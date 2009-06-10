@@ -29,6 +29,3 @@
 	}
 ?>
 </div>
-<script type="text/javascript">
-	$("#headerMenuHub").makeHeaderMenu('headerButtonHub');
-</script>

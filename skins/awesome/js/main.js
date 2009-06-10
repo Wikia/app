@@ -3,96 +3,12 @@ var $G = function(id) {
 	return document.getElementById(id);
 };
 
-//Edit Tips
-// macbre: doesn't seem to be used anywhere in the code
-/*
-var editorMode = 'normal';
-function editorAnimate(editorModeRequest) {
-	var animationSpeed = .75;
-	var easing = YAHOO.util.Easing.easeOut;
-	if (editorModeRequest == editorMode) {
-		var sidebarAnim = new YAHOO.util.Anim('widget_sidebar', {
-			left: { to: 5 }
-		}, animationSpeed, easing);
-		var pageAnim = new YAHOO.util.Anim('wikia_page', {
-			marginLeft: { to: 221 }
-		}, animationSpeed, easing);
-		var editorAnim = new YAHOO.util.Anim(['editTipWrapper2', 'wikiPreview'], {
-			marginLeft: { to: 0 }
-		}, animationSpeed, easing);
-		var previewAnim = new YAHOO.util.Anim(['wikiPreview', 'wikiPreview'], {
-			marginLeft: { to: 0 }
-		}, animationSpeed, easing);
-
-		sidebarAnim.animate();
-		pageAnim.animate();
-		editorAnim.animate();
-		previewAnim.animate();
-		YAHOO.util.Dom.get('editTipsLink').innerHTML = 'Show Editing Tips';
-		YAHOO.util.Dom.get('editWideLink').innerHTML = 'Go Widescreen';
-		AccordionMenu.seriouslyCollapseAll('editTips');
-		editorMode = 'normal';
-	} else if (editorModeRequest == 'tips') {
-		var sidebarAnim = new YAHOO.util.Anim('widget_sidebar', {
-			left: { to: -211 }
-		}, animationSpeed, easing);
-		var pageAnim = new YAHOO.util.Anim('wikia_page', {
-			marginLeft: { to: 5 }
-		}, animationSpeed, easing);
-		var editorAnim = new YAHOO.util.Anim('editTipWrapper2', {
-			marginLeft: { to: 216 }
-		}, animationSpeed, easing);
-		var previewAnim = new YAHOO.util.Anim('wikiPreview', {
-			marginLeft: { to: 216 }
-		}, animationSpeed, easing);
-
-		sidebarAnim.animate();
-		pageAnim.animate();
-		editorAnim.animate();
-		previewAnim.animate();
-		YAHOO.util.Dom.get('editTipsLink').innerHTML = 'Show Navigation';
-		YAHOO.util.Dom.get('editWideLink').innerHTML = 'Go Widescreen';
-		editorMode = 'tips';
-	} else if (editorModeRequest == 'wide') {
-		var sidebarAnim = new YAHOO.util.Anim('widget_sidebar', {
-			left: { to: -211 }
-		}, animationSpeed, easing);
-		var pageAnim = new YAHOO.util.Anim('wikia_page', {
-			marginLeft: { to: 5 }
-		}, animationSpeed, easing);
-		var editorAnim = new YAHOO.util.Anim('editTipWrapper2', {
-			marginLeft: { to: 0 }
-		}, animationSpeed, easing);
-		var previewAnim = new YAHOO.util.Anim(['wikiPreview', 'wikiPreview'], {
-			marginLeft: { to: 216 }
-		}, animationSpeed, easing);
-
-		sidebarAnim.animate();
-		pageAnim.animate();
-		editorAnim.animate();
-		previewAnim.animate();
-		YAHOO.util.Dom.get('editTipsLink').innerHTML = 'Show Editing Tips';
-		YAHOO.util.Dom.get('editWideLink').innerHTML = 'Exit Widescreen';
-		AccordionMenu.seriouslyCollapseAll('editTips');
-		editorMode = 'wide';
-	}
-}
-*/
-
 //Attach DOM-Ready handlers
 $(function() {
 	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
 	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
-	//$("[rel='manage_widgets']").click(openCockpit);
 	$('.ajaxLogin').click(openLogin);
 	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
-	//$("#search_field").autocomplete({ajax: "http://muppet.wikia.com/?query=" + $("#search_field").val() + "&action=ajax&rs=getLinkSuggest"})
-	/*
-	$("#search_field").autocomplete({
-		list: ["hello", "hello person", "goodbye"],
-		timeout: 300
-	});
-	*/
 	setupVoting();
 });
 
@@ -103,15 +19,6 @@ function startAjax() {
 function stopAjax() {
 	$("body").removeClass("ajax");
 }
-/*
-//Widget Cockpit
-function openCockpit(event) {
-	event.preventDefault();
-	$.get("cockpit.html", function(html) {
-		$("#positioned_elements").append(html);
-	});
-}
-*/
 
 //Search Field
 function monacoSearchField(event) {
@@ -128,20 +35,33 @@ function monacoSearchField(event) {
 
 //Hub Menu
 function openHubMenu(event) {
-	event.preventDefault();
-	headerMenuFunction = openHubMenu;
-	$.get(wgScript + '?action=ajax&rs=GetHubMenu&cb=' + wgMWrevId + '-' + wgStyleVersion, function(html) {
-		$("#positioned_elements").append(html);
-	});
+	event.stopPropagation();
+
+	if ( $('#headerMenuHub').exists() ) {
+		$("#headerMenuHub").makeHeaderMenu('headerButtonHub', openHubMenu);
+	}
+	else {
+		$.get(wgScript + '?action=ajax&rs=GetHubMenu&cb=' + wgMWrevId + '-' + wgStyleVersion, function(html) {
+			$("#positioned_elements").append(html);
+			$("#headerMenuHub").makeHeaderMenu('headerButtonHub', openHubMenu);
+		});
+	}
 }
 
 //User Menu
 function openUserMenu(event) {
-	event.preventDefault();
-	headerMenuFunction = openUserMenu;
-	$.get(wgScript + '?action=ajax&rs=GetUserMenu&rsargs[]='+ wgUserName +'&uselang='+ wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function(html) {
-		$("#positioned_elements").append(html);
-	});
+	event.stopPropagation();
+
+	if ( $('#headerMenuUser').exists() ) {
+		$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#wikia_page", attach_at: "top"});
+	}
+	else {
+		$.get(wgScript + '?action=ajax&rs=GetUserMenu&rsargs[]='+ wgUserName +'&uselang='+ wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function(html) {
+			$("#positioned_elements").append(html);
+			$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#wikia_page", attach_at: "top"});
+			$('#cockpit1').click(WidgetFramework.show_cockpit);
+		});
+	}
 }
 
 // AjaxLogin
@@ -174,7 +94,7 @@ function openLogin(event) {
 
 //Header Menu
 $.fn.extend({
-	makeHeaderMenu: function(trigger, options) {
+	makeHeaderMenu: function(trigger, headerMenuFunction, options) {
 		if (!trigger) {
 			//adding error logging here
 			$(this).remove();
@@ -214,7 +134,15 @@ $.fn.extend({
 		//show menu, set mouseenter/mouseleave handlers
 		menu.css("left", targetLeft).css("top", targetTop).slideDown("fast").mouseleave(function() {
 			headerMenuTimer = setTimeout(function() {
-				menu.closeHeaderMenu(trigger, menu);
+				menu.closeHeaderMenu(trigger, headerMenuFunction);
+			}, settings.delay);
+		}).mouseenter(function() {
+			clearTimeout(headerMenuTimer);
+		});
+
+		trigger.mouseleave(function() {
+			headerMenuTimer = setTimeout(function() {
+				menu.closeHeaderMenu(trigger, headerMenuFunction);
 			}, settings.delay);
 		}).mouseenter(function() {
 			clearTimeout(headerMenuTimer);
@@ -222,19 +150,17 @@ $.fn.extend({
 
 		//close menu by clicking anywhere
 		$(document).bind("click.headerMenu", function() {
-			menu.closeHeaderMenu(trigger, menu);
+			menu.closeHeaderMenu(trigger, headerMenuFunction);
 		});
 
 		menu.click(function(event) {
 			event.stopPropagation();
 		});
   	},
-	closeHeaderMenu: function(trigger, menu) {
-		$(document).unbind(".headerMenu");
+	closeHeaderMenu: function(trigger, headerMenuFunction) {
+		$(document).unbind("click.headerMenu");
 		trigger.bind("click.headerMenu", headerMenuFunction);
-		menu.slideUp("fast", function() {
-			menu.remove();
-		});
+		$(this).slideUp("fast");
 	}
 });
 
