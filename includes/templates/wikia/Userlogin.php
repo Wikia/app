@@ -29,7 +29,9 @@ class UserloginTemplate extends QuickTemplate {
 	<p id="userloginlink"><?php $this->html('link') ?></p>
 	<?php $this->html('header'); /* pre-table point for form plugins... */ ?>
 	<div id="userloginprompt"><?php  $this->msgWiki('loginprompt') ?></div>
-	<?php if( !empty($wgDisplayLanguageSelectorOnLogin) && @$this->haveData( 'languages' ) ) { 
+	<?php 
+	global $wgDisplayLanguageSelectorOnLogin;
+	if( !empty($wgDisplayLanguageSelectorOnLogin) && @$this->haveData( 'languages' ) ) { 
 		?><div id="languagelinks"><p><?php $this->html( 'languages' ); ?></p></div>
 	<?php } ?>
 	<table>
