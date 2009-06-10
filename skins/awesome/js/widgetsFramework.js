@@ -7,6 +7,8 @@
  * @author Maciej Brencz <macbre@wikia-inc.com>
  */
 var WidgetFramework = {
+	isIE6: ($.browser.msie && $.browser.version.substr(0,1)<7),
+
 	edit: function(e) {
 		var id = $(this).attr('id').split('_')[1];
 
@@ -282,9 +284,10 @@ var WidgetFramework = {
 		}
 
 		// show cockpit
-		if ($.browser.msie) {
+		if (WidgetFramework.isIE6) {
 			$('#cockpit').show();
-			window.scrollTo(0, 0);
+			WidgetFramework.onScroll();
+			$(window).bind('scroll.cockpit', WidgetFramework.onScroll);
 		}
 		else {
 			$('#cockpit').css("bottom", -85).show().animate({
@@ -302,10 +305,16 @@ var WidgetFramework = {
 		}
 	},
 
+	// fix for IE6 (simulate position:fixed)
+	onScroll: function(e) {
+		$('#cockpit').css('top', (document.documentElement.scrollTop+document.documentElement.clientHeight) - 85);
+	},
+
 	hide_cockpit: function(e) {
 		WidgetFramework.carouselVisible = false;
 
-		if ($.browser.msie) {
+		if (WidgetFramework.isIE6) {
+			$(window).unbind('.cockpit');
 			$('#cockpit').hide();
 		}
 		else {

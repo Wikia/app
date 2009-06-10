@@ -386,12 +386,7 @@ body.widgetsAddingBlocked .add {
 /* widget cockpit IE6 fixes */
 * html #cockpit {
 	position: absolute;
-	top: 0;
 	left: 0;
-}
-
-* html #cockpit_close {
-	top: 5px;
 }
 
 .widget_sort_placeholder {
