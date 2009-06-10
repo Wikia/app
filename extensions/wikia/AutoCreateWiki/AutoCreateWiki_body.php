@@ -765,7 +765,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 		#-
 		$aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
-		$aLanguages = $this->getFixedLanguageNames();
+		$aLanguages = wfGetFixedLanguageNames();
 		asort($aLanguages);
 		#-
 		$hubs = WikiFactoryHub::getInstance();
@@ -819,7 +819,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		global $wgCaptchaTriggers, $wgRequest;
 		wfProfileIn( __METHOD__ );
 		#-
-		$aLanguages = $this->getFixedLanguageNames();
+		$aLanguages = wfGetFixedLanguageNames();
 		#-
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
@@ -1280,25 +1280,4 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileOut( __METHOD__ );
 		return $iCount;
 	}
-
-	/*
-	 * get a list of language names available for wiki request
-	 * (possibly filter some)
-	 *
-	 * @author nef@wikia-inc.com
-	 * @return array
-	 *
-	 * @see Language::getLanguageNames()
-	 * @see RT#11870
-	 */
-	private function getFixedLanguageNames() {
-		$languages = Language::getLanguageNames();
-
-		$filter_languages = explode(',', wfMsg('requestwiki-filter-language'));
-		foreach ($filter_languages as $key) {
-			unset($languages[$key]);
-		}
-		return $languages;
-	}
-
 }

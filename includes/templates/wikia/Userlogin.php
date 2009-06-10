@@ -29,7 +29,9 @@ class UserloginTemplate extends QuickTemplate {
 	<p id="userloginlink"><?php $this->html('link') ?></p>
 	<?php $this->html('header'); /* pre-table point for form plugins... */ ?>
 	<div id="userloginprompt"><?php  $this->msgWiki('loginprompt') ?></div>
-	<?php if( @$this->haveData( 'languages' ) ) { ?><div id="languagelinks"><p><?php $this->html( 'languages' ); ?></p></div><?php } ?>
+	<?php if( !empty($wgDisplayLanguageSelectorOnLogin) && @$this->haveData( 'languages' ) ) { 
+		?><div id="languagelinks"><p><?php $this->html( 'languages' ); ?></p></div>
+	<?php } ?>
 	<table>
 		<tr>
 			<td class="mw-label"><label for='wpName1'><?php $this->msg('yourname') ?></label></td>
@@ -134,7 +136,7 @@ class UsercreateTemplate extends QuickTemplate {
 <?php } ?>
 	<p id="userloginlink"><?php $this->html('link') ?></p>
 	<?php $this->html('header'); /* pre-table point for form plugins... */ ?>
-	<?php if( @$this->haveData( 'languages' ) ) { ?><div id="languagelinks"><p><?php $this->html( 'languages' ); ?></p></div><?php } ?>
+	<?php /* LoginLanguageSelector used to be here, moved downward and modified as part of rt#16889 */ ?>
 	<script type="text/javascript">
 		var errorNick = false;	//nick checking can be disabled
 		var errorEmail = errorPass = errorRetype = errorDate = true;
@@ -228,15 +230,48 @@ class UsercreateTemplate extends QuickTemplate {
 			</td>
 		</tr>
 		<tr>
-			<?php if( $this->data['userealname'] ) { ?>
 			<td class="mw-input">
-				<label for='wpRealName'><?php $this->msg('yourrealname') ?></label><br/>
-				<input type='text' class='loginText' name="wpRealName" id="wpRealName" value="<?php $this->text('realname') ?>" size='20' />
-				<div class="mw-input-help">
-					<?php $this->msgWiki('prefs-help-realname'); ?>
-				</div>
+				<label for='uselang'><?php $this->msg('yourlanguage') ?></label><br/>
+
+                                <select name="uselang" id="uselang">
+<?php
+	global $wgLanguageCode;
+
+        $isSelected = false;
+
+	$aTopLanguages = explode(',', wfMsg('wikia-language-top-list'));
+	$aLanguages = wfGetFixedLanguageNames();
+	asort( $aLanguages );
+
+        if (!empty($aTopLanguages) && is_array($aTopLanguages)) :
+?>
+                                <optgroup label="<?= wfMsg('wikia-language-top', count($aTopLanguages)) ?>">
+<?php foreach ($aTopLanguages as $sLang) :
+                $selected = '';
+                if ( !$isSelected && ( $wgLanguageCode == $sLang ) ) :
+                        $isSelected = true;
+                        $selected = ' selected="selected"';
+                endif;
+?>
+                                <option value="<?=$sLang?>" <?=$selected?>><?=$aLanguages[$sLang]?></option>
+<?php endforeach ?>
+                                </optgroup>
+<?php endif ?>
+                                <optgroup label="<?= wfMsg('wikia-language-all') ?>">
+<?php if (!empty($aLanguages) && is_array($aLanguages)) : ?>
+<?php
+        foreach ($aLanguages as $sLang => $sLangName) :
+                if ( empty($isSelected) && ( $wgLanguageCode == $sLang ) ) :
+                        $isSelected = true;
+                        $selected = ' selected="selected"';
+                endif;
+?>
+                                <option value="<?=$sLang?>" <?=$selected?>><?=$sLangName?></option>
+<?php endforeach ?>
+                                </optgroup>
+<?php endif ?>
+                                </select>
 			</td>
-			<?php } ?>
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpBirthDateTD">

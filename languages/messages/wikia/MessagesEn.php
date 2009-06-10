@@ -842,6 +842,9 @@ Text should be placed on this page if you wish to explain usage, style and polic
 * pt-br
 ** Zuirdj
 ",
+'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
+'wikia-language-top' => 'Top $1 languages',
+'wikia-language-all' => 'All languages',
 
 # Special: Preferences
 'seeeditcount' => 'See edit count',
