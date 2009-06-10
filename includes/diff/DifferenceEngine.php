@@ -112,12 +112,27 @@ CONTROL;
 
 		$wgOut->setArticleFlag( false );
 		if ( ! $this->loadRevisionData() ) {
-			$t = $this->mTitle->getPrefixedText();
-			$d = wfMsgExt( 'missingarticle-diff', array( 'escape' ), $this->mOldid, $this->mNewid );
-			$wgOut->setPagetitle( wfMsg( 'errorpagetitle' ) );
-			$wgOut->addWikiMsg( 'missing-article', "<nowiki>$t</nowiki>", $d );
-			wfProfileOut( __METHOD__ );
-			return;
+			/* Wikia change begin - @author: Marooned */
+			/* displaying messages with empty user talk page */
+			$msg_temp = false;
+			wfRunHooks ( 'GetUserMessagesDiffCurrent', array ($this->mTitle, &$msg_temp ) );
+			if ( $msg_temp !== false ) {
+				//empty history but we have some messages - create a fake revision to take away error "(Diff: 0, 0)"
+				$mtext = $msg_temp;
+				$this->mOldid = false;
+				//if talk page doesn't exist, create a fake revision empty revision in order not to display messages twice
+				//those are displayed from loadText()/loadNewText()
+				$this->mNewRev = new Revision(array('text' => ''));
+			} else {
+				//empty history and no messages - normal behavior
+				$t = $this->mTitle->getPrefixedText();
+				$d = wfMsgExt( 'missingarticle-diff', array( 'escape' ), $this->mOldid, $this->mNewid );
+				$wgOut->setPagetitle( wfMsg( 'errorpagetitle' ) );
+				$wgOut->addWikiMsg( 'missing-article', "<nowiki>$t</nowiki>", $d );
+				wfProfileOut( __METHOD__ );
+				return;
+			}
+			/* Wikia change end */
 		}
 
 		wfRunHooks( 'DiffViewHeader', array( $this, $this->mOldRev, $this->mNewRev ) );
@@ -876,6 +891,14 @@ CONTROL;
 		}
 		if ( $this->mNewRev ) {
 			$this->mNewtext = $this->mNewRev->getText( Revision::FOR_THIS_USER );
+
+			/* Wikia change begin - @author: Marooned */
+			/* displaying messages with empty user talk page */
+			$msg_temp = false;
+			wfRunHooks( 'GetUserMessagesDiffCurrent', array( $this->mTitle, &$msg_temp ) );
+			if ($msg_temp !== false) $this->mNewtext = $msg_temp . $this->mNewtext;
+			/* Wikia change end */
+
 			if ( $this->mNewtext === false ) {
 				return false;
 			}
@@ -896,6 +919,14 @@ CONTROL;
 			return false;
 		}
 		$this->mNewtext = $this->mNewRev->getText();
+
+		/* Wikia change begin - @author: Marooned */
+		/* displaying messages with empty user talk page */
+		$msg_temp = false;
+		wfRunHooks( 'GetUserMessagesDiffCurrent', array( $this->mTitle, &$msg_temp ) );
+		if ($msg_temp !== false) $this->mNewtext = $msg_temp . $this->mNewtext;
+		/* Wikia change end */
+
 		return true;
 	}
 
