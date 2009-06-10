@@ -336,67 +336,52 @@ class HomeTemplate extends QuickTemplate {
 
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
-	<?php $this->html('headlinks') ?>
-	<title><?php $this->text('pagetitle') ?></title>
+	<head>
+		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
+		<?php $this->html('headlinks') ?>
+		<title><?php $this->text('pagetitle') ?></title>
 
-	<meta http-equiv="imagetoolbar" content="no" />
+		<meta http-equiv="imagetoolbar" content="no" />
 
-<?= Skin::makeGlobalVariablesScript( $this->data ); ?>
+		<?= Skin::makeGlobalVariablesScript( $this->data ); ?>
 
-<!-- Dependency -->
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js" ></script>
+		<!-- Dependency -->
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/yahoo/yahoo-min.js" ></script>
 
-<!-- Event source file -->
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/event/event-min.js" ></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/dom/dom-min.js" ></script>
+		<!-- Event source file -->
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/event/event-min.js" ></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.5.2/build/dom/dom-min.js" ></script>
 
-
-<?php /**
-<!-- YUI -->
-<script type="text/javascript" src="http://images.wikia.com/common/yui/utilities/utilities.js?<?= $wgStyleVersion ?>"></script>
-<script type="text/javascript" src="http://images.wikia.com/common/yui/container/container-min.js?<?= $wgStyleVersion ?>"></script>
-<script type="text/javascript" src="http://images.wikia.com/common/yui/autocomplete/autocomplete-min.js?<?= $wgStyleVersion ?>"></script>
-<script type="text/javascript" src="http://images.wikia.com/common/yui/logger/logger-min.js?<?= $wgStyleVersion ?>"></script>
-<script type="text/javascript" src="http://images.wikia.com/common/yui/3rdpart/yui-cookie.js?<?= $wgStyleVersion ?>"></script>
-<script type="text/javascript" src="http://images.wikia.com/common/yui/3rdpart/tools-min.js?<?= $wgStyleVersion ?>"></script>
-**/ ?>
-	<script type="text/javascript" src="http://images.wikia.com/common/yui/logger/logger-min.js?<?= $wgStyleVersion ?>"></script>
-	<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?= $wgStyleVersion ?>"><!-- wikibits js --></script>
+		<script type="text/javascript" src="http://images.wikia.com/common/yui/logger/logger-min.js?<?= $wgStyleVersion ?>"></script>
+		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js?<?= $wgStyleVersion ?>"><!-- wikibits js --></script>
 <?php	if($this->data['jsvarurl'  ]) { ?>
-	<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"><!-- site js --></script>
+		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"><!-- site js --></script>
 <?php	} ?>
 <?php	if($this->data['pagecss'   ]) { ?>
-	<style type="text/css"><?php $this->html('pagecss'   ) ?></style>
+		<style type="text/css"><?php $this->html('pagecss'   ) ?></style>
 <?php	}
 		if($this->data['usercss'   ]) { ?>
-	<style type="text/css"><?php $this->html('usercss'   ) ?></style>
+		<style type="text/css"><?php $this->html('usercss'   ) ?></style>
 <?php	}
 		if($this->data['userjs'    ]) { ?>
-	<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs' ) ?>"></script>
+		<script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs' ) ?>"></script>
 <?php	}
 		if($this->data['userjsprev']) { ?>
-	<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
+		<script type="<?php $this->text('jsmimetype') ?>"><?php $this->html('userjsprev') ?></script>
 <?php	}
 		if($this->data['trackbackhtml']) echo $this->data['trackbackhtml']; ?>
-	<style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/common/yui_2.5.2/reset/reset-min.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
-		<?php $this->html('headscripts') ?>
-	<style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/home/css/main.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
-	<style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/home/css/main.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
-	<!--[if lt IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/home/css/ie.css?<?= $wgStyleVersion ?>" /><![endif]-->
-	<!--[if IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/home/css/ie7.css?<?= $wgStyleVersion ?>" /><![endif]-->
+		<style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/common/yui_2.5.2/reset/reset-min.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
+<?php $this->html('headscripts') ?>
+		<style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/home/css/main.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
+		<style type="text/css" media="screen,projection">/*<![CDATA[*/@import "<?php $this->text('stylepath') ?>/home/css/main.css?<?= $wgStyleVersion ?>"; /*]]>*/</style>
+		<!--[if lt IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/home/css/ie.css?<?= $wgStyleVersion ?>" /><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" href="<?php $this->text('stylepath') ?>/home/css/ie7.css?<?= $wgStyleVersion ?>" /><![endif]-->
 
-<?php /**
-	<link rel="stylesheet" type="text/css" href="http://images.wikia.com/common/yui/container/assets/container.css?<?= $wgStyleVersion ?>" />
-	<link rel="stylesheet" type="text/css" href="http://images.wikia.com/common/yui/logger/assets/logger.css?<?= $wgStyleVersion ?>" />
+		<script type="text/javascript" src="<?php $this->text('stylepath') ?>/home/js/main.js?<?= $wgStyleVersion ?>"></script>
+		<script type="text/javascript" src="<?php $this->text('stylepath') ?>/common/tracker.js?<?= $wgStyleVersion ?>"></script>
+	</head>
 
-**/ ?>
-	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/home/js/main.js?<?= $wgStyleVersion ?>"></script>
-	<script type="text/javascript" src="<?php $this->text('stylepath') ?>/common/tracker.js?<?= $wgStyleVersion ?>"></script>
-</head>
-
-<body class="mediawiki <?php $this->text('nsclass') ?> <?php $this->text('dir') ?> <?php $this->text('pageclass') ?>">
+<body class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?>">
 
 <?php
 		if ( $wgTitle->getText() != 'Userlogin' ) {
