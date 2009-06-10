@@ -6,15 +6,14 @@ if (!defined('MEDIAWIKI')) die();
  * @package MediaWiki
  * @subpackage Skins
  *
- * @author Maciej Brencz <macbre@wikia.com>
- * @copyright Copyright (C) 2008 Maciej Brencz, Wikia Inc.
+ * @author Maciej Brencz <macbre@wikia-inc.com>
+ * @copyright Copyright (C) 2009 Maciej Brencz, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
 require_once dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 
 class SkinHome extends SkinTemplate {
-
 	function initPage(&$out) {
 		global $wgOut;
 		wfProfileIn(__METHOD__);
@@ -25,12 +24,18 @@ class SkinHome extends SkinTemplate {
 		$this->stylename = 'home';
 		$this->template  = 'HomeTemplate';
 
-		$wgOut->addInlineScript('var search_terms = ' . wfSearchPropositions() . ';');
-		$wgOut->addInlineScript('var search_terms_extra = ' . wfSearchPropositions('_extra') . ';');
+		global $wgHooks;
+		$wgHooks['MakeGlobalVariablesScript'][] = array($this, 'addVars');
 
 		wfProfileOut(__METHOD__);
 	}
 
+	function addVars(&$vars) {
+		$vars['search_terms'] = wfSearchPropositions();
+		$vars['search_terms_extra'] = wfSearchPropositions('_extra');
+
+		return true;
+	}
 }
 
 class HomeTemplate extends QuickTemplate {
@@ -822,7 +827,7 @@ class HomeDataProvider {
 
 function wfSearchPropositions($extra='') {
 	global $wgMemc;
-	$key = 'wikia:main_page:search_terms' . $extra;
+	$key = 'wikia:main_page:search_terms' . $extra . ':1';
 	$items = $wgMemc->get($key);
 	if(!$items) {
 		$prefix = 'Main-page-';
@@ -837,7 +842,6 @@ function wfSearchPropositions($extra='') {
 				$items[] = explode('|', ltrim($item, '* '));
 			}
 		}
-		$items = Wikia::json_encode($items);
 		$wgMemc->set($key, $items, 300);
 	}
 	return $items;
