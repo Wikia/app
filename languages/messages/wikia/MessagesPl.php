@@ -130,6 +130,6 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'widget_description' => 'Opis',
 'see_more' => 'Więcej...',
 'tog-disablelinksuggest' => 'Nie pokazuj sugestii linków',
-'tog-disablewysiwyg' => 'Wyłącz edytor wizualny',
+'tog-enablerichtext' => 'Włącz edytor wizualny',
 'nodiff' => 'Brak różnic',
 ) );

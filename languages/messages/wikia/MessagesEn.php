@@ -812,7 +812,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'var_logheader' => 'Below is a list of the most recent configuration changes for this wiki.',
 'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see article pages as logged-out users see them.<br/><br/>',
 'fast-adv' => 'Advertisement',
-'tog-disablewysiwyg' => 'Disable Rich Text Editing',
+'tog-enablerichtext' => 'Enable Rich Text Editing',
 'atom' => 'Wikia Atom',
 'feed-watom' => 'Wikia Atom',
 'nodiff' => 'No changes',
