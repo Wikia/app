@@ -790,7 +790,7 @@ class SiteWideMessages extends SpecialPage {
 
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$langCond = ' AND msg_lang IN ( ';
+		$langCond = ' AND ( msg_lang IN ( ';
 
 		//check if user is using one of our supported languages
 		if ( in_array( $user->getOption('language'), $wgWikiaStaffLanguages ) ) {
@@ -799,7 +799,7 @@ class SiteWideMessages extends SpecialPage {
 			$langCond .= "'en'"; // if not, default to English
 		}
 
-		$langCond .= ", 'all', NULL )"; // also include global messages
+		$langCond .= ", 'all' ) OR msg_lang IS NULL )"; // also include global messages
 
 		return $langCond;
 	}
