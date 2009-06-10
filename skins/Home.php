@@ -7,7 +7,7 @@ if (!defined('MEDIAWIKI')) die();
  * @subpackage Skins
  *
  * @author Maciej Brencz <macbre@wikia-inc.com>
- * @copyright Copyright (C) 2009 Maciej Brencz, Wikia Inc.
+ * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
