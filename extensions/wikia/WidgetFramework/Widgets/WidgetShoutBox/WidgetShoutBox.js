@@ -9,7 +9,7 @@ function WidgetShoutBoxSend(widgetId) {
 	// get message
 	message = encodeURIComponent( messageBox.attr('value') );
 
-	$('#widget_' + widgetId + '_content').html('').addClass('widget_loading').log('msg: ' + message, 'WidgetSlideshow');
+	$('#widget_' + widgetId + '_content').html('').addClass('widget_loading').log('msg: ' + message, 'WidgetShoutBox');
 
 	$.getJSON(wgScript + '?action=ajax&rs=WidgetFrameworkAjax&actionType=configure&id='+widgetId+'&skin='+skin+'&message='+message, function(res) {
 		if(res.success) {
@@ -33,7 +33,7 @@ function WidgetShoutBoxRemoveMsg(widgetId, msgId) {
 		return false;
 	}
 
-	$('#widget_' + widgetId + '_content').html('').addClass('widget_loading').log('removing msg #' + msgId, 'WidgetSlideshow');
+	$('#widget_' + widgetId + '_content').html('').addClass('widget_loading').log('removing msg #' + msgId, 'WidgetShoutBox');
 
 	$.getJSON(wgScript + '?action=ajax&rs=WidgetFrameworkAjax&actionType=configure&id='+widgetId+'&skin='+skin+'&msgid='+msgId, function(res) {
 		if(res.success) {
