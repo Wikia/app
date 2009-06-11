@@ -389,9 +389,42 @@ function WidgetShoutBoxGenerateHostname() {
 	wfProfileIn( __METHOD__ );
 	global $wgServer, $wgCityId;
 
-	// #3094: dirty fix for dofus
-	if ($wgCityId == 602) {
-		return 'dofus.wikia.com';
+	$hack_domains = array(
+		4533	=> 'ca.dofus.wikia.com',
+		1177	=> 'cs.dofus.wikia.com',
+		1982	=> 'de.dofus.wikia.com',
+		602	=> 'en.dofus.wikia.com',
+		1630	=> 'es.dofus.wikia.com',
+		7491	=> 'fi.dofus.wikia.com',
+		1112	=> 'fr.dofus.wikia.com',
+		4763	=> 'hu.dofus.wikia.com',
+		7645	=> 'it.dofus.wikia.com',
+		2278	=> 'nl.dofus.wikia.com',
+		1922	=> 'pl.dofus.wikia.com',
+		1809	=> 'pt.dofus.wikia.com',
+		2788	=> 'ru.dofus.wikia.com',
+		2791	=> 'tr.dofus.wikia.com',
+
+		8416	=> 'bg.memory-alpha.org',
+		2422	=> 'cs.memory-alpha.org',
+		114	=> 'de.memory-alpha.org',
+		113	=> 'en.memory-alpha.org',
+		765	=> 'eo.memory-alpha.org',
+		1260	=> 'es.memory-alpha.org',
+		763	=> 'fr.memory-alpha.org',
+		6613	=> 'it.memory-alpha.org',
+		5379	=> 'ja.memory-alpha.org',
+		2067	=> 'mu.memory-alpha.org',
+		115	=> 'nl.memory-alpha.org',
+		548	=> 'pl.memory-alpha.org',
+		2556	=> 'pt.memory-alpha.org',
+		2421	=> 'ru.memory-alpha.org',
+		2255	=> 'sr.memory-alpha.org',
+		365	=> 'sv.memory-alpha.org',
+		2698	=> 'zh-cn.memory-alpha.org',
+	);
+	if (!empty($hack_domains[$wgCityId])) {
+		return $hack_domains[$wgCityId];
 	}
 
 	if ( isset( $wgServer ) ) {
