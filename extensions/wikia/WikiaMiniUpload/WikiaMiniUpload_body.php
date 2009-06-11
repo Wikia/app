@@ -242,7 +242,7 @@ class WikiaMiniUpload {
 		$extraId = $wgRequest->getVal('extraId');
 		$newFile =  true;
 
-		if( wfReadOnly ) {
+		if( wfReadOnly() ) {
 			header('X-screen-type: error');
 			return wfMsg( 'wmu-readonly' );
 		}
@@ -405,9 +405,7 @@ class WikiaMiniUpload {
 		$caption = $wgRequest->getVal('caption');
 		$slider = $wgRequest->getVal('slider');
 
-		$ns_img = $wgContLang->getFormattedNsText( NS_IMAGE );
-
-		$tag = '[[' . $ns_img . ':'.$title->getDBkey();
+		$tag = '[[' . $title->getPrefixedText();
 		if($size != 'full' && ($file->getMediaType() == 'BITMAP' || $file->getMediaType() == 'DRAWING')) {
 			$tag .= '|thumb';
 			if($layout != 'right') {
