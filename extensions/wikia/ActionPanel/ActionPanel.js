@@ -338,6 +338,7 @@ function applyActionsOnQuestions(){
 						
 						
 						if( j.query.pages ){
+							add_categories.value = "";
 							for( page in j.query.pages ){
 								for(x = 0; x <= j.query.pages[page].categories.length-1;x++){
 									category = j.query.pages[page].categories[x].title.replace(wgCategoryName+":","");
