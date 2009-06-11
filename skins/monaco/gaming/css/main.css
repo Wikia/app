@@ -116,10 +116,6 @@ body {
 #articleFooter {
 	background-color: transparent;
 }
-#articleFooter a {
-	color: #FFF;
-	text-decoration: underline;
-}
 #articleFooter strong {
 	color: #FFF;
 }
