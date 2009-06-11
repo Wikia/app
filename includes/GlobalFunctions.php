@@ -845,6 +845,7 @@ function wfHostname() {
 function wfReportTime() {
 	global $wgRequestTime, $wgShowHostnames, $wgRUstart;
 
+	wfProfileIn( __METHOD__ );
 	$now = wfTime();
 	$elapsed = $now - $wgRequestTime;
 
@@ -863,6 +864,7 @@ function wfReportTime() {
 	// WIKIA: send a message to the MQ
 	global $wgReportTimeViaStomp;
 	if( $wgReportTimeViaStomp ) {
+		wfProfileIn( __METHOD__ . '-stomp' );
 		global $wgStompServer, $wgStompUser, $wgStompPassword;
 		$stomp = new Stomp( $wgStompServer );
 		$stomp->connect( $wgStompUser, $wgStompPassword );
@@ -877,8 +879,10 @@ function wfReportTime() {
 			) ),
 			array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 		);
+		wfProfileOut( __METHOD__ . '-stomp' );
 	}
 
+	wfProfileOut( __METHOD__ );
 	return $wgShowHostnames
 		? sprintf( "<!-- Served by %s in %01.3f secs. cpu: %01.3f -->", wfHostname(), $elapsed, $elapsedcpu )
 		: sprintf( "<!-- Served in %01.3f secs. cpu: %01.3f -->", $elapsed, $elapsedcpu );
