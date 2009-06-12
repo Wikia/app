@@ -256,6 +256,7 @@ JAVASCRIPT;
 
 	function insertGoogleMapLinks() {
 		var image = document.createElement("img");
+		image.id = 'mw-editbutton-googlemaps';
 		image.width = 23;
 		image.height = 22;
 		image.src = '{$this->mUrlPath}/images/button_map_open.gif?v={$extensionVersion}';
