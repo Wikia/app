@@ -77,7 +77,7 @@ function wfGetWikiaNewtalk( &$user, &$talks ) {
 	if( !is_array( $wikia_talks ) ) {
 		$wikia_talks = array();
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_MASTER );
 		$tbl_shared_newtalks = wfSharedTable( 'shared_newtalks' );
 		$tbl_city_list = wfSharedTable( 'city_list' );
 		$res = $dbr->query( "SELECT city_id, sn_wiki, city_title, city_url FROM $tbl_shared_newtalks LEFT OUTER JOIN $tbl_city_list ON city_dbname=sn_wiki WHERE sn_user_id=".$user->getID()." AND sn_user_ip=".$dbr->addQuotes( $user->getName() ) . ' AND city_public = 1');
