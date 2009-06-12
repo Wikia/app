@@ -94,6 +94,11 @@ class LocalMaintenanceTask extends BatchTask {
 				$this->mFounder->load();
 				$this->setCentralPages();
 			}
+
+			/**
+			 * once again clear cache at the very end
+			 */
+			WikiFactory::clearCache( $city_id );
 		}
 
 		return true;
@@ -232,13 +237,13 @@ class LocalMaintenanceTask extends BatchTask {
 				$this->log( sprintf("Updating existing article: %s", $centralTitle->getFullUrl()) );
 				$sContent = $oCentralArticle->getContent();
 				$wikiUrl = "http://". $this->mWikiData["subdomain"] .".wikia.com";
-				$pos = strpos($sContent, $wikiUrl); 
+				$pos = strpos($sContent, $wikiUrl);
 				if ($pos !== false) {
 					$sContent .= $oTmpl->execute("central");
 					$oCentralArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT );
 					$this->log( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
 				} else {
-					$this->log( sprintf("Article %s already exists and content was added some times ago", $centralTitle->getFullUrl()) );					
+					$this->log( sprintf("Article %s already exists and content was added some times ago", $centralTitle->getFullUrl()) );
 				}
 			}
 		}
