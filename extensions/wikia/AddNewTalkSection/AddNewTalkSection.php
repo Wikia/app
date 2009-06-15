@@ -30,6 +30,8 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionFunctions[] = 'AddNewTalkSectionInit';
 $wgExtensionMessagesFiles['AddNewTalkSection'] = dirname(__FILE__) . '/AddNewTalkSection.i18n.php';
+//in AddNewTalkSectionInit() it's too late...
+$wgHooks['LanguageGetMagic'][] = 'AddNewTalkSectionGetMagic';
 
 /**
  * Initialize hooks
@@ -43,6 +45,16 @@ function AddNewTalkSectionInit() {
 	$wgHooks['EditPage::importFormData::finished'][] = 'AddNewTalkSectionImportFormData';
 //	$wgHooks['UserToggles'][] = 'AddNewTalkSectionToggleUserPreference';
 //	$wgHooks['getEditingPreferencesTab'][] = 'AddNewTalkSectionToggleUserPreference';
+}
+
+/**
+ * add magic word
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function AddNewTalkSectionGetMagic(&$magicWords, $langCode) {
+	$magicWords['MAG_NONEWSECTIONLINK'] = array(0, '__NONEWSECTIONLINK__');
+	return true;
 }
 
 /**
@@ -69,6 +81,10 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 	$action = $wgRequest->getVal('action', 'view');
 	//do not show link when anon sees 'pres ok to purge the page'
 	if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
+		return true;
+	}
+
+	if (MagicWord::get('MAG_NONEWSECTIONLINK')->matchAndRemove(Revision::newFromTitle($wgTitle)->getText())) {
 		return true;
 	}
 
