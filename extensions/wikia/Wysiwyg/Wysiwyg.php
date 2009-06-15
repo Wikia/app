@@ -349,18 +349,13 @@ function Wysiwyg_CheckEdgeCases($text) {
 		}
 	}
 
-	// macbre: existance of __NOWYSIWYG__
-	wfDebug("Wysiwyg: checking for __NOWYSIWYG__\n");
-
-	$mw = MagicWord::get('MAG_NOWYSIWYG');
-	if ($mw->match($text)) {
-		$matches = array();
-		$countNoWysiwygAll = preg_match_all($mw->getRegex(), $text, $matches);
-		$countNoWysiwygInNoWiki = preg_match_all('/\<nowiki\>__NOWYSIWYG__\<\/nowiki\>/si', $text, $matches);
-
-		wfDebug("Wysiwyg: __NOWYSIWYG__ (count: {$countNoWysiwygAll} / in <nowiki>: {$countNoWysiwygInNoWiki})\n");
-
-		if ($countNoWysiwygAll > $countNoWysiwygInNoWiki) {
+	// macbre: existance of __NOWYSIWYG__ (RT #17005)
+	global $wgWysiwygNoWysiwygFound;
+	if (!empty($wgWysiwygNoWysiwygFound)) {
+		$edgeCasesFound[] = wfMsg('wysiwyg-edgecase-nowysiwyg');
+	}
+	else {
+		if (Wysiwyg_NoWysiwygFound($text)) {
 			$edgeCasesFound[] = wfMsg('wysiwyg-edgecase-nowysiwyg');
 		}
 	}
@@ -375,6 +370,43 @@ function Wysiwyg_CheckEdgeCases($text) {
 		$out = wfMsg('wysiwyg-edgecase-info').' '.implode(', ', $edgeCasesFound);
 	}
 	return $out;
+}
+
+/*
+ * Check for __NOWYSIWYG__ magic word
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+$wgHooks['EditPage::getContent::end'][] = 'Wysiwyg_CheckNoWysiwyg';
+function Wysiwyg_CheckNoWysiwyg($editPage, $t) {
+	global $wgWysiwygNoWysiwygFound;
+
+	// get WHOLE article content, even if doing section edit (RT #17005)
+	$text = $editPage->mArticle->getContent();
+	$wgWysiwygNoWysiwygFound = Wysiwyg_NoWysiwygFound($text);
+
+	return true;
+}
+
+/*
+ * Helper function to find __NOWYSIWYG__ magic word in wikitext provided
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+function Wysiwyg_NoWysiwygFound($text) {
+	$mw = MagicWord::get('MAG_NOWYSIWYG');
+	if ($mw->match($text)) {
+		$matches = array();
+		$countNoWysiwygAll = preg_match_all($mw->getRegex(), $text, $matches);
+		$countNoWysiwygInNoWiki = preg_match_all('/\<nowiki\>__NOWYSIWYG__\<\/nowiki\>/si', $text, $matches);
+
+		wfDebug("Wysiwyg: __NOWYSIWYG__ (count: {$countNoWysiwygAll} / in <nowiki>: {$countNoWysiwygInNoWiki})\n");
+
+		if ($countNoWysiwygAll > $countNoWysiwygInNoWiki) {
+			return true;
+		}
+	}
+	return false;
 }
 
 function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
