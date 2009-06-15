@@ -332,10 +332,10 @@ $(function() {
 	var start = (new Date()).getTime();
 
 	if (skin == 'quartz') {
-		widgets = $('.widgets').children('li');
+		widgets = $('li.widget');
 	}
 	else {
-		widgets = $('.sidebar').children('dl');
+		widgets = $('dl.widget');
 	}
 
 	if (wgUserName != null) {
