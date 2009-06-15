@@ -924,13 +924,13 @@ class OutputPage {
 
 		if ( $wgUseAjax ) {
 			// macbre@wikia: ajax.js and ajaxwatch.js files are part of allinone.js for Monaco skin - don't add them twice
-			if ( get_class($sk) != 'SkinMonaco' ) {
+			if ( !in_array(get_class($sk), array('SkinMonaco', 'SkinAwesome')) ) {
 				$this->addScriptFile( 'ajax.js' );
 			}
 			
 			wfRunHooks( 'AjaxAddScript', array( &$this ) );
 
-			if ( get_class($sk) != 'SkinMonaco' ) {
+			if ( !in_array(get_class($sk), array('SkinMonaco', 'SkinAwesome')) ) {
 				if( $wgAjaxWatch && $wgUser->isLoggedIn() ) {
 					$this->addScriptFile( 'ajaxwatch.js' );
 				}
