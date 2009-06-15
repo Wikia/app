@@ -335,7 +335,7 @@ class AdEngine {
 		$AdProvider = $this->getAdProvider($slotname);
 		// If it's a Null Ad, just return an empty comment, and don't store in place holder array.
 		if ($AdProvider instanceof AdProviderNull){
-			return "<div id=\"$slotname\" style=\"display:none\">'" . $AdProvider->getAd($slotname, array()) . "</div>";
+			return "<div id=\"$slotname\" style=\"display:none\">" . $AdProvider->getAd($slotname, array()) . "</div>";
 		}
 
 		$styles = array();
