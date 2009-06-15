@@ -16,4 +16,6 @@ $messages['en'] = array(
 	'wysiwyg-first-edit-dont-show-me' => 'Don\'t show me this message again',
 	'wysiwyg-first-edit-dismiss' => 'Close',
 	'wysiwyg-tooltip' => "'''New!''' Edit toolbar. See [[Help:New editor|help]] to learn more",
+
+	'wysiwyg-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
 );
