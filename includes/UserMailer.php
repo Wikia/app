@@ -439,8 +439,9 @@ class EmailNotification {
 
 		$this->composed_common = true;
 
-		$summary = ($this->summary == '') ? wfMsg( 'enotif_no_summary' ) : wfMsg( 'enotif_summary'  ) . '"' . $this->summary . '"';
-		$medit   = ($this->minorEdit) ? wfMsg( 'minoredit' ) : '';
+		// RT #1294 Bartek 07.05.2009, use the language of the wiki
+		$summary = ($this->summary == '') ? wfMsgForContent( 'enotif_no_summary' ) : wfMsgForContent( 'enotif_summary'  ) . '"' . $this->summary . '"';
+		$medit   = ($this->minorEdit) ? wfMsgForContent( 'minoredit' ) : '';
 
 		# You as the WikiAdmin and Sysops can make use of plenty of
 		# named variables when composing your notification emails while
@@ -577,7 +578,7 @@ class EmailNotification {
 	 * @private
 	 */
 	function sendPersonalised( $watchingUser ) {
-		global $wgLang, $wgEnotifUseRealName;
+		global $wgLang, $wgEnotifUseRealName, $wgLanguageCode;
 		// From the PHP manual:
 		//     Note:  The to parameter cannot be an address in the form of "Something <someone@example.com>".
 		//     The mail command will not parse this properly while talking with the MTA.
@@ -591,8 +592,8 @@ class EmailNotification {
 		# expressed in terms of individual local time of the notification
 		# recipient, i.e. watching user
 
-		// RT #1294 Bartek 5.12.2008, use the language object with the code the user does
-		$wlang = Language::factory( $watchingUser->getOption( 'language' ) );
+		// RT #1294 Bartek 07.05.2009, use the language object with the wiki code
+		$wlang = Language::factory( $wgLanguageCode );	
 
 		$body = str_replace('$PAGEEDITDATE',
 			$wlang->timeanddate( $this->timestamp, true, false, $timecorrection ),
