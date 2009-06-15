@@ -1117,3 +1117,37 @@ function WysiwygParseWikitext($wikitext) {
 
 	return new AjaxResponse($html);
 }
+
+/*
+ * Special page to enable rich text editor
+*/
+$wgSpecialPages['EnableRichTextEditor'] = 'EnableRichTextEditor';
+class EnableRichTextEditor extends SpecialPage {
+	function __construct() {
+		parent::__construct('EnableRichTextEditor');
+	}
+
+	function execute( $par ) {
+		global $wgOut, $wgUser;
+
+		$this->setHeaders();
+
+		if ($wgUser->isAnon()) {
+			$this->displayRestrictionError();
+			return;
+		}
+
+		$wgOut->setPageTitle('Enable Rich Text Editor');
+
+		// set user option
+		$wgUser->setOption('enablerichtext', true);
+		$wgUser->saveSettings();
+
+		// commit
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->commit();
+
+		// show message
+		$wgOut->addWikiText( wfMsg('EnableRichTextEditorMessage') );
+	}
+}
