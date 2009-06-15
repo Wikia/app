@@ -14,14 +14,12 @@ class AddVideo extends SpecialPage {
 	}
 	
 	function execute() {
-
-	        global $IP, $wgRequest, $wgStyleVersion, $wgOut, $wgUser ;
+        global $IP, $wgRequest, $wgStyleVersion, $wgOut, $wgUser ;
 
 		if(!$wgUser->isAllowed('AddVideo')) {
-                        $wgOut->permissionRequired('AddVideo');
-                        return;
-                }
-
+			$wgOut->permissionRequired('AddVideo');
+			return;
+		}
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/Video/Video.css?{$wgStyleVersion}\"/>\n");
 
 		if( $wgUser->isBlocked() ){
@@ -32,7 +30,9 @@ class AddVideo extends SpecialPage {
 		$from = $wgRequest->getVal("wpFrom");
 		$categories = $wgRequest->getVal("wpCategories");
 		$destination = $wgRequest->getVal("destName");
-		if( !$destination ) $destination = $wgRequest->getVal("wpDestName");
+		if ( !$destination ) {
+			$destination = $wgRequest->getVal("wpDestName");
+		}
 			
 		//posted items
 		$video_code = $wgRequest->getVal("wpVideo");
@@ -40,16 +40,14 @@ class AddVideo extends SpecialPage {
 		$categories = $wgRequest->getVal("wpCategories");
 		
 		$page_title=wfMsgForContent( 'video_addvideo_title' );
-		if($destination)$page_title=wfMsgForContent( 'video_addvideo_title' )." for ".str_replace("_", " ", $destination);
+		if ($destination) {
+			$page_title = wfMsgForContent( 'video_addvideo_title' )." for ".str_replace("_", " ", $destination);
+		}
 			
 		$wgOut->setPagetitle( $page_title );
 			
-		if($destination)$title = $destination;
-		
-		if( $from ){
-			$from_title = Title::newFromDBkey( $from );
-			$from_url = $from_title->getFullURL();
-			$from_text = $from_title->getText();
+		if ($destination) {
+			$title = $destination;
 		}
 		
 		$output = "<div class=\"add-video-container\">
@@ -59,10 +57,8 @@ class AddVideo extends SpecialPage {
 		$output .= "<table border=\"0\" cellpadding=\"3\" cellspacing=\"5\">";
 		$output .= "<tr>";
 		
-		if(!$destination){
-			
+		if (!$destination) {
 			$output .= "<td><label for='wpTitle'>" . wfMsgHtml( 'video_addvideo_title_label' ) . "</label></td><td>";
-				
 			$output .= wfElement("input", array(
 						"type"=>"text",
 						"name" => "wpTitle",
@@ -72,7 +68,6 @@ class AddVideo extends SpecialPage {
 					);
 			$output .= "</td></tr>";
 		}
-
 		$watchChecked = ''; # FIXME: What's this for? Wasn't defined anywhere.
 
 		$output .= "<tr>
@@ -84,34 +79,33 @@ class AddVideo extends SpecialPage {
 			<td>
 				<input type='checkbox' name='wpWatchthis' id='wpWatchthis' $watchChecked value='true' />
 				<label for='wpWatchthis'>" . wfMsgHtml( 'watchthisupload' ) . "</label>
-			
-				</td>
+			</td>
 		</tr>";
 
-				$output .= "<tr>
-					<td></td><td>";
-				$output .= wfElement("input", array(
+		$output .= "<tr>
+		<td></td><td>";
+		$output .= wfElement("input", array(
 					"type"=>"button",
 					"value" => wfMsg("video-addvideo_button"),
 					"onclick" => "document.videoadd.submit();",
-					) 
-				);
-				$output .= "</td>
-			</tr>";
-		$output .= "</table>
-			</form>
-			</div>";
+			) 
+		);
+		$output .= "</td>
+		</tr>
+		</table>
+		</form>
+		</div>";
 			
 		if( $wgRequest->wasPosted() ){
-				
 			$video = Video::newFromName($title);
-				
 			//Page title for Video has already been taken
-			if( $video->exists() && !$destination ){
+			if ( is_null($video) ) {
+				$error = "<div class=\"video-error\">" . wfMsgForContent( 'video_addvideo_invalidcode') . "</div>";
+				$wgOut->addHTML( $error ); 
+			} elseif( $video->exists() && !$destination ){
 				$error = "<div class=\"video-error\">" . wfMsgForContent( 'video_addvideo_exists') . "</div>";
 				$wgOut->addHTML( $error ); 
 			}else{
-				
 				//Get URL based on user input
 				//it could be a straight URL to the page or the embed code
 				if ( $video->isURL( $video_code ) ){
@@ -130,11 +124,8 @@ class AddVideo extends SpecialPage {
 					$video->addVideo($url,$provider,$categories, $wgRequest->getVal("wpWatchthis") );
 					$wgOut->redirect( $video->title->getFullURL() );
 				}
-	
 			}
 		} 
-			
 		$wgOut->addHTML( $output );
-		 
 	}
 }
