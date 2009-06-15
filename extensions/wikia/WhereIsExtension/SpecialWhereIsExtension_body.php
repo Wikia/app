@@ -93,16 +93,13 @@ class WhereIsExtension extends SpecialPage {
 	private function getListOfWikisWithVar($varId, $val) {
 		$aTables = array(
 			wfSharedTable('city_variables'),
-			wfSharedTable('city_list'),
-			wfSharedTable('city_variables_pool'),
+			wfSharedTable('city_list')
 		);
 
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
 		$aWhere[] = "cv_value = '" . serialize($val == 'true' ? true : false) . "'";
 		$aWhere[] = "cv_variable_id = '$varId'";
-		$aWhere[] = 'cv_variable_id = cv_id';
-		$aWhere[] = 'cv_variable_group = 27';	//id 'extensions' group
 
 		$dbr = wfGetDB(DB_SLAVE);
 		$oRes = $dbr->select(
