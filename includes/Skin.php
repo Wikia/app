@@ -620,7 +620,8 @@ END;
 
 			// Wikia
 			if( empty($this->themename) || $this->themename == 'custom' ) {
-				$out->addStyle( self::makeNSUrl( $this->getSkinName() . '.css', $query, NS_MEDIAWIKI ) );
+				$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
+				$out->addStyle( self::makeNSUrl( $skinName . '.css', $query, NS_MEDIAWIKI ) );
 			}
 		}
 
