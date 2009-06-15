@@ -494,6 +494,9 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 	// fix for multiline pre
 	$html = str_replace("<!--EOLPRE-->", "\n", $html);
 
+	// RT #17007
+	$html = str_replace("\x0a\x20\x0d\x0a", "\x0a", $html);
+
 	$html = preg_replace_callback("/<li space_after=\"(\s*)\">/", create_function('$matches','return "<li>".$matches[1];'), $html);
 
 	require_once(dirname(__FILE__).'/ReverseParser.php');
