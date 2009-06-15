@@ -235,8 +235,10 @@ class WidgetFramework {
 			return '';
 		}
 
-		// generate xHTML valid nodes ID (refs RT #9584)
-		$widget['id'] = 'widget_' . $widget['id'];
+		// generate xHTML valid nodes ID (refs RT #9584 and #17185)
+		if (empty($widget['widgetTag'])) {
+			$widget['id'] = 'widget_' . $widget['id'];
+		}
 
 		if($this->skinname == 'monaco') {
 			$closeButton = ($closeable) ? "<div id=\"{$widget['id']}_close\" class=\"close\"><span></span></div>" : '';

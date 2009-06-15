@@ -2,7 +2,7 @@
 
 class WidgetTagRenderer extends WidgetFramework {
 
-	private $count = 1;
+	private $count = 1000;
 
 	public static function getInstance() {
 		if( !(self::$instance instanceof WidgetTagRenderer) ) {
@@ -32,12 +32,13 @@ class WidgetTagRenderer extends WidgetFramework {
 		}
 
 		// create array for getParams method of widget framework
-		$id = 'WidgetTag' . $this->count;
+		$id = 'widget_' . $this->count;
 
 		$widget = array(
 			'type'  => $widgetType,
 			'id'    => $id,
 			'param' => $args,
+			'widgetTag' => true
 		);
 
 		// configure widget
@@ -45,7 +46,7 @@ class WidgetTagRenderer extends WidgetFramework {
 
 		// set additional params
 		$widgetParams['skinname'] = $this->skinname;
-		
+
 		// inform widget he's rendered by WidgetTag
 		$widgetParams['_widgetTag'] = true;
 

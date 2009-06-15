@@ -515,10 +515,10 @@ if(wgUserName != null) {
 // init widgets
 $(function() {
 	if (skin == 'quartz') {
-		widgets = $('#widgets_1').children('li');
+		widgets = $('li.widget');
 	}
 	else {
-		widgets = $('#sidebar_1').children('dl');
+		widgets = $('dl.widget');
 	}
 
 	var start = (new Date()).getTime();
