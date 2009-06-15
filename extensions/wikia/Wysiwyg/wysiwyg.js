@@ -69,9 +69,6 @@ function wysiwygShowInfobox(header, body, labelOk, handlerOk) {
 
 // show first time edit message
 function wysiwygShowFirstEditMessage(title, message, dismiss) {
-
-	return;
-
 	// client-site check for anons/logged-in
 	value = $.cookies.get('wysiwyg-cities-edits');
 	if (value) {
