@@ -142,8 +142,8 @@ FCK.SwitchEditMode = function() {
 		window.parent.sajax_do_call('Wysywig_Ajax', ['wiki2html', FCK.EditingArea.Textarea.value, false, window.parent.wgPageName], function(res) {
 			var edgecases = res.getResponseHeader('X-edgecases');
 			if(typeof edgecases == "undefined") edgecases = res.getResponseHeader('X-Edgecases');
-			if (edgecases == '1') {
-				messages = res.responseText;
+			if (edgecases == '1' || window.parent.noWysiwygMagicWordMsg) {
+				messages = window.parent.noWysiwygMagicWordMsg || res.responseText;
 
 				// track comments in wikitext
 				if (FCK.EditingArea.Textarea.value.indexOf('<!--') > -1) {

@@ -193,6 +193,13 @@ function Wysiwyg_Initial($form) {
 		'var magicWordList = ' . Wikia::json_encode($magicWords, true) . ";"
 	);
 
+	// RT #17007
+	global $wgWysiwygNoWysiwygFound;
+	if (!empty($wgWysiwygNoWysiwygFound)) {
+		$msg =  Xml::encodeJsVar( wfMsg('wysiwyg-edgecase-info') . ' ' . wfMsg('wysiwyg-edgecase-nowysiwyg') );
+		$wgOut->addInlineScript("var noWysiwygMagicWordMsg = {$msg};");
+	}
+
 	// CSS
 	$wgOut->addExtensionStyle("$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.css?$wgStyleVersion");
 
