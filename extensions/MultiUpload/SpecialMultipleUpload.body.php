@@ -157,6 +157,8 @@ class MultipleUploadForm extends UploadForm {
 
 			$wgOut->addHTML( '<tr><td>' );
 			parent::processUpload();
+                        if ( $this->mUploadStatus == self::SUCCESS )
+                                $this->showSuccess();
 			$wgOut->addHTML( '</td></tr>' );
 		}
 
@@ -185,7 +187,7 @@ class MultipleUploadForm extends UploadForm {
 		global $wgUser, $wgOut, $wgContLang;
 		$t = $this->mLocalFile->getTitle();
 		$wgOut->addHTML( '<h2>' . wfMsg( 'multiupload-fileuploaded' ) . '</h2>' );
-		$wgOut->addWikiText( "[[:{$t->getFullText()}]]" );
+		$wgOut->addWikiText( "[[{$t->getFullText()}|thumb|{$t->getText()}]]" );
 	}
 
 	/**
