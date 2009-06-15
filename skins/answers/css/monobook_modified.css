@@ -1015,6 +1015,10 @@ input#wpSave, input#wpDiff {
 	display: inline;
 }
 
+#editform {
+	clear: both;
+}
+
 #wpSave {
 	font-weight: bold;
 }
