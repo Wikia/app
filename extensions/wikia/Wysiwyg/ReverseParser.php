@@ -38,37 +38,37 @@ class ReverseParser {
 	 * Parses given HTML into DOM tree (using XML/HTML parser)
 	 */
 	private function parseToDOM($html, $parseAsXML = true) {
-			wfProfileIn(__METHOD__);
+		wfProfileIn(__METHOD__);
 
-			$ret = false;
+		$ret = false;
 
-			wfSuppressWarnings();
+		wfSuppressWarnings();
 
-			if ($parseAsXML) {
-				// form proper XML string
-				$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><body>{$html}</body>";
+		if ($parseAsXML) {
+			// form proper XML string
+			$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><body>{$html}</body>";
 
-				// try to parse as XML
-				if($this->dom->loadXML($xml)) {
-					$ret = $this->dom->getElementsByTagName('body')->item(0);
-				}
+			// try to parse as XML
+			if($this->dom->loadXML($xml)) {
+				$ret = $this->dom->getElementsByTagName('body')->item(0);
 			}
-			else {
-				// form proper HTML string
-				$html = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head><body>{$html}</body></html>";
+		}
+		else {
+			// form proper HTML string
+			$html = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/></head><body>{$html}</body></html>";
 
-				// try to parse as HTML
-				if($this->dom->loadHTML($html)) {
-					$ret = $this->dom->getElementsByTagName('body')->item(0);
-				}
+			// try to parse as HTML
+			if($this->dom->loadHTML($html)) {
+				$ret = $this->dom->getElementsByTagName('body')->item(0);
 			}
+		}
 
-			wfRestoreWarnings();
+		wfRestoreWarnings();
 
-			wfProfileOut(__METHOD__);
+		wfProfileOut(__METHOD__);
 
-			// return <body> node or false if XML parsing failed
-			return $ret;
+		// return <body> node or false if XML parsing failed
+		return $ret;
 	}
 
 	/**
@@ -1025,7 +1025,7 @@ class ReverseParser {
 	 * Local links are formatted as follows:
 	 *  - http://../wiki/Twilight_Saga
 	 *  - http://muppet.wikia.com/wiki/Elmo
-	 *  - ../wiki/Volturi 
+	 *  - ../wiki/Volturi
 	 *  - ../index.php/Matt_Groening
 	 */
 	private function isLocalWikiLink($href) {
