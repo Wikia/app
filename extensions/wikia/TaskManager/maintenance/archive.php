@@ -33,7 +33,7 @@ require_once( "commandLine.inc" );
  */
 class TaskManagerArchive {
 
-	const CUTOFFDAYS = 60;
+	const CUTOFFDAYS = 30;
 	const LIMIT      = 10000;
 
 	private $mData;
