@@ -1125,6 +1125,7 @@ $wgSpecialPages['EnableRichTextEditor'] = 'EnableRichTextEditor';
 class EnableRichTextEditor extends SpecialPage {
 	function __construct() {
 		parent::__construct('EnableRichTextEditor');
+		wfLoadExtensionMessages('Wysiwyg');
 	}
 
 	function execute( $par ) {
@@ -1148,6 +1149,6 @@ class EnableRichTextEditor extends SpecialPage {
 		$dbw->commit();
 
 		// show message
-		$wgOut->addWikiText( wfMsg('EnableRichTextEditorMessage') );
+		$wgOut->addWikiText( wfMsg('wysiwyg-enablerichtexteditormessage') );
 	}
 }
