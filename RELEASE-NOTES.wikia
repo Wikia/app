@@ -7,6 +7,11 @@
 * rt #16912: WidgetShoutbox can now be disabled per-wiki
 * rt #16889: added language selector to user registration screen
 * rt #16949: proper i18n of dates in Blogs
+* rt #17196: shoutbox not working on some wikis
+* rt #17005: FCK: NOWYSIWYG magic word isn't applying to section edits
+* rt #17007: FCK: Preformatted text gains line feeds on save or preview
+* rt #17185: Slideshow widget no longer works when embedded
+* jQuery: add helper function $('#foo').exists()
 
 == Changes since 200905.4 ==
 * EditEnhancements & NewEditPage changed (see http://contractor.wikia-inc.com/wiki/Edit_window_improvement_2)
