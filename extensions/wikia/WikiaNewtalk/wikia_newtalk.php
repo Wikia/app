@@ -77,6 +77,10 @@ function wfGetWikiaNewtalk( &$user, &$talks ) {
 	if( !is_array( $wikia_talks ) ) {
 		$wikia_talks = array();
 
+		// Get the data from master. Otherwise we may get the data 
+		// from a lagged slave. The effect for the user would be 
+		// that he can't clear his user talk notice (the data are 
+		// removed on master but not replicated to the slave yet).
 		$dbr = wfGetDB( DB_MASTER );
 		$tbl_shared_newtalks = wfSharedTable( 'shared_newtalks' );
 		$tbl_city_list = wfSharedTable( 'city_list' );
