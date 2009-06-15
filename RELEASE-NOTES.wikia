@@ -7,6 +7,28 @@
 * rt #16912: WidgetShoutbox can now be disabled per-wiki
 * rt #16889: added language selector to user registration screen
 * rt #16949: proper i18n of dates in Blogs
+* rt #17065: Add id to googlemaps toolbar button. (Nef)
+* rt #16675: Fixed encoding of main search/input box @answwers. (Nef)
+* rt #16769: Fix unnecessary replication of categories in ActionPanel. (Nef)
+* rt #17022: Fix image on gaming skins. (Nef)
+* rt #17019: Fix footer links css on gaming skins. (Nef)
+* rt #17004: Fix broken i18n in ActionPanel. (Nef)
+* rt #16999: Fixed gaming skin css. (Nef)
+* rt #16971: Fix shoutbox widget on memory-alpha. (And dofus too.) (Nef)
+* rt #16917: Aadd log entry to wikifactory for removed values. (Nef)
+* rt #15924: Deploy ActionPanel for all users with actionpanel right. (Nef)
+* rt #16875: Prevent ActionPanel from stripping line breaks. (Nef)
+* rt #16524: i18n / js / magic handling tweaks for answers widget. HT macbre. (Nef)
+* rt #16524: Allow i18n of hardcoded English text in Answers Widget. (Nef)
+* rt #16758: EditTips i18n fix. (Nef)
+* rt #16816: LastWidget fixed. WebResponse::setcookies adds wgCookiePrefix behind the scene. (Nef)
+* rt #11002: Sitemap name compatible with redirect-robots.php. (Nef)
+* rt #16588: Log WF redirects for quick bug / misconfig assesment. (Nef)
+* rt #16588: Prevent non-existent wikicities wiki from getting redirected to wiki.com. (Nef)
+* rt #16604: Enable starter for nl. (Nef)
+* rt #16559: Fixed links to non-existent special page Special:Login. OVERRIDEAI (Nef)
+* rt #15983: Mail re-confirming workflow created. (Nef)
+* rt #16194: One click action to set main domain. (Nef)
 * rt #17196: shoutbox not working on some wikis
 * rt #17005: FCK: NOWYSIWYG magic word isn't applying to section edits
 * rt #17007: FCK: Preformatted text gains line feeds on save or preview
