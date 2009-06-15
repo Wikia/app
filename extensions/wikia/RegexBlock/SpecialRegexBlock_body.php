@@ -248,10 +248,18 @@ class RegexBlockForm extends SpecialPage
             $expiry = $this->mRegexBlockedExpire ;    
         }
 
-        $result = RegexBlockData::blockUser($this->mRegexBlockedAddress, $expiry, $this->mRegexBlockedExact, $this->mRegexBlockedCreation, $this->mRegexBlockedReason);
-		/* clear memcache */
-		$uname = $wgUser->getName();
-		wfRegexBlockUnsetKeys($this->mRegexBlockedAddress);
+		# check first if I can remove all data from memcache - if yes - add new regex to the list
+		if ( wfRegexBlockUnsetKeys($this->mRegexBlockedAddress) ) {
+        	$result = RegexBlockData::blockUser($this->mRegexBlockedAddress, $expiry, $this->mRegexBlockedExact, $this->mRegexBlockedCreation, $this->mRegexBlockedReason);
+			/* clear memcache */
+			$uname = $wgUser->getName();
+			/* clear memcache once again */
+			wfRegexBlockUnsetKeys($this->mRegexBlockedAddress);
+		} else {
+            $this->mError = wfMsg('regexblock_give_username_ip');
+            wfProfileOut( __METHOD__ );
+            return false;
+		}
 
         wfProfileOut( __METHOD__ );
         
@@ -259,7 +267,7 @@ class RegexBlockForm extends SpecialPage
         $titleObj = Title::makeTitle( NS_SPECIAL, 'RegexBlock' ) ;
         $wgOut->redirect( $titleObj->getFullURL( 'action=success_block&ip=' .urlencode( $this->mRegexBlockedAddress )."&".$this->makeListUrlParams() ) ) ;
 
-        return;
+        return true;
     }
     
     /* remove name or address from list - without confirmation */
