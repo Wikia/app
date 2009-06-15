@@ -162,8 +162,14 @@
 				<option>all</option>
 				<?php
 					global $wgWikiaStaffLanguages;
+					$selectedLang = false;
 					foreach ($wgWikiaStaffLanguages as $lang) {
-						echo "<option>$lang</option>\n";
+						if ( !$selectedLang && $lang == $formData['lang'] ) {
+							echo "<option selected>$lang</option>";
+							$selectedLang = true;
+						} else {
+							echo "<option>$lang</option>\n";
+						}
 					}
 				?>
 				</select>
