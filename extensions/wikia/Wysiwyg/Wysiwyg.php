@@ -471,6 +471,12 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 		}
 
 		$templateParser = new Parser();
+	
+		//  RT #17279
+		global $wgParser;
+		$templateParser->mTagHooks = & $wgParser->mTagHooks;
+		$templateParser->mStripList = & $wgParser->mStripList;
+
 		$templateParser->setOutputType(OT_HTML);
 		$templateCallsParsed = explode("\x7f-sep-\x7f", $templateParser->parse(implode("\x7f-sep-\x7f", $templateCallsToParse), $title, $options, false)->getText());
 
