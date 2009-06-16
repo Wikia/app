@@ -491,13 +491,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 			}
 			else {
 				// HTML cleanup
-				if ( substr($parsed, 0, 4) == '</p>' ) {
-					$parsed = trim( substr($parsed, 4) );
-				}
-
-				if ( substr($parsed, -3) == '<p>' ) {
-					$parsed = trim( substr($parsed, 0, -3) );
-				}
+				$parsed = Parser::tidy($parsed);
 
 				// get first HTML tag
 				$wrapper = substr($parsed, 1, strpos($parsed, '>') - 1);
