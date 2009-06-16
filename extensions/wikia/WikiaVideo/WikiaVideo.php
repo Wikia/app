@@ -3,7 +3,7 @@ if(!defined('MEDIAWIKI')) {
 	exit(1);
 }
 
-//Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980 
+//Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
 if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'WikiaVideo_initParserHook';
 } else {
@@ -19,9 +19,23 @@ $wgHooks['UndeleteForm::showRevision'][] = 'WikiaVideoSpecialUndeleteSwitchArchi
 $wgHooks['UndeleteForm::showHistory'][] = 'WikiaVideoSpecialUndeleteSwitchArchive';
 $wgHooks['UndeleteForm::undelete'][] = 'WikiaVideoSpecialUndeleteSwitchArchive';
 $wgHooks['WantedFiles::getSQL'][] = 'WikiaVideoWantedFilesGetSQL';
+$wgHooks['Parser::FetchTemplateAndTitle'][] = 'WikiaVideoFetchTemplateAndTitle';
 
 $wgWikiaVideoGalleryId = 0;
 $wgWikiaVETLoaded = false;
+$wgWikiaVideosFoundInTemplates = 0;
+
+function WikiaVideoFetchTemplateAndTitle( $text, $finalTitle ) {
+	global $wgContLang, $wgWikiaVideosFoundInTemplates;
+
+	$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":";
+	
+	// replace text and give Video_Template: namespace everywhere - because it's template...
+	$count = 0;
+	$text = str_replace( $vid_tag, 'Video_Template:', $text, $count );	
+	$wgWikiaVideosFoundInTemplates += $count;
+	return true;	
+}
 
 function WikiaVideoWantedFilesGetSQL( $sql, $querypage, $name, $imagelinks, $page ) {
        	$sql = "
@@ -32,13 +46,13 @@ function WikiaVideoWantedFilesGetSQL( $sql, $querypage, $name, $imagelinks, $pag
                                 COUNT(*) as value
                         FROM $imagelinks
 			LEFT JOIN $page ON il_to = page_title AND page_namespace = ". NS_FILE ."
-			WHERE page_title IS NULL AND LOCATE(':', il_to) != 1 
+			WHERE page_title IS NULL AND LOCATE(':', il_to) != 1
                         GROUP BY il_to
                         ";
         return true;
 }
 
-function WikiaVideoSpecialUndeleteSwitchArchive( $archive, $title ) {	
+function WikiaVideoSpecialUndeleteSwitchArchive( $archive, $title ) {
 	if( NS_VIDEO != $title->getNamespace() ) {
 		return true;
 	} else {
@@ -47,9 +61,9 @@ function WikiaVideoSpecialUndeleteSwitchArchive( $archive, $title ) {
 	return true;
 }
 
-function WikiaVideoWhatlinkshereBeforeQuery( $hideimages, $pageconds, $targetconds, $imageconds ) {	
+function WikiaVideoWhatlinkshereBeforeQuery( $hideimages, $pageconds, $targetconds, $imageconds ) {
 	if( NS_VIDEO == $pageconds['pl_namespace'] ) {
-		$hideimages = false;		
+		$hideimages = false;
 		$imageconds['il_to'] = ':' . $imageconds['il_to'];
 	}
 	return true;
@@ -63,22 +77,23 @@ function WikiaVideoNewImagesBeforeQuery( $where ) {
 }
 
 function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
-	global $wgExtraNamespaces, $wgWysiwygParserEnabled, $wgWikiaVideoGalleryId;
+	global $wgExtraNamespaces, $wgWysiwygParserEnabled, $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId;
 
 	$wgWikiaVideoGalleryId = 0;
+	$wgWikiaVideoPlaceholderId = 0;
 
 	// macbre: don't touch anything when parsing for FCK
 	if (!empty($wgWysiwygParserEnabled)) {
 		return true;
 	}
 
-	$pattern = "/<videogallery/";                   
+	$pattern = "/<videogallery/";
 	$text = preg_replace_callback($pattern, 'WikiaVideoPreRenderVideoGallery', $text);
 	return true;
 }
 
 function WikiaVideoPreRenderVideoGallery( $matches ) {
-	global $wgWikiaVideoGalleryId;	
+	global $wgWikiaVideoGalleryId;
 	$result = $matches[0] . ' id="' . $wgWikiaVideoGalleryId . '"';
 	$wgWikiaVideoGalleryId++;
 	return $result;
@@ -98,15 +113,11 @@ function WikiaVideo_init() {
 			$wgExtraNamespaces[NS_VIDEO + 1] = 'Dyskusja_Video';
 			$wgNamespaceAliases['Video_talk'] = NS_VIDEO + 1;
 			break;
-		case 'fa':
-			$wgExtraNamespaces[NS_VIDEO] = 'ویدیو';
-			$wgExtraNamespaces[NS_VIDEO + 1] = 'بحث_ویدیو';
-			$wgNamespaceAliases['Video'] = NS_VIDEO;
-			$wgNamespaceAliases['Video_talk'] = NS_VIDEO + 1;
-			break;
 		default:
 			$wgExtraNamespaces[NS_VIDEO] = 'Video';
 			$wgExtraNamespaces[NS_VIDEO + 1] = 'Video_talk';
+			$wgExtraNamespaces[NS_VIDEO_TEMPLATE] = 'Video_Template';
+
 	}
 	$wgAutoloadClasses['VideoPage'] = dirname(__FILE__). '/VideoPage.php';
 	$wgAutoloadClasses['VideoPageArchive'] = dirname(__FILE__). '/VideoPage.php';
@@ -125,7 +136,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 	global $wgHooks;
 	wfLoadExtensionMessages('VideoEmbedTool');
 	$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
-	
+
 	$lines = explode("\n", $input);
 	foreach($lines as $line) {
 		$matches = array();
@@ -158,24 +169,9 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 	if(count($videos) > 0) {
 		// todo check if VET enabled
 		global $wgUser, $wgWikiaVETLoaded;
-		
+
 		// for first gallery, load VET js
 		$out .= '<table class="gallery" cellspacing="0" cellpadding="0"><tr>';
-		$out .= '<script type="text/javascript">';
-		$out .= 'var vet_back = \'' . wfMsg('vet-back') . '\';';
-		$out .= 'var vet_imagebutton = \'' . wfMsg('vet-imagebutton') . '\';';
-		$out .= 'var vet_close = \'' . wfMsg('vet-close') . '\';';
-		$out .= 'var vet_warn1 = \'' . wfMsg('vet-warn1') . '\';';
-		$out .= 'var vet_warn2 = \'' . wfMsg('vet-warn2') . '\';';
-		$out .= 'var vet_warn3 = \'' . wfMsg('vet-warn3') . '\';';
-
-		$out .= 'var vet_bad_extension = \'' . wfMsg('vet-bad-extension') . '\';';
-		$out .= 'var vet_show_message = \'' . wfMsg('vet-show-message') . '\';';
-		$out .= 'var vet_hide_message = \'' . wfMsg('vet-hide-message') . '\';';
-		$out .= 'var vet_title = \'' . wfMsg('vet-title') . '\';';
-		$out .= 'var vet_max_thumb = \'' . wfMsg('vet-max-thumb') . '\';';
-
-		$out .= '</script>';
 
 		for($i = 0; $i < count($videos); $i++) {
 			$video = new VideoPage($videos[$i][0]);
@@ -189,7 +185,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 
 		if( isset( $args['id'] ) ) {
 			if( ( !$wgWikiaVETLoaded ) && get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
-				global $wgStylePath, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgHooks;			
+				global $wgStylePath, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgUser, $wgHooks;
 				wfLoadExtensionMessages('VideoEmbedTool');
 				$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 				$wgWikiaVETLoaded = true;
@@ -197,17 +193,17 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 		}
 
 		if( isset( $args['id'] ) ) {
-			if (count($videos) < 4) { // fill up 
+			if (count($videos) < 4) { // fill up
 				global $wgUser;
 				for($i = count($videos); $i < 4; $i++) {
 					if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
 						global $wgStylePath;
 						$function = 'YAHOO.util.Get.script([wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, stylepath+\'/common/yui_2.5.2/slider/slider-min.js?\'+wgStyleVersion], {onSuccess:function(o) { VET_show( o.data, ' . $args['id'] . ', ' . $i . ' )  }, data:YAHOO.util.Event.getEvent() }); YAHOO.util.Get.css( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion )';
-						
+
 
 						$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;" id="WikiaVideoGalleryPlaceholder' . $args['id'] . 'x' .  $i . '" onclick="' . $function . '"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
 					} else {
-						$inside = wfMsg( 'wikiavideo-not-supported' );				
+						$inside = wfMsg( 'wikiavideo-not-supported' );
 					}
 
 					$out .= '<td><div class="gallerybox" style="width: 335px;"><div class="thumb" style="padding: 13px 0; width: 330px;"><div style="margin-left: auto; margin-right: auto; width: 300px; height: 250px;">' . $inside . '</div></div><div class="gallerytext"></div></div></td>';
@@ -222,13 +218,94 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 	return $out;
 }
 
-function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
+function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_template = false ) {
 	global $wgWysiwygParserEnabled, $wgRequest;
 
 	wfProfileIn('WikiaVideo_makeVideo');
 
+	// placeholder? treat differently
+	if( 'Placeholder' == $title->getText() ) {
+		// generate a single empty cell with a button
+		global $wgExtensionMessagesFiles, $wgWikiaVideoPlaceholderId, $wgContLang;
+		$wgExtensionMessagesFiles['WikiaVideo'] = dirname(__FILE__).'/WikiaVideo.i18n.php';
+		wfLoadExtensionMessages( 'WikiaVideo' );
+
+		$refid = Wysiwyg_GetRefId($options, true); // strip refid
+
+		$params = array_map( 'trim', explode( '|', $options ) );
+
+		// defaults
+		$width = 300;
+		$thumb = false;
+		$frame = false;
+		$caption = '';
+		$isalign = 0;
+		$isthumb = 0;
+		$iswidth = 0;
+		$iscaption = 0;
+		$plc_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Placeholder";
+
+		foreach($params as $param) {
+			$width_check = strpos($param, 'px');
+			if($width_check > -1) {
+				$width = str_replace('px', '', $param);
+				$iswidth = $width;
+			} else if('thumb' == $param) {
+				$thumb = true;
+				$isthumb = 1;
+			} else if('frame' == $param) {
+				$thumb = true;
+				$isthumb = 1;
+				// frame is not covered here as per specs
+			} else if(('left' == $param) || ('right' == $param)) {
+				$align = $param;
+				('left' == $param) ? $isalign = 1 : $isalign = 2;
+			} else {
+				if( $plc_tag != $param ) {
+					$caption = $param;
+					$iscaption = 1;
+				}
+			}
+		}
+
+		// height? we don't know the provider yet... I'll take youtube proportions for the time being
+		$height = ceil( $width * 355 / 425 );
+		$lmarg = ceil( ( $width - 90 ) / 2 );
+		$tmarg = ceil( ( $height - 30 ) / 2 );
+
+		if(empty($align)) {
+			if($thumb) {
+				$align = 'right';
+				$isalign = 2;
+			} else {
+				$align = 'none';
+			}
+		}
+
+		// macbre: Wysiwyg support for video placeholder
+		if (!empty($wgWysiwygParserEnabled)) {
+			$refid = Wysiwyg_SetRefId('video_add', array('width' => $width, 'height' => $height, 'isAlign' => $isalign, 'isThumb' => $isthumb, 'original' => $wikitext), false, true);
+
+			$wysiwygAttr = " refid={$refid}";
+			$onclick = '';
+		} else {
+				$wysiwygAttr = '';
+				$onclick= ' onclick="YAHOO.util.Get.script([wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, stylepath+\'/common/yui_2.5.2/slider/slider-min.js?\'+wgStyleVersion], {onSuccess:function(o) { VET_show( o.data, ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' ) }, data:YAHOO.util.Event.getEvent() }); YAHOO.util.Get.css( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion )"';
+		}
+
+			$out = '<div id="WikiaVideoPlaceholder' . $wgWikiaVideoPlaceholderId . '" class="gallerybox" style="clear:both;"' . $wysiwygAttr . '><div class="thumb t' . $align . ' videobox" style="padding: 0; position: relative; width: ' . $width . 'px; height: ' . $height . 'px;"><div style="margin-left: auto; margin-right: auto; width: ' . $width . 'px; height: ' . $height . 'px;" >';
+			if( !$plc_template ) {
+				$out .= '<a href="#" class="bigButton" style="left: ' . $lmarg . 'px; position: absolute; top: ' . $tmarg . 'px;" id="WikiaVideoPlaceholderInner' . $wgWikiaVideoPlaceholderId  . '"'. $onclick . '><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>'. $caption .'</div></div></div>';
+			} else {
+				$out .= '</div></div></div>';
+			}				
+		wfProfileOut('WikiaVideo_makeVideo');
+		$wgWikiaVideoPlaceholderId++;
+		return $out;
+	}
+
 	if(!$title->exists()) {
-		//Wysiwyg: generate wikitext placeholder
+		//Wysiwyg: generate wikitext placeholder for not exisiting video
 		if (!empty($wgWysiwygParserEnabled)) {
 			$out = Wysiwyg_SetRefId('placeholder', array('text' => $wikitext));
 		}
@@ -249,7 +326,7 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 		//Wysiwyg: remove markers
 		if (!empty($wgWysiwygParserEnabled)) {
 			$params = array_map( create_function('$par', 'return preg_replace(\'%\x7f-wtb-(\d+)-\x7f(.*?)\x7f-wte-\1-\x7f%si\', \'\\2\', $par);'), $params);
-		}	
+		}
 
 		// defaults
 		$width = 400;
@@ -258,7 +335,6 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 		$caption = '';
 
 		foreach($params as $param) {
-
 			$width_check = strpos($param, 'px');
 			if($width_check > -1) {
 				$width = str_replace('px', '', $param);
@@ -266,7 +342,7 @@ function WikiaVideo_makeVideo($title, $options, $sk, $wikitext = '') {
 				$thumb = true;
 			} else if('frame' == $param) {
 				$thumb = true;
-				$frame = true;							
+				$frame = true;
 			} else if(('left' == $param) || ('right' == $param)) {
 				$align = $param;
 			} else {

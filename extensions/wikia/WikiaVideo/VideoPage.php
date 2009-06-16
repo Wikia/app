@@ -451,13 +451,8 @@ EOD;
 		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
 	}
 
-	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb, $frame) {
+	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb) {
 		global $wgStylePath, $wgWysiwygMetaData;
-
-		if ($frame) { // frame has always native width
-			$ratios = split( "x", $this->getTextRatio() );
-			$width = intval( trim( $ratios[0] ) );
-		}
 
 		$code = $this->getThumbnailCode($width);
 
@@ -1480,7 +1475,6 @@ class VideoPageArchive extends PageArchive {
 		if(  $this->title->exists()) { // we currently restore only whole deleted videos, a restore link from log could take us here...
 			return;
 		}
-
 		$dbw = wfGetDB( DB_MASTER );
 
 		$conditions = array( 'fa_name' => VideoPage::getNameFromTitle( $this->title ) );

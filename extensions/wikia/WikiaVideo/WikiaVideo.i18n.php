@@ -10,6 +10,7 @@ $messages['en'] = array(
 	'wikiavideo-replace' => 'Replace Video',
 	'wikiavideo-category' => 'Videos',
 	'wikiavideo-links' => 'Links',
+	'wikiavideo-placeholder' => 'Placeholder',
 	'wikiavideo-gallery-template' => 'This video gallery is within a template, and is not editable from the view mode. Please edit the appriopriate template.',
 	'wikiavideo-not-supported' => 'This skin does not support inserting videos from the view mode into galleries.',
 	'wikiavideo-pixel' => ' pixel',
