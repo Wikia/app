@@ -517,6 +517,9 @@ class HomeTemplate extends QuickTemplate {
 		<div class="box blue" style="padding: 0">
 			<?= HomeDataProvider::getContentForBox('promoted-feature') ?>
 		</div>
+		<div class="box blue" style="padding: 0">
+			<?= HomeDataProvider::getContentForBox('promoted-feature-2') ?>
+		</div>
 	</div>
 </div>
 
