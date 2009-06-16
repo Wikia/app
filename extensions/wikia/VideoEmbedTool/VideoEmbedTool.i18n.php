@@ -72,4 +72,5 @@ $messages['en'] = array(
 	'vet-left' => 'Left',
 	'vet-right' => 'Right',
 	'vet-gallery' => 'Gallery',
+	'vet-protected' => 'This video is protected',
 );

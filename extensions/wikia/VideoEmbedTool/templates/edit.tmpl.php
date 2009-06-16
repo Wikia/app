@@ -29,7 +29,7 @@ if('' == $props['oname']) {
 			&nbsp;
 		</td>
 	</tr>
-	<tr id="ImageWidthRow">
+	<tr id="VideoEmbedWidthRow">
 		<th><?= wfMsg('vet-width') ?></th>
 		<td>
                         <div id="VideoEmbedSlider">
@@ -41,7 +41,7 @@ if('' == $props['oname']) {
 			<span>
 		</td>
 	</tr>
-	<tr id="ImageLayoutRow">
+	<tr id="VideoEmbedLayoutRow">
 		<th><?= wfMsg('vet-layout') ?></th>
 		<td>
 			<input type="radio" id="VideoEmbedLayoutLeft" name="layout" onclick="VET_toggleSizing( true );" />

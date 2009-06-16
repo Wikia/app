@@ -6,6 +6,42 @@
 
 class VideoEmbedTool {
 
+	function loadMainFromView( $error = false ) {
+		wfLoadExtensionMessages( 'VideoEmbedTool' );
+
+		$out .= '<script type="text/javascript">';
+                $out .= 'var vet_back = \'' . wfMsg('vet-back') . '\';';
+                $out .= 'var vet_imagebutton = \'' . wfMsg('vet-imagebutton') . '\';';
+                $out .= 'var vet_close = \'' . wfMsg('vet-close') . '\';';
+                $out .= 'var vet_warn1 = \'' . wfMsg('vet-warn1') . '\';';
+                $out .= 'var vet_warn2 = \'' . wfMsg('vet-warn2') . '\';';
+                $out .= 'var vet_warn3 = \'' . wfMsg('vet-warn3') . '\';';
+
+                $out .= 'var vet_bad_extension = \'' . wfMsg('vet-bad-extension') . '\';';
+                $out .= 'var vet_show_message = \'' . wfMsg('vet-show-message') . '\';';
+                $out .= 'var vet_hide_message = \'' . wfMsg('vet-hide-message') . '\';';
+                $out .= 'var vet_title = \'' . wfMsg('vet-title') . '\';';
+                $out .= 'var vet_max_thumb = \'' . wfMsg('vet-max-thumb') . '\';';
+
+                $out .= '</script>';
+
+		$out = '<div class="reset" id="VideoEmbed">';
+                $out .= '<div id="VideoEmbedBorder"></div>';
+                $out .= '<div id="VideoEmbedProgress1" class="VideoEmbedProgress"></div>';
+                $out .= '<div id="VideoEmbedBack"><div></div><a href="#">' . wfMsg( 'vet-back' ) . '</a></div>';
+                $out .= '<div id="VideoEmbedClose"><div></div><a href="#">' . wfMsg( 'vet-close' ) . '</a></div>';
+                $out .= '<div id="VideoEmbedBody">';
+                $out .= '<div id="VideoEmbedError"></div>';
+                $out .= '<div id="VideoEmbedMain">' . $this->loadMain() . '</div>';
+                $out .= '<div id="VideoEmbedDetails" style="display: none;"></div>';
+                $out .= '<div id="VideoEmbedConflict" style="display: none;"></div>';
+                $out .= '<div id="VideoEmbedSummary" style="display: none;"></div>';
+                $out .= '</div>';
+                $out .= '</div>';
+
+		return $out;
+	}
+
 	function loadMain( $error = false ) {
 		$tmpl = new EasyTemplate(dirname(__FILE__).'/templates/');
 		$tmpl->set_vars(array(
@@ -255,8 +291,7 @@ class VideoEmbedTool {
 
 						if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 							header('X-screen-type: error');
-							// todo messagize
-							return 'This image is protected';
+							return wfMsg( 'vet-protected' );
 						}
 
 						$video = new VideoPage( $title );
@@ -309,8 +344,7 @@ class VideoEmbedTool {
 
 					if( $permErrors || $permErrorsUpload || $permErrorsCreate ) {
 						header('X-screen-type: error');
-						// todo messagize
-						return 'This video is protected';
+						return wfMsg( 'vet-protected' );
 					}
 
 					$video = new VideoPage( $title );
@@ -332,22 +366,46 @@ class VideoEmbedTool {
 		$caption = $wgRequest->getVal('caption');
 
 		if ('' != $gallery) {
-			if (!$fck) { // of course, don't edit article for fck...
+			if ( -2 == $gallery ) {
+				// this went in from the single placeholder...
+				$size = $wgRequest->getVal('size');
+				$width = $wgRequest->getVal('width');
+				$layout = $wgRequest->getVal('layout');
+				$slider = $wgRequest->getVal('slider');
+
 				$title_obj = Title::newFromText( $title_main, $ns );
 				$article_obj = new Article( $title_obj );
 				$text = $article_obj->getContent();
 
-				// todo nowiki?
-				preg_match_all( '/<videogallery>[^<]*/s', $text, $matches, PREG_OFFSET_CAPTURE );
+				( '' != $wgRequest->getVal( 'box' ) ) ? $box = $wgRequest->getVal( 'box' ) : $box = '' ;
+
+				// todo change that to take care of parameters
+				preg_match_all( '/\[\[' . $ns_vid . ':Placeholder[^\]]*\]\]/s', $text, $matches, PREG_OFFSET_CAPTURE );
 				if( is_array( $matches ) ) {
-					$our_gallery = $matches[0][$gallery][0];				
-					$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $name;	
+					$our_gallery = $matches[0][$box][0];				
+					$gallery_split = split( ':', $our_gallery );
+					$thumb = false;
+					
+					$tag = $gallery_split[0] . ":" . $name;	
+
+					if($size != 'full') {
+						$tag .= '|thumb';
+						$thumb = true;
+					}
+
+					$tag .= '|'.$width;
+					$tag .= '|'.$layout;
+
 					if( $caption != '' ) {
-						$our_gallery_modified .= '|' . $caption;
+						$tag .= '|' . $caption;
 					}				
-					$our_gallery_modified .= "\n";
-					$text = substr_replace( $text, $our_gallery_modified, $matches[0][$gallery][1], strlen( $our_gallery ) );
-				}	
+
+					$tag .= "]]";
+					$text = substr_replace( $text, $tag, $matches[0][$box][1], strlen( $our_gallery ) );
+					// return the proper embed code with all fancies around it
+					$embed_code = $video->generateWindow( $layout, $width, $caption, $thumb, false );
+					$message = wfMsg( 'vet-single-success' );
+				}
 
 				$summary = wfMsg( 'vet-added-from-gallery' ) ;
 				$success = $article_obj->doEdit( $text, $summary);
@@ -357,14 +415,41 @@ class VideoEmbedTool {
 				} else {
 					// todo well, communicate failure
 				}
-			} else {
-				header('X-screen-type: summary');				
-				$tag = $ns_vid . ":" . $name ;
-				if($caption != '') {
-					$tag .= "|".$caption;
+			} else {	
+				if (!$fck) { // of course, don't edit article for fck...
+					$title_obj = Title::newFromText( $title_main, $ns );
+					$article_obj = new Article( $title_obj );
+					$text = $article_obj->getContent();
+
+					// todo nowiki?
+					preg_match_all( '/<videogallery>[^<]*/s', $text, $matches, PREG_OFFSET_CAPTURE );
+					if( is_array( $matches ) ) {
+						$our_gallery = $matches[0][$gallery][0];				
+						$our_gallery_modified = $our_gallery . "\n" . $ns_vid . ":" . $name;	
+						if( $caption != '' ) {
+							$our_gallery_modified .= '|' . $caption;
+						}				
+						$our_gallery_modified .= "\n";
+						$text = substr_replace( $text, $our_gallery_modified, $matches[0][$gallery][1], strlen( $our_gallery ) );
+					}	
+
+					$summary = wfMsg( 'vet-added-from-gallery' ) ;
+					$success = $article_obj->doEdit( $text, $summary);
+					if ( $success ) {
+						header('X-screen-type: summary');				
+						$tag = $our_gallery_modified . "\n</videogallery>";
+					} else {
+						// todo well, communicate failure
+					}
+				} else {
+					header('X-screen-type: summary');				
+					$tag = $ns_vid . ":" . $name ;
+					if($caption != '') {
+						$tag .= "|".$caption;
+					}
 				}
+				$message = wfMsg( 'vet-gallery-add-success' );
 			}
-			$message = wfMsg( 'vet-gallery-add-success' );
 		} else {
 			header('X-screen-type: summary');
 
