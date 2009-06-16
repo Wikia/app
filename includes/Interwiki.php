@@ -142,8 +142,8 @@ class Interwiki {
 		global $wgMemc, $wgInterwikiExpiry;
 		# Moli 
 		if (mb_strlen($prefix) > 100) {
-			$backTraceMsg = "key = $prefix \n";
-			$backTraceMsg .= wfBacktrace(); // $e->getText();
+			#$backTraceMsg = "key = $prefix \n";
+			$backTraceMsg = wfBacktrace(); // $e->getText();
 			error_log( "MOLI: ". $_SERVER['SERVER_NAME'] . " $backTraceMsg \n");
 		}
 		# Moli - remove after find a bug
