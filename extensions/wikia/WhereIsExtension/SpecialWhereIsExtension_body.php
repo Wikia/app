@@ -46,9 +46,9 @@ class WhereIsExtension extends SpecialPage {
 			return;
 		}
 
-		$formData['vars'] = $this->getListOfVars();
+		$formData['vars'] = $this->getListOfVars($gVar == '');
 		$formData['selectedVal'] = $gVal;
-		$formData['selectedGroup'] = 27;	//default group: extensions
+		$formData['selectedGroup'] = $gVar == '' ? 27 : '';	//default group: extensions (or all groups when looking for variable, rt#16953)
 		$formData['groups'] = WikiFactory::getGroups();
 		$formData['actionURL'] = $wgTitle->getFullURL();
 		if (!empty($gVar)) {
@@ -63,14 +63,16 @@ class WhereIsExtension extends SpecialPage {
 	}
 
 	//fetching variable list from 'extension' group
-	private function getListOfVars() {
+	private function getListOfVars($clear) {
 		$aTables = array(
 			wfSharedTable('city_variables_pool'),
 			wfSharedTable('city_variables_groups')
 		);
 
 		$aWhere = array('cv_group_id = cv_variable_group');
-		$aWhere['cv_variable_group'] = '27';	//id 'extensions' group
+		if ($clear) {	//rt#16953
+			$aWhere['cv_variable_group'] = '27';	//id 'extensions' group
+		}
 
 		$dbr = wfGetDB(DB_SLAVE);
 		$oRes = $dbr->select(
