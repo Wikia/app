@@ -132,7 +132,8 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = f
 }
 
 function Wysiwyg_Initial($form) {
-	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType, $wgWysiwygEdit;
+	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgContentNamespaces;
+	global $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType, $wgWysiwygEdit;
 
 	wfProfileIn(__METHOD__);
 
@@ -143,7 +144,8 @@ function Wysiwyg_Initial($form) {
 	}
 
 	// do not initialize for articles in namespaces different then main, image or user
-	if(!in_array($form->mTitle->mNamespace, array(NS_MAIN, NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO))) {
+	$validNamespaces = array_merge( $wgContentNamespaces, array( NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO ) );
+	if(!in_array($form->mTitle->mNamespace, $validNamespaces)) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
