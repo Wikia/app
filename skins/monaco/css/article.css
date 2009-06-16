@@ -413,8 +413,8 @@ span.searchmatch {
 }
 
 /*** TOC improvements ***/
-body.TOCimprovements #toc ul,
+body.TOCimprovements #toc .toclevel-1,
 /* for shared help TOC */
-body.TOCimprovements #sharedtoc ul {
+body.TOCimprovements #sharedtoc .toclevel-1 {
 	display: none;
 }
