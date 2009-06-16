@@ -1,6 +1,6 @@
 <?php
 /**
- * Category objects are immutable, strictly speaking. If you call methods that change the database, 
+ * Category objects are immutable, strictly speaking. If you call methods that change the database,
  * like to refresh link counts, the objects will be appropriately reinitialized.
  * Member variables are lazy-initialized.
  *
@@ -25,7 +25,7 @@ class Category {
 	 * @return bool True on success, false on failure.
 	 */
 	protected function initialize() {
-		if ( $this->mName === null && $this->mTitle ) 
+		if ( $this->mName === null && $this->mTitle )
 			$this->mName = $title->getDBKey();
 
 		if( $this->mName === null && $this->mID === null ) {
@@ -128,7 +128,7 @@ class Category {
 	/**
 	 * Factory function, for constructing a Category object from a result set
 	 *
-	 * @param $row result set row, must contain the cat_xxx fields. If the fields are null, 
+	 * @param $row result set row, must contain the cat_xxx fields. If the fields are null,
 	 *        the resulting Category object will represent an empty category if a title object
 	 *        was given. If the fields are null and no title was given, this method fails and returns false.
 	 * @param $title optional title object for the category represented by the given row.
@@ -140,7 +140,7 @@ class Category {
 		$cat->mTitle = $title;
 
 
-		# NOTE: the row often results from a LEFT JOIN on categorylinks. This may result in 
+		# NOTE: the row often results from a LEFT JOIN on categorylinks. This may result in
 		#       all the cat_xxx fields being null, if the category page exists, but nothing
 		#       was ever added to the category. This case should be treated linke an empty
 		#       category, if possible.
@@ -185,7 +185,7 @@ class Category {
 	 */
 	public function getTitle() {
 		if( $this->mTitle ) return $this->mTitle;
-		
+
 		if( !$this->initialize() ) {
 			return false;
 		}
@@ -255,7 +255,7 @@ class Category {
 				'IGNORE'
 			);
 		}
-
+		Wikia::lock( md5( $this->mName ) );
 		$cond1 = $dbw->conditional( 'page_namespace='.NS_CATEGORY, 1, 'NULL' );
 		$cond2 = $dbw->conditional( 'page_namespace='.NS_FILE, 1, 'NULL' );
 		$result = $dbw->selectRow(
@@ -279,6 +279,7 @@ class Category {
 			__METHOD__
 		);
 		$dbw->commit();
+		Wikia::unlock( md5( $this->mName ) );
 
 		# Now we should update our local counts.
 		$this->mPages   = $result->pages;
