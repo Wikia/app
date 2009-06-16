@@ -61,7 +61,7 @@ if ( document.location.protocol == 'file:' )
 
 
 // RT #12624
-var IsIE8 = /*@cc_on!@*/ /Trident\/4.0/.test(navigator.userAgent.toLowerCase());
+var IsIE8 = /*@cc_on!@*/false && /trident\/4.0/.test(navigator.userAgent.toLowerCase());
 // if IE8, setup a bunch of popups that use a domain we can touch....
 var GLOBAL_POPUP_BUCKET_FCK_IE8 = [];
 if(IsIE8) {
