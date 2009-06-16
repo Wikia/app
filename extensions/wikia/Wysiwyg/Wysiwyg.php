@@ -3,7 +3,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Wikia Rich Text Editor (Wysiwyg)',
 	'description' => 'FCKeditor integration for MediaWiki',
 	'url' => 'http://www.wikia.com/wiki/c:help:Help:New_editor',
-	'version' => 0.14,
+	'version' => 0.15,
 	'author' => array('Inez Korczyński', 'Maciej Brencz', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
 );
 
@@ -160,6 +160,14 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
+	// editor mode (RT #17269)
+	$editorMode = $wgRequest->getVal('useeditor', 'wysiwyg');
+
+	// fallback to old MW editor
+	if ($editorMode == 'mediawiki') {
+		return true;
+	}
+
 	require("$IP/extensions/wikia/Wysiwyg/fckeditor/fckeditor_php5.php");
 
 	// do not initialize for not compatible browsers
@@ -176,12 +184,12 @@ function Wysiwyg_Initial($form) {
 	// detect edgecases
 	$wgWysiwygEdgeCasesFound = (Wysiwyg_CheckEdgeCases($form->textbox1) != '');
 
-	// initialize FCK in source mode for articles in which edge case occured / user adds fckmode=source to edit page URL / user requested diff/preview when in source mode
+	// initialize FCK in source mode for articles in which edge case occured / useeditor=wysiwygsource in URL / user requested diff/preview when in source mode
 	$wgWysiwygFallbackToSourceMode = $wgWysiwygEdgeCasesFound ||
-		($wgRequest->getVal('fckmode', 'wysiwyg') == 'source') ||
+		($editorMode == 'wysiwygsource') ||
 		($wgRequest->getVal('action') == 'submit' && $wgRequest->getVal('wysiwygTemporarySaveType') == '1');
 
-
+	// magic words list
 	$magicWords = MagicWord::$mVariableIDs;
 	sort($magicWords);
 
