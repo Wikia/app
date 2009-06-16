@@ -1,0 +1,96 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script src="Mediawiki.js"></script>
+<script>
+Mediawiki.cookiePrefix = "wikicities";
+</script>
+
+<div id="loginForm">
+<form onSubmit="return handleLoginForm(this)">
+Username: <input type="text" name="lgname"> <br />
+Password: <input type="password" name="lgpassword"> <br />
+<input type="submit" value="Login">
+</form>
+</div>
+
+<div id="logoutForm" style="display:none">
+	You are logged in.
+	<input type="button" value="logout" onClick="return Mediawiki.logout(handleLogoutForm)"/>
+</div>
+
+
+
+<script>
+function handleLoginForm(f){
+	try { 
+		Mediawiki.apiUser = f.lgname.value;
+		Mediawiki.apiPass = f.lgpassword.value;
+		Mediawiki.login(loginWorked, apiFailed);
+	} catch (e) {
+		Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
+	}
+	return false; // Return false so that the form doesn't submit
+}
+function loginWorked (){
+	$("#loginForm").hide();
+	$("#logoutForm").show();
+}
+
+function apiFailed(msg){
+	alert("Login failed! " + msg);
+}
+function handleLogoutForm(f){
+	$("#logoutForm").hide();
+	$("#loginForm").show();
+}
+
+if (Mediawiki.isLoggedIn()){
+	loginWorked();
+}
+</script>
+<hr />
+
+<!-- ############## Create an article ############## -->
+<form onSubmit="return handleCreateArticle(this)">
+Create a new article named: <input type="text" name="new_title"> <input type="submit" value="Create">
+</form>
+<div id="articleStatus"></div>
+<script>
+function handleCreateArticle (f){
+	try { 
+		normalizedTitle = Mediawiki.getNormalizedTitle(f.new_title.value);
+		f.new_title.value = normalizedTitle;
+		Mediawiki.editArticle({"title": normalizedTitle, "createonly": true, "summary": "testing new api", "text": "page automatically created using Nick's api"}, createArticleSuccess, apiFailed);
+	} catch (e) {
+		Mediawiki.updateStatus( "Error creating article:" + Mediawiki.print_r(e));	
+	}
+	return false; // Return false so that the form doesn't submit
+}
+function createArticleSuccess(){
+	alert("Article created");
+	$("#articleStatus").html("Article created! <a href='/wiki/" + normalizedTitle + "'>" + normalizedTitle + "</a> " + 
+		"<input type=button value=delete onClick='deleteArticle(\"" + normalizedTitle + "\")'/>");
+}
+</script>
+<hr />
+<!-- ############## Pull down an article ############## -->
+
+<div id="Kermit">
+</div>
+
+<script>
+fillInArticle = function (result){
+	Mediawiki.$("Kermit").innerHTML = '<pre>' + Mediawiki.print_r(result) + '</pre>';
+/*
+                if (!empty($result) && empty($result['error'])){
+                        foreach($result["query"]["pages"] as $page){
+                                return $page['revisions'][0]['*'];
+                        }
+                } else {
+                        return false;
+                }
+*/
+};
+
+Mediawiki.getArticleContent("Kermit_the_Frog", fillInArticle);
+</script>
+
