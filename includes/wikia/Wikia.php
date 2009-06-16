@@ -485,4 +485,28 @@ class Wikia {
 			return $dump;
 		}
 	}
+
+	/**
+	 * Represents a write lock on the key, based in MessageCache::lock
+	 */
+	function lock( $key ) {
+		global $wgMemc;
+		$timeout = 10;
+		$lockKey = wfMemcKey( $key, "lock" );
+		for ($i=0; $i < $timeout && !$wgMemc->add( $lockKey, 1, $timeout ); $i++ ) {
+			sleep(1);
+		}
+
+		return $i >= $timeout;
+	}
+
+	/**
+	 * Unlock a write lock on the key, based in MessageCache::unlock
+	 */
+	function unlock($key) {
+		global $wgMemc;
+		$lockKey = wfMemcKey( $key, "lock" );
+		return $wgMemc->delete( $lockKey );
+	}
+
 }
