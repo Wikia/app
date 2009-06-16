@@ -471,6 +471,7 @@ class StaticChute {
 			// far into the future. This will make it so that the browsers won't even check this
 			// url to see if the files have changed, saving an http request.
 			header('Expires: ' . gmdate('r', strtotime('+13 years')));
+			header('X-Pass-Cache-Control: max-age=' . (13 * 365 * 24 * 60 * 60));
 		}
 
 		$this->setContentType();
