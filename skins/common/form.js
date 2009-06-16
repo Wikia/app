@@ -17,6 +17,11 @@ $(function() {
 			//Remove "selected" class
 			selected.removeClass("selected");
 
+			// check whether given element is inside .formblock node
+			if (!$(this).closest(".formblock").exists()) {
+				return;
+			}
+
 			//Move highlight
 			highlight.animate({
 				height: $(this).closest(".formblock").outerHeight(),
