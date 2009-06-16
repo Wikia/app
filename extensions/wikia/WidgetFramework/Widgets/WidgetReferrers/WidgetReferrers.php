@@ -9,8 +9,16 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetReferrers'] = array(
 	'callback' => 'WidgetReferrers',
-	'title' => 'widget-title-referers',
-	'desc' => 'widget-desc-referers',
+	'title' => array(
+		'en' => 'Top referrers',
+		'pl' => 'Strony odsyłające',
+		'hu' => 'Legnagyobb hivatkozók'
+	),
+	'desc' => array(
+		'en' => 'A "cloud" of the sites that link to this wiki. Bigger text means more refers',
+		'pl' => 'Chmura stron odsylajacych na ta Wikie',
+		'hu' => 'A wikire hivatkozó weblapok felhõben. Minél nagyobb a szöveg, annál többen jöttek onnan.'
+    ),
     'params' => array(
 		'wt_show_referrers' => array(
 			'type' => 'select',
@@ -29,11 +37,11 @@ $wgWidgets['WidgetReferrers'] = array(
 		'wt_show_period' => array(
 		    'type'    => 'select',
 		    'values'   => array(
-		        date('Ymd', strtotime('-1 month')) => 'last month',
-		        date('Ymd', strtotime('-3 month')) => 'last 3 months',
-		        date('Ymd', strtotime('-6 month')) => 'last 6 months',
+		        1 => 'last month',
+		        3 => 'last 3 months',
+		        6 => 'last 6 months',
 		    ),
-		    'default' => date('Ymd', strtotime('-1 month'))
+		    'default' => 1
 		),
 	),
     
@@ -51,15 +59,6 @@ function WidgetReferrers($id, $params) {
 	$limit = (array_key_exists('limit', $params) && !empty($params['limit'])) ? $params['limit'] : 25;
 	$wkuseext = (array_key_exists('wt_show_referrers', $params)) ? $params['wt_show_referrers'] : 1;
 	$wkparamdate = $wkfromdate = (array_key_exists('wt_show_period', $params) && !empty($params['wt_show_period'])) ? $params['wt_show_period'] : "";
-	if (!empty($wkfromdate)) {
-	    $m = array(); if (preg_match('/^(20\d{2}|21\d{2})(0?[1-9]|1[0-2])(0?[1-9]|[12][0-9]|3[01])$/', $wkfromdate, $m)) {
-	        $wkfromdate = $m[1]."-".$m[2]."-".$m[3];
-        } else {
-            unset($wkfromdate);
-        }
-    } else {
-        unset($wkfromdate);
-    }
 	
 	$memcKey = wfMemcKey('widgets:referers:cloud:'.$limit.':'.$wkuseext.':'.$wkparamdate);
 	
