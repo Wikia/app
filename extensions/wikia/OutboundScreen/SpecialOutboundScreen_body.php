@@ -16,7 +16,14 @@ class Outbound extends UnlistedSpecialPage {
 	}
 
 	function execute($url) {
+		global $wgRequest;
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$fragment = $wgRequest->getText( 'f' );
+		if ( !empty( $fragment ) )
+			$url .= '#' . $fragment;
+
 		$oTmpl->set_vars(
 				array(
 					'url' => $url,

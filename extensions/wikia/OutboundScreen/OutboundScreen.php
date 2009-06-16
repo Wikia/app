@@ -50,9 +50,18 @@ function efOutboundScreen ( $url, $text, $link ) {
 		}
 
 		if(!$isWhitelisted) {
+
+			// strip URL fragment for later use
+			$urlAndFragment = explode( '#', $url, 2 );
+			$url = $urlAndFragment[0];
+			$fragment = isset( $urlAndFragment[1] ) ? $urlAndFragment[1] : false;
+
+			// make the actual link
 			$special = Title::newFromText( 'Special:Outbound/' . $url );
 			if($special instanceof Title) {
 				$url = $special->getFullURL();
+				// add URL fragment if needed
+				$url .= $fragment ? '?f=' . $fragment : '';
 			}
 		}
 	}
