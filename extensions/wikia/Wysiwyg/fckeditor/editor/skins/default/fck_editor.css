@@ -507,6 +507,7 @@ td.childrenHidden textarea, td.childrenHidden iframe
 
 #wysiwygTemplatePreviewCloudInner * {
 	cursor: default;
+	border: none;
 }
 
 .cloudUnder #wysiwygTemplatePreviewCloudInner {
