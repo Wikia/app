@@ -27,7 +27,7 @@ var FCKBrowserInfo =
 {
 	IsIE		: /*@cc_on!@*/false,
 	// @see http://blogs.msdn.com/ie/archive/2009/01/09/the-internet-explorer-8-user-agent-string-updated-edition.aspx
-	IsIE8		: /*@cc_on!@*/false && /Trident\/4\.0/.test(s), // we all love you, IE :)
+	IsIE8		: /*@cc_on!@*/false && /trident\/4\.0/.test(s), // we all love you, IE :)
 	IsIE7		: /*@cc_on!@*/false && ( parseInt( s.match( /msie (\d+)/ )[1], 10 ) >= 7 ),
 	IsIE6		: /*@cc_on!@*/false && ( parseInt( s.match( /msie (\d+)/ )[1], 10 ) >= 6 ),
 	IsSafari	: s.Contains(' applewebkit/'),		// Read "IsWebKit"

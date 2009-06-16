@@ -35,6 +35,10 @@ var FCKPanel = function( parentWindow )
 	// Wikia: RT #12624
 	if ( FCKBrowserInfo.IsIE8 )
 	{
+		if (window.console) {
+			console.log('Wysiwyg: IE8 fix applied');
+		}
+
 		this._Popup = GLOBAL_POPUP_BUCKET_FCK_IE8.pop();
 		oDocument = this.Document = this._Popup.document ;
 		FCK.IECleanup.AddItem( this, FCKPanel_Cleanup ) ;
