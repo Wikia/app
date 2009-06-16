@@ -489,7 +489,7 @@ class Wikia {
 	/**
 	 * Represents a write lock on the key, based in MessageCache::lock
 	 */
-	function lock( $key ) {
+	static public function lock( $key ) {
 		global $wgMemc;
 		$timeout = 10;
 		$lockKey = wfMemcKey( $key, "lock" );
@@ -503,7 +503,7 @@ class Wikia {
 	/**
 	 * Unlock a write lock on the key, based in MessageCache::unlock
 	 */
-	function unlock($key) {
+	static public function unlock($key) {
 		global $wgMemc;
 		$lockKey = wfMemcKey( $key, "lock" );
 		return $wgMemc->delete( $lockKey );
