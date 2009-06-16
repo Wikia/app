@@ -74,7 +74,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			$selected = ' selected="selected"';
 		endif;
 ?>
-				<option value="<?=$sLang?>" <?=$selected?>><?=$aLanguages[$sLang]?></option>
+				<option value="<?=$sLang?>" <?=$selected?>><?=$sLang?>: <?=$aLanguages[$sLang]?></option>
 <?php endforeach ?>
 				</optgroup>
 <?php endif ?>
@@ -87,7 +87,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			$selected = ' selected="selected"';
 		endif;
 ?>
-				<option value="<?=$sLang?>" <?=$selected?>><?=$sLangName?></option>
+				<option value="<?=$sLang?>" <?=$selected?>><?=$sLang?>: <?=$sLangName?></option>
 <?php endforeach ?>
 				</optgroup>
 <?php endif ?>

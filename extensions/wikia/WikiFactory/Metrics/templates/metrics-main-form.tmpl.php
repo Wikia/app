@@ -40,17 +40,25 @@ div#sidebar { display: none !important; }
 <?php 			if (!empty($aTopLanguages) && is_array($aTopLanguages)) : ?>
 					<optgroup label="<?= wfMsg('autocreatewiki-language-top', count($aTopLanguages)) ?>">
 <?php 				foreach ($aTopLanguages as $sLang) : ?>
-						<option value="<?=$sLang?>"><?=$aLanguages[$sLang]?></option>
+						<option value="<?=$sLang?>"><?=$sLang?>: <?=$aLanguages[$sLang]?></option>
 <?php 				endforeach ?>
 					</optgroup>
 <?php 			endif ?>
 					<optgroup label="<?= wfMsg('autocreatewiki-language-all') ?>">
 <?php 			if (!empty($aLanguages) && is_array($aLanguages)) : ?>
 <?php				foreach ($aLanguages as $sLang => $sLangName) : ?>
-						<option value="<?=$sLang?>"><?=$sLangName?></option>
+						<option value="<?=$sLang?>"><?=$sLang?>: <?=$sLangName?></option>
 <?php 				endforeach ?>
 					</optgroup>
 <?php 			endif ?>
+					</select>
+				</span>
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-category')?></span>
+				<span style="vertical-align:middle">
+					<select name="awc-metrics-category-hub" id="awc-metrics-category-hub"><option value=""> </option>
+			<? foreach ($aCategories as $id => $catName) : ?>
+					<option value="<?=$id?>"><?=$catName?></option>
+			<? endforeach ?>
 					</select>
 				</span>
 			</td></tr>
@@ -214,6 +222,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	//----
 	var created 	= YD.get( "awc-metrics-created" );
 	var language	= YD.get( "awc-metrics-language" );
+	var category	= YD.get( "awc-metrics-category-hub" );
 	var between_f 	= YD.get( "awc-metrics-between-from" );
 	var between_to  = YD.get( "awc-metrics-between-to" );
 	//----
@@ -418,6 +427,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-from=" + between_f.value;
 	params += "&awc-to=" + between_to.value;
 	params += "&awc-language=" + language.value;
+	params += "&awc-language=" + category.value;
 	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
 	params += "&awc-title=" + title.value;
