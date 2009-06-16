@@ -288,6 +288,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mCurrTime = wfTime();
 		$startTime = $this->mCurrTime;
 		$this->mFounder = $wgUser;
+		#-- for other users -> for staff only
+		if ( in_array('staff', $wgUser->getGroups()) && !empty($this->awcStaff_username) ) { 
+			$this->mFounder = User::newFromName($this->awcStaff_username);
+		}
 
 		/**
 		 * create image folder
@@ -330,8 +334,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			'city_title'          => $this->mWikiData[ "title" ],
 			'city_dbname'         => $this->mWikiData[ "dbname"],
 			'city_url'            => sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], "wikia.com" ),
-			'city_founding_user'  => $wgUser->getID(),
-			'city_founding_email' => $wgUser->getEmail(),
+			'city_founding_user'  => $this->mFounder->getID(),
+			'city_founding_email' => $this->mFounder->getEmail(),
 			'city_path'           => $this->mWikiData[ "path" ],
 			'city_description'    => $this->mWikiData[ "title" ],
 			'city_lang'           => $this->mWikiData[ "language" ],
@@ -424,7 +428,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgEnableEditEnhancements'	=> true,
 			'wgEnableSectionEdit'	    => true,
 		);
-		$this->mWikiData[ "founder" ] = $wgUser->getId();
+		$this->mWikiData[ "founder" ] = $this->mFounder->getId();
 
 		$oRes = $dbw->select(
 			wfSharedTable("city_variables_pool"),
@@ -559,9 +563,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * making the wiki founder a sysop/bureaucrat
 		 */
-		if ( $wgUser->getID() ) {
-			$dbw->replace( "user_groups", array( ), array( "ug_user" => $wgUser->getID(), "ug_group" => "sysop" ) );
-			$dbw->replace( "user_groups", array( ), array( "ug_user" => $wgUser->getID(), "ug_group" => "bureaucrat" ) );
+		if ( $this->mFounder->getID() ) {
+			$dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mFounder->getID(), "ug_group" => "sysop" ) );
+			$dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mFounder->getID(), "ug_group" => "bureaucrat" ) );
 		}
 		$this->log( "Create user sysop/bureaucrat" );
 
@@ -960,6 +964,21 @@ class AutoCreateWikiPage extends SpecialPage {
 		if ( !empty($sResponse) ) {
 			$this->makeError( "wiki-language", $sResponse );
 			$res = false;
+		}
+
+		#-- check username given by staff
+		if ( in_array('staff', $wgUser->getGroups()) && !empty($this->mStaff_username) ) { 
+			$user_id = User::idFromName($this->mStaff_username);
+			if ( empty($user_id) ) {
+				$this->makeError( "wiki-staff-username", wfMsg('autocreatewiki-invalid-username') );
+				$res = false;
+			} else {
+				$u = User::newFromId($user_id);
+				if ( $u->isBlocked() ) {
+					$this->makeError( "wiki-staff-username", wfMsg('autocreatewiki-invalid-username') );
+					$res = false;
+				}
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
