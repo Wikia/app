@@ -12,7 +12,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'Video Embed Tool',
         'author' => 'Bartek Łapiński, Inez Korczyński',
-	'version' => '0.95',
+	'version' => '0.99',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -52,12 +52,10 @@ $wgHooks['EditPage::showEditForm:initial2'][] = 'VETSetup';
 $wgHooks['WikiaVideo::View:RedLink'][] = 'VETWIkiaVideoRedLink';
 $wgHooks['WikiaVideo::View:BlueLink'][] = 'VETWIkiaVideoBlueLink';
 
-$wgVETAllowedSkins = array( 'SkinMonaco', 'SkinAnswers' );
 
 // display the link for replacing the video on the video page
 function VETWikiaVideoBlueLink() {
         global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgArticlePath, $wgContLang, $wgTitle;
-	global $wgVETAllowedSkins;
 
 	$special = $wgContLang->getFormattedNsText( NS_SPECIAL );
 	$url = $wgArticlePath;
@@ -71,7 +69,7 @@ function VETWikiaVideoBlueLink() {
 	$s = '<br/><a id="VideoEmbedReplace" href="' . $url . '" id="VideoEmbedReplace" >' . wfMsg( 'wikiavideo-replace' ) . '</a><br/><br/>';
 	$wgOut->addHTML( $s );
 
-        if ( in_array( get_class($wgUser->getSkin()), $wgVETAllowedSkins ) ) {
+        if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
                 wfLoadExtensionMessages('VideoEmbedTool');
                 $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
@@ -83,8 +81,7 @@ function VETWikiaVideoBlueLink() {
 
 // display the link for adding the video on the video page
 function VETWikiaVideoRedLink() {
-	global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgContLang, $wgTitle, $wgArticlePath;
-	global $wgVETAllowedSkins;
+        global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgContLang, $wgTitle, $wgArticlePath;
 
 	$special = $wgContLang->getFormattedNsText( NS_SPECIAL );
 	$url = $wgArticlePath;
@@ -98,7 +95,7 @@ function VETWikiaVideoRedLink() {
 	$s = '<br/><a id="VideoEmbedCreate" href="' . $url . '">' . wfMsg( 'wikiavideo-create' ) . '</a><br/><br/>';
 	$wgOut->addHTML( $s );
 
-        if ( in_array( get_class($wgUser->getSkin()), $wgVETAllowedSkins ) ) {
+        if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
                 wfLoadExtensionMessages('VideoEmbedTool');
                 $wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
                 $wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');
@@ -116,9 +113,8 @@ function VETArticleSave( $article, $user, $text, $summary) {
 }
 
 function VETSetup($editform) {
-	global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser, $wgVETAllowedSkins;
-
-	if ( in_array( get_class($wgUser->getSkin()), $wgVETAllowedSkins ) ) {
+	global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser;
+	if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
 		wfLoadExtensionMessages('VideoEmbedTool');
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');

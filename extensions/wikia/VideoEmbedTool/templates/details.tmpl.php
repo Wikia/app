@@ -29,7 +29,7 @@ if('' == $props['oname']) {
 			&nbsp;
 		</td>
 	</tr>
-	<tr id="ImageWidthRow">
+	<tr id="VideoEmbedWidthRow">
 		<th><?= wfMsg('vet-width') ?></th>
 		<td>
                         <div id="VideoEmbedSlider">
@@ -41,18 +41,24 @@ if('' == $props['oname']) {
 			<span>
 		</td>
 	</tr>
-	<tr id="ImageLayoutRow">
+	<tr id="VideoEmbedLayoutRow">
 		<th><?= wfMsg('vet-layout') ?></th>
 		<td>
+			<span id="VET_LayoutLeftBox">
 			<input type="radio" id="VideoEmbedLayoutLeft" name="layout" onclick="VET_toggleSizing( true );" />
 			<label for="VideoEmbedLayoutLeft"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_left.png' ?>" alt="<?= wfMsg( 'vet-left' ) ?>" title="<?= wfMsg( 'vet-left' ) ?>" /></label>
+			</span>
+			<span id="VET_LayoutRightBox">
 			<input type="radio" id="VideoEmbedLayoutRight" name="layout" checked="checked" onclick="VET_toggleSizing( true );" />
 			<label for="VideoEmbedLayoutRight"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_right.png' ?>" alt="<?=wfMsg( 'vet-right' ) ?>" title="<?= wfMsg( 'vet-right' ) ?>" /></label>
+			</span>
+			<span id="VET_LayoutGalleryBox">			
 			<input type="radio" id="VideoEmbedLayoutGallery" name="layout" onclick="VET_toggleSizing( false );" />
 			<label for="VideoEmbedLayoutGallery"><img src="<?= $wgExtensionsPath.'/wikia/VideoEmbedTool/images/image_upload_gallery.png' ?>" alt="<?= wfMsg( 'vet-gallery' ) ?>" title="<?= wfMsg( 'vet-gallery' ) ?>" /></label>
+			</span>
 		</td>
 	</tr>
-	<tr>
+	<tr id="VideoEmbedCaptionRow">
 		<th><?= wfMsg('vet-caption') ?></th>
 		<td><input id="VideoEmbedCaption" type="text" /><?= wfMsg('vet-optional') ?></td>
 	</tr>
