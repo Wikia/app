@@ -89,6 +89,10 @@ function AddNewTalkSectionAddCSS(&$out) {
 function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 	global $wgTitle, $wgRequest, $wgUser;
 
+	if (!$wgTitle->isTalkPage()) {
+		return true;
+	}
+
 	$action = $wgRequest->getVal('action', 'view');
 	//do not show link when anon sees 'pres ok to purge the page'
 	if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
@@ -100,7 +104,7 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 		return true;
 	}
 
-	if ($wgTitle->isTalkPage() && in_array($action, array('view', 'purge'))) {
+	if (in_array($action, array('view', 'purge'))) {
 		global $wgUser;
 		wfLoadExtensionMessages('AddNewTalkSection');
 		$link = wfMsg('addnewtalksection-link');
