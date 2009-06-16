@@ -4,10 +4,10 @@ var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use
  * @author Nick Sullivan
 */
 
-function AdEngine (){
-}
-
-AdEngine.bodyWrapper = 'bodyContent';
+AdEngine = {
+	bodyWrapper : 'bodyContent',
+	adColorsContent : []
+};
 
 /**
  * For pages that have divs floated right, clear right so they appear under a box ad
@@ -34,25 +34,22 @@ AdEngine.resetCssClear = function (side) {
  */
 AdEngine.getAdColor = function (type) {
 
-	if(typeof adColorsContent == 'undefined') {
-		adColorsContent = [];
-	}
 
-	if(typeof themename == 'string') {
-		if(typeof adColorsContent[themename] == 'object') {
-			if(typeof adColorsContent[themename][type] == 'string') {
-				return adColorsContent[themename][type];
+	if(typeof window.themename == 'string') {
+		if(typeof AdEngine.adColorsContent[window.themename] == 'object') {
+			if(typeof AdEngine.adColorsContent[window.themename][type] == 'string') {
+				return AdEngine.adColorsContent[window.themename][type];
 			}
 		}
 	}
 
-	if(typeof adColorsContent[type] == 'string') {
-		return adColorsContent[type];
+	if(typeof AdEngine.adColorsContent[type] == 'string') {
+		return AdEngine.adColorsContent[type];
 	}
 
 	if(type == 'text') {
-		adColorsContent[type] = AdEngine.normalizeColor($('#article').css('color'));
-		return adColorsContent[type];
+		AdEngine.adColorsContent[type] = AdEngine.normalizeColor($('#article').css('color'));
+		return AdEngine.adColorsContent[type];
 	}
 
 	if(type == 'link' || type == 'url') {
@@ -60,21 +57,21 @@ AdEngine.getAdColor = function (type) {
 		var a;
 		if ($("#article a:first").length > 0){
 			a=$("#article a:first");
-			adColorsContent[type] = AdEngine.normalizeColor(a.css('color'));
+			AdEngine.adColorsContent[type] = AdEngine.normalizeColor(a.css('color'));
 		} else if ($("a:first").length > 0){
 			a=$("a:first");
-			adColorsContent[type] = AdEngine.normalizeColor(a.css('color'));
+			AdEngine.adColorsContent[type] = AdEngine.normalizeColor(a.css('color'));
 		} else {
-			adColorsContent[type] = "black";
+			AdEngine.adColorsContent[type] = "black";
 		}
 
-		return adColorsContent[type];
+		return AdEngine.adColorsContent[type];
 	}
 
 	if(type == 'bg') {
 	        var color = AdEngine.normalizeColor($('#article').css('background-color'));
 
-		if(color == 'transparent' || color == AdGetColor('text')) {
+		if(color == 'transparent' || color == window.AdGetColor('text')) {
 		        color = AdEngine.normalizeColor($('#wikia_page').css('background-color'));
         	}
 
@@ -82,8 +79,8 @@ AdEngine.getAdColor = function (type) {
        		 	color = AdEngine.normalizeColor($("#bodyContent").css('background-color'));
        		}
 
-		adColorsContent[type] = color;
-		return adColorsContent[type];
+		AdEngine.adColorsContent[type] = color;
+		return AdEngine.adColorsContent[type];
 	}
 
 };
@@ -115,7 +112,7 @@ AdEngine.dec2hex = function(d){
 };
 
 /* Backward compatible function call, this method is already referenced in Ad Server code */
-AdGetColor = AdEngine.getAdColor;
+window.AdGetColor = AdEngine.getAdColor;
 
 /* Display the div for an ad, as long as it is not a no-op ad, such as a clear gif */
 AdEngine.displaySlotIfAd = function (slotname) {
@@ -124,7 +121,7 @@ AdEngine.displaySlotIfAd = function (slotname) {
                 'http://m1.2mdn.net/viewad/817-grey.gif');  // DART sometimes sends this
 
         var noopFound = false;
-        for (i = 0 ; i < noopStrings.length; i++){
+        for (var i = 0 ; i < noopStrings.length; i++){
                 if($('#' + slotname + '_load').html().indexOf(noopStrings[i]) > -1 ) {
                 	// Override stated dimensions set by CSS
                 	$("#" + slotname + "_load").css("height", "1px");
@@ -144,7 +141,7 @@ AdEngine.displaySlotIfAd = function (slotname) {
 /* Return the meta keywords so they can be passed as hints */
 AdEngine.getKeywords = function () {
 	var metaTags = document.getElementsByTagName('meta');
-	for (i = 0; i < metaTags.length; i++){
+	for (var i = 0; i < metaTags.length; i++){
 		if (metaTags[i].name == "keywords"){
 			return metaTags[i].content;
 		}
