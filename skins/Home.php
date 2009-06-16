@@ -797,7 +797,7 @@ class HomeDataProvider {
 				//begin: promoted feature
 				//line no. 1: header
 				//line no. 2: image | alt
-				//line no. 3: text
+				//line no. 3: HTML text
 				$msgKey = 'promoted-feature';
 				if (!wfEmptyMsg($prefix . $msgKey, $msg = wfMsg($prefix . $msgKey))) {
 					$msg = explode("\n", $msg);
@@ -818,6 +818,31 @@ class HomeDataProvider {
 					self::$data[$msgKey] .= $text;
 				}
 				//end: promoted feature
+
+				//begin: promoted feature 2
+                                //line no. 1: header
+                                //line no. 2: image | alt
+                                //line no. 3: HTML text
+                                $msgKey = 'promoted-feature-2';
+                                if (!wfEmptyMsg($prefix . $msgKey, $msg = wfMsg($prefix . $msgKey))) {
+                                        $msg = explode("\n", $msg);
+                                        $header = ltrim($msg[0], '* ');
+                                        $image = parseItem($msg[1]);
+                                        if ($title = Title::newFromText($image['org'])) {
+                                                $image['src'] = Image::newFromTitle($title)->getUrl();
+                                        }
+                                        $text = ltrim($msg[2], '* ');
+                                        self::$data[$msgKey] = '';
+                                        if ( $header ) {
+                                                self::$data[$msgKey] = '<h1>' . htmlspecialchars( $header ) . '</h1>';
+                                        }
+                                        if ( $image && !empty($image['src']) ) {
+                                                self::$data[$msgKey] .= "<img id=\"promoted_feature_img\" src=\"{$image['src']}\" alt=\"{$image['text']}\" style=\"float: right; margin-left: 10px;\" />";
+                                        }
+
+                                        self::$data[$msgKey] .= $text;
+                                }
+
 				$wgMemc->set($key, self::$data, 300);
 			}
 		}
