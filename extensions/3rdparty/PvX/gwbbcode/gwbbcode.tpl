@@ -38,7 +38,7 @@
     <div class="pvx_overlib" style="width:{desc_len}px;">
         <div class="pvx_campaign">{chapter}</div>
         <div class="pvx_mastery">{profession}. {attr_html}</div>
-        <div class="pvx_description" style="background-image:url('http://images.wikia.com/pvx.com/img_skin/{profession}.jpg');">
+        <div class="pvx_description" style="background-image:url('http://images.wikia.com/pvx/img_skin/{profession}.jpg');">
             <div class="pvx_{elite_or_normal}">{name}</div>
             <div class="pvx_type">{type}</div>
             <div class="pvx_skill_info">{{tpl_desc}}{extra_desc}</div>
