@@ -43,6 +43,7 @@ function AddNewTalkSectionInit() {
 	$wgHooks['CustomArticleFooter'][] = 'AddNewTalkSectionAddFooter';
 	$wgHooks['SkinTemplateSetupPageCss'][] = 'AddNewTalkSectionAddCSS';
 	$wgHooks['EditPage::importFormData::finished'][] = 'AddNewTalkSectionImportFormData';
+	$wgHooks['InternalParseBeforeLinks'][] = 'AddNewTalkSectionRemoveMagicWord';
 //	$wgHooks['UserToggles'][] = 'AddNewTalkSectionToggleUserPreference';
 //	$wgHooks['getEditingPreferencesTab'][] = 'AddNewTalkSectionToggleUserPreference';
 }
@@ -54,6 +55,16 @@ function AddNewTalkSectionInit() {
  */
 function AddNewTalkSectionGetMagic(&$magicWords, $langCode) {
 	$magicWords['MAG_NONEWSECTIONLINK'] = array(0, '__NONEWSECTIONLINK__');
+	return true;
+}
+
+/**
+ * remove magic word from content
+ *
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function AddNewTalkSectionRemoveMagicWord(&$parser, &$text, &$strip_state) {
+	MagicWord::get('MAG_NONEWSECTIONLINK')->matchAndRemove($text);
 	return true;
 }
 
@@ -84,7 +95,8 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 		return true;
 	}
 
-	if (MagicWord::get('MAG_NONEWSECTIONLINK')->matchAndRemove(Revision::newFromTitle($wgTitle)->getText())) {
+	$rev = Revision::newFromTitle($wgTitle);
+	if ($rev && MagicWord::get('MAG_NONEWSECTIONLINK')->match($rev->getText())) {
 		return true;
 	}
 
