@@ -67,7 +67,7 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 				// last 6 months 
 				case "6" : $where_derived .= " and ref_type = 4 "; break;
 				// default (all referrers)
-				default  : $where_derived .= " and ref_type = 1 "; break;
+				default  : $where_derived .= " and ref_type = 4 "; break;
 			}
 			$this->setCacheKey( $lcache_key, 'FM', $fromdate );
 
