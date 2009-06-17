@@ -21,7 +21,7 @@ function ActionPanelClose() {
 }
 
 function applyActionsOnQuestions(){
-	jQuery("[href*='/wiki/']").live("mouseover", function(){
+	jQuery("[href*='" + wgServer + "/wiki/']").live("mouseover", function(){
 		if( menu_is_open )return;
 		questions = this.href.match(/\/wiki\/(.*)/i );
 		jQuery("#ActionPanelTrigger").unbind('mouseenter mouseleave'); 
