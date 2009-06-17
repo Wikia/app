@@ -84,7 +84,7 @@
 
       $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + 'px;"></div></div></div>').appendTo(this.options.appendTo);
 
-      this.container = $('#' + autocompleteElId);
+      this.container = $(this.options.appendTo).find('#' + autocompleteElId);
       this.fixPosition();
       if (window.opera) {
         this.el.keypress(function(e) { me.onKeyPress(e); });
@@ -101,7 +101,7 @@
     fixPosition: function() {
       var offset = this.el.offset();
       var parentOffset = $(this.options.appendTo).offset();
-      $('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
+      $(this.options.appendTo).find('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
     },
 
     enableKillerFn: function() {
