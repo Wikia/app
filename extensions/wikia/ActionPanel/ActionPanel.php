@@ -56,7 +56,7 @@ function wfGetCategorySuggest( $query, $limit = 5 ){
 		array( 'cl_to', 'count(*) as cnt' ),
 		array( "UPPER(cl_to) LIKE " . $dbr->addQuotes(strtoupper($query) . "%") ),	
 		__METHOD__,
-		array("ORDER BY" => "cl_to", "GROUP BY" => "cl_to"  )
+		array("ORDER BY" => "cl_to", "GROUP BY" => "cl_to", "LIMIT" => $limit )
 		);
 	while ($row = $dbr->fetchObject( $res ) ) {
 		$title = Title::makeTitle(NS_CATEGORY, $row->cl_to);
