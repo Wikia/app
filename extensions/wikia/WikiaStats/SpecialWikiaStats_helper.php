@@ -1090,7 +1090,7 @@ class WikiaGenericStats {
 					array( 'cat_name', 'cat_url' ),
 					array(
 						'city_id' => $city,
-						"$city_cats.cat_id = $city_cat_mapping.cat_id",
+						"city_cats.cat_id = city_cat_mapping.cat_id",
 					),
 					__METHOD__,
 					array( 'LIMIT' => '1' )
