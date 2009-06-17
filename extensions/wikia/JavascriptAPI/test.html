@@ -70,7 +70,7 @@ Mediawiki.cookiePrefix = "wikicities";
 	}
 
 	function apiFailed(msg){
-		alert("Api call failed! " + msg);
+		alert("Api call returned an error: " + msg);
 	}
 	function handleLogoutForm(f){
 		$("#logoutForm").hide();
@@ -115,25 +115,35 @@ Mediawiki.cookiePrefix = "wikicities";
 <!-- ############## Pull down an article ############## -->
 
 <div id="tabs-3">
-	Main Page from this wiki
-	<div id="Main_Page">
+	<form onSubmit="return handlePullArticle(this)" id="pullArticleForm">
+		<input type="text" name="articleName" value="Main_Page">
+		<input type="submit" value="Pull Article"/> <br />
+		<input type="checkbox" name="redirects"/> Resolve Redirects
+	</form>
+	<div id="pulledArticle">
 	</div>
 
 	<script>
-	fillInArticle = function (result){
-		Mediawiki.$("Main_Page").innerHTML = '<pre>' + Mediawiki.print_r(result) + '</pre>';
-	/*
-			if (!empty($result) && empty($result['error'])){
-				foreach($result["query"]["pages"] as $page){
-					return $page['revisions'][0]['*'];
-				}
-			} else {
-				return false;
-			}
-	*/
-	};
+	function fillInArticle(result){
+		if (result === null){
+			result = document.getElementById("pullArticleForm").articleName.value + " does not exist";
+		}
+		Mediawiki.$("pulledArticle").innerHTML = '<pre>' + result + '</pre>';
+	}
 
-	Mediawiki.getArticleContent("Main_Page", fillInArticle);
+	function handlePullArticle (f) {
+		var articleName = f.articleName.value;
+		var cleanName = Mediawiki.getNormalizedTitle(articleName);
+		document.getElementById("pullArticleForm").articleName.value = cleanName;
+
+		var options = {};
+		if (f.redirects.checked) {
+			options.redirects = true;
+		}
+		Mediawiki.pullArticleContent(cleanName, fillInArticle, options);
+
+		return false;
+	}
 	</script>
 
 </div>
