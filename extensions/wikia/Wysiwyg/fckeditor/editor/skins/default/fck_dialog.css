@@ -266,3 +266,38 @@ body, .BackColor
 .throbber #PopupButtons {
 	visibility: hidden;
 }
+
+/* jquery search autosuggest */
+.autocomplete-w1 {
+	left: 0px;
+	margin: 8px 0 0 6px;
+	position: absolute;
+	top: 0px;
+	/* ie6 fix: */
+	_background:none;
+	_margin:0;
+}
+.autocomplete {
+	background: #fff;
+	background: Window;
+	border: 1px solid #aaa;
+	cursor: default;
+	font-size: 0.95em;
+	margin: -6px 6px 6px -6px;
+	max-height: 350px;
+	overflow: auto;
+	overflow-x: hidden;
+	text-align: left;
+	/* ie6 specific: */
+	_margin: 0;
+}
+.autocomplete .selected {
+	background-color: white;
+	background-color: Highlight;
+	color: black;
+	color: Hightlighttext;
+}
+.autocomplete div {
+	padding: 2px 5px;
+	white-space: nowrap;
+}
