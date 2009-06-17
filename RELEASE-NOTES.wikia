@@ -34,6 +34,11 @@
 * rt #17007: FCK: Preformatted text gains line feeds on save or preview
 * rt #17185: Slideshow widget no longer works when embedded
 * jQuery: add helper function $('#foo').exists()
+* rt#16953: WhereIsExtension results view does not show what your viewing (Marooned)
+* rt#16674: Kill warnings in EditingTips (Marooned)
+* rt#17312: Fatal error in AddNewTalkSection extension (Marooned)
+* rt#17311: TOC not displaying nested headings (Marooned)
+* rt#16967: Add new talk section: support __NONEWSECTIONLINK__ (Marooned)
 
 == Changes since 200905.4 ==
 * EditEnhancements & NewEditPage changed (see http://contractor.wikia-inc.com/wiki/Edit_window_improvement_2)
