@@ -266,7 +266,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	 *
 	 */
 	private function createWiki() {
-		global $wgDebugLogGroups, $wgOut, $wgUser, $IP, $wgDBname, $wgExternalSharedDB;
+		global $wgDebugLogGroups, $wgOut, $wgUser, $IP, $wgDBname;
+		global $wgSharedDB, $wgExternalSharedDB;
 		global $wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath;
 		global $wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
 
@@ -475,6 +476,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 
 		$dbw_local = wfGetDB( DB_MASTER, array(), $this->mWikiData[ "dbname"] ); # databases
+		$tmpSharedDB = $wgSharedDB;
+		$wgSharedDB = $this->mWikiData[ "dbname"];
+
 		$sqlfiles = array(
 			"{$IP}/maintenance/tables.sql",
 			"{$IP}/maintenance/interwiki.sql",
@@ -632,6 +636,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step9') );
 
 		$dbw_local->commit();
+		$wgSharedDB = $tmpSharedDB;
+
 		/**
 		 * add local job
 		 */
