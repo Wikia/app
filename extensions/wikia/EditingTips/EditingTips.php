@@ -34,7 +34,9 @@ function getEditingTips() {
 		$text = wfMsg('EditingTips')."\n__NOTOC__\n__NOEDITSECTION__";
 		$html = '<html>'.$wgOut->parse($text).'</html>';
 		$doc = new DOMDocument("1.0", "ISO-8859-1");
+		wfSuppressWarnings();
 		$doc->loadHTML($html);
+		wfRestoreWarnings();
 		$xpath = new DOMXPath($doc);
 		$elements = $xpath->query("/html/body/*");
 		$j = $i = $lastAi = $lastHi = 0;

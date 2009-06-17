@@ -150,6 +150,12 @@ FCK.SwitchEditMode = function() {
 					FCK.Track('/wikitext_comment/popup');
 				}
 
+
+				// track comments in wikitext
+				if (FCK.EditingArea.Textarea.value.indexOf('<!--') > -1) {
+					FCK.Track('/wikitext_comment/popup');
+				}
+
 				//macbre: just show old-school alert()
 				alert(messages);
 			} else {

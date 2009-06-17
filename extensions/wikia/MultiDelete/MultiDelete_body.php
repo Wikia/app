@@ -117,6 +117,9 @@ class MultiDelete extends SpecialPage {
 					$wgOut->addHTML( wfMsg('multidelete-info-empty-list') ); 
 				} 
 				$wikis = $this->getWikisWithTitles($wikis, $mTitles);
+				if( empty( $wikis ) ) {
+					$wgOut->addHTML( wfMsg('multidelete-info-empty-list') );
+				}
 				$this->deletePagesOnWikis($wikis, $mTitles, $username, 'single');
 				break;
 
