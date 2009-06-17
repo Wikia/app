@@ -1,102 +1,141 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<html>
+<body>
+<!-- Jquery is required for the API itself -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<!-- Jquery UI is just used for this test page -->
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<!-- Tabs ripped from http://jqueryui.com/demos/tabs/ -->
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css"/>
+<script type="text/javascript">
+	$(function() {
+		$("#tabs").tabs({
+			collapsible: true
+		});
+	});
+</script>
+<style type="text/css">
+.ui-tabs .ui-tabs-hide {
+     display: none;
+}
+body {
+	/* The default in the theme is farkin huge */
+	font-size: 80%;
+}
+</style>
+<!-- End tabs setup -->
 <script src="Mediawiki.js"></script>
 <script>
+// Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
 Mediawiki.cookiePrefix = "wikicities";
 </script>
+<!-- End Mediawiki API setup -->
 
-<div id="loginForm">
-<form onSubmit="return handleLoginForm(this)">
-Username: <input type="text" name="lgname"> <br />
-Password: <input type="password" name="lgpassword"> <br />
-<input type="submit" value="Login">
-</form>
-</div>
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Login/</a></li>
+		<li><a href="#tabs-2">Create Article</a></li>
+		<li><a href="#tabs-3">Pull Article</a></li>
+	</ul>
 
-<div id="logoutForm" style="display:none">
-	You are logged in.
-	<input type="button" value="logout" onClick="return Mediawiki.logout(handleLogoutForm)"/>
-</div>
+<div id="tabs-1">
+	<div id="loginForm">
+	<form onSubmit="return handleLoginForm(this)">
+	Username: <input type="text" name="lgname"> <br />
+	Password: <input type="password" name="lgpassword"> <br />
+	<input type="submit" value="Login">
+	</form>
+	</div>
+
+	<div id="logoutForm" style="display:none">
+		You are logged in.
+		<input type="button" value="logout" onClick="return Mediawiki.logout(handleLogoutForm)"/>
+	</div>
 
 
 
-<script>
-function handleLoginForm(f){
-	try { 
-		Mediawiki.apiUser = f.lgname.value;
-		Mediawiki.apiPass = f.lgpassword.value;
-		Mediawiki.login(loginWorked, apiFailed);
-	} catch (e) {
-		Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
+	<script>
+	function handleLoginForm(f){
+		try { 
+			Mediawiki.apiUser = f.lgname.value;
+			Mediawiki.apiPass = f.lgpassword.value;
+			Mediawiki.login(loginWorked, apiFailed);
+		} catch (e) {
+			Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
+		}
+		return false; // Return false so that the form doesn't submit
 	}
-	return false; // Return false so that the form doesn't submit
-}
-function loginWorked (){
-	$("#loginForm").hide();
-	$("#logoutForm").show();
-}
+	function loginWorked (){
+		$("#loginForm").hide();
+		$("#logoutForm").show();
+	}
 
-function apiFailed(msg){
-	alert("Api call failed! " + msg);
-}
-function handleLogoutForm(f){
-	$("#logoutForm").hide();
-	$("#loginForm").show();
-}
+	function apiFailed(msg){
+		alert("Api call failed! " + msg);
+	}
+	function handleLogoutForm(f){
+		$("#logoutForm").hide();
+		$("#loginForm").show();
+	}
 
-if (Mediawiki.isLoggedIn()){
-	loginWorked();
-}
-</script>
-<hr />
+	if (Mediawiki.isLoggedIn()){
+		loginWorked();
+	}
+	</script>
+</div>
 
 <!-- ############## Create an article ############## -->
-<form onSubmit="return handleCreateArticle(this)">
-Create a new article named: <input type="text" name="new_title"> <input type="submit" value="Create">
-</form>
-<div id="articleStatus"></div>
-<script>
-function handleCreateArticle (f){
-	try { 
-		normalizedTitle = Mediawiki.getNormalizedTitle(f.new_title.value);
-		f.new_title.value = normalizedTitle;
-		Mediawiki.editArticle({"title": normalizedTitle, "createonly": true, "summary": "testing new api", "text": "page automatically created using Nick's api"}, createArticleSuccess, apiFailed);
-	} catch (e) {
-		Mediawiki.updateStatus( "Error creating article:" + Mediawiki.print_r(e));	
+<div id="tabs-2">
+	<form onSubmit="return handleCreateArticle(this)">
+	Create a new article named: <input type="text" name="new_title"> <input type="submit" value="Create">
+	</form>
+	<div id="articleStatus"></div>
+	<script>
+	function handleCreateArticle (f){
+		try { 
+			normalizedTitle = Mediawiki.getNormalizedTitle(f.new_title.value);
+			f.new_title.value = normalizedTitle;
+			Mediawiki.editArticle({"title": normalizedTitle, "createonly": true, "summary": "testing new api", "text": "page automatically created using Nick's api"}, createArticleSuccess, apiFailed);
+		} catch (e) {
+			Mediawiki.updateStatus( "Error creating article:" + Mediawiki.print_r(e));	
+		}
+		return false; // Return false so that the form doesn't submit
 	}
-	return false; // Return false so that the form doesn't submit
-}
-function createArticleSuccess(){
-	alert("Article created");
-	$("#articleStatus").html("Article created! <a href='/wiki/" + normalizedTitle + "'>" + normalizedTitle + "</a> " + 
-		"<input type=button value=delete onClick='Mediawiki.deleteArticle(\"" + normalizedTitle + "\", null, deleteArticleSuccess, apiFailed)'/>");
-}
-function deleteArticleSuccess(){
-	alert(normalizedTitle + " deleted");
-	$("#articleStatus").hide();	
-}
-</script>
-<hr />
-<!-- ############## Pull down an article ############## -->
-
-<!--
-<div id="Kermit">
+	function createArticleSuccess(){
+		alert("Article created");
+		$("#articleStatus").html("Article created! <a href='/wiki/" + normalizedTitle + "'>" + normalizedTitle + "</a> " + 
+			"<input type=button value=delete onClick='Mediawiki.deleteArticle(\"" + normalizedTitle + "\", null, deleteArticleSuccess, apiFailed)'/>");
+	}
+	function deleteArticleSuccess(){
+		alert(normalizedTitle + " deleted");
+		$("#articleStatus").hide();	
+	}
+	</script>
 </div>
 
-<script>
-fillInArticle = function (result){
-	Mediawiki.$("Kermit").innerHTML = '<pre>' + Mediawiki.print_r(result) + '</pre>';
-/*
-                if (!empty($result) && empty($result['error'])){
-                        foreach($result["query"]["pages"] as $page){
-                                return $page['revisions'][0]['*'];
-                        }
-                } else {
-                        return false;
-                }
-*/
-};
+<!-- ############## Pull down an article ############## -->
 
-Mediawiki.getArticleContent("Kermit_the_Frog", fillInArticle);
-</script>
--->
+<div id="tabs-3">
+	Main Page from this wiki
+	<div id="Main_Page">
+	</div>
 
+	<script>
+	fillInArticle = function (result){
+		Mediawiki.$("Main_Page").innerHTML = '<pre>' + Mediawiki.print_r(result) + '</pre>';
+	/*
+			if (!empty($result) && empty($result['error'])){
+				foreach($result["query"]["pages"] as $page){
+					return $page['revisions'][0]['*'];
+				}
+			} else {
+				return false;
+			}
+	*/
+	};
+
+	Mediawiki.getArticleContent("Main_Page", fillInArticle);
+	</script>
+
+</div>
+
+</div> <!-- /div id=tabs -->
