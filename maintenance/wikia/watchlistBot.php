@@ -1,10 +1,10 @@
 <?php
 /**
  * GlobalWatchlistBot execute script - part of GlobalWatchlist extension
- * 
+ *
  * @addto maintenance
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
- * 
+ *
  */
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once('commandLine.inc');
@@ -17,14 +17,14 @@ $sDebugMailTo = (isset($options['mailto']) ? $options['mailto'] : '');
 
 if(class_exists('GlobalWatchlistBot')) {
 	$oWatchlistBot = new GlobalWatchlistBot($bDebugMode, $aUserNames);
-	$oWatchlistBot->setDbExistsCheck($bDbExistsCheck);
+	//$oWatchlistBot->setDbExistsCheck($bDbExistsCheck);
 	$oWatchlistBot->setDebugMailTo($sDebugMailTo);
-	
+
 	if($bClearMode) {
 		$oWatchlistBot->clear();
 	}
 	else {
-		$oWatchlistBot->run();	
+		$oWatchlistBot->run();
 	}
 }
 else {
