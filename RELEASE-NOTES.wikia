@@ -41,6 +41,7 @@
 * rt #17214: FCK: Insert link window only shows two linksuggestions at a time (Macbre)
 * rt #17269: FCK: Add parameters to turn FCK on/off (Macbre)
 * rt #17279: FCK: other extensions not loaded in FCK parser space (Macbre)
+* rt #17090: Add click-tracking for green section edit buttons (Macbre)
 * rt#16953: WhereIsExtension results view does not show what your viewing (Marooned)
 * rt#16674: Kill warnings in EditingTips (Marooned)
 * rt#17312: Fatal error in AddNewTalkSection extension (Marooned)
