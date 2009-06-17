@@ -102,7 +102,8 @@ class AutoCreateWiki {
 			if ( is_array( $names ) ) {
 				foreach( $names as $n ) {
 					if ( !preg_match("/^[\w\.]+$/",$n) ) continue;
-					$tmp_array['exact'][] = "city_domain = '{$n}'";
+					$sDomain = Wikia::fixDomainName($n, $language);
+					$tmp_array['exact'][] = "city_domain = '{$sDomain}'";
 					$tmp_array['similar'][] = "city_domain like '%{$n}%'";
 				}
 				if ( sizeof( $tmp_array ) ) {
@@ -112,14 +113,12 @@ class AutoCreateWiki {
 					$skip = true;
 				}
 			} else {
-				$condition = "city_domain = '{$name}'";
+				$sDomain = Wikia::fixDomainName($name, $language);
+				$condition = "city_domain = '{$sDomain}'";
 				$conditionSimilar = "city_domain like '%{$name}%'";
 			}
 
 			$conditionLanguage = "";
-			if ( !is_null($language) ) {
-				$conditionLanguage = "city_lang = '{$language}'";
-			}
 
 			if ( $skip === false ) {
 				#--- exact (but with language prefixes)
@@ -130,8 +129,7 @@ class AutoCreateWiki {
 					array ( "*" ),
 					array (
 						$condition,
-						"{$city_domains}.city_id = {$city_list}.city_id",
-						$conditionLanguage
+						"{$city_domains}.city_id = {$city_list}.city_id"
 					),
 					__METHOD__,
 					array( "LIMIT" => 20 )
@@ -148,6 +146,10 @@ class AutoCreateWiki {
 					}
 				}
 				$dbr->freeResult($oRes);
+
+				if ( !is_null($language) ) {
+					$conditionLanguage = "city_lang = '{$language}'";
+				}
 
 				#--
 				# Similar domains
