@@ -114,7 +114,7 @@ class WikiFactoryPage extends SpecialPage {
 	private function getWikiData( $subpage ) {
 		global $wgRequest;
 
-		$domain	=  $wgRequest->getVal( "wpCityDomain", null );
+		$domain	= $wgRequest->getVal( "wpCityDomain", null );
 		$cityid	= $wgRequest->getVal( "cityid", null );
 		$tab 	= "variables";
 		if( is_null( $cityid ) && ( isset( $subpage ) || isset( $domain ) ) ) {
@@ -342,9 +342,9 @@ class WikiFactoryPage extends SpecialPage {
 
 	private function shortStats() {
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = WikiFactory::db( DB_SLAVE );
 		$res = $dbr->select(
-			WikiFactory::table( "city_list" ),
+			array( "city_list" ),
 			array(
 				"date(city_created) as date",
 				"city_public",
@@ -380,6 +380,7 @@ class WikiFactoryPage extends SpecialPage {
 		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$Tmpl->set( "stats", $stats );
 
+
 		return $Tmpl->render( "shortstats" );
 	}
 }
@@ -404,6 +405,7 @@ class CityListPager extends TablePager {
 		$this->mDefaultDirection = true;
 		$search = $wgRequest->getText( 'ilsearch' );
 		parent::__construct();
+		$this->mDb = WikiFactory::db( DB_SLAVE );
 	}
 
     function getFieldNames() {
@@ -496,15 +498,9 @@ class CityListPager extends TablePager {
 		$fields[] = "city_title";
 
 		$query = array(
-			"tables" => array(
-				WikiFactory::table("city_list"),
-				WikiFactory::table("city_cats_view"),
-			),
+			"tables" => array( "city_list",	"city_cats_view" ),
 			"fields" => $fields,
-			"conds" => array(
-				WikiFactory::table("city_list").".city_id = ".
-				WikiFactory::table("city_cats_view").".cc_city_id",
-			)
+			"conds"  => array( "city_list.city_id = city_cats_view.cc_city_id" )
 		);
 
 		return $query;

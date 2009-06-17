@@ -35,7 +35,7 @@ class MagicFooterLinksLoader extends SpecialPage {
 	}
 
 	public function execute($par) {
-		global $wgUser, $wgRequest, $wgOut, $wgMemc;
+		global $wgUser, $wgRequest, $wgOut, $wgMemc, $wgExternalSharedDB;
 
 		if(!$this->userCanExecute($wgUser)) {
 			$this->displayRestrictionError();
@@ -52,22 +52,22 @@ class MagicFooterLinksLoader extends SpecialPage {
 
 				// Collect database names for all wikis which had some magic footer links before loading new configuration.
 				$dbnames = array();
-				$dbr =& wfGetDB(DB_SLAVE);
-				$res = $dbr->select(wfSharedTable('magic_footer_links'), 'DISTINCT dbname');
+				$dbr =& wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+				$res = $dbr->select('magic_footer_links', 'DISTINCT dbname');
 				while($row = $dbr->fetchObject($res)) {
 					$dbnames[] = $row->dbname;
 				}
 				$dbr->freeResult($res);
 
 				// Delete current data from database
-				$dbw = wfGetDB(DB_MASTER);
-				$dbw->delete(wfSharedTable('magic_footer_links'), '*');
+				$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+				$dbw->delete('magic_footer_links', '*');
 				$deleted = $dbw->affectedRows();
 
 				// Insert data from Google Spreadsheet into database and into cache
 				$inserted = 0;
 				foreach($this->results as $row => $result) {
-					if(count($result) == 3 && $dbw->insert(wfSharedTable('magic_footer_links'), array('dbname' => $result['dbname'], 'page' => str_replace('_', ' ', $result['page']), 'links' => join(' | ', $result['links'])))) {
+					if(count($result) == 3 && $dbw->insert('magic_footer_links', array('dbname' => $result['dbname'], 'page' => str_replace('_', ' ', $result['page']), 'links' => join(' | ', $result['links'])))) {
 						$dbnames[] = $result['dbname'];
 						$inserted++;
 					} else {

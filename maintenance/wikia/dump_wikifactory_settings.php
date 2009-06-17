@@ -17,8 +17,8 @@ echo "<?php\n\n";
 
 $oRes = $dbr->select(
     array(
-        wfSharedTable( "city_variables" ),
-        wfSharedTable( "city_variables_pool" )
+        WikiFactory::table( "city_variables" ),
+        WikiFactory::table( "city_variables_pool" )
     ),
     array( "*" ),
     array( "cv_city_id" => $wgCityId, "cv_variable_id = cv_id" ),

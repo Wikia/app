@@ -94,11 +94,11 @@ class PageImporterTask extends BatchTask {
      * @return string: HTML code for form
      */
 	public function getForm ($title, $data = false ) {
-		global $wgOut;
+		global $wgOut, $wgExternalSharedDB;
 
-		$dbr = wfGetDB(DB_MASTER);
+		$dbr = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$oRes = $dbr->select(
-				wfSharedTable( "wikia_tasks" ),
+				"wikia_tasks",
 				array( "task_id","task_arguments" ),
 				array( "task_type" => "pagegrabberdump", "task_status" => 3 ),
 				__METHOD__,
@@ -110,7 +110,7 @@ class PageImporterTask extends BatchTask {
 		while( $oRow = $dbr->fetchObject( $oRes )) {
 			$args = unserialize($oRow->task_arguments);
 			$oRes2 = $dbr->select(
-					wfSharedTable( "wikia_tasks" ),
+					"wikia_tasks",
 					array("task_arguments"),
 					array("task_id" => $args["source-task-id"]),
 					__METHOD__

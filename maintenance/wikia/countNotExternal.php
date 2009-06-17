@@ -11,7 +11,7 @@ function countNotExternal() {
 	 */
 	$databases = array();
 	$res = $dbr->select(
-		wfSharedTable( "city_list" ),
+		WikiFactory::table( "city_list" ),
 		array( "city_dbname", "city_id" ),
 		array( "city_public" => 1 ),
 		__FUNCTION__

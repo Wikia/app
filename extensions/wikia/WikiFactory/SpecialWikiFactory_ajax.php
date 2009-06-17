@@ -53,7 +53,7 @@ function axWFactoryGetVariable() {
 }
 
 function axWFactoryDomainCRUD($type="add") {
-    global $wgRequest, $wgUser;
+    global $wgRequest, $wgUser, $wgExternalSharedDB;
     $sDomain = $wgRequest->getVal("domain");
     $iCityId = $wgRequest->getVal("cityid");
 
@@ -66,7 +66,7 @@ function axWFactoryDomainCRUD($type="add") {
         return;
     }
 
-    $dbw = wfGetDB( DB_MASTER );
+    $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
     $aDomains = array();
     $aResponse = array();
     $sInfo = "";
@@ -93,7 +93,7 @@ function axWFactoryDomainCRUD($type="add") {
             $sNewDomain = $wgRequest->getVal("newdomain");
             #--- first, check if domain is not used
             $oRes = $dbw->select(
-                wfSharedTable("city_domains"),
+                "city_domains",
                 "count(*) as count",
                 array("city_domain" => $sNewDomain),
                 __METHOD__
@@ -112,7 +112,7 @@ function axWFactoryDomainCRUD($type="add") {
             else {
                 #--- reall change domain
                 $dbw->update(
-                    wfSharedTable("city_domains"),
+                    "city_domains",
                     array("city_domain" => strtolower($sNewDomain)),
                     array(
                         "city_id" => $iCityId,
@@ -135,7 +135,7 @@ function axWFactoryDomainCRUD($type="add") {
             $iNewStatus = $wgRequest->getVal("status");
             if (in_array($iNewStatus, array(0,1,2))) {
                 #--- updatec city_list table
-                $dbw->update(wfSharedTable("city_list"), array("city_public" => $iNewStatus),
+                $dbw->update("city_list", array("city_public" => $iNewStatus),
                     array("city_id" => $iCityId));
 				$dbw->commit();
                 switch ($iNewStatus) {

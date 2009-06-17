@@ -49,11 +49,12 @@ class WikiFactoryReporter extends SpecialPage
 
 	function getCustomSettings()
 	{
-		$city_list = wfSharedTable('city_list');
-		$cv        = wfSharedTable('city_variables');
-		$cv_pool   = wfSharedTable('city_variables_pool');
+		global $wgExternalSharedDB;
+		$city_list = 'city_list';
+		$cv        = 'city_variables';
+		$cv_pool   = 'city_variables_pool';
 
-		$dbr = wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$res = $dbr->select(
 			array($city_list, $cv, $cv_pool),
 			array('cv_value', 'city_url'),
@@ -78,7 +79,7 @@ class WikiFactoryReporter extends SpecialPage
 			{
 				$cv_value = 'Error. Not an array?!?';
 			}
-		
+
 			if (preg_match('/http:\/\/([\w\.\-]+)\//', $row->city_url, $matches))
 			{
 				$city_url = str_ireplace('.wikia.com', '', $matches[1]);
@@ -86,7 +87,7 @@ class WikiFactoryReporter extends SpecialPage
 			{
 				$city_url = 'Error. Unknown wiki?!?';
 			}
-			
+
 			if (!empty($cv_value))
 			{
 				$data[] = array($cv_value, $city_url);

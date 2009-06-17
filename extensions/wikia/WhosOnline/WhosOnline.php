@@ -49,7 +49,7 @@ function wfWhosOnline() {
 
 // update online data
 function wfWhosOnline_update_data() {
-	global $wgUser, $wgMaxAgeUserOnline, $wgMemc, $wgCityId;
+	global $wgUser, $wgMaxAgeUserOnline, $wgMemc, $wgCityId, $wgExternalSharedDB;
 
 	wfProfileIn(__METHOD__);
 
@@ -60,7 +60,7 @@ function wfWhosOnline_update_data() {
 		$wgUser->saveSettings();
 
 		// write to DB (use master)
-		$db = wfGetDB(DB_WRITE);
+		$db = wfGetDB(DB_WRITE, array(), $wgExternalSharedDB);
 
 		// row to insert to table
 		$row = array (
@@ -70,7 +70,7 @@ function wfWhosOnline_update_data() {
 			'wikiid'    => $wgCityId
 		);
 
-		$sharedOnline = wfSharedTable('online');
+		$sharedOnline = 'online';
 		$ignore = $db->ignoreErrors( true );
 		$db->begin();
 		$db->delete($sharedOnline, array('username' => $wgUser->getName(), 'wikiid' => $wgCityId), __METHOD__);

@@ -8,16 +8,15 @@ $wgWikiaNewtalkExpiry = 300;
  * Hook, set new wikia shared message
  *
  * @author
- * @author eloy@wikia (changes)
+ * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com> (changes)
  * @access public
  *
  * @param Article $article: edited article
  *
  * @return false: don't go to next hook
  */
-function wfSetWikiaNewtalk( &$article )
-{
-	global $wgSharedDB, $wgMemc, $wgWikiaNewtalkExpiry;
+function wfSetWikiaNewtalk( &$article ) {
+	global $wgMemc, $wgWikiaNewtalkExpiry, $wgExternalSharedDB;
 	$name = $article->mTitle->getDBkey();
 	$other = User::newFromName( $name );
 
@@ -30,12 +29,15 @@ function wfSetWikiaNewtalk( &$article )
     if( $other ) {
 		$other->setNewtalk( true );
 		$other->load();
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
         $dbw->begin();
-        #--- first delete
+
+		/**
+		 * first delete
+		 */
 		$dbw->delete(
-            wfSharedTable("shared_newtalks"),
+            "shared_newtalks",
             array(
                 'sn_wiki' => wfWikiID(),
                 'sn_user_id' => $other->getID(),
@@ -43,9 +45,11 @@ function wfSetWikiaNewtalk( &$article )
     		),
             __METHOD__
         );
-        #--- then insert
+        /**
+		 * then insert
+		 */
 		$dbw->insert(
-            wfSharedTable("shared_newtalks"),
+            "shared_newtalks",
             array(
                 'sn_wiki' => wfWikiID(),
                 'sn_user_id' => $other->getID(),
@@ -61,17 +65,17 @@ function wfSetWikiaNewtalk( &$article )
 }
 
 function wfGetWikiaNewtalk( &$user, &$talks ) {
-	global $wgSharedDB, $wgMemc, $wgWikiaNewtalkExpiry;
+	global $wgMemc, $wgWikiaNewtalkExpiry, $wgExternalSharedDB;
 
 	# hack: don't check it for our varnish ip addresses
 	global $wgSquidServers, $wgSquidServersNoPurge;
-	if( !$user->mId && ( 
+	if( !$user->mId && (
 		in_array( $user->getName(), $wgSquidServers ) ||
 		in_array( $user->getName(), $wgSquidServersNoPurge )
 	) ) {
 		return true;
 	}
-
+	wfProfileIn( __METHOD__ );
 	$key = 'wikia:shared_newtalk:'.$user->getID().':'.str_replace( ' ', '_', $user->getName() );
 	$wikia_talks = $wgMemc->get( $key );
 	if( !is_array( $wikia_talks ) ) {
@@ -81,21 +85,50 @@ function wfGetWikiaNewtalk( &$user, &$talks ) {
 		// from a lagged slave. The effect for the user would be 
 		// that he can't clear his user talk notice (the data are 
 		// removed on master but not replicated to the slave yet).
-		$dbr = wfGetDB( DB_MASTER );
-		$tbl_shared_newtalks = wfSharedTable( 'shared_newtalks' );
-		$tbl_city_list = wfSharedTable( 'city_list' );
-		$res = $dbr->query( "SELECT city_id, sn_wiki, city_title, city_url FROM $tbl_shared_newtalks LEFT OUTER JOIN $tbl_city_list ON city_dbname=sn_wiki WHERE sn_user_id=".$user->getID()." AND sn_user_ip=".$dbr->addQuotes( $user->getName() ) . ' AND city_public = 1');
-		while( $row = $dbr->fetchObject( $res ) ) {
-			$link = $row->city_url . 'index.php?title=User_talk:' . urlencode($user->getTitleKey());
-			$wiki = empty( $row->city_title ) ? $row->sn_wiki : $row->city_title;
-			$wikia_talks[$row->city_id] = array( 'wiki' => $wiki, 'link' => $link );
-		}
+		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
+		$sth = $dbr->select(
+			array( "shared_newtalks" ),
+			array( "sn_wiki" ),
+			array(
+				"sn_user_id" => $user->getID(),
+				"sn_user_ip" => $user->getName()
+			),
+			__METHOD__,
+			array( "LIMIT" => 255 )
+		);
+		$wikis = array();
+		while( $row = $dbr->fetchObject( $sth ) ) {
+			$wikis[] = $row->sn_wiki;
+		}
+		$dbr->freeResult( $sth );
+
+		if( count( $wikis ) ) {
+			$dbwf = wfGetDB( DB_SLAVE );
+			$sth = $dbwf->select(
+				WikiFactory::table( 'city_list' ),
+				array( "city_id", "city_title", "city_url", "city_dbname" ),
+				array(
+					  $dbwf->makeList( array( "city_dbname" => $wikis ), LIST_OR ),
+					  "city_public" => 1
+				),
+				__METHOD__
+			);
+			while( $row = $dbwf->fetchObject( $sth ) ) {
+				$link = $row->city_url . 'index.php?title=User_talk:' . urlencode($user->getTitleKey());
+				$wiki = empty( $row->city_title ) ? $row->city_dbname : $row->city_title;
+				$wikia_talks[ $row->city_id ] = array( 'wiki' => $wiki, 'link' => $link );
+			}
+		}
 		$wgMemc->set( $key, $wikia_talks, $wgWikiaNewtalkExpiry );
 	}
+
 	if( is_array( $wikia_talks ) && count( $wikia_talks ) > 0 ) {
 		$talks += $wikia_talks;
 	}
+
+	wfProfileOut( __METHOD__ );
+
 	return true;
 }
 
@@ -112,13 +145,12 @@ function wfGetWikiaNewtalk( &$user, &$talks ) {
  *
  * @return true: don't stop hook's processing
  */
-function wfClearWikiaNewtalk( &$user )
-{
-	global $wgMemc;
+function wfClearWikiaNewtalk( &$user ) {
+	global $wgMemc, $wgExternalSharedDB;
 
-    $dbw = wfGetDB( DB_MASTER );
+	$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 	$dbw->delete(
-        wfSharedTable("shared_newtalks"),
+        "shared_newtalks",
         array(
             'sn_wiki' => wfWikiID(),
             'sn_user_id' => $user->getID(),
@@ -134,7 +166,7 @@ function wfClearWikiaNewtalk( &$user )
 /**
  * register Hooks
  */
-if( isset( $wgSharedDB ) && !( isset( $wgDontWantShared ) && ($wgDontWantShared == true) ) ) {
+if( !empty( $wgExternalSharedDB ) ) {
 	global $wgHooks;
 	$wgHooks['UserRetrieveNewTalks'][] = 'wfGetWikiaNewtalk';
 	$wgHooks['ArticleEditUpdateNewTalk'][] = 'wfSetWikiaNewtalk';

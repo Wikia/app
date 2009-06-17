@@ -22,34 +22,37 @@ function getSuggestedArticleURL( $text )
  *
  * @Return String
  */
-function cxValidateUserName ($uName)
-{
-    Global $IP, $wgDBname, $wgSharedDB;
+function cxValidateUserName ($uName) {
+	global $IP, $wgDBname, $wgExternalSharedDB;
 
-    Require_Once ($IP . '/includes/User.php');
+	require_once ($IP . '/includes/User.php');
 
-    $DB =& wfGetDB (DB_SLAVE);
 
-    $nt = Title::newFromText( $uName );
+	$nt = Title::newFromText( $uName );
 	if( is_null( $nt ) ) {
-	   # Illegal name
-	    return 'INVALID';
+		# Illegal name
+		return 'INVALID';
 	}
-    $uName = $nt->getText();
 
-    $uName = MySQL_Real_Escape_String ($uName);
+	$uName = $nt->getText();
+	$uName = MySQL_Real_Escape_String ($uName);
 
-    //if (! User::isValidUserName ($uName))
-    //    return 'INVALID';return wfMsg ('username-invalid');
-    if ($uName == '')
-	return 'INVALID';
+	if ($uName == '') {
+		return 'INVALID';
+	}
 
-    if (!empty($wgSharedDB) && $DB->NumRows ($dbResults = $DB->Query ("SELECT User_Name FROM `" . $wgSharedDB . "`.`user` WHERE User_Name = '$uName';")))
-	return 'EXISTS';#wfMsg ('username-exists');
-    if ($DB->NumRows ($dbResults = $DB->Query ("SELECT User_Name FROM `user` WHERE User_Name = '$uName';")))
-	return 'EXISTS';#wfMsg ('username-exists');
+	$dbr = wfGetDB (DB_SLAVE);
+	$oRow = $dbr->selectRow( 'user', 'user_name', array('user_name' => $uName), __METHOD__);
+	if ($oRow !== false) {
+		return 'EXISTS';#wfMsg ('username-exists');
+	}
 
-    return 'OK';#wfMsg ('username-valid');
+	$dbExt = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+	if ($dbExt->NumRows ($dbResults = $dbExt->Query ("SELECT User_Name FROM `user` WHERE User_Name = '$uName';"))) {
+		return 'EXISTS';#wfMsg ('username-exists');
+	}
+
+	return 'OK';#wfMsg ('username-valid');
 }
 
 function wfSignForReview() {

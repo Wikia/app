@@ -15,7 +15,7 @@ if ( ! defined( 'MEDIAWIKI' ) ) {
 $wgHooks['UploadComplete'][]  = 'wfSpecialUploadPutInformation';
 
 function wfSpecialUploadPutInformation( $uploadForm ) {
-	global $wgRequest, $wgCityId;
+	global $wgRequest, $wgCityId, $wgExternalDatawareDB;
 
 	$title = $uploadForm->mLocalFile->getTitle();
 	if( !($title instanceof Title) ) {
@@ -44,7 +44,7 @@ function wfSpecialUploadPutInformation( $uploadForm ) {
 		$oldFileName = sprintf("%s/%s", $uploadForm->mLocalFile->getArchivePath(), $oldFileName);
 	}
 
-	$dbw = wfGetDBExt( DB_MASTER );
+	$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 	$dbw->insert(
 		"upload_log",
 		array(

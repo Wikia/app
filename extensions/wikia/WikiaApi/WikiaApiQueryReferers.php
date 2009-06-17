@@ -22,33 +22,35 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 		}
 	}
 
-	protected function getDB() { return wfGetDBExt(DB_SLAVE); }
+	protected function getDB() {
+		global $wgExternalStatsDB;
+		return wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+	}
 
 	private function getWikiReferers () {
-		global $wgDBStats, $wgCityId;
-		global $wgServerName, $wgDBname;
-		
+		global $wgCityId, $wgServerName, $wgDBname;
+
 		#--- initial parameters (dbname, limit, offset ...)
 		extract($this->getInitialParams());
-		
+
 		#--- request parameters ()
 		extract($this->extractRequestParams());
-		
+
 		$this->initCacheKey($lcache_key, __METHOD__);
-		
+
 		#---
 		$user_id = $this->getUser()->getId();
 		$ip = wfGetIP();
 		$browserId = $this->getBrowser();
-		
+
 		#---
 		$aTmp = $aData = array();
 		$where_derived = " ref_domain != '' and ref_domain != '".$wgServerName."' and ref_domain not like '%$wgDBname.wikia%' and ref_domain not like '%wikia-inc.com%'";
 		try {
 			#--- database instance - DB_SLAVE
 			$dbs = $this->getDB();
-			
-			if ( is_null($dbs) ) throw new WikiaApiQueryError(0); 
+
+			if ( is_null($dbs) ) throw new WikiaApiQueryError(0);
 
 			#--- identifier of wikia
 			$city = ( !is_null($city) ) ? intval($city) : intval($wgCityId);
@@ -57,14 +59,14 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 				$this->setCacheKey( $lcache_key, 'C', $city );
 			}
 
-			#--- number of months 
+			#--- number of months
 			$fromdate = intval($fromdate);
-			switch ($fromdate) { 
-				// last month 
+			switch ($fromdate) {
+				// last month
 				case "1" : $where_derived .= " and ref_type = 2 "; break;
-				// last 3 months 
+				// last 3 months
 				case "3" : $where_derived .= " and ref_type = 3 "; break;
-				// last 6 months 
+				// last 6 months
 				case "6" : $where_derived .= " and ref_type = 4 "; break;
 				// default (all referrers)
 				default  : $where_derived .= " and ref_type = 4 "; break;
@@ -111,7 +113,7 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 				}
 			}
 
-			$table = "`{$wgDBStats}`.`{$define_table}`";
+			$table = "`{$define_table}`";
 			$select = " ref_domain, ref_count ";
 			$order = ""; #"ORDER BY ref_count DESC";
 
@@ -137,7 +139,7 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 			} else {
 				$aTmp = $cached;
 			}
-			
+
 			$iLimit = $iOffset = 0;
 			#--- limit
 			if ( !empty($limit)  ) {
@@ -145,16 +147,16 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 					throw new WikiaApiQueryError(1);
 				}
 				$iLimit = $limit;
-			} 
-			
+			}
+
 			#--- offset
 			if ( !empty($offset)  ) {
 				if ( !$this->isInt($offset) ) {
 					throw new WikiaApiQueryError(1);
 				}
 				$iOffset = $offset;
-			} 
-			
+			}
+
 			if (!empty($aTmp)) {
 				krsort($aTmp);
 				$aData = array_slice($aTmp, $iOffset, $iLimit);
@@ -176,7 +178,7 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 		if ( isset($e) ) {
 			$sData = $e->getText();
 			$this->getResult()->setIndexedTagName($sData, 'fault');
-		} else { 
+		} else {
 			$this->getResult()->setIndexedTagName($aData, 'item');
 		}
 		$this->getResult()->addValue('query', $this->getModuleName(), $aData);
@@ -199,7 +201,7 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 						if (count($_) > 1 && !empty($_[count($_)-2])) $domain_where = $_[count($_)-2].".".$_[count($_)-1];
 						break;
 				}
-				if (!empty($domain_where)) 
+				if (!empty($domain_where))
 					if (empty($domain_cond["(ref_domain not like '%".$domain_where."%')"]))
 						$domain_cond["(ref_domain not like '%".$domain_where."%')"] = 1;
 			}

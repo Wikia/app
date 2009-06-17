@@ -256,18 +256,12 @@ class TaskManagerPage extends SpecialPage {
 	 * @return mixed	row from database or null if no data
 	 */
 	private function loadTaskData( $id ) {
-
-		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_MASTER );
-
-		$oRow = $dbr->selectRow(
-			array( wfSharedTable( "wikia_tasks")) /*from*/,
-			array( "*" ) /*what*/,
-			array( "task_id" => $id ) /*where*/,
-			__METHOD__
-		);
-		wfProfileOut( __METHOD__ );
-
+		global $wgExternalSharedDB;
+		$fname = __METHOD__;
+		wfProfileIn( $fname );
+		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$oRow = $dbr->selectRow( "wikia_tasks", "*", array( "task_id" => $id ), $fname );
+		wfProfileOut( $fname );
 		return $oRow;
 	}
 
@@ -281,18 +275,13 @@ class TaskManagerPage extends SpecialPage {
 	 * @return boolean status of operation
 	 */
 	private function removeTask( $id ) {
-		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
-
-		$status = $dbw->delete(
-			wfSharedTable("wikia_tasks") /*from*/,
-			array( "task_id" => $id ) /*where*/,
-			__METHOD__
-		);
+		global $wgExternalSharedDB;
+		$fname = __METHOD__;
+		wfProfileIn( $fname );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$status = $dbw->delete( "wikia_tasks", array( "task_id" => $id ), $fname );
 		$dbw->commit();
-
-		wfProfileOut( __METHOD__ );
-
+		wfProfileOut( $fname );
 		return $status;
 	}
 
@@ -307,15 +296,12 @@ class TaskManagerPage extends SpecialPage {
 	 * @return boolean  status of operation
 	 */
 	private function changeTaskStatus( $id, $status ) {
-		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
-		$sth = $dbw->update(
-			wfSharedTable( "wikia_tasks" )/*from*/,
-			array( "task_status" => $status ) /*what*/,
-			array( "task_id" => $id ) /*where*/,
-			__METHOD__
-		);
-		wfProfileOut( __METHOD__ );
+		global $wgExternalSharedDB;
+		$fname = __METHOD__;
+		wfProfileIn( $fname );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$sth = $dbw->update( "wikia_tasks", array( "task_status" => $status ), array( "task_id" => $id ), $fname );
+		wfProfileOut( $fname );
 		return $sth;
 	}
 
@@ -382,9 +368,11 @@ class TaskManagerPager extends TablePager {
 	 * constructor
 	 */
 	function __construct() {
+		global $wgExternalSharedDB;
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "TaskManager" );
 		$this->mDefaultDirection = true;
 		parent::__construct();
+		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 	}
 
 	/**
@@ -597,7 +585,7 @@ class TaskManagerPager extends TablePager {
 		 * get filters from session
 		 */
 		return array(
-			"tables" => wfSharedTable("wikia_tasks"),
+			"tables" => "wikia_tasks",
 			"fields" => array("*"),
 			"conds" => $this->mQueryConds
 		);

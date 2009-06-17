@@ -27,10 +27,6 @@ $wgExtensionCredits['specialpage'][] = array(
  */
 $wgExtensionMessagesFiles["RequestWiki"] = dirname(__FILE__) . "/SpecialRequestWiki.i18n.php";
 
-#--- helper file
-require_once( dirname(__FILE__) . '/SpecialRequestWiki_helper.php' );
-
-
 #--- permissions
 $wgAvailableRights[] = 'requestwiki';
 $wgGroupPermissions['*']['requestwiki'] = true;

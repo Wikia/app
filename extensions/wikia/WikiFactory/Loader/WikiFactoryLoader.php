@@ -60,7 +60,7 @@ class WikiFactoryLoader {
 	 * @return WikiFactoryLoader object
 	 */
 	public function  __construct( $id = null, $server_name = false ) {
-		global $wgDBname, $wgSharedDB, $wgDevelEnvironment, $wgDevelDomains;
+		global $wgDBname, $wgDevelEnvironment, $wgDevelDomains;
 		global $wgWikiFactoryDomains;
 
 		$this->mCommandLine = false;
@@ -179,23 +179,24 @@ class WikiFactoryLoader {
 	 * @return object Database	database handler
 	 */
 	public function getDB() {
-		global $wgDBserver, $wgDBuser, $wgDBpassword,  $wgDBservers;
+		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
 		if( $this->mDBhandler instanceof Database ) {
 			return $this->mDBhandler;
 		}
-		$host = "";
-		if( isset( $wgDBservers ) && is_array( $wgDBservers ) ) {
-			$server = array_rand( $wgDBservers );
-			$host = $wgDBservers[ $server ]["host"];
-			$this->mDBhandler = new Database( $host, $wgDBuser, $wgDBpassword, $this->mDBname, 1 );
-			$this->debug( "connecting to {$host} {$wgDBuser} {$wgDBpassword} {$this->mDBname}" );
-		}
+
 		/**
-		 * and finally fallback to $wgDBserver
+		 * get the connection handler using MW DB LoadBalabcer
+		 * do not forget about destroying the loadbalancer instance
+		 */
+		$this->mDBhandler = wfGetDB( DB_SLAVE, array(), $this->mDBname );
+		$this->debug( "connecting to {$this->mDBname} via LoadBalancer" );
+
+		/**
+		 * if something goes wrong just fallback to $wgDBserver
 		 */
 		if( !$this->mDBhandler || !$this->mDBhandler->isOpen() ) {
-			error_log( "WikiFactoryLoader[{$this->mCityID}]: fallback from {$host} to {$wgDBserver}" );
+			error_log( "WikiFactoryLoader[{$this->mCityID}]: fallback to {$wgDBserver}" );
 			$this->mDBhandler = new Database( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
 			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
 		}
@@ -216,7 +217,7 @@ class WikiFactoryLoader {
 
 		wfProfileIn(__METHOD__);
 		global $wgCityId, $wgDevelEnvironment, $wgWikiaAdvertiserCategory,
-			$wgDBservers;
+			$wgDBservers, $wgLBFactoryConf;
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local
@@ -652,12 +653,16 @@ class WikiFactoryLoader {
 				$wgDBservers[ $index ][ "dbname" ] = $this->mVariables["wgDBname"];
 			}
 		}
+		if( isset( $wgLBFactoryConf ) && is_array( $wgLBFactoryConf ) && isset( $this->mVariables["wgDBname"] ) ) {
+			$wgLBFactoryConf['serverTemplate']['dbname'] = $this->mVariables["wgDBname"];
+		}
 
 		wfProfileOut( __METHOD__ );
 
 		/**
-		 * and finally return wiki id
+		 * cleanup and finally return wiki id
 		 */
+		LBFactory::destroyInstance();
 		return $this->mWikiID;
 	}
 

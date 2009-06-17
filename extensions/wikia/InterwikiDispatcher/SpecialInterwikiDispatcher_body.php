@@ -58,10 +58,11 @@ class InterwikiDispatcher extends SpecialPage {
 	}
 	
 	private static function isWikiExists($sName) {
-		$DBr = wfGetDB(DB_SLAVE);
+		global $wgExternalSharedDB;
+		$DBr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$dbResult = $DBr->Query(
 			  'SELECT city_id'
-			. ' FROM ' . wfSharedTable('city_domains')
+			. ' FROM city_domains'
 			. ' WHERE city_domain = ' . $DBr->AddQuotes("$sName.wikia.com")
 			. ' LIMIT 1'
 			. ';'
@@ -79,10 +80,11 @@ class InterwikiDispatcher extends SpecialPage {
 	}
 	
 	private static function getCityUrl($iCityId) {
-		$DBr = wfGetDB(DB_SLAVE);
+		global $wgExternalSharedDB;
+		$DBr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$dbResult = $DBr->Query(
 			  'SELECT city_url'
-			. ' FROM ' . wfSharedTable('city_list')
+			. ' FROM city_list'
 			. ' WHERE city_id = ' . $DBr->AddQuotes($iCityId)
 			. ';'
 			, __METHOD__

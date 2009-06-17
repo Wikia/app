@@ -266,7 +266,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 *
 	 */
 	private function createWiki() {
-		global $wgDebugLogGroups, $wgOut, $wgUser, $IP, $wgDBname, $wgSharedDB;
+		global $wgDebugLogGroups, $wgOut, $wgUser, $IP, $wgDBname, $wgExternalSharedDB;
 		global $wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath;
 		global $wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
 
@@ -303,9 +303,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * check and create database
 		 */
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); # central
+		$dbw_local = wfGetDB( DB_MASTER ); # databases
 		$Row = $dbw->selectRow(
-			wfSharedTable("city_list"),
+			"city_list",
 			array( "count(*) as count" ),
 			array( "city_dbname" => $this->mWikiData[ "dbname"] ),
 			__METHOD__
@@ -317,7 +318,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->log( "Database {$this->mWikiData[ "dbname"]} exists!" );
 			$error = 1;
 		} else {
-			$dbw->query( sprintf( "CREATE DATABASE `%s`", $this->mWikiData[ "dbname"]) );
+			$dbw_local->query( sprintf( "CREATE DATABASE `%s`", $this->mWikiData[ "dbname"]) );
 			$this->log( "Creating database {$this->mWikiData[ "dbname"]}" );
 		}
 
@@ -342,7 +343,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			'city_created'        => wfTimestamp( TS_DB, time() ),
 		);
 
-		$bIns = $dbw->insert( wfSharedTable("city_list"),$insertFields, __METHOD__ );
+		$bIns = $dbw->insert( "city_list", $insertFields, __METHOD__ );
 		if ( empty($bIns) ) {
 			$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step3') );
 			$this->log( "Cannot set data in city_list table" );
@@ -367,7 +368,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( "Creating row in city_list table, city_id = {$this->mWikiId}" );
 
 		$bIns = $dbw->insert(
-			wfSharedTable("city_domains"),
+			"city_domains",
 			array(
 				array(
 					'city_id'     =>  $this->mWikiId,
@@ -417,7 +418,6 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgUploadPath'				=> "http://images.wikia.com/{$this->mWikiData[ "dir_part" ]}/images",
 			'wgUploadDirectory'			=> "/images/{$this->mWikiData[ "dir_part" ]}/images",
 			'wgDBname'					=> $this->mWikiData[ "dbname" ],
-			'wgSharedDB'				=> 'wikicities',
 			'wgLocalInterwiki'			=> $this->mWikiData[ 'title' ],
 			'wgLanguageCode'			=> $this->mWikiData['language'],
 			'wgServer'					=> "http://{$this->mWikiData["subdomain"]}." . "wikia.com",
@@ -431,7 +431,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "founder" ] = $this->mFounder->getId();
 
 		$oRes = $dbw->select(
-			wfSharedTable("city_variables_pool"),
+			"city_variables_pool",
 			array( "cv_id, cv_name" ),
 			array( "cv_name in ('" . implode( "', '", array_keys($WFSettingsVars) ) . "')"),
 			__METHOD__
@@ -456,7 +456,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			 */
 			if( !empty($cv_id) ) {
 				$dbw->insert(
-					wfSharedTable( "city_variables" ),
+					"city_variables",
 					array(
 						"cv_value"       => serialize( $value ),
 						"cv_city_id"     => $this->mWikiId,
@@ -473,14 +473,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * we got empty database created, now we have to create tables and
 		 * populate it with some default values
 		 */
-		$tmpSharedDB = $wgSharedDB;
-		$wgSharedDB = $this->mWikiData[ "dbname"];
 
-		$dbw->selectDb( $this->mWikiData[ "dbname"] );
+		$dbw_local->selectDb( $this->mWikiData[ "dbname"] );
 		$sqlfiles = array(
 			"{$IP}/maintenance/tables.sql",
 			"{$IP}/maintenance/interwiki.sql",
-			"{$IP}/maintenance/wikia/default_userrights.sql",
 			"{$IP}/maintenance/wikia/city_interwiki_links.sql",
 			"{$IP}/maintenance/wikia-additional-tables.sql",
 			"{$IP}/extensions/CheckUser/cu_changes.sql",
@@ -488,14 +485,13 @@ class AutoCreateWikiPage extends SpecialPage {
 		);
 
 		foreach ($sqlfiles as $file) {
-			$error = $dbw->sourceFile( $file );
+			$error = $dbw_local->sourceFile( $file );
 			if ($error !== true) {
 				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step6') );
 				$wgOut->addHTML(wfMsg('autocreatewiki-step6-error'));
 				return;
 			}
 		}
-		$wgSharedDB = $tmpSharedDB;
 		$this->log( "Creating tables in database" );
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step6') );
 
@@ -510,7 +506,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			 * first check whether database starter exists
 			 */
 			$sql = sprintf( "SHOW DATABASES LIKE '%s';", $starterDB );
-			$Res = $dbw->query( $sql, __METHOD__ );
+			$Res = $dbw_local->query( $sql, __METHOD__ );
 			$numRows = $Res->numRows();
 			if ( !empty( $numRows ) ) {
 				$cmd = sprintf(
@@ -529,7 +525,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->log($cmd);
 				wfShellExec( $cmd );
 
-				$error = $dbw->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
+				$error = $dbw_local->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
 				if ($error !== true) {
 					$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step7') );
 					$wgOut->addHTML(wfMsg('autocreatewiki-step7-error'));
@@ -564,8 +560,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * making the wiki founder a sysop/bureaucrat
 		 */
 		if ( $this->mFounder->getID() ) {
-			$dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mFounder->getID(), "ug_group" => "sysop" ) );
-			$dbw->replace( "user_groups", array( ), array( "ug_user" => $this->mFounder->getID(), "ug_group" => "bureaucrat" ) );
+			$dbw_local->replace( "user_groups", array( ), array( "ug_user" => $this->mFounder->getID(), "ug_group" => "sysop" ) );
+			$dbw_local->replace( "user_groups", array( ), array( "ug_user" => $this->mFounder->getID(), "ug_group" => "bureaucrat" ) );
 		}
 		$this->log( "Create user sysop/bureaucrat" );
 
@@ -617,7 +613,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * set images timestamp to current date (see: #1687)
 		 */
-		$dbw->update(
+		$dbw_local->update(
 			"image",
 			array( "img_timestamp" => date('YmdHis') ),
 			"*",
@@ -628,21 +624,21 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * init site_stats table (add empty row)
 		 */
-		$dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
+		$dbw_local->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
 
 		/**
 		 * commit all in new database
 		 */
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step9') );
 
-		$dbw->commit();
+		$dbw_local->commit();
 		/**
 		 * add local job
 		 */
 		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
 		$localJob->WFinsert( $this->mWikiId, $this->mWikiData[ "dbname" ] );
 
-		$dbw->selectDB( $wgDBname );
+		$dbw_local->selectDB( $wgDBname );
 
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step10') );
 
@@ -1097,7 +1093,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			$oUser = $this->initUser( $oUser, false );
 			$user_id = $oUser->getID();
 			if (!empty($user_id)) {
-				$dbw = wfGetDB(DB_MASTER);
+				global $wgExternalSharedDB;
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$dbw->update(
 					'user',
 					array( 'user_birthdate' => date('Y-m-d', $userBirthDay) ),
@@ -1268,15 +1265,16 @@ class AutoCreateWikiPage extends SpecialPage {
 	 * get number of created Wikis for current day
 	 */
 	private function countCreatedWikis($iUser = 0) {
+		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$where = array( "date_format(city_created, '%Y%m%d') = date_format(now(), '%Y%m%d')" );
 		if ( !empty($iUser) ) {
 			$where[] = "city_founding_user = '{$iUser}' ";
 		}
 		$oRow = $dbr->selectRow(
-			wfSharedTable("city_list"),
+			"city_list",
 			array( "count(*) as count" ),
 			$where,
 			__METHOD__

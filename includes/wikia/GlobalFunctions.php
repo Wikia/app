@@ -131,30 +131,6 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	return $url;
 }
 
-/**
- * create table name for shared database
- *
- * @access public
- * @author eloy@wikia
- *
- * @param $table string: table name
- *
- * @return string: table name with additional shared database
- */
-
-function wfSharedTable( $table, $useExternal = true )
-{
-    global $wgSharedDB, $wgExternalSharedDB;
-
-	if ($useExternal && !empty( $wgExternalSharedDB )) {
-		return "`$wgExternalSharedDB`.`$table`";
-	} elseif (!empty( $wgSharedDB )) {
-		return "`$wgSharedDB`.`$table`";
-	} else
-		return "`$table`";
-
-}
-
 /*
  * 	@author Krzysztof Zmudziński <kaz3t@wikia.com>
  *	Returns array of review reason id
@@ -201,7 +177,7 @@ function shortenText( $text, $chars=25 ) {
 }
 
 function wfGetBreadCrumb( $cityId = 0 ) {
-	global $wgMemc, $wgSitename, $wgServer, $wgCats;
+	global $wgMemc, $wgSitename, $wgServer, $wgCats, $wgExternalSharedDB, $wgCityId;
 
 	$method = __METHOD__;
 
@@ -214,7 +190,6 @@ function wfGetBreadCrumb( $cityId = 0 ) {
 	if ($cityId) $memckey[] = $cityId;
 	$wgCats = $wgMemc->get( wfMemcKey( $memckey ) );
 	if( empty( $wgCats ) ) {
-		global $wgCityId, $wgSharedDB;
 		if( $cityId == 0 ) {
 			if( $wgCityId == 0 ) {
 				wfProfileOut( $method );
@@ -225,17 +200,18 @@ function wfGetBreadCrumb( $cityId = 0 ) {
 		}
 
 		wfProfileIn( $method . "-fromdb" );
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$catId = $dbr->selectField(
-				wfSharedTable("city_cat_mapping"),
+				"city_cat_mapping",
 				"cat_id",
 				array( "city_id" => $cityId ) );
 		$wgCats = array();
 		while( !empty( $catId ) ) {
 			$res = $dbr->select(
-				array( wfSharedTable("city_cat_structure"), wfSharedTable("city_cats") ),
+				array( "city_cat_structure", "city_cats" ),
 				array( "cat_name", "cat_url", "cat_parent_id" ),
-				array( wfSharedTable("city_cat_structure").".cat_id=".wfSharedTable("city_cats").".cat_id", wfSharedTable("city_cat_structure").".cat_id=$catId" ) );
+				array( "city_cat_structure.cat_id=city_cats.cat_id", "city_cat_structure.cat_id={$catId}" )
+			);
 			if( $row = $dbr->fetchObject( $res ) ) {
 				$wgCats[] = array( "name" => $row->cat_name, "url" => $row->cat_url, "id" => intval( $catId ), "parentId" => intval( $row->cat_parent_id ) );
 				$catId = $row->cat_parent_id;
@@ -454,24 +430,6 @@ function getMessageAsArray($messageKey) {
 		}
 	}
 	return null;
-}
-
-/**
- * @author MoLi <moli@wikia.com>
- * @return db's handle
- */
-if (!function_exists('wfGetDBStats')) {
-	function &wfGetDBStats()
-	{
-		global $wgDBuser, $wgDBpassword, $wgDBStatsServer, $wgDBStats;
-		wfProfileIn( __METHOD__ );
-		if ( (!isset($wgDBStatsServer)) || (!isset($wgDBStats)) ) {
-			return null;
-		}
-		$db = new Database( $wgDBStatsServer, $wgDBuser, $wgDBpassword, $wgDBStats);
-		wfProfileOut( __METHOD__ );
-		return $db;
-	}
 }
 
 /**

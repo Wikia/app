@@ -29,15 +29,13 @@
      
      function rceDrawForm( $info )
      {
-        global $wgOut, $wgTitle, $wgMemc, $wgDBuser, $wgDBpassword, $wgSharedDB, $wgLangLimit;
+        global $wgOut, $wgTitle, $wgMemc, $wgExternalStatsDB, $wgLangLimit;
 
 	$cnt = 100;
 	$formAction = $wgTitle->escapeLocalURL();
 	$d = array();
-	$db =&wfGetDB( DB_MASTER );
-	$dbstats = 'dbstats';
-	$db = Database::newFromParams( 'sayid.sjc.wikia-inc.com', $wgDBuser, $wgDBpassword, $dbstats );
-	$res = $db->query( "select article_id, timestamp, request_uri from $dbstats.webstats where 1=1 " . limit2langs() . "group by article_id order by timestamp desc limit $cnt" );;
+	$db =&wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
+	$res = $db->query( "select article_id, timestamp, request_uri from webstats where 1=1 " . limit2langs() . "group by article_id order by timestamp desc limit $cnt" );;
 	while( $o = $db->fetchObject( $res ) )
 	{
     	    $title = $o->request_uri;

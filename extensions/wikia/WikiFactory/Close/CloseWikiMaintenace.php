@@ -265,6 +265,8 @@ class CloseWikiMaintenace {
 	 */
 	public function cleanWikiFactory() {
 
+		global $wgExternalArchiveDB;
+
 		wfProfileIn( __METHOD__ );
 
 		/**
@@ -275,9 +277,8 @@ class CloseWikiMaintenace {
 			if( isset( $wiki->city_id ) && $wiki->city_public != 1 ) {
 
 				$timestamp = wfTimestampNow();
-				$dbw = wfGetDB( DB_MASTER );
-				$dba = wfGetDBExt( DB_MASTER );
-				$dba->selectDb( "archive" );
+				$dbw = WikiFactory::db( DB_MASTER );
+				$dba = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
 
 				$dba->begin();
 
@@ -393,9 +394,9 @@ class CloseWikiMaintenace {
 	 */
 	public function setupDirectories() {
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
-			WikiFactory::table( "city_list" ),
+			array( "city_list" ),
 			array( "city_id", "city_dbname", "city_url" ),
 			false,
 			__METHOD__
@@ -441,13 +442,13 @@ class CloseWikiMaintenace {
 		/**
 		 * check if database is used in more than one wiki
 		 */
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = WikiFactory::db( DB_MASTER );
 
 		/**
 		 * check city_list table
 		 */
 		$Row = $dbw->selectRow(
-			WikiFactory::table( "city_list" ),
+			array( "city_list" ),
 			array( "count(*) as count" ),
 			array( "city_dbname" => $wgDBname ),
 			__METHOD__
@@ -460,13 +461,11 @@ class CloseWikiMaintenace {
 		 * check city_variables table
 		 */
 		$Row = $dbw->selectRow(
-			WikiFactory::table( "city_variables" ),
+			array( "city_variables" ),
 			array( "count(*) as count" ),
 			array(
 				"cv_value" => serialize( $wgDBname ),
-				"cv_variable_id = (SELECT cv_id FROM " .
-				WikiFactory::table( "city_variables_pool" ) .
-				" WHERE cv_name='wgDBname')",
+				"cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name='wgDBname')"
 			),
 			__METHOD__
 		);

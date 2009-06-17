@@ -70,14 +70,15 @@ class PageGrabberDumpTask extends BatchTask {
 	 * @return boolean: true if success, false otherwise
 	 */
 	function execute ($params = null) {
+		global $wgExternalSharedDB;
 		$aArgs = unserialize($params->task_arguments);
 		$this->mTaskID = $params->task_id;
 		$this->mSourceTaskId = $aArgs["source-task-id"];
 
-		$dbr = wfGetDB(DB_MASTER);
+		$dbr = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$oRes = $dbr->select(
-				wfSharedTable("wikia_tasks"),
-				array("task_arguments"),
+				"wikia_tasks",
+				"task_arguments",
 				array("task_id" => $this->mSourceTaskId),
 				__METHOD__
 		);
@@ -101,11 +102,11 @@ class PageGrabberDumpTask extends BatchTask {
 	 * @author Inez Korczynski (inez@wikia.com)
 	 */
 	function getForm ($title, $data = false ) {
-		global $wgOut;
+		global $wgOut, $wgExternalSharedDB;
 
-		$dbr = wfGetDB(DB_MASTER);
+		$dbr = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$oRes = $dbr->select(
-				wfSharedTable("wikia_tasks"),
+				"wikia_tasks",
 				array("task_id","task_arguments"),
 				array("task_type" => "pagegrabber", "task_status" => 3),
 				__METHOD__,

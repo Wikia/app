@@ -733,7 +733,7 @@ class WikiMover {
 	 * @return nothing
 	 */
 	public function redirect() {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 
 		if (empty( $this->mSourceID )) {
 			wfDebug("wikimover: source id is empty. Cannot redirect", true);
@@ -747,17 +747,18 @@ class WikiMover {
 			return false;
 		}
 
-		$dbw = wfGetDB( DB_MASTER );
+
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$dbw->begin();
 		#--- set city_public to 2 for source
 		$dbw->update(
-			wfSharedTable( "city_list" ),
+			"city_list",
 			array( "city_public" => 2 ), #--- means redirected
 			array( "city_id" => $this->mSourceID ),
 			__METHOD__
 		);
 		$oTargetWiki = $dbw->selectRow(
-			wfSharedTable( "city_list" ),
+			"city_list",
 			array( "city_url" ),
 			array( "city_id" => $this->mTargetID ),
 			__METHOD__
@@ -765,7 +766,7 @@ class WikiMover {
 
 		#--- set city_url for source from target
 		$dbw->update(
-			wfSharedTable( "city_list" ),
+			"city_list",
 			array( "city_url" => $oTargetWiki->city_url ),
 			array( "city_id" => $this->mSourceID ),
 			__METHOD__

@@ -159,7 +159,6 @@ class CloseWikiPage extends SpecialPage {
 			/**
 			 * check which action was requested
 			 */
-			error_log ("wgRequest->getValues() = " . print_r($wgRequest->getValues(), true). "\n");
 			foreach( array_keys( $wgRequest->getValues() ) as $value ) {
 				if( preg_match( "/^submit(\d+)$/", $value, $matches ) ) {
 					$this->mAction = $matches[1];
@@ -250,19 +249,19 @@ class CloseWikiPage extends SpecialPage {
 	 * @access private
 	 */
 	private function moveOldDomains($wikiaId, $newWikiaId = null, $remove = 0) {
-		global $wgSharedDB;
+		global $wgExternalArchiveDB;
 
 		$aDomainsToMove = WikiFactory::getDomains( $wikiaId );
 
 		if ( !empty($aDomainsToMove) ) {
 			#-- connect to dataware;
-			$dbs = wfGetDBExt(DB_SLAVE);
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalArchiveDB );
 			if (!is_null($dbs)) {
 				#-- save domains in archive DB
 				$dbs->begin();
 				foreach ($aDomainsToMove as $domain) {
 					$dbs->insert(
-						"`archive`.`city_domains`",
+						"city_domains",
 						array(
 							"city_id" => $wikiaId,
 							"city_domain" => $domain,

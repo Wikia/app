@@ -18,6 +18,13 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		parent :: __construct($query, $moduleName, "wk");
 	}
 
+	protected function getDB() {
+		global $wgExternalSharedDB;
+		$this->mDb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+
+		return $this->mDb;
+	}
+
 	/**
 	 * main function
 	 */
@@ -38,12 +45,12 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		/**
 		 * query builder
 		 */
-		$this->addTables(array(wfSharedTable('city_list')));
+		$this->addTables(array('city_list'));
 		$this->addFields(array('city_id', 'city_url'));
 
 		if ($activeonly) $this->addWhereFld('city_public', 1);
 		if ($wikia) $this->addWhereFld('city_id', $wikia);
-		
+
 		if ( !empty($from) && !empty($to) ) {
 			if ($from && is_int($from)) $this->addWhere('city_id >= '.intval($from));
 			if ($to && is_int($to)) $this->addWhere('city_id <= '.intval($to));

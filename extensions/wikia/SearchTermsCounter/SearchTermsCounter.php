@@ -20,7 +20,7 @@ class SearchTermsCounter extends SpecialPage {
 	}
 
 	public function execute($par) {
-		global $wgUser, $wgOut, $wgCityId;
+		global $wgUser, $wgOut, $wgCityId, $wgExternalSharedDB;
 
 		if(!$this->userCanExecute($wgUser)) {
 			$this->displayRestrictionError();
@@ -29,8 +29,9 @@ class SearchTermsCounter extends SpecialPage {
 
 		$this->setHeaders();
 
-		$dbr =& wfGetDB(DB_SLAVE);
-		$res = $dbr->select(wfSharedTable('search_terms_counter'), 'term, counter', array('city_id' => $wgCityId, 'counter > 2'), '', array('LIMIT' => 100, 'ORDER BY' => 'counter DESC'));
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+
+		$res = $dbr->select('search_terms_counter', 'term, counter', array('city_id' => $wgCityId, 'counter > 2'), '', array('LIMIT' => 100, 'ORDER BY' => 'counter DESC'));
 		$wgOut->addHTML('This page lists one hundred of search terms which were called at least three times.<br /><ul>');
 		while($row = $dbr->fetchObject($res)) {
 			$wgOut->addHTML('<li>'.$row->term.' ('.$row->counter.')</li>');

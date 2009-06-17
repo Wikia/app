@@ -80,18 +80,18 @@ class DaemonLoader extends SpecialPage {
 	}
 	
 	static public function getAllDaemons($dt_id = 0) {
-		global $wgMemc, $wgSharedDB;
+		global $wgMemc, $wgExternalDatawareDB;
 		global $wgCityId;
         wfProfileIn( __METHOD__ );
 		$aResult = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "getAllDaemons", $dt_id);
+		$memkey = wfForeignMemcKey( $wgExternalDatawareDB, null, "getAllDaemons", $dt_id);
 		$cached = "";#$wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt();
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 			if (!is_null($dbs)) {
 				$where = ($dt_id > 0) ? " and dt_id = ".intval($dt_id) : "";
 				$oRes = $dbs->select(
-					array( "`dataware`.`daemon_tasks`" ),
+					array( "daemon_tasks" ),
 					array( "dt_id, dt_name, dt_script, dt_desc, dt_input_params" ),
 					array( "dt_name != '' $where and dt_visible = 1" ),
 					__METHOD__,
@@ -118,19 +118,19 @@ class DaemonLoader extends SpecialPage {
 	}
 	
 	static public function getAllJobs($dj_id = 0, $orderby = 'dj_id', $limit = 30, $offset = 0, $desc = 0) {
-		global $wgMemc, $wgSharedDB;
+		global $wgMemc, $wgExternalDatawareDB;
 		global $wgCityId;
         wfProfileIn( __METHOD__ );
 		$aResult = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "getAllJobs", $dj_id, $limit, $offset);
+		$memkey = wfForeignMemcKey( $wgExternalDatawareDB, null, "getAllJobs", $dj_id, $limit, $offset);
 		$cached = "";#$wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt();
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 			if (!is_null($dbs)) {
 				$orderby = (empty($orderby)) ? "dj_id" : $orderby;
 				$where = ($dj_id > 0) ? " and dj_id = ".intval($dj_id) : "";
 				$oRes = $dbs->select(
-					array( "`dataware`.`daemon_tasks_jobs`" ),
+					array( "daemon_tasks_jobs" ),
 					array( "dj_id, dj_dt_id, date_format(dj_start, '%Y-%m-%d') as st, date_format(dj_end, '%Y-%m-%d') as end, dj_frequency, dj_visible, dj_param_values, dj_result_file, dj_result_emails, dj_createdby, dj_added" ),
 					array( "dj_dt_id > 0 $where and dj_visible = 1" ),	
 					__METHOD__,
@@ -177,9 +177,10 @@ class DaemonLoader extends SpecialPage {
 	public function saveDaemon() {
 		global $wgCityId, $wgUser;
 		global $wgRequest;
+		global $wgExternalDatawareDB;
 		$res = true;
         wfProfileIn( __METHOD__ );
-		$dbs = wfGetDBExt(DB_MASTER);
+		$dbs = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 		
 		$dt_id = intval($wgRequest->getVal("dt_id"));
 		$dt_name = $wgRequest->getVal("dt_name");
@@ -207,7 +208,7 @@ class DaemonLoader extends SpecialPage {
 		$dbs->begin();
 		if (empty($dt_id)) {
 			$dbs->insert(
-				"`dataware`.`daemon_tasks`",
+				"daemon_tasks",
 				array(
 					"dt_name" => $dt_name,
 					"dt_script" => $dt_script,
@@ -222,7 +223,7 @@ class DaemonLoader extends SpecialPage {
 			if ( $wgRequest->getVal("dt_remove", false) ) {
 				// remove (so set as non-visible)
 				$dbs->update(
-					"`dataware`.`daemon_tasks`",
+					"daemon_tasks",
 					array( "dt_visible" => 0 ),
 					array("dt_id" => $dt_id),
 					__METHOD__ 
@@ -230,7 +231,7 @@ class DaemonLoader extends SpecialPage {
 			} elseif ( $wgRequest->getVal("dt_submit", false) ) {
 				// update
 				$dbs->update(
-					"`dataware`.`daemon_tasks`",
+					"daemon_tasks",
 					array(
 						"dt_name" => $dt_name,
 						"dt_script" => $dt_script,
@@ -255,10 +256,11 @@ class DaemonLoader extends SpecialPage {
 	public static function closeJob($dj_id) {
 		$res = 0;
 		if ( $dj_id > 0 ) {
-			$dbs = wfGetDBExt();
+			global $wgExternalDatawareDB;
+			$dbs = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 			$dbs->begin();
 			$dbs->update(
-				"`dataware`.`daemon_tasks_jobs`",
+				"daemon_tasks_jobs",
 				array( "dj_visible" => 0 ),
 				array("dj_id" => $dj_id),
 				__METHOD__ 
@@ -273,9 +275,9 @@ class DaemonLoader extends SpecialPage {
 	public function saveTask() {
 		global $wgCityId, $wgUser;
 		global $wgRequest;
+		global $wgExternalDatawareDB;
 		$res = false;
-        wfProfileIn( __METHOD__ );
-		$dbs = wfGetDBExt(DB_MASTER);
+		wfProfileIn( __METHOD__ );
 		
 		$daemon_id = intval($wgRequest->getVal("dt-daemons"));
 		if ($daemon_id != 0) {
@@ -308,10 +310,10 @@ class DaemonLoader extends SpecialPage {
 					$dt_end = date("Ymd", mktime(0,0,0,date("m")+6,date("d"),date("Y")));
 				}
 				
-				$dbs = wfGetDBExt(DB_MASTER);
+				$dbs = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 				$dbs->begin();
 				$dbs->insert(
-					"`dataware`.`daemon_tasks_jobs`",
+					"daemon_tasks_jobs",
 					array(
 						"dj_dt_id" => $daemon_id,
 						"dj_start" => trim($dt_start),
@@ -330,7 +332,7 @@ class DaemonLoader extends SpecialPage {
 			}
 		}
         
-        wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 	
@@ -649,16 +651,16 @@ class DaemonLoader extends SpecialPage {
 	}
 
 	function getWikisDB( $name ) {
-		global $wgSharedDB, $wgMemc;
+		global $wgExternalSharedDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		$limit = (empty($name)) ? "search" : "search$name";
-		$memkey = wfForeignMemcKey( $wgSharedDB, $limit, __METHOD__);
+		$memkey = wfForeignMemcKey( $wgExternalSharedDB, $limit, __METHOD__);
 		$domains = ""; #$wgMemc->get($memkey);
 		if (empty($domains)) { 
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			$oRes = $dbr->select(
-				array( wfSharedTable("city_list") ),
+				array( "city_list" ),
 				array( "city_dbname, city_url" ),
 				array( "city_public" => 1, "city_url like '%".$dbr->escapeLike($name)."%'" ),
 				__METHOD__,

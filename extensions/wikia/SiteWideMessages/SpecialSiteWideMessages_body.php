@@ -23,10 +23,9 @@ if (!defined('MEDIAWIKI')) {
 	exit(1) ;
 }
 
-global $wgSharedDB;
-define('MSG_TEXT_DB', wfSharedTable('messages_text'));
+define('MSG_TEXT_DB', 'messages_text');
 if (!defined('MSG_STATUS_DB')) {	//prevent notices - these two const can be defined before in SQMSendToGroupTask
-	define('MSG_STATUS_DB', wfSharedTable('messages_status'));
+	define('MSG_STATUS_DB', 'messages_status');
 }
 define('MSG_MODE_ALL', '0');
 define('MSG_MODE_SELECTED', '1');
@@ -51,7 +50,7 @@ class SiteWideMessages extends SpecialPage {
 		wfLoadExtensionMessages('SpecialSiteWideMessages');
 
 		//add CSS (from static file)
-		global $wgExtensionsPath, $wgStyleVersion;
+		global $wgExtensionsPath, $wgStyleVersion, $wgExternalSharedDB;
 		$wgOut->addScript("\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css?$wgStyleVersion\" />");
 
 		$template = 'editor';	//default template
@@ -68,14 +67,14 @@ class SiteWideMessages extends SpecialPage {
 		$formData['lang'] = $wgRequest->getVal('mLang');
 
 		//fetching hub list
-		$DB = wfGetDB(DB_SLAVE);
-		$dbResult = $DB->Query (
-			  'SELECT cat_id, cat_name'
-			. ' FROM ' . wfSharedTable('city_cats')
-			. ' ORDER BY cat_name'
-			. ';'
-			, __METHOD__
-		);
+		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+        $dbResult = $DB->select(
+            array( 'city_cats' ),
+            array( 'cat_id, cat_name' ),
+            null,
+            __METHOD__,
+            array( 'ORDER BY' => 'cat_name' )
+        );
 
 		$hubList = array();
 		while ($row = $DB->FetchObject($dbResult)) {
@@ -88,14 +87,13 @@ class SiteWideMessages extends SpecialPage {
 		$formData['hubNames'] = $hubList;
 
 		//fetching group list
-		$DB = wfGetDB(DB_SLAVE);
-		$dbResult = $DB->Query (
-			  'SELECT DISTINCT ug_group'
-			. ' FROM ' . wfSharedTable('user_groups')
-			. ' ORDER BY ug_group'
-			. ';'
-			, __METHOD__
-		);
+        $dbResult = $DB->select(
+            array( 'user_groups' ),
+            array( 'DISTINCT ug_group' ),
+            null,
+            __METHOD__,
+            array( 'ORDER BY' => 'ug_group' )
+        );
 
 		$groupList = array();
 		while ($row = $DB->FetchObject($dbResult)) {
@@ -255,7 +253,7 @@ class SiteWideMessages extends SpecialPage {
 
 	//DB functions
 	private function sendMessage($mSender, $mRecipientId, $mText, $mExpire, $mWikiName, $mRecipientName, $mGroupName, $mSendModeWikis, $mSendModeUsers, $mHubId, $mLang) {
-		global $wgSharedDB;
+		global $wgExternalSharedDB, $wgExternalDatawareDB;
 		$result = array('msgId' => null, 'errMsg' => null);
 		$dbInsertResult = false;
 		$mWikiId = null;
@@ -324,7 +322,7 @@ class SiteWideMessages extends SpecialPage {
 			//null => expire never
 			$mExpire = $mExpire != '0' ? date('Y-m-d H:i:s', strtotime(ctype_digit($mExpire) ? " +$mExpire day" : ' +' . substr($mExpire, 0, -1) . ' hour')) : null;
 
-			$DB = wfGetDB(DB_MASTER);
+			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbResult = (boolean)$DB->Query (
 				  'INSERT INTO ' . MSG_TEXT_DB
 				. ' (msg_sender_id, msg_text, msg_mode, msg_expire, msg_recipient_name, msg_group_name, msg_wiki_name, msg_hub_id, msg_lang)'
@@ -417,7 +415,7 @@ class SiteWideMessages extends SpecialPage {
 							switch ($mSendModeUsers) {
 								case 'ALL':
 								case 'ACTIVE':
-									$dbr = wfGetDBExt(DB_SLAVE);
+									$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 
 									$dbResult = $dbr->select(
 										array('city_local_users'),
@@ -434,13 +432,15 @@ class SiteWideMessages extends SpecialPage {
 										$dbr->FreeResult($dbResult);
 									}
 
-									$dbw = wfGetDB(DB_MASTER);
+									if (!$DB) {
+										$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+									}
 									$sqlValues = array();
 									foreach($activeUsers as $activeUser) {
 										$sqlValues[] = "($mWikiId, $activeUser, {$result['msgId']}, " . MSG_STATUS_UNSEEN . ')';
 									}
 									if (count($sqlValues)) {
-										$dbResult = (boolean)$dbw->Query (
+										$dbResult = (boolean)$DB->Query (
 											  'INSERT INTO ' . MSG_STATUS_DB
 											. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
 											. ' VALUES ' . implode(',', $sqlValues)
@@ -480,14 +480,14 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	private function saveMessage($editMsgId, $mText) {
-		global $wgUser, $wgParser;
+		global $wgUser, $wgParser, $wgExternalSharedDB;
 		$title = Title::newFromText(uniqid('tmp'));
 		$options = ParserOptions::newFromUser($wgUser);
 
 		//Parse some wiki markup [eg. ~~~~]
 		$mText = $wgParser->preSaveTransform($mText, $title, $wgUser, $options);
 
-		$DB = wfGetDB(DB_MASTER);
+		$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbResult = (boolean)$DB->Query (
 			  'UPDATE ' . MSG_TEXT_DB
 			. ' SET msg_text = ' . $DB->AddQuotes($mText)
@@ -504,7 +504,8 @@ class SiteWideMessages extends SpecialPage {
 	/**
 	 */
 	private function getMessageText($mId, $master = false) {
-		$DB = wfGetDB($master ? DB_MASTER : DB_SLAVE);
+		global $wgExternalSharedDB;
+		$DB = wfGetDB( $master ? DB_MASTER : DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$dbResult = $DB->Query (
 			  'SELECT msg_text'
@@ -526,12 +527,13 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	private function getAllMessagesInfo() {
-		$DB = wfGetDB (DB_SLAVE);
+		global $wgExternalSharedDB;
+		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$dbResult = $DB->Query (
 			  'SELECT msg_id, user_name, msg_text, msg_removed, msg_expire, msg_date, msg_recipient_name, msg_group_name, msg_wiki_name'
 			. ' FROM ' . MSG_TEXT_DB
-			. ' LEFT JOIN ' . wfSharedTable('user') . ' ON msg_sender_id = user_id'
+			. ' LEFT JOIN user ON msg_sender_id = user_id'
 			. ' ORDER BY msg_id DESC'
 			. ';'
 			, __METHOD__
@@ -558,7 +560,8 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	private function removeMessage($mId) {
-		$DB = wfGetDB(DB_MASTER);
+		global $wgExternalSharedDB;
+		$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 		$dbResult = (boolean)$DB->Query (
 			  'UPDATE ' . MSG_TEXT_DB
@@ -575,8 +578,9 @@ class SiteWideMessages extends SpecialPage {
 	//Static functions (used in hooks)
 	static function getAllUserMessagesId($user) {
 		global $wgCityId, $wgLanguageCode;
+		global $wgExternalSharedDB ;
 		$localCityId = isset($wgCityId) ? $wgCityId : 0;
-		$DB = wfGetDB(DB_SLAVE);
+		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		//step 1 of 3: get all active messages sent to *all*
 		$dbResult = $DB->Query (
@@ -655,8 +659,10 @@ class SiteWideMessages extends SpecialPage {
 
 	static function getAllUserMessages($user, $dismissLink = true) {
 		global $wgMemc, $wgCityId, $wgLanguageCode;
+		global $wgExternalSharedDB;
 		$localCityId = isset($wgCityId) ? $wgCityId : 0;
-		$DB = wfGetDB(DB_SLAVE);
+
+		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		//step 1 of 3: get all active messages sent to *all*
 		$dbResult = $DB->Query (
@@ -740,7 +746,7 @@ class SiteWideMessages extends SpecialPage {
 		if (count($tmpMsg) && !wfReadOnly()) {
 			$userID = $user->GetID();
 
-			$DB = wfGetDB(DB_MASTER);
+			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbResult = (boolean)$DB->Query (
 				  'REPLACE INTO ' . MSG_STATUS_DB
 				. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
@@ -805,12 +811,12 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	static function dismissMessage($messageID) {
-		global $wgUser, $wgMemc;
+		global $wgUser, $wgMemc, $wgExternalSharedDB;
 		$userID = $wgUser->GetID();
 		if (wfReadOnly()) {
 			return wfMsg('readonly');
 		} elseif ($userID) {
-			$DB = wfGetDB(DB_MASTER);
+			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 			$dbResult = $DB->Query (
 				  'SELECT msg_wiki_id'
@@ -855,7 +861,8 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	static function deleteMessagesOnWiki($city_id) {
-		$DB = wfGetDB(DB_MASTER);
+		global $wgExternalSharedDB;
+		$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbResult = (boolean)$DB->Query (
 			  'DELETE FROM ' . MSG_STATUS_DB
 			. ' WHERE msg_wiki_id = ' . $DB->AddQuotes($city_id)
@@ -982,7 +989,7 @@ class SiteWideMessagesPager extends TablePager {
 	#--- getQueryInfo -------------------------------------------------------
 	function getQueryInfo() {
 		return array(
-			'tables' => MSG_TEXT_DB . ' LEFT JOIN ' . wfSharedTable('user') . ' ON msg_sender_id = user_id',
+			'tables' => MSG_TEXT_DB . ' LEFT JOIN user ON msg_sender_id = user_id',
 			'fields' => array('msg_id', 'user_name AS msg_sender', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_recipient_name', 'msg_group_name', 'msg_wiki_name')
 		);
 	}

@@ -8,20 +8,17 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 
-$dbr = wfGetDB( DB_SLAVE );
+$dbr = WikiFactory::db( DB_SLAVE );
+$dbw = wfGetDB( DB_SLAVE );
 
 /**
  * find dbs not defined in city_variables
  **/
 print "Checking for databases defined in RDBS but not in city_list\n";
 $sth = $dbr->select(
-	WikiFactory::table( "city_variables" ),
+	array( "city_variables" ),
 	array( "cv_value" ),
-	array(
-		"cv_variable_id = (SELECT cv_id FROM " .
-		WikiFactory::table("city_variables_pool") .
-		" WHERE cv_name='wgDBname')"
-	),
+	array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name='wgDBname')" ),
 	__FILE__,
 	array( "ORDER BY" => "cv_value" )
 );
@@ -35,7 +32,7 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 };
 $dbr->freeResult( $sth );
 
-$sth = $dbr->select(
+$sth = $dbw->select(
 	array( "INFORMATION_SCHEMA.SCHEMATA" ),
 	array( "distinct(SCHEMA_NAME) as dbname " ),
 	false,
@@ -43,19 +40,19 @@ $sth = $dbr->select(
 	array( "ORDER BY" => "1" )
 );
 
-while( $row = $dbr->fetchObject( $sth ) ) {
+while( $row = $dbw->fetchObject( $sth ) ) {
 	if ( !isset($DB_NAMES[$row->dbname]) ) {
 		print "{$row->dbname} exists, but is not used in city_variables\n";
 	}
 }
-$dbr->freeResult( $sth );
+$dbw->freeResult( $sth );
 
 /**
  * find duplicates of city_dbname in city_list
  */
 print "Checking for duplicates in city_list\n";
 $sth = $dbr->select(
-	WikiFactory::table("city_list"),
+	array( "city_list" ),
 	array( "city_dbname", "count(city_dbname) as count" ),
 	false,
 	__FILE__,
@@ -74,13 +71,9 @@ $dbr->freeResult( $sth );
  */
 print "Checking for duplicates in city_variables\n";
 $sth = $dbr->select(
-	WikiFactory::table("city_variables"),
+	array( "city_variables" ),
 	array( "cv_value", "count(cv_value) as count" ),
-	array(
-		"cv_variable_id = (SELECT cv_id FROM " .
-		WikiFactory::table("city_variables_pool") .
-		" WHERE cv_name='wgDBname')"
-	),
+	array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name='wgDBname')" ),
 	__FILE__,
 	array( "GROUP BY" => "cv_value" )
 );
@@ -99,8 +92,7 @@ $dbr->freeResult( $sth );
  */
 print "Checking for orphaned image directories\n";
 $dirs = array();
-$dba = wfGetDBExt( DB_SLAVE );
-$dba->selectDB( "archive" );
+$dba = wfGetDB( DB_SLAVE, array(), "archive" );
 $stha = $dba->select(
 	array( "city_variables" ),
 	array( "*" ),
@@ -117,12 +109,9 @@ foreach( $dirs as $dir => $city_id ) {
 		 * check if is connected to any wiki alive or not
 		 */
 		$row = $dbr->selectRow(
-			WikiFactory::table( "city_variables" ),
+			array( "city_variables" ),
 			array( "cv_city_id" ),
-			array(
-				"cv_variable_id" => 17,
-				"cv_value" => serialize( $dir )
-			),
+			array( "cv_variable_id" => 17, "cv_value" => serialize( $dir ) ),
 			__FILE__
 		);
 		if( !empty( $row->cv_city_id ) ) {
@@ -141,7 +130,7 @@ foreach( $dirs as $dir => $city_id ) {
  */
 print "Compare values stored in city_list and city_variables\n";
 $sth = $dbr->select(
-	WikiFactory::table("city_list"),
+	array( "city_list" ),
 	array( "city_dbname", "city_id", "city_public" ),
 	false,
 	__FILE__,
@@ -150,7 +139,7 @@ $sth = $dbr->select(
 
 while( $row = $dbr->fetchObject( $sth ) ) {
 	$variable = $dbr->selectRow(
-		WikiFactory::table( "city_variables" ),
+		array( "city_variables" ),
 		array( "cv_value" ),
 		array(
 			"cv_city_id" => $row->city_id,
@@ -167,7 +156,7 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 			/**
 			 * check if such database exists
 			 */
-			$exists = $dbr->selectRow(
+			$exists = $dbw->selectRow(
 				array( "INFORMATION_SCHEMA.SCHEMATA" ),
  				array( "count(SCHEMA_NAME) as count" ),
 				array( "SCHEMA_NAME" => $row->city_dbname ),

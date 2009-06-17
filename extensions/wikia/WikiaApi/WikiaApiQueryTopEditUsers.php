@@ -48,7 +48,10 @@ class WikiaApiQueryTopEditUsers extends WikiaApiQuery {
 		}
 	}
 
-	protected function getDB() { return wfGetDBExt(DB_SLAVE); }
+	protected function getDB() {
+		global $wgExternalDatawareDB;
+		return wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+	}
 
 	#---
 	private function getTopEditUsers() {

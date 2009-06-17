@@ -14,7 +14,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 if (!defined('MSG_STATUS_DB')) {
-	define('MSG_STATUS_DB', wfSharedTable('messages_status'));
+	define('MSG_STATUS_DB', 'messages_status');
 }
 if (!defined('MSG_STATUS_UNSEEN')) {
 	define('MSG_STATUS_UNSEEN', '0');
@@ -270,15 +270,16 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of sending
 	 */
 	private function sendMessageToGroup($params) {
+		global $wgExternalSharedDB;
 		$result = true;
 
-		$DB = wfGetDB(DB_SLAVE);
+		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		//step 1 of 3: get list of all active wikis
 		$this->addLog('Step 1 of 3: get list of all active wikis');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
-			. ' FROM ' . wfSharedTable('city_list')
+			. ' FROM city_list'
 			. ' WHERE city_public = 1'
 			. ' AND city_useshared = 1'
 			. ';'
@@ -309,6 +310,7 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of sending
 	 */
 	private function sendMessageToWiki($params) {
+		global $wgExternalSharedDB;
 		$result = true;
 
 		$wikiID = null;
@@ -322,10 +324,10 @@ class SWMSendToGroupTask extends BatchTask {
 			return false;
 		}
 
-		$DB = wfGetDB(DB_SLAVE);
+		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$dbResult = $DB->Query (
 			  'SELECT city_useshared'
-			. ' FROM ' . wfSharedTable('city_list')
+			. ' FROM city_list'
 			. " WHERE city_id = $wikiID"
 			. ';'
 			, __METHOD__
@@ -341,6 +343,7 @@ class SWMSendToGroupTask extends BatchTask {
 
 		$this->addLog("Look into selected wiki for users that belong to a specified group [wiki_id = $wikiID, wiki_db = $wikiDB]");
 		$wikiDB = WikiFactory::IDtoDB($wikiID);
+		$DB = wfGetDB( DB_SLAVE );
 		$DB->selectDB($wikiDB);
 		$dbResult = $DB->Query (
 			  'SELECT ug_user'
@@ -376,16 +379,17 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of sending
 	 */
 	private function sendMessageToHub($params) {
+		global $wgExternalSharedDB;
 		$result = true;
 
-		$DB = wfGetDB(DB_SLAVE);
+		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		//step 1 of 3: get list of all active wikis
 		$this->addLog('Step 1 of 3: get list of all active wikis belonging to a specified hub');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
-			. ' FROM ' . wfSharedTable('city_list')
-			. ' JOIN ' . wfSharedTable('city_cat_mapping') . ' USING (city_id)'
+			. ' FROM city_list'
+			. ' JOIN city_cat_mapping USING (city_id)'
 			. ' WHERE city_public = 1'
 			. ' AND city_useshared = 1'
 			. ' AND cat_id = ' . $params['hubId']
@@ -417,16 +421,17 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of sending
 	 */
 	private function sendMessageToGroupOnHub($params) {
+		global $wgExternalSharedDB;
 		$result = true;
 
-		$DB = wfGetDB(DB_SLAVE);
+		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		//step 1 of 3: get list of all active wikis
 		$this->addLog('Step 1 of 3: get list of all active wikis belonging to a specified hub');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
-			. ' FROM ' . wfSharedTable('city_list')
-			. ' JOIN ' . wfSharedTable('city_cat_mapping') . ' USING (city_id)'
+			. ' FROM city_list'
+			. ' JOIN city_cat_mapping USING (city_id)'
 			. ' WHERE city_public = 1'
 			. ' AND city_useshared = 1'
 			. ' AND cat_id = ' . $params['hubId']
@@ -458,15 +463,16 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of sending
 	 */
 	private function sendMessageToActive($params) {
+		global $wgExternalSharedDB;
 		$result = true;
 
-		$DB = wfGetDB(DB_SLAVE);
+		$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		//step 1 of 3: get list of all active wikis
 		$this->addLog('Step 1 of 3: get list of all active wikis');
 		$dbResult = $DB->Query (
 			  'SELECT city_id, city_dbname'
-			. ' FROM ' . wfSharedTable('city_list')
+			. ' FROM city_list'
 			. ' WHERE city_public = 1'
 			. ' AND city_useshared = 1'
 			. ';'
@@ -497,7 +503,8 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of operation
 	 */
 	private function sendMessageHelperToUsers(&$sqlValues) {
-		$DB = wfGetDB(DB_MASTER);
+		global $wgExternalSharedDB;
+		$DB = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$dbResult = (boolean)$DB->Query (
 			  'INSERT INTO ' . MSG_STATUS_DB
 			. ' (msg_wiki_id, msg_recipient_id, msg_id, msg_status)'
@@ -521,12 +528,14 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of operation
 	 */
 	private function sendMessageHelperToActive(&$DB, &$wikisDB, &$params) {
+		global $wgExternalDatawareDB;
+
 		$result = true;
 
 		//step 2 of 3: get list of active users (on specified wikis)
 		$this->addLog('Step 2 of 3: get list of active users (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
-		$dbr = wfGetDBExt(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 
 		$dbResult = $dbr->select(
 			array('city_local_users'),
@@ -565,12 +574,14 @@ class SWMSendToGroupTask extends BatchTask {
 	 * @return boolean: result of operation
 	 */
 	private function sendMessageHelperToGroup(&$DB, &$wikisDB, &$params) {
+		global $wgExternalDatawareDB;
+
 		$result = true;
 
 		//step 2 of 3: get list of users that belong to a specified group (on specified wikis)
 		$this->addLog('Step 2 of 3: get list of users that belong to a specified group (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
-		$dbr = wfGetDBExt(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 
 		$dbResult = $dbr->select(
 			array('city_local_users'),

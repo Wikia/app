@@ -176,11 +176,11 @@ class CreateWikiMetrics {
 		#---
 		list ($AWCCities, $AWCCitiesCount) = $this->getWikis();
 		if ( !empty( $AWCCities ) ) {
-			$dbs = wfGetDBExt(DB_SLAVE);
+			$dbs = wfGetDB(DB_SLAVE, array(), 'dbstats');
 			$wikiList = implode( ",", array_keys( $AWCCities ) );
 
 			#--- stats 				
-			$table = "`dbstats`.`city_stats_full`";
+			$table = "city_stats_full";
 			$db_fields[] = "round(avg(cw_users_all_reg_main_ns), 1) as users_edits";
 			$db_fields[] = "max(cw_users_all_reg) as users_reg";
 			$db_fields[] = "max(cw_images_uploaded) as images";
@@ -233,7 +233,7 @@ class CreateWikiMetrics {
 			$dbs->freeResult( $oRes );
 			
 			#--- page views 
-			$table = "`dbstats`.`city_page_views`";
+			$table = "city_page_views";
 			$oRes = $dbs->select( 
 				$table, 
 				array( 'pv_city_id, sum(pv_views) as cnt' ),

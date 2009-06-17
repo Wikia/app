@@ -69,7 +69,7 @@ class SearchRankBot {
 
 
 	public function run($bVerbose = true, $iEntryId = 0, $iMaxEntriesLimit = 0) {
-		global $wgSharedDB, $wgSearchRankTrackerConfig;
+		global $wgExternalSharedDB, $wgSearchRankTrackerConfig;
 		$this->printDebug("Starting SearchRankBot ...", $bVerbose);
 
 //		$sCurrentTime = date('Y-m-d H:i:s');
@@ -78,8 +78,7 @@ class SearchRankBot {
 		$iCurrentMonth = date('m', strtotime($sCurrentTime));
 		$iCurrentDay = date('d', strtotime($sCurrentTime));
 
-		$dbr = wfGetDB(DB_SLAVE);
-		$dbr->selectDB($wgSharedDB);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$oResource = $dbr->query("SELECT * FROM rank_entry " . ($iEntryId ? "WHERE ren_id='" . addslashes($iEntryId) . "' " : "") . "ORDER BY ren_city_id, ren_id");
 

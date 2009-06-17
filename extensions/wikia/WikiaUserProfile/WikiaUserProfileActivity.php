@@ -150,10 +150,10 @@ class WikiaUserProfileActivity
 			#---
 			$city_where = ($this->shared_city) ? " and rc_city_id = '".$this->shared_city."' " : "";
 			#---
-			$dbs = wfGetDBExt(DB_SLAVE);
+			$dbs = wfGetDB(DB_SLAVE, array(), 'dbstats');
 			#---
 			$sql = "SELECT rc_city_id, UNIX_TIMESTAMP( rc_timestamp) as item_date, rc_title, rc_user, rc_user_text, rc_comment, rc_id, rc_minor, rc_new, rc_namespace ";
-			$sql .= "FROM `dbstats`.`city_recentchanges` where rc_id > 0 {$rel_sql} {$user_sql} {$city_where} ";
+			$sql .= "FROM city_recentchanges where rc_id > 0 {$rel_sql} {$user_sql} {$city_where} ";
 			$sql .= "ORDER BY rc_id DESC LIMIT 0," . $this->item_max;
 
 			#echo $sql. "<br>";
@@ -219,10 +219,10 @@ class WikiaUserProfileActivity
 			#---
 			$city_where = ($this->shared_city) ? " and city_id = '".$this->shared_city."' " : "";
 			#---
-			$dbs =& wfGetDBExt(DB_SLAVE);
+			$dbs =& wfGetDB(DB_SLAVE, array(), 'dbstats');
 			#---
 			$sql = "SELECT city_id, page_id, page_namespace, page_title, user_id, user_name, vote, UNIX_TIMESTAMP(time) as item_date ";
-			$sql .= "FROM `dbstats`.`city_page_vote` ";
+			$sql .= "FROM city_page_vote ";
 			$sql .= "WHERE page_id > 0 {$rel_sql} {$user_sql} {$city_where} ORDER BY time DESC LIMIT 0," . $this->item_max;
 			#---
 

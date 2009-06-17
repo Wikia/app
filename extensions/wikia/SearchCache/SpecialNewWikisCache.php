@@ -29,13 +29,12 @@
      
      function nwceDrawForm( $info )
      {
-        global $wgOut, $wgTitle, $wgMemc, $wgSharedDB;
+        global $wgOut, $wgTitle, $wgMemc, $wgExternalSharedDB;
 	
 	$formAction = $wgTitle->escapeLocalURL();
 	$d = array();
-	$dbstats = 'dbstats';
-	$db = &wfGetDB( DB_SLAVE );
-	$res = $db->query( "select city_title, city_url from $wgSharedDB.city_list where 1=1" . limit2langs()  . " order by city_id desc limit 50" );
+	$db = &wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+	$res = $db->query( "select city_title, city_url from city_list where 1=1" . limit2langs()  . " order by city_id desc limit 50" );
 	while( $o = $db->fetchObject( $res ) )
 	{
 	    $d[] = $o->city_url . ' ' . $o->city_title;

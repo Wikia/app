@@ -19,11 +19,11 @@ class MultipleLookupCore {
     public function __construct($username) {
         $this->mUsername = $username;
     }
-    
+
 	/* return if such user exists */
 	public function checkIp() {
 		global $wgUser;
-		
+
 		if (empty($this->mUsername)) {
 			return false;
 		}
@@ -32,45 +32,45 @@ class MultipleLookupCore {
 		if ($wgUser->isIP($this->mUsername)) {
 			return true ;
 		}
-		
+
 		return false;
 	}
-	
+
 	/* fetch all wikias from the database */
 	function getWikiList() {
-		global $wgMemc, $wgSharedDB;
-		/* 
+		global $wgMemc, $wgExternalSharedDB;
+		/*
 		 will memcache this - but where will be mechanism controlling that when we add/delete wikias from database?
-		 won't the data get outdated? surely it would 
+		 won't the data get outdated? surely it would
 		*/
 		$wikias_array = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "Multilookup", "wikis" );
+		$memkey = wfForeignMemcKey( $wgExternalSharedDB, null, "Multilookup", "wikis" );
 		$cached = $wgMemc->get($memkey);
-		if (!is_array ($cached) || MULTILOOKUP_NO_CACHE) { 
-			$dbr =& wfGetDB(DB_SLAVE);
-			$query = "SELECT city_dbname, city_url, city_title FROM ". wfSharedTable("city_list"). " WHERE city_public != 0";
+		if (!is_array ($cached) || MULTILOOKUP_NO_CACHE) {
+			$dbr =& wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+			$query = "SELECT city_dbname, city_url, city_title FROM city_list WHERE city_public != 0";
 			$res = $dbr->query ($query);
 			while ($row = $dbr->fetchObject($res)) {
 				$wikias_array[$row->city_dbname] = $row;
 			}
 			$dbr->freeResult ($res);
 			if (!MULTILOOKUP_NO_CACHE) $wgMemc->set( $memkey, $wikias_array );
-		} else { 
+		} else {
 			$wikias_array = $cached;
 		}
-		
+
 		return $wikias_array;
 	}
-	
+
 	function checkUserActivity($username) {
-		global $wgMemc, $wgSharedDB, $wgDBStats;
+		global $wgMemc, $wgExternalSharedDB, $wgExternalStatsDB;
 		$userActivity = array();
-		$memkey = wfForeignMemcKey( $wgSharedDB, null, "MultiLookup", "UserActivity", $username );
+		$memkey = wfForeignMemcKey( $wgExternalSharedDB, null, "MultiLookup", "UserActivity", $username );
 		$cached = $wgMemc->get($memkey);
-		if (!is_array ($cached) || MULTILOOKUP_NO_CACHE) { 
-			$dbs = wfGetDBExt();
+		if (!is_array ($cached) || MULTILOOKUP_NO_CACHE) {
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			if (!is_null($dbs)) {
-				$query = "select ca_latest_activity from `{$wgDBStats}`.`city_ip_activity` where ca_ip_text = {$dbs->addQuotes($username)}";
+				$query = "select ca_latest_activity from city_ip_activity where ca_ip_text = {$dbs->addQuotes($username)}";
 				$res = $dbs->query ($query);
 				if ($row = $dbs->fetchObject($res)) {
 					$userActivity = $row->ca_latest_activity;
@@ -80,10 +80,10 @@ class MultipleLookupCore {
 					$wgMemc->set( $memkey, $userActivity, 60*3 );
 				}
 			}
-		} else { 
+		} else {
 			$userActivity = $cached;
 		}
-		
+
 		return $userActivity;
 	}
 
@@ -94,7 +94,7 @@ class MultipleLookupCore {
 
 	/* fetch all contributions from that given database */
 	function fetchContribs ($database) {
-		global $wgOut, $wgRequest, $wgLang, $wgMemc, $wgSharedDB ;
+		global $wgOut, $wgRequest, $wgLang, $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		/* todo since there are now TWO modes, we need TWO keys to rule them all */
@@ -104,11 +104,10 @@ class MultipleLookupCore {
 
 		if ( !is_array($cached) || MULTILOOKUP_NO_CACHE) {
 			/* get that data from database */
-			$dbr =& wfGetDB(DB_SLAVE);
+			$dbr =& wfGetDB( DB_SLAVE, array(), $this->__getDBname( $database ) );
 			/* don't check these databases - their structure is not overly compactible */
-			$userTable = wfSharedTable("user");
 			$res = $dbr->select(
-				"`{$this->__getDBname($database)}`.`recentchanges`",
+				"recentchanges",
 				array( 'rc_user_text as user_name', 'max(rc_timestamp) as rc_timestamp' ),
 				array(
 					'rc_ip' => $this->mUsername
@@ -149,7 +148,7 @@ class MultipleLookupCore {
 		wfProfileOut( __METHOD__ );
 		return $fetched_data;
 	}
-	
+
 	/* a customized version of makeKnownLinkObj - hardened'n'modified for all those non-standard wikia out there */
 	private function produceLink ($nt, $text = '', $query = '', $url = '', $sk, $wiki_meta, $namespace, $article_id) {
 		global $wgContLang, $wgOut, $wgMetaNamespace ;
@@ -182,15 +181,15 @@ class MultipleLookupCore {
 		} else {
 			$u = $url ."index.php". $part[1] ;
 		}
-                
+
 		if ( $nt->getFragment() != '' ) {
 			if( $nt->getPrefixedDbkey() == '' ) {
-				$u = ''; 
+				$u = '';
 				if ( '' == $text ) {
 					$text = htmlspecialchars( $nt->getFragment() );
 				}
 			}
-			
+
 			$anchor = urlencode( Sanitizer::decodeCharReferences( str_replace( ' ', '_', $nt->getFragment() ) ) );
 			$replacearray = array(
  				'%3A' => ':',
@@ -203,7 +202,7 @@ class MultipleLookupCore {
 		} else {
 			$r = "<a href=\"{$u}{$append}\">".urldecode($u)."</a>";
 		}
-		
+
 		return $r;
 	}
 
@@ -212,7 +211,7 @@ class MultipleLookupCore {
 		$sk = $wgUser->getSkin();
 		$page_user = Title::makeTitle (NS_USER, $row->user_name);
 		$page_contribs = Title::makeTitle (NS_SPECIAL, "Contributions/{$row->user_name}");
-		
+
 		$meta = strtr($row->rc_city_title,' ','_');
 		$contrib = $this->produceLink ($page_contribs, $row->user_name, '', $row->rc_url, $sk, $meta, 0, 0 );
 		return array('link' => $contrib, 'last_edit' => $wgLang->timeanddate( wfTimestamp( TS_MW, $row->rc_timestamp ), true ));

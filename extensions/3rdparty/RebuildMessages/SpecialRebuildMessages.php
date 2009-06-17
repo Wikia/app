@@ -151,10 +151,10 @@ class RebuildMessagesForm {
 
         /* fetch all wikis from the database */
         function fetchWikias () {
-        	global $wgMemc, $wgSharedDB ;
+        	global $wgMemc, $wgExternalSharedDB ;
                 /* from database */
-                $dbr =& wfGetDB (DB_SLAVE);
-                $query = "SELECT city_dbname, city_url, city_title FROM {$wgSharedDB}.city_list" ;
+                $dbr =& wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
+                $query = "SELECT city_dbname, city_url, city_title FROM city_list" ;
                 $res = $dbr->query ($query) ;
                 $wikias_array = array () ;
                 while ($row = $dbr->fetchObject($res)) {

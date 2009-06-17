@@ -66,7 +66,7 @@ class WikiaUserProfileStats
 		#---
 		if (empty($data))
 		{
-			$dbr = wfGetDBExt(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE, array(), 'dbstats');
 			#---
 			$sql_where = array( "rc_user" => $this->user_id, "rc_new" => "1" );
 			#---
@@ -75,7 +75,7 @@ class WikiaUserProfileStats
 				$sql_where["rc_city_id"] = $this->shared_city;
 			}
 			#---
-			$s = $dbr->selectRow( "`dbstats`.`city_recentchanges` FORCE INDEX (rc_user_inx)", array("count(rc_new) as cnt_new"), $sql_where, "" );
+			$s = $dbr->selectRow( "city_recentchanges FORCE INDEX (rc_user_inx)", array("count(rc_new) as cnt_new"), $sql_where, "" );
 		
 			if ( $s === false ) 
 			{
@@ -136,7 +136,7 @@ class WikiaUserProfileStats
 		#---
 		if (empty($data))
 		{
-			$dbr =& wfGetDBExt(DB_SLAVE);
+			$dbr =& wfGetDB(DB_SLAVE, array(), 'dbstats');
 			#---
 			$sql_where = array( "user_id" => $this->user_id );
 			#---
@@ -145,7 +145,7 @@ class WikiaUserProfileStats
 				$sql_where["city_id"] = $this->shared_city;
 			}
 			#---
-			$s = $dbr->selectRow( "`dbstats`.`city_page_vote` FORCE INDEX (user_id)", array("count(vote) as count_vote, round(avg(vote),2) as avg_vote"), $sql_where, "" );
+			$s = $dbr->selectRow( "city_page_vote FORCE INDEX (user_id)", array("count(vote) as count_vote, round(avg(vote),2) as avg_vote"), $sql_where, "" );
 		
 			if ( $s === false ) 
 			{

@@ -27,10 +27,10 @@ $wgExtensionCredits['other'][] = array(
 );
 
 function efInitializeGlobalUserrights(){
-	global $wgSharedDB, $wgHooks;
+	global $wgExternalSharedDB, $wgHooks;
 
 	# Paranoia: only initialize if using SharedDB
-	if (empty($wgSharedDB)) {
+	if (empty($wgExternalSharedDB)) {
 		return true;
 	}
 
@@ -40,37 +40,36 @@ function efInitializeGlobalUserrights(){
 }
 
 function efAddSharedUserRights($user, $groups) {
-	global $wgSharedDB, $wgDBname;	
+	global $wgExternalSharedDB, $wgDBname;
 
-	$dbr =& wfGetDB( DB_SLAVE );
+	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
-	if ($dbr->selectDB($wgSharedDB)) {
-		$res = $dbr->select(
-			'shared_user_groups',
-			'sug_group',
-			array ('sug_user' => $user->mId));
-		while ( $row = $dbr->fetchObject( $res ) ) {
-		       $groups[] = $row->sug_group;
-		}
-		$dbr->freeResult( $res );
-		$dbr->selectDB( $wgDBname ); # to prevent Listusers from breaking
+	$res = $dbr->select(
+		'shared_user_groups',
+		'sug_group',
+		array ('sug_user' => $user->mId));
+	while ( $row = $dbr->fetchObject( $res ) ) {
+		$groups[] = $row->sug_group;
 	}
-	
+
+	$dbr->freeResult( $res );
+
 	return $groups;
 }
 
 function efManageSharedUserRights($user, $addgroup, $removegroup) {
-	global $wgWikiaGlobalUserGroups;
+	global $wgWikiaGlobalUserGroups, $wgExternalSharedDB;
 
 	# Remove groups if there is anything to remove
 	if (!empty($removegroup)) {
 		$global_removable = array_intersect($removegroup, $wgWikiaGlobalUserGroups);
 
 		if (!empty($global_removable)) {
-	                $dbw =& wfGetDB( DB_MASTER );
+	                $dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+
 
 		        foreach ($global_removable as $group) {
-                	        $dbw->delete(wfSharedTable('shared_user_groups'), array(
+                	        $dbw->delete('shared_user_groups', array(
                         	        'sug_user' => $user->getId(),
 	                                'sug_group' => $group),
         	                        'SharedUserRights::removeGroup'
@@ -81,17 +80,19 @@ function efManageSharedUserRights($user, $addgroup, $removegroup) {
 
 	# Add groups if there is anything to add
 	if (!empty($addgroup)) {
-		$global_addable = array_intersect($addgroup, $wgWikiaGlobalUserGroups);	
-	
+		$global_addable = array_intersect($addgroup, $wgWikiaGlobalUserGroups);
+
 		if (!empty($global_addable)) {
 			global $wgDBname, $wgDBprefix;
 
-			$dbw =& wfGetDB( DB_MASTER );
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+			$dbwl = wfGetDB(DB_MASTER);
+			$dbwl->selectDB($wgDBname);
 
 			foreach ($global_addable as $group) {
 
 				# INSERT into global table
-				$dbw->insert(wfSharedTable('shared_user_groups'), array(
+				$dbw->insert('shared_user_groups', array(
 					'sug_user' => $user->getId(),
 					'sug_group' => $group),
 					'SharedUserRights::addGroup',
@@ -99,9 +100,7 @@ function efManageSharedUserRights($user, $addgroup, $removegroup) {
 				);
 
 				# DELETE from local table, since it was added by Special:Userrights
-				$dbw->selectDB($wgDBname);
-
-				$dbw->delete($wgDBprefix . 'user_groups', array(
+				$dbwl->delete($wgDBprefix . 'user_groups', array(
 					'ug_user' => $user->getId(),
 					'ug_group' => $group),
 					'SharedUserRights::cleanupLocal'

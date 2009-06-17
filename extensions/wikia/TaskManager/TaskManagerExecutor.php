@@ -97,10 +97,11 @@ class TaskManagerExecutor {
 	 * @return boolean: status of operation
 	 */
 	private function lockTask( $taskid ) {
-		$dbw = wfGetDB( DB_MASTER );
+		global $wgExternalSharedDB;
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->begin();
 		$dbw->update(
-			wfSharedTable("wikia_tasks"),
+			"wikia_tasks",
 			array(
 				"task_status" => TASK_STARTED,
 				"task_started" => wfTimestampNow()
@@ -125,12 +126,13 @@ class TaskManagerExecutor {
 	 * @return boolean: status of operation
 	 */
 	private function unlockTask( $taskid, $status ) {
+		global $wgExternalSharedDB;
 		$iStatus = ( $status === true ) ? TASK_FINISHED_SUCCESS : TASK_FINISHED_ERROR;
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->begin();
 		try {
 			$dbw->update(
-				wfSharedTable("wikia_tasks"),
+				"wikia_tasks",
 				array(
 					"task_status" => $iStatus,
 					"task_finished" => wfTimestampNow()
@@ -161,15 +163,16 @@ class TaskManagerExecutor {
 	 * @return boolean: status of operation
 	 */
 	private function getTask() {
+		global $wgExternalSharedDB;
 		$aStarted = array();
 		$aRunning = array();
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 		$dbr->begin();
 		try {
 			#--- first check if any task have state TASK_STARTED
 			$oRes = $dbr->select(
-			array( wfSharedTable("wikia_tasks") ),
+			array( "wikia_tasks" ),
 				array( "*" ),
 				array( "task_status" => TASK_STARTED),
 				__METHOD__
@@ -192,13 +195,7 @@ class TaskManagerExecutor {
 			$aCondition["task_status"] = TASK_QUEUED;
 
 			#--- then get first from top sorted by priority and timestamp
-			$oTask = $dbr->selectRow(
-			array( wfSharedTable("wikia_tasks") ),
-				array( "*" ),
-				$aCondition,
-				__METHOD__,
-				array( "ORDER BY" => "task_id")
-			);
+			$oTask = $dbr->selectRow( "wikia_tasks", "*", $aCondition, __METHOD__, array( "ORDER BY" => "task_id") );
 		}
 		catch( DBConnectionError $e ) {
 			$this->log( "Connection error: " . $e->getMessage() );

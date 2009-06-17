@@ -51,7 +51,7 @@ class WikiaReplicateImages {
 	 */
 	public function execute() {
 
-		global $wgErrorLog;
+		global $wgErrorLog, $wgExternalDatawareDB;
 
 		/**
 		 * rsync must be run from root in order to save file's ownership
@@ -63,7 +63,7 @@ class WikiaReplicateImages {
 		$reverse    = isset( $this->mOptions['reverse']) ? true : false;
 		$wgErrorLog = isset( $this->mOptions['log']) ? true : false;
 
-		$dbw = wfGetDBExt( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 		/**
 		 * count flag for image copied on all servers

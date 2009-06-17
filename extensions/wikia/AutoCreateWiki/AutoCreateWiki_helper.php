@@ -31,11 +31,12 @@ class AutoCreateWiki {
 	 * @return integer - 0 or 1
 	 */
 	public static function domainExists( $name, $language = null  ) {
+		global $wgExternalSharedDB;
 		$sDomain = Wikia::fixDomainName($name, $language);
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$oRow = $dbr->selectRow(
-			wfSharedTable("city_domains"),
+			"city_domains",
 			array( "city_id" ),
 			array( "city_domain" => $sDomain ),
 			__METHOD__
@@ -43,7 +44,7 @@ class AutoCreateWiki {
 		
 		if ( !isset($oRow->city_id) ) {
 			$oRow = $dbr->selectRow(
-				wfSharedTable("city_domains"),
+				"city_domains",
 				array( "city_id" ),
 				array( "city_domain" => sprintf( "%s.%s", "www", $sDomain ) ),
 				__METHOD__
@@ -54,7 +55,7 @@ class AutoCreateWiki {
 		if (isset($oRow->city_id)) {
 			$city_id = $oRow->city_id;
 			$oRow = $dbr->selectRow(
-				wfSharedTable("city_list"),
+				"city_list",
 				array( "count(*) as count" ),
 				array( "city_id" => $city_id, "city_public" => 1 ),
 				__METHOD__
@@ -78,8 +79,8 @@ class AutoCreateWiki {
 	 * @return array with matches
 	 */
 	function getDomainsLikeOrExact( $name, $language = null ) {
-
-		$dbr = wfGetDB( DB_SLAVE );
+		global $wgExternalSharedDB;
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 		$domains = array();
 		$unique = array();
@@ -120,7 +121,7 @@ class AutoCreateWiki {
 
 			if ( $skip === false ) {
 				#--- exact (but with language prefixes)
-				list ($city_domains, $city_list) = array(wfSharedTable("city_domains"), wfSharedTable("city_list"));
+				list ($city_domains, $city_list) = array("city_domains", "city_list");
 
 				$oRes = $dbr->select (
 					array ( $city_domains, $city_list ),

@@ -152,16 +152,15 @@ abstract class BatchTask {
      * @return object BatchTask or null if doesn't exists
      */
     static public function newFromID( $taskID ) {
-        global $wgWikiaBatchTasks;
+        global $wgWikiaBatchTasks, $wgExternalSharedDB;
 
         wfProfileIn( __METHOD__ );
 
         $retval = null;
 
-        $dbr = wfGetDB( DB_MASTER );
-
+        $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
         $oTask = $dbr->selectRow(
-            wfSharedTable( "wikia_tasks" ),
+            "wikia_tasks",
             array( "*" ),
             array( "task_id" => $taskID ),
             __METHOD__
@@ -297,6 +296,7 @@ abstract class BatchTask {
 	 * @param string $timestamp default null - timestamp to set in MW oformat
 	 */
 	public function log( $line, $timestamp = null ) {
+		global $wgExternalSharedDB;
 		if( empty( $this->mTaskID ) ) {
 			/**
 			 * task id not defined
@@ -305,9 +305,9 @@ abstract class BatchTask {
 		}
 		wfProfileIn( __METHOD__ );
 		$sTimestamp = is_null($timestamp) ? wfTimestampNow() : $timestamp;
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
 		$dbw->insert(
-			wfSharedTable( "wikia_tasks_log" ),
+			"wikia_tasks_log",
 			array(
 			  "task_id"         => $this->mTaskID,
 			  "log_timestamp"   => $sTimestamp,
@@ -334,6 +334,7 @@ abstract class BatchTask {
 	 * @return string or mixed or null
 	 */
 	public function getLog( $wantarray = false ) {
+		global $wgExternalSharedDB;
 		if (is_null($this->mTaskID)) {
 			/**
 			 * task id not defined
@@ -341,9 +342,9 @@ abstract class BatchTask {
 			return false;
 		}
 		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
 		$oRes = $dbr->select(
-			wfSharedTable( "wikia_tasks_log" ),
+			"wikia_tasks_log",
 			array( "*" ),
 			array( "task_id" => $this->mTaskID ),
 			__METHOD__,
@@ -388,12 +389,12 @@ abstract class BatchTask {
 	 * @return integer: id of added task or null
 	 */
 	public function createTask( $params, $status = TASK_WAITING ) {
-		global $wgUser;
+		global $wgUser, $wgExternalSharedDB;
 
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
 		$dbw->insert(
-			wfSharedTable( "wikia_tasks" ),
+			"wikia_tasks",
 			array(
 			   "task_user_id" => $wgUser->getID(),
 			   "task_type" => $this->getType(),
@@ -427,6 +428,7 @@ abstract class BatchTask {
 	 * @return void
 	 */
 	public function closeTask( $success = true ) {
+		global $wgExternalSharedDB;
 		if (is_null($this->mTaskID)) {
 			return false; #--- task id not defined
 		}
@@ -436,9 +438,9 @@ abstract class BatchTask {
 			? TASK_FINISHED_SUCCESS
 			: TASK_FINISHED_ERROR;
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
 		$dbw->update(
-			wfSharedTable( "wikia_tasks" ),
+			"wikia_tasks",
 			array(
 			   "task_status" => $status,
 			   "task_finished" => wfTimestampNow(),

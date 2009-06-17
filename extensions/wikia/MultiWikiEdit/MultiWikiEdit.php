@@ -520,15 +520,15 @@ class MultiWikiEditForm {
 	/*	get the list of wikis from database
 	*/
 	function fetchWikis ($lang = '', $cat = 0) {
-		global $wgSharedDB ;
-		$dbr =& wfGetDB (DB_SLAVE);
+		global $wgExternalSharedDB ;
+		$dbr =& wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 		$extra = '';
 		if (!empty($lang)) {
 			$extra = " WHERE city_lang = '$lang'";
 		} else if (!empty($cat)) {
 			$extra = " WHERE cat_id = '$cat'";
 		}
-		$query = "SELECT city_dbname, city_id, city_url, city_title, city_path FROM `{$wgSharedDB}`.city_list JOIN `{$wgSharedDB}`.city_cat_mapping USING (city_id)" . $extra ;
+		$query = "SELECT city_dbname, city_id, city_url, city_title, city_path FROM city_list JOIN city_cat_mapping USING (city_id)" . $extra ;
 		$res = $dbr->query ($query) ;
 		$wiki_array = array () ;
 		while ($row = $dbr->fetchObject($res)) {
@@ -541,11 +541,11 @@ class MultiWikiEditForm {
 	/*	get the data for this current wiki we're on
 	*/
 	function fetchThisWiki ($wikiid) {
-		global $wgSharedDB ;
+		global $wgExternalSharedDB ;
 		$wiki_array = array () ;
-		$dbr =& wfGetDB (DB_SLAVE);
+		$dbr =& wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 		$query = "SELECT city_dbname, city_id, city_url, city_title, city_path
-			FROM `{$wgSharedDB}`.city_list
+			FROM city_list
 			WHERE city_id = $wikiid" ;
 
 		$res = $dbr->query ($query) ;
@@ -563,13 +563,13 @@ class MultiWikiEditForm {
 		populate it with all required data		
 	*/
 	function fetchSelectedWikis ($wiki_list) {
-		global $wgSharedDB ;
+		global $wgExternalSharedDB ;
 		$wiki_array = array () ;
 		foreach ($wiki_list as $single_wiki) {
 			$single_wiki = trim ($single_wiki) ;
-			$dbr =& wfGetDB (DB_SLAVE);
+			$dbr =& wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 			$query = "SELECT city_list.city_dbname, city_list.city_id, city_list.city_url, city_list.city_title, city_list.city_path
-				  FROM `{$wgSharedDB}`.city_list, `{$wgSharedDB}`.city_domains
+				  FROM city_list, city_domains
 				  WHERE city_domain = '".$single_wiki."'
 				  AND city_list.city_id = city_domains.city_id" ;
 		
@@ -670,7 +670,7 @@ class MultiWikiEditForm {
 
 	/* print out to confirm */
         function checkArticle ($line, $wiki, &$articles_found) {
-		global $wgSharedDB, $wgUser, $wgOut ;
+		global $wgUser, $wgOut ;
 		$dbr =& wfGetDB (DB_SLAVE) ; 
 		if ($dbr->selectDB ($wiki->city_dbname)) {
 			/* get only the selected namespace, nothing more */
