@@ -15,19 +15,18 @@ $wgWidgets['WidgetAnswers'] = array(
     'closeable' => true,
     'editable' => false,
     'listable' => true,
-    'languages' => array( 'en' ), # only show in carousel on EN wikis
+    'languages' => $wgAvailableAnswersLang,
     'contentlang' => true,
 );
 
 function WidgetAnswers($id, $params) {
 	global $IP;
 
-    wfProfileIn(__METHOD__);
+	wfProfileIn(__METHOD__);
 
-	// Hide widget if wiki content language is not english
 	# TODO: should be handled directly in WidgetFramework, probably Draw/DrawOne method
-	global $wgLanguageCode;
-	if($wgLanguageCode != 'en')	{
+	global $wgLanguageCode, $wgAvailableAnswersLang;
+	if (!in_array($wgLanguageCode, $wgAvailableAnswersLang))        {
 		return '';
 	}
 
