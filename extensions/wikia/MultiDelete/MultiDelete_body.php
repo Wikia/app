@@ -27,6 +27,8 @@ if (!defined('MEDIAWIKI')) {
 define('CHUNK_SIZE', 500);
 
 class MultiDelete extends SpecialPage {
+	var $mReason = null; // master reason for batch, per-page override is possible
+
 	/**
 	 * contructor
 	 */
@@ -97,6 +99,7 @@ class MultiDelete extends SpecialPage {
 	function doSubmit() {
 		global $wgCityId, $wgRequest, $wgUser, $wgOut, $wgTitle, $wgExternalSharedDB;
 		$mTitles = trim($wgRequest->getText('mTitles'));
+		$this->mReason = trim($wgRequest->getText('mReason'));
 		if ($mTitles == '') {
 			return wfMsg('multidelete-error-empty-pages');
 		}
@@ -256,6 +259,9 @@ class MultiDelete extends SpecialPage {
 			if (!is_object($page)) {
 				continue;
 			}
+			// get the default reason if there is no per-article override
+			if ( empty( $reason ) && !empty( $this->mReason ) )
+				$reason = $this->mReason;
 			$namespace = $page->getNamespace();
 			$titleName = $page->getText();
 
@@ -287,6 +293,9 @@ class MultiDelete extends SpecialPage {
 				$wgOut->addHtml(wfMsg('multidelete-task-error'));
 				return;
 			}
+			// get the default reason if there is no per-article override
+			if (empty( $reason ) && !empty( $this->mReason ))
+				$reason = $this->mReason;
 			$namespace = $page->getNamespace();
 			$titleName = $page->getText();
 
