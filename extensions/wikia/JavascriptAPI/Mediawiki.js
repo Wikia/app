@@ -90,6 +90,7 @@ Mediawiki.cookie = function(name, value, options) {
     }
 };
 
+
 /* Send a message to the debug console if available, otherwise alert */
 Mediawiki.debug = function (msg, level){
         if (Mediawiki.e(Mediawiki.debugLevel)){
@@ -124,6 +125,65 @@ Mediawiki.debug = function (msg, level){
 Mediawiki.d = Mediawiki.debug; // Shortcut to reduce size of JS
 
 
+Mediawiki.deleteArticle = function (title, reason, callBackSuccess, callBackFailure){
+     try {
+	var token = Mediawiki.getToken(title, "delete"); 
+	if (token === false){
+		Mediawiki.error("Error obtaining delete token, delete failed");
+		return false;
+	}
+
+	var urlParams = {
+		'token' : token,	
+		'action' : 'delete',
+                'format' : 'json',
+		'title'  : title,
+		'reason'  : reason
+	};
+                
+	Mediawiki.updateStatus("Deleting article...");
+	Mediawiki.deleteArticleSuccess = callBackSuccess;
+	Mediawiki.deleteArticleFailure = callBackFailure;
+
+	Mediawiki.fetch( {
+		'url': Mediawiki.apiUrl,
+		'data': urlParams,
+		'type': "POST",
+		'callBack': Mediawiki.deleteArticleCallback
+	});
+
+	return true;
+
+      } catch (e) {
+	Mediawiki.error("Error deleting article");
+	Mediawiki.d(Mediawiki.print_r(e));
+	return false;
+      }
+};
+
+
+Mediawiki.deleteArticleCallback = function(resultJson) {
+	var result;
+	try {
+		eval('result = ' + resultJson + ';');
+		if (Mediawiki.e(result.error)){
+
+			Mediawiki.updateStatus("Delete Article Successful");
+			Mediawiki.runCallback(Mediawiki.deleteArticleSuccess);
+
+		} else {
+			Mediawiki.runCallback(Mediawiki.deleteArticleFailure, "Error deleting article: " + result.error.info); 
+		}
+
+
+	} catch (e) {
+		// Javascript Error processing login
+		Mediawiki.error("Error during article callback");
+		Mediawiki.d(Mediawiki.print_r(e));
+	}
+};
+
+
 /* Main interface for editing/creating articles. The "article" param is an object contaiing
  * any of the properties listed in the api on:
  * http://www.mediawiki.org/wiki/API:Edit_-_Create%26Edit_pages
@@ -153,7 +213,7 @@ Mediawiki.editArticle = function (article, callBackSuccess, callBackFailure){
 		urlParams[key] = article[key];
 	}
                 
-	Mediawiki.updateStatus("Logging in...");
+	Mediawiki.updateStatus("Saving article...");
 	Mediawiki.editArticleSuccess = callBackSuccess;
 	Mediawiki.editArticleFailure = callBackFailure;
 
@@ -183,13 +243,13 @@ Mediawiki.editArticleCallback = function(resultJson) {
 			Mediawiki.runCallback(Mediawiki.editArticleSuccess);
 
 		} else {
-			Mediawiki.runCallback(Mediawiki.loginCallbackFailure, "Error saving article: " + result.error + " See http://www.mediawiki.org/wiki/API:Edit_-_Create%26Edit_pages" );
+			Mediawiki.runCallback(Mediawiki.editArticleFailure, "Error saving article: " + result.error.info + " See http://www.mediawiki.org/wiki/API:Edit_-_Create%26Edit_pages" );
 		}
 
 
 	} catch (e) {
 		// Javascript Error processing login
-		Mediawiki.error("Error editing article");
+		Mediawiki.error("Error during article callback");
 		Mediawiki.d(Mediawiki.print_r(e));
 	}
 };
@@ -358,7 +418,7 @@ Mediawiki.getToken = function(titles, tokenType){
 			return false;
 		}
 		for ( var artid in responseData.query.pages){
-			return responseData.query.pages[artid]["edittoken"];	
+			return responseData.query.pages[artid][tokenType + "token"];	
 		}
 	}
 	return false;
@@ -499,7 +559,7 @@ Mediawiki.print_r = function (arr,level) {
 Mediawiki.runCallback = function(callBack, arg){
 	var parens = "()";
 	if (typeof arg != "undefined") {
-		arg = arg.replace(/"/, '\\"');
+		arg = arg.replace(/"/g, '\\"');
 		parens = '("' + arg + '")';
 	}
 	if (typeof callBack == "string" && typeof window[callBack] == "function"){
