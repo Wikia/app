@@ -95,7 +95,7 @@ class MultiDelete extends SpecialPage {
 	}
 
 	function doSubmit() {
-		global $wgCityId, $wgRequest, $wgUser, $wgOut, $wgTitle;
+		global $wgCityId, $wgRequest, $wgUser, $wgOut, $wgTitle, $wgExternalSharedDB;
 		$mTitles = trim($wgRequest->getText('mTitles'));
 		if ($mTitles == '') {
 			return wfMsg('multidelete-error-empty-pages');
@@ -125,11 +125,11 @@ class MultiDelete extends SpecialPage {
 					return wfMsg('multidelete-error-multi-page');
 				}
 
-				$dbr = wfGetDB(DB_SLAVE);
+				$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 				//get selected wikis
 				$res = $dbr->select(
-					array(wfSharedTable('city_list'), wfSharedTable('city_domains')),
+					array('city_list', 'city_domains'),
 					array('city_list.city_id', 'city_domain'),
 					array('city_list.city_id = city_domains.city_id'),
 					__METHOD__
@@ -172,7 +172,7 @@ class MultiDelete extends SpecialPage {
 					return wfMsg('multidelete-error-multi-page');
 				}
 
-				$dbr = wfGetDB(DB_SLAVE);
+				$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 				$selectedWikis = explode(',', $mWikiInbox);
 				array_walk($selectedWikis, create_function('&$item, $key', '$item = "\'" . mysql_real_escape_string(trim($item)) . "\'";'));
@@ -180,7 +180,7 @@ class MultiDelete extends SpecialPage {
 
 				//get selected wikis
 				$res = $dbr->select(
-					array(wfSharedTable('city_list'), wfSharedTable('city_domains')),
+					array('city_list', 'city_domains'),
 					array('city_list.city_id', 'city_domain'),
 					array('city_list.city_id = city_domains.city_id', "city_domain IN ($selectedWikis)"),
 					__METHOD__
@@ -214,9 +214,9 @@ class MultiDelete extends SpecialPage {
 					$lang = substr($mRange, 5);
 
 					//get selected wikis
-					$dbr = wfGetDB(DB_SLAVE);
+					$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 					$res = $dbr->select(
-						array(wfSharedTable('city_list'), wfSharedTable('city_domains')),
+						array('city_list', 'city_domains'),
 						array('city_list.city_id', 'city_domain'),
 						array('city_list.city_id = city_domains.city_id', "city_lang = '$lang'"),
 						__METHOD__

@@ -48,7 +48,7 @@ class SendToAFriendMaintenance {
      */
     public function execute()
     {
-        global $wgMemc, $wgSharedDB ;
+        global $wgMemc, $wgExternalSharedDB;
 
         wfProfileIn( __METHOD__ );
         #--- get emails to send
@@ -56,7 +56,8 @@ class SendToAFriendMaintenance {
         if( is_array( $aQueue ) ) {
             wfDebug('Will now try to send '.count($aQueue)." email(s)...\n");
             #---
-            $dbw = wfGetDB( DB_MASTER );
+            $dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+
             foreach( $aQueue as $oEmail ) {
                 //print_r( $oEmail );
                 $oEmailUser = User::newFromName($oEmail->que_user);
@@ -106,15 +107,15 @@ class SendToAFriendMaintenance {
 
                 // send emails
                 $addresses = explode( ",", $oEmail->que_to );
-            
+
                 foreach ( $addresses as $address ) {
                     $to[] = new MailAddress(trim($address));
                 }
-                
+
                 $success = UserMailer::send($to, $from, $oEmail->que_subject, $oEmail->que_body, $reply_to);
-                
+
                 if ( empty($success) || $success === true ) {
-                    $dbw->update( wfSharedTable('send_queue'), array('que_sent' => 1), array('que_id' => $oEmail->que_id), __METHOD__);
+                    $dbw->update( 'send_queue', array('que_sent' => 1), array('que_id' => $oEmail->que_id), __METHOD__);
                 } else {
                 	if (class_exists("WikiError") && WikiError::isError($success)) {
                 		wfDebug('Message could not be sent. Mailer Error: ' . $success->getMessage() . "\n\n");
@@ -128,7 +129,7 @@ class SendToAFriendMaintenance {
     		wfDebug("No emails to send!\n");
     	}
     	wfDebug("\n\n -- Finished!\n");
-    	
+
         wfProfileOut( __METHOD__ );
     	return true;
     }
@@ -145,13 +146,14 @@ class SendToAFriendMaintenance {
      */
     private function getQueue()
     {
+        global $wgExternalSharedDB;
         wfProfileIn( __METHOD__ );
 
         $aEmails = array();
-        $dbr = wfGetDB( DB_MASTER );
+        $dbr = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
         $oRes = $dbr->select(
-            wfSharedTable( "send_queue" ),
+            "send_queue",
             array( "*" ),
             array( "que_sent" => 0 ),
             __METHOD__
@@ -166,7 +168,7 @@ class SendToAFriendMaintenance {
 
         return $aEmails;
     }
-    
+
     /**
      * setMsgBlocked
      * set blocked reason
@@ -175,15 +177,15 @@ class SendToAFriendMaintenance {
         $blocker = User::newFromId($user->mBlockedby);
         $blck_name = $user->mBlockedby;
         if (is_object($blocker)) {
-            $blck_name = $blocker->getName();    
+            $blck_name = $blocker->getName();
         }
-        
+
         $newbody = "This message has been stopped due to block set by ".str_replace( "'", "", $blck_name );
         $newbody .= ", because of:\n" . str_replace( "'", "", $user->mBlockreason ) . "\n";
-    
+
         wfDebug($newbody);
-    
-        $dbw->update( wfSharedTable('send_queue'), array('que_sent' => 2, 'que_body' => $newbody), array('que_id' => $que_id), __METHOD__);
+
+        $dbw->update( 'send_queue', array('que_sent' => 2, 'que_body' => $newbody), array('que_id' => $que_id), __METHOD__);
     }
 
 }

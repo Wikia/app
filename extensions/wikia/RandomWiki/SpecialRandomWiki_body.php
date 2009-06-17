@@ -34,11 +34,7 @@ class RandomWiki extends SpecialPage {
 	 * @param $par String: page name on target wiki
 	 */
 	public function execute( $par ) {
-		global $wgOut, $wgSharedDB, $wgMemc;
-
-		// Quit early if we don't have access to the central wiki DB
-		if ( empty( $wgSharedDB ) )
-			return;
+		global $wgExternalStatsDB, $wgOut, $wgMemc;
 
 		$topWikis = $wgMemc->get( self::cachekey );
 
@@ -51,8 +47,7 @@ class RandomWiki extends SpecialPage {
 			);
 
 
-			$dbs = wfGetDBExt( DB_SLAVE );
-			$dbs->selectDB( 'dbstats' );
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
 
 			$res = $dbs->select( 'city_stats_full', array( 'cw_city_id' ), '', __METHOD__, $options );
 

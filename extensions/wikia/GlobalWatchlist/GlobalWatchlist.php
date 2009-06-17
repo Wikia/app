@@ -44,10 +44,10 @@ function wfGlobalWatchlistToggle($extraToggles) {
 }
 
 function wfGlobalWatchlistPrefsCustomHtml($prefsForm) {
-	global $wgOut, $wgUser, $wgSharedDB;
+	global $wgOut, $wgUser, $wgExternalSharedDB;
 
-	$dbr = wfGetDB(DB_SLAVE);
-	$oResource = $dbr->query("SELECT count(*) AS count FROM $wgSharedDB.global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
+	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+	$oResource = $dbr->query("SELECT count(*) AS count FROM global_watchlist WHERE gwa_user_id='" . $wgUser->getID() . "'");
 	$oResultRow = $dbr->fetchObject($oResource);
 
 	if($oResultRow->count) {
@@ -77,25 +77,3 @@ function wfGlobalWatchlistPrefsEmailToggle($prefsForm, $toggleHtml) {
  return true;
 }
 
-/*
-function wfGlobalWatchArticleComplete($oUser, $oArticle) {
-	global $wgSharedDB, $wgCityId;
-
-	echo "<pre>";
-	//echo $oArticle->getTitle()->getNamespace();
-	echo $oArticle->getTitle()->getPrefixedURL();
-	print_r($oArticle);
-	exit;
-
-	$dbw = wfGetDB(DB_MASTER);
-
-	$dbw->query("INSERT INTO " . $wgSharedDB . ".global_watchlist (gwa_user_id, gwa_city_id, gwa_namespace, gwa_title, gwa_rev_id, gwa_timestamp) VALUES ('" . $oUser->getId() . "', '" . $wgCityId . "','" . $aPage['namespace'] . "', '" . addslashes($aPage['title']) . "', '" . $aPage['revisionId'] . "', '" . $aPage['timestamp']. "')");
-
-	return true;
-}
-
-function wfGlobalUnwatchArticleComplete($user, $artile) {
-
-	return true;
-}
-*/

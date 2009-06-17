@@ -9,10 +9,10 @@
 ini_set( "include_path", dirname(__FILE__)."/../../../maintenance" );
 require_once( "commandLine.inc" );
 
-$dbw = wfGetDB( DB_MASTER );
+$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 $res = $dbw->select(
-	wfSharedTable("city_variables_log"),
+	"city_variables_log",
 	array( "*" ),
 	array( 1 => 1 ),
 	__METHOD__,
@@ -36,7 +36,7 @@ while( $row = $dbw->fetchObject( $res ) ) {
 		"cl_timestamp" => $timestamp
 	);
 	$dbw->insert(
-		wfSharedTable( "city_list_log" ),
+		"city_list_log",
 		$log,
 		__METHOD__
 	);

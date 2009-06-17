@@ -56,12 +56,13 @@ class WikiFactoryHub {
 	 * @return array	array with categories
 	 */
 	public function getBreadCrumb( $city_id ) {
+		global $wgExternalSharedDB;
 
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB( DB_SLAVE );
-		$cat_id = $dbr->selectField(
-			wfSharedTable("city_cat_mapping"),
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$cat_id = $dbr->selectField( 
+			"city_cat_mapping",
 			"cat_id",
 			array( "city_id" => $city_id )
 		);
@@ -69,9 +70,9 @@ class WikiFactoryHub {
 		$cats = array();
 		while( !empty( $cat_id ) ) {
 			$res = $dbr->select(
-				array( wfSharedTable("city_cat_structure"), wfSharedTable("city_cats") ),
+				array( "city_cat_structure", "city_cats" ),
 				array( "cat_name", "cat_url", "cat_parent_id" ),
-				array( wfSharedTable("city_cat_structure").".cat_id=".wfSharedTable("city_cats").".cat_id", wfSharedTable("city_cat_structure").".cat_id=$cat_id" )
+				array( "city_cat_structure.cat_id=city_cats.cat_id", "city_cat_structure.cat_id={$cat_id}" )
 			);
 			if( $row = $dbr->fetchObject( $res ) ) {
 				$cats[] = array( "name" => $row->cat_name, "url" => $row->cat_url, "id" => intval( $cat_id ), "parentId" => intval( $row->cat_parent_id ) );
@@ -145,13 +146,13 @@ class WikiFactoryHub {
 	 * @return integer	category id from city_cat_mapping table
 	 */
     public function getCategoryId( $city_id ) {
-
+		global $wgExternalSharedDB;
+		
         wfProfileIn( __METHOD__ );
 
-        $dbr = wfGetDB( DB_SLAVE );
-
+        $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
         $oRow = $dbr->selectRow(
-            array( wfSharedTable("city_cat_mapping") ),
+            array( "city_cat_mapping" ),
             array( "cat_id" ),
             array( "city_id" => $city_id ),
             __METHOD__
@@ -174,41 +175,36 @@ class WikiFactoryHub {
     /**
 	 * loadCategories
 	 *
-     * load data from database: wikicities.city_cats
+     * load data from database: city_cats (WF)
      *
      * @author Krzysztof Krzyżaniak <eloy@wikia.com>
      *
 	 * @return array	array with category maps id => name
      */
     private function loadCategories() {
-      global $wgSharedDB ;
-	$tmp = array();
-
-
-	if( !$wgSharedDB ) {
-	  return array();
+    	global $wgExternalSharedDB ;
+    	$tmp = array();
+    	if( !$wgExternalSharedDB ) {
+    		return array();
+		}
+		wfProfileIn( __METHOD__ );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$oRes = $dbr->select(
+			array( "city_cats" ),
+			array( "*" ),
+			null,
+			__METHOD__,
+			array( "ORDER BY" => "cat_name" )
+		);
+		
+		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			$tmp[ $oRow->cat_id ] = $oRow->cat_name;
+		}
+		
+		$dbr->freeResult( $oRes );
+		wfProfileOut( __METHOD__ );
+		return $tmp;
 	}
-        wfProfileIn( __METHOD__ );
-        $dbr = wfGetDB( DB_SLAVE );
-
-        $oRes = $dbr->select(
-            array( wfSharedTable("city_cats") ),
-            array( "*" ),
-            null,
-            __METHOD__,
-            array( "ORDER BY" => "cat_name" )
-        );
-
-        while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-            $tmp[ $oRow->cat_id ] = $oRow->cat_name;
-        }
-
-        $dbr->freeResult( $oRes );
-
-        wfProfileOut( __METHOD__ );
-
-        return $tmp;
-    }
 
 	/**
 	 * getIdByName
@@ -221,13 +217,12 @@ class WikiFactoryHub {
 	 * @return integer	category id
 	 */
     public function getIdByName( $name ) {
-
+		global $wgExternalSharedDB;
         wfProfileIn( __METHOD__ );
 
-        $dbr = wfGetDB( DB_SLAVE );
-
+        $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
         $oRow = $dbr->selectRow(
-            array( wfSharedTable("city_cats") ),
+            array( "city_cats" ),
             array( "cat_id" ),
             array( "cat_name" => htmlspecialchars( $name ) ),
             __METHOD__
@@ -249,13 +244,13 @@ class WikiFactoryHub {
      * @param integer   $cat_id     category identifier
      */
     public function setCategory( $city_id, $cat_id ) {
-
+		global $wgExternalSharedDB;
         wfProfileIn( __METHOD__ );
 
-        $dbw = wfGetDB( DB_MASTER );
+        $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
         $dbw->begin();
-        $dbw->delete( wfSharedTable("city_cat_mapping"), array( "city_id" => $city_id ), __METHOD__ );
-        $dbw->insert( wfSharedTable("city_cat_mapping"), array( "city_id" => $city_id, "cat_id" => $cat_id ), __METHOD__  );
+        $dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
+        $dbw->insert( "city_cat_mapping", array( "city_id" => $city_id, "cat_id" => $cat_id ), __METHOD__  );
 
 		$categories = $this->getCategories();
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]}", $city_id );

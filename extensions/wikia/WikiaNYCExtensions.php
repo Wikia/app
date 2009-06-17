@@ -1,18 +1,16 @@
 <?php
 
 /*
- * Temporary -> NYC 	
- * Additional user's page extensions 
+ * Temporary -> NYC
+ * Additional user's page extensions
  *
- */  
+ */
 $wgFriendingEnabled = true;
 
 $wgDefaultUserOptions['notifygift'] = 1;
 $wgDefaultUserOptions['notiftyfriendrequest'] = 1;
 
 $wgExtraNamespaces[207] = "UserProfile";
-$wgDBStatsServer = "localhost";
-$wgDBStats = "dbstats";
 /*$wgAvatarPath = $wgUploadPath."/avatars";
 $wgAvatarUploadPath = $wgUploadDirectory."/avatars";*/
 /*$wgGiftImagePath = $wgUploadPath."/awards";
@@ -21,10 +19,10 @@ $wgImageCommonPath = "/images/common/common/";
 require_once ("$IP/extensions/wikia/WikiaUserProfile/WikiaUserProfile.php");
 require_once ("$IP/extensions/wikia/WikiaAvatar/SpecialWikiaAvatar.php");
 require_once ("$IP/extensions/wikia/WikiaAvatar/SpecialWikiaRemoveAvatar.php");
- 
-/* 
+
+/*
 $wgAvatarPath = "/images/avatars";
-$wgGiftImagePath = "/images/awards"; 
+$wgGiftImagePath = "/images/awards";
 
 //require_once("$IP/extensions/Avatar/Avatar.php"); //upload
 //require_once("$IP/extensions/Avatar/AvatarClass.php"); //class to get avatar for a user

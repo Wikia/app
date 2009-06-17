@@ -144,7 +144,7 @@ function SiteWideMessagesGetUserMessages(&$out, &$parseroutput) {
  *
  */
 function SiteWideMessagesUserNewTalks (&$user, &$talks) {
-	global $wgSharedDB, $wgMemc, $wgUser;
+	global $wgExternalSharedDB, $wgMemc, $wgUser;
 
 	if ($user->isAnon() || $wgUser->isAllowed('bot')) {	//don't show information for anons and bots
 		return true;
@@ -162,8 +162,8 @@ function SiteWideMessagesUserNewTalks (&$user, &$talks) {
 			$wikis = array_filter($messagesID['wiki']);
 			if(count($wikis)) {
 				$wikis = implode(',', $wikis);
-				$DB = wfGetDB(DB_SLAVE);
-				$res = $DB->query("SELECT city_id, city_title, city_url FROM `$wgSharedDB`.`city_list` WHERE city_id IN ($wikis)");
+				$DB = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+				$res = $DB->query("SELECT city_id, city_title, city_url FROM city_list WHERE city_id IN ($wikis)");
 
 				while($row = $DB->fetchObject($res)) {
 					$link = $row->city_url . 'index.php?title=User_talk:' . urlencode($user->getTitleKey());

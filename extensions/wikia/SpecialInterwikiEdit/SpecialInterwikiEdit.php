@@ -24,9 +24,9 @@ $wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/Specia
 $wgSpecialPageGroups['InterwikiEdit'] = 'wiki';
 
 function wfInitializeSpecialInterwikiEdit(){
-	global $wgSharedDB, $wgExternalSharedDB;
+	global $wgExternalSharedDB;
 
-	if (!isset($wgSharedDB) && !isset($wgExternalSharedDB)){
+	if( empty( $wgExternalSharedDB ) ) {
 	        return true;
 	}
 	global $wgAvailableRights, $wgGroupPermissions, $wgMessageCache, $IP;
@@ -66,7 +66,7 @@ function wfSpecialInterwikiEdit (){
 }
 
 function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
-	global $wgOut, $wgLanguageNames;
+	global $wgOut, $wgLanguageNames, $wgExternalSharedDB;
 
 	if (!$wikia && !$wikiaID ){
 	        $wgOut->addHTML("No wikia specified <br />\n<br />\n");
@@ -76,7 +76,7 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 	$wikiaDB = null;
 	$result = null;
 	$wikia = trim($wikia);
-	$db =& wfGetDB (DB_SLAVE);
+	$db =& wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 
 	if (empty($wikiaID)){
 		$wikiaID = 0;
@@ -89,7 +89,7 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
         	    $wikia = $wikia.".wikia.com";
 		}
 
-		$oRes = $db->select( wfSharedTable("city_domains"), "city_id, city_domain",
+		$oRes = $db->select( "city_domains", "city_id, city_domain",
 	            array("city_domain" => $wikia), array("limit" => 1), __METHOD__);
 
 		if ($dbobject = $db->fetchObject($oRes)){
@@ -98,7 +98,7 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 
 	}
 
-        $result = $db->select(wfSharedTable('city_list'), 'city_id,city_dbname,city_url,city_umbrella,city_lang', "city_id = ". $db->addQuotes($wikiaID));
+        $result = $db->select('city_list', 'city_id,city_dbname,city_url,city_umbrella,city_lang', "city_id = ". $db->addQuotes($wikiaID));
 
 	if ($dbobject = $db->fetchObject($result)){
 	        return array(
@@ -138,11 +138,11 @@ function wfSIWEChooseAction(){
 }
 
 function wfSIWEChangeUmbrella(){
-	global $wgRequest;
+	global $wgRequest, $wgExternalSharedDB;
 
 	list($wikia, $wikiaID) = wfSIWEGetRequestData();
 
-    $db =& wfGetDB (DB_MASTER);
+	$db =& wfGetDB (DB_MASTER, array(), $wgExternalSharedDB);
 
 	list($wikiaID, , $wikiaURL, $wikiaUmbrella) = wfSIWEGetWikiaData($wikia, $wikiaID);
 	if (!isset($wikiaURL)) return false;
@@ -150,7 +150,7 @@ function wfSIWEChangeUmbrella(){
 	if ( $wgRequest->getVal('action')=='change_umbrella_commit' ){
 		$wikiaUmbrella = $wgRequest->getVal( 'wikiaUmbrella', '');
 
-		$result = $db->update(wfSharedTable('city_list'),array('city_umbrella' => $wikiaUmbrella), array('city_id ' => $wikiaID));
+		$result = $db->update('city_list',array('city_umbrella' => $wikiaUmbrella), array('city_id ' => $wikiaID));
 		list(,,,$wikiaUmbrellaNew) = wfSIWEGetWikiaData(null, $wikiaID);
 		$ret .= "<p>Umbrella for ". htmlspecialchars($wikiaURL). " is now set to ".
 			htmlspecialchars($wikiaUmbrellaNew). "</p>\n";

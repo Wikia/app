@@ -132,9 +132,9 @@ class Editcount extends SpecialPage {
 		$fname = 'Editcount::editsByNsAll';
 		$nscount = array();
 
-		$dbs = wfGetDBExt(DB_SLAVE);
+		$dbs = wfGetDB(DB_SLAVE, array(), 'dbstats');
 		$res = $dbs->select(
-			array( '`dbstats`.`city_user_edits`' ),
+			array( 'city_user_edits' ),
 			array( 'ue_edit_namespace as namespace', 'ue_edit_count as count' ),
 			array(
 				'ue_user_id' => $uid

@@ -280,3 +280,18 @@ $wgAutoloadClasses['StaticChute'] = "$IP/extensions/wikia/StaticChute/StaticChut
  * array of language codes supported by ComTeam
  */
 $wgWikiaStaffLanguages = array();
+
+/**
+ * @name wgExternalSharedDB
+ * use it when you have $wgSharedDB on an external cluster
+ */
+$wgExternalSharedDB = false;
+
+/**
+ * external databases
+ */
+$wgExternalDatawareDB = 'dataware';
+$wgExternalArchiveDB = 'archive';
+$wgExternalStatsDB = 'dbstats';
+
+$wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";

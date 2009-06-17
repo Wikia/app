@@ -69,10 +69,9 @@ class SearchRankEntry {
 	}
 
 	private function loadFromDb($id) {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 
-		$dbr = wfGetDB(DB_SLAVE);
-		$dbr->selectDB($wgSharedDB);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$data = $dbr->selectRow('rank_entry', array( '*' ), array( 'ren_id' => $id ), __METHOD__);
 
@@ -82,18 +81,17 @@ class SearchRankEntry {
 	}
 
 	public function update() {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 
 		if($this->mId) {
-			$dbw = wfGetDB(DB_MASTER);
-			$dbw->selectDB($wgSharedDB);
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 			$fields = array();
 			$fields['ren_page_name'] = addslashes($this->mPageName);
 			$fields['ren_is_main_page'] = ($this->mIsMainPage ? '1' : '0');
 			$fields['ren_phrase'] = addslashes($this->mPhrase);
 
-			$dbw->update(wfSharedTable('rank_entry'), $fields, array( 'ren_id' => $this->mId ), __METHOD__);
+			$dbw->update('rank_entry', $fields, array( 'ren_id' => $this->mId ), __METHOD__);
 			$dbw->immediateCommit();
 		}
 		else {
@@ -103,11 +101,10 @@ class SearchRankEntry {
 	}
 
 	public function delete() {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 
 		if($this->mId) {
-			$dbw = wfGetDB(DB_MASTER);
-			$dbw->selectDB($wgSharedDB);
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 			$dbw->delete('rank_result', array('rre_ren_id' => $this->mId), __METHOD__);
 			$dbw->delete('rank_entry', array('ren_id' => $this->mId), __METHOD__);
@@ -116,10 +113,9 @@ class SearchRankEntry {
 	}
 
 	private function create() {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 
-		$dbw = wfGetDB(DB_MASTER);
-		$dbw->selectDB($wgSharedDB);
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 		$fields = array();
 		$fields['ren_city_id'] = $this->mCityId;
@@ -128,18 +124,17 @@ class SearchRankEntry {
 		$fields['ren_phrase'] = addslashes($this->mPhrase);
 		$fields['ren_created'] = date('Y-m-d H:i:s');
 
-		$dbw->insert(wfSharedTable('rank_entry'), $fields, __METHOD__);
+		$dbw->insert('rank_entry', $fields, __METHOD__);
 		$this->mId = $dbw->insertId();
 
 		$dbw->immediateCommit();
 	}
 
 	public static function getList() {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 		$aEntries = array();
 
-		$dbr = wfGetDB(DB_SLAVE);
-		$dbr->selectDB($wgSharedDB);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$oResource = $dbr->query("SELECT * FROM rank_entry ORDER BY ren_id");
 
@@ -151,11 +146,10 @@ class SearchRankEntry {
 	}
 
 	public static function getResultDates() {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 		$aDates = array();
 
-		$dbr = wfGetDB(DB_SLAVE);
-		$dbr->selectDB($wgSharedDB);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$oResource = $dbr->query("SELECT rre_date FROM rank_result GROUP BY rre_date ORDER BY rre_date");
 
@@ -167,10 +161,9 @@ class SearchRankEntry {
 	}
 
 	public function getRankResultByDate($sDate) {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 
-		$dbr = wfGetDB(DB_SLAVE);
-		$dbr->selectDB($wgSharedDB);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$oResource = $dbr->query("SELECT rre_rank FROM rank_result WHERE rre_date='" . addslashes($sDate) . "' AND rre_ren_id='" . $this->mId . "' ORDER BY rre_id DESC LIMIT 1");
 		$oResultRow = $dbr->fetchObject($oResource);
@@ -179,10 +172,9 @@ class SearchRankEntry {
 	}
 
 	public function getRankResults($sSearchEngine, $iYear = 0, $iMonth = 0 , $iDay = 0, $iDaysBack = 0) {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 
-		$dbr = wfGetDB(DB_SLAVE);
-		$dbr->selectDB($wgSharedDB);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$sWhereClause = "rre_ren_id='" . $this->mId . "' AND rre_engine='" . addslashes($sSearchEngine) . "'";
 		$sOrderByClause = "ORDER BY rre_date";
@@ -217,10 +209,9 @@ class SearchRankEntry {
 	}
 
 	public function setRankResult($sSearchEngine, $sDate, $iRank) {
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 
-		$dbw = wfGetDB(DB_MASTER);
-		$dbw->selectDB($wgSharedDB);
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 		$fields = array();
 		$fields['rre_ren_id'] = $this->mId;
@@ -228,7 +219,7 @@ class SearchRankEntry {
 		$fields['rre_date'] = addslashes($sDate);
 		$fields['rre_rank'] = addslashes($iRank);
 
-		$dbw->insert(wfSharedTable('rank_result'), $fields, __METHOD__);
+		$dbw->insert('rank_result', $fields, __METHOD__);
 		return $dbw->insertId();
 	}
 

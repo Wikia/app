@@ -25,8 +25,8 @@ class RegexBlockData
     var $mNbrResults;
 
     public function __construct() {
-        $this->mTable = wfSharedTable(REGEXBLOCK_TABLE);
-        $this->mStatsTable = wfSharedTable(REGEXBLOCK_STATS_TABLE);
+        $this->mTable = REGEXBLOCK_TABLE;
+        $this->mStatsTable = REGEXBLOCK_STATS_TABLE;
         $this->mNbrResults = 0;
     }    
     
@@ -34,18 +34,17 @@ class RegexBlockData
      * fetch number of all rows 
      */
     public function fetchNbrResults () {
-        global $wgMemc, $wgSharedDB ;
+        global $wgMemc, $wgExternalSharedDB ;
 
         wfProfileIn( __METHOD__ );
 
         $this->mNbrResults = 0;
         /* we use memcached here */
-        $key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_SPECIAL_KEY, REGEXBLOCK_SPECIAL_NUM_RECORD );
+        $key = wfForeignMemcKey( (isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities", "", REGEXBLOCK_SPECIAL_KEY, REGEXBLOCK_SPECIAL_NUM_RECORD );
         $cached = $wgMemc->get ($key);
 
         if ( empty( $cached ) ) {
-            $dbr =& wfGetDB (DB_MASTER) ;
-            
+            $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
             $oRes = $dbr->select(
                 $this->mTable,
                 array("COUNT(*) as cnt"),
@@ -80,13 +79,13 @@ class RegexBlockData
         if (function_exists('wfRegexBlockGetBlockers')) {
             $blockers_array = wfRegexBlockGetBlockers();
         } else {
-            global $wgMemc, $wgSharedDB;
-            $key = wfForeignMemcKey( (isset($wgSharedDB)) ? $wgSharedDB : "wikicities", "", REGEXBLOCK_BLOCKERS_KEY );
+            global $wgMemc, $wgExternalSharedDB;
+            $key = wfForeignMemcKey( (isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities", "", REGEXBLOCK_BLOCKERS_KEY );
             $cached = $wgMemc->get ($key);
 
             if (!is_array($cached)) {
                 /* get from database */
-                $dbr =& wfGetDB (DB_MASTER);
+                $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
                 $oRes = $dbr->select(
                     $this->mTable,
                     array("blckby_blocker"),
@@ -110,13 +109,13 @@ class RegexBlockData
     }
 
     public function getBlockersData($current = "", $username = "", $limit, $offset) {
-        global $wgSharedDB, $wgLang, $wgUser;
+        global $wgExternalSharedDB, $wgLang, $wgUser;
 
         wfProfileIn( __METHOD__ );
 
         $blocker_list = array();
         /* get data and play with data */
-        $dbr =& wfGetDB (DB_MASTER) ;
+        $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
         $conds = array("blckby_blocker <> ''");
 
         if ( !empty($current) ) {
@@ -166,12 +165,12 @@ class RegexBlockData
 
     /* fetch number of all stats rows */
     public function fetchNbrStatResults($id) {
-        global $wgSharedDB ;
+        global $wgExternalSharedDB ;
 
         wfProfileIn( __METHOD__ );
         $nbrStats = 0;
 
-        $dbr =& wfGetDB (DB_SLAVE);
+        $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
         $oRes = $dbr->select(
             $this->mStatsTable,
             array("COUNT(*) as cnt"),
@@ -190,13 +189,13 @@ class RegexBlockData
 
 	/* fetch all logs */
 	public function getStatsData ($id, $limit = 50, $offset = 0) {
-        global $wgSharedDB ;
+        global $wgExternalSharedDB ;
 
         wfProfileIn( __METHOD__ );
 	    $stats = array();
 
 	    /* from database */
-	    $dbr =& wfGetDB (DB_SLAVE);
+	    $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
         $conds = array("stats_blckby_id = '".intval($id)."'");
         $oRes = $dbr->select(
             $this->mStatsTable,
@@ -217,12 +216,12 @@ class RegexBlockData
 
     /* fetch record for selected identifier of regex block */
     public function getRegexBlockById($id) {
-        global $wgSharedDB ;
+        global $wgExternalSharedDB ;
 
         wfProfileIn( __METHOD__ );
         $record = null;
         
-        $dbr =& wfGetDB (DB_MASTER);
+        $dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
         $oRes = $dbr->select(
             $this->mTable,
             array("blckby_id", "blckby_name", "blckby_blocker", "blckby_timestamp", "blckby_expire", "blckby_create", "blckby_exact", "blckby_reason"),
@@ -244,11 +243,11 @@ class RegexBlockData
 
         wfProfileIn( __METHOD__ );
         /* make insert */
-        $dbw =& wfGetDB( DB_MASTER );
+        $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
         $name = $wgUser->getName() ;
 
         $oRes = $dbw->replace( 
-            wfSharedTable(REGEXBLOCK_TABLE),
+            REGEXBLOCK_TABLE,
             array( "blckby_id", "blckby_name" ),
             array(
                 "blckby_id"         => "null",

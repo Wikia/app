@@ -370,7 +370,7 @@ class UserBadges {
 	
 	
 	private function setDefaultOptions() {
-		if (!empty($this->mOptions) && is_array($this->mOptions)) {
+		if (!empty($this->mOptions) && is_array($this->mOptions) && isset($this->mOptions[$this->mCity])) {
 			$oUserBadgesOptions = $this->mOptions[$this->mCity];
 			if ( !empty($oUserBadgesOptions) && (is_object($oUserBadgesOptions)) ) {
 				$this->mCurrentOptions = $oUserBadgesOptions;
@@ -734,9 +734,9 @@ class UserBadges {
 		if (class_exists("Editcount")) {
 			$editCount = $wgContLang->formatNum( Editcount::getTotal( Editcount::editsByNs( $uid ) ) );
 		} else {
-			$dbs = wfGetDBExt(DB_SLAVE);
+			$dbs = wfGetDB(DB_SLAVE, array(), 'dbstats');
 			$res = $dbs->select(
-				array( '`dbstats`.`city_local_users`' ),
+				array( 'city_local_users' ),
 				array( 'count(*) as cnt' ),
 				array(
 					'lu_wikia_id' => $wgCityId,

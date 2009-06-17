@@ -118,12 +118,12 @@ class AdEngine {
 	}
 
 	public function loadConfig() {
-		global $wgMemc, $wgCityId, $wgUser, $wgRequest;
+		global $wgMemc, $wgCityId, $wgUser, $wgRequest, $wgExternalSharedDB;
 
-                $skin_name = null;
-                if ( is_object($wgUser)){
-                        $skin_name = $wgUser->getSkin()->getSkinName();
-                }
+		$skin_name = null;
+		if ( is_object($wgUser)){
+				$skin_name = $wgUser->getSkin()->getSkinName();
+		}
 
 		if ($skin_name == 'awesome'){
 			// Temporary hack while we transition to lean monaco
@@ -138,10 +138,10 @@ class AdEngine {
 			return true;
 		}
 
-		$db = wfGetDB(DB_SLAVE);
-		$ad_slot_table = wfSharedTable('ad_slot');
-		$ad_slot_override_table = wfSharedTable('ad_slot_override');
-		$ad_provider_value_table = wfSharedTable('ad_provider_value');
+		$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$ad_slot_table = 'ad_slot';
+		$ad_slot_override_table = 'ad_slot_override';
+		$ad_provider_value_table = 'ad_provider_value';
 
 		$sql = "SELECT ad_slot.as_id, ad_slot.slot, ad_slot.size, ad_slot.load_priority,
 				COALESCE(adso.provider_id, ad_slot.default_provider_id) AS provider_id,
@@ -458,7 +458,7 @@ class AdEngine {
 	 * Key value string as a javascript variable.
 	 */
 	public function providerValuesAsJavascript($city_id){
-		global $wgMemc, $wgRequest;
+		global $wgMemc, $wgRequest, $wgExternalSharedDB;
 		$cacheKey = wfMemcKey(__CLASS__ . 'dartkeyvalues', self::cacheKeyVersion);
 
 		$out = $wgMemc->get($cacheKey);
@@ -466,19 +466,18 @@ class AdEngine {
 			return $out;
 		}
 
-		$db = wfGetDB(DB_SLAVE);
-		$ad_provider_value_table = wfSharedTable('ad_provider_value');
+		$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$ad_provider_value_table = 'ad_provider_value';
 
-                $sql = "SELECT * FROM $ad_provider_value_table WHERE
-                         city_id = ".intval($city_id);
-                $res = $db->query($sql);
+		$sql = "SELECT * FROM $ad_provider_value_table WHERE city_id = ".intval($city_id);
+		$res = $db->query($sql);
 
 		$list = array();
 		$string = '';
-                while($row = $db->fetchObject($res)) {
+		while($row = $db->fetchObject($res)) {
 			$list[]= array('name'=> $row->keyname, 'value'=>$row->keyvalue);
 			$string .= $row->keyname . '=' . urlencode($row->keyvalue) . ';';
-                }
+		}
 
 		$out =  '<script type="text/javascript">' . "\n" .
 			'ProviderValues = {};' . "\n" .

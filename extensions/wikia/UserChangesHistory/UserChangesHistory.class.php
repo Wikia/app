@@ -35,6 +35,7 @@ class UserChangesHistory {
 	 */
 	static public function LoginHistoryHook( $from, $User, $type = false ) {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
+		global $wgExternalDatawareDB;
 
 		wfProfileIn( __METHOD__ );
 
@@ -49,7 +50,7 @@ class UserChangesHistory {
 				# ignore
 			}
 			else {
-				$dbw = wfGetDBExt( DB_MASTER ) ;
+				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB ) ;
 
 				$status = $dbw->insert(
 					"user_login_history",
@@ -87,6 +88,8 @@ class UserChangesHistory {
 	 */
 	static public function SavePreferencesHook( $preferences, $User, $msg ) {
 
+		global $wgExternalDatawareDB;
+
 		wfProfileIn( __METHOD__ );
 
 		$id = $User->getId();
@@ -96,7 +99,7 @@ class UserChangesHistory {
 			 * clusters. But we should have all user data already loaded.
 			 */
 
-			$dbw = wfGetDBExt( DB_MASTER ) ;
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB ) ;
 
 			/**
 			 * so far encodeOptions is public by default but could be

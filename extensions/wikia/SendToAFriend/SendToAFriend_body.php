@@ -26,12 +26,11 @@ class InviteSpecialPage extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
-
 		$this->setHeaders();
 
 		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage();			
-			wfProfileOut( __METHOD__ );			
+			$wgOut->blockedPage();
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -166,8 +165,8 @@ class InviteSpecialPage extends SpecialPage {
 
 	function sendNotification( $isEncoded, $notifyTo, $notifyFrom, $notifyName, $notifyBody )
 	{
-		global $wgOut, $wgUser, $wgMemc, $wgDBname, $wgSharedDB, $wgSitename;
-		global $wgServer, $wgNotificationThrottle, $wgNotificationEmails;
+		global $wgOut, $wgUser, $wgMemc, $wgDBname, $wgSitename;
+		global $wgServer, $wgNotificationThrottle, $wgNotificationEmails, $wgExternalSharedDB;
 
 		wfProfileIn( __METHOD__ );
 
@@ -206,10 +205,10 @@ class InviteSpecialPage extends SpecialPage {
 
 		$subject = $notifyName . wfMsg( 'stf_subject', $wgSitename );
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$dbw->begin();
 		$dbw->insert(
-			wfSharedTable("send_queue"),
+			"send_queue",
 			array(
 				'que_ip'      => $ip,
 				'que_to'      => $to,

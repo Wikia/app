@@ -703,15 +703,15 @@ EOS;
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
 	private function getMagicFooterLinks() {
-		global $wgDBname, $wgTitle;
+		global $wgDBname, $wgTitle, $wgExternalSharedDB;
 		$results = array();
 
 		$tmpParser = new Parser();
 		$tmpParser->setOutputType(OT_HTML);
 		$tmpParserOptions = new ParserOptions();
 
-		$dbr =& wfGetDB(DB_SLAVE);
-		$res = $dbr->select(wfSharedTable('magic_footer_links'), 'page, links', array('dbname' => $wgDBname));
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$res = $dbr->select('magic_footer_links', 'page, links', array('dbname' => $wgDBname));
 		while($row = $dbr->fetchObject($res)) {
 			$results[$row->page] = $tmpParser->parse($row->links, $wgTitle, $tmpParserOptions, false)->getText();
 		}

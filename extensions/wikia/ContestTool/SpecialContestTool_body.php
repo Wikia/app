@@ -58,7 +58,7 @@ class ContestTool extends SpecialPage {
 
 			case 'select':
 				$wgOut->SetPageTitle(wfMsg('cntool-page-title-select'));
-				$template = "selector";	
+				$template = "selector";
 				break;
 			case 'save':
 				$mArticle = new Article ( Title::newFromText( $mTitle ) );
@@ -69,7 +69,7 @@ class ContestTool extends SpecialPage {
 
 				/* add page semi-protection */
 				$this->covertProtect ( $mArticle );
-	
+
 				$title = Title::newFromText($mTitle);
 				$redirect = $title->getLocalUrl('action=purge');
 				$wgOut->redirect($redirect);
@@ -112,22 +112,33 @@ class ContestTool extends SpecialPage {
 	}
 
 	function replaceText ( $revision ) {
-		global $wgRequest, $wgDefaultExternalStore, $wgCityId;
+		global $wgRequest, $wgDefaultExternalStore, $wgCityId, $wgExternalSharedDB;
 
-		$dbw =& wfGetDb( DB_MASTER );
+		$dbr = wfGetDB(DB_SLAVE);
+
+		$oRow = $dbr->selectRow(
+			'text',
+			array(
+				'old_id',
+				'old_text'
+			),
+			array (
+				'old_id' => $revision->getTextId()
+			),
+			'ContestTool:replaceText'
+		);
+
 		$mText = $wgRequest->getText('mContent');
 
 		# Backup text or External reference to shared table
-		$dbw->insertSelect (
-			wfSharedTable('contesttool_text'),
-			$dbw->tableName('text'),
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+
+		$dbw->insert(
+			'contesttool_text',
 			array (
 				'city_id' => $wgCityId,
-				'old_id' => 'old_id',
- 				'old_text' => 'old_text'
-			),
-                        array (
-				'old_id' => $revision->getTextId()
+				'old_id' => $oRow->old_id,
+				'old_text' => $oRow->old_text
 			),
 			'ContestTool::replaceText',
 			array( 'IGNORE' ) # Backup 1st one only, subsequent edits are corrections of the *new* text
@@ -153,14 +164,15 @@ class ContestTool extends SpecialPage {
 		} else {
 			$new_text = $mText;
 		}
-	
+
+		$dbw = wfGetDB(DB_MASTER);
 		$dbw->update(
 			$dbw->tableName( 'text' ),
 			array( 'old_text' => $new_text ),
 			array( 'old_id' => $revision->getTextId ),
 			'ContestTool::replaceText'
 		);
-		
+
 		if ($wgDefaultExternalStore) {
 			ExternalStorageUpdate::addDeferredUpdate( $revision, $new_text, $flags );
 		}

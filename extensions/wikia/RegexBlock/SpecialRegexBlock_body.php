@@ -273,6 +273,7 @@ class RegexBlockForm extends SpecialPage
     /* remove name or address from list - without confirmation */
     private function deleteFromRegexBlockList() {
         global $wgOut, $wgRequest, $wgMemc, $wgUser ;
+        global $wgExternalSharedDB;
 
         wfProfileIn( __METHOD__ );
         
@@ -283,9 +284,9 @@ class RegexBlockForm extends SpecialPage
         $titleObj = Title::makeTitle( NS_SPECIAL, 'Regexblock' ) ;
 
 		if (empty($ip) && !empty($blckid)) {
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			$oRes = $dbr->select(
-				wfSharedTable(REGEXBLOCK_TABLE),
+				REGEXBLOCK_TABLE,
 				array("blckby_name", "blckby_blocker"),
 				array("blckby_id = '". $blckid  ."'"),
 				__METHOD__
@@ -302,10 +303,9 @@ class RegexBlockForm extends SpecialPage
             $result = wfRegexBlockClearExpired($ip, $blocker);
         } else {
             /* delete */
-            $dbw =& wfGetDB( DB_MASTER );
-            
+            $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
             $dbw->delete(
-            	wfSharedTable(REGEXBLOCK_TABLE), 
+            	REGEXBLOCK_TABLE, 
             	array("blckby_name = {$dbw->addQuotes($ip)}"),
             	__METHOD__
             );

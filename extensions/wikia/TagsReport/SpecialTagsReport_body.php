@@ -6,8 +6,8 @@
  * @version: 1.0
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) { 
-	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ; 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ;
 }
 
 class TagsReportPage extends SpecialPage {
@@ -20,7 +20,7 @@ class TagsReportPage extends SpecialPage {
 		parent::__construct( "TagsReport"  /*class*/, 'tagsreport' /*restriction*/);
 		wfLoadExtensionMessages("TagsReport");
 	}
-	
+
 	public function execute( $subpage ) {
 		global $wgUser, $wgOut, $wgRequest;
 
@@ -70,7 +70,7 @@ class TagsReportPage extends SpecialPage {
         $wgOut->addHTML( $oTmpl->execute("main-form") );
         wfProfileOut( __METHOD__ );
 	}
-	
+
 	function showArticleList() {
 		global $wgOut, $wgRequest ;
 		global $wgCanonicalNamespaceNames;
@@ -78,7 +78,7 @@ class TagsReportPage extends SpecialPage {
         wfProfileIn( __METHOD__ );
 
 		$articles = $this->getTagsInfo();
-				
+
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "mTag"  		=> $this->mTag,
@@ -90,7 +90,7 @@ class TagsReportPage extends SpecialPage {
         $wgOut->addHTML( $oTmpl->execute("tag-activity") );
         wfProfileOut( __METHOD__ );
 	}
-	
+
 	function getResults() {
 		global $wgOut, $wgRequest ;
         wfProfileIn( __METHOD__ );
@@ -104,17 +104,17 @@ class TagsReportPage extends SpecialPage {
 		/* before, we need that numResults */
         wfProfileOut( __METHOD__ );
 	}
-	
+
 	private function getTagsList() {
-		global $wgMemc, $wgSharedDB, $wgDBStats;
+		global $wgMemc, $wgSharedDB, $wgExternalStatsDB;
 		global $wgCityId;
 		$tagsList = array();
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $wgCityId );
 		$cached = $wgMemc->get($memkey);
-		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt();
+		if (!is_array ($cached)) {
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			if (!is_null($dbs)) {
-				$query = "select ct_kind, count(*) as cnt from `{$wgDBStats}`.`city_used_tags` where ct_kind is not null and ct_wikia_id = {$wgCityId} group by ct_kind order by ct_kind";
+				$query = "select ct_kind, count(*) as cnt from city_used_tags where ct_kind is not null and ct_wikia_id = {$wgCityId} group by ct_kind order by ct_kind";
 				$res = $dbs->query ($query);
 				while ($row = $dbs->fetchObject($res)) {
 					$tagsList[$row->ct_kind] = $row->cnt;
@@ -122,23 +122,23 @@ class TagsReportPage extends SpecialPage {
 				$dbs->freeResult($res);
 				$wgMemc->set( $memkey, $tagsList, 60*60 );
 			}
-		} else { 
+		} else {
 			$tagsList = $cached;
 		}
-		
+
 		return $tagsList;
 	}
-	
+
 	private function getTagsInfo() {
-		global $wgMemc, $wgSharedDB, $wgDBStats;
+		global $wgMemc, $wgSharedDB, $wgExternalStatsDB;
 		global $wgCityId;
 		$tagsArticles = array();
 		$memkey = wfForeignMemcKey( $wgSharedDB, null, "TagsReport", $this->mTag, $wgCityId );
 		$cached = $wgMemc->get($memkey);
-		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt();
+		if (!is_array ($cached)) {
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			if (!is_null($dbs)) {
-				$query = "select ct_namespace, ct_page_id from `{$wgDBStats}`.`city_used_tags` where ct_kind = " .$dbs->addQuotes( $this->mTag ). " and ct_wikia_id = {$wgCityId} order by ct_namespace";
+				$query = "select ct_namespace, ct_page_id from city_used_tags where ct_kind = " .$dbs->addQuotes( $this->mTag ). " and ct_wikia_id = {$wgCityId} order by ct_namespace";
 				$res = $dbs->query ($query);
 				while ($row = $dbs->fetchObject($res)) {
 					$tagsArticles[$row->ct_namespace][] = $row->ct_page_id;
@@ -146,11 +146,11 @@ class TagsReportPage extends SpecialPage {
 				$dbs->freeResult($res);
 				$wgMemc->set( $memkey, $tagsArticles, 60*60*3 );
 			}
-		} else { 
+		} else {
 			$tagsArticles = $cached;
 		}
-		
+
 		return $tagsArticles;
 	}
-	
+
 }

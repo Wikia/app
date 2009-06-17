@@ -220,7 +220,7 @@ function WidgetShoutBox($id, $params) {
 
 function WidgetShoutBoxAddMessage($msg) {
 
-	global $wgUser, $wgMemc, $wgCityId;
+	global $wgUser, $wgMemc, $wgCityId, $wgExternalSharedDB;
 
 	wfProfileIn(__METHOD__);
 
@@ -245,10 +245,10 @@ function WidgetShoutBoxAddMessage($msg) {
 				'message' => $message
 			);
 
-			$dbw = &wfGetDB(DB_MASTER);
+			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 			// add message to shared table
-			$dbw->insert(wfSharedTable('shout_box_messages'), $row, __METHOD__);
+			$dbw->insert('shout_box_messages', $row, __METHOD__);
 
 			$insertId = $dbw->insertId();
 
@@ -289,7 +289,7 @@ function WidgetShoutBoxAddMessage($msg) {
 
 function WidgetShoutBoxGetMessages() {
 
-	global $wgMemc;
+	global $wgMemc, $wgExternalSharedDB;
 
 	wfProfileIn(__METHOD__);
 
@@ -306,10 +306,10 @@ function WidgetShoutBoxGetMessages() {
 	$msgs = array();
 
 	// get them from DB (don't use API)
-	$dbr = wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 	// build query params
-	$tables = array( wfSharedTable('shout_box_messages').' AS s', wfSharedTable('user').' AS u' );
+	$tables = array( 'shout_box_messages AS s', 'user AS u' );
 	$fields = array(
 		's.id AS id',
 		'UNIX_TIMESTAMP(s.time) AS time',
@@ -446,7 +446,7 @@ function WidgetShoutBoxGenerateHostname() {
 }
 
 function WidgetShoutBoxRemoveMessage($msgId) {
-	global $wgUser, $wgMemc;
+	global $wgUser, $wgMemc, $wgExternalSharedDB;
 
 	wfProfileIn(__METHOD__);
 
@@ -461,10 +461,11 @@ function WidgetShoutBoxRemoveMessage($msgId) {
 	if (ctype_digit($msgId)) {
 		wfDebug("Shoutbox: removing msg id=$msgId\n");
 
-		$dbw = wfGetDB(DB_MASTER);
+
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 		// remove a message from shared table
-		$dbw->delete(wfSharedTable('shout_box_messages'), array('id' => $msgId), __FUNCTION__ );
+		$dbw->delete('shout_box_messages', array('id' => $msgId), __FUNCTION__ );
 
 		// fix RT #14396
 		$dbw->commit();

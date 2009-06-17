@@ -38,7 +38,7 @@ class WikiFactory {
 	const STATUS_CLOSED = 0;
 	const STATUS_DELETE = -1;
 
-	const db            = "wikicities"; // @see $wgWikiFactoryDB
+	const db            = "wikicities"; // @see $wgExternalSharedDB
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
 	const CACHEDIR      = "/tmp/wikifactory/wikis";
 
@@ -92,15 +92,33 @@ class WikiFactory {
 	 * @return string	table name with database
 	 */
 	static public function table( $table, $column = false ) {
-		global $wgWikiFactoryDB;
+		global $wgExternalSharedDB;
 
-		$database = !empty( $wgWikiFactoryDB )  ? $wgWikiFactoryDB : self::db;
+		$database = !empty( $wgExternalSharedDB ) ? $wgExternalSharedDB : self::db;
 		if( $column ) {
 			return sprintf("`%s`.`%s`.`%s`", $database, $table, $column );
 		}
 		else {
 			return sprintf("`%s`.`%s`", $database, $table );
 		}
+	}
+
+
+	/**
+	 * wrapper to database connection
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param string	$table	table name
+	 * @param string	$column	column name default false
+	 *
+	 * @return string	table name with database
+	 */
+	static public function db( $db ) {
+		global $wgExternalSharedDB;
+
+		return wfGetDB( $db, array(), $wgExternalSharedDB );
 	}
 
 	/**
@@ -149,9 +167,9 @@ class WikiFactory {
 			}
 		}
 
-		$dbr = ( $master ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
+		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 		$oRes = $dbr->select(
-			array( self::table( "city_domains" ) ),
+			array( "city_domains" ),
 			array( "*" ),
 			$condition,
 			__METHOD__
@@ -203,14 +221,14 @@ class WikiFactory {
 			return false;
 		}
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = self::db( DB_MASTER );
 		$dbw->begin();
 
 		/**
 		 * check if $wiki exists
 		 */
 		$oRow = $dbw->selectRow(
-			self::table( "city_list" ),
+			array( "city_list" ),
 			array( "city_id "),
 			array( "city_id" => $city_id ),
 			__METHOD__
@@ -228,7 +246,7 @@ class WikiFactory {
 		 * check if $domain exists
 		 */
 		$oRow = $dbw->selectRow(
-			self::table( "city_domains" ),
+			array( "city_domains" ),
 			array( "city_domain "),
 			array( "city_domain" => strtolower( $domain ) ),
 			__METHOD__
@@ -246,7 +264,7 @@ class WikiFactory {
 		 * ewentually insert
 		 */
 		$dbw->insert(
-			self::table("city_domains"),
+			array("city_domains"),
 			array(
 				"city_domain" => strtolower( $domain ),
 				"city_id" => $city_id
@@ -285,7 +303,7 @@ class WikiFactory {
 		}
 
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = self::db( DB_MASTER );
 		$dbw->begin();
 
 		$cond = array( "city_id" => $wiki );
@@ -293,7 +311,7 @@ class WikiFactory {
 			$cond["city_domain"] = $domain;
 		}
 
-		if ( ! $dbw->delete( self::table("city_domains"), $cond, __METHOD__ ) ) {
+		if ( ! $dbw->delete( "city_domains", $cond, __METHOD__ ) ) {
 			$dbw->rollback();
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -363,9 +381,9 @@ class WikiFactory {
 			/**
 			 * failure, getting from database
 			 */
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = self::db( DB_SLAVE );
 			$oRow = $dbr->selectRow(
-				array( self::table("city_domains") ),
+				array( "city_domains" ),
 				array( "city_id" ),
 				array( "city_domain" => $domain ),
 				__METHOD__
@@ -407,7 +425,7 @@ class WikiFactory {
 		}
 
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = self::db( DB_MASTER );
 		$bStatus = true;
 
 		$dbw->begin();
@@ -423,8 +441,8 @@ class WikiFactory {
 			 * delete old value
 			 */
 			$dbw->delete(
-				self::table("city_variables"),
-				array (
+				array( "city_variables" ),
+				array(
 					"cv_variable_id" => $cv_variable_id,
 					"cv_city_id" => $city_id
 				),
@@ -435,11 +453,11 @@ class WikiFactory {
 			 * insert new one
 			 */
 			$dbw->insert(
-				self::table("city_variables"),
+				array( "city_variables" ),
 				array(
-					"cv_variable_id"    => $cv_variable_id,
-					"cv_city_id"        => $city_id,
-					"cv_value"          => serialize( $value )
+					"cv_variable_id" => $cv_variable_id,
+					"cv_city_id"     => $city_id,
+					"cv_value"       => serialize( $value )
 				),
 				__METHOD__
 			);
@@ -584,13 +602,13 @@ class WikiFactory {
 	static public function removeVarById( $variable_id, $wiki ) {
 		$bStatus = false;
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = self::db( DB_MASTER );
 
 		$dbw->begin();
 		try {
 			if ( isset($variable_id) && isset($wiki) ) {
 				$dbw->delete(
-					self::table("city_variables"),
+					"city_variables",
 					array (
 						"cv_variable_id" => $variable_id,
 						"cv_city_id" => $wiki
@@ -712,15 +730,10 @@ class WikiFactory {
 			return false;
 		}
 
-		if( $master )  {
-			$dbr = wfGetDB( DB_MASTER );
-		}
-		else {
-			$dbr = wfGetDB( DB_SLAVE );
-		}
+		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 
 		$oRow = $dbr->selectRow(
-			array( self::table("city_list") ),
+			array( "city_list" ),
 			array( "city_id", "city_dbname" ),
 			array( "city_dbname" => $city_dbname ),
 			__METHOD__
@@ -750,14 +763,9 @@ class WikiFactory {
 			return false;
 		}
 
-		if( $master )  {
-			$dbr = wfGetDB( DB_MASTER );
-		}
-		else {
-			$dbr = wfGetDB( DB_SLAVE );
-		}
+		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 		$oRow = $dbr->selectRow(
-			array( self::table("city_list") ),
+			array( "city_list" ),
 			array( "city_id", "city_dbname" ),
 			array( "city_id" => $city_id ),
 			__METHOD__
@@ -788,9 +796,9 @@ class WikiFactory {
 		/**
 		 * first from slave
 		 */
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = self::db( DB_SLAVE );
 		$oRow = $dbr->selectRow(
-			array( self::table("city_list") ),
+			array( "city_list" ),
 			array( "*" ),
 			array( "city_id" => $id ),
 			__METHOD__
@@ -802,9 +810,9 @@ class WikiFactory {
 		/**
 		 * if not then from master
 		 */
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = self::db( DB_MASTER );
 		$oRow = $dbr->selectRow(
-			array( self::table("city_list") ),
+			array( "city_list" ),
 			array( "*" ),
 			array( "city_id" => $id ),
 			__METHOD__
@@ -842,7 +850,6 @@ class WikiFactory {
 			 */
 			$domain = sprintf( "%d.$domain", $city_id );
 		}
-
 		return $domain;
 	}
 
@@ -1003,9 +1010,9 @@ class WikiFactory {
 			return false;
 		}
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = self::db( DB_MASTER );
 		$dbw->update(
-			self::table( "city_list" ),
+			"city_list",
 			array( "city_factory_timestamp" => wfTimestampNow()	),
 			array( "city_id" => $city_id ),
 			__METHOD__
@@ -1044,20 +1051,12 @@ class WikiFactory {
 
 		$groups = array();
 
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = self::db( DB_MASTER );
 
 		$oRes = $dbr->select(
-			array(
-				self::table("city_variables_pool"),
-				self::table("city_variables_groups")
-			), /*from*/
-			array(
-				"cv_group_id",
-				"cv_group_name"
-			), /*what*/
-			array(
-				"cv_group_id in (select cv_variable_group from ". self::table("city_variables_pool").")"
-			), /*where*/
+			array( "city_variables_pool", "city_variables_groups" ), /*from*/
+			array( "cv_group_id", "cv_group_name" ), /*what*/
+			array( "cv_group_id in (select cv_variable_group from city_variables_pool)"	), /*where*/
 			__METHOD__
 		);
 
@@ -1096,12 +1095,9 @@ class WikiFactory {
 		}
 
 		$aVariables = array();
-		$aTables = array(
-			self::table("city_variables_pool"),
-			self::table("city_variables_groups")
-		);
-
+		$tables = array( "city_variables_pool", "city_variables_groups" );
 		$where = array( "cv_group_id = cv_variable_group" );
+
 		$aAllowedOrders = array(
 			"cv_id", "cv_name", "cv_variable_type",
 			"cv_variable_group", "cv_access_level"
@@ -1120,7 +1116,7 @@ class WikiFactory {
 
 		if ( $defined === true && $wiki != 0 ) {
 			#--- add city_variables table
-			$aTables[] = self::table("city_variables");
+			$tables[] = "city_variables";
 			#--- add join
 			$where[] = "cv_variable_id = cv_id";
 			$where[ "cv_city_id" ] = $wiki;
@@ -1128,10 +1124,10 @@ class WikiFactory {
 
 		#--- now construct query
 
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = self::db( DB_MASTER );
 
 		$oRes = $dbr->select(
-			$aTables,
+			$tables,
 			array( "*" ),
 			$where,
 			__METHOD__,
@@ -1234,9 +1230,9 @@ class WikiFactory {
 
 		wfRunHooks( 'WikiFactoryPublicStatusChange', array( &$city_public, &$city_id ) );
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = self::db( DB_MASTER );
 		$dbw->update(
-			self::table( "city_list" ),
+			"city_list",
 			array( "city_public" => $city_public ),
 			array( "city_id" => $city_id ),
 			__METHOD__
@@ -1294,15 +1290,10 @@ class WikiFactory {
 			$condition = array( "cv_name" => $cv_name );
 		}
 
-		if( $master )  {
-			$dbr = wfGetDB( DB_MASTER );
-		}
-		else {
-			$dbr = wfGetDB( DB_SLAVE );
-		}
+		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
 
 		$oRow = $dbr->selectRow(
-			self::table( "city_variables_pool" ),
+			array( "city_variables_pool" ),
 			array(
 				"cv_id",
 				"cv_name",
@@ -1325,7 +1316,7 @@ class WikiFactory {
 
 		if( !empty( $city_id ) ) {
 			$oRow2 = $dbr->selectRow(
-				self::table("city_variables"),
+				array("city_variables"),
 				array(
 					"cv_city_id",
 					"cv_variable_id",
@@ -1454,9 +1445,9 @@ class WikiFactory {
 
 		$city_id = ( $city_id === false ) ? $wgCityId : $city_id;
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = self::db( DB_MASTER );
 		return $dbw->insert(
-			self::table( "city_list_log" ),
+			"city_list_log",
 			array(
 				"cl_city_id" => $city_id,
 				"cl_user_id" => $wgUser->getId(),
@@ -1497,10 +1488,10 @@ class WikiFactory {
 
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = self::db( DB_SLAVE );
 
 		$oRow = $dbr->selectRow(
-			array( self::table("city_variables") ),
+			array( "city_variables" ),
 			array( "cv_city_id" ),
 			array( "cv_value" => @serialize($cv_value) ),
 			__METHOD__
@@ -1530,13 +1521,13 @@ class WikiFactory {
 		wfProfileIn( __METHOD__ );
 		$res = true;
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = self::db( DB_MASTER );
 		$dbw->begin();
 
 		$db = $dbw->update(
-			self::table("city_domains"),
-			array("city_id" => $new_city_id ),
-			array("city_id" => $city_id),
+			array( "city_domains" ),
+			array( "city_id" => $new_city_id ),
+			array( "city_id" => $city_id ),
 			__METHOD__ );
 
 		if ($db) {
@@ -1570,9 +1561,8 @@ class WikiFactory {
 		if( isset( $wiki->city_id ) ) {
 
 			$timestamp = wfTimestampNow();
-			$dbw = wfGetDB( DB_MASTER );
-			$dba = wfGetDBExt( DB_MASTER );
-			$dba->selectDb( "archive" );
+			$dbw = self::db( DB_MASTER );
+			$dba = wfGetDB( DB_MASTER, array(), "archive" );
 
 			$dba->begin();
 
@@ -1615,7 +1605,7 @@ class WikiFactory {
 			 * copy city_variables to archive
 			 */
 			$sth = $dbw->select(
-				array( WikiFactory::table( "city_variables" ) ),
+				array( "city_variables" ),
 				array( "cv_city_id", "cv_variable_id", "cv_value" ),
 				array( "cv_city_id" => $city_id ),
 				__METHOD__
@@ -1638,7 +1628,7 @@ class WikiFactory {
 			 * copy domains to archive
 			 */
 			$sth = $dbw->select(
-				array( WikiFactory::table( "city_domains" ) ),
+				array( "city_domains" ),
 				array( "*" ),
 				array( "city_id" => $city_id ),
 				__METHOD__
@@ -1660,8 +1650,8 @@ class WikiFactory {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-	
-	
+
+
 	/**
 	 * prepareDBName
 	 *
@@ -1672,19 +1662,23 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param integer	$dbname		name of DB to check
+	 * @todo when second cluster will come this function has to changed
 	 *
 	 * @return string: fixed name of DB
 	 */
 	static public function prepareDBName($dbname) {
 		wfProfileIn( __METHOD__ );
-		$dbr = wfGetDB( DB_MASTER );
+
+		$dbwf = self::db( DB_SLAVE );
+		$dbr  = wfGetDB( DB_MASTER );
+
 		#-- check city_list
 		$exists = 1; $suffix = "";
 		while ( $exists == 1 ) {
 			$dbname = sprintf("%s%s", $dbname, $suffix);
 			Wikia::log( __METHOD__, "", "Checking if database {$dbname} already exists in city_list" );
-			$Row = $dbr->selectRow(
-				WikiFactory::table("city_list"),
+			$Row = $dbwf->selectRow(
+				array( "city_list" ),
 				array( "count(*) as count" ),
 				array( "city_dbname" => $dbname ),
 				__METHOD__
@@ -1699,15 +1693,15 @@ class WikiFactory {
 				if ( $dbr->numRows( $oRes ) > 0 ) {
 					Wikia::log( __METHOD__, "", "Database {$dbname} exists in database!" );
 					$exists = 1;
-				} 
+				}
 			}
-			# add suffix			
+			# add suffix
 			if ($exists == 1) {
 				$suffix = rand(1,999);
-			} 
+			}
 		}
 		wfProfileOut( __METHOD__ );
 		return $dbname;
 	}
-	
+
 };

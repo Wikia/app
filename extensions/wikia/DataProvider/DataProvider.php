@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('MEDIAWIKI')) die();
 /**
  * Data Provider for Wikia skins
@@ -410,25 +411,21 @@ class DataProvider
 	 */
 	final public static function /* array */ GetTopFiveUsers($limit = 7) {
 		wfProfileIn( __METHOD__ );
-		global $wgDBname, $wgMemc;
+		global $wgExternalDatawareDB, $wgMemc;
 
 		$memckey = wfMemcKey("TopFiveUsers", $limit);
 		$results = $wgMemc->get( $memckey );
 
 		if ( !is_array( $results ) ) {
-			$query = "select rev_user, rev_cnt as cnt from user_rev_cnt where rev_user != 0 and rev_user NOT IN (SELECT ug_user FROM user_groups WHERE ug_group IN ('staff', 'bot'))  order by rev_cnt desc";
-			$dbr = &wfGetDB( DB_SLAVE );
-			if ($dbr->tableExists("user_rev_cnt") === false) {
-				$query = "select rev_user, cnt from ";
-				$query .= "(SELECT rev_user, count(0) as cnt FROM revision where rev_user > 0 and rev_user not in (select ug_user from user_groups where ug_group IN ('staff', 'bot')) ";
-				$query .= "GROUP BY rev_user) as c ";
-				$query .= "ORDER BY cnt desc";
-			}
-			$res = $dbr->query( $dbr->limitResult($query, $limit * 4, 0) );
+			$dbr = wfGetDB( DB_SLAVE );
+			$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), __METHOD__ );
+
+			$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+			$query = "SELECT lu_user_id AS rev_user, lu_rev_cnt AS cnt FROM city_local_users WHERE lu_user_id != 0 AND lu_user_name != 'CreateWiki script' " . ( !empty($row->user_list) ? "AND lu_user_id NOT IN (" . $row->user_list . ")" : "" ) . " ORDER BY lu_rev_cnt DESC";
+			$res = $dbs->query( $dbs->limitResult($query, $limit * 4, 0) );
 
 			$results = array();
-
-			while ( $row = $dbr->fetchObject($res) ) {
+			while ( $row = $dbs->fetchObject( $res ) ) {
 				$user = User::newFromID( $row->rev_user );
 
 				if (!$user->isBlocked() && !$user->isAllowed('bot') && $user->getUserPage()->exists() ) {
@@ -437,7 +434,7 @@ class DataProvider
 					$results[] = $article;
 				}
 			}
-			$dbr->freeResult( $res );
+			$dbs->freeResult( $res );
 
 			$results = array_slice( $results, 0, $limit );
 			$wgMemc->set($memckey, $results, 60 * 60 * 3);

@@ -99,12 +99,7 @@ EOT
 			$emailUser = htmlspecialchars( $emailUser );
 			$dbr = wfGetDB( DB_SLAVE );
 			
-			$oRes = $dbr->select(
-				wfSharedTable( "user" ),
-				array( "user_name" ),
-				array( "user_email" => $target ),
-				__METHOD__
-			);
+			$oRes = $dbr->select( "user", "user_name", array( "user_email" => $target ), __METHOD__ );
 
 			$loop = 0;
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {

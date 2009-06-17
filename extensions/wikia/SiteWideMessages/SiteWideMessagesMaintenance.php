@@ -13,8 +13,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 ) ;
 }
 
-define('MSG_TEXT_DB', wfSharedTable('messages_text'));
-define('MSG_STATUS_DB', wfSharedTable('messages_status'));
+define('MSG_TEXT_DB', 'messages_text');
+define('MSG_STATUS_DB', 'messages_status');
 define('MSG_MODE_ALL', '0');
 define('MSG_MODE_SELECTED', '1');
 define('MSG_STATUS_UNSEEN', '0');
@@ -52,8 +52,9 @@ class SiteWideMessagesMaintenance {
 	 * @return status of operations
 	 */
 	public function execute() {
+		global $wgExternalSharedDB;
 		require_once('commandLine.inc');
-		$DB = wfGetDB(DB_MASTER);
+		$DB = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 
 		$dbResult = (boolean)$DB->Query (
 			  'DELETE'

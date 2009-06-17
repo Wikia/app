@@ -6,7 +6,7 @@ Author: Piotr Molski (moli@wikia.com)
 $wgHooks['NotifyOnPageChangeComplete'][] = 'wfNotifyOnPageChangeComplete';
 
 function wfNotifyOnPageChangeComplete($title, $timestamp, $watcher) {
-	global $wgCityId, $wgDBname, $wgUser, $wgCityId, $wgDefaultExternalStore;
+	global $wgCityId, $wgDBname, $wgUser, $wgCityId, $wgDefaultExternalStore, $wgExternalDatawareDB;
     wfProfileIn( __METHOD__ );
 
 	if ( ! $wgDefaultExternalStore ) {
@@ -40,7 +40,7 @@ function wfNotifyOnPageChangeComplete($title, $timestamp, $watcher) {
 	}
 
 	$notify_type = "notifyonpagechange";
-	$dbw = wfGetDBExt( DB_MASTER );
+	$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 	$nl_id = $dbw->nextSequenceValue( 'notify_log_nl_id_seq' );
 	$dbw->insert(

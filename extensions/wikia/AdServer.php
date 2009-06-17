@@ -50,24 +50,22 @@ class AdServer {
 		}
 
 		if(empty($this->adsConfig) && !is_array($this->adsConfig)) {
-			global $wgCityId, $wgSharedDB, $wgDBname, $wgAdServerPath, $wgServer, $wgGoogleAnalyticsID;
+			global $wgCityId, $wgExternalSharedDB, $wgDBname, $wgAdServerPath, $wgServer, $wgGoogleAnalyticsID;
 
-			$db =& wfGetDB(DB_SLAVE);
+			$db = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			$this->adsConfig = array();
 
-			$sharedDB = $wgSharedDB;
-			if(!isset($wgSharedDB)) { $sharedDB = 'wikicities'; }
 
 			$cityID = $wgCityId;
 			if(empty($cityID)) {
-				$row = $db->selectRow("`{$sharedDB}`.`city_list`", "city_id", "city_dbname='{$wgDBname}'", 'AdServer::loadAdsConfig');
+				$row = $db->selectRow("city_list", "city_id", "city_dbname='{$wgDBname}'", 'AdServer::loadAdsConfig');
 				$cityID = !empty($row->city_id) ? $row->city_id : 0;
 			}
 
 			$res = $db->select(
-				"`{$sharedDB}`.`city_ads`",
+				"city_ads",
 				array('ad_zone', 'ad_pos', 'ad_keywords', 'domain', 'ad_server'),
-				"(city_id={$cityID} OR (city_id=0 AND ((ad_lang=(SELECT SUBSTRING(city_lang,1,2) FROM $sharedDB.city_list WHERE city_id={$cityID}) AND ad_cat=(SELECT ad_cat FROM $sharedDB.city_list WHERE city_id={$cityID})) OR (ad_lang=(SELECT SUBSTRING(city_lang,1,2) FROM $sharedDB.city_list WHERE city_id={$cityID}) AND ad_cat='') OR (ad_lang='' AND ad_cat=(SELECT ad_cat FROM $sharedDB.city_list WHERE city_id={$cityID})) OR (ad_lang='' AND ad_cat='')))) AND city_ads.ad_skin='{$skin}'",
+				"(city_id={$cityID} OR (city_id=0 AND ((ad_lang=(SELECT SUBSTRING(city_lang,1,2) FROM city_list WHERE city_id={$cityID}) AND ad_cat=(SELECT ad_cat FROM city_list WHERE city_id={$cityID})) OR (ad_lang=(SELECT SUBSTRING(city_lang,1,2) FROM city_list WHERE city_id={$cityID}) AND ad_cat='') OR (ad_lang='' AND ad_cat=(SELECT ad_cat FROM city_list WHERE city_id={$cityID})) OR (ad_lang='' AND ad_cat='')))) AND city_ads.ad_skin='{$skin}'",
 				'AdServer::loadAdsConfig',
 				array('ORDER BY' => 'city_id, ad_lang, ad_cat')
 			);

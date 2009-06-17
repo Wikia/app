@@ -122,17 +122,17 @@ class Listusers extends SpecialPage {
 	}
 	
 	private function getGroupList( $aGroups ) {
-		global $wgMemc, $wgSharedDB;
+		global $wgMemc, $wgExternalDatawareDB;
 		global $wgCityId;
-        wfProfileIn( __METHOD__ );
+		wfProfileIn( __METHOD__ );
 		$aResult = array();
-		$dbs = wfGetDBExt(DB_SLAVE);
+		$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 		if (!is_null($dbs)) {
 			$aQuery = array();
 			if (!empty($aGroups) && is_array($aGroups)) {
-				$aQuery[] = "select '' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_numgroups = 0 and lu_closed = 0 ";
+				$aQuery[] = "select '' as groupName, count(*) as cnt from city_local_users where lu_wikia_id = {$wgCityId} and lu_numgroups = 0 and lu_closed = 0 ";
 				foreach ($aGroups as $groupName => $userGroupName) {
-					$aQuery[] = "select '{$groupName}' as groupName, count(*) as cnt from `dataware`.`city_local_users` where lu_wikia_id = {$wgCityId} and lu_allgroups like '%{$groupName}%' and lu_closed = 0 group by groupName";
+					$aQuery[] = "select '{$groupName}' as groupName, count(*) as cnt from city_local_users where lu_wikia_id = {$wgCityId} and lu_allgroups like '%{$groupName}%' and lu_closed = 0 group by groupName";
 				}
 			}
 			if (!empty($aQuery)) {
@@ -144,8 +144,8 @@ class Listusers extends SpecialPage {
 				$dbs->freeResult($res);
 			}
 		}
-		
-        wfProfileOut( __METHOD__ );
+
+		wfProfileOut( __METHOD__ );
 		return $aResult;
 	}
 	
@@ -164,11 +164,11 @@ class Listusers extends SpecialPage {
 	}
 	
 	private static function __getUsersFromDB($groups, $text = "", $contrib = 0, $limit = 30, $offset = 0, $order = 'username', $desc = -1) {
-		global $wgMemc, $wgSharedDB, $wgDBStats;
+		global $wgMemc, $wgExternalDatawareDB;
 		global $wgCityId, $wgLang;
 		global $wgUser, $wgDBname;
-        wfProfileIn( __METHOD__ );
-		
+		wfProfileIn( __METHOD__ );
+
 		$descOrder = ($desc == -1) ? "" : "desc";
 		$orderOption = array(
 			"username" => "lu_user_name $descOrder",
@@ -177,17 +177,17 @@ class Listusers extends SpecialPage {
 			"loggedin" => "ts $descOrder"
 		);
 		$orderby = (isset($orderOption[$order])) ? $orderOption[$order] : $orderOption["username"];
-		
+
 		$aUsers = array('cnt' => 0, 'data' => array());
 		$subMemkey = md5($groups.$text.$contrib.$offset.$limit.$orderby);
 		$memkey = wfForeignMemcKey( $wgCityId, null, "Listusers", $subMemkey );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
-			$dbs = wfGetDBExt(DB_SLAVE);
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 			if (!is_null($dbs)) {
 				$aGroups = array(); 
 				$aWhere = array(" lu_wikia_id = {$wgCityId} and lu_closed = 0 ");
-				
+
 				if (!empty($groups)) {
 					$aGroups = explode(",", $groups);
 					if ( !empty($aGroups) && is_array($aGroups) ) {
@@ -206,7 +206,7 @@ class Listusers extends SpecialPage {
 						}
 					}
 				}
-				
+
 				if (!empty($text)) {
 					$aWhere[] = " lu_user_name >= ".$dbs->addQuotes($text)." ";
 				}
@@ -214,11 +214,11 @@ class Listusers extends SpecialPage {
 				if (!empty($contrib)) {
 					$aWhere[] = " lu_rev_cnt >= ".intval($contrib);
 				}
-				
-				$aTables = array('`dataware`.`city_local_users`');
+
+				$aTables = array('city_local_users');
 				$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "'' as ts" );
 				if (!$wgUser->isAnon()) {
-					$aTables = array ( '`dataware`.`city_local_users` left join `dataware`.`user_login_history` on (lu_user_id = user_id)' );
+					$aTables = array ( 'city_local_users left join user_login_history on (lu_user_id = user_id)' );
 					$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "ifnull(max(ulh_timestamp), '') as ts" );
 				}
 				$res = $dbs->select(
@@ -245,12 +245,12 @@ class Listusers extends SpecialPage {
 						1 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), $wgLang->ucfirst(wfMsg('contribslink')), "target={$oUser->getName()}"),
 						2 => $sk->makeLinkObj(Title::newFromText('Editcount', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listusersedits')), "username={$oUser->getName()}")
 					);
-					
+
 					$oUserTalkTitle = Title::newFromText($oUser->getName(), NS_USER_TALK);
 					if ( !is_null($oUserTalkTitle) && $oUserTalkTitle instanceof Title ) {
 						$aLinks[0] = $sk->makeLinkObj($oUserTalkTitle, $wgLang->ucfirst(wfMsg('talkpagelinktext')));
 					}
-					
+
 					if ( $wgUser->isAllowed( 'block' ) && (!$wgUser->isBlocked()) ) {
 						$aLinks[] = $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink')));
 					}
@@ -287,8 +287,8 @@ class Listusers extends SpecialPage {
 						"page_id = rev_page",
 						" rev_user in (". $dbr->makeList( array_keys($aUsers['data']) ).") ",
 					);
- 					$res = $dbr->select(
-						array( "`$wgDBname`.`revision`, `$wgDBname`.`page` " ),
+					$res = $dbr->select(
+						array( "revision", "page" ),
 						array( "rev_user as user_id", "page_id", "page_title", "page_namespace", "max(rev_timestamp) as ts " ),
 						$aWhere,
 						__METHOD__,
@@ -309,7 +309,7 @@ class Listusers extends SpecialPage {
 			$aUsers = $cached;
 		}
 
-        wfProfileOut( __METHOD__ );
+		wfProfileOut( __METHOD__ );
 		return $aUsers;
 	}
 	

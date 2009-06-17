@@ -60,11 +60,13 @@ class TaskManagerArchive {
 	 */
 	private function getRows() {
 
+		global $wgExternalSharedDB;
+
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = WikiFactory::db( DB_SLAVE, array(), $wgExternalSharedDB );
 		$res = $dbr->select(
-			array( WikiFactory::table( "wikia_tasks" ) ),
+			array( "wikia_tasks" ),
 			array(
 				"task_id",
 				"task_user_id",
@@ -95,7 +97,7 @@ class TaskManagerArchive {
 		foreach( $this->mData as $num => $task ) {
 			Wikia::log( __METHOD__, "", sprintf( "Getting logs for task id=%d type=%s added=%s", $task->task_id, $task->task_type, $task->task_added ) );
 			$res = $dbr->select(
-				array( WikiFactory::table( "wikia_tasks_log" ) ),
+				array( "wikia_tasks_log" ),
 				array( "*" ),
 				array( "task_id" => $task->task_id ),
 				__METHOD__
@@ -120,10 +122,10 @@ class TaskManagerArchive {
 	 */
 	private function moveRows() {
 
+		global $wgExternalArchiveDB;
 		wfProfileIn( __METHOD__ );
 
-		$dbw = wfGetDBExt( DB_MASTER );
-		$dbw->selectDb( "archive" );
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
 		$dbw->begin();
 		foreach( $this->mData as $num => $task ) {
 			$values = array(
@@ -159,14 +161,16 @@ class TaskManagerArchive {
 	 */
 	private function removeRows() {
 
+		global $wgExternalSharedDB;
+
 		wfProfileIn( __METHOD__ );
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = WikiFactory::db( DB_MASTER, array(), $wgExternalSharedDB );
 
 		foreach( $this->mData as $num => $task ) {
 			if( !empty( $task->moved ) ) {
 				$dbw->delete(
-					WikiFactory::table( "wikia_tasks" ),
+					"wikia_tasks",
 					array( "task_id" => $task->task_id ),
 					__method__
 				);

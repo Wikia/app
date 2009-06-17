@@ -43,7 +43,7 @@ class PasswordError extends MWException {
 class User {
 
 	/**
-	 * \type{\arrayof{\string}} A list of default user toggles, i.e., boolean user 
+	 * \type{\arrayof{\string}} A list of default user toggles, i.e., boolean user
          * preferences that are displayed by Special:Preferences as checkboxes.
 	 * This list can be extended via the UserToggles hook or by
 	 * $wgContLang::getExtraUserToggles().
@@ -97,8 +97,8 @@ class User {
 	);
 
 	/**
-	 * \type{\arrayof{\string}} List of member variables which are saved to the 
-	 * shared cache (memcached). Any operation which changes the 
+	 * \type{\arrayof{\string}} List of member variables which are saved to the
+	 * shared cache (memcached). Any operation which changes the
 	 * corresponding database fields must call a cache-clearing function.
 	 * @showinitializer
 	 */
@@ -127,7 +127,7 @@ class User {
 
 	/**
 	 * \type{\arrayof{\string}} Core rights.
-	 * Each of these should have a corresponding message of the form 
+	 * Each of these should have a corresponding message of the form
 	 * "right-$right".
 	 * @showinitializer
 	 */
@@ -214,7 +214,7 @@ class User {
 	/**
 	 * Lightweight constructor for an anonymous user.
 	 * Use the User::newFrom* factory functions for other kinds of users.
-	 * 
+	 *
 	 * @see newFromName()
 	 * @see newFromId()
 	 * @see newFromConfirmationCode()
@@ -232,6 +232,7 @@ class User {
 		if ( $this->mDataLoaded ) {
 			return;
 		}
+		error_log ("load -> " . $this->mId . " from = " . $this->mFrom);
 		wfProfileIn( __METHOD__ );
 
 		# Set it now to avoid infinite recursion in accessors
@@ -302,15 +303,18 @@ class User {
 			}
 		}
 
+		error_log (__METHOD__ . " data loaded ( " . intval(!$data) . " ), expired = $isExpired");
 		if ( !$data || $isExpired ) { # Wikia
 			wfDebug( "Cache miss for user {$this->mId}\n" );
 			# Load from DB
+			error_log (__METHOD__ . " load from database");
 			if ( !$this->loadFromDatabase() ) {
 				# Can't load from ID, user is anonymous
 				return false;
 			}
 			$this->saveToCache();
 		} else {
+			error_log (__METHOD__ . " load from cache");
 			wfDebug( "Got user {$this->mId} from cache\n" );
 			# Restore from cache
 			foreach ( self::$mCacheVars as $name ) {
@@ -341,8 +345,8 @@ class User {
 		global $wgMemc;
 		$wgMemc->set( $key, $data );
 	}
-	
-	
+
+
 	/** @name newFrom*() static factory methods */
 	//@{
 
@@ -357,8 +361,8 @@ class User {
 	 *    User::getCanonicalName(), except that true is accepted as an alias
 	 *    for 'valid', for BC.
 	 *
-	 * @return \type{User} The User object, or null if the username is invalid. If the 
-	 *    username is not present in the database, the result will be a user object 
+	 * @return \type{User} The User object, or null if the username is invalid. If the
+	 *    username is not present in the database, the result will be a user object
 	 *    with a name, zero user ID and default settings.
 	 */
 	static function newFromName( $name, $validate = 'valid' ) {
@@ -436,9 +440,9 @@ class User {
 		$user->loadFromRow( $row );
 		return $user;
 	}
-	
+
 	//@}
-	
+
 
 	/**
 	 * Get the username corresponding to a given user ID
@@ -676,7 +680,7 @@ class User {
 			return false;
 
 		# Clean up name according to title rules
-		$t = ($validate === 'valid') ? 
+		$t = ($validate === 'valid') ?
 			Title::newFromText( $name ) : Title::makeTitle( NS_USER, $name );
 		# Check for invalid titles
 		if( is_null( $t ) ) {
@@ -770,9 +774,9 @@ class User {
 	}
 
 	/**
-	 * Set cached properties to default. 
+	 * Set cached properties to default.
 	 *
-	 * @note This no longer clears uncached lazy-initialised properties; 
+	 * @note This no longer clears uncached lazy-initialised properties;
 	 *       the constructor does that instead.
 	 * @private
 	 */
@@ -835,7 +839,7 @@ class User {
 			$sId = intval( $_COOKIE["{$wgCookiePrefix}UserID"] );
 			if( isset( $_SESSION['wsUserID'] ) && $sId != $_SESSION['wsUserID'] ) {
 				$this->loadDefaults(); // Possible collision!
-				wfDebugLog( 'loginSessions', "Session user ID ({$_SESSION['wsUserID']}) and 
+				wfDebugLog( 'loginSessions', "Session user ID ({$_SESSION['wsUserID']}) and
 					cookie user ID ($sId) don't match!" );
 				return false;
 			}
@@ -919,6 +923,8 @@ class User {
 
 		$s = $dbr->selectRow( 'user', '*', array( 'user_id' => $this->mId ), __METHOD__ );
 
+		wfRunHooks( 'UserLoadFromDatabase', array( $this, &$s ) );
+
 		if ( $s !== false ) {
 			# Initialise user table data
 			$this->loadFromRow( $s );
@@ -978,6 +984,7 @@ class User {
 				$this->mGroups[] = $row->ug_group;
 			}
 		}
+		wfRunHooks( 'UserLoadGroups', array( $this ) );
 	}
 
 	/**
@@ -1105,8 +1112,8 @@ class User {
 				$this->spreadBlock();
 			}
 		} else {
-			// Bug 13611: don't remove mBlock here, to allow account creation blocks to 
-			// apply to users. Note that the existence of $this->mBlock is not used to 
+			// Bug 13611: don't remove mBlock here, to allow account creation blocks to
+			// apply to users. Note that the existence of $this->mBlock is not used to
 			// check for edit blocks, $this->mBlockedby is instead.
 		}
 
@@ -1296,7 +1303,7 @@ class User {
 
 	/**
 	 * Check if user is blocked
-	 * 
+	 *
 	 * @param $bFromSlave \bool Whether to check the slave database instead of the master
 	 * @return \bool True if blocked, false otherwise
 	 */
@@ -1308,7 +1315,7 @@ class User {
 
 	/**
 	 * Check if user is blocked from editing a particular article
-	 * 
+	 *
 	 * @param $title      \string Title to check
 	 * @param $bFromSlave \bool   Whether to check the slave database instead of the master
 	 * @return \bool True if blocked, false otherwise
@@ -1348,12 +1355,12 @@ class User {
 		$this->getBlockedStatus();
 		return $this->mBlockreason;
 	}
-	
+
 	/**
 	 * Check if user is blocked on all wikis.
 	 * Do not use for actual edit permission checks!
 	 * This is intented for quick UI checks.
-	 * 
+	 *
 	 * @param $ip \type{\string} IP address, uses current client if none given
 	 * @return \type{\bool} True if blocked, false otherwise
 	 */
@@ -1372,10 +1379,10 @@ class User {
 		$this->mBlockedGlobally = (bool)$blocked;
 		return $this->mBlockedGlobally;
 	}
-	
+
 	/**
 	 * Check if user account is locked
-	 * 
+	 *
 	 * @return \type{\bool} True if locked, false otherwise
 	 */
 	function isLocked() {
@@ -1387,10 +1394,10 @@ class User {
 		$this->mLocked = (bool)$authUser->isLocked();
 		return $this->mLocked;
 	}
-	
+
 	/**
 	 * Check if user account is hidden
-	 * 
+	 *
 	 * @return \type{\bool} True if hidden, false otherwise
 	 */
 	function isHidden() {
@@ -1642,7 +1649,7 @@ class User {
 	 * user_touched field when we update things.
 	 * @return \string Timestamp in TS_MW format
 	 */
-	private static function newTouchedTimestamp() {
+	public static function newTouchedTimestamp() {
 		global $wgClockSkewFudge;
 		return wfTimestamp( TS_MW, time() + $wgClockSkewFudge );
 	}
@@ -1754,6 +1761,7 @@ class User {
 		} else {
 			// Wikia uses the old hashing until we migrate all wikis to MW 1.13
 			//$this->mPassword = self::crypt( $str );
+			error_log ("oldCrypt( $str, {$this->mId} )");
 			$this->mPassword = self::oldCrypt( $str, $this->mId );
 		}
 		$this->mNewpassword = '';
@@ -1792,7 +1800,7 @@ class User {
 			$this->mToken = $token;
 		}
 	}
-	
+
 	/**
 	 * Set the cookie password
 	 *
@@ -1821,7 +1829,7 @@ class User {
 	}
 
 	/**
-	 * Has password reminder email been sent within the last 
+	 * Has password reminder email been sent within the last
 	 * $wgPasswordReminderResendTime hours?
 	 * @return \bool True or false
 	 */
@@ -1913,7 +1921,7 @@ class User {
 					$this->setOption('theme', trim($this->mOptions[$oname]));
 				}
 			}
-			
+
 			# Wikia hook - allow extensions to modify value returned by User::getOption()
 			# make local copy of option value, so hook won't modify value read from DB and store in object
 			$value = $this->mOptions[$oname];
@@ -1925,7 +1933,7 @@ class User {
 			return $defaultOverride;
 		}
 	}
-	
+
 	/**
 	 * Get the user's current setting for a given option, as a boolean value.
 	 *
@@ -1937,7 +1945,7 @@ class User {
 		return (bool)$this->getOption( $oname );
 	}
 
-	
+
 	/**
 	 * Get the user's current setting for a given option, as a boolean value.
 	 *
@@ -2351,11 +2359,11 @@ class User {
 	}
 
 	/**
-	 * Set a cookie on the user's client. Wrapper for 
+	 * Set a cookie on the user's client. Wrapper for
 	 * WebResponse::setCookie
 	 * @param $name \string Name of the cookie to set
 	 * @param $value \string Value to set
-	 * @param $exp \int Expiration time, as a UNIX time value; 
+	 * @param $exp \int Expiration time, as a UNIX time value;
 	 *                   if 0 or not specified, use the default $wgCookieExpiration
 	 */
 	protected function setCookie( $name, $value, $exp=0 ) {
@@ -2393,7 +2401,7 @@ class User {
 		}
 
 		wfRunHooks( 'UserSetCookies', array( $this, &$session, &$cookies ) );
-		#check for null, since the hook could cause a null value 
+		#check for null, since the hook could cause a null value
 		if ( !is_null( $session ) && isset( $_SESSION ) ){
 			$_SESSION = $session + $_SESSION;
 		}
@@ -3118,7 +3126,7 @@ class User {
 			? $this->mRegistration
 			: false;
 	}
-	
+
 	/**
 	 * Get the timestamp of the first edit
 	 *
@@ -3135,7 +3143,7 @@ class User {
 		);
 		if( !$time ) return false; // no edits
 		return wfTimestamp( TS_MW, $time );
-	}	
+	}
 
 	/**
 	 * Get the permissions associated with a given list of groups
@@ -3155,10 +3163,10 @@ class User {
 		}
 		return array_unique($rights);
 	}
-	
+
 	/**
 	 * Get all the groups who have a given permission
-	 * 
+	 *
 	 * @param $role \string Role to check
 	 * @return \type{\arrayof{\string}} List of internal group names with the given permission
 	 */
@@ -3266,7 +3274,7 @@ class User {
 	}
 
 	/**
-	 * Create a link to the group in HTML, if available; 
+	 * Create a link to the group in HTML, if available;
 	 * else return the group name.
 	 *
 	 * @param $group \string Internal name of the group
@@ -3288,7 +3296,7 @@ class User {
 	}
 
 	/**
-	 * Create a link to the group in Wikitext, if available; 
+	 * Create a link to the group in Wikitext, if available;
 	 * else return the group name.
 	 *
 	 * @param $group \string Internal name of the group
@@ -3418,7 +3426,7 @@ class User {
 	 * Make a new-style password hash
 	 *
 	 * @param $password \string Plain-text password
-	 * @param $salt \string Optional salt, may be random or the user ID. 
+	 * @param $salt \string Optional salt, may be random or the user ID.
 	 *                     If unspecified or false, will generate one automatically
 	 * @return \string Password hash
 	 */
@@ -3429,7 +3437,7 @@ class User {
 		if( !wfRunHooks( 'UserCryptPassword', array( &$password, &$salt, &$wgPasswordSalt, &$hash ) ) ) {
 			return $hash;
 		}
-		
+
 		if( $wgPasswordSalt ) {
 			if ( $salt === false ) {
 				$salt = substr( wfGenerateToken(), 0, 8 );
@@ -3452,12 +3460,12 @@ class User {
 	static function comparePasswords( $hash, $password, $userId = false ) {
 		$m = false;
 		$type = substr( $hash, 0, 3 );
-		
+
 		$result = false;
 		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result ) ) ) {
 			return $result;
 		}
-		
+
 		if ( $type == ':A:' ) {
 			# Unsalted
 			return md5( $password ) === substr( $hash, 3 );
@@ -3470,7 +3478,7 @@ class User {
 			return self::oldCrypt( $password, $userId ) === $hash;
 		}
 	}
-	
+
 	/**
 	 * Add a newuser log entry for this user
 	 * @param $byEmail Boolean: account made by email?

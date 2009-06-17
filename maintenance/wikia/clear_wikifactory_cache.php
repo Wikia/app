@@ -31,7 +31,7 @@ else {
 	$dbr = wfGetDB( DB_SLAVE );
 
 	$res = $dbr->select(
-		wfSharedTable( "city_list" ),
+		WikiFactory::table( "city_list" ),
 		array( "city_id", "city_dbname" ),
 		array( "city_public"  => 1 ),
 		__FILE__,

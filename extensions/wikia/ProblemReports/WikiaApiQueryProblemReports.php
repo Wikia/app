@@ -49,7 +49,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 	
 		wfProfileIn(__METHOD__);
 	
-		global $wgServerName;
+		global $wgServerName, $wgExternalSharedDB;
 	
  		$params  = $this->getInitialParams();
 		
@@ -57,10 +57,10 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		$isTokenValid = ( !empty($params['token']) && WikiaApiQueryProblemReports::getToken($wgServerName) == $params['token'] );
 
 		// database instance
-		$db =& $this->getDB(DB_SLAVE);
+		$db =& $this->getDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		// build query
-		$this->addTables( array( wfSharedTable('problem_reports'), wfSharedTable('city_list') ) );
+		$this->addTables( array( 'problem_reports', 'city_list' ) );
 		$this->addFields( array
 			(
 				'problem_reports.pr_id as id',
@@ -176,7 +176,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 	
 		wfProfileIn(__METHOD__);
 	
-		global $wgServer, $wgServerName;
+		global $wgServer, $wgServerName, $wgExternalSharedDB;
 		
 		$params  = $this->getInitialParams();
 
@@ -197,7 +197,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		}
 		
 		// add row to problem_reports table (use DB_MASTER !!!)
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw =& wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 		
 		$values = array(
 			'pr_cat'     => $params['type'],
@@ -218,7 +218,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		//print_pre($values);
 		
 		$dbw->begin();
-		$dbw->insert( wfSharedTable('problem_reports'), $values, __METHOD__ );
+		$dbw->insert( 'problem_reports', $values, __METHOD__ );
 		$insertId = (int) $dbw->insertId();
 		$dbw->commit();
 
@@ -267,9 +267,9 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 	
 		wfProfileIn(__METHOD__);
 	
-		global $wgServer, $wgServerName, $wgDBname;
+		global $wgServer, $wgServerName, $wgDBname, $wgExternalSharedDB;
 	
-        $params  = $this->getInitialParams();
+		$params  = $this->getInitialParams();
 
 		//print_pre($params);
 		
@@ -310,20 +310,21 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		}
 		
 		// update row in problem_reports table (use DB_MASTER !!!)
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw =& wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 		// are we updating type of report?
 		$updatingType = is_numeric($params['type']);
 
 		if ( $updatingType ) {
-			$dbw->update( wfSharedTable('problem_reports'), array('pr_cat' => intval($params['type'])), $sql_where, __METHOD__);
+			$dbw->update( 'problem_reports', array('pr_cat' => intval($params['type'])), $sql_where, __METHOD__);
 		}
 		else {
-			$dbw->update( wfSharedTable('problem_reports'), array('pr_status' => intval($params['status'])), $sql_where, __METHOD__);
+			$dbw->update( 'problem_reports', array('pr_status' => intval($params['status'])), $sql_where, __METHOD__);
 		}
 		
 		
 		$ret = $dbw->affectedRows() > 0; // did we actually update any row?
+		$dbw->commit();
 		
 		
 		if ($ret) {
@@ -336,6 +337,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			
 			// tricky part ;)
 			//update recent changes and logger table of wiki report is coming from (#2466)
+			$dbw =& wfGetDB( DB_MASTER );
 			$dbw->selectDB( $report['db'] );
 			
 			wfDebug('ProblemReports: selecting "'.$report['db']."\" DB...\n");
@@ -370,9 +372,9 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 	
 		wfProfileIn(__METHOD__);
 	
-		global $wgServer, $wgServerName, $wgDBname;
+		global $wgServer, $wgServerName, $wgDBname, $wgExternalSharedDB;
 	
-        $params  = $this->getInitialParams();
+		$params  = $this->getInitialParams();
 		
 		// check user permissions
 		if ( !self::userCanRemove() ) {
@@ -399,13 +401,15 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		$reportedTitle = Title::newFromText($report['title'], NS_MAIN);
 		
 		// delete row from problem_reports table (use DB_MASTER !!!)
-		$dbw =& wfGetDB( DB_MASTER );
+		$dbw =& wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 		$dbw->begin();
-		$dbw->delete( wfSharedTable('problem_reports'), array('pr_id' => intval($params['report'])), __METHOD__);
+		$dbw->delete( 'problem_reports', array('pr_id' => intval($params['report'])), __METHOD__);
+		$dbw->commit();
 		
 		// tricky part ;)
 		//update recent changes and logger table of wiki report is coming from (#2466)
+		$dbw =& wfGetDB( DB_MASTER );
 		$dbw->selectDB( $report['db'] );
 		
 		wfDebug('ProblemReports: selecting "'.$report['db']."\" DB...\n");
@@ -665,11 +669,11 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
     
 		wfProfileIn(__METHOD__);
 		
-		global $wgSharedDB;
+		global $wgExternalSharedDB;
 		
-		$db =& wfGetDB(DB_SLAVE);
+		$db =& wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
-		$tables = array(wfSharedTable('problem_reports'));
+		$tables = array('problem_reports');
 
 		$sql_wheres = array();
 
@@ -697,7 +701,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		
 		// filter by language
 		if ( !empty($params['lang']) ) {
-			$tables[] = wfSharedTable('city_list');
+			$tables[] = 'city_list';
 			
 			$sql_wheres[] = 'problem_reports.pr_city_id = city_list.city_id';
 			$sql_wheres['city_lang'] = $params['lang'];

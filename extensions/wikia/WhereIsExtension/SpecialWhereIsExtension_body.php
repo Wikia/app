@@ -64,17 +64,15 @@ class WhereIsExtension extends SpecialPage {
 
 	//fetching variable list from 'extension' group
 	private function getListOfVars($clear) {
-		$aTables = array(
-			wfSharedTable('city_variables_pool'),
-			wfSharedTable('city_variables_groups')
-		);
+		global $wgExternalSharedDB;
+		$aTables = array( 'city_variables_pool', 'city_variables_groups' );
 
 		$aWhere = array('cv_group_id = cv_variable_group');
 		if ($clear) {	//rt#16953
 			$aWhere['cv_variable_group'] = '27';	//id 'extensions' group
 		}
 
-		$dbr = wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$oRes = $dbr->select(
 			$aTables,
 			array('cv_id, cv_name'),
@@ -93,17 +91,18 @@ class WhereIsExtension extends SpecialPage {
 
 	//fetching wiki list with selected variable set to 'true'
 	private function getListOfWikisWithVar($varId, $val) {
-		$aTables = array(
-			wfSharedTable('city_variables'),
-			wfSharedTable('city_list')
-		);
+		global $wgExternalSharedDB;
 
+		$aTables = array(
+			'city_variables',
+			'city_list',
+		);
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
 		$aWhere[] = "cv_value = '" . serialize($val == 'true' ? true : false) . "'";
 		$aWhere[] = "cv_variable_id = '$varId'";
 
-		$dbr = wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$oRes = $dbr->select(
 			$aTables,
 			array('city_title', 'city_url'),

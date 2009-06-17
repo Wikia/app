@@ -67,7 +67,7 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 	 * @access public
 	 */
 	public function doThumbnail( $uri ){
-		global $wgOut, $wgMemc;
+		global $wgOut, $wgMemc, $wgExternalSharedDB;
 
 		wfProfileIn( __METHOD__ );
 		/**
@@ -125,12 +125,9 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 			 * try to find which wiki it is based on $sUploadDirectory value.
 			 * first without trailing slash
 			 */
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			$oRow = $dbr->selectRow(
-				array(
-					wfSharedTable( 'city_variables' ),
-					wfSharedTable( 'city_list' )
-				),
+				array( 'city_variables', 'city_list' ),
 				array( 'city_id', 'city_url' ),
 				array(
 					'cv_value' => serialize( $sUploadDirectoryN ),
@@ -143,10 +140,7 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 				 * second query with trailing slash
 				 */
 				$oRow = $dbr->selectRow(
-					array(
-						wfSharedTable( 'city_variables' ),
-						wfSharedTable( 'city_list' )
-					),
+					array( 'city_variables', 'city_list' ),
 					array( 'city_id', 'city_url' ),
 					array(
 						'cv_value' => serialize( $sUploadDirectoryY ),

@@ -186,7 +186,7 @@ class Wikia {
      */
     static public function addCredits( $row )
     {
-		global $wgIwPrefix, $wgSharedDB, $wgAddFromLink;
+		global $wgIwPrefix, $wgExternalSharedDB, $wgAddFromLink;
 
         $text = "";
 
@@ -194,11 +194,11 @@ class Wikia {
 			if (isset($wgIwPrefix)){
 				$text .= '<div id="wikia-credits"><br /><br /><small>' . wfMsg('tagline-url-interwiki',$wgIwPrefix) . '</small></div>';
 			}
-            elseif (isset($wgSharedDB)){
+            elseif (isset($wgExternalSharedDB)){
 				global $wgServer,$wgArticlePath,$wgSitename;
-				$dbr = wfGetDB( DB_SLAVE );
+				$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 				$oRow = $dbr->selectRow(
-                    wfSharedTable("interwiki"),
+                    'interwiki',
                     array( 'iw_prefix' ),
                     array( 'iw_url' => $wgServer.$wgArticlePath ),
                     __METHOD__
