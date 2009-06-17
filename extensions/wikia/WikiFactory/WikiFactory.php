@@ -264,7 +264,7 @@ class WikiFactory {
 		 * ewentually insert
 		 */
 		$dbw->insert(
-			array("city_domains"),
+			"city_domains",
 			array(
 				"city_domain" => strtolower( $domain ),
 				"city_id" => $city_id
