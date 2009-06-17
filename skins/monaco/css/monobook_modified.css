@@ -442,6 +442,18 @@ div.tleft {
 	margin: .5em 1.4em 1.2em 0;
 	/*CHRISTIAN*/
 }
+
+/*BARTEK*/
+div.tnone {
+	float: none;
+	clear: both;
+}
+
+div.videobox {
+	background-color: #f9f9f9;
+}
+/*BARTEK*/
+
 img.thumbborder {
 	border: 1px solid #dddddd;
 }
