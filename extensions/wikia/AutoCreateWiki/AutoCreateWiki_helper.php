@@ -102,7 +102,7 @@ class AutoCreateWiki {
 			if ( is_array( $names ) ) {
 				foreach( $names as $n ) {
 					if ( !preg_match("/^[\w\.]+$/",$n) ) continue;
-					$tmp_array['exact'][] = "city_domain like '{$n}.%'";
+					$tmp_array['exact'][] = "city_domain = '{$n}'";
 					$tmp_array['similar'][] = "city_domain like '%{$n}%'";
 				}
 				if ( sizeof( $tmp_array ) ) {
@@ -112,7 +112,7 @@ class AutoCreateWiki {
 					$skip = true;
 				}
 			} else {
-				$condition = "city_domain like '{$name}.%'";
+				$condition = "city_domain like = '{$name}'";
 				$conditionSimilar = "city_domain like '%{$name}%'";
 			}
 
