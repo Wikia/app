@@ -570,25 +570,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( "Create user sysop/bureaucrat" );
 
 		/**
-		 * set hub/category
-		 */
-		$hub = WikiFactoryHub::getInstance();
-		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
-		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
-
-		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step8') );
-
-		/**
-		 * modify variables
-		 */
-		$this->addCustomSettings( 0, $wgUniversalCreationVariables, "universal" );
-
-		/**
-		 * set variables per language
-		 */
-		$this->addCustomSettings( $this->mWikiData[ "language" ], $wgLangCreationVariables, "language" );
-
-		/**
 		 * use starter when wikia in proper hub
 		 */
 		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )
@@ -635,16 +616,35 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step9') );
 
-		$dbw_local->commit();
-		$wgSharedDB = $tmpSharedDB;
-
 		/**
 		 * add local job
 		 */
 		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
 		$localJob->WFinsert( $this->mWikiId, $this->mWikiData[ "dbname" ] );
-
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step10') );
+
+		$dbw_local->commit();
+		$wgSharedDB = $tmpSharedDB;
+
+
+		/**
+		 * set hub/category
+		 */
+		$hub = WikiFactoryHub::getInstance();
+		$hub->setCategory( $this->mWikiId, $this->mWikiData[ "hub" ] );
+		$this->log( "Wiki added to the category hub " . $this->mWikiData[ "hub" ] );
+		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step8') );
+
+		/**
+		 * modify variables
+		 */
+		$this->addCustomSettings( 0, $wgUniversalCreationVariables, "universal" );
+
+		/**
+		 * set variables per language
+		 */
+		$this->addCustomSettings( $this->mWikiData[ "language" ], $wgLangCreationVariables, "language" );
+
 
 		/**
 		 * show congratulation message
