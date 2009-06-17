@@ -50,6 +50,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 <?php
 	endforeach
 ?>
+				<option value="9">Other</option>
 <?php endif ?>
 				</select>
 				<div class="error" style="display: none;" id="wiki-category-error"></div>
@@ -98,7 +99,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-language')?></span></li>
 		</ul>
 	</div>
-<!-- staff section -->	
+<!-- staff section -->
 <?php if ( in_array('staff', $wgUser->getGroups()) ) : ?>
 	<div class="formblock">
 		<ul>
@@ -110,8 +111,8 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-staff-username')?></span></li>
 		</ul>
 	</div>
-<!-- end of staff section --->	
-<?php endif ?>	
+<!-- end of staff section --->
+<?php endif ?>
 <?php if ($wgUser->isAnon()) : ?>
 	<br />
 <!-- Create an account -->
