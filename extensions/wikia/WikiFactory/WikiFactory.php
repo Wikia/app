@@ -441,7 +441,7 @@ class WikiFactory {
 			 * delete old value
 			 */
 			$dbw->delete(
-				array( "city_variables" ),
+				"city_variables",
 				array(
 					"cv_variable_id" => $cv_variable_id,
 					"cv_city_id" => $city_id
@@ -453,7 +453,7 @@ class WikiFactory {
 			 * insert new one
 			 */
 			$dbw->insert(
-				array( "city_variables" ),
+				"city_variables",
 				array(
 					"cv_variable_id" => $cv_variable_id,
 					"cv_city_id"     => $city_id,
