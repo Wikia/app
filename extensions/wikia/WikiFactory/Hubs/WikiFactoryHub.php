@@ -61,7 +61,7 @@ class WikiFactoryHub {
 		wfProfileIn( __METHOD__ );
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$cat_id = $dbr->selectField( 
+		$cat_id = $dbr->selectField(
 			"city_cat_mapping",
 			"cat_id",
 			array( "city_id" => $city_id )
@@ -147,7 +147,7 @@ class WikiFactoryHub {
 	 */
     public function getCategoryId( $city_id ) {
 		global $wgExternalSharedDB;
-		
+
         wfProfileIn( __METHOD__ );
 
         $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
@@ -189,6 +189,7 @@ class WikiFactoryHub {
 		}
 		wfProfileIn( __METHOD__ );
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		Wikia::log( __METHOD__, "var", $wgExternalSharedDB );
 		$oRes = $dbr->select(
 			array( "city_cats" ),
 			array( "*" ),
@@ -196,11 +197,11 @@ class WikiFactoryHub {
 			__METHOD__,
 			array( "ORDER BY" => "cat_name" )
 		);
-		
+
 		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 			$tmp[ $oRow->cat_id ] = $oRow->cat_name;
 		}
-		
+
 		$dbr->freeResult( $oRes );
 		wfProfileOut( __METHOD__ );
 		return $tmp;
