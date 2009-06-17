@@ -62,7 +62,7 @@ class WikiFactoryLoader {
 	 */
 	public function  __construct( $id = null, $server_name = false ) {
 		global $wgDBname, $wgDevelEnvironment, $wgDevelDomains;
-		global $wgWikiFactoryDomains, $wgExternalSharedDB;
+		global $wgWikiFactoryDomains;
 
 		$this->mCommandLine = false;
 
@@ -104,7 +104,7 @@ class WikiFactoryLoader {
 		$this->mDebug = false;
 		$this->mOldServerName = false;
 		$this->mAlternativeDomainUsed = false;
-		$this->mDBname = isset( $wgExternalSharedDB ) ? $wgExternalSharedDB : "wikicities";
+		$this->mDBname = "wikicities";
 		$this->mDomain = array();
 		$this->mVariables = array();
 		$this->mIsWikiaActive = 0;
