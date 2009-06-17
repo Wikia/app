@@ -239,7 +239,7 @@ class RegexBlockData
     }
 
     static public function blockUser($address, $expiry, $exact, $creation, $reason) {
-        global $wgUser;
+        global $wgUser, $wgExternalSharedDB;
 
         wfProfileIn( __METHOD__ );
         /* make insert */
