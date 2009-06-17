@@ -134,10 +134,11 @@ function wfRecentRatings()
 		function GetRatings()
 		{
 			$dbr = &wfGetDB(DB_SLAVE);
+			$userTbl = $dbr->tableName( 'user' );
 			$res = $dbr->query("
  			SELECT user_name, R.user_id, page_title, comment, rollback, admin_id, reason, rating1, rating2, rating3, timestamp
 			FROM rating AS R
-			LEFT JOIN " . wfSharedTable( 'user' ) . " AS u1 ON R.user_id = u1.user_id 
+			LEFT JOIN $userTbl AS u1 ON R.user_id = u1.user_id 
 			LEFT JOIN page AS p1 ON R.page_id = p1.page_id 
 			WHERE p1.page_namespace = 100
 			ORDER BY R.timestamp DESC
