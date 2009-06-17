@@ -2,7 +2,7 @@
 
 /**
  * WikiaApiQueryProblemReports
- * 
+ *
  * API for ProblemReports extension
  * Lists, adds, updates and removes problem reports
  *
@@ -30,34 +30,48 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			case parent::INSERT:
 				$this->executeInsert();
 				break;
-			
+
 			case parent::UPDATE:
 				$this->executeUpdate();
 				break;
-			
+
 			case parent::DELETE:
 				$this->executeDelete();
 				break;
-		
+
 			default:
 				$this->executeQuery();
 				break;
 		}
     }
-    
+
+    /**
+     * Gets a default slave database connection object, override base function
+     */
+	public function getDB() {
+		global  $wgExternalSharedDB;
+		if (!isset ($this->mSlaveDB)) {
+			$this->profileDBIn();
+			$this->mSlaveDB = wfGetDB(DB_SLAVE,'api',  $wgExternalSharedDB );
+			$this->profileDBOut();
+		}
+		return $this->mSlaveDB;
+	}
+
+
     private function executeQuery() {
-	
+
 		wfProfileIn(__METHOD__);
-	
+
 		global $wgServerName, $wgExternalSharedDB;
-	
+
  		$params  = $this->getInitialParams();
-		
+
 		// validate given token
 		$isTokenValid = ( !empty($params['token']) && WikiaApiQueryProblemReports::getToken($wgServerName) == $params['token'] );
 
 		// database instance
-		$db =& $this->getDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		$db = $this->getDB();
 
 		// build query
 		$this->addTables( array( 'problem_reports', 'city_list' ) );
@@ -77,15 +91,15 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 				'problem_reports.pr_cat as problem',
 				'problem_reports.pr_status as status',
 				'problem_reports.pr_date as date',
-				
+
 				'city_list.city_lang as lang',
 				'city_list.city_dbname as db'
 			)
 		);
-		
+
 		// get info about wikis language
 		$this->addWhere('problem_reports.pr_city_id = city_list.city_id');
-	
+
 		// just show one problem report (we have ID)
 		if (intval($params['id'])) {
 			$this->addWhereFld( 'pr_id',  $params['id'] );
@@ -96,12 +110,12 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			if (intval($params['showall']) != 1) {
 				$this->addWhereFld( 'pr_city_id',  !empty($params['wikia']) ? intval($params['wikia']) : self::getCityID()  );
 			}
-			
+
 			// filter by language?
 			if ( !empty($params['lang']) ) {
 				$this->addWhereFld( 'city_lang', $params['lang'] );
 			}
-		
+
 			// archived?
 			if ($params['archived'] == 1) {
 				$this->addWhere( 'pr_status in (1,2)' );
@@ -113,19 +127,19 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			else {
 				$this->addWhereFld('pr_status', 0);
 			}
-		
+
 			// problem type
-			if (isset($params['type']) && $params['type'] > -1) {	
+			if (isset($params['type']) && $params['type'] > -1) {
 				$this->addWhereFld( 'pr_cat', (int) $params['type'] );
 			}
-		
+
 			$this->addOption( 'LIMIT', is_numeric($params['limit']) ? $params['limit'] : 50 );
-		
+
 			$this->addOption( 'OFFSET', is_numeric($params['offset']) ? $params['offset'] : 0 );
 
 			$this->addOption( 'ORDER BY', 'id DESC' );
 		}
-		
+
 		// build results
 		$data = array();
 		$res = $this->select(__METHOD__);
@@ -144,61 +158,61 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 				'email' 	=> $isTokenValid ? $row->email : '',
 				'ip'	 	=> $isTokenValid ? long2ip($row->ip) : '',
 				'browser'       => $row->browser,
-				
+
 				'type'		=> $row->problem,
 				'status'	=> $row->status,
 				'staff'		=> (int) ($row->status == 3),
 				'archived'  => (int) (($row->status == 1) || ($row->status == 2)),
-				
+
 				'date'		=> date('YmdHis', strtotime($row->date) - (int) date('Z') ), /* return UTC time (#2214) */
 				'ns'        => $row->ns,
 				'title'     => $row->title,
 				'summary'   => $row->summary,
 			);
-			
+
 			ApiResult :: setContent( $data[$row->id], "" );
 		}
-		
+
 		$db->freeResult($res);
-		
+
 		// count all reports in current view
 		$count = $this->countAllReports($params);
-		
+
 		$this->getResult()->setIndexedTagName($data, 'report');
 		$this->getResult()->addValue('query', $this->getModuleName(), $data);
 		$this->getResult()->addValue('query', 'reports', intval($count) );
-		
+
 		wfProfileOut(__METHOD__);
 	}
-    
-    
+
+
     private function executeInsert() {
-	
+
 		wfProfileIn(__METHOD__);
-	
+
 		global $wgServer, $wgServerName, $wgExternalSharedDB;
-		
+
 		$params  = $this->getInitialParams();
 
 		//print_pre($params);
-		
+
 		// check params list
 		if ( !$this->isInt($params['type']) || !$this->isInt($params['ns']) || empty($params['summary']) || empty($params['title']) ) {
 			wfProfileOut(__METHOD__);
 			throw new WikiaApiQueryError(1, 'One of expected parameters is empty');
 		}
-		
+
 		// validate given token
 		$isTokenValid = ( !empty($params['token']) && self::getToken($params['title']) == $params['token'] );
-		
+
 		if (!$isTokenValid) {
 			wfProfileOut(__METHOD__);
 			throw new WikiaApiQueryError(2, 'Token is not valid');
 		}
-		
+
 		// add row to problem_reports table (use DB_MASTER !!!)
 		$dbw =& wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-		
+
 		$values = array(
 			'pr_cat'     => $params['type'],
 			'pr_summary' => $params['summary'],
@@ -214,9 +228,9 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			'pr_date'    => date('Y-m-d H:i:s'),
 			'pr_status'  => 0 					// initial status: awaits
 		);
-		
+
 		//print_pre($values);
-		
+
 		$dbw->begin();
 		$dbw->insert( 'problem_reports', $values, __METHOD__ );
 		$insertId = (int) $dbw->insertId();
@@ -227,33 +241,33 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		{
 			// add the log entry for problem reports
 			$log = new LogPage('pr_rep_log', true); // true: also add entry to Special:Recentchanges
-			
+
 			$reportedTitle = Title::newFromText($params['title'], NS_MAIN);
 			$desc = 'reported a problem';
-			
+
 			$log->addEntry('prl_rep', $reportedTitle, /*$data['summary']*/ '', array
 			(
 				$reportedTitle->getFullURL(),
 				$insertId
 			) );
-				
+
 			$dbw->immediateCommit(); // do commit (MW 'forgets' to do it)
-				
+
 			// ok!
 			wfDebug('ProblemReports: report #'.$insertId." reported and log added to Special:Log...\n");
 		}
 		else
 		{
 			wfDebug('ProblemReports: report #'.$insertId." NOT reported!\n");
-			
+
 			wfProfileOut(__METHOD__);
-			
+
 			throw new WikiaApiQueryError(0);
 		}
-		
-		// return added report ID	
+
+		// return added report ID
 		$this->getResult()->addValue('results', 'report', array('id' => $insertId));
-		
+
 		wfProfileOut(__METHOD__);
     }
 
@@ -264,39 +278,39 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 
 
     private function executeUpdate() {
-	
+
 		wfProfileIn(__METHOD__);
-	
+
 		global $wgServer, $wgServerName, $wgDBname, $wgExternalSharedDB;
-	
+
 		$params  = $this->getInitialParams();
 
 		//print_pre($params);
-		
+
 		// check user permission to update reports
 		if ( !self::userCanDoActions() ) {
 			wfProfileOut(__METHOD__);
 			throw new WikiaApiQueryError(2, 'To update report status you need to be in sysop or staff group');
 		}
-		
+
 		// check params list
 		if ( !$this->isInt($params['report']) || (isset($params['status']) && isset($params['type'])) ) {
 			wfProfileOut(__METHOD__);
 			throw new WikiaApiQueryError(1, 'One of expected parameters is empty');
 		}
-		
+
 		// validate given token
 		$isTokenValid = ( !empty($params['token']) && self::getToken($params['report']) == $params['token'] );
-		
+
 		if (!$isTokenValid) {
 			wfProfileOut(__METHOD__);
 			throw new WikiaApiQueryError(2, 'Token is not valid');
 		}
-		
-	
+
+
 		// can you update cross-wiki reports?
 		$sql_where = array();
-		
+
 		if ( self::userCanDoCrossWikiActions() ) {
 			$sql_where['pr_id'] = intval($params['report']);	// yes, you can update all reports
 		}
@@ -308,7 +322,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			wfProfileOut(__METHOD__);
 			throw new WikiaApiQueryError(3, 'Action is not allowed');
 		}
-		
+
 		// update row in problem_reports table (use DB_MASTER !!!)
 		$dbw =& wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
@@ -321,120 +335,120 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		else {
 			$dbw->update( 'problem_reports', array('pr_status' => intval($params['status'])), $sql_where, __METHOD__);
 		}
-		
-		
+
+
 		$ret = $dbw->affectedRows() > 0; // did we actually update any row?
 		$dbw->commit();
-		
-		
+
+
 		if ($ret) {
 			// create title object of reported page
 			$report = self::getReportById($params['report']);
 			$reportedTitle = Title::newFromText($report['title'], NS_MAIN);
-		
+
 			// add the log entry for problem reports
 			$log = new LogPage('pr_rep_log', true); // true: also add entry to Special:Recentchanges
-			
+
 			// tricky part ;)
 			//update recent changes and logger table of wiki report is coming from (#2466)
 			$dbw =& wfGetDB( DB_MASTER );
 			$dbw->selectDB( $report['db'] );
-			
+
 			wfDebug('ProblemReports: selecting "'.$report['db']."\" DB...\n");
-			
+
 			$log->addEntry($updatingType ? 'prl_typ' : 'prl_chn', $reportedTitle, '', array
 			(
 				$reportedTitle, // dummy title
 				$params['report'],
 				$updatingType ? $params['type'] : $params['status']
 			) );
-				
+
 			$dbw->immediateCommit(); // do commit (MW 'forgets' to do it)
-			
+
 			// return to DB of current wiki
 			$dbw->selectDB( $wgDBname );
-				
+
 			// ok!
 			wfDebug('ProblemReports: ' . ($updatingType ? 'type' : 'status') . ' of report #'.$params['report']." updated and log added to Special:Log...\n");
 		}
 		else {
 			//throw new WikiaApiQueryError(0);
 		}
-			
+
 		// return info
 		$this->getResult()->addValue('results', 'report', array('id' => $params['report'], 'status' => $params['status'], 'type' => $params['type']));
-		
+
 		wfProfileOut(__METHOD__);
     }
 
 
     private function executeDelete() {
-	
+
 		wfProfileIn(__METHOD__);
-	
+
 		global $wgServer, $wgServerName, $wgDBname, $wgExternalSharedDB;
-	
+
 		$params  = $this->getInitialParams();
-		
+
 		// check user permissions
 		if ( !self::userCanRemove() ) {
 			wfProfileOut(__METHOD__);
 			throw new WikiaApiQueryError(2, 'To remove report you need to be in staff group');
 		}
-		
+
 		// check params list
 		if ( !$this->isInt($params['report']) ) {
 			wfProfileOut(__METHOD__);
 			throw new WikiaApiQueryError(1, 'One of expected parameters is empty');
 		}
-		
+
 		// validate given token
 		$isTokenValid = ( !empty($params['token']) && self::getToken($params['report']) == $params['token'] );
-		
+
 		if (!$isTokenValid) {
 			wfProfileOut(__METHOD__);
 			throw new WikiaApiQueryError(2, 'Token is not valid');
 		}
-		
+
 		// create title object of reported page
 		$report = self::getReportById($params['report']);
 		$reportedTitle = Title::newFromText($report['title'], NS_MAIN);
-		
+
 		// delete row from problem_reports table (use DB_MASTER !!!)
 		$dbw =& wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 		$dbw->begin();
 		$dbw->delete( 'problem_reports', array('pr_id' => intval($params['report'])), __METHOD__);
 		$dbw->commit();
-		
+
 		// tricky part ;)
 		//update recent changes and logger table of wiki report is coming from (#2466)
 		$dbw =& wfGetDB( DB_MASTER );
 		$dbw->selectDB( $report['db'] );
-		
+
 		wfDebug('ProblemReports: selecting "'.$report['db']."\" DB...\n");
-		
-		
+
+
 		// add the log entry for problem reports
 		$log = new LogPage('pr_rep_log', true); // true: also add entry to Special:Recentchanges
-			
+
 		$log->addEntry('prl_rem', $reportedTitle, '', array
 		(
 			$reportedTitle,
 			$params['report']
 		) );
-			
+
 		$dbw->commit();
-		
+
 		// return to DB of current wiki
 		$dbw->selectDB( $wgDBname );
-			
+
 		// ok!
 		wfDebug('ProblemReports: report #'.$params['report']." removed by staff member and log added to Special:Log...\n");
 
 		// return info
 		$this->getResult()->addValue('results', 'report', array('id' => $params['report']) );
-		
+
 		wfProfileOut(__METHOD__);
     }
 
@@ -495,7 +509,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
             ),
         );
     }
-    
+
     public function getParamQueryDescription() {
         return array (
             'wikia'    => 'Wikia ID from which show problem reports (default 0 - shows from current wikia)',
@@ -510,7 +524,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			'token'    => 'Used for internal communication'
         );
     }
-    
+
     public function getQueryExamples() {
         return array (
             'api.php?action=query&list=problemreports',
@@ -562,7 +576,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
             ),
         );
     }
-    
+
     public function getParamInsDescription() {
         return array (
             'type'     => 'Type of reported problem <0; 4>',
@@ -575,7 +589,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			'token'    => 'Used for query validation'
         );
     }
-    
+
     public function getInsExamples() {
         return array (
             'api.php?action=insert&wklist=problemreports&wktype=1&wkns=0&wktitle=Main_Page&wksummary=foo%20bar&wkreporter=User123&wkemail=foo%40bar.pl&wktoken=xxxxx'
@@ -609,7 +623,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 				),
         );
     }
-    
+
     public function getParamUpdDescription() {
         return array (
 			'report'   => 'Problem report id',
@@ -618,7 +632,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			'token'    => 'Used for query validation'
         );
     }
-    
+
     public function getUpdExamples() {
         return array (
             'api.php?action=update&list=problemreports&wkreport=341&wkstatus=5&wktoken=xxxxx',
@@ -646,14 +660,14 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
             ),
         );
     }
-    
+
     public function getParamDelDescription() {
         return array (
 	    'report'   => 'Problem report id',
 	    'token'    => 'Used for query validation'
         );
     }
-    
+
     public function getDelExamples() {
         return array (
             'api.php?action=delete&wklist=problemreports&wkreport=341&wktoken=xxxxx'
@@ -666,22 +680,22 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 
     // let's count all reports within given criteria
     private function countAllReports($params) {
-    
+
 		wfProfileIn(__METHOD__);
-		
+
 		global $wgExternalSharedDB;
-		
+
 		$db =& wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$tables = array('problem_reports');
 
 		$sql_wheres = array();
 
-		// select from given city only?	
+		// select from given city only?
 		if ( empty($params['showall']) ) {
 			$sql_wheres ['pr_city_id'] = !empty($params['wikia']) ? (int) $params['wikia'] : self::getCityID();
 		}
-		
+
 		// archived?
 		if ( !empty($params['archived']) ) {
 			$sql_wheres[] = 'pr_status in (1,2)';
@@ -698,25 +712,25 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		if (isset($params['type']) && $params['type'] > -1) {
 			$sql_wheres['pr_cat'] = intval($params['type']);
 		}
-		
+
 		// filter by language
 		if ( !empty($params['lang']) ) {
 			$tables[] = 'city_list';
-			
+
 			$sql_wheres[] = 'problem_reports.pr_city_id = city_list.city_id';
 			$sql_wheres['city_lang'] = $params['lang'];
 		}
-		
+
 		//print_pre($params);print_pre($sql_wheres);
-		
+
 		// make query
 		$count = $db->selectField($tables, 'count(*) as cnt', $sql_wheres, __METHOD__);
 
 		wfProfileOut(__METHOD__);
-		
+
 		return $count;
-	}	
-		
+	}
+
 	// check whether provided problem description contains spam
 	// using SpamBlacklist extension (which should be enabled sitewide)
 	static function checkForSpam($content)
@@ -727,7 +741,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		}
 
 		wfProfileIn(__METHOD__);
-		
+
 		$spamObj = wfSpamBlacklistObject();
 		$title = new Title();
 
@@ -738,7 +752,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		return $result;
 	}
 
-    
+
     // returns token for internal extension communication
     static function getToken($param) {
 		global $wgProblemReportsSecret;
@@ -748,7 +762,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
     //
     // check user permissions (refs #1915, #1970)
     //
-    
+
     // user can do actions: fix, reopen, close problem reports (only local wiki)
     static function userCanDoActions() {
         global $wgUser;
@@ -762,16 +776,16 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
     }
 
 
-    
+
     // user can do actions: fix, reopen, close problem reports (cross-wiki)
     static function userCanDoCrossWikiActions() {
 		global $wgUser;
-		
+
 		$groups = $wgUser->getGroups();
-		
+
 		return in_array( 'staff', $groups ) || in_array( 'janitor', $groups ) || in_array( 'helper', $groups );
     }
-    
+
     // use can remove problem reports
     static function userCanRemove() {
     	global $wgUser;
@@ -792,7 +806,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			wfMsg('pr_what_problem_software_bug_short'),
 			wfMsg('pr_what_problem_other_short'),
 		);
-		
+
 		// additional information
 		switch($key) {
 			// problem is reported
@@ -806,7 +820,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 
 				$rt = wfMsg( $wgLogActions[$key], $titleLink, '[[Special:ProblemReports/'.$params[1].'|#'.$params[1].']]' );
 				break;
-		
+
 			// problem reports status is changed
 			case 'pr_rep_log/prl_chn':
 				// dirty hack
@@ -816,7 +830,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 
 				$rt = wfMsg( $wgLogActions[$key], '[[Special:ProblemReports/'.$params[1].'|#'.$params[1].']]', ucfirst(wfMsg('pr_status_'.$params[2])) );
 				break;
-			
+
 			// problem reports type is changed
 			case 'pr_rep_log/prl_typ':
 				$rt = wfMsg( $wgLogActions[$key], '[[Special:ProblemReports/'.$params[1].'|#'.$params[1].']]', $problemTypes[$params[2]] );
@@ -826,7 +840,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 			case 'pr_rep_log/prl_rem':
 				$rt = wfMsg( $wgLogActions[$key], '[[Special:ProblemReports/'.$params[1].'|#'.$params[1].']]' );
 				break;
-				
+
 			// email is sent
 			case 'pr_rep_log/prl_eml':
 				$rt = wfMsg( $wgLogActions[$key], '[[User:'.$params[1].'|'.$params[1].']]', $params[2], '[[Special:ProblemReports/'.$params[3].'|#'.$params[3].']]' );
@@ -837,42 +851,42 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		if ($skin != NULL) {
 		    $rt = substr($wgOut->parse($rt), 3, -4);
 		}
-		
+
 		wfProfileOut(__METHOD__);
-		
+
 		return $rt;
     }
-    
+
     // get problem report data from API
     static function getReportById( $id ) {
-		
+
 		wfProfileIn(__METHOD__);
-		
+
 		global $wgServerName;
-		
+
 		$apiCall = array (
 			'wkid'	 	=> $id,
 			'wktoken'	=> WikiaApiQueryProblemReports::getToken($wgServerName),
 			'action'  	=> 'query',
 			'list'    	=> 'problemreports'
 		);
-			
+
 		$FauxRequest = new FauxRequest($apiCall);
 		$api = new ApiMain($FauxRequest);
 		$api->execute();
 		$data =& $api->GetResultData();
-			
+
 		$report = is_array($data['query']) ? $data['query']['problemreports'][$id] : false;
-		
+
 		wfProfileOut(__METHOD__);
-		
+
 		return $report;
     }
-	
+
 	// get cityID
 	static function getCityID() {
 		global $wgDBname, $wgCityId;
-		
+
 		return intval($wgCityId) ? $wgCityId : WikiFactory::DBtoID($wgDBname);
 	}
 
@@ -900,4 +914,3 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
                 }
 	}
 };
-
