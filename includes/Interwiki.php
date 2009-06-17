@@ -140,14 +140,9 @@ class Interwiki {
 	 */
 	protected static function load( $prefix ) {
 		global $wgMemc, $wgInterwikiExpiry;
-		# Moli 
-		if (mb_strlen($prefix) > 100) {
-			#$backTraceMsg = "key = $prefix \n";
-			$backTraceMsg = wfBacktrace(); // $e->getText();
-			error_log( "MOLI: ". $_SERVER['SERVER_NAME'] . " $backTraceMsg \n");
-		}
-		# Moli - remove after find a bug
-		$key = wfMemcKey( 'interwiki', $prefix );
+
+		# temporary fix RT#15123
+		$key = wfMemcKey( 'interwiki', md5($prefix) );
 		$mc = $wgMemc->get( $key );
 		$iw = false;
 		if( $mc && is_array( $mc ) ){ // is_array is hack for old keys
