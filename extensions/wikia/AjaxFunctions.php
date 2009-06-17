@@ -35,13 +35,13 @@ function cxValidateUserName ($uName) {
 	}
 
 	$uName = $nt->getText();
-	$uName = MySQL_Real_Escape_String ($uName);
 
+	$dbr = wfGetDB (DB_SLAVE);
+	$uName = $dbr->strencode($uName);
 	if ($uName == '') {
 		return 'INVALID';
 	}
 
-	$dbr = wfGetDB (DB_SLAVE);
 	$oRow = $dbr->selectRow( 'user', 'user_name', array('user_name' => $uName), __METHOD__);
 	if ($oRow !== false) {
 		return 'EXISTS';#wfMsg ('username-exists');
