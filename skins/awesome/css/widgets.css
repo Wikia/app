@@ -363,10 +363,6 @@ body.widgetsAddingBlocked .add {
 	padding: 2px 5px;
 	white-space: nowrap;
 }
-.autocomplete strong {
-	color:#3399FF;
-	font-weight: normal;
-}
 
 /* macbre: <widget> */
 .widgetTag {
