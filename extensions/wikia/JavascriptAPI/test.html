@@ -36,7 +36,7 @@ function loginWorked (){
 }
 
 function apiFailed(msg){
-	alert("Login failed! " + msg);
+	alert("Api call failed! " + msg);
 }
 function handleLogoutForm(f){
 	$("#logoutForm").hide();
@@ -68,12 +68,17 @@ function handleCreateArticle (f){
 function createArticleSuccess(){
 	alert("Article created");
 	$("#articleStatus").html("Article created! <a href='/wiki/" + normalizedTitle + "'>" + normalizedTitle + "</a> " + 
-		"<input type=button value=delete onClick='deleteArticle(\"" + normalizedTitle + "\")'/>");
+		"<input type=button value=delete onClick='Mediawiki.deleteArticle(\"" + normalizedTitle + "\", null, deleteArticleSuccess, apiFailed)'/>");
+}
+function deleteArticleSuccess(){
+	alert(normalizedTitle + " deleted");
+	$("#articleStatus").hide();	
 }
 </script>
 <hr />
 <!-- ############## Pull down an article ############## -->
 
+<!--
 <div id="Kermit">
 </div>
 
@@ -93,4 +98,5 @@ fillInArticle = function (result){
 
 Mediawiki.getArticleContent("Kermit_the_Frog", fillInArticle);
 </script>
+-->
 
