@@ -708,7 +708,7 @@ EOS;
 		$tmpParser->setOutputType(OT_HTML);
 		$tmpParserOptions = new ParserOptions();
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$res = $dbr->select('magic_footer_links', 'page, links', array('dbname' => $wgDBname));
 		while($row = $dbr->fetchObject($res)) {
 			$results[$row->page] = $tmpParser->parse($row->links, $wgTitle, $tmpParserOptions, false)->getText();
