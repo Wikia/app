@@ -1166,3 +1166,23 @@ function WysiwygParseWikitext($wikitext) {
 
 	return new AjaxResponse($html);
 }
+
+/**
+ * Helper function for link / template suggest feature
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+$wgAjaxExportList[] = 'WysiwygAutosuggest';
+function WysiwygAutosuggest() {
+	global $wgRequest;
+
+	$query = $wgRequest->getVal('query');
+	$ns = $wgRequest->getVal('ns', '');
+
+	$resp = array(
+		'query' => $query,
+		'suggestions' => PrefixSearch::titleSearch($query, 10, $ns),
+	);
+
+	return new AjaxResponse( Wikia::json_encode($resp) );
+}
