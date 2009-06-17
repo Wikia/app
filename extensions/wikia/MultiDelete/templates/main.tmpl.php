@@ -57,7 +57,15 @@
 					<textarea name="mTitles" id="mTitles" cols="40" rows="10"><?= empty($formData['titles']) ? '' : $formData['titles'] ?></textarea>
 				</td>
 			</tr>
-
+			<tr>
+				<td class="right">
+					<?= wfMsg('multidelete-reason') ?>
+				</td>
+				<td>
+					<input name="mReason" type="text" />
+				</td>
+			</tr>
+			</tr>
 			<tr>
 				<td>
 				</td>

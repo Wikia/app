@@ -13,6 +13,7 @@ $messages['en'] = array(
 	'multidelete-as' => 'Run the script as',
 	'multidelete-both-modes' => 'Please choose either one specified page or a given list of pages.',
 	'multidelete-or' => '<b>OR</b>',
+	'multidelete-reason' => 'Reason',
 	'multidelete-error-empty-selection' => 'Please supply the list of selected wikis',
 	'multidelete-error-empty-pages' => 'Please choose either one specified page or a given list of pages.',
 	'multidelete-error-multi-page' => 'Only one title at a time allowed for multi-wiki deletion.',
