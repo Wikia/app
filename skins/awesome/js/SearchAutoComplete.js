@@ -19,7 +19,8 @@ function sf_focus(e) {
 				fnFormatResult: function(v) { return v; },
 				onSelect: function(v, d) { location.href = wgArticlePath.replace(/\$1/, encodeURI(v.replace(/ /g, '_'))); },
 				selectedClass: 'navigation-hover',
-				deferRequestBy: 1000
+				deferRequestBy: 1000,
+				appendTo: '#search_box'
 			});
 		    $('body').children('div').slice(-1).css('zIndex', 20000);
 		});

@@ -47,7 +47,8 @@
       params: {},
       fnFormatResult: fnFormatResult,
       delimiter: null,
-      selectedClass: 'selected'
+      selectedClass: 'selected',
+      appendTo: 'body'
     };
     if (options) { $.extend(this.options, options); }
     if(this.options.lookup){
@@ -81,8 +82,7 @@
       if (!this.options.width) { this.options.width = this.el.width(); }
       this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-      //$('<div id="' + this.mainContainerId + '" style="position:absolute;z-index:' + zindex + '"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + 'px;"></div></div></div>').appendTo('body');
-      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + 'px;"></div></div></div>').appendTo('body');
+      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + 'px;"></div></div></div>').appendTo(this.options.appendTo);
 
       this.container = $('#' + autocompleteElId);
       this.fixPosition();
