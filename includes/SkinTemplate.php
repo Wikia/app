@@ -110,7 +110,7 @@ class SkinTemplate extends Skin {
 	 */
 	function setupSkinUserCss( OutputPage $out ){
 		$out->addStyle( 'common/shared.css', 'screen' );
-		$out->addStyle( 'common/commonPrint.css', 'print' );	
+		$out->addStyle( 'common/commonPrint.css', 'print' );
 	}
 
 	/**
@@ -190,7 +190,7 @@ class SkinTemplate extends Skin {
 
 		# quick hack for rt#15730; if you ever feel temptation to add 'elseif' ***CREATE A PROPER HOOK***
 		if (NS_CATEGORY == $this->mTitle->getNamespace()) $tpl->set( 'pagetitle', preg_replace("/^{$this->mTitle->getNsText()}:/", '', $out->getHTMLTitle()));
-						 
+
 		wfProfileOut( "parsePageTitle" );
 		$tpl->set( 'displaytitle', $out->mPageLinkTitle );
 		$tpl->set( 'pageclass', $this->getPageClasses( $this->mTitle ) );
@@ -289,10 +289,11 @@ class SkinTemplate extends Skin {
 		$tpl->setRef( 'userjsprev', $this->userjsprev);
 		if( $wgUseSiteJs ) {
 			$jsCache = $this->loggedin ? '&smaxage=0' : '';
+			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 			$tpl->set( 'jsvarurl',
 				self::makeUrl('-',
 					"action=raw$jsCache&gen=js&useskin=" .
-						urlencode( $this->getSkinName() ) ) );
+						urlencode( $skinName ) ) );
 		} else {
 			$tpl->set('jsvarurl', false);
 		}
@@ -1012,7 +1013,8 @@ class SkinTemplate extends Skin {
 				# XXX: additional security check/prompt?
 				$this->userjsprev = '/*<![CDATA[*/ ' . $wgRequest->getText('wpTextbox1') . ' /*]]>*/';
 			} else {
-				$this->userjs = self::makeUrl($this->userpage.'/'.$this->skinname.'.js', 'action=raw&ctype='.$wgJsMimeType);
+				$skinName = ($this->skinname == 'awesome') ? 'monaco' : $this->skinname; // macbre: temp fix
+				$this->userjs = self::makeUrl($this->userpage.'/'.$skinName.'.js', 'action=raw&ctype='.$wgJsMimeType);
 			}
 		}
 		wfProfileOut( __METHOD__ );

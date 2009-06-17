@@ -1009,7 +1009,7 @@ EOS;
 			// macbre: check for empty merged JS file
 			$s = '';
 			$s .= !isMsgEmpty('Common.js') ? wfMsgForContent('Common.js') : '';
-			$s .= !isMsgEmpty('Awesome.js') ? wfMsgForContent('Awesome.js') : '';
+			$s .= !isMsgEmpty('Monaco.js') ? wfMsgForContent('Monaco.js') : '';
 
 			// eliminate multi-line comments in '/* ... */' form, at start of string
 			// taken from includes/api/ApiFormatJson_json.php
@@ -1021,7 +1021,7 @@ EOS;
 		}
 		if($tpl->data['userjs']) {
 			// macbre: check for empty User:foo/skin.js
-			$userJStitle = Title::newFromText($this->userpage.'/awesome.js');
+			$userJStitle = Title::newFromText($this->userpage.'/monaco.js');
 			if ($userJStitle->exists()) {
 				$rev = Revision::newFromTitle($userJStitle, 0);
 				if (!empty($rev) && $rev->getText() != '') {
