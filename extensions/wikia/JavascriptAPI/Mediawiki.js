@@ -318,22 +318,6 @@ Mediawiki.fetch = function(p) {
 };
 
 
-Mediawiki.getArticleContent = function (title, callBack){
-	var urlParams = {
-		'action' :'query',
-		'titles' : title,
-		'prop' : 'revisions',
-		'rvprop' : 'content',
-		'format' : 'json'
-	};
-
-	Mediawiki.fetch({
-		'url' : Mediawiki.apiUrl,
-		'data' : urlParams,
-		'callBack': callBack
-	});
-};
-
 /* The mediawiki login cookies are prefixed. Look to see if we can figure it out by looking at the cookie.
  * null will be returned if there is no matching cookies, otherwise the string */
 Mediawiki.getCookiePrefix = function( ) {
@@ -555,12 +539,67 @@ Mediawiki.print_r = function (arr,level) {
         return text;
 };
 
+/* Pull article content http://www.mediawiki.org/wiki/API:Query */
+Mediawiki.pullArticleContent = function (title, callBack, options){
+	var urlParams = {
+		'action' :'query',
+		'titles' : title,
+		'prop' : 'revisions',
+		'rvprop' : 'content',
+		'format' : 'json'
+	};
+	
+	if (typeof options == "object") {
+		// Pass thru
+		for (var option in options){
+			urlParams[option] = options[option];
+		}
+	}
+	
+	// Store the callback	
+	Mediawiki.pullArticleCallback = callBack;
+
+	Mediawiki.fetch({
+		'url' : Mediawiki.apiUrl,
+		'data' : urlParams,
+		'callBack': Mediawiki.pullArticleContentCallback
+	});
+};
+
+Mediawiki.pullArticleContentCallback = function (result) {
+	try {
+		if (!Mediawiki.e(result.error)){
+			Mediawiki.runCallback(Mediawiki.pullArticleCallback, "Error pulling article: " + result.error.info); 
+		} else if (!Mediawiki.e(result.query.pages[-1])) {
+			// Missing article
+			Mediawiki.runCallback(Mediawiki.pullArticleCallback, null); 
+		} else {
+			for (var pageid in result.query.pages){
+				var content = result.query.pages[pageid].revisions[0]['*'];
+				break;
+			} 
+
+			if (Mediawiki.e(content)) {
+				content = null;
+			} else {
+				Mediawiki.updateStatus("Pull Article Successful");
+			}
+
+			Mediawiki.runCallback(Mediawiki.pullArticleCallback, content);
+		}
+
+
+	} catch (e) {
+		// Javascript Error processing login
+		Mediawiki.error("Error during article callback");
+		Mediawiki.d(Mediawiki.print_r(e));
+	}
+};
 
 Mediawiki.runCallback = function(callBack, arg){
 	var parens = "()";
 	if (typeof arg != "undefined") {
-		arg = arg.replace(/"/g, '\\"');
-		parens = '("' + arg + '")';
+		parens = '(arg)';
 	}
 	if (typeof callBack == "string" && typeof window[callBack] == "function"){
 		return eval(callBack + parens + ";");
