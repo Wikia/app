@@ -26,6 +26,12 @@ class SMWParserExtensions {
 	 *  at the end of the article.
 	 */
 	static public function onInternalParseBeforeLinks(&$parser, &$text) {
+		// macbre: Wysiwyg change
+		global $wgWysiwygParserEnabled;
+		if (!empty($wgWysiwygParserEnabled)) {
+			return true;
+		}
+
 		global $smwgStoreAnnotations, $smwgLinksInValues;
 		SMWParseData::stripMagicWords($text, $parser);
 		// store the results if enabled (we have to parse them in any case, in order to
