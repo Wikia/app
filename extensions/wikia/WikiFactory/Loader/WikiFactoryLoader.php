@@ -13,6 +13,7 @@ ini_set( "cgi.fix_pathinfo", 1);
 
 require_once( "$IP/includes/Defines.php" );
 require_once( "$IP/includes/DefaultSettings.php" );
+require_once( "$IP/includes/Hooks.php" );
 require_once( "$IP/includes/GlobalFunctions.php" );
 require_once( "$IP/includes/wikia/GlobalFunctions.php" );
 require_once( "$IP/includes/Exception.php" );
