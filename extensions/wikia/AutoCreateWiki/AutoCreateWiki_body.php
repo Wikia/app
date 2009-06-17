@@ -475,9 +475,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * populate it with some default values
 		 */
 
-		$dbw_local = wfGetDB( DB_MASTER, array(), $this->mWikiData[ "dbname"] ); # databases
 		$tmpSharedDB = $wgSharedDB;
 		$wgSharedDB = $this->mWikiData[ "dbname"];
+		$dbw_local->selectDb( $this->mWikiData[ "dbname"] );
 
 		$sqlfiles = array(
 			"{$IP}/maintenance/tables.sql",
