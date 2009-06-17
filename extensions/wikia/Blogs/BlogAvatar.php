@@ -269,8 +269,10 @@ class BlogAvatar {
 	 * @param String  $alt	-- alternate text
 	 * @param String  $class -- which class should be used for element
 	 * @param String  $id -- DOM identifier
+	 * @param Boolean $showEditMenu
+	 * @param String  $tracker -- what tracker to add, if any
 	 */
-	public function display( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false, $class = "avatar", $id = false, $showEditMenu = false ) {
+	public function display( $width = AVATAR_DEFAULT_WIDTH, $height = AVATAR_DEFAULT_HEIGHT, $alt = false, $class = "avatar", $id = false, $showEditMenu = false, $tracker = false ) {
 
 		wfProfileIn( __METHOD__ );
 		$image = $this->getImageTag( $width, $height, $alt, $class, $id );
@@ -279,6 +281,9 @@ class BlogAvatar {
 			$showEditDiv = "document.getElementById('wk-avatar-change').style.visibility='visible'";
 			$hideEditDiv = "document.getElementById('wk-avatar-change').style.visibility='hidden'";
 			$additionalAttribs = "onmouseover=\"{$showEditDiv}\" onmouseout=\"{$hideEditDiv}\"";
+		}
+		if (!empty($tracker)) {
+			$additionalAttribs .= " onclick=\"WET.byStr('{$tracker}')\"";
 		}
 		if( ! $this->mUser->isAnon() ) {
 			$url = sprintf("<a href=\"%s\" %s>%s</a>", $this->mUser->getUserPage()->getFullUrl(), $additionalAttribs, $image );
