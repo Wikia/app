@@ -355,7 +355,6 @@ body.widgetsAddingBlocked .add {
 	width: 174px !important;
 	/* IE6 specific: */
 	_margin: 0;
-	_width: 168px !important;
 }
 .autocomplete .selected {
 	background: #F0F0F0;

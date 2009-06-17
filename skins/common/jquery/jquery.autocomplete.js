@@ -47,9 +47,7 @@
       params: {},
       fnFormatResult: fnFormatResult,
       delimiter: null,
-      selectedClass: 'selected',
-      // macbre@wikia
-      appendTo: 'body'
+      selectedClass: 'selected'
     };
     if (options) { $.extend(this.options, options); }
     if(this.options.lookup){
@@ -83,7 +81,8 @@
       if (!this.options.width) { this.options.width = this.el.width(); }
       this.mainContainerId = 'AutocompleteContainter_' + uid;
 
-      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + 'px;"></div></div></div>').appendTo( this.option.appendTo );
+      //$('<div id="' + this.mainContainerId + '" style="position:absolute;z-index:' + zindex + '"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + 'px;"></div></div></div>').appendTo('body');
+      $('<div id="' + this.mainContainerId + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + this.options.width + 'px;"></div></div></div>').appendTo('body');
 
       this.container = $('#' + autocompleteElId);
       this.fixPosition();
@@ -101,7 +100,8 @@
 
     fixPosition: function() {
       var offset = this.el.offset();
-      $('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight()) + 'px', left: offset.left + 'px' });
+      var parentOffset = $(this.options.appendTo).offset();
+      $('#' + this.mainContainerId).css({ top: (offset.top + this.el.innerHeight() - parentOffset.top) + 'px', left: (offset.left - parentOffset.left) + 'px' });
     },
 
     enableKillerFn: function() {
