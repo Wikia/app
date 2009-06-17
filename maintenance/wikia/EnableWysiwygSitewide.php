@@ -13,11 +13,11 @@ if(!function_exists('readline')){
 	}
 }
 
-$dbr = wfGetDB(DB_SLAVE);
+$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 
 echo "Get id and creation date for all wikis with Wysiwyg enabled\n";
 $res = $dbr->select(
-		array(wfSharedTable('city_variables'), wfSharedTable('city_list')),
+		array('city_variables', 'city_list'),
 		'cv_city_id, city_created, city_dbname',
 		array("cv_value = 'b:1;'", "cv_variable_id = 637", "cv_city_id = city_id")
 	);
@@ -31,7 +31,7 @@ echo "Wysiwyg is enabled for ".count($wikis)." wikis\n";
 
 echo "Get the Wysiwyg enabling time for each wiki\n";
 $res = $dbr->select(
-		wfSharedTable('city_list_log'),
+		'city_list_log',
 		'cl_city_id, cl_timestamp',
 		"cl_text like '%wgEnableWysiwygExt%' and (cl_text like '%set value: true' or cl_text like '%to true')"
 	);
@@ -55,6 +55,7 @@ while($row = $dbr->fetchObject($res)) {
 		}
 	}
 }
+$dbr->freeResult($res);
 
 echo "Get list of users which made at least one edit since Wysiwyg has been enabled on particular wiki\n";
 $users = array();
@@ -64,8 +65,9 @@ foreach($wikis as $wiki) {
 	} else {
 		$timestamp = $wiki['created'];
 	}
+	$dbr = wfGetDB( DB_SLAVE, array(), $wiki['dbname'] );
 	$res = $dbr->select(
-			$wiki['dbname'].'.revision',
+			'revision',
 			'rev_user',
 			array('rev_timestamp > '.gmdate('YmdHis', $timestamp)),
 			null,
@@ -74,6 +76,7 @@ foreach($wikis as $wiki) {
 	while($row = $dbr->fetchObject($res)) {
 		$users[] = $row->rev_user;
 	}
+	$dbr->freeResult($res);
 }
 $users = array_unique($users);
 echo "There is ".count($users)." such users\n";
