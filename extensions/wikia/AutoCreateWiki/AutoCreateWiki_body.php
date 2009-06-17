@@ -289,7 +289,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$startTime = $this->mCurrTime;
 		$this->mFounder = $wgUser;
 		#-- for other users -> for staff only
-		if ( in_array('staff', $wgUser->getGroups()) && !empty($this->awcStaff_username) ) { 
+		if ( in_array('staff', $wgUser->getGroups()) && !empty($this->awcStaff_username) ) {
 			$this->mFounder = User::newFromName($this->awcStaff_username);
 		}
 
@@ -474,7 +474,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * populate it with some default values
 		 */
 
-		$dbw_local->selectDb( $this->mWikiData[ "dbname"] );
+		$dbw_local = wfGetDB( DB_MASTER, array(), $this->mWikiData[ "dbname"] ); # databases
 		$sqlfiles = array(
 			"{$IP}/maintenance/tables.sql",
 			"{$IP}/maintenance/interwiki.sql",
@@ -638,8 +638,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$localJob = new AutoCreateWikiLocalJob(	Title::newFromText( NS_MAIN, "Main" ), $this->mWikiData );
 		$localJob->WFinsert( $this->mWikiId, $this->mWikiData[ "dbname" ] );
 
-		$dbw_local->selectDB( $wgDBname );
-
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step10') );
 
 		/**
@@ -713,9 +711,9 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->mWikiData[ "dir_part" ] .= "/" . strtolower( $this->mWikiData[ "language" ] );
 			$this->mWikiData[ "images" ]    = self::IMGROOT . $this->mWikiData[ "dir_part"] . "/images";
 		}
-		
+
 		$this->mWikiData[ "dbname" ] = WikiFactory::prepareDBName($this->mWikiData[ "dbname" ]);
-	
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -724,14 +722,14 @@ class AutoCreateWikiPage extends SpecialPage {
 	 *
 	 * @access private
 	 *
-	 * @param 
+	 * @param
 	 */
 	private function prepareDirValue() {
 		wfProfileIn( __METHOD__ );
 		#---
 		$this->log( "Checking {$this->mWikiData[ "name"]} folder" );
 
-		$isExist = false; $suffix = ""; 
+		$isExist = false; $suffix = "";
 		$dir_part = $this->mWikiData[ "name"] . $suffix;
 		while ( $isExist == false ) {
 			$dirName = $this->mWikiData[ "name"] . $suffix;
@@ -739,7 +737,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$dirName .= "/" . strtolower( $this->mWikiData[ "language" ] );
 			}
 			$dirName = self::IMGROOT . $dirName . "/images";
-			#---				
+			#---
 			if ( file_exists( $dirName ) ) {
 				$suffix = rand(1, 9999);
 			} else {
@@ -747,7 +745,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$isExist = true;
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $dir_part;
 	}
@@ -963,7 +961,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		#-- check username given by staff
-		if ( in_array('staff', $wgUser->getGroups()) && !empty($this->mStaff_username) ) { 
+		if ( in_array('staff', $wgUser->getGroups()) && !empty($this->mStaff_username) ) {
 			$user_id = User::idFromName($this->mStaff_username);
 			if ( empty($user_id) ) {
 				$this->makeError( "wiki-staff-username", wfMsg('autocreatewiki-invalid-username') );
