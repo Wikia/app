@@ -126,6 +126,11 @@ body {
 	color: #000;
 }
 
+/* Bartek */
+div.videobox {
+	background-color: #09101D;
+}
+
 #wikia_page table.toc,
 #catlinks,
 #wikia_page table.gallery td,
