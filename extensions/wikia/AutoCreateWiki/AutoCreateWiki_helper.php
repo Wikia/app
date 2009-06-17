@@ -53,18 +53,9 @@ class AutoCreateWiki {
 			);
 		}
 
-		$exists = 0;
-		if (isset($oRow->city_id)) {
-			$city_id = $oRow->city_id;
-			$oRow = $dbr->selectRow(
-				"city_list",
-				array( "count(*) as count" ),
-				array( "city_id" => $city_id, "city_public" => 1 ),
-				__METHOD__
-			);
-			$exists = (isset($oRow->count) && $oRow->count > 0);
-		}
-		return $exists;
+		$result = !empty( $oRow->city_id ) ? true : false;
+
+		return $result;
 	}
 
 	/**
