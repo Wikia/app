@@ -1,4 +1,5 @@
 == Changes since 200906.1 ==
+* rt #17384: YAHOO.widget.Logger is undefined on answers (Inez)
 * rt #14522: error sending email from problem report, for sysop
 * rt #3304: Widgets can now be translated
 * rt #16527: Widgets can now use contentlang instead of userlang if required
