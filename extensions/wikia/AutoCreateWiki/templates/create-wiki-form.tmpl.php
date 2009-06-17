@@ -81,6 +81,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 				<optgroup label="<?= wfMsg('autocreatewiki-language-all') ?>">
 <?php if (!empty($aLanguages) && is_array($aLanguages)) : ?>
 <?php
+	ksort($aLanguages);
 	foreach ($aLanguages as $sLang => $sLangName) :
 		if ( empty($isSelected) && ( ( isset($params['wiki-language'] ) && ( $sLang == $params['wiki-language'] ) ) || ( !isset($params['wiki-language']) && ( $sLang == 'en' ) ) ) ) :
 			$isSelected = true;
