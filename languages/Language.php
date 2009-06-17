@@ -2320,7 +2320,7 @@ class Language {
 	 *
 	 * @return array Dependencies, map of filenames to mtimes
 	 */
-	static function loadLocalisation( $code, $disableCache = true ) {
+	static function loadLocalisation( $code, $disableCache = false ) {
 		static $recursionGuard = array();
 		global $wgMemc, $wgEnableSerializedMessages, $wgCheckSerialized;
 
