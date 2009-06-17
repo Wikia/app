@@ -34,6 +34,8 @@ class AutoCreateWiki {
 		global $wgExternalSharedDB;
 		$sDomain = Wikia::fixDomainName($name, $language);
 
+		Wikia::log( __METHOD__, "domain", $sDomain );
+
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$oRow = $dbr->selectRow(
 			"city_domains",
@@ -41,7 +43,7 @@ class AutoCreateWiki {
 			array( "city_domain" => $sDomain ),
 			__METHOD__
 		);
-		
+
 		if ( !isset($oRow->city_id) ) {
 			$oRow = $dbr->selectRow(
 				"city_domains",
@@ -50,7 +52,7 @@ class AutoCreateWiki {
 				__METHOD__
 			);
 		}
-		
+
 		$exists = 0;
 		if (isset($oRow->city_id)) {
 			$city_id = $oRow->city_id;
