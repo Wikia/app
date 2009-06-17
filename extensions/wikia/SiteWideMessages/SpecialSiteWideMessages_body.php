@@ -883,11 +883,13 @@ class SiteWideMessagesPager extends TablePager {
 
 	#--- constructor
 	function __construct() {
+		global $wgExternalSharedDB;
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'SiteWideMessages' );
 		$this->mDefaultDirection = true;
 		$this->never = explode(',', wfMsg('swm-days'));
 		$this->never = $this->never[0];
 		parent::__construct();
+		$this->mDb = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 	}
 
 	#--- getFieldNames ------------------------------------------------------
