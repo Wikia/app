@@ -2,6 +2,7 @@
 <style type="text/css">
 #PaneList #headerWikis {
 	margin-top: 20px;
+	clear: both;
 }
 #busyDiv {
 	position: fixed;
