@@ -112,7 +112,7 @@ class AutoCreateWiki {
 					$skip = true;
 				}
 			} else {
-				$condition = "city_domain like = '{$name}'";
+				$condition = "city_domain = '{$name}'";
 				$conditionSimilar = "city_domain like '%{$name}%'";
 			}
 
