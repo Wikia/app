@@ -247,7 +247,7 @@ class PreferencesForm {
 
 		/* Wikia change begin - @author: Inez */
 		/* Skin chooser related */
-		wfRunHooks('SavePreferencesHook', array($this));
+		wfRunHooks('SavePreferencesHook', array(&$this));
 		/* Wikia change end */
 
 		$wgUser->setRealName( $this->mRealName );

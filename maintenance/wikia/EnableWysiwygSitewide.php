@@ -94,12 +94,10 @@ echo "Now there is ".count($usersNew)." users\n";
 if(trim(readline("Please enter 'blabla' to continue and enable Wysiwyg for those users using new variable\n")) == 'blabla') {
 	foreach($usersNew as $user) {
 		fwrite($fp, $user."\n");
-		/*
 		$oUser = User::newFromId($user);
 		$oUser->setOption("EnableWysiwyg", true);
 		$oUser->saveSettings();
 		$oUser->invalidateCache();
-		*/
 	}
 
 } else {
