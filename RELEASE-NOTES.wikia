@@ -1,3 +1,5 @@
+== Changes since 200906.3 ==
+
 == Changes since 200906.1 ==
 * rt #17384: YAHOO.widget.Logger is undefined on answers (Inez)
 * rt #14522: error sending email from problem report, for sysop
