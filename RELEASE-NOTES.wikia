@@ -29,11 +29,15 @@
 * rt #16559: Fixed links to non-existent special page Special:Login. OVERRIDEAI (Nef)
 * rt #15983: Mail re-confirming workflow created. (Nef)
 * rt #16194: One click action to set main domain. (Nef)
-* rt #17196: shoutbox not working on some wikis
-* rt #17005: FCK: NOWYSIWYG magic word isn't applying to section edits
-* rt #17007: FCK: Preformatted text gains line feeds on save or preview
-* rt #17185: Slideshow widget no longer works when embedded
-* jQuery: add helper function $('#foo').exists()
+* rt #17196: shoutbox not working on some wikis (Macbre)
+* rt #17005: FCK: NOWYSIWYG magic word isn't applying to section edits (Macbre)
+* rt #17007: FCK: Preformatted text gains line feeds on save or preview (Macbre)
+* rt #17185: Slideshow widget no longer works when embedded (Macbre)
+* jQuery: add helper function $('#foo').exists() (Macbre)
+* rt #12624: FCK: Toolbar is entirely broken in IE8 (Macbre)
+* rt #17214: FCK: Insert link window only shows two linksuggestions at a time (Macbre)
+* rt #17269: FCK: Add parameters to turn FCK on/off (Macbre)
+* rt #17279: FCK: other extensions not loaded in FCK parser space (Macbre)
 * rt#16953: WhereIsExtension results view does not show what your viewing (Marooned)
 * rt#16674: Kill warnings in EditingTips (Marooned)
 * rt#17312: Fatal error in AddNewTalkSection extension (Marooned)
