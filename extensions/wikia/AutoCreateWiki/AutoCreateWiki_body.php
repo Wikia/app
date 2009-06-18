@@ -1079,7 +1079,7 @@ class AutoCreateWikiPage extends SpecialPage {
 					$wgMemc->set( $key, 1, 86400 );
 				}
 				if ( $value > $wgAccountCreationThrottle ) {
-					$this->makeError( "wiki-username", wfMsgExt('acct_creation_throttle_hit', $wgAccountCreationThrottle) );
+					$this->makeError( "wiki-username", wfMsgExt('acct_creation_throttle_hit', array("parse"), $wgAccountCreationThrottle) );
 				}
 			}
 
