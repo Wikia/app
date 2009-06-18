@@ -67,13 +67,13 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	}
 
 	public static function getCentralDB() {
-		global $wgExternalSharedDB;
-		return wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		global $wgWikiaCentralAuthDatabase;
+		return wfGetDB(DB_MASTER, array(), $wgWikiaCentralAuthDatabase);
 	}
 
 	public static function getCentralSlaveDB() {
-		global $wgExternalSharedDB;
-		return wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+		global $wgWikiaCentralAuthDatabase;
+		return wfGetDB(DB_SLAVE, array(), $wgWikiaCentralAuthDatabase);
 	}
 
 	public static function getLocalDB( ) {
@@ -121,7 +121,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */ 
 	static function loadFromDatabaseByName($userName) {
 		$dbr = self::getCentralDB();
-		$oRow = $dbr->selectRow( array( 'user' ), array( '*' ), array( 'user_name' => $userName ), __METHOD__ );
+		$oRow = $dbr->selectRow( array( '`user`' ), array( '*' ), array( 'user_name' => $userName ), __METHOD__ );
 		return $oRow;
 	}
 
@@ -130,7 +130,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */ 
 	static function loadFromDatabaseById($userId) {
 		$dbr = self::getCentralDB();
-		$oRow = $dbr->selectRow( array( 'user' ), array( '*' ), array( 'user_id' => $userId ), __METHOD__ );
+		$oRow = $dbr->selectRow( array( '`user`' ), array( '*' ), array( 'user_id' => $userId ), __METHOD__ );
 		return $oRow;
 	}
 
@@ -204,7 +204,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 
 		$id = 0;
 		$dbr =& self::getCentralDB(); // We need the master.
-		$oRow = $dbr->selectRow( 'user', 'user_id', array( 'user_name' => $oUser->getName() ), __METHOD__ );
+		$oRow = $dbr->selectRow( '`user`', 'user_id', array( 'user_name' => $oUser->getName() ), __METHOD__ );
 		if ($oRow === false) {
 			$id = 0;
 		} else {
@@ -477,7 +477,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			'user_editcount' => 0,
 		);
 
-		$ok = $dbw->insert ( 'user', $fields, __METHOD__ );
+		$ok = $dbw->insert ( '`user`', $fields, __METHOD__ );
 
 		if( $ok ) {
 			wfDebug( __METHOD__ . ": registered global account '$this->mName' \n" );
@@ -521,8 +521,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		);
 		wfDebug ( __METHOD__ . ": Replace local copy of User by central data: {$fields['user_name']} \n" );
 
-		$user = $dbw->tableName('user');
-		$dbw->replace( $user,  array( 'user_name' ), $fields, __METHOD__ );
+		$dbw->replace( 'user',  'user_name', $fields, __METHOD__ );
 
 		wfDebug( __METHOD__ . ": Attaching local user {$this->mName} on {$wgCityId} \n" );
 		$this->mIsAttached = 1;
@@ -759,7 +758,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		$this->mSalt = $salt;
 
 		$dbw = self::getCentralDB();
-		$dbw->update( 'user',
+		$dbw->update( '`user`',
 			array( 'user_password' => $this->mPassword ),
 			array( 'user_id' => $user_id ),
 			__METHOD__
@@ -904,7 +903,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		$this->mTouched = User::newTouchedTimestamp();
 		wfDebug( __METHOD__ . ": Update User settings in database \n" );
 		$dbw = self::getCentralDB();
-		$dbw->update( 'user',
+		$dbw->update( '`user`',
 			array( # SET
 				'user_name' => $this->mName,
 				'user_password' => $this->mPassword,
@@ -1015,9 +1014,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	}
 
 	static function memcKey( /*...*/ ) {
-		global $wgExternalSharedDB;
+		global $wgWikiaCentralAuthDatabase;
 		$args = func_get_args();
-		return $wgExternalSharedDB . ':' . implode( ':', $args );
+		return $wgWikiaCentralAuthDatabase . ':' . implode( ':', $args );
 	}
 
 	/**
