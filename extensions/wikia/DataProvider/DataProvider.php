@@ -411,7 +411,7 @@ class DataProvider
 	 */
 	final public static function /* array */ GetTopFiveUsers($limit = 7) {
 		wfProfileIn( __METHOD__ );
-		global $wgExternalDatawareDB, $wgMemc;
+		global $wgExternalDatawareDB, $wgMemc, $wgCityId;
 
 		$memckey = wfMemcKey("TopFiveUsers", $limit);
 		$results = $wgMemc->get( $memckey );
@@ -421,7 +421,8 @@ class DataProvider
 			$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), __METHOD__ );
 
 			$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-			$query = "SELECT lu_user_id AS rev_user, lu_rev_cnt AS cnt FROM city_local_users WHERE lu_user_id != 0 AND lu_user_name != 'CreateWiki script' " . ( !empty($row->user_list) ? "AND lu_user_id NOT IN (" . $row->user_list . ")" : "" ) . " ORDER BY lu_rev_cnt DESC";
+			$query = "SELECT lu_user_id AS rev_user, lu_rev_cnt AS cnt FROM city_local_users USE INDEX (lu_rev_cnt) WHERE lu_wikia_id = '" . $wgCityId . "' " . ( !empty($row->user_list) ? "AND lu_user_id NOT IN (" . $row->user_list . ",'0','929702')" : "" ) . " ORDER BY lu_rev_cnt DESC";
+
 			$res = $dbs->query( $dbs->limitResult($query, $limit * 4, 0) );
 
 			$results = array();
@@ -437,7 +438,7 @@ class DataProvider
 			$dbs->freeResult( $res );
 
 			$results = array_slice( $results, 0, $limit );
-			$wgMemc->set($memckey, $results, 60 * 60 * 3);
+			$wgMemc->set($memckey, $results, 60 * 60 * 12);
 		}
 
 		wfProfileOut( __METHOD__ );
