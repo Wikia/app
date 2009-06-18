@@ -205,8 +205,7 @@ FCK.VideoEdit = function(refid) {
 
 // remove video from the article
 FCK.VideoRemove = function(refid, dontAsk) {
-	if (dontAsk || confirm('Are you sure you want to remove this video?')) {
-
+	var callback = function() {
 		FCKUndo.SaveUndoStep();
 
 		FCK.log('removed video #' + refid);
@@ -221,6 +220,12 @@ FCK.VideoRemove = function(refid, dontAsk) {
 
 		// tracker
 		FCK.Track('/video/remove');
+	}
+
+	if (dontAsk) {
+		callback();
+	} else {
+		FCK.ShowConfirm('Are you sure you want to remove this video?', 'Remove this video', callback);
 	}
 }
 
