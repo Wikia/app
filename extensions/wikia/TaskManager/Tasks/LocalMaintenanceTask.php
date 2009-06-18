@@ -49,9 +49,6 @@ class LocalMaintenanceTask extends BatchTask {
 	public function execute( $params = null ) {
 		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $wgExtensionMessagesFiles;
 
-		$wgExtensionMessagesFiles[ "LocalMaintenance" ] = dirname(__FILE__) . "/LocalMaintenanceTask/messages.i18n.php";
-		wfLoadExtensionMessages( "LocalMaintenance" );
-
 		$this->mTaskID = $params->task_id;
 		$this->mParams = unserialize( $params->task_arguments );
 
