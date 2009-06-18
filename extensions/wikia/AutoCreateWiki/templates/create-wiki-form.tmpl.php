@@ -100,7 +100,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 		</ul>
 	</div>
 <!-- staff section -->
-<?php if ( in_array('staff', $wgUser->getGroups()) ) : ?>
+<?php $group = $wgUser->getGroups(); if ( is_array($group) && in_array('staff', $group) ) : ?>
 	<div class="formblock">
 		<ul>
 			<li class="label"><?=wfMsg('yourname')?></li>
