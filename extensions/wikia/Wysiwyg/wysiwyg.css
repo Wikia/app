@@ -24,7 +24,8 @@
 	left: -215px
 }
 
-#wysiwygInfobox {
+#wysiwygInfobox,
+#wysiwygConfirm {
 	font-family: arial, sans-serif;
 	font-size: 0.9em;
 }
