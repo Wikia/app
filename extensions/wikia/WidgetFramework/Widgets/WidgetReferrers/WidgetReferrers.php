@@ -9,17 +9,9 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetReferrers'] = array(
 	'callback' => 'WidgetReferrers',
-	'title' => array(
-		'en' => 'Top referrers',
-		'pl' => 'Strony odsyłające',
-		'hu' => 'Legnagyobb hivatkozók'
-	),
-	'desc' => array(
-		'en' => 'A "cloud" of the sites that link to this wiki. Bigger text means more refers',
-		'pl' => 'Chmura stron odsylajacych na ta Wikie',
-		'hu' => 'A wikire hivatkozó weblapok felhõben. Minél nagyobb a szöveg, annál többen jöttek onnan.'
-    ),
-    'params' => array(
+	'title' => 'widget-title-referers', 
+	'desc' => 'widget-desc-referers',     
+	'params' => array(
 		'wt_show_referrers' => array(
 			'type' => 'select',
 			'values' => array
