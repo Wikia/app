@@ -35,7 +35,6 @@ extAddBatchTask( dirname(__FILE__)."/Tasks/ImageImporterTask.php", "imageimporte
 extAddBatchTask( dirname(__FILE__)."/Tasks/PageGrabberTask.php", "pagegrabber", "PageGrabberTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/PageGrabberDumpTask.php", "pagegrabberdump", "PageGrabberDumpTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/CreateWikiTask.php", "createwiki", "CreateWikiTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
 
