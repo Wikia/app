@@ -39,9 +39,10 @@ EditEnhancementsPreview = {
 		// fix for IE
 		if ($.browser.msie && $.browser.version.substr(0,1)<7) {
 			$('#edit_enhancements_toolbar').css( positionFixed ? {
-				'left': 	0,
+				'left': 	$(document.body).hasClass('editingTips') && !$(document.body).hasClass('editingWide') ? '215px' : 0,
 				'position': 	'absolute',
-				'top':		(document.documentElement.scrollTop+document.documentElement.clientHeight) - 70
+				'top':		(document.documentElement.scrollTop+document.documentElement.clientHeight) - (window.FCK ? 70 : 105),
+				'width':	$('#wpTextbox1').width() + 'px'
 			} : {
 				'position': 	'static'
 			});
