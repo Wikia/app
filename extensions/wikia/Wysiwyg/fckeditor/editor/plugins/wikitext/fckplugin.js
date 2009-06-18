@@ -536,10 +536,44 @@ FCK.ShowInfoDialog = function(text, title) {
 		if (!title) {
 			title = '&nbsp;';
 		}
-		
+
 		var html = '<div id="wysiwygInfobox" title="' + title + '"><div style="padding: 5px">' + text + '</div></div>';
 		FCK.jQuery("#positioned_elements").append(html);
 		FCK.jQuery("#wysiwygInfobox").makeModal({width: 450});
+	});
+}
+
+FCK.ShowConfirm = function(question, title, callback) {
+	// use jQuery make modal plugin
+	FCK.jQuery.getScript(window.parent.stylepath + '/common/jquery/jquery.wikia.modal.js?' + FCKConfig.StyleVersion, function() {
+		// no title provided
+		if (!title) {
+			title = '&nbsp;';
+		}
+
+		var html = '<div id="wysiwygConfirm" title="' + title + '">' +
+			'<div style="padding: 5px">' + question +
+			'<div style="border-top: solid 1px #ddd; text-align: right; padding-top: 5px; margin-top: 5px">' +
+				'<button id="wysiwygConfirmOk" style="margin: 0 8px">' + FCKLang.DlgBtnOK + '</button>' +
+				'<button id="wysiwygConfirmCancel">' + FCKLang.DlgBtnCancel + '</button>' +
+			'</div></div></div>';
+
+		FCK.jQuery("#positioned_elements").append(html);
+
+		// function to close dialog
+		var closeDialog = function() {FCK.jQuery('#wysiwygConfirm').closest('.modalWrapper').find('h1 div').click()};
+
+		// onclick handlers
+		FCK.jQuery('#wysiwygConfirmOk').click(function() {
+			closeDialog();
+			if (typeof callback == 'function') {
+				callback();
+			}
+		});
+		FCK.jQuery('#wysiwygConfirmCancel').click(closeDialog);
+
+		// show modal
+		FCK.jQuery("#wysiwygConfirm").makeModal({width: 450});
 	});
 }
 
