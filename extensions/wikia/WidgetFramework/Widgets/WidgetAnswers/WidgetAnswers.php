@@ -7,7 +7,7 @@ if(!defined('MEDIAWIKI')) {
 	die(1);
 }
 
-global $wgWidgets;
+global $wgWidgets, $wgAvailableAnswersLang;
 $wgWidgets['WidgetAnswers'] = array(
 	'callback' => 'WidgetAnswers',
 	'title' => 'widget-title-answers',
