@@ -847,7 +847,6 @@ span.updatedmarker {
 }
 
 table.gallery {
-	border: 1px solid #ccc;
 	margin: 2px;
 	padding: 2px;
 }
@@ -859,8 +858,6 @@ table.gallery tr {
 table.gallery td {
 	color: black; /*CHRISTIAN*/
 	vertical-align: top;
-	background-color: #f9f9f9;
-	border: solid 2px white;
 }
 
 /*CHRISTIAN*/
@@ -883,9 +880,10 @@ div.gallerybox {
 }
 
 div.gallerybox div.thumb {
-	text-align: center;
+	background: #F9F9F9;
 	border: 1px solid #ccc;
 	margin: 2px;
+	text-align: center;
 }
 
 div.gallerytext {
