@@ -13,7 +13,8 @@ class DefaultMessagesCache {
 	// Variable for tracking which variables are loaded
 	var $mLoadedLanguages = array();
 
-	var $mLocalMessageCache, $mLocalMessageCacheSerialized = true;
+	var $mLocalMessageCache = false;
+	var $mLocalMessageCacheSerialized = true;
 
 	function __construct( &$memCached, $useDB, $expiry ) {
 		global $wgLocalMessageCache;
