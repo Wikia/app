@@ -25,8 +25,6 @@ class DefaultMessagesCache {
 
 		if( $wgLocalMessageCache !== false ) {
 			$this->mLocalMessageCache = $wgLocalMessageCache;
-		} else {
-			$this->mLocalMessageCache = '/tmp/messagecache';
 		}
 	}
 
