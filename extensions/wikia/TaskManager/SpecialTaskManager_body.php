@@ -421,32 +421,25 @@ class TaskManagerPager extends TablePager {
 
 		switch ($field) {
 			case "task_status":
-				$iTaskID = $this->mCurrentRow->task_id;
-				$sRetval = BatchTask::getStatusName( $value );
+				$taskId = $this->mCurrentRow->task_id;
+				$name = BatchTask::getStatusName( $value );
 
-				if( in_array ( $value, array(
-					TASK_FINISHED_SUCCESS,
-					TASK_FINISHED_ERROR,
-					TASK_FINISHED_SUCCESS,
-					TASK_FINISHED_UNDO ) )
-				){
-					$sRetval .= sprintf(
-						"<br /><a href=\"%s\">log</a>",
-						$this->mTitle->getLocalUrl( "action=log&id={$iTaskID}")
-					);
-				}
+				$return = sprintf( "<a href=\"%s\">%s</a>",
+					$this->mTitle->getLocalUrl( "action=log&id={$taskId}"),
+					$name
+				);
 
 				// also, stuff to make a link for restore task as per #2478
-				$iTaskType = $this->mCurrentRow->task_type ;
-				if ((TASK_FINISHED_SUCCESS == $value) && ('multidelete' == $iTaskType)) {
-					$sRetval .= sprintf (
+				$taskType = $this->mCurrentRow->task_type ;
+				if( ( TASK_FINISHED_SUCCESS == $value) && ('multidelete' == $taskType ) ) {
+					$return .= sprintf (
 						//restore or revert?
 						"<br /><a href=\"%s\">undo</a>",
 						//todo this is just a placeholder now
-						$this->mTitle->getLocalUrl( "action=undo&id={$iTaskID}")
+						$this->mTitle->getLocalUrl( "action=undo&id={$taskId}")
 					) ;
 				}
-				return $sRetval;
+				return $return;
 				break;
 
 			case "task_actions":
