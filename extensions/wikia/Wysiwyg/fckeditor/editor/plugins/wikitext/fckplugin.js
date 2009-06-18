@@ -528,25 +528,19 @@ FCK.SetupElementsWithRefId = function() {
 	return true;
 }
 
-// show YUI dialog
-FCK.ShowInfoDialog = function(text) {
-	var Dialog = new FCK.YAHOO.widget.SimpleDialog("wysiwygInfobox",
-	{
-		width: "450px",
-		zIndex: 999,
-		effect: {effect: FCK.YAHOO.widget.ContainerEffect.FADE, duration: 0.25},
-		fixedcenter: true,
-		modal: true,
-		draggable: true,
-		close: false
+// show pop-up dialog
+FCK.ShowInfoDialog = function(text, title) {
+	// use jQuery make modal plugin
+	FCK.jQuery.getScript(window.parent.stylepath + '/common/jquery/jquery.wikia.modal.js?' + FCKConfig.StyleVersion, function() {
+		// no title provided
+		if (!title) {
+			title = '&nbsp;';
+		}
+		
+		var html = '<div id="wysiwygInfobox" title="' + title + '"><div style="padding: 5px">' + text + '</div></div>';
+		FCK.jQuery("#positioned_elements").append(html);
+		FCK.jQuery("#wysiwygInfobox").makeModal({width: 450});
 	});
-
-	Dialog.setHeader('&nbsp;');
-	Dialog.setBody(text);
-	Dialog.cfg.queueProperty("buttons", [ { "text": 'OK', handler: function() {this.hide()}, isDefault: true} ]);
-
-	Dialog.render(window.parent.document.body);
-	Dialog.show();
 }
 
 // setup grey wikitext placeholder: block context menu, add dirty span(s) if needed
@@ -1510,6 +1504,9 @@ FCK.Events.AttachEvent("OnUndoRedo", function() {
 FCK.YAHOO = window.parent.YAHOO;
 FCK.YD = FCK.YAHOO.util.Dom;
 FCK.YE = FCK.YAHOO.util.Event;
+
+// jQuery reference
+FCK.jQuery = window.parent.jQuery;
 
 // log functionality
 FCK.log = function(msg) {
