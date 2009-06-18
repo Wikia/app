@@ -104,21 +104,21 @@ function wfGetWikiaNewtalk( &$user, &$talks ) {
 		$dbr->freeResult( $sth );
 
 		if( count( $wikis ) ) {
-			$dbwf = wfGetDB( DB_SLAVE );
-			$sth = $dbwf->select(
-				WikiFactory::table( 'city_list' ),
+			$sth = $dbr->select(
+				'city_list',
 				array( "city_id", "city_title", "city_url", "city_dbname" ),
 				array(
-					  $dbwf->makeList( array( "city_dbname" => $wikis ), LIST_OR ),
+					  $dbr->makeList( array( "city_dbname" => $wikis ), LIST_OR ),
 					  "city_public" => 1
 				),
 				__METHOD__
 			);
-			while( $row = $dbwf->fetchObject( $sth ) ) {
+			while( $row = $dbr->fetchObject( $sth ) ) {
 				$link = $row->city_url . 'index.php?title=User_talk:' . urlencode($user->getTitleKey());
 				$wiki = empty( $row->city_title ) ? $row->city_dbname : $row->city_title;
 				$wikia_talks[ $row->city_id ] = array( 'wiki' => $wiki, 'link' => $link );
 			}
+			$dbr->freeResult( $sth );
 		}
 		$wgMemc->set( $key, $wikia_talks, $wgWikiaNewtalkExpiry );
 	}
