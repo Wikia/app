@@ -307,10 +307,10 @@ function SharedHelpArticleExists($title) {
 		} else {
 			wfProfileIn( __METHOD__ );
 
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), WikiFactory::IDtoDB($wgHelpWikiId) );
 			$res = $dbr->select(
-				array( WikiFactory::IDtoDB($wgHelpWikiId) . '.page' ),
-				array( 'page_id' ),
+				'page',
+				'page_id',
 				array(
 					'page_namespace' => NS_HELP,
 					'page_title' => $title->getDBkey(),
