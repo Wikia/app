@@ -270,7 +270,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 * @author Lucas 'TOR' Garczewski <tor@wikia-inc.com>
 	 */
 	private function protectKeyPages() {
-		global $wgUser, $wgWikiaKeyPages, $wgMessageCache;
+		global $wgUser, $wgWikiaKeyPages;
 
 		$wgUser = User::newFromName( "CreateWiki script" );
 		if ( $wgUser->isAnon() ) {
@@ -292,8 +292,7 @@ class AutoCreateWikiLocalJob extends Job {
 		/**
 		 *  define reason msg and fetch it
 		 */
-		$wgMessageCache->addMessages( array ('createwiki-protect-reason' => 'Part of the official interface') );
-		$reason = wfMsgForContent('createwiki-protect-reason');
+		$reason = wfMsgForContent('autocreatewiki-protect-reason');
 
 		$wgUser->addGroup( 'staff' );
 		$wgUser->addGroup( 'bot' );

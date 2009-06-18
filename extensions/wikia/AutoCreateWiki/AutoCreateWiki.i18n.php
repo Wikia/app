@@ -92,6 +92,8 @@ $messages['en'] = array(
 	"autocreatewiki-step6-error" => "Cannot set default tables in database!",
 	"autocreatewiki-step7-error" => "Cannot copy starter database for language!",
 	"requestwiki-filter-language" => "kh,kp,mu,als,an,ast,de-form,de-weig,dk,en-gb,ia,ie,ksh,mwl,pdc,pfl,simple,tokipona,tp,zh-cn,zh-hans,zh-hant,zh-hk,zh-mo,zh-my,zh-sg,zh-tw",
+// task
+	"autocreatewiki-protect-reason" => 'Part of the official interface',
     "autocreatewiki-welcomesubject" => "$1 has been created!",
     "autocreatewiki-welcomebody" => "
 Hello, $2,
