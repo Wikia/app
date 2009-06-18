@@ -40,8 +40,8 @@ Mediawiki.cookiePrefix = "wikicities";
 <div id="tabs-1">
 	<div id="loginForm">
 	<form onSubmit="return handleLoginForm(this)">
-	Username: <input type="text" name="lgname"> <br />
-	Password: <input type="password" name="lgpassword"> <br />
+	<label class="formLabel">Username:</label> <input type="text" name="lgname" size="10">
+	<label class="formLabel">Password:</label> <input type="password" name="lgpassword" size="10"> <br />
 	<input type="submit" value="Login">
 	</form>
 	</div>
@@ -116,33 +116,48 @@ Mediawiki.cookiePrefix = "wikicities";
 
 <div id="tabs-3">
 	<form onSubmit="return handlePullArticle(this)" id="pullArticleForm">
-		<input type="text" name="articleName" value="Main_Page">
+		<input type="text" name="articleName" value="Main_Page" id="articleName">
 		<input type="submit" value="Pull Article"/> <br />
-		<input type="checkbox" name="redirects"/> Resolve Redirects
+		<input type="checkbox" name="redirects"/> Resolve Redirects <br />
+		<input type="checkbox" name="parseText"/> Return HTML (instead of Mediawiki Text)
 	</form>
 	<div id="pulledArticle">
 	</div>
 
 	<script>
 	function fillInArticle(result){
+		console.log("in fillInArticle"); 
+		var html;
 		if (result === null){
-			result = document.getElementById("pullArticleForm").articleName.value + " does not exist";
+			html = Mediawiki.$("pullArticleForm").articleName.value + " does not exist";
+		} else if (document.getElementById("pullArticleForm").parseText.checked){
+			html = result;
+		} else {
+			html  = '<pre>' + result + '</pre>';
 		}
-		Mediawiki.$("pulledArticle").innerHTML = '<pre>' + result + '</pre>';
+		Mediawiki.$("pulledArticle").innerHTML = html;
 	}
 
 	function handlePullArticle (f) {
+		try { 
 		var articleName = f.articleName.value;
 		var cleanName = Mediawiki.getNormalizedTitle(articleName);
-		document.getElementById("pullArticleForm").articleName.value = cleanName;
+		Mediawiki.$("pullArticleForm").articleName.value = cleanName;
 
-		var options = {};
-		if (f.redirects.checked) {
-			options.redirects = true;
+		if (f.parseText.checked) {
+			Mediawiki.pullArticleHtml(cleanName, fillInArticle);
+		} else {
+			var options = {};
+			if (f.redirects.checked) {
+				options.redirects = true;
+			}
+			Mediawiki.pullArticleContent(cleanName, fillInArticle, options);
 		}
-		Mediawiki.pullArticleContent(cleanName, fillInArticle, options);
+		} catch (e) {
+			Mediawiki.error("Error pulling article: " + Mediawiki.print_r(e));
+		}
 
-		return false;
+		return false; // So the form doesn't submit
 	}
 	</script>
 

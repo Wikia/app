@@ -149,7 +149,7 @@ Mediawiki.deleteArticle = function (title, reason, callBackSuccess, callBackFail
 		'url': Mediawiki.apiUrl,
 		'data': urlParams,
 		'type': "POST",
-		'callBack': Mediawiki.deleteArticleCallback
+		'success': Mediawiki.deleteArticleCallback
 	});
 
 	return true;
@@ -177,7 +177,7 @@ Mediawiki.deleteArticleCallback = function(resultJson) {
 
 
 	} catch (e) {
-		// Javascript Error processing login
+		// Javascript Error 
 		Mediawiki.error("Error during article callback");
 		Mediawiki.d(Mediawiki.print_r(e));
 	}
@@ -221,7 +221,7 @@ Mediawiki.editArticle = function (article, callBackSuccess, callBackFailure){
 		'url': Mediawiki.apiUrl,
 		'data': urlParams,
 		'type': "POST",
-		'callBack': Mediawiki.editArticleCallback
+		'success': Mediawiki.editArticleCallback
 	});
 
 	return true;
@@ -248,7 +248,7 @@ Mediawiki.editArticleCallback = function(resultJson) {
 
 
 	} catch (e) {
-		// Javascript Error processing login
+		// Javascript Error
 		Mediawiki.error("Error during article callback");
 		Mediawiki.d(Mediawiki.print_r(e));
 	}
@@ -310,10 +310,10 @@ Mediawiki.fetch = function(p) {
 		p.url += '?' + Mediawiki.buildQueryString(p.data);
 		p.data = null;
 		Mediawiki.d("Fetching " + p.url, 2);
-		jQuery.getJSON(p.url, null, p.callBack); 
+		return jQuery.ajax(p); 
 	} else {
 		Mediawiki.d("POSTing data to " + p.url, 2);
-		jQuery.post(p.url, p.data, p.callBack);
+		return jQuery.ajax(p);
 	}
 };
 
@@ -350,7 +350,7 @@ Mediawiki.getNormalizedTitle = function(title){
                 
 	Mediawiki.updateStatus("Getting normalized title...");
 
-	var result = jQuery.ajax( { // Calling ajax directly because of async
+	var result = Mediawiki.fetch( { // Calling ajax directly because of async
 		'url' : Mediawiki.apiUrl,
 		'data' : urlParams,
 		'type' : "POST",
@@ -430,6 +430,37 @@ Mediawiki.isLoggedIn = function( ){
 };
 
 
+// http://www.mediawiki.org/wiki/API:Parsing_wikitext
+Mediawiki.parseText = function(text, title){
+	var urlParams = {
+		'action' : 'expandtemplates',
+                'text' : text,
+		'format' : 'json'
+	};
+                
+	Mediawiki.updateStatus("Getting normalized title...");
+
+	var result = jQuery.ajax( { // Calling ajax directly because of async
+		'url' : Mediawiki.apiUrl,
+		'data' : urlParams,
+		'type' : "POST",
+		'async': false // Block for the token, since it's the first step of a multi step process
+	});
+	
+	var responseData;
+	eval ("responseData=" + result.responseText);
+
+	// We can get two different responses back here. If it's a valid title, then it returns it directly
+	// If not, it returns it "normalized". If your page title isn't coming through the API, try normalizeTitle first
+	if (!Mediawiki.e(responseData.query) && Mediawiki.empty(responseData.query.normalized)){
+		return title;
+	} else {
+		return responseData.query.normalized[0]["to"];
+	}
+	return false;
+};
+
+
 Mediawiki.pullLoginFromCookie = function(cookiePrefix){
 	for (var cookieName in Mediawiki.cookieMap) {
 		var memberName = Mediawiki.cookieMap[cookieName];
@@ -460,7 +491,7 @@ Mediawiki.login = function (callBackSuccess, callBackFailure){
 		'url': Mediawiki.apiUrl,
 		'data': urlParams,
 		'type': "POST",
-		'callBack': Mediawiki.loginCallback
+		'success': Mediawiki.loginCallback
 	});
 };
 
@@ -562,12 +593,15 @@ Mediawiki.pullArticleContent = function (title, callBack, options){
 	Mediawiki.fetch({
 		'url' : Mediawiki.apiUrl,
 		'data' : urlParams,
-		'callBack': Mediawiki.pullArticleContentCallback
+		'success': Mediawiki.pullArticleContentCallback
 	});
 };
 
-Mediawiki.pullArticleContentCallback = function (result) {
+
+Mediawiki.pullArticleContentCallback = function (resultJson) {
+	var result;
 	try {
+		eval('result = ' + resultJson + ';');
 		if (!Mediawiki.e(result.error)){
 			Mediawiki.runCallback(Mediawiki.pullArticleCallback, "Error pulling article: " + result.error.info); 
 		} else if (!Mediawiki.e(result.query.pages[-1])) {
@@ -595,6 +629,22 @@ Mediawiki.pullArticleContentCallback = function (result) {
 		Mediawiki.d(Mediawiki.print_r(e));
 	}
 };
+
+
+// If called through the API, there are several steps. Just use action=render
+Mediawiki.pullArticleHtml = function (title, callBack){
+	var urlParams = {
+		'action' :'render',
+		'title' : title
+	};
+	
+	Mediawiki.fetch({
+		'url' : Mediawiki.apiUrl.replace(/api.php/, 'index.php'),
+		'data' : urlParams,
+		'success': callBack
+	});
+};
+
 
 Mediawiki.runCallback = function(callBack, arg){
 	var parens = "()";
