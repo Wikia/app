@@ -1,4 +1,5 @@
 == Changes since 200906.3 ==
+* rt #16138: remove old messages createwiki_* (eloy)
 * rt #17257: FCK chokes on wikis with SMW enabled (Macbre)
 * rt #17342: added master reason field to MultiDelete (TOR)
 * rt #17281: Restrict ActionPanel to local links. (Nef)
