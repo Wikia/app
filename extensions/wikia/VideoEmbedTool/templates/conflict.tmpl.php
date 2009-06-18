@@ -1,4 +1,3 @@
-<input id="VideoEmbedExtraId" type="hidden" value="<?= urlencode($extraId) ?>" />
 <?php
 
 $title = Title::newFromText( $name, NS_VIDEO );
