@@ -39,13 +39,28 @@ $wgGroupPermissions['staff']['spamregex'] = true;
 
 /* return the proper db key for Memc */
 function wfSpamRegexCacheKey( /*...*/ ) {
-	global $wgSharedDB, $wgSharedTables, $wgSharedPrefix;
+	global $wgSharedDB, $wgSharedTables, $wgSharedPrefix, $wgExternalSharedDB;
 	$args = func_get_args();
 	if( in_array( 'spam_regex', $wgSharedTables ) ) {
 		$args = array_merge( array( $wgSharedDB, $wgSharedPrefix ), $args );
 		return call_user_func_array( 'wfForeignMemcKey', $args );
+	} elseif( $wgExternalSharedDB ) {
+		$args = array_merge( array( $wgExternalSharedDB ), $args );
+		return call_user_func_array( 'wfForeignMemcKey', $args );
 	} else {
 		return call_user_func_array( 'wfMemcKey', $args );
+	}
+}
+
+/* return the proper db connection hander */
+function wfSpamRegexGetDB( $db ) {
+	global $wgSharedDB, $wgSharedTables, $wgSharedPrefix, $wgExternalSharedDB;
+	if( in_array( 'spam_regex', $wgSharedTables ) ) {
+		return wfGetDB( $db );
+	} elseif( $wgExternalSharedDB ) {
+		return wfGetDB( $db, array(), $wgExternalSharedDB );
+	} else {
+		return wfGetDB( $db );
 	}
 }
 

@@ -87,7 +87,7 @@ class SpamRegexHooks {
 		if ( !$cached ) {
 			/* fetch data from db, concatenate into one string, then fill cache */
 			$field = $mode == SPAMREGEX_SUMMARY ? 'spam_summary' : 'spam_textbox';
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfSpamRegexGetDB( DB_SLAVE );
 			$res = $dbr->select( 'spam_regex', 'spam_text', array( $field => 1 ), __METHOD__ );
 			while ( $row = $res->fetchObject() ) {
 				$concat = $row->spam_text;

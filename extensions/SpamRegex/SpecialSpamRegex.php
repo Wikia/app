@@ -110,7 +110,7 @@ class spamRegexList {
 		if ( !$this->fetchNumResults() ) {
 			$wgOut->addWikiMsg( 'spamregex-no-currently-blocked' );
 		} else {
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfSpamRegexGetDB( DB_SLAVE );
 			$titleObj = SpecialPage::getTitleFor( 'SpamRegex' );
 			$action = $titleObj->escapeLocalURL( self::getListBits() );
 			$action_unblock = $titleObj->escapeLocalURL( 'action=delete&'.self::getListBits() );
@@ -150,7 +150,7 @@ class spamRegexList {
 		global $wgOut, $wgRequest, $wgUser;
 		$text = urldecode( $wgRequest->getVal( 'text' ) );
 		/* delete */
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfSpamRegexGetDB( DB_MASTER );
 		$dbw->delete( 'spam_regex', array( 'spam_text' => $text ), __METHOD__ );
 		$titleObj = SpecialPage::getTitleFor( 'SpamRegex' );
 		if ( $dbw->affectedRows() ) {
@@ -177,7 +177,7 @@ class spamRegexList {
 		$cached = $wgMemc->get( $key );
 		$results = 0;
 		if ( is_null( $cached ) || $cached === false ) {
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfSpamRegexGetDB( DB_SLAVE );
 			$results = $dbr->selectField( 'spam_regex', 'COUNT(*)', '', __METHOD__ );
 			$wgMemc->set( $key, $results, SPAMREGEX_EXPIRE );
 		} else {
@@ -367,7 +367,7 @@ class spamRegexForm {
 		}
 
 		/* make insert */
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfSpamRegexGetDB( DB_MASTER );
 		$name = $wgUser->getName();
 		$timestamp = wfTimestampNow();
 
