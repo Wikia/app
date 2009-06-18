@@ -70,11 +70,11 @@ EOD;
 		'wklimit'=>'5',
 		'callback'=>'WidgetAnswers_load'
 	);
-	if($wgUser->getOption('language') != 'en') {
-		$domain = $wgUser->getOption('language').'.';
-	} else {
-		$domain = '';
-	}
+#	if($wgUser->getOption('language') != 'en') { // waiting for international logic phase Future (v 2.0)
+#		$domain = $wgUser->getOption('language').'.';
+#	} else {
+		$domain = $wgLanguageCode . '.';
+#	}
 	$url = 'http://'.$domain.'answers.wikia.com/api.php?'.http_build_query($apiparams);
 
 	$output .= <<<EOD

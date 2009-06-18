@@ -4,6 +4,7 @@
 * rt #17281: Restrict ActionPanel to local links. (Nef)
 * rt #17343: ActionPanel now respects limits in it's CategorySuggest
 * rt #17414: Google Analytics tracking for masthead. (Nef)
+* rt #16527: Fixed broken answers widget "routing". (Nef)
 
 == Changes since 200906.1 ==
 * rt #17384: YAHOO.widget.Logger is undefined on answers (Inez)
