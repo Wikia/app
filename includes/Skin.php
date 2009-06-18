@@ -448,16 +448,18 @@ class Skin extends Linker {
 		global $wgUseSiteJs;
 		if ($wgUseSiteJs) {
 			$jsCache = $wgUser->isLoggedIn() ? '&smaxage=0' : '';
+			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 			$r[] = "<script type=\"$wgJsMimeType\" src=\"".
 				htmlspecialchars(self::makeUrl('-',
 					"action=raw$jsCache&gen=js&useskin=" .
-					urlencode( $this->getSkinName() ) ) ) .
+					urlencode( $skinName ) ) ) .
 				"\"><!-- site js --></script>";
 		}
 		if( $allowUserJs && $wgUser->isLoggedIn() ) {
 			$userpage = $wgUser->getUserPage();
+			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 			$userjs = htmlspecialchars( self::makeUrl(
-				$userpage->getPrefixedText().'/'.$this->getSkinName().'.js',
+				$userpage->getPrefixedText().'/'.$skinName.'.js',
 				'action=raw&ctype='.$wgJsMimeType));
 			$r[] = '<script type="'.$wgJsMimeType.'" src="'.$userjs."\"></script>";
 		}
@@ -647,7 +649,8 @@ END;
 				// @FIXME: properly escape the cdata!
 				$this->usercss = "/*<![CDATA[*/\n" . $previewCss . "/*]]>*/";
 			} else {
-				$out->addStyle( self::makeUrl($this->userpage . '/' . $this->getSkinName() .'.css',
+				$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
+				$out->addStyle( self::makeUrl($this->userpage . '/' . $skinName .'.css',
 					'action=raw&ctype=text/css' ) );
 			}
 		}
