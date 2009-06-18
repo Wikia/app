@@ -786,7 +786,7 @@ class BlogCommentList {
 			$msg = 'blockedtext';
 		}
 
-		return wfMsgExt( $msg, "", $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
+		return wfMsgExt( $msg, array("parse"), $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
 	}
 
 	/**
