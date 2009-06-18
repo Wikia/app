@@ -974,8 +974,7 @@ FCK.ProtectImageEdit = function(refid) {
 
 // remove image from the article
 FCK.ProtectImageRemove = function(refid, dontAsk) {
-	if (dontAsk || confirm('Are you sure you want to remove this image?')) {
-
+	var callback = function() {
 		FCKUndo.SaveUndoStep();
 
 		FCK.log('removed image #' + refid);
@@ -990,6 +989,12 @@ FCK.ProtectImageRemove = function(refid, dontAsk) {
 
 		// tracker
 		FCK.Track('/image/remove');
+	}
+
+	if (dontAsk) {
+		callback();
+	} else {
+		FCK.ShowConfirm('Are you sure you want to remove this image?', 'Remove this image', callback);
 	}
 }
 
