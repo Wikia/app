@@ -1,5 +1,3 @@
-FCK.log('new toolbar enabled...');
-
 // show toolbar tooltip
 FCK.WikiaToolbarShowTooltip = function(content) {
 	FCK.log('showing toolbar tooltip');
