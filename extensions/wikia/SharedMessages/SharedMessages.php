@@ -45,18 +45,18 @@ function wfGetSharedMessage($messageTitle, &$message){
 }
 
 function getSharedMessageText(&$title) {
-	global $wgSharedDB;
-	if(!$wgSharedDB) {
+	global $wgExternalSharedDB;
+	if(!$wgExternalSharedDB) {
 		return null;
 	}
 
-	$db =& wfGetDB( DB_SLAVE );
+	$db =& wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 	$row = $db->selectRow(
 			array(
-				"`$wgSharedDB`.page",
-				"`$wgSharedDB`.revision",
-				"`$wgSharedDB`.text"
+				"page",
+				"revision",
+				"text"
 			),
 			array('*'),
 			array(

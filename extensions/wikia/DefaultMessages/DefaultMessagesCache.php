@@ -282,7 +282,7 @@ class DefaultMessagesCache {
 		wfProfileIn( __METHOD__ );
 		global $wgMaxMsgCacheEntrySize;
 		global $wgDefaultMessagesDB;
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgDefaultMessagesDB );
 		$cache = array();
 
 		# Common conditions
@@ -310,7 +310,7 @@ class DefaultMessagesCache {
 		$bigConds[] = 'page_len > ' . intval( $wgMaxMsgCacheEntrySize );
 
 		# Load titles for all oversized pages in the MediaWiki namespace
-		$res = $dbr->select( "`$wgDefaultMessagesDB`.`page`", 'page_title', $bigConds, __METHOD__ );
+		$res = $dbr->select( "page", 'page_title', $bigConds, __METHOD__ );
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$cache[$row->page_title] = '!TOO BIG';
 		}
@@ -322,7 +322,7 @@ class DefaultMessagesCache {
 		$smallConds[] = 'rev_text_id=old_id';
 		$smallConds[] = 'page_len <= ' . intval( $wgMaxMsgCacheEntrySize );
 
-		$res = $dbr->select( array( "`$wgDefaultMessagesDB`.`page`", "`$wgDefaultMessagesDB`.`revision`", "`$wgDefaultMessagesDB`.`text`" ),
+		$res = $dbr->select( array( "page", "revision", "text" ),
 			array( 'page_title', 'old_text', 'old_flags' ),
 			$smallConds, __METHOD__ );
 
@@ -470,8 +470,8 @@ class DefaultMessagesCache {
 			// Try loading it from the DB
 			global $wgDefaultMessagesDB;
 			$t = Title::makeTitle( NS_MEDIAWIKI, $title );
-			$db = wfGetDB( DB_SLAVE );
-			$row = $db->selectRow( array( "`$wgDefaultMessagesDB`.`page`", "`$wgDefaultMessagesDB`.`revision`", "`$wgDefaultMessagesDB`.`text`" ),
+			$db = wfGetDB( DB_SLAVE, array(), $wgDefaultMessagesDB );
+			$row = $db->selectRow( array( "page", "revision", "text" ),
 					array( '*' ),
 					array(
 						'page_namespace' => $t->getNamespace(),
