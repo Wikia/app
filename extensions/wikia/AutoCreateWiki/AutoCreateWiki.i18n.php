@@ -92,8 +92,8 @@ $messages['en'] = array(
 	"autocreatewiki-step6-error" => "Cannot set default tables in database!",
 	"autocreatewiki-step7-error" => "Cannot copy starter database for language!",
 	"requestwiki-filter-language" => "kh,kp,mu,als,an,ast,de-form,de-weig,dk,en-gb,ia,ie,ksh,mwl,pdc,pfl,simple,tokipona,tp,zh-cn,zh-hans,zh-hant,zh-hk,zh-mo,zh-my,zh-sg,zh-tw",
-    "createwiki_welcomesubject" => "$1 has been created!",
-    "createwiki_welcomebody" => "
+    "autocreatewiki-welcomesubject" => "$1 has been created!",
+    "autocreatewiki-welcomebody" => "
 Hello, $2,
 
 The Wikia you requested is now available at <$1> We hope to see you editing there soon!
@@ -112,7 +112,7 @@ Wikia Community Team
 
 <http://www.wikia.com/wiki/User:$4>
     ",
-    "createwiki_welcometalk" => "
+    "autocreatewiki-welcometalk" => "
 Hi '''$1''' -- we are excited to have '''$4''' as part of the Wikia community!
 
 Starting a new wiki can be overwhelming, but don't worry, the [[Wikia:Community Team|WIkia Community Team]] is here to help!  We have put together a few guides to getting started. They say imitation is the best form of flattery so absolutely check out other wikis on [[Wikia:Wikia| Wikia]] for ideas on layout, ways to organize your content, etc. We are all one big family at Wikia and the most important thing is to have fun!
@@ -130,6 +130,6 @@ Best wishes,
 [[User:$2|$3]]
     ",
 // new wikis - special page
-	"newwikis" => "New wikis",    
+	"newwikis" => "New wikis",
 	"newwikisstart" => "Display Wikis starting at:",
 );

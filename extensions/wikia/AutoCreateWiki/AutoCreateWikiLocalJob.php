@@ -176,14 +176,14 @@ class AutoCreateWikiLocalJob extends Job {
 				/**
 				 * custom lang translation
 				 */
-				$talkBody = wfMsgExt( "createwiki_welcometalk", array( 'language' => $wikiaLang ), $talkParams );
+				$talkBody = wfMsgExt( "autocreatewiki-welcometalk", array( 'language' => $wikiaLang ), $talkParams );
 			}
 
 			if( ! $talkBody ) {
 				/**
 				 * wfMsgExt should always return message, but just in case...
 				 */
-				$talkBody = wfMsg( "createwiki_welcometalk", $talkParams );
+				$talkBody = wfMsg( "autocreatewiki-welcometalk", $talkParams );
 			}
 
 			/**
@@ -369,11 +369,11 @@ class AutoCreateWikiLocalJob extends Job {
 		$sBody = $sSubject = null;
 		if ( !empty( $this->mParams['language'] ) ) {
 			// custom lang translation
-			$sBody = wfMsgExt("createwiki_welcomebody",
+			$sBody = wfMsgExt("autocreatewiki-welcomebody",
 				array( 'language' => $this->mParams['language'] ),
 				$aBodyParams
 			);
-			$sSubject = wfMsgExt("createwiki_welcomesubject",
+			$sSubject = wfMsgExt("autocreatewiki-welcomesubject",
 				array( 'language' => $this->mParams['language'] ),
 				array( $this->mParams[ "title" ] )
 			);
