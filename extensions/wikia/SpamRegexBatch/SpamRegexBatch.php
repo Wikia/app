@@ -334,12 +334,12 @@ class SpamRegexBatch {
 		wfDebugLog( 'SpamRegexBatch', "Fetching local spam ".$this->list." from '$article' on '$db'...\n" );
 
 		$title =  Title::newFromText( $article );
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, array(), $db );
 		$row = $dbr->selectRow(
 			array(
-				"`$db`.page",
-				"`$db`.revision",
-				"`$db`.text"
+				"page",
+				"revision",
+				"text"
 			),
 			array('*'),
 			array(
