@@ -2110,7 +2110,6 @@ if(count($wikiafooterlinks) > 0) {
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
-			     			   ! $wgEnableAdsInContent && // Turn off Lower skys when ads in content is enabled
 					     	   !ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_2', false) .'</div>';
 					}
