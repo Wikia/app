@@ -87,23 +87,10 @@ class SiteWideMessages extends SpecialPage {
 		$formData['hubNames'] = $hubList;
 
 		//fetching group list
-        $dbResult = $DB->select(
-            array( 'user_groups' ),
-            array( 'DISTINCT ug_group' ),
-            null,
-            __METHOD__,
-            array( 'ORDER BY' => 'ug_group' )
-        );
-
-		$groupList = array();
-		while ($row = $DB->FetchObject($dbResult)) {
-			$groupList[] = $row->ug_group;
-		}
-		if ($dbResult !== false) {
-			$DB->FreeResult($dbResult);
-		}
-
-		$formData['groupNames'] = $groupList;
+		global $wgGroupPermissions;
+		$groupList = $wgGroupPermissions;
+		unset($groupList['*']);
+		$formData['groupNames'] = array_keys($groupList);
 
 		//handle different submit buttons in one form
 		$button = $wgRequest->getVal('mAction');
