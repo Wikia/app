@@ -1619,12 +1619,14 @@ if ($wgOut->isArticle()){
 		}
 	} else if ( ArticleAdLogic::isContentPage()){
 
+		/* Reverting to the old behavior because the boxad is showing all the time because it's the end of the quarter
 		if ($wgEnableAdsInContent) {
 			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
 			if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 				$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD', false);
 			}
 		} else {
+		*/
 			if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
 				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
 			} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
@@ -1633,7 +1635,7 @@ if ($wgOut->isArticle()){
 				// Long article, but a collision
 				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
 			}
-		}
+		//}
 	}
 }
 ?>
@@ -2105,7 +2107,6 @@ if(count($wikiafooterlinks) > 0) {
 			<?php
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SLIMBOX_1', false);
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_2', false);
-				global $wgEnableAdsInContent;
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
