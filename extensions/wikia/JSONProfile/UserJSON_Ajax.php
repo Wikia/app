@@ -14,7 +14,8 @@ function wfUserSearchJSON( $q="", $limit = 10, $start = 0, $callback = "usersRen
 	
 	
 	$dbr =& wfGetDB( DB_SLAVE );
-	$res = $dbr->select( '`wikicities`.user INNER JOIN user_profile on up_user_id = user_id', 
+	list($user, $user_profile) = $dbr->tableNamesN('user', 'user_profile');
+	$res = $dbr->select( "{$user} INNER JOIN {$user_profile} on up_user_id = user_id", 
 			array('user_id', 'user_name', 'user_real_name'),
 			"UPPER(user_name) like '%" . $dbr->escapeLike( $q )  . "%' or UPPER(user_real_name) like '%" . $dbr->escapeLike( $q )  . "%'" , __METHOD__, 
 		$params
