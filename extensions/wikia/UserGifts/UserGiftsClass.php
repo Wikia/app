@@ -42,9 +42,9 @@ class UserGifts {
 		$db_name = wfGetUserGiftDBName();
 
 		$user_id_to = User::idFromName($user_to);
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
 		$fname = __METHOD__;
-		$dbr->insert( "`{$db_name}`.`user_gift`",
+		$dbr->insert( "user_gift",
 		array(
 			'ug_gift_id' => $gift_id,
 			'ug_user_id_from' => $this->user_id,
@@ -86,8 +86,8 @@ class UserGifts {
 		#---
 		$db_name = wfGetUserGiftDBName();
 		#---
-		$dbw =& wfGetDB( DB_MASTER );
-		$dbw->update( "`{$db_name}`.`user_gift`",
+		$dbw =& wfGetDB( DB_MASTER, array(), $db_name );
+		$dbw->update( "user_gift",
 			array( /* SET */
 			'ug_status' => 0
 			), array( /* WHERE */
@@ -100,8 +100,8 @@ class UserGifts {
 		#---
 		$db_name = wfGetUserGiftDBName();
 		#---
-		$dbw =& wfGetDB( DB_MASTER );
-		$dbw->update( "`{$db_name}`.`user_gift`",
+		$dbw =& wfGetDB( DB_MASTER, array(), $db_name );
+		$dbw->update( "user_gift",
 			array( /* SET */
 			'ug_status' => 0
 			), array( /* WHERE */
@@ -114,8 +114,8 @@ class UserGifts {
 		#---
 		$db_name = wfGetUserGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow( "`{$db_name}`.`user_gift`", array( 'ug_user_id_to' ), array( 'ug_id' => $ug_id ), $fname );
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
+		$s = $dbr->selectRow( "user_gift", array( 'ug_user_id_to' ), array( 'ug_id' => $ug_id ), $fname );
 		if ( $s !== false ) {
 			if($user_id == $s->ug_user_id_to){
 				return true;
@@ -128,8 +128,8 @@ class UserGifts {
 		#---
 		$db_name = wfGetUserGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
-		$sql = "DELETE FROM `{$db_name}`.`user_gift` WHERE ug_id={$ug_id}";
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
+		$sql = "DELETE FROM user_gift WHERE ug_id={$ug_id}";
 		$res = $dbr->query($sql);
 	}	
 
@@ -137,10 +137,10 @@ class UserGifts {
 		#---
 		$db_name = wfGetUserGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
 		$sql = "SELECT ug_id, ug_user_id_from, ug_user_name_from, ug_user_id_to,ug_user_name_to,ug_message,gift_id, ug_date,
 			gift_name, gift_description, gift_given_count
-			FROM `{$db_name}`.`user_gift` INNER JOIN `{$db_name}`.`gift` ON ug_gift_id=gift_id  
+			FROM user_gift INNER JOIN gift ON ug_gift_id=gift_id  
 			WHERE ug_id = {$id} LIMIT 0,1";
 		$res = $dbr->query($sql);
 		$row = $dbr->fetchObject( $res );
@@ -165,9 +165,9 @@ class UserGifts {
 		#---
 		$db_name = wfGetUserGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
 		$new_gift_count = 0;
-		$s = $dbr->selectRow( "`{$db_name}`.`user_gift`", array( 'count(*) as count' ), array( 'ug_user_id_to' => $user_id, 'ug_status' => 1 ), __METHOD__ );
+		$s = $dbr->selectRow( "user_gift", array( 'count(*) as count' ), array( 'ug_user_id_to' => $user_id, 'ug_status' => 1 ), __METHOD__ );
 		if ( $s !== false )$new_gift_count = $s->count;	
 		return $new_gift_count;
 	}
@@ -176,7 +176,7 @@ class UserGifts {
 		#---
 		$db_name = wfGetUserGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
 		
 		if($limit>0){
 			$limitvalue = 0;
@@ -186,7 +186,7 @@ class UserGifts {
 		
 		$sql = "SELECT ug_id, ug_user_id_from, ug_user_name_from, ug_gift_id, ug_date, ug_status,
 			gift_name, gift_description, gift_given_count
-			FROM `{$db_name}`.`user_gift` INNER JOIN `{$db_name}`.`gift` ON ug_gift_id=gift_id 
+			FROM user_gift INNER JOIN gift ON ug_gift_id=gift_id 
 			WHERE ug_user_id_to = {$this->user_id}
 			ORDER BY ug_id DESC
 			{$limit_sql}";
@@ -207,8 +207,8 @@ class UserGifts {
 		#---
 		$db_name = wfGetUserGiftDBName();
 		#---
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->update( "`{$db_name}`.`gift`",
+		$dbw = wfGetDB( DB_MASTER, array(), $db_name );
+		$dbw->update( "gift",
 			array( 'gift_given_count=gift_given_count+1' ),
 			array( 'gift_id' => $gift_id ),
 			__METHOD__ );
@@ -218,12 +218,9 @@ class UserGifts {
 		#---
 		$db_name = wfGetUserGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
 		$user_id = User::idFromName($user_name);
-		$sql = "SELECT count(*) as count
-			FROM `{$db_name}`.`user_gift`
-			WHERE ug_user_id_to = {$user_id}
-			LIMIT 0,1";
+		$sql = "SELECT count(*) as count FROM user_gift WHERE ug_user_id_to = {$user_id} LIMIT 0,1";
 		$res = $dbr->query($sql);
 		$row = $dbr->fetchObject( $res );
 		$gift_count = 0;
