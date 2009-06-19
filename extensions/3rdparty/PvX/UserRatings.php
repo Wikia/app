@@ -15,7 +15,7 @@ if (!defined('MEDIAWIKI'))
 $wgExtensionFunctions[] = 'wfUserRatings';
 $wgExtensionCredits['specialpage'][] = array('name' => 'User Ratings',
 					     'url' => 'http://www.gcardinal.com/',
-					     'description' => 'List user ratings.', 
+					     'description' => 'List user ratings.',
 					     'author' => 'gcardinal/Hhhippo');
 
 # Simple clone of RecentRatings, displays only contributions of the reader.
@@ -33,34 +33,36 @@ function wfUserRatings() {
     require_once "$IP/includes/SpecialPage.php";
     class SpecialUserRatings extends SpecialPage {
 
-        #-- Constructor ----------------------------#       
+        #-- Constructor ----------------------------#
 	function SpecialUserRatings() {
-        #-------------------------------------------#       
+        #-------------------------------------------#
 
             SpecialPage::SpecialPage('UserRatings');
             $this->includable(true);
         }
 
-        #-- main() ---------------------------------#       
+        #-- main() ---------------------------------#
 	function execute($par = null) {
-        #-------------------------------------------#       
-            global $wgOut;
-            global $wgRequest;
-            global $wgScript;
-            global $wgUser;
+        #-------------------------------------------#
+        global $wgOut;
+        global $wgRequest;
+        global $wgScript;
+        global $wgUser;
 	    global $wgParser;
 	    global $wgTitle;
-            $wgOut->setPageTitle('User ratings');
-            if ($this->including())
-	    {
-		$out = "I'm being included... :(";
-	    } else {
+		global $wgLang;
+
+        $wgOut->setPageTitle('User ratings');
+        if ($this->including()) {
+			$out = "I'm being included... :(";
+	    }
+		else {
 		$got_ratings=self::GetRatings();
 		if ($got_ratings) {
 		    $timeprevious = '';
-		    foreach ($got_ratings as $array) 
+		    foreach ($got_ratings as $array)
 		    {
-			
+
 			if ($array['page_title'])
 			{
 			    date_default_timezone_set("UTC");
@@ -69,52 +71,52 @@ function wfUserRatings() {
 				$timecurent = $wgLang->date( wfTimestamp( TS_MW, $array['timestamp'] ), true, false, $timecorrection );
 
 			    $out = '* ';
-			    
-			    if ( $timeprevious != $timecurent) 
+
+			    if ( $timeprevious != $timecurent)
 			    {
-				$tc = '===' . $timecurent . '===';    
+				$tc = '===' . $timecurent . '===';
 				$wgOut->addWikiText($tc);
 			    }
 			    $timeprevious = $timecurent;
 			    $time = $wgLang->time( wfTimestamp( TS_MW, $array['timestamp'] ), true, false, $timecorrection);
-			    
+
 			    if ($array['user_name'])
 			    {
 				$user_link = '[[User:' . $array['user_name'] . '|' . $array['user_name'] . ']]' . ' ' . '(' . '[[User_talk:' . $array['user_name'] . '|Talk]]' . ' | ' . '[[Special:Contributions/' . $array['user_name'] . '|contribs]])';
 			    } else {
 				$user_link = '';
 			    }
-			    
-			    
+
+
 			    $page_link = '[[Build:' . $array['page_title'] . '|' . $array['page_title'] . ']]';
-			    
+
 			    if ($array['admin_id'])
 			    {
-				$admin_name = User::newFromId($array['admin_id'])->getName();										
+				$admin_name = User::newFromId($array['admin_id'])->getName();
 				$admin_link = '[[User:' . $admin_name . '|' . $admin_name . ']]';
 			    }
-			    
+
 			    $out .= $time;
 			    $out .= ' . . ';
 			    if ($array['rollback']) $out .= '<font color="red"><b>Rollback</b></font> ';
 			    if (!$array['rollback'] && $array['reason']) $out .= '<font color="green"><b>Restore</b></font> ';
 			    $out .= $page_link;
 			    $out .= '; ';
-			    
-			    
+
+
 			    $total = $array['rating'][0] * .8 + $array['rating'][1] * .2 + $array['rating'][2] * .0;
 			    if ($total >= 0.0) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'trash\'\')';
 			    if ($total >= 2.5) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'acceptable\'\')';
 			    if ($total >= 3.5) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'good\'\')';
 			    if ($total >= 4.5) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'great\'\')';
-			    
+
 			    if ($array['rollback'])
 			    {
 				#<font color="red">
-				$out .= '\'\'\'' . $admin_link . '\'\'\'' . ' removed ' 
+				$out .= '\'\'\'' . $admin_link . '\'\'\'' . ' removed '
 				    . strtolower($rating) . ' posted by: ' . $user_link;
 			    } elseif (!$array['rollback'] && $array['reason']) {
-				$out .= '\'\'\'' . $admin_link . '\'\'\'' . ' restored ' 
+				$out .= '\'\'\'' . $admin_link . '\'\'\'' . ' restored '
 				    . strtolower($rating) . ' posted by: ' . $user_link;
 			    } else {
 				$out .= $rating;
@@ -125,9 +127,9 @@ function wfUserRatings() {
 				$out .= ' . . ';
 				$out .= $user_link;
 			    }
-			    
+
 			    $wgOut->addWikiText($out);
-			}			
+			}
 		    }
 		} else {
 		    $out = "No ratings found for this user.";
@@ -135,18 +137,18 @@ function wfUserRatings() {
 		}
 	    }
 	}
-	
 
-        #-------------------------------------------#       
+
+        #-------------------------------------------#
 	function GetRatings() {
-        #-------------------------------------------#       
+        #-------------------------------------------#
 
-	    global $wgUser;		
+	    global $wgUser;
 	    $dbr = &wfGetDB(DB_SLAVE);
 	    $res = $dbr->query("SELECT user_name, R.user_id, page_title, comment, rollback, admin_id, reason, rating1, rating2, rating3, timestamp
 			FROM rating AS R
-			LEFT JOIN user AS u1 ON R.user_id = u1.user_id 
-			LEFT JOIN page AS p1 ON R.page_id = p1.page_id 
+			LEFT JOIN user AS u1 ON R.user_id = u1.user_id
+			LEFT JOIN page AS p1 ON R.page_id = p1.page_id
                         WHERE R.user_id=".$wgUser->getID()."
                          AND p1.page_namespace = 100
 			ORDER BY R.timestamp DESC
@@ -154,7 +156,7 @@ function wfUserRatings() {
 	    $count = $dbr->numRows( $res );
 	    if( $count > 0 ) {
 		# Make list
-		while( $row = $dbr->fetchObject( $res ) ) 
+		while( $row = $dbr->fetchObject( $res ) )
 		{
 		    $out[] = array('user_name'  => $row->user_name,
 				   'comment' 	=> $row->comment,
