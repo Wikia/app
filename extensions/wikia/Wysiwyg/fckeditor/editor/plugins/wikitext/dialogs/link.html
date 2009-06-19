@@ -157,6 +157,7 @@ window.onload = function() {
 	window.parent.SetAutoSize(true);
 
 	// setup MW suggest
+	//FCK.EnableAutocomplete(GetE('internal_article_name'), dialog.Ok, false);
 	os_enableSuggestionsOn('internal_article_name', 'formInternalLink');
 }
 
@@ -261,7 +262,7 @@ function Ok() {
 	</script>
 </head>
 	<body scroll="no" style="OVERFLOW: hidden">
-		<div id="divInternalLink" style="DISPLAY: none; padding-bottom: 40px">
+		<div id="divInternalLink" style="DISPLAY: none; padding-bottom: 40px; position: relative">
 
 			<span>Article name:</span>
 			<br />
