@@ -167,6 +167,7 @@ function Wysiwyg_Initial($form) {
 
 	// fallback to old MW editor
 	if ($editorMode == 'mediawiki') {
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -473,7 +474,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 		}
 
 		$templateParser = new Parser();
-	
+
 		//  RT #17279
 		global $wgParser;
 		$templateParser->mTagHooks = & $wgParser->mTagHooks;
