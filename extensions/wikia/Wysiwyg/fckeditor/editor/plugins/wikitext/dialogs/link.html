@@ -15,25 +15,6 @@ var FCKConfig	= oEditor.FCKConfig ;
 var FCKRegexLib	= oEditor.FCKRegexLib ;
 var FCKTools	= oEditor.FCKTools ;
 
-// load wikibits and some of wgFoo JS variables
-window.wgMWSuggestTemplate = window.parent.parent.wgMWSuggestTemplate;
-window.wgSearchNamespaces = window.parent.parent.wgSearchNamespaces;
-window.wgDBname = window.parent.parent.wgDBname;
-window.stylepath = window.parent.parent.stylepath;
-window.skin = window.parent.parent.skin;
-window.wgContentLanguage = window.parent.wgContentLanguage;
-window.sajax_init_object = window.parent.parent.sajax_init_object;
-
-var url = window.parent.parent.stylepath + '/common/wikibits.js?' + FCKConfig.StyleVersion;
-document.write('<scr' + 'ipt type="text/javascript" src="' + url + '"><\/scr' + 'ipt>');
-
-var url = window.parent.parent.stylepath + '/common/shared.css?' + FCKConfig.StyleVersion;
-document.write('<li' + 'nk rel="stylesheet" type="text/css" href="' + url + '"/>');
-
-// load MW suggest
-var url = window.parent.parent.stylepath + '/common/mwsuggest.js?' + FCKConfig.StyleVersion;
-document.write('<scr' + 'ipt type="text/javascript" src="' + url + '"><\/scr' + 'ipt>');
-
 // Overall classification
 var EXISTING = 1;
 var NEW_SELECTION = 2;
@@ -156,9 +137,8 @@ window.onload = function() {
 	window.parent.SetOkButton(true);
 	window.parent.SetAutoSize(true);
 
-	// setup MW suggest
-	//FCK.EnableAutocomplete(GetE('internal_article_name'), dialog.Ok, false);
-	os_enableSuggestionsOn('internal_article_name', 'formInternalLink');
+	// setup link suggest
+	FCK.EnableAutocomplete(GetE('internal_article_name'), dialog.Ok, false);
 }
 
 function Ok() {
