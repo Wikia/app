@@ -175,11 +175,7 @@ class WikiaGenericStats {
    		if (self::USE_MEMC) $wkCityOrderStats = $wgMemc->get($memckey);
     	if (empty($wkCityOrderStats))
     	{
-			if (self::USE_OLD_DB == 1) {
-				$dbs =& wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
-			} else {
-				$dbs =& wfGetDBExt();
-			}
+			$dbs =& wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			#---
 			$column = "avg(c1.cw_wikians_total) as cnt";
 			$order_by = "cnt";
@@ -226,11 +222,7 @@ class WikiaGenericStats {
    		if (self::USE_MEMC) $wkCreationWikiansList = $wgMemc->get('wikiacreationwikiansstats');
     	if (empty($wkCreationWikiansList))
     	{
-    		if (self::USE_OLD_DB == 1) {
-				$dbs =& wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
-			} else {
-				$dbs =& wfGetDBExt();
-			}
+			$dbs =& wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			#---
 			$whereCity = " c1.cw_city_id > 0 ";
 			$noactive_citylist = self::getNoPublicCities();
@@ -279,12 +271,7 @@ class WikiaGenericStats {
    		if (self::USE_MEMC) $wkCreationArticleList = $wgMemc->get('wikiacreationarticlestats');
     	if (empty($wkCreationWikiansList))
     	{
-    		if (self::USE_OLD_DB == 1) {
-				$dbs =& wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
-
-			} else {
-				$dbs =& wfGetDBExt();
-			}
+			$dbs =& wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			#---
 			$whereCity = " c1.cw_city_id > 0 ";
 			$noactive_citylist = self::getNoPublicCities();
@@ -502,11 +489,7 @@ class WikiaGenericStats {
 			try
 			{
 				#--- database instance - DB_SLAVE
-				if (self::USE_OLD_DB == 1) {
-					$dbs =& wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
-				} else {
-					$dbs =& wfGetDBExt();
-				}
+				$dbs =& wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 				if ( is_null($dbs) ) {
 					throw new DBConnectionError($dbs, wfMsg("wikiastats_connection_error"));
 				}
