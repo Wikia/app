@@ -895,7 +895,7 @@ class WikiaGenericStats {
 				$prevValues = array();
 				$result_months = array();
 
-				$sql = "select date_format(pv_use_date, '%Y-%m') as pv_date, sum(pv_views) as cnt, pv_namespace from `dbstats`.`city_page_views` ";
+				$sql = "select date_format(pv_use_date, '%Y-%m') as pv_date, sum(pv_views) as cnt, pv_namespace from `city_page_views` ";
 				$sql .= "where {$where_city} and date_format(pv_use_date, '%Y-%m') <= date_format(now(), '%Y-%m') group by pv_date, pv_namespace order by pv_date";
 				$res = $dbs->query($sql);
 				#---
