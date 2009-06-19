@@ -1525,7 +1525,7 @@ class WikiFactory {
 		$dbw->begin();
 
 		$db = $dbw->update(
-			array( "city_domains" ),
+			self::table("city_domains"),
 			array( "city_id" => $new_city_id ),
 			array( "city_id" => $city_id ),
 			__METHOD__ );
