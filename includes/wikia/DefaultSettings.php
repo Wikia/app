@@ -293,5 +293,6 @@ $wgExternalSharedDB = false;
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgExternalStatsDB = 'dbstats';
+$wgExternalWikiaStatsDB = 'wikiastats';
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
