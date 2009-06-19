@@ -119,6 +119,9 @@ class CreateWikiMetrics {
 		#---
 		$this->getLangs();
 		#---
+		$hubs = WikiFactoryHub::getInstance();
+		$aCategories = $hubs->getCategories();
+		
 		$oCloseWikiTitle = Title::makeTitle( NS_SPECIAL, "CloseWiki" );
 		$action = $oCloseWikiTitle->getFullURL();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -132,6 +135,7 @@ class CreateWikiMetrics {
             "oCloseWikiTitle"	=> $oCloseWikiTitle,
             "aLanguages" 		=> $this->mLanguages,
 			"aTopLanguages" 	=> $this->mTopLanguages,
+			"aCategories"		=> $aCategories
         ));
         $wgOut->addHTML( $oTmpl->execute("metrics-main-form") );
         wfProfileOut( __METHOD__ );
@@ -383,7 +387,7 @@ class CreateWikiMetrics {
 		$res = array();
 
 		/* db */
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		/* check params */
 		$where = $this->buildQueryOptions($dbr);
 		#----
@@ -396,7 +400,7 @@ class CreateWikiMetrics {
 
 		#----
 		$oRes = $dbr->select( 
-			"`wikicities`.`city_list`", 
+			"city_list", 
 			array( "city_id, city_dbname, city_url, city_created, city_founding_user, city_title, city_founding_email, city_lang, city_public" ),
 			$where,
 			__METHOD__,
@@ -465,7 +469,7 @@ class CreateWikiMetrics {
 	public function getCategoriesRecords() {
 		global $wgUser, $wgLang;
 		/* db */
-		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		/* check params */
 		$where = $this->buildQueryOptions($dbr, 'cl');
 		#----
@@ -481,7 +485,7 @@ class CreateWikiMetrics {
 		}
 			
 		$oRes = $dbr->select( 
-			"`wikicities`.`city_cat_mapping` as ccm, `wikicities`.`city_list` as cl", 
+			"city_cat_mapping as ccm, city_list as cl", 
 			array( "ccm.cat_id, $what as row_date, count(*) as cnt" ),
 			$where,
 			__METHOD__,
@@ -553,11 +557,11 @@ class CreateWikiMetrics {
 		wfProfileIn( __METHOD__ );
 		$aCityIds = array();
 
-		$dbr = wfGetDB( DB_SLAVE );		
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );		
 		$domain = $dbr->escapeLike( strtolower( $this->axDomain ) );
 		
 		$oRes = $dbr->select( 
-			"`wikicities`.`city_domains`", 
+			"city_domains", 
 			array( 'city_id' ),
 			array( "city_domain like '%{$domain}%'" ),
 			__METHOD__,
