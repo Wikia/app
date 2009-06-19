@@ -671,10 +671,10 @@ class MultiWikiEditForm {
 	/* print out to confirm */
         function checkArticle ($line, $wiki, &$articles_found) {
 		global $wgUser, $wgOut ;
-		$dbr =& wfGetDB (DB_SLAVE) ; 
-		if ($dbr->selectDB ($wiki->city_dbname)) {
+		$dbr = wfGetDB (DB_SLAVE, array(), $wiki->city_dbname) ; 
+		if ($dbr) {
 			/* get only the selected namespace, nothing more */
-                        $page = Title::newFromText ($line) ;
+			$page = Title::newFromText ($line) ;
 			if (!is_object ($page) ) {
 				return false ;
 			}
