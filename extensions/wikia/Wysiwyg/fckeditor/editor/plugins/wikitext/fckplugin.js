@@ -1725,6 +1725,34 @@ FCK.CheckPasteCompare = function() {
 	FCK._CheckPasteOldHTML = false;
 }
 
+// autosuggest setup function
+FCK.EnableAutocomplete = function(field, onSelectFunc, searchTemplates) {
+	FCK.jQuery.getScript(window.parent.stylepath + '/common/jquery/jquery.autocomplete.js?' + FCKConfig.StyleVersion, function() {
+		// use LinkSuggest extension
+		var url = window.parent.wgServer + window.parent.wgScript + '?action=ajax&rs=getLinkSuggest&format=json';
+
+		if (searchTemplates) {
+			url += '&ns=10';
+		}
+
+		FCK.jQuery(field).autocomplete({
+			serviceUrl: url,
+			fnFormatResult: function(v) {
+				return v;
+			},
+			onSelect: function(v, d) {
+				if (typeof onSelectFunc == 'function') {
+					onSelectFunc();
+				}
+			},
+			deferRequestBy: 110,
+			delimiter: "\n",
+			maxHeight: 110,
+			appendTo: FCK.jQuery(field).parent().parent()
+		});
+	});
+}
+
 // track the fact of using FCK
 FCK.Track('/init');
 
