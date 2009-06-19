@@ -28,11 +28,11 @@ $wgWikiaVideosFoundInTemplates = 0;
 function WikiaVideoFetchTemplateAndTitle( $text, $finalTitle ) {
 	global $wgContLang, $wgWikiaVideosFoundInTemplates;
 
-	$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":";
+	$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Placeholder";
 	
 	// replace text and give Video_Template: namespace everywhere - because it's template...
 	$count = 0;
-	$text = str_replace( $vid_tag, 'Video_Template:', $text, $count );	
+	$text = str_replace( $vid_tag, 'Video_Template:Placeholder', $text, $count );	
 	$wgWikiaVideosFoundInTemplates += $count;
 	return true;	
 }
