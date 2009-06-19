@@ -267,7 +267,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	private function createWiki() {
 		global $wgDebugLogGroups, $wgOut, $wgUser, $IP, $wgDBname;
-		global $wgSharedDB, $wgExternalSharedDB;
+		global $wgSharedDB, $wgExternalSharedDB, $wgDBcluster;
 		global $wgDBserver, $wgDBuser,	$wgDBpassword, $wgWikiaLocalSettingsPath;
 		global $wgHubCreationVariables, $wgLangCreationVariables, $wgUniversalCreationVariables;
 
@@ -305,7 +305,22 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * check and create database
 		 */
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); # central
-		$dbw_local = wfGetDB( DB_MASTER ); # databases
+
+		/**
+		 * local database handled is handler to cluster we create new wiki.
+		 * It doesn't have to be the same like wikifactory cluster or db cluster
+		 * where Special:CreateWiki exists.
+		 *
+		 * @todo do not use hardcoded name, code below is only for test
+	     */
+		if( !empty( $wgDBcluster ) ) {
+			$dbname = "wikicities_c2";
+		}
+		else {
+			$dbname = "wikicities";
+		}
+		$dbw_local = wfGetDB( DB_MASTER, array(), $dbname ); # databases
+
 		$Row = $dbw->selectRow(
 			"city_list",
 			array( "count(*) as count" ),
