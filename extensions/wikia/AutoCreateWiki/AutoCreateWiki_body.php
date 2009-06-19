@@ -314,11 +314,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * @todo do not use hardcoded name, code below is only for test
 	     */
 		if( !empty( $wgDBcluster ) ) {
-			$activeCluser = "c2";
+			$activeCluster = "c2";
 			$dbname = "wikicities_c2";
 		}
 		else {
-			$activeCluser = false;
+			$activeCluster = false;
 			$dbname = "wikicities";
 		}
 		$dbw_local = wfGetDB( DB_MASTER, array(), $dbname ); # databases
@@ -456,8 +456,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgEnableSectionEdit'	    => true,
 		);
 
-		if( $activeCluser ) {
-			$WFSettingsVars[ "wgDBcluster" ] = $activeCluser;
+		if( $activeCluster ) {
+			$WFSettingsVars[ "wgDBcluster" ] = $activeCluster;
 		}
 		$this->mWikiData[ "founder" ] = $this->mFounder->getId();
 
