@@ -485,6 +485,7 @@ div.wikiaDialog h2,
 'tog-skinoverwrite' => '<b>See custom wikis</b> (recommended)<br>Some wiki administrators take a lot of time to customize the look of their wikis. Check the box above to see their wikis with full customization.',
 'defaultskin_choose' => 'Set the default theme for this wiki: ',
 'admin_skin' => 'Admin Options',
+'skin-forced' => 'You can\'t change skin on this wiki.',
 
 #Misc stuff
 'or' => 'or',

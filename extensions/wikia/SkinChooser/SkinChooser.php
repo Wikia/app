@@ -90,9 +90,9 @@ function WikiaSkinPreferences($pref) {
 
 	global $wgForceSkin;
 	if(!empty($wgForceSkin)) {
-		$wgOut->addHTML(wfMsg('this_is_special_wikia'));
+		$wgOut->addHTML(wfMsg('skin-forced'));
 		$wgOut->addHTML('<div style="display:none;">'.$pref->getToggle('skinoverwrite').'</div>');
-		return true;
+		return false;
 	}
 
 	if(!empty($wgAdminSkin)) {

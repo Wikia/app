@@ -9,6 +9,7 @@
 * rt #17532: FCK removes table placed inside <dl> (Macbre)
 * rt #17237: WYSIWYG LinkSuggest stops after the first word (Macbre)
 * rt #17529: Fix how action panel handles categories. (Nef)
+* rt #17507: Fix how skin chooser handles forced skin, eg. on answers. (Nef)
 
 == Changes since 200906.1 ==
 * rt #17384: YAHOO.widget.Logger is undefined on answers (Inez)
