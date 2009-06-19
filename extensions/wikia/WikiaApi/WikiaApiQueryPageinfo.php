@@ -29,6 +29,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 				case "views" 	: $this->getPageViews($result); break;
 				case "revcount" : $this->getRevCount($result); break;
 				case "created"	: $this->getCreateDate($result); break;
+				case "redirect"	: $this->getRedirectName($result); break;
 			}
 		}
 		parent :: execute(); 
@@ -106,6 +107,23 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 			}
 		}
 	}
+	
+	private function getRedirectName(&$result) {
+		$res = &$result->getData();
+		$db = $this->getDB();
+		if ( isset($res['query']) && isset($res['query']['pages']) ) {
+			foreach ($this->getPageSet()->getGoodTitles() as $page_id => $oTitle) {
+				$res['query']['pages'][$page_id]['redirectto'] = ""; 
+				if ( $oTitle->isRedirect() ) {
+					$oArticle = new Article($oTitle);
+					$oRedirTitle = $oArticle->getRedirectTarget();
+					if ( $oRedirTitle instanceof Title ) {
+						$res['query']['pages'][$page_id]['redirectto'] = $oRedirTitle->getDBkey();
+					}
+				} 
+			}
+		}
+	}
 
 	protected function getExamples() {
 		return array_merge(
@@ -124,7 +142,8 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 			array (
 				'views',
 				'revcount',
-				'created'
+				'created',
+				'redirect'
 			)
 		);
 		return $params;
@@ -137,7 +156,8 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 			array (
 				' "views"        - The number of pageviews of each page',
 				' "revcount"     - The number of all revisions of each page',
-				' "created"		 - Creation date of each page'
+				' "created"		 - Creation date of each page',
+				' "redirect"     - Name of redirected page'
 			)
 		);
 		return $description;
