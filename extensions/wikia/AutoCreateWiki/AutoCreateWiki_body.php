@@ -736,9 +736,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( "Checking {$this->mWikiData[ "name"]} folder" );
 
 		$isExist = false; $suffix = "";
-		$dir_part = $this->mWikiData[ "name"] . $suffix;
+		$dir_part = strtolower( substr( $this->mWikiData[ "name"], 0, 1 ) ). "/" . $this->mWikiData[ "name"] . $suffix;
 		while ( $isExist == false ) {
-			$dirName = $this->mWikiData[ "name"] . $suffix;
+			$dirName = strtolower( substr( $this->mWikiData[ "name"], 0, 1 ) ) . "/" . $this->mWikiData[ "name"] . $suffix;
 			if ( isset( $this->mWikiData[ "language" ] ) && $this->mWikiData[ "language" ] !== "en" ) {
 				$dirName .= "/" . strtolower( $this->mWikiData[ "language" ] );
 			}
@@ -746,8 +746,9 @@ class AutoCreateWikiPage extends SpecialPage {
 			#---
 			if ( file_exists( $dirName ) ) {
 				$suffix = rand(1, 9999);
-			} else {
-				$dir_part = $this->mWikiData[ "name"] . $suffix;
+			}
+			else {
+				$dir_part = strtolower( substr( $this->mWikiData[ "name"], 0, 1 ) ) . "/" . $this->mWikiData[ "name"] . $suffix;
 				$isExist = true;
 			}
 		}
