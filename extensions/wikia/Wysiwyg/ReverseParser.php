@@ -586,6 +586,10 @@ class ReverseParser {
 						$out = $this->handleListItem($node, $textContent);
 						break;
 
+					case 'dl':
+						$out = $textContent;
+						break;
+
 					// image / video
 					case 'div':
 					case 'iframe':
@@ -1094,7 +1098,10 @@ class ReverseParser {
 
 					return $this->listIndent . $this->listBullets . $content . "\n";
 				}
-			break;
+				break;
+
+			case 'dd':
+				return $this->listBullets . ltrim($content, "\n");
 		}
 	}
 
