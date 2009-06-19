@@ -6,6 +6,8 @@
 * rt #17343: ActionPanel now respects limits in it's CategorySuggest
 * rt #17414: Google Analytics tracking for masthead. (Nef)
 * rt #16527: Fixed broken answers widget "routing". (Nef)
+* rt #17532: FCK removes table placed inside <dl> (Macbre)
+* rt #17237: WYSIWYG LinkSuggest stops after the first word (Macbre)
 
 == Changes since 200906.1 ==
 * rt #17384: YAHOO.widget.Logger is undefined on answers (Inez)
