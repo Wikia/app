@@ -15,7 +15,10 @@
  */
 function memsess_key( $id ) {
 	global $wgSharedDB, $wgDBname;
-	if ( !empty( $wgSharedDB ) ) {
+	global $wgWikiaCentralAuthDatabase;
+	if ( !empty( $wgWikiaCentralAuthDatabase ) ) {
+		return "{$wgWikiaCentralAuthDatabase}:session:{$id}";
+	} elseif ( !empty( $wgSharedDB ) ) {
 		return "{$wgSharedDB}:session:{$id}";
 	}
 	else {
