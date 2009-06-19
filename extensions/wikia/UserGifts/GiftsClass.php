@@ -34,9 +34,9 @@ class Gifts {
 		#---
 		$db_name = wfGetGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
 		$fname = __METHOD__;
-		$dbr->insert( "`{$db_name}`.`gift`", 
+		$dbr->insert( "gift", 
 		array(
 			'gift_name' => $gift_name,
 			'gift_description' => $gift_description,
@@ -51,8 +51,8 @@ class Gifts {
 		#---
 		$db_name = wfGetGiftDBName();
 		#---
-		$dbw =& wfGetDB( DB_MASTER );
-		$dbw->update( "`{$db_name}`.`gift`",
+		$dbw =& wfGetDB( DB_MASTER, array(), $db_name );
+		$dbw->update( "gift",
 			array( /* SET */
 			'gift_name' => $gift_name,
 			'gift_description' => $gift_description
@@ -67,9 +67,8 @@ class Gifts {
 		#---
 		$db_name = wfGetGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
-		$sql = "SELECT gift_id, gift_name, gift_description
-			FROM `{$db_name}`.`gift` WHERE gift_id = {$id} LIMIT 0,1";
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
+		$sql = "SELECT gift_id, gift_name, gift_description FROM gift WHERE gift_id = {$id} LIMIT 0,1";
 		$res = $dbr->query($sql);
 		$row = $dbr->fetchObject( $res );
 		$gift = array("gift_name"=>"", "gift_description"=>"", "gift_id"=>"");
@@ -120,7 +119,7 @@ class Gifts {
 		#---
 		$db_name = wfGetGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
 		
 		if($limit>0){
 			$limitvalue = 0;
@@ -128,7 +127,7 @@ class Gifts {
 			$limit_sql = " LIMIT {$limitvalue},{$limit} ";
 		}
 		
-		$sql = "SELECT gift_id,gift_name,gift_description,gift_given_count, gift_createdate FROM `{$db_name}`.`gift` ORDER BY {$order} {$limit_sql}";
+		$sql = "SELECT gift_id,gift_name,gift_description,gift_given_count, gift_createdate FROM gift ORDER BY {$order} {$limit_sql}";
 		
 		$res = $dbr->query($sql);
 		$gifts = array();
@@ -148,9 +147,9 @@ class Gifts {
 		#---
 		$db_name = wfGetGiftDBName();
 		#---
-		$dbr =& wfGetDB( DB_MASTER );
+		$dbr =& wfGetDB( DB_MASTER, array(), $db_name );
 		$gift_count = 0;
-		$s = $dbr->selectRow( "`{$db_name}`.`gift`", array( 'count(*) as count' ), array(), $fname );
+		$s = $dbr->selectRow( "gift", array( 'count(*) as count' ), array(), $fname );
 		if ( $s !== false )$gift_count = $s->count;	
 		return $gift_count;
 	}
