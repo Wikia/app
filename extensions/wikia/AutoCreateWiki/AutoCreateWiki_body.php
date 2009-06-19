@@ -410,15 +410,24 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * wikifactory variables
 		 */
+
+		/**
+		 * @fixme!! images directories and urls should be created more simply
+		 */
+		$parts = explode( "/", $this->mWikiData[ "dir_part" ] );
+		array_shift( $parts );
+		$imageUrl = "http://images.wikia.com/".implode( "/", $parts ) . "/images";
+		$imageDir = "/images/{$this->mWikiData[ "dir_part" ]}/images";
+
 		$WFSettingsVars = array(
 			'wgSitename'				=> $this->mWikiData[ "title" ],
 			'wgScriptPath'				=> '',
 			'wgScript'					=> '/index.php',
 			'wgArticlePath'				=> '/wiki/$1',
 			'wgLogo'					=> '$wgUploadPath/b/bc/Wiki.png',
-			'wgUploadPath'				=> "http://images.wikia.com/{$this->mWikiData[ "dir_part" ]}/images",
-			'wgUploadDirectory'			=> "/images/{$this->mWikiData[ "dir_part" ]}/images",
-			'wgDBname'					=> $this->mWikiData[ "dbname" ],
+			'wgUploadPath'              => $imageUrl,
+			'wgUploadDirectory'         => $imageDir,
+			'wgDBname'                  => $this->mWikiData[ "dbname" ],
 			'wgLocalInterwiki'			=> $this->mWikiData[ 'title' ],
 			'wgLanguageCode'			=> $this->mWikiData['language'],
 			'wgServer'					=> "http://{$this->mWikiData["subdomain"]}." . "wikia.com",
@@ -426,7 +435,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgDefaultSkin'				=> 'monaco',
 			'wgDefaultTheme'			=> 'sapphire',
 			'wgEnableNewParser'			=> true,
-			'wgEnableEditEnhancements'	=> true,
+			'wgEnableEditEnhancements'  => true,
 			'wgEnableSectionEdit'	    => true,
 		);
 		$this->mWikiData[ "founder" ] = $this->mFounder->getId();
