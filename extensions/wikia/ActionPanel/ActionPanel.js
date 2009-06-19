@@ -308,7 +308,7 @@ function applyActionsOnQuestions(){
 								wiki_text = existing_content.replace(regex,"") + "\n\n" + categories_wiki_text;
 								//alert( "would have saved wiki text:" + wiki_text )
 								//return false;
-								url = wgServer + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=edit&title=" + this_title + "&text=" + wiki_text + "&summary=" + wgActionPanelAddCategoriesSummary;
+								url = wgServer + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=edit&title=" + this_title + "&text=" + encodeURIComponent(wiki_text) + "&summary=" + wgActionPanelAddCategoriesSummary;
 								jQuery.post( url, "", function( response ){	
 									eval("j=" + response);
 									
