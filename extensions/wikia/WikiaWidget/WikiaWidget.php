@@ -10,13 +10,14 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '1.0',
 );
  
-$dir = dirname(__FILE__) . '/';
+$dir = dirname(__FILE__);
 
 /*
 $wgAutoloadClasses['WikiaWidget'] = $dir . 'WikiaWidget_body.php'; # Tell MediaWiki to load the extension body.
 $wgSpecialPages['WikiaWidget'] = 'WikiaWidget'; # Let MediaWiki know about your new special page.
 */
 
+$wgExtensionMessagesFiles['WikiaWidget'] = $dir . '/WikiaWidget.i18n.php';
 
 
 /**

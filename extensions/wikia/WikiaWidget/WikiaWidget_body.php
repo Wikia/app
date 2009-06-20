@@ -2,7 +2,7 @@
 class WikiaWidget extends SpecialPage {
 	function __construct() {
 		parent::__construct( 'WikiaWidget' );
-		//wfLoadExtensionMessages('WikiaWidget');
+		wfLoadExtensionMessages('WikiaWidget');
 	}
  
 	function execute( $par ) {
