@@ -1717,7 +1717,6 @@ if ($wgOut->isArticle()){
 			    !$wgContLang->isRTL() && // Since this is in the left nav, not suitable for right-to-left languages
 		            !ArticleAdLogic::isMainPage() &&
 			     ArticleAdLogic::isContentPage() &&
-			     ! $wgEnableAdsInContent && // Turn off Lower skys when ads in content is enabled
 			     ArticleAdLogic::isSuperLongArticle($this->data['bodytext'])) {
 				echo '<div style="position: absolute; height: 600px; width: 160px; margin-top: -600px; left: -190px;">' .
 					AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_3', true) .
