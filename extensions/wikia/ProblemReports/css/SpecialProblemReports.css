@@ -161,6 +161,7 @@ em.reportProblemStatus3 {
 	width: 25%;
 	height: 250px;
 	background-color: #f9f9f9;
+	color: black;
 	border-left: solid 2px #ccc;
 	padding: 3px 5px;
 	overflow: auto;
