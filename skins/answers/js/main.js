@@ -36,6 +36,24 @@ jQuery("#answers_ask_field").ready(function() {
 	myAutoComp.generateRequest = function(sQuery) {
 		return "?lang=" + wgContentLanguage + "&db=" + wgDB + "&query=" + sQuery;
 	}
+
+	var submitAutoComplete_callback = {
+		success: function(o) {
+			if(o.responseText !== undefined) {
+				window.location.href=o.responseText;
+			}
+		}
+	}
+
+	var submitAutoComplete = function(comp, resultListItem) {
+		//YAHOO.Wikia.Tracker.trackByStr(null, 'search/suggestItem/' + escape(YAHOO.util.Dom.get('search_field').value.replace(/ /g, '_')));
+		sUrl = wgServer + wgScriptPath + '?action=ajax&rs=getSuggestedArticleURL&rsargs=' + encodeURIComponent(YAHOO.util.Dom.get('answers_ask_field').value);
+		console.log(sUrl);
+		var request = YAHOO.util.Connect.asyncRequest('GET', sUrl, submitAutoComplete_callback);
+	}
+	myAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
+
+	YAHOO.util.Event.addListener('answers_ask_field', 'keypress', function(e) {if(e.keyCode==13) {askQuestion();}});
 });
 
 jQuery("#header_menu_user").ready(function() {
