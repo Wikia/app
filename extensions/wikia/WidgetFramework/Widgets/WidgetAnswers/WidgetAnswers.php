@@ -78,7 +78,7 @@ EOD;
 	$url = 'http://'.$domain.'answers.wikia.com/api.php?'.http_build_query($apiparams);
 
 	$output .= <<<EOD
-<script type="text/javascript">
+<script type="text/javascript">/*<![CDATA[*/
 var ask_a_question_msg = "{$ask_a_question}";
 if(typeof WidgetAnswers_html == 'undefined') var WidgetAnswers_html = '';
 var WidgetAnswers_url = '$url';
@@ -87,7 +87,7 @@ if(WidgetAnswers_html == '') {
 		if(WidgetAnswers_html != '') jQuery('#{$id}_content').children('div').children('ul').prepend(WidgetAnswers_html);
 	});
 } else jQuery('#{$id}_content').children('div').children('ul').prepend(WidgetAnswers_html);
-</script>
+/*]]>*/</script>
 EOD;
 
 	if($wgUser->isLoggedIn()) {
