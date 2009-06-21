@@ -15,6 +15,7 @@
 * rt #17638: WikiaWidget msg and i18n. (Nef)
 * rt #17684: W3c validation tweaks for answers widget. (Nef)
 * rt #17657: Css tweaks for ProblemReports. (Nef)
+* rt #17276: Changes to typeahead / search experience on answers. (Nef)
 
 == Changes since 200906.1 ==
 * rt #17384: YAHOO.widget.Logger is undefined on answers (Inez)
