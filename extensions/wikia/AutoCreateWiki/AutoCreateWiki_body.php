@@ -632,7 +632,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * destroy connection to newly created database
 		 */
 		$dbw_local->commit();
-		$dbw_local->close();
 
 		$wgSharedDB = $tmpSharedDB;
 
