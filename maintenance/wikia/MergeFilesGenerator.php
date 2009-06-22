@@ -9,9 +9,9 @@ require_once('extensions/wikia/MergeFiles/MergeFilesAdditional.php');
 
 $HeadURL = split('/', '$HeadURL$');
 $wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
-$targetPrefix = "/images/common/releases_{$wgReleaseNumber}/skins/";
+$targetPrefix = "/images/c/common/releases_{$wgReleaseNumber}/skins/";
 $java = "/usr/bin/java";
-$yuic = "/images/common/yuic.jar";
+$yuic = "/images/c/common/yuic.jar";
 $headerComment = "/* To download this javascript non-compressed, add allinone=0 to the end of the url. */\n/* Example: http://www.wikia.com/wiki/About_Wikia?allinone=0 */\n\n";
 
 foreach($MF as $group) {
