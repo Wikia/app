@@ -383,6 +383,7 @@ class CreateWikiMetrics {
 	 *
 	 */
 	private function getWikis() {
+		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 		$res = array();
 
