@@ -336,6 +336,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		global $wgWikiaCentralAuthMemcPrefix;
 		$memcKey = $wgWikiaCentralAuthMemcPrefix . md5($this->mName);
 
+/*
 		if(isset($this->mGlobalId)) {
 			$userId = $this->mGlobalId;
 		}
@@ -348,6 +349,8 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 				return $memcKey;
 			}
 		}
+*/
+		$userId = $this->mGlobalId;
 
 		$memcKey = wfMemcKey( 'user', 'id', $userId );
 		return $memcKey;
