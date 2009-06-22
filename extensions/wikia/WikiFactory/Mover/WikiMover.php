@@ -752,16 +752,16 @@ class WikiMover {
 		}
 
 
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
-		$dbw->begin();
+		$dbCentral = WikiFactory::db( DB_MASTER );
+		$dbCentral->begin();
 		#--- set city_public to 2 for source
-		$dbw->update(
+		$dbCentral->update(
 			"city_list",
 			array( "city_public" => 2 ), #--- means redirected
 			array( "city_id" => $this->mSourceID ),
 			__METHOD__
 		);
-		$oTargetWiki = $dbw->selectRow(
+		$oTargetWiki = $dbCentral->selectRow(
 			"city_list",
 			array( "city_url" ),
 			array( "city_id" => $this->mTargetID ),
@@ -769,14 +769,14 @@ class WikiMover {
 		);
 
 		#--- set city_url for source from target
-		$dbw->update(
+		$dbCentral->update(
 			"city_list",
 			array( "city_url" => $oTargetWiki->city_url ),
 			array( "city_id" => $this->mSourceID ),
 			__METHOD__
 		);
 
-		$dbw->commit();
+		$dbCentral->commit();
 	}
 
 	/**
