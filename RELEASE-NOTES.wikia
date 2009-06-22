@@ -1,5 +1,5 @@
 == Changes since 200906.4 ==
-* 
+* rt#2281: removed new lines from the beginning of scary transcluded texts (Marooned)
 
 == Changes since 200906.3 ==
 * AWC: fixed function getDomainsLikeOrExact (moli)

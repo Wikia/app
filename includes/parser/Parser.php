@@ -3269,7 +3269,10 @@ class Parser
 		# Add a blank line preceding, to prevent it from mucking up
 		# immediately preceding headings
 		if ( $isHTML ) {
-			$text = "\n\n" . $this->insertStripItem( $text );
+			/* Wikia change begin - @author: Marooned */
+			/* rt#2281 - removed "\n\n" from the beginning per request */
+			$text = $this->insertStripItem( $text );
+			/* Wikia change end */
 		}
 		# Escape nowiki-style return values
 		elseif ( $nowiki && ( $this->ot['html'] || $this->ot['pre'] ) ) {
