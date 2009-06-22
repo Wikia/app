@@ -166,13 +166,15 @@ class WikiMover {
 		#--- target path for images
 		$this->mTargetUploadDirectory = WikiFactory::getVarValueByName( "wgUploadDirectory", $this->mTargetID );
 
-		#--- table "text" could be in old format (three fields instead eleven)
-		$dbr = wfGetDB( DB_MASTER );
-		$oRes = $dbr->query(sprintf("SHOW COLUMNS FROM %s",$this->targetTable( "text" )));
-		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+		/**
+		 * table "text" could be in old format (three fields instead eleven)
+		 */
+		$dbTarget = wfGetDB( DB_MASTER, array(), $this->mTargetName );
+		$oRes = $dbTarget->query(sprintf("SHOW COLUMNS FROM %s",$this->targetTable( "text" )));
+		while ( $oRow = $dbTarget->fetchObject( $oRes ) ) {
 			$this->mTargetTextFields[] =  $oRow->Field;
 		}
-		$dbr->freeResult($oRes);
+		$dbTarget->freeResult($oRes);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -243,7 +245,7 @@ class WikiMover {
 			return false;
 		}
 
-		if ( ($this->mTargetName === $this->mSourceName) || ($this->mSourceID == $this->mTargetID) ) {
+		if( ( $this->mTargetName === $this->mSourceName) || ($this->mSourceID == $this->mTargetID) ) {
 			wfDebug("wikimover: source and target are exactly the same", true);
 			return false;
 		}
@@ -256,14 +258,15 @@ class WikiMover {
 		#--- seems like we can start moving articles
 		$this->log( "Moving articles from {$this->mSourceName} ({$this->mSourceID}) to $this->mTargetName ({$this->mTargetID})" );
 
-		$dbr = wfGetDB( DB_MASTER );
+		$dbSource = wfGetDB( DB_MASTER, array(), $this->mSourceName );
+		$dbTarget = wfGetDB( DB_MASTER, array(), $this->mTargetName );
 
 		/**
 		 * get all pages for source DB
 		 */
 		$skipNamespaces = array( NS_MEDIAWIKI, NS_MEDIAWIKI_TALK );
 		$aSourcePages = array();
-		$oRes = $dbr->select(
+		$oRes = $dbSource->select(
 			array(
 				$this->sourceTable( "page" ),
 				$this->sourceTable( "revision" ),
@@ -276,7 +279,7 @@ class WikiMover {
 			 ),
 			__METHOD__
 		);
-		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+		while ( $oRow = $dbSource->fetchObject( $oRes ) ) {
 			if ( !isset( $aSourcePages[ $oRow->page_id ] ) ) {
 				$aSourcePages[ $oRow->page_id ] = array();
 				$aSourcePages[ $oRow->page_id ][ "data" ] = $oRow;
@@ -287,7 +290,7 @@ class WikiMover {
 			}
 			$aSourcePages[ $oRow->page_id ][ "revision" ][ $oRow->rev_id ] = $oRow;
 		}
-		$dbr->freeResult( $oRes );
+		$dbSource->freeResult( $oRes );
 
 		$this->log( "Get data from source database" );
 		/**
@@ -295,17 +298,17 @@ class WikiMover {
 		 */
 		$aTargetPages = array();
 		//array( "page_namespace not in (" . implode(",", $skipNamespaces) . ")" ),
-		$oRes = $dbr->select(
+		$oRes = $dbTarget->select(
 			array( $this->targetTable( "page" ) ),
 			array( "*" ),
 			null,
 			__METHOD__
 		);
 
-		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+		while ( $oRow = $dbTarget->fetchObject( $oRes ) ) {
 			$aTargetPages[ $oRow->page_namespace ][ $oRow->page_title ] = $oRow->page_id;
 		}
-		$dbr->freeResult( $oRes );
+		$dbTarget->freeResult( $oRes );
 
 		$this->log( "Get all pages from target database" );
 		$imageDirs = array();
@@ -475,7 +478,8 @@ class WikiMover {
 	 * @return nothing
 	 */
 	private function movePage( $aPage, $sTitle = null ) {
-		$dbw = wfGetDB( DB_MASTER );
+
+		$dbTarget = wfGetDB( DB_MASTER, array(), $this->mTargetName );
 		if ( !empty( $sTitle )) {
 			$sNewTitle = $sTitle;
 		} else {
@@ -487,9 +491,9 @@ class WikiMover {
 		$iOldLastRevision = $aPage["data"]->page_latest;
 		$iNewLastRevision = 0;
 
-		$dbw->begin();
+		$dbTarget->begin();
 		try {
-			$dbw->insert(
+			$dbTarget->insert(
 				$this->targetTable("page"),
 				array(
 					"page_id"           => null,
@@ -505,7 +509,7 @@ class WikiMover {
 					"page_len"          => $aPage["data"]->page_len
 				)
 			);
-			$iNewArticleID = $dbw->insertId();
+			$iNewArticleID = $dbTarget->insertId();
 
 			foreach ( $aPage["revision"] as $id => $oRevision ) {
 
@@ -513,23 +517,23 @@ class WikiMover {
 				# first insert text and get old_id (which is new rev_text_id)
 				# text table can have different layout in different wikia
 
-				$dbw->insert(
+				$dbTarget->insert(
 					$this->targetTable("text"),
 					$this->rowToText($oRevision),
 					__METHOD__
 				);
-				$iNewTextID = $dbw->insertId();
+				$iNewTextID = $dbTarget->insertId();
 
-		if(($this->mRevisionUser instanceof User) && $this->mRevisionUser->getId()) {
-			$sRevUser = $this->mRevisionUser->getId();
-			$sRevUserText = $this->mRevisionUser->getName();
-		}
-		else {
-			$sRevUser = $oRevision->rev_user;
-			$sRevUserText = $oRevision->rev_user_text;
-		}
+				if(($this->mRevisionUser instanceof User) && $this->mRevisionUser->getId()) {
+					$sRevUser = $this->mRevisionUser->getId();
+					$sRevUserText = $this->mRevisionUser->getName();
+				}
+				else {
+					$sRevUser = $oRevision->rev_user;
+					$sRevUserText = $oRevision->rev_user_text;
+				}
 
-				$dbw->insert(
+				$dbTarget->insert(
 					$this->targetTable("revision"),
 					array(
 						"rev_id"            => null,
@@ -545,25 +549,25 @@ class WikiMover {
 					__METHOD__
 				);
 				if ( $oRevision->rev_id == $iOldLastRevision ) {
-					$iNewLastRevision = $dbw->insertId();
+					$iNewLastRevision = $dbTarget->insertId();
 				}
 
 				#--- update page with new last revision
-				$dbw->update(
+				$dbTarget->update(
 					$this->targetTable("page"),
 					array( "page_latest" => $iNewLastRevision ),
 					array( "page_id" => $iNewArticleID ),
 					__METHOD__
 				);
 			}
-			$dbw->commit();
+			$dbTarget->commit();
 		}
 		catch( DBQueryError $e ) {
 			$this->log(
 				sprintf("Error %s not moved because it already exists in target database",
 					$this->pageName( $aPage["data"]->page_namespace, $sNewTitle )
 			));
-			$dbw->rollback();
+			$dbTarget->rollback();
 		}
 	}
 
@@ -581,7 +585,7 @@ class WikiMover {
 	 * @return nothing
 	 */
 	private function moveLastRevision( $aPage, $targetID ) {
-		$dbw = wfGetDB( DB_MASTER );
+		$dbTarget = wfGetDB( DB_MASTER, array(), $this->mTargetName );
 
 		$iOldArticleID = $aPage["data"]->page_id;
 		$iNewArticleID = $targetID;
@@ -589,7 +593,7 @@ class WikiMover {
 		$iNewLastRevision = 0;
 
 		#--- get only data for last revision
-		$dbw->begin();
+		$dbTarget->begin();
 		$oRevision = $aPage["revision"][$aPage["data"]->page_latest];
 
 		$sNow = wfTimestampNow();
@@ -599,12 +603,12 @@ class WikiMover {
 			$aText["old_timestamp"] = $sNow;
 		}
 
-		$dbw->insert(
+		$dbTarget->insert(
 			$this->targetTable("text"),
 			$aText,
 			__METHOD__
 		);
-		$iNewTextID = $dbw->insertId();
+		$iNewTextID = $dbTarget->insertId();
 
 		if(($this->mRevisionUser instanceof User) && $this->mRevisionUser->getId()) {
 			$sRevUser = $this->mRevisionUser->getId();
@@ -615,7 +619,7 @@ class WikiMover {
 			$sRevUserText = $oRevision->rev_user_text;
 		}
 
-		$dbw->insert(
+		$dbTarget->insert(
 			$this->targetTable("revision"),
 			array(
 				"rev_id"            => null,
@@ -631,17 +635,17 @@ class WikiMover {
 			__METHOD__
 		);
 
-		$iNewLastRevision = $dbw->insertId();
+		$iNewLastRevision = $dbTarget->insertId();
 
 		#--- update page with new last revision
-		$dbw->update(
+		$dbTarget->update(
 			$this->targetTable("page"),
 			array( "page_latest" => $iNewLastRevision ),
 			array( "page_id" => $iNewArticleID ),
 			__METHOD__
 		);
 		echo "last-revision: {$iNewLastRevision} article-id: {$iNewArticleID}\n";
-		$dbw->commit();
+		$dbTarget->commit();
 	}
 
 	/**
@@ -804,26 +808,27 @@ class WikiMover {
 		wfProfileIn( __METHOD__ );
 		$aUserGroups = array();
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbSource = wfGetDB( DB_MASTER, array(), $this->mSourceName );
+		$dbTarget = wfGetDB( DB_MASTER, array(), $this->mTargetName );
 
 		#--- get user_groups data from source
-		$oRes = $dbw->select(
+		$oRes = $dbSource->select(
 			$this->sourceTable("user_groups"),
 			array("*"),
 			null,
 			__METHOD__
 		);
 
-		while ( $oRow = $dbw->fetchObject($oRes)) {
+		while ( $oRow = $dbSource->fetchObject($oRes)) {
 			$aUserGroups[] = $oRow;
 		}
 
-		$dbw->freeResult( $oRes );
+		$dbSource->freeResult( $oRes );
 
-		$dbw->begin();
+		$dbTarget->begin();
 		#--- iterate, delete, insert
 		foreach ( $aUserGroups as $oUserRow ) {
-			$dbw->delete(
+			$dbTarget->delete(
 				$this->targetTable("user_groups"),
 				array(
 					"ug_user" => $oUserRow->ug_user,
@@ -831,7 +836,7 @@ class WikiMover {
 				),
 				__METHOD__
 			);
-			$dbw->insert(
+			$dbTarget->insert(
 				$this->targetTable("user_groups"),
 				array(
 					"ug_user" => $oUserRow->ug_user,
@@ -841,7 +846,7 @@ class WikiMover {
 			);
 			$this->log(sprintf("User %s/%s moved to target database", $oUserRow->ug_user, $oUserRow->ug_group));
 		}
-		$dbw->commit();
+		$dbTarget->commit();
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -869,18 +874,19 @@ class WikiMover {
 		wfProfileIn( __METHOD__ );
 		$aImages = array();
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbSource = wfGetDB( DB_MASTER, array(), $this->mSourceName );
+		$dbTarget = wfGetDB( DB_MASTER, array(), $this->mTargetName );
 
 		$this->log( "load images from source database" );
 		#--- get image data from source
-		$oRes = $dbw->select(
+		$oRes = $dbSource->select(
 			$this->sourceTable("image"),
 			array("*"),
 			null,
 			__METHOD__
 		);
 
-		while ( $oRow = $dbw->fetchObject($oRes)) {
+		while ( $oRow = $dbSource->fetchObject($oRes)) {
 			$aImages[] = array (
 				"img_name"          => $oRow->img_name,
 				"img_size"          => $oRow->img_size,
@@ -898,41 +904,41 @@ class WikiMover {
 				"img_sha1"			=> $oRow->img_sha1
 			);
 		}
-		$dbw->freeResult( $oRes );
+		$dbSource->freeResult( $oRes );
 
 		$this->log( "load images from target database" );
 		#--- get image data from target
-		$oRes = $dbw->select(
+		$oRes = $dbTarget->select(
 			$this->targetTable("image"),
 			array("img_name, img_size"),
 			null,
 			__METHOD__
 		);
 		$targetImages = array();
-		while ( $oRow = $dbw->fetchObject($oRes)) {
+		while ( $oRow = $dbTarget->fetchObject($oRes)) {
 			$targetImages[$oRow->img_name] = $oRow->img_size;
 		}
-		$dbw->freeResult( $oRes );
+		$dbTarget->freeResult( $oRes );
 
-		$dbw->begin();
+		$dbTarget->begin();
 		#--- iterate, delete, insert
-		foreach ( $aImages as $aImage ) {
+		foreach( $aImages as $aImage ) {
 			#--- check if exists in target database (compare img_name)
-			if ( isset($targetImages[$aImage["img_name"]]) ) {
+			if( isset($targetImages[$aImage["img_name"]]) ) {
 				#--- delete only if overwrite is enabled
 				if ($this->mOverwrite === true) {
-					$dbw->delete( $this->targetTable("image"), array("img_name" => $aImage["img_name"]), __METHOD__ );
-					$dbw->insert( $this->targetTable("image"), $aImage, __METHOD__ );
+					$dbTarget->delete( $this->targetTable("image"), array("img_name" => $aImage["img_name"]), __METHOD__ );
+					$dbTarget->insert( $this->targetTable("image"), $aImage, __METHOD__ );
 					$this->log(sprintf("image %s moved to target database", $aImage["img_name"]));
 				} else {
 					$this->log(sprintf("image %s not moved to target database", $aImage["img_name"]));
 				}
 			} else {
-				$dbw->insert( $this->targetTable("image"), $aImage, __METHOD__ );
+				$dbTarget->insert( $this->targetTable("image"), $aImage, __METHOD__ );
 				$this->log(sprintf("image %s moved to target database", $aImage["img_name"]));
 			}
 		}
-		$dbw->commit();
+		$dbTarget->commit();
 
 		$this->log( "moved images to target database" );
 		wfProfileOut( __METHOD__ );
@@ -978,7 +984,6 @@ class WikiMover {
 				return $this->mInternalLogger;
 			}
 		}
-
 		return null;
 	}
 
