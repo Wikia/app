@@ -455,6 +455,7 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		if( $activeCluster ) {
 			$WFSettingsVars[ "wgDBcluster" ] = $activeCluster;
+			wfGetLBFactory()->sectionsByDB[ $this->mWikiData[ "dbname" ] ] = $activeCluster;
 		}
 		$this->mWikiData[ "founder" ] = $this->mFounder->getId();
 
@@ -526,6 +527,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 		$this->log( "Creating tables in database" );
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step6') );
+
 
 		/**
 		 * import language starter
@@ -647,7 +649,6 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
 				$this->mWikiId /** target **/
 			);
-			$this->log( sprintf( "WikiMover: moving from %d to %d" ) );
 			$wikiMover->setOverwrite( true );
 			$wikiMover->mMoveUserGroups = false;
 			$wikiMover->load();
