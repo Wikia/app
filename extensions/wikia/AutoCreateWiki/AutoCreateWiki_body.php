@@ -601,32 +601,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->log( "Create user sysop/bureaucrat" );
 
 		/**
-		 * use starter when wikia in proper hub
-		 */
-		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )
-			&& $this->mStarters[ $this->mWikiData[ "hub" ] ]
-			&& $this->mWikiData[ "language" ] === "en" ) {
-
-			$wikiMover = WikiMover::newFromIDs(
-				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
-				$this->mWikiId /** target **/
-			);
-			$wikiMover->setOverwrite( true );
-			$wikiMover->mMoveUserGroups = false;
-			$wikiMover->load();
-			$wikiMover->setRunJobs( false );
-			$wikiMover->setTargetUploadDirectory( $this->mWikiData[ "images" ] );
-			$wikiMover->setRevisionUser(User::newFromName('Default'));
-			$wikiMover->move();
-
-			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
-		}
-		else {
-			$this->log( sprintf( "There's not starters for category %d and language %s",
-				$this->mWikiData[ 'hub' ], $this->mWikiData[ "language" ] ) );
-		}
-
-		/**
 		 * set images timestamp to current date (see: #1687)
 		 */
 		$dbw_local->update(
@@ -654,8 +628,39 @@ class AutoCreateWikiPage extends SpecialPage {
 		$localJob->WFinsert( $this->mWikiId, $this->mWikiData[ "dbname" ] );
 		$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step10') );
 
+		/**
+		 * destroy connection to newly created database
+		 */
 		$dbw_local->commit();
+		$dbw_local->close();
+
 		$wgSharedDB = $tmpSharedDB;
+
+		/**
+		 * use starter when wikia in proper hub
+		 */
+		if( isset( $this->mStarters[ $this->mWikiData[ "hub" ] ] )
+			&& $this->mStarters[ $this->mWikiData[ "hub" ] ]
+			&& $this->mWikiData[ "language" ] === "en" ) {
+
+			$wikiMover = WikiMover::newFromIDs(
+				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
+				$this->mWikiId /** target **/
+			);
+			$wikiMover->setOverwrite( true );
+			$wikiMover->mMoveUserGroups = false;
+			$wikiMover->load();
+			$wikiMover->setRunJobs( false );
+			$wikiMover->setTargetUploadDirectory( $this->mWikiData[ "images" ] );
+			$wikiMover->setRevisionUser(User::newFromName('Default'));
+			$wikiMover->move();
+
+			$this->addCustomSettings( $this->mWikiData[ "hub" ], $wgHubCreationVariables, 'hub' );
+		}
+		else {
+			$this->log( sprintf( "There's not starters for category %d and language %s",
+			$this->mWikiData[ 'hub' ], $this->mWikiData[ "language" ] ) );
+		}
 
 
 		/**
