@@ -538,18 +538,22 @@ class AutoCreateWikiPage extends SpecialPage {
 			 * first check whether database starter exists
 			 */
 			$sql = sprintf( "SHOW DATABASES LIKE '%s';", $starterDB );
-			$Res = $dbw_local->query( $sql, __METHOD__ );
+			/**
+			 * @fixme we should not assume that dbw in this place is to first
+			 * cluster
+			 */
+			$Res = $dbw->query( $sql, __METHOD__ );
 			$numRows = $Res->numRows();
 			if ( !empty( $numRows ) ) {
 				$cmd = sprintf(
 					"%s -h%s -u%s -p%s %s categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text | %s -h%s -u%s -p%s %s",
 					$this->mMYSQLdump,
-					$wgDBserver,
+					$dbw->getLBInfo( 'host' ),
 					$wgDBuser,
 					$wgDBpassword,
 					$starterDB,
 					$this->mMYSQLbin,
-					$wgDBserver,
+					$dbw_local->getLBInfo( 'host' ),
 					$wgDBuser,
 					$wgDBpassword,
 					$this->mWikiData[ "dbname"]
