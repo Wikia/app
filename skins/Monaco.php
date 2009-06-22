@@ -1302,7 +1302,6 @@ class MonacoTemplate extends QuickTemplate {
 	} ?>xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
 <?php		wfProfileIn( __METHOD__ . '-head'); ?>
 <head>
-		<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
                 <!-- Skin = <?php echo basename(__FILE__) ?> -->
 		<?php $this->html('headlinks') ?>
@@ -2153,20 +2152,6 @@ wfProfileOut( __METHOD__ . '-body');
 ?>
 		<div id="positioned_elements" class="reset"></div>
 	</body>
-<script type="text/javascript">
-var domain = document.location.toString().substring(7);
-domain = domain.substring(0,domain.indexOf('/'));
-if(domain.substring(domain.length-9,domain.length) == 'wikia.com') {
-    domain = 'wikia.com';
-}
-var domainA = domain.split('.');
-if(domainA.length >= 2) {
-    domain = domainA[domainA.length-2] + '.' + domainA[domainA.length-1];
-}
-var cbjspath = "static.chartbeat.com/js/chartbeat.js?uid=2056&domain="+domain;
-var cbjsprotocol = (("https:" == document.location.protocol) ? "https://s3.amazonaws.com/" : "http://");
-document.write(unescape("%3Cscript src='"+cbjsprotocol+cbjspath+"' type='text/javascript'%3E%3C/script%3E"))
-</script>
 </html>
 <?php
 		wfProfileOut( __METHOD__ );
