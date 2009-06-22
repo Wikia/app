@@ -312,16 +312,13 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * where Special:CreateWiki exists.
 		 *
 		 * @todo do not use hardcoded name, code below is only for test
+		 *
+		 * set $activeCluster to false if you want to create wikis on first
+		 * cluster
 	     */
-		if( !empty( $wgDBcluster ) ) {
-			$activeCluster = "c2";
-			$dbname = "wikicities_c2";
-		}
-		else {
-			$activeCluster = false;
-			$dbname = "wikicities";
-		}
-		$dbw_local = wfGetDB( DB_MASTER, array(), $dbname ); # databases
+		$activeCluster = "c2";
+		$dbname = ( $activeCluster ) ? "wikicities_{$activeCluster}" : "wikicities";
+		$dbw_local = wfGetDB( DB_MASTER, array(), $dbname );
 
 		$Row = $dbw->selectRow(
 			"city_list",
