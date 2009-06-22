@@ -164,6 +164,7 @@ class WikiaCentralAuthHooks {
 		if ($oCUser->exists()) {
 			$oCUser->deleteGlobalCookies();
 			$oCUser->resetAuthToken();
+			$oCUser->quickInvalidateCache();
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -307,6 +308,7 @@ class WikiaCentralAuthHooks {
 			wfDebug( __METHOD__ . ": save settings of user: {$oUser->getName()} \n" );
 			$ca->invalidateCentralUser( $oUser );
 			$ca->resetAuthToken($oUser->mToken);
+			$ca->invalidateCache();
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -453,6 +455,7 @@ class WikiaCentralAuthHooks {
 		if ( !$oUser instanceof User ) {
 			return true;
 		}
+		wfDebug( __METHOD__ . ": Load from central database user: {$oUser->getName()} \n" );		
 		$userName = $oUser->mName;
 		if ( User::isValidUserName($userName) ) {
 			$oRow2 = WikiaCentralAuthUser::loadFromDatabaseByName($userName);
