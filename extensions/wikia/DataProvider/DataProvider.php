@@ -413,35 +413,39 @@ class DataProvider
 		wfProfileIn( __METHOD__ );
 		global $wgExternalDatawareDB, $wgMemc, $wgCityId;
 
-		$memckey = wfMemcKey("TopFiveUsers", $limit);
-		$results = $wgMemc->get( $memckey );
-
-		if ( !is_array( $results ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
-			$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), __METHOD__ );
-
-			$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-			$query = "SELECT lu_user_id AS rev_user, lu_rev_cnt AS cnt FROM city_local_users USE INDEX (lu_rev_cnt) WHERE lu_wikia_id = '" . $wgCityId . "' " . ( !empty($row->user_list) ? "AND lu_user_id NOT IN (" . $row->user_list . ",'0','929702')" : "" ) . " ORDER BY lu_rev_cnt DESC";
-
-			$res = $dbs->query( $dbs->limitResult($query, $limit * 4, 0) );
-
-			$results = array();
-			while ( $row = $dbs->fetchObject( $res ) ) {
-				$user = User::newFromID( $row->rev_user );
-
-				if (!$user->isBlocked() && !$user->isAllowed('bot') && $user->getUserPage()->exists() ) {
-					$article['url'] = $user->getUserPage()->getLocalUrl();
-					$article['text'] = $user->getName();
-					$results[] = $article;
-				}
-			}
-			$dbs->freeResult( $res );
-
-			$results = array_slice( $results, 0, $limit );
-			$wgMemc->set($memckey, $results, 60 * 60 * 12);
+		if( empty( $wgExternalDatawareDB ) ) {
+			$result = array();
 		}
+		else {
+			$memckey = wfMemcKey("TopFiveUsers", $limit);
+			$results = $wgMemc->get( $memckey );
 
-		wfProfileOut( __METHOD__ );
+			if ( !is_array( $results ) ) {
+				$dbr = wfGetDB( DB_SLAVE );
+				$row = $dbr->selectRow("user_groups", "GROUP_CONCAT(ug_user) AS user_list", array("ug_group IN ('staff', 'bot')"), __METHOD__ );
+
+				$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+				$query = "SELECT lu_user_id AS rev_user, lu_rev_cnt AS cnt FROM city_local_users USE INDEX (lu_rev_cnt) WHERE lu_wikia_id = '" . $wgCityId . "' " . ( !empty($row->user_list) ? "AND lu_user_id NOT IN (" . $row->user_list . ",'0','929702')" : "" ) . " ORDER BY lu_rev_cnt DESC";
+
+				$res = $dbs->query( $dbs->limitResult($query, $limit * 4, 0) );
+
+				$results = array();
+				while ( $row = $dbs->fetchObject( $res ) ) {
+					$user = User::newFromID( $row->rev_user );
+
+					if (!$user->isBlocked() && !$user->isAllowed('bot') && $user->getUserPage()->exists() ) {
+						$article['url'] = $user->getUserPage()->getLocalUrl();
+						$article['text'] = $user->getName();
+						$results[] = $article;
+					}
+				}
+				$dbs->freeResult( $res );
+
+				$results = array_slice( $results, 0, $limit );
+				$wgMemc->set($memckey, $results, 60 * 60 * 12);
+			}
+			wfProfileOut( __METHOD__ );
+		}
 		return $results;
 	}
 
