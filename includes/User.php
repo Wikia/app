@@ -293,7 +293,7 @@ class User {
 			 */
 			$isExpired = true;
 			if(!empty($data)) {
-				$_key = "{$wgSharedDB}:user_touched:{$this->mId}";
+				$_key = wfSharedMemcKey( "user_touched", $this->mId );
 				$_touched = $wgMemc->get( $_key );
 				if($_touched == null){
 					$wgMemc->set( $_key, $data['mTouched'] );
@@ -1666,7 +1666,8 @@ class User {
 		if( $this->mId ) {
 			global $wgMemc, $wgSharedDB; # Wikia
 			$wgMemc->delete( wfMemcKey( 'user', 'id', $this->mId ) );
-			if( !empty( $wgSharedDB ) ) $wgMemc->delete( "{$wgSharedDB}:user_touched:{$this->mId}" ); # Wikia
+			# not uncyclo
+			if( !empty( $wgSharedDB ) ) $wgMemc->delete( wfSharedMemcKey( "user_touched", $this->mId ) ); # Wikia
 		}
 	}
 
