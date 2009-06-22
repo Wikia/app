@@ -55,10 +55,10 @@ class Webtools extends SpecialPage {
 
 		$out = array();
 
-		$dbr =  wfGetDB(DB_SLAVE);
+		$dbr =  wfGetDB(DB_SLAVE, array(), 'sitemaps');
 
 		$query = "SELECT site_url, sitemap_url, sitemap_format, sitemap_type, last_downloaded, sitemap_status, url_count
-				  FROM `sitemaps`.sitemaps
+				  FROM sitemaps
 				  WHERE site_url = '" . $host . "'";
 
 		$result = $dbr->query ($query) ;
@@ -74,7 +74,7 @@ class Webtools extends SpecialPage {
 		$out['overview'] = $dbs;
 
 		$query = "SELECT *
-				  FROM `sitemaps`.sitemap_stats
+				  FROM sitemap_stats
 				  WHERE site_url = '" . $host . "'";
 
 		$result = $dbr->query ($query) ;
@@ -88,9 +88,6 @@ class Webtools extends SpecialPage {
 		$dbr->freeResult( $result );
 
 		return $out;
-
-		$dbr =  wfGetDB(DB_SLAVE);
-		$dbr->selectDB( $wgDBname);
 	}
 }
 
