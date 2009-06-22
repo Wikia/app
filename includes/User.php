@@ -232,7 +232,6 @@ class User {
 		if ( $this->mDataLoaded ) {
 			return;
 		}
-		error_log ("load -> " . $this->mId . " from = " . $this->mFrom);
 		wfProfileIn( __METHOD__ );
 
 		# Set it now to avoid infinite recursion in accessors
@@ -303,18 +302,15 @@ class User {
 			}
 		}
 
-		error_log (__METHOD__ . " data loaded ( " . intval(!$data) . " ), expired = $isExpired");
 		if ( !$data || $isExpired ) { # Wikia
 			wfDebug( "Cache miss for user {$this->mId}\n" );
 			# Load from DB
-			error_log (__METHOD__ . " load from database");
 			if ( !$this->loadFromDatabase() ) {
 				# Can't load from ID, user is anonymous
 				return false;
 			}
 			$this->saveToCache();
 		} else {
-			error_log (__METHOD__ . " load from cache");
 			wfDebug( "Got user {$this->mId} from cache\n" );
 			# Restore from cache
 			foreach ( self::$mCacheVars as $name ) {
@@ -1762,7 +1758,6 @@ class User {
 		} else {
 			// Wikia uses the old hashing until we migrate all wikis to MW 1.13
 			//$this->mPassword = self::crypt( $str );
-			error_log ("oldCrypt( $str, {$this->mId} )");
 			$this->mPassword = self::oldCrypt( $str, $this->mId );
 		}
 		$this->mNewpassword = '';
