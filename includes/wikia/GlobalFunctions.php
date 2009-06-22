@@ -657,3 +657,14 @@ function wfGetFixedLanguageNames() {
 	return $languages;
 }
 
+/**
+ * Get a shared cache key
+ */
+function wfSharedMemcKey( /*... */ ) {
+	global $wgSharedDB, $wgWikiaCentralAuthDatabase;
+
+	$args = func_get_args();
+	$prefix = empty( $wgWikiaCentralAuthDatabase ) ? $wgSharedDB : $wgWikiaCentralAuthDatabase;
+	$key = $prefix . ':' . implode( ':', $args );
+	return $key;
+}
