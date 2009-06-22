@@ -1340,7 +1340,10 @@ class AwesomeTemplate extends QuickTemplate {
 <?php
 	}
 
-	echo "\t\t";
+        echo "\t\t";
+        // Note this one is safe at the top because it's an image call, so it's not blocking like GA or Quantserve
+        echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+
 	$this->html('csslinks');
 
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
