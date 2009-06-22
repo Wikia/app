@@ -137,15 +137,20 @@ function showTocToggle(toctitleId, tocId, togglelinkId) {
 		//changes close related to TOCimprovements extension
 		//change link text when anon and fix cache issue
 		if (typeof TOCimprovementsEnabled != 'undefined' && !wgUserName) {
-			var toc = document.getElementById(tocId ? tocId : 'toc').getElementsByTagName('ul')[0];
+			var toc = document.getElementById(tocId ? tocId : 'toc');
+			var rootItems = getElementsByClassName(toc, 'li', 'toclevel-1');
 			//no cookie found
 			if (cookiePos == -1) {
 				var toggleLink = document.getElementById(togglelinkId ? togglelinkId : 'togglelink');
 				//browser bug: setting display:none via CSS will not be seen as element.style.display
-				toc.style.display = 'none';
+				for (i=0,len=rootItems.length; i<len; i++ ) {
+					rootItems[i].style.display = 'none';
+				}
 				changeText(toggleLink, tocShowText);
 			} else if (document.cookie.charAt(cookiePos + 8) == '0') {
-				toc.style.display = 'block';
+				for (i=0,len=rootItems.length; i<len; i++ ) {
+					rootItems[i].style.display = 'block';
+				}
 			}
 		}
 		/* Wikia change end */
