@@ -27,7 +27,7 @@ class WikiaCentralAuthUserArrayFromResult extends UserArrayFromResult {
 
 		$dbr = WikiaCentralAuthUser::getCentralSlaveDB();
 		$caRes = $dbr->select( 
-			'user', 
+			'`user`', 
 			'*',
 			array( 
 				'user_name' => $names
