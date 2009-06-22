@@ -236,17 +236,17 @@ class WikiMover {
 		global $wgCanonicalNamespaceNames, $IP, $wgWikiaLocalSettingsPath, $wgContLang;
 
 		if (empty( $this->mSourceName )) {
-			wfDebug("wikimover: source database name is empty", true);
+			$this->log( "wikimover: source database name is empty" );
 			return false;
 		}
 
 		if (empty( $this->mTargetName )) {
-			wfDebug("wikimover: target database name is empty", true);
+			$this->log("wikimover: target database name is empty", true);
 			return false;
 		}
 
 		if( ( $this->mTargetName === $this->mSourceName) || ($this->mSourceID == $this->mTargetID) ) {
-			wfDebug("wikimover: source and target are exactly the same", true);
+			$this->log("wikimover: source and target are exactly the same", true);
 			return false;
 		}
 
@@ -740,13 +740,11 @@ class WikiMover {
 		global $wgExternalSharedDB;
 
 		if (empty( $this->mSourceID )) {
-			wfDebug("wikimover: source id is empty. Cannot redirect", true);
 			$this->log( "wikimover: source id is empty. Cannot redirect" );
 			return false;
 		}
 
 		if (empty( $this->mTargetID )) {
-			wfDebug("wikimover: target id is empty. Cannot redirect", true);
 			$this->log( "wikimover: target id is empty. Cannot redirect" );
 			return false;
 		}
@@ -958,7 +956,7 @@ class WikiMover {
 			"info" => $info
 		);
 		$info = sprintf( "%s: %F", $info, wfTime() - $this->mCurrTime );
-		Wikia::log( __METHOD__, "", $info );
+		Wikia::log( __METHOD__, "log", $info );
 		$this->mCurrTime = wfTime();
 	}
 

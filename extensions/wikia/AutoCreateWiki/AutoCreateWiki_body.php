@@ -647,6 +647,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->mStarters[ $this->mWikiData[ "hub" ] ], /** source **/
 				$this->mWikiId /** target **/
 			);
+			$this->log( sprintf( "WikiMover: moving from %d to %d" ) );
 			$wikiMover->setOverwrite( true );
 			$wikiMover->mMoveUserGroups = false;
 			$wikiMover->load();
