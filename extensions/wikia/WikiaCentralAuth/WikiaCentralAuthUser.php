@@ -334,25 +334,11 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	protected function getCacheKey() {
 		global $wgWikiaCentralAuthMemcPrefix;
-		$memcKey = $wgWikiaCentralAuthMemcPrefix . md5($this->mName);
-
-/*
-		if(isset($this->mGlobalId)) {
-			$userId = $this->mGlobalId;
+		if ( isset($this->mGlobalId) ) {
+			$memcKey = wfMemcKey( 'user', 'id', $this->mGlobalId );
+		} else {
+			$memcKey = $wgWikiaCentralAuthMemcPrefix . md5($this->mName . rand());
 		}
-		else {
-			$oRow = self::loadFromDatabaseByName($this->mName);
-			if(isset($oRow->user_id)) {
-				$userId = $oRow->user_id;
-			}
-			else {
-				return $memcKey;
-			}
-		}
-*/
-		$userId = $this->mGlobalId;
-
-		$memcKey = wfMemcKey( 'user', 'id', $userId );
 		return $memcKey;
 	}
 
