@@ -117,7 +117,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 
 	/*
 	 * load row by name
-	 */ 
+	 */
 	static function loadFromDatabaseByName($userName) {
 		$dbr = self::getCentralDB();
 		$oRow = $dbr->selectRow( array( '`user`' ), array( '*' ), array( 'user_name' => $userName ), __METHOD__ );
@@ -126,7 +126,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 
 	/*
 	 * load row by id
-	 */ 
+	 */
 	static function loadFromDatabaseById($userId) {
 		$dbr = self::getCentralDB();
 		$oRow = $dbr->selectRow( array( '`user`' ), array( '*' ), array( 'user_id' => $userId ), __METHOD__ );
@@ -333,9 +333,23 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * Generate a valid memcached key for caching the object's data.
 	 */
 	protected function getCacheKey() {
-		#global $wgWikiaCentralAuthMemcPrefix;
-		#$memcKey = $wgWikiaCentralAuthMemcPrefix . md5($this->mName);
-		$memcKey = wfMemcKey( 'user', 'id', $this->mGlobalId);
+		global $wgWikiaCentralAuthMemcPrefix;
+		$memcKey = $wgWikiaCentralAuthMemcPrefix . md5($this->mName);
+
+		if(isset($this->mGlobalId)) {
+			$userId = $this->mGlobalId;
+		}
+		else {
+			$oRow = self::loadFromDatabaseByName($this->mName);
+			if(isset($oRow->user_id)) {
+				$userId = $oRow->user_id;
+			}
+			else {
+				return $memcKey;
+			}
+		}
+
+		$memcKey = wfMemcKey( 'user', 'id', $userId );
 		return $memcKey;
 	}
 
@@ -1096,7 +1110,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	function invalidateLocalUser( User &$oUser, $useId = false ) {
 		wfDebug( __METHOD__ . ": Update wgUser values with Central User: {$this->mName} data \n" );
 		#--- load data from local cache
-		
+
 		foreach( self::$mCacheVars as $var ) {
 			if ( !in_array($var, array('mOptions','mGroups') ) ) {
 				$oUser->$var = $this->$var;
@@ -1127,13 +1141,13 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		$this->mName = $oUser->getName();
 		$this->setOptions( $oUser->encodeOptions() );
 	}
-	
+
 	/*
-	 * check local user token	 
-	 */ 
+	 * check local user token
+	 */
 	function authenticateLocalUserToken ($token, &$from) {
 		global $wgCookiePrefix;
-		
+
 		$passwordCorrect = false;
 		if ( isset( $_SESSION['wsToken'] ) ) {
 			$passwordCorrect = $_SESSION['wsToken'] == $token;
@@ -1146,5 +1160,5 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 		}
 		return $passwordCorrect;
 	}
- 
+
 }
