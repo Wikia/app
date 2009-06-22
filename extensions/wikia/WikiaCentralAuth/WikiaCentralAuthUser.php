@@ -105,7 +105,6 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	protected function resetState() {
 		unset( $this->mGlobalId );
-		unset( $this->mProperties );
 		unset( $this->mGroups );
 	}
 
@@ -334,8 +333,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * Generate a valid memcached key for caching the object's data.
 	 */
 	protected function getCacheKey() {
-		global $wgWikiaCentralAuthMemcPrefix;
-		$memcKey = $wgWikiaCentralAuthMemcPrefix . md5($this->mName);
+		#global $wgWikiaCentralAuthMemcPrefix;
+		#$memcKey = $wgWikiaCentralAuthMemcPrefix . md5($this->mName);
+		$memcKey = wfMemcKey( 'user', 'id', $this->mGlobalId);
 		return $memcKey;
 	}
 
