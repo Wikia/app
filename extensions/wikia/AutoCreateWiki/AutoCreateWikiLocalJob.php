@@ -113,23 +113,21 @@ class AutoCreateWikiLocalJob extends Job {
 		if( $database ) {
 			$fields = $this->insertFields();
 
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->selectDB( $database );
+			$dbw_local = wfGetDB( DB_MASTER, array(), $database );
 
 			if ( $this->removeDuplicates ) {
-				$res = $dbw->select( 'job', array( '1' ), $fields, __METHOD__ );
-				if ( $dbw->numRows( $res ) ) {
+				$res = $dbw_local->select( 'job', array( '1' ), $fields, __METHOD__ );
+				if ( $dbw_local->numRows( $res ) ) {
 					return;
 				}
 			}
-			$fields['job_id'] = $dbw->nextSequenceValue( 'job_job_id_seq' );
-			$dbw->insert( 'job', $fields, __METHOD__ );
+			$fields['job_id'] = $dbw_local->nextSequenceValue( 'job_job_id_seq' );
+			$dbw_local->insert( 'job', $fields, __METHOD__ );
 
 			/**
 			 * we need to commit before switching databases
 			 */
-			$dbw->commit();
-			$dbw->selectDB( $wgDBname );
+			$dbw_local->commit();
 		}
 		$wgErrorLog = $oldValue;
 	}
