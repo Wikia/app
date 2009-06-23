@@ -21,6 +21,11 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 		}
 	}
 
+	protected function getDB() {
+		global $wgDBname;
+		return wfGetDB(DB_SLAVE, array(), $wgDBname);
+	}
+
 	#---
 	# if someone want to use it
 	#---
@@ -37,8 +42,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 
 		try {
 			#--- database instance
-			$db =& $this->getDB();
-			$db->selectDB( (!defined(WIKIA_API_QUERY_DBNAME)) ? WIKIA_API_QUERY_DBNAME : $wgDBname );
+			$db = $this->getDB();
 			if ( is_null($db) ) {
 				throw new WikiaApiQueryError(0);
 			}
@@ -297,7 +301,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			if (!is_array($cached)) {
 				foreach ($encodedCats as $id => $category) {
 					#---
-					$pages = $this->getCategoryPages($db, $category);
+					$pages = $this->getCategoryPages($db, $category, $limit);
 					#--- no pages
 					if ( empty($pages) ) continue;
 					
@@ -360,13 +364,15 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 		$this->getResult()->addValue('query', $this->getModuleName(), $data);
 	}
 
-	private function getCategoryPages($db, $category) {
+	private function getCategoryPages($db, $category, $limit) {
 		#---
 		$this->resetQueryParams();
 		# build main query on page table
 		$this->addTables( array( 'categorylinks' ) );
 		$this->addFields( array( 'cl_from as page_id' ) );
 		$this->addWhere ( array('cl_to' => $category) );
+		$this->addOption( "ORDER BY", "rand()" );
+		$this->addOption( "LIMIT", $limit * 2 );
 		#---
 		$res = $this->select(__METHOD__);
 		#---
