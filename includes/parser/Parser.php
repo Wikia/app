@@ -777,6 +777,7 @@ class Parser
 	 */
 	function doTableStuff ( $text ) {
 		wfProfileIn( __METHOD__ );
+		global $wgWysiwygParserEnabled;
 
 		$lines = StringUtils::explode( "\n", $text );
 		$out = '';
@@ -802,6 +803,12 @@ class Parser
 				$indent_level = strlen( $matches[1] );
 
 				$attributes = $this->mStripState->unstripBoth( $matches[2] );
+				if(!empty($wgWysiwygParserEnabled)) {
+					if(strpos($attributes, "\x7f") !== false) {
+						global $wgWysiwygTableTemplateEdgeCase;
+						$wgWysiwygTableTemplateEdgeCase = true;
+					}
+				}
 				$attributes = Sanitizer::fixTagAttributes ( $attributes , 'table' );
 
 				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "<table{$attributes}>";
@@ -838,6 +845,12 @@ class Parser
 
 				// Whats after the tag is now only attributes
 				$attributes = $this->mStripState->unstripBoth( $line );
+				if(!empty($wgWysiwygParserEnabled)) {
+					if(strpos($attributes, "\x7f") !== false) {
+						global $wgWysiwygTableTemplateEdgeCase;
+						$wgWysiwygTableTemplateEdgeCase = true;
+					}
+				}
 				$attributes = Sanitizer::fixTagAttributes ( $attributes , 'tr' );
 				array_pop ( $tr_attributes );
 				array_push ( $tr_attributes , $attributes );

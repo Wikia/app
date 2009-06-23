@@ -115,17 +115,18 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = f
 
 	if($type == 'html2wiki') {
 		return new AjaxResponse(Wysiwyg_HtmlToWikiText($input, $wysiwygData, true));
-
 	} else if($type == 'wiki2html') {
 		wfLoadExtensionMessages('Wysiwyg');
-		$edgeCasesText = Wysiwyg_CheckEdgeCases($input);
-		if ($edgeCasesText != '') {
-			header('X-edgecases: 1');
-			return $edgeCasesText;
-		} else {
+
+		$ret = Wysiwyg_WikiTextToHtml($input, $pageName, true);
+
+		if($ret['type'] == 'html') {
 			$separator = Parser::getRandomString();
 			header('X-sep: ' . $separator);
-			return new AjaxResponse(join(Wysiwyg_WikiTextToHtml($input, $pageName, true), "--{$separator}--"));
+			return new AjaxResponse($ret['html']."--{$separator}--".$ret['data']);
+		} else if($ret['type'] == 'edgecase') {
+			header('X-edgecases: 1');
+			return $ret['edgecaseText'];
 		}
 
 	}
@@ -141,7 +142,7 @@ function Wysiwyg_Variables(&$vars) {
 
 function Wysiwyg_Initial($form) {
 	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgContentNamespaces;
-	global $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType, $wgWysiwygEdit;
+	global $wgJsMimeType, $wgWysiwygEdit;
 
 	wfProfileIn(__METHOD__);
 
@@ -170,11 +171,9 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
-	// editor mode (RT #17269)
-	$editorMode = $wgRequest->getVal('useeditor', 'wysiwyg');
-
-	// fallback to old MW editor
-	if ($editorMode == 'mediawiki') {
+	if($wgRequest->getVal('useeditor', 'wysiwyg') == 'mediawiki') {
+		// editor mode (RT #17269)
+		// fallback to old MW editor
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -192,14 +191,6 @@ function Wysiwyg_Initial($form) {
 	// set global flag - we're using wysiwyg to edit this page
 	$wgWysiwygEdit = true;
 
-	// detect edgecases
-	$wgWysiwygEdgeCasesFound = (Wysiwyg_CheckEdgeCases($form->textbox1) != '');
-
-	// initialize FCK in source mode for articles in which edge case occured / useeditor=wysiwygsource in URL / user requested diff/preview when in source mode
-	$wgWysiwygFallbackToSourceMode = $wgWysiwygEdgeCasesFound ||
-		($editorMode == 'wysiwygsource') ||
-		($wgRequest->getVal('action') == 'submit' && $wgRequest->getVal('wysiwygTemporarySaveType') == '1');
-
 	// magic words list
 	$magicWords = MagicWord::$mVariableIDs;
 	sort($magicWords);
@@ -207,7 +198,6 @@ function Wysiwyg_Initial($form) {
 	// JS
 	// TODO: move to Wysiwyg_Variables
 	$wgOut->addInlineScript(
-		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true' : 'false') . ";\n" .
 		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
 		'var templateHotList = ' . WysiwygGetTemplateHotList() . ";\n" .
 		'var magicWordList = ' . Wikia::json_encode($magicWords, true) . ";"
@@ -300,14 +290,18 @@ function Wysiwyg_Initial($form) {
 }
 
 function Wysiwyg_Initial2($form) {
-	global $wgWysiwygData, $wgWysiwygFallbackToSourceMode;
+	global $wgWysiwygData, $wgOut, $wgRequest;
+	$wgWysiwygData = '';
 
-	if (empty($wgWysiwygFallbackToSourceMode)) {
-		list($form->textbox1, $wgWysiwygData) = Wysiwyg_WikiTextToHtml($form->textbox1, false, true);
+	if(!($wgRequest->getVal('useeditor', 'wysiwyg') == 'wysiwygsource' || ($wgRequest->getVal('action') == 'submit' && $wgRequest->getVal('wysiwygTemporarySaveType') == '1'))) {
+		$ret = Wysiwyg_WikiTextToHtml($form->textbox1, false, true);
+		if($ret['type'] == 'html') {
+			$form->textbox1 = $ret['html'];
+			$wgWysiwygData = $ret['data'];
+		}
 	}
-	else {
-		$wgWysiwygData = '';
-	}
+
+	$wgOut->addInlineScript('var fallbackToSourceMode = '.($wgWysiwygData === '' ? 'true' : 'false').';');
 
 	// show first edit messages when needed
 	WysiwygFirstEditMessage();
@@ -451,6 +445,11 @@ function Wysiwyg_NoWysiwygFound($text) {
 }
 
 function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
+	$edgeCasesText = Wysiwyg_CheckEdgeCases($wikitext);
+	if($edgeCasesText != '') {
+		return array('type' => 'edgecase', 'edgecaseText' => $edgeCasesText);
+	}
+
 	global $IP, $wgWysiwygMetaData, $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgTitle, $wgUser, $wgWysiwygMarkers;
 
 	require_once("$IP/extensions/wikia/Wysiwyg/WysiwygParser.php");
@@ -474,6 +473,11 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 	$wgWysiwygParserEnabled = true;
 	$html = $wysiwygParser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
+
+	global $wgWysiwygTableTemplateEdgeCase;
+	if(!empty($wgWysiwygTableTemplateEdgeCase)) {
+		return array('type' => 'edgecase', 'edgecaseText' => wfMsg('wysiwyg-edgecase-info').' '.wfMsg('wysiwyg-edgecase-templateintable'));
+	}
 
 	// detect empty line at the beginning of wikitext
 	if($emptyLinesAtStart == 1) {
@@ -557,7 +561,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
-	return array($html, $encode ? Wikia::json_encode($wgWysiwygMetaData, true) : $wgWysiwygMetaData);
+	return array('type' => 'html', 'html' => $html, 'data' => $encode ? Wikia::json_encode($wgWysiwygMetaData, true) : $wgWysiwygMetaData);
 }
 
 function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
