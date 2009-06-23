@@ -966,6 +966,11 @@ class ReverseParser {
 					$data['description'] = $content;
 				}
 
+				// RT #17841
+				if ($data['description'] == $data['href']) {
+					$data['description'] = '';
+				}
+
 				// generate wikisyntax
 				$tag =  "[[{$data['href']}";
 
