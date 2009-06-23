@@ -264,13 +264,27 @@ function Wysiwyg_Initial($form) {
 		( !empty($toolbarTooltip) ? "\nvar wysiwygToolbarTooltip = " . Xml::encodeJsVar($toolbarTooltip) . ";" : '')
 	);
 
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/fckeditor/fckeditor.js?$wgStyleVersion\"></script>\n" );
-	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.js?$wgStyleVersion\"></script>\n" );
+	// RT #17499: detect wikis which may cause troubles when serving JS/iframe from images.wikia.com
+	global $wgServerName, $wgScriptPath, $wgWysiwygPath;
+	if (strpos($wgServerName, 'wikia.com') === false) {
+		// serve JS/iframe from wiki domain
+		$wgWysiwygPath = 'http://' . $wgServerName . $wgScriptPath . '/extensions/wikia/Wysiwyg';
+	}
+	else {
+		// serve JS/iframe from images.wikia.com + fix document domain
+		$wgWysiwygPath = $wgExtensionsPath . '/wikia/Wysiwyg';
+	}
+
+	$wgOut->addInlineScript("var wgWysiwygPath = " . Xml::encodeJsVar($wgWysiwygPath) . ";");
+
+	// load JS files
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgWysiwygPath/fckeditor/fckeditor.js?$wgStyleVersion\"></script>\n" );
+	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgWysiwygPath/wysiwyg.js?$wgStyleVersion\"></script>\n" );
 
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'Wysiwyg_Initial2';
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
 	$wgHooks['EditPageBeforeEditButtons'][] = 'Wysiwyg_BlockSaveButton';
+	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
 
 	wfProfileOut(__METHOD__);
 	return true;

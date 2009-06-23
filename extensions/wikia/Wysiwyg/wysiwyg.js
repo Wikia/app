@@ -107,8 +107,8 @@ function initEditor() {
 	}
 
 	var oFCKeditor = new FCKeditor("wpTextbox1");
-	oFCKeditor.BasePath = window.wgExtensionsPath + '/wikia/Wysiwyg/fckeditor/';
-	oFCKeditor.Config["CustomConfigurationsPath"] = window.wgExtensionsPath + '/wikia/Wysiwyg/wysiwyg_config.js';
+	oFCKeditor.BasePath = window.wgWysiwygPath + '/fckeditor/';
+	oFCKeditor.Config["CustomConfigurationsPath"] = window.wgWysiwygPath + '/wysiwyg_config.js';
 	oFCKeditor.ready = true;
 	oFCKeditor.Height = '450px';
 	oFCKeditor.Width = '100%';
