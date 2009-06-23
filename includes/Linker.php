@@ -789,6 +789,13 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			$prefix  = '<div class="center">';
 			$postfix = '</div>';
 			$fp['align']   = 'none';
+
+			// Wysiwyg: RT #17722
+			if (!empty($wgWysiwygParserEnabled) && isset($fp['refid'])) {
+				$prefix = "<div class=\"center\" refid=\"{$fp['refid']}\">";
+				unset($fp['refid']);
+			}
+
 		}
 		if ( $file && !isset( $hp['width'] ) ) {
 			$hp['width'] = $file->getWidth( $page );
