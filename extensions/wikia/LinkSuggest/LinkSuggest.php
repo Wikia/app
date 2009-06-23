@@ -138,8 +138,21 @@ function getLinkSuggest() {
 	while($row = $db->fetchObject($res)) {
 		$results[] = str_replace('_', ' ', $namespacePrefix . $row->qc_title);
 	}
-	$sql = "SELECT page_title FROM page WHERE LOWER(page_title) LIKE LOWER('{$query}%') AND page_is_redirect=0 AND page_namespace = {$namespace} ORDER BY page_title ASC LIMIT ".(15 - count($results));
-	$res = $db->query($sql);
+
+	$res = $db->select(
+		array( "page" ),
+		array( "page_title" ),
+		array(
+			" page_is_redirect = 0 ",
+			" LOWER(page_title) LIKE LOWER('{$query}%') ",
+			" page_namespace = {$namespace} "
+		),
+		__METHOD__,
+		array(
+			"ORDER BY" => "page_title ASC", 
+			"LIMIT" => (15 - count($results))
+		)
+	);
 	while($row = $db->fetchObject($res)) {
 		$results[] = str_replace('_', ' ', $namespacePrefix . $row->page_title);
 	}
