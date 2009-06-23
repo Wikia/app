@@ -3058,6 +3058,8 @@ class Parser
 		# SUBST
 		wfProfileIn( __METHOD__.'-modifiers' );
 		if ( !$found ) {
+			global $wgWysiwygParserTildeEnabled;
+
 			$mwSubst = MagicWord::get( 'subst' );
 			if ( $mwSubst->matchStartAndRemove( $part1 ) xor $this->ot['wiki'] ) {
 				# One of two possibilities is true:
@@ -3068,6 +3070,15 @@ class Parser
 				$isLocalObj = true;
 				$found = true;
 			}
+			/* Wikia change begin - @author: Macbre */
+			/* Wysiwyg: replace {{subst:foo}} with placeholder */
+			else if (!empty($wgWysiwygParserTildeEnabled)) {
+				$preview = $frame->virtualBracketedImplode( '{{', '|', '}}', $titleWithSpaces, $args );
+				$text = Wysiwyg_WrapTemplate('{{'.$titleWithSpaces.'}}', $frame->expand($preview), false);
+				$isLocalObj = true;
+				$found = true;
+			}
+			/* Wikia change end */
 		}
 
 		# Variables
