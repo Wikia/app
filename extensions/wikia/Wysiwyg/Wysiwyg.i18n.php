@@ -11,6 +11,7 @@ $messages['en'] = array(
 	'wysiwyg-edgecase-syntax' => 'not allowed syntax',
 	'wysiwyg-edgecase-image-with-link' => 'image with a link in the description',
 	'wysiwyg-edgecase-redirect' => 'redirect',
+	'wysiwyg-edgecase-templateintable' => 'a table with template call in definition',
 	'wysiwyg-first-edit-title' => 'Welcome to the new Wikia editor',
 	'wysiwyg-first-edit-message' => 'This wiki uses Wikia\'s new Rich Text Editor. If you want to use traditional wikitext click the "source" button on the toolbar. To learn more about this new editor please see [[Help:New editor]]',
 	'wysiwyg-first-edit-dont-show-me' => 'Don\'t show me this message again',
