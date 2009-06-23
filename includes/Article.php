@@ -3538,8 +3538,8 @@ class Article {
 		global $wgSkipCountForCategories; # wikia change for answers
 
 		if( is_array( $wgSkipCountForCategories ) ) {
-			$added = arrray_diff( $added, $wgSkipCountForCategories );
-			$deleted = arrray_diff( $deleted, $wgSkipCountForCategories );
+			$added = array_diff( $added, $wgSkipCountForCategories );
+			$deleted = array_diff( $deleted, $wgSkipCountForCategories );
 		}
 
 		$ns = $this->mTitle->getNamespace();
