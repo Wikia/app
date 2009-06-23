@@ -271,7 +271,7 @@ function Wysiwyg_Initial($form) {
 		$wgWysiwygPath = 'http://' . $wgServerName . $wgScriptPath . '/extensions/wikia/Wysiwyg';
 	}
 	else {
-		// serve JS/iframe from images.wikia.com + fix document domain
+		// serve JS/iframe from images.wikia.com
 		$wgWysiwygPath = $wgExtensionsPath . '/wikia/Wysiwyg';
 	}
 
