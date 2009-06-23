@@ -29,12 +29,14 @@ function WikiaVideoFetchTemplateAndTitle( $text, $finalTitle ) {
 	global $wgContLang, $wgWikiaVideosFoundInTemplates;
 
 	$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Placeholder";
-	
+
 	// replace text and give Video_Template: namespace everywhere - because it's template...
-	$count = 0;
-	$text = str_replace( $vid_tag, 'Video_Template:Placeholder', $text, $count );	
-	$wgWikiaVideosFoundInTemplates += $count;
-	return true;	
+	if ($text != '') {
+		$count = 0;
+		$text = str_replace( $vid_tag, 'Video_Template:Placeholder', $text, $count );
+		$wgWikiaVideosFoundInTemplates += $count;
+	}
+	return true;
 }
 
 function WikiaVideoWantedFilesGetSQL( $sql, $querypage, $name, $imagelinks, $page ) {
@@ -298,7 +300,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 				$out .= '<a href="#" class="bigButton" style="left: ' . $lmarg . 'px; position: absolute; top: ' . $tmarg . 'px;" id="WikiaVideoPlaceholderInner' . $wgWikiaVideoPlaceholderId  . '"'. $onclick . '><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>'. $caption .'</div></div></div>';
 			} else {
 				$out .= '</div></div></div>';
-			}				
+			}
 		wfProfileOut('WikiaVideo_makeVideo');
 		$wgWikiaVideoPlaceholderId++;
 		return $out;
