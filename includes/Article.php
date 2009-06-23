@@ -108,7 +108,7 @@ class Article {
 			return null;
 		}
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->replace( 'redirect', array('rd_from'), 
+		$dbw->replace( 'redirect', array('rd_from'),
 			array(
 				'rd_from' => $this->getID(),
 				'rd_namespace' => $retval->getNamespace(),
@@ -508,7 +508,7 @@ class Article {
 	public function exists() {
 		return $this->getId() > 0;
 	}
-	
+
 	/**
 	 * Check if this page is something we're going to be showing
 	 * some sort of sensible content for. If we return false, page
@@ -531,10 +531,10 @@ class Article {
 				$this->mCounter = 0;
 			} else {
 				$dbr = wfGetDB( DB_SLAVE );
-				$this->mCounter = $dbr->selectField( 'page', 
-					'page_counter', 
-					array( 'page_id' => $id ), 
-					__METHOD__, 
+				$this->mCounter = $dbr->selectField( 'page',
+					'page_counter',
+					array( 'page_id' => $id ),
+					__METHOD__,
 					$this->getSelectOptions()
 				);
 			}
@@ -838,7 +838,7 @@ class Article {
 					$text = wfMsg( 'noarticletext' );
 				}
 			}
-			
+
 			# Non-existent pages
 			if( $this->getID() === 0 ) {
 				$wgOut->setRobotPolicy( 'noindex,nofollow' );
@@ -848,7 +848,7 @@ class Article {
 					// for better machine handling of broken links.
 					$return404 = true;
 				}
-			} 
+			}
 
 			if( $return404 ) {
 				$wgRequest->response()->header( "HTTP/1.x 404 Not Found" );
@@ -862,7 +862,7 @@ class Article {
 				wfProfileOut( __METHOD__ );
 				return;
 			}
-			
+
 			# For ?curid=x urls, disallow indexing
 			if( $wgRequest->getInt('curid') )
 				$wgOut->setRobotPolicy( 'noindex,follow' );
@@ -973,7 +973,7 @@ class Article {
 		$this->viewUpdates();
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	protected function showDeletionLog() {
 		global $wgUser, $wgOut;
 		$loglist = new LogEventsList( $wgUser->getSkin(), $wgOut );
@@ -992,7 +992,7 @@ class Article {
 					SpecialPage::getTitleFor( 'Log' ),
 					wfMsgHtml( 'deletelog-fulllog' ),
 					array(),
-					array( 'type' => 'delete', 'page' => $this->mTitle->getPrefixedText() ) 
+					array( 'type' => 'delete', 'page' => $this->mTitle->getPrefixedText() )
 				) );
 			}
 			$wgOut->addHTML( '</div>' );
@@ -1446,9 +1446,9 @@ class Article {
 	 *          Fill in blank summaries with generated text where possible
 	 *
 	 * If neither EDIT_NEW nor EDIT_UPDATE is specified, the status of the article will be detected.
-	 * If EDIT_UPDATE is specified and the article doesn't exist, the function will an 
-	 * edit-gone-missing error. If EDIT_NEW is specified and the article does exist, an 
-	 * edit-already-exists error will be returned. These two conditions are also possible with 
+	 * If EDIT_UPDATE is specified and the article doesn't exist, the function will an
+	 * edit-gone-missing error. If EDIT_NEW is specified and the article does exist, an
+	 * edit-already-exists error will be returned. These two conditions are also possible with
 	 * auto-detection due to MediaWiki's performance-optimised locking strategy.
 	 *
 	 * @param $baseRevId the revision ID this edit was based off, if any
@@ -1483,7 +1483,7 @@ class Article {
 		$status = Status::newGood( array() );
 
 		# Load $this->mTitle->getArticleID() and $this->mLatest if it's not already
-		$this->loadPageData(); 
+		$this->loadPageData();
 
 		if( !($flags & EDIT_NEW) && !($flags & EDIT_UPDATE) ) {
 			$aid = $this->mTitle->getArticleID();
@@ -1564,9 +1564,9 @@ class Article {
 
 				# Update page
 				#
-				# Note that we use $this->mLatest instead of fetching a value from the master DB 
-				# during the course of this function. This makes sure that EditPage can detect 
-				# edit conflicts reliably, either by $ok here, or by $article->getTimestamp() 
+				# Note that we use $this->mLatest instead of fetching a value from the master DB
+				# during the course of this function. This makes sure that EditPage can detect
+				# edit conflicts reliably, either by $ok here, or by $article->getTimestamp()
 				# before this function is called. A previous function used a separate query, this
 				# creates a window where concurrent edits can cause an ignored edit conflict.
 				$ok = $this->updateRevisionOn( $dbw, $revision, $this->mLatest );
@@ -1759,12 +1759,12 @@ class Article {
 			$wgOut->showErrorPage( 'rcpatroldisabled', 'rcpatroldisabledtext' );
 			return;
 		}
-		
+
 		if( in_array(array('hookaborted'), $errors) ) {
 			// The hook itself has handled any output
 			return;
 		}
-		
+
 		if( in_array(array('markedaspatrollederror-noautopatrol'), $errors) ) {
 			$wgOut->setPageTitle( wfMsg( 'markedaspatrollederror' ) );
 			$wgOut->addWikiMsg( 'markedaspatrollederror-noautopatrol' );
@@ -1929,7 +1929,7 @@ class Article {
 			if( wfRunHooks( 'ArticleProtect', array( &$this, &$wgUser, $limit, $reason ) ) ) {
 
 				$dbw = wfGetDB( DB_MASTER );
-				
+
 				# Prepare a null revision to be added to the history
 				$modified = $current != '' && $protect;
 				if( $protect ) {
@@ -1945,9 +1945,9 @@ class Article {
 				# The schema allows multiple restrictions
 				if(!in_array('protect', $editrestriction) && !in_array('sysop', $editrestriction))
 					$cascade = false;
-				$cascade_description = ''; 	 
+				$cascade_description = '';
 				if( $cascade ) {
-					$cascade_description = ' ['.wfMsgForContent('protect-summary-cascade').']'; 	 
+					$cascade_description = ' ['.wfMsgForContent('protect-summary-cascade').']';
 				}
 
 				if( $reason )
@@ -1961,10 +1961,10 @@ class Article {
 					if( $restrictions != '' ) {
 						$protect_description .= "[$action=$restrictions] (";
 						if( $encodedExpiry[$action] != 'infinity' ) {
-							$protect_description .= wfMsgForContent( 'protect-expiring', 
+							$protect_description .= wfMsgForContent( 'protect-expiring',
 								$wgContLang->timeanddate( $expiry[$action], false, false ) ,
 								$wgContLang->date( $expiry[$action], false, false ) ,
-								$wgContLang->time( $expiry[$action], false, false ) ); 	 
+								$wgContLang->time( $expiry[$action], false, false ) );
 						} else {
 							$protect_description .= wfMsgForContent( 'protect-expiry-indefinite' );
 						}
@@ -1972,7 +1972,7 @@ class Article {
 					}
 				}
 				$protect_description = trim($protect_description);
-					
+
 				if( $protect_description && $protect )
 					$editComment .= " ($protect_description)";
 				if( $cascade )
@@ -1981,9 +1981,9 @@ class Article {
 				foreach( $limit as $action => $restrictions ) {
 					if($restrictions != '' ) {
 						$dbw->replace( 'page_restrictions', array(array('pr_page', 'pr_type')),
-							array( 'pr_page' => $id, 
-								'pr_type' => $action, 
-								'pr_level' => $restrictions, 
+							array( 'pr_page' => $id,
+								'pr_type' => $action,
+								'pr_level' => $restrictions,
 								'pr_cascade' => ($cascade && $action == 'edit') ? 1 : 0,
 								'pr_expiry' => $encodedExpiry[$action] ), __METHOD__  );
 					} else {
@@ -2107,7 +2107,7 @@ class Article {
 			else
 				$reason = wfMsgForContent( 'excontent', '$1' );
 		}
-		
+
 		if( $reason == '-' ) {
 			// Allow these UI messages to be blanked out cleanly
 			return '';
@@ -2311,7 +2311,7 @@ class Article {
 		}
 		$checkWatch = $wgUser->getBoolOption( 'watchdeletion' ) || $this->mTitle->userIsWatching();
 
-		$form = Xml::openElement( 'form', array( 'method' => 'post', 
+		$form = Xml::openElement( 'form', array( 'method' => 'post',
 			'action' => $this->mTitle->getLocalURL( 'action=delete' ), 'id' => 'deleteconfirm' ) ) .
 			Xml::openElement( 'fieldset', array( 'id' => 'mw-delete-table' ) ) .
 			Xml::tags( 'legend', null, wfMsgExt( 'delete-legend', array( 'parsemag', 'escapenoentities' ) ) ) .
@@ -2331,7 +2331,7 @@ class Article {
 					Xml::label( wfMsg( 'deleteotherreason' ), 'wpReason' ) .
 				"</td>
 				<td class='mw-input'>" .
-					Xml::input( 'wpReason', 60, $reason, array( 'type' => 'text', 'maxlength' => '255', 
+					Xml::input( 'wpReason', 60, $reason, array( 'type' => 'text', 'maxlength' => '255',
 						'tabindex' => '2', 'id' => 'wpReason' ) ) .
 				"</td>
 			</tr>
@@ -2475,7 +2475,7 @@ class Article {
 			$dbw->rollback();
 			return false;
 		}
-		
+
 		# Fix category table counts
 		$cats = array();
 		$res = $dbw->select( 'categorylinks', 'cl_to', array( 'cl_from' => $id ), __METHOD__ );
@@ -2505,7 +2505,7 @@ class Article {
 		if( !$dbw->cleanupTriggers() ) {
 			# Clean up recentchanges entries...
 			$dbw->delete( 'recentchanges',
-				array( 'rc_type != '.RC_LOG, 
+				array( 'rc_type != '.RC_LOG,
 					'rc_namespace' => $this->mTitle->getNamespace(),
 					'rc_title' => $this->mTitle->getDBKey() ),
 				__METHOD__ );
@@ -2717,7 +2717,7 @@ class Article {
 			if( isset( $details['current'] ) ){
 				$current = $details['current'];
 				if( $current->getComment() != '' ) {
-					$wgOut->addWikiMsgArray( 'editcomment', array( 
+					$wgOut->addWikiMsgArray( 'editcomment', array(
 						$wgUser->getSkin()->formatComment( $current->getComment() ) ), array( 'replaceafter' ) );
 				}
 			}
@@ -2840,7 +2840,7 @@ class Article {
 		$u = new LinksUpdate( $this->mTitle, $editInfo->output, false );
 		$u->setRecursiveTouch( $changed ); // refresh/invalidate including pages too
 		$u->doUpdate();
-		
+
 		wfRunHooks( 'ArticleEditUpdates', array( &$this, &$editInfo, $changed ) );
 
 		if( wfRunHooks( 'ArticleEditUpdatesDeleteFromRecentchanges', array( &$this ) ) ) {
@@ -3534,6 +3534,14 @@ class Article {
 	 * @return null
 	 */
 	public function updateCategoryCounts( $added, $deleted ) {
+
+		global $wgSkipCountForCategories; # wikia change for answers
+
+		if( is_array( $wgSkipCountForCategories ) ) {
+			$added = arrray_diff( $added, $wgSkipCountForCategories );
+			$deleted = arrray_diff( $deleted, $wgSkipCountForCategories );
+		}
+
 		$ns = $this->mTitle->getNamespace();
 		$dbw = wfGetDB( DB_MASTER );
 
