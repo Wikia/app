@@ -22,6 +22,7 @@ $wgHooks['MagicWordwgVariableIDs'][] = 'Wysiwyg_RegisterMagicWordID';
 $wgHooks['LanguageGetMagic'][] = 'Wysiwyg_GetMagicWord';
 $wgHooks['InternalParseBeforeLinks'][] = 'Wysiwyg_RemoveMagicWord';
 $wgHooks['LinkEnd'][] = 'Wysiwyg_LinkEnd';
+$wgHooks['MakeGlobalVariablesScript'][] = 'Wysiwyg_Variables';
 
 function Wysiwyg_SetDomain(&$skin, &$tpl) {
 
@@ -131,6 +132,13 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = f
 	return false;
 }
 
+function Wysiwyg_Variables(&$vars) {
+	global $wgWysiwygPath;
+	$vars['wgWysiwygPath'] = $wgWysiwygPath;
+
+	return true;
+}
+
 function Wysiwyg_Initial($form) {
 	global $wgUser, $wgOut, $wgRequest, $IP, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgContentNamespaces;
 	global $wgWysiwygEdgeCasesFound, $wgWysiwygFallbackToSourceMode, $wgJsMimeType, $wgWysiwygEdit;
@@ -197,6 +205,7 @@ function Wysiwyg_Initial($form) {
 	sort($magicWords);
 
 	// JS
+	// TODO: move to Wysiwyg_Variables
 	$wgOut->addInlineScript(
 		'var fallbackToSourceMode = ' . ($wgWysiwygFallbackToSourceMode ? 'true' : 'false') . ";\n" .
 		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
@@ -208,6 +217,7 @@ function Wysiwyg_Initial($form) {
 	global $wgWysiwygNoWysiwygFound;
 	if (!empty($wgWysiwygNoWysiwygFound)) {
 		$msg =  Xml::encodeJsVar( wfMsg('wysiwyg-edgecase-info') . ' ' . wfMsg('wysiwyg-edgecase-nowysiwyg') );
+		// TODO: move to Wysiwyg_Variables
 		$wgOut->addInlineScript("var noWysiwygMagicWordMsg = {$msg};");
 	}
 
@@ -258,6 +268,7 @@ function Wysiwyg_Initial($form) {
 	// tooltip
 	$toolbarTooltip = WysiwygToolbarAddTooltip();
 
+	// TODO: move to Wysiwyg_Variables
 	$wgOut->addInlineScript(
 		"var wysiwygToolbarBuckets = " . Wikia::json_encode($toolbarBuckets) . ";\n" .
 		"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";" .
@@ -274,8 +285,6 @@ function Wysiwyg_Initial($form) {
 		// serve JS/iframe from images.wikia.com
 		$wgWysiwygPath = $wgExtensionsPath . '/wikia/Wysiwyg';
 	}
-
-	$wgOut->addInlineScript("var wgWysiwygPath = " . Xml::encodeJsVar($wgWysiwygPath) . ";");
 
 	// load JS files
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgWysiwygPath/fckeditor/fckeditor.js?$wgStyleVersion\"></script>\n" );
