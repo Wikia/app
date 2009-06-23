@@ -16,7 +16,7 @@ class Outbound extends UnlistedSpecialPage {
 	}
 
 	function execute($url) {
-		global $wgRequest;
+		global $wgRequest, $wgExtensionsPath;
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
@@ -27,7 +27,8 @@ class Outbound extends UnlistedSpecialPage {
 		$oTmpl->set_vars(
 				array(
 					'url' => $url,
-					'redirectDelay' => $this->redirectDelay
+					'redirectDelay' => $this->redirectDelay,
+					'imagesPath' => ($wgExtensionsPath . '/wikia/OutboundScreen/images')
 					)
 			);
 		echo $oTmpl->execute('page');
