@@ -461,7 +461,7 @@ class HomeTemplate extends QuickTemplate {
 			<a href="http://www.wikia.com"><img src="<?php $this->text('stylepath') ?>/home/images/logo.gif?<?= $wgStyleVersion ?>" alt="Wikia - Find and collaborate with people who love what you love."/></a>
 		</div>
 		<div id="love">
-			<form onsubmit="perform_search()" id="find_form">
+			<form onsubmit="return perform_search()" id="find_form">
 				<span style="float: left;">
 					What do you love?
 					<input type="text" id="search_field" />
