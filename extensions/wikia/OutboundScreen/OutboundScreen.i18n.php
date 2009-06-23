@@ -2,5 +2,6 @@
 
 $messages = array();
 $messages["en"] = array(
-	'outbound-screen-text' => '<p><a href="$1">click here to leave wikia</a></p>'
+	'outbound-screen-text' => 'click here to leave wikia',
+	'outbound-screen-text-with-redirect' => 'click here to leave wikia, or wait $1 secs to be redirected'
 );
