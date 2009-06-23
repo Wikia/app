@@ -95,27 +95,32 @@ class Vote{
     
 	function updateStats(){
 		//update stats
-		$dbr =& wfGetDB( DB_SLAVE );
-		$sql = "SELECT * from wikia_page_stats where ps_page_id =  " . $this->PageID;
-		$res = $dbr->query($sql);
-		$row = $dbr->fetchObject( $res );
-		if(!$row){
-		    $dbr->insert( '`wikia_page_stats`',
-			array(
-				'ps_page_id' => $this->PageID,
-				'vote_count' => $this->count(),
-				'vote_avg' => $this->getAverageVote() ,
-				'comment_count' => 0
+		$dbw =& wfGetDB( DB_MASTER );
+		$oRow = $dbw->selectRow(
+			"wikia_page_stats",
+			array( "ps_page_id" ),
+			array( "ps_page_id" => $this->PageID ),
+			__METHOD__
+		);
+		if( $oRow === false ){
+		    $dbw->insert( 'wikia_page_stats', 
+				array(
+					'ps_page_id' => $this->PageID,
+					'vote_count' => $this->count(),
+					'vote_avg' => $this->getAverageVote() ,
+					'comment_count' => 0
 				), __METHOD__
 			);
 		} else{
-		    $dbr->update( 'wikia_page_stats',
-			array( 'vote_count'=>$this->count(), 'vote_avg'=>$this->getAverageVote()),
-			array( 'ps_page_id' => $this->PageID ),
-			__METHOD__ );
-		
+		    $dbw->update( 'wikia_page_stats',
+				array( 
+					'vote_count'=>$this->count(), 
+					'vote_avg'=>$this->getAverageVote()
+				),
+				array( 'ps_page_id' => $this->PageID ),
+				__METHOD__ 
+			);
 		}
-	
 	}
     
 	function insert($VoteValue){
