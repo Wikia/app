@@ -381,7 +381,7 @@ class Database {
 			}
 			if ($this->mConn === false) {
 				#$iplus = $i + 1;
-				#wfLogDBError("Connect loop error $iplus of $max ($server): " . mysql_errno() . " - " . mysql_error()."\n"); 
+				#wfLogDBError("Connect loop error $iplus of $max ($server): " . mysql_errno() . " - " . mysql_error()."\n");
 			}
 		}
 		$phpError = $this->restoreErrorHandler();
@@ -397,7 +397,7 @@ class Database {
 				substr( $password, 0, 3 ) . "..., error: " . mysql_error() . "\n" );
 			$success = false;
 		}
-		
+
 		wfProfileOut("dbconnect-$server");
 
 		if ( $dbName != '' && $this->mConn !== false ) {
@@ -424,7 +424,7 @@ class Database {
 				}
 				// Turn off strict mode
 				/* Nick wrote: Our sql_mode is already =''. Turning this off to save
-  				 * approx 16,000,000+ sql statements per day. 
+  				 * approx 16,000,000+ sql statements per day.
 				 * $this->query( "SET sql_mode = ''", __METHOD__ );
 				 */
 			}
@@ -515,11 +515,11 @@ class Database {
 	 * Usually aborts on failure.  If errors are explicitly ignored, returns success.
 	 *
 	 * @param  $sql        String: SQL query
-	 * @param  $fname      String: Name of the calling function, for profiling/SHOW PROCESSLIST 
+	 * @param  $fname      String: Name of the calling function, for profiling/SHOW PROCESSLIST
 	 *     comment (you can use __METHOD__ or add some extra info)
-	 * @param  $tempIgnore Boolean:   Whether to avoid throwing an exception on errors... 
+	 * @param  $tempIgnore Boolean:   Whether to avoid throwing an exception on errors...
 	 *     maybe best to catch the exception instead?
-	 * @return true for a successful write query, ResultWrapper object for a successful read query, 
+	 * @return true for a successful write query, ResultWrapper object for a successful read query,
 	 *     or false on failure if $tempIgnore set
 	 * @throws DBQueryError Thrown when the database returns an error of any kind
 	 */
@@ -570,14 +570,14 @@ class Database {
 		#}
 
 		# If DBO_TRX is set, start a transaction
-		if ( ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() && 
+		if ( ( $this->mFlags & DBO_TRX ) && !$this->trxLevel() &&
 			$sql != 'BEGIN' && $sql != 'COMMIT' && $sql != 'ROLLBACK') {
 			// avoid establishing transactions for SHOW and SET statements too -
-			// that would delay transaction initializations to once connection 
+			// that would delay transaction initializations to once connection
 			// is really used by application
 			$sqlstart = substr($sql,0,10); // very much worth it, benchmark certified(tm)
-			if (strpos($sqlstart,"SHOW ")!==0 and strpos($sqlstart,"SET ")!==0) 
-				$this->begin(); 
+			if (strpos($sqlstart,"SHOW ")!==0 and strpos($sqlstart,"SET ")!==0)
+				$this->begin();
 		}
 
 		if ( $this->debug() ) {
@@ -976,10 +976,10 @@ class Database {
 		if ( isset( $options['GROUP BY'] ) ) $preLimitTail .= " GROUP BY {$options['GROUP BY']}";
 		if ( isset( $options['HAVING'] ) ) $preLimitTail .= " HAVING {$options['HAVING']}";
 		if ( isset( $options['ORDER BY'] ) ) $preLimitTail .= " ORDER BY {$options['ORDER BY']}";
-		
+
 		//if (isset($options['LIMIT'])) {
 		//	$tailOpts .= $this->limitResult('', $options['LIMIT'],
-		//		isset($options['OFFSET']) ? $options['OFFSET'] 
+		//		isset($options['OFFSET']) ? $options['OFFSET']
 		//		: false);
 		//}
 
@@ -1002,7 +1002,7 @@ class Database {
 		} else {
 			$useIndex = '';
 		}
-		
+
 		return array( $startOpts, $useIndex, $preLimitTail, $postLimitTail );
 	}
 
@@ -1024,7 +1024,7 @@ class Database {
 		$sql = $this->selectSQLText( $table, $vars, $conds, $fname, $options, $join_conds );
 		return $this->query( $sql, $fname );
 	}
-	
+
 	/**
 	 * SELECT wrapper
 	 *
@@ -1075,7 +1075,7 @@ class Database {
 			$sql = $this->limitResult($sql, $options['LIMIT'],
 				isset($options['OFFSET']) ? $options['OFFSET'] : false);
 		$sql = "$sql $postLimitTail";
-		
+
 		if (isset($options['EXPLAIN'])) {
 			$sql = 'EXPLAIN ' . $sql;
 		}
@@ -1114,13 +1114,13 @@ class Database {
 		return $obj;
 
 	}
-	
+
 	/**
 	 * Estimate rows in dataset
 	 * Returns estimated count, based on EXPLAIN output
 	 * Takes same arguments as Database::select()
 	 */
-	
+
 	function estimateRowCount( $table, $vars='*', $conds='', $fname = 'Database::estimateRowCount', $options = array() ) {
 		$options['EXPLAIN']=true;
 		$res = $this->select ($table, $vars, $conds, $fname, $options );
@@ -1130,17 +1130,17 @@ class Database {
 			$this->freeResult($res);
 			return 0;
 		}
-		
+
 		$rows=1;
-	
+
 		while( $plan = $this->fetchObject( $res ) ) {
 			$rows *= ($plan->rows > 0)?$plan->rows:1; // avoid resetting to zero
 		}
-		
+
 		$this->freeResult($res);
-		return $rows;		
+		return $rows;
 	}
-	
+
 
 	/**
 	 * Removes most variables from an SQL query and replaces them with X or N for numbers.
@@ -1228,7 +1228,7 @@ class Database {
 			}
 		}
 		$this->freeResult($res);
-		
+
 		return empty($result) ? false : $result;
 	}
 
@@ -1479,7 +1479,7 @@ class Database {
 		# use of `database`.table. But won't break things if someone wants
 		# to query a database table with a dot in the name.
 		if ( $name[0] == '`' && substr( $name, -1, 1 ) == '`' ) return $name;
-		
+
 		# Lets test for any bits of text that should never show up in a table
 		# name. Basically anything like JOIN or ON which are actually part of
 		# SQL queries, but may end up inside of the table value to combine
@@ -1488,7 +1488,7 @@ class Database {
 		# any remote case where a word like on may be inside of a table name
 		# surrounded by symbols which may be considered word breaks.
 		if( preg_match( '/(^|\s)(DISTINCT|JOIN|ON|AS)(\s|$)/i', $name ) !== 0 ) return $name;
-		
+
 		# Split database and table into proper variables.
 		# We reverse the explode so that database.table and table both output
 		# the correct table.
@@ -1496,11 +1496,11 @@ class Database {
 		if( isset( $dbDetails[1] ) ) @list( $table, $database ) = $dbDetails;
 		else                         @list( $table ) = $dbDetails;
 		$prefix = $this->mTablePrefix; # Default prefix
-		
+
 		# A database name has been specified in input. Quote the table name
 		# because we don't want any prefixes added.
 		if( isset($database) ) $table = ( $table[0] == '`' ? $table : "`{$table}`" );
-		
+
 		# Note that we use the long format because php will complain in in_array if
 		# the input is not an array, and will complain in is_array if it is not set.
 		if( !isset( $database ) # Don't use shared database if pre selected.
@@ -1512,14 +1512,14 @@ class Database {
 			$database = $wgSharedDB;
 			$prefix   = isset( $wgSharedPrefix ) ? $wgSharedPrefix : $prefix;
 		}
-		
+
 		# Quote the $database and $table and apply the prefix if not quoted.
 		if( isset($database) ) $database = ( $database[0] == '`' ? $database : "`{$database}`" );
 		$table = ( $table[0] == '`' ? $table : "`{$prefix}{$table}`" );
-		
+
 		# Merge our database and table into our final table name.
 		$tableName = ( isset($database) ? "{$database}.{$table}" : "{$table}" );
-		
+
 		# We're finished, return.
 		return $tableName;
 	}
@@ -1541,7 +1541,7 @@ class Database {
 		}
 		return $retVal;
 	}
-	
+
 	/**
 	 * Fetch a number of table names into an zero-indexed numerical array
 	 * This is handy when you need to construct SQL for joins
@@ -2124,15 +2124,15 @@ class Database {
 		$res = $this->query( 'SHOW PROCESSLIST' );
 		# Find slave SQL thread
 		while ( $row = $this->fetchObject( $res ) ) {
-			/* This should work for most situations - when default db 
-			 * for thread is not specified, it had no events executed, 
+			/* This should work for most situations - when default db
+			 * for thread is not specified, it had no events executed,
 			 * and therefore it doesn't know yet how lagged it is.
 			 *
 			 * Relay log I/O thread does not select databases.
 			 */
-			if ( $row->User == 'system user' && 
+			if ( $row->User == 'system user' &&
 				$row->State != 'Waiting for master to send event' &&
-				$row->State != 'Connecting to master' && 
+				$row->State != 'Connecting to master' &&
 				$row->State != 'Queueing master event to the relay log' &&
 				$row->State != 'Waiting for master update' &&
 				$row->State != 'Requesting binlog dump'
@@ -2307,13 +2307,13 @@ class Database {
 	function buildConcat( $stringList ) {
 		return 'CONCAT(' . implode( ',', $stringList ) . ')';
 	}
-	
+
 	/**
 	 * Acquire a lock
-	 * 
+	 *
 	 * Abstracted from Filestore::lock() so child classes can implement for
 	 * their own needs.
-	 * 
+	 *
 	 * @param $lockName String: Name of lock to aquire
 	 * @param $method String: Name of method calling us
 	 * @return bool
@@ -2333,10 +2333,10 @@ class Database {
 	}
 	/**
 	 * Release a lock.
-	 * 
+	 *
 	 * @todo fixme - Figure out a way to return a bool
 	 * based on successful lock release.
-	 * 
+	 *
 	 * @param $lockName String: Name of lock to release
 	 * @param $method String: Name of method calling us
 	 */
@@ -2345,11 +2345,11 @@ class Database {
 		$result = $this->query( "SELECT RELEASE_LOCK($lockName)", $method );
 		$this->freeResult( $result );
 	}
-	
+
 	/**
 	 * Get search engine class. All subclasses of this
 	 * need to implement this if they wish to use searching.
-	 * 
+	 *
 	 * @return String
 	 */
 	public function getSearchEngine() {
@@ -2488,7 +2488,7 @@ class DBError extends MWException {
  */
 class DBConnectionError extends DBError {
 	public $error;
-	
+
 	function __construct( Database &$db, $error = 'unknown error' ) {
 		$msg = 'DB connection error';
 		if ( trim( $error ) != '' ) {
@@ -2507,7 +2507,7 @@ class DBConnectionError extends DBError {
 		// Not likely to work
 		return false;
 	}
-	
+
 	function getText() {
 		return $this->getMessage() . "\n";
 	}
@@ -2570,8 +2570,8 @@ border=\"0\" ALT=\"Google\"></A>
 
 		/*
 		if ( $GLOBALS['wgShowExceptionDetails'] ) {
-			$text .= '</p><p>Backtrace:</p><p>' . 
-				nl2br( htmlspecialchars( $this->getTraceAsString() ) ) . 
+			$text .= '</p><p>Backtrace:</p><p>' .
+				nl2br( htmlspecialchars( $this->getTraceAsString() ) ) .
 				"</p>\n";
 		}*/
 
@@ -2614,7 +2614,7 @@ border=\"0\" ALT=\"Google\"></A>
  */
 class DBQueryError extends DBError {
 	public $error, $errno, $sql, $fname;
-	
+
 	function __construct( Database &$db, $error, $errno, $sql, $fname ) {
 		$message = "A database error has occurred\n" .
 		  "Query: $sql\n" .
@@ -2636,18 +2636,20 @@ class DBQueryError extends DBError {
 			return $this->getMessage();
 		}
 	}
-	
+
 	function getSQL() {
-		global $wgShowSQLErrors;
+		global $wgShowSQLErrors, $wgDBname;
 		$time = wfTimestamp( TS_MW );
-		error_log("DBQueryError: id=$time, errorNo={$this->errno}, errorMessage={$this->error}, functionName={$this->fname}, SQL={$this->sql}");
+		$uri  = $_SERVER[ 'SERVER_NAME' ] . $_SERVER[ 'REQUEST_URI' ];
+		$qry  = $_SERVER[ 'QUERY_STRING' ];
+		error_log("DBQueryError: id=$time, errorNo={$this->errno}, errorMessage={$this->error}, functionName={$this->fname}, SQL={$this->sql} URI={$uri} QUERY={$qry}");
 		if( !$wgShowSQLErrors ) {
 			return "/*id=$time*/ " . $this->msg( 'sqlhidden', 'SQL hidden' );
 		} else {
 			return "/*id=$time*/ " . $this->sql;
 		}
 	}
-	
+
 	function getLogMessage() {
 		# Don't send to the exception log
 		return false;
