@@ -496,6 +496,9 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 				// HTML cleanup
 				$parsed = Parser::tidy($parsed);
 
+				// remove HTML comments (RT #17554)
+				$parsed = Sanitizer::removeHTMLcomments($parsed);
+
 				// get first HTML tag
 				$wrapper = substr($parsed, 1, strpos($parsed, '>') - 1);
 
