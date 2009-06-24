@@ -429,10 +429,10 @@ class WikiFactoryLoader {
 			global $wgNotAValidWikia;
 			$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 			if( $this->mIsWikiaActive < 0 ) {
-				header( "X-Redirected-By-WF: NotAValidWikia" );
+				header( "X-Redirected-By-WF: MarkedForClosing" );
 			}
 			else {
-				header( "X-Redirected-By-WF: MarkedForClosing" );
+				header( "X-Redirected-By-WF: NotAValidWikia" );
 			}
 			header("Location: $wgNotAValidWikia");
 			wfProfileOut( __METHOD__ );
