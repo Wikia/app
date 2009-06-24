@@ -126,12 +126,11 @@ if (scalar @$dates) {
 }
 
 $oConf->log("Processing: select users from local users table");
-my $select = "sum(lu_rev_cnt) as rev_cnt, lu_user_id as user_id, lu_user_name as user_name";
-my $from = "`dataware`.`city_local_users`";
-my @where = ( "lu_user_id > 0", "lu_wikia_id not in (5 /*staff*/, 11 /*contractor*/, 425 /*uncyclo*/ )" );
+my $select = "ue_user_id as user_id, ue_user_text as user_name, ue_edit_count as cnt";
+my $from = "`dbstats`.`city_user_edits`";
+my @where = ( "ue_edit_namespace in (0, 1, 2, 100, 102, 112, 114, 116, 118)" );
 my @options = (
-	"GROUP BY lu_user_id, lu_user_name",
-	"ORDER BY rev_cnt desc",
+	"ORDER BY cnt desc",
 	"LIMIT ". $limit
 );
 
@@ -140,7 +139,7 @@ my %TOP_EDITORS = ();
 $sth = $db_ext->select_many($select, $from, \@where, \@options);
 if ($sth) {
 	while(my $values = $sth->fetchrow_hashref()) {
-		%{$USERS{$values->{user_id}}} = ('all' => $values->{rev_cnt}, 'name' => $values->{user_name} );
+		%{$USERS{$values->{user_id}}} = ('all' => $values->{cnt}, 'name' => $values->{user_name} );
 		$TOP_EDITORS{$values->{user_id}} = $values->{rev_cnt};
 	}
 	$sth->finish();
@@ -194,13 +193,15 @@ foreach my $user_id (sort keys %USERS) {
 		my $city_id = $_;
 		my $dbname = $databases->{$city_id};
 
+		$db_ext->handler->ping();
 		$oConf->log("processing Wiki: ".$dbname);
 
 		my $contentNS = $db->getContentNS($city_id);
-		$contentNS = "0" unless $contentNS;
+		$contentNS = 0 unless $contentNS;
 		
 		foreach (@dates) {
 			my $date = $_;
+			$oConf->log("Get revision for date " . $date);
 			$USERS{$user_id}{$date} = 0 unless $USERS{$user_id}{$date};
 
 			$db->handler->ping();
@@ -215,14 +216,9 @@ foreach my $user_id (sort keys %USERS) {
 			my @options = ();
 		
 			my $cnt = 0;
-			($oRow) = $db->select($select, $from, \@where, \@options);
-			if ( ref($oRow) eq "HASH" ) {
-				if (($oRow->{cnt} eq '') || (!$oRow->{cnt})) {
-					$cnt = 0;
-				} else {
-					$cnt = $oRow->{cnt};
-				}
-			}
+			my ($oRowCnt) = $db->select($select, $from, \@where, \@options);
+			$cnt = $oRowCnt->{cnt};
+			$cnt = 0 unless $cnt;
 			$USERS{$user_id}{$date} = $cnt;
 		}
 	}
