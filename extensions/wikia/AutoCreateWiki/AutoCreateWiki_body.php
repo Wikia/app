@@ -45,8 +45,8 @@ class AutoCreateWikiPage extends SpecialPage {
 	const STARTER_SPRT = 15; /** sport **/
 	const LOG = "autocreatewiki";
 	const IMGROOT = "/images/";
-	const CREATEWIKI_LOGO = "/images/central/images/2/22/Wiki_Logo_Template.png";
-	const CREATEWIKI_ICON = "/images/central/images/6/64/Favicon.ico";
+	const CREATEWIKI_LOGO = "/images/c/central/images/2/22/Wiki_Logo_Template.png";
+	const CREATEWIKI_ICON = "/images/c/central/images/6/64/Favicon.ico";
 	const SESSION_TIME = 60;
 	const DAILY_LIMIT = 1000;
 	const DAILY_USER_LIMIT = 2;
@@ -570,7 +570,11 @@ class AutoCreateWikiPage extends SpecialPage {
 					return;
 				}
 
-				$startupImages = sprintf( "%s/starter/%s/images/", self::IMGROOT, $prefix );
+				/**
+				 * @todo move copying images from local database changes section
+				 * use wikifactory variable to determine proper path to images
+			     */
+				$startupImages = sprintf( "%s/s/starter/%s/images/", self::IMGROOT, $prefix );
 
 				if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
 					wfShellExec("/bin/cp -af {$startupImages} /images/{$this->mWikiData[ "dir_part" ]}/");
