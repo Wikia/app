@@ -12,15 +12,18 @@ require_once('commandLine.inc');
 /**
  * connect to WF db
  */
-$dbr = Wikifactory::db( DB_MASTER );
-$sth = $dbr->select(
+$dbw = Wikifactory::db( DB_MASTER );
+$dbw->begin();
+$sth = $dbw->select(
 		array( "city_variables" ),
 		array( "*" ),
 		array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name = 'wgUploadDirectory')"),
-		__METHOD__
+		__METHOD__,
+		array( "LIMIT" => 1, "FOR UPDATE" )
 );
-while( $row = $dbr->fetchObject( $sth ) ) {
+while( $row = $dbw->fetchObject( $sth ) ) {
 	$value = ltrim( unserialize( $row->cv_value ), "/" );
+	#print "{$value}\n";
 	$parts = explode( "/", $value );
 	/**
 	 * first part is not interesting
@@ -39,3 +42,4 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 		WikiFactory::setVarByName( "wgUploadPath", $row->cv_city_id, $path );
 	}
 }
+$dbw->commit();
