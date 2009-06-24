@@ -1,9 +1,9 @@
 <?php
 /**
- * GlobalWatchlistBot execute script - part of GlobalWatchlist extension
+ * migrateUploadPath -- migrate images to new directory layout
  *
  * @addto maintenance
- * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
+ * @author Krzysztof Krzyżaniak (eloy)
  *
  */
 ini_set( "include_path", dirname(__FILE__)."/.." );
@@ -12,14 +12,14 @@ require_once('commandLine.inc');
 /**
  * connect to WF db
  */
+$variable = "wgUploadDirectory";
 $dbw = Wikifactory::db( DB_MASTER );
-$dbw->begin();
 $sth = $dbw->select(
 		array( "city_variables" ),
 		array( "*" ),
-		array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name = 'wgUploadDirectory')"),
+		array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name = '{$variable}')"),
 		__METHOD__,
-		array( "LIMIT" => 1, "FOR UPDATE" )
+		array( "FOR UPDATE" )
 );
 while( $row = $dbw->fetchObject( $sth ) ) {
 	$value = ltrim( unserialize( $row->cv_value ), "/" );
@@ -39,7 +39,6 @@ while( $row = $dbw->fetchObject( $sth ) ) {
 		/**
 		 * now update value through WF to get logs
 		 */
-		WikiFactory::setVarByName( "wgUploadPath", $row->cv_city_id, $path );
+		WikiFactory::setVarByName( $variable, $row->cv_city_id, $path );
 	}
 }
-$dbw->commit();
