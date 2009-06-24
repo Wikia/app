@@ -203,6 +203,17 @@ FCK.InsertDirtySpanAfter = function(node) {
 	FCKDomTools.InsertAfterNode(node, span);
 }
 
+// abstraction layer to get/set metadata entries
+// TODO: store entry as HTML tag attribute
+FCK.SetMetaData = function(refid, data) {
+	refid = parseInt(refid);
+	FCK.wysiwygData[refid] = FCK.jQuery().extend(true/* deep */, FCK.wysiwygData[refid], data);
+}
+
+FCK.GetMetaData = function(refid) {
+	return FCK.wysiwygData[parseInt(refid)];
+}
+
 // return next free refId
 FCK.GetFreeRefId = function() {
 	// JSONEncode & JSONParse sometimes breaks FCK.wysiwygData.length value
