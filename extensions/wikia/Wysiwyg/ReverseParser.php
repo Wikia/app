@@ -725,6 +725,15 @@ class ReverseParser {
 				$textContent = substr($textContent, 0, -1);
 			}
 
+			// RT #17895
+			else if ( $node->parentNode->nodeName == 'div' ) {
+				$previousNode = $node->previousSibling;
+
+				if ( !empty($previousNode) && $previousNode->nodeType == XML_ELEMENT_NODE ) {
+					$textContent = "\n" . substr($textContent, 1);
+				}
+			}
+
 			$out = $textContent;
 		}
 
