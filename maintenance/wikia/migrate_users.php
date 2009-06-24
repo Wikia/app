@@ -102,6 +102,8 @@ if(isset($wgSharedDB)){
 #Get the user list
 $dbr =& wfGetDB( DB_MASTER );
 
+$db_main =& wfGetDBExt( DB_MASTER );
+
 $user = $dbr->tableName( 'user' );
 $res = $dbr->query( "SELECT * FROM $user" );
 while($row = $dbr->fetchObject( $res )){
@@ -116,13 +118,13 @@ while($row = $dbr->fetchObject( $res )){
     }
   }
   if($options['verbose']) print "migrating $row->user_name ($row->user_id) <$row->user_email>\n";
-  $res2 = $dbr->query("SELECT user_id,user_name,user_email FROM $shared_db.$shared_table where user_name=".$dbr->addQuotes($row->user_name));
+  $res2 = $db_main->query("SELECT user_id,user_name,user_email FROM $shared_db.$shared_table where user_name=".$db_main->addQuotes($row->user_name));
 
 #row is from the wikis DB
 #row2 is from the shared/target DB
 
 #  if(mysql_num_rows($res2) >= 1){ #user already exists in target DB
-  if($row2 = $dbr->fetchObject( $res2 )) {
+  if($row2 = $db_main->fetchObject( $res2 )) {
     $collisions[] = "$row->user_name exists in both DBs.  Email in $shared_db: $row2->user_email, in $wgDBname: $row->user_email";
     if( strtolower($row->user_email) == strtolower($row2->user_email) && $row2->user_email != ""){
       $newid = $row2->user_id;
@@ -139,7 +141,7 @@ while($row = $dbr->fetchObject( $res )){
 		alterTable($dbr->tableName( 'user' ),"user_name","\"$row->user_name\"","\"$new_local_username\"");
 		moveUserPages("\"$row->user_name\"","\"$new_local_username\"");
 
-		$res3 = $dbr->insert("`$shared_db`.`$shared_table`",
+		$res3 = $db_main->insert("`$shared_db`.`$shared_table`",
 					  array('user_name' => $new_local_username,
 						'user_real_name' => $row->user_real_name,
 						'user_password' => $row->user_password,
@@ -152,7 +154,7 @@ while($row = $dbr->fetchObject( $res )){
 						'user_email_token' => $row->user_email_token,
 						'user_email_token_expires' => $row->user_email_token_expires,
 						'user_registration' => $row->user_registration));
-		$newid = $dbr->insertID();
+		$newid = $db_main->insertID();
 
     }
     else{
@@ -172,16 +174,16 @@ while($row = $dbr->fetchObject( $res )){
       }
       if($new_shared_username != $row2->user_name){
 	#shared DB user name is changed changed
-	alterTable("`$shared_db`.`$shared_table`","user_name","\"$row2->user_name\"","\"$new_shared_username\"");
+	alterTable("`$shared_db`.`$shared_table`","user_name","\"$row2->user_name\"","\"$new_shared_username\"", $db_main);
       }
       if($new_local_username != $row->user_name){
 	#local DB user name is changed
 	alterTable($dbr->tableName( 'user' ),"user_name","\"$row->user_name\"","\"$new_local_username\"");
       }
-      $res2 = $dbr->query("SELECT user_id,user_name,user_email FROM $shared_db.$shared_table where user_name=".$dbr->addQuotes($new_local_username));
-      $row2 = $dbr->fetchObject($res2);
+      $res2 = $db_main->query("SELECT user_id,user_name,user_email FROM $shared_db.$shared_table where user_name=".$db_main->addQuotes($new_local_username));
+      $row2 = $db_main->fetchObject($res2);
 	if (empty($row2) ){ #user doesn't exist in target DB
-	$res3 = $dbr->insert("`$shared_db`.`$shared_table`",
+	$res3 = $db_main->insert("`$shared_db`.`$shared_table`",
 			     array('user_name' => $new_local_username,
 				   'user_real_name' => $row->user_real_name,
 				   'user_password' => $row->user_password,
@@ -194,7 +196,7 @@ while($row = $dbr->fetchObject( $res )){
 				   'user_email_token' => $row->user_email_token,
 				   'user_email_token_expires' => $row->user_email_token_expires,
 				   'user_registration' => $row->user_registration));
-	$newid = $dbr->insertID();
+	$newid = $db_main->insertID();
       }
       else{ # new user name exists in target, so we merge into target ID
 #	$row2 = $dbr->fetchObject( $res2 );
@@ -203,7 +205,7 @@ while($row = $dbr->fetchObject( $res )){
     } # end prompt for user names
   }
   else{ #insert user into the shared database
-    $res3 = $dbr->insert("`$shared_db`.`$shared_table`",
+    $res3 = $db_main->insert("`$shared_db`.`$shared_table`",
 			 array('user_name' => $row->user_name,
 			       'user_real_name' => $row->user_real_name,
 			       'user_password' => $row->user_password,
@@ -216,7 +218,7 @@ while($row = $dbr->fetchObject( $res )){
 			       'user_email_token' => $row->user_email_token,
 			       'user_email_token_expires' => $row->user_email_token_expires,
 			       'user_registration' => $row->user_registration));
-    $newid = $dbr->insertID();
+    $newid = $db_main->insertID();
   }//end if(mysql_num_rows($res2) >= 1) # user already exists in target DB
 
   print "new ID is $newid\n";
@@ -260,9 +262,12 @@ if(count($collisions) >=1 && ($options["collision-action"] == "different")){# ||
 print "\nUsers migrated (unless collisions were reported).  Now, you should set the \$wgSharedDB variable to $shared_db\n\n";
 $wgSharedDB='wikicities';
 
-function alterTable( $table, $column, $from_val, $to_val, $where_column = false ) {
+function alterTable( $table, $column, $from_val, $to_val, $where_column = false, $db = false ) {
 	global $options, $dbr;
 	
+	if ( $db === false )
+		$db = $dbr;
+
 	# Use the indexed field, if specified
 	if ( $where_column === false ) {
 		$where_column = $column;
@@ -273,7 +278,7 @@ function alterTable( $table, $column, $from_val, $to_val, $where_column = false 
 	}
 
 	if( !$options['dryrun'] ) {
-		$dbr->query("UPDATE low_priority $table SET $column=$to_val where $where_column=$from_val");
+		$db->query("UPDATE low_priority $table SET $column=$to_val where $where_column=$from_val");
 	}
 }
 
