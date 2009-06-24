@@ -1682,18 +1682,17 @@ if ($wgOut->isArticle()){
 					$this->html('bodytext');
 
 		                        // Display additional ads before categories and footer on long pages
-					global $wgEnableAdsPrefooter, $wgDBname, $wgEnableAdsInContent;
+					global $wgEnableAdsPrefooter, $wgDBname;
 					if ( !empty( $wgEnableAdsPrefooter ) &&
 					$wgOut->isArticle() &&
 					ArticleAdLogic::isContentPage() &&
 					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
 						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
-						'<td style="width: 100%; text-align: center">
-						<div style="width: 300px; margin: 0 auto">' .
+						'<td style="text-align: center">' .
 						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD", false) .
-						'</div><div style="width: 500px; margin: 0 auto">' .
+						'</td><td style="text-align: center">' .
 						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_RIGHT_BOXAD", false) .
-						"</div></td></tr>\n</table>";
+						"</td></tr>\n</table>";
 					}
 
 					// Display categories
@@ -1711,7 +1710,7 @@ if ($wgOut->isArticle()){
 			</div>
 			<!-- /ARTICLE -->
 			<?php // Check to see if it is a super long article, if so, show bottom left nav skyscraper
-			global $wgContLang, $wgEnableAdsInContent;
+			global $wgContLang;
 			if ($wgOut->isArticle() &&
 			    !$wgContLang->isRTL() && // Since this is in the left nav, not suitable for right-to-left languages
 		            !ArticleAdLogic::isMainPage() &&
@@ -2135,6 +2134,13 @@ global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 ?>
 <!-- End Analytics -->
+
+<?php
+/* Put two "invisible" ad slots here. These are for loading ads that just load javascript,
+but it isn't positioned at any particular part of a page, such as a slider or a interstitial */
+echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_1', false);
+echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_2', false);
+?>
 
 <?
 echo AdEngine::getInstance()->getDelayedLoadingCode();

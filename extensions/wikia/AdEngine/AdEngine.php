@@ -436,6 +436,7 @@ class AdEngine {
 			case '160x600': return 'skyscraper';
 			case '120x600': return 'skyscraper';
 			case '200x200': return 'navbox';
+			case '0x0': return 'invisible';
 			default: return NULL;
 		}
 	}

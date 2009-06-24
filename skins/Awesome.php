@@ -1562,12 +1562,15 @@ if ($wgOut->isArticle()){
 			$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
 		}
 	} else if ( ArticleAdLogic::isContentPage() ){
+                /* Reverting to the old behavior because the boxad is showing all the time because it's the end of the quarter
+ *
                 if ($wgEnableAdsInContent) {
                         $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
                         if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
                                 $topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD', false);
                         }
                 } else {
+		*/
                         if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
                                 $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
                         } else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
@@ -1576,7 +1579,7 @@ if ($wgOut->isArticle()){
                                 // Long article, but a collision
                                 $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
                         }
-                }
+                //}
 
 	}
 }
@@ -1621,22 +1624,20 @@ if ($wgOut->isArticle()){
 					// Display content
 					$this->html('bodytext');
 
-		                        // Display additional ads before categories and footer on long pages
-					global $wgEnableAdsPrefooter, $wgDBname, $wgEnableAdsInContent;
-					if ( !empty( $wgEnableAdsPrefooter ) &&
-					$wgUser->isAnon() &&
-					$wgOut->isArticle() &&
-					! $wgEnableAdsInContent &&
-					ArticleAdLogic::isContentPage() &&
-					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
+	                                // Display additional ads before categories and footer on long pages
+                                        global $wgEnableAdsPrefooter, $wgDBname;
+                                        if ( !empty( $wgEnableAdsPrefooter ) &&
+                                        $wgOut->isArticle() &&
+                                        ArticleAdLogic::isContentPage() &&
+                                        ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
 						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
-						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
-						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD_$wgDBname", false) .
-						"</div></td>\n" .
-						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
-						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_RIGHT_BOXAD_$wgDBname", false) .
-						"</div></td></tr>\n</table>";
-					}
+                                                '<td style="text-align: center">' .
+                                                AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD", false) .
+                                                '</td><td style="text-align: center">' .
+                                                AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_RIGHT_BOXAD", false) .
+                                                "</td></tr>\n</table>";
+                                        }
+
 
 					// Display categories
 					if($this->data['catlinks'])
@@ -2039,9 +2040,8 @@ if(count($wikiafooterlinks) > 0) {
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
 
 			<?php
-				global $wgEnableAdsInContent;
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_2', false);
-				if ($wgOut->isArticle() && !$wgEnableAdsInContent){
+				if ($wgOut->isArticle()){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
@@ -2071,6 +2071,12 @@ global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 ?>
 <!-- End Analytics -->
+<?php
+/* Put two "invisible" ad slots here. These are for loading ads that just load javascript,
+ * but it isn't positioned at any particular part of a page, such as a slider or a interstitial */
+echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_1', false);
+echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_2', false);
+?>
 
 <?
 echo AdEngine::getInstance()->getDelayedLoadingCode();

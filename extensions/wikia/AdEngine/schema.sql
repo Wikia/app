@@ -51,6 +51,11 @@ INSERT INTO ad_slot VALUES (NULL, 'RIGHT_SPOTLIGHT_1', 'quartz', '125x125', 0, 4
 INSERT INTO ad_slot VALUES (NULL, 'RIGHT_SPOTLIGHT_2', 'quartz', '125x125', 0, 4, 'Yes');
 INSERT INTO ad_slot VALUES (NULL, 'LEFT_NAVBOX_1', 'monaco', '200x200', 3, 1, 'Yes');
 INSERT INTO ad_slot VALUES (NULL, 'LEFT_NAVBOX_2', 'monaco', '200x200', 3, 1, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'PREFOOTER_LEFT_BOXAD', 'monaco', '300x250', 5, 6, 'Yes');
+INSERT into ad_slot VALUES (NULL, 'PREFOOTER_RIGHT_BOXAD', 'monaco', '300x250', 4, 6, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'INVISIBLE_1', 'monaco', '0x0', 4, 6, 'Yes');
+INSERT INTO ad_slot VALUES (NULL, 'INVISIBLE_2', 'monaco', '0x0', 4, 6, 'Yes');
+
 
 -- Allow wikis to override slots
 DROP TABLE IF EXISTS ad_slot_override;
