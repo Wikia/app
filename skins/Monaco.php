@@ -1684,17 +1684,15 @@ if ($wgOut->isArticle()){
 		                        // Display additional ads before categories and footer on long pages
 					global $wgEnableAdsPrefooter, $wgDBname, $wgEnableAdsInContent;
 					if ( !empty( $wgEnableAdsPrefooter ) &&
-					$wgUser->isAnon() &&
 					$wgOut->isArticle() &&
-					! $wgEnableAdsInContent && // Turn off Lower skys when ads in content is enabled
 					ArticleAdLogic::isContentPage() &&
 					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
 						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
-						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
-						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD_$wgDBname", false) .
-						"</div></td>\n" .
-						'<td style="width: 50%; text-align: center"><div style="width: 300px; margin: 0 auto">' .
-						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_RIGHT_BOXAD_$wgDBname", false) .
+						'<td style="width: 100%; text-align: center">
+						<div style="width: 300px; margin: 0 auto">' .
+						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD", false) .
+						'</div><div style="width: 500px; margin: 0 auto">' .
+						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_RIGHT_BOXAD", false) .
 						"</div></td></tr>\n</table>";
 					}
 
