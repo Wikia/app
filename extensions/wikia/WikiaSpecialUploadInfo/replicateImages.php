@@ -24,14 +24,17 @@ class WikiaReplicateImages {
 	private $mServers = array(
 		"file3" => array(
 			"address" => "10.8.2.133",
+			"directory" => "/raid/images/by_id/",
 			"flag" => 1
 		),
 		"willow" => array(
 			"address" => "10.8.2.136",
+			"directory" => "/images/",
 			"flag" => 2
 		),
 		"file4" => array(
 			"address" => "10.6.10.39",
+			"directory" => "/raid/images/by_id/",
 			"flag" => 4
 		)
 	);
@@ -170,17 +173,18 @@ class WikiaReplicateImages {
 	 */
 	public function transformPath( $source, $server ) {
 		$destination = $source;
-		switch( $server ) {
-			case "file3":
-			case "file4":
-				if( preg_match('!^/images/(.)!', $source, $matches ) ) {
-					$first_char = $matches[1];
-					$replace = '/raid/images/by_id/' . strtolower( $first_char ) . '/' . $first_char;
-					$destination = preg_replace( '!^/images/(.)!', $replace, $source );
-				}
-				break;
+		/**
+		 * transform path only for old directory layout
+		 */
+		$parts = explode( "/", ltrim( $source, "/" ) );
+		array_shift( $parts );
+		if( strlen( $parts[ 0 ] ) > 1) {
+			/**
+			 * add small first character
+			 */
+			$char = strtolower( substr( $parts[0], 0, 1 ) );
 		}
-		return $destination;
+		return $this->mServers[ "directory" ] . implode( "/", $parts );
 	}
 
 	/**
