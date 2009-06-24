@@ -561,7 +561,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 
 	// RT #17933 - add <p> before <input> at the beginning of line
 	// we need to open paragraph which is closed after <input>
-	$html = preg_replace('/^<input type="button" refid=/', '<p>\0', $html);
+	$html = preg_replace('/^<input type="button" refid=/m', '<p>\0', $html);
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
