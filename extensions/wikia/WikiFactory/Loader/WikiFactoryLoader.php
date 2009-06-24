@@ -422,16 +422,25 @@ class WikiFactoryLoader {
 		}
 
 		/**
-		 * if wikia is not defined or is disabled we redirecting to Not_a_valid_Wikia
+		 * if wikia is not defined or is marked for closing we redirecting to
+		 * Not_a_valid_Wikia
 		 */
-		if( empty( $this->mWikiID ) ) {
+		if( empty( $this->mWikiID ) || $this->mIsWikiaActive < 0 ) {
 			global $wgNotAValidWikia;
 			$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
-			header( "X-Redirected-By-WF: NotAValidWikia" );
+			if( $this->mIsWikiaActive < 0 ) {
+				header( "X-Redirected-By-WF: NotAValidWikia" );
+			}
+			else {
+				header( "X-Redirected-By-WF: MarkedForClosing" );
+			}
 			header("Location: $wgNotAValidWikia");
 			wfProfileOut( __METHOD__ );
 			exit(0);
 		}
+
+		/**
+		 * if wikia is marked for deletion
 
 		/**
 		 * if wikia is disabled and is not Commandline mode we redirect it to
