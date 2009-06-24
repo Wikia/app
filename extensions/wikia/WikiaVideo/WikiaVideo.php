@@ -232,7 +232,9 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		$wgExtensionMessagesFiles['WikiaVideo'] = dirname(__FILE__).'/WikiaVideo.i18n.php';
 		wfLoadExtensionMessages( 'WikiaVideo' );
 
-		$refid = Wysiwyg_GetRefId($options, true); // strip refid
+		if (!empty($wgWysiwygParserEnabled)) {
+			$refid = Wysiwyg_GetRefId($options, true); // strip refid
+		}
 
 		$params = array_map( 'trim', explode( '|', $options ) );
 
