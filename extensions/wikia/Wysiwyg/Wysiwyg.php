@@ -1133,6 +1133,9 @@ function WysiwygToolbarRemoveTooltip() {
 	$dbw = wfGetDB( DB_MASTER );
 	$dbw->commit();
 
+	// may fix RT #17951
+	$wgUser->invalidateCache();
+
 	return new AjaxResponse('ok');
 }
 
