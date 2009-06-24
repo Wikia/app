@@ -7,6 +7,7 @@
 * rt#17841: Modal link dialogue generates redundantly piped links (Macbre)
 * rt#17554: FCK: Scary transcluded templates show "NewPP limit" reports in the rollover (Macbre)
 * rt#17477: FCK: substing templates ignores <noinclude> style tags (Macbre)
+* rt#17933: FCK: Newlines being added after templates on fallout.wikia (Macbre)
 
 == Changes since 200906.3 ==
 * AWC: fixed function getDomainsLikeOrExact (moli)
