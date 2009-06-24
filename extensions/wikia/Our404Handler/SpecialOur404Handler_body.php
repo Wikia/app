@@ -17,7 +17,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class Our404HandlerPage extends UnlistedSpecialPage {
 	const IMAGEROOT = '/images';
-	const FAVICON_ICO = '/images/central/images/6/64/Favicon.ico';
+	const FAVICON_ICO = '/images/c/central/images/6/64/Favicon.ico';
 	const FAVICON_URL = 'http://images.wikia.com/central/images/6/64/Favicon.ico';
 	const LOGOWIDE_PNG = 'templates/Wiki_wide.png';
 	const LOGOWIDE_URL = 'http://images.wikia.com/starter/images/e/ed/TitleTemplate.png';
