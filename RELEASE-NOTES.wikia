@@ -1,4 +1,5 @@
 == Changes since 200906.4 ==
+* rt#17547: fix image replication script to work with new file2 structure (eloy)
 * rt#2281: removed new lines from the beginning of scary transcluded texts (Marooned)
 * rt#17624: Some TOCs at WoW cannot be uncollapsed (Marooned)
 * rt#17746: non-existent templates not showing as red link (Macbre)
