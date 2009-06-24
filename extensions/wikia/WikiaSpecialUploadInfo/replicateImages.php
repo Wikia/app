@@ -183,8 +183,9 @@ class WikiaReplicateImages {
 			 * add small first character
 			 */
 			$char = strtolower( substr( $parts[0], 0, 1 ) );
+			array_unshift( $parts, $char );
 		}
-		return $this->mServers[ "directory" ] . implode( "/", $parts );
+		return $this->mServers[ $server ][ "directory" ] . implode( "/", $parts );
 	}
 
 	/**
