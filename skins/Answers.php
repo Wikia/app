@@ -248,19 +248,15 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<div class="bottom"><span></span></div>
 		</div>
 		<div id="attribution" class="clearfix">
-			<?php 
-			/* If it is an anonymous user, then we send it to the
-			 * contributions page for that IP per Gil
-			 */
-			if (ip2long($author["user_name"])){
-				$url = "/wiki/Special:Contributions/" . $author["user_name"];
-			} else { 
-				$url = $author["title"]->escapeFullURL();
-			} 
-			?>
 			<div>
-			<span><?= wfMsg("question_asked_by")?> <a href="<?= $url ?>"><?= $author["user_name"] ?></a></span>
-			<a href="<?= $url ?>"><?= $author["avatar"]?></a>
+			<?php if (ip2long($author["user_name"])): ?>
+				<span><?= wfMsg("question_asked_by_a_wikia_user")?></span>
+				<?= $author["avatar"]?>
+			<?php else: ?>
+				<?php $url = $author["title"]->escapeFullURL(); ?>
+				<span><?= wfMsg("question_asked_by")?> <a href="<?= $url ?>"><?= $author["user_name"] ?></a></span>
+				<a href="<?= $url ?>"><?= $author["avatar"]?></a>
+			<?php endif; ?>
 			</div>
 			<div id="question_tail"></div>
 		</div>
