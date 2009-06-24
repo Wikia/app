@@ -365,6 +365,11 @@ WikiaButtonUI.prototype.ChangeState = function( newState, force )
 	}
 
 	this.State = newState ;
+
+	// RT #17747
+	if (this.Name == 'Source') {
+		e.title = (this.State == FCK_TRISTATE_ON) ? FCKLang.Wysiwyg : FCKLang.Source;
+	}
 }
 
 function WikiaButtonUI_OnMouseOver( ev, button )
