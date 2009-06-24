@@ -211,7 +211,21 @@ FCK.SetMetaData = function(refid, data) {
 }
 
 FCK.GetMetaData = function(refid) {
-	return FCK.wysiwygData[parseInt(refid)];
+	refid = parseInt(refid);
+	return FCK.wysiwygData[refid];
+}
+
+// abstraction layer for adding/removing metadata entries
+FCK.AddMetaData = function(refid, node, data) {
+	refid = parseInt(refid);
+	FCK.SetMetaData(refid, data);
+	FCK.NodesWithRefId[refid] = node;
+}
+
+FCK.DeleteMetaData = function(refid) {
+	refid = parseInt(refid);
+	delete FCK.wysiwygData[refid];
+	delete FCK.NodesWithRefId[refid];
 }
 
 // return next free refId
