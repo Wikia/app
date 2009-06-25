@@ -73,7 +73,7 @@ FCK.ToggleEditButtons = function( mode ) {
 	}
 }
 
-FCK.EditorInstanceId = (new Date()).getTime();
+FCK.EditorInstanceId = window.parent.wgCityId + '-' + (new Date()).getTime();
 
 FCK.LoadTime = false;
 FCK.onWysiwygLoad = function() {
@@ -204,22 +204,44 @@ FCK.InsertDirtySpanAfter = function(node) {
 }
 
 // abstraction layer to get/set metadata entries
-// TODO: store entry as HTML tag attribute
 FCK.SetMetaData = function(refid, data) {
 	refid = parseInt(refid);
 	FCK.wysiwygData[refid] = FCK.jQuery().extend(true/* deep */, FCK.wysiwygData[refid], data);
+
+	// store JSON encoded meta data in _fck_meta_data attribute
+	var node = FCK.GetElementByRefId(refid);
+	if (node) {
+		node.setAttribute('_fck_meta_data', FCK.jQuery.compactJSON(FCK.wysiwygData[refid]));
+	}
 }
 
+// get metadata of node with given refid
 FCK.GetMetaData = function(refid) {
 	refid = parseInt(refid);
 	return FCK.wysiwygData[refid];
 }
 
+// get metadata from given node (from HTML attribute)
+FCK.GetMetaDataFromNode = function(node) {
+	var meta = node.getAttribute('_fck_meta_data');
+
+	if (meta) {
+		meta = FCK.jQuery.evalJSON(meta);
+		if (typeof meta == 'object') {
+			return meta;
+		}
+	}
+	return false;
+}
+
 // abstraction layer for adding/removing metadata entries
 FCK.AddMetaData = function(refid, node, data) {
 	refid = parseInt(refid);
-	FCK.SetMetaData(refid, data);
 	FCK.NodesWithRefId[refid] = node;
+	FCK.SetMetaData(refid, data);
+
+	// add editor instance info
+	node.setAttribute('_fck_editor_instance', FCK.EditorInstanceId);
 }
 
 FCK.DeleteMetaData = function(refid) {
@@ -241,12 +263,13 @@ FCK.GetFreeRefId = function() {
 	return ++refid;
 }
 
+// get HTML node with given refid
 FCK.GetElementByRefId = function(refId) {
 	return FCK.NodesWithRefId[refId];
 }
 
+// create refid to HTML nodes mapping
 FCK.NodesWithRefId = {};
-
 FCK.GetNodesWithRefId = function() {
 	var nodes = [];
 
@@ -502,8 +525,8 @@ FCK.SetupElementsWithRefId = function() {
 			continue;
 		}
 
-		// add editor instance
-		node.setAttribute('_fck_editor_instance', FCK.EditorInstanceId);
+		// register new node with refid
+		FCK.AddMetaData(refid, node, {});
 
 		var type = node.getAttribute('_fck_type') || data.type;
 		var name = node.nodeName.toLowerCase();
