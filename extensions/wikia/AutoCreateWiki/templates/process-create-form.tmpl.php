@@ -71,7 +71,7 @@ YE.onDOMReady(function () {
 			timeout: 20000
 		}
 				
-		var url = wgAjaxPath + "?action=ajax&rs=axACWRequestCheckLog";
+		var url = wgAjaxPath + "?action=ajax&rs=axACWRequestCheckLog&token=<?=$ajaxToken?>";
 		YC.asyncRequest( "GET", url, __callback);
 	}
 	
