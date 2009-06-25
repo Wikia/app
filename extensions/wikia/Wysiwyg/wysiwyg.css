@@ -1,11 +1,11 @@
 .mw-editTools {
 	display: none;
 }
-#editform #toolbar {
+form #toolbar {
 	position: absolute;
 	visibility: hidden;
 }
-#editform #toolbar img {
+form #toolbar img {
 	margin: 0 1px;
 }
 #wpTextbox1 {
