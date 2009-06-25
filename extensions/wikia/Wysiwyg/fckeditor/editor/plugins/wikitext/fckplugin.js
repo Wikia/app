@@ -1505,7 +1505,11 @@ FCK.InsertTemplate = function(refid, name, params) {
 
 	if (refid > -1) {
 		FCK.log('updating template #'+refid);
-		var placeholder = FCK.GetElementByRefId(refid);
+
+		placeholder = FCK.GetElementByRefId(refid);
+
+		// update placeholder data
+		placeholder.value = name;
 	}
 	else {
 		refid = FCK.GetFreeRefId();
@@ -1513,39 +1517,24 @@ FCK.InsertTemplate = function(refid, name, params) {
 		FCK.log('inserting new template as #'+refid);
 
 		// create new placeholder and add it to the article
-		placeholder = FCK.EditorDocument.createElement('INPUT');
-		placeholder.className = 'wysiwygDisabled wysiwygTemplate';
-		placeholder.type = 'button';
-		placeholder.value = name;
-		placeholder.setAttribute('refid', refid);
-		placeholder.setAttribute('_fck_type', 'template');
+		placeholder = FCK.AddPlaceholder(refid, 'template', name);
 
-		FCK.InsertElement(placeholder);
-
-		// add entry to metaData
-		FCK.wysiwygData[refid] = {
-			'type': 'template'
-		}
-
-		FCK.NodesWithRefId[refid] = placeholder;
-
-		// fix placeholder by adding dirty <br /> tag
+		// fix placeholder by adding "dirty" tags
 		FCK.FixWikitextPlaceholder(placeholder);
 	}
-
-	// update placeholder data
-	placeholder.value = name;
 
 	// generate new wikitext
         var wikitext = FCK.GenerateTemplateWikitext(name, params);
 
 	// update metaData and send AJAX request to generate template preview
-	FCK.wysiwygData[refid].name = name;
-	FCK.wysiwygData[refid].originalCall = wikitext;
-	FCK.wysiwygData[refid].templateParams = params;
-	FCK.wysiwygData[refid].preview = '<p><em>please wait</em></p>';
+	FCK.SetMetaData(refid, {
+		'name': name,
+		originalCall: wikitext,
+		templateParams: params,
+		preview: '<p><em>please wait</em></p>'
+	});
 
-	FCK.log(FCK.wysiwygData[refid]);
+	FCK.log(FCK.GetMetaData(refid));
 
 	// add placeholder event handlers
 	FCK.TemplatePreviewAdd(placeholder);
@@ -1555,7 +1544,7 @@ FCK.InsertTemplate = function(refid, name, params) {
 		refid = data.refid;
 
 		// update metaData entry and preview
-		FCK.wysiwygData[refid].preview = html;
+		FCK.SetMetaData(refid, {preview: html});
 		FCK.TemplatePreviewAdd(FCK.GetElementByRefId(refid));
 
 		FCK.log('template #'+refid+' preview updated');
