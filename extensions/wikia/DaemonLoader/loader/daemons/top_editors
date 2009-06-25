@@ -128,7 +128,9 @@ if (scalar @$dates) {
 $oConf->log("Processing: select users from local users table");
 my $select = "ue_user_id as user_id, ue_user_text as user_name, ue_edit_count as cnt";
 my $from = "`dbstats`.`city_user_edits`";
-my @where = ( "ue_edit_namespace in (0, 1, 2, 100, 102, 112, 114, 116, 118)" );
+my @where = ( 
+	"ue_user_id not in (select lu_user_id from dataware.city_local_users where lu_singlegroup = 'Bot')"
+);
 my @options = (
 	"ORDER BY cnt desc",
 	"LIMIT ". $limit
@@ -139,15 +141,15 @@ my %TOP_EDITORS = ();
 $sth = $db_ext->select_many($select, $from, \@where, \@options);
 if ($sth) {
 	while(my $values = $sth->fetchrow_hashref()) {
-		%{$USERS{$values->{user_id}}} = ('all' => $values->{cnt}, 'name' => $values->{user_name} );
-		$TOP_EDITORS{$values->{user_id}} = $values->{rev_cnt};
+		%{$USERS{$values->{user_id}}} = ('all' => $values->{cnt}, 'name' => $values->{user_name});
+		$TOP_EDITORS{$values->{user_id}} = $values->{cnt};
 	}
 	$sth->finish();
 }
 
 =get all Wikis
 =cut
-my @where_db = ("city_public = 1");
+my @where_db = ("1 = 1");
 my $databases = $db->get_wikis(\@where_db);
 my $hubs = $db->getWikiCats();
 
