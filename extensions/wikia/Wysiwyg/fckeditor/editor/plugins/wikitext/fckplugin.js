@@ -1320,7 +1320,14 @@ FCK.TemplatePreviewOnPlaceholderClick = function(e) {
 	var target = FCK.YE.getTarget(e);
 	var refid = target.getAttribute('refid');
 
-	FCK.TemplateWizard = {'name':FCK.wysiwygData[refid].name,'params':FCK.wysiwygData[refid].templateParams,'refid':refid};
+	data = FCK.GetMetaData(refid);
+
+	FCK.TemplateWizard = {
+		'name':		data.name,
+		'params':	data.templateParams,
+		'refid':	refid
+	};
+
 	FCK.TemplateClickCommand.Execute();
 }
 
