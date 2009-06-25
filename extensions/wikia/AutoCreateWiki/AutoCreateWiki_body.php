@@ -885,6 +885,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"awcLanguage" => $this->awcLanguage,
 			"subdomain" => ( $this->awcLanguage === 'en' ) ? strtolower( trim( $this->awcDomain ) ) : $this->awcLanguage . "." . strtolower( trim( $this->awcDomain ) ),
 			"domain" => $this->mDefSubdomain,
+			"ajaxToken" => md5($this->mTitle . "_" . $this->awcName . "_" . $this->awcDomain . "_" . $this->awcCategory . "_" . $this->awcLanguage),
 		));
 
 		#---
