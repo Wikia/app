@@ -153,7 +153,7 @@ function Wysiwyg_Initial($form) {
 	}
 
 	// do not initialize for articles in namespaces different then main, image or user
-	$validNamespaces = array_merge( $wgContentNamespaces, array( NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO ) );
+	$validNamespaces = array_merge( $wgContentNamespaces, array( NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ) );
 	if(!in_array($form->mTitle->mNamespace, $validNamespaces)) {
 		wfProfileOut(__METHOD__);
 		return true;
