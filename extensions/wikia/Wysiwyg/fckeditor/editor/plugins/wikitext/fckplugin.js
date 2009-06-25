@@ -1336,7 +1336,14 @@ FCK.TemplatePreviewOnPreviewClick = function(e) {
 	FCK.YE.stopEvent( FCK.YE.getEvent(e) );
 	var refid = FCK.TemplatePreviewCloud.getAttribute('refid');
 
-	FCK.TemplateWizard = {'name':FCK.wysiwygData[refid].name,'params':FCK.wysiwygData[refid].templateParams,'refid':refid};
+	data = FCK.GetMetaData(refid);
+
+	FCK.TemplateWizard = {
+		'name':		data.name,
+		'params':	data.templateParams,
+		'refid':	refid
+	};
+
 	FCK.TemplateClickCommand.Execute();
 }
 
