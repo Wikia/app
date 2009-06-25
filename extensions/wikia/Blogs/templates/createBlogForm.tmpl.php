@@ -38,9 +38,15 @@
 	<div class="formBlock">
 		<label><?php echo wfMsg( "create-blog-form-post-text" ) ?></label>
 		<div class="display: block">
-			<?php //echo EditPage::getEditToolbar(); ?>
+			<?php
+				$form = new EditPage(new Article($title));
+
+				echo EditPage::getEditToolbar();
+				Wysiwyg_BeforeDisplayingTextbox(1,2);
+				Wysiwyg_Initial2($form);
+			 ?>
 			<textarea id="wpTextbox1" class="yui-ac-input" cols="80" rows="15" name="wpTextbox1" accesskey="," autocomplete="off"><?php echo (isset($formData['postBody']) ? $formData['postBody'] : ""); ?></textarea>
-			<?php wfRunHooks('EditPage::showEditForm:initial', array(new EditPage(new Article($title)))); ?>
+			<?php wfRunHooks('EditPage::showEditForm:initial', array($form)); ?>
 		</div>
 	</div>
 
