@@ -2138,8 +2138,10 @@ echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 <?php
 /* Put two "invisible" ad slots here. These are for loading ads that just load javascript,
 but it isn't positioned at any particular part of a page, such as a slider or a interstitial */
+if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_1', false);
 echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_2', false);
+}
 ?>
 
 <?
