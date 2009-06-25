@@ -211,7 +211,7 @@ foreach my $user_id (sort keys %USERS) {
 			$select = "count(*) as cnt";
 			$from = "`".$dbname."`.`revision`";
 			@where = (
-				"rev_user = " . $db->handler->quote($user_id),
+				"rev_user = '".$user_id."'",
 				"rev_page in (select page_id from `".$dbname."`.`page` where page_namespace in (".$contentNS.") and page_is_redirect = 0)",
 				"date_format(rev_timestamp, '%Y%m') = '".$date."'"
 			);
@@ -221,7 +221,7 @@ foreach my $user_id (sort keys %USERS) {
 			my ($oRowCnt) = $db->select($select, $from, \@where, \@options);
 			$cnt = $oRowCnt->{cnt};
 			$cnt = 0 unless $cnt;
-			$USERS{$user_id}{$date} = $cnt;
+			$USERS{$user_id}{$date} += $cnt;
 		}
 	}
 =end of main loop
