@@ -15,14 +15,18 @@ class Outbound extends UnlistedSpecialPage {
 		wfLoadExtensionMessages( 'Outbound' ); // Load internationalization messages
 	}
 
-	function execute($url) {
-		global $wgRequest, $wgExtensionsPath;
+	function execute() {
+		global $wgOut, $wgUser, $wgRequest, $wgExtensionsPath, $wgOutboundScreenConfig;
+
+		$url = $wgRequest->getText( 'u' );
+
+		$loggedIn = $wgUser->isLoggedIn();
+		if(($wgOutboundScreenConfig['anonsOnly'] == true) && $loggedIn) {
+			$wgOut->redirect( $url );
+			return true;
+		}
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-
-		$fragment = $wgRequest->getText( 'f' );
-		if ( !empty( $fragment ) )
-			$url .= '#' . $fragment;
 
 		$oTmpl->set_vars(
 				array(
