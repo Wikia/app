@@ -250,6 +250,26 @@ FCK.DeleteMetaData = function(refid) {
 	delete FCK.NodesWithRefId[refid];
 }
 
+// add new placeholder (templates, galleries...)
+FCK.AddPlaceholder= function(refid, type, label) {
+	// make first letter of placeholder type uppercase (for CSS class name)
+	var className = 'wysiwyg' + type.charAt(0).toUpperCase() + type.substr(1).toLowerCase();
+
+	placeholder = FCK.EditorDocument.createElement('INPUT');
+	placeholder.className = 'wysiwygDisabled ' + className;
+	placeholder.type = 'button';
+	placeholder.value = label;
+	placeholder.setAttribute('refid', refid);
+	placeholder.setAttribute('_fck_type', type);
+
+	FCK.InsertElement(placeholder);
+
+	// add meta data entry
+	FCK.AddMetaData(refid, placeholder, {'type': type});
+
+	return placeholder;
+}
+
 // return next free refId
 FCK.GetFreeRefId = function() {
 	// JSONEncode & JSONParse sometimes breaks FCK.wysiwygData.length value
