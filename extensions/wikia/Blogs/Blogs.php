@@ -114,6 +114,7 @@ include( dirname( __FILE__ ) . "/BlogTemplate.php");
 include( dirname( __FILE__ ) . "/BlogArticle.php");
 include( dirname( __FILE__ ) . "/BlogComments.php");
 include( dirname( __FILE__ ) . "/BlogLockdown.php");
+include( dirname( __FILE__ ) . "/BlogAvatar.php");
 
 /**
  * add task

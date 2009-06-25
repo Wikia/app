@@ -60,21 +60,10 @@ var oTildesItem = new FCKToolbarButton( 'AddImage', 'Add image' ) ;
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/addImage.png' ;
 FCKToolbarItems.RegisterItem( 'AddImage', oTildesItem );
 
-//
-// FCK load time logging
-//
-//
-//
-
-FCK.ToggleEditButtons = function( mode ) {
-	var buttons = ['wpSave', 'wpPreview', 'wpDiff'];
-	for (b=0; b<buttons.length; b++) {
-		window.parent.document.getElementById(buttons[b]).disabled = mode;
-	}
-}
-
+// set editor instance using city ID ans current timestamp
 FCK.EditorInstanceId = window.parent.wgCityId + '-' + (new Date()).getTime();
 
+// FCK load time logging
 FCK.LoadTime = false;
 FCK.onWysiwygLoad = function() {
 	// run just once
@@ -174,6 +163,17 @@ FCK.SwitchEditMode = function() {
 	}
 
 	return true;
+}
+
+FCK.ToggleEditButtons = function( mode ) {
+	var buttons = ['wpSave', 'wpPreview', 'wpDiff'];
+	for (b=0; b<buttons.length; b++) {
+		var button = window.parent.document.getElementById(buttons[b]);
+
+		if (button) {
+			button.disabled = mode;
+		}
+	}
 }
 
 //
