@@ -9,7 +9,7 @@ class DPLLogger {
 	function DPLLogger() {
 		$this->iDebugLevel = ExtDynamicPageList::$options['debug']['default'];
 		#--- moli
-		$this->iSuppressErrors = ExtDynamicPageList2::$options['suppresserrors']['default'];
+		$this->iSuppressErrors = ExtDynamicPageList::$options['suppresserrors']['default'];
 	}
 
 	#--- moli

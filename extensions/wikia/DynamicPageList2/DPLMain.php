@@ -564,16 +564,17 @@ class DPLMain
                         $output .= $logger->msgWrongParam('shownamespace', $sArg);
                     break;
                 
+                #-- moli
                 case 'suppresserrors':
-                   if( in_array($sArg, ExtDynamicPageList::$options['suppresserrors'])) {
-                       $bSuppressErrors = self::argBoolean($sArg);
-                       if( $bSuppressErrors )  $sNoResultsHeader = ' ';
-                   }
-                   else {
-                       $output .= $logger->msgWrongParam('suppresserrors', $sArg);
-                   }
-                   break;
-                 
+                    if( in_array($sArg, ExtDynamicPageList::$options['suppresserrors'])) {
+                    	$bSuppressErrors = self::argBoolean($sArg);
+                    	if( $bSuppressErrors )  $sNoResultsHeader = ' ';
+                        $logger->setSuppressErrors('true');
+                    } else {
+                        $logger->setSuppressErrors('false');
+					}
+                    break;
+
                 /**
                  * OTHER PARAMETER
                  */
@@ -795,15 +796,6 @@ class DPLMain
                         $output .= $logger->msgWrongParam('debug', $sArg);
                     break;
 
-				#-- moli
-                case 'suppresserrors':
-                    if( in_array($sArg, self::$options['suppresserrors']) ) {
-                        $logger->setSuppressErrors('true');
-                    } else {
-                        $logger->setSuppressErrors('false');
-					}
-                    break;
-                    
                 /**
                  * UNKNOWN PARAMETER
                  */
@@ -2440,6 +2432,7 @@ class DPLMain
     // ###### PROCESS SQL QUERY ######
          
         try {
+        	error_log ("FUCING QUERY: " . $sSqlSelectFrom . $sSqlWhere);
             $res = $dbr->query($sSqlSelectFrom . $sSqlWhere);
         }
         catch (Exception $e) {
