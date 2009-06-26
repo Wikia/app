@@ -54,7 +54,7 @@ class DPLMain
 		}    
             
         // get database access
-        $dbr =& wfGetDB( DB_SLAVE );
+        $dbr =& wfGetDB( DB_SLAVE, 'dpl' );
         $sPageTable = $dbr->tableName( 'page' );
         $sCategorylinksTable = $dbr->tableName( 'categorylinks' );
         
@@ -2850,7 +2850,7 @@ class DPLMain
     }
 
     private static function getSubcategories($cat,$sPageTable,$depth) {
-        $dbr =& wfGetDB( DB_SLAVE );
+        $dbr =& wfGetDB( DB_SLAVE, 'dpl' );
         $cats=$cat;	        
         $res = $dbr->query("select distinct page_title from ".$dbr->tableName('page')." inner join "
                 .$dbr->tableName('categorylinks')." as cl0 on ".$sPageTable.".page_id = cl0.cl_from and cl0.cl_to='"
