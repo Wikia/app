@@ -1,5 +1,5 @@
 body {
-	background: #FFF url(/skins/answers/images/sidebar_bg.png) top right repeat-y;
+	background: #FFF url(http://images.wikia.com/common/skins/answers/images/sidebar_bg.png) top right repeat-y;
 	font-family: "Arial", sans-serif;
 	font-size: 10pt;
 	margin: 0;
@@ -39,7 +39,7 @@ body {
 	padding: 0 5px 0 3px; 
 } 
 input.header_field {
-	background: #FFF url(/skins/answers/images/ask_field_bg.png) top left repeat-x; 
+	background: #FFF url(http://images.wikia.com/common/skins/answers/images/ask_field_bg.png) top left repeat-x; 
 	border: 2px solid #093; 
 	font-size: 18pt; 
 	font-weight: bold; 
@@ -104,7 +104,7 @@ input.header_field {
 
 /*** PAGE/ARTICLE ***/
 #page_bar {
-	background: #36C url(/skins/answers/images/reflected_shadow.png) repeat-x;
+	background: #36C url(http://images.wikia.com/common/skins/answers/images/reflected_shadow.png) repeat-x;
 	color: white;
 	font-family: "Tahoma", sans-serif;
 	font-size: 11pt;
@@ -125,7 +125,7 @@ input.header_field {
 	position: relative;
 }
 #page_controls div {
-	background-image: url(/skins/answers/images/sprite.png);
+	background-image: url(http://images.wikia.com/common/skins/answers/images/sprite.png);
 	clip: rect(0px 0px 0px 0px);
 	height: 16px;
 	margin: 8px 2px 0 0;
@@ -229,7 +229,7 @@ input.header_field {
 	float: right;
 }
 #question, #question .top, #question .top span, #question .bottom, #question .bottom span, #question_tail {
-	background-image: url(/skins/answers/images/question_sprite.png);
+	background-image: url(http://images.wikia.com/common/skins/answers/images/question_sprite.png);
 }
 #question {
 	background-color: #e9f0ff;
@@ -336,7 +336,7 @@ input.header_field {
 }
 
 #related_questions {
-	background: url(/skins/answers/images/related_questions_bg.png) repeat-x;
+	background: url(http://images.wikia.com/common/skins/answers/images/related_questions_bg.png) repeat-x;
 	font-size: 10pt;
 	margin-top: 15px;
 	overflow: hidden;
@@ -358,7 +358,7 @@ input.header_field {
 	padding: 10px;
 }
 .inline_form h1 {
-	background: #cc5200 url(/skins/answers/images/inline_form_header_bg.png) repeat-x;
+	background: #cc5200 url(http://images.wikia.com/common/skins/answers/images/inline_form_header_bg.png) repeat-x;
 	color: #FFF;
 	font-family: "Arial Narrow", "Arial", sans-serif;
 	font-size: 22pt;
@@ -371,7 +371,7 @@ div.inline_form_inside {
 	padding: 2px;
 }
 .inline_form td input, .inline_form .captcha input {
-	background: #FFF url(/skins/answers/images/search_field_bg.png) 0px -3px repeat-x;
+	background: #FFF url(http://images.wikia.com/common/skins/answers/images/search_field_bg.png) 0px -3px repeat-x;
 	border: 1px solid #093;
 	padding: 3px;
 
@@ -407,7 +407,7 @@ div.inline_form_inside {
 }
 
 #wikia_footer {
-	background: #252525 url(/skins/answers/images/wikianswers_logo.png) 95% 0 no-repeat;
+	background: #252525 url(http://images.wikia.com/common/skins/answers/images/wikianswers_logo.png) 95% 0 no-repeat;
 	bottom: -1px;
 	color: #666;
 	font-size: 9pt;
@@ -448,7 +448,7 @@ a.bigButton * {
 	line-height: 21px;
 }
 a.bigButton big, a.bigButton small {
-	background: url(/skins/answers/images/big_button.png) no-repeat;
+	background: url(http://images.wikia.com/common/skins/answers/images/big_button.png) no-repeat;
 }
 a.bigButton big {
 	color: #EEE;
@@ -462,7 +462,7 @@ a.bigButton small {
 }
 
 .huge_button { 
-	background: url(/skins/answers/images/huge_button.png) 100% -37px;
+	background: url(http://images.wikia.com/common/skins/answers/images/huge_button.png) 100% -37px;
 	display: block; 
 	float: left; 
 	font-family: "Arial Narrow", "Arial", sans-serif;
@@ -478,7 +478,7 @@ a.bigButton small {
 	text-decoration: none; 
 }
 .huge_button div { 
-	background: url(/skins/answers/images/huge_button.png); 
+	background: url(http://images.wikia.com/common/skins/answers/images/huge_button.png); 
 	float: left; 
 	height: 41px; 
 	width: 36px; 
@@ -519,7 +519,7 @@ body .header_menu_button * {
 	line-height: 15px;
 }
 .header_menu_button dt, .header_menu_button dd {
-	background: url(/skins/answers/images/header_button.png);
+	background: url(http://images.wikia.com/common/skins/answers/images/header_button.png);
 }
 .header_menu_button dt {
 	color: #EEE;
@@ -559,7 +559,7 @@ body .header_menu_button * {
 
 /*** MAGIC ANSWER***/
 #magicAnswer {
-	background: #000 url(/skins/answers/images/magic_answer_backdrop.png) bottom left repeat-x;
+	background: #000 url(http://images.wikia.com/common/skins/answers/images/magic_answer_backdrop.png) bottom left repeat-x;
 	color: #FFF;
 	font-size: 11pt;
 	position: relative;
@@ -567,14 +567,14 @@ body .header_menu_button * {
 	width: 100%;
 }
 #magicAnswerLeft {
-	background: url(/skins/answers/images/magic_answer_curtain_left.png) repeat-y;
+	background: url(http://images.wikia.com/common/skins/answers/images/magic_answer_curtain_left.png) repeat-y;
 	overflow: hidden;
 }
 #magicAnswerRight {
-	background: url(/skins/answers/images/magic_answer_curtain_right.png) top right repeat-y;
+	background: url(http://images.wikia.com/common/skins/answers/images/magic_answer_curtain_right.png) top right repeat-y;
 }
 #magicAnswerCurtainLeft, #magicAnswerCurtainRight {
-	background: url(/skins/answers/images/magic_answer_curtains.png) no-repeat;
+	background: url(http://images.wikia.com/common/skins/answers/images/magic_answer_curtains.png) no-repeat;
 	height: 108px;
 	position: absolute;
 	top: 0;
@@ -589,7 +589,7 @@ body .header_menu_button * {
 	right: -44px;
 }
 #magicAnswerHat {
-	background: url(/skins/answers/images/magic_answer_hat.jpg) no-repeat;
+	background: url(http://images.wikia.com/common/skins/answers/images/magic_answer_hat.jpg) no-repeat;
 	position: absolute;
 	bottom: 0;
 	height: 45px;
@@ -612,7 +612,7 @@ body .header_menu_button * {
 	margin-right: 5px;
 }
 #magicAnswerStage {
-	background: url(/skins/answers/images/magic_answer_stage.jpg) repeat-x;
+	background: url(http://images.wikia.com/common/skins/answers/images/magic_answer_stage.jpg) repeat-x;
 	font-size: 8pt;
 	height: 18px;
 	line-height: 18px;
@@ -636,12 +636,12 @@ body .header_menu_button * {
 	z-index: 20;
 }
 #toolbox {
-	background: #e1e1b4 url(/skins/answers/images/toolbox_bg.png) repeat-x;
+	background: #e1e1b4 url(http://images.wikia.com/common/skins/answers/images/toolbox_bg.png) repeat-x;
 	color: #252525;
 	padding: 1px;
 }
 #toolbox.anon {
-	background: #006722 url(/skins/answers/images/toolbox_anon_bg.png) repeat-x;
+	background: #006722 url(http://images.wikia.com/common/skins/answers/images/toolbox_anon_bg.png) repeat-x;
 	color: #FFF;
 }
 #toolbox_stroke {
@@ -679,7 +679,7 @@ body .header_menu_button * {
 	float: right;
 }
 #search_input {
-	background: #FFF url(/skins/answers/images/search_field_bg.png) repeat-x;
+	background: #FFF url(http://images.wikia.com/common/skins/answers/images/search_field_bg.png) repeat-x;
 	border: 1px solid #36C;
 	padding: 2px;
 }
@@ -769,10 +769,10 @@ body .header_menu_button * {
 	padding: 0 8px 0 5px;
 }
 .button_small_green, .button_small_green span {
-	background-image: url(/skins/answers/images/button_small_green.png);
+	background-image: url(http://images.wikia.com/common/skins/answers/images/button_small_green.png);
 }
 .button_small_blue, .button_small_blue span {
-	background-image: url(/skins/answers/images/button_small_blue.png);
+	background-image: url(http://images.wikia.com/common/skins/answers/images/button_small_blue.png);
 }
 
 .editsection {
