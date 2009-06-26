@@ -13,7 +13,12 @@ class RandomPage extends SpecialPage {
 	function __construct( $name = 'Randompage' ){
 		global $wgContentNamespaces;
 
-		$this->namespaces = $wgContentNamespaces;
+		if (!empty( $wgContentNamespaces ) ) {
+			$this->namespaces = $wgContentNamespaces;
+		} else {
+			// should never happen, but...
+			$this->namespaces = array( NS_MAIN );
+		}
 
 		parent::__construct( $name );
 	}
