@@ -105,10 +105,9 @@ function wfUserRatings() {
 
 
 			    $total = $array['rating'][0] * .8 + $array['rating'][1] * .2 + $array['rating'][2] * .0;
-			    if ($total >= 0.0) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'trash\'\')';
-			    if ($total >= 2.5) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'acceptable\'\')';
-			    if ($total >= 3.5) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'good\'\')';
-			    if ($total >= 4.5) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'great\'\')';
+			    if ($total < 3.75) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'trash\'\')';
+			    elseif ($total >= 3.75) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'good\'\')';
+			    elseif ($total >= 4.75) $rating = 'Rating: \'\'\'' . $total . '\'\'\' (\'\'great\'\')';
 
 			    if ($array['rollback'])
 			    {
