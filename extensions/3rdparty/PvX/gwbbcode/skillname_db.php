@@ -1342,7 +1342,7 @@
 'gaze of fury (pvp)' => 91734,
 'signet of spirits (pvp)' => 91239,
 'anguish (pvp)' => 91745,
-'disenchantment (pvp)' => 90923
+'disenchantment (pvp)' => 90923,
 'dissonance (pvp)' => 90921,
 'earthbind (pvp)' => 91252,
 'pain (pvp)' => 91247,
