@@ -7,5 +7,5 @@
 <div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
 <br />
 <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
-<div class="awc-domain"><a href="http://<?=$domain?>"><?=$domain?></a></div>
+<div class="awc-domain"><a href="<?=$domain?>"><?=$domain?></a></div>
 <!-- e:<?= __FILE__ ?> -->
