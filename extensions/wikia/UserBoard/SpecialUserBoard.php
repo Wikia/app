@@ -286,7 +286,7 @@
 		
 					$output .= "<div class=\"user-board-message\" style=\"width:550px\">
 						<div class=\"user-board-message-from\">
-								<a href=\"{$user->escapeFullURL()}\" title=\"{$message["user_name_from"]}}\">{$message["user_name_from"]} </a> {$message_type_label}
+								<a href=\"{$user->escapeFullURL()}\" title=\"{$message["user_name_from"]}\">{$message["user_name_from"]} </a> {$message_type_label}
 						</div>
 						<div class=\"user-board-message-time\">
 							" . wfMsg("time_posted") . " " . get_time_ago($message["timestamp"]) . " " . wfMsg("time_ago") . "
