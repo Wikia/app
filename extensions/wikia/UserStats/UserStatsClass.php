@@ -21,7 +21,11 @@ $wgUserStatsPointValues["user_image"] = 1000;
 $wgUserStatsPointValues["poll_vote"] = 0;
 $wgUserStatsPointValues["quiz_points"] = 0;
 $wgUserStatsPointValues["quiz_created"] = 0;
-$wgNamespacesForEditPoints = array(0);
+
+# Allow global to be defined externally
+if ( empty( $wgNamespacesForEditPoints ) ) {
+	$wgNamespacesForEditPoints = array(0);
+}
 class UserStatsTrack{
 
 	//for referencing purposes
