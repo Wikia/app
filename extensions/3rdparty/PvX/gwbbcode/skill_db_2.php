@@ -2330,6 +2330,27 @@ array (
 'desc'=>'For 5..15 seconds, the next time target other ally would be knocked down, 1 nearby foe takes 15..75 damage instead.',
 'name_id'=>'brace yourself',
 ),
+91572=>
+array (
+'name'=>'"Brace Yourself!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>12,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 5..12 seconds, the next time target other ally would be knocked down, all nearby foes take 15..75 damage instead.',
+'name_id'=>'brace yourself (pvp)',
+),
 1780=>
 array (
 'name'=>'"Can\'t Touch This!"',
@@ -2350,6 +2371,27 @@ array (
 'elite'=>0,
 'desc'=>'For 20 seconds, the next 1..5 touch Skills used against you fail.',
 'name_id'=>'cant touch this',
+),
+91780=>
+array (
+'name'=>'"Can\'t Touch This!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>20,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 20 seconds, the next 1..5 touch skills used against allies within earshot fail.',
+'name_id'=>'cant touch this (pvp)',
 ),
 1595=>
 array (
@@ -2372,6 +2414,27 @@ array (
 'desc'=>'For 4..10 seconds, all allies within earshot gain 5..15 Health per second while moving and move 33% faster. "Fall Back!" ends on an ally affected by this Shout when that ally successfully hits with an attack.',
 'name_id'=>'fall back',
 ),
+91595=>
+array (
+'name'=>'"Fall Back!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout','ty'=>'sh','energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>20,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 4..10 seconds, all allies within earshot gain 5..15 Health per seco
+nd while moving and move 33% faster. "Fall Back!" ends on an ally affected by th
+is Shout when that ally successfully hits with an attack.',
+'name_id'=>'fall back (pvp)',
+),
 1781=>
 array (
 'name'=>'"Find Their Weakness!"',
@@ -2392,6 +2455,27 @@ array (
 'elite'=>0,
 'desc'=>'For 5..20 seconds, the next time target ally criticals, that ally also inflicts a Deep Wound for 5..20 seconds.',
 'name_id'=>'find their weakness',
+),
+91781=>
+array (
+'name'=>'"Find Their Weakness!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>15,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 5..20 seconds, the next time target ally attacks, that ally also inflicts a Deep Wound and does 5..50 additional damage for 5..20 seconds.',
+'name_id'=>'find their weakness (pvp)',
 ),
 1558=>
 array (
@@ -2414,6 +2498,27 @@ array (
 'desc'=>'For 10 seconds, the next time each ally within earshot makes an attack, that attack has an additional 30..75% chance to critical.',
 'name_id'=>'go for the eyes',
 ),
+91558=>
+array (
+'name'=>'"Go for the Eyes!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>0,
+'adrenaline'=>4,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>0,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 10 seconds, the next time each ally within earshot makes an attack, that attack has an additional 30..100% chance to critical.',
+'name_id'=>'go for the eyes (pvp)',
+),
 1594=>
 array (
 'name'=>'"Help Me!"',
@@ -2435,6 +2540,27 @@ array (
 'desc'=>'For 1..10 seconds, you gain 5..50 Health and other allies\' spells targeting you cast 50% faster',
 'name_id'=>'help me',
 ),
+91594=>
+array (
+'name'=>'"Help Me!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>10,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 1..10 seconds, you gain 15..90 Health and other allies\' spells targeting you cast 50% faster.',
+'name_id'=>'help me (pvp)',
+),
 1596=>
 array (
 'name'=>'"Incoming!"',
@@ -2455,6 +2581,27 @@ array (
 'elite'=>1,
 'desc'=>'For 4..10 seconds, all allies within earshot move 33% faster, and gain 5..15 Health while moving.',
 'name_id'=>'incoming',
+),
+91596=>
+array (
+'name'=>'"Incoming!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>25,
+'pve_only'=>0,
+'elite'=>1,
+'desc'=>'For 4..10 seconds, all allies within earshot move 33% faster, and gain 5..15 Health while moving.',
+'name_id'=>'incoming (pvp)',
 ),
 1591=>
 array (
@@ -2498,6 +2645,27 @@ array (
 'desc'=>'All allies within earshot and below 75% Health gain 1..10 Energy.',
 'name_id'=>'never give up',
 ),
+91593=>
+array (
+'name'=>'"Never Give Up!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>15,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'All allies within earshot and below 75% Health gain 1..10 Energy.',
+'name_id'=>'never give up (pvp)',
+),
 1598=>
 array (
 'name'=>'"Never Surrender!"',
@@ -2518,6 +2686,27 @@ array (
 'elite'=>0,
 'desc'=>'For 15 seconds, all party members within earshot and below 75% Health gain +1..5 Health regeneration.',
 'name_id'=>'never surrender',
+),
+91598=>
+array (
+'name'=>'"Never Surrender!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>15,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 15 seconds, all party members within earshot and below 75% Health gain +1..5 Health regeneration.',
+'name_id'=>'never surrender (pvp)',
 ),
 1589=>
 array (
@@ -2540,6 +2729,27 @@ array (
 'desc'=>'For 5..20 seconds, all party members within earshot receive +24 armor when not moving.',
 'name_id'=>'stand your ground',
 ),
+91589=>
+array (
+'name'=>'"Stand Your Ground!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>20,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 5..20 seconds, all party members within earshot receive +24 armor when not moving.',
+'name_id'=>'stand your ground (pvp)',
+),
 1592=>
 array (
 'name'=>'"We Shall Return!"',
@@ -2561,6 +2771,27 @@ array (
 'desc'=>'For 10 seconds, whenever party members within earshot use a resurrection Skill, their fallen allies return with 10..75% more Health and 5..50% more Energy.',
 'name_id'=>'we shall return',
 ),
+91592=>
+array (
+'name'=>'"We Shall Return!" (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Shout',
+'ty'=>'sh',
+'energy'=>25,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>0,
+'recharge'=>30,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'All party members in earshot are resurrected with 25..50% Health and 5..20% Energy.',
+'name_id'=>'we shall return (pvp)',
+),
 2018=>
 array (
 'name'=>'Anthem of Disruption',
@@ -2581,6 +2812,27 @@ array (
 'elite'=>0,
 'desc'=>'For 1..10 seconds, the next attack Skill used by each ally within earshot also interrupts an action.',
 'name_id'=>'anthem of disruption',
+),
+92018=>
+array (
+'name'=>'Anthem of Disruption (PvP)',
+'chapter'=>4,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Chant',
+'ty'=>'ch',
+'energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>15,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 1..10 seconds, the next attack Skill used by each ally within earshot also interrupts an action.',
+'name_id'=>'anthem of disruption (pvp)',
 ),
 1559=>
 array (
@@ -2665,6 +2917,27 @@ array (
 'elite'=>0,
 'desc'=>'For 20 seconds, target non-Spirit ally has +10..40 armor against slashing damage. This Echo is reapplied every time a Chant or Shout ends on that ally.',
 'name_id'=>'bladeturn refrain',
+),
+91580=>
+array (
+'name'=>'Bladeturn Refrain (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Command',
+'attr'=>'comma',
+'type'=>'Echo',
+'ty'=>'ec',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>8,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 20 seconds, target non-spirit ally has a 5..20% chance to block incoming attacks. This Echo is reapplied every time a Chant or Shout ends on that ally.',
+'name_id'=>'bladeturn refrain (pvp)',
 ),
 1554=>
 array (
@@ -2960,6 +3233,27 @@ array (
 'desc'=>'For 10..35 seconds, whenever a Chant or Shout ends on target non-Spirit ally, all foes adjacent to that ally are set on Fire for 1..3 seconds.',
 'name_id'=>'blazing finale',
 ),
+91575=>
+array (
+'name'=>'Blazing Finale (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Leadership',
+'attr'=>'lea',
+'type'=>'Echo',
+'ty'=>'ec',
+'energy'=>5,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>8,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 10..35 seconds, whenever a Chant or Shout ends on target non-Spirit ally, all foes adjacent to that ally are set on Fire for 1..7 seconds.',
+'name_id'=>'blazing finale (pvp)',
+),
 1576=>
 array (
 'name'=>'Burning Refrain',
@@ -3022,6 +3316,27 @@ array (
 'elite'=>1,
 'desc'=>'For 4..10 seconds, each party member within earshot has a 50% chance to block incoming attacks. This Chant ends if that party member hits with an attack Skill.',
 'name_id'=>'defensive anthem',
+),
+91555=>
+array (
+'name'=>'Defensive Anthem (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Leadership',
+'attr'=>'lea',
+'type'=>'Chant',
+'ty'=>'ch',
+'energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>2,
+'recharge'=>25,
+'pve_only'=>0,
+'elite'=>1,
+'desc'=>'For 4..10 seconds, each party member within earshot has a 50% chance to block incoming attacks. This Chant ends if that party member hits with an attack Skill.',
+'name_id'=>'defensive anthem (pvp)',
 ),
 1574=>
 array (
@@ -3190,6 +3505,27 @@ array (
 'elite'=>0,
 'desc'=>'Resurrect target party member with 5..15% Health and 1..4% Energy for each party member within earshot.',
 'name_id'=>'signet of return',
+),
+91778=>
+array (
+'name'=>'Signet of Return (PvP)',
+'chapter'=>3,
+'profession'=>'Paragon',
+'prof'=>'P',
+'attribute'=>'Leadership',
+'attr'=>'lea',
+'type'=>'Signet',
+'ty'=>'si',
+'energy'=>0,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>5,
+'recharge'=>5,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'Resurrect target party member with 5..15% Health and 1..4% Energy for each party member within earshot.',
+'name_id'=>'signet of return (pvp)',
 ),
 1773=>
 array (
@@ -7118,7 +7454,7 @@ array (
 'desc'=>'For 10 seconds, you move 25% faster. This Stance is refreshed whenever you take Elemental damage.',
 'name_id'=>'storms embrace',
 ),
-2205=>
+92205=>
 array (
 'name'=>'Agony (PvP)',
 'chapter'=>4,
@@ -7137,9 +7473,9 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..12 Spirit. This Spirit causes 3..10 Health loss each second to foes within earshot. This Spirit loses 3..10 Health for each foe hurt in this way. This Spirit dies after 30..90 seconds.',
-'name_id'=>'agony pvp',
+'name_id'=>'agony (pvp)',
 ),
-92205=>
+2205=>
 array (
 'name'=>'Agony',
 'chapter'=>4,
@@ -7202,7 +7538,7 @@ array (
 'desc'=>'Create a level 1..12 Spirit who dies after 30..150 seconds. Attacks by that Spirit steal up to 5..25 Health.',
 'name_id'=>'bloodsong',
 ),
-1253=>
+91253=>
 array (
 'name'=>'Bloodsong (PvP)',
 'chapter'=>2,
@@ -7221,7 +7557,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..8 Spirit who dies after 30..150 seconds. Attacks by that Spirit steal up to 5..25 Health.',
-'name_id'=>'bloodsong pvp',
+'name_id'=>'bloodsong (pvp)',
 ),
 1744=>
 array (
@@ -7328,7 +7664,7 @@ array (
 'desc'=>'Create a level 1..10 Spirit that dies after 30 seconds. When this Spirit dies, all foes in the area take 1..14 damage for each second the Spirit was alive.',
 'name_id'=>'destruction',
 ),
-920=>
+90920=>
 array (
 'name'=>'Destruction (PvP)',
 'chapter'=>2,
@@ -7347,7 +7683,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..10 Spirit that dies after 30 seconds. When this Spirit dies, all foes in the area take 1..5 damage for each second the Spirit was alive.',
-'name_id'=>'destruction pvp',
+'name_id'=>'destruction (pvp)',
 ),
 1732=>
 array (
@@ -7452,7 +7788,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Destroy target Spirit and create a level 1..10 Spirit of Fury. This Spirit\'s attacks deal 5..20 damage. This Spirit dies after 30..60 seconds.',
-'name_id'=>'gaze of fury pvp',
+'name_id'=>'gaze of fury (pvp)',
 ),
 789=>
 array (
@@ -7598,8 +7934,29 @@ array (
 'recharge'=>20,
 'pve_only'=>0,
 'elite'=>1,
-'desc'=>'You gain 3..12 Energy if you are within earshot of a Spirit.',
+'desc'=>'Create three level 1..12 spirits. These spirits deal 5..30 damage with attacks. These spirits die after 60 seconds.',
 'name_id'=>'signet of spirits',
+),
+91239=>
+array (
+'name'=>'Signet of Spirits (PvP)',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Channeling Magic',
+'attr'=>'cha',
+'type'=>'Signet',
+'ty'=>'si',
+'energy'=>0,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>20,
+'pve_only'=>0,
+'elite'=>1,
+'desc'=>'You gain 3..12 Energy if you are within earshot of a Spirit.',
+'name_id'=>'signet of spirits (pvp)',
 ),
 1226=>
 array (
@@ -7851,7 +8208,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..11 Spirit. This Spirit\'s attacks deal 5..20 damage and deal double damage to Hexed foes. This Spirit dies after 15..45 seconds.',
-'name_id'=>'anguish pvp',
+'name_id'=>'anguish (pvp)',
 ),
 1223=>
 array (
@@ -7974,7 +8331,7 @@ array (
 'sacrifice'=>0,
 'casting'=>1,
 'recharge'=>30,
-'pve_only'=>1,
+'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..12 Spirit. This Spirit deals 5..20 damage and anyone struck by its attack loses one Enchantment. This Spirit dies after 10..35 seconds.',
 'name_id'=>'disenchantment',
@@ -7998,7 +8355,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..8 Spirit. This Spirit deals 5..20 damage and anyone struck by its attack loses one Enchantment. This Spirit dies after 10..35 seconds.',
-'name_id'=>'disenchantment pvp',
+'name_id'=>'disenchantment (pvp)',
 ),
 1249=>
 array (
@@ -8037,7 +8394,7 @@ array (
 'sacrifice'=>0,
 'casting'=>1,
 'recharge'=>45,
-'pve_only'=>1,
+'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..12 Spirit. This Spirit deals 5..20 damage and anyone struck by its attack is interrupted. This Spirit dies after 10..25 seconds.',
 'name_id'=>'dissonance',
@@ -8061,7 +8418,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..8 Spirit. This Spirit deals 5..20 damage and anyone struck by its attack is interrupted. This Spirit dies after 10..25 seconds.',
-'name_id'=>'dissonance pvp',
+'name_id'=>'dissonance (pvp)',
 ),
 1235=>
 array (
@@ -8105,7 +8462,7 @@ array (
 'desc'=>'Create a level 1..14 Spirit. All non-Spirit foes knocked down within its range are knocked down for at least 3 seconds. Whenever this happens, this Spirit loses 50..25 Health. This Spirit dies after 15..45 seconds.',
 'name_id'=>'earthbind',
 ),
-1252=>
+91252=>
 array (
 'name'=>'Earthbind (PvP)',
 'chapter'=>2,
@@ -8124,7 +8481,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..10 Spirit. All non-Spirit foes knocked down within its range are knocked down for at least 3 seconds. Whenever this happens, this Spirit loses 50..25 Health. This Spirit dies after 15..45 seconds.',
-'name_id'=>'earthbind pvp',
+'name_id'=>'earthbind (pvp)',
 ),
 2206=>
 array (
@@ -8205,7 +8562,7 @@ array (
 'sacrifice'=>0,
 'casting'=>0.75,
 'recharge'=>30,
-'pve_only'=>1,
+'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..12 Spirit. This Spirit\'s attacks deal 5..30 damage. This Spirit dies after 30..150 seconds.',
 'name_id'=>'pain',
@@ -8229,11 +8586,32 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..8 Spirit. This Spirit\'s attacks deal 5..30 damage. This Spirit dies after 30..150 seconds.',
-'name_id'=>'pain pvp',
+'name_id'=>'pain (pvp)',
 ),
 963=>
 array (
 'name'=>'Restoration',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Communing',
+'attr'=>'com',
+'type'=>'Binding Ritual',
+'ty'=>'bi',
+'energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>45,
+'pve_only'=>1,
+'elite'=>0,
+'desc'=>'Create a level 1..14 Spirit. When this Spirit dies, all party members in the area are resurrected with 5..50% Health and zero Energy. This Spirit dies after 30 seconds.',
+'name_id'=>'restoration',
+),
+90963=>
+array (
+'name'=>'Restoration (PvP)',
 'chapter'=>2,
 'profession'=>'Ritualist',
 'prof'=>'Rt',
@@ -8250,11 +8628,32 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..10 Spirit. When this Spirit dies, all party members in the area are resurrected with 5..50% Health and zero Energy. This Spirit dies after 30 seconds.',
-'name_id'=>'restoration',
+'name_id' => 'restoration (pvp)',
 ),
 871=>
 array (
 'name'=>'Shadowsong',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Communing',
+'attr'=>'com',
+'type'=>'Binding Ritual',
+'ty'=>'bi',
+'energy'=>15,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>30,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'Create a level 1..10 Spirit. The Spirit\'s attacks cause Blindness for 1..6 seconds. This Spirit dies after 30 seconds.',
+'name_id'=>'shadowsong',
+),
+90871=>
+array (
+'name'=>'Shadowsong (PvP)',
 'chapter'=>2,
 'profession'=>'Ritualist',
 'prof'=>'Rt',
@@ -8271,11 +8670,32 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..6 Spirit. The Spirit\'s attacks cause Blindness for 1..6 seconds. This Spirit dies after 30 seconds.',
-'name_id'=>'shadowsong',
+'name_id'=>'shadowsong (pvp)',
 ),
 982=>
 array (
 'name'=>'Shelter',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Communing',
+'attr'=>'com',
+'type'=>'Binding Ritual',
+'ty'=>'bi',
+'energy'=>25,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>45,
+'pve_only'=>1,
+'elite'=>0,
+'desc'=>'Create a level 1..12 Spirit. Non-Spirit allies within its range cannot lose more than 10% maximum Health from a single attack. When this Spirit prevents damage, it loses 75..45 Health. This Spirit lasts 30..60 seconds.',
+'name_id'=>'shelter',
+),
+90982=>
+array (
+'name'=>'Shelter (PvP)',
 'chapter'=>2,
 'profession'=>'Ritualist',
 'prof'=>'Rt',
@@ -8292,7 +8712,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..8 Spirit. Non-Spirit allies within its range cannot lose more than 10% maximum Health from a single attack. When this Spirit prevents damage, it loses 75..45 Health. This Spirit lasts 30..60 seconds.',
-'name_id'=>'shelter',
+'name_id'=>'shelter (pvp)',
 ),
 1743=>
 array (
@@ -8346,6 +8766,27 @@ array (
 'attr'=>'com',
 'type'=>'Binding Ritual',
 'ty'=>'bi',
+'energy'=>15,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>45,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'Create a level 1..12 Spirit. All foes within its range take twice as long to build adrenaline. This Spirit dies after 15..45 seconds.',
+'name_id'=>'soothing',
+),
+91266=>
+array (
+'name'=>'Soothing (PvP)',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Communing',
+'attr'=>'com',
+'type'=>'Binding Ritual',
+'ty'=>'bi',
 'energy'=>25,
 'adrenaline'=>0,
 'eregen'=>0,
@@ -8355,7 +8796,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..8 Spirit. All foes within its range take twice as long to build adrenaline. This Spirit dies after 15..45 seconds.',
-'name_id'=>'soothing',
+'name_id'=>'soothing (pvp)',
 ),
 2148=>
 array (
@@ -8392,12 +8833,33 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
+'casting'=>0.75,
+'recharge'=>45,
+'pve_only'=>1,
+'elite'=>0,
+'desc'=>'Create a level 1..12 Spirit. Whenever a non-Spirit ally in its range takes damage, that damage is reduced by 15 and the Spirit takes 15 damage. This Spirit dies after 30..60 seconds.',
+'name_id'=>'union',
+),
+90911=>
+array (
+'name'=>'Union (PvP)',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Communing',
+'attr'=>'com',
+'type'=>'Binding Ritual',
+'ty'=>'bi',
+'energy'=>15,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
 'casting'=>3,
 'recharge'=>45,
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..8 Spirit. Whenever a non-Spirit ally in its range takes damage, that damage is reduced by 15 and the Spirit takes 15 damage. This Spirit dies after 30..60 seconds.',
-'name_id'=>'union',
+'name_id'=>'union (pvp)',
 ),
 1267=>
 array (
@@ -8434,12 +8896,33 @@ array (
 'adrenaline'=>0,
 'eregen'=>0,
 'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>45,
+'pve_only'=>0,
+'elite'=>1,
+'desc'=>'Create a level 1..12 Spirit. Whenever this Spirit\'s attack hits a stationary foe, that foe is knocked down and the Spirit loses 70..50 Health. This Spirit dies after 30..60 seconds.',
+'name_id'=>'wanderlust',
+),
+91255=>
+array (
+'name'=>'Wanderlust (PvP)',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Communing',
+'attr'=>'com',
+'type'=>'Binding Ritual',
+'ty'=>'bi',
+'energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
 'casting'=>5,
 'recharge'=>45,
 'pve_only'=>0,
 'elite'=>1,
 'desc'=>'Create a level 1..8 Spirit. Whenever this Spirit\'s attack hits a stationary foe, that foe is knocked down and the Spirit loses 70..50 Health. This Spirit dies after 30..60 seconds.',
-'name_id'=>'wanderlust',
+'name_id'=>'wanderlust (pvp)',
 ),
 1268=>
 array (
@@ -8628,7 +9111,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..10 Spirit. When this Spirit dies, all non-Spirit allies within its range are healed for 1..7 Health for each second this Spirit was alive. This Spirit dies after 20 seconds.',
-'name_id'=>'life pvp',
+'name_id'=>'life (pvp)',
 ),
 1222=>
 array (
@@ -8733,7 +9216,7 @@ array (
 'pve_only'=>0,
 'elite'=>1,
 'desc'=>'Create a level 1..10 Spirit. Every 4 seconds, this Spirit heals one non-Spirit ally in the area for 10..115 Health. This Spirit dies after 90 seconds.',
-'name_id'=>'preservation pvp',
+'name_id'=>'preservation (pvp)',
 ),
 
 1219=>
@@ -8818,7 +9301,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..10 Spirit. Conditions on allies within range of this Spirit expire 20..50% faster. This Spirit dies after 30..60 seconds.',
-'name_id'=>'recovery pvp',
+'name_id'=>'recovery (pvp)',
 ),
 
 981=>
@@ -8844,7 +9327,7 @@ array (
 ),
 90981=>
 array (
-'name'=>'Recuperation',
+'name'=>'Recuperation (PvP)',
 'chapter'=>2,
 'profession'=>'Ritualist',
 'prof'=>'Rt',
@@ -8861,7 +9344,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..10 Spirit. Non-Spirit allies within its range gain +1..3 Health regeneration. This Spirit dies after 15..45 seconds.',
-'name_id'=>'recuperation',
+'name_id'=>'recuperation (pvp)',
 ),
 2204=>
 array (
@@ -8903,7 +9386,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..20 Spirit. This Spirit heals all party members within earshot for 3..10 Health each second. This Spirit loses 3..10 Health for each party member healed in this way. This Spirit dies after 30..90 seconds.',
-'name_id'=>'rejuvenation pvp',
+'name_id'=>'rejuvenation (pvp)',
 ),
 1221=>
 array (
@@ -9199,6 +9682,27 @@ array (
 'desc'=>'For 3..8 seconds, target ally has a Weapon of Warding, granting that ally +2..4 Health regeneration and a 50% chance to block. Weapon of Warding ends if that ally attacks.',
 'name_id'=>'weapon of warding',
 ),
+90793=>
+array (
+'name'=>'Weapon of Warding (PvP)',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Restoration Magic',
+'attr'=>'res',
+'type'=>'Weapon Spell',
+'ty'=>'wea',
+'energy'=>10,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>1,
+'recharge'=>5,
+'pve_only'=>0,
+'elite'=>0,
+'desc'=>'For 3..8 seconds, target ally has a Weapon of Warding, granting that ally +2..4 Health regeneration and a 50% chance to block. Weapon of Warding ends if that ally attacks.',
+'name_id'=>'weapon of warding (pvp)',
+),
 1265=>
 array (
 'name'=>'Wielder\'s Boon',
@@ -9344,7 +9848,7 @@ array (
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'Create a level 1..10 Spirit. All allies within its range holding an item gain 15..45 maximum Health and 10 maximum Energy. This Spirit dies after 15..60 seconds.',
-'name_id'=>'empowerment pvp',
+'name_id'=>'empowerment (pvp)',
 ),
 2016=>
 array (
@@ -9550,11 +10054,32 @@ array (
 'eregen'=>0,
 'sacrifice'=>0,
 'casting'=>2,
+'recharge'=>30,
+'pve_only'=>1,
+'elite'=>0,
+'desc'=>'For 5..30 seconds, your next 1..3 Binding Rituals cast instantly.',
+'name_id'=>'signet of creation',
+),
+91238=>
+array (
+'name'=>'Signet of Creation (PvP)',
+'chapter'=>2,
+'profession'=>'Ritualist',
+'prof'=>'Rt',
+'attribute'=>'Spawning Power',
+'attr'=>'spa',
+'type'=>'Signet',
+'ty'=>'si',
+'energy'=>0,
+'adrenaline'=>0,
+'eregen'=>0,
+'sacrifice'=>0,
+'casting'=>2,
 'recharge'=>10,
 'pve_only'=>0,
 'elite'=>0,
 'desc'=>'All Spirits and animated creatures within earshot gain +1..7 Health regeneration. After 30 seconds, those spirits and creatures are destroyed.',
-'name_id'=>'signet of creation',
+'name_id'=>'signet of creation (pvp)',
 ),
 1231=>
 array (
@@ -14173,4 +14698,4 @@ array (
 'name_id'=>'resurrection signet',
 'chapter'=>0,
 ),
-); ?>
+);
