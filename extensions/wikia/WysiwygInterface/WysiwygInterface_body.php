@@ -4,6 +4,7 @@ class WysiwygInterface extends SpecialPage {
 		function WysiwygInterface() {
 			SpecialPage::SpecialPage("WysiwygInterface");
 			wfLoadExtensionMessages('WysiwygInterface');
+			wfLoadExtensionMessages('Wysiwyg');
 		}
 
 		function execute( $par ) {
@@ -24,10 +25,22 @@ class WysiwygInterface extends SpecialPage {
 			}
 
 			$options = new ParserOptions();
-			//$options->setTidy(true);
 
 			// use simple function to parse wikitext to HTML with FCK extra data
-			list($out, $tmpMetaData) = Wysiwyg_WikiTextToHtml($wikitext);
+			$ret = Wysiwyg_WikiTextToHtml($wikitext);
+
+			// parsing successful
+			if ($ret['type'] == 'html') {
+				$out = $ret['html'];
+			}
+			// edgecase found - display message
+			else if ($ret['type'] == 'edgecase') {
+				$wgOut->addHTML("<h4>Edgecause found!</h4>\n<p>{$ret['edgecaseText']}</p>");
+				return;
+			}
+			else {
+				$out = '';
+			}
 
 			// will be used by reverse parser
 			$html = $out;
