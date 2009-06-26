@@ -7,7 +7,7 @@
  * @licence GNU General Public Licence 2.0 or later
  */
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension named TagsReport.\n";
+    echo "This is MediaWiki extension named User Badges.\n";
     exit( 1 ) ;
 }
 $wgExtensionCredits['specialpage'][] = array(
