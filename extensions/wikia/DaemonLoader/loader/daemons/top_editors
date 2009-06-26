@@ -124,12 +124,13 @@ my @dates = ();
 if (scalar @$dates) {		
 	@dates = map { substr ($_, 0, 6) } @$dates;
 }
-
+my $other_wikis = "5, 11, 425, 520, 2719, 5409";
 $oConf->log("Processing: select users from local users table");
 my $select = "lu_user_id as user_id, lu_user_name as user_name, sum(lu_rev_cnt) as cnt";
 my $from = "`dataware`.`city_local_users`";
 my @where = ( 
-	"lu_singlegroup != 'Bot'"
+	"lu_singlegroup != 'Bot'",
+	"lu_wikia_id not in (".$other_wikis.")"
 );
 my @options = (
 	"group by 1, 2",
@@ -163,7 +164,7 @@ foreach my $user_id (sort keys %USERS) {
 =cut
 	$select = "city_id";
 	$from = "`dataware`.`user_login_history`";
-	@where = ("ulh_from = 2", "user_id = ".$user_id);	
+	@where = ("ulh_from = 2", "user_id = ".$user_id, "city_id not in (".$other_wikis.")");	
 	@options = ();
 	my ($oRow) = $db_ext->select($select, $from, \@where, \@options);
 	my $homeCityId = $oRow->{city_id};
@@ -174,7 +175,7 @@ foreach my $user_id (sort keys %USERS) {
 	
 	$select = "lu_wikia_id as city_id, count(*) as cnt";
 	$from = "`dataware`.`city_local_users`";
-	@where = ( "lu_user_id = " . $db_ext->handler->quote($user_id) , "lu_wikia_id not in (5 /*staff*/, 11 /*contractor*/, 425 /*uncyclo*/ )" );
+	@where = ( "lu_user_id = " . $db_ext->handler->quote($user_id) , "lu_wikia_id not in (".$other_wikis.")" );
 	@options = ( "GROUP BY lu_wikia_id", "ORDER BY cnt desc, lu_wikia_id" );
 	$sth = $db_ext->select_many($select, $from, \@where, \@options);
 	if ($sth) {
@@ -280,7 +281,9 @@ foreach my $user_id (sort { $TOP_EDITORS{$b} <=> $TOP_EDITORS{$a} } keys %TOP_ED
 	$sheet->write($row, $col+$i, $USERS{$user_id}{home}, $formatBody); $i++;
 	$sheet->write($row, $col+$i, $USERS{$user_id}{hub}, $formatBody); $i++;
 	foreach (@dates) {
-		$sheet->write($row, $col+$i, $USERS{$user_id}{$_}, $formatBody);$i++;
+		my $cnt = $USERS{$user_id}{$_};
+		$cnt = 0 unless $cnt;
+		$sheet->write($row, $col+$i, $cnt, $formatBody);$i++;
 	}
 }
 =close XLS file
