@@ -20,5 +20,7 @@ function efGetRankedMatches() {
 	foreach( $results as $title => $rank ) {
 		$out['ResultSet']['Result'][] = array( 'title' => $title, 'rank' => $rank );
 	}
-	return new AjaxResponse( json_encode( $out ) );
+	$res = new AjaxResponse( json_encode( $out ) );
+	$res->setCacheDuration( 3600 );
+	return $res;
 }
