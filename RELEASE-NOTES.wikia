@@ -10,6 +10,7 @@
 * rt#17933: FCK: Newlines being added after templates on fallout.wikia (Macbre)
 * rt#17987: Answers: don't display IP address on question page. (Nef)
 * rt#18113: allow customization of namespaces for points (TOR)
+* rt#17281, rt#17979, rt#18067: Answers: What and when triggers ActionPanel. (Nef)
 
 == Changes since 200906.3 ==
 * AWC: fixed function getDomainsLikeOrExact (moli)
