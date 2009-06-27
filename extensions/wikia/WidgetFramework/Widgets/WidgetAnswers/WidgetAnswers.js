@@ -1,12 +1,13 @@
 function WidgetAnswers_load(data) {
-	if(data.query.wkpagesincat) {
-		for(var recent_q in data.query.wkpagesincat ) {
-			var page = data.query.wkpagesincat[recent_q];
+	if(data.query.categoriesonanswers) {
+		for(var recent_q in data.query.categoriesonanswers ) {
+			var page = data.query.categoriesonanswers[recent_q];
+			var url  = page.title.replace(/_/g," ");
 			var text = page.title.replace(/_/g," ") + "?";
 			if(text.length > 100) {
 				text = text.substring(0,100) + "...";
 			}
-			WidgetAnswers_html += "<li><a href=\"" + page.url + "\" target=\"_blank\">" + text + "</a></li>";
+			WidgetAnswers_html += "<li><a href=\"http://" + wgContentLanguage + '.answers.wikia.com/index.php?title=' + encodeURIComponent(url) + "\" target=\"_blank\">" + text + "</a></li>";
 		}
 	}
 }
