@@ -63,14 +63,12 @@ EOD;
 	$output .= '<div style="padding: 7px;"><b>'.wfMsgForContent('recent_asked_questions').'</b><ul></ul></div>';
 
 	$apiparams = array(
-		'smaxage'=>300,
-		'maxage'=> 300,
-		'action'=> 'query',
-		'list'=>'wkpagesincat',
-		'wkcategory'=> wfMsgForContent('unanswered_category') . '|' . $wgSitename,
-		'format'=>'json',
-		'wklimit'=>'5',
-		'callback'=>'WidgetAnswers_load'
+		'callback' => 'WidgetAnswers_load',
+		'format'   => 'json',
+		'action'   => 'query',
+		'list'     => 'categoriesonanswers',
+		'coatitle' =>  $wgSitename,
+		'coalimit' => '5',
 	);
 #	if($wgUser->getOption('language') != 'en') { // waiting for international logic phase Future (v 2.0)
 #		$domain = $wgUser->getOption('language').'.';
