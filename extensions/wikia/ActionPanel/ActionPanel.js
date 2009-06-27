@@ -20,8 +20,7 @@ function ActionPanelClose() {
 	}
 }
 
-function applyActionsOnQuestions(){
-	jQuery("[href*='" + wgServer + "/wiki/']").live("mouseover", function(){
+function ActionPanelMouseover(e) {
 		if( menu_is_open )return;
 		questions = this.href.match(/\/wiki\/(.*)/i );
 		jQuery("#ActionPanelTrigger").unbind('mouseenter mouseleave'); 
@@ -475,11 +474,16 @@ function applyActionsOnQuestions(){
 			});
 			
 		}
-	}).live("mouseout", function(){
-	
+}
+
+function ActionPanelMouseout(e) {
 		if( !menu_is_open ) {
 			jQuery("#ActionPanelTrigger").fadeOut("slow");
 		}
-	});
+}
+
+function applyActionsOnQuestions(){
+	jQuery("[href^='/wiki/']").live("mouseover", ActionPanelMouseover).live("mouseout", ActionPanelMouseout);
+	jQuery("[href^='" + wgServer + "/wiki/']").live("mouseover", ActionPanelMouseover).live("mouseout", ActionPanelMouseout);
 }
 
