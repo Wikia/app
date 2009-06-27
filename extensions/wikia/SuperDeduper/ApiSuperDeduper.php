@@ -41,7 +41,7 @@ class ApiSuperDeduper extends ApiBase {
 				ApiBase :: PARAM_TYPE => 'string',
 			),
 			'db' => array(
-				ApiBase :: PARAM_DFLT => 'mywiki',
+				ApiBase :: PARAM_DFLT => 'answers',
 				ApiBase :: PARAM_TYPE => 'string',
 			),
 		);
