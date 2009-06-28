@@ -63,6 +63,8 @@ EOD;
 	$output .= '<div style="padding: 7px;"><b>'.wfMsgForContent('recent_asked_questions').'</b><ul></ul></div>';
 
 	$apiparams = array(
+		'smaxage'  =>  300,
+		'maxage'   =>  300,
 		'callback' => 'WidgetAnswers_load',
 		'format'   => 'json',
 		'action'   => 'query',
