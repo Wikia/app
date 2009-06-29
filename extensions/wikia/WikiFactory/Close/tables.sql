@@ -61,14 +61,17 @@ CREATE TABLE `city_list` (
   `city_google_search` varchar(100) default '',
   `city_google_maps` varchar(100) default '',
   `city_indexed_rev` int(8) unsigned NOT NULL default '1',
-  `city_deleted_timestamp` varchar(14) default '19700101000000',
+  `city_lastdump_timestamp` varchar(14) default '19700101000000',
   `city_factory_timestamp` varchar(14) default '19700101000000',
   `city_useshared` tinyint(1) default '1',
+  `city_flags` int(10) unsigned not null default '0',
+  `city_cluster` varchar(255) default NULL,
   `ad_cat` char(4) NOT NULL default '',
   KEY `city_id` (`city_id`),
   KEY `city_dbname_idx` (`city_dbname`),
   KEY `city_title_idx` (`city_title`),
-  KEY `city_url_idx` (`city_url`)
+  KEY `city_url_idx` (`city_url`),
+  KEY `city_flags_idx` (`city_flags`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 

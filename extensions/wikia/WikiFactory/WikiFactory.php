@@ -1593,7 +1593,7 @@ class WikiFactory {
 					"city_google_search"     => $wiki->city_google_search,
 					"city_google_maps"       => $wiki->city_google_maps,
 					"city_indexed_rev"       => $wiki->city_indexed_rev,
-					"city_deleted_timestamp" => $timestamp,
+					"city_lastdump_timestamp"=> $timestamp,
 					"city_factory_timestamp" => $timestamp,
 					"city_useshared"         => $wiki->city_useshared,
 					"ad_cat"                 => $wiki->ad_cat,

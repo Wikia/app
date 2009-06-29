@@ -28,7 +28,7 @@ CREATE TABLE `city_list_deleted` (
   `city_lang` varchar(7) NOT NULL default 'en',
   `city_umbrella` varchar(255) default NULL,
   `city_useshared` tinyint(1) default '1',
-  `city_deleted_timestamp` varchar(14) default '19700101000000',
+  `city_lastdump_timestamp` varchar(14) default '19700101000000',
   `city_factory_timestamp` varchar(14) default '19700101000000',
 ) ENGINE=InnoDB
 **/
