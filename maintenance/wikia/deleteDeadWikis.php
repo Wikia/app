@@ -1352,5 +1352,6 @@ foreach( $deadWikis as $city_dbname ) {
 		 * set new status
 		 */
 		WikiFactory::setPublicStatus( WikiFactory::STATUS_DELETE, $wiki->city_id );
+		WikiFactory::clearCache( $wiki->city_id );
 	}
 }
