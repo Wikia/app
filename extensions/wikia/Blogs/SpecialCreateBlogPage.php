@@ -166,7 +166,7 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	protected function renderForm() {
-		global $wgOut, $wgScriptPath;
+		global $wgOut, $wgScriptPath, $wgEnableWysiwygExt;
 
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
@@ -178,6 +178,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			'cloud' => new TagCloud(),
 			'cols' => 10,
 			'cloudNo' => 1,
+			'wysiwygEnabled' => ( !empty($wgEnableWysiwygExt) ? true : false ),
 			'textCategories' => ( isset($this->mFormData['postCategories']) ? $this->mFormData['postCategories'] : "" ) )
 		);
 
