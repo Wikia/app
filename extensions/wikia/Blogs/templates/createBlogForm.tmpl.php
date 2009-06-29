@@ -49,7 +49,7 @@
 			<?php
 				if($wysiwygEnabled) {
 					wfRunHooks('EditPage::showEditForm:initial', array($form));
-					Wysiwyg_Initial2($form);
+					wfRunHooks('EditPage::showEditForm:initial2', array($form));
 				}
 			?>
 		</div>
