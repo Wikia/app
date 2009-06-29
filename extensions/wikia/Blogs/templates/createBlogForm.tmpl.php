@@ -35,7 +35,7 @@
 			<input type="checkbox" name="blogPostIsCommentingEnabled" value="1" <?php echo (!empty($formData['isCommentingEnabled']) || !isset($formData['isCommentingEnabled'])) ? "checked" : ""; ?> /><?php echo wfMsg("blog-comments-label") ?>
 		</div>
 	</div>
-	<div class="formBlock">
+	<div class="formBlock" id="editform">
 		<label><?php echo wfMsg( "create-blog-form-post-text" ) ?></label>
 		<div class="display: block">
 			<?php
