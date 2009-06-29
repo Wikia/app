@@ -125,6 +125,7 @@ if (scalar @$dates) {
 	@dates = map { substr ($_, 0, 6) } @$dates;
 }
 my $other_wikis = "5, 11, 425, 520, 2719, 5409";
+
 $oConf->log("Processing: select users from local users table");
 my $select = "lu_user_id as user_id, lu_user_name as user_name, sum(lu_rev_cnt) as cnt";
 my $from = "`dataware`.`city_local_users`";
@@ -136,7 +137,7 @@ my @options = (
 	"group by 1, 2",
 	"ORDER BY cnt desc",
 	"LIMIT ". $limit
-);
+); 
 
 my %USERS = ();
 my %TOP_EDITORS = ();
@@ -147,6 +148,22 @@ if ($sth) {
 		$TOP_EDITORS{$values->{user_id}} = $values->{cnt};
 	}
 	$sth->finish();
+}
+
+my %USERS_WIKIS = ();
+foreach my $user_id (sort keys %USERS) {
+	$select = "lu_wikia_id as city_id, count(*) as cnt";
+	$from = "`dataware`.`city_local_users`";
+	@where = ( "lu_user_id = " . $db_ext->handler->quote($user_id) , "lu_wikia_id not in (".$other_wikis.")" );
+	@options = ( "GROUP BY lu_wikia_id", "ORDER BY cnt desc, lu_wikia_id" );
+	$sth = $db_ext->select_many($select, $from, \@where, \@options);
+	if ($sth) {
+		while(my $values = $sth->fetchrow_hashref()) {
+			$USERS_WIKIS{$user_id} = () unless $USERS_WIKIS{$user_id};
+			push @{$USERS_WIKIS{$user_id}}, $values->{city_id};
+		}
+		$sth->finish();
+	}
 }
 
 =get all Wikis
@@ -164,29 +181,14 @@ foreach my $user_id (sort keys %USERS) {
 =cut
 	$select = "city_id";
 	$from = "`dataware`.`user_login_history`";
-	@where = ("ulh_from = 2", "user_id = ".$user_id, "city_id not in (".$other_wikis.")");	
+	@where = ("ulh_from = 2", "user_id = ".$user_id);	
 	@options = ();
 	my ($oRow) = $db_ext->select($select, $from, \@where, \@options);
 	my $homeCityId = $oRow->{city_id};
 	
 =get list of wikis, where user edited something
 =cut
-	my @wikis = ();
-	
-	$select = "lu_wikia_id as city_id, count(*) as cnt";
-	$from = "`dataware`.`city_local_users`";
-	@where = ( "lu_user_id = " . $db_ext->handler->quote($user_id) , "lu_wikia_id not in (".$other_wikis.")" );
-	@options = ( "GROUP BY lu_wikia_id", "ORDER BY cnt desc, lu_wikia_id" );
-	$sth = $db_ext->select_many($select, $from, \@where, \@options);
-	if ($sth) {
-		while(my $values = $sth->fetchrow_hashref()) {
-			if (!$homeCityId) {
-				$homeCityId = $values->{city_id};
-			}
-			push @wikis, $values->{city_id};
-		}
-		$sth->finish();
-	}
+	my @wikis = $USERS_WIKIS{$user_id};
 
 	$USERS{$user_id}{home} = $databases->{$homeCityId};
 	$USERS{$user_id}{hub} = $hubs->{$homeCityId};
@@ -196,6 +198,8 @@ foreach my $user_id (sort keys %USERS) {
 	foreach (@wikis) {
 		my $city_id = $_;
 		my $dbname = $databases->{$city_id};
+		
+		$homeCityId = $city_id unless ($homeCityId);
 
 		$db_ext->handler->ping();
 		$oConf->log("processing Wiki: ".$dbname);
@@ -281,9 +285,7 @@ foreach my $user_id (sort { $TOP_EDITORS{$b} <=> $TOP_EDITORS{$a} } keys %TOP_ED
 	$sheet->write($row, $col+$i, $USERS{$user_id}{home}, $formatBody); $i++;
 	$sheet->write($row, $col+$i, $USERS{$user_id}{hub}, $formatBody); $i++;
 	foreach (@dates) {
-		my $cnt = $USERS{$user_id}{$_};
-		$cnt = 0 unless $cnt;
-		$sheet->write($row, $col+$i, $cnt, $formatBody);$i++;
+		$sheet->write($row, $col+$i, $USERS{$user_id}{$_}, $formatBody);$i++;
 	}
 }
 =close XLS file
