@@ -1348,5 +1348,9 @@ foreach( $deadWikis as $city_dbname ) {
 	if( $city_id ) {
 		$wiki = WikiFactory::getWikiByID( $city_id );
 		print "{$city_dbname}\t{$city_id}\t{$wiki->city_public}\n";
+		/**
+		 * set new status
+		 */
+		WikiFactory::setPublicStatus( WikiFactory::STATUS_DELETE, $wiki->city_id );
 	}
 }
