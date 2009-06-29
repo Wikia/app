@@ -56,7 +56,7 @@ class LocalMaintenanceTask extends BatchTask {
 		$command = $this->mParams[ "command" ];
 		$type    = $this->mParams[ "type" ];
 
-		wfWaitForSlaves( 2 );
+		# wfWaitForSlaves( 2 );
 
 		if( $city_id && $command ) {
 			$this->mWikiId = $city_id;
