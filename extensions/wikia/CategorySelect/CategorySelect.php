@@ -43,9 +43,9 @@ $wgAjaxExportList[] = 'CategorySelectGetCategories';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function CategorySelectInit() {
-	global $wgRequest, $wgDisableAnonymousEditig;
+	global $wgRequest, $wgUser, $wgDisableAnonymousEditig;
 
-	if (!empty($wgDisableAnonymousEditig)) {
+	if (!empty($wgDisableAnonymousEditig) && $wgUser->isAnon()) {
 		return true;
 	}
 
