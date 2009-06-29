@@ -216,7 +216,7 @@ function ActionPanelMouseover(e) {
 									errorMessage( j.error.info )
 									return false;
 								}else{
-									jQuery(this_link).html( document.getElementById("quickmove").value );
+									jQuery(this_link).html( document.getElementById("quickmove").value + '?' );
 									jQuery( hover_menu ).html( wgActionPanelRenameSuccessMsg );
 									actionSuccess( success_close_speed );
 								}

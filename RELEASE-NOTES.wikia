@@ -1,5 +1,5 @@
 == Changes since 200907.1 ==
-* 
+* rt#18031: ActionPanel: added missing question mark when renaming (TOR)
 
 == Changes since 200906.4 ==
 * rt#17491: Answers: Super Deduper has used hardcoded db10. Now it's connecting via MW load balancer
