@@ -69,7 +69,7 @@ class WikiaUserProfileStats
 				$sql_where["rc_city_id"] = $this->shared_city;
 			}
 			$row = $dbr->selectRow(
-				"city_recentchanges",
+				array( "city_recentchanges" ),
 				array("count(rc_new) as cnt_new"),
 				$sql_where,
 				__METHOD__,
@@ -103,7 +103,7 @@ class WikiaUserProfileStats
 		#---
 		if (empty($data))
 		{
-			$dbr =& wfGetDB( DB_MASTER );
+			$dbr = wfGetDB( DB_MASTER );
 			$s = $dbr->selectRow( "`{$db_name}`.`user`", array("user_editcount as cnt_edit"), array( "user_id" => $this->user_id), "" );
 
 			if ( $s === false )
@@ -121,42 +121,39 @@ class WikiaUserProfileStats
 		return $s;
 	}
 
-	private function getUserVotes()
-	{
-		global $wgUser, $wgMemc;
+	private function getUserVotes() {
+		global $wgUser, $wgMemc, $wgExternalStatsDB;
 
 		wfProfileIn( __METHOD__ );
 
 		$key = wfMemcKey( 'user_stats', 'profile_user_votes', $this->user_id );
 		$data = $wgMemc->get( $key );
 
-		#---
-		if (empty($data))
-		{
-			$dbr =& wfGetDB(DB_SLAVE, array(), 'dbstats');
-			#---
+		if (empty($data)) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
 			$sql_where = array( "user_id" => $this->user_id );
-			#---
-			if (!empty($this->shared_city))
-			{
+			if (!empty($this->shared_city)) {
 				$sql_where["city_id"] = $this->shared_city;
 			}
-			#---
-			$s = $dbr->selectRow( "city_page_vote FORCE INDEX (user_id)", array("count(vote) as count_vote, round(avg(vote),2) as avg_vote"), $sql_where, "" );
+			$row = $dbr->selectRow(
+				array( "city_page_vote" ),
+				array("count(vote) as count_vote, round(avg(vote),2) as avg_vote" ),
+				$sql_where,
+				__METHOD__,
+				array( "USE INDEX" => "user_id" )
+			);
 
-			if ( $s === false )
-			{
+			if ( $row === false ) {
 				return false;
 			}
-			$wgMemc->set( $key, $s, self::MEM_STATS_TIME_1 );
+			$wgMemc->set( $key, $row, self::MEM_STATS_TIME_1 );
 		}
-		else
-		{
-			$s = $data;
+		else {
+			$row = $data;
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $s;
+		return $row;
 	}
 }
 
