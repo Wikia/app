@@ -85,6 +85,8 @@ class CreateBlogPage extends SpecialBlogPage {
 		$editPage->initialiseForm();
 		$editPage->textbox1 = $sPostBody;
 		$editPage->summary  = wfMsgForContent('create-blog-updated');
+
+		$result = false;
 		$status = $editPage->internalAttemptSave( $result );
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
@@ -114,6 +116,10 @@ class CreateBlogPage extends SpecialBlogPage {
 
 	protected function parseFormData() {
 		global $wgUser, $wgRequest, $wgOut;
+
+		// store preview HTML for Wysiwyg
+		$this->mFormData['html'] = $wgRequest->getVal('wpTextbox1');
+		wfRunHooks('BlogsAlternateEdit', array(false));
 
 		$this->mFormData['postId'] = $wgRequest->getVal('blogPostId');
 		$this->mFormData['postTitle'] = $wgRequest->getVal('blogPostTitle');
@@ -166,19 +172,30 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	protected function renderForm() {
-		global $wgOut, $wgUser, $wgScriptPath, $wgEnableWysiwygExt;
+		global $wgOut, $wgUser, $wgScriptPath, $wgEnableWysiwygExt, $wgRequest;
 
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
+		$wysiwygEnabled = ( (!empty($wgEnableWysiwygExt) && ($wgUser->getOption('enablerichtext') == 1) ) ? true : false );
+		$form = new EditPage(new Article($this->mTitle));
+
+		// restore HTML and metadata for Wysiwyg (preview mode)
+		if ( isset($wgRequest->data['wysiwygData']) && $wgRequest->data['wysiwygData'] != '') {
+			global $wgWysiwygData;
+			$wgWysiwygData = $wgRequest->getVal('wysiwygData');
+
+			$this->mFormData['postBody'] = $this->mFormData['html'];
+		}
+
 		$oTmpl->set_vars( array(
 			'categoryCloudTitle' => wfMsg('create-blog-categories-title'),
 			'cloud' => new TagCloud(),
 			'cols' => 10,
 			'cloudNo' => 1,
-			'wysiwygEnabled' => ( (!empty($wgEnableWysiwygExt) && ($wgUser->getOption('enablerichtext') == 1) ) ? true : false ),
+			'wysiwygEnabled' => $wysiwygEnabled,
 			'textCategories' => ( isset($this->mFormData['postCategories']) ? $this->mFormData['postCategories'] : "" ) )
 		);
 
@@ -186,6 +203,7 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$oTmpl->set_vars( array(
 			"title" => $this->mTitle,
+			"form" => $form,
 			"formErrors" => $this->mFormErrors,
 			"formData" => $this->mFormData,
 			"preview" => $this->mRenderedPreview,
@@ -194,6 +212,13 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$wgOut->addHTML( $oTmpl->execute("createBlogForm") );
 
+		if($wysiwygEnabled) {
+			Wysiwyg_BeforeDisplayingTextbox(1,2);
+			wfRunHooks('EditPage::showEditForm:initial', array(&$form));
+			wfRunHooks('EditPage::showEditForm:initial2', array(&$form));
+		}
+
+		$wgOut->addHTML('</form>');
 
 		return;
 	}
