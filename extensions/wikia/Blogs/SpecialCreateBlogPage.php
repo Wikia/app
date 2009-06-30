@@ -7,6 +7,8 @@
  */
 class CreateBlogPage extends SpecialBlogPage {
 
+	private $reEdit = false;
+
 	public function __construct() {
 		// initialise messages
 		wfLoadExtensionMessages( "Blogs" );
@@ -190,6 +192,14 @@ class CreateBlogPage extends SpecialBlogPage {
 			$this->mFormData['postBody'] = $this->mFormData['html'];
 		}
 
+		// restore HTML for Wysiwyg (blog post re-edit mode)
+		if($wysiwygEnabled && ($this->reEdit == true) && !empty($this->mFormData['postBody'])) {
+			$ret = Wysiwyg_WikiTextToHtml($this->mFormData['postBody'], false, true);
+			if($ret['type'] == 'html') {
+				$this->mFormData['postBody'] = $ret['html'];
+			}
+		}
+
 		$oTmpl->set_vars( array(
 			'categoryCloudTitle' => wfMsg('create-blog-categories-title'),
 			'cloud' => new TagCloud(),
@@ -225,6 +235,8 @@ class CreateBlogPage extends SpecialBlogPage {
 
 	private function parseArticle($sTitle) {
 		global $wgParser, $wgContLang;
+
+		$this->reEdit = true;
 
 		$oTitle = Title::newFromText($sTitle, NS_BLOG_ARTICLE);
 		$oArticle = new Article($oTitle, 0);
