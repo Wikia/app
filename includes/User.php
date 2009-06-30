@@ -2542,7 +2542,7 @@ class User {
 			 * wikia, increase number of registered users for wfIniStats
 			 */
 			global $wgMemc;
-			$wgMemc->incr( wfSharedMemcKey( "registered-user-numbers" ) );
+			$wgMemc->incr( wfSharedMemcKey( "registered-users-number" ) );
 
 		} else {
 			$newUser = null;

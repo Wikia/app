@@ -27,10 +27,10 @@ function wfInitStats( $options=array() ) {
 	 * query is quite expensive. Value of this key is increased after user
 	 * registration but frankly we don't care about proper value
 	 */
-	$users = $wgMemc->get( wfSharedMemcKey( "registered-user-numbers" ) );
+	$users = $wgMemc->get( wfSharedMemcKey( "registered-users-number" ) );
 	if( empty( $users ) )
 		$users = $dbc->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
-		$wgMemc->set( wfSharedMemcKey( "registered-user-numbers" ), $users, 86400 );
+		$wgMemc->set( wfSharedMemcKey( "registered-users-number" ), $users, 86400 );
 	}
 	wfOut( "{$users}\nCounting number of active users..." );
 
