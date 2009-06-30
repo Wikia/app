@@ -96,7 +96,7 @@ class WikiaUserProfileStats {
 	 * @access private
 	 */
 	private function getUserEdits() {
-		global $wgUser, $wgMemc, $wgExternalShareDB;
+		global $wgUser, $wgMemc, $wgExternalSharedDB;
 
 		wfProfileIn( __METHOD__ );
 
@@ -104,7 +104,7 @@ class WikiaUserProfileStats {
 		$data = $wgMemc->get( $key );
 
 		if (empty($data)) {
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalShareDB );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			$row = $dbr->selectRow(
 				array( "user" ),
 				array( "user_editcount as cnt_edit" ),
