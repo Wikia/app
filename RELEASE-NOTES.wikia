@@ -2,6 +2,8 @@
 * rt#18267: UserProfile: fix query
 * rt#18227: CentralUserLogin: query to user table with externalsharedb connection
 * rt#18031: ActionPanel: added missing question mark when renaming (TOR)
+* rt#17553: FCK: Multiplying bullets on callofduty with quote template (Macbre)
+* rt#18269: Wysiwyg converts HTML entities into characters (Macbre)
 
 == Changes since 200906.4 ==
 * rt#17491: Answers: Super Deduper has used hardcoded db10. Now it's connecting via MW load balancer
