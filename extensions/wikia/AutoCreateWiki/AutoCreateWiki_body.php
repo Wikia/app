@@ -132,6 +132,11 @@ class AutoCreateWikiPage extends SpecialPage {
 			return;
 		}
 
+		if ( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
+
 		$this->mUserLanguage = $wgUser->getOption( 'language', $wgContLanguageCode );
 		$this->mNbrCreated = $this->countCreatedWikis();
 
