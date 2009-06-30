@@ -40,18 +40,8 @@
 		<div class="display: block">
 			<?php
 				echo EditPage::getEditToolbar();
-				if($wysiwygEnabled) {
-					$form = new EditPage(new Article($title));
-					Wysiwyg_BeforeDisplayingTextbox(1,2);
-				}
 			?>
 			<textarea id="wpTextbox1" class="yui-ac-input" cols="80" rows="15" name="wpTextbox1" accesskey="," autocomplete="off"><?php echo (isset($formData['postBody']) ? $formData['postBody'] : ""); ?></textarea>
-			<?php
-				if($wysiwygEnabled) {
-					wfRunHooks('EditPage::showEditForm:initial', array($form));
-					wfRunHooks('EditPage::showEditForm:initial2', array($form));
-				}
-			?>
 		</div>
 	</div>
 
@@ -69,6 +59,4 @@
 			</span>
 		</div>
 	</div>
-
-</form>
 <!-- e:<?= __FILE__ ?> -->
