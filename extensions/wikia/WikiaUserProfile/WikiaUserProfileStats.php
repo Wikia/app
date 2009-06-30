@@ -103,10 +103,10 @@ class WikiaUserProfileStats {
 		$key = wfMemcKey( 'user_stats', 'profile_user_edits', $this->user_id );
 		$data = $wgMemc->get( $key );
 
-		if (empty($data)) {
+		if( empty( $data ) ) {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			$row = $dbr->selectRow(
-				array( "user" ),
+				array( "`user`" ),
 				array( "user_editcount as cnt_edit" ),
 				array( "user_id" => $this->user_id),
 				__METHOD__
