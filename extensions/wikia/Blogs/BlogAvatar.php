@@ -702,6 +702,7 @@ class BlogAvatar {
 				}
 			}
 			if ($userspace != "") {
+				$isDestinationUserAnon = User::isIP($userspace);
 				$out['userspace'] = $userspace;
 
 				$oTitle = Title::newFromText( $userspace, NS_USER );
@@ -712,24 +713,23 @@ class BlogAvatar {
 				if ($oTitle instanceof Title) {
 					$out['nav_links'][] = array('text' => wfMsg('talkpage'), 'href' => $oTitle->getLocalUrl(), "dbkey" => NS_USER_TALK );
 				}
-				if ( defined("NS_BLOG_ARTICLE") ) {
+				if ( defined("NS_BLOG_ARTICLE") && !$isAnon && !$isDestinationUserAnon) {
 					$oTitle = Title::newFromText( $userspace, NS_BLOG_ARTICLE );
 					if ($oTitle instanceof Title) {
 						$out['nav_links'][] = array('text' => wfMsg('blog-page'), 'href' => $oTitle->getLocalUrl(), "dbkey" => NS_BLOG_ARTICLE );
 					}
 				}
-				if( !$isAnon ) {
-					$oTitle = Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL );
-					if ($oTitle instanceof Title) {
-						$out['nav_links'][] = array('text' => wfMsg('contris'), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Contributions" );
-					}
+
+				$oTitle = Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL );
+				if ($oTitle instanceof Title) {
+					$out['nav_links'][] = array('text' => wfMsg('contris'), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Contributions" );
 				}
 
 				if ( $wgUser->isLoggedIn() && $wgUser->getName() == $userspace ) {
 					$out['nav_links'][] = array('text' => wfMsg('prefs-watchlist'), 'href' => Title::newFromText("Watchlist", NS_SPECIAL )->getLocalUrl(), "dbkey" => "Watchlist" );
 					$out['nav_links'][] = array('text' => wfMsg('blog-widgets-label'), 'href' => Title::newFromText("WidgetDashboard", NS_SPECIAL )->getLocalUrl(), "dbkey" => "WidgetDashboard" );
 					$out['nav_links'][] = array('text' => wfMsg('preferences'), 'href' => Title::newFromText("Preferences", NS_SPECIAL )->getLocalUrl(), "dbkey" => "Preferences" );
-				} elseif ( !$isAnon ) {
+				} elseif ( !$isAnon && !$isDestinationUserAnon) {
 					$oTitle = Title::newFromText( "EmailUser/{$userspace}", NS_SPECIAL );
 					if ($oTitle instanceof Title) {
 						$out['nav_links'][] = array('text' => wfMsg("emailpage"), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Emailuser" );
