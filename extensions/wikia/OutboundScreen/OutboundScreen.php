@@ -20,7 +20,7 @@ $wgOutboundScreenConfig = array(
 );
 
 function efOutboundScreen ( $url, $text, $link ) {
-	global $wgUser, $wgOutboundScreenConfig;
+	global $wgCityId, $wgUser, $wgOutboundScreenConfig;
 	static $whiteList;
 
 	$loggedIn = $wgUser->isLoggedIn();
@@ -37,6 +37,8 @@ function efOutboundScreen ( $url, $text, $link ) {
 					}
 				}
 			}
+			$wikiDomains = WikiFactory::getDomains($wgCityId);
+			$whiteList = array_merge($wikiDomains, $whiteList);
 		}
 
 		$isWhitelisted = false;
