@@ -14,6 +14,7 @@ $wgAjaxExportList[] = 'WysiwygToolbarRemoveTooltip';
 $wgEnableMWSuggest = true;
 
 $wgHooks['AlternateEdit'][] = 'Wysiwyg_AlternateEdit';
+$wgHooks['BlogsAlternateEdit'][] = 'Wysiwyg_AlternateEdit';
 $wgHooks['EditPage::showEditForm:initial'][] = 'Wysiwyg_Initial';
 $wgHooks['UserToggles'][] = 'Wysiwyg_Toggle';
 $wgHooks['UserGetOption'][] = 'Wysiwyg_UserGetOption';

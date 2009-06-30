@@ -359,12 +359,13 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 
 	// initialize meta data
 	if(!FCK.wysiwygData) {
-		FCK.wysiwygData = eval("{"+window.parent.document.getElementById('wysiwygData').value+"}");
+		var data = window.parent.document.getElementById('wysiwygData').value;
+
+		FCK.wysiwygData = data ? FCK.jQuery.evalJSON( data ) : false;
 		if(!FCK.wysiwygData) {
 			FCK.wysiwygData = [];
 		}
 		FCK.log(FCK.wysiwygData);
-
 	}
 
 	// setup wysiwyg mode
