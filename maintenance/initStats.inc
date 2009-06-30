@@ -5,7 +5,10 @@
  */
 
 function wfInitStats( $options=array() ) {
+	global $wgExternalSharedDB;
+
 	$dbr = wfGetDB( DB_SLAVE, 'vslow' );
+	$dbc = wfGetDB( DB_SLAVE, 'vslow', $wgExternalSharedDB );
 
 	wfOut( "Counting total edits..." );
 	$edits = $dbr->selectField( 'revision', 'COUNT(*)', '', __METHOD__ );
@@ -19,7 +22,7 @@ function wfInitStats( $options=array() ) {
 	$pages = $dbr->selectField( 'page', 'COUNT(*)', '', __METHOD__ );
 	wfOut( "{$pages}\nCounting number of users..." );
 
-	$users = $dbr->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
+	$users = $dbc->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
 	wfOut( "{$users}\nCounting number of active users..." );
 
 	$active_users = $dbr->selectField( 'recentchanges', 'COUNT( DISTINCT rc_user_text )',
@@ -51,7 +54,7 @@ function wfInitStats( $options=array() ) {
 					'ss_images' => $image );
 	$conds = array( 'ss_row_id' => 1 );
 	$views = array( 'ss_total_views' => isset( $views ) ? $views : 0 );
-				
+
 	if( isset( $options['update'] ) ) {
 		$dbw->update( 'site_stats', $values, $conds, __METHOD__ );
 	} else {
