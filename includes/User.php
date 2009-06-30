@@ -2538,9 +2538,16 @@ class User {
 		$dbw->insert( 'user', $fields, __METHOD__, array( 'IGNORE' ) );
 		if ( $dbw->affectedRows() ) {
 			$newUser = User::newFromId( $dbw->insertId() );
+			/**
+			 * wikia, increase number of registered users for wfIniStats
+			 */
+			global $wgMemc;
+			$wgMemc->incr( wfSharedMemcKey( "registered-user-numbers" ) );
+
 		} else {
 			$newUser = null;
 		}
+
 		return $newUser;
 	}
 
