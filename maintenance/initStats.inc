@@ -28,8 +28,8 @@ function wfInitStats( $options=array() ) {
 	 * registration but frankly we don't care about proper value
 	 */
 	$users = $wgMemc->get( wfSharedMemcKey( "registered-users-number" ) );
-	if( empty( $users ) )
-		$users = $dbc->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
+	if( empty( $users ) ) {
+		$users = $dbc->selectField( '`user`', 'COUNT(*)', '', __METHOD__ );
 		$wgMemc->set( wfSharedMemcKey( "registered-users-number" ), $users, 86400 );
 	}
 	wfOut( "{$users}\nCounting number of active users..." );
