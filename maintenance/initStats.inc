@@ -5,7 +5,7 @@
  */
 
 function wfInitStats( $options=array() ) {
-	global $wgExternalSharedDB;
+	global $wgExternalSharedDB, $wgMemc;
 
 	$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 	$dbc = wfGetDB( DB_SLAVE, 'vslow', $wgExternalSharedDB );
@@ -22,7 +22,16 @@ function wfInitStats( $options=array() ) {
 	$pages = $dbr->selectField( 'page', 'COUNT(*)', '', __METHOD__ );
 	wfOut( "{$pages}\nCounting number of users..." );
 
-	$users = $dbc->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
+	/**
+	 * wikia, use cached information about users - we create wikis on demand so
+	 * query is quite expensive. Value of this key is increased after user
+	 * registration but frankly we don't care about proper value
+	 */
+	$users = $wgMemc->get( wfSharedMemcKey( "registered-user-numbers" ) );
+	if( empty( $users ) )
+		$users = $dbc->selectField( 'user', 'COUNT(*)', '', __METHOD__ );
+		$wgMemc->set( wfSharedMemcKey( "registered-user-numbers" ), $users, 86400 );
+	}
 	wfOut( "{$users}\nCounting number of active users..." );
 
 	$active_users = $dbr->selectField( 'recentchanges', 'COUNT( DISTINCT rc_user_text )',
