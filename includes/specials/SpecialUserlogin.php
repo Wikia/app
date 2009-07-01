@@ -124,28 +124,18 @@ class LoginForm {
 	function addNewAccountMailPassword() {
 		global $wgOut;
 
-		error_log ( __METHOD__ . " => addNewAccountMailPassword \n\n" );
-
 		if ('' == $this->mEmail) {
 			$this->mainLoginForm( wfMsg( 'noemail', htmlspecialchars( $this->mName ) ) );
 			return;
 		}
-
-		error_log ( __METHOD__ . " => addNewAccountInternal \n\n" );
 		$u = $this->addNewAccountInternal();
-
 		if ($u == NULL) {
 			return;
 		}
 
 		// Wipe the initial password and mail a temporary one
-		error_log ( __METHOD__ . " => setPassword ({$u->getName()}) \n\n" );
 		$u->setPassword( null );
-		error_log ( __METHOD__ . " => saveSettings ({$u->getName()}) \n\n" );
-		error_log ( __METHOD__ . " => user = " . print_r($u->mPassword, true) );
-		error_log ( __METHOD__ . " => user = " . print_r($u->mNewpassword, true) );
 		$u->saveSettings();
-		error_log ( __METHOD__ . " => mailPasswordInternal \n\n" );
 		$result = $this->mailPasswordInternal( $u, false, 'createaccount-title', 'createaccount-text' );
 
 		wfRunHooks( 'AddNewAccount', array( $u, true ) );
@@ -172,7 +162,6 @@ class LoginForm {
 		global $wgUser, $wgEmailAuthentication;
 
 		# Create the account and abort if there's a problem doing so
-		error_log ( __METHOD__ . " => addNewAccount \n\n" );
 		$u = $this->addNewAccountInternal();
 		if( $u == NULL )
 			return;
@@ -245,7 +234,6 @@ class LoginForm {
 		}
 
 		$userBirthDay = strtotime($this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay);
-		error_log ( __METHOD__ . " => userBirthDay = $userBirthDay \n\n" );
 		if($userBirthDay > strtotime('-13 years')) {
 			$wgOut->setPageTitle( wfMsg('userlogin-unable-title') );
 			$wgOut->setRobotpolicy( 'noindex,nofollow' );
@@ -261,10 +249,8 @@ class LoginForm {
 		//new registration - end
 
 		// If the user passes an invalid domain, something is fishy
-		error_log ( __METHOD__ . " => validDomain( {$this->mDomain} ) \n\n" );
 		if( !$wgAuth->validDomain( $this->mDomain ) ) {
 			$this->mainLoginForm( wfMsg( 'wrongpassword' ) );
-			error_log ( __METHOD__ . " => this->mainLoginForm( wfMsg( 'wrongpassword' )  (1))" );
 			return false;
 		}
 
@@ -274,11 +260,7 @@ class LoginForm {
 		// create a local account and login as any domain user). We only need
 		// to check this for domains that aren't local.
 		if( 'local' != $this->mDomain && '' != $this->mDomain ) {
-			error_log ( __METHOD__ . " => wgAuth->canCreateAccounts() = " . $wgAuth->canCreateAccounts() . " \n\n" );
-			error_log ( __METHOD__ . " => wgAuth->userExists( {$this->mName} ) = " . $wgAuth->userExists( $this->mName ) . " \n\n" );
-			error_log ( __METHOD__ . " => wgAuth->authenticate( {$this->mName}, {$this->mPassword} ) = " . $wgAuth->userExists( $this->mName ) . " \n\n" );
 			if( !$wgAuth->canCreateAccounts() && ( !$wgAuth->userExists( $this->mName ) || !$wgAuth->authenticate( $this->mName, $this->mPassword ) ) ) {
-				error_log ( __METHOD__ . " => this->mainLoginForm( wfMsg( 'wrongpassword' ) (2) )" );
 				$this->mainLoginForm( wfMsg( 'wrongpassword' ) );
 				return false;
 			}
@@ -291,11 +273,9 @@ class LoginForm {
 
 		# Check permissions
 		if ( !$wgUser->isAllowed( 'createaccount' ) ) {
-			error_log ( __METHOD__ . " => !wgUser->isAllowed( 'createaccount' ) \n\n" );
 			$this->userNotPrivilegedMessage();
 			return false;
 		} elseif ( $wgUser->isBlockedFromCreateAccount() ) {
-			error_log ( __METHOD__ . " => !wgUser->isBlockedFromCreateAccount() \n\n" );
 			$this->userBlockedMessage();
 			return false;
 		}
@@ -304,7 +284,6 @@ class LoginForm {
 		if ( $wgEnableSorbs && !in_array( $ip, $wgProxyWhitelist ) &&
 		  $wgUser->inSorbsBlacklist( $ip ) )
 		{
-			error_log ( __METHOD__ . " => wgUser->inSorbsBlacklist($ip) \n\n" );
 			$this->mainLoginForm( wfMsg( 'sorbs_create_account_reason' ) . ' (' . htmlspecialchars( $ip ) . ')' );
 			return;
 		}
@@ -312,26 +291,22 @@ class LoginForm {
 		# Now create a dummy user ($u) and check if it is valid
 		$name = trim( $this->mName );
 		$u = User::newFromName( $name, 'creatable' );
-		error_log ( __METHOD__ . " => u = " . $u->getName() . " \n\n" );
 		if ( is_null( $u ) ) {
 			$this->mainLoginForm( wfMsg( 'noname' ) );
 			return false;
 		}
 
-		error_log ( __METHOD__ . " => u = " . $u->idForName() . " \n\n" );
 		if ( 0 != $u->idForName() ) {
 			$this->mainLoginForm( wfMsg( 'userexists' ) );
 			return false;
 		}
 
-		error_log ( __METHOD__ . " => {$this->mPassword} == {$this->mRetype} = " . strcmp( $this->mPassword, $this->mRetype ) . " \n\n" );
 		if ( 0 != strcmp( $this->mPassword, $this->mRetype ) ) {
 			$this->mainLoginForm( wfMsg( 'badretype' ) );
 			return false;
 		}
 
 		# check for minimal password length
-		error_log ( __METHOD__ . " => isValidPassword = " . $u->isValidPassword( $this->mPassword ) . " \n\n" );
 		if ( !$u->isValidPassword( $this->mPassword ) ) {
 			if ( !$this->mCreateaccountMail ) {
 				$this->mainLoginForm( wfMsgExt( 'passwordtooshort', array( 'parsemag' ), $wgMinimalPasswordLength ) );
@@ -357,20 +332,16 @@ class LoginForm {
 
 		# Set some additional data so the AbortNewAccount hook can be used for
 		# more than just username validation
-		error_log ( __METHOD__ . " => setEmail = " . $this->mEmail . " \n\n" );
 		$u->setEmail( $this->mEmail );
-		error_log ( __METHOD__ . " => setRealName = " . $this->mRealName . " \n\n" );
 		$u->setRealName( $this->mRealName );
 
 		$abortError = '';
 		if( !wfRunHooks( 'AbortNewAccount', array( $u, &$abortError ) ) ) {
-			error_log ( __METHOD__ . " => AbortNewAccount = " . $abortError . " \n\n" );
 			// Hook point to add extra creation throttles and blocks
 			wfDebug( "LoginForm::addNewAccountInternal: a hook blocked creation\n" );
 			$this->mainLoginForm( $abortError );
 			return false;
 		}
-		error_log ( __METHOD__ . " => after AbortNewAccount ($wgAccountCreationThrottle, " . $wgUser->isPingLimitable() . "  \n\n" );
 
 		if ( $wgAccountCreationThrottle && $wgUser->isPingLimitable() ) {
 			$key = wfMemcKey( 'acctcreate', 'ip', $ip );
@@ -380,13 +351,11 @@ class LoginForm {
 			}
 			if ( $value >= $wgAccountCreationThrottle ) {
 				$this->throttleHit( $wgAccountCreationThrottle );
-				error_log ( __METHOD__ . " => this->throttleHit \n\n" );
 				return false;
 			}
 			$wgMemc->incr( $key );
 		}
 
-		error_log ( __METHOD__ . " => wgAuth->addUser = {$this->mPassword}, {$this->mEmail}, {$this->mRealName} \n\n" );
 		if( !$wgAuth->addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName ) ) {
 			$this->mainLoginForm( wfMsg( 'externaldberror' ) );
 			return false;
@@ -428,15 +397,10 @@ class LoginForm {
 		$u->setRealName( $this->mRealName );
 		$u->setToken();
 		
-		error_log (__METHOD__ . " u = " . $u->getName() . " => " . $u->mPassword);
-
 		$wgAuth->initUser( $u, $autocreate );
 		
-		error_log (__METHOD__ . " u2 = " . $u->getName() . " => " . $u->mPassword);
-
 		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
 		$u->setOption('skinoverwrite', 1);
-		error_log (__METHOD__ . " u2 saveSettings = " . $u->getName() . " => " . $u->mPassword);
 		$u->saveSettings();
 
 		# Update user count
@@ -486,19 +450,15 @@ class LoginForm {
 		// creates the user in the database. Until we load $wgUser, checking
 		// for user existence using User::newFromName($name)->getId() below
 		// will effectively be using stale data.
-		error_log ( __METHOD__ . " => this->mName = " . $this->mName . "\n\n" );
-		error_log ( __METHOD__ . " => wgUser->getName() = " . $wgUser->getName() . "\n\n" );
 		if ( $wgUser->getName() === $this->mName ) {
 			wfDebug( __METHOD__.": already logged in as {$this->mName}\n" );
 			return self::SUCCESS;
 		}
 		$u = User::newFromName( $this->mName );
-		error_log ( __METHOD__ . " => User::newFromName -> " . print_r($u->mGroups, true) . " \n\n" );
 		if( is_null( $u ) || !User::isUsableName( $u->getName() ) ) {
 			return self::ILLEGAL;
 		}
 
-		error_log ( __METHOD__ . " => u = " . $u->getName() . " id = " . $u->getID() . "\n\n" );
 		$isAutoCreated = false;
 		if ( 0 == $u->getID() ) {
 			$status = $this->attemptAutoCreate( $u );
@@ -510,7 +470,6 @@ class LoginForm {
 		} else {
 			$u->load();
 		}
-		error_log ( __METHOD__ . " => after load -> " . print_r($u->mGroups, true) . " \n\n" );
 
 		// Give general extensions, such as a captcha, a chance to abort logins
 		$abort = self::ABORTED;
@@ -518,11 +477,8 @@ class LoginForm {
 			return $abort;
 		}
 
-		error_log ( __METHOD__ . " => checkPassword ({$this->mPassword}) \n\n" );
 		if (!$u->checkPassword( $this->mPassword )) {
-			error_log ( __METHOD__ . " => invalid checkPassword \n\n" );
 			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
-				error_log ( __METHOD__ . " => checkTemporaryPassword \n\n" );
 				// The e-mailed temporary password should not be used for actu-
 				// al logins; that's a very sloppy habit, and insecure if an
 				// attacker has a few seconds to click "search" on someone's o-
@@ -552,7 +508,6 @@ class LoginForm {
 				$retval = '' == $this->mPassword ? self::EMPTY_PASS : self::WRONG_PASS;
 			}
 		} else {
-			error_log ( __METHOD__ . " => wgAuth->updateUser -> " . print_r($u->mGroups, true) . " \n\n" );
 			$wgAuth->updateUser( $u );
 			$wgUser = $u;
 
@@ -563,7 +518,6 @@ class LoginForm {
 
 			if ( $isAutoCreated ) {
 				// Must be run after $wgUser is set, for correct new user log
-				error_log ( __METHOD__ . " => run AuthPluginAutoCreate \n\n" );
 				wfRunHooks( 'AuthPluginAutoCreate', array( $wgUser ) );
 			}
 
@@ -686,7 +640,6 @@ class LoginForm {
 	function mailPassword() {
 		global $wgUser, $wgOut, $wgAuth;
 
-		error_log (__METHOD__ . ": wgAuth->allowPasswordChange()");
 		if( !$wgAuth->allowPasswordChange() ) {
 			$this->mainLoginForm( wfMsg( 'resetpass_forbidden' ) );
 			return;
@@ -694,14 +647,12 @@ class LoginForm {
 
 		# Check against blocked IPs
 		# fixme -- should we not?
-		error_log (__METHOD__ . ": wgUser->isBlocked");
 		if( $wgUser->isBlocked() ) {
 			$this->mainLoginForm( wfMsg( 'blocked-mailpassword' ) );
 			return;
 		}
 
 		# Check against the rate limiter
-		error_log (__METHOD__ . ": wgUser->pingLimiter( 'mailpassword' )");
 		if( $wgUser->pingLimiter( 'mailpassword' ) ) {
 			$wgOut->rateLimited();
 			return;
@@ -712,7 +663,6 @@ class LoginForm {
 			return;
 		}
 		$u = User::newFromName( $this->mName );
-		error_log (__METHOD__ . ": is_null( {$this->mName} )");
 		if( is_null( $u ) ) {
 			$this->mainLoginForm( wfMsg( 'noname' ) );
 			return;
@@ -732,7 +682,6 @@ class LoginForm {
 			return;
 		}
 
-		error_log (__METHOD__ . ": mailPasswordInternal");
 		$result = $this->mailPasswordInternal( $u, true, 'passwordremindertitle', 'passwordremindertext' );
 		if( WikiError::isError( $result ) ) {
 			$this->mainLoginForm( wfMsg( 'mailerror', $result->getMessage() ) );
@@ -764,13 +713,10 @@ class LoginForm {
 		wfRunHooks( 'User::mailPasswordInternal', array(&$wgUser, &$ip, &$u) );
 
 		$np = $u->randomPassword();
-		error_log ("randomPassword = > " . $np . "\n\n\n" );
 		$u->setNewpassword( $np, $throttle );
-		error_log ("setNewpassword = > ( $np, $throttle ) \n\n\n");
 		$u->saveSettings();
 
 		$m = wfMsg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript );
-		error_log ("sendemail = " . wfMsg( $emailTitle ) . ", $m \n\n\n");
 		$result = $u->sendMail( wfMsg( $emailTitle ), $m );
 
 		return $result;
