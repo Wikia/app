@@ -49,8 +49,7 @@ class ExternalStorageUpdate {
 			$Title = Title::newFromID( $this->mPageId, GAID_FOR_UPDATE );
 			if( ! $Title  ) {
 				global $wgDBname;
-				wfDebug( __METHOD__.": title is null, page_id={$this->mPageId}; city_id={$wgCityId}, dbname={$wgDBname}" );
-				error_log( __METHOD__.": title is null, page_id={$this->mPageId}; city_id={$wgCityId}, dbname={$wgDBname}" );
+				Wikia::log( __METHOD__, "err", " title is null, page_id={$this->mPageId}; city_id={$wgCityId}, dbname={$wgDBname}" );
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -147,7 +146,7 @@ class ExternalStorageUpdate {
 			}
 		}
 		else {
-			wfDebug( __METHOD__.": revision object is not Revision instance\n" );
+			Wikia::log( __METHOD__, "err", "revision object is not Revision instance" );
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
