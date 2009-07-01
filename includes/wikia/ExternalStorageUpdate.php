@@ -13,10 +13,10 @@ $wgHooks[ "RevisionInsertComplete" ][]	= "ExternalStorageUpdate::addDeferredUpda
 class ExternalStorageUpdate {
 
 	private $mId, $mUrl, $mPageId, $mRevision, $mFlags;
-	const 
+	const
 		REV_ACTIVE 	= 'active', /*default*/
 		REV_DELETED = 'delete',
-		REV_HIDDEN 	= 'hidden';		
+		REV_HIDDEN 	= 'hidden';
 
 	public function __construct( $url, $revision, $flags ) {
 		$this->mUrl = $url;
@@ -57,7 +57,7 @@ class ExternalStorageUpdate {
 
 			$dbw = wfGetDBExt( DB_MASTER, $cluster );
 			$ip = ip2long(wfGetIP());
-			
+
 			$ret = $dbw->update(
 				"blobs",
 				array(
@@ -82,9 +82,9 @@ class ExternalStorageUpdate {
 				$Row = $dbw->selectRow(
 					"pages",
 					array( "page_id", "page_title", "page_namespace" ),
-					array( 
-						"page_id" => $this->mPageId, 
-						"page_wikia_id" => $wgCityId 
+					array(
+						"page_id" => $this->mPageId,
+						"page_wikia_id" => $wgCityId
 					),
 					__METHOD__
 				);
@@ -92,15 +92,22 @@ class ExternalStorageUpdate {
 					/**
 					 * update
 					 */
-					$title = $Title->getText();
-					$namespace = $Title->getNamespace();
-					if( $Row->page_title != $title || $Row->page_namespace != $namespace ) {
+					$page_title     = $Title->getText();
+					$page_namespace = $Title->getNamespace();
+					/**
+					 * @todo add more statuses
+					 */
+					$status = $Title->isRedirect() ? 1 : 0;
+					if( $Row->page_title != $page_title || $Row->page_namespace != $page_namespace ) {
 						$dbw->update(
 							"pages",
 							array(
-								"page_wikia_id"  => $wgCityId,
-								"page_namespace" => $Title->getNamespace(),
-								"page_title"     => $Title->getText(),
+								"page_wikia_id"    => $wgCityId,
+								"page_namespace"   => $page_namespace,
+								"page_title"       => $page_title,
+								"page_title_lower" => mb_strtolower( $page_title ),
+								"page_latest"      => $Title->getLatestRevID(),
+								"page_status"      => $status
 							),
 							array(
 								"page_id"        => $this->mPageId,
@@ -117,12 +124,15 @@ class ExternalStorageUpdate {
 					$dbw->insert(
 						"pages",
 						array(
-							"page_wikia_id"  => $wgCityId,
-							"page_id"        => $this->mPageId,
-							"page_namespace" => $Title->getNamespace(),
-							"page_title"     => $Title->getText(),
-							"page_counter"   => 0,
-							"page_edits"     => 0,
+							"page_wikia_id"    => $wgCityId,
+							"page_id"          => $this->mPageId,
+							"page_namespace"   => $page_namespace,
+							"page_title"       => $page_title,
+							"page_title_lower" => mb_strtolower( $page_title ),
+							"page_latest"      => $Title->getLatestRevID(),
+							"page_status"      => $status,
+							"page_counter"     => 0,
+							"page_edits"       => 0,
 						),
 						__METHOD__
 					);
@@ -167,7 +177,7 @@ class ExternalStorageUpdate {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * deleteArticleExternal
 	 *
@@ -179,21 +189,21 @@ class ExternalStorageUpdate {
 	 *
 	 * @param Revision	$oArticle	article object
 	 * @param User		$oUser		user object
-	 * @param string	$reason		reason of object removing 
+	 * @param string	$reason		reason of object removing
 	 * @param int		$page_id	page_id to remove
 	 *
 	 * @return true means process other hooks
 	 */
 	static public function deleteArticleExternal(&$oArticle, &$oUser, $reason, $page_id) {
 		global $wgCityId;
-		
+
 		wfProfileIn( __METHOD__ );
 		if ($oArticle instanceof Article) {
 			$dbw = wfGetDBExt( DB_MASTER );
-			/* begin transaction */			
+			/* begin transaction */
 			$dbw->begin();
 			/* set revision as 'removed' in blobs table */
-			$where = array( 
+			$where = array(
 				"rev_page_id"	=> $page_id,
 				"rev_wikia_id"	=> $wgCityId
 			);
@@ -206,7 +216,7 @@ class ExternalStorageUpdate {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * hiddenArticleExternal
 	 *
@@ -222,10 +232,10 @@ class ExternalStorageUpdate {
 	 */
 	static public function hiddenArticleExternal(&$oRevision) {
 		global $wgCityId;
-		
+
 		wfProfileIn( __METHOD__ );
 		if ($oRevision instanceof Revision) {
-			
+
 			$dbw = wfGetDBExt( DB_MASTER );
 			/* set revision as 'hidden' in blobs table */
 			$ret = $dbw->update(
@@ -233,7 +243,7 @@ class ExternalStorageUpdate {
 				array (
 					"rev_status"	=> self::REV_HIDDEN,
 				),
-				array ( 
+				array (
 					"rev_id" 		=> $oRevision->getId(),
 					"rev_page_id"	=> $oRevision->getPage(),
 					"rev_wikia_id"	=> $wgCityId,
@@ -259,14 +269,14 @@ class ExternalStorageUpdate {
 	 *
 	 * @param Revision	$oArticle	article object
 	 * @param User		$oUser		user object
-	 * @param string	$reason		reason of object removing 
+	 * @param string	$reason		reason of object removing
 	 * @param int		$page_id	page_id to remove
 	 *
 	 * @return true means process other hooks
 	 */
 	static public function undeleteArticleExternal(&$oTitle, $oRevision, $page_id) {
 		global $wgCityId;
-		
+
 		wfProfileIn( __METHOD__ );
 		if ($oRevision instanceof Revision) {
 			$dbw = wfGetDBExt( DB_MASTER );
@@ -284,15 +294,15 @@ class ExternalStorageUpdate {
 					"rev_page_id"	=> $oRevision->getPage(),
 				), $whereActive, __METHOD__
 			);
-			$whereNotActive = array( 
-				"rev_id" => $oRevision->getId(), 
+			$whereNotActive = array(
+				"rev_id" => $oRevision->getId(),
 				"rev_page_id"	=> $oRevision->getPage(),
-				"rev_wikia_id" => $wgCityId, 
+				"rev_wikia_id" => $wgCityId,
 				" blob_text is NULL "
-			); 
+			);
 
-			$dbw->update( 
-				"blobs", 
+			$dbw->update(
+				"blobs",
 				array (
 					"rev_status"	=> self::REV_DELETED,
 				), $whereNotActive, __METHOD__);
@@ -304,5 +314,5 @@ class ExternalStorageUpdate {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 };
