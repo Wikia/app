@@ -31,7 +31,7 @@ class BlogLockdown {
 		 * here we only handle Blog articles, everyone can read it
 		 */
 		if( $namespace != NS_BLOG_ARTICLE && $namespace != NS_BLOG_ARTICLE_TALK ) {
-			$result = true;
+			$result = null;
 			return true;
 		}
 
