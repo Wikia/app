@@ -29,7 +29,7 @@ if ($wgTitle == 'Special:Watchlist') {
 		echo '<a href="'. $nav_urls['blockip']['href'] .'" onclick="WET.byStr(\'usermasthead/blockip\')">'. wfMsg('blockip') .'</a>';
 	}
 	?>
-	<ul>
+	<ul id="user_masthead_links">
 		<?
 		foreach( $data['nav_links'] as $navLink ) {
 			$tracker = $navLink['href'];
