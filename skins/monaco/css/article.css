@@ -103,7 +103,23 @@
 	clip: rect(0px 336px 16px 320px);
 	left: -320px;
 }
-
+li#control_share {
+	padding-left: 0;
+}
+#control_share #sharethis_0 {
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+}
+#sharethis_0 a.stbutton {
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 18px;
+	background-position: 0 50% !important;
+}
+.stbutton .stbuttontext {
+	line-height: 32px;
+}
 #page_tabs {
 	float: right;
 	font-family: arial;
