@@ -4,6 +4,7 @@
 * rt#18031: ActionPanel: added missing question mark when renaming (TOR)
 * rt#17553: FCK: Multiplying bullets on callofduty with quote template (Macbre)
 * rt#18269: Wysiwyg converts HTML entities into characters (Macbre)
+* rt#18263: Wrong links in masthead (Marooned)
 * rt#17983: Fixed SpecialInterwikiEdit to handle multiple clusters (TOR)
 
 == Changes since 200906.4 ==
