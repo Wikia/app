@@ -175,13 +175,13 @@ function wfSIWEEditInterwiki(){
 	$ret = '';
 
 	list($wikia, $wikiaID) = wfSIWEGetRequestData();
-
-	$db =& wfGetDB (DB_MASTER, array(), $wikiaID );
 	list($wikiaID, $wikiaDB, $wikiaURL) = wfSIWEGetWikiaData($wikia, $wikiaID);
 
 	if (!$wikiaDB){
 	        return wfSIWEChooseAction();
 	}
+
+	$db =& wfGetDB (DB_MASTER, array(), $wikiaDB );
 
 	global $wgLanguageNames, $IP;
 #	$lang_names = array_keys($wgLanguageNames);
@@ -426,8 +426,6 @@ function wfSIWELinkWikis(){
 
 	list($wikia, $wikiaID, $ext_wikia, $ext_wikiaID) = wfSIWEGetRequestData();
 
-	$db =& wfGetDB ( DB_SLAVE, array(), $wikiaID );
-
 	list($wikiaID, $wikiaDB, $wikiaURL, $wikiaUmbrella, $wikiaLang) = wfSIWEGetWikiaData($wikia, $wikiaID);
 	list($ext_wikiaID, $ext_wikiaDB, $ext_wikiaURL, $ext_wikiaUmbrella, $ext_wikiaLang) = wfSIWEGetWikiaData($ext_wikia, $ext_wikiaID);
 
@@ -510,12 +508,10 @@ function wfSIWEMakeInterlanguageUrl($wikiaID) {
 
 function wfSIWELinkWikisCommitProper ($linker, $linkee) {
 
-
 	list( , $linkerDB) = wfSIWEGetWikiaData( '', $linker);
 	list( , , , , $iw_prefix) = wfSIWEGetWikiaData( '', $linkee);
 
-	$db =& wfGetDB( DB_MASTER, array(), $linker );
-
+	$db =& wfGetDB( DB_MASTER, array(), $linkerDB );
 	if ($db->selectDB($linkerDB)) {
 		return (bool) $db->query("REPLACE INTO `$linkerDB`.`interwiki`(iw_prefix, iw_url, iw_local, iw_trans)" .
 				" values('". $iw_prefix. "','". wfSIWEMakeInterlanguageUrl($linkee). "',1,0);");
