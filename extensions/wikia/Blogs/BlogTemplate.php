@@ -1016,13 +1016,15 @@ class BlogTemplateClass {
 						$result = self::__makeRssOutput($aResult);
 					}
 				} else {
-					if ( $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
+					if( !empty( $wgTitle ) && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
 						$result = wfMsg('blog-empty-user-blog');
-					} else {
+					}
+					else {
 						if ( self::$aOptions['type'] != 'array' ) {
 							$sk = $wgUser->getSkin();
-							$result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone'));
-						} else {
+							$result = wfMsg('blog-nopostfound') . " " . $sk->makeLinkObj(Title::newFromText('CreateBlogPage', NS_SPECIAL), wfMsg('blog-writeone' ) );
+						}
+						else {
 							$result = "";
 						}
 					}
