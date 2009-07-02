@@ -80,7 +80,7 @@ class ExternalStorageUpdate {
 				 */
 				$Row = $dbw->selectRow(
 					"pages",
-					array( "page_id", "page_title", "page_namespace" ),
+					array( "page_id", "page_title", "page_namespace", "page_status" ),
 					array(
 						"page_id" => $this->mPageId,
 						"page_wikia_id" => $wgCityId
@@ -101,6 +101,13 @@ class ExternalStorageUpdate {
 					 * update
 					 */
 					if( $Row->page_title != $page_title || $Row->page_namespace != $page_namespace ) {
+						/**
+						 * just copy page status if is different that 0 or 1
+						 */
+						if( $Row->page_status != 0 && $Row->page_status != 1 ) {
+							$page_status = $Row->page_status;
+						}
+
 						$dbw->update(
 							"pages",
 							array(
