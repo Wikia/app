@@ -83,7 +83,13 @@ class BlogComment {
 	static public function newFromId( $id ) {
 		$Title = Title::newFromID( $id );
 		if( ! $Title ) {
-			return false;
+			/**
+			 * maybe from Master?
+			 */
+			$Title = Title::newFromID( $id, GAID_FOR_UPDATE );
+			if( ! $Title ) {
+				return false;
+			}
 		}
 		return new BlogComment( $Title );
 	}
@@ -353,9 +359,14 @@ class BlogComment {
 		 * toggle
 		 */
 		$Comment = BlogComment::newFromId( $commentId );
-		$status  = $Comment->toggle();
-		$text    = $Comment->render();
-
+		if( $Comment ) {
+			$status  = $Comment->toggle();
+			$text    = $Comment->render();
+		}
+		else {
+			$text = "";
+			$status = false;
+		}
 		/**
 		 * clear article/listing cache for this article
 		 */
@@ -470,11 +481,11 @@ class BlogComment {
 
 		return array( $retval, $article );
 	}
-	
+
 	static public function doAfterPost($status, $article) {
 		global $wgUser, $wgDBname;
 		global $wgDevelEnvironment;
-		
+
 		$error = false;
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
@@ -636,7 +647,7 @@ class BlogCommentList {
 		wfProfileIn( __METHOD__ );
 
 		$pages = array();
-		
+
 		if ($oTitle instanceof Title) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
@@ -650,7 +661,7 @@ class BlogCommentList {
 				array( "ORDER BY" => "ar_page_id" )
 			);
 			while( $row = $dbr->fetchObject( $res ) ) {
-				$pages[ $row->ar_page_id ] = array( 
+				$pages[ $row->ar_page_id ] = array(
 					'title' => $row->ar_title,
 					'nspace' => NS_BLOG_ARTICLE_TALK
 				);
@@ -688,10 +699,10 @@ class BlogCommentList {
 		global $wgOut;
 
 		if ($wgRequest->wasPosted()) {
-			// for non-JS version !!! 
+			// for non-JS version !!!
 			$sComment = $wgRequest->getVal( "wpBlogComment", false );
-			$iArticleId = $wgRequest->getVal( "wpArticleId", false ); 
-			$sSubmit = $wgRequest->getVal( "wpBlogSubmit", false ); 
+			$iArticleId = $wgRequest->getVal( "wpArticleId", false );
+			$sSubmit = $wgRequest->getVal( "wpBlogSubmit", false );
 			if ( $sSubmit && $sComment && $iArticleId ) {
 				$oTitle = Title::newFromID( $iArticleId );
 				if ( $oTitle instanceof Title ) {
@@ -820,7 +831,7 @@ class BlogCommentList {
 
 		if ( NS_BLOG_ARTICLE == $Article->getTitle()->getNamespace() ) {
 			$listing = BlogCommentList::newFromTitle( $Article->getTitle() );
-				
+
 			$aComments = $listing->getCommentPages();
 			if ( !empty($aComments) ) {
 				foreach ($aComments as $page_id => $oComment) {
@@ -837,7 +848,7 @@ class BlogCommentList {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * Hook
 	 *
@@ -853,7 +864,7 @@ class BlogCommentList {
 	static public function undeleteComments( &$oTitle, $revision, $old_page_id ) {
 		// to do
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( $oTitle instanceof Title ) {
 			#---
 			$new_page_id = $oTitle->getArticleId();
@@ -864,11 +875,11 @@ class BlogCommentList {
 				BlogArticle::setProps($new_page_id, $aProps);
 				$newProps = BlogArticle::getProps($new_page_id);
 			}
-			#---			
+			#---
 			$listing = BlogCommentList::newFromTitle( $oTitle );
-			#---			
+			#---
 			$pagesToRecover = $listing->getRemovedCommentPages($oTitle);
-			#---			
+			#---
 			if ( !empty($pagesToRecover) && is_array($pagesToRecover) ) {
 				#---
 				foreach ($pagesToRecover as $page_id => $page_value) {
@@ -877,7 +888,7 @@ class BlogCommentList {
 					if ($oCommentTitle instanceof Title) {
 						$archive = new PageArchive( $oCommentTitle );
 						$ok = $archive->undelete( "", wfMsg("blogs-undeleted-comment", $new_page_id) );
-					
+
 						if ( !is_array($ok) ) {
 							Wikia::log( __METHOD__, "error", "cannot restore comment {$page_value['title']} (id: {$page_id})" );
 						}
@@ -885,11 +896,11 @@ class BlogCommentList {
 				}
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * Hook
 	 *
