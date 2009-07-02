@@ -664,7 +664,7 @@ Mediawiki.updateStatus = function(msg, waiting, isError){
 
 	if ( isError ){
 		document.body.style.cursor = "default";
-		Mediawiki.statusBar.show(msg, 10000, true);
+		Mediawiki.statusBar.show(msg, null, true);
 	} else if (waiting ){
 		document.body.style.cursor = "wait";
 		Mediawiki.statusBar.show(msg, 30000, false);
@@ -683,6 +683,7 @@ var MediawikiStatusBar = function (sel,options) {
 	this.prependMultiline = true;	
 	this.showCloseButton = true; 
 	this.afterTimeoutText = null;
+	this.closeTimeout = 5000;
 
 	this.cssClass = "statusbar";
 	this.highlightClass = "statusbarhighlight";
@@ -704,7 +705,7 @@ var MediawikiStatusBar = function (sel,options) {
 	}
 
 	if (_I.showCloseButton) {
-		$("." + _I.cssClass).click(function(e) { $(_sb).hide(); });
+		$("." + _I.cssClass).click(function(e) { $(_sb).fadeOut(); });
 	}
 	      
 
@@ -741,12 +742,18 @@ var MediawikiStatusBar = function (sel,options) {
 				}
 			     },
 			     timeout);
-		}		 
+		} else {
+			timeout = 0;
+		} 
+		window.setTimeout( function(){
+			_I.release();
+			}, _I.closeTimeout + timeout); 
+			
 	}; 
 
 	this.release = function() {
 		if(Mediawiki.statusBar) {
-			$(Mediawiki.statusBar).fadeOut("slow");
+			$(_sb).fadeOut("slow");
 		}
 	};	
 };

@@ -110,6 +110,7 @@ Mediawiki.cookiePrefix = "wikicities";
 	<form onSubmit="return handlePullArticle(this)" id="pullArticleForm">
 		<input type="text" name="articleName" value="Main_Page" id="articleName">
 		<input type="submit" value="Pull Article"/> <br />
+		Section: <input type="text" name="section" size="3"><br />
 		<input type="checkbox" name="redirects"/> Resolve Redirects <br />
 		<input type="checkbox" name="parseText"/> Return HTML (instead of Mediawiki Text)
 	</form>
@@ -118,7 +119,6 @@ Mediawiki.cookiePrefix = "wikicities";
 
 	<script>
 	function fillInArticle(result){
-		console.log("in fillInArticle"); 
 		var html;
 		if (result === null){
 			html = Mediawiki.$("pullArticleForm").articleName.value + " does not exist";
@@ -142,6 +142,9 @@ Mediawiki.cookiePrefix = "wikicities";
 			var options = {};
 			if (f.redirects.checked) {
 				options.redirects = true;
+			}
+			if (f.section.value != "") {
+				options.rvsection = f.section.value;
 			}
 			Mediawiki.pullArticleContent(cleanName, fillInArticle, options);
 		}
