@@ -87,16 +87,19 @@ class ExternalStorageUpdate {
 					),
 					__METHOD__
 				);
+
+				/**
+				 * @todo add more statuses to $page_status
+				 */
+				$page_title     = $Title->getText();
+				$page_namespace = $Title->getNamespace();
+				$page_status    = $Title->isRedirect() ? 1 : 0;
+				$page_latest    = $Title->getLatestRevID();
+
 				if( isset( $Row->page_id ) && !empty( $Row->page_id ) ) {
 					/**
 					 * update
 					 */
-					$page_title     = $Title->getText();
-					$page_namespace = $Title->getNamespace();
-					/**
-					 * @todo add more statuses
-					 */
-					$status = $Title->isRedirect() ? 1 : 0;
 					if( $Row->page_title != $page_title || $Row->page_namespace != $page_namespace ) {
 						$dbw->update(
 							"pages",
@@ -105,8 +108,8 @@ class ExternalStorageUpdate {
 								"page_namespace"   => $page_namespace,
 								"page_title"       => $page_title,
 								"page_title_lower" => mb_strtolower( $page_title ),
-								"page_latest"      => $Title->getLatestRevID(),
-								"page_status"      => $status
+								"page_latest"      => $page_latest,
+								"page_status"      => $page_status
 							),
 							array(
 								"page_id"        => $this->mPageId,
@@ -128,8 +131,8 @@ class ExternalStorageUpdate {
 							"page_namespace"   => $page_namespace,
 							"page_title"       => $page_title,
 							"page_title_lower" => mb_strtolower( $page_title ),
-							"page_latest"      => $Title->getLatestRevID(),
-							"page_status"      => $status,
+							"page_latest"      => $page_latest,
+							"page_status"      => $page_status,
 							"page_counter"     => 0,
 							"page_edits"       => 0,
 						),
