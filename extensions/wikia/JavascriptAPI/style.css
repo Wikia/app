@@ -10,6 +10,7 @@ body {
 /* Styles for status bar http://www.west-wind.com/WebLog/posts/388213.aspx */
 
 .statusbar { 
+	font-family:Lucida Grande,Lucida Sans,Arial,sans-serif;
     position: fixed;
     bottom: 5px;
     left: 0;
@@ -34,4 +35,9 @@ body {
     background-color: #F0E68C;
     color: maroon;
     border: solid 1px silver;
+}
+
+.statusbarerror {
+    background-color: red;
+    color: white;    
 }

@@ -664,15 +664,14 @@ Mediawiki.updateStatus = function(msg, waiting, isError){
 
 	if ( isError ){
 		document.body.style.cursor = "default";
-		Mediawiki.statusBar.show(msg, 10000, true, true);
+		Mediawiki.statusBar.show(msg, 10000, true);
 	} else if (waiting ){
 		document.body.style.cursor = "wait";
-		Mediawiki.statusBar.show(msg, 30000, true, false);
+		Mediawiki.statusBar.show(msg, 30000, false);
 	} else {
 		document.body.style.cursor = "default";
-		Mediawiki.statusBar.show(msg, 3000, false, false);
+		Mediawiki.statusBar.show(msg, 3000, false);
 	}
-
 };
 
 var MediawikiStatusBar = function (sel,options) {
@@ -682,12 +681,12 @@ var MediawikiStatusBar = function (sel,options) {
 	// options     
 	this.elementId = "_showstatus";
 	this.prependMultiline = true;	
-	this.showCloseButton = false; 
+	this.showCloseButton = true; 
 	this.afterTimeoutText = null;
 
 	this.cssClass = "statusbar";
 	this.highlightClass = "statusbarhighlight";
-	this.errorClass = "statuserror";
+	this.errorClass = "statusbarerror";
 	this.closeButtonClass = "statusbarclose";
 	this.additive = false;	 
 	
@@ -701,7 +700,7 @@ var MediawikiStatusBar = function (sel,options) {
 	if (!_sb) {
 		_sb = $("<div id='_statusbar' class='" + _I.cssClass + "'>" +
 		    "<div class='" + _I.closeButtonClass +  "'>" +
-		    (_I.showCloseButton ? " X </div></div>" : "") ).appendTo(document.body).show();
+		    (_I.showCloseButton ? " </div></div>" : "") ).appendTo(document.body).show();
 	}
 
 	if (_I.showCloseButton) {
@@ -726,7 +725,7 @@ var MediawikiStatusBar = function (sel,options) {
 			}
 		}		
 		
-		_sb.show();	   
+		_sb.fadeIn("slow");	   
 		
 		if (timeout) {
 			if (isError) {
@@ -747,7 +746,7 @@ var MediawikiStatusBar = function (sel,options) {
 
 	this.release = function() {
 		if(Mediawiki.statusBar) {
-			$(Mediawiki.statusBar).remove();
+			$(Mediawiki.statusBar).fadeOut("slow");
 		}
 	};	
 };
