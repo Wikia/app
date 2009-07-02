@@ -165,7 +165,7 @@ $.fn.extend({
 });
 
 //Navigation
-monacoNavigationInitCalled = false;
+var monacoNavigationInitCalled = false;
 function menuInit() {
 	if (monacoNavigationInitCalled) {
 		return;
