@@ -883,6 +883,7 @@ class ReverseParser {
 
 				// fallback
 				default:
+					error_log('ReverseParser: unsupported placeholder type');
 					return '<!-- unsupported placeholder type -->';
 			}
 		}
