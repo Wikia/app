@@ -225,12 +225,12 @@ function addCategory(category, params, index) {
 
 	elementSpan = document.createElement('span');
 	elementSpan.className = 'CScontrol CScontrolRemove';
-	elementSpan.onclick = function(e) {deleteCategory(this); return false;};
+	elementSpan.onclick = function(e) {WET.byStr('articleAction/deleteCategory'); deleteCategory(this); return false;};
 	elementSpanOuter.appendChild(elementSpan);
 
 	elementSpan = document.createElement('span');
 	elementSpan.className = 'CScontrol ' + (params['sortkey'] == '' ? 'CScontrolSort' : 'CScontrolSorted');
-	elementSpan.onclick = function(e) {modifyCategory(this); return false;};
+	elementSpan.onclick = function(e) {WET.byStr('articleAction/sortCategory'); modifyCategory(this); return false;};
 	elementSpanOuter.appendChild(elementSpan);
 
 	$G('csItemsContainer').insertBefore(elementA, $G('csCategoryInput'));
@@ -447,6 +447,8 @@ function moveElement(movedId, prevSibId) {
 
 function inputKeyPress(e) {
 	if(e.keyCode == 13) {
+		WET.byStr('articleAction/enterCategory');
+
 		//TODO: stop AJAX call for AutoComplete
 		YAHOO.util.Event.preventDefault(e);
 		category = $G('csCategoryInput').value;
@@ -455,10 +457,14 @@ function inputKeyPress(e) {
 		}
 		//hide input and show button when [enter] pressed with empty input
 		if (category == '') {
+			WET.byStr('articleAction/enterCategoryEmpty');
+
 			inputBlur();
 		}
 	}
 	if(e.keyCode == 27) {
+		WET.byStr('articleAction/escapeCategory');
+
 		inputBlur();
 	}
 	positionSuggestBox();
