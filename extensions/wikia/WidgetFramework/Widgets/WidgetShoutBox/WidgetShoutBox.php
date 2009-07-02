@@ -149,7 +149,7 @@ function WidgetShoutBox($id, $params) {
 			}
 			// time
 			//adjust user's timezone
-			$msg['time'] = $wgLang->sprintfDate('U', $wgLang->userAdjust(wfTimestamp(TS_MW, $msg['time'])));
+			$msg['time'] = intval( $wgLang->sprintfDate('U', $wgLang->userAdjust(wfTimestamp(TS_MW, $msg['time']))) );
 			$ret .= '<li' . ($count++ % 2 ? ' class="msgOdd"' : '') . '>' .
 				$removeLink.
 				htmlspecialchars( '['.date( $msg['time'] < $midnight ? 'j M' : 'G:i', $msg['time']) . ']' ) . '&nbsp;';
