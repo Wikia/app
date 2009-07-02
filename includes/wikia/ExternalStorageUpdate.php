@@ -91,7 +91,7 @@ class ExternalStorageUpdate {
 				/**
 				 * @todo add more statuses to $page_status
 				 */
-				$page_title     = $Title->getText();
+				$page_title     = $Title->getDBkey();
 				$page_namespace = $Title->getNamespace();
 				$page_status    = $Title->isRedirect() ? 1 : 0;
 				$page_latest    = $Title->getLatestRevID();
