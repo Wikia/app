@@ -30,7 +30,10 @@ function WidgetAnswers($id, $params) {
 		return '';
 	}
 
-	global $wgDBname; if ('ttte' == $wgDBname) return ''; // ugly hack for #17981 till #17862 gets done
+	global $wgEnableAnswersMonacoWidget;
+	if (empty($wgEnableAnswersMonacoWidget)) {
+		return '';
+	}
 
 	global $wgExtensionMessagesFiles;
 	if( empty( $wgExtensionMessagesFiles['Answers'] ) ) {
