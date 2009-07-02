@@ -7,7 +7,7 @@ Mediawiki = {
 	apiUrl		: "/api.php",
 	apiUser		: null, // Defaults to anon
 	apiPass		: null, // Defaults to anon
-	debugLevel	: 3,
+	debugLevel	: 0,
 	cookiePrefix	: null, // http://www.mediawiki.org/wiki/Manual:$wgCookiePrefix
 	cookieMap	: {
 		// Map of cookie names to member variables
@@ -39,9 +39,6 @@ Mediawiki.buildQueryString = function(nvpairs, sep){
 
 	var out = '';
 	for(var name in nvpairs){
-		if (Mediawiki.e(nvpairs[name])){
-			continue;
-		}
 		out += sep + name + '=' + escape(nvpairs[name]);
 	}
 
@@ -313,11 +310,48 @@ Mediawiki.fetch = function(p) {
 		Mediawiki.d("Fetching " + p.url, 2);
 		return jQuery.ajax(p); 
 	} else {
-		Mediawiki.d("POSTing data to " + p.url, 2);
+		Mediawiki.d("POSTing data to " + p.url, 2, p.data);
 		return jQuery.ajax(p);
 	}
 };
 
+
+Mediawiki.followRedirect = function(title){
+     try {
+	var urlParams = {
+		'action' : 'query',
+		'prop' : 'info',
+		'titles' : title,
+		'intoken' : "edit",
+		'format' : 'json',
+		'redirects' : true
+	};
+		
+	Mediawiki.d("Getting redirect...");
+
+	var result = Mediawiki.fetch( { // Calling ajax directly because of async
+		'url' : Mediawiki.apiUrl,
+		'data' : urlParams,
+		'type' : "POST",
+		'async': false // Block for the token, since it's the first step of a multi step process
+	});
+
+	
+	var responseData;
+	eval ("responseData=" + result.responseText);
+
+	if (!Mediawiki.e(responseData.query) && Mediawiki.empty(responseData.query.redirects)){
+		return title;
+	} else {
+		return responseData.query.redirects[0]["to"];
+	}
+
+     } catch (e) {
+	Mediawiki.error("Error resolving redirect");
+	Mediawiki.d(Mediawiki.print_r(e));
+	return false;
+     }
+};
 
 /* The mediawiki login cookies are prefixed. Look to see if we can figure it out by looking at the cookie.
  * null will be returned if there is no matching cookies, otherwise the string */

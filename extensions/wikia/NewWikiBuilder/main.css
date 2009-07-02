@@ -1,0 +1,43 @@
+.ui-tabs .ui-tabs-hide {
+     display: none;
+}
+body {
+        /* The default in the theme is farkin huge */
+        font-size: 80%;
+}
+
+
+/* Styles for status bar http://www.west-wind.com/WebLog/posts/388213.aspx */
+
+.statusbar { 
+	font-family:Lucida Grande,Lucida Sans,Arial,sans-serif;
+    position: fixed;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    height: 16px;    
+    padding: 5px;
+
+    background: black;
+    color: white;    
+    border: solid 1px lightgray;
+
+    opacity: .70;    
+    filter: alpha(opacity="70");
+    z-index: 200;
+
+    overflow: hidden;
+    overflow-y: auto; 
+}
+
+.statusbarhighlight {
+    font-weight: bold;
+    background-color: #F0E68C;
+    color: maroon;
+    border: solid 1px silver;
+}
+
+.statusbarerror {
+    background-color: red;
+    color: white;    
+}

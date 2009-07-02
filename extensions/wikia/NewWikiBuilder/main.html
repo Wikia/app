@@ -1,0 +1,97 @@
+<html>
+<body>
+<!-- Jquery is required for the API itself -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<!-- Jquery UI is just used for this test page -->
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<!-- Tabs ripped from http://jqueryui.com/demos/tabs/ -->
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="main.css"/>
+<script type="text/javascript">
+	$(function() {
+		$("#tabs").tabs({
+			collapsible: true
+		});
+	});
+</script>
+<!-- End tabs setup -->
+<script src="../JavascriptAPI/Mediawiki.js"></script>
+<script src="main.js"></script>
+<script>
+// Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
+Mediawiki.cookiePrefix = "wikicities";
+var match = window.location.search.match(/js_debug=([0-9])/);
+if (match !== null){
+	Mediawiki.debugLevel = match[1];
+}
+</script>
+<!-- End Mediawiki API setup -->
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">1. Add a description</a></li>
+		<li><a href="#tabs-2">2. Add a logo</a></li>
+		<li><a href="#tabs-3">3. Pick Theme</a></li>
+		<li><a href="#tabs-4">4. Create First pages</a></li>
+		<li><a href="#tabs-5">5. Done</a></li>
+	</ul>
+
+<!-- ##############  Add a description to main page ############## -->
+<div id="tabs-1">
+	<form onSubmit="return handleDescriptionForm(this)">
+	<div id="desc_form_html">
+	Enter a description for the main page:<br />
+	<form onSubmit="return handleEditForm(this)">
+	<textarea name="desc" rows="10" cols="60" id="desc_textarea"></textarea><br />
+	<input type="submit" value="Save Description"/> <br />
+	</form>
+	</div>
+
+	<script>
+
+	// Find where main page redirects too
+	var mainPageEnd = Mediawiki.followRedirect("Main Page"); 
+
+	// Bring in the main page 
+	Mediawiki.pullArticleContent(mainPageEnd,	
+		function (result){ $("#desc_textarea").val(result);},
+		{"rvsection":0}
+	);
+
+	handleDescriptionForm = function(result){
+	  try {
+	     // Save the article
+	     Mediawiki.editArticle({
+		  "title": mainPageEnd,
+		  "summary": "Adding initial description to " + mainPageEnd, /* i18n */
+		  "section": 0,
+		  "text": $("#desc_textarea").val()}, 
+		  function(){
+			  NewWikiBuilder.updateStatus("Description Saved"); /* i18n */
+		  },
+		  NewWikiBuilder.handleError);
+	  } catch (e) {
+		  Mediawiki.updateStatus("Error saving description.");
+		  Mediawiki.debug(Mediawiki.print_r(e));
+	  }
+
+	  return false; // Return false so that the form doesn't submit
+	};
+	</script>
+</div>
+
+<!-- ############## Add a logo ############ -->
+<div id="tabs-2">
+</div>
+
+<!-- ############## Pick Theme ############## -->
+
+<div id="tabs-3">
+</div>
+
+<!-- ############## Create first pages ############## -->
+
+<div id="tabs-4">
+</div>
+
+</div> <!-- /div id=tabs -->
