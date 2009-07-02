@@ -1,10 +1,4 @@
 #cockpit {
-	bottom: 0px;
-	display: none;
-	height: 85px;
-	position: fixed;
-	width: 100%;
-	z-index: 1000;
 }
 
 #cockpit_wrapper {
@@ -18,7 +12,7 @@
 
 #cockpit_close {
 	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
-	background-position: 48px 0;
+	background-position: 160px 0;
 	cursor: pointer;
 	height: 16px;
 	position: absolute;
@@ -379,11 +373,6 @@ body.widgetsAddingBlocked .add {
 }
 
 /* widget cockpit IE6 fixes */
-* html #cockpit {
-	position: absolute;
-	left: 0;
-}
-
 .widget_sort_placeholder {
 	background: transparent;
 	border: 1px dashed #AAA;
