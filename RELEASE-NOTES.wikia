@@ -1,4 +1,5 @@
 == Changes since 200907.1 ==
+* rt#18287: Google Analytics tracking for Category Select. (Nef)
 * rt#17414: Google Analytics tracking for the masthead. (Nef)
 * rt#18357: Unique id for masthead element. (Nef)
 * rt#18267: UserProfile: fix query

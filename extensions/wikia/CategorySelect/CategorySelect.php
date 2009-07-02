@@ -446,6 +446,8 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 /* CategorySelect */
 wgAfterContentAndJS.push(function() {
 	$('#csAddCategorySwitch').children('a').click(function() {
+		WET.byStr('articleAction/addCategory');
+
 		function loadCSJS() {
 			$.getScript(wgExtensionsPath+ '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion, function(){showCSpanel();});
 		}
@@ -520,8 +522,8 @@ function CategorySelectGenerateHTMLforView() {
 			<input id="csCategoryInput" type="text" style="display: none; outline: none;" />
 		</div>
 		<div id="csButtonsContainer" class="color1">
-			<input type="button" id="csSave" onclick="csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
-			<input type="button" id="csCancel" onclick="csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" />
+			<input type="button" id="csSave" onclick="WET.byStr(\'articleAction/saveCategory\');csSave()" value="' . wfMsg('categoryselect-button-save') . '" />
+			<input type="button" id="csCancel" onclick="WET.byStr(\'articleAction/cancelCategory\');csCancel()" value="' . wfMsg('categoryselect-button-cancel') . '" />
 		</div>
 	</div>
 	';
