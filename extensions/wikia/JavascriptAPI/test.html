@@ -25,8 +25,9 @@ Mediawiki.cookiePrefix = "wikicities";
 <div id="tabs">
 	<ul>
 		<li><a href="#tabs-1">Login/</a></li>
-		<li><a href="#tabs-2">Create Article</a></li>
+		<li><a href="#tabs-2">Create/Delete Article</a></li>
 		<li><a href="#tabs-3">Pull Article</a></li>
+		<li><a href="#tabs-4">Edit Article</a></li>
 	</ul>
 
 <div id="tabs-1">
@@ -57,16 +58,16 @@ Mediawiki.cookiePrefix = "wikicities";
 		return false; // Return false so that the form doesn't submit
 	}
 	function loginWorked (){
-		$("#loginForm").hide();
-		$("#logoutForm").show();
+		$("#loginForm").fadeOut();
+		$("#logoutForm").fadeIn();
 	}
 
 	function apiFailed(msg){
 		alert("Api call returned an error: " + msg);
 	}
 	function handleLogoutForm(f){
-		$("#logoutForm").hide();
-		$("#loginForm").show();
+		$("#logoutForm").fadeOut();
+		$("#loginForm").fadeIn();
 	}
 
 	if (Mediawiki.isLoggedIn()){
@@ -75,7 +76,7 @@ Mediawiki.cookiePrefix = "wikicities";
 	</script>
 </div>
 
-<!-- ############## Create an article ############## -->
+<!-- ############## Create/Delete an article ############## -->
 <div id="tabs-2">
 	<form onSubmit="return handleCreateArticle(this)">
 	Create a new article named: <input type="text" name="new_title"> <input type="submit" value="Create">
@@ -155,6 +156,75 @@ Mediawiki.cookiePrefix = "wikicities";
 		return false; // So the form doesn't submit
 	}
 	</script>
+
+</div>
+
+<!-- ############## Edit an article ############## -->
+
+<div id="tabs-4">
+	<form onSubmit="return handleEditNameForm(this)">
+		<input type="text" name="article_name_edit" value="Main_Page" id="article_name_edit">
+		<input type="submit" value="Pull Article"/> <br />
+		Section: <input type="text" name="section" size="3"><br />
+	</form>
+	<div id="editFormHtml" style="display:none">
+	<hr />	
+	<form onSubmit="return handleEditForm(this)">
+	<textarea name="article" rows="12" cols="80" id="article_textarea"></textarea><br />
+	Summary: <input type="text" name="summary" id="article_summary_edit"/>
+	<input type="submit" value="Save Article"/> <br />
+	</form>
+	</div>
+
+	<script>
+	function handleEditForm(result){
+		try { 
+			Mediawiki.editArticle({
+				"title": $("#article_name_edit").val(),
+				"summary": $("#article_summary_edit").val(),
+				"text": $("#article_textarea").val()}, editArticleSuccess, apiFailed);
+		} catch (e) {
+			Mediawiki.updateStatus( "Error creating article:" + Mediawiki.print_r(e));	
+		}
+		return false; // Return false so that the form doesn't submit
+	}
+
+	function editArticleSuccess(){
+		alert("Article saved");
+	}
+
+	function fillInEditForm(result){
+		var html;
+		if (result === null){
+			Mediawiki.$("article_textarea").value = '';
+			Mediawiki.updateStatus("Article '" + $("#article_name_edit").val() + "' does not exist, saving will create a new one");
+		} else {
+			Mediawiki.$("article_textarea").value = result;
+		}
+		$("#editFormHtml").fadeIn();
+	}
+
+	function handleEditNameForm (f) {
+		try { 
+		var articleName = f.article_name_edit.value;
+		var cleanName = Mediawiki.getNormalizedTitle(articleName);
+		f.article_name_edit.value = cleanName;
+
+		var options = {};
+		if (f.section.value != "") {
+			options.rvsection = f.section.value;
+		}
+		Mediawiki.pullArticleContent(cleanName, fillInEditForm, options);
+		} catch (e) {
+			Mediawiki.error("Error pulling article: " + Mediawiki.print_r(e));
+		}
+
+		return false; // So the form doesn't submit
+	}
+
+	</script>
+
+</div>
 
 </div>
 
