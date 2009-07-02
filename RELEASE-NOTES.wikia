@@ -1,4 +1,5 @@
 == Changes since 200907.1 ==
+* rt#17981: Allow answers widget to be disabled. (Nef)
 * rt#17491: SuperDeduper 2.
 * rt#18287: Google Analytics tracking for Category Select. (Nef)
 * rt#17414: Google Analytics tracking for the masthead. (Nef)
