@@ -129,9 +129,9 @@ class Editcount extends SpecialPage {
 				$nscount[$row->page_namespace] = $row->count;
 			}
 		} else {
-			$nscount = $this->editsByNsAll($uid);
-			if (!empty($nscount)) {
-				foreach ($nscount as $ns => $count) {
+			$nspaces = $this->editsByNsAll($uid);
+			if (!empty($nspaces)) {
+				foreach ($nspaces as $ns => $count) {
 					if ($count > 0) {
 						$nscount[$ns] = $this->editsInNs($uid, $ns);
 					}
