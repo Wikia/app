@@ -13,7 +13,7 @@ jQuery("#answers_ask_field").ready(function() {
 		}
 	});
 	
-	var oDS = new YAHOO.util.XHRDataSource(  "/extensions/wikia/SuperDeduper/"); 
+	var oDS = new YAHOO.util.XHRDataSource(wgServer + '/api.php');
 	// Set the responseType 
 	oDS.responseType = YAHOO.util.XHRDataSource.TYPE_JSON; 
 	// Define the schema of the JSON results 
@@ -34,7 +34,7 @@ jQuery("#answers_ask_field").ready(function() {
 	myAutoComp.autoHighlight = false; 
 
 	myAutoComp.generateRequest = function(sQuery) {
-		return "?lang=" + wgContentLanguage + "&db=" + wgDB + "&query=" + sQuery;
+		return "?action=superdeduper&lang=" + wgContentLanguage + "&db=" + wgDB + "&query=" + sQuery;
 	}
 
 	var submitAutoComplete_callback = {
