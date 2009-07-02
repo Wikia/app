@@ -358,6 +358,11 @@ class StaticChute {
 
 	public function minifyCssData($css){
 		require_once dirname(__FILE__) . '/Minify_CSS_Compressor.php';
+
+		// macbre: RT #11257 - add ? to images included in CSS
+		$cb = '?1';
+		$css = preg_replace("#\.(png|gif)('?\))#s", '.\\1' . $cb . '\\2', $css);
+
     		return Minify_CSS_Compressor::process($css);
 	}
 
