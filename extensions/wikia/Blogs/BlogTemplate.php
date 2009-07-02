@@ -294,7 +294,8 @@ class BlogTemplateClass {
 		if (!empty($username)) {
 			$oUser = User::newFromName($username);
 			if ( $oUser instanceof User ) {
-				$sk = $oUser->getSkin();
+				global $wgUser;
+				$sk = $wgUser->getSkin();
 				$oUserPage = $oUser->getUserPage();
 				$oUserTalkPage = $oUser->getTalkPage();
 				$aResult = array(
