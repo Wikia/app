@@ -361,7 +361,7 @@ class StaticChute {
 
 		// macbre: RT #11257 - add ? to images included in CSS
 		$cb = '?1';
-		$css = preg_replace("#\.(png|gif)('?\))#s", '.\\1' . $cb . '\\2', $css);
+		$css = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1' . $cb . '\\2', $css);
 
     		return Minify_CSS_Compressor::process($css);
 	}
