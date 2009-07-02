@@ -200,6 +200,9 @@ var WidgetFramework = {
 		$('#widget_' + id).remove();
 	},
 
+	//
+	// widget cockpit
+	//
 	carouselLoaded: false,
 	carouselVisible: false,
 	carouselLength: 0,
@@ -210,7 +213,8 @@ var WidgetFramework = {
 		$('#headerMenuUser').hide().log('showing cockpit', 'Widgets');
 
 		if(WidgetFramework.carouselLoaded == false) {
-			$('#positioned_elements').html('<div id="cockpit" class="color1"><div id="cockpit_wrapper"><ul id="widget_cockpit_list"></ul></div><div id="cockpit_close" class="color1"></div></div>');
+			// RT #16828
+			$('#wikia_header').before('<div id="cockpit" class="color1"><div id="cockpit_wrapper"><ul id="widget_cockpit_list"></ul></div><div id="cockpit_close" class="color1"></div></div>');
 
 			var carousel = $('#widget_cockpit_list').hide();
 
@@ -274,7 +278,7 @@ var WidgetFramework = {
 			carousel.find('.add').click(WidgetFramework.add);
 
 			// set correct width of carousel
-			carousel.css("width", (WidgetFramework.carouselLength * ($.browser.msie ? 220 : 210)) + 'px').show();
+			carousel.css("width", (WidgetFramework.carouselLength * ($.browser.msie ? 211 : 210)) + 'px').show();
 
 			// close cockpit
 			$('#cockpit_close').click(WidgetFramework.hide_cockpit);
@@ -284,16 +288,7 @@ var WidgetFramework = {
 		}
 
 		// show cockpit
-		if (WidgetFramework.isIE6) {
-			$('#cockpit').show();
-			WidgetFramework.onScroll();
-			$(window).bind('scroll.cockpit', WidgetFramework.onScroll);
-		}
-		else {
-			$('#cockpit').css("bottom", -85).show().animate({
-				bottom: 0
-			}, "fast");
-		}
+		$('#cockpit').show();
 
 		$('#positioned_elements').css('visibility', 'visible');
 
@@ -305,23 +300,10 @@ var WidgetFramework = {
 		}
 	},
 
-	// fix for IE6 (simulate position:fixed)
-	onScroll: function(e) {
-		$('#cockpit').css('top', (document.documentElement.scrollTop+document.documentElement.clientHeight) - 85);
-	},
-
 	hide_cockpit: function(e) {
 		WidgetFramework.carouselVisible = false;
 
-		if (WidgetFramework.isIE6) {
-			$(window).unbind('.cockpit');
-			$('#cockpit').hide();
-		}
-		else {
-			$('#cockpit').animate({
-				bottom: -85
-			}, "fast", function() {$(this).hide();});
-		}
+		$('#cockpit').hide();
 	}
 }
 
