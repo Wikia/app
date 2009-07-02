@@ -2,6 +2,7 @@
 if (!defined('MEDIAWIKI')) die();
 
 class Editcount extends SpecialPage {
+	const ONE_QUERY = 1;
 	/**
 	 * Constructor
 	 */
@@ -37,7 +38,7 @@ class Editcount extends SpecialPage {
 		$uid = User::idFromName( $username );
 
 		if ( $this->including() ) {
-			if ( $namespace === null ) {
+			if ( empty($namespace) ) {
 				if ($uid != 0) {
 					// ADi: can't do that, we need count per wiki
 					// $out = $wgContLang->formatNum( User::edits( $uid ) );
@@ -46,7 +47,11 @@ class Editcount extends SpecialPage {
 					$out = "";
 				}
 			} else {
-				$out = $wgContLang->formatNum( $this->editsInNs( $uid, $namespace ) );
+				if ($uid != 0) {
+					$out = $wgContLang->formatNum( $this->editsInNs( $uid, $namespace ) );
+				} else {
+					$out = "";
+				}
 			}
 			$wgOut->addHTML( $out );
 		} else {
@@ -105,24 +110,33 @@ class Editcount extends SpecialPage {
 	 * @return array
 	 */
 	function editsByNs( $uid ) {
-		$fname = 'Editcount::editsByNs';
 		$nscount = array();
 
-		$dbr =& wfGetDB( DB_SLAVE );
-		$res = $dbr->select(
-			array( 'user', 'revision', 'page' ),
-			array( 'page_namespace', 'COUNT(*) as count' ),
-			array(
-				'user_id' => $uid,
-				'rev_user = user_id',
-				'rev_page = page_id'
-			),
-			$fname,
-			array( 'GROUP BY' => 'page_namespace' )
-		);
+		if (self::ONE_QUERY == 1) {
+			$dbr =& wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( 'revision', 'page' ),
+				array( 'page_namespace', 'COUNT(*) as count' ),
+				array(
+					'rev_user' => $uid,
+					'rev_page = page_id'
+				),
+				__METHOD__,
+				array( 'GROUP BY' => 'page_namespace' )
+			);
 
-		while( $row = $dbr->fetchObject( $res ) ) {
-			$nscount[$row->page_namespace] = $row->count;
+			while( $row = $dbr->fetchObject( $res ) ) {
+				$nscount[$row->page_namespace] = $row->count;
+			}
+		} else {
+			$nscount = $this->editsByNsAll($uid);
+			if (!empty($nscount)) {
+				foreach ($nscount as $ns => $count) {
+					if ($count > 0) {
+						$nscount[$ns] = $this->editsInNs($uid, $ns);
+					}
+				}
+			}
 		}
 
 		return $nscount;
@@ -130,7 +144,6 @@ class Editcount extends SpecialPage {
 
 	function editsByNsAll( $uid ) {
 		global $wgExternalStatsDB;
-		$fname = 'Editcount::editsByNsAll';
 		$nscount = array();
 
 		$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
@@ -140,7 +153,7 @@ class Editcount extends SpecialPage {
 			array(
 				'ue_user_id' => $uid
 			),
-			$fname
+			__METHOD__
 		);
 
 		while( $row = $dbs->fetchObject( $res ) ) {
@@ -158,26 +171,23 @@ class Editcount extends SpecialPage {
 	 * @return string
 	 */
 	function editsInNs( $uid, $ns ) {
-		$fname = 'Editcount::editsInNs';
 		$nscount = array();
 
 		$dbr =& wfGetDB( DB_SLAVE );
 		$res = $dbr->selectField(
-			array( 'user', 'revision', 'page' ),
+			array( 'revision', 'page' ),
 			array( 'COUNT(*) as count' ),
 			array(
-				'user_id' => $uid,
 				'page_namespace' => $ns,
-				'rev_user = user_id',
+				'rev_user' => $uid,
 				'rev_page = page_id'
 			),
-			$fname,
-			array( 'GROUP BY' => 'page_namespace' )
+			__METHOD__
 		);
 
 		return $res;
 	}
-
+	
 }
 
 class EditcountHTML extends Editcount {
