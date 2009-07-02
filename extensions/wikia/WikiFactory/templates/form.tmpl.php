@@ -426,6 +426,12 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 			<li>
 				&nbsp;
 			</li>
+			<li <?php echo ( $tab === "close" ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "close", $tab, $wiki->city_id ); ?>
+			</li>
+			<li>
+				&nbsp;
+			</li>
 			<li class="inactive">
 				<a href="<?php echo Title::newFromText( "WikiFactory", NS_SPECIAL )->getLocalUrl(); ?>">
 					<?php echo wfMsg( "wikifactory-label-return" ) ?>
@@ -448,6 +454,10 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 
 		case "clog":
 			include_once( "form-clog.tmpl.php" );
+		break;
+
+		case "close":
+			include_once( "form-close.tmpl.php" );
 		break;
 
 	endswitch;

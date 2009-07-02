@@ -18,25 +18,17 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class CloseWikiPage extends SpecialPage {
-
-	const
-		CLOSE          = 0,
-		CLOSE_REDIRECT = 1,
-		CLOSE_DELETE   = 2,
-		CLOSE_ACTION   = 0,
-		DELETE_ACTION  = -1,
-		REDIR_ACTION   = 2;
-
+	
 	private
 		$mTitle,
-		$mWikis     = array(),
+		$mWikis     	= array(),
 		$mTmpl,
-		$mStep      = 1,
+		$mStep      	= 1,
 		$mAction,
-		$mErrors    = array(),
-		$mRedirects = array(),
-		$mActionList = array( "Closing", "Closing and Redirecting", "Closing and Deleting");
-
+		$mErrors    	= array(),
+		$mRedirects 	= array(),
+		$mRedirect		= "",
+		$mFlags 		= array();
 
 	/**
 	 * constructor
@@ -155,21 +147,24 @@ class CloseWikiPage extends SpecialPage {
 			}
 		}
 
-		if( $this->mStep == 1 ) {
-			/**
-			 * check which action was requested
-			 */
-			foreach( array_keys( $wgRequest->getValues() ) as $value ) {
-				if( preg_match( "/^submit(\d+)$/", $value, $matches ) ) {
-					$this->mAction = $matches[1];
-					break;
-				}
+		/**
+		 * check which action was requested
+		 */
+		$flags = $wgRequest->getArray( "close_flags", array() );
+		foreach ($flags as $flag) {
+			if ( in_array($flag, array(
+				WikiFactory::FLAG_CREATE_DB_DUMP,
+				WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE,
+				WikiFactory::FLAG_DELETE_DB_IMAGES,
+				WikiFactory::FLAG_FREE_WIKI_URL,
+				WikiFactory::FLAG_HIDE_DB_IMAGES,
+				WikiFactory::FLAG_REDIRECT
+			) ) ) {
+				$this->mFlags[$flag] = $flag;
 			}
-			#---
-		} else {
-			$this->mAction = $wgRequest->getVal( "action", 0 );
 		}
-		$this->mRedirects = $wgRequest->getArray( "redirects", array() );
+		$this->mRedirect = $wgRequest->getVal( "redirect_url", "" );
+		#---
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -185,8 +180,8 @@ class CloseWikiPage extends SpecialPage {
 		$this->mTmpl->set( "title",     $this->mTitle );
 		$this->mTmpl->set( "action",    $this->mAction );
 		$this->mTmpl->set( "errors",    $this->mErrors );
-		$this->mTmpl->set( "actions",   $this->mActionList );
-		$this->mTmpl->set( "redirects", $this->mRedirects );
+		$this->mTmpl->set( "redirect", 	$this->mRedirect );
+		$this->mTmpl->set( "flags", 	$this->mFlags );
 
 		$wgOut->addHTML( $this->mTmpl->render( "confirm" ) );
 	}
@@ -199,28 +194,20 @@ class CloseWikiPage extends SpecialPage {
 		 * if we redirecting check if target wikia exists and is active wiki
 		 */
 		$valid = true;
-		$newWikis = array();
-		if( $this->mAction == self::CLOSE_REDIRECT ) {
-			foreach( $this->mWikis as $wiki ) {
-				Wikia::log( __METHOD__, $wiki->city_id, $this->mRedirects[ $wiki->city_id ] );
-				if( !isset( $this->mRedirects[ $wiki->city_id ] ) ) {
-					$valid = false;
-					$this->mErrors[ $wiki->city_id ] = "";
-				}
-				else {
-					$city_id = WikiFactory::DomainToID( trim( $this->mRedirects[ $wiki->city_id ] ) );
-					if( !$city_id ) {
-						Wikia::log( __METHOD__, $wiki->city_id, "not exists" );
-						$valid = false;
-						$this->mErrors[ $wiki->city_id ] = $this->mRedirects[ $wiki->city_id ];
-					} else {
-						$newWikis[ $wiki->city_id ] = $city_id;
-					}
-				}
+		$newWiki = 0;
+		if ( isset($this->mRedirect) && !empty($this->mRedirect) ) {
+			Wikia::log( __METHOD__, "check domain {$this->mRedirect}" );
+			$city_id = WikiFactory::DomainToID( trim( $this->mRedirect ) );
+			if( !$city_id ) {
+				Wikia::log( __METHOD__, "domain doesn't exist" );
+				$valid = false;
+				$this->mErrors[] = $this->mRedirect;
+			} else {
+				$newWiki = $city_id;
 			}
 		}
 
-		if( !$valid ) {
+		if( $valid === false ) {
 			/**
 			 * back to form
 			 */
@@ -230,17 +217,7 @@ class CloseWikiPage extends SpecialPage {
 			 * do other action
 			 */
 			if ( !empty($this->mWikis) ) {
-				switch( $this->mAction ) {
-					case self::CLOSE:
-						$this->doClose();
-						break;
-					case self::CLOSE_REDIRECT:
-						$this->doCloseAndRedirect($newWikis);
-						break;
-					case self::CLOSE_DELETE:
-						$this->doCloseAndDelete();
-						break;
-				}
+				$this->doClose($newWiki);
 			}
 		}
 	}
@@ -280,128 +257,50 @@ class CloseWikiPage extends SpecialPage {
 	 * close Wiki(s)
 	 * @access private
 	 */
-	private function doClose() {
+	private function doClose( $newWiki = "" ) {
 		global $wgRequest, $wgOut;
 		wfProfileIn( __METHOD__ );
 
 		$WFTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
 		#---
 		$output = "";
-		if ( is_array($this->mWikis) && !empty($this->mWikis) ) {
+		if ( !empty($this->mWikis) ) {
 			$output = Xml::openElement( 'ul', null );
 			foreach( $this->mWikis as $wiki ) {
-				Wikia::log( __METHOD__, "Closing: {$wiki->city_description} (url: {$wiki->city_url}) (id: {$wiki->city_id}) (dbname: {$wiki->city_dbname})" );
-				#-- set public to 0
-				$res = WikiFactory::setPublicStatus(self::CLOSE_ACTION, $wiki->city_id);
-				if ($res === self::CLOSE_ACTION) {
-					$output .= Xml::tags(
-						'li',
-						array( 'style' => 'list-style:none' ),
-						wfMsgExt( 'closewiki-wiki-closed', array('parse'), $wiki->city_description, $wiki->city_url )
+				Wikia::log( __METHOD__, "Closing: {$wiki->city_description} (url: {$wiki->city_url}) (id: {$wiki->city_id}) (dbname: {$wiki->city_dbname}) " );
+				#-- move to archive
+				$message = wfMsgExt( 'closewiki-wiki-closed', array('parse'), $wiki->city_description, $wiki->city_url );
+				if ( !empty($newWiki) ) {
+					Wikia::log( __METHOD__,  " ... and redirecting to: {$this->mRedirect} (id: {$newWiki})" );
+					$this->moveOldDomains( $wiki->city_id, $newWiki );
+					#-- set new city ID in city_domains
+					$isMoved = WikiFactory::redirectDomains( $wiki->city_id, $newWiki );
+					#---
+					$message = wfMsgExt(
+						'closewiki-wiki-closed_redirect',
+						array('parse'),
+						$wiki->city_description,
+						$wiki->city_url,
+						sprintf( "%s%s", "http://", $this->mRedirect )
 					);
 				}
-				WikiFactory::clearCache($wiki->city_id);
-			}
-			$output .= Xml::closeElement( 'ul' );
-		}
-
-		$output .= Xml::element( 'input',
-			array(
-				'name' 		=> 'wiki-return',
-				'type' 		=> 'button',
-				'value' 	=> wfMsg( 'closewiki-return', wfMsg('wikifactory') ),
-				'onclick' 	=> "window.location='{$WFTitle->getFullURL()}'",
-			)
-		);
-
-		$wgOut->addHtml( $output );
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * close and redirect Wiki(s)
-	 * @access private
-	 */
-	private function doCloseAndRedirect($newWikis = array()) {
-		global $wgRequest, $wgOut;
-		wfProfileIn( __METHOD__ );
-
-		$WFTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
-		#---
-		$output = "";
-		if ( is_array($this->mWikis) && !empty($this->mWikis) && !empty($newWikis) ) {
-			$output = Xml::openElement( 'ul', null );
-			foreach( $this->mWikis as $wiki ) {
-				Wikia::log( __METHOD__, "Closing: {$wiki->city_description} (url: {$wiki->city_url}) (id: {$wiki->city_id}) (dbname: {$wiki->city_dbname}) and redirecting to: {$this->mRedirects[$wiki->city_id]} (id: {$newWikis[$wiki->city_id]}) " );
-				#-- move to archive
-				$this->moveOldDomains( $wiki->city_id, $newWikis[$wiki->city_id] );
-				#-- set new city ID in city_domains
-				$isMoved = WikiFactory::redirectDomains( $wiki->city_id, $newWikis[$wiki->city_id] );
-				if ( !empty($isMoved) ) {
-					#-- set public to 0
-					$res = WikiFactory::setPublicStatus(self::REDIR_ACTION, $wiki->city_id);
-					if ($res === self::REDIR_ACTION) {
-						$output .= Xml::tags(
-							'li',
-							array( 'style' => 'list-style:none' ),
-							wfMsgExt(
-								'closewiki-wiki-closed_redirect',
-								array('parse'),
-								$wiki->city_description,
-								$wiki->city_url,
-								sprintf( "%s%s", "http://", $this->mRedirects[ $wiki->city_id ] )
-							)
-						);
-						WikiFactory::clearCache($wiki->city_id);
-						WikiFactory::clearCache($newWikis[$wiki->city_id]);
+				#-- set public to 0
+				$status = ( isset($this->mFlags[WikiFactory::FLAG_HIDE_DB_IMAGES]) ) ? WikiFactory::HIDE_ACTION : WikiFactory::CLOSE_ACTION;
+				#-- set flags as a number
+				if (!empty($this->mFlags)) {
+					$city_flags = 0;
+					foreach ($this->mFlags as $flag) {
+						$city_flags |= $flag;
 					}
+					WikiFactory::setFlags($wiki->city_id, $city_flags);
 				}
-			}
-			$output .= Xml::closeElement( 'ul' );
-		}
-
-		$output .= Xml::element( 'input',
-			array(
-				'name' 		=> 'wiki-return',
-				'type' 		=> 'button',
-				'value' 	=> wfMsg( 'closewiki-return', wfMsg('wikifactory') ),
-				'onclick' 	=> "window.location='{$WFTitle->getFullURL()}'",
-			)
-		);
-
-		$wgOut->addHtml( $output );
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * close and remove Wiki(s)
-	 * @access private
-	 */
-	private function doCloseAndDelete() {
-		global $wgRequest, $wgOut;
-		wfProfileIn( __METHOD__ );
-
-		$WFTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
-		#---
-		$output = "";
-		if ( is_array($this->mWikis) && !empty($this->mWikis) ) {
-			$output = Xml::openElement( 'ul', null );
-			foreach( $this->mWikis as $wiki ) {
-				Wikia::log( __METHOD__, "Closing and removing: {$wiki->city_description} (url: {$wiki->city_url}) (id: {$wiki->city_id}) (dbname: {$wiki->city_dbname})" );
-				#-- move to archive
-				$this->moveOldDomains( $wiki->city_id, self::DELETE_ACTION );
-				#-- clear city_domains
-				if ( WikiFactory::removeDomain( $wiki->city_id ) ) {
-					#-- set public to -1
-					$res = WikiFactory::setPublicStatus(self::DELETE_ACTION, $wiki->city_id);
-					if ($res === self::DELETE_ACTION) {
-						$output .= Xml::tags(
-							'li',
-							array( 'style' => 'list-style:none' ),
-							wfMsgExt( 'closewiki-wiki-closed_removed', array('parse'), $wiki->city_description, $wiki->city_url )
-						);
-					}
+				$res = WikiFactory::setPublicStatus($status, $wiki->city_id);
+				if ($res === $status) {
+					$output .= Xml::tags( 'li', array( 'style' => 'padding:4px;' ), $message );
 					WikiFactory::clearCache($wiki->city_id);
+					if ( !empty($newWiki) ) {
+						WikiFactory::clearCache($newWiki);
+					}
 				}
 			}
 			$output .= Xml::closeElement( 'ul' );
@@ -419,7 +318,7 @@ class CloseWikiPage extends SpecialPage {
 		$wgOut->addHtml( $output );
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 	/*
 	 * is closed Wiki
 	 */

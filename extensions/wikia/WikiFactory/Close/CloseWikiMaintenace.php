@@ -14,22 +14,13 @@ class CloseWikiMaintenace {
 		$mDumpDirectory,
 		$mImgDirectory,
 		$mAction,
+		$mFlags,
 		$mCityID,
 		$mHistory,
 		$mWiki,
 		$mDryRun;
 
 	public function __construct( $options ) {
-		global $wgDevelEnvironment;
-
-		if( !$wgDevelEnvironment ) {
-			$this->mDumpDirectory = "/opt/dbdumps";
-			$this->mZipDirectory = "/opt/dbdumps";
-		}
-		else {
-			$this->mDumpDirectory = "/tmp/dumps";
-			$this->mZipDirectory = "/tmp/dumps";
-		}
 		$this->mHistory = true;
 		$this->mOptions = $options;
 		$this->mDryRun = isset( $options[ "dry-run" ] ) ? true : false;
@@ -44,49 +35,72 @@ class CloseWikiMaintenace {
 	 */
 	public function execute( $setup ) {
 		global $wgCityId, $wgDBname, $wgServer;
+		global $wgDevelEnvironment;
 
 		$this->mCityID = $wgCityId;
 
-		if( $setup ) {
-			$this->setupDirectories();
+		if ( wfReadOnly() ) {
+			return true;
 		}
-		elseif( !wfReadOnly() ) {
-			/**
-			 * check what we have to do with this wikia
-			 */
-			if( $wgCityId ) {
-				$this->mWiki = WikiFactory::getWikiByID( $wgCityId );
-				$this->mAction = $this->mWiki->city_public;
+
+		$this->mWiki = WikiFactory::getWikiByID( $this->mCityID );
+		$this->mAction = $this->mWiki->city_public;
+		$this->mFlags = $this->mWiki->city_flags;
+
+		/**
+		 * check what we have to do with this wikia
+		 */
+		Wikia::log( __CLASS__, "info", "maintenance on {$wgCityId}" );
+		
+		switch ( $this->mAction ) {
+			case WikiFactory::HIDE_ACTION: 
+				$this->mDumpDirectory = ( !$wgDevelEnvironment ) ? "/opt/dbdumps-hidden" : "/tmp/dumps-hidden";
+				break
+			case WikiFactory::CLOSE_ACTION: 
+				$this->mDumpDirectory = ( !$wgDevelEnvironment ) ? "/opt/dbdumps" : "/tmp/dumps";
+				break;
+			default : 
+				Wikia::log( __CLASS__, "info", "invalid action: {$this->mAction}" );
+				break;
+		}
+
+		Wikia::log( __CLASS__, "info", "check wikis duplicates" );
+		$this->checkDuplicates();
+
+		if( $setup ) {
+			Wikia::log( __CLASS__, "info", "create archive directory" );
+			$this->setupDirectories();
+		} else {
+			$done = 0;
+			#--- Create a database dump
+			if ( $this->mFlags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
+				$this->dumpXMl();
+				$done = 1;
 			}
-			Wikia::log( __CLASS__, "info", "maintenance on {$wgCityId}" );
-			$this->checkDuplicates();
-			switch( $this->mAction ) {
 
-				case WikiFactory::STATUS_OPEN:
-					$this->dumpXMl();
-					$this->compressImages();
-					# $this->createIndex( $wgDBname, $wgServer );
-					$this->updateTimestamp();
-					break;
-
-				case WikiFactory::STATUS_CLOSED:
-				case WikiFactory::STATUS_REDIR:
-					$this->dumpXMl();
-					$this->compressImages();
-					# $this->createIndex( $wgDBname, $wgServer );
-					$this->updateTimestamp();
-					break;
-
-				case WikiFactory::STATUS_DELETE:
-					Wikia::log( __CLASS__, "info", "close and delete on {$wgCityId}" );
-					$this->dumpXMl();
-					$this->compressImages();
-					$this->removeImageDirectory();
-					$this->cleanWikiFactory();
-					# $this->createIndex( $wgDBname, $wgServer );
-					$this->dropDB();
-					break;
+			#--- Create an image archive
+			if ( $this->mFlags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
+				$this->compressImages();
+				$done = 1;
 			}
+
+			#--- Delete the database and images
+			if ( $this->mFlags & WikiFactory::FLAG_DELETE_DB_IMAGES ) {
+				$this->dropDB();
+				$this->removeImageDirectory();
+				$done = 1;
+			}
+
+			#--- Free the URL for a new founder
+			if ( $this->mFlags & WikiFactory::FLAG_FREE_WIKI_URL ) {
+				$this->cleanWikiFactory();
+				$done = 1;
+			}
+
+			if ( $done == 1 ) {
+				$this->updateTimestamp();
+			}
+
 		}
 		return true;
 	}
@@ -312,6 +326,8 @@ class CloseWikiMaintenace {
 						"city_factory_timestamp" => $timestamp,
 						"city_useshared"         => $wiki->city_useshared,
 						"ad_cat"                 => $wiki->ad_cat,
+						"city_flags"             => $wiki->city_flags,
+						"city_cluster"           => $wiki->city_cluster
 					),
 					__METHOD__
 				);

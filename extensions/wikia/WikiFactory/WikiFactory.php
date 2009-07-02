@@ -33,10 +33,16 @@ class WikiFactory {
 	const LOG_CATEGORY  = 3;
 	const LOG_STATUS    = 4;
 
-	const STATUS_OPEN   = 1;
-	const STATUS_REDIR  = 2;
-	const STATUS_CLOSED = 0;
-	const STATUS_DELETE = -1;
+	const HIDE_ACTION 	= -1;
+	const CLOSE_ACTION 	= 0;	
+
+	# city_flags
+	const FLAG_CREATE_DB_DUMP 			= 1;
+	const FLAG_CREATE_IMAGE_ARCHIVE 	= 2;
+	const FLAG_DELETE_DB_IMAGES 		= 4;
+	const FLAG_FREE_WIKI_URL 			= 8;
+	const FLAG_HIDE_DB_IMAGES 			= 16;
+	const FLAG_REDIRECT 				= 32;
 
 	const db            = "wikicities"; // @see $wgExternalSharedDB
 	const DOMAINCACHE   = "/tmp/wikifactory/domains.ser";
@@ -1702,6 +1708,47 @@ class WikiFactory {
 		}
 		wfProfileOut( __METHOD__ );
 		return $dbname;
+	}
+
+	/**
+	 * setFlags
+	 *
+	 * method for changing city_public value in city_list table
+	 *
+	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param integer	$city_public	status in city_list
+	 * @param integer	$city_id		wikia identifier in city_list
+	 *
+	 * @return string: HTML form
+	 */
+	static public function setFlags( $city_id, $city_flags = 0 ) {
+
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		wfProfileIn( __METHOD__ );
+
+		if ( empty($city_flags) ) {
+			return false;
+		}
+
+		$dbw = self::db( DB_MASTER );
+		$dbw->update(
+			"city_list",
+			array( "city_flags" => $city_flags ),
+			array( "city_id" => $city_id ),
+			__METHOD__
+		);
+		self::log( self::LOG_STATUS, "Flags in wiki changed to {$city_flags}.", $city_id );
+
+		wfProfileOut( __METHOD__ );
+
+		return $city_flags;
 	}
 
 };
