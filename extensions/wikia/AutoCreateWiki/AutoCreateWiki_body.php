@@ -358,7 +358,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			'city_dbname'         => $this->mWikiData[ "dbname"],
 			'city_url'            => $this->mWikiData[ "url" ],
 			'city_founding_user'  => $this->mWikiData[ "founder" ],
-			'city_founding_email' => $this->mWikiData[ "founder-name" ],
+			'city_founding_email' => $this->mWikiData[ "founder-email" ],
 			'city_path'           => $this->mWikiData[ "path" ],
 			'city_description'    => $this->mWikiData[ "title" ],
 			'city_lang'           => $this->mWikiData[ "language" ],
@@ -728,6 +728,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "dbname" ] = WikiFactory::prepareDBName($this->mWikiData[ "dbname" ]);
 		$this->mWikiData[ "founder" ] = $this->mFounder->getId();
 		$this->mWikiData[ "founder-name" ] = $this->mFounder->getName();
+		$this->mWikiData[ "founder-email" ] = $this->mFounder->getEmail();
 
 		wfProfileOut( __METHOD__ );
 	}
