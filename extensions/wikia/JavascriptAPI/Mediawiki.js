@@ -543,6 +543,26 @@ Mediawiki.logout = function (callbackSuccess){
 };
 
 
+/* Parse the selected text and return the html */
+Mediawiki.parse = function (text){
+	var result = Mediawiki.fetch( { // Calling ajax directly because of async
+		'url' : Mediawiki.apiUrl,
+		'data' : {"action": "parse", "text": text, "format": "json"},
+		'type' : "POST",
+		'async': false // No callback, this should be fast 
+	});
+
+	
+	var responseData;
+	eval ("responseData=" + result.responseText);
+
+	if (Mediawiki.e(responseData.parse) || Mediawiki.e(responseData.parse.text)){
+		return false;
+	} else {
+		return responseData.parse.text['*'];
+	}
+};
+
 /* Javascript equivalent of php's print_r. 
  * http://www.openjs.com/scripts/others/dump_function_php_print_r.php
  */

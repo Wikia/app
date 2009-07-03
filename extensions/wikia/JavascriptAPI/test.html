@@ -32,6 +32,7 @@ Mediawiki.cookiePrefix = "wikicities";
 		<li><a href="#tabs-2">Create/Delete Article</a></li>
 		<li><a href="#tabs-3">Pull Article</a></li>
 		<li><a href="#tabs-4">Edit Article</a></li>
+		<li><a href="#tabs-5">Parse Text</a></li>
 	</ul>
 
 <div id="tabs-1">
@@ -228,5 +229,32 @@ Mediawiki.cookiePrefix = "wikicities";
 
 	</script>
 </div>
+
+<!-- ############## Parse text ############# -->
+
+
+<div id="tabs-5">
+	<div id="parseFormHtml">
+	<form onSubmit="return handleEditForm(this)">
+	Text:<br />
+	<textarea name="text" rows="12" cols="40" id="parse_textarea"></textarea> 
+	<textarea name="result" rows="12" cols="40" id="result_textarea">Result will appear here...</textarea><br />
+	<input type="submit" value="Parse"/> <br />
+	</form>
+	</div>
+
+	<script>
+	function handleEditForm(f){
+		try { 
+			var html = Mediawiki.parse($("#parse_textarea").val());
+			$("#result_textarea").val(html);
+
+		} catch (e) {
+			Mediawiki.updateStatus( "Error creating article:" + Mediawiki.print_r(e));	
+		}
+		return false; // Return false so that the form doesn't submit
+	}
+	</script>
+
 
 </div> <!-- /div id=tabs -->
