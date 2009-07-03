@@ -528,6 +528,7 @@ EOS;
 		// marged JS files
 		// get the right package from StaticChute
 		$StaticChute = new StaticChute('js');
+		$StaticChute->useLocalChuteUrl();
 
 		if ($wgUser->isLoggedIn()) {
 			$package = 'awesome_loggedin_js';
@@ -970,7 +971,9 @@ EOS;
 
 		// merged CSS - use StaticChute
 		$StaticChute = new StaticChute('css');
-		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') );
+		$StaticChute->useLocalChuteUrl();
+
+		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . "\n" );
 		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') );
 
 		if(isset($this->themename)) {
