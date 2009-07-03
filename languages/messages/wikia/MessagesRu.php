@@ -34,6 +34,6 @@ $messages = array_merge( $messages, array(
 'review_reason_2' => 'рассмотрите рассуждают 2',
 'review_reason_3' => 'рассмотрите рассуждают 3',
 'review_reason_4' => 'рассмотрите рассуждают 4',
-'review_reason_5' => 'рассмотрите рассуждают 5'
+'review_reason_5' => 'рассмотрите рассуждают 5',
+'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
 ) );
-?>

@@ -29,6 +29,6 @@ $messages = array_merge( $messages, array(
 'rate_it' => "打分數:",
 'unrate_it' => "取消分數",
 'use_old_formatting' => '換回舊面板',
-'use_new_formatting' => '嘗試新面板'
+'use_new_formatting' => '嘗試新面板',
+'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
 ) );
-?>

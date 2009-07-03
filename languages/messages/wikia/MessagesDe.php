@@ -59,6 +59,6 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 'review_reason_4' => 'Bewertungsgrund 4',
 'review_reason_5' => 'Bewertungsgrund 5',
 'watchlist_s' => 'Beobachtungsliste',
-'preferences' => 'Einstellungen'
+'preferences' => 'Einstellungen',
+'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
 ) );
-?>

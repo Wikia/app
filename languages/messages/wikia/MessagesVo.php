@@ -34,6 +34,6 @@ $messages = array_merge( $messages, array(
 'review_reason_2' => 'Revidakod 2',
 'review_reason_3' => 'Revidakod 3',
 'review_reason_4' => 'Revidakod 4',
-'review_reason_5' => 'Revidakod 5'
+'review_reason_5' => 'Revidakod 5',
+'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
 ) );
-?>

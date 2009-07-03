@@ -34,6 +34,6 @@ $messages = array_merge( $messages, array(
 'review_reason_2' => 'Anmeld grunn 2',
 'review_reason_3' => 'Anmeld grunn 3',
 'review_reason_4' => 'Anmeld grunn 4',
-'review_reason_5' => 'Anmeld grunn 5'
+'review_reason_5' => 'Anmeld grunn 5',
+'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
 ) );
-?>

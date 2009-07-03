@@ -1,4 +1,5 @@
 == Changes since 200907.1 ==
+* rt#18469: Change MediaWiki:Copyrightpage default. (Nef)
 * rt#18422: Fix fatal blank pages on wiki with lean bloggers. (Nef)
 * rt#17981: Allow answers widget to be disabled. (Nef)
 * rt#17491: SuperDeduper 2.

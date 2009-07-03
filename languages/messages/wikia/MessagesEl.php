@@ -34,6 +34,6 @@ $messages = array_merge( $messages, array(
 'review_reason_2' => 'Λόγος ανασκόπησης 2',
 'review_reason_3' => 'Λόγος ανασκόπησης 3',
 'review_reason_4' => 'Λόγος ανασκόπησης 4',
-'review_reason_5' => 'Λόγος ανασκόπησης 5'
+'review_reason_5' => 'Λόγος ανασκόπησης 5',
+'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
 ) );
-?>
