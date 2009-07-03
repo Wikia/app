@@ -287,6 +287,10 @@ class BlogTemplateClass {
 		wfProfileOut( __METHOD__ );
 		return "";
 	}
+	
+	public static function setTitle($oTitle) {
+		self::$oTitle = $oTitle;
+	}
 
 	public static function getUserNameRecord($username) {
 		wfProfileIn( __METHOD__ );
