@@ -17,7 +17,10 @@ $dbw = Wikifactory::db( DB_MASTER );
 $sth = $dbw->select(
 		array( "city_variables" ),
 		array( "*" ),
-		array( "cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name = '{$variable}')"),
+		array(
+			"cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name = '{$variable}')",
+			"cv_city_id > 30000"
+		),
 		__METHOD__,
 		array( "FOR UPDATE" )
 );
