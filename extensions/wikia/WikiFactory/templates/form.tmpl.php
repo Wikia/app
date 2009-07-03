@@ -372,12 +372,12 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 				</strong>
 			</li>
             <li>
-					 Wiki founder name is <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
+			    Wiki founder name is <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
                 and his/her email is <strong><?php echo empty( $wiki->city_founding_email) ? "empty" : $wiki->city_founding_email ?></strong>
             </li>
-				<li>
-					Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
-				</li>
+			<li>
+				Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
+			</li>
             <li>
                 This wiki is <strong><?php echo $statuses[ $wiki->city_public ] ?></strong>.
 				            <? if(($statuses[$wiki->city_public] == 'disabled') && is_object($wikiRequest)): ?>
@@ -386,15 +386,9 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 				             (<i>no wiki request were found with name: <?=$wikiRequest;?></i>)
 				            <? endif; ?>
             </li>
-            <li><a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a></li>
             <li>
-            	<form method="post" action="<?php echo Title::makeTitle( NS_SPECIAL, "CloseWiki" )->getFullURL(); ?>" id="wf-close-form">
-            	<input type="hidden" name="wikis[]" value="<?=$wiki->city_id?>" />
-            	<a href="#" onclick="YAHOO.Wiki.Factory.Variable.close_submit(0);">Close</a> &#183;
-            	<a href="#" onclick="YAHOO.Wiki.Factory.Variable.close_submit(1);">Close and Redirect</a> &#183;
-				<a href="#" onclick="YAHOO.Wiki.Factory.Variable.close_submit(2);">Close and Delete</a>
-				</form>
-            </li>
+				<a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a>
+			</li>
         </ul>
     </div>
 	<div id="wiki-factory-panel">
