@@ -970,9 +970,8 @@ EOS;
 
 		// merged CSS - use StaticChute
 		$StaticChute = new StaticChute('css');
-		$tpl->set('mergedCSS',
-			"\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') .
-			"\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') . "\n" );
+		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') );
+		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') );
 
 		if(isset($this->themename)) {
 			if($this->themename == 'custom') {
@@ -2091,6 +2090,11 @@ wfProfileOut( __METHOD__ . '-body');
 ?>
 
 		<div id="positioned_elements" class="reset"></div>
+<?php
+	// RT #18411
+	$this->html('mergedCSSprint');
+?>
+
 	</body>
 </html>
 <?php
