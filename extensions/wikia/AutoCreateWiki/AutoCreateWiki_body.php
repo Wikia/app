@@ -356,7 +356,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$insertFields = array(
 			'city_title'          => $this->mWikiData[ "title" ],
 			'city_dbname'         => $this->mWikiData[ "dbname"],
-			'city_url'            => $this->mWikiData[ "url" ],
+			'city_url'            => $this->mWikiData[ "url" ] . "/",
 			'city_founding_user'  => $this->mWikiData[ "founder" ],
 			'city_founding_email' => $this->mWikiData[ "founder-name" ],
 			'city_path'           => $this->mWikiData[ "path" ],
@@ -724,7 +724,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData[ "images_icon" ] 	= sprintf("%s/%s", $this->mWikiData[ "images_dir" ], "6/64" );
 
 		$this->mWikiData[ "domain" ] = sprintf("%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain);
-		$this->mWikiData[ "url" ] = sprintf( "http://%s.%s/", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain );
+		$this->mWikiData[ "url" ] = sprintf( "http://%s.%s", $this->mWikiData[ "subdomain" ], $this->mDefSubdomain );
 		$this->mWikiData[ "dbname" ] = WikiFactory::prepareDBName($this->mWikiData[ "dbname" ]);
 		$this->mWikiData[ "founder" ] = $this->mFounder->getId();
 		$this->mWikiData[ "founder-name" ] = $this->mFounder->getName();
@@ -1372,7 +1372,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			'wgLanguageCode'            => $this->mWikiData[ "language" ],
 			'wgServer'                  => $this->mWikiData[ "url" ],
 			'wgFavicon'                 => '$wgUploadPath/6/64/Favicon.ico',
-			'wgDefaultSkin'				=> 'monaco',
+			'wgDefaultSkin'	  	    => 'monaco',
 			'wgDefaultTheme'            => 'sapphire',
 			'wgEnableNewParser'         => true,
 			'wgEnableEditEnhancements'  => true,
