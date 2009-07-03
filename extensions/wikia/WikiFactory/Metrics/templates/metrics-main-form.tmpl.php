@@ -427,7 +427,6 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-from=" + between_f.value;
 	params += "&awc-to=" + between_to.value;
 	params += "&awc-language=" + language.value;
-	params += "&awc-language=" + category.value;
 	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
 	params += "&awc-title=" + title.value;
