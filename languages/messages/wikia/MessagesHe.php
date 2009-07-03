@@ -29,6 +29,6 @@ $messages = array_merge( $messages, array(
 'rate_it' => "תנ/י לו ציון",
 'unrate_it' => "בטל/י הצבעה",
 'use_old_formatting' => 'החלפ/י לעור מונובוק',
-'use_new_formatting' => 'נסה/י את העיצוב החדש'
+'use_new_formatting' => 'נסה/י את העיצוב החדש',
+'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
 ) );
-?>

@@ -26,6 +26,6 @@ $messages = array_merge( $messages, array(
 'most_emailed' => "am häufigsten verschickt",
 'use_old_formatting' => 'Gebruik het oude uiterlijk (Monobook)',
 'use_new_formatting' => 'Gebruik het nieuwe uiterlijk',
-'preferences' => 'Voorkeuren'
+'preferences' => 'Voorkeuren',
+'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
 ) );
-?>
