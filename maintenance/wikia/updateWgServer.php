@@ -15,14 +15,14 @@ require_once('commandLine.inc');
 $variable = "wgServer";
 $dbw = Wikifactory::db( DB_MASTER );
 $sth = $dbw->select(
-		array( "city_variables" ),
+		    array( "city_variables", "city_list" ),
 		array( "*" ),
 		array(
 			"cv_variable_id = (SELECT cv_id FROM city_variables_pool WHERE cv_name = '{$variable}')",
-			"cv_city_id > 30000"
+			"city_public=1",
+			"city_id = cv_city_id"
 		),
-		__METHOD__,
-		array( "FOR UPDATE" )
+		__METHOD__
 );
 while( $row = $dbw->fetchObject( $sth ) ) {
 	$before = unserialize( $row->cv_value );
@@ -31,7 +31,7 @@ while( $row = $dbw->fetchObject( $sth ) ) {
 	array_shift( $parts ); array_shift( $parts );
 	$domain = array_shift( $parts );
 
-	$row = $dbw->selectRow(
+	$match = $dbw->selectRow(
 		array( "city_domains" ),
 		array( "count(*) as count" ),
 		array(
@@ -40,7 +40,17 @@ while( $row = $dbw->fetchObject( $sth ) ) {
 		),
 		__METHOD__
 	);
-	if( empty( $row->count ) ) {
-		print "{$before} is wrong\n";
+
+	if( empty( $match->count ) ) {
+		print "{$row->cv_city_id} {$before} is wrong ";
+		$parts = explode( ".", $domain );
+		$tmp = $parts[ 0 ];
+		$parts[ 0 ] = $parts[ 1 ];
+		$parts[ 1 ] = $tmp;
+		$after = implode( ".", $parts );
+		$after = "http://" . $after;
+		print "it should be {$after}\n";
+#		WikiFactory::setVarByName( $variable, $row->cv_city_id, $after );
+#		WikiFactory::clearCache( $row->city_id );
 	}
 }
