@@ -272,7 +272,10 @@ class BlogTemplateClass {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
 		/* parse input parameters */
-		self::$oTitle = (is_null(self::$oTitle)) ? $wgTitle : self::$oTitle;
+		if (is_null(self::$oTitle)) {
+			self::$oTitle = ( is_null($wgTitle) ) ? $parser->getTitle() : $wgTitle;
+		}
+		
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
@@ -1005,7 +1008,7 @@ class BlogTemplateClass {
 							"skin"			=> $wgUser->getSkin(),
 							"wgExtensionsPath" 	=> $wgExtensionsPath,
 							"sPager"		=> $sPager,
-							"wgTitle"		=> $wgTitle,
+							"wgTitle"		=> self::$oTitle,
 						) );
 						#---
 						if ( self::$aOptions['type'] == 'box' ) {
@@ -1022,7 +1025,7 @@ class BlogTemplateClass {
 						$result = self::__makeRssOutput($aResult);
 					}
 				} else {
-					if( !empty( $wgTitle ) && $wgTitle->getNamespace() == NS_BLOG_ARTICLE) {
+					if( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE) {
 						$result = wfMsg('blog-empty-user-blog');
 					}
 					else {
