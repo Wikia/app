@@ -371,7 +371,7 @@ class ReverseParser {
 							$nextNode = $this->getNextElementNode($node);
 
 							$linesBefore = 0;
-							$linesAfter = $nodeData['linesAfter']-1;
+							$linesAfter = !empty($nodeData['linesAfter']) ? ($nodeData['linesAfter']-1) : 1; // RT #18186
 
 							// do not remove one lineAfter if paragraph is following
 							if ( $nextNode && ($nextNode->nodeName == 'p') && $this->getIndentationLevel($nextNode) === false ) {
