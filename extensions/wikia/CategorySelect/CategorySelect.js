@@ -376,6 +376,8 @@ function initializeDragAndDrop() {
 
 function toggleCodeView() {
 	if ($G('csWikitextContainer').style.display != 'block') {	//switch to code view
+		WET.byStr('editpage/codeviewCategory');
+
 		$G('csWikitext').value = generateWikitextForCategories();
 		$G('csItemsContainer').style.display = 'none';
 		$G('csHintContainer').style.display = 'none';
@@ -385,6 +387,8 @@ function toggleCodeView() {
 		$G('wpCategorySelectWikitext').value = '';	//remove JSON - this will inform PHP to use wikitext instead
 		$G('wpCategorySelectSourceType').value = 'wiki';	//inform PHP what source should it use
 	} else {	//switch to visual code
+		WET.byStr('editpage/visualviewCategory');
+
 		var pars = 'rs=CategorySelectAjaxParseCategories&rsargs=' + encodeURIComponent($G('csWikitext').value + ' ');
 		var callback = {
 			success: function(originalRequest) {
