@@ -1,4 +1,11 @@
 == Changes since 200907.1 ==
+* rt#18410: Change static chute to load from wiki domain instead of images (Macbre)
+* rt#18411: Move print css includes to the bottom of the page (Macbre)
+* rt#18484: FCK removes empty spans (Macbre)
+* rt#11257: Missing version number on urls (Macbre)
+* rt#16828: LeanMonaco: No widget carousel (Macbre)
+* rt#18364: date() expects parameter 2 to be long, string given in WidgetShoutBox.php (Macbre)
+* rt#18404: FCK: Improve the "welcome to the new editor" window (Macbre)
 * rt#18469: Change MediaWiki:Copyrightpage default. (Nef)
 * rt#18422: Fix fatal blank pages on wiki with lean bloggers. (Nef)
 * rt#17981: Allow answers widget to be disabled. (Nef)
