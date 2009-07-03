@@ -22,12 +22,22 @@ $sth = $dbw->select(
 		array( "FOR UPDATE" )
 );
 while( $row = $dbw->fetchObject( $sth ) ) {
-
 	$before = unserialize( $row->cv_value );
-	$after  = rtrim( $before, "/" );
-	if( $before !== $after ) {
-		print "{$before} <> {$after}\n";
-#		WikiFactory::setVarByName( $variable, $row->cv_city_id, $after );
-#		WikiFactory::clearCache( $row->cv_city_id );
+
+	$parts = explode( "/", $before );
+	array_shift( $parts ); array_shift( $parts );
+	$domain = array_shift( $parts );
+
+	$row = $dbw->selectRow(
+		array( "city_domains" ),
+		array( "count(*) as count" ),
+		array(
+			"city_id" => $row->cv_city_id,
+			"city_domain" => $domain
+		),
+		__METHOD__
+	);
+	if( empty( $row->count ) ) {
+		print "{$before} is wrong\n";
 	}
 }
