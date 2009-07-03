@@ -7,4 +7,3 @@ then install the current version from phpunit.de like this:
 
 # pear channel-discover pear.phpunit.de
 # pear install phpunit/PHPUnit
-#
