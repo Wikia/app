@@ -12,6 +12,9 @@ class StaticChute {
 
 	public $config = array();
 
+	// macbre: RT #18410
+	private $path = false;
+
 	public function __construct($fileType){
 		if (! in_array($fileType, $this->supportedFileTypes)){
 			trigger_error("Unsupported file type: $fileType", E_USER_ERROR);
@@ -293,6 +296,21 @@ class StaticChute {
 		return $html;
 	}
 
+	// macbre: RT #18410
+	public function setChuteUrlPath($path) {
+		$this->path = $path;
+	}
+
+	public function getChuteUrlPath() {
+		global $wgExtensionsPath;
+		return !empty($this->path) ? $this->path : $wgExtensionsPath;
+	}
+
+	public function useLocalChuteUrl() {
+		global $wgServer, $wgScriptPath;
+		$this->setChuteUrlPath($wgServer . $wgScriptPath . '/extensions');
+	}
+
 	public function getChuteUrlForPackage($package, $type = null){
 		if ($type === null){
 			$type = $this->fileType;
@@ -306,9 +324,7 @@ class StaticChute {
 
 		$latestMod = $this->getLatestMod($files);
 
-		global $wgExtensionsPath;
-
-		return $wgExtensionsPath . '/wikia/StaticChute/?' .
+		return $this->getChuteUrlPath() . '/wikia/StaticChute/?' .
 			http_build_query(array('type'=> $type, 'packages'=> $package, 'maxmod'=> $latestMod));
 	}
 
