@@ -288,8 +288,9 @@ class BlogTemplateClass {
 		return "";
 	}
 	
-	public static function setTitle($oTitle) {
+	public static function parseTagWithTitle($input, $params, &$parser, $oTitle) {
 		self::$oTitle = $oTitle;
+		return self::parseTag( $input, $params, &$parser );
 	}
 
 	public static function getUserNameRecord($username) {
