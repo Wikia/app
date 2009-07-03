@@ -2,6 +2,7 @@
 div.modalWrapper {
 	background: #FFF;
 	border: 1px solid #AAA;
+	color: #000;
 	left: 50%;
 	padding: 2px;
 	position: absolute;
