@@ -79,7 +79,8 @@ class CreateBlogListingPage extends SpecialBlogPage {
 
 		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
 			if($this->mFormData['listingType'] == 'plain') {
-					$this->mRenderedPreview = BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
+				BlogTemplateClass::setTitle($oPostTitle);
+				$this->mRenderedPreview = BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
 			}
 			else {
 				$this->mRenderedPreview = '<pre>' . htmlspecialchars($this->mTagBody) . '</pre>';
@@ -179,6 +180,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		preg_match('/<bloglist[^>]*>(.*)<\/bloglist>/siU', $sArticleBody, $aMatches);
 
 		if(isset($aMatches[1]) && !empty($aMatches)) {
+			BlogTemplateClass::setTitle($oTitle);
 			BlogTemplateClass::parseTag($aMatches[1], array(), $wgParser);
 			$aOptions = BlogTemplateClass::getOptions();
 
