@@ -125,15 +125,6 @@ var initTracker = function() {
 		}
 	});
 
-	// Navigation - toolbox
-	Event.addListener('link_box', 'click', function(e) {
-		var el = Event.getTarget(e);
-		if(el.nodeName == 'A') {
-			Tracker.trackByStr(e, 'toolbox/' + el.innerHTML);
-		}
-	});
-
-
 	// User Engagement
 	Event.addListener('ue_msg', 'click', function(e) {
 		var el = Event.getTarget(e);

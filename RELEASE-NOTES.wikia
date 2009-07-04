@@ -1,4 +1,5 @@
 == Changes since 200907.1 ==
+* rt#18366: Fixed Google Analytics tracking for monaco toolbox. (Nef)
 * rt#18410: Change static chute to load from wiki domain instead of images (Macbre)
 * rt#18411: Move print css includes to the bottom of the page (Macbre)
 * rt#18484: FCK removes empty spans (Macbre)

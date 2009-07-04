@@ -634,6 +634,13 @@ EOS;
 		if(is_array($lines)) {
 			foreach($lines as $line) {
 				$item = parseItem(trim($line, ' *'));
+
+				$tracker = $item['org'];
+				$tracker = preg_replace('/-url$/', '', $tracker);
+				if (empty($tracker)) $tracker = $item['href'];
+				$tracker = preg_replace('/[^a-z0-9.]/i', '_', $tracker);
+				$item['tracker'] = $tracker;
+
 				$nodes[] = $item;
 			}
 		}
@@ -2006,13 +2013,13 @@ if(count($wikiafooterlinks) > 0) {
 	$extraLinksArray = array();
 	$nav_urls = $this->data['nav_urls'];
 	if(!empty($nav_urls['contributions'])) {
-		$extraLinksArray[] = array('href' => $nav_urls['contributions']['href'], 'text' => wfMsg('contributions'));
+		$extraLinksArray[] = array('href' => $nav_urls['contributions']['href'], 'text' => wfMsg('contributions'), 'tracker' => 'contributions');
 	}
 	if(!empty($nav_urls['blockip'])) {
-		$extraLinksArray[] = array('href' => $nav_urls['blockip']['href'], 'text' => wfMsg('blockip'));
+		$extraLinksArray[] = array('href' => $nav_urls['blockip']['href'], 'text' => wfMsg('blockip'), 'tracker' => 'blockip');
 	}
 	if(!empty($nav_urls['emailuser'])) {
-		$extraLinksArray[] = array('href' => $nav_urls['emailuser']['href'], 'text' => wfMsg('emailuser'));
+		$extraLinksArray[] = array('href' => $nav_urls['emailuser']['href'], 'text' => wfMsg('emailuser'), 'tracker' => 'emailuser');
 	}
 	if(!is_array($linksArray) || count($linksArray) == 0) {
 		if(count($extraLinksArray) > 0) {
@@ -2051,7 +2058,7 @@ if(count($wikiafooterlinks) > 0) {
 		if(is_array($linksArrayL) && count($linksArrayL) > 0) {
 		    foreach($linksArrayL as $key => $val) {
 ?>
-						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>"><?= htmlspecialchars($val['text']) ?></a></li>
+						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?=$val['tracker'] ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
 		    }
         }
@@ -2064,7 +2071,7 @@ if(count($wikiafooterlinks) > 0) {
 		if(is_array($linksArrayR) && count($linksArrayR) > 0) {
 		    foreach($linksArrayR as $key => $val) {
 ?>
-						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>"><?= htmlspecialchars($val['text']) ?></a></li>
+						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?=$val['tracker'] ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
 		    }
         }
