@@ -275,7 +275,7 @@ class BlogTemplateClass {
 		if (is_null(self::$oTitle)) {
 			self::$oTitle = ( is_null($wgTitle) ) ? $parser->getTitle() : $wgTitle;
 		}
-		
+
 		$aParams = self::__parseXMLTag($input);
 		wfDebugLog( __METHOD__, "parse input parameters\n" );
 		/* parse all and return result */
@@ -290,10 +290,10 @@ class BlogTemplateClass {
 		wfProfileOut( __METHOD__ );
 		return "";
 	}
-	
+
 	public static function parseTagWithTitle($input, $params, &$parser, $oTitle) {
 		self::$oTitle = $oTitle;
-		return self::parseTag( $input, $params, &$parser );
+		return self::parseTag( $input, $params, $parser );
 	}
 
 	public static function getUserNameRecord($username) {
