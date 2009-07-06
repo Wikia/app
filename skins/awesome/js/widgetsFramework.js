@@ -127,7 +127,7 @@ var WidgetFramework = {
 				$(loadEl).remove();
 
 				// get ID of new widget
-				newId = parseInt( res.widget.match(/widget_(\d+)/).pop() );
+				newId = parseInt( res.widget.match(/widget_(\d+)/).pop(), 10 );
 
 				$('#sidebar_1').prepend(res.widget).log(res.type + ' added as #' + newId, 'Widgets');
 
@@ -228,8 +228,8 @@ var WidgetFramework = {
 						}
 					}
 				} else if (widgetConfig.languages.length > 0) {
-					for(var j in widgetConfig.languages) {
-						if(wgContentLanguage.indexOf(widgetConfig.languages[j]) >= 0) {
+					for(var k in widgetConfig.languages) {
+						if(wgContentLanguage.indexOf(widgetConfig.languages[k]) >= 0) {
 							allow = true;
 						}
 					}
@@ -267,7 +267,7 @@ var WidgetFramework = {
 					if(skin == 'monaco' || skin == 'awesome') {
 						thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<div class="add" rel="' + i + '"></div></h1><br />' + desc;
 					} else if(skin == 'quartz') {
-						thumb_el.innerHTML = title
+						thumb_el.innerHTML = title;
 						thumb_el.title = desc;
 					}
 					carousel.append(thumb_el);
@@ -305,7 +305,7 @@ var WidgetFramework = {
 
 		$('#cockpit').hide();
 	}
-}
+};
 
 // init widgets
 $(function() {
@@ -338,7 +338,7 @@ $(function() {
 				forcePlaceholderSize: true,
 				handle: (skin == 'quartz' ? 'h1' : 'dt'),
 				items: '> .widget',
-				opacity: .5,
+				opacity: 0.5,
 				placeholder: 'widget_sort_placeholder',
 				revert: 200, // smooth animation
 
@@ -356,7 +356,7 @@ $(function() {
 					});
 
 					// get sidebar ID
-					var id = parseInt(newSidebar.attr('id').substring(8));
+					var id = parseInt(newSidebar.attr('id').substring(8), 10);
 
 					// send reindex request to WidgetFramework
 					$.get(wgScript, {
@@ -377,7 +377,7 @@ $(function() {
 	// run widgets init functions
 	widgets.each(function() {
 		// get widget id
-		var id = parseInt(this.id.substring(7));
+		var id = parseInt(this.id.substring(7), 10);
 
 		// try to run widget init function
 		var fname = this.className.split(' ').pop() + '_init';

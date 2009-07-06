@@ -123,7 +123,7 @@ var initTracker = function() {
 
 	// Spotlights
 	$('#spotlight_footer').find('div').each(function(i) {
-		var id = parseInt(this.id.substr(this.id.length-1));
+		var id = parseInt(this.id.substr(this.id.length-1), 10);
 		$('#realAd'+id).click(function() {
 			$.tracker.byStr('spotlights/footer' + (i+1));
 		});
@@ -199,7 +199,7 @@ jQuery.tracker = function() {
 		var listNames = ['title', 'text'];
 		// parse URL to get offset value
 		var re = (/\&offset\=(\d+)/).exec(document.location);
-		var offset = re ? (parseInt(re[1]) + 1) : 1;
+		var offset = re ? (parseInt(re[1], 10) + 1) : 1;
 
 		$('#bodyContent').children('.mw-search-results').each(function(i) {
 			$(this).find('a').each(function(j) {
@@ -236,6 +236,6 @@ jQuery.tracker.track = function(fakeurl) {
 			urchinTracker(fake);
 		}
 	}
-}
+};
 
 $(document).ready($.tracker);

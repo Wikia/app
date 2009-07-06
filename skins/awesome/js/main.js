@@ -218,7 +218,7 @@ function menuInit() {
 		if (append) {
 			$("#menu-item_" + i).append(html);
 		}
-	};
+	}
 	$.each(menuArray.mainMenu, function (i, item) {
 		monacoNavigationRender(i, item, true);
 	});
