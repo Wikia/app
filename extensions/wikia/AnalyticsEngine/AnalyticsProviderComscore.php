@@ -12,11 +12,11 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 		switch ($event){
 		  case AnalyticsEngine::EVENT_PAGEVIEW : return '
 <!-- Begin comScore Tag -->
-<script type="text/javascript">
+<script type="text/javascript">/*<![CDATA[*/
 setTimeout(function(){ var url = "http" + (/^https:/.test(document.location.href) ? "s" : "") + "://beacon.scorecardresearch.com/scripts/beacon.dll" + "?c1=2&c2=6177433&c3=&c4=&c5=&c6=&c7=" + escape(document.location.href) + "&c8=" + escape(document.title) + "&c9=" + escape(document.referrer) + "&c10=" + escape(screen.width+\'x\'+screen.height) + "&rn=" + (new Date()).getTime(); var i = new Image(); i.src = url; }, 1);
-</script>
+/*]]>*/</script>
 <noscript>
-<img src="http://beacon.scorecardresearch.com/scripts/beacon.dll?c1=2&c2=6177433&c3=&c4=&c5=&c6=&c7=&x=NOJAVASCRIPT" alt="" />
+<img src="http://beacon.scorecardresearch.com/scripts/beacon.dll?c1=2&amp;c2=6177433&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c7=&amp;x=NOJAVASCRIPT" alt="" />
 </noscript>
 <!-- End comScore Tag -->'; 
 			break;
