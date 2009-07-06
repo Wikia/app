@@ -1,5 +1,6 @@
 == Changes since 200907.2 ==
 * rt#18259: FCK removing newlines in/around H2 tags (Macbre)
+* rt#18499: IE8: Right side of certain buttons are reversed in IE8 mode (Macbre)
 
 == Changes since 200907.1 ==
 * rt#18491: FCK: Formatted text followed by divs gains line feeds when mode switching (Macbre)
