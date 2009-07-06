@@ -17,7 +17,7 @@ function sf_focus(e) {
 			a=$('#search_field').autocomplete({
 				serviceUrl: wgServer+wgScript+'?action=ajax&rs=getLinkSuggest&format=json',
 				fnFormatResult: function(v) { return v; },
-				onSelect: function(v, d) { location.href = wgArticlePath.replace(/\$1/, encodeURI(v.replace(/ /g, '_'))); },
+				onSelect: function(v, d) { window.location.href = wgArticlePath.replace(/\$1/, encodeURI(v.replace(/ /g, '_'))); },
 				selectedClass: 'navigation-hover',
 				deferRequestBy: 1000,
 				appendTo: '#search_box'
