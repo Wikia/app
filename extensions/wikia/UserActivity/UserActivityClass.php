@@ -212,7 +212,7 @@ class UserActivity {
 			</div>";
 
 			$this->activityLines[] = array( "type" => "gift-rec", "timestamp"=>$row->item_date,
-					"data" => "<b><a href=\"{$user_title->escapeFullURL()}\">{$row->ug_user_name_to}</a></b> {$html}") ;
+					"data" => "<b><a href=\"{$user_title->escapeFullURL()}\" rel=\"nofollow\">{$row->ug_user_name_to}</a></b> {$html}") ;
 
 
 			$this->items[] = array("id"=>$row->ug_id,"type"=>"gift-rec","timestamp"=>$row->item_date ,"pagetitle"=>$row->gift_name,"namespace"=>$row->gift_id,"username"=>$row->ug_user_name_to,"userid"=>$row->ug_user_id_to,"comment"=>$row->ug_user_name_from,"new"=>"0","minor"=>0 );
@@ -254,7 +254,7 @@ class UserActivity {
 			</div>";
 
 			$this->activityLines[] = array( "type" => "system_gift", "timestamp"=>$row->item_date,
-					"data" => "<b><a href=\"{$user_title->escapeFullURL()}\">{$row->sg_user_name}</a></b> {$html}") ;
+					"data" => "<b><a href=\"{$user_title->escapeFullURL()}\" rel=\"nofollow\">{$row->sg_user_name}</a></b> {$html}") ;
 
 
 
@@ -367,7 +367,7 @@ class UserActivity {
 			$user_title = Title::makeTitle( NS_USER, $row->um_user_name);
 			$user_name_short = substr($row->um_user_name,0,15);
 			if( $row->um_user_name != $user_name_short )$user_name_short.= "...";
-			$this->activityLines[] = array( "type" => "system_message", "timestamp"=>$row->item_date, "data" => "<b><a href=\"{$user_title->escapeFullURL()}\">{$user_name_short}</a></b> {$row->um_message}") ;
+			$this->activityLines[] = array( "type" => "system_message", "timestamp"=>$row->item_date, "data" => "<b><a href=\"{$user_title->escapeFullURL()}\" rel=\"nofollow\">{$user_name_short}</a></b> {$row->um_message}") ;
 
 
 			$this->items[] = array("id"=>$row->um_id,"type"=>"system_message","timestamp"=>$row->item_date ,"pagetitle"=>"","namespace"=>"","username"=>$row->um_user_name,"userid"=>$row->um_user_id,"comment"=>$row->um_message,"new"=>"0","minor"=>0 );
@@ -409,7 +409,7 @@ class UserActivity {
 						</a>
 					</div>";
 
-			$this->activityLines[] = array( "type" => "network_update", "timestamp"=>$row->item_date, "data" => "<b><a href=\"{$user_title->escapeFullURL()}\">{$user_name_short}</a></b> {$html}") ;
+			$this->activityLines[] = array( "type" => "network_update", "timestamp"=>$row->item_date, "data" => "<b><a href=\"{$user_title->escapeFullURL()}\" rel=\"nofollow\">{$user_name_short}</a></b> {$html}") ;
 
 
 		}
@@ -540,7 +540,7 @@ class UserActivity {
 
 					$this->displayed[ $type ][ $page_name ] = 1;
 
-					$pages .= " <a href=\"{$page_title->escapeFullURL()}\">{$page_name}</a>";
+					$pages .= " <a href=\"{$page_title->escapeFullURL()}\" rel=\"nofollow\">{$page_name}</a>";
 					if( $count_users == 1 && $count_actions > 1 ){
 						$pages .= " ($count_actions " . wfMsg("useractivity_group_{$type}") . ")";
 					}
@@ -567,7 +567,7 @@ class UserActivity {
 
 
 									if( $pages ) $pages .= ", ";
-									$pages .= " <a href=\"{$page_title2->escapeFullURL()}\">{$page_name2}</a>";
+									$pages .= " <a href=\"{$page_title2->escapeFullURL()}\" rel=\"nofollow\">{$page_name2}</a>";
 									if( $count_actions2 > 1 ){
 										$pages .= " ($count_actions2 " . wfMsg("useractivity_group_{$type}") . ")";
 									}
@@ -591,7 +591,7 @@ class UserActivity {
 				$user_name_short = substr($user_name,0,15);
 				if( $user_name != $user_name_short )$user_name_short.= "...";
 
-				$users .= " <b><a href=\"{$user_title->escapeFullURL()}\">{$user_name_short}</a></b>";
+				$users .= " <b><a href=\"{$user_title->escapeFullURL()}\" rel=\"nofollow\">{$user_name_short}</a></b>";
 			}
 			if( $pages || $has_page == false ){
 				$this->activityLines[] =  array("type" => $type, "timestamp" => $page_data[ "timestamp" ], "data" => $users . " " . wfMsgExt("useractivity_{$type}", "parsemag", $pages_count, $count_users) . $pages );
