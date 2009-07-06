@@ -69,6 +69,11 @@ class OutputPage {
 		# Strip newlines as a paranoia check for header injection in PHP<5.1.2
 		$this->mRedirect = str_replace( "\n", '', $url );
 		$this->mRedirectCode = $responsecode;
+
+		# Cache permanent redirects for 20 minutes, see rt#18297
+		if( $responsecode == '301' ) {
+			$this->setSquidMaxage( 1200 );
+		}
 	}
 
 	public function getRedirect() {
