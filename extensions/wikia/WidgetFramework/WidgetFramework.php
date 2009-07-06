@@ -241,10 +241,10 @@ class WidgetFramework {
 		}
 
 		if($this->skinname == 'monaco') {
-			$closeButton = ($closeable) ? "<div id=\"{$widget['id']}_close\" class=\"close\"><span></span></div>" : '';
-			$editButton  = ($editable) ? "<div id=\"{$widget['id']}_edit\" class=\"edit\"><span></span></div>" : '';
+			$closeButton = ($closeable) ? "<span id=\"{$widget['id']}_close\" class=\"close toolboxItem\"><span></span></span>" : '';
+			$editButton  = ($editable) ? "<span id=\"{$widget['id']}_edit\" class=\"edit toolboxItem\"><span></span></span>" : '';
 			$editForm  = ($editable) ? "<dd style=\"display: none;\" class=\"shadow widget_contents\" id=\"{$widget['id']}_editform\"></dd>" : '';
-			return "<dl class=\"widget {$widget['type']}\" id=\"{$widget['id']}\"><dt class=\"color1 widget_title\" id=\"{$widget['id']}_header\"><div class=\"widgetToolbox\">{$closeButton}{$editButton}</div>{$title}</dt><dd class=\"shadow widget_contents\" id=\"{$widget['id']}_content\">{$body}</dd>{$editForm}</dl>";
+			return "<dl class=\"widget {$widget['type']}\" id=\"{$widget['id']}\"><dt class=\"color1 widget_title\" id=\"{$widget['id']}_header\"><span class=\"widgetToolbox\">{$closeButton}{$editButton}</span>{$title}</dt><dd class=\"shadow widget_contents\" id=\"{$widget['id']}_content\">{$body}</dd>{$editForm}</dl>";
 		} else if($this->skinname == 'quartz') {
 			$closeButton = ($closeable) ? "<span id=\"{$widget['id']}_close\" class=\"closeButton\">x</span>" : '';
 			$editButton  = ($editable) ? "<span id=\"{$widget['id']}_edit\" class=\"editButton\">Edit</span>" : '';

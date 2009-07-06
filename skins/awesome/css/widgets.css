@@ -12,7 +12,7 @@
 
 #cockpit_close {
 	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
-	background-position: 160px 0;
+	background-position: 48px 0;
 	cursor: pointer;
 	height: 16px;
 	position: absolute;
@@ -64,13 +64,13 @@ body.widgetsAddingBlocked .add {
 	padding: 2px;
 	text-align: center;
 }
-.widget .widgetToolbox div {
+.widget .widgetToolbox .toolboxItem {
 	float: right;
 	height: 12px;
 	margin: 3px 0 0 4px;
 	position: relative;
 }
-.widget .widgetToolbox span {
+.widget .widgetToolbox .toolboxItem span {
 	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png);
 	cursor: pointer;
 	display: block;
@@ -78,26 +78,26 @@ body.widgetsAddingBlocked .add {
 	position: absolute;
 	width: 28px;
 }
-.widget .widgetToolbox div.close {
+.widget .widgetToolbox .close {
 	width: 10px;
 }
-.widget .widgetToolbox div.close span {
+.widget .widgetToolbox .close span {
 	clip: rect(0px 28px 12px 18px);
 	left: -18px;
 	margin-top: -2px;
 }
-.widget .widgetToolbox div.edit {
+.widget .widgetToolbox .edit {
 	width: 11px;
 }
-.widget .widgetToolbox div.edit span {
+.widget .widgetToolbox .edit span {
 	clip: rect(0px 18px 12px 7px);
 	left: -7px;
 	margin-top: -2px;
 }
-.widget .widgetToolbox div.hide {
+.widget .widgetToolbox .hide {
 	width: 7px;
 }
-.widget .widgetToolbox div.hide span {
+.widget .widgetToolbox .hide span {
 	clip: rect(0px 7px 12px 0px);
 	margin-top: -2px;
 }
