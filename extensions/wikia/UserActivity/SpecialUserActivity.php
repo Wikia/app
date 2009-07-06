@@ -64,12 +64,12 @@ function wfSpecialUserHome(){
 					$filter = $line[0];
 					$link_text = $line[1];
 					$link_image = $line[2];
-					$output .= "<a href=\"" . $this_title->escapeFullURL("item_type={$filter}") . "\"><img src=\"{$wgUploadPath}/common/" . UserActivity::getTypeIcon($link_image) . "\"/>{$link_text}</a>";
+					$output .= "<a href=\"" . $this_title->escapeFullURL("item_type={$filter}") . "\" rel=\"nofollow\"><img src=\"{$wgUploadPath}/common/" . UserActivity::getTypeIcon($link_image) . "\"/>{$link_text}</a>";
 
 				}
 			}
 			  
-				$output .= "<a href=\"".$this_title->escapeFullURL()."\">" . wfMsg("useractivity_all") . "</a>
+				$output .= "<a href=\"".$this_title->escapeFullURL()."\" rel=\"nofollow\">" . wfMsg("useractivity_all") . "</a>
 				</div>
 			 </div>
 			*/ 
