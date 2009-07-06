@@ -39,7 +39,7 @@ foreach ($aRows as $pageId => $aRow) {
 	/* s: COMMENTS */
 ?>
 <div class="wk_blogs_comments"><ul class="links">
-<? $commentTitle = $oTitle; $commentTitle->setFragment("#comments"); ?>
+<? $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?>
 <? if (!empty($isCommenting)) { ?><li><span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->makeLinkObj($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?></li><li>|</li><? } ?>
 <? if (!empty($isVoting)) { ?><li class="wk_star_list"><?=$aRow['votes']?></li><li>|</li><? } ?>
 <li><?=$skin->makeLinkObj($oTitle, wfMsg('blog-readfullpost'))?></li>
