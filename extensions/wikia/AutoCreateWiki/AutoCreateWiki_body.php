@@ -45,7 +45,7 @@ class AutoCreateWikiPage extends SpecialPage {
 	const STARTER_SPRT = 15; /** sport **/
 	const LOG = "autocreatewiki";
 	const IMGROOT = "/images/";
-	const IMAGEURL = "http://images.wikia.com";
+	const IMAGEURL = "http://images.wikia.com/";
 	const CREATEWIKI_LOGO = "/images/c/central/images/2/22/Wiki_Logo_Template.png";
 	const CREATEWIKI_ICON = "/images/c/central/images/6/64/Favicon.ico";
 	const SESSION_TIME = 60;
