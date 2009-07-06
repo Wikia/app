@@ -759,6 +759,7 @@ class BlogAvatarRemovePage extends SpecialPage {
 
 	#--- constructor
 	public function __construct() {
+		wfLoadExtensionMessages( "Blogs" );
 		$this->mPosted = false;
 		$this->mCommitRemoved = false;
 		$this->mSysMsg = false;
