@@ -41,7 +41,6 @@ if (match !== null){
 	<form onSubmit="return handleDescriptionForm(this)">
 	<div id="desc_form_html">
 	Enter a description for the main page:<br />
-	<form onSubmit="return handleEditForm(this)">
 	<textarea name="desc" rows="10" cols="60" id="desc_textarea"></textarea><br />
 	<input type="submit" value="Save Description"/> <br />
 	</form>
@@ -58,7 +57,7 @@ if (match !== null){
 		{"rvsection":0}
 	);
 
-	handleDescriptionForm = function(result){
+	handleDescriptionForm = function(f){
 	  try {
 	     // Save the article
 	     Mediawiki.editArticle({
@@ -82,16 +81,50 @@ if (match !== null){
 
 <!-- ############## Add a logo ############ -->
 <div id="tabs-2">
+	<div id="logo_form_html">
+	<form onSubmit="return handleLogoForm(this)">
+	<div id="desc_form_html">
+	Upload a logo
+	<input type="file" name="logo_file"><br />
+	<p>
+	<input type="submit" name="Preview" value="Preview"/> 
+	<input type="submit" name="Save" value="Save"/> 
+	</form>
+	</div>
+
+	<!-- Christian: help. Float! -->
+	<div style="float: right">
+	<div id="logo_current"><img src="http://images.wikia.com/nicktest001/images/b/bc/Wiki.png"></div>
+	<br />
+	<br />
+	<div id="logo_preview">
+		Logo preview
+	</div>
+	</div>
+
+	<script> 
+	handleLogoForm = function(f){
+	}
+	</script>	
+	
 </div>
 
 <!-- ############## Pick Theme ############## -->
 
 <div id="tabs-3">
+	Pick a theme
 </div>
 
 <!-- ############## Create first pages ############## -->
 
 <div id="tabs-4">
+	Create your first pages
+</div>
+
+<!-- ############## Create first pages ############## -->
+
+<div id="tabs-5">
+	Done
 </div>
 
 </div> <!-- /div id=tabs -->
