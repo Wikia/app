@@ -2,6 +2,7 @@
 * 
 
 == Changes since 200907.1 ==
+* rt#18612: Fixed grammar in blog i18n. (Nef)
 * rt#18366: Fixed Google Analytics tracking for monaco toolbox. (Nef)
 * rt#18410: Change static chute to load from wiki domain instead of images (Macbre)
 * rt#18411: Move print css includes to the bottom of the page (Macbre)
