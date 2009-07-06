@@ -2,6 +2,8 @@
 * 
 
 == Changes since 200907.1 ==
+* rt#18491: FCK: Formatted text followed by divs gains line feeds when mode switching (Macbre)
+* rt#18502: FCK: Text immediately following headings in a table gain a preceding space (Macbre)
 * rt#18613: Fixed i18n not loading for blog's Special:RemoveAvatar. (Nef)
 * rt#18612: Fixed grammar in blog i18n. (Nef)
 * rt#18366: Fixed Google Analytics tracking for monaco toolbox. (Nef)
