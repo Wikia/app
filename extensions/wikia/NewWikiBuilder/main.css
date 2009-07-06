@@ -1,43 +1,57 @@
 .ui-tabs .ui-tabs-hide {
-     display: none;
+	display: none;
 }
 body {
-        /* The default in the theme is farkin huge */
+        /* The default in the jqueryui theme is farkin huge */
         font-size: 80%;
 }
 
 
+/* logo page */
+#logo_current {
+	border: ridge black 3px;
+	height: 155px;
+	width: 216px;
+}
+
+#logo_preview {
+	background-color: lightgray;
+	border: ridge black 3px;
+	color: gray;
+	height: 155px;
+	text-align: center;
+	text-vertical-align: center;
+	width: 216px;
+}
+
 /* Styles for status bar http://www.west-wind.com/WebLog/posts/388213.aspx */
 
 .statusbar { 
+	background: black;
+	border: solid 1px lightgray;
+	bottom: 5px;
+	color: white;    
+	filter: alpha(opacity="70");
 	font-family:Lucida Grande,Lucida Sans,Arial,sans-serif;
-    position: fixed;
-    bottom: 5px;
-    left: 0;
-    right: 0;
-    height: 16px;    
-    padding: 5px;
-
-    background: black;
-    color: white;    
-    border: solid 1px lightgray;
-
-    opacity: .70;    
-    filter: alpha(opacity="70");
-    z-index: 200;
-
-    overflow: hidden;
-    overflow-y: auto; 
+	height: 16px;    
+	left: 0;
+	opacity: .70;    
+	overflow: hidden;
+	overflow-y: auto; 
+	padding: 5px;
+	position: fixed;
+	right: 0;
+	z-index: 200;
 }
 
 .statusbarhighlight {
-    font-weight: bold;
-    background-color: #F0E68C;
-    color: maroon;
-    border: solid 1px silver;
+	background-color: #F0E68C;
+	border: solid 1px silver;
+	color: maroon;
+	font-weight: bold;
 }
 
 .statusbarerror {
-    background-color: red;
-    color: white;    
+	background-color: red;
+	color: white;    
 }
