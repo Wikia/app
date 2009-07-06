@@ -340,6 +340,7 @@ body.widgetsAddingBlocked .add {
 .autocomplete {
 	background: #FFF;
 	border: 1px solid #999;
+	color: #000;
 	cursor: default;
 	font-size: 0.9em;
 	margin: -6px 6px 6px -6px;
