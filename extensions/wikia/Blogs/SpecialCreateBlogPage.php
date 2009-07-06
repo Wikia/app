@@ -174,7 +174,7 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	protected function renderForm() {
-		global $wgOut, $wgUser, $wgScriptPath, $wgEnableWysiwygExt, $wgRequest;
+		global $wgOut, $wgUser, $wgScriptPath, $wgEnableWysiwygExt, $wgRequest, $wgWysiwygEdit;
 
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
@@ -192,11 +192,26 @@ class CreateBlogPage extends SpecialBlogPage {
 			$this->mFormData['postBody'] = $this->mFormData['html'];
 		}
 
-		// restore HTML for Wysiwyg (blog post re-edit mode)
+		// restore HTML and metadata for Wysiwyg (blog post re-edit mode)
 		if($wysiwygEnabled && ($this->reEdit == true) && !empty($this->mFormData['postBody'])) {
 			$ret = Wysiwyg_WikiTextToHtml($this->mFormData['postBody'], false, true);
 			if($ret['type'] == 'html') {
+				global $wgWysiwygData;
+				$wgWysiwygData = $ret['data'];
+
+				$this->mFormData['wikimarkup'] = $this->mFormData['postBody'];
 				$this->mFormData['postBody'] = $ret['html'];
+			}
+		}
+
+		if($wysiwygEnabled) {
+			wfRunHooks('EditPage::showEditForm:initial', array(&$form));
+			if(!$wgWysiwygEdit && isset($this->mFormData['wikimarkup'])) {
+				//fallback to wiki markup if we don't have Wysiwyg enabled for whatever reason (e.g. non-comaptible browser)
+				global $wgWysiwygData;
+				$wgWysiwygData = '';
+
+				$this->mFormData['postBody'] = $this->mFormData['wikimarkup'];
 			}
 		}
 
@@ -224,7 +239,8 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		if($wysiwygEnabled) {
 			Wysiwyg_BeforeDisplayingTextbox(1,2);
-			wfRunHooks('EditPage::showEditForm:initial', array(&$form));
+			//moved above to get $wgWysiwygEdit set properly
+			//wfRunHooks('EditPage::showEditForm:initial', array(&$form));
 			wfRunHooks('EditPage::showEditForm:initial2', array(&$form));
 		}
 
