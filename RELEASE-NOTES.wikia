@@ -1,4 +1,5 @@
 == Changes since 200907.2 ==
+* rt#18654: Fixed comment link in blog. (Nef)
 * rt#18666: Added nofollow all around NY site activity feed. (Nef)
 * rt#18259: FCK removing newlines in/around H2 tags (Macbre)
 * rt#18499: IE8: Right side of certain buttons are reversed in IE8 mode (Macbre)
