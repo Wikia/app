@@ -142,7 +142,7 @@ function wfSIWEChangeUmbrella(){
 
 	list($wikia, $wikiaID) = wfSIWEGetRequestData();
 
-	$db =& wfGetDB (DB_MASTER, array(), $wgExternalSharedDB);
+	$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
 	list($wikiaID, , $wikiaURL, $wikiaUmbrella) = wfSIWEGetWikiaData($wikia, $wikiaID);
 	if (!isset($wikiaURL)) return false;
@@ -180,6 +180,7 @@ function wfSIWEEditInterwiki(){
 	if (!$wikiaDB){
 	        return wfSIWEChooseAction();
 	}
+	$db = wfGetDB (DB_MASTER, array(), $wikiaDB );
 
 	$db =& wfGetDB (DB_MASTER, array(), $wikiaDB );
 
@@ -214,8 +215,6 @@ function wfSIWEEditInterwiki(){
 	#Edit or delete if requested...
 	if ( ($action=='edit_interwiki' || $action=='delete_interwiki') && $fields['iw_prefix'] && $fields['iw_url']){
 
-		$db->selectDB($wikiaDB);
-
 		switch ($action) {
 			case 'edit_interwiki' :
 #				Allow for non-language interwikis (rt#12266)
@@ -224,7 +223,12 @@ function wfSIWEEditInterwiki(){
 #					break;
 #				}
 				if ( $fields['iw_prefix'] != $old_prefix ){
-					$res = $db->select('interwiki', '*', array('iw_prefix' => $fields['iw_prefix']));
+					$res = $db->select(
+						'interwiki',
+						array( '*'),
+						array('iw_prefix' => $fields['iw_prefix']),
+						__METHOD__
+					);
 
 					if ( $dbObject = $db->fetchObject($res) ){
 
@@ -244,7 +248,7 @@ function wfSIWEEditInterwiki(){
 							</form>";
 					}else{
 						$ret .= "<p>Changeing interwiki...<br />\n";
-						$res = $db->insert( 'interwiki', $fields);
+						$res = $db->insert( 'interwiki', $fields, __METHOD__ );
 
 	  					if ($res){
    						$ret.= "<p>Prefix <b>". $fields['iw_prefix']. "</b> edited for <a href='$wikiaURL'>$wikiaURL</a> to:<ul>\n
@@ -265,7 +269,7 @@ function wfSIWEEditInterwiki(){
 		        				"ON DUPLICATE KEY ".
 		        				"UPDATE iw_url=". $db->addQuotes($fields['iw_url']).
 		        				", iw_local=". $db->addQuotes($fields['iw_local']).
-		        				", iw_trans=". $db->addQuotes($fields['iw_trans']). ";" );
+		        				", iw_trans=". $db->addQuotes($fields['iw_trans']), __METHOD__ );
 
 	  				if ($res){
   						$ret.= "Prefix <b>". $fields['iw_prefix']. "</b> edited for <a href='$wikiaURL'>$wikiaURL</a> to:<ul>\n
@@ -282,7 +286,7 @@ function wfSIWEEditInterwiki(){
 
 			    $ret .= "<p>Deleting interwiki selected interwiki...";
 
-				$res = $db->delete('interwiki', $fields);
+				$res = $db->delete('interwiki', $fields, __METHOD__ );
 
 	  			if ($res){
   					$ret.= " Done.<br />Prefix <b>". $fields['iw_prefix']. "</b> deleted for <a href='$wikiaURL'>$wikiaURL</a></p>\n";
