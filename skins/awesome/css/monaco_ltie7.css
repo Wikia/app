@@ -25,8 +25,8 @@ a.bigButton big, a.bigButton small {
 .shadow, #page_bar, #search_box {
 	background-image: none !important;
 }
-.widget dt div.close span, .widget dt div.edit span, .widget dt div.hide span, #widget_cockpit_close {
-	background-image: none;
+.widget .close span, .widget .edit span, .widget .hide span, #widget_cockpit_close {
+	background-image: none !important;
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/widget_sprite.png', sizingMethod='crop');
 }
 .staffSig {
