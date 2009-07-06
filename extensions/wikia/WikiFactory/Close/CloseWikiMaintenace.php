@@ -55,7 +55,7 @@ class CloseWikiMaintenace {
 		switch ( $this->mAction ) {
 			case WikiFactory::HIDE_ACTION: 
 				$this->mDumpDirectory = ( !$wgDevelEnvironment ) ? "/opt/dbdumps-hidden" : "/tmp/dumps-hidden";
-				break
+				break;
 			case WikiFactory::CLOSE_ACTION: 
 				$this->mDumpDirectory = ( !$wgDevelEnvironment ) ? "/opt/dbdumps" : "/tmp/dumps";
 				break;
@@ -85,20 +85,25 @@ class CloseWikiMaintenace {
 			}
 
 			#--- Delete the database and images
+			$remove = 0;
 			if ( $this->mFlags & WikiFactory::FLAG_DELETE_DB_IMAGES ) {
 				$this->dropDB();
 				$this->removeImageDirectory();
-				$done = 1;
+				$done = 1; $remove = 1;
+			}
+			
+			if ($this->mFlags & WikiFactory::FLAG_FREE_WIKI_URL) {
+				$remove = 1;
 			}
 
 			#--- Free the URL for a new founder
-			if ( $this->mFlags & WikiFactory::FLAG_FREE_WIKI_URL ) {
+			if ( $remove ) {
 				$this->cleanWikiFactory();
 				$done = 1;
 			}
 
-			if ( $done == 1 ) {
-				$this->updateTimestamp();
+			if ( $done ) {
+				$this->updateTimestamp( $remove );
 			}
 
 		}
@@ -502,11 +507,12 @@ class CloseWikiMaintenace {
 	 * @todo change name of column to something meaningfull
 	 *
 	 */
-	public function updateTimestamp() {
-
+	public function updateTimestamp( $old = 0 ) {
+		global $wgExternalArchiveDB;
+		
 		wfProfileIn( __METHOD__ );
 		if( $this->mCityID && ! $this->mDryRun ) {
-			$dbw = wfGetDB( DB_MASTER );
+			$dbw = ( empty($old) ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
 			$dbw->update(
 				WikiFactory::table( "city_list" ),
 				array( "city_lastdump_timestamp" => wfTimestampNow() ),
@@ -516,4 +522,5 @@ class CloseWikiMaintenace {
 		}
 		wfProfileOut( __METHOD__ );
 	}
+	
 }
