@@ -22,6 +22,10 @@ function AddEditResearch($o) {
 		if( $wgTitle->getNamespace() != NS_MAIN ){
 			return true;
 		}
+
+		if ($wgTitle->equals(Title::newMainPage())) {
+			return true;
+		}
 	}
 
 	wfLoadExtensionMessages('EditResearch');
