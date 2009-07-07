@@ -87,22 +87,21 @@ class CloseWikiMaintenace {
 			#--- Delete the database and images
 			$remove = 0;
 			if ( $this->mFlags & WikiFactory::FLAG_DELETE_DB_IMAGES ) {
-				$this->dropDB();
-				$this->removeImageDirectory();
-				$done = 1; $remove = 1;
+				$remove = 1;
 			}
-			
 			if ($this->mFlags & WikiFactory::FLAG_FREE_WIKI_URL) {
 				$remove = 1;
 			}
 
 			#--- Free the URL for a new founder
 			if ( $remove ) {
+				$this->dropDB();
+				$this->removeImageDirectory();
 				$this->cleanWikiFactory();
 				$done = 1;
 			}
 
-			if ( $done ) {
+			if ( $done || $remove ) {
 				$this->updateTimestamp( $remove );
 			}
 
