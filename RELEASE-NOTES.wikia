@@ -8,6 +8,9 @@
 * rt#18259: FCK removing newlines in/around H2 tags (Macbre)
 * rt#18499: IE8: Right side of certain buttons are reversed in IE8 mode (Macbre)
 * rt#18663: define black color for masthead div (Macbre)
+* rt#18653: Blogs: Set nofollow on certain bloglist links (Macbre)
+* rt#18650: FCK + Opera: Editor doesn't load - Security violation error in JS console (Macbre)
+* rt#18642: FCK: Images without positions get an underlined menu (Macbre)
 
 == Changes since 200907.1 ==
 * rt#18491: FCK: Formatted text followed by divs gains line feeds when mode switching (Macbre)
