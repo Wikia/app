@@ -2140,6 +2140,7 @@ echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
 global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('fat_monaco'));
 ?>
 <!-- End Analytics -->
 
