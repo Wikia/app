@@ -40,9 +40,9 @@ function moveToExternal( $cluster, $limit ) {
 	$sql = "SELECT * FROM revision r1 FORCE INDEX (PRIMARY), text t2
 		WHERE old_id = rev_text_id
 		AND old_flags NOT LIKE '%external%'
-		AND old_text NOT LIKE '%HistoryBlobStub%'
 		ORDER BY rev_id DESC
 		$limit";
+	#AND old_text NOT LIKE '%HistoryBlobStub%'
 
 	$res = $dbr->query( $sql, __METHOD__ );
 	$ext = new ExternalStoreDB;
@@ -59,13 +59,9 @@ function moveToExternal( $cluster, $limit ) {
 		if ( strpos( $flags, 'object' ) !== false ) {
 			$obj = unserialize( $text );
 			$className = strtolower( get_class( $obj ) );
-			if ( $className == 'historyblobstub' ) {
-				continue;
-			} elseif ( $className == 'historyblobcurstub' ) {
+			if ( in_array($className, array('historyblobstub', 'historyblobcurstub', 'concatenatedgziphistoryblob') ) ) {
 				$text = gzdeflate( $obj->getText() );
 				$flags = 'utf-8,gzip,external';
-			} elseif ( $className == 'concatenatedgziphistoryblob' ) {
-				// Do nothing
 			} else {
 				print "Warning: unrecognised object class \"$className\"\n";
 				continue;
