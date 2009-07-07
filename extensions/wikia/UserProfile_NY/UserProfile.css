@@ -660,6 +660,7 @@
 .profile-on {
 	background-color:#FFFB9B;
 	border:1px solid #FDC745;
+	color: black;
 	font-weight:bold;
 	padding:1px 5px 1px 5px;
 }
