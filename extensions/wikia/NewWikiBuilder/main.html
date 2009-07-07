@@ -82,7 +82,9 @@ if (match !== null){
 <!-- ############## Add a logo ############ -->
 <div id="tabs-2">
 	<div id="logo_form_html">
-	<form onSubmit="return handleLogoForm(this)">
+	<!--form onSubmit="return handleLogoForm(this)"-->
+	<form action="/api.php" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="action" value="uploadlogo">	
 	<div id="desc_form_html">
 	Upload a logo
 	<input type="file" name="logo_file"><br />
