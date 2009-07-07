@@ -31,7 +31,7 @@ class VideoPage extends Article {
 
 	function __construct(&$title){
 		wfLoadExtensionMessages('WikiaVideo');
-		parent::__construct(&$title);
+		parent::__construct($title);
 	}
 
 	function render() {
@@ -42,7 +42,7 @@ class VideoPage extends Article {
 
 	function delete() {
 		// content moved to doDelete
-		parent::delete();	
+		parent::delete();
 	}
 
 	// wrapper for deletion - two modes, total (deletes article plus all history) or one chosen old history (file) revision
@@ -51,13 +51,13 @@ class VideoPage extends Article {
 
 		$wgRequest->getVal( 'wpOldVideo' ) ? $oldvideo = $wgRequest->getVal( 'wpOldVideo' ) : $oldvideo = false ;
 
-		if( !$oldvideo ) { 
+		if( !$oldvideo ) {
 			// move the history to filearchive
 			$this->doDBInserts();
 			// and clean it up
-			$this->doDBDeletes();	
+			$this->doDBDeletes();
 			// delete the article itself
-			parent::doDelete( $reason, $suppress );	
+			parent::doDelete( $reason, $suppress );
 
 			// clean up cache for all articles that linked to this one
 			$title = $this->mTitle;
@@ -68,7 +68,7 @@ class VideoPage extends Article {
 		} else {
 			// delete just this one "file" revision, the article remains intact
 			$this->doDBInserts( $oldvideo );
-			$this->doDBDeletes( $oldvideo );				
+			$this->doDBDeletes( $oldvideo );
 
 			// supply info about what we have done
 			$this->load();
@@ -129,8 +129,8 @@ class VideoPage extends Article {
                                 $wgLang->date( $oldvideo, true ),
                                 $wgLang->time( $oldvideo, true ),
 				self::getOldUrl( $this->mTitle, $oldvideo ),
-				$this->mTitle->getText()				
-                                ) );			
+				$this->mTitle->getText()
+                                ) );
 		}
 
 		if( $wgUser->isAllowed( 'suppressrevision' ) ) {
@@ -188,7 +188,7 @@ class VideoPage extends Article {
 			Xml::closeElement( 'table' ) .
 			Xml::closeElement( 'fieldset' ) .
 			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
-			Xml::hidden( 'wpOldVideo', $oldvideo ) .			
+			Xml::hidden( 'wpOldVideo', $oldvideo ) .
 			Xml::closeElement( 'form' );
 
 		if( $wgUser->isAllowed( 'editinterface' ) ) {
@@ -201,7 +201,7 @@ class VideoPage extends Article {
 		LogEventsList::showLogExtract( $wgOut, 'delete', $this->mTitle->getPrefixedText() );
 	}
 
-	// handles main video page viewing - two modes, for existing page and for non-existing (not created, deleted...) 
+	// handles main video page viewing - two modes, for existing page and for non-existing (not created, deleted...)
 	function view() {
 		global $wgOut, $wgUser, $wgRequest;
 
@@ -253,18 +253,18 @@ class VideoPage extends Article {
 			),
 			$fname
 		);
-		
+
 		if(!$row) {
-			return; // no need to run 
-		}			
+			return; // no need to run
+		}
 
 		// move anything from image and oldimage into filearchive, because it wasn't moved before
 		$this->doDBInserts();
-		$this->doDBDeletes();	
+		$this->doDBDeletes();
 	}
 
 	// take all given video's records from image and oldimage and put into filearchive or just one single old revision
-	// performs old format correction along the way	
+	// performs old format correction along the way
 	function doDBInserts( $oldvideo = false ) {
 		global $wgUser;
 
@@ -392,7 +392,7 @@ class VideoPage extends Article {
 	// delete all given video's records from image and oldimage or just one single old revision
 	// complementary function for doDBInserts
 	function doDBDeletes( $oldvideo = false ) {
-		$dbw = wfGetDB( DB_MASTER );				
+		$dbw = wfGetDB( DB_MASTER );
 
 		if (!$oldvideo ) {
 			// clear current rev
@@ -403,9 +403,9 @@ class VideoPage extends Article {
 			$where =  array(
 				'oi_name = ' . $dbw->addQuotes( self::getNameFromTitle( $this->mTitle ) ) .' OR oi_name = ' . $dbw->addQuotes( $this->mTitle->getPrefixedText()),
 				'oi_timestamp' => $oldvideo
-			);			
+			);
 		}
-		
+
 		// clear old revs
 		$dbw->delete( 'oldimage', $where, __METHOD__ );
 
@@ -426,7 +426,7 @@ class VideoPage extends Article {
 
 		if ($frame) { // frame has always native width
 			$ratios = split( "x", $this->getTextRatio() );
-			$width = intval( trim( $ratios[0] ) );					
+			$width = intval( trim( $ratios[0] ) );
 		}
 
 		$code = $this->getEmbedCode($width);
@@ -820,7 +820,7 @@ EOD;
 				return '';
 		}
 	}
-	
+
 	// return video name
 	public function getVideoName() {
 		$vname = '';
@@ -1211,7 +1211,7 @@ EOD;
 		$thumb = $wgExtensionsPath . '/wikia/VideoEmbedTool/images/vid_thumb.jpg';
 		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
 			case "metacafe":
-				$thumb = 'http://www.metacafe.com/thumb/' . $this->mId . '.jpg';	
+				$thumb = 'http://www.metacafe.com/thumb/' . $this->mId . '.jpg';
 				break;
 			case "youtube":
 				$thumb = 'http://img.youtube.com/vi/' . $this->mId . '/0.jpg';
@@ -1233,10 +1233,10 @@ EOD;
 						if( $item = $doc->getElementsByTagName('item')->item( 0 ) ) {
 							$thumb = trim( $item->getElementsByTagNameNS('media', 'thumbnail')->item(0)->getAttribute('url') );
 						}
-					}				
+					}
 				break;
 				*/
-			case "sevenload":					
+			case "sevenload":
 			case "myvideo":
 			case "gamevideos":
 			case 'southparkstudios': // no API
@@ -1244,13 +1244,13 @@ EOD;
 				break;
 		}
 
-		$height = round( $width / $this->getRatio() );	
+		$height = round( $width / $this->getRatio() );
 		if ( '' != $thumb) {
 			$image = "<img src=\"$thumb\" height=\"$height\" width=\"$width\" alt=\"\" />";
 		} else {
 			$image = '';
 		}
-						
+
  		return "$image<div style=\"width: {$width}px; height: {$height}px; background: transparent url({$wgExtensionsPath}/wikia/Wysiwyg/fckeditor/editor/plugins/video/video.png) no-repeat 50% 50%; position: absolute; top: 0; left: 0\"><br /></div>";
 	}
 
@@ -1532,7 +1532,7 @@ class VideoPageArchive extends PageArchive {
 			$first = false;
 		}
 
-		unset( $result );		
+		unset( $result );
 
 		if ( $insertCurrent ) {
 			$dbw->insert( 'image', $insertCurrent, __METHOD__ );
