@@ -24,7 +24,7 @@ $db_wiki = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 $oRes = $db_wiki->select(
 	"city_list", 
 	array("city_url, group_concat(city_dbname) as db_list, count(*) as cnt"), 
-	"",
+	array("city_public" => 1),
 	__METHOD__,
 	array( "GROUP BY" => "city_url", "HAVING" => "count(*)>1" )
 );
