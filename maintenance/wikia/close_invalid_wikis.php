@@ -50,12 +50,11 @@ if ( !empty($DB) ) {
 		$db = wfGetDB(DB_SLAVE, array(), $dbname);
 		if (!$db->tableExists('revision')) {
 			$city_id = WikiFactory::DBtoID($dbname);
-			$sql = "update city_list set city_public = ". WikiFactory::HIDE_ACTION ." where city_id = {$city_id}";
+			$sql = "update city_list set city_public = ". WikiFactory::HIDE_ACTION .", city_flags = {$city_flags} where city_id = {$city_id}";
 			if ( isset($options['dryrun'])) {
 				echo $sql . "\n";
 			} else {
 				$db_wiki->query($sql);
-				WikiFactory::setFlags($wiki->city_id, $city_flags);
 			}
 			$loop++;
 		}
