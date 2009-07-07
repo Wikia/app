@@ -1,4 +1,5 @@
 == Changes since 200907.2 ==
+* Infolinks extension. (Nef)
 * rt@18297: Cache Special:FilePath 301 for a while. (Nef)
 * rt#18639: Don't show research box on mainpage edit on answers. (Nef)
 * rt#18638: Fixed 'read full post' link in blog. (Nef)
