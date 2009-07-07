@@ -1,4 +1,5 @@
 == Changes since 200907.2 ==
+* rt#18567: Answers: ad unit moved higher on category pages. (Nef)
 * rt#18567: Css tweaks for NYC code. (Nef)
 * Infolinks extension. (Nef)
 * rt@18297: Cache Special:FilePath 301 for a while. (Nef)
