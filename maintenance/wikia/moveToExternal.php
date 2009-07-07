@@ -59,6 +59,7 @@ function moveToExternal( $cluster, $limit ) {
 		if ( strpos( $flags, 'object' ) !== false ) {
 			$obj = unserialize( $text );
 			$className = strtolower( get_class( $obj ) );
+			print "flags: {$flags}\n";
 			if ( in_array($className, array('historyblobstub', 'historyblobcurstub', 'concatenatedgziphistoryblob') ) ) {
 				$text = gzdeflate( $obj->getText() );
 				$flags = 'utf-8,gzip,external';
