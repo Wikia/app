@@ -23,7 +23,7 @@ foreach ($aRows as $pageId => $aRow) {
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
-		$aUserLinks = BlogTemplateClass::getUserNameRecord($aRow['username']);
+		$aUserLinks = BlogTemplateClass::getUserNameRecord($aRow['username'], true);
 		$sUserLinks = ""; 
 		if ( !empty($aUserLinks) ) {
 			$sUserLinks = $aUserLinks['userpage']." (".$aUserLinks['talkpage']."|".$aUserLinks['contribs'].")";
@@ -37,7 +37,7 @@ foreach ($aRows as $pageId => $aRow) {
 	if ( !empty($aOptions['summary']) ) {
 ?>
 <div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
-<div class="wk_blogs_comments"><?php if (!empty($isCommenting)) : ?><?php $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?><span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->makeLinkObj($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])))?> | <?php endif ?><?=$skin->makeLinkObj($oTitle, wfMsg('blog-continuereading'))?></div>
+<div class="wk_blogs_comments"><?php if (!empty($isCommenting)) : ?><?php $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?><span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->link($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), array('rel' => 'nofollow'))?> | <?php endif ?><?=$skin->link($oTitle, wfMsg('blog-continuereading'), array('rel' => 'nofollow'))?></div>
 <?		
 	}
 /* e: SUMMARY */

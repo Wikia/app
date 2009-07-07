@@ -296,9 +296,18 @@ class BlogTemplateClass {
 		return self::parseTag( $input, $params, $parser );
 	}
 
-	public static function getUserNameRecord($username) {
+	public static function getUserNameRecord($username, $nofollow = false) {
 		wfProfileIn( __METHOD__ );
 		$aResult = array();
+
+		// RT #18653
+		if (!empty($nofollow)) {
+			$attribs = array('rel' => 'nofollow');
+		}
+		else {
+			$attribs = array();
+		}
+
 		if (!empty($username)) {
 			$oUser = User::newFromName($username);
 			if ( $oUser instanceof User ) {
@@ -307,9 +316,9 @@ class BlogTemplateClass {
 				$oUserPage = $oUser->getUserPage();
 				$oUserTalkPage = $oUser->getTalkPage();
 				$aResult = array(
-					"userpage" => ($oUserPage instanceof Title) ? $sk->makeLinkObj($oUserPage, $oUser->getName()) : "",
-					"talkpage" => ($oUserTalkPage instanceof Title) ? $sk->makeLinkObj($oUserTalkPage, wfMsg('blog-avatar-talk')) : "",
-					"contribs" => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), wfMsg('blog-avatar-contrib'), "target={$oUser->getName()}"),
+					"userpage" => ($oUserPage instanceof Title) ? $sk->link($oUserPage, $oUser->getName(), $attribs) : "",
+					"talkpage" => ($oUserTalkPage instanceof Title) ? $sk->link($oUserTalkPage, wfMsg('blog-avatar-talk'), $attribs) : "",
+					"contribs" => $sk->link(Title::newFromText('Contributions', NS_SPECIAL), wfMsg('blog-avatar-contrib'), $attribs, array('target' => $oUser->getName())),
 				);
 			}
 		}
