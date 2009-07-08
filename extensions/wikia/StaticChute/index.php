@@ -12,4 +12,3 @@ if (empty($files)){
 }
 
 echo $StaticChute->process($files);
-?>

@@ -980,18 +980,19 @@ EOS;
 		$StaticChute = new StaticChute('css');
 		$StaticChute->useLocalChuteUrl();
 
-		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . "\n" );
-		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') );
-
+		// RT #18765
 		if(isset($this->themename)) {
 			if($this->themename == 'custom') {
 				// ...do nothing - CSS will be added by MW core
 			} else if($this->themename == 'sapphire') {
 				 // ...do nothing
 			} else if($this->themename != '') {
-				$css[] = array('url' => $wgStylePath.'/monaco2/'.$this->themename.'/css/main.css?'.$wgStyleVersion);
+				$StaticChute->setTheme($this->themename);
 			}
 		}
+
+		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . "\n" );
+		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') );
 
 		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
 		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
