@@ -46,7 +46,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		 * query builder
 		 */
 		$this->addTables(array('city_list'));
-		$this->addFields(array('city_id', 'city_url'));
+		$this->addFields(array('city_id', 'city_url', 'city_lang'));
 
 		if ($activeonly) $this->addWhereFld('city_public', 1);
 		if ($wikia) $this->addWhereFld('city_id', $wikia);
@@ -54,6 +54,16 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		if ( !empty($from) && !empty($to) ) {
 			if ($from && is_int($from)) $this->addWhere('city_id >= '.intval($from));
 			if ($to && is_int($to)) $this->addWhere('city_id <= '.intval($to));
+		}
+
+		if (!empty($lang)) {
+			global $wgLanguageNames;
+			if (!array_key_exists($lang, $wgLanguageNames)) {
+				// FIXME add proper error msg
+				$this->dieUsageMsg(array("invalidtitle", $lang));
+			}
+		
+			$this->addWhereFld("city_lang", $lang);
 		}
 
 		$this->addOption( "ORDER BY ", "city_id" );
@@ -69,8 +79,9 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 				$data[$row->city_id] = array(
 					"id"		=> $row->city_id,
 					"domain"	=> $domain,
+					"lang"   => $row->city_lang,
 				);
-				ApiResult :: setContent( $data[$row->city_id], $domain );
+				ApiResult :: setContent( $data[$row->city_id], $domain, $data[$row->city_lang] );
 			}
 		}
 		$db->freeResult($res);
@@ -104,7 +115,8 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"to" => array(
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 1,
-			)
+			),
+			"lang" => null,
 		);
 	}
 
@@ -113,7 +125,8 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"wikia" => "Identifier in Wiki Factory",
 			"active" => "Get only active domains [optional]",
 			"from" => "Begin of range - identifier in Wiki Factory",
-			"to" => "end of range - identifier in Wiki Factory"
+			"to" => "end of range - identifier in Wiki Factory",
+			"lang" => "Wiki language",
 		);
 	}
 
@@ -123,6 +136,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"api.php?action=query&list=wkdomains&wkactive=1",
 			"api.php?action=query&list=wkdomains&wkwikia=177",
 			"api.php?action=query&list=wkdomains&wkfrom=100&wkto=150",
+			"api.php?action=query&list=wkdomains&wkfrom=10000&wkto=15000&wklang=de",
 		);
 	}
 };
