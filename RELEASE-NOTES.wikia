@@ -14,6 +14,7 @@
 * rt#18650: FCK + Opera: Editor doesn't load - Security violation error in JS console (Macbre)
 * rt#18642: FCK: Images without positions get an underlined menu (Macbre)
 * Wysiwyg: FCK updated to v2.6.4.1 (Macbre)
+* rt#18765: Add theme specific CSS to CSS served by static chute (Macbre)
 
 == Changes since 200907.1 ==
 * rt#18491: FCK: Formatted text followed by divs gains line feeds when mode switching (Macbre)
