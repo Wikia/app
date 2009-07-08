@@ -300,22 +300,21 @@ function WikiaGetSkin ($user) {
 	if( !empty( $wgHomePageSkin ) ) {
 		$overrideSkin = false;
 		$mainPrefixedText = Title::newMainPage()->getPrefixedText();
-
 		if ( $wgTitle->getPrefixedText() === $mainPrefixedText ) {
 			// we're on the main page
 			$overrideSkin = true;
 		} elseif ( $wgTitle->isRedirect() && $wgRequest->getVal( 'redirect' ) !== 'no' ) {
 			// not on main page, but page is redirect -- check where we're going next
-			if ( !is_null( $wgArticle ) ) {
-				$rdTitle = $wgArticle->getRedirectTarget();
-				if ( !is_null( $rdTitle ) && $rdTitle->getPrefixedText() === $mainPrefixedText ) {
+			$tempArticle = new Article( $wgTitle );
+			if ( !is_null( $tempArticle ) ) {
+				$rdTitle = $tempArticle->getRedirectTarget();
+				if ( !is_null( $rdTitle ) && $rdTitle->getPrefixedText() == $mainPrefixedText ) {
 					// current page redirects to main page
 					$skinOverride = true;
 				}
 			}
 		}
-
-		if ( $overrideSkin ) {
+		if ( $skinOverride ) {
 			$user->mSkin = &Skin::newFromKey( $wgHomePageSkin );
 			wfProfileOut(__METHOD__);
 			return false;
