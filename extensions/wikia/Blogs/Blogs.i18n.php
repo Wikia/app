@@ -127,7 +127,9 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"right-blog-comments-toggle" => "Permission for toggling comments on Blog Articles",
 	"right-blog-comments-delete" => "Permission for deleting comments on Blog Articles",
 	"right-blog-articles-edit" => "Permission for editing Blog Articles",
-	"blogs-undeleted-comment" => "Undeleted comment for blog page $1"
+	"blogs-undeleted-comment" => "Undeleted comment for blog page $1",
+	"blogs-recent-url" => "Blog:Recent_posts",
+	"blogs-recent-url-text" => "Recent Blog Posts",
 );
 
 $messages['fi'] = array(
