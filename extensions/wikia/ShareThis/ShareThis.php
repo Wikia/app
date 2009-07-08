@@ -12,8 +12,8 @@ $wgHooks['MonacoAfterArticleLinks'][] = 'efAddShareThisButton';
 function efAddShareThisCode( $skin, $text ) {
 	global $wgTitle;
 
-	// only available under Monaco
-	if ( $skin->getSkinname() !== 'monaco' && $wgTitle->exists() && $wgTitle->getNamespace() !== NS_SPECIAL ) {
+	// only available under Monaco, on existing, non-special pages
+	if ( $skin->getSkinname() !== 'monaco' || !$wgTitle->exists() || $wgTitle->getNamespace() == NS_SPECIAL ) {
 		return true;
 	}
 
