@@ -284,7 +284,9 @@ function WikiaSkinPreferences($pref) {
 
 $wgHooks['AlternateGetSkin'][] = 'WikiaGetSkin';
 function WikiaGetSkin ($user) {
-	global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme, $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageName, $wgHomePageSkin, $wgTitle, $wgAdminSkin, $wgSkipSkins;
+	global $wgCookiePrefix, $wgCookieExpiration, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgDefaultSkin, $wgDefaultTheme;
+	global $wgVisitorSkin, $wgVisitorTheme, $wgOldDefaultSkin, $wgSkinTheme, $wgOut, $wgForceSkin, $wgRequest, $wgHomePageSkin, $wgTitle;
+	global $wgAdminSkin, $wgSkipSkins, $wgArticle, $wgRequest;
 
 	wfProfileIn(__METHOD__);
 
@@ -294,11 +296,31 @@ function WikiaGetSkin ($user) {
 		return false;
 	}
 
-	if( $wgTitle->getText() == $wgHomePageName && $wgTitle->getNamespace() == NS_MAIN ) {
-		$user->mSkin = &Skin::newFromKey($wgHomePageSkin);
-		wfProfileOut(__METHOD__);
-		return false;
-	}
+	// change to custom skin for home page
+	if( !empty( $wgHomePageSkin ) ) {
+		$overrideSkin = false;
+		$mainPrefixedText = Title::newMainPage()->getPrefixedText();
+
+		if ( $wgTitle->getPrefixedText() === $mainPrefixedText ) {
+			// we're on the main page
+			$overrideSkin = true;
+		} elseif ( $wgTitle->isRedirect() && $wgRequest->getVal( 'redirect' ) !== 'no' ) {
+			// not on main page, but page is redirect -- check where we're going next
+			if ( !is_null( $wgArticle ) ) {
+				$rdTitle = $wgArticle->getRedirectTarget();
+				if ( !is_null( $rdTitle ) && $rdTitle->getPrefixedText() === $mainPrefixedText ) {
+					// current page redirects to main page
+					$skinOverride = true;
+				}
+			}
+		}
+
+		if ( $overrideSkin ) {
+			$user->mSkin = &Skin::newFromKey( $wgHomePageSkin );
+			wfProfileOut(__METHOD__);
+			return false;
+		}
+	} 
 
 	if(!empty($wgForceSkin)) {
 		$elems = split('-', $wgForceSkin);
