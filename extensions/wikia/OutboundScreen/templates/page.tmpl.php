@@ -45,9 +45,17 @@ function doRedirect(){
 			<span id="exitLinkText"><a href="<?=$url;?>" id="exitLink"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a></span>
 		</div>
 		<div id="exitPageAd">
-			<!-- begin ZEDO for channel:  EA-Site Target 4368-1 , publisher: Wikia.com , Ad Dimension: Full Page Pop Under - 1024 x 768 -->
-			<iframe src="http://d3.zedo.com/jsc/d3/ff2.html?n=790;c=1509/1;s=1368;d=16;w=1024;h=768" frameborder=0 marginheight=0 marginwidth=0 scrolling="no" allowTransparency="true" width=1024 height=768></iframe>
-			<!-- end ZEDO for channel:  EA-Site Target 4368-1 , publisher: Wikia.com , Ad Dimension: Full Page Pop Under - 1024 x 768 -->
+			<script type="text/javascript"><!--
+			google_ad_client = "pub-4086838842346968";
+			/* Exit page ad */
+			google_ad_slot = "0549965769";
+			google_ad_width = 336;
+			google_ad_height = 280;
+			//-->
+			</script>
+			<script type="text/javascript"
+			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>
 		</div>
 	</div>
 </body>
