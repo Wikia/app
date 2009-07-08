@@ -633,6 +633,13 @@ EOS;
 		if(is_array($lines)) {
 			foreach($lines as $line) {
 				$item = parseItem(trim($line, ' *'));
+
+				$tracker = $item['org'];
+				$tracker = preg_replace('/-url$/', '', $tracker);
+				if (empty($tracker)) $tracker = $item['href'];
+				$tracker = preg_replace('/[^a-z0-9.]/i', '_', $tracker);
+				$item['tracker'] = $tracker;
+
 				$nodes[] = $item;
 			}
 		}
@@ -1346,6 +1353,8 @@ class MonacoTemplate extends QuickTemplate {
         // Note this one is safe at the top because it's an image call, so it's not blocking like GA or Quantserve
         echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 
+	// Note this one is safe at the top because it's an image call, so it's not blocking like GA or Quantserve
+	echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 	$this->html('csslinks');
 
 	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
@@ -1530,6 +1539,7 @@ if(isset($this->data['articlelinks']['left'])) {
 					<li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><div>&nbsp;</div><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
 <?php
 	}
+	wfRunHooks( 'MonacoAfterArticleLinks' );
 }
 ?>
 				</ul>
@@ -1563,29 +1573,29 @@ if ($wgOut->isArticle()){
 		if ($wgEnableFAST_HOME2) {
 			$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
 		}
-	} else if ( ArticleAdLogic::isContentPage() ){
-                if ($wgEnableAdsInContent) {
-                        $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
-                        if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-                                $topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD', false);
-                        }
-                } else {
-                        if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
-                                $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
-                        } else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-                                $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
-                        } else {
-                                // Long article, but a collision
-                                $topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
-                        }
-                }
+	} else if ( ArticleAdLogic::isContentPage()){
 
+		if ($wgEnableAdsInContent) {
+			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+			if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+				$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD', false);
+			}
+		} else {
+			if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
+				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+			} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
+			} else {
+				// Long article, but a collision
+				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+			}
+		}
 	}
 }
 ?>
 <?php		wfProfileIn( __METHOD__ . '-article'); ?>
 			<div id="article" <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>>
-				<a name="top" id="top" rel="nofollow"></a>
+				<a name="top" id="top"></a>
 				<?php
 				global $wgSupressSiteNotice;
 				if( empty( $wgSupressSiteNotice ) && $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
@@ -1623,20 +1633,19 @@ if ($wgOut->isArticle()){
 					// Display content
 					$this->html('bodytext');
 
-	                                // Display additional ads before categories and footer on long pages
-                                        global $wgEnableAdsPrefooter, $wgDBname;
-                                        if ( !empty( $wgEnableAdsPrefooter ) &&
-                                        $wgOut->isArticle() &&
-                                        ArticleAdLogic::isContentPage() &&
-                                        ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
+		                        // Display additional ads before categories and footer on long pages
+					global $wgEnableAdsPrefooter, $wgDBname;
+					if ( !empty( $wgEnableAdsPrefooter ) &&
+					$wgOut->isArticle() &&
+					ArticleAdLogic::isContentPage() &&
+					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
 						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
-                                                '<td style="text-align: center">' .
-                                                AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD", false) .
-                                                '</td><td style="text-align: center">' .
-                                                AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_RIGHT_BOXAD", false) .
-                                                "</td></tr>\n</table>";
-                                        }
-
+						'<td style="text-align: center">' .
+						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD", false) .
+						'</td><td style="text-align: center">' .
+						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_RIGHT_BOXAD", false) .
+						"</td></tr>\n</table>";
+					}
 
 					// Display categories
 					if($this->data['catlinks'])
@@ -1660,15 +1669,11 @@ if ($wgOut->isArticle()){
 <?php		wfProfileIn( __METHOD__ . '-articlefooter'); ?>
 <?php
 global $wgTitle, $wgOut;
-$displayArticleFooter = $wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle();
-
-$custom_article_footer = "";
-if( $displayArticleFooter ){
-	wfRunHooks( 'CustomArticleFooter', array( &$this, &$tpl, &$custom_article_footer ) );
-	if( $custom_article_footer )echo $custom_article_footer;
-}
-
-if(!$custom_article_footer && $displayArticleFooter) {
+$custom_article_footer = '';
+wfRunHooks( 'CustomArticleFooter', array( &$this, &$tpl, &$custom_article_footer ));
+if ($custom_article_footer !== '') {
+	echo $custom_article_footer;
+} elseif ($wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle()) {
 	global $wgArticle, $wgLang, $wgSitename;
 ?>
 			<div id="articleFooter" class="reset">
@@ -1724,13 +1729,13 @@ if(!$custom_article_footer && $displayArticleFooter) {
 							<div id="star-rating-wrapper">
 								<ul id="star-rating" class="star-rating">
 									<li style="width: <?= $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
-									<li><a class="one-star" id="star1" rel="nofollow" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
-									<li><a class="two-stars" id="star2" rel="nofollow" title="2/5"<?=$hidden_star?>><span>2</span></a></li>
-									<li><a class="three-stars" id="star3" rel="nofollow" title="3/5"<?=$hidden_star?>><span>3</span></a></li>
-									<li><a class="four-stars" id="star4" rel="nofollow" title="4/5"<?=$hidden_star?>><span>4</span></a></li>
-									<li><a class="five-stars" id="star5" rel="nofollow" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
+									<li><a rel="nofollow" class="one-star" id="star1" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
+									<li><a rel="nofollow" class="two-stars" id="star2" title="2/5"<?=$hidden_star?>><span>2</span></a></li>
+									<li><a rel="nofollow" class="three-stars" id="star3" title="3/5"<?=$hidden_star?>><span>3</span></a></li>
+									<li><a rel="nofollow" class="four-stars" id="star4" title="4/5"<?=$hidden_star?>><span>4</span></a></li>
+									<li><a rel="nofollow" class="five-stars" id="star5" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
 								</ul>
-								<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a id="unrate" rel="nofollow" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
+								<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a rel="nofollow" id="unrate" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
 							</div>
 						</td>
 						<td class="col2">
@@ -1943,13 +1948,13 @@ if(count($wikiafooterlinks) > 0) {
 	$extraLinksArray = array();
 	$nav_urls = $this->data['nav_urls'];
 	if(!empty($nav_urls['contributions'])) {
-		$extraLinksArray[] = array('href' => $nav_urls['contributions']['href'], 'text' => wfMsg('contributions'));
+		$extraLinksArray[] = array('href' => $nav_urls['contributions']['href'], 'text' => wfMsg('contributions'), 'tracker' => 'contributions');
 	}
 	if(!empty($nav_urls['blockip'])) {
-		$extraLinksArray[] = array('href' => $nav_urls['blockip']['href'], 'text' => wfMsg('blockip'));
+		$extraLinksArray[] = array('href' => $nav_urls['blockip']['href'], 'text' => wfMsg('blockip'), 'tracker' => 'blockip');
 	}
 	if(!empty($nav_urls['emailuser'])) {
-		$extraLinksArray[] = array('href' => $nav_urls['emailuser']['href'], 'text' => wfMsg('emailuser'));
+		$extraLinksArray[] = array('href' => $nav_urls['emailuser']['href'], 'text' => wfMsg('emailuser'), 'tracker' => 'emailuser');
 	}
 	if(!is_array($linksArray) || count($linksArray) == 0) {
 		if(count($extraLinksArray) > 0) {
@@ -1987,8 +1992,9 @@ if(count($wikiafooterlinks) > 0) {
 <?php
 		if(is_array($linksArrayL) && count($linksArrayL) > 0) {
 		    foreach($linksArrayL as $key => $val) {
+			 	$trackerL = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
-								<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>"><?= htmlspecialchars($val['text']) ?></a></li>
+						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $trackerL ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
 		    }
         }
@@ -2000,8 +2006,9 @@ if(count($wikiafooterlinks) > 0) {
 <?php
 		if(is_array($linksArrayR) && count($linksArrayR) > 0) {
 		    foreach($linksArrayR as $key => $val) {
+			 	$trackerR = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
-								<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>"><?= htmlspecialchars($val['text']) ?></a></li>
+						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $trackerR ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
 		    }
         }
@@ -2039,6 +2046,7 @@ if(count($wikiafooterlinks) > 0) {
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
 
 			<?php
+				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SLIMBOX_1', false);
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_2', false);
 				if ($wgOut->isArticle()){
 					if (ArticleAdLogic::isMainPage()) { //main page
@@ -2080,6 +2088,15 @@ if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 }
 ?>
 
+<?php
+/* Put two "invisible" ad slots here. These are for loading ads that just load javascript,
+but it isn't positioned at any particular part of a page, such as a slider or a interstitial */
+if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
+echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_1', false);
+echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_2', false);
+}
+?>
+
 <?
 echo AdEngine::getInstance()->getDelayedLoadingCode();
 
@@ -2092,7 +2109,7 @@ $this->html('reporttime');
 wfRunHooks('SpecialFooter');
 wfProfileOut( __METHOD__ . '-body');
 ?>
-
+		<div id="positioned_elements" class="reset"></div>
 		<div id="positioned_elements" class="reset"></div>
 <?php
 	// RT #18411
