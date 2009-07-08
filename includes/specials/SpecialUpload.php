@@ -278,6 +278,11 @@ class UploadForm {
 		$this->cleanupTempFile();
 	}
 
+	function showSuccess() {
+		global $wgOut;
+		$wgOut->redirect( $this->mLocalFile->getTitle()->getFullURL() );
+	}
+
 	/**
 	 * Do the upload
 	 * Checks are made in SpecialUpload::execute()
@@ -294,7 +299,7 @@ class UploadForm {
 
 	 	switch($value) {
 			case self::SUCCESS:
-				$wgOut->redirect( $this->mLocalFile->getTitle()->getFullURL() );
+				$this->showSuccess();
 				break;
 
 			case self::BEFORE_PROCESSING:
