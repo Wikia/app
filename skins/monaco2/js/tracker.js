@@ -1,3 +1,14 @@
+// Port of getTarget and resolveTextNode function (altogether) from YUI Event lib
+// @author: Inez
+// TODO: Move it to some more general place because it is not realted only to tracking
+function getTarget(ev) {
+	var t = ev.target || ev.srcElement;
+	if(t && 3 == t.nodeType) {
+		t = t.parentNode;
+	}
+	return t;
+}
+
 /*
 Copyright (c) 2009, Wikia Inc.
 Author: Inez Korczynski (inez (at) wikia.com)
@@ -236,6 +247,15 @@ jQuery.tracker.track = function(fakeurl) {
 			urchinTracker(fake);
 		}
 	}
+};
+
+
+// macbre: temporary fix
+var WET = {
+	byStr: function(str) {
+		$.tracker.byStr(str)
+	},
+	byId: $.tracker.byId
 };
 
 $(document).ready($.tracker);
