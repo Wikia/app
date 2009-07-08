@@ -28,10 +28,10 @@ $MF['monaco_css']['target'] = 'monaco/css/allinone.css';
 
 /* LeanMonaco */
 $MF['awesome_loggedin_js']['type'] = 'js';
-$MF['awesome_loggedin_js']['target'] = 'awesome/js/allinone_loggedin.js';
+$MF['awesome_loggedin_js']['target'] = 'monaco2/js/allinone_loggedin.js';
 
 $MF['awesome_non_loggedin_js']['type'] = 'js';
-$MF['awesome_non_loggedin_js']['target'] = 'awesome/js/allinone_non_loggedin.js';
+$MF['awesome_non_loggedin_js']['target'] = 'monaco2/js/allinone_non_loggedin.js';
 
 $MF['awesome_css']['type'] = 'css';
-$MF['awesome_css']['target'] = 'awesome/css/allinone.css';
+$MF['awesome_css']['target'] = 'monaco2/css/allinone.css';
