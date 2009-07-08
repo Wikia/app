@@ -2110,7 +2110,6 @@ wfRunHooks('SpecialFooter');
 wfProfileOut( __METHOD__ . '-body');
 ?>
 		<div id="positioned_elements" class="reset"></div>
-		<div id="positioned_elements" class="reset"></div>
 <?php
 	// RT #18411
 	$this->html('mergedCSSprint');
