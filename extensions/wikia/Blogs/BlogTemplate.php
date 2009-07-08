@@ -362,39 +362,45 @@ class BlogTemplateClass {
 	}
 
 	public static function __getVoteCode($iPage) {
-		wfProfileIn( __METHOD__ );
-		$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $iPage, "wkuservote" => true ));
-		$oApi = new ApiMain($oFauxRequest);
-		$oApi->execute();
-		$aResult =& $oApi->GetResultData();
+		global $wgUser;
 
-		if(count($aResult['query']['wkvoteart']) > 0) {
-			if (!empty($aResult['query']['wkvoteart'][$iPage]['uservote'])) {
-				$voted = true;
+		wfProfileIn( __METHOD__ );
+		if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
+
+			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $iPage, "wkuservote" => true ));
+			$oApi = new ApiMain($oFauxRequest);
+			$oApi->execute();
+			$aResult =& $oApi->GetResultData();
+
+			if(count($aResult['query']['wkvoteart']) > 0) {
+				if (!empty($aResult['query']['wkvoteart'][$iPage]['uservote'])) {
+					$voted = true;
+				} else {
+					$voted = false;
+				}
+				$rating = $aResult['query']['wkvoteart'][$iPage]['votesavg'];
 			} else {
 				$voted = false;
+				$rating = 0;
 			}
-			$rating = $aResult['query']['wkvoteart'][$iPage]['votesavg'];
-		} else {
-			$voted = false;
-			$rating = 0;
+			$sHiddenStar = $voted ? ' style="display: none;"' : '';
+			$iRating = round($rating * 2)/2;
+			$iRatingPx = round($rating * 17);
+
+			/* run template */
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"ratingPx"		=> $iRatingPx,
+				"rating"		=> $iRating,
+				"hidden_star"	=> $sHiddenStar,
+			));
+			$return = $oTmpl->execute("blog-page-voting");
 		}
-
-		$sHiddenStar = $voted ? ' style="display: none;"' : '';
-		$iRating = round($rating * 2)/2;
-		$iRatingPx = round($rating * 17);
-
-		/* run template */
-		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$oTmpl->set_vars( array(
-			"ratingPx"		=> $iRatingPx,
-			"rating"		=> $iRating,
-			"hidden_star"	=> $sHiddenStar,
-		));
-
-		#---
+		else {
+			$return = "";
+		}
 		wfProfileOut( __METHOD__ );
-		return $oTmpl->execute("blog-page-voting");
+		return $return;
 	}
 
 	private static function __parseXMLTag($string) {
