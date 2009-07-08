@@ -15,6 +15,9 @@ class StaticChute {
 	// macbre: RT #18410
 	private $path = false;
 
+	// macbre: RT #18765
+	private $theme = false;
+
 	public function __construct($fileType){
 		if (! in_array($fileType, $this->supportedFileTypes)){
 			trigger_error("Unsupported file type: $fileType", E_USER_ERROR);
@@ -190,6 +193,15 @@ class StaticChute {
 					foreach ($this->config[$package] as $f){
 						$out[] = realpath($basedir . '/' . $f);
 					}
+	
+					// macbre: rt #18765
+					// add possibility to add more files to current package
+					$moreFiles = $this->getMoreFileList($package, $args);
+					if (!empty($moreFiles)) {
+						foreach ($moreFiles as $f) {
+							$out[] = realpath($basedir . '/' . $f);
+						}
+					}
 				}
 			}
 
@@ -211,6 +223,21 @@ class StaticChute {
 		return $out;
 	}
 
+	private function getMoreFileList($package, $args) {
+		switch($package) {
+			case 'awesome_css':
+				if (!empty($args['usetheme'])) {
+					return array('monaco2/' . basename($args['usetheme']) . '/css/main.css');
+				}
+				else {
+					return false;
+				}
+				break;
+
+			default:
+				return false;
+		}
+	}
 
 	/* Walk through a list of files and get the latest modified time in the list
 	* @param $files -array of files to check. Assumed to be relative to basedir
@@ -256,6 +283,13 @@ class StaticChute {
 			// include files separately
 			global $wgStyleVersion;
 			$urls = $this->config[$package];
+
+			// get more files (rt #18765)
+			$moreUrls = $this->getMoreFileList($package, array('usetheme' => $this->theme));
+			if (!empty($moreUrls)) {
+				$urls = array_merge($urls, $moreUrls);
+			}
+
 			$prefix = $wgStylePath . '/';
 			$cb = "?{$wgStyleVersion}";
 		}
@@ -311,6 +345,11 @@ class StaticChute {
 		$this->setChuteUrlPath($wgServer . $wgScriptPath . '/extensions');
 	}
 
+	// macbre: RT #18765
+	public function setTheme($theme) {
+		$this->theme = $theme;
+	}
+
 	public function getChuteUrlForPackage($package, $type = null){
 		if ($type === null){
 			$type = $this->fileType;
@@ -324,8 +363,14 @@ class StaticChute {
 
 		$latestMod = $this->getLatestMod($files);
 
-		return $this->getChuteUrlPath() . '/wikia/StaticChute/?' .
-			http_build_query(array('type'=> $type, 'packages'=> $package, 'maxmod'=> $latestMod));
+		$params = array('type'=> $type, 'packages'=> $package, 'maxmod'=> $latestMod);
+
+		// macbre: RT #18765
+		if (!empty($this->theme)) {
+			$params['usetheme'] = $this->theme;
+		}
+
+		return $this->getChuteUrlPath() . '/wikia/StaticChute/?' . http_build_query($params);
 	}
 
 	private function getWidgetsAssets() {
