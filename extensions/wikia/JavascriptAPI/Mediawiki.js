@@ -7,13 +7,14 @@ Mediawiki = {
 	apiUrl		: "/api.php",
 	apiUser		: null, // Defaults to anon
 	apiPass		: null, // Defaults to anon
+	apiTimeout	: 10000, // How long to wait for request, in milliseconds
 	debugLevel	: 0,
 	cookiePrefix	: null, // http://www.mediawiki.org/wiki/Manual:$wgCookiePrefix
 	cookieMap	: {
 		// Map of cookie names to member variables
 		"UserID"	: "lguserid",
 		"UserName"	: "lgusername",
-		"Token"		:  "lgtoken",
+		"Token"		: "lgtoken",
 		"_session"	: "sessionid"
 	},
 	sessionLength	: 86400,
@@ -27,6 +28,83 @@ Mediawiki.$ = function(id){
 	return document.getElementById(id);
 };
 
+
+/* Issue an http request to the api, based on jQuery's ajax().
+ * "apiParams" is an object of the params that are passed to the API, as defined in the Mediawiki documentation
+ * callbackSuccess/Error params are the callbacks for success/failure
+ * If no callbackSuccess function is supplied, then syncronous (blocking) mode will be used,
+ * and the response will be returned directly.
+ * method is POST or GET
+ * ajaxParams is an object that contains key values to be passed to jQuery's ajax function
+ */
+Mediawiki.apiCall = function(apiParams, callbackSuccess, callbackError, method, ajaxParams){
+   try {
+	// Hard code the "json" parameter to the api call
+	apiParams.format = "json";
+
+	var p = {
+		'url': Mediawiki.apiUrl,
+		'data': apiParams,
+		'type' : method || "GET",
+		'timeout' : Mediawiki.apiTimeout
+	};
+
+	// Callbacks
+	if (typeof callbackSuccess == "function"){
+		p.success = callbackSuccess;
+	} else {
+		p.async = false; 
+		p.type = "POST"; // POST is required for async. Silly. 
+	}
+	if (typeof callbackError == "function"){
+		p.error = callbackError;
+	} else {
+		p.error = Mediawiki.error;
+	}
+
+	// Tell jQuery that the result is json so it returns a javascript object
+	p.dataType = "json";
+
+	// ajaxParams
+	if (typeof ajaxParams == "object"){
+		for (var param in ajaxParams){
+			p[param] = ajaxParams[param];
+		}
+	}
+	
+	// POST vs GET
+	if (p.type == "GET" ) {
+		// Don't confuse p.data with p.diddy. He gets mad.
+		p.url += '?' + Mediawiki.buildQueryString(p.data);
+		p.data = null;
+		Mediawiki.d("Fetching " + p.url, 2);
+	} else {
+		Mediawiki.d("POSTing data to " + p.url, 2, p.data);
+	}
+
+	var r = jQuery.ajax(p);
+
+	// For async requests, parse the data. If not, the callbacks will receive an object passed to the callback
+	if (p.async === false) {
+		if (typeof r == "object" && !Mediawiki.e(r.responseText)){
+			if (typeof JSON != "undefiend"){
+				// For browsers that support it, it's more better.
+				return JSON.parse(r.responseText);
+			} else {
+				return eval(r.responseText);
+			}
+		} else {
+			return false;
+		}
+	}
+
+   } catch (e) {
+	Mediawiki.error("API error");
+	Mediawiki.d("API error: " + Mediawiki.print_r(e));
+	return false;
+   }
+
+};
 
 /* Build up a query string from the supplied array (nvpairs). Optional separator, default ';' */
 Mediawiki.buildQueryString = function(nvpairs, sep){
@@ -48,6 +126,7 @@ Mediawiki.buildQueryString = function(nvpairs, sep){
 
 Mediawiki.cookie = function(name, value, options) {
     if (typeof value != 'undefined') { // name and value given, set cookie
+	Mediawiki.d("Setting " + name + " cookie, with a value of " + value);
 	options = options || {};
 	if (Mediawiki.e(value)) {
 	    value = '';
@@ -114,16 +193,15 @@ Mediawiki.debug = function (msg, level){
 		if (Mediawiki.d.arguments.length > 2){
 			console.log(Mediawiki.print_r(Mediawiki.d.arguments[2]));
 		}
-	} else {
-		alert("Mediawiki.debug: " + msg);
 	}
+	// No solution right now for browsers that don't have console
 
 	return true;
 };
 Mediawiki.d = Mediawiki.debug; // Shortcut to reduce size of JS
 
 
-Mediawiki.deleteArticle = function (title, reason, callBackSuccess, callBackFailure){
+Mediawiki.deleteArticle = function (title, reason, callbackSuccess, callbackError){
      try {
 	var token = Mediawiki.getToken(title, "delete"); 
 	if (token === false){
@@ -131,54 +209,20 @@ Mediawiki.deleteArticle = function (title, reason, callBackSuccess, callBackFail
 		return false;
 	}
 
-	var urlParams = {
+	var apiParams = {
 		'token' : token,	
 		'action' : 'delete',
-		'format' : 'json',
 		'title'  : title,
 		'reason'  : reason
 	};
+
+	return Mediawiki.apiCall(apiParams, callbackSuccess, callbackError, "POST");
 		
-	Mediawiki.updateStatus("Deleting article...", true);
-	Mediawiki.deleteArticleSuccess = callBackSuccess;
-	Mediawiki.deleteArticleFailure = callBackFailure;
-
-	Mediawiki.fetch( {
-		'url': Mediawiki.apiUrl,
-		'data': urlParams,
-		'type': "POST",
-		'success': Mediawiki.deleteArticleCallback
-	});
-
-	return true;
-
       } catch (e) {
 	Mediawiki.error("Error deleting article");
 	Mediawiki.d(Mediawiki.print_r(e));
 	return false;
       }
-};
-
-
-Mediawiki.deleteArticleCallback = function(resultJson) {
-	var result;
-	try {
-		eval('result = ' + resultJson + ';');
-		if (Mediawiki.e(result.error)){
-
-			Mediawiki.updateStatus("Delete Article Successful", false);
-			Mediawiki.runCallback(Mediawiki.deleteArticleSuccess);
-
-		} else {
-			Mediawiki.runCallback(Mediawiki.deleteArticleFailure, "Error deleting article: " + result.error.info); 
-		}
-
-
-	} catch (e) {
-		// Javascript Error 
-		Mediawiki.error("Error during article callback");
-		Mediawiki.d(Mediawiki.print_r(e));
-	}
 };
 
 
@@ -193,7 +237,7 @@ Mediawiki.deleteArticleCallback = function(resultJson) {
  *	createonly/nocreate
  *	watch/unwatch
  */
-Mediawiki.editArticle = function (article, callBackSuccess, callBackFailure){
+Mediawiki.editArticle = function (article, callbackSuccess, callbackError){
      try {
 	var token = Mediawiki.getToken(article.title, "edit"); 
 	if (token === false){
@@ -201,28 +245,18 @@ Mediawiki.editArticle = function (article, callBackSuccess, callBackFailure){
 		return false;
 	}
 
-	var urlParams = {
+	var apiParams = {
 		'token' : token,	
 		'action' : 'edit',
 		'format' : 'json'
 	};
+
 	// Pass thru
 	for (var key in article){
-		urlParams[key] = article[key];
+		apiParams[key] = article[key];
 	}
 		
-	Mediawiki.updateStatus("Saving article...", true);
-	Mediawiki.editArticleSuccess = callBackSuccess;
-	Mediawiki.editArticleFailure = callBackFailure;
-
-	Mediawiki.fetch( {
-		'url': Mediawiki.apiUrl,
-		'data': urlParams,
-		'type': "POST",
-		'success': Mediawiki.editArticleCallback
-	});
-
-	return true;
+	return Mediawiki.apiCall(apiParams,  callbackSuccess, callbackError, "POST");
 
       } catch (e) {
 	Mediawiki.error("Error editing article");
@@ -230,27 +264,6 @@ Mediawiki.editArticle = function (article, callBackSuccess, callBackFailure){
 	return false;
       }
 };				  
-
-Mediawiki.editArticleCallback = function(resultJson) {
-	var result;
-	try {
-		eval('result = ' + resultJson + ';');
-		if (Mediawiki.e(result.error)){
-
-			Mediawiki.updateStatus("Edit Article Successful", false);
-			Mediawiki.runCallback(Mediawiki.editArticleSuccess);
-
-		} else {
-			Mediawiki.runCallback(Mediawiki.editArticleFailure, "Error saving article: " + result.error.info + " See http://www.mediawiki.org/wiki/API:Edit_-_Create%26Edit_pages" );
-		}
-
-
-	} catch (e) {
-		// Javascript Error
-		Mediawiki.error("Error during article callback");
-		Mediawiki.d(Mediawiki.print_r(e));
-	}
-};
 
 
 /* Emulate php's empty(). Thanks to:
@@ -283,62 +296,23 @@ Mediawiki.e = Mediawiki.empty; // Shortcut to make the Javascript smaller
 
 
 Mediawiki.error = function (msg){
-	Mediawiki.updateStatus(msg, false, true);
-};
-
-
-/* Issue an http request, based on jQuery's ajax(). p is an object that can supply:
- * url
- * data (as an assoc array[object])
- * type (POST or GET)
- * callBack 
- * async
- * contentType (for form data. Default "application/x-www-form-urlencoded")
- * timeout how long to wait, in milliseconds, default 5000)
- *
- */
-Mediawiki.fetch = function(p) {
-	if (Mediawiki.e(p.type)){
-		p.type = "GET";
-	} else {
-		p.type.toUpperCase();
+	if (typeof msg == "object"){
+		msg = Mediawiki.print_r(msg);
 	}
-
-	if (p.type == "GET" ) {
-		p.url += '?' + Mediawiki.buildQueryString(p.data);
-		p.data = null;
-		Mediawiki.d("Fetching " + p.url, 2);
-		return jQuery.ajax(p); 
-	} else {
-		Mediawiki.d("POSTing data to " + p.url, 2, p.data);
-		return jQuery.ajax(p);
-	}
+	
+	Mediawiki.updateStatus(msg, true);
 };
 
 
 Mediawiki.followRedirect = function(title){
      try {
-	var urlParams = {
+	var responseData = Mediawiki.apiCall({
 		'action' : 'query',
 		'prop' : 'info',
 		'titles' : title,
 		'intoken' : "edit",
-		'format' : 'json',
 		'redirects' : true
-	};
-		
-	Mediawiki.d("Getting redirect...");
-
-	var result = Mediawiki.fetch( { // Calling ajax directly because of async
-		'url' : Mediawiki.apiUrl,
-		'data' : urlParams,
-		'type' : "POST",
-		'async': false // Block for the token, since it's the first step of a multi step process
 	});
-
-	
-	var responseData;
-	eval ("responseData=" + result.responseText);
 
 	if (!Mediawiki.e(responseData.query) && Mediawiki.empty(responseData.query.redirects)){
 		return title;
@@ -374,27 +348,17 @@ Mediawiki.getCookiePrefix = function( ) {
 	}
 };
 
+
 Mediawiki.getNormalizedTitle = function(title){
-	var urlParams = {
+	
+	Mediawiki.d("Getting Normalized title for " + title);
+	var responseData = Mediawiki.apiCall({
 		'action' : 'query',
 		'prop' : 'info',
 		'titles' : title,
-		'intoken' : "edit",
-		'format' : 'json'
-	};
-		
-	Mediawiki.d("Getting normalized title...");
-
-	var result = Mediawiki.fetch( { // Calling ajax directly because of async
-		'url' : Mediawiki.apiUrl,
-		'data' : urlParams,
-		'type' : "POST",
-		'async': false // Block for the token, since it's the first step of a multi step process
+		'intoken' : "edit"
 	});
-
-	
-	var responseData;
-	eval ("responseData=" + result.responseText);
+	console.dir(responseData);
 
 	// We can get two different responses back here. If it's a valid title, then it returns it directly
 	// If not, it returns it "normalized". If your page title isn't coming through the API, try normalizeTitle first
@@ -406,29 +370,20 @@ Mediawiki.getNormalizedTitle = function(title){
 	return false;
 };
 
+
 Mediawiki.getToken = function(titles, tokenType){
 	if (typeof titles == "array"){
-		Mediawiki.error("Sorry, multiple titles not supported for getToken");
+		Mediawiki.error("Sorry, multiple titles not yet supported for getToken");
 	}
-	var urlParams = {
+
+	Mediawiki.d("Getting " + tokenType + " token for " + titles);
+			
+	var responseData = Mediawiki.apiCall({
 		'action' : 'query',
 		'prop' : 'info',
 		'titles' : titles,
-		'intoken' : tokenType,
-		'format' : 'json'
-	};
-		
-	Mediawiki.d("Obtaining edit token...");
-
-	var tokenResult = jQuery.ajax( { // Calling ajax directly because of async
-		'url' : Mediawiki.apiUrl,
-		'data' : urlParams,
-		'type' : "POST",
-		'async': false // Block for the token, since it's the first step of a multi step process
-	});
-	
-	var responseData;
-	eval ("responseData=" + tokenResult.responseText);
+		'intoken' : tokenType
+	}); 
 
 	// We can get two different responses back here. If it's a valid title, then it returns it directly
 	// If not, it returns it "normalized". 
@@ -475,48 +430,35 @@ Mediawiki.pullLoginFromCookie = function(cookiePrefix){
 
 
 // http://www.mediawiki.org/wiki/API:Login
-Mediawiki.login = function (callBackSuccess, callBackFailure){
+Mediawiki.login = function (callbackSuccess, callbackError){
 	if (Mediawiki.isLoggedIn()){
 		Mediawiki.d("You are already logged in");
-		return; 
+		return null; 
 	}	
 			
-	var urlParams = {
+	var apiParams = {
 		'action' : 'login',
 		'lgname' : Mediawiki.apiUser,
-		'lgpassword' : Mediawiki.apiPass,
-		'format' : 'json'
+		'lgpassword' : Mediawiki.apiPass
 	};
+	Mediawiki.loginCallbackSuccess = callbackSuccess;
+	Mediawiki.loginCallbackError = callbackError;
 		
-	Mediawiki.updateStatus("Logging in...", true);
-	Mediawiki.loginCallbackSuccess = callBackSuccess;
-	Mediawiki.loginCallbackFailure = callBackFailure;
-
-	Mediawiki.fetch( {
-		'url': Mediawiki.apiUrl,
-		'data': urlParams,
-		'type': "POST",
-		'success': Mediawiki.loginCallback
-	});
+	return Mediawiki.apiCall(apiParams, Mediawiki.loginCallback, callbackError, "POST");
 };
 
 
-Mediawiki.loginCallback = function(resultJson) {
-	var result;
+Mediawiki.loginCallback = function(result) {
 	try {
-		eval('result = ' + resultJson + ';');
 		if (result.login.result == "Success"){
 
 			Mediawiki.setLoginCookies(result.login);
-			Mediawiki.updateStatus("Login Successful", false);
 			Mediawiki.runCallback(Mediawiki.loginCallbackSuccess);
 
 		} else if (result.login.result == "WrongPass" || result.login.result == "EmptyPass" || result.login.result == "WrongPluginPass"){
-			Mediawiki.updateStatus("Invalid Password", false);
-			Mediawiki.runCallback(Mediawiki.loginCallbackFailure, "Invalid Password");
+			Mediawiki.runCallback(Mediawiki.loginCallbackError, "Invalid Password");
 		} else if (result.login.result == "NotExists" || result.login.result == "Illegal" || result.login.result == "NoName"){
-			Mediawiki.updateStatus("Invalid Username", false);
-			Mediawiki.runCallback(Mediawiki.loginCallbackFailure, "Invalid Username");
+			Mediawiki.runCallback(Mediawiki.loginCallbackError, "Invalid Username");
 		} else {
 			throw ("Unexpected response from api when logging in");
 		}
@@ -539,27 +481,20 @@ Mediawiki.logout = function (callbackSuccess){
 		Mediawiki[memberName] = null;
 	}
 	Mediawiki.runCallback(callbackSuccess);
-	Mediawiki.updateStatus("Logout successful", false);	
 };
 
 
 /* Parse the selected text and return the html */
 Mediawiki.parse = function (text){
-	var result = Mediawiki.fetch( { // Calling ajax directly because of async
-		'url' : Mediawiki.apiUrl,
-		'data' : {"action": "parse", "text": text, "format": "json"},
-		'type' : "POST",
-		'async': false // No callback, this should be fast 
-	});
-
+	var responseData = Mediawiki.apiCall({
+			"action": "parse",
+			"text": text }, null, null, "POST");
 	
-	var responseData;
-	eval ("responseData=" + result.responseText);
-
 	if (Mediawiki.e(responseData.parse) || Mediawiki.e(responseData.parse.text)){
 		return false;
 	} else {
-		return responseData.parse.text['*'];
+		// Strip the parse comment
+		return responseData.parse.text['*'].replace(/<!--[^>]*-->/, '');
 	}
 };
 
@@ -596,37 +531,30 @@ Mediawiki.print_r = function (arr,level) {
 };
 
 /* Pull article content http://www.mediawiki.org/wiki/API:Query */
-Mediawiki.pullArticleContent = function (title, callBack, options){
-	var urlParams = {
+Mediawiki.pullArticleContent = function (title, callback, options){
+	var apiParams = {
 		'action' :'query',
 		'titles' : title,
 		'prop' : 'revisions',
-		'rvprop' : 'content',
-		'format' : 'json'
+		'rvprop' : 'content'
 	};
 	
 	if (typeof options == "object") {
 		// Pass thru
 		for (var option in options){
-			urlParams[option] = options[option];
+			apiParams[option] = options[option];
 		}
 	}
 	
 	// Store the callback	
-	Mediawiki.pullArticleCallback = callBack;
+	Mediawiki.pullArticleCallback = callback;
 
-	Mediawiki.fetch({
-		'url' : Mediawiki.apiUrl,
-		'data' : urlParams,
-		'success': Mediawiki.pullArticleContentCallback
-	});
+	return Mediawiki.apiCall(apiParams, Mediawiki.pullArticleContentCallback, callback);
 };
 
 
-Mediawiki.pullArticleContentCallback = function (resultJson) {
-	var result;
+Mediawiki.pullArticleContentCallback = function (result) {
 	try {
-		eval('result = ' + resultJson + ';');
 		if (!Mediawiki.e(result.error)){
 			Mediawiki.runCallback(Mediawiki.pullArticleCallback, "Error pulling article: " + result.error.info); 
 		} else if (!Mediawiki.e(result.query.pages[-1])) {
@@ -640,8 +568,6 @@ Mediawiki.pullArticleContentCallback = function (resultJson) {
 
 			if (Mediawiki.e(content)) {
 				content = null;
-			} else {
-				Mediawiki.updateStatus("Pull Article Successful", false);
 			}
 
 			Mediawiki.runCallback(Mediawiki.pullArticleCallback, content);
@@ -657,29 +583,25 @@ Mediawiki.pullArticleContentCallback = function (resultJson) {
 
 
 // If called through the API, there are several steps. Just use action=render
-Mediawiki.pullArticleHtml = function (title, callBack){
+Mediawiki.pullArticleHtml = function (title, callback){
 	var urlParams = {
 		'action' :'render',
 		'title' : title
 	};
 	
-	Mediawiki.fetch({
-		'url' : Mediawiki.apiUrl.replace(/api.php/, 'index.php'),
-		'data' : urlParams,
-		'success': callBack
-	});
+	return jQuery.get( Mediawiki.apiUrl.replace(/api.php/, 'index.php'), urlParams, callback);
 };
 
 
-Mediawiki.runCallback = function(callBack, arg){
+Mediawiki.runCallback = function(callback, arg){
 	var parens = "()";
 	if (typeof arg != "undefined") {
 		parens = '(arg)';
 	}
-	if (typeof callBack == "string" && typeof window[callBack] == "function"){
-		return eval(callBack + parens + ";");
-	} else if (typeof callBack == "function"){
-		var anonFunc = callBack;
+	if (typeof callback == "string" && typeof window[callback] == "function"){
+		return eval(callback + parens + ";");
+	} else if (typeof callback == "function"){
+		var anonFunc = callback;
 		return eval("anonFunc" + parens + ";");
 	}
 };
@@ -710,7 +632,7 @@ Mediawiki.setLoginCookies = function(vars) {
 };
 
 
-Mediawiki.updateStatus = function(msg, waiting, isError){
+Mediawiki.updateStatus = function(msg, isError){
 
 	if (Mediawiki.statusBar === null) {
 		Mediawiki.statusBar = new MediawikiStatusBar();
@@ -718,10 +640,7 @@ Mediawiki.updateStatus = function(msg, waiting, isError){
 
 	if ( isError ){
 		document.body.style.cursor = "default";
-		Mediawiki.statusBar.show(msg, null, true);
-	} else if (waiting ){
-		document.body.style.cursor = "wait";
-		Mediawiki.statusBar.show(msg, 30000, false);
+		Mediawiki.statusBar.show(msg, 10000, true);
 	} else {
 		document.body.style.cursor = "default";
 		Mediawiki.statusBar.show(msg, 3000, false);
@@ -736,11 +655,9 @@ var MediawikiStatusBar = function (sel,options) {
 	this.elementId = "_showstatus";
 	this.prependMultiline = true;	
 	this.showCloseButton = true; 
-	this.afterTimeoutText = null;
-	this.closeTimeout = 5000;
-
+	this.closeTimeout = 10000;
+	
 	this.cssClass = "statusbar";
-	this.highlightClass = "statusbarhighlight";
 	this.errorClass = "statusbarerror";
 	this.closeButtonClass = "statusbarclose";
 	this.additive = false;	 
@@ -779,29 +696,19 @@ var MediawikiStatusBar = function (sel,options) {
 				_sb.text(message).prepend(t);
 			}
 		}		
-		
-		_sb.fadeIn("slow");	   
-		
-		if (timeout) {
-			if (isError) {
-			    _sb.addClass(_I.errorClass);
-			} else {
-			    _sb.addClass(_I.highlightClass);
-			}
-			    
-			window.setTimeout( function() {
-				_sb.removeClass(_I.highlightClass); 
-				if (_I.afterTimeoutText) {
-					_I.show(_I.afterTimeoutText);
-				}
-			     },
-			     timeout);
+
+		if (isError) {
+		    _sb.addClass(_I.errorClass);
 		} else {
-			timeout = 0;
-		} 
-		window.setTimeout( function(){
-			_I.release();
-			}, _I.closeTimeout + timeout); 
+		    _sb.removeClass(_I.errorClass);
+		}
+		
+		_sb.show();	   
+		
+		timeout = timeout || _I.closeTimeout;
+		if (timeout){
+			window.setTimeout( function(){ _I.release(); }, timeout); 
+		}
 			
 	}; 
 

@@ -23,6 +23,7 @@
 <script>
 // Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
 Mediawiki.cookiePrefix = "wikicities";
+Mediawiki.debugLevel = 5;
 </script>
 <!-- End Mediawiki API setup -->
 
@@ -49,13 +50,17 @@ Mediawiki.cookiePrefix = "wikicities";
 		<input type="button" value="logout" onClick="return Mediawiki.logout(handleLogoutForm)"/>
 	</div>
 
-
-
 	<script>
+	if (Mediawiki.isLoggedIn()){
+		$("#loginForm").hide();
+		$("#logoutForm").fadeIn();
+	}
+
 	function handleLoginForm(f){
 		try { 
 			Mediawiki.apiUser = f.lgname.value;
 			Mediawiki.apiPass = f.lgpassword.value;
+			Mediawiki.updateStatus("Logging in...");
 			Mediawiki.login(loginWorked, apiFailed);
 		} catch (e) {
 			Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
@@ -63,20 +68,19 @@ Mediawiki.cookiePrefix = "wikicities";
 		return false; // Return false so that the form doesn't submit
 	}
 	function loginWorked (){
+		Mediawiki.updateStatus("Login successful");
 		$("#loginForm").fadeOut();
 		$("#logoutForm").fadeIn();
 	}
 
 	function apiFailed(msg){
-		alert("Api call returned an error: " + msg);
+		alert("ERROR from API:\n" + msg);
+		Mediawiki.updateStatus("ERROR from API: " + msg, true);
 	}
 	function handleLogoutForm(f){
+		Mediawiki.updateStatus("Logout successful");
 		$("#logoutForm").fadeOut();
 		$("#loginForm").fadeIn();
-	}
-
-	if (Mediawiki.isLoggedIn()){
-		loginWorked();
 	}
 	</script>
 </div>
@@ -89,6 +93,7 @@ Mediawiki.cookiePrefix = "wikicities";
 	<div id="articleStatus"></div>
 	<script>
 	function handleCreateArticle (f){
+		Mediawiki.updateStatus("Creating article...");
 		try { 
 			normalizedTitle = Mediawiki.getNormalizedTitle(f.new_title.value);
 			f.new_title.value = normalizedTitle;
@@ -99,12 +104,12 @@ Mediawiki.cookiePrefix = "wikicities";
 		return false; // Return false so that the form doesn't submit
 	}
 	function createArticleSuccess(){
-		alert("Article created");
+		Mediawiki.updateStatus("Article created");
 		$("#articleStatus").html("Article created! <a href='/wiki/" + normalizedTitle + "'>" + normalizedTitle + "</a> " + 
 			"<input type=button value=delete onClick='Mediawiki.deleteArticle(\"" + normalizedTitle + "\", null, deleteArticleSuccess, apiFailed)'/>");
 	}
 	function deleteArticleSuccess(){
-		alert(normalizedTitle + " deleted");
+		Mediawiki.updateStatus(normalizedTitle + " deleted");
 		$("#articleStatus").hide();	
 	}
 	</script>
@@ -134,17 +139,21 @@ Mediawiki.cookiePrefix = "wikicities";
 			html  = '<pre>' + result + '</pre>';
 		}
 		Mediawiki.$("pulledArticle").innerHTML = html;
+		Mediawiki.updateStatus("Article pulled");
 	}
 
 	function handlePullArticle (f) {
 		try { 
 		var articleName = f.articleName.value;
-		var cleanName = Mediawiki.getNormalizedTitle(articleName);
-		Mediawiki.$("pullArticleForm").articleName.value = cleanName;
 
 		if (f.parseText.checked) {
-			Mediawiki.pullArticleHtml(cleanName, fillInArticle);
+			Mediawiki.updateStatus("Fetching " + articleName + "...");
+			Mediawiki.pullArticleHtml(articleName, fillInArticle, true);
 		} else {
+			Mediawiki.updateStatus("Normalizing " + articleName + "...");
+			var cleanName = Mediawiki.getNormalizedTitle(articleName);
+			Mediawiki.$("pullArticleForm").articleName.value = cleanName;
+
 			var options = {};
 			if (f.redirects.checked) {
 				options.redirects = true;
@@ -152,6 +161,7 @@ Mediawiki.cookiePrefix = "wikicities";
 			if (f.section.value != "") {
 				options.rvsection = f.section.value;
 			}
+			Mediawiki.updateStatus("Fetching " + cleanName + "...");
 			Mediawiki.pullArticleContent(cleanName, fillInArticle, options);
 		}
 		} catch (e) {
@@ -184,18 +194,19 @@ Mediawiki.cookiePrefix = "wikicities";
 	<script>
 	function handleEditForm(result){
 		try { 
+			Mediawiki.updateStatus("Saving article...");
 			Mediawiki.editArticle({
 				"title": $("#article_name_edit").val(),
 				"summary": $("#article_summary_edit").val(),
 				"text": $("#article_textarea").val()}, editArticleSuccess, apiFailed);
 		} catch (e) {
-			Mediawiki.updateStatus( "Error creating article:" + Mediawiki.print_r(e));	
+			Mediawiki.updateStatus( "Error editing article:" + Mediawiki.print_r(e));	
 		}
 		return false; // Return false so that the form doesn't submit
 	}
 
 	function editArticleSuccess(){
-		alert("Article saved");
+		Mediawiki.updateStatus("Article saved");
 	}
 
 	function fillInEditForm(result){
@@ -205,6 +216,7 @@ Mediawiki.cookiePrefix = "wikicities";
 			Mediawiki.updateStatus("Article '" + $("#article_name_edit").val() + "' does not exist, saving will create a new one");
 		} else {
 			Mediawiki.$("article_textarea").value = result;
+			Mediawiki.updateStatus("Article ready for edit");
 		}
 		$("#editFormHtml").fadeIn();
 	}
@@ -212,6 +224,7 @@ Mediawiki.cookiePrefix = "wikicities";
 	function handleEditNameForm (f) {
 		try { 
 		var articleName = f.article_name_edit.value;
+		Mediawiki.updateStatus("Normalizing " + articleName + "...");
 		var cleanName = Mediawiki.getNormalizedTitle(articleName);
 		f.article_name_edit.value = cleanName;
 
@@ -219,6 +232,7 @@ Mediawiki.cookiePrefix = "wikicities";
 		if (f.section.value != "") {
 			options.rvsection = f.section.value;
 		}
+		Mediawiki.updateStatus("Pulling up " + cleanName + "...");
 		Mediawiki.pullArticleContent(cleanName, fillInEditForm, options);
 		} catch (e) {
 			Mediawiki.error("Error pulling article: " + Mediawiki.print_r(e));
@@ -235,7 +249,7 @@ Mediawiki.cookiePrefix = "wikicities";
 
 <div id="tabs-5">
 	<div id="parseFormHtml">
-	<form onSubmit="return handleEditForm(this)">
+	<form onSubmit="return handleParseForm(this)">
 	Text:<br />
 	<textarea name="text" rows="12" cols="40" id="parse_textarea"></textarea> 
 	<textarea name="result" rows="12" cols="40" id="result_textarea">Result will appear here...</textarea><br />
@@ -244,13 +258,15 @@ Mediawiki.cookiePrefix = "wikicities";
 	</div>
 
 	<script>
-	function handleEditForm(f){
+	function handleParseForm(f){
 		try { 
+			Mediawiki.updateStatus("Parsing Text...");
 			var html = Mediawiki.parse($("#parse_textarea").val());
 			$("#result_textarea").val(html);
+			Mediawiki.updateStatus("Text Parsed");
 
 		} catch (e) {
-			Mediawiki.updateStatus( "Error creating article:" + Mediawiki.print_r(e));	
+			Mediawiki.updateStatus( "Error parsing text:" + Mediawiki.print_r(e));	
 		}
 		return false; // Return false so that the form doesn't submit
 	}
