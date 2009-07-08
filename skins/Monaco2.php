@@ -314,7 +314,7 @@ $wgAdCalled = array();
 require_once dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 require_once dirname(__FILE__) . "/../extensions/wikia/AdsenseForSearch/AdsenseForSearch.php";
 
-class SkinAwesome extends SkinTemplate {
+class SkinMonaco extends SkinTemplate {
 
 	/**
 	 * Overwrite few SkinTemplate methods which we don't need in Monaco
@@ -341,9 +341,9 @@ class SkinAwesome extends SkinTemplate {
 
 		SkinTemplate::initPage($out);
 
-		$this->skinname  = 'awesome';
-		$this->stylename = 'awesome';
-		$this->template  = 'AwesomeTemplate';
+		$this->skinname  = 'monaco';
+		$this->stylename = 'monaco';
+		$this->template  = 'MonacoTemplate';
 
 		// Get category information (id, name, url)
 		$cats = wfGetBreadCrumb();
@@ -982,17 +982,17 @@ EOS;
 			} else if($this->themename == 'sapphire') {
 				 // ...do nothing
 			} else if($this->themename != '') {
-				$css[] = array('url' => $wgStylePath.'/awesome/'.$this->themename.'/css/main.css?'.$wgStyleVersion);
+				$css[] = array('url' => $wgStylePath.'/monaco2/'.$this->themename.'/css/main.css?'.$wgStyleVersion);
 			}
 		}
 
-		$css[] = array('url' => $wgStylePath.'/awesome/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
-		$css[] = array('url' => $wgStylePath.'/awesome/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
-		$css[] = array('url' => $wgStylePath.'/awesome/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
+		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
+		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
+		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
 
 		// RTL support
 		if ($wgContLang->isRTL()) {
-			$css[] = array('url' => $wgStylePath.'/awesome/rtl.css?'.$wgStyleVersion);
+			$css[] = array('url' => $wgStylePath.'/monaco2/rtl.css?'.$wgStyleVersion);
 		}
 
 		// CSS - end
@@ -1226,7 +1226,7 @@ EOS;
 	}
 }
 
-class AwesomeTemplate extends QuickTemplate {
+class MonacoTemplate extends QuickTemplate {
 
 	private function printMenu($id, $last_count='', $level=0) {
 		global $wgUploadPath, $wgArticlePath, $wgCityId;
@@ -1334,7 +1334,7 @@ class AwesomeTemplate extends QuickTemplate {
 <?php
 	}
 ?>
-		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/awesome/css/noscript.css" /></noscript>
+		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco2/css/noscript.css" /></noscript>
 <?php
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>

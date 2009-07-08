@@ -80,7 +80,7 @@ function SkinChooserExtraToggle(&$extraToggle) {
 
 $wgHooks['AlternateSkinPreferences'][] = 'WikiaSkinPreferences';
 function WikiaSkinPreferences($pref) {
-	global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins;
+	global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins, $wgUseMonaco2;
 
 	if($pref->mSkin == 'awesome') {
 		$pref->mSkin = 'monaco';
@@ -167,7 +167,7 @@ function WikiaSkinPreferences($pref) {
 			}
 			$wgOut->addHTML('</tr>');
 		}
-		if($skinKey == 'monaco') {
+		if($skinKey == 'monaco' && empty($wgUseMonaco2)) {
 			$wgOut->addHTML('<tr><td colspan=2>'.$pref->getToggle('showAds').'</td></tr>');
 			$wgOut->addHTML('<tr><td colspan=2><div class="toggle"><input type="checkbox" name="UseAwesome" id="UseAwesome"'.($UseAwesome == true ? ' checked="checked"' : '').'/><span class="toggletext"><label for="UseAwesome"><b>Use Awesome / LeanMonaco</b></label></span></div></td></tr>');
 		}

@@ -60,7 +60,7 @@ class Skin extends Linker {
 		}
 		return $wgValidSkinNames;
 	}
-	
+
 	/**
 	 * Fetch the list of usable skins in regards to $wgSkipSkins.
 	 * Useful for Special:Preferences and other places where you
@@ -135,14 +135,22 @@ class Skin extends Linker {
 	 * @static
 	 */
 	static function &newFromKey( $key ) {
-		global $wgStyleDirectory;
-		global $wgCityId;
+		global $wgStyleDirectory, $wgCityId, $wgUseMonaco2;
+
+		if($key == 'awesome') {
+			$key = 'monaco';
+			$awesome = true;
+		}
 
 		$key = Skin::normalizeKey( $key );
 
 		$skinNames = Skin::getSkinNames();
 		$skinName = $skinNames[$key];
 		$className = 'Skin'.ucfirst($key);
+
+		if(($skinName == 'Monaco' && !empty($wgUseMonaco2)) || !empty($awesome)) {
+			$skinName = 'Monaco2';
+		}
 
 		# Grab the skin class and initialise it.
 		if ( !class_exists( $className ) ) {
@@ -320,7 +328,7 @@ class Skin extends Linker {
 		$out->out( $out->mBodytext . "\n" );
 
 		$out->out( $this->afterContent() );
-		
+
 		$out->out( $afterContent );
 
 		$out->out( $this->bottomScripts() );
@@ -443,7 +451,7 @@ class Skin extends Linker {
 		$vars = self::makeGlobalVariablesScript( array( 'skinname' => $this->getSkinName() ) );
 
 		$r = array();
-		$r[] = $wgOut->mScripts; // macbre: add scripts from addScript and addInlineScript methods of $wgOut 
+		$r[] = $wgOut->mScripts; // macbre: add scripts from addScript and addInlineScript methods of $wgOut
 		$r[] = "<script type=\"{$wgJsMimeType}\" src=\"{$wgStylePath}/common/wikibits.js?$wgStyleVersion\"></script>";
 		global $wgUseSiteJs;
 		if ($wgUseSiteJs) {
@@ -542,7 +550,7 @@ class Skin extends Linker {
 		wfProfileOut( __METHOD__ );
 		return $s;
 	}
-	
+
 	/**
 	 * Split for easier subclassing in SkinSimple, SkinStandard and SkinCologneBlue
 	 */
@@ -693,7 +701,7 @@ END;
 			' skin-'. Sanitizer::escapeClass( $this->getSkinName( ) );
 		return $a;
 	}
-	
+
 	function getPageClasses( $title ) {
 		$numeric = 'ns-'.$title->getNamespace();
 		if( $title->getNamespace() == NS_SPECIAL ) {
@@ -704,7 +712,7 @@ END;
 			$type = "ns-subject";
 		}
 		$name = Sanitizer::escapeClass( 'page-'.$title->getPrefixedText() );
-		
+
 		$classes = "$numeric $type $name";
 
 		// macbre@wikia: allow extensions to change body tag attributes
