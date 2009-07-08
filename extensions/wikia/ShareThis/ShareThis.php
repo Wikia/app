@@ -25,7 +25,7 @@ function efAddShareThisCode( $skin, $text ) {
 }
 
 function efAddShareThisButton( ) {
-	echo '<li id="control_share"><span id="sharethis_0"></span></li>';
+	echo '<li id="control_share"><span id="sharethis_0" onclick="WET.byStr(\'articleAction/sharethis\');"></span></li>';
 
 	return true;
 }
