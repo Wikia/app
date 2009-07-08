@@ -21,7 +21,7 @@ class ApiUploadLogo extends ApiBase {
 	const LOGO_WIDTH = 216;
 	const LOGO_HEIGHT = 155;
 	const LOGO_TYPE = 'png';
-	const LOGO_NAME = 'Image:Wiki.png';
+	const LOGO_NAME = 'Wiki4.png';
 	const LOGO_QUALITY = 60; // The "quality" param passed to convert. Lower = smaller
 
 	/* Takes an incoming filename and processes it as a Mediawiki logo,
@@ -35,7 +35,7 @@ class ApiUploadLogo extends ApiBase {
 
 		// Generate a temporary file name for the output file
 		$dir = dirname($file);
-		$outfile = tempnam(sys_get_temp_dir(), __METHOD__) . '.' . self::LOGO_TYPE;
+		$outfile = tempnam(sys_get_temp_dir(), __FUNCTION__) . '.' . self::LOGO_TYPE;
 
 		// Convert to correct size and format	
 		$size = self::LOGO_WIDTH . 'x' . self::LOGO_HEIGHT;
@@ -67,9 +67,31 @@ class ApiUploadLogo extends ApiBase {
 		if (empty($params['logo_file']) || empty($_FILES) || !empty($_FILES['error'])){
                         $this->dieUsageMsg(array('missingparam', 'logo_file'));
 		}
-		$titleObj = Title::newFromText($params['title']);
-		if($params['createonly'] && $titleObj->exists()) {
+
+                global $wgEnableUploads;
+
+                # Check uploading enabled
+                if( !$wgEnableUploads ) {
+                        $this->dieUsageMsg(array('uploaddisabled', 'uploaddisabledtext'));
+                        return false;
+                }
+
+                # Check permissions
+		global $wgUser;
+                if( !$wgUser->isAllowed( 'upload' ) ) {
+                        if( !$wgUser->isLoggedIn() ) {
+                                $this->dieUsageMsg( array('anonymous-users-cantupload'));
+                        } else {
+				$this->dieUsageMsg( array("permission-denied-upload"));
+                        }
+                        return false;
+                }
+
+		global $wgTitle;
+		$wgTitle = Title::newFromText($params['title']);
+		if($params['createonly'] && $wgTitle->exists()) {
                         $this->dieUsageMsg(array('createonly-exists'));
+			return false;
 		}
 
 		return true;
@@ -90,26 +112,47 @@ class ApiUploadLogo extends ApiBase {
 		$this->usageCheck($params);
 
         	$r = array();
-		$r['params'] = $params;
 		$r['file_info'] = $_FILES;
 		$convertedFile = $this->convert_logo($_FILES['logo_file']['tmp_name']);
 		$r['converted_file'] = $convertedFile;
 
 		// Save the resulting file Mediawiki. 
+                $licenses = new Licenses(); // Just a weird fix
+                global $wgRequest, $wgOut;
 
-/*
-		// Code pulled from SpecialMiniUpload
-		$licenses = new Licenses(); // Just a weird fix
-		global $wgRequest, $wgOut;
+                # Set OutputPage object to contain only article body,
+                # without skin parts (header&footer)
+                $wgOut->setArticleBodyOnly(true);
 
-		// Disable redirects - this is what standard UploadForm do after succesful
-		// upload of file
-		$wgOut->enableRedirects(false);
+                # Disable redirects - this is what standard UploadForm do after succesfull
+                # upload of file
+                $wgOut->enableRedirects(false);
 
-		$UploadForm = new UploadForm();
-		$UploadForm->execute();
-*/
+                # Create UploadForm object (standard Special:Upload) and pass to it
+                # request object which was sent to this page
 
+                $Upload = new UploadFromApi( $wgRequest , $params['title']);
+		$Upload->initializeFromApi($params, $convertedFile);
+		$Upload->execute();
+		$r['upload_status'] = $Upload->upload_status;
+
+                # Get whole output (HTML) from above initializated UploadForm object
+                $html = $wgOut->getHTML();
+
+                # Clear HTML output for OutputPage object
+                $wgOut->clearHTML();
+
+                if(is_object($Upload->mLocalFile)) {
+
+                        $img = $Upload->mLocalFile;
+
+                        $r['image_info'] = array(
+                                'width' => $img->getWidth(),
+                                'height' => $img->getHeight(),
+                                'url' => $img->getFullUrl(),
+                                'name' => $img->getName(),
+                        );
+		}
 
 		$this->getResult()->addValue(null, $this->getModuleName(), $r);
 	}
@@ -149,4 +192,33 @@ class ApiUploadLogo extends ApiBase {
 		echo "hi";
 	}
 
+}
+
+
+class UploadFromApi extends UploadForm {
+
+        function initializeFromApi ( $params, $convertedFile ) {
+		$this->mTempPath = $convertedFile;
+		$this->mFileSize = filesize($convertedFile);
+		$this->mSrcName = $params['title'];
+		$this->mStashed = false;
+		$this->mSessionkey = false;
+		$this->removeTempFile = true;
+		$this->mAction = "submit";
+		$this->mIgnoreWarning = true;
+		if (empty($params['createonly'])){
+			$this->mDestWarningAck = true;
+		}
+	}
+
+	/* Overwrite the default here so we can capture the error messages */
+	function processUpload() {
+                $details = null;
+                $value = $this->internalProcessUpload( $details );
+		if ($value == self::SUCCESS){
+			$this->upload_status = true;
+		} else {
+			$this->upload_status = "Error uploading image, code $value: " . print_r($details, true);
+		}
+	}
 }
