@@ -81,7 +81,7 @@ class CategorySelect {
 								break;
 							case 'ext':
 								$tmpOuterTag = $node->getElementsByTagName('name')->item(0)->textContent;
-								if ($tmpOuterTag == 'nowiki' || $tmpOuterTag == 'pre') {
+								if (in_array($tmpOuterTag, array('nowiki', 'pre', 'gallery'))) {
 									continue;
 								}
 								$inner = $node->getElementsByTagName('inner')->item(0);
