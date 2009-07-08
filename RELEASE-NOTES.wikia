@@ -1,4 +1,5 @@
 == Changes since 200907.2 ==
+* GamePro Widgets. (Nef)
 * rt#18792: Analytics tracking for ShareThis article button. (Nef)
 * rt#18786: Lang support for wkdomain api module. (Nef)
 * rt#18766: I18n sidebar link for recent blog posts. (Nef)
