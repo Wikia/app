@@ -365,7 +365,6 @@ class BlogTemplateClass {
 		global $wgUser;
 
 		wfProfileIn( __METHOD__ );
-		Wikia::log( __METHOD__, 'skin', $wgUser->getSkin() );
 		if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
 
 			$oFauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $iPage, "wkuservote" => true ));
