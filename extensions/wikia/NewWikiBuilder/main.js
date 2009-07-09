@@ -31,7 +31,7 @@ NewWikiBuilder.iframeFormUpload = function(iframe){
 		url = Mediawiki.getImageUrl("Wiki-Preview.png") + '?' + Math.random();
 		$("#logo_preview").css("backgroundImage", "url(" + url + ")");
 	} else {
-		url = Mediawiki.getImageUrl("Wiki.png") + '?' + Math.random();
+		url = Mediawiki.getImageUrl("Wiki2.png") + '?' + Math.random();
 		$("#logo_current").css("backgroundImage", "url(" + url + ")");
 	}
 };
