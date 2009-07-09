@@ -3,6 +3,10 @@ body {
         font-size: 80%;
 }
 
+.ui-tabs .ui-tabs-hide {
+         display: none;
+}
+
 
 /* logo page */
 #logo_current {
