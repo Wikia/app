@@ -22,7 +22,7 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
 			$G("toggleEditingTips").innerHTML = editingTipsHideMsg;
 		}
 
-		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/on');
+		WET.byStr('editingTips/toggle/editingTips/on');
 	} else if(YAHOO.util.Dom.hasClass(document.body, "editingTips")) {
 		SaveEditingTipsState(false, isWide);
 
@@ -30,7 +30,7 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
 		if($G("toggleEditingTips")) {
 			$G("toggleEditingTips").innerHTML = editingTipsShowMsg ;
 		}
-		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/off');
+		WET.byStr('editingTips/toggle/editingTips/off');
 	} else {
 		SaveEditingTipsState(true, isWide);
 
@@ -42,7 +42,7 @@ YAHOO.util.Event.addListener(["toggleEditingTips", "editingTips_close"], "click"
 		if($G("toggleEditingTips")) {
 			$G("toggleEditingTips").innerHTML = editingTipsHideMsg ;
 		}
-		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/editingTips/on');
+		WET.byStr('editingTips/toggle/editingTips/on');
 	}
 });
 
@@ -68,7 +68,7 @@ YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
 		}
 		//save state
 		SaveEditingTipsState(iEnabled, false);
-		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/widescreen/off');
+		WET.byStr('editingTips/toggle/widescreen/off');
 	} else {
 		YAHOO.util.Dom.addClass(document.body, "editingWide");
 		YAHOO.util.Dom.addClass(document.body, "editingTips");
@@ -81,7 +81,7 @@ YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
 
 		//save state
 		SaveEditingTipsState(iEnabled, true);
-		YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/toggle/widescreen/on');
+		WET.byStr('editingTips/toggle/widescreen/on');
 	}
 });
 
@@ -103,9 +103,9 @@ YAHOO.util.Event.onDOMReady(function() {
 		tipId = (el.id == 'firstTip') ? 1 : (el.id.split('-')[1]);
 
 		if (parseInt(tipId)) {
-			YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/expand/' + tipId);
+			WET.byStr('editingTips/expand/' + tipId);
 		}
 	});
 
-	YAHOO.util.Event.addListener('editingTips_close', 'click', function(e) {YAHOO.Wikia.Tracker.trackByStr(e, 'editingTips/close')});
+	YAHOO.util.Event.addListener('editingTips_close', 'click', function(e) {WET.byStr('editingTips/close')});
 });
