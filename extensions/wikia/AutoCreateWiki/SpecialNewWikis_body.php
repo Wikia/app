@@ -7,8 +7,8 @@
  * @version: 1.0
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) { 
-	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ; 
+if ( !defined( 'MEDIAWIKI' ) ) {
+	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ;
 }
 
 class NewWikisSpecialPage extends SpecialPage {
@@ -19,23 +19,70 @@ class NewWikisSpecialPage extends SpecialPage {
 	}
 
 	function execute($par) {
-		global $wgOut;
-		$wgOut->setPageTitle( wfMsg('newwikis') );
-		$up = new NewWikisPage($par);
+		global $wgOut, $wgRequest;
 
-		# getBody() first to check, if empty
-		$usersbody = $up->getBody();
-		$s = XML::openElement( 'div', array('class' => 'mw-spcontent') );
-		$s .= $up->getPageHeader();
-		if( $usersbody ) {
-			$s .=	$up->getNavigationBar();
-			$s .=	'<ul>' . $usersbody . '</ul>';
-			$s .=	$up->getNavigationBar() ;
-		} else {
-			$s .=	'<p>' . wfMsgHTML('listusers-noresult') . '</p>';
-		};
-		$s .= XML::closeElement( 'div' );
-		$wgOut->addHTML( $s );
+		$format = $wgRequest->getVal( "format", false );
+		if( $format === "xml" ) {
+			$this->generateXml();
+		}
+		else {
+			$wgOut->setPageTitle( wfMsg('newwikis') );
+			$up = new NewWikisPage($par);
+
+			# getBody() first to check, if empty
+			$usersbody = $up->getBody();
+			$s = XML::openElement( 'div', array('class' => 'mw-spcontent') );
+			$s .= $up->getPageHeader();
+			if( $usersbody ) {
+				$s .=	$up->getNavigationBar();
+				$s .=	'<ul>' . $usersbody . '</ul>';
+				$s .=	$up->getNavigationBar() ;
+			} else {
+				$s .=	'<p>' . wfMsgHTML('listusers-noresult') . '</p>';
+			};
+			$s .= XML::closeElement( 'div' );
+			$wgOut->addHTML( $s );
+		}
+	}
+
+	/**
+	 * @access private
+	 */
+	private function generateXml() {
+		global $wgOut, $wgMemc, $wgExternalSharedDB;
+
+		$list = $wgMemc->get( wfSharedMemcKey( "xml-city-list" ) );
+		#$list = array();
+		if( empty( $list ) ) {
+			$list = array();
+			$dbr = WikiFactory::db( DB_SLAVE );
+			$sth = $dbr->select(
+				array( "city_list" ),
+				array( "city_title", "city_lang", "city_url", "city_id" ),
+				array( "city_public = 1" ),
+				__METHOD__
+			);
+			while( $row = $dbr->fetchObject( $sth ) ) {
+				$row->category = WikiFactory::getCategory( $row->city_id );
+				$list[] = $row;
+			}
+			$wgMemc->set( wfSharedMemcKey( "xml-city-list" ), $list, 3600 * 6 );
+		}
+		print Xml::openElement( "citylist" );
+		foreach( $list as $city ) {
+			 print Xml::element( "siteinfo",
+				array(
+					"sitename"      => $city->city_title,
+					"url"           => $city->city_url,
+					"language"      => $city->city_lang,
+					"category-name" => empty( $city->category->cat_name )
+						? 'unknown' : $city->category->cat_name,
+					"category-id"   => empty( $city->category->cat_id )
+						? 0 : $city->category->cat_id
+				)
+			);
+		}
+		print Xml::closeElement( "citylist" );
 	}
 }
 
@@ -58,7 +105,7 @@ class NewWikisPage extends AlphabeticPager {
 		#---
 		$this->lang = ( $this->lang != '' ) ? $this->lang : $wgRequest->getVal( 'language' );
 		$this->firstChar = ( $this->firstChar != '' ) ? $this->firstChar : $wgRequest->getText( 'start' );
-		
+
 		parent::__construct();
 	}
 
@@ -66,7 +113,7 @@ class NewWikisPage extends AlphabeticPager {
 	function getIndexField() {
 		return 'city_id';
 	}
-	
+
 	function getDefaultDirections() {
 		return 'desc';
 	}
@@ -134,7 +181,7 @@ class NewWikisPage extends AlphabeticPager {
 
 			$out .= Xml::element( 'optgroup', array('label' => wfMsg('autocreatewiki-language-all')), '');
 
-		foreach( $this->mLanguages as $sLang => $sLangName ) 
+		foreach( $this->mLanguages as $sLang => $sLangName )
 			$out .= Xml::option( $sLangName, $sLang, $sLang == $this->lang );
 
 		$out .= Xml::closeElement( 'select' ) . '<br/>';
@@ -165,5 +212,5 @@ class NewWikisPage extends AlphabeticPager {
 		asort($this->mLanguages);
 		return count($this->mLanguages);
 	}
-	
+
 }
