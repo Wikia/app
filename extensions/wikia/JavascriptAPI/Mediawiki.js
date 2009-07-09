@@ -349,7 +349,7 @@ Mediawiki.getCookiePrefix = function( ) {
 
 
 Mediawiki.getImageUrl = function(image){
-	if (!image.match(/^Image:/)){
+	if (!image.match(/:/)){
 		image = "Image:" + image;
 	}
 
