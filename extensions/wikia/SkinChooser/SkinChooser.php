@@ -310,11 +310,11 @@ function WikiaGetSkin ($user) {
 				$rdTitle = $tempArticle->getRedirectTarget();
 				if ( !is_null( $rdTitle ) && $rdTitle->getPrefixedText() == $mainPrefixedText ) {
 					// current page redirects to main page
-					$skinOverride = true;
+					$overrideSkin = true;
 				}
 			}
 		}
-		if ( $skinOverride ) {
+		if ( $overrideSkin ) {
 			$user->mSkin = &Skin::newFromKey( $wgHomePageSkin );
 			wfProfileOut(__METHOD__);
 			return false;
