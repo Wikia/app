@@ -90,7 +90,7 @@ class CategorySelect {
 									if (count($childOut)) {
 										$out = array_merge($out, $childOut);
 										//remove tags when there is no content after removing category
-										if ($inner->textContent == '') {
+										if (trim($inner->textContent) == '') {
 											$nodesToDelete[] = $node;
 											//try to remove newline right after <tag>[[category:abc]]</tag>\n - it will be in next sibbling
 											if (!is_null($node->nextSibling) && $node->nextSibling->nodeType == XML_TEXT_NODE) {

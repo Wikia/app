@@ -308,13 +308,13 @@ function CategorySelectChangeFormat($categories, $from, $to) {
 	if ($to == 'wiki') {
 		$categoriesStr = '';
 		foreach($categories as $c) {
-			$catTmp = '[[' . $c['namespace'] . ':' . $c['category'] . ($c['sortkey'] == '' ? '' : ('|' . $c['sortkey'])) . ']]';
+			$catTmp = "\n[[" . $c['namespace'] . ':' . $c['category'] . ($c['sortkey'] == '' ? '' : ('|' . $c['sortkey'])) . ']]';
 			if ($c['outerTag'] != '') {
 				$catTmp = '<' . $c['outerTag'] . '>' . $catTmp . '</' . $c['outerTag'] . '>';
 			}
-			$categoriesStr .= $catTmp . "\n";
+			$categoriesStr .= $catTmp;
 		}
-		return "\n" . rtrim($categoriesStr);
+		return $categoriesStr;
 	} elseif ($to == 'array') {
 		return $categories;
 	}

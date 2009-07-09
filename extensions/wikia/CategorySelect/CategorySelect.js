@@ -246,11 +246,11 @@ function addCategory(category, params, index) {
 function generateWikitextForCategories() {
 	var categoriesStr = '';
 	for (c=0; c < categories.length; c++) {
-		catTmp = '[[' + categories[c].namespace + ':' + categories[c].category + (categories[c].sortkey == '' ? '' : ('|' + categories[c].sortkey)) + ']]';
+		catTmp = '\n[[' + categories[c].namespace + ':' + categories[c].category + (categories[c].sortkey == '' ? '' : ('|' + categories[c].sortkey)) + ']]';
 		if (categories[c].outerTag != '') {
 			catTmp = '<' + categories[c].outerTag + '>' + catTmp + '</' + categories[c].outerTag + '>';
 		}
-		categoriesStr += catTmp + "\n";
+		categoriesStr += catTmp;
 	}
 	return categoriesStr;
 }
