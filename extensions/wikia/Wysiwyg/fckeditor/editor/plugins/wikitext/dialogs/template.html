@@ -45,6 +45,9 @@ document.write('<li' + 'nk rel="stylesheet" type="text/css" href="' + dialog.par
 
 window.onload = function() {
 
+	// apply i18n
+	oEditor.FCKLanguageManager.TranslatePage(document);
+
 	FCK.TemplateEditor.Dialog.SetAutoSize(true);
 
 	// choose correct editor step
@@ -195,6 +198,29 @@ FCK.TemplateEditor.SelectTemplate = function(name, params) {
 	}
 }
 
+// insert given magic word and detect its type ({{foo}} or __bar__)
+FCK.TemplateEditor.SelectMagicWord = function(magic) {
+	FCK.log('inserting magic word "' + magic + '"');
+
+	FCK.TemplateEditor.Editor.FCKUndo.SaveUndoStep();
+
+	FCK.Track('/templateEditor/save');
+
+	// detect type of magic word
+	var underscoreMagic = FCK.TemplateEditor.Dialog.parent.wysiwygMagicWordUnderscoreList;
+
+	if (FCK.jQuery.inArray(magic.toLowerCase(), underscoreMagic) > -1) {
+		// __foo__
+		FCK.InsertMagic(FCK.TemplateEditor.origRefid, magic);
+	}
+	else {
+		// {{foo}}
+		FCK.InsertTemplate(FCK.TemplateEditor.origRefid, magic, null);
+	}
+
+	FCK.TemplateEditor.Dialog.CloseDialog();
+}
+
 // change editor step
 FCK.TemplateEditor.SelectStep = function(stepId) {
 	// show OK only in step #2
@@ -206,7 +232,7 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 
 		case 1:
 			var templates = FCK.TemplateEditor.Dialog.parent.templateHotList;
-			var magicWords = FCK.TemplateEditor.Dialog.parent.magicWordList;
+			var magicWords = FCK.TemplateEditor.Dialog.parent.wysiwygMagicWordList;
 
 			var templatesOutput = ['', '', ''];
 
@@ -217,10 +243,10 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 				i++;
 			}
 
-			// third column is for magic words ({{SITENAME}} etc)
+			// third column is for magic words ({{SITENAME}}, __NOTOC__ etc)
 			for (i=0; i<magicWords.length; i++) {
 				var magicWord = magicWords[i].toUpperCase();
-				templatesOutput[2] += '<li><a onclick="FCK.TemplateEditor.SelectTemplate(\'' + magicWord + '\', null)">' + magicWord + '</a></li>';
+				templatesOutput[2] += '<li><a onclick="FCK.TemplateEditor.SelectMagicWord(\'' + magicWord + '\')">' + magicWord + '</a></li>';
 			}
 
 			// set HTML
@@ -273,7 +299,7 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 			FCK.TemplateEditor.EnableTemplateSuggestion(false);
 
 			// clear back button
-			FCK.TemplateEditor.Dialog.SetBackButton('<span onclick="FCK.TemplateEditor.SelectStep(1)">choose another template</span>');
+			FCK.TemplateEditor.Dialog.SetBackButton('<span onclick="FCK.TemplateEditor.SelectStep(1)">' + FCKLang.TemplateChooseAnother + '</span>');
 			break;
 	}
 
@@ -334,7 +360,7 @@ FCK.TemplateEditor.CreatePreview = function() {
 		data.button.disabled = false;
 
 		// reset margin/padding/align of template
-		FCK.TemplatePreviewReset(data.preview);
+		FCK.PreviewReset(data.preview);
 	}, {
 		'preview': FCK.TemplateEditor.GetE('templatePreview'),
 		'button': FCK.TemplateEditor.GetE('templateDoPreview')
@@ -489,19 +515,19 @@ function Ok() {
 </head>
 <body scroll="no" style="overflow: hidden">
 	<div id="templateEditorStep1" class="editorStep">
-		<h1 style="float: left">Search for Template</h1>
+		<h1 style="float: left"><span fcklang="TemplateSearchFor">Search for Template</span></h1>
 
 		<form id="templateSearch" onsubmit="return FCK.TemplateEditor.InsertTemplateFromSearch()">
 			<input type="text" id="templateQuery" style="width: 300px" />
-			<input type="submit" value="Insert" />
+			<input type="submit" value="Insert" fcklang="TemplateInsert" />
 		</form>
 
 		<hr />
 
-		<h1>Browse for Template</h1>
+		<h1><span fcklang="TemplateBrowseFor">Browse for Template</span></h1>
 
-		<h2 style="float: left">Most Frequently Used</h2>
-		<h2 style="float: right; width: 260px"><a href="http://help.wikia.com/wiki/Help:Magic_words" target="_blank">Magic words</a></h2>
+		<h2 style="float: left"><span fcklang="TemplateMostFrequenty">Most Frequently Used</span></h2>
+		<h2 style="float: right; width: 260px"><a href="http://help.wikia.com/wiki/Help:Magic_words" target="_blank"><span fcklang="TemplateMagicWords">Magic words</span></a></h2>
 
 		<br style="clear: both" />
 
@@ -516,20 +542,20 @@ function Ok() {
 
 	<div id="templateEditorStep2" class="editorStep">
 		<h1 id="templateName">Template</h1>
-		<span id="templateOptions"><a id="templateViewLink" target="_blank">view template page (opens a new window)</a></span>
-		<h3>Change the values on the left and click to preview. When you're done making your edits, click to save</h3>
+		<span id="templateOptions"><a id="templateViewLink" target="_blank"><span fcklang="TemplateView">view template page (opens a new window)</span></a></span>
+		<h3><span fcklang="TemplateEditorHint">Change the values on the left and click to preview. When you're done making your edits, click to save</span></h3>
 
 		<table id="templateEditor" height="330px"><tr>
 
 			<td width="330" height="330">
-				<h2>Parameters</h2>
+				<h2><span fcklang="TemplateParameters">Parameters</span></h2>
 				<div id="templateParameters"></div>
 			</td>
 			<td>
-				<input id="templateDoPreview" type="button" value="Preview" onclick="FCK.TemplateEditor.CreatePreview()" />
+				<input id="templateDoPreview" type="button" value="Preview" fcklang="Preview" onclick="FCK.TemplateEditor.CreatePreview()" />
 			</td>
 			<td width="330">
-				<h2>Preview</h2>
+				<h2><span fcklang="Preview">Preview</span></h2>
 				<div id="templatePreview"></div>
 			</td>
 		</tr></table>

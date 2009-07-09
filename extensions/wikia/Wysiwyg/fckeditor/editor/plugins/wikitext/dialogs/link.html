@@ -37,7 +37,7 @@ if(link) {
 
 	var refid = link.getAttribute('refid');
 	if(refid) {
-		var data = FCK.wysiwygData[refid];
+		var data = FCK.GetMetaData(refid);
 		if(data.type == 'internal link') {
 			TYPE = INTERNAL;
 		} else {
@@ -59,8 +59,8 @@ if(link) {
 
 }
 
-dialog.AddTab('internal_link', 'Internal link');
-dialog.AddTab('external_link', 'External link');
+dialog.AddTab('internal_link', FCKLang.LinkInternal);
+dialog.AddTab('external_link', FCKLang.LinkExternal);
 
 function OnDialogTabChange(tabCode) {
 	ShowE('divInternalLink', (tabCode == 'internal_link'));
@@ -80,6 +80,9 @@ function OnDialogTabChange(tabCode) {
 
 window.onload = function() {
 
+	// apply i18n
+	oEditor.FCKLanguageManager.TranslatePage(document);
+
 	GetE('external_unlabeled_link').onchange = function() {
 		GetE('external_link_text').disabled = GetE('external_unlabeled_link').checked;
 	}
@@ -90,7 +93,9 @@ window.onload = function() {
 
 			dialog.SetSelectedTab('internal_link');
 
-			GetE('internal_article_name').value = FCK.wysiwygData[refid].href;
+			var data = FCK.GetMetaData(refid);
+
+			GetE('internal_article_name').value = data.href;
 
 			if(GetE('internal_article_name').value != link.innerHTML) {
 				GetE('internal_link_text').value = link.innerHTML;
@@ -106,7 +111,8 @@ window.onload = function() {
 			dialog.SetSelectedTab('external_link');
 
 			if(refid) {
-				GetE('external_url').value = FCK.wysiwygData[refid].href;
+				var data = FCK.GetMetaData(refid);
+				GetE('external_url').value = data.href;
 			} else {
 				GetE('external_url').value = link.href;
 			}
@@ -197,8 +203,9 @@ function Ok() {
 	aLinks[0].removeAttribute('_fcksavedurl');
 
 	if(!refid) {
+		// add entry to metadata
 		refid = FCK.GetFreeRefId();
-		aLinks[0].setAttribute('refid', refid);
+		FCK.AddMetaData(refid, aLinks[0], {});
 	}
 
 	// CSS classes handling code
@@ -234,7 +241,7 @@ function Ok() {
 		FCK.YAHOO.util.Dom.removeClass(aLinks[0], 'new');
 	}
 
-	FCK.wysiwygData[refid] = data;
+	FCK.SetMetaData(refid, data);
 
 	return true;
 }
@@ -244,7 +251,7 @@ function Ok() {
 	<body scroll="no" style="OVERFLOW: hidden">
 		<div id="divInternalLink" style="DISPLAY: none; padding-bottom: 40px; position: relative">
 
-			<span>Article name:</span>
+			<span fcklang="LinkArticleName">Article name:</span>
 			<br />
 			<form id="formInternalLink" style="margin:0;padding:0">
 				<input id="internal_article_name" style="WIDTH: 100%" type="text" />
@@ -252,7 +259,7 @@ function Ok() {
 
 			<br /><br />
 
-			<span>Link text (if different than Article name):</span>
+			<span fcklang="LinkInternalText">Link text (if different than Article name):</span>
 			<br />
 			<input id="internal_link_text" style="WIDTH: 100%" type="text" />
 
@@ -260,20 +267,20 @@ function Ok() {
 
 		<div id="divExternalLink" style="DISPLAY: none">
 
-			<span>URL:</span>
+			<span fcklang="LinkURL">URL:</span>
 			<br />
 			<input id="external_url" style="WIDTH: 100%" type="text" />
 
 			<br /><br />
 
-			<span>Link text (if different than URL):</span>
+			<span fcklang="LinkExternalText">Link text (if different than URL):</span>
 			<br />
 			<input id="external_link_text" style="WIDTH: 100%" type="text" />
 
 			<br /><br />
 
 			<input id="external_unlabeled_link" type="checkbox" />
-			<label for="external_unlabeled_link">create a numbered link</label>
+			<label for="external_unlabeled_link" fcklang="LinkExternalNumbered">create a numbered link</label>
 
 		</div>
 	</body>

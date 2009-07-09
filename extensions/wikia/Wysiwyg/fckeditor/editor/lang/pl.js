@@ -531,5 +531,50 @@ DlgAboutInfo		: "Więcej informacji uzyskasz pod adresem",
 DlgDivGeneralTab	: "General",	//MISSING
 DlgDivAdvancedTab	: "Advanced",	//MISSING
 DlgDivStyle		: "Style",	//MISSING
-DlgDivInlineStyle	: "Inline Style"	//MISSING
+DlgDivInlineStyle	: "Inline Style",	//MISSING
+
+// Wikia messages
+Move			: "Przesuń",
+DlgImageRemoveTitle	: "Usuń ten obrazek",
+DlgImageRemoveContent	: "Czy na pewno chcesz usunąć ten obrazek?",
+DlgVideoRemoveTitle	: "Usuń to wideo",
+DlgVideoRemoveContent	: "Czy na pewno chcesz usunąć to wideo?",
+
+DlgSwitchToWikitext	: "Aby edytować ten fragment artykułu, przejdź do trybu źródłowego klikając na 'Źródło dokumentu'",
+
+// templates
+TemplateOther		: "Inny szablon / słowo kluczowe",
+TemplateClickToEdit	: "Kliknij, aby edytować szablon lub przeciągnij go w inne miejsce artykułu",
+TemplateSearchFor	: "Szukaj szablonu",
+TemplateInsert		: "Wstaw",
+TemplateBrowseFor	: "Przeglądaj szablony",
+TemplateMostFrequenty	: "Najczęściej używane",
+TemplateMagicWords	: "Słowa magiczne",
+TemplateMagicWordsLink	: "http://help.wikia.com/wiki/Help:Magic_words",
+TemplateChooseAnother	: "wybierz inny szablon",
+TemplateView		: "zobacz stronę szablonu (otwiera się w nowym oknie)",
+TemplateEditorHint	: "Zmień wartości parametrów po lewej stronie i kliknij Podgląd. Aby zapisać zmiany, kliknij Ok.",
+TemplateParameters	: "Parametry",
+
+// comments
+CommentClickToEdit	: "Kliknij, aby edytować komentarz lub przeciągnij go w inne miejsce artykułu",
+Comment			: "Komentarz",
+CommentRemove		: "Usuń",
+
+// links
+LinkInternal		: "Link wewnętrzny",
+LinkExternal		: "Link zewnętrzny",
+LinkArticleName		: "Nazwa artykułu",
+LinkInternalText	: "Opis linku (jeśli inny niż nazwa artykułu)",
+LinkURL			: "URL",
+LinkExternalText	: "Opis linku (jeśli inny niż URL)",
+LinkExternalNumbered	: "stwórz numerowany link",
+
+// toolbar
+ToolbarH2		: "Nagłówek sekcji",
+ToolbarH3		: "Nagłówek podsekcji",
+ToolbarPre		: "Preformatowany",
+ToolbarNormal		: "Usuń nagłówek",
+ToolbarSignature	: "Dodaj swój podpis",
+ToolbarWidescreen	: "Szeroki ekran",
 };
