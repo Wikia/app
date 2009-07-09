@@ -2,7 +2,7 @@
  * Requires jQuery
  */
 
-Mediawiki = {
+var Mediawiki = {
 	// apiUrl must be on the same domain for write access
 	apiUrl		: "/api.php",
 	apiUser		: null, // Defaults to anon
@@ -385,10 +385,10 @@ Mediawiki.getNormalizedTitle = function(title){
 
 	// We can get two different responses back here. If it's a valid title, then it returns it directly
 	// If not, it returns it "normalized". If your page title isn't coming through the API, try normalizeTitle first
-	if (!Mediawiki.e(responseData.query) && Mediawiki.empty(responseData.query.normalized)){
-		return title;
-	} else {
+	try {
 		return responseData.query.normalized[0]["to"];
+	} catch (e) {
+		return title;
 	}
 	return false;
 };
