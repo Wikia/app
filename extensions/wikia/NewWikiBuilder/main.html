@@ -1,12 +1,19 @@
 <html>
 <body>
 <!-- Jquery is required for the API itself -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script-->
+<script src="../../../skins/common/jquery-1.2.6.min.js"></script>
 <!-- Jquery UI is just used for this test page -->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
 <!-- Tabs ripped from http://jqueryui.com/demos/tabs/ -->
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css"/>
 <link rel="stylesheet" type="text/css" href="main.css"/>
+<style type="text/css">
+/* Put this here instead of in external stylesheet so that it's immediately usable */
+.ui-tabs .ui-tabs-hide {
+         display: block;
+}
+</style>
 <script type="text/javascript">
 	$(function() {
 		$("#tabs").tabs({
@@ -17,6 +24,7 @@
 <!-- End tabs setup -->
 <script src="../JavascriptAPI/Mediawiki.js"></script>
 <script src="main.js"></script>
+
 <script>
 // Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
 Mediawiki.cookiePrefix = "wikicities";
@@ -58,6 +66,7 @@ if (match !== null){
                 try { 
                         Mediawiki.apiUser = f.lgname.value;
                         Mediawiki.apiPass = f.lgpassword.value;
+                        Mediawiki.updateStatus("Logging In...");
                         Mediawiki.login(loginWorked, apiFailed);
                 } catch (e) {
                         Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));    
@@ -65,6 +74,7 @@ if (match !== null){
                 return false; // Return false so that the form doesn't submit
         }
         function loginWorked (){
+                Mediawiki.updateStatus("Login Successful");
                 $("#loginForm").fadeOut();
                 $("#logoutForm").fadeIn();
         }
@@ -75,6 +85,7 @@ if (match !== null){
         function handleLogoutForm(f){
                 $("#logoutForm").fadeOut();
                 $("#loginForm").fadeIn();
+                Mediawiki.updateStatus("Logout Successful");
         }
 
         if (Mediawiki.isLoggedIn()){
@@ -105,12 +116,13 @@ if (match !== null){
 		{"rvsection":0}
 	);
 
-	handleDescriptionForm = function(f){
+	function handleDescriptionForm (f){
 	  try {
 	     // Save the article
+             Mediawiki.updateStatus("Saving description...");
 	     Mediawiki.editArticle({
 		  "title": mainPageEnd,
-		  "summary": "Adding initial description to " + mainPageEnd, /* i18n */
+		  "summary": "Adding description to " + mainPageEnd + " via NewWikiBuilder", /* i18n */
 		  "section": 0,
 		  "text": $("#desc_textarea").val()}, 
 		  function(){
@@ -147,15 +159,12 @@ if (match !== null){
 
 	<!-- Christian: help. Float! -->
 	<div style="float: right">
-	<!-- TODO: API call to get image url -->
 	<div id="logo_current"></div>
 	<br />
-	<div id="logo_preview">
-		Logo preview
-	</div>
-	</div>
+	<div id="logo_preview">Logo preview</div>
 
 	<script> 
+	// Fill in the background image for the logo
 	normalizedLogo = Mediawiki.getNormalizedTitle(Mediawiki.$("logo_article").value);
         url = Mediawiki.getImageUrl(normalizedLogo) + '?' + Math.random();
         $("#logo_current").css("backgroundImage", "url(" + url + ")");
@@ -172,7 +181,49 @@ if (match !== null){
 <!-- ############## Create first pages ############## -->
 
 <div id="tabs-4">
-	Create your first pages
+	<script>
+	function addAnotherCategory(){
+		// Figure out what the next one is.
+		var num = $(".fp_block").length + 1;
+		if (num > 10){
+			Mediawiki.updateStatus("No more than 10 categories are allowed");
+			return false;
+		}
+
+		// Copy the html from the first one, and replicate. Search and replace the names
+		var fp_1 = Mediawiki.$("category_1");
+		fp_html = fp_1.innerHTML;
+		fp_html = fp_html.replace(/category_1/g, 'category_' + num);
+		fp_html = fp_html.replace(/Category 1/, 'Category ' + num);
+
+		// Create a new div and append it. Christian: Make this elegant please.
+		var div = document.createElement("DIV");
+		div.innerHTML = fp_html;
+		div.style.display = "none";
+		div.id = "fp_" + num;
+		div.className = "fp_block";
+		Mediawiki.$("all_fp").appendChild(div);
+		$("#fp_" + num).fadeIn();
+	}
+
+	function removeCategory(category){
+		$("#" + category).remove();
+	}
+	</script>
+	<form>
+	<a href="javascript:addAnotherCategory()">Add Another Category</a>
+	<div id="all_fp">
+	<div class="fp_block" id="category_1">
+	Category 1: <input type="text" name="category_1">
+	<a href="javascript:removeCategory('category_1')">Remove</a><br />
+	&nbsp; &nbsp; &nbsp; Page 1: <input class="fp_page" type="text" name="category_1_page_1"><br />
+	&nbsp; &nbsp; &nbsp; Page 2: <input class="fp_page" type="text" name="category_1_page_2"><br />
+	&nbsp; &nbsp; &nbsp; Page 3: <input class="fp_page" type="text" name="category_1_page_3"><br />
+	&nbsp; &nbsp; &nbsp; Page 4: <input class="fp_page" type="text" name="category_1_page_4"><br />
+	&nbsp; &nbsp; &nbsp; Page 5: <input class="fp_page" type="text" name="category_1_page_5"><br />
+	</div>
+	</div><!-- all_fp -->
+	</form>
 </div>
 
 <!-- ############## Create first pages ############## -->
