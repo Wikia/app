@@ -172,15 +172,16 @@ class PollPage extends Article{
 						$x=1;
 						
 						foreach($poll_info_prev["choices"] as $choice) {
-							$percent = round( $choice["votes"] / $poll_info_prev["votes"]  * 100 );
 							if( $poll_info_prev["votes"]  > 0 ){
+								$percent = round( $choice["votes"] / $poll_info_prev["votes"]  * 100 );
 								$bar_width = floor( 360 * ( $choice["votes"] / $poll_info_prev["votes"] ) );
 							}else{
+								$percent = 0;
 								$bar_width = 0;
 							}
 							$bar_img = "<img src=\"{$wgUploadPath}/common/vote-bar-{$x}.gif\"  border=\"0\" class=\"image-choice-{$x}\" style=\"width:{$bar_width}px;height:11px;\"/>";
 							$output .= "<div class=\"previous-poll-choice\">
-								<div class=\"previous-poll-choice-left\">{$choice["choice"]} ({$choice["percent"]}%)</div>";
+								<div class=\"previous-poll-choice-left\">{$choice["choice"]} ({$percent}%)</div>";
 							
 							$output .= "<div class=\"previous-poll-choice-right\">{$bar_img} <span class=\"previous-poll-choice-votes\">".(($choice["votes"]>0)?"{$choice["votes"]}":"0")." ". wfMsgExt( 'poll_votes' , "parsemag",  $choice["votes"] ) ."</span></div>";
 							
@@ -212,14 +213,17 @@ class PollPage extends Article{
 					$x = 1;
 					
 					foreach($poll_info["choices"] as $choice){
-						//$percent = round( $choice["votes"] / $poll_info["votes"]  * 100 );
 						if( $poll_info["votes"] > 0 ){
+							$percent = round( $choice["votes"] / $poll_info["votes"]  * 100 );
 							$bar_width = floor( 480 * ( $choice["votes"] / $poll_info["votes"] ) );
+						}else{
+							$percent = 0;
+							$bar_width = 0;
 						}
 						$bar_img = "<img src=\"{$wgUploadPath}/common/vote-bar-{$x}.gif\"  border=\"0\" class=\"image-choice-{$x}\" style=\"width:{$bar_width}px;height:12px;\"/>";
 						
 						$output .= "<div class=\"poll-choice\">
-						<div class=\"poll-choice-left\">{$choice["choice"]} ({$choice["percent"]}%)</div>";
+						<div class=\"poll-choice-left\">{$choice["choice"]} ({$percent}%)</div>";
 						
 						$output .= "<div class=\"poll-choice-right\">{$bar_img} <span class=\"poll-choice-votes\">".(($choice["votes"] > 0)?"{$choice["votes"]}":"0")." " . wfMsgExt( 'poll_votes' , "parsemag",  $choice["votes"] ) ."</span></div>";
 						$output .= "</div>";
