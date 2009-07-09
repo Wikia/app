@@ -34,7 +34,7 @@ class WikiFactory {
 	const LOG_STATUS    = 4;
 
 	const HIDE_ACTION 	= -1;
-	const CLOSE_ACTION 	= 0;	
+	const CLOSE_ACTION 	= 0;
 
 	# city_flags
 	const FLAG_CREATE_DB_DUMP 			= 1;
@@ -1751,4 +1751,29 @@ class WikiFactory {
 		return $city_flags;
 	}
 
+	/**
+	 * get category/hub name and number for $city_id
+	 *
+	 * @param integer	$city_id		wikia identifier in city_list
+	 *
+	 * @return StdObject ($row->cat_id $row->cat_name) or false
+	 */
+	static public function getCategory( $city_id ) {
+
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		$dbr = self::db( DB_SLAVE );
+
+		$row = $dbr->selectRow(
+			array( "city_cat_mapping", "city_cats" ),
+			array( "city_cats.cat_id as cat_id", "city_cats.cat_name as cat_id" ),
+			array( "city_id" => $city_id ),
+			__METHOD__
+		);
+
+		return empty( $row ) ? false : $row;
+	}
 };
