@@ -1,17 +1,19 @@
 <html>
+<!-- TODO:
+	Speed up page load by looking at blcoking calls
+	Use Wiki.png instead of Wiki2.png
+-->
 <body>
 <!-- Jquery is required for the API itself -->
-<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script-->
-<script src="../../../skins/common/jquery-1.2.6.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <!-- Jquery UI is just used for this test page -->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
 <!-- Tabs ripped from http://jqueryui.com/demos/tabs/ -->
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css"/>
 <link rel="stylesheet" type="text/css" href="main.css"/>
 <style type="text/css">
-/* Put this here instead of in external stylesheet so that it's immediately usable */
 .ui-tabs .ui-tabs-hide {
-         display: block;
+         display: none;
 }
 </style>
 <script type="text/javascript">
@@ -148,7 +150,6 @@ if (match !== null){
 	<input type="hidden" name="action" value="uploadlogo">	
 	<input type="hidden" name="format" value="xml">	
 	<input id="logo_article" type="hidden" name="title" value="Wiki2.png">	
-	<div id="desc_form_html">
 	Upload a logo
 	<input type="file" name="logo_file"><br />
 	<p>
@@ -162,6 +163,7 @@ if (match !== null){
 	<div id="logo_current"></div>
 	<br />
 	<div id="logo_preview">Logo preview</div>
+	</div>
 
 	<script> 
 	// Fill in the background image for the logo
@@ -175,8 +177,61 @@ if (match !== null){
 <!-- ############## Pick Theme ############## -->
 
 <div id="tabs-3">
-	Pick a theme
-</div>
+  <div id="theme_chooser">
+    <div id="theme_template" style="display:none">
+	<img id="theme_preview_image_$theme" width="75"><br />
+	<input onClick="changeTheme('$theme')" type="radio" value="$theme" id="theme_radio_$theme"><label for="theme_radio_$theme">$Theme</label>
+    </div>
+  </div>
+
+<script>
+var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Mediawiki
+
+/* 1. Change the stylesheet on the current page 
+ * 2. Save the value using the API
+ */
+function changeTheme (theme){
+	// Create a link object for the stylesheet
+	var link = document.createElement("link");
+	link.rel = "stylesheet";
+	link.type = "text/css";
+	link.href = "http://images.wikia.com/common/skins/monaco/" + ltheme + "/css/main.css";
+	
+	// Put it in the head so they can see what it will look like
+	var h = document.getElementsByTagName("head").item(0);
+	h.appendChild(link);
+
+	// TODO: Save the changes using the API
+}
+
+// TODO: Pull this list from wgSkinTheme?
+var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
+for (var i = 0; i < themes.length; i++){
+	// Copy the template, search and replace the values
+	var ltheme = themes[i].toLowerCase();
+	var thtml = $("#theme_template").html();
+	thtml = thtml.replace(/\$Theme/, themes[i]);
+	thtml = thtml.replace(/\$theme/, ltheme);
+
+
+	// Create div with that preview and append it
+	// TODO: jQuery this
+	var div = document.createElement("div"); 
+	div.innerHTML = thtml;
+	div.id = "theme_" + themes[i].toLowerCase();
+	Mediawiki.$("theme_chooser").appendChild(div);
+	Mediawiki.$("theme_preview_image_" + ltheme).src = "http://images.wikia.com/common/skins/monaco/" + ltheme + "/images/preview.png";
+
+
+	// Check the box with the current theme ($wgDefaultTheme)
+	if (wgDefaultTheme == ltheme) {
+		// Check the box and change the theme 
+		$("#theme_radio_" + ltheme).checked();
+		changeTheme(ltheme);
+	}
+}
+</script>
+
 
 <!-- ############## Create first pages ############## -->
 
@@ -207,7 +262,12 @@ if (match !== null){
 	}
 
 	function removeCategory(category){
+		// TODO: Get this working
 		$("#" + category).remove();
+	}
+
+	function addAnotherPage() {
+		// TODO, as soon as you get to the last page, it adds another
 	}
 	</script>
 	<form>
@@ -215,13 +275,14 @@ if (match !== null){
 	<div id="all_fp">
 	<div class="fp_block" id="category_1">
 	Category 1: <input type="text" name="category_1">
-	<a href="javascript:removeCategory('category_1')">Remove</a><br />
+	<a href="javascript:removeCategory('category_1')">Remove</a> (not working yet)<br />
 	&nbsp; &nbsp; &nbsp; Page 1: <input class="fp_page" type="text" name="category_1_page_1"><br />
 	&nbsp; &nbsp; &nbsp; Page 2: <input class="fp_page" type="text" name="category_1_page_2"><br />
 	&nbsp; &nbsp; &nbsp; Page 3: <input class="fp_page" type="text" name="category_1_page_3"><br />
-	&nbsp; &nbsp; &nbsp; Page 4: <input class="fp_page" type="text" name="category_1_page_4"><br />
-	&nbsp; &nbsp; &nbsp; Page 5: <input class="fp_page" type="text" name="category_1_page_5"><br />
 	</div>
+
+	<p>
+	<input type="submit" value="Save (not working yet)">
 	</div><!-- all_fp -->
 	</form>
 </div>
