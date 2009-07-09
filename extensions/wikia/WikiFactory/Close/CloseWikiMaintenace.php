@@ -507,11 +507,11 @@ class CloseWikiMaintenace {
 	 *
 	 */
 	public function updateTimestamp( $old = 0 ) {
-		global $wgExternalArchiveDB;
+		global $wgExternalArchiveDB, $wgExternalSharedDB;
 		
 		wfProfileIn( __METHOD__ );
 		if( $this->mCityID && ! $this->mDryRun ) {
-			$dbw = ( empty($old) ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
+			$dbw = wfGetDB( DB_MASTER, array(), ( empty($old) ) ? $wgExternalSharedDB : $wgExternalArchiveDB );
 			$dbw->update(
 				WikiFactory::table( "city_list" ),
 				array( "city_lastdump_timestamp" => wfTimestampNow() ),
