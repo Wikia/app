@@ -1,4 +1,5 @@
 == Changes since 200907.2 ==
+* rt#18763, rt#18564: Answers: fixes for empty answers widget. (Nef)
 * rt#18827: Fixed division by zero in NY poll. (Nef)
 * GamePro Widgets. (Nef)
 * rt#18792: Analytics tracking for ShareThis article button. (Nef)
