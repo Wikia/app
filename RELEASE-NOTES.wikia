@@ -19,6 +19,7 @@
 * rt#18642: FCK: Images without positions get an underlined menu (Macbre)
 * Wysiwyg: FCK updated to v2.6.4.1 (Macbre)
 * rt#18765: Add theme specific CSS to CSS served by static chute (Macbre)
+* rt#18795: LeanMonaco: Top left "More" dropdown no longer uses hub-specific links (Macbre)
 
 == Changes since 200907.1 ==
 * rt#18491: FCK: Formatted text followed by divs gains line feeds when mode switching (Macbre)
