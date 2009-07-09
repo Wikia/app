@@ -29,12 +29,60 @@ if (match !== null){
 
 <div id="tabs">
 	<ul>
+		<li><a href="#tabs-0">0. Logged In?</a></li>
 		<li><a href="#tabs-1">1. Add a description</a></li>
 		<li><a href="#tabs-2">2. Add a logo</a></li>
 		<li><a href="#tabs-3">3. Pick Theme</a></li>
 		<li><a href="#tabs-4">4. Create First pages</a></li>
 		<li><a href="#tabs-5">5. Done</a></li>
 	</ul>
+
+<div id="tabs-0">
+        <div id="loginForm">
+        <form onSubmit="return handleLoginForm(this)">
+        <label class="formLabel">Username:</label> <input type="text" name="lgname" size="10">
+        <label class="formLabel">Password:</label> <input type="password" name="lgpassword" size="10"> <br />
+        <input type="submit" value="Login">
+        </form>
+        </div>
+
+        <div id="logoutForm" style="display:none">
+                You are logged in.
+                <input type="button" value="logout" onClick="return Mediawiki.logout(handleLogoutForm)"/>
+        </div>
+
+
+
+        <script>
+        function handleLoginForm(f){
+                try { 
+                        Mediawiki.apiUser = f.lgname.value;
+                        Mediawiki.apiPass = f.lgpassword.value;
+                        Mediawiki.login(loginWorked, apiFailed);
+                } catch (e) {
+                        Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));    
+                }
+                return false; // Return false so that the form doesn't submit
+        }
+        function loginWorked (){
+                $("#loginForm").fadeOut();
+                $("#logoutForm").fadeIn();
+        }
+
+        function apiFailed(msg){
+                alert("Api call returned an error: " + msg);
+        }
+        function handleLogoutForm(f){
+                $("#logoutForm").fadeOut();
+                $("#loginForm").fadeIn();
+        }
+
+        if (Mediawiki.isLoggedIn()){
+                loginWorked();
+        }
+        </script>
+</div>
+
 
 <!-- ##############  Add a description to main page ############## -->
 <div id="tabs-1">
@@ -82,22 +130,25 @@ if (match !== null){
 <!-- ############## Add a logo ############ -->
 <div id="tabs-2">
 	<div id="logo_form_html">
-	<!--form onSubmit="return handleLogoForm(this)"-->
-	<form action="/api.php" method="post" enctype="multipart/form-data">
+	<!-- Hidden iframe to handle the file upload -->
+	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NewWikiBuilder.iframeFormUpload(this)"></iframe>
+	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='Mediawiki.updateStatus("Uploading image...")'>
 	<input type="hidden" name="action" value="uploadlogo">	
+	<input type="hidden" name="format" value="xml">	
+	<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
 	<div id="desc_form_html">
 	Upload a logo
 	<input type="file" name="logo_file"><br />
 	<p>
-	<input type="submit" name="Preview" value="Preview"/> 
-	<input type="submit" name="Save" value="Save"/> 
+	<input type="submit" value="Preview" onClick="this.form.title.value='Wiki-Preview.png'"/> 
+	<input type="submit" value="Save" onClick="this.form.title.value='Wiki.png'"/> 
 	</form>
 	</div>
 
 	<!-- Christian: help. Float! -->
 	<div style="float: right">
-	<div id="logo_current"><img src="http://images.wikia.com/nicktest001/images/b/bc/Wiki.png"></div>
-	<br />
+	<!-- TODO: API call to get image url -->
+	<div id="logo_current"></div>
 	<br />
 	<div id="logo_preview">
 		Logo preview
@@ -105,10 +156,11 @@ if (match !== null){
 	</div>
 
 	<script> 
-	handleLogoForm = function(f){
-	}
-	</script>	
-	
+	normalizedLogo = Mediawiki.getNormalizedTitle(Mediawiki.$("logo_article").value);
+        url = Mediawiki.getImageUrl(normalizedLogo) + '?' + Math.random();
+        $("#logo_current").css("backgroundImage", "url(" + url + ")");
+	</script>
+
 </div>
 
 <!-- ############## Pick Theme ############## -->
