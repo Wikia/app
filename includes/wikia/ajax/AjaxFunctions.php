@@ -2,6 +2,19 @@
 
 $wgAjaxExportList[] = 'GetHubMenu';
 function GetHubMenu() {
+	// rt #18795: get category information (id, name, url)
+	global $wgCat;
+
+	$cats = wfGetBreadCrumb();
+	$idx = count($cats)-2;
+	if(isset($cats[$idx])) {
+		$wgCat = $cats[$idx];
+		wfDebugLog('monaco', 'There is category info');
+	} else {
+		$wgCat = array('id' => -1);
+		wfDebugLog('monaco', 'No category info');
+	}
+
 	$tmpl = new EasyTemplate(dirname(__FILE__).'/templates');
 	$tmpl->set_vars(array(
 		'categorylist' => DataProvider::getCategoryList()
