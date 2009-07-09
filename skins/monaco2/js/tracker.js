@@ -241,9 +241,11 @@ jQuery.tracker.track = function(fakeurl) {
 		_uacct = "UA-2871474-1";
 		var username = wgUserName == null ? 'anon' : 'user';
 		var fake = '/1_monaco/' + username + '/' + fakeurl;
+		$().log('tracker: ' + fake);
 		urchinTracker(fake);
 		if(wgPrivateTracker) {
 			fake = '/1_monaco/' + wgDB + '/' + username + '/' + fakeurl;
+			$().log('tracker: ' + fake);
 			urchinTracker(fake);
 		}
 	}
