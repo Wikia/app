@@ -180,7 +180,7 @@ if (match !== null){
   <div id="theme_chooser">
     <div id="theme_template" style="display:none">
 	<img id="theme_preview_image_$theme" width="75"><br />
-	<input onClick="changeTheme('$theme')" type="radio" value="$theme" id="theme_radio_$theme"><label for="theme_radio_$theme">$Theme</label>
+	<input onClick="changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"><label for="theme_radio_$theme">$Theme</label>
     </div>
   </div>
 
@@ -191,6 +191,15 @@ var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Med
  * 2. Save the value using the API
  */
 function changeTheme (theme){
+	// Save the changes using the API
+	if (theme != wgDefaultTheme ) {
+	  Mediawiki.apiCall({
+		"action" : "foundersettings",
+		"changesetting" : "wgDefaultTheme", 
+		"value" : theme}, function() { Mediawiki.updateStatus("Theme Choice Saved") });
+	  wgDefaultTheme = theme;
+	} 
+
 	// Create a link object for the stylesheet
 	var link = document.createElement("link");
 	link.rel = "stylesheet";
@@ -201,7 +210,6 @@ function changeTheme (theme){
 	var h = document.getElementsByTagName("head").item(0);
 	h.appendChild(link);
 
-	// TODO: Save the changes using the API
 }
 
 // TODO: Pull this list from wgSkinTheme?
@@ -210,8 +218,8 @@ for (var i = 0; i < themes.length; i++){
 	// Copy the template, search and replace the values
 	var ltheme = themes[i].toLowerCase();
 	var thtml = $("#theme_template").html();
-	thtml = thtml.replace(/\$Theme/, themes[i]);
-	thtml = thtml.replace(/\$theme/, ltheme);
+	thtml = thtml.replace(/\$Theme/g, themes[i]);
+	thtml = thtml.replace(/\$theme/g, ltheme);
 
 
 	// Create div with that preview and append it
@@ -226,7 +234,7 @@ for (var i = 0; i < themes.length; i++){
 	// Check the box with the current theme ($wgDefaultTheme)
 	if (wgDefaultTheme == ltheme) {
 		// Check the box and change the theme 
-		$("#theme_radio_" + ltheme).checked();
+		$("#theme_radio_" + ltheme).attr("checked", true);
 		changeTheme(ltheme);
 	}
 }

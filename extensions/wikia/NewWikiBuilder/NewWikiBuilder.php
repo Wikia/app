@@ -1,7 +1,8 @@
 <?php
 // TODO extension credits
 
-$class = "ApiUploadLogo";
-$wgAutoloadClasses[$class] = dirname(__FILE__) . '/' . $class . '.php';
+$wgAutoloadClasses['ApiUploadLogo'] = dirname(__FILE__) . '/ApiUploadLogo.php';
 $wgAPIModules['uploadlogo'] = 'ApiUploadLogo';
 
+$wgAutoloadClasses['ApiFounderSettings'] = dirname(__FILE__) . '/ApiFounderSettings.php';
+$wgAPIModules['foundersettings'] = 'ApiFounderSettings';
