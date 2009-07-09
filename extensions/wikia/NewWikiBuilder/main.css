@@ -12,9 +12,13 @@ body {
 	border: ridge black 3px;
 	height: 155px;
 	width: 216px;
+	background-position:center center;
+	background-repeat:no-repeat;
 }
 
 #logo_preview {
+	background-position:center center;
+	background-repeat:no-repeat;
 	background-color: lightgray;
 	border: ridge black 3px;
 	color: gray;

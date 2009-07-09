@@ -21,7 +21,7 @@ class ApiUploadLogo extends ApiBase {
 	const LOGO_WIDTH = 216;
 	const LOGO_HEIGHT = 155;
 	const LOGO_TYPE = 'png';
-	const LOGO_NAME = 'Wiki4.png';
+	const LOGO_NAME = 'Wiki.png';
 	const LOGO_QUALITY = 60; // The "quality" param passed to convert. Lower = smaller
 
 	/* Takes an incoming filename and processes it as a Mediawiki logo,
