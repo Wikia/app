@@ -57,11 +57,6 @@ class ApiUploadLogo extends ApiBase {
                 parent :: __construct($main, $action);
         }
 
-        protected function getDB() {
-                global $wgDBname;
-                return wfGetDB(DB_MASTER, array(), $wgDBname);
-        }
-
 	private function usageCheck($params){
                 $this->getMain()->requestWriteMode();
 		if (empty($params['logo_file']) || empty($_FILES) || !empty($_FILES['error'])){
