@@ -76,11 +76,13 @@ EOD;
 		'coalimit' => '5',
 	);
 #	if($wgUser->getOption('language') != 'en') { // waiting for international logic phase Future (v 2.0)
-#		$domain = $wgUser->getOption('language').'.';
+#		$domain = $wgUser->getOption('language');
 #	} else {
-		$domain = $wgLanguageCode . '.';
+		$domain = $wgLanguageCode;
 #	}
-	$url = 'http://'.$domain.'answers.wikia.com/api.php?'.http_build_query($apiparams);
+	$url = 'http://'.$domain.'.answers.wikia.com/api.php?'.http_build_query($apiparams);
+
+	$no_questions = wfMsgForContent("answers_widget_no_questions");
 
 	$output .= <<<EOD
 <script type="text/javascript">/*<![CDATA[*/
@@ -90,6 +92,7 @@ var WidgetAnswers_url = '$url';
 if(WidgetAnswers_html == '') {
 	jQuery.getScript(WidgetAnswers_url, function() {
 		if(WidgetAnswers_html != '') jQuery('#{$id}_content').children('div').children('ul').prepend(WidgetAnswers_html);
+		else jQuery('#{$id}_content').children('div').children('ul').parent().html('{$no_questions}');
 	});
 } else jQuery('#{$id}_content').children('div').children('ul').prepend(WidgetAnswers_html);
 /*]]>*/</script>
