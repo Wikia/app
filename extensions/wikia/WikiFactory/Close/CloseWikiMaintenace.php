@@ -513,7 +513,7 @@ class CloseWikiMaintenace {
 		if( $this->mCityID && ! $this->mDryRun ) {
 			$dbw = wfGetDB( DB_MASTER, array(), ( empty($old) ) ? $wgExternalSharedDB : $wgExternalArchiveDB );
 			$dbw->update(
-				WikiFactory::table( "city_list" ),
+				"city_list",
 				array( "city_lastdump_timestamp" => wfTimestampNow() ),
 				array( "city_id" => $this->mCityID ),
 				__METHOD__
