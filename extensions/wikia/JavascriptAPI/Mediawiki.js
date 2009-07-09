@@ -54,7 +54,7 @@ Mediawiki.apiCall = function(apiParams, callbackSuccess, callbackError, method, 
 		p.success = callbackSuccess;
 	} else {
 		p.async = false; 
-		p.type = "POST"; // POST is required for async. Silly. 
+	//	p.type = "POST"; // POST is required for async. Silly. 
 	}
 	if (typeof callbackError == "function"){
 		p.error = callbackError;
@@ -247,8 +247,7 @@ Mediawiki.editArticle = function (article, callbackSuccess, callbackError){
 
 	var apiParams = {
 		'token' : token,	
-		'action' : 'edit',
-		'format' : 'json'
+		'action' : 'edit'
 	};
 
 	// Pass thru
@@ -349,6 +348,31 @@ Mediawiki.getCookiePrefix = function( ) {
 };
 
 
+Mediawiki.getImageUrl = function(image){
+	if (!image.match(/^Image:/)){
+		image = "Image:" + image;
+	}
+
+	var apiParams = {
+		'action' : 'query',
+		'titles' : image,
+		'prop' : "imageinfo",
+		'iiprop' : 'url'
+	};
+		
+	var result = Mediawiki.apiCall(apiParams);
+	try {
+		for (var pageid in result.query.pages){
+			return result.query.pages[pageid].imageinfo[0].url;
+		}
+		return false;
+	} catch (e) {
+		Mediawiki.e("Error pulling image url: " + Mediawiki.print_r(e));
+		return false;
+	}	
+};
+
+
 Mediawiki.getNormalizedTitle = function(title){
 	
 	Mediawiki.d("Getting Normalized title for " + title);
@@ -358,7 +382,6 @@ Mediawiki.getNormalizedTitle = function(title){
 		'titles' : title,
 		'intoken' : "edit"
 	});
-	console.dir(responseData);
 
 	// We can get two different responses back here. If it's a valid title, then it returns it directly
 	// If not, it returns it "normalized". If your page title isn't coming through the API, try normalizeTitle first
