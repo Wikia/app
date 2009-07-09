@@ -34,6 +34,7 @@ Mediawiki.debugLevel = 5;
 		<li><a href="#tabs-3">Pull Article</a></li>
 		<li><a href="#tabs-4">Edit Article</a></li>
 		<li><a href="#tabs-5">Parse Text</a></li>
+		<li><a href="#tabs-6">Get Image Url</a></li>
 	</ul>
 
 <div id="tabs-1">
@@ -271,6 +272,33 @@ Mediawiki.debugLevel = 5;
 		return false; // Return false so that the form doesn't submit
 	}
 	</script>
+</div>
+
+
+<!-- ############## Get Image Url ############# -->
+
+<div id="tabs-6">
+	<form onSubmit="return handleImageForm(this)">
+		<input type="text" name="image_name" value="Wiki.png" id="article_name_edit">
+		<input type="submit" value="Pull Image"/> <br />
+	</form>
+	<div id="image_holder" style="display:none">
+		<img id="image1"/> 
+	</div>
+	<script>
+	function handleImageForm(f){
+		var url = Mediawiki.getImageUrl(f.image_name.value);
+		if (!Mediawiki.e(url)){
+			Mediawiki.updateStatus("Image url: " + url);
+			Mediawiki.$("image1").src = url;
+			$("#image_holder").fadeIn();
+		} else {
+			Mediawiki.updateStatus("Error pulling image. File does not exist?", true);
+		}
+		return false;
+	}
+	</script>
+</div>
 
 
 </div> <!-- /div id=tabs -->
