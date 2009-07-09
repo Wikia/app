@@ -47,8 +47,7 @@ body.fckEditor
 body, td
 {
 	font-family: Arial, Verdana, sans-serif;
-	/*font-size: 12px;*/
-	font-size: 12px !important;
+	font-size: 13px !important;
 }
 
 a
@@ -59,6 +58,11 @@ a
 a.new 
 {
 	color: #BA0000 !important;
+}
+
+a.image
+{
+	text-decoration: none !important;
 }
 
 input.wysiwygDisabled
@@ -213,4 +217,11 @@ a.bigButton small {
 	position: absolute;
 	right: 0;
 	width: 300px;
+}
+
+/* wysiwyg placeholders */
+input.wysiwygComment {
+	background: #fff url('../skins/default/images/comment.png?1') no-repeat 50% 50%;
+	border: none;
+	width: 16px;
 }

@@ -946,6 +946,15 @@ class Parser
 					$outLine .= $cell;
 					array_push ( $td_history , true );
 				}
+			} else {
+				if(!empty($wgWysiwygParserEnabled )) {
+					if(empty($td_history[0]) || $last_tag == 'caption') {
+						if(strpos($outLine, "\x7f-comment-") !== false) {
+							global $wgWysiwygCommentEdgeCase;
+							$wgWysiwygCommentEdgeCase = true;
+						}
+					}
+				}
 			}
 			$out .= $outLine . "\n";
 		}
@@ -1424,6 +1433,10 @@ class Parser
 					$originalWikitext = $wgWikitext[$matches[1]];
 					$trail = str_replace("\x7e-start-{$matches[1]}-stop", '', $trail);
 				}
+				if(strpos($originalWikitext, '<comment>') !== false) {
+					global $wgWysiwygCommentEdgeCase;
+					$wgWysiwygCommentEdgeCase = true;
+				}
 			}
 			$wasblank = $text == '';
 			/* Wikia change end */
@@ -1558,15 +1571,17 @@ class Parser
 		     || ( $imagesexception && $imagematch )
 		     || (!empty($wgAllowExternalWhitelistImages) && wfRunHooks('outputMakeExternalImage', array(&$url)))) {
 			if ( preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
-				# Image found
 				/* Wikia change begin - @author: Marooned */
 				/* Wysiwyg: mark element and add metadata to wysiwyg array */
 				global $wgWysiwygParserEnabled;
 				if (!empty($wgWysiwygParserEnabled)) {
-				} else {
-					$text = $sk->makeExternalImage( $url );
+					// RT #18490
+					Wysiwyg_SetRefId('image: whitelisted', array('text' => &$url));
 				}
 				/* Wikia change end */
+
+				# Image found
+				$text = $sk->makeExternalImage( $url );
 			}
 		}
 		if( !$text && $this->mOptions->getEnableImageWhitelist()
@@ -1687,6 +1702,10 @@ class Parser
 					$linkmark = intval(substr($line, 2, 4));
 					$originalWikitext = $wgWikitext[$linkmark];
 					$line = substr($line, 6);
+				}
+				if(strpos($originalWikitext, '<comment>') !== false) {
+					global $wgWysiwygCommentEdgeCase;
+					$wgWysiwygCommentEdgeCase = true;
 				}
 			}
 			/* Wikia change end */
@@ -2281,6 +2300,8 @@ class Parser
 		$prefixLength = 0;
 		$paragraphStack = false;
 
+		$comment = $prefixType = false;
+
 		foreach ( $textLines as $oLine ) {
 			# Fix up $linestart
 			if ( !$linestart ) {
@@ -2359,14 +2380,51 @@ class Parser
 				}
 				$lastPrefix = $prefix2;
 			}
+
+			// Wikia
+			if(!empty($wgWysiwygParserEnabled )) {
+				if($prefixLength > 0) {
+					$prefixTypeTemp = substr($prefix, 0, 1);
+					if($prefixTypeTemp == '*' || $prefixTypeTemp == '#') {
+						if($prefixTypeTemp == $prefixType) {
+							if($comment) {
+								global $wgWysiwygCommentEdgeCase;
+								$wgWysiwygCommentEdgeCase = true;
+							}
+						}
+					}
+					$prefixType = $prefixTypeTemp;
+					$comment = false;
+				} else {
+					if(strpos($t, "\x7f-comment-") !== false) {
+						$comment = true;
+					} else {
+						$comment = false;
+						$prefixType = false;
+					}
+				}
+			}
+
 			if( 0 == $prefixLength ) {
+
 				wfProfileIn( __METHOD__."-paragraph" );
 				# No prefix (not in list)--go to paragraph mode
 				// XXX: use a stack for nestable elements like span, table and div
-				$openmatch = preg_match('/(?:<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
-				$closematch = preg_match(
-					'/(?:<\\/table|<\\/blockquote|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
-					'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+				/* Wikia change begin - @author: Macbre */
+				// RT #17478
+				if (!empty($wgWysiwygParserEnabled)) {
+					$openmatch = preg_match('/(?:<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th|<div)/iS', $t );
+					$closematch = preg_match(
+						'/(?:<\\/table|<\\/blockquote|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
+						'<td|<th|<\\/div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+				}
+				/* Wikia change end */
+				else {
+					$openmatch = preg_match('/(?:<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|<\\/tr|<\\/td|<\\/th)/iS', $t );
+					$closematch = preg_match(
+						'/(?:<\\/table|<\\/blockquote|<\\/h1|<\\/h2|<\\/h3|<\\/h4|<\\/h5|<\\/h6|'.
+						'<td|<th|<\\/?div|<hr|<\\/pre|<\\/p|'.$this->mUniqPrefix.'-pre|<\\/li|<\\/ul|<\\/ol|<\\/?center)/iS', $t );
+				}
 				if ( $openmatch or $closematch ) {
 					$paragraphStack = false;
 					# TODO bug 5718: paragraph closed
@@ -2389,6 +2447,12 @@ class Parser
 						$inBlockElem = false;
 					} else {
 						$inBlockElem = true;
+						/* Wikia change begin - @author: Macbre */
+						/* RT #18259 */
+						if (!empty($wgWysiwygParserEnabled)) {
+							$t .= '<!--EOL_BLOCK-->';
+						}
+						/* Wikia change end */
 					}
 				} else if ( !$inBlockElem && !$this->mInPre ) {
 					if ( ' ' == substr( $t, 0, 1 ) and ( $this->mLastSection === 'pre' or trim($t) != '' ) ) {
@@ -2461,6 +2525,12 @@ class Parser
 						}
 					}
 				}
+				/* Wikia change begin - @author: Macbre */
+				/* RT #18259 */
+				else if ($inBlockElem && !empty($wgWysiwygParserEnabled)) {
+					$t .= '<!--EOL_BLOCK-->';
+				}
+				/* Wikia change end */
 				wfProfileOut( __METHOD__."-paragraph" );
 			} else {
 				if(!empty($wgWysiwygParserEnabled)) {

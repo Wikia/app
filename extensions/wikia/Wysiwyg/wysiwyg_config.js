@@ -6,6 +6,7 @@ var toolbarItems = ['Source','-','Undo','Redo','-','Bold','Italic','Underline','
 FCKConfig.ToolbarCanCollapse = false;
 
 FCKConfig.StyleVersion = window.parent.wgStyleVersion;
+FCKConfig.i18nRequest = window.parent.wgServer + window.parent.wgScript + '?action=ajax&rs=WysiwygGetFCKi18n&revID=' + window.parent.wgMWrevId;
 FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'css/fck_editorarea.css';
 FCKConfig.EditorAreaStyles = window.parent.stylepath + '/monobook/main.css';
 
@@ -28,7 +29,9 @@ toolbarItems = window.parent.wysiwygToolbarItems;
 FCKConfig.Plugins.Add('toolbar');
 
 FCKConfig.ToolbarSets["Default"] = [ toolbarItems ];
-	
+
+// configuration
+// @see http://docs.fckeditor.net/FCKeditor_2.x/Developers_Guide/Configuration/Configuration_Options
 FCKConfig.FillEmptyBlocks = false;
 FCKConfig.FormatSource = false;
 FCKConfig.FormatOutput = false;
@@ -42,3 +45,7 @@ FCKConfig.FirefoxSpellChecker = true;
 FCKConfig.BackgroundBlockerColor = '#000';
 FCKConfig.BackgroundBlockerOpacity = '0.6';
 FCKConfig.FloatingPanelsZIndex = 1200;
+
+// handle numeric HTML entities (&#91; -> [)
+//FCKConfig.AdditionalNumericEntities = "'|\\[|\\]";
+FCKConfig.ProcessHTMLEntities = false; // RT #18269

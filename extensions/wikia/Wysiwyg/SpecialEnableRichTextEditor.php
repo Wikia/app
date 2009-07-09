@@ -1,7 +1,7 @@
 <?php
 
 $dir = dirname(__FILE__).'/';
-$wgExtensionMessagesFiles['Wysiwyg'] = $dir.'Wysiwyg.i18n.php';
+$wgExtensionMessagesFiles['Wysiwyg'] = $dir.'i18n/Wysiwyg.i18n.php';
 
 /*
  * Special page to enable rich text editor

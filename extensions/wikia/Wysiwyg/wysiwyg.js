@@ -32,41 +32,6 @@ function wysiwygInitInSourceMode(src) {
 	}, 250);
 }
 
-// render and show YUI infobox
-function wysiwygShowInfobox(header, body, labelOk, handlerOk) {
-	Dialog = new YAHOO.widget.SimpleDialog("wysiwygInfobox",
-	{
-		width: "450px",
-		zIndex: 999,
-		effect: {effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.25},
-		fixedcenter: true,
-		modal: true,
-		draggable: true,
-		close: false
-	});
-
-	var buttons = [ { text: labelOk, handler: handlerOk, isDefault: true} ];
-
-	Dialog.setHeader(header);
-	Dialog.setBody(body);
-	Dialog.cfg.setProperty('icon', YAHOO.widget.SimpleDialog.ICON_INFO);
-	Dialog.cfg.queueProperty("buttons", buttons);
-
-	Dialog.render(document.body);
-	Dialog.show();
-
-	// make link to open in new window
-	links = document.getElementById('wysiwygInfobox').getElementsByTagName('a');
-
-	for (i=0; i<links.length; i++) {
-		links[i].onclick = function(e) {
-			var newWindow = window.open(this.getAttribute('href'), '_blank');
-			newWindow.focus();
-			return false;
-		}
-	}
-}
-
 // show first time edit message
 function wysiwygShowFirstEditMessage(title, message, dismiss) {
 	// client-site check for anons/logged-in
@@ -77,12 +42,10 @@ function wysiwygShowFirstEditMessage(title, message, dismiss) {
 	}
 
 	// tracking
-	WET.byStr('wysiwyg/firstTimeEditMessage');
+	FCK.Track('/firstTimeEditMessage');
 
-	// create and show YUI message
-	wysiwygShowInfobox(title, message, dismiss, function() {
-		this.hide();
-
+	// create and show message popup
+	FCK.ShowConfirm(message, title, function() {
 		var checkbox = document.getElementById('wysiwyg-first-edit-dont-show-me');
 
 		if (checkbox && checkbox.checked) {
@@ -92,11 +55,12 @@ function wysiwygShowFirstEditMessage(title, message, dismiss) {
 				// send AJAX request
 				sajax_do_call('WysiwygFirstEditMessageSave', [], function() {});
 			}
-			// for anon store in cookie
-			else {
-				$.cookies.set('wysiwyg-cities-edits', '1', {hoursToLive: 24 * 365 * 5, domain: document.domain, path: '/'});
-			}
+			// for anons/logged-in store in cookie (logged-in included - RT #17951)
+			$.cookies.set('wysiwyg-cities-edits', '1', {hoursToLive: 24 * 365 * 5, domain: document.domain, path: '/'});
 		}
+	}, function() {
+		// hide cancel button before dialog is shown
+		$('#wysiwygConfirmCancel').hide();
 	});
 }
 

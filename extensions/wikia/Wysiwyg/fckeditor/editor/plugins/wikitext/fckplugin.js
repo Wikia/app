@@ -1,5 +1,5 @@
 // Rewrite the link command to use our link.html
-FCKCommands.RegisterCommand('Link', new FCKDialogCommand('Link', FCKLang.DlgLnkWindowTitle, FCKConfig.PluginsPath + 'wikitext/dialogs/link.html', 400, 250));
+FCKCommands.RegisterCommand('Link', new FCKDialogCommand('Link', FCKLang.InsertLinkLbl, FCKConfig.PluginsPath + 'wikitext/dialogs/link.html', 400, 250));
 
 // Register templates editor
 FCK.TemplateClickCommand = new FCKDialogCommand('Template', '&nbsp;', FCKConfig.PluginsPath + 'wikitext/dialogs/template.html', 780, 490);
@@ -34,7 +34,7 @@ FCKTildesCommand.prototype = {
 	}
 } ;
 FCKCommands.RegisterCommand('Tildes', new FCKTildesCommand());
-var oTildesItem = new FCKToolbarButton( 'Tildes', 'Add your signature' ) ;
+var oTildesItem = new FCKToolbarButton( 'Tildes', FCKLang.ToolbarSignature);
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/sig.gif' ;
 FCKToolbarItems.RegisterItem( 'Tildes', oTildesItem );
 
@@ -56,7 +56,7 @@ FCKAddImageCommand.prototype = {
 	}
 } ;
 FCKCommands.RegisterCommand('AddImage', new FCKAddImageCommand());
-var oTildesItem = new FCKToolbarButton( 'AddImage', 'Add image' ) ;
+var oTildesItem = new FCKToolbarButton( 'AddImage', window.parent.wmu_imagebutton ) ;
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/addImage.png' ;
 FCKToolbarItems.RegisterItem( 'AddImage', oTildesItem );
 
@@ -139,8 +139,7 @@ FCK.SwitchEditMode = function() {
 					FCK.Track('/wikitext_comment/popup');
 				}
 
-				//macbre: just show old-school alert()
-				alert(messages);
+				FCK.ShowInfoDialog(messages);
 			} else {
 				var separator = res.getResponseHeader('X-sep');
 				if(typeof separator == "undefined") separator = res.getResponseHeader('X-Sep');
@@ -203,10 +202,12 @@ FCK.InsertDirtySpanAfter = function(node) {
 	FCKDomTools.InsertAfterNode(node, span);
 }
 
+//
 // abstraction layer to get/set metadata entries
+//
 FCK.SetMetaData = function(refid, data) {
 	refid = parseInt(refid);
-	FCK.wysiwygData[refid] = FCK.jQuery().extend(true/* deep */, FCK.wysiwygData[refid], data);
+	FCK.wysiwygData[refid] = FCK.jQuery().extend(true/* deep */, FCK.wysiwygData[refid] ? FCK.wysiwygData[refid] : {}, data);
 
 	// store JSON encoded meta data in _fck_meta_data attribute
 	var node = FCK.GetElementByRefId(refid);
@@ -240,13 +241,28 @@ FCK.AddMetaData = function(refid, node, data) {
 	FCK.NodesWithRefId[refid] = node;
 	FCK.SetMetaData(refid, data);
 
-	// add editor instance info
-	node.setAttribute('_fck_editor_instance', FCK.EditorInstanceId);
+	if (node) {
+		// set refid
+		node.setAttribute('refid', refid);
+
+		// add editor instance info
+		node.setAttribute('_fck_editor_instance', FCK.EditorInstanceId);
+	}
 }
 
-FCK.DeleteMetaData = function(refid) {
+FCK.DeleteMetaData = function(refid, removeNodeToo) {
 	refid = parseInt(refid);
-	delete FCK.wysiwygData[refid];
+
+	// assign NULL so we won't break numbering inside meta-data array
+	FCK.wysiwygData[refid] = null;
+
+	// remove placeholder node with refid from DOM ...
+	var node = FCK.GetElementByRefId(refid);
+	if (node && removeNodeToo) {
+		FCKDomTools.RemoveNode(node);
+	}
+
+	// ... and from the list
 	delete FCK.NodesWithRefId[refid];
 }
 
@@ -464,12 +480,20 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 			if(target.tagName == 'INPUT') {
 				var refid = target.getAttribute('refid');
 				var type = target.getAttribute('_fck_type');
-				if(refid && type != 'template') {
-					if (FCK.Track && FCK.wysiwygData) {
-						FCK.Track('/wikitextbox/' + (FCK.wysiwygData[refid] ? FCK.wysiwygData[refid].type : 'unknown'));
+
+				if(refid) {
+					switch (type) {
+						case 'template':
+						case 'comment':
+							// they have their own edit dialogs
+							break;
+
+						default:
+							// show popup saying "switch to wikitext mode"
+							var data = FCK.GetMetaData(refid);
+							FCK.Track('/wikitextbox/' + (data ? data.type : 'unknown'));
+							FCK.ShowInfoDialog(FCKLang.DlgSwitchToWikitext);
 					}
-					// show simple YUI dialog
-					FCK.ShowInfoDialog('To edit this section please switch to WikiText view by clicking the "Source" button');
 				}
 			}
 			// probably IE - go up the DOM tree looking for refid element of the image
@@ -496,7 +520,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 	// setup source mode
 	else {
 		// hide currently shown template preview
-		FCK.TemplatePreviewInit();
+		FCK.PreviewInit();
 
 		// add Tab handler -> move to summary field
 		FCKTools.AddEventListener(FCK.EditingArea.Textarea, 'keydown', function(e) {
@@ -528,7 +552,7 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 FCK.SetupElementsWithRefId = function() {
 
 	// init templates preview
-	FCK.TemplatePreviewInit();
+	FCK.PreviewInit();
 
 	// get all elements with refid attribute and handle them by value of _fck_type attribute
 	var nodes = FCK.GetNodesWithRefId();
@@ -554,7 +578,7 @@ FCK.SetupElementsWithRefId = function() {
 
 		switch(type) {
 			case 'template':
-				FCK.TemplatePreviewAdd(node);
+				FCK.PreviewAdd(node);
 				break;
 
 			case 'image':
@@ -584,6 +608,11 @@ FCK.SetupElementsWithRefId = function() {
 				if ( (typeof FCK.VideoSetupGalleryPlaceholder != 'undefined') && (data.name == 'videogallery') ) {
 					FCK.VideoSetupGalleryPlaceholder(node);
 				}
+				break;
+
+			case 'comment':
+				FCK.PreviewAdd(node);
+				break;
 		}
 
 		// fix issues with input tags and cursor
@@ -612,7 +641,7 @@ FCK.ShowInfoDialog = function(text, title) {
 	});
 }
 
-FCK.ShowConfirm = function(question, title, callback) {
+FCK.ShowConfirm = function(question, title, callback, afterInit) {
 	// use jQuery make modal plugin
 	FCK.jQuery.getScript(window.parent.stylepath + '/common/jquery/jquery.wikia.modal.js?' + FCKConfig.StyleVersion, function() {
 		// no title provided
@@ -640,6 +669,11 @@ FCK.ShowConfirm = function(question, title, callback) {
 			}
 		});
 		FCK.jQuery('#wysiwygConfirmCancel').click(closeDialog);
+
+		// call afterInit callback
+		if (typeof afterInit == 'function') {
+			afterInit();
+		}
 
 		// show modal
 		FCK.jQuery("#wysiwygConfirm").makeModal({width: 450});
@@ -986,7 +1020,7 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 
 	// add "move" option for images handled by contentEditable
 	if (FCK.UseContentEditable) {
-		overlay.innerHTML += '<span class="imageOverlayDrag">move</span>';
+		overlay.innerHTML += '<span class="imageOverlayDrag">' + FCKLang.Move + '</span>';
 	}
 
 	// show overlay menu
@@ -1063,7 +1097,7 @@ FCK.ProtectImageRemove = function(refid, dontAsk) {
 	if (dontAsk) {
 		callback();
 	} else {
-		FCK.ShowConfirm('Are you sure you want to remove this image?', 'Remove this image', callback);
+		FCK.ShowConfirm(FCKLang.DlgImageRemoveContent, FCKLang.DlgImageRemoveTitle, callback);
 	}
 }
 
@@ -1216,48 +1250,47 @@ FCK.ProtectImageAdd = function(wikitext, extraData) {
 }
 
 //
-// onmouseover template preview
+// onmouseover cloud preview (templates and comments)
 //
+FCK.PreviewCloud = false;
+FCK.PreviewTimeouts = {Tag: false, Cloud: false};
 
-FCK.TemplatePreviewCloud = false;
-FCK.TemplatePreviewTimeouts = {Tag: false, Cloud: false};
-
-FCK.TemplatePreviewInit = function() {
-	if (FCK.TemplatePreviewCloud) {
-		FCK.TemplatePreviewCloud.parentNode.removeChild(FCK.TemplatePreviewCloud);
-		FCK.TemplatePreviewCloud = false;
-		FCK.TemplatePreviewTimeouts = {Tag: false, Cloud: false};
+FCK.PreviewInit = function() {
+	if (FCK.PreviewCloud) {
+		FCK.PreviewCloud.parentNode.removeChild(FCK.PreviewCloud);
+		FCK.PreviewCloud = false;
+		FCK.PreviewTimeouts = {Tag: false, Cloud: false};
 	}
 }
 
-FCK.TemplatePreviewAdd = function(placeholder) {
+FCK.PreviewAdd = function(placeholder) {
 
 	var docObj = FCKTools.GetElementDocument(FCK.EditingArea.TargetElement);
 
 	// initialize preview cloud
-	if (!FCK.TemplatePreviewCloud) {
-		FCK.TemplatePreviewCloud = docObj.createElement('DIV');
-		docObj.body.appendChild(FCK.TemplatePreviewCloud);
+	if (!FCK.PreviewCloud) {
+		FCK.PreviewCloud = docObj.createElement('DIV');
+		docObj.body.appendChild(FCK.PreviewCloud);
 
-		FCK.TemplatePreviewCloud.id = 'wysiwygTemplatePreviewCloud';
-		FCK.TemplatePreviewCloud.innerHTML = '<div id="wysiwygTemplatePreviewCloudInner"></div>';
+		FCK.PreviewCloud.id = 'wysiwygPreviewCloud';
+		FCK.PreviewCloud.innerHTML = '<div id="wysiwygPreviewCloudInner"></div>';
 
-		FCKTools.AddEventListener(FCK.TemplatePreviewCloud, 'mouseover', function(e) {
+		FCKTools.AddEventListener(FCK.PreviewCloud, 'mouseover', function(e) {
 			// clear timeouts
-			clearTimeout(FCK.TemplatePreviewTimeouts.Tag);
-			clearTimeout(FCK.TemplatePreviewTimeouts.Cloud);
+			clearTimeout(FCK.PreviewTimeouts.Tag);
+			clearTimeout(FCK.PreviewTimeouts.Cloud);
 		});
 
-		FCKTools.AddEventListener(FCK.TemplatePreviewCloud, 'mouseout', function(e) {
+		FCKTools.AddEventListener(FCK.PreviewCloud, 'mouseout', function(e) {
 			// hide preview 1 sec. after mouseout from cloud
-			FCK.TemplatePreviewTimeouts.Cloud = setTimeout('FCK.TemplatePreviewHide()', 1000);
+			FCK.PreviewTimeouts.Cloud = setTimeout('FCK.PreviewHide()', 1000);
 		});
 	}
 
 	var refId = placeholder.getAttribute('refid');
 
 	// remove any existing preview cloud
-	var previewDiv = docObj.getElementById('wysiwygTemplatePreview' + refId);
+	var previewDiv = docObj.getElementById('wysiwygPreview' + refId);
 
 	if (previewDiv) {
 		FCKDomTools.RemoveNode(previewDiv);
@@ -1267,96 +1300,129 @@ FCK.TemplatePreviewAdd = function(placeholder) {
 	var preview = placeholder.nextSibling;
 	previewDiv = docObj.createElement('div');
 
-	FCK.TemplatePreviewCloud.firstChild.appendChild( previewDiv );
+	FCK.PreviewCloud.firstChild.appendChild( previewDiv );
 
-	previewDiv.id = 'wysiwygTemplatePreview' + refId;
-	placeholder.title = 'Click to edit this template or use drag&drop to move template';
+	previewDiv.id = 'wysiwygPreview' + refId;
 
 	// try to use cached preview from wysiwygData
-	previewDiv.innerHTML = (FCK.wysiwygData[refId].preview ? FCK.wysiwygData[refId].preview : preview.value);
+	var data = FCK.GetMetaData(refId);
+	previewDiv.innerHTML = (data.preview ? data.preview : preview.value);
 	previewDiv.setAttribute('refid', refId);
+
+	switch (data.type) {
+		case 'template':
+			// show tooltip only for templates
+			placeholder.title = FCKLang.TemplateClickToEdit;
+			break;
+
+		case 'comment':
+			// show tooltip only for templates
+			placeholder.title = FCKLang.CommentClickToEdit;
+			break;
+	}
 
 	// sometimes innerHTML contains whitespices at the end -> fix it
 	previewDiv.innerHTML = previewDiv.innerHTML.Trim();
 	previewDiv.style.display = 'none';
 
 	// reset template's margin/padding/align
-	FCK.TemplatePreviewReset(previewDiv);
+	FCK.PreviewReset(previewDiv);
 
 	// remove preview div from editing area and store preview in wysiwygData
 	if (preview && preview.nodeName.IEquals('input') && preview.type == 'text') {
 		preview.parentNode.removeChild(preview);
-		FCK.wysiwygData[refId].preview = previewDiv.innerHTML;
+		FCK.SetMetaData(refId, {'preview': previewDiv.innerHTML});
 	}
 
 	// setup events (remove listener first to avoid multiple event firing)
-	FCKTools.RemoveEventListener(placeholder, 'mouseover', FCK.TemplatePreviewOnPlaceholderMouseover);
-	FCKTools.RemoveEventListener(placeholder, 'mouseout', FCK.TemplatePreviewOnPlaceholderMouseout);
-	FCKTools.RemoveEventListener(placeholder, 'click', FCK.TemplatePreviewOnPlaceholderClick);
-	FCKTools.RemoveEventListener(previewDiv, 'click', FCK.TemplatePreviewOnPreviewClick);
+	FCKTools.RemoveEventListener(placeholder, 'mouseover', FCK.PreviewOnPlaceholderMouseover);
+	FCKTools.RemoveEventListener(placeholder, 'mouseout', FCK.PreviewOnPlaceholderMouseout);
+	FCKTools.RemoveEventListener(placeholder, 'click', FCK.PreviewOnPlaceholderClick);
+	FCKTools.RemoveEventListener(previewDiv, 'click', FCK.PreviewOnPreviewClick);
 
 	// register events handlers
-	FCKTools.AddEventListener(placeholder, 'mouseover', FCK.TemplatePreviewOnPlaceholderMouseover);
-	FCKTools.AddEventListener(placeholder, 'mouseout', FCK.TemplatePreviewOnPlaceholderMouseout);
+	FCKTools.AddEventListener(placeholder, 'mouseover', FCK.PreviewOnPlaceholderMouseover);
+	FCKTools.AddEventListener(placeholder, 'mouseout', FCK.PreviewOnPlaceholderMouseout);
 
 	// events firing template editor
-	FCKTools.AddEventListener(placeholder, 'click', FCK.TemplatePreviewOnPlaceholderClick);
-	FCKTools.AddEventListener(previewDiv, 'click', FCK.TemplatePreviewOnPreviewClick);
+	FCKTools.AddEventListener(placeholder, 'click', FCK.PreviewOnPlaceholderClick);
+	FCKTools.AddEventListener(previewDiv, 'click', FCK.PreviewOnPreviewClick);
 }
 
-FCK.TemplatePreviewOnPlaceholderMouseover = function(e) {
-	FCK.TemplatePreviewShow( FCK.YE.getTarget(e) );
+FCK.PreviewOnPlaceholderMouseover = function(e) {
+	FCK.PreviewShow( FCK.YE.getTarget(e) );
 
-	clearTimeout(FCK.TemplatePreviewTimeouts.Tag);
-	clearTimeout(FCK.TemplatePreviewTimeouts.Cloud);
+	clearTimeout(FCK.PreviewTimeouts.Tag);
+	clearTimeout(FCK.PreviewTimeouts.Cloud);
 }
 
-FCK.TemplatePreviewOnPlaceholderMouseout = function(e) {
+FCK.PreviewOnPlaceholderMouseout = function(e) {
 	// hide preview 0,5 sec. after mouseout from tag
-	FCK.TemplatePreviewTimeouts.Tag = setTimeout('FCK.TemplatePreviewHide()', 500);
+	FCK.PreviewTimeouts.Tag = setTimeout('FCK.PreviewHide()', 500);
 }
 
-FCK.TemplatePreviewOnPlaceholderClick = function(e) {
+FCK.PreviewOnPlaceholderClick = function(e) {
 	var e = FCK.YE.getEvent(e);
 	var target = FCK.YE.getTarget(e);
 	var refid = target.getAttribute('refid');
 
 	data = FCK.GetMetaData(refid);
 
-	FCK.TemplateWizard = {
-		'name':		data.name,
-		'params':	data.templateParams,
-		'refid':	refid
-	};
+	switch (data.type) {
+		case 'template':
+			FCK.TemplateWizard = {
+				'name':		data.name,
+				'params':	data.templateParams,
+				'refid':	refid
+			};
 
-	FCK.TemplateClickCommand.Execute();
+			FCK.TemplateClickCommand.Execute();
+			break;
+
+		case 'comment':
+			// comments editing
+			FCK.EditCommentRefId = refid;
+			FCK.EditCommentCommand.Execute();
+			break;
+	}
 }
 
-FCK.TemplatePreviewOnPreviewClick = function(e) {
+FCK.PreviewOnPreviewClick = function(e) {
 	// prevent clicking on links inside template preview
 	FCK.YE.stopEvent( FCK.YE.getEvent(e) );
-	var refid = FCK.TemplatePreviewCloud.getAttribute('refid');
+	var refid = FCK.PreviewCloud.getAttribute('refid');
 
 	data = FCK.GetMetaData(refid);
 
-	FCK.TemplateWizard = {
-		'name':		data.name,
-		'params':	data.templateParams,
-		'refid':	refid
-	};
+	switch (data.type) {
+		case 'template':
+			FCK.TemplateWizard = {
+				'name':		data.name,
+				'params':	data.templateParams,
+				'refid':	refid
+			};
 
-	FCK.TemplateClickCommand.Execute();
+			FCK.TemplateClickCommand.Execute();
+			break;
+
+		case 'comment':
+			// comments editing
+			FCK.EditCommentRefId = refid;
+			FCK.EditCommentCommand.Execute();
+			break;
+	}
 }
 
 
 // show template preview
-FCK.TemplatePreviewShow = function(placeholder) {
+FCK.PreviewShow = function(placeholder) {
 
 	var refId = placeholder.getAttribute('refid');
-	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refId);
+	var data = FCK.GetMetaData(refId);
+	var preview = FCKTools.GetElementDocument(FCK.PreviewCloud).getElementById('wysiwygPreview' + refId);
 
 	// hide all previews / show just the one we need
-	var previews = FCK.TemplatePreviewCloud.firstChild.childNodes;
+	var previews = FCK.PreviewCloud.firstChild.childNodes;
 
 	for (p=0; p<previews.length; p++) {
 		previews[p].style.display = 'none';
@@ -1383,13 +1449,13 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	var showUnder = true;
 
 	// reset preview height
-	FCK.TemplatePreviewCloud.firstChild.style.height = 'auto';
+	FCK.PreviewCloud.firstChild.style.height = 'auto';
 
 	if (cloudPos.y + previewHeight > iFrameHeight) {
 		// if needed decrease preview height
 		if (cloudPos.y < 280) {
 			previewHeight = cloudPos.y - 80;
-			FCK.TemplatePreviewCloud.firstChild.style.height = previewHeight + 'px';
+			FCK.PreviewCloud.firstChild.style.height = previewHeight + 'px';
 		}
 
 		// show it over the placeholder
@@ -1398,44 +1464,45 @@ FCK.TemplatePreviewShow = function(placeholder) {
 	}
 
 	// set preview position
-	FCK.TemplatePreviewCloud.style.left = cloudPos.x + 'px';
-	FCK.TemplatePreviewCloud.style.top = cloudPos.y + 'px';
+	FCK.PreviewCloud.style.left = cloudPos.x + 'px';
+	FCK.PreviewCloud.style.top = cloudPos.y + 'px';
 
 	// show template preview and cloud
-	FCK.TemplatePreviewCloud.style.display = 'block';
-	FCK.TemplatePreviewCloud.className = showUnder ? 'cloudUnder' : 'cloudOver';
+	FCK.PreviewCloud.style.display = 'block';
+	FCK.PreviewCloud.className = data.type + 'cloud ' + (showUnder ? 'cloudUnder' : 'cloudOver');
 
-	FCK.TemplatePreviewCloud.setAttribute('refid', refId);
+	FCK.PreviewCloud.setAttribute('refid', refId);
 }
 
-FCK.TemplatePreviewHide = function() {
-	FCK.TemplatePreviewCloud.style.display = 'none';
+FCK.PreviewHide = function() {
+	FCK.PreviewCloud.style.display = 'none';
 }
 
 // set/get preview cloud HTML for given template
-FCK.TemplatePreviewSetHTML = function(refid, html) {
-	var preview = FCKTools.GetElementDocument(FCK.TemplatePreviewCloud).getElementById('wysiwygTemplatePreview' + refid);
+FCK.PreviewSetHTML = function(refid, html) {
+	var preview = FCKTools.GetElementDocument(FCK.PreviewCloud).getElementById('wysiwygPreview' + refid);
 	preview.innerHTML = html;
 
-	FCK.wysiwygData[refid].preview = html;
+	FCK.SetMetaData(refid, {'preview': html});
 
 	// reset margin/padding/align
-	FCK.TemplatePreviewReset(preview);
+	FCK.PreviewReset(preview);
 
 	FCK.log('saved template preview for #' + refid);
 }
 
-FCK.TemplatePreviewGetHTML = function(refid) {
-	return FCK.wysiwygData[refid].preview;
+FCK.PreviewGetHTML = function(refid) {
+	var data = FCK.GetMetaData(refid);
+	return data.preview;
 }
 
-FCK.TemplatePreviewSetName = function(refid, name) {
+FCK.PreviewSetName = function(refid, name) {
 	var input = FCK.GetElementByRefId(refid);
 	input.value = FCK.YAHOO.lang.trim(name);
 }
 
 // reset template preview margins/padding/float/align
-FCK.TemplatePreviewReset = function(previewDiv) {
+FCK.PreviewReset = function(previewDiv) {
 	if (previewDiv.firstChild && previewDiv.firstChild.nodeType == 1) {
 		FCK.YD.addClass(previewDiv.firstChild, 'resetTemplate');
 		previewDiv.firstChild.removeAttribute('align');
@@ -1552,22 +1619,28 @@ FCK.InsertTemplate = function(refid, name, params) {
 	FCK.log(FCK.GetMetaData(refid));
 
 	// add placeholder event handlers
-	FCK.TemplatePreviewAdd(placeholder);
+	FCK.PreviewAdd(placeholder);
 
 	// generate template preview
-	FCK.ParseWikitext(wikitext, function(html, FCK, data) {
+	FCK.RegenerateTemplatePreview(refid);
+}
+
+// regenerate template preview
+FCK.RegenerateTemplatePreview = function(refid) {
+	var data = FCK.GetMetaData(refid);
+
+	FCK.ParseWikitext(data.originalCall, function(html, FCK, data) {
 		refid = data.refid;
 
 		// update metaData entry and preview
-		FCK.SetMetaData(refid, {preview: html});
-		FCK.TemplatePreviewAdd(FCK.GetElementByRefId(refid));
+		FCK.SetMetaData(refid, {'preview': html});
+		FCK.PreviewAdd(FCK.GetElementByRefId(refid));
 
 		FCK.log('template #'+refid+' preview updated');
 	}, {
 		'refid': refid
 	});
 }
-
 
 FCKCommands.RegisterCommand('InsertTemplate', new FCKInsertTemplateCommand());
 
@@ -1594,12 +1667,63 @@ FCKToolbarInsertTemplateCombo.prototype.CreateItems = function( targetSpecialCom
 	for(key in FCK.templateList) {
 		targetSpecialCombo.AddItem(key, (FCK.templateList[key].desc) ? FCK.templateList[key].desc : FCK.templateList[key].name);
 	}
-	targetSpecialCombo.AddItem(":other:", "Other template / magic word", '', true);
+	targetSpecialCombo.AddItem(":other:", FCKLang.TemplateOther, '', true);
 }
 
 var oInsertTemplateItem = new FCKToolbarInsertTemplateCombo();
 FCKToolbarItems.RegisterItem('InsertTemplate', oInsertTemplateItem);
 
+// add new magic word __bar__
+FCK.InsertMagic = function(refid, magic) {
+
+	// remove current template placeholder
+	if (refid > -1) {
+		FCK.log('old template #' + refid + ' removed');
+		FCK.DeleteMetaData(refid, true);
+	}
+
+	// generate new refid
+	refid = FCK.GetFreeRefId();
+
+	FCK.log('inserting magic word __' + magic + '__ as #'+refid);
+
+	// create new placeholder and add it to the article
+	placeholder = FCK.AddPlaceholder(refid, 'double underscore', '__' + magic + '__');
+
+	// fix placeholder by adding "dirty" tags
+	FCK.FixWikitextPlaceholder(placeholder);
+
+	// update metaData
+	FCK.SetMetaData(refid, {description: '__' + magic + '__'});
+}
+
+// comments editing
+FCK.EditCommentCommand = new FCKDialogCommand('Comment', FCKLang.Comment, FCKConfig.PluginsPath + 'wikitext/dialogs/comment.html', 400, 200);
+FCK.EditComment = function(refid, comment) {
+	var data = FCK.GetMetaData(refid);
+
+	// remove <!-- and --> if they were added in edit window
+	comment = comment.replace(/<!--/g, '').replace(/-->/g, '');
+
+	// create preview
+	var preview = comment.replace(/\n/g, '<br />');
+
+	// update metadata
+	comment = '<!--' + comment + '-->';
+	FCK.SetMetaData(refid, {'originalCall': comment});
+
+	// update preview
+	FCK.PreviewSetHTML(refid, preview);
+
+	FCK.log([comment, preview]);
+}
+
+FCK.RemoveComment = function(refid) {
+	FCK.log('Removing comment #' + refid);
+
+	// remove placeholder and entry from meta-data	
+	FCK.DeleteMetaData(refid, true);
+}
 
 // regenerate elements with refid after redo/undo
 FCK.Events.AttachEvent("OnUndoRedo", function() {
@@ -1723,30 +1847,11 @@ FCK.CheckPasteCompare = function() {
 	}
 
 	var diff = FCK.Diff(oldHTML, newHTML);
+	var pasteFromDifferentWiki = false;
 
 	FCK.log(diff);
 
 	if (diff != null) {
-		// check for _fck_editor_instance attribute
-		var editorInstance = diff.html.match(/_fck_editor_instance="(\d+)"[^>]*>/);
-
-		if (editorInstance != null && (parseInt(editorInstance[1]) != FCK.EditorInstanceId) ) {
-			FCK.log('Pasted from different editor instance!');
-			FCK.Track('/paste/outside');
-
-			// TODO: messagize
-			FCK.ShowInfoDialog('To copy from another article you must first click the "wikitext source mode" button on the toolbar of both the original and new pages');
-
-			// replace with old HTML and set events on placeholders
-			FCK.EditorDocument.body.innerHTML = oldHTML;
-			FCK.SetupElementsWithRefId();
-
-			// unblock paste
-			FCK._CheckPasteOldHTML = false;
-
-			return;
-		}
-
 		// search for refid attributes in pasted HTML
 		var re = /refid="(\d+)"[^>]*>/g;
 		var matches = [];
@@ -1754,6 +1859,33 @@ FCK.CheckPasteCompare = function() {
 		while (match = re.exec(diff.html)) {
 			matches.push(match);
 		}
+
+		// check for _fck_editor_instance attribute
+		var editorInstance = diff.html.match(/_fck_editor_instance="([^"]+)"[^>]*>/);
+
+		// track pasting from different editor instance / different wikis
+		if ( editorInstance != null && editorInstance[1] != FCK.EditorInstanceId ) {
+			FCK.log('Pasted from different editor instance!');
+			FCK.Track('/paste/outside');
+
+			// get city id of wiki text was copied from
+			var sourceCityId = parseInt(editorInstance[1].split('-')[0]);
+
+			if (sourceCityId != parseInt(window.parent.wgCityId)) {
+				pasteFromDifferentWiki = true;
+				FCK.log('Pasted from different wiki (city #' + sourceCityId  +')!');
+				FCK.Track('/paste/another_wiki');
+			}
+		}
+		else {
+			if (matches.length > 0) {
+				FCK.Track('/paste/inside');
+			}
+			else {
+				FCK.Track('/paste/plainText');
+			}
+		}
+
 
 		// scan refids found in pasted HTML
 		if (matches.length > 0) {
@@ -1763,33 +1895,47 @@ FCK.CheckPasteCompare = function() {
 			// here's HTML we're going to change
 			var newHTML = newHTML.substring(diff.index, newHTML.length);
 
-			// make replacement in diff
+			// create fake node
+			var fakeNode = FCK.EditorDocument.createElement('div');
+
+			// make replacements in diff
 			for(n=0; n<matches.length; n++) {
 				var refid = parseInt(matches[n][1]);
-				FCK.log('Checking refid #' + refid);
+
+				// get HTML of pasted node
+				var nodeHTML = diff.html.match(new RegExp('<[^>]*refid="' + refid + '"[^>]*>'));
+
+				// get meta-data from _fck_meta_data attribute
+				fakeNode.innerHTML = nodeHTML;
+				var data = FCK.GetMetaDataFromNode(fakeNode.firstChild);
 
 				// generate new refid
-				var newRefId = FCK.GetFreeRefId();
+  				var newRefId = FCK.GetFreeRefId();
 
-				// copy meta-data into new refid
-				FCK.wysiwygData[newRefId] = window.parent.$().extend(true, {}, FCK.wysiwygData[refid]);
-				FCK.log('New refid #' + newRefId);
+				// debug log
+				FCK.log('Working on pasted node with refid #' + refid + ' (' + data.type  + ') -> refid #' + newRefId);
+				FCK.log(data);
+
+				// copy meta-data
+				FCK.AddMetaData(newRefId, false, data);
 
 				// replace old refid with new one
-				var re = new RegExp('refid="' + refid + '"([^>]*>)');
-				newHTML = newHTML.replace(re, 'refid="' + newRefId + '"$1');
+				newHTML = newHTML.replace(new RegExp('refid="' + refid + '"([^>]*>)'), 'refid="' + newRefId + '"$1');
+
+				// do more staff for some placeholders
+				switch(data.type) {
+					case 'template':
+						// regenerate template preview if pasted from different wiki
+						if (pasteFromDifferentWiki) {
+							FCK.RegenerateTemplatePreview(newRefId);
+						}
+						break;
+				}
 			}
-
-			//FCK.log(newHTML);
-
-			FCK.Track('/paste/inside');
 
 			// set new HTML and events on placeholders
 			FCK.EditorDocument.body.innerHTML = html + newHTML;
 			FCK.SetupElementsWithRefId();
-		}
-		else {
-			FCK.Track('/paste/plainText');
 		}
 	}
 

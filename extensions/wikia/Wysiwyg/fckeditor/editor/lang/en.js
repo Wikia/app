@@ -531,5 +531,54 @@ DlgAboutInfo		: "For further information go to",
 DlgDivGeneralTab	: "General",
 DlgDivAdvancedTab	: "Advanced",
 DlgDivStyle		: "Style",
-DlgDivInlineStyle	: "Inline Style"
+DlgDivInlineStyle	: "Inline Style",
+
+//
+// Wikia messages
+//
+Move			: "Move",
+
+// video/image editing
+DlgImageRemoveTitle	: "Remove this image",
+DlgImageRemoveContent	: "Are you sure you want to remove this image?",
+DlgVideoRemoveTitle	: "Remove this video",
+DlgVideoRemoveContent	: "Are you sure you want to remove this video?",
+
+DlgSwitchToWikitext	: "To edit this section please switch to WikiText view by clicking the 'View Wikitext' button",
+
+// templates
+TemplateOther		: "Other template / magic word",
+TemplateClickToEdit	: "Click to edit this template or use drag&drop to move template",
+TemplateSearchFor	: "Search for Template",
+TemplateInsert		: "Insert",
+TemplateBrowseFor	: "Browse for Template",
+TemplateMostFrequenty	: "Most Frequently Used",
+TemplateMagicWords	: "Magic words",
+TemplateMagicWordsLink	: "http://help.wikia.com/wiki/Help:Magic_words",
+TemplateChooseAnother	: "choose another template",
+TemplateView		: "view template page (opens a new window)",
+TemplateEditorHint	: "Change the values on the left and click to preview. When you're done making your edits, click to save",
+TemplateParameters	: "Parameters",
+
+// comments
+CommentClickToEdit	: "Click to edit this comment or use drag&drop to move comment",
+Comment			: "Comment",
+CommentRemove		: "Remove",
+
+// links
+LinkInternal		: "Internal link",
+LinkExternal		: "External link",
+LinkArticleName		: "Article name",
+LinkInternalText	: "Link text (if different than Article name)",
+LinkURL			: "URL",
+LinkExternalText	: "Link text (if different than URL)",
+LinkExternalNumbered	: "create a numbered link",
+
+// toolbar
+ToolbarH2		: "Section Heading",
+ToolbarH3		: "Sub Heading",
+ToolbarPre		: "Preformatted",
+ToolbarNormal		: "Remove Heading",
+ToolbarSignature	: "Add your signature",
+ToolbarWidescreen	: "Toggle widescreen",
 };

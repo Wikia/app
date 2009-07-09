@@ -21,7 +21,7 @@ FCKAddVideoCommand.prototype = {
 FCKCommands.RegisterCommand('AddVideo', new FCKAddVideoCommand());
 
 // toolbar item icon
-var oTildesItem = new FCKToolbarButton( 'AddVideo', 'Add video' ) ;
+var oTildesItem = new FCKToolbarButton( 'AddVideo', window.parent.vet_imagebutton ) ;
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'video/addVideo.png';
 
 // register toolbar item
@@ -225,7 +225,7 @@ FCK.VideoRemove = function(refid, dontAsk) {
 	if (dontAsk) {
 		callback();
 	} else {
-		FCK.ShowConfirm('Are you sure you want to remove this video?', 'Remove this video', callback);
+		FCK.ShowConfirm(FCKLang.DlgVideoRemoveContent, FCKLang.DlgVideoRemoveTitle, callback);
 	}
 }
 
@@ -385,7 +385,7 @@ FCK.VideoSetupOverlayMenu = function(refid, div) {
 
 	// add "move" option for videos handled by contentEditable
 	if (FCK.UseContentEditable) {
-		overlay.innerHTML += '<span class="videoOverlayDrag">move</span>';
+		overlay.innerHTML += '<span class="videoOverlayDrag">' + FCKLang.Move + '</span>';
 	}
 
 	// show overlay menu

@@ -74,9 +74,16 @@ if(IsIE8) {
 var FCK_ORIGINAL_DOMAIN = document.domain;
 
 if(document.domain != 'localhost') {
-	var chunks = document.domain.split('.');
-	var d = chunks.pop(); // com
-	d = chunks.pop() + '.' + d; // wikia.com
+
+	// change domain only for wikis with foo.wikia.com domain
+	if (document.domain.indexOf('wikia.com') > -1) {
+		var chunks = document.domain.split('.');
+		var d = chunks.pop(); // com
+		d = chunks.pop() + '.' + d; // wikia.com
+	}
+	else {
+		d = document.domain;
+	}
 
 	// report new document.domain
 	if (typeof window.console != 'undefined') {
@@ -90,7 +97,10 @@ if(document.domain != 'localhost') {
 			GLOBAL_POPUP_BUCKET_FCK_IE8[i].document.domain = d;
 		}
 
-		document.domain = d;
+		// change only when needed
+		if (document.domain != d) {
+			document.domain = d;
+		}
 	}
 	catch(e) {
 		// ...
@@ -193,7 +203,8 @@ document.write( FCKTools.GetStyleHtml( FCKConfig.SkinEditorCSS ) ) ;
 
 // Load the language file.
 FCKLanguageManager.Initialize() ;
-LoadScript( 'lang/' + FCKLanguageManager.ActiveLanguage.Code + '.js' ) ;
+//LoadScript( 'lang/' + FCKLanguageManager.ActiveLanguage.Code + '.js' ) ;
+LoadScript(FCKConfig.i18nRequest + '&uselang=' + FCKLanguageManager.ActiveLanguage.Code);
 
 	</script>
 	<script type="text/javascript">

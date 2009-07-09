@@ -31,10 +31,13 @@
 
 // Domain relaxation logic.
 if(document.domain != 'localhost') {
-	var chunks = document.domain.split('.');
-	var d = chunks.pop(); // com
-	d = chunks.pop() + '.' + d; // wikia.com
-	document.domain = d;
+	// change domain only for wikis with foo.wikia.com domain
+	if (document.domain.indexOf('wikia.com') > -1) {
+		var chunks = document.domain.split('.');
+		var d = chunks.pop(); // com
+		d = chunks.pop() + '.' + d; // wikia.com
+		document.domain = d;
+	}
 }
 
 var E = frameElement._DialogArguments.Editor ;
@@ -736,7 +739,7 @@ var onReadyRegister = function()
 			document.write( Args().Title );
 		// ]]></script></div>
 		<div id="backButton"></div>
-		<div id="closeButton" onclick="Cancel();">close</div>
+		<div id="closeButton" onclick="Cancel();"><span fckLang="DlgBtnClose">close</span></div>
 		<div class="contents" id="contents">
 			<div id="header">
 				<div id="TabsRow" class="PopupTabArea" style="display: none">

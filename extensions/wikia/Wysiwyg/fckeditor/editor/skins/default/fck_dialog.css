@@ -230,6 +230,7 @@ body, .BackColor
 	font-size: 13px;
 	color: #fff;
 	cursor: pointer;
+	text-transform: lowercase;
 }
 
 #closeButton
@@ -245,6 +246,7 @@ body, .BackColor
 	background-image: url(images/close.png);
 	background-repeat: no-repeat;
 	background-position: left 50%;
+	text-transform: lowercase;
 }
 
 .rtl #closeButton
@@ -288,6 +290,7 @@ body, .BackColor
 	overflow: auto;
 	overflow-x: hidden;
 	text-align: left;
+	width: 356px !important;
 	/* ie6 specific: */
 	_margin: 0;
 }

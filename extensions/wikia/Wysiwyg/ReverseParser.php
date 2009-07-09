@@ -94,7 +94,13 @@ class ReverseParser {
 			$replacements = array(
 				"#<\/{$formatTags}>(<a[^>]+>)<\\1>#i"		=> '$2',
 				"#<\/{$formatTags}>(<\/a>)<\\1>#i"		=> '$2',
-				"#<\/{$formatTags}>(<\/a><a[^>]+>)<\\1>#i"	=> '$2'
+				"#<\/{$formatTags}>(<\/a><a[^>]+>)<\\1>#i"	=> '$2',
+				 // to allow using U and STRIKE in Visual mode
+				"#&lt;(/?(?:u|strike))&gt;#i" 			=> '\x7flt$1\x7fgt',
+				// HTML entities (&ndash;) RT #18269
+				"#&(\w+);#i"					=> '\x7f-ent-$1;',
+				// HTML entities (&#91;)
+				"/&#(\d+);/i"					=> '\x7f-ent-#$1;',
 			);
 
 			$htmlFixed = preg_replace(array_keys($replacements), array_values($replacements), $html, -1, $count);
@@ -122,6 +128,15 @@ class ReverseParser {
 				wfDebug("Wysiwyg ReverseParserNew: HTML parsing failed!\n");
 				$out = '';
 			}
+
+			// wikitext cleanup
+			$out = strtr($out, array(
+				// to allow using U and STRIKE in Visual mode
+				'\x7flt' => '<',
+				'\x7fgt' => '>',
+				// HTML entities (RT #18269)
+				'\x7f-ent-' => '&',
+			));
 		}
 
 		wfProfileOut(__METHOD__);
@@ -335,6 +350,13 @@ class ReverseParser {
 									// is list
 									if ($this->isList($previousNode)) {
 										$textContent = "\n{$textContent}";
+
+										// RT #17553
+										if ($previousNode->childNodes->length == 1) {
+											if ($previousNode->firstChild->textContent == '') {
+												$textContent = substr($textContent, 1);
+											}
+										}
 									}
 
 									// is <pre> or <div>
@@ -377,7 +399,7 @@ class ReverseParser {
 							if ( $nextNode && ($nextNode->nodeName == 'p') && $this->getIndentationLevel($nextNode) === false ) {
 								$linesAfter++;
 							}
-							$textContent = $node->getAttribute('space_after') . $textContent;
+							$textContent = $node->getAttribute('_wysiwyg_space_after') . $textContent;
 						} else {
 							$linesBefore = $node->previousSibling ? 2 : 0;
 							$linesAfter = 1;
@@ -612,9 +634,14 @@ class ReverseParser {
 						$out = $this->handleLink($node, $textContent);
 						break;
 
-					// templates, magic words, parser hooks placeholders
+					// templates, magic words, parser hooks placeholders, comments
 					case 'input':
 						$out = $this->handlePlaceholder($node, $textContent);
+						break;
+
+					// whitelisted images (RT #18490)
+					case 'img':
+						$out = $this->handleMedia($node, '');
 						break;
 				}
 
@@ -678,6 +705,11 @@ class ReverseParser {
 				$out = "\n";
 			}
 
+			// RT #18259 - handle <!--EOL_BLOCK-->
+			if ($this->isEOLBlockComment($node)) {
+				$out = "\n";
+			}
+
 		} else if($node->nodeType == XML_TEXT_NODE) {
 
 			// if the next sibling node of the current one text node is comment (NEW_LINE_1)
@@ -685,6 +717,13 @@ class ReverseParser {
 			// e.g. "abc <!--NEW_LINE_1-->" => "abc<!--NEW_LINE_1-->"
 			if($node->nextSibling && $node->nextSibling->nodeType == XML_COMMENT_NODE && $node->nextSibling->data == "NEW_LINE_1") {
 				$textContent = substr($textContent, 0, -1);
+			}
+
+			// if the previous sibling node of the current one text node is comment (EOL_BLOCK) - RT #18259
+			// then cut the first character of current text node (it must be space added by FCK after convertion of \n)
+			// e.g. "<!--EOL_BLOCK--> " => "<!--EOL_BLOCK-->"
+			if($node->previousSibling && $node->previousSibling->nodeType == XML_COMMENT_NODE && $node->previousSibling->data == 'EOL_BLOCK') {
+				$textContent = substr($textContent, 1);
 			}
 
 			// remove last space from last child of paragraph
@@ -701,6 +740,7 @@ class ReverseParser {
 					case 'table':
 					case 'tbody':
 					case 'tr':
+					case 'td': // RT #18502
 					case 'body':
 						$textContent = '';
 						break;
@@ -761,6 +801,7 @@ class ReverseParser {
 
 		wfDebug("ReverseParserNew cleanupTextContent for: >>{$text}<<\n");
 
+/*
 		// 1. wrap repeating apostrophes using <nowiki>
 		$text = preg_replace("/('{2,})/", '<nowiki>$1</nowiki>', $text);
 
@@ -794,6 +835,7 @@ class ReverseParser {
 
 		// 8. wrap repeating ~ using <nowiki>
 		$text = preg_replace("/(~{3,5})/", '<nowiki>$1</nowiki>', $text);
+*/
 
 		wfProfileOut(__METHOD__);
 		return $text;
@@ -857,6 +899,10 @@ class ReverseParser {
 				// {{template}}
 				//case 'curly brackets':
 				case 'template':
+					return $refData['originalCall'];
+
+				// <!-- foo -->
+				case 'comment':
 					return $refData['originalCall'];
 
 				// __NOTOC__ ...
@@ -1077,16 +1123,23 @@ class ReverseParser {
 	 * Returns wikimarkup for image/video tags
 	 */
 	private function handleMedia($node, $content) {
+		$refid = $node->getAttribute('refid');
+		$data = isset($this->data[$refid]) ? $this->data[$refid] : false;
 
-		// check is perfomed earlier
-		$data = $this->data[ $node->getAttribute('refid') ];
+		if (empty($data)) {
+			return '';
+		}
 
 		switch($data['type']) {
 			case 'image':
 			case 'video':
 			case 'video_add':
-				$out = $data['original'];
-				return $out;
+				return $data['original'];
+
+			// RT #18490
+			case 'image: whitelisted':
+				return $data['href'];
+				break;
 
 			default:
 				return '';
@@ -1218,8 +1271,8 @@ class ReverseParser {
 			return true;
 		}
 
-		// HTML tags (e.g. image containers, ignore inline tags)
-		if ($node->getAttribute('_wysiwyg_line_start') && !in_array($node->nodeName, array('a')) ) {
+		// HTML tags (e.g. image containers, ignore inline tags - RT #18491)
+		if ($node->getAttribute('_wysiwyg_line_start') && !in_array($node->nodeName, array('a', 'i', 'b')) ) {
 			return true;
 		}
 
@@ -1283,6 +1336,13 @@ class ReverseParser {
 	}
 
 	/**
+	 * Return true if given node is EOL_BLOCK comment in valid node
+	 */
+	private function isEOLBlockComment($node) {
+		return ($node->data == 'EOL_BLOCK' && ($this->isHeaderNode($node->parentNode) || in_array($node->parentNode->nodeName, array('div', 'p'))));
+	}
+
+	/**
 	 * input: '<div id="123" washtml="true" _wysiwyg_new_line="false" style="border: solid 1px">'
 	 * output: ' id="123" style="border: solid 1px"'
 	 */
@@ -1299,8 +1359,9 @@ class ReverseParser {
 
 		$attStr = '';
 		foreach ($node->attributes as $attrName => $attrNode) {
-			// ignore attributes used internally by Wysiwyg
-			if( in_array($attrName, array('washtml', '_wysiwyg_new_line', '_wysiwyg_line_start', '_wysiwyg_new')) ) {
+			// ignore attributes used internally by Wysiwyg,
+			// "washtml" and with "_wysiwyg_" prefix
+			if ( ($attrName == 'washtml') || (substr($attrName, 0, 9) == '_wysiwyg_') ) {
 				continue;
 			}
 			$attStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';

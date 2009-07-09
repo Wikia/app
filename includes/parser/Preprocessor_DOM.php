@@ -980,7 +980,12 @@ class PPFrame_DOM implements PPFrame {
 						} else {
 							//Wysiwyg: mark template call and add metadata to wysiwyg array
 							if($wgWysiwygParserEnabled && ($originalCall = $xpath->query( 'originalCall', $contextNode )->item( 0 ))) {
-								$out .= Wysiwyg_WrapTemplate(htmlspecialchars_decode($originalCall->textContent), $ret['text'], $lineStart);
+								$textContent = htmlspecialchars_decode($originalCall->textContent);
+								$out .= Wysiwyg_WrapTemplate($textContent, $ret['text'], $lineStart);
+								if(strpos($textContent, "\x7f-comment-") !== false || strpos($textContent, "<!--") !== false) {
+									global $wgWysiwygCommentEdgeCase;
+									$wgWysiwygCommentEdgeCase = true;
+								}
 							} else {
 								$out .= $ret['text'];
 							}
@@ -1012,7 +1017,28 @@ class PPFrame_DOM implements PPFrame {
 						|| ( $this->parser->ot['pre'] && $this->parser->mOptions->getRemoveComments() )
 						|| ( $flags & self::STRIP_COMMENTS ) )
 					{
-						$out .= '';
+						if(!empty($wgWysiwygParserEnabled )) {
+							if(strlen($out) === 0 || substr($out, -1) == "\n") {
+
+								if(substr($contextNode->textContent, -1) == "\n") {
+									$add = "\n";
+									$text = substr($contextNode->textContent, 0, -1);
+								} else {
+									$add = "";
+									$text = $contextNode->textContent;
+								}
+
+								$refId = Wysiwyg_SetRefId('comment', array('text' => $text), false, true);
+								$out .= "\x7f-comment-{$refId}-\x7f{$add}";
+							} else {
+								global $wgWysiwygCommentEdgeCase;
+								$wgWysiwygCommentEdgeCase = true;
+								$out .= '';
+							}
+						} else {
+							$out .= '';
+						}
+
 					}
 					# Add a strip marker in PST mode so that pstPass2() can run some old-fashioned regexes on the result
 					# Not in RECOVER_COMMENTS mode (extractSections) though

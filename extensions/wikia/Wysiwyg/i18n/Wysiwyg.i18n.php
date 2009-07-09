@@ -19,4 +19,19 @@ $messages['en'] = array(
 	'wysiwyg-tooltip' => "'''New!''' Edit toolbar. See [[Help:New editor|help]] to learn more",
 	'enablerichtexteditor' => 'Enable Rich Text Editor',
 	'wysiwyg-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
+	'wysiwyg-toolbar-text-appearance' => 'Text Appearance',
+	'wysiwyg-toolbar-lists-and-links' => 'Lists and links',
+	'wysiwyg-toolbar-insert' => 'Insert',
+	'wysiwyg-toolbar-wiki-templates' => 'Wiki Templates',
+	'wysiwyg-toolbar-controls' => 'Controls',
+);
+$messages['pl'] = array(
+	'wysiwyg' => 'FCKeditor dla MediaWiki',
+	'enablerichtexteditor' => 'Włącz edytor wizualny',
+	'wysiwyg-enablerichtexteditormessage' => 'Edytor wizualny został włączony!',
+	'wysiwyg-toolbar-text-appearance' => 'Wygląd tekstu',
+	'wysiwyg-toolbar-lists-and-links' => 'Listy i hiperłącza',
+	'wysiwyg-toolbar-insert' => 'Wstaw',
+	'wysiwyg-toolbar-wiki-templates' => 'Szablony',
+	'wysiwyg-toolbar-controls' => 'Narzędzia',
 );

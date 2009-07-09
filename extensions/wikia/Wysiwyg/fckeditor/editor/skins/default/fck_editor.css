@@ -473,7 +473,7 @@ td.childrenHidden textarea, td.childrenHidden iframe
     background-color: #c4cdd6;
 }
 
-#wysiwygTemplatePreviewCloud {
+#wysiwygPreviewCloud {
 	position: absolute;
 	display: none;
 	z-index: 10;
@@ -493,8 +493,8 @@ td.childrenHidden textarea, td.childrenHidden iframe
 	background-position: -10px 100%;
 	padding-bottom: 9px;
 }
- 
-#wysiwygTemplatePreviewCloudInner {
+
+#wysiwygPreviewCloudInner {
 	min-width: 50px;
 	max-width: 300px;
 	max-height: 250px;
@@ -505,17 +505,23 @@ td.childrenHidden textarea, td.childrenHidden iframe
 	padding: 5px;
 }
 
-#wysiwygTemplatePreviewCloudInner * {
+#wysiwygPreviewCloudInner * {
 	cursor: default;
 	border: none;
 }
 
-.cloudUnder #wysiwygTemplatePreviewCloudInner {
+.cloudUnder #wysiwygPreviewCloudInner {
 	border-top: none;
 }
 
-.cloudOver #wysiwygTemplatePreviewCloudInner {
+.cloudOver #wysiwygPreviewCloudInner {
 	border-bottom: none;
+}
+
+.commentCloud {
+	background-position: -19px 0;
+	font-family: monospace !important;
+	margin-top: -6px;
 }
 
 .resetTemplate {

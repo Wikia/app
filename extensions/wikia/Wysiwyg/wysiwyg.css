@@ -30,12 +30,14 @@ form #toolbar img {
 	font-size: 0.9em;
 }
 
-#wysiwygInfobox p {
-	margin: 0 5px 0 25px;
+#wysiwygConfirm p {
+	line-height: 1.5em;
+	margin: 0 5px;
 }
 
-#wysiwygInfobox .bd input {
-	margin: 5px 5px 5px 25px;
+#wysiwygConfirm input {
+	margin: 0 5px;
+	vertical-align: text-top;
 }
 
 /** Tooltip **/

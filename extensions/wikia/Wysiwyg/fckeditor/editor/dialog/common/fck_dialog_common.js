@@ -24,10 +24,13 @@
 
 // Automatically detect the correct document.domain (#123).
 if(document.domain != 'localhost') {
-	var chunks = document.domain.split('.');
-	var d = chunks.pop(); // com
-	d = chunks.pop() + '.' + d; // wikia.com
-	document.domain = d;
+	// change domain only for wikis with foo.wikia.com domain
+	if (document.domain.indexOf('wikia.com') > -1) {
+		var chunks = document.domain.split('.');
+		var d = chunks.pop(); // com
+		d = chunks.pop() + '.' + d; // wikia.com
+		document.domain = d;
+	}
 }
 
 // Attention: FCKConfig must be available in the page.

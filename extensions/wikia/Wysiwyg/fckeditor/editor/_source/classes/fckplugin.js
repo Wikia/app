@@ -48,7 +48,8 @@ FCKPlugin.prototype.Load = function()
 			sLang = this.AvailableLangs[0] ;
 
 		// Add the main plugin script.
-		LoadScript( this.Path + 'lang/' + sLang + '.js' ) ;
+		//LoadScript( this.Path + 'lang/' + sLang + '.js' ) ;
+		LoadScript(FCKConfig.i18nRequest + '&uselang=' + sLang);
 	}
 
 	// Add the main plugin script.

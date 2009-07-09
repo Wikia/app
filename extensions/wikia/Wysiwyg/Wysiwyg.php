@@ -3,12 +3,13 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Wikia Rich Text Editor (Wysiwyg)',
 	'description' => 'FCKeditor integration for MediaWiki',
 	'url' => 'http://www.wikia.com/wiki/c:help:Help:New_editor',
-	'version' => 0.15,
+	'version' => 0.16,
 	'author' => array('Inez Korczyński', 'Maciej Brencz', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
 );
 
 $dir = dirname(__FILE__).'/';
-$wgExtensionMessagesFiles['Wysiwyg'] = $dir.'Wysiwyg.i18n.php';
+$wgExtensionMessagesFiles['Wysiwyg'] = $dir.'i18n/Wysiwyg.i18n.php';
+$wgExtensionMessagesFiles['FCK'] = $dir.'i18n/FCK.i18n.php';
 $wgAjaxExportList[] = 'Wysywig_Ajax';
 $wgAjaxExportList[] = 'WysiwygToolbarRemoveTooltip';
 $wgEnableMWSuggest = true;
@@ -138,6 +139,42 @@ function Wysiwyg_Variables(&$vars) {
 	global $wgWysiwygPath;
 	$vars['wgWysiwygPath'] = $wgWysiwygPath;
 
+	// magic words list
+	$magicWords = MagicWord::getVariableIDs();
+
+	// double underscore magic words list (RT #18631)
+	$magicWordsUnderscore = MagicWord::$mDoubleUnderscoreIDs;
+
+	// filter MAG_NOWYSIWYG and MAG_NOSHAREDHELP out from the list (RT #18631)
+	// and add to the list of double underscore magic words
+	$magicWords = array_flip($magicWords);
+	foreach($magicWords as $magic => $tmp) {
+		if (substr($magic, 0, 4) == 'MAG_') {
+			unset($magicWords[$magic]);
+			$magicWordsUnderscore[] = strtolower(substr($magic, 4));
+		}
+	}
+	$magicWords = array_flip($magicWords);
+
+	// merge magic words lists, in FCK check type of magic word by searching $magicWordUnderscore list
+	$magicWords = array_merge($magicWords, $magicWordsUnderscore);
+	sort($magicWords);
+	$vars['wysiwygMagicWordList'] = $magicWords;
+
+	sort($magicWordsUnderscore);
+	$vars['wysiwygMagicWordUnderscoreList'] = $magicWordsUnderscore;
+
+	// toolbar tooltip
+	$toolbarTooltip = WysiwygToolbarAddTooltip();
+	if (!empty($toolbarTooltip)) {
+		$vars['wysiwygToolbarTooltip'] = $toolbarTooltip;
+	}
+
+	// toolbar buckets & items
+	$toolbar = WysiwygGetToolbarData();
+	$vars['wysiwygToolbarBuckets'] = $toolbar['buckets'];
+	$vars['wysiwygToolbarItems'] = $toolbar['items'];
+
 	return true;
 }
 
@@ -192,18 +229,6 @@ function Wysiwyg_Initial($form) {
 	// set global flag - we're using wysiwyg to edit this page
 	$wgWysiwygEdit = true;
 
-	// magic words list
-	$magicWords = MagicWord::$mVariableIDs;
-	sort($magicWords);
-
-	// JS
-	// TODO: move to Wysiwyg_Variables
-	$wgOut->addInlineScript(
-		'var templateList = ' . WysiwygGetTemplateList() . ";\n" .
-		'var templateHotList = ' . WysiwygGetTemplateHotList() . ";\n" .
-		'var magicWordList = ' . Wikia::json_encode($magicWords, true) . ";"
-	);
-
 	// RT #17007
 	global $wgWysiwygNoWysiwygFound;
 	if (!empty($wgWysiwygNoWysiwygFound)) {
@@ -215,55 +240,10 @@ function Wysiwyg_Initial($form) {
 	// CSS
 	$wgOut->addExtensionStyle("$wgExtensionsPath/wikia/Wysiwyg/wysiwyg.css?$wgStyleVersion");
 
-	//
-	// add support for new toolbar
-	//
-
-	// toolbar data
-	// TODO: get it from MW article
-	// TODO: i18n
-	$toolbarData = array(
-		array(
-			'name'  => 'Text Appearance',
-			'items' => array('H2', 'H3', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Normal', 'Pre', 'Outdent', 'Indent')
-		),
-		array(
-			'name'  => 'Lists and Links',
-			'items' => array('UnorderedList', 'OrderedList', 'Link', 'Unlink')
-		),
-		array(
-			'name'  => 'Insert',
-			'items' => array('AddImage', 'AddVideo', 'Table', 'Tildes')
-		),
-		array(
-			'name'  => 'Wiki Templates',
-			'items' => array('InsertTemplate')
-		),
-		array(
-			'name'  => 'Controls',
-			'items' => array('Undo', 'Redo', 'Widescreen', 'Source')
-		),
-	);
-
-	// generate buckets and items data
-	$toolbarBuckets = array();
-	$toolbarItems = array();
-
-	foreach($toolbarData as $bucket) {
-		$toolbarBuckets[] = $bucket['name'];
-
-		$toolbarItems[] = '-';
-		$toolbarItems = array_merge($toolbarItems, $bucket['items']);
-	}
-
-	// tooltip
-	$toolbarTooltip = WysiwygToolbarAddTooltip();
-
 	// TODO: move to Wysiwyg_Variables
 	$wgOut->addInlineScript(
-		"var wysiwygToolbarBuckets = " . Wikia::json_encode($toolbarBuckets) . ";\n" .
-		"var wysiwygToolbarItems = " . Wikia::json_encode($toolbarItems) . ";" .
-		( !empty($toolbarTooltip) ? "\nvar wysiwygToolbarTooltip = " . Xml::encodeJsVar($toolbarTooltip) . ";" : '')
+		"\tvar templateList = " . WysiwygGetTemplateList() . ';' .
+		"\n\tvar templateHotList = " . WysiwygGetTemplateHotList() . ';'
 	);
 
 	// RT #17499: detect wikis which may cause troubles when serving JS/iframe from images.wikia.com
@@ -275,6 +255,9 @@ function Wysiwyg_Initial($form) {
 	else {
 		// serve JS/iframe from images.wikia.com
 		$wgWysiwygPath = $wgExtensionsPath . '/wikia/Wysiwyg';
+
+		// change document domain to wikia.com
+		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
 	}
 
 	// load JS files
@@ -284,7 +267,6 @@ function Wysiwyg_Initial($form) {
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'Wysiwyg_Initial2';
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';
 	$wgHooks['EditPageBeforeEditButtons'][] = 'Wysiwyg_BlockSaveButton';
-	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
 
 	wfProfileOut(__METHOD__);
 	return true;
@@ -367,7 +349,7 @@ function Wysiwyg_CheckEdgeCases($text) {
 	$edgeCasesFound = array();
 	$edgeCases = array(
 		'regular' => array(
-			'<!--' => 'wysiwyg-edgecase-comment', // HTML comments
+			//'<!--' => 'wysiwyg-edgecase-comment', // HTML comments
 			'{{{' => 'wysiwyg-edgecase-triplecurls', // template parameters
 		),
 		'regexp' => array(
@@ -480,6 +462,12 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 		return array('type' => 'edgecase', 'edgecaseText' => wfMsg('wysiwyg-edgecase-info').' '.wfMsg('wysiwyg-edgecase-templateintable'));
 	}
 
+	global $wgWysiwygCommentEdgeCase;
+	if(!empty($wgWysiwygCommentEdgeCase)) {
+		return array('type' => 'edgecase', 'edgecaseText' => wfMsg('wysiwyg-edgecase-info').' '.wfMsg('wysiwyg-edgecase-comment'));
+	}
+
+
 	// detect empty line at the beginning of wikitext
 	if($emptyLinesAtStart == 1) {
 		$html = '<!--NEW_LINE-->' . $html;
@@ -513,8 +501,35 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 
 		$templateCallsParsed =  array_combine($matches[1], $templateCallsParsed);
 
+		wfDebug("Wysiwyg HTML {{$html}\n");
+
 		// save name of HTML tag wrapping template output
 		foreach($templateCallsParsed as $refid => $parsed) {
+
+			// get closing tags from the beginning of the original HTML between wtb/wte markers (RT #17553)
+			$wgWysiwygMetaData[$refid]['prefix'] = '';
+
+			preg_match('/\x7f-wtb-'.$refid.'-\x7f(.*)\x7f-wte-'.$refid.'-\x7f/s', $html, $parsedOrig);
+			if (!empty($parsedOrig)) {
+				preg_match('/^\s?(<\/\w+>\s?)+/', ltrim($parsedOrig[1]), $matches);
+				if (!empty($matches)) {
+					$wgWysiwygMetaData[$refid]['prefix'] = rtrim($matches[0]);
+					wfDebug("Wysiwyg template prefix {$matches[0]}\n");
+				}
+			}
+
+			// get closing tags after the wte marker (RT #17553)
+			// they will be compared with tidy'ed preview HTML
+			preg_match('/\x7f-wte-'.$refid.'-\x7f(\s?(<\/\w+>\s?)+)/s', $html, $parsedAfter);
+			if (!empty($parsedAfter)) {
+				$parsedAfter = trim($parsedAfter[2]);
+				wfDebug("Wysiwyg template suffix {$parsedAfter}\n");
+			}
+			else {
+				$parsedAfter = false;
+			}
+
+			// get template wrapping HTML tag
 			$parsed = trim($parsed);
 
 			if (strlen($parsed) > 0 && $parsed{0} != '<') {
@@ -537,11 +552,29 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 
 				// save cleaned HTML for preview in wysiwyg mode
 				$templateCallsParsed[$refid] = $parsed;
+
+				wfDebug("Wysiwyg template #{$refid}: {$parsed}\n");
 			}
 			$wgWysiwygMetaData[$refid]['wrapper'] = $wrapper;
+
+			// RT #17553 - do not fix templates wrapped inside table/div
+			if ( in_array($wrapper, array('table', 'div')) ) {
+				$wgWysiwygMetaData[$refid]['prefix'] = '';
+				$parsedAfter = false;
+			}
+
+			// compare end of template preview with $parsedAfter (RT #17553)
+			if ($parsedAfter !== false) {
+				if ( substr(rtrim($parsed), strlen($parsedAfter) * -1) == $parsedAfter ) {
+					wfDebug("Wysiwyg removing template prefix {$parsedAfter}\n");
+
+					// remove from HTML after wte marker
+					$html = preg_replace("\x7c".'(\x7f-wte-' . $refid . '-\x7f)\s?' . $parsedAfter . "\x7cs", '\\1', $html);
+				}
+			}
 		}
 
-		$html = preg_replace('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/sie', "'<input type=\"button\" refid=\"\\1\" _fck_type=\"template\" value=\"'.\$wgWysiwygMetaData[\\1]['name'].'\" class=\"wysiwygDisabled wysiwygTemplate\" /><input value=\"'.htmlspecialchars(stripslashes(\$templateCallsParsed[\\1])).'\" style=\"display:none\" />'", $html);
+		$html = preg_replace('/\x7f-wtb-(\d+)-\x7f.*?\x7f-wte-\1-\x7f/sie', "\$wgWysiwygMetaData[\\1]['prefix'] . '<input type=\"button\" refid=\"\\1\" _fck_type=\"template\" value=\"'.\$wgWysiwygMetaData[\\1]['name'].'\" class=\"wysiwygDisabled wysiwygTemplate\" /><input value=\"'.htmlspecialchars(stripslashes(\$templateCallsParsed[\\1])).'\" style=\"display:none\" />'", $html);
 	}
 
 	// fix for multiline pre
@@ -552,8 +585,9 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 	// fix for IE
 	$html = str_replace("\n", "<!--EOL1-->\n", $html);
 
-	$html = preg_replace_callback("/<li>(\s*)/", create_function('$matches','return "<li space_after=\"".$matches[1]."\">";'), $html);
-	$html = preg_replace_callback("/<h([1-6][^>]*)>(\s*)/", create_function('$matches','return "<h".$matches[1]." space_after=\"".$matches[2]."\">";'), $html);
+	// correctly handle whitespaces at the beginning of list item and inside headers
+	$html = preg_replace_callback("/<li>(\s*)/", create_function('$matches','return "<li _wysiwyg_space_after=\"".$matches[1]."\">";'), $html);
+	$html = preg_replace_callback("/<h([1-6][^>]*)>(\s*)/", create_function('$matches','return "<h".$matches[1]." _wysiwyg_space_after=\"".$matches[2]."\">";'), $html);
 
 	// replace placeholders with <input> grey boxes
 	if (!empty($wgWysiwygMarkers)) {
@@ -582,7 +616,7 @@ function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
 	// RT #17007
 	$html = str_replace("\x0a\x20\x0d\x0a", "\x0a", $html);
 
-	$html = preg_replace_callback("/<li space_after=\"(\s*)\">/", create_function('$matches','return "<li>".$matches[1];'), $html);
+	$html = preg_replace_callback("/<li _wysiwyg_space_after=\"(\s*)\">/", create_function('$matches','return "<li>".$matches[1];'), $html);
 
 	require_once(dirname(__FILE__).'/ReverseParser.php');
 
@@ -766,6 +800,12 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			}
 			break;
 
+		// RT #18490
+		case 'image: whitelisted':
+			$data['href'] = $params['text'];
+			$result = $params['text'];
+			break;
+
 		case 'external link: raw image':
 			$data['href'] = $params['text'];
 			break;
@@ -803,6 +843,29 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 
 			// class name based on hook type
 			$className .= ' wysiwygHook' . ucfirst($params['name']);
+
+			break;
+
+		case 'comment':
+			$data['originalCall'] = $params['text'];
+
+			// get content of comment
+			$value = substr(trim($params['text']), 4, -3);
+
+			// preview
+			$value = strtr(htmlspecialchars(trim($value)), array("\n" => '<br />'));
+			$data['preview'] = $value;
+
+			// add comment placeholder
+			$placeholder = Xml::element('input', array(
+				'type' => 'button',
+				'refid' => $refId,
+				'_fck_type' => $type,
+				'class' => $className
+			));
+
+			$marker = "\x7f-comment-{$refId}-\x7f";
+			$wgWysiwygMarkers[$marker] = $placeholder;
 
 			break;
 
@@ -844,9 +907,15 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		if (isset($data['description'])) {
 			$data['description'] =  str_replace(' wasHtml="1"', '', $data['description']);
 		}
-		$result = htmlspecialchars($result);
 
-		$result = "<input type=\"button\" refid=\"{$refId}\" _fck_type=\"{$type}\" value=\"{$result}\" title=\"{$result}\" class=\"{$className}\" />";
+		$result = Xml::element('input', array(
+			'type' => 'button',
+			'refid' => $refId,
+			'_fck_type' => $type,
+			'value' => $result,
+			'title' => $result,
+			'class' => $className
+		));
 
 		// macbre: use placeholders
 		// they will be replaced with <input> grey boxes
@@ -1020,6 +1089,51 @@ function WysiwygGetTemplateHotList() {
 }
 
 /**
+ * Returns toolbar buckets and items names
+ *
+ * @author Maciej Brencz <macbre@wikia-inc.com>
+ */
+function WysiwygGetToolbarData() {
+	$toolbarData = array(
+		array(
+			'name'  => wfMsg('wysiwyg-toolbar-text-appearance'),
+			'items' => array('H2', 'H3', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'Normal', 'Pre', 'Outdent', 'Indent')
+		),
+		array(
+			'name'  => wfMsg('wysiwyg-toolbar-lists-and-links'),
+			'items' => array('UnorderedList', 'OrderedList', 'Link', 'Unlink')
+		),
+		array(
+			'name'  => wfMsg('wysiwyg-toolbar-insert'),
+			'items' => array('AddImage', 'AddVideo', 'Table', 'Tildes')
+		),
+		array(
+			'name'  => wfMsg('wysiwyg-toolbar-wiki-templates'),
+			'items' => array('InsertTemplate')
+		),
+		array(
+			'name'  => wfMsg('wysiwyg-toolbar-controls'),
+			'items' => array('Undo', 'Redo', 'Widescreen', 'Source')
+		),
+	);
+
+	// generate buckets and items data
+	$toolbar = array(
+		'buckets' => array(),
+		'items' => array()
+	);
+
+	foreach($toolbarData as $bucket) {
+		$toolbar['buckets'][] = $bucket['name'];
+
+		$toolbar['items'][] = '-';
+		$toolbar['items'] = array_merge($toolbar['items'], $bucket['items']);
+	}
+
+	return $toolbar;
+}
+
+/**
  * Bogus function for setHook
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
@@ -1033,6 +1147,8 @@ function WysiwygParserHookCallback($input, $args, $parser) {
  */
 function WysiwygFirstEditMessageShow() {
 	global $wgUser, $wgCityId;
+
+	//return true; // debug only!
 
 	// for anon users we have JS logic
 	if ($wgUser->isAnon()) {
@@ -1078,8 +1194,9 @@ function WysiwygFirstEditMessage() {
 
 	if ( WysiwygFirstEditMessageShow() ) {
 		// HTML for popup body
-		$body = wfMsgExt('wysiwyg-first-edit-message', 'parse') . '<input type="checkbox" id="wysiwyg-first-edit-dont-show-me" />'.
-			'<label for="wysiwyg-first-edit-dont-show-me">' . wfMsg('wysiwyg-first-edit-dont-show-me') . '</label>';
+		$body = wfMsgExt('wysiwyg-first-edit-message', 'parse') .
+			'<div style="margin: 8px 0"><input type="checkbox" id="wysiwyg-first-edit-dont-show-me" />'.
+			'<label for="wysiwyg-first-edit-dont-show-me">' . wfMsg('wysiwyg-first-edit-dont-show-me') . '</label></div>';
 
 		// properly encode values for JS
 		$title = Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-title') );
@@ -1204,4 +1321,41 @@ function WysiwygParseWikitext($wikitext) {
 	$wgWysiwygParserEnabled = false;
 
 	return new AjaxResponse($html);
+}
+
+/**
+ * Return messages for FCK
+ *
+ * FCK stores its messages in static files. Using AJAX request we can make FCK MW-i18n compatible.
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+$wgAjaxExportList[] = 'WysiwygGetFCKi18n';
+function WysiwygGetFCKi18n() {
+	global $wgExtensionMessagesFiles, $wgLang;
+
+	// load messages (they all have Wysiwyg prefix)
+	wfLoadExtensionMessages('FCK');
+
+	// load messages file to get list of messages we should return
+	$messages = array();
+	require( $wgExtensionMessagesFiles['FCK'] );
+
+	$list = array_keys($messages['en']);
+
+	$messages = array();
+	$messages['Dir'] = ($wgLang->isRTL() ? 'rtl' : 'ltr');
+
+	foreach($list as $msg) {
+		$key = substr($msg, 7);
+		$messages[$key] = wfMsg($msg);
+	}
+
+	$js = 'var FCKLang = ' . Wikia::json_encode($messages) . ';';
+
+	$ret = new AjaxResponse($js);
+	$ret->setContentType('application/x-javascript');
+	$ret->setCacheDuration(86400 * 365 * 10); // 10 years
+
+	return $ret;
 }

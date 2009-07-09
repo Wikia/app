@@ -586,16 +586,16 @@ WideScreenToggle.prototype = {
 
 // register new toolbar items
 FCKCommands.RegisterCommand('H2', new StyleCommand('h2', 'Heading 2'));
-FCKToolbarItems.RegisterItem('H2', new FCKToolbarButton('H2', 'Section Heading')  );
+FCKToolbarItems.RegisterItem('H2', new FCKToolbarButton('H2', FCKLang.ToolbarH2));
 
 FCKCommands.RegisterCommand('H3', new StyleCommand('h3', 'Heading 3'));
-FCKToolbarItems.RegisterItem('H3', new FCKToolbarButton('H3', 'Sub Heading'));
+FCKToolbarItems.RegisterItem('H3', new FCKToolbarButton('H3', FCKLang.ToolbarH3));
 
 FCKCommands.RegisterCommand('Pre', new StyleCommand('pre', 'Preformatted'));
-FCKToolbarItems.RegisterItem('Pre', new FCKToolbarButton('Pre', 'Preformatted'));
+FCKToolbarItems.RegisterItem('Pre', new FCKToolbarButton('Pre', FCKLang.ToolbarPre));
 
 FCKCommands.RegisterCommand('Normal', new StyleCommand('p', 'Normal Text'));
-FCKToolbarItems.RegisterItem('Normal', new FCKToolbarButton('Normal', 'Remove Heading'));
+FCKToolbarItems.RegisterItem('Normal', new FCKToolbarButton('Normal', FCKLang.ToolbarNormal));
 
 FCKCommands.RegisterCommand('Widescreen', new WideScreenToggle());
-FCKToolbarItems.RegisterItem('Widescreen', new FCKToolbarButton('Widescreen', 'Toggle widescreen'));
+FCKToolbarItems.RegisterItem('Widescreen', new FCKToolbarButton('Widescreen', FCKLang.ToolbarWidescreen));

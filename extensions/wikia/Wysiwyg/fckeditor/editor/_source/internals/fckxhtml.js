@@ -502,8 +502,15 @@ FCKXHtml.TagProcessors =
 	span : function( node, htmlNode )
 	{
 		// Firefox may create empty tags when deleting the selection in some special cases (SF-BUG 1084404).
-		if ( htmlNode.innerHTML.length == 0 )
-			return false ;
+		if ( htmlNode.innerHTML.length == 0 ) {
+			// wikia: RT #18484
+			if (node.getAttribute('washtml')) {
+				return node;
+			}
+			else {
+				return false ;
+			}
+		}
 
 		node = FCKXHtml._AppendChildNodes( node, htmlNode, false ) ;
 
