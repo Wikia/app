@@ -1769,8 +1769,11 @@ class WikiFactory {
 
 		$row = $dbr->selectRow(
 			array( "city_cat_mapping", "city_cats" ),
-			array( "city_cats.cat_id as cat_id", "city_cats.cat_name as cat_id" ),
-			array( "city_id" => $city_id ),
+			array( "city_cats.cat_id as cat_id", "city_cats.cat_name as cat_name" ),
+			array(
+				"city_id" => $city_id,
+				"city_cats.cat_id = city_cat_mapping.cat_id"
+			),
 			__METHOD__
 		);
 
