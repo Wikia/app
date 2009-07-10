@@ -219,7 +219,15 @@ class ExternalStorageUpdate {
 			$ret = $dbw->update( "blobs", array( "rev_status" => self::REV_DELETED), $where, __METHOD__ );
 			*/
 			/* remove page from pages table */
-			$dbw->delete( "pages", array( "page_id"	=> $page_id, "page_wikia_id" => $wgCityId ), __METHOD__ );
+			$dbw->update(
+				"pages",
+				array( "page_status" => 2 ),
+				array(
+					"page_id"       => $page_id,
+					"page_wikia_id" => $wgCityId
+				),
+				__METHOD__
+			);
 			/* commit */
 			$dbw->commit();
 		}
