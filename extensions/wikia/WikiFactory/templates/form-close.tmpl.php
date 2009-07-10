@@ -12,6 +12,13 @@ function close_allowToSave() {
 	}
 	return result;
 }
+function checkFlag(id) {
+	var field = document.getElementById(id);
+	var flags = new Array('<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>', '<?=WikiFactory::FLAG_FREE_WIKI_URL?>');
+	for (i = 0; i < flags.length; i++) {
+		if ( id != 'flag_' + flags[i]) document.getElementById('flag_' + flags[i]).checked = field.checked;
+	}
+}
 </script>
 <h2>
     <?=wfMsg('closewiki')?>
@@ -29,8 +36,8 @@ function close_allowToSave() {
 		<ul style="list-style:none;padding:1px 10px">
 			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_CREATE_DB_DUMP?>" value="<?=WikiFactory::FLAG_CREATE_DB_DUMP?>" checked="checked"> <?=wfMsg('closed-create-dump')?></li>
 			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE?>" value="<?=WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE?>" checked="checked"> <?=wfMsg('closed-create-image-archive')?></li>
-			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>" value="<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>" checked="checked"> <?=wfMsg('closed-delete-database-images')?></li>
-			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_FREE_WIKI_URL?>" value="<?=WikiFactory::FLAG_FREE_WIKI_URL?>" checked="checked"> <?=wfMsg('closed-free-url')?></li>
+			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>" onchange="checkFlag(this.id)" value="<?=WikiFactory::FLAG_DELETE_DB_IMAGES?>" checked="checked"> <?=wfMsg('closed-delete-database-images')?></li>
+			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_FREE_WIKI_URL?>" onchange="checkFlag(this.id)" value="<?=WikiFactory::FLAG_FREE_WIKI_URL?>" checked="checked"> <?=wfMsg('closed-free-url')?></li>
 			<li><input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_HIDE_DB_IMAGES?>" value="<?=WikiFactory::FLAG_HIDE_DB_IMAGES?>"> <?=wfMsg('closed-hide-dumps')?></li>
 			<li>
 				<input type="checkbox" name="close_flags[]" id="flag_<?=WikiFactory::FLAG_REDIRECT?>" value="<?=WikiFactory::FLAG_REDIRECT?>"> <?=wfMsg('closed-redirect-url')?>
