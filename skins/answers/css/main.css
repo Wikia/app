@@ -420,11 +420,6 @@ div.inline_form_inside {
 	color: #CCC;
 }
 
-/*** QUESTION MARKS ***/
-#mw-pages a:after {
-	content: '?';
-}
-
 /*** BUTTONS ***/
 a.bigButton {
 	display: block;
