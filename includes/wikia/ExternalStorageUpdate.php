@@ -218,7 +218,6 @@ class ExternalStorageUpdate {
 			);
 			$ret = $dbw->update( "blobs", array( "rev_status" => self::REV_DELETED), $where, __METHOD__ );
 			*/
-			/* remove page from pages table */
 			$dbw->update(
 				"pages",
 				array( "page_status" => 2 ),
