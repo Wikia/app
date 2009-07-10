@@ -87,12 +87,7 @@ Mediawiki.apiCall = function(apiParams, callbackSuccess, callbackError, method, 
 	// For async requests, parse the data. If not, the callbacks will receive an object passed to the callback
 	if (p.async === false) {
 		if (typeof r == "object" && !Mediawiki.e(r.responseText)){
-			if (typeof JSON != "undefiend"){
-				// For browsers that support it, it's more better.
-				return JSON.parse(r.responseText);
-			} else {
-				return eval(r.responseText);
-			}
+			return Mediawiki.json_decode(r.responseText);
 		} else {
 			return false;
 		}
@@ -300,6 +295,7 @@ Mediawiki.error = function (msg){
 	}
 	
 	Mediawiki.updateStatus(msg, true);
+	Mediawiki.d(msg);
 };
 
 
@@ -440,6 +436,22 @@ Mediawiki.isLoggedIn = function( ){
 		Mediawiki.error("Error checking login");
 		Mediawiki.d(Mediawiki.print_r(e));
 		return false;
+	}
+};
+
+Mediawiki.json_decode = function (json){
+	if (typeof JSON != "undefined"){
+		// For browsers that support it, it's more better.
+		return JSON.parse(json);
+	} else {
+		try { 
+			var anon; 
+			eval('anon = ' + json + ';');
+			return anon;
+		} catch (e){
+			Mediawiki.error("Error parsing json string '" + json + "'. Details: " + Mediawiki.print_r(e));
+			return false;
+		}
 	}
 };
 
