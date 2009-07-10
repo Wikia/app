@@ -20,7 +20,11 @@ class StaticChute {
 
 	public function __construct($fileType){
 		if (! in_array($fileType, $this->supportedFileTypes)){
-			trigger_error("Unsupported file type: $fileType", E_USER_ERROR);
+			// macbre: temporary change to fix RT #18825
+			$referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+			$url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+			trigger_error("Unsupported file type: $fileType (referrer: $referrer / url: $url)", E_USER_ERROR);
 			return;
 		}
 
