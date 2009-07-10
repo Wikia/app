@@ -19,12 +19,8 @@ class StaticChute {
 	private $theme = false;
 
 	public function __construct($fileType){
+		// macbre: we will return HTTP 400 when file type is invalid (RT #18825)
 		if (! in_array($fileType, $this->supportedFileTypes)){
-			// macbre: temporary change to fix RT #18825
-			$referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-			$url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-			trigger_error("Unsupported file type: $fileType (referrer: $referrer / url: $url)", E_USER_WARNING);
 			return;
 		}
 
