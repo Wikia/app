@@ -1,9 +1,9 @@
 <html>
+<head>
 <!-- TODO:
 	Speed up page load by looking at blcoking calls
 	Use Wiki.png instead of Wiki2.png
 -->
-<body>
 <!-- Jquery is required for the API itself -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <!-- Jquery UI is just used for this test page -->
@@ -35,7 +35,9 @@ if (match !== null){
 	Mediawiki.debugLevel = match[1];
 }
 </script>
+</head>
 <!-- End Mediawiki API setup -->
+<body>
 
 <div id="tabs">
 	<ul>
@@ -76,9 +78,9 @@ if (match !== null){
                 return false; // Return false so that the form doesn't submit
         }
         function loginWorked (){
-                Mediawiki.updateStatus("Login Successful");
                 $("#loginForm").fadeOut();
                 $("#logoutForm").fadeIn();
+                Mediawiki.updateStatus("Login Successful");
         }
 
         function apiFailed(msg){
@@ -91,7 +93,8 @@ if (match !== null){
         }
 
         if (Mediawiki.isLoggedIn()){
-                loginWorked();
+                $("#loginForm").hide();
+                $("#logoutForm").show();
         }
         </script>
 </div>
@@ -249,7 +252,7 @@ for (var i = 0; i < themes.length; i++){
 		// Figure out what the next one is.
 		var num = $(".fp_block").length + 1;
 		if (num > 10){
-			Mediawiki.updateStatus("No more than 10 categories are allowed");
+			Mediawiki.updateStatus("No more than 10 categories are allowed", true);
 			return false;
 		}
 
