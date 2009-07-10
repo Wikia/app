@@ -1,4 +1,4 @@
-#wikia_page {
+/.#wikia_page {
 	background: #FFF;
 	border: 1px solid #AAA;
 	height: 1%;
@@ -122,7 +122,7 @@ li#control_share {
 }
 #page_tabs {
 	float: right;
-	font-family: arial;
+	font-family: arial, sans-serif;
 }
 #page_tabs li {
 	background-color: #EEE;
@@ -267,7 +267,7 @@ li#control_share {
 	background: url(http://images.wikia.com/common/skins/quartz/images/share_hover_bg.png);
 	color: #FFF;
 	display: none;
-	font-size: 8.5pt; 
+	font-size: 8.5pt;
 	font-weight: bold;
 	height: 21px;
 	left: -32px;
