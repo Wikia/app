@@ -21,6 +21,9 @@ $user = User::newFromName( wfMsgForContent( 'abusefilter-blocker' ) );
 if (!$user->getId()) {
 	$user->addToDatabase();
 	$user->saveSettings();
+	# Increment site_stats.ss_users
+	$ssu = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
+	$ssu->doUpdate();
 } else {
 	// Sorry dude, we need this account.
 	$user->setPassword( null );
@@ -30,7 +33,3 @@ if (!$user->getId()) {
 
 # Promote user so it doesn't look too crazy.
 $user->addGroup( 'sysop' );
-
-# Increment site_stats.ss_users
-$ssu = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
-$ssu->doUpdate();
