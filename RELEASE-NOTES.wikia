@@ -24,6 +24,9 @@
 * Wysiwyg: FCK updated to v2.6.4.1 (Macbre)
 * rt#18765: Add theme specific CSS to CSS served by static chute (Macbre)
 * rt#18795: LeanMonaco: Top left "More" dropdown no longer uses hub-specific links (Macbre)
+* rt#18733: Wikia Contact Mail - Content box fails to [show] (Marooned)
+* rt#18487: CategorySelect: Newline issues with noinclude categories (Marooned)
+* rt#18751: CategorySelect: Ignore gallery tags (Marooned)
 
 == Changes since 200907.1 ==
 * rt#18491: FCK: Formatted text followed by divs gains line feeds when mode switching (Macbre)
