@@ -207,7 +207,7 @@ class ExternalStorageUpdate {
 		global $wgCityId;
 
 		wfProfileIn( __METHOD__ );
-		if ($oArticle instanceof Article) {
+		if( !empty( $page_id ) ) {
 			$dbw = wfGetDBExt( DB_MASTER );
 			/* begin transaction */
 			$dbw->begin();
