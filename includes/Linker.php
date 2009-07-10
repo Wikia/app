@@ -1537,15 +1537,15 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		 # paragraph
 		 . "</ul>\n</td></tr></table>"
 		 . '<script type="' . $wgJsMimeType . '">'
-		/* Wikia change begin - @author: macbre */
-		/* Fixes for #2643 and #3730 */
-		 . 'if (!window.onloadFuncts) var onloadFuncts = [];'
-		 . 'onloadFuncts[onloadFuncts.length] = function() {'
+		/* Wikia change begin - @author: macbre, Marooned */
+		/* Fixes for #2643 and #3730 - macbre */
+		/* Fixes for rt#18733 (do not wait for ads to run this script) - Marooned */
+		 . 'wgAfterContentAndJS.push(function() {'
 		 . ' if (window.showTocToggle) {'
 		 . '  window.tocShowText = "' . Xml::escapeJsString( wfMsg('showtoc') ) . '";'
 		 . '  window.tocHideText = "' . Xml::escapeJsString( wfMsg('hidetoc') ) . '";'
 		 . '  showTocToggle();'
-		 . '}};'
+		 . '}});'
 		/* Wikia change end */
 		 . "</script>\n";
 	}
