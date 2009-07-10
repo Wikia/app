@@ -741,7 +741,7 @@ class HomeDataProvider {
 						<td style=\"background: transparent url({$footerArr['footer-column-3']['image']}) no-repeat scroll 95% 95%\">
 							{$footerArr['footer-column-3']['items']}
 						</td>
-						<td class=\"last\" style=\"background: transparent url({$footerArr['footer-column-2']['image']}) no-repeat scroll 95% 95%\">
+						<td class=\"last\" style=\"background: transparent url({$footerArr['footer-column-4']['image']}) no-repeat scroll 95% 95%\">
 							{$footerArr['footer-column-4']['items']}
 						</td>
 					</tr>
