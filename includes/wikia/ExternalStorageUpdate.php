@@ -6,7 +6,7 @@
 
 
 $wgHooks[ "RevisionInsertComplete" ][]	= "ExternalStorageUpdate::addDeferredUpdate";
-#$wgHooks[ "ArticleDeleteComplete" ][]	= "ExternalStorageUpdate::deleteArticleExternal";
+$wgHooks[ "ArticleDeleteComplete" ][]	= "ExternalStorageUpdate::deleteArticleExternal";
 #$wgHooks[ "RevisionHiddenComplete" ][]	= "ExternalStorageUpdate::hiddenArticleExternal";
 #$wgHooks[ "ArticleRevisionUndeleted" ][] = "ExternalStorageUpdate::undeleteArticleExternal";
 
@@ -211,16 +211,17 @@ class ExternalStorageUpdate {
 			$dbw = wfGetDBExt( DB_MASTER );
 			/* begin transaction */
 			$dbw->begin();
-			/* set revision as 'removed' in blobs table */
+			/* set revision as 'removed' in blobs table
 			$where = array(
 				"rev_page_id"	=> $page_id,
 				"rev_wikia_id"	=> $wgCityId
 			);
 			$ret = $dbw->update( "blobs", array( "rev_status" => self::REV_DELETED), $where, __METHOD__ );
+			*/
 			/* remove page from pages table */
-			$dbw->delete( "pages", array( "page_id"	=> $page_id, "page_wikia_id" => $wgCityId), __METHOD__ );
+			$dbw->delete( "pages", array( "page_id"	=> $page_id, "page_wikia_id" => $wgCityId ), __METHOD__ );
 			/* commit */
-			$dbw->immediateCommit();
+			$dbw->commit();
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
