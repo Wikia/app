@@ -103,22 +103,12 @@
 	clip: rect(0px 336px 16px 320px);
 	left: -320px;
 }
-li#control_share {
-	padding-left: 0;
-}
-#control_share #sharethis_0 {
-	padding-top: 0;
-	padding-bottom: 0;
-	padding-left: 0;
-}
-#sharethis_0 a.stbutton {
-	padding-top: 0;
-	padding-bottom: 0;
-	padding-left: 18px;
+#control_add div {
 	background-position: 0 50% !important;
-}
-.stbutton .stbuttontext {
-	line-height: 32px;
+	background-image: url(http://s7.addthis.com/static/t00/logo1414.gif);
+	background-repeat: no-repeat;
+	clip: auto;
+	left: 0;
 }
 #page_tabs {
 	float: right;
