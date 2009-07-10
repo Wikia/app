@@ -106,7 +106,7 @@
 
 #page_tabs {
 	float: right;
-	font-family: arial;
+	font-family: arial, sans-serif;
 }
 #page_tabs li {
 	background-color: #EEE;
@@ -251,7 +251,7 @@
 	background: url(http://images.wikia.com/common/skins/quartz/images/share_hover_bg.png);
 	color: #FFF;
 	display: none;
-	font-size: 8.5pt; 
+	font-size: 8.5pt;
 	font-weight: bold;
 	height: 21px;
 	left: -32px;
