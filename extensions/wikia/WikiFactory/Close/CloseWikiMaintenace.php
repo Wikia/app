@@ -112,6 +112,7 @@ class CloseWikiMaintenace {
 	public function dumpXMl() {
 		global $wgDBname, $wgDevelEnvironment;
 
+		$db = wfGetDB(DB_SLAVE, "dump", $wgDBname);
 		/**
 		 * @name dumpfile
 		 */
@@ -120,11 +121,9 @@ class CloseWikiMaintenace {
 			"--full",
 			"--quiet",
 			"--output=gzip:{$dumpfile}",
-			"--xml"
+			"--xml",
+			"--server=".$db->getServer()
 		);
-		if( isset( $this->mOptions[ "server" ] ) ) {
-			$args[] = "--server=" . $this->mOptions[ "server" ] ;
-		}
 		Wikia::log( __CLASS__, "info", "dumping {$wgDBname} to {$dumpfile}");
 		if( !$this->mDryRun ) {
 			$dumper = new BackupDumper( $args );
