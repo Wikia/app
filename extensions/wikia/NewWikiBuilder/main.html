@@ -1,8 +1,29 @@
 <html>
 <head>
 <!-- TODO:
-	Speed up page load by looking at blcoking calls
+	Speed up page load by looking at blocking calls
 	Use Wiki.png instead of Wiki2.png
+	Messaging API, swap out hard coded messages calls
+	Finish API for "first pages"
+	Build out "first pages"
+	Implement "Coming Soon" category in starter
+	Make "First pages" accessible via a special page
+	Add Permission checking to settings changer
+	Fix Wiki.png madness
+
+     Known Bugs:
+	Login "sticks" in Safari
+	Odd look when the page first loads. Fine after reorg?
+
+     Questions:  
+	What perms for settings changer?
+	What goes on "Done"?
+
+
+AFTER Christian:
+	Mediawikify - Put main.html into Mediawiki
+	Selenium Test Suite
+	Cross Browser testing
 -->
 <!-- Jquery is required for the API itself -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
@@ -51,7 +72,7 @@ if (match !== null){
 
 <div id="tabs-0">
         <div id="loginForm">
-        <form onSubmit="return handleLoginForm(this)">
+        <form onSubmit="return NWB.handleLoginForm(this)">
         <label class="formLabel">Username:</label> <input type="text" name="lgname" size="10">
         <label class="formLabel">Password:</label> <input type="password" name="lgpassword" size="10"> <br />
         <input type="submit" value="Login">
@@ -60,38 +81,10 @@ if (match !== null){
 
         <div id="logoutForm" style="display:none">
                 You are logged in.
-                <input type="button" value="logout" onClick="return Mediawiki.logout(handleLogoutForm)"/>
+                <input type="button" value="logout" onClick="return Mediawiki.logout(NWB.handleLogoutForm)"/>
         </div>
 
-
-
         <script>
-        function handleLoginForm(f){
-                try { 
-                        Mediawiki.apiUser = f.lgname.value;
-                        Mediawiki.apiPass = f.lgpassword.value;
-                        Mediawiki.updateStatus("Logging In...");
-                        Mediawiki.login(loginWorked, apiFailed);
-                } catch (e) {
-                        Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));    
-                }
-                return false; // Return false so that the form doesn't submit
-        }
-        function loginWorked (){
-                $("#loginForm").fadeOut();
-                $("#logoutForm").fadeIn();
-                Mediawiki.updateStatus("Login Successful");
-        }
-
-        function apiFailed(msg){
-                alert("Api call returned an error: " + msg);
-        }
-        function handleLogoutForm(f){
-                $("#logoutForm").fadeOut();
-                $("#loginForm").fadeIn();
-                Mediawiki.updateStatus("Logout Successful");
-        }
-
         if (Mediawiki.isLoggedIn()){
                 $("#loginForm").hide();
                 $("#logoutForm").show();
@@ -102,7 +95,7 @@ if (match !== null){
 
 <!-- ##############  Add a description to main page ############## -->
 <div id="tabs-1">
-	<form onSubmit="return handleDescriptionForm(this)">
+	<form onSubmit="return Mediawiki.handleDescriptionForm(this)">
 	<div id="desc_form_html">
 	Enter a description for the main page:<br />
 	<textarea name="desc" rows="10" cols="60" id="desc_textarea"></textarea><br />
@@ -111,36 +104,14 @@ if (match !== null){
 	</div>
 
 	<script>
-
-	// Find where main page redirects too
-	var mainPageEnd = Mediawiki.followRedirect("Main Page"); 
-
-	// Bring in the main page 
-	Mediawiki.pullArticleContent(mainPageEnd,	
+	// Setup
+	$(function() {
+		// Bring in the main page 
+		Mediawiki.pullArticleContent(Mediawiki.followRedirect("Main Page"),	
 		function (result){ $("#desc_textarea").val(result);},
-		{"rvsection":0}
-	);
-
-	function handleDescriptionForm (f){
-	  try {
-	     // Save the article
-             Mediawiki.updateStatus("Saving description...");
-	     Mediawiki.editArticle({
-		  "title": mainPageEnd,
-		  "summary": "Adding description to " + mainPageEnd + " via NewWikiBuilder", /* i18n */
-		  "section": 0,
-		  "text": $("#desc_textarea").val()}, 
-		  function(){
-			  NewWikiBuilder.updateStatus("Description Saved"); /* i18n */
-		  },
-		  NewWikiBuilder.handleError);
-	  } catch (e) {
-		  Mediawiki.updateStatus("Error saving description.");
-		  Mediawiki.debug(Mediawiki.print_r(e));
-	  }
-
-	  return false; // Return false so that the form doesn't submit
-	};
+			{"rvsection":0}
+		);
+	});
 	</script>
 </div>
 
@@ -148,7 +119,7 @@ if (match !== null){
 <div id="tabs-2">
 	<div id="logo_form_html">
 	<!-- Hidden iframe to handle the file upload -->
-	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NewWikiBuilder.iframeFormUpload(this)"></iframe>
+	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
 	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='Mediawiki.updateStatus("Uploading image...")'>
 	<input type="hidden" name="action" value="uploadlogo">	
 	<input type="hidden" name="format" value="xml">	
@@ -170,9 +141,11 @@ if (match !== null){
 
 	<script> 
 	// Fill in the background image for the logo
-	normalizedLogo = Mediawiki.getNormalizedTitle(Mediawiki.$("logo_article").value);
-        url = Mediawiki.getImageUrl(normalizedLogo) + '?' + Math.random();
-        $("#logo_current").css("backgroundImage", "url(" + url + ")");
+	$(function() {
+		normalizedLogo = Mediawiki.getNormalizedTitle(Mediawiki.$("logo_article").value);
+		url = Mediawiki.getImageUrl(normalizedLogo) + '?' + Math.random();
+		$("#logo_current").css("backgroundImage", "url(" + url + ")");
+	});
 	</script>
 
 </div>
@@ -183,37 +156,12 @@ if (match !== null){
   <div id="theme_chooser">
     <div id="theme_template" style="display:none">
 	<img id="theme_preview_image_$theme" width="75"><br />
-	<input onClick="changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"><label for="theme_radio_$theme">$Theme</label>
+	<input onClick="NWB.changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"><label for="theme_radio_$theme">$Theme</label>
     </div>
   </div>
 
 <script>
 var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Mediawiki
-
-/* 1. Change the stylesheet on the current page 
- * 2. Save the value using the API
- */
-function changeTheme (theme){
-	// Save the changes using the API
-	if (theme != wgDefaultTheme ) {
-	  Mediawiki.apiCall({
-		"action" : "foundersettings",
-		"changesetting" : "wgDefaultTheme", 
-		"value" : theme}, function() { Mediawiki.updateStatus("Theme Choice Saved") });
-	  wgDefaultTheme = theme;
-	} 
-
-	// Create a link object for the stylesheet
-	var link = document.createElement("link");
-	link.rel = "stylesheet";
-	link.type = "text/css";
-	link.href = "http://images.wikia.com/common/skins/monaco/" + ltheme + "/css/main.css";
-	
-	// Put it in the head so they can see what it will look like
-	var h = document.getElementsByTagName("head").item(0);
-	h.appendChild(link);
-
-}
 
 // TODO: Pull this list from wgSkinTheme?
 var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
@@ -238,55 +186,25 @@ for (var i = 0; i < themes.length; i++){
 	if (wgDefaultTheme == ltheme) {
 		// Check the box and change the theme 
 		$("#theme_radio_" + ltheme).attr("checked", true);
-		changeTheme(ltheme);
+		NWB.changeTheme(ltheme);
 	}
 }
 </script>
+
+</div>
 
 
 <!-- ############## Create first pages ############## -->
 
 <div id="tabs-4">
 	<script>
-	function addAnotherCategory(){
-		// Figure out what the next one is.
-		var num = $(".fp_block").length + 1;
-		if (num > 10){
-			Mediawiki.updateStatus("No more than 10 categories are allowed", true);
-			return false;
-		}
-
-		// Copy the html from the first one, and replicate. Search and replace the names
-		var fp_1 = Mediawiki.$("category_1");
-		fp_html = fp_1.innerHTML;
-		fp_html = fp_html.replace(/category_1/g, 'category_' + num);
-		fp_html = fp_html.replace(/Category 1/, 'Category ' + num);
-
-		// Create a new div and append it. Christian: Make this elegant please.
-		var div = document.createElement("DIV");
-		div.innerHTML = fp_html;
-		div.style.display = "none";
-		div.id = "fp_" + num;
-		div.className = "fp_block";
-		Mediawiki.$("all_fp").appendChild(div);
-		$("#fp_" + num).fadeIn();
-	}
-
-	function removeCategory(category){
-		// TODO: Get this working
-		$("#" + category).remove();
-	}
-
 	function addAnotherPage() {
 		// TODO, as soon as you get to the last page, it adds another
 	}
 	</script>
 	<form>
-	<a href="javascript:addAnotherCategory()">Add Another Category</a>
 	<div id="all_fp">
 	<div class="fp_block" id="category_1">
-	Category 1: <input type="text" name="category_1">
-	<a href="javascript:removeCategory('category_1')">Remove</a> (not working yet)<br />
 	&nbsp; &nbsp; &nbsp; Page 1: <input class="fp_page" type="text" name="category_1_page_1"><br />
 	&nbsp; &nbsp; &nbsp; Page 2: <input class="fp_page" type="text" name="category_1_page_2"><br />
 	&nbsp; &nbsp; &nbsp; Page 3: <input class="fp_page" type="text" name="category_1_page_3"><br />
