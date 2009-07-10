@@ -370,8 +370,18 @@ Mediawiki.getImageUrl = function(image){
 
 
 Mediawiki.getNormalizedTitle = function(title){
+
+	if (Mediawiki.e(Mediawiki.normalizedTitles)){
+		Mediawiki.normalizedTitles = {};
+	}
+
+	if (!Mediawiki.e(Mediawiki.normalizedTitles[title])){
+		// Score!
+		return Mediawiki.normalizedTitles[title];
+	}
 	
 	Mediawiki.d("Getting Normalized title for " + title);
+	// TODO: is there a cheaper way to get this?
 	var responseData = Mediawiki.apiCall({
 		'action' : 'query',
 		'prop' : 'info',
@@ -379,14 +389,20 @@ Mediawiki.getNormalizedTitle = function(title){
 		'intoken' : "edit"
 	});
 
-	// We can get two different responses back here. If it's a valid title, then it returns it directly
-	// If not, it returns it "normalized". If your page title isn't coming through the API, try normalizeTitle first
+	// We can get two different responses back here.
+	// If it's a valid title, then it returns it directly
+	// If not, it returns it "normalized".
+	// If your page title isn't coming through the API, try normalizeTitle first
+	var out;
 	try {
-		return responseData.query.normalized[0]["to"];
+		out =  responseData.query.normalized[0]["to"];
 	} catch (e) {
-		return title;
+		out =  title;
 	}
-	return false;
+
+	// Save in cache
+	Mediawiki.normalizedTitles[title] = out;
+	return out;
 };
 
 
