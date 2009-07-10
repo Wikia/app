@@ -1,0 +1,1 @@
+rmspecials("foo;bar!") = "foobar"
