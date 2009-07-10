@@ -15,7 +15,8 @@ function GetAjaxLoginForm($skin) {
 	global $wgTitle, $wgUser;
 
 	// different approach for Lean Monaco
-	if (get_class($skin) == 'AwesomeTemplate') {
+	global $wgUseMonaco2;
+	if (!empty($wgUseMonaco2)) {
 		return true;
 	}
 
