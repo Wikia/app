@@ -35,7 +35,6 @@ class WidgetFramework {
 
 		switch (get_class($wgUser->getSkin())) {
 			case "SkinMonaco":
-			case "SkinAwesome":
 				$this->skinname = 'monaco';
 				break;
 			case "SkinQuartz":
@@ -190,6 +189,9 @@ class WidgetFramework {
 			}
 			if(isset($widgetOut['body'])) {
 				$body = $widgetOut['body'];
+			}
+			if(isset($widgetOut['title'])) {
+				$title = $widgetOut['title'];
 			}
 			if(isset($widgetOut['reload'])) {
 				$reload = ($widgetOut['reload'] === true);
