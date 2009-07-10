@@ -115,7 +115,7 @@ class CloseWikiMaintenace {
 		/**
 		 * @name dumpfile
 		 */
-		$dumpfile = sprintf("%s/full.xml.gz", $this->getDirectory( $wgDBname ) );
+		$dumpfile = sprintf("%s/pages_full.xml.gz", $this->getDirectory( $wgDBname ) );
 		$args = array(
 			"--full",
 			"--quiet",
