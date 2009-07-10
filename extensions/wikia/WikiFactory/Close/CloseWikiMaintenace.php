@@ -281,95 +281,12 @@ class CloseWikiMaintenace {
 	 *  city_list( city_id )
 	 */
 	public function cleanWikiFactory() {
-
-		global $wgExternalArchiveDB;
-
 		wfProfileIn( __METHOD__ );
 
-		/**
-		 * do only on inactive wikis
-		 */
 		if( ! $this->mDryRun ) {
-			$wiki = WikiFactory::getWikiByID( $this->mCityID );
-			if( isset( $wiki->city_id ) && $wiki->city_public != 1 ) {
-
-				$timestamp = wfTimestampNow();
-				$dbw = WikiFactory::db( DB_MASTER );
-				$dba = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
-
-				$dba->begin();
-
-				/**
-				 * copy city_list to archive
-				 */
-				$dba->insert(
-					"city_list",
-					array(
-						"city_id"                => $wiki->city_id,
-						"city_path"              => $wiki->city_path,
-						"city_dbname"            => $wiki->city_dbname,
-						"city_sitename"          => $wiki->city_sitename,
-						"city_url"               => $wiki->city_url,
-						"city_created"           => $wiki->city_created,
-						"city_founding_user"     => $wiki->city_founding_user,
-						"city_adult"             => $wiki->city_adult,
-						"city_public"            => $wiki->city_public,
-						"city_additional"        => $wiki->city_additional,
-						"city_description"       => $wiki->city_description,
-						"city_title"             => $wiki->city_title,
-						"city_founding_email"    => $wiki->city_founding_email,
-						"city_lang"              => $wiki->city_lang,
-						"city_special_config"    => $wiki->city_special_config,
-						"city_umbrella"          => $wiki->city_umbrella,
-						"city_ip"                => $wiki->city_ip,
-						"city_google_analytics"  => $wiki->city_google_analytics,
-						"city_google_search"     => $wiki->city_google_search,
-						"city_google_maps"       => $wiki->city_google_maps,
-						"city_indexed_rev"       => $wiki->city_indexed_rev,
-						"city_factory_timestamp" => $timestamp,
-						"city_useshared"         => $wiki->city_useshared,
-						"ad_cat"                 => $wiki->ad_cat,
-						"city_flags"             => $wiki->city_flags,
-						"city_cluster"           => $wiki->city_cluster
-					),
-					__METHOD__
-				);
-				$dba->commit();
-
-				/**
-				 * move city_variables to archive
-				 */
-				$sth = $dbw->select(
-					array( WikiFactory::table( "city_variables" ) ),
-					array( "cv_city_id", "cv_variable_id", "cv_value" ),
-					array( "cv_city_id" => $this->mCityID ),
-					__METHOD__
-				);
-				while( $row = $dbw->fetchObject( $sth ) ) {
-					$dba->insert(
-						"city_variables",
-						array(
-							"cv_city_id"     => $row->cv_city_id,
-							"cv_variable_id" => $row->cv_variable_id,
-							"cv_value"       => $row->cv_value,
-							"cv_timestamp"   => $timestamp
-						),
-						__METHOD__
-					);
-				}
-				$dbw->freeResult( $sth );
-
-				$dbw->begin();
-				if( !empty( $this->mCityID ) ) {
-					$dbw->delete(
-						WikiFactory::table( "city_list" ),
-						array( "city_id" => $this->mCityID ),
-						__METHOD__
-					);
-				}
-				$dbw->commit();
-			}
+			WikiFactory::copyToArchive( $this->mCityID );
 		}
+
 		wfProfileOut( __METHOD__ );
 	}
 
