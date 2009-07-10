@@ -683,18 +683,16 @@ Mediawiki.setLoginCookies = function(vars) {
 };
 
 
-Mediawiki.updateStatus = function(msg, isError){
+Mediawiki.updateStatus = function(msg, isError, timeout){
 
 	if (Mediawiki.statusBar === null) {
 		Mediawiki.statusBar = new MediawikiStatusBar();
 	}
 
 	if ( isError ){
-		document.body.style.cursor = "default";
-		Mediawiki.statusBar.show(msg, 10000, true);
+		Mediawiki.statusBar.show(msg, timeout || 10000, true);
 	} else {
-		document.body.style.cursor = "default";
-		Mediawiki.statusBar.show(msg, 3000, false);
+		Mediawiki.statusBar.show(msg, timeout || 3000, false);
 	}
 };
 

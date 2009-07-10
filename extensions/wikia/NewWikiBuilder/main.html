@@ -10,14 +10,17 @@
 	Make "First pages" accessible via a special page
 	Add Permission checking to settings changer
 	Fix Wiki.png madness
+	Error handling for bad images
 
      Known Bugs:
 	Login "sticks" in Safari
 	Odd look when the page first loads. Fine after reorg?
+	
 
      Questions:  
 	What perms for settings changer?
 	What goes on "Done"?
+	What happens with first pages after the first time it's created?
 
 
 AFTER Christian:
@@ -120,11 +123,11 @@ if (match !== null){
 	<div id="logo_form_html">
 	<!-- Hidden iframe to handle the file upload -->
 	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
-	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='Mediawiki.updateStatus("Uploading image...")'>
+	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)'>
 	<input type="hidden" name="action" value="uploadlogo">	
 	<input type="hidden" name="format" value="xml">	
 	<input id="logo_article" type="hidden" name="title" value="Wiki2.png">	
-	Upload a logo
+	Upload a logo<p>
 	<input type="file" name="logo_file"><br />
 	<p>
 	<input type="submit" value="Preview" onClick="this.form.title.value='Wiki-Preview.png'"/> 
@@ -133,11 +136,12 @@ if (match !== null){
 	</div>
 
 	<!-- Christian: help. Float! -->
-	<div style="float: right">
-	<div id="logo_current"></div>
-	<br />
-	<div id="logo_preview">Logo preview</div>
-	</div>
+	<table>
+		<tr>
+			<td><div id="logo_current"></div></td>
+			<td><div id="logo_preview">Logo preview</div></td>
+		</tr>
+	</table>
 
 	<script> 
 	// Fill in the background image for the logo
@@ -152,10 +156,18 @@ if (match !== null){
 
 <!-- ############## Pick Theme ############## -->
 
-<div id="tabs-3">
+<div id="tabs-3" style="height:300px;">
+<style type="text/css">
+.theme_selection {
+	float: left;
+	padding: 15px;
+}
+</style>
   <div id="theme_chooser">
-    <div id="theme_template" style="display:none">
-	<img id="theme_preview_image_$theme" width="75"><br />
+     Pick a theme
+	<p>
+    <div id="theme_template" style="display:none" class="theme_selekction">
+	<img id="theme_preview_image_$theme" width="100"><br />
 	<input onClick="NWB.changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"><label for="theme_radio_$theme">$Theme</label>
     </div>
   </div>
@@ -178,6 +190,7 @@ for (var i = 0; i < themes.length; i++){
 	var div = document.createElement("div"); 
 	div.innerHTML = thtml;
 	div.id = "theme_" + themes[i].toLowerCase();
+	div.className = "theme_selection";
 	Mediawiki.$("theme_chooser").appendChild(div);
 	Mediawiki.$("theme_preview_image_" + ltheme).src = "http://images.wikia.com/common/skins/monaco/" + ltheme + "/images/preview.png";
 
@@ -196,18 +209,20 @@ for (var i = 0; i < themes.length; i++){
 
 <!-- ############## Create first pages ############## -->
 
-<div id="tabs-4">
+<div id="tabs-4" >
+	Create your first pages
 	<script>
 	function addAnotherPage() {
 		// TODO, as soon as you get to the last page, it adds another
 	}
 	</script>
-	<form>
+	<form onSubmit="return NWB.handleFirstPages(this)">
+	<input type="hidden" name="category_1" value="Coming Soon"><!-- i18n -->
 	<div id="all_fp">
 	<div class="fp_block" id="category_1">
-	&nbsp; &nbsp; &nbsp; Page 1: <input class="fp_page" type="text" name="category_1_page_1"><br />
-	&nbsp; &nbsp; &nbsp; Page 2: <input class="fp_page" type="text" name="category_1_page_2"><br />
-	&nbsp; &nbsp; &nbsp; Page 3: <input class="fp_page" type="text" name="category_1_page_3"><br />
+	Page 1: <input class="fp_page" type="text" name="category_1_page_1"><br />
+	Page 2: <input class="fp_page" type="text" name="category_1_page_2"><br />
+	Page 3: <input class="fp_page" type="text" name="category_1_page_3"><br />
 	</div>
 
 	<p>
@@ -215,11 +230,16 @@ for (var i = 0; i < themes.length; i++){
 	</div><!-- all_fp -->
 	</form>
 </div>
+<script>
+NWB.handleFirstPages = function(f){
+
+};
+</script>
 
 <!-- ############## Create first pages ############## -->
 
 <div id="tabs-5">
-	Done
+	Done. Is this page needed?
 </div>
 
 </div> <!-- /div id=tabs -->

@@ -6,10 +6,18 @@ var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Med
 
 NWB.messages = {
 	"en": {
+		"choose-a-file": "Please choose a file",
 		"error-saving-description": "Error Saving Description",
 		"theme-saved": "Theme Choice Saved",
-		"saving-article": "Saving Article...",
-		"description-saved": "Description Saved"
+		"saving-description": "Saving Description...",
+		"description-saved": "Description Saved",
+		"uploading-logo": "Uploading Logo...",
+		"logo-uploaded": "Logo Uploaded",
+		"login-successful": "Login Successful",
+		"logout-successful": "Logout Successful",
+		"login-error": "Error logging in",
+		"logging-in": "Logging in...",
+		"api-error": "There was a problem:"
 	}
 };
 
@@ -43,7 +51,7 @@ NWB.changeTheme = function (theme){
 Mediawiki.handleDescriptionForm = function (f){
 	try {
              // Save the article
-             Mediawiki.updateStatus(NWB.msg("saving-article"));
+             Mediawiki.updateStatus(NWB.msg("saving-description"));
 	     var mainPageEnd = Mediawiki.followRedirect("Main Page"); // Should be cached.
              Mediawiki.editArticle({
                   "title": mainPageEnd,
@@ -72,23 +80,25 @@ NWB.handleLoginForm = function (f){
 	try { 
         	Mediawiki.apiUser = f.lgname.value;
 		Mediawiki.apiPass = f.lgpassword.value;
-		Mediawiki.updateStatus("Logging In...");
+		Mediawiki.updateStatus(NWB.msg("logging-in"));
 		Mediawiki.login(function() {
 				$("#loginForm").fadeOut();
 				$("#logoutForm").fadeIn();
-				Mediawiki.updateStatus("Login Successful");
-			}, NWB.apiFailed);
+				Mediawiki.updateStatus(NWB.msg("login-successful"));
+			}, function(msg) { Mediawiki.updateStatus(NWB.msg("login-error") + " : " + msg, true); }
+		);
 	} catch (e) {
-		Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));    
+		Mediawiki.updateStatus(NWB.msg("error-loging-in") + Mediawiki.print_r(e));    
 	}
 	
 	return false; // Return false so that the form doesn't submit
 };
 
+
 NWB.handleLogoutForm = function(f){ // Is f required?
 	$("#logoutForm").fadeOut();
         $("#loginForm").fadeIn();
-        Mediawiki.updateStatus("Logout Successful");
+        Mediawiki.updateStatus(NWB.msg("logout-successful"));
 };
 
 NWB.msg = function (msg){
@@ -117,7 +127,7 @@ NWB.iframeFormUpload = function(iframe){
 		return;
 	}
 
-	Mediawiki.updateStatus('Image Uploaded');
+	Mediawiki.updateStatus(NWB.msg("logo-uploaded"));
 
 	// Fill in the preview or the current depending on what was clicked
 	var url;
@@ -131,8 +141,19 @@ NWB.iframeFormUpload = function(iframe){
 };
 
 
+NWB.iframeFormInit = function (f){
+	if (Mediawiki.e(f.logo_file.value)){
+		Mediawiki.updateStatus(NWB.msg("choose-a-file"), true);
+		return false;
+	}
+
+	Mediawiki.updateStatus(NWB.msg("uploading-logo"), false, 30000);
+	return true;
+};
+
+
 NWB.apiFailed = function(msg){
-	alert("Api call returned an error: " + msg);
+	alert(NWB.msg("api-error") + " : " + msg);
 };
         
 NWB.updateStatus = Mediawiki.updateStatus;
