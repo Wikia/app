@@ -33,8 +33,13 @@ class WikiFactory {
 	const LOG_CATEGORY  = 3;
 	const LOG_STATUS    = 4;
 
-	const HIDE_ACTION 	= -1;
-	const CLOSE_ACTION 	= 0;
+	# close Wiki
+	const HIDE_ACTION 			= -1;
+	const CLOSE_ACTION 			= 0;
+	static public $DUMP_SERVERS = array(
+		'c1' => 'db2', 
+		'c2' => 'db-sb2'
+	);
 
 	# city_flags
 	const FLAG_CREATE_DB_DUMP 			= 1;
@@ -1558,6 +1563,7 @@ class WikiFactory {
 	 * @param integer	$city_id	source Wiki ID
 	 */
 	static public function copyToArchive( $city_id ) {
+		global $wgExternalArchiveDB;
 
 		wfProfileIn( __METHOD__ );
 		/**
@@ -1568,7 +1574,7 @@ class WikiFactory {
 
 			$timestamp = wfTimestampNow();
 			$dbw = self::db( DB_MASTER );
-			$dba = wfGetDB( DB_MASTER, array(), "archive" );
+			$dba = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
 
 			$dba->begin();
 
@@ -1603,6 +1609,8 @@ class WikiFactory {
 					"city_factory_timestamp" => $timestamp,
 					"city_useshared"         => $wiki->city_useshared,
 					"ad_cat"                 => $wiki->ad_cat,
+					"city_flags"			 => $wiki->city_flags,
+					"city_cluster"			 => $wiki->city_cluster
 				),
 				__METHOD__
 			);
