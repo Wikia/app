@@ -426,17 +426,19 @@ class WikiFactoryLoader {
 		 * Not_a_valid_Wikia
 		 */
 		if( empty( $this->mWikiID ) || $this->mIsWikiaActive < 0 ) {
-			global $wgNotAValidWikia;
-			$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
-			if( $this->mIsWikiaActive < 0 ) {
-				header( "X-Redirected-By-WF: MarkedForClosing" );
+			if( ! $this->mCommandLine ) {
+				global $wgNotAValidWikia;
+				$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				if( $this->mIsWikiaActive < 0 ) {
+					header( "X-Redirected-By-WF: MarkedForClosing" );
+				}
+				else {
+					header( "X-Redirected-By-WF: NotAValidWikia" );
+				}
+				header("Location: $wgNotAValidWikia");
+				wfProfileOut( __METHOD__ );
+				exit(0);
 			}
-			else {
-				header( "X-Redirected-By-WF: NotAValidWikia" );
-			}
-			header("Location: $wgNotAValidWikia");
-			wfProfileOut( __METHOD__ );
-			exit(0);
 		}
 
 		/**
