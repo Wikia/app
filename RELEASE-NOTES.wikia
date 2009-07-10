@@ -1,5 +1,6 @@
 == Changes since 200907.2 ==
-* trt#17956: Create list of all Wikia wikis (csv/xml) (eloy)
+* rt#18640: "Wiki page in widget" widget does not save the heading (Macbre)
+* rt#17956: Create list of all Wikia wikis (csv/xml) (eloy)
 * rt#18763, rt#18564: Answers: fixes for empty answers widget. (Nef)
 * rt#18827: Fixed division by zero in NY poll. (Nef)
 * GamePro Widgets. (Nef)
