@@ -116,7 +116,7 @@ function ActionPanelMouseover(e) {
 				
 				//Quick Answer Box is Default
 				var quick_rename = document.createElement('div');
-				quick_rename.innerHTML = "<div class='quickrename'><input id='quickmove' type='text' style='width:240px' value='" + decodeURIComponent( this_title.replace(/_/g," ") ) + "'></div>";
+				quick_rename.innerHTML = "<div class=\"quickrename\"><input id=\"quickmove\" type=\"text\" style=\"width:240px\" value=\"" + decodeURIComponent(this_title).replace(/_/g, " ").replace(/"/g, "&quot;") + "\"></div>";
 				jQuery( quick_rename ).css("display","none").addClass("hoverform");
 				modes["rename"] = { form: quick_rename, is_selected: false };
 				
