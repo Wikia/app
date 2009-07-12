@@ -36,5 +36,5 @@ $messages = array_merge( $messages, array(
 'review_reason_4' => 'Arvostelun syy 4',
 'review_reason_5' => 'Arvostelun syy 5',
 'preferences' => 'Asetukset',
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ) );

@@ -141,5 +141,5 @@ $messages = array_merge( $messages , array(
 'searchsuggest' => '検索補間',
 'tog-searchsuggest' => '補間つき検索機能を使う',
 'see_more' => '更に詳しくは',
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ));

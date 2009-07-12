@@ -35,5 +35,5 @@ $messages = array_merge( $messages, array(
 'review_reason_3' => 'Razlog recenzije 3',
 'review_reason_4' => 'Razlog recenzije 4',
 'review_reason_5' => 'Razlog recenzije 5',
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ) );

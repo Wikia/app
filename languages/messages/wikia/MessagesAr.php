@@ -22,5 +22,5 @@ $messages = array_merge( $messages, array(
 'most_visited' => "الاكثر زيار",
 'newly_changed' => "متغيّر حديثا",
 'highest_ratings' => "التقديرات الأعل",
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ) );
