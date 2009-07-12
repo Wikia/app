@@ -132,5 +132,5 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'tog-disablelinksuggest' => 'Nie pokazuj sugestii linków',
 'tog-enablerichtext' => 'Włącz edytor wizualny',
 'nodiff' => 'Brak różnic',
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ) );

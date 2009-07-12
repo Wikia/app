@@ -36,5 +36,5 @@ $messages = array_merge( $messages, array(
 'review_reason_4' => 'Motiv previzualizare 4',
 'review_reason_5' => 'Motiv previzualizare 5',
 'preferences' => 'Preferinte',
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ) );

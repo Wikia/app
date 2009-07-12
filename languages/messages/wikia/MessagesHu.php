@@ -44,4 +44,4 @@ $messages = array_merge( $messages, array(
 'widget-title-wikipage' => 'Wikioldal a kiegészítõben',
 'widget-desc-wikipage' => 'Egy szócikk jeleníthetõ meg a kiegészítõben. Remek lehetõség saját kiegészítõ létrehozására!',
 ) );
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',

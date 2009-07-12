@@ -58,5 +58,5 @@ $messages = array_merge( $messages, array(
 'review_reason_4' => 'Razlog ispravke 4',
 'review_reason_5' => 'Razlog ispravke 5',
 'contris' => 'doprinos',
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ) );

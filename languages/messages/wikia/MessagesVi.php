@@ -7,5 +7,5 @@ $messages = array_merge( $messages, array(
 'forum' => "diển đàn",
 'helpfaq' => "Trợ giúp & Vấn đáp",
 'choose_reason' => "Chọn lý do",
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ) );

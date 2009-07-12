@@ -5,5 +5,5 @@ $messages = array_merge( $messages, array(
 'create_an_account' => "Crea un account",
 'login_as_another' => "Esegui il login come un'altro user",
 'not_you' => "Non sei tu?",
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ) );

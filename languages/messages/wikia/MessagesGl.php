@@ -30,5 +30,5 @@ $messages = array_merge( $messages, array(
 'unrate_it' => "Anula o teu voto",
 'use_old_formatting' => 'Cambiar a deseño Monobook',
 'use_new_formatting' => 'Probar un deseño novo',
-'copyrightpage' => '{{w:Wikia:Licensing|Wikia:Licensing}}',
+'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 ) );
