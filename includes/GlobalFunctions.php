@@ -2981,3 +2981,17 @@ function wfStripIllegalFilenameChars( $name ) {
 	$name = preg_replace ( "/[^".Title::legalChars()."]|:/", '-', $name );
 	return $name;
 }
+
+/* Recursively converts the parameter (an object) to an array with the same data */
+function wfObjectToArray( $object, $recursive = true ) {
+	$array = array();
+	foreach ( get_object_vars($object) as $key => $value ) {
+		if ( is_object($value) && $recursive ) {
+			$value = wfObjectToArray( $value );
+		}
+		
+		$array[$key] = $value;
+	}
+	
+	return $array;
+}
