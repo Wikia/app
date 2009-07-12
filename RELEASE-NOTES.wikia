@@ -1,4 +1,5 @@
 == Changes since 200907.2 ==
+* rt#18954: Answers: Fixed apostrophes handling by ActionPanel rephrase code. (Nef)
 * rt#18949: Fixed Copyrightpage msg. (Nef)
 * rt#18657: AbuseFilter upgraded to MW 1.15.0. (Nef)
 * rt#18211: Fixed invalid url path to Wiki logo (Moli)
