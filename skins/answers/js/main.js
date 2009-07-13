@@ -196,8 +196,12 @@ jQuery("#recent_unanswered_questions").ready( renderQuestions );
 
 
 jQuery("#related_answered_questions").ready(function() {
-	
-	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&wklimit=5";
+	if ( wgContentLanguage == 'en' ) {
+		// trial for en.answers only (rt#18568)
+		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + 'Auto' + "&format=json&wklimit=5";
+	} else {	
+		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&wklimit=5";
+	}
 	jQuery.get( url, "", function( oResponse ){
 		eval("j=" + oResponse);
 		if( j.query.wkpagesincat ){
