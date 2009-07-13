@@ -388,7 +388,6 @@ class MultiWikiEditForm {
 		
 		/* if not, either don't specify or overwrite with given arguments */
 
-		$dbw =& wfGetDB( DB_MASTER );
                 if ($filename) {
 			for ( $linenum = 1; !feof( $file ); $linenum++ ) {
         			$line = trim( fgets( $file ) );
@@ -528,7 +527,7 @@ class MultiWikiEditForm {
 		} else if (!empty($cat)) {
 			$extra = " WHERE cat_id = '$cat'";
 		}
-		$query = "SELECT city_dbname, city_id, city_url, city_title, city_path FROM city_list JOIN city_cat_mapping USING (city_id)" . $extra ;
+		$query = "SELECT city_dbname, city_id, city_url, city_title, city_path FROM city_list JOIN city_cat_mapping USING (city_id)" . $extra ." LIMIT 500";
 		$res = $dbr->query ($query) ;
 		$wiki_array = array () ;
 		while ($row = $dbr->fetchObject($res)) {
