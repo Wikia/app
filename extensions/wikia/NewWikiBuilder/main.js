@@ -78,10 +78,8 @@ NWB.handleError = function(e){
 
 NWB.handleLoginForm = function (f){
 	try { 
-        	Mediawiki.apiUser = f.lgname.value;
-		Mediawiki.apiPass = f.lgpassword.value;
 		Mediawiki.updateStatus(NWB.msg("logging-in"));
-		Mediawiki.login(function() {
+		Mediawiki.login(f.lgname.value, f.lgpassword.value, function() {
 				$("#loginForm").fadeOut();
 				$("#logoutForm").fadeIn();
 				Mediawiki.updateStatus(NWB.msg("login-successful"));
