@@ -63,7 +63,7 @@ EOD;
 		$output = $askform;
 	}
 
-	$output .= '<div style="padding: 7px;"><b>'.wfMsgForContent('recent_asked_questions').'</b><ul></ul></div>';
+	$output .= '<div style="padding: 7px;"><b>'.wfMsgForContent('recent_asked_questions').'</b></div>';
 
 	$apiparams = array(
 		'smaxage'  =>  300,
@@ -89,12 +89,13 @@ EOD;
 var ask_a_question_msg = "{$ask_a_question}";
 if(typeof WidgetAnswers_html == 'undefined') var WidgetAnswers_html = '';
 var WidgetAnswers_url = '$url';
+var node = jQuery('#{$id}_content').children('div:last');
 if(WidgetAnswers_html == '') {
 	jQuery.getScript(WidgetAnswers_url, function() {
-		if(WidgetAnswers_html != '') jQuery('#{$id}_content').children('div').children('ul').prepend(WidgetAnswers_html);
-		else jQuery('#{$id}_content').children('div').children('ul').parent().html('{$no_questions}');
+		if(WidgetAnswers_html != '') node.append('<ul>' + WidgetAnswers_html + '</ul>');
+		else node.html('{$no_questions}');
 	});
-} else jQuery('#{$id}_content').children('div').children('ul').prepend(WidgetAnswers_html);
+} else node.append('<ul>' + WidgetAnswers_html + '</ul>');
 /*]]>*/</script>
 EOD;
 
