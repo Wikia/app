@@ -34,6 +34,7 @@
 * rt#18487: CategorySelect: Newline issues with noinclude categories (Marooned)
 * rt#18751: CategorySelect: Ignore gallery tags (Marooned)
 * rt#18989: PvX Rate: check for rights and blocked status (TOR)
+* rt#18568: Answers: turned related answered question into featured category questions for en (TOR)
 
 == Changes since 200907.1 ==
 * rt#18491: FCK: Formatted text followed by divs gains line feeds when mode switching (Macbre)
