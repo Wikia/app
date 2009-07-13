@@ -1,24 +1,25 @@
 <html>
 <head>
 <!-- TODO:
-	Speed up page load by looking at blocking calls
 	Use Wiki.png instead of Wiki2.png
 	Messaging API, swap out hard coded messages calls
+	Add Permission checking to settings changer
+	Error handling for bad images
+	TODO: delete wiki-previeew
+	PUt 5 fields
+
+After first pages
+	Implement "Coming Soon" category in starter
 	Finish API for "first pages"
 	Build out "first pages"
-	Implement "Coming Soon" category in starter
 	Make "First pages" accessible via a special page
-	Add Permission checking to settings changer
-	Fix Wiki.png madness
-	Error handling for bad images
 
      Known Bugs:
 	Login "sticks" in Safari
-	Odd look when the page first loads. Fine after reorg?
+	Theme saves value, but doesn't change theme
 	
-
      Questions:  
-	What perms for settings changer?
+	What perms for settings changer? admin/bearuacrat/staff
 	What goes on "Done"?
 	What happens with first pages after the first time it's created?
 
@@ -84,7 +85,7 @@ if (match !== null){
 
         <div id="logoutForm" style="display:none">
                 You are logged in.
-                <input type="button" value="logout" onClick="return Mediawiki.logout(NWB.handleLogoutForm)"/>
+		<a href="/index.php?title=Special:UserLogout">Logout</a> (not ajax yet)
         </div>
 
         <script>

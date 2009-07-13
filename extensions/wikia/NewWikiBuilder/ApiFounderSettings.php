@@ -74,8 +74,25 @@ class ApiFounderSettings extends ApiBase {
 
 	public function execute() {
 
-global $wgShowExceptionDetails;
-$wgShowExceptionDetails= true;
+		// Logged in?
+		global $wgUser;
+		if (!$wgUser->isLoggedIn() || $wgUser->isAnon()) {
+			$this->dieUsageMsg(array("badaccess-groups"));
+		} 
+
+		// Permissions check
+		$user_groups = $wgUser->getGroups();
+		$user_groups = array_flip($user_groups);
+		if (isset($user_groups['staff']) ||
+		    isset($user_groups['bureaucrat']) ||
+		    isset($user_groups['sysop']) || 
+		    isset($user_groups['admin'])){
+			// Good
+		} else {
+			$this->dieUsageMsg(array("badaccess-groups"));
+		}
+
+
                 $params = $this->extractRequestParams();
 
 		if (!empty($params['changesetting'])){
