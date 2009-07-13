@@ -33,6 +33,7 @@
 * rt#18733: Wikia Contact Mail - Content box fails to [show] (Marooned)
 * rt#18487: CategorySelect: Newline issues with noinclude categories (Marooned)
 * rt#18751: CategorySelect: Ignore gallery tags (Marooned)
+* rt#18989: PvX Rate: check for rights and blocked status (TOR)
 
 == Changes since 200907.1 ==
 * rt#18491: FCK: Formatted text followed by divs gains line feeds when mode switching (Macbre)
