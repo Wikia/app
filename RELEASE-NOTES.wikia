@@ -1,4 +1,5 @@
 == Changes since 200907.2 ==
+* rt#18369: Limit MultiWikiEdit, db connection dies with wikia-wide changes. (Nef)
 * rt#18985: FCK: Text immediately following headings in a table with styling loses a linebreak (Macbre)
 * rt#18981: FCK inserts newlines after links (Macbre)
 * rt#18954: Answers: Fixed apostrophes handling by ActionPanel rephrase code. (Nef)
