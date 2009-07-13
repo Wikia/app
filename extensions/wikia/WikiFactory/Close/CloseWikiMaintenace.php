@@ -51,15 +51,15 @@ class CloseWikiMaintenace {
 		 * check what we have to do with this wikia
 		 */
 		Wikia::log( __CLASS__, "info", "maintenance on {$wgCityId}" );
-		
+
 		switch ( $this->mAction ) {
-			case WikiFactory::HIDE_ACTION: 
+			case WikiFactory::HIDE_ACTION:
 				$this->mDumpDirectory = ( !$wgDevelEnvironment ) ? "/opt/dbdumps-hidden" : "/tmp/dumps-hidden";
 				break;
-			case WikiFactory::CLOSE_ACTION: 
+			case WikiFactory::CLOSE_ACTION:
 				$this->mDumpDirectory = ( !$wgDevelEnvironment ) ? "/opt/dbdumps" : "/tmp/dumps";
 				break;
-			default : 
+			default :
 				Wikia::log( __CLASS__, "info", "invalid action: {$this->mAction}" );
 				break;
 		}
@@ -124,11 +124,26 @@ class CloseWikiMaintenace {
 			"--xml",
 			"--server=".$db->getServer()
 		);
-		Wikia::log( __CLASS__, "info", "dumping {$wgDBname} to {$dumpfile}");
+		Wikia::log( __CLASS__, "info", "full dump {$wgDBname} to {$dumpfile}");
 		if( !$this->mDryRun ) {
 			$dumper = new BackupDumper( $args );
 			$dumper->dump( WikiExporter::FULL, WikiExporter::TEXT );
 		}
+
+		$dumpfile = sprintf("%s/pages_current.xml.gz", $this->getDirectory( $wgDBname ) );
+		$args = array(
+			"--current",
+			"--quiet",
+			"--output=gzip:{$dumpfile}",
+			"--xml",
+			"--server=".$db->getServer()
+		);
+		Wikia::log( __CLASS__, "info", "current revisions dump {$wgDBname} to {$dumpfile}");
+		if( !$this->mDryRun ) {
+			$dumper = new BackupDumper( $args );
+			$dumper->dump( WikiExporter::FULL, WikiExporter::TEXT );
+		}
+
 	}
 
 	/**
@@ -424,7 +439,7 @@ class CloseWikiMaintenace {
 	 */
 	public function updateTimestamp( $old = 0 ) {
 		global $wgExternalArchiveDB, $wgExternalSharedDB;
-		
+
 		wfProfileIn( __METHOD__ );
 		if( $this->mCityID && ! $this->mDryRun ) {
 			$dbw = wfGetDB( DB_MASTER, array(), ( empty($old) ) ? $wgExternalSharedDB : $wgExternalArchiveDB );
@@ -437,5 +452,5 @@ class CloseWikiMaintenace {
 		}
 		wfProfileOut( __METHOD__ );
 	}
-	
+
 }
