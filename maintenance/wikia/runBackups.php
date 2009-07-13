@@ -41,8 +41,7 @@ function runBackups( $from, $to, $full ) {
 		$status = false;
 		if( $full ) {
 			$path = sprintf("%s/pages_full.xml.gz", getDirectory( $row->city_dbname ) );
-			$cmd = wfEscapeShellArg(
-				"SERVER_ID={$row->city_id}",
+			$cmd = "SERVER_ID={$row->city_id} " . wfEscapeShellArg(
 				"php",
 				"{$IP}/maintenance/dumpBackup.php",
 				"--conf {$wgWikiaLocalSettingsPath}",
@@ -56,7 +55,7 @@ function runBackups( $from, $to, $full ) {
 		}
 		else {
 			$path = sprintf("%s/pages_current.xml.gz", getDirectory( $row->city_dbname ) );
-			$cmd = "SERVER_ID={$row->city_id}" . " " .wfEscapeShellArg(
+			$cmd = "SERVER_ID={$row->city_id} " . wfEscapeShellArg(
 				"php",
 				"{$IP}/maintenance/dumpBackup.php",
 				"--conf {$wgWikiaLocalSettingsPath}",
