@@ -1387,7 +1387,7 @@ class ReverseParser {
 		while (!empty($node->parentNode)) {
 			$cssStyle = $node->getAttribute('style');
 
-			if(!empty($cssStyle)) {
+			if ( !empty($cssStyle) && strpos($cssStyle, 'margin-left') !== false ) {
 				$margin = (substr($cssStyle, 0, 11) == 'margin-left') ? intval(substr($cssStyle, 12)) : 0;
 				return intval($margin/40);
 			}
