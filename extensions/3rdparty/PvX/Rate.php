@@ -55,6 +55,17 @@ function wfRate() {
 			////////////////////////////////////////////////////////////////////
 			// Checking permissions. if now, lets quit.
 			////////////////////////////////////////////////////////////////////
+			if ( !$wgUser->isAllowed( 'ratebuild' ) ) {
+				$wgOut->permissionRequired( 'ratebuild' );
+				return;
+			}
+
+			if ( $wgUser->isBlocked() ) {
+				$wgOut->blockedPage();
+				return;
+			}
+
+
 	 	    if (self::ratePermissions()) {
 
 			if ( ($wgRequest->getText( 'action' ) == 'rate') &&
@@ -488,11 +499,6 @@ public static function ratePermissions() {
 * You need to log in. Visit [[Special:Userlogin]] to log in or create a new account.
 * You need to authenticate your e-mail address.
 * You need to make at least 8 edits to the wiki.';
-	$wgOut->addWikiText($perm_msg);
-	return false;
-   } elseif ($wgUser->isBlocked()){
-	$perm_msg = '=== Read-only mode: You are currently blocked. ===
-	             __NOEDITSECTION__';
 	$wgOut->addWikiText($perm_msg);
 	return false;
    } elseif (!$wgUser->mEmailAuthenticated){
