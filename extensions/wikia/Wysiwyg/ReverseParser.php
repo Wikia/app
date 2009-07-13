@@ -1366,7 +1366,6 @@ class ReverseParser {
 		// replace style attribute with _wysiwyg_style
 		if ($node->hasAttribute('_wysiwyg_style')) {
 			$node->setAttribute('style', $node->getAttribute('_wysiwyg_style'));
-			$node->removeAttribute('_wysiwyg_style');
 		}
 
 		$attStr = '';
