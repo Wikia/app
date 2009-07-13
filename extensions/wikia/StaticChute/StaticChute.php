@@ -229,14 +229,9 @@ class StaticChute {
 				if (!empty($args['usetheme'])) {
 					return array('monaco2/' . basename($args['usetheme']) . '/css/main.css');
 				}
-				else {
-					return false;
-				}
 				break;
-
-			default:
-				return false;
 		}
+		return false;
 	}
 
 	/* Walk through a list of files and get the latest modified time in the list
@@ -546,8 +541,6 @@ class StaticChute {
 		$stime = microtime(true);
 		foreach($files as $file){
 			if (!is_readable($file)){
-				// Mimic a 404
-				trigger_error("$file does not exist", E_USER_NOTICE);
 				continue;
 			}
 			$fileCount++;
