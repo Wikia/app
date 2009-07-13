@@ -51,7 +51,7 @@ function runBackups( $from, $to, $full ) {
 				"--quiet",
 				"--output=gzip:{$path}"
 			);
-			 wfShellExec( $cmd, $status );
+			print wfShellExec( $cmd, $status );
 		}
 		else {
 			$path = sprintf("%s/pages_current.xml.gz", getDirectory( $row->city_dbname ) );
@@ -65,7 +65,7 @@ function runBackups( $from, $to, $full ) {
 				"--quiet",
 				"--output=gzip:{$path}"
 			);
-			wfShellExec( $cmd, $status );
+			print wfShellExec( $cmd, $status );
 		}
 		if( $status ) {
 			/**
