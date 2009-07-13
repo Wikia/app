@@ -733,6 +733,16 @@ class ReverseParser {
 				$textContent = substr($textContent, 0, -1);
 			}
 
+			// RT #17895
+			else if ( $node->parentNode->nodeName == 'div' ) {
+				$nextNode = $node->nextSibling;
+
+				// extra check for RT #18981
+				if ( $this->isHtmlNode($nextNode, 'p') ) {
+					$textContent = "\n" . substr($textContent, 1);
+				}
+			}
+
 			// check whether we should allow whitespaces inclusion into wikitext
 			// e.g. we don't want to add whitespaces inside tables HTML markup
 			else if ( strspn($textContent, ' ') == strlen($textContent) ) {
@@ -763,15 +773,6 @@ class ReverseParser {
 			// e.g. ' <div _wysiwyg_new_line="true">...' => '\n<div>...'
 			else if ( substr($textContent, -1) == ' ' && $this->nextSiblingIsInNextLine($node)) {
 				$textContent = substr($textContent, 0, -1);
-			}
-
-			// RT #17895
-			else if ( $node->parentNode->nodeName == 'div' ) {
-				$previousNode = $node->previousSibling;
-
-				if ( !empty($previousNode) && $previousNode->nodeType == XML_ELEMENT_NODE ) {
-					$textContent = "\n" . substr($textContent, 1);
-				}
 			}
 
 			$out = $textContent;
@@ -1312,6 +1313,17 @@ class ReverseParser {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Return true if given node is HTML node with one of names provided
+	 */
+	private function isHtmlNode($node, $names) {
+		if (is_string($names)) {
+			$names = array($names);
+		}
+
+		return !empty($node) && $node->nodeType == XML_ELEMENT_NODE && in_array($node->nodeName, $names);
 	}
 
 	/**
