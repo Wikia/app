@@ -22,11 +22,14 @@ class CreateWikiMetrics {
 	private $mOrderDesc;
 	private $mLimit;
 	private $mOffset;
+	private $cityIds;
 	/* const */
-	const START_DATE = '2009-04-02';
-	const LIMIT = 25;
-	const ORDER = "created";
-	const DESC = 1;
+	const START_DATE 		= '2009-04-02';
+	const DEF_DAYS_PVIEWS 	= 90;
+	const DEF_MONTH_EDITS 	= 1;
+	const LIMIT 			= 25;
+	const ORDER 			= "created";
+	const DESC 				= 1;
 	/* ajax params */
 	private $axAction;
     private $axCreated;
@@ -175,12 +178,37 @@ class CreateWikiMetrics {
 	 *
 	 */
 	public function getMainStatsRecords() {
+		global $wgExternalStatsDB;
+		
 		$res = array();
 		wfProfileIn( __METHOD__ );
 		#---
+		error_log ("this = " . print_r($this, true));
+		
+		#- find Wikis with nbr pageviews fewer than X
+		$this->cityIds = array();
+		if ( !empty($this->axNbrEdits) ) { 
+			$this->cityIds = $this->getWikisByNbrEdits();
+			if ( empty($this->cityIds) ) {
+				$this->cityIds = array(0);
+			}
+		}
+		if ( !empty($this->axNbrPageviews) ) {
+			$this->cityIds = $this->getWikisByNbrPageviews();
+			if ( empty($this->cityIds) ) {
+				$this->cityIds = array(0);
+			}
+		}
+		if ( !empty($this->axNbrArticles) ) { 
+			$this->cityIds = $this->getWikisByNbrArticles();
+			if ( empty($this->cityIds) ) {
+				$this->cityIds = array(0);
+			}
+		}
+
 		list ($AWCCities, $AWCCitiesCount) = $this->getWikis();
 		if ( !empty( $AWCCities ) ) {
-			$dbs = wfGetDB(DB_SLAVE, array(), 'dbstats');
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			$wikiList = implode( ",", array_keys( $AWCCities ) );
 
 			#--- stats 				
@@ -196,12 +224,15 @@ class CreateWikiMetrics {
 			$db_fields[] = "max(cw_article_count_link) as articles";
 			$db_fields[] = "max(cw_wikians_total) as wikians";
 
+			$where = array( 'cw_city_id in (' . $wikiList . ')' );
+			$options = array( 'GROUP BY' => 'cw_city_id' );
+
 			$oRes = $dbs->select( 
 				$table, 
 				array( 'cw_city_id,' . implode( ",", $db_fields ) ),
-				array( 'cw_city_id in (' . $wikiList . ')' ),
+				$where,
 				__METHOD__,
-				array( 'GROUP BY' => 'cw_city_id' )
+				$options
 			);
 			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
 				$db_size = array_reduce (
@@ -238,14 +269,16 @@ class CreateWikiMetrics {
 			
 			#--- page views 
 			$table = "city_page_views";
+			$where = array( 'pv_city_id in (' . $wikiList . ')' );
 			$oRes = $dbs->select( 
 				$table, 
 				array( 'pv_city_id, sum(pv_views) as cnt' ),
-				array( 'pv_city_id in (' . $wikiList . ')' ),
+				$where,
 				__METHOD__,
 				array( 'GROUP BY' => 'pv_city_id' )
 			);
 			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+				#---
 				$page_views = array_reduce (
 					array (" ", " K", " M", " G"), create_function (
 						'$a,$b', 'return is_numeric($a)?($a>=1000?$a/1000:number_format($a,1).$b):$a;'
@@ -342,16 +375,14 @@ class CreateWikiMetrics {
 		if ( !empty($this->axClosed) ) {
 			$city_public[] = 0;
 		}
-		if ( !empty($this->axRedir) ) {
-			$city_public[] = 2;
-		}
-		if ( !empty($this->axRemoved) ) {
-			$city_public[] = -1;
-		}
 		if ( !empty($city_public) ) {
 			$where[] = 'city_public in (' . implode(",", $city_public) . ')';
 		} else {
 			$where[] = "{$city_id} = 0";
+		}
+
+		if ( !empty($this->cityIds) ) {
+			$where[] = 'city_id in (' . implode(",", $this->cityIds) . ')';
 		}
 
 		#----
@@ -382,16 +413,16 @@ class CreateWikiMetrics {
 	 * @return array
 	 *
 	 */
-	private function getWikis() {
+	private function getWikis( ) {
 		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 		$res = array();
 
 		/* db */
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		/* check params */
 		$where = $this->buildQueryOptions($dbr);
-		#----
+		
 		$options[] = 'SQL_CALC_FOUND_ROWS';
 		if ( $this->mSort != $this->axOrder ) {
 			$options['LIMIT'] = $this->mLimit;
@@ -468,9 +499,9 @@ class CreateWikiMetrics {
 	 *
 	 */
 	public function getCategoriesRecords() {
-		global $wgUser, $wgLang;
+		global $wgUser, $wgLang, $wgExternalSharedDB;
 		/* db */
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		/* check params */
 		$where = $this->buildQueryOptions($dbr, 'cl');
 		#----
@@ -555,10 +586,12 @@ class CreateWikiMetrics {
 	 * @return array
 	 */
 	private function getWikisByDomain() {
+		global $wgExternalSharedDB;
+		
 		wfProfileIn( __METHOD__ );
 		$aCityIds = array();
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );		
+		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		$domain = $dbr->escapeLike( strtolower( $this->axDomain ) );
 		
 		$oRes = $dbr->select( 
@@ -579,4 +612,135 @@ class CreateWikiMetrics {
 		return $aCityIds;
 	}
 	
+	/*
+	 * get a list of Wikis that have nbr of pageviews fewer than X 
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 */
+	private function getWikisByNbrPageviews() {
+		global $wgExternalStatsDB, $wgMemc;
+		
+		$pageViews = $this->axNbrPageviews;
+		$pageViewsDays = $this->axNbrPageviewsDays;
+		if ( empty($pageViewsDays) ) {
+			$pageViewsDays = self::DEF_DAYS_PVIEWS;
+		}
+
+		$where = array( 'DATE_SUB(CURDATE(),INTERVAL '.intval($pageViewsDays).' DAY) <= pv_timestamp' );
+		$cityList = "";
+		if ( !empty($this->cityIds) ) {
+			$cityList = implode(",", $this->cityIds);
+			$where[] = " cw_city_id in (" . $cityList . ") ";
+		}
+
+		$memkey = __METHOD__ . "v:" . $pageViews . "vd:" . $pageViewsDays . "vc:" . md5($cityList);
+		$cities = $wgMemc->get( $memkey );
+		if ( empty($cities) ) {
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$oRes = $dbs->select( 
+				"city_page_views", 
+				array( 'pv_city_id', 'sum(pv_views) as cnt' ),
+				$where,
+				__METHOD__,
+				array( 'GROUP BY' => 'pv_city_id', 'HAVING' => 'cnt < '. intval($pageViews) )
+			);
+			$cities = array();
+			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+				$cities[] = $oRow->pv_city_id;
+			}
+			$dbs->freeResult( $oRes );
+			$wgMemc->set( $memkey, $cities, 3600 );
+		}
+		
+		return $cities;
+	}
+
+	/*
+	 * get a list of Wikis that have nbr of edits fewer than X 
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 */
+	private function getWikisByNbrEdits( ) {
+		global $wgExternalStatsDB, $wgMemc;
+		
+		$nbrEdits = $this->axNbrEdits;
+		$nbrEditsDays = $this->axNbrEditsDays;
+		if ( empty($nbrEditsDays) ) {
+			$nbrEditsDays = self::DEF_MONTH_EDITS;
+		}
+		$where = array( 'date_format(DATE_SUB(CURDATE(),INTERVAL '.intval($nbrEditsDays).' MONTH), \'%Y%m00000000\') <= cw_stats_date' );
+		$cityList = "";
+		if ( !empty($this->cityIds) ) {
+			$cityList = implode(",", $this->cityIds);
+			$where[] = " cw_city_id in (" . $cityList . ") ";
+		}
+				
+		$memkey = __METHOD__ . "e:" . $nbrEdits . "ed:" . $nbrEditsDays . "ids:" . md5($cityList);
+		$cities = $wgMemc->get( $memkey );
+		if ( empty($cities) ) {
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$oRes = $dbs->select( 
+				"city_stats_full", 
+				array( 'cw_city_id', 'sum(cw_db_edits) as cnt' ),
+				$where,
+				__METHOD__,
+				array( 'GROUP BY' => 'cw_city_id', 'HAVING' => 'cnt < '. intval($nbrEdits) )
+			);
+			$cities = array();
+			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+				$cities[] = $oRow->cw_city_id;
+			}
+			$dbs->freeResult( $oRes );
+			$wgMemc->set( $memkey, $cities, 3600 );
+		}
+		#---
+		return $cities;
+	}
+	
+	/*
+	 * get a list of Wikis that have nbr of articles fewer than X 
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 */
+	private function getWikisByNbrArticles() {
+		global $wgExternalStatsDB, $wgMemc;
+		
+		$nbrArticles = $this->axNbrArticles;
+		#----
+		$where = array();
+		$cityList = "";
+		if ( !empty($this->cityIds) ) {
+			$cityList = implode(",", $this->cityIds);
+			$where[] = " cw_city_id in (" . $cityList . ") ";
+		}
+		$options = array( 
+			'GROUP BY' => 'cw_city_id', 
+			'HAVING' => '(select c1.cw_article_count_link from city_stats_full c1 where c1.cw_stats_date = max(c2.cw_stats_date) and c1.cw_city_id = c2.cw_city_id) <= ' . intval($nbrArticles)
+		);
+				
+		$memkey = __METHOD__ . "a:" . $nbrArticles . "ids:" . md5($cityList);
+		$cities = $wgMemc->get( $memkey );
+		if ( empty($cities) ) {
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			$oRes = $dbs->select( 
+				"`city_stats_full` as c2", 
+				array( 'c2.cw_city_id', 'max(c2.cw_stats_date) as m' ),
+				$where,
+				__METHOD__,
+				$options
+			);
+			$cities = array();
+			while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+				$cities[] = $oRow->cw_city_id;
+			}
+			$dbs->freeResult( $oRes );
+			$wgMemc->set( $memkey, $cities, 3600 );
+		}
+		#---
+		return $cities;
+	}
+
 }

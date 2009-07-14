@@ -87,6 +87,13 @@ $messages["en"] = array(
 	"awc-metrics-news-day" => "New wikis (daily)",
 	"awc-metrics-sum-month" => "Count (per month)",
 	"awc-metrics-sum-day" => "Count (per day)",
+	"awc-metrics-fewer-than" => "that has fewer than $1 articles, ",
+	"awc-metrics-edits-label" => "$1 edits in $2, ",
+	"awc-metrics-this-month" => "this month",
+	"awc-metrics-last-month" => "the last $1 months",
+	"awc-metrics-pageviews-label" => "and $1 pageviews in the last $2 days",
+	"awc-metrics-close-listed" => "Close all listed",
+	"awc-metrics-close-checked" => "Close checked",
 // closed Wiki
 	"closed-wiki" => "Closed Wiki",
 	"closed-wiki-info" => "This wiki has been closed",

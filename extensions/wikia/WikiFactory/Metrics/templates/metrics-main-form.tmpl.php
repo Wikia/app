@@ -88,14 +88,32 @@ div#sidebar { display: none !important; }
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-email')?></span>
 				<span style="vertical-align:middle"><input name="awc-metrics-email" id="awc-metrics-email" size="40" /></span>
 			</td></tr>
+<?
+$months = '<select name="awc-nbr-edits-days" id="awc-nbr-edits-days">';
+$months .= '<option value="1">'.wfMsg('awc-metrics-this-month').'</option>';
+for ($i = 2; $i <= 12; $i++ ) {
+	$months .= '<option value="'.$i.'">'.wfMsg('awc-metrics-last-month', $i).'</option>';
+}
+$months .= '</select>';
+
+$days = '<select name="awc-nbr-pageviews-days" id="awc-nbr-pageviews-days">';
+foreach ( array(30, 60, 90, 120, 180, 365) as $id ) {
+	$selected = ( $id == 90 ) ? "selected=\"selected\"" : "";
+	$days .= '<option value="'.$id.'" '.$selected.'>'.$id.'</option>';
+}
+$days .= '</select>';
+?>			
+			<tr><td valign="middle" class="awc-metrics-row">
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-fewer-than', '<input name="awc-nbr-articles" id="awc-nbr-articles" size="2" />')?></span>
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-edits-label', '<input name="awc-nbr-edits" id="awc-nbr-edits" size="2" />', $months)?></span>
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-pageviews-label', '<input name="awc-nbr-pageviews" id="awc-nbr-pageviews" size="2" />', $days)?></span>
+			</td></tr>
 		</table>
 		<table width="100%" style="text-align:left;">
 			<tr>
 				<td valign="middle" class="awc-metrics-row">
 					<input name="awc-metrics-active" id="awc-metrics-active" type="checkbox" checked="checked" /> <?=wfMsg('awc-metrics-active')?>
 					<input name="awc-metrics-closed" id="awc-metrics-closed" type="checkbox" /> <?=wfMsg('awc-metrics-closed')?>
-					<input name="awc-metrics-redirected" id="awc-metrics-redirected" type="checkbox" /> <?=wfMsg('awc-metrics-redirected')?>
-					<input name="awc-metrics-removed" id="awc-metrics-removed" type="checkbox" /> <?=wfMsg('awc-metrics-removed')?>
 				</td>
 				<td valign="middle" class="awc-metrics-row" align="right">
 					<input type="button" value="<?=wfMsg('search')?>" id="awc-metrics-submit" />
@@ -144,9 +162,10 @@ function wfJSPager(total,link,page,limit,func,order,desc,additional) {
 
 	var nbr_result = "<select id=\"wcAWCMetricsSelect\" style=\"" + selectStyle + "\" ";
 	nbr_result += __makeClickFunc("onChange", func, "this.value", 0, order, desc);
-	for (k = 0; k <= 9; k++) {
-		selected = (limit == (5*(parseInt(k)+1))) ? "selected" : "";
-		nbr_result += "<option " + selected + " value=\""+(5*(parseInt(k)+1))+"\">" + (5*(parseInt(k)+1)) + "</option>";
+	var results = new Array(25, 50, 100, 250, 500, 1000);
+	for (k = 0; k < results.length; k++) {
+		selected = (limit == results[k]) ? "selected" : "";
+		nbr_result += "<option " + selected + " value=\""+results[k]+"\">" + results[k] + "</option>";
 	}
 	nbr_result += "</select>";
 
@@ -234,9 +253,13 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 
 	var active 		= YD.get( "awc-metrics-active" );
 	var closed 		= YD.get( "awc-metrics-closed" );
-	var redirected 	= YD.get( "awc-metrics-redirected" );
-	var removed 	= YD.get( "awc-metrics-removed" );
 
+	var nbr_articles		= YD.get( "awc-nbr-articles" );
+	var nbr_edits			= YD.get( "awc-nbr-edits" );
+	var nbr_edits_days		= YD.get( "awc-nbr-edits-days" );
+	var nbr_pageviews		= YD.get( "awc-nbr-pageviews" );
+	var nbr_pageviews_days	= YD.get( "awc-nbr-pageviews-days" );
+	
 	var foundText 	= "<?=wfMsg('awc-metrics-wikis-found', "CNT")?>";
 
 	AWCMetricsDetailsCallback = {
@@ -259,9 +282,8 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 				div_details.innerHTML = foundText.replace("CNT", resData['nbr_records']);
 				//
 				var buttons = "<div class=\"awc-buttons\">";
-				buttons += "<input type=\"submit\" value=\"Close\" name=\"submit0\"/>";
-				buttons += "<input type=\"submit\" value=\"Close and Redirect\" name=\"submit1\"/>";
-				buttons += "<input type=\"submit\" value=\"Close and Delete\" name=\"submit2\"/>";
+				buttons += "<input type=\"submit\" value=\"<?=wfMsg('awc-metrics-close-listed')?>\" name=\"submit0\" style=\"color:#FF0000\"/>";
+				buttons += "<input type=\"submit\" value=\"<?=wfMsg('awc-metrics-close-checked')?>\" name=\"submit1\"/>";
 				buttons += "</div>";
 				
 				pager = wfJSPager(resData['nbr_records'], wgScript + "?title=" + wgPageName + "/metrics", page, limit, 'wkAWCMetricsDetails', order, desc, buttons);
@@ -437,9 +459,12 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-order=" + ord;
 	params += "&awc-desc=" + desc;
 	params += "&awc-closed=" + ((closed.checked) ? 1 : 0);
-	params += "&awc-redir=" + ((redirected.checked) ? 1 : 0);
 	params += "&awc-active=" + ((active.checked) ? 1 : 0);
-	params += "&awc-removed=" + ((removed.checked) ? 1 : 0);
+	params += "&awc-nbrArticles=" + nbr_articles.value;
+	params += "&awc-nbrEdits=" + nbr_edits.value;
+	params += "&awc-nbrEditsDays=" + nbr_edits_days.value;
+	params += "&awc-nbrPageviews=" + nbr_pageviews.value;
+	params += "&awc-nbrPageviewsDays=" + nbr_pageviews_days.value;
 
 	//---
 	div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/WikiFactory/Metrics/images/ajax-loader-s.gif\" />";
@@ -493,8 +518,12 @@ __ShowCategories = function(e, args) {
 
 	var active 		= YD.get( "awc-metrics-active" );
 	var closed 		= YD.get( "awc-metrics-closed" );
-	var redirected 	= YD.get( "awc-metrics-redirected" );
-	var removed 	= YD.get( "awc-metrics-removed" );
+
+	var nbr_articles		= YD.get( "awc-nbr-articles" );
+	var nbr_edits			= YD.get( "awc-nbr-edits" );
+	var nbr_edits_days		= YD.get( "awc-nbr-edits-days" );
+	var nbr_pageviews		= YD.get( "awc-nbr-pageviews" );
+	var nbr_pageviews_days	= YD.get( "awc-nbr-pageviews-days" );
 
 	var foundText 	= "<?=wfMsg('awc-metrics-wikis-found', "CNT")?>";
 
@@ -625,10 +654,14 @@ __ShowCategories = function(e, args) {
 	params += "&awc-founder=" + user.value;
 	params += "&awc-founderEmail=" + emailFnder.value;
 	params += "&awc-closed=" + ((closed.checked) ? 1 : 0);
-	params += "&awc-redir=" + ((redirected.checked) ? 1 : 0);
 	params += "&awc-active=" + ((active.checked) ? 1 : 0);
-	params += "&awc-removed=" + ((removed.checked) ? 1 : 0);
 	params += "&awc-daily=" + daily;
+	params += "&awc-nbrArticles=" + nbr_articles.value;
+	params += "&awc-nbrEdits=" + nbr_edits.value;
+	params += "&awc-nbrEditsDays=" + nbr_edits_days.value;
+	params += "&awc-nbrPageviews=" + nbr_pageviews.value;
+	params += "&awc-nbrPageviewsDays=" + nbr_pageviews_days.value;
+	
 	//---
 	div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/WikiFactory/Metrics/images/ajax-loader-s.gif\" />";
 	//---
