@@ -195,7 +195,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			$category_text = array();
 			global $wgOut;
 			$categories_array = $wgOut->getCategoryLinks();
-			if( is_array( $categories_array["normal"] ) ){
+			if( !empty( $categories_array["normal"] ) ){
 				foreach($categories_array["normal"] as $ctg){
 					$category_text[]=strip_tags($ctg);
 				}
@@ -396,8 +396,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			</div>
 			<?php
 		}
-		
-		if ($wgUser->isLoggedin() && !$answer_page->isArticleAnswered() && $_GET['state'] == 'registered') {
+			
+		if ($wgUser->isLoggedin() && !$answer_page->isArticleAnswered() && $wgRequest->getVal('state') == 'registered') {
 		?>
 			<div class="inline_form reset">
 				<h1><?= wfMsg("inline-welcome") ?>, <?= $wgUser->getName() ?></h1>
@@ -655,7 +655,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<div class="widget">
 			<h2><?= wfMsg("popular_categories") ?></h2>
 			<ul id="popular_categories">
-				<? 
+				<?
+				$popular_categories = array(); 
 				$lines = getMessageAsArray("sidebar-popular-categories");
 				if( is_array( $lines ) ){
 					foreach($lines as $line) {
