@@ -22,7 +22,11 @@ function ActionPanelClose() {
 
 function ActionPanelMouseover(e) {
 		if( menu_is_open )return;
-		questions = this.href.match(/\/wiki\/(.*)/i );
+
+		var articlePathRegExp = wgArticlePath.replace(/\$1/, '(.*)').replace(/\\/, '\\\\');
+
+		questions = this.href.match( new RegExp(articlePathRegExp, 'i') );
+
 		jQuery("#ActionPanelTrigger").unbind('mouseenter mouseleave'); 
 		
 		//TODO
@@ -483,7 +487,8 @@ function ActionPanelMouseout(e) {
 }
 
 function applyActionsOnQuestions(){
-	jQuery("[href^='/wiki/']").live("mouseover", ActionPanelMouseover).live("mouseout", ActionPanelMouseout);
-	jQuery("[href^='" + wgServer + "/wiki/']").live("mouseover", ActionPanelMouseover).live("mouseout", ActionPanelMouseout);
+	var articlePath = wgArticlePath.replace(/\$1/, '');
+	jQuery("[href^='" + articlePath + "']").live("mouseover", ActionPanelMouseover).live("mouseout", ActionPanelMouseout);
+	jQuery("[href^='" + wgServer + articlePath + "']").live("mouseover", ActionPanelMouseover).live("mouseout", ActionPanelMouseout);
 }
 
