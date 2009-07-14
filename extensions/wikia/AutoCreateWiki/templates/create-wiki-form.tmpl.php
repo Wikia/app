@@ -103,7 +103,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 <?php $group = $wgUser->getGroups(); if ( is_array($group) && in_array('staff', $group) ) : ?>
 	<div class="formblock">
 		<ul>
-			<li class="label"><?=wfMsg('yourname')?></li>
+			<li class="label"><label><?=wfMsg('yourname')?>:</label></li>
 			<li class="data1">
 				<input type="text" maxlength="245" autocomplete="off" name="wiki-staff-username" id="wiki-staff-username" value="<?=@$params['wiki-staff-username']?>" style="width:145px" /> <span class="error-status" id="wiki-staff-username-error-status">&nbsp;</span>
 				<div class="error" style="display: none;" id="wiki-staff-username-error"></div>
