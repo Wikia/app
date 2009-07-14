@@ -125,10 +125,6 @@ body {
 	padding-right: 5px;
 	padding-left: 15px;	
 }
-
-#articleFooter ul.actions li div {
-	margin-right: 20px;
-}
 #articleFooter td.col2 {
 	border-left: 0;
 	border-right: 1px dashed #CCC;
@@ -190,7 +186,8 @@ body {
 	right: -272px;
 }
 #fe_talk,
-#fe_permalink {
+#fe_permalink,
+#articleFooter ul.actions li {
 	float: right;
 }
 ul.star-rating {

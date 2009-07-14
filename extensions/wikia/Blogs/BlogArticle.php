@@ -17,7 +17,6 @@ $wgHooks[ "CategoryViewer::addPage" ][] = "BlogArticle::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogArticle::skinTemplateTabs";
 $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogArticle::editPageCheckboxes";
 $wgHooks[ "LinksUpdate" ][] = "BlogArticle::linksUpdate";
-$wgHooks[ "CustomArticleFooter" ][] = "BlogArticle::getCustomArticleFooter";
 $wgHooks[ "WikiFactoryChanged" ][] = "BlogArticle::WikiFactoryChanged";
 
 class BlogArticle extends Article {
@@ -73,69 +72,8 @@ class BlogArticle extends Article {
 				}
 				Article::view();
 				$this->mTitle->mPrefixedText = $oldPrefixedText;
-
 				$this->mProps = self::getProps( $this->mTitle->getArticleID() );
-				if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
-					$templateParams = array();
 
-					if( isset( $this->mProps[ "voting" ] ) && $this->mProps[ "voting" ] == 1 ) {
-						$pageid = $this->mTitle->getArticleID();
-						$FauxRequest = new FauxRequest( array(
-							"action" => "query",
-							"list" => "wkvoteart",
-							"wkpage" => $pageid,
-							"wkuservote" => true
-						));
-						$oApi = new ApiMain( $FauxRequest );
-						$oApi->execute();
-						$aResult = $oApi->GetResultData();
-
-						if( count($aResult['query']['wkvoteart']) > 0 ) {
-							if(!empty($aResult['query']['wkvoteart'][ $pageid ]['uservote'])) {
-								$voted = true;
-							}
-							else {
-								$voted = false;
-							}
-							$rating = $aResult['query']['wkvoteart'][ $pageid ]['votesavg'];
-						}
-						else {
-							$voted = false;
-							$rating = 0;
-						}
-
-						$hidden_star = $voted ? ' style="display: none;"' : '';
-						$rating = round($rating * 2)/2;
-						$ratingPx = round($rating * 17);
-						$templateParams = $templateParams + array(
-							"voted"				=> $voted,
-							"rating"			=> $rating,
-							"ratingPx"			=> $ratingPx,
-							"hidden_star"		=> $hidden_star,
-							"voting_enabled"	=> true,
-						);
-					}
-					else {
-						$templateParams[ "voting_enabled" ] = false;
-					}
-					$templateParams[ "edited" ] = $wgContLang->timeanddate( $this->getTimestamp() );
-					$templateParams[ "oTitle" ] = $this->mTitle;
-					$templateParams[ "wgStylePath" ] = $wgStylePath;
-					$templateParams[ "lastUpdate" ] = $wgLang->date($this->getTimestamp());
-					$templateParams[ "wgNotificationEnableSend" ] = $wgNotificationEnableSend;
-					$templateParams[ "wgProblemReportsEnable" ] = $wgProblemReportsEnable;
-
-					if ($this->getUser() > 0) {
-						$username = $this->getUserText();
-						$oUserTitle = Title::makeTitle(NS_USER, $username);
-						$templateParams[ "username" ] = $username;
-						$templateParams[ "oUserTitle" ] = $oUserTitle;
-					}
-
-					$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
-					$tmpl->set_vars( $templateParams );
-					$wgOut->addHTML( $tmpl->execute("footer") );
-				}
 				/**
 				 * check if something was posted, maybe comment with ajax switched
 				 * off so it wend to $wgRequest
@@ -185,7 +123,6 @@ class BlogArticle extends Article {
 	 */
 	private function showBlogListing() {
 		global $wgOut, $wgRequest, $wgParser, $wgMemc;
-		global $displayArticleFooter;
 
 		/**
 		 * use cache or skip cache when action=purge
@@ -502,28 +439,8 @@ class BlogArticle extends Article {
 		$row = array();
 		switch( $wgTitle->getNamespace()  ) {
 			case NS_BLOG_ARTICLE:
-				$row["blog-create-tab"] = array(
-					"class" => "",
-					"text" => wfMsg("blog-create-label"),
-					"href" => Title::newFromText("CreateBlogPage", NS_SPECIAL)->getLocalUrl()
-				);
-				$tabs = $row + $tabs;
 				break;
 			case NS_BLOG_LISTING:
-				if( $wgUser->isLoggedIn() ) {
-					$row["listing-create-blog-post-tab"] = array(
-						"class" => "",
-						"text" => wfMsg("blog-create-post-label"),
-						"href" => Title::newFromText( "CreateBlogPage", NS_SPECIAL)->getLocalUrl()
-					);
-					$tabs = $row + $tabs;
-				}
-				$row["listing-create-tab"] = array(
-					"class" => "",
-					"text" => wfMsg("blog-create-listing-label"),
-					"href" => Title::newFromText( "CreateBlogListingPage", NS_SPECIAL)->getLocalUrl()
-				);
-				$tabs = $row + $tabs;
 				if (empty($wgEnableSemanticMediaWikiExt)) {
 					$row["listing-refresh-tab"] = array(
 						"class" => "",
@@ -643,22 +560,6 @@ class BlogArticle extends Article {
 		wfProfileOut( __METHOD__ );
 
 		return $title;
-	}
-
-	/**
-	 * disable default footer
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return true
-	 */
-	static public function getCustomArticleFooter( &$skin, &$tpl, &$custom_article_footer ) {
-		global $wgTitle;
-		if ( in_array($wgTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_LISTING)) ) {
-			$custom_article_footer .= "<!-- ".wfMsg('blog-defaulttitle')."-->";
-		}
-		return true;
 	}
 
 	/**

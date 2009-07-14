@@ -40,12 +40,9 @@ $wgHooks['LanguageGetMagic'][] = 'AddNewTalkSectionGetMagic';
  */
 function AddNewTalkSectionInit() {
 	global $wgHooks;
-	$wgHooks['CustomArticleFooter'][] = 'AddNewTalkSectionAddFooter';
-	$wgHooks['SkinTemplateSetupPageCss'][] = 'AddNewTalkSectionAddCSS';
+	$wgHooks['AddNewTalkSection'][] = 'AddNewTalkSectionAddFooter';
 	$wgHooks['EditPage::importFormData::finished'][] = 'AddNewTalkSectionImportFormData';
 	$wgHooks['InternalParseBeforeLinks'][] = 'AddNewTalkSectionRemoveMagicWord';
-//	$wgHooks['UserToggles'][] = 'AddNewTalkSectionToggleUserPreference';
-//	$wgHooks['getEditingPreferencesTab'][] = 'AddNewTalkSectionToggleUserPreference';
 }
 
 /**
@@ -65,19 +62,6 @@ function AddNewTalkSectionGetMagic(&$magicWords, $langCode) {
  */
 function AddNewTalkSectionRemoveMagicWord(&$parser, &$text, &$strip_state) {
 	MagicWord::get('MAG_NONEWSECTIONLINK')->matchAndRemove($text);
-	return true;
-}
-
-/**
- * add CSS to style new link
- *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
- */
-function AddNewTalkSectionAddCSS(&$out) {
-	global $wgExtensionsPath, $wgStyleVersion, $wgTitle;
-	if ($wgTitle->isTalkPage()) {
-		$out .= "@import url($wgExtensionsPath/wikia/AddNewTalkSection/AddNewTalkSection.css?$wgStyleVersion);\n";
-	}
 	return true;
 }
 
@@ -105,12 +89,12 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 	}
 
 	if (in_array($action, array('view', 'purge'))) {
-		global $wgUser;
+		global $wgStylePath;
 		wfLoadExtensionMessages('AddNewTalkSection');
-		$link = wfMsg('addnewtalksection-link');
-		$skin = $wgUser->getSkin();
-		$link = $skin->makeKnownLinkObj( $wgTitle, $link, 'action=edit&section=new', '', '', 'rel="nofollow" onclick="WET.byStr(\'AddNewTalkSection/footerLink\');"' );
-		$custom_article_footer .= '<div id="articleFooter" class="clearfix"><div id="AddNewTalkSectionFooter"><div id="AddNewTalkSectionImage"></div><span id="AddNewTalkSectionLink">' . $link . '</span></div></div>';
+		$text = wfMsg('addnewtalksection-link');
+		$url = $wgTitle->getLocalURL('action=edit&section=new');
+
+		$custom_article_footer = '<li id="fe_newsection"><a rel="nofollow" id="fe_newsection_icon" href="' . $url . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_newsection_img" class="sprite" alt="' . $text . '" /></a> <div><a id="fe_newsection_link" rel="nofollow" href="' . $url . '">' . $text . '</a></div></li>';
 	}
 	return true;
 }
@@ -142,17 +126,3 @@ function AddNewTalkSectionImportFormData($editPage, $request) {
 	}
 	return true;
 }
-
-/**
- * Toggle ANTS in user preferences
- *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
- */
-//function AddNewTalkSectionToggleUserPreference($toggles, $default_array = false) {
-//	if(is_array($default_array)) {
-//		$default_array[] = 'disableaddnewtalksection';
-//	} else {
-//		$toggles[] = 'disableaddnewtalksection';
-//	}
-//	return true;
-//}

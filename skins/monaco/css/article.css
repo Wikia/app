@@ -185,6 +185,8 @@
 	padding: 2px 0;
 	position: relative;
 	clear: both;
+	margin-right: 25px;
+	overflow: hidden !important; /* Opera fix */
 }
 #articleFooter ul.actions li div {
 	display: inline;
@@ -196,7 +198,7 @@
 	height: 16px;
 	margin-right: 16px;
 	position: absolute;
-	width: 336px;
+	width: 446px;
 }
 #fe_edit_icon,
 #fe_edit_img {
@@ -235,15 +237,36 @@
 }
 #fe_permalink_icon,
 #fe_permalink_img {
-        clip: rect(0px 64px 16px 48px);
-        left: -48px;
+	clip: rect(0px 64px 16px 48px);
+	left: -48px;
+}
+#fe_recent_icon,
+#fe_recent_img {
+	clip: rect(0px 368px 16px 352px);
+	left: -352px;
+}
+#fe_whatlinkshere_icon,
+#fe_whatlinkshere_img {
+	clip: rect(0px 384px 16px 368px);
+	left: -368px;
+}
+#fe_newsection_icon,
+#fe_newsection_img {
+	clip: rect(0px 288px 16px 272px);
+	left: -272px;
 }
 #fe_talk {
 	float: left;
 }
 #fe_permalink {
 	float: left;
-	margin: 0 25px;
+}
+#fe_recent {
+	float: left;
+	clear: none !important;
+}
+#fe_whatlinkshere {
+	float: left;
 	clear: none !important;
 }
 #share {

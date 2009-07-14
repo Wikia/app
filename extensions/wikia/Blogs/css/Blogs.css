@@ -301,17 +301,20 @@ padding:4px;
 
 #user_masthead h2 {
 font-size:14pt;
-margin:7px 0 3px;
+margin:0 0 3px;
+float:left;
+position:relative;
+top:7px;
 }
 
-#user_masthead li {
+#user_masthead ul.nav_links li {
 float:left;
 font-size:9pt;
 font-weight:700;
 padding:5px;
 }
 
-#user_masthead li.selected {
+#user_masthead ul.nav_links li.selected {
 background:#f2f2da;
 -moz-border-radius:5px;
 border-radius:5px;
@@ -323,6 +326,65 @@ color:#333;
 
 #user_masthead li a.new {
 color:inherit;
+}
+
+#user_masthead_head {
+height: 2.5em;
+}
+
+#user_masthead_head ul.nav_links_head {
+position:relative;
+top:10px;
+left:10px;
+}
+
+#user_masthead_head ul.nav_links_head li {
+float:left;
+font-size:8pt;
+padding:5px;
+position:relative;
+}
+
+/* page-specific head links */
+.nav_links_head {
+	margin: 0;
+	padding: 0;
+}
+.nav_links_head li {
+	line-height: 1.5em;
+	padding: 2px 0;
+	position: relative;
+	font-size: 8pt;
+	float: left;
+	margin-right: 2px;
+	overflow: hidden !important; /* Opera fix */
+}
+.nav_links_head li div {
+	display: inline;
+	position: relative;
+	margin-left: 14px;
+}
+.nav_links_head img.sprite {
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
+	height: 16px;
+	margin-right: 16px;
+	position: absolute;
+	width: 464px;
+}
+/* fix for IE6 */
+* html .nav_links_head img.sprite {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');
+}
+#mt_emailuser_icon,
+#mt_emailuser_img {
+	clip: rect(0px 464px 16px 448px);
+	left: -448px;
+}
+#mt_blockip_icon,
+#mt_blockip_img {
+	clip: rect(0px 96px 16px 80px);
+	left: -80px;
 }
 
 div.blog-comm-input {
@@ -362,6 +424,7 @@ position:absolute;
 top:0;
 margin:6px -6px;
 padding:3px;
+z-index:100;
 }
 
 .avatarOverlay span {
