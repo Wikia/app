@@ -1,25 +1,37 @@
-<h2><?php $this->msg( 'closewiki-database-dump' ) ?></h2>
-<?php $this->msg( 'closewiki-database-dump-info' ) ?>
-<table>
+<h2><?php $this->msg( 'dump-database' ) ?></h2>
+<?php $this->msg( 'dump-database-info' ) ?>
+<table class="mw-statistics-table">
 	<tr>
-		<td>
-			Current pages
+		<td style="border-right: 0">
+			<?php $this->msg( 'dump-database-curr-pages' ) ?>
+			<div class="small">
+			<?php $this->msg( 'dump-database-curr-pages-info' ) ?>
+			</div>
 		</td>
-		<td>
+		<td style="border-left: 0">
 		</td>
 	</tr>
 	<tr>
-		<td>
-			Current pages and history
+		<td  style="border-right: 0">
+			<?php $this->msg( 'dump-database-full-pages' ) ?>
+			<div class="small">
+			<?php $this->msg( 'dump-database-full-pages-info' ) ?>
+			</div>
 		</td>
-		<td>
+		<td style="border-left: 0">
 		</td>
 	</tr>
 	<tr>
-		<td>
-			Request an update
+		<td  style="border-right: 0">
+			<?php $this->msg( 'dump-database-request' ) ?>
+			<div class="small">
+				<?php $this->msg( 'dump-database-request-info' ) ?>
+			</div>
 		</td>
-		<td>
+		<td style="border-left: 0">
+			<form>
+				<input type="submit" value="<?php $this->msg( 'dump-database-request-submit' ) ?>" />
+			</form>
 		</td>
 	</tr>
 </table>

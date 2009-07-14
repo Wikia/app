@@ -7,6 +7,8 @@
  */
 $wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemads::customSpecialStatistics";
 
+$wgExtensionMessagesFiles[ "WikiFactoryDoD" ] =  dirname( __FILE__ ) . '/DumpsOnDemand.i18n.php';
+
 class DumpsOnDemads {
 
 	/**
@@ -16,10 +18,10 @@ class DumpsOnDemads {
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
 		global $wgOut;
 
+		wfLoadExtensionMessages( "WikiFactoryDoD" );
+
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$dod = $tmpl->render( "dod" );
-		$text .= $dod;
-		Wikia::log( __METHOD__, "info", $dod );
+		$text .= $tmpl->render( "dod" );
 		return true;
 	}
 }
