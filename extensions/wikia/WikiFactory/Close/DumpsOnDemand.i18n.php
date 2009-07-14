@@ -15,5 +15,6 @@ $messages["en"] = array(
 	'dump-database-full-pages-info' => '(Warning: this file may be very large)',
 	'dump-database-request' => 'Request an update',
 	'dump-database-request-info' => '(Dumps are usually generated weekly)',
-	'dump-database-request-submit' => 'Send request'
+	'dump-database-request-submit' => 'Send request',
+	'dump-database-info-more' => 'Please see <a href="..more">link</a> for more'
 );

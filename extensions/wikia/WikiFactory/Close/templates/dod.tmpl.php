@@ -35,3 +35,6 @@
 		</td>
 	</tr>
 </table>
+<div class="right">
+	<?php $this->msg( 'dump-database-info-more' ) ?>
+</div>
