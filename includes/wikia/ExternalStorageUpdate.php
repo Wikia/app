@@ -101,13 +101,6 @@ class ExternalStorageUpdate {
 					 * update
 					 */
 					if( $Row->page_title != $page_title || $Row->page_namespace != $page_namespace ) {
-						/**
-						 * just copy page status if is different that 0 or 1
-						 */
-						if( $Row->page_status != 0 && $Row->page_status != 1 ) {
-							$page_status = $Row->page_status;
-						}
-
 						$dbw->update(
 							"pages",
 							array(
@@ -254,7 +247,6 @@ class ExternalStorageUpdate {
 		if ($oRevision instanceof Revision) {
 
 			$dbw = wfGetDBExt( DB_MASTER );
-			/* set revision as 'hidden' in blobs table */
 			$ret = $dbw->update(
 				"blobs",
 				array (
@@ -276,7 +268,7 @@ class ExternalStorageUpdate {
 	}
 
 	/**
-	 * deleteArticleExternal
+	 * undeleteArticleExternal
 	 *
 	 * static method called as hook
 	 *
