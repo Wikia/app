@@ -364,6 +364,10 @@ class AutoCreateWikiPage extends SpecialPage {
 			'city_lang'           => $this->mWikiData[ "language" ],
 			'city_created'        => wfTimestamp( TS_DB, time() ),
 		);
+		if( self::ACTIVE_CLUSTER ) {
+			$insertFields[ "city_cluster" ] = self::ACTIVE_CLUSTER;
+		}
+
 
 		$bIns = $dbw->insert( "city_list", $insertFields, __METHOD__ );
 		if ( empty($bIns) ) {
