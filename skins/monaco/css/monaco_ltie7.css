@@ -42,6 +42,16 @@ body.ns-0 #bodyContent table {
 	margin-left: -30%;
 }
 
+/* footer actions */
+#articleFooter img.sprite,
+/* share icons */
+#share dd a,
+/* dynamic links in monaco toolbox */
+#link_box_dynamic img.sprite {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');
+}
+
 /* RTL fixes */
 body.rtl #fe_talk,
 body.rtl #fe_permalink {

@@ -142,7 +142,7 @@ var initTracker = function() {
 	});
 
 	// Article footer
-	Event.addListener(['articleFooterActions', 'articleFooterActions2'], 'click', function(e) {
+	Event.addListener(['articleFooterActions', 'articleFooterActions2', 'articleFooterActions3', 'articleFooterActions4'], 'click', function(e) {
 		var el = Event.getTarget(e);
 		if(el.nodeName == 'IMG') {
 			el = el.parentNode;

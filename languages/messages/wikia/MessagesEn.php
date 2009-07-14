@@ -88,7 +88,11 @@ $messages = array_merge( $messages , array(
 * randompage-url|randompage
 * whatlinkshere|whatlinkshere',
 
-
+#dynamic links
+'dynamic-links-write-article' => 'Write an Article',
+'dynamic-links-add-image' => 'Add Image',
+'dynamic-links-write-blog' => 'Write a Blog',
+'dynamic-links-blog-listing' => 'New Blog Listing',
 
 'specialpages-url' => 'Special:Specialpages',
 'upload-url' => 'Special:Upload',
