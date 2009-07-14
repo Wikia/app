@@ -230,7 +230,6 @@ body, .BackColor
 	font-size: 13px;
 	color: #fff;
 	cursor: pointer;
-	text-transform: lowercase;
 }
 
 #closeButton

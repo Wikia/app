@@ -265,7 +265,22 @@ FCK.TemplateEditor.SelectStep = function(stepId) {
 		case 2:
 			// show proper template name (with namespace prefix)
 			name = (FCK.TemplateWizard.name.indexOf(':') > -1) ?  FCK.TemplateWizard.name : 'Template:' +  FCK.TemplateWizard.name;
+
+			// store template name in hidden <SPAN>
 			FCK.TemplateEditor.GetE('templateName').innerHTML = name;
+
+			// show template name with localised MW namespace (RT #3808)
+			var localisedName;
+			if ( /^Template:/.test(FCK.TemplateWizard.name) ) {
+				// if template name has "Template:" hardcoded replaced it with localised NS_TEMPLATE name
+				localisedName = FCK.TemplateWizard.name.replace(/^Template/, FCK.TemplateEditor.Dialog.parent.wysiwygTemplateNS_name);
+			}
+			else {
+				// just add localised NS_TEMPLATE name
+				localisedName = FCK.TemplateEditor.Dialog.parent.wysiwygTemplateNS_name + ':' + FCK.TemplateWizard.name;
+			}
+
+			FCK.TemplateEditor.GetE('template').innerHTML = localisedName;
 
 			// set "view template page" link
 			FCK.TemplateEditor.GetE('templateViewLink').href = FCK.TemplateEditor.Dialog.parent.wgServer + FCK.TemplateEditor.Dialog.parent.wgArticlePath.replace(/\$1/, encodeURI(name.replace(/ /g, '_')));
@@ -434,7 +449,7 @@ function Ok() {
 			clear: both;
 		}
 
-		#templateName {
+		#template {
 			float: left;
 			margin-right: 25px;
 		}
@@ -541,7 +556,8 @@ function Ok() {
 	</div>
 
 	<div id="templateEditorStep2" class="editorStep">
-		<h1 id="templateName">Template</h1>
+		<span id="templateName" style="display:none"></span><!-- store name of displayed template without localised namespace name -->
+		<h1 id="template">Template</h1>
 		<span id="templateOptions"><a id="templateViewLink" target="_blank"><span fcklang="TemplateView">view template page (opens a new window)</span></a></span>
 		<h3><span fcklang="TemplateEditorHint">Change the values on the left and click to preview. When you're done making your edits, click to save</span></h3>
 

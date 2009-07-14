@@ -175,6 +175,11 @@ function Wysiwyg_Variables(&$vars) {
 	$vars['wysiwygToolbarBuckets'] = $toolbar['buckets'];
 	$vars['wysiwygToolbarItems'] = $toolbar['items'];
 
+	// localised template namespace name (RT #3808)
+	global $wgLang;
+	$ns_names = $wgLang->getNamespaces();
+	$vars['wysiwygTemplateNS_name'] = $ns_names[NS_TEMPLATE];
+
 	return true;
 }
 

@@ -26,7 +26,6 @@ $skipKeys = array(
 	'DlgImg\w+',
 	'DlgFlash\w+',
 	'DlgLnk\w+',
-	'DlgColor\w+',
 	'DlgAnchor\w+',
 	'DlgSpell\w+',
 	'DlgButton\w+',
