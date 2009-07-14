@@ -20,10 +20,12 @@ function wfGeolocateIP($addr){
 
 	require_once($IP . "/extensions/wikia/JSONProfile/ipgeo/geoipcity.inc");
 
+
 	// try our cache first since itll be faster
 	$IPDataKey = wfMemcKey( 'wikiasearch' , 'mapfun' , 'IPGeoDataX' );
 	$IPGeoData = $wgMemc->get($IPDataKey);
 
+	error_log( __METHOD__ . " uses cache" );
 
 	if($IPGeoData && array_key_exists($addr, $IPGeoData)){
 		return $IPGeoData[$addr];
@@ -32,9 +34,9 @@ function wfGeolocateIP($addr){
 	if(!is_array($IPGeoData)){
 		$IPGeoData = array();
 	}
+	error_log( __METHOD__ . " uses GeoLiteCity.dat" );
 
 	$IPGeo = geoip_open($IP . "/extensions/wikia/JSONProfile/ipgeo/GeoLiteCity.dat", GEOIP_STANDARD);
-	error_log( __METHOD__ . " uses GeoLiteCity.dat" );
 	$record = geoip_record_by_addr($IPGeo, $addr);
 	$location["name"] = $record->city . ", " . $record->country_name;
 	$location["lat"] =  $record->latitude;
