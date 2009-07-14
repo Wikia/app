@@ -47,7 +47,11 @@ if ($wgTitle == 'Special:Watchlist') {
 	<ul class="nav_links">
 		<?
 		foreach( $data['nav_links'] as $navLink ) {
-			echo "<li ". ( ( $current  == $navLink[ "dbkey" ]) ? 'class="selected">' : ">" ) . '<a href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')">'. $navLink['text'] .'</a></li>';
+			$tracker = $navLink['href'];
+			$tracker = preg_replace('|^/wiki/(.*)[:/][^:/]+$|', '\1', $tracker); // /wiki/User:REMOVE but /wiki/Special:Contributions/REMOVE
+			$tracker = preg_replace('/[^a-z]/i', '', $tracker);
+			$tracker = strtolower($tracker);
+			echo "<li ". ( ( $current  == $navLink[ "dbkey" ]) ? 'class="selected">' : ">" ) . '<a href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $tracker . '\')">'. $navLink['text'] .'</a></li>';
 		}
 		?>
 	</ul>
