@@ -81,7 +81,7 @@ class SpecialStatistics extends SpecialPage {
 		/**
 		 * wikia, custom statistics
 		 */
-		wfRunHooks( "CustomSpecialStatistics", array( $this ) );
+		wfRunHooks( "CustomSpecialStatistics", array( &$this, &$text ) );
 
 		# Customizable footer
 		$footer = wfMsgExt( 'statistics-footer', array('parseinline') );
