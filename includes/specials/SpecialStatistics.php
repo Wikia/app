@@ -14,21 +14,21 @@
  * @param mixed $par (not used)
  */
 class SpecialStatistics extends SpecialPage {
-	
+
 	private $views, $edits, $good, $images, $total, $users,
 			$activeUsers, $admins, $numJobs = 0;
-	
+
 	public function __construct() {
 		parent::__construct( 'Statistics' );
 	}
-	
+
 	public function execute( $par ) {
 		global $wgOut, $wgRequest, $wgMessageCache;
 		global $wgDisableCounters, $wgMiserMode;
 		$wgMessageCache->loadAllMessages();
-		
+
 		$this->setHeaders();
-	
+
 		$this->views = SiteStats::views();
 		$this->edits = SiteStats::edits();
 		$this->good = SiteStats::articles();
@@ -38,19 +38,19 @@ class SpecialStatistics extends SpecialPage {
 		$this->activeUsers = SiteStats::activeUsers();
 		$this->admins = SiteStats::numberingroup('sysop');
 		$this->numJobs = SiteStats::jobs();
-	
+
 		# Staticic - views
 		$viewsStats = '';
 		if( !$wgDisableCounters ) {
 			$viewsStats = $this->getViewsStats();
 		}
-		
+
 		# Set active user count
 		if( !$wgMiserMode ) {
 			$dbw = wfGetDB( DB_MASTER );
 			SiteStatsUpdate::cacheUpdate( $dbw );
 		}
-	
+
 		# Do raw output
 		if( $wgRequest->getVal( 'action' ) == 'raw' ) {
 			$this->doRawOutput();
@@ -59,7 +59,7 @@ class SpecialStatistics extends SpecialPage {
 		$text = Xml::openElement( 'table', array( 'class' => 'mw-statistics-table' ) );
 
 		# Statistic - pages
-		$text .= $this->getPageStats();		
+		$text .= $this->getPageStats();
 
 		# Statistic - edits
 		$text .= $this->getEditStats();
@@ -77,6 +77,11 @@ class SpecialStatistics extends SpecialPage {
 		}
 
 		$text .= Xml::closeElement( 'table' );
+
+		/**
+		 * wikia, custom statistics
+		 */
+		wfRunHooks( "CustomSpecialStatistics", array( $this ) );
 
 		# Customizable footer
 		$footer = wfMsgExt( 'statistics-footer', array('parseinline') );
@@ -102,7 +107,7 @@ class SpecialStatistics extends SpecialPage {
 			$descriptionText = wfMsgExt( $descMsg, array( 'parseinline' ), $descMsgParam );
 			if ( !wfEmptyMsg( $descMsg, $descriptionText ) ) {
 				$descriptionText = " ($descriptionText)";
-				$text .= "<br />" . Xml::element( 'small', array( 'class' => 'mw-statistic-desc'), 
+				$text .= "<br />" . Xml::element( 'small', array( 'class' => 'mw-statistic-desc'),
 					$descriptionText );
 			}
 		}
@@ -111,7 +116,7 @@ class SpecialStatistics extends SpecialPage {
 			Xml::openElement( 'td', array( 'class' => 'mw-statistics-numbers' ) ) . $number . Xml::closeElement( 'td' ) .
 			Xml::closeElement( 'tr' );
 	}
-	
+
 	/**
 	 * Each of these methods is pretty self-explanatory, get a particular
 	 * row for the table of statistics
@@ -211,7 +216,7 @@ class SpecialStatistics extends SpecialPage {
 					$wgLang->formatNum( $this->views ),
 						array ( 'class' => 'mw-statistics-views-total' ) ) .
 				$this->formatRow( wfMsgExt( 'statistics-views-peredit', array( 'parseinline' ) ),
-					$wgLang->formatNum( sprintf( '%.2f', $this->edits ? 
+					$wgLang->formatNum( sprintf( '%.2f', $this->edits ?
 						$this->views / $this->edits : 0 ) ),
 						array ( 'class' => 'mw-statistics-views-peredit' ) );
 	}
@@ -244,14 +249,14 @@ class SpecialStatistics extends SpecialPage {
 					if( $title instanceof Title ) {
 						$text .= $this->formatRow( $sk->link( $title ),
 								$wgLang->formatNum( $row->page_counter ) );
-	
+
 					}
 				}
 				$res->free();
 			}
 		return $text;
 	}
-	
+
 	/**
 	 * Do the action=raw output for this page. Legacy, but we support
 	 * it for backwards compatibility
@@ -261,9 +266,9 @@ class SpecialStatistics extends SpecialPage {
 		global $wgOut;
 		$wgOut->disable();
 		header( 'Pragma: nocache' );
-		echo "total=" . $this->total . ";good=" . $this->good . ";views=" . 
+		echo "total=" . $this->total . ";good=" . $this->good . ";views=" .
 				$this->views . ";edits=" . $this->edits . ";users=" . $this->users . ";";
-		echo "activeusers=" . $this->activeUsers . ";admins=" . $this->admins . 
+		echo "activeusers=" . $this->activeUsers . ";admins=" . $this->admins .
 				";images=" . $this->images . ";jobs=" . $this->numJobs . "\n";
 		return;
 	}
