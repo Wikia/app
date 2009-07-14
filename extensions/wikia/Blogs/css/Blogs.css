@@ -158,6 +158,10 @@ border:1px solid #666;
 padding:2px;
 }
 
+#blog-comments .comment p {
+line-height:1.5em;
+}
+
 #blog-comments .details {
 margin:4px 0 7px;
 }
