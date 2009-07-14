@@ -94,7 +94,7 @@ var initTracker = function() {
 	});
 
 	// Article footer
-	$('#articleFooterActions, #articleFooterActions2').click(function(e) {
+	$('#articleFooterActions, #articleFooterActions2, #articleFooterActions3, #articleFooterActions4').click(function(e) {
 		var el = e.target;
 		if(el.nodeName == 'IMG') { el = el.parentNode; }
 		if(el.nodeName == 'A') { $.tracker.byStr('ArticleFooter/' + el.id.split('_')[1]); }
