@@ -227,7 +227,7 @@ function WikiaSkinPreferences($pref) {
 		foreach($wgSkinTheme as $skinKey => $skinVal) {
 
 			# Do not display skins which are defined in wgSkipSkins array
-			if(in_array($skinKey, $wgSkipSkins)) {
+			if(in_array($skinKey, $wgSkipSkins) || $skinKey == 'awesome') {
 				continue;
 			}
 			if($skinKey == 'quartz') {
