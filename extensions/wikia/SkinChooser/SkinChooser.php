@@ -167,8 +167,10 @@ function WikiaSkinPreferences($pref) {
 			}
 			$wgOut->addHTML('</tr>');
 		}
-		if($skinKey == 'monaco' && empty($wgUseMonaco2)) {
+		if( $skinKey == 'monaco' ) {
 			$wgOut->addHTML('<tr><td colspan=2>'.$pref->getToggle('showAds').'</td></tr>');
+		}
+		if ( $skinKey == 'monaco' && empty($wgUseMonaco2) ) {
 			$wgOut->addHTML('<tr><td colspan=2><div class="toggle"><input type="checkbox" name="UseAwesome" id="UseAwesome"'.($UseAwesome == true ? ' checked="checked"' : '').'/><span class="toggletext"><label for="UseAwesome"><b>Use Awesome / LeanMonaco</b></label></span></div></td></tr>');
 		}
 
