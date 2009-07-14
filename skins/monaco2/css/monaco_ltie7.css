@@ -43,8 +43,8 @@ a.bigButton big, a.bigButton small {
 	height: 1%;
 }
 
-#wikia_header #headerButtonHub {
-	margin-left: -30%;
+#wikia_header .headerMenuButton {
+	float: left;
 }
 
 /* footer actions */
