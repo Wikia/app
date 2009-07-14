@@ -1,4 +1,5 @@
 == Changes since 200907.3 ==
+* rt#18671: Blogs: Fixed pager on the list of blogs. (Moli)
 * rt#19019: Blogs: Fixed incorrect line spacing in comments. (Nef)
 * rt#3808: Allow WYSIWYG i18n (Mabcre)
 * rt#18674: live javascript errors - this.call is not a function (jQuery?) (Macbre)
