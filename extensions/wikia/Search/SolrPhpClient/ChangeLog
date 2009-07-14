@@ -1,0 +1,43 @@
+2009-01-29 00:49  donovan.jimenez
+
+	* Apache/Solr/Document.php: See
+	  http://code.google.com/p/solr-php-client/issues/detail?id=2
+	  
+	  Attempting to fix null vs. false boost parameter value issue by
+	  always casting to float value first.
+	  
+	  Needs tested.
+
+2009-01-28 17:11  donovan.jimenez
+
+	* Apache/Solr/Service.php, Apache/Solr/Service/Balancer.php: See
+	  http://code.google.com/p/solr-php-client/issues/detail?id=1
+	  
+	  Changed require_once statements that expected the Solr Client
+	  library to be on the include path into statements that use the
+	  __FILE__ magic constant to do them as absolute paths. This should
+	  get rid of the requirement for the user to change their include
+	  path configuration or add the library to the include path at
+	  runtime.
+	  
+	  Provided as a convenience for the user.
+	  
+
+2009-01-22 04:01  donovan.jimenez
+
+	* Apache/Solr/Document.php, Apache/Solr/Response.php,
+	  Apache/Solr/Service.php, Apache/Solr/Service/Balancer.php,
+	  COPYING: Updating license to New BSD for google code hosting.
+	  Also updating copyright message
+
+2009-01-21 23:50  donovan.jimenez@gmail.com
+
+	* Apache, Apache/Solr, Apache/Solr/Document.php,
+	  Apache/Solr/Response.php, Apache/Solr/Service,
+	  Apache/Solr/Service.php, Apache/Solr/Service/Balancer.php:
+	  Importing Solr PHP client from last released zip file
+
+2008-11-26 00:26  
+
+	* branches, tags, .: Initial directory structure.
+
