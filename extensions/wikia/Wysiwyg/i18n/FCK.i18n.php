@@ -1,6 +1,6 @@
 <?php
 
-/* FCK messages -- auto-generated on 2009-07-03 13:33:10 - 3 languages
+/* FCK messages -- auto-generated on 2009-07-14 09:54:02 - 3 languages
 
 Do not modify it by hand!
 
@@ -156,6 +156,10 @@ $messages['de'] = array(
 	'wysiwygDlnLnkMsgNoEMail' => 'Bitte geben Sie e-Mail Adresse an',
 	'wysiwygDlnLnkMsgNoAnchor' => 'Bitte wählen Sie einen Anker aus',
 	'wysiwygDlnLnkMsgInvPopName' => 'Der Name des Popups muss mit einem Buchstaben beginnen und darf keine Leerzeichen enthalten',
+	'wysiwygDlgColorTitle' => 'Farbauswahl',
+	'wysiwygDlgColorBtnClear' => 'Keine Farbe',
+	'wysiwygDlgColorHighlight' => 'Vorschau',
+	'wysiwygDlgColorSelected' => 'Ausgewählt',
 	'wysiwygDlgSmileyTitle' => 'Smiley auswählen',
 	'wysiwygDlgSpecialCharTitle' => 'Sonderzeichen auswählen',
 	'wysiwygDlgTableTitle' => 'Tabellen-Eigenschaften',
@@ -399,6 +403,10 @@ $messages['en'] = array(
 	'wysiwygDlnLnkMsgNoEMail' => 'Please type the e-mail address',
 	'wysiwygDlnLnkMsgNoAnchor' => 'Please select an anchor',
 	'wysiwygDlnLnkMsgInvPopName' => 'The popup name must begin with an alphabetic character and must not contain spaces',
+	'wysiwygDlgColorTitle' => 'Select Color',
+	'wysiwygDlgColorBtnClear' => 'Clear',
+	'wysiwygDlgColorHighlight' => 'Highlight',
+	'wysiwygDlgColorSelected' => 'Selected',
 	'wysiwygDlgSmileyTitle' => 'Insert a Smiley',
 	'wysiwygDlgSpecialCharTitle' => 'Select Special Character',
 	'wysiwygDlgTableTitle' => 'Table Properties',
@@ -676,6 +684,10 @@ $messages['pl'] = array(
 	'wysiwygDlnLnkMsgNoEMail' => 'Podaj adres e-mail',
 	'wysiwygDlnLnkMsgNoAnchor' => 'Wybierz etykietę',
 	'wysiwygDlnLnkMsgInvPopName' => 'Nazwa wyskakującego okienka musi zaczynać się od znaku alfanumerycznego i nie może zawierać spacji',
+	'wysiwygDlgColorTitle' => 'Wybierz kolor',
+	'wysiwygDlgColorBtnClear' => 'Wyczyść',
+	'wysiwygDlgColorHighlight' => 'Podgląd',
+	'wysiwygDlgColorSelected' => 'Wybrane',
 	'wysiwygDlgSmileyTitle' => 'Wstaw emotikonę',
 	'wysiwygDlgSpecialCharTitle' => 'Wybierz znak specjalny',
 	'wysiwygDlgTableTitle' => 'Właściwości tabeli',
