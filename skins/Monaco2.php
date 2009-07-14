@@ -107,7 +107,7 @@ class MonacoSidebar {
 					$mainMenu[$val] = $nodes[$val]['magic'];
 				}
 				if(isset($nodes[$val]['href']) && $nodes[$val]['href'] == 'editthispage') $menu .= '<!--b-->';
-				$menu .= '<div id="menu-item_'.$val.'" class="menu-item'.($val==end($nodes[0]['children']) ? ' border-fix' : '').'">';
+				$menu .= '<div id="menu-item_'.$val.'" class="menu-item">';
 				$menu .= '<a id="a-menu-item_'.$val.'" href="'.(!empty($nodes[$val]['href']) ? htmlspecialchars($nodes[$val]['href']) : '#').'" rel="nofollow">'.htmlspecialchars($nodes[$val]['text']).((!empty($nodes[$val]['children']) || !empty($nodes[$val]['magic'])) ? '<em>&rsaquo;</em>' : '').'</a>';
 				$menu .= '</div>';
 				if(isset($nodes[$val]['href']) && $nodes[$val]['href'] == 'editthispage') $menu .= '<!--e-->';
@@ -1258,8 +1258,7 @@ class MonacoTemplate extends QuickTemplate {
 				//$mouseover = ' onmouseover="' . ($level ? 'sub_' : '') . 'menuItemAction(\'' .
 				($level ? $last_count . '_' : '_') .$count . '\');"';
 				//$mouseout = ' onmouseout="clearBackground(\'_' . $count . '\')"';
-				$menu_output .='<div class="menu-item' .
-				(($count==sizeof($this->navmenu[$id]['children'])) ? ' border-fix' : '') . '" id="' . ($level ? 'sub-' : '') . 'menu-item' . ($level ? $last_count . '_' :'_') .$count . '">';
+				$menu_output .='<div class="menu-item" id="' . ($level ? 'sub-' : '') . 'menu-item' . ($level ? $last_count . '_' :'_') .$count . '">';
 				$menu_output .= '<a id="' . ($level ? 'a-sub-' : 'a-') . 'menu-item' . ($level ? $last_count . '_' : '_') .$count . '" href="'.(!empty($this->navmenu[$child]['href']) ? htmlspecialchars($this->navmenu[$child]['href']) : '#').'" class="'.(!empty($this->navmenu[$child]['class']) ? htmlspecialchars($this->navmenu[$child]['class']) : '').'"' . $extraAttributes . '>';
 
 				if (($fixed_art_path) == $this->navmenu[$child]['href']) {
@@ -1538,7 +1537,6 @@ if(isset($this->data['articlelinks']['left'])) {
 					<li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><div>&nbsp;</div><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
 <?php
 	}
-	wfRunHooks( 'MonacoAfterArticleLinks' );
 }
 ?>
 				</ul>
@@ -1546,7 +1544,7 @@ if(isset($this->data['articlelinks']['left'])) {
 <?php
 global $userMasthead;
 $showright = true;
-if( defined( "NS_BLOG_ARTICLE" ) && $wgTitle->getNamespace() == NS_BLOG_ARTICLE ) {
+if( defined( "NS_BLOG_ARTICLE" ) && $namespace == NS_BLOG_ARTICLE ) {
 	$showright = false;
 }
 if(isset($this->data['articlelinks']['right']) && $showright ) {
@@ -1942,61 +1940,93 @@ if(count($wikiafooterlinks) > 0) {
 	}
 	echo $monacoSidebar->getCode();
 
+	//BEGIN: create dynamic box
+	$dynamicLinksArray = array();
+	//Blog, User_Blog namespaces
+	if (defined('NS_BLOG_ARTICLE') && defined('NS_BLOG_LISTING') && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_LISTING))) {
+		$dynamicLinksArray[] = array(
+			'url' => Title::makeTitle(NS_SPECIAL, 'CreateBlogPage')->getLocalURL(),
+			'text' => wfMsg('dynamic-links-write-blog'),
+			'id' => 'dynamic-links-write-blog',
+			'tracker' => 'CreateBlogPage'
+		);
+		$dynamicLinksArray[] = array(
+			'url' => Title::makeTitle(NS_SPECIAL, 'CreateBlogListingPage')->getLocalURL(),
+			'text' => wfMsg('dynamic-links-blog-listing'),
+			'id' => 'dynamic-links-blog-listing',
+			'tracker' => 'CreateBlogListingPage'
+		);
+	}
+	//all other namespaces
+	else {
+		$dynamicLinksArray[] = array(
+			'url' => Title::makeTitle(NS_SPECIAL, 'CreatePage')->getLocalURL(),
+			'text' => wfMsg('dynamic-links-write-article'),
+			'id' => 'dynamic-links-write-article',
+			'tracker' => 'CreatePage'
+		);
+		$dynamicLinksArray[] = array(
+			'url' => Title::makeTitle(NS_SPECIAL, 'Upload')->getLocalURL(),
+			'text' => wfMsg('dynamic-links-add-image'),
+			'id' => 'dynamic-links-add-image',
+			'tracker' => 'Upload'
+		);
+	}
+
+	if (count($dynamicLinksArray) > 0) {
+?>
+	<div id="link_box_dynamic" class="clearfix linkbox_dynamic">
+		<ul id="dynamic-links-list">
+<?php
+	foreach ($dynamicLinksArray as $link) {
+		$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
+		echo '
+			<li id="' . $link['id'] . '-li"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="' . $wgStylePath  . '/monobook/blank.gif" id="' . $link['id'] . '-img" class="sprite" alt="' . $link['text'] . '" /></a> <div><a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>' . $link['text'] . '</a></div></li>';
+	}
+?>
+		</ul>
+	</div>
+<?php
+	}
+	//END: create dynamic box
+
+	//BEGIN: create static box
 	$linksArrayL = $linksArrayR = array();
 	$linksArray = $this->data['data']['toolboxlinks'];
-	$extraLinksArray = array();
-	$nav_urls = $this->data['nav_urls'];
+
+	//add user specific links
 	if(!empty($nav_urls['contributions'])) {
-		$extraLinksArray[] = array('href' => $nav_urls['contributions']['href'], 'text' => wfMsg('contributions'), 'tracker' => 'contributions');
+		$linksArray[] = array('href' => $nav_urls['contributions']['href'], 'text' => wfMsg('contributions'), 'tracker' => 'contributions');
 	}
 	if(!empty($nav_urls['blockip'])) {
-		$extraLinksArray[] = array('href' => $nav_urls['blockip']['href'], 'text' => wfMsg('blockip'), 'tracker' => 'blockip');
+		$linksArray[] = array('href' => $nav_urls['blockip']['href'], 'text' => wfMsg('blockip'), 'tracker' => 'blockip');
 	}
 	if(!empty($nav_urls['emailuser'])) {
-		$extraLinksArray[] = array('href' => $nav_urls['emailuser']['href'], 'text' => wfMsg('emailuser'), 'tracker' => 'emailuser');
+		$linksArray[] = array('href' => $nav_urls['emailuser']['href'], 'text' => wfMsg('emailuser'), 'tracker' => 'emailuser');
 	}
-	if(!is_array($linksArray) || count($linksArray) == 0) {
-		if(count($extraLinksArray) > 0) {
-			list($linksArrayL, $linksArrayR) = array_chunk($extraLinksArray, ceil(count($extraLinksArray)/2));
-		} else {
-			$linksArrayL = $linksArrayR = array();
-		}
-	} else {
-		$chunked = array_chunk($linksArray, ceil(count($linksArray)/2));
-		$linksArrayL = isset($chunked[0]) ? $chunked[0] : array();
-		$linksArrayR = isset($chunked[1]) ? $chunked[1] : array();
-		if(count($linksArrayL) != count($linksArrayR)) {
-			$extraLinksArray = array_reverse($extraLinksArray);
-			for($i = 0; $i < count($linksArrayL) - count($linksArrayR); $i++) {
-				$linksArrayR[] = array_pop($extraLinksArray);
-			}
-			$extraLinksArray = array_reverse($extraLinksArray);
-		}
-		for($i = 0; $i < count($extraLinksArray); $i++) {
-			if(($i+1)%2 == 0) {
-				$linksArrayR[] = $extraLinksArray[$i];
-			} else {
-				$linksArrayL[] = $extraLinksArray[$i];
-			}
+
+	if(is_array($linksArray) && count($linksArray) > 0) {
+		for ($i = 0, $len = count($linksArray); $i < $len; $i++) {
+			$i & 1 ? $linksArrayR[] = $linksArray[$i] : $linksArrayL[] = $linksArray[$i];
 		}
 	}
 
 	if(count($linksArrayL) > 0 || count($linksArrayR) > 0) {
 ?>
-				<div id="link_box" class="color2 clearfix">
+				<div id="link_box" class="color2 clearfix linkbox_static">
 					<table cellspacing="0">
 					<tr>
 						<td>
 							<ul>
 <?php
 		if(is_array($linksArrayL) && count($linksArrayL) > 0) {
-		    foreach($linksArrayL as $key => $val) {
-			 	$trackerL = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
+			foreach($linksArrayL as $key => $val) {
+				$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
-						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $trackerL ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
+						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $tracker ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
-		    }
-        }
+			}
+		}
 ?>
 							</ul>
 						</td>
@@ -2005,12 +2035,12 @@ if(count($wikiafooterlinks) > 0) {
 <?php
 		if(is_array($linksArrayR) && count($linksArrayR) > 0) {
 		    foreach($linksArrayR as $key => $val) {
-			 	$trackerR = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
+				$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
-						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $trackerR ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
+						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $tracker ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
-		    }
-        }
+			}
+		}
 ?>
 								<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r" rel="nofollow">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x" rel="nofollow">Random page</a></li>
 							</ul>
@@ -2020,6 +2050,7 @@ if(count($wikiafooterlinks) > 0) {
 				</div>
 <?php
 	}
+	//END: create static box
 ?>
 			</div>
 			<!-- /SEARCH/NAVIGATION -->
@@ -2033,7 +2064,7 @@ if(count($wikiafooterlinks) > 0) {
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_1', false) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
-					     	   !ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
+							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_1', false) .'</div>';
 					}
 				}
@@ -2051,7 +2082,7 @@ if(count($wikiafooterlinks) > 0) {
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
-					     	   !ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
+							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_2', false) .'</div>';
 					}
 				}
