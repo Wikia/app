@@ -1,3 +1,8 @@
+== Changes since 200907.3 ==
+* rt#3808: Allow WYSIWYG i18n (Mabcre)
+* rt#18674: live javascript errors - this.call is not a function (jQuery?) (Macbre)
+* rt#19017: FCK: Nowiki fix misses <s> alias for strikethrough (Macbre)
+
 == Changes since 200907.2 ==
 * rt#18369: Limit MultiWikiEdit, db connection dies with wikia-wide changes. (Nef)
 * rt#18985: FCK: Text immediately following headings in a table with styling loses a linebreak (Macbre)
