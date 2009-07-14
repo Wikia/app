@@ -813,12 +813,11 @@ class BlogTemplateClass {
     	wfProfileIn( __METHOD__ );
     	/* main query */
     	$aResult = array();
-    	$aFields = array( 'page_id', 'page_namespace', 'page_title', 'page_touched', 'unix_timestamp(page_touched) as timestamp', 'page_latest as rev_id' );
+    	$aFields = array( 'distinct(page_id) as page_id' );
 		$res = self::$dbr->select(
 			array_map(array(self::$dbr, 'tableName'), self::$aTables),
 			$aFields,
 			self::$aWhere,
-			'',
 			__METHOD__
 		);
     	wfProfileOut( __METHOD__ );
