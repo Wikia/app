@@ -95,8 +95,10 @@ class ReverseParser {
 				"#<\/{$formatTags}>(<a[^>]+>)<\\1>#i"		=> '$2',
 				"#<\/{$formatTags}>(<\/a>)<\\1>#i"		=> '$2',
 				"#<\/{$formatTags}>(<\/a><a[^>]+>)<\\1>#i"	=> '$2',
-				 // to allow using U and STRIKE in Visual mode
-				"#&lt;(/?(?:u|strike))&gt;#i" 			=> '\x7flt$1\x7fgt',
+
+				 // formatting HTML tags in Wysiwyg mode (RT #19017)
+				"#&lt;(/?(?:u|strike|s|b|i|del))&gt;#i"		=> '\x7flt$1\x7fgt',
+
 				// HTML entities (&ndash;) RT #18269
 				"#&(\w+);#i"					=> '\x7f-ent-$1;',
 				// HTML entities (&#91;)
