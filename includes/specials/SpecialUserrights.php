@@ -79,6 +79,13 @@ class UserrightsPage extends SpecialPage {
 			return;
 		}
 
+		// check if user is blocked -- see rt#19111
+		if ( $wgUser->isBlocked() ) {
+			global $wgOut;
+			$wgOut->blockedPage();
+			return;
+		}	
+
 		if ( wfReadOnly() ) {
 			global $wgOut;
 			$wgOut->readOnlyPage();
