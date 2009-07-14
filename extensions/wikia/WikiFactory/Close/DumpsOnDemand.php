@@ -21,6 +21,8 @@ class DumpsOnDemads {
 		wfLoadExtensionMessages( "WikiFactoryDoD" );
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$tmpl->set( "urlDumpFull", "http://wikistats.wikia.com/dbdumps/t/te/techteamtest/" );
+		$tmpl->set( "urlDumpCurr", "http://wikistats.wikia.com/dbdumps/t/te/techteamtest/" );
 		$text .= $tmpl->render( "dod" );
 		return true;
 	}

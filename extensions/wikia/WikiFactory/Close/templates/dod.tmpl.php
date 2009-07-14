@@ -2,13 +2,15 @@
 <?php $this->msg( 'dump-database-info' ) ?>
 <table class="mw-statistics-table">
 	<tr>
-		<td style="border-right: 0">
+		<td style="border-right: 0;">
 			<?php $this->msg( 'dump-database-curr-pages' ) ?>
 			<div class="small">
 			<?php $this->msg( 'dump-database-curr-pages-info' ) ?>
 			</div>
 		</td>
-		<td style="border-left: 0">
+		<td style="border-left: 0;padding 1em;">
+			&nbsp;
+			<a href="<?php echo $urlDumpCurr ?>"><?php echo $GLOBALS[ "wgContLang" ]->timeanddate( wfTimestampNow() )?></a>
 		</td>
 	</tr>
 	<tr>
@@ -19,6 +21,7 @@
 			</div>
 		</td>
 		<td style="border-left: 0">
+			&nbsp;<a href="<?php echo $urlDumpFull ?>"><?php echo $GLOBALS[ "wgContLang" ]->timeanddate( wfTimestampNow() )?></a>
 		</td>
 	</tr>
 	<tr>
