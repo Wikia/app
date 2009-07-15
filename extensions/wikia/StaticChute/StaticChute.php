@@ -361,7 +361,11 @@ class StaticChute {
 
 	public function useLocalChuteUrl() {
 		global $wgServer, $wgScriptPath;
-		$this->setChuteUrlPath($wgServer . $wgScriptPath . '/extensions');
+		/**
+		 * do not use wgScriptPath, problem with dofus/memory-alpha
+		 * rt#18410
+		 */
+		$this->setChuteUrlPath($wgServer . '/extensions');
 	}
 
 	// macbre: RT #18765
