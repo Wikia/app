@@ -138,7 +138,7 @@ function wfGoogleMaps_Install() {
 		$wgGoogleMapsCustomMessages,
 		$wgGoogleMapsTemplateVariables,
 		$wgJsMimeType,
-		$wgLanguageCode,
+		$wgContLanguageCode,
 		$wgContLang,
 		$wgProxyKey,
 		$wgTitle );
