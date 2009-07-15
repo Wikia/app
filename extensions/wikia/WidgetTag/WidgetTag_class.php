@@ -31,6 +31,15 @@ class WidgetTagRenderer extends WidgetFramework {
 			return '';
 		}
 
+		// seek for style attribute (RT #19092)
+		if (isset($args['style'])) {
+			$style = ' style="' . htmlspecialchars($args['style']) . '"';
+			unset($args['style']);
+		}
+		else {
+			$style = '';
+		}
+
 		// create array for getParams method of widget framework
 		$id = 'widget_' . $this->count;
 
@@ -60,7 +69,7 @@ class WidgetTagRenderer extends WidgetFramework {
 		$this->count++;
 
 		// wrap widget HTML
-		$output = '<nowiki><div class="widgetTag reset">' . $output . '</div></nowiki>';
+		$output = "<div class=\"widgetTag reset\"{$style}>{$output}</div>";
 
 		// finally!
 		return $output;
