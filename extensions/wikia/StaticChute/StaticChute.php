@@ -35,7 +35,7 @@ class StaticChute {
 
 		$this->config = array();
 		// As we convert other skins, bring their config here from MergeFiles
-		$this->config['awesome_anon_article_js'] = array(
+		$this->config['monaco_anon_article_js'] = array(
 			'common/jquery/jquery-1.3.2.js',
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
@@ -55,9 +55,9 @@ class StaticChute {
 			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 			'common/contributed.js',
 		);
-		$this->config['awesome_anon_article_js'] = array_merge($this->config['awesome_anon_article_js'], $widgetsAssets['js']);
+		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
-		$this->config['awesome_loggedin_js'] = array(
+		$this->config['monaco_loggedin_js'] = array(
 			'common/yui_2.5.2/utilities/utilities.js',
 			'common/yui_2.5.2/cookie/cookie-beta.js',
 			'common/yui_2.5.2/container/container.js',
@@ -89,9 +89,9 @@ class StaticChute {
 			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 			'common/contributed.js',
 		);
-		$this->config['awesome_loggedin_js'] = array_merge($this->config['awesome_loggedin_js'], $widgetsAssets['js']);
+		$this->config['monaco_loggedin_js'] = array_merge($this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
-		$this->config['awesome_anon_everything_else_js'] = array(
+		$this->config['monaco_anon_everything_else_js'] = array(
 			'common/yui_2.5.2/utilities/utilities.js',
 			'common/yui_2.5.2/cookie/cookie-beta.js',
 			'common/yui_2.5.2/container/container.js',
@@ -121,7 +121,7 @@ class StaticChute {
 			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 			'common/contributed.js',
 		);
-		$this->config['awesome_anon_everything_else_js'] = array_merge($this->config['awesome_anon_everything_else_js'], $widgetsAssets['js']);
+		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
 
 		// YUI package
 		$this->config['yui'] = array(
@@ -162,7 +162,7 @@ class StaticChute {
 		);
 
 		// CSS
-		$this->config['awesome_css'] = array(
+		$this->config['monaco_css'] = array(
 			'common/yui_2.5.2/container/assets/container.css',
 			'common/yui_2.5.2/tabview/assets/tabview.css',
         		'common/shared.css',
@@ -177,10 +177,10 @@ class StaticChute {
 			'monaco2/css/ny.css',
 			'../extensions/wikia/Blogs/css/Blogs.css',
 		);
-		$this->config['awesome_css'] = array_merge($this->config['awesome_css'], $widgetsAssets['css']);
+		$this->config['monaco_css'] = array_merge($this->config['monaco_css'], $widgetsAssets['css']);
 
 		// printable CSS
-		$this->config['awesome_css_print'] = array(
+		$this->config['monaco_css_print'] = array(
 			'monaco2/css/print.css',
 			'common/commonPrint.css',
 		);
@@ -249,7 +249,7 @@ class StaticChute {
 
 	private function getMoreFileList($package, $args) {
 		switch($package) {
-			case 'awesome_css':
+			case 'monaco_css':
 				if (!empty($args['usetheme'])) {
 					return array('monaco2/' . basename($args['usetheme']) . '/css/main.css');
 				}

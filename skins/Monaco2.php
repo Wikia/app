@@ -531,7 +531,7 @@ EOS;
 		$StaticChute->useLocalChuteUrl();
 
 		if ($wgUser->isLoggedIn()) {
-			$package = 'awesome_loggedin_js';
+			$package = 'monaco_loggedin_js';
 		}
 		else {
 			// list of namespaces and actions on which we should load package with YUI
@@ -546,11 +546,11 @@ EOS;
 
 			if ( in_array($wgTitle->getNamespace(), $ns) || in_array($wgRequest->getVal('action', 'view'), $actions) ) {
 				// edit mode & special/blog pages (package with YUI)
-				$package = 'awesome_anon_everything_else_js';
+				$package = 'monaco_anon_everything_else_js';
 			}
 			else {
 				// view mode (package without YUI)
-				$package = 'awesome_anon_article_js';
+				$package = 'monaco_anon_article_js';
 			}
 		}
 
@@ -991,8 +991,8 @@ EOS;
 			}
 		}
 
-		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css') . "\n" );
-		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('awesome_css_print') );
+		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n" );
+		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css_print') );
 
 		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
 		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
