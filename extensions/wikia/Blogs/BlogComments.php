@@ -606,6 +606,8 @@ class BlogCommentList {
 		$order  = $wgRequest->getText("order", false );
 		$action = $wgRequest->getText( "action", false );
 
+		$this->handleBlogCommentOrderCookie($order); // it's &$order...
+
 		$this->mOrder = ( $order == "desc" ) ? "desc" : "asc";
 		if( $action != "purge" ) {
 			$this->mComments = $wgMemc->get( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ) );
@@ -638,6 +640,40 @@ class BlogCommentList {
 
 		wfProfileOut( __METHOD__ );
 		return $this->sort();
+	}
+
+	/**
+	 * handleBlogCommentOrderCookie -- save in cookie blog comment order from url & get it next time
+	 *
+	 * @param string $order -- asc/desc or false if not set via url
+	 *
+	 * @see RT#19080
+	 */
+	private function handleBlogCommentOrderCookie(&$order) {
+		global $wgCookiePrefix;
+		$cookie = !empty($_COOKIE[$wgCookiePrefix . BLOGCOMMENTORDERCOOKIE_NAME]) ? $_COOKIE[$wgCookiePrefix . BLOGCOMMENTORDERCOOKIE_NAME] : false;
+
+		if (empty($cookie)) {
+			if (empty($order)) {
+				// nothing to do, 100% default
+			} else {
+				// save order in cookie
+				WebResponse::setcookie(BLOGCOMMENTORDERCOOKIE_NAME, $order, time() + BLOGCOMMENTORDERCOOKIE_EXPIRE);
+			}
+		} else {
+			if (empty($order)) {
+				// set order to cookie value
+				$order = $cookie;
+			} else {
+				// both set, another round of arbitrage
+				if ($order == $cookie) {
+					// nothing to do, both are in sync
+				} else {
+					// save order in cookie
+					WebResponse::setcookie(BLOGCOMMENTORDERCOOKIE_NAME, $order, time() + BLOGCOMMENTORDERCOOKIE_EXPIRE);
+				}
+			}
+		}
 	}
 
 	/**
