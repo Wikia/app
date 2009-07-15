@@ -22,6 +22,8 @@ define( "NS_BLOG_LISTING", 502 );
 define( "NS_BLOG_LISTING_TALK", 503 );
 define( "BLOGTPL_TAG", "bloglist" );
 
+define( "BLOGCOMMENTSORT_COOKIE_NAME", "blogcommentsort" );
+define( "BLOGCOMMENTSORT_COOKIE_EXPIRE", 60 * 60 * 24 * 365 );
 
 $wgExtraNamespaces[ NS_BLOG_ARTICLE ] = "User_blog";
 $wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ] = "User_blog_comment";
