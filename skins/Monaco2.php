@@ -1315,7 +1315,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne;
+		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces;
 		$skin = $wgUser->getSkin();
 		$namespace = $wgTitle->getNamespace();
 
@@ -1356,7 +1356,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	$this->html('csslinks');
 
-	if($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL) {
+	if($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL) {
 		$this->html('mergedJS');
 		foreach($this->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
@@ -1668,122 +1668,196 @@ if ($wgOut->isArticle()){
 <?php
 global $wgTitle, $wgOut;
 $custom_article_footer = '';
+$namespaceType = '';
 wfRunHooks( 'CustomArticleFooter', array( &$this, &$tpl, &$custom_article_footer ));
 if ($custom_article_footer !== '') {
 	echo $custom_article_footer;
-} elseif ($wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle()) {
-	global $wgArticle, $wgLang, $wgSitename;
+} else {
+	//default footer
+	if ($wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle()) {
+		$namespaceType = 'content';
+	}
+	//talk footer
+	elseif ($wgTitle->isTalkPage()) {
+		$namespaceType = 'talk';
+	}
+	//Blog, User_Blog namespaces
+	elseif (defined('NS_BLOG_ARTICLE') && defined('NS_BLOG_LISTING') && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_LISTING))) {
+		$namespaceType = 'blog';
+	}
+	//disable footer on some namespaces
+	elseif ($namespace == NS_SPECIAL) {
+		$namespaceType = 'none';
+	}
+
+	$action = $wgRequest->getVal('action', 'view');
+	if ($namespaceType != 'none' && in_array($action, array('view', 'purge'))) {
+		$nav_urls = $this->data['nav_urls'];
+
+		$actions = '';
+		if (!empty($this->data['content_actions']['history']) || !empty($nav_urls['recentchangeslinked'])) {
+			$actions =
+								'<ul id="articleFooterActions3" class="actions clearfix">' .
+								(!empty($this->data['content_actions']['history']) ? ('
+								<li id="fe_talk"><a rel="nofollow" id="fe_talk_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_talk_img" class="sprite" alt="' . wfMsg('history_short') . '" /></a> <div><a id="fe_talk_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
+
+								(!empty($nav_urls['recentchangeslinked']) ? ('
+								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_recent_img" class="sprite" alt="' . wfMsg('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsg('recentchangeslinked') . '</a></div></li>') : '') .
+
+								'</ul>';
+		}
+		if (!empty($nav_urls['permalink']) || !empty($nav_urls['whatlinkshere'])) {
+			$actions .=
+								'<ul id="articleFooterActions4" class="actions clearfix">' .
+
+								(!empty($nav_urls['permalink']) ? ('
+								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_permalink_img" class="sprite" alt="' . wfMsg('permalink') . '" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
+
+								(!empty($nav_urls['whatlinkshere']) ? ('
+								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_whatlinkshere_img" class="sprite" alt="' . wfMsg('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsg('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
+		}
+
+		global $wgArticle, $wgLang, $wgSitename;
 ?>
 			<div id="articleFooter" class="reset">
 				<table cellspacing="0">
 					<tr>
 						<td class="col1">
 							<ul class="actions" id="articleFooterActions">
-								<li><a rel="nofollow" id="fe_edit_icon" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_edit_img" class="sprite" alt="<?= wfMsg('edit') ?>" /></a> <div><?= wfMsg('footer_1', $wgSitename) ?> <a id="fe_edit_link" rel="nofollow" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><?= wfMsg('footer_1.5') ?></a></div></li>
-								<li id="fe_talk"><a rel="nofollow" id="fe_talk_icon" href="<?= htmlspecialchars($this->data['content_actions']['history']['href']) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_talk_img" class="sprite" alt="<?= wfMsg('history_short') ?>" /></a> <div><a id="fe_talk_link" rel="nofollow" href="<?=htmlspecialchars($this->data['content_actions']['history']['href'])?>"><?=$this->data['content_actions']['history']['text']?></a></div></li>
-								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="<?= htmlspecialchars($this->data['nav_urls']['permalink']['href']) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_permalink_img" class="sprite" alt="<?= wfMsg('permalink') ?>" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="<?=htmlspecialchars($this->data['nav_urls']['permalink']['href'])?>"><?=$this->data['nav_urls']['permalink']['text']?></a></div></li>
 <?php
-	$timestamp = $wgArticle->getTimestamp();
-	$lastUpdate = $wgLang->date($timestamp);
-	$userId = $wgArticle->getUser();
-	if($userId > 0) {
-		$userText = $wgArticle->getUserText();
-		$userPageTitle = Title::makeTitle(NS_USER, $userText);
-		$userPageLink = $userPageTitle->getLocalUrl();
-		$userPageExists = $userPageTitle->exists();
+		if ($namespaceType == 'talk') {
+			$custom_article_footer = '';
+			wfRunHooks('AddNewTalkSection', array( &$this, &$tpl, &$custom_article_footer ));
+			if ($custom_article_footer != '')
+				echo $custom_article_footer;
+		} elseif ($namespaceType == 'blog') {
+			$href = htmlspecialchars(Title::makeTitle(NS_SPECIAL, 'CreateBlogPage')->getLocalURL());
+?>
+								<li><a rel="nofollow" id="fe_edit_icon" href="<?= $href ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_edit_img" class="sprite" alt="<?= wfMsg('edit') ?>" /></a> <div><a id="fe_edit_link" rel="nofollow" href="<?= $href ?>"><?= wfMsg('blog-create-next-label') ?></a></div></li>
+<?php
+		} else {
+?>
+								<li><a rel="nofollow" id="fe_edit_icon" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_edit_img" class="sprite" alt="<?= wfMsg('edit') ?>" /></a> <div><?= wfMsg('footer_1', $wgSitename) ?> <a id="fe_edit_link" rel="nofollow" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><?= wfMsg('footer_1.5') ?></a></div></li>
+<?php
+		}
+		$timestamp = $wgArticle->getTimestamp();
+		$lastUpdate = $wgLang->date($timestamp);
+		$userId = $wgArticle->getUser();
+		if($userId > 0) {
+			$userText = $wgArticle->getUserText();
+			$userPageTitle = Title::makeTitle(NS_USER, $userText);
+			$userPageLink = $userPageTitle->getLocalUrl();
+			$userPageExists = $userPageTitle->exists();
 ?>
 								<li><?= $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '' ?><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_user_img" class="sprite" alt="<?= wfMsg('userpage') ?>" /><?= $userPageExists ? '</a>' : '' ?> <div><?= wfMsg('footer_5', '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
 <?php
-	}
+		}
 ?>
 							</ul>
-							<strong><?= wfMsgHtml('rate_it') ?></strong>
-<?php
-	$FauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $this->data['articleid'], "wkuservote" => true ));
-	$oApi = new ApiMain($FauxRequest);
-	try { $oApi->execute(); } catch (Exception $e) {};
-	$aResult =& $oApi->GetResultData();
-
-	if( !empty( $aResult['query']['wkvoteart'] ) ) {
-		if(!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['uservote'])) {
-			$voted = true;
-		} else {
-			$voted = false;
-		}
-		if (!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'])) {
-			$rating = $aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'];
-		} else {
-			$rating = 0;
-		}
-	} else {
-		$voted = false;
-		$rating = 0;
-	}
-
-	$hidden_star = $voted ? ' style="display: none;"' : '';
-	$rating = round($rating * 2)/2;
-	$ratingPx = round($rating * 17);
-?>
-							<div id="star-rating-wrapper">
-								<ul id="star-rating" class="star-rating">
-									<li style="width: <?= $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
-									<li><a rel="nofollow" class="one-star" id="star1" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
-									<li><a rel="nofollow" class="two-stars" id="star2" title="2/5"<?=$hidden_star?>><span>2</span></a></li>
-									<li><a rel="nofollow" class="three-stars" id="star3" title="3/5"<?=$hidden_star?>><span>3</span></a></li>
-									<li><a rel="nofollow" class="four-stars" id="star4" title="4/5"<?=$hidden_star?>><span>4</span></a></li>
-									<li><a rel="nofollow" class="five-stars" id="star5" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
-								</ul>
-								<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a rel="nofollow" id="unrate" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
+							<?= $namespaceType == 'content' ? $actions : '' ?>
 							</div>
 						</td>
 						<td class="col2">
+<?php
+		if ($namespaceType != 'content') {
+?>
+							<?= $actions ?>
+<?php
+		} else {
+?>
 							<ul class="actions" id="articleFooterActions2">
 								<li><a rel="nofollow" id="fe_random_icon" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_random_img" class="sprite" alt="<?= wfMsg('randompage') ?>" /></a> <div><a rel="nofollow" id="fe_random_link" href="<?= Skin::makeSpecialUrl( 'Randompage' ) ?>"><?= wfMsg('footer_6') ?></a></div></li>
 <?php
-	global $wgProblemReportsEnable;
+			global $wgProblemReportsEnable;
 
-	if ( !empty($wgProblemReportsEnable) ) {
+			if ( !empty($wgProblemReportsEnable) ) {
 ?>
-								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_report_img" class="sprite" alt="<?= wfMsg('reportproblem') ?>" /> <div><a style="cursor:pointer" rel="nofollow" id="fe_report_link"><?= wfMsg('reportproblem'); ?></a></div></li>
+								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_report_img" class="sprite" alt="<?= wfMsg('reportproblem') ?>" /> <div><a style="cursor:pointer" id="fe_report_link"><?= wfMsg('reportproblem'); ?></a></div></li>
 <?php
-	}
+			}
 
-	if(!empty($wgNotificationEnableSend)) {
+			if(!empty($wgNotificationEnableSend)) {
 ?>
-								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" rel="nofollow" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
+								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
 <?php
-	}
+			}
 ?>
 							</ul>
-							<strong><?= wfMsg('footer_8') ?>:</strong>
+							<div class="clearfix">
+								<strong><?= wfMsg('footer_8') ?>:</strong>
 <?php
-	$url = htmlspecialchars($wgTitle->getFullURL());
-	$title = htmlspecialchars($wgTitle->getText());
+			$url = htmlspecialchars($wgTitle->getFullURL());
+			$title = htmlspecialchars($wgTitle->getText());
 ?>
-							<div id="share">
-							<dl id="shareDelicious" class="share">
-								<dt>del.icio.us</dt>
-								<dd><a rel="nofollow" href="http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=<?=$url?>&amp;title=<?=$title?>" id="shareDelicious_a"></a></dd>
-							</dl>
-							<dl id="shareStumble" class="share">
-								<dt>StumbleUpon</dt>
-								<dd><a rel="nofollow" href="http://www.stumbleupon.com/submit?url=<?=$url?>&amp;title=<?=$title?>" id="shareStumble_a"></a></dd>
-							</dl>
-							<dl id="shareDigg" class="share">
-								<dt>Digg</dt>
-								<dd><a rel="nofollow" href="http://digg.com/submit?phase=2&amp;url=<?=$url?>&amp;title=<?=$title?>" id="shareDigg_a"></a></dd>
-							</dl>
-							<dl id="shareFacebook" class="share">
-								<dt>Facebook</dt>
-								<dd><a rel="nofollow" href="http://www.facebook.com/share.php?u=<?=$url?>" id="shareFacebook_a"></a></dd>
-							</dl>
+								<div id="share">
+								<dl id="shareDelicious" class="share">
+									<dt>del.icio.us</dt>
+									<dd><a rel="nofollow" href="http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=<?=$url?>&amp;title=<?=$title?>" id="shareDelicious_a"></a></dd>
+								</dl>
+								<dl id="shareStumble" class="share">
+									<dt>StumbleUpon</dt>
+									<dd><a rel="nofollow" href="http://www.stumbleupon.com/submit?url=<?=$url?>&amp;title=<?=$title?>" id="shareStumble_a"></a></dd>
+								</dl>
+								<dl id="shareDigg" class="share">
+									<dt>Digg</dt>
+									<dd><a rel="nofollow" href="http://digg.com/submit?phase=2&amp;url=<?=$url?>&amp;title=<?=$title?>" id="shareDigg_a"></a></dd>
+								</dl>
+								<dl id="shareFacebook" class="share">
+									<dt>Facebook</dt>
+									<dd><a rel="nofollow" href="http://www.facebook.com/share.php?u=<?=$url?>" id="shareFacebook_a"></a></dd>
+								</dl>
+								</div>
 							</div>
+							<div class="clearfix">
+								<strong><?= wfMsgHtml('rate_it') ?></strong>
+<?php
+			$FauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $this->data['articleid'], "wkuservote" => true ));
+			$oApi = new ApiMain($FauxRequest);
+			try { $oApi->execute(); } catch (Exception $e) {};
+			$aResult =& $oApi->GetResultData();
+
+			if( !empty( $aResult['query']['wkvoteart'] ) ) {
+				if(!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['uservote'])) {
+					$voted = true;
+				} else {
+					$voted = false;
+				}
+				if (!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'])) {
+					$rating = $aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'];
+				} else {
+					$rating = 0;
+				}
+			} else {
+				$voted = false;
+				$rating = 0;
+			}
+
+			$hidden_star = $voted ? ' style="display: none;"' : '';
+			$rating = round($rating * 2)/2;
+			$ratingPx = round($rating * 17);
+?>
+								<div id="star-rating-wrapper">
+									<ul id="star-rating" class="star-rating">
+										<li style="width: <?= $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?= $rating ?>/5</span></li>
+										<li><a rel="nofollow" class="one-star" id="star1" title="1/5"<?=$hidden_star?>><span>1</span></a></li>
+										<li><a rel="nofollow" class="two-stars" id="star2" title="2/5"<?=$hidden_star?>><span>2</span></a></li>
+										<li><a rel="nofollow" class="three-stars" id="star3" title="3/5"<?=$hidden_star?>><span>3</span></a></li>
+										<li><a rel="nofollow" class="four-stars" id="star4" title="4/5"<?=$hidden_star?>><span>4</span></a></li>
+										<li><a rel="nofollow" class="five-stars" id="star5" title="5/5"<?=$hidden_star?>><span>5</span></a></li>
+									</ul>
+									<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a rel="nofollow" id="unrate" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
+								</div>
+							</div>
+<?php
+		}
+?>
 						</td>
 					</tr>
 				</table>
 			</div>
 <?php
-}
+	} //end $namespaceType != 'none'
+} //end else from CustomArticleFooter hook
 ?>
 			<!-- /ARTICLE FOOTER -->
 <?php		wfProfileOut( __METHOD__ . '-articlefooter'); ?>
@@ -1793,7 +1867,7 @@ if ($custom_article_footer !== '') {
 <?php		wfProfileOut( __METHOD__ . '-page'); ?>
 
 <?php
-	if(!($wgRequest->getVal('action') != '' || $wgTitle->getNamespace() == NS_SPECIAL)) {
+	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
 		$this->html('mergedJS');
 		foreach($this->data['references']['js'] as $script) {
 ?>
