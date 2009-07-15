@@ -50,6 +50,9 @@ window.onload = function() {
 
 	FCK.TemplateEditor.Dialog.SetAutoSize(true);
 
+	// use correct link to "Magic words" help page
+	GetE('templateLinkToHelp').href = FCKLang.TemplateMagicWordsLink;
+
 	// choose correct editor step
 	FCK.log(FCK.TemplateWizard);
 
@@ -542,7 +545,7 @@ function Ok() {
 		<h1><span fcklang="TemplateBrowseFor">Browse for Template</span></h1>
 
 		<h2 style="float: left"><span fcklang="TemplateMostFrequenty">Most Frequently Used</span></h2>
-		<h2 style="float: right; width: 260px"><a href="http://help.wikia.com/wiki/Help:Magic_words" target="_blank"><span fcklang="TemplateMagicWords">Magic words</span></a></h2>
+		<h2 style="float: right; width: 260px"><a href="http://help.wikia.com/wiki/Help:Magic_words" target="_blank" id="templateLinkToHelp"><span fcklang="TemplateMagicWords">Magic words</span></a></h2>
 
 		<br style="clear: both" />
 
