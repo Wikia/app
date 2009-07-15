@@ -12,7 +12,7 @@ $wgExtensionCredits['other'][] = array(
 	"name" => "BlogArticles",
 	"description" => "Blog Articles",
 	"url" => "http://help.wikia.com/wiki/Help:Blog_article",
-	"version" => preg_replace( '/^.* (\d\d\d\d-\d\d-\d\d).*$/', '\1', '$Id: WikiFactory.php 13985 2008-06-16 15:20:38Z eloy $' ),
+	"svn-revision" => "$LastChangedRevision$",
 	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)], Piotr Molski, Adrian Wieczorek, [http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]"
 );
 
