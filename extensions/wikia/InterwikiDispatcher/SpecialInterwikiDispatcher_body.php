@@ -4,7 +4,7 @@
  *
  * @author Maciej Błaszkowski (Marooned) <marooned@wikia.com>
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
- * 
+ *
  * @date 2008-07-08
  * @copyright Copyright (C) 2008 Maciej Błaszkowski, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
@@ -56,7 +56,7 @@ class InterwikiDispatcher extends SpecialPage {
 //		$wgOut->SetPageTitle(wfMsg('interwikidispatcher'));
 		$wgOut->redirect($redirect, 301);
 	}
-	
+
 	private static function isWikiExists($sName) {
 		global $wgExternalSharedDB;
 		$DBr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
@@ -78,7 +78,7 @@ class InterwikiDispatcher extends SpecialPage {
 			return false;
 		}
 	}
-	
+
 	private static function getCityUrl($iCityId) {
 		global $wgExternalSharedDB;
 		$DBr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
@@ -92,36 +92,36 @@ class InterwikiDispatcher extends SpecialPage {
 
 		$row = $DBr->FetchObject($dbResult);
 		$DBr->FreeResult($dbResult);
-		
+
 		return $row->city_url;
-	} 
+	}
 
 	public static function getInterWikiaURL(&$title, &$url, $query) {
 		global $wgArticlePath, $wgScriptPath;
 
 		if(in_array($title->mInterwiki, array('w', 'wikia', 'wikicities'))) {
-			$aLinkParts = explode(':', $title->getText());
-			if($aLinkParts[0] == 'c') {				
-				$iCityId = self::isWikiExists($aLinkParts[1]);
+			$aLinkParts = explode(':', $title->getFullText());
+			if($aLinkParts[1] == 'c') {
+				$iCityId = self::isWikiExists($aLinkParts[2]);
 				if($iCityId) {
 					$sArticlePath = WikiFactory::getVarValueByName('wgArticlePath', $iCityId);
 					$sArticlePath = !empty($sArticlePath) ? $sArticlePath : $wgArticlePath;
- 
-					/* $wgScriptPath is already included in city_url 
+
+					/* $wgScriptPath is already included in city_url
 					$sScriptPath = WikiFactory::getVarValueByName('wgScriptPath', $iCityId);
 					$sScriptPath = !empty($sScriptPath) ? $sScriptPath : $wgScriptPath;
 					*/
-					
+
 					if(!empty($sArticlePath)) {
 						$sArticleTitle = "";
-						for($i = 2; $i < count($aLinkParts); $i++) {
+						for($i = 3; $i < count($aLinkParts); $i++) {
 							$sArticleTitle .= (!empty($sArticleTitle)?":":"") . $aLinkParts[$i];
 						}
-						
+
 						$sCityUrl = self::getCityUrl($iCityId);
 						if(!empty($sCityUrl)) {
-							$url = str_replace(array('$1', '$wgScriptPath'),  array($sArticleTitle, ''), $sArticlePath);												
-							$url = $sCityUrl . ltrim($url, '/'); 
+							$url = str_replace(array('$1', '$wgScriptPath'),  array($sArticleTitle, ''), $sArticlePath);
+							$url = $sCityUrl . ltrim($url, '/');
 						}
 					}
 				}
@@ -129,5 +129,4 @@ class InterwikiDispatcher extends SpecialPage {
 		}
 		return true;
 	}
-	
 }
