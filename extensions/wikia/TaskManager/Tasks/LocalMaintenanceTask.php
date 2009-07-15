@@ -47,7 +47,8 @@ class LocalMaintenanceTask extends BatchTask {
 	 * @return boolean - status of operation
 	 */
 	public function execute( $params = null ) {
-		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath, $wgExtensionMessagesFiles;
+		global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath,
+			$wgExtensionMessagesFiles;
 
 		$this->mTaskID = $params->task_id;
 		$this->mParams = unserialize( $params->task_arguments );
@@ -79,11 +80,11 @@ class LocalMaintenanceTask extends BatchTask {
 				$retval = wfShellExec( $cmd, $status );
 				$this->addLog( $retval );
 
-				$this->addLog( "Disable lock to edits" );
+				$this->addLog( "Set edit lock" );
 				$oVariable = WikiFactory::getVarByName( 'wgReadOnly', $city_id );
 				if ( isset($oVariable->cv_variable_id) ) {
 					WikiFactory::removeVarById($oVariable->cv_variable_id, $city_id);
-					WikiFactory::clearCache($city_id);
+					WikiFactory::clearCache( $city_id );
 				}
 
 				$this->mWikiData = $this->mParams[ "data" ];
@@ -95,7 +96,9 @@ class LocalMaintenanceTask extends BatchTask {
 			/**
 			 * once again clear cache at the very end
 			 */
-			WikiFactory::clearCache( $city_id );
+			$this->addLog( "Remove edit lock" );
+			$wgMemc = wfGetMainCache();
+			$wgMemc->delete( WikiFactory::getVarsKey( $city_id ) );
 		}
 
 		return true;
