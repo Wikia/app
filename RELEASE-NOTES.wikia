@@ -1,4 +1,5 @@
 == Changes since 200907.3 ==
+* rt#19062: Fix GoogleMaps to use user lang. (Nef)
 * rt#19078: Blogs: Make ajax submit-and-append observe comment sort order. (Nef)
 * rt#19080: Blogs: Make comment sort order persist. (Nef)
 * rt#18671: Blogs: Fixed pager on the list of blogs. (Moli)
