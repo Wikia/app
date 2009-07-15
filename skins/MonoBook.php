@@ -57,7 +57,7 @@ class SkinMonoBook extends WikiaSkinMonoBook {
  * @todo document
  * @ingroup Skins
  */
-class MonoBookTemplate extends WikiaMonoBookTemplate {
+class MonoBookTemplate extends QuickTemplate {
 
 	var $skin;
 
@@ -255,7 +255,6 @@ if ( !$this->isSkyscraper() ) {
 }
 ?>
 			<div class="visualClear"></div>
-<?php $this->spotlight_footer(); ?>
 			<div id="footer">
 <?php $this->footer(); ?>
 		</div>

@@ -208,30 +208,3 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		";
 	}
 } // end of class
-
-class WikiaMonoBookTemplate extends QuickTemplate {
-	public function spotlight_footer() {
-		global $wgRequest;
-
-		if ( $wgRequest->getVal('action') != 'edit' ) {
-		?>
-		<div id="spotlight_footer">
-		<table style="border: solid 5px blue;">
-		<tr>
-			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderDiv('FOOTER_SPOTLIGHT_LEFT'); ?>
-			</td>
-			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderDiv('FOOTER_SPOTLIGHT_MIDDLE'); ?>
-			</td>
-			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderDiv('FOOTER_SPOTLIGHT_RIGHT'); ?>
-			</td>
-		</tr>
-		</table>
-		</div>
-		<?php
-		}
-
-	}
-}

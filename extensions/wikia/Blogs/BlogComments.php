@@ -606,8 +606,6 @@ class BlogCommentList {
 		$order  = $wgRequest->getText("order", false );
 		$action = $wgRequest->getText( "action", false );
 
-		$this->handleCommentSortCookie($order); // it's &$order, may get changed if cookie is set
-
 		$this->mOrder = ( $order == "desc" ) ? "desc" : "asc";
 		if( $action != "purge" ) {
 			$this->mComments = $wgMemc->get( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ) );
@@ -640,44 +638,6 @@ class BlogCommentList {
 
 		wfProfileOut( __METHOD__ );
 		return $this->sort();
-	}
-
-	/**
-	 * handleCommentSortCookie -- get/save comment sort order in cookie
-	 *
-	 * @param string $order -- sort order requested via url: 'asc'/'desc' or false if not given
-	 *
-	 * @see #19080
-	 */
-	private function handleCommentSortCookie(&$order) {
-		global $wgCookiePrefix;
-		$cookie = isset($_COOKIE[$wgCookiePrefix . BLOGCOMMENTSORT_COOKIE_NAME]) ? $_COOKIE[$wgCookiePrefix . BLOGCOMMENTSORT_COOKIE_NAME] : false;
-
-		if (empty($cookie)) {
-			if (empty($order)) {
-				// nothing to do, 100% defaults
-			}
-			else {
-				// save order in cookie
-				WebResponse::setcookie(BLOGCOMMENTSORT_COOKIE_NAME, $order, time() + BLOGCOMMENTSORT_COOKIE_EXPIRE);
-			}
-		}
-		else {
-			if (empty($order)) {
-				// set order to cookie value
-				$order = $cookie;
-			}
-			else {
-				// both set, next round of arbitrage
-				if ($order == $cookie) {
-					// nothing to do, they are the same
-				}
-				else {
-					// save order in cookie
-					WebResponse::setcookie(BLOGCOMMENTSORT_COOKIE_NAME, $order, time() + BLOGCOMMENTSORT_COOKIE_EXPIRE);
-				}
-			}
-		}
 	}
 
 	/**
