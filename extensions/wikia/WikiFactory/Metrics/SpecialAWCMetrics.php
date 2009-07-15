@@ -161,6 +161,7 @@ class CreateWikiMetrics {
 			foreach ($aValues as $key => $value) {
 				$k = trim($key);
 				if ( strpos($key, "awc-") !== false ) {
+					$_SESSION[$key] = $value;
 					$mKey = str_replace("awc-", "", $key);
 					$mKey = str_replace("-", "_", "ax".ucfirst($mKey));
 					$this->$mKey = strip_tags($value);
@@ -168,6 +169,20 @@ class CreateWikiMetrics {
 			}
 		}
 		wfProfileOut( __METHOD__ );
+	}
+	
+	/* check session params */
+	public function getRequestParamsFromSession() {
+		wfProfileIn( __METHOD__ );
+		if ( !empty($_SESSION) && is_array($_SESSION) ) {
+			foreach ($_SESSION as $key => $value) {
+				if ( strpos($key, "awc-") !== false ) {
+					$mKey = str_replace("awc-", "", $key);
+					$mKey = str_replace("-", "_", "ax".ucfirst($mKey));
+					$this->$mKey = strip_tags($value);
+				}
+			}
+		}
 	}
 	
 	/*
@@ -183,35 +198,12 @@ class CreateWikiMetrics {
 		$res = array();
 		wfProfileIn( __METHOD__ );
 		#---
-		error_log ("this = " . print_r($this, true));
-		
-		#- find Wikis with nbr pageviews fewer than X
-		$this->cityIds = array();
-		if ( !empty($this->axNbrEdits) ) { 
-			$this->cityIds = $this->getWikisByNbrEdits();
-			if ( empty($this->cityIds) ) {
-				$this->cityIds = array(0);
-			}
-		}
-		if ( !empty($this->axNbrPageviews) ) {
-			$this->cityIds = $this->getWikisByNbrPageviews();
-			if ( empty($this->cityIds) ) {
-				$this->cityIds = array(0);
-			}
-		}
-		if ( !empty($this->axNbrArticles) ) { 
-			$this->cityIds = $this->getWikisByNbrArticles();
-			if ( empty($this->cityIds) ) {
-				$this->cityIds = array(0);
-			}
-		}
-
 		list ($AWCCities, $AWCCitiesCount) = $this->getWikis();
 		if ( !empty( $AWCCities ) ) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			$wikiList = implode( ",", array_keys( $AWCCities ) );
 
-			#--- stats 				
+			#--- stats 
 			$table = "city_stats_full";
 			$db_fields[] = "round(avg(cw_users_all_reg_main_ns), 1) as users_edits";
 			$db_fields[] = "max(cw_users_all_reg) as users_reg";
@@ -316,6 +308,21 @@ class CreateWikiMetrics {
 	}
 
 	/*
+	 * get list of filtered Wikis
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 *
+	 */
+	public function getFilteredWikis() {				
+		$showAll = true;
+		$this->getRequestParamsFromSession();
+
+		list ($AWCCities, $AWCCitiesCount) = $this->getWikis( $showAll );
+		return $AWCCities;
+	}
+
+	/*
 	 * build proper options for SQL queries
 	 *
 	 * @author moli@wikia-inc.com
@@ -413,20 +420,46 @@ class CreateWikiMetrics {
 	 * @return array
 	 *
 	 */
-	private function getWikis( ) {
+	private function getWikis( $all = false ) {
 		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 		$res = array();
+
+		#- find Wikis with nbr pageviews fewer than X
+		$this->cityIds = array();
+		if ( !empty($this->axNbrEdits) ) { 
+			$this->cityIds = $this->getWikisByNbrEdits();
+			if ( empty($this->cityIds) ) {
+				$this->cityIds = array(0);
+			}
+		}
+		if ( !empty($this->axNbrPageviews) ) {
+			$this->cityIds = $this->getWikisByNbrPageviews();
+			if ( empty($this->cityIds) ) {
+				$this->cityIds = array(0);
+			}
+		}
+		if ( !empty($this->axNbrArticles) ) { 
+			$this->cityIds = $this->getWikisByNbrArticles();
+			if ( empty($this->cityIds) ) {
+				$this->cityIds = array(0);
+			}
+		}
 
 		/* db */
 		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		/* check params */
 		$where = $this->buildQueryOptions($dbr);
+		$options = array();
 		
-		$options[] = 'SQL_CALC_FOUND_ROWS';
-		if ( $this->mSort != $this->axOrder ) {
-			$options['LIMIT'] = $this->mLimit;
-			$options['OFFSET'] = $this->mOffset;
+		if ( $all === false ) {
+			$options = array('SQL_CALC_FOUND_ROWS');
+			if ( $this->mSort != $this->axOrder ) {
+				$options['LIMIT'] = $this->mLimit;
+				$options['OFFSET'] = $this->mOffset;
+				$options['ORDER BY'] = $this->mSort . " " . $this->mOrderDesc;
+			}
+		} else {
 			$options['ORDER BY'] = $this->mSort . " " . $this->mOrderDesc;
 		}
 
@@ -440,7 +473,7 @@ class CreateWikiMetrics {
 		);
 		
 		$AWCCitiesCount = 0;
-		if ( $this->mSort != $this->axOrder ) {
+		if ( ($this->mSort != $this->axOrder) && ( $all === false ) )  {
 			$oResCnt = $dbr->query('SELECT FOUND_ROWS() as rowsCount');
 			$oRowCnt = $dbr->fetchObject ( $oResCnt );
 			$AWCCitiesCount = $oRowCnt->rowsCount;
@@ -449,41 +482,46 @@ class CreateWikiMetrics {
 
 		$AWCMetrics = array();
 		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-			$oFounder = User::newFromId($oRow->city_founding_user);
-			$sFounderLink = $sFounderName = "";
-			if ($oFounder instanceof User) {
-				$sk = $oFounder->getSkin();
-				$sFounderLink = $sk->makeLinkObj( Title::newFromText($oFounder->getName(), NS_USER), $oFounder->getName());
-				$sFounderName = $oFounder->getName();
+			if ( $all === false ) {
+				$oFounder = User::newFromId($oRow->city_founding_user);
+				$sFounderLink = $sFounderName = "";
+				if ($oFounder instanceof User) {
+					$sk = $oFounder->getSkin();
+					$sFounderLink = $sk->makeLinkObj( Title::newFromText($oFounder->getName(), NS_USER), $oFounder->getName());
+					$sFounderName = $oFounder->getName();
+				}
+				$AWCMetrics[ $oRow->city_id ] = array(
+					'id' 				=> $oRow->city_id,
+					'db' 				=> $oRow->city_dbname,
+					'url' 				=> $oRow->city_url,
+					'lang'				=> $oRow->city_lang,
+					'title'				=> $oRow->city_title,
+					'created' 			=> $oRow->city_created,
+					'founder'			=> $oRow->city_founding_user,
+					'founderUrl'		=> $sFounderLink,
+					'founderName'		=> $sFounderName,
+					'founderEmail'		=> $oRow->city_founding_email,
+					'public'			=> $oRow->city_public,
+					#-- stats 
+					'wikians' 			=> 0,
+					'articles' 			=> 0,
+					'articles_per_day'	=> 0,
+					'mean_nbr_revision'	=> 0,
+					'mean_size'			=> 0,
+					'mean_size_txt'		=> "",
+					'edits'				=> 0,
+					'db_size'			=> 0,
+					'db_size_txt'		=> "",
+					'images'			=> 0,
+					'users_reg'			=> 0,
+					'users_edits'		=> 0,
+					'pageviews'			=> 0,
+					'pageviews_txt'		=> 0,
+				);
+			} else {
+				$AWCMetrics[ $oRow->city_id ] = $oRow->city_dbname;
+				$AWCCitiesCount++;
 			}
-			$AWCMetrics[ $oRow->city_id ] = array(
-				'id' 				=> $oRow->city_id,
-				'db' 				=> $oRow->city_dbname,
-				'url' 				=> $oRow->city_url,
-				'lang'				=> $oRow->city_lang,
-				'title'				=> $oRow->city_title,
-				'created' 			=> $oRow->city_created,
-				'founder'			=> $oRow->city_founding_user,
-				'founderUrl'		=> $sFounderLink,
-				'founderName'		=> $sFounderName,
-				'founderEmail'		=> $oRow->city_founding_email,
-				'public'			=> $oRow->city_public,
-				#-- stats 
-				'wikians' 			=> 0,
-				'articles' 			=> 0,
-				'articles_per_day'	=> 0,
-				'mean_nbr_revision'	=> 0,
-				'mean_size'			=> 0,
-				'mean_size_txt'		=> "",
-				'edits'				=> 0,
-				'db_size'			=> 0,
-				'db_size_txt'		=> "",
-				'images'			=> 0,
-				'users_reg'			=> 0,
-				'users_edits'		=> 0,
-				'pageviews'			=> 0,
-				'pageviews_txt'		=> 0,
-			);
 		}
 		$dbr->freeResult( $oRes );
 

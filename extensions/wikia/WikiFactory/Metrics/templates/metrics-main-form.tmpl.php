@@ -231,6 +231,52 @@ function wfJSPager(total,link,page,limit,func,order,desc,additional) {
 	return pager;
 }
 
+function __closeAllListed () {
+	var div_details = YD.get( "awc-metrics-result" );
+	var foundText 	= "<?=wfMsg('awc-metrics-wikis-found', "CNT")?>";
+
+	AWCMetricsDetailsCallback = {
+		success: function( oResponse ) {
+			var resData = __parseResponse(oResponse.responseText);
+			if ( (!resData) || (resData['nbr_records'] == 0) ) {
+				alert("<?=wfMsg('awc-metrics-not-found')?>");
+				div_details.innerHTML = "";
+			} else { 
+				div_details.innerHTML = foundText.replace("CNT", resData['nbr_records']);
+ 				if (resData['data']) {
+					var formWiki = YD.get("awc-metrics-form");
+					var loop = 0;
+ 					for (i in resData['data']) {
+ 						var el = document.createElement("input");
+ 						el.setAttribute("type", "checkbox");
+ 						el.setAttribute("name", "wikis[]");
+ 						el.setAttribute("value", i);
+ 						el.setAttribute("checked", "checked");
+ 						formWiki.appendChild(el);
+ 						loop++;
+					}
+					formWiki.submit();
+				}
+			}
+		},
+		failure: function( oResponse ) {
+			alert("<?=wfMsg('awc-metrics-not-found')?>");
+			div_details.innerHTML = "";
+			if (typeof TieDivLibrary != "undefined" ) {
+				TieDivLibrary.calculate();
+			}; 
+		}
+	};
+
+	//---
+	div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/WikiFactory/Metrics/images/ajax-loader-s.gif\" />";
+	//---
+	var baseurl = wgScript + "?action=ajax&rs=axAWCMetricsAllWikis";
+	YAHOO.util.Connect.asyncRequest( "GET", baseurl, AWCMetricsDetailsCallback);
+	
+	return false;
+}
+
 function wkAWCMetricsDetails(limit, offset, ord, desc) 
 {
 	limit = typeof(limit) != 'undefined' ?limit : <?=CreateWikiMetrics::LIMIT?>;
@@ -282,7 +328,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 				div_details.innerHTML = foundText.replace("CNT", resData['nbr_records']);
 				//
 				var buttons = "<div class=\"awc-buttons\">";
-				buttons += "<input type=\"submit\" value=\"<?=wfMsg('awc-metrics-close-listed')?>\" name=\"submit0\" style=\"color:#FF0000\"/>";
+				buttons += "<input type=\"submit\" value=\"<?=wfMsg('awc-metrics-close-listed')?>\" name=\"submit0\" id=\"submit0\" style=\"color:#FF0000\" onclick=\"__closeAllListed(); return false;\" />";
 				buttons += "<input type=\"submit\" value=\"<?=wfMsg('awc-metrics-close-checked')?>\" name=\"submit1\"/>";
 				buttons += "</div>";
 				
