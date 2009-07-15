@@ -19,7 +19,6 @@ class SolrSearchSet extends SearchResultSet {
 	 * Contact the solr search server and return a wrapper
 	 * object with the set of results. Results may be cached.
 	 *
-	 * @param string $method The protocol verb to use
 	 * @param string $query
 	 * @param int $limit
 	 * @param int $offset
@@ -34,26 +33,53 @@ class SolrSearchSet extends SearchResultSet {
 
 		$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
 		if($solr->ping()) {
-			$response = $solr->search('html:'.$query.' OR title:'.$query, $offset, $limit /*, array('sort' => 'timestamp desc')*/);
+			$params = array(
+				'fl' => 'title,url,host,bytes,words,ns,lang,indexed,created', // fields we want to fetch back
+				'hl' => 'true',
+				'hl.fl' => 'html', // highlight field
+				'hl.snippets' => '2', // number of snippets per field
+				'hl.fragsize' => '150', // snippet size in characters
+				'hl.simple.pre' => '<span class="searchmatch">',
+				'hl.simple.post' => '</span>'
+				/*'sort' => 'rank desc'*/
+			);
+
+			if(count($namespaces)) {
+				$nsQuery = '';
+				foreach($namespaces as $namespace) {
+					$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
+				}
+				$params['fq'] = $nsQuery; // filter results for selected ns
+			}
+
+			try {
+				$response = $solr->search($query, $offset, $limit, $params);
+			}
+			catch (Exception $exception) {
+				wfProfileOut( $fname );
+				return null;
+			}
 		}
 		else {
-			echo "Error.";
+			wfDebug("Couldn't connect to Solr backend at: $wgSolrHost:$wgSolrPort\n");
+			wfProfileOut( $fname );
+			return null;
 		}
 		//echo "<pre>";
 		//print_r($response->response);
+		//print_r($response->highlighting);
 		//exit;
 
 		/*
 		$suggestion = null;
-		$info = null;
-		$interwiki = null;
 		*/
 
 		$resultDocs = $response->response->docs;
+		$resultSnippets = is_object($response->highlighting) ? get_object_vars($response->highlighting) : array();
 		$resultCount = count($resultDocs);
 		$totalHits = $response->response->numFound;
 
-		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultCount, $totalHits /*, $suggestion, $info, $interwiki*/ );
+		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultCount, $totalHits /*, $suggestion */ );
 
 		wfProfileOut( $fname );
 		return $resultSet;
@@ -67,24 +93,18 @@ class SolrSearchSet extends SearchResultSet {
 	 * @param int $resultCount
 	 * @param int $totalHits
 	 * @param string $suggestion
-	 * @param string $info
 	 * @access private
 	 */
-	private function __construct( $query, $results, $resultCount, $totalHits = null, $suggestion = null, $info = null, $interwiki = null ) {
+	private function __construct( $query, $results, $snippets, $resultCount, $totalHits = null, $suggestion = null) {
 		$this->mQuery             = $query;
 		$this->mTotalHits         = $totalHits;
 		$this->mResults           = $results;
+		$this->mSnippets          = $snippets;
 		$this->mResultCount       = $resultCount;
 		$this->mPos               = 0;
 		//$this->mSuggestionQuery   = null;
 		//$this->mSuggestionSnippet = '';
 		//$this->parseSuggestion($suggestion);
-		$this->mInfo              = $info;
-		$this->mInterwiki         = $interwiki;
-
-		//echo "<pre>";
-		//print_r($results);
-		//exit;
 	}
 
 	/**
@@ -117,6 +137,10 @@ class SolrSearchSet extends SearchResultSet {
 	function next() {
 		if(isset($this->mResults[$this->mPos])) {
 			$solrResult = new SolrResult($this->mResults[$this->mPos]);
+			$url = $this->mResults[$this->mPos]->url;
+			if(isset($this->mSnippets[$url]->html)) {
+				$solrResult->setSnippets($this->mSnippets[$url]->html);
+			}
 			$this->mPos++;
 		}
 		else {
@@ -149,75 +173,37 @@ class SolrSearchSet extends SearchResultSet {
 }
 
 class SolrResult extends SearchResult {
-	/**
-	 * result url
-	 */
-	protected $mHitUrl;
-	/**
-	 * result title
-	 */
-	protected $mHitTitle;
+	private $mSnippets = array();
+	private $mCreated = null;
+	private $mIndexed = null;
 	/**
 	 * Construct a result object from single Apache_Solr_Document object
 	 *
 	 * @param Apache_Solr_Document $document
 	 */
 	public function __construct( Apache_Solr_Document $document ) {
-		//echo "<pre>";
-		//print_r($document);
-		//exit;
-		$namespace = $document->ns;
-		$title = $document->title;
-
-		$this->mHitUrl = $document->url;
-		$this->mHitTitle = $title;
-
-		$this->mTitle = Title::makeTitle( $namespace, $title );
-		$this->mSectionTitle = '';
+		$this->mTitle = new SolrResultTitle($document->ns, $document->title, $document->url);
 		$this->mWordCount = $document->words;
 		$this->mSize = $document->bytes;
-
-		/* w8 for highlightet snippets provided by solr
-		if(isset($document->html)) {
-			$this->mHighlightText = $document->html;
-			//list( $this->mHighlightText, $dummy ) = $this->extractSnippet($document->html,'',"#h.text",true);
-		}
-		else {
-			$this->mHighlightText = '';
-		}
-		*/
+		$this->mCreated = $document->created;
+		$this->mIndexed = $document->indexed;
 		$this->mHighlightText = null;
-
-		$this->mText = null;
-		$this->initText(isset($document->html) ? $document->html : '');
 	}
 
-	public static function makeHitLink($result, $skin, $link) {
-		$link = '<a href="' . $result->getHitUrl() . '">' . $result->getHitTitle() . '</a>';
+	protected function initText() {
 		return true;
 	}
 
-	protected function initText($text = '') {
-		if($this->mText == null) {
-			$this->mText = $text;
-		}
-	}
-
-	public function getHitUrl() {
-		return $this->mHitUrl;
-	}
-
-	public function getHitTitle() {
-		return $this->mHitTitle;
-	}
-
-	public function getSectionTitle() {
-		return $this->mSectionTitle;
+	public function setSnippets(Array $snippets) {
+		$this->mSnippets = $snippets;
 	}
 
 	public function getTextSnippet($terms) {
 		if( is_null($this->mHighlightText) ) {
-			return parent::getTextSnippet($terms);
+			$this->mHighlightText = '';
+			foreach($this->mSnippets as $snippet) {
+				$this->mHighlightText .= $snippet . '... ';
+			}
 		}
 		return $this->mHighlightText;
 	}
@@ -230,95 +216,35 @@ class SolrResult extends SearchResult {
 		return $this->mSize;
 	}
 
-	function getWordCount() {
+	public function getWordCount() {
 		return $this->mWordCount;
 	}
 
-	protected function extractSnippet($lines, $nsText, $type, $useFinalSeparator=false) {
-		if(!array_key_exists($type,$lines))
-			return array(null,null);
-		$ret = "";
-		$original = null;
-		foreach($lines[$type] as $h){
-			list($s,$o) = $this->extractSnippetLine($h,$useFinalSeparator);
-			$ret .= $s;
-			$original = $o;
-		}
-		if($nsText!='')
-			$ret = $nsText.':'.$ret;
-		return array($ret,$original);
+	public function getTimestamp() {
+		return $this->mCreated;
 	}
 
-	/**
-	 * Parse one line of a snippet
-	 *
-	 * @param string $line
-	 * @param boolean $useFinalSeparator if "..." is to be appended to the end of snippet
-	 * @access protected
-	 * @return array(snippet,unmodified text)
-	 */
-	protected function extractSnippetLine($line, $useFinalSeparator){
-		$parts = explode(" ",$line);
-		if(count($parts)!=4 && count($parts)!=5){
-			wfDebug("Bad result line:".$line."\n");
-			return "";
-		}
-		$splits = $this->stripBracketsSplit($parts[0]);
-		$highlight = $this->stripBracketsSplit($parts[1]);
-		$suffix = urldecode($this->stripBrackets($parts[2]));
-		$text = urldecode($parts[3]);
-		$original = null;
-		if(count($parts) > 4)
-			$original = urldecode($parts[4]);
+}
 
-		$splits[] = strlen($text);
-		$start = 0;
-		$snippet = "";
-		$hi = 0;
-		$ellipsis = wfMsgForContent( 'ellipsis' );
+/**
+ * Simple Title class wrapper for compatibility with Special:Search
+ */
+class SolrResultTitle extends Title {
+	private $mUrl;
 
-		foreach($splits as $sp){
-			$sp = intval($sp);
-			// highlight words!
-			while($hi < count($highlight) && intval($highlight[$hi]) < $sp){
-				$s = intval($highlight[$hi]);
-				$e = intval($highlight[$hi+1]);
-				$snippet .= substr($text,$start,$s-$start)."<span class='searchmatch'>".substr($text,$s,$e-$s)."</span>";
-				$start = $e;
-				$hi += 2;
-			}
-			// copy till split point
-			$snippet .= substr($text,$start,$sp-$start);
-			if($sp == strlen($text) && $suffix != '')
-				$snippet .= $suffix;
-			else if($useFinalSeparator)
-				$snippet .= " <b>" . $ellipsis . "</b> ";
+	public function __construct($ns, $title, $url) {
+		$this->mInterwiki = '';
+		$this->mFragment = '';
+		$this->mNamespace = 0; //$ns = intval( $ns );
+		$this->mDbkeyform = str_replace( ' ', '_', $title );
+		$this->mArticleID = 0; //( $ns >= 0 ) ? -1 : 0;
+		$this->mUrlform = wfUrlencode( $this->mDbkeyform );
+		$this->mTextform = str_replace( '_', ' ', $title );
 
-			$start = $sp;
-		}
-		return array($snippet,$original);
+		$this->mUrl = $url;
 	}
 
-
-	/**
-	 * @access private
-	 */
-	private function stripBrackets($str){
-		if($str == '[]')
-			return '';
-		return substr($str,1,strlen($str)-2);
+	public function getLinkUrl( $query = array(), $variant = false ) {
+		return $this->mUrl;
 	}
-
-	/**
-	 * @access private
-	 * @return array
-	 */
-	private function stripBracketsSplit($str){
-		$strip = $this->stripBrackets($str);
-		if($strip == '')
-			return array();
-		else
-			return explode(",",$strip);
-	}
-
 }
