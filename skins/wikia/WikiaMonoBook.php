@@ -80,8 +80,11 @@ class WikiaSkinMonoBook extends SkinTemplate {
 			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW)
 		);
 
-		// load allinone / separate JS files
-		$tpl->set('wikia_headscripts', GetReferences('monobook_js') . "<!-- wikia -->\n");
+		// use StaticChute (RT #17212)
+		$StaticChute = new StaticChute('js');
+		$StaticChute->useLocalChuteUrl();
+
+		$tpl->set('wikia_headscripts', $StaticChute->getChuteHtmlForPackage('monobook_js'));
 
 		// wikia toolbox
 		$tpl->set('wikia_toolbox', $this->buildWikiaToolbox());

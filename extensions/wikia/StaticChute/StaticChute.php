@@ -137,6 +137,30 @@ class StaticChute {
 			'common/yui_extra/carousel-min.js',
 		);
 
+		$this->config['monobook_js'] = array(
+			'common/yui_2.5.2/utilities/utilities.js',
+			'common/yui_2.5.2/cookie/cookie-beta.js',
+			'common/yui_2.5.2/container/container.js',
+			'common/yui_2.5.2/autocomplete/autocomplete.js',
+			'common/yui_2.5.2/logger/logger.js',
+			'common/yui_2.5.2/menu/menu.js',
+			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_extra/tools-min.js',
+
+			'common/jquery/jquery-1.3.2.js',
+			'common/jquery/jquery.json-1.3.js',
+			'common/jquery/jquery.cookies.2.1.0.js',
+			'common/jquery/jquery.wikia.js',
+
+			'common/urchin.js',
+			'common/wikibits.js',
+			'monobook/main.js',
+			'monobook/tracker.js',
+			'common/tracker.js',
+			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
+			'common/contributed.js',
+		);
+
 		// CSS
 		$this->config['awesome_css'] = array(
 			'common/yui_2.5.2/container/assets/container.css',
