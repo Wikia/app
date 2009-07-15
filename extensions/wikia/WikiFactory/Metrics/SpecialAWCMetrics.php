@@ -10,7 +10,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension and cannot be used standalone.\n"; exit( 1 ) ; 
 }
 
-class CreateWikiMetrics {
+class WikiMetrics {
 	/* private */
 	private $mTitle;
 	private $mPeriods;

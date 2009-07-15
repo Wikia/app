@@ -80,7 +80,7 @@ class WikiFactoryPage extends SpecialPage {
 			$wgOut->addHTML( $oTmpl->execute("changelog") );
 		}
 		elseif ( strtolower($subpage) === "metrics" ) {
-			$oAWCMetrics = new CreateWikiMetrics();
+			$oAWCMetrics = new WikiMetrics();
 			$oAWCMetrics->show();
 		}
 		elseif ( $subpage === "short.stats" ) {
@@ -91,7 +91,9 @@ class WikiFactoryPage extends SpecialPage {
 			$oWiki = $this->getWikiData( $subpage );
 
 			if( !isset( $oWiki->city_id )) {
-				$this->doWikiSelector();
+				//$this->doWikiSelector();
+				$oAWCMetrics = new WikiMetrics();
+				$oAWCMetrics->show();
 			}
 			else {
 				$this->mWiki = $oWiki;

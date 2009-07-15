@@ -453,13 +453,13 @@ function axAWCMetrics() {
 		return "";
 	}
 	
-	$limit = $wgRequest->getVal('awc-limit', CreateWikiMetrics::LIMIT);
+	$limit = $wgRequest->getVal('awc-limit', WikiMetrics::LIMIT);
 	$page = $wgRequest->getVal('awc-offset', 0);
-	$order = $wgRequest->getVal('awc-order', CreateWikiMetrics::ORDER);
-	$desc = $wgRequest->getVal('awc-desc', CreateWikiMetrics::DESC);
+	$order = $wgRequest->getVal('awc-order', WikiMetrics::ORDER);
+	$desc = $wgRequest->getVal('awc-desc', WikiMetrics::DESC);
 	$aResponse = array('nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
 	
-	$OAWCMetrics = new CreateWikiMetrics();
+	$OAWCMetrics = new WikiMetrics();
 	$OAWCMetrics->getRequestParams();
 	list ($res, $count) = $OAWCMetrics->getMainStatsRecords();
 	
@@ -504,7 +504,7 @@ function axAWCMetricsCategory() {
 	
 	$aResponse = array('nbr_records' => 0, 'data' => '', 'cats' => array());
 	
-	$OAWCMetrics = new CreateWikiMetrics();
+	$OAWCMetrics = new WikiMetrics();
 	$OAWCMetrics->getRequestParams();
 	list ($res, $count, $categories) = $OAWCMetrics->getCategoriesRecords();
 	
@@ -550,7 +550,7 @@ function axAWCMetricsAllWikis() {
 	
 	$aResponse = array('nbr_records' => 0, 'data' => '');
 	
-	$OAWCMetrics = new CreateWikiMetrics();
+	$OAWCMetrics = new WikiMetrics();
 	$res = $OAWCMetrics->getFilteredWikis();
 	
 	if ( !empty($res) ) {
