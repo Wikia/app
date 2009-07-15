@@ -117,7 +117,7 @@ class CreateWikiMetrics {
 	/* draws the form itself  */
 	function showForm ($error = "") {
 		global $wgOut, $wgContLang;
-		global $wgExtensionsPath;
+		global $wgExtensionsPath, $wgRequest;
         wfProfileIn( __METHOD__ );
 		#---
 		$this->getLangs();
@@ -125,6 +125,7 @@ class CreateWikiMetrics {
 		$hubs = WikiFactoryHub::getInstance();
 		$aCategories = $hubs->getCategories();
 		
+		$params = $wgRequest->getValues();
 		$oCloseWikiTitle = Title::makeTitle( NS_SPECIAL, "CloseWiki" );
 		$action = $oCloseWikiTitle->getFullURL();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -138,7 +139,9 @@ class CreateWikiMetrics {
             "oCloseWikiTitle"	=> $oCloseWikiTitle,
             "aLanguages" 		=> $this->mLanguages,
 			"aTopLanguages" 	=> $this->mTopLanguages,
-			"aCategories"		=> $aCategories
+			"aCategories"		=> $aCategories,
+			"params"			=> $params,
+			"obj"				=> $this,
         ));
         $wgOut->addHTML( $oTmpl->execute("metrics-main-form") );
         wfProfileOut( __METHOD__ );
@@ -779,6 +782,24 @@ class CreateWikiMetrics {
 		}
 		#---
 		return $cities;
+	}
+	
+	/*
+	 * get  params 
+	 *
+	 * @author moli@wikia-inc.com
+	 * @return array
+	 */
+	public function setDefaultOption( $params, $field, $default, $value ) {
+		$selected = "";
+		if ( isset($params[$field]) && ($params[$field] == $value) ) {
+			$selected = " selected=\"selected\" ";
+		} elseif ( !isset($params[$field]) && ($default == $value) ) {
+			$selected = " selected=\"selected\" ";
+		} else {
+			$selected = "";
+		}
+		return $selected;
 	}
 
 }

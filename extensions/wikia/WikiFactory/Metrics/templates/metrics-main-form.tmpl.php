@@ -29,7 +29,7 @@ div#sidebar { display: none !important; }
 				<span style="vertical-align:middle">
 					<select name="awc-metrics-created" id="awc-metrics-created">
 			<? foreach ($mPeriods as $value => $text) : ?>
-			<? $selected = ($mDefPeriod == $value) ? " selected=\"selected\" " : ""; ?>
+			<? $selected = ""; $selected = $obj->setDefaultOption($params, 'created', $mDefPeriod, $value); ?> 
 					<option <?=$selected?> value="<?=$value?>"><?= wfMsg('awc-metrics-' . $text) ?></option>
 			<? endforeach ?>
 					</select>
@@ -40,14 +40,16 @@ div#sidebar { display: none !important; }
 <?php 			if (!empty($aTopLanguages) && is_array($aTopLanguages)) : ?>
 					<optgroup label="<?= wfMsg('autocreatewiki-language-top', count($aTopLanguages)) ?>">
 <?php 				foreach ($aTopLanguages as $sLang) : ?>
-						<option value="<?=$sLang?>"><?=$sLang?>: <?=$aLanguages[$sLang]?></option>
+<?php 					$selected = $obj->setDefaultOption($params, 'lang', '', $sLang); ?> 
+						<option <?=$selected?> value="<?=$sLang?>"><?=$sLang?>: <?=$aLanguages[$sLang]?></option>
 <?php 				endforeach ?>
 					</optgroup>
 <?php 			endif ?>
 					<optgroup label="<?= wfMsg('autocreatewiki-language-all') ?>">
 <?php 			if (!empty($aLanguages) && is_array($aLanguages)) : ?>
 <?php				foreach ($aLanguages as $sLang => $sLangName) : ?>
-						<option value="<?=$sLang?>"><?=$sLang?>: <?=$sLangName?></option>
+<?php 					$selected = $obj->setDefaultOption($params, 'lang', '', $sLang); ?> 
+						<option <?= $selected ?> value="<?=$sLang?>"><?=$sLang?>: <?=$sLangName?></option>
 <?php 				endforeach ?>
 					</optgroup>
 <?php 			endif ?>
@@ -57,7 +59,8 @@ div#sidebar { display: none !important; }
 				<span style="vertical-align:middle">
 					<select name="awc-metrics-category-hub" id="awc-metrics-category-hub"><option value=""> </option>
 			<? foreach ($aCategories as $id => $catName) : ?>
-					<option value="<?=$id?>"><?=$catName?></option>
+<?php 				$selected = $obj->setDefaultOption($params, 'cat', '', $id); ?> 
+					<option <?= $selected ?> value="<?=$id?>"><?=$catName?></option>
 			<? endforeach ?>
 					</select>
 				</span>
@@ -67,8 +70,8 @@ div#sidebar { display: none !important; }
 			<tr><td valign="middle" class="awc-metrics-row">
 				<span style="vertical-align:middle">
 					<?= wfMsg('awc-metrics-created-between', 
-						'<input name="awc-metrics-between-from" id="awc-metrics-between-from" size="20" />', 
-						'<input name="awc-metrics-between-to" id="awc-metrics-between-to" size="20" />'
+						'<input name="awc-metrics-between-from" id="awc-metrics-between-from" size="20" value="'.@$params['from'].'" />', 
+						'<input name="awc-metrics-between-to" id="awc-metrics-between-to" size="20" value="'.@$params['to'].'" />'
 					) ?>
 				</span>
 			</td></tr>
@@ -76,37 +79,38 @@ div#sidebar { display: none !important; }
 		<table width="100%" style="text-align:left;">
 			<tr><td valign="middle" class="awc-metrics-row">
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-dbname')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-dbname" id="awc-metrics-dbname" size="10" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-dbname" id="awc-metrics-dbname" size="10" value="<?=@$params['dbname']?>" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-title')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-title" id="awc-metrics-title" size="10" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-title" id="awc-metrics-title" size="10" value="<?=@$params['title']?>" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-domains')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-domains" id="awc-metrics-domains" size="10" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-domains" id="awc-metrics-domains" size="10" value="<?=@$params['domain']?>" /></span>
 			</td></tr>
 			<tr><td valign="middle" class="awc-metrics-row">
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-user')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-user" id="awc-metrics-user" size="15" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-user" id="awc-metrics-user" size="15" value="<?=@$params['fouder']?>" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-email')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-email" id="awc-metrics-email" size="40" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-email" id="awc-metrics-email" size="40" value="<?=@$params['email']?>" /></span>
 			</td></tr>
 <?
 $months = '<select name="awc-nbr-edits-days" id="awc-nbr-edits-days">';
 $months .= '<option value="1">'.wfMsg('awc-metrics-this-month').'</option>';
 for ($i = 2; $i <= 12; $i++ ) {
-	$months .= '<option value="'.$i.'">'.wfMsg('awc-metrics-last-month', $i).'</option>';
+	$selected = $obj->setDefaultOption($params, 'etime', '', $i); 
+	$months .= '<option '.$selected.' value="'.$i.'">'.wfMsg('awc-metrics-last-month', $i).'</option>';
 }
 $months .= '</select>';
 
 $days = '<select name="awc-nbr-pageviews-days" id="awc-nbr-pageviews-days">';
 foreach ( array(30, 60, 90, 120, 180, 365) as $id ) {
-	$selected = ( $id == 90 ) ? "selected=\"selected\"" : "";
+	$selected = $obj->setDefaultOption($params, 'ptime', 90, $id); 
 	$days .= '<option value="'.$id.'" '.$selected.'>'.$id.'</option>';
 }
 $days .= '</select>';
 ?>			
 			<tr><td valign="middle" class="awc-metrics-row">
-				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-fewer-than', '<input name="awc-nbr-articles" id="awc-nbr-articles" size="2" />')?></span>
-				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-edits-label', '<input name="awc-nbr-edits" id="awc-nbr-edits" size="2" />', $months)?></span>
-				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-pageviews-label', '<input name="awc-nbr-pageviews" id="awc-nbr-pageviews" size="2" />', $days)?></span>
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-fewer-than', '<input name="awc-nbr-articles" id="awc-nbr-articles" size="2" value="'.@$params['articles'].'" />')?></span>
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-edits-label', '<input name="awc-nbr-edits" id="awc-nbr-edits" size="2" value="'.@$params['edits'].'" />', $months)?></span>
+				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-pageviews-label', '<input name="awc-nbr-pageviews" id="awc-nbr-pageviews" size="2" value="'.@$params['pageviews'].'" />', $days)?></span>
 			</td></tr>
 		</table>
 		<table width="100%" style="text-align:left;">
