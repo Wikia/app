@@ -5,6 +5,7 @@
 * rt#18674: live javascript errors - this.call is not a function (jQuery?) (Macbre)
 * rt#19017: FCK: Nowiki fix misses <s> alias for strikethrough (Macbre)
 * rt#19111: UserRights: prevent access if user is blocked (TOR)
+* rt#19092: Add style= parameter to widget tag (Macbre)
 
 == Changes since 200907.2 ==
 * upgraded to MW 1.14.1 (Emil)
