@@ -13,7 +13,7 @@ $wgExtensionCredits['other'][] = array(
 	"description" => "Blog Articles",
 	"url" => "http://help.wikia.com/wiki/Help:Blog_article",
 	"version" => preg_replace( '/^.* (\d\d\d\d-\d\d-\d\d).*$/', '\1', '$Id: WikiFactory.php 13985 2008-06-16 15:20:38Z eloy $' ),
-	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)], Piotr Molski, Adrian Wieczorek"
+	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)], Piotr Molski, Adrian Wieczorek, [http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]"
 );
 
 define( "NS_BLOG_ARTICLE", 500 );
@@ -22,6 +22,8 @@ define( "NS_BLOG_LISTING", 502 );
 define( "NS_BLOG_LISTING_TALK", 503 );
 define( "BLOGTPL_TAG", "bloglist" );
 
+define( "BLOGCOMMENTORDERCOOKIE_NAME", "blogcommentorder" );
+define( "BLOGCOMMENTORDERCOOKIE_EXPIRE", 60 * 60 * 24 * 365 );
 
 $wgExtraNamespaces[ NS_BLOG_ARTICLE ] = "User_blog";
 $wgExtraNamespaces[ NS_BLOG_ARTICLE_TALK ] = "User_blog_comment";
