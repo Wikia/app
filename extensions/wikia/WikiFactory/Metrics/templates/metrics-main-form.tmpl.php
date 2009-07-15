@@ -81,15 +81,15 @@ div#sidebar { display: none !important; }
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-dbname')?></span>
 				<span style="vertical-align:middle"><input name="awc-metrics-dbname" id="awc-metrics-dbname" size="10" value="<?=@$params['dbname']?>" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-title')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-title" id="awc-metrics-title" size="10" value="<?=@$params['title']?>" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-title" id="awc-metrics-title" size="10" value="<?=@$params['stitle']?>" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-domains')?></span>
 				<span style="vertical-align:middle"><input name="awc-metrics-domains" id="awc-metrics-domains" size="10" value="<?=@$params['domain']?>" /></span>
 			</td></tr>
 			<tr><td valign="middle" class="awc-metrics-row">
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-user')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-user" id="awc-metrics-user" size="15" value="<?=@$params['fouder']?>" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-user" id="awc-metrics-user" size="15" value="<?=$params['fouder']?>" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-email')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-email" id="awc-metrics-email" size="40" value="<?=@$params['email']?>" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-email" id="awc-metrics-email" size="40" value="<?=$params['email']?>" /></span>
 			</td></tr>
 <?
 $months = '<select name="awc-nbr-edits-days" id="awc-nbr-edits-days">';
