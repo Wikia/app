@@ -1,4 +1,5 @@
 == Changes since 200907.3 ==
+* rt#19078: Blogs: Make ajax submit-and-append observe comment sort order. (Nef)
 * rt#19080: Blogs: Make comment sort order persist. (Nef)
 * rt#18671: Blogs: Fixed pager on the list of blogs. (Moli)
 * rt#19019: Blogs: Fixed incorrect line spacing in comments. (Nef)
