@@ -37,7 +37,7 @@ class WikiFactory {
 	const HIDE_ACTION 			= -1;
 	const CLOSE_ACTION 			= 0;
 	static public $DUMP_SERVERS = array(
-		'c1' => 'db2', 
+		'c1' => 'db2',
 		'c2' => 'db-sb2'
 	);
 
@@ -965,12 +965,12 @@ class WikiFactory {
 	 *
 	 * @return string - variables key for memcached
 	 */
-	static public function getVarsKey( $wiki ) {
-		if (empty($wiki)) {
+	static public function getVarsKey( $city_id ) {
+		if( empty( $city_id ) ) {
 			return "wikifactory:variables:v3:0";
 		}
 		else {
-			return "wikifactory:variables:v3:{$wiki}";
+			return "wikifactory:variables:v3:{$city_id}";
 		}
 	}
 
