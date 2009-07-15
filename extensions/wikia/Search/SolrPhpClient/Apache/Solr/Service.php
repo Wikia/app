@@ -549,7 +549,7 @@ class Apache_Solr_Service
 		$errstr = '';
 
 		//try to connect to the host with timeout
-		$fp = fsockopen($this->_host, $this->_port, $errno, $errstr, $timeout);
+		$fp = @fsockopen($this->_host, $this->_port, $errno, $errstr, $timeout);
 
 		if ($fp)
 		{
