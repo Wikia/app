@@ -43,5 +43,6 @@ $messages = array_merge( $messages, array(
 'widget-desc-watchlist' => 'Könnyedén szemmel tarthatod a megfigyelt lapokat.',
 'widget-title-wikipage' => 'Wikioldal a kiegészítõben',
 'widget-desc-wikipage' => 'Egy szócikk jeleníthetõ meg a kiegészítõben. Remek lehetõség saját kiegészítõ létrehozására!',
-) );
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+) );
+
