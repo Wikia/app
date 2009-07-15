@@ -136,6 +136,12 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = f
 }
 
 function Wysiwyg_Variables(&$vars) {
+	// only add variables on edit page using Wysiwyg
+	global $wgWysiwygEdit;
+	if (empty($wgWysiwygEdit)) {
+		return true;
+	}
+
 	global $wgWysiwygPath;
 	$vars['wgWysiwygPath'] = $wgWysiwygPath;
 
