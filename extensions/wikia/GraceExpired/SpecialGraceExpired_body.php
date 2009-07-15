@@ -54,12 +54,12 @@ class GraceExpiredPager extends ReverseChronologicalPager {
 			'tables' => array( 'page', 'revision', 'categorylinks' ),
 			'fields' => array( 'page_title', 'page_namespace', 'cl_to', 'rev_timestamp' ),
 			'conds' => array( 
-#				'page_namespace' => self::buildNs,
+				'page_namespace' => self::buildNs,
 				'page_is_redirect' => 0,
 				'page_latest = rev_id',
 				"rev_timestamp < $date",
 				'cl_from = page_id',
-				"cl_to in ('Abandoned', 'Trash_builds', 'Build_stubs', 'Trash_Builds')"
+				"cl_to in ('Abandoned', 'Trash_builds', 'Build_stubs', 'Trial_Builds')"
 			),
 			'options' => 'ORDER BY rev_id ASC',
 		);
