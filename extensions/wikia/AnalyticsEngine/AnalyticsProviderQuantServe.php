@@ -13,8 +13,8 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 		}
 
 		return  '<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>' . "\n" .
-			"<script type=\"text/javascript\">
-			try { 
+			"<script type=\"text/javascript\">/*<![CDATA[*/
+			try {
 				_qoptions = { qacct: '{$this->account}' };
 				_qoptions.labels = Athena.getPageVar('hub');
 				for (var i = 0; i < ProviderValues.list.length; i++){
@@ -24,7 +24,7 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 				// Fall back to old way.
 				_qacct=\"{$this->account}\";
 			}
-			</script>";
+			/*]]>*/</script>";
 	}
 
 	function trackEvent($event, $eventDetails=array()){
