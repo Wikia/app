@@ -7,7 +7,7 @@
 if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1  && count( $comments ) > 1 ):
 ?>
 <form action="<?php echo $title->getFullURL() ?>" method="get" id="blog-comm-form-select">
-<select name="order" style="margin-top:-26px;">
+<select name="order" style="margin-top:-26px;" id="blog-comm-order">
 	<option value="asc" <?php if ($order=="asc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-asc") ?></option>
 	<option value="desc" <?php if ($order=="desc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-dsc") ?></option>
 </select>
