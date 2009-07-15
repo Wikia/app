@@ -91,9 +91,7 @@ class WikiFactoryPage extends SpecialPage {
 			$oWiki = $this->getWikiData( $subpage );
 
 			if( !isset( $oWiki->city_id )) {
-				//$this->doWikiSelector();
-				$oAWCMetrics = new WikiMetrics();
-				$oAWCMetrics->show();
+				$this->doWikiSelector();
 			}
 			else {
 				$this->mWiki = $oWiki;
