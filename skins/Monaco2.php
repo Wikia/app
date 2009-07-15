@@ -18,7 +18,7 @@ $wgHooks['MessageCacheReplace'][] = 'MonacoSidebar::invalidateCache';
 
 class MonacoSidebar {
 
-	const version = '0.03';
+	const version = '0.04';
 
 	static function invalidateCache() {
 		global $wgMemc;
