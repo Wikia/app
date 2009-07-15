@@ -151,7 +151,7 @@ function wfJSPager(total,link,page,limit,func,order,desc,additional) {
 	var tableStyle = "font-size:8.5pt;font-weight:normal;margin:5px;";
 	var linkStyle = "font-size:9pt;padding:2px 6px;";
 
-	limit = typeof(limit) != 'undefined' ?limit : <?=CreateWikiMetrics::LIMIT?>;
+	limit = typeof(limit) != 'undefined' ?limit : <?=WikiMetrics::LIMIT?>;
 	page = typeof(page) != 'undefined' ? page : 0;
 
 	if ((!total) || (total <= 0)) return "";
@@ -283,7 +283,7 @@ function __closeAllListed () {
 
 function wkAWCMetricsDetails(limit, offset, ord, desc) 
 {
-	limit = typeof(limit) != 'undefined' ?limit : <?=CreateWikiMetrics::LIMIT?>;
+	limit = typeof(limit) != 'undefined' ?limit : <?=WikiMetrics::LIMIT?>;
 	offset = typeof(offset) != 'undefined' ? offset : 0;
 
 	var div_details = YD.get( "awc-metrics-result" );
@@ -544,7 +544,7 @@ __ShowStats = function(e, args) {
 		_order = _id.replace('TablePager_', '');
 	} 
 	var select_pages = YD.get( 'wcAWCMetricsSelect' );
-	var cnt = (select_pages) ? select_pages.value : <?=CreateWikiMetrics::LIMIT?>;
+	var cnt = (select_pages) ? select_pages.value : <?=WikiMetrics::LIMIT?>;
 	wkAWCMetricsDetails(cnt, 0, _order, _desc);
 };
 
@@ -741,7 +741,7 @@ function _addEvents(f, desc) {
 
 YAHOO.util.Event.onDOMReady(function () {
 	var desc = 1;
-	wkAWCMetricsDetails(<?=CreateWikiMetrics::LIMIT?>, 0, 'created', desc );
+	wkAWCMetricsDetails(<?=WikiMetrics::LIMIT?>, 0, 'created', desc );
 	YE.addListener("awc-metrics-submit", "click", __ShowStats, [desc] );
 	YE.addListener("awc-metrics-hubs", "click", __ShowCategories, [0] );
 	YE.addListener("awc-metrics-news-day", "click", __ShowCategories, [1] );
