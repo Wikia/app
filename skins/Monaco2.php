@@ -1317,6 +1317,7 @@ class MonacoTemplate extends QuickTemplate {
 		wfProfileIn( __METHOD__ );
 		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne;
 		$skin = $wgUser->getSkin();
+		$namespace = $wgTitle->getNamespace();
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="<?php $this->text('xhtmldefaultnamespace') ?>" <?php
