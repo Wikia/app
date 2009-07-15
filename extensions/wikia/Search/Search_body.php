@@ -36,7 +36,7 @@ class SolrSearchSet extends SearchResultSet {
 			$params = array(
 				'fl' => 'title,url,host,bytes,words,ns,lang,indexed,created', // fields we want to fetch back
 				'hl' => 'true',
-				'hl.fl' => 'html', // highlight field
+				'hl.fl' => 'html,title', // highlight field
 				'hl.snippets' => '2', // number of snippets per field
 				'hl.fragsize' => '150', // snippet size in characters
 				'hl.simple.pre' => '<span class="searchmatch">',
@@ -141,6 +141,9 @@ class SolrSearchSet extends SearchResultSet {
 			if(isset($this->mSnippets[$url]->html)) {
 				$solrResult->setSnippets($this->mSnippets[$url]->html);
 			}
+			if(isset($this->mSnippets[$url]->title[0])) {
+				$solrResult->setHighlightTitle($this->mSnippets[$url]->title[0]);
+			}
 			$this->mPos++;
 		}
 		else {
@@ -176,6 +179,7 @@ class SolrResult extends SearchResult {
 	private $mSnippets = array();
 	private $mCreated = null;
 	private $mIndexed = null;
+	private $mHighlightTitle = null;
 	/**
 	 * Construct a result object from single Apache_Solr_Document object
 	 *
@@ -198,7 +202,11 @@ class SolrResult extends SearchResult {
 		$this->mSnippets = $snippets;
 	}
 
-	public function getTextSnippet($terms) {
+	public function setHighlightTitle($title) {
+		$this->mHighlightTitle = $title;
+	}
+
+	public function getTextSnippet($terms = null) {
 		if( is_null($this->mHighlightText) ) {
 			$this->mHighlightText = '';
 			foreach($this->mSnippets as $snippet) {
@@ -206,6 +214,10 @@ class SolrResult extends SearchResult {
 			}
 		}
 		return $this->mHighlightText;
+	}
+
+	public function getTitleSnippet($terms = null) {
+		return ( !is_null($this->mHighlightTitle) ? $this->mHighlightTitle : '' );
 	}
 
 	public function isMissingRevision() {
