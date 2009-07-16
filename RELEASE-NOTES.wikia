@@ -6,6 +6,7 @@
 * rt#18283: Fixed version of LinkSuggest (Moli)
 * rt#19150: Enable Ajaxlogin in WMU and VET (Macbre)
 * rt#19200: "Add Video" placeholder doesn't work in view mode for anons (Macbre)
+* rt#19206: FCK: Shift + Space is converted into &#160; (Macbre)
 
 == Changes since 200907.3 ==
 * rt#19062: Fix GoogleMaps to use user lang. (Nef)
