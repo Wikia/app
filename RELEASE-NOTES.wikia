@@ -20,6 +20,11 @@
 * rt#19111: UserRights: prevent access if user is blocked (TOR)
 * rt#19092: Add style= parameter to widget tag (Macbre)
 * rt#17212: StaticChute - monobook (Macbre)
+* rt#19159: PSL: If whatlinkshere is high up in Monaco-toolbox it causes layout issues when missing (Marooned)
+* rt#19155: Page specific links: Masthead links are not following the correct logic (Marooned)
+* rt#18030: quick action panel - category select box appears in the wrong place (Marooned)
+* rt#19010: Interwiki links of the style w:c:wiki lose anchor links (Marooned)
+* rt#19011: EPE arrow title message not listed, not being used (Marooned)
 
 == Changes since 200907.2 ==
 * upgraded to MW 1.14.1 (Emil)
