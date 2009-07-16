@@ -25,6 +25,7 @@
 * rt#18030: quick action panel - category select box appears in the wrong place (Marooned)
 * rt#19010: Interwiki links of the style w:c:wiki lose anchor links (Marooned)
 * rt#19011: EPE arrow title message not listed, not being used (Marooned)
+* rt#19208: FCK: Several issues with references in image captions (Macbre)
 * rt#19162: Increase vertical spacing for dynamic creation links by a couple of pixels (Marooned)
 
 == Changes since 200907.2 ==
