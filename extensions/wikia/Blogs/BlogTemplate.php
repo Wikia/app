@@ -784,7 +784,7 @@ class BlogTemplateClass {
 				"page" 			=> $oRow->page_id,
 				"namespace" 	=> $oRow->page_namespace,
 				"title" 		=> $oRow->page_title,
-				"page_touched" 	=> $oRevision->getTimestamp(),
+				"page_touched" 	=> (!is_null($oRevision)) ? $oRevision->getTimestamp() : $oTitle->getTouched(),
 				"rev_timestamp"	=> $oRow->rev_timestamp,
 				"timestamp" 	=> $oRow->timestamp,
 				"username"		=> (isset($username)) ? $username : "",
