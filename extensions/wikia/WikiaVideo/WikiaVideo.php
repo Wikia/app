@@ -200,8 +200,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 				for($i = count($videos); $i < 4; $i++) {
 					if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
 						global $wgStylePath;
-						$function = 'YAHOO.util.Get.script([wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, stylepath+\'/common/yui_2.5.2/slider/slider-min.js?\'+wgStyleVersion], {onSuccess:function(o) { VET_show( o.data, ' . $args['id'] . ', ' . $i . ' )  }, data:YAHOO.util.Event.getEvent() }); YAHOO.util.Get.css( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion )';
-
+						$function = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { VET_show( $.getEvent(), ' . $args['id'] . ', ' . $i . ' ); importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } )';
 
 						$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;" id="WikiaVideoGalleryPlaceholder' . $args['id'] . 'x' .  $i . '" onclick="' . $function . '"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
 					} else {
@@ -294,7 +293,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 			$onclick = '';
 		} else {
 				$wysiwygAttr = '';
-				$onclick= ' onclick="YAHOO.util.Get.script([wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, stylepath+\'/common/yui_2.5.2/slider/slider-min.js?\'+wgStyleVersion], {onSuccess:function(o) { VET_show( o.data, ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' ) }, data:YAHOO.util.Event.getEvent() }); YAHOO.util.Get.css( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion )"';
+				$onclick= ' onclick="$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { VET_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } )"';
 		}
 
 			$out = '<div id="WikiaVideoPlaceholder' . $wgWikiaVideoPlaceholderId . '" class="gallerybox" style="clear:both;"' . $wysiwygAttr . '><div class="thumb t' . $align . ' videobox" style="padding: 0; position: relative; width: ' . $width . 'px; height: ' . $height . 'px;"><div style="margin-left: auto; margin-right: auto; width: ' . $width . 'px; height: ' . $height . 'px;" >';
