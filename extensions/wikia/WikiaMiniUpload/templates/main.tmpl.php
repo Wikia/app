@@ -21,7 +21,7 @@ global $wgStylePath, $wgUser, $wgScriptPath;
 
 if( !$wgUser->isAllowed( 'upload' ) ) {
 	if( !$wgUser->isLoggedIn() ) {
-		echo wfMsg( 'wmu-notlogged' );
+		echo '<a id="ImageUploadLoginMsg">' . wfMsg( 'wmu-notlogged' ) . '</a>';
 	} else {
 		echo wfMsg( 'wmu-notallowed' ); 
 	}

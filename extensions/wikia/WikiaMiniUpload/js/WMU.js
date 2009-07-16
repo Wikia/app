@@ -228,7 +228,7 @@ function WMU_show(e) {
 		fixedcenter: true,
 		underlay: "none",
 		visible: false,
-		zIndex: 1500
+		zIndex: 900
 	});
 	WMU_panel.render();
 	WMU_panel.show();
@@ -253,13 +253,16 @@ function WMU_loadMain() {
 				$G('ImageUploadTextCont').style.display = 'none';
 				$G('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
 			}
+
+			// macbre: RT #19150
+			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
+				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
+			}
 		}
 	}
 	WMU_indicator(1, true);
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMain', callback);
 	WMU_curSourceId = 0;
-
-
 }
 
 function WMU_loadLicense( license ) {
