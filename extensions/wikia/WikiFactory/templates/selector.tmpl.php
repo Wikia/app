@@ -86,7 +86,7 @@ table.TablePager { border: 1px solid gray;}
 	});
 /*]]>*/
 </script>
-
+<?php /**
 <div id="wf-city-list">
 	<?php echo $limit ?>
 	<br />
@@ -94,4 +94,5 @@ table.TablePager { border: 1px solid gray;}
 	<br />
 	<?php echo  $nav ?>
 </div>
+**/ ?>
 <!-- e:<?= __FILE__ ?> -->
