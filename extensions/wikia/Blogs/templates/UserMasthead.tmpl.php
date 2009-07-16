@@ -39,11 +39,6 @@ if ($wgTitle == 'Special:Watchlist') {
 			?>
 		</ul>
 	</div>
-	<?
-	if(!empty($nav_urls['blockip'])) {
-		echo '<a href="'. $nav_urls['blockip']['href'] .'" onclick="WET.byStr(\'usermasthead/blockip\')">'. wfMsg('blockip') .'</a>';
-	}
-	?>
 	<ul class="nav_links">
 		<?
 		foreach( $data['nav_links'] as $navLink ) {
