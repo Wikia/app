@@ -95,7 +95,7 @@ function VET_doEditVideo() {
 	if ($G('VideoEmbedThumbOption').checked) {
 		extraData.thumb = 1;
 	}
-	
+
 	if (extraData.thumb) {
 		if( $G('VideoEmbedLayoutLeft').checked ) {
 			extraData.align = 'left';
@@ -191,12 +191,12 @@ function VET_addHandler() {
 function VET_toggleSizing( enable ) {
 	if( enable ) {
 		$G( 'VideoEmbedThumbOption' ).disabled = false;
-		$G( 'VideoEmbedWidthRow' ).style.display = '';				
-		$G( 'VideoEmbedSizeRow' ).style.display = '';						
+		$G( 'VideoEmbedWidthRow' ).style.display = '';
+		$G( 'VideoEmbedSizeRow' ).style.display = '';
 	} else {
 		$G( 'VideoEmbedThumbOption' ).disabled = true;
 		$G( 'VideoEmbedWidthRow' ).style.display = 'none';
-		$G( 'VideoEmbedSizeRow' ).style.display = 'none';				
+		$G( 'VideoEmbedSizeRow' ).style.display = 'none';
 	}
 }
 
@@ -275,7 +275,7 @@ function VET_getCaret() {
 	} else {
 		var control = FCK.EditingArea.Textarea;
 	}
-	
+
   var caretPos = 0;
 	if(YAHOO.env.ua.ie != 0) { // IE Support
     control.focus();
@@ -318,12 +318,12 @@ function VET_getFirstFree( gallery, box ) {
 	for (i=box; i >= 0; i--) {
 		if ( ! $G( 'WikiaVideoGalleryPlaceholder' + gallery + 'x' + i ) ) {
 			return i + 1;
-		}			
+		}
 	}
 	return box;
 }
 
-// some parameters are 
+// some parameters are
 function VET_show( e, gallery, box, align, thumb, size, caption ) {
 	VET_refid = null;
 	VET_wysiwygStart = 1;
@@ -433,7 +433,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			fixedcenter: true,
 			underlay: "none",
 			visible: false,
-			zIndex: 1500
+			zIndex: 900
 		});
 		VET_panel.render();
 		VET_panel.show();
@@ -460,6 +460,11 @@ function VET_loadMain() {
 			$G('VideoEmbedMain').innerHTML = o.responseText;
 			VET_indicator(1, false);
 			if($G('VideoEmbedUrl') && VET_panel.element.style.visibility == 'visible') $G('VideoEmbedUrl').focus();
+
+			// macbre: RT #19150
+			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
+				$('#VideoEmbedLoginMsg').click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
+			}
 		}
 	}
 	VET_indicator(1, true);
@@ -487,13 +492,18 @@ function VET_loadMainFromView() {
 				fixedcenter: true,
 				underlay: "none",
 				visible: false,
-				zIndex: 1500
+				zIndex: 900
 			});
 			VET_panel.render();
 			VET_panel.show();
 
 			VET_indicator(1, false);
 			if($G('VideoEmbedUrl') && VET_panel.element.style.visibility == 'visible') $G('VideoEmbedUrl').focus();
+
+			// macbre: RT #19150
+			if ( window.wgEnableAjaxLogin == true && $('#VideoEmbedLoginMsg').exists() ) {
+				$('#VideoEmbedLoginMsg').click(openLogin).css('cursor', 'pointer').log('VET: ajax login enabled');
+			}
 		}
 	}
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=VET&method=loadMainFromView', callback);
@@ -570,7 +580,7 @@ function VET_preQuery(e) {
 		var query = $G('VideoEmbedUrl').value;
 
 		if ( !( query.match( 'http://' ) || query.match( 'www.' ) ) ) {
-			VET_track('query/url/' + query); // tracking			
+			VET_track('query/url/' + query); // tracking
 			VET_sendQuery(query, 1, VET_curSourceId);
 			return false;
 		} else {
@@ -591,12 +601,12 @@ function VET_insertTag( target, tag, position ) {
 			+ target.value.substring( position + 1, target.value.length);
 		target.scrollTop = winScroll;
 	} else if (target.selectionStart || target.selectionStart == '0') { // Mozilla
-		var textScroll = target.scrollTop;			
+		var textScroll = target.scrollTop;
 		target.value = target.value.substring(0, position)
 			+ '\n' + tag + '\n'
 			+ target.value.substring( position + 1, target.value.length);
 		target.scrollTop = textScroll;
-	}							
+	}
 }
 
 function VET_displayDetails(responseText) {
@@ -638,16 +648,16 @@ function VET_displayDetails(responseText) {
 	}
 
 	if( 0 < VET_thumb ) {
-		$G( 'VideoEmbedSizeRow' ).style.display = 'none';		
+		$G( 'VideoEmbedSizeRow' ).style.display = 'none';
 	}
 
 	if( 0 < VET_size ) {
-		$G( 'VideoEmbedWidthRow' ).style.display = 'none';		
-	}	
+		$G( 'VideoEmbedWidthRow' ).style.display = 'none';
+	}
 
 	if( '' != VET_caption ) {
-		$G('VideoEmbedCaptionRow').style.display = 'none';		
-	}	
+		$G('VideoEmbedCaptionRow').style.display = 'none';
+	}
 
 	if ( ( '-1' < VET_gallery ) || VET_inGalleryPosition ) {
 		$G( 'VideoEmbedWidthRow' ).style.display = 'none';
@@ -759,7 +769,7 @@ function VET_insertFinalVideo(e, type) {
 		}
 		if( '' != VET_caption ) {
 			params.push( 'caption=' + VET_caption );
-		}		
+		}
 	}
 
 	var callback = {
@@ -784,7 +794,7 @@ function VET_insertFinalVideo(e, type) {
 					if ( !$G( 'VideoEmbedCreate'  ) && !$G( 'VideoEmbedReplace' ) ) {
 						if(VET_refid == null) { // not FCK
 							if ('-1' == VET_gallery) {
-								if (!VET_inGalleryPosition) { 
+								if (!VET_inGalleryPosition) {
 									insertTags( $G('VideoEmbedTag').value, '', '');
 								} else {
 									if (typeof FCK == 'undefined') {
@@ -798,12 +808,12 @@ function VET_insertFinalVideo(e, type) {
 								var to_update = $G( 'WikiaVideoPlaceholder' + VET_box );
 								to_update.innerHTML = $G( 'VideoEmbedCode' ).innerHTML;
 								YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
-							} else {								
+							} else {
 								// insert into first free "add video" node
 								var box_num = VET_getFirstFree( VET_gallery, VET_box );
 								if( $G( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + box_num ) ) {
 									var to_update = $G( 'WikiaVideoGalleryPlaceholder' + VET_gallery + 'x' + box_num );
-									to_update.parentNode.innerHTML = $G('VideoEmbedCode').innerHTML;			
+									to_update.parentNode.innerHTML = $G('VideoEmbedCode').innerHTML;
 									YAHOO.util.Connect.asyncRequest('POST', wgServer + wgScript + '?title=' + wgPageName  +'&action=purge');
 								}
 							}
@@ -910,9 +920,9 @@ function VET_sendQueryEmbed(query) {
 			}
 
 			if( 'error' == YAHOO.lang.trim(screenType) ) {
-				alert( o.responseText );		
+				alert( o.responseText );
 			} else {
-				VET_displayDetails(o.responseText);		
+				VET_displayDetails(o.responseText);
 			}
 
 			VET_indicator(1, false);

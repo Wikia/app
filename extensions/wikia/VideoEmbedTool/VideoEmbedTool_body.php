@@ -9,6 +9,8 @@ class VideoEmbedTool {
 	function loadMainFromView( $error = false ) {
 		wfLoadExtensionMessages( 'VideoEmbedTool' );
 
+		$out = '';
+
 		$out .= '<script type="text/javascript">';
                 $out .= 'var vet_back = \'' . wfMsg('vet-back') . '\';';
                 $out .= 'var vet_imagebutton = \'' . wfMsg('vet-imagebutton') . '\';';
