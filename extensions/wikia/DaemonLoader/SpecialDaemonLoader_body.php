@@ -346,7 +346,7 @@ class DaemonLoader extends SpecialPage {
 		if (!empty($oRows) && is_array($oRows[0])) {
 			$sFiles = $oRows[0]['result_file'];
         	$aFiles = explode(",", $sFiles);
-        	sort($aFiles);
+        	krsort($aFiles);
         	$aUrls = array();
         	$loop = 0; $fileToSave = "";
         	foreach ($aFiles as $id => $fileName) {
@@ -453,6 +453,7 @@ class DaemonLoader extends SpecialPage {
         if (!empty($sFiles)) {
         	$sk = $wgUser->getSkin();
         	$aFiles = explode(",", $sFiles);
+        	krsort($aFiles);
         	$aUrls = array();
         	$loop = 0;
         	foreach ($aFiles as $id => $fileName) {
