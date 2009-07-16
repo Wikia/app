@@ -42,7 +42,7 @@ function doRedirect(){
 	<div>
 		<div id="pageTop">
 			<img src="<?=$imagesPath?>/wikia_logo_tiny.png" align="left"/>
-			<span id="exitLinkText"><a href="<?=$url;?>" id="exitLink"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a></span>
+			<span id="exitLinkText"><a href="<?=$url;?>" id="exitLink" rel="nofollow"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 		</div>
 		<div id="exitPageAd">
 			<script type="text/javascript"><!--
@@ -51,6 +51,7 @@ function doRedirect(){
 			google_ad_slot = "0549965769";
 			google_ad_width = 336;
 			google_ad_height = 280;
+			google_page_url = "http://gamergear.wikia.com/wiki/GamerGear_Wiki";
 			//-->
 			</script>
 			<script type="text/javascript"
