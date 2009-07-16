@@ -1,3 +1,6 @@
+== Changes since 200907.4 ==
+* rt#18427: Fixed SearchNearMarch (Moli)
+
 == Changes since 200907.3 ==
 * rt#19062: Fix GoogleMaps to use user lang. (Nef)
 * rt#19078: Blogs: Make ajax submit-and-append observe comment sort order. (Nef)
