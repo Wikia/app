@@ -345,6 +345,10 @@ function axWFactoryDomainQuery() {
 		"suggestions" => array(),
 		"data"        => array()
 	);
+
+	$exact = array( "suggestion" => array(), "data" => array() );
+	$match = array( "suggestion" => array(), "data" => array() );
+
 	if( $query ) {
 		$domains = WikiFactory::getDomains( null, true );
 		foreach( $domains as $domain ) {
@@ -356,11 +360,18 @@ function axWFactoryDomainQuery() {
 			if( $skip ) {
 				continue;
 			}
-		    if( preg_match( "/$query/", $domain->city_domain ) ) {
-				$return[ "suggestions" ][] = $domain->city_domain;
-				$return[ "data" ][] = $domain->city_id;
+		    if( preg_match( "/^$query/", $domain->city_domain ) ) {
+				$exact[ "suggestions" ][] = $domain->city_domain;
+				$exact[ "data" ][] = $domain->city_id;
 		    }
+			elseif( preg_match( "/$query/", $domain->city_domain ) ){
+				$match[ "suggestions" ][] = $domain->city_domain;
+				$match[ "data" ][] = $domain->city_id;
+			}
 		}
+		$return[ "suggestions" ] = $exact[ "suggestions" ] + $match[ "suggestions" ];
+		$return[ "data" ] = $exact[ "data" ] + $match[ "suggestions" ];
+
 	}
 
 	return Wikia::json_encode( $return );
