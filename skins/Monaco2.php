@@ -1740,17 +1740,19 @@ if ($custom_article_footer !== '') {
 								<li><a rel="nofollow" id="fe_edit_icon" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_edit_img" class="sprite" alt="<?= wfMsg('edit') ?>" /></a> <div><?= wfMsg('footer_1', $wgSitename) ?> <a id="fe_edit_link" rel="nofollow" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><?= wfMsg('footer_1.5') ?></a></div></li>
 <?php
 		}
-		$timestamp = $wgArticle->getTimestamp();
-		$lastUpdate = $wgLang->date($timestamp);
-		$userId = $wgArticle->getUser();
-		if($userId > 0) {
-			$userText = $wgArticle->getUserText();
-			$userPageTitle = Title::makeTitle(NS_USER, $userText);
-			$userPageLink = $userPageTitle->getLocalUrl();
-			$userPageExists = $userPageTitle->exists();
+		if(is_object($wgArticle)) {
+			$timestamp = $wgArticle->getTimestamp();
+			$lastUpdate = $wgLang->date($timestamp);
+			$userId = $wgArticle->getUser();
+			if($userId > 0) {
+				$userText = $wgArticle->getUserText();
+				$userPageTitle = Title::makeTitle(NS_USER, $userText);
+				$userPageLink = $userPageTitle->getLocalUrl();
+				$userPageExists = $userPageTitle->exists();
 ?>
 								<li><?= $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '' ?><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_user_img" class="sprite" alt="<?= wfMsg('userpage') ?>" /><?= $userPageExists ? '</a>' : '' ?> <div><?= wfMsg('footer_5', '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
 <?php
+			}
 		}
 ?>
 							</ul>
