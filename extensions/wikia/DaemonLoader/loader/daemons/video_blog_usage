@@ -174,7 +174,7 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 	my $start_sec = time();
 	$oConf->log($databases->{$city_id} . " processed (city_id: ".$city_id.")");
 	
-	my $dbh = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, undef, $databases->{$city_id} )} );
+	my $dbh = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, 'stats', $databases->{$city_id} )} );
 	$db_ext->ping();
 	
 =main loop for every wiki and every period
