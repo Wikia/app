@@ -1,4 +1,4 @@
-== Changes since 200907.4 ==
+== Changes since 200907.3 ==
 * rt#18992: Fixed queries and db connections in LookupContribs (Moli)
 * rt#19141: Fix i18n in Special:EnableWysywig. (Nef)
 * rt#19173: Tweaks in Infolinks. (Nef)
@@ -8,8 +8,6 @@
 * rt#19200: "Add Video" placeholder doesn't work in view mode for anons (Macbre)
 * rt#19206: FCK: Shift + Space is converted into &#160; (Macbre)
 * rt#19196: corrected wikitext parsing in user profile (TOR)
-
-== Changes since 200907.3 ==
 * rt#19062: Fix GoogleMaps to use user lang. (Nef)
 * rt#19078: Blogs: Make ajax submit-and-append observe comment sort order. (Nef)
 * rt#19080: Blogs: Make comment sort order persist. (Nef)
