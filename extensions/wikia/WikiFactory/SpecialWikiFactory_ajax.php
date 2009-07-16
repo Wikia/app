@@ -351,7 +351,9 @@ function axWFactoryDomainQuery() {
 			/**
 			 * skip all www. domains
 			 */
-			if( preg_match( '/^www\./', $domain->city_domain ) ) {
+			if( preg_match( '/^www\./', $domain->city_domain ) ||
+				preg_match( '/wikicities\.com$/', $domain->city_domain )
+			) {
 				continue;
 			}
 		    if( preg_match( "/$query/", $domain->city_domain ) ) {
