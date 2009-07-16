@@ -731,13 +731,22 @@ class BlogAvatar {
 					$out['nav_links'][] = array('text' => wfMsg('blog-widgets-label'), 'href' => Title::newFromText("WidgetDashboard", NS_SPECIAL )->getLocalUrl(), "dbkey" => "WidgetDashboard", 'tracker' => 'widget');
 					$out['nav_links'][] = array('text' => wfMsg('preferences'), 'href' => Title::newFromText("Preferences", NS_SPECIAL )->getLocalUrl(), "dbkey" => "Preferences", 'tracker' => 'preferences');
 				} elseif ( !$isAnon && !$isDestinationUserAnon) {
-					$oTitle = Title::newFromText( "EmailUser/{$userspace}", NS_SPECIAL );
-					if ($oTitle instanceof Title) {
-						$out['nav_links_head'][] = array('text' => wfMsg("emailpage"), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Emailuser", 'tracker' => 'emailuser');
+					$user = User::newFromName($userspace);
+					if ($user) {
+						$destinationUserId = $user->getId();
+						$skin = $wgUser->getSkin();
+						if ($skin->showEmailUser($destinationUserId)) {
+							$oTitle = Title::newFromText( "EmailUser/{$userspace}", NS_SPECIAL );
+							if ($oTitle instanceof Title) {
+								$out['nav_links_head'][] = array('text' => wfMsg("emailpage"), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Emailuser", 'tracker' => 'emailuser');
+							}
+						}
 					}
-					$oTitle = Title::newFromText( "Blockip/{$userspace}", NS_SPECIAL );
-					if ($oTitle instanceof Title) {
-						$out['nav_links_head'][] = array('text' => wfMsg("blockip"), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Blockip", 'tracker' => 'blockip');
+					if ($wgUser->isAllowed( 'block' )) {
+						$oTitle = Title::newFromText( "Blockip/{$userspace}", NS_SPECIAL );
+						if ($oTitle instanceof Title) {
+							$out['nav_links_head'][] = array('text' => wfMsg("blockip"), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Blockip", 'tracker' => 'blockip');
+						}
 					}
 				}
 
