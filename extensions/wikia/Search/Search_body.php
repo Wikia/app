@@ -189,8 +189,8 @@ class SolrResult extends SearchResult {
 		$this->mTitle = new SolrResultTitle($document->ns, $document->title, $document->url);
 		$this->mWordCount = $document->words;
 		$this->mSize = $document->bytes;
-		$this->mCreated = $document->created;
-		$this->mIndexed = $document->indexed;
+		$this->mCreated = isset($document->created) ? $document->created : 0;
+		$this->mIndexed = isset($document->indexed) ? $document->indexed : 0;
 		$this->mHighlightText = null;
 	}
 
