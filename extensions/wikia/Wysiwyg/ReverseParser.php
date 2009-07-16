@@ -101,6 +101,10 @@ class ReverseParser {
 
 				// HTML entities (&ndash;) RT #18269
 				"#&(\w+);#i"					=> '\x7f-ent-$1;',
+
+				// RT #19206
+				"/&#160;/i"					=> ' ',
+
 				// HTML entities (&#91;)
 				"/&#(\d+);/i"					=> '\x7f-ent-#$1;',
 			);
