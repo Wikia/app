@@ -20,7 +20,7 @@
 			<?php
 			if( !$wgUser->isAllowed( 'upload' ) ) {
 				if( !$wgUser->isLoggedIn() ) {
-					echo wfMsg( 'vet-notlogged' );
+					echo '<a id="VideoEmbedLoginMsg">' .wfMsg( 'vet-notlogged' ) . '</a>';
 				} else {
 					echo wfMsg( 'vet-notallowed' ); 
 				}
