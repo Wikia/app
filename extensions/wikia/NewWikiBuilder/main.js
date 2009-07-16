@@ -1,5 +1,6 @@
 var NWB = {
-	"language": "en" // TODO: Pull this from the browser or users settings
+	"language": "en", // TODO: Pull this from the browser or users settings
+	"descriptionSection" : 1
 };	      
 
 var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Mediawiki
@@ -56,7 +57,7 @@ Mediawiki.handleDescriptionForm = function (f){
              Mediawiki.editArticle({
                   "title": mainPageEnd,
                   "summary": "",
-                  "section": 0,
+                  "section": NWB.descriptionSection,
                   "text": $("#desc_textarea").val()}, 
                   function(){
                           NWB.updateStatus(NWB.msg("description-saved"));
