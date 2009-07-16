@@ -147,8 +147,8 @@ function getLinkSuggest() {
 		array(
 			" page_wikia_id " => $wgCityId,
 			" page_title_lower LIKE '{$query}%' ",
-			" page_namespace = {$namespace} "
-			" page_status = 0 ",
+			" page_namespace = {$namespace} ",
+			" page_status = 0 "
 		),
 		__METHOD__,
 		array(
