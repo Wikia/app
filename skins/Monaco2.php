@@ -2081,8 +2081,9 @@ if(count($wikiafooterlinks) > 0) {
 	}
 
 	if(is_array($linksArray) && count($linksArray) > 0) {
-		for ($i = 0, $len = count($linksArray); $i < $len; $i++) {
-			$i & 1 ? $linksArrayR[] = $linksArray[$i] : $linksArrayL[] = $linksArray[$i];
+		for ($i = 0, $max = max(array_keys($linksArray)); $i < $max; $i++) {
+			$item = isset($linksArray[$i]) ? $linksArray[$i] : false;
+			$i & 1 ? $linksArrayR[] = $item : $linksArrayL[] = $item;
 		}
 	}
 
@@ -2096,10 +2097,14 @@ if(count($wikiafooterlinks) > 0) {
 <?php
 		if(is_array($linksArrayL) && count($linksArrayL) > 0) {
 			foreach($linksArrayL as $key => $val) {
-				$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
+				if ($val === false) {
+					echo '<li>&nbsp;</li>';
+				} else {
+					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
 						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $tracker ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
+				}
 			}
 		}
 ?>
@@ -2110,10 +2115,14 @@ if(count($wikiafooterlinks) > 0) {
 <?php
 		if(is_array($linksArrayR) && count($linksArrayR) > 0) {
 		    foreach($linksArrayR as $key => $val) {
-				$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
+				if ($val === false) {
+					echo '<li>&nbsp;</li>';
+				} else {
+					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
 						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $tracker ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
+				}
 			}
 		}
 ?>
