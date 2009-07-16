@@ -83,7 +83,7 @@ function getLinkSuggestImage() {
 }
 
 function getLinkSuggest() {
-	global $wgRequest, $wgContLang;
+	global $wgRequest, $wgContLang, $wgExternalBlobsDB, $wgCityId;
 
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
@@ -145,9 +145,10 @@ function getLinkSuggest() {
 		array( "pages" ),
 		array( "page_title" ),
 		array(
-			" page_status = 0 ",
+			" page_wikia_id " => $wgCityId,
 			" page_title_lower LIKE '{$query}%' ",
 			" page_namespace = {$namespace} "
+			" page_status = 0 ",
 		),
 		__METHOD__,
 		array(
