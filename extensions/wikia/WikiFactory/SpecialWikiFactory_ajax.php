@@ -65,7 +65,6 @@ function axWFactoryDomainCRUD($type="add") {
         $wgOut->readOnlyPage(); #--- later change to something reasonable
         return;
     }
-
     $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
     $aDomains = array();
     $aResponse = array();
@@ -334,21 +333,35 @@ function axWFactorySaveVariable() {
  *
  * used in autocompletion
  *
- * @param string	$input	string from input field
- *
  * @return string
  */
-function axWFactoryDomainQuery( $input ) {
-	$domains = WikiFactory::getDomains( null, true );
-	$return = "";
+function axWFactoryDomainQuery() {
+	global $wgRequest;
 
-    foreach( $domains as $domain ) {
-        if( strpos( $domain->city_domain, $input ) ) {
-            $return .= "{$domain->city_domain}\t{$domain->city_id}\n";
-        }
+	$query = $wgRequest->getVal( "query", false );
+
+	$return = array(
+		"query"       => $query,
+		"suggestions" => array(),
+		"data"        => array()
+	);
+	if( $query ) {
+		$domains = WikiFactory::getDomains( null, true );
+		foreach( $domains as $domain ) {
+			/**
+			 * skip all www. domains
+			 */
+			if( preg_match( '/^www\./', $domain->city_domain ) ) {
+				continue;
+			}
+		    if( strpos( $domain->city_domain, $query ) ) {
+				$return[ "suggestions" ][] = $domain->city_domain;
+				$return[ "data" ][] = $domain->city_id;
+		    }
+		}
 	}
 
-	return $return;
+	return Wikia::json_encode( $return );
 }
 
 /**
@@ -409,7 +422,7 @@ function axWFactoryRemoveVariable( ) {
 	else {
 		$cv_id				= $wgRequest->getVal( 'varId' );
 		$city_id			= $wgRequest->getVal( 'cityid' );
-		
+
 		if( ! WikiFactory::removeVarById( $cv_id, $city_id ) ) {
 			$error++;
 			$return = Wikia::errormsg( "Variable not removed because of problems with database. Try again." );
@@ -435,10 +448,10 @@ function axWFactoryRemoveVariable( ) {
  * @access public
  * @author moli@wikia
  *
- * @return string: json string 
+ * @return string: json string
  */
 function axAWCMetrics() {
-	global $wgUser, $wgRequest;	
+	global $wgUser, $wgRequest;
 	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	if ( wfReadOnly() ) {
@@ -447,27 +460,27 @@ function axAWCMetrics() {
 
 	if ( !in_array('staff', $wgUser->getGroups()) ) {
 		return "";
-	} 
+	}
 
 	if( $wgUser->isBlocked() ) {
 		return "";
 	}
-	
+
 	$limit = $wgRequest->getVal('awc-limit', WikiMetrics::LIMIT);
 	$page = $wgRequest->getVal('awc-offset', 0);
 	$order = $wgRequest->getVal('awc-order', WikiMetrics::ORDER);
 	$desc = $wgRequest->getVal('awc-desc', WikiMetrics::DESC);
 	$aResponse = array('nbr_records' => 0, 'limit' => $limit, 'page' => $page, 'order' => $order, 'desc' => $desc);
-	
+
 	$OAWCMetrics = new WikiMetrics();
 	$OAWCMetrics->getRequestParams();
 	list ($res, $count) = $OAWCMetrics->getMainStatsRecords();
-	
+
 	if ( !empty($res) ) {
 		$aResponse['data'] = $res;
 		$aResponse['nbr_records'] = $count;
 	}
-	
+
 	if (!function_exists('json_encode'))  {
 		$oJson = new Services_JSON();
 		return $oJson->encode($aResponse);
@@ -484,10 +497,10 @@ function axAWCMetrics() {
  * @access public
  * @author moli@wikia
  *
- * @return string: json string 
+ * @return string: json string
  */
 function axAWCMetricsCategory() {
-	global $wgUser, $wgRequest;	
+	global $wgUser, $wgRequest;
 	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	if ( wfReadOnly() ) {
@@ -496,24 +509,24 @@ function axAWCMetricsCategory() {
 
 	if ( !in_array('staff', $wgUser->getGroups()) ) {
 		return "";
-	} 
+	}
 
 	if( $wgUser->isBlocked() ) {
 		return "";
 	}
-	
+
 	$aResponse = array('nbr_records' => 0, 'data' => '', 'cats' => array());
-	
+
 	$OAWCMetrics = new WikiMetrics();
 	$OAWCMetrics->getRequestParams();
 	list ($res, $count, $categories) = $OAWCMetrics->getCategoriesRecords();
-	
+
 	if ( !empty($res) ) {
 		$aResponse['data'] = $res;
 		$aResponse['nbr_records'] = $count;
 		$aResponse['cats'] = $categories;
 	}
-	
+
 	if (!function_exists('json_encode'))  {
 		$oJson = new Services_JSON();
 		return $oJson->encode($aResponse);
@@ -530,10 +543,10 @@ function axAWCMetricsCategory() {
  * @access public
  * @author moli@wikia
  *
- * @return string: json string 
+ * @return string: json string
  */
 function axAWCMetricsAllWikis() {
-	global $wgUser, $wgRequest;	
+	global $wgUser, $wgRequest;
 	wfLoadExtensionMessages( "AutoCreateWiki" );
 
 	if ( wfReadOnly() ) {
@@ -542,22 +555,22 @@ function axAWCMetricsAllWikis() {
 
 	if ( !in_array('staff', $wgUser->getGroups()) ) {
 		return "";
-	} 
+	}
 
 	if( $wgUser->isBlocked() ) {
 		return "";
 	}
-	
+
 	$aResponse = array('nbr_records' => 0, 'data' => '');
-	
+
 	$OAWCMetrics = new WikiMetrics();
 	$res = $OAWCMetrics->getFilteredWikis();
-	
+
 	if ( !empty($res) ) {
 		$aResponse['data'] = $res;
 		$aResponse['nbr_records'] = count($res);
 	}
-	
+
 	if (!function_exists('json_encode'))  {
 		$oJson = new Services_JSON();
 		return $oJson->encode($aResponse);
