@@ -1,9 +1,14 @@
 #!/usr/bin/perl
 
 my $wikia_lib;
+my $YML;
 BEGIN {
 	$wikia_lib = "/home/moli/wikia/wikia-utils/lib/"; 
-	$wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib" if !(-e $wikia_lib);
+	$YML = "/home/moli/wikia/wikia-conf/DB.localhost.yml";
+	if (! -e $wikia_lib) {
+		$wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib" ;
+		$YML = undef;
+	}
 }
 
 =needed modules
@@ -21,6 +26,7 @@ use lib $wikia_lib;
 use Wikia::Config;
 use Wikia::Utils;
 use Wikia::DB;
+use Wikia::LB;
 
 =default values
 =cut
@@ -86,7 +92,9 @@ my $oConf = new Wikia::Config( {logfile => "/tmp/video_blog_usage.log"} );
 
 =db archive connection
 =cut
-my $db_ext = new Wikia::DB( {"host" => DB_EXT_SLAVE} );
+my $lb = Wikia::LB->new( {yml => $YML } );
+my $db_ext = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, undef, Wikia::LB::DATAWARESHARED )} );
+
 
 =wikia utils 
 =cut
@@ -94,7 +102,7 @@ my $oUtils = new Wikia::Utils();
 
 =db slave connection
 =cut
-my $db = new Wikia::DB( {"host" => DB_SLAVE} );
+my $db = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, 'stats', Wikia::LB::EXTERNALSHARED )} );
 
 #----
 =parse args
@@ -102,11 +110,11 @@ my $db = new Wikia::DB( {"host" => DB_SLAVE} );
 my @where_db = ("city_public = 1");
 if ($usedb) {
 	my @use_dbs = split /,/,$usedb;
-	push @where_db, "city_dbname in (".join(",", map { $db->handler()->quote($_) } @use_dbs).")";
+	push @where_db, "city_dbname in (".join(",", map { $db->quote($_) } @use_dbs).")";
 } elsif ($from_city) {
-	push @where_db, "city_id >= ".$db->handler()->quote($from_city);
+	push @where_db, "city_id >= ".$db->quote($from_city);
 } elsif ($to_city) {
-	push @where_db, "city_id <= ".$db->handler()->quote($to_city);
+	push @where_db, "city_id <= ".$db->quote($to_city);
 }
 
 =input parameters - set default values
@@ -129,12 +137,13 @@ if (!@dates) {
 	$oConf->log("No dates found to generate report (invalid parameters): " . $daysago);
 	exit();
 }
-push @where_db, "date_format(city_created, '%Y%m') <= ". $db->handler->quote($dates[scalar(@dates) - 1]);
+push @where_db, "date_format(city_created, '%Y%m') <= ". $db->quote($dates[scalar(@dates) - 1]);
 
 =get list of wikis -> its ids and names
 =cut
 my $databases = $db->get_wikis(\@where_db);
 my $wikiUrls = $db->get_wgservers();
+$db->disconnect() if ($db);
 
 =get task info
 =cut
@@ -165,7 +174,8 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 	my $start_sec = time();
 	$oConf->log($databases->{$city_id} . " processed (city_id: ".$city_id.")");
 	
-	$db_ext->handler->ping();
+	my $dbh = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, undef, $databases->{$city_id} )} );
+	$db_ext->ping();
 	
 =main loop for every wiki and every period
 =cut
@@ -177,15 +187,17 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 		#- 
 		# from wikiastats - nbr of pages and revisions (PER WIKI)
 		#-
-		my $select = "af_namespace as nspace, count(*) as page_count, sum(af_page_count) as rev_count";
-		my $from = "`wikiastats`.`".$databases->{$city_id}."_articles_full`";
+		my $select = "page_namespace as nspace, count(rev_id) as rev_count, count(distinct(page_id)) as page_count";
+		my $from = "`".$databases->{$city_id}."`.`page`, `".$databases->{$city_id}."`.`revision`";
 		my @where = (
-			"af_namespace in (" . join(",", map { $db_ext->handler->quote($_) } @nspaces) . ")",
-			"date_format(af_stats_date, '%Y%m') = ".$db_ext->handler->quote($date)
+			"page_id = rev_page",
+			"page_is_redirect = 0",
+			"page_namespace in (" . join(",", map { $dbh->quote($_) } @nspaces) . ")",
+			"date_format(rev_timestamp, '%Y%m') = ".$dbh->quote($date)
 		);
-		my @options = ("group by af_namespace");
-		
-		my $sth = $db_ext->select_many($select, $from, \@where, \@options);
+		my @options = ("group by page_namespace");
+
+		my $sth = $dbh->select_many($select, $from, \@where, \@options);
 		if ($sth) {
 			while(my $values = $sth->fetchrow_hashref()) {
 				$DATA->{$date}->{$w}->{$values->{nspace}}->{page_count} = $values->{page_count};
@@ -200,9 +212,9 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 		$select = "pv_namespace as nspace, sum(pv_views) as views_count";
 		$from = "`dbstats`.`city_page_views`";
 		@where = (
-			"pv_namespace in (" . join(",", map { $db_ext->handler->quote($_) } @nspaces) . ")",
-			"date_format(pv_use_date, '%Y%m') = ".$db_ext->handler->quote($date),
-			"pv_city_id = ".$db_ext->handler->quote($city_id)
+			"pv_namespace in (" . join(",", map { $db_ext->quote($_) } @nspaces) . ")",
+			"date_format(pv_use_date, '%Y%m') = ".$db_ext->quote($date),
+			"pv_city_id = ".$db_ext->quote($city_id)
 		);
 		@options = ("group by pv_namespace");
 		
@@ -220,11 +232,11 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 		$select = "ar_namespace as nspace, count(*) as remove_count";
 		$from = "`".$databases->{$city_id}."`.`archive`";
 		@where = (
-			"date_format(ar_timestamp, '%Y%m') = ".$db_ext->handler->quote($date),
-			"ar_namespace in (" . join(",", map { $db_ext->handler->quote($_) } @nspaces) . ")",
+			"date_format(ar_timestamp, '%Y%m') = ".$dbh->quote($date),
+			"ar_namespace in (" . join(",", map { $dbh->quote($_) } @nspaces) . ")",
 		);
 		@options = ("group by ar_namespace");
-		$sth = $db->select_many($select, $from, \@where, \@options);
+		$sth = $dbh->select_many($select, $from, \@where, \@options);
 		if ($sth) {
 			while(my $values = $sth->fetchrow_hashref()) {
 				$DATA->{$date}->{$w}->{$values->{nspace}}->{remove_count} = $values->{remove_count};
@@ -235,15 +247,17 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 		#-
 		# from wikiastats - nbr of pages created in month
 		#-
-		$select = "af_namespace as nspace, count(*) as page_count";
-		$from = "`wikiastats`.`".$databases->{$city_id}."_articles_full`";
+		$select = "page_namespace as nspace, count(distinct(page_id)) as page_count";
+		$from = "`".$databases->{$city_id}."`.`page`, `".$databases->{$city_id}."`.`revision`";
 		@where = (
-			"af_namespace in (" . join(",", map { $db_ext->handler->quote($_) } @nspacesAll) . ")",
-			"date_format(af_stats_date, '%Y%m') = ".$db_ext->handler->quote($date)
+			"page_id = rev_page",
+			"page_is_redirect = 0",
+			"page_namespace in (" . join(",", map { $dbh->quote($_) } @nspacesAll) . ")",
+			"date_format(rev_timestamp, '%Y%m') = ".$dbh->quote($date)
 		);
-		@options = ("group by af_namespace");
+		@options = ("group by page_namespace");
 		
-		$sth = $db_ext->select_many($select, $from, \@where, \@options);
+		$sth = $dbh->select_many($select, $from, \@where, \@options);
 		if ($sth) {
 			while(my $values = $sth->fetchrow_hashref()) {
 				$DATAALL->{$date}->{$values->{nspace}}->{page_count} = 0 unless ($DATAALL->{$date}->{$values->{nspace}}->{page_count});
@@ -260,9 +274,9 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 		$from = "`dbstats`.`city_page_views`";
 		@where = (
 			"pv_namespace > 0",
-			"pv_namespace in (" . join(",", map { $db_ext->handler->quote($_) } @nspacesAll) . ")",
-			"date_format(pv_use_date, '%Y%m') = ".$db_ext->handler->quote($date),
-			"pv_city_id = ".$db_ext->handler->quote($city_id)
+			"pv_namespace in (" . join(",", map { $db_ext->quote($_) } @nspacesAll) . ")",
+			"date_format(pv_use_date, '%Y%m') = ".$db_ext->quote($date),
+			"pv_city_id = ".$db_ext->quote($city_id)
 		);
 		@options = ("group by pv_namespace");
 		
@@ -281,6 +295,8 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 	my @ts = gmtime($end_sec - $start_sec);
 
 	$oConf->log($databases->{$city_id} . " processed ".sprintf ("%d hours %d minutes %d seconds",@ts[2,1,0]));
+	
+	$dbh->disconnect() if ($dbh);
 }
 
 #my $d = Data::Dumper->Dump([%{$DATA->{511}}], [qw(data)]);
@@ -425,6 +441,7 @@ if ( $q_up ) {
 	$oConf->log("send emails with report");
 	$oUtils->send_file( $email_title, $task->{dj_result_emails}, $XLS_FILE . ".gz" );
 }
+$dbh_ext->disconnect() if ($dbh_ext);
 $oConf->log("process done");
 
 1;
