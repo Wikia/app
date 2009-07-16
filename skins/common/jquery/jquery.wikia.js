@@ -49,6 +49,18 @@ jQuery.fn.getModal = function(url, id, options) {
 	});
 }
 
+// load YUI if not yet loaded
+$.loadYUI = function(callback) {
+	if (typeof YAHOO == 'undefined') {
+		$().log('YUI: loading on-demand');
+		$.getScript(wgExtensionsPath + '/wikia/StaticChute/?type=js&packages=yui&cb=' + wgStyleVersion, callback);
+	}
+	else {
+		$().log('YUI: already loaded');
+		callback();
+	}
+}
+
 /*
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
@@ -90,4 +102,33 @@ $.getViewportWidth = function() {
 		document.body.clientWidth; // Quirks
     }
     return width;
+};
+
+/**
+* Finds the event in the window object, the caller's arguments, or
+* in the arguments of another method in the callstack.  This is
+* executed automatically for events registered through the event
+* manager, so the implementer should not normally need to execute
+* this function at all.
+* @method getEvent
+* @param {Event} e the event parameter from the handler
+* @param {HTMLElement} boundEl the element the listener is attached to
+* @return {Event} the event 
+* @static
+*/
+$.getEvent = function(e, boundEl) {
+	var ev = e || window.event;
+
+	if (!ev) {
+		var c = this.getEvent.caller;
+		while (c) {
+			ev = c.arguments[0];
+			if (ev && Event == ev.constructor) {
+				break;
+			}
+			c = c.caller;
+		}
+	}
+
+	return ev;
 };
