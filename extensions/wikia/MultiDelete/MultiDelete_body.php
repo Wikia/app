@@ -264,12 +264,13 @@ class MultiDelete extends SpecialPage {
 				$reason = $this->mReason;
 			$namespace = $page->getNamespace();
 			$titleName = $page->getText();
+			$titleDBName = $page->getDBKey();
 
 			$res = $dbr->select(
 				'pages',
 				'DISTINCT page_wikia_id',
 				array(	'page_namespace' => $namespace,
-					'page_title' => $titleName,
+					'page_title' => $titleDBName,
 					'page_wikia_id IN (' . implode(',', array_keys($wikis)) . ')'
 				),
 				__METHOD__
