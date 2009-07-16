@@ -354,7 +354,7 @@ function axWFactoryDomainQuery() {
 			if( preg_match( '/^www\./', $domain->city_domain ) ) {
 				continue;
 			}
-		    if( strpos( $domain->city_domain, $query ) ) {
+		    if( preg_match( "/$query/", $domain->city_domain ) ) {
 				$return[ "suggestions" ][] = $domain->city_domain;
 				$return[ "data" ][] = $domain->city_id;
 		    }
