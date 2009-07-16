@@ -14,6 +14,7 @@ div#sidebar { display: none !important; }
 #LEFT_SPOTLIGHT_1_load {display: none !important; }
 .TablePager th { font-size:91%; }
 .TablePager td { padding:1px; }
+.TablePager th a {font-weight:normal;}
 </style>
 <p class='error'><?=$error?></p>
 <div>
@@ -347,36 +348,36 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 
 				// column (TITLE)
 				var _th = (order == 'title') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_title\" style=\"cursor:pointer;" + ((order == 'title') ? "color:#006400;" : "") + "\">" + _th + " Wikia</a></th>";
+				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_title\" style=\"cursor:pointer;" + ((order == 'title') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " Wikia</a></th>";
 
 				// column (DBNAME)
 				var _th = (order == 'db') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_db\" style=\"cursor:pointer;" + ((order == 'db') ? "color:#006400;" : "") + "\">" + _th + " DBName</a></th>";
+				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_db\" style=\"cursor:pointer;" + ((order == 'db') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " DBName</a></th>";
 				
 				// column (LANG)
 				_th = (order == 'lang') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_lang\" style=\"cursor:pointer;" + ((order == 'lang') ? "color:#006400;" : "") + "\">" + _th + " Lang</a></th>";
+				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_lang\" style=\"cursor:pointer;" + ((order == 'lang') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " Lang</a></th>";
 
 				// column (CREATED)				
 				_th = (order == 'created') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_created\" style=\"cursor:pointer;" + ((order == 'created') ? "color:#006400;" : "") + "\">" + _th + " Created</a></th>";
+				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_created\" style=\"cursor:pointer;" + ((order == 'created') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " Created</a></th>";
 				
 				// column (FOUNDER)
 				_th = (order == 'founderName') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
 				var _th2 = (order == 'founderEmail') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_founderName\" style=\"cursor:pointer;" + ((order == 'founderName') ? "color:#006400;" : "") + "\">" + _th + " Founder</a>";
-				oneRow += "<a id=\"TablePager_founderEmail\" style=\"cursor:pointer;" + ((order == 'founderEmail') ? "color:#006400;" : "") + "\">" + _th2 + " Founder email</a></th>";
+				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_founderName\" style=\"cursor:pointer;" + ((order == 'founderName') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " Founder</a>";
+				oneRow += "<a id=\"TablePager_founderEmail\" style=\"cursor:pointer;" + ((order == 'founderEmail') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th2 + " Founder email</a></th>";
 
 				// column (FOUNDER EMAIL)
 				//_th = (order == 'founderEmail') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				//oneRow += "<th rowspan=\"2\"><a id=\"TablePager_founderEmail\" style=\"cursor:pointer;" + ((order == 'founderEmail') ? "color:#006400;" : "") + "\">" + _th + " Founder email</a></th>";
+				//oneRow += "<th rowspan=\"2\"><a id=\"TablePager_founderEmail\" style=\"cursor:pointer;" + ((order == 'founderEmail') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " Founder email</a></th>";
 
 				// columns (stats)
 				oneRow += "<th colspan=\"10\" style=\"text-align:center\"><?=wfMsg('awc-metrics-statistics')?></th>";
 
 				// column (pageviews)
 				_th = (order == 'pageviews') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_pageviews\" style=\"cursor:pointer;" + ((order == 'pageviews') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-pageviews')?></a></th>";
+				oneRow += "<th rowspan=\"2\"><a id=\"TablePager_pageviews\" style=\"cursor:pointer;" + ((order == 'pageviews') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-pageviews')?></a></th>";
 				
 				// column (options)
 				oneRow += "<th rowspan=\"2\" style=\"text-align:center\"><?=wfMsg('awc-metrics-close')?></th></tr>";
@@ -390,43 +391,43 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 
 				// column (WIKIANS)
 				_th = (order == 'wikians') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_wikians\" style=\"cursor:pointer;" + ((order == 'wikians') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-wikians')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_wikians\" style=\"cursor:pointer;" + ((order == 'wikians') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-wikians')?></a></th>";
 
 				// column (ARTICLES)
 				_th = (order == 'articles') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_articles\" style=\"cursor:pointer;" + ((order == 'articles') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-articles')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_articles\" style=\"cursor:pointer;" + ((order == 'articles') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-articles')?></a></th>";
 
 				// column (NEW_ARTICLES_PER_DAY)
 				_th = (order == 'articles_per_day') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_articles_per_day\" style=\"cursor:pointer;" + ((order == 'articles_per_day') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-articles-per-day')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_articles_per_day\" style=\"cursor:pointer;" + ((order == 'articles_per_day') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-articles-per-day')?></a></th>";
 
 				// column (REVISIONS)
 				_th = (order == 'mean_nbr_revision') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_mean_nbr_revision\" style=\"cursor:pointer;" + ((order == 'mean_nbr_revision') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-revisions-per-page')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_mean_nbr_revision\" style=\"cursor:pointer;" + ((order == 'mean_nbr_revision') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-revisions-per-page')?></a></th>";
 
 				// column (MEAN SIZE)
 				_th = (order == 'mean_size') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_mean_size\" style=\"cursor:pointer;" + ((order == 'mean_size') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-article-avg-size')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_mean_size\" style=\"cursor:pointer;" + ((order == 'mean_size') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-article-avg-size')?></a></th>";
 
 				// column (EDITS)
 				_th = (order == 'edits') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_edits\" style=\"cursor:pointer;" + ((order == 'edits') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-edits')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_edits\" style=\"cursor:pointer;" + ((order == 'edits') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-edits')?></a></th>";
 
 				// column (DB_SIZE)
 				_th = (order == 'db_size') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_db_size\" style=\"cursor:pointer;" + ((order == 'db_size') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-db-size')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_db_size\" style=\"cursor:pointer;" + ((order == 'db_size') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-db-size')?></a></th>";
 
 				// column (images)
 				_th = (order == 'images') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_images\" style=\"cursor:pointer;" + ((order == 'images') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-images')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_images\" style=\"cursor:pointer;" + ((order == 'images') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-images')?></a></th>";
 
 				// column (users_reg)
 				_th = (order == 'users_reg') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_users_reg\" style=\"cursor:pointer;" + ((order == 'users_reg') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-all-users')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_users_reg\" style=\"cursor:pointer;" + ((order == 'users_reg') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-all-users')?></a></th>";
 
 				// column (users_edits)
 				_th = (order == 'users_edits') ? ((desc == -1) ? "<strong style=\"font-size:146%\">&darr;</strong>" : "<strong style=\"font-size:146%\">&uarr;</strong>") : "";
-				oneRow += "<th><a id=\"TablePager_users_edits\" style=\"cursor:pointer;" + ((order == 'users_edits') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-all-users-edit-main-ns')?></a></th>";
+				oneRow += "<th><a id=\"TablePager_users_edits\" style=\"cursor:pointer;" + ((order == 'users_edits') ? "color:#006400;font-weight:bold;" : "") + "\">" + _th + " <?=wfMsg('awc-metrics-all-users-edit-main-ns')?></a></th>";
 
 				oneRow += "</tr>";
 				
