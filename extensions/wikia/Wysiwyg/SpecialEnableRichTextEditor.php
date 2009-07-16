@@ -23,7 +23,7 @@ class EnableRichTextEditor extends SpecialPage {
 			return;
 		}
 
-		$wgOut->setPageTitle('Enable Rich Text Editor');
+		$wgOut->setPageTitle(wfMsg("enablerichtexteditor"));
 
 		// set user option
 		$wgUser->setOption('enablerichtext', true);
