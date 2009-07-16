@@ -91,6 +91,7 @@ class SearchNearMatch {
 		$searchTitleId = $wgMemc->get( $memkey );
 		if (empty($searchTitleId)) {
 			// from DB
+			$pages = array(); 
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalBlobsDB );
 			$res = $dbr->select(
 				array( 'pages' ),
@@ -102,9 +103,11 @@ class SearchNearMatch {
 				),
 				__METHOD__
 			);
-			$pages = array(); while ( $row = $dbr->fetchObject( $res ) ) { 
+			while ( $row = $dbr->fetchObject( $res ) ) { 
 				$pages[$row->page_namespace] = $row->page_id;
 			}
+			$dbr->freeResult( $res );
+			
 			if ( !empty($pages) ) {
 				ksort($pages, SORT_STRING);
 				list($searchTitleId) = array_slice($pages, 0, 1);
