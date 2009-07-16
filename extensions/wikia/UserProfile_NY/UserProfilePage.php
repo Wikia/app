@@ -682,16 +682,9 @@ class UserProfilePage extends Article{
 				}
 			}
 		
-			$value = trim( $value );
-
-			# if the value starts with a list, we need a leading newline
-			if ( strpos( $value, '*' ) === 0 || strpos( $value, '#' ) === 0 ) {
-				$value = "\n" . $value;
-			}
-
-			$value = $wgOut->parse( $value, false );
+			$value = $wgOut->parse( "<b>{$label}</b>\n" . trim( $value ), true );
 			$output = "<div>
-				<b>{$label}</b>{$value}
+				$value
 			</div>";
 		}	
 				
