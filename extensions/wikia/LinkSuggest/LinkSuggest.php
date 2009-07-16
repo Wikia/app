@@ -122,7 +122,7 @@ function getLinkSuggest() {
 	$namespacePrefix = (!empty($namespaceName)) ? $namespaceName . ':' : '';
 
 	$query = addslashes(mb_strtolower($query));
-	$db =& wfGetDB(DB_SLAVE, 'search');
+	$db = wfGetDB(DB_SLAVE, 'search');
 
 	$res = $db->select(
 		array( "querycache" ),
@@ -138,24 +138,28 @@ function getLinkSuggest() {
 	while($row = $db->fetchObject($res)) {
 		$results[] = str_replace('_', ' ', $namespacePrefix . $row->qc_title);
 	}
+	$db->freeResult( $res );
 
-	$res = $db->select(
-		array( "page" ),
+	$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalBlobsDB );
+	$res = $dbs->select(
+		array( "pages" ),
 		array( "page_title" ),
 		array(
-			" page_is_redirect = 0 ",
-			" LOWER(page_title) LIKE LOWER('{$query}%') ",
+			" page_status = 0 ",
+			" page_title_lower LIKE '{$query}%' ",
 			" page_namespace = {$namespace} "
 		),
 		__METHOD__,
 		array(
-			"ORDER BY" => "page_title ASC", 
+			"ORDER BY" => "page_title_lower ASC", 
 			"LIMIT" => (15 - count($results))
 		)
 	);
-	while($row = $db->fetchObject($res)) {
+	while($row = $dbs->fetchObject($res)) {
 		$results[] = str_replace('_', ' ', $namespacePrefix . $row->page_title);
 	}
+	$dbs->freeResult( $res );
+
 	$results = array_unique($results);
 
 	if($wgRequest->getText('format') == 'json') {
