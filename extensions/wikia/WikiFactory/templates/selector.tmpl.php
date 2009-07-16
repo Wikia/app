@@ -59,7 +59,7 @@ table.TablePager { border: 1px solid gray;}
 		You can start typing begining of domain name into input field below
 	</li>
 	<li>
-		You can find Wikia in table
+		You can use filters in the <a href="<?php echo $title->getFullUrl() ?>/metrics"><strong>metrics interface</strong></a>
 	</li>
 	<li>
 		<a href="<?php echo $title->getFullUrl() ?>/change.log"><strong>Changelog for variables (all wikis)</strong></a>
@@ -67,41 +67,23 @@ table.TablePager { border: 1px solid gray;}
 </ul>
 <!-- e:short info -->
 <br />
-<form method="post" action="<?= $title->getLocalUrl( 'action=select' ) ?>">
-
+<form method="post" action="<?php echo $title->getLocalUrl( 'action=select' ) ?>">
 <div class="wk-form-row">
  <ul>
  <li><label>Domain name</label></li>
- <li><input type="text" name="wpCityDomain" id="citydomain" value="<?= $domain ?>" size="24" maxlength="255" /></li>
+ <li><input type="text" name="wpCityDomain" id="citydomain" value="<?php echo $domain ?>" size="24" maxlength="255" /></li>
  <li><button style="z-index:9002">Get configuration</button></li>
  </ul>
 </div>
-<div class="wk-form-row">
-<ul>
- <li><label>&nbsp;</label></li>
- <li><div id="var-autocomplete"></div></li>
-</div>
-</ul>
 </form>
 <script type="text/javascript">
 /*<![CDATA[*/
-
-var wkDataSource = new YAHOO.widget.DS_XHR("<?php echo $GLOBALS["wgScript"] ?>", ["\n", "\t"] );
-wkDataSource.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
-wkDataSource.scriptQueryParam = "rsargs[0]";
-wkDataSource.scriptQueryAppend = "action=ajax&rs=axWFactoryDomainQuery";
-wkDataSource.connTimeout = 3000;
-
-var wkAutoComp = new YAHOO.widget.AutoComplete("citydomain","var-autocomplete", wkDataSource);
-wkAutoComp.maxCacheEntries = 5000;
-wkAutoComp.minQueryLength = 3;
-wkAutoComp.queryMatchContains = true;
-wkAutoComp.queryDelay = 0;
-wkAutoComp.typeAhead = false;
-wkAutoComp.animHoriz = false;
-wkAutoComp.animSpeed = 0.2;
-wkAutoComp.queryMatchSubset = true;
-
+	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
+		$('#citydomain').autocomplete({
+			serviceUrl: wgServer+wgScript+'?action=ajax&rs=axWFactoryDomainQuery',
+			minChars:3
+		});
+	});
 /*]]>*/
 </script>
 
