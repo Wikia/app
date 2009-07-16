@@ -711,7 +711,7 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 	$regexPreProcessor = array(
 		'search' => array(
 			'%<template><title>[^<]*</title><originalCall><!\[CDATA\[(.*?)]]></originalCall>(?:<part>.*?</part>)*</template>%si',
-			'%<ext><name>([^>]+)</name><attr></attr><inner>([^>]+)</inner><close>[^>]+</close></ext>%si'),
+			'%<ext><name>([^>]+)</name><attr>[^>]*</attr><inner>([^>]+)</inner><close>[^>]+</close></ext>%si'),
 		'replace' => array(
 			'\1',
 			'<\1>\2</\1>')
@@ -807,6 +807,8 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 						}
 					}
 				}
+				// let's replace original wikitext image params (RT #19208)
+				$params['text'] = htmlspecialchars(substr($data['original'], 3 + strlen($params['link']), -2));
 			}
 			break;
 
