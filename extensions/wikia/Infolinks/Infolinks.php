@@ -13,29 +13,25 @@ $wgExtensionCredits["other"][] = array(
 	"name"        => "Infolinks",
 	"author"      => "[http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]",
 	"description" => "Displays ad code that creates double-underline text links",
-	"version"     =>  1.0,
+	"svn-date"    => '$LastChangedDate$',
+	"svn-revision" => '$LastChangedRevision$',
 );
 
 $wgExtensionFunctions[] = 'wfInfolinksSetup';
 
 function wfInfolinksSetup() {
 	global $wgHooks;
-	global $wgInfolinksAccess, $wgUser;
 
-	if (!empty($wgInfolinksAccess)) {
-		if (!in_array("User:{$wgUser->getName()}", $wgInfolinksAccess) && !count(array_intersect($wgUser->getGroups(), $wgInfolinksAccess))) {
-			return;
-		}
-	}
-
-	$wgHooks["OutputPageBeforeHTML"][] = "wfInfolinksHook";
+	$wgHooks["SkinAfterBottomScripts"][] = "wfInfolinksHook";
 }
 
-function wfInfolinksHook(&$out, &$text) {
-	global $wgOut;
+function wfInfolinksHook(&$skin, &$text) {
+	global $wgUser;
 
-	$wgOut->addHtml("<script type=\"text/javascript\">var infolink_pid = 26475;</script>");
-	$wgOut->addHtml("<script type=\"text/javascript\" src=\"http://resources.infolinks.com/js/infolinks_main.js\"></script>");
+	if ($wgUser->isAnon() && ArticleAdLogic::isContentPage()) {
+		$text .= "<script type=\"text/javascript\">var infolink_pid = 26475;</script>\n";
+		$text .= "<script type=\"text/javascript\" src=\"http://resources.infolinks.com/js/infolinks_main.js\"></script>\n";
+	}
 
 	return true;
 }
