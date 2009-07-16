@@ -81,7 +81,8 @@ table.TablePager { border: 1px solid gray;}
 	$.getScript(stylepath+'/common/jquery/jquery.autocomplete.js', function() {
 		$('#citydomain').autocomplete({
 			serviceUrl: wgServer+wgScript+'?action=ajax&rs=axWFactoryDomainQuery',
-			minChars:3
+			minChars:3,
+			deferRequestBy: 0
 		});
 	});
 /*]]>*/
