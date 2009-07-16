@@ -19,7 +19,7 @@ $wgOutboundScreenConfig = array(
 	'anonsOnly' => true
 );
 
-function efOutboundScreen ( $url, $text, $link ) {
+function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 	global $wgCityId, $wgUser, $wgOutboundScreenConfig;
 	static $whiteList;
 
