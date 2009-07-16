@@ -382,6 +382,9 @@ body.widgetsAddingBlocked .add {
 }
 
 /* page-specific links */
+#link_box_dynamic {
+	padding: 2px 0;
+}
 #link_box_dynamic #dynamic-links-list {
 	margin: 0;
 	padding: 0;
