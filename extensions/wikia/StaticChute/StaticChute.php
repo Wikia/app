@@ -133,6 +133,7 @@ class StaticChute {
 			'common/yui_2.5.2/logger/logger.js',
 			'common/yui_2.5.2/menu/menu.js',
 			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_2.5.2/slider/slider.js',
 			'common/yui_extra/tools-min.js',
 			'common/yui_extra/carousel-min.js',
 		);
@@ -217,7 +218,7 @@ class StaticChute {
 					foreach ($this->config[$package] as $f){
 						$out[] = realpath($basedir . '/' . $f);
 					}
-	
+
 					// macbre: rt #18765
 					// add possibility to add more files to current package
 					$moreFiles = $this->getMoreFileList($package, $args);
