@@ -105,7 +105,7 @@ class LookupContribsCore {
 	function checkUserActivity($username) {
 		global $wgMemc, $wgExternalStatsDB;
 		$userActivity = array();
-		$memkey = "LookupContribs:UserActivity:$username:$wgExternalSharedDB";
+		$memkey = "LookupContribs:UserActivity:$username";
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached) || LOOKUPCONTRIBS_NO_CACHE) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
@@ -128,7 +128,7 @@ class LookupContribsCore {
 	}
 
 	function checkUserActivityExternal($username) {
-		global $wgMemc, $wgContLang;
+		global $wgMemc, $wgContLang, $wgExternalBlobsDB, $wgExternalSharedDB;
 		$userActivity = array();
 		$oUser = User::newFromName($username);
 		if (!$oUser instanceof User) {
@@ -143,11 +143,10 @@ class LookupContribsCore {
 		$memkey = "LookupContribs:UserActivityExt:$iUserId:$wgExternalSharedDB";
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached) || LOOKUPCONTRIBS_NO_CACHE) {
-			$dbext =& wfGetDBExt(DB_SLAVE);
+			$dbext = wfGetDB(DB_SLAVE, array(), $wgExternalBlobsDB);
 			if (!is_null($dbext)) {
 				$query = "select rev_wikia_id, max(rev_timestamp) as max_activity, unix_timestamp(rev_timestamp) as max_timestamp ";
 				$query .= "from blobs where rev_user = ".intval($iUserId)." and rev_wikia_id > 0 ";
-				//$query .= "and rev_status = 'active' and blob_text is not null ";
 				$query .= "group by rev_wikia_id";
 				$res = $dbext->query ($query);
 				while ($row = $dbext->fetchObject($res)) {
@@ -193,13 +192,13 @@ class LookupContribsCore {
 
 		if ( !is_array($cached) || LOOKUPCONTRIBS_NO_CACHE) {
 			/* get that data from database */
-			$dbr =& wfGetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE, array(), $this->__getDBname($database));
 			/* don't check these databases - their structure is not overly compactible */
 			$excCities = $this->getExclusionList();
 			/* */
 			if ( $fetch_mode == 'normal' ) {
 				$res = $dbr->select(
-					"`{$this->__getDBname($database)}`.`recentchanges`, `{$this->__getDBname($database)}`.`revision`",
+					array ('recentchanges', 'revision'),
 					array (
 						'rc_title',
 						'rev_id',
@@ -220,7 +219,7 @@ class LookupContribsCore {
 				);
 			} else if ( $fetch_mode == 'final' ) {
 				$res = $dbr->select(
-					"`{$this->__getDBname($database)}`.`revision`, `{$this->__getDBname($database)}`.`page`",
+					array ( 'revision', 'page' ),
 					array (
 						'page_title as rc_title',
 						'rev_id',
@@ -241,7 +240,7 @@ class LookupContribsCore {
 				);
 			} else if ( $fetch_mode == 'all' ) {
 				$res = $dbr->select(
-					"`{$this->__getDBname($database)}`.`revision`, `{$this->__getDBname($database)}`.`page`",
+					array ( 'revision', 'page' ),
 					array (
 						'page_title as rc_title',
 						'rev_id',
@@ -284,7 +283,7 @@ class LookupContribsCore {
 				// don't do that if we are in links mode and result was found already
 				if ( empty($result_found_already) ) {
 					$res = $dbr->select (
-						" `{$this->__getDBname($database)}`.`logging` ",
+						'logging',
 						array (
 							'log_timestamp as timestamp',
 							'log_namespace as rc_namespace',
@@ -324,7 +323,7 @@ class LookupContribsCore {
 				 */
 				if ( empty($result_found_already) && ($fetch_mode == 'all') ) {
 					$res = $dbr->select (
-						" `{$this->__getDBname($database)}`.`archive` ",
+						'archive',
 						array (
 							'ar_timestamp as timestamp',
 							'ar_namespace as rc_namespace',

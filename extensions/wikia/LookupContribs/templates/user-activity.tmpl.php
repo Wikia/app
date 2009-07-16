@@ -1,5 +1,10 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- USER-ACTIVITY -->
+<!-- css -->
+<style>
+.lc-points { white-space:nowrap;padding:0px 10px 0px 1px; }
+.lc-row { padding-top: 3px; }
+</style>
 <!-- js part -->
 <script type="text/javascript">
 /*<![CDATA[*/
@@ -121,18 +126,15 @@ function wkLCshowDetails(dbname, limit, offset)
 			div_details.innerHTML = "";
 			var records = document.getElementById('wkLCUserActivityRow_' + dbname);
 			if (!resData) {
-				records.innerHTML = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;padding:5px;\"><?=wfMsg('lookupcontribsinvalidresults')?></div>";
+				records.innerHTML = "<div style=\"clear:both;margin:5px 5px 15px 15px;padding:10px 5px;\"><?=wfMsg('lookupcontribsinvalidresults')?></div>";
 			} else if (resData['nbr_records'] == 0) {
-				records.innerHTML = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;padding:5px;\"><?=wfMsg('lookupcontribsnoresultfound')?></div>";
+				records.innerHTML = "<div style=\"clear:both;margin:5px 5px 15px 15px;padding:10px 5px;\"><?=wfMsg('lookupcontribsnoresultfound')?></div>";
 			} else {
 				//records.innerHTML = resData['nbr_records'];
 				page = resData['offset'];
 				limit = resData['limit'];
-				//records.style.borderColor = "#D5DDF2";
-				//records.style.borderStyle = "dashed";
-				//records.style.borderWidth = "1px";
 				pager = wfJSPager(resData['nbr_records'],"/index.php?title=Special:LookupContribs&target=<?=htmlspecialchars($username)?>", page, limit, 'wkLCshowDetails', dbname);
-				var _tmp = "<div style=\"clear:both;border:1px dashed #D5DDF2;margin:0px 5px 0px 15px;\">";
+				var _tmp = "<div style=\"clear:both;margin:5px 5px 15px 20px;\">";
 				_tmp += pager;
  				_tmp += "<br /><table width=\"100%\" style=\"line-height:1.5em\">";
  				loop = limit * offset;
@@ -192,15 +194,17 @@ function wkLCshowDetails(dbname, limit, offset)
 		$wikiname = $wikiList[$city_id];
 		$loop++;
 ?>
-<tr bgcolor="#FFFFDF">
-	<td style="white-space:nowrap;padding:0px 10px 0px 1px;"><?=$loop?>.</td>
-	<td><a href="<?=$wikiname->city_url?>" target="new"><?=$wikiname->city_url?></a></td>
-	<td align="center">(<a href="<?php echo $wikiname->city_url?>index.php?title=Special:Contributions/<?php echo urlencode( $username ) ?>" target="new"><?=wfMsg('lookupcontribscontribs')?></a>)</td>
-	<td><?=wfMsg('lookupcontribsdetails')?>&#160;<select name="mode" id="wkLCmode<?=$wikiname->city_dbname?>" class="small">
-		<option value="normal"><?=wfMsg('lookupcontribsselectmodenormal')?></option><option value="final"><?=wfMsg('lookupcontribsselectmodefinal')?></option><option value="all"><?=wfMsg('lookupcontribsselectmodeall')?></option>
+<tr>
+	<td class="lc-points"><?=$loop?>.</td>
+	<td class="lc-row"><a href="<?=$wikiname->city_url?>" target="new"><?=$wikiname->city_url?></a></td>
+	<td class="lc-row" align="center">(<a href="<?php echo $wikiname->city_url?>index.php?title=Special:Contributions/<?php echo urlencode( $username ) ?>" target="new"><?=wfMsg('lookupcontribscontribs')?></a>)</td>
+	<td class="lc-row"><?=wfMsg('lookupcontribsdetails')?>&#160;<select name="mode" id="wkLCmode<?=$wikiname->city_dbname?>" class="small">
+		<option value="normal"><?=wfMsg('lookupcontribsselectmodenormal')?></option>
+		<option value="final"><?=wfMsg('lookupcontribsselectmodefinal')?>
+		</option><option value="all"><?=wfMsg('lookupcontribsselectmodeall')?></option>
 		</select>&#160;&#160;<input type="button" value="<?=wfMsg('lookupcontribsgo')?>" onclick="javascript:wkLCshowDetails('<?=$wikiname->city_dbname?>');" class="small">
 	</td>
-	<td id="wkLCUserActivityInd_<?=$wikiname->city_dbname?>" style="clear:both"></td>
+	<td class="lc-row" id="wkLCUserActivityInd_<?=$wikiname->city_dbname?>" style="clear:both"></td>
 </tr>
 <tr><td colspan="4" valign="top" id="wkLCUserActivityRow_<?=$wikiname->city_dbname?>" style="line-height:0.3em">&nbsp;</td><td></td>
 </tr>
