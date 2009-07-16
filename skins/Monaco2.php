@@ -2081,7 +2081,7 @@ if(count($wikiafooterlinks) > 0) {
 	}
 
 	if(is_array($linksArray) && count($linksArray) > 0) {
-		for ($i = 0, $max = max(array_keys($linksArray)); $i < $max; $i++) {
+		for ($i = 0, $max = max(array_keys($linksArray)); $i <= $max; $i++) {
 			$item = isset($linksArray[$i]) ? $linksArray[$i] : false;
 			$i & 1 ? $linksArrayR[] = $item : $linksArrayL[] = $item;
 		}
