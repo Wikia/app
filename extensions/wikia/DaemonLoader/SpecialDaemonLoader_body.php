@@ -346,7 +346,7 @@ class DaemonLoader extends SpecialPage {
 		if (!empty($oRows) && is_array($oRows[0])) {
 			$sFiles = $oRows[0]['result_file'];
         	$aFiles = explode(",", $sFiles);
-        	krsort($aFiles);
+        	sort($aFiles);
         	$aUrls = array();
         	$loop = 0; $fileToSave = "";
         	foreach ($aFiles as $id => $fileName) {
