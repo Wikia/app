@@ -84,29 +84,33 @@ class SearchNearMatch {
 	 * @see Language::ucwordbreaks etc.
 	 */
 	public static function allCapitalOneLowerFromDB($term, &$title) {
-		global $wgMemc;
+		global $wgMemc, $wgExternalBlobsDB, $wgCityId;
 		wfProfileIn(__METHOD__);
 		$word = strtolower(str_replace(" ", "_", $term));
 		$memkey = wfMemcKey( "searchnearmatch", $word );
 		$searchTitleId = $wgMemc->get( $memkey );
 		if (empty($searchTitleId)) {
 			// from DB
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalBlobsDB );
 			$res = $dbr->select(
-				array( 'page' ),
-				array( 'page_id' ),
+				array( 'pages' ),
+				array( 'page_id', 'page_namespace' ),
 				array(
-					'lower(page_title)' => $word,
-					'page_is_redirect' => 0
+					'page_wikia_id' => $wgCityId,
+					'page_title_lower' => $word,
+					'page_status' => 0
 				),
-				__METHOD__,
-				array( "ORDER BY" => "CAST(page_namespace AS CHAR)", "LIMIT" => 1 )
+				__METHOD__
 			);
-			if ( $row = $dbr->fetchObject( $res ) ) { 
-				$searchTitleId = $row->page_id;
+			$pages = array(); while ( $row = $dbr->fetchObject( $res ) ) { 
+				$pages[$row->page_namespace] = $row->page_id;
 			}
+			if ( !empty($pages) ) {
+				ksort($pages, SORT_STRING);
+				list($searchTitleId) = array_slice($pages, 0, 1);
+			}
+			$wgMemc->set( $memkey, $searchTitleId, 60*60*24 );
 		} 
-		$wgMemc->set( $memkey, $searchTitleId, 60*60*24 );
 
 		$not_exists = true;
 		if (!empty($searchTitleId)) {
