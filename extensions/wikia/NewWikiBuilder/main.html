@@ -1,6 +1,7 @@
 <html>
 <head>
 <!-- TODO:
+	Make the section a config
 	Use Wiki.png instead of Wiki2.png
 	Messaging API, swap out hard coded messages calls
 	Add Permission checking to settings changer
@@ -113,7 +114,7 @@ if (match !== null){
 		// Bring in the main page 
 		Mediawiki.pullArticleContent(Mediawiki.followRedirect("Main Page"),	
 		function (result){ $("#desc_textarea").val(result);},
-			{"rvsection":0}
+			{"rvsection": NWB.descriptionSection}
 		);
 	});
 	</script>
