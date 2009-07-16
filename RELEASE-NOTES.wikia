@@ -1,7 +1,9 @@
 == Changes since 200907.4 ==
+* rt#18992: Fixed queries and db connections in LookupContribs (Moli)
 * rt#19141: Fix i18n in Special:EnableWysywig. (Nef)
 * rt#19173: Tweaks in Infolinks. (Nef)
 * rt#18427: Fixed SearchNearMarch (Moli)
+* rt#18283: Fixed version of LinkSuggest (Moli)
 
 == Changes since 200907.3 ==
 * rt#19062: Fix GoogleMaps to use user lang. (Nef)
