@@ -61,7 +61,7 @@ class OutputPage {
 		return $returnval;
 	}
 
-	public function redirect( $url, $responsecode = '301' ) {
+	public function redirect( $url, $responsecode = '302' ) {
 		if( !$this->mRedirectsEnabled ) {
 			return false;
 		}
