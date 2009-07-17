@@ -399,10 +399,10 @@ class ConfirmAccountsPage extends SpecialPage
 			if( !$row->acr_rejected && $this->submitType != 'spam' ) {
 				if( $this->reason ) {
 					$result = $u->sendMail( wfMsg( 'confirmaccount-email-subj' ),
-						wfMsgExt( 'confirmaccount-email-body4', array('parsemag'), $u->getName(), $this->reason ) );
+						wfMsgExt( 'confirmaccount-email-body4', array('parsemag'), $u->getName(), $this->reason ), null, null, 'ConfirmAccount' );
 				} else {
 					$result = $u->sendMail( wfMsg( 'confirmaccount-email-subj' ),
-						wfMsgExt( 'confirmaccount-email-body3', array('parsemag'), $u->getName() ) );
+						wfMsgExt( 'confirmaccount-email-body3', array('parsemag'), $u->getName() ), null, null, 'ConfirmAccount' );
 				}
 				if( WikiError::isError( $result ) ) {
 					$error = wfMsg( 'mailerror', htmlspecialchars( $result->toString() ) );
@@ -558,7 +558,7 @@ class ConfirmAccountsPage extends SpecialPage
 					$ebody = wfMsgExt( 'confirmaccount-email-body', array('parsemag'), $user->getName(), $p, $this->reason );
 				}
 			}
-			$result = $user->sendMail( wfMsg( 'confirmaccount-email-subj' ), $ebody );
+			$result = $user->sendMail( wfMsg( 'confirmaccount-email-subj' ), $ebody, null, null, 'ConfirmAccount' );
 			if( WikiError::isError( $result ) ) {
 				$error = wfMsg( 'mailerror', htmlspecialchars( $result->toString() ) );
 			}
@@ -674,7 +674,7 @@ class ConfirmAccountsPage extends SpecialPage
 			# Do not send multiple times
 			if( !$row->acr_held && !($row->acr_deleted && $row->acr_deleted !='f') ) {
 				$result = $u->sendMail( wfMsg( 'confirmaccount-email-subj' ),
-					wfMsgExt( 'confirmaccount-email-body5', array('parsemag'), $u->getName(), $this->reason ) );
+					wfMsgExt( 'confirmaccount-email-body5', array('parsemag'), $u->getName(), $this->reason ), null, null, 'ConfirmAccount' );
 				if( WikiError::isError( $result ) ) {
 					$dbw->rollback();
 					$error = wfMsg( 'mailerror', htmlspecialchars( $result->toString() ) );

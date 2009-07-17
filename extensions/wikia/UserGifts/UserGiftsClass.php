@@ -78,7 +78,7 @@ class UserGifts {
 			$subject = wfMsg( 'gift_received_subject', $user_from, $gift["gift_name"] );
 			$body = wfMsgForContent( 'gift_received_body', $user->getName(), $user_from, $gift["gift_name"], $gifts_link->getFullURL(), $update_profile_link->getFullURL(), $user_from_profile_link->getFullURL() );
 
-			$user->sendMail($subject, $body, "friends@wikia.com");
+			$user->sendMail($subject, $body, "friends@wikia.com", null, 'GiftNotificationEmail');
 		}
 	}
 	

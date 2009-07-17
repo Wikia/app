@@ -534,7 +534,7 @@ class RequestAccountPage extends SpecialPage {
 				$title = Title::makeTitle( NS_SPECIAL, 'ConfirmAccounts' );
 				$url = $title->getFullUrl();
 				$u->sendMail( wfMsg('requestaccount-email-subj-admin'),
-					wfMsg( 'requestaccount-email-body-admin', $name, $url ) );
+					wfMsg( 'requestaccount-email-body-admin', $name, $url ), null, null, 'ConfirmAccount' );
 			}
 			$wgOut->addWikiText( wfMsgHtml( 'request-account-econf' ) );
 			$wgOut->returnToMain();
@@ -608,7 +608,7 @@ class RequestAccountPage extends SpecialPage {
 				wfGetIP(),
 				$user->getName(),
 				$url,
-				$wgContLang->timeanddate( $expiration, false ) ) );
+				$wgContLang->timeanddate( $expiration, false ) ), null, null, 'ConfirmAccount' );
 	}	
 	
 	/**

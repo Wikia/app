@@ -309,11 +309,11 @@ class GlobalWatchlistBot {
 
 		$sFrom = 'Wikia <community@wikia.com>';
 		if(empty($this->mDebugMailTo)) {
-			$oUser->sendMail($sEmailSubject, $sEmailBody, $sFrom);
+			$oUser->sendMail($sEmailSubject, $sEmailBody, $sFrom, null, 'GlobalWatchlist');
 			$this->printDebug("Digest email sent to user: " . $oUser->getName());
 		}
 		else {
-			UserMailer::send(new MailAddress($this->mDebugMailTo), new MailAddress($sFrom), $sEmailSubject, $sEmailBody);
+			UserMailer::send(new MailAddress($this->mDebugMailTo), new MailAddress($sFrom), $sEmailSubject, $sEmailBody, 'GlobalWatchlist');
 			$this->printDebug("Digest email sent to: " . $this->mDebugMailTo . " (debug mode)");
 		}
 	}

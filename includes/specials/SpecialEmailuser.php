@@ -204,7 +204,7 @@ class EmailUserForm {
 				$replyTo = null;
 			}
 			
-			$mailResult = UserMailer::send( $to, $mailFrom, $subject, $this->text, $replyTo );
+			$mailResult = UserMailer::send( $to, $mailFrom, $subject, $this->text, $replyTo, null, 'EmailUser' );
 
 			if( WikiError::isError( $mailResult ) ) {
 				return $mailResult;
@@ -216,7 +216,7 @@ class EmailUserForm {
 				if ($this->cc_me && $to != $from) {
 					$cc_subject = wfMsg('emailccsubject', $this->target->getName(), $subject);
 					if( wfRunHooks( 'EmailUser', array( &$from, &$from, &$cc_subject, &$this->text ) ) ) {
-						$ccResult = UserMailer::send( $from, $from, $cc_subject, $this->text );
+						$ccResult = UserMailer::send( $from, $from, $cc_subject, $this->text, null, null, 'EmailUser' );
 						if( WikiError::isError( $ccResult ) ) {
 							// At this stage, the user's CC mail has failed, but their
 							// original mail has succeeded. It's unlikely, but still, what to do?

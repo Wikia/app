@@ -460,7 +460,7 @@ class TodoItem {
 				$owner->getName(),
 				$wgContLang->timeanddate( $this->timestamp ),
 				$this->title,
-				$closeComment ) ) );
+				$closeComment ) ), null, 'ConfirmationMail' );
 	}
 
 	/**

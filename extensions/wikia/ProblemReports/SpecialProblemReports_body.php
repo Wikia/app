@@ -145,14 +145,14 @@ class SpecialProblemReports extends SpecialPage
 		$from = new MailAddress($params['from'], $wgUser->getName());
 
 		// send email (at least try)	   
-		$mailResult = UserMailer::send($to, $from, $params['subject'], $params['message']);
+		$mailResult = UserMailer::send($to, $from, $params['subject'], $params['message'], null, null, 'ProblemReport');
 
 		$success = !WikiError::isError( $mailResult );
 	    
 		if ( $params['cc'] ) {
 			// send me a copy
 			wfDebug("ProblemReports: sending copy to sender...\n");
-			$mailResult = UserMailer::send($from, $from, $params['subject'], $params['message']);
+			$mailResult = UserMailer::send($from, $from, $params['subject'], $params['message'], null, null, 'ProblemReport');
 
 			$success = !WikiError::isError( $mailResult ) && $success;
 	    	}

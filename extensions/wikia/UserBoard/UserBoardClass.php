@@ -116,7 +116,7 @@ class UserBoard {
 				4 => $user_from_display )
 			);
 		
-			$user->sendMail($subject, $body );
+			$user->sendMail($subject, $body, null, null, 'BoardNotificationEmail');
 		}
 	}
 	

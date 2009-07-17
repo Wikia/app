@@ -254,7 +254,7 @@ class SpecialAccountManager extends SpecialPage {
 		$mailFrom = new MailAddress( $wgPasswordSender );
 		$mailTo = new MailAddress( User::newFromName( $username ) );
 		
-		$mailResult = UserMailer::send( $mailTo, $mailFrom, $mailSubject, $email );
+		$mailResult = UserMailer::send( $mailTo, $mailFrom, $mailSubject, $email, null, null, 'NssMySQLAuth');
 		
 		if ( WikiError::isError( $mailResult ) ) {
 			$this->mErrors[] = $mailResult->getMessage();

@@ -142,7 +142,8 @@ class CategoryWatch {
 						$from,
 						wfMsg('categorywatch-emailsubject', $page),
 						$body,
-						$replyto
+						$replyto,
+						'CategoryWatch'
 					);
 				}
 				else {
@@ -151,7 +152,9 @@ class CategoryWatch {
 						$from,
 						wfMsg('categorywatch-emailsubject', $page),
 						$body,
-						$replyto
+						$replyto,
+						null,
+						'CategoryWatch'
 					);
 				}
 			}

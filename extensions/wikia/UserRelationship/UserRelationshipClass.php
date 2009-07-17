@@ -88,7 +88,7 @@ class UserRelationship {
 				$body = wfMsg( 'foe_request_body', $user->getName(), $user_from, $request_link->getFullURL(), $update_profile_link->getFullURL() );				
 			}
 			*/
-			$user->sendMail($subject, $body, $this->from_email);
+			$user->sendMail($subject, $body, $this->from_email, null, 'RelationshipRequestEmail');
 		}
 	}
 	
@@ -113,7 +113,7 @@ class UserRelationship {
 				$subject = wfMsg( 'foe_accept_subject', $user_from );
 				$body = wfMsg( 'foe_accept_body', $user->getName(), $user_from, $user_link->getFullURL(), $update_profile_link->getFullURL() );
 			}*/
-			$user->sendMail($subject, $body, $this->from_email);
+			$user->sendMail($subject, $body, $this->from_email, null, 'RelationshipAcceptEmail');
 		}		
 	}
 
@@ -136,7 +136,7 @@ class UserRelationship {
 				$subject = wfMsg( 'foe_removed_subject', $user_from );
 				$body = wfMsg( 'foe_removed_body', $user->getName(), $user_from, $user_link->getFullURL(), $update_profile_link->getFullURL() );
 			}*/
-			$user->sendMail($subject, $body, $this->from_email);
+			$user->sendMail($subject, $body, $this->from_email, null, 'RelationshipRemoveEmail');
 		}
 	}
 	

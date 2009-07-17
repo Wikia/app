@@ -717,7 +717,7 @@ class LoginForm {
 		$u->saveSettings();
 
 		$m = wfMsg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript );
-		$result = $u->sendMail( wfMsg( $emailTitle ), $m );
+		$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, null, 'TemporaryPassword' );
 
 		return $result;
 	}
