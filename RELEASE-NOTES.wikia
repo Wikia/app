@@ -1,4 +1,5 @@
 == Changes since 200907.3 ==
+* rt#18478: Don't always send confirmation email after profile update (Moli)
 * rt#19244: Special:Random returns 302 instead of 301 (Emil)
 * rt#19197: Answers: Css tweaks in UserProfile. (Nef, HT Uberfuzzy)
 * rt#18992: Fixed queries and db connections in LookupContribs (Moli)
