@@ -801,6 +801,10 @@ class AutoCreateWikiPage extends SpecialPage {
 		$f = new FancyCaptcha();
 		#--
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
+
+		// RT #19245
+		$wgOut->addScript( "<!--[if IE 7]><link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.ie7.css?{$wgStyleVersion}\" /><![endif]-->" );
+
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js?{$wgStyleVersion}\"></script>" );
 		/* run template */
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
