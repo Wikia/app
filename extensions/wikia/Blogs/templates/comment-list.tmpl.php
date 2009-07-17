@@ -55,8 +55,10 @@ endif;
 		echo "</li></ul>";
 	else:
 		echo "<ul id=\"blog-comments-ul\" >";
+		$odd = true;
 		foreach( $comments as $comment ):
-			echo "<li id=\"comm-{$comment->getTitle()->getArticleId()}\">\n";
+			$class = $odd ? 'odd' : 'even'; $odd = !$odd;
+			echo "<li id=\"comm-{$comment->getTitle()->getArticleId()}\" class=\"blog-comment-row-{$class}\">\n";
 			echo $comment->render();
 			echo "\n</li>\n";
 		endforeach;
