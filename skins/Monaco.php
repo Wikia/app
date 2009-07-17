@@ -1592,6 +1592,7 @@ if(isset($this->data['articlelinks']['left'])) {
 					<li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><div>&nbsp;</div><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
 <?php
 	}
+	wfRunHooks( 'MonacoAfterArticleLinks' );
 }
 ?>
 				</ul>

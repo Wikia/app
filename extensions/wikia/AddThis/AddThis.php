@@ -14,7 +14,7 @@ function efAddShareThisCode( $skin, $text ) {
 	global $wgTitle;
 
 	// only available under Monaco, on existing, non-special pages
-	if ( $skin->getSkinname() !== 'monaco' || !$wgTitle->exists() || $wgTitle->getNamespace() == NS_SPECIAL ) {
+	if ( !in_array( $skin->getSkinname(), array( 'monaco', 'awesome' ) ) || !$wgTitle->exists() || $wgTitle->getNamespace() == NS_SPECIAL ) {
 		return true;
 	}
 
