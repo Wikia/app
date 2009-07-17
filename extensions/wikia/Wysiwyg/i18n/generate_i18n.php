@@ -14,7 +14,14 @@ $files = glob($dir . '*.js');
 $messages = array();
 
 // list of supported languages
-$langs = array('de', 'en', 'pl');
+$langs = array(
+	'de',
+	'en',
+	'es',
+	'fr',
+	'it',
+	'pl'
+);
 
 // messages to skip
 // set of regexp strings to match keys to be skipped
