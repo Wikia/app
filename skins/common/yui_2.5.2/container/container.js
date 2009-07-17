@@ -4897,8 +4897,9 @@ version: 2.5.2
                 this.cfg.applyConfig(userConfig, true);
             }
 
-            this.subscribe("showMask", this._addFocusHandlers);
-            this.subscribe("hideMask", this._removeFocusHandlers);
+            // macbre: make Wikia LeanMonaco dialogs work when YUI Panel is shown
+            //this.subscribe("showMask", this._addFocusHandlers);
+            //this.subscribe("hideMask", this._removeFocusHandlers);
             this.subscribe("beforeRender", createHeader);
 
             this.initEvent.fire(Panel);
