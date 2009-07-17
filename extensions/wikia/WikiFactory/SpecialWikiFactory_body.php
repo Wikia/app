@@ -386,8 +386,15 @@ class WikiFactoryPage extends SpecialPage {
 /**
  * Changelog Pager
  */
-class ChangeLogPager  {
+class ChangeLogPager extends TablePager {
 
+	public
+		$mFieldNames = null,
+		$mMessages = array(),
+		$mQueryConds = array(),
+		$mTitle,
+		$mWikiId;
+		
 	/**
 	 * __construct
 	 *
