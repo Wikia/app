@@ -27,6 +27,7 @@
 * rt#19011: EPE arrow title message not listed, not being used (Marooned)
 * rt#19208: FCK: Several issues with references in image captions (Macbre)
 * rt#19162: Increase vertical spacing for dynamic creation links by a couple of pixels (Marooned)
+* rt#19215: FCK: <feyn> tags prevents a page for being edited: server error appears (Macbre)
 
 == Changes since 200907.2 ==
 * upgraded to MW 1.14.1 (Emil)

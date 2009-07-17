@@ -588,9 +588,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 	}
 
 	// fix for multiline pre
-	//
-	// macbre: str_replace added to fix RT #15834
-	$html = preg_replace('#<pre>.*?</pre>#sie', 'str_replace("\\n", "<!--EOLPRE-->\\n", str_replace("\\\'", "\'", "\0"))', $html);
+	$html = preg_replace_callback('#<pre>.*?</pre>#si', 'WysiwygPreCallback', $html);
 
 	// fix for IE
 	$html = str_replace("\n", "<!--EOL1-->\n", $html);
@@ -611,6 +609,15 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
 
 	return array('type' => 'html', 'html' => $html, 'data' => $encode ? Wikia::json_encode($wgWysiwygMetaData, true) : $wgWysiwygMetaData);
+}
+
+/**
+ * Callback function for preg_replace_callback (RT #19215)
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+function WysiwygPreCallback($input) {
+	return str_replace("\n", "<!--EOLPRE-->\n", $input[0]);
 }
 
 function Wysiwyg_HtmlToWikiText($html, $wysiwygData, $decode = false) {
