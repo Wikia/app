@@ -18,7 +18,7 @@ div#sidebar { display: none !important; }
 </style>
 <p class='error'><?=$error?></p>
 <div>
-<form method="post" action="<?=$action?>" id="awc-metrics-form">
+<form method="post" action="<?=$action?>" id="awc-metrics-opt-form">
 <? $found = 0; $i = 0; $isSelected = false; ?>	
 <!-- options -->
 	<div>
@@ -122,7 +122,7 @@ $days .= '</select>';
 					<input name="awc-metrics-closed" id="awc-metrics-closed" type="checkbox" /> <?=wfMsg('awc-metrics-closed')?>
 				</td>
 				<td valign="middle" class="awc-metrics-row" align="right">
-					<input type="button" value="<?=wfMsg('search')?>" id="awc-metrics-submit" />
+					<input type="submit" value="<?=wfMsg('search')?>" id="awc-metrics-submit" onclick="return false;" />
 					<input type="button" value="<?=wfMsg('awc-metrics-hubs')?>" id="awc-metrics-hubs" />
 					<input type="button" value="<?=wfMsg('awc-metrics-news-day')?>" id="awc-metrics-news-day" />
 				</td>
@@ -130,7 +130,9 @@ $days .= '</select>';
 		</table>
 	</fieldset>
 	</div>
+</form> 
 <!-- end of options -->
+<form method="post" action="<?=$action?>" id="awc-metrics-form">
 	<div style="text-align:right;height:25px;" id="awc-metrics-result"><?=wfMsg('awc-metrics-wikis-found', $found)?></div>
 	<div id="awc-metrics-list" style="font-size:83.666%;clear:both;"></div>
 </form> 
@@ -504,7 +506,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-language=" + language.value;
 	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
-	params += "&awc-exactDomain=" + exact_domain.value;
+	params += "&awc-exactDomain=" + ((exact_domain.checked) ? 1 : 0);
 	params += "&awc-title=" + title.value;
 	params += "&awc-founder=" + user.value;
 	params += "&awc-founderEmail=" + email.value;
@@ -705,7 +707,7 @@ __ShowCategories = function(e, args) {
 	params += "&awc-language=" + language.value;
 	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
-	params += "&awc-exactDomain=" + exact_domain.value;
+	params += "&awc-exactDomain=" + ((exact_domain.checked) ? 1 : 0);
 	params += "&awc-title=" + title.value;
 	params += "&awc-founder=" + user.value;
 	params += "&awc-founderEmail=" + emailFnder.value;
@@ -749,6 +751,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	var desc = 1;
 	wkAWCMetricsDetails(<?=WikiMetrics::LIMIT?>, 0, 'created', desc );
 	YE.addListener("awc-metrics-submit", "click", __ShowStats, [desc] );
+	YE.addListener("awc-metrics-opt-form", "submit", __ShowStats, [desc] );
 	YE.addListener("awc-metrics-hubs", "click", __ShowCategories, [0] );
 	YE.addListener("awc-metrics-news-day", "click", __ShowCategories, [1] );
 });

@@ -636,7 +636,7 @@ class WikiMetrics {
 		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		$domain = $dbr->escapeLike( strtolower( $this->axDomain ) );
 		
-		$where = ( isset($this->axExactDomain) ) 
+		$where = ( isset($this->axExactDomain) && ($this->axExactDomain == 1) ) 
 				? array( "city_domain = 'www.{$domain}.wikia.com'" ) 
 				: array( "city_domain like '%{$domain}%'" );
 		
