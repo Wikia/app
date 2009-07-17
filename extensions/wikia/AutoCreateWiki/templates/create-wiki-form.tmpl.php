@@ -188,7 +188,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 				<input type="hidden" name="wiki-birthday" id="wiki-birthday" />
 				<div class="error" style="display: none;" id="wiki-birthday-error"></div>
 			</li>
-			<li class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-birthdate')?></span></li>
+			<li id="AWCInfoBirthday" class="data2"><span class="note"><?=wfMsg('autocreatewiki-info-birthdate')?></span></li>
 		</ul>
 	</div>
 	<div class="formblock">
