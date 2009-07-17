@@ -1,5 +1,8 @@
 <?php
 
+// following functions provide HTML for LeanMonaco drop-down menus
+// TODO: move to the skin class
+
 $wgAjaxExportList[] = 'GetHubMenu';
 function GetHubMenu() {
 	// rt #18795: get category information (id, name, url)
@@ -31,10 +34,14 @@ $wgAjaxExportList[] = 'GetUserMenu';
 function GetUserMenu($userName = '') {
 	$links = array();
 
-	$links['userpage'] = array(
-		'text' => wfMsg('mypage'),
-		'href' => Title::newFromText($userName, NS_USER)->getLocalURL()
-		);
+	$userPage = Title::newFromText($userName, NS_USER);
+
+	if (!empty($userPage)) {
+		$links['userpage'] = array(
+			'text' => wfMsg('mypage'),
+			'href' => $userPage->getLocalURL()
+			);
+	}
 
 	$links['mycontris'] = array(
 		'text' => wfMsg('mycontris'),
