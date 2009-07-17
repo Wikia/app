@@ -102,12 +102,12 @@ class UpdateProfile extends SpecialPage {
 		
 		$wgUser->setRealName( $wgRequest->getVal("real_name") );
 	
-		if($wgUser->getEmail()!=$wgRequest->getVal("email")){
+		if ($wgUser->getEmail()!=$wgRequest->getVal("email")) {
 			$wgUser->setEmail( $wgRequest->getVal("email") );
 			$wgUser->mEmailAuthenticated = null; # but flag as "dirty" = unauthenticated
 		}
 		
-		if ($wgEmailAuthentication) {
+		if ( $wgEmailAuthentication && is_null($wgUser->mEmailAuthenticated) ) {
 			# Mail a temporary password to the dirty address.
 			# User can come back through the confirmation URL to re-enable email.
 			$result = $wgUser->sendConfirmationMail();
