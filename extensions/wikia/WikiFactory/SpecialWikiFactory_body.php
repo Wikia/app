@@ -453,9 +453,6 @@ class ChangeLogPager  {
 		return in_array( $field, $aSortable );
 	}
 
-	protected function preprocessResults( $result ) {
-
-	}
 	/**
 	 * formatValue
 	 *
@@ -577,7 +574,7 @@ class CityListPager {
 
 	/**
 	 * render page of pager
-	 * 
+	 *
 	 * @access public
 	 */
 	public function render() {
