@@ -1,4 +1,5 @@
 == Changes since 200907.3 ==
+* rt#19244: Special:Random returns 302 instead of 301 (Emil)
 * rt#19197: Answers: Css tweaks in UserProfile. (Nef, HT Uberfuzzy)
 * rt#18992: Fixed queries and db connections in LookupContribs (Moli)
 * rt#19141: Fix i18n in Special:EnableWysywig. (Nef)
