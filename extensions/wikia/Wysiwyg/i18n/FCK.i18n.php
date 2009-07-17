@@ -1,10 +1,6 @@
 <?php
 
-/* FCK messages -- auto-generated on 2009-07-14 09:54:02 - 3 languages
-
-Do not modify it by hand!
-
-*/
+/* FCK messages -- auto-generated on 2009-07-17 15:28:58 - 3 languages - 279 messages per language - do not modify it by hand! */
 
 $messages = array();
 $messages['de'] = array(

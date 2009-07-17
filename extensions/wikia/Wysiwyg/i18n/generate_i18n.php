@@ -81,9 +81,10 @@ $path = dirname(__FILE__);
 
 $now = date('Y-m-d H:i:s');
 $count = count($messages);
+$msgCount = count($messages['en']);
 
 // FCK.i18n.php
-$out = "<?php\n\n/* FCK messages -- auto-generated on {$now} - {$count} languages\n\nDo not modify it by hand!\n\n*/\n\n\$messages = array();";
+$out = "<?php\n\n/* FCK messages -- auto-generated on {$now} - {$count} languages - {$msgCount} messages per language - do not modify it by hand! */\n\n\$messages = array();";
 
 foreach($messages as $lang => $data) {
 	$out .= "\n\$messages['{$lang}'] = array(\n";
