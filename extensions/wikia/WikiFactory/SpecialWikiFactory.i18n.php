@@ -94,6 +94,7 @@ $messages["en"] = array(
 	"awc-metrics-pageviews-label" => "and $1 pageviews in the last $2 days",
 	"awc-metrics-close-listed" => "Close all listed",
 	"awc-metrics-close-checked" => "Close checked",
+	"awc-metrics-exact-match" => "exact match",
 // closed Wiki
 	"closed-wiki" => "Closed Wiki",
 	"closed-wiki-info" => "This wiki has been closed",
