@@ -4,38 +4,6 @@
 #cityselect {z-index:9000} /* for IE z-index of absolute divs inside relative divs issue */
 #citydomain {z-index:0;} **//* abs for ie quirks */
 
-/*** Search suggest ***/
-#var-autocomplete .yui-ac-container {
-	z-index: 1000;
-	position: absolute;
-	top: 25px;
-	left: 5px;
-	width: 171px;
-}
-#var-autocomplete .yui-ac-content{
-	border:1px solid #808080 !important;
-	color: #000;
-	position: absolute;
-	width: 100%;
-	background:#fff;
-	overflow:hidden;
-	z-index:9050;
-}
-#var-autocomplete .yui-ac-content ul {
-	float: none !important;
-	margin: 0 !important;
-	padding: 0 !important;
-	width: 100%;
-}
-#var-autocomplete .yui-ac-content li {
-	float: none !important;
-	font-size: 9pt;
-	margin: 0 !important;
-	/*padding: 2px 5px !important;*/
-	padding: 1px 0px 0px 3px;
-	cursor: default;
-	white-space: nowrap;
-}
 
 .wk-form-row { list-style-type: none; display: inline; margin:0; }
 .wk-form-row li { display: inline; }
@@ -87,13 +55,16 @@ table.TablePager { border: 1px solid gray;}
 	});
 /*]]>*/
 </script>
+<br />
+<?php if( !empty( $domain) ): ?>
+<h2>Results for <?php echo $domain ?>:</h2>
 <?php /**
 <div id="wf-city-list">
-	<?php echo $limit ?>
 	<br />
 	<?php echo  $body ?>
 	<br />
 	<?php echo  $nav ?>
 </div>
 **/ ?>
+<?php endif ?>
 <!-- e:<?= __FILE__ ?> -->
