@@ -511,7 +511,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 
 		$templateCallsParsed =  array_combine($matches[1], $templateCallsParsed);
 
-		wfDebug("Wysiwyg HTML {{$html}\n");
+		wfDebug("Wysiwyg HTML: {$html}\n");
 
 		// save name of HTML tag wrapping template output
 		foreach($templateCallsParsed as $refid => $parsed) {
@@ -686,6 +686,11 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 	// paragraphs will be added, so newline info won't be lost
 	if ( substr($output, 0, 4) == '<div') {
 		$output = "\n".trim($output)."\n";
+	}
+
+	// RT #19213: don't break table wikitext
+	if ( substr($output, 0, 2) == '{|') {
+		$output = "\n".$output;
 	}
 
 	return "\x7f-wtb-{$refId}-\x7f{$output}\x7f-wte-{$refId}-\x7f";
