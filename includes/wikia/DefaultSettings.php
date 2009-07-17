@@ -255,7 +255,6 @@ $wgLangCreationVariables = array();
  * Can not be define directly in extension since it is used in Parser.php and extension is not always enabled
  */
 define('NS_VIDEO', '400');
-define('NS_VIDEO_TEMPLATE', 402);
 
 /**
  * register job class
