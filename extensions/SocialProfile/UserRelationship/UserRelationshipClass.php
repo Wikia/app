@@ -70,7 +70,7 @@ class UserRelationship {
 					$update_profile_link->getFullURL()
 				);
 			}
-			$user->sendMail($subject, $body);
+			$user->sendMail($subject, $body, null, null, 'RelationshipRequestEmail');
 		}
 	}
 
@@ -101,7 +101,7 @@ class UserRelationship {
 					$update_profile_link->getFullURL()
 				);
 			}
-			$user->sendMail($subject, $body);
+			$user->sendMail($subject, $body, null, null, 'RelationshipAcceptEmail');
 		}
 	}
 
@@ -132,7 +132,7 @@ class UserRelationship {
 					$update_profile_link->getFullURL()
 				);
 			}
-			$user->sendMail( $subject, $body );
+			$user->sendMail( $subject, $body, null, null, 'RelationshipRemoveEmail' );
 		}
 	}
 

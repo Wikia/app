@@ -87,7 +87,7 @@ class UserGifts {
 			);
 				
 				
-			$user->sendMail($subject, $body );
+			$user->sendMail($subject, $body, null, null, 'GiftNotificationEmail');
 		}
 	}
 	

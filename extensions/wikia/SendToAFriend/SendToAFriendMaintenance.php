@@ -112,7 +112,7 @@ class SendToAFriendMaintenance {
                     $to[] = new MailAddress(trim($address));
                 }
 
-                $success = UserMailer::send($to, $from, $oEmail->que_subject, $oEmail->que_body, $reply_to);
+                $success = UserMailer::send($to, $from, $oEmail->que_subject, $oEmail->que_body, $reply_to, null, 'SendToAFriend');
 
                 if ( empty($success) || $success === true ) {
                     $dbw->update( 'send_queue', array('que_sent' => 1), array('que_id' => $oEmail->que_id), __METHOD__);

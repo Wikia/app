@@ -707,7 +707,8 @@ class WhiteList extends SpecialPage
 					$wgUser->getRealName(),
 					$requestedPages,
 					$requestedPagesCount ),
-				$sender->toString()
+				$sender->toString(),
+				null, 'WhiteList'
 			);
 
 			$wgOut->addWikiText( wfMsg( 'whitelistrequestconf', $to->getRealName() ) );

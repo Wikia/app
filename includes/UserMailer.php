@@ -103,9 +103,10 @@ class UserMailer {
 	 * @param $body String: email's text.
 	 * @param $replyto String: optional reply-to email (default: null).
 	 * @param $contentType String: optional custom Content-Type
+	 * @param $category String: optional category for statistic [added by Wikia]
 	 * @return mixed True on success, a WikiError object on failure.
 	 */
-	static function send( $to, $from, $subject, $body, $replyto=null, $contentType=null ) {
+	static function send( $to, $from, $subject, $body, $replyto=null, $contentType=null, $category='unknown' ) {
 		global $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEnotifImpersonal;
 		global $wgEnotifMaxRecips;
 
@@ -114,6 +115,29 @@ class UserMailer {
 		} else {
 			wfDebug( __METHOD__.': sending mail to ' . implode( ',', array( $to->toString() ) ) . "\n" );
 		}
+
+		/* Wikia change begin - @author: Marooned */
+		/* Send a message to the MQ */
+		global $wgReportMailViaStomp;
+		if(!empty($wgReportMailViaStomp)) {
+			wfProfileIn(__METHOD__ . '-stomp');
+			global $wgStompServer, $wgStompUser, $wgStompPassword, $wgCityId;
+			$stomp = new Stomp($wgStompServer);
+			$stomp->connect($wgStompUser, $wgStompPassword);
+			$stomp->sync = false;
+			$key = 'wikia.email.' . $category;
+			$count = is_array($to) ? count($to) : 1;
+			$stomp->send($key,
+				Wikia::json_encode(array(
+					'category' => $category,
+					'wikiID' => $wgCityId,
+					'count' => $count
+				)),
+				array('exchange' => 'amq.topic', 'bytes_message' => 1)
+			);
+			wfProfileOut(__METHOD__ . '-stomp');
+		}
+		/* Wikia change end */
 
 		if (is_array( $wgSMTP )) {
 			require_once( 'Mail.php' );
@@ -176,7 +200,7 @@ class UserMailer {
 			} else {
 				$endl = "\n";
 			}
-			$ctype = (is_null($contentType) ? 
+			$ctype = (is_null($contentType) ?
 					'text/plain; charset='.$wgOutputEncoding : $contentType);
 			$headers =
 				"MIME-Version: 1.0$endl" .
@@ -597,7 +621,7 @@ class EmailNotification {
 			$wgContLang->timeanddate( $this->timestamp, true, false, $timecorrection ),
 			$body);
 
-		return UserMailer::send($to, $this->from, $this->subject, $body, $this->replyto);
+		return UserMailer::send($to, $this->from, $this->subject, $body, $this->replyto, null, 'UserMailer');
 	}
 
 	/**
@@ -617,7 +641,7 @@ class EmailNotification {
 					$wgLang->timeanddate($this->timestamp, true, false, false)),
 				$this->body);
 
-		return UserMailer::send($addresses, $this->from, $this->subject, $body, $this->replyto);
+		return UserMailer::send($addresses, $this->from, $this->subject, $body, $this->replyto, null, 'UserMailer');
 	}
 
 } # end of class EmailNotification
@@ -629,6 +653,6 @@ function wfRFC822Phrase( $s ) {
 	return UserMailer::rfc822Phrase( $s );
 }
 
-function userMailer( $to, $from, $subject, $body, $replyto=null ) {
-	return UserMailer::send( $to, $from, $subject, $body, $replyto );
+function userMailer( $to, $from, $subject, $body, $replyto=null, $category='unknown' ) {
+	return UserMailer::send( $to, $from, $subject, $body, $replyto, null, $category );
 }

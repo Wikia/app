@@ -73,7 +73,7 @@ class UserBoard {
 				$board_link->escapeFullURL(),
 				$update_profile_link->escapeFullURL()
 			);
-			$user->sendMail( $subject, $body );
+			$user->sendMail( $subject, $body, null, null, 'BoardNotificationEmail' );
 		}
 	}
 

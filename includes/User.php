@@ -2911,7 +2911,7 @@ class User {
 				$this->getName(),
 				$url,
 				$wgLang->timeanddate( $expiration, false ),
-				$invalidateURL ) );
+				$invalidateURL ), null, null, 'ConfirmationMail' );
 	}
 
 	/* c&p quick hack for re-confirmation */
@@ -2929,7 +2929,7 @@ class User {
 				$this->getName(),
 				$url,
 				$wgLang->timeanddate( $expiration, false ),
-				$invalidateURL ) );
+				$invalidateURL ), null, null, 'ReConfirmationMail'  );
 	}
 
 
@@ -2944,7 +2944,7 @@ class User {
 	 * @param $replyto \string Reply-To address
 	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure
 	 */
-	function sendMail( $subject, $body, $from = null, $replyto = null ) {
+	function sendMail( $subject, $body, $from = null, $replyto = null, $category='unknown' ) {
 		if( is_null( $from ) ) {
 			global $wgPasswordSender;
 			$from = $wgPasswordSender;
@@ -2952,7 +2952,7 @@ class User {
 
 		$to = new MailAddress( $this );
 		$sender = new MailAddress( $from );
-		return UserMailer::send( $to, $sender, $subject, $body, $replyto );
+		return UserMailer::send( $to, $sender, $subject, $body, $replyto, null, $category );
 	}
 
 	/**

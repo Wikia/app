@@ -78,7 +78,7 @@ class UserSystemMessage {
 				$level,
 				$update_profile_link->getFullURL()
 			);
-			$user->sendMail($subject, $body );
+			$user->sendMail($subject, $body, null, null, 'UserSystemMessages');
 		}
 	}
 	

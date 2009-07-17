@@ -41,7 +41,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 			$removed = is_array( $removed ) ? implode( ', ', $removed ) : '';
 			$subject = wfMsg( 'userrightsnotifysubject', $wgSitename );
 			$message = wfMsg( 'userrightsnotifybody', $user->getName(), $wgSitename, $wgUser->getName(), $wgContLang->timeAndDate( wfTimestampNow() ), $added, $removed );
-			$user->sendMail( $subject, $message, $wgUserRightsNotif['sender'] );
+			$user->sendMail( $subject, $message, $wgUserRightsNotif['sender'], null, 'UserRightsNotification' );
 		}
 		return true;
 	}

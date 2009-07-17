@@ -266,7 +266,7 @@ class Poke {
 					$user_from_display 
 				);			
 			}
-			$user->sendMail($subject, $body );
+			$user->sendMail($subject, $body, null, null, 'Poke');
 			return "yes";
 		}
 		return "no";

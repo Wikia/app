@@ -185,7 +185,7 @@ function wfTodoParserFunction_Render( &$parser, $input, $users, $project='') {
                 $u = User::newFromId($userid);
                 $fullname = $u->getRealName();
                 $email = sprintf(wfMsgTL('tasklistemail'), $fullname . $body);
-                $u->sendMail(sprintf(wfMsgTL('tasklistemailsubject'), $wgSitename), $email, $adminAddress->toString());
+                $u->sendMail(sprintf(wfMsgTL('tasklistemailsubject'), $wgSitename), $email, $adminAddress->toString(), null, 'TodoTask');
                 $dbr->insert('todo', array( 'hash' => $hash ), __METHOD__ );
             }
         }

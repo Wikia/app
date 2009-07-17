@@ -249,7 +249,8 @@ class CodeRevision {
 				if( $user->canReceiveEmail() ) {
 					$user->sendMail(
 						wfMsgExt( 'codereview-email-subj', $lang, $this->mRepo->getName(), $this->mId ),
-						wfMsgExt( 'codereview-email-body', $lang, $wgUser->getName(), $url, $this->mId, $text )
+						wfMsgExt( 'codereview-email-body', $lang, $wgUser->getName(), $url, $this->mId, $text ),
+						null, null, 'CodeReview'
 					);
 				}
 			}

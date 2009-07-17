@@ -60,7 +60,7 @@ class NewUserNotifier {
 				$user->sendMail(
 					wfMsgForContent( 'newusernotifsubj', $wgSitename ),
 					$this->makeMessage( $user->getName(), $this->user ),
-					$this->sender
+					$this->sender, null, 'NewUserNotification'
 				);
 			}
 		}
