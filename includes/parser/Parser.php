@@ -1878,7 +1878,7 @@ class Parser
 
 				/* Wikia change begin - @author: Inez, Macbre */
 				/* Support for [[Video:...]] */
-				if( ( $ns == NS_VIDEO ) || ( $ns == NS_VIDEO_TEMPLATE ) ) {
+				if( $ns == NS_VIDEO ) {
 					if(!empty($wgEnableVideoToolExt) && (empty($wgEnableNYCSocialTools) || empty($wgEnableVideoNY))) {
 						wfProfileIn(__METHOD__ . "-video");
 						if (!empty($wgWysiwygParserEnabled)) {
@@ -1891,7 +1891,14 @@ class Parser
 						} else {
 							$text = $this->replaceExternalLinks($text);
 							$holders->merge( $this->replaceInternalLinks2( $text ) );
-							$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk, '', ( NS_VIDEO_TEMPLATE == $ns ))).$trail;
+							global $wgContLang;
+							$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Template_Placeholder";
+							if( 0 === strpos( $text, $vid_tag ) ) {
+								$in_template = true;
+							} else {
+								$in_template = false;
+							}
+							$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk, '', $in_template)).$trail;
 							$this->mOutput->addImage(':'.$nt->getDBkey());
 						}
 						wfProfileOut(__METHOD__ . "-video");
