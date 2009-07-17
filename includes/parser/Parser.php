@@ -2519,7 +2519,10 @@ class Parser
 								$this->mLastSection = 'p';
 							} else {
 								if(!empty($wgWysiwygParserEnabled)) {
-									$output .= "<!--NEW_LINE_1-->";
+									// RT #19213: don't break table wikitext
+									if ( !in_array($t, array('{|', '|}')) ) {
+										$output .= "<!--NEW_LINE_1-->";
+									}
 								}
 							}
 						}
