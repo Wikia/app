@@ -146,9 +146,9 @@ class WikiFactoryPage extends SpecialPage {
 				 * or if is only one dot (language.domain.wikia.com)
 				 */
 				if( sizeof(explode(".", $domain )) <= 2 && strlen( $domain ) > 0) {
+					$this->mDomain = $domain;
 					$domain = $domain.".wikia.com";
 				}
-				$this->mDomain = $domain;
 
 				$cityid = WikiFactory::DomainToId( $domain );
 			}
@@ -394,7 +394,7 @@ class ChangeLogPager extends TablePager {
 		$mQueryConds = array(),
 		$mTitle,
 		$mWikiId;
-		
+
 	/**
 	 * __construct
 	 *
@@ -568,7 +568,7 @@ class ChangeLogPager extends TablePager {
  */
 class CityListPager {
 
-	private $mPart;
+	private $mPart, $mRequest, $mLimit, $mOffset, $mTemplate;
 
 	/**
 	 * constructor
@@ -576,7 +576,13 @@ class CityListPager {
 	 * @access public
 	 */
 	public function __construct( $part ) {
-		$this->mPart = $part;
+		global $wgRequest;
+
+		$this->mPart     = $part;
+		$this->mRequest  = $wgRequest;
+		$this->mLimit    = 25;
+		$this->mOffset   = $this->mRequest->getVal( "offset", false );
+		$this->mTemplate = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	}
 
 	/**
@@ -586,5 +592,45 @@ class CityListPager {
 	 */
 	public function render() {
 
+		global $wgOut;
+		$this->mTemplate->set( "data",$this->getData() );
+		return $this->mTemplate->render( "listing" );
+	}
+
+	private function getData() {
+
+		/**
+		 * build query
+		 */
+		wfProfileIn( __METHOD__ );
+		$offset = $this->mOffset ? array( "OFFSET" => $this->mOffset ) : array();
+		$dbr = WikiFactory::db( DB_SLAVE );
+		$sth = $dbr->select(
+			array( "city_domains" ),
+			array( "distinct city_id" ),
+			array( "city_domain like '%{$this->mPart}%'"),
+			__METHOD__,
+			array(
+				"ORDER BY" => "city_id",
+				"LIMIT" => $this->mLimit + 1
+			) + $offset
+		);
+		$data = array();
+		$counter = 0;
+		while( $row = $dbr->fetchObject( $sth ) ) {
+			$obj = new stdClass;
+			$obj->wiki = WikiFactory::getWikiByID( $row->city_id );
+			$obj->domains = WikiFactory::getDomains( $row->city_id );
+			if( $counter <= $this->mLimit ) {
+				$data[] = $obj;
+			}
+			else {
+				/**
+				 * there's next page
+				 */
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return $data;
 	}
 };
