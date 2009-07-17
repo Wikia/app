@@ -56,15 +56,8 @@ table.TablePager { border: 1px solid gray;}
 /*]]>*/
 </script>
 <br />
-<?php if( !empty( $domain) ): ?>
+<?php if( !empty( $domain) && !empty( $GLOBALS[ "wgDevelEnvironment" ])): ?>
 <h2>Results for <?php echo $domain ?>:</h2>
-<?php /**
-<div id="wf-city-list">
-	<br />
-	<?php echo  $body ?>
-	<br />
-	<?php echo  $nav ?>
-</div>
-**/ ?>
+<?php echo $pager ?>
 <?php endif ?>
 <!-- e:<?= __FILE__ ?> -->

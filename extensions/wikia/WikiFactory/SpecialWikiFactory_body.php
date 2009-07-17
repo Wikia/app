@@ -184,12 +184,8 @@ class WikiFactoryPage extends SpecialPage {
 		));
 
 		if( !empty( $this->mDomain ) ) {
-			$pager = new CityListPager;
-
-			$oTmpl->set( "body",       $pager->getBody() );
-			$oTmpl->set( "limit",      $pager->getForm() );
-			$oTmpl->set( "navigation", $pager->getNavigationBar() );
-
+			$pager = new CityListPager( $this->mDomain );
+			$oTmpl->set( "pager", $pager->render() );
 		}
 		$wgOut->addHTML( $oTmpl->render( "selector" ) );
 	}
@@ -388,185 +384,9 @@ class WikiFactoryPage extends SpecialPage {
 }
 
 /**
- * @name CityListPager
- */
-class CityListPager extends TablePager {
-	private
-		$mFieldNames = null,
-		$mMessages   = array(),
-		$mQueryConds = array();
-
-	/**
-	 * constructor
-	 *
-	 * @access public
-	 */
-	public function __construct() {
-		global $wgRequest, $wgMiserMode;
-
-		$this->mDefaultDirection = true;
-		$search = $wgRequest->getText( 'ilsearch' );
-		parent::__construct();
-		$this->mDb = WikiFactory::db( DB_SLAVE );
-	}
-
-    function getFieldNames() {
-        if ( !$this->mFieldNames ) {
-            $this->mFieldNames = array(
-                'city_id' => wfMsg( "wf_city_id" ),
-                'city_url' => wfMsg( "wf_city_url" ),
-                'city_lang' => wfMsg( "wf_city_lang" ),
-				'cc_name' => wfMsg( "wf_cc_name" ),
-                'city_public' => wfMsg( "wf_city_public" ),
-				'actions' => wfMsg( "wikifactory-label-actions" ),
-            );
-        }
-        return $this->mFieldNames;
-    }
-
-    function isFieldSortable( $field ) {
-        static $sortable = array( "city_url", "city_public", "city_id", "city_lang", "cc_name" );
-        return in_array( $field, $sortable );
-    }
-
-    function getDefaultSort() {
-        return 'city_id';
-    }
-
-	/**
-	 * prepare HTML for listing
-	 *
-	 * @access public
-	 *
-	 * @param string $field
-	 * @param mixed $value
-	 *
-	 * @return string
-	 */
-    public function formatValue( $field, $value ) {
-        global $wgLang;
-
-		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-
-		$return = false;
-        switch ( $field ) {
-            case "city_url":
-                $title = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
-                $link = sprintf( "%s/%s", $title->getFullUrl(), $this->mCurrentRow->city_id );
-				$Tmpl->set( "link", $link );
-				$Tmpl->set( "value", $value );
-				$Tmpl->set( "city_title", $this->mCurrentRow->city_title );
-				$Tmpl->set( "city_created", $this->mCurrentRow->city_created );
-				$return = $Tmpl->execute("listing-city-url");
-                break;
-            case "city_public":
-                switch( $value ) {
-                    case 0:
-                        $return = "<span style=\"color:#fe0000;font-weight:bold;font-size:small;\">disabled</span>";
-                        break;
-                    case 1:
-                        $return = "<span style=\"color:darkgreen;font-weight:bold;font-size:small;\">enabled</span>";
-                        break;
-                    case 2:
-                        $return = "<span style=\"color: #0000fe;font-weight:bold;font-size:small\">redirected</span>";
-                        break;
-                    case -1:
-                        $return = "<span style=\"color: #fe0000;font-size:small\"><em><strong>scheduled for deletion</strong></em></span>";
-                        break;
-                }
-                break;
-			case "actions":
-				$return = Xml::check( "wikis[ ]", false, array( "value" => $this->mCurrentRow->city_id ) );
-				break;
-            default:
-				$return = $value;
-        }
-		return $return;
-    }
-
-	/**
-	 * getQueryInfo	get data needed for creating query
-	 *
-	 * @access public
-	 *
-	 * @return Array	builded query
-	 */
-	public function getQueryInfo() {
-		$fields = $this->getFieldNames();
-		unset( $fields['actions'] );
-
-		$fields = array_keys( $fields );
-		$fields[] = "city_created";
-		$fields[] = "city_title";
-
-		$query = array(
-			"tables" => array( "city_list",	"city_cats_view" ),
-			"fields" => $fields,
-			"conds"  => array( "city_list.city_id = city_cats_view.cc_city_id" )
-		);
-
-		return $query;
-	}
-
-    function getForm() {
-        global $wgRequest, $wgMiserMode;
-        $url = $this->getTitle()->escapeLocalURL();
-        $search = $wgRequest->getText( 'ilsearch' );
-        $s = "<form method=\"get\" action=\"$url\">\n" .
-        wfMsgHtml( 'table_pager_limit', $this->getLimitSelect() );
-        if ( !$wgMiserMode ) {
-            $s .= "<br/>\n" .
-            Xml::inputLabel( wfMsg( 'imagelist_search_for' ), 'ilsearch', 'mw-ilsearch', 20, $search );
-        }
-        $s .= " " . Xml::submitButton( wfMsg( 'table_pager_limit_submit' ) ) ." \n" .
-            $this->getHiddenFields( array( 'limit', 'ilsearch' ) ) .
-            "</form>\n";
-        return $s;
-    }
-
-	/**
-	 * top of table
-
-	 * @access public
-	 *
-	 * @return string HTML code
-	 */
-	public function getStartBody() {
-		global $wgDevelEnvironment;
-
-		$Tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-		$Tmpl->set( "closeTitle", Title::makeTitle( NS_SPECIAL, "CloseWiki" ) );
-		$html = $Tmpl->render( "listing-actions" );
-		$html .= parent::getStartBody();
-
-		return $html;
-	}
-
-	/**
-	 * bottom of table
-	 *
-	 * @access public
-	 *
-	 * @return string HTML code
-	 */
-	public function getEndBody() {
-
-		$html = Xml::closeElement( "form" );
-		$html .= parent::getEndBody();
-
-		return $html;
-	}
-}
-
-/**
  * Changelog Pager
  */
-class ChangeLogPager extends TablePager {
-	public $mFieldNames = null;
-	public $mMessages = array();
-	public $mQueryConds = array();
-	public $mTitle;
-	public $mWikiId;
+class ChangeLogPager  {
 
 	/**
 	 * __construct
@@ -633,6 +453,9 @@ class ChangeLogPager extends TablePager {
 		return in_array( $field, $aSortable );
 	}
 
+	protected function preprocessResults( $result ) {
+
+	}
 	/**
 	 * formatValue
 	 *
@@ -734,3 +557,30 @@ class ChangeLogPager extends TablePager {
 		return "";
 	}
 }
+
+
+/**
+ * CityListPager( $this->mDomain );
+ */
+class CityListPager {
+
+	private $mPart;
+
+	/**
+	 * constructor
+	 *
+	 * @access public
+	 */
+	public function __construct( $part ) {
+		$this->mPart = $part;
+	}
+
+	/**
+	 * render page of pager
+	 * 
+	 * @access public
+	 */
+	public function render() {
+
+	}
+};
