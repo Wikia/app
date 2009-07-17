@@ -38,10 +38,24 @@ class ApiUploadLogo extends ApiBase {
 		$outfile = tempnam(sys_get_temp_dir(), __FUNCTION__) . '.' . self::LOGO_TYPE;
 
 		// Convert to correct size and format	
+		// (Emil: wouldn't be better to use includes/media/Bitmap.php class?
+		// We may use something else in future than ImageMagick so why to tighly-couple with it?)
+		global $wgImageMagickConvertCommand, $wgImageMagickTempDir;
+		if ( strval( $wgImageMagickTempDir ) !== '' ) {
+			$tempEnv = 'MAGICK_TMPDIR=' . wfEscapeShellArg( $wgImageMagickTempDir ) . ' ';
+		} else {
+			$tempEnv = '';
+		}
 		$size = self::LOGO_WIDTH . 'x' . self::LOGO_HEIGHT;
-		$cmd = "convert -quality " . self::LOGO_QUALITY . " -size $size -resize $size $infile $outfile";
+		$cmd = $tempEnv . 
+			wfEscapeShellArg( $wgImageMagickConvertCommand ) .
+			" -quality " . self::LOGO_QUALITY . 
+			" -size $size" .
+			" -resize $size" .
+			" " . wfEscapeShellArg( $infile ) .
+			" " . wfEscapeShellArg( $outfile );
 
-		exec($cmd, $output, $returnVar);
+		wfShellExec($cmd, $returnVar);
 
 		if ($returnVar === 0){
 			return $outfile;
