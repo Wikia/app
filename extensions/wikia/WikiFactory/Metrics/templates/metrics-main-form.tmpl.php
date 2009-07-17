@@ -84,6 +84,7 @@ div#sidebar { display: none !important; }
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-title')?></span>
 				<span style="vertical-align:middle"><input name="awc-metrics-title" id="awc-metrics-title" size="10" value="<?=@$params['stitle']?>" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-domains')?></span>
+				(<input name="awc-metrics-domains-exact" id="awc-metrics-domains-exact" <?=(@$params['exact']==1)?'checked="checked"':''?> type="checkbox" /><?=wfMsg('awc-metrics-exact-match')?>)
 				<span style="vertical-align:middle"><input name="awc-metrics-domains" id="awc-metrics-domains" size="10" value="<?=@$params['domain']?>" /></span>
 			</td></tr>
 			<tr><td valign="middle" class="awc-metrics-row">
@@ -298,6 +299,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	//----
 	var dbname 		= YD.get( "awc-metrics-dbname" );
 	var domain 		= YD.get( "awc-metrics-domains" );
+	var exact_domain= YD.get( "awc-metrics-domains-exact" );
 	var title		= YD.get( "awc-metrics-title" );
 	var user 		= YD.get( "awc-metrics-user" );
 	var email 		= YD.get( "awc-metrics-email" );
@@ -502,6 +504,7 @@ function wkAWCMetricsDetails(limit, offset, ord, desc)
 	params += "&awc-language=" + language.value;
 	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
+	params += "&awc-exactDomain=" + exact_domain.value;
 	params += "&awc-title=" + title.value;
 	params += "&awc-founder=" + user.value;
 	params += "&awc-founderEmail=" + email.value;
@@ -563,6 +566,7 @@ __ShowCategories = function(e, args) {
 	//----
 	var dbname 		= YD.get( "awc-metrics-dbname" );
 	var domain 		= YD.get( "awc-metrics-domains" );
+	var exact_domain= YD.get( "awc-metrics-domains-exact" );
 	var title		= YD.get( "awc-metrics-title" );
 	var user 		= YD.get( "awc-metrics-user" );
 	var emailFnder	= YD.get( "awc-metrics-email" );
@@ -701,6 +705,7 @@ __ShowCategories = function(e, args) {
 	params += "&awc-language=" + language.value;
 	params += "&awc-dbname=" + dbname.value;
 	params += "&awc-domain=" + domain.value;
+	params += "&awc-exactDomain=" + exact_domain.value;
 	params += "&awc-title=" + title.value;
 	params += "&awc-founder=" + user.value;
 	params += "&awc-founderEmail=" + emailFnder.value;

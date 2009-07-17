@@ -38,6 +38,7 @@ class WikiMetrics {
     private $axLanguage;
     private $axDbname;
     private $axDomain;
+    private $axExactDomain;
     private $axTitle;
     private $axFounder;
     private $axFounderEmail;
@@ -635,10 +636,14 @@ class WikiMetrics {
 		$dbr = wfGetDB( DB_SLAVE, "stats", $wgExternalSharedDB );
 		$domain = $dbr->escapeLike( strtolower( $this->axDomain ) );
 		
+		$where = ( isset($this->axExactDomain) ) 
+				? array( "city_domain = 'www.{$domain}.wikia.com'" ) 
+				: array( "city_domain like '%{$domain}%'" );
+		
 		$oRes = $dbr->select( 
 			"city_domains", 
 			array( 'city_id' ),
-			array( "city_domain like '%{$domain}%'" ),
+			$where,
 			__METHOD__,
 			array( 'ORDER BY' => 'city_id' )
 		);
