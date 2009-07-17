@@ -743,7 +743,7 @@ class BlogAvatar {
 						}
 					}
 					if ($wgUser->isAllowed( 'block' )) {
-						$oTitle = Title::newFromText( "Blockip/{$userspace}", NS_SPECIAL );
+						$oTitle = Title::newFromText( "Block/{$userspace}", NS_SPECIAL );
 						if ($oTitle instanceof Title) {
 							$out['nav_links_head'][] = array('text' => wfMsg("blockip"), 'href' => $oTitle->getLocalUrl(), "dbkey" => "Blockip", 'tracker' => 'blockip');
 						}
