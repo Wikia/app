@@ -333,7 +333,7 @@ function axWFactorySaveVariable() {
  *
  * used in autocompletion
  *
- * @return string
+ * @return string JSON encoded array
  */
 function axWFactoryDomainQuery() {
 	global $wgRequest;
@@ -369,9 +369,8 @@ function axWFactoryDomainQuery() {
 				$match[ "data" ][] = $domain->city_id;
 			}
 		}
-		$return[ "suggestions" ] = $exact[ "suggestions" ] + $match[ "suggestions" ];
-		$return[ "data" ] = $exact[ "data" ] + $match[ "suggestions" ];
-
+		$return[ "suggestions" ] = array_merge( $exact[ "suggestions" ], $match[ "suggestions" ] );
+		$return[ "data" ] = array_merge( $exact[ "data" ], $match[ "suggestions" ] );
 	}
 
 	return Wikia::json_encode( $return );
