@@ -118,7 +118,6 @@ function WikiaVideo_init() {
 		default:
 			$wgExtraNamespaces[NS_VIDEO] = 'Video';
 			$wgExtraNamespaces[NS_VIDEO + 1] = 'Video_talk';
-			$wgExtraNamespaces[NS_VIDEO_TEMPLATE] = 'Video_Template';
 
 	}
 	$wgAutoloadClasses['VideoPage'] = dirname(__FILE__). '/VideoPage.php';
