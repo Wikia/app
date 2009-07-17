@@ -33,7 +33,7 @@ function WikiaVideoFetchTemplateAndTitle( $text, $finalTitle ) {
 	// replace text and give Video_Template: namespace everywhere - because it's template...
 	if ($text !== false) {
 		$count = 0;
-		$text = str_replace( $vid_tag, 'Video_Template:Placeholder', $text, $count );
+		$text = str_replace( $vid_tag, 'Video:Template_Placeholder', $text, $count );
 		$wgWikiaVideosFoundInTemplates += $count;
 	}
 	return true;
@@ -225,7 +225,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 	wfProfileIn('WikiaVideo_makeVideo');
 
 	// placeholder? treat differently
-	if( 'Placeholder' == $title->getText() ) {
+	if( ('Placeholder' == $title->getText() ) || ('Template Placeholder' == $title->getText() ) ) {
 		// generate a single empty cell with a button
 		global $wgExtensionMessagesFiles, $wgWikiaVideoPlaceholderId, $wgContLang;
 		$wgExtensionMessagesFiles['WikiaVideo'] = dirname(__FILE__).'/WikiaVideo.i18n.php';
