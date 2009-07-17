@@ -67,7 +67,7 @@ class WikiMetrics {
 			103 => "three-months", 
 			106 => "half-year" 
 		);
-		$this->mDefPeriod = 2;
+		$this->mDefPeriod = 0;
 		$this->mSortList = array(
 			"db"				=> "city_dbname",
 			"created" 			=> "city_id",
