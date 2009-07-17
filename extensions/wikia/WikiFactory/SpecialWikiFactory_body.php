@@ -58,7 +58,7 @@ class WikiFactoryPage extends SpecialPage {
 		}
 
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );
-		$this->mDomain = null;
+		$this->mDomain = false;
 
 		/**
 		 * initial output
@@ -171,25 +171,27 @@ class WikiFactoryPage extends SpecialPage {
 	 * @access private
 	 * @author eloy
 	 *
-	 *
 	 * @return nothing
 	 */
 	private function doWikiSelector() {
 		global $wgOut;
 
-		#--- init
-		$citylist = array();
-		$pager = new CityListPager;
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
-			"domain"    => $this->mDomain,
-			"title"     => $this->mTitle,
-			"limit"     => $pager->getForm(),
-			"body"      => $pager->getBody(),
-			"nav"       => $pager->getNavigationBar()
+			"title"  => $this->mTitle,
+			"domain" => $this->mDomain
 		));
-		$wgOut->addHTML( $oTmpl->execute("selector") );
+
+		if( !empty( $this->mDomain ) ) {
+			$pager = new CityListPager;
+
+			$oTmpl->set( "body",       $pager->getBody() );
+			$oTmpl->set( "limit",      $pager->getForm() );
+			$oTmpl->set( "navigation", $pager->getNavigationBar() );
+
+		}
+		$wgOut->addHTML( $oTmpl->render( "selector" ) );
 	}
 
 	/**
