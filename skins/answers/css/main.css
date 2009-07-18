@@ -857,3 +857,9 @@ div.category br {
 	opacity: 0.6;
 	position: fixed;
 }
+
+/**
+ * Hidden categories
+ */
+.mw-hidden-cats-hidden { display: none; }
+.catlinks-allhidden { display: none; }
