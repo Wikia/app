@@ -276,6 +276,18 @@ class StaticChute {
 		return $maxtime;
 	}
 
+	/* We used to use the lastmod, but this isn't reliable in production environments where
+	 * we have multiple apaches that have different timestamps on the files, it
+	 * produces too many distinct urls
+	 */
+	public function getChecksum($files){
+		$data = '';
+		foreach($files as $file){
+			$data .= file_get_contents($file);	
+		}
+		return md5($data);
+	}
+
 	public function getChuteHtmlForPackage($package, $type = null){
 		global $wgStylePath, $wgStyleVersion;
 
@@ -385,9 +397,9 @@ class StaticChute {
 			return false;
 		}
 
-		$latestMod = $this->getLatestMod($files);
+		$checksum = $this->getChecksum($files);
 
-		$params = array('type'=> $type, 'packages'=> $package, 'maxmod'=> $latestMod);
+		$params = array('type'=> $type, 'packages'=> $package, 'checksum'=> $checksum);
 
 		// macbre: RT #18765
 		if (!empty($this->theme)) {
@@ -560,6 +572,10 @@ class StaticChute {
 			// Since we have a timestamp that will change with the url, set an Expires header
 			// far into the future. This will make it so that the browsers won't even check this
 			// url to see if the files have changed, saving an http request.
+			header('Expires: ' . gmdate('r', strtotime('+13 years')));
+			header('X-Pass-Cache-Control: max-age=' . (13 * 365 * 24 * 60 * 60));
+		} else if ($this->httpCache && !empty($_GET['checksum'])){
+			// Alternate form of versioning the url
 			header('Expires: ' . gmdate('r', strtotime('+13 years')));
 			header('X-Pass-Cache-Control: max-age=' . (13 * 365 * 24 * 60 * 60));
 		}
