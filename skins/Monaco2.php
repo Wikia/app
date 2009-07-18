@@ -1563,7 +1563,7 @@ if(isset($this->data['articlelinks']['right']) && $showright ) {
 			<!-- ARTICLE -->
 <?php
 echo AdEngine::getInstance()->getSetupHtml();
-global $wgOut, $wgEnableAdsInContent;
+global $wgOut, $wgEnableAdsInContent, $wgAdsForceLeaderboards;
 $topAdCode = '';
 $topAdCodeDisplayed = false;
 if ($wgOut->isArticle()){
@@ -1574,12 +1574,13 @@ if ($wgOut->isArticle()){
 		}
 	} else if ( ArticleAdLogic::isContentPage()){
 
-		if ($wgEnableAdsInContent) {
+		if (!empty($wgAdsForceLeaderboards)){
 			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
 			if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 				$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD', false);
 			}
 		} else {
+			// Let the collision detection decide
 			if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
 				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
 			} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
