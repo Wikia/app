@@ -1,0 +1,32 @@
+body {
+	background: #F5F5F5;
+	color: #000;
+}
+.accent {
+	background-color: #dbe7ff;
+	border-color: #AAA;
+	color: #333;
+}
+#progress li {
+	background-color: #FFF;
+	border-color: #AAA;
+	color: #AAA;
+}
+#progress li.selected {
+	background: #36C;
+	color: #FFF;
+}
+h1.headline {
+	background: #36C;
+	color: #FFF;
+}
+.wrapper {
+	background-color: #FFF;
+	border-color: #AAA;
+}
+.nav {
+	color: #000;
+}
+.nav a {
+	color: #00F;
+}
