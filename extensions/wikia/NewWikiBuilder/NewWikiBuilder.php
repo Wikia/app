@@ -8,8 +8,13 @@ $wgGroupPermissions['sysop']['newwikibuilder'] = true;
 $wgGroupPermissions['bureaucrat']['newwikibuilder'] = true;
 $wgGroupPermissions['staff']['newwikibuilder'] = true;
 
-$wgAutoloadClasses['ApiUploadLogo'] = dirname(__FILE__) . '/ApiUploadLogo.php';
-$wgAPIModules['uploadlogo'] = 'ApiUploadLogo';
+$NWBApiExtensions = array(
+	'uploadlogo' => 'ApiUploadLogo',
+	'foundersettings' => 'ApiFounderSettings',
+	'createmultiplepages' => 'ApiCreateMultiplePages',
+);
 
-$wgAutoloadClasses['ApiFounderSettings'] = dirname(__FILE__) . '/ApiFounderSettings.php';
-$wgAPIModules['foundersettings'] = 'ApiFounderSettings';
+foreach ($NWBApiExtensions as $action => $classname){
+	$wgAutoloadClasses[$classname] = dirname(__FILE__) . '/' . $classname . '.php';
+	$wgAPIModules[$action] = $classname;
+}
