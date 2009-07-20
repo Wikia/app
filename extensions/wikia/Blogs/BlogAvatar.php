@@ -677,7 +677,8 @@ class BlogAvatar {
 			$out = array();
 			/* check conditions */
 			if ( in_array( $namespace, $allowedNamespaces ) ) {
-				$userspace = $wgTitle->getBaseText();
+				# Title::getBaseText only backs up one step, we need the leftmost part
+				list( $userspace ) = explode( "/", $wgTitle->getText(), 2 );
 				$Avatar = BlogAvatar::newFromUserName( $userspace );
 			}
 
