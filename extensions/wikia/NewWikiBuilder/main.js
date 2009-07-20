@@ -27,7 +27,7 @@ function showStep(stepName) {
 
 //There is no back button click event. This checks the URL and sets the correct step.
 function checkStep(firstStep) {
-	setInterval(function() {
+	window.setInterval(function() {
 		var url = document.location.toString();
 		var urlAnchor = firstStep;
 		if (url.match("#")) {
@@ -56,6 +56,9 @@ NWB.messages = {
 	"en": {
 		"choose-a-file": "Please choose a file",
 		"error-saving-description": "Error Saving Description",
+		"error-saving-articles": "Error Saving Articles",
+		"saving-articles": "Saving Articles...",
+		"articles-saved": "Articles Saved",
 		"theme-saved": "Theme Choice Saved",
 		"saving-description": "Saving Description...",
 		"description-saved": "Description Saved",
@@ -65,7 +68,7 @@ NWB.messages = {
 		"logout-successful": "Logout Successful",
 		"login-error": "Error logging in",
 		"logging-in": "Logging in...",
-		"api-error": "There was a problem:"
+		"api-error": "There was a problem: "
 	}
 };
 
@@ -90,7 +93,7 @@ NWB.changeTheme = function (theme){
 };
 
 
-Mediawiki.handleDescriptionForm = function (f){
+NWB.handleDescriptionForm = function (f){
 	try {
              // Save the article
              Mediawiki.updateStatus(NWB.msg("saving-description"));
@@ -103,7 +106,7 @@ Mediawiki.handleDescriptionForm = function (f){
                   function(){
                           NWB.updateStatus(NWB.msg("description-saved"));
                   },
-                  NWB.handleError);
+                  NWB.apiFailed);
         } catch (e) {
                   Mediawiki.updateStatus(NWB.msg("error-saving-description"));
                   Mediawiki.debug(Mediawiki.print_r(e));
@@ -113,10 +116,46 @@ Mediawiki.handleDescriptionForm = function (f){
 };
 
 
-NWB.handleError = function(e){
-	// TODO: More graceful handling
-	alert(Mediawiki.print_r(e));
+NWB.handleFirstPages = function (f){
+	try {
+		Mediawiki.updateStatus(NWB.msg("saving-articles"));
+
+		// Go through the form fields and get the titles
+		var pages = [];
+		$("#all_fp input[type='text']").each(
+			function(i, o){
+				if (!Mediawiki.e(o.value)){
+					pages.push(o.value);
+				}
+			}
+		);
+
+                Mediawiki.apiCall({
+                        "action" : "createmultiplepages",
+			"pagelist" : pages.join("|"),
+                        "category" : f.category.value
+                        }, NWB.handleFirstPagesCallback, NWB.apiError, "POST");
+        } catch (e) {
+                  Mediawiki.updateStatus(NWB.msg("error-saving-articles"));
+                  Mediawiki.debug(Mediawiki.print_r(e));
+        }
+
+        return false; // Return false so that the form doesn't submit
 };
+
+
+NWB.handleFirstPagesCallback = function (result){
+	if (result.error) {
+		NWB.apiFailed(result.error.info);
+	} else {
+		var count = 0;
+		for (var page in result.createmultiplepages.success){
+			count++;
+		}
+		Mediawiki.updateStatus(count + " " + NWB.msg("articles-saved"));
+	}
+};
+
 
 NWB.handleLoginForm = function (f){
 	try { 
@@ -193,7 +232,7 @@ NWB.iframeFormInit = function (f){
 
 
 NWB.apiFailed = function(msg){
-	alert(NWB.msg("api-error") + " : " + msg);
+	alert(NWB.msg("api-error") + msg);
 };
         
 NWB.updateStatus = Mediawiki.updateStatus;
