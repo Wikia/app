@@ -184,7 +184,7 @@ class WikiFactoryPage extends SpecialPage {
 		));
 
 		if( !empty( $this->mDomain ) ) {
-			$pager = new CityListPager( $this->mDomain );
+			$pager = new CityListPager( $this->mDomain, $this->mTitle );
 			$oTmpl->set( "pager", $pager->render() );
 		}
 		$wgOut->addHTML( $oTmpl->render( "selector" ) );
@@ -568,20 +568,21 @@ class ChangeLogPager extends TablePager {
  */
 class CityListPager {
 
-	private $mPart, $mRequest, $mLimit, $mOffset, $mTemplate;
+	private $mPart, $mRequest, $mLimit, $mOffset, $mTemplate, $mTitle;
 
 	/**
 	 * constructor
 	 *
 	 * @access public
 	 */
-	public function __construct( $part ) {
+	public function __construct( $part, $title ) {
 		global $wgRequest;
 
 		$this->mPart     = $part;
 		$this->mRequest  = $wgRequest;
 		$this->mLimit    = 25;
 		$this->mOffset   = $this->mRequest->getVal( "offset", false );
+		$this->mTitle    = $title;
 		$this->mTemplate = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	}
 
@@ -594,6 +595,8 @@ class CityListPager {
 
 		global $wgOut;
 		$this->mTemplate->set( "data",$this->getData() );
+		$this->mTemplate->set( "limit", $this->mLimit );
+		$this->mTemplate->set( "title", $this->mTitle );
 		return $this->mTemplate->render( "listing" );
 	}
 
