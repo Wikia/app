@@ -47,7 +47,8 @@ function gotostep(step) {
 
 var NWB = {
 	"language": "en", // TODO: Pull this from the browser or users settings
-	"descriptionSection" : 1
+	"descriptionSection" : 1,
+	"firstPagesBlocks" : 1
 };	      
 
 var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Mediawiki
@@ -68,7 +69,8 @@ NWB.messages = {
 		"logout-successful": "Logout Successful",
 		"login-error": "Error logging in",
 		"logging-in": "Logging in...",
-		"api-error": "There was a problem: "
+		"api-error": "There was a problem: ",
+		"no-more-pages": "No more pages can be created"
 	}
 };
 
@@ -90,6 +92,38 @@ NWB.changeTheme = function (theme){
         //var href = "http://images.wikia.com/common/skins/monaco/" + theme.toLowerCase() + "/css/main.css";
 	var href = "themes/" + theme.toLowerCase() + ".css";
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
+};
+
+
+/* Make sure there are the right amount of available boxes */
+NWB.firstPagesInputs = function (){
+	var empties = 0, fulls = 0;
+
+	$("#all_fp input[type='text']").each(
+		function(i, o){
+			if (Mediawiki.e(o.value)){
+				empties++;
+			} else {
+				fulls++;
+			}
+		}
+	);
+	console.log("empties " + empties + " fulls " + fulls);
+
+	if (fulls > 100){
+		Mediawiki.updateStatus(NWB.msg("no-more-pages"), true);
+	}
+
+	if (empties <= 2){
+		NWB.firstPagesBlocks++;
+		// Add a block of 5 more titles
+		var id = 'fp_block_' + NWB.firstPagesBlocks;
+		var html = '<div id="' + id + '" style="display:none">' + 
+			   $("#fp_block_1").html() +
+			   '</div>';
+		$("#all_fp").append(html);
+		$("#" + id).fadeIn();
+	}
 };
 
 
