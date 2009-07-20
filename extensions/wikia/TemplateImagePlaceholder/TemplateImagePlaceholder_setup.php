@@ -18,7 +18,10 @@ $wgHooks['Parser::FetchTemplateAndTitle'][] = 'TIPFetchTemplateAndTitle';
 function TIPFetchTemplateAndTitle( $text, $finalTitle ) {
 	$img_tag = "{{{Image}}}";
 
-	// TODO fill it out
+	// TODO this is a temporary test
+	if( strpos( $text, $img_tag ) ) {
+		$text = str_replace( $img_tag, "{{TIP_PLACEMENT}}", $text );
+	}
 
         return true;
 }
