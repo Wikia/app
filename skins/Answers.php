@@ -79,6 +79,7 @@ class AnswersTemplate extends MonacoTemplate {
 		<!-- Combo-handled YUI JS files: --> 
 		<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&2.7.0/build/datasource/datasource-min.js&2.7.0/build/autocomplete/autocomplete-min.js&2.7.0/build/container/container-min.js&2.7.0/build/logger/logger-min.js"></script> 
 		<script type="text/javascript" src="<?=$wgStylePath?>/common/yui/3rdpart/tools.js"></script>
+		<script type="text/javascript" src="<?=$wgStylePath?>/common/urchin.js?<?=$wgStyleVersion?>"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/tracker.js?<?=$wgStyleVersion?>"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/common/tracker.js?<?=$wgStyleVersion?>"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
@@ -697,7 +698,7 @@ google_max_num_ads = '10';
 google_ad_type = 'text';
 google_feedback = 'on';
 <?
-echo 'google_hints = \''. $google_hints .'\';';
+echo 'google_hints = \'' . ( !empty($google_hints) ? $google_hints : '' ) . '\';';
 ?>
 </script>
 <script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
