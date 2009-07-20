@@ -13,3 +13,14 @@ $wgExtensionCredits['other'][] = array(
         'version' => '0.11',
 );
 
+$wgHooks['Parser::FetchTemplateAndTitle'][] = 'TIPFetchTemplateAndTitle';
+
+function TIPFetchTemplateAndTitle( $text, $finalTitle ) {
+	$img_tag = "{{{Image}}}";
+
+	// TODO fill it out
+
+        return true;
+}
+
+
