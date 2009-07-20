@@ -5,7 +5,6 @@
 	Messaging API, swap out hard coded messages calls
 	Error handling for bad images
 	TODO: delete wiki-previeew
-	PUt 5 fields
 
 After first pages
 	Implement "Coming Soon" category in starter
@@ -86,7 +85,7 @@ if (match !== null){
 <li id="step1" class="step">
 <h1 class="headline">Describe your wiki</h1>
 <div class="wrapper">
-	<form onSubmit="return Mediawiki.handleDescriptionForm(this)">
+	<form onSubmit="return NWB.handleDescriptionForm(this)">
 	<div id="desc_form_html">
 	Enter a description for the main page:<br />
 	<textarea name="desc" rows="10" cols="60" id="desc_textarea"></textarea><br />
@@ -220,17 +219,19 @@ for (var i = 0; i < themes.length; i++){
 		// TODO, as soon as you get to the last page, it adds another
 	}
 	</script>
-	<form onSubmit="return NWB.handleFirstPages(this)">
-	<input type="hidden" name="category_1" value="Coming Soon"><!-- i18n -->
+	<form onSubmit="return NWB.handleFirstPages(this)" id="firstPagesForm">
+	<input type="hidden" name="category" value="Coming Soon"><!-- TODO: i18n -->
 	<div id="all_fp">
-	<div class="fp_block" id="category_1">
-	Page 1: <input class="fp_page" type="text" name="category_1_page_1"><br />
-	Page 2: <input class="fp_page" type="text" name="category_1_page_2"><br />
-	Page 3: <input class="fp_page" type="text" name="category_1_page_3"><br />
+	<div class="fp_block" id="fp_block_1">
+	Title: <input class="fp_page" type="text"><br />
+	Title: <input class="fp_page" type="text"><br />
+	Title: <input class="fp_page" type="text"><br />
+	Title: <input class="fp_page" type="text"><br />
+	Title: <input class="fp_page" type="text"><br />
 	</div>
 
 	<p>
-	<input type="submit" value="Save (not working yet)">
+	<input type="submit" value="Save pages">
 	</div><!-- all_fp -->
 	</form>
 </div>
@@ -240,13 +241,8 @@ for (var i = 0; i < themes.length; i++){
 	<button onclick="gotostep(5);"><span>Create Pages</span></button>
 </div>
 </li>
-<script>
-NWB.handleFirstPages = function(f){
 
-};
-</script>
-
-<!-- ############## Create first pages ############## -->
+<!-- ############## Dones ############## -->
 
 <li id="step5" class="step">
 <h1 class="headline">You're Done!</h1>
