@@ -237,6 +237,7 @@ class BlogTemplateClass {
 	private static $oTitle 					= null;
 
 	private static $blogWIKITEXT = array(
+		"/\[\[Video\:(.*)\]\]\s/iU",	
 		"/\[\[Image\:(.*)\]\]/siU",
 		"/\[\[(.*)\:((.+\.[a-z]{3,4})(\|)(.*))\]\]/iU", #images [[Image:Test.png|(.*)]]
 		"/\[\[(.*)\:((.+\.[a-z]{3,4}))\]\]/iU", #images [[Image:Test.png]]
