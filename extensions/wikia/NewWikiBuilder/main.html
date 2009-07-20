@@ -224,16 +224,17 @@ for (var i = 0; i < themes.length; i++){
 	<input type="hidden" name="category" value="Coming Soon"><!-- TODO: i18n -->
 	<div id="all_fp">
 	<div class="fp_block" id="fp_block_1">
-	Title: <input class="fp_page" type="text"><br />
-	Title: <input class="fp_page" type="text"><br />
-	Title: <input class="fp_page" type="text"><br />
-	Title: <input class="fp_page" type="text"><br />
-	Title: <input class="fp_page" type="text"><br />
+	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
+	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
+	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
+	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
+	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
 	</div>
-
-	<p>
-	<input type="submit" value="Save pages">
+	<!-- Other fp_blocks will be inserted into the dom here with
+		javascript:NWB.firstPagesInputs() -->
 	</div><!-- all_fp -->
+
+	<input type="submit" value="Save pages">
 	</form>
 </div>
 <div class="nav">
