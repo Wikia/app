@@ -236,17 +236,19 @@ class BlogTemplateClass {
 	private static $pageOffsetName 			= "page";
 	private static $oTitle 					= null;
 
-	private static $blogTAGS = array(
+	private static $blogWIKITEXT = array(
 		"/\[\[Image\:(.*)\]\]/siU",
-		"/\[\[(.*)\:((.+\.[a-z]{3,4})(\|)(.*))\]\]/siU", #images [[Image:Test.png|(.*)]]
-		"/\[\[(.*)\:((.+\.[a-z]{3,4}))\]\]/siU", #images [[Image:Test.png]]
+		"/\[\[(.*)\:((.+\.[a-z]{3,4})(\|)(.*))\]\]/iU", #images [[Image:Test.png|(.*)]]
+		"/\[\[(.*)\:((.+\.[a-z]{3,4}))\]\]/iU", #images [[Image:Test.png]]
+	);
+
+	private static $blogTAGS = array(
 		"/\{\{#dpl(.*)\}\}/siU",
 		"/\{\{#dplchapter(.*)\}\}/siU",
 		"/<(dpl|dynamicpagelist(.*))>(.*)<\/(dpl|dynamicpagelist)>/siU",
 		"/<(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube(.*))>(.*)<\/(youtube|gvideo|aovideo|aoaudio|wegame|tangler|gtrailer|nicovideo|ggtube)>/siU",
 		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet(.*))>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet)>/siU",
 	);
-
 
 	public static function setup() {
 		global $wgParser, $wgMessageCache;
@@ -727,13 +729,19 @@ class BlogTemplateClass {
 			$localParser = new Parser();
 			if ( !in_array(self::$aOptions['type'], array('array', 'noparse')) ) {
 				/* skip HTML tags */
+				if (!empty(self::$blogTAGS)) {
+					/* skip some special tags  */
+					foreach (self::$blogTAGS as $id => $tag) {
+						$sBlogText = preg_replace($tag, '', $sBlogText);
+					}
+				}
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
 				/* skip invalid Wiki-text  */
 				$sBlogText = preg_replace('/\{\{\/(.*?)\}\}/siU', '', $sBlogText);
 				$sBlogText = preg_replace('/\{\{(.*?)\}\}/siU', '', $sBlogText);
-				if (!empty(self::$blogTAGS)) {
-					/* skip some wiki-text and special tags  */
-					foreach (self::$blogTAGS as $id => $tag) {
+				if (!empty(self::$blogWIKITEXT)) {
+					/* skip some wiki-text */
+					foreach (self::$blogWIKITEXT as $id => $tag) {
 						$sBlogText = preg_replace($tag, '', $sBlogText);
 					}
 				}
