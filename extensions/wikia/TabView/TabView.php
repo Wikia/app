@@ -89,6 +89,10 @@ function tabviewRender($input, $params, &$parser ) {
 	}
 
 	$outJS .= "tabView_{$id}.appendTo('tabview_" . $id . "');";
+
+	// macbre: fix RT #19285
+	$outJS = '$.loadYUI(function() {' . $outJS . '});';
+
 	$outJS = '<script type="text/javascript">wgAfterContentAndJS.push(function() {' . $outJS . '});</script>';
 	return $out.$outJS;
 }
