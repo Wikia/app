@@ -2,7 +2,6 @@ body {
 	font-family: "Helvetica", "Arial", "sans-serif";
 	font-size: 12pt;
 	margin: 0 40px 40px 40px;
-	text-align: center;
 }
 form {
 	margin: 0;
@@ -13,14 +12,16 @@ ul, li {
 	margin: 0;
 	padding: 0;
 }
+.accent {
+	border-width: 1px;
+	border-style: solid;
+}
 .step {
 	clear: both;
 	display: none;
 	text-align: left;
 }
 .headline {
-	background: #36C;
-	color: #FFF;
 	font-size: 18pt;
 	margin: 0;
 	padding: 10px 15px;
@@ -30,8 +31,8 @@ ul, li {
 	-webkit-border-top-right-radius: 7px;
 }
 .wrapper {
-	background-color: #FFF;
-	border: 1px solid #AAA;
+	border-width: 1px; 
+	border-style: solid;
 	padding: 40px;	
 	-moz-border-radius-bottomleft: 7px;
 	-moz-border-radius-bottomright: 7px;
@@ -47,24 +48,18 @@ ul, li {
 	float: right;
 }
 #progress li {
-	background: #FFF;
-	border: 1px solid #AAA;
-	color: #666;
+	border-width: 1px;
+	border-style: solid;
 	float: left;
 	font-size: 20pt;
 	font-weight: bold;
 	height: 28px;
 	line-height: 32px;
 	margin-left: 5px;
+	text-align: center;
 	width: 28px;
 	-moz-border-radius: 7px;
-	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
-	-webkit-border-radius: 7px;
-}
-#progress li.selected {
-	background: #36C;
-	color: #FFF;
 }
 
 .nav {
@@ -160,6 +155,27 @@ button span {
 .statusbarerror {
 	background-color: red;
 	color: white;    
+}
+
+
+/*** Step 3: Theme ***/
+#theme_scroller {
+	overflow: auto;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+}
+#theme_scroller td {
+	font-weight: bold;
+	padding: 10px;
+	text-align: center;
+}
+#theme_scroller img {
+	border: 1px solid #AAA;
+	cursor: pointer;
+	display: block;
+	margin-bottom: 5px;
 }
 
 .clearfix:after {

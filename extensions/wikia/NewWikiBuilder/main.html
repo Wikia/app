@@ -30,7 +30,6 @@ AFTER Christian:
 -->
 
 <link rel="stylesheet" type="text/css" href="main.css"/>
-<link rel="stylesheet" type="text/css" href="sapphire.css"/>
 
 <!-- Jquery is required for the API itself -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
@@ -166,19 +165,21 @@ if (match !== null){
 	padding: 15px;
 }
 </style>
-  <div id="theme_chooser">
-     Pick a theme
-	<p>
-    <div id="theme_template" style="display:none" class="theme_selekction">
-	<img id="theme_preview_image_$theme" width="100"><br />
-	<input onClick="NWB.changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"><label for="theme_radio_$theme">$Theme</label>
-    </div>
-  </div>
+Pick a theme
+	<div id="theme_template" style="display:none" class="theme_selekction">
+		<label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
+		<input onClick="NWB.changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
+	</div>
+	<div id="theme_scroller" class="accent">
+		<table><tr></tr></table>
+	</div>
+
 
 <script>
 var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Mediawiki
 
 // TODO: Pull this list from wgSkinTheme?
+
 var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
 for (var i = 0; i < themes.length; i++){
 	// Copy the template, search and replace the values
@@ -187,16 +188,9 @@ for (var i = 0; i < themes.length; i++){
 	thtml = thtml.replace(/\$Theme/g, themes[i]);
 	thtml = thtml.replace(/\$theme/g, ltheme);
 
-
-	// Create div with that preview and append it
-	// TODO: jQuery this
-	var div = document.createElement("div"); 
-	div.innerHTML = thtml;
-	div.id = "theme_" + themes[i].toLowerCase();
-	div.className = "theme_selection";
-	Mediawiki.$("theme_chooser").appendChild(div);
-	Mediawiki.$("theme_preview_image_" + ltheme).src = "http://images.wikia.com/common/skins/monaco/" + ltheme + "/images/preview.png";
-
+	// Create element with that preview and append it
+	$("#theme_scroller tr").append("<td>" + thtml + "</td>");
+	$("#theme_preview_image_" + ltheme).attr("src", "http://images.wikia.com/common/skins/monaco/" + ltheme + "/images/preview.png");
 
 	// Check the box with the current theme ($wgDefaultTheme)
 	if (wgDefaultTheme == ltheme) {

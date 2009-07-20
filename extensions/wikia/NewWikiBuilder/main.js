@@ -84,15 +84,9 @@ NWB.changeTheme = function (theme){
         } 
 
         // Create a link object for the stylesheet
-        var link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.type = "text/css";
-        link.href = "http://images.wikia.com/common/skins/monaco/" + theme.toLowerCase() + "/css/main.css";
-        
-        // Put it in the head so they can see what it will look like
-        var h = document.getElementsByTagName("head").item(0);
-        h.appendChild(link);
-
+        //var href = "http://images.wikia.com/common/skins/monaco/" + theme.toLowerCase() + "/css/main.css";
+	var href = "themes/" + theme.toLowerCase() + ".css";
+	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
 };
 
 
