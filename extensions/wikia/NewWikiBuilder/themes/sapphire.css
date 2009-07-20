@@ -7,6 +7,10 @@ body {
 	border-color: #AAA;
 	color: #333;
 }
+#header {
+	background: #FFF;
+	border-color: #AAA;
+}
 #progress li {
 	background-color: #FFF;
 	border-color: #AAA;
