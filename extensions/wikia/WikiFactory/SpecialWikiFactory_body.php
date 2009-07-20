@@ -594,9 +594,11 @@ class CityListPager {
 	public function render() {
 
 		global $wgOut;
-		$this->mTemplate->set( "data",$this->getData() );
+		$this->mTemplate->set( "part", $this->mPart );
+		$this->mTemplate->set( "data", $this->getData() );
 		$this->mTemplate->set( "limit", $this->mLimit );
 		$this->mTemplate->set( "title", $this->mTitle );
+
 		return $this->mTemplate->render( "listing" );
 	}
 
@@ -635,5 +637,9 @@ class CityListPager {
 		}
 		wfProfileOut( __METHOD__ );
 		return $data;
+	}
+
+	static public function bold( $subject, $search ) {
+		echo str_replace( $search, "<strong>{$search}</strong>", $subject );
 	}
 };
