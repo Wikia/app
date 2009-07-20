@@ -61,14 +61,12 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 			// make the actual link
 			$special = Title::newFromText( 'Special:Outbound' );
 			if($special instanceof Title) {
-				$href = $special->getFullURL() . '?u=' . urlencode($url);
-
 				// RT #19167
 				$link = Xml::element('a', array(
 					'class' => 'external',
 					'rel' => 'nofollow',
 					'title' => $url,
-					'href' => $href
+					'href' => $special->getFullURL('u=' . urlencode($url)),
 				), $text);
 
 				return false;
