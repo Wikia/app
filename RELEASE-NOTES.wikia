@@ -1,4 +1,5 @@
 == Changes since 200907.3 ==
+* rt#19285: TabView fails on Lean Monaco (Macbre)
 * rt#19298: Answers: Css tweaks fo hidden categories. (Nef, HT Uberfuzzy)
 * rt#17019: Css tweaks to gaming skin. (Nef)
 * rt#19081: Blogs: css for even/odd comments. (Nef)
