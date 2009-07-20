@@ -23,6 +23,12 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 	global $wgCityId, $wgUser, $wgOutboundScreenConfig;
 	static $whiteList;
 
+	// skip logic when in FCK
+	global $wgWysiwygParserEnabled;
+	if(!empty($wgWysiwygParserEnabled)) {
+		return true;
+	}
+
 	$loggedIn = $wgUser->isLoggedIn();
 
 	if(($wgOutboundScreenConfig['anonsOnly'] == false) || (($wgOutboundScreenConfig['anonsOnly'] == true) && !$loggedIn)) {
@@ -55,7 +61,17 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 			// make the actual link
 			$special = Title::newFromText( 'Special:Outbound' );
 			if($special instanceof Title) {
-				$url = $special->getFullURL() . '?u=' . urlencode($url);
+				$href = $special->getFullURL() . '?u=' . urlencode($url);
+
+				// RT #19167
+				$link = Xml::element('a', array(
+					'class' => 'external',
+					'rel' => 'nofollow',
+					'title' => $url,
+					'href' => $href
+				), $text);
+
+				return false;
 			}
 		}
 	}
