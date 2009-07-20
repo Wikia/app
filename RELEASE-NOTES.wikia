@@ -1,7 +1,9 @@
 == Changes since 200907.4 ==
-* 
+*
 
 == Changes since 200907.3 ==
+* rt#19167: Exit page ads ads need rel=nofollow (Macbre)
+* rt#19168: Exit page ads need class=external (Macbre)
 * rt#18672: fixed images and special tags parser (blogs) (Moli)
 * rt#19332: trackers dont work on answers (Macbre)
 * rt#19371: AjaxLogin: focus on name field (Macbre)
