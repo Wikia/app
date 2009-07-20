@@ -1,3 +1,50 @@
+$(function() {
+	var url = document.location.toString();
+	var firstStep = $(".step:first").attr("id");
+	var urlAnchor = firstStep;
+	if (url.match("#")) {
+		urlAnchor = url.split('#')[1];
+	}
+	showStep(urlAnchor);
+
+	$(".step a").click(function() {
+		if (this.href.match("#")) {
+			showStep(this.href.split('#')[1]);
+		}
+	});
+	checkStep(firstStep);
+});
+ 
+var currentStep;
+
+function showStep(stepName) {
+	$(".step").hide();
+	$("[id="+stepName+"]").show();
+	$("#progress li").removeClass("selected");
+	$("[id=progress_"+stepName+"]").addClass("selected");
+	currentStep = stepName;
+}
+
+//There is no back button click event. This checks the URL and sets the correct step.
+function checkStep(firstStep) {
+	setInterval(function() {
+		var url = document.location.toString();
+		var urlAnchor = firstStep;
+		if (url.match("#")) {
+			urlAnchor = url.split('#')[1];
+		}
+		if (currentStep != urlAnchor) {
+			showStep(urlAnchor);
+		}
+	}, 200);
+}
+
+function gotostep(step) {
+	var current = document.location.toString();
+	var url = current.split('#')[0];
+	document.location = url + "#step" + step;
+}
+
 var NWB = {
 	"language": "en", // TODO: Pull this from the browser or users settings
 	"descriptionSection" : 1
