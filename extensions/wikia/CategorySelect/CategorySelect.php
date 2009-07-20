@@ -448,18 +448,12 @@ wgAfterContentAndJS.push(function() {
 	$('#csAddCategorySwitch').children('a').click(function() {
 		WET.byStr('articleAction/addCategory');
 
-		function loadCSJS() {
-			$.getScript(wgExtensionsPath+ '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion, function(){showCSpanel();});
-		}
-
 		$.getScript(wgServer + wgScriptPath + '?action=ajax&rs=CategorySelectGetCategories');
 
-		if (typeof YAHOO == 'undefined') {
-			$.getScript(wgExtensionsPath + '/wikia/StaticChute/?type=js&packages=yui&cb=' + wgStyleVersion, loadCSJS);
-		}
-		else {
-			loadCSJS();
-		}
+		$.loadYUI( function() {
+			$.getScript(wgExtensionsPath+ '/wikia/CategorySelect/CategorySelect.js?' + wgStyleVersion, function(){showCSpanel();});
+		});
+
 		$('#catlinks').addClass('csLoading');
 		return false;
 	});
