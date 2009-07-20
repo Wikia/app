@@ -1,11 +1,112 @@
 body {
-        /* The default in the jqueryui theme is farkin huge */
-        font-size: 80%;
+	font-family: "Helvetica", "Arial", "sans-serif";
+	font-size: 12pt;
+	margin: 0 40px 40px 40px;
+	text-align: center;
+}
+form {
+	margin: 0;
+	padding: 0;
+}
+ul, li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.step {
+	clear: both;
+	display: none;
+	text-align: left;
+}
+.headline {
+	background: #36C;
+	color: #FFF;
+	font-size: 18pt;
+	margin: 0;
+	padding: 10px 15px;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+}
+.wrapper {
+	background-color: #FFF;
+	border: 1px solid #AAA;
+	padding: 40px;	
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
 }
 
-.ui-tabs .ui-tabs-hide {
-         display: none;
+#header {
+	background: url(logo.png) 15px 50% no-repeat;
+	padding: 15px;
 }
+#progress {
+	float: right;
+}
+#progress li {
+	background: #FFF;
+	border: 1px solid #AAA;
+	color: #666;
+	float: left;
+	font-size: 20pt;
+	font-weight: bold;
+	height: 28px;
+	line-height: 32px;
+	margin-left: 5px;
+	width: 28px;
+	-moz-border-radius: 7px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	-webkit-border-radius: 7px;
+}
+#progress li.selected {
+	background: #36C;
+	color: #FFF;
+}
+
+.nav {
+	padding: 15px;
+	text-align: right;
+}
+.nav_reverse {
+	float: left;
+}
+/* Button styling research: http://www.filamentgroup.com/lab/update_styling_the_button_element_with_css_sliding_doors_now_with_image_spr/ */
+button {
+	background: transparent url(green_button_sprite.png) no-repeat right -57px; 
+	position: relative;
+	border: 0; 
+	padding: 0 15px 0 0;
+	cursor: pointer;
+	overflow: visible; /* removes extra side padding in IE */
+}
+button::-moz-focus-inner {
+	border: none;  /* overrides extra padding in Firefox */
+}
+button span { 
+	background: transparent url(green_button_sprite.png) no-repeat left top; 
+	color: #FFF;
+	font-family: "Arial Narrow", sans-serif;
+	font-size: 14pt;
+	line-height: 36px;
+	height: 37px;
+	padding-left: 40px;
+	position: relative;
+	display: block; 
+	white-space: nowrap;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	/* Safari and Google Chrome only - fix margins */
+	button span {
+		margin-top: -1px;
+	}
+}
+
+
+
 
 
 /* logo page */
@@ -59,4 +160,12 @@ body {
 .statusbarerror {
 	background-color: red;
 	color: white;    
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }

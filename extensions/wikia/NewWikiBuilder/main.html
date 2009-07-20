@@ -30,26 +30,12 @@ AFTER Christian:
 	Selenium Test Suite
 	Cross Browser testing
 -->
+
+<link rel="stylesheet" type="text/css" href="main.css"/>
+<link rel="stylesheet" type="text/css" href="sapphire.css"/>
+
 <!-- Jquery is required for the API itself -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-<!-- Jquery UI is just used for this test page -->
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
-<!-- Tabs ripped from http://jqueryui.com/demos/tabs/ -->
-<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css"/>
-<link rel="stylesheet" type="text/css" href="main.css"/>
-<style type="text/css">
-.ui-tabs .ui-tabs-hide {
-         display: none;
-}
-</style>
-<script type="text/javascript">
-	$(function() {
-		$("#tabs").tabs({
-			collapsible: true
-		});
-	});
-</script>
-<!-- End tabs setup -->
 <script src="../JavascriptAPI/Mediawiki.js"></script>
 <script src="main.js"></script>
 
@@ -65,17 +51,18 @@ if (match !== null){
 <!-- End Mediawiki API setup -->
 <body>
 
-<div id="tabs">
-	<ul>
-		<li><a href="#tabs-0">0. Logged In?</a></li>
-		<li><a href="#tabs-1">1. Add a description</a></li>
-		<li><a href="#tabs-2">2. Add a logo</a></li>
-		<li><a href="#tabs-3">3. Pick Theme</a></li>
-		<li><a href="#tabs-4">4. Create First pages</a></li>
-		<li><a href="#tabs-5">5. Done</a></li>
+<div id="header" class="clearfix">
+	<ul id="progress">
+		<li id="progress_step1">1</li>
+		<li id="progress_step2">2</li>
+		<li id="progress_step3">3</li>
+		<li id="progress_step4">4</li>
+		<li id="progress_step5">5</li>
 	</ul>
+</div>
 
-<div id="tabs-0">
+<ul>
+<li style="display: none;">
         <div id="loginForm">
         <form onSubmit="return NWB.handleLoginForm(this)">
         <label class="formLabel">Username:</label> <input type="text" name="lgname" size="10">
@@ -95,11 +82,13 @@ if (match !== null){
                 $("#logoutForm").show();
         }
         </script>
-</div>
+</li>
 
 
 <!-- ##############  Add a description to main page ############## -->
-<div id="tabs-1">
+<li id="step1" class="step">
+<h1 class="headline">Describe your wiki</h1>
+<div class="wrapper">
 	<form onSubmit="return Mediawiki.handleDescriptionForm(this)">
 	<div id="desc_form_html">
 	Enter a description for the main page:<br />
@@ -119,9 +108,16 @@ if (match !== null){
 	});
 	</script>
 </div>
+<div class="nav">
+	<a href="#step2">Skip this step</a> or 
+	<button onclick="gotostep(2);"><span>Save Description</span></button>
+</div>
+</li>
 
 <!-- ############## Add a logo ############ -->
-<div id="tabs-2">
+<li id="step2" class="step">
+<h1 class="headline">Upload a logo</h1>
+<div class="wrapper">
 	<div id="logo_form_html">
 	<!-- Hidden iframe to handle the file upload -->
 	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
@@ -153,12 +149,19 @@ if (match !== null){
 		$("#logo_current").css("backgroundImage", "url(" + url + ")");
 	});
 	</script>
-
 </div>
+<div class="nav">
+	<span class="nav_reverse"><a href="#step1">Back to step 1</a></span>
+	<a href="#step3">Skip this step</a> or 
+	<button onclick="gotostep(3);"><span>Save Logo</span></button>
+</div>
+</li>
 
 <!-- ############## Pick Theme ############## -->
 
-<div id="tabs-3" style="height:300px;">
+<li id="step3" class="step">
+<h1 class="headline">Pick a Theme</h1>
+<div class="wrapper clearfix">
 <style type="text/css">
 .theme_selection {
 	float: left;
@@ -205,13 +208,20 @@ for (var i = 0; i < themes.length; i++){
 	}
 }
 </script>
-
 </div>
+<div class="nav">
+	<span class="nav_reverse"><a href="#step2">Back to step 2</a></span>
+	<a href="#step4">Skip this step</a> or
+	<button onclick="gotostep(4);"><span>Save Theme</span></button>
+</div>
+</li>
 
 
 <!-- ############## Create first pages ############## -->
 
-<div id="tabs-4" >
+<li id="step4" class="step">
+<h1 class="headline">Create pages</h1>
+<div class="wrapper">
 	Create your first pages
 	<script>
 	function addAnotherPage() {
@@ -232,6 +242,12 @@ for (var i = 0; i < themes.length; i++){
 	</div><!-- all_fp -->
 	</form>
 </div>
+<div class="nav">
+	<span class="nav_reverse"><a href="#step3">Back to step 3</a></span>
+	<a href="#step5">Skip this step</a> or 
+	<button onclick="gotostep(5);"><span>Create Pages</span></button>
+</div>
+</li>
 <script>
 NWB.handleFirstPages = function(f){
 
@@ -240,8 +256,17 @@ NWB.handleFirstPages = function(f){
 
 <!-- ############## Create first pages ############## -->
 
-<div id="tabs-5">
+<li id="step5" class="step">
+<h1 class="headline">You're Done!</h1>
+<div class="wrapper">
 	Done. Is this page needed?
 </div>
+<div class="nav">
+	<button><span>Go to your Wiki</span></button>
+</div>
+</li>
+</ul>
 
-</div> <!-- /div id=tabs -->
+
+</body>
+</html>
