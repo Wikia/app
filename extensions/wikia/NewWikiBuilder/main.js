@@ -108,7 +108,6 @@ NWB.firstPagesInputs = function (){
 			}
 		}
 	);
-	console.log("empties " + empties + " fulls " + fulls);
 
 	if (fulls > 100){
 		Mediawiki.updateStatus(NWB.msg("no-more-pages"), true);
