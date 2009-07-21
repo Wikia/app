@@ -467,17 +467,25 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 	$html = $wysiwygParser->parse($wikitext, $title, $options)->getText();
 	$wgWysiwygParserEnabled = false;
 
+	// check edgecases
 	global $wgWysiwygTableTemplateEdgeCase;
 	if(!empty($wgWysiwygTableTemplateEdgeCase)) {
+		wfDebug("Wysiwyg: edgecase found - template in table\n");
 		return array('type' => 'edgecase', 'edgecaseText' => wfMsg('wysiwyg-edgecase-info').' '.wfMsg('wysiwyg-edgecase-templateintable'));
 	}
 
 	global $wgWysiwygCommentEdgeCase;
 	if(!empty($wgWysiwygCommentEdgeCase)) {
+		wfDebug("Wysiwyg: edgecase found - HTML comment\n");
 		return array('type' => 'edgecase', 'edgecaseText' => wfMsg('wysiwyg-edgecase-info').' '.wfMsg('wysiwyg-edgecase-comment'));
 	}
 
-
+	global  $wgWysiwygSanitizerApplied;
+	if(!empty($wgWysiwygSanitizerApplied)) {
+		wfDebug("Wysiwyg: edgecase found - unclosed HTML tag\n");
+		return array('type' => 'edgecase', 'edgecaseText' => wfMsg('wysiwyg-edgecase-info').' '.wfMsg('wysiwyg-edgecase-unclosed-tags'));
+	}
+	
 	// detect empty line at the beginning of wikitext
 	if($emptyLinesAtStart == 1) {
 		$html = '<!--NEW_LINE-->' . $html;

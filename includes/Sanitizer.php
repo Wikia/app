@@ -499,6 +499,10 @@ class Sanitizer {
 			}
 			# Close off any remaining tags
 			while ( is_array( $tagstack ) && ($t = array_pop( $tagstack )) ) {
+				// RT #19013
+				global $wgWysiwygSanitizerApplied;
+				$wgWysiwygSanitizerApplied = true;
+
 				$text .= "</$t>\n";
 				if ( $t == 'table' ) { $tagstack = array_pop( $tablestack ); }
 			}
