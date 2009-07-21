@@ -244,7 +244,7 @@ NWB.iframeFormUpload = function(iframe){
 	// Use jquery to process the xml inside the iframe
 	var error = $("#" + iframe.id).contents().find("error").attr("info");
 	if (!Mediawiki.e(error)){
-		Mediawiki.updateStatus(NWB.msg("error-saving-logo") + " " + error);
+		Mediawiki.updateStatus(NWB.msg("error-saving-logo") + " " + error, true);
 		Mediawiki.d("Upload error: " + error);
 		return;
 	} 
