@@ -1759,7 +1759,6 @@ if ($custom_article_footer !== '') {
 ?>
 							</ul>
 							<?= $namespaceType == 'content' ? $actions : '' ?>
-							</div>
 						</td>
 						<td class="col2">
 <?php
