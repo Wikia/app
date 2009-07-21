@@ -171,6 +171,7 @@ a.bigButton small {
 #wikia_header #headerButtonHub {
 	left: -50%;
 	margin-top: 3px;
+	padding-bottom: 3px;
 }
 
 /*** BACKGROUND STRIP ***/
@@ -199,7 +200,7 @@ a.bigButton small {
 	float: right;
 	margin: 15px 16px 0 284px;
 	position: relative;
-	text-align: center; 
+	text-align: center;
 	z-index: 2;
 }
 #accent_graphic1 {
@@ -302,7 +303,7 @@ div.widget_cockpit_controls {
 }
 #widget_cockpit_list li {
 	float: left;
-	font-size: 8.5pt; 
+	font-size: 8.5pt;
 	height: 60px;
 	line-height: 11px;
 	margin: 0 5px;
@@ -441,7 +442,7 @@ div.widget_cockpit_controls {
 
 /* LeanMonaco code */
 body.ajax * {
-	cursor: wait !important;	
+	cursor: wait !important;
 }
 ul.jq-ui-autocomplete {
     position: absolute;
@@ -455,14 +456,14 @@ ul.jq-ui-autocomplete {
     color: #333;
     z-index: 30;
 }
-ul.jq-ui-autocomplete li { 
-  display: block; 
-  padding: .3em .5em .3em .3em; 
+ul.jq-ui-autocomplete li {
+  display: block;
+  padding: .3em .5em .3em .3em;
   overflow: hidden;
   width: 100%;
 }
 
-ul.jq-ui-autocomplete li.active { 
-  background-color: #3875d7; 
+ul.jq-ui-autocomplete li.active {
+  background-color: #3875d7;
   color: #fff;
 }
