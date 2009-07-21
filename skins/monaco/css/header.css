@@ -171,6 +171,7 @@ a.bigButton small {
 #wikia_header #headerButtonHub {
 	left: -50%;
 	margin-top: 3px;
+	padding-bottom: 3px;
 }
 
 /*** BACKGROUND STRIP ***/
