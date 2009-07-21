@@ -53,7 +53,7 @@ class ApiCreateMultiplePages extends ApiBase {
 		}
 
                 // Now let's check whether we're even allowed to do this
-                $errors = $titleObj->getUserPermissionsErrors('create', $wgUser);
+                $errors = $titleObj->getUserPermissionsErrors('createpage', $wgUser);
                 if(count($errors)) {
                         $this->dieUsageMsg($errors[0]);
 		}
