@@ -63,9 +63,6 @@ function SavePreferencesSkinChooser($pref) {
 	if ( !is_null($pref->mTheme) ) {
 		$wgUser->setOption('theme', $pref->mTheme);
 	}
-	if($pref->mSkin == 'monaco' && $wgRequest->getCheck('UseAwesome')) {
-		$pref->mSkin = 'awesome';
-	}
 
 	return true;
 }
@@ -80,14 +77,7 @@ function SkinChooserExtraToggle(&$extraToggle) {
 
 $wgHooks['AlternateSkinPreferences'][] = 'WikiaSkinPreferences';
 function WikiaSkinPreferences($pref) {
-	global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins, $wgUseMonaco2;
-
-	if($pref->mSkin == 'awesome') {
-		$pref->mSkin = 'monaco';
-		$UseAwesome = true;
-	} else {
-		$UseAwesome = false;
-	}
+	global $wgOut, $wgSkinTheme, $wgSkipSkins, $wgStylePath, $wgSkipThemes, $wgUser, $wgDefaultSkin, $wgDefaultTheme, $wgSkinPreviewPage, $wgAdminSkin, $wgSkipOldSkins;
 
 	global $wgForceSkin;
 	if(!empty($wgForceSkin)) {
@@ -133,7 +123,7 @@ function WikiaSkinPreferences($pref) {
 	foreach($wgSkinTheme as $skinKey => $skinVal) {
 
 		# Do not display skins which are defined in wgSkipSkins array
-		if(in_array($skinKey, $wgSkipSkins) || $skinKey == 'awesome') {
+		if(in_array($skinKey, $wgSkipSkins)) {
 			unset($validSkinNames[$skinKey]);
 			continue;
 		}
@@ -169,9 +159,6 @@ function WikiaSkinPreferences($pref) {
 		}
 		if( $skinKey == 'monaco' ) {
 			$wgOut->addHTML('<tr><td colspan=2>'.$pref->getToggle('showAds').'</td></tr>');
-		}
-		if ( $skinKey == 'monaco' && empty($wgUseMonaco2) ) {
-			$wgOut->addHTML('<tr><td colspan=2><div class="toggle"><input type="checkbox" name="UseAwesome" id="UseAwesome"'.($UseAwesome == true ? ' checked="checked"' : '').'/><span class="toggletext"><label for="UseAwesome"><b>Use Awesome / LeanMonaco</b></label></span></div></td></tr>');
 		}
 
 		$wgOut->addHTML('</table>');
@@ -227,7 +214,7 @@ function WikiaSkinPreferences($pref) {
 		foreach($wgSkinTheme as $skinKey => $skinVal) {
 
 			# Do not display skins which are defined in wgSkipSkins array
-			if(in_array($skinKey, $wgSkipSkins) || $skinKey == 'awesome') {
+			if(in_array($skinKey, $wgSkipSkins)) {
 				continue;
 			}
 			if($skinKey == 'quartz') {
@@ -321,7 +308,7 @@ function WikiaGetSkin ($user) {
 			wfProfileOut(__METHOD__);
 			return false;
 		}
-	} 
+	}
 
 	if(!empty($wgForceSkin)) {
 		$elems = split('-', $wgForceSkin);
@@ -361,9 +348,6 @@ function WikiaGetSkin ($user) {
 				if(!empty($wgAdminSkin)) {
 					$elems = split('-',$wgAdminSkin);
                     $userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
-					if($userSkin == 'awesome') {
-						$UseAwesome = true;
-					}
                     $userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 				} else {
 					$userSkin = $skinpref[0];
@@ -386,9 +370,6 @@ function WikiaGetSkin ($user) {
 		}
 	} else {
 		$userSkin = $user->getOption('skin');
-		if($userSkin == 'awesome') {
-			$UseAwesome = true;
-		}
 		$userTheme = $user->getOption('theme');
 
 		if(true == (bool) $user->getOption('skinoverwrite')) { # Doest have overwrite enabled?
@@ -400,10 +381,6 @@ function WikiaGetSkin ($user) {
 		}
 	}
 	wfProfileOut(__METHOD__.'::GetSkinLogic');
-
-	if(!empty($UseAwesome) && $userSkin == 'monaco') {
-		$userSkin = 'awesome';
-	}
 
 	$userSkin = $wgRequest->getVal('useskin', $userSkin);
 	$userTheme = $wgRequest->getVal('usetheme', $userTheme);
