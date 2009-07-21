@@ -502,7 +502,7 @@ DlgDocCLink			: "Hiperłącze",
 DlgDocCVisited		: "Odwiedzane hiperłącze",
 DlgDocCActive		: "Aktywne hiperłącze",
 DlgDocMargins		: "Marginesy strony",
-DlgDocMaTop			: "Górny",
+DlgDocMaTop		: "Górny",
 DlgDocMaLeft		: "Lewy",
 DlgDocMaRight		: "Prawy",
 DlgDocMaBottom		: "Dolny",
@@ -513,7 +513,7 @@ DlgDocMeCopy		: "Prawa autorskie",
 DlgDocPreview		: "Podgląd",
 
 // Templates Dialog
-Templates			: "Sablony",
+Templates		: "Szablony",
 DlgTemplatesTitle	: "Szablony zawartości",
 DlgTemplatesSelMsg	: "Wybierz szablon do otwarcia w edytorze<br>(obecna zawartość okna edytora zostanie utracona):",
 DlgTemplatesLoading	: "Ładowanie listy szablonów. Proszę czekać...",
@@ -534,30 +534,30 @@ DlgDivStyle		: "Style",	//MISSING
 DlgDivInlineStyle	: "Inline Style",	//MISSING
 
 // Wikia messages
-Move			: "Przesuń",
-DlgImageRemoveTitle	: "Usuń ten obrazek",
-DlgImageRemoveContent	: "Czy na pewno chcesz usunąć ten obrazek?",
-DlgVideoRemoveTitle	: "Usuń to wideo",
-DlgVideoRemoveContent	: "Czy na pewno chcesz usunąć to wideo?",
+Move			: "Przenieś",
+DlgImageRemoveTitle	: "Usuń grafikę",
+DlgImageRemoveContent	: "Czy jesteś pewien, że chcesz usunąć tę grafikę?",
+DlgVideoRemoveTitle	: "Usuń video",
+DlgVideoRemoveContent	: "Czy jesteś pewien, że chcesz usunąć to video?",
 
-DlgSwitchToWikitext	: "Aby edytować ten fragment artykułu, przejdź do trybu źródłowego klikając na 'Źródło dokumentu'",
+DlgSwitchToWikitext	: "Aby edytować tę sekcję musisz przełączyć się tryb WikiTekstu, klikając w przycisk 'Źródło dokumentu'",
 
 // templates
 TemplateOther		: "Inny szablon / słowo kluczowe",
-TemplateClickToEdit	: "Kliknij, aby edytować szablon lub przeciągnij go w inne miejsce artykułu",
-TemplateSearchFor	: "Szukaj szablonu",
+TemplateClickToEdit	: "Kliknij, aby przejść do edycji szablonu lub kliknij i przytrzymaj, aby przenieść go w inne miejsce",
+TemplateSearchFor	: "Wyszukaj szablon",
 TemplateInsert		: "Wstaw",
 TemplateBrowseFor	: "Przeglądaj szablony",
 TemplateMostFrequenty	: "Najczęściej używane",
 TemplateMagicWords	: "Słowa magiczne",
 TemplateMagicWordsLink	: "http://help.wikia.com/wiki/Help:Magic_words",
 TemplateChooseAnother	: "wybierz inny szablon",
-TemplateView		: "zobacz stronę szablonu (otwiera się w nowym oknie)",
-TemplateEditorHint	: "Zmień wartości parametrów po lewej stronie i kliknij Podgląd. Aby zapisać zmiany, kliknij Ok.",
+TemplateView		: "otwórz stronę szablonu (w nowym oknie)",
+TemplateEditorHint	: "Wprowadź wartości parametrów w pola po lewej i kliknij w Podgląd. Kiedy skończysz, kliknij Zapisz.",
 TemplateParameters	: "Parametry",
 
 // comments
-CommentClickToEdit	: "Kliknij, aby edytować komentarz lub przeciągnij go w inne miejsce artykułu",
+CommentClickToEdit	: "Kliknij, aby przejść do edycji komentarza lub kliknij i przytrzymaj, aby przenieść go w inne miejsce",
 Comment			: "Komentarz",
 CommentRemove		: "Usuń",
 
@@ -565,16 +565,16 @@ CommentRemove		: "Usuń",
 LinkInternal		: "Link wewnętrzny",
 LinkExternal		: "Link zewnętrzny",
 LinkArticleName		: "Nazwa artykułu",
-LinkInternalText	: "Opis linku (jeśli inny niż nazwa artykułu)",
-LinkURL			: "URL",
-LinkExternalText	: "Opis linku (jeśli inny niż URL)",
-LinkExternalNumbered	: "stwórz numerowany link",
+LinkInternalText	: "Opis (jeśli ma się różnić od Nazwy artykułu)",
+LinkURL			: "Adres",
+LinkExternalText	: "Opis (jeśli ma się różnić od Adresu)",
+LinkExternalNumbered	: "utwórz link numerowany",
 
 // toolbar
 ToolbarH2		: "Nagłówek sekcji",
-ToolbarH3		: "Nagłówek podsekcji",
-ToolbarPre		: "Preformatowany",
+ToolbarH3		: "Podsekcja",
+ToolbarPre		: "Tekst preformatowany",
 ToolbarNormal		: "Usuń nagłówek",
 ToolbarSignature	: "Dodaj swój podpis",
-ToolbarWidescreen	: "Szeroki ekran",
+ToolbarWidescreen	: "Włącz/wyłącz tryb pełnoekranowy"
 };
