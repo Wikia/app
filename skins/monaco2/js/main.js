@@ -38,12 +38,12 @@ function openHubMenu(event) {
 	event.stopPropagation();
 
 	if ( $('#headerMenuHub').exists() ) {
-		$("#headerMenuHub").makeHeaderMenu('headerButtonHub', openHubMenu);
+		$("#headerMenuHub").makeHeaderMenu('headerButtonHub', openHubMenu, {attach_to: "#headerButtonHub", attach_at: "bottom"});
 	}
 	else {
 		$.get(wgScript + '?action=ajax&rs=GetHubMenu&cb=' + wgMWrevId + '-' + wgStyleVersion, function(html) {
 			$("#positioned_elements").append(html);
-			$("#headerMenuHub").makeHeaderMenu('headerButtonHub', openHubMenu);
+			$("#headerMenuHub").makeHeaderMenu('headerButtonHub', openHubMenu, {attach_to: "#headerButtonHub", attach_at: "bottom"});
 		});
 	}
 }
