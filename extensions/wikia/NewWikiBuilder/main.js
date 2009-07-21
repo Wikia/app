@@ -256,6 +256,7 @@ NWB.iframeFormUpload = function(iframe){
 	if ($("#logo_article").val() == "Wiki-Preview.png"){
 		url = Mediawiki.getImageUrl("Wiki-Preview.png") + '?' + Math.random();
 		$("#logo_preview").css("backgroundImage", "url(" + url + ")");
+		$("#logo_preview_wrapper").show();
 	} else {
 		url = Mediawiki.getImageUrl("Wiki2.png") + '?' + Math.random();
 		$("#logo_current").css("backgroundImage", "url(" + url + ")");
