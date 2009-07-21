@@ -5,45 +5,15 @@ $(function() {
 	if (url.match("#")) {
 		urlAnchor = url.split('#')[1];
 	}
-	showStep(urlAnchor);
+	NWB.showStep(urlAnchor);
 
 	$(".step a").click(function() {
 		if (this.href.match("#")) {
-			showStep(this.href.split('#')[1]);
+			NWB.showStep(this.href.split('#')[1]);
 		}
 	});
-	checkStep(firstStep);
+	NWB.checkStep(firstStep);
 });
- 
-var currentStep;
-
-function showStep(stepName) {
-	$(".step").hide();
-	$("[id="+stepName+"]").show();
-	$("#progress li").removeClass("selected");
-	$("[id=progress_"+stepName+"]").addClass("selected");
-	currentStep = stepName;
-}
-
-//There is no back button click event. This checks the URL and sets the correct step.
-function checkStep(firstStep) {
-	window.setInterval(function() {
-		var url = document.location.toString();
-		var urlAnchor = firstStep;
-		if (url.match("#")) {
-			urlAnchor = url.split('#')[1];
-		}
-		if (currentStep != urlAnchor) {
-			showStep(urlAnchor);
-		}
-	}, 200);
-}
-
-function gotostep(step) {
-	var current = document.location.toString();
-	var url = current.split('#')[0];
-	document.location = url + "#step" + step;
-}
 
 var NWB = {
 	"language": "en", // TODO: Pull this from the browser or users settings
@@ -73,6 +43,37 @@ NWB.messages = {
 		"no-more-pages": "No more pages can be created"
 	}
 };
+
+NWB.currentStep = "";
+
+NWB.showStep = function(stepName) {
+	$(".step").hide();
+	$("[id="+stepName+"]").show();
+	$("#progress li").removeClass("selected");
+	$("[id=progress_"+stepName+"]").addClass("selected");
+	NWB.currentStep = stepName;
+}
+
+//There is no back button click event. This checks the URL and sets the correct step.
+NWB.checkStep = function(firstStep) {
+	window.setInterval(function() {
+		var url = document.location.toString();
+		var urlAnchor = firstStep;
+		if (url.match("#")) {
+			urlAnchor = url.split('#')[1];
+		}
+		if (NWB.currentStep != urlAnchor) {
+			NWB.showStep(urlAnchor);
+		}
+	}, 200);
+}
+
+NWB.gotostep = function(step) {
+	var current = document.location.toString();
+	var url = current.split('#')[0];
+	document.location = url + "#step" + step;
+}
+
 
 /* 1. Change the stylesheet on the current page 
  * 2. Save the value using the API
