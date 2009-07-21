@@ -53,12 +53,12 @@ function openUserMenu(event) {
 	event.stopPropagation();
 
 	if ( $('#headerMenuUser').exists() ) {
-		$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#wikia_page", attach_at: "top"});
+		$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#wikia_header .monaco_shrinkwrap", attach_at: "bottom"});
 	}
 	else {
 		$.get(wgScript + '?action=ajax&rs=GetUserMenu&rsargs[]='+ wgUserName +'&uselang='+ wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function(html) {
 			$("#positioned_elements").append(html);
-			$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#wikia_page", attach_at: "top"});
+			$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#wikia_header .monaco_shrinkwrap", attach_at: "bottom"});
 			$('#cockpit1').click(WidgetFramework.show_cockpit);
 		});
 	}
