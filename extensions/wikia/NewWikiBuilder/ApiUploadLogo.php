@@ -11,6 +11,7 @@
  *
  * Someday:
  * Handle user defined cropping & zooming
+ * Run "pngcrush" on the resulting image
  *
  * When this becomes available, consider using it instead:
  * http://www.mediawiki.org/wiki/API:Edit_-_Uploading_files
@@ -142,7 +143,12 @@ class ApiUploadLogo extends ApiBase {
                 $Upload = new UploadFromApi( $wgRequest , $params['title']);
 		$Upload->initializeFromApi($params, $convertedFile);
 		$Upload->execute();
-		$r['upload_status'] = $Upload->upload_status;
+
+		// Everything go ok?
+		if (!empty($Upload->upload_error)){
+			$this->getResult()->addValue(null, error, array('info' => $Upload->upload_error));
+			return;
+		}
 
                 # Get whole output (HTML) from above initializated UploadForm object
                 $html = $wgOut->getHTML();
@@ -220,9 +226,9 @@ class UploadFromApi extends UploadForm {
                 $details = null;
                 $value = $this->internalProcessUpload( $details );
 		if ($value == self::SUCCESS){
-			$this->upload_status = true;
+			$this->upload_error = null;
 		} else {
-			$this->upload_status = "Error uploading image, code $value: " . print_r($details, true);
+			$this->upload_error = "Error uploading image, code $value: " . print_r($details, true);
 		}
 	}
 }
