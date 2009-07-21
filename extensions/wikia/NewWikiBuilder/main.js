@@ -15,19 +15,19 @@ $(function() {
 	NWB.checkStep(firstStep);
 });
 
+var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Mediawiki
+
 var NWB = {
 	"language": "en", // TODO: Pull this from the browser or users settings
 	"descriptionSection" : 1,
-	"firstPagesBlocks" : 1
-};	      
-
-var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Mediawiki
-
-NWB.messages = {
-	"en": {
+	"firstPagesBlocks" : 1,
+	"currentStep": null,
+	"messages" : {
+	  "en": {
 		"choose-a-file": "Please choose a file",
 		"error-saving-description": "Error Saving Description",
 		"error-saving-articles": "Error Saving Articles",
+		"error-saving-logo": "Error Uploading Logo",
 		"saving-articles": "Saving Articles...",
 		"articles-saved": "Articles Saved",
 		"theme-saved": "Theme Choice Saved",
@@ -40,11 +40,16 @@ NWB.messages = {
 		"login-error": "Error logging in",
 		"logging-in": "Logging in...",
 		"api-error": "There was a problem: ",
-		"no-more-pages": "No more pages can be created"
+		"no-more-pages": "No more pages can be created",
+		"must-be-logged-in": "You must be logged in for this action"
+	  }
 	}
 };
 
-NWB.currentStep = "";
+
+NWB.apiFailed = function(msg){
+	alert(NWB.msg("api-error") + msg);
+};
 
 NWB.showStep = function(stepName) {
 	$(".step").hide();
@@ -52,7 +57,7 @@ NWB.showStep = function(stepName) {
 	$("#progress li").removeClass("selected");
 	$("[id=progress_"+stepName+"]").addClass("selected");
 	NWB.currentStep = stepName;
-}
+};
 
 //There is no back button click event. This checks the URL and sets the correct step.
 NWB.checkStep = function(firstStep) {
@@ -66,13 +71,13 @@ NWB.checkStep = function(firstStep) {
 			NWB.showStep(urlAnchor);
 		}
 	}, 200);
-}
+};
 
 NWB.gotostep = function(step) {
 	var current = document.location.toString();
 	var url = current.split('#')[0];
 	document.location = url + "#step" + step;
-}
+};
 
 
 /* 1. Change the stylesheet on the current page 
@@ -218,7 +223,8 @@ NWB.msg = function (msg){
 };
 
 NWB.iframeFormUpload = function(iframe){
-	var d;
+   try {
+	var d, xml, xmlString;
 	// Different browsers have different ways of getting the iframe's document
 	if (iframe.contentDocument) {
 		d = iframe.contentDocument;
@@ -228,10 +234,18 @@ NWB.iframeFormUpload = function(iframe){
 		d = window.frames[iframe.id].document;
 	}
 
-	// Bail if it loaded
+	// Bail if it isn't loaded yet
 	if (d.location.href == "about:blank") {
 		return;
 	}
+
+	// Use jquery to process the xml inside the iframe
+	var error = $("#" + iframe.id).contents().find("error").attr("info");
+	if (!Mediawiki.e(error)){
+		Mediawiki.updateStatus(NWB.msg("error-saving-logo") + " " + error);
+		Mediawiki.d("Upload error: " + error);
+		return;
+	} 
 
 	Mediawiki.updateStatus(NWB.msg("logo-uploaded"));
 
@@ -244,11 +258,20 @@ NWB.iframeFormUpload = function(iframe){
 		url = Mediawiki.getImageUrl("Wiki2.png") + '?' + Math.random();
 		$("#logo_current").css("backgroundImage", "url(" + url + ")");
 	}
+	return;
+
+     } catch (e) {
+         Mediawiki.updateStatus(NWB.msg("error-saving-logo"));
+         Mediawiki.debug(Mediawiki.print_r(e)); 
+     }
 };
 
 
 NWB.iframeFormInit = function (f){
-	if (Mediawiki.e(f.logo_file.value)){
+	if (! Mediawiki.isLoggedIn()) {
+		Mediawiki.updateStatus(NWB.msg("must-be-logged-in"), true);
+//		return false;
+	} else if (Mediawiki.e(f.logo_file.value)){
 		Mediawiki.updateStatus(NWB.msg("choose-a-file"), true);
 		return false;
 	}
@@ -256,10 +279,21 @@ NWB.iframeFormInit = function (f){
 	Mediawiki.updateStatus(NWB.msg("uploading-logo"), false, 30000);
 	return true;
 };
-
-
-NWB.apiFailed = function(msg){
-	alert(NWB.msg("api-error") + msg);
-};
         
+
+NWB.parseXml = function (xml) {
+	if( window.ActiveXObject && window.GetObject ) { 
+		// MS
+		var dom = new window.ActiveXObject( 'Microsoft.XMLDOM' );
+		dom.loadXML( xml );
+		return dom;
+	} else if ( window.DOMParser ) {
+		// W3C
+		return new window.DOMParser().parseFromString( xml, 'text/xml' );
+	} else {
+		throw ( 'No XML parser available' ); 
+	}
+};
+
+
 NWB.updateStatus = Mediawiki.updateStatus;
