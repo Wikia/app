@@ -358,7 +358,6 @@ class SkinMonaco extends SkinTemplate {
 
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
-
 		wfProfileOut(__METHOD__);
 	}
 
@@ -370,6 +369,7 @@ class SkinMonaco extends SkinTemplate {
 	 * @param $out OutputPage
 	 */
 	function setupSkinUserCss( OutputPage $out ){
+		$out->addStyle( 'common/commonPrint.css', 'print' );
 	}
 
 	/**
@@ -394,7 +394,7 @@ class SkinMonaco extends SkinTemplate {
 			wfProfileIn(__METHOD__ . ' - DATA ARRAY');
 			$data_array['footerlinks'] = $this->getFooterLinks();
 			$data_array['wikiafooterlinks'] = $this->getWikiaFooterLinks();
-			$data_array['categorylist'] = DataProvider::getCategoryList();
+			$data_array['categorylist'] = $this->getCategoryList();
 			$data_array['toolboxlinks'] = $this->getToolboxLinks();
 			//$data_array['sidebarmenu'] = $this->getSidebarLinks();
 			$data_array['relatedcommunities'] = $this->getRelatedCommunitiesLinks();
@@ -525,37 +525,6 @@ EOS;
 		// User actions links
 		$tpl->set('userlinks', $this->getUserLinks($tpl));
 
-		// marged JS files
-		// get the right package from StaticChute
-		$StaticChute = new StaticChute('js');
-		$StaticChute->useLocalChuteUrl();
-
-		if ($wgUser->isLoggedIn()) {
-			$package = 'monaco_loggedin_js';
-		}
-		else {
-			// list of namespaces and actions on which we should load package with YUI
-			$ns = array(NS_SPECIAL);
-			$actions = array('edit', 'preview', 'submit');
-
-			// add blog namespaces
-			global $wgEnableBlogArticles;
-			if (!empty($wgEnableBlogArticles)) {
-				$ns = array_merge($ns, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK));
-			}
-
-			if ( in_array($wgTitle->getNamespace(), $ns) || in_array($wgRequest->getVal('action', 'view'), $actions) ) {
-				// edit mode & special/blog pages (package with YUI)
-				$package = 'monaco_anon_everything_else_js';
-			}
-			else {
-				// view mode (package without YUI)
-				$package = 'monaco_anon_article_js';
-			}
-		}
-
-		$tpl->set('mergedJS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage($package) . "\n");
-
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -623,6 +592,38 @@ EOS;
 		}
 		wfProfileOut( __METHOD__ );
 		return $nodes;
+	}
+
+	/**
+	 * @author Inez Korczynski <inez@wikia.com>
+	 */
+	 private function getCategoryList() {
+		wfProfileIn(__METHOD__);
+		global $wgCat;
+		$cat['text'] = isset($wgCat['name']) ? $wgCat['name'] : '';
+		$cat['href'] = isset($wgCat['url']) ? $wgCat['url'] : '';
+		$message_key = 'shared-Monaco-category-list';
+		$nodes = array();
+
+		if(!isset($wgCat['id']) || null == ($lines = getMessageAsArray($message_key.'-'.$wgCat['id']))) {
+			wfDebugLog('monaco', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
+			if(null == ($lines = getMessageAsArray($message_key))) {
+				wfDebugLog('monaco', $message_key . ' - seems to be empty');
+				wfProfileOut( __METHOD__ );
+				return $nodes;
+			}
+		}
+
+		foreach($lines as $line) {
+			$depth = strrpos($line, '*');
+			if($depth === 0) {
+				$cat = parseItem($line);
+			} else if($depth === 1) {
+				$nodes[] = parseItem($line);
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return array('nodes' => $nodes, 'cat' => $cat);
 	}
 
 	/**
@@ -971,36 +972,34 @@ EOS;
 	 */
 	private function getReferencesLinks(&$tpl) {
 		wfProfileIn( __METHOD__ );
-		global $wgStylePath, $wgStyleVersion, $wgExtensionsPath, $wgContLang;
-		$js = $css = $cssstyle = array();
+		global $wgStylePath, $wgStyleVersion, $wgMergeStyleVersionCSS, $wgExtensionsPath, $wgContLang;
+		$js = $css = $cssstyle = $allinoneCSS = array();
 
 		// CSS - begin
+		$cssTemp = GetReferences('monaco_css', true);
+		foreach($cssTemp as $cssFile) {
+			$allinoneCSS[] = array('url' => $wgStylePath.'/'.$cssFile.'?'.$wgMergeStyleVersionCSS);
+		}
 
-		// merged CSS - use StaticChute
-		$StaticChute = new StaticChute('css');
-		$StaticChute->useLocalChuteUrl();
-
-		// RT #18765
 		if(isset($this->themename)) {
 			if($this->themename == 'custom') {
 				// ...do nothing - CSS will be added by MW core
 			} else if($this->themename == 'sapphire') {
 				 // ...do nothing
 			} else if($this->themename != '') {
-				$StaticChute->setTheme($this->themename);
+				$css[] = array('url' => $wgStylePath.'/monaco/'.$this->themename.'/css/main.css?'.$wgStyleVersion);
 			}
 		}
 
-		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n" );
-		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css_print') );
+		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
+		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
+		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
 
-		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
-		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
-		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
+		$css[] = array('url' => $wgStylePath.'/monaco/css/print.css?'.$wgStyleVersion, 'param' => empty($tpl->data['printable']) ? 'media="print" ' : '');
 
 		// RTL support
 		if ($wgContLang->isRTL()) {
-			$css[] = array('url' => $wgStylePath.'/monaco2/rtl.css?'.$wgStyleVersion);
+			$css[] = array('url' => $wgStylePath.'/monaco/rtl.css?'.$wgStyleVersion);
 		}
 
 		// CSS - end
@@ -1016,28 +1015,12 @@ EOS;
 
 		// JS - begin
 		if($tpl->data['jsvarurl']) {
-			// macbre: check for empty merged JS file
-			$s = '';
-			$s .= !isMsgEmpty('Common.js') ? wfMsgForContent('Common.js') : '';
-			$s .= !isMsgEmpty('Monaco.js') ? wfMsgForContent('Monaco.js') : '';
-
-			// eliminate multi-line comments in '/* ... */' form, at start of string
-			// taken from includes/api/ApiFormatJson_json.php
-			$s = trim(preg_replace('#^\s*/\*(.+)\*/#Us', '', $s));
-
-			if ($s != '') {
+			if(!isMsgEmpty('Common.js') ||  !isMsgEmpty('Monaco.js')) {
 				$js[] = array('url' => $tpl->data['jsvarurl'], 'mime' => 'text/javascript');
 			}
 		}
 		if($tpl->data['userjs']) {
-			// macbre: check for empty User:foo/skin.js
-			$userJStitle = Title::newFromText($this->userpage.'/monaco.js');
-			if ($userJStitle->exists()) {
-				$rev = Revision::newFromTitle($userJStitle, 0);
-				if (!empty($rev) && $rev->getText() != '') {
-					$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
-				}
-			}
+			$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
 		}
 		if($tpl->data['userjsprev']) {
 			$js[] = array('content' => $tpl->data['userjsprev'], 'mime' => 'text/javascript');
@@ -1045,7 +1028,7 @@ EOS;
 		// JS - end
 
 		wfProfileOut( __METHOD__ );
-		return array('js' => $js, 'css' => $css, 'cssstyle' => $cssstyle);
+		return array('js' => $js, 'css' => $css, 'cssstyle' => $cssstyle, 'allinone_css' => $allinoneCSS);
 	}
 
 	/**
@@ -1315,7 +1298,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces;
+		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgContentNamespaces;
 		$skin = $wgUser->getSkin();
 		$namespace = $wgTitle->getNamespace();
 
@@ -1325,16 +1308,24 @@ class MonacoTemplate extends QuickTemplate {
 		?>xmlns:<?php echo "{$tag}=\"{$ns}\" ";
 	} ?>xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
 <?php		wfProfileIn( __METHOD__ . '-head'); ?>
-	<head>
+<head>
 		<meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
                 <!-- Skin = <?php echo basename(__FILE__) ?> -->
 		<?php $this->html('headlinks') ?>
 
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php print Skin::makeGlobalVariablesScript( $this->data ); ?>
+		<style type="text/css">/*<![CDATA[*/
 <?php
-	$this->html('mergedCSS');
-
+	/* macbre: #3432 */
+	foreach($this->data['references']['allinone_css'] as $css) {
+?>
+			@import "<?= $css['url'] ?>";
+<?php
+	}
+?>
+		/*]]>*/</style>
+<?php
 	foreach($this->data['references']['css'] as $css) {
 ?>
 		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= htmlspecialchars($css['url']) ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
@@ -1342,7 +1333,7 @@ class MonacoTemplate extends QuickTemplate {
 <?php
 	}
 ?>
-		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco2/css/noscript.css" /></noscript>
+		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript>
 <?php
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
@@ -1350,14 +1341,13 @@ class MonacoTemplate extends QuickTemplate {
 <?php
 	}
 
-        echo "\t\t";
-        // Note this one is safe at the top because it's an image call, so it's not blocking like GA or Quantserve
-        echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
-
+	echo "\t\t";
+	// Note this one is safe at the top because it's an image call, so it's not blocking like GA or Quantserve
+	echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 	$this->html('csslinks');
 
 	if($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL) {
-		$this->html('mergedJS');
+		echo $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js");
 		foreach($this->data['references']['js'] as $script) {
 			if (!empty($script['url'])) {
 ?>
@@ -1374,10 +1364,10 @@ class MonacoTemplate extends QuickTemplate {
 	}
 
 ?>
-
 	</head>
 <?php		wfProfileOut( __METHOD__ . '-head'); ?>
 <?php		wfProfileIn( __METHOD__ . '-body'); ?>
+
 <?php
 	if (ArticleAdLogic::isMainPage()){
 		$isMainpage = ' mainpage';
@@ -1394,25 +1384,28 @@ class MonacoTemplate extends QuickTemplate {
 		$body_css_action = '';
 	}
 ?>
+
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
-<?php
-	// add hidden login-box, so firefox can fill it using stored login/password
-	// then copy it to AjaxLogin box
-	// TODO: move to AjaxLogin extension and use GetHTMLAfterBody hook
-	if ($wgUser->isAnon()) {
-?>
-		<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="display: none">
-			<input type="text" name="wpName" id="wpName1" tabindex="101" size="20" />
-			<input type="password" name="wpPassword" id="wpPassword1" tabindex="102" size="20" />
-			<input type="checkbox" name="wpRemember" id="wpRemember1" tabindex="104" value="1" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />
-		</form>
-<?
-	}
+			<div id="widget_cockpit" class="color1">
+				<div id="carousel-prev" class="widget_cockpit_controls">&laquo;</div>
+				<div id="carousel-next" class="widget_cockpit_controls"><div id="cockpit1_close"></div>&raquo;</div>
+				<div class="carousel-clip-region">
+					<ul id="widget_cockpit_list" class="carousel-list clearfix"></ul>
+				</div>
+			</div>
+			<div id="ghost"></div>
 
+<?php
 wfRunHooks('GetHTMLAfterBody', array ($this));
 ?>
-	<!-- HEADER -->
+
+		<div style="font-size: 1px; position: absolute;">
+			<a href="/wiki/Special:Recentchanges" accesskey="r">Recent changes</a>
+			<a href="/wiki/Special:Random" accesskey="x">Random page</a>
+		</div>
+
+		<!-- HEADER -->
 <?php
 
 // curse like cobranding
@@ -1433,6 +1426,11 @@ $central_url = !empty($wgLangToCentralMap[$wgContLang->getCode()]) ? $wgLangToCe
 $categorylist = $this->data['data']['categorylist'];
 if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
 ?>
+				<div style="background: #F00; margin: 0 auto; display: inline; padding-right: 20px; position: relative; display: none;">
+					<div style="height: 10px; width: 10px; background: #FF0; position: absolute; top: 0; right: 0;"></div>
+					GAMING
+				</div>
+
 				<div style="position: absolute; left: 50%;">
 				<dl id="headerButtonHub" class="headerMenuButton">
 					<dt><?= isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?></dt><dd>&nbsp;</dd>
@@ -1479,7 +1477,7 @@ if( $custom_user_data ) {
 					<a rel="nofollow" href="http://www.wikia.com/wiki/Special:CreateWiki" id="request_wiki"><?=wfMsg('createwikipagetitle')?></a>
 				</li>
 				<li id="userLogin">
-					<a rel="nofollow" class="bigButton ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>">
+					<a rel="nofollow" class="bigButton" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>">
 						<big><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></big>
 						<small>&nbsp;</small>
 					</a>
@@ -1499,6 +1497,62 @@ if( $custom_user_data ) {
 		</div>
 	</div>
 
+	<div class="monaco_shrinkwrap" style="position: absolute; top: 0; z-index: 20">
+<?php
+	if(!empty($categorylist)) {
+?>
+
+			<div id="headerMenuHub" class="headerMenu color1 reset">
+				<table cellspacing="0">
+				<tr>
+					<td>
+<?php
+		for($i = 0; $i < ceil(count($categorylist['nodes']) / 2); $i++) {
+?>
+						<a rel="nofollow" href="<?= htmlspecialchars($categorylist['nodes'][$i]['href']) ?>" id="headerMenuHub-<?= $i ?>"><?= $categorylist['nodes'][$i]['text'] ?></a><br />
+<?php
+		}
+?>
+					</td>
+					<td>
+<?php
+		for($i = ceil(count($categorylist['nodes']) / 2); $i < count($categorylist['nodes']); $i++) {
+?>
+						<a rel="nofollow" href="<?= htmlspecialchars($categorylist['nodes'][$i]['href']) ?>" id="headerMenuHub-<?= $i ?>"><?= $categorylist['nodes'][$i]['text'] ?></a><br />
+<?php
+		}
+?>
+					</td>
+				</tr>
+				</table>
+<?php
+		if($categorylist['cat']['text']) {
+?>
+				<a rel="nofollow" href="<?= htmlspecialchars($categorylist['cat']['href']) ?>" id="goToHub"><?= wfMsg('seemoredotdotdot') ?></a>
+<?php
+		}
+?>
+			</div>
+<?php
+	}
+
+	if(isset($this->data['userlinks']['more'])) {
+?>
+			<div id="headerMenuUser" class="headerMenu color1 reset">
+					<ul>
+<?php
+		foreach($this->data['userlinks']['more'] as $itemKey => $itemVal) {
+?>
+						<li <?= ($itemKey == 'widgets') ? 'id="cockpit1" ' : '' ?>class="yuimenuitem"><a rel="nofollow" href="<?= htmlspecialchars($itemVal['href']) ?>" class="yuimenuitemlabel" <?= $skin->tooltipAndAccesskey('pt-'.$itemKey) ?>><?= htmlspecialchars($itemVal['text']) ?></a></li>
+<?php
+		}
+?>
+					</ul>
+			</div>
+<?php
+	}
+?>
+	</div>
 	<div class="monaco_shrinkwrap"><div id="background_accent1"></div></div>
 	<div style="position: relative;"><div id="background_accent2"></div></div>
 
@@ -1563,7 +1617,7 @@ if(isset($this->data['articlelinks']['right']) && $showright ) {
 			<!-- ARTICLE -->
 <?php
 echo AdEngine::getInstance()->getSetupHtml();
-global $wgOut, $wgEnableAdsInContent, $wgAdsForceLeaderboards;
+global $wgOut, $wgEnableAdsInContent;
 $topAdCode = '';
 $topAdCodeDisplayed = false;
 if ($wgOut->isArticle()){
@@ -1574,13 +1628,12 @@ if ($wgOut->isArticle()){
 		}
 	} else if ( ArticleAdLogic::isContentPage()){
 
-		if (!empty($wgAdsForceLeaderboards)){
+		if ($wgEnableAdsInContent) {
 			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
 			if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 				$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD', false);
 			}
 		} else {
-			// Let the collision detection decide
 			if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
 				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
 			} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
@@ -1614,6 +1667,7 @@ if ($wgOut->isArticle()){
 					<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
 					<?php if($this->data['newtalk'] ) { ?><div class="usermessage"><?php $this->html('newtalk')  ?></div><?php } ?>
 					<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
+					<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#searchInput"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
 					<?php
 					// Print out call to top leaderboard or box ad, if it's a main page, or not in the bucket test
 					if (ArticleAdLogic::isMainPage() || !$topAdCodeDisplayed){
@@ -1661,7 +1715,17 @@ if ($wgOut->isArticle()){
 
 			</div>
 			<!-- /ARTICLE -->
-			<?php
+			<?php // Check to see if it is a super long article, if so, show bottom left nav skyscraper
+			global $wgContLang;
+			if ($wgOut->isArticle() &&
+			    !$wgContLang->isRTL() && // Since this is in the left nav, not suitable for right-to-left languages
+		            !ArticleAdLogic::isMainPage() &&
+			     ArticleAdLogic::isContentPage() &&
+			     ArticleAdLogic::isSuperLongArticle($this->data['bodytext'])) {
+				echo '<div style="position: absolute; height: 600px; width: 160px; margin-top: -600px; left: -190px;">' .
+					AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_3', true) .
+				     '</div>' . "\n";
+			}
 
 		wfProfileOut( __METHOD__ . '-article'); ?>
 
@@ -1742,19 +1806,17 @@ if ($custom_article_footer !== '') {
 								<li><a rel="nofollow" id="fe_edit_icon" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_edit_img" class="sprite" alt="<?= wfMsg('edit') ?>" /></a> <div><?= wfMsg('footer_1', $wgSitename) ?> <a id="fe_edit_link" rel="nofollow" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><?= wfMsg('footer_1.5') ?></a></div></li>
 <?php
 		}
-		if(is_object($wgArticle)) {
-			$timestamp = $wgArticle->getTimestamp();
-			$lastUpdate = $wgLang->date($timestamp);
-			$userId = $wgArticle->getUser();
-			if($userId > 0) {
-				$userText = $wgArticle->getUserText();
-				$userPageTitle = Title::makeTitle(NS_USER, $userText);
-				$userPageLink = $userPageTitle->getLocalUrl();
-				$userPageExists = $userPageTitle->exists();
+		$timestamp = $wgArticle->getTimestamp();
+		$lastUpdate = $wgLang->date($timestamp);
+		$userId = $wgArticle->getUser();
+		if($userId > 0) {
+			$userText = $wgArticle->getUserText();
+			$userPageTitle = Title::makeTitle(NS_USER, $userText);
+			$userPageLink = $userPageTitle->getLocalUrl();
+			$userPageExists = $userPageTitle->exists();
 ?>
 								<li><?= $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '' ?><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_user_img" class="sprite" alt="<?= wfMsg('userpage') ?>" /><?= $userPageExists ? '</a>' : '' ?> <div><?= wfMsg('footer_5', '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
 <?php
-			}
 		}
 ?>
 							</ul>
@@ -1872,7 +1934,7 @@ if ($custom_article_footer !== '') {
 
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
-		$this->html('mergedJS');
+		echo $wgUser->isLoggedIn() ? GetReferences("monaco_loggedin_js") : GetReferences("monaco_non_loggedin_js");
 		foreach($this->data['references']['js'] as $script) {
 ?>
 		<script type="<?= $script['mime'] ?>" src="<?= htmlspecialchars($script['url']) ?>"></script>
@@ -1880,7 +1942,7 @@ if ($custom_article_footer !== '') {
 		}
 		$this->html('headscripts');
 	}
-	echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
+	echo '<script type="text/javascript">for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}</script>' . "\n";
 
 if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders())){
 	// Reset elements with a "clear:none" to "clear:right" when the box ad is displayed
@@ -1930,7 +1992,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 		$GPcontent = '<img src="' . $wgStylePath . '/home/images/gp_media.png" width="128" height="22" alt="GamePro Media" />';
 		// on WoW add link to the image
 		if ($wgCityId == 490) {
-			$GPcontent = '<a href="http://www.idgentertainment.com" rel="nofollow">' . $GPcontent . '</a>';
+			$GPcontent = '<a href="http://www.idgentertainment.com">' . $GPcontent . '</a>';
 		}
 	}
 	//
@@ -2007,10 +2069,11 @@ if(count($wikiafooterlinks) > 0) {
 			<div class="widget" id="navigation_widget">
 				<div id="search_box" class="color1">
 					<form action="<?php $this->text('searchaction') ?>" id="searchform">
-						<input id="search_field" name="search" type="text" value="<?= htmlspecialchars($searchLabel) ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= htmlspecialchars($searchLabel) ?>" autocomplete="off"<?= $skin->tooltipAndAccesskey('search'); ?> />
+						<input id="search_field" name="search" type="text" title="<?= htmlspecialchars($searchLabel) ?>" value="" maxlength="200"<?= $skin->tooltipAndAccesskey('search'); ?> />
 						<input type="hidden" name="go" value="1" />
 						<input type="submit" id="search_button" value="" title="<?= wfMsgHtml('searchbutton') ?>" />
 					</form>
+					<div id="searchSuggestContainer" class="yui-ac-container"></div>
 				</div>
 <?php
 	$monacoSidebar = new MonacoSidebar();
@@ -2085,9 +2148,8 @@ if(count($wikiafooterlinks) > 0) {
 	}
 
 	if(is_array($linksArray) && count($linksArray) > 0) {
-		for ($i = 0, $max = max(array_keys($linksArray)); $i <= $max; $i++) {
-			$item = isset($linksArray[$i]) ? $linksArray[$i] : false;
-			$i & 1 ? $linksArrayR[] = $item : $linksArrayL[] = $item;
+		for ($i = 0, $len = count($linksArray); $i < $len; $i++) {
+			$i & 1 ? $linksArrayR[] = $linksArray[$i] : $linksArrayL[] = $linksArray[$i];
 		}
 	}
 
@@ -2101,14 +2163,10 @@ if(count($wikiafooterlinks) > 0) {
 <?php
 		if(is_array($linksArrayL) && count($linksArrayL) > 0) {
 			foreach($linksArrayL as $key => $val) {
-				if ($val === false) {
-					echo '<li>&nbsp;</li>';
-				} else {
-					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
+				$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
 						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $tracker ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
-				}
 			}
 		}
 ?>
@@ -2119,18 +2177,13 @@ if(count($wikiafooterlinks) > 0) {
 <?php
 		if(is_array($linksArrayR) && count($linksArrayR) > 0) {
 		    foreach($linksArrayR as $key => $val) {
-				if ($val === false) {
-					echo '<li>&nbsp;</li>';
-				} else {
-					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
+				$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
 						<li><a rel="nofollow" href="<?= htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?= $tracker ?>')"><?= htmlspecialchars($val['text']) ?></a></li>
 <?php
-				}
 			}
 		}
 ?>
-								<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r" rel="nofollow">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x" rel="nofollow">Random page</a></li>
 							</ul>
 						</td>
 					</tr>
@@ -2166,7 +2219,7 @@ if(count($wikiafooterlinks) > 0) {
 			<?php
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SLIMBOX_1', false);
 				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_2', false);
-				if ($wgOut->isArticle()){
+				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
 						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
@@ -2194,7 +2247,7 @@ echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
 echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
 global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
+echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('fat_monaco'));
 ?>
 <!-- End Analytics -->
 
@@ -2220,11 +2273,6 @@ wfRunHooks('SpecialFooter');
 wfProfileOut( __METHOD__ . '-body');
 ?>
 		<div id="positioned_elements" class="reset"></div>
-<?php
-	// RT #18411
-	$this->html('mergedCSSprint');
-?>
-
 	</body>
 </html>
 <?php

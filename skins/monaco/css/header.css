@@ -21,6 +21,7 @@
 
 #wikia_header .headerMenuButton {
 	cursor: pointer;
+	float: left;
 	margin-top: 13px;
 	overflow: hidden;
 	padding-right: 20px;
@@ -43,10 +44,8 @@
 }
 .headerMenuButton dd {
 	clip: rect(0px 300px 15px 280px);
-	float: right !important;
 	position: absolute;
 	right: 0;
-	top: 0;
 	width: 300px;
 }
 #wikia_header a.bigButton {
@@ -123,14 +122,14 @@ a.bigButton small {
 	border-width: 0 1px 1px;
 	border-style: solid;
 	border-color: #999;
-	display: none;
 	font-size: 9pt;
 	position: absolute;
 	-moz-opacity: .95;
 	opacity: .95;
 	overflow: hidden;
-	visibility: visible;
-	z-index: 1000;
+	top: 32px;
+	visibility: hidden;
+	z-index: 15;
 }
 .headerMenu a {
 	background: transparent;
@@ -145,8 +144,14 @@ a.bigButton small {
 	padding-bottom: 5px;
 	text-align: center;
 }
+.headerMenu .yui-menu-shadow {
+	display: none;
+}
 #wikia_header.headerMenu a {
 	background-color: transparent;
+}
+#headerMenuUser {
+	right: 35px;
 }
 #headerMenuUser ul {
 	padding: 3px;
@@ -161,6 +166,10 @@ a.bigButton small {
 	text-decoration: underline;
 }
 
+#headerMenuHub {
+	left: 10px;
+	top: 50px;
+}
 #wikiaBranding {
 	text-align: center;
 	padding-top: 5px;
@@ -169,9 +178,21 @@ a.bigButton small {
 	z-index: 2;
 }
 #wikia_header #headerButtonHub {
-	left: -50%;
 	margin-top: 3px;
+	margin-left: -50%;
 }
+/*
+#wikia_header #headerButtonHub {
+	background: #F00;
+	display: inline;
+	float: none;
+	margin: 0 auto;
+}
+#wikia_header #headerButtonHub * {
+	float: none;
+	display: inline;
+}
+*/
 
 /*** BACKGROUND STRIP ***/
 #background_strip {
@@ -313,6 +334,7 @@ div.widget_cockpit_controls {
 }
 #widget_cockpit_list li div.icon {
 	background-repeat: no-repeat;
+	cursor: move;
 	height: 50px;
 	left: 0;
 	position: absolute;
@@ -437,32 +459,4 @@ div.widget_cockpit_controls {
 }
 .WidgetAnswersThumb div {
 	background-image: url(http://images.wikia.com/common/skins/common/widgets/icons/widget_answers.png);
-}
-
-/* LeanMonaco code */
-body.ajax * {
-	cursor: wait !important;	
-}
-ul.jq-ui-autocomplete {
-    position: absolute;
-    overflow: hidden;
-    background-color: #fff;
-    border: 1px solid #aaa;
-    margin: 0px;
-    padding: 0;
-    list-style: none;
-    font: normal .75em/.75em Verdana, Arial, sans-serif;
-    color: #333;
-    z-index: 30;
-}
-ul.jq-ui-autocomplete li { 
-  display: block; 
-  padding: .3em .5em .3em .3em; 
-  overflow: hidden;
-  width: 100%;
-}
-
-ul.jq-ui-autocomplete li.active { 
-  background-color: #3875d7; 
-  color: #fff;
 }
