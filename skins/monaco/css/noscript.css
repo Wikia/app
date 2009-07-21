@@ -1,0 +1,23 @@
+#navigation {
+	display: block;
+}
+#navigation .widget {
+	border: 0;
+	margin-left: 10px;
+	position: static;
+}
+#navigation .widget ul li a {
+	font-size: 10pt;
+	font-weight: normal;
+}
+
+#wmuLinkDiv {
+	display: none;
+}
+
+/*** TOC improvements ***/
+body.TOCimprovements #toc ul,
+/* for shared help TOC */
+body.TOCimprovements #sharedtoc ul {
+	display: block;
+}
