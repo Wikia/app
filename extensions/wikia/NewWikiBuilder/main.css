@@ -1,6 +1,7 @@
 body {
 	font-family: "Helvetica", "Arial", "sans-serif";
 	font-size: 12pt;
+	line-height: 1.25em;
 	margin: 60px 40px 20px 40px;
 }
 form {
@@ -35,7 +36,7 @@ ul, li {
 .wrapper {
 	border-width: 1px; 
 	border-style: solid;
-	padding: 40px;	
+	padding: 20px 40px;	
 	-moz-border-radius-bottomleft: 7px;
 	-moz-border-radius-bottomright: 7px;
 	-webkit-border-bottom-left-radius: 7px;
@@ -85,7 +86,7 @@ ul, li {
 }
 /* Button styling research: http://www.filamentgroup.com/lab/update_styling_the_button_element_with_css_sliding_doors_now_with_image_spr/ */
 button {
-	background: transparent url(green_button_sprite.png) no-repeat right -57px; 
+	background: transparent url(button_sprite.png) no-repeat right -57px; 
 	position: relative;
 	border: 0; 
 	padding: 0 15px 0 0;
@@ -96,7 +97,7 @@ button::-moz-focus-inner {
 	border: none;  /* overrides extra padding in Firefox */
 }
 button span { 
-	background: transparent url(green_button_sprite.png) no-repeat left top; 
+	background: transparent url(button_sprite.png) no-repeat left top; 
 	color: #FFF;
 	font-family: "Arial Narrow", sans-serif;
 	font-size: 14pt;
@@ -114,11 +115,30 @@ button span {
 	}
 }
 
+button.secondary {
+	background-position: right -171px;
+}
+button.secondary span {
+	background-position: 0px -114px;
+	color: #000;
+}
 
+.note {
+	font-size: 10pt;
+	padding: 10px;
+}
 
+/*** Step 1: Description ***/
+#step1 .note {
+	margin-left: 550px;
+}
+#step1 textarea {
+	float: left;
+	width: 500px;
+	height: 175px;
+}
 
-
-/* logo page */
+/*** Step 2: Logo ***/
 #logo_current {
 	border: ridge black 3px;
 	height: 155px;
@@ -139,7 +159,42 @@ button span {
 	width: 216px;
 }
 
-/* Styles for status bar http://www.west-wind.com/WebLog/posts/388213.aspx */
+/*** Step 3: Theme ***/
+#theme_scroller {
+	overflow: auto;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+}
+#theme_scroller td {
+	font-weight: bold;
+	padding: 10px;
+	text-align: center;
+}
+#theme_scroller img {
+	border: 1px solid #AAA;
+	cursor: pointer;
+	display: block;
+	margin-bottom: 5px;
+}
+
+/*** Step 4: Create Pages ***/
+#all_fp {
+	float: left;
+}
+#all_fp li {
+	padding: 3px;
+}
+#all_fp label {
+	font-weight: bold;
+	margin-right: 5px;
+}
+#step4 .note {
+	margin-left: 400px;
+}
+
+/*** Styles for status bar http://www.west-wind.com/WebLog/posts/388213.aspx ***/
 
 .statusbar { 
 	background: black;
@@ -172,25 +227,6 @@ button span {
 }
 
 
-/*** Step 3: Theme ***/
-#theme_scroller {
-	overflow: auto;
-	-moz-border-radius-topleft: 7px;
-	-moz-border-radius-topright: 7px;
-	-webkit-border-top-left-radius: 7px;
-	-webkit-border-top-right-radius: 7px;
-}
-#theme_scroller td {
-	font-weight: bold;
-	padding: 10px;
-	text-align: center;
-}
-#theme_scroller img {
-	border: 1px solid #AAA;
-	cursor: pointer;
-	display: block;
-	margin-bottom: 5px;
-}
 
 .clearfix:after {
 	content: ".";

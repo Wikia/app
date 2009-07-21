@@ -85,12 +85,17 @@ if (match !== null){
 <!-- ##############  Add a description to main page ############## -->
 <li id="step1" class="step">
 <h1 class="headline">Describe your wiki</h1>
-<div class="wrapper">
+<div class="wrapper clearfix">
 	<form onSubmit="return NWB.handleDescriptionForm(this)">
 	<div id="desc_form_html">
-	Enter a description for the main page:<br />
-	<textarea name="desc" rows="10" cols="60" id="desc_textarea"></textarea><br />
-	<input type="submit" value="Save Description"/> <br />
+	<p>Let's start setting up <b>Wiki Name</b>. You can skip any step and come back to it later on.</p> 
+	<p>First: Write a message for the front page of your wiki that describes what <b>Wiki Name</b> is about.</p>
+	<textarea name="desc" id="desc_textarea"></textarea>
+	<div class="accent note">
+		<b>Example</b><br />
+		Muppet Wiki is an encyclopedia about everything related to Jim Henson, The Muppet Show and Sesame Street. The wiki format allows anyone to create or edit any article, so we can all work together to create a comprehensive database for fans of the Muppets.
+	</div>
+	<!--<input type="submit" value="Save Description"/> <br />-->
 	</form>
 	</div>
 
@@ -114,7 +119,7 @@ if (match !== null){
 <!-- ############## Add a logo ############ -->
 <li id="step2" class="step">
 <h1 class="headline">Upload a logo</h1>
-<div class="wrapper">
+<div class="wrapper clearfix">
 	<div id="logo_form_html">
 	<!-- Hidden iframe to handle the file upload -->
 	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
@@ -148,7 +153,9 @@ if (match !== null){
 	</script>
 </div>
 <div class="nav">
-	<span class="nav_reverse"><a href="#step1">Back to step 1</a></span>
+	<span class="nav_reverse">
+		<button class="secondary" onclick="gotostep(1);"><span>Back to step 1</span></button>
+	</span>
 	<a href="#step3">Skip this step</a> or 
 	<button onclick="gotostep(3);"><span>Save Logo</span></button>
 </div>
@@ -159,13 +166,8 @@ if (match !== null){
 <li id="step3" class="step">
 <h1 class="headline">Pick a Theme</h1>
 <div class="wrapper clearfix">
-<style type="text/css">
-.theme_selection {
-	float: left;
-	padding: 15px;
-}
-</style>
-Pick a theme
+	<p>Now choose a color scheme for <b>Wiki Name</b>.</p>
+	<p>You can change this later on if you change your mind.</p>
 	<div id="theme_template" style="display:none" class="theme_selekction">
 		<label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
 		<input onClick="NWB.changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
@@ -176,7 +178,7 @@ Pick a theme
 
 
 <script>
-var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Mediawiki
+var wgDefaultTheme = 'sapphire'; // TODO don't use hardcoded value, use it from Mediawiki
 
 // TODO: Pull this list from wgSkinTheme?
 
@@ -202,7 +204,9 @@ for (var i = 0; i < themes.length; i++){
 </script>
 </div>
 <div class="nav">
-	<span class="nav_reverse"><a href="#step2">Back to step 2</a></span>
+	<span class="nav_reverse">
+		<button class="secondary" onclick="gotostep(2);"><span>Back to step 2</span></button>
+	</span>
 	<a href="#step4">Skip this step</a> or
 	<button onclick="gotostep(4);"><span>Save Theme</span></button>
 </div>
@@ -213,8 +217,9 @@ for (var i = 0; i < themes.length; i++){
 
 <li id="step4" class="step">
 <h1 class="headline">Create pages</h1>
-<div class="wrapper">
-	Create your first pages
+<div class="wrapper clearfix">
+	<p>What do you want to write about?</p>
+	<p>Make a list of some pages you want to have on your wiki.</p>
 	<script>
 	function addAnotherPage() {
 		// TODO, as soon as you get to the last page, it adds another
@@ -223,22 +228,27 @@ for (var i = 0; i < themes.length; i++){
 	<form onSubmit="return NWB.handleFirstPages(this)" id="firstPagesForm">
 	<input type="hidden" name="category" value="Coming Soon"><!-- TODO: i18n -->
 	<div id="all_fp">
-	<div class="fp_block" id="fp_block_1">
-	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
-	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
-	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
-	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
-	Title: <input class="fp_page" type="text" onBlur="NWB.firstPagesInputs()"><br />
-	</div>
-	<!-- Other fp_blocks will be inserted into the dom here with
-		javascript:NWB.firstPagesInputs() -->
+		<ul class="fp_block" id="fp_block_1">
+			<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+			<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+			<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+			<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+			<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+		</ul>
+		<!-- Other fp_blocks will be inserted into the dom here with javascript:NWB.firstPagesInputs() -->
 	</div><!-- all_fp -->
-
-	<input type="submit" value="Save pages">
+	<div class="accent note">
+		<b>Example</b><br />
+		TBD Danny
+	</div>
+	<br style="clear: both;" />
+	<input type="submit" value="Save pages" />
 	</form>
 </div>
 <div class="nav">
-	<span class="nav_reverse"><a href="#step3">Back to step 3</a></span>
+	<span class="nav_reverse">
+		<button class="secondary" onclick="gotostep(3);"><span>Back to step 3</span></button>
+	</span>
 	<a href="#step5">Skip this step</a> or 
 	<button onclick="gotostep(5);"><span>Create Pages</span></button>
 </div>
@@ -247,9 +257,11 @@ for (var i = 0; i < themes.length; i++){
 <!-- ############## Dones ############## -->
 
 <li id="step5" class="step">
-<h1 class="headline">You're Done!</h1>
-<div class="wrapper">
-	Done. Is this page needed?
+<h1 class="headline">What's Next?</h1>
+<div class="wrapper clearfix">
+	<p>That's all the steps! <b>Wiki Name</b> is ready to go.</p>
+	<p>Now it's time to start writing and adding some pictures, to give people something to read when they find your wiki.</p>
+	<p>The list of pages that you made in the last step has been added to a "Coming Soon" box on the main page. You can get started by clicking on those pages. Have fun!</p>
 </div>
 <div class="nav">
 	<button><span>Go to your Wiki</span></button>

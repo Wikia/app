@@ -99,15 +99,13 @@ NWB.changeTheme = function (theme){
 NWB.firstPagesInputs = function (){
 	var empties = 0, fulls = 0;
 
-	$("#all_fp input[type='text']").each(
-		function(i, o){
-			if (Mediawiki.e(o.value)){
-				empties++;
-			} else {
-				fulls++;
-			}
+	$("#all_fp input[type='text']").each(function(i, o) {
+		if (Mediawiki.e(o.value)){
+			empties++;
+		} else {
+			fulls++;
 		}
-	);
+	});
 
 	if (fulls > 100){
 		Mediawiki.updateStatus(NWB.msg("no-more-pages"), true);
@@ -116,12 +114,7 @@ NWB.firstPagesInputs = function (){
 	if (empties <= 2){
 		NWB.firstPagesBlocks++;
 		// Add a block of 5 more titles
-		var id = 'fp_block_' + NWB.firstPagesBlocks;
-		var html = '<div id="' + id + '" style="display:none">' + 
-			   $("#fp_block_1").html() +
-			   '</div>';
-		$("#all_fp").append(html);
-		$("#" + id).fadeIn();
+		$('<ul id="fp_block_' + NWB.firstPagesBlocks + '" style="display: none;">' + $("#fp_block_1").html() + '</ul>').appendTo("#all_fp").fadeIn();
 	}
 };
 
