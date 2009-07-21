@@ -18,13 +18,13 @@ $MF['monobook_js']['type'] = 'js';
 $MF['monobook_js']['target'] = 'monobook/allinone.js';
 
 $MF['monaco_loggedin_js']['type'] = 'js';
-$MF['monaco_loggedin_js']['target'] = 'monaco/js/allinone_loggedin.js';
+$MF['monaco_loggedin_js']['target'] = 'monaco_old/js/allinone_loggedin.js';
 
 $MF['monaco_non_loggedin_js']['type'] = 'js';
-$MF['monaco_non_loggedin_js']['target'] = 'monaco/js/allinone_non_loggedin.js';
+$MF['monaco_non_loggedin_js']['target'] = 'monaco_old/js/allinone_non_loggedin.js';
 
 $MF['monaco_css']['type'] = 'css';
-$MF['monaco_css']['target'] = 'monaco/css/allinone.css';
+$MF['monaco_css']['target'] = 'monaco_old/css/allinone.css';
 
 /* LeanMonaco */
 $MF['awesome_loggedin_js']['type'] = 'js';
