@@ -64,6 +64,9 @@ function RenderAdSkin() {
 			*/
 			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/superpages.css?'. $wgAdSkinVersion .'" />';
 			break;
+		case "iphone_games":
+			echo '<link rel="stylesheet" type="text/css" href="'. $wgExtensionsPath .'/wikia/AdSkin/css/iphone_games.css?'. $wgAdSkinVersion .'" />';
+			break;
 		}	
 	}
 
@@ -73,6 +76,11 @@ function RenderAdSkin() {
 function RenderAdSkinJS() {
 	global $wgUser, $wgExtensionsPath, $wgAdSkin, $wgAdSkinVersion;
 	
+	// Disable if not the main page
+	if (!ArticleAdLogic::isMainPage()) {
+		return true;
+	}
+
 	if (is_object($wgUser) && $wgUser->isLoggedIn() ){
 		return true;
 	}
@@ -83,7 +91,11 @@ function RenderAdSkinJS() {
 			echo '<script type="text/javascript" src="'. $wgExtensionsPath .'/wikia/AdSkin/js/warhammer.js?'. $wgAdSkinVersion .'"></script>';
 			echo '<A HREF="http://ad.doubleclick.net/jump/N2790.Wikia/B3436947.10;sz=1x1;ord='. time() .'?"><IMG SRC="http://ad.doubleclick.net/ad/N2790.Wikia/B3436947.10;sz=1x1;ord='. time() .'?" BORDER=0 WIDTH=1 HEIGHT=1 ALT="Click Here"></A>'; 
 			break;
+		case "iphone_games":
+			echo '<script type="text/javascript" src="'. $wgExtensionsPath .'/wikia/AdSkin/js/iphone_games.js?'. $wgAdSkinVersion .'"></script>';
+			break;
 		}
+
 	}
 	
 	return true;
