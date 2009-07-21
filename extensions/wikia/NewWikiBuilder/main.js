@@ -13,6 +13,9 @@ $(function() {
 		}
 	});
 	NWB.checkStep(firstStep);
+
+	$("#step1_form").submit(NWB.handleDescriptionForm);
+	$("#step4_form").submit(NWB.handleFirstPages);
 });
 
 var wgDefaultTheme = 'slate'; // TODO don't use hardcoded value, use it from Mediawiki
@@ -124,8 +127,7 @@ NWB.firstPagesInputs = function (){
 	}
 };
 
-
-NWB.handleDescriptionForm = function (f){
+NWB.handleDescriptionForm = function (event){
 	try {
              // Save the article
              Mediawiki.updateStatus(NWB.msg("saving-description"));
@@ -137,18 +139,18 @@ NWB.handleDescriptionForm = function (f){
                   "text": $("#desc_textarea").val()}, 
                   function(){
                           NWB.updateStatus(NWB.msg("description-saved"));
+			  NWB.gotostep(2);
                   },
                   NWB.apiFailed);
         } catch (e) {
                   Mediawiki.updateStatus(NWB.msg("error-saving-description"));
                   Mediawiki.debug(Mediawiki.print_r(e));
         }
-
-        return false; // Return false so that the form doesn't submit
+	event.preventDefault();
 };
 
 
-NWB.handleFirstPages = function (f){
+NWB.handleFirstPages = function (event){
 	try {
 		Mediawiki.updateStatus(NWB.msg("saving-articles"));
 
@@ -165,14 +167,13 @@ NWB.handleFirstPages = function (f){
                 Mediawiki.apiCall({
                         "action" : "createmultiplepages",
 			"pagelist" : pages.join("|"),
-                        "category" : f.category.value
+                        "category" : this.category.value
                         }, NWB.handleFirstPagesCallback, NWB.apiError, "POST");
         } catch (e) {
                   Mediawiki.updateStatus(NWB.msg("error-saving-articles"));
                   Mediawiki.debug(Mediawiki.print_r(e));
         }
-
-        return false; // Return false so that the form doesn't submit
+	event.preventDefault();
 };
 
 
@@ -185,6 +186,7 @@ NWB.handleFirstPagesCallback = function (result){
 			count++;
 		}
 		Mediawiki.updateStatus(count + " " + NWB.msg("articles-saved"));
+		NWB.gotostep(5);
 	}
 };
 
