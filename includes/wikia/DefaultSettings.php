@@ -200,6 +200,7 @@ $wgSkipSkins = array(
 		'wowwiki',
 		'lostbook',
 		'quartz',
+		'monaco_old'
 );
 /**
  * @name wgSkipOldSkins
@@ -212,7 +213,6 @@ $wgSkipOldSkins = array(
 		'myskin',
 		'simple',
 		'standard',
-		'monaco2'
 );
 
 /**

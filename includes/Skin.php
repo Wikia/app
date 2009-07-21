@@ -137,19 +137,14 @@ class Skin extends Linker {
 	static function &newFromKey( $key ) {
 		global $wgStyleDirectory, $wgCityId, $wgUseMonaco2;
 
-		if($key == 'awesome') {
-			$key = 'monaco';
-			$awesome = true;
-		}
-
 		$key = Skin::normalizeKey( $key );
 
 		$skinNames = Skin::getSkinNames();
 		$skinName = $skinNames[$key];
 		$className = 'Skin'.ucfirst($key);
 
-		if(($skinName == 'Monaco' && !empty($wgUseMonaco2)) || !empty($awesome)) {
-			$skinName = 'Monaco2';
+		if($skinName == 'Monaco' && empty($wgUseMonaco2)) {
+			$skinName = 'Monaco_old';
 		}
 
 		# Grab the skin class and initialise it.
