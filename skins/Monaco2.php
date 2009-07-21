@@ -1342,7 +1342,7 @@ class MonacoTemplate extends QuickTemplate {
 <?php
 	}
 ?>
-		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco2/css/noscript.css" /></noscript>
+		<object><noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco2/css/noscript.css" /></noscript></object>
 <?php
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
@@ -1759,7 +1759,6 @@ if ($custom_article_footer !== '') {
 ?>
 							</ul>
 							<?= $namespaceType == 'content' ? $actions : '' ?>
-							</div>
 						</td>
 						<td class="col2">
 <?php
