@@ -1342,7 +1342,7 @@ class MonacoTemplate extends QuickTemplate {
 <?php
 	}
 ?>
-		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript>
+		<object><noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript></object>
 <?php
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
