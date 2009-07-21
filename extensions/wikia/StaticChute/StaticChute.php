@@ -44,11 +44,11 @@ class StaticChute {
 			'common/ajax.js',
 			'common/urchin.js',
 			'common/wikibits.js',
-			'monaco2/js/main.js',
-			'monaco2/js/tracker.js',
-			'monaco2/js/SearchAutoComplete.js',
+			'monaco/js/main.js',
+			'monaco/js/tracker.js',
+			'monaco/js/SearchAutoComplete.js',
 			'common/widgets/js/widgetsConfig.js',
-			'monaco2/js/widgetsFramework.js',
+			'monaco/js/widgetsFramework.js',
 			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 			'../extensions/wikia/AdEngine/AdEngine.js',
 			'../extensions/wikia/Userengagement/Userengagement.js',
@@ -79,11 +79,11 @@ class StaticChute {
 			'common/urchin.js',
 			'common/wikibits.js',
 			'common/ajaxwatch.js',
-			'monaco2/js/main.js',
-			'monaco2/js/tracker.js',
-			'monaco2/js/SearchAutoComplete.js',
+			'monaco/js/main.js',
+			'monaco/js/tracker.js',
+			'monaco/js/SearchAutoComplete.js',
 			'common/widgets/js/widgetsConfig.js',
-			'monaco2/js/widgetsFramework.js',
+			'monaco/js/widgetsFramework.js',
 			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 			'../extensions/wikia/AdEngine/AdEngine.js',
 			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
@@ -110,11 +110,11 @@ class StaticChute {
 			'common/ajax.js',
 			'common/urchin.js',
 			'common/wikibits.js',
-			'monaco2/js/main.js',
-			'monaco2/js/tracker.js',
-			'monaco2/js/SearchAutoComplete.js',
+			'monaco/js/main.js',
+			'monaco/js/tracker.js',
+			'monaco/js/SearchAutoComplete.js',
 			'common/widgets/js/widgetsConfig.js',
-			'monaco2/js/widgetsFramework.js',
+			'monaco/js/widgetsFramework.js',
 			'../extensions/wikia/ProblemReports/js/ProblemReports-loader.js',
 			'../extensions/wikia/AdEngine/AdEngine.js',
 			'../extensions/wikia/Userengagement/Userengagement.js',
@@ -167,22 +167,22 @@ class StaticChute {
 			'common/yui_2.5.2/container/assets/container.css',
 			'common/yui_2.5.2/tabview/assets/tabview.css',
         		'common/shared.css',
-			'monaco2/css/monobook_modified.css',
-			'monaco2/css/reset_modified.css',
-			'monaco2/css/root.css',
-			'monaco2/css/header.css',
-			'monaco2/css/article.css',
-			'monaco2/css/widgets.css',
-			'monaco2/css/footer.css',
-			'monaco2/css/star_rating.css',
-			'monaco2/css/ny.css',
+			'monaco/css/monobook_modified.css',
+			'monaco/css/reset_modified.css',
+			'monaco/css/root.css',
+			'monaco/css/header.css',
+			'monaco/css/article.css',
+			'monaco/css/widgets.css',
+			'monaco/css/footer.css',
+			'monaco/css/star_rating.css',
+			'monaco/css/ny.css',
 			'../extensions/wikia/Blogs/css/Blogs.css',
 		);
 		$this->config['monaco_css'] = array_merge($this->config['monaco_css'], $widgetsAssets['css']);
 
 		// printable CSS
 		$this->config['monaco_css_print'] = array(
-			'monaco2/css/print.css',
+			'monaco/css/print.css',
 			'common/commonPrint.css',
 		);
 
@@ -252,7 +252,7 @@ class StaticChute {
 		switch($package) {
 			case 'monaco_css':
 				if (!empty($args['usetheme'])) {
-					return array('monaco2/' . basename($args['usetheme']) . '/css/main.css');
+					return array('monaco/' . basename($args['usetheme']) . '/css/main.css');
 				}
 				break;
 		}
@@ -283,7 +283,7 @@ class StaticChute {
 	public function getChecksum($files){
 		$data = '';
 		foreach($files as $file){
-			$data .= file_get_contents($file);	
+			$data .= file_get_contents($file);
 		}
 		return md5($data);
 	}
