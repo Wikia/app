@@ -105,29 +105,36 @@ if (match !== null){
 <li id="step2" class="step">
 <h1 class="headline">Upload a logo</h1>
 <div class="wrapper clearfix">
-	<div id="logo_form_html">
+	<p>Next: Choose a logo for <b>Wiki Name</b>.</p>
+	<p>Upload a picture from your computer to represent your wiki.</p>
+	<p>You can skip this step if you don't have a picture that you want to use right now.</p>
+	
 	<!-- Hidden iframe to handle the file upload -->
 	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
+
+	<div style="float: left;">
 	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)'>
-	<input type="hidden" name="action" value="uploadlogo">	
-	<input type="hidden" name="format" value="xml">	
-	<input id="logo_article" type="hidden" name="title" value="Wiki2.png">	
-	Upload a logo<p>
-	<input type="file" name="logo_file"><br />
-	<p>
-	<input type="submit" value="Preview" onClick="this.form.title.value='Wiki-Preview.png'"/> 
-	<input type="submit" value="Save" onClick="this.form.title.value='Wiki2.png'"/> 
+		<input type="hidden" name="action" value="uploadlogo">	
+		<input type="hidden" name="format" value="xml">	
+		<input id="logo_article" type="hidden" name="title" value="Wiki2.png">	
+		<label>Choose logo:</label><input type="file" name="logo_file"> <input type="submit" value="Preview" onClick="this.form.title.value='Wiki-Preview.png'"/> 
+		<!--<input type="submit" value="Save" onClick="this.form.title.value='Wiki2.png'"/>-->
 	</form>
+
+	<div id="logo_preview_wrapper">
+		<label>Logo preview:</label>
+		<div id="logo_preview"></div>
 	</div>
-
-	<!-- Christian: help. Float! -->
-	<table>
-		<tr>
-			<td><div id="logo_current"></div></td>
-			<td><div id="logo_preview">Logo preview</div></td>
-		</tr>
-	</table>
-
+	
+	<div id="logo_current" style="display: none;"></div>
+	
+	</div><!--float-->
+	<div class="accent note clearfix">
+		<b>Example</b><br />
+		<img src="sample_logo.jpg" id="sample_logo" />
+		This would be a good logo for a skateboarding wiki.
+		<p>Your logo will automatically be resized and saved in the proper file format.</p>
+	</div>
 	<script> 
 	// Fill in the background image for the logo
 	$(function() {
@@ -213,11 +220,11 @@ for (var i = 0; i < themes.length; i++){
 		<input type="hidden" name="category" value="Coming Soon"><!-- TODO: i18n -->
 		<div id="all_fp">
 			<ul class="fp_block" id="fp_block_1">
-				<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
-				<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
-				<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
-				<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
-				<li><label>Title:</label><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+				<li><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+				<li><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+				<li><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+				<li><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+				<li><input class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
 			</ul>
 			<!-- Other fp_blocks will be inserted into the dom here with javascript:NWB.firstPagesInputs() -->
 		</div><!-- all_fp -->

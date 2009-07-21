@@ -146,17 +146,28 @@ button.secondary span {
 	background-position:center center;
 	background-repeat:no-repeat;
 }
+#step2 .note {
+	margin-left: 525px;
+}
+#sample_logo {
+	float: right;
+	margin-left: 10px;
+}
+#step2 label {
+	display: block;
+	font-weight: bold;
+	float: left;
+	width: 150px;
+}
+#logo_preview_wrapper {
+	display: none;
+	margin-top: 20px;
+}
 
 #logo_preview {
-	background-position:center center;
-	background-repeat:no-repeat;
-	background-color: lightgray;
-	border: ridge black 3px;
-	color: gray;
+	float: left;
 	height: 155px;
-	text-align: center;
-	text-vertical-align: center;
-	width: 216px;
+	width: 200px;
 }
 
 /*** Step 3: Theme ***/
