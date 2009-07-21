@@ -966,7 +966,7 @@ EOS;
 	/**
 	 * Create arrays containing refereces to JS and CSS files used in skin
 	 *
-	 * @return array
+ * @return array
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
 	private function getReferencesLinks(&$tpl) {
@@ -1403,9 +1403,9 @@ class MonacoTemplate extends QuickTemplate {
 	if ($wgUser->isAnon()) {
 ?>
 		<form action="" method="post" name="userajaxloginform" id="userajaxloginform" style="display: none">
-			<input type="text" name="wpName" id="wpName1" tabindex="101" size="20" />
-			<input type="password" name="wpPassword" id="wpPassword1" tabindex="102" size="20" />
-			<input type="checkbox" name="wpRemember" id="wpRemember1" tabindex="104" value="1" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />
+			<input type="text" name="wpName" id="wpName1Ajax" tabindex="101" size="20" />
+			<input type="password" name="wpPassword" id="wpPassword1Ajax" tabindex="102" size="20" />
+			<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />
 		</form>
 <?
 	}

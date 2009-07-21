@@ -7,9 +7,9 @@ var AjaxLogin = {
 
 		// move login/password/remember fields from hidden form to AjaxLogin
 		var labels = this.form.find('label');
-		$('#wpName1').insertAfter(labels[0]);
-		$('#wpPassword1').insertAfter(labels[1]);
-		$('#wpRemember1').insertBefore(labels[2]);
+		$('#wpName1Ajax').insertAfter(labels[0]);
+		$('#wpPassword1Ajax').insertAfter(labels[1]);
+		$('#wpRemember1Ajax').insertBefore(labels[2]);
 
 		// remove hidden form
 		$('#userajaxloginform').remove();
