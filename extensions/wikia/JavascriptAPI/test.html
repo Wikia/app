@@ -23,7 +23,10 @@
 <script>
 // Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
 Mediawiki.cookiePrefix = "wikicities";
-Mediawiki.debugLevel = 5;
+var match = window.location.search.match(/js_debug=([0-9])/);
+if (match !== null){
+        Mediawiki.debugLevel = match[1];
+}
 </script>
 <!-- End Mediawiki API setup -->
 
@@ -48,7 +51,10 @@ Mediawiki.debugLevel = 5;
 
 	<div id="logoutForm" style="display:none">
 		You are logged in.
-		<input type="button" value="logout" onClick="return Mediawiki.logout(handleLogoutForm)"/>
+		<input type="button" value="Logout" onClick="Mediawiki.logout(function(){
+			$('#logoutForm').hide();
+			$('#loginForm').fadeIn();
+		})"/>
 	</div>
 
 	<script>
@@ -59,10 +65,8 @@ Mediawiki.debugLevel = 5;
 
 	function handleLoginForm(f){
 		try { 
-			Mediawiki.apiUser = f.lgname.value;
-			Mediawiki.apiPass = f.lgpassword.value;
 			Mediawiki.updateStatus("Logging in...");
-			Mediawiki.login(loginWorked, apiFailed);
+			Mediawiki.login(f.lgname.value, f.lgpassword.value, loginWorked, apiFailed);
 		} catch (e) {
 			Mediawiki.updateStatus( "Error logging in:" + Mediawiki.print_r(e));	
 		}
@@ -75,13 +79,7 @@ Mediawiki.debugLevel = 5;
 	}
 
 	function apiFailed(msg){
-		alert("ERROR from API:\n" + msg);
 		Mediawiki.updateStatus("ERROR from API: " + msg, true);
-	}
-	function handleLogoutForm(f){
-		Mediawiki.updateStatus("Logout successful");
-		$("#logoutForm").fadeOut();
-		$("#loginForm").fadeIn();
 	}
 	</script>
 </div>

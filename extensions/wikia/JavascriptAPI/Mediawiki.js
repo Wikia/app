@@ -5,18 +5,11 @@
 var Mediawiki = {
 	// apiUrl must be on the same domain for write access
 	apiUrl		: "/api.php",
-	apiUser		: null, // Defaults to anon
-	apiPass		: null, // Defaults to anon
 	apiTimeout	: 10000, // How long to wait for request, in milliseconds
 	debugLevel	: 0,
 	cookiePrefix	: null, // http://www.mediawiki.org/wiki/Manual:$wgCookiePrefix
-	cookieMap	: {
-		// Map of cookie names to member variables
-		"UserID"	: "lguserid",
-		"UserName"	: "lgusername",
-		"Token"		: "lgtoken",
-		"_session"	: "sessionid"
-	},
+	cookiePrefixApi	: "jsapi", // used if using httpcookies
+	cookieNames	: [ "UserID", "UserName", "Token", "_session" ],
 	sessionLength	: 86400,
 	statusBar	: null
 };
@@ -325,28 +318,23 @@ Mediawiki.followRedirect = function(title){
 /* The mediawiki login cookies are prefixed. Look to see if we can figure it out by looking at the cookie.
  * null will be returned if there is no matching cookies, otherwise the string */
 Mediawiki.getCookiePrefix = function( ) {
-	if (Mediawiki.cookiePrefix !== null){
-		// It's already been set
-		return Mediawiki.cookiePrefix;
-	} else {
-		// Try to determine it automagically with hokey regexp. Could [should?] we query the API?
-		for (var cookieName in Mediawiki.cookieMap) {
-			var reg = new RegExp("([^ ;]*)" + cookieName + "=[^;]");
-			var match = document.cookie.match(reg);
-			if (match === null ) {
-				return null;
-			}
-		} 
-	
-		// If it got this far, all the cookies were found, and match[1] contains the cookie prefix
-		return match[1];
-	}
+	// Try to determine it automagically with hokey regexp. Could [should?] we query the API?
+	for (var i = 0; i < Mediawiki.cookieNames.length; i++) {
+		var reg = new RegExp("([^ ;]*)" + Mediawiki.cookieNames[i] + "=[^;]");
+		var match = document.cookie.match(reg);
+		if (match === null ) {
+			return null;
+		}
+	} 
+
+	// If it got this far, all the cookies were found, and match[1] contains the cookie prefix
+	return match[1];
 };
 
 
 Mediawiki.getImageUrl = function(image){
 	if (!image.match(/:/)){
-		image = "Image:" + image;
+		image = "File:" + image; // A little confusion on if I should use Image: here...
 	}
 
 	var apiParams = {
@@ -437,8 +425,8 @@ Mediawiki.getToken = function(titles, tokenType){
 /* Check the current page, and then the cookies for a login. Return username if logged in, otherwise false */
 Mediawiki.isLoggedIn = function( ){
 	try {
-	  if (!Mediawiki.e(Mediawiki.lgusername)){
-		  return Mediawiki.lgusername;
+	  if (!Mediawiki.e(Mediawiki.UserName)){
+		  return Mediawiki.UserName;
 	  }
 
 	  var cookiePrefix = Mediawiki.getCookiePrefix();
@@ -446,7 +434,7 @@ Mediawiki.isLoggedIn = function( ){
 		  return false;
 	  } else {
 		  Mediawiki.pullLoginFromCookie(cookiePrefix);
-		  return Mediawiki.lgusername;
+		  return Mediawiki.UserName;
 	  }	
 	} catch (e) {
 		Mediawiki.error("Error checking login");
@@ -473,15 +461,15 @@ Mediawiki.json_decode = function (json){
 
 
 Mediawiki.pullLoginFromCookie = function(cookiePrefix){
-	for (var cookieName in Mediawiki.cookieMap) {
-		var memberName = Mediawiki.cookieMap[cookieName];
-		Mediawiki[memberName] = Mediawiki.cookie(cookiePrefix + cookieName);
+	for (var i = 0; i < Mediawiki.cookieNames.length; i++) {
+		var cookieName = Mediawiki.cookieNames[i];
+		Mediawiki[cookieName] = Mediawiki.cookie(cookiePrefix + cookieName);
 	}
 };
 
 
 // http://www.mediawiki.org/wiki/API:Login
-Mediawiki.login = function (callbackSuccess, callbackError){
+Mediawiki.login = function (username, password, callbackSuccess, callbackError){
 	if (Mediawiki.isLoggedIn()){
 		Mediawiki.d("You are already logged in");
 		return null; 
@@ -489,8 +477,8 @@ Mediawiki.login = function (callbackSuccess, callbackError){
 			
 	var apiParams = {
 		'action' : 'login',
-		'lgname' : Mediawiki.apiUser,
-		'lgpassword' : Mediawiki.apiPass
+		'lgname' : username,
+		'lgpassword' : password
 	};
 	Mediawiki.loginCallbackSuccess = callbackSuccess;
 	Mediawiki.loginCallbackError = callbackError;
@@ -503,7 +491,7 @@ Mediawiki.loginCallback = function(result) {
 	try {
 		if (result.login.result == "Success"){
 
-			Mediawiki.setLoginCookies(result.login);
+			Mediawiki.setLoginSession(result.login);
 			Mediawiki.runCallback(Mediawiki.loginCallbackSuccess);
 
 		} else if (result.login.result == "WrongPass" || result.login.result == "EmptyPass" || result.login.result == "WrongPluginPass"){
@@ -524,14 +512,23 @@ Mediawiki.loginCallback = function(result) {
 
 
 Mediawiki.logout = function (callbackSuccess){
-	// Clear the cookies and the member variables
-	for (var cookieName in Mediawiki.cookieMap) {
-		Mediawiki.cookie(Mediawiki.getCookiePrefix().toString() + cookieName, null);
+	Mediawiki.apiCall({"action" : "logout"}, callbackSuccess);
 
-		var memberName = Mediawiki.cookieMap[cookieName];
-		Mediawiki[memberName] = null;
+	var cookiesToo = false;
+	if (Mediawiki.getCookiePrefix() == Mediawiki.cookiePrefixApi){
+		cookiesToo = true;
 	}
-	Mediawiki.runCallback(callbackSuccess);
+	// Clear member variables
+	for (var i = 0; i < Mediawiki.cookieNames.length; i++) {
+		var cookieName = Mediawiki.cookieNames[i];
+		Mediawiki[cookieName] = null;
+
+		// If the api cookie prefix is used, then clear those cookies as well
+		if (cookiesToo){
+			Mediawiki.cookie(Mediawiki.cookiePrefixApi + cookieName, "");
+		}
+	}
+
 };
 
 
@@ -658,28 +655,22 @@ Mediawiki.runCallback = function(callback, arg){
 };
 
 
-Mediawiki.setLoginCookies = function(vars) {
-      try {
-	Mediawiki.lguserid = vars.lguserid;
-	Mediawiki.lgusername = vars.lgusername;
-	Mediawiki.sessionid = vars.sessionid;
-	Mediawiki.lgtoken = vars.lgtoken;
+Mediawiki.setLoginSession = function(vars) {
+	Mediawiki.UserID = vars.lguserid;
+	Mediawiki.UserName = vars.lgusername;
+	Mediawiki._session = vars.sessionid;
+	Mediawiki.Token = vars.lgtoken;
 	Mediawiki.cookieprefix = vars.cookieprefix;
 
-	var cp = Mediawiki.getCookiePrefix() || "";
+	if (!document.cookie.match(new RegExp(Mediawiki.cookieprefix + "UserID"))){
 
-	for (var cookieName in Mediawiki.cookieMap) {
-		var memberName = Mediawiki.cookieMap[cookieName];
-		Mediawiki.cookie(cp + cookieName, Mediawiki[memberName], Mediawiki.sessionLength);
-	}
-
-	return true;
-
-      } catch (e) {
-	Mediawiki.error("Error setting login cookies");
-	Mediawiki.d(Mediawiki.print_r(e));
-	return false;
-      }
+		// They must be using http://www.mediawiki.org/wiki/Manual:$wgCookieHttpOnly
+		// Set our own cookies with a different prefix
+		for (var i = 0; i < Mediawiki.cookieNames.length; i++){
+			var c = Mediawiki.cookieNames[i];
+			Mediawiki.cookie(Mediawiki.cookiePrefixApi + c, Mediawiki[c]);
+		}
+	}		
 };
 
 
