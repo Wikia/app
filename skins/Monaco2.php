@@ -994,13 +994,13 @@ EOS;
 		$tpl->set('mergedCSS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css') . "\n" );
 		$tpl->set('mergedCSSprint', "\n\t\t" . $StaticChute->getChuteHtmlForPackage('monaco_css_print') );
 
-		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
-		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
-		$css[] = array('url' => $wgStylePath.'/monaco/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
+		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ltie7.css?'.$wgStyleVersion, 'cond' => 'if lt IE 7');
+		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ie7.css?'.$wgStyleVersion, 'cond' => 'if IE 7');
+		$css[] = array('url' => $wgStylePath.'/monaco2/css/monaco_ie8.css?'.$wgStyleVersion, 'cond' => 'if IE 8');
 
 		// RTL support
 		if ($wgContLang->isRTL()) {
-			$css[] = array('url' => $wgStylePath.'/monaco/rtl.css?'.$wgStyleVersion);
+			$css[] = array('url' => $wgStylePath.'/monaco2/rtl.css?'.$wgStyleVersion);
 		}
 
 		// CSS - end
@@ -1342,7 +1342,7 @@ class MonacoTemplate extends QuickTemplate {
 <?php
 	}
 ?>
-		<object><noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript></object>
+		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco2/css/noscript.css" /></noscript>
 <?php
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
@@ -1759,6 +1759,7 @@ if ($custom_article_footer !== '') {
 ?>
 							</ul>
 							<?= $namespaceType == 'content' ? $actions : '' ?>
+							</div>
 						</td>
 						<td class="col2">
 <?php
