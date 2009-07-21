@@ -137,11 +137,20 @@ class Skin extends Linker {
 	static function &newFromKey( $key ) {
 		global $wgStyleDirectory, $wgCityId, $wgUseMonaco2;
 
+		if($key == 'awesome') {
+			$key = 'monaco';
+			$awesome = true;
+		}
+
 		$key = Skin::normalizeKey( $key );
 
 		$skinNames = Skin::getSkinNames();
 		$skinName = $skinNames[$key];
 		$className = 'Skin'.ucfirst($key);
+
+		if(($skinName == 'Monaco' && !empty($wgUseMonaco2)) || !empty($awesome)) {
+			$skinName = 'Monaco2';
+		}
 
 		# Grab the skin class and initialise it.
 		if ( !class_exists( $className ) ) {
@@ -447,7 +456,7 @@ class Skin extends Linker {
 		global $wgUseSiteJs;
 		if ($wgUseSiteJs) {
 			$jsCache = $wgUser->isLoggedIn() ? '&smaxage=0' : '';
-			$skinName = $this->getSkinName();
+			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 			$r[] = "<script type=\"$wgJsMimeType\" src=\"".
 				htmlspecialchars(self::makeUrl('-',
 					"action=raw$jsCache&gen=js&useskin=" .
@@ -456,7 +465,7 @@ class Skin extends Linker {
 		}
 		if( $allowUserJs && $wgUser->isLoggedIn() ) {
 			$userpage = $wgUser->getUserPage();
-			$skinName = $this->getSkinName();
+			$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 			$userjs = htmlspecialchars( self::makeUrl(
 				$userpage->getPrefixedText().'/'.$skinName.'.js',
 				'action=raw&ctype='.$wgJsMimeType));
@@ -621,7 +630,7 @@ END;
 
 			// Wikia
 			if( empty($this->themename) || $this->themename == 'custom' ) {
-				$skinName = $this->getSkinName();
+				$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 				$out->addStyle( self::makeNSUrl( $skinName . '.css', $query, NS_MEDIAWIKI ) );
 			}
 		}
@@ -648,7 +657,7 @@ END;
 				// @FIXME: properly escape the cdata!
 				$this->usercss = "/*<![CDATA[*/\n" . $previewCss . "/*]]>*/";
 			} else {
-				$skinName = $this->getSkinName();
+				$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
 				$out->addStyle( self::makeUrl($this->userpage . '/' . $skinName .'.css',
 					'action=raw&ctype=text/css' ) );
 			}
