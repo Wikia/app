@@ -107,6 +107,7 @@ $wgHooks['UserLoadFromSessionInfo'][] = 'WikiaCentralAuthHooks::onUserLoadFromSe
 $wgHooks['GetCacheVaryCookies'][] = 'WikiaCentralAuthHooks::onGetCacheVaryCookies';
 $wgHooks['UserSetCookies'][] = 'WikiaCentralAuthHooks::onUserSetCookies';
 $wgHooks['UserLoadFromSession'][] = 'WikiaCentralAuthHooks::onUserLoadFromSession'; 
-$wgHooks['UserLoadGroups'][] = 'WikiaCentralAuthHooks::onUserLoadGroups';
+#- turn on if central database with users will be ready
+#$wgHooks['UserLoadGroups'][] = 'WikiaCentralAuthHooks::onUserLoadGroups';
 
 $wgHooks['UserLoadFromDatabase'][] = 'WikiaCentralAuthHooks::onUserLoadFromDatabase';
