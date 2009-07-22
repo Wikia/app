@@ -36,20 +36,24 @@ function tabviewRender($input, $params, &$parser ) {
 	}
 
 	if(isset($params['id']) && $params['id'] != '' && strpos($params['id'], '<') === false && strpos($params['id'], '>') === false) {
-		$id = '_'.$params['id'];
+		$id = $params['id'];
+		$id = preg_replace('/[^A-Za-z0-9_]/', '', $id);
 	}
 
 	if(empty($id)) {
 		$id = $tabsCount++;
 	}
 
+	// HTML wrapper
 	$out = '<div id="tabview_'.$id.'">';
 	if(!empty($title)) {
 		$out .= $title;
 	}
+
+	$out .= '<div class="yui-navset yui-navset-top"><ul id="flytabs_'.$id.'" class="yui-nav"></ul></div>';
 	$out .= '</div>';
 
-	$tabs = array_filter(split("\n",$input));
+	$tabs = array_filter(explode("\n",$input));
 
 	if(isset($tabs[0]) && $tabs[0] == "") {
 		unset($tabs[0]);
@@ -58,8 +62,7 @@ function tabviewRender($input, $params, &$parser ) {
 		unset($tabs[count($tabs)]);
 	}
 
-	$outJS = "var tabView_{$id} = new YAHOO.widget.TabView();";
-	$tempJS = "tabView_%s.addTab( (function() {var tab = new YAHOO.widget.Tab({label: '%s', dataSrc: '%s'.replace('amp;',''), cacheData: %s, active: %s});tab.loadHandler.success = function(o) {YAHOO.log('tab loaded'); this.set('content', o.responseText); if (typeof window.TieDivLibrary!='undefined') window.TieDivLibrary.calculate();}; return tab;})() );";
+	$outJS = "$('#flytabs_{$id}').flyTabs.config({align: 'top', effect: 'no'});";
 
 	foreach($tabs as $tab) {
 		$onetab = explode('|', $tab);
@@ -84,17 +87,22 @@ function tabviewRender($input, $params, &$parser ) {
 						}
 					}
 				}
-				$outJS .= sprintf($tempJS, $id, addslashes($text), $url, !empty($noCache) ? 'false' : 'true', !empty($active) ? 'true' : 'false');
+
+				// prepare flytab options array
+				$options = Wikia::json_encode(array(
+					'caption' => $text,
+					'cache' => !empty($noCache) ? false : true,
+					'status' => !empty($active) ? 'pinned' : 'off',
+					'url' => $url,
+				));
+
+				$outJS .= "$('#flytabs_{$id}').flyTabs.addTab({$options});";
 			}
 		}
 		unset($url, $text, $noCache, $active);
 	}
 
-	$outJS .= "tabView_{$id}.appendTo('tabview_" . $id . "');";
-
-	// macbre: fix RT #19285
-	$outJS = '$.loadYUI(function() {' . $outJS . '});';
-
 	$outJS = '<script type="text/javascript">wgAfterContentAndJS.push(function() {' . $outJS . '});</script>';
-	return $out.$outJS;
+
+	return $out . $outJS;
 }
