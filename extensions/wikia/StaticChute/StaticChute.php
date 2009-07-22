@@ -40,6 +40,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
+			'common/jquery/jquery.flytabs.js',
 
 			'common/ajax.js',
 			'common/urchin.js',
@@ -74,6 +75,7 @@ class StaticChute {
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
 			'common/jquery/jquery-ui-1.7.1.custom.js',
+			'common/jquery/jquery.flytabs.js',
 
 			'common/ajax.js',
 			'common/urchin.js',
@@ -106,6 +108,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
+			'common/jquery/jquery.flytabs.js',
 
 			'common/ajax.js',
 			'common/urchin.js',
@@ -152,6 +155,7 @@ class StaticChute {
 			'common/jquery/jquery.json-1.3.js',
 			'common/jquery/jquery.cookies.2.1.0.js',
 			'common/jquery/jquery.wikia.js',
+			'common/jquery/jquery.flytabs.js',
 
 			'common/urchin.js',
 			'common/wikibits.js',
