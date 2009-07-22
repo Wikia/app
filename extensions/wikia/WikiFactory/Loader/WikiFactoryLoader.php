@@ -71,9 +71,14 @@ class WikiFactoryLoader {
 			 * central / dofus / memory-alpha case
 			 */
 			$this->mCityID = $id;
-			$this->mServerName = ( $server_name === false )
-				? strtolower( $_SERVER['SERVER_NAME'] )
-				: $server_name;
+			if( $server_name === false ) {
+				$this->mServerName =  empty( $_SERVER['SERVER_NAME'] )
+					? false
+					: $_SERVER['SERVER_NAME'];
+			}
+			else {
+				$this->mServerName = $server_name;
+			}
 		}
 		elseif( !empty($_SERVER['SERVER_NAME'])) {
 			/**
