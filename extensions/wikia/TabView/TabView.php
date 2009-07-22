@@ -14,7 +14,9 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'TabView',
-	'author' => 'Inez Korczynski'
+	'author' => 'Inez Korczynski',
+	'description' => 'Gives an easy way of combining pages into one page with a tab for each sub-page.',
+	'url' => 'http://help.wikia.com/wiki/Tabview',
 );
 
 $wgExtensionFunctions[] = 'wfSetupTabView';
@@ -60,7 +62,7 @@ function tabviewRender($input, $params, &$parser ) {
 	$tempJS = "tabView_%s.addTab( (function() {var tab = new YAHOO.widget.Tab({label: '%s', dataSrc: '%s'.replace('amp;',''), cacheData: %s, active: %s});tab.loadHandler.success = function(o) {YAHOO.log('tab loaded'); this.set('content', o.responseText); if (typeof window.TieDivLibrary!='undefined') window.TieDivLibrary.calculate();}; return tab;})() );";
 
 	foreach($tabs as $tab) {
-		$onetab = split('\|', $tab);
+		$onetab = explode('|', $tab);
 
 		if(isset($onetab[0]) && strpos($onetab[0], '<') === false && strpos($onetab[0], '>') === false) {
 			$titleObj = Title::newFromText($onetab[0]);
@@ -73,19 +75,19 @@ function tabviewRender($input, $params, &$parser ) {
 					}
 					if(isset($onetab[2])) {
 						if($onetab[2] != '') {
-							$cache = (bool) $onetab[2];
+							$noCache = ($onetab[2] == 'false');
 						}
 						if(isset($onetab[3])) {
 							if($onetab[3] != '') {
-								$active = (bool) $onetab[3];
+								$active = ($onetab[3] == 'true');
 							}
 						}
 					}
 				}
-				$outJS .= sprintf($tempJS, $id, addslashes($text), $url, (!empty($cache) && $cache === false) ? 'false' : 'true', (!empty($active) && $active === true) ? 'true' : 'false');
+				$outJS .= sprintf($tempJS, $id, addslashes($text), $url, !empty($noCache) ? 'false' : 'true', !empty($active) ? 'true' : 'false');
 			}
 		}
-		unset($url, $text, $cache, $active);
+		unset($url, $text, $noCache, $active);
 	}
 
 	$outJS .= "tabView_{$id}.appendTo('tabview_" . $id . "');";
