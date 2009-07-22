@@ -5,6 +5,7 @@
 * rt#19418: Close button missing on Wysiwyg toolbar notice (Macbre)
 * rt#19370: WYSIWYG translated into Polish (TOR)
 * rt#18840: User subsubpages no longer break masthead (TOR)
+* rt#19230: added e-mail validation in NYC Invite (TOR)
 
 == Changes since 200907.3 ==
 * rt#19167: Exit page ads ads need rel=nofollow (Macbre)
