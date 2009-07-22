@@ -1,11 +1,11 @@
-body.mainpage {
-	background: #000 url(../images/iphone_games.jpg) 50% 51px no-repeat;
+body {
+	background: #000 url(../images/iphone_games.jpg) 50% 51px no-repeat !important;
 }
-body.mainpage #background_strip {
+body #background_strip {
 	background: transparent;
 	border: none;
 }
-body.mainpage .monaco_shrinkwrap {
+body .monaco_shrinkwrap {
 	left: 50%;
 	margin-left: -486px;
 	width: 972px;
