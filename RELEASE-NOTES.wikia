@@ -1,4 +1,5 @@
 == Changes since 200907.4 ==
+* rt#18722: Answers: Track traffic by category. (Nef)
 * rt#19503: Fixed db server name in LookupContribs. (Nef)
 * rt#19383: Missing click tracking on lean edit page. (Nef)
 * rt#19256: Extension:Tabber. (Nef)
