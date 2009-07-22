@@ -431,6 +431,11 @@ class StaticChute {
 			}
 			closedir($dh);
 		}
+
+		// Nick wrote: opendir will sort the files differently on different servers.
+		// Force them to a consistent order so that get checksum works properly
+		sort($js);
+		sort($css);
 		return array('js' => $js, 'css' => $css);
 	}
 
