@@ -128,7 +128,7 @@ class LookupContribsCore {
 	}
 
 	function checkUserActivityExternal($username) {
-		global $wgMemc, $wgContLang, $wgExternalBlobsDB, $wgExternalSharedDB;
+		global $wgMemc, $wgContLang, $wgExternalDatawareDB, $wgExternalSharedDB;
 		$userActivity = array();
 		$oUser = User::newFromName($username);
 		if (!$oUser instanceof User) {
@@ -143,7 +143,7 @@ class LookupContribsCore {
 		$memkey = "LookupContribs:UserActivityExt:$iUserId:$wgExternalSharedDB";
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached) || LOOKUPCONTRIBS_NO_CACHE) {
-			$dbext = wfGetDB(DB_SLAVE, array(), $wgExternalBlobsDB);
+			$dbext = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 			if (!is_null($dbext)) {
 				$query = "select rev_wikia_id, max(rev_timestamp) as max_activity, unix_timestamp(rev_timestamp) as max_timestamp ";
 				$query .= "from blobs where rev_user = ".intval($iUserId)." and rev_wikia_id > 0 ";
