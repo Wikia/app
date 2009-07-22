@@ -15,6 +15,14 @@ function runBackups( $from, $to, $full ) {
 
 	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
 
+	/**
+	 * hardcoded for while
+	 */
+	$servers = array(
+		"DEFAULT" => "10.6.10.36",
+		"c2" => "10.6.10.19"
+	);
+
 	$range = array();
 	if( $from !== false && $to !== false ) {
 		$range = array( sprintf( "city_id >= %d AND city_id < %d", $from, $to ) );
@@ -36,12 +44,18 @@ function runBackups( $from, $to, $full ) {
 		Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname}");
 
 		/**
+		 * get cluster for this wiki
+		 */
+		$cluster = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
+		$server = ( $cluster == "c2" ) ? $servers[ "c2" ] : $servers[ "DEFAULT" ];
+		/**
 		 * build command
 		 */
 		$status = false;
 		if( $full ) {
 			$path = sprintf("%s/pages_full.xml.gz", getDirectory( $row->city_dbname ) );
-			$cmd = "SERVER_ID={$row->city_id} " . wfEscapeShellArg(
+			$cmd = array(
+				"SERVER_ID={$row->city_id}",
 				"php",
 				"{$IP}/maintenance/dumpBackup.php",
 				"--conf {$wgWikiaLocalSettingsPath}",
@@ -49,13 +63,15 @@ function runBackups( $from, $to, $full ) {
 				"--full",
 				"--xml",
 				"--quiet",
+				"--server={$server}",
 				"--output=gzip:{$path}"
 			);
-			print wfShellExec( $cmd, $status );
+			wfShellExec( implode( " ", $cmd ), $status );
 		}
 		else {
 			$path = sprintf("%s/pages_current.xml.gz", getDirectory( $row->city_dbname ) );
-			$cmd = "SERVER_ID={$row->city_id} " . wfEscapeShellArg(
+			$cmd = array(
+				"SERVER_ID={$row->city_id}",
 				"php",
 				"{$IP}/maintenance/dumpBackup.php",
 				"--conf {$wgWikiaLocalSettingsPath}",
@@ -63,9 +79,10 @@ function runBackups( $from, $to, $full ) {
 				"--current",
 				"--xml",
 				"--quiet",
+				"--server={$server}",
 				"--output=gzip:{$path}"
 			);
-			print wfShellExec( $cmd, $status );
+			wfShellExec( implode( " ", $cmd ), $status );
 		}
 		if( $status ) {
 			/**
@@ -82,7 +99,7 @@ function runBackups( $from, $to, $full ) {
  */
 function getDirectory( $database ) {
 	global $wgDevelEnvironment;
-	$dumpDirectory = empty( $wgDevelEnvironment ) ?  "/opt/dbdumps" : "/tmp/dumps";
+	$dumpDirectory = empty( $wgDevelEnvironment ) ?  "/backup/dumps/" : "/tmp/dumps";
 	$database = strtolower( $database );
 	$directory = sprintf(
 		"%s/%s/%s/%s",
