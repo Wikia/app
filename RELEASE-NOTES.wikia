@@ -1,4 +1,5 @@
 == Changes since 200907.4 ==
+* rt#19256: Extension:Tabber. (Nef)
 * rt#19369: Rewrite TabView to use jQuery (Macbre)
 * rt#19458: disabled central user rights (Moli)
 * rt#19013: FCK: Editor autoclosing tags in section edits, breaks pages (Macbre)
