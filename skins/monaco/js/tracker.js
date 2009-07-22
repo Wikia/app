@@ -181,6 +181,11 @@ jQuery.tracker = function() {
 		$.tracker.byStr('editpage/view');
 	}
 
+	// Links on edit page
+	$('#wpMinoredit, #wpWatchthis, #wpSave, #wpPreview, #wpDiff, #wpCancel, #wpEdithelp').click(function (e) {
+		$.tracker.byStr('editpage/' + $(this).attr('id').substring(2).toLowerCase());
+	});
+
 	// TODO: Verify if it works
 	// EditSimilar extension - result & preferences links - Bartek, Inez
 	$('#editsimilar_links').click(function(e) {
