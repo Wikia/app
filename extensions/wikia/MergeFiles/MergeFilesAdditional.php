@@ -47,6 +47,7 @@ $MF['quartz_js']['source'] = array(
 	'common/jquery/jquery.cookies.2.1.0.js',
 	'common/jquery/jquery.wikia.js',
 	'common/jquery/jquery-ui-1.7.1.custom.js',
+	'common/jquery/jquery.flytabs.js',
 
 	'common/urchin.js',
 	'quartz/js/main.js',
@@ -87,6 +88,7 @@ $MF['monobook_js']['source'] = array(
 	'common/jquery/jquery.json-1.3.js',
 	'common/jquery/jquery.cookies.2.1.0.js',
 	'common/jquery/jquery.wikia.js',
+	'common/jquery/jquery.flytabs.js',
 
 	'common/urchin.js',
 	'common/wikibits.js',
@@ -118,6 +120,7 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'common/jquery/jquery.cookies.2.1.0.js',
 	'common/jquery/jquery.wikia.js',
 	'common/jquery/jquery-ui-1.7.1.custom.js',
+	'common/jquery/jquery.flytabs.js',
 
 	'common/ajax.js',
 	'common/urchin.js',
@@ -151,6 +154,7 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'common/jquery/jquery.cookies.2.1.0.js',
 	'common/jquery/jquery.wikia.js',
 	'common/jquery/jquery-ui-1.7.1.custom.js',
+	'common/jquery/jquery.flytabs.js',
 
 	'common/ajax.js',
 	'common/urchin.js',
