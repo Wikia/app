@@ -1534,46 +1534,43 @@ class WikiFactory {
 		wfProfileIn( __METHOD__ );
 		$res = true;
 
+		$domains = self::getDomains( $city_id, false, true );
+
 		$dbw = self::db( DB_MASTER );
-		$dba = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
-		$timestamp = wfTimestampNow();
-
 		$dbw->begin();
-		/**
-		 * copy domains to archive
-		 */
-		$sth = $dbw->select(
-			array( "city_domains" ),
-			array( "*" ),
-			array( "city_id" => $city_id ),
-			__METHOD__
-		);
-		while( $row = $dbw->fetchObject( $sth ) ) {
-			$dba->insert(
-				"city_domains",
-				array(
-					"city_id"         => $row->city_id,
-					"city_domain"     => $row->city_domain,
-					"city_new_id"     => $new_city_id,
-					"city_timestamp"  => $timestamp
-				),
-				__METHOD__
-			);
-		}
-		$dbw->freeResult( $sth );
-
 		$db = $dbw->update(
 			self::table("city_domains"),
 			array( "city_id" => $new_city_id ),
 			array( "city_id" => $city_id ),
 			__METHOD__ );
-
 		if ($db) {
 			$dbw->commit();
 		} else {
 			$dbw->rollback();
 			$res = false;
 		}
+
+		if ( $res !== false ) {
+			if ( !empty($domains) ) {
+				/**
+				 * copy domains to archive
+				 */
+				$dba = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
+				foreach ( $domains as $domain ) {
+					$dba->insert(
+						"city_domains",
+						array(
+							"city_id"         => $city_id,
+							"city_domain"     => $domain,
+							"city_new_id"     => $new_city_id,
+							"city_timestamp"  => wfTimestampNow()
+						),
+						__METHOD__
+					);
+				}
+			}
+		}
+		
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
