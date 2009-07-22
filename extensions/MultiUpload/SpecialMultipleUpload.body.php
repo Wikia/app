@@ -185,7 +185,8 @@ class MultipleUploadForm extends UploadForm {
 		global $wgUser, $wgOut, $wgContLang;
 		$t = $this->mLocalFile->getTitle();
 		$wgOut->addHTML( '<h2>' . wfMsg( 'multiupload-fileuploaded' ) . '</h2>' );
-		$wgOut->addWikiText( "[[:{$t->getFullText()}]]" );
+		//$wgOut->addWikiText( "[[:{$t->getFullText()}]]" );
+		$wgOut->addHTML($wgUser->getSkin()->makeThumbLink2( $t, $this->mLocalFile, array('caption' => $t->getText())));
 	}
 
 	/**
