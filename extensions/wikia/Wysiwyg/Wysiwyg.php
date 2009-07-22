@@ -113,7 +113,13 @@ function Wysiwyg_UserGetOption($options, $name, $value) {
 	return true;
 }
 
-function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = false) {
+function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = false, $sectionEdit = false) {
+
+	// RT #19013
+	global $wgWysiwygSectionEdit;
+	if (!empty($sectionEdit)) {
+		$wgWysiwygSectionEdit = true;
+	}
 
 	if($type == 'html2wiki') {
 		return new AjaxResponse(Wysiwyg_HtmlToWikiText($input, $wysiwygData, true));
@@ -184,6 +190,10 @@ function Wysiwyg_Variables(&$vars) {
 	// localised template namespace name (RT #3808)
 	global $wgLang;
 	$vars['wysiwygTemplateNS_name'] = $wgLang->getNsText(NS_TEMPLATE);
+
+	// RT #19013
+	global $wgWysiwygSectionEdit;
+	$vars['wysiwygSectionEdit'] = !empty($wgWysiwygSectionEdit);
 
 	return true;
 }
@@ -268,6 +278,12 @@ function Wysiwyg_Initial($form) {
 
 		// change document domain to wikia.com
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'Wysiwyg_SetDomain';
+	}
+
+	// RT #19013
+	global $wgWysiwygSectionEdit;
+	if (is_numeric($form->section)) {
+		$wgWysiwygSectionEdit = true;
 	}
 
 	// load JS files
@@ -447,6 +463,12 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 
 	require_once("$IP/extensions/wikia/Wysiwyg/WysiwygParser.php");
 
+	// RT #19013
+	global $wgWysiwygSectionEdit;
+	if (!empty($wgWysiwygSectionEdit)) {
+		wfDebug("Wysiwyg: section editing\n");
+	}
+
 	wfDebug("Wysiwyg_WikiTextToHtml wikitext: {$wikitext}\n");
 
 	$title = ($pageName === false) ? $wgTitle : Title::newFromText($pageName);
@@ -480,12 +502,13 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 		return array('type' => 'edgecase', 'edgecaseText' => wfMsg('wysiwyg-edgecase-info').' '.wfMsg('wysiwyg-edgecase-comment'));
 	}
 
-	global  $wgWysiwygSanitizerApplied;
-	if(!empty($wgWysiwygSanitizerApplied)) {
+	// RT #19013
+	global $wgWysiwygSanitizerApplied;
+	if( !empty($wgWysiwygSanitizerApplied) && !empty($wgWysiwygSectionEdit) ) {
 		wfDebug("Wysiwyg: edgecase found - unclosed HTML tag\n");
 		return array('type' => 'edgecase', 'edgecaseText' => wfMsg('wysiwyg-edgecase-info').' '.wfMsg('wysiwyg-edgecase-unclosed-tags'));
 	}
-	
+
 	// detect empty line at the beginning of wikitext
 	if($emptyLinesAtStart == 1) {
 		$html = '<!--NEW_LINE-->' . $html;
