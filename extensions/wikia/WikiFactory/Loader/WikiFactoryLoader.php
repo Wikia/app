@@ -184,7 +184,7 @@ class WikiFactoryLoader {
 	 *
 	 * @return object Database	database handler
 	 */
-	public function getDB() {
+	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
 		if( $this->mDBhandler instanceof Database ) {
@@ -195,7 +195,7 @@ class WikiFactoryLoader {
 		 * get the connection handler using MW DB LoadBalabcer
 		 * do not forget about destroying the loadbalancer instance
 		 */
-		$this->mDBhandler = wfGetDB( DB_SLAVE, array(), $this->mDBname );
+		$this->mDBhandler = wfGetDB( $type, array(), $this->mDBname );
 		$this->debug( "connecting to {$this->mDBname} via LoadBalancer" );
 
 		/**
@@ -544,7 +544,7 @@ class WikiFactoryLoader {
 		 */
 		if( ! isset( $this->mVariables["wgDBname"] ) ) {
 			wfProfileIn( __METHOD__."-varsdb" );
-			$dbr = $this->getDB();
+			$dbr = $this->getDB( DB_MASTER );
 			$oRes = $dbr->select(
 				array(
 					"city_variables",
