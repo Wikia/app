@@ -49,9 +49,8 @@ class ImageGrabberTask extends BatchTask {
 
 		$wikiurl .= "?title=Special:Imagelist&limit=1000" ;
 
-        #--- standard method from MW
         $this->addLog( "Getting {$wikiurl}" );
-        $html = Http::get( $wikiurl, 60 );
+        $html = file_get_contents( $wikiurl );
 
 		if ( !$html ) {
 			$this->addLog ("Unable to get image list") ;
