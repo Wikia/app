@@ -127,8 +127,11 @@ FCK.SwitchEditMode = function() {
 
 		FCK.EditingArea.TargetElement.className = 'childrenHidden';
 
+		// RT #19013
+		var sectionEdit = window.parent.wysiwygSectionEdit ? 1 : 0;
+
 		window.parent.sajax_request_type = 'POST';
-		window.parent.sajax_do_call('Wysywig_Ajax', ['wiki2html', FCK.EditingArea.Textarea.value, false, window.parent.wgPageName], function(res) {
+		window.parent.sajax_do_call('Wysywig_Ajax', ['wiki2html', FCK.EditingArea.Textarea.value, false, window.parent.wgPageName, sectionEdit], function(res) {
 			var edgecases = res.getResponseHeader('X-edgecases');
 			if(typeof edgecases == "undefined") edgecases = res.getResponseHeader('X-Edgecases');
 			if (edgecases == '1' || window.parent.noWysiwygMagicWordMsg) {
@@ -1721,7 +1724,7 @@ FCK.EditComment = function(refid, comment) {
 FCK.RemoveComment = function(refid) {
 	FCK.log('Removing comment #' + refid);
 
-	// remove placeholder and entry from meta-data	
+	// remove placeholder and entry from meta-data
 	FCK.DeleteMetaData(refid, true);
 }
 
