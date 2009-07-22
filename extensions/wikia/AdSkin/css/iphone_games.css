@@ -1,5 +1,5 @@
 body {
-	background: #000 url(../images/iphone_games.jpg) 50% 51px no-repeat !important;
+	background: #000 url(../images/iphone_games.jpg?1) 50% 51px no-repeat !important;
 }
 body #background_strip {
 	background: transparent;
