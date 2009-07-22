@@ -6,7 +6,7 @@ $wgExtensionCredits['parserhook'][] = array(
     'author'=>'Eric Fortin',
     'url'=>'http://www.mediawiki.org/wiki/Extension:Tabber',
     'description'=>'Create tabs that contain wiki compatible based data',
-    'version'=>'1.0'
+    'version'=>'1.01'
 );
 
 $wgExtensionFunctions[] = "wfTabber";
@@ -18,13 +18,12 @@ function wfTabber() {
 }
 
 function renderTabber( $paramstring, $params = array() ){
-	global $wgParser, $wgScriptPath;
-	$wgParser->disableCache();
+	global $wgExtensionsPath, $wgStyleVersion;
 	
-	$path = $wgScriptPath . '/extensions/tabber/';
+	$path = $wgExtensionsPath . '/3rdparty/tabber/';
 
-	$htmlHeader = '<script type="text/javascript" src="'.$path.'tabber.js"></script>'
-		. '<link rel="stylesheet" href="'.$path.'tabber.css" TYPE="text/css" MEDIA="screen">'
+	$htmlHeader = '<script type="text/javascript" src="'.$path.'tabber.js?' . $wgStyleVersion . '"></script>'
+		. '<link rel="stylesheet" href="'.$path.'tabber.css?' . $wgStyleVersion . '" TYPE="text/css" MEDIA="screen">'
 		. '<div class="tabber">';
 		
 	$htmlFooter = '</div>';
@@ -52,14 +51,3 @@ function buildTab($tab){
 
 	return $tab;
 }
-
-
-
-
-
-
-
-
-
-
-
