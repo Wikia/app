@@ -1,4 +1,5 @@
 == Changes since 200907.4 ==
+* rt#19458: disabled central user rights (Moli)
 * rt#19013: FCK: Editor autoclosing tags in section edits, breaks pages (Macbre)
 * rt#19165: lean monaco's new header menus are parented to wrong thing, hating wikis with big headers (Macbre)
 * rt#19418: Close button missing on Wysiwyg toolbar notice (Macbre)
