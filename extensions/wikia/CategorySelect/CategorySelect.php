@@ -347,7 +347,7 @@ function CategorySelectAddFormFields($editPage, $wgOut) {
  * @author Lucas Garczewski <tor@wikia-inc.com>
  */
 function CategorySelectImportFormData($editPage, $request) {
-	global $wgCategorySelectCategoriesInWikitext, $wgContLang;
+	global $wgCategorySelectCategoriesInWikitext, $wgContLang, $wgEnableAnswers;
 
 	if ($request->wasPosted()) {
 		$sourceType = $request->getVal('wpCategorySelectSourceType');
@@ -366,14 +366,16 @@ function CategorySelectImportFormData($editPage, $request) {
 			$editPage->textbox1 = $data['wikitext'];
 			$categories = CategorySelectChangeFormat($data['categories'], 'array', 'wiki');
 		} else {	//saving article
-			// don't add categories if the page is a redirect
-			$magicWords = $wgContLang->getMagicWords();
-			$redirects = $magicWords['redirect'];
-			array_shift( $redirects ); // first element doesn't interest us
-			// check for localized versions of #REDIRECT
-			foreach ($redirects as $alias) {
-				if ( stripos( $editPage->textbox1, $alias ) === 0 ) {
-					return true;
+			if ( !empty( $wgEnableAnswers ) ) {
+				// don't add categories if the page is a redirect
+				$magicWords = $wgContLang->getMagicWords();
+				$redirects = $magicWords['redirect'];
+				array_shift( $redirects ); // first element doesn't interest us
+				// check for localized versions of #REDIRECT
+				foreach ($redirects as $alias) {
+					if ( stripos( $editPage->textbox1, $alias ) === 0 ) {
+						return true;
+					}
 				}
 			}
 
