@@ -90,31 +90,33 @@ class GlobalWatchlistBot {
 
 		$dbr = wfGetDB( DB_SLAVE, 'stats', $sWikiDb );
 
-		$oResource = $dbr->select(
-			array ( "watchlist", "page" ),
-			array ( 
-				"wl_user", 
-				"page_id", 
-				"wl_title as page_title", 
-				"wl_namespace as page_namespace", 
-				"wl_notificationtimestamp as page_timestamp", 
-				"(select max(rev_id) from revision where rev_page = page_id and rev_timestamp <= wl_notificationtimestamp) as page_revision"
-			), 
-			array (
-				"page_title = wl_title",
-				"page_namespace = wl_namespace",
-				"wl_user > 0",
-				"wl_notificationtimestamp IS NOT NULL"
-			),
-			__METHOD__
-		);
-		
-		
-		if ( $oResource ) {
-			while ( $oResultRow = $dbr->fetchObject($oResource) ) {
-				$aPages[ $oResultRow->wl_user ][] = $oResultRow;
+		if ( $dbr->tableExists('watchlist') ) {
+			$oResource = $dbr->select(
+				array ( "watchlist", "page" ),
+				array ( 
+					"wl_user", 
+					"page_id", 
+					"wl_title as page_title", 
+					"wl_namespace as page_namespace", 
+					"wl_notificationtimestamp as page_timestamp", 
+					"(select max(rev_id) from revision where rev_page = page_id and rev_timestamp <= wl_notificationtimestamp) as page_revision"
+				), 
+				array (
+					"page_title = wl_title",
+					"page_namespace = wl_namespace",
+					"wl_user > 0",
+					"wl_notificationtimestamp IS NOT NULL"
+				),
+				__METHOD__
+			);
+			
+			
+			if ( $oResource ) {
+				while ( $oResultRow = $dbr->fetchObject($oResource) ) {
+					$aPages[ $oResultRow->wl_user ][] = $oResultRow;
+				}
+				$dbr->freeResult( $oResource );
 			}
-			$dbr->freeResult( $oResource );
 		}
 
 		return $aPages;
