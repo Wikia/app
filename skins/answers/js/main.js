@@ -156,23 +156,33 @@ YAHOO.widget.Effects.Fade = function( id ){
 };
 
 //Sidebar Widgets
-var recent_questions_page = 0;
+var recent_questions_page = '';
 var recent_questions_limit = 10;
 function renderQuestions() {
 	
-	url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=" + recent_questions_limit + "&wkoffset=" + (recent_questions_limit * recent_questions_page) + "&wkorder=id";
+	url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categorymembers&cmtitle=Category:" + wgUnAnsweredCategory + "&cmnamespace=0&cmprop=title|timestamp&cmsort=timestamp&cmdir=desc&cmlimit=" + recent_questions_limit + recent_questions_page;
 	jQuery.getJSON( url, "", function( j ){
-		if( j.query.wkpagesincat ){
+		if( j.query.categorymembers ){
 			html = "";
-			for( recent_q in j.query.wkpagesincat ){
-				page = j.query.wkpagesincat[recent_q];
-				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
+			var timestamp1 = '';
+			for( var recent_q in j.query.categorymembers ){
+				var page = j.query.categorymembers[recent_q];
+				var url  = page.title.replace(/ /g,"_");
+				var text = page.title + "?";
+				var timestamp = page.timestamp;
+				html += "<li><a href=\"" + url + "\">" + text + "</a></li>";
+
+				if (timestamp1 == '') timestamp1 = timestamp;
 			}
+
+			// round to full minute, make caching easier; if smaxage is higher than 1 min consider changing this as well
+			timestamp1 = timestamp1.replace(/:[0-9]{2}Z$/, ":00Z");
+			timestamp  =  timestamp.replace(/:[0-9]{2}Z$/, ":00Z");
 		
 			//nav
 			html += "<li class='sidebar_nav'>"
-			if( recent_questions_page > 0 )html+= "<div class=\"sidebar_nav_prev\"><a href=javascript:void(0); onclick='questionsNavClick(-1);'>" + wgPrevPageMsg + "</a></div>";
-			html += "<div class=\"sidebar_nav_next\"><a href=javascript:void(0); onclick='questionsNavClick(1);'>" + wgNextPageMsg + "</a></div>";
+			html += "<div class=\"sidebar_nav_prev\"><a href=javascript:void(0); onclick=\"questionsNavClick('&cmstart=" + timestamp  + "');\">" + wgPrevPageMsg + "</a></div>";
+			html += "<div class=\"sidebar_nav_next\"><a href=javascript:void(0); onclick=\"questionsNavClick('&cmend="   + timestamp1 + "');\">" + wgNextPageMsg + "</a></div>";
 			html += "<a href='" + wgUnansweredRecentChangesURL + "'>" + wgUnansweredRecentChangesText + "</a>";
 			html += "</li>";
 			
@@ -185,7 +195,7 @@ function renderQuestions() {
 }
 
 function questionsNavClick( dir ){
-	recent_questions_page = recent_questions_page + dir
+	recent_questions_page = dir;
 	
 	jQuery("#recent_unanswered_questions").animate({opacity: 0},500);
 	renderQuestions()
