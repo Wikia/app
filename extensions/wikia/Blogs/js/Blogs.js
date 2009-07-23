@@ -95,6 +95,7 @@ YAHOO.Wikia.Blogs.submit = function( event, id ) {
 		oForm.submit();
 	}
 	else {
+		WET.byStr('articleAction/postComment');
 		document.body.style.cursor = "wait";
 		var bottom = YAHOO.util.Dom.get( "blog-comm-bottom" );
 		if( bottom ) {
