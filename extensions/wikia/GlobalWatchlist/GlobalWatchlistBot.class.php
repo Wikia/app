@@ -9,6 +9,8 @@ class GlobalWatchlistBot {
 	private $mStartTime;
 	private $mWatchlisters;
 	private $mWikiData = array();
+	
+	const MAX_LAG = 30;
 
 	public function __construct($bDebugMode = false, $aUsers = array(), $useDB = array() ) {
 		global $wgExtensionMessagesFiles;
@@ -91,6 +93,13 @@ class GlobalWatchlistBot {
 		$dbr = wfGetDB( DB_SLAVE, 'stats', $sWikiDb );
 
 		if ( $dbr->tableExists('watchlist') ) {
+			
+			$lag = $this->isLagged($dbr);
+			while ( $lag > self::MAX_LAG ) {
+				sleep($lag);
+				$this->printDebug("Database is lagged: sleep($lag)");
+			}
+			
 			$oResource = $dbr->select(
 				array ( "watchlist", "page" ),
 				array ( 
@@ -118,6 +127,8 @@ class GlobalWatchlistBot {
 				$dbr->freeResult( $oResource );
 			}
 		}
+		
+		$dbr->close();
 
 		return $aPages;
 	}
@@ -443,6 +454,21 @@ class GlobalWatchlistBot {
 		}
 
 		return join(' ', $aResult);
+	}
+
+
+	/*
+	 * check lag only for this bot
+	 */
+	private function isLagged($dbr) {
+		$res = $dbr->query( 'SHOW SLAVE STATUS', __METHOD__ );
+		$row = $this->fetchObject( $res );
+		if ( $row ) {
+			$val = isset($row->Seconds_behind_master) ? $row->Seconds_behind_master : $row->Seconds_Behind_Master;
+			return intval($val);
+		} else {
+			return 0;
+		}
 	}
 
 }
