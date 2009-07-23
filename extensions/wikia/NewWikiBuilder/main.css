@@ -86,7 +86,7 @@ ul, li {
 }
 /* Button styling research: http://www.filamentgroup.com/lab/update_styling_the_button_element_with_css_sliding_doors_now_with_image_spr/ */
 button {
-	background: transparent url(button_sprite.png) no-repeat right -57px; 
+	background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat right -57px; 
 	position: relative;
 	border: 0; 
 	padding: 0 15px 0 0;
@@ -97,7 +97,7 @@ button::-moz-focus-inner {
 	border: none;  /* overrides extra padding in Firefox */
 }
 button span { 
-	background: transparent url(button_sprite.png) no-repeat left top; 
+	background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat left top; 
 	color: #FFF;
 	font-family: "Arial Narrow", sans-serif;
 	font-size: 14pt;

@@ -24,29 +24,7 @@ var NWB = {
 	"language": "en", // TODO: Pull this from the browser or users settings
 	"descriptionSection" : 1,
 	"firstPagesBlocks" : 1,
-	"currentStep": null,
-	"messages" : {
-	  "en": {
-		"choose-a-file": "Please choose a file",
-		"error-saving-description": "Error Saving Description",
-		"error-saving-articles": "Error Saving Articles",
-		"error-saving-logo": "Error Uploading Logo",
-		"saving-articles": "Saving Articles...",
-		"articles-saved": "Articles Saved",
-		"theme-saved": "Theme Choice Saved",
-		"saving-description": "Saving Description...",
-		"description-saved": "Description Saved",
-		"uploading-logo": "Uploading Logo...",
-		"logo-uploaded": "Logo Uploaded",
-		"login-successful": "Login Successful",
-		"logout-successful": "Logout Successful",
-		"login-error": "Error logging in",
-		"logging-in": "Logging in...",
-		"api-error": "There was a problem: ",
-		"no-more-pages": "No more pages can be created",
-		"must-be-logged-in": "You must be logged in for this action"
-	  }
-	}
+	"currentStep": null
 };
 
 
@@ -98,8 +76,7 @@ NWB.changeTheme = function (theme){
         } 
 
         // Create a link object for the stylesheet
-        //var href = "http://images.wikia.com/common/skins/monaco/" + theme.toLowerCase() + "/css/main.css";
-	var href = "themes/" + theme.toLowerCase() + ".css";
+	var href = "/extensions/wikia/NewWikiBuilder/themes/" + theme.toLowerCase() + ".css";
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
 };
 
