@@ -231,9 +231,40 @@ class LocalMaintenanceTask extends BatchTask {
 				$this->log( sprintf("Article %s added.", $centralTitle->getFullUrl()) );
 			}
 			else {
+				$update = true;
+
+				/**
+				 * check if article is a redirect and if so, switch to it's target
+				 */
+				if ( $oCentralArticle>isRedirect() ) {
+					$this->log( sprintf("Article %s exists and is a redirect.", $centralTitle->getFullUrl()) );
+					$centralTitle = $oCentralArticle->getRedirectTarget();
+					if ( $centralTitle !== null && $centralTitle->exists() ) {
+						if ( $centralTitle->getNamespace() == NS_MAIN ) {
+							$oCentralArticle = new Article( $centralTitle, 0 );
+							$this->log( sprintf("Following redirect to article %s.", $centralTitle->getFullUrl()) );
+						} else {
+							$this->log( 'Redirected to a page outside NS_MAIN. Aborting update.' );
+							$update = false; # don't update page but do the other stuff
+						}
+					} else {
+						# should never happen, but...
+						$this->log( "ERROR: Failed to process the redirect correctly." );
+						return false;
+					}
+				}
+
+				/**
+				 * abort update if target article is the main page
+				 */
+				if ( Title::newMainPage()->getPrefixedText() == $centralTitle->getPrefixedText() ) {
+					$update = false;
+				}
+
 				/**
 				 * update article
 				 */
+				if ( $update ) {
 				$this->log( sprintf("Updating existing article: %s", $centralTitle->getFullUrl()) );
 				$sContent = $oCentralArticle->getContent();
 				$wikiUrl = "http://". $this->mWikiData["subdomain"] .".wikia.com";
@@ -244,6 +275,7 @@ class LocalMaintenanceTask extends BatchTask {
 					$this->log( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
 				} else {
 					$this->log( sprintf("Article %s already exists and content was added some times ago", $centralTitle->getFullUrl()) );
+				}
 				}
 			}
 		}
