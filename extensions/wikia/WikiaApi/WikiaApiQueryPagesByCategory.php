@@ -121,7 +121,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			$this->addOption( "ORDER BY", "{$order_field}" );
 			
 			#--- limit
-			if ( !empty($limit) ) { //WikiaApiQuery::DEF_LIMIT
+			if ( !empty($limit) ) { 
 				if ( !$this->isInt($limit) ) {
 					throw new WikiaApiQueryError(1);
 				}
@@ -129,13 +129,12 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 				$this->setCacheKey ($lcache_key, 'L', $limit);
 			}
 
-			#--- offset
-			if ( !empty($offset)  ) { //WikiaApiQuery::DEF_LIMIT_COUNT
+			if ( !empty($offset)  ) { 
 				if ( !$this->isInt($offset) ) {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->addOption( "OFFSET", $offset );
-				$this->setCacheKey ($lcache_key, 'LO', $offset);
+				$this->setCacheKey ($lcache_key, 'LO', $limit);
 			}
 			
 			$data = array();
@@ -286,18 +285,25 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 			$this->setCacheKey($lcache_key, 'ORD', $orderCache);
 
 			#--- limit
-			if ( !empty($limit) ) { //WikiaApiQuery::DEF_LIMIT
+			if ( !empty($limit) ) { 
 				if ( !$this->isInt($limit) ) {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->setCacheKey ($lcache_key, 'L', $limit);
 			}
 
+			if ( !empty($offset)  ) { 
+				if ( !$this->isInt($offset) ) {
+					throw new WikiaApiQueryError(1);
+				}
+				$this->setCacheKey ($lcache_key, 'LO', $offset);
+			}
+
 			# if user categorylinks in query 
 			sort($encodedCats);
 			$data = array();
 			// check data from cache ...
-			$cached = $this->getDataFromCache($lcache_key);
+			$cached = ""; #$this->getDataFromCache($lcache_key);
 			if (!is_array($cached)) {
 				foreach ($encodedCats as $id => $category) {
 					#---
@@ -319,6 +325,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 					$this->addWhere ( "page_is_redirect = 0" );
 					#-- limit;
 					$this->addOption( "LIMIT", $limit );
+					$this->addOption( "OFFSET", $offset );
 					$this->addOption( "ORDER BY", "{$order_field}" );
 					#---
 					$res = $this->select(__METHOD__);
@@ -376,6 +383,7 @@ class WikiaApiQueryPagesyByCategory extends WikiaApiQuery {
 		#---
 		$res = $this->select(__METHOD__);
 		#---
+		$pages = array();
 		while ($row = $db->fetchObject($res)) {
 			$pages[] = $row->page_id;
 		}
