@@ -1,4 +1,5 @@
 == Changes since 200907.4 ==
+* rt#19518: Analytics: Fixed re-broken masthead tracking. (Nef)
 * rt#19493: rtl wiki are re-set to lrt under lean monaco (Macbre)
 * rt#19481: Analytics: Missing blog tracking. (Nef)
 * rt#18722: Answers: Track traffic by category. (Nef)
