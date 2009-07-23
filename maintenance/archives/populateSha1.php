@@ -31,7 +31,7 @@ $i = 0;
 foreach ( $res as $row ) {
 	if ( $i % 100 == 0 ) {
 		printf( "Done %d of %d, %5.3f%%  \r", $i, $numRows, $i / $numRows * 100 );
-		wfWaitForSlaves( 5 );
+#		wfWaitForSlaves( 5 );
 	}
 	$file = wfLocalFile( $row->img_name );
 	if ( !$file ) {
