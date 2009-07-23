@@ -62,7 +62,8 @@ function tabviewRender($input, $params, &$parser ) {
 		unset($tabs[count($tabs)]);
 	}
 
-	$outJS = "$('#flytabs_{$id}').flyTabs.config({align: 'top', effect: 'no'});";
+	// prepeare tabs options array
+	$optins = array();
 
 	foreach($tabs as $tab) {
 		$onetab = explode('|', $tab);
@@ -89,20 +90,25 @@ function tabviewRender($input, $params, &$parser ) {
 				}
 
 				// prepare flytab options array
-				$options = Wikia::json_encode(array(
+				$options[] = array(
 					'caption' => $text,
-					'cache' => !empty($noCache) ? false : true,
+					'cache' => !empty($noCache) ? false : true, // TODO: handling in FlyTabs
 					'status' => !empty($active) ? 'pinned' : 'off',
 					'url' => $url,
-				));
+				);
 
-				$outJS .= "$('#flytabs_{$id}').flyTabs.addTab({$options});";
 			}
 		}
 		unset($url, $text, $noCache, $active);
 	}
 
-	$outJS = '<script type="text/javascript">wgAfterContentAndJS.push(function() {' . $outJS . '});</script>';
+	// tabview config
+	$tab = array(
+		'id' => $id,
+		'options' => $options,
+	);
+
+	$outJS = '<script type="text/javascript">if (typeof window.__FlyTabs == "undefined") window.__FlyTabs = []; window.__FlyTabs.push(' . Wikia::json_encode($tab) . ');</script>';
 
 	return $out . $outJS;
 }
