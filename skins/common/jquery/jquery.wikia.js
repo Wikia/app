@@ -1,4 +1,4 @@
-//@see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache 
+//@see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
 $.ajaxSetup({cache: true});
 
 jQuery.fn.log = function (msg, group) {
@@ -61,6 +61,27 @@ $.loadYUI = function(callback) {
 	}
 }
 
+// RT #19369: TabView
+$(function() {
+	if (typeof window.__FlyTabs == 'undefined') {
+		return;
+	}
+
+	$.getScript(stylepath + '/common/jquery/jquery.flytabs.js?' + wgStyleVersion, function() {
+		$().log(window.__FlyTabs, 'TabView');
+
+		for(t=0; t<window.__FlyTabs.length; t++) {
+			var tab = window.__FlyTabs[t];
+
+			$('#flytabs_' + tab.id).flyTabs.config({align: 'top', effect: 'no'});
+
+			for (s=0; s<tab.options.length; s++) {
+				$('#flytabs_' + tab.id).flyTabs.addTab(tab.options[s]);
+			}
+		}
+	});
+});
+
 /*
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
@@ -95,7 +116,7 @@ $.getViewportHeight = function() {
 $.getViewportWidth = function() {
     var width = self.innerWidth;  // Safari
     var mode = document.compatMode;
-    
+
     if (mode || $.browser.msie) { // IE, Gecko, Opera
 	width = (mode == 'CSS1Compat') ?
 		document.documentElement.clientWidth : // Standards
@@ -113,7 +134,7 @@ $.getViewportWidth = function() {
 * @method getEvent
 * @param {Event} e the event parameter from the handler
 * @param {HTMLElement} boundEl the element the listener is attached to
-* @return {Event} the event 
+* @return {Event} the event
 * @static
 */
 $.getEvent = function(e, boundEl) {
