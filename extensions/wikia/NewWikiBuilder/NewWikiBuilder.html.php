@@ -54,14 +54,16 @@ echo "NWB.messages = " . json_encode($NWBmessages);
 <li id="step1" class="step">
 <h1 class="headline">Describe your wiki</h1>
 <div class="wrapper clearfix">
-	<form id="step1_form" name="step1_form"><!-- Name needed for selenium tests -->
-		<p>Let's start setting up <b><?php echo $wgSitename?></b>. You can skip any step and come back to it later on.</p> 
-		<p>First: Write a message for the front page of your wiki that describes what <b><?php echo $wgSitename?></b> is about.</p>
-		<textarea name="desc" id="desc_textarea"></textarea>
+	<div id="step1_example">
 		<div class="accent note">
 			<b>Example</b><br />
 			Muppet Wiki is an encyclopedia about everything related to Jim Henson, The Muppet Show and Sesame Street. The wiki format allows anyone to create or edit any article, so we can all work together to create a comprehensive database for fans of the Muppets.
 		</div>
+	</div>
+	<p>Let's start setting up <b><?php echo $wgSitename?></b>. You can skip any step and come back to it later on.</p> 
+	<p>First: Write a message for the front page of your wiki that describes what <b><?php echo $wgSitename?></b> is about.</p>
+	<form id="step1_form" name="step1_form"><!-- Name needed for selenium tests -->
+		<textarea name="desc" id="desc_textarea"></textarea>
 	</form>
 
 	<script>
@@ -110,11 +112,9 @@ echo "NWB.messages = " . json_encode($NWBmessages);
 	<div id="logo_current" style="display: none;"></div>
 	
 	</div><!--float-->
-	<div class="accent note clearfix">
-		<b>Example</b><br />
-		<img src="/extensions/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" />
+	<div class="accent note">
+		<img src="/extensions/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" /><br />
 		This would be a good logo for a skateboarding wiki.
-		<p>Your logo will automatically be resized and saved in the proper file format.</p>
 	</div>
 	<script> 
 	// Fill in the background image for the logo
@@ -179,8 +179,8 @@ for (var i = 0; i < themes.length; i++){
 	<span class="nav_reverse">
 		<button class="secondary" onclick="NWB.gotostep(2);"><span>Back to step 2</span></button>
 	</span>
+	<a href="#step4" id="skip_step_3"><?php echo wfMsg("skip-this-step")?></a> or 
 	<button onclick="NWB.gotostep(4);"><span>Save Theme</span></button>
-	<input onclick="NWB.gotostep(4);" type="button" id="hidden_step_3_skip" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
 
@@ -192,6 +192,10 @@ for (var i = 0; i < themes.length; i++){
 <div class="wrapper clearfix">
 	<p>What do you want to write about?</p>
 	<p>Make a list of some pages you want to have on your wiki.</p>
+	<div class="accent note">
+		<b>Example</b><br />
+		TBD Danny
+	</div>
 	<form id="step4_form">
 		<input type="hidden" name="category" value="Coming Soon"><!-- TODO: i18n -->
 		<div id="all_fp">
@@ -205,10 +209,6 @@ for (var i = 0; i < themes.length; i++){
 			</ul>
 			<!-- Other fp_blocks will be inserted into the dom here with javascript:NWB.firstPagesInputs() -->
 		</div><!-- all_fp -->
-		<div class="accent note">
-			<b>Example</b><br />
-			TBD Danny
-		</div>
 	</form>
 </div>
 <div class="nav">
@@ -231,6 +231,9 @@ for (var i = 0; i < themes.length; i++){
 	<p>The list of pages that you made in the last step has been added to a "Coming Soon" box on the main page. You can get started by clicking on those pages. Have fun!</p>
 </div>
 <div class="nav">
+	<span class="nav_reverse">
+		<button class="secondary" onclick="NWB.gotostep(4);"><span>Back to step 4</span></button>
+	</span>
 	<button><span id="finito">Go to your Wiki</span></button>
 </div>
 </li>
