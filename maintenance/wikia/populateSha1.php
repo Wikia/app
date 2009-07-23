@@ -3,6 +3,7 @@
 require_once( dirname(__FILE__).'/../commandLine.inc' );
 
 $dbr = wfGetDB( DB_SLAVE );
+$dbw = wfGetDB( DB_MASTER );
 $sth = $dbr->select(
 	array( "image" ),
 	array( "img_name", "img_media_type" ),
@@ -30,6 +31,12 @@ while( $row = $dbr->fetchObject( $sth ) ) {
 				);
 				if( $row->oi_sha1 !== $sha1 ) {
 					Wikia::log( "info", "", "{$path} new:{$sha1} <> old:{$row->oi_sha1}" );
+					$dbw->update(
+						"oldimage",
+						array( "oi_sha1" => $sha1 ),
+						array( "oi_archive_name" => $file ),
+						__METHOD__
+					);
 				}
 			}
 			else {
