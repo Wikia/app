@@ -1,7 +1,7 @@
 // FlyTabs version 1.01 - 12/12/2008
 // Copyright © Milan Adamovsky
-// E-mail  : milan@adamovsky.com   
-// Website : http://www.adamovsky.com/flytabs                                 
+// E-mail  : milan@adamovsky.com
+// Website : http://www.adamovsky.com/flytabs
 // License : Must give credit to use in any way (e.g. commercially, personally, academically).
 // I kept the notice short so you will keep this notice in here. Thanks!
 
@@ -11,21 +11,21 @@
 
  if (!_data['tabs'])
   _data['tabs'] = new Object();
- 
+
  if (!_data['core'])
   _data['core'] = new Object();
 
  var _selector = '';
  var _temp_selector = '';
- var init = $.prototype.init; 
+ var init = $.prototype.init;
  // init rewrite code borrowed from Brandon Aaron
  $.prototype.init = function(selector, context) {
 
    var r = init.apply(this, arguments);
-	
+
    if (selector && selector.selector)
      r.context = selector.context, r.selector = selector.selector;
-		
+
    if ( typeof selector == 'string' )
     {
      r.context = context || document, r.selector = selector;
@@ -37,31 +37,31 @@
  $.prototype.init.prototype = $.prototype;
 
  $.fn.flyTabs = {
-   config : function(args) { 
+   config : function(args) {
     _selector = _temp_selector;
     return _config(args);
    },
-   addTab : function(args) { 
+   addTab : function(args) {
     _selector = _temp_selector;
     return _addTab(args);
    },
-   clearTabs : function(args) { 
+   clearTabs : function(args) {
     _selector = _temp_selector;
     return _clearTabs(args);
    },
-   countTabs : function(args) { 
+   countTabs : function(args) {
     _selector = _temp_selector;
     return _countTabs(args);
    },
-   getTab : function(args) { 
+   getTab : function(args) {
     _selector = _temp_selector;
     return _getTab(args);
    },
-   pinTab : function(args) { 
+   pinTab : function(args) {
     _selector = _temp_selector;
     return _pinTab(args);
    },
-   removeTab : function(args) { 
+   removeTab : function(args) {
     _selector = _temp_selector;
     return _removeTab(args);
    }
@@ -74,7 +74,7 @@
 
  function _init (selector) {
 
-   $(selector).each(function () { 
+   $(selector).each(function () {
 
     var tabElement = '#' + this.id + ' li a';
 
@@ -113,7 +113,7 @@
 
    };
 
-  return (selector);  
+  return (selector);
  };
  function _config (args) {
 
@@ -128,7 +128,7 @@
                          'align': 'top',
                          'effect': 'yes',
                          'html': ''
-                        }, args);   
+                        }, args);
 
     $(_selector).data('config', opts);
 
@@ -164,7 +164,7 @@
 
    if ($.browser.msie)
      $('#' + tabsId + '_wrapper').css({'left' : "-3px"});
-   else 
+   else
      _adjustTabs(args);
  };
 
@@ -237,8 +237,8 @@
        case(2): // icon enabled
         var tabWidth = parseInt($('#' + tabId).width());
         var tabHeight = parseInt($('#' + tabId).height());
-        $('#' + tabId + 'Img').load(function() { 
-          imgHeight = this.height; 
+        $('#' + tabId + 'Img').load(function() {
+          imgHeight = this.height;
           imgWidth = this.width;
           var _padding = parseInt((imgHeight / 2) - (tabHeight / 2));
           _padding = _padding < 0 ? (tabHeight > 0 ? (tabHeight / 4) : 0) : _padding;
@@ -265,7 +265,7 @@
         // gotta be here for IE
         break;
       }
- 
+
       _adjustWrapper({"tabsId" : tabsId});
 
      });
@@ -273,7 +273,7 @@
  };
 
  function _Vars(args) {
-  
+
   var tabsId = args['tabs'] || '';
   var tabId = args['tab'] || '';
 
@@ -284,8 +284,8 @@
 
    o = o || this;
    o.tabs = new Object();
-   o.tabs.id = tabsId; 
-   o.tabs.offset = new Object();   
+   o.tabs.id = tabsId;
+   o.tabs.offset = new Object();
    o.tabs.offset.left = function () { return ($(o.tabs.id).offset().left); };
    o.tabs.top = function () { return ($(o.tabs.id).offset().top); };
    o.tabs.css = new Object();
@@ -294,7 +294,7 @@
    o.tabs.height = function () { return ($(o.tabs.id).height()); };
    o.tabs.bottom = function () { return (o.tabs.top() + o.tabs.height()); };
    o.tabs.wrapper = new Object();
-   o.tabs.wrapper.id = o.tabs.id + '_wrapper'; 
+   o.tabs.wrapper.id = o.tabs.id + '_wrapper';
    o.tabs.wrapper.original = new Object();
    o.tabs.wrapper.original.css = new Object();
    o.tabs.wrapper.original.css.borderTopWidth = function () { return (parseInt($(o.tabs.wrapper.id).css("border-top-width"))); };
@@ -302,7 +302,7 @@
    o.tabs.wrapper.original.offset.top = function () { return ($(o.tabs.wrapper.id).offset().top); };
    o.tabs.wrapper.original.top = function () { return (o.tabs.wrapper.original.offset.top() + o.tabs.wrapper.original.css.borderTopWidth()); };
    o.tabs.wrapper.original.difference = function () { return (o.tabs.wrapper.original.top() - o.tabs.bottom()); };
-  
+
   };
 
   this.setTab = function (tabId, o) {
@@ -322,9 +322,9 @@
    o.tab.original.css.left = '';
    o.tab.css = new Object();
    o.tab.css.left = function () {
-                                  var _cssLeft = (parseInt($(o.tab.id).css("left")) || 0); 
-                                  o.tab.original.css.left = o.tab.original.css.left != '' ? o.tab.original.css.left : _cssLeft; 
-                                  return (_cssLeft); 
+                                  var _cssLeft = (parseInt($(o.tab.id).css("left")) || 0);
+                                  o.tab.original.css.left = o.tab.original.css.left != '' ? o.tab.original.css.left : _cssLeft;
+                                  return (_cssLeft);
                                 };
    o.tab.css.top = function () { return (parseInt($(o.tab.id).css("top")) || 0); };
    o.tab.css.marginLeft = function () { return (parseInt($(o.tab.id).css("margin-left")) || 0); };
@@ -341,7 +341,7 @@
   };
 
   if (tabsId)
-   this.setTabs(tabsId, this); 
+   this.setTabs(tabsId, this);
 
   if (tabId)
    this.setTab(tabId, this);
@@ -364,10 +364,10 @@
            {
             var vars = new _Vars({ "tabs" : _tabs });
             var diff = vars.tabs.wrapper.original.difference();
-  
+
             if ((setTop != '') && (diff != setTop))
               $(vars.tabs.id).css({ "top" : (vars.tabs.css.top() + (diff - setTop) + (($.browser.mozilla  && ($.browser.version.substr(0,3) == '1.9')) ? -2 : 0)) + "px" });
-   
+
             setTop = diff;
            }
         }
@@ -384,7 +384,7 @@
     _tabsReAlign();
 
     $tabs.each(function() {
-      
+
       var vars = new _Vars({ "tabs" : '#' + this.id });
       var origTabsBottom = vars.tabs.bottom();
 
@@ -402,17 +402,17 @@
         case(1): // no icon
          var borderBottomWidth = vars.tab.css.borderBottomWidth();
          $('#' + tabId).css({ "border-bottom" : 'none' }); // we don't want to put this in 'default' for arithmetical reasons
-         $('#' + tabId).css({ "top" : (origTabTopCSS + borderBottomWidth) + 'px'});         
+         $('#' + tabId).css({ "top" : (origTabTopCSS + borderBottomWidth) + 'px'});
          break;
         case(2): // icon enabled
          var tabHeight = vars.tab.height();
          var imgHeight = $(this).find('img').height();
- 
+
          // These are the values of tab before any resizing. Needed for alignment arithmetic.
          var origTabBottom = vars.tab.bottom();
 
-         $('#' + tabId + 'Img').load(function() { 
-          imgHeight = this.height; 
+         $('#' + tabId + 'Img').load(function() {
+          imgHeight = this.height;
           imgWidth = this.width;
 
            var _padding = parseInt((imgHeight / 2) - (tabHeight / 2));
@@ -445,14 +445,14 @@
         break;
 
        case(3): // mouseenter
-        break;         
+        break;
        case(4): // mouseleave
         break;
        case(5): // pin tab clicked
 
         if (tabData.icon)
          {
-          $('#' + tabId).css({"top" : (vars.tab.css.top() + 1) + "px"}); 
+          $('#' + tabId).css({"top" : (vars.tab.css.top() + 1) + "px"});
           $('#' + tabId).addClass("tabOn");  // needed for IE6
          }
         else
@@ -467,7 +467,7 @@
        case(7): // pin tab defined
         if (tabData.icon)
          {
-          $('#' + tabId + 'Img').load(function() { 
+          $('#' + tabId + 'Img').load(function() {
             $('#' + tabId).css({"top" : (vars.tab.css.top() + 1) + "px"});
           });
          }
@@ -489,7 +489,7 @@
     var total = 0;
     $(select).each(function() {
           total += this[attr];
-     });   
+     });
 
    return (total);
 
@@ -508,7 +508,7 @@
  };
  function _addTab (args) {
 
-    _init(_selector); 
+    _init(_selector);
 
     var $tabs = $(_selector);
 
@@ -520,6 +520,7 @@
 
      var opts = $.extend({
                           'caption': "tabName" + newIndex,
+                          'cache': true,
                           'id': this.id + "-tabID" + newIndex,
                           'html': "Tab " + newIndex,
                           'index': newIndex,
@@ -527,7 +528,7 @@
                           'icon': null,
                           'code': function () {},
                           'url': '#'
-                         }, args);   
+                         }, args);
 
 
      if (!_data['tabs'][_selector])
@@ -543,13 +544,13 @@
 
      if (indexedElement)
       {
-       $('<li id="' + opts.id + '" class="tab' + statusClass + '"><a href="javascript:return(false);" xhref="' + opts.url + '">' + icon + 
+       $('<li id="' + opts.id + '" class="tab' + statusClass + '"><a href="javascript:return(false);" xhref="' + opts.url + '">' + icon +
                                opts.caption +  '</a></li>').insertBefore(indexedElement);
        _bindEvents(this, tabElement, _selector);
       }
      else
       {
-       $('<li id="' + opts.id + '" class="tab' + statusClass + '"><a onclick="return(false);" href="javascript:return(false);" xhref="' + opts.url + '">' + icon + 
+       $('<li id="' + opts.id + '" class="tab' + statusClass + '"><a onclick="return(false);" href="javascript:return(false);" xhref="' + opts.url + '">' + icon +
                               opts.caption + '</a></li>').appendTo(this);
 
        _bindEvents(this, tabElement, _selector);
@@ -616,7 +617,7 @@
    var config = _getConfig();
 
    function _loadTab(args) {
- 
+
     var data = args['data'];
     var _this = args['this'];
     var parentThis = args['parentThis'];
@@ -625,7 +626,7 @@
     if(data.url == '#')
      {
       $(_this).html(data.html);
-      if ($.browser.msie) 
+      if ($.browser.msie)
         $(_this).css({ "display" : 'block' });
       $(_this).show("slow", function() {
        $("#" + parentThis.id + "_wrapper").removeClass("loading");
@@ -634,13 +635,38 @@
      }
     else
      {
-      if ($.browser.msie) 
+      if ($.browser.msie)
         $(_this).css({ "display" : 'block' });
-      $(_this).load($(parentThis).children().eq(myIndex).find("a").attr("xhref"), {}, function(){
+
+      // wikia: tab cache handling
+      var cacheDivId = data.id + '_cache';
+      if (data.cache) {
+        if ( !$('#' + cacheDivId).exists() ) {
+          // init cache div
+          $('#' + parentThis.id).parent().append('<div id="' + cacheDivId +'" style="display:none"></div>');
+        }
+        else {
+          // load from cache
+          $(_this).html( $('#' + cacheDivId).html() );
+          $(_this).show("slow", function() {
+            $("#" + parentThis.id + "_wrapper").removeClass("loading");
+            data.code();
+          });
+          return;
+        }
+      }
+
+      $(_this).load($(parentThis).children().eq(myIndex).find("a").attr("xhref"), {}, function(html){
         $(_this).show("slow", function() {
          $("#" + parentThis.id + "_wrapper").removeClass("loading");
           data.code();
         });
+
+        // wikia: tab cache handling
+        if (data.cache) {
+         // store in cache
+         $('#' + cacheDivId).html(html);
+        }
       });
      }
 
@@ -693,7 +719,7 @@
 
  };
 
- function _pinTab (args) {  
+ function _pinTab (args) {
 
    var myIndex = args['index'];
    var viaInit = args['defined'];
@@ -711,7 +737,7 @@
         tabElement.removeClass("tabOff");
       if (tabElement.hasClass("tabOn"))
         tabElement.removeClass("tabOn");
- 
+
       tabElement.addClass("tabPinned");
       tabElement.attr("defaultClass", tabElement.attr("class"));
      });
@@ -734,7 +760,7 @@
 
      var opts = $.extend({
                           'index': newIndex
-                         }, args);   
+                         }, args);
 
      if ($children.get(opts.index))
       {
@@ -749,7 +775,7 @@
     });
 
    return ($(_selector));
-  
+
  };
 
  function _bindEvents (parentThis, tabElement, currentSelector) {
@@ -796,7 +822,7 @@
       });
 
     $(tabElement).click(function(){
-  
+
         if ($(this).hasClass("tabPinned"))
          return(0);
 
@@ -808,13 +834,9 @@
         var index = $(tabElement).index(this);
         $(currentSelector).flyTabs.pinTab({'index' : index});
         $(currentSelector).flyTabs.getTab(index);
-  
+
      });
 
  };
- 
+
 })(jQuery);
-
-
-
-

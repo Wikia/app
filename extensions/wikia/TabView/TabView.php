@@ -92,7 +92,7 @@ function tabviewRender($input, $params, &$parser ) {
 				// prepare flytab options array
 				$options[] = array(
 					'caption' => $text,
-					'cache' => !empty($noCache) ? false : true, // TODO: handling in FlyTabs
+					'cache' => !empty($noCache) ? false : true,
 					'status' => !empty($active) ? 'pinned' : 'off',
 					'url' => $url,
 				);
