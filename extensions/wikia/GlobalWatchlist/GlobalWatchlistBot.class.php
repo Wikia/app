@@ -154,13 +154,13 @@ class GlobalWatchlistBot {
 		$this->mUsers = array();
 		while ( $oResultRow = $dbr->fetchObject($oResource) ) {
 			#-- load users from watchlist table with list of pages 
+			$localTime = time();
 			$this->printDebug("Processing {$oResultRow->city_dbname} ... ");
 			$aUsers = $this->getUsersPagesFromWatchlist( $oResultRow->city_dbname );
 			#---
 			$this->printDebug( count($aUsers). " watchlister(s) found ");
 			if ( !empty($aUsers) ) {
 				#----
-				$localTime = time();
 				foreach ($aUsers as $iUserId => $aWatchLists) {
 					#--- skip users without email authentication
 					if ( !isset($this->mWatchlisters[ $iUserId ]) ) {
@@ -194,8 +194,8 @@ class GlobalWatchlistBot {
 						} // foreach $aWatchLists
 					} // if !empty $aWatchLists
 				} // foreach
-				$this->printDebug("Gathering watchlist data for: {$oResultRow->city_dbname} ... done! (time: " . $this->calculateDuration(time() - $localTime ) . ")");
 			} // !empty
+			$this->printDebug("Gathering watchlist data for: {$oResultRow->city_dbname} ... done! (time: " . $this->calculateDuration(time() - $localTime ) . ")");
 		} // while
 		$dbr->freeResult( $oResource );		
 
