@@ -139,7 +139,7 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'footer_1.5' => 'edytując tę stronę',
 #'footer_2' => 'Discuss this article',
 'footer_5' => '$1 zmienił tę stronę $2',
-'footer_6' => 'Przejdź do losoego artykułu',
+'footer_6' => 'Przejdź do losowego artykułu',
 'footer_7' => 'Prześlij ten artykuł mailem',
 'footer_8' => 'Podziel się tym artykułem',
 'footer_9' => 'Oceń ten artykuł',
