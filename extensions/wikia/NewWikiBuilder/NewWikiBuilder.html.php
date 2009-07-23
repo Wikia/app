@@ -1,6 +1,11 @@
 <?php
 if (!defined('MEDIAWIKI')){
 $wgSitename = "Wiki Name";
+$wgDefaultTheme = "slate";
+// Stub
+function wfMsg($in) {
+	return $in;
+}
 ?>
 <!-- Called as a standalone file -->
 <html>
