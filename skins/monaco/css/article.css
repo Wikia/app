@@ -199,8 +199,8 @@
 	clip: rect(0px 16px 16px 0px);
 	left: 0;
 }
-#fe_talk_icon,
-#fe_talk_img {
+#fe_history_icon,
+#fe_history_img {
 	clip: rect(0px 32px 16px 16px);
 	left: -16px;
 }
@@ -249,7 +249,7 @@
 	clip: rect(0px 288px 16px 272px);
 	left: -272px;
 }
-#fe_talk {
+#fe_history {
 	float: left;
 }
 #fe_permalink {

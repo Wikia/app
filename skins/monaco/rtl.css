@@ -157,7 +157,7 @@ body {
 	left: auto;
 	right: -320px;
 }
-#fe_talk_icon {
+#fe_history_icon {
 	left: auto;
 	right: -304px;
 }
@@ -185,7 +185,7 @@ body {
 	left: auto;
 	right: -272px;
 }
-#fe_talk,
+#fe_history,
 #fe_permalink,
 #articleFooter ul.actions li {
 	float: right;

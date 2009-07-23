@@ -1701,7 +1701,7 @@ if ($custom_article_footer !== '') {
 			$actions =
 								'<ul id="articleFooterActions3" class="actions clearfix">' .
 								(!empty($this->data['content_actions']['history']) ? ('
-								<li id="fe_talk"><a rel="nofollow" id="fe_talk_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_talk_img" class="sprite" alt="' . wfMsg('history_short') . '" /></a> <div><a id="fe_talk_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
+								<li id="fe_history"><a rel="nofollow" id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_history_img" class="sprite" alt="' . wfMsg('history_short') . '" /></a> <div><a id="fe_history_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
 
 								(!empty($nav_urls['recentchangeslinked']) ? ('
 								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_recent_img" class="sprite" alt="' . wfMsg('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsg('recentchangeslinked') . '</a></div></li>') : '') .
