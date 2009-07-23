@@ -8,12 +8,12 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionFunctions[] = 'wfEditEnhancementsInit';
 
-function wfEditEnhancementsInit() {
+function wfEditEnhancementsInit($forceInit = false) {
 	global $wgRequest;
 
 	$action = $wgRequest->getVal('action', null);
 
-	if ($action == 'edit' || $action == 'submit') {
+	if ($action == 'edit' || $action == 'submit' || $forceInit == true) {
 		require( dirname(__FILE__) . '/EditEnhancements.class.php' );
 		$instance = new EditEnhancements($action);
 	}

@@ -86,7 +86,7 @@ function CategorySelectInitializeHooks($title, $article) {
 	}
 
 	// Initialize only for namespace: content, file, user (same as for Wysiwyg)
-	if(!in_array($title->mNamespace, $wgContentNamespaces) && !in_array($title->mNamespace, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO ))) {
+	if(!in_array($title->mNamespace, $wgContentNamespaces) && !in_array($title->mNamespace, array( NS_FILE, NS_USER, NS_CATEGORY, NS_VIDEO, NS_SPECIAL ))) {
 		return true;
 	}
 
@@ -277,7 +277,7 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectReplaceContent($editPage, $text) {
+function CategorySelectReplaceContent($editPage, &$text) {
 	if (!$editPage->isConflict) {
 		$data = CategorySelect::SelectCategoryAPIgetData($text);
 		$text = $data['wikitext'];

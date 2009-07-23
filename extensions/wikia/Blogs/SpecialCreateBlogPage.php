@@ -7,12 +7,18 @@
  */
 class CreateBlogPage extends SpecialBlogPage {
 
-	private $reEdit = false;
+	private $mEditPage = null;
+	private $mCategorySelectEnabled = false;
 
 	public function __construct() {
 		// initialise messages
 		wfLoadExtensionMessages( "Blogs" );
 		parent::__construct( 'CreateBlogPage'  /*class*/, '' /*restriction*/, true);
+
+		// force EditEnhancements initialisation if available
+		if(function_exists('wfEditEnhancementsInit') && !class_exists('EditEnhancements')) {
+			wfEditEnhancementsInit(true);
+		}
 	}
 
 	public function execute() {
@@ -35,6 +41,13 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
 
+		// force CategorySelect initialisation if available
+		if(function_exists('CategorySelectInitializeHooks')) {
+			$this->mCategorySelectEnabled = true;
+			$wgRequest->setVal('action', 'edit');
+			CategorySelectInitializeHooks($this->mTitle, null);
+		}
+
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
 
 		if($wgRequest->wasPosted()) {
@@ -50,20 +63,22 @@ class CreateBlogPage extends SpecialBlogPage {
 			if($wgRequest->getVal('article') != null) {
 				$this->parseArticle(urldecode($wgRequest->getVal('article')));
 			}
+			else {
+				$this->createEditPage('');
+			}
 			$this->renderForm();
 		}
 	}
 
 	protected function save() {
-		global $wgOut, $wgUser, $wgContLang;
+		global $wgOut, $wgUser, $wgContLang, $wgRequest;
 
-		$sPostBody = $this->mFormData['postBody'];
-
-		if(!empty($this->mFormData['postCategories'])) {
-			// add categories
-			$aCategories = preg_split ("/\|/", $this->mFormData['postCategories'], -1);
-			$sPostBody .= $this->getCategoriesAsText($aCategories);
+		// CategorySelect compatibility (add categories to article body)
+		if($this->mCategorySelectEnabled) {
+			CategorySelectImportFormData($this->mEditPage, $wgRequest);
 		}
+
+		$sPostBody = $this->mEditPage->textbox1;
 
 		/**
 		 * add category for blogs (if defined in message and not existed already)
@@ -86,7 +101,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$editPage = new EditBlogPage( $this->mPostArticle );
 		$editPage->initialiseForm();
 		$editPage->textbox1 = $sPostBody;
-		$editPage->summary  = wfMsgForContent('create-blog-updated');
+		$editPage->summary = isset($this->mFormData['postEditSummary']) ? $this->mFormData['postEditSummary'] : wfMsgForContent('create-blog-updated');
 
 		$result = false;
 		$status = $editPage->internalAttemptSave( $result );
@@ -119,13 +134,12 @@ class CreateBlogPage extends SpecialBlogPage {
 	protected function parseFormData() {
 		global $wgUser, $wgRequest, $wgOut;
 
-		// store preview HTML for Wysiwyg
-		$this->mFormData['html'] = $wgRequest->getVal('wpTextbox1');
 		wfRunHooks('BlogsAlternateEdit', array(false));
 
 		$this->mFormData['postId'] = $wgRequest->getVal('blogPostId');
 		$this->mFormData['postTitle'] = $wgRequest->getVal('blogPostTitle');
 		$this->mFormData['postBody'] = $wgRequest->getVal('wpTextbox1');
+		$this->mFormData['postEditSummary'] = $wgRequest->getVal('wpSummary');
 		$this->mFormData['postCategories'] = $wgRequest->getVal('wpCategoryTextarea1');
 		$this->mFormData['isVotingEnabled'] = $wgRequest->getCheck('blogPostIsVotingEnabled');
 		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
@@ -167,92 +181,57 @@ class CreateBlogPage extends SpecialBlogPage {
 			$this->mFormErrors[] = wfMsg('create-blog-empty-post-error');
 		}
 
+		//create EditPage object
+		$this->createEditPage( $this->mFormData['postBody'] );
+
 		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
+			// preview mode
 			$oParser = new Parser();
 			$this->mRenderedPreview = $oParser->parse( $this->mFormData['postBody'], Title::newFromText($this->mFormData['postTitle']), $wgOut->parserOptions() );
+
+			// CategorySelect compatibility (add categories to article body)
+			if($this->mCategorySelectEnabled) {
+				CategorySelectImportFormData( $this->mEditPage, $wgRequest );
+			}
+		}
+
+		// CategorySelect compatibility (restore categories from article body)
+		if($this->mCategorySelectEnabled) {
+			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
 		}
 	}
 
+	protected function createEditPage($sPostBody) {
+		$oArticle = new Article( Title::makeTitle( NS_BLOG_ARTICLE, 'New or Updated Blog Post' ) );
+		$this->mEditPage = new EditPage($oArticle);
+		$this->mEditPage->textbox1 = $sPostBody;
+	}
+
 	protected function renderForm() {
-		global $wgOut, $wgUser, $wgScriptPath, $wgEnableWysiwygExt, $wgRequest, $wgWysiwygEdit;
+		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
+		return true;
+	}
 
-		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
-		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
-
+	/**
+	 * EditPage::showEditForm callback - need to be public
+	 */
+	public function renderFormHeader($wgOut) {
+		global $wgScriptPath;
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
-		$wysiwygEnabled = ( (!empty($wgEnableWysiwygExt) && ($wgUser->getOption('enablerichtext') == 1) ) ? true : false );
-		$form = new EditPage(new Article($this->mTitle));
-
-		// restore HTML and metadata for Wysiwyg (preview mode)
-		if ( isset($wgRequest->data['wysiwygData']) && $wgRequest->data['wysiwygData'] != '') {
-			global $wgWysiwygData;
-			$wgWysiwygData = $wgRequest->getVal('wysiwygData');
-
-			$this->mFormData['postBody'] = $this->mFormData['html'];
-		}
-
-		// restore HTML and metadata for Wysiwyg (blog post re-edit mode)
-		if($wysiwygEnabled && ($this->reEdit == true) && !empty($this->mFormData['postBody'])) {
-			$ret = Wysiwyg_WikiTextToHtml($this->mFormData['postBody'], false, true);
-			if($ret['type'] == 'html') {
-				global $wgWysiwygData;
-				$wgWysiwygData = $ret['data'];
-
-				$this->mFormData['wikimarkup'] = $this->mFormData['postBody'];
-				$this->mFormData['postBody'] = $ret['html'];
-			}
-		}
-
-		if($wysiwygEnabled) {
-			wfRunHooks('EditPage::showEditForm:initial', array(&$form));
-			if(!$wgWysiwygEdit && isset($this->mFormData['wikimarkup'])) {
-				//fallback to wiki markup if we don't have Wysiwyg enabled for whatever reason (e.g. non-comaptible browser)
-				global $wgWysiwygData;
-				$wgWysiwygData = '';
-
-				$this->mFormData['postBody'] = $this->mFormData['wikimarkup'];
-			}
-		}
-
 		$oTmpl->set_vars( array(
-			'categoryCloudTitle' => wfMsg('create-blog-categories-title'),
-			'cloud' => new TagCloud(),
-			'cols' => 10,
-			'cloudNo' => 1,
-			'wysiwygEnabled' => $wysiwygEnabled,
-			'textCategories' => ( isset($this->mFormData['postCategories']) ? $this->mFormData['postCategories'] : "" ) )
-		);
-
-		$sCategoryCloud = $oTmpl->execute("createPostCategoryCloud");
-
-		$oTmpl->set_vars( array(
-			"title" => $this->mTitle,
-			"form" => $form,
 			"formErrors" => $this->mFormErrors,
 			"formData" => $this->mFormData,
-			"preview" => $this->mRenderedPreview,
-			"categoryCloud" => $sCategoryCloud )
-		);
+			"preview" => $this->mRenderedPreview
+		) );
 
-		$wgOut->addHTML( $oTmpl->execute("createBlogForm") );
-
-		if($wysiwygEnabled) {
-			Wysiwyg_BeforeDisplayingTextbox(1,2);
-			//moved above to get $wgWysiwygEdit set properly
-			//wfRunHooks('EditPage::showEditForm:initial', array(&$form));
-			wfRunHooks('EditPage::showEditForm:initial2', array(&$form));
-		}
-
-		$wgOut->addHTML('</form>');
-
-		return;
+		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
+		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
+		$wgOut->addHTML( $oTmpl->execute("createBlogFormHeader") );
 	}
 
 	private function parseArticle($sTitle) {
 		global $wgParser, $wgContLang;
-
-		$this->reEdit = true;
 
 		$oTitle = Title::newFromText($sTitle, NS_BLOG_ARTICLE);
 		$oArticle = new Article($oTitle, 0);
@@ -263,20 +242,20 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mFormData['postId'] = $oArticle->getId();
 		$this->mFormData['postTitle'] = $aTitleParts[1];
 		$this->mFormData['postBody'] = trim(preg_replace('/\[\[' . $wgContLang->getFormattedNsText( NS_CATEGORY ) . ':(.*)\]\]/siU', '', $sArticleBody));
-		$this->mFormData['postCategories'] = implode('|', $this->getCategoriesFromArticleContent($sArticleBody));
+		$this->mFormData['postBody'] = $sArticleBody;
 		$this->mFormData['isVotingEnabled'] = isset($aPageProps['voting']) ? $aPageProps['voting'] : 0;
 		$this->mFormData['isCommentingEnabled'] = isset($aPageProps['commenting']) ? $aPageProps['commenting'] : 0;
 		$this->mFormData['isExistingArticleEditAllowed'] = 1;
 
-	}
+		//create EditPage object
+		$this->createEditPage( $this->mFormData['postBody'] );
 
-	private function getCategoriesFromArticleContent($sArticleContent) {
-		global $wgContLang;
+		// CategorySelect compatibility (restore categories from article body)
+		if($this->mCategorySelectEnabled) {
+			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
+		}
 
-		$aMatches = null;
-		preg_match_all('/\[\[' . $wgContLang->getFormattedNsText( NS_CATEGORY ) . ':(.*)\]\]/siU', $sArticleContent, $aMatches);
-
-		return ( is_array($aMatches) ? $aMatches[1] : array() );
+		return $oArticle;
 	}
 
 	/**
