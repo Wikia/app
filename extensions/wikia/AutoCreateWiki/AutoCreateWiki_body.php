@@ -519,7 +519,6 @@ class AutoCreateWikiPage extends SpecialPage {
 					$wgOut->addHTML(wfMsg('autocreatewiki-step7-error'));
 					return;
 				}
-
 				/**
 				 * @todo move copying images from local database changes section
 				 * use wikifactory variable to determine proper path to images
@@ -540,6 +539,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->log($cmd);
 				wfShellExec( $cmd );
 
+				$this->changeStarterContributions( $dbw_local );
 				$this->log( "Copying starter database" );
 				$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
 			}
@@ -1448,7 +1448,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		$user = User::newFromName( self::DEFAULT_USER );
 		$user->load();
 
-		$this->log( "change rev_user and rev_user_text in revisions" );
 		$dbw->update(
 			"revision",
 			array(
@@ -1458,6 +1457,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			false,
 			__METHOD__
 		);
+		$rows = $dbw->affectedRows();
+		$this->log( "change rev_user and rev_user_text in revisions: {$rows} rows" );
 
 		wfProfileOut( __METHOD__ );
 	}
