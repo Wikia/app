@@ -462,7 +462,7 @@ class GlobalWatchlistBot {
 	 */
 	private function isLagged($dbr) {
 		$res = $dbr->query( 'SHOW SLAVE STATUS', __METHOD__ );
-		$row = $this->fetchObject( $res );
+		$row = $dbr->fetchObject( $res );
 		if ( $row ) {
 			$val = isset($row->Seconds_behind_master) ? $row->Seconds_behind_master : $row->Seconds_Behind_Master;
 			return intval($val);
