@@ -96,10 +96,10 @@ ADS;
 ?>
 <div id="navbar">
 	<ul>
-		<li>More <a href="http://gamewikis.org">GameWikis</a> projects: </li><li><a href="http://fury.gamewikis.org">FuryWiki</a> (Fury)</li><li><a href="http://war.gamewikis.org">HammerWiki</a> (Warhammer Online)</li><li><a href="http://oblivion.gamewikis.org">OblivioWiki</a> (TES IV: Oblivion)</li><li class="suggesta"><a href="http://requests.wikia.com/">Suggest a wiki</a></li>
+		<li>More <a href="http://gamewikis.org">GameWikis</a> projects: </li><li><a href="http://fury.gamewikis.org">FuryWiki</a> (Fury)</li><li><a href="http://war.gamewikis.org">HammerWiki</a> (Warhammer Online)</li><li><a href="http://oblivion.gamewikis.org">OblivioWiki</a> (TES IV: Oblivion)</li><li class="suggesta"><a href="http://www.wikia.com/wiki/Special:CreateWiki">Create a wiki</a></li>
 	</ul>
 </div>
-<?php		
+<?php
 	}
 
 	// customize wowwiki search box

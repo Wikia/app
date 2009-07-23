@@ -103,7 +103,7 @@ function WidgetWikiaToolbox($id, $params) {
 	$this_wiki_out .= '<ul>'.$this_wiki_out_temp.'</ul>';
 
 	$this_article_out .= "\n<div style='display: none; position: absolute; bottom: {$buttonPaddingBottom}px;' class=\"gelButton addButton\"><a id=\"tb_new_article\" href=\"".Skin::makeSpecialUrl( 'Createpage' )."\">".wfMsg( 'new_article' )."</a></div>\n</div>";
-	$this_wiki_out .= "\n<div style='position: absolute; bottom: {$buttonPaddingBottom}px;' class=\"gelButton addButton\"><a id=\"tb_new_wiki\" href=\"http://requests.wikia.com\">".wfMsg( 'new_wiki' )."</a></div>\n</div>";
+	$this_wiki_out .= "\n<div style='position: absolute; bottom: {$buttonPaddingBottom}px;' class=\"gelButton addButton\"><a id=\"tb_new_wiki\" href=\"http://www.wikia.com/wiki/Special:CreateWiki\">".wfMsg( 'new_wiki' )."</a></div>\n</div>";
 
 	$body = "
     <li id=\"{$id}_wg\" class='widget WidgetWikiaToolbox'>
