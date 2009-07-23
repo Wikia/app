@@ -413,56 +413,8 @@ body.widgetsAddingBlocked .add {
 }
 #dynamic-links-write-article-icon,
 #dynamic-links-write-article-img {
-	clip: rect(0px 416px 16px 400px);
-	left: -400px;
-}
-#dynamic-links-add-image-icon,
-#dynamic-links-add-image-img {
-	clip: rect(0px 432px 16px 416px);
-	left: -416px;
-}
-#dynamic-links-write-blog-icon,
-#dynamic-links-write-blog-img {
-	clip: rect(0px 400px 16px 384px);
-	left: -384px;
-}
-#dynamic-links-blog-listing-icon,
-#dynamic-links-blog-listing-img {
-	clip: rect(0px 448px 16px 432px);
-	left: -432px;
-}
-
-/* page-specific links */
-#link_box_dynamic #dynamic-links-list {
-	margin: 0;
-	padding: 0;
-}
-#link_box_dynamic #dynamic-links-list li {
-	line-height: 1.5em;
-	padding: 2px 0;
-	position: relative;
-	font-size: 8pt;
-	font-weight: bold;
-	float: left;
-	margin-right: 2px;
-	overflow: hidden !important; /* Opera fix */
-}
-#link_box_dynamic #dynamic-links-list li div {
-	display: inline;
-	position: relative;
-	margin-left: 18px;
-}
-#link_box_dynamic img.sprite {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
-	height: 16px;
-	margin-right: 16px;
-	position: absolute;
-	width: 464px;
-}
-#dynamic-links-write-article-icon,
-#dynamic-links-write-article-img {
-	clip: rect(0px 416px 16px 400px);
-	left: -400px;
+	clip: rect(0px 16px 16px 0px);
+	left: 0px;
 }
 #dynamic-links-add-image-icon,
 #dynamic-links-add-image-img {

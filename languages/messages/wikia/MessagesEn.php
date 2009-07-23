@@ -89,7 +89,7 @@ $messages = array_merge( $messages , array(
 * whatlinkshere|whatlinkshere',
 
 #dynamic links
-'dynamic-links-write-article' => 'Write an Article',
+'dynamic-links-write-article' => 'New Page',
 'dynamic-links-add-image' => 'Add Image',
 'dynamic-links-write-blog' => 'Write a Blog',
 'dynamic-links-blog-listing' => 'New Blog Listing',
