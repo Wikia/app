@@ -1432,4 +1432,33 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 	}
 
+	/**
+	 * this method updates rev_user and rev_user_text for language starters
+	 * update is performed on local (freshly created) database
+	 *
+	 * @access private
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 *
+	 * @param Database $dbw
+	 * @param User $user
+	 */
+	private function changeStarterContributions( &$dbw ) {
+
+		wfProfileIn( __METHOD__ );
+		$user = User::newFromName( self::DEFAULT_USER );
+		$user->load();
+
+		$this->log( "change rev_user and rev_user_text in revisions" );
+		$dbw->update(
+			"revision",
+			array(
+				"rev_user"      => $user->getId(),
+				"rev_user_text" => $user->getName()
+			),
+			false,
+			__METHOD__
+		);
+
+		wfProfileOut( __METHOD__ );
+	}
 }
