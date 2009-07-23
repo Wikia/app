@@ -23,7 +23,12 @@
 				font-family: Verdana, Arial, sans-serif;
 			}
 
-			#exitPageAd {
+			#exitPageAd1 {
+				text-align: center;
+				padding: 5px;
+			}
+
+			#exitPageAd2 {
 				text-align: center;
 				padding: 5px;
 			}
@@ -37,19 +42,15 @@
 		/*]]>*/</script>
 	</head>
 	<body class="color2"<?php if($redirectDelay > 0): ?> onLoad="setTimeout(doRedirect, <?=($redirectDelay * 1000);?>)"<?php endif?>>
+		<?= $athenaInitStuff; ?>
 		<div>
 			<div id="pageTop" class="color1"><a href="<?= htmlspecialchars($url); ?>" id="exitLink" rel="nofollow"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a></div>
-			<div id="exitPageAd">
-				<script type="text/javascript">/*<![CDATA[*/
-					google_ad_client = "pub-4086838842346968";
-					/* Exit page ad */
-					google_ad_slot = "0549965769";
-					google_ad_width = 336;
-					google_ad_height = 280;
-					google_page_url = "http://gamergear.wikia.com/wiki/GamerGear_Wiki";
-				/*]]>*/</script>
-				<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-				</script>
+			<?=$adSlots['INVISIBLE'];?>
+			<div id="exitPageAd1">
+				<?=$adSlots['BOXAD_1'];?>
+			</div>
+			<div id="exitPageAd2">
+				<?=$adSlots['BOXAD_2'];?>
 			</div>
 		</div>
 	</body>

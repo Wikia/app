@@ -62,12 +62,22 @@ class Outbound extends UnlistedSpecialPage {
 		// render template
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
+		$adSlots = array(
+		'INVISIBLE' => AdEngine::getInstance()->getAd('EXIT_STITIAL_INVISIBLE'),
+		'BOXAD_1' => AdEngine::getInstance()->getAd('EXIT_STITIAL_BOXAD_1'),
+		//'BOXAD_1' => AdEngine::getInstance()->getAd('HOME_TOP_LEADERBOARD'), // for dev testing
+		'BOXAD_2' => AdEngine::getInstance()->getAd('EXIT_STITIAL_BOXAD_2')
+		//'BOXAD_2' => AdEngine::getInstance()->getAd('HOME_TOP_LEADERBOARD') // for dev testing
+		);
+
 		$oTmpl->set_vars(
 				array(
 					'url' => $url,
 					'css' => $css,
+					'athenaInitStuff' => AdProviderAthena::getInstance()->getSetupHtml(),
 					'redirectDelay' => $this->redirectDelay,
 					'imagesPath' => $wgExtensionsPath . '/wikia/OutboundScreen/images',
+					'adSlots' => $adSlots
 				)
 		);
 
