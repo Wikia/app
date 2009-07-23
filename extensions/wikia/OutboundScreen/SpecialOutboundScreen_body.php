@@ -16,7 +16,7 @@ class Outbound extends UnlistedSpecialPage {
 	}
 
 	function execute() {
-		global $wgOut, $wgUser, $wgRequest, $wgExtensionsPath, $wgOutboundScreenConfig;
+		global $wgOut, $wgUser, $wgRequest, $wgExtensionsPath, $wgOutboundScreenConfig, $wgCityId;
 
 		$url = $wgRequest->getText( 'u' );
 
@@ -70,11 +70,14 @@ class Outbound extends UnlistedSpecialPage {
 		//'BOXAD_2' => AdEngine::getInstance()->getAd('HOME_TOP_LEADERBOARD') // for dev testing
 		);
 
+		$athenaInitStuff = AdProviderAthena::getInstance()->getSetupHtml();
+		$athenaInitStuff .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
+
 		$oTmpl->set_vars(
 				array(
 					'url' => $url,
 					'css' => $css,
-					'athenaInitStuff' => AdProviderAthena::getInstance()->getSetupHtml(),
+					'athenaInitStuff' => $athenaInitStuff,
 					'redirectDelay' => $this->redirectDelay,
 					'imagesPath' => $wgExtensionsPath . '/wikia/OutboundScreen/images',
 					'adSlots' => $adSlots
