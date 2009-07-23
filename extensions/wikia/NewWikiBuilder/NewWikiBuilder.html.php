@@ -11,11 +11,11 @@ function wfMsg($in) {
 <html>
 <body>
 <!-- Jquery is required for the API itself -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <?php } else {
 global $wgSitename;
 }
 ?>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/extensions/wikia/NewWikiBuilder/main.css"/>
 
 <script src="/extensions/wikia/JavascriptAPI/Mediawiki.js"></script>
@@ -38,7 +38,7 @@ echo "NWB.messages = " . json_encode($NWBmessages);
 <body>
 
 <div id="header" class="clearfix">
-	<img src="logo.png" id="logo" />
+	<img src="/extensions/wikia/NewWikiBuilder/logo.png" id="logo" />
 	<ul id="progress">
 		<li id="progress_step1">1</li>
 		<li id="progress_step2">2</li>
@@ -112,7 +112,7 @@ echo "NWB.messages = " . json_encode($NWBmessages);
 	</div><!--float-->
 	<div class="accent note clearfix">
 		<b>Example</b><br />
-		<img src="sample_logo.jpg" id="sample_logo" />
+		<img src="/extensions/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" />
 		This would be a good logo for a skateboarding wiki.
 		<p>Your logo will automatically be resized and saved in the proper file format.</p>
 	</div>
