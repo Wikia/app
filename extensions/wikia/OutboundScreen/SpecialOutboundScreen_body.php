@@ -33,7 +33,7 @@ class Outbound extends UnlistedSpecialPage {
 		$skinName = get_class($skin);
 
 		// this may not be set yet
-		if (empty($skin->skinname)) {
+		if ($skin->getSkinName() == '') {
 			$skin->skinname = substr($skinName, 4);
 		}
 
