@@ -63,8 +63,6 @@ ul, li {
 	margin-right: 55px;
 }
 #progress li {
-	border-width: 1px;
-	border-style: solid;
 	float: left;
 	font-size: 20pt;
 	font-weight: bold;
@@ -129,13 +127,24 @@ button.secondary span {
 }
 
 /*** Step 1: Description ***/
+#step1_example {
+	background: url(/extensions/wikia/NewWikiBuilder/description.png) top right no-repeat;
+	float: right;
+	height: 377px;
+	width: 401px;
+}
 #step1 .note {
-	margin-left: 550px;
+	height: 140px;
+	margin-top: 126px;
+	overflow: auto;
+	width: 298px;
 }
 #step1 textarea {
-	float: left;
-	width: 500px;
-	height: 175px;
+	width: 100%;
+	height: 240px;
+}
+#step1_form {
+	margin-right: 441px;
 }
 
 /*** Step 2: Logo ***/
@@ -147,11 +156,11 @@ button.secondary span {
 	background-repeat:no-repeat;
 }
 #step2 .note {
-	margin-left: 525px;
+	float: right;
+	width: 200px;
 }
 #sample_logo {
-	float: right;
-	margin-left: 10px;
+	margin-bottom: 5px;
 }
 #step2 label {
 	display: block;
@@ -195,6 +204,8 @@ button.secondary span {
 	float: left;
 }
 #all_fp li {
+	list-style: disc;
+	margin-left: 15px;
 	padding: 3px;
 }
 #all_fp label {
@@ -202,7 +213,13 @@ button.secondary span {
 	margin-right: 5px;
 }
 #step4 .note {
-	margin-left: 400px;
+	float: right;
+	width: 300px;
+}
+.fp_page {
+	font-size: 14px;
+	padding: 5px;
+	width: 300px;
 }
 
 /*** Styles for status bar http://www.west-wind.com/WebLog/posts/388213.aspx ***/

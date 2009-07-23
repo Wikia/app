@@ -12,8 +12,6 @@ body {
 	border-color: #71d1ef;
 }
 #progress li {
-	background-color: #FFF;
-	border-color: #ffcb3b;
 	color: #AAA;
 }
 #progress li.selected {
