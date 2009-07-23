@@ -199,6 +199,11 @@
 	clip: rect(0px 16px 16px 0px);
 	left: 0;
 }
+#fe_createblog_icon,
+#fe_createblog_img {
+	clip: rect(0px 16px 16px 0px);
+	left: 0;
+}
 #fe_history_icon,
 #fe_history_img {
 	clip: rect(0px 32px 16px 16px);

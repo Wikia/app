@@ -1735,7 +1735,7 @@ if ($custom_article_footer !== '') {
 		} elseif ($namespaceType == 'blog') {
 			$href = htmlspecialchars(Title::makeTitle(NS_SPECIAL, 'CreateBlogPage')->getLocalURL());
 ?>
-								<li><a rel="nofollow" id="fe_edit_icon" href="<?= $href ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_edit_img" class="sprite" alt="<?= wfMsg('edit') ?>" /></a> <div><a id="fe_edit_link" rel="nofollow" href="<?= $href ?>"><?= wfMsg('blog-create-next-label') ?></a></div></li>
+								<li><a rel="nofollow" id="fe_createblog_icon" href="<?= $href ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_createblog_img" class="sprite" alt="<?= wfMsg('blog-create-next-label') ?>" /></a> <div><a id="fe_createblog_link" rel="nofollow" href="<?= $href ?>"><?= wfMsg('blog-create-next-label') ?></a></div></li>
 <?php
 		} else {
 ?>
