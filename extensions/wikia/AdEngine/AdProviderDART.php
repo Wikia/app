@@ -224,6 +224,7 @@ EOT;
 		switch ($slotname){
 			case 'TOP_LEADERBOARD': return 'dcopt=ist;';
 			case 'HOME_TOP_LEADERBOARD': return 'dcopt=ist;';
+			case 'EXIT_STITIAL_INVISIBLE': return 'dcopt=ist;';
 			default: return '';
 		}
 	}
