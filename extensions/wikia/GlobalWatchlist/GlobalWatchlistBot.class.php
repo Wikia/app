@@ -206,7 +206,7 @@ class GlobalWatchlistBot {
 					} // if !empty $aWatchLists
 				} // foreach
 			} // !empty
-			$this->printDebug("Gathering watchlist data for: {$oResultRow->city_dbname} ... done! (time: " . $this->calculateDuration(time() - $localTime ) . ")");
+			$this->printDebug("Gathering watchlist data for: {$oResultRow->city_dbname} ({$oResultRow->city_id}) ... done! (time: " . $this->calculateDuration(time() - $localTime ) . ")");
 		} // while
 		$dbr->freeResult( $oResource );		
 
