@@ -34,7 +34,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mPosted,
 		$mPostedErrors,
 		$mErrors,
-		$mUserLanguage;
+		$mUserLanguage,
+		$mDefaultUser;
 
 	/**
 	 * test database, CAUTION! content will be destroyed during tests
@@ -539,8 +540,8 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->log($cmd);
 				wfShellExec( $cmd );
 
-				#$this->changeStarterContributions( $dbw_local );
 				$this->log( "Copying starter database" );
+				$this->changeStarterContributions( $dbw_local );
 				$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
 			}
 			else {
@@ -692,6 +693,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		wfProfileIn( __METHOD__ );
 
 		$this->mFounder = $wgUser;
+		$this->mDefaultUser = User::newFromName( self::DEFAULT_USER );
+		$this->mDefaultUser->load();
+
 		#-- for other users -> for staff only
 		if ( in_array('staff', $wgUser->getGroups()) && !empty($this->awcStaff_username) ) {
 			$this->mFounder = User::newFromName($this->awcStaff_username);
@@ -1445,21 +1449,25 @@ class AutoCreateWikiPage extends SpecialPage {
 	private function changeStarterContributions( &$dbw ) {
 
 		wfProfileIn( __METHOD__ );
-		$user = User::newFromName( self::DEFAULT_USER );
-		$user->load();
 
-		$dbw->update(
-			"revision",
-			array(
-				"rev_user"      => $user->getId(),
-				"rev_user_text" => $user->getName()
-			),
-			false,
-			__METHOD__
-		);
-		$rows = $dbw->affectedRows();
-		$this->log( "change rev_user and rev_user_text in revisions: {$rows} rows" );
+		if( $this->mDefaultUser ) {
 
+			/**
+			 * check if we are connected to local db
+			 * $this->mWikiData[ "dbname"]
+			 */
+			$dbw->update(
+				"revision",
+				array(
+					"rev_user"      => $this->mDefaultUser->getId(),
+					"rev_user_text" => $this->mDefaultUser->getName()
+				),
+				false,
+				__METHOD__
+			);
+			$rows = $dbw->affectedRows();
+			$this->log( "change rev_user and rev_user_text in revisions: {$rows} rows" );
+		}
 		wfProfileOut( __METHOD__ );
 	}
 }
