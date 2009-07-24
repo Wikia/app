@@ -12,5 +12,5 @@
 <!-- Link to the New Wiki Builder. Make it trixy for now, it's not ready for everyone to see -->
 <p>
 <p>
-<span style="font-size:8pt; color: grey; text-decoration:none"><a href="<?=$domain?>/wiki/Special:NewWikiBuilder">.</a></span>
+<span style="font-size:8pt; color: grey; text-decoration:none"><a href="<?=$domain?>wiki/Special:NewWikiBuilder">.</a></span>
 <!-- e:<?= __FILE__ ?> -->
