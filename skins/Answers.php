@@ -83,6 +83,7 @@ class AnswersTemplate extends MonacoTemplate {
 		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/tracker.js?<?=$wgStyleVersion?>"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/common/tracker.js?<?=$wgStyleVersion?>"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+		<script type="text/javascript" src="<?=$wgStylePath?>/common/jquery/jquery.wikia.js?<?=$wgStyleVersion?>"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/main.js?<?=$wgStyleVersion?>"></script>
 		<?php
 		if( $wgEnableFacebookConnect ){
