@@ -218,8 +218,8 @@ class GlobalWatchlistBot {
 	 * mark all pages sent as weekly digest as visited (only for users who requested that in Special:Preferences)
 	 */
 	private function markWeeklyDigestAsVisited() {
-		global $wgExternalSharedDB, $wgDefaultUserOptions;
-		$dbs = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		global $wgExternalDatawareDB, $wgDefaultUserOptions;
+		$dbs = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 		$wgDefaultUserOptions['watchlistdigestclear'] = 0;
 
 		foreach($this->mWatchlisters as $iUserId => $aUserData) {
@@ -298,13 +298,13 @@ class GlobalWatchlistBot {
 	}
 
 	public function run() {
-		global $wgExternalSharedDB;
+		global $wgExternalDatawareDB;
 
 		$this->mStartTime = time();
 		$this->printDebug("Script started. (" . date('Y-m-d H:i:s'). ")");
 
 		// ditch previous watchlist data
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 		$dbw->query("DELETE FROM global_watchlist");
 		$this->printDebug("Old digest data removed.");
 
