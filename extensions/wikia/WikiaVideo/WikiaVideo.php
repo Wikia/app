@@ -30,7 +30,7 @@ function WikiaVideoFetchTemplateAndTitle( $text, $finalTitle ) {
 
 	$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Placeholder";
 
-	// replace text and give Video_Template: namespace everywhere - because it's template...
+	// replace text and give Video:Template_Placeholder: text everywhere
 	if ($text !== false) {
 		$count = 0;
 		$text = str_replace( $vid_tag, 'Video:Template_Placeholder', $text, $count );
