@@ -1450,12 +1450,12 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
-		if( $this->mDefaultUser ) {
+		/**
+		 * check if we are connected to local db
+		 *
+		 */
+		if( $this->mDefaultUser && $dbw->getDBname() === $this->mWikiData[ "dbname"] ) {
 
-			/**
-			 * check if we are connected to local db
-			 * $this->mWikiData[ "dbname"]
-			 */
 			$dbw->update(
 				"revision",
 				array(
