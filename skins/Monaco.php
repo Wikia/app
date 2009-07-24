@@ -1544,7 +1544,6 @@ if(isset($this->data['articlelinks']['left'])) {
 				</ul>
 				<ul id="page_tabs">
 <?php
-global $userMasthead;
 $showright = true;
 if( defined( "NS_BLOG_ARTICLE" ) && $namespace == NS_BLOG_ARTICLE ) {
 	$showright = false;
