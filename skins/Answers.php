@@ -73,11 +73,11 @@ class AnswersTemplate extends MonacoTemplate {
 		<?php $this->html('headlinks') ?>
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/monobook_modified.css?<?=$wgStyleVersion?>" />
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/reset_modified.css?<?=$wgStyleVersion?>" />
-		<!-- Combo-handled YUI CSS files: --> 
+		<!-- Combo-handled YUI CSS files: -->
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/autocomplete/assets/skins/sam/autocomplete.css&2.7.0/build/container/assets/skins/sam/container.css">
 		<link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/common/yui_2.5.2/container/assets/container.css">
-		<!-- Combo-handled YUI JS files: --> 
-		<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&2.7.0/build/datasource/datasource-min.js&2.7.0/build/autocomplete/autocomplete-min.js&2.7.0/build/container/container-min.js&2.7.0/build/logger/logger-min.js"></script> 
+		<!-- Combo-handled YUI JS files: -->
+		<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/utilities/utilities.js&2.7.0/build/datasource/datasource-min.js&2.7.0/build/autocomplete/autocomplete-min.js&2.7.0/build/container/container-min.js&2.7.0/build/logger/logger-min.js"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/common/yui/3rdpart/tools.js"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/common/urchin.js?<?=$wgStyleVersion?>"></script>
 		<script type="text/javascript" src="<?=$wgStylePath?>/answers/js/tracker.js?<?=$wgStyleVersion?>"></script>
@@ -91,7 +91,7 @@ class AnswersTemplate extends MonacoTemplate {
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/cookie/cookie-min.js"></script>
 		<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
 		<?php } ?>
-		
+
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php $this->html('csslinks') ?>
 
@@ -125,7 +125,7 @@ class AnswersTemplate extends MonacoTemplate {
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?>
  <?php if($answer_page->isQuestion(false,false) && $action=="edit") { ?>editquestion<?php } ?>
- <?php if($answer_page->isQuestion(false,false) && $action=="submit") { ?>editquestion<?php } ?>"> 
+ <?php if($answer_page->isQuestion(false,false) && $action=="submit") { ?>editquestion<?php } ?>">
 
 <!--GetHTMLAfterBody-->
 <?
@@ -138,7 +138,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<a href="/" id="wikianswers_logo"><img src="/skins/answers/images/wikianswers_logo.png" /></a>
 
 		<div class="yui-skin-sam" id="ask_wrapper">
-	
+
 		<div id="answers_ask">
 			<form method="get" action="" onsubmit="return false" name="ask_form" id="ask_form">
 				<input type="text" id="answers_ask_field" value="<?=htmlspecialchars(wfMsg("ask_a_question"))?>" class="header_field alt" /><span>?</span>
@@ -185,7 +185,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		</div><?/*page_bar*/?>
 
 		<div id="answers_article">
-		
+
 		<a name="top" id="top"></a>
 
 		<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
@@ -193,7 +193,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<?php
 		if ( $answer_page->isQuestion(true) ) {
 			$author = $answer_page->getOriginalAuthor();
-			
+
 			$category_text = array();
 			global $wgOut;
 			$categories_array = $wgOut->getCategoryLinks();
@@ -212,7 +212,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				if( $google_hints == "" ) $google_hints = str_replace("'","\'",$wgTitle->getText() );
 			}
 		?>
-		
+
 		<div id="question">
 			<div class="top"><span></span></div>
 			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?> <a href="<?=$this->data['content_actions']['move']['href']?>"><?=wfMsg('rephrase')?></a></h1>
@@ -264,8 +264,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		</div>
 		<?php
 		} else {
-		?>	
-		
+		?>
+
 		<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1>
 		<?php
 		}
@@ -275,18 +275,18 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			$this->displayMagicAnswer();
 		}
 		?>
-		
-		
+
+
 		<?php
 		global $wgTitle;
 		if ( $is_question && $answer_page->isArticleAnswered() ) {
-			
+
 			if( !( $wgRequest->getVal("diff") ) ){
 				echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
 				echo '<div id="answer_title">'. wfMsg("answer_title") .'</div>';
-				
+
 			}
-			
+
 			$bodyContentClass = ' class="question"';
 		} else if ($wgTitle->getNamespace() == NS_CATEGORY) {
 			$bodyContentClass = ' class="category"';
@@ -294,8 +294,8 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			$bodyContentClass = '';
 		}
 		?>
-			
-		<div id="bodyContent"<?=$bodyContentClass?>> 
+
+		<div id="bodyContent"<?=$bodyContentClass?>>
 			<h3 id="siteSub"><?php $this->msg('tagline') ?></h3>
 			<div id="contentSub"><?php $this->html('subtitle') ?></div>
 			<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
@@ -305,13 +305,13 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<?php $this->html('bodytext') ?>
 			<!-- end content -->
 			<?php if($this->data['dataAfterContent']) { $this->html ('dataAfterContent'); } ?>
-			
+
 			<div class="visualClear"></div>
 		</div><?/*bodyContent*/?>
 
 		<?php
 		if( $is_question && !$answer_page->isArticleAnswered() ){
-		
+
 			if( !( $wgRequest->getVal("diff") ) && $wgUser->isAnon() ){
 				$ads = '<div id="ads-unaswered-bottom">
 				<script type="text/javascript">
@@ -329,7 +329,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				</div>';
 				echo $ads;
 			}
-		
+
 		} else if ( $is_question && $answer_page->isArticleAnswered() ) {
 			if ( $wgUser->isAnon() ) {
 				$ads = '<script type="text/javascript">
@@ -347,13 +347,13 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				echo $ads;
 			}
 		}?>
-		
+
 		<?php
 		global $wgTitle, $wgAnswersShowInlineRegister;
 		if ($wgAnswersShowInlineRegister && $wgUser->isAnon() && !$answer_page->isArticleAnswered() && $_GET['state'] == 'asked') {
 			$submit_title = SpecialPage::getTitleFor( 'Userlogin' );
 			$submit_url = $submit_title->escapeFullURL("type=signup&action=submitlogin");
-			
+
 			global $wgOut, $wgCaptchaTriggers;
 				if($wgCaptchaTriggers['createaccount'] == true){
 					$f = new FancyCaptcha();
@@ -398,7 +398,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			</div>
 			<?php
 		}
-			
+
 		if ($wgUser->isLoggedin() && !$answer_page->isArticleAnswered() && $wgRequest->getVal('state') == 'registered') {
 		?>
 			<div class="inline_form reset">
@@ -411,7 +411,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			</div>
 
 		<?
-		}	
+		}
 		if ( !$wgRequest->getVal("diff") && $is_question) {
 			if( $wgUser->isLoggedIn() ){
 				$watchlist_url = $wgTitle->escapeFullURL("action=watch");
@@ -420,21 +420,21 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			}
 		?>
 		<!--
-		<table id="bottom_ads"> 
+		<table id="bottom_ads">
 		<tr>
 			<td id="google_ad_1" class="google_ad"></td>
-			<td id="google_ad_2" class="google_ad"></td> 
+			<td id="google_ad_2" class="google_ad"></td>
 		</tr>
-		</table> 
+		</table>
 		-->
 		<?
 		/*
 		<div id="huge_buttons" class="clearfix">
 			<? if ( $answer_page->isArticleAnswered() ) { ?>
-			<a href="<?= $wgTitle->getEditURL() ?>" class="huge_button edit"><div></div><?= wfMsg("improve_this_answer") ?></a>	
+			<a href="<?= $wgTitle->getEditURL() ?>" class="huge_button edit"><div></div><?= wfMsg("improve_this_answer") ?></a>
 			<a href="<?= $watchlist_url ?>" class="huge_button watchlist"><div></div><?= wfMsg("notify_improved") ?></a>
 			<? } else { ?>
-			<a href="<?= $wgTitle->getEditURL() ?>" class="huge_button edit"><div></div><?= wfMsg("answer_this_question") ?></a>	
+			<a href="<?= $wgTitle->getEditURL() ?>" class="huge_button edit"><div></div><?= wfMsg("answer_this_question") ?></a>
 			<a href="<?= $watchlist_url ?>" class="huge_button watchlist"><div></div><?= wfMsg("notify_answered") ?></a>
 			<? } ?>
 		</div>
@@ -451,7 +451,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		?>
 			<div id="answer_title"><?= wfMsg("answer_title")?></div>
 			<div><?= wfMsg("question_not_answered")?></div>
-			
+
 			<div id="unanswered-links">
 			<div><?= wfMsg("you_can")?></div>
 			<ul>
@@ -464,11 +464,11 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<?php
 		}else{
 		?>
-		
+
 		<div id="social_networks">
 		<label><?= wfMsg("ask_friends")?></label>
 			<?
-			
+
 			if( $wgEnableFacebookConnect == true ){
 			?>
 			<script>
@@ -482,14 +482,14 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			</div>
 			<div id="facebook-connect-ask" style="display:none">
 			</div>
-			
-			<?php 
-			
-			} 
-			
+
+			<?php
+
+			}
+
 			?>
 
-		
+
 		<div id="twitter-post">
 			<a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><?= wfMsg("twitter_ask")?></a>
 		</div>
@@ -501,26 +501,26 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<div id="facebook-send-request" style="display:none;">
 			<fb:serverfbml>
 			<script type="text/fbml" >
-			<fb:fbml> 
+			<fb:fbml>
 			<fb:request-form invite="false"  type="Wikianswers" action="<?= $wgTitle->getFullURL() ?>" content="<?= wfMsg("facebook_send_request_content", htmlentities("<a href='" . $wgTitle->getFullURL() . "'>" . $wgTitle->getText() . "</a>") )?>  " style="height:300px">
 			<fb:multi-friend-input border_color="#8496ba"></fb:multi-friend-input>
-			<fb:request-form-submit /> 
+			<fb:request-form-submit />
 			</fb:request-form>
-			</fb:fbml> 
+			</fb:fbml>
 			</script>
 			</fb:serverfbml>
 			</div>
 			<script type="text/javascript">  FB.init(wgFacebookAnswersAppID, <?= $wgServer ?>"/extensions/wikia/FacebookConnect/xd_receiver.htm");  </script>
 			<!--<div id="facebook-connet"></div>-->
-			<?php 
+			<?php
 				if( $_GET['state'] == "asked" && facebook_client()->get_loggedin_user() ){
 					echo "<script>facebook_publish_feed_story()</script>";
 				}
-		} 
-		} 
+		}
+		}
 		}
 		?>
-		
+
 		<?php if($this->data['catlinks']) { $this->html('catlinks'); } ?>
 
 		<!-- XIAN: Pull content that is now in "AnswersAfterArticle" hook -->
@@ -536,7 +536,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 		<? } ?>
 		</div><?/*answers_article*/?>
 	</div><?/*answers_page*/?>
-	
+
 	<?
 	if(isset($this->data['userlinks']['more'])) {
 	?>
@@ -562,13 +562,13 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 	$wikiafooterlinks = $this->data['data']['wikiafooterlinks'];
 	if(count($wikiafooterlinks) > 0) {
 		echo '<div id="wikia_footer">';
-		
+
 		if( $wgEnableFacebookConnect ){
 			echo '<div id="facebook-connect-logout" style="display:none">
 				<div id="facebook-user-placeholder"></div>
 			</div>';
 		}
-		
+
 		$wikiafooterlinksA = array();
 		foreach($wikiafooterlinks as $key => $val) {
 			// Very primitive way to actually have copyright WF variable, not MediaWiki:msg constant.
@@ -605,7 +605,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			?>
 				<div id="toolbox_inside">
 					<h6><?= wfMsg("answers_toolbox")?></h6>
-					
+
 					<table>
 					<tr>
 						<td>
@@ -642,13 +642,13 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			?>
 			</div><?/*toolbox_stroke*/?>
 		</div><?/*toolbox*/?>
-		
+
 		<div class="widget">
 			<h2><?= wfMsg("recent_unanswered_questions") ?></h2>
 			<ul id="recent_unanswered_questions">
 			</ul>
-			<? 
-			if ($is_question) {	
+			<?
+			if ($is_question) {
 			echo '<li><div id="google_ad_1" class="google_ad"></div></li>';
 			}
 			?>
@@ -658,7 +658,7 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			<h2><?= wfMsg("popular_categories") ?></h2>
 			<ul id="popular_categories">
 				<?
-				$popular_categories = array(); 
+				$popular_categories = array();
 				$lines = getMessageAsArray("sidebar-popular-categories");
 				if( is_array( $lines ) ){
 					foreach($lines as $line) {
@@ -671,13 +671,13 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 						echo '<li><a href="' . $popular_category["href"] . '">' . $popular_category["text"] . '</a></li>';
 					}
 				}
-				if ($is_question) {	
+				if ($is_question) {
 				echo '<li><div id="google_ad_2" class="google_ad"></div></li>';
 				}
 				?>
 			</ul>
 		</div>
-		
+
 	</div><?/*answers_sidebar*/?>
 
 	<div id="footer">
@@ -811,7 +811,7 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 			<ul>
 <?php		foreach($this->data['language_urls'] as $langlink) {
 			// Add title tag only if differ from shown text
-			$titleTag = $langlink['title'] == $langlink['text'] 
+			$titleTag = $langlink['title'] == $langlink['text']
 				? ''
 				: 'title="' . htmlspecialchars( $langlink['title'] ) . '"';
 			?>
@@ -900,7 +900,7 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 			<input type="hidden" id="magicAnswerField" name="magicAnswer" value=""/><!-- Filled in with js -->
 			<h6><?=wfMsg("magic_answer_headline") ?></h6>
 			<div id="magicAnswerBox"></div>
-			<div id="magicAnswerButtons" class="clearfix">	
+			<div id="magicAnswerButtons" class="clearfix">
 				<button id="magicAnswerYes" class="button_small button_small_green"><span><?=wfMsg("magic_answer_yes")?></span></button>
 				<button id="magicAnswerNo" class="button_small button_small_blue"><span><?=wfMsg("magic_answer_no")?></span></button>
 			</div>
