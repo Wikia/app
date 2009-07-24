@@ -62,6 +62,7 @@ class EditAccount extends SpecialPage {
 
 		$action = $wgRequest->getVal( 'wpAction' );
 		$userName = $wgRequest->getVal( 'wpUserName' );
+		$userName = $userName
 
 		// check if user name is an existing user
 		if( User::isValidUserName( $userName ) ) {
@@ -128,7 +129,11 @@ class EditAccount extends SpecialPage {
 		$oldEmail = $this->mUser->getEmail();
 		if( $this->mUser->isValidEmailAddr( $email ) || $email == '' ) {
 			$this->mUser->setEmail( $email );
-			$this->mUser->confirmEmail();
+			if ( $email != '' ) {
+				$this->mUser->confirmEmail();
+			} else {
+				$this->mUser->invalidateEmail();
+			}
 			$this->mUser->saveSettings();
 
 			// Check if everything went through OK, just in case
