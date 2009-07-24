@@ -539,7 +539,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				$this->log($cmd);
 				wfShellExec( $cmd );
 
-				$this->changeStarterContributions( $dbw_local );
+				#$this->changeStarterContributions( $dbw_local );
 				$this->log( "Copying starter database" );
 				$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
 			}
