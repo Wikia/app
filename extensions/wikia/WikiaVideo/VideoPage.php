@@ -1546,9 +1546,6 @@ class VideoPageArchive extends PageArchive {
 						__METHOD__ );
 					}
 
-		// todo check out and return the proper "file" restoration info
-		// the info is put into the log inside the parent function
-
 		// run parent version, because it uses a private function inside
 		// files will not be touched anyway here, because it's not NS_FILE
 		parent::undelete( $timestamps, $comment, $fileVersions, $unsuppress );
