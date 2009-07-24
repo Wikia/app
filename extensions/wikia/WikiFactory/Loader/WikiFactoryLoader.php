@@ -39,13 +39,13 @@ function wfUnserializeHandler( $errno, $errstr ) {
 class WikiFactoryLoader {
 
 	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
-	public $mAlternativeDomainUsed, $mCityDB;
+	public $mAlternativeDomainUsed, $mCityDB, $mDebug;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mNoRedirect, $mTimestamp, $mAdCategory, $mCommandLine;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
 	public $mExpireValuesCacheTimeout = 86400; #--- 24 hours
 
-	private $mDebug, $mDBhandler, $mDBname;
+	private $mDBhandler, $mDBname;
 
 	/**
 	 * __construct
