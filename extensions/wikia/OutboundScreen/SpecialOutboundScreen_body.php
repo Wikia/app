@@ -19,6 +19,7 @@ class Outbound extends UnlistedSpecialPage {
 		global $wgOut, $wgUser, $wgRequest, $wgExtensionsPath, $wgOutboundScreenConfig, $wgCityId;
 
 		$url = $wgRequest->getText( 'u' );
+		$noAutoRedirect = ( $wgRequest->getText( 'noredirect' ) == 1 ) ? true : false;
 
 		$loggedIn = $wgUser->isLoggedIn();
 		if(($wgOutboundScreenConfig['anonsOnly'] == true) && $loggedIn) {
@@ -78,7 +79,7 @@ class Outbound extends UnlistedSpecialPage {
 					'url' => $url,
 					'css' => $css,
 					'athenaInitStuff' => $athenaInitStuff,
-					'redirectDelay' => $this->redirectDelay,
+					'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
 					'imagesPath' => $wgExtensionsPath . '/wikia/OutboundScreen/images',
 					'adSlots' => $adSlots
 				)
