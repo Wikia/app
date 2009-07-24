@@ -1,4 +1,5 @@
 == Changes since 200907.4 ==
+* rt#4259:  New version of global watchlist (Moli)
 * rt#19643: catselect broken on answers (Macbre)
 * rt#18068: AWC: Pages duplicated from wiki starters are bringing full edit history (eloy)
 * rt#19601: New non-en wikis miss images from starter (eloy)
