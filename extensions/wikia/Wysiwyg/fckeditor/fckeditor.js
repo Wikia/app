@@ -177,6 +177,9 @@ FCKeditor.prototype._GetIFrameHtml = function()
 	if (this.ToolbarSet)
 		sLink += '&amp;Toolbar=' + this.ToolbarSet ;
 
+	// wikia: temp for RT #18830
+	sLink += '&amp;city=' + window.wgCityId;
+
 	sLink += '&amp;cb=' + window.wgStyleVersion ;
 
 	var html = '<iframe id="' + this.InstanceName +
