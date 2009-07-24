@@ -11,6 +11,8 @@ class GlobalWatchlistBot {
 	private $mWikiData = array();
 	
 	const MAX_LAG = 30;
+	const RECORDS_SLEEP = 1000;
+	const TIME_SLEEP = 10;
 
 	public function __construct($bDebugMode = false, $aUsers = array(), $useDB = array() ) {
 		global $wgExtensionMessagesFiles;
@@ -207,6 +209,9 @@ class GlobalWatchlistBot {
 				} // foreach
 			} // !empty
 			$this->printDebug("Gathering watchlist data for: {$oResultRow->city_dbname} ({$oResultRow->city_id}) ... done! (time: " . $this->calculateDuration(time() - $localTime ) . ")");
+			if ( ($wlNbr % self::RECORDS_SLEEP) == 0) {
+				sleep(self::TIME_SLEEP)
+			}
 		} // while
 		$dbr->freeResult( $oResource );		
 
