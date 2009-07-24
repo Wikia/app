@@ -647,29 +647,29 @@ EOD;
 	public function getRatio() {
 		global $wgWikiaVideoProviders;
 		$ratio = 0;
-		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
-			case "metacafe":
+		switch( $this->mProvider ) {
+			case self::V_METACAFE:
 				$ratio =  (40 / 35);
 				break;
-			case "youtube":
+			case self::V_YOUTUBE:
 				$ratio =  (425 / 355);
 				break;
-			case "sevenload":
+			case self::V_SEVENLOAD:
 				$ratio =  (500 / 408);
 				break;
-			case "gamevideos":
+			case self::V_GAMEVIDEOS:
 				$ratio = (500 / 319);
 				break;
-			case "5min":
+			case self::V_5MIN:
 				$ratio = (480 / 401);
 				break;
-			case "vimeo":
+			case self::V_VIMEO:
 				$ratio = (400 / 225);
 				break;
-			case "myvideo":
+			case self::V_MYVIDEO:
 				$ratio = (470 / 406);
 				break;
-                        case "southparkstudios":
+                        case self::V_SOUTHPARKSTUDIOS:
                                 $ratio = ( 480 / 400 );
 			default:
 				$ratio = 1;
@@ -681,29 +681,29 @@ EOD;
 	public function getTextRatio() {
 		global $wgWikiaVideoProviders;
 		$ratio = '';
-		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
-			case "metacafe":
+		switch( $this->mProvider ) {
+			case self::V_METACAFE:
 				$ratio = "400 x 350";
 				break;
-			case "youtube":
+			case self::V_YOUTUBE:
 				$ratio = "425 x 355";
 				break;
-			case "sevenload":
+			case self::V_SEVENLOAD:
 				$ratio = "500 x 408";
 				break;
-			case "gamevideos":
+			case self::V_GAMEVIDEOS:
 				$ratio = "500 x 319";
 				break;
-			case "5min":
+			case self::V_5MIN5:
 				$ratio = "480 x 401";
 				break;
-			case "vimeo":
+			case self::V_VIMEO:
 				$ratio = "400 x 225";
 				break;
-			case "myvideo":
+			case self::V_MYVIDEO:
 				$ratio = "470 x 406";
 				break;
-                        case "southparkstudios":
+                        case self::V_SOUTHPARKSTUDIOS:
                                 $ratio = "480 x 400";
 				break;
 			default:
@@ -718,8 +718,8 @@ EOD;
 	public function checkIfVideoExists() {
 		global $wgWikiaVideoProviders;
 		$exists = false;
-		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
-			case "metacafe":
+		switch( $this->mProvider ) {
+			case self::V_METACAFE:
 				$file = @file_get_contents( "http://www.metacafe.com/api/item/" . $this->mId, FALSE );
 				if ($file) {
 					$doc = new DOMDocument;
@@ -730,7 +730,7 @@ EOD;
 					}
 				}
 				break;
-			case "youtube":
+			case self::V_YOTUBE:
 				$file = @file_get_contents( "http://gdata.youtube.com/feeds/api/videos/" . $this->mId, FALSE );
 				if ($file) {
 					$doc = new DOMDocument;
@@ -739,7 +739,7 @@ EOD;
 					$exists = true;
 				}
 				break;
-			case "sevenload":
+			case self::V_SEVENLOAD:
 				// needs an API key - to be done last
 				// 1. create a token
 				// http://api.sevenload.com/rest/1.0/tokens/create with user and password
@@ -750,10 +750,10 @@ EOD;
 
 				$exists = true;
 				break;
-			case "gamevideos":
+			case self::V_GAMEVIDEOS:
 				$exists = true;
 				break;
-			case "5min":
+			case self::V_5MIN:
 				$file = @file_get_contents( "http://api.5min.com/video/" . $this->mId . '/info.xml', FALSE );
 				if ($file) {
 					$doc = new DOMDocument;
@@ -764,7 +764,7 @@ EOD;
 					}
 				}
 				break;
-			case "vimeo":
+			case self::V_VIMEO:
 				$file = @file_get_contents( "http://vimeo.com/api/clip/" . $this->mId . '.php', FALSE );
 				if ($file) {
 					$data = unserialize( $file );
@@ -772,11 +772,11 @@ EOD;
 					$exists = true;
 				}
 				break;
-			case "myvideo":
+			case self::V_MYVIDEO:
 				// entire site is in German? I need help here
 				$exists = true;
 				break;
-			case "southparkstudios": // todo verify if exists
+			case self::V_SOUTHPARKSTUDIOS: // todo verify if exists
 				$exists = true;
 				break;
 			default:
@@ -799,22 +799,22 @@ EOD;
 	// return provider url
 	public function getProviderUrl() {
 		global $wgWikiaVideoProviders;
-		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
-			case "metacafe":
+		switch( $this->mProvider ) {
+			case self::V_METACAFE:
 				return 'http://www.metacafe.com';
-			case "youtube":
+			case self::V_YOTUBE:
 				return 'http://www.youtube.com';
-			case "sevenload":
+			case self::V_SEVENLOAD:
 				return 'http://www.sevenload.com';
-			case "gamevideos":
+			case self::V_GAMEVIDEOS:
 				return 'http://gamevideos.1up.com';
-			case "5min":
+			case self::V_5MIN:
 				return 'http://www.5min.com';
-			case "myvideo":
+			case self::V_MYVIDEO:
 				return 'http://www/myvideo.de';
-			case "vimeo":
+			case self::V_VIMEO:
 				return 'http://www.vimeo.com';
-			case 'southparkstudios':
+			case self::V_SOUTHPARKSTUDIOS:
 				return 'http://www.southparkstudios.com';
 			default:
 				return '';
@@ -843,29 +843,29 @@ EOD;
 			}
 		}
 		$url = '';
-		switch( $wgWikiaVideoProviders[$provider] ) {
-			case "metacafe":
+		switch( $provider ) {
+			case self::V_METACAFE:
 				$url = 'http://www.metacafe.com/watch/' . $id . '/' . $mData[0];
 				break;
-			case "youtube":
+			case self::V_YOUTUBE:
 				$url = 'http://www.youtube.com/watch?v=' . $id;
 				break;
-			case "sevenload":
+			case self::V_SEVENLOAD:
 				$url = 'http://www.sevenload.com/videos/' . $id;
 				break;
-			case "gamevideos":
+			case self::V_GAMEVIDEOS:
 				$url = 'http://gamevideos.1up.com/video/id/' . $id;
 				break;
-			case "5min":
+			case self::V_5MIN:
 				$url = 'http://www.5min.com/Video/' . $mData[0] . $id;
 				break;
-			case "myvideo":
+			case self::V_MYVIDEO:
 				$url = 'http://www/myvideo.de/watch/' . $id;
 				break;
-			case "vimeo":
+			case self::V_VIMEO:
 				$url = 'http://www.vimeo.com/' . $id;
 				break;
-			case "southparkstudios":
+			case self::V_SOTHPARKSTUDIOS:
 				$url = 'http://www.southparkstudios.com/clips/' . $id;
                                 break;
 			default:
@@ -907,17 +907,17 @@ EOD;
                 $dbw = wfGetDB( DB_MASTER );
                 $now = $dbw->timestamp();
 
-		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
-			case 'metacafe':
-			case 'sevenload':
-			case 'myvideo':
-			case '5min':
+		switch( $this->mProvider ) {
+			case self::V_METACAFE:
+			case self::V_SEVENLOAD:
+			case self::V_MYVIDEO:
+			case self::V_5MIN:
 				$metadata = $this->mProvider . ',' . $this->mId . ',' . $this->mData[0];
 				break;
-			case 'youtube':
-			case 'gamevideos':
-			case 'vimeo':
-			case 'southparkstudios':
+			case self::V_YOUTUBE:
+			case self::V_GAMEVIDEOS:
+			case self::V_VIMEO:
+			case self::V_SOUTHPARKSTUDIOS:
 				$metadata = $this->mProvider . ',' . $this->mId . ',';
 				break;
 			default:
@@ -1163,37 +1163,37 @@ EOD;
                 $embed = "";
 		$code = 'standard';
 		$height = round( $width / $this->getRatio() );
-                switch( $wgWikiaVideoProviders[$this->mProvider] ) {
-                        case "metacafe":
+                switch( $this->mProvider ) {
+                        case self::V_METACAFE:
 				$url = 'http://www.metacafe.com/fplayer/' . $this->mId . '/' . $this->mData[0];
 				$code = 'custom';
 				$autoplay ? $auto = 'flashVars="playerVars=autoPlay=yes"' : $auto = '';
 				$embed = '<embed ' . $auto . ' src="' . $url . '" width="' . $width . '" height="' . $height . '" wmode="transparent"" allowFullScreen="true" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>';
                                 break;
-                        case "youtube":
+                        case self::V_YOUTUBE:
 				$url = 'http://www.youtube.com/v/' . $this->mId;
                                 break;
-			case "sevenload":
+			case self::V_SEVENLOAD:
 				$code = 'custom';
 				$embed = '<object style="visibility: visible;" id="sevenloadPlayer_' . $this->mId . '" data="http://static.sevenload.com/swf/player/player.swf" type="application/x-shockwave-flash" height="' . $height . '" width="' . $width . '"><param name="wmode" value="transparent"><param value="always" name="allowScriptAccess"><param value="true" name="allowFullscreen"><param value="configPath=http%3A%2F%2Fflash.sevenload.com%2Fplayer%3FportalId%3Den%26autoplay%3D0%26itemId%3D' . $this->mId . '&amp;locale=en_US&amp;autoplay=0&amp;environment=" name="flashvars"></object>';
 				break;
-			case 'myvideo':
+			case self::V_MYVIDEO:
 				$code = 'custom';
 				$embed = "<object style='width:{$width}px;height:{$height}px;' type='application/x-shockwave-flash' data='http://www.myvideo.de/movie/{$this->mId}'><param name='wmode' value='transparent'><param name='movie' value='http://www.myvideo.de/movie/{$this->mId}' /> <param name='AllowFullscreen?' value='true' /> </object>";
 				break;
-			case "gamevideos":
+			case self::V_GAMEVIDEOS:
 				$code = 'custom';
 				$embed = '<embed wmode="transparent" type="application/x-shockwave-flash" width="' . $width . '" height="' . $height . '" src="http://gamevideos.1up.com/swf/gamevideos12.swf?embedded=1&amp;fullscreen=1&amp;autoplay=0&amp;src=http://gamevideos.1up.com/do/videoListXML%3Fid%3D' . $this->mId . '%26adPlay%3Dtrue" align="middle"></embed>';
 				break;
-			case "5min":
+			case self::V_5MIN:
 				$code = 'custom';
 				$embed = "<object width='{$width}' height='{$height}' id='FiveminPlayer' classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'><param name='allowfullscreen' value='true'/><param name='wmode' value='transparent'><param name='allowScriptAccess' value='always'/><param name='movie' value='http://www.5min.com/Embeded/{$this->mId}/'/><embed src='http://www.5min.com/Embeded/{$this->mId}/' type='application/x-shockwave-flash' width='{$width}' height='{$height}' allowfullscreen='true' allowScriptAccess='always'></embed></object>";
 				break;
-			case 'vimeo':
+			case self::V_VIMEO:
 		$code = 'custom';
 				$embed = '<object width="'.$width.'" height="'.$height.'"><param name="allowfullscreen" value="true" /><param name="wmode" value="transparent"><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id='.$this->mId.'&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id='.$this->mId.'&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="'.$width.'" height="'.$height.'"></embed></object>';
 				break;
-                        case 'southparkstudios':
+                        case self::V_SOUTHPARKSTUDIOS:
                                 $code = 'custom';
                                 $embed = '<embed src="http://media.mtvnservices.com/mgid:cms:item:southparkstudios.com:' . $this->mId . '" width="' . $width . '" height="' . $height . '" type="application/x-shockwave-flash" wmode="window" flashVars="autoPlay=false&dist=http://www.southparkstudios.com&orig=" allowFullScreen="true" allowScriptAccess="always" allownetworking="all" bgcolor="#000000"></embed>';
                                 break;
@@ -1209,21 +1209,21 @@ EOD;
 		global $wgExtensionsPath, $wgWikiaVideoProviders;
 
 		$thumb = $wgExtensionsPath . '/wikia/VideoEmbedTool/images/vid_thumb.jpg';
-		switch( $wgWikiaVideoProviders[$this->mProvider] ) {
-			case "metacafe":
+		switch( $this->mProvider ) {
+			case self::V_METACAFE:
 				$thumb = 'http://www.metacafe.com/thumb/' . $this->mId . '.jpg';
 				break;
-			case "youtube":
+			case self::V_YOUTUBE:
 				$thumb = 'http://img.youtube.com/vi/' . $this->mId . '/0.jpg';
 				break;
-			case "vimeo":
+			case self::V_VIMEO:
 				$file = @file_get_contents( "http://vimeo.com/api/clip/" . $this->mId . '.php', FALSE );
 				if ($file) {
 					$data = unserialize( $file );
 					$thumb = trim( $data[0]["thumbnail_large"] );
 				}
 				break;
-			case "5min":
+			case self::V_5MIN:
 				break;
 				/* todo test
 				$file = @file_get_contents( "http://api.5min.com/video/" . $this->mId . '/info.xml', FALSE );
@@ -1236,10 +1236,10 @@ EOD;
 					}
 				break;
 				*/
-			case "sevenload":
-			case "myvideo":
-			case "gamevideos":
-			case 'southparkstudios': // no API
+			case self::V_SEVENLOAD:
+			case self::V_MYVIDEO:
+			case self::V_GAMEVIDEOS:
+			case self::V_SOUTHPARKSTUDIOS: // no API
 			default:
 				break;
 		}
