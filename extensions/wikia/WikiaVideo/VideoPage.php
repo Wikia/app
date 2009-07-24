@@ -645,7 +645,6 @@ EOD;
 	}
 
 	public function getRatio() {
-		global $wgWikiaVideoProviders;
 		$ratio = 0;
 		switch( $this->mProvider ) {
 			case self::V_METACAFE:
@@ -679,7 +678,6 @@ EOD;
 	}
 
 	public function getTextRatio() {
-		global $wgWikiaVideoProviders;
 		$ratio = '';
 		switch( $this->mProvider ) {
 			case self::V_METACAFE:
@@ -716,7 +714,6 @@ EOD;
 	// run a check from provided api or elsewhere
 	// to see if we can go to details page or not
 	public function checkIfVideoExists() {
-		global $wgWikiaVideoProviders;
 		$exists = false;
 		switch( $this->mProvider ) {
 			case self::V_METACAFE:
@@ -798,7 +795,6 @@ EOD;
 
 	// return provider url
 	public function getProviderUrl() {
-		global $wgWikiaVideoProviders;
 		switch( $this->mProvider ) {
 			case self::V_METACAFE:
 				return 'http://www.metacafe.com';
@@ -830,7 +826,6 @@ EOD;
 
 	// return url for the video file
 	public static function getUrl( $metadata ) {
-		global $wgWikiaVideoProviders;
 		$meta = split( ",", $metadata );
 		if ( is_array( $meta ) ) {
 			$provider = $meta[0];
@@ -900,7 +895,7 @@ EOD;
 
 	// save the video info in db, handles overwrite too
 	public function save() {
-		global $wgUser, $wgWikiaVideoProviders, $wgContLang;
+		global $wgUser, $wgContLang;
 
 		$desc = wfMsg( 'wikiavideo-added', $this->mTitle->getText() );
 
@@ -1159,7 +1154,6 @@ EOD;
 
 	// return embed code for the particular video per provider
         public function getEmbedCode( $width = 300, $autoplay = false ) {
-		global $wgWikiaVideoProviders;
                 $embed = "";
 		$code = 'standard';
 		$height = round( $width / $this->getRatio() );
@@ -1206,7 +1200,7 @@ EOD;
         }
 
 	private function getThumbnailCode($width) {
-		global $wgExtensionsPath, $wgWikiaVideoProviders;
+		global $wgExtensionsPath;
 
 		$thumb = $wgExtensionsPath . '/wikia/VideoEmbedTool/images/vid_thumb.jpg';
 		switch( $this->mProvider ) {
