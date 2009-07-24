@@ -523,11 +523,11 @@ class AutoCreateWikiPage extends SpecialPage {
 				 * @todo move copying images from local database changes section
 				 * use wikifactory variable to determine proper path to images
 			     */
-				$startupImages = sprintf( "%s/s/starter/%s/images/*", self::IMGROOT, $prefix );
+				$startupImages = sprintf( "%s/s/starter/%s/images", self::IMGROOT, $prefix );
 
 				if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
-					wfShellExec("/bin/cp -af {$startupImages} {$this->mWikiData[ "images_dir" ]}/");
-					$this->log("/bin/cp -af {$startupImages} {$this->mWikiData[ "images_dir" ]}/");
+					wfShellExec("/bin/cp -af {$startupImages}/* {$this->mWikiData[ "images_dir" ]}/");
+					$this->log("/bin/cp -af {$startupImages}/* {$this->mWikiData[ "images_dir" ]}/");
 				}
 				$cmd = sprintf(
 					"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
