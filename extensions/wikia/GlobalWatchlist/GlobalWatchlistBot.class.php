@@ -90,7 +90,7 @@ class GlobalWatchlistBot {
 	private function getUsersPagesFromWatchlist($sWikiDb) {
 		$aPages = array();
 
-		$dbr = wfGetDB( DB_SLAVE, 'stats', "`{$sWikiDb}`" );
+		$dbr = wfGetDB( DB_SLAVE, 'stats', $sWikiDb );
 
 		if ( $dbr->tableExists('watchlist') ) {
 			
