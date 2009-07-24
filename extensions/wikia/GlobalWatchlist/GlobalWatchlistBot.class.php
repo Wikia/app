@@ -210,7 +210,7 @@ class GlobalWatchlistBot {
 			} // !empty
 			$this->printDebug("Gathering watchlist data for: {$oResultRow->city_dbname} ({$oResultRow->city_id}) ... done! (time: " . $this->calculateDuration(time() - $localTime ) . ")");
 			if ( ($wlNbr % self::RECORDS_SLEEP) == 0) {
-				sleep(self::TIME_SLEEP)
+				sleep(self::TIME_SLEEP);
 			}
 		} // while
 		$dbr->freeResult( $oResource );		
