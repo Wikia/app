@@ -236,7 +236,7 @@ class LocalMaintenanceTask extends BatchTask {
 				/**
 				 * check if article is a redirect and if so, switch to it's target
 				 */
-				if ( $oCentralArticle>isRedirect() ) {
+				if ( $oCentralArticle->isRedirect() ) {
 					$this->log( sprintf("Article %s exists and is a redirect.", $centralTitle->getFullUrl()) );
 					$centralTitle = $oCentralArticle->getRedirectTarget();
 					if ( $centralTitle !== null && $centralTitle->exists() ) {
@@ -269,7 +269,7 @@ class LocalMaintenanceTask extends BatchTask {
 				$sContent = $oCentralArticle->getContent();
 				$wikiUrl = "http://". $this->mWikiData["subdomain"] .".wikia.com";
 				$pos = strpos($sContent, $wikiUrl);
-				if ($pos !== false) {
+				if ($pos === false) {
 					$sContent .= $oTmpl->execute("central");
 					$oCentralArticle->doEdit( $sContent, "modified by autocreate Wiki process", EDIT_FORCE_BOT );
 					$this->log( sprintf("Article %s already exists... content added", $centralTitle->getFullUrl()) );
