@@ -62,7 +62,7 @@ class EditAccount extends SpecialPage {
 
 		$action = $wgRequest->getVal( 'wpAction' );
 		$userName = $wgRequest->getVal( 'wpUserName' );
-		$userName = $userName
+		$userName = ucfirst( $userName ); # user names begin with a capital letter
 
 		// check if user name is an existing user
 		if( User::isValidUserName( $userName ) ) {
