@@ -26,6 +26,7 @@
 * rt#19565: AWC: follow redirects on central (TOR)
 * rt#17858: AWC: correctly update existing articles on central (TOR)
 * rt#19736: EditAccount: allow for an empty e-mail to be set (TOR)
+* rt#19782: SemanticForms: parse anoneditwarning msg (TOR)
 
 == Changes since 200907.3 ==
 * rt#19167: Exit page ads ads need rel=nofollow (Macbre)

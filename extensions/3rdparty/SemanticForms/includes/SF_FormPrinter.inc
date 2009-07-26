@@ -129,8 +129,7 @@ class SFFormPrinter {
       // show "Your IP address will be recorded" warning if user is
       // anonymous - wikitext for bolding has to be replaced with HTML
       if ($wgUser->isAnon()) {
-        $anon_edit_warning = preg_replace("/'''(.*)'''/", "<strong>$1</strong>", wfMsg('anoneditwarning'));
-        $form_text .= "<p>$anon_edit_warning</p>\n";
+        $form_text .= wfMsgExt( 'anoneditwarning', array('parse') ) . "\n";
       }
     } else {
       $form_is_disabled = true;
