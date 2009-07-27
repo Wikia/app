@@ -56,16 +56,14 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 
 <!-- ##############  Add a description to main page ############## -->
 <li id="step1" class="step">
-<h1 class="headline">Describe your wiki</h1>
+<h1 class="headline"><?php echo wfMsg("nwb-step1-headline")?></h1>
 <div class="wrapper clearfix">
 	<div id="step1_example">
 		<div class="accent note">
-			<b>Example</b><br />
-			Muppet Wiki is an encyclopedia about everything related to Jim Henson, The Muppet Show and Sesame Street. The wiki format allows anyone to create or edit any article, so we can all work together to create a comprehensive database for fans of the Muppets.
+			<?php echo wfMsg("nwb-step1-example")?>
 		</div>
 	</div>
-	<p>Let's start setting up <b><?php echo $wgSitename?></b>. You can skip any step and come back to it later on.</p> 
-	<p>First: Write a message for the front page of your wiki that describes what <b><?php echo $wgSitename?></b> is about.</p>
+	<?php echo wfMsg("nwb-step1-text")?>
 	<form id="step1_form" name="step1_form"><!-- Name needed for selenium tests -->
 		<textarea name="desc" id="desc_textarea"></textarea>
 	</form>
@@ -79,19 +77,16 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 </div>
 <div class="nav">
 	<a href="#step2" id="skip_step_1"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onclick="$('#step1_form').submit();"><span>Save Description</span></button>
+	<button onclick="$('#step1_form').submit();"><span><?php echo wfMsg("nwb-save-description")?></span></button>
 	<input onclick="$('#step1_form').submit();" type="button" id="hidden_description_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
 
 <!-- ############## Add a logo ############ -->
 <li id="step2" class="step">
-<h1 class="headline">Upload a logo</h1>
+<h1 class="headline"><?php echo wfMsg("nwb-step2-headline")?></h1>
 <div class="wrapper clearfix">
-	<p>Next: Choose a logo for <b><?php echo $wgSitename?></b>.</p>
-	<p>Upload a picture from your computer to represent your wiki.</p>
-	<p>You can skip this step if you don't have a picture that you want to use right now.</p>
-	
+	<?php echo wfMsg("nwb-step2-text")?>	
 	<!-- Hidden iframe to handle the file upload -->
 	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
 
@@ -100,12 +95,12 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 		<input type="hidden" name="action" value="uploadlogo">	
 		<input type="hidden" name="format" value="xml">	
 		<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
-		<label>Choose logo:</label><input type="file" name="logo_file"> <input type="submit" value="Preview" onClick="this.form.title.value='Wiki-Preview.png'"/> 
+		<label><?php echo wfMsg("nwb-choose-logo")?>:</label><input type="file" name="logo_file"> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onClick="this.form.title.value='Wiki-Preview.png'"/> 
 		<!--<input type="submit" value="Save" onClick="this.form.title.value='Wiki.png'"/>-->
 	</form>
 
 	<div id="logo_preview_wrapper">
-		<label>Logo preview:</label>
+		<label><?php echo wfMsg("nwb-logo-preview")?>:</label>
 		<div id="logo_preview"></div>
 	</div>
 	
@@ -114,7 +109,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 	</div><!--float-->
 	<div class="accent note">
 		<img src="/extensions/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" /><br />
-		This would be a good logo for a skateboarding wiki.
+		<?php echo wfMsg("nwb-step2-example")?>
 	</div>
 	<script> 
 	// Fill in the background image for the logo
@@ -127,20 +122,19 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 </div>
 <div class="nav">
 	<span class="nav_reverse">
-		<button class="secondary" onclick="NWB.gotostep(1);"><span>Back to step 1</span></button>
+		<button class="secondary" onclick="NWB.gotostep(1);"><span><?php echo wfMsg("nwb-back-to-step-1")?></span></button>
 	</span>
 	<a href="#step3" id="skip_step_2"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onClick="f=document.getElementById('logo_form'); f.title.value='Wiki.png'; f.submit();"><span>Save Logo</span></button>
+	<button onClick="f=document.getElementById('logo_form'); f.title.value='Wiki.png'; f.submit();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
 </div>
 </li>
 
 <!-- ############## Pick Theme ############## -->
 
 <li id="step3" class="step">
-<h1 class="headline">Pick a Theme</h1>
+<h1 class="headline"><?php echo wfMsg("nwb-step3-headline")?></h1>
 <div class="wrapper clearfix">
-	<p>Now choose a color scheme for <b><?php echo $wgSitename?></b>.</p>
-	<p>You can change this later on if you change your mind.</p>
+	<?php echo wfMsg("nwb-step3-text")?>
 	<div id="theme_template" style="display:none" class="theme_selekction">
 		<label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
 		<input onClick="NWB.changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
@@ -177,10 +171,10 @@ for (var i = 0; i < themes.length; i++){
 </div>
 <div class="nav">
 	<span class="nav_reverse">
-		<button class="secondary" onclick="NWB.gotostep(2);"><span>Back to step 2</span></button>
+		<button class="secondary" onclick="NWB.gotostep(2);"><span><?php echo wfMsg("nwb-back-to-step-2")?></span></button>
 	</span>
 	<a href="#step4" id="skip_step_3"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onclick="NWB.gotostep(4);"><span>Save Theme</span></button>
+	<button onclick="NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
 </div>
 </li>
 
@@ -188,17 +182,15 @@ for (var i = 0; i < themes.length; i++){
 <!-- ############## Create first pages ############## -->
 
 <li id="step4" class="step">
-<h1 class="headline">Create pages</h1>
+<h1 class="headline"><?php echo wfMsg("nwb-step4-headline")?></h1>
 <div class="wrapper clearfix">
-	<p>What do you want to write about?</p>
-	<p>Make a list of some pages you want to have on your wiki.</p>
+	<?php echo wfMsg("nwb-step4-text")?>
 	<div class="accent note">
-		<b>Example</b><br />
-		TBD Danny
+		<?php echo wfMsg("nwb-step4-example")?>
 	</div>
 	<form id="step4_form">
 		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsg("nwb-coming-soon"))?>">
-		<div id="all_fp">
+		<div id="all_fp" class="bullets">
 			<ul class="fp_block" id="fp_block_1">
 				<!-- Ids aren't necessary for the form, only used for Selenium -->
 				<li><input id="fp_1" class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
@@ -213,10 +205,10 @@ for (var i = 0; i < themes.length; i++){
 </div>
 <div class="nav">
 	<span class="nav_reverse">
-		<button class="secondary" onclick="NWB.gotostep(3);"><span>Back to step 3</span></button>
+		<button class="secondary" onclick="NWB.gotostep(3);"><span><?php echo wfMsg("nwb-back-to-step-3")?></span></button>
 	</span>
 	<a href="#step5" id="skip_step_4"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onclick="$('#step4_form').submit();"><span>Create Pages</span></button>
+	<button onclick="$('#step4_form').submit();"><span><?php echo wfMsg("nwb-create-pages")?></span></button>
 	<input onclick="$('#step4_form').submit();" type="button" id="hidden_step_4_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
@@ -224,25 +216,22 @@ for (var i = 0; i < themes.length; i++){
 <!-- ############## Dones ############## -->
 
 <li id="step5" class="step">
-<h1 class="headline">What's Next?</h1>
+<h1 class="headline"><?php echo wfMsg("nwb-step5-headline")?></h1>
 <div class="wrapper clearfix">
-	<p>That's all the steps! <b><?php echo $wgSitename?></b> is ready to go.</p>
-	<p>Now it's time to start writing and adding some pictures, to give people something to read when they find your wiki.</p>
-	<p>The list of pages that you made in the last step has been added to a "Coming Soon" box on the main page. You can get started by clicking on those pages. Have fun!</p>
+	<?php echo wfMsg("nwb-step5-text")?>
 	<div id="wiki_army_container">
-		<img src="wiki_army.gif" id="wiki_army" />
-		<img src="wiki_army_logo.png" id ="wiki_army_logo" />
+		<img src="/extensions/wikia/NewWikiBuilder/wiki_army.gif" id="wiki_army" />
+		<img src="/extensions/wikia/NewWikiBuilder/wiki_army_logo.png" id ="wiki_army_logo" />
 	</div>
 </div>
 <div class="nav">
 	<span class="nav_reverse">
-		<button class="secondary" onclick="NWB.gotostep(4);"><span>Back to step 4</span></button>
+		<button class="secondary" onclick="NWB.gotostep(4);"><span><?php echo wfMsg("nwb-back-to-step-4")?></span></button>
 	</span>
-	<button><span id="finito">Go to your Wiki</span></button>
+	<button><span id="finito"><?php echo wfMsg("nwb-go-to-your-wiki")?></span></button>
 </div>
 </li>
 </ul>
-
 
 </body>
 </html>
