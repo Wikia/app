@@ -90,7 +90,7 @@ var initTracker = function() {
 	Event.addListener('headerButtonHub', 'click', this.trackByStr, 'categoryList/more');
 
 	// Wikia & Wiki top left logo
-	Event.addListener(['wikia_logo','wiki_logo'], 'click', this.trackById);
+	Event.addListener('wikianswers_logo', 'click', function(e) { WET.byStr('wiki_logo'); });
 
 	// Navigation - sidebar
 	Event.addListener('navigation', 'click', function(e) {
