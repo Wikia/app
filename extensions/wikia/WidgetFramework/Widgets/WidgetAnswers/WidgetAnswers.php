@@ -20,7 +20,7 @@ $wgWidgets['WidgetAnswers'] = array(
 );
 
 function WidgetAnswers($id, $params) {
-	global $IP;
+	global $IP, $wgTitle, $wgUser, $wgSitename, $wgContentNamespaces;
 
 	wfProfileIn(__METHOD__);
 
@@ -41,8 +41,6 @@ function WidgetAnswers($id, $params) {
 		$wgExtensionMessagesFiles['Answers'] = "$IP/../answers/Answers.i18n.php";
 	}
 	wfLoadExtensionMessages( 'Answers' );
-
-	global $wgSitename, $wgUser;
 
 	// This HTML for the Ask a Question is used for both logged in and logged out users
 	// but in different place - top or the bottom of the widget
@@ -83,6 +81,9 @@ EOD;
 	$url = 'http://'.$domain.'.answers.wikia.com/api.php?'.http_build_query($apiparams);
 
 	$no_questions = wfMsgForContent("answers_widget_no_questions");
+	if ( in_array( $wgTitle->getNamespace(), $wgContentNamespaces ) ) {
+		$no_questions .= wfMsgForContent( 'answers_widget_no_questions_askabout' );
+	}
 
 	$output .= <<<EOD
 <script type="text/javascript">/*<![CDATA[*/
