@@ -227,6 +227,10 @@ for (var i = 0; i < themes.length; i++){
 	<p>That's all the steps! <b><?php echo $wgSitename?></b> is ready to go.</p>
 	<p>Now it's time to start writing and adding some pictures, to give people something to read when they find your wiki.</p>
 	<p>The list of pages that you made in the last step has been added to a "Coming Soon" box on the main page. You can get started by clicking on those pages. Have fun!</p>
+	<div id="wiki_army_container">
+		<img src="wiki_army.gif" id="wiki_army" />
+		<img src="wiki_army_logo.png" id ="wiki_army_logo" />
+	</div>
 </div>
 <div class="nav">
 	<span class="nav_reverse">

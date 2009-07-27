@@ -222,6 +222,26 @@ button.secondary span {
 	width: 300px;
 }
 
+/*** Step 5: Done ***/
+#wiki_army_container {
+	background: url(wiki_army_floor.png) bottom left repeat-x;
+	height: 184px;
+	margin-top: 50px;
+	overflow: hidden;
+	position: relative;
+}
+#wiki_army {
+	left: 50%;
+	margin-left: -468px;
+	position: absolute;
+}
+#wiki_army_logo {
+	bottom: 0;
+	left: 50%;
+	margin-left: -115px;
+	position: absolute;
+}
+
 /*** Styles for status bar http://www.west-wind.com/WebLog/posts/388213.aspx ***/
 
 .statusbar { 
