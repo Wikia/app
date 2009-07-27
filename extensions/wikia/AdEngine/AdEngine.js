@@ -4,7 +4,7 @@ var AdsCB = Math.floor(Math.random()*99999999); // generate random number to use
  * @author Nick Sullivan
 */
 
-AdEngine = {
+var AdEngine = {
 	bodyWrapper : 'bodyContent',
 	adColorsContent : []
 };
@@ -116,16 +116,12 @@ window.AdGetColor = AdEngine.getAdColor;
 
 /* Display the div for an ad, as long as it is not a no-op ad, such as a clear gif */
 AdEngine.displaySlotIfAd = function (slotname) {
-        var noopStrings = new Array(
-                'http://images.wikia.com/common/wikia/noad.gif', // This should be our standard no-op
-                'http://m1.2mdn.net/viewad/817-grey.gif');  // DART sometimes sends this
+        var noopStrings = [ 'http://images.wikia.com/common/wikia/noad.gif' ]; // This should be our standard no-op
 
         var noopFound = false;
         for (var i = 0 ; i < noopStrings.length; i++){
                 if($('#' + slotname + '_load').html().indexOf(noopStrings[i]) > -1 ) {
-                	// Override stated dimensions set by CSS
-                	$("#" + slotname + "_load").css("height", "1px");
-                	$("#" + slotname + "_load").css("width", "1px");
+                	$("#" + slotname + "_load").hide();
                         noopFound = true;
                         break;
                 }
