@@ -69,6 +69,24 @@ class SkinUncyclopedia extends SkinMonoBook {
 
 	public function addWikiaVars(&$obj, &$tpl) {
 		parent::addWikiaVars($obj, $tpl);
+
+		$spotlights = AdEngine::getInstance()->getSetupHtml() .
+'<div id="wikia_header" style="display:none"></div>
+<table id="spotlight_container">
+<tr>
+<td>
+<div>' . AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT') . '</div>
+</td>
+<td>
+<div>' . AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_MIDDLE') . '</div>
+</td>
+<td>
+<div>' . AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_RIGHT') . '</div>
+</td>
+</tr>
+</table>';
+
+		$tpl->set('ads_columngoogle', $spotlights );
 		return true;
 	}
 }
