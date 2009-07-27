@@ -1,4 +1,5 @@
 == Changes since 200907.5 ==
+* rt#19819: Answers: i18n msg changes. (Nef)
 * rt#19651: Analytics: CategorySelect tracking. (Nef)
 
 == Changes since 200907.4 ==
