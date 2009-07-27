@@ -18,8 +18,7 @@ $messages['en'] = array(
 	'create-blog-post-title' => 'Create a new blog post',
 	'create-blog-form-title' => 'What is a blog post?',
 	'create-blog-form-post-text' => 'Blog text',
-	'create-blog-form-info' => "Blog posts are the best way to write original content that you don't want to be editable by the community.
-Blog posts can be aggregated by a blog listing page based on the blog post's tags. You can choose to allow voting or comments for your blog post.",
+	'create-blog-form-info' => "Blog posts are a great way to share news, opinions, and creative pieces with the community.",
 	'create-blog-form-post-title' => 'Blog post title',
 	'create-blog-empty-title-error' => 'Title required',
 	'create-blog-empty-post-error' => 'Post body is empty',

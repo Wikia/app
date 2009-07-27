@@ -1,7 +1,8 @@
 <!-- s:<?php echo __FILE__ ?> -->
-<strong><?php echo wfMsg( "create-blog-form-title" ) ?></strong><br />
-<?php echo wfMsg( "create-blog-form-info" ) ?>
-<br />
+<div id="blogInfo">
+<label><?php echo wfMsg( "create-blog-form-title" ) ?></label><br />
+<span id="blogInfoText"><?php echo wfMsg( "create-blog-form-info" ) ?></span>
+</div>
 <br />
 <div id="blogPostForm">
 	<input type="hidden" name="articleEditAllowed" value="<?php echo isset($formData['isExistingArticleEditAllowed']) ? $formData['isExistingArticleEditAllowed'] : "0"; ?>" />

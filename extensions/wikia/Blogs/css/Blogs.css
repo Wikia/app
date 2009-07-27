@@ -1,5 +1,5 @@
-#blogPostForm label {
-color:#cc4d33;
+#blogPostForm, #blogInfo label {
+color:#000000;
 display:block;
 float:left;
 padding-right:1em;
@@ -12,7 +12,6 @@ font-weight:700;
 }
 
 #blogPostForm div.formBlock {
-border-bottom:1px dashed #AAA;
 clear:left;
 float:left;
 width:100%;
