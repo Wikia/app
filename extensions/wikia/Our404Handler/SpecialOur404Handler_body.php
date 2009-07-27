@@ -84,13 +84,10 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 			/**
 			 * deal with local file
 			 */
-			print_r( $parts );
-
 			$thumbWidth = $parts[ 1 ];
 			$thumbName = $parts[ 2 ];
 			$image = wfLocalFile( $thumbName );
 			if( $image ) {
-				print_pre( $image );
 				try {
 					$thumb = $image->transform( array( "width" => $thumbWidth ), File::RENDER_NOW );
 					$render = true;
@@ -102,6 +99,9 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		}
 		wfProfileOut( __METHOD__ );
 		if( $render ) {
+			/**
+			 * @todo handle errors
+			 */
 			wfStreamFile( $thumb->getPath() );
 		}
 		else {
@@ -178,54 +178,5 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		$info = wfMsgForContent( 'message404', $uri, urldecode( $title ) );
 		$wgOut->addHTML( '<h2>'.wfMsg( 'our404handler-oops' ).'</h2>
 						<div>'. $wgOut->parse( $info ) .'</div>' );
-	}
-
-	/**
-	 * Copy default favicon.ico if missing
-	 *
-	 * @access public
-	 *
-	 * @param $oWiki DatabaseRow: database object for row from city_list
-	 * @return redirect to default favicon
-	 */
-	public function doCopyDefaultFavicon( $oWiki ){
-		global $wgOut;
-
-		# Get image directory for wiki
-		$sUploadDirectory = WikiFactory::getVarValueByName( 'wgUploadDirectory', $oWiki->city_id );
-		$sTargetFavicon = $sUploadDirectory.'/6/64/Favicon.ico';
-		if( !file_exists( $sTargetFavicon ) ) {
-			wfMkdirParents( dirname($sTargetFavicon) );
-			@copy( self::FAVICON_ICO, $sTargetFavicon );
-		}
-
-		$sTargetFavicon = $sUploadDirectory.'/6/64/favicon.ico';
-		if( !file_exists( $sTargetFavicon ) ) {
-			wfMkdirParents( dirname( $sTargetFavicon ) );
-			@copy( self::FAVICON_ICO, $sTargetFavicon );
-		}
-
-		return $wgOut->redirect( self::FAVICON_URL );
-	}
-
-	/**
-	 * Copy default logo if missing
-	 *
-	 * @access public
-	 *
-	 * @param $oWiki DatabaseRow: database object for row from city_list
-	 * @return redirect to default favicon
-	 */
-	public function doCopyDefaultLogo( $oWiki ){
-		global $wgOut;
-
-		# Get image directory for wiki
-		$sUploadDirectory = WikiFactory::getVarValueByName( 'wgUploadDirectory', $oWiki->city_id );
-		$sTargetLogo = $sUploadDirectory.'/b/bf/Wiki_wide.png';
-		if( !file_exists( $sTargetLogo ) ) {
-			wfMkdirParents( dirname( $sTargetLogo ) );
-			@copy( dirname( __FILE__ ) . '/'. self::LOGOWIDE_PNG, $sTargetLogo );
-		}
-		return $wgOut->redirect( self::LOGOWIDE_URL );
 	}
 };
