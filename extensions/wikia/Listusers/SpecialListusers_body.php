@@ -137,7 +137,7 @@ class Listusers extends SpecialPage {
 			}
 			if (!empty($aQuery)) {
 				$query = implode(' union ', $aQuery);
-				$res = $dbs->query ($query);
+				$res = $dbs->query ($query, __METHOD__ );
 				while ($row = $dbs->fetchObject($res)) {
 					$aResult[(empty($row->groupName)) ? "all" : $row->groupName] = $row->cnt;
 				}
