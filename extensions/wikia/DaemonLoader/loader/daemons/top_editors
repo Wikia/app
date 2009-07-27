@@ -179,19 +179,18 @@ foreach my $user_id (sort keys %USERS) {
 	
 =get home Wiki for user
 =cut
-	$select = "city_id";
+	$select = "city_id, unix_timestamp(ulh_timestamp) as first_date";
 	$from = "`dataware`.`user_login_history`";
 	@where = ("ulh_from = 2", "user_id = ".$user_id);	
 	@options = ();
 	my ($oRow) = $db_ext->select($select, $from, \@where, \@options);
 	my $homeCityId = $oRow->{city_id};
+	my $first_date = $oRow->{first_date};
 	
 =get list of wikis, where user edited something
 =cut
 	my @wikis = $USERS_WIKIS{$user_id};
 
-	$USERS{$user_id}{home} = $databases->{$homeCityId};
-	$USERS{$user_id}{hub} = $hubs->{$homeCityId};
 =processing for every Wiki
 =cut
 	$oConf->log("Selected list of Wikis for selected users (" .scalar(@wikis). ")");
@@ -200,6 +199,7 @@ foreach my $user_id (sort keys %USERS) {
 		my $dbname = $databases->{$city_id};
 		
 		$homeCityId = $city_id unless ($homeCityId);
+		$first_date = time() unless $first_date;
 
 		$db_ext->handler->ping();
 		$oConf->log("processing Wiki: ".$dbname);
@@ -213,7 +213,29 @@ foreach my $user_id (sort keys %USERS) {
 			$USERS{$user_id}{$date} = 0 unless $USERS{$user_id}{$date};
 
 			$db->handler->ping();
+
+			#---
+			# check first edition date 
+			$select = "min(unix_timestamp(rev_timestamp)) as first_date";
+			$from = "`".$dbname."`.`revision`";
+			@where = (
+				"rev_user = '".$user_id."'",
+				"rev_page in (select page_id from `".$dbname."`.`page` where page_namespace in (".$contentNS.") and page_is_redirect = 0)"
+			);
+			my @options = ();
 		
+			my $cnt = 0;
+			my ($oRowCnt) = $db->select($select, $from, \@where, \@options);
+			my $tmp_first_date = $oRowCnt->{first_date};
+			$tmp_first_date = time() unless $tmp_first_date;
+
+			if ( $tmp_first_date < $first_date ) {
+				$homeCityId = $city_id;
+				$first_date = $tmp_first_date;
+			}
+		
+			#
+			# count in month 
 			$select = "count(*) as cnt";
 			$from = "`".$dbname."`.`revision`";
 			@where = (
@@ -232,6 +254,9 @@ foreach my $user_id (sort keys %USERS) {
 	}
 =end of main loop
 =cut
+	$USERS{$user_id}{home} = $databases->{$homeCityId};
+	$USERS{$user_id}{hub} = $hubs->{$homeCityId};
+
 	my $end_sec = time();
 	my @ts = gmtime($end_sec - $start_sec);
 
