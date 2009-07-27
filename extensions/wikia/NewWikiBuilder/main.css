@@ -80,6 +80,7 @@ ul, li {
 	text-align: right;
 }
 .nav_reverse {
+	clear: both;
 	float: left;
 }
 /* Button styling research: http://www.filamentgroup.com/lab/update_styling_the_button_element_with_css_sliding_doors_now_with_image_spr/ */
@@ -140,7 +141,7 @@ button.secondary span {
 	width: 298px;
 }
 #step1 textarea {
-	width: 100%;
+	width: 95%;
 	height: 240px;
 }
 #step1_form {
@@ -181,6 +182,7 @@ button.secondary span {
 
 /*** Step 3: Theme ***/
 #theme_scroller {
+	height: 270px;
 	overflow: auto;
 	-moz-border-radius-topleft: 7px;
 	-moz-border-radius-topright: 7px;
@@ -282,4 +284,7 @@ button.secondary span {
 	height: 0;
 	clear: both;
 	visibility: hidden;
+}
+.clearfix {
+	zoom: 1;
 }
