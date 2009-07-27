@@ -235,7 +235,7 @@ NWB.iframeFormUpload = function(iframe){
 		$("#logo_preview").css("backgroundImage", "url(" + url + ")");
 		$("#logo_preview_wrapper").show();
 	} else {
-		url = Mediawiki.getImageUrl("Wiki2.png") + '?' + Math.random();
+		url = Mediawiki.getImageUrl("Wiki.png") + '?' + Math.random();
 		$("#logo_current").css("backgroundImage", "url(" + url + ")");
 	}
 	return;
