@@ -65,6 +65,8 @@ function modifyCategoryDialog(data, handler) {
 	});
 
 	var buttons = [ { text: data.save, handler: function() {
+		WET.byStr('articleAction/sortSave');
+		
 		// close dialog
 		this.hide();
 
