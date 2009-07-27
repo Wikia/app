@@ -2,6 +2,7 @@
 * 
 
 == Changes since 200907.4 ==
+* rt#19651: Analytics: CategorySelect tracking. (Nef)
 * rt#4259:  New version of global watchlist (Moli)
 * rt#19643: catselect broken on answers (Macbre)
 * rt#18068: AWC: Pages duplicated from wiki starters are bringing full edit history (eloy)
