@@ -2,6 +2,7 @@
 if (!defined('MEDIAWIKI')){
 $wgSitename = "Wiki Name";
 $wgDefaultTheme = "slate";
+$language = "en";
 // Stub
 function wfMsg($in) {
 	return $in;
@@ -10,11 +11,12 @@ function wfMsg($in) {
 <!-- Called as a standalone file -->
 <html>
 <body>
-<!-- Jquery is required for the API itself -->
 <?php } else {
-global $wgSitename;
+global $wgSitename, $wgDefaultTheme, $wgSkinTheme, $wgContLang;
+$language = $wgContLang->getCode();
 }
 ?>
+<!-- Jquery is required for the API itself -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/extensions/wikia/NewWikiBuilder/main.css"/>
 
@@ -30,7 +32,7 @@ if (match !== null){
 }
 <?php 
 global $NWBmessages;
-echo "NWB.messages = " . json_encode($NWBmessages);
+echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$language]) . "}";
 ?>
 </script>
 </head>
@@ -69,16 +71,12 @@ echo "NWB.messages = " . json_encode($NWBmessages);
 	<script>
 	// Setup
 	$(function() {
-		// Bring in the main page 
-		Mediawiki.pullArticleContent(Mediawiki.followRedirect("Main Page"),	
-		function (result){ $("#desc_textarea").val(result);},
-			{"rvsection": NWB.descriptionSection}
-		);
+		Mediawiki.pullArticleContent(Mediawiki.followRedirect("Main Page"), NWB.pullWikiDescriptionCallback, {"rvsection": 0});
 	});
 	</script>
 </div>
 <div class="nav">
-	<a href="#step2" id="skip_step_1"><?php echo wfMsg("skip-this-step")?></a> or 
+	<a href="#step2" id="skip_step_1"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
 	<button onclick="$('#step1_form').submit();"><span>Save Description</span></button>
 	<input onclick="$('#step1_form').submit();" type="button" id="hidden_description_submit" style="display:none"><!-- For selenium tests -->
 </div>
@@ -96,7 +94,7 @@ echo "NWB.messages = " . json_encode($NWBmessages);
 	<iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
 
 	<div style="float: left;">
-	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)'>
+	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)' id="logo_form">
 		<input type="hidden" name="action" value="uploadlogo">	
 		<input type="hidden" name="format" value="xml">	
 		<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
@@ -129,8 +127,8 @@ echo "NWB.messages = " . json_encode($NWBmessages);
 	<span class="nav_reverse">
 		<button class="secondary" onclick="NWB.gotostep(1);"><span>Back to step 1</span></button>
 	</span>
-	<a href="#step3" id="skip_step_2"><?php echo wfMsg("skip-this-step")?></a> or 
-	<button onclick="NWB.gotostep(3);"><span>Save Logo</span></button>
+	<a href="#step3" id="skip_step_2"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
+	<button onClick="f=document.getElementById('logo_form'); f.title.value='Wiki.png'; f.submit();"><span>Save Logo</span></button>
 </div>
 </li>
 
@@ -151,7 +149,7 @@ echo "NWB.messages = " . json_encode($NWBmessages);
 
 
 <script>
-var wgDefaultTheme = '<?php global $wgDefaultTheme; echo $wgDefaultTheme?>';
+var wgDefaultTheme = '<?php echo $wgDefaultTheme?>';
 
 // TODO: Pull this list from wgSkinTheme?
 var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
@@ -179,7 +177,7 @@ for (var i = 0; i < themes.length; i++){
 	<span class="nav_reverse">
 		<button class="secondary" onclick="NWB.gotostep(2);"><span>Back to step 2</span></button>
 	</span>
-	<a href="#step4" id="skip_step_3"><?php echo wfMsg("skip-this-step")?></a> or 
+	<a href="#step4" id="skip_step_3"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
 	<button onclick="NWB.gotostep(4);"><span>Save Theme</span></button>
 </div>
 </li>
@@ -197,7 +195,7 @@ for (var i = 0; i < themes.length; i++){
 		TBD Danny
 	</div>
 	<form id="step4_form">
-		<input type="hidden" name="category" value="Coming Soon"><!-- TODO: i18n -->
+		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsg("nwb-coming-soon"))?>">
 		<div id="all_fp">
 			<ul class="fp_block" id="fp_block_1">
 				<!-- Ids aren't necessary for the form, only used for Selenium -->
@@ -215,7 +213,7 @@ for (var i = 0; i < themes.length; i++){
 	<span class="nav_reverse">
 		<button class="secondary" onclick="NWB.gotostep(3);"><span>Back to step 3</span></button>
 	</span>
-	<a href="#step5" id="skip_step_4"><?php echo wfMsg("skip-this-step")?></a> or 
+	<a href="#step5" id="skip_step_4"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
 	<button onclick="$('#step4_form').submit();"><span>Create Pages</span></button>
 	<input onclick="$('#step4_form').submit();" type="button" id="hidden_step_4_submit" style="display:none"><!-- For selenium tests -->
 </div>
