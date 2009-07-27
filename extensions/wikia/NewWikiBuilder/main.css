@@ -209,9 +209,11 @@ button.secondary span {
 #all_fp {
 	float: left;
 }
-#all_fp li {
+.bullets li {
 	list-style: disc;
 	margin-left: 15px;
+}
+#all_fp li {
 	padding: 3px;
 }
 #all_fp label {
