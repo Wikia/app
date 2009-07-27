@@ -98,9 +98,15 @@ NWB.firstPagesInputs = function (){
 	if (empties <= 2){
 		NWB.firstPagesBlocks++;
 		// Add a block of 5 more titles
-		$('<ul id="fp_block_' + NWB.firstPagesBlocks + '" style="display: none;">' + $("#fp_block_1").html() + '</ul>').appendTo("#all_fp").fadeIn();
+		$("#fp_block_1").clone().attr("id", "fp_block_" + NWB.firstPagesBlocks).find("input").val("").end().appendTo("#all_fp").fadeIn(NWB.reflow);
 	}
 };
+
+//Call this function when the page doesn't properly lay out after performing a dynamic action
+NWB.reflow = function() {
+	$("body").addClass("reflow");
+	$("body").removeClass("reflow");
+}
 
 NWB.handleDescriptionForm = function (event){
     try {

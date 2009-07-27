@@ -13,6 +13,9 @@ ul, li {
 	margin: 0;
 	padding: 0;
 }
+.reflow {
+	border-right: 1px solid transparent;
+}
 .accent {
 	border-width: 1px;
 	border-style: solid;
@@ -170,6 +173,7 @@ button.secondary span {
 	width: 150px;
 }
 #logo_preview_wrapper {
+	background-repeat: no-repeat;
 	display: none;
 	margin-top: 20px;
 }
