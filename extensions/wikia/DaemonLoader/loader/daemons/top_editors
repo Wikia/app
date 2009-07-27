@@ -144,7 +144,7 @@ my %TOP_EDITORS = ();
 $sth = $db_ext->select_many($select, $from, \@where, \@options);
 if ($sth) {
 	while(my $values = $sth->fetchrow_hashref()) {
-		%{$USERS{$values->{user_id}}} = ('all' => $values->{cnt}, 'name' => $values->{user_name});
+		%{$USERS{$values->{user_id}}} = ('all' => $values->{cnt}, 'name' => $values->{user_name}, 'ns_main' => 0);
 		$TOP_EDITORS{$values->{user_id}} = $values->{cnt};
 	}
 	$sth->finish();
@@ -186,6 +186,16 @@ foreach my $user_id (sort keys %USERS) {
 	my ($oRow) = $db_ext->select($select, $from, \@where, \@options);
 	my $homeCityId = $oRow->{city_id};
 	my $first_date = $oRow->{first_date};
+
+=get number of edits in main namespace
+=cut
+	$select = "sum(ue_edit_count) as cnt";
+	$from = "`dbstats`.`city_user_edits`";
+	@where = ("ue_edit_namespace = 0", "ue_user_id = ".$user_id);	
+	@options = ();
+	($oRow) = $db_ext->select($select, $from, \@where, \@options);
+	$USERS{$user_id}{ns_main} = $oRow->{cnt};
+	$USERS{$user_id}{ns_main} = 0 unless ($USERS{$user_id}{ns_main});
 	
 =get list of wikis, where user edited something
 =cut
@@ -222,7 +232,7 @@ foreach my $user_id (sort keys %USERS) {
 				"rev_user = '".$user_id."'",
 				"rev_page in (select page_id from `".$dbname."`.`page` where page_namespace in (".$contentNS.") and page_is_redirect = 0)"
 			);
-			my @options = ();
+			@options = ();
 		
 			my $cnt = 0;
 			my ($oRowCnt) = $db->select($select, $from, \@where, \@options);
@@ -245,8 +255,8 @@ foreach my $user_id (sort keys %USERS) {
 			);
 			my @options = ();
 		
-			my $cnt = 0;
-			my ($oRowCnt) = $db->select($select, $from, \@where, \@options);
+			$cnt = 0;
+			($oRowCnt) = $db->select($select, $from, \@where, \@options);
 			$cnt = $oRowCnt->{cnt};
 			$cnt = 0 unless $cnt;
 			$USERS{$user_id}{$date} = $USERS{$user_id}{$date} + $cnt;
@@ -293,10 +303,11 @@ $sheet->activate();
 my ($col, $row) = (0, 2); 
 $sheet->write($row, $col, "Editor", $formatHdr); 
 $sheet->write($row, $col+1, "Editor Id", $formatHdr); 
-$sheet->write($row, $col+2, "Total edits", $formatHdr); 
-$sheet->write($row, $col+3, "Home wiki", $formatHdr); 
-$sheet->write($row, $col+4, "Hub", $formatHdr); 
-my $i = 5;
+$sheet->write($row, $col+2, "Total edits (all ns)", $formatHdr); 
+$sheet->write($row, $col+3, "Total edits (main ns)", $formatHdr); 
+$sheet->write($row, $col+4, "Home wiki", $formatHdr); 
+$sheet->write($row, $col+5, "Hub", $formatHdr); 
+my $i = 6;
 foreach (@dates) {
 	$sheet->write($row, $col+$i, $_, $formatHdr); 
 	$i++;
@@ -307,6 +318,7 @@ foreach my $user_id (sort { $TOP_EDITORS{$b} <=> $TOP_EDITORS{$a} } keys %TOP_ED
 	$sheet->write($row, $col+$i, $USERS{$user_id}{name}, $formatBody); $i++;
 	$sheet->write($row, $col+$i, $user_id, $formatBody); $i++;
 	$sheet->write($row, $col+$i, $USERS{$user_id}{all}, $formatBody); $i++;
+	$sheet->write($row, $col+$i, $USERS{$user_id}{ns_main}, $formatBody); $i++;
 	$sheet->write($row, $col+$i, $USERS{$user_id}{home}, $formatBody); $i++;
 	$sheet->write($row, $col+$i, $USERS{$user_id}{hub}, $formatBody); $i++;
 	foreach (@dates) {
