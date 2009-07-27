@@ -99,9 +99,9 @@ echo "NWB.messages = " . json_encode($NWBmessages);
 	<form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)'>
 		<input type="hidden" name="action" value="uploadlogo">	
 		<input type="hidden" name="format" value="xml">	
-		<input id="logo_article" type="hidden" name="title" value="Wiki2.png">	
+		<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
 		<label>Choose logo:</label><input type="file" name="logo_file"> <input type="submit" value="Preview" onClick="this.form.title.value='Wiki-Preview.png'"/> 
-		<!--<input type="submit" value="Save" onClick="this.form.title.value='Wiki2.png'"/>-->
+		<!--<input type="submit" value="Save" onClick="this.form.title.value='Wiki.png'"/>-->
 	</form>
 
 	<div id="logo_preview_wrapper">
