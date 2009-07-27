@@ -253,3 +253,12 @@ body.rtl #column-google {
 body.ajax * {
 	cursor: wait !important;	
 }
+
+/* Spotlights */
+#spotlight_container {
+	width: 100%;
+	text-align: center;
+	padding-left: 15em;
+	padding-right: 125px;
+	background-color: transparent;
+}
