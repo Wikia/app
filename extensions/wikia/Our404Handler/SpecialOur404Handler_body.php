@@ -70,143 +70,43 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		global $wgOut, $wgMemc, $wgExternalSharedDB;
 
 		wfProfileIn( __METHOD__ );
+
 		/**
 		 * take last part, it should be nnnpx-title schema
 		 * (622px-Welcome_talk.png)
 		 */
-		$favicon = 0;
-		$logowide = 0;
-		$aParts = explode( '/', $uri );
-		$sLast = array_pop( $aParts );
+		$render   = false;
+		$filename = array_pop( explode( '/', $uri ) );
 
-		/**
-		 * maybe we have 404 on favicon.ico
-		 */
-		switch( $sLast ) {
-			case 'Favicon.ico':
-				$favicon = 1;
-				break;
-
-			case 'Wiki_wide.png':
-				$logowide = 1;
-				break;
-
-			default:
-				preg_match( "/(\d+)px\-([^\?]+)/", $sLast, $aParts );
-				if( isset( $aParts[1] ) && isset( $aParts[2] ) ) {
-					$sThumbWidth = $aParts[1];
-					$sThumbName = $aParts[2];
-				} else {
-					wfProfileOut( __METHOD__ );
-					return $this->doRender404();
-				}
-				break;
-		}
-
-		/**
-		 * part before /images/ tell us what wiki it is
-		 *
-		 * this is little tricky because we're almost guessing by using image path
-		 * which wiki it is. We ask twice, with and without closing "/"
-		 */
-		$sUploadDirectoryY = self::IMAGEROOT . substr( $uri, 0, strpos( $uri, '/images/' ) + strlen( '/images/' ) );
-		$sUploadDirectoryN = rtrim( $sUploadDirectoryY, "/" );
-
-		/**
-		 * first check in cache, maybe we already saw it
-		 */
-		$sCacheKey = $this->cacheKey( $sUploadDirectoryN );
-		$oRow = $wgMemc->get( $sCacheKey );
-
-		if( !isset( $oRow->city_id ) ) {
-			wfProfileIn( __METHOD__ ."-db" );
+		preg_match( "/(\d+)px\-([^\?]+)/", $filename, $parts );
+		if( isset( $parts[ 1 ] ) && isset( $parts[ 2 ] ) ) {
 
 			/**
-			 * try to find which wiki it is based on $sUploadDirectory value.
-			 * first without trailing slash
+			 * deal with local file
 			 */
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-			$oRow = $dbr->selectRow(
-				array( 'city_variables', 'city_list' ),
-				array( 'city_id', 'city_url' ),
-				array(
-					'cv_value' => serialize( $sUploadDirectoryN ),
-					'city_id = cv_city_id'
-				),
-				__METHOD__
-			);
-			if( empty( $oRow->city_id ) ) {
-				/**
-				 * second query with trailing slash
-				 */
-				$oRow = $dbr->selectRow(
-					array( 'city_variables', 'city_list' ),
-					array( 'city_id', 'city_url' ),
-					array(
-						'cv_value' => serialize( $sUploadDirectoryY ),
-						'city_id = cv_city_id'
-					),
-					__METHOD__
-				);
-			}
+			print_r( $parts );
 
-			if( isset( $oRow->city_id ) ) {
-				$wgMemc->set( $sCacheKey, $oRow, 86400 );
-			}
-			wfProfileOut( __METHOD__ ."-db" );
-		} else {
-			wfDebug( "Upload directory taken from cache" );
-		}
-
-		# still empty?
-		if( !empty( $oRow->city_id ) && !empty( $oRow->city_url ) ) {
-
-			if ( $favicon == 1 ) {
-				# copy default favicon
-				wfProfileOut( __METHOD__ );
-				return $this->doCopyDefaultFavicon( $oRow );
-			}
-			if ( $logowide == 1 ) {
-				# copy default logo
-				wfProfileOut( __METHOD__ );
-				return $this->doCopyDefaultLogo( $oRow );
-			} else {
-				/**
-				 * thumbnail of file.svg file is file.svg.png, so we have to
-				 * check if part before last is svg
-				 */
-				$svg = false;
-				$parts = explode( ".", $sThumbName );
-				if( is_array( $parts ) ) {
-					$ext1 = array_pop( $parts );
-					$ext2 = array_pop( $parts );
-					if( strtolower( $ext2 ) === 'svg' ) {
-						$svg = true;
-						/**
-						 * now build new filename without last part (extension)
-						 */
-						$file = implode( ".", $parts );
-						$sThumbName = $file . "." . $ext2;
-					}
+			$thumbWidth = $parts[ 1 ];
+			$thumbName = $parts[ 2 ];
+			$image = wfLocalFile( $thumbName );
+			if( $image ) {
+				print_pre( $image );
+				try {
+					$thumb = $image->transform( array( "width" => $thumbWidth ), File::RENDER_NOW );
+					$render = true;
 				}
-
-				# build API query
-				$sApiQuery = sprintf(
-					"%s/api.php?action=imagethumb&tiimage=%s&tiwidth=%d&format=json",
-					rtrim( $oRow->city_url, "/" ),
-					$sThumbName,
-					$sThumbWidth
-				);
-				$sResponse = Http::get( $sApiQuery, 60 );
-				$oResponse = Wikia::json_decode( $sResponse );
-				if( !empty( $oResponse->query->imagethumb->thumb->exists ) ) {
-					return $wgOut->redirect( $oResponse->query->imagethumb->thumb->url );
+				catch( Exception $ex ) {
+					$thumb = false;
 				}
 			}
 		}
-
 		wfProfileOut( __METHOD__ );
-		return $this->doRender404( $uri );
+		if( $render ) {
+			wfStreamFile( $thumb->getPath() );
+		}
+		else {
+			return $this->doRender404( $uri );
+		}
 	}
 
 	/**
@@ -328,17 +228,4 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		}
 		return $wgOut->redirect( self::LOGOWIDE_URL );
 	}
-
-	/**
-	 * Create cache key
-	 *
-	 * @access private
-	 * @param $directory String: path to upload directory
-	 * @return String: cache key
-	 */
-	private function cacheKey( $directory ){
-		$parts = str_replace( '/', ':', $directory );
-		return '404handler' . $parts;
-	}
-
 };
