@@ -249,6 +249,7 @@ NWB.iframeFormUpload = function(iframe){
 	} else {
 		url = Mediawiki.getImageUrl("Wiki.png") + '?' + Math.random();
 		$("#logo_current").css("backgroundImage", "url(" + url + ")");
+		NWB.gotostep(3);
 	}
 	return;
 

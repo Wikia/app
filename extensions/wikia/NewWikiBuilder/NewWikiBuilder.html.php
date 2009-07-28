@@ -96,7 +96,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 		<input type="hidden" name="format" value="xml">	
 		<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
 		<label><?php echo wfMsg("nwb-choose-logo")?>:</label><input type="file" name="logo_file" id="logo_file" /> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onclick="this.form.title.value='Wiki-Preview.png'"/>
-		<!--<input type="submit" value="Save" onClick="this.form.title.value='Wiki.png'"/>-->
+		<!--<input type="submit" value="Save" onclick="this.form.title.value='Wiki.png'"/>-->
 	</form>
 
 	<div id="logo_preview_wrapper">
@@ -125,7 +125,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 		<button class="secondary" onclick="NWB.gotostep(1);"><span><?php echo wfMsg("nwb-back-to-step-1")?></span></button>
 	</span>
 	<a href="#step3" id="skip_step_2"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onClick="f=document.getElementById('logo_form'); f.title.value='Wiki.png'; f.submit();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
+	<button onclick="f=document.getElementById('logo_form'); f.title.value='Wiki.png'; f.submit();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
 </div>
 </li>
 
@@ -137,7 +137,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 	<?php echo wfMsg("nwb-step3-text")?>
 	<div id="theme_template" style="display:none" class="theme_selekction">
 		<label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
-		<input onClick="NWB.changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
+		<input onclick="NWB.changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
 	</div>
 	<div id="theme_scroller" class="accent">
 		<table><tr></tr></table>
