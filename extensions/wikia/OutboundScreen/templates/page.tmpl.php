@@ -37,14 +37,14 @@
 
 		<script type="text/javascript">/*<![CDATA[*/
 			function doRedirect() {
-				window.location = <?= Xml::encodeJSvar($url) ?>;
+				window.location = <?= Xml::encodeJSvar( htmlspecialchars_decode( $url ) ); ?>;
 			}
 		/*]]>*/</script>
 	</head>
 	<body class="color2"<?php if($redirectDelay > 0): ?> onLoad="setTimeout(doRedirect, <?=($redirectDelay * 1000);?>)"<?php endif?>>
 		<?= $athenaInitStuff; ?>
 		<div>
-			<div id="pageTop" class="color1"><a href="<?= htmlspecialchars($url); ?>" id="exitLink" rel="nofollow"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a></div>
+			<div id="pageTop" class="color1"><a href="<?= $url ?>" id="exitLink" rel="nofollow"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a></div>
 			<?=$adSlots['INVISIBLE'];?>
 			<div id="exitPageAd1">
 				<?=$adSlots['BOXAD_1'];?>
