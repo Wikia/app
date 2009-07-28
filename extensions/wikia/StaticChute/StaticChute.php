@@ -66,6 +66,7 @@ class StaticChute {
 			'common/yui_2.5.2/logger/logger.js',
 			'common/yui_2.5.2/menu/menu.js',
 			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_2.5.2/slider/slider.js',
 			'common/yui_extra/tools-min.js',
 			'common/yui_extra/carousel-min.js',
 
@@ -100,6 +101,7 @@ class StaticChute {
 			'common/yui_2.5.2/logger/logger.js',
 			'common/yui_2.5.2/menu/menu.js',
 			'common/yui_2.5.2/tabview/tabview.js',
+			'common/yui_2.5.2/slider/slider.js',
 			'common/yui_extra/tools-min.js',
 
 			'common/jquery/jquery-1.3.2.js',
