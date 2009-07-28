@@ -187,7 +187,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
 			// preview mode
 			$this->mEditPage->formtype = 'preview';
-			$this->mPreviewTitle = Title::newFromText( $this->mFormData['postTitle'] ); //$oParser->parse( $this->mFormData['postBody'], ), $wgOut->parserOptions() );
+			$this->mPreviewTitle = Title::newFromText( $this->mFormData['postTitle'] );
 
 			//simple hack to show correct title in preview mode
 			$wgTitle = $this->mPreviewTitle;
@@ -219,7 +219,7 @@ class CreateBlogPage extends SpecialBlogPage {
 	 * EditPage::showEditForm callback - need to be public
 	 */
 	public function renderFormHeader($wgOut) {
-		global $wgScriptPath, $wgTitle;
+		global $wgScriptPath;
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$oTmpl->set_vars( array(
