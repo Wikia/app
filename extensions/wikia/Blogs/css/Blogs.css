@@ -1,7 +1,6 @@
-#blogPostForm, #blogInfo label {
+#blogPostForm, #blogInfo {
 color:#000000;
 display:block;
-float:left;
 padding-right:1em;
 font-size:12pt;
 }
@@ -27,10 +26,18 @@ margin-bottom:10px;
 padding-bottom:20px;
 }
 
+#blogPostForm #blogPostTitleHeader {
+float:left;
+}
+
 #blogPostForm #blogPostTitle {
 clear:left;
 float:left;
 display:block;
+}
+
+#blogPostForm #blogPostCheckboxes {
+float:left;
 }
 
 #blogPostROTitle {
@@ -46,29 +53,6 @@ padding:5px;
 display:block!important;
 clear:both;
 padding:.8em;
-}
-
-.categoryCloudSection {
-border:1px solid lightgray;
-padding:15px;
-}
-
-.wpCategoryTextarea {
-display:none;
-}
-
-#wpCategoryInput,#wpCategoryButton {
-margin:4px 2px 0;
-}
-
-.wpCategoryInput {
-width:230px;
-}
-
-#blogPostCategoriesTitle {
-color:#cc4d33;
-padding-right:1em;
-font-size:12pt;
 }
 
 .matches-info {
