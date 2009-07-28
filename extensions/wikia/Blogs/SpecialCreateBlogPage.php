@@ -52,7 +52,7 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		if($wgRequest->wasPosted()) {
 			$this->parseFormData();
-			if(count($this->mFormErrors) > 0 || !empty($this->mRenderedPreview)) {
+			if(count($this->mFormErrors) > 0 || !empty($this->mPreviewTitle)) {
 				$this->renderForm();
 			}
 			else {
@@ -132,7 +132,7 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	protected function parseFormData() {
-		global $wgUser, $wgRequest, $wgOut;
+		global $wgUser, $wgRequest, $wgOut, $wgTitle;
 
 		wfRunHooks('BlogsAlternateEdit', array(false));
 
@@ -186,8 +186,11 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
 			// preview mode
-			$oParser = new Parser();
-			$this->mRenderedPreview = $oParser->parse( $this->mFormData['postBody'], Title::newFromText($this->mFormData['postTitle']), $wgOut->parserOptions() );
+			$this->mEditPage->formtype = 'preview';
+			$this->mPreviewTitle = Title::newFromText( $this->mFormData['postTitle'] ); //$oParser->parse( $this->mFormData['postBody'], ), $wgOut->parserOptions() );
+
+			//simple hack to show correct title in preview mode
+			$wgTitle = $this->mPreviewTitle;
 
 			// CategorySelect compatibility (add categories to article body)
 			if($this->mCategorySelectEnabled) {
@@ -216,16 +219,18 @@ class CreateBlogPage extends SpecialBlogPage {
 	 * EditPage::showEditForm callback - need to be public
 	 */
 	public function renderFormHeader($wgOut) {
-		global $wgScriptPath;
+		global $wgScriptPath, $wgTitle;
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$oTmpl->set_vars( array(
 			"formErrors" => $this->mFormErrors,
 			"formData" => $this->mFormData,
-			"preview" => $this->mRenderedPreview
+			"preview" => $this->mPreviewTitle
 		) );
 
-		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
+		if(!($this->mPreviewTitle instanceof Title)) {
+			$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
+		}
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 		$wgOut->addHTML( $oTmpl->execute("createBlogFormHeader") );
 	}
