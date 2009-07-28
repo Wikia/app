@@ -257,23 +257,50 @@ body.widgetsAddingBlocked .add {
 #navigation .widget {
 	margin: 0;
 }
-#link_box {
+
+#link_box_table {
 	font-size: 8pt;
-	padding: 5px 0;
-}
-#link_box a {
-	background: transparent;
 	font-weight: bold;
-}
-#link_box table {
 	width: 100%;
 }
-#link_box td {
+#link_box_table td {
+	padding: 5px;
 	vertical-align: top;
 }
-#link_box ul {
-	padding: 0 5px;
+#link_box_table a {
+	background: transparent;
 }
+#link_box_dynamic img {
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?adfasdf) no-repeat;
+	height: 16px;
+	position: absolute;
+	width: 464px;
+}
+.link_box_dynamic_div:first-line {
+	line-height: 16px;
+}
+.link_box_dynamic_div {
+	position: relative;
+	margin-left: 20px !important;
+}
+#dynamic-links-write-article-img {
+	clip: rect(0px 16px 16px 0px);
+	left: -20px;
+}
+#dynamic-links-add-image-img {
+	clip: rect(0px 432px 16px 416px);
+	left: -436px;
+}
+#dynamic-links-write-blog-img {
+	clip: rect(0px 400px 16px 384px);
+	left: -304px;
+}
+#dynamic-links-blog-listing-img {
+	clip: rect(0px 448px 16px 432px);
+	left: -452px;
+}
+*
+
 
 .yuimenuitemmore a,
 .yuimenuitemedit1 a,
@@ -379,55 +406,4 @@ body.widgetsAddingBlocked .add {
 	border: 1px dashed #AAA;
 	margin-bottom: 10px !important;
 	padding: 2px !important;
-}
-
-/* page-specific links */
-#link_box_dynamic {
-	padding: 2px 0;
-}
-#link_box_dynamic #dynamic-links-list {
-	margin: 0;
-	padding: 0;
-}
-#link_box_dynamic #dynamic-links-list li {
-	line-height: 1.5em;
-	padding: 2px 0;
-	position: relative;
-	font-size: 8pt;
-	font-weight: bold;
-	float: left;
-	margin-right: 2px;
-	overflow: hidden !important; /* Opera fix */
-}
-#link_box_dynamic #dynamic-links-list li div {
-	display: inline;
-	position: relative;
-	margin-left: 18px;
-}
-#link_box_dynamic img.sprite {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
-	height: 16px;
-	margin-right: 16px;
-	position: absolute;
-	width: 464px;
-}
-#dynamic-links-write-article-icon,
-#dynamic-links-write-article-img {
-	clip: rect(0px 16px 16px 0px);
-	left: 0px;
-}
-#dynamic-links-add-image-icon,
-#dynamic-links-add-image-img {
-	clip: rect(0px 432px 16px 416px);
-	left: -416px;
-}
-#dynamic-links-write-blog-icon,
-#dynamic-links-write-blog-img {
-	clip: rect(0px 400px 16px 384px);
-	left: -384px;
-}
-#dynamic-links-blog-listing-icon,
-#dynamic-links-blog-listing-img {
-	clip: rect(0px 448px 16px 432px);
-	left: -432px;
 }
