@@ -32,7 +32,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*Sannse*/8,'staff'),
 (/*Scarecroe*/10637, 'staff'),
 (/*Shahid*/152910,'staff'),
-(/*Shahidhussain*/1418752,'staff'),
 (/*TOR*/23865,'staff'),
 (/*Toughpigs*/10370,'staff'),
 (/*Uberfuzzy*/161697, 'staff'),
