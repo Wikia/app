@@ -104,18 +104,20 @@ function runBackups( $from, $to, $full ) {
 		if( is_dir( $basedir ) ) {
 			$dh = opendir( $basedir );
 			while( ( $file = readdir( $dh ) ) !== false ) {
-				$json[] = array(
-					"name" => $file,
-					"timestamp" => filectime( $basedir . "/" . $file ),
-					"mwtimestamp" => wfTimestamp( TS_MW, filectime(  $basedir . "/" . $file ) )
-				);
+				$fullpath = $basedir . "/" . $file;
+				if( is_file( $fullpath ) ) {
+					$json[ $file ] = array(
+						"name" => $file,
+						"timestamp" => filectime( $fullpath ),
+						"mwtimestamp" => wfTimestamp( TS_MW, filectime( $fullpath ) )
+					);
+				}
 			}
 			closedir( $dh );
 		}
 		if( count( $json ) ) {
 			file_put_contents( $jsonfile, Wikia::json_encode( $json ) );
 		}
-
 	}
 }
 
