@@ -27,21 +27,19 @@ class DumpsOnDemand {
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$index = array();
-		$index = Wikia::json_decode( file_get_contents( self::getUrl( $wgDBname, "index.json" ) ) );
-		print_pre( self::getUrl( $wgDBname, "index.json" ) );
-		print_pre( $index->pages_current.xml.gz );
+		$index = (array )Wikia::json_decode( file_get_contents( self::getUrl( $wgDBname, "index.json" ) ) );
 
-		$tmpl->set( "full", array(
+		$tmpl->set( "curr", array(
 			"url" => self::getUrl( $wgDBname, "pages_current.xml.gz" ),
 			"timestamp" => !empty( $index["pages_current.xml.gz"]->mwtimestamp )
-				? $wgContLang->timeanddate( $index[ "pages_current.xml.gz"][ "mwtimestamp" ] )
+				? $wgContLang->timeanddate( $index[ "pages_current.xml.gz"]->mwtimestamp )
 				: "unknown"
 		));
 
-		$tmpl->set( "curr", array(
+		$tmpl->set( "full", array(
 			"url" => self::getUrl( $wgDBname, "pages_full.xml.gz" ),
-			"timestamp" => !empty( $index[ "pages_full.xml.gz" ][ "mwtimestamp" ] )
-				? $wgContLang->timeanddate( $index[ "pages_full.xml.gz" ][ "mwtimestamp" ] )
+			"timestamp" => !empty( $index[ "pages_full.xml.gz" ]->mwtimestamp )
+				? $wgContLang->timeanddate( $index[ "pages_full.xml.gz" ]->mwtimestamp )
 				: "unknown"
 		));
 		$tmpl->set( "index", $index );

@@ -106,7 +106,7 @@ function runBackups( $from, $to, $full, $options ) {
 			while( ( $file = readdir( $dh ) ) !== false ) {
 				$fullpath = $basedir . "/" . $file;
 				if( is_file( $fullpath ) ) {
-					$json[ str_replace( ".", "_", $file ) ] = array(
+					$json[ $file ] = array(
 						"name" => $file,
 						"timestamp" => filectime( $fullpath ),
 						"mwtimestamp" => wfTimestamp( TS_MW, filectime( $fullpath ) )
