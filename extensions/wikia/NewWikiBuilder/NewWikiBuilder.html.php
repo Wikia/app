@@ -1,7 +1,7 @@
 <?php
 if (!defined('MEDIAWIKI')){
 $wgSitename = "Wiki Name";
-$wgDefaultTheme = "slate";
+$wgAdminSkin = "monaco-sapphire";
 $language = "en";
 // Stub
 function wfMsg($in) {
@@ -14,7 +14,7 @@ function wfMsg($in) {
 <html>
 <body>
 <?php } else {
-global $wgSitename, $wgDefaultTheme, $wgSkinTheme, $wgContLang, $wgServer;
+global $wgSitename, $wgAdminSkin, $wgContLang, $wgServer;
 $language = $wgContLang->getCode();
 }
 ?>
@@ -137,7 +137,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 	<?php echo wfMsg("nwb-step3-text")?>
 	<div id="theme_template" style="display:none" class="theme_selekction">
 		<label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
-		<input onclick="NWB.changeTheme('$theme')" type="radio" name="theme" value="$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
+		<input onclick="NWB.changeTheme('$theme')" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
 	</div>
 	<div id="theme_scroller" class="accent">
 		<table><tr></tr></table>
@@ -145,7 +145,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 
 
 <script>
-var wgDefaultTheme = '<?php echo $wgDefaultTheme?>';
+var wgAdminSkin = '<?php echo $wgAdminSkin?>';
 
 // TODO: Pull this list from wgSkinTheme?
 var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
@@ -160,8 +160,8 @@ for (var i = 0; i < themes.length; i++){
 	$("#theme_scroller tr").append("<td>" + thtml + "</td>");
 	$("#theme_preview_image_" + ltheme).attr("src", "http://images.wikia.com/common/skins/monaco/" + ltheme + "/images/preview.png");
 
-	// Check the box with the current theme ($wgDefaultTheme)
-	if (wgDefaultTheme == ltheme) {
+	// Check the box with the current theme ($wgAdminSkin)
+	if (wgAdminSkin.replace(/monaco-/, '')  == ltheme) {
 		// Check the box and change the theme 
 		$("#theme_radio_" + ltheme).attr("checked", true);
 		NWB.changeTheme(ltheme);

@@ -13,7 +13,8 @@ class ApiFounderSettings extends ApiBase {
                 parent :: __construct($main, $action);
 		$this->writeSettings = array(
 			'wgDefaultTheme',
-			'wgDefaultSkin'
+			'wgDefaultSkin',
+			'wgAdminSkin'
 		);
 
 		$this->readSettings = array_merge($this->writeSettings, array(
