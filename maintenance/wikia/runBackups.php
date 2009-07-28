@@ -126,7 +126,7 @@ function runBackups( $from, $to, $full ) {
  */
 function getDirectory( $database ) {
 	global $wgDevelEnvironment;
-	$dumpDirectory = empty( $wgDevelEnvironment ) ?  "/backup/dumps/" : "/tmp/dumps";
+	$dumpDirectory = empty( $wgDevelEnvironment ) ?  "/backup/dumps" : "/tmp/dumps";
 	$database = strtolower( $database );
 	$directory = sprintf(
 		"%s/%s/%s/%s",
