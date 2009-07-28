@@ -5,8 +5,7 @@
  *
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
-$wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemads::customSpecialStatistics";
-
+$wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
 $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  dirname( __FILE__ ) . '/DumpsOnDemand.i18n.php';
 
 class DumpsOnDemand {
@@ -18,19 +17,33 @@ class DumpsOnDemand {
 	 * @static
 	 */
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
-		global $wgOut, $wgDBname;
+		global $wgOut, $wgDBname, $wgContLang;
 
-		wfLoadExtensionMessages( "DumpsOnDemads" );
+		wfLoadExtensionMessages( "DumpsOnDemand" );
 
 		/**
 		 * read json file with dumps information
 		 */
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$index = array();
 		$index = Wikia::json_decode( file_get_contents( self::getUrl( $wgDBname, "index.json" ) ) );
+		print_pre( self::getUrl( $wgDBname, "index.json" ) );
+		print_pre( $index->pages_current.xml.gz );
 
-		$tmpl->set( "urlDumpFull", self::getUrl( $wgDBname, "pages_current.xml.gz" ) );
-		$tmpl->set( "urlDumpCurr", self::getUrl( $wgDBname, "pages_full.xml.gz" ) );
+		$tmpl->set( "full", array(
+			"url" => self::getUrl( $wgDBname, "pages_current.xml.gz" ),
+			"timestamp" => !empty( $index["pages_current.xml.gz"]->mwtimestamp )
+				? $wgContLang->timeanddate( $index[ "pages_current.xml.gz"][ "mwtimestamp" ] )
+				: "unknown"
+		));
+
+		$tmpl->set( "curr", array(
+			"url" => self::getUrl( $wgDBname, "pages_full.xml.gz" ),
+			"timestamp" => !empty( $index[ "pages_full.xml.gz" ][ "mwtimestamp" ] )
+				? $wgContLang->timeanddate( $index[ "pages_full.xml.gz" ][ "mwtimestamp" ] )
+				: "unknown"
+		));
 		$tmpl->set( "index", $index );
 		$text .= $tmpl->render( "dod" );
 		return true;

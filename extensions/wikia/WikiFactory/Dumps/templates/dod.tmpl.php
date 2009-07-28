@@ -10,7 +10,7 @@
 		</td>
 		<td style="border-left: 0;padding 1em;">
 			&nbsp;
-			<a href="<?php echo $urlDumpCurr ?>"><?php echo $GLOBALS[ "wgContLang" ]->timeanddate( wfTimestampNow() )?></a>
+			<a href="<?php echo $curr[ "url" ] ?>"><?php echo $curr[ "timestamp" ] ?></a>
 		</td>
 	</tr>
 	<tr>
@@ -21,7 +21,7 @@
 			</div>
 		</td>
 		<td style="border-left: 0">
-			&nbsp;<a href="<?php echo $urlDumpFull ?>"><?php echo $GLOBALS[ "wgContLang" ]->timeanddate( wfTimestampNow() )?></a>
+			&nbsp;<a href="<?php echo $full[ "url" ] ?>"><?php echo $full[ "timestamp" ] ?></a>
 		</td>
 	</tr>
 	<tr>
