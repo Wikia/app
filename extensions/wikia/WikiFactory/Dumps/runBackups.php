@@ -25,6 +25,13 @@ function runBackups( $from, $to, $full, $options ) {
 	);
 
 	/**
+	 * silly trick, if we have id defined we are defining $from & $to from it
+	 */
+	if( isset( $options[ "id" ] ) && is_numeric( $options[ "id" ] ) ) {
+		$from = $to = $options[ "id" ];
+	}
+
+	/**
 	 * switch off limits for dumps
 	 */
 	$wgMaxShellTime     = 0;
@@ -48,8 +55,6 @@ function runBackups( $from, $to, $full, $options ) {
 			array( "ORDER BY" => "city_id" )
 	);
 	while( $row = $dbw->fetchObject( $sth ) ) {
-		Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname}");
-
 		/**
 		 * get cluster for this wiki
 		 */
@@ -92,6 +97,7 @@ function runBackups( $from, $to, $full, $options ) {
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
 		}
+		Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}");
 		/**
 		 * generate index.json
 	     */
@@ -144,7 +150,6 @@ function getDirectory( $database ) {
 
 	return $directory;
 }
-
 
 /**
  * main part
