@@ -106,8 +106,8 @@ function runBackups( $from, $to, $full ) {
 			while( ( $file = readdir( $dh ) ) !== false ) {
 				$json[] = array(
 					"name" => $file,
-					"timestamp" => filectime( $file ),
-					"mwtimestamp" => wfTimestamp( TS_MW, filectime( $file ) )
+					"timestamp" => filectime( $basedir . "/" . $file ),
+					"mwtimestamp" => wfTimestamp( TS_MW, filectime(  $basedir . "/" . $file ) )
 				);
 			}
 			closedir( $dh );
