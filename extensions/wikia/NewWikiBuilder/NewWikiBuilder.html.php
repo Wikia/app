@@ -125,7 +125,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 		<button class="secondary" onclick="NWB.gotostep(1);"><span><?php echo wfMsg("nwb-back-to-step-1")?></span></button>
 	</span>
 	<a href="#step3" id="skip_step_2"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onclick="f=document.getElementById('logo_form'); f.title.value='Wiki.png'; f.submit();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
+	<button onclick="NWB.uploadLogo();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
 </div>
 </li>
 
