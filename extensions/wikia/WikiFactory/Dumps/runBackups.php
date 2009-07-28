@@ -26,8 +26,16 @@ function runBackups( $from, $to, $full, $options ) {
 
 	/**
 	 * silly trick, if we have id defined we are defining $from & $to from it
+	 * if we have db param defined we first resolve which id is connected to this
+	 * database
 	 */
-	if( isset( $options[ "id" ] ) && is_numeric( $options[ "id" ] ) ) {
+	if( isset( $options[ "db" ] ) && is_string( $options[ "db" ] ) ) {
+		$city_id = WikiFactory::DBtoID( $options[ "db" ] );
+		if( $city_id ) {
+			$from = $to = $city_id;
+		}
+	}
+	elseif( isset( $options[ "id" ] ) && is_numeric( $options[ "id" ] ) ) {
 		$from = $to = $options[ "id" ];
 	}
 
