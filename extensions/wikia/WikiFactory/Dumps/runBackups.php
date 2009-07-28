@@ -4,14 +4,14 @@
  * @author Krzysztof Krzyżaniak (eloy)
  *
  */
-ini_set( "include_path", dirname(__FILE__)."/.." );
+ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once('commandLine.inc');
 
 
 /**
  * run backup for range of wikis
  */
-function runBackups( $from, $to, $full ) {
+function runBackups( $from, $to, $full, $options ) {
 
 	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath,
 		$wgMaxShellTime, $wgMaxShellFileSize;
@@ -149,9 +149,9 @@ function getDirectory( $database ) {
 /**
  * main part
  */
-$optionsWithArgs = array( 'from', 'to' );
+$optionsWithArgs = array( 'from', 'to', "id", "db" );
 $from = isset( $options[ "from" ] ) ? $options[ "from" ] : false;
 $to   = isset( $options[ "to" ] ) ? $options[ "to" ] : false;
 $full = isset( $options[ "full" ] ) ? true : false;
 
-runBackups( $from, $to, $full );
+runBackups( $from, $to, $full, $options );
