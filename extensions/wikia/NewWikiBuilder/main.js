@@ -313,3 +313,11 @@ NWB.parseXml = function (xml) {
 
 
 NWB.updateStatus = Mediawiki.updateStatus;
+
+NWB.uploadLogo = function (){
+	var f=document.getElementById('logo_form');
+	if (NWB.iframeFormInit(f)){
+		f.title.value='Wiki.png';
+		f.submit();
+	}
+};
