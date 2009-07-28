@@ -2017,6 +2017,7 @@ if(count($wikiafooterlinks) > 0) {
 	}
 	echo $monacoSidebar->getCode();
 
+	echo '<table cellspacing="0" id="link_box_table">';
 	//BEGIN: create dynamic box
 	$dynamicLinksArray = array();
 	//Blog, User_Blog namespaces
@@ -2051,18 +2052,18 @@ if(count($wikiafooterlinks) > 0) {
 	}
 
 	if (count($dynamicLinksArray) > 0) {
-?>
-	<div id="link_box_dynamic" class="clearfix linkbox_dynamic">
-		<ul id="dynamic-links-list">
+?>	
+		<tbody id="link_box_dynamic">
+			<tr>
 <?php
-	foreach ($dynamicLinksArray as $link) {
-		$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
-		echo '
-			<li id="' . $link['id'] . '-li"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="' . $wgStylePath  . '/monobook/blank.gif" id="' . $link['id'] . '-img" class="sprite" alt="' . $link['text'] . '" /></a> <div><a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>' . $link['text'] . '</a></div></li>';
-	}
+			foreach ($dynamicLinksArray as $link) {
+				//print_r($link);
+				$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
+				echo '<td><div class="link_box_dynamic_div"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="' . $wgStylePath  . '/monobook/blank.gif" id="' . $link['id'] . '-img" class="sprite" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></div></td>';
+			}			
 ?>
-		</ul>
-	</div>
+			</tr>
+		</tbody>
 <?php
 	}
 	//END: create dynamic box
@@ -2091,11 +2092,10 @@ if(count($wikiafooterlinks) > 0) {
 
 	if(count($linksArrayL) > 0 || count($linksArrayR) > 0) {
 ?>
-				<div id="link_box" class="color2 clearfix linkbox_static">
-					<table cellspacing="0">
-					<tr>
-						<td>
-							<ul>
+		<tbody id="link_box" class="color2 linkbox_static">
+			<tr>
+				<td>
+					<ul>
 <?php
 		if(is_array($linksArrayL) && count($linksArrayL) > 0) {
 			foreach($linksArrayL as $key => $val) {
@@ -2110,10 +2110,10 @@ if(count($wikiafooterlinks) > 0) {
 			}
 		}
 ?>
-							</ul>
-						</td>
-						<td>
-							<ul>
+					</ul>
+				</td>
+				<td>
+					<ul>
 <?php
 		if(is_array($linksArrayR) && count($linksArrayR) > 0) {
 		    foreach($linksArrayR as $key => $val) {
@@ -2128,16 +2128,16 @@ if(count($wikiafooterlinks) > 0) {
 			}
 		}
 ?>
-								<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r" rel="nofollow">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x" rel="nofollow">Random page</a></li>
-							</ul>
-						</td>
-					</tr>
-					</table>
-				</div>
+						<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?= Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r" rel="nofollow">Recent changes</a><a href="<?= Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x" rel="nofollow">Random page</a></li>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
 <?php
 	}
 	//END: create static box
 ?>
+	</table>
 			</div>
 			<!-- /SEARCH/NAVIGATION -->
 <?php		wfProfileOut( __METHOD__ . '-navigation'); ?>
