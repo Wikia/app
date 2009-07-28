@@ -33,10 +33,12 @@ function runBackups( $from, $to, $full, $options ) {
 		$city_id = WikiFactory::DBtoID( $options[ "db" ] );
 		if( $city_id ) {
 			$from = $to = $city_id;
+			$to++;
 		}
 	}
 	elseif( isset( $options[ "id" ] ) && is_numeric( $options[ "id" ] ) ) {
 		$from = $to = $options[ "id" ];
+		$to++;
 	}
 
 	/**
