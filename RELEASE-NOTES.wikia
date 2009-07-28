@@ -3,6 +3,7 @@
 * rt#19658: Answers, Analytics: Logo tracking. (Nef)
 * rt#19819: Answers: i18n msg changes. (Nef)
 * rt#19651: Analytics: CategorySelect tracking. (Nef)
+* rt#19860: Masthead: handle target parameter correctly (TOR)
 
 == Changes since 200907.4 ==
 * rt#4259:  New version of global watchlist (Moli)
