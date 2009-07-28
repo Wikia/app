@@ -1,4 +1,5 @@
 == Changes since 200907.5 ==
+* rt#19926: Fixed icons in custom footer. (Nef)
 * rt#19573: Fixed icons for page-specific links. (Nef)
 * rt#19658: Answers, Analytics: Logo tracking. (Nef)
 * rt#19819: Answers: i18n msg changes. (Nef)
