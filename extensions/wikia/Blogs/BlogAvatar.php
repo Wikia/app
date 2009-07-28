@@ -684,8 +684,15 @@ class BlogAvatar {
 
 			if ( in_array( $dbKey, $allowedPages ) ) {
 				$reqTitle = $wgRequest->getText("title", false);
-				if ( strpos( $reqTitle, "/") !== false ) {
+
+				# try to get a target user name
+				$userspace = $wgRequest->getText('target', false);
+				if ( empty( $userspace ) && strpos( $reqTitle, "/") !== false ) {
 					list ( , $userspace ) = explode( "/", $reqTitle, 2 );
+				}
+
+				# process the name
+				if ( !empty( $userspace ) ) {				
 					$user = User::newFromName( $userspace );
 					if( ! $user ) {
 						/**
@@ -702,6 +709,7 @@ class BlogAvatar {
 					$Avatar = BlogAvatar::newFromUser( $wgUser );
 				}
 			}
+
 			if ($userspace != "") {
 				$isDestinationUserAnon = User::isIP($userspace);
 				$out['userspace'] = $userspace;
