@@ -1,3 +1,4 @@
+<br />
 <h2><?php $this->msg( 'dump-database' ) ?></h2>
 <?php $this->msg( 'dump-database-info' ) ?>
 <table class="mw-statistics-table">
