@@ -2197,16 +2197,14 @@ echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
 <!-- End Analytics -->
 
 <?php
+echo AdEngine::getInstance()->getDelayedLoadingCode();
+
 /* Put two "invisible" ad slots here. These are for loading ads that just load javascript,
 but it isn't positioned at any particular part of a page, such as a slider or a interstitial */
 if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
-echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_1', false);
-echo AdEngine::getInstance()->getPlaceHolderDiv('INVISIBLE_2', false);
+echo AdEngine::getInstance()->getAd('INVISIBLE_1');
+echo AdEngine::getInstance()->getAd('INVISIBLE_2');
 }
-?>
-
-<?
-echo AdEngine::getInstance()->getDelayedLoadingCode();
 
 
 echo '</div>';
