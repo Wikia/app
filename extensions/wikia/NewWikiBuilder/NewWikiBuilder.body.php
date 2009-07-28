@@ -1,12 +1,18 @@
 <?php
 class NewWikiBuilder extends SpecialPage {
 	function __construct() {
-		parent::__construct( 'NewWikiBuilder' );
+		parent::__construct( 'NewWikiBuilder' , 'newwikibuilder');
 		wfLoadExtensionMessages('NewWikiBuilder');
 	}
  
 	function execute( $par ) {
-		global $wgRequest, $wgOut;
+		global $wgRequest, $wgOut, $wgUser;
+
+		global $wgUser;
+		if ( !$this->userCanExecute($wgUser) ) {
+			$this->displayRestrictionError();
+			return;
+		}
  
 		$this->setHeaders();
  

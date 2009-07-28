@@ -269,10 +269,7 @@ NWB.iframeFormUpload = function(iframe){
 
 
 NWB.iframeFormInit = function (f){
-	if (! Mediawiki.isLoggedIn()) {
-		Mediawiki.updateStatus(NWB.msg("nwb-must-be-logged-in"), true);
-		return false;
-	} else if (Mediawiki.e(f.logo_file.value)){
+	if (Mediawiki.e(f.logo_file.value)){
 		Mediawiki.updateStatus(NWB.msg("nwb-choose-a-file"), true);
 		return false;
 	}
