@@ -17,7 +17,7 @@ class DumpsOnDemand {
 	 * @static
 	 */
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
-		global $wgOut, $wgDBname, $wgContLang;
+		global $wgOut, $wgDBname, $wgContLang, $wgRequest;
 
 		wfLoadExtensionMessages( "DumpsOnDemand" );
 
@@ -47,6 +47,11 @@ class DumpsOnDemand {
 		));
 		$tmpl->set( "index", $index );
 		$text .= $tmpl->render( "dod" );
+
+		if( $wgRequest->wasPosted() ) {
+			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" )) . $text;
+		}
+
 		return true;
 	}
 
