@@ -21,8 +21,7 @@ $(function() {
 var NWB = {
 	"language": "en", // TODO: Pull this from the browser or users settings
 	"firstPagesBlocks" : 1,
-	"currentStep": null,
-	"descPlaceHolder": "Describing my new wiki"
+	"currentStep": null
 };
 
 
@@ -126,20 +125,14 @@ NWB.reflow = function() {
 NWB.handleDescriptionForm = function (event){
     try {
 	
-	    if (! NWB.originalSection0.match(new RegExp(NWB.descPlaceHolder))){
-		NWB.updateStatus(NWB.msg("nwb-unable-to-edit-description"), true);
-     		event.preventDefault();
-		return;
-	     }
-
-	     var text = NWB.originalSection0.replace(new RegExp(NWB.descPlaceHolder), $("#desc_textarea").val());
+	     var text = NWB.originalHeading + "\n" + $("#desc_textarea").val();
              // Save the article
              Mediawiki.updateStatus(NWB.msg("nwb-saving-description"));
 	     var mainPageEnd = Mediawiki.followRedirect("Main Page"); // Should be cached.
              Mediawiki.editArticle({
                   "title": mainPageEnd,
                   "summary": "",
-                  "section": 0,
+                  "section": 1,
                   "text": text}, 
                   function(){
                           NWB.updateStatus(NWB.msg("nwb-description-saved"));
@@ -278,7 +271,7 @@ NWB.iframeFormUpload = function(iframe){
 NWB.iframeFormInit = function (f){
 	if (! Mediawiki.isLoggedIn()) {
 		Mediawiki.updateStatus(NWB.msg("nwb-must-be-logged-in"), true);
-//		return false;
+		return false;
 	} else if (Mediawiki.e(f.logo_file.value)){
 		Mediawiki.updateStatus(NWB.msg("nwb-choose-a-file"), true);
 		return false;
@@ -290,13 +283,17 @@ NWB.iframeFormInit = function (f){
         
 
 NWB.pullWikiDescriptionCallback = function (result){
-	// Pull down the current main page. If we can recognize the first section as editable,
-	// then allow for it to be edited. Otherwise don't allow
-	NWB.originalSection0 = result;
+        var rg = new RegExp("={2,3}[^=]+={2,3}");
 
-	if (! result.match(new RegExp(NWB.descPlaceHolder))){
+	var match = result.match(rg);
+	if (match === null){
 		$("#desc_textarea").attr("disabled", true); 
 		NWB.updateStatus(NWB.msg("nwb-unable-to-edit-description"), true);
+	} else {
+		// Preserve the existing heading (=== blah ===) , we will tack it on when saving
+		NWB.originalHeading = match[0];
+		var text = result.replace(match, '');
+		$("#desc_textarea").val(jQuery.trim(text));
 	}
 };
 
