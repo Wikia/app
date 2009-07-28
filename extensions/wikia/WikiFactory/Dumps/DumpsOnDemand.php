@@ -27,7 +27,8 @@ class DumpsOnDemand {
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$index = array();
-		$index = (array )Wikia::json_decode( file_get_contents( self::getUrl( $wgDBname, "index.json" ) ) );
+		$json = @file_get_contents( self::getUrl( $wgDBname, "index.json" ) );
+		$index = (array )Wikia::json_decode( $json );
 
 		$tmpl->set( "curr", array(
 			"url" => self::getUrl( $wgDBname, "pages_current.xml.gz" ),
