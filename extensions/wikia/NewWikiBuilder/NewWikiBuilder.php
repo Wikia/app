@@ -35,3 +35,27 @@ foreach ($NWBApiExtensions as $action => $classname){
 	$wgAutoloadClasses[$classname] = $dir . $classname . '.php';
 	$wgAPIModules[$action] = $classname;
 }
+
+//removes category [[Category:New pages]] if any non-category content is saved to the page
+$wgHooks['EditPage::attemptSave'][] = 'fnMarkAsSeen';
+function fnMarkAsSeen( $editpage){
+	global $wgContLang;
+
+        if( Title::newFromRedirect( $editpage->textbox1 ) != NULL )return true;
+
+	// WTF, this doesn't work. wfMsg Comes through as "<nwb-new-pages>" 
+	// $newPagesCat = "[[" . $wgContLang->getNsText( NS_CATEGORY ) . ":" . wfMsg("nwb-new-pages") .  "]]";
+	$newPagesCat = "[[" . $wgContLang->getNsText( NS_CATEGORY ) . ":" . "New pages" .  "]]";
+	if (strstr($editpage->textbox1, $newPagesCat) === false ){
+		// This text doesn't have a "New pages" category. Don't bother.
+		return true;
+	}
+
+	// Check to see if there is any non-category content
+	$textWithoutCat = trim(str_replace($newPagesCat, '', $editpage->textbox1 ));
+	if (!empty($textWithoutCat)){
+		$editpage->textbox1 = $textWithoutCat;
+	}
+
+        return true;
+}

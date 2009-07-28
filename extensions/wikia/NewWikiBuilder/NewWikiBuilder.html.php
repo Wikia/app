@@ -189,7 +189,7 @@ for (var i = 0; i < themes.length; i++){
 		<?php echo wfMsg("nwb-step4-example")?>
 	</div>
 	<form id="step4_form">
-		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsg("nwb-coming-soon"))?>">
+		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsg("nwb-new-pages"))?>">
 		<div id="all_fp" class="bullets">
 			<ul class="fp_block" id="fp_block_1">
 				<!-- Ids aren't necessary for the form, only used for Selenium -->
