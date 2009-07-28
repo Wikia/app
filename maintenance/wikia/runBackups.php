@@ -13,7 +13,8 @@ require_once('commandLine.inc');
  */
 function runBackups( $from, $to, $full ) {
 
-	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath;
+	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath,
+		$wgMaxShellTime, $wgMaxShellFileSize;
 
 	/**
 	 * hardcoded for while
@@ -22,6 +23,12 @@ function runBackups( $from, $to, $full ) {
 		"DEFAULT" => "10.6.10.36",
 		"c2" => "10.6.10.19"
 	);
+
+	/**
+	 * switch off limits for dumps
+	 */
+	$wgMaxShellTime     = 0;
+	$wgMaxShellFileSize	= 0;
 
 	$range = array();
 	if( $from !== false && $to !== false ) {
@@ -51,9 +58,10 @@ function runBackups( $from, $to, $full ) {
 		/**
 		 * build command
 		 */
-		$status = false;
+		$status  = false;
+		$basedir = getDirectory( $row->city_dbname );
 		if( $full ) {
-			$path = sprintf("%s/pages_full.xml.gz", getDirectory( $row->city_dbname ) );
+			$path = sprintf("%s/pages_full.xml.gz", $basedir );
 			$cmd = array(
 				"SERVER_ID={$row->city_id}",
 				"php",
@@ -69,7 +77,7 @@ function runBackups( $from, $to, $full ) {
 			wfShellExec( implode( " ", $cmd ), $status );
 		}
 		else {
-			$path = sprintf("%s/pages_current.xml.gz", getDirectory( $row->city_dbname ) );
+			$path = sprintf("%s/pages_current.xml.gz", $basedir );
 			$cmd = array(
 				"SERVER_ID={$row->city_id}",
 				"php",
@@ -84,11 +92,30 @@ function runBackups( $from, $to, $full ) {
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
 		}
-		if( $status ) {
-			/**
-			 * update city_list table
-			 */
+		/**
+		 * generate index.json
+	     */
+		$jsonfile = sprintf("%s/index.json", $basedir );
+		$json = array();
+
+		/**
+		 * open dir and read info about files
+		 */
+		if( is_dir( $basedir ) ) {
+			$dh = opendir( $basedir );
+			while( ( $file = readdir( $dh ) ) !== false ) {
+				$json[] = array(
+					"name" => $file,
+					"timestamp" => filectime( $file ),
+					"mwtimestamp" => wfTimestamp( TS_MW, filectime( $file ) )
+				);
+			}
+			closedir( $dh );
 		}
+		if( count( $json ) ) {
+			file_put_contents( $jsonfile, Wikia::json_encode( $json ) );
+		}
+
 	}
 }
 

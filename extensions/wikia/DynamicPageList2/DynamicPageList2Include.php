@@ -16,7 +16,7 @@
  * In this copy names were changed (wfLst.. --> wfDplLst..).
  * So any version of LabeledSectionTransclusion can be installed together with DPL2
  *
- * Enhancements were made to 
+ * Enhancements were made to
  *     -  allow inclusion of templates ("template swapping")
  *     -  reduce the size of the transcluded text to a limit of <n> characters
  *
@@ -81,9 +81,9 @@ class DPL2Include
     # To do transclusion from an extension, we need to interact with the parser
     # at a low level.  This is the general transclusion functionality
     ##############################################################
-    
+
     ///Register what we're working on in the parser, so we don't fall into a trap.
-    public static function open($parser, $part1) 
+    public static function open($parser, $part1)
     {
       // Infinite loop test
       if ( isset( $parser->mTemplatePath[$part1] ) ) {
@@ -93,11 +93,11 @@ class DPL2Include
         $parser->mTemplatePath[$part1] = 1;
         return true;
       }
-      
+
     }
-    
+
     ///Finish processing the function.
-    public static function close($parser, $part1) 
+    public static function close($parser, $part1)
     {
       // Infinite loop test
       if ( isset( $parser->mTemplatePath[$part1] ) ) {
@@ -106,54 +106,54 @@ class DPL2Include
         wfDebug( __METHOD__.": close unopened template loop at '$part1'\n" );
       }
     }
-    
+
     /**
      * Handle recursive substitution here, so we can break cycles, and set up
      * return values so that edit sections will resolve correctly.
      **/
-    private static function parse($parser, $title, $text, $part1, $skiphead=0, $recursionCheck=true, $maxLength=-1, $link='') 
+    private static function parse($parser, $title, $text, $part1, $skiphead=0, $recursionCheck=true, $maxLength=-1, $link='')
     {
       global $wgVersion;
-    
+
       // if someone tries something like<section begin=blah>lst only</section>
       // text, may as well do the right thing.
       $text = str_replace('</section>', '', $text);
-    
+
       if (self::open($parser, $part1)) {
-    
+
         //Handle recursion here, so we can break cycles.  Although we can't do
         //feature detection here, r18473 was only a few weeks before the
         //release, so this is close enough.
-    
+
         if(version_compare( $wgVersion, "1.9" ) < 0 || $recursionCheck == false) {
           $text = $parser->replaceVariables($text);
           self::close($parser, $part1);
         }
-    
+
         if ($maxLength>=0) {
             $text = self::limitTranscludedText($text,$maxLength,$link);
         }
 
         return $text;
       }  else {
-        return "[[" . $title->getPrefixedText() . "]]". 
+        return "[[" . $title->getPrefixedText() . "]]".
           "<!-- WARNING: LST loop detected -->";
       }
-      
+
     }
-    
+
     ##############################################################
     # And now, the labeled section transclusion
     ##############################################################
-    
+
     ///The section markers aren't paired, so we only need to remove them.
     # this function doesn't seem to be in use.  remove?
     public static function emptyString( $in, $assocArgs=array(), $parser=null ) {
       return '';
     }
-    
+
     ///Generate a regex to match the section(s) we're interested in.
-    private static function createSectionPattern($sec, $to, &$any) 
+    private static function createSectionPattern($sec, $to, &$any)
     {
 	  $any = false;
       $to_sec = ($to == '')?$sec : $to;
@@ -172,7 +172,7 @@ class DPL2Include
         "['\"]?$ws\/?>(.*?)\n?<section$ws\s+(?:[^>]+\s+)?(?i:end)=".
         "['\"]?\\1['\"]?".
         "$ws\/?>/s";
-        
+
 /*      return "/<section$ws\s+(?i:begin)=".
         "(?:$sec|\"$sec\"|'$sec')".
         "$ws\/?>(.*?)\n?<section$ws\s+(?:[^>]+\s+)?(?i:end)=".
@@ -180,27 +180,27 @@ class DPL2Include
         "$ws\/?>/s";
 */
     }
-    
+
     ///Count headings in skipped text; the $parser arg could go away in the future.
-    private static function countHeadings($text,$limit) 
+    private static function countHeadings($text,$limit)
     {
       //count skipped headings, so parser (as of r18218) can skip them, to
       //prevent wrong heading links (see bug 6563).
       $pat = '^(={1,6}).+\s*.*?\1\s*$';
       return preg_match_all( "/$pat/im", substr($text,0,$limit), $m);
     }
-    
-    private static function text($parser, $page, &$title, &$text) 
+
+    private static function text($parser, $page, &$title, &$text)
     {
       $title = Title::newFromText($page);
-      
+
       if (is_null($title) ) {
         $text = '';
         return true;
       } else {
         $text = $parser->fetchTemplate($title);
       }
-      
+
       //if article doesn't exist, return a red link.
       if ($text == false) {
         $text = "[[" . $title->getPrefixedText() . "]]";
@@ -209,7 +209,7 @@ class DPL2Include
         return true;
       }
     }
-    
+
     ///section inclusion - include all matching sections
     public static function includeSection($parser, $page='', $sec='', $to='', $recursionCheck=true) {
 	  	$output = array();
@@ -219,17 +219,17 @@ class DPL2Include
 	    }
 	    $any=false;
     	$pat = self::createSectionPattern($sec,$to,$any);
-    
+
     	preg_match_all( $pat, $text, $m, PREG_PATTERN_ORDER);
-      
+
     	foreach ($m[0] as $nr=>$piece)  {
 	    	if ($any) $output[] = $m[1][$nr].'::'.$piece;
 	    	else 	  $output[] = $piece;
     	}
 	    return $output;
     }
-    
-    
+
+
     //reduce transcluded wiki text to a certain length; we will care for matching brackets to some extent
     // so that we do not spoil wiki syntax; the returned result may be smaller or bigger that the limit
     // to achieve this.
@@ -251,13 +251,13 @@ class DPL2Include
                 if ($c == ' ') $nb = $i;
             }
         }
-        // if there is a valid cut-off point we use it; it will be the largest one which is not above the limit 
+        // if there is a valid cut-off point we use it; it will be the largest one which is not above the limit
         if ( $n0>=0 )  {
             // we try to cut off at a word boundary
             if ($nb>0 && $nb+15>$n0) $n0=$nb;
             $cut=substr($text, 0, $n0+1);
-            if (stristr($cut,'<nowiki>')!==false && stristr($cut,'</nowiki>')===false) $cut.='</nowiki>';  
-            if (stristr($cut,'<pre>')!==false && stristr($cut,'</pre>')===false) $cut.='</pre>';  
+            if (stristr($cut,'<nowiki>')!==false && stristr($cut,'</nowiki>')===false) $cut.='</nowiki>';
+            if (stristr($cut,'<pre>')!==false && stristr($cut,'</pre>')===false) $cut.='</pre>';
             return $cut.$link;
         }
         else if ($limit==0) {
@@ -279,12 +279,12 @@ class DPL2Include
         return $output;
       }
 
-      return self::extractHeadingFromText($parser, $page, $title, $text, $sec, $to, &$sectionHeading, $recursionCheck, $maxLength, $link);
+      return self::extractHeadingFromText($parser, $page, $title, $text, $sec, $to, $sectionHeading, $recursionCheck, $maxLength, $link);
     }
 
     //section inclusion - include all matching sections (return array)
     public static function extractHeadingFromText($parser, $page, $title, $text, $sec='', $to='', &$sectionHeading, $recursionCheck=true, $maxLength=-1, $link='default') {
-      
+
       // create a link symbol (arrow, img, ...) in case we have to cut the text block to maxLength
       if      ($link=='default')                 $link = ' [['.$page.'#'.$sec.'|..&rarr;]]';
       else if (strstr($link,'img=')!=false)      $link = str_replace('img=',"<linkedimage>page=".$page.'#'.$sec."\nimg=Image:",$link)."\n</linkedimage>";
@@ -297,7 +297,7 @@ class DPL2Include
        // check if we are going to fetch the n-th section
       if (preg_match('/^%-?[1-9][0-9]*$/',$sec)) 	$nr = substr($sec,1);
       if (preg_match('/^%0$/',$sec))  				$nr = -2; // transclude text before the first section
-      
+
       // if the section name starts with a # we use it as regexp, otherwise as plain string
       $isPlain=true;
       if ($sec!='' && $sec[0]=='#') {
@@ -324,14 +324,14 @@ class DPL2Include
                 return $output;
             }
         }
-        
+
         if ($nr==-2) {
             // output text before first section and done
-            $piece = substr($text,0,$m[1][1]-1); 
+            $piece = substr($text,0,$m[1][1]-1);
             $output[0] = self::parse($parser,$title,$piece, "#lsth:${page}|${sec}", 0, $recursionCheck, $maxLength, $link);
             return $output;
         }
-        
+
         if (isset($end_off)) unset($end_off);
         if ($to != '') {
             //if $to is supplied, try and match it.  If we don't match, just ignore it.
@@ -340,17 +340,17 @@ class DPL2Include
             if (preg_match( "/$pat/im", $text, $mm, PREG_OFFSET_CAPTURE, $begin_off))
                 $end_off = $mm[0][1]-1;
         }
-    
+
         if (! isset($end_off)) {
             if ($nr!=0)	$pat = '^(={1,6})\s*[^\s\n=][^\n=]*\s*\1\s*$';
             else 	  	$pat = '^(={1,'.$head_len.'})(?!=)\s*.*?\1\s*$';
             if (preg_match( "/$pat/im", $text, $mm, PREG_OFFSET_CAPTURE, $begin_off)) 	$end_off = $mm[0][1]-1;
             else if ($sec=='') 												      		$end_off = -1;
         }
-    
+
         $nhead = self::countHeadings($text, $begin_off);
         wfDebug( "LSTH: head offset = $nhead" );
-    
+
         if (isset($end_off)) {
             if ($end_off == -1) {
                 return $output;
@@ -363,13 +363,13 @@ class DPL2Include
             $piece = substr($text, $begin_off);
             $continueSearch = false;
         }
-        
+
         if ($nr > 1) {
             // skip until we reach the n-th section
             $nr--;
             continue;
         }
-        
+
         if (isset($m[0][0])) {
             $sectionHeading=preg_replace("/^=+\s*/","",$m[0][0]);
             $sectionHeading=preg_replace("/\s*=+\s*$/","",$sectionHeading);
@@ -393,9 +393,9 @@ class DPL2Include
       } while ($continueSearch);
       return $output;
     }
-    
-    
-    
+
+
+
     // template inclusion - find the place(s) where template1 is called,
     // replace its name by template2, then expand template2 and return the result
     // we return an array containing all occurences of the template call which match the condition "$mustMatch"
@@ -416,17 +416,17 @@ class DPL2Include
 	        if ($tCall[0]=='}') $tCalls[$nr] = '}'.$tCall;
 	        else				$tCalls[$nr] = '|'.$tCall;
         }
-    
+
         $output=array();
         $extractParm = array();
-        
+
         // check if we want to extract parameters directly from the call
         // in that case we won´t invoke template2 but will directly return the extracted parameters
-        // as a sequence of table columns; 
+        // as a sequence of table columns;
         if (strlen($template2)>strlen($template1) && ($template2[strlen($template1)]==':')) {
             $extractParm = split(':',substr($template2,strlen($template1)+1));
         }
-    
+
         if (count($tCalls) <= 1) {
             // template was not called (note that count will be 1 if there is no template invocation)
             if (count($extractParm)>0) {
@@ -443,7 +443,7 @@ class DPL2Include
             }
             return $output;
         }
-        
+
         $output[0]='';
         $n=-2;
         // loop for all template invocations
@@ -466,7 +466,7 @@ class DPL2Include
                     if ($c == '}') $cbrackets--;
                     if ($cbrackets==0) {
                         // if we must match a condition: test against it
-                        if (($mustMatch   =='' ||  preg_match($mustMatch,substr($templateCall,0,$i-1))) && 
+                        if (($mustMatch   =='' ||  preg_match($mustMatch,substr($templateCall,0,$i-1))) &&
                             ($mustNotMatch=='' || !preg_match($mustNotMatch,substr($templateCall,0,$i-1)))) {
                             $output[++$n] = $parser->replaceVariables(substr($templateCall,0,$i-1).
                                 '|%PAGE%='.$page.'|%TITLE%='.$title->getText().'|%DATE%='.$date.'|%USER%='.$user.'}}');
