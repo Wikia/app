@@ -46,7 +46,7 @@ function wfCustomArticleFooter(  $skin , &$tpl, &$custom_article_footer ) {
 							<div>Improve Wikia by <a href=\"".$wgTitle->getEditURL()."\">".wfMsg('footer_1.5')."</a></div>
 						</li>
 						<li>
-							<a id=\"fe_talk_icon\" href=\"".$skin->data['content_actions']['history']['href']."\"><img src=\"/skins/monobook/blank.gif\" id=\"fe_talk_icon\" class=\"sprite\" /></a>
+							<a id=\"fe_history_icon\" href=\"".$skin->data['content_actions']['history']['href']."\"><img src=\"/skins/monobook/blank.gif\" id=\"fe_history_icon\" class=\"sprite\" /></a>
 							<div><a href=\"".$skin->data['content_actions']['history']['href']."\">".$skin->data['content_actions']['history']['text']."</a></div>
 						</li>
 						<li>
