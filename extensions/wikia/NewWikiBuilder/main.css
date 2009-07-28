@@ -173,12 +173,12 @@ button.secondary span {
 	width: 150px;
 }
 #logo_preview_wrapper {
-	background-repeat: no-repeat;
 	display: none;
 	margin-top: 20px;
 }
 
 #logo_preview {
+	background-repeat: no-repeat;
 	float: left;
 	height: 155px;
 	width: 200px;
