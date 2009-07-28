@@ -25,6 +25,7 @@ $messages['en'] = array(
 	  "nwb-must-be-logged-in" => "You must be logged in for this action",
 	  "nwb-skip-this-step" => "Skip this step",
 	  "nwb-coming-soon" => "Coming Soon",
+	  "nwb-new-pages" => "New pages",
 	  "nwb-unable-to-edit-description" => "The description is uneditable with New Wiki Builder",
 	  "nwb-step1-headline" => "Describe your wiki",
 	  "nwb-step1-text" => "<p>Let's start setting up <b>". $wgSitename ."</b>. You can skip any step and come back to it later on.</p><p>First: Write a message for the front page of your wiki that describes what Wiki Name is about.</p>",

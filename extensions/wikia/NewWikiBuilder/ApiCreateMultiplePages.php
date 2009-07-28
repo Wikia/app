@@ -39,7 +39,7 @@ class ApiCreateMultiplePages extends ApiBase {
 	}
 
 	private function createPage($title, $category = null){
-		global $wgUser;
+		global $wgUser, $wgContLang;
 
 		$titleObj = Title::newFromText($title);
 		if(!$titleObj) {
@@ -58,8 +58,12 @@ class ApiCreateMultiplePages extends ApiBase {
                         $this->dieUsageMsg($errors[0]);
 		}
 
-		// TODO: i18n
-		$text = "[[Category:New pages]]";
+		if (!empty($category)){
+			$text = "[[" . $wgContLang->getNsText( NS_CATEGORY ) . ":" . $category .  "]]";
+		} else {
+			$text = '';
+		}
+
 		$summary = '';
 
 		$articleObj = new Article($titleObj);
