@@ -64,10 +64,10 @@ NWB.gotostep = function(step) {
 NWB.changeTheme = function (theme){
     try {
         // Save the changes using the API
-        if (theme != window.wgDefaultTheme ) {
+        if (theme != window.wgAdminSkin ) {
                 Mediawiki.apiCall({
                         "action" : "foundersettings",
-                        "changesetting" : "wgDefaultTheme", 
+                        "changesetting" : "wgAdminSkin", 
                         "value" : theme},
 			function(result) { 
 				if (result.settings == "success") {
@@ -78,11 +78,11 @@ NWB.changeTheme = function (theme){
 					NWB.apiFailed(Mediawiki.print_r(result));
 				}
 			}, NWB.apiFailed, "POST");
-                window.wgDefaultTheme = theme;
+                window.wgAdminSkin = theme;
         } 
 
         // Create a link object for the stylesheet
-	var href = "/extensions/wikia/NewWikiBuilder/themes/" + theme.toLowerCase() + ".css";
+	var href = "/extensions/wikia/NewWikiBuilder/themes/" + theme.replace(/monaco-/, '').toLowerCase() + ".css";
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
    } catch (e) {
         Mediawiki.updateStatus(NWB.msg("nwb-error-saving-theme"), true);
