@@ -14,7 +14,7 @@ function wfMsg($in) {
 <html>
 <body>
 <?php } else {
-global $wgSitename, $wgDefaultTheme, $wgSkinTheme, $wgContLang;
+global $wgSitename, $wgDefaultTheme, $wgSkinTheme, $wgContLang, $wgServer;
 $language = $wgContLang->getCode();
 }
 ?>
@@ -95,7 +95,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 		<input type="hidden" name="action" value="uploadlogo">	
 		<input type="hidden" name="format" value="xml">	
 		<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
-		<label><?php echo wfMsg("nwb-choose-logo")?>:</label><input type="file" name="logo_file"> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onClick="this.form.title.value='Wiki-Preview.png'"/> 
+		<label><?php echo wfMsg("nwb-choose-logo")?>:</label><input type="file" name="logo_file" id="logo_file" /> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onclick="this.form.title.value='Wiki-Preview.png'"/>
 		<!--<input type="submit" value="Save" onClick="this.form.title.value='Wiki.png'"/>-->
 	</form>
 
@@ -193,11 +193,11 @@ for (var i = 0; i < themes.length; i++){
 		<div id="all_fp" class="bullets">
 			<ul class="fp_block" id="fp_block_1">
 				<!-- Ids aren't necessary for the form, only used for Selenium -->
-				<li><input id="fp_1" class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
-				<li><input id="fp_2" class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
-				<li><input id="fp_3" class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
-				<li><input id="fp_4" class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
-				<li><input id="fp_5" class="fp_page" type="text" onblur="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_1" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_2" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_3" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_4" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
+				<li><input id="fp_5" class="fp_page" type="text" onfocus="NWB.firstPagesInputs()" /></li>
 			</ul>
 			<!-- Other fp_blocks will be inserted into the dom here with javascript:NWB.firstPagesInputs() -->
 		</div><!-- all_fp -->
@@ -228,7 +228,7 @@ for (var i = 0; i < themes.length; i++){
 	<span class="nav_reverse">
 		<button class="secondary" onclick="NWB.gotostep(4);"><span><?php echo wfMsg("nwb-back-to-step-4")?></span></button>
 	</span>
-	<button><span id="finito"><?php echo wfMsg("nwb-go-to-your-wiki")?></span></button>
+	<button onclick="document.location = '<?php echo $wgServer ?>';"><span id="finito"><?php echo wfMsg("nwb-go-to-your-wiki")?></span></button>
 </div>
 </li>
 </ul>
