@@ -26,6 +26,12 @@ class ApiFounderSettings extends ApiBase {
 	private function changeSetting($params){
                 $this->getMain()->requestWriteMode();
 
+		// Logged in?
+		global $wgUser;
+		if ( !$wgUser->isAllowed('newwikibuilder') ) {
+			$this->dieUsageMsg(array("badaccess-groups"));
+		} 
+
                 if (empty($params['changesetting'])){ 
                         $this->dieUsageMsg(array('missingparam', 'changesetting'));
                 } else if (empty($params['value'])){ 
@@ -35,7 +41,6 @@ class ApiFounderSettings extends ApiBase {
 		if (! in_array($params['changesetting'], $this->writeSettings)){
                         $this->dieUsageMsg(array("readonlysetting"));
 		}
-		// TODO: Check permissions
 
 		global $wgCityId;
 		if (empty($wgCityId)) { 
@@ -73,12 +78,6 @@ class ApiFounderSettings extends ApiBase {
 
 
 	public function execute() {
-
-		// Logged in?
-		global $wgUser;
-		if ( !$wgUser->isAllowed('newwikibuilder') ) {
-			$this->dieUsageMsg(array("badaccess-groups"));
-		} 
 
                 $params = $this->extractRequestParams();
 

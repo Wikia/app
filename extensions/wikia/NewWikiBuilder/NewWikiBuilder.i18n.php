@@ -6,6 +6,7 @@ $messages['en'] = array(
 	  'newwikibuilder' => 'New Wiki Builder',
 	  "nwb-choose-a-file" => "Please choose a file",
 	  "nwb-error-saving-description" => "Error Saving Description",
+	  "nwb-error-saving-theme" => "Error Saving Theme",
 	  "nwb-error-saving-articles" => "Error Saving Articles",
 	  "nwb-error-saving-logo" => "Error Uploading Logo",
 	  "nwb-saving-articles" => "Saving Articles...",

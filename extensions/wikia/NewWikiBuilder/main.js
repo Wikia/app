@@ -63,19 +63,32 @@ NWB.gotostep = function(step) {
  * 2. Save the value using the API
  */
 NWB.changeTheme = function (theme){
+    try {
         // Save the changes using the API
         if (theme != window.wgDefaultTheme ) {
                 Mediawiki.apiCall({
                         "action" : "foundersettings",
                         "changesetting" : "wgDefaultTheme", 
                         "value" : theme},
-			function() { Mediawiki.updateStatus(NWB.msg("nwb-theme-saved")); });
+			function(result) { 
+				if (result.settings == "success") {
+					Mediawiki.updateStatus(NWB.msg("nwb-theme-saved"));
+				} else if (result.error){
+					Mediawiki.updateStatus(NWB.msg("nwb-error-saving-theme") + " " + result.error.info, true);
+				} else {
+					NWB.apiFailed(Mediawiki.print_r(result));
+				}
+			}, NWB.apiFailed, "POST");
                 window.wgDefaultTheme = theme;
         } 
 
         // Create a link object for the stylesheet
 	var href = "/extensions/wikia/NewWikiBuilder/themes/" + theme.toLowerCase() + ".css";
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
+   } catch (e) {
+        Mediawiki.updateStatus(NWB.msg("nwb-error-saving-theme"), true);
+        Mediawiki.debug(Mediawiki.print_r(e));
+   }
 };
 
 
@@ -102,11 +115,13 @@ NWB.firstPagesInputs = function (){
 	}
 };
 
+
 //Call this function when the page doesn't properly lay out after performing a dynamic action
 NWB.reflow = function() {
 	$("body").addClass("reflow");
 	$("body").removeClass("reflow");
-}
+};
+
 
 NWB.handleDescriptionForm = function (event){
     try {
@@ -132,7 +147,7 @@ NWB.handleDescriptionForm = function (event){
                   },
                   NWB.apiFailed);
      } catch (e) {
-                  Mediawiki.updateStatus(NWB.msg("nwb-error-saving-description"));
+                  Mediawiki.updateStatus(NWB.msg("nwb-error-saving-description"), true);
                   Mediawiki.debug(Mediawiki.print_r(e));
      }
      event.preventDefault();
@@ -157,7 +172,7 @@ NWB.handleFirstPages = function (event){
                         "action" : "createmultiplepages",
 			"pagelist" : pages.join("|"),
                         "category" : this.category.value
-                        }, NWB.handleFirstPagesCallback, NWB.apiError, "POST");
+                        }, NWB.handleFirstPagesCallback, NWB.apiFailed, "POST");
         } catch (e) {
                   Mediawiki.updateStatus(NWB.msg("nwb-error-saving-articles"));
                   Mediawiki.debug(Mediawiki.print_r(e));
