@@ -45,9 +45,9 @@ function runBackups( $from, $to, $full, $options ) {
 	$wgMaxShellTime     = 0;
 	$wgMaxShellFileSize	= 0;
 
-	$range = array();
+	$range = array( "city_public=1" );
 	if( $from !== false && $to !== false ) {
-		$range = array( sprintf( "city_id >= %d AND city_id < %d", $from, $to ) );
+		$range[] = sprintf( "city_id >= %d AND city_id < %d", $from, $to );
 		Wikia::log( __METHOD__, "info", "Running from {$from} to {$to}" );
 	}
 	else {
@@ -58,7 +58,7 @@ function runBackups( $from, $to, $full, $options ) {
 	$sth = $dbw->select(
 			array( "city_list" ),
 			array( "city_id", "city_dbname" ), # , "city_cluster"
-			array( "city_public=1" ) + $range ,
+			$range,
 			__METHOD__,
 			array( "ORDER BY" => "city_id" )
 	);
