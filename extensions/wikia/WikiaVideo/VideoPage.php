@@ -862,7 +862,7 @@ EOD;
 				break;
 			case self::V_SOUTHPARKSTUDIOS:
 				$url = 'http://www.southparkstudios.com/clips/' . $id;
-                                break;
+				break;
 			default:
 				$url = '';
 				break;
