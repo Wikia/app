@@ -427,7 +427,7 @@ class AutoCreateWikiLocalJob extends Job {
 			__METHOD__
 		);
 		$rows = $dbw->affectedRows();
-		Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );
+		Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );
 
 		wfProfileOut( __METHOD__ );
 	}
