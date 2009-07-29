@@ -670,7 +670,7 @@ class BlogAvatar {
 		);
 
 		if( in_array( $namespace, $allowedNamespaces ) ||
-			( ( $namespace == NS_SPECIAL ) && ( in_array( $dbKey, $allowedPages ) ) )
+			( $namespace == NS_SPECIAL && ( in_array( $dbKey, $allowedPagesSingle ) || in_array( $dbKey, $allowedPagesMulti ) ) )
 		) {
 			/**
 			 * change dbkey for nonspecial articles, in this case we use NAMESPACE
