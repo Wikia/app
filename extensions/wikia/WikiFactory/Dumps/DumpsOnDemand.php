@@ -94,7 +94,7 @@ class DumpsOnDemand {
 		);
 
 		UserMailer::send(
-			new MailAddress( "eloy@wikia-inc.com" ),
+			new MailAddress( "tasks@wikia-inc.com" ),
 			new MailAddress( "spam@wikia-inc.com" ),
 			"Database dump request for {$wgDBname}",
 			$body
