@@ -361,7 +361,7 @@ class MultiWikiEditForm {
 
 		/* get wiki array */
 		if ($mode == MULTIWIKIEDIT_ALL) {
-	                $wikis = $this->fetchWikis ($lang, $cat) ;
+			$wikis = $this->fetchWikis ($lang, $cat) ;
 		}  else if ($mode == MULTIWIKIEDIT_SELECTED) {
 			$pre_wikis = array () ;
 			if ($filename2) {
@@ -388,18 +388,18 @@ class MultiWikiEditForm {
 		
 		/* if not, either don't specify or overwrite with given arguments */
 
-                if ($filename) {
+		if ($filename) {
 			for ( $linenum = 1; !feof( $file ); $linenum++ ) {
-        			$line = trim( fgets( $file ) );
-        			if ( $line == false ) {
-                			break;
+				$line = trim( fgets( $file ) );
+				if ( $line == false ) {
+					break;
 				}
 				/*  the file should contain only "page title|reason"\n lines
 				*/
 				$arr = explode ("|",$line) ;
 				is_null($arr[1]) ? $reason = '' : $reason = $arr[1] ; 
 				$found = $this->checkArticle ($arr[0], $wikis[0], $found_articles) ;
-        		}
+        	}
 			// cut the array into smaller ones, and then apply task to each of them
 			$chunked_articles = array_chunk ($found_articles, MULTIWIKIEDIT_CHUNK_SIZE) ;
 			$this->splitWarning ($chunked_articles) ;
