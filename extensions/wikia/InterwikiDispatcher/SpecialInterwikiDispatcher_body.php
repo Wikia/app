@@ -21,7 +21,7 @@ if (!defined('MEDIAWIKI')) {
 	exit(1) ;
 }
 
-class InterwikiDispatcher extends SpecialPage {
+class InterwikiDispatcher extends UnlistedSpecialPage {
 	/**
 	 * contructor
 	 */
