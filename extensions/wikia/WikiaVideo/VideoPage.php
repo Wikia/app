@@ -692,7 +692,7 @@ EOD;
 			case self::V_GAMEVIDEOS:
 				$ratio = "500 x 319";
 				break;
-			case self::V_5MIN5:
+			case self::V_5MIN:
 				$ratio = "480 x 401";
 				break;
 			case self::V_VIMEO:
