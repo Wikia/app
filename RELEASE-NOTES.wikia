@@ -7,6 +7,7 @@
 * rt#19819: Answers: i18n msg changes. (Nef)
 * rt#19651: Analytics: CategorySelect tracking. (Nef)
 * rt#19860: Masthead: handle target parameter correctly (TOR)
+* rt#19966: Masthead: don't ever change user for current-user Special pages (TOR)
 
 == Changes since 200907.4 ==
 * rt#4259:  New version of global watchlist (Moli)
