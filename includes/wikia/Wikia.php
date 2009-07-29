@@ -48,10 +48,11 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function successbox($what)
-    {
-        return Xml::element("div", array( "class"=> "successbox", "style" => "margin: 0;"), $what).
-            Xml::element("hr", array( "style" => "clear: both;margin:0;margin-top: 10pt;"));
+    static public function successbox($what) {
+        return Xml::element( "div", array(
+				"class"=> "successbox", "style" => "margin: 0;margin-bottom: 1em;"
+			), $what)
+			. Xml::element("br", array( "style" => "clear: both;"));
     }
 
     /**
@@ -67,10 +68,11 @@ class Wikia {
      *
      * @return string composed HTML/XML code
      */
-    static public function errorbox($what)
-    {
-        return Xml::element("div", array( "class"=> "errorbox"), $what).
-            Xml::element("hr", array( "style" => "clear: both;margin:0;margin-top: 10pt;"));
+    static public function errorbox($what) {
+        return Xml::element( "div", array(
+				"class"=> "errorbox", "style" => "margin: 0;margin-bottom: 1em;"
+			), $what )
+			. Xml::element("br", array( "style" => "clear: both;"));
     }
 
     /**
