@@ -193,7 +193,7 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 			"page_id = rev_page",
 			"page_is_redirect = 0",
 			"page_namespace in (" . join(",", map { $dbh->quote($_) } @nspaces) . ")",
-			"date_format(rev_timestamp, '%Y%m') = ".$dbh->quote($date)
+			"date_format(rev_timestamp, '%Y%m') <= ".$dbh->quote($date)
 		);
 		my @options = ("group by page_namespace");
 
@@ -253,7 +253,7 @@ foreach my $num (sort ( map { sprintf("%012u",$_) } (keys %$databases) )) {
 			"page_id = rev_page",
 			"page_is_redirect = 0",
 			"page_namespace in (" . join(",", map { $dbh->quote($_) } @nspacesAll) . ")",
-			"date_format(rev_timestamp, '%Y%m') = ".$dbh->quote($date)
+			"date_format(rev_timestamp, '%Y%m') <= ".$dbh->quote($date)
 		);
 		@options = ("group by page_namespace");
 		
