@@ -9,8 +9,8 @@ class DaemonLoader extends SpecialPage {
 	static $paramsRows = 10;
 	static $paramsType = array();
 
-	function __contruct() {
-		SpecialPage::SpecialPage( self::$oName );
+	function __construct() {
+		parent::__construct( self::$oName, 'daemonloader' );
 		wfLoadExtensionMessages( self::$oName );
 	}
 
@@ -23,7 +23,7 @@ class DaemonLoader extends SpecialPage {
 		wfLoadExtensionMessages( self::$oName );
 
 		if ( !$wgUser->isAllowed( 'daemonloader' ) ) {
-			$wgOut->readOnlyPage(); #--- later change to something reasonable
+			$wgOut->permissionRequired( 'daemonloader' );
 			return;
 		}
 	
