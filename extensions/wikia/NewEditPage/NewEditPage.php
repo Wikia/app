@@ -130,8 +130,8 @@ function wfNewEditPageAddOldRevisionBar($editPage) {
 
 // add page title before preview HTML
 function wfNewEditPageAddPreviewTitle($wgOut, $text) {
-	global $wgTitle;
-	$wgOut->addHTML('<h1 id="new_edit_page_preview_title">' . $wgTitle->getPrefixedText() . '</h1>');
+	global $wgTitle, $wgCustomTitle;
+	$wgOut->addHTML('<h1 id="new_edit_page_preview_title">' . ( isset($wgCustomTitle) ? $wgCustomTitle->getPrefixedText() : $wgTitle->getPrefixedText() ) . '</h1>');
 
 	// find first closing </h2> and remove preview notice
 	$pos = strpos($text, '</h2>');
