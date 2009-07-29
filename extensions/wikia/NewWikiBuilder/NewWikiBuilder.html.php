@@ -1,7 +1,6 @@
 <?php
 if (!defined('MEDIAWIKI')){
 $wgSitename = "Wiki Name";
-$wgAdminSkin = "monaco-sapphire";
 $language = "en";
 // Stub
 function wfMsg($in) {
@@ -137,7 +136,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 	<?php echo wfMsg("nwb-step3-text")?>
 	<div id="theme_template" style="display:none" class="theme_selekction">
 		<label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
-		<input onclick="NWB.changeTheme('$theme')" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
+		<input onclick="NWB.changeTheme('monaco-$theme', true)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
 	</div>
 	<div id="theme_scroller" class="accent">
 		<table><tr></tr></table>
@@ -164,7 +163,7 @@ for (var i = 0; i < themes.length; i++){
 	if (wgAdminSkin.replace(/monaco-/, '')  == ltheme) {
 		// Check the box and change the theme 
 		$("#theme_radio_" + ltheme).attr("checked", true);
-		NWB.changeTheme(ltheme);
+		NWB.changeTheme(ltheme, false);
 	}
 }
 </script>

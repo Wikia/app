@@ -61,10 +61,10 @@ NWB.gotostep = function(step) {
 /* 1. Change the stylesheet on the current page 
  * 2. Save the value using the API
  */
-NWB.changeTheme = function (theme){
+NWB.changeTheme = function (theme, changeData){
     try {
         // Save the changes using the API
-        if (theme != window.wgAdminSkin ) {
+        if (theme != window.wgAdminSkin && changeData ) {
                 Mediawiki.apiCall({
                         "action" : "foundersettings",
                         "changesetting" : "wgAdminSkin", 
@@ -84,6 +84,7 @@ NWB.changeTheme = function (theme){
         // Create a link object for the stylesheet
 	var href = "/extensions/wikia/NewWikiBuilder/themes/" + theme.replace(/monaco-/, '').toLowerCase() + ".css";
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
+
    } catch (e) {
         Mediawiki.updateStatus(NWB.msg("nwb-error-saving-theme"), true);
         Mediawiki.debug(Mediawiki.print_r(e));
