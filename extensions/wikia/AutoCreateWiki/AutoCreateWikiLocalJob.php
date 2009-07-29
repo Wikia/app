@@ -78,6 +78,7 @@ class AutoCreateWikiLocalJob extends Job {
 		}
 		$wgUser = User::newFromName( "CreateWiki script" );
 
+		$this->changeStarterContributions();
 		$this->moveMainPage();
 		$this->setWelcomeTalkPage();
 		$this->sendWelcomeMail();
@@ -403,8 +404,6 @@ class AutoCreateWikiLocalJob extends Job {
 	 * @access private
 	 * @author Krzysztof Krzyżaniak (eloy)
 	 *
-	 * @param Database $dbw
-	 * @param User $user
 	 */
 	private function changeStarterContributions( ) {
 
