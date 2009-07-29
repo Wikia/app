@@ -349,7 +349,7 @@ class AutoCreateWikiPage extends SpecialPage {
 				),
 				__METHOD__
 			);
-			
+
 			if ( empty($oRow->cnt) ) {
 				$dbw_local->query( sprintf( "CREATE DATABASE `%s`", $this->mWikiData[ "dbname"]) );
 				$this->log( "Creating database {$this->mWikiData[ "dbname"]}" );
@@ -1476,7 +1476,7 @@ class AutoCreateWikiPage extends SpecialPage {
 					"rev_user"      => $this->mDefaultUser->getId(),
 					"rev_user_text" => $this->mDefaultUser->getName()
 				),
-				false,
+				'*',
 				__METHOD__
 			);
 			$rows = $dbw->affectedRows();
