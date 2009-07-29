@@ -151,7 +151,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 	<?php echo wfMsg("nwb-step3-text")?>
 	<div id="theme_template" style="display:none" class="theme_selekction">
 		<label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
-		<input onclick="NWB.changeTheme('$theme', true)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
+		<input onclick="NWB.changeTheme('monaco-$theme', true)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
 	</div>
 	<div id="theme_scroller" class="accent">
 		<table><tr></tr></table>
@@ -161,7 +161,8 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 <script>
 var wgAdminSkin = '<?php echo $wgAdminSkin?>';
 
-// TODO: Pull this list from wgSkinTheme?
+// TODO: Pull this list from wgSkinTheme? 
+// TODO: convert this to a loop in PHP?
 var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
 for (var i = 0; i < themes.length; i++){
 	// Copy the template, search and replace the values
