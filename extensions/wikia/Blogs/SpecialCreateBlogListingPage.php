@@ -157,7 +157,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 				$sPageBody .= $this->getCategoriesAsText($aCategories);
 			}
 
-			$this->mPostArticle->doEdit($sPageBody, "Blog listing page created." );
+			$this->mPostArticle->doEdit($sPageBody, wfMsgForContent( 'blog-listing-created' ) );
 
 			$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
 		}
