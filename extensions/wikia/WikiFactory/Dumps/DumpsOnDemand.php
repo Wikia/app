@@ -33,6 +33,7 @@ class DumpsOnDemand {
 		}
 
 		$tmpl->set( "title", $wgTitle );
+		$tmpl->set( "isAnon", $wgUser->isAnon() );
 
 		$tmpl->set( "curr", array(
 			"url" => self::getUrl( $wgDBname, "pages_current.xml.gz" ),
@@ -88,8 +89,8 @@ class DumpsOnDemand {
 		global $wgDBname, $wgServer, $wgCityId, $wgUser;
 
 		$body = sprintf(
-			"Database dump request for %s\n",
-			$wgDBname
+			"Database dump request for %s, city id %d, url %s\nRequested by %s\n",
+			$wgDBname, $wgCityId, $wgServer, $wgUser->getName()
 		);
 
 		UserMailer::send(
