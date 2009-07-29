@@ -83,6 +83,7 @@ NWB.changeTheme = function (theme, changeData){
 
         // Create a link object for the stylesheet
 	var href = "/extensions/wikia/NewWikiBuilder/themes/" + theme.replace(/monaco-/, '').toLowerCase() + ".css";
+	// Heh. Head first.
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
 
    } catch (e) {
@@ -260,7 +261,6 @@ NWB.iframeFormUpload = function(iframe){
 		$("#logo_current").css("backgroundImage", "url(" + url + ")");
 		NWB.gotostep(3);
 	}
-	return;
 
      } catch (e) {
          Mediawiki.updateStatus(NWB.msg("nwb-error-saving-logo"));
