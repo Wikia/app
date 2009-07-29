@@ -17,7 +17,7 @@ class DumpsOnDemand {
 	 * @static
 	 */
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
-		global $wgOut, $wgDBname, $wgContLang, $wgRequest, $wgTitle;
+		global $wgOut, $wgDBname, $wgContLang, $wgRequest, $wgTitle, $wgUser;
 
 		wfLoadExtensionMessages( "DumpsOnDemand" );
 
@@ -50,7 +50,8 @@ class DumpsOnDemand {
 		$tmpl->set( "index", $index );
 		$text .= $tmpl->render( "dod" );
 
-		if( $wgRequest->wasPosted() ) {
+		if( $wgRequest->wasPosted() && !$wgUser->isAnon() ) {
+			self::sendMail();
 			Wikia::log( __METHOD__, "info", "request was posted" );
 			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" ) ) . $text;
 		}
@@ -84,13 +85,18 @@ class DumpsOnDemand {
 	 * @access public
 	 */
 	static public function sendMail() {
-		global $wgDBname, $wgServer, $wgCityId;
+		global $wgDBname, $wgServer, $wgCityId, $wgUser;
+
+		$body = sprintf(
+			"Database dump request for %s\n",
+			$wgDBname
+		);
 
 		UserMailer::send(
 			new MailAddress( "eloy@wikia-inc.com" ),
 			new MailAddress( "spam@wikia-inc.com" ),
 			"Database dump request for {$wgDBname}",
-			"Database dump request for {$wgDBname}"
+			$body
 		);
 	}
 }
