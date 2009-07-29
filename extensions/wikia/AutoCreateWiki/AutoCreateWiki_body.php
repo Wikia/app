@@ -555,7 +555,6 @@ class AutoCreateWikiPage extends SpecialPage {
 				wfShellExec( $cmd );
 
 				$this->log( "Copying starter database" );
-				// $this->changeStarterContributions( $dbw_local );
 				$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
 			}
 			else {
@@ -1448,40 +1447,5 @@ class AutoCreateWikiPage extends SpecialPage {
 				);
 			}
 		}
-	}
-
-	/**
-	 * this method updates rev_user and rev_user_text for language starters
-	 * update is performed on local (freshly created) database
-	 *
-	 * @access private
-	 * @author Krzysztof Krzyżaniak (eloy)
-	 *
-	 * @param Database $dbw
-	 * @param User $user
-	 */
-	private function changeStarterContributions( &$dbw ) {
-
-		wfProfileIn( __METHOD__ );
-
-		/**
-		 * check if we are connected to local db
-		 *
-		 */
-		if( $this->mDefaultUser && $dbw->getDBname() === $this->mWikiData[ "dbname"] ) {
-
-			$dbw->update(
-				"revision",
-				array(
-					"rev_user"      => $this->mDefaultUser->getId(),
-					"rev_user_text" => $this->mDefaultUser->getName()
-				),
-				'*', /* mean all */
-				__METHOD__
-			);
-			$rows = $dbw->affectedRows();
-			$this->log( "change rev_user and rev_user_text in revisions: {$rows} rows" );
-		}
-		wfProfileOut( __METHOD__ );
 	}
 }

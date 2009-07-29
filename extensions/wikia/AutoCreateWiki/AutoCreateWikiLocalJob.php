@@ -32,6 +32,8 @@ include_once( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
 
 class AutoCreateWikiLocalJob extends Job {
 
+	const DEFAULT_USER = 'Default';
+
 	private
 		$mFounder;
 
@@ -392,5 +394,41 @@ class AutoCreateWikiLocalJob extends Job {
 		} else {
 			Wikia::log( __METHOD__, "mail", "Founder email is not set. Welcome email is not sent" );
 		}
+	}
+
+	/**
+	 * this method updates rev_user and rev_user_text for language starters
+	 * update is performed on local (freshly created) database
+	 *
+	 * @access private
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 *
+	 * @param Database $dbw
+	 * @param User $user
+	 */
+	private function changeStarterContributions( ) {
+
+		wfProfileIn( __METHOD__ );
+
+		/**
+		 * check if we are connected to local db
+		 *
+		 */
+		$contributor = User::newFromName(self::DEFAULT_USER);
+
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->update(
+			"revision",
+			array(
+				"rev_user"      => $contributor->getId(),
+				"rev_user_text" => $contributor->getName()
+			),
+			'*', /* mean all */
+			__METHOD__
+		);
+		$rows = $dbw->affectedRows();
+		Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );
+
+		wfProfileOut( __METHOD__ );
 	}
 }
