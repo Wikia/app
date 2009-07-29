@@ -166,9 +166,8 @@ class TaskManagerExecutor {
 		global $wgExternalSharedDB;
 		$aStarted = array();
 		$aRunning = array();
-		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
-		$dbr->begin();
 		try {
 			#--- first check if any task have state TASK_STARTED
 			$oRes = $dbr->select(
