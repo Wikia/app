@@ -294,6 +294,16 @@ Mediawiki.error = function (msg){
 
 Mediawiki.followRedirect = function(title){
      try {
+
+	if (Mediawiki.e(Mediawiki.redirectCache)){
+		Mediawiki.redirectCache = {};
+	}
+
+	if (!Mediawiki.e(Mediawiki.redirectCache[title])){
+		// Score!
+		return Mediawiki.redirectCache[title];
+	}
+
 	var responseData = Mediawiki.apiCall({
 		'action' : 'query',
 		'prop' : 'info',
@@ -302,11 +312,17 @@ Mediawiki.followRedirect = function(title){
 		'redirects' : true
 	});
 
+	var out;
 	if (!Mediawiki.e(responseData.query) && Mediawiki.empty(responseData.query.redirects)){
-		return title;
+		out = title;
 	} else {
-		return responseData.query.redirects[0]["to"];
+		out = responseData.query.redirects[0]["to"];
 	}
+
+	// Store in cache
+	Mediawiki.redirectCache[title] = out;
+
+	return out;
 
      } catch (e) {
 	Mediawiki.error("Error resolving redirect");
