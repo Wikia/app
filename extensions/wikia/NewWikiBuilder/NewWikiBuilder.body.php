@@ -6,12 +6,17 @@ class NewWikiBuilder extends SpecialPage {
 	}
  
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgUser;
+		global $wgRequest, $wgOut, $wgUser, $wgAdminSkin;
 
 		global $wgUser;
 		if ( !$this->userCanExecute($wgUser) ) {
 			$this->displayRestrictionError();
 			return;
+		}
+
+		// Default the skin
+		if (empty($wgAdminSkin)){
+			$wgAdminSkin = "monaco-sapphire";
 		}
  
 		$this->setHeaders();
