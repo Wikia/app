@@ -1,6 +1,7 @@
 <?php
 if (!defined('MEDIAWIKI')){
 $wgSitename = "Wiki Name";
+$wgAdminSkin = "monaco-sapphire";
 $language = "en";
 // Stub
 function wfMsg($in) {
@@ -23,6 +24,20 @@ $language = $wgContLang->getCode();
 
 <script src="/extensions/wikia/JavascriptAPI/Mediawiki.js"></script>
 <script src="/extensions/wikia/NewWikiBuilder/main.js"></script>
+
+<script type="text/javascript">/*<![CDATA[*/
+// fake tracker engine
+if(!window.WET) {
+	var WET = {
+		byStr : function(str){
+			console.log('WET.byStr(' + str + ')');
+		},
+		byId : function(e){
+			console.log('WET.byId(' + e.id + ')');
+		}
+	}
+}
+/*]]>*/</script>
 
 <script>
 // Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
@@ -75,8 +90,8 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 	</script>
 </div>
 <div class="nav">
-	<a href="#step2" id="skip_step_1"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onclick="$('#step1_form').submit();"><span><?php echo wfMsg("nwb-save-description")?></span></button>
+	<a href="#step2" id="skip_step_1" onclick="WET.byStr('nwb/step1skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
+	<button onclick="WET.byStr('nwb/step1save');$('#step1_form').submit();"><span><?php echo wfMsg("nwb-save-description")?></span></button>
 	<input onclick="$('#step1_form').submit();" type="button" id="hidden_description_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
@@ -94,7 +109,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 		<input type="hidden" name="action" value="uploadlogo">	
 		<input type="hidden" name="format" value="xml">	
 		<input id="logo_article" type="hidden" name="title" value="Wiki.png">	
-		<label><?php echo wfMsg("nwb-choose-logo")?>:</label><input type="file" name="logo_file" id="logo_file" /> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onclick="this.form.title.value='Wiki-Preview.png'"/>
+		<label><?php echo wfMsg("nwb-choose-logo")?>:</label><input type="file" name="logo_file" id="logo_file" onclick="WET.byStr('nwb/step2browse');"/> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onclick="WET.byStr('nwb/step2preview');this.form.title.value='Wiki-Preview.png'"/>
 		<!--<input type="submit" value="Save" onclick="this.form.title.value='Wiki.png'"/>-->
 	</form>
 
@@ -121,10 +136,10 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 </div>
 <div class="nav">
 	<span class="nav_reverse">
-		<button class="secondary" onclick="NWB.gotostep(1);"><span><?php echo wfMsg("nwb-back-to-step-1")?></span></button>
+		<button class="secondary" onclick="WET.byStr('nwb/step2back');NWB.gotostep(1);"><span><?php echo wfMsg("nwb-back-to-step-1")?></span></button>
 	</span>
-	<a href="#step3" id="skip_step_2"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onclick="NWB.uploadLogo();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
+	<a href="#step3" id="skip_step_2" onclick="WET.byStr('nwb/step2skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
+	<button onclick="WET.byStr('nwb/step2save');NWB.uploadLogo();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
 </div>
 </li>
 
@@ -136,7 +151,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 	<?php echo wfMsg("nwb-step3-text")?>
 	<div id="theme_template" style="display:none" class="theme_selekction">
 		<label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
-		<input onclick="NWB.changeTheme('monaco-$theme', true)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
+		<input onclick="NWB.changeTheme('$theme')" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
 	</div>
 	<div id="theme_scroller" class="accent">
 		<table><tr></tr></table>
@@ -163,17 +178,17 @@ for (var i = 0; i < themes.length; i++){
 	if (wgAdminSkin.replace(/monaco-/, '')  == ltheme) {
 		// Check the box and change the theme 
 		$("#theme_radio_" + ltheme).attr("checked", true);
-		NWB.changeTheme(ltheme, false);
+		NWB.changeTheme(ltheme);
 	}
 }
 </script>
 </div>
 <div class="nav">
 	<span class="nav_reverse">
-		<button class="secondary" onclick="NWB.gotostep(2);"><span><?php echo wfMsg("nwb-back-to-step-2")?></span></button>
+		<button class="secondary" onclick="WET.byStr('nwb/step3back');NWB.gotostep(2);"><span><?php echo wfMsg("nwb-back-to-step-2")?></span></button>
 	</span>
-	<a href="#step4" id="skip_step_3"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onclick="NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
+	<a href="#step4" id="skip_step_3" onclick="WET.byStr('nwb/step3skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
+	<button onclick="WET.byStr('nwb/step3save');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
 </div>
 </li>
 
@@ -204,10 +219,10 @@ for (var i = 0; i < themes.length; i++){
 </div>
 <div class="nav">
 	<span class="nav_reverse">
-		<button class="secondary" onclick="NWB.gotostep(3);"><span><?php echo wfMsg("nwb-back-to-step-3")?></span></button>
+		<button class="secondary" onclick="WET.byStr('nwb/step4back');NWB.gotostep(3);"><span><?php echo wfMsg("nwb-back-to-step-3")?></span></button>
 	</span>
-	<a href="#step5" id="skip_step_4"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onclick="$('#step4_form').submit();"><span><?php echo wfMsg("nwb-create-pages")?></span></button>
+	<a href="#step5" id="skip_step_4" onclick="WET.byStr('nwb/step4skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
+	<button onclick="WET.byStr('nwb/step4save');$('#step4_form').submit();"><span><?php echo wfMsg("nwb-create-pages")?></span></button>
 	<input onclick="$('#step4_form').submit();" type="button" id="hidden_step_4_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
@@ -225,9 +240,9 @@ for (var i = 0; i < themes.length; i++){
 </div>
 <div class="nav">
 	<span class="nav_reverse">
-		<button class="secondary" onclick="NWB.gotostep(4);"><span><?php echo wfMsg("nwb-back-to-step-4")?></span></button>
+		<button class="secondary" onclick="WET.byStr('nwb/step5back');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-back-to-step-4")?></span></button>
 	</span>
-	<button onclick="document.location = '<?php echo $wgServer ?>';"><span id="finito"><?php echo wfMsg("nwb-go-to-your-wiki")?></span></button>
+	<button onclick="WET.byStr('nwb/step5go');document.location = '<?php echo $wgServer ?>';"><span id="finito"><?php echo wfMsg("nwb-go-to-your-wiki")?></span></button>
 </div>
 </li>
 </ul>
