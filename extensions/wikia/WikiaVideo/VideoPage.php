@@ -727,7 +727,7 @@ EOD;
 					}
 				}
 				break;
-			case self::V_YOTUBE:
+			case self::V_YOUTUBE:
 				$file = @file_get_contents( "http://gdata.youtube.com/feeds/api/videos/" . $this->mId, FALSE );
 				if ($file) {
 					$doc = new DOMDocument;
@@ -798,7 +798,7 @@ EOD;
 		switch( $this->mProvider ) {
 			case self::V_METACAFE:
 				return 'http://www.metacafe.com';
-			case self::V_YOTUBE:
+			case self::V_YOUTUBE:
 				return 'http://www.youtube.com';
 			case self::V_SEVENLOAD:
 				return 'http://www.sevenload.com';
@@ -1548,4 +1548,3 @@ class VideoPageArchive extends PageArchive {
 	}
 
 }
-
