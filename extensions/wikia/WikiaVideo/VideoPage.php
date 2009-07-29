@@ -860,7 +860,7 @@ EOD;
 			case self::V_VIMEO:
 				$url = 'http://www.vimeo.com/' . $id;
 				break;
-			case self::V_SOTHPARKSTUDIOS:
+			case self::V_SOUTHPARKSTUDIOS:
 				$url = 'http://www.southparkstudios.com/clips/' . $id;
                                 break;
 			default:
