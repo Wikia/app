@@ -1476,7 +1476,7 @@ class AutoCreateWikiPage extends SpecialPage {
 					"rev_user"      => $this->mDefaultUser->getId(),
 					"rev_user_text" => $this->mDefaultUser->getName()
 				),
-				'*',
+				'*', /* mean all */
 				__METHOD__
 			);
 			$rows = $dbw->affectedRows();
