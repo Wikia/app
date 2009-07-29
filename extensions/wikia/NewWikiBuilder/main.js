@@ -92,6 +92,18 @@ NWB.changeTheme = function (theme, changeData){
    }
 };
 
+/* Wrap up and redirect them to their wiki */
+NWB.finalize = function (redir){
+	/* Issue a purge request */
+        Mediawiki.updateStatus(NWB.msg("nwb-finalizing"));
+        var mainPageEnd = Mediawiki.followRedirect("Main Page"); // Should be cached.
+        var result = Mediawiki.apiCall({
+		"action" : "purge",
+		"titles" : mainPageEnd});
+
+	// Redirect
+	window.location = 'http://' + document.domain + '/wiki/' + mainPageEnd;
+};
 
 /* Make sure there are the right amount of available boxes */
 NWB.firstPagesInputs = function (){
@@ -218,7 +230,7 @@ NWB.msg = function (msg){
 	try {
 		ret = NWB.messages[NWB.language][msg];
 	} catch(e) {
-		ret =  msg;
+		ret = msg;
 	}
 	return ret;
 };

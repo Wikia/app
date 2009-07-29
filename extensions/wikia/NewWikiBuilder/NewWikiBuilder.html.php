@@ -243,7 +243,7 @@ for (var i = 0; i < themes.length; i++){
 	<span class="nav_reverse">
 		<button class="secondary" onclick="WET.byStr('nwb/step5back');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-back-to-step-4")?></span></button>
 	</span>
-	<button onclick="WET.byStr('nwb/step5go');document.location = '<?php echo $wgServer ?>';"><span id="finito"><?php echo wfMsg("nwb-go-to-your-wiki")?></span></button>
+	<button onclick="WET.byStr('nwb/step5go');NWB.finalize('<?php echo $wgServer ?>');"><span id="finito"><?php echo wfMsg("nwb-go-to-your-wiki")?></span></button>
 </div>
 </li>
 </ul>
