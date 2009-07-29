@@ -341,8 +341,22 @@ class AutoCreateWikiPage extends SpecialPage {
 		if ( !$this->canCreateDatabase() ) {
 			$msgType = 'ERROR';
 		} else {
-			$dbw_local->query( sprintf( "CREATE DATABASE `%s`", $this->mWikiData[ "dbname"]) );
-			$this->log( "Creating database {$this->mWikiData[ "dbname"]}" );
+			$oRow = $dbw_local->selectRow(
+				"INFORMATION_SCHEMA.SCHEMATA",
+				array( "count(*) as cnt" ),
+				array(
+					'SCHEMA_NAME' => $this->mWikiData[ "dbname"]
+				),
+				__METHOD__
+			);
+			
+			if ( empty($oRow->cnt) ) {
+				$dbw_local->query( sprintf( "CREATE DATABASE `%s`", $this->mWikiData[ "dbname"]) );
+				$this->log( "Creating database {$this->mWikiData[ "dbname"]}" );
+			} else {
+				$this->log( "Database {$this->mWikiData[ "dbname"]} exists" );
+				$msgType = 'ERROR';
+			}
 		}
 
 		$this->setInfoLog( $msgType, wfMsg('autocreatewiki-step2') );
