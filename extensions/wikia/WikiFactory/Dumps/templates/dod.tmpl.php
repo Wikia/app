@@ -1,6 +1,7 @@
 <br />
 <h2><?php $this->msg( 'dump-database' ) ?></h2>
 <?php $this->msg( 'dump-database-info' ) ?>
+<form action="<?php echo $title->getFullUrl() ?>" method="post">
 <table class="mw-statistics-table">
 	<tr>
 		<td style="border-right: 0;">
@@ -39,6 +40,7 @@
 		</td>
 	</tr>
 </table>
+</form>
 <div class="right">
 	<?php $this->msg( 'dump-database-info-more' ) ?>
 </div>

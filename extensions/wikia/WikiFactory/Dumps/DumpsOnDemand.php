@@ -17,7 +17,7 @@ class DumpsOnDemand {
 	 * @static
 	 */
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
-		global $wgOut, $wgDBname, $wgContLang, $wgRequest;
+		global $wgOut, $wgDBname, $wgContLang, $wgRequest, $wgTitle;
 
 		wfLoadExtensionMessages( "DumpsOnDemand" );
 
@@ -31,6 +31,8 @@ class DumpsOnDemand {
 		if( $json ) {
 			$index = (array )Wikia::json_decode( $json );
 		}
+
+		$tmpl->set( "title", $wgTitle );
 
 		$tmpl->set( "curr", array(
 			"url" => self::getUrl( $wgDBname, "pages_current.xml.gz" ),
@@ -49,7 +51,8 @@ class DumpsOnDemand {
 		$text .= $tmpl->render( "dod" );
 
 		if( $wgRequest->wasPosted() ) {
-			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" )) . $text;
+			Wikia::log( __METHOD__, "info", "request was posted" );
+			$text = Wikia::successbox( wfMsg( "dump-database-request-requested" ) ) . $text;
 		}
 
 		return true;
@@ -73,6 +76,21 @@ class DumpsOnDemand {
 			substr( $database, 0, 2),
 			$database,
 			$file
+		);
+	}
+
+	/**
+	 * @static
+	 * @access public
+	 */
+	static public function sendMail() {
+		global $wgDBname, $wgServer, $wgCityId;
+
+		UserMailer::send(
+			new MailAddress( "eloy@wikia-inc.com" ),
+			new MailAddress( "spam@wikia-inc.com" ),
+			"Database dump request for {$wgDBname}",
+			"Database dump request for {$wgDBname}"
 		);
 	}
 }
