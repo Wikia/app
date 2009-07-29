@@ -10,6 +10,7 @@ $messages['en'] = array(
 	  "nwb-error-saving-articles" => "Error Saving Articles",
 	  "nwb-error-saving-logo" => "Error Uploading Logo",
 	  "nwb-saving-articles" => "Saving Articles...",
+	  "nwb-finalizing" => "Finalizing...",
 	  "nwb-articles-saved" => "Articles Saved",
 	  "nwb-theme-saved" => "Theme Choice Saved",
 	  "nwb-saving-description" => "Saving Description...",
