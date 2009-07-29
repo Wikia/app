@@ -653,13 +653,22 @@ class BlogAvatar {
 		if ( defined("NS_BLOG_ARTICLE") ) {
 			$allowedNamespaces[] = NS_BLOG_ARTICLE;
 		}
-		$allowedPages = array (
+
+		# special pages visible only for the current user
+		# /$par is used for other things here
+		$allowedPagesSingle = array (
 			'Watchlist',
 			'WidgetDashboard',
-			'Preferences',
+			'Preferences'
+		);
+
+		# special pages visible for other users
+		# /$par or target paramtere are used for username
+		$allowedPagesMulti = array (
 			'Contributions',
 			'Emailuser'
 		);
+
 		if( in_array( $namespace, $allowedNamespaces ) ||
 			( ( $namespace == NS_SPECIAL ) && ( in_array( $dbKey, $allowedPages ) ) )
 		) {
@@ -680,9 +689,10 @@ class BlogAvatar {
 				# Title::getBaseText only backs up one step, we need the leftmost part
 				list( $userspace ) = explode( "/", $wgTitle->getText(), 2 );
 				$Avatar = BlogAvatar::newFromUserName( $userspace );
-			}
-
-			if ( in_array( $dbKey, $allowedPages ) ) {
+			} elseif ( in_array( $dbKey, $allowedPagesSingle ) ) {
+				$userspace = $wgUser->getName();
+				$Avatar = BlogAvatar::newFromUser( $wgUser );
+			} elseif ( in_array( $dbKey, $allowedPagesMulti ) ) {
 				$reqTitle = $wgRequest->getText("title", false);
 
 				# try to get a target user name
