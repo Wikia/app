@@ -85,7 +85,7 @@ class DaemonLoader extends SpecialPage {
         wfProfileIn( __METHOD__ );
 		$aResult = array();
 		$memkey = wfForeignMemcKey( $wgExternalDatawareDB, null, "getAllDaemons", $dt_id);
-		$cached = "";#$wgMemc->get($memkey);
+		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
 			if (!is_null($dbs)) {
@@ -118,56 +118,48 @@ class DaemonLoader extends SpecialPage {
 	}
 	
 	static public function getAllJobs($dj_id = 0, $orderby = 'dj_id', $limit = 30, $offset = 0, $desc = 0) {
-		global $wgMemc, $wgExternalDatawareDB;
-		global $wgCityId;
+		global $wgExternalDatawareDB, $wgCityId;
         wfProfileIn( __METHOD__ );
 		$aResult = array();
-		$memkey = wfForeignMemcKey( $wgExternalDatawareDB, null, "getAllJobs", $dj_id, $limit, $offset);
-		$cached = "";#$wgMemc->get($memkey);
-		if (!is_array ($cached)) { 
-			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
-			if (!is_null($dbs)) {
-				$orderby = (empty($orderby)) ? "dj_id" : $orderby;
-				$where = ($dj_id > 0) ? " and dj_id = ".intval($dj_id) : "";
-				$oRes = $dbs->select(
-					array( "daemon_tasks_jobs" ),
-					array( "dj_id, dj_dt_id, date_format(dj_start, '%Y-%m-%d') as st, date_format(dj_end, '%Y-%m-%d') as end, dj_frequency, dj_visible, dj_param_values, dj_result_file, dj_result_emails, dj_createdby, dj_added" ),
-					array( "dj_dt_id > 0 $where and dj_visible = 1" ),	
-					__METHOD__,
-					array( "ORDER BY" => $orderby . (($desc == 0) ? " asc" : " desc"), 'LIMIT' => $limit, 'OFFSET' => intval($offset) * $limit, 'SQL_CALC_FOUND_ROWS' )
+		$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+		if (!is_null($dbs)) {
+			$orderby = (empty($orderby)) ? "dj_id" : $orderby;
+			$where = ($dj_id > 0) ? " and dj_id = ".intval($dj_id) : "";
+			$oRes = $dbs->select(
+				array( "daemon_tasks_jobs" ),
+				array( "dj_id, dj_dt_id, date_format(dj_start, '%Y-%m-%d') as st, date_format(dj_end, '%Y-%m-%d') as end, dj_frequency, dj_visible, dj_param_values, dj_result_file, dj_result_emails, dj_createdby, dj_added" ),
+				array( "dj_dt_id > 0 $where and dj_visible = 1" ),	
+				__METHOD__,
+				array( "ORDER BY" => $orderby . (($desc == 0) ? " asc" : " desc"), 'LIMIT' => $limit, 'OFFSET' => intval($offset) * $limit, 'SQL_CALC_FOUND_ROWS' )
+			);
+			$aResult = array();
+			while( $oRow = $dbs->fetchObject( $oRes ) ) {
+				$oUser = User::newFromId($oRow->dj_createdby);
+				$xlsFiles = self::listXLSFiles($oRow->dj_id, $oRow->dj_result_file);
+				$aResult[] = array( 
+					'id' => $oRow->dj_id, 
+					'dt_id' => $oRow->dj_dt_id, 
+					'frequency' => $oRow->dj_frequency, 
+					'visible' => $oRow->dj_visible, 
+					'param_values' => $oRow->dj_param_values, 
+					'result_file' => $oRow->dj_result_file, 
+					'result_xls_files' => $xlsFiles,
+					'result_emails' => $oRow->dj_result_emails, 
+					'createdby' => $oUser,
+					'start' => $oRow->st,
+					'end' => $oRow->end,
+					'added' => $oRow->dj_added
 				);
-				$aResult = array();
-				while( $oRow = $dbs->fetchObject( $oRes ) ) {
-					$oUser = User::newFromId($oRow->dj_createdby);
-					$xlsFiles = self::listXLSFiles($oRow->dj_id, $oRow->dj_result_file);
-					$aResult[] = array( 
-						'id' => $oRow->dj_id, 
-						'dt_id' => $oRow->dj_dt_id, 
-						'frequency' => $oRow->dj_frequency, 
-						'visible' => $oRow->dj_visible, 
-						'param_values' => $oRow->dj_param_values, 
-						'result_file' => $oRow->dj_result_file, 
-						'result_xls_files' => $xlsFiles,
-						'result_emails' => $oRow->dj_result_emails, 
-						'createdby' => $oUser,
-						'start' => $oRow->st,
-						'end' => $oRow->end,
-						'added' => $oRow->dj_added
-					);
-				}
-				$dbs->freeResult($oRes);
-				
-				# nbr all records 
-				$oRes = $dbs->query('SELECT FOUND_ROWS() as rowcount');
-				$oRow = $dbs->fetchObject ( $oRes );
-				$cnt = $oRow->rowcount;
-				$dbs->freeResult( $oRes );
-
-				$aResult = array(0 => $cnt, 1 => $aResult);
-				$wgMemc->set( $memkey, $aResult, 60*60 );
 			}
-		} else { 
-			$aResult = $cached;
+			$dbs->freeResult($oRes);
+			
+			# nbr all records 
+			$oRes = $dbs->query('SELECT FOUND_ROWS() as rowcount');
+			$oRow = $dbs->fetchObject ( $oRes );
+			$cnt = $oRow->rowcount;
+			$dbs->freeResult( $oRes );
+
+			$aResult = array(0 => $cnt, 1 => $aResult);
 		}
 		
         wfProfileOut( __METHOD__ );
