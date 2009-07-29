@@ -132,7 +132,7 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	protected function parseFormData() {
-		global $wgUser, $wgRequest, $wgOut, $wgTitle;
+		global $wgUser, $wgRequest, $wgOut;
 
 		wfRunHooks('BlogsAlternateEdit', array(false));
 
@@ -190,7 +190,8 @@ class CreateBlogPage extends SpecialBlogPage {
 			$this->mPreviewTitle = Title::newFromText( $this->mFormData['postTitle'] );
 
 			//simple hack to show correct title in preview mode
-			$wgTitle = $this->mPreviewTitle;
+			global $wgCustomTitle;
+			$wgCustomTitle = $this->mPreviewTitle;
 
 			// CategorySelect compatibility (add categories to article body)
 			if($this->mCategorySelectEnabled) {
@@ -228,9 +229,7 @@ class CreateBlogPage extends SpecialBlogPage {
 			"preview" => $this->mPreviewTitle
 		) );
 
-		if(!($this->mPreviewTitle instanceof Title)) {
-			$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
-		}
+		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
 		$wgOut->addHTML( $oTmpl->execute("createBlogFormHeader") );
 	}
