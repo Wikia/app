@@ -4,21 +4,12 @@ class MostpopulararticlesSpecialPage extends SpecialPage {
 	private $mpa = null;
 
 	function __construct() {
-		self::load_messages();
 		parent::__construct( 'Mostpopulararticles' );
 	}
 
-	function load_messages() {
-		require_once( dirname(__FILE__).'/SpecialMostPopularArticles.i18n.php' );
-		global $wgMessageCache, $wgMostPopularArticlesMessages;
-
-		foreach( $wgMostPopularArticlesMessages as $lang => $messages ) {
-			$wgMessageCache->addMessages( $messages, $lang );
-		}
-		return true;
-    }
-
 	function execute($limit = "", $offset = "", $show = true) {
+		wfLoadExtensionMessages("Mostpopulararticles");
+		
 		if (empty($limit) && empty($offset)) {
 			list( $limit, $offset ) = wfCheckLimits();
 		}

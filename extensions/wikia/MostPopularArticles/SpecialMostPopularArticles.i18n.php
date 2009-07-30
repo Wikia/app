@@ -6,10 +6,8 @@
  * @subpackage Extensions
 */
 
-global $wgMostPopularArticlesMessages;
-$wgMostPopularArticlesMessages = array();
-
-$wgMostPopularArticlesMessages['en'] = array(
+$messages = array();
+$messages["en"] = array(
 	'mostpopulararticles' => 'Most popular articles (from database)',
 );
 

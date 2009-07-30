@@ -6,10 +6,8 @@
  * @subpackage Extensions
 */
 
-global $wgMostPopularPagesMessages;
-$wgMostPopularPagesMessages = array();
-
-$wgMostPopularPagesMessages['en'] = array(
+$messages = array();
+$messages["en"] = array(
 	'mostvisitedpages' => 'Most visited pages',
 	'mostvisitedpagessearchtext' => 'Article\'s name:',
 	'mostvisitedpagessearchbtn' => 'search'
