@@ -55,6 +55,22 @@ clear:both;
 padding:.8em;
 }
 
+.categoryCloudSection {
+border:1px solid lightgray;
+padding:15px;
+}
+	
+.wpCategoryTextarea {
+display:none;
+}
+	
+#wpCategoryInput,#wpCategoryButton {
+margin:4px 2px 0;
+}
+
+wpCategoryInput {
+width:230px;
+}
 .matches-info {
 color:#060;
 font-style:italic;
