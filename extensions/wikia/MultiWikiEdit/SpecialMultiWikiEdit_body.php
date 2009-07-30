@@ -168,7 +168,7 @@ class Multiwikiedit extends SpecialPage {
 		$this->mEditToken = $wgRequest->getVal ('wpEditToken');
 
 		if ( $this->mMode == 'script' ) {
-			$this->mUser = wfMsg('multiwikiedit_select_script');
+			$this->mUser = 'Maintenance script';
 		} else {
 			$this->mUser = $wgUser->getName();
 		}
@@ -280,20 +280,11 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 	 * @return display form
 	 */
 	function previewSubmit($mode = MULTIWIKIEDIT_THIS, $lang = '', $cat = 0) {
-		global $wgUser, $wgOut, $wgCityId ;
+		global $wgUser, $wgOut, $wgCityId;
 
-		/* if not, either don't specify or overwrite with given arguments */
 		$lines = explode( "\n", $this->mPage );
-		/*	don't allow to edit more than 1 title at once on multiple wikis
-			since they check all pages manually anyway			
-		*/
-		/*if ( ($mode != MULTIWIKIEDIT_THIS) && (count($lines) > 1) ) {
-			$this->showForm ("Only one title at a time allowed for multi-wiki edit.") ;
-			return ;								
-		}*/
-
 		#---
-		$this->makeDefaultTaskParams();
+		$this->makeDefaultTaskParams($lang, $cat);
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		foreach ($lines as $single_page) {
 			#-- lines with articles
@@ -333,21 +324,14 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 	function acceptSubmit($mode = MULTIWIKIEDIT_THIS, $lang = '', $cat = 0) {
 		global $wgUser, $wgOut, $wgCityId ;
 
-		/* if not, either don't specify or overwrite with given arguments */
 		$lines = explode( "\n", $this->mPage );
-		/*	don't allow to edit more than 1 title at once on multiple wikis
-			since they check all pages manually anyway			
-		*/
-		if ( ($mode != MULTIWIKIEDIT_THIS) && (count($lines) > 1) ) {
-			$this->showForm ("Only one title at a time allowed for multi-wiki edit.") ;
-			return ;								
-		}
-
-		$pre_wikis = array();
+		$pre_wikis = array(); 
+		$wikiaId = 0;
 		$modeText = "";
 		switch ( $mode ) {
 			case MULTIWIKIEDIT_SELECTED : 
 				$pre_wikis = explode( ",", $this->mWikiInbox );
+				array_walk($pre_wikis ,create_function('&$str','$str=trim($str);'));
 				$lang = $cat = "";
 				$modeText = wfMsg('multiwikiedit_selected_wikis');
 				break;
@@ -356,15 +340,16 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 				$modeText = wfMsg('multiwikiedit_all_wikis');
 				break;
 			case MULTIWIKIEDIT_THIS : 
-				$pre_wikis = array($wgCityId);
+				$pre_wikis = array();
+				$wikiaId = $wgCityId;
 				$modeText = wfMsg('multiwikiedit_this_wiki');
 				$lang = $cat = "";
 		}
 		#---
-		$countWikis = $this->fetchCountWikis($pre_wikis, $lang, $cat);
+		$countWikis = $this->fetchCountWikis($pre_wikis, $lang, $cat, $wikiaId);
 		
 		#---
-		$this->makeDefaultTaskParams();
+		$this->makeDefaultTaskParams($lang, $cat, $wikiaId);
 
 		$wgOut->addHTML("<p><strong>". wfMsg('multiwikiedit_tasks_list') . ": </strong></p>");
 		$wgOut->addHTML( Xml::openElement( 'ol', null ) );
@@ -379,8 +364,8 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 					$this->mTaskParams['page'] = $sTitle;
 
-					//$thisTask = new MultiWikiEditTask( $this->mTaskParams );
-					$submit_id = $loop; // = $thisTask->submitForm();
+					$thisTask = new MultiWikiEditTask( $this->mTaskParams );
+					$submit_id = $thisTask->submitForm();
 					
 					$oTmpl->set_vars( array(
 						"modeText" 		=> $modeText,
@@ -416,7 +401,7 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 	 *
 	 * @return integer (count of wikis)
 	 */
-	private function fetchCountWikis($wikis = array(), $lang = '', $cat = 0) {
+	private function fetchCountWikis($wikis = array(), $lang = '', $cat = 0, $city_id = 0) {
 		global $wgExternalSharedDB ;
 		$dbr = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 
@@ -429,6 +414,10 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 			$where['cat_id'] = $cat;
 		}
 		
+		if ( !empty($city_id) ) {
+			$where['city_list.city_id'] = $city_id;
+		}
+		
 		if ( empty($wikis) ) {
 			$oRow = $dbr->selectRow(
 				array( "city_list join city_cat_mapping on city_cat_mapping.city_id = city_list.city_id" ),
@@ -436,7 +425,6 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 				$where,
 				__METHOD__
 			);
-			
 			$count = intval($oRow->cnt);
 		} else {
 			$where[] = "city_list.city_id = city_domains.city_id";
@@ -463,7 +451,7 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 	 *
 	 * @return none (set local variables)
 	 */
-	private function makeDefaultTaskParams() {
+	private function makeDefaultTaskParams($lang = '', $cat = '', $city_id = 0) {
 		global $wgUser;
 		
 		$this->mTaskParams['mode'] = $this->mMode;
@@ -472,6 +460,9 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 		$this->mTaskParams['range'] = $this->mRange;
 		$this->mTaskParams['text'] = $this->mText;
 		$this->mTaskParams['summary'] = $this->mSummary;
+		$this->mTaskParams['lang'] = $lang;
+		$this->mTaskParams['cat'] = $cat;		
+		$this->mTaskParams['selwikia'] = $city_id;
 
 		$this->mTaskParams['flags'] = array(
 			$this->mMinorEdit, 
@@ -487,6 +478,4 @@ Notice: Undefined variable: countWikis in /home/moli/wikia/trunk/extensions/wiki
 		
 		$this->mTaskParams['page'] = array();
 	}
-
-	
 }
