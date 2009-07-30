@@ -170,9 +170,14 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * Load user groups from the database.
 	 */
 	protected function loadGroups() {
+		global $wgWikiaCentralUseGlobalGroups;
+		if ( !$wgWikiaCentralUseGlobalGroups) {
+			wfDebug( __METHOD__ . ": Don't use central user groups \n" );
+			return;
+		}
+		
 		if ( isset( $this->mGroups ) ) {
 			wfDebug( __METHOD__ . ": Groups are loaded \n" );
-			// Already loaded
 			return;
 		}
 		$id = $this->getId();
@@ -649,8 +654,14 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	}
 
 	function setGroups( $groups = array()) {
-		global $wgWikiaCentralGroups;
+		global $wgWikiaCentralGroups, $wgWikiaCentralUseGlobalGroups;
+		if (!$wgWikiaCentralUseGlobalGroups) {
+			return $groups;
+		}
 		$glGroups = $this->getGlobalGroups();
+		if (empty($glGroups)) {
+			$glGroups = array();
+		}
 		wfDebug( __METHOD__ . ": set local user groups (merge local (".implode(",", $groups).") and central groups (".implode(",", $glGroups).") ) \n" );
 		$mergedGroups = array();
 		foreach ($groups as $id => $group) {
@@ -937,6 +948,11 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	}
 
 	function removeFromGlobalGroups( $groups ) {
+		global $wgWikiaCentralUseGlobalGroups;
+		if ( !$wgWikiaCentralUseGlobalGroups ) {
+			wfDebug( __METHOD__ . ": Don't use central user groups \n" );
+			return;
+		}
 		if ( !empty($groups) ) {
 			$dbw = self::getCentralDB();
 			$dbw->delete(
@@ -952,6 +968,12 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	}
 
 	function addToGlobalGroups( $groups ) {
+		global $wgWikiaCentralUseGlobalGroups;
+		if ( !$wgWikiaCentralUseGlobalGroups ) {
+			wfDebug( __METHOD__ . ": Don't use central user groups \n" );
+			return;
+		}
+
 		$dbw = self::getCentralDB();
 
 		if ( !is_array($groups) ) {

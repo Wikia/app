@@ -76,6 +76,7 @@ $wgWikiaCentralNewCryptPassword = false;
 /**
  * Central groups 
  */
+$wgWikiaCentralUseGlobalGroups = false;
 $wgWikiaCentralGroups = array('staff', 'wikiabot');
 
 /**
