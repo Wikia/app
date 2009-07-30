@@ -95,7 +95,6 @@ my $oConf = new Wikia::Config( {logfile => "/tmp/video_blog_usage.log"} );
 my $lb = Wikia::LB->new( {yml => $YML } );
 my $db_ext = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, undef, Wikia::LB::DATAWARESHARED )} );
 
-
 =wikia utils 
 =cut
 my $oUtils = new Wikia::Utils();
@@ -428,12 +427,14 @@ foreach (@dates) {
 =close XLS file
 =cut
 $workbook->close();
+$dbh_ext->disconnect() if ($dbh_ext);
 
 =finish
 =cut
 system("gzip -c $XLS_FILE > $XLS_FILE.gz") if ( -e $XLS_FILE );
 %updata = ("-dj_result_file" => "concat_ws(',', dj_result_file, '".$XLS_FILE.".gz')");
 $oConf->log("update task info in database (subdomains)");
+$db_ext = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_MASTER, undef, Wikia::LB::DATAWARESHARED )} );
 $q_up = $db_ext->update_daemon_task( \%updata, $TASKID );
 if ( $q_up ) {
 	$oConf->log("send emails with report");
