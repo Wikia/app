@@ -170,7 +170,7 @@ function renderQuestions() {
 				var url  = page.title.replace(/ /g,"_");
 				var text = page.title + "?";
 				var timestamp = page.timestamp;
-				html += "<li><a href=\"" + url + "\">" + text + "</a></li>";
+				html += "<li><a href=\"/wiki/" + url + "\">" + text + "</a></li>";
 
 				if (timestamp1 == '') timestamp1 = timestamp;
 			}
