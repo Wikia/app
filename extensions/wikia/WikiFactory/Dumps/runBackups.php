@@ -94,6 +94,7 @@ function runBackups( $from, $to, $full, $options ) {
 		$basedir = getDirectory( $row->city_dbname );
 		if( $full || $both ) {
 			$path = sprintf("%s/pages_full.xml.gz", $basedir );
+			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}");
 			$cmd = array(
 				"SERVER_ID={$row->city_id}",
 				"php",
@@ -107,10 +108,10 @@ function runBackups( $from, $to, $full, $options ) {
 				"--output=gzip:{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} full:{$path}");
 		}
 		if( !$full || $both ) {
 			$path = sprintf("%s/pages_current.xml.gz", $basedir );
+			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}");
 			$cmd = array(
 				"SERVER_ID={$row->city_id}",
 				"php",
@@ -124,7 +125,6 @@ function runBackups( $from, $to, $full, $options ) {
 				"--output=gzip:{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
-			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} curr:{$path}");
 		}
 		/**
 		 * generate index.json
