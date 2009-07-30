@@ -30,7 +30,7 @@ if ($wgTitle == 'Special:Watchlist') {
 			global $wgStylePath;
 			foreach( $data['nav_links_head'] as $navLink ) {
 				$id = strtolower($navLink['dbkey']);
-				echo '<li id="mt_' . $id . '"><a id="mt_' . $id . '_icon" href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')"><img id="mt_' . $id . '_img" class="sprite" src="' . $wgStylePath . '/monobook/blank.gif" alt="'. $navLink['text'] .'"/></a> <div><a id="mt_' . $id . '_link" href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')">'. $navLink['text'] .'</a></div></li>';
+				echo '<li id="mt_' . $id . '"><a id="mt_' . $id . '_icon" href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')" rel="nofollow"><img id="mt_' . $id . '_img" class="sprite" src="' . $wgStylePath . '/monobook/blank.gif" alt="'. $navLink['text'] .'"/></a> <div><a id="mt_' . $id . '_link" href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')">'. $navLink['text'] .'</a></div></li>';
 			}
 			?>
 		</ul>
@@ -38,7 +38,7 @@ if ($wgTitle == 'Special:Watchlist') {
 	<ul class="nav_links">
 		<?
 		foreach( $data['nav_links'] as $navLink ) {
-			echo "<li ". ( ( $current  == $navLink[ "dbkey" ]) ? 'class="selected">' : ">" ) . '<a href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')">'. $navLink['text'] .'</a></li>';
+			echo "<li ". ( ( $current  == $navLink[ "dbkey" ]) ? 'class="selected">' : ">" ) . '<a href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')" rel="nofollow">'. $navLink['text'] .'</a></li>';
 		}
 		?>
 	</ul>
