@@ -184,7 +184,7 @@ class WikiFactoryLoader {
 	 *
 	 * @return object Database	database handler
 	 */
-	public function getDB( $type = DB_SLAVE ) {
+	public function getDB( $type = DB_MASTER ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
 		if( $this->mDBhandler instanceof Database ) {
@@ -394,20 +394,6 @@ class WikiFactoryLoader {
 
 		if( ( $cond1 || $cond2 ) && empty( $wgDevelEnvironment ) && $this->mNoRedirect === false ) {
 			$url = wfGetCurrentUrl();
-			#/**
-			# * dofus exception
-			# */
-			#$dofus =  array( 602, 1982, 4533, 1177, 1630, 1112, 7491, 4763, 2278, 1922, 1809, 2791, 2788, 7645 );
-			#if( in_array( $this->mWikiID, $dofus ) ) {
-			#	/**
-			#	 * replace /wiki/ with /dofus/ in obsoleted links
-			#	 * $this->mCityHost in dofus used to have
-			#	 * http://<language>.dofus.wikia.com/wiki
-			#	 * now it have http://<language>.wikia.com/dofus
-			#	 */
-			#	$url[ "path" ] = preg_replace( "!^(/wiki)!", "", $url[ "path" ] );
-			#}
-
 			/**
 			 * now recombine url from parts
 			 */
