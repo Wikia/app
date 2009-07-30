@@ -91,6 +91,8 @@ class CreateBlogListingPage extends SpecialBlogPage {
 	protected function renderForm() {
 		global $wgOut, $wgScriptPath;
 
+		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/Blogs/js/categoryCloud.js"><!-- categoryCloud js --></script>');
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 	$sQuery = "SELECT replace(replace(cl_to,'_News',''),'_Opinions','') AS cl_to, count(*) AS count
