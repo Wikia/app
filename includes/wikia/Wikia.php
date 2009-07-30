@@ -552,9 +552,6 @@ class Wikia {
 		foreach ($segments as $key => $value) {
 			$segment_name = substr($key, 0, -1);
 			$segment = $value . ' ' . $segment_name;
-			if ($value != 1) {
-				$segment .= 's';
-			}
 			$array[] = $segment;
 		}
 
