@@ -3,53 +3,65 @@
 /**
  * @package MediaWiki
  * @subpackage BatchTask
- * @author Bartek Lapinski <bartek@wikia.com> for Wikia.com
- * @copyright (C) 2007-2008, Wikia Inc.
+ * @author Bartek Lapinski <bartek@wikia.com> for Wikia.com, Piotr Molski <moli@wikia-inc.com> for Wikia.com
+ * @copyright (C) 2007-2009, Wikia Inc.
  * @license GNU General Public Licence 2.0 or later
  * @version: $Id$
  */
 
 
 class MultiWikiEditTask extends BatchTask {
-	var $mType, $mVisible, $mSingle, $mArguments, $mMode, $mAdmin ;
-	var $mUser ;
+	var $mType;
+	var $mVisible;
+	var $mUser;
 
 	/* constructor */
-	function __construct ($single = false) {
-        $this->mType = 'multiwikiedit' ;
-		$this->mVisible = false ; //we don't show form for this, it already exists
-		$this->mSingle = $single ; //single wiki or not (need that for a reason)
+	function __construct( $params = array() ) {
+        $this->mType = 'multiwikiedit';
+		$this->mVisible = false; //we don't show form for this, it already exists
+		$this->mParams = $params;
 		parent::__construct () ;
 	}
 
 	function execute ($params = null) {
 		global $IP, $wgWikiaLocalSettingsPath ;
-		/*      go with each supplied wiki and edit the supplied article
-			load all configs for particular wikis before doing so
+		
+		/* 
+		 * go with each supplied wiki and edit the supplied article 
+		 * load all configs for particular wikis before doing so
 		 */
 
-		$this->mTaskID = $params->task_id ;
+		$this->mTaskID = $params->task_id;
 		$oUser = User::newFromId( $params->task_user_id );
-		$oUser->load();
-		$this->mUser = $oUser->getName () ;
+		if ( $oUser instanceof User ) {
+			$oUser->load();
+			$this->mUser = $oUser->getName();
+		} else {
+			$this->addLog("Invalid user - id: " . $params->task_user_id );
+			return true;
+		}
 		
-		$data = unserialize ($params->task_arguments) ;
+		$data = unserialize($params->task_arguments);
 
-		$articles = $data ["articles"] ;
-		$username = escapeshellarg ($data ["username"]) ;
-		$text = escapeshellarg ($data ["text"]) ;
-		$summary = escapeshellarg ($data ["summary"]) ;
-		$summary != '' ? $summary_text = " -s $summary" : $summary_text = "" ;
+		$article = $data["page"];
+		$username = escapeshellarg($data["user"]);
+		$oUser = User::newFromName( $username );
+		if ( !is_object($oUser) ) {
+			$username = '';
+		}
+		$text = escapeshellarg($data["text"]);
+		$summary = escapeshellarg($data["summary"]);
+		$summary_text = ($summary != '') ? " -s $summary" : "";
 
-		$this->addLog ("Starting task.") ;
-		$this->addLog ("Article text: ") ;
-		$this->addLog ($text) ;
+		$this->addLog("Starting task.");
+		$this->addLog("Article text: ");
+		$this->addLog($text);
 
-		$this->addLog ("Article summary: ") ;
-		$this->addLog ($summary_text) ;
+		$this->addLog("Article summary: ");
+		$this->addLog($summary_text);
 
-		$options_switches = array ('-m','-b','-a','--no-rc', '--newonly') ;
-		$options_descriptions = array (
+		$options_switches = array('-m','-b','-a','--no-rc', '--newonly');
+		$options_descriptions = array(
 			'minor edit' ,
 			'bot (hidden) edit' ,
 			'enable autosummary' ,
@@ -61,38 +73,69 @@ class MultiWikiEditTask extends BatchTask {
 
 		/* initialize semi-global options */
 		$semiglobals = '' ;
-		$flags = $data ["flags"] ;
+		$flags = $data["flags"] ;
 		for ($j = 0; $j < count ($flags); $j++) {
-			if ($flags [$j]) {
-				$semiglobals .= " " . $options_switches [$j];
-				$this->addLog (' - ' . $options_descriptions [$j]) ;
+			if ( $flags[$j] ) {
+				$semiglobals .= " " . $options_switches[$j];
+				$this->addLog(' - ' . $options_descriptions[$j]);
 			}
 		}
 
-		$this->addLog ("List of edited articles (by" . $this->mUser . ' as ' . $username . "):") ;
+		$this->addLog("List of edited articles (by " . $this->mUser . ' as ' . $username . "):");
 
-		for ($i = 0 ; $i < count ($articles) ; $i++) {
+		$range = escapeshellarg($data["range"]);
+		$selwikia = intval($data["selwikia"]);
+		$wikis = $data["wikis"];
+		$lang = $data["lang"];
+		$cat = $data["cat"];
 
-			$titleobj = Title::makeTitle ($articles [$i]["namespace"], $articles [$i]["title"]) ;
-			$article_to_do = $titleobj->getText () ;
-			$namespace = intval($articles [$i]["namespace"]);
+		$pre_wikis = array();
+		if ( !empty($wikis) ) {
+			$pre_wikis = explode( ",", $wikis );
+		}
 
-			$sCommand = "SERVER_ID=".$articles [$i]["wikiid"]." php $IP/maintenance/wikia/editOn.php -u $username -t " . escapeshellarg ($article_to_do) . " -n " . $namespace . " -x $text ".$summary_text." $semiglobals --conf $wgWikiaLocalSettingsPath";
+		$wikiList = $this->fetchWikis($pre_wikis, $lang, $cat, $selwikia);
+		
+		if ( !empty($wikiList) ) {
+			$this->addLog("Found " . count($wikiList) . " Wikis to proceed");
+			foreach ( $wikiList as $id => $oWiki ) {
+				$retval = "";
+				$fixedArticle = $this->checkArticle($article, $oWiki);
+				if ( empty($fixedArticle) ) {
+					$this->addLog("Article " . $article . " doesn't exist on {$oWiki->city_dbname} ({$oWiki->city_url}) ");
+				}
 
-                        $city_url  = WikiFactory::getVarValueByName( "wgServer", $articles [$i]["wikiid"] ) ;
-                        if (empty ($city_url)) {
-                                $city_url = 'wiki id in WikiFactory: ' . $articles [$i]["wikiid"]  ;
-                        }
+				$title = $fixedArticle['title'];
+				$namespace = intval($fixedArticle['namespace']);
 
-                        $city_path  = WikiFactory::getVarValueByName( "wgScript", $articles [$i]["wikiid"] ) ;
+				$sCommand = "SERVER_ID=". $oWiki->city_id ." php $IP/maintenance/wikia/editOn.php ";
+				if ( !empty($username) ) {
+					$sCommand .= "-u $username ";
+				}
+				$sCommand .= "-t ".escapeshellarg($title)." ";
+				$sCommand .= "-n " . $namespace . " ";
+				$sCommand .= "-x " . $text. " ";
+				$sCommand .= $summary_text. " ";
+				$sCommand .= $semiglobals . " ";
+				$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
-			$actual_title = wfShellExec( $sCommand, $retval ) ;
+				echo "command: " . $sCommand . " \n";
 
-			wfShellExec( $sCommand, $retval ) ;
-			if ($retval) {
-                                $this->addLog ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title) ;
-			} else {
-                        	$this->addLog ('<a href="' . $city_url . $city_path . '?title=' . $actual_title . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>') ;
+				$city_url = WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id );
+				if ( empty($city_url) ) {
+					$city_url = 'wiki id in WikiFactory: ' . $oWiki->city_id;
+				}
+				
+				$city_path = WikiFactory::getVarValueByName( "wgScript", $oWiki->city_id );
+				$actual_title = wfShellExec( $sCommand, $retval );
+
+				//wfShellExec( $sCommand, $retval );
+				if ($retval) {
+					$this->addLog ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
+				} 
+				else {
+					$this->addLog ('<a href="' . $city_url . $city_path . '?title=' . $actual_title . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>') ;
+				}
 			}
 		}
 		return true ;
@@ -106,115 +149,185 @@ class MultiWikiEditTask extends BatchTask {
 		return $this->mVisible;
 	}
 
-        function getForm ($title, $errors = false ) {
-	        return true ;
+	function getForm($title, $errors = false ) {
+		return true ;
 	}
 
-	function submitForm () {
-		global $wgRequest, $wgOut, $IP, $wgUser ;
-		if (isset ($_SESSION ["MWE_selected_articles"]) ) {
-			$articles = $this->mArguments ;
-			$mode = $this->mMode ;
-			$username = $_SESSION ["MWE_username"] ;
-			$text = $_SESSION ["MWE_text"] ;
-			$summary = $_SESSION ["MWE_summary"] ;
-			$flags = $_SESSION ["MWE_selected_flags"] ;
-
-			$tempUser = User::newFromName ($username) ;
-
-			#--- all should be correct at this point
-			#--- first prepare serialized info with params
-
-			if (!$this->mSingle) {
-				$sel_articles = array () ;
-
-				for ($i = 0 ; $i < count ($articles) ; $i++) {
-					if ($wgRequest->getVal("wpArticle" . $i) == 1) {
-						array_push ($sel_articles, $articles [$i]) ;
-					}
-				}
-			} else {
-				/* in case of a single (this) wiki deletion, do not need confirmation */
-				$sel_articles = $articles ;
-			}
-
-			$sParams = serialize ( array(
-						"articles" => $sel_articles ,
-						"username" => $username ,
-						"text" => $text ,
-						"summary" => $summary ,
-						"flags" => $flags ,
-						"mode" => $mode ,
-						"admin" => $this->mAdmin
-					     ));
-
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->selectDB( "wikicities" );
-
-			$dbw->insert( "wikia_tasks", array(
-						"task_user_id" => $wgUser->getID(),
-						"task_type" => $this->mType,
-						"task_priority" => 1,
-						"task_status" => 1,
-						"task_added" => wfTimestampNow(),
-						"task_started" => "",
-						"task_finished" => "",
-						"task_arguments" => $sParams
-						));
-			$task_id = $dbw->insertId () ;
-			$dbw->commit();
-			return $task_id ;
+	function submitForm() {
+		global $wgRequest, $wgOut, $IP, $wgUser, $wgExternalSharedDB;
+		
+		if ( empty($this->mParams) ) {
+			return false;
 		}
+		
+		$sParams = serialize( $this->mParams );
+		
+		$dbw = wfGetDB( DB_MASTER, null, $wgExternalSharedDB );
+		$dbw->insert( 
+			"wikia_tasks", 
+			array(
+				"task_user_id" => $wgUser->getID(),
+				"task_type" => $this->mType,
+				"task_priority" => 1,
+				"task_status" => 1,
+				"task_added" => wfTimestampNow(),
+				"task_started" => "",
+				"task_finished" => "",
+				"task_arguments" => $sParams
+			)
+		);
+		$task_id = $dbw->insertId() ;
+		$dbw->commit();
+		return $task_id ;		
 	}
 
-        /**
-         * getDescription
-         *
-         * description of task, used in task listing.
-         *
-         * @access public
-         * @author eloy@wikia, bartek@wikia
-         *
-         * @return string: task description
-         */
-        public function getDescription() {
-                $desc = $this->getType();
-                if( !is_null( $this->mData ) ) {
-                        $args = unserialize( $this->mData->task_arguments );
-                        $mode = $args ["mode"] ;
-			$admin = $args ["username"] ;
-			$oUser = User::newFromName ($admin) ;
-                        if (is_object ($oUser)) {
-                                $oUser->load() ;
-                                $userLink = $oUser->getUserPage()->getLocalUrl() ;
-                                $userName = $oUser->getName() ;
-                        } else {
-                                $userLink = '' ;
-                                $userName = '' ;
-                        }
-
-                        if ("single" != $mode) {
-				$article = str_replace ("_", " ", $args ["articles"][0]["title"]) ;
-				$desc = sprintf(
-						"multiwikiedit mode: %s,<br/> article: %s, namespace %d <br/>as user: <a href=\"%s\">%s</a>",
-						$mode ,
-						$article ,
-						$args ["articles"][0]["namespace"] ,
-						$userLink ,
-						$userName
-					       );
+	/**
+	 * getDescription
+	 *
+	 * description of task, used in task listing.
+	 *
+	 * @access public
+	 * @author eloy@wikia, bartek@wikia
+	 *
+	 * @return string: task description
+	 */
+	public function getDescription() {
+		$desc = $this->getType();
+		if( !is_null( $this->mData ) ) {
+			$args = unserialize( $this->mData->task_arguments );
+			$mode = $args["mode"];
+			$admin = $args["admin"];
+			$oUser = User::newFromName ($admin);
+			if (is_object ($oUser)) {
+				$oUser->load();
+				$userLink = $oUser->getUserPage()->getLocalUrl();
+				$userName = $oUser->getName();
 			} else {
-				$url = $args ["articles"][0]["url"] ;		
-				$desc = sprintf(
-						"multiwikiedit mode: %s,<br/>wiki: <a href=\"%s\">%s</a>,<br/>as user: <a href=\"%s\">%s</a>",
-						$mode ,
-						$url ,
-						$url ,
-						$userLink ,
-						$userName
-					       );
+				$userLink = '';
+				$userName = '';
 			}
-                }
+
+			$title = $namespace = '';
+			$page = Title::newFromText($args["page"]);
+			if ( !is_object($page) ) {
+				$title = $args["page"];
+			} else {
+				$namespace = $page->getNamespace();
+				$title = str_replace( ' ', '_', $page->getText() );
+			}
+
+			$desc = sprintf (
+				"multiwikiedit mode: %s,<br/> article: %s, namespace %d <br/>as user: <a href=\"%s\">%s</a>",
+				$mode,
+				$title,
+				$namespace,
+				$userLink,
+				$userName
+			);
+		}
 		return $desc;
 	}
+	
+	/**
+	 * fetchWikis
+	 *
+	 * return number of wikis for params
+	 *
+	 * @access private
+	 *
+	 * @return integer (count of wikis)
+	 */
+	private function fetchWikis($wikis = array(), $lang = '', $cat = 0, $wikiaId = 0) {
+		global $wgExternalSharedDB ;
+		$dbr = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
+
+		$where = array("city_public" => 1);	
+		$count = 0;	
+		if ( !empty($lang) ) {
+			$where['city_lang'] = $lang;
+		} 
+		else if (!empty($cat)) {
+			$where['cat_id'] = $cat;
+		}
+		
+		if ( !empty($wikiaId) ) {
+			$where['city_list.city_id'] = $wikiaId;
+		}
+		
+		if ( empty($wikis) ) {
+			$oRes = $dbr->select(
+				array( "city_list join city_cat_mapping on city_cat_mapping.city_id = city_list.city_id" ),
+				array( "city_list.city_id, city_dbname, city_url" ),
+				$where,
+				__METHOD__
+			);
+		} else {
+			$where[] = "city_list.city_id = city_domains.city_id";
+			$where[] = " city_domain in ('" . implode("','", $wikis) . "') ";
+
+			$oRes = $dbr->select(
+				array( "city_list", "city_domains" ),
+				array( "city_list.city_id, city_dbname, city_url" ),
+				$where,
+				__METHOD__
+			);
+		}
+
+		$wiki_array = array();
+		while ($oRow = $dbr->fetchObject($oRes)) {
+			array_push($wiki_array, $oRow) ;
+		}
+		$dbr->freeResult ($oRes) ;
+
+		return $wiki_array;
+	}
+	
+	/**
+	 * checkArticle
+	 *
+	 * check articles exists on selected Wiki
+	 *
+	 * @access private
+	 *
+	 * @return array
+	 */
+	function checkArticle ($article, $wiki) {
+		$result = array();
+		$dbr = wfGetDB( DB_SLAVE, array(), $wiki->city_dbname ); 
+		if ($dbr) {
+			/* get only the selected namespace, nothing more */
+			$page = Title::newFromText($article);
+			if ( !is_object($page) ) {
+				return $result;
+			}
+			$namespace = $page->getNamespace();
+			$fixedTitle = str_replace( ' ', '_', $page->getText() );
+
+			$oRow = $dbr->selectRow(
+				array( 'page' ),
+				array( 'page_namespace', 'page_title' ),
+				array(
+					'page_title' => $fixedTitle,
+					'page_namespace' => $namespace
+				),
+				__METHOD__
+			);
+
+			if ( (!empty($oRow)) && (!empty($oRow->page_title)) ) { 
+				$result = array(
+					'title' => $oRow->page_title,
+					'namespace' => $oRow->page_namespace
+				);
+			} else {
+				$result = array(
+					'title' => $fixedTitle,
+					'namespace' => $namespace
+				);
+			}
+		}
+		
+		return $result;
+	}
+	
+	
 }

@@ -1,5 +1,4 @@
 <!-- s:<?= __FILE__ ?> -->
-<?error_log (print_r($mTaskParams, true)); ?>
 <p><?=wfMsg('multiwikiedit_help')?></p>
 <form name="multiwikiedit" class="highlightform" id="highlightform" enctype="multipart/form-data" method="post" action="<?=$obj->mTitle->escapeLocalURL( "action=addTask" ) ?>">
 <table>
