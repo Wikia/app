@@ -3,6 +3,18 @@
  * @addto maintenance
  * @author Krzysztof Krzyżaniak (eloy)
  *
+ *
+ * SERVER_ID=177 php runBackups.php --full -- generate full backups for
+ * 	all active wikis
+ *
+ * SERVER_ID=177 php runBackups.php  -- generate current backups for all
+ *	active wikis
+ *
+ * SERVER_ID=177 php runBackups.php  --both --id=177 -- generate full & current
+ * 	backups for city_id = 177
+ *
+ * SERVER_ID=177 php runBackups.php  --both --db=wikicities -- generate full & current
+ * 	backups for city_dbname = wikicities
  */
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once('commandLine.inc');
@@ -23,6 +35,11 @@ function runBackups( $from, $to, $full, $options ) {
 		"DEFAULT" => "10.6.10.36",
 		"c2" => "10.6.10.19"
 	);
+
+	/**
+	 * shortcut for full & current together
+	 */
+	$both = isset( $options[ "both" ] ) ? true : false;
 
 	/**
 	 * silly trick, if we have id defined we are defining $from & $to from it
@@ -75,7 +92,7 @@ function runBackups( $from, $to, $full, $options ) {
 		 */
 		$status  = false;
 		$basedir = getDirectory( $row->city_dbname );
-		if( $full ) {
+		if( $full || $both ) {
 			$path = sprintf("%s/pages_full.xml.gz", $basedir );
 			$cmd = array(
 				"SERVER_ID={$row->city_id}",
@@ -90,8 +107,9 @@ function runBackups( $from, $to, $full, $options ) {
 				"--output=gzip:{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
+			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} full:{$path}");
 		}
-		else {
+		if( !$full || $both ) {
 			$path = sprintf("%s/pages_current.xml.gz", $basedir );
 			$cmd = array(
 				"SERVER_ID={$row->city_id}",
@@ -106,8 +124,8 @@ function runBackups( $from, $to, $full, $options ) {
 				"--output=gzip:{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
+			Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} curr:{$path}");
 		}
-		Wikia::log( __METHOD__, "info", "{$row->city_id} {$row->city_dbname} {$path}");
 		/**
 		 * generate index.json
 	     */
