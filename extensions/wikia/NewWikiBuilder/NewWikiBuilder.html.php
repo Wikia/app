@@ -30,10 +30,10 @@ $language = $wgContLang->getCode();
 if(!window.WET) {
 	var WET = {
 		byStr : function(str){
-			console.log('WET.byStr(' + str + ')');
+	//		console.log('WET.byStr(' + str + ')');
 		},
 		byId : function(e){
-			console.log('WET.byId(' + e.id + ')');
+	//		console.log('WET.byId(' + e.id + ')');
 		}
 	}
 }
