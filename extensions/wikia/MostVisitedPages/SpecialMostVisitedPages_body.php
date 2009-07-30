@@ -4,22 +4,13 @@ class MostvisitedpagesSpecialPage extends SpecialPage {
     private $mpa = null;
 
 	function __construct() {
-	    self::load_messages();
 		parent::__construct( 'Mostvisitedpages' );
 	}
 
-    function load_messages() {
-		require_once( dirname(__FILE__).'/SpecialMostVisitedPages.i18n.php' );
-		
-		global $wgMessageCache, $wgMostPopularPagesMessages;
-		
-		foreach( $wgMostPopularPagesMessages as $lang => $messages ) {
-			$wgMessageCache->addMessages( $messages, $lang );
-		}
-		return true;
-    }	
 
 	function execute($article_id = null, $limit = "", $offset = "", $show = true) {
+		wfLoadExtensionMessages("Mostvisitedpages");
+
 		if (empty($limit) && empty($offset)) { 
             list( $limit, $offset ) = wfCheckLimits();
         }

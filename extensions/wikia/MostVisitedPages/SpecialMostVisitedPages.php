@@ -24,8 +24,10 @@ $wgExtensionCredits['specialpage'][] = array(
     "author" => "Moli <moli at wikia.com>"
 );
 
+$wgHooks['wgQueryPages'][] = 'wfSetupMostPopularCategories';
+$wgExtensionFunctions[] = 'wfSetupMostPopularCategories';
 #--- messages file
-$wgExtensionMessagesFiles["MostVisitedPages"] = dirname(__FILE__) . '/SpecialMostVisitedPages.i18n.php';
+$wgExtensionMessagesFiles["Mostvisitedpages"] = dirname(__FILE__) . '/SpecialMostVisitedPages.i18n.php';
 
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once ( "$IP/extensions/ExtensionFunctions.php" );
