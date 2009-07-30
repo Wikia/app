@@ -1,4 +1,5 @@
 == Changes since 200907.5 ==
+* rt#20048: Login button in create a wiki form does not work at all (Moli, eloy)
 * rt#19964: Css changes to gaming skin. (Nef, HT Uberfuzzy)
 * rt#19946: Analytics: click-tracking for New Wiki Builder. (Nef)
 * rt#19926: Fixed icons in custom footer. (Nef)
