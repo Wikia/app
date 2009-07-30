@@ -529,9 +529,9 @@ class Wikia {
 			'Months'    => 2629743,
 			'weeks'     => 604800,
 			'days'      => 86400,
-			'hours'     => 3600,
-			'minutes'   => 60,
-			'seconds'   => 1
+			'hr'        => 3600,
+			'min'       => 60,
+			'sec'       => 1
 			);
 
 		// Break into periods
