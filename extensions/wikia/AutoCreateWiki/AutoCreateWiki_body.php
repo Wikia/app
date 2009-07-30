@@ -80,7 +80,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * language starters
 		 */
-		$this->mLanguageStarters = array("en", "ja", "de", "fr", "nl", "es");
+		$this->mLanguageStarters = array("en", "ja", "de", "fr", "nl", "es", "aa");
 
 		/**
 		 * set paths for external tools
