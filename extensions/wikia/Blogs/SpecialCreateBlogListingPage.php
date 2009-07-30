@@ -8,6 +8,7 @@
 class CreateBlogListingPage extends SpecialBlogPage {
 
 	private $mTagBody = '';
+	private $mRenderedPreview;
 
 	public function __construct() {
 		// initialise messages
