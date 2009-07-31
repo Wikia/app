@@ -146,7 +146,12 @@ margin:0!important;
 padding:3px 10px;
 }
 
-#blog-comments-ul li {
+#blog-comments-ul {
+/* from reset.css */ margin:0;padding:0;
+/* from reset.css */ list-style:none; list-style-image: none;
+}
+
+#blog-comments-li {
 border-bottom:1px solid #DDD;
 padding:15px 10px;
 }

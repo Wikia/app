@@ -15,7 +15,7 @@ if( isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1  && count( $c
 <?php
 endif;
 ?>
-<div id="blog-comments" class="reset clearfix">
+<div id="blog-comments" class="clearfix">
 <?php
 if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "commenting" ] == 1 ):
 	if( $canEdit ):
@@ -58,7 +58,7 @@ endif;
 		$odd = true;
 		foreach( $comments as $comment ):
 			$class = $odd ? 'odd' : 'even'; $odd = !$odd;
-			echo "<li id=\"comm-{$comment->getTitle()->getArticleId()}\" class=\"blog-comment-row-{$class}\">\n";
+			echo "<li id=\"comm-{$comment->getTitle()->getArticleId()}\" class=\"blog-comments-li blog-comment-row-{$class}\">\n";
 			echo $comment->render();
 			echo "\n</li>\n";
 		endforeach;
