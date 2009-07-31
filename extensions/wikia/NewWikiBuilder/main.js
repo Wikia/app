@@ -19,14 +19,18 @@ $(function() {
 });
 
 var NWB = {
-	"language": "en", // TODO: Pull this from the browser or users settings
-	"firstPagesBlocks" : 1,
-	"currentStep": null
+	"language":		"en", // TODO: Pull this from the browser or users settings
+	"firstPagesBlocks" :	1,
+	"currentStep":		null
 };
 
 
-NWB.apiFailed = function(msg){
-	alert(NWB.msg("nwb-api-error") + msg);
+NWB.apiFailed = function(reqObj, msg, error){
+	Mediawiki.waitingDone();
+	if (typeof msg == "object"){
+		msg = Mediawiki.print_r(msg);
+	}
+	alert(NWB.msg("nwb-api-error") + Mediawiki.print_r(msg));
 };
 
 NWB.showStep = function(stepName) {
@@ -65,17 +69,19 @@ NWB.changeTheme = function (theme, changeData){
     try {
         // Save the changes using the API
         if (theme != window.wgAdminSkin && changeData ) {
+		Mediawiki.waiting();
                 Mediawiki.apiCall({
                         "action" : "foundersettings",
                         "changesetting" : "wgAdminSkin", 
                         "value" : theme},
 			function(result) { 
+				Mediawiki.waitingDone();
 				if (result.settings == "success") {
 					Mediawiki.updateStatus(NWB.msg("nwb-theme-saved"));
 				} else if (result.error){
 					Mediawiki.updateStatus(NWB.msg("nwb-error-saving-theme") + " " + result.error.info, true);
 				} else {
-					NWB.apiFailed(Mediawiki.print_r(result));
+					NWB.apiFailed(null, result, null);
 				}
 			}, NWB.apiFailed, "POST");
                 window.wgAdminSkin = theme;
@@ -87,6 +93,7 @@ NWB.changeTheme = function (theme, changeData){
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
 
    } catch (e) {
+	Mediawiki.waitingDone();
         Mediawiki.updateStatus(NWB.msg("nwb-error-saving-theme"), true);
         Mediawiki.debug(Mediawiki.print_r(e));
    }
@@ -96,6 +103,7 @@ NWB.changeTheme = function (theme, changeData){
 NWB.finalize = function (redir){
 	/* Issue a purge request */
         Mediawiki.updateStatus(NWB.msg("nwb-finalizing"));
+	Mediawiki.waiting();
         var mainPageEnd = Mediawiki.followRedirect("Main Page"); // Should be cached.
         var result = Mediawiki.apiCall({
 		"action" : "purge",
@@ -141,6 +149,7 @@ NWB.handleDescriptionForm = function (event){
 	
 	     var text = NWB.originalHeading + "\n" + $("#desc_textarea").val();
              // Save the article
+	     Mediawiki.waiting();
              Mediawiki.updateStatus(NWB.msg("nwb-saving-description"));
 	     var mainPageEnd = Mediawiki.followRedirect("Main Page"); // Should be cached.
              Mediawiki.editArticle({
@@ -149,6 +158,7 @@ NWB.handleDescriptionForm = function (event){
                   "section": 1,
                   "text": text}, 
                   function(){
+	     		  Mediawiki.waitingDone();
                           NWB.updateStatus(NWB.msg("nwb-description-saved"));
 			  NWB.gotostep(2);
                   },
@@ -175,6 +185,7 @@ NWB.handleFirstPages = function (event){
 			}
 		);
 
+		Mediawiki.waiting();
                 Mediawiki.apiCall({
                         "action" : "createmultiplepages",
 			"pagelist" : pages.join("|"),
@@ -189,8 +200,9 @@ NWB.handleFirstPages = function (event){
 
 
 NWB.handleFirstPagesCallback = function (result){
+	Mediawiki.waitingDone();
 	if (result.error) {
-		NWB.apiFailed(result.error.info);
+		NWB.apiFailed(null, result.error.info, null);
 	} else {
 		var count = 0;
 		for (var page in result.createmultiplepages.success){
@@ -273,6 +285,7 @@ NWB.iframeFormUpload = function(iframe){
 		$("#logo_current").css("backgroundImage", "url(" + url + ")");
 		NWB.gotostep(3);
 	}
+   	Mediawiki.waitingDone();
 
      } catch (e) {
          Mediawiki.updateStatus(NWB.msg("nwb-error-saving-logo"));
@@ -287,6 +300,7 @@ NWB.iframeFormInit = function (f){
 		return false;
 	}
 
+   	Mediawiki.waiting();
 	Mediawiki.updateStatus(NWB.msg("nwb-uploading-logo"), false, 30000);
 	return true;
 };
