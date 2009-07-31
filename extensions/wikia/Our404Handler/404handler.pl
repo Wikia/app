@@ -1,19 +1,23 @@
 #!/usr/bin/perl -w
 
 use strict;
+use URI;
 use URI::Escape;
 use FCGI;
 use Sys::Syslog qw(:standard :macros);
+use Image::Magick;
 
-my $baseurl = "http://techteamtest.wikia.com/index.php?title=Special:Our404Handler/thumb";
+use Data::Dumper;
+
 my $request = FCGI::Request();
 my $syslog = 1;
+my $basepath = "/images";
 
 openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
 while( $request->Accept() >= 0 ) {
     my $env = $request->GetEnvironment();
     my $redirect_to = "";
-    my $request_uri = "";
+    my $request_uri = "http://images.wikia.com/central/images/thumb/b/bf/Wiki_wide.png/50px-Wiki_wide.png"; # test url
     my $referer = "";
 
     #
@@ -21,13 +25,14 @@ while( $request->Accept() >= 0 ) {
     #
     $request_uri = $env->{"REQUEST_URI"} if $env->{"REQUEST_URI"};
     $referer = $env->{"HTTP_REFERER"} if $env->{"HTTP_REFERER"};
-    $redirect_to = $baseurl."&uri=".uri_escape($request_uri);
 
     #
     # get last part of uri
     #
-    my @parts = split(/\//, $request_uri );
+	my $uri = URI->new( $request_uri );
+    my @parts = split( "/", $uri->path );
     my $last = pop @parts;
+	print Dumper( \@parts );
 
     #
     # if last part of $request_uri is \d+px-\. we redirecting this to special
@@ -35,6 +40,34 @@ while( $request->Accept() >= 0 ) {
     #
     if( $last =~ /^\d+px\-/ ) {
         syslog( LOG_INFO, qq{302 $request_uri $referer} ) if $syslog;
+
+		#
+		# guess rest of image, last three parts would be image name and two
+		# subdirectories
+		#
+		my $orig = join( "/", splice( @parts, -3, 3 ) );
+		print Dumper( $orig );
+
+		#
+		# now, last part is thumbnails folder, we skip that too
+		#
+		pop @parts;
+		print Dumper( \@parts );
+
+
+		#
+		# then find proper thumbnailer for file, first check if this is svg
+		# thumbnail request
+		#
+
+		#
+		# read original file, thumbnail it, store on disc
+		#
+
+
+		#
+		# serve file if is ready to serve
+		#
         print "HTTP/1.1 302 Moved Temporarily\r\n";
         print "Location: $redirect_to\r\n";
         print "Content-type: text/html\r\n\r\n";
