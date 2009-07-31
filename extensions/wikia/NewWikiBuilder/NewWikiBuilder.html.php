@@ -9,16 +9,15 @@
 global $wgSitename, $wgAdminSkin, $wgContLang, $wgServer, $wgUser;
 $language = $wgContLang->getCode();
 ?>
-<link rel="stylesheet" type="text/css" href="/extensions/wikia/NewWikiBuilder/main.css?1"/>
+<link rel="stylesheet" type="text/css" href="/extensions/wikia/NewWikiBuilder/main.css?<?php echo filemtime(dirname(__FILE__) . '/main.css')?>"/>
 <?php echo Skin::makeGlobalVariablesScript( $this->data ); ?>
 <?php
 $StaticChute = new StaticChute('js');
 $StaticChute->useLocalChuteUrl();
 echo $StaticChute->getChuteHtmlForPackage('monaco_loggedin_js');
 ?>
-<script src="/extensions/wikia/JavascriptAPI/Mediawiki.js?1"></script>
-<script src="/extensions/wikia/NewWikiBuilder/main.js?1"></script>
-
+<script src="/extensions/wikia/JavascriptAPI/Mediawiki.js?<?php echo filemtime(dirname(__FILE__) . '/../JavascriptAPI/Mediawiki.js')?>"></script>
+<script src="/extensions/wikia/NewWikiBuilder/main.js?<?php echo filemtime(dirname(__FILE__) . '/main.js')?>"></script>
 <script>
 // Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
 Mediawiki.cookiePrefix = "wikicities";
