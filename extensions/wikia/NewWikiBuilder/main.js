@@ -21,7 +21,8 @@ $(function() {
 var NWB = {
 	"language":		"en", // TODO: Pull this from the browser or users settings
 	"firstPagesBlocks" :	1,
-	"currentStep":		null
+	"currentStep":		null,
+	"statusTimeout": 	5000
 };
 
 
@@ -77,7 +78,7 @@ NWB.changeTheme = function (theme, changeData){
 			function(result) { 
 				Mediawiki.waitingDone();
 				if (result.settings == "success") {
-					Mediawiki.updateStatus(NWB.msg("nwb-theme-saved"));
+					Mediawiki.updateStatus(NWB.msg("nwb-theme-saved"), false, NWB.statusTimeout);
 				} else if (result.error){
 					Mediawiki.updateStatus(NWB.msg("nwb-error-saving-theme") + " " + result.error.info, true);
 				} else {
@@ -166,7 +167,7 @@ NWB.handleDescriptionForm = function (event){
 					NWB.apiFailed(null, result.error.info, null);
 				}
 			  } else {
-				NWB.updateStatus(NWB.msg("nwb-description-saved"));
+				NWB.updateStatus(NWB.msg("nwb-description-saved"), false, NWB.statusTimeout);
 			  	NWB.gotostep(2);
 			  }
                   },
@@ -216,7 +217,7 @@ NWB.handleFirstPagesCallback = function (result){
 		for (var page in result.createmultiplepages.success){
 			count++;
 		}
-		Mediawiki.updateStatus(count + " " + NWB.msg("nwb-articles-saved"));
+		Mediawiki.updateStatus(count + " " + NWB.msg("nwb-articles-saved"), false, NWB.statusTimeout);
 		NWB.gotostep(5);
 	}
 };
@@ -228,7 +229,7 @@ NWB.handleLoginForm = function (f){
 		Mediawiki.login(f.lgname.value, f.lgpassword.value, function() {
 				$("#loginForm").fadeOut();
 				$("#logoutForm").fadeIn();
-				Mediawiki.updateStatus(NWB.msg("nwb-login-successful"));
+				Mediawiki.updateStatus(NWB.msg("nwb-login-successful"), false, NWB.statusTimeout);
 			}, function(msg) { Mediawiki.updateStatus(NWB.msg("nwb-login-error") + " : " + msg, true); }
 		);
 	} catch (e) {
@@ -242,7 +243,7 @@ NWB.handleLoginForm = function (f){
 NWB.handleLogoutForm = function(f){ // Is f required?
 	$("#logoutForm").fadeOut();
         $("#loginForm").fadeIn();
-        Mediawiki.updateStatus(NWB.msg("nwb-logout-successful"));
+        Mediawiki.updateStatus(NWB.msg("nwb-logout-successful"), false, NWB.statusTimeout);
 };
 
 NWB.msg = function (msg){
@@ -280,7 +281,7 @@ NWB.iframeFormUpload = function(iframe){
 		return;
 	} 
 
-	Mediawiki.updateStatus(NWB.msg("nwb-logo-uploaded"));
+	Mediawiki.updateStatus(NWB.msg("nwb-logo-uploaded"), false, NWB.statusTimeout);
 
 	// Fill in the preview or the current depending on what was clicked
 	var url;
@@ -296,7 +297,7 @@ NWB.iframeFormUpload = function(iframe){
    	Mediawiki.waitingDone();
 
      } catch (e) {
-         Mediawiki.updateStatus(NWB.msg("nwb-error-saving-logo"));
+         Mediawiki.updateStatus(NWB.msg("nwb-error-saving-logo"), true);
          Mediawiki.debug(Mediawiki.print_r(e)); 
      }
 };
