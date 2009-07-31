@@ -1,43 +1,23 @@
-<?php
-if (!defined('MEDIAWIKI')){
-$wgSitename = "Wiki Name";
-$wgAdminSkin = "monaco-sapphire";
-$language = "en";
-// Stub
-function wfMsg($in) {
-	return $in;
-}
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!-- Called as a standalone file -->
 <html>
+<head>
+<title><?php echo wfMsg("newwikibuilder")?></title>
 <body>
-<?php } else {
-global $wgSitename, $wgAdminSkin, $wgContLang, $wgServer;
+<?php
+global $wgSitename, $wgAdminSkin, $wgContLang, $wgServer, $wgUser;
 $language = $wgContLang->getCode();
-}
 ?>
-<!-- Jquery is required for the API itself -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/extensions/wikia/NewWikiBuilder/main.css"/>
-
+<?php echo Skin::makeGlobalVariablesScript( $this->data ); ?>
+<?php
+$StaticChute = new StaticChute('js');
+$StaticChute->useLocalChuteUrl();
+echo $StaticChute->getChuteHtmlForPackage('monaco_loggedin_js');
+?>
 <script src="/extensions/wikia/JavascriptAPI/Mediawiki.js"></script>
 <script src="/extensions/wikia/NewWikiBuilder/main.js"></script>
-
-<script type="text/javascript">/*<![CDATA[*/
-// fake tracker engine
-if(!window.WET) {
-	var WET = {
-		byStr : function(str){
-	//		console.log('WET.byStr(' + str + ')');
-		},
-		byId : function(e){
-	//		console.log('WET.byId(' + e.id + ')');
-		}
-	}
-}
-/*]]>*/</script>
 
 <script>
 // Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
@@ -151,7 +131,7 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 	<?php echo wfMsg("nwb-step3-text")?>
 	<div id="theme_template" style="display:none" class="theme_selekction">
 		<label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
-		<input onclick="NWB.changeTheme('monaco-$theme', true)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
+		<input onclick="NWB.changeTheme('monaco-$theme', false)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
 	</div>
 	<div id="theme_scroller" class="accent">
 		<table><tr></tr></table>
@@ -189,7 +169,7 @@ for (var i = 0; i < themes.length; i++){
 		<button class="secondary" onclick="WET.byStr('nwb/step3back');NWB.gotostep(2);"><span><?php echo wfMsg("nwb-back-to-step-2")?></span></button>
 	</span>
 	<a href="#step4" id="skip_step_3" onclick="WET.byStr('nwb/step3skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> or 
-	<button onclick="WET.byStr('nwb/step3save');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
+	<button onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
 </div>
 </li>
 
@@ -248,5 +228,10 @@ for (var i = 0; i < themes.length; i++){
 </li>
 </ul>
 
+<!-- Served by <?php echo trim(`hostname`) ?> -->
+<?php
+require_once dirname(__FILE__) . "/../AnalyticsEngine/AnalyticsEngine.php";
+echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+?>
 </body>
 </html>

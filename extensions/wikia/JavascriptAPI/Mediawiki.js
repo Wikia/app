@@ -5,7 +5,7 @@
 var Mediawiki = {
 	// apiUrl must be on the same domain for write access
 	apiUrl		: "/api.php",
-	apiTimeout	: 10000, // How long to wait for request, in milliseconds
+	apiTimeout	: 30000, // How long to wait for request, in milliseconds
 	debugLevel	: 0,
 	cookiePrefix	: null, // http://www.mediawiki.org/wiki/Manual:$wgCookiePrefix
 	cookiePrefixApi	: "jsapi", // used if using httpcookies
@@ -47,7 +47,7 @@ Mediawiki.apiCall = function(apiParams, callbackSuccess, callbackError, method, 
 		p.success = callbackSuccess;
 	} else {
 		p.async = false; 
-	//	p.type = "POST"; // POST is required for async. Silly. 
+		Mediawiki.waiting(Mediawiki.apiTimeout);
 	}
 	if (typeof callbackError == "function"){
 		p.error = callbackError;
@@ -79,6 +79,7 @@ Mediawiki.apiCall = function(apiParams, callbackSuccess, callbackError, method, 
 
 	// For async requests, parse the data. If not, the callbacks will receive an object passed to the callback
 	if (p.async === false) {
+		Mediawiki.waitingDone();
 		if (typeof r == "object" && !Mediawiki.e(r.responseText)){
 			return Mediawiki.json_decode(r.responseText);
 		} else {
@@ -499,11 +500,13 @@ Mediawiki.login = function (username, password, callbackSuccess, callbackError){
 	Mediawiki.loginCallbackSuccess = callbackSuccess;
 	Mediawiki.loginCallbackError = callbackError;
 		
+	Mediawiki.waiting();
 	return Mediawiki.apiCall(apiParams, Mediawiki.loginCallback, callbackError, "POST");
 };
 
 
 Mediawiki.loginCallback = function(result) {
+	Mediawiki.waitingDone();
 	try {
 		if (result.login.result == "Success"){
 
@@ -589,7 +592,7 @@ Mediawiki.print_r = function (arr,level) {
 			}
 		}
 	} else { //Stings/Chars/Numbers etc.
-		text = "===>"+arr+"<===("+typeof(arr)+")";
+		text = "'"+arr+"'";
 	}
 	return text;
 };
@@ -697,11 +700,25 @@ Mediawiki.updateStatus = function(msg, isError, timeout){
 	}
 
 	if ( isError ){
-		Mediawiki.statusBar.show(msg, timeout || 10000, true);
+		Mediawiki.waitingDone(); // catch all
+		Mediawiki.statusBar.show(msg, timeout || 30000, true);
 	} else {
-		Mediawiki.statusBar.show(msg, timeout || 3000, false);
+		Mediawiki.statusBar.show(msg, timeout || Mediawiki.apiTimeout, false);
 	}
 };
+
+
+Mediawiki.waiting = function (timeout){
+	$("body").css("cursor", "wait");
+	timeout = timeout || Mediawiki.apiTimeout;
+	window.setTimeout( function(){ Mediawiki.waitingDone(); }, timeout); 
+};
+
+
+Mediawiki.waitingDone = function (){
+	$("body").css("cursor", "auto");
+};
+
 
 var MediawikiStatusBar = function (sel,options) {
 	var _I = this;	     
