@@ -12,7 +12,6 @@
 
 
 <div style="display: none; font-style: normal;" class="clearfix" id="nwb_link">
-	<? print_r($GLOBALS); ?>
 	<!-- Link to the New Wiki Builder. Make it trixy for now, it's not ready for everyone to see -->
 	<div class="awc-title"><?=$domain?></div>
 	<div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-has-been-created')?></div>
