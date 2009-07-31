@@ -550,8 +550,7 @@ class Wikia {
 
 		// Build the string
 		foreach ($segments as $key => $value) {
-			$segment_name = substr($key, 0, -1);
-			$segment = $value . ' ' . $segment_name;
+			$segment = $value . ' ' . $key;
 			$array[] = $segment;
 		}
 
