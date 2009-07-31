@@ -9,12 +9,19 @@ class SolrSearch extends SearchEngine {
 	 * @access public
 	 */
 	function searchText( $term ) {
-		return SolrSearchSet::newFromQuery( $term, $this->namespaces, $this->limit, $this->offset );
+		return SolrSearchSet::newFromQuery( "title:$term OR html:$term", $this->namespaces, $this->limit, $this->offset );
+		//return SolrSearchSet::newFromQuery( $term, $this->namespaces, $this->limit, $this->offset );
 	}
+
+	//function searchTitle( $term ) {
+	//	return SolrSearchSet::newFromQuery( "title:$term", $this->namespaces, $this->limit, $this->offset );
+	//}
 
 }
 
 class SolrSearchSet extends SearchResultSet {
+
+	private $mCanonicals = array();
 	/**
 	 * Contact the solr search server and return a wrapper
 	 * object with the set of results. Results may be cached.
@@ -26,7 +33,7 @@ class SolrSearchSet extends SearchResultSet {
 	 * @access public
 	 */
 	public static function newFromQuery( $query, $namespaces = array(), $limit = 20, $offset = 0 ) {
-		global $wgSolrHost, $wgSolrPort, $wgMemc;
+		global $wgSolrHost, $wgSolrPort, $wgMemc, $wgCityId;
 
 		$fname = 'SolrSearchSet::newFromQuery';
 		wfProfileIn( $fname );
@@ -34,14 +41,14 @@ class SolrSearchSet extends SearchResultSet {
 		$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
 		if($solr->ping()) {
 			$params = array(
-				'fl' => 'title,url,host,bytes,words,ns,lang,indexed,created', // fields we want to fetch back
+				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created', // fields we want to fetch back
 				'hl' => 'true',
 				'hl.fl' => 'html,title', // highlight field
 				'hl.snippets' => '2', // number of snippets per field
 				'hl.fragsize' => '150', // snippet size in characters
 				'hl.simple.pre' => '<span class="searchmatch">',
-				'hl.simple.post' => '</span>'
-				/*'sort' => 'rank desc'*/
+				'hl.simple.post' => '</span>',
+				'sort' => 'backlinks desc, views desc, revcount desc, created asc'
 			);
 
 			if(count($namespaces)) {
@@ -51,7 +58,8 @@ class SolrSearchSet extends SearchResultSet {
 				}
 				$params['fq'] = $nsQuery; // filter results for selected ns
 			}
-
+			//$params['fq'] = "(" . $params['fq'] . ") AND wid:" . $wgCityId;
+			//echo $params['fq'];
 			try {
 				$response = $solr->search($query, $offset, $limit, $params);
 			}
@@ -98,7 +106,7 @@ class SolrSearchSet extends SearchResultSet {
 	private function __construct( $query, $results, $snippets, $resultCount, $totalHits = null, $suggestion = null) {
 		$this->mQuery             = $query;
 		$this->mTotalHits         = $totalHits;
-		$this->mResults           = $results;
+		$this->mResults           = $this->deDupe($results);
 		$this->mSnippets          = $snippets;
 		$this->mResultCount       = $resultCount;
 		$this->mPos               = 0;
@@ -107,6 +115,34 @@ class SolrSearchSet extends SearchResultSet {
 		//$this->parseSuggestion($suggestion);
 	}
 
+	/**
+	 * Remove duplicates (like redirects) from the result set
+	 */
+	private function deDupe(Array $results) {
+		$deDupedResults = array();
+		//echo "<pre>";
+		//print_r($results);
+		//exit;
+		foreach($results as $result) {
+			if(isset($result->canonical)) {
+				if(!in_array($result->canonical, $this->mCanonicals)) {
+					//echo "Got canonical for: " . $result->title . ", canonical is: " . $result->canonical . "<br />";
+					$this->mCanonicals[] = $result->canonical;
+					$deDupedResults[] = $result;
+				}
+				else {
+					continue;
+				}
+			}
+			else {
+				$deDupedResults[] = $result;
+			}
+		}
+		//echo "<pre>";
+		//print_r($deDupedResults);
+		//exit;
+		return $deDupedResults;
+	}
 	/**
 	 * Some search modes return a total hit count for the query
 	 * in the entire article database. This may include pages
@@ -186,7 +222,11 @@ class SolrResult extends SearchResult {
 	 * @param Apache_Solr_Document $document
 	 */
 	public function __construct( Apache_Solr_Document $document ) {
-		$this->mTitle = new SolrResultTitle($document->ns, $document->title, $document->url);
+		//echo "<pre>";
+		//print_r($document);
+		//var_dump(isset($document->canonical));
+		//echo "</pre>";
+		$this->mTitle = new SolrResultTitle($document->ns, urldecode( ( isset($document->canonical) ? $document->canonical : $document->title) ), $document->url);
 		$this->mWordCount = $document->words;
 		$this->mSize = $document->bytes;
 		$this->mCreated = isset($document->created) ? $document->created : 0;
@@ -203,7 +243,7 @@ class SolrResult extends SearchResult {
 	}
 
 	public function setHighlightTitle($title) {
-		$this->mHighlightTitle = $title;
+		$this->mHighlightTitle = urldecode($title);
 	}
 
 	public function getTextSnippet($terms = null) {
