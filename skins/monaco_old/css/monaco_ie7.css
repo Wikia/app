@@ -3,7 +3,7 @@ body.rtl #articleFooter .actions li {
 	direction: ltr;
 }
 
-body.rtl #fe_talk,
+body.rtl #fe_history,
 body.rtl #fe_permalink {
 	width: 40% !important;
 	position: relative;

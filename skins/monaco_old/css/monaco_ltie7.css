@@ -53,14 +53,14 @@ body.ns-0 #bodyContent table {
 }
 
 /* RTL fixes */
-body.rtl #fe_talk,
+body.rtl #fe_history,
 body.rtl #fe_permalink {
 	width: 40%;
 	position: relative;
 	right: -6px;
 }
 
-body.rtl #fe_talk div a,
+body.rtl #fe_history div a,
 body.rtl #fe_permalink div a {
 	position: relative;
 	margin-right: 6px;
