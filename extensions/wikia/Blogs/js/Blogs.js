@@ -56,10 +56,19 @@ YAHOO.Wikia.Blogs.callback.add = function( data ) {
 		}
 		var li = document.createElement( "li" );
 		li.innerHTML = data["text"];
-		if (YAHOO.util.Dom.get("blog-comm-order").value == "asc") {
+		var order = YAHOO.util.Dom.get("blog-comm-order");
+		if( order ) {
+			if( order.value == "asc") {
+				YAHOO.util.Dom.insertAfter(li, YAHOO.util.Dom.getLastChild("blog-comments-ul"));
+			} else {
+				YAHOO.util.Dom.insertBefore(li, YAHOO.util.Dom.getFirstChild("blog-comments-ul"));
+			}
+		}
+		else {
+			/**
+			 * by default after
+			 */
 			YAHOO.util.Dom.insertAfter(li, YAHOO.util.Dom.getLastChild("blog-comments-ul"));
-		} else {
-			YAHOO.util.Dom.insertBefore(li, YAHOO.util.Dom.getFirstChild("blog-comments-ul"));
 		}
 		YAHOO.util.Dom.get("blog-comm-bottom-info").innerHTML = "&nbsp;";
 	}
