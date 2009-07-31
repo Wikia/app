@@ -4,13 +4,25 @@
 .awc-title {font-size:1.3em;font-style:normal;color:#000;font-weight:bold;}
 .awc-subtitle {font-size:1.1em;font-style:normal;color:#000;}
 </style>
+
 <div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
 <br />
 <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
 <div class="awc-domain"><a href="<?=$domain?>"><?=$domain?></a></div>
 
-<!-- Link to the New Wiki Builder. Make it trixy for now, it's not ready for everyone to see -->
-<p>
-<p>
-<span style="font-size:8pt; color: grey; text-decoration:none"><a href="<?=$domain?>wiki/Special:NewWikiBuilder">.</a></span>
+
+<div style="display: none;" id="nwb_link">
+	<? print_r($this); ?>
+	<!-- Link to the New Wiki Builder. Make it trixy for now, it's not ready for everyone to see -->
+	<div class="awc-title"><?=$domain?></div>
+	<div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-has-been-created')?></div>
+
+	<div style="position: absolute; left: 50%; margin-top: 20px;">
+		<a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="big_button" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
+	</div>
+</div>
+
+<?php
+}
+?>
 <!-- e:<?= __FILE__ ?> -->
