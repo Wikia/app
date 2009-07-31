@@ -157,10 +157,18 @@ NWB.handleDescriptionForm = function (event){
                   "summary": "",
                   "section": 1,
                   "text": text}, 
-                  function(){
+                  function(result){
 	     		  Mediawiki.waitingDone();
-                          NWB.updateStatus(NWB.msg("nwb-description-saved"));
-			  NWB.gotostep(2);
+			  if (result.error){
+			        if (result.error.code == "readonly"){
+					NWB.updateStatus(NWB.msg("nwb-readonly-try-again"), true);
+			        } else {
+					NWB.apiFailed(null, result.error.info, null);
+				}
+			  } else {
+				NWB.updateStatus(NWB.msg("nwb-description-saved"));
+			  	NWB.gotostep(2);
+			  }
                   },
                   NWB.apiFailed);
      } catch (e) {
