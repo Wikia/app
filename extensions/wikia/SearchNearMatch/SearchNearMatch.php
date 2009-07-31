@@ -18,7 +18,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLower';
 $wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::fullCapitalAndLowerMix';
-$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLowerFromDB';
+
+/**
+ * only when dataware is available
+ */
+if( !empty( $wgEnableExternalStorage ) ) {
+	$wgHooks['SearchGetNearMatch'][] = 'SearchNearMatch::allCapitalOneLowerFromDB';
+}
 
 class SearchNearMatch {
 	/**
@@ -46,7 +52,7 @@ class SearchNearMatch {
 	 */
 	public static function allCapitalOneLower($term, &$title) {
 		$guesses = array();
-		
+
 		$words = ucwords(strtolower($term));
 		$words = preg_split('/\s/', $words, -1, PREG_SPLIT_NO_EMPTY);
 		if (7 < sizeof($words)) {
@@ -91,7 +97,7 @@ class SearchNearMatch {
 		$searchTitleId = $wgMemc->get( $memkey );
 		if (empty($searchTitleId)) {
 			// from DB
-			$pages = array(); 
+			$pages = array();
 			$dbr = wfGetDBExt( DB_SLAVE );
 			$res = $dbr->select(
 				array( 'pages' ),
@@ -103,17 +109,17 @@ class SearchNearMatch {
 				),
 				__METHOD__
 			);
-			while ( $row = $dbr->fetchObject( $res ) ) { 
+			while ( $row = $dbr->fetchObject( $res ) ) {
 				$pages[$row->page_namespace] = $row->page_id;
 			}
 			$dbr->freeResult( $res );
-			
+
 			if ( !empty($pages) ) {
 				ksort($pages, SORT_STRING);
 				list($searchTitleId) = array_slice($pages, 0, 1);
 			}
 			$wgMemc->set( $memkey, $searchTitleId, 60*60*24 );
-		} 
+		}
 
 		$not_exists = true;
 		if (!empty($searchTitleId)) {
@@ -123,7 +129,7 @@ class SearchNearMatch {
 				$not_exists = false;
 			}
 		}
-		
+
 		wfProfileOut(__METHOD__);
 		return $not_exists;
 	}
@@ -173,4 +179,3 @@ class SearchNearMatch {
 		}
 	}
 }
-
