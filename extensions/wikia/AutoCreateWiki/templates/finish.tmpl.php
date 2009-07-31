@@ -11,14 +11,14 @@
 <div class="awc-domain"><a href="<?=$domain?>"><?=$domain?></a></div>
 
 
-<div style="display: none;" id="nwb_link">
-	<? print_r($this); ?>
+<div style="display: none; font-style: normal;" class="clearfix" id="nwb_link">
+	<? print_r($GLOBALS); ?>
 	<!-- Link to the New Wiki Builder. Make it trixy for now, it's not ready for everyone to see -->
 	<div class="awc-title"><?=$domain?></div>
 	<div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-has-been-created')?></div>
 
 	<div style="position: absolute; left: 50%; margin-top: 20px;">
-		<a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="big_button" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
+		<a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
 	</div>
 </div>
 
