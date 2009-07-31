@@ -254,7 +254,7 @@ if( wgIsMainpage == true ){
 				html = "";
 				for( new_q in j.query.wkpagesincat ){
 					page = j.query.wkpagesincat[new_q];
-					html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
+					html += "<li><a href=\"" + page.url + "\" onclick=\"WET.byStr('mainpage/homepage_new_questions')\">" + page.title.replace(/_/g," ") + "?</a></li>";
 				}
 				jQuery("#homepage_new_questions").prepend( html );
 			}
@@ -272,7 +272,7 @@ if( wgIsMainpage == true ){
 				for( recent_q in j.query.wkpagesincat ){
 					page = j.query.wkpagesincat[recent_q];
 					if( page.title != wgPageName ){
-						html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
+						html += "<li><a href=\"" + page.url + "\" onclick=\"WET.byStr('mainpage/homepage_recently_answered_questions')\">" + page.title.replace(/_/g," ") + "?</a></li>";
 					}
 				}
 				jQuery("#homepage_recently_answered_questions").prepend( html );

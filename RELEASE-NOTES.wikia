@@ -1,4 +1,5 @@
 == Changes since 200907.5 ==
+* rt#19659: Answers, Analytics: Main page tracking. (Nef)
 * rt#19987: NYC social code footer: fixed history link icon on FFXI. (Nef)
 * rt#20068: Answers: Action panel fix. (Nef)
 * rt#20078: Nofollow on masthead links. (Nef)
