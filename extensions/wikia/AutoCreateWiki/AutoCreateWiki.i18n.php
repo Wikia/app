@@ -28,6 +28,8 @@ $messages['en'] = array(
 	"autocreatewiki-haveaccount-question" => "Do you already have a Wikia account?",
 	"autocreatewiki-success-title" => "Your wiki has been created!",
 	"autocreatewiki-success-subtitle" => "You can now begin working on your wiki by visiting:",
+	"autocreatewiki-success-has-been-created" => "has been created!",
+	"autocreatewiki-success-get-started" => "Get Started",
 // form messages
 	"autocreatewiki-info-domain" => "It's best to use a word likely to be a search keyword for your topic.",
 	"autocreatewiki-info-topic" => "Add a short description such as \"Star Wars\" or \"TV Shows\".",
