@@ -1,4 +1,5 @@
 == Changes since 200907.5 ==
+* rt#20154: Answers: Fixed always-empty non-en widgets. (Nef)
 * rt#19970: Google maps: fix rt#19062. (Nef)
 * rt#19019: Blogs: Incorrect line spacing in comments fix removed. (Nef)
 * rt#20057: Blogs: Fixed lists-in-comments display. (Nef)
