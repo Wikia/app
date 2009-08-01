@@ -65,7 +65,7 @@ function wfGoogleMaps_CommentJS(&$pParser, &$pText) {
 function wfGoogleMaps_Install() {
 	global $wgGoogleMapsKey, $wgGoogleMapsKeys, $wgGoogleMapsDisableEditorsMap, $wgGoogleMapsEnablePaths,
 		$wgGoogleMapsDefaults, $wgGoogleMapsMessages, $wgGoogleMapsCustomMessages, $wgGoogleMapsUrlPath,
-		$wgXhtmlNamespaces, $wgGoogleMapsTemplateVariables, $wgJsMimeType, $wgLanguageCode, $wgContLang,
+		$wgXhtmlNamespaces, $wgGoogleMapsTemplateVariables, $wgJsMimeType, $wgLanguageCode, $wgLang,
 		$wgParser, $wgProxyKey, $wgVersion, $wgGoogleMaps, $wgHooks, $wgScriptPath, $wgSpecialPages,
 		$wgTitle;
 	// set up some default values for the various extension configuration parameters
@@ -138,8 +138,8 @@ function wfGoogleMaps_Install() {
 		$wgGoogleMapsCustomMessages,
 		$wgGoogleMapsTemplateVariables,
 		$wgJsMimeType,
-		$wgContLanguageCode,
-		$wgContLang,
+		$wgLang->getCode(),
+		$wgLang,
 		$wgProxyKey,
 		$wgTitle );
 
