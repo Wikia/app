@@ -6,9 +6,13 @@
  * @author Przemek Piotrowski <nef@wikia-inc.com>
  */
 class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
+	var $unanswered_category, $answered_category;
 
 	public function __construct($query, $moduleName) {
 		parent :: __construct($query, $moduleName, 'coa');
+
+		$this->unanswered_category = wfMsgForContent('unanswered_category');
+		$this->answered_category   = wfMsgForContent('answered_category');
 	}
 
 	public function execute() {
@@ -21,7 +25,7 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 		if ( is_null( $categoryTitle ) || $categoryTitle->getNamespace() != NS_CATEGORY )
 			$this->dieUsage("The category name you entered is not valid", 'invalidcategory');
 
-		$answeredTitle = Title::newFromText( ( 'no' == $params['answered'] ? 'Un-answered questions' : 'Answered questions' ), NS_CATEGORY );
+		$answeredTitle = Title::newFromText( ( 'no' == $params['answered'] ? $this->unanswered_category : $this->answered_category ), NS_CATEGORY );
 
 		if ( is_null( $answeredTitle ) || $answeredTitle->getNamespace() != NS_CATEGORY )
 			$this->dieUsage("The name of un/answered category is not valid", 'invalidcategory');
