@@ -94,6 +94,6 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': v 1.0';
+		return __CLASS__ . ': $Id$';
 	}
 }
