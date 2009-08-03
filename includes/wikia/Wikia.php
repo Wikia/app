@@ -524,43 +524,43 @@ class Wikia {
 	 */
 	static public function timeDuration($seconds, $use = null, $zeros = false) {
 
-		if( !$seconds ) {
-			$str = "0 sec";
+		if( $seconds == 0 || $seconds == 1 ) {
+			$str = "{$second} sec";
 		}
 		else {
 
-		// Define time periods
-		$periods = array (
-			'years'     => 31556926,
-			'Months'    => 2629743,
-			'weeks'     => 604800,
-			'days'      => 86400,
-			'hr'        => 3600,
-			'min'       => 60,
-			'sec'       => 1
-			);
+			// Define time periods
+			$periods = array (
+				'years'     => 31556926,
+				'Months'    => 2629743,
+				'weeks'     => 604800,
+				'days'      => 86400,
+				'hr'        => 3600,
+				'min'       => 60,
+				'sec'       => 1
+				);
 
-		// Break into periods
-		$seconds = (float) $seconds;
-		foreach ($periods as $period => $value) {
-			if ($use && strpos($use, $period[0]) === false) {
-				continue;
+			// Break into periods
+			$seconds = (float) $seconds;
+			foreach ($periods as $period => $value) {
+				if ($use && strpos($use, $period[0]) === false) {
+					continue;
+				}
+				$count = floor($seconds / $value);
+				if ($count == 0 && !$zeros) {
+					continue;
+				}
+				$segments[strtolower($period)] = $count;
+				$seconds = $seconds % $value;
 			}
-			$count = floor($seconds / $value);
-			if ($count == 0 && !$zeros) {
-				continue;
+
+			// Build the string
+			foreach ($segments as $key => $value) {
+				$segment = $value . ' ' . $key;
+				$array[] = $segment;
 			}
-			$segments[strtolower($period)] = $count;
-			$seconds = $seconds % $value;
-		}
 
-		// Build the string
-		foreach ($segments as $key => $value) {
-			$segment = $value . ' ' . $key;
-			$array[] = $segment;
-		}
-
-		$str = implode(', ', $array);
+			$str = implode(', ', $array);
 		}
 		return $str;
 	}
