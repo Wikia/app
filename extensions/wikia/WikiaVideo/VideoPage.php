@@ -1165,7 +1165,7 @@ EOD;
 				$embed = '<embed ' . $auto . ' src="' . $url . '" width="' . $width . '" height="' . $height . '" wmode="transparent"" allowFullScreen="true" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>';
                                 break;
                         case self::V_YOUTUBE:
-				$url = 'http://www.youtube.com/v/' . $this->mId;
+				$url = 'http://www.youtube.com/v/' . $this->mId . ($autoplay ? '&autoplay=1' : '');
                                 break;
 			case self::V_SEVENLOAD:
 				$code = 'custom';
