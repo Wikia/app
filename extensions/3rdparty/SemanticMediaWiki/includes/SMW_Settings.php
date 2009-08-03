@@ -101,7 +101,7 @@ $smwgToolboxBrowseLink = true;
 # This affects only semantic annotations, not warnings that are displayed by
 # inline queries or other features.
 ##
-$smwgInlineErrors = true;
+$smwgInlineErrors = empty( $smwgInlineErrors ) ? $smwgInlineErrors : true;
 ##
 
 ###
