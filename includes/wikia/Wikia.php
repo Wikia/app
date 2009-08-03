@@ -524,9 +524,6 @@ class Wikia {
 	 */
 	static public function timeDuration($seconds, $use = null, $zeros = false) {
 
-		if( empty( $seconds ) ) {
-			return "0 sec"
-		}
 		// Define time periods
 		$periods = array (
 			'years'     => 31556926,
