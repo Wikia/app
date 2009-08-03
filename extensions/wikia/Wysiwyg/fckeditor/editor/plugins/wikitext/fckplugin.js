@@ -68,6 +68,12 @@ FCK.LoadTime = false;
 FCK.onWysiwygLoad = function() {
 	// run just once
 	if (FCK.LoadTime == false) {
+		// show first edit message
+		if (window.parent.wysiwygFirstEditMessage) {
+			var msg = window.parent.wysiwygFirstEditMessage;
+			FCK.wysiwygShowFirstEditMessage(msg.title, msg.body);
+		}
+
 		// unblock save / preview / show changes button
 		FCK.ToggleEditButtons( false );
 		FCK.log('Save / preview / show changes buttons have been unblocked');
@@ -680,6 +686,40 @@ FCK.ShowConfirm = function(question, title, callback, afterInit) {
 
 		// show modal
 		FCK.jQuery("#wysiwygConfirm").makeModal({width: 450});
+	});
+}
+
+// show first time edit message
+FCK.wysiwygShowFirstEditMessage = function(title, message) {
+	// client-site check for anons/logged-in
+	value = FCK.jQuery.cookies.get('wysiwyg-cities-edits');
+	if (value) {
+		FCK.log('first edit msg cookie found');
+		return;
+	}
+
+	// tracking
+	FCK.Track('/firstTimeEditMessage');
+
+	// create and show message popup
+	FCK.ShowConfirm(message, title, function() {
+		var checkbox = window.parent.document.getElementById('wysiwyg-first-edit-dont-show-me');
+
+		if (checkbox && checkbox.checked) {
+			FCK.log('storing new value of wysiwyg-cities-edits');
+
+			// for logged in store in DB
+			if (window.parent.wgUserName) {
+				// send AJAX request
+				FCK.jQuery.post(window.parent.wgScript + '?action=ajax&rs=WysiwygFirstEditMessageSave');
+			}
+
+			// for anons/logged-in store in cookie (logged-in included - RT #17951)
+			FCK.jQuery.cookies.set('wysiwyg-cities-edits', '1', {hoursToLive: 24 * 365 * 5, domain: document.domain, path: '/'});
+		}
+	}, function() {
+		// hide cancel button before dialog is shown
+		FCK.jQuery('#wysiwygConfirmCancel').hide();
 	});
 }
 
