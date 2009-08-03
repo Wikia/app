@@ -1203,8 +1203,6 @@ function WysiwygParserHookCallback($input, $args, $parser) {
 function WysiwygFirstEditMessageShow() {
 	global $wgUser, $wgCityId;
 
-	//return true; // debug only!
-
 	// for anon users we have JS logic
 	if ($wgUser->isAnon()) {
 		return true;
@@ -1253,12 +1251,13 @@ function WysiwygFirstEditMessage() {
 			'<div style="margin: 8px 0"><input type="checkbox" id="wysiwyg-first-edit-dont-show-me" />'.
 			'<label for="wysiwyg-first-edit-dont-show-me">' . wfMsg('wysiwyg-first-edit-dont-show-me') . '</label></div>';
 
-		// properly encode values for JS
-		$title = Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-title') );
-		$body = Xml::encodeJsVar($body);
-		$dismiss = Xml::encodeJsVar( wfMsg('wysiwyg-first-edit-dismiss') );
+		// dialog data
+		$dialog = array(
+			'title' => wfMsg('wysiwyg-first-edit-title'),
+			'body' => $body,
+		);
 
-		$wgOut->addInlineScript('addOnloadHook(function() { wysiwygShowFirstEditMessage(' . $title . ', ' . $body . ', ' . $dismiss  . '); });');
+		$wgOut->addInlineScript('var wysiwygFirstEditMessage = ' . Wikia::json_encode($dialog) . ';');
 	}
 
 	return;

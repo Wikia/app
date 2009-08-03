@@ -32,38 +32,6 @@ function wysiwygInitInSourceMode(src) {
 	}, 250);
 }
 
-// show first time edit message
-function wysiwygShowFirstEditMessage(title, message, dismiss) {
-	// client-site check for anons/logged-in
-	value = $.cookies.get('wysiwyg-cities-edits');
-	if (value) {
-		$().log('first edit msg cookie found', 'Wysiwyg');
-		return;
-	}
-
-	// tracking
-	FCK.Track('/firstTimeEditMessage');
-
-	// create and show message popup
-	FCK.ShowConfirm(message, title, function() {
-		var checkbox = document.getElementById('wysiwyg-first-edit-dont-show-me');
-
-		if (checkbox && checkbox.checked) {
-			YAHOO.log('Wysiwyg: storing new value of wysiwyg-cities-edits');
-			// for logged in store in DB
-			if (wgUserName) {
-				// send AJAX request
-				sajax_do_call('WysiwygFirstEditMessageSave', [], function() {});
-			}
-			// for anons/logged-in store in cookie (logged-in included - RT #17951)
-			$.cookies.set('wysiwyg-cities-edits', '1', {hoursToLive: 24 * 365 * 5, domain: document.domain, path: '/'});
-		}
-	}, function() {
-		// hide cancel button before dialog is shown
-		$('#wysiwygConfirmCancel').hide();
-	});
-}
-
 function initEditor() {
 	// hide link to WikiaMiniUpload
 	if($G('wmuLink')) {
