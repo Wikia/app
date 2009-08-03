@@ -139,9 +139,17 @@ class MonoBookTemplate extends QuickTemplate {
 <?php	}
 		if($this->data['trackbackhtml']) print $this->data['trackbackhtml']; ?>
 	</head>
+<?php
+	global $wgTitle;
+	if (Title::newMainPage()->getArticleId() == $wgTitle->getArticleId()) {
+		$isMainpage = ' mainpage';
+	} else {
+		$isMainpage = null;
+	}
+?>
 <body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
- class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?> wikiaSkinMonobook">
+ class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?> <?php $this->text('skinnameclass') ?> wikiaSkinMonobook<?=$isMainpage?>">
 <?php $this->navbar(); ?>
 	<div id="globalWrapper">
 	<div id="column-content">

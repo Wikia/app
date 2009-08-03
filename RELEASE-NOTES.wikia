@@ -1,5 +1,6 @@
 == Changes since 200908.1 ==
 * rt#20330: New starter. (Nef)
+* rt#20185: Mainpage class tag for monobook. (Nef)
 
 == Changes since 200907.5 ==
 * rt#20139: WikiFactoryLoader: Dofus redirect oddities (eloy)
