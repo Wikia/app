@@ -525,7 +525,7 @@ class Wikia {
 	static public function timeDuration( $seconds, $use = null, $zeros = false ) {
 		$seconds = ceil( $seconds );
 		if( $seconds == 0 || $seconds == 1 ) {
-			$str = "{$second} sec";
+			$str = "{$seconds} sec";
 		}
 		else {
 
