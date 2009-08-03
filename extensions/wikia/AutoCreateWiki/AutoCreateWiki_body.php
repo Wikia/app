@@ -69,12 +69,11 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mWikiData = array();
 
 		/**
-		 * hub starters
+		 * hub starters (empty now)
+		 *
+		 * @see rt#20345
 		 */
 		$this->mStarters = array(
-			self::STARTER_GAME => 3578,
-			self::STARTER_ENTE => 3711,
-			self::STARTER_SPRT => 12698
 		);
 
 		/**
