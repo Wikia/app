@@ -194,6 +194,10 @@ NWB.handleFirstPages = function (event){
 			}
 		);
 
+		// Reverse the order of the pages, so that the first one is created last,
+		// so that when they show up on home page, they are in correct order
+		pages.reverse();
+
 		Mediawiki.waiting();
                 Mediawiki.apiCall({
                         "action" : "createmultiplepages",
