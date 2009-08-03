@@ -2,12 +2,12 @@
 
 use strict;
 use URI;
-use URI::Escape;
 use FCGI;
 use Sys::Syslog qw(:standard :macros);
 use Image::Magick;
 use Image::LibRSVG;
 use File::LibMagic;
+use IO::File;
 
 #
 # debug
@@ -19,12 +19,18 @@ my $syslog = 1;
 my $basepath = "/images";
 my $flm = File::LibMagic->new();
 
+#
+# if thumbnail was really generated
+#
+my $transformed = 0;
+my $mimetype = "text/plain";
+
 openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
 while( $request->Accept() >= 0 ) {
     my $env = $request->GetEnvironment();
     my $redirect_to = "";
-    # my $request_uri = "http://images.wikia.com/central/images/thumb/b/bf/Wiki_wide.png/50px-Wiki_wide.png"; # test url
-	my $request_uri = "http://images.wikia.com/firefly/images/thumb/e/e0/Bsag-logo.svg/120px-Bsag-logo.svg.png"; # test url
+    my $request_uri = "http://images.wikia.com/central/images/thumb/b/bf/Wiki_wide.png/50px-Wiki_wide.png"; # test url
+	#my $request_uri = "http://images.wikia.com/firefly/images/thumb/e/e0/Bsag-logo.svg/120px-Bsag-logo.svg.png"; # test url
     my $referer = "";
 
     #
@@ -44,11 +50,13 @@ while( $request->Accept() >= 0 ) {
     my @parts = split( "/", $path );
     my $last = pop @parts;
 
+
     #
     # if last part of $request_uri is \d+px-\. we redirecting this to special
     # page. otherwise we sending 404 error
-    #
-    if( $last =~ /^\d+px\-/ ) {
+	#
+	my ( $width ) = $last =~ /^(\d+)px\-/;
+    if( $width ) {
         syslog( LOG_INFO, qq{302 $request_uri $referer} ) if $syslog;
 
 		#
@@ -69,33 +77,55 @@ while( $request->Accept() >= 0 ) {
 		# then find proper thumbnailer for file, first check if this is svg
 		# thumbnail request. mimetype will be used later in header
 		#
-		my $mimetype = $flm->checktype_filename( $original );
-		if( $mimetype =~ /^image\/svg\+xml/ ) {
+		if( -f $original ) {
+			$mimetype = $flm->checktype_filename( $original );
+
 			#
-			# RSVG thumbnailer
+			# read original file, thumbnail it, store on disc
 			#
+
+			if( $mimetype =~ /^image\/svg\+xml/ ) {
+				#
+				# RSVG thumbnailer
+				#
+
+				$transformed = 1;
+			}
+			else {
+				#
+				# for other else use Image::Magick
+				#
+				my $image = new Image::Magick;
+				$image->Read( $original );
+				my $origw  = $image->Get( 'width' );
+				my $origh  = $image->Get( 'height' );
+				if( $origw && $origh ) {
+					my $height = $width * $origh / $origw;
+					$image->Resize( "geometry" => "${width}x${height}>", "blur" => 0.9 );
+					$image->Write( "filename" => $thumbnail );
+
+					if( -f $thumbnail ) {
+						#
+						# serve file if is ready to serve
+						#
+						$transformed = 1;
+						print "HTTP/1.1 200 OK\r\n";
+				        print "Content-type: $mimetype\r\n\r\n";
+						my $fh = new IO::File $thumbnail, O_RDONLY;
+						if( defined $fh ) {
+							binmode $fh;
+							print <$fh>;
+							undef $fh;
+						}
+					}
+				}
+				else {
+			        syslog( LOG_INFO, qq{cannot read original file $original} ) if $syslog;
+				}
+			}
 		}
-		else {
-			#
-			# for other else use Image::Magick
-			#
-		}
-
-		#
-		# read original file, thumbnail it, store on disc
-		#
-		print Dumper( $thumbnail );
-		print Dumper( $original );
-
-
-		#
-		# serve file if is ready to serve
-		#
-        print "HTTP/1.1 302 Moved Temporarily\r\n";
-        print "Location: $redirect_to\r\n";
-        print "Content-type: $mimetype\r\n\r\n";
     }
-    else {
+	if( ! $transformed ) {
         syslog( LOG_INFO, qq{404 $request_uri $referer} ) if $syslog;
         print "Status: 404\r\n";
         print "Connection: close\r\n";
