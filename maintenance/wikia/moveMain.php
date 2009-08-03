@@ -34,11 +34,11 @@ $target = isset( $options['t'] ) ? $options['t'] : $wgSitename;
 
 $wgUser = User::newFromName( $userName );
 if ( !$wgUser ) {
-				print "Invalid username\n";
-				exit( 1 );
+	print "Invalid username\n";
+	exit( 1 );
 }
 if ( $wgUser->isAnon() ) {
-				$wgUser->addToDatabase();
+	$wgUser->addToDatabase();
 }
 
 /**
@@ -78,20 +78,20 @@ if( !is_null( $sourceTitle ) ) {
                 $mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_MINOR | EDIT_FORCE_BOT );
                 print " - Page moved.\n";
 
-		/**
-		 * also move associated talk page if it exists
-		 */
-		$sourceTalkTitle = $sourceTitle->getTalkPage();
-		$targetTalkTitle = $targetTitle->getTalkPage();
-		if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
-			print $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText();
-			$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO");
-			if ( $err === true ) {
-				print " - Moved talk page.\n";
-			} else {
-				print " - Found talk page but moving FAILED: " . var_dump($err) . "\n";
-			}
-		}
+				/**
+				 * also move associated talk page if it exists
+				 */
+				$sourceTalkTitle = $sourceTitle->getTalkPage();
+				$targetTalkTitle = $targetTitle->getTalkPage();
+				if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
+					print $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText();
+					$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO");
+					if ( $err === true ) {
+						print " - Moved talk page.\n";
+					} else {
+						print " - Found talk page but moving FAILED: " . var_dump($err) . "\n";
+					}
+				}
             }
         }
         else {
@@ -100,6 +100,6 @@ if( !is_null( $sourceTitle ) ) {
     }
 }
 else {
-				print "sourceTitle is null.\n";
-				exit(1);
+	print "sourceTitle is null.\n";
+	exit(1);
 }
