@@ -6,18 +6,25 @@ use URI::Escape;
 use FCGI;
 use Sys::Syslog qw(:standard :macros);
 use Image::Magick;
+use Image::LibRSVG;
+use File::LibMagic;
 
+#
+# debug
+#
 use Data::Dumper;
 
 my $request = FCGI::Request();
 my $syslog = 1;
 my $basepath = "/images";
+my $flm = File::LibMagic->new();
 
 openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
 while( $request->Accept() >= 0 ) {
     my $env = $request->GetEnvironment();
     my $redirect_to = "";
-    my $request_uri = "http://images.wikia.com/central/images/thumb/b/bf/Wiki_wide.png/50px-Wiki_wide.png"; # test url
+    # my $request_uri = "http://images.wikia.com/central/images/thumb/b/bf/Wiki_wide.png/50px-Wiki_wide.png"; # test url
+	my $request_uri = "http://images.wikia.com/firefly/images/thumb/e/e0/Bsag-logo.svg/120px-Bsag-logo.svg.png"; # test url
     my $referer = "";
 
     #
@@ -27,12 +34,15 @@ while( $request->Accept() >= 0 ) {
     $referer = $env->{"HTTP_REFERER"} if $env->{"HTTP_REFERER"};
 
     #
-    # get last part of uri
+    # get last part of uri, remove first slash if exists
     #
 	my $uri = URI->new( $request_uri );
-    my @parts = split( "/", $uri->path );
+	my $path  = $uri->path;
+	$path =~ s/^\///;
+	my $thumbnail = $basepath . '/' . substr( $path, 0, 1 ) . '/' . $path;
+
+    my @parts = split( "/", $path );
     my $last = pop @parts;
-	print Dumper( \@parts );
 
     #
     # if last part of $request_uri is \d+px-\. we redirecting this to special
@@ -46,23 +56,36 @@ while( $request->Accept() >= 0 ) {
 		# subdirectories
 		#
 		my $orig = join( "/", splice( @parts, -3, 3 ) );
-		print Dumper( $orig );
 
 		#
 		# now, last part is thumbnails folder, we skip that too
 		#
 		pop @parts;
-		print Dumper( \@parts );
 
+		my $original = $basepath . '/' . substr( join( "/", @parts ), 0, 1 )
+			. '/' .  join( "/", @parts ) . '/' . $orig;
 
 		#
 		# then find proper thumbnailer for file, first check if this is svg
-		# thumbnail request
+		# thumbnail request. mimetype will be used later in header
 		#
+		my $mimetype = $flm->checktype_filename( $original );
+		if( $mimetype =~ /^image\/svg\+xml/ ) {
+			#
+			# RSVG thumbnailer
+			#
+		}
+		else {
+			#
+			# for other else use Image::Magick
+			#
+		}
 
 		#
 		# read original file, thumbnail it, store on disc
 		#
+		print Dumper( $thumbnail );
+		print Dumper( $original );
 
 
 		#
@@ -70,7 +93,7 @@ while( $request->Accept() >= 0 ) {
 		#
         print "HTTP/1.1 302 Moved Temporarily\r\n";
         print "Location: $redirect_to\r\n";
-        print "Content-type: text/html\r\n\r\n";
+        print "Content-type: $mimetype\r\n\r\n";
     }
     else {
         syslog( LOG_INFO, qq{404 $request_uri $referer} ) if $syslog;
