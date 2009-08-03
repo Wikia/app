@@ -29,6 +29,11 @@ function runBackups( $from, $to, $full, $options ) {
 		$wgMaxShellTime, $wgMaxShellFileSize;
 
 	/**
+	 * only for active
+	 */
+	$range = array( "city_public=1" );
+
+	/**
 	 * hardcoded for while
 	 */
 	$servers = array(
@@ -57,6 +62,12 @@ function runBackups( $from, $to, $full, $options ) {
 		$from = $to = $options[ "id" ];
 		$to++;
 	}
+	elseif( isset ( $options[ "even" ] ) ) {
+		$range[] = "city_id % 2 = 0";
+	}
+	elseif( isset( $options[ "odd" ] ) ) {
+		$range[] = "city_id % 2 <> 0";
+	}
 
 	/**
 	 * switch off limits for dumps
@@ -64,7 +75,6 @@ function runBackups( $from, $to, $full, $options ) {
 	$wgMaxShellTime     = 0;
 	$wgMaxShellFileSize	= 0;
 
-	$range = array( "city_public=1" );
 	if( $from !== false && $to !== false ) {
 		$range[] = sprintf( "city_id >= %d AND city_id < %d", $from, $to );
 		Wikia::log( __METHOD__, "info", "Running from {$from} to {$to}" );
