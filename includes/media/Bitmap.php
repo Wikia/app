@@ -9,7 +9,7 @@
  */
 class BitmapHandler extends ImageHandler {
 	function normaliseParams( $image, &$params ) {
-		global $wgMaxImageArea;
+		global $wgMaxImageArea, $wgMaxThumbnailArea;
 		if ( !parent::normaliseParams( $image, $params ) ) {
 			return false;
 		}
@@ -34,7 +34,13 @@ class BitmapHandler extends ImageHandler {
 		if ( $params['physicalWidth'] >= $srcWidth ) {
 			$params['physicalWidth'] = $srcWidth;
 			$params['physicalHeight'] = $srcHeight;
-			return true;
+		}
+
+		# Same as srcWidth * srcHeight above but:
+		# - no free pass for jpeg
+		# - thumbs should be smaller
+		if ( $params['physicalWidth'] * $params['physicalHeight'] > $wgMaxThumbnailArea ) {
+			return false;
 		}
 
 		return true;

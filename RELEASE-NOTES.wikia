@@ -1,4 +1,5 @@
 == Changes since 200908.1 ==
+* rt#18812: Prevent extremely large thumbnail generation. (Nef)
 * rt#20330: New starter. (Nef)
 * rt#20185: Mainpage class tag for monobook. (Nef)
 
