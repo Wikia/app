@@ -522,8 +522,8 @@ class Wikia {
 	 * @param       string  which time periods to display
 	 * @param       bool    whether to show zero time periods
 	 */
-	static public function timeDuration($seconds, $use = null, $zeros = false) {
-
+	static public function timeDuration( $seconds, $use = null, $zeros = false ) {
+		$seconds = ceil( $seconds );
 		if( $seconds == 0 || $seconds == 1 ) {
 			$str = "{$second} sec";
 		}
