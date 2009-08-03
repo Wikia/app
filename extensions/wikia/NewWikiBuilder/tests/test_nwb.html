@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/extensions/wikia/NewWikiBuilder/NewWikiBuilder.html.php</td>
+	<td>/wiki/Special:NewWikiBuilder</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,14 +82,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>id=_statusbar</td>
-	<td>glob:*Theme Choice Saved*</td>
+	<td>pause</td>
+	<td>200</td>
+	<td></td>
 </tr>
-
 <tr>
 	<td>click</td>
 	<td>id=theme_radio_brick</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=hidden_theme_submit</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,7 +101,6 @@
 	<td>id=_statusbar</td>
 	<td>glob:*Theme Choice Saved*</td>
 </tr>
-
 <!-- Step 4 -->
 <tr>
 	<td>type</td>
@@ -125,7 +128,7 @@
 <tr>
 	<td>waitForText</td>
 	<td>id=_statusbar</td>
-	<td>glob:*Articles Saved*</td>
+	<td>glob:*Pages Saved*</td>
 </tr>
 
 <!-- Look for text on the last page -->
