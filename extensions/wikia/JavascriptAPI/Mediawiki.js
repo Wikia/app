@@ -244,7 +244,7 @@ Mediawiki.editArticle = function (article, callbackSuccess, callbackError){
 		apiParams[key] = article[key];
 	}
 		
-	return Mediawiki.apiCall(apiParams,  callbackSuccess, callbackError, "POST");
+	return Mediawiki.apiCall(apiParams, callbackSuccess, callbackError, "POST");
 
       } catch (e) {
 	Mediawiki.error("Error editing article");
@@ -642,8 +642,8 @@ Mediawiki.pullArticleContentCallback = function (result) {
 
 
 	} catch (e) {
-		// Javascript Error processing login
-		Mediawiki.error("Error during article callback");
+		// Javascript Error 
+		Mediawiki.error("Error during login callback");
 		Mediawiki.d(Mediawiki.print_r(e));
 	}
 };
@@ -728,7 +728,7 @@ var MediawikiStatusBar = function (sel,options) {
 	this.elementId = "_showstatus";
 	this.prependMultiline = true;	
 	this.showCloseButton = true; 
-	this.closeTimeout = 10000;
+	this.closeTimeout = 5000;
 	
 	this.cssClass = "statusbar";
 	this.errorClass = "statusbarerror";
