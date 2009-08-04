@@ -41,7 +41,7 @@ $messages['en'] = array(
 	  "nwb-step4-text" => "<p>What do you want to write about?</p><p>Make a list of some pages you want to have on your wiki.</p>",
 	  "nwb-step4-example" => "<b>Example</b><p>For a Monster Movie Wiki, your first pages would be: <ul class=\"bullets\"><li>Dracula</li><li>Frankenstein's Monster</li><li>The Wolfman</li><li>The Mummy</li></ul></p><p>For a Board Games Wiki: <ul class=\"bullets\"><li>Monopoly</li><li>Risk</li><li>Scrabble</li><li>Trivial Pursuit</li></ul></p>",
 	  "nwb-step5-headline" => "What's Next?",
-	  "nwb-step5-text" => "<p>That's all the steps! <b>". $wgSitename ."</b> is ready to go.</p><p>Now it's time to start writing and adding some pictures, to give people something to read when they find your wiki.</p><p>The list of pages that you made in the last step has been added to a \"Coming Soon\" box on the main page. You can get started by clicking on those pages. Have fun!</p>",
+	  "nwb-step5-text" => "<p>That's all the steps! <b>". $wgSitename ."</b> is ready to go.</p><p>Now it's time to start writing and adding some pictures, to give people something to read when they find your wiki.</p><p>The list of pages that you made in the last step has been added to a \"New pages\" box on the main page. You can get started by clicking on those pages. Have fun!</p>",
 	  "nwb-preview" => "Preview",
 	  "nwb-logo-preview" => "Logo preview",
 	  "nwb-choose-logo" => "Choose logo",
