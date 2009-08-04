@@ -113,6 +113,21 @@ Mediawiki.buildQueryString = function(nvpairs, sep){
 };
 
 
+/* Take a look at the result from the api call. If it lookks ok, return true.
+ * Otherwise, return the error message 
+ */
+Mediawiki.checkResult = function (result){
+	if (typeof result != "object"){
+		// This isn't going to work out 
+		return "Error processing result";
+	} else if (result.error) {
+		return result.error.info;
+	} else {
+		return true;
+	}
+};
+
+
 Mediawiki.cookie = function(name, value, options) {
     if (typeof value != 'undefined') { // name and value given, set cookie
 	Mediawiki.d("Setting " + name + " cookie, with a value of " + value);
@@ -313,7 +328,12 @@ Mediawiki.followRedirect = function(title){
 		'redirects' : true
 	});
 
-	var out;
+	var out, result = Mediawiki.checkResult(responseData);
+	if (result !== true) {
+		Mediawiki.error("Error resolving redirect: " + result);
+		return false;
+	}
+
 	if (!Mediawiki.e(responseData.query) && Mediawiki.empty(responseData.query.redirects)){
 		out = title;
 	} else {
@@ -362,6 +382,12 @@ Mediawiki.getImageUrl = function(image){
 	};
 		
 	var result = Mediawiki.apiCall(apiParams);
+	var cresult = Mediawiki.checkResult(result);
+	if (cresult !== true) {
+		Mediawiki.error("API Error pulling image url: " + cresult);
+		return false;
+	}
+
 	try {
 		for (var pageid in result.query.pages){
 			return result.query.pages[pageid].imageinfo[0].url;
@@ -394,6 +420,12 @@ Mediawiki.getNormalizedTitle = function(title){
 		'intoken' : "edit"
 	});
 
+	var cresult = Mediawiki.checkResult(responseData);
+	if (cresult !== true) {
+		Mediawiki.error("API Error normalizing title: " + cresult);
+		return false;
+	}
+
 	// We can get two different responses back here.
 	// If it's a valid title, then it returns it directly
 	// If not, it returns it "normalized".
@@ -424,6 +456,12 @@ Mediawiki.getToken = function(titles, tokenType){
 		'titles' : titles,
 		'intoken' : tokenType
 	}); 
+
+	var cresult = Mediawiki.checkResult(responseData);
+	if (cresult !== true) {
+		Mediawiki.error("API Error obtaining token: " + cresult);
+		return false;
+	}
 
 	// We can get two different responses back here. If it's a valid title, then it returns it directly
 	// If not, it returns it "normalized". 
@@ -507,6 +545,11 @@ Mediawiki.login = function (username, password, callbackSuccess, callbackError){
 
 Mediawiki.loginCallback = function(result) {
 	Mediawiki.waitingDone();
+	var cresult = Mediawiki.checkResult(result);
+	if (cresult !== true) {
+		Mediawiki.error("API Error logging in: " + cresult);
+		return;
+	}
 	try {
 		if (result.login.result == "Success"){
 
@@ -621,10 +664,13 @@ Mediawiki.pullArticleContent = function (title, callback, options){
 
 
 Mediawiki.pullArticleContentCallback = function (result) {
+	var cresult = Mediawiki.checkResult(result);
+	if (cresult !== true) {
+		Mediawiki.error("API Error pulling content: " + cresult);
+		return;
+	}
 	try {
-		if (!Mediawiki.e(result.error)){
-			Mediawiki.runCallback(Mediawiki.pullArticleCallback, "Error pulling article: " + result.error.info); 
-		} else if (!Mediawiki.e(result.query.pages[-1])) {
+		if (!Mediawiki.e(result.query.pages[-1])) {
 			// Missing article
 			Mediawiki.runCallback(Mediawiki.pullArticleCallback, null); 
 		} else {
