@@ -1168,6 +1168,7 @@ var userAgent = navigator.userAgent.toLowerCase();
 // Figure out what browser is being used
 jQuery.browser = {
 	version: (userAgent.match( /.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/ ) || [0,'0'])[1],
+	chrome: /chrome/.test( userAgent ),
 	safari: /webkit/.test( userAgent ),
 	opera: /opera/.test( userAgent ),
 	msie: /msie/.test( userAgent ) && !/opera/.test( userAgent ),
@@ -3490,7 +3491,7 @@ jQuery.extend({
                                 // safari doesn't support either onload or readystate, create a timer
                                 // only way to do this in safari
                                 // @see http://ajaxian.com/archives/a-technique-for-lazy-script-loading
-                                if (($.browser.safari && !navigator.userAgent.match(/Version\/3/)) || $.browser.opera) { // sniff
+                                if (($.browser.safari && !navigator.userAgent.match(/Version\/3/) && $.browser.chrome == false) || $.browser.opera) {
                                         $.lazyLoaderTimer[s.url] = setInterval(function() {
                                                 if (!done && /loaded|complete/.test(document.readyState)) {
                                                         clearInterval($.lazyLoaderTimer[s.url]);
