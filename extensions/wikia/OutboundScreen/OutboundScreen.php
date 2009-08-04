@@ -16,7 +16,8 @@ $wgExtensionMessagesFiles['Outbound'] = dirname(__FILE__) . '/OutboundScreen.i18
 
 $wgOutboundScreenConfig = array(
 	'redirectDelay' => 10,
-	'anonsOnly' => true
+	'anonsOnly' => true,
+	'adLayoutMode' => !empty($wgOutboundScreenAdLayout) ? $wgOutboundScreenAdLayout : 'classic'
 );
 
 function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
