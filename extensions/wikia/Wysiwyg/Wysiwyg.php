@@ -11,7 +11,6 @@ $dir = dirname(__FILE__).'/';
 $wgExtensionMessagesFiles['Wysiwyg'] = $dir.'i18n/Wysiwyg.i18n.php';
 $wgExtensionMessagesFiles['FCK'] = $dir.'i18n/FCK.i18n.php';
 $wgAjaxExportList[] = 'Wysywig_Ajax';
-$wgAjaxExportList[] = 'WysiwygToolbarRemoveTooltip';
 $wgEnableMWSuggest = true;
 
 $wgHooks['AlternateEdit'][] = 'Wysiwyg_AlternateEdit';
@@ -175,12 +174,6 @@ function Wysiwyg_Variables(&$vars) {
 
 	sort($magicWordsUnderscore);
 	$vars['wysiwygMagicWordUnderscoreList'] = $magicWordsUnderscore;
-
-	// toolbar tooltip
-	$toolbarTooltip = WysiwygToolbarAddTooltip();
-	if (!empty($toolbarTooltip)) {
-		$vars['wysiwygToolbarTooltip'] = $toolbarTooltip;
-	}
 
 	// toolbar buckets & items
 	$toolbar = WysiwygGetToolbarData();
@@ -1261,54 +1254,6 @@ function WysiwygFirstEditMessage() {
 	}
 
 	return;
-}
-
-/**
- * Add tooltip on first usage of new toolbar
- *
- * @author Maciej Brencz <macbre at wikia-inc.com>
- */
-function WysiwygToolbarAddTooltip() {
-
-	// logic to check whether we should show tooltip
-	global $wgUser;
-
-	if ($wgUser->isAnon()) {
-		// don't show for anon user
-		$closed = true;
-	}
-	else {
-		$closed = $wgUser->getOption('wysiwyg-toolbar-closed', 0) ? true : false;
-	}
-
-	return ($closed ? false : wfMsgExt('wysiwyg-tooltip' , 'parse').'<span id="wysiwygToolbarTooltipClose">&nbsp;</span>');
-}
-
-/**
- * Permanently remove tooltip
- *
- * @author Maciej Brencz <macbre at wikia-inc.com>
- */
-function WysiwygToolbarRemoveTooltip() {
-
-	// store in user settings
-	global $wgUser;
-
-	if ($wgUser->isAnon()) {
-		return;
-	}
-
-	$wgUser->setOption('wysiwyg-toolbar-closed', 1);
-	$wgUser->saveSettings();
-
-	// commit
-	$dbw = wfGetDB( DB_MASTER );
-	$dbw->commit();
-
-	// may fix RT #17951
-	$wgUser->invalidateCache();
-
-	return new AjaxResponse('ok');
 }
 
 /**

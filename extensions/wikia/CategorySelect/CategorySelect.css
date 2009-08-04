@@ -127,36 +127,6 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 	background-color: #D2E3FF;
 }
 
-/** Tooltip **/
-#csTooltip {
-	position: absolute;
-	width: 200px;
-	background-color: #ffc;
-	border: solid 1px #dda;
-	color: #000;
-	display: none;
-}
-
-#csTooltip p {
-	font-size: 0.9em;
-	padding: 5px 15px 5px 5px;
-}
-
-#csTooltip a {
-	text-decoration: underline;
-}
-
-#csTooltipClose {
-	position: absolute;
-	top: 2px;
-	right: 2px;
-	width: 12px;
-	height: 12px;
-	background-image: url('http://images.wikia.com/common/skins/common/yui_2.5.2/container/assets/close12_1.gif');
-	cursor: pointer;
-	line-height: 12px;
-}
-
 /** View mode **/
 .csViewMode {
 	border: none !important;
