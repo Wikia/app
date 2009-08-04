@@ -1471,7 +1471,12 @@ FCK.PreviewShow = function(placeholder) {
 		previews[p].style.display = 'none';
 	}
 
-	preview.style.display = '';
+	// show current preview
+	preview.style.display = 'block';
+
+	// this way we can get preview cloud dimensions
+	FCK.PreviewCloud.style.display = 'block';
+	FCK.PreviewCloud.style.visibility = 'hidden';
 
 	// toolbar height (the one build in FCK)
 	var toolbarY = FCK.ToolbarSet._TargetElement.offsetHeight;
@@ -1486,9 +1491,14 @@ FCK.PreviewShow = function(placeholder) {
 	// calculate preview position
 	var cloudPos = {x: parseInt(x - scrollXY[0]), y: parseInt(y - scrollXY[1])};
 
-	// should we show preview over the placeholder?
+	// get dimensions of FCK editing area and preview cloud
 	var iFrameHeight = FCK.EditingArea.IFrame.offsetHeight;
+	var iFrameWidth = FCK.EditingArea.IFrame.offsetWidth;
+
 	var previewHeight = preview.offsetHeight < 250 ? preview.offsetHeight : 250;
+	var previewWidth = preview.offsetWidth;
+
+	// should we show preview over the placeholder?
 	var showUnder = true;
 
 	// reset preview height
@@ -1506,13 +1516,23 @@ FCK.PreviewShow = function(placeholder) {
 		showUnder = false;
 	}
 
+	// RT #19844
+	var backgroundLeftOffset = '-510px';
+	if (cloudPos.x + previewWidth > iFrameWidth) {
+		cloudPos.x = parseInt(iFrameWidth - previewWidth - 25);
+
+		// move /\ so it's below grey box
+		backgroundLeftOffset = parseInt(-535 + previewWidth) + 'px';
+	}
+
 	// set preview position
 	FCK.PreviewCloud.style.left = cloudPos.x + 'px';
 	FCK.PreviewCloud.style.top = cloudPos.y + 'px';
 
 	// show template preview and cloud
-	FCK.PreviewCloud.style.display = 'block';
+	FCK.PreviewCloud.style.visibility = '';
 	FCK.PreviewCloud.className = data.type + 'cloud ' + (showUnder ? 'cloudUnder' : 'cloudOver');
+	FCK.PreviewCloud.style.backgroundPosition = backgroundLeftOffset + (showUnder ? '  0' : ' 100%');
 
 	FCK.PreviewCloud.setAttribute('refid', refId);
 }
