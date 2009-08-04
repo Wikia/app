@@ -61,15 +61,51 @@ if ( document.location.protocol == 'file:' )
 			}, false ) ;
 	}
 }
+// RT #12624
+var IsIE8 = /*@cc_on!@*/false && /trident\/4.0/.test(navigator.userAgent.toLowerCase());
+// if IE8, setup a bunch of popups that use a domain we can touch....
+var GLOBAL_POPUP_BUCKET_FCK_IE8 = [];
+if(IsIE8) {
+	for(i=0; i<20; i++){
+		GLOBAL_POPUP_BUCKET_FCK_IE8.push(window.createPopup());
+	}
+}
 
 // Save a reference to the default domain.
 var FCK_ORIGINAL_DOMAIN = document.domain;
 
 if(document.domain != 'localhost') {
-	var chunks = document.domain.split('.');
-	var d = chunks.pop(); // com
-	d = chunks.pop() + '.' + d; // wikia.com
-	document.domain = d;
+
+	// change domain only for wikis with foo.wikia.com domain
+	if (document.domain.indexOf('wikia.com') > -1) {
+		var chunks = document.domain.split('.');
+		var d = chunks.pop(); // com
+		d = chunks.pop() + '.' + d; // wikia.com
+	}
+	else {
+		d = document.domain;
+	}
+
+	// report new document.domain
+	if (typeof window.console != 'undefined') {
+		window.console.log('Wysiwyg: setting document.domain = "' + d + '"');
+	}
+
+	// RT #12624
+	try {
+		// Before setting document.domain, set it for all the popups we've created.  I hope this fucking works....
+		for(i=0; i <GLOBAL_POPUP_BUCKET_FCK_IE8.length; i++) {
+			GLOBAL_POPUP_BUCKET_FCK_IE8[i].document.domain = d;
+		}
+
+		// change only when needed
+		if (document.domain != d) {
+			document.domain = d;
+		}
+	}
+	catch(e) {
+		// ...
+	}
 }
 
 // Save a reference to the detected runtime domain.
