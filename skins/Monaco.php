@@ -1575,9 +1575,11 @@ if ($wgOut->isArticle()){
 
 		if (!empty($wgAdsForceLeaderboards)){
 			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+			/* Uncomment for tandems
 			if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 				$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD', false);
 			}
+			*/
 		} else {
 			// Let the collision detection decide
 			if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
