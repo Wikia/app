@@ -47,36 +47,36 @@ if ( $wgUser->isAnon() ) {
  */
 $sourceTitle = Title::newFromText( $source );
 if( !$sourceTitle ) {
-    print "Invalid page title: $source";
-    exit(1);
+	print "Invalid page title: $source";
+	exit(1);
 }
 $mainPageArticle = new Article( $sourceTitle, 0 );
 if( !$mainPageArticle->exists() ) {
-    print "Article $source not exists.";
-    exit(1);
+	print "Article $source not exists.";
+	exit(1);
 }
 
 if( !is_null( $sourceTitle ) ) {
-    /**
-     * check target title
-     */
-    $targetTitle = Title::newFromText( $target );
-    if( !is_null( $targetTitle ) ) {
-        if( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
-            print $sourceTitle->getPrefixedText() . ' --> ' . $targetTitle->getPrefixedText();
-            $err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
-            if( $err !== true ) {
-                print " - Moving FAILED: ". var_dump($err) . "\n";
-            }
-            else {
-                /**
-                 * fill Mediawiki:Mainpage with new title
-                 */
-                $mwMainPageTitle = Title::newFromText( "Mainpage", NS_MEDIAWIKI );
-                $mwMainPageArticle = new Article( $mwMainPageTitle, 0 );
+	/**
+	 * check target title
+	 */
+	$targetTitle = Title::newFromText( $target );
+	if( !is_null( $targetTitle ) ) {
+		if( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
+			print $sourceTitle->getPrefixedText() . ' --> ' . $targetTitle->getPrefixedText();
+			$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
+			if( $err !== true ) {
+				print " - Moving FAILED: ". var_dump($err) . "\n";
+			}
+			else {
+				/**
+				 * fill Mediawiki:Mainpage with new title
+				 */
+				$mwMainPageTitle = Title::newFromText( "Mainpage", NS_MEDIAWIKI );
+				$mwMainPageArticle = new Article( $mwMainPageTitle, 0 );
 
-                $mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_MINOR | EDIT_FORCE_BOT );
-                print " - Page moved.\n";
+				$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_MINOR | EDIT_FORCE_BOT );
+				print " - Page moved.\n";
 
 				/**
 				 * also move associated talk page if it exists
@@ -88,16 +88,17 @@ if( !is_null( $sourceTitle ) ) {
 					$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO");
 					if ( $err === true ) {
 						print " - Moved talk page.\n";
-					} else {
+					}
+					else {
 						print " - Found talk page but moving FAILED: " . var_dump($err) . "\n";
 					}
 				}
-            }
-        }
-        else {
-            print "source {$source} and target {$target} are the same\n";
-        }
-    }
+			}
+		}
+		else {
+			print "source {$source} and target {$target} are the same\n";
+		}
+	}
 }
 else {
 	print "sourceTitle is null.\n";
