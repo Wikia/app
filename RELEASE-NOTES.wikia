@@ -1,4 +1,5 @@
 == Changes since 200908.1 ==
+* rt#20342: Make TabView ignore whitespaces and be case-insensitive (Macbre)
 * rt#20385: FCK saves are mad slow (Macbre)
 * rt#20360: FCK: Remove the yellow popup notices (Macbre)
 * rt#20345: Disable hub starters. (Nef)
