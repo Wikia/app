@@ -327,6 +327,10 @@ function Wysiwyg_AlternateEdit($form) {
 }
 
 function Wysiwyg_NotifySaveComplete(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision) {
+
+	// macbre: disabling it (RT #20385)
+	return true;
+
 	global $wgDevelEnvironment;
 	if(is_object($revision) && empty($wgDevelEnvironment)) {
 		global $wgSitename;
