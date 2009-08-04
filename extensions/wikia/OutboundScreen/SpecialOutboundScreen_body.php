@@ -2,6 +2,7 @@
 
 class Outbound extends UnlistedSpecialPage {
 	private $redirectDelay = 0; // in seconds
+	private $adLayoutMode;
 
 	/**
 	 * Constructor
@@ -10,8 +11,9 @@ class Outbound extends UnlistedSpecialPage {
 		global $wgOutboundScreenConfig;
 
 		$this->redirectDelay = $wgOutboundScreenConfig['redirectDelay'];
+		$this->adLayoutMode = strtoupper($wgOutboundScreenConfig['adLayoutMode']);
 
-		parent::__construct( 'Outbound'/*class*/ );
+		parent::__construct( 'Outbound' /*class*/ );
 		wfLoadExtensionMessages( 'Outbound' ); // Load internationalization messages
 	}
 
@@ -66,10 +68,34 @@ class Outbound extends UnlistedSpecialPage {
 		$adSlots = array(
 		'INVISIBLE' => AdEngine::getInstance()->getAd('EXIT_STITIAL_INVISIBLE'),
 		'BOXAD_1' => AdEngine::getInstance()->getAd('EXIT_STITIAL_BOXAD_1'),
-		//'BOXAD_1' => AdEngine::getInstance()->getAd('HOME_TOP_LEADERBOARD'), // for dev testing
+		//'BOXAD_1' => AdEngine::getInstance()->getAd('TOP_RIGHT_BOXAD'), // for dev testing
 		'BOXAD_2' => AdEngine::getInstance()->getAd('EXIT_STITIAL_BOXAD_2')
-		//'BOXAD_2' => AdEngine::getInstance()->getAd('HOME_TOP_LEADERBOARD') // for dev testing
+		//'BOXAD_2' => AdEngine::getInstance()->getAd('TOP_RIGHT_BOXAD') // for dev testing
 		);
+
+		$oTmpl->set_vars(
+			array(
+					'adSlots' => $adSlots
+			)
+		);
+
+		switch($this->adLayoutMode) {
+			case 'V1':
+				$adTemplate = 'adLayoutV1';
+				break;
+			case 'V2':
+				$adTemplate = 'adLayoutV2';
+				break;
+			case 'V3':
+				$adTemplate = 'adLayoutV3';
+				break;
+			case 'V4':
+				$adTemplate = 'adLayoutV4';
+				break;
+			case 'CLASSIC':
+			default:
+				$adTemplate = 'adLayoutClassic';
+		}
 
 		$athenaInitStuff = AdProviderAthena::getInstance()->getSetupHtml();
 		$athenaInitStuff .= AdEngine::getInstance()->providerValuesAsJavascript($wgCityId);
@@ -81,7 +107,7 @@ class Outbound extends UnlistedSpecialPage {
 					'athenaInitStuff' => $athenaInitStuff,
 					'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
 					'imagesPath' => $wgExtensionsPath . '/wikia/OutboundScreen/images',
-					'adSlots' => $adSlots
+					'adLayout' => $oTmpl->execute($adTemplate)
 				)
 		);
 

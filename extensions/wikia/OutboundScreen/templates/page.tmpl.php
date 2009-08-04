@@ -22,16 +22,6 @@
 				font-size: 12px;
 				font-family: Verdana, Arial, sans-serif;
 			}
-
-			#exitPageAd1 {
-				text-align: center;
-				padding: 5px;
-			}
-
-			#exitPageAd2 {
-				text-align: center;
-				padding: 5px;
-			}
 		</style>
 		<?= $css ?>
 
@@ -45,13 +35,7 @@
 		<?= $athenaInitStuff; ?>
 		<div>
 			<div id="pageTop" class="color1"><a href="<?= $url ?>" id="exitLink" rel="nofollow"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a></div>
-			<?=$adSlots['INVISIBLE'];?>
-			<div id="exitPageAd1">
-				<?=$adSlots['BOXAD_1'];?>
-			</div>
-			<div id="exitPageAd2">
-				<?=$adSlots['BOXAD_2'];?>
-			</div>
+			<?=$adLayout;?>
 		</div>
 	</body>
 </html>
