@@ -78,7 +78,13 @@ if (match !== null){
 		$("#logoutForm").fadeIn();
 	}
 
-	function apiFailed(msg){
+	function apiFailed(reqObj, msg, error){
+       		Mediawiki.waitingDone();
+		if (typeof msg == "undefined" && typeof reqObj == "string"){
+			msg = reqObj;
+		} else if (typeof msg == "object"){
+               		msg = Mediawiki.print_r(msg);
+		}
 		Mediawiki.updateStatus("ERROR from API: " + msg, true);
 	}
 	</script>
