@@ -106,7 +106,7 @@ NWB.finalize = function (redir){
 	/* Issue a purge request */
         Mediawiki.updateStatus(NWB.msg("nwb-finalizing"));
 	Mediawiki.waiting();
-        var mainPageEnd = Mediawiki.followRedirect("Main Page"); // Should be cached.
+        var mainPageEnd = Mediawiki.followRedirect("Main Page", false); // Should be cached.
         var result = Mediawiki.apiCall({
 		"action" : "purge",
 		"titles" : mainPageEnd});
@@ -153,7 +153,8 @@ NWB.handleDescriptionForm = function (event){
              // Save the article
              Mediawiki.updateStatus(NWB.msg("nwb-saving-description"));
 	     Mediawiki.waiting();
-	     var mainPageEnd = Mediawiki.followRedirect("Main Page"); // Should be cached.
+	     var mainPageEnd = Mediawiki.followRedirect("Main Page", false); // Should be cached.
+	     Mediawiki.waiting();
              Mediawiki.editArticle({
                   "title": mainPageEnd,
                   "summary": "",
@@ -294,8 +295,8 @@ NWB.iframeFormInit = function (f){
 		return false;
 	}
 
-   	Mediawiki.waiting();
 	Mediawiki.updateStatus(NWB.msg("nwb-uploading-logo"), false, 30000);
+   	Mediawiki.waiting();
 	return true;
 };
         
