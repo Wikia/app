@@ -483,14 +483,14 @@ td.childrenHidden textarea, td.childrenHidden iframe
 }
 
 .cloudUnder {
-	background-image: url('../../css/images/template_cloud_bg.gif');
-	background-position: -10px 0;
+	background-image: url('../../css/images/template_cloud_bg.gif?2');
+	background-position: -510px 0;
 	padding-top: 9px;
 }
 
 .cloudOver {
-	background-image: url('../../css/images/template_cloud_bg_over.gif');
-	background-position: -10px 100%;
+	background-image: url('../../css/images/template_cloud_bg_over.gif?2');
+	background-position: -510px 100%;
 	padding-bottom: 9px;
 }
 
