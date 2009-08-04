@@ -310,7 +310,9 @@ Mediawiki.error = function (msg){
 
 Mediawiki.followRedirect = function(title, useCache){
      try {
-	useCache = useCache || true;
+	if (typeof useCache == "undefined") {
+		useCache = true;
+	}
 
 	if (Mediawiki.e(Mediawiki.redirectCache)){
 		Mediawiki.redirectCache = {};
