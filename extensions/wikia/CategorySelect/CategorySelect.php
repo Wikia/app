@@ -33,7 +33,6 @@ $wgExtensionMessagesFiles['CategorySelect'] = dirname(__FILE__) . '/CategorySele
 $wgAjaxExportList[] = 'CategorySelectAjaxGetCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxParseCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxSaveCategories';
-$wgAjaxExportList[] = 'CategorySelectRemoveTooltip';
 $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
 $wgAjaxExportList[] = 'CategorySelectGetCategories';
 
@@ -479,12 +478,10 @@ function CategorySelectGenerateHTMLforEdit($formId = '') {
 	$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/CategorySelect/CategorySelect.css?$wgStyleVersion\" />");
 
 	$categories = is_null($wgCategorySelectMetaData) ? '' : CategorySelectChangeFormat($wgCategorySelectMetaData['categories'], 'array', 'wiki');
-	$tooltip = CategorySelectAddTooltip();
 
 	$result = '
 	<script type="text/javascript">document.write(\'<style type="text/css">#csWikitextContainer {display: none}</style>\');</script>
 	<div id="csMainContainer">
-		' . $tooltip . '
 		<div id="csSuggestContainer">
 			<div id="csHintContainer">' . wfMsg('categoryselect-suggest-hint') . '</div>
 		</div>
@@ -528,51 +525,6 @@ function CategorySelectGenerateHTMLforView() {
 	$ar->setCacheDuration(60 * 60);
 
 	return $ar;
-}
-
-/**
- * Add tooltip on first usage of Category Select
- *
- * @author Maciej Brencz <macbre at wikia-inc.com>
- */
-function CategorySelectAddTooltip() {
-
-	// logic to check whether we should show tooltip
-	global $wgUser;
-
-	if ($wgUser->isAnon()) {
-		// don't show for anon user
-		$closed = true;
-	}
-	else {
-		$closed = $wgUser->getOption('category-select-closed', 0) ? true : false;
-	}
-
-	return ($closed ? '' : '<div id="csTooltip">'.wfMsgExt('categoryselect-tooltip' , 'parse').'<span id="csTooltipClose">&nbsp;</span></div>');
-}
-
-/**
- * Permanently remove tooltip
- *
- * @author Maciej Brencz <macbre at wikia-inc.com>
- */
-function CategorySelectRemoveTooltip() {
-
-	// store in user settings
-	global $wgUser;
-
-	if ($wgUser->isAnon()) {
-		return;
-	}
-
-	$wgUser->setOption('category-select-closed', 1);
-	$wgUser->saveSettings();
-
-	// commit
-	$dbw = wfGetDB( DB_MASTER );
-	$dbw->commit();
-
-	return new AjaxResponse('ok');
 }
 
 /**

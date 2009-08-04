@@ -39,33 +39,3 @@ form #toolbar img {
 	margin: 0 5px;
 	vertical-align: text-top;
 }
-
-/** Tooltip **/
-#wysiwygToolbarTooltip {
-	position: absolute;
-	width: 200px;
-	background-color: #ffc;
-	border: solid 1px #dda;
-	color: #000;
-	z-index: 100;
-}
-
-#wysiwygToolbarTooltip p {
-	font-size: 0.9em;
-	padding: 5px 15px 5px 5px;
-}
-
-#wysiwygToolbarTooltip a {
-	text-decoration: underline;
-}
-
-#wysiwygToolbarTooltipClose {
-	position: absolute;
-	top: 2px;
-	right: 2px;
-	width: 12px;
-	height: 12px;
-	background-image: url('http://images.wikia.com/common/skins/common/yui_2.5.2/container/assets/close12_1.gif');
-	cursor: pointer;
-	line-height: 12px;
-}

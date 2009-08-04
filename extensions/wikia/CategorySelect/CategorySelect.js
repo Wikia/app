@@ -544,20 +544,6 @@ function initHandlers() {
 	}
 }
 
-function initTooltip() {
-	// Init tooltip
-	var tooltip =  YAHOO.util.Dom.get('csTooltip');
-
-	if (tooltip) {
-		tooltip.style.display = 'block';
-		tooltip.style.top = ((jQuery('#csTooltip').height() + 8) * -1) + 'px';
-		YAHOO.util.Event.addListener('csTooltipClose', 'click', function(e) {
-			YAHOO.util.Dom.get('csTooltip').style.display = 'none';
-			sajax_do_call('CategorySelectRemoveTooltip', [], function() {});
-		});
-	}
-}
-
 //`view article` mode
 function showCSpanel() {
 	csType = 'view';
@@ -633,8 +619,5 @@ wgAfterContentAndJS.push(function() {
 		initializeCategories();
 		//show switch after loading categories
 		$G('csSwitchViewContainer').style.display = 'block';
-
-		// Init tooltip
-		initTooltip();
 	}
 });
