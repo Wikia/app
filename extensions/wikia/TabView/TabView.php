@@ -14,7 +14,7 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'TabView',
-	'author' => 'Inez Korczynski',
+	'author' => array('Inez Korczynski', 'Maciej Brencz'),
 	'description' => 'Gives an easy way of combining pages into one page with a tab for each sub-page.',
 	'url' => 'http://help.wikia.com/wiki/Tabview',
 );
@@ -53,6 +53,7 @@ function tabviewRender($input, $params, &$parser ) {
 	$out .= '<div class="yui-navset yui-navset-top"><ul id="flytabs_'.$id.'" class="yui-nav"></ul></div>';
 	$out .= '</div>';
 
+	// remove empty lines
 	$tabs = array_filter(explode("\n",$input));
 
 	if(isset($tabs[0]) && $tabs[0] == "") {
@@ -66,7 +67,7 @@ function tabviewRender($input, $params, &$parser ) {
 	$optins = array();
 
 	foreach($tabs as $tab) {
-		$onetab = explode('|', $tab);
+		$onetab = explode('|', trim($tab));
 
 		if(isset($onetab[0]) && strpos($onetab[0], '<') === false && strpos($onetab[0], '>') === false) {
 			$titleObj = Title::newFromText($onetab[0]);
@@ -79,11 +80,11 @@ function tabviewRender($input, $params, &$parser ) {
 					}
 					if(isset($onetab[2])) {
 						if($onetab[2] != '') {
-							$noCache = ($onetab[2] == 'false');
+							$noCache = (strtolower($onetab[2]) == 'false');
 						}
 						if(isset($onetab[3])) {
 							if($onetab[3] != '') {
-								$active = ($onetab[3] == 'true');
+								$active = (strtolower($onetab[3]) == 'true');
 							}
 						}
 					}
