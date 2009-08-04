@@ -84,7 +84,9 @@ class AdProviderAthena implements iAdProvider {
 	}
 
         public function getAd($slotname, $slot){
-		return '<script type="text/javascript">Athena.callAd("' . $slotname . '");</script>' . "\n";
+		$out = $this->getSetupHtml();
+		$out .= '<script type="text/javascript">Athena.callAd("' . $slotname . '");</script>' . "\n";
+		return $out;
         }
 
 }
