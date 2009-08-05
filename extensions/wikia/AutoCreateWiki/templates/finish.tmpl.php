@@ -8,7 +8,7 @@
 <div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
 <br />
 <!--
-<?php print_r($GLOBALS) ?>
+<?php echo htmlspecialchars(print_r($GLOBALS, true)) ?>
 -->
 <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
 <div class="awc-domain"><a href="<?=$domain?>"><?=$domain?></a></div>
