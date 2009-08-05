@@ -2164,10 +2164,6 @@ if(count($wikiafooterlinks) > 0) {
 <?php		wfProfileIn( __METHOD__ . '-widgets'); ?>
 
 			<div id="sidebar_1" class="sidebar">
-<?php ini_set('display-errors', true);
-ini_set('log_errors', true);
-ini_set('error_log', '/tmp/nickerros');
-?>
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
 
 			<?php
