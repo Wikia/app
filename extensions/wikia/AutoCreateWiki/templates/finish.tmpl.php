@@ -7,10 +7,10 @@
 
 <div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
 <br />
-<div style="font-style: normal;" class="clearfix" id="nwb_link" align="center">
+<div style="font-style: normal;" class="clearfix" id="nwb_link">
 
         <div style="position: absolute; left: 50%;">
-                <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
+                <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
         </div>
 </div>
 
