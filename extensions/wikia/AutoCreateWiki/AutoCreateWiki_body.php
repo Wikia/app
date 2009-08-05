@@ -651,7 +651,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * move main page
 		 */
-		$this->log( "move main page to wgSitename" );
 		$cmd = sprintf(
 			"SERVER_ID=%d %s %s/maintenance/wikia/moveMain.php -t '%s' --conf %s",
 			$this->mWikiId,
@@ -661,7 +660,8 @@ class AutoCreateWikiPage extends SpecialPage {
 			$wgWikiaLocalSettingsPath
 		);
 		$this->log($cmd);
-		wfShellExec( $cmd );
+		$output = wfShellExec( $cmd );
+		$this->log( $output );
 
 
 
