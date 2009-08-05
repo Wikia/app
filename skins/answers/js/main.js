@@ -206,23 +206,28 @@ jQuery("#recent_unanswered_questions").ready( renderQuestions );
 
 
 jQuery("#related_answered_questions").ready(function() {
-	if ( wgContentLanguage == 'en' ) {
-		// trial for en.answers only (rt#18568)
-		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + 'Auto' + "&format=json&wklimit=5";
-	} else {	
-		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&wklimit=5";
-	}
-	jQuery.get( url, "", function( oResponse ){
-		eval("j=" + oResponse);
-		if( j.query.wkpagesincat ){
+	var category = null;
+	$("#mw-normal-catlinks > span > a, #mw-hidden-catlinks > span > a").each(function (e) {
+		// pick first category...
+		if (category == null) {
+			// ...but skip un/answered cats
+			/* if (category not in ... ) { FIXME do the skipping part <-; */
+				category = $(this).attr("href").replace(/^.*:/, "");
+			/* } */
+		}
+	});
+	url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categoriesonanswers&coatitle=" + category + "&coaanswered=yes&coalimit=5";
+	jQuery.getJSON( url, "", function( j ){
+		if( j.query.categoriesonanswers) {
 			html = "";
-			for( related_q in j.query.wkpagesincat ){
-				page = j.query.wkpagesincat[related_q];
-				html += "<li><a href=\"" + page.url + "\">" + page.title.replace(/_/g," ") + "?</a></li>";
+			for( var recent_q in j.query.categoriesonanswers ){
+				var page = j.query.categoriesonanswers[recent_q];
+				var url  = page.title.replace(/ /g,"_");
+				var text = page.title + "?";
+				html += "<li><a href=\"/wiki/" + url + "\">" + text + "</a></li>";
 			}
 			jQuery("#related_answered_questions").prepend( html );
 		}
-		
 	});
 });
 
