@@ -28,7 +28,7 @@ EOT;
 }
 **/
 
-$userName = isset( $options['u'] ) ? $options['u'] : 'Maintenance script';
+$userName = isset( $options['u'] ) ? $options['u'] : "CreateWiki script";
 $source = isset( $options['s'] ) ? $options['s'] : wfMsgForContent('Mainpage');
 $target = isset( $options['t'] ) ? $options['t'] : $wgSitename;
 
