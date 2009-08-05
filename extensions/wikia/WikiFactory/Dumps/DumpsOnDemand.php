@@ -88,9 +88,10 @@ class DumpsOnDemand {
 	static public function sendMail() {
 		global $wgDBname, $wgServer, $wgCityId, $wgUser;
 
+		$title = SpecialPage::getTitleFor( "Statistics" );
 		$body = sprintf(
-			"Database dump request for %s, city id %d, url %s\nRequested by %s\n",
-			$wgDBname, $wgCityId, $wgServer, $wgUser->getName()
+			"Database dump request for %s, city id %d\nurl %s\nRequested by %s\n",
+			$wgDBname, $wgCityId, $title->getFullUrl(), $wgUser->getName()
 		);
 
 		UserMailer::send(
