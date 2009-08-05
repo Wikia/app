@@ -13,13 +13,13 @@ global $wgLanguageCode;
 if ($wgLanguageCode == "en"){
 ?>
 
-<div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
-
 <div style="font-style: normal;" class="clearfix" id="nwb_link">
-	<div align="center">
-		<a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big></a>
-	</div>
+
+        <div style="position: absolute; left: 50%;">
+                <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
+        </div>
 </div>
+
 
 <?php } else { ?>
 <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
