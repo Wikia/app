@@ -651,6 +651,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * move main page
 		 */
+		$this->log( "move main page to wgSitename" );
 		$cmd = sprintf(
 			"SERVER_ID=%d %s %s/maintenance/wikia/moveMain.php.php --conf %s",
 			$this->mWikiId,
@@ -683,11 +684,6 @@ class AutoCreateWikiPage extends SpecialPage {
 		);
 		$this->log( "Add local maintenance task" );
 
-		/**
-		 * set new db as readonly (while Task Manager don't finish its job)
-		 */
-		$this->log( "Set new Wiki as readonly" );
-		$isset = WikiFactory::setVarByName('wgReadOnly', $this->mWikiId, "This wiki has been locked to edits (AWC process)");
 
 		/**
 		 * show total time
