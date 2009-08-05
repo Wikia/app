@@ -700,7 +700,14 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array( "domain" => $this->mWikiData[ "url" ] ) );
-		$sFinishText = $oTmpl->execute("finish");
+		
+		// New Wiki Builder isn't supported by all languages yet
+		$NewWikiBuilderLanguages = array('en');
+		if (in_array($this->mWikiData[ "language" ], $NewWikiBuilderLanguages)){
+			$sFinishText = $oTmpl->execute("finish");
+		} else {
+			$sFinishText = $oTmpl->execute("finish_old");
+		}
 		$this->log( "return " . $this->mWikiData[ "url" ] );
 		$this->setInfoLog('END', $sFinishText);
 
