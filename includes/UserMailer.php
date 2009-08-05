@@ -126,7 +126,7 @@ class UserMailer {
 			$stomp->connect($wgStompUser, $wgStompPassword);
 			$stomp->sync = false;
 			$key = 'wikia.email.' . $category;
-			$count = is_array($to) ? count($to) : 1;
+			$count = is_array($to) ? count($to) : count(explode("\n", $to));
 			$stomp->send($key,
 				Wikia::json_encode(array(
 					'category' => $category,
