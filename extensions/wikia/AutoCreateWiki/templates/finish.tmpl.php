@@ -8,20 +8,21 @@
 <div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
 <br />
 <div style="display:none" id="english-awc">
-<div style="font-style: normal;" class="clearfix" id="nwb_link" align="center">
+  <div style="font-style: normal;" class="clearfix" id="nwb_link" align="center">
 
         <div style="position: absolute; left: 50%;">
                 <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
         </div>
+  </div>
 </div>
 
 
 <div style="display:none" id="non-english-awc">
-<div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
-<div class="awc-domain"><a href="<?=$domain?>"><?=$domain?></a></div>
+  <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
+  <div class="awc-domain"><a href="<?=$domain?>"><?=$domain?></a></div>
 
 
-<div style="display: none; font-style: normal;" class="clearfix" id="nwb_link">
+  <div style="display: none; font-style: normal;" class="clearfix" id="nwb_link">
 	<!-- Link to the New Wiki Builder. Make it trixy for now, it's not ready for everyone to see -->
 	<div class="awc-title"><?=$domain?></div>
 	<div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-has-been-created')?></div>
@@ -29,12 +30,14 @@
 	<div style="position: absolute; left: 50%; margin-top: 20px;">
 		<a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
 	</div>
+  </div>
 </div>
-</div>
+
 <script>
 if (wgUserLanguage == "en"){
 	$("#english-awc").show();
 } else {
+	$("#english-awc").hide();
 	$("#non-english-awc").show();
 }
 </script>
