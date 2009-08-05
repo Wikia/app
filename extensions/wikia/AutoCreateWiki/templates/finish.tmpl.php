@@ -6,13 +6,8 @@
 </style>
 
 <div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
-<div style="display:none"><?php echo htmlspecialchars(print_r($GLOBALS, true))?></div>
 <br />
-<?php
-global $wgLanguageCode;
-// Launch New WikiBuilder for English only until we get translations done
-if ($wgLanguageCode == "en"){
-?>
+<div style="display:none" id="english-awc">
 <div style="font-style: normal;" class="clearfix" id="nwb_link" align="center">
 
         <div style="position: absolute; left: 50%;">
@@ -21,7 +16,7 @@ if ($wgLanguageCode == "en"){
 </div>
 
 
-<?php } else { ?>
+<div style="display:none" id="non-english-awc">
 <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
 <div class="awc-domain"><a href="<?=$domain?>"><?=$domain?></a></div>
 
@@ -35,8 +30,14 @@ if ($wgLanguageCode == "en"){
 		<a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
 	</div>
 </div>
+</div>
+<script>
+if (wgUserLanguage == "en"){
+	$("#english-awc").show();
+} else {
+	$("#non-english-awc").show();
+}
+</script>
 
-
-<?php } ?>
 
 <!-- e:<?= __FILE__ ?> -->
