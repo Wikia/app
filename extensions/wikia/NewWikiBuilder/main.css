@@ -94,6 +94,7 @@ button {
 	padding: 0 15px 0 0;
 	cursor: pointer;
 	overflow: visible; /* removes extra side padding in IE */
+	margin-left: 5px;
 }
 button::-moz-focus-inner {
 	border: none;  /* overrides extra padding in Firefox */
