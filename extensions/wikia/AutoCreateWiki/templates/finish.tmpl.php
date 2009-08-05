@@ -8,11 +8,9 @@
 <div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
 <br />
 <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-subtitle')?></div>
-<div class="awc-domain"><a href="<?=$domain?>"><?=$domain?></a></div>
 
 
-<div style="display: none; font-style: normal;" class="clearfix" id="nwb_link">
-	<!-- Link to the New Wiki Builder. Make it trixy for now, it's not ready for everyone to see -->
+<div style="font-style: normal;" class="clearfix" id="nwb_link">
 	<div class="awc-title"><?=$domain?></div>
 	<div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-has-been-created')?></div>
 
