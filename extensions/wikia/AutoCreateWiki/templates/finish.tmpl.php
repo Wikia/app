@@ -11,7 +11,7 @@
 
 <div style="font-style: normal;" class="clearfix" id="nwb_link">
 
-	<div style="position: absolute; left: 50%; margin-top: 20px;">
+	<div style="position: absolute; left: 50%;">
 		<a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="margin-left: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
 	</div>
 </div>
