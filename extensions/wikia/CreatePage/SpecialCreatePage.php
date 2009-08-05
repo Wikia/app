@@ -64,7 +64,8 @@ class CreatePage extends SpecialEditPage {
 		$this->mFormData['postEditSummary'] = $wgRequest->getVal('wpSummary');
 		$this->mFormData['postCategories'] = $wgRequest->getVal('wpCategoryTextarea1');
 
-		if(empty($this->mFormData['postBody'])) {
+		$postBody = trim($this->mFormData['postBody']);
+		if(empty($postBody)) {
 			$this->mFormErrors[] = wfMsg('createpage_empty_article_body_error');
 		}
 
