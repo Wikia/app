@@ -41,8 +41,9 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
 
+//echo $wgUser->getOption('')
 		// force CategorySelect initialisation if available
-		if(function_exists('CategorySelectInitializeHooks')) {
+		if(function_exists('CategorySelectInitializeHooks') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
 			$this->mCategorySelectEnabled = true;
 			$wgRequest->setVal('action', 'edit');
 			CategorySelectInitializeHooks($this->mTitle, null);
@@ -199,10 +200,6 @@ class CreateBlogPage extends SpecialBlogPage {
 			}
 		}
 
-		// CategorySelect compatibility (restore categories from article body)
-		if($this->mCategorySelectEnabled) {
-			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
-		}
 	}
 
 	protected function createEditPage($sPostBody) {
@@ -212,6 +209,11 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	protected function renderForm() {
+		// CategorySelect compatibility (restore categories from article body)
+		if($this->mCategorySelectEnabled) {
+			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
+		}
+
 		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
 		return true;
 	}

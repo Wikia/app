@@ -26,9 +26,9 @@ abstract class SpecialEditPage extends SpecialPage {
 	}
 
 	public function execute() {
-		global $wgRequest, $wgDisableAnonymousEditig;
+		global $wgRequest, $wgDisableAnonymousEditig, $wgUser;
 		// force CategorySelect initialisation if available
-		if(function_exists('CategorySelectInit') && function_exists('CategorySelectInitializeHooks')) {
+		if(function_exists('CategorySelectInit') && function_exists('CategorySelectInitializeHooks') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
 			$this->mCategorySelectEnabled = true;
 			$tmp = $wgDisableAnonymousEditig;
 			$wgDisableAnonymousEditig = false; // set to false for forcing init
@@ -45,6 +45,11 @@ abstract class SpecialEditPage extends SpecialPage {
 	}
 
 	protected function renderForm() {
+		// CategorySelect compatibility (restore categories from article body)
+		if($this->mCategorySelectEnabled) {
+			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
+		}
+
 		$this->mEditPage->showEditForm( array($this, 'renderFormHeader') );
 		return true;
 	}
@@ -69,11 +74,6 @@ abstract class SpecialEditPage extends SpecialPage {
 			if($this->mCategorySelectEnabled) {
 				CategorySelectImportFormData( $this->mEditPage, $wgRequest );
 			}
-		}
-
-		// CategorySelect compatibility (restore categories from article body)
-		if($this->mCategorySelectEnabled) {
-			CategorySelectReplaceContent( $this->mEditPage, $this->mEditPage->textbox1 );
 		}
 
 	}
