@@ -7,7 +7,7 @@
 
 <div class="awc-title"><?=wfMsg('autocreatewiki-success-title')?></div>
 <br />
-<div style="display:none" id="english-awc">
+<div id="english-awc">
   <div style="font-style: normal;" class="clearfix" id="nwb_link" align="center">
 
         <div style="position: absolute; left: 50%;">
@@ -34,9 +34,7 @@
 </div>
 
 <script>
-if (wgUserLanguage == "en"){
-	$("#english-awc").show();
-} else {
+if (wgUserLanguage != "en"){
 	$("#english-awc").hide();
 	$("#non-english-awc").show();
 }
