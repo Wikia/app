@@ -1351,8 +1351,6 @@ class MonacoTemplate extends QuickTemplate {
 	}
 
         echo "\t\t";
-        // Note this one is safe at the top because it's an image call, so it's not blocking like GA or Quantserve
-        echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 
 	$this->html('csslinks');
 
@@ -1376,6 +1374,11 @@ class MonacoTemplate extends QuickTemplate {
 ?>
 
 	</head>
+<?php
+        // Note this one is safe at the top because it's an image call, so it's not blocking like GA or Quantserve
+        // UPdate, but do make sure it's not in the <head>
+        echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+?>
 <?php		wfProfileOut( __METHOD__ . '-head'); ?>
 <?php		wfProfileIn( __METHOD__ . '-body'); ?>
 <?php
@@ -2161,6 +2164,10 @@ if(count($wikiafooterlinks) > 0) {
 <?php		wfProfileIn( __METHOD__ . '-widgets'); ?>
 
 			<div id="sidebar_1" class="sidebar">
+<?php ini_set('display-errors', true);
+ini_set('log_errors', true);
+ini_set('error_log', '/tmp/nickerros');
+?>
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
 
 			<?php
