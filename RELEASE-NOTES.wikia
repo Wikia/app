@@ -1,4 +1,5 @@
 == Changes since 200908.1 ==
+* rt#20367: Auto Wiki Create: Move the main page before it says done, don't lock as read-only (eloy)
 * rt#19844: FCK: Template previews can go off the right side of the edit window (Macbre)
 * rt#20342: Make TabView ignore whitespaces and be case-insensitive (Macbre)
 * rt#20385: FCK saves are mad slow (Macbre)
