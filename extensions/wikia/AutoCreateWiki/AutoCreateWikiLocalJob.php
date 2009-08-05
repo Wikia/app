@@ -78,8 +78,9 @@ class AutoCreateWikiLocalJob extends Job {
 		}
 		$wgUser = User::newFromName( "CreateWiki script" );
 
-		$this->changeStarterContributions();
-		$this->moveMainPage();
+		## $this->changeStarterContributions();
+		## $this->moveMainPage();
+
 		$this->setWelcomeTalkPage();
 		$this->sendWelcomeMail();
 		$this->populateCheckUserTables();

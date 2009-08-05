@@ -648,6 +648,20 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 		$this->addCustomSettings( $this->mWikiData[ "language" ], $wgLangCreationVariables, "language" );
 
+		/**
+		 * move main page
+		 */
+		$cmd = sprintf(
+			"SERVER_ID=%d %s %s/maintenance/wikia/moveMain.php.php --conf %s",
+			$this->mWikiId,
+			$this->mPHPbin,
+			$IP,
+			$wgWikiaLocalSettingsPath
+		);
+		$this->log($cmd);
+		wfShellExec( $cmd );
+
+
 
 		/**
 		 * show congratulation message
