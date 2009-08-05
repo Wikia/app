@@ -117,11 +117,15 @@ class SendToAFriendMaintenance {
                 if ( empty($success) || $success === true ) {
                     $dbw->update( 'send_queue', array('que_sent' => 1), array('que_id' => $oEmail->que_id), __METHOD__);
                 } else {
+					//'5' for errors - do not try to send it again [see RT#20409] - Marooned
+                    $dbw->update( 'send_queue', array('que_sent' => 5), array('que_id' => $oEmail->que_id), __METHOD__);
+
                 	if (class_exists("WikiError") && WikiError::isError($success)) {
-                		wfDebug('Message could not be sent. Mailer Error: ' . $success->getMessage() . "\n\n");
+                		$error_message = "Message [queue ID = {$oEmail->que_id}] could not be sent. Mailer Error: " . $success->getMessage() . "\n\n";
 					} else {
-                    	wfDebug('Message could not be sent. Mailer Error: ' . $success . "\n\n");
+                    	$error_message = "Message [queue ID = {$oEmail->que_id}] could not be sent. Mailer Error: " . $success . "\n\n";
 					}
+					Wikia::log(__METHOD__, 'mail-failed', $error_message);
                 }
             } // \foreach
     	} // \if
