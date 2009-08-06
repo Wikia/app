@@ -44,7 +44,9 @@ class NewUserNotifier {
 				new MailAddress( $target ),
 				new MailAddress( $this->sender ),
 				wfMsgForContent( 'newusernotifsubj', $wgSitename ),
-				$this->makeMessage( $target, $this->user )
+				$this->makeMessage( $target, $this->user ),
+				null,
+				'NewUserNotifier'
 			);
 		}
 	}

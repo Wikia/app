@@ -323,7 +323,7 @@ function checkForm() {
 					? NULL : version_compare( $ver, '1.10', '<' )
 						? $replyto->toString() : $replyto;
 
-			$mailResult = userMailer( $to, $from, $subject, $this->text, $replyaddr );
+			$mailResult = userMailer( $to, $from, $subject, $this->text, $replyaddr, 'SpecialContact' );
 
 			if( WikiError::isError( $mailResult ) ) {
 				$wgOut->addWikiText( wfMsg( "usermailererror" ) . $mailResult->getMessage());
@@ -335,7 +335,7 @@ function checkForm() {
 					$cc_subject = wfMsg('emailccsubject', $this->target->getName(), $subject);
 					if( wfRunHooks( 'ContactForm', array( &$from, &$replyto, &$cc_subject, &$this->text ) ) ) {
 						wfDebug( "$fname: sending cc mail from ".$from->toString()." to ".$replyto->toString()."\n" );
-						$ccResult = userMailer( $replyto, $from, $cc_subject, $this->text );
+						$ccResult = userMailer( $replyto, $from, $cc_subject, $this->text, null, 'SpecialContact' );
 						if( WikiError::isError( $ccResult ) ) {
 							// At this stage, the user's CC mail has failed, but their
 							// original mail has succeeded. It's unlikely, but still, what to do?

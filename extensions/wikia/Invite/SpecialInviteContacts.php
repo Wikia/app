@@ -71,10 +71,10 @@ EOF;
 						$headers .= "MIME-Version: 1.0\n";
 						$headers .= "Content-Type: text/html; charset=ISO-8859-1\n";
 						mail($to,$subject,$message,$headers); */
-						userMailer( new MailAddress( $to ), new MailAddress( $from ), $subject, $message );
+						userMailer( new MailAddress( $to ), new MailAddress( $from ), $subject, $message, null, 'InviteContacts' );
 					} else {
 						//mail($to, $subject, $message, "From: $from\r\nReply-To:$sendersemail");
-						userMailer( new MailAddress( $to ), new MailAddress( $from ), $subject, $message, new MailAddress( $sendersemail ) );
+						userMailer( new MailAddress( $to ), new MailAddress( $from ), $subject, $message, new MailAddress( $sendersemail ), 'InviteContacts' );
 					}
 				}
 

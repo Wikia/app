@@ -18,7 +18,8 @@ class EmaillingJob extends Job {
 			$this->params['from'],
 			$this->params['subj'],
 			$this->params['body'],
-			$this->params['replyto']
+			$this->params['replyto'],
+			'EmaillingJob'
 		);
 		return true;
 	}
