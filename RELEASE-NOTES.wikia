@@ -1,4 +1,5 @@
 == Changes since 200908.1 ==
+* rt#20499: Array extension. (Nef)
 * rt#18803: DB error in Special:Random fixed. (Nef)
 * rt#19546: Answers: Switch related questions footer to new api. (Nef)
 * rt#20367: Auto Wiki Create: Move the main page before it says done, don't lock as read-only (eloy)
