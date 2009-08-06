@@ -59,6 +59,7 @@ class SolrSearchSet extends SearchResultSet {
 				$params['fq'] = $nsQuery; // filter results for selected ns
 			}
 			//$params['fq'] = "(" . $params['fq'] . ") AND wid:" . $wgCityId;
+			$params['fq'] = "(" . $params['fq'] . ") AND wid:831";
 			//echo $params['fq'];
 			try {
 				$response = $solr->search($query, $offset, $limit, $params);
@@ -124,7 +125,7 @@ class SolrSearchSet extends SearchResultSet {
 		//print_r($results);
 		//exit;
 		foreach($results as $result) {
-			if(isset($result->canonical)) {
+			if(isset($result->canonical) && !empty($result->canonical)) {
 				if(!in_array($result->canonical, $this->mCanonicals)) {
 					//echo "Got canonical for: " . $result->title . ", canonical is: " . $result->canonical . "<br />";
 					$this->mCanonicals[] = $result->canonical;
@@ -226,7 +227,7 @@ class SolrResult extends SearchResult {
 		//print_r($document);
 		//var_dump(isset($document->canonical));
 		//echo "</pre>";
-		$this->mTitle = new SolrResultTitle($document->ns, urldecode( ( isset($document->canonical) ? $document->canonical : $document->title) ), $document->url);
+		$this->mTitle = new SolrResultTitle($document->ns, urldecode( ( ( isset($document->canonical) && !empty($document->canonical) ) ? $document->canonical : $document->title) ), $document->url);
 		$this->mWordCount = $document->words;
 		$this->mSize = $document->bytes;
 		$this->mCreated = isset($document->created) ? $document->created : 0;
