@@ -11,9 +11,10 @@
 
 
 class MultiWikiEditTask extends BatchTask {
-	var $mType;
-	var $mVisible;
-	var $mUser;
+	public
+		$mType,
+		$mVisible,
+		$mUser;
 
 	/* constructor */
 	function __construct( $params = array() ) {
@@ -25,9 +26,9 @@ class MultiWikiEditTask extends BatchTask {
 
 	function execute ($params = null) {
 		global $IP, $wgWikiaLocalSettingsPath ;
-		
-		/* 
-		 * go with each supplied wiki and edit the supplied article 
+
+		/*
+		 * go with each supplied wiki and edit the supplied article
 		 * load all configs for particular wikis before doing so
 		 */
 
@@ -37,10 +38,10 @@ class MultiWikiEditTask extends BatchTask {
 			$oUser->load();
 			$this->mUser = $oUser->getName();
 		} else {
-			$this->addLog("Invalid user - id: " . $params->task_user_id );
+			$this->log("Invalid user - id: " . $params->task_user_id );
 			return true;
 		}
-		
+
 		$data = unserialize($params->task_arguments);
 
 		$article = $data["page"];
@@ -53,12 +54,12 @@ class MultiWikiEditTask extends BatchTask {
 		$summary = escapeshellarg($data["summary"]);
 		$summary_text = ($summary != '') ? " -s $summary" : "";
 
-		$this->addLog("Starting task.");
-		$this->addLog("Article text: ");
-		$this->addLog($text);
+		$this->log("Starting task.");
+		$this->log("Article text: ");
+		$this->log($text);
 
-		$this->addLog("Article summary: ");
-		$this->addLog($summary_text);
+		$this->log("Article summary: ");
+		$this->log($summary_text);
 
 		$options_switches = array('-m','-b','-a','--no-rc', '--newonly');
 		$options_descriptions = array(
@@ -69,7 +70,7 @@ class MultiWikiEditTask extends BatchTask {
 			'skip existing articles'
 		) ;
 
-		$this->addLog ("Article flags used with this operation: ") ;
+		$this->log ("Article flags used with this operation: ") ;
 
 		/* initialize semi-global options */
 		$semiglobals = '' ;
@@ -77,11 +78,11 @@ class MultiWikiEditTask extends BatchTask {
 		for ($j = 0; $j < count ($flags); $j++) {
 			if ( $flags[$j] ) {
 				$semiglobals .= " " . $options_switches[$j];
-				$this->addLog(' - ' . $options_descriptions[$j]);
+				$this->log(' - ' . $options_descriptions[$j]);
 			}
 		}
 
-		$this->addLog("List of edited articles (by " . $this->mUser . ' as ' . $username . "):");
+		$this->log("List of edited articles (by " . $this->mUser . ' as ' . $username . "):");
 
 		$range = escapeshellarg($data["range"]);
 		$selwikia = intval($data["selwikia"]);
@@ -95,14 +96,14 @@ class MultiWikiEditTask extends BatchTask {
 		}
 
 		$wikiList = $this->fetchWikis($pre_wikis, $lang, $cat, $selwikia);
-		
+
 		if ( !empty($wikiList) ) {
-			$this->addLog("Found " . count($wikiList) . " Wikis to proceed");
+			$this->log("Found " . count($wikiList) . " Wikis to proceed");
 			foreach ( $wikiList as $id => $oWiki ) {
 				$retval = "";
 				$fixedArticle = $this->checkArticle($article, $oWiki);
 				if ( empty($fixedArticle) ) {
-					$this->addLog("Article " . $article . " doesn't exist on {$oWiki->city_dbname} ({$oWiki->city_url}) ");
+					$this->log("Article " . $article . " doesn't exist on {$oWiki->city_dbname} ({$oWiki->city_url}) ");
 				}
 
 				$title = $fixedArticle['title'];
@@ -125,16 +126,16 @@ class MultiWikiEditTask extends BatchTask {
 				if ( empty($city_url) ) {
 					$city_url = 'wiki id in WikiFactory: ' . $oWiki->city_id;
 				}
-				
+
 				$city_path = WikiFactory::getVarValueByName( "wgScript", $oWiki->city_id );
 				$actual_title = wfShellExec( $sCommand, $retval );
 
 				//wfShellExec( $sCommand, $retval );
 				if ($retval) {
-					$this->addLog ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
-				} 
+					$this->log ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
+				}
 				else {
-					$this->addLog ('<a href="' . $city_url . $city_path . '?title=' . $actual_title . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>') ;
+					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $title . '">' . $city_url . $city_path . '?title=' . $title . '</a>') ;
 				}
 			}
 		}
@@ -155,16 +156,16 @@ class MultiWikiEditTask extends BatchTask {
 
 	function submitForm() {
 		global $wgRequest, $wgOut, $IP, $wgUser, $wgExternalSharedDB;
-		
+
 		if ( empty($this->mParams) ) {
 			return false;
 		}
-		
+
 		$sParams = serialize( $this->mParams );
-		
+
 		$dbw = wfGetDB( DB_MASTER, null, $wgExternalSharedDB );
-		$dbw->insert( 
-			"wikia_tasks", 
+		$dbw->insert(
+			"wikia_tasks",
 			array(
 				"task_user_id" => $wgUser->getID(),
 				"task_type" => $this->mType,
@@ -178,7 +179,7 @@ class MultiWikiEditTask extends BatchTask {
 		);
 		$task_id = $dbw->insertId() ;
 		$dbw->commit();
-		return $task_id ;		
+		return $task_id ;
 	}
 
 	/**
@@ -227,7 +228,7 @@ class MultiWikiEditTask extends BatchTask {
 		}
 		return $desc;
 	}
-	
+
 	/**
 	 * fetchWikis
 	 *
@@ -241,19 +242,19 @@ class MultiWikiEditTask extends BatchTask {
 		global $wgExternalSharedDB ;
 		$dbr = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 
-		$where = array("city_public" => 1);	
-		$count = 0;	
+		$where = array("city_public" => 1);
+		$count = 0;
 		if ( !empty($lang) ) {
 			$where['city_lang'] = $lang;
-		} 
+		}
 		else if (!empty($cat)) {
 			$where['cat_id'] = $cat;
 		}
-		
+
 		if ( !empty($wikiaId) ) {
 			$where['city_list.city_id'] = $wikiaId;
 		}
-		
+
 		if ( empty($wikis) ) {
 			$oRes = $dbr->select(
 				array( "city_list join city_cat_mapping on city_cat_mapping.city_id = city_list.city_id" ),
@@ -281,7 +282,7 @@ class MultiWikiEditTask extends BatchTask {
 
 		return $wiki_array;
 	}
-	
+
 	/**
 	 * checkArticle
 	 *
@@ -293,7 +294,7 @@ class MultiWikiEditTask extends BatchTask {
 	 */
 	function checkArticle ($article, $wiki) {
 		$result = array();
-		$dbr = wfGetDB( DB_SLAVE, array(), $wiki->city_dbname ); 
+		$dbr = wfGetDB( DB_SLAVE, array(), $wiki->city_dbname );
 		if ($dbr) {
 			/* get only the selected namespace, nothing more */
 			$page = Title::newFromText($article);
@@ -313,7 +314,7 @@ class MultiWikiEditTask extends BatchTask {
 				__METHOD__
 			);
 
-			if ( (!empty($oRow)) && (!empty($oRow->page_title)) ) { 
+			if ( (!empty($oRow)) && (!empty($oRow->page_title)) ) {
 				$result = array(
 					'title' => $oRow->page_title,
 					'namespace' => $oRow->page_namespace
@@ -325,9 +326,7 @@ class MultiWikiEditTask extends BatchTask {
 				);
 			}
 		}
-		
+
 		return $result;
 	}
-	
-	
 }
