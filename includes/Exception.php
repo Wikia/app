@@ -199,9 +199,24 @@ class MWException extends Exception {
 			header( 'Pragma: nocache' );
 		}
 		$title = $this->getPageTitle();
+
+$js = <<<EOD
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2871474-1");
+pageTracker._trackPageview("/error/MWException");
+pageTracker._trackEvent("error", "MWException");
+} catch(err) {}</script>
+EOD;
+
 		echo "<html>
 		<head>
 		<title>$title</title>
+		$js
 		</head>
 		<body>
 		<h1><img src='$wgLogo' style='float:left;margin-right:1em' alt=''>$title</h1>
@@ -212,21 +227,7 @@ class MWException extends Exception {
 	 * print the end of the html page if not using $wgOut.
 	 */
 	function htmlFooter() {
-		$js = <<<EOD
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-9713682-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-<script type="text/javascript">
-pageTracker._trackEvent("MWException", "Display" , "{$_SERVER['REQUEST_URI']}");
-</script>
-EOD;
-		echo "</body></html>";
+		return "</body></html>";
 	}
 }
 
