@@ -30,37 +30,37 @@ my $mimetype = "text/plain";
 
 openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
 while( $request->Accept() >= 0 ) {
-    my $env = $request->GetEnvironment();
-    my $redirect_to = "";
-    #my $request_uri = "http://images.wikia.com/central/images/thumb/b/bf/Wiki_wide.png/50px-Wiki_wide.png"; # test url
+	my $env = $request->GetEnvironment();
+	my $redirect_to = "";
+	#my $request_uri = "http://images.wikia.com/central/images/thumb/b/bf/Wiki_wide.png/50px-Wiki_wide.png"; # test url
 	my $request_uri = "";
-    my $referer = "";
+	my $referer = "";
 
-    #
-    # we basicly redirecting REQUEST_URI to another url
-    #
-    $request_uri = $env->{"REQUEST_URI"} if $env->{"REQUEST_URI"};
-    $referer = $env->{"HTTP_REFERER"} if $env->{"HTTP_REFERER"};
+	#
+	# we basicly redirecting REQUEST_URI to another url
+	#
+	$request_uri = $env->{"REQUEST_URI"} if $env->{"REQUEST_URI"};
+	$referer = $env->{"HTTP_REFERER"} if $env->{"HTTP_REFERER"};
 
-    #
-    # get last part of uri, remove first slash if exists
-    #
+	#
+	# get last part of uri, remove first slash if exists
+	#
 	my $uri = URI->new( $request_uri );
 	my $path  = $uri->path;
 	$path =~ s/^\///;
 	my $thumbnail = $basepath . '/' . substr( $path, 0, 1 ) . '/' . $path;
 
-    my @parts = split( "/", $path );
-    my $last = pop @parts;
+	my @parts = split( "/", $path );
+	my $last = pop @parts;
 
 
-    #
-    # if last part of $request_uri is \d+px-\. we redirecting this to special
-    # page. otherwise we sending 404 error
+	#
+	# if last part of $request_uri is \d+px-\. we redirecting this to special
+	# page. otherwise we sending 404 error
 	#
 	my ( $width ) = $last =~ /^(\d+)px\-/;
-    if( $width ) {
-        syslog( LOG_INFO, qq{Request for $request_uri $referer} ) if $syslog;
+	if( $width ) {
+		syslog( LOG_INFO, qq{Request for $request_uri $referer} ) if $syslog;
 
 		#
 		# guess rest of image, last three parts would be image name and two
@@ -127,7 +127,8 @@ while( $request->Accept() >= 0 ) {
 						#
 						$transformed = 1;
 						print "HTTP/1.1 200 OK\r\n";
-				        print "Content-type: $mimetype\r\n\r\n";
+						print "X-Thumb-Path: $thumbnail\r\n";
+						print "Content-type: $mimetype\r\n\r\n";
 						my $fh = new IO::File $thumbnail, O_RDONLY;
 						if( defined $fh ) {
 							binmode $fh;
@@ -137,30 +138,30 @@ while( $request->Accept() >= 0 ) {
 					}
 				}
 				else {
-			        syslog( LOG_INFO, qq{cannot read original file $original} ) if $syslog;
+					syslog( LOG_INFO, qq{cannot read original file $original} ) if $syslog;
 				}
 			}
 		}
-    }
+	}
 	if( ! $transformed ) {
-        syslog( LOG_INFO, qq{404 $request_uri $referer} ) if $syslog;
-        print "Status: 404\r\n";
-        print "Connection: close\r\n";
-        print "Content-Type: text/html; charset=utf-8\r\n\r\n";
-        print qq{
+		syslog( LOG_INFO, qq{404 $request_uri $referer} ) if $syslog;
+		print "Status: 404\r\n";
+		print "Connection: close\r\n";
+		print "Content-Type: text/html; charset=utf-8\r\n\r\n";
+		print qq{
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>Error 404: Page not found</title></head>
 <body style="font-family: sans-serif; font-size: 10pt;">
 <h1 style="font-size: large;">Error 404: Page not found</h1>
 <hr style="border-top: 1px solid black;" />
-    Please move along people, nothing to see here. Especially, there is no <strong>$request_uri</strong> file. But still, you can
+	Please move along people, nothing to see here. Especially, there is no <strong>$request_uri</strong> file. But still, you can
 	go for example to our <a href="http://www.wikia.com/">Main Page</a>.
 </body>
 </html>
-        };
-    }
+		};
+	}
 
-    $request->Finish();
+	$request->Finish();
 }
 closelog if $syslog;
