@@ -624,7 +624,7 @@ class UserProfilePage extends Article {
 					$avatar_img = '<img src="'.$wgUploadPath.'/avatars/' . $avatar->getAvatarImage() . '" alt="" border="0"/>';
 
 					// Chop down username that gets displayed
-					$user_name = substr($friend['user_name'], 0, 9);
+					$user_name = mb_substr($friend['user_name'], 0, 9);
 					if( $user_name != $friend['user_name'] ) $user_name.= '..';
 
 					$output .= "<a href=\"".$user->escapeFullURL()."\" title=\"{$friend["user_name"]}\" rel=\"nofollow\">
@@ -718,7 +718,7 @@ class UserProfilePage extends Article {
 				}
 
 			$output .= '</div>';
-		} 
+		}
 
 		return $output;
 	}
@@ -733,7 +733,7 @@ class UserProfilePage extends Article {
 		if( $wgUserProfileDisplay['awards'] == false ){
 			return '';
 		}
- 
+
 		$output = '';
 
 		// SYSTEM GIFTS
@@ -754,7 +754,7 @@ class UserProfilePage extends Article {
 		$system_gift_count = $sg->getGiftCountByUsername($user_name);
 		$system_gift_link = SpecialPage::getTitleFor( 'ViewSystemGifts' );
 		$per_row = 4;
-	
+
 		if( $system_gifts ) {
 			$x = 1;
 
@@ -797,7 +797,7 @@ class UserProfilePage extends Article {
 					</a>";
 
 					if( $x == count($system_gifts) || $x != 1 && $x%$per_row == 0 ) $output .= '<div class="cleared"></div>';
-					$x++;	
+					$x++;
 				}
 
 			$output .= '</div>';
@@ -1003,7 +1003,7 @@ class UserProfilePage extends Article {
 								<a class=\"perma\" style=\"font-size:8px; color:".$fanbox['fantag_right_textcolor']."\" href=\"".$fantag_title->escapeFullURL()."\" title=\"{$fanbox["fantag_title"]}\">".wfMsg('fanbox-perma')."</a>
 								<table  class=\"fanBoxTableProfile\" onclick=\"javascript:openFanBoxPopup('fanboxPopUpBox{$fanbox["fantag_id"]}', 'individualFanbox{$fanbox["fantag_id"]}')\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" >
 									<tr>
-										<td id=\"fanBoxLeftSideOutputProfile\" style=\"color:".$fanbox['fantag_left_textcolor']."; font-size:$leftfontsize\" bgcolor=\"".$fanbox['fantag_left_bgcolor']."\">".$fantag_leftside."</td> 
+										<td id=\"fanBoxLeftSideOutputProfile\" style=\"color:".$fanbox['fantag_left_textcolor']."; font-size:$leftfontsize\" bgcolor=\"".$fanbox['fantag_left_bgcolor']."\">".$fantag_leftside."</td>
 										<td id=\"fanBoxRightSideOutputProfile\" style=\"color:".$fanbox['fantag_right_textcolor']."; font-size:$rightfontsize\" bgcolor=\"".$fanbox['fantag_right_bgcolor']."\">".$right_text."</td>
 									</tr>
 								</table>
