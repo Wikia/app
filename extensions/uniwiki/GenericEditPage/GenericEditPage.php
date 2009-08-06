@@ -63,7 +63,7 @@ function UW_GenericEditPage_emailSuggestion ( $category ) {
 	$body = wfMsg ( "gep-emailbody", $wgUser->getName(), $category, $wgSitename );
 
 	// attempt to send the notification
-	$result = userMailer ( $to, $from, $subj, $body );
+	$result = userMailer ( $to, $from, $subj, $body, null, 'GenericEditPage' );
 
 	/* send a message back to the client, to let them
 	 * know if the suggestion was successfully sent (or not) */
