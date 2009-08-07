@@ -87,11 +87,11 @@ while( $request->Accept() >= 0 ) {
 		if( -f $original ) {
 			$mimetype = $flm->checktype_filename( $original );
 			syslog( LOG_INFO, qq{$thumbnail $mimetype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
+
 			#
 			# read original file, thumbnail it, store on disc
 			#
-
-			if( $mimetype =~ /^image\/svg\+xml/ ) {
+			if( $mimetype =~ m!^image/svg\+xml! || $mimetype =~ m!text/xml! ) {
 				#
 				# RSVG thumbnailer
 				#
