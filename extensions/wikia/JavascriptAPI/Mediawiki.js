@@ -1,34 +1,71 @@
-/* API for interacting with Mediawiki.
- * Requires jQuery
+/* Javascript API for interacting with Mediawiki.
+ * The Mediawiki API for PHP is great, and it allows for JSON responses. 
+ * This Javascript API allows for interacting with that API from a web browser.
+ * Why use an intermediary scripting layer, just call the Mediawiki api right on the page.
+ *
+ * Probably because no one else was crazy enough to write an API in Javascript. :)
+ * 
+ * The heart of the class is the apiCall function, which is the interface to the API directly.
+ * You can use it directly and issue your own api calls to Mediawiki, or use one of the convenience
+ * methods like editArticle that wrap up common tasks into a tidy bundle.
+ *
+ * @author Nick Sullivan nick at sullivanflock.com 
+ *
+ * Conventions used:
+ * * Syntax checked with jslint. If you submit changes, please run them through there.
+ * * Careful variable scoping, every member variable is local, persistent variables are member variables of the Mediawiki object
+ *
+ *
+ * Notes:
+ * * This script is really just a thin interface to the PHP API, so use it's documentation for API calls - http://www.mediawiki.org/wiki/API
+ * * See test.html in this same directory for example uses.
+ * * Requires jQuery, http://jquery.com/ mostly for the underlying http work. 
+ * * There are a few programming convenince methods included such as 'print_r' and 'empty', check them out too 
+ * * This is the full version. With comments and all the goodies. Consider using jsmin to minify the javascript. But hey - you knew that.
+ * * Don't just call this from Wikia's servers. Host your own copy or we may be tempted to redirect all of your users to disneyland.com ;)
+ * * Contributions encouraged - place e-mail nick at sullivanflock.com
+ * * Firebug and debugLevel > 0 is your friend.
+ * * There is a Mediawiki status bar supplied that's helpful for letting the user know what's going on
+ *
+ *
+ * TODO: 
+ * * i18n of the messages
+ * * More convenience wrappers
+ * 
  */
 
 var Mediawiki = {
 	// apiUrl must be on the same domain for write access
 	apiUrl		: "/api.php",
-	apiTimeout	: 30000, // How long to wait for request, in milliseconds
-	debugLevel	: 0,
-	cookiePrefix	: null, // http://www.mediawiki.org/wiki/Manual:$wgCookiePrefix
-	cookiePrefixApi	: "jsapi", // used if using httpcookies
-	cookieNames	: [ "UserID", "UserName", "Token", "_session" ],
-	sessionLength	: 86400,
-	statusBar	: null
+
+	// How long to wait for request, in milliseconds
+	apiTimeout	: 30000,
+
+	// The higher the number, the more info. See Mediawiki.debug
+	debugLevel	: 0, 
+
+	// http://www.mediawiki.org/wiki/Manual:$wgCookiePrefix
+	cookiePrefix	: null,
+
+	 // if using http://www.mediawiki.org/wiki/Manual:$wgCookieHttpOnly
+	cookiePrefixApi	: "jsapi",
+
+	// cookies used by the login	
+	cookieNames	: [ "UserID", "UserName", "Token", "_session" ]
 };
 
 
-/* Methods are in alphabetical order. */
-
-Mediawiki.$ = function(id){
-	return document.getElementById(id);
-};
+/***  Methods are in alphabetical order. ***/
 
 
 /* Issue an http request to the api, based on jQuery's ajax().
- * "apiParams" is an object of the params that are passed to the API, as defined in the Mediawiki documentation
- * callbackSuccess/Error params are the callbacks for success/failure
- * If no callbackSuccess function is supplied, then syncronous (blocking) mode will be used,
+ * @param "apiParams" is an object of the params that are passed to the API, as defined in the Mediawiki documentation
+ * @param callbackSuccess/Error params are the callbacks for success/failure
+ * Note: If no callbackSuccess function is supplied, then syncronous (blocking) mode will be used,
  * and the response will be returned directly.
- * method is POST or GET
- * ajaxParams is an object that contains key values to be passed to jQuery's ajax function
+ * @param method is POST or GET
+ * @param ajaxParams is an object that contains key values to be passed to jQuery's ajax function
+ * @return either the ajax handle if using callbacks, or the actual data if no callbacks supplied
  */
 Mediawiki.apiCall = function(apiParams, callbackSuccess, callbackError, method, ajaxParams){
    try {
@@ -77,7 +114,8 @@ Mediawiki.apiCall = function(apiParams, callbackSuccess, callbackError, method, 
 
 	var r = jQuery.ajax(p);
 
-	// For async requests, parse the data. If not, the callbacks will receive an object passed to the callback
+	// For async requests, parse the data.
+	// If not, the callbacks will receive an object passed to the callback
 	if (p.async === false) {
 		Mediawiki.waitingDone();
 		if (typeof r == "object" && !Mediawiki.e(r.responseText)){
@@ -95,7 +133,12 @@ Mediawiki.apiCall = function(apiParams, callbackSuccess, callbackError, method, 
 
 };
 
-/* Build up a query string from the supplied array (nvpairs). Optional separator, default ';' */
+
+/* Build up a query string from the supplied array (nvpairs). 
+ * @param nvpairs - an assoc array (javascript object) containing name/value pairs
+ * @param sep - the separator to use in between the values. Default "&"
+ * @param - url encoded query string. empty if nvpairs is empty
+ */
 Mediawiki.buildQueryString = function(nvpairs, sep){
 	if (Mediawiki.e(nvpairs)){
 		return '';
@@ -113,7 +156,7 @@ Mediawiki.buildQueryString = function(nvpairs, sep){
 };
 
 
-/* Take a look at the result from the api call. If it lookks ok, return true.
+/* Take a look at the result from the api call. If it looks ok, return true.
  * Otherwise, return the error message 
  */
 Mediawiki.checkResult = function (result){
@@ -127,7 +170,9 @@ Mediawiki.checkResult = function (result){
 	}
 };
 
-
+/* Set/get cookies. Thanks to http://plugins.jquery.com/project/Cookie
+ * Note this won't work to read Mediawiki cookies if you have httpcookies set in Mediawiki.
+ */
 Mediawiki.cookie = function(name, value, options) {
     if (typeof value != 'undefined') { // name and value given, set cookie
 	Mediawiki.d("Setting " + name + " cookie, with a value of " + value);
@@ -159,7 +204,7 @@ Mediawiki.cookie = function(name, value, options) {
 	if (!Mediawiki.e(document.cookie)){
 	    var cookies = document.cookie.split(';');
 	    for (var i = 0; i < cookies.length; i++) {
-		var cookie = cookies[i].replace( /^\s+|\s+$/g, "");
+                var cookie = jQuery.trim(cookies[i]);
 		// Does this cookie string begin with the name we want?
 		if (cookie.substring(0, name.length + 1) == (name + '=')) {
 		    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
@@ -205,6 +250,7 @@ Mediawiki.debug = function (msg, level){
 Mediawiki.d = Mediawiki.debug; // Shortcut to reduce size of JS
 
 
+/* Convenience wrapper for deleting an article. Obtains a token and then deletes */
 Mediawiki.deleteArticle = function (title, reason, callbackSuccess, callbackError){
      try {
 	var token = Mediawiki.getToken(title, "delete"); 
@@ -298,6 +344,7 @@ Mediawiki.empty = function ( v ) {
 Mediawiki.e = Mediawiki.empty; // Shortcut to make the Javascript smaller
 
 
+/* Default handler for errors from the API */
 Mediawiki.error = function (msg){
 	if (typeof msg == "object"){
 		msg = Mediawiki.print_r(msg);
@@ -308,6 +355,7 @@ Mediawiki.error = function (msg){
 };
 
 
+/* Convenience wrapper for getting the end url for a redirect. Will use cache if allowed */
 Mediawiki.followRedirect = function(title, useCache){
      try {
 	if (typeof useCache == "undefined") {
@@ -372,6 +420,8 @@ Mediawiki.getCookiePrefix = function( ) {
 };
 
 
+/* For the supplied Wiki Image, return the full url for including it in HTML.
+ * @return url or false on error */
 Mediawiki.getImageUrl = function(image){
 	if (!image.match(/:/)){
 		image = "File:" + image; // A little confusion on if I should use Image: here...
@@ -403,6 +453,10 @@ Mediawiki.getImageUrl = function(image){
 };
 
 
+/* There is a set of cleanup that Mediawiki does to user generated article title.
+ * For example, changing spaces to underscores, capitilization of certain characters,
+ * remove of others. Issue a call to the API to handle this translation
+ */
 Mediawiki.getNormalizedTitle = function(title){
 
 	if (Mediawiki.e(Mediawiki.normalizedTitles)){
@@ -446,6 +500,11 @@ Mediawiki.getNormalizedTitle = function(title){
 };
 
 
+/* Obtain a token for the supplied tokenType (edit, delete, etc). This is the first step
+ * in a few of the write operations, particularly those dealing with articles.
+ * @param title (could supprt multiple if someone wants to build it out)
+ * @tokenType - type of token. Example "edit"
+ */
 Mediawiki.getToken = function(titles, tokenType){
 	if (typeof titles == "array"){
 		Mediawiki.error("Sorry, multiple titles not yet supported for getToken");
@@ -480,27 +539,27 @@ Mediawiki.getToken = function(titles, tokenType){
 	return false;
 };
 
+
 /* Check the current page, and then the cookies for a login. Return username if logged in, otherwise false */
 Mediawiki.isLoggedIn = function( ){
-	try {
-	  if (!Mediawiki.e(Mediawiki.UserName)){
-		  return Mediawiki.UserName;
-	  }
-
-	  var cookiePrefix = Mediawiki.getCookiePrefix();
-	  if (cookiePrefix === null){
-		  return false;
-	  } else {
-		  Mediawiki.pullLoginFromCookie(cookiePrefix);
-		  return Mediawiki.UserName;
-	  }	
-	} catch (e) {
-		Mediawiki.error("Error checking login");
-		Mediawiki.d(Mediawiki.print_r(e));
-		return false;
+	if (!Mediawiki.e(Mediawiki.UserName)){
+		return Mediawiki.UserName;
 	}
+
+	var cookiePrefix = Mediawiki.getCookiePrefix();
+	if (cookiePrefix === null){
+		return false;
+	} else {
+		Mediawiki.pullLoginFromCookie(cookiePrefix);
+		return Mediawiki.UserName;
+	}	
 };
 
+
+/* Simple convenience wrapper for json parsing. It will be nice when most browsers support JSON
+ * natively. For now it's just IE 8+, Safari 4+, Firefox 3.1+
+ * http://blogs.msdn.com/jscript/archive/2009/06/23/native-json-support-in-ie8-and-tracking-the-ecmascript-fifth-edition-draft-specification.aspx
+ */
 Mediawiki.json_decode = function (json){
 	if (typeof JSON != "undefined"){
 		// For browsers that support it, it's more better.
@@ -517,7 +576,9 @@ Mediawiki.json_decode = function (json){
 	}
 };
 
-
+/* Take a look at the cookies for the login info
+ * Note this won't work to read Mediawiki cookies if you have httpcookies set in Mediawiki.
+ */
 Mediawiki.pullLoginFromCookie = function(cookiePrefix){
 	for (var i = 0; i < Mediawiki.cookieNames.length; i++) {
 		var cookieName = Mediawiki.cookieNames[i];
@@ -526,7 +587,7 @@ Mediawiki.pullLoginFromCookie = function(cookiePrefix){
 };
 
 
-// http://www.mediawiki.org/wiki/API:Login
+/* Convenience wrapper for http://www.mediawiki.org/wiki/API:Login */
 Mediawiki.login = function (username, password, callbackSuccess, callbackError){
 	if (Mediawiki.isLoggedIn()){
 		Mediawiki.d("You are already logged in");
@@ -576,6 +637,7 @@ Mediawiki.loginCallback = function(result) {
 };
 
 
+/* Convenience wrapper for  http://www.mediawiki.org/wiki/API:Logout */
 Mediawiki.logout = function (callbackSuccess){
 	Mediawiki.apiCall({"action" : "logout"}, callbackSuccess);
 
@@ -611,6 +673,7 @@ Mediawiki.parse = function (text){
 	}
 };
 
+
 /* Javascript equivalent of php's print_r. 
  * http://www.openjs.com/scripts/others/dump_function_php_print_r.php
  */
@@ -642,6 +705,7 @@ Mediawiki.print_r = function (arr,level) {
 	}
 	return text;
 };
+
 
 /* Pull article content http://www.mediawiki.org/wiki/API:Query */
 Mediawiki.pullArticleContent = function (title, callback, options){
@@ -709,6 +773,7 @@ Mediawiki.pullArticleHtml = function (title, callback){
 };
 
 
+/* Run the supplied callback, optionally with the supplied argument */
 Mediawiki.runCallback = function(callback, arg){
 	var parens = "()";
 	if (typeof arg != "undefined") {
@@ -744,7 +809,7 @@ Mediawiki.setLoginSession = function(vars) {
 
 Mediawiki.updateStatus = function(msg, isError, timeout){
 
-	if (Mediawiki.statusBar === null) {
+	if (Mediawiki.e(Mediawiki.statusBar)) {
 		Mediawiki.statusBar = new MediawikiStatusBar();
 	}
 
@@ -757,6 +822,7 @@ Mediawiki.updateStatus = function(msg, isError, timeout){
 };
 
 
+/* Indicate to the user that the API is working (change the cursor ) */
 Mediawiki.waiting = function (timeout){
 	$("body").css("cursor", "wait");
 	timeout = timeout || Mediawiki.apiTimeout;
@@ -769,6 +835,9 @@ Mediawiki.waitingDone = function (){
 };
 
 
+
+/* A status bar at the bottom of the window that let's the user know what's going on.
+ * Thanks to http://www.west-wind.com/WebLog/posts/388213.aspx */
 var MediawikiStatusBar = function (sel,options) {
 	var _I = this;	     
 	var _sb = null;
