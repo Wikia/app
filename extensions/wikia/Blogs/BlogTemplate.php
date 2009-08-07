@@ -1049,7 +1049,7 @@ class BlogTemplateClass {
 					}
 				} else {
 					if( !empty( self::$oTitle ) && self::$oTitle->getNamespace() == NS_BLOG_ARTICLE) {
-						$result = wfMsg('blog-empty-user-blog');
+						$result = wfMsgExt('blog-empty-user-blog', array('parse'));
 					}
 					else {
 						if ( self::$aOptions['type'] != 'array' ) {
