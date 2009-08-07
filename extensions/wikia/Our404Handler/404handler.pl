@@ -27,6 +27,7 @@ my $flm = new File::LibMagic;
 #
 my $transformed = 0;
 my $mimetype = "text/plain";
+umask( 022 );
 
 openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
 while( $request->Accept() >= 0 ) {
@@ -112,6 +113,9 @@ while( $request->Accept() >= 0 ) {
 					}
 					syslog( LOG_INFO, "$thumbnail created" ) if $syslog;
 				}
+				else {
+					syslog( LOG_INFO, "SVG conversion from $original to $thumbnail failed" ) if $syslog;
+				}
 				undef $rsvg;
 			}
 			else {
@@ -143,12 +147,15 @@ while( $request->Accept() >= 0 ) {
 						}
 						syslog( LOG_INFO, "$thumbnail created" ) if $syslog;
 					}
+					else {
+						syslog( LOG_INFO, "ImageMagick thumbnailer from $original to $thumbnail failed" ) if $syslog;
+					}
 					undef $image;
 				}
 			}
 		}
 		else {
-			syslog( LOG_INFO, "Cannot read original file $original" ) if $syslog;
+			syslog( LOG_INFO, "$thumbnail cannot read original file $original" ) if $syslog;
 		}
 	}
 	if( ! $transformed ) {
