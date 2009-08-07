@@ -65,7 +65,7 @@ while( $request->Accept() >= 0 ) {
 	# if last part of $request_uri is \d+px-\. we redirecting this to special
 	# page. otherwise we sending 404 error
 	#
-	syslog( LOG_INFO, qq{$thumbnail, REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
+	syslog( LOG_INFO, qq{$thumbnail REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
 	my ( $width ) = $last =~ /^(\d+)px\-/;
 	if( $width ) {
 		#
@@ -146,10 +146,10 @@ while( $request->Accept() >= 0 ) {
 					}
 					undef $image;
 				}
-				else {
-					syslog( LOG_INFO, "Cannot read original file $original" ) if $syslog;
-				}
 			}
+		}
+		else {
+			syslog( LOG_INFO, "Cannot read original file $original" ) if $syslog;
 		}
 	}
 	if( ! $transformed ) {
