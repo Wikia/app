@@ -170,7 +170,7 @@ function renderQuestions() {
 				var url  = page.title.replace(/ /g,"_");
 				var text = page.title + "?";
 				var timestamp = page.timestamp;
-				html += "<li><a href=\"/wiki/" + url + "\">" + text + "</a></li>";
+				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\">" + text + "</a></li>";
 
 				if (timestamp1 == '') timestamp1 = timestamp;
 			}
@@ -224,7 +224,7 @@ jQuery("#related_answered_questions").ready(function() {
 				var page = j.query.categoriesonanswers[recent_q];
 				var url  = page.title.replace(/ /g,"_");
 				var text = page.title + "?";
-				html += "<li><a href=\"/wiki/" + url + "\">" + text + "</a></li>";
+				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\">" + text + "</a></li>";
 			}
 			jQuery("#related_answered_questions").prepend( html );
 		}

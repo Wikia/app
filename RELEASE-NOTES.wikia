@@ -1,4 +1,5 @@
 == Changes since 200908.1 ==
+* rt#20507: Answers: Fix to sidebar not escaped urls. (Nef)
 * rt#20622: Allow MediaWiki:Blog-empty-user-blog to accept wikitext. (Nef)
 * rt#19023: Answers, Analytics: Add click tracking to Answers. (Nef)
 * rt#15170: fix corrupted user board messages on frag.wikia (eloy)
