@@ -65,7 +65,6 @@ while( $request->Accept() >= 0 ) {
 	# if last part of $request_uri is \d+px-\. we redirecting this to special
 	# page. otherwise we sending 404 error
 	#
-	syslog( LOG_INFO, qq{$thumbnail REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
 	my ( $width ) = $last =~ /^(\d+)px\-/;
 	if( $width ) {
 		#
@@ -87,7 +86,7 @@ while( $request->Accept() >= 0 ) {
 		#
 		if( -f $original ) {
 			$mimetype = $flm->checktype_filename( $original );
-			syslog( LOG_INFO, qq{$thumbnail $mimetype} ) if $syslog;
+			syslog( LOG_INFO, qq{$thumbnail $mimetype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
 			#
 			# read original file, thumbnail it, store on disc
 			#
