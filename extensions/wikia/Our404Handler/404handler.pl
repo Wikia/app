@@ -21,6 +21,7 @@ my $syslog = 1;
 my $request = FCGI::Request();
 my $basepath = "/images";
 my $flm = new File::LibMagic;
+my $maxwidth = 3000;
 
 #
 # if thumbnail was really generated
@@ -63,11 +64,11 @@ while( $request->Accept() >= 0 ) {
 
 
 	#
-	# if last part of $request_uri is \d+px-\. we redirecting this to special
-	# page. otherwise we sending 404 error
+	# if last part of $request_uri is \d+px-\. it is probably thumbnail
 	#
 	my ( $width ) = $last =~ /^(\d+)px\-/;
 	if( $width ) {
+		$width = $maxwidth if ( $width > $maxwidth );
 		#
 		# guess rest of image, last three parts would be image name and two
 		# subdirectories
@@ -129,6 +130,9 @@ while( $request->Accept() >= 0 ) {
 				if( $origw && $origh ) {
 					my $height = $width * $origh / $origw;
 					$image->Resize( "geometry" => "${width}x${height}>", "blur" => 0.9 );
+					if( $mimetype =~ m!image/gif! ) {
+						$image->Coalesce();
+					}
 					$image->Write( "filename" => $thumbnail );
 
 					if( -f $thumbnail ) {
@@ -155,7 +159,7 @@ while( $request->Accept() >= 0 ) {
 			}
 		}
 		else {
-			syslog( LOG_INFO, "$thumbnail cannot read original file $original" ) if $syslog;
+			syslog( LOG_INFO, "$thumbnail can't read original file $original" ) if $syslog;
 		}
 	}
 	if( ! $transformed ) {
