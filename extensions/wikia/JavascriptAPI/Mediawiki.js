@@ -1,31 +1,43 @@
-/* Javascript API for interacting with Mediawiki.
- * The Mediawiki API for PHP is great, and it allows for JSON responses. 
- * This Javascript API allows for interacting with that API from a web browser.
- * Why use an intermediary scripting layer, just call the Mediawiki api right on the page.
- *
- * Probably because no one else was crazy enough to write an API in Javascript. :)
+/* Javascript API for interacting with Mediawiki. The Mediawiki API for PHP is great, and it allows
+ * for JSON responses. This Javascript API allows for interacting with that API from a web browser.
+ * Why use an intermediary scripting layer, just call the Mediawiki api right on the page. Probably
+ * because no one else was crazy enough to write an API in Javascript. :)
  * 
- * The heart of the class is the apiCall function, which is the interface to the API directly.
- * You can use it directly and issue your own api calls to Mediawiki, or use one of the convenience
- * methods like editArticle that wrap up common tasks into a tidy bundle.
+ * The heart of the class is the apiCall function, which is the interface to the API directly. You
+ * can use it directly and issue your own api calls to Mediawiki, or use one of the convenience
+ * wrappers that wrap up common tasks into a tidy bundle.
  *
  * @author Nick Sullivan nick at sullivanflock.com 
  *
  * Conventions used:
  * * Syntax checked with jslint. If you submit changes, please run them through there.
- * * Careful variable scoping, every member variable is local, persistent variables are member variables of the Mediawiki object
+ *
+ * * Careful variable scoping, every member variable is local, persistent variables are member
+ *   variables of the Mediawiki object
  *
  *
  * Notes:
- * * This script is really just a thin interface to the PHP API, so use it's documentation for API calls - http://www.mediawiki.org/wiki/API
+ * * This script is really just a thin interface to the PHP API, so use it's documentation for API
+ *   calls - http://www.mediawiki.org/wiki/API
+ *
  * * See test.html in this same directory for example uses.
+ *
  * * Requires jQuery, http://jquery.com/ mostly for the underlying http work. 
- * * There are a few programming convenince methods included such as 'print_r' and 'empty', check them out too 
- * * This is the full version. With comments and all the goodies. Consider using jsmin to minify the javascript. But hey - you knew that.
- * * Don't just call this from Wikia's servers. Host your own copy or we may be tempted to redirect all of your users to disneyland.com ;)
- * * Contributions encouraged - place e-mail nick at sullivanflock.com
+ *
+ * * There are a few programming convenince methods included such as 'print_r' and 'empty', check
+ *   them out too.
+ *
+ * * This is the full version with comments and all the goodies. Consider using jsmin to minify the
+ *   javascript. But hey - you are a good javascript programmer, so you knew that.
+ *
+ * * Don't just call this from Wikia's servers. Host your own copy or we may be tempted to redirect
+ *   all of your users to disneyland.com ;)
+ *
+ * * Contributions ENCOURAGED - please e-mail nick at sullivanflock.com
+ *
  * * Firebug and debugLevel > 0 is your friend.
- * * There is a Mediawiki status bar supplied that's helpful for letting the user know what's going on
+ *
+ * * There is a Mediawiki status bar supplied that's helpful for letting the user know what's up
  *
  *
  * TODO: 
@@ -59,10 +71,11 @@ var Mediawiki = {
 
 
 /* Issue an http request to the api, based on jQuery's ajax().
- * @param "apiParams" is an object of the params that are passed to the API, as defined in the Mediawiki documentation
+ * @param "apiParams" is an object of the params that are passed to the API, as defined in the
+ * 	   Mediawiki documentation
  * @param callbackSuccess/Error params are the callbacks for success/failure
- * Note: If no callbackSuccess function is supplied, then syncronous (blocking) mode will be used,
- * and the response will be returned directly.
+ * 	   Note: If no callbackSuccess function is supplied, then syncronous (blocking) mode will
+ * 	   be used, and the response will be returned directly.
  * @param method is POST or GET
  * @param ajaxParams is an object that contains key values to be passed to jQuery's ajax function
  * @return either the ajax handle if using callbacks, or the actual data if no callbacks supplied
@@ -190,7 +203,8 @@ Mediawiki.cookie = function(name, value, options) {
 	    } else {
 		d = options.expires;
 	    }
-	    expires = '; expires=' + d.toUTCString(); // use expires attribute, max-age is not supported by IE
+	    // use expires attribute, max-age is not supported by IE
+	    expires = '; expires=' + d.toUTCString(); 
 	}	 
 	// CAUTION: Needed to parenthesize options.path and options.domain
 	// in the following expressions, otherwise they evaluate to undefined
@@ -403,8 +417,8 @@ Mediawiki.followRedirect = function(title, useCache){
      }
 };
 
-/* The mediawiki login cookies are prefixed. Look to see if we can figure it out by looking at the cookie.
- * null will be returned if there is no matching cookies, otherwise the string */
+/* The mediawiki login cookies are prefixed. Look to see if we can figure it out by looking at the
+ * cookie. null will be returned if there is no matching cookies, otherwise the string */
 Mediawiki.getCookiePrefix = function( ) {
 	// Try to determine it automagically with hokey regexp. Could [should?] we query the API?
 	for (var i = 0; i < Mediawiki.cookieNames.length; i++) {
@@ -525,8 +539,8 @@ Mediawiki.getToken = function(titles, tokenType){
 		return false;
 	}
 
-	// We can get two different responses back here. If it's a valid title, then it returns it directly
-	// If not, it returns it "normalized". 
+	// We can get two different responses back here. If it's a valid title, then it returns it
+	// directly If not, it returns it "normalized". 
 	if (!Mediawiki.e(responseData.query) && !Mediawiki.empty(responseData.query.pages)){
 		if (!Mediawiki.e(responseData.query.normalized)){
 			// If your page title isn't coming through the API, try normalizeTitle first
@@ -540,7 +554,8 @@ Mediawiki.getToken = function(titles, tokenType){
 };
 
 
-/* Check the current page, and then the cookies for a login. Return username if logged in, otherwise false */
+/* Check the current page, and then the cookies for login information. Return username if logged in,
+ * otherwise false */
 Mediawiki.isLoggedIn = function( ){
 	if (!Mediawiki.e(Mediawiki.UserName)){
 		return Mediawiki.UserName;
@@ -558,7 +573,7 @@ Mediawiki.isLoggedIn = function( ){
 
 /* Simple convenience wrapper for json parsing. It will be nice when most browsers support JSON
  * natively. For now it's just IE 8+, Safari 4+, Firefox 3.1+
- * http://blogs.msdn.com/jscript/archive/2009/06/23/native-json-support-in-ie8-and-tracking-the-ecmascript-fifth-edition-draft-specification.aspx
+ * http://tinyurl.com/n5qnlb
  */
 Mediawiki.json_decode = function (json){
 	if (typeof JSON != "undefined"){
@@ -570,7 +585,8 @@ Mediawiki.json_decode = function (json){
 			eval('anon = ' + json + ';');
 			return anon;
 		} catch (e){
-			Mediawiki.error("Error parsing json string '" + json + "'. Details: " + Mediawiki.print_r(e));
+			Mediawiki.error("Error parsing json string '" + json +
+				"'. Details: " + Mediawiki.print_r(e));
 			return false;
 		}
 	}
@@ -620,9 +636,11 @@ Mediawiki.loginCallback = function(result) {
 			Mediawiki.setLoginSession(result.login);
 			Mediawiki.runCallback(Mediawiki.loginCallbackSuccess);
 
-		} else if (result.login.result == "WrongPass" || result.login.result == "EmptyPass" || result.login.result == "WrongPluginPass"){
+		} else if (result.login.result == "WrongPass" || result.login.result == "EmptyPass" ||
+			   result.login.result == "WrongPluginPass"){
 			Mediawiki.runCallback(Mediawiki.loginCallbackError, "Invalid Password");
-		} else if (result.login.result == "NotExists" || result.login.result == "Illegal" || result.login.result == "NoName"){
+		} else if (result.login.result == "NotExists" || result.login.result == "Illegal" ||
+			   result.login.result == "NoName"){
 			Mediawiki.runCallback(Mediawiki.loginCallbackError, "Invalid Username");
 		} else {
 			throw ("Unexpected response from api when logging in");
