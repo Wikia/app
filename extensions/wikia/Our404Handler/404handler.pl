@@ -20,7 +20,7 @@ my $syslog = 1;
 #
 my $request = FCGI::Request();
 my $basepath = "/images";
-my $flm = File::LibMagic->new();
+my $flm = new File::LibMagic;
 
 #
 # if thumbnail was really generated
@@ -48,7 +48,15 @@ while( $request->Accept() >= 0 ) {
 	my $uri = URI->new( $request_uri );
 	my $path  = $uri->path;
 	$path =~ s/^\///;
-	my $thumbnail = $basepath . '/' . substr( $path, 0, 1 ) . '/' . $path;
+
+	#
+	# if path has single letter on beginning it's already new directory layout
+	#
+	if( $path !~ m!^\w/! ) {
+		$path = substr( $path, 0, 1 ) . '/' . $path;
+		syslog( LOG_INFO, "Old layout, path converted to $path" ) if $syslog;
+	}
+	my $thumbnail = $basepath . '/' . $path;
 
 	my @parts = split( "/", $path );
 	my $last = pop @parts;
@@ -73,8 +81,7 @@ while( $request->Accept() >= 0 ) {
 		#
 		pop @parts;
 
-		my $original = $basepath . '/' . substr( join( "/", @parts ), 0, 1 )
-			. '/' .  join( "/", @parts ) . '/' . $orig;
+		my $original = $basepath . '/' . join( "/", @parts ) . '/' . $orig;
 
 		#
 		# then find proper thumbnailer for file, first check if this is svg
@@ -91,7 +98,7 @@ while( $request->Accept() >= 0 ) {
 				#
 				# RSVG thumbnailer
 				#
-				my $rsvg = new Image::LibRSVG();
+				my $rsvg = new Image::LibRSVG;
 				$rsvg->convertAtMaxSize( $original, $thumbnail, $width, $width );
 
 				if( -f $thumbnail ) {
@@ -107,6 +114,7 @@ while( $request->Accept() >= 0 ) {
 						undef $fh;
 					}
 				}
+				undef $rsvg;
 			}
 			else {
 				#
@@ -136,6 +144,7 @@ while( $request->Accept() >= 0 ) {
 							undef $fh;
 						}
 					}
+					undef $image;
 				}
 				else {
 					syslog( LOG_INFO, qq{cannot read original file $original} ) if $syslog;
