@@ -54,7 +54,6 @@ while( $request->Accept() >= 0 ) {
 	#
 	if( $path !~ m!^\w/! ) {
 		$path = substr( $path, 0, 1 ) . '/' . $path;
-		syslog( LOG_INFO, "Old layout, path converted to $path" ) if $syslog;
 	}
 	my $thumbnail = $basepath . '/' . $path;
 
@@ -66,10 +65,9 @@ while( $request->Accept() >= 0 ) {
 	# if last part of $request_uri is \d+px-\. we redirecting this to special
 	# page. otherwise we sending 404 error
 	#
+	syslog( LOG_INFO, qq{$thumbnail, REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
 	my ( $width ) = $last =~ /^(\d+)px\-/;
 	if( $width ) {
-		syslog( LOG_INFO, qq{Request for $request_uri $referer} ) if $syslog;
-
 		#
 		# guess rest of image, last three parts would be image name and two
 		# subdirectories
@@ -113,6 +111,7 @@ while( $request->Accept() >= 0 ) {
 						print <$fh>;
 						undef $fh;
 					}
+					syslog( LOG_INFO, "$thumbnail created" ) if $syslog;
 				}
 				undef $rsvg;
 			}
@@ -143,17 +142,17 @@ while( $request->Accept() >= 0 ) {
 							print <$fh>;
 							undef $fh;
 						}
+						syslog( LOG_INFO, "$thumbnail created" ) if $syslog;
 					}
 					undef $image;
 				}
 				else {
-					syslog( LOG_INFO, qq{cannot read original file $original} ) if $syslog;
+					syslog( LOG_INFO, "Cannot read original file $original" ) if $syslog;
 				}
 			}
 		}
 	}
 	if( ! $transformed ) {
-		syslog( LOG_INFO, qq{404 $request_uri $referer} ) if $syslog;
 		print "Status: 404\r\n";
 		print "Connection: close\r\n";
 		print "Content-Type: text/html; charset=utf-8\r\n\r\n";
