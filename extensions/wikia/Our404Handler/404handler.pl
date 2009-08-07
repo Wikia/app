@@ -171,5 +171,6 @@ while( $request->Accept() >= 0 ) {
 	}
 
 	$request->Finish();
+	$transformed = 0;
 }
 closelog if $syslog;
