@@ -66,21 +66,24 @@ while( $request->Accept() >= 0 ) {
 	#
 	# if last part of $request_uri is \d+px-\. it is probably thumbnail
 	#
-	my ( $width ) = $last =~ /^(\d+)px\-/;
+	my ( $width ) = $last =~ /^(\d+)px\-.+\w$/;
 	if( $width ) {
 		$width = $maxwidth if ( $width > $maxwidth );
 		#
 		# guess rest of image, last three parts would be image name and two
 		# subdirectories
 		#
-		my $orig = join( "/", splice( @parts, -3, 3 ) );
+		my $original = join( "/", splice( @parts, -3, 3 ) );
 
 		#
 		# now, last part is thumbnails folder, we skip that too
 		#
 		pop @parts;
 
-		my $original = $basepath . '/' . join( "/", @parts ) . '/' . $orig;
+		#
+		# merge with rest of path
+		#
+		$original = $basepath . '/' . join( "/", @parts ) . '/' . $original;
 
 		#
 		# then find proper thumbnailer for file, first check if this is svg
@@ -92,6 +95,8 @@ while( $request->Accept() >= 0 ) {
 
 			#
 			# read original file, thumbnail it, store on disc
+			# file2 has old mimetype database, it thinks that svg file is just
+			# xml file
 			#
 			if( $mimetype =~ m!^image/svg\+xml! || $mimetype =~ m!text/xml! ) {
 				#
