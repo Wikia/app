@@ -170,7 +170,7 @@ function renderQuestions() {
 				var url  = page.title.replace(/ /g,"_");
 				var text = page.title + "?";
 				var timestamp = page.timestamp;
-				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\">" + text + "</a></li>";
+				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('unanswered/click')\">" + text + "</a></li>";
 
 				if (timestamp1 == '') timestamp1 = timestamp;
 			}
@@ -181,9 +181,9 @@ function renderQuestions() {
 		
 			//nav
 			html += "<li class='sidebar_nav'>"
-			html += "<div class=\"sidebar_nav_prev\"><a href=javascript:void(0); onclick=\"questionsNavClick('&cmstart=" + timestamp  + "');\">" + wgPrevPageMsg + "</a></div>";
-			html += "<div class=\"sidebar_nav_next\"><a href=javascript:void(0); onclick=\"questionsNavClick('&cmend="   + timestamp1 + "');\">" + wgNextPageMsg + "</a></div>";
-			html += "<a href='" + wgUnansweredRecentChangesURL + "'>" + wgUnansweredRecentChangesText + "</a>";
+			html += "<div class=\"sidebar_nav_prev\"><a href=javascript:void(0); onclick=\"WET.byStr('unanswered/prev');questionsNavClick('&cmstart=" + timestamp  + "');\">" + wgPrevPageMsg + "</a></div>";
+			html += "<div class=\"sidebar_nav_next\"><a href=javascript:void(0); onclick=\"WET.byStr('unanswered/next');questionsNavClick('&cmend="   + timestamp1 + "');\">" + wgNextPageMsg + "</a></div>";
+			html += "<a href=\"" + wgUnansweredRecentChangesURL + "\" onclick=\"WET.byStr('unanswered/seeall')\">" + wgUnansweredRecentChangesText + "</a>";
 			html += "</li>";
 			
 			jQuery("#recent_unanswered_questions").html( html );
