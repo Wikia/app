@@ -846,10 +846,10 @@ class UserProfilePage extends Article{
 			</div>
 			<div class=\"cleared\"></div>
 			<div class=\"profile-info-container\">".
-				$this->getProfileSection(wfMSg("custom-info-field1"),$profile_data["custom_1"],false).
-				$this->getProfileSection(wfMSg("custom-info-field2"),$profile_data["custom_2"],false).
-				$this->getProfileSection(wfMSg("custom-info-field3"),$profile_data["custom_3"],false).
-				$this->getProfileSection(wfMSg("custom-info-field4"),$profile_data["custom_4"],false).
+				$this->getProfileSection(wfMsg("custom-info-field1"),$profile_data["custom_1"],false).
+				$this->getProfileSection(wfMsg("custom-info-field2"),$profile_data["custom_2"],false).
+				$this->getProfileSection(wfMsg("custom-info-field3"),$profile_data["custom_3"],false).
+				$this->getProfileSection(wfMsg("custom-info-field4"),$profile_data["custom_4"],false).
 			"</div>";
 		} else if ($wgUser->getName()==$user_name) {
 			$output .= "<div class=\"user-section-heading\">

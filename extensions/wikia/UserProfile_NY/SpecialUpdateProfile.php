@@ -646,22 +646,22 @@ class UpdateProfile extends SpecialPage {
 			<div class=\"profile-info clearfix\">
 				<div class=\"profile-update\">
 					<p class=\"profile-update-title\">" . wfMsgForContent( 'user-profile-tidbits-title' ) . "</p>
-					<p class=\"profile-update-unit-left\">" . wfMsgForContent( 'custom-info-field1' ) . "</p>
+					<p class=\"profile-update-unit-left\">" . wfMsgExt( 'custom-info-field1', array('parse') ) . "</p>
 					<p class=\"profile-update-unit\">
 						<textarea name=\"custom1\" id=\"fav_moment\" rows=\"3\" cols=\"75\">{$custom1}</textarea>
 					</p>
 					<div class=\"cleared\"></div>
-					<p class=\"profile-update-unit-left\">" . wfMsgForContent( 'custom-info-field2' ) . "</p>
+					<p class=\"profile-update-unit-left\">" . wfMsgExt( 'custom-info-field2', array('parse') ) . "</p>
 					<p class=\"profile-update-unit\">
 						<textarea name=\"custom2\" id=\"least_moment\" rows=\"3\" cols=\"75\">{$custom2}</textarea>
 					</p>
 					<div class=\"cleared\"></div>
-					<p class=\"profile-update-unit-left\">" . wfMsgForContent( 'custom-info-field3' ) . "</p>
+					<p class=\"profile-update-unit-left\">" . wfMsgExt( 'custom-info-field3', array('parse') ) . "</p>
 					<p class=\"profile-update-unit\">
 						<textarea name=\"custom3\" id=\"fav_athlete\" rows=\"3\" cols=\"75\">{$custom3}</textarea>
 					</p>
 					<div class=\"cleared\"></div>
-					<p class=\"profile-update-unit-left\">" . wfMsgForContent( 'custom-info-field4' ) . "</p>
+					<p class=\"profile-update-unit-left\">" . wfMsgExt( 'custom-info-field4', array('parse') ) . "</p>
 					<p class=\"profile-update-unit\">
 						<textarea name=\"custom4\" id=\"least_fav_athlete\" rows=\"3\" cols=\"75\">{$custom4}</textarea>
 					</p>
