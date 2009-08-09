@@ -207,7 +207,7 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
 </script>
 <script type="text/javascript">
 try {
-var pageTracker = _gat._getTracker("UA-2871474-1");
+var pageTracker = _gat._getTracker("UA-288915-41");
 pageTracker._trackPageview("/error/MWException");
 pageTracker._trackEvent("error", "MWException");
 } catch(err) {}</script>
