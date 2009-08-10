@@ -1,11 +1,11 @@
 <!-- s:<?= __FILE__ ?> -->
-<div class="wk_blogs_panel reset" style="<?=(isset($aOptions['style']))?$aOptions['style']:''?>">
+<div class="wk_blogs_panel" style="<?=(isset($aOptions['style']))?$aOptions['style']:''?>">
 <div class="wk_blogs_title color1"><div><?= ( !empty($aOptions['title']) ) ? $aOptions['title'] : "" ?></div>
 <div class="wk_blogs_title_refresh"><?=$skin->makeLinkObj($wgTitle, "<img src=\"{$wgExtensionsPath}/wikia/Blogs/images/refresh.gif\" border=0 />", "action=purge")?></div>
 </div>
 <div class="wk_blogs_body">
 <? if (!empty($aRows)) { ?>	
-<ul class="list">
+<ul class="list" style="list-style-image:none;list-style-position:outside;list-style-type:none;margin:0.3em 0 0 0.5em">
 <?	
 foreach ($aRows as $pageId => $aRow) {
 	$oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
@@ -18,7 +18,7 @@ foreach ($aRows as $pageId => $aRow) {
 		$isCommenting = $aRow['props']['commenting'];
 	}
 ?>
-<li>
+<li style="line-height:normal;margin:0;padding:0;">
 <div class="wk_blogs_link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getSubpageText()?></a></div>
 <?
 /* s: TIMESTAMP */
