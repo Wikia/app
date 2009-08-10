@@ -7,6 +7,7 @@
 
 $wgHooks[ "RevisionInsertComplete" ][]	= "ExternalStorageUpdate::addDeferredUpdate";
 $wgHooks[ "ArticleDeleteComplete" ][]	= "ExternalStorageUpdate::deleteArticleExternal";
+$wgHooks[ "NewRevisionFromEditComplete" ][] = "ExternalStorageUpdate::setRevisionFromEdit"; 
 #$wgHooks[ "RevisionHiddenComplete" ][]	= "ExternalStorageUpdate::hiddenArticleExternal";
 #$wgHooks[ "ArticleRevisionUndeleted" ][] = "ExternalStorageUpdate::undeleteArticleExternal";
 
@@ -93,7 +94,7 @@ class ExternalStorageUpdate {
 				 */
 				$page_title     = $Title->getDBkey();
 				$page_namespace = $Title->getNamespace();
-				$page_status    = $Title->isRedirect() ? 1 : 0;
+				$page_status    = $Title->isRedirect(GAID_FOR_UPDATE) ? 1 : 0;
 				$page_latest    = $Title->getLatestRevID();
 
 				if( isset( $Row->page_id ) && !empty( $Row->page_id ) ) {
@@ -322,6 +323,69 @@ class ExternalStorageUpdate {
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+	
+	
+	/**
+	 * setRevisionFromEdit
+	 *
+	 * static method called as hook
+	 *
+	 * @static
+	 * @access public
+	 * @author Piotr Molski <moli@wikia.com>
+	 *
+	 * @param Article	$oArticle	article object
+	 * @param Revision	$oRevision	revision object
+	 * @param int		$baseRevId	base revision ID (false if not used)
+	 * @param User		$oUser		user object
+	 *
+	 * @return true means process other hooks
+	 */
+	static public function setRevisionFromEdit( $oArticle, $oRevision, $baseRevId, $oUser) {
+		global $wgCityId;
+
+		wfProfileIn( __METHOD__ );
+		
+		if ( !$oArticle instanceof Article ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+		
+		if ( !$oRevision instanceof Revision) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
+		$Title = $oRevision->getTitle();
+		if( ! $Title  ) {
+			global $wgDBname;
+			Wikia::log( __METHOD__, "err", " title is null, page_id={$this->mPageId}; city_id={$wgCityId}, dbname={$wgDBname}" );
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$page_status = $Title->isRedirect(GAID_FOR_UPDATE) ? 1 : 0;
+
+		$dbw = wfGetDBExt( DB_MASTER );
+
+		$dbw->update( "pages", 
+		array( /* SET */
+			'page_latest'	=> $oRevision->getId(),
+			'page_status' 	=> $page_status
+		),
+		array( 
+			'page_id' 		=> $oArticle->getId(),
+			'page_wikia_id' => $wgCityId
+		), 
+		__METHOD__ );		
+
+		if( $dbw->getFlag( DBO_TRX ) ) {
+			$dbw->commit();
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return true;		
 	}
 
 };
