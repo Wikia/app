@@ -61,7 +61,7 @@ function wfExtImagesWhiteListParse($text) {
 	//---
 	if (preg_match('#http://(.*?).(jpg|jpeg|png|gif)#i', $text, $captures)) {
 	    $lhref = $captures[0];
-	    if (preg_match('#^\s*http://#', $lhref)) {
+	    if (preg_match('#^\s*http://[^\/\s]#', $lhref)) {
 	        //---
 	        $lparsed = parse_url($lhref);
 	        $lschema = (!empty($lparsed['scheme'])) ? $lparsed['scheme'] : "http";
