@@ -40,7 +40,7 @@ function wfSpecialCreatePoll(){
 			if($wgUser->getID() == 0 ){
 				$wgOut->setPagetitle( "Woops!" );
 				$login =  Title::makeTitle( NS_SPECIAL  , "Userlogin"  );
-				$wgOut->redirect( $login->getFullURL("returnto=Special:CreatePoll")  );
+				$wgOut->redirect( $login->getLocalURL("returnto=Special:CreatePoll")  );
 				return false;
 			}
 			

@@ -1,5 +1,5 @@
 == Changes since 200908.2 ==
-* 
+* rt#20770: NYC: Fixed redirect-after-login. (Nef) 
 
 == Changes since 200908.1 ==
 * rt#20643: Answers: Raw html / broken msg on user profile pages fixed. (Nef)

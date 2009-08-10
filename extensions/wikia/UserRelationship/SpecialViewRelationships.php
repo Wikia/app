@@ -55,7 +55,7 @@ function wfSpecialViewRelationships(){
 			{
 				$wgOut->setPagetitle( wfMsg('woopserror') );
 				$login =  Title::makeTitle( NS_SPECIAL  , "UserLogin"  );
-				$wgOut->redirect( $login->getFullURL("returnto=Special:ViewRelationships") );
+				$wgOut->redirect( $login->getLocalURL("returnto=Special:ViewRelationships") );
 				return false;
 			}
 

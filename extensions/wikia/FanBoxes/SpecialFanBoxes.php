@@ -41,7 +41,7 @@ class FanBoxes extends SpecialPage {
 		if($wgUser->getID() == 0 ){
 				$wgOut->setPagetitle( "Woops!" );
 				$login =  Title::makeTitle( NS_SPECIAL  , "Userlogin"  );
-				$wgOut->redirect( $login->getFullURL("returnto=Special:UserBoxes")  );
+				$wgOut->redirect( $login->getLocalURL("returnto=Special:UserBoxes")  );
 				return false;
 		}
 

@@ -30,7 +30,7 @@ class ViewUserStatus extends SpecialPage {
 		if($wgUser->getID() == 0 && $user_name==""){
 			$wgOut->setPagetitle( wfMsgForContent( 'us_woops' ) );
 			$login =  Title::makeTitle( NS_SPECIAL  , "Userlogin"  );
-			$wgOut->redirect( $login->getFullURL("returnto=Special:UserStatus") );
+			$wgOut->redirect( $login->getLocalURL("returnto=Special:UserStatus") );
 			return false;
 		}	 
 		

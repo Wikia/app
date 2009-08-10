@@ -29,7 +29,7 @@ class ViewSystemGifts extends SpecialPage {
 		if($wgUser->getID() == 0 && $user_name==""){
 			$wgOut->setPagetitle( wfMsg("ga-error-title") );
 			$login =  Title::makeTitle(NS_SPECIAL, "UserLogin");
-			$wgOut->redirect( $login->escapeFullURL('returnto=Special:ViewSystemGifts') );
+			$wgOut->redirect( $login->getLocalURL('returnto=Special:ViewSystemGifts') );
 			return false;
 		}
 		
