@@ -35,7 +35,7 @@ class DumpsOnDemand {
 		$context = stream_context_create( array(
 			"http" => array(
 				"method" => "GET",
-				"timeout" => "1.0"
+				"timeout" => 1.0
 		) ) );
 		$json = @file_get_contents( self::getUrl( $wgDBname, "index.json" ), 0, $context );
 		if( $json ) {
