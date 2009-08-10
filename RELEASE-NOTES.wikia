@@ -20,6 +20,7 @@
 * rt#18812: Prevent extremely large thumbnail generation. (Nef)
 * rt#20330: New starter. (Nef)
 * rt#20185: Mainpage class tag for monobook. (Nef)
+* rt#20769: Fixed pipe separator display (TOR)
 
 == Changes since 200907.5 ==
 * rt#20139: WikiFactoryLoader: Dofus redirect oddities (eloy)
