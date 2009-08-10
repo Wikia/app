@@ -216,9 +216,8 @@ body.widgetsAddingBlocked .add {
 	z-index: 1000;
 }
 
-.menu-item {
+#navigation .menu-item {
 	border-bottom: 1px solid #EEE;
-	color: #333;
 	display: block;
 	font-family: Tahoma, arial, sans-serif;
 	font-weight: bold;
@@ -226,8 +225,8 @@ body.widgetsAddingBlocked .add {
 	padding: 0;
 	position: relative;
 }
-.menu-item a {
-	color: inherit;
+#navigation a {
+	color: #333;
 	display: block;
 	height: 1%;
 	padding: 3px 5px;
@@ -243,6 +242,9 @@ body.widgetsAddingBlocked .add {
 	text-align: right;
 }
 
+.navigation-hover {
+	background-color: #e0efff;
+}
 #navigation em {
 	font-family: arial, sans-serif;
 	font-size: 16pt;
