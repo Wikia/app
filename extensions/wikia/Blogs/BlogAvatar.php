@@ -24,6 +24,7 @@ $wgHooks['AdditionalUserProfilePreferences'][] = "BlogAvatar::additionalUserProf
 $wgHooks['SavePreferences'][] = "BlogAvatar::savePreferences";
 $wgHooks['MonacoBeforePageBar'][] = "BlogAvatar::userMasthead";
 
+$wgLogNames["useravatar"] = "useravatar-log";
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "RemoveAvatar",
