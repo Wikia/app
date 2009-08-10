@@ -103,6 +103,7 @@ $messages = array_merge( $messages , array(
 'title' => 'Title',
 
 #Overrides for MediaWiki defaults
+'pipe-separator' => ' | ',
 'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/
 /* See also: [[MediaWiki:Monobook.css]] */
 /* <pre> */
