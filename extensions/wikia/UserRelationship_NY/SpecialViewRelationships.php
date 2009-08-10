@@ -44,7 +44,7 @@
 			if($wgUser->getID() == 0 && $user_name==""){
 				$wgOut->setPagetitle( "Woops!" );
 				$login = Title::makeTitle(NS_SPECIAL,"UserLogin");
-				$wgOut->redirect( $login->escapeFullURL('returnto=Special:ViewRelationships'));
+				$wgOut->redirect( $login->getLocalURL('returnto=Special:ViewRelationships'));
 				return false;
 			}
 			

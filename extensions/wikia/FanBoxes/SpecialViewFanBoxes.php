@@ -38,7 +38,7 @@ function wfSpecialViewFanBoxes(){
 		
 			if($wgUser->getID() == 0 && $user_name==""){
 			$login =  Title::makeTitle(NS_SPECIAL,"UserLogin");
-			$wgOut->redirect( $login->escapeFullURL('returnto=Special:ViewUserBoxes'));
+			$wgOut->redirect( $login->getLocalURL('returnto=Special:ViewUserBoxes'));
 			return false;
 			}
 			
