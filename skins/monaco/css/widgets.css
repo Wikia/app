@@ -216,8 +216,9 @@ body.widgetsAddingBlocked .add {
 	z-index: 1000;
 }
 
-#navigation .menu-item {
+.menu-item {
 	border-bottom: 1px solid #EEE;
+	color: #333;
 	display: block;
 	font-family: Tahoma, arial, sans-serif;
 	font-weight: bold;
@@ -225,8 +226,8 @@ body.widgetsAddingBlocked .add {
 	padding: 0;
 	position: relative;
 }
-#navigation a {
-	color: #333;
+.menu-item a {
+	color: inherit;
 	display: block;
 	height: 1%;
 	padding: 3px 5px;
@@ -242,9 +243,6 @@ body.widgetsAddingBlocked .add {
 	text-align: right;
 }
 
-.navigation-hover {
-	background-color: #e0efff;
-}
 #navigation em {
 	font-family: arial, sans-serif;
 	font-size: 16pt;
@@ -293,7 +291,7 @@ body.widgetsAddingBlocked .add {
 }
 #dynamic-links-write-blog-img {
 	clip: rect(0px 400px 16px 384px);
-	left: -304px;
+	left: -404px;
 }
 #dynamic-links-blog-listing-img {
 	clip: rect(0px 448px 16px 432px);
