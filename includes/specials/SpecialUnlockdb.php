@@ -101,7 +101,7 @@ END
 #			return;
 #		}
 
-		if ( !WikiFactory::removeVarByName( 'wgReadOnly', $wgCityId ) || !WikiFactory::clearCache() ) {
+		if ( !WikiFactory::setVarByName( 'wgReadOnly', $wgCityId, '' ) || !WikiFactory::clearCache( $wgCityId ) ) {
 			$wgOut->showErrorPage( 'unlockdb', 'unlockdb-wikifactory-error');
 			return;
 		}
