@@ -79,11 +79,12 @@ while( $request->Accept() >= 0 ) {
 		my $original = join( "/", splice( @parts, -3, 3 ) );
 
 		#
-		# we later will match thumbnail path against this name
+		# we match thumbnail path against this name because we don't want to
+		# create false positives (it's not perfect though )
 		#
 		my $origname = pop @{ [ split( "/" , $original ) ] };
 		if( index( $last, $original ) != -1 ) {
-				syslog( LOG_INFO, "$origname not found in $last" ) if $syslog;
+			syslog( LOG_INFO, "$origname not found in $last" ) if $syslog;
 		}
 		else {
 			#
@@ -114,7 +115,7 @@ while( $request->Accept() >= 0 ) {
 						syslog( LOG_INFO, "Creating of $thumbdir folder failed" ) if $syslog;
 					}
 					else {
-						syslog( LOG_INFO, "Create $thumbdir folder" ) if $syslog;
+						syslog( LOG_INFO, "Folder $thumbdir created" ) if $syslog;
 					}
 				}
 

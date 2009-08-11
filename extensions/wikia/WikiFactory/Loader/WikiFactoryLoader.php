@@ -557,7 +557,7 @@ class WikiFactoryLoader {
 				$tUnserVal = unserialize( $oRow->cv_value );
 				restore_error_handler();
 
-				if( !empty( $wgDevelEnvironment ) && $oRow->cv_name === "wgServer" ) {
+				if( (!empty( $wgDevelEnvironment ) || $this->mNoRedirect ) && $oRow->cv_name === "wgServer" ) {
 					/**
 					 * skip this variable
 					 */
