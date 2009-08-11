@@ -101,7 +101,7 @@ class MultiWikiEditTask extends BatchTask {
 		if ( !empty($wikiList) ) {
 			$this->log("Found " . count($wikiList) . " Wikis to proceed");
 			foreach ( $wikiList as $id => $oWiki ) {
-				$this->log("Proceed " . {$oWiki->city_dbname} . " ({$oWiki->city_url} ({$oWiki->city_id}))");
+				$this->log("Proceed " . $oWiki->city_dbname . " ({$oWiki->city_url} ({$oWiki->city_id}))");
 				$retval = "";
 				$fixedArticle = $this->checkArticle($article, $oWiki);
 				if ( empty($fixedArticle) ) {
