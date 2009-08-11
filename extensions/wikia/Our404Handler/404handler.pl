@@ -10,7 +10,6 @@ use File::LibMagic;
 use IO::File;
 use File::Basename;
 use File::Path;
-use URI::Escape;
 
 #
 # debug
@@ -37,7 +36,7 @@ openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
 while( $request->Accept() >= 0 ) {
 	my $env = $request->GetEnvironment();
 	my $redirect_to = "";
-	#my $request_uri = "http://images.wikia.com/central/images/thumb/b/bf/Wiki_wide.png/50px-Wiki_wide.png"; # test url
+	#my $request_uri = "/s/silenthill/de/images/thumb/8/85/Heather_%28Konzept4%29.jpg/420px-Heather_%28Konzept4%29.jpg"; # test url
 	my $request_uri = "";
 	my $referer = "";
 
@@ -51,9 +50,9 @@ while( $request->Accept() >= 0 ) {
 	# get last part of uri, remove first slash if exists
 	#
 	my $uri = URI->new( $request_uri );
-	my $path  = uri_unescape( $uri->path );
+	my $path  = $uri->path;
 	$path =~ s/^\///;
-
+	$path =~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg;
 
 	#
 	# if path has single letter on beginning it's already new directory layout
