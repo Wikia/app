@@ -117,21 +117,20 @@ Wikia Community Team
 <http://www.wikia.com/wiki/User:$4>
     ",
     "autocreatewiki-welcometalk" => "
-Hi '''$1''' -- we are excited to have '''$4''' as part of the Wikia community!
+== Welcome! ==
+<div style=\"font-size:120%; line-height:1.2em;\">Hi $1 -- we're excited to have '''$4''' as part of the Wikia community!
 
-Starting a new wiki can be overwhelming, but don't worry, the [[Wikia:Community Team|WIkia Community Team]] is here to help!  We have put together a few guides to getting started. They say imitation is the best form of flattery so absolutely check out other wikis on [[Wikia:Wikia| Wikia]] for ideas on layout, ways to organize your content, etc. We are all one big family at Wikia and the most important thing is to have fun!
+Now you've got a whole website to fill up with information, pictures and videos about your favorite topic. But right now, it's just blank pages staring at you... Scary, right? Here are some ways to get started.
 
-* Our guide to [[Help:Starting this wiki|Getting Started]] gives you 5 things you can do right now to set your wiki up for success
-* We also put together some [[w:c:help:Advice:Starting_a_wiki|Advice on Starting a Wiki]] which provides a more a in-depth look at some of the important things you should consider when building a wiki
-* If you are new to wikis in general than we recommend checking our [[help:FAQ|new user FAQ]]
+* '''Introduce your topic''' on the front page. This is your opportunity to explain to your readers what your topic is all about. Write as much as you want! Your description can link off to all the important pages on your site. 
 
-If you need help (which trust me we ALL do) you can access our full in-depth help at [[w:c:Help|Help Wikia]], Stop by the [[Wikia:Forum:Help desk|Wikia Help Desk Forum]], or email us through our [[Special:Contact|contact form]].  Also, you can visit our [http://irc.wikia.com live #wikia chat channel] any time. A lot of the veteran \"Wikians\" hang out here so its a good place if come if you want to get some advice or simply make friends.
+* '''Start some new pages''' -- just a sentence or two is fine to get started. Don't let the blank page stare you down! A wiki is all about adding and changing things as you go along. You can also add pictures and videos, to fill out the page and make it more interesting.
 
-Now, go edit!  We look forward to seeing this project thrive!
+And then just keep going! People like visiting wikis when there's lots of stuff to read and look at, so keep adding stuff, and you'll attract readers and editors. There's a lot to do, but don't worry -- today's your first day, and you've got plenty of time. Every wiki starts the same way -- a little bit at a time, starting with the first few pages, until it grows into a huge, busy site. 
 
-Best wishes,
+If you've got questions, you can e-mail us through our [[Special:Contact|contact form]]. Have fun!
 
-[[User:$2|$3]]
+-- [[User:$2|$3]] <staff /></div>
     ",
 // new wikis - special page
 	"newwikis" => "New wikis",
