@@ -8,6 +8,8 @@ use Image::Magick;
 use Image::LibRSVG;
 use File::LibMagic;
 use IO::File;
+use File::Basename;
+use File::Path;
 
 #
 # debug
@@ -92,6 +94,20 @@ while( $request->Accept() >= 0 ) {
 		if( -f $original ) {
 			$mimetype = $flm->checktype_filename( $original );
 			syslog( LOG_INFO, qq{$thumbnail $mimetype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
+
+			#
+			# create folder for thumbnail if doesn't exists
+			#
+			my $thumbdir = dirname( $thumbnail );
+			if( ! -d $thumbdir ) {
+				eval { mkpath( $thumbdir, 1 ) };
+				if( $@ ) {
+					syslog( LOG_INFO, "Creating of $thumbdir folder failed" ) if $syslog;
+				}
+				else {
+					syslog( LOG_INFO, "Create $thumbdir folder" ) if $syslog;
+				}
+			}
 
 			#
 			# read original file, thumbnail it, store on disc
