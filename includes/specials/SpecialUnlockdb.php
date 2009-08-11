@@ -34,10 +34,15 @@ function wfSpecialUnlockdb() {
 class DBUnlockForm {
 	function showForm( $err )
 	{
+		/*
+		 * WIKIA-SPECIFIC CHANGES
+		 * use $wgReadOnly instead, to prevent unnecessary stat()s (rt#20875)
+		 */
 		global $wgOut, $wgUser;
 
-		global $wgReadOnlyFile;
-		if( !file_exists( $wgReadOnlyFile ) ) {
+		global $wgReadOnly;
+#		if( !file_exists( $wgReadOnlyFile ) ) {
+		if( empty( $wgReadOnly ) ) {
 			$wgOut->addWikiMsg( 'databasenotlocked' );
 			return;
 		}
