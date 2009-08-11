@@ -137,13 +137,13 @@ if (match !== null){
 	function fillInArticle(result){
 		var html;
 		if (result === null){
-			html = Mediawiki.$("pullArticleForm").articleName.value + " does not exist";
+			html = document.getElementById("pullArticleForm").articleName.value + " does not exist";
 		} else if (document.getElementById("pullArticleForm").parseText.checked){
 			html = result;
 		} else {
 			html  = '<pre>' + result + '</pre>';
 		}
-		Mediawiki.$("pulledArticle").innerHTML = html;
+		document.getElementById("pulledArticle").innerHTML = html;
 		Mediawiki.updateStatus("Article pulled");
 	}
 
@@ -157,7 +157,7 @@ if (match !== null){
 		} else {
 			Mediawiki.updateStatus("Normalizing " + articleName + "...");
 			var cleanName = Mediawiki.getNormalizedTitle(articleName);
-			Mediawiki.$("pullArticleForm").articleName.value = cleanName;
+			document.getElementById("pullArticleForm").articleName.value = cleanName;
 
 			var options = {};
 			if (f.redirects.checked) {
@@ -217,10 +217,10 @@ if (match !== null){
 	function fillInEditForm(result){
 		var html;
 		if (result === null){
-			Mediawiki.$("article_textarea").value = '';
+			document.getElementById("article_textarea").value = '';
 			Mediawiki.updateStatus("Article '" + $("#article_name_edit").val() + "' does not exist, saving will create a new one");
 		} else {
-			Mediawiki.$("article_textarea").value = result;
+			document.getElementById("article_textarea").value = result;
 			Mediawiki.updateStatus("Article ready for edit");
 		}
 		$("#editFormHtml").fadeIn();
@@ -294,7 +294,7 @@ if (match !== null){
 		var url = Mediawiki.getImageUrl(f.image_name.value);
 		if (!Mediawiki.e(url)){
 			Mediawiki.updateStatus("Image url: " + url);
-			Mediawiki.$("image1").src = url;
+			document.getElementById("image1").src = url;
 			$("#image_holder").fadeIn();
 		} else {
 			Mediawiki.updateStatus("Error pulling image. File does not exist?", true);
