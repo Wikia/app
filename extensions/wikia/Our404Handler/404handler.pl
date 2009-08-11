@@ -79,88 +79,59 @@ while( $request->Accept() >= 0 ) {
 		my $original = join( "/", splice( @parts, -3, 3 ) );
 
 		#
-		# now, last part is thumbnails folder, we skip that too
+		# we later will match thumbnail path against this name
 		#
-		pop @parts;
-
-		#
-		# merge with rest of path
-		#
-		$original = $basepath . '/' . join( "/", @parts ) . '/' . $original;
-
-		#
-		# then find proper thumbnailer for file, first check if this is svg
-		# thumbnail request. mimetype will be used later in header
-		#
-		if( -f $original ) {
-			$mimetype = $flm->checktype_filename( $original );
-			syslog( LOG_INFO, qq{$thumbnail $mimetype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
+		my $origname = pop @{ [ split( "/" , $original ) ] };
+		if( index( $last, $original ) != -1 ) {
+				syslog( LOG_INFO, "$origname not found in $last" ) if $syslog;
+		}
+		else {
+			#
+			# now, last part is thumbnails folder, we skip that too
+			#
+			pop @parts;
 
 			#
-			# create folder for thumbnail if doesn't exists
+			# merge with rest of path
 			#
-			my $thumbdir = dirname( $thumbnail );
-			unless( -d $thumbdir ) {
-				eval { mkpath( $thumbdir, 1 ) };
-				if( $@ ) {
-					syslog( LOG_INFO, "Creating of $thumbdir folder failed" ) if $syslog;
-				}
-				else {
-					syslog( LOG_INFO, "Create $thumbdir folder" ) if $syslog;
-				}
-			}
+			$original = $basepath . '/' . join( "/", @parts ) . '/' . $original;
 
 			#
-			# read original file, thumbnail it, store on disc
-			# file2 has old mimetype database, it thinks that svg file is just
-			# xml file
+			# then find proper thumbnailer for file, first check if this is svg
+			# thumbnail request. mimetype will be used later in header
 			#
-			if( $mimetype =~ m!^image/svg\+xml! || $mimetype =~ m!text/xml! ) {
+			if( -f $original ) {
+				$mimetype = $flm->checktype_filename( $original );
+				syslog( LOG_INFO, qq{$thumbnail $mimetype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
+
 				#
-				# RSVG thumbnailer
+				# create folder for thumbnail if doesn't exists
 				#
-				my $rsvg = new Image::LibRSVG;
-				$rsvg->convertAtMaxSize( $original, $thumbnail, $width, $width );
-
-				if( -f $thumbnail ) {
-					$mimetype = $flm->checktype_filename( $thumbnail );
-					$transformed = 1;
-					print "HTTP/1.1 200 OK\r\n";
-					print "X-Thumb-Path: $thumbnail\r\n";
-					print "Content-type: $mimetype\r\n\r\n";
-					my $fh = new IO::File $thumbnail, O_RDONLY;
-					if( defined $fh ) {
-						binmode $fh;
-						print <$fh>;
-						undef $fh;
+				my $thumbdir = dirname( $thumbnail );
+				unless( -d $thumbdir ) {
+					eval { mkpath( $thumbdir, 1 ) };
+					if( $@ ) {
+						syslog( LOG_INFO, "Creating of $thumbdir folder failed" ) if $syslog;
 					}
-					syslog( LOG_INFO, "$thumbnail created" ) if $syslog;
-				}
-				else {
-					syslog( LOG_INFO, "SVG conversion from $original to $thumbnail failed" ) if $syslog;
-				}
-				undef $rsvg;
-			}
-			else {
-				#
-				# for other else use Image::Magick
-				#
-				my $image = new Image::Magick;
-				$image->Read( $original );
-				my $origw  = $image->Get( 'width' );
-				my $origh  = $image->Get( 'height' );
-				if( $origw && $origh ) {
-					my $height = $width * $origh / $origw;
-					$image->Resize( "geometry" => "${width}x${height}>", "blur" => 0.9 );
-					if( $mimetype =~ m!image/gif! ) {
-						$image->Coalesce();
+					else {
+						syslog( LOG_INFO, "Create $thumbdir folder" ) if $syslog;
 					}
-					$image->Write( "filename" => $thumbnail );
+				}
+
+				#
+				# read original file, thumbnail it, store on disc
+				# file2 has old mimetype database, it thinks that svg file is just
+				# xml file
+				#
+				if( $mimetype =~ m!^image/svg\+xml! || $mimetype =~ m!text/xml! ) {
+					#
+					# RSVG thumbnailer
+					#
+					my $rsvg = new Image::LibRSVG;
+					$rsvg->convertAtMaxSize( $original, $thumbnail, $width, $width );
 
 					if( -f $thumbnail ) {
-						#
-						# serve file if is ready to serve
-						#
+						$mimetype = $flm->checktype_filename( $thumbnail );
 						$transformed = 1;
 						print "HTTP/1.1 200 OK\r\n";
 						print "X-Thumb-Path: $thumbnail\r\n";
@@ -174,14 +145,52 @@ while( $request->Accept() >= 0 ) {
 						syslog( LOG_INFO, "$thumbnail created" ) if $syslog;
 					}
 					else {
-						syslog( LOG_INFO, "ImageMagick thumbnailer from $original to $thumbnail failed" ) if $syslog;
+						syslog( LOG_INFO, "SVG conversion from $original to $thumbnail failed" ) if $syslog;
 					}
-					undef $image;
+					undef $rsvg;
+				}
+				else {
+					#
+					# for other else use Image::Magick
+					#
+					my $image = new Image::Magick;
+					$image->Read( $original );
+					my $origw  = $image->Get( 'width' );
+					my $origh  = $image->Get( 'height' );
+					if( $origw && $origh ) {
+						my $height = $width * $origh / $origw;
+						$image->Resize( "geometry" => "${width}x${height}>", "blur" => 0.9 );
+						if( $mimetype =~ m!image/gif! ) {
+							$image->Coalesce();
+						}
+						$image->Write( "filename" => $thumbnail );
+
+						if( -f $thumbnail ) {
+							#
+							# serve file if is ready to serve
+							#
+							$transformed = 1;
+							print "HTTP/1.1 200 OK\r\n";
+							print "X-Thumb-Path: $thumbnail\r\n";
+							print "Content-type: $mimetype\r\n\r\n";
+							my $fh = new IO::File $thumbnail, O_RDONLY;
+							if( defined $fh ) {
+								binmode $fh;
+								print <$fh>;
+								undef $fh;
+							}
+							syslog( LOG_INFO, "$thumbnail created" ) if $syslog;
+						}
+						else {
+							syslog( LOG_INFO, "ImageMagick thumbnailer from $original to $thumbnail failed" ) if $syslog;
+						}
+						undef $image;
+					}
 				}
 			}
-		}
-		else {
-			syslog( LOG_INFO, "$thumbnail original file $original does not exists" ) if $syslog;
+			else {
+				syslog( LOG_INFO, "$thumbnail original file $original does not exists" ) if $syslog;
+			}
 		}
 	}
 	if( ! $transformed ) {
