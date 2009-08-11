@@ -2401,11 +2401,6 @@ class Title {
 			}
 		}
 
-		// purge Special:RecentChanges too
-		$urls[] = SpecialPage::getTitleFor('RecentChanges')->getInternalURL();
-		$urls[] = SpecialPage::getTitleFor('RecentChanges')->getInternalURL('feed=rss');
-		$urls[] = SpecialPage::getTitleFor('RecentChanges')->getInternalURL('feed=atom');
-
 		return $urls;
 	}
 
