@@ -135,7 +135,7 @@ class MultiWikiEditTask extends BatchTask {
 					$this->log ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				}
 				else {
-					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $title . '">' . $city_url . $city_path . '?title=' . $title . '</a>') ;
+					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $title . '">' . $city_url . $city_path . '?title=' . $title . '</a> <br />');
 				}
 			}
 		}
@@ -325,6 +325,7 @@ class MultiWikiEditTask extends BatchTask {
 					'namespace' => $namespace
 				);
 			}
+			$dbr->close();
 		}
 
 		return $result;
