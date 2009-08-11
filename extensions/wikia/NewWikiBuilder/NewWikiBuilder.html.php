@@ -96,21 +96,11 @@ echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$languag
 		<div id="logo_preview"></div>
 	</div>
 	
-	<div id="logo_current" style="display: none;"></div>
-	
 	</div><!--float-->
 	<div class="accent note">
 		<img src="/extensions/wikia/NewWikiBuilder/sample_logo.jpg" id="sample_logo" /><br />
 		<?php echo wfMsg("nwb-step2-example")?>
 	</div>
-	<script> 
-	// Fill in the background image for the logo
-	$(function() {
-		normalizedLogo = Mediawiki.getNormalizedTitle(Mediawiki.$("logo_article").value);
-		url = Mediawiki.getImageUrl(normalizedLogo) + '?' + Math.random();
-		$("#logo_current").css("backgroundImage", "url(" + url + ")");
-	});
-	</script>
 </div>
 <div class="nav">
 	<span class="nav_reverse">
