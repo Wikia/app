@@ -58,6 +58,7 @@ if ( isset( $options['o'] ) ) {
 		}
 		$dbw =& wfGetDB( DB_MASTER );
 		while ( $row = $dbr->fetchRow( $res ) ) {
+			wfWaitForSlaves( 100 );
 			if ($dbw->selectDB($row['city_dbname'])) {
 				if ( $verbose )
 					print "Updating database: ". $row['city_dbname']. "... ";
