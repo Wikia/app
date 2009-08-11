@@ -109,7 +109,7 @@ END
 #		$fp = @fopen( $wgReadOnlyFile, 'w' );
 
 		$reason = $this->reason . "\nby " . $wgUser->getName() . ' at ' . $wgLang->timeanddate( wfTimestampNow() );
-		if ( !WikiFactory::setVarByName( 'wgReadOnly', $wgCityId, $reason ) || !WikiFactory::clearCache() ) {
+		if ( !WikiFactory::setVarByName( 'wgReadOnly', $wgCityId, $reason ) || !WikiFactory::clearCache( $wgCityId ) ) {
 			$wgOut->showErrorPage( 'lockdb', 'lockdb-wikifactory-error');
 			return;
 		}
