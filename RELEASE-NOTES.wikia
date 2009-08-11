@@ -1,4 +1,5 @@
 == Changes since 200908.2 ==
+* rt#20990: Hide MultiWikiEdit from special:specialpages. (Nef)
 * rt#20989: MultiWikiEdit for helpers. (Nef)
 * rt#20765: AWC: i18n msg change. (Nef)
 * rt#20852: Blogs, VET: NS i18n. (Nef)

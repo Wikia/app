@@ -19,7 +19,7 @@ class Multiwikiedit extends SpecialPage {
 	 * constructor
 	 */
 	function  __construct() {
-		parent::__construct( "Multiwikiedit"  /*class*/ );
+		parent::__construct( "Multiwikiedit"  /*class*/, "multiwikiedit");
 		wfLoadExtensionMessages("Multiwikiedit");
 	}
 	
