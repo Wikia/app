@@ -8,7 +8,7 @@ var divErrors = new Array();
 var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 /*]]>*/
 </script>
-<form class="highlightform" id="highlightform" method="post" action="<?=$mTitle->escapeLocalURL("")?>">
+<form class="highlightform" id="highlightform" method="post" action="<?=$mTitle->escapeLocalURL(( $mLanguage != 'en' ) ? 'uselang=' . $mLanguage : '')?>">
 <div id="monobook_font">
 	<div class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgStylePath}/common/required.png?{$wgStyleVersion}' />")?></div>
 	<div id="moving" class="formhighlight"></div>
@@ -70,7 +70,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 				<optgroup label="<?= wfMsg('autocreatewiki-language-top', count($aTopLanguages)) ?>">
 <?php foreach ($aTopLanguages as $sLang) :
 		$selected = '';
-		if ( empty($isSelected) && ( ( isset( $params['wiki-language'] ) && ($sLang == $params['wiki-language']) ) || ( !isset($params['wiki-language']) && ( $sLang == 'en' ) ) ) ) :
+		if ( empty($isSelected) && ( ( isset( $params['wiki-language'] ) && ($sLang == $params['wiki-language']) ) || ( !isset($params['wiki-language']) && ( $sLang == $mLanguage ) ) ) ) :
 			$isSelected = true;
 			$selected = ' selected="selected"';
 		endif;
@@ -84,7 +84,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 <?php
 	ksort($aLanguages);
 	foreach ($aLanguages as $sLang => $sLangName) :
-		if ( empty($isSelected) && ( ( isset($params['wiki-language'] ) && ( $sLang == $params['wiki-language'] ) ) || ( !isset($params['wiki-language']) && ( $sLang == 'en' ) ) ) ) :
+		if ( empty($isSelected) && ( ( isset($params['wiki-language'] ) && ( $sLang == $params['wiki-language'] ) ) || ( !isset($params['wiki-language']) && ( $sLang == $mLanguage ) ) ) ) :
 			$isSelected = true;
 			$selected = ' selected="selected"';
 		endif;
@@ -256,7 +256,7 @@ YE.onDOMReady(function () {
 	if (YD.get('userloginRound')) {
 		__showLoginPanel = function(e) {
 			var ifr = YD.get('awc-process-login');
-			var titleUrl = '<?=$mTitle->getLocalURL()."/Caching"?>';
+			var titleUrl = '<?=$mTitle->getLocalURL()."/Caching".(( $mLanguage != 'en' ) ? '?uselang=' . $mLanguage : '')?>';
 			var wikiName = YD.get('wiki-name');
 			var wikiDomain = YD.get('wiki-domain');
 			var wikiCategory = YD.get('wiki-category');
