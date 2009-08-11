@@ -1374,13 +1374,23 @@ class MonacoTemplate extends QuickTemplate {
 ?>
 
 	</head>
+<?php		wfProfileOut( __METHOD__ . '-head');  ?>
 <?php
-        // Note this one is safe at the top because it's an image call, so it's not blocking like GA or Quantserve
-        // UPdate, but do make sure it's not in the <head>
-        echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+
+// Sometimes we need an ad delivered at the very top of the page (like for a skin)
+// This sucks to have a blocking call at the top of the page, but they promised
+// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
+global $wgEnableAdInvisibleTop, $wgEnableAdInvisibleHomeTop, $wgOut;
+if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
+	echo '<script src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
+	echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
+} else if (!empty($wgEnableAdInvisibleTop) && $wgOut->isArticle() && ArticleAdLogic::isContentPage()){
+	echo '<script src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
+	echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
+}
 ?>
-<?php		wfProfileOut( __METHOD__ . '-head'); ?>
-<?php		wfProfileIn( __METHOD__ . '-body'); ?>
+<?php
+wfProfileIn( __METHOD__ . '-body'); ?>
 <?php
 	if (ArticleAdLogic::isMainPage()){
 		$isMainpage = ' mainpage';
@@ -2216,6 +2226,7 @@ if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 
 
 echo '</div>';
+echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 // Quant serve moved *after* the ads because it depends on Athena/Provider values.
 echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
