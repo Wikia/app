@@ -99,7 +99,7 @@ while( $request->Accept() >= 0 ) {
 			# create folder for thumbnail if doesn't exists
 			#
 			my $thumbdir = dirname( $thumbnail );
-			if( ! -d $thumbdir ) {
+			unless( -d $thumbdir ) {
 				eval { mkpath( $thumbdir, 1 ) };
 				if( $@ ) {
 					syslog( LOG_INFO, "Creating of $thumbdir folder failed" ) if $syslog;
