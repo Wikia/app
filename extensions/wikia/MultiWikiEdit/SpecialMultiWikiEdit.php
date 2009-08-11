@@ -25,7 +25,7 @@ $wgExtensionMessagesFiles["Multiwikiedit"] = dirname(__FILE__) . '/MultiWikiEdit
 
 $wgAvailableRights[] = 'multiwikiedit';
 $wgGroupPermissions['staff']['multiwikiedit'] = true;
-#$wgGroupPermissions['helper']['multiwikiedit'] = true;
+$wgGroupPermissions['helper']['multiwikiedit'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiWikiEdit_body.php', 'Multiwikiedit', 'Multiwikiedit' );
 $wgSpecialPageGroups['Multiwikiedit'] = 'pagetools';

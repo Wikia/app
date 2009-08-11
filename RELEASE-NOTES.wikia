@@ -1,4 +1,6 @@
 == Changes since 200908.2 ==
+* rt#20989: MultiWikiEdit for helpers. (Nef)
+* rt#20765: AWC: i18n msg change. (Nef)
 * rt#20852: Blogs, VET: NS i18n. (Nef)
 * MagCloud project: simplest collecting extension + pdf rendering routines. (Nef)
 * rt#20767: Blogs: Allow change/i18n of avatar log id. (Nef)
