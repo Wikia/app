@@ -91,26 +91,40 @@ END
 	}
 
 	function doSubmit() {
-		global $wgOut, $wgUser, $wgLang, $wgRequest;
+		/*
+		 * WIKIA-SPECIFIC CHANGES
+		 * use $wgReadOnly instead, to prevent unnecessary stat()s (rt#20875)
+		 */
+		global $wgOut, $wgUser, $wgLang, $wgRequest, $wgCityId;
 		global $wgReadOnlyFile;
 
 		if ( ! $wgRequest->getCheck( 'wpLockConfirm' ) ) {
 			$this->showForm( wfMsg( 'locknoconfirm' ) );
 			return;
 		}
-		$fp = @fopen( $wgReadOnlyFile, 'w' );
+		/*
+		 * WIKIA-SPECIFIC CHANGES
+		 * use $wgReadOnly instead, to prevent unnecessary stat()s (rt#20875)
+		 */
+#		$fp = @fopen( $wgReadOnlyFile, 'w' );
 
-		if ( false === $fp ) {
+		$reason = $this->reason . "\nby " . $wgUser->getName() . ' at ' . $wgLang->timeanddate( wfTimestampNow() );
+		if ( !WikiFactory::setVarByName( 'wgReadOnly', $wgCityId, $reason ) || !WikiFactory::clearCache() ) {
+			$wgOut->showErrorPage( 'lockdb', 'lockdb-wikifactory-error');
+			return;
+		}
+
+#		if ( false === $fp ) {
 			# This used to show a file not found error, but the likeliest reason for fopen()
 			# to fail at this point is insufficient permission to write to the file...good old
 			# is_writable() is plain wrong in some cases, it seems...
-			self::notWritable();
-			return;
-		}
-		fwrite( $fp, $this->reason );
-		fwrite( $fp, "\n<p>(by " . $wgUser->getName() . " at " .
-		  $wgLang->timeanddate( wfTimestampNow() ) . ")</p>\n" );
-		fclose( $fp );
+#			self::notWritable();
+#			return;
+#		}
+#		fwrite( $fp, $this->reason );
+#		fwrite( $fp, "\n<p>(by " . $wgUser->getName() . " at " .
+#		  $wgLang->timeanddate( wfTimestampNow() ) . ")</p>\n" );
+#		fclose( $fp );
 
 		$titleObj = SpecialPage::getTitleFor( 'Lockdb' );
 		$wgOut->redirect( $titleObj->getFullURL( 'action=success' ) );

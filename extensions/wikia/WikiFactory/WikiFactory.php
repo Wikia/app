@@ -597,6 +597,26 @@ class WikiFactory {
 
 
 	/**
+	 * removeVarByName
+	 *
+	 * handy wrapper for removeVarById
+	 *
+	 * @access public
+	 * @author tor@wikia-inc.com
+	 * @static
+	 *
+	 * @param string $variable: variable name in city_variables_pool
+	 * @param integer $wiki: wiki id in city list
+	 *
+	 * @return boolean: transaction status
+	 */
+        static public function removeVarByName( $variable, $wiki ) {
+                $oVariable = self::getVarByName( $variable, $wiki );
+                return WikiFactory::removeVarById( $oVariable->cv_variable_id, $wiki );
+        }
+
+
+	/**
 	 * removeVarById
 	 *
 	 * remove variable's value from DB

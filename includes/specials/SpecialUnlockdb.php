@@ -80,17 +80,27 @@ END
 	}
 
 	function doSubmit() {
-		global $wgOut, $wgRequest, $wgReadOnlyFile;
+		/*
+		 * WIKIA-SPECIFIC CHANGES
+		 * use $wgReadOnly instead, to prevent unnecessary stat()s (rt#20875)
+		 */
+		global $wgOut, $wgRequest, $wgReadOnlyFile, $wgCityId;
 
 		$wpLockConfirm = $wgRequest->getCheck( 'wpLockConfirm' );
 		if ( ! $wpLockConfirm ) {
 			$this->showForm( wfMsg( "locknoconfirm" ) );
 			return;
 		}
-		if ( @! unlink( $wgReadOnlyFile ) ) {
-			$wgOut->showFileDeleteError( $wgReadOnlyFile );
+#		if ( @! unlink( $wgReadOnlyFile ) ) {
+#			$wgOut->showFileDeleteError( $wgReadOnlyFile );
+#			return;
+#		}
+
+		if ( !WikiFactory::removeVarByName( 'wgReadOnly', $wgCityId ) || !WikiFactory::clearCache() ) {
+			$wgOut->showErrorPage( 'unlockdb', 'unlockdb-wikifactory-error');
 			return;
 		}
+
 		$titleObj = SpecialPage::getTitleFor( "Unlockdb" );
 		$success = $titleObj->getFullURL( "action=success" );
 		$wgOut->redirect( $success );
