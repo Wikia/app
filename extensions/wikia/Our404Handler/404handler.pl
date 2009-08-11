@@ -190,7 +190,7 @@ while( $request->Accept() >= 0 ) {
 				}
 			}
 			else {
-				syslog( LOG_INFO, "$thumbnail original file $original does not exists" ) if $syslog;
+				syslog( LOG_INFO, "$thumbnail original file $original does not exists" ) if $syslog > 1;
 			}
 		}
 	}
