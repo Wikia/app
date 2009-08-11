@@ -359,9 +359,9 @@ class WikiFactoryLoader {
 		}
 
 		/**
-		 * @todo check if owis.wikia.com should not be regex
+		 * @todo check if owikis.wikia.com should not be regex
 		 */
-		if( $this->mServerName == "owis.wikia.com" || strpos( $this->mServerName, "beta." ) === 0 ) {
+		if( $this->mServerName == "owikis.wikia.com" || strpos( $this->mServerName, "beta." ) === 0 ) {
 			$this->mNoRedirect = true;
 		}
 
