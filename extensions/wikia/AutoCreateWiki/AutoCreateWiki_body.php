@@ -24,6 +24,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$mAction,
 		$mSubpage,
 		$mWikiData,
+		$mLang,
 		$mWikiId,
 		$mMYSQLdump,
 		$mMYSQLbin,
@@ -106,18 +107,18 @@ class AutoCreateWikiPage extends SpecialPage {
 	 */
 	public function execute( $subpage ) {
 		global $wgRequest, $wgAuth, $wgUser, $wgOut, $wgDevelEnvironment,
-			$wgContLanguageCode;
+			$wgContLanguageCode, $wgContLang;
 
 		wfLoadExtensionMessages( "AutoCreateWiki" );
 
 		$this->setHeaders();
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, "CreateWiki" );
+		$this->mLang = $wgRequest->getVal( 'uselang', $wgUser->getOption( 'language' ) );
 		$this->mAction = $wgRequest->getVal( "action", false );
 		$this->mSubpage = $subpage;
 		$this->mPosted = $wgRequest->wasPosted();
 		$this->mPostedErrors = array();
 		$this->mErrors = 0;
-
 
 		if( $wgDevelEnvironment ) {
 			global $wgDevelDomains;
@@ -207,7 +208,8 @@ class AutoCreateWikiPage extends SpecialPage {
 						}
 					} else {
 						$this->clearSessionKeys();
-						$wgOut->redirect( $this->mTitle->getLocalURL() );
+						$query = ( $this->mLang != 'en' ) ? 'uselang=' . $this->mLang : '';
+						$wgOut->redirect( $this->mTitle->getLocalURL($query) );
 					}
 					break;
 			}
@@ -266,7 +268,8 @@ class AutoCreateWikiPage extends SpecialPage {
 									);
 									#wfTimestamp() + self::SESSION_TIME;
 									$_SESSION['mAllowToCreate'] = md5(implode("_", $aToken) . "_" . $user_id);
-									$wgOut->redirect($this->mTitle->getLocalURL() . '/Wiki_create');
+									$query = ( $this->mLang != 'en' ) ? '?uselang=' . $this->mLang : '';
+									$wgOut->redirect($this->mTitle->getLocalURL() . '/Wiki_create' . $query);
 								}
 							} else {
 								#--- some errors
@@ -274,6 +277,10 @@ class AutoCreateWikiPage extends SpecialPage {
 									unset($_SESSION['mAllowToCreate']);
 								}
 							}
+						}
+					} else {
+						if (isset($_SESSION['mAllowToCreate'])) {
+							unset($_SESSION['mAllowToCreate']);
 						}
 					}
 					$this->createWikiForm();
@@ -855,6 +862,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"aCategories" => $aCategories,
 			"wgScriptPath" => $wgScriptPath,
 			"mTitle" => $this->mTitle,
+			"mLanguage" => $this->mLang,
 			"mPostedErrors" => $this->mPostedErrors,
 			"wgStylePath" => $wgStylePath,
 			"captchaForm" => $f->getForm(),
@@ -894,6 +902,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			"wgExtensionsPath" => $wgExtensionsPath,
 			"wgStyleVersion" => $wgStyleVersion,
 			"mTitle" => $this->mTitle,
+			"mLanguage" => $this->mLang,
 			"awcName" => $this->awcName,
 			"awcDomain" => $this->awcDomain,
 			"awcCategory" => $this->awcCategory,

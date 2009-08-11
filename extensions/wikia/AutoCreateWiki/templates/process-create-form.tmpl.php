@@ -19,7 +19,7 @@ var YT = YAHOO.Tools;
 YE.onDOMReady(function () {
 	var loop = 0;
 	var ifr = YD.get('awc-process');
-	var titleUrl = '<?=$mTitle->getLocalURL()."/Processing"?>'; 
+	var titleUrl = '<?=$mTitle->getLocalURL()."/Processing" . (( $mLanguage != "en" ) ? "?uselang=" . $mLanguage : "") ?>'; 
 	var wgAjaxPath = wgScriptPath + wgScript;
 	var redirServer = '<?=$subdomain?>';
 	var waitMsg = '<?=wfMsg('autocreatewiki-stepdefault')?>';
