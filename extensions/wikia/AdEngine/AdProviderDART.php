@@ -47,6 +47,15 @@ class AdProviderDART implements iAdProvider {
 
 	public function getAd($slotname, $slot){
 
+		// Manipulate DART sizes for values it expects
+		switch ($slot['size']){
+		  case '300x250': $slot['size'] = '300x250,300x600'; break;
+           	  case '728x90': $slot['size'] = '728x90,468x60'; break;
+                  case '160x600': $slot['size'] = '160x600,120x600'; break;
+                  case '0x0': $slot['size'] = '1x1'; break;
+		}
+			
+
 		/* Nick wrote: Note, be careful of the order of the key values. From Dart Webmaster guide:
 		 * 	Order of multiple key-values in DART ad tags:  For best performance, DoubleClick recommends
 		 * 	that reserved key-values be placed as the last attributes in the DART ad tags, after any custom key-
@@ -74,6 +83,7 @@ class AdProviderDART implements iAdProvider {
 		$url .= 'wkabkt=@@WIKIA_BUCKET@@;'; // To be filled in from AdEngine.bucket via javascript
 		$url .= 'pos=' . $slotname . ';';
 		$url .= $this->getKeywordsKV();
+		$url .= $this->getLocKV($slotname);
 		$url .= $this->getDcoptKV($slotname);
 		$url .= "sz=" . $slot['size'] . ';';
 		$url .= $this->getTileKV($slotname);
@@ -87,7 +97,7 @@ class AdProviderDART implements iAdProvider {
 		// Ug. Heredocs suck, but with all the combinations of quotes, it was the cleanest way.
 		$out .= <<<EOT
 		dartUrl = "$url";
-		dartUrl = dartUrl.replace(/@@WIKIA_BUCKET@@/, AdEngine.bucketid);
+		dartUrl = dartUrl.replace(/@@WIKIA_BUCKET@@/, AdEngine.bucketid || '');
 		dartUrl = dartUrl.replace(/@@WIKIA_AQ@@/, AdEngine.getMinuteTargeting());
 		dartUrl = dartUrl.replace(/@@WIKIA_RANDOM@@/, AdsCB);
 		document.write("<scr"+"ipt type='text/javascript' src='"+ dartUrl +"'><\/scr"+"ipt>");
@@ -212,6 +222,37 @@ EOT;
 			case 'HOME_LEFT_SKYSCRAPER_1': return 'tile=3;';
 			case 'HOME_LEFT_SKYSCRAPER_2': return 'tile=3;';
 			default: return '';
+		}
+	}
+
+	function getLocKV($slotname){
+		switch ($slotname){
+		  case 'TOP_RIGHT_BOXAD': return "loc=top;";
+		  case 'TOP_LEADERBOARD': return "loc=top;";
+		  case 'LEFT_SKYSCRAPER_1': return "loc=top;";
+		  case 'LEFT_SKYSCRAPER_2': return "loc=middle;";
+		  case 'LEFT_SKYSCRAPER_3': return "loc=middle;";
+		  case 'FOOTER_BOXAD': return "loc=footer;";
+		  case 'PREFOOTER_LEFT_BOXAD': return "loc=footer;";
+		  case 'PREFOOTER_RIGHT_BOXAD': return "loc=footer;";
+		  case 'HOME_TOP_RIGHT_BOXAD': return "loc=top;";
+		  case 'HOME_TOP_LEADERBOARD': return "loc=top;";
+		  case 'HOME_LEFT_SKYSCRAPER_1': return "loc=top;";
+		  case 'HOME_LEFT_SKYSCRAPER_2': return "loc=middle;";
+		  case 'INCONTENT_BOXAD_1': return "loc=middle;";
+		  case 'INCONTENT_BOXAD_2': return "loc=middle;";
+		  case 'INCONTENT_BOXAD_3': return "loc=middle;";
+		  case 'INCONTENT_BOXAD_4': return "loc=middle;";
+		  case 'INCONTENT_BOXAD_5': return "loc=middle;";
+		  case 'INCONTENT_LEADERBOARD_1': return "loc=middle;";
+		  case 'INCONTENT_LEADERBOARD_2': return "loc=middle;";
+		  case 'INCONTENT_LEADERBOARD_3': return "loc=middle;";
+		  case 'INCONTENT_LEADERBOARD_4': return "loc=middle;";
+		  case 'INCONTENT_LEADERBOARD_5': return "loc=middle;";
+		  case 'EXIT_STITIAL_INVISIBLE': return "loc=exit;";
+		  case 'EXIT_STITIAL_BOXAD_1': return "loc=exit;";
+		  case 'EXIT_STITIAL_BOXAD_2': return "loc=exit;";
+		  default: return "";
 		}
 	}
 
