@@ -10,6 +10,7 @@ use File::LibMagic;
 use IO::File;
 use File::Basename;
 use File::Path;
+use URI::Escape;
 
 #
 # debug
@@ -50,8 +51,9 @@ while( $request->Accept() >= 0 ) {
 	# get last part of uri, remove first slash if exists
 	#
 	my $uri = URI->new( $request_uri );
-	my $path  = $uri->path;
+	my $path  = uri_unescape( $uri->path );
 	$path =~ s/^\///;
+
 
 	#
 	# if path has single letter on beginning it's already new directory layout
@@ -180,7 +182,7 @@ while( $request->Accept() >= 0 ) {
 			}
 		}
 		else {
-			syslog( LOG_INFO, "$thumbnail can't read original file $original" ) if $syslog;
+			syslog( LOG_INFO, "$thumbnail original file $original does not exists" ) if $syslog;
 		}
 	}
 	if( ! $transformed ) {
