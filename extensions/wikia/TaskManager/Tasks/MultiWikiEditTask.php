@@ -21,6 +21,7 @@ class MultiWikiEditTask extends BatchTask {
         $this->mType = 'multiwikiedit';
 		$this->mVisible = false; //we don't show form for this, it already exists
 		$this->mParams = $params;
+		$this->mTTL = 60 * 60 * 5; // 5 hours
 		parent::__construct () ;
 	}
 
@@ -100,6 +101,7 @@ class MultiWikiEditTask extends BatchTask {
 		if ( !empty($wikiList) ) {
 			$this->log("Found " . count($wikiList) . " Wikis to proceed");
 			foreach ( $wikiList as $id => $oWiki ) {
+				$this->log("Proceed " . {$oWiki->city_dbname} . " ({$oWiki->city_url} ({$oWiki->city_id}))");
 				$retval = "";
 				$fixedArticle = $this->checkArticle($article, $oWiki);
 				if ( empty($fixedArticle) ) {
@@ -119,8 +121,6 @@ class MultiWikiEditTask extends BatchTask {
 				$sCommand .= $summary_text. " ";
 				$sCommand .= $semiglobals . " ";
 				$sCommand .= "--conf $wgWikiaLocalSettingsPath";
-
-				echo "command: " . $sCommand . " \n";
 
 				$city_url = WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id );
 				if ( empty($city_url) ) {
