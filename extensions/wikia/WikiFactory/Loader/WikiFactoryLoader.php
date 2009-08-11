@@ -358,7 +358,10 @@ class WikiFactoryLoader {
 			$this->mCityDB = isset( $this->mDomain[ "db" ] ) ? $this->mDomain[ "db" ] : false;
 		}
 
-		if( strpos($this->mServerName, "-abc.") != 0 || strpos( $this->mServerName, "beta." ) === 0 ) {
+		/**
+		 * @todo check if owis.wikia.com should not be regex
+		 */
+		if( $this->mServerName == "owis.wikia.com" || strpos( $this->mServerName, "beta." ) === 0 ) {
 			$this->mNoRedirect = true;
 		}
 
