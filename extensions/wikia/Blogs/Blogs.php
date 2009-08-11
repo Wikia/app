@@ -42,17 +42,29 @@ $wgNamespacesWithSubpages[ NS_BLOG_LISTING_TALK ] = true;
  * @see SMW includes/SMW_GlobalFunctions.php::smwfInitNamespaces
  * FIXME generalize
  */
-if ('de' == $wgLanguageCode) {
+if (in_array($wgLanguageCode, array("de", "ru"))) {
 	// make en ns point (alias) to "main ns" - at this point themselves
 	foreach (array(500, 501, 502, 503) as $ns) {
 		$wgNamespaceAliases[$wgExtraNamespaces[$ns]] = $ns;
 	}
-	// translate "main ns" into de
-	$wgExtraNamespaces[500] = 'Benutzer_Blog';
-	$wgExtraNamespaces[501] = 'Benutzer_Blog_Kommentare';
-	$wgExtraNamespaces[502] = 'Blog';
-	$wgExtraNamespaces[503] = 'Blog_Diskussion';
-	// the end: de name is the "main ns", en is just an alias (redirect)
+
+	switch ($wgLanguageCode) {
+		case "de":
+			// translate "main ns" into de
+			$wgExtraNamespaces[500] = 'Benutzer_Blog';
+			$wgExtraNamespaces[501] = 'Benutzer_Blog_Kommentare';
+			$wgExtraNamespaces[502] = 'Blog';
+			$wgExtraNamespaces[503] = 'Blog_Diskussion';
+			// the end: de name is the "main ns", en is just an alias (redirect)
+			break;
+		case "ru":
+			$wgExtraNamespaces[500] = "Блог_участника";
+			$wgExtraNamespaces[501] = "Комментарий_блога_участника";
+			$wgExtraNamespaces[502] = "Блог";
+			$wgExtraNamespaces[503] = "Обсуждение_блога";
+
+			break;
+	}
 }
 
 /**
