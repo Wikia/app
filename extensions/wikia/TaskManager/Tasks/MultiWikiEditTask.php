@@ -101,8 +101,15 @@ class MultiWikiEditTask extends BatchTask {
 		if ( !empty($wikiList) ) {
 			$this->log("Found " . count($wikiList) . " Wikis to proceed");
 			foreach ( $wikiList as $id => $oWiki ) {
-				$this->log("Proceed " . $oWiki->city_dbname . " ({$oWiki->city_url} ({$oWiki->city_id}))");
 				$retval = "";
+				$this->log("Proceed " . $oWiki->city_dbname . " ({$oWiki->city_url} ({$oWiki->city_id}))");
+
+				$city_path = $oWiki->city_script;
+				$city_url = $oWiki->city_server;
+				if ( empty($city_url) ) {
+					$city_url = 'wiki id in WikiFactory: ' . $oWiki->city_id;
+				}
+
 				$fixedArticle = $this->checkArticle($article, $oWiki);
 				if ( empty($fixedArticle) ) {
 					$this->log("Article " . $article . " doesn't exist on {$oWiki->city_dbname} ({$oWiki->city_url}) ");
@@ -122,12 +129,6 @@ class MultiWikiEditTask extends BatchTask {
 				$sCommand .= $semiglobals . " ";
 				$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
-				$city_url = WikiFactory::getVarValueByName( "wgServer", $oWiki->city_id );
-				if ( empty($city_url) ) {
-					$city_url = 'wiki id in WikiFactory: ' . $oWiki->city_id;
-				}
-
-				$city_path = WikiFactory::getVarValueByName( "wgScript", $oWiki->city_id );
 				$actual_title = wfShellExec( $sCommand, $retval );
 
 				//wfShellExec( $sCommand, $retval );
@@ -258,7 +259,7 @@ class MultiWikiEditTask extends BatchTask {
 		if ( empty($wikis) ) {
 			$oRes = $dbr->select(
 				array( "city_list join city_cat_mapping on city_cat_mapping.city_id = city_list.city_id" ),
-				array( "city_list.city_id, city_dbname, city_url" ),
+				array( "city_list.city_id, city_dbname, city_url, '' as city_server, '' as city_script" ),
 				$where,
 				__METHOD__
 			);
@@ -268,7 +269,7 @@ class MultiWikiEditTask extends BatchTask {
 
 			$oRes = $dbr->select(
 				array( "city_list", "city_domains" ),
-				array( "city_list.city_id, city_dbname, city_url" ),
+				array( "city_list.city_id, city_dbname, city_url, '' as city_server, '' as city_script" ),
 				$where,
 				__METHOD__
 			);
@@ -276,12 +277,15 @@ class MultiWikiEditTask extends BatchTask {
 
 		$wiki_array = array();
 		while ($oRow = $dbr->fetchObject($oRes)) {
+			$oRow->city_server = WikiFactory::getVarValueByName( "wgServer", $oRow->city_id );
+			$oRow->city_script = WikiFactory::getVarValueByName( "wgScript", $oRow->city_id );
 			array_push($wiki_array, $oRow) ;
 		}
 		$dbr->freeResult ($oRes) ;
 
 		return $wiki_array;
 	}
+
 
 	/**
 	 * checkArticle
