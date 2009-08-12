@@ -2226,7 +2226,8 @@ if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 
 
 echo '</div>';
-echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+// Diabled comscore #21030
+// echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 // Quant serve moved *after* the ads because it depends on Athena/Provider values.
 echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */
