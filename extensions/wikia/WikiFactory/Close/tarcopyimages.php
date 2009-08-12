@@ -69,6 +69,7 @@ class CloseWikiTarAndCopyImages {
 							escapeshellcmd( $target )
 						);
 						print $cmd  . "\n";
+						unlink( $source );
 					}
 				}
 			}
