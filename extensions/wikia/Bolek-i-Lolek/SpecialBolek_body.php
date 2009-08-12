@@ -63,6 +63,7 @@ class BolekPage extends UnlistedSpecialPage {
 			#$wgOut->setPageTitle( $this->mTitle->getPrefixedText() );
 			$wgOut->addHTML("<h1 style=\"page-break-before: always\">{$article->getTitle()->getPrefixedText()}</h1>");
 
+			$article->doPurge(); // FIXME do it only for page_touched older than date of efBolekTemplate deployment
 			$article->view();
 		}
 		$wgOut->addHTML("</div>\n");
@@ -71,6 +72,7 @@ class BolekPage extends UnlistedSpecialPage {
 			var content = $('#bolek');
 			$('body').replaceWith(content);
 			$('table#toc, span.editsection').remove();
+			$('div.bolek-remove').text('Debug: blacklisted template removed.');
 			/*]]>*/</script>\n");
 
 		return;
