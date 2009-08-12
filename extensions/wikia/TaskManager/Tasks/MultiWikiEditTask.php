@@ -98,6 +98,14 @@ class MultiWikiEditTask extends BatchTask {
 
 		$wikiList = $this->fetchWikis($pre_wikis, $lang, $cat, $selwikia);
 
+		$page = Title::newFromText($article);
+		if ( !is_object($page) ) {
+			$this->log("Page " . $article . " is invalid - task was terminated ");
+			return true;
+		}
+		$namespace = $page->getNamespace();
+		$title = str_replace( ' ', '_', $page->getText() );
+
 		if ( !empty($wikiList) ) {
 			$this->log("Found " . count($wikiList) . " Wikis to proceed");
 			foreach ( $wikiList as $id => $oWiki ) {
@@ -109,14 +117,6 @@ class MultiWikiEditTask extends BatchTask {
 				if ( empty($city_url) ) {
 					$city_url = 'wiki id in WikiFactory: ' . $oWiki->city_id;
 				}
-
-				$fixedArticle = $this->checkArticle($article, $oWiki);
-				if ( empty($fixedArticle) ) {
-					$this->log("Article " . $article . " doesn't exist on {$oWiki->city_dbname} ({$oWiki->city_url}) ");
-				}
-
-				$title = $fixedArticle['title'];
-				$namespace = intval($fixedArticle['namespace']);
 
 				$sCommand = "SERVER_ID=". $oWiki->city_id ." php $IP/maintenance/wikia/editOn.php ";
 				if ( !empty($username) ) {
