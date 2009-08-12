@@ -87,12 +87,19 @@ AdEngine.getAdColor = function (type) {
 
 /* We can get color data in a lot of different formats. Normalize here for css. false on error */
 AdEngine.normalizeColor = function(input){
-	if (input.match(/^#[A-F0-9a-f]{3,6}/)){
-		// It's already hex
+	if (input.match(/^#[A-F0-9a-f]{6}/)){
+		// It's 6 digit already hex
 		return input.toUpperCase().replace(/^#/, "");
+	} else if (input.match(/^#[A-F0-9a-f]{3}$/)){
+		// It's 3 digit hex. Convert to 6. Thank you IE.
+		var f = input.substring(1, 1);
+		var s = input.substring(2, 1);
+		var t = input.substring(3, 1);
+		var out = f + f + s + s + t + t;
+		return out.toUpperCase();
 	} else if (input.match(/^rgb/)){
-		var s = input.replace(/[^0-9,]/g, '');
-		var rgb = s.split(",");
+		var str = input.replace(/[^0-9,]/g, '');
+		var rgb = str.split(",");
 		return AdEngine.dec2hex(rgb[0]) + 
 		       AdEngine.dec2hex(rgb[1]) + 
 		       AdEngine.dec2hex(rgb[2]); 
