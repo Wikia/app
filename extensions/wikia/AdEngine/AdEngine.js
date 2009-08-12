@@ -71,11 +71,11 @@ AdEngine.getAdColor = function (type) {
 	if(type == 'bg') {
 	        var color = AdEngine.normalizeColor($('#article').css('background-color'));
 
-		if(color == 'transparent' || color == window.AdGetColor('text')) {
+		if(color === '' || color == window.AdGetColor('text')) {
 		        color = AdEngine.normalizeColor($('#wikia_page').css('background-color'));
         	}
 
-	        if(color == 'transparent' || color == '#000000') {
+	        if(color === '' || color == '000000') {
        		 	color = AdEngine.normalizeColor($("#bodyContent").css('background-color'));
        		}
 
@@ -87,7 +87,9 @@ AdEngine.getAdColor = function (type) {
 
 /* We can get color data in a lot of different formats. Normalize here for css. false on error */
 AdEngine.normalizeColor = function(input){
-	if (input.match(/^#[A-F0-9a-f]{6}/)){
+	if (input == "transparent") {
+		return "";
+        } else if (input.match(/^#[A-F0-9a-f]{6}/)){
 		// It's 6 digit already hex
 		return input.toUpperCase().replace(/^#/, "");
 	} else if (input.match(/^#[A-F0-9a-f]{3}$/)){
@@ -104,7 +106,7 @@ AdEngine.normalizeColor = function(input){
 		       AdEngine.dec2hex(rgb[1]) + 
 		       AdEngine.dec2hex(rgb[2]); 
 	} else {
-		// Input is a string, like "transparent" or "white"
+		// Input is a string, like "white"
 		return input;
 	}
 };
