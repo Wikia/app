@@ -46,7 +46,7 @@ class CloseWikiTarAndCopyImages {
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			array( "city_list" ),
-			array( "city_id", "city_flags", "city_dbname" ),
+			array( "city_id", "city_flags", "city_dbname", "city_url" ),
 			array( "city_public" => array( 0, -1 ) ),
 			__METHOD__
 		);
@@ -58,6 +58,7 @@ class CloseWikiTarAndCopyImages {
 					$source = $this->tarFiles( $folder, $dbname );
 					$target = DumpsOnDemand::getUrl( $dbname, "images.tar", $this->mTarget );
 					if( $source && $target ) {
+						Wikia::log( __METHOD__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname}");
 						$cmd = wfEscapeShellArg(
 							"/usr/bin/rsync",
 							"-axpr",
