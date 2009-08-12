@@ -407,7 +407,7 @@ class AutoCreateWiki {
 	public static function checkBadWordsInMsg($sText, $where, $split = false) {
 		wfProfileIn(__METHOD__);
 		$allowed = true;
-		$sBadWords = wfMsg(self::BAD_WORDS_MSG);
+		$sBadWords = wfMsgForContent(self::BAD_WORDS_MSG);
 
 		if ( !empty($sBadWords) && !empty($sText) ) {
 			#-- check only a-z and 0-9
