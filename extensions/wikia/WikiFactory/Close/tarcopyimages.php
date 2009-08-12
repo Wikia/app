@@ -58,6 +58,7 @@ class CloseWikiTarAndCopyImages {
 					Wikia::log( __METHOD__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
 					$source = $this->tarFiles( $folder, $dbname );
 					$target = DumpsOnDemand::getUrl( $dbname, "images.tar", $this->mTarget );
+
 					if( $source && $target ) {
 						$cmd = wfEscapeShellArg(
 							"/usr/bin/rsync",
@@ -136,7 +137,11 @@ class CloseWikiTarAndCopyImages {
 					$files = array_merge( $files, $this->getDirTree( $path, $files ) );
 				}
 				else {
-					if( strpos( $path, "/images/thumb/") === false ) {
+					$exclude =
+						strpos( $path, "/images/thumb/") === false ||
+						strpos( $path, "/images/temp/") === false
+						;
+					if( $exclude ) {
 						$files[] = $path;
 					}
 				}
