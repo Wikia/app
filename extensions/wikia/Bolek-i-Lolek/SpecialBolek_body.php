@@ -66,6 +66,12 @@ class BolekPage extends UnlistedSpecialPage {
 			$article->doPurge(); // FIXME do it only for page_touched older than date of efBolekTemplate deployment
 			$article->view();
 		}
+
+		$add = $wgRequest->getVal("add", 0);
+		for ($i = 1; $i <= $add; $i++) {
+			$wgOut->addHTML("<p style=\"page-break-before: always\">&nbsp;</p>");
+			$wgOut->addHTML("<p>Debug: empty page added ({$i}/{$add}).</p>");
+		}
 		$wgOut->addHTML("</div>\n");
 
 		$wgOut->addHTML("<script type=\"text/javascript\">/*<![CDATA[*/
