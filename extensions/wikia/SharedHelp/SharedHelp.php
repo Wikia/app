@@ -221,6 +221,23 @@ function SharedHelpHook(&$out, &$text) {
 			# replace help wiki links with local links, except for special namespaces defined above
 			$content = preg_replace("|{$sharedServer}{$sharedArticlePathClean}(?!" . implode(")(?!", $skipNamespaces) . ")|", $localArticlePathClean, $content);
 
+			# replace help wiki project namespace with local project namespace
+			$sharedMetaNamespace = unserialize(WikiFactory::getVarByName('wgMetaNamespace', $wgHelpWikiId)->cv_value);
+			if ( empty( $sharedMetaNamespace ) ) {
+				# use wgSitename if empty, per MW docs
+				$sharedMetaNamespace = unserialize(WikiFactory::getVarByName('wgSitename', $wgHelpWikiId)->cv_value);
+				$sharedMetaNamespace = str_replace( ' ', '_', $sharedMetaNamespace );
+			}
+
+			if ( !empty( $sharedMetaNamespace ) ) {
+				global $wgMetaNamespace;
+				$content = preg_replace(
+					"|{$localArticlePathClean}{$sharedMetaNamespace}|",
+					$localArticlePathClean . $wgMetaNamespace,
+					$content
+				);
+			}
+
 			// "this text is stored..."
 			$info = '<div class="sharedHelpInfo plainlinks" style="text-align: right; font-size: smaller;padding: 5px">' . wfMsgExt('shared_help_info', 'parseinline', $sharedServer . $sharedArticlePathClean . Namespace::getCanonicalName(NS_HELP_TALK) . ':' . $wgTitle->getDBkey()) . '</div>';
 
