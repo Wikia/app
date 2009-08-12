@@ -23,7 +23,7 @@ function SectionEditJS() {
 	}
 
 	// don't add JS for protected pages and special pages (inherently protected)
-	if ( $wgTitle->isProtected() ) {
+	if ( $wgTitle->isProtected( 'edit' ) ) {
 		return true;
 	}
 
