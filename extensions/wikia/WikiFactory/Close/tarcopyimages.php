@@ -9,14 +9,68 @@ ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
 require_once( "commandLine.inc" );
 require_once( "Archive/Tar.php" );
 
-class WikiFactoryTarAndCopyImages {
+class CloseWikiTarAndCopyImages {
+
+	private $mTarget;
 
 	/**
+	 * constructor
+	 *
+	 * @access public
+	 */
+	public function __construct() {
+		global $wgDevelEnvironment;
+		if( !empty( $wgDevelEnvironment ) ) {
+			$this->mTarget = "root@127.0.0.1:/tmp/dumps";
+		}
+		else {
+			$this->mTarget = "root@10.6.10.39:/backup/dumps";
+		}
+	}
+
+	/**
+	 * 1. go through all wikis which are marked for closing and check which one
+	 * 	want to have images packed.
+	 *
+	 * 2. pack images, send them via rsync to  target server,
+	 *
+	 * 3. mark in city_list.city_flags that images are sent,
+	 *
+	 * 4. remove images
+	 *
 	 * @access public
 	 */
 	public function execute() {
 		global $wgUploadDirectory, $wgDBname;
-		$this->tarFiles( $wgUploadDirectory, $wgDBname );
+
+		$dbr = WikiFactory::db( DB_SLAVE );
+		$sth = $dbr->select(
+			array( "city_list" ),
+			array( "city_id", "city_flags", "city_dbname" ),
+			array( "city_public" => array( 0, -1 ) ),
+			__METHOD__
+		);
+		while( $row = $dbr->fetchObject( $sth ) ) {
+			$dbname = $row->city_dbname;
+			$folder = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
+			if( $dbname && $folder ) {
+				$source = $this->tarFiles( $folder, $dbname );
+				$target = DumpsOnDemand::getUrl( $dbname, "images.tar", $this->mTarget );
+				if( $source && $target ) {
+					$cmd = wfEscapeShellArg(
+						"/usr/bin/rsync",
+						"-axpr",
+						"--quiet",
+						"--owner",
+						"--group",
+						"--chmod=g+w",
+						$source,
+						escapeshellcmd( $target )
+					);
+					print $cmd  . "\n";
+				}
+			}
+		}
 	}
 
 	/**
@@ -38,7 +92,6 @@ class WikiFactoryTarAndCopyImages {
 		if( file_exists( $tarfile ) ) {
 			@unlink( $tarfile );
 		}
-		Wikia::log( __CLASS__, "info", "Packing images from {$directory} to {$tarfile}" );
 
 		$tar = new Archive_Tar( $tarfile );
 
@@ -47,21 +100,21 @@ class WikiFactoryTarAndCopyImages {
 			wfDie( "Cannot open {$tarfile}" );
 		}
 		$files = $this->getDirTree( $directory );
-		print_r( $files );
 
 		if( is_array( $files ) && count( $files ) ) {
-			Wikia::log( __CLASS__, "info", sprintf( "Packing %d images", count( $files ) ) );
-			return $tar->create( $files );
+			Wikia::log( __CLASS__, "info", sprintf( "Packing %d images from {$directory} to {$tarfile}", count( $files ) ) );
+			$tar->create( $files );
+			$result = $tarfile;
 		}
 		else {
-			Wikia::log( __CLASS__, "info", "List of images is empty" );
-			return true;
+			Wikia::log( __CLASS__, "info", "List of images in {$directory} is empty" );
+			$result = false;
 		}
-		return true;
+		return $result;
 	}
 
 	/**
-	 * Get images list from folder, recursive, skip thumbnails
+	 * Get images list from folder, recursive, skip thumbnails directory
 	 *
 	 * @return array
 	 */
@@ -71,19 +124,20 @@ class WikiFactoryTarAndCopyImages {
 
 		wfProfileIn( __METHOD__ );
 
-		$dirs = array_diff( scandir( $dir ), array( ".", ".." ) );
-	    foreach( $dirs as $d ) {
-			$path = $dir . "/" . $d;
-	        if( is_dir( $path ) ) {
-				$files = array_merge( $files, $this->getDirTree( $path, $files ) );
-			}
-	        else {
-				if( strpos( $path, "/images/thumb/") === false ) {
-					$files[] = $path;
+		if( is_dir( $dir ) ) {
+			$dirs = array_diff( scandir( $dir ), array( ".", ".." ) );
+		    foreach( $dirs as $d ) {
+				$path = $dir . "/" . $d;
+				if( is_dir( $path ) ) {
+					$files = array_merge( $files, $this->getDirTree( $path, $files ) );
+				}
+				else {
+					if( strpos( $path, "/images/thumb/") === false ) {
+						$files[] = $path;
+					}
 				}
 			}
-	    }
-
+		}
 		wfProfileOut( __METHOD__ );
 
 		return $files;
@@ -91,5 +145,6 @@ class WikiFactoryTarAndCopyImages {
 
 }
 
-$maintenance = new WikiFactoryTarAndCopyImages;
+$wgAutoloadClasses[ "DumpsOnDemand" ] = "$IP/extensions/wikia/WikiFactory/Dumps/DumpsOnDemand.php";
+$maintenance = new CloseWikiTarAndCopyImages;
 $maintenance->execute();
