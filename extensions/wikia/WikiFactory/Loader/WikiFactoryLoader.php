@@ -223,7 +223,7 @@ class WikiFactoryLoader {
 
 		wfProfileIn(__METHOD__);
 		global $wgCityId, $wgDevelEnvironment, $wgWikiaAdvertiserCategory,
-			$wgDBservers, $wgLBFactoryConf;
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver;
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local
@@ -661,6 +661,18 @@ class WikiFactoryLoader {
 		}
 		if( isset( $wgLBFactoryConf ) && is_array( $wgLBFactoryConf ) && isset( $this->mVariables["wgDBname"] ) ) {
 			$wgLBFactoryConf['serverTemplate']['dbname'] = $this->mVariables["wgDBname"];
+
+			/**
+			 * set wgDBserver for second cluster based on $wgLBFactoryConf
+			 */
+			if( isset( $this->mVariables["wgDBcluster"] ) &&
+				isset( $wgLBFactoryConf[ "sectionLoads" ][ $this->mVariables[ "wgDBcluster" ] ] )) {
+
+				$cluster = $wgLBFactoryConf[ "sectionLoads" ][ $this->mVariables["wgDBcluster"] ];
+				$db = array_shift( array_keys( $cluster ) );
+				$wgDBserver = $wgLBFactoryConf[ "hostsByName" ][ $db ];
+				$this->debug( "wgDBserver for cluster {$cluster} set to {$wgDBserver}" );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
