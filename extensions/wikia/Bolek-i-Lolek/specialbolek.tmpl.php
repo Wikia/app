@@ -15,6 +15,8 @@
 
 <h3>Lolek</h3>
 
+<p><a href="/wiki/Special:Bolek?action=print">Preview pdf source</a></p>
+
 <script type="text/javascript">
 /*<![CDATA[*/
 function getPdf() {
