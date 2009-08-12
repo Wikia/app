@@ -51,23 +51,25 @@ class CloseWikiTarAndCopyImages {
 			__METHOD__
 		);
 		while( $row = $dbr->fetchObject( $sth ) ) {
-			$dbname = $row->city_dbname;
-			$folder = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
-			if( $dbname && $folder ) {
-				$source = $this->tarFiles( $folder, $dbname );
-				$target = DumpsOnDemand::getUrl( $dbname, "images.tar", $this->mTarget );
-				if( $source && $target ) {
-					$cmd = wfEscapeShellArg(
-						"/usr/bin/rsync",
-						"-axpr",
-						"--quiet",
-						"--owner",
-						"--group",
-						"--chmod=g+w",
-						$source,
-						escapeshellcmd( $target )
-					);
-					print $cmd  . "\n";
+			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
+				$dbname = $row->city_dbname;
+				$folder = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
+				if( $dbname && $folder ) {
+					$source = $this->tarFiles( $folder, $dbname );
+					$target = DumpsOnDemand::getUrl( $dbname, "images.tar", $this->mTarget );
+					if( $source && $target ) {
+						$cmd = wfEscapeShellArg(
+							"/usr/bin/rsync",
+							"-axpr",
+							"--quiet",
+							"--owner",
+							"--group",
+							"--chmod=g+w",
+							$source,
+							escapeshellcmd( $target )
+						);
+						print $cmd  . "\n";
+					}
 				}
 			}
 		}
