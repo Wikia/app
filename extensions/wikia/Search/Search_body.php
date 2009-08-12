@@ -9,7 +9,14 @@ class SolrSearch extends SearchEngine {
 	 * @access public
 	 */
 	function searchText( $term ) {
-		return SolrSearchSet::newFromQuery( "title:$term^10 OR html:$term", $this->namespaces, $this->limit, $this->offset );
+		$words = "";
+		foreach(explode(' ', $term) as $word) {
+			$words .= ( !empty($words) ? " AND " : "" ) . $word;
+		}
+		$queryString = "title:$words^10 OR html:$words";
+		//echo $queryString;
+		return SolrSearchSet::newFromQuery( $queryString, $this->namespaces, $this->limit, $this->offset );
+		//return SolrSearchSet::newFromQuery( "title:$term^10 OR html:$term", $this->namespaces, $this->limit, $this->offset );
 		//return SolrSearchSet::newFromQuery( $term, $this->namespaces, $this->limit, $this->offset );
 	}
 
@@ -48,7 +55,8 @@ class SolrSearchSet extends SearchResultSet {
 				'hl.fragsize' => '150', // snippet size in characters
 				'hl.simple.pre' => '<span class="searchmatch">',
 				'hl.simple.post' => '</span>',
-				'sort' => 'score desc, backlinks desc, views desc, revcount desc, created asc'
+				//'sort' => 'score desc, backlinks desc, views desc, revcount desc, created asc'
+				'sort' => 'backlinks desc, views desc, revcount desc, created asc'
 			);
 
 			if(count($namespaces)) {
@@ -132,10 +140,12 @@ class SolrSearchSet extends SearchResultSet {
 					$deDupedResults[] = $result;
 				}
 				else {
+					//echo "(!) Already have: " . $result->canonical . " - " . $result->title . " - deduped<br />";
 					continue;
 				}
 			}
-			else {
+			else if(!in_array($result->title, $this->mCanonicals)) {
+				$this->mCanonicals[] = $result->title;
 				$deDupedResults[] = $result;
 			}
 		}
