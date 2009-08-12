@@ -1130,7 +1130,8 @@ FCK.ProtectImageRemove = function(refid, dontAsk) {
 		FCKDomTools.RemoveNode(node);
 
 		// clear meta data
-		delete FCK.wysiwygData[refid];
+		//delete FCK.wysiwygData[refid];
+		FCK.wysiwygData[refid] = null;
 		delete FCK.NodesWithRefId[refid];
 
 		// tracker
