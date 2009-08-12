@@ -22,6 +22,11 @@ function SectionEditJS() {
 		return true;
 	}
 
+	// don't add JS for protected pages and special pages (inherently protected)
+	if ( $wgTitle->isProtected() ) {
+		return true;
+	}
+
 	// RT #10623: add green buttons also when anon editing is disabled
 	if ( !empty($wgDisableAnonymousEditig)) {
 		$editMsg = Xml::escapeJsString(wfMsg('editsection'));
