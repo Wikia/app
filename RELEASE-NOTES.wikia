@@ -9,6 +9,7 @@
 * rt#20770: NYC: Fixed redirect-after-login. (Nef) 
 * rt#20382: SharedHelp: replace Project ns with local version (TOR)
 * rt#20395: AWC: always use one (English) blacklist for wiki names (TOR)
+* rt#21038: SectionEdit: don't display edit links on protected and special pages (TOR)
 
 == Changes since 200908.1 ==
 * rt#20643: Answers: Raw html / broken msg on user profile pages fixed. (Nef)
