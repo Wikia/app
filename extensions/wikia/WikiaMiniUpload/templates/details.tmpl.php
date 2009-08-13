@@ -19,7 +19,7 @@ if(isset($props['name'])) {
 		<tr class="ImageUploadNoBorder ImageUploadThin">
 			<th><?= wfMsg('license') ?></th>
 			<td>
-			<span id="ImageUploadLicenseSpan">
+			<span id="ImageUploadLicenseSpan" >
 			<?php
 				$licenses = new Licenses();
 				$licensehtml = $licenses->getHtml();	
@@ -39,7 +39,9 @@ if(isset($props['name'])) {
 		</tr>
 		<tr class="ImageUploadNoBorder">
 		<td colspan="2">
-		<div id="ImageUploadLicenseText">&nbsp;</div>			
+		<div id="ImageUploadLicenseTextWrapper">
+			<div id="ImageUploadLicenseText">&nbsp;</div>			
+		</div>
 		</td>
 		</tr>
 		<?php
@@ -59,18 +61,26 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 <?php
 }
 echo '<div style="position: relative; z-index: 5;">';
+//echo '<div style="position: absolute; top: 214px; z-index: 500;">';
 echo wfMsg('wmu-details-inf2')
 ?>
 <table class="ImageUploadOptionsTable">
 <?php
 if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAWING') {
 ?>
-	<tr>
+	<tr id="ImageSizeRow">
 		<th><?= wfMsg('wmu-size') ?></th>
 		<td>
-			<input onclick="MWU_imageSizeChanged('thumb');" type="radio" name="fullthumb" id="ImageUploadThumbOption" checked=checked /> <label for="ImageUploadThumbOption" onclick="MWU_imageSizeChanged('thumb');"><?= wfMsg('wmu-thumbnail') ?></label>
+			<span id="WMU_LayoutThumbBox">
+				<input onclick="MWU_imageSizeChanged('thumb');" type="radio" name="fullthumb" id="ImageUploadThumbOption" checked=checked /> <label for="ImageUploadThumbOption" onclick="MWU_imageSizeChanged('thumb');"><?= wfMsg('wmu-thumbnail') ?></label>
 			&nbsp;
-			<input onclick="MWU_imageSizeChanged('full');" type="radio" name="fullthumb" id="ImageUploadFullOption" /> <label for="ImageUploadFullOption" onclick="MWU_imageSizeChanged('full');"><?= wfMsg('wmu-fullsize', $props['file']->width, $props['file']->height) ?></label>
+			</span>
+			<span id="WMU_LayoutFullBox">
+				<input onclick="MWU_imageSizeChanged('full');" type="radio" name="fullthumb" id="ImageUploadFullOption" /> <label for="ImageUploadFullOption" onclick="MWU_imageSizeChanged('full');"><?= wfMsg('wmu-fullsize', $props['file']->width, $props['file']->height) ?></label>
+			</span>
+			<span id="WMU_LayoutGalleryBox">
+				<input onclick="MWU_imageSizeChanged('gallery');" type="radio" name="fullthumb" id="ImageUploadGalleryOption" /> <label for="ImageUploadGalleryOption" onclick="MWU_imageSizeChanged('gallery');"><?= wfMsg('wmu-gallery', $props['file']->width, $props['file']->height) ?></label>
+			</span>
 		</td>
 	</tr>
 	<tr id="ImageWidthRow">
@@ -88,19 +98,43 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 	<tr id="ImageLayoutRow">
 		<th><?= wfMsg('wmu-layout') ?></th>
 		<td>
+			<span id="WMU_LayoutLeftBox">
 			<input type="radio" id="ImageUploadLayoutLeft" name="layout" />
 			<label for="ImageUploadLayoutLeft"><img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/image_upload_left.png' ?>" /></label>
+			</span>
+			<span id="WMU_LayoutRightBox">
 			<input type="radio" id="ImageUploadLayoutRight" name="layout" checked="checked" />
 			<label for="ImageUploadLayoutRight"><img src="<?= $wgExtensionsPath.'/wikia/WikiaMiniUpload/images/image_upload_right.png' ?>" /></label>
+			</span>
 		</td>
 	</tr>
 <?php
 }
 ?>
-	<tr>
+	<tr id="ImageColumnRow">
+		<th><?= wfMsg('wmu-column') ?></th>
+		<td>
+			<select>
+				<?
+				for( $i=1; $i <= 6; $i++ ) {
+					( 4 == $i ) ? $selected = 'selected = "selected"' : $selected = '';
+					?>												
+						<option value="$i" <?= $selected ?>><?= wfMsgExt('wmu-columns', array( 'parsemag' ), $i); ?></option>
+					<?
+				}
+				?>
+			</select>
+		</td>
+	</tr>
+	<tr id="ImageCaptionRow">
 		<th><?= wfMsg('wmu-caption') ?></th>
 		<td><input id="ImageUploadCaption" type="text" /><?= wfMsg('wmu-optional') ?></td>
 	</tr>
+	<tr id="ImageLinkRow">
+		<th><?= wfMsg('wmu-link') ?></th>
+		<td><input id="ImageUploadLink" type="text" /><?= wfMsg('wmu-optional') ?></td>
+	</tr>
+
 	<tr class="ImageUploadNoBorder">
 		<td>&nbsp;</td>
 		<td>

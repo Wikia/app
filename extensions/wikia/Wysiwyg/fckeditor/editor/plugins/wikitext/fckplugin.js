@@ -601,7 +601,11 @@ FCK.SetupElementsWithRefId = function() {
 			case 'video_add':
 				FCK.ProtectVideoAdd(node);
 				break;
-
+			
+			case 'image_add':
+				FCK.ProtectImagePlcAdd(node);
+				break;
+		
 			// add tooltip to links
 			case 'internal link':
 				node.title = data.href;
@@ -835,6 +839,66 @@ FCK.CheckInternalLink = function(title, link) {
 //
 // support for non-editable images
 //
+
+// protect "Add image" placeholder
+FCK.ProtectImagePlcAdd = function(image) {
+        var refid = parseInt(image.getAttribute('refid'));
+
+        // for browsers supporting contentEditable
+        if (FCK.UseContentEditable) {
+                image.setAttribute('contentEditable', false);
+
+                // apply contentEditable to all child nodes of video
+                FCK.YD.getElementsBy(
+                        function(node) {
+                                return true;
+                        },
+                        false,
+                        image,
+                        function(node) {
+                                node.setAttribute('contentEditable', false);
+                        }
+                );
+
+                // setup events (remove listener first to avoid multiple event firing)
+                var imageAdd = image.getElementsByTagName('a')[0];
+
+    //            FCKTools.RemoveEventListener(imageAdd, 'click', FCK.VideoOnClick);
+                FCKTools.AddEventListener(imageAdd, 'click', FCK.ImagePlcAddOnClick);
+
+                FCK.BlockEvent(image, 'contextmenu');
+                FCK.BlockEvent(image, 'mousedown');
+                FCK.BlockEvent(image, 'mouseup');
+
+                // store node with refId
+                FCK.NodesWithRefId[ refid ] = image;
+                return;
+        }
+}
+
+FCK.ImagePlcAddOnClick = function(e) {
+        var e = FCK.YE.getEvent(e);
+        var target = FCK.YE.getTarget(e);
+
+        FCK.YE.stopEvent(e);
+
+        // ignore buttons different then left
+        if (e.button == 0) {
+                var image = FCK.GetParentImage(target);
+                var refid = parseInt(image.getAttribute('refid'));
+		var data = FCK.wysiwygData[refid];
+		if (!data) {
+			return;
+		}
+
+                FCK.log('image placeholder add #' + refid  + ' clicked');
+                FCK.log(FCK.wysiwygData[refid]);
+
+                // tracker
+                FCK.Track('/image/add');
+                window.parent.WMU_show( parseInt(refid), -2, -1, data.isAlign, data.isThumb, data.width, data.caption, data.link );
+        }
+};
 
 // image overlay with edit/delete link
 FCK.ProtectImageOverlay = false;
@@ -1229,10 +1293,15 @@ FCK.ProtectImageUpdate = function(refid, wikitext, extraData) {
 	);
 }
 
-FCK.ProtectImageAdd = function(wikitext, extraData) {
+FCK.ProtectImageAdd = function(wikitext, extraData, placeholderRefId) {
 	var refid = FCK.GetFreeRefId();
 
 	FCK.log('adding new image #' + refid + ' using >>' + wikitext + '<<');
+
+        // use this param to replace existing "Add video" placeholder with new video
+	if (placeholderRefId != null) {
+		FCK.log('replacing "Add image" placeholder #' + placeholderRefId);
+	}
 
 	FCK.Track('/image/add');
 
@@ -1263,7 +1332,15 @@ FCK.ProtectImageAdd = function(wikitext, extraData) {
 
 			// insert html into editing area...
 			var wrapper = FCK.EditorDocument.createElement('DIV');
-			FCK.InsertElement(wrapper);
+
+			if (placeholderRefId != null) {
+				var placeholder = FCK.GetElementByRefId(placeholderRefId);
+				placeholder.parentNode.replaceChild(wrapper, placeholder);
+			}
+			else {
+				FCK.InsertElement(wrapper);
+			}
+
 			wrapper.innerHTML = html;
 
 			// is "simple" image wrapped by <p></p> ?
@@ -1282,7 +1359,11 @@ FCK.ProtectImageAdd = function(wikitext, extraData) {
 			FCK.log(FCK.wysiwygData[refid]);
 		},
 		failure: function(o) {},
-		argument: {'FCK': FCK, 'refid': refid}
+		argument: {
+			'FCK': FCK,
+			'refid': refid,
+			'placeholderRefId': placeholderRefId	
+		}
 	}
 
 	FCK.YAHOO.util.Connect.asyncRequest(

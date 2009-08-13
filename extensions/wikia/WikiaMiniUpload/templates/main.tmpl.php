@@ -17,16 +17,17 @@
 		<td><h1><?= wfMsg('wmu-upload') ?></h1></td>
 		<td>
 <?php
-global $wgStylePath, $wgUser, $wgScriptPath;
-
-if( !$wgUser->isAllowed( 'upload' ) ) {
+global $wgStylePath, $wgUser, $wgScriptPath, $wgEnableUploads;
+if (!$wgEnableUploads) {
+	echo wfMsg( "wmu-uploaddisabled" );
+} else if( !$wgUser->isAllowed( 'upload' ) ) {
 	if( !$wgUser->isLoggedIn() ) {
-		echo '<a id="ImageUploadLoginMsg">' . wfMsg( 'wmu-notlogged' ) . '</a>';
+		echo '<a id="ImageUploadLoginMsg">' .wfMsg( 'wmu-notlogged' ) . '</a>';
 	} else {
 		echo wfMsg( 'wmu-notallowed' ); 
 	}
-} else if( wfReadOnly() ) { 
-		echo wfMsg( 'wmu-readonly' );
+} else if( wfReadOnly() ) {
+	echo wfMsg( 'wmu-readonly' );
 } else {
 	if ($error) {
 		?>
@@ -47,7 +48,7 @@ if( !$wgUser->isAllowed( 'upload' ) ) {
 		<td><h1><?= wfMsg('wmu-find') ?></h1></td>
 		<td>
 <?php
-if( ( $wgUser->isLoggedIn() ) && ( $wgUser->isAllowed( 'upload' ) ) ) {
+if( ( $wgUser->isLoggedIn() ) && ( $wgUser->isAllowed( 'upload' ) && $wgEnableUploads && !wfReadOnly() ) ) {
 ?>
 			<div onclick="WMU_changeSource(event);" style="font-size: 9pt; float: right; margin-top: 5px;">
 				<a id="WMU_source_0" href="#" style="font-weight: bold;"><?= wfMsg('wmu-thiswiki') ?></a> |

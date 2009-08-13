@@ -946,9 +946,19 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			$data['height'] = $params['height'];
 			$data['isAlign'] = $params['isAlign'];
 			$data['isThumb'] = $params['isThumb'];
-
 			$data['original'] = $params['original'];
 			break;
+
+		case 'image_add':
+			$data['width'] = $params['width'];
+			$data['height'] = $params['height'];
+			$data['isAlign'] = $params['isAlign'];
+			$data['isThumb'] = $params['isThumb'];
+			$data['original'] = $params['original'];
+			$data['caption'] = $params['caption'];
+			$data['link'] = $params['link'];
+			break;
+
 	}
 
 	if($addMarker) {

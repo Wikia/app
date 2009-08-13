@@ -9,8 +9,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'WikiaMiniUpload (Add Images)',
-        'author' => array( 'Inez Korczyński', 'Bartek Łapiński' ),
-	'version' => '1.02'
+        'author' => 'Inez Korczyński, Bartek Łapiński',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -20,7 +19,8 @@ $wgHooks['EditPage::showEditForm:initial2'][] = 'WMUSetup';
 
 function WMUSetup($editform) {
 	global $wgOut, $wgStylePath, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgUser;
-	if( in_array( get_class($wgUser->getSkin()), array( 'SkinMonaco', 'SkinAnswers' ) ) ) {
+
+	if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
 		wfLoadExtensionMessages('WikiaMiniUpload');
 		$wgHooks['MakeGlobalVariablesScript'][] = 'WMUSetupVars';
 		$wgOut->addScript('<script type="text/javascript" src="'.$wgStylePath.'/common/yui_2.5.2/slider/slider-min.js?'.$wgStyleVersion.'"></script>');

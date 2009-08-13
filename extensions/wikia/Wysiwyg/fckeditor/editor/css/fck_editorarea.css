@@ -225,3 +225,35 @@ input.wysiwygComment {
 	border: none;
 	width: 16px;
 }
+
+
+/*BARTEK*/
+div.tnone {
+        float: none;
+        clear: both;
+}
+
+div.videobox {
+        background-color: #f9f9f9;
+}
+
+.bigButtonContainer {
+        margin-top: -11px;
+        top: 50%;
+        position: absolute;
+}
+
+.gallerybox .thumbcaption {
+        position: absolute;
+        bottom: 0px;
+        padding: 5px !important;
+        font-size: 88%;
+}
+
+.gallerybox .thumbcaption hr {
+        color: #cccccc;
+}
+
+/*BARTEK*/
+
+

@@ -1893,11 +1893,7 @@ class Parser
 							$holders->merge( $this->replaceInternalLinks2( $text ) );
 							global $wgContLang;
 							$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Template_Placeholder";
-							if( 0 === strpos( $text, $vid_tag ) ) {
-								$in_template = true;
-							} else {
-								$in_template = false;
-							}
+							( 0 === strpos( $text, $vid_tag ) ) ? $in_template = true : $in_template = false;
 							$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk, '', $in_template)).$trail;
 							$this->mOutput->addImage(':'.$nt->getDBkey());
 						}
@@ -1930,7 +1926,12 @@ class Parser
 							$holders->merge( $this->replaceInternalLinks2( $text ) );
 						}
 						# cloak any absolute URLs inside the image markup, so replaceExternalLinks() won't touch them
-						$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text, $holders ) ) . $trail;
+						# cater for new placeholder-in-template namespace -  Bartek
+						if( "Template Placeholder" != $nt->getText() ) {
+							$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text, $holders ) ) . $trail;
+						} else {
+							$s .= $prefix . $this->armorLinks( ImagePlaceholder_makeDullImage( $nt, $text, $holders ) ) . $trail;
+						}
 					}
 
 					if(empty($wgWysiwygParserEnabled)) {
@@ -4751,7 +4752,14 @@ class Parser
 		# Process the input parameters
 		$caption = '';
 		$params = array( 'frame' => array(), 'handler' => array(),
-			'horizAlign' => array(), 'vertAlign' => array() );
+				'horizAlign' => array(), 'vertAlign' => array() );
+
+		// please consider adding a hook providing options next time
+		if (!wfRunHooks( 'BeforeParserMakeImageLinkObjOptions', array( &$this, &$title, &$parts, &$params, &$time, &$descQuery, $options ) ) ) {
+			$ret = $sk->makeImageLink2( $title, $file, $params['frame'], $params['handler'], $time, $descQuery );
+			return $ret;
+		}
+
 		foreach( $parts as $part ) {
 			$part = trim( $part );
 			list( $magicName, $value ) = $mwArray->matchVariableStartToEnd( $part );

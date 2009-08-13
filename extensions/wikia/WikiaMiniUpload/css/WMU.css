@@ -8,7 +8,7 @@
 	background-color: #000;
 	border: 1px solid #FFF;
 	filter: alpha(opacity=60);
-	height: 505px;
+	height: 545px;
 	left: 0;
 	opacity: .6;
 	position: absolute;
@@ -17,7 +17,7 @@
 }
 #ImageUploadBody {
 	background: #FFF;
-	height: 440px;
+	height: 470px;
 	opacity: 1;
 	overflow: hidden;
 	padding: 15px;
@@ -175,7 +175,7 @@
 	border-bottom: 1px solid #CCC;
 	padding: 5px 5px;
 }
-ImageUploadOptionsTable img {
+.ImageUploadOptionsTable img {
 	vertical-align: middle;
 }
 .ImageUploadOptionsTable label {
@@ -256,6 +256,18 @@ ImageUploadOptionsTable img {
 	font-size: 8pt;
 }
 
+/*
+#ImageUploadLicenseTextWrapper {
+	height: 46px;
+	overflow: hidden;
+}
+
+#ImageUploadLicenseTextWrapper:hover {
+	height: auto;
+	overflow: auto;
+}
+*/
+
 #ImageUploadMessageControl {
 	position: absolute;
 	font-size: 9pt;
@@ -280,3 +292,4 @@ ImageUploadOptionsTable img {
 	width: 36px;
 	height: 16px;
 }
+
