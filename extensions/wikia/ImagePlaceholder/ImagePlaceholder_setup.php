@@ -55,8 +55,9 @@ function ImagePlaceholderTranslateNsImage() {
 	$aliases = array_flip( $aliases );
 	if ( !empty( $aliases[ NS_FILE ] ) ) {
         	return $aliases[ NS_FILE ]; # Image:
+	} else {
+		return wfMsgForContent( 'imgplc-image' );
 	}
-	return false;
 }
 
 // this function is to bypass the default MW parameter handling, because it assumes we have an actual file on the way
@@ -70,14 +71,8 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( $parser, $title, $
 	}
 	global $wgContLang;
 	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );
-	$ns_translated = ImagePlaceholderTranslateNsImage();
-	if( !$ns_translated ) {
-		$ns_img = wfMsgForContent( 'imgplc-image' );
-	} else {
-		$ns_img = $ns_translated;
-	}
+	$ns_img = ImagePlaceholderTranslateNsImage();
 	$img_tag = $ns_img . ':' . wfMsgForContent( 'imgplc-placeholder' );
-//	$cn_img_tag = 
 
 	$params = array(
 		'frame' => array(),
