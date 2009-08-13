@@ -15,7 +15,25 @@ use File::Path;
 # debug
 #
 use Data::Dumper;
-my $syslog = 1;
+
+sub real404 {
+	my $request_uri  = shift;
+	print "Status: 404\r\n";
+	print "Connection: close\r\n";
+	print "Content-Type: text/html; charset=utf-8\r\n\r\n";
+	print qq{
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>Error 404: Page not found</title></head>
+<body style="font-family: sans-serif; font-size: 10pt;">
+<h1 style="font-size: large;">Error 404: Page not found</h1>
+<hr style="border-top: 1px solid black;" />
+	Please move along people, nothing to see here. Especially, there is no <strong>$request_uri</strong> file. But still, you can
+	go for example to our <a href="http://www.wikia.com/">Main Page</a>.
+</body>
+</html>
+		};
+}
 
 #
 # initialization
@@ -24,6 +42,7 @@ my $request = FCGI::Request();
 my $basepath = "/images";
 my $flm = new File::LibMagic;
 my $maxwidth = 3000;
+my $syslog = 1;
 
 #
 # if thumbnail was really generated
@@ -36,19 +55,17 @@ openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
 while( $request->Accept() >= 0 ) {
 	my $env = $request->GetEnvironment();
 	my $redirect_to = "";
-	#my $request_uri = "/s/silenthill/de/images/thumb/8/85/Heather_%28Konzept4%29.jpg/420px-Heather_%28Konzept4%29.jpg"; # test url
 	my $request_uri = "";
 	my $referer = "";
+	#$request_uri = "/s/silenthill/de/images/thumb/8/85/Heather_%28Konzept4%29.jpg/420px-Heather_%28Konzept4%29.jpg"; # test url
+	#$request_uri = "/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG";  # test url
 
-	#
-	# we basicly redirecting REQUEST_URI to another url
-	#
-	$request_uri = $env->{"REQUEST_URI"} if $env->{"REQUEST_URI"};
-	$referer = $env->{"HTTP_REFERER"} if $env->{"HTTP_REFERER"};
 
 	#
 	# get last part of uri, remove first slash if exists
 	#
+	$request_uri = $env->{"REQUEST_URI"} if $env->{"REQUEST_URI"};
+	$referer = $env->{"HTTP_REFERER"} if $env->{"HTTP_REFERER"};
 	my $uri = URI->new( $request_uri );
 	my $path  = $uri->path;
 	$path =~ s/^\///;
@@ -76,6 +93,9 @@ while( $request->Accept() >= 0 ) {
 		# guess rest of image, last three parts would be image name and two
 		# subdirectories
 		#
+		# there could be two kinds: current image and archive image,
+		# archive image has '/archive/' part additionaly
+		#
 		my $original = join( "/", splice( @parts, -3, 3 ) );
 
 		#
@@ -93,10 +113,16 @@ while( $request->Accept() >= 0 ) {
 			pop @parts;
 
 			#
+			# if thumbnail is for archived image add /archive/ part
+			#
+			if( index( $thumbnail, "/archive/" ) != -1 ) {
+				$parts[ -1 ] = "archive";
+			}
+
+			#
 			# merge with rest of path
 			#
 			$original = $basepath . '/' . join( "/", @parts ) . '/' . $original;
-
 			#
 			# then find proper thumbnailer for file, first check if this is svg
 			# thumbnail request. mimetype will be used later in header
@@ -195,21 +221,7 @@ while( $request->Accept() >= 0 ) {
 		}
 	}
 	if( ! $transformed ) {
-		print "Status: 404\r\n";
-		print "Connection: close\r\n";
-		print "Content-Type: text/html; charset=utf-8\r\n\r\n";
-		print qq{
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head><title>Error 404: Page not found</title></head>
-<body style="font-family: sans-serif; font-size: 10pt;">
-<h1 style="font-size: large;">Error 404: Page not found</h1>
-<hr style="border-top: 1px solid black;" />
-	Please move along people, nothing to see here. Especially, there is no <strong>$request_uri</strong> file. But still, you can
-	go for example to our <a href="http://www.wikia.com/">Main Page</a>.
-</body>
-</html>
-		};
+		real404( $request_uri )
 	}
 
 	$request->Finish();
