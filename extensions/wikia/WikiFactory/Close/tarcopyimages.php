@@ -77,13 +77,13 @@ class CloseWikiTarAndCopyImages {
 							/**
 							 * creating directory attempt
 							 */
-							list( $remote, $path ) = explode( ":", $target );
+							list( $remote, $path ) = explode( ":", $target, 2 );
 							$mkdir = wfEscapeShellArg(
 								"/usr/bin/ssh",
 								$remote,
 								escapeshellcmd( "mkdir -p " . dirname( $path ) )
 							);
-							$output = wfShellExec( $cmd, $retval );
+							$output = wfShellExec( $mkdir, $retval );
 							if( $retval == 0 ) {
 								Wikia::log( __CLASS__, "info",  dirname( $path ) . " created on {$remote}" );
 								$output = wfShellExec( $cmd, $retval );
