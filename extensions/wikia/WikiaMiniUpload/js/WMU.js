@@ -740,12 +740,12 @@ function WMU_displayDetails(responseText) {
 		}
 	}	
 	$G( 'ImageColumnRow' ).style.display = 'none';
-	if( -1 != WMU_gallery ) {
+//	if( -1 != WMU_gallery ) {
 		// todo gallery stuff here
-		if( -2 == WMU_gallery ) { // placeholder stuff, don't need that
+//		if( -2 == WMU_gallery ) { // placeholder stuff, don't need that
 			$G( 'WMU_LayoutGalleryBox' ).style.display = 'none';
-		}
-	}
+//		}
+//	}
 
 	WMU_indicator(1, false);
 }
