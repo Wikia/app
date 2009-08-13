@@ -52,8 +52,9 @@ class CloseWikiTarAndCopyImages {
 		);
 		while( $row = $dbr->fetchObject( $sth ) ) {
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
-				$dbname = $row->city_dbname;
-				$folder = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
+				$success = false;
+				$dbname  = $row->city_dbname;
+				$folder  = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
 				if( $dbname && $folder ) {
 					Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
 					$source = $this->tarFiles( $folder, $dbname );
@@ -73,10 +74,30 @@ class CloseWikiTarAndCopyImages {
 						$output = wfShellExec( $cmd, $retval );
 						if( $retval > 0 ) {
 							Wikia::log( __CLASS__, "error", "{$cmd} command failed." );
+							/**
+							 * creating directory attempt
+							 */
+							list( $remote, $path ) = explode( ":", $target );
+							$mkdir = wfEscapeShellArg(
+								"/usr/bin/ssh",
+                                $remote,
+                                escapeshellcmd( "mkdir -p " . dirname( $path ) )
+                            );
+							$output = wfShellExec( $cmd, $retval );
+							if( $retval == 0 ) {
+								Wikia::log( __CLASS__, "info",  dirname( $path ) . " created on {$remote}" );
+								$output = wfShellExec( $cmd, $retval );
+								if( $retval == 0 ) {
+									Wikia::log( __CLASS__, "info", "{$source} copied to {$target}." );
+									unlink( $source );
+									$success = true;
+								}
+							}
 						}
 						else {
-							Wikia::log( __CLASS__, "info", "{$cource} copied to {$target}." );
+							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}." );
 							unlink( $source );
+							$success = true;
 						}
 					}
 				}
