@@ -164,11 +164,11 @@ class CloseWikiTarAndCopyImages {
 					$files = array_merge( $files, $this->getDirTree( $path, $files ) );
 				}
 				else {
-					$exclude =
-						strpos( $path, "/images/thumb/") === false ||
+					$include =
+						strpos( $path, "/images/thumb/") === false &&
 						strpos( $path, "/images/temp/") === false
 						;
-					if( $exclude ) {
+					if( $include ) {
 						$files[] = $path;
 					}
 				}
