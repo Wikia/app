@@ -265,6 +265,7 @@ include_once( "$IP/extensions/wikia/AutoCreateWiki/AutoCreateWikiLocalJob.php" )
 
 $wgReportTimeViaStomp = false;
 $wgPurgeSquidViaStomp = false;
+$wgReportMailViaStomp = false;
 
 $wgStompServer = '';
 $wgStompUser = '';
