@@ -523,6 +523,7 @@ class WikiaMiniUpload {
 			$caption = $wgRequest->getVal('caption');
 			$slider = $wgRequest->getVal('slider');
 			$ns_vid = $wgContLang->getFormattedNsText( NS_FILE );
+			$ns_img = ImagePlaceholderTranslateNsImage();
 
 			$title_obj = Title::newFromText( $title_main, $ns );
 			$article_obj = new Article( $title_obj );
@@ -531,7 +532,11 @@ class WikiaMiniUpload {
 			( '' != $wgRequest->getVal( 'box' ) ) ? $box = $wgRequest->getVal( 'box' ) : $box = '' ;
 			
 			$placeholder_msg = wfMsgForContent( 'imgplc-placeholder' );
-			preg_match_all( '/\[\[' . $ns_vid . ':' . $placeholder_msg . '[^\]]*\]\]/s', $text, $matches, PREG_OFFSET_CAPTURE );
+
+			$transl_v_t = '\[\[' . $ns_vid . ':' . $placeholder_msg . '[^\]]*\]\]';	
+			$transl_i_t = '\[\[' . $ns_img . ':' . $placeholder_msg . '[^\]]*\]\]';	
+			
+			preg_match_all( '/' . $transl_v_t . '|' . $transl_i_t . '/s', $text, $matches, PREG_OFFSET_CAPTURE );
 			if( is_array( $matches ) ) {
 				$our_gallery = $matches[0][$box][0];
 				$gallery_split = split( ':', $our_gallery );
