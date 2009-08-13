@@ -140,7 +140,9 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	global $wgContLang, $wgUser, $wgThumbLimits, $wgThumbUpright, $wgWysiwygParserEnabled, $wgWysiwygMetaData;
 
-	$refid = Wysiwyg_GetRefId($options, true); // strip refid
+	if ( !empty( $wgWysiwygParserEnabled ) ) {
+		$refid = Wysiwyg_GetRefId($options, true); // strip refid
+	}
 	$plc_tag = '';
 	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );	
 	( isset( $hp['options'] ) && ( '' != $hp['options'] ) ) ? $wikitext = '[[' . $plc_tag . '|' . $hp['options'] . ']]' : $wikitext = '[[' . $plc_tag . ']]';
