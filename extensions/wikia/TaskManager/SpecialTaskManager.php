@@ -27,8 +27,6 @@ $wgExtensionCredits['specialpage'][] = array(
  */
 require_once( dirname(__FILE__) . "/BatchTask.php" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/CloseWikiTask.php", "closewiki", "CloseWikiTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/MultiDeleteTask.php", "multidelete", "MultiDeleteTask" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/MultiWikiEditTask.php", "multiwikiedit", "MultiWikiEditTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/MultiRestoreTask.php", "multirestore", "MultiRestoreTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/ImageGrabberTask.php", "imagegrabber", "ImageGrabberTask" );
 extAddBatchTask( dirname(__FILE__)."/Tasks/ImageImporterTask.php", "imageimporter", "ImageImporterTask" );
