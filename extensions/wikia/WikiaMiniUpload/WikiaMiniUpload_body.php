@@ -187,7 +187,7 @@ class WikiaMiniUpload {
 		}
 
 		if( strlen( $partname ) < 1 ) {
-			return UploadForm::MIN_LENGHT_PARTNAME;
+			return UploadForm::MIN_LENGTH_PARTNAME;
 		}
 
 		$form->mFileProps = File::getPropsFromPath( $form->mTempPath, $finalExt );
@@ -222,7 +222,7 @@ class WikiaMiniUpload {
 				return false;
 			case UploadForm::EMPTY_FILE:
 				return wfMsg( 'emptyfile' );
-			case UploadForm::MIN_LENGHT_PARTNAME:
+			case UploadForm::MIN_LENGTH_PARTNAME:
 				return wfMsg( 'minlength1' );
 			case UploadForm::ILLEGAL_FILENAME:
 				return wfMsg( 'illegalfilename' );
