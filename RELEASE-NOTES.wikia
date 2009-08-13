@@ -1,4 +1,5 @@
 == Changes since 200908.2 ==
+* rt#20451: Answers: Skip un/answered categories in related answered footer. (Nef)
 * rt#20021: Answers, Ads: YieldBuild testing. (Nef)
 * rt#20978: fix maintenance/update.php on c2 (eloy)
 * rt#20990: Hide MultiWikiEdit from special:specialpages. (Nef)
