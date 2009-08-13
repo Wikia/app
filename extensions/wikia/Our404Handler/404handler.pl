@@ -136,7 +136,7 @@ while( $request->Accept() >= 0 ) {
 				#
 				my $thumbdir = dirname( $thumbnail );
 				unless( -d $thumbdir ) {
-					eval { mkpath( $thumbdir, 1 ) };
+					eval { mkpath( $thumbdir ) };
 					if( $@ ) {
 						syslog( LOG_INFO, "Creating of $thumbdir folder failed" ) if $syslog;
 					}
