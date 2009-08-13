@@ -169,7 +169,7 @@ while( $request->Accept() >= 0 ) {
 							print <$fh>;
 							undef $fh;
 						}
-						syslog( LOG_INFO, "$thumbnail created" ) if $syslog;
+						syslog( LOG_INFO, "File $thumbnail created" ) if $syslog;
 					}
 					else {
 						syslog( LOG_INFO, "SVG conversion from $original to $thumbnail failed" ) if $syslog;
@@ -206,7 +206,7 @@ while( $request->Accept() >= 0 ) {
 								print <$fh>;
 								undef $fh;
 							}
-							syslog( LOG_INFO, "$thumbnail created" ) if $syslog;
+							syslog( LOG_INFO, "File $thumbnail created" ) if $syslog;
 						}
 						else {
 							syslog( LOG_INFO, "ImageMagick thumbnailer from $original to $thumbnail failed" ) if $syslog;
