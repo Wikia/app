@@ -10,7 +10,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'Image Placeholder (Add Images)',
         'author' => 'Bartek Łapiński',
-	'version' => '0.60',
+	'version' => '0.61',
 );
 
 global $wgWikiaImagesFoundInTemplates;
