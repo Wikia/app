@@ -107,12 +107,12 @@ class CloseWikiTarAndCopyImages {
 		$files = $this->getDirTree( $directory );
 
 		if( is_array( $files ) && count( $files ) ) {
-			Wikia::log( __CLASS__, "info", sprintf( "Packing %d images from {$directory} to {$tarfile}", count( $files ) ) );
+			Wikia::log( __CLASS__, "info", sprintf( "Packing %d files from {$directory} to {$tarfile}", count( $files ) ) );
 			$tar->create( $files );
 			$result = $tarfile;
 		}
 		else {
-			Wikia::log( __CLASS__, "info", "List of images in {$directory} is empty" );
+			Wikia::log( __CLASS__, "info", "List of files in {$directory} is empty" );
 			$result = false;
 		}
 		return $result;
