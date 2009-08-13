@@ -184,6 +184,18 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			</ul>
 		</div><?/*page_bar*/?>
 
+<?php global $wgRequest; $YB = (bool) $wgRequest->getVal("YB", false); ?>
+<?php if ($YB): ?>
+<div style="border: solid 5px red">
+<!-- YB: leaderboard (728x90) -->
+<script type="text/javascript"><!--
+yieldbuild_site = 5286;
+yieldbuild_loc = "leaderboard";
+//--></script>
+<script type="text/javascript" src="http://hook.yieldbuild.com/s_ad.js"></script>
+</div>
+<?php endif; ?>
+
 		<div id="answers_article">
 
 		<a name="top" id="top"></a>
@@ -246,6 +258,18 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				}
 				?>
 				<button class="button_small button_small_blue" onclick="document.location='<?=$watchlist_url?>';"><span><? echo ($answer_page->isArticleAnswered() ? wfMsg("notify_improved") : wfMsg("notify_answered"));?></span></button>
+
+<?php if ($YB): ?>
+<div style="border: solid 5px red">
+<!-- YB: question_bubble (468x60) -->
+<script type="text/javascript"><!--
+yieldbuild_site = 5286;
+yieldbuild_loc = "question_bubble";
+//--></script>
+<script type="text/javascript" src="http://hook.yieldbuild.com/s_ad.js"></script>
+</div>
+<?php endif; ?>
+
 			</div>
 			<div class="bottom"><span></span></div>
 		</div>
@@ -347,6 +371,19 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				echo $ads;
 			}
 		}?>
+
+<?php if ($YB): ?>
+<div id="ads-unanswered-bottom">
+<div style="border: solid 5px red">
+<!-- YB: left_content_top (300x250) -->
+<script type="text/javascript"><!--
+yieldbuild_site = 5286;
+yieldbuild_loc = "left_content_top";
+//--></script>
+<script type="text/javascript" src="http://hook.yieldbuild.com/s_ad.js"></script>
+</div>
+</div>
+<?php endif; ?>
 
 		<?php
 		global $wgTitle, $wgAnswersShowInlineRegister;
@@ -525,6 +562,17 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 
 		<!-- XIAN: Pull content that is now in "AnswersAfterArticle" hook -->
 
+<?php if ($YB): ?>
+<div style="border: solid 5px red">
+<!-- YB: left_content_bottom (728x250) -->
+<script type="text/javascript"><!--
+yieldbuild_site = 5286;
+yieldbuild_loc = "left_content_bottom";
+//--></script>
+<script type="text/javascript" src="http://hook.yieldbuild.com/s_ad.js"></script>
+</div>
+<?php endif; ?>
+
                 <!-- NICK: Related answered questions -->
 		<? if ( $is_question ) { ?>
 		<div id="related_questions" class="reset widget">
@@ -643,6 +691,17 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			</div><?/*toolbox_stroke*/?>
 		</div><?/*toolbox*/?>
 
+<?php if ($YB): ?>
+<div style="border: solid 5px red">
+<!-- YB: right_nav_top (300x250) -->
+<script type="text/javascript"><!--
+yieldbuild_site = 5286;
+yieldbuild_loc = "right_nav_top";
+//--></script>
+<script type="text/javascript" src="http://hook.yieldbuild.com/s_ad.js"></script>
+</div>
+<?php endif; ?>
+
 		<div class="widget">
 			<h2><?= wfMsg("recent_unanswered_questions") ?></h2>
 			<ul id="recent_unanswered_questions">
@@ -653,6 +712,17 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 			}
 			?>
 		</div>
+
+<?php if ($YB): ?>
+<div style="border: solid 5px red">
+<!-- YB: right_nav_middle (300x600) -->
+<script type="text/javascript"><!--
+yieldbuild_site = 5286;
+yieldbuild_loc = "right_nav_middle";
+//--></script>
+<script type="text/javascript" src="http://hook.yieldbuild.com/s_ad.js"></script>
+</div>
+<?php endif; ?>
 
 		<div class="widget">
 			<h2><?= wfMsg("popular_categories") ?></h2>
@@ -678,6 +748,17 @@ wfRunHooks('GetHTMLAfterBody', array (&$this));
 				?>
 			</ul>
 		</div>
+
+<?php if ($YB): ?>
+<div style="border: solid 5px red">
+<!-- YB: right_nav_bottom (300x600) -->
+<script type="text/javascript"><!--
+yieldbuild_site = 5286;
+yieldbuild_loc = "right_nav_bottom";
+//--></script>
+<script type="text/javascript" src="http://hook.yieldbuild.com/s_ad.js"></script>
+</div>
+<?php endif; ?>
 
 	</div><?/*answers_sidebar*/?>
 
