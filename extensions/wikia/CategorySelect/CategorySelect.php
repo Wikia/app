@@ -60,7 +60,7 @@ function CategorySelectInit() {
 
 	global $wgHooks, $wgAutoloadClasses;
 	$wgAutoloadClasses['CategorySelect'] = 'extensions/wikia/CategorySelect/CategorySelect_body.php';
-	$wgHooks['ArticleFromTitle'][] = 'CategorySelectInitializeHooks';
+	$wgHooks['MediaWikiPerformAction'][] = 'CategorySelectInitializeHooks';
 	$wgHooks['UserToggles'][] = 'CategorySelectToggleUserPreference';
 	$wgHooks['getEditingPreferencesTab'][] = 'CategorySelectToggleUserPreference';
 }
@@ -70,7 +70,7 @@ function CategorySelectInit() {
  *
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
-function CategorySelectInitializeHooks($title, $article) {
+function CategorySelectInitializeHooks($output, $article, $title, $user, $request) {
 	global $wgHooks, $wgRequest, $wgUser, $wgContentNamespaces;
 
 	// Check user preferences option
@@ -102,7 +102,7 @@ function CategorySelectInitializeHooks($title, $article) {
 	$action = $wgRequest->getVal('action', 'view');
 
 	if($action == 'view' || $action == 'purge') {
-		if(!$title->exists()) {
+		if($title->mArticleID == 0) {
 			return true;
 		}
 		if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
