@@ -33,7 +33,7 @@ abstract class SpecialEditPage extends SpecialPage {
 			$tmp = $wgDisableAnonymousEditig;
 			$wgDisableAnonymousEditig = false; // set to false for forcing init
 			CategorySelectInit();
-			CategorySelectInitializeHooks($this->mTitle, null);
+			CategorySelectInitializeHooks(null, null, $this->mTitle, null, null);
 			$wgDisableAnonymousEditig = $tmp;
 		}
 	}
