@@ -6,4 +6,3 @@
         <div id="ImageUploadCode" style="display: none;" ><?= $code ?></div>
         <input type="hidden" id="ImageUploadTag" value="<?= htmlspecialchars( $tag ) ?>" />
 </div>
-

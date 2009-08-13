@@ -1141,6 +1141,7 @@ class ReverseParser {
 			case 'image':
 			case 'video':
 			case 'video_add':
+			case 'image_add':
 				return $data['original'];
 
 			// RT #18490
