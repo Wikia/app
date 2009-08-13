@@ -571,7 +571,10 @@ class WikiaApiQuery extends ApiQueryBase {
 	{
 		global $wgCookiePath, $wgCookieDomain, $wgCookieSecure;
 		if (empty($_COOKIE['wgWikiaUniqueBrowserId'])) {
-			$unique_id = md5(uniqid(rand(), true));
+			$unique_id = md5(wfGetIP());
+			/* previous version */
+			//$unique_id = md5(uniqid(rand(), true));
+			/* not used */
 			//setcookie('wgWikiaUniqueBrowserId', $unique_id, time() + COOKIE_EXPR, $wgCookiePath, $wgCookieDomain, $wgCookieSecure);
 		} else {
 			$unique_id = $_COOKIE['wgWikiaUniqueBrowserId'];
@@ -671,5 +674,3 @@ class WikiaApiQueryError extends MWException {
 		return array( 'fault' => array('id' => $this->mFaultCode, 'name' => $this->getMessage(), 'fault' => $this->getApiFaultName() ) );
 	}
 }
-
-?>
