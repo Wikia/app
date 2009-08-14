@@ -10,6 +10,7 @@ use File::LibMagic;
 use IO::File;
 use File::Basename;
 use File::Path;
+use XML::Simple;
 
 #
 # debug
@@ -57,9 +58,12 @@ while( $request->Accept() >= 0 ) {
 	my $redirect_to = "";
 	my $request_uri = "";
 	my $referer = "";
-	#$request_uri = "/s/silenthill/de/images/thumb/8/85/Heather_%28Konzept4%29.jpg/420px-Heather_%28Konzept4%29.jpg"; # test url
-	#$request_uri = "/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG";  # test url
 
+=pod examples
+	$request_uri = "/s/silenthill/de/images/thumb/8/85/Heather_%28Konzept4%29.jpg/420px-Heather_%28Konzept4%29.jpg"; # test url
+	$request_uri = "/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG";  # test url
+	$request_uri = "/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png";
+=cut
 
 	#
 	# get last part of uri, remove first slash if exists
@@ -152,10 +156,20 @@ while( $request->Accept() >= 0 ) {
 				#
 				if( $mimetype =~ m!^image/svg\+xml! || $mimetype =~ m!text/xml! ) {
 					#
+					# read width & height of SVG file
+					#
+					my $xmlp = XMLin( $original );
+					my $origw = $xmlp->{'width'};
+					my $origh = $xmlp->{'height'};
+					my $height = $width;
+					if( $origw && $origh ) {
+						$height = $width * $origh / $origw;
+					}
+					#
 					# RSVG thumbnailer
 					#
 					my $rsvg = new Image::LibRSVG;
-					$rsvg->convertAtMaxSize( $original, $thumbnail, $width, $width );
+					$rsvg->convertAtMaxSize( $original, $thumbnail, $width, $height );
 
 					if( -f $thumbnail ) {
 						$mimetype = $flm->checktype_filename( $thumbnail );
@@ -175,6 +189,7 @@ while( $request->Accept() >= 0 ) {
 						syslog( LOG_INFO, "SVG conversion from $original to $thumbnail failed" ) if $syslog;
 					}
 					undef $rsvg;
+					undef $xmlp;
 				}
 				else {
 					#
