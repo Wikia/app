@@ -105,6 +105,9 @@ class CloseWikiTarAndCopyImages {
 							$success = true;
 						}
 					}
+					else {
+						$success = false;
+					}
 				}
 			}
 			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES && $success ) {
