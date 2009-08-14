@@ -55,10 +55,10 @@ class CloseWikiTarAndCopyImages {
 			$success = true;
 			$dbname  = $row->city_dbname;
 			$folder  = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
-
+			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
+			
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
-					Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
 					$source = $this->tarFiles( $folder, $dbname );
 					$target = DumpsOnDemand::getUrl( $dbname, "images.tar", $this->mTarget );
 
