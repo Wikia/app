@@ -47,7 +47,15 @@ class CloseWikiTarAndCopyImages {
 		$sth = $dbr->select(
 			array( "city_list" ),
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
-			array( "city_public" => array( 0, -1 ) ),
+			array(
+				"city_public" => array( 0, -1 ),
+				sprintf("city_flags & %d = %d OR city_flags & %d = %d",
+					WikiFactory::FLAG_DELETE_DB_IMAGES,
+					WikiFactory::FLAG_DELETE_DB_IMAGES,
+					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE,
+					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE
+				)
+			),
 			__METHOD__
 		);
 		while( $row = $dbr->fetchObject( $sth ) ) {
@@ -56,7 +64,7 @@ class CloseWikiTarAndCopyImages {
 			$dbname  = $row->city_dbname;
 			$folder  = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
 			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
-			
+
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
 					$source = $this->tarFiles( $folder, $dbname );
