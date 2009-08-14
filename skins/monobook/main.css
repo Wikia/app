@@ -1213,6 +1213,16 @@ div.gallerybox div.thumb {
 	margin: 2px;
 }
 
+
+
+/*BARTEK*/
+
+.gallerybox .bigButton {
+	font-size: 80%;	
+}
+
+/*BARTEK*/
+
 div.gallerytext {
 	overflow: hidden;
 	font-size: 94%;
