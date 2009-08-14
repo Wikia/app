@@ -73,6 +73,7 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			$this->fld_timestamp = isset($prop['timestamp']);
 			$this->fld_sizes = isset($prop['sizes']);
 			$this->fld_patrol = isset($prop['patrol']);
+			$this->fld_wikiamode = isset($prop['wikiamode']);
 
 			if ($this->fld_patrol) {
 				global $wgUser;
@@ -90,6 +91,12 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 				'rc_timestamp'
 			));
 
+			$this->addFieldsIf('rc_type', $this->fld_wikiamode);
+			$this->addFieldsIf('rc_params', $this->fld_wikiamode);
+			$this->addFieldsIf('rc_logid', $this->fld_wikiamode);
+			$this->addFieldsIf('rc_log_type', $this->fld_wikiamode);
+			$this->addFieldsIf('rc_log_action', $this->fld_wikiamode);
+			$this->addFieldsIf('rc_last_oldid', $this->fld_wikiamode);
 			$this->addFieldsIf('rc_new', $this->fld_flags);
 			$this->addFieldsIf('rc_minor', $this->fld_flags);
 			$this->addFieldsIf('rc_user', $this->fld_user);
@@ -122,17 +129,29 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 		));
 
 		$userId = $wgUser->getId();
-		$this->addWhere(array (
-			'wl_namespace = rc_namespace',
-			'wl_title = rc_title',
-			'rc_cur_id = page_id',
-			'wl_user' => $userId,
-			'rc_deleted' => 0,
-		));
+
+		if(!$this->fld_wikiamode) {
+			$this->addWhere(array (
+				'wl_namespace = rc_namespace',
+				'wl_title = rc_title',
+				'rc_cur_id = page_id',
+				'wl_user' => $userId,
+				'rc_deleted' => 0,
+			));
+		} else {
+			$this->addJoinConds(array(
+				'watchlist' => array('INNER JOIN', array('wl_namespace=rc_namespace AND wl_title=rc_title',	'wl_user' => $userId)),
+				'page' => array('LEFT JOIN', array('rc_cur_id=page_id')),
+			));
+		}
 
 		$this->addWhereRange('rc_timestamp', $params['dir'], $params['start'], $params['end']);
 		$this->addWhereFld('wl_namespace', $params['namespace']);
-		$this->addWhereIf('rc_this_oldid=page_latest', !$params['allrev']);
+		if(!$this->fld_wikiamode) {
+			$this->addWhereIf('rc_this_oldid=page_latest', !$params['allrev']);
+		} else {
+			$this->addWhereIf('(rc_this_oldid=page_latest OR rc_type=3)', !$params['allrev']);
+		}
 
 		if (!is_null($params['show'])) {
 			$show = array_flip($params['show']);
@@ -145,7 +164,7 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 
 				$this->dieUsage("Incorrect parameter - mutually exclusive values may not be supplied", 'show');
 			}
-			
+
 			// Check permissions
 			global $wgUser;
 			if((isset($show['patrolled']) || isset($show['!patrolled'])) && !$wgUser->useRCPatrol() && !$wgUser->useNPPatrol())
@@ -159,7 +178,7 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 			$this->addWhereIf('rc_user = 0', isset ($show['anon']));
 			$this->addWhereIf('rc_user != 0', isset ($show['!anon']));
 			$this->addWhereIf('rc_patrolled = 0', isset($show['!patrolled']));
-			$this->addWhereIf('rc_patrolled != 0', isset($show['patrolled']));			
+			$this->addWhereIf('rc_patrolled != 0', isset($show['patrolled']));
 		}
 
 
@@ -209,6 +228,24 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 	private function extractRowInfo($row) {
 
 		$vals = array ();
+
+		if ($this->fld_wikiamode) {
+			$vals['rc_params'] = $row->rc_params;
+			$type = intval ( $row->rc_type );
+			switch ( $type ) {
+				case RC_EDIT:  $vals['type'] = 'edit'; break;
+				case RC_NEW:   $vals['type'] = 'new'; break;
+				case RC_MOVE:  $vals['type'] = 'move'; break;
+				case RC_LOG:   $vals['type'] = 'log'; break;
+				case RC_MOVE_OVER_REDIRECT: $vals['type'] = 'move over redirect'; break;
+				default: $vals['type'] = $type;
+			}
+			if($row->rc_type == RC_LOG) {
+				$vals['logtype'] = $row->rc_log_type;
+				$vals['logaction'] = $row->rc_log_action;
+			}
+			$vals['old_revid'] = $row->rc_last_oldid;
+		}
 
 		if ($this->fld_ids) {
 			$vals['pageid'] = intval($row->rc_cur_id);
@@ -289,6 +326,7 @@ class ApiQueryWatchlist extends ApiQueryGeneratorBase {
 					'timestamp',
 					'patrol',
 					'sizes',
+					'wikiamode'
 				)
 			),
 			'show' => array (

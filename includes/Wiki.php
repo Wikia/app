@@ -108,6 +108,12 @@ class MediaWiki {
 			$ret = Title::newFromID( $curid );
 		} elseif( '' == $title && 'delete' != $action ) {
 			$ret = Title::newMainPage();
+
+			/* Wikia change begin - @author: Macbre */
+			/* Wysiwyg: Add hook to allow modification of page user is redirected to when title is not specified in URL */
+			wfRunHooks( 'InitialQueriesMainPage', array( &$ret ) );
+			/* Wikia change end */
+
 		} else {
 			$ret = Title::newFromURL( $title );
 			// check variant links so that interwiki links don't have to worry
