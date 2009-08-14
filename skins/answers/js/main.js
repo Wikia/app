@@ -217,6 +217,8 @@ jQuery("#related_answered_questions").ready(function() {
 			}
 		}
 	});
+	if (category) {
+
 	url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categoriesonanswers&coatitle=" + category + "&coaanswered=yes&coalimit=5";
 	jQuery.getJSON( url, "", function( j ){
 		if( j.query.categoriesonanswers) {
@@ -230,6 +232,11 @@ jQuery("#related_answered_questions").ready(function() {
 			jQuery("#related_answered_questions").prepend( html );
 		}
 	});
+
+	} else {
+			html = wgNoRelatedAnsweredQuestions;
+			jQuery("#related_answered_questions").prepend( html );
+	}
 });
 
 jQuery(document).ready(function() {
