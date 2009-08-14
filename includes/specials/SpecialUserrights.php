@@ -445,6 +445,7 @@ class UserrightsPage extends SpecialPage {
 				(!$set && !$this->canRemove( $group ) ) );
 
 			$attr = $disabled ? array( 'disabled' => 'disabled' ) : array();
+			$attr['title'] = $group;
 			$text = $irreversible
 				? wfMsgHtml( 'userrights-irreversible-marker', User::getGroupMember( $group ) )
 				: User::getGroupMember( $group );
