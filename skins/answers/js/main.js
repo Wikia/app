@@ -210,10 +210,10 @@ jQuery("#related_answered_questions").ready(function() {
 	$("#mw-normal-catlinks > span > a, #mw-hidden-catlinks > span > a").each(function (e) {
 		// pick first category...
 		if (category == null) {
-			c = $(this).attr("href").replace(/^.*:/, "").replace(/_/, " ");
+			c = $(this).attr("href").replace(/^.*:/, "").replace(/_/g, " ");
 			// ...but skip un/answered cats
 			if (c != wgAnsweredCategory && c != wgUnAnsweredCategory) { // c is dbkey, wgVars are plain text - utf fail if wgVars contain utf
-				category = c.replace(/ /, "_");
+				category = c.replace(/ /g, "_");
 			}
 		}
 	});
