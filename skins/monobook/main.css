@@ -1217,6 +1217,13 @@ div.gallerybox div.thumb {
 
 /*BARTEK*/
 
+.gallerybox .thumbcaption {
+        position: absolute !important;
+        bottom: 0px !important;
+        padding: 5px !important;
+        font-size: 88%;
+}
+
 .gallerybox .bigButton {
 	font-size: 80%;	
 }
