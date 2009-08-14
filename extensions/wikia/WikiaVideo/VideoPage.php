@@ -1200,7 +1200,7 @@ EOD;
                 return $embed;
         }
 
-	private function getThumbnailCode($width) {
+	public function getThumbnailCode($width) {
 		global $wgExtensionsPath;
 
 		$thumb = $wgExtensionsPath . '/wikia/VideoEmbedTool/images/vid_thumb.jpg';

@@ -43,7 +43,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 	private $fld_comment = false, $fld_user = false, $fld_flags = false,
 			$fld_timestamp = false, $fld_title = false, $fld_ids = false,
 			$fld_sizes = false;
-	
+
 	protected function getTokenFunctions() {
 		// tokenname => function
 		// function prototype is func($pageid, $title, $rev)
@@ -63,13 +63,13 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 		wfRunHooks('APIQueryRecentChangesTokens', array(&$this->tokenFunctions));
 		return $this->tokenFunctions;
 	}
-	
+
 	public static function getPatrolToken($pageid, $title, $rc)
 	{
 		global $wgUser;
 		if(!$wgUser->useRCPatrol() && !$wgUser->useNPPatrol())
 			return false;
-		
+
 		// The patrol token is always the same, let's exploit that
 		static $cachedPatrolToken = null;
 		if(!is_null($cachedPatrolToken))
@@ -132,7 +132,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 
 				$this->dieUsage("Incorrect parameter - mutually exclusive values may not be supplied", 'show');
 			}
-			
+
 			// Check permissions
 			global $wgUser;
 			if((isset($show['patrolled']) || isset($show['!patrolled'])) && !$wgUser->useRCPatrol() && !$wgUser->useNPPatrol())
@@ -178,6 +178,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 			$this->fld_redirect = isset($prop['redirect']);
 			$this->fld_patrolled = isset($prop['patrolled']);
 			$this->fld_loginfo = isset($prop['loginfo']);
+			$this->fld_wikiamode = isset($prop['wikiamode']);
 
 			global $wgUser;
 			if($this->fld_patrolled && !$wgUser->useRCPatrol() && !$wgUser->useNPPatrol())
@@ -326,7 +327,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 		/* Add the patrolled flag */
 		if ($this->fld_patrolled && $row->rc_patrolled == 1)
 			$vals['patrolled'] = '';
-			
+
 		if ($this->fld_loginfo && $row->rc_type == RC_LOG) {
 			$vals['logid'] = $row->rc_logid;
 			$vals['logtype'] = $row->rc_log_type;
@@ -335,7 +336,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 				$vals, $row->rc_params,
 				$row->rc_log_type, $row->rc_timestamp);
 		}
-		
+
 		if(!is_null($this->token))
 		{
 			$tokenFunctions = $this->getTokenFunctions();
@@ -348,6 +349,10 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 				else
 					$vals[$t . 'token'] = $val;
 			}
+		}
+
+		if($this->fld_wikiamode) {
+			$vals['rc_params'] = $row->rc_params;
 		}
 
 		return $vals;
@@ -406,6 +411,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 					'redirect',
 					'patrolled',
 					'loginfo',
+					'wikiamode'
 				)
 			),
 			'token' => array(

@@ -162,6 +162,11 @@ class RecentChange
 			unset ( $this->mAttribs['rc_cur_id'] );
 		}
 
+		/* Wikia change begin - @author: Macbre */
+		/* Wysiwyg: add extra data before row is added */
+		wfRunHooks( 'RecentChange_beforeSave', array( &$this ) );
+		/* Wikia change end */
+
 		# Insert new row
 		$dbw->insert( 'recentchanges', $this->mAttribs, $fname );
 
@@ -245,7 +250,7 @@ class RecentChange
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Remove newlines and carriage returns
 	 * @param string $line
@@ -271,7 +276,7 @@ class RecentChange
 		}
 		return $change->doMarkPatrolled( $auto );
 	}
-	
+
 	/**
 	 * Mark this RecentChange as patrolled
 	 *
@@ -312,7 +317,7 @@ class RecentChange
 		wfRunHooks( 'MarkPatrolledComplete', array($this->getAttribute('rc_id'), &$wgUser, false) );
 		return array();
 	}
-	
+
 	/**
 	 * Mark this RecentChange patrolled, without error checking
 	 * @return int Number of affected rows
@@ -433,7 +438,7 @@ class RecentChange
 			'newSize' => $size
 		);
 		$rc->save();
-		return $rc;	
+		return $rc;
 	}
 
 	# Makes an entry in the database corresponding to a rename
@@ -637,7 +642,7 @@ class RecentChange
 				$url .= "&rcid=$rc_id";
 			}
 			// XXX: *HACK* this should use getFullURL(), hacked for SSL madness --brion 2005-12-26
-			// XXX: *HACK^2* the preg_replace() undoes much of what getInternalURL() does, but we 
+			// XXX: *HACK^2* the preg_replace() undoes much of what getInternalURL() does, but we
 			// XXX: need to call it so that URL paths on the Wikimedia secure server can be fixed
 			// XXX: by a custom GetInternalURL hook --vyznev 2008-12-10
 			$url = preg_replace( '/title=[^&]*&/', '', $titleObj->getInternalURL( $url ) );
@@ -678,12 +683,12 @@ class RecentChange
 		} else {
 			$titleString = "\00314[[\00307$title\00314]]";
 		}
-		
+
 		# see http://www.irssi.org/documentation/formats for some colour codes. prefix is \003,
 		# no colour (\003) switches back to the term default
 		$fullString = "$titleString\0034 $flag\00310 " .
 		              "\00302$url\003 \0035*\003 \00303$user\003 \0035*\003 $szdiff \00310$comment\003\n";
-			
+
 		return $fullString;
 	}
 

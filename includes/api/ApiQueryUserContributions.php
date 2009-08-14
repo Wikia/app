@@ -53,6 +53,7 @@ class ApiQueryContributions extends ApiQueryBase {
 		$this->fld_title = isset($prop['title']);
 		$this->fld_comment = isset($prop['comment']);
 		$this->fld_flags = isset($prop['flags']);
+		$this->fld_wikiamode = isset($prop['wikiamode']);
 		$this->fld_timestamp = isset($prop['timestamp']);
 
 		// TODO: if the query is going only against the revision table, should this be done?
@@ -137,7 +138,7 @@ class ApiQueryContributions extends ApiQueryBase {
 		//anything we retrieve.
 		$this->addTables(array('revision', 'page'));
 		$this->addWhere('page_id=rev_page');
-		
+
 		// Handle continue parameter
 		if($this->multiUserMode && !is_null($this->params['continue']))
 		{
@@ -196,6 +197,10 @@ class ApiQueryContributions extends ApiQueryBase {
 		$this->addFieldsIf('rev_comment', $this->fld_comment);
 		$this->addFieldsIf('rev_minor_edit', $this->fld_flags);
 		$this->addFieldsIf('page_is_new', $this->fld_flags);
+		/* Wikia change begin - @author: Marooned */
+		/* Add revision parent id to make diff link in MyHome and to see if current revision was the first one */
+		$this->addFieldsIf('rev_parent_id', $this->fld_wikiamode);
+		/* Wikia change end */
 	}
 
 	/**
@@ -228,12 +233,20 @@ class ApiQueryContributions extends ApiQueryBase {
 				$vals['top'] = '';
 		}
 
+		/* Wikia change begin - @author: Marooned */
+		/* Add revision parent id to make diff link in MyHome and to see if current revision was the first one */
+		if($this->fld_wikiamode) {
+			$vals['rev_parent_id'] = $row->rev_parent_id;
+
+		}
+		/* Wikia change end */
+
 		if ($this->fld_comment && isset( $row->rev_comment ) )
 			$vals['comment'] = $row->rev_comment;
 
 		return $vals;
 	}
-	
+
 	private function continueStr($row)
 	{
 		return $row->rev_user_text . '|' .
@@ -279,7 +292,8 @@ class ApiQueryContributions extends ApiQueryBase {
 					'title',
 					'timestamp',
 					'comment',
-					'flags'
+					'flags',
+					'wikiamode'
 				)
 			),
 			'show' => array (
