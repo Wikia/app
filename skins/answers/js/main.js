@@ -259,38 +259,34 @@ jQuery(document).ready(function() {
 jQuery(document).ready(function() {
 if( wgIsMainpage == true ){
 	jQuery("#homepage_new_questions").ready(function() {
-		
-		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgUnAnsweredCategory  + "&format=json&wklimit=5";
-		jQuery.get( url, "", function( oResponse ){
-			eval("j=" + oResponse);
-			if( j.query.wkpagesincat ){
+		url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categorymembers&cmtitle=Category:" + wgUnAnsweredCategory + "&cmnamespace=0&cmprop=title|timestamp&cmsort=timestamp&cmdir=desc&cmlimit=5";
+		jQuery.getJSON( url, "", function( j ){
+			if( j.query.categorymembers ){
 				html = "";
-				for( new_q in j.query.wkpagesincat ){
-					page = j.query.wkpagesincat[new_q];
-					html += "<li><a href=\"" + page.url + "\" onclick=\"WET.byStr('mainpage/homepage_new_questions')\">" + page.title.replace(/_/g," ") + "?</a></li>";
+				for( var recent_q in j.query.categorymembers ){
+					var page = j.query.categorymembers[recent_q];
+					var url  = page.title.replace(/ /g,"_");
+					var text = page.title + "?";
+					html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('mainpage/homepage_new_questions')\">" + text + "</a></li>";
 				}
 				jQuery("#homepage_new_questions").prepend( html );
 			}
-			
 		});
 	});
 	
 	jQuery("#homepage_recently_answered_questions").ready(function() {
-		
-		url = wgServer + "/api.php?smaxage=60&action=query&list=wkpagesincat&wkcategory=" + wgAnsweredCategory + "&format=json&&wkorder=edit&wklimit=6";
-		jQuery.get( url, "", function( oResponse ){
-			eval("j=" + oResponse);
-			if( j.query.wkpagesincat ){
+		url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categorymembers&cmtitle=Category:" + wgAnsweredCategory + "&cmnamespace=0&cmprop=title|timestamp&cmsort=timestamp&cmdir=desc&cmlimit=5";
+		jQuery.getJSON( url, "", function( j ){
+			if( j.query.categorymembers ){
 				html = "";
-				for( recent_q in j.query.wkpagesincat ){
-					page = j.query.wkpagesincat[recent_q];
-					if( page.title != wgPageName ){
-						html += "<li><a href=\"" + page.url + "\" onclick=\"WET.byStr('mainpage/homepage_recently_answered_questions')\">" + page.title.replace(/_/g," ") + "?</a></li>";
-					}
+				for( var recent_q in j.query.categorymembers ){
+					var page = j.query.categorymembers[recent_q];
+					var url  = page.title.replace(/ /g,"_");
+					var text = page.title + "?";
+					html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('mainpage/homepage_recently_answered_questions')\">" + text + "</a></li>";
 				}
 				jQuery("#homepage_recently_answered_questions").prepend( html );
 			}
-			
 		});
 	});
 }});
