@@ -20,7 +20,7 @@ $wgWidgets['WidgetAnswers'] = array(
 );
 
 function WidgetAnswers($id, $params) {
-	global $IP, $wgTitle, $wgUser, $wgSitename, $wgContentNamespaces;
+	global $IP, $wgTitle, $wgUser, $wgSitename, $wgContentNamespaces,  $wgAnswersURLs;
 
 	wfProfileIn(__METHOD__);
 
@@ -76,9 +76,13 @@ EOD;
 #	if($wgUser->getOption('language') != 'en') { // waiting for international logic phase Future (v 2.0)
 #		$domain = $wgUser->getOption('language');
 #	} else {
-		$domain = $wgLanguageCode;
+		if ( !empty( $wgAnswersURLs[$wgLanguageCode] ) ) {
+			$domain = $wgAnswersURLs[$wgLanguageCode];
+		} else {
+			$domain = $wgLanguageCode . '.answers.wikia.com';
+		}
 #	}
-	$url = 'http://'.$domain.'.answers.wikia.com/api.php?'.http_build_query($apiparams);
+	$url = 'http://'.$domain.'/api.php?'.http_build_query($apiparams);
 
 	$no_questions = wfMsgForContent("answers_widget_no_questions");
 	if ( in_array( $wgTitle->getNamespace(), $wgContentNamespaces ) ) {
@@ -89,6 +93,7 @@ EOD;
 <script type="text/javascript">/*<![CDATA[*/
 var ask_a_question_msg = "{$ask_a_question}";
 if(typeof WidgetAnswers_html == 'undefined') var WidgetAnswers_html = '';
+var WidgetAnswers_domain = '$domain';
 var WidgetAnswers_url = '$url';
 var node = jQuery('#{$id}_content').children('div:last');
 if(WidgetAnswers_html == '') {
