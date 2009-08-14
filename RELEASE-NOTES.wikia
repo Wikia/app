@@ -1,4 +1,5 @@
 == Changes since 200908.2 ==
+* rt#21115: SMW: WF-ize config var. (Nef)
 * rt#20462: Answers: Switch homepage api calls to new api. (Nef)
 * rt#20449: Answers: No related answered questions. (Nef)
 * rt#21114: svg to png thumbnailer has width and height reversed (eloy)
