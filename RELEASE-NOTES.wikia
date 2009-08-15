@@ -18,6 +18,7 @@
 * rt#20395: AWC: always use one (English) blacklist for wiki names (TOR)
 * rt#21038: SectionEdit: don't display edit links on protected and special pages (TOR)
 * rt#21090: WidgetAnswers: URLs corrected to avoid 301 redirects (TOR)
+* Masthead: round the selected link for webkit browsers
 
 == Changes since 200908.1 ==
 * rt#20643: Answers: Raw html / broken msg on user profile pages fixed. (Nef)
