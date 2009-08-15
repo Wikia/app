@@ -318,6 +318,7 @@ padding:5px;
 background:#f2f2da;
 -moz-border-radius:5px;
 border-radius:5px;
+-webkit-border-radius:5px;
 }
 
 #user_masthead li a {
