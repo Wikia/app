@@ -738,8 +738,12 @@ yieldbuild_loc = "right_nav_middle";
 				}
 				if( is_array( $popular_categories ) ){
 					foreach( $popular_categories as $popular_category ){
-						$tracker = str_replace(" ", "_", $popular_category["text"]);
-						echo '<li><a href="' . $popular_category["href"] . '" onclick="WET.byStr(\'popularcategories/' . $tracker . '\')">' . $popular_category["text"] . '</a></li>';
+						if ("#" != $popular_category["href"]) {
+							$tracker = str_replace(" ", "_", $popular_category["text"]);
+							echo '<li><a href="' . $popular_category["href"] . '" onclick="WET.byStr(\'popularcategories/' . $tracker . '\')">' . $popular_category["text"] . '</a></li>';
+						} else {
+							echo $popular_category["text"];
+						}
 					}
 				}
 				if ($is_question) {
