@@ -6,8 +6,8 @@
 <title><?php echo wfMsg("newwikibuilder")?></title>
 <body>
 <?php
-global $wgSitename, $wgAdminSkin, $wgContLang, $wgServer, $wgUser;
-$language = $wgContLang->getCode();
+global $wgSitename, $wgAdminSkin, $wgContLang, $wgServer, $wgUser, $NWBmessages;
+$language = addslashes($wgContLang->getCode());
 ?>
 <link rel="stylesheet" type="text/css" href="/extensions/wikia/NewWikiBuilder/main.css?<?php echo filemtime(dirname(__FILE__) . '/main.css')?>"/>
 <?php echo Skin::makeGlobalVariablesScript( $this->data ); ?>
@@ -25,10 +25,8 @@ var match = window.location.search.match(/js_debug=([0-9])/);
 if (match !== null){
 	Mediawiki.debugLevel = match[1];
 }
-<?php 
-global $NWBmessages;
-echo "NWB.messages = {'" . $language . "': " . json_encode($NWBmessages[$language]) . "}";
-?>
+NWB.language = "<?php echo $language?>";
+NWB.messages = {"<?php echo $language . '": ' . json_encode($NWBmessages[$language]) . "};"?>
 </script>
 </head>
 <!-- End Mediawiki API setup -->

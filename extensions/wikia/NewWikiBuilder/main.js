@@ -19,7 +19,7 @@ $(function() {
 });
 
 var NWB = {
-	"language":		"en", // TODO: Pull this from the browser or users settings
+	"language":		"en", // default
 	"firstPagesBlocks" :	1,
 	"currentStep":		null,
 	"statusTimeout": 	5000
