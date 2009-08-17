@@ -90,6 +90,8 @@ function wfSetupProtectsite() {
 		$wgGroupPermissions['*']['createtalk'] = !($prot['createpage'] >= 1);
 		$wgGroupPermissions['user']['createpage'] = !($prot['createpage'] == 2);
 		$wgGroupPermissions['user']['createtalk'] = !($prot['createpage'] == 2);
+		$wgGroupPermissions['sysop']['createpage'] = true;
+		$wgGroupPermissions['sysop']['createtalk'] = true;
 
 		$wgGroupPermissions['*']['edit'] = !($prot['edit'] >= 1);
 		$wgGroupPermissions['user']['edit'] = !($prot['edit'] == 2);
