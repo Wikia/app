@@ -62,7 +62,9 @@ class CloseWikiTarAndCopyImages {
 		);
 		while( $row = $dbr->fetchObject( $sth ) ) {
 
-			$success = true;
+			$success = false;
+			$rsyncok = true;
+			$xdumpok = true;
 			$dbname  = $row->city_dbname;
 			$folder  = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
 			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
@@ -86,6 +88,7 @@ class CloseWikiTarAndCopyImages {
 					))
 				);
 				$output = wfShellExec( $dump, $retval );
+				$xdumpok = empty( $retval ) ? true : false;
 				Wikia::log( __CLASS__, "info", $dump );
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
@@ -123,25 +126,25 @@ class CloseWikiTarAndCopyImages {
 								if( $retval == 0 ) {
 									Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 									unlink( $source );
-									$success = true;
+									$rsyncok = true;
 								}
 							}
 							else {
-								$success = false;
+								$rsyncok = false;
 							}
 						}
 						else {
 							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 							unlink( $source );
-							$success = true;
+							$rsyncok = true;
 						}
 					}
 					else {
-						$success = false;
+						$rsyncok = false;
 					}
 				}
 			}
-			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES && $success ) {
+			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES && $rsyncok && $xdumpok ) {
 				Wikia::log( __CLASS__, "info", "removing folder {$folder}" );
 				if( is_dir( $wgUploadDirectory ) && 0 ) {
 			        /**
