@@ -1,5 +1,5 @@
 == Changes since 200908.3 ==
-* 
+* rt#18951: Answers: Magic answers attribution. (Nef)
 
 == Changes since 200908.2 ==
 * rt#21278: ProtectSite: Fix permissions that lock sysops out during sysop-only settings (Uberfuzzy)
