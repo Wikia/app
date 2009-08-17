@@ -325,6 +325,13 @@ yieldbuild_loc = "question_bubble";
 			<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
 			<?php if($this->data['newtalk'] ) { ?><div class="usermessage"><?php $this->html('newtalk')  ?></div><?php } ?>
 			<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#search_input"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
+			<?
+			// Adsense for search
+			global $wgAFSEnabled;
+			if ($wgAFSEnabled && $wgTitle->getLocalURL() == $this->data['searchaction'] && !$wgUser->isLoggedIn() ) {
+				renderAdsenseForSearch('w2n8', '7000000004');
+			}
+			?>
 			<!-- start content -->
 			<?php $this->html('bodytext') ?>
 			<!-- end content -->
