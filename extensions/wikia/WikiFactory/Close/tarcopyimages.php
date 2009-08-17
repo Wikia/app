@@ -47,45 +47,47 @@ class CloseWikiTarAndCopyImages {
 		$sth = $dbr->select(
 			array( "city_list" ),
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
-			array(
-				"city_public" => array( 0, -1 ),
-				sprintf("city_flags & %d = %d OR city_flags & %d = %d OR city_flags & %d = %d",
-					WikiFactory::FLAG_DELETE_DB_IMAGES,
-					WikiFactory::FLAG_DELETE_DB_IMAGES,
-					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE,
-					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE,
-					WikiFactory::FLAG_CREATE_DB_DUMP,
-					WikiFactory::FLAG_CREATE_DB_DUMP
-				)
-			),
+			array( "city_public" => array( 0, -1 ) ),
 			__METHOD__
 		);
 		while( $row = $dbr->fetchObject( $sth ) ) {
 
+			/**
+			 * reasonable defaults for wikis and some presets
+			 */
+			$hide    = false;
 			$success = false;
 			$rsyncok = true;
 			$xdumpok = true;
 			$dbname  = $row->city_dbname;
 			$folder  = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
+
 			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
 
 			/**
 			 * request for dump on remote server (now hardcoded for Iowa)
 			 */
+			if( $row->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)  {
+				$hide = true;
+			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				Wikia::log( __CLASS__, "info", "Dumping database on remote host" );
 				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
+				$cmd  = array(
+					"SERVER_ID=177",
+					"php",
+					"/usr/wikia/source/trunk/extensions/wikia/WikiFactory/Dumps/runBackups.php",
+					"--conf /usr/wikia/conf/current/qa.wiki.factory/LocalSettings.Iowa.php",
+					"--both",
+					"--id={$row->city_id}"
+				);
+				if( $hide ) {
+					$cmd[] = "--hide";
+				}
 				$dump = wfEscapeShellArg(
 					"/usr/bin/ssh",
 					$remote,
-					implode( " ", array(
-						"SERVER_ID=177",
-						"php",
-						"/usr/wikia/source/trunk/extensions/wikia/WikiFactory/Dumps/runBackups.php",
-						"--conf /usr/wikia/conf/current/qa.wiki.factory/LocalSettings.Iowa.php",
-						"--both",
-						"--id={$row->city_id}"
-					))
+					implode( " ", $cmd )
 				);
 				$output = wfShellExec( $dump, $retval );
 				$xdumpok = empty( $retval ) ? true : false;
@@ -94,7 +96,14 @@ class CloseWikiTarAndCopyImages {
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
 					$source = $this->tarFiles( $folder, $dbname );
+
 					$target = DumpsOnDemand::getUrl( $dbname, "images.tar", $this->mTarget );
+					if( $hide ) {
+						/**
+						 * different path for hidden dumps
+						 */
+						$target = str_replace( "dumps", "dumps-hidden", $target );
+					}
 
 					if( $source && $target ) {
 						$cmd = wfEscapeShellArg(
