@@ -71,6 +71,7 @@ class CloseWikiTarAndCopyImages {
 			 * request for dump on remote server (now hardcoded for Iowa)
 			 */
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
+				Wikia::log( __CLASS__, "info", "Dumping database on remote host" );
 				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
 				$dump = wfEscapeShellArg(
 					"/usr/bin/ssh",
@@ -85,6 +86,7 @@ class CloseWikiTarAndCopyImages {
 					))
 				);
 				$output = wfShellExec( $dump, $retval );
+				Wikia::log( __CLASS__, "info", $dump );
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
