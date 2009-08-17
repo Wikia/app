@@ -44,6 +44,12 @@ function runBackups( $from, $to, $full, $options ) {
 	$both = isset( $options[ "both" ] ) ? true : false;
 
 	/**
+	 * store backup in another folder, not available for users
+	 */
+	$hide = isset( $options[ "hide" ] ) ? true : false;
+
+
+	/**
 	 * silly trick, if we have id defined we are defining $from & $to from it
 	 * if we have db param defined we first resolve which id is connected to this
 	 * database
@@ -106,7 +112,7 @@ function runBackups( $from, $to, $full, $options ) {
 		 * build command
 		 */
 		$status  = false;
-		$basedir = getDirectory( $row->city_dbname );
+		$basedir = getDirectory( $row->city_dbname, $hide );
 		if( $full || $both ) {
 			$path = sprintf("%s/pages_full.xml.gz", $basedir );
 			$time = wfTime();
@@ -181,13 +187,17 @@ function runBackups( $from, $to, $full, $options ) {
  *
  * <root>/<first letter>/<two first letters>/<database>
  */
-function getDirectory( $database ) {
+function getDirectory( $database, $hide = false ) {
 	global $wgDevelEnvironment;
-	$dumpDirectory = empty( $wgDevelEnvironment ) ?  "/backup/dumps" : "/tmp/dumps";
-	$database = strtolower( $database );
+
+	$folder     = empty( $wgDevelEnvironment ) ?  "backup" : "tmp";
+	$subfoloder = $hide ? "dumps-hidden" : "dumps";
+	$database   = strtolower( $database );
+	
 	$directory = sprintf(
-		"%s/%s/%s/%s",
-		$dumpDirectory,
+		"/%s/%s/%s/%s/%s",
+		$folder,
+		$subfolder,
 		substr( $database, 0, 1),
 		substr( $database, 0, 2),
 		$database
