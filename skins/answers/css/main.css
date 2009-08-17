@@ -863,3 +863,19 @@ div.category br {
  */
 .mw-hidden-cats-hidden { display: none; }
 .catlinks-allhidden { display: none; }
+
+/*** ADSENSE FOR SEARCH ***/
+#afs_narrow {
+	border-left: 1px solid #CCC;
+	clear: right;
+	float: right;
+	margin-left: 10px;
+	padding-left: 10px;
+	width: 220px;
+}  
+#afs_wide .ad_text {
+	padding-right: .5em;
+}  
+.google_afs a {
+	background-image: none !important;
+}  
