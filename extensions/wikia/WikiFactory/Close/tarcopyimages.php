@@ -49,11 +49,13 @@ class CloseWikiTarAndCopyImages {
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
 			array(
 				"city_public" => array( 0, -1 ),
-				sprintf("city_flags & %d = %d OR city_flags & %d = %d",
+				sprintf("city_flags & %d = %d OR city_flags & %d = %d OR city_flags & %d = %d",
 					WikiFactory::FLAG_DELETE_DB_IMAGES,
 					WikiFactory::FLAG_DELETE_DB_IMAGES,
 					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE,
-					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE
+					WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE,
+					WikiFactory::FLAG_CREATE_DB_DUMP,
+					WikiFactory::FLAG_CREATE_DB_DUMP
 				)
 			),
 			__METHOD__
@@ -65,6 +67,25 @@ class CloseWikiTarAndCopyImages {
 			$folder  = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
 			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
 
+			/**
+			 * request for dump on remote server (now hardcoded for Iowa)
+			 */
+			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
+				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
+				$dump = wfEscapeShellArg(
+					"/usr/bin/ssh",
+					$remote,
+					implode( " ", array(
+						"SERVER_ID=177",
+						"php",
+						"/usr/wikia/source/trunk/extensions/wikia/WikiFactory/Dumps/runBackups.php",
+						"--conf /usr/wikia/conf/current/qa.wiki.factory/LocalSettings.Iowa.php",
+						"--both",
+						"--id={$row->city_id}"
+					))
+				);
+				$output = wfShellExec( $dump, $retval );
+			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
 					$source = $this->tarFiles( $folder, $dbname );
@@ -98,7 +119,7 @@ class CloseWikiTarAndCopyImages {
 								Wikia::log( __CLASS__, "info",  dirname( $path ) . " created on {$remote}" );
 								$output = wfShellExec( $cmd, $retval );
 								if( $retval == 0 ) {
-									Wikia::log( __CLASS__, "info", "{$source} copied to {$target}." );
+									Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 									unlink( $source );
 									$success = true;
 								}
@@ -108,7 +129,7 @@ class CloseWikiTarAndCopyImages {
 							}
 						}
 						else {
-							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}." );
+							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 							unlink( $source );
 							$success = true;
 						}
@@ -119,7 +140,24 @@ class CloseWikiTarAndCopyImages {
 				}
 			}
 			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES && $success ) {
-				Wikia::log( __CLASS__, "info", "removing folder {$folder} ." );
+				Wikia::log( __CLASS__, "info", "removing folder {$folder}" );
+				if( is_dir( $wgUploadDirectory ) && 0 ) {
+			        /**
+					 * what should we use here?
+					 */
+					$cmd = "rm -rf {$folder}";
+					wfShellExec( $cmd, $retval );
+					if( $retval ) {
+						$success = false;
+					}
+				}
+			}
+
+			/**
+			 * reset flags
+			 */
+			if( $success ) {
+
 			}
 		}
 	}
