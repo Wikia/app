@@ -1,4 +1,5 @@
 == Changes since 200908.2 ==
+* rt#21171: Analytics: Add click-tracking to Image placeholder. (Nef)
 * rt#21243: Answers, Analytics: Fixed tracking in popularcategories new table format. (Nef)
 * rt#21199: MagCloud: Change blacklist marker, fix broken table templates. (Nef)
 * rt#21158: Tweak to Special:Userrights to clarify what you're actually changing. (Nef)

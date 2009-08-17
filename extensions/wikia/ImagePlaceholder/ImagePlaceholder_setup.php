@@ -209,7 +209,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
                 $onclick = '';		
         } else {
                 $wysiwygAttr = '';
-		$onclick = ' onclick="$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )"';
+		$onclick = ' onclick="WET.byStr(\'articleAction/imageplaceholder\');$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )"';
         }
 	
 	( $thumb || $frame ) ? $caption_line = '<div class="thumbcaption" style="width:' . ($width - 10) . 'px"><hr/>' . $caption . '</div>' : $caption_line = '';

@@ -896,6 +896,7 @@ FCK.ImagePlcAddOnClick = function(e) {
 
                 // tracker
                 FCK.Track('/image/add');
+					 window.parent.WET.byStr('editpage/imageplaceholder');
                 window.parent.WMU_show( parseInt(refid), -2, -1, data.isAlign, data.isThumb, data.width, data.caption, data.link );
         }
 };
