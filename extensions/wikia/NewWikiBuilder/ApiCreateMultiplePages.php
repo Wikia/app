@@ -23,7 +23,7 @@ class ApiCreateMultiplePages extends ApiBase {
 		$pages = explode('|', $params['pagelist']);
 		if (count($pages) > $this->maxpages){
 			// Let's not go nuts.
-			$this->dieUsageMessage(array("invalidparam", "pagelist")); // TODO
+			$this->dieUsageMsg(array("invalidparam", "pagelist")); // TODO
 		}
 
 		foreach ($pages as $page){
