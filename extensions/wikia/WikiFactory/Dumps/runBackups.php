@@ -28,10 +28,7 @@ function runBackups( $from, $to, $full, $options ) {
 	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath,
 		$wgMaxShellTime, $wgMaxShellFileSize;
 
-	/**
-	 * only for active
-	 */
-	$range = array( "city_public=1" );
+	$range = array();
 
 	/**
 	 * hardcoded for while
@@ -64,9 +61,17 @@ function runBackups( $from, $to, $full, $options ) {
 	}
 	elseif( isset ( $options[ "even" ] ) ) {
 		$range[] = "city_id % 2 = 0";
+		$range[] = "city_public = 1";
 	}
 	elseif( isset( $options[ "odd" ] ) ) {
 		$range[] = "city_id % 2 <> 0";
+		$range[] = "city_public = 1";
+	}
+	else {
+		/**
+		 * if all only for active
+		 */
+		$range[] = "city_public = 1";
 	}
 
 	/**
