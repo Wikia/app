@@ -39,11 +39,18 @@ sub real404 {
 #
 # initialization
 #
-my $request = FCGI::Request();
-my $basepath = "/images";
-my $flm = new File::LibMagic;
-my $maxwidth = 3000;
-my $syslog = 1;
+my $request     = FCGI::Request();
+my $basepath    = "/images";
+my $flm         = new File::LibMagic;
+my $maxwidth    = 3000;
+my $syslog      = 1;
+
+#
+# how many requests we should handle
+#
+my $maxrequests  = 1000;
+my $cntrequest   = 0;
+
 
 #
 # if thumbnail was really generated
@@ -241,5 +248,14 @@ while( $request->Accept() >= 0 ) {
 
 	$request->Finish();
 	$transformed = 0;
+	$cntrequest++;
+
+	#
+	# prevent memory leaks
+	#
+	if( $cntrequest >= $maxrequests ) {
+		$request->LastCall();
+		last;
+	}
 }
 closelog if $syslog;
