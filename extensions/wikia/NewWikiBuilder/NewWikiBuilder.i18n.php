@@ -53,7 +53,10 @@ $messages['en'] = array(
 	  "nwb-back-to-step-1" => "Back to step 1",
 	  "nwb-back-to-step-2" => "Back to step 2",
 	  "nwb-back-to-step-3" => "Back to step 3",
-	  "nwb-back-to-step-4" => "Back to step 4"
+	  "nwb-back-to-step-4" => "Back to step 4",
+	  "nwb-or" => "or",
+	  "nwb-new-pages-text" => "[[File:Placeholder|thumb|300px]]
+Replace this text by writing your article here!"
 );
 
 // Note that this variable is referenced in the NewWikiBuilder.html.php file

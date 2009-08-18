@@ -7,7 +7,6 @@
 <body>
 <?php
 global $wgSitename, $wgAdminSkin, $wgContLang, $wgServer, $wgUser, $NWBmessages;
-$language = addslashes($wgContLang->getCode());
 ?>
 <link rel="stylesheet" type="text/css" href="/extensions/wikia/NewWikiBuilder/main.css?<?php echo filemtime(dirname(__FILE__) . '/main.css')?>"/>
 <?php echo Skin::makeGlobalVariablesScript( $this->data ); ?>
@@ -25,8 +24,8 @@ var match = window.location.search.match(/js_debug=([0-9])/);
 if (match !== null){
 	Mediawiki.debugLevel = match[1];
 }
-NWB.language = "<?php echo $language?>";
-NWB.messages = {"<?php echo $language . '": ' . json_encode($NWBmessages[$language]) . "};"?>
+NWB.language = "<?php echo $this->lang?>";
+NWB.messages = {"<?php echo $this->lang . '": ' . json_encode($NWBmessages[$this->lang]) . "};"?>
 </script>
 </head>
 <!-- End Mediawiki API setup -->
@@ -67,7 +66,7 @@ NWB.messages = {"<?php echo $language . '": ' . json_encode($NWBmessages[$langua
 	</script>
 </div>
 <div class="nav">
-	<a href="#step2" id="skip_step_1" onclick="WET.byStr('nwb/step1skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> or<button onclick="WET.byStr('nwb/step1save');$('#step1_form').submit();"><span><?php echo wfMsg("nwb-save-description")?></span></button>
+	<a href="#step2" id="skip_step_1" onclick="WET.byStr('nwb/step1skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> <?php echo wfMsg("nwb-or")?><button onclick="WET.byStr('nwb/step1save');$('#step1_form').submit();"><span><?php echo wfMsg("nwb-save-description")?></span></button>
 	<input onclick="$('#step1_form').submit();" type="button" id="hidden_description_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
@@ -104,7 +103,7 @@ NWB.messages = {"<?php echo $language . '": ' . json_encode($NWBmessages[$langua
 	<span class="nav_reverse">
 		<button class="secondary" onclick="WET.byStr('nwb/step2back');NWB.gotostep(1);"><span><?php echo wfMsg("nwb-back-to-step-1")?></span></button>
 	</span>
-	<a href="#step3" id="skip_step_2" onclick="WET.byStr('nwb/step2skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> or<button onclick="WET.byStr('nwb/step2save');NWB.uploadLogo();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
+	<a href="#step3" id="skip_step_2" onclick="WET.byStr('nwb/step2skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> <?php echo wfMsg("nwb-or")?><button onclick="WET.byStr('nwb/step2save');NWB.uploadLogo();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
 </div>
 </li>
 
@@ -153,7 +152,7 @@ for (var i = 0; i < themes.length; i++){
 	<span class="nav_reverse">
 		<button class="secondary" onclick="WET.byStr('nwb/step3back');NWB.gotostep(2);"><span><?php echo wfMsg("nwb-back-to-step-2")?></span></button>
 	</span>
-	<a href="#step4" id="skip_step_3" onclick="WET.byStr('nwb/step3skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> or<button onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
+	<a href="#step4" id="skip_step_3" onclick="WET.byStr('nwb/step3skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> <?php echo wfMsg("nwb-or")?><button onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
 	<input onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);" type="button" id="hidden_theme_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
@@ -187,7 +186,7 @@ for (var i = 0; i < themes.length; i++){
 	<span class="nav_reverse">
 		<button class="secondary" onclick="WET.byStr('nwb/step4back');NWB.gotostep(3);"><span><?php echo wfMsg("nwb-back-to-step-3")?></span></button>
 	</span>
-	<a href="#step5" id="skip_step_4" onclick="WET.byStr('nwb/step4skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> or<button onclick="WET.byStr('nwb/step4save');$('#step4_form').submit();"><span><?php echo wfMsg("nwb-create-pages")?></span></button>
+	<a href="#step5" id="skip_step_4" onclick="WET.byStr('nwb/step4skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> <?php echo wfMsg("nwb-or")?><button onclick="WET.byStr('nwb/step4save');$('#step4_form').submit();"><span><?php echo wfMsg("nwb-create-pages")?></span></button>
 	<input onclick="$('#step4_form').submit();" type="button" id="hidden_step_4_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
