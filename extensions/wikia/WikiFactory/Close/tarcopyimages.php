@@ -3,6 +3,8 @@
 /**
  * @package MediaWiki
  * @addtopackage maintenance
+ *
+ * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
@@ -11,14 +13,14 @@ require_once( "Archive/Tar.php" );
 
 class CloseWikiTarAndCopyImages {
 
-	private $mTarget;
+	private $mTarget, $mOptions;
 
 	/**
 	 * constructor
 	 *
 	 * @access public
 	 */
-	public function __construct() {
+	public function __construct( $options ) {
 		global $wgDevelEnvironment;
 		if( !empty( $wgDevelEnvironment ) ) {
 			$this->mTarget = "root@127.0.0.1:/tmp/dumps";
@@ -26,6 +28,7 @@ class CloseWikiTarAndCopyImages {
 		else {
 			$this->mTarget = "root@10.6.10.39:/backup/dumps";
 		}
+		$this->mOptions = $options;
 	}
 
 	/**
@@ -55,6 +58,7 @@ class CloseWikiTarAndCopyImages {
 			/**
 			 * reasonable defaults for wikis and some presets
 			 */
+			$first    = isset( $this->mOptions[ "first" ] ) ? true : false;
 			$hide     = false;
 			$rsyncok  = true;
 			$xdumpok  = true;
@@ -161,7 +165,7 @@ class CloseWikiTarAndCopyImages {
 			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) && $rsyncok ) {
 
 				Wikia::log( __CLASS__, "info", "removing folder {$folder}" );
-				if( is_dir( $wgUploadDirectory ) && 0 ) {
+				if( is_dir( $wgUploadDirectory ) ) {
 			        /**
 					 * what should we use here?
 					 */
@@ -212,6 +216,13 @@ class CloseWikiTarAndCopyImages {
 			 */
 			if( !empty( $newFlags ) ) {
 				WikiFactory::resetFlags( $row->city_id, $newFlags );
+			}
+
+			/**
+			 * just one?
+			 */
+			if( $first ) {
+				break;
 			}
 		}
 	}
@@ -292,6 +303,11 @@ class CloseWikiTarAndCopyImages {
 
 }
 
+/**
+ * used options:
+ *
+ * --first -- run only once for first wiki in queue
+ */
 $wgAutoloadClasses[ "DumpsOnDemand" ] = "$IP/extensions/wikia/WikiFactory/Dumps/DumpsOnDemand.php";
-$maintenance = new CloseWikiTarAndCopyImages;
+$maintenance = new CloseWikiTarAndCopyImages( $options );
 $maintenance->execute();
