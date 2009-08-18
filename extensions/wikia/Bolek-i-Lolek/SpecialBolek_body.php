@@ -35,6 +35,10 @@ class BolekPage extends UnlistedSpecialPage {
 				$result = Bolek::clearCollection();
 
 				break;
+			case "remove":
+				$result = Bolek::removePage($wgRequest->getVal("page_id",  null));
+
+				break;
 		}
 
 		$tmpl = new EasyTemplate(dirname(__FILE__));
