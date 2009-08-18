@@ -60,7 +60,6 @@ class CloseWikiTarAndCopyImages {
 			 */
 			$first    = isset( $this->mOptions[ "first" ] ) ? true : false;
 			$hide     = false;
-			$rsyncok  = true;
 			$xdumpok  = true;
 			$newFlags = 0;
 			$dbname   = $row->city_dbname;
@@ -142,7 +141,6 @@ class CloseWikiTarAndCopyImages {
 									Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 									unlink( $source );
 									$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
-									$rsyncok = true;
 								}
 							}
 							else {
@@ -151,23 +149,25 @@ class CloseWikiTarAndCopyImages {
 								 * images later without backup
 								 */
 								wfDie( "Can't copy images to remote host. Please, fix that and rerun" );
-								$rsyncok = false;
 							}
 						}
 						else {
 							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 							unlink( $source );
 							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
-							$rsyncok = true;
 						}
 					}
 					else {
-						$rsyncok = false;
+						/**
+						 * actually it's better to die than remove
+						 * images later without backup
+						 */
+						wfDie( "Can't copy images to remote host. Source {$source} and target {$target} is not defined" );
 					}
 				}
 			}
-			if( ( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
-			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) && $rsyncok ) {
+			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
+			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
 
 				Wikia::log( __CLASS__, "info", "removing folder {$folder}" );
 				if( is_dir( $wgUploadDirectory ) ) {
