@@ -206,7 +206,8 @@ NWB.handleFirstPages = function (event){
                 Mediawiki.apiCall({
                         "action" : "createmultiplepages",
 			"pagelist" : pages.join("|"),
-                        "category" : this.category.value
+                        "category" : this.category.value,
+                        "pagetext" : NWB.msg("nwb-new-pages-text")
                         }, NWB.handleFirstPagesCallback, NWB.apiFailed, "POST");
         } catch (e) {
                   Mediawiki.updateStatus(NWB.msg("nwb-error-saving-articles"));
@@ -241,6 +242,7 @@ NWB.msg = function (msg){
 	}
 	return ret;
 };
+
 
 NWB.iframeFormUpload = function(iframe){
    try {

@@ -23,11 +23,11 @@ class ApiCreateMultiplePages extends ApiBase {
 		$pages = explode('|', $params['pagelist']);
 		if (count($pages) > $this->maxpages){
 			// Let's not go nuts.
-			$this->dieUsageMsg(array("invalidparam", "pagelist")); // TODO
+			$this->dieUsageMsg(array("invalidparam", "pagelist")); 
 		}
 
 		foreach ($pages as $page){
-			$create = $this->createPage($page, $params['category']);
+			$create = $this->createPage($page, $params['category'], $params['pagetext']);
 			if (!empty($create)){
 				$r['success'][$page] = $create;
 			} else {
@@ -38,7 +38,7 @@ class ApiCreateMultiplePages extends ApiBase {
 		$this->getResult()->addValue(null, "createmultiplepages", $r);
 	}
 
-	private function createPage($title, $category = null){
+	private function createPage($title, $category = null, $text = null){
 		global $wgUser, $wgContLang;
 
 		$titleObj = Title::newFromText($title);
@@ -59,9 +59,7 @@ class ApiCreateMultiplePages extends ApiBase {
 		}
 
 		if (!empty($category)){
-			$text = "[[" . $wgContLang->getNsText( NS_CATEGORY ) . ":" . $category .  "]]";
-		} else {
-			$text = '';
+			$text .= "[[" . $wgContLang->getNsText( NS_CATEGORY ) . ":" . $category .  "]]";
 		}
 
 		$summary = '';
@@ -82,14 +80,16 @@ class ApiCreateMultiplePages extends ApiBase {
 	public function getAllowedParams() {
 		return array (
 			'pagelist' => null, 
-			'category' => null
+			'category' => null,
+			'pagetext' => null
 		);
 	}
 
 	public function getParamDescription() {
 		return array (
 			'pagelist' => 'The titles of the pages to create. Pipe separated',
-			'category' => 'Optional category to assign the newly created pages to'
+			'category' => 'Optional category to assign the newly created pages to',
+			'pagetext' => 'Optional text for the newly created pages to'
 		);
 	}
 
@@ -105,6 +105,7 @@ class ApiCreateMultiplePages extends ApiBase {
 			'api.php?action=createmultiplepages&pagelist=Page1|Page2|Page3&category=categoryname',
 		);
 	}
+
         public function getVersion() { return __CLASS__ . ': $Id: '.__CLASS__.'.php '.filesize(dirname(__FILE__)."/".__CLASS__.".php").' '.strftime("%Y-%m-%d %H:%M:%S", time()).'Z wikia $'; }
 
 }

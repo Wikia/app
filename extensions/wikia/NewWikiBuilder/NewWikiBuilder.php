@@ -36,6 +36,7 @@ foreach ($NWBApiExtensions as $action => $classname){
 	$wgAPIModules[$action] = $classname;
 }
 
+/* UPDATE: This is no longer used.
 //removes category [[Category:New pages]] if any non-category content is saved to the page
 $wgHooks['EditPage::attemptSave'][] = 'fnMarkAsSeen';
 function fnMarkAsSeen( $editpage){
@@ -59,3 +60,4 @@ function fnMarkAsSeen( $editpage){
 
         return true;
 }
+*/
