@@ -18,7 +18,7 @@
 
 <h3>Lolek</h3>
 
-<p><a href="/wiki/Special:Bolek?action=print">Preview pdf source</a></p>
+<p>Preview <a href="/wiki/Special:Bolek?action=cover">front cover</a> and pdf <a href="/wiki/Special:Bolek?action=print">content</a>.</p>
 
 <script type="text/javascript">
 /*<![CDATA[*/
