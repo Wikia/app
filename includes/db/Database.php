@@ -629,11 +629,19 @@ class Database {
 	 * @private
 	 */
 	/*private*/ function doQuery( $sql ) {
+		global $wgDBUsage;
+		$ru_start = getrusage();
+		$time_start = microtime(true);
 		if( $this->bufferResults() ) {
 			$ret = mysql_query( $sql, $this->mConn );
 		} else {
 			$ret = mysql_unbuffered_query( $sql, $this->mConn );
 		}
+		$ru_end = getrusage();
+		$time_end = microtime(true);
+		$wgDBUsage['cpu'] += ($ru_end['ru_utime.tv_sec'] + $ru_end['ru_stime.tv_sec'] + ($ru_end['ru_utime.tv_usec'] + $ru_end['ru_stime.tv_usec'])*1e-6)
+			- ($ru_start['ru_utime.tv_sec'] + $ru_start['ru_stime.tv_sec'] + ($ru_start['ru_utime.tv_usec'] + $ru_start['ru_stime.tv_usec'])*1e-6);
+		$wgDBUsage['real'] += $time_end - $time_start;
 		return $ret;
 	}
 
