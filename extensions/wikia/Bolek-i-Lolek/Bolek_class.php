@@ -94,4 +94,26 @@ class Bolek {
 
 		return $result;
 	}
+
+	static function removePage($page_id) {
+		global $wgUser;
+
+		$dbw = self::_getDB(DB_MASTER);
+		try {
+			$dbw->delete(
+				"bolek",
+				array(
+					"b_user_id"   => $wgUser->getId(),
+					"b_page_id"   => $page_id,
+				),
+				__METHOD__
+			);
+			$result = "Page {$page_id} removed from the collection.";
+		} catch (DBQueryError $e) {
+			$result = "Error with page {$page_id}: {$e->error}";
+			throw $e;
+		}
+
+		return $result;
+	}
 }
