@@ -111,7 +111,6 @@ class MultiWikiEditTask extends BatchTask {
 			$this->log("Found " . count($wikiList) . " Wikis to proceed");
 			foreach ( $wikiList as $id => $oWiki ) {
 				$retval = "";
-				#$this->log("Proceed " . $oWiki->city_dbname . " ({$oWiki->city_url} ({$oWiki->city_id}))");
 
 				$city_path = $oWiki->city_script;
 				$city_url = $oWiki->city_server;
@@ -131,13 +130,11 @@ class MultiWikiEditTask extends BatchTask {
 				$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
 				$actual_title = wfShellExec( $sCommand, $retval );
-
-				//wfShellExec( $sCommand, $retval );
 				if ($retval) {
 					$this->log ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				}
 				else {
-					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $resultTitle . '">' . $city_url . $city_path . '?title=' . $resultTitle . '</a> <br />');
+					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $actual_title . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
 				}
 			}
 		}
