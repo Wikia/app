@@ -146,6 +146,11 @@ class CloseWikiTarAndCopyImages {
 								}
 							}
 							else {
+								/**
+								 * actually it's better to die than remove
+								 * images later without backup
+								 */
+								wfDie( "Can't copy images to remote host. Please, fix that and rerun" );
 								$rsyncok = false;
 							}
 						}
