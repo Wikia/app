@@ -11,11 +11,12 @@
 class AdProviderGAM implements iAdProvider {
 
 	protected static $instance = false;
+	private $provider_id = 4;
 
 	//private $adManagerId = "ca-pub-3862144315477646"; gorillamania@gmail.com account
 	public $adManagerId = "ca-pub-4086838842346968"; // Wikia account
 
-	public $batchHtmlCalled = false;
+	public $batchHtmlCalled = false, $setupHtmlCalled = false;
 
 	public static function getInstance() {
 		if(self::$instance == false) {
@@ -63,11 +64,10 @@ class AdProviderGAM implements iAdProvider {
 	}
 
         public function getSetupHtml(){
-		static $called = false;
-		if ($called){
+		if ($this->setupHtmlCalled){
 			return false;
 		}
-		$called = true;
+		$this->setupHtmlCalled = true;
 
 		$out = "<!-- ## BEGIN " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		// Download the necessary required javascript
@@ -99,6 +99,8 @@ class AdProviderGAM implements iAdProvider {
 		$out = "<!-- ## BEGIN " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		
 		// Make a call for each slot.
+		$this->slotsToCall = AdEngine::getInstance()->getSlotNamesForProvider($this->provider_id);
+
 		$out .= '<script type="text/javascript">' . "\n" .
 			'try {' . "\n";
 		foreach ( $this->slotsToCall as $slotname ){
@@ -197,6 +199,9 @@ class AdProviderGAM implements iAdProvider {
 	public function getAd($slotname, $slot){
 		$out = "";
 		// First time the ad is called, call all the batch code, if it hasn't already been called.
+		if (! $this->setupHtmlCalled){
+			$out .= $this->getSetupHtml();
+		} 
 		if (! $this->batchHtmlCalled){
 			$out .= $this->getBatchCallHtml();
 		} 
