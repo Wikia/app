@@ -55,13 +55,13 @@ class CloseWikiTarAndCopyImages {
 			/**
 			 * reasonable defaults for wikis and some presets
 			 */
-			$hide    = false;
-			$success = false;
-			$rsyncok = true;
-			$xdumpok = true;
-			$dbname  = $row->city_dbname;
-			$folder  = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
-			$cluster = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
+			$hide     = false;
+			$rsyncok  = true;
+			$xdumpok  = true;
+			$newFlags = 0;
+			$dbname   = $row->city_dbname;
+			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
+			$cluster  = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
 
 			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
 
@@ -92,6 +92,7 @@ class CloseWikiTarAndCopyImages {
 				);
 				$output = wfShellExec( $dump, $retval );
 				$xdumpok = empty( $retval ) ? true : false;
+				$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;
 				Wikia::log( __CLASS__, "info", $dump );
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
@@ -136,6 +137,7 @@ class CloseWikiTarAndCopyImages {
 								if( $retval == 0 ) {
 									Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 									unlink( $source );
+									$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
 									$rsyncok = true;
 								}
 							}
@@ -146,6 +148,7 @@ class CloseWikiTarAndCopyImages {
 						else {
 							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 							unlink( $source );
+							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
 							$rsyncok = true;
 						}
 					}
@@ -154,7 +157,9 @@ class CloseWikiTarAndCopyImages {
 					}
 				}
 			}
-			if( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES && $rsyncok ) {
+			if( ( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
+			$row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) && $rsyncok ) {
+
 				Wikia::log( __CLASS__, "info", "removing folder {$folder}" );
 				if( is_dir( $wgUploadDirectory ) && 0 ) {
 			        /**
@@ -163,16 +168,50 @@ class CloseWikiTarAndCopyImages {
 					$cmd = "rm -rf {$folder}";
 					wfShellExec( $cmd, $retval );
 					if( $retval ) {
-						$success = false;
+						/**
+						 * info removing folder was not possible
+						 */
 					}
+
+					/**
+					 * clear wikifactory tables, condition for city_public should
+					 * be always true there but better safe than sorry
+					 */
+					WikiFactory::copyToArchive( $row->city_id );
+					$dbw = WikiFactory::db( DB_MASTER );
+					$dbw->delete(
+						"city_list",
+						array(
+							"city_public" => array( 0, -1 ),
+							"city_id" => $row->city_id
+						),
+						__METHOD__
+					);
+					Wikia::log( __CLASS__, "info", "{$row->city_id} removed from WikiFactory tables" );
+
+					/**
+					 * drop database, get db handler for proper cluster
+					 */
+					$centralDb = empty( $cluster) ? "wikicities" : "wikicities_{$cluster}";
+					$dbw = wfGetDB( DB_MASTER, array(), $centralDb );
+					$dbw->begin();
+					$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
+					$dbw->commit();
+					Wikia::log( __CLASS__, "info", "{$row->city_dbname} dropped from cluster {$cluster}" );
+
+					/**
+					 * there is nothing to set because row in city_list doesn't
+					 * exists
+					 */
+					$newFlags = 0;
 				}
 			}
-
 			/**
-			 * reset flags
+			 * reset flags, if database was dropped and data were removed from
+			 * WikiFactory tables it will return false anyway
 			 */
-			if( $success ) {
-
+			if( !empty( $newFlags ) ) {
+				WikiFactory::resetFlags( $row->city_id, $newFlags );
 			}
 		}
 	}
