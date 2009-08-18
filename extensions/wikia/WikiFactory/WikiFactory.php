@@ -1590,7 +1590,7 @@ class WikiFactory {
 				}
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
@@ -1713,9 +1713,9 @@ class WikiFactory {
 	/**
 	 * prepareDBName
 	 *
-	 * check dbname in city_list and databases
+	 * check if database name is used, if it's used prepare another one
 	 *
-	 * @author moli@wikia
+	 * @author Piotr Molski <moli@wikia-inc.com>
 	 * @access public
 	 * @static
 	 *
@@ -1763,9 +1763,9 @@ class WikiFactory {
 	}
 
 	/**
-	 * setFlags
+	 * resetFlags
 	 *
-	 * method for changing city_public value in city_list table
+	 * remove binary flags for city, value will be removed from existing flags
 	 *
 	 * @author Krzysztof Krzyżaniak <eloy@wikia.com>
 	 * @access public
@@ -1774,33 +1774,66 @@ class WikiFactory {
 	 * @param integer	$city_public	status in city_list
 	 * @param integer	$city_id		wikia identifier in city_list
 	 *
-	 * @return string: HTML form
+	 * @return boolean, usually true when success
 	 */
-	static public function setFlags( $city_id, $city_flags = 0 ) {
+	static public function resetFlags( $city_id, $city_flags ) {
 
 		if( ! self::isUsed() ) {
-			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			Wikia::log( __METHOD__, "info", "WikiFactory is not used." );
 			return false;
 		}
 
 		wfProfileIn( __METHOD__ );
 
-		if ( empty($city_flags) ) {
+		$dbw = self::db( DB_MASTER );
+		$dbw->update(
+			"city_list",
+			array( "city_flags = ( city_flags &~ {$city_flags} )" ),
+			array( "city_id" => $city_id ),
+			__METHOD__
+		);
+		self::log( self::LOG_STATUS, sprintf("Binary flags %s removed from city_flags", dec2bin( $city_flags ) ), $city_id );
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
+	/**
+	 * setFlags
+	 *
+	 * set binary flags for city, value will be added to existed flags
+	 *
+	 * @author Piotr Molski <moli@wikia-inc.com>
+	 * @access public
+	 * @static
+	 *
+	 * @param integer	$city_public	status in city_list
+	 * @param integer	$city_id		wikia identifier in city_list
+	 *
+	 * @return boolean, usually true when success
+	 */
+	static public function setFlags( $city_id, $city_flags ) {
+
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "info", "WikiFactory is not used." );
 			return false;
 		}
+
+		wfProfileIn( __METHOD__ );
 
 		$dbw = self::db( DB_MASTER );
 		$dbw->update(
 			"city_list",
-			array( "city_flags" => $city_flags ),
+			array( "city_flags = ( city_flags | {$city_flags} )" ),
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		self::log( self::LOG_STATUS, "Flags in wiki changed to {$city_flags}.", $city_id );
+		self::log( self::LOG_STATUS, sprintf("Binary flags %s added to city_flags", dec2bin( $city_flags ) ), $city_id );
 
 		wfProfileOut( __METHOD__ );
 
-		return $city_flags;
+		return true;
 	}
 
 	/**
