@@ -199,7 +199,8 @@ class CloseWikiTarAndCopyImages {
 					$centralDb = empty( $cluster) ? "wikicities" : "wikicities_{$cluster}";
 					$dbw = wfGetDB( DB_MASTER, array(), $centralDb );
 					$dbw->begin();
-					$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
+					echo "DROP DATABASE `{$row->city_dbname}`";
+					#$dbw->query( "DROP DATABASE `{$row->city_dbname}`");
 					$dbw->commit();
 					Wikia::log( __CLASS__, "info", "{$row->city_dbname} dropped from cluster {$cluster}" );
 
