@@ -4,7 +4,10 @@
 
 <ul>
 	<?php foreach ($collection as $page): ?>
-		<li><?=Title::newFromID($page)->getText()?></li>
+		<li>
+			<?=Title::newFromID($page)->getText()?>
+			[<a href="/wiki/Special:Bolek?action=remove&page_id=<?=$page?>">x</a>]
+		</li>
 	<?php endforeach; ?>
 	<?php if (!sizeof($collection)): ?>
 		<li>(empty)</li>
