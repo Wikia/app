@@ -250,6 +250,8 @@ while( $request->Accept() >= 0 ) {
 	$transformed = 0;
 	$cntrequest++;
 
+	syslog( LOG_INFO, "request no $cntrequest" ) if $syslog;
+
 	#
 	# prevent memory leaks
 	#
