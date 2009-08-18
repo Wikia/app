@@ -335,10 +335,11 @@ class HAWelcomeJob extends Job {
 
 		/**
 		 * Do not create task when DB is locked (rt#12229)
+		 * Do not create task when we are in $wgCommandLineMode
 		 */
 		$oldValue = $wgErrorLog;
 		$wgErrorLog = true;
-		if ( !wfReadOnly() ) {
+		if( !wfReadOnly() && ! $wgCommandLineMode ) {
 			wfLoadExtensionMessages( "HAWelcome" );
 
 			/**
@@ -378,7 +379,7 @@ class HAWelcomeJob extends Job {
 				Wikia::log( __METHOD__, $wgUser->getId(), "Store possible welcomer in memcached" );
 			}
 
-			if( $Title && !$wgCommandLineMode && $canWelcome && !empty( $wgSharedDB ) ) {
+			if( $Title && $canWelcome && !empty( $wgSharedDB ) ) {
 
 				Wikia::log( __METHOD__, "title", $Title->getFullURL() );
 
