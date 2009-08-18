@@ -130,13 +130,11 @@ class MultiWikiEditTask extends BatchTask {
 				$sCommand .= "--conf $wgWikiaLocalSettingsPath";
 
 				$actual_title = wfShellExec( $sCommand, $retval );
-
-				//wfShellExec( $sCommand, $retval );
 				if ($retval) {
 					$this->log ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				}
 				else {
-					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $resultTitle . '">' . $city_url . $city_path . '?title=' . $resultTitle . '</a> <br />');
+					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $actual_title . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
 				}
 			}
 		}
