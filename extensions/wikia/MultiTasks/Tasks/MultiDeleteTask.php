@@ -59,6 +59,7 @@ class MultiDeleteTask extends BatchTask {
 		}
 		$namespace = $page->getNamespace();
 		$title = str_replace( ' ', '_', $page->getText() );
+		$resultTitle = $page->getFullText();
 
 		$range = escapeshellarg($data["range"]);
 		$selwikia = intval($data["selwikia"]);
@@ -101,7 +102,7 @@ class MultiDeleteTask extends BatchTask {
 				if ($retval) {
 					$this->addLog('Article deleting error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				} else {
-					$this->addLog('<a href="' . $city_url . $city_path . '?title=' . $actual_title  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a><br />');
+					$this->addLog('<a href="' . $city_url . $city_path . '?title=' . $resultTitle  . '">' . $city_url . $city_path . '?title=' . $resultTitle . '</a><br />');
 				}
 			}
 		}
