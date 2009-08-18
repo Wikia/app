@@ -80,7 +80,7 @@ class MultiDeleteTask extends BatchTask {
 			foreach ( $wikiList as $id => $oWiki ) {
 
 				$retval = "";
-				$this->log("Proceed " . $oWiki->city_dbname . " ({$oWiki->city_url} ({$oWiki->city_id}))");
+				#$this->log("Proceed " . $oWiki->city_dbname . " ({$oWiki->city_url} ({$oWiki->city_id}))");
 
 				$city_path = $oWiki->city_script;
 				$city_url = $oWiki->city_server;
