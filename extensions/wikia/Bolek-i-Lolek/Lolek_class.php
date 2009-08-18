@@ -18,7 +18,7 @@ class Lolek {
 			do {
 
 			$debug = "Debug: rendered " . date("r", time());
-			$cmd   = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --footer-left \"{$debug}\" \"{$url}?action=print&user_id={$user_id}&add={$add}\" {$wgUploadDirectory}/lolek/{$fname}";
+			$cmd   = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --footer-left \"{$debug}\" --cover \"{$url}?action=cover&user_id={$user_id}\" \"{$url}?action=print&user_id={$user_id}&add={$add}\" {$wgUploadDirectory}/lolek/{$fname}";
 
 			$wgMaxShellTime     = 0;
 			$wgMaxShellFileSize  = 0;
