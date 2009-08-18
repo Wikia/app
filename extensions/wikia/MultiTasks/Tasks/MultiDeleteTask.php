@@ -78,10 +78,7 @@ class MultiDeleteTask extends BatchTask {
 		if ( !empty($wikiList) ) {
 			$this->log("Found " . count($wikiList) . " Wikis to proceed");
 			foreach ( $wikiList as $id => $oWiki ) {
-
 				$retval = "";
-				#$this->log("Proceed " . $oWiki->city_dbname . " ({$oWiki->city_url} ({$oWiki->city_id}))");
-
 				$city_path = $oWiki->city_script;
 				$city_url = $oWiki->city_server;
 				if ( empty($city_url) ) {
@@ -102,7 +99,7 @@ class MultiDeleteTask extends BatchTask {
 				if ($retval) {
 					$this->addLog('Article deleting error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				} else {
-					$this->addLog('<a href="' . $city_url . $city_path . '?title=' . $resultTitle  . '">' . $city_url . $city_path . '?title=' . $resultTitle . '</a><br />');
+					$this->addLog('<a href="' . $city_url . $city_path . '?title=' . $actual_title  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
 				}
 			}
 		}
