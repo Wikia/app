@@ -105,6 +105,7 @@ class MultiWikiEditTask extends BatchTask {
 		}
 		$namespace = $page->getNamespace();
 		$title = str_replace( ' ', '_', $page->getText() );
+		$resultTitle = $page->getFullText();
 
 		if ( !empty($wikiList) ) {
 			$this->log("Found " . count($wikiList) . " Wikis to proceed");
@@ -136,7 +137,7 @@ class MultiWikiEditTask extends BatchTask {
 					$this->log ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				}
 				else {
-					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $title . '">' . $city_url . $city_path . '?title=' . $title . '</a> <br />');
+					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $resultTitle . '">' . $city_url . $city_path . '?title=' . $resultTitle . '</a> <br />');
 				}
 			}
 		}
