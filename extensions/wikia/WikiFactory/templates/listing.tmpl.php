@@ -16,13 +16,13 @@ foreach( range( 1, $limit) as $cnt ):
 	</a></h4>
 	<?php echo empty( $row->wiki->city_description ) ? "no description" : $row->wiki->city_description ?>
 	<br />
-	<em>Used domains: <?php echo CityListPager::bold( implode ( ", ", $row->domains ), $part ) ?></em>
+	<em>Used domains: <?php echo CityListPager::bold( implode ( ", ", (array) $row->domains ), $part ) ?></em>
 	<br />
 	<span style="color: darkgreen;"><?php CityListPager::bold( $row->wiki->city_url, $part ) ?></a></span>
 	 - <a href="<?php echo $title->getFullUrl() . "/{$row->wiki->city_id}" ?>">wikifactory</a>
 	 - <a href="<?php echo $row->wiki->city_url ?>">link</a>
-</div
+</div>
 <?php
 endforeach
 ?>
-</form
+</form>

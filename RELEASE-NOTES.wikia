@@ -1,4 +1,5 @@
 == Changes since 200908.3 ==
+* rt#21138: WikiFactory: WF template code fixed. (Nef)
 * rt#18698: Answers, Ads: Ads on wikianswers search. (Nef)
 * rt#18951: Answers: Magic answers attribution. (Nef)
 
