@@ -1,5 +1,9 @@
 #!/usr/bin/perl -w
 
+#
+# Image::Magick version
+#
+
 use strict;
 use URI;
 use FCGI;
@@ -250,7 +254,7 @@ while( $request->Accept() >= 0 ) {
 	$transformed = 0;
 	$cntrequest++;
 
-	syslog( LOG_INFO, "request no $cntrequest" ) if $syslog;
+	syslog( LOG_INFO, "PID=$$ REQUEST=$cntrequest" ) if $syslog > 1;
 
 	#
 	# prevent memory leaks
