@@ -16,6 +16,23 @@
 
 <p><a href="/wiki/Special:Bolek?action=clear">Clear collection</a></p>
 
+<form method="POST">
+
+<p>Front cover:</p>
+
+<ul>
+	<?php foreach ($cover as $c_name => $c_value): ?>
+		<li>
+			<label for="c_<?=$c_name?>"><?=str_replace("_", " ", $c_name)?></label>
+			<input id="c_<?=$c_name?>" name="cover[<?=$c_name?>]" value="<?=htmlspecialchars($c_value)?>"/>
+		</li>
+	<?php endforeach; ?>
+</ul>
+
+<input type="submit" name="action" value="customize"/>
+
+</form>
+
 <h3>Lolek</h3>
 
 <p>Preview <a href="/wiki/Special:Bolek?action=cover">front cover</a> and pdf <a href="/wiki/Special:Bolek?action=print">content</a>.</p>

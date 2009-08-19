@@ -44,6 +44,10 @@ class BolekPage extends UnlistedSpecialPage {
 				$result = Bolek::removePage($wgRequest->getVal("page_id",  null));
 
 				break;
+			case "customize":
+				$result = Bolek::customizeCover($wgRequest->getArray("cover",  null));
+
+				break;
 		}
 
 		$tmpl = new EasyTemplate(dirname(__FILE__));
@@ -53,7 +57,8 @@ class BolekPage extends UnlistedSpecialPage {
 			"collection" =>  Bolek::getCollection(),
 			"url"        => $this->getTitle()->getFullURL(),
 			"user_id"    => $wgUser->getId(),
-			"timestamp"  =>  Bolek::getCollectionTimestamp(),
+			"timestamp"  =>  Bolek::getTimestamp(),
+			"cover"      =>  Bolek::getCover(),
 		));
 
 		$wgOut->addHTML($tmpl->execute("specialbolek"));
@@ -113,13 +118,17 @@ class BolekPage extends UnlistedSpecialPage {
 	}
 
 	private function _cover() {
+		global $wgRequest;
+		$user_id = $wgRequest->getVal("user_id",  null);
+		$cover = Bolek::getCover($user_id);
+
 		global $wgOut;
 		$wgOut->addHTML("<div id=\"bolek\">\n");
 
-		$wgOut->addHTML("<div style=\"background-color: #FF6600\">");
-		$wgOut->addHTML("<div style=\"color: #FFF; font-size: 80pt\">Magazine Title</div>");
-		$wgOut->addHTML("<div style=\"color: #FFF505; font-size: 28pt; text-transform: uppercase\">Subtitle which will be slightly longer</div>");
-		$wgOut->addHTML("<img src=\"http://images.wikia.com/muppet/images/7/79/Kermit-the-frog.jpg\"/>");
+		$wgOut->addHTML("<div style=\"background-color: {$cover['background_color']}\">");
+		$wgOut->addHTML("<div style=\"color: {$cover['title_color']}; font-size: {$cover['title_size']}\">{$cover['title']}</div>");
+		$wgOut->addHTML("<div style=\"color: {$cover['subtitle_color']}; font-size: {$cover['subtitle_size']}; text-transform: uppercase\">{$cover['subtitle']}</div>");
+		$wgOut->addHTML("<img src=\"{$cover['image']}\"/>");
 		$wgOut->addHTML("</div>");
 		$wgOut->addHTML("<img src=\"http://images.wikia.com/common/skins/monaco/images/wikia_logo.png?1\" width=\"159\" height=\"40\"/>");
 
