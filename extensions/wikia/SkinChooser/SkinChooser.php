@@ -384,6 +384,12 @@ function WikiaGetSkin ($user) {
 	$userSkin = $wgRequest->getVal('useskin', $userSkin);
 	$userTheme = $wgRequest->getVal('usetheme', $userTheme);
 
+	if($userSkin == 'monacoold') {
+		global $wgUseMonaco2;
+		$wgUseMonaco2 = null;
+		$userSkin = 'monaco';
+	}
+
 	$user->mSkin = &Skin::newFromKey($userSkin);
 
 	$normalizedSkinName = substr(strtolower(get_class($user->mSkin)),4);
