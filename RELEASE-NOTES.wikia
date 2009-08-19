@@ -1,5 +1,6 @@
 == Changes since 200908.3 ==
 * rt#19023: Answers, Analytics: Add click tracking to Answers. (Nef)
+* rt#21296: Answers: Nofollow some wikianswers links for better SEO. (Nef)
 * rt#21138: WikiFactory: WF template code fixed. (Nef)
 * rt#18698: Answers, Ads: Ads on wikianswers search. (Nef)
 * rt#18951: Answers: Magic answers attribution. (Nef)
