@@ -343,7 +343,7 @@ class ExternalStorageUpdate {
 	 * @return true means process other hooks
 	 */
 	static public function setRevisionFromEdit( $oArticle, $oRevision, $baseRevId, $oUser) {
-		global $wgCityId;
+		global $wgCityId, $wgDBname;
 
 		wfProfileIn( __METHOD__ );
 		
@@ -358,9 +358,10 @@ class ExternalStorageUpdate {
 		}
 
 		$Title = $oRevision->getTitle();
+		$page_id = $oArticle->getId();
 		if( ! $Title  ) {
 			global $wgDBname;
-			Wikia::log( __METHOD__, "err", " title is null, page_id={$this->mPageId}; city_id={$wgCityId}, dbname={$wgDBname}" );
+			Wikia::log( __METHOD__, "err", " title is null, page_id={$page_id}; city_id={$wgCityId}, dbname={$wgDBname}" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
