@@ -116,4 +116,94 @@ class Bolek {
 
 		return $result;
 	}
+
+	static function getCover($user_id = null) {
+		global $wgUser;
+		if (null == $user_id) $user_id = $wgUser->getId();
+
+		$dbr = self::_getDB(DB_SLAVE);
+		$res = $dbr->select(
+			array("bolek_meta"),
+			array("bm_cover"),
+			array("bm_user_id" => $user_id),
+			__METHOD__
+		);
+		while ($row = $dbr->fetchObject($res)) {
+			$result = unserialize($row->bm_cover);
+		}
+		$dbr->freeResult($res);
+
+		if (empty($result)) $result = array(
+			"background_color" => "#FF6600",
+			"title_color"      => "#FFF",
+			"title_size"       => "80pt",
+			"title"            => "Magazine Title",
+			"subtitle_color"   => "#FFF505",
+			"subtitle_size"    => "28pt",
+			"subtitle"         => "Subtitle which will be slightly longer",
+			"image"            => "http://images.wikia.com/muppet/images/7/79/Kermit-the-frog.jpg",
+		);
+
+		return $result;
+	}
+
+	static function customizeCover($cover) {
+		global $wgUser;
+
+		$dbw = self::_getDB(DB_MASTER);
+		try {
+			$dbw->insert(
+				"bolek_meta",
+				array(
+					"bm_user_id"   => $wgUser->getId(),
+					"bm_cover"     =>  serialize($cover),
+					"bm_timestamp" =>  time(),
+				),
+				__METHOD__
+			);
+			$result = "Cover customized.";
+		} catch (DBQueryError $e) {
+			if (1062 == $e->errno) { // ER_DUP_ENTRY
+				$dbw->update(
+					"bolek_meta",
+					array(
+						"bm_cover"     => serialize($cover),
+						"bm_timestamp" => time(),
+					),
+					array("bm_user_id" => $wgUser->getId()),
+					__METHOD__
+				);
+				$result = "Cover customized.";
+			} else {
+				$result = "Error with cover customization: {$e->error}";
+				throw $e;
+			}
+		}
+
+		return $result;
+	}
+
+	static function getCoverTimestamp() {
+		global $wgUser;
+
+		$dbr = self::_getDB(DB_SLAVE);
+		$res = $dbr->select(
+			array("bolek_meta"),
+			array("bm_timestamp"),
+			array("bm_user_id" => $wgUser->getId()),
+			__METHOD__
+		);
+		while ($row = $dbr->fetchObject($res)) {
+			$result = $row->bm_timestamp;
+		}
+		$dbr->freeResult($res);
+
+		if (empty($result)) $result = 0;
+
+		return $result;
+	}
+
+	static function getTimestamp() {
+		return max(Bolek::getCollectionTimestamp(), Bolek::getCoverTimestamp());
+	}
 }
