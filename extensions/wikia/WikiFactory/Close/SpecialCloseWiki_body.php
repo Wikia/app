@@ -232,7 +232,7 @@ class CloseWikiPage extends SpecialPage {
 
 		if ( !empty($aDomainsToMove) ) {
 			#-- connect to dataware;
-			$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalArchiveDB );
+			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalArchiveDB );
 			if (!is_null($dbs)) {
 				#-- save domains in archive DB
 				$dbs->begin();
