@@ -7,7 +7,7 @@
 
 $wgHooks[ "RevisionInsertComplete" ][]	= "ExternalStorageUpdate::addDeferredUpdate";
 $wgHooks[ "ArticleDeleteComplete" ][]	= "ExternalStorageUpdate::deleteArticleExternal";
-$wgHooks[ "NewRevisionFromEditComplete" ][] = "ExternalStorageUpdate::setRevisionFromEdit"; 
+$wgHooks[ "NewRevisionFromEditComplete" ][] = "ExternalStorageUpdate::setRevisionFromEdit";
 #$wgHooks[ "RevisionHiddenComplete" ][]	= "ExternalStorageUpdate::hiddenArticleExternal";
 #$wgHooks[ "ArticleRevisionUndeleted" ][] = "ExternalStorageUpdate::undeleteArticleExternal";
 
@@ -324,8 +324,8 @@ class ExternalStorageUpdate {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * setRevisionFromEdit
 	 *
@@ -343,15 +343,15 @@ class ExternalStorageUpdate {
 	 * @return true means process other hooks
 	 */
 	static public function setRevisionFromEdit( $oArticle, $oRevision, $baseRevId, $oUser) {
-		global $wgCityId, $wgDBname;
+		global $wgCityId;
 
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( !$oArticle instanceof Article ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
-		
+
 		if ( !$oRevision instanceof Revision) {
 			wfProfileOut( __METHOD__ );
 			return true;
@@ -360,8 +360,7 @@ class ExternalStorageUpdate {
 		$Title = $oRevision->getTitle();
 		$page_id = $oArticle->getId();
 		if( ! $Title  ) {
-			global $wgDBname;
-			Wikia::log( __METHOD__, "err", " title is null, page_id={$page_id}; city_id={$wgCityId}, dbname={$wgDBname}" );
+			Wikia::log( __METHOD__, "err", " title is null, page_id={$page_id}" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -370,23 +369,23 @@ class ExternalStorageUpdate {
 
 		$dbw = wfGetDBExt( DB_MASTER );
 
-		$dbw->update( "pages", 
+		$dbw->update( "pages",
 		array( /* SET */
 			'page_latest'	=> $oRevision->getId(),
 			'page_status' 	=> $page_status
 		),
-		array( 
+		array(
 			'page_id' 		=> $oArticle->getId(),
 			'page_wikia_id' => $wgCityId
-		), 
-		__METHOD__ );		
+		),
+		__METHOD__ );
 
 		if( $dbw->getFlag( DBO_TRX ) ) {
 			$dbw->commit();
 		}
-		
+
 		wfProfileOut( __METHOD__ );
-		return true;		
+		return true;
 	}
 
 };
