@@ -328,6 +328,11 @@ class AdEngine {
         }
 
 	public function getPlaceHolderIframe($slotname, $reserveSpace=true){
+		$AdProvider = $this->getAdProvider($slotname);
+		// If it's a Null Ad, just return an empty comment, and don't store in place holder array.
+		if ($AdProvider instanceof AdProviderNull){
+			return "<!-- Null Ad from " . __METHOD__ . "-->" . $AdProvider->getAd($slotname, array()); 
+		}
 
 		$this->placeholders[$slotname]=$this->slots[$slotname]['load_priority'];
 
