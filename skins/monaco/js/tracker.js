@@ -72,13 +72,6 @@ var initTracker = function() {
 	// Wikia & Wiki logo
 	$('#wikia_logo, #wiki_logo').click($.tracker.byId);
 
-	// Navigation - toolbox
-	$('#link_box').click(function(e) {
-		if(e.target.nodeName == 'A') {
-			$.tracker.byStr('toolbox/' + e.target.innerHTML);
-		}
-	});
-
 	// User Engagement
 	$('#ue_msg').click(function(e) {
 		if(e.target.nodeName == 'A') {

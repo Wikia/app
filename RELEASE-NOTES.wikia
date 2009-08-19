@@ -1,4 +1,5 @@
 == Changes since 200908.3 ==
+* rt#21388: Analytics: Old (double) trackers removed. (Nef)
 * rt#19023: Answers, Analytics: Add click tracking to Answers. (Nef)
 * rt#21296: Answers: Nofollow some wikianswers links for better SEO. (Nef)
 * rt#21138: WikiFactory: WF template code fixed. (Nef)
