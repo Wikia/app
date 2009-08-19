@@ -227,7 +227,7 @@ yieldbuild_loc = "leaderboard";
 
 		<div id="question">
 			<div class="top"><span></span></div>
-			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?> <a href="<?=$this->data['content_actions']['move']['href']?>"><?=wfMsg('rephrase')?></a></h1>
+			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?> <a href="<?=$this->data['content_actions']['move']['href']?>" rel="nofollow"><?=wfMsg('rephrase')?></a></h1>
 			<!--<div class="categories">
 			<?php
 			/*
@@ -535,7 +535,7 @@ yieldbuild_loc = "left_content_top";
 
 
 		<div id="twitter-post">
-			<a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><?= wfMsg("twitter_ask")?></a>
+			<a rel="nofollow" href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><?= wfMsg("twitter_ask")?></a>
 		</div>
 		</div><?/* social_networks */?>
 		<?
@@ -630,7 +630,7 @@ yieldbuild_loc = "left_content_bottom";
 			// This is only shown when there is copyright data available. It is not shown on special pages for example.
 			if ( 'GFDL' == $val['text'] ) {
 				if (!empty($this->data['copyright'])) {
-					$wikiafooterlinksA[] = $this->data['copyright'];
+					$wikiafooterlinksA[] = str_replace("<a href", "<a rel=\"nofollow\" href", $this->data['copyright']);
 				}
 			} else {
 				$wikiafooterlinksA[] = '<a rel="nofollow" href="'.htmlspecialchars($val['href']).'">'.$val['text'].'</a>';
@@ -843,24 +843,24 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 			<ul>
 <?php
 		if($this->data['notspecialpage']) { ?>
-				<li id="t-whatlinkshere"><a href="<?php
+				<li id="t-whatlinkshere"><a rel="nofollow" href="<?php
 				echo htmlspecialchars($this->data['nav_urls']['whatlinkshere']['href'])
 				?>"<?php echo $this->skin->tooltipAndAccesskey('t-whatlinkshere') ?>><?php $this->msg('whatlinkshere') ?></a></li>
 <?php
 			if( $this->data['nav_urls']['recentchangeslinked'] ) { ?>
-				<li id="t-recentchangeslinked"><a href="<?php
+				<li id="t-recentchangeslinked"><a rel="nofollow" href="<?php
 				echo htmlspecialchars($this->data['nav_urls']['recentchangeslinked']['href'])
 				?>"<?php echo $this->skin->tooltipAndAccesskey('t-recentchangeslinked') ?>><?php $this->msg('recentchangeslinked') ?></a></li>
 <?php 		}
 		}
 		if(isset($this->data['nav_urls']['trackbacklink'])) { ?>
-			<li id="t-trackbacklink"><a href="<?php
+			<li id="t-trackbacklink"><a rel="nofollow" href="<?php
 				echo htmlspecialchars($this->data['nav_urls']['trackbacklink']['href'])
 				?>"<?php echo $this->skin->tooltipAndAccesskey('t-trackbacklink') ?>><?php $this->msg('trackbacklink') ?></a></li>
 <?php 	}
 		if($this->data['feeds']) { ?>
 			<li id="feedlinks"><?php foreach($this->data['feeds'] as $key => $feed) {
-					?><span id="<?php echo Sanitizer::escapeId( "feed-$key" ) ?>"><a href="<?php
+					?><span id="<?php echo Sanitizer::escapeId( "feed-$key" ) ?>"><a rel="nofollow" href="<?php
 					echo htmlspecialchars($feed['href']) ?>"<?php echo $this->skin->tooltipAndAccesskey('feed-'.$key) ?>><?php echo htmlspecialchars($feed['text'])?></a>&nbsp;</span>
 					<?php } ?></li><?php
 		}
@@ -868,18 +868,18 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 		foreach( array('contributions', 'log', 'blockip', 'emailuser', 'upload', 'specialpages') as $special ) {
 
 			if($this->data['nav_urls'][$special]) {
-				?><li id="t-<?php echo $special ?>"><a href="<?php echo htmlspecialchars($this->data['nav_urls'][$special]['href'])
+				?><li id="t-<?php echo $special ?>"><a rel="nofollow" href="<?php echo htmlspecialchars($this->data['nav_urls'][$special]['href'])
 				?>"<?php echo $this->skin->tooltipAndAccesskey('t-'.$special) ?>><?php $this->msg($special) ?></a></li>
 <?php		}
 		}
 
 		if(!empty($this->data['nav_urls']['print']['href'])) { ?>
-				<li id="t-print"><a href="<?php echo htmlspecialchars($this->data['nav_urls']['print']['href'])
+				<li id="t-print"><a rel="nofollow" href="<?php echo htmlspecialchars($this->data['nav_urls']['print']['href'])
 				?>"<?php echo $this->skin->tooltipAndAccesskey('t-print') ?>><?php $this->msg('printableversion') ?></a></li><?php
 		}
 
 		if(!empty($this->data['nav_urls']['permalink']['href'])) { ?>
-				<li id="t-permalink"><a href="<?php echo htmlspecialchars($this->data['nav_urls']['permalink']['href'])
+				<li id="t-permalink"><a rel="nofollow" href="<?php echo htmlspecialchars($this->data['nav_urls']['permalink']['href'])
 				?>"<?php echo $this->skin->tooltipAndAccesskey('t-permalink') ?>><?php $this->msg('permalink') ?></a></li><?php
 		} elseif ($this->data['nav_urls']['permalink']['href'] === '') { ?>
 				<li id="t-ispermalink"<?php echo $this->skin->tooltip('t-ispermalink') ?>><?php $this->msg('permalink') ?></li><?php
@@ -950,8 +950,8 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
         	?>
 			<ul id="user_data">
                                 <li id="header_username"><a href="<?php echo htmlspecialchars($this->data['personal_urls']['userpage']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-userpage') ?>><?php echo htmlspecialchars($wgUser->getName()) ?></a></li>
-                                <li><a href="<?php echo htmlspecialchars($this->data['personal_urls']['mytalk']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-mytalk') ?>><?php echo htmlspecialchars($this->data['personal_urls']['mytalk']['text']) ?></a></li>
-                                <li><a href="<?php echo htmlspecialchars($this->data['personal_urls']['watchlist']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-watchlist') ?>><?php echo htmlspecialchars(wfMsg('prefs-watchlist')) ?></a></li>
+											  <li><a href="<?php echo htmlspecialchars($this->data['personal_urls']['mytalk']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-mytalk') ?>><?php echo htmlspecialchars($this->data['personal_urls']['mytalk']['text']) ?></a></li>
+											  <li><a href="<?php echo htmlspecialchars($this->data['personal_urls']['watchlist']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-watchlist') ?>><?php echo htmlspecialchars(wfMsg('prefs-watchlist')) ?></a></li>
                                 <li><dl id="header_button_user" class="header_menu_button">
 					<dt><?php echo trim(wfMsg('moredotdotdot'), ' .') ?></dt>
                                         <dd>&nbsp;</dd>
