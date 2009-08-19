@@ -666,14 +666,14 @@ yieldbuild_loc = "left_content_bottom";
 						<td>
 						<?
 						for($i=0; $i<ceil(count($this->data['data']['toolboxlinks'])/2); $i++) {
-							echo '<a href="'. $this->data['data']['toolboxlinks'][$i]['href'] .'">'. $this->data['data']['toolboxlinks'][$i]['text'] .'</a><br />';
+							echo '<a href="'. $this->data['data']['toolboxlinks'][$i]['href'] .'" onclick="WET.byStr(\'' . $this->data['data']['toolboxlinks'][$i]['tracker'] . '\')">'. $this->data['data']['toolboxlinks'][$i]['text'] .'</a><br />';
 						}
 						?>
 						</td>
 						<td>
 						<?
 						for($i; $i<count($this->data['data']['toolboxlinks']); $i++) {
-							echo '<a href="'. $this->data['data']['toolboxlinks'][$i]['href'] .'">'. $this->data['data']['toolboxlinks'][$i]['text'] .'</a><br />';
+							echo '<a href="'. $this->data['data']['toolboxlinks'][$i]['href'] .'" onclick="WET.byStr(\'' . $this->data['data']['toolboxlinks'][$i]['tracker'] . '\')">'. $this->data['data']['toolboxlinks'][$i]['text'] .'</a><br />';
 						}
 						?>
 						</td>
