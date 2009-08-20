@@ -844,7 +844,6 @@ function wfHostname() {
  */
 function wfReportTime() {
 	global $wgRequestTime, $wgShowHostnames, $wgRUstart;
-	global $wgDBUsage;
 
 	wfProfileIn( __METHOD__ );
 	$now = wfTime();
@@ -876,8 +875,6 @@ function wfReportTime() {
 				'key' => $key,
 				'real' => $elapsed,
 				'cpu' => $elapsedcpu,
-				'db_cpu' => $wgDBUsage['cpu'],
-				'db_real' => $wgDBUsage['real'],
 				'url' => 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],
 			) ),
 			array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )

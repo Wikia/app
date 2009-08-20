@@ -45,7 +45,6 @@ if ( function_exists ( 'getrusage' ) ) {
 } else {
 	$wgRUstart = array();
 }
-$wgDBUsage = array( 'cpu' => 0, 'real' => 0 );
 #--- removed by eloy, make harm in our directory layout --- unset( $IP );
 @ini_set( 'allow_url_fopen', 0 ); # For security
 
