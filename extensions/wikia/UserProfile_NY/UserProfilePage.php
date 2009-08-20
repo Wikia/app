@@ -2,7 +2,8 @@
 
 class UserProfilePage extends Article{
 
-	var $title = null;
+	public $title = null;
+	public $is_owner = false;
 
 	function __construct (&$title){
 		global $wgUser;
