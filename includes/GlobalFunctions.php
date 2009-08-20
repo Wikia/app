@@ -1982,11 +1982,7 @@ function wfMkdirParents( $dir, $mode = null ) {
 		$mode = $wgDirectoryMode;
 
 	$res = @mkdir( $dir, $mode, true );
-	if ($res === false) {
-		$backTraceMsg = "wfMkdirParents($dir, $mode); \n";
-		$backTraceMsg .= wfBacktrace(); // $e->getText();
-		error_log( "MOLI: ". $_SERVER['SERVER_NAME'] ." $backTraceMsg \n" );
-	}
+
 	return $res;  // PHP5 <3
 }
 
