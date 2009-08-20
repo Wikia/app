@@ -380,11 +380,13 @@ function wfReadOnly() {
 		return false;
 	}
 	// Set $wgReadOnly for faster access next time
+	/**
 	if ( is_file( $wgReadOnlyFile ) ) {
 		$wgReadOnly = file_get_contents( $wgReadOnlyFile );
 	} else {
 		$wgReadOnly = false;
 	}
+	**/
 	return (bool)$wgReadOnly;
 }
 
