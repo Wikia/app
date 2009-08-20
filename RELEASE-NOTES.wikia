@@ -1,4 +1,5 @@
 == Changes since 200908.3 ==
+* rt#21402: Answers: Undefined variable google_hints fixed. (Nef)
 * rt#21388: Analytics: Old (double) trackers removed. (Nef)
 * rt#19023: Answers, Analytics: Add click tracking to Answers. (Nef)
 * rt#21296: Answers: Nofollow some wikianswers links for better SEO. (Nef)
