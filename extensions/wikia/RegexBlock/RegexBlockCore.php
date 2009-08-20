@@ -675,4 +675,17 @@ function wfRegexBlockUnsetKeys ($username) {
 	return true;
 }
 
+
+function wfLoadRegexBlockLink( $id, $nt, &$links ) {
+    global $wgUser;
+        if( $wgUser->isAllowed( 'regexblock' ) ) {
+	        wfLoadExtensionMessages( 'RegexBlock' );
+		$links[] = $wgUser->getSkin()->makeKnownLinkObj(
+			            SpecialPage::getTitleFor( 'RegexBlock' ),
+				                wfMsg( 'regexblock' ),
+				                'ip=' . urlencode( $nt->getText() ) );
+	}
+	return true;
+}
+
 ?>

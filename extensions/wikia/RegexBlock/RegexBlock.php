@@ -29,6 +29,7 @@ define ('REGEXBLOCK_SPECIAL_NUM_RECORD', 'number_records');
 
 /* add hook */
 $wgHooks['GetBlockedStatus'][] = 'wfRegexBlockCheck';
+$wgHooks['ContributionsToolLinks'][] = 'wfLoadRegexBlockLink';
 
 /* messages */
 require_once (dirname(__FILE__) . '/RegexBlock.i18n.php'); 
