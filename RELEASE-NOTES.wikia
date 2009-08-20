@@ -1,4 +1,5 @@
 == Changes since 200908.3 ==
+* rt#21029: new problem reports do not show up in logs, or recent changes (Macbre)
 * rt#21402: Answers: Undefined variable google_hints fixed. (Nef)
 * rt#21388: Analytics: Old (double) trackers removed. (Nef)
 * rt#19023: Answers, Analytics: Add click tracking to Answers. (Nef)
@@ -26,7 +27,7 @@
 * rt#20852: Blogs, VET: NS i18n. (Nef)
 * MagCloud project: simplest collecting extension + pdf rendering routines. (Nef)
 * rt#20767: Blogs: Allow change/i18n of avatar log id. (Nef)
-* rt#20770: NYC: Fixed redirect-after-login. (Nef) 
+* rt#20770: NYC: Fixed redirect-after-login. (Nef)
 * rt#20382: SharedHelp: replace Project ns with local version (TOR)
 * rt#20395: AWC: always use one (English) blacklist for wiki names (TOR)
 * rt#21038: SectionEdit: don't display edit links on protected and special pages (TOR)
