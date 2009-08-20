@@ -60,7 +60,8 @@ my $cntrequest   = 0;
 # if thumbnail was really generated
 #
 my $transformed = 0;
-my $mimetype = "text/plain";
+my $mimetype    = "text/plain";
+my $imgtype     = undef;
 umask( 022 );
 
 openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
@@ -146,7 +147,8 @@ while( $request->Accept() >= 0 ) {
 			#
 			if( -f $original ) {
 				$mimetype = $flm->checktype_filename( $original );
-				syslog( LOG_INFO, qq{$thumbnail $mimetype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
+				( $imgtype ) = $mimetype =~ m![^/+]/([^\S+])!;
+				syslog( LOG_INFO, qq{$thumbnail $mimetype $imgtype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
 
 				#
 				# create folder for thumbnail if doesn't exists
