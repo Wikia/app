@@ -239,6 +239,11 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		// log if succesfull
 		if ($insertId > 0)
 		{
+			// use local database for recentcnages (RT #21029)
+			global $wgDBname;
+			$dbw =& wfGetDB( DB_MASTER );
+			$dbw->selectDB($wgDBname);
+
 			// add the log entry for problem reports
 			$log = new LogPage('pr_rep_log', true); // true: also add entry to Special:Recentchanges
 
@@ -251,7 +256,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 				$insertId
 			) );
 
-			$dbw->immediateCommit(); // do commit (MW 'forgets' to do it)
+			$dbw->commit();
 
 			// ok!
 			wfDebug('ProblemReports: report #'.$insertId." reported and log added to Special:Log...\n");
