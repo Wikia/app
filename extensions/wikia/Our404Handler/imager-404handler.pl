@@ -78,7 +78,6 @@ while( $request->Accept() >= 0 ) {
 	$request_uri = "/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png";
 	$request_uri = "/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif";
 =cut
-	$request_uri = "/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif";
 
 	#
 	# get last part of uri, remove first slash if exists
@@ -270,9 +269,9 @@ while( $request->Accept() >= 0 ) {
 	#
 	# prevent memory leaks
 	#
-	# if( $cntrequest >= $maxrequests ) {
-	#	$request->LastCall();
-	#	last;
-	# }
+	if( $cntrequest >= $maxrequests ) {
+		$request->LastCall();
+		last;
+	}
 }
 closelog if $syslog;
