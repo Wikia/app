@@ -78,6 +78,7 @@ while( $request->Accept() >= 0 ) {
 	$request_uri = "/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png";
 	$request_uri = "/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif";
 =cut
+	$request_uri = "/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif";
 
 	#
 	# get last part of uri, remove first slash if exists
@@ -147,7 +148,7 @@ while( $request->Accept() >= 0 ) {
 			#
 			if( -f $original ) {
 				$mimetype = $flm->checktype_filename( $original );
-				( $imgtype ) = $mimetype =~ m![^/+]/([^\S+])!;
+				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
 				syslog( LOG_INFO, qq{$thumbnail $mimetype $imgtype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
 
 				#
@@ -226,7 +227,7 @@ while( $request->Accept() >= 0 ) {
 						if( $mimetype =~ m!image/gif! ) {
 							# so far nothing
 						}
-						$thumb->write( file => $thumbnail );
+						$thumb->write( file => $thumbnail, type => $imgtype );
 
 						if( -f $thumbnail ) {
 							#
