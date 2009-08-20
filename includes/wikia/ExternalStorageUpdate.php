@@ -357,7 +357,7 @@ class ExternalStorageUpdate {
 			return true;
 		}
 
-		$Title = $oRevision->getTitle();
+		$Title   = $oArticle->getTitle();
 		$page_id = $oArticle->getId();
 		if( ! $Title  ) {
 			Wikia::log( __METHOD__, "err", " title is null, page_id={$page_id}" );
