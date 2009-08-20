@@ -203,6 +203,7 @@ yieldbuild_loc = "leaderboard";
 		<?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 
 		<?php
+				$google_hints = "";
 		if ( $answer_page->isQuestion(true) ) {
 			$author = $answer_page->getOriginalAuthor();
 
@@ -215,7 +216,6 @@ yieldbuild_loc = "leaderboard";
 				}
 			}
 			if ($category_text) {
-				$google_hints = "";
 				foreach($category_text as $ctg){
 					if( strtoupper($ctg) != strtoupper(wfMsg("unanswered_category")) && strtoupper($ctg) != strtoupper(wfMsg("answered_category")) ){
 						$google_hints .= (( $google_hints ) ? ", " : "" ) . $ctg;
