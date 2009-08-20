@@ -20,7 +20,7 @@ use XML::Simple;
 # debug
 #
 use Data::Dumper;
-my $syslog      = 2;
+my $syslog      = 1;
 
 sub real404 {
 	my $request_uri  = shift;
