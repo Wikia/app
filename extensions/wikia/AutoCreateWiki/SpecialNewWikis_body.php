@@ -53,76 +53,20 @@ class NewWikisSpecialPage extends SpecialPage {
 	private function generateList( $format ) {
 		global $wgOut, $wgMemc, $wgExternalSharedDB;
 
+		$res = $wgMemc->get( wfSharedMemcKey( "{$format}-city-list" ) );
+		$filename = "{$format}_city_list.{$format}";
+		
 		$wgOut->disable();
 		if( $format === "xml" ) {
-			header( "Content-type: application/xml; charset=UTF-8" );
+				header( "Content-type: application/xml; charset=UTF-8" );
 		}
 		else {
-			header( "Content-type: text/csv; charset=UTF-8" );
+				header( "Content-type: text/csv; charset=UTF-8" );
 		}
 		$wgOut->sendCacheControl();
 
-		$list = $wgMemc->get( wfSharedMemcKey( "xml-city-list" ) );
-		#$list = array();
-		if( empty( $list ) ) {
-			$list = array();
-			$dbr = WikiFactory::db( DB_SLAVE );
-			$sth = $dbr->select(
-				array( "city_list" ),
-				array( "city_title", "city_lang", "city_url", "city_id" ),
-				array( "city_public = 1" ),
-				__METHOD__
-			);
-			while( $row = $dbr->fetchObject( $sth ) ) {
-				$row->category = WikiFactory::getCategory( $row->city_id );
-				$list[] = $row;
-			}
-			$wgMemc->set( wfSharedMemcKey( "xml-city-list" ), $list, 3600 * 6 );
-		}
-		if( $format === "xml" ) {
-			echo Xml::openElement( "citylist" ) . "\n";
-		}
-		else {
-			echo implode( ",", array(
-				$this->quote( "id" ),
-				$this->quote( "sitename" ),
-				$this->quote( "url" ),
-				$this->quote( "language" ),
-				$this->quote( "category-name" ),
-				$this->quote( "category-id" )
-			) )  . "\n";
-		}
-		foreach( $list as $city ) {
-			if( $format === "xml" ) {
-				echo Xml::element( "siteinfo",
-					array(
-						"id"            => $city->city_id,
-						"sitename"      => $city->city_title,
-						"url"           => $city->city_url,
-						"language"      => $city->city_lang,
-						"category-name" => empty( $city->category->cat_name )
-							? 'unknown' : $city->category->cat_name,
-						"category-id"   => empty( $city->category->cat_id )
-							? 0 : $city->category->cat_id
-					)
-				) . "\n";
-			}
-			else {
-				echo implode( ",", array(
-					$this->quote( $city->city_id ),
-					$this->quote( $city->city_title ),
-					$this->quote( $city->city_url ),
-					$this->quote( $city->city_lang ),
-					empty( $city->category->cat_name )
-						? $this->quote( 'unknown' )
-						: $this->quote( $city->category->cat_name ),
-					empty( $city->category->cat_id )
-						? $this->quote( 0 )
-						: $this->quote( $city->category->cat_id )
-				) ) ."\n";
-			}
-		}
-		if( $format === "xml" ) { echo Xml::closeElement( "citylist" ) . "\n" ; }
+		print gzinflate($res);
+		exit;
 	}
 
 	/**
