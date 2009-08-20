@@ -221,8 +221,12 @@ button.secondary span {
 	font-weight: bold;
 	margin-right: 5px;
 }
+#step4_form {
+	float: left;
+}
 #step4 .note {
-	float: right;
+	float: left;
+	margin-left: 20px;
 	width: 300px;
 }
 .fp_page {
