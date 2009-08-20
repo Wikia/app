@@ -1,4 +1,5 @@
 == Changes since 200908.3 ==
+* rt#20828: Blogs: Fixed blog avatar logs (non)unique action identifiers for log events. (Uberfuzzy)
 * rt#21029: new problem reports do not show up in logs, or recent changes (Macbre)
 * rt#21402: Answers: Undefined variable google_hints fixed. (Nef)
 * rt#21388: Analytics: Old (double) trackers removed. (Nef)
