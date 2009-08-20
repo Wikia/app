@@ -75,9 +75,8 @@ while( $request->Accept() >= 0 ) {
 	$request_uri = "/s/silenthill/de/images/thumb/8/85/Heather_%28Konzept4%29.jpg/420px-Heather_%28Konzept4%29.jpg";
 	$request_uri = "/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG";
 	$request_uri = "/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png";
-=cut
-
 	$request_uri = "/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif";
+=cut
 
 	#
 	# get last part of uri, remove first slash if exists
@@ -209,17 +208,21 @@ while( $request->Accept() >= 0 ) {
 					#
 					# for other else use Image::Magick
 					#
-					my $image = new Imager;
-					$image->read( file => $original );
+					#my $image = new Imager;
+					my @in = Imager->read_multi( file => $original );
+
+					#
+					# animated gifs have more frames, but so far we use first
+					#
+					my $image = shift @in;
+
 					my $origw  = $image->getwidth;
 					my $origh  = $image->getheight;
-					print "Here! $origw $origh\n";
 					if( $origw && $origh ) {
-						print "Here!";
 						my $height = $width * $origh / $origw;
 						my $thumb = $image->scale( xpixels => $width, ypixels => $height );
 						if( $mimetype =~ m!image/gif! ) {
-#							$image->Coalesce();
+							# so far nothing
 						}
 						$thumb->write( file => $thumbnail );
 
@@ -259,14 +262,14 @@ while( $request->Accept() >= 0 ) {
 	$transformed = 0;
 	$cntrequest++;
 
-	syslog( LOG_INFO, "request no $cntrequest" ) if $syslog;
+	syslog( LOG_INFO, "pid=$$ request=$cntrequest" ) if $syslog;
 
 	#
 	# prevent memory leaks
 	#
-	if( $cntrequest >= $maxrequests ) {
-		$request->LastCall();
-		last;
-	}
+	# if( $cntrequest >= $maxrequests ) {
+	#	$request->LastCall();
+	#	last;
+	# }
 }
 closelog if $syslog;
