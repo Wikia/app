@@ -389,6 +389,11 @@ function WikiaGetSkin ($user) {
 		$wgUseMonaco2 = null;
 		$userSkin = 'monaco';
 	}
+	if($userSkin == 'monaconew') {
+		global $wgUseMonaco2;
+		$wgUseMonaco2 = true;
+		$userSkin = 'monaco';
+	}
 
 	$user->mSkin = &Skin::newFromKey($userSkin);
 
