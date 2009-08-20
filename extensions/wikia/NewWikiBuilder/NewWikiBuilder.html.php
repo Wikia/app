@@ -164,9 +164,6 @@ for (var i = 0; i < themes.length; i++){
 <h1 class="headline"><?php echo wfMsg("nwb-step4-headline")?></h1>
 <div class="wrapper clearfix">
 	<?php echo wfMsg("nwb-step4-text")?>
-	<div class="accent note">
-		<?php echo wfMsg("nwb-step4-example")?>
-	</div>
 	<form id="step4_form">
 		<input type="hidden" name="category" value="<?php echo htmlspecialchars(wfMsg("nwb-new-pages"))?>">
 		<div id="all_fp" class="bullets">
@@ -181,6 +178,9 @@ for (var i = 0; i < themes.length; i++){
 			<!-- Other fp_blocks will be inserted into the dom here with javascript:NWB.firstPagesInputs() -->
 		</div><!-- all_fp -->
 	</form>
+	<div class="accent note">
+		<?php echo wfMsg("nwb-step4-example")?>
+	</div>
 </div>
 <div class="nav">
 	<span class="nav_reverse">
