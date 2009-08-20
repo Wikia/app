@@ -206,7 +206,6 @@ NWB.handleFirstPages = function (event){
                 Mediawiki.apiCall({
                         "action" : "createmultiplepages",
 			"pagelist" : pages.join("|"),
-                        "category" : this.category.value,
                         "pagetext" : NWB.msg("nwb-new-pages-text")
                         }, NWB.handleFirstPagesCallback, NWB.apiFailed, "POST");
         } catch (e) {
