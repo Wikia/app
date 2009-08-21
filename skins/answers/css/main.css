@@ -320,6 +320,7 @@ input.header_field {
 	font-family: "Arial Narrow", "Arial", sans-serif;
 	font-weight: bold;
 	font-size: 18pt;
+	padding: 0;
 }
 #bodyContent.question {
 	color: #333;
@@ -534,7 +535,7 @@ body .header_menu_button * {
 	font-size: 11pt;
 	margin-top: 15px;
 }
-#social_networks label {
+#social_networks #ask_friends_label {
 	color: #252525;
 	font-family: "Arial Narrow", "Arial", sans-serif;
 	font-size: 13pt;

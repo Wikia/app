@@ -307,7 +307,7 @@ yieldbuild_loc = "question_bubble";
 
 			if( !( $wgRequest->getVal("diff") ) ){
 				echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
-				echo '<div id="answer_title">'. wfMsg("answer_title") .'</div>';
+				echo '<h3 id="answer_title">'. wfMsg("answer_title") .'</h3>';
 
 			}
 
@@ -493,7 +493,7 @@ yieldbuild_loc = "left_content_top";
 		<?php
 		if( !$answer_page->isArticleAnswered() ){
 		?>
-			<div id="answer_title"><?= wfMsg("answer_title")?></div>
+			<h3 id="answer_title"><?= wfMsg("answer_title")?></h3>
 			<div><?= wfMsg("question_not_answered")?></div>
 
 			<div id="unanswered-links">
@@ -510,7 +510,7 @@ yieldbuild_loc = "left_content_top";
 		?>
 
 		<div id="social_networks">
-		<label><?= wfMsg("ask_friends")?></label>
+		<span id="ask_friends_label"><?= wfMsg("ask_friends")?></span>
 			<?
 
 			if( $wgEnableFacebookConnect == true ){
