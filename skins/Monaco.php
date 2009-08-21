@@ -2168,10 +2168,10 @@ if(count($wikiafooterlinks) > 0) {
 				echo AdEngine::getInstance()->getAd('LEFT_NAVBOX_1', false);
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('HOME_LEFT_SKYSCRAPER_1', false) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('HOME_LEFT_SKYSCRAPER_1', true) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
 							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('LEFT_SKYSCRAPER_1', false) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('LEFT_SKYSCRAPER_1', true) .'</div>';
 					}
 				}
 			?>
@@ -2186,10 +2186,10 @@ if(count($wikiafooterlinks) > 0) {
 				echo AdEngine::getInstance()->getAd('LEFT_NAVBOX_2', false);
 				if ($wgOut->isArticle()){
 					if (ArticleAdLogic::isMainPage()) { //main page
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('HOME_LEFT_SKYSCRAPER_2', true) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
 							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('LEFT_SKYSCRAPER_2', false) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('LEFT_SKYSCRAPER_2', true) .'</div>';
 					}
 				}
 			?>
