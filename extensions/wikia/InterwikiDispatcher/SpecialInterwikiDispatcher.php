@@ -2,7 +2,7 @@
 /**
  * InterwikiDispatcher - see ticket #2954
  *
- * @author Maciej Błaszkowski (Marooned) <marooned@wikia.com>
+ * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
  *
  * @date 2008-07-08
@@ -24,7 +24,7 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'InterwikiDispatcher',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description' => 'This extension provides an interface for sending messages seen on all wikis.'
+	'description' => 'This extension solves interwiki links to reduce amount of apache redirects.'
 );
 
 $wgExtensionMessagesFiles['SpecialInterwikiDispatcher'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.i18n.php';
