@@ -76,12 +76,8 @@ class AdProviderGAM implements iAdProvider {
 			// Set up a try/catch to see if the user has AdBcock enabled presumably because the above call failed to download
 			'<script type="text/javascript">
 			wgAdBlockEnabled=false;
-			try {
-			  GS_googleAddAdSenseService("' . $this->adManagerId . '");
-			  GS_googleEnableAllServices();
-			} catch (e){
-			  wgAdBlockEnabled=true;
-			}
+			GS_googleAddAdSenseService("' . $this->adManagerId . '");
+			GS_googleEnableAllServices();
 			</script>' . "\n";
 		$out .= "<!-- ## END " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		return $out;
@@ -101,8 +97,7 @@ class AdProviderGAM implements iAdProvider {
 		// Make a call for each slot.
 		$this->slotsToCall = AdEngine::getInstance()->getSlotNamesForProvider($this->provider_id);
 
-		$out .= '<script type="text/javascript">' . "\n" .
-			'try {' . "\n";
+		$out .= '<script type="text/javascript">' . "\n";
 		foreach ( $this->slotsToCall as $slotname ){
 			$out .= 'GA_googleAddSlot("' . $this->adManagerId . '","' . $slotname . '");' . "\n";
 			// Set up key values
@@ -122,10 +117,6 @@ class AdProviderGAM implements iAdProvider {
 
 		// ###### Ad Sense attributes
 		$out .= $this->getAdSenseAttr() . "\n" .
-			// Google Ad Call failed, probably because of AdBlock
-			// Hide these errors from Athena error reporting.
-			// Consider putting something else here for tracking?
-			'} catch (e) { }' . "\n" . 
 			'</script>' . "\n";
 		
 		// Make the call for all the ads
