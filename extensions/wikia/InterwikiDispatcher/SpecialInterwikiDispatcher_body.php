@@ -2,7 +2,7 @@
 /**
  * InterwikiDispatcher - see ticket #2954
  *
- * @author Maciej Błaszkowski (Marooned) <marooned@wikia.com>
+ * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
  *
  * @date 2008-07-08
