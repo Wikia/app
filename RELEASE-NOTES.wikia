@@ -1,4 +1,5 @@
 == Changes since 200908.3 ==
+* rt#21122: StaticChute does strange things to SemanticForms's YUI code (Macbre)
 * rt#21671: MultiLookup: prevent trailing whitespace problems (Uberfuzzy)
 * upgraded to MW 1.15.1 (Emil)
 * rt#21297: Answers: Changed wikianswers visible headings for better SEO. (Nef)
