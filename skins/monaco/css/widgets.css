@@ -310,8 +310,8 @@ body.widgetsAddingBlocked .add {
 	padding: 2px 2px !important;
 }
 
-/*** Search suggest ***/
-.yui-ac-container {
+/*** Link suggest ***/
+.link-suggest-container {
 	z-index: 1000;
 	position: absolute;
 	top: 25px;
