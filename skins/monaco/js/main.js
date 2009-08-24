@@ -253,6 +253,7 @@ function monacoNavigationHoverActions() {
 
 	// RT #19924
 	$('#wpTextbox1').mouseover(function() {
+		$('#navigation').find(".menu-item").removeClass("navigation-hover");
 		menutimer = setTimeout(function() {
 			$("#navigation").find(".sub-menu").hide();
 		}, 500);
