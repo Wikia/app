@@ -26,7 +26,7 @@
 			&nbsp;<a href="<?php echo $full[ "url" ] ?>"><?php echo $full[ "timestamp" ] ?></a>
 		</td>
 	</tr>
-	<?php if( ! $isAnon ): ?>
+	<?php if( ! $isAnon && $available ): ?>
 	<tr>
 		<td  style="border-right: 0">
 			<?php $this->msg( 'dump-database-request' ) ?>
