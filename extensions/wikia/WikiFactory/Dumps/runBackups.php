@@ -191,7 +191,7 @@ function getDirectory( $database, $hide = false ) {
 	global $wgDevelEnvironment;
 
 	$folder     = empty( $wgDevelEnvironment ) ?  "backup" : "tmp";
-	$subfoloder = $hide ? "dumps-hidden" : "dumps";
+	$subfolder = $hide ? "dumps-hidden" : "dumps";
 	$database   = strtolower( $database );
 	
 	$directory = sprintf(
