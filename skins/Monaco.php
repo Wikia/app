@@ -1660,9 +1660,9 @@ if ($wgOut->isArticle()){
 					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
 						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
 						'<td style="text-align: center">' .
-						AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_LEFT_BOXAD", false) .
+						AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_LEFT_BOXAD", true) .
 						'</td><td style="text-align: center">' .
-						AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_RIGHT_BOXAD", false) .
+						AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_RIGHT_BOXAD", true) .
 						"</td></tr>\n</table>";
 					}
 
