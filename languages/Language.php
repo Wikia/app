@@ -2387,7 +2387,7 @@ class Language {
 			}
 
 			# Try the global cache
-			$memcKey = wfMemcKey('localisation', $code, 'mw1.14' );
+			$memcKey = wfMemcKey('localisation', $code );
 			$fbMemcKey = wfMemcKey('fallback', $cache['fallback'] );
 			$cache = $wgMemc->get( $memcKey );
 			if ( $cache ) {
