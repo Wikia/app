@@ -1,3 +1,6 @@
+== Changes since 200908.4 ==
+* 
+
 == Changes since 200908.3 ==
 * rt#19924: Sidebar menu does not collapse when cursor moves over MediaWiki edit area (Macbre)
 * rt#21122: StaticChute does strange things to SemanticForms's YUI code (Macbre)
