@@ -665,11 +665,13 @@ class WikiFactoryLoader {
 			/**
 			 * set wgDBserver for second cluster based on $wgLBFactoryConf
 			 */
-			if( isset( $this->mVariables["wgDBcluster"] ) &&
-				isset( $wgLBFactoryConf[ "sectionLoads" ][ $this->mVariables[ "wgDBcluster" ] ] )) {
+			$cluster = isset( $this->mVariables["wgDBcluster"] )
+				? $this->mVariables["wgDBcluster"]
+				: "DEFAULT";
 
-				$cluster = $wgLBFactoryConf[ "sectionLoads" ][ $this->mVariables["wgDBcluster"] ];
-				$db = array_shift( array_keys( $cluster ) );
+			if( isset( $wgLBFactoryConf[ "sectionLoads" ][ $cluster ] )) {
+				$servers = $wgLBFactoryConf[ "sectionLoads" ][ $cluster ];
+				$db = array_shift( array_keys( $servers ) );
 				if( isset( $wgLBFactoryConf[ "hostsByName" ][ $db ] ) ) {
 					$wgDBserver = $wgLBFactoryConf[ "hostsByName" ][ $db ];
 					$this->debug( "wgDBserver for cluster {$cluster} set to {$wgDBserver}" );
