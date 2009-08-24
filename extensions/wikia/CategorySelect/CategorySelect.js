@@ -19,7 +19,7 @@ function extractSortkey(text) {
 	var len = text.length;
 	var curly = square = 0;
 	var pipePos = -1;
-	for (i = 0; i < len && pipePos == -1; i++) {
+	for (var i = 0; i < len && pipePos == -1; i++) {
 		switch (text.charAt(i)) {
 			case '{':
 				curly++;
@@ -36,7 +36,7 @@ function extractSortkey(text) {
 			case '|':
 				if (curly == 0 && square == 0) {
 					pipePos = i;
-			}
+				}
 		}
 	}
 	if (pipePos != -1) {
@@ -120,7 +120,7 @@ function modifyCategory(e) {
 		if (categories[catId].category != data['category']) {
 			categories[catId].category = data['category'];
 			var items = $G('csItemsContainer').getElementsByTagName('a');
-			for (i=0; i<items.length; i++) {
+			for (var i=0; i<items.length; i++) {
 				if (items[i].getAttribute('catId') == catId) {
 					items[i].firstChild.firstChild.nodeValue = data['category'];
 					break;
@@ -247,7 +247,7 @@ function addCategory(category, params, index) {
 
 function generateWikitextForCategories() {
 	var categoriesStr = '';
-	for (c=0; c < categories.length; c++) {
+	for (var c=0; c < categories.length; c++) {
 		catTmp = '\n[[' + categories[c].namespace + ':' + categories[c].category + (categories[c].sortkey == '' ? '' : ('|' + categories[c].sortkey)) + ']]';
 		if (categories[c].outerTag != '') {
 			catTmp = '<' + categories[c].outerTag + '>' + catTmp + '</' + categories[c].outerTag + '>';
@@ -272,7 +272,7 @@ function initializeCategories(cats) {
 	}
 
 	addAddCategoryButton();
-	for (c=0; c < categories.length; c++) {
+	for (var c=0; c < categories.length; c++) {
 		addCategory(categories[c].category, {'namespace': categories[c].namespace, 'outerTag': categories[c].outerTag, 'sortkey': categories[c].sortkey}, c);
 	}
 
@@ -402,7 +402,7 @@ function toggleCodeView() {
 					YAHOO.log('AJAX result: OK');
 					//delete old categories [HTML items]
 					var items = $G('csItemsContainer').getElementsByTagName('a');
-					for (i=items.length-1; i>=0; i--) {
+					for (var i=items.length-1; i>=0; i--) {
 						if (items[i].getAttribute('catId') != null) {
 							items[i].parentNode.removeChild(items[i]);
 						}
@@ -441,7 +441,7 @@ function moveElement(movedId, prevSibId) {
 	//reorder catId in HTML elements
 	var itemId = 0;
 	var items = $G('csItemsContainer').getElementsByTagName('a');
-	for (catId=0; catId < newCat.length; catId++) {
+	for (var catId=0; catId < newCat.length; catId++) {
 		if (newCat[catId] == undefined) {
 			continue;
 		}
