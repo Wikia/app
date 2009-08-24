@@ -11,15 +11,13 @@ class Bolek {
 		// (cache would be nice anyway)
 	}
 
-	static function addPage($page_id) {
-		global $wgUser;
-
+	static function addPage($bolek_id, $page_id) {
 		$dbw = self::_getDB(DB_MASTER);
 		try {
 			$dbw->insert(
 				"bolek",
 				array(
-					"b_user_id"   => $wgUser->getId(),
+					"b_bolek_id"  => $bolek_id,
 					"b_page_id"   => $page_id,
 					"b_timestamp" =>  time(),
 				),
@@ -38,17 +36,14 @@ class Bolek {
 		return $result;
 	}
 
-	static function getCollection($user_id = null) {
-		global $wgUser;
-		if (null == $user_id) $user_id = $wgUser->getId();
-
+	static function getCollection($bolek_id) {
 		$result = array();
 
 		$dbr = self::_getDB(DB_SLAVE);
 		$res = $dbr->select(
 			array("bolek"),
 			array("b_page_id"),
-			array("b_user_id" => $user_id),
+			array("b_bolek_id" => $bolek_id),
 			__METHOD__,
 			array("ORDER BY" => "b_timestamp")
 		);
@@ -60,13 +55,11 @@ class Bolek {
 		return $result;
 	}
 
-	static function clearCollection() {
-		global $wgUser;
-
+	static function clearCollection($bolek_id) {
 		$dbw = self::_getDB(DB_MASTER);
 		$dbw->delete(
 			"bolek",
-			array("b_user_id" => $wgUser->getId()),
+			array("b_bolek_id" => $bolek_id),
 			__METHOD__
 		);
 
@@ -75,14 +68,12 @@ class Bolek {
 		return $result;
 	}
 
-	static function getCollectionTimestamp() {
-		global $wgUser;
-
+	static function getCollectionTimestamp($bolek_id) {
 		$dbr = self::_getDB(DB_SLAVE);
 		$res = $dbr->select(
 			array("bolek"),
 			array("max(b_timestamp) AS timestamp"),
-			array("b_user_id" => $wgUser->getId()),
+			array("b_bolek_id" => $bolek_id),
 			__METHOD__
 		);
 		while ($row = $dbr->fetchObject($res)) {
@@ -95,15 +86,13 @@ class Bolek {
 		return $result;
 	}
 
-	static function removePage($page_id) {
-		global $wgUser;
-
+	static function removePage($bolek_id, $page_id) {
 		$dbw = self::_getDB(DB_MASTER);
 		try {
 			$dbw->delete(
 				"bolek",
 				array(
-					"b_user_id"   => $wgUser->getId(),
+					"b_bolek_id"   => $bolek_id,
 					"b_page_id"   => $page_id,
 				),
 				__METHOD__
@@ -117,15 +106,12 @@ class Bolek {
 		return $result;
 	}
 
-	static function getCover($user_id = null) {
-		global $wgUser;
-		if (null == $user_id) $user_id = $wgUser->getId();
-
+	static function getCover($bolek_id) {
 		$dbr = self::_getDB(DB_SLAVE);
 		$res = $dbr->select(
 			array("bolek_meta"),
 			array("bm_cover"),
-			array("bm_user_id" => $user_id),
+			array("bm_bolek_id" => $bolek_id),
 			__METHOD__
 		);
 		while ($row = $dbr->fetchObject($res)) {
@@ -147,15 +133,13 @@ class Bolek {
 		return $result;
 	}
 
-	static function customizeCover($cover) {
-		global $wgUser;
-
+	static function customizeCover($bolek_id, $cover) {
 		$dbw = self::_getDB(DB_MASTER);
 		try {
 			$dbw->insert(
 				"bolek_meta",
 				array(
-					"bm_user_id"   => $wgUser->getId(),
+					"bm_bolek_id"   => $bolek_id,
 					"bm_cover"     =>  serialize($cover),
 					"bm_timestamp" =>  time(),
 				),
@@ -170,7 +154,7 @@ class Bolek {
 						"bm_cover"     => serialize($cover),
 						"bm_timestamp" => time(),
 					),
-					array("bm_user_id" => $wgUser->getId()),
+					array("bm_bolek_id" => $bolek_id),
 					__METHOD__
 				);
 				$result = "Cover customized.";
@@ -183,14 +167,12 @@ class Bolek {
 		return $result;
 	}
 
-	static function getCoverTimestamp() {
-		global $wgUser;
-
+	static function getCoverTimestamp($bolek_id) {
 		$dbr = self::_getDB(DB_SLAVE);
 		$res = $dbr->select(
 			array("bolek_meta"),
 			array("bm_timestamp"),
-			array("bm_user_id" => $wgUser->getId()),
+			array("bm_bolek_id" => $bolek_id),
 			__METHOD__
 		);
 		while ($row = $dbr->fetchObject($res)) {
@@ -203,7 +185,7 @@ class Bolek {
 		return $result;
 	}
 
-	static function getTimestamp() {
-		return max(Bolek::getCollectionTimestamp(), Bolek::getCoverTimestamp());
+	static function getTimestamp($bolek_id) {
+		return max(Bolek::getCollectionTimestamp($bolek_id), Bolek::getCoverTimestamp($bolek_id));
 	}
 }

@@ -45,7 +45,7 @@ function getPdf() {
 		action:    "ajax",
 		rs:        "Lolek::getPdf",
 		url:       "<?=$url?>",
-		user_id:    <?=$user_id?>,
+		bolek_id:  "<?=$bolek_id?>",
 		timestamp:  <?=$timestamp?>
 	}, function(data, textStatus) {
 		if (data.match(/\.pdf$/)) {
@@ -65,5 +65,5 @@ function getPdf() {
 
 <hr />
 
-<p>Debug: (<?=$action?>) <?=$result?></p>
+<p>Debug: (<?=$action?>) <?=$result?> [<?=$bolek_id?>]</p>
 

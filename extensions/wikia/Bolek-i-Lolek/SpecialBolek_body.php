@@ -6,24 +6,41 @@ class BolekPage extends UnlistedSpecialPage {
 	}
 
 	public function execute() {
-		global $wgRequest, $wgUser, $wgOut;
+		global $wgRequest, $wgUser, $wgOut, $wgCookiePrefix;
 
 		$action  = $wgRequest->getVal("action",  "view");
 
 		// totally different wrokflow, almost separate application
+		if (in_array($action, array("print", "cover"))) {
+			if (!empty($_COOKIE["{$wgCookiePrefix}bolek"])) {
+				$bolek_id = $_COOKIE["{$wgCookiePrefix}bolek"];
+			} else {
+				$bolek_id = $wgRequest->getVal("bolek_id",  null); // FIXME add a secret hash (from lolek)?
+			}
+
 		if ("print" == $action) {
-			$this->_print();
+			$this->_print($bolek_id);
 			return;
 		}
-		// too many exceptions... )-: rethink, refactor
 		if ("cover" == $action) {
-			$this->_cover();
+			$this->_cover($bolek_id);
 			return;
+		}
+
 		}
 
 		if (!in_array($wgUser->getName(), array("Ppiotr", "Angies", "Shahid", "VickyBC", "Eloy.wikia"))) {
 			$this->displayRestrictionError();
 			return;
+		}
+
+		if (!empty($_COOKIE["{$wgCookiePrefix}bolek"])) {
+			$bolek_id = $_COOKIE["{$wgCookiePrefix}bolek"];
+		} else {
+			$bolek_id = md5(uniqid(mt_rand(), true));
+
+			$expire = time()+3600*24*365;
+			WebResponse::setcookie("bolek", $bolek_id, $expire);
 		}
 
 		switch ($action) {
@@ -33,19 +50,19 @@ class BolekPage extends UnlistedSpecialPage {
 
 				break;
 			case "add":
-				$result = Bolek::addPage($wgRequest->getVal("page_id",  null));
+				$result = Bolek::addPage($bolek_id, $wgRequest->getVal("page_id",  null));
 
 				break;
 			case "clear":
-				$result = Bolek::clearCollection();
+				$result = Bolek::clearCollection($bolek_id);
 
 				break;
 			case "remove":
-				$result = Bolek::removePage($wgRequest->getVal("page_id",  null));
+				$result = Bolek::removePage($bolek_id, $wgRequest->getVal("page_id",  null));
 
 				break;
 			case "customize":
-				$result = Bolek::customizeCover($wgRequest->getArray("cover",  null));
+				$result = Bolek::customizeCover($bolek_id, $wgRequest->getArray("cover",  null));
 
 				break;
 		}
@@ -54,20 +71,18 @@ class BolekPage extends UnlistedSpecialPage {
 		$tmpl->set_vars(array(
 			"action"     => $action,
 			"result"     => $result,
-			"collection" =>  Bolek::getCollection(),
+			"collection" =>  Bolek::getCollection($bolek_id),
 			"url"        => $this->getTitle()->getFullURL(),
-			"user_id"    => $wgUser->getId(),
-			"timestamp"  =>  Bolek::getTimestamp(),
-			"cover"      =>  Bolek::getCover(),
+			"bolek_id"   => $bolek_id,
+			"timestamp"  =>  Bolek::getTimestamp($bolek_id),
+			"cover"      =>  Bolek::getCover($bolek_id),
 		));
 
 		$wgOut->addHTML($tmpl->execute("specialbolek"));
 	}
 
-	private function _print() {
-		global $wgRequest;
-		$user_id = $wgRequest->getVal("user_id",  null);
-		$collection = Bolek::getCollection($user_id);
+	private function _print($bolek_id) {
+		$collection = Bolek::getCollection($bolek_id);
 
 		global $wgOut;
 		$wgOut->addHTML("<div id=\"bolek\">\n");
@@ -94,6 +109,7 @@ class BolekPage extends UnlistedSpecialPage {
 			$wgOut->addHTML("</ul>");
 		}
 
+		global $wgRequest;
 		$add = $wgRequest->getVal("add", 0);
 		for ($i = 1; $i <= $add; $i++) {
 			$wgOut->addHTML("<p style=\"page-break-before: always\">&nbsp;</p>");
@@ -117,10 +133,8 @@ class BolekPage extends UnlistedSpecialPage {
 		return;
 	}
 
-	private function _cover() {
-		global $wgRequest;
-		$user_id = $wgRequest->getVal("user_id",  null);
-		$cover = Bolek::getCover($user_id);
+	private function _cover($bolek_id) {
+		$cover = Bolek::getCover($bolek_id);
 
 		global $wgOut;
 		$wgOut->addHTML("<div id=\"bolek\">\n");

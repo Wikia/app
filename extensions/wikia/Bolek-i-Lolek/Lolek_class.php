@@ -5,12 +5,12 @@ class Lolek {
 		global $wgRequest, $wgUploadDirectory, $wgUploadPath;
 
 		$url       = $wgRequest->getVal("url");
-		$user_id   = $wgRequest->getVal("user_id");
+		$bolek_id  = $wgRequest->getVal("bolek_id");
 		$timestamp = $wgRequest->getVal("timestamp");
 
-		if (empty($url) || empty($user_id) || empty($timestamp)) return "Not enough data.";
+		if (empty($url) || empty($bolek_id) || empty($timestamp)) return "Not enough data.";
 
-		$fname = "{$user_id}-{$timestamp}.pdf";
+		$fname = "{$bolek_id}-{$timestamp}.pdf";
 
 		if (!file_exists("{$wgUploadDirectory}/lolek/{$fname}")) {
 			$add       = 0;
@@ -18,7 +18,7 @@ class Lolek {
 			do {
 
 			$debug = "Debug: rendered " . date("r", time());
-			$cmd   = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --footer-left \"{$debug}\" --cover \"{$url}?action=cover&user_id={$user_id}\" \"{$url}?action=print&user_id={$user_id}&add={$add}\" {$wgUploadDirectory}/lolek/{$fname}";
+			$cmd   = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --footer-left \"{$debug}\" --cover \"{$url}?action=cover&bolek_id={$bolek_id}\" \"{$url}?action=print&bolek_id={$bolek_id}&add={$add}\" {$wgUploadDirectory}/lolek/{$fname}";
 
 			$wgMaxShellTime     = 0;
 			$wgMaxShellFileSize  = 0;
