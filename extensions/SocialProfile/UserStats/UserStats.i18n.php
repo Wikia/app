@@ -42,19 +42,26 @@ $messages['en'] = array(
 	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Gift received|Gifts received}}',
 	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Gift sent|Gifts sent}}',
 	'level-advance-subject' => 'You are now a "$1" on {{SITENAME}}!',
-	'level-advance-body' => 'Hi $1:
+	'level-advance-body' => 'Hi $1.
 
 You are now a "$2" on {{SITENAME}}!
 
 Congratulations,
 
-The {{SITENAME}} Team
+The {{SITENAME}} team
 
 ---
-Hey, want to stop getting emails from us?
+Hey, want to stop getting e-mails from us?
 
 Click $3
-and change your settings to disable email notifications.'
+and change your settings to disable e-mail notifications.'
+);
+
+/** Message documentation (Message documentation)
+ * @author Purodha
+ */
+$messages['qqq'] = array(
+	'top-fans-by-category-title' => '$1 is any of the messages starting with "top-fans-stats-" and the name of the statistic. Examples are {{msg-mw|top-fans-stats-vote-count}}, {{msg-mw|top-fans-stats-weekly-winner-count}}, {{msg-mw|top-fans-stats-referrals-completed}}, {{msg-mw|top-fans-stats-friends-count}}, and {{msg-mw|top-fans-stats-edit-count}}.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -177,6 +184,54 @@ $messages['arz'] = array(
 وغير إعداداتك لتعديل إخطارات البريد الإلكتروني.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
+ */
+$messages['be-tarask'] = array(
+	'user-stats-alltime-title' => 'Болей за ўсё пунктаў у гісторыі',
+	'user-stats-weekly-title' => 'Болей за ўсё пунктаў у гэтым тыдні',
+	'user-stats-monthly-title' => 'Болей за ўсё пунктаў у гэтым месяцы',
+	'topusers' => 'Самыя актыўныя ўдзельнікі',
+	'top-fans-by-points-nav-header' => 'Самыя актыўныя аматары',
+	'top-fans-by-category-nav-header' => 'Самыя актыўныя па катэгорыях',
+	'top-fans-total-points-link' => 'Усяго пунктаў',
+	'top-fans-weekly-points-link' => 'Пунктаў на гэтым тыдні',
+	'top-fans-monthly-points-link' => 'Пунктаў у гэтым месяцы',
+	'top-fans-points' => 'пунктаў',
+	'top-fans-by-category-title' => 'Самы актыўны за ўсіх $1',
+	'top-fans-bad-field-title' => 'Ой!',
+	'top-fans-bad-field-message' => 'Такой статыстыкі няма.',
+	'top-fans-stats-vote-count' => '{{PLURAL:$1|Голас|Галасы|Галасоў}}',
+	'top-fans-stats-monthly-winner-count' => '{{PLURAL:$1|Пераможца месяца|Пераможцы месяца|Пераможцаў месяца}}',
+	'top-fans-stats-weekly-winner-count' => '{{PLURAL:$1|Пераможца тыдня|Пераможцы тыдня}}',
+	'top-fans-stats-edit-count' => '{{PLURAL:$1|Рэдагаваньне|Рэдагаваньні|Рэдагаваньняў}}',
+	'top-fans-stats-comment-count' => '{{PLURAL:$1|Камэнтар|Камэнтары|Камэнтараў}}',
+	'top-fans-stats-referrals-completed' => '{{PLURAL:$1|Прыцягнуты|Прыцягнутых|Прыцягнутых}}',
+	'top-fans-stats-friends-count' => '{{PLURAL:$1|Сябар|Сябры|Сяброў}}',
+	'top-fans-stats-foe-count' => '{{PLURAL:$1|Вораг|Ворагі|Ворагаў}}',
+	'top-fans-stats-opinions-published' => '{{PLURAL:$1|Апублікаванае меркаваньне|Апублікаваныя меркаваньні}}',
+	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Меркаваньне|Меркаваньні|Меркаваньняў}}',
+	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Атрыманы голас за|Атрыманыя галасы за|Атрыманых галасоў за}}',
+	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Атрыманы голас супраць|Атрыманыя галасы супраць|Атрыманых галасоў супраць}}',
+	'top-fans-stats-comment-score-positive-given' => '{{PLURAL:$1|Адданы голас за|Адданыя галасы за|Адданых галасоў за}}',
+	'top-fans-stats-comment-score-negative-given' => '{{PLURAL:$1|Адданы голас супраць|Адданыя галасы супраць|Адданых галасоў супраць}}',
+	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Атрыманы падарунак|Атрыманыя падарункі|Атрыманых падарункаў}}',
+	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Дасланы падарунак|Дасланыя падарункі|Дасланых падарункаў}}',
+	'level-advance-subject' => 'Цяпер Вы ў групе «$1» у {{SITENAME}}!',
+	'level-advance-body' => 'Прывітаньне, $1:
+
+Цяпер Вы «$2» у {{SITENAME}}!
+
+Віншуем,
+
+Каманда {{SITENAME}}
+
+---
+Калі Вы не жадаеце болей атрымліваць ад нас лісты па электроннай пошце, націсьніце $3 і зьмяніце Вашыя ўстаноўкі для паведамленьняў.',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -208,6 +263,13 @@ $messages['bg'] = array(
 Не искате да получавате повече писма от нас?
 
 Можете да промените настройките си за известяване от следната препратка: $3.',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'top-fans-total-points-link' => 'Ukupni bodovi',
 );
 
 /** Czech (Česky)
@@ -273,10 +335,69 @@ Klicke $3
 und ändere deine Einstellungen, um die E-Mail-Benachrichtigungen abzustellen.',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'user-stats-alltime-title' => 'Absolutnje nejwěcej dypkow',
+	'user-stats-weekly-title' => 'Nejwěcej dypkow toś ten tyźeń',
+	'user-stats-monthly-title' => 'Nejwěcej dypkow toś ten mjasec',
+	'topusers' => 'Nejlěpše wužywarje',
+	'top-fans-by-points-nav-header' => 'Nejlěpše fany',
+	'top-fans-by-category-nav-header' => 'Nejlěpše pó kategoriji',
+	'top-fans-total-points-link' => 'Dypki dogromady',
+	'top-fans-weekly-points-link' => 'Dypki toś ten tyźeń',
+	'top-fans-monthly-points-link' => 'Dypki toś ten mjasec',
+	'top-fans-points' => 'dypki',
+	'top-fans-by-category-title' => 'Nejlěpše dogromady $1',
+	'top-fans-bad-field-title' => 'Hopla!',
+	'top-fans-bad-field-message' => 'Pódana statistika njeeksistěrujo.',
+	'top-fans-stats-vote-count' => '{{PLURAL:$1|Głos|Głosa|Głose|Głosow}}',
+	'top-fans-stats-monthly-winner-count' => '{{PLURAL:$1|Mjasecne dobyśe|Mjasecnej dobyśi|Mjasecne dobyśa|Mjasecnych dobyśow}}',
+	'top-fans-stats-weekly-winner-count' => '{{PLURAL:$1|Tyźeńske dobyśe|Tyźeńskej dobyśi|Tyźeńske dobyśa|Tyźeńskich dobyśow}}',
+	'top-fans-stats-edit-count' => '{{PLURAL:$1|Změna|Změnje|Změny|Změnow}}',
+	'top-fans-stats-comment-count' => '{{PLURAL:$1|Komentar|Komentara|Komentary|Komentarow}}',
+	'top-fans-stats-referrals-completed' => '{{PLURAL:$1|Pórucenje|Póruceni|Pórucenja|Pórucenjow}}',
+	'top-fans-stats-friends-count' => '{{PLURAL:$1|Pśijaśel|Pśijaśela|Pśijaśele|Pśijaśelow}}',
+	'top-fans-stats-foe-count' => '{{PLURAL:$1|Njepśijaśel|Njepśijaśela|Njepśijaśele|Njepśijaśelow}}',
+	'top-fans-stats-opinions-published' => '{{PLURAL:$1|Wózjawjone měnjenje|Wózjawjonej měnjeni|Wózjawjone měnjenja|Wózjawjonych měnjenjow}}',
+	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Měnjenje|Měnjeni|Měnjenja|Měnjenjow}}',
+	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Tłusty palc|Tłustej palca|Tłuste palce|Tłustych palcow}} górjej',
+	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Tłusty palc|Tłustej palca|Tłuste palce|Tłustych palcow}} dołoj',
+	'top-fans-stats-comment-score-positive-given' => '{{PLURAL:$1|Dany tłusty palc|Danej tłustej palca|Dane tłuste palce|Danych tłustych palcow}} górjej',
+	'top-fans-stats-comment-score-negative-given' => '{{PLURAL:$1|Dany tłusty palc|Danej tłustej palca|Dane tłuste palce|Danych tłustych palcow}} dołoj',
+	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Dar dostaty|Dara dostatej|Dary dostate|Darow dostatych}}',
+	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Dar pósłany|Dara pósłanej|Dary pósłane|Darow pósłanych}}',
+	'level-advance-subject' => 'Sy něnto "$1" na {{GRAMMAR:lokatiw|{{SITENAME}}}}!',
+	'level-advance-body' => 'Witaj $1.
+
+Sy něnto "$2" na {{GRAMMAR:lokatiw|{{SITENAME}}}}!
+
+Glukužycenje,
+
+Team {{GRAMMAR:genitiw|{{SITENAME}}}}
+
+---
+Njocoš wěcej scełego žedne e-maile wót nas dostawaś?
+
+Klikni na $3
+a změń swóje nastajenja, aby znjemóžnił zdźělenja pśez e-mail.',
+);
+
+/** Ewe (Eʋegbe)
+ * @author Natsubee
+ */
+$messages['ee'] = array(
+	'top-fans-bad-field-title' => 'Tsalele!',
+);
+
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
  */
 $messages['el'] = array(
+	'top-fans-points' => 'βαθμοί',
+	'top-fans-bad-field-title' => 'Ωχ!',
 	'top-fans-stats-edit-count' => '{{PLURAL:$1|Επεξεργασία|Επεξεργασίες}}',
 	'top-fans-stats-comment-count' => '{{PLURAL:$1|Σχόλιο|Σχόλια}}',
 	'top-fans-stats-friends-count' => '{{PLURAL:$1|Φίλος|Φίλοι}}',
@@ -308,13 +429,47 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'topusers' => 'Usuarios top',
+	'top-fans-total-points-link' => 'Puntos totales',
+	'top-fans-weekly-points-link' => 'Puntos esta semana',
+	'top-fans-monthly-points-link' => 'Puntos este mes',
 	'top-fans-points' => 'puntos',
+	'top-fans-bad-field-title' => 'Oops!',
+	'top-fans-bad-field-message' => 'La estadística especificada no existe.',
+	'top-fans-stats-vote-count' => '{{PLURAL:$1|Voto|Votos}}',
+	'top-fans-stats-monthly-winner-count' => '{{PLURAL:$1|Wictoria mensual|Victorias mensuales}}',
+	'top-fans-stats-weekly-winner-count' => '{{PLURAL:$1|Victoria semanal|Victorias semanales}}',
+	'top-fans-stats-edit-count' => '{{PLURAL:$1|Edición|Ediciones}}',
+	'top-fans-stats-comment-count' => '{{PLURAL:$1|Comentario|Comentarios}}',
+	'top-fans-stats-friends-count' => '{{PLURAL:$1|Amigo|Amigos}}',
+	'top-fans-stats-foe-count' => '{{PLURAL:$1|Enemigo|Enemigos}}',
+	'top-fans-stats-opinions-published' => '{{PLURAL:$1|Opinión publicada|Opiniones publicadas}}',
 	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Opinión|Opiniones}}',
+	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Pulgar arriba|Pulgares arriba}}',
+	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Pulgar abajo|Pulgares abajo}}',
+	'top-fans-stats-comment-score-positive-given' => '{{PLURAL:$1|Pulgar arriba dado|Pulgares arriba dados}}',
+	'top-fans-stats-comment-score-negative-given' => '{{PLURAL:$1|Pulgar abajo dado|Pulgares abajos dados}}',
+	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Regalo recibido|Regalos recibidos}}',
+	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Regalo enviado|Regalos enviados}}',
 	'level-advance-subject' => '¡Ahora eres un «$1» en {{SITENAME}}!',
+	'level-advance-body' => 'Hola $1.
+
+Usted es ahora un "$2" en {{SITENAME}}!
+
+Felicitaciones,
+
+El  Equipo {{SITENAME}}
+
+---
+Hey, Desea no recibir correos electrónicos de nosotros?
+
+Haga click en  $3
+y cambie sus configuraciones para deshabilitar notificaciones por correo electrónico.',
 );
 
 /** Basque (Euskara)
@@ -468,6 +623,53 @@ Quere deixar de recibir correos electrónicos nosos?
 
 Faga clic $3
 e troque as súas configuracións para deshabilitar as notificacións por correo electrónico.',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'user-stats-alltime-title' => 'Am meischte Pinkt (insgsamt)',
+	'user-stats-weekly-title' => 'Am meischte Pinkt in däre Wuche',
+	'user-stats-monthly-title' => 'Am meische Pinkt in däm Monet',
+	'topusers' => 'Top-Benutzer',
+	'top-fans-by-points-nav-header' => 'Top-Fan',
+	'top-fans-by-category-nav-header' => 'Top-per-Kategorii',
+	'top-fans-total-points-link' => 'Gsamtpunktzahl',
+	'top-fans-weekly-points-link' => 'Pinkt in däre Wuche',
+	'top-fans-monthly-points-link' => 'Pinkt in däm Monet',
+	'top-fans-points' => 'Pinkt',
+	'top-fans-by-category-title' => 'Top insgsamt $1',
+	'top-fans-bad-field-title' => 'Hoppla!',
+	'top-fans-bad-field-message' => 'Die Statischtik git s nit.',
+	'top-fans-stats-vote-count' => '{{PLURAL:$1|Stimm|Stimme}}',
+	'top-fans-stats-monthly-winner-count' => '{{PLURAL:$1|Monetsgwinn|Monatsgwinn}}',
+	'top-fans-stats-weekly-winner-count' => '{{PLURAL:$1|Wuchegwinn|Wuchegwinn}}',
+	'top-fans-stats-edit-count' => '{{PLURAL:$1|Bearbeitig|Bearbeitige}}',
+	'top-fans-stats-comment-count' => '{{PLURAL:$1|Kommentar|Kommentar}}',
+	'top-fans-stats-referrals-completed' => '{{PLURAL:$1|Empfählig|Empfählige}}',
+	'top-fans-stats-friends-count' => '{{PLURAL:$1|Frynd|Frynd}}',
+	'top-fans-stats-foe-count' => '{{PLURAL:$1|Fynd|Fynd}}',
+	'top-fans-stats-opinions-published' => '{{PLURAL:$1|Vereffentligti Meinig|Vereffentligti Meinige}}',
+	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Meinig|Meinige}}',
+	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Duume ufezues|Dyyme ufezues}}',
+	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Duume abezues|Dyyme aabezues}}',
+	'top-fans-stats-comment-score-positive-given' => '{{PLURAL:$1|Duume ufezues|Dyyme ufezues}} gee',
+	'top-fans-stats-comment-score-negative-given' => '{{PLURAL:$1|Duume abezues|Dyyme abezues}} gee',
+	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Gschänk iberchu|Gschänk inerchu}}',
+	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Gschänk gmacht|Gschänk gmacht}}',
+	'level-advance-subject' => 'Du bisch jetz „$1“ uf {{SITENAME}}!',
+	'level-advance-body' => 'Sali $1,
+
+Du bisch jetz e „$2“ uf {{SITENAME}}!
+
+S {{SITENAME}}-Team grateliert Dir!
+
+---
+Du witt gar kei E-Mail vu uns iberchu?
+
+Druck $3
+un ändere Dyyi Yystellige go d E-Mail-Benochrichtigunge abzstelle.',
 );
 
 /** Hebrew (עברית)
@@ -633,6 +835,7 @@ $messages['ja'] = array(
 	'top-fans-weekly-points-link' => '今週の得点',
 	'top-fans-monthly-points-link' => '今月の得点',
 	'top-fans-points' => '得点',
+	'top-fans-by-category-title' => '総合上位$1',
 	'top-fans-bad-field-title' => 'おっと！',
 	'top-fans-bad-field-message' => '指定した統計は存在しません。',
 	'top-fans-stats-vote-count' => '投票',
@@ -786,6 +989,8 @@ $messages['lb'] = array(
 	'top-fans-stats-foe-count' => '{{PLURAL:$1|Géigner|Géigner}}',
 	'top-fans-stats-opinions-published' => '{{PLURAL:$1|Verëffentlecht Meenung| Verëffentlecht Meenungen}}',
 	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Meenung|Meenungen}}',
+	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Daum no uewen|Daumen no uewen}}',
+	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Daum no ënnen|Daumen no ënnen}}',
 	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Cadeau kritt|Cadeaue kritt}}',
 	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Cadeau|Cadeauë}} geschéckt',
 	'level-advance-subject' => 'Dir sidd elo "$1" op {{SITENAME}}!',
@@ -1013,40 +1218,46 @@ e modificatz vòstres paramètres en desactivant las notificacions per corrièr 
 /** Polish (Polski)
  * @author Leinad
  * @author Maikking
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'user-stats-alltime-title' => 'Najwięcej punktów w historii',
 	'user-stats-weekly-title' => 'Najwięcej punktów w tym tygodniu',
 	'user-stats-monthly-title' => 'Najwięcej punktów w tym miesiącu',
+	'topusers' => 'Najwyżej notowani użytkownicy',
+	'top-fans-by-points-nav-header' => 'Najwyżej notowani wielbiciele',
+	'top-fans-by-category-nav-header' => 'Najwyżej notowani według kategorii',
 	'top-fans-total-points-link' => 'Suma punktów',
 	'top-fans-weekly-points-link' => 'Punkty w tym tygodniu',
 	'top-fans-monthly-points-link' => 'Punkty w tym miesiącu',
 	'top-fans-points' => 'punktów',
+	'top-fans-by-category-title' => 'Ogólnie najwyżej notowani $1',
 	'top-fans-bad-field-title' => 'Oops!',
-	'top-fans-bad-field-message' => 'Taka statystyka nie istnieje.',
+	'top-fans-bad-field-message' => 'Brak takiej statystyki.',
 	'top-fans-stats-vote-count' => '{{PLURAL:$1|Głos|Głosy}}',
 	'top-fans-stats-monthly-winner-count' => '{{PLURAL:$1|Zwycięzca miesiąca|Zwycięzcy miesiąca}}',
 	'top-fans-stats-weekly-winner-count' => '{{PLURAL:$1|Zwycięzca tygodnia|Zwycięzcy tygodnia}}',
 	'top-fans-stats-edit-count' => '{{PLURAL:$1|Edycja|Edycje}}',
-	'top-fans-stats-comment-count' => '{{PLURAL:$1|Komentarz|Komentarzy}}',
+	'top-fans-stats-comment-count' => '{{PLURAL:$1|Komentarz|Komentarze}}',
+	'top-fans-stats-referrals-completed' => '{{PLURAL:$1|Rekomendacja|Rekomendacje}}',
 	'top-fans-stats-friends-count' => '{{PLURAL:$1|Znajomy|Znajomych}}',
 	'top-fans-stats-foe-count' => '{{PLURAL:$1|Wróg|Wrogów}}',
 	'top-fans-stats-opinions-published' => '{{PLURAL:$1|Opublikowana opinia|Opublikowane opinie}}',
-	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Opinia|Opinii}}',
-	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Głos za otrzymany|Głosy za otrzymane}}',
-	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Głos przeciw otrzymany|Głosy przeciw otrzymane}}',
-	'top-fans-stats-comment-score-positive-given' => '{{PLURAL:$1|Głos za oddany|Głosy za oddane}}',
-	'top-fans-stats-comment-score-negative-given' => '{{PLURAL:$1|Głos przeciw oddane|Głosy przeciw oddane}}',
-	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Prezent otrzymany|Prezenty otrzymane}}',
-	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Prezent dany|Prezenty dane}}',
-	'level-advance-subject' => 'Należysz teraz do grupy "$1" na {{SITENAME}}!',
-	'level-advance-body' => 'Witaj $1:
+	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Opinia|Opinie}}',
+	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Otrzymany głos|Otrzymane głosy}} poparcia',
+	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Otrzymany głos|Otrzymane głosy}} sprzeciwu',
+	'top-fans-stats-comment-score-positive-given' => '{{PLURAL:$1|Oddany głos|Oddane głosy}} poparcia',
+	'top-fans-stats-comment-score-negative-given' => '{{PLURAL:$1|Oddany głos|Oddane głosy}} sprzeciwu',
+	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Otrzymany prezent|Otrzymane prezenty}}',
+	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Podarowany prezent|Podarowane prezenty}}',
+	'level-advance-subject' => 'Należysz teraz do grupy „$1” na {{GRAMMAR:MS.lp|{{SITENAME}}}}!',
+	'level-advance-body' => 'Witaj $1.
 
-Od teraz jesteś „$2” w {{SITENAME}}!
+Jesteś „$2” w {{GRAMMAR:Ms.lp|{{SITENAME}}}}!
 
-Gratulacje,
+Gratulacje
 
-Zespół {{SITENAME}}
+od zespołu {{GRAMMAR:D.lp|{{SITENAME}}}}
 
 ---
 Jeżeli nie chcesz otrzymywać od nas więcej wiadomości, kliknij na poniższy link i zmień swoje ustawienia powiadamiania:
@@ -1084,6 +1295,55 @@ $messages['pt'] = array(
 	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Polegar para cima|Polegares para cima}}',
 	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Polegar para baixo|Polegares para baixo}}',
 	'top-fans-stats-comment-score-positive-given' => '{{PLURAL:$1|Polegar para cima dado|Polegares para cima dados}}n',
+	'top-fans-stats-comment-score-negative-given' => '{{PLURAL:$1|Polegar para baixo dado|Polegares para baixo dados}}',
+	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Presente recebido|Presentes recebidos}}',
+	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Presente enviado|Presentes enviados}}',
+	'level-advance-subject' => 'Você agora é um "$1" em {{SITENAME}}!',
+	'level-advance-body' => 'Oi $1:
+
+Você agora é um "$2" em {{SITENAME}}!
+
+Parabéns,
+
+O Time de {{SITENAME}}
+
+---
+Ei, quer parar de receber e-mails de nós?
+
+Clique $3
+e altere suas preferências para desabilitar e-mails de notificação',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'user-stats-alltime-title' => 'Mais pontos de todo o tempo',
+	'user-stats-weekly-title' => 'Mais pontos esta semana',
+	'user-stats-monthly-title' => 'Mais pontos deste mês',
+	'topusers' => 'Melhores utilizadores',
+	'top-fans-by-points-nav-header' => 'Maiores Fãs',
+	'top-fans-by-category-nav-header' => 'Melhores por categoria',
+	'top-fans-total-points-link' => 'Pontos totais',
+	'top-fans-weekly-points-link' => 'Pontos esta semana',
+	'top-fans-monthly-points-link' => 'Pontos este mês',
+	'top-fans-points' => 'pontos',
+	'top-fans-by-category-title' => 'Melhores $1 de sempre',
+	'top-fans-bad-field-title' => 'Ops!',
+	'top-fans-bad-field-message' => 'O status especificado não existe.',
+	'top-fans-stats-vote-count' => '{{PLURAL:$1|Voto|Votos}}',
+	'top-fans-stats-monthly-winner-count' => '{{PLURAL:$1|vencedor do mês|vencedores do mês}}',
+	'top-fans-stats-weekly-winner-count' => '{{PLURAL:$1|vencedor da semana|vencedores da semana}}',
+	'top-fans-stats-edit-count' => '{{PLURAL:$1|Edição|Edições}}',
+	'top-fans-stats-comment-count' => '{{PLURAL:$1|Comentário|Comentários}}',
+	'top-fans-stats-referrals-completed' => '{{PLURAL:$1|Indicação|Indicações}}',
+	'top-fans-stats-friends-count' => '{{PLURAL:$1|Amigo|Amigos}}',
+	'top-fans-stats-foe-count' => '{{PLURAL:$1|Inimigo|Inimigos}}',
+	'top-fans-stats-opinions-published' => '{{PLURAL:$1|Opinião publicada|Opiniões publicadas}}',
+	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Opinião|Opiniões}}',
+	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Polegar para cima|Polegares para cima}}',
+	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Polegar para baixo|Polegares para baixo}}',
+	'top-fans-stats-comment-score-positive-given' => '{{PLURAL:$1|Polegar para cima dado|Polegares para cima dados}}',
 	'top-fans-stats-comment-score-negative-given' => '{{PLURAL:$1|Polegar para baixo dado|Polegares para baixo dados}}',
 	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Presente recebido|Presentes recebidos}}',
 	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Presente enviado|Presentes enviados}}',
@@ -1141,12 +1401,52 @@ $messages['roa-tara'] = array(
 /** Russian (Русский)
  * @author Ferrer
  * @author Rubin
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'user-stats-alltime-title' => 'Больше всего очков за всё время',
+	'user-stats-weekly-title' => 'Больше всего очков на этой неделе',
+	'user-stats-monthly-title' => 'Больше всего очков в этом месяце',
+	'topusers' => 'Рейтинг участников',
+	'top-fans-by-points-nav-header' => 'Рейтинг болельщиков',
+	'top-fans-by-category-nav-header' => 'Рейтинг по категориям',
+	'top-fans-total-points-link' => 'Всего очков',
+	'top-fans-weekly-points-link' => 'Очков за эту неделю',
+	'top-fans-monthly-points-link' => 'Очков за этот месяц',
+	'top-fans-points' => 'очков',
+	'top-fans-by-category-title' => 'Рейтинг $1',
 	'top-fans-bad-field-title' => 'Ой!',
+	'top-fans-bad-field-message' => 'Указанной статистики не существует.',
 	'top-fans-stats-vote-count' => '{{PLURAL:$1|Голос|Голосов}}',
+	'top-fans-stats-monthly-winner-count' => '{{PLURAL:$1|Побед за месяц|Побед за месяц}}',
+	'top-fans-stats-weekly-winner-count' => '{{PLURAL:$1|Побед за неделю|Побед за неделю}}',
 	'top-fans-stats-edit-count' => '{{PLURAL:$1|Правка|Правок}}',
 	'top-fans-stats-comment-count' => '{{PLURAL:$1|Комментарий|Комментариев}}',
+	'top-fans-stats-referrals-completed' => '{{PLURAL:$1|Направление|Направлений}}',
+	'top-fans-stats-friends-count' => '{{PLURAL:$1|Друг|Друзей}}',
+	'top-fans-stats-foe-count' => '{{PLURAL:$1|Недруг|Недругов}}',
+	'top-fans-stats-opinions-published' => '{{PLURAL:$1|Опубликовано мнений|Опубликовано мнений}}',
+	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Мнение|Мнений}}',
+	'top-fans-stats-comment-score-positive-rec' => '{{PLURAL:$1|Голосов за|Голосов за}}',
+	'top-fans-stats-comment-score-negative-rec' => '{{PLURAL:$1|Голосов против|Голосов против}}',
+	'top-fans-stats-comment-score-positive-given' => '{{PLURAL:$1|Подано голосов за|Подано голосов за}}',
+	'top-fans-stats-comment-score-negative-given' => '{{PLURAL:$1|Подано голосов против|Подано голосов против}}',
+	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Получено подарков|Получено подарков}}',
+	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Отправлено подарков|Отправлено подарков}}',
+	'level-advance-subject' => 'Вы теперь «$1» в проекте {{SITENAME}}!',
+	'level-advance-body' => 'Привет, $1.
+
+Вы теперь «$2» в проекте {{SITENAME}}!
+
+Поздравляем!
+
+Команда проекта {{SITENAME}}
+
+---
+Эй, не хотите больше получать таких писем от нас?
+
+Нажмите $3
+и измените настройки отправки уведомлений по эл. почте.',
 );
 
 /** Slovak (Slovenčina)
@@ -1332,12 +1632,33 @@ Pindutin ang $3
 at baguhin ang mga pagtatakda mo upang huwag nang paganahin ang mga pagpapabatid sa pamamagitan ng e-liham.',
 );
 
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'user-stats-alltime-title' => 'Tüm zamanların en çok puanı',
+	'user-stats-weekly-title' => 'Bu hafta en çok puan',
+	'user-stats-monthly-title' => 'Bu ay en çok puan',
+	'top-fans-total-points-link' => 'Toplam puan',
+	'top-fans-weekly-points-link' => 'Bu haftadaki puanlar',
+	'top-fans-monthly-points-link' => 'Bu ayki puanlar',
+	'top-fans-points' => 'puan',
+);
+
 /** Volapük (Volapük)
  * @author Malafaya
+ * @author Smeira
  */
 $messages['vo'] = array(
+	'top-fans-bad-field-message' => 'Statit pavilöl no dabinon.',
 	'top-fans-stats-edit-count' => '{{PLURAL:$1|Redakam|Redakams}}',
 	'top-fans-stats-comment-count' => '{{PLURAL:$1|Küpet|Küpets}',
 	'top-fans-stats-friends-count' => '{{PLURAL:$1|Flen|Flens}}',
+	'top-fans-stats-foe-count' => '{{PLURAL:$1|Neflen|Neflens}}',
+	'top-fans-stats-opinions-published' => '{{PLURAL:$1|Ced pepüböl|Ceds pepüböl}}',
+	'top-fans-stats-opinions-created' => '{{PLURAL:$1|Ced|Ceds}}',
+	'top-fans-stats-gifts-rec-count' => '{{PLURAL:$1|Legivot pegetöl|Legivots pegetöl}}',
+	'top-fans-stats-gifts-sent-count' => '{{PLURAL:$1|Legivot pesedöl|Legivots pesedöl}}',
+	'level-advance-subject' => 'Anu binol „$1“ in {{SITENAME}}!',
 );
 

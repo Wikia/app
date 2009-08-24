@@ -6,26 +6,36 @@ reading at:
  http://semantic-mediawiki.org/wiki/Semantic_Result_Formats
 
 Copy all files into MediaWiki's extensions folder, either by using SVN or by
-extracting an installation package. You need to enter two lines to your local
-settings (after the inclusion of Semantic MediaWiki). The first one is to
-include the code:
+extracting an installation package. You need to enter one line to your local
+settings (somewhere after the inclusion of Semantic MediaWiki):
 
  require_once("$IP/extensions/SemanticResultFormats/SRF_Settings.php");
 
-If nothing else is added, the following formats will be enabled: 'calendar',
-'timeline', 'eventline', 'sum', 'average', 'min' and 'max'. To add more
-formats to this list, you can add lines like:
+If nothing else is added, a default set of formats is enabled. These are the
+the formats that satisfy the following criteria:
+
+* they do not require further software to be installed (besides SMW),
+* they do not transmit any data to external websites, not even by making client
+  browsers request any static external resources (such as an externally hosted
+  image file),
+* they are considered reasonably stable and secure.
+
+Currently, these default formats thus are:
+'vcard', 'icalendar', 'calendar', 'timeline', 'eventline', 'sum', 'average',
+'min', 'max'.
+
+To add more formats to this list, you can add lines like:
 
  $srfgFormats[] = 'googlebar';
 
-...or you can override the set of formats entirely, with a call like:
+... or you can override the set of formats entirely, with a call like:
 
  $srfgFormats = array('calendar', 'timeline');
 
-...using one or more of the following values:
+... using one or more of the following values:
 
-  average, calendar, eventline, googlebar, googlepie, graph, max, min,
-  sum, timeline
+  average, calendar, eventline, exhibit, googlebar, googlepie, graph, ploticus,
+  max, min, sum, timeline
 
 There are some formats that you may not want to include because they may
 not follow certain policies within your wiki; the formats 'googlebar' and
@@ -34,10 +44,17 @@ which may be considered a data leak.
 
 Notes on specific formats:
 * eventline: requires Javascript to render.
+* exhibit: requires Javascript to render; requires access to javascript files
+  hosted by the MIT (not locally included), but does not send any data to
+  the MIT (besides the requesters IP and the URL of the site with the query).
+  Some subformats of Exhibit (like the Google Maps view) sends data to Google
+  for rendering.
 * googlebar: note that Googlebar sends data to Google for rendering.
   Googlebar requires access to the Google servers in order to render.
 * googlepie: note that Googlepie is sends data to Google for rendering.
   Googlepie requires access to the Google servers in order to render.
 * graph: in order to get the graph format to run, you first must have
   the MediaWiki Graph extension running.
+* ploticus: requires that the Ploticus application be installed on the
+  server.
 * timeline: requires Javascript to render.

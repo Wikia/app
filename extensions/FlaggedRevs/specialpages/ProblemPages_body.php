@@ -6,14 +6,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class ProblemPages extends SpecialPage
 {
-    function __construct() {
-        SpecialPage::SpecialPage( 'ProblemPages' );
+	public function __construct() {
+		SpecialPage::SpecialPage( 'ProblemPages' );
 		wfLoadExtensionMessages( 'ProblemPages' );
 		wfLoadExtensionMessages( 'FlaggedRevs' );
-    }
+	}
 
-    function execute( $par ) {
-        global $wgRequest, $wgOut, $wgUser;
+	public function execute( $par ) {
+		global $wgRequest, $wgOut, $wgUser;
 		$this->setHeaders();
 		if( $wgUser->isAllowed( 'feedback' ) ) {
 			if( $wgUser->isBlocked() ) {
@@ -77,7 +77,8 @@ class ProblemPages extends SpecialPage
 			if($size == 0)
 				$stxt = ' <small>' . wfMsgHtml('historyempty') . '</small>';
 			else
-				$stxt = ' <small>' . wfMsgExt('historysize', array('parsemag'), $wgLang->formatNum( $size ) ) . '</small>';
+				$stxt = ' <small>' . wfMsgExt('historysize', array('parsemag'),
+					$wgLang->formatNum( $size ) ) . '</small>';
 		}
 		$ratinghist = SpecialPage::getTitleFor( 'RatingHistory' );
 		$graph = $this->skin->makeKnownLinkObj( $ratinghist, wfMsg('problempages-graphs'), 

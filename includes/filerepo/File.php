@@ -586,7 +586,7 @@ abstract class File {
 		} while (false);
 
 		wfProfileOut( __METHOD__ );
-		return $thumb;
+		return is_object( $thumb ) ? $thumb : false;
 	}
 
 	/**
@@ -865,22 +865,23 @@ abstract class File {
 	 *
 	 * @deprecated Use HTMLCacheUpdate, this function uses too much memory
 	 */
-	function getLinksTo( $options = '' ) {
+	function getLinksTo( $options = array() ) {
 		wfProfileIn( __METHOD__ );
 
 		// Note: use local DB not repo DB, we want to know local links
-		if ( $options ) {
+		if ( count( $options ) > 0 ) {
 			$db = wfGetDB( DB_MASTER );
 		} else {
 			$db = wfGetDB( DB_SLAVE );
 		}
 		$linkCache = LinkCache::singleton();
 
-		list( $page, $imagelinks ) = $db->tableNamesN( 'page', 'imagelinks' );
 		$encName = $db->addQuotes( $this->getName() );
-		$sql = "SELECT page_namespace,page_title,page_id,page_len,page_is_redirect,
-			FROM $page,$imagelinks WHERE page_id=il_from AND il_to=$encName $options";
-		$res = $db->query( $sql, __METHOD__ );
+		$res = $db->select( array( 'page', 'imagelinks'), 
+							array( 'page_namespace', 'page_title', 'page_id', 'page_len', 'page_is_redirect' ),
+							array( 'page_id' => 'il_from', 'il_to' => $encName ),
+							__METHOD__,
+							$options );
 
 		$retVal = array();
 		if ( $db->numRows( $res ) ) {
@@ -950,7 +951,7 @@ abstract class File {
 	 */
 	function wasDeleted() {
 		$title = $this->getTitle();
-		return $title && $title->isDeleted() > 0;
+		return $title && $title->isDeletedQuick();
 	}
 
 	/**
@@ -1068,15 +1069,16 @@ abstract class File {
 	 * Get the HTML text of the description page, if available
 	 */
 	function getDescriptionText() {
-		global $wgMemc;
+		global $wgMemc, $wgContLang;
 		if ( !$this->repo->fetchDescription ) {
 			return false;
 		}
-		$renderUrl = $this->repo->getDescriptionRenderUrl( $this->getName() );
+		$renderUrl = $this->repo->getDescriptionRenderUrl( $this->getName(), $wgContLang->getCode() );
 		if ( $renderUrl ) {
 			if ( $this->repo->descriptionCacheExpiry > 0 ) {
 				wfDebug("Attempting to get the description from cache...");
-				$key = wfMemcKey( 'RemoteFileDescription', 'url', md5($renderUrl) );
+				$key = wfMemcKey( 'RemoteFileDescription', 'url', $wgContLang->getCode(), 
+									$this->getName() );
 				$obj = $wgMemc->get($key);
 				if ($obj) {
 					wfDebug("success!\n");
@@ -1086,7 +1088,9 @@ abstract class File {
 			}
 			wfDebug( "Fetching shared description from $renderUrl\n" );
 			$res = Http::get( $renderUrl );
-			if ( $res && $this->repo->descriptionCacheExpiry > 0 ) $wgMemc->set( $key, $res, $this->repo->descriptionCacheExpiry );
+			if ( $res && $this->repo->descriptionCacheExpiry > 0 ) {
+				$wgMemc->set( $key, $res, $this->repo->descriptionCacheExpiry );
+			}
 			return $res;
 		} else {
 			return false;

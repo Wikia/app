@@ -135,7 +135,7 @@ class OmegaWikiAttributes {
 		$t->collectionMembershipStructure = new Structure("collection-membership",$t->collectionId, $t->collectionMeaning, $t->sourceIdentifier);
 		$t->collectionMembership = new Attribute(null, wfMsgSc("CollectionMembership"), $t->collectionMembershipStructure);
 		$t->classMembershipId = new Attribute("class-membership-id", "Class membership id", "integer");	 
-		$t->class = new Attribute("class", "Class", $t->definedMeaningReferenceStructure);
+		$t->class = new Attribute("class", wfMsg('ow_Class'), $t->definedMeaningReferenceStructure);
 		$t->classMembershipStructure = new Structure("class-membership", $t->classMembershipId, $t->class);
 		$t->classMembership = new Attribute(null, wfMsgSc("ClassMembership"), $t->classMembershipStructure);
 		
@@ -202,9 +202,9 @@ class OmegaWikiAttributes {
 		$t->textAttributeValuesStructure = new Structure("text-attribute-values", $t->textAttributeId, $t->textAttributeObject, $t->textAttribute, $t->text);	
 		$t->textAttributeValues = new Attribute(null, wfMsgSc("TextAttributeValues"), $t->textAttributeValuesStructure);
 		
-		$t->linkLabel = new Attribute("label", "Label", "short-text"); 
-		$t->linkURL = new Attribute("url", "URL", "url");
-		$t->link = new Attribute("link", "Link", new Structure($t->linkLabel, $t->linkURL));
+		$t->linkLabel = new Attribute("label", wfMsg('ow_Label'), "short-text"); 
+		$t->linkURL = new Attribute("url", wfMsg('ow_URL'), "url");
+		$t->link = new Attribute("link", wfMsg('ow_Link'), new Structure($t->linkLabel, $t->linkURL));
 		$t->linkAttributeId = new Attribute("link-attribute-id", "Attribute identifier", "object-id");
 		$t->linkAttributeObject = new Attribute("link-attribute-object-id", "Attribute object", "object-id");
 		$t->linkAttribute = new Attribute("link-attribute", wfMsgSc("LinkAttribute"), $t->definedMeaningReferenceStructure);
@@ -300,18 +300,18 @@ class OmegaWikiAttributes {
 		
 		# transaction stuff 
 		$t->transactionId = new Attribute('transaction-id', 'Transaction ID', 'integer');
-		$t->user = new Attribute('user', 'User', 'user');
+		$t->user = new Attribute('user', wfMsg('ow_User'), 'user');
 		$t->userIP = new Attribute('user-ip', 'User IP', 'IP');
-		$t->timestamp = new Attribute('timestamp', 'Time', 'timestamp');
+		$t->timestamp = new Attribute('timestamp', wfMsg('ow_Time'), 'timestamp');
 		$t->summary = new Attribute('summary', 'Summary', 'text');
 		$t->transactionStructure = new Structure($t->transactionId, $t->user, $t->userIP, $t->timestamp, $t->summary);
 		$t->transaction = new Attribute('transaction', 'Transaction', $t->transactionStructure);
 
-		$t->addTransaction = new Attribute('add-transaction', 'Added', $t->transactionStructure);
-		$t->removeTransaction = new Attribute('remove-transaction', 'Removed', $t->transactionStructure);
+		$t->addTransaction = new Attribute('add-transaction', wfMsg('ow_added'), $t->transactionStructure);
+		$t->removeTransaction = new Attribute('remove-transaction', wfMsg('ow_removed'), $t->transactionStructure);
 
 		$t->recordLifeSpanStructure = new Structure($t->addTransaction, $t->removeTransaction);
-		$t->recordLifeSpan = new Attribute('record-life-span', 'Record life span', $t->recordLifeSpanStructure);
+		$t->recordLifeSpan = new Attribute('record-life-span', wfMsg('ow_RecordLifeSpan'), $t->recordLifeSpanStructure);
 
 		$t->in_setup=False;
 	}

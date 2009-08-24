@@ -4368,7 +4368,4 @@ class DPL2Logger {
 		sort($paramoptions);
 		return $this->escapeMsg( $msgid, $paramvar, htmlspecialchars( $val ), ExtDynamicPageList2::$options[$paramvar]['default'], implode(' | ', $paramoptions ));
 	}
-
 }
-
-?>

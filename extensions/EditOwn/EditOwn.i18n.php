@@ -42,6 +42,20 @@ $messages['arz'] = array(
 	'editown-desc' => 'المستخدمون بدون الصلاحية editall يمكنهم تعديل الصفحات التى قاموا بإنشائها فقط',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'editown-desc' => 'Korisnici bez prava editall mogu uređivati samo stranice koje su napravili',
+);
+
+/** Kashubian (Kaszëbsczi)
+ * @author Kaszeba
+ */
+$messages['csb'] = array(
+	'editown-desc' => 'Brëkòwnicë bez editorsczich praw mògą editowac blós starnë chtërné sómi ùsôdzelë',
+);
+
 /** German (Deutsch)
  * @author ChrisiPK
  */
@@ -96,6 +110,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'editown-desc' => 'Os usuarios sen o dereito de editar só poden editar as páxinas que crearon',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'editown-desc' => 'Benutzer ohni s editall-Rächt chenne nume sälber aagleiti Syte bearbeite',
 );
 
 /** Hebrew (עברית)
@@ -182,6 +203,13 @@ $messages['mr'] = array(
 	'editown-desc' => 'ज्या सदस्यांना सर्वसंपादन अधिकार नाहीत ते फक्त त्यांनी तयार केलेली पानेच संपादित करू शकतात',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'editown-desc' => 'Brukers ahn dat editall-Recht dröfft blot sülvst opstell Sieden ännern',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -231,6 +259,13 @@ $messages['pt'] = array(
 	'editown-desc' => "Utilizadores sem o privilégio 'editall' só podem editar as páginas que os próprios criaram",
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'editown-desc' => "Utilizadores sem o privilégio 'editall' só podem editar as páginas que os próprios criaram",
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -250,6 +285,13 @@ $messages['ru'] = array(
  */
 $messages['sk'] = array(
 	'editown-desc' => 'Používatelia bez oprávnenia editall môžu upravovať iba stránky, ktoré vytvorili',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'editown-desc' => 'Përdoruesit pa të drejtë redaktimi mund të redaktojnë vetëm faqet që kanë krijuar vetë',
 );
 
 /** Swedish (Svenska)
@@ -272,6 +314,13 @@ $messages['te'] = array(
  */
 $messages['tet'] = array(
 	'editown-desc' => "Uza-na'in sira-ne'ebé la iha priviléjiu 'editall' bele filak pájina sira-ne'ebé sira kria tiha de'it",
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'editown-desc' => 'Ang mga tagagamit na walang karapatang "baguhin lahat" ay makapagbabago lamang ng mga pahinang sila ang lumikha',
 );
 
 /** Turkish (Türkçe)

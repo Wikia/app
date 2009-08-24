@@ -139,45 +139,43 @@ class AbuseFilterViewExamine extends AbuseFilterView {
 			"var wgMessageError = ".Xml::encodeJsVar( $msg['syntaxerror'] ) . ";\n" );
 
 		// Add test bit
-		if ($wgUser->isAllowed( 'abusefilter-modify' ) ) {
-			$tester = Xml::tags( 'h2', null, wfMsgExt( 'abusefilter-examine-test', 'parseinline' ) );
-			$tester .= AbuseFilter::buildEditBox( $this->mTestFilter, 'wpTestFilter', false );
-			$tester .= 
-				"\n" . 
-				Xml::inputLabel( 
-					wfMsg( 'abusefilter-test-load-filter' ), 
-					'wpInsertFilter', 
-					'mw-abusefilter-load-filter', 
-					10, 
-					'' 
-				) . 
-				'&nbsp;' .
-				Xml::element( 
-					'input', 
-					array( 
-						'type' => 'button', 
-						'value' => wfMsg( 'abusefilter-test-load' ), 
-						'id' => 'mw-abusefilter-load' 
-					) 
-				);
-			$output .= Xml::tags( 'div', array( 'id' => 'mw-abusefilter-examine-editor' ), $tester );
-			$output .= Xml::tags( 'p', 
-				null, 
-				Xml::element( 'input', 
-					array( 
-						'type' => 'button', 
-						'value' => wfMsg( 'abusefilter-examine-test-button' ), 
-						'id' => 'mw-abusefilter-examine-test' 
-					) 
-				) .
-				Xml::element( 'div', 
-					array( 
-						'id' => 'mw-abusefilter-syntaxresult', 
-						'style' => 'display: none;' 
-					), '&nbsp;' 
+		$tester = Xml::tags( 'h2', null, wfMsgExt( 'abusefilter-examine-test', 'parseinline' ) );
+		$tester .= AbuseFilter::buildEditBox( $this->mTestFilter, 'wpTestFilter', false );
+		$tester .= 
+			"\n" . 
+			Xml::inputLabel( 
+				wfMsg( 'abusefilter-test-load-filter' ), 
+				'wpInsertFilter', 
+				'mw-abusefilter-load-filter', 
+				10, 
+				'' 
+			) . 
+			'&nbsp;' .
+			Xml::element( 
+				'input', 
+				array( 
+					'type' => 'button', 
+					'value' => wfMsg( 'abusefilter-test-load' ), 
+					'id' => 'mw-abusefilter-load' 
 				) 
 			);
-		}
+		$output .= Xml::tags( 'div', array( 'id' => 'mw-abusefilter-examine-editor' ), $tester );
+		$output .= Xml::tags( 'p', 
+			null, 
+			Xml::element( 'input', 
+				array( 
+					'type' => 'button', 
+					'value' => wfMsg( 'abusefilter-examine-test-button' ), 
+					'id' => 'mw-abusefilter-examine-test' 
+				) 
+			) .
+			Xml::element( 'div', 
+				array( 
+					'id' => 'mw-abusefilter-syntaxresult', 
+					'style' => 'display: none;' 
+				), '&nbsp;' 
+			) 
+		);
 
 		// Variable dump
 		$output .= Xml::tags( 'h2', null, wfMsgExt( 'abusefilter-examine-vars', 'parseinline' ) );
@@ -226,7 +224,7 @@ class AbuseFilterExaminePager extends ReverseChronologicalPager {
 		
 		// If one of these is true, we're abusefilter compatible.
 		$compatConds = array(
-			'rc_this_oldid != 0',
+			'rc_this_oldid',
 			'rc_log_action' => array( 'move', 'create' ),
 		);
 		

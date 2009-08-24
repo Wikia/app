@@ -204,7 +204,7 @@ class ApiWikiDataFormatXml extends ApiWikiDataFormatBase {
 		
 	}
 	
-	protected function getDescription() {
+	public function getDescription() {
 		return 'Output WikiData defined meaning in XML format' . parent :: getDescription();
 	}
 

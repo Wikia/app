@@ -170,18 +170,18 @@
 	right:0px;
 }
 .submenu_container{
-	left:110px;
+	top:25px;
+	left:10px;
+	right:0px;
 	overflow:auto;
 	position:absolute;
 	broder: solid thin gray;
 }
 .mv_submenu{	
 	/*position:absolute;*/
-	float:left;
 	left:0px;
 	top:0px;
 	margin:2px;
-	width:100px;	
 	list-style-type:none; 
 	bottom:0px;	
 	border:none;
@@ -190,9 +190,11 @@
 .mv_submenu li{
 	border:solid thin gray;
 	cursor:pointer;
+	display:inline;
+	padding:5px;
 }
 .mv_submenu .mv_sub_selected{
-	border-right: none;
+	border-bottom: none;
 }
 #seq_menu .mv_selected_item{
 	border-bottom:none;

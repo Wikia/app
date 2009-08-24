@@ -16,33 +16,23 @@ if(typeof wgScriptPath=='undefined')
 		
 var gMvd={};
 function mv_setup_allpage(){
-	js_log("mv embed done loading now setup 'all page'");	
-	
+	js_log("mv embed done loading now setup 'all page'");		
 	//make sure we have jQuery and any base required libs:
-	mvJsLoader.doLoad(mvEmbed.lib_jquery, function(){
- 		_global['$j'] = jQuery.noConflict();
- 		js_log('allpage_ did jquery check');
- 		
- 		if(typeof wgCanonicalNamespace != 'undefined'){
-			//(@@todo genneralize to a script action taken by the php so its not language specifc) 
-			if(wgCanonicalNamespace=='Sequence' && $j('#ca-edit').hasClass("selected")){
-				mv_do_sequence_edit_swap('seq');
+	mvJsLoader.loadBaseLibs(function(){ 		
+ 		js_log('allpage_ did jquery check'); 		
+ 		mvJsLoader.doLoad( {
+ 			'$j.fn.autocomplete':'jquery/plugins/jquery.autocomplete.js',
+ 			'$j.fn.hoverIntent':'jquery/plugins/jquery.hoverIntent.js'
+ 		}, function(){
+			//js_log('allpage_ auto and hover check'+mv_setup_allpage_flag);
+			if( ! mv_setup_allpage_flag ){
+				mv_setup_search_ac();
+				mv_do_mvd_link_rewrite();
+				mv_page_specific_rewrites();
+				//set the flag:
+				mv_setup_allpage_flag=true;
 			}
- 		}
- 		
- 		var reqLibs = {'$j.fn.autocomplete':'jquery/plugins/jquery.autocomplete.js',
- 					   '$j.fn.hoverIntent':'jquery/plugins/jquery.hoverIntent.js'};
- 		mvJsLoader.doLoad(
- 			reqLibs, function(){
-	 				//js_log('allpage_ auto and hover check'+mv_setup_allpage_flag);
-					if(!mv_setup_allpage_flag){
-						mv_setup_search_ac();
-						mv_do_mvd_link_rewrite();
-						mv_page_specific_rewrites();
-						//set the flag:
-						mv_setup_allpage_flag=true;
-					}
-				});
+		});
 	});
 }
 function mv_do_sequence_edit_swap(mode){
@@ -146,7 +136,7 @@ function mv_do_mvd_link_rewrite(){
 					$j('#mv_pglink_'+i).click(function(){
 						inx = this.id.substr(10);
 						js_log('inx: '+ inx);
-						window.location=wgArticlePath.replace('$1',gMvd[inx]['url']);
+						window.location = wgArticlePath.replace('$1',gMvd[inx]['url']);
 					})
 				}
 			}
@@ -212,7 +202,7 @@ function mv_toggle_advs(){
 		$j('.advs_basic').fadeOut('fast',function(){
 			if(!_fadecalled){
 				if($j('#tmp_loading_txt').length==0){
-					$j('.advanced_search_tag').before('<span id="tmp_loading_txt">'+getMsg('loading_txt')+'</span>');
+					$j('.advanced_search_tag').before('<span id="tmp_loading_txt">'+gM('loading_txt')+'</span>');
 				}					
 				if(typeof(mv_setup_search)=='undefined'){
 					$j.getScript(mv_embed_path +'../mv_search.js', function(){

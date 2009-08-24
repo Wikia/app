@@ -321,6 +321,8 @@ class WatchSubpages extends SpecialPage {
 	 * @return string
 	 */
 	private function buildLine( $title, $redirect, $skin ) {
+		global $wgLang;
+
 		$link = $skin->makeLinkObj( $title );
 		if( $redirect )
 			$link = '<span class="watchlistredir">' . $link . '</span>';
@@ -333,6 +335,6 @@ class WatchSubpages extends SpecialPage {
 		}
 		return '<li>'
 			. Xml::check( 'titles[]', true, array( 'value' => $title->getPrefixedText() ) )
-			. $link . ' (' . implode( ' | ', $tools ) . ')' . '</li>';
+			. $link . ' (' . $wgLang->pipeList( $tools ) . ')' . '</li>';
 	}
 }

@@ -321,7 +321,7 @@ function wfSpecialFilelist () {
 				$ret[] = $this->sk->makeKnownLinkObj( $titleObj, $wgLang->formatNum( $l ), $p ) ;
 			}
 
-			$text = wfMsg( "showlast", implode ( " | " , $ret ), wfMsg('bydate') );
+			$text = wfMsg( "showlast", $wgLang->pipeList( $ret ), wfMsg('bydate') );
 			return $text ;
 		}
 
@@ -329,6 +329,8 @@ function wfSpecialFilelist () {
 		 * Returns the option links
 		*/
 		function options ( &$params ) {
+			global $wgLang;
+
 			$titleObj = Title::makeTitle( NS_SPECIAL, 'Filelist' );
 			$ret = array () ;
 
@@ -342,7 +344,7 @@ function wfSpecialFilelist () {
 			$bots = $params['gallery'] ? wfMsg('filelist-show-list') : wfMsg('filelist-show-gallery') ;
 			$ret[] = $this->sk->makeKnownLinkObj( $titleObj, $bots, $this->getURLparams ( $p2 ) );
 
-			return "<p>" . implode ( " | " , $ret ) . "</p>" ;
+			return "<p>" . $wgLang->pipeList( $ret ) . "</p>" ;
 		}
 
 		/**
@@ -369,7 +371,7 @@ function wfSpecialFilelist () {
 				$nextLink = $this->sk->makeKnownLinkObj( $titleObj, $nextLink, $this->getURLparams ( $p2 ) );
 			}
 
-			$out .= $prevLink . " | " . $nextLink ;
+			$out .= $wgLang->pipeList( array( $prevLink, $nextLink ) );
 
 			return "<p>" . $out . "</p>" ;
 		}

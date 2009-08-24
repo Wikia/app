@@ -42,10 +42,14 @@ class ApiOpenSearch extends ApiBase {
 	}
 
 	public function execute() {
+		global $wgEnableMWSuggest;
 		$params = $this->extractRequestParams();
 		$search = $params['search'];
 		$limit = $params['limit'];
 		$namespaces = $params['namespace'];
+		$suggest = $params['suggest'];
+		# $wgEnableMWSuggest hit incoming when $wgEnableMWSuggest is disabled
+		if( $suggest && !$wgEnableMWSuggest ) return;
 		
 		// Open search results may be stored for a very long time
 		$this->getMain()->setCacheMaxAge(1200);
@@ -61,7 +65,7 @@ class ApiOpenSearch extends ApiBase {
 	public function getAllowedParams() {
 		return array (
 			'search' => null,
-			'limit' => array (
+			'limit' => array(
 				ApiBase :: PARAM_DFLT => 10,
 				ApiBase :: PARAM_TYPE => 'limit',
 				ApiBase :: PARAM_MIN => 1,
@@ -73,6 +77,7 @@ class ApiOpenSearch extends ApiBase {
 				ApiBase :: PARAM_TYPE => 'namespace',
 				ApiBase :: PARAM_ISMULTI => true
 			),
+			'suggest' => false,
 		);
 	}
 
@@ -81,6 +86,7 @@ class ApiOpenSearch extends ApiBase {
 			'search' => 'Search string',
 			'limit' => 'Maximum amount of results to return',
 			'namespace' => 'Namespaces to search',
+			'suggest' => 'Do nothing if $wgEnableMWSuggest is false',
 		);
 	}
 
@@ -95,6 +101,6 @@ class ApiOpenSearch extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiOpenSearch.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id: ApiOpenSearch.php 47188 2009-02-12 17:27:05Z catrope $';
 	}
 }

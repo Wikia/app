@@ -87,7 +87,7 @@ class MV_StreamPage extends Article {
  		$wgTitle->mNamespace = NS_SPECIAL;
  		
  		// do some aditional stream proccessing throw an error if we have a type
- 		if ( $this->mvTitle->getTypeMarker() != null ) {
+ 		if ( $this->mvTitle->getMvdTypeKey() != null ) {
  			$page = 'Bad format for Metavid request';
  			return mvOutputSpecialPage( 'bad format for Metavid request',
  			$page );

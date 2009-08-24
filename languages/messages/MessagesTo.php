@@ -307,7 +307,7 @@ Kuo fakatupu hoʻo tohi kau-ki-ai. ʻOua ʻe ngalo ke liliu hoʻo faʻiteliha {{
 'passwordtooshort'           => 'ʻOku fuʻu nounou hoʻo leatapu. ʻE pau ʻoku ʻi loto ko e mataʻitohi ʻe $1 pe lahi ange.',
 'mailmypassword'             => 'Tohila mai ʻa e leatapu foʻou',
 'passwordremindertitle'      => 'Ko e fakamanatu ki he leatapu mei he {{SITENAME}}',
-'passwordremindertext'       => 'Ko e tokotaha, mahalo pe ko koe mei he tuʻasila IP $1, naʻe kole ia ke ʻavea ha leatapu foʻou maʻa e {{SITENAME}} ($4). Ko e leatapu maʻa e ʻetita "$2", ʻoku "$3" he taimí ni. ʻOku pau te ke kau-ki-ai pea te ke liliu hoʻo leatapu.
+'passwordremindertext'       => 'Ko e tokotaha, mahalo pe ko koe mei he tuʻasila IP $1, naʻe kole ia ke ʻavea ha leatapu foʻou maʻa e {{SITENAME}} ($4). Ko e leatapu maʻa e ʻetita "$2", ʻoku "$3" he taimí ni. ʻOku ke pau te ke kau-ki-ai pea te ke liliu hoʻo leatapu. Ko e leatapu fakataimi ʻe mate ia ʻi he ʻaho ʻe $5.
 
 Kapau naʻe kole ia ʻe he tokotaha kehe, pea ʻosi hoʻo manatuʻi ʻo e leatapu motuʻa mo ʻoku ʻikai te ke kei fieliliu ia, ʻe sai te ke taʻetokaʻi ʻa e fakamatalá ni pea ngāueʻaki ai pe hoʻo leatapu motuʻa.',
 'noemail'                    => 'ʻOku ʻikai ʻiloa ha tuʻasila tohila maʻa e ʻetita "$1".',
@@ -369,7 +369,7 @@ Kapau naʻe kole ia ʻe he tokotaha kehe, pea ʻosi hoʻo manatuʻi ʻo e leatap
 'loginreqlink'            => 'kau ki ai',
 'loginreqpagetext'        => 'ʻOku pau ke $1 kapau te ke fievakai ki he ngaahi peesi ʻe taha.',
 'accmailtitle'            => 'ʻOsi ʻave ʻa e leatapu',
-'accmailtext'             => 'ʻOsi ʻave ʻa e leatapu maʻa "$1" ki he $2.',
+'accmailtext'             => "ʻOsi ʻave ʻa e leatapu maʻa [[User talk:$1|$1]] ki he $2. Te ke lava liliu ia ʻi he ''[[Special:ChangePassword|peesi liliu leatapu]]''.",
 'newarticle'              => '(Foʻou)',
 'newarticletext'          => "Naʻa ke muimui ha fehokotaki ki he peesi ʻoku teʻeki fakatupu. Kapau te ke fiefakatupi he pēsí ni, kamata hoʻo tohi ʻi he puha ʻi lalo. (Vakai ki he [[{{MediaWiki:Helppage}}|tokoni]] mo hano ongoongo lahi ange.) Kapau ʻoku hala pē heni, lomiʻi pē he meʻa-lolomi 'ki mui' ʻo ho palausa.",
 'anontalkpagetext'        => "----''Ko e peesi ʻeni ko e peesi alea ia maʻa e ʻetita taʻehingoa teʻeki ʻene fakatupu ʻo e tohi kau-ki-ai pe ʻoku ʻikai ngāueʻaki mo ia. Ko ia ai ʻoku fakapapauʻi ia ʻe he tuʻasila IP fakafika pē. Ka ʻe lava ʻoku vahevahe ʻa e tuʻasila IP pehē ʻe he kau ʻetita tokolahi. Kapau ko koe ko e ʻetita taʻehingoa, ʻoku ke tui ko e ngaahi fakamatala ʻi heni ʻoku ʻikai maʻau, mahalo pē ʻoku sai ange ke ke [[Special:UserLogin|fai ha tohi kau-ki-ai, pe kau-ki-ai]] he taimí ni pea fakaʻehiʻehi ha ngaahi meʻafihi ē ʻi he kahaʻu.''",
@@ -497,6 +497,7 @@ Ko e ʻuhinga loka ko e $1 ia.",
 'localtime'             => 'Taimi fakafeituʻu:',
 'timezoneoffset'        => 'Ngaahi houa ʻo e faikehekehe:',
 'servertime'            => 'Taimi ʻo e tauhia:',
+'timezoneregion-africa' => 'ʻAfelika',
 'allowemail'            => 'Fakamafeiaʻi ʻa e tohila mei he kau ʻetita ʻe taha',
 'defaultns'             => 'Kumi ʻi he vā hingoa fakatuʻunga:',
 'default'               => 'tuʻunga',
@@ -732,7 +733,8 @@ Ko e ʻuhinga loka ko e $1 ia.",
 'categoriespagetext' => 'ʻOku ʻi ai ha ngaahi faʻahinga pehē.',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Ngaahi foaki ʻo ha ʻetita kuo tāmateʻi',
+'deletedcontributions'       => 'Ngaahi foaki ʻo ha ʻetita kuo tāmateʻi',
+'deletedcontributions-title' => 'Ngaahi foaki ʻo ha ʻetita kuo tāmateʻi',
 
 # Special:LinkSearch
 'linksearch'       => 'Ngaahi fehokotaki fakamatamatakupenga',

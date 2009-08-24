@@ -3,7 +3,7 @@
 class SpecialGlobalUsers extends SpecialPage {
 
 	function __construct() {
-		wfLoadExtensionMessages('SpecialCentralAuth');
+		wfLoadExtensionMessages( 'SpecialCentralAuth' );
 		parent::__construct( 'GlobalUsers' );
 	}
 
@@ -31,7 +31,7 @@ class SpecialGlobalUsers extends SpecialPage {
 }
 
 class GlobalUsersPager extends UsersPager {
-	private $mGroup, $mUsername;
+	private $mGroup = false, $mUsername;
 
 	function __construct() {
 		parent::__construct();
@@ -62,7 +62,15 @@ class GlobalUsersPager extends UsersPager {
 	function getIndexField() {
 		return 'gu_name';
 	}
-	
+
+	function getDefaultQuery() {
+		$query = parent::getDefaultQuery();
+		if( !isset( $query['group'] ) && $this->mGroup )
+			$query['group'] = $this->mGroup;
+		return $this->mDefaultQuery = $query;
+
+	}
+
 	function getQueryInfo() {
 		$localwiki = wfWikiID();
 		$conds = array( 'gu_hidden' => 0 );
@@ -125,7 +133,7 @@ class GlobalUsersPager extends UsersPager {
 		}
 		$result = $this->mDb->select( 'global_user_groups', 'gug_group', array( 'gug_user' => $row->gu_id ), __METHOD__ );
 		$rights = array();
-		while( $row2 = $this->mDb->fetchObject( $result ) ) 
+		while( $row2 = $this->mDb->fetchObject( $result ) )
 			$rights[] = self::buildGroupLink( $row2->gug_group );
 		return implode( ', ', $rights );
 	}

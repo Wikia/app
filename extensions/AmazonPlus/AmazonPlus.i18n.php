@@ -25,7 +25,6 @@ $messages['en'] = array(
 	'amazonplus-amazon' => 'amazon price',
 	'amazonplus-new' => 'new',
 	'amazonplus-status' => '($1)',
-	'amazonplus-status-sep' => ', ',
 	'amazonplus-none' => 'No copies of this item are up for sale.',
 	'amazonplus-currency' => '$3$1 $2$4',
 	'amazonplus-cp-none' => 'None',
@@ -39,12 +38,16 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
+ * @author Meno25
  * @author Purodha
  * @author Skizzerz
  */
 $messages['qqq'] = array(
 	'amazonplus-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
-	'amazonplus-nores' => 'Error message, automatically wrapped in a span tag with class="error."',
+	'amazonplus-nores' => 'Error message, automatically wrapped in a span tag with class="error."
+
+{{Identical|Sorry, no results}}',
 	'amazonplus-noidres' => 'Error message, automatically wrapped in a span tag with class="error."',
 	'amazonplus-fgcerr' => 'Error message, automatically wrapped in a span tag with class="error."',
 	'amazonplus-slserr' => 'Error message, automatically wrapped in a span tag with class="error."',
@@ -52,16 +55,20 @@ $messages['qqq'] = array(
 	'amazonplus-german' => 'Name of the German language, or an empty string if translating to German.',
 	'amazonplus-french' => 'Name of the French language, or an empty string if translating to French.',
 	'amazonplus-japanese' => 'Name of the Japanese language, or an empty string if translating to Japanese.',
-	'amazonplus-english' => 'Name of the English language, or an empty string if translating to English.',
 	'amazonplus-status' => ';$1:A combination of status messages seperated with [[MediaWiki:Amazonplus-status-sep/en|amazonplus-status-sep]]',
-	'amazonplus-status-sep' => 'Seperator used in [[MediaWiki:Amazonplus-status/en|amazonplus-status]] to divide the listing of terms',
 	'amazonplus-currency' => ';$1:Formatted price without symbol (e.g. 16.41)
 ;$2:Currency code (e.g. USD)
 ;$3:Currency symbol (e.g. $)
 ;$4:Status message',
+	'amazonplus-cp-usd' => '{{optional}}',
+	'amazonplus-cp-cad' => '{{optional}}',
+	'amazonplus-cp-gbp' => '{{optional}}',
+	'amazonplus-cp-eur' => '{{optional}}',
+	'amazonplus-cp-jpy' => '{{optional}}',
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  * @author Ouda
  */
@@ -79,14 +86,21 @@ $messages['ar'] = array(
 	'amazonplus-new' => 'جديد',
 	'amazonplus-none' => 'لا نُسخ من هذا العنصر معروضة للبيع.',
 	'amazonplus-cp-none' => 'لا شيء',
+	'amazonplus-cp-usd' => 'دولار أمريكي',
+	'amazonplus-cp-gbp' => 'جنيه إسترليني',
+	'amazonplus-cp-eur' => 'يورو',
+	'amazonplus-cp-jpy' => 'ين ياباني',
+	'amazonplus-more' => 'أكثر',
+	'amazonplus-less' => 'أقل',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
  * @author Ouda
  * @author Ramsis II
  */
 $messages['arz'] = array(
-	'amazonplus-desc' => 'امتداد عالي القابله للتخصيص لعرض معلومات امازون',
+	'amazonplus-desc' => 'امتداد عالى القابليه للتخصيص لعرض معلومات امازون',
 	'amazonplus-nores' => '! خطأ: لم يتم العثور على نتائج',
 	'amazonplus-noidres' => 'غلط:مالقيناش بطاقة تعريف المنتج!',
 	'amazonplus-fgcerr' => 'غلط:مانفعش نرجع البيانات من امازون!',
@@ -97,7 +111,6 @@ $messages['arz'] = array(
 	'amazonplus-japanese' => 'يابانية',
 	'amazonplus-amazon' => 'سعر أمازون',
 	'amazonplus-new' => 'جديد',
-	'amazonplus-status-sep' => ',',
 	'amazonplus-none' => 'مافيش نسخ من الصنف دا معروضه للبيع',
 	'amazonplus-cp-none' => 'لا شيء',
 	'amazonplus-more' => 'أكثر',
@@ -115,6 +128,27 @@ $messages['bg'] = array(
 	'amazonplus-french' => 'френски',
 	'amazonplus-japanese' => 'японски',
 	'amazonplus-cp-none' => 'Няма',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'amazonplus-desc' => 'Un astenn aes da bersonelaat a-benn diskwel titouroù diwar Amazon',
+	'amazonplus-nores' => "Fazi : N'eus bet kavet tamm disoc'h ebet !",
+	'amazonplus-noidres' => "Fazi : N'eus ket bet kavet ID produ ebet !",
+	'amazonplus-fgcerr' => "Fazi : N'eus ket bet gallet adtapout roadennoù Amazon",
+	'amazonplus-slserr' => "Fazi : N'eus ket bet gallet dielfennañ roadennoù Amazon",
+	'amazonplus-used' => 'implijet',
+	'amazonplus-german' => 'Alamaneg',
+	'amazonplus-french' => 'Galleg',
+	'amazonplus-japanese' => 'Japaneg',
+	'amazonplus-amazon' => 'Priz Amazon',
+	'amazonplus-new' => 'nevez',
+	'amazonplus-none' => "N'haller prenañ eilenn ebet eus an draezenn-mañ",
+	'amazonplus-cp-none' => 'Hini ebet',
+	'amazonplus-more' => "muioc'h",
+	'amazonplus-less' => "nebeutoc'h",
 );
 
 /** Bosnian (Bosanski)
@@ -199,6 +233,15 @@ $messages['dsb'] = array(
 	'amazonplus-less' => 'mjenjej',
 );
 
+/** Greek (Ελληνικά)
+ * @author Konsnos
+ */
+$messages['el'] = array(
+	'amazonplus-nores' => 'Σφάλμα: Δεν υπήρξαν αποτελέσματα!',
+	'amazonplus-fgcerr' => 'Σφάλμα: Δεν έγινε ανάκτηση δεδομένων από το Amazon!',
+	'amazonplus-none' => 'Δεν υπάρχουν αντίτυπα αυτού του προϊόντος προς πώληση.',
+);
+
 /** Esperanto (Esperanto)
  * @author Melancholie
  * @author Yekrats
@@ -216,6 +259,28 @@ $messages['eo'] = array(
 	'amazonplus-cp-none' => 'Nenia',
 	'amazonplus-more' => 'pli',
 	'amazonplus-less' => 'malpli',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ * @author Drini
+ */
+$messages['es'] = array(
+	'amazonplus-desc' => 'Una extensión altamente personalizable para desplegar informaciónde Amazon',
+	'amazonplus-nores' => 'Error: Sin resultados encontrados!',
+	'amazonplus-noidres' => 'Error: ¡No se pudo encontrar el ID del producto!',
+	'amazonplus-fgcerr' => 'Error: ¡No se pudo obtener los datos desde Amazon!',
+	'amazonplus-slserr' => 'Error: ¡no se pudo procesar los datos desde Amazon!',
+	'amazonplus-used' => 'usado',
+	'amazonplus-german' => 'Alemán',
+	'amazonplus-french' => 'Francés',
+	'amazonplus-japanese' => 'Japonés',
+	'amazonplus-amazon' => 'precio amazon',
+	'amazonplus-new' => 'nuevo',
+	'amazonplus-none' => 'No hay copias de este item para venta.',
+	'amazonplus-cp-none' => 'Ninguno',
+	'amazonplus-more' => 'más',
+	'amazonplus-less' => 'menos',
 );
 
 /** Estonian (Eesti)
@@ -242,7 +307,6 @@ $messages['eu'] = array(
 	'amazonplus-amazon' => 'amazon prezioa',
 	'amazonplus-new' => 'berria',
 	'amazonplus-status' => '($1)',
-	'amazonplus-status-sep' => ',',
 	'amazonplus-none' => 'Ez dago artikulu honen kopiarik salgai.',
 	'amazonplus-currency' => '$1$3 $4$2',
 	'amazonplus-cp-none' => 'Bat ere ez',
@@ -319,6 +383,36 @@ $messages['gl'] = array(
 	'amazonplus-less' => 'menos',
 );
 
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Crazymadlover
+ */
+$messages['grc'] = array(
+	'amazonplus-german' => 'Γερμανιστί',
+	'amazonplus-french' => 'Φραγκογαλλιστί',
+	'amazonplus-japanese' => 'Ἰαπωνιστί',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'amazonplus-desc' => 'E Erwyterig, wu gut aapassbar isch, go Informatione vu Amazon aazeige',
+	'amazonplus-nores' => 'Fähler: Kei Ergebnis gfunde!',
+	'amazonplus-noidres' => 'Fähler: Produkt-ID het nit chenne gfunde wäre!',
+	'amazonplus-fgcerr' => 'Fähler: Date vu Amazon hän nit chenne gholt wäre!',
+	'amazonplus-slserr' => 'Fähler: D Date, wu vu Amazon empfange wore sin, hän nit chenne verarbeitet wäre!',
+	'amazonplus-used' => 'bruucht',
+	'amazonplus-german' => 'Dytsch',
+	'amazonplus-french' => 'Franzesisch',
+	'amazonplus-japanese' => 'Japanisch',
+	'amazonplus-amazon' => 'Pryys bi Amazon',
+	'amazonplus-new' => 'nej',
+	'amazonplus-none' => 'Vu däre Publikation wäre im Momänt kei Kopie verchauft.',
+	'amazonplus-cp-none' => 'Keini',
+	'amazonplus-more' => 'meh',
+	'amazonplus-less' => 'weniger',
+);
+
 /** Manx (Gaelg)
  * @author Wrightbus
  */
@@ -351,6 +445,8 @@ $messages['he'] = array(
 	'amazonplus-cp-gbp' => 'GBP',
 	'amazonplus-cp-eur' => 'EUR',
 	'amazonplus-cp-jpy' => 'JPY',
+	'amazonplus-more' => 'עוד',
+	'amazonplus-less' => 'פחות',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -393,6 +489,48 @@ $messages['hu'] = array(
 	'amazonplus-cp-none' => 'Semmi',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'amazonplus-desc' => 'Un extension multo personalisabile pro presentar informationes de Amazon',
+	'amazonplus-nores' => 'Error: Nulle resultato trovate!',
+	'amazonplus-noidres' => 'Error: Non poteva trovar un ID de producto!',
+	'amazonplus-fgcerr' => 'Error: Non poteva reciper datos de Amazon!',
+	'amazonplus-slserr' => 'Error: Syntaxe incorrecte in le datos de Amazon!',
+	'amazonplus-used' => 'usate',
+	'amazonplus-german' => 'Germano',
+	'amazonplus-french' => 'Francese',
+	'amazonplus-japanese' => 'Japonese',
+	'amazonplus-amazon' => 'precio de Amazon',
+	'amazonplus-new' => 'nove',
+	'amazonplus-none' => 'Nulle copia de iste articulo es in vendita.',
+	'amazonplus-cp-none' => 'Necun',
+	'amazonplus-more' => 'plus',
+	'amazonplus-less' => 'minus',
+);
+
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'amazonplus-desc' => "Un'estensione altamente personalizzabile per visualizzare le informazioni Amazon",
+	'amazonplus-nores' => 'Errore: Nessun risultato trovato!',
+	'amazonplus-noidres' => 'Errore: Impossibile trovare un ID di prodotto!',
+	'amazonplus-fgcerr' => 'Errore: Impossibile recuperare i dati da Amazon!',
+	'amazonplus-slserr' => 'Errore: Impossibile analizzare i dati da Amazon!',
+	'amazonplus-used' => 'usato',
+	'amazonplus-german' => 'Tedesco',
+	'amazonplus-french' => 'Francese',
+	'amazonplus-japanese' => 'Giapponese',
+	'amazonplus-amazon' => 'prezzo di amazon',
+	'amazonplus-new' => 'nuovo',
+	'amazonplus-none' => 'Nessun pezzo di questo articolo è in vendita.',
+	'amazonplus-cp-none' => 'Nessuno',
+	'amazonplus-more' => 'più',
+	'amazonplus-less' => 'meno',
+);
+
 /** Japanese (日本語)
  * @author Aotake
  * @author Fievarsty
@@ -413,8 +551,8 @@ $messages['ja'] = array(
 	'amazonplus-new' => '新品',
 	'amazonplus-none' => 'この商品は在庫・出品がありません。',
 	'amazonplus-cp-none' => '無し',
-	'amazonplus-more' => 'もっと',
-	'amazonplus-less' => '以下',
+	'amazonplus-more' => '続き',
+	'amazonplus-less' => '省略',
 );
 
 /** Georgian (ქართული)
@@ -469,7 +607,6 @@ $messages['ksh'] = array(
 	'amazonplus-amazon' => 'dä Priiß bei <i lang="en">Amazon</i>',
 	'amazonplus-new' => 'neu',
 	'amazonplus-status' => '($1)',
-	'amazonplus-status-sep' => ',',
 	'amazonplus-none' => 'Et es jraad kei Stöck dovun em Aanjebott.',
 	'amazonplus-currency' => '$3$1 $2$4',
 	'amazonplus-cp-none' => 'Nix',
@@ -510,6 +647,13 @@ $messages['li'] = array(
 	'amazonplus-german' => 'Duits',
 	'amazonplus-french' => 'Frans',
 	'amazonplus-japanese' => 'Japans',
+);
+
+/** Mongolian (Монгол)
+ * @author E.shijir
+ */
+$messages['mn'] = array(
+	'amazonplus-nores' => 'Алдаа: Үр дүн олдсонгүй.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -646,6 +790,27 @@ $messages['pt'] = array(
 	'amazonplus-less' => 'menos',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'amazonplus-desc' => 'Uma extensão altamente personalizável para apresentar informações da Amazon',
+	'amazonplus-nores' => 'Erro: Nenhum resultado encontrado!',
+	'amazonplus-noidres' => 'Erro: Não foi encontrado um ID de produto!',
+	'amazonplus-fgcerr' => 'Erro: Não foi possível retornar dados da Amazon!',
+	'amazonplus-slserr' => 'Erro: Não foi possível interpretar dados da Amazon!',
+	'amazonplus-used' => 'usado',
+	'amazonplus-german' => 'Alemão',
+	'amazonplus-french' => 'Francês',
+	'amazonplus-japanese' => 'Japonês',
+	'amazonplus-amazon' => 'preço Amazon',
+	'amazonplus-new' => 'novo',
+	'amazonplus-none' => 'Nenhuma cópia deste item está disponível para venda.',
+	'amazonplus-cp-none' => 'Nenhum',
+	'amazonplus-more' => 'mais',
+	'amazonplus-less' => 'menos',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  * @author Silviubogan
@@ -659,6 +824,27 @@ $messages['ro'] = array(
 	'amazonplus-amazon' => 'preţul amazon',
 	'amazonplus-new' => 'nou',
 	'amazonplus-cp-none' => 'Nimic',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'amazonplus-desc' => "'N'estenziona assaije personalizzabbile de le 'mbormaziune de Amazon",
+	'amazonplus-nores' => 'Errore:Nisciune resultete acchijete',
+	'amazonplus-noidres' => "Errore: Non ge riesche ad acchià 'u codece d'u prodotte!",
+	'amazonplus-fgcerr' => 'Errore: Non ge pozze pigghià le date da Amazon!',
+	'amazonplus-slserr' => 'Errore: Non ge pozze verificà le date da Amazon!',
+	'amazonplus-used' => 'ausete',
+	'amazonplus-german' => 'Tedesche',
+	'amazonplus-french' => 'Frangese',
+	'amazonplus-japanese' => 'Giapponese',
+	'amazonplus-amazon' => 'prizze de amazon',
+	'amazonplus-new' => 'nuève',
+	'amazonplus-none' => 'Nisciuna copie de ste artichele ha state mise in vendita.',
+	'amazonplus-cp-none' => 'Ninde',
+	'amazonplus-more' => 'de cchiù',
+	'amazonplus-less' => 'de mene',
 );
 
 /** Russian (Русский)
@@ -678,6 +864,29 @@ $messages['ru'] = array(
 	'amazonplus-new' => 'новая',
 	'amazonplus-none' => 'Не осталось экземпляров этого товара для продажи.',
 	'amazonplus-cp-none' => 'Нет',
+	'amazonplus-more' => 'больше',
+	'amazonplus-less' => 'меньше',
+);
+
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'amazonplus-desc' => 'Amazon саайтыттан ылыллар билиигэ туттуллар уларытыллар тупсарыы',
+	'amazonplus-nores' => 'Алҕас: Туох да көстүбэтэ!',
+	'amazonplus-noidres' => 'Алҕас: Табаар ID нүөмэрин булар табыллыбата!',
+	'amazonplus-fgcerr' => 'Алҕас: Amazon саайтын кытта ситимнэһэр табыллыбата!',
+	'amazonplus-slserr' => 'Error: Amazon саайтыттан ылыллыбыт информация кыайан ааҕыллыбата!',
+	'amazonplus-used' => 'туттуллар',
+	'amazonplus-german' => 'ниэмэс',
+	'amazonplus-french' => 'француз',
+	'amazonplus-japanese' => 'дьоппуон',
+	'amazonplus-amazon' => 'Amazon сыаната',
+	'amazonplus-new' => 'саҥа',
+	'amazonplus-none' => 'Бу табаар атыыга тахсара бүппүт.',
+	'amazonplus-cp-none' => 'Суох',
+	'amazonplus-more' => 'өссө',
+	'amazonplus-less' => 'аҕыйат',
 );
 
 /** Slovak (Slovenčina)
@@ -696,7 +905,6 @@ $messages['sk'] = array(
 	'amazonplus-amazon' => 'cena na Amazon',
 	'amazonplus-new' => 'nové',
 	'amazonplus-status' => '($1)',
-	'amazonplus-status-sep' => ',',
 	'amazonplus-none' => 'Nepredávajú sa žiadne kópie tejto položky.',
 	'amazonplus-currency' => '$3$1 $2$4',
 	'amazonplus-cp-none' => 'Žiadne',
@@ -707,6 +915,27 @@ $messages['sk'] = array(
 	'amazonplus-cp-jpy' => 'JPY',
 	'amazonplus-more' => 'viac',
 	'amazonplus-less' => 'menej',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'amazonplus-desc' => 'Ne goud appaasboare Ärwiederenge, uum Informatione fon Amazon antouwiesen',
+	'amazonplus-nores' => 'Failer: Neen Resultoate fuunen!',
+	'amazonplus-noidres' => 'Failer: Produkt-ID kuud nit fuunen wäide!',
+	'amazonplus-fgcerr' => 'Failer: Der kuuden neen Doaten fon Amazon hoald wäide.',
+	'amazonplus-slserr' => 'Failer: Fon Amazon ämpfangene Doaten kuuden nit feroarbaided wäide!',
+	'amazonplus-used' => 'bruukt',
+	'amazonplus-german' => 'Düütsk',
+	'amazonplus-french' => 'Frantsöösk',
+	'amazonplus-japanese' => 'Japanisk',
+	'amazonplus-amazon' => 'Pries bie Amazon',
+	'amazonplus-new' => 'näi',
+	'amazonplus-none' => 'Fon disse Publikation wäide apstuuns neen Kopien ferkooped.',
+	'amazonplus-cp-none' => 'Neen',
+	'amazonplus-more' => 'moor',
+	'amazonplus-less' => 'minner',
 );
 
 /** Sundanese (Basa Sunda)
@@ -728,9 +957,17 @@ $messages['su'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'amazonplus-nores' => 'పొరపాటు: ఫలితాలేమీ లేవు!',
+	'amazonplus-noidres' => 'పొరపాటు: ఉత్పాదన ID కనబడలేదు!',
+	'amazonplus-fgcerr' => 'పొరపాటు: అమెజాన్ నుండి భోగట్టాని తేలేకపోయాం!',
+	'amazonplus-slserr' => 'పొరపాటు: అమెజాన్ నుండి వచ్చిన భోగట్టాని చదవలేకపోయాం!',
+	'amazonplus-used' => 'వాడినది',
 	'amazonplus-german' => 'జర్మను',
 	'amazonplus-french' => 'ఫ్రెంచి',
 	'amazonplus-japanese' => 'జపనీస్',
+	'amazonplus-amazon' => 'అమెజాన్ ధర',
+	'amazonplus-none' => 'దీని యొక్క కాపీలేమీ అమ్మకానికి లేవు.',
+	'amazonplus-more' => 'మరిన్ని',
 );
 
 /** Tetum (Tetun)
@@ -738,6 +975,27 @@ $messages['te'] = array(
  */
 $messages['tet'] = array(
 	'amazonplus-more' => 'barak liu',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'amazonplus-desc' => 'Isang napaka maipapasadyang karugtong upang maipakita ang kabatirang nasa Amazon',
+	'amazonplus-nores' => 'Kamalian: Walang natagpuang resulta!',
+	'amazonplus-noidres' => 'Kamalian: Hindi matagpuan ang ID ng isang produkto!',
+	'amazonplus-fgcerr' => 'Kamalian: Hindi makuha ang dato mula sa Amazon!',
+	'amazonplus-slserr' => 'Kamalian: Hindi mabanghay ang dato mula sa Amazon!',
+	'amazonplus-used' => 'nagamit na',
+	'amazonplus-german' => 'Aleman',
+	'amazonplus-french' => 'Pranses',
+	'amazonplus-japanese' => 'Hapones',
+	'amazonplus-amazon' => 'halaga sa amazon',
+	'amazonplus-new' => 'bago',
+	'amazonplus-none' => 'Walang ipinagbibiling mga sipi ng bagay na ito.',
+	'amazonplus-cp-none' => 'Wala',
+	'amazonplus-more' => 'mas marami',
+	'amazonplus-less' => 'mas kaunti',
 );
 
 /** Turkish (Türkçe)
@@ -756,7 +1014,6 @@ $messages['tr'] = array(
 	'amazonplus-amazon' => 'amazon fiyatı',
 	'amazonplus-new' => 'yeni',
 	'amazonplus-status' => '($1)',
-	'amazonplus-status-sep' => ',',
 	'amazonplus-none' => 'Bu ürünün hiçbir kopyası satılık değil.',
 	'amazonplus-currency' => '$1$3 $2$4',
 	'amazonplus-cp-none' => 'Hiç',

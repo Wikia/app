@@ -27,7 +27,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 	protected $nsfromMsg = 'allpagesfrom';
 
 	function __construct( $name = 'Allpages' ){
-		parent::__construct( $name );	
+		parent::__construct( $name );
 	}
 
 	/**
@@ -217,9 +217,9 @@ class SpecialAllpages extends IncludableSpecialPage {
 				$out2 .= '<tr valign="top"><td>' . $nsForm;
 				$out2 .= '</td><td align="' . $align . '" style="font-size: smaller; margin-bottom: 1em;">' .
 					$wgUser->getSkin()->makeKnownLinkObj( $this->getTitle(), wfMsgHtml ( 'allpages' ) );
-				$out2 .= "</td></tr></table><hr />";
+				$out2 .= "</td></tr></table>";
 			} else {
-				$out2 = $nsForm . '<hr />';
+				$out2 = $nsForm;
 			}
 		}
 		$wgOut->addHTML( $out2 . $out );
@@ -237,8 +237,8 @@ class SpecialAllpages extends IncludableSpecialPage {
 		$inpointf = htmlspecialchars( str_replace( '_', ' ', $inpoint ) );
 		$outpointf = htmlspecialchars( str_replace( '_', ' ', $outpoint ) );
 		// Don't let the length runaway
-		$inpointf = $wgContLang->truncate( $inpointf, $this->maxPageLength, '...' );
-		$outpointf = $wgContLang->truncate( $outpointf, $this->maxPageLength, '...' );
+		$inpointf = $wgContLang->truncate( $inpointf, $this->maxPageLength );
+		$outpointf = $wgContLang->truncate( $outpointf, $this->maxPageLength );
 
 		$queryparams = $namespace ? "namespace=$namespace&" : '';
 		$special = $this->getTitle();
@@ -257,7 +257,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 	 * @param string $to list all pages to this name (default FALSE)
 	 */
 	function showChunk( $namespace = NS_MAIN, $from = false, $to = false ) {
-		global $wgOut, $wgUser, $wgContLang;
+		global $wgOut, $wgUser, $wgContLang, $wgLang;
 
 		$sk = $wgUser->getSkin();
 
@@ -382,7 +382,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 					. ( $namespace ? '&namespace=' . $namespace : '' );
 				$prevLink = $sk->makeKnownLinkObj( $self,
 					wfMsgHTML( 'prevpage', htmlspecialchars( $pt ) ), $q );
-				$out2 .= ' | ' . $prevLink;
+				$out2 = $wgLang->pipeList( array( $out2, $prevLink ) );
 			}
 
 			if( $n == $this->maxPerPage && $s = $res->fetchObject() ) {
@@ -392,9 +392,9 @@ class SpecialAllpages extends IncludableSpecialPage {
 					. ( $namespace ? '&namespace=' . $namespace : '' );
 				$nextLink = $sk->makeKnownLinkObj( $self,
 					wfMsgHtml( 'nextpage', htmlspecialchars( $t->getText() ) ), $q );
-				$out2 .= ' | ' . $nextLink;
+				$out2 = $wgLang->pipeList( array( $out2, $nextLink ) );
 			}
-			$out2 .= "</td></tr></table><hr />";
+			$out2 .= "</td></tr></table>";
 		}
 
 		$wgOut->addHTML( $out2 . $out );
@@ -404,7 +404,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 				$wgOut->addHTML( $prevLink );
 			}
 			if( isset( $prevLink ) && isset( $nextLink ) ) {
-				$wgOut->addHTML( ' | ' );
+				$wgOut->addHTML( wfMsgExt( 'pipe-separator' , 'escapenoentities' ) );
 			}
 			if( isset( $nextLink ) ) {
 				$wgOut->addHTML( $nextLink );

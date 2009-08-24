@@ -37,6 +37,18 @@ $messages['qqq'] = array(
 	'expand_templates_preview' => '{{Identical|Preview}}',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'expand_templates_input' => 'Tekst:',
+	'expand_templates_output' => "Rezul'tat",
+	'expand_templates_xml_output' => 'XML-lähtmižvend',
+	'expand_templates_ok' => 'OK',
+	'expand_templates_remove_comments' => 'Čuta kommentarijad',
+	'expand_templates_preview' => 'Ezikacund',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Arnobarnard
  * @author Naudefj
@@ -317,6 +329,7 @@ $messages['ca'] = array(
 	'expand_templates_xml_output' => 'Sortida XML',
 	'expand_templates_ok' => "D'acord",
 	'expand_templates_remove_comments' => 'Elimina els comentaris',
+	'expand_templates_generate_xml' => "Mostra l'arbre XML",
 	'expand_templates_preview' => 'Previsualitza',
 );
 
@@ -351,21 +364,35 @@ $messages['cs'] = array(
 );
 
 /** Danish (Dansk)
+ * @author Byrial
  * @author Jon Harald Søby
  */
 $messages['da'] = array(
-	'expand_templates_ok' => 'OK',
+	'expandtemplates' => 'Udfold skabeloner',
+	'expandtemplates-desc' => '[[Special:ExpandTemplates|Udfolder skabeloner, oversætterfunktioner og variabler]] for at vise den resulterende wikitekst og en forhåndsvisning af en side med den',
+	'expand_templates_intro' => 'Denne specialside tager noget tekst og folder alle skabeloner ud rekursivt.
+Den udfolder også specielle oversætterfunktioner såsom <nowiki>{{#if:...}}</nowiki> samt variabler såsom <nowiki>{{CURRENTDAY}}</nowiki> –
+faktisk folder den næsten hvad som helst i dobbelte krøllede parenteser ud.
+Den gør det ved at kalde det relevante analysetrin i MediaWiki-softwaren.',
+	'expand_templates_title' => 'Titlen på siden som {{PAGENAME}} og tilsvarende skal tolkes ud fra:',
+	'expand_templates_input' => 'Inputtekst:',
+	'expand_templates_output' => 'Resultat',
+	'expand_templates_xml_output' => 'XML-kode',
+	'expand_templates_ok' => 'Udfold',
+	'expand_templates_remove_comments' => 'Fjern kommentarer',
+	'expand_templates_generate_xml' => 'Vis analysetræ som XML',
 	'expand_templates_preview' => 'Forhåndsvisning',
 );
 
 /** German (Deutsch)
+ * @author Metalhead64
  * @author Raimond Spekking
  * @author Umherirrender
  */
 $messages['de'] = array(
 	'expandtemplates' => 'Vorlagen expandieren',
 	'expandtemplates-desc' => '[[Special:ExpandTemplates|Expandiert Vorlagen, Parser-Funktionen und Variablen]] zu vollständigem Wikitext und zeigt die gerenderte Vorschau',
-	'expand_templates_intro' => 'In diese Spezialseite kann Text eingegeben werden und alle Vorlagen in ihr werden rekursiv expandiert. Auch Parserfunkionen wie <nowiki>{{</nowiki>#if:…}} und Variablen wie <nowiki>{{</nowiki>CURRENTDAY}} werden ausgewertet - faktisch alles was in doppelten geschweiften Klammern enthalten ist. Dies geschieht durch den Aufruf der jeweiligen Parser-Phasen in MediaWiki.',
+	'expand_templates_intro' => 'In diese Spezialseite kann Text eingegeben werden und alle Vorlagen in ihr werden rekursiv expandiert. Auch Parserfunkionen wie <code><nowiki>{{</nowiki>#if:…}}</code> und Variablen wie <code><nowiki>{{</nowiki>CURRENTDAY}}</code> werden ausgewertet - faktisch alles was in doppelten geschweiften Klammern enthalten ist. Dies geschieht durch den Aufruf der jeweiligen Parser-Phasen in MediaWiki.',
 	'expand_templates_title' => 'Kontexttitel, für {{PAGENAME}} etc.:',
 	'expand_templates_input' => 'Eingabefeld:',
 	'expand_templates_output' => 'Ergebnis',
@@ -393,15 +420,33 @@ $messages['dsb'] = array(
 	'expand_templates_preview' => 'Pśeglěd',
 );
 
+/** Ewe (Eʋegbe)
+ * @author Natsubee
+ */
+$messages['ee'] = array(
+	'expand_templates_preview' => 'Kpɔe do ŋgɔ',
+);
+
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Dead3y3
  * @author ZaDiak
  */
 $messages['el'] = array(
 	'expandtemplates' => 'Επέκτεινε τα πρότυπα',
+	'expandtemplates-desc' => '[[Special:ExpandTemplates|Αναπτύσσει πρότυπα, συναρτήσεις συντακτικού αναλυτή και μεταβλητές]] για την εμφάνιση του αναπτυγμένου κειμένου wiki και της προεπισκόπησης της ερμηνευμένης σελίδας',
+	'expand_templates_intro' => 'Αυτή η ειδική σελίδα παίρνει κάποιο κείμενο και αναπτύσσει όλα τα πρότυπα σε αυτό αναδρομικά.<br />
+Επίσης αναπτύσσει συναρτήσεις συντακτικού αναλυτή όπως η<br />
+<nowiki>{{</nowiki>#if:…}}, και μεταβλητές όπως η<br />
+<nowiki>{{</nowiki>CURRENTDAY}}&mdash;Ουσιαστικά τα πάντα σε διπλές αγκύλες.<br />
+Αυτό το κάνει καλώντας το σχετικό στάδιο του συντακτικού αναλυτή από το MediaWiki αυτό καθαυτό.',
+	'expand_templates_title' => 'Τίτλων συμφραζόμενων, για την {{PAGENAME}} κ.τ.λ.:',
+	'expand_templates_input' => 'Κείμενο εισόδου:',
 	'expand_templates_output' => 'Αποτέλεσμα',
+	'expand_templates_xml_output' => 'Έξοδος XML',
 	'expand_templates_ok' => 'ΟΚ',
-	'expand_templates_remove_comments' => 'Αφαίρεσε τα σχόλια',
+	'expand_templates_remove_comments' => 'Αφαίρεση σχολίων',
+	'expand_templates_generate_xml' => 'Εμφάνιση δέντρου συντακτικής ανάλυσης XML',
 	'expand_templates_preview' => 'Προεπισκόπηση',
 );
 
@@ -449,6 +494,13 @@ Lo hace llamando al nivel del analizador sintáctico correspondiente del propio 
 	'expand_templates_remove_comments' => 'Eliminar comentarios',
 	'expand_templates_generate_xml' => 'Mostrar el árbol XML.',
 	'expand_templates_preview' => 'Previsualización',
+);
+
+/** Estonian (Eesti)
+ * @author Ker
+ */
+$messages['et'] = array(
+	'expandtemplates' => 'Mallide lahendamine',
 );
 
 /** Basque (Euskara)
@@ -523,22 +575,25 @@ $messages['fo'] = array(
  * @author Grondin
  * @author IAlex
  * @author Sherbrooke
+ * @author Verdy p
  * @author Zetud
  */
 $messages['fr'] = array(
 	'expandtemplates' => 'Expansion des modèles',
-	'expandtemplates-desc' => 'Augmente les modèles, les fonctions parseurs et les variables pour visionner les textes wikis étendus et prévisualise les pages ainsi rendues.',
-	'expand_templates_intro' => 'Cette page permet de tester l’expansion de modèles,
-qui sont développés récursivement. Les fonctions et les variables prédéfinies,
-telles que <nowiki>{{</nowiki>#if:...}} et <nowiki>{{</nowiki>CURRENTDAY}} sont aussi développées.',
-	'expand_templates_title' => 'Titre de la page, utile par exemple si le modèle utilise {{PAGENAME}} :',
-	'expand_templates_input' => 'Entrez votre texte ici :',
-	'expand_templates_output' => 'Résultat',
-	'expand_templates_xml_output' => 'Sortie XML',
-	'expand_templates_ok' => 'Accepter',
-	'expand_templates_remove_comments' => 'Supprimer les commentaires.',
-	'expand_templates_generate_xml' => "Voir l'arborescence XML",
-	'expand_templates_preview' => 'Prévisualisation',
+	'expandtemplates-desc' => '[[Special:ExpandTemplates|Réalise l’expansion des modèles, fonctions parseurs et variables]] afin de visionner le texte wiki obtenu après expansion et prévisualiser le rendu effectif de la page.',
+	'expand_templates_intro' => 'Cette page spéciale accepte un texte wiki source et permet de réaliser récursivement l’expansion des modèles qu’il contient.
+Elle réalise aussi l’expansion des fonctions du parseur telles que
+<tt><nowiki>{{</nowiki>#if:...<nowiki>}}</nowiki></tt>  et des variables prédéfinies telles que
+<tt><nowiki>{{</nowiki>CURRENTDAY<nowiki>}}</nowiki></tt> — en fait pratiquement tout ce qui est encadré par des doubles accolades.
+Elle réalise ceci en appelant les étages successifs appropriés du parseur de MediaWiki lui-même.',
+	'expand_templates_title' => 'Titre de la page, si le code utilise {{PAGENAME}}, etc. :',
+	'expand_templates_input' => 'Texte wiki source :',
+	'expand_templates_output' => 'Texte wiki obtenu après expansion',
+	'expand_templates_xml_output' => 'Résultat intermédiaire de l’analyse, au format XML',
+	'expand_templates_ok' => 'OK',
+	'expand_templates_remove_comments' => 'Supprimer les commentaires',
+	'expand_templates_generate_xml' => "Afficher l’arbre d'analyse au format XML",
+	'expand_templates_preview' => 'Aperçu du rendu',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -609,9 +664,20 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Holder
  * @author J. 'mach' wust
  */
 $messages['gsw'] = array(
+	'expandtemplates' => 'Vorlage expandiere',
+	'expandtemplates-desc' => '[[Special:ExpandTemplates|Expandiert Vorlage, Parser-Funktione un Variable]] zue vollständigem Wikitext un zeigt di grendert Vorschau',
+	'expand_templates_intro' => 'In däre Spezialsyte cha Täxt yygee wäre und alli Vorlage in ere wäre rekursiv expandiert. Au Parserfunkione wie <nowiki>{{</nowiki>#if:…}} un Variable wie <nowiki>{{</nowiki>CURRENTDAY}} wäre usgwärtet - faktisch alles was in dopplete gschweifte Chlammere din isch. Des gschiht dur dr Ufruef vu dr jewyylige Parser-Phase in MediaWiki.',
+	'expand_templates_title' => 'Kontexttitel, fir {{PAGENAME}} etc.:',
+	'expand_templates_input' => 'Yygabfäld:',
+	'expand_templates_output' => 'Ergebnis',
+	'expand_templates_xml_output' => 'XML-Usgab',
+	'expand_templates_ok' => 'Uusfiere',
+	'expand_templates_remove_comments' => 'Kommentar useneh',
+	'expand_templates_generate_xml' => 'Zeig XML-Parser-Baum',
 	'expand_templates_preview' => 'Vorschou',
 );
 
@@ -787,6 +853,15 @@ $messages['id'] = array(
 	'expand_templates_remove_comments' => 'Buang komentar',
 	'expand_templates_generate_xml' => 'Tampilkan pohon parser XML',
 	'expand_templates_preview' => 'Pratayang',
+);
+
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'expand_templates_output' => 'Rezulto',
+	'expand_templates_ok' => 'O.K.',
+	'expand_templates_preview' => 'Previdar',
 );
 
 /** Icelandic (Íslenska)
@@ -1000,6 +1075,10 @@ $messages['la'] = array(
 $messages['lb'] = array(
 	'expandtemplates' => 'Schablounen expandéieren',
 	'expandtemplates-desc' => "[[Special:ExpandTemplates|Erweidert Schablounen, Parser-Funktiounen a Variabelen]] zu engem komplette Wikitext a weist d'Säiten esou wéi wann se ofgespäichert wieren.",
+	'expand_templates_intro' => 'Op dëser Spezialsäit kann Text agi ginn an all Schablounen doran gi rekursiv expandéiert.
+Och Parserfonctioune wéi <nowiki>{{</nowiki>#if:…}} a Variabele wéi 
+<nowiki>{{</nowiki>CURRENTDAY}} ginn ausgewert&mdash; faktisch alles wat an duebele geschweefte Klamere steet.
+Dëst geschitt duerch Oprufe vun de jeweiligen Parser-Phase vu MediaWiki selwer.',
 	'expand_templates_title' => 'Titel vun der Säit, dëst kann nëtzlech si wa(nn) {{PAGENAME}} benotzt gëtt:',
 	'expand_templates_input' => 'Gitt ären Text hei an:',
 	'expand_templates_output' => 'Resultat',
@@ -1153,6 +1232,12 @@ $messages['nan'] = array(
  */
 $messages['nds'] = array(
 	'expandtemplates' => 'Vörlagen oplösen',
+	'expandtemplates-desc' => '[[Special:ExpandTemplates|Wannelt Vörlagen, Parser-Funkschonen un Variablen]] to Wikitext un wiest de Sied, so as se naher utsüht',
+	'expand_templates_intro' => 'Mit disse Spezialsied köönt Vörlagen in ingeven Text in Wikitext ümwannelt warrn.
+Ok Parserfunkschonen so as
+<nowiki>{{</nowiki>#if:…}}, un Variabeln so as
+<nowiki>{{</nowiki>CURRENTDAY}} warrt ümwannelt. Also so temlich allens, wat twischen swiefte Klammern steit.
+Dorto warrt de nödigen Parser-Phasen in MediaWiki direkt opropen.',
 	'expand_templates_title' => 'Kontexttitel, för {{PAGENAME}} etc.:',
 	'expand_templates_input' => 'Inputtext:',
 	'expand_templates_output' => 'Resultat',
@@ -1161,6 +1246,14 @@ $messages['nds'] = array(
 	'expand_templates_remove_comments' => 'Kommentaren rutnehmen',
 	'expand_templates_generate_xml' => 'XML-Parser-Boom wiesen',
 	'expand_templates_preview' => 'Vörschau',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'expandtemplates' => 'Mallen substitueren',
+	'expand_templates_intro' => 'Op disse speciale pagina kan tekse in-evoerd wonnen en alle mallen derin wonnen recursief esubstitueerd. Oek parserfuncties zoas <nowiki>{{</nowiki>#if:...}} en variabelen zoas <nowiki>{{</nowiki>CURRENTDAY}} wonnen esubstitueerd - eigenlijks alles wat tussen dubbele krulhaken steet. Dit wonnen edaon deur de betreffende parserfuncties op te reupen vanuut de MediaWiki-pregrammetuur.',
 );
 
 /** Dutch (Nederlands)
@@ -1172,7 +1265,7 @@ $messages['nl'] = array(
 	'expandtemplates-desc' => '[[Special:ExpandTemplates|Substitueert sjablonen, parserfuncties en variabelen]] en geeft wikitekst en een controleversie van een pagina weer',
 	'expand_templates_intro' => 'Deze speciale pagina leest de ingegeven tekst in en
 substitueert recursief alle sjablonen in de tekst.
-Het substitueert ook alle parserfuncties zoals <nowiki>{{</nowiki>#if:...}} en
+Het substitueert ook alle parserfuncties zoals <nowiki>{{</nowiki>#if:…}} en
 variabelen als <nowiki>{{</nowiki>CURRENTDAY}} — vrijwel alles tussen dubbele accolades.
 Hiervoor worden de relevante functies van de MediaWiki-parser gebruikt.',
 	'expand_templates_title' => 'Contexttitel, voor {{PAGENAME}}, enzovoort:',
@@ -1331,6 +1424,23 @@ $messages['pt'] = array(
 	'expand_templates_preview' => 'Previsão',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'expandtemplates' => 'Expandir predefinições',
+	'expandtemplates-desc' => 'Expande predefinições, funções do analisador (parser) e variáveis para mostrar texto wiki expandido e prever o aspecto da página',
+	'expand_templates_intro' => 'Esta página especial pega algum texto e expande todas as predefinições nele existentes recursivamente. Também expande funções do analisador (parser) como <nowiki>{{</nowiki>#if:...}}, e variáveis como <nowiki>{{</nowiki>CURRENTDAY}}&mdash;de fato, tudo entre chaves duplas. Isto é feito através da chamada ao estágio relevante do analisador (parser) do próprio MediaWiki.',
+	'expand_templates_title' => 'Título de contexto para {{PAGENAME}} etc.:',
+	'expand_templates_input' => 'Texto de entrada:',
+	'expand_templates_output' => 'Resultado',
+	'expand_templates_xml_output' => 'Resultado XML',
+	'expand_templates_ok' => 'OK',
+	'expand_templates_remove_comments' => 'Remover comentários',
+	'expand_templates_generate_xml' => 'Mostrar árvore de análise (parse) do XML',
+	'expand_templates_preview' => 'Previsão',
+);
+
 /** Quechua (Runa Simi)
  * @author AlimanRuna
  */
@@ -1361,7 +1471,10 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'expand_templates_output' => 'Resultete',
+	'expand_templates_xml_output' => 'XML de output',
 	'expand_templates_ok' => 'OK',
+	'expand_templates_preview' => 'Andeprime',
 );
 
 /** Russian (Русский)
@@ -1596,10 +1709,12 @@ $messages['tg-cyrl'] = array(
 );
 
 /** Thai (ไทย)
+ * @author Ans
  * @author Octahedron80
  */
 $messages['th'] = array(
 	'expand_templates_ok' => 'ตกลง',
+	'expand_templates_preview' => 'ตัวอย่างผลแสดง',
 );
 
 /** Tagalog (Tagalog)
@@ -1636,11 +1751,19 @@ $messages['to'] = array(
  */
 $messages['tr'] = array(
 	'expandtemplates' => 'Şablonları genişlet',
+	'expandtemplates-desc' => 'Genişletilmiş vikimetin göstermek ve işlenmiş sayfayı önizlemek için [[Special:ExpandTemplates|şablonları, derleyici fonksiyonlarını ve değişkenleri genişletir]]',
+	'expand_templates_intro' => 'Bu özel sayfa biraz metni alır ve içindeki tüm şablonları yinelemeli olarak genişletir.
+Ayrıca şu gibi derleyici fonksiyonlarını da genişletir
+<nowiki>{{</nowiki>#if:…}}, ve şu gibi değişkenleri
+<nowiki>{{</nowiki>CURRENTDAY}}&mdash;aslında çift-bağlı hemen herşey.
+Bunu, ilgili derleyici aşamasını MedyaVikinin kendisinden çağırarak yapar.',
+	'expand_templates_title' => 'Durum başlığı, ör {{PAGENAME}} için.:',
 	'expand_templates_input' => 'Giriş metni:',
 	'expand_templates_output' => 'Sonuç',
 	'expand_templates_xml_output' => 'XML üretim',
 	'expand_templates_ok' => 'Tamam',
 	'expand_templates_remove_comments' => 'Yorumları sil',
+	'expand_templates_generate_xml' => 'XML derleyici ağacını göster',
 	'expand_templates_preview' => 'Ön izleme',
 );
 
@@ -1650,6 +1773,13 @@ $messages['tr'] = array(
 $messages['ts'] = array(
 	'expand_templates_ok' => 'Hiswona',
 	'expand_templates_preview' => 'Ringanisa',
+);
+
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'expand_templates_ok' => 'Maqul',
 );
 
 /** Ukrainian (Українська)

@@ -56,13 +56,27 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 		$fld_len = isset($prop['len']);
 		$fld_content = isset($prop['content']);
 		$fld_token = isset($prop['token']);
-
+		
 		$result = $this->getResult();
 		$pageSet = $this->getPageSet();
 		$titles = $pageSet->getTitles();
 		$data = array();
+		
+		// This module operates in three modes:
+		// 'revs': List deleted revs for certain titles
+		// 'user': List deleted revs by a certain user
+		// 'all': List all deleted revs
+		$mode = 'all';
+		if(count($titles) > 0)
+			$mode = 'revs';
+		else if(!is_null($params['user']))
+			$mode = 'user';
+		
+		if(!is_null($params['user']) && !is_null($params['excludeuser']))
+				$this->dieUsage('user and excludeuser cannot be used together', 'badparams');
 
 		$this->addTables('archive');
+		$this->addWhere('ar_deleted = 0');
 		$this->addFields(array('ar_title', 'ar_namespace', 'ar_timestamp'));
 		if($fld_revid)
 			$this->addFields('ar_rev_id');
@@ -102,34 +116,88 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 			$token = $wgUser->editToken();
 
 		// We need a custom WHERE clause that matches all titles.
-		if(count($titles) > 0)
+		if($mode == 'revs')
 		{
 			$lb = new LinkBatch($titles);
 			$where = $lb->constructSet('ar', $db);
 			$this->addWhere($where);
-		} else {
-			$this->dieUsage('You have to specify a page title or titles');
+		}
+		elseif($mode == 'all')
+		{
+			$this->addWhereFld('ar_namespace', $params['namespace']);
+			if(!is_null($params['from']))
+			{
+				$from = $this->getDB()->strencode($this->titleToKey($params['from']));
+				$this->addWhere("ar_title >= '$from'");
+			}
+		}
+		
+		if(!is_null($params['user'])) {
+			$this->addWhereFld('ar_user_text', $params['user']);
+		} elseif(!is_null($params['excludeuser'])) {
+			$this->addWhere('ar_user_text != ' .
+				$this->getDB()->addQuotes($params['excludeuser']));
+		}
+		
+		if(!is_null($params['continue']) && ($mode == 'all' || $mode == 'revs'))
+		{
+			$cont = explode('|', $params['continue']);
+			if(count($cont) != 3)
+				$this->dieUsage("Invalid continue param. You should pass the original value returned by the previous query", "badcontinue");
+			$ns = intval($cont[0]);
+			$title = $this->getDB()->strencode($this->titleToKey($cont[1]));
+			$ts = $this->getDB()->strencode($cont[2]);
+			$op = ($params['dir'] == 'newer' ? '>' : '<');
+			$this->addWhere("ar_namespace $op $ns OR " .
+					"(ar_namespace = $ns AND " .
+					"(ar_title $op '$title' OR " .
+					"(ar_title = '$title' AND " .
+					"ar_timestamp = '$ts')))");
 		}
 
 		$this->addOption('LIMIT', $limit + 1);
-		$this->addWhereRange('ar_timestamp', $params['dir'], $params['start'], $params['end']);
+		$this->addOption('USE INDEX', array('archive' => ($mode == 'user' ? 'usertext_timestamp' : 'name_title_timestamp')));
+		if($mode == 'all')
+		{
+			if($params['unique'])
+			{
+				$this->addOption('GROUP BY', 'ar_title');
+				$this->addOption('ORDER BY', 'ar_title');
+			}
+			else
+				$this->addOption('ORDER BY', 'ar_title, ar_timestamp');
+		}
+		else
+		{
+			if($mode == 'revs')
+			{
+				// Sort by ns and title in the same order as timestamp for efficiency
+				$this->addWhereRange('ar_namespace', $params['dir'], null, null);
+				$this->addWhereRange('ar_title', $params['dir'], null, null);
+			}
+			$this->addWhereRange('ar_timestamp', $params['dir'], $params['start'], $params['end']);
+		}
 		$res = $this->select(__METHOD__);
-		$pages = array();
+		$pageMap = array(); // Maps ns&title to (fake) pageid
 		$count = 0;
-		// First populate the $pages array
+		$newPageID = 0;
 		while($row = $db->fetchObject($res))
 		{
 			if(++$count > $limit)
 			{
 				// We've had enough
-				$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->ar_timestamp));
+				if($mode == 'all' || $mode == 'revs')
+					$this->setContinueEnumParameter('continue', intval($row->ar_namespace) . '|' .
+						$this->keyToTitle($row->ar_title) . '|' . $row->ar_timestamp);
+				else
+					$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->ar_timestamp));
 				break;
 			}
 
 			$rev = array();
 			$rev['timestamp'] = wfTimestamp(TS_ISO_8601, $row->ar_timestamp);
 			if($fld_revid)
-				$rev['revid'] = $row->ar_rev_id;
+				$rev['revid'] = intval($row->ar_rev_id);
 			if($fld_user)
 				$rev['user'] = $row->ar_user_text;
 			if($fld_comment)
@@ -142,31 +210,38 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 			if($fld_content)
 				ApiResult::setContent($rev, Revision::getRevisionText($row));
 
-			$t = Title::makeTitle($row->ar_namespace, $row->ar_title);
-			if(!isset($pages[$t->getPrefixedText()]))
+			if(!isset($pageMap[$row->ar_namespace][$row->ar_title]))
 			{
-				$pages[$t->getPrefixedText()] = array(
-					'title' => $t->getPrefixedText(),
-					'ns' => intval($row->ar_namespace),
-					'revisions' => array($rev)
-				);
+				$pageID = $newPageID++;
+				$pageMap[$row->ar_namespace][$row->ar_title] = $pageID;
+				$t = Title::makeTitle($row->ar_namespace, $row->ar_title);
+				$a['revisions'] = array($rev);
+				$result->setIndexedTagName($a['revisions'], 'rev');
+				ApiQueryBase::addTitleInfo($a, $t);
 				if($fld_token)
-					$pages[$t->getPrefixedText()]['token'] = $token;
+					$a['token'] = $token;
+				$fit = $result->addValue(array('query', $this->getModuleName()), $pageID, $a);
 			}
 			else
-				$pages[$t->getPrefixedText()]['revisions'][] = $rev;
+			{
+				$pageID = $pageMap[$row->ar_namespace][$row->ar_title];
+				$fit = $result->addValue(
+					array('query', $this->getModuleName(), $pageID, 'revisions'),
+					null, $rev);
+			}
+			if(!$fit)
+			{
+				if($mode == 'all' || $mode == 'revs')
+					$this->setContinueEnumParameter('continue', intval($row->ar_namespace) . '|' .
+						$this->keyToTitle($row->ar_title) . '|' . $row->ar_timestamp);
+				else
+					$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->ar_timestamp));
+				break;
+			}
 		}
 		$db->freeResult($res);
-
-		// We don't want entire pagenames as keys, so let's make this array indexed
-		foreach($pages as $page)
-		{
-			$result->setIndexedTagName($page['revisions'], 'rev');
-			$data[] = $page;
-		}
-		$result->setIndexedTagName($data, 'page');
-		$result->addValue('query', $this->getModuleName(), $data);
-		}
+		$result->setIndexedTagName_internal(array('query', $this->getModuleName()), 'page');
+	}
 
 	public function getAllowedParams() {
 		return array (
@@ -182,6 +257,19 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 					'older'
 				),
 				ApiBase :: PARAM_DFLT => 'older'
+			),
+			'from' => null,
+			'continue' => null,
+			'unique' => false,
+			'user' => array(
+				ApiBase :: PARAM_TYPE => 'user'
+			),
+			'excludeuser' => array(
+				ApiBase :: PARAM_TYPE => 'user'
+			),
+			'namespace' => array(
+				ApiBase :: PARAM_TYPE => 'namespace',
+				ApiBase :: PARAM_DFLT => 0,
 			),
 			'limit' => array(
 				ApiBase :: PARAM_DFLT => 10,
@@ -202,34 +290,51 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 					'token'
 				),
 				ApiBase :: PARAM_ISMULTI => true
-			)
+			),
 		);
 	}
 
 	public function getParamDescription() {
 		return array (
-			'start' => 'The timestamp to start enumerating from',
-			'end' => 'The timestamp to stop enumerating at',
-			'dir' => 'The direction in which to enumerate',
+			'start' => 'The timestamp to start enumerating from. (1,2)',
+			'end' => 'The timestamp to stop enumerating at. (1,2)',
+			'dir' => 'The direction in which to enumerate. (1,2)',
 			'limit' => 'The maximum amount of revisions to list',
-			'prop' => 'Which properties to get'
+			'prop' => 'Which properties to get',
+			'namespace' => 'Only list pages in this namespace (3)',
+			'user' => 'Only list revisions by this user',
+			'excludeuser' => 'Don\'t list revisions by this user',
+			'from' => 'Start listing at this title (3)',
+			'continue' => 'When more results are available, use this to continue (3)',
+			'unique' => 'List only one revision for each page (3)',
 		);
 	}
 
 	public function getDescription() {
-		return 'List deleted revisions.';
+		return array(	'List deleted revisions.',
+				'This module operates in three modes:',
+				'1) List deleted revisions for the given title(s), sorted by timestamp',
+				'2) List deleted contributions for the given user, sorted by timestamp (no titles specified)',
+				'3) List all deleted revisions in the given namespace, sorted by title and timestamp (no titles specified, druser not set)',
+				'Certain parameters only apply to some modes and are ignored in others.',
+				'For instance, a parameter marked (1) only applies to mode 1 and is ignored in modes 2 and 3.',
+		);
 	}
 
 	protected function getExamples() {
 		return array (
-			'List the first 50 deleted revisions',
+			'List the last deleted revisions of Main Page and Talk:Main Page, with content (mode 1):',
+			'  api.php?action=query&list=deletedrevs&titles=Main%20Page|Talk:Main%20Page&drprop=user|comment|content',
+			'List the last 50 deleted contributions by Bob (mode 2):',
+			'  api.php?action=query&list=deletedrevs&druser=Bob&drlimit=50',
+			'List the first 50 deleted revisions in the main namespace (mode 3):',
 			'  api.php?action=query&list=deletedrevs&drdir=newer&drlimit=50',
-			'List the last deleted revisions of Main Page and Talk:Main Page, with content:',
-			'  api.php?action=query&list=deletedrevs&titles=Main%20Page|Talk:Main%20Page&drprop=user|comment|content'
+			'List the first 50 deleted pages in the Talk namespace (mode 3):',
+			'  api.php?action=query&list=deletedrevs&drdir=newer&drlimit=50&drnamespace=1&drunique',
 		);
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryDeletedrevs.php 40798 2008-09-13 20:41:58Z aaron $';
+		return __CLASS__ . ': $Id: ApiQueryDeletedrevs.php 50220 2009-05-05 14:07:59Z tstarling $';
 	}
 }

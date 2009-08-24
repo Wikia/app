@@ -81,7 +81,7 @@ function getFileField($name, $onChangeHandler = "") {
 */
 function getSuggest($name, $query, $parameters = array(), $value=0, $label='', $displayLabelColumns = array(0), DataSet $dc=null) {
 	global
-		$wgScriptPath;
+		$wgScriptPath, $wgLang;
 
 	if(is_null($dc)) {
 		$dc=wdGetDataSetContext();
@@ -102,15 +102,32 @@ function getSuggest($name, $query, $parameters = array(), $value=0, $label='', $
 			'<input type="hidden" id="'. $name .'-suggest-parameter-'. $parameter .'" name="'. $parameter .'" value="'. $parameterValue .'"/>';
 
 	$result .=		
-			'<a id="'. $name .'-suggest-link" class="suggest-link" onclick="suggestLinkClicked(event, this);" title="Click to change selection">' . $label . '</a>' .
-		'</span>'.
+			'<a id="'. $name .'-suggest-link" class="suggest-link" onclick="suggestLinkClicked(event, this);" title="' . wfMsgSc("SuggestHint") . '">' . $label . '</a>' .
+		'</span>';
+	
+	if ($wgLang->isRTL())
+		$result .=
+        '<div class="suggest-drop-down" style="position: relative"><div id="'. $name .'-suggest-div" style="position: absolute; right: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
+        	'<div><table>' .
+        		'<tr>' .
+        			'<td><input type="text" id="'. $name .'-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input></td>' .
+        			'<td><a id="'. $name .'-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg('ow_suggest_clear') . '</a></td>' .
+        			'<td style="white-space: nowrap"><a id="'. $name .'-suggest-previous" href="javascript:void(0)" class="suggest-previous" onclick="suggestPreviousClicked(event, this)"><img src="'.$wgScriptPath.'/extensions/Wikidata/Images/ArrowRight.png" alt="' . wfMsg('ow_suggest_previous') . '"/> ' . wfMsg('ow_suggest_previous') . '</a></td>'.
+        			'<td style="white-space: nowrap"><a id="'. $name .'-suggest-next" href="javascript:void(0)" class="suggest-next" onclick="suggestNextClicked(event, this)">' . wfMsg('ow_suggest_next') . ' <img src="'.$wgScriptPath.'/extensions/Wikidata/Images/ArrowLeft.png" alt="' . wfMsg('ow_suggest_next') . '"/></a></td>'.
+        			'<td><a id="'. $name .'-suggest-close" href="javascript:void(0)" onclick="suggestCloseClicked(event, this)">[X]</a></td>' .
+        		'</tr>' .
+        	'</table></div>' .
+        	'<div><table id="'. $name .'-suggest-table"><tr><td></td></tr></table></div>'.
+        '</div></div>';
+	else
+		$result .=
         '<div class="suggest-drop-down" style="position: relative"><div id="'. $name .'-suggest-div" style="position: absolute; left: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
         	'<div><table>' .
         		'<tr>' .
         			'<td><input type="text" id="'. $name .'-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input></td>' .
-        			'<td><a id="'. $name .'-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">Clear</a></td>' .
-        			'<td style="white-space: nowrap"><a id="'. $name .'-suggest-previous" href="javascript:void(0)" class="suggest-previous" onclick="suggestPreviousClicked(event, this)"><img src="'.$wgScriptPath.'/extensions/Wikidata/Images/ArrowLeft.png" alt="Previous"/> Previous</a></td>'.
-        			'<td style="white-space: nowrap"><a id="'. $name .'-suggest-next" href="javascript:void(0)" class="suggest-next" onclick="suggestNextClicked(event, this)">Next <img src="'.$wgScriptPath.'/extensions/Wikidata/Images/ArrowRight.png" alt="Next"/></a></td>'.
+        			'<td><a id="'. $name .'-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg('ow_suggest_clear') . '</a></td>' .
+        			'<td style="white-space: nowrap"><a id="'. $name .'-suggest-previous" href="javascript:void(0)" class="suggest-previous" onclick="suggestPreviousClicked(event, this)"><img src="'.$wgScriptPath.'/extensions/Wikidata/Images/ArrowLeft.png" alt="' . wfMsg('ow_suggest_previous') . '"/> ' . wfMsg('ow_suggest_previous') . '</a></td>'.
+        			'<td style="white-space: nowrap"><a id="'. $name .'-suggest-next" href="javascript:void(0)" class="suggest-next" onclick="suggestNextClicked(event, this)">' . wfMsg('ow_suggest_next') . ' <img src="'.$wgScriptPath.'/extensions/Wikidata/Images/ArrowRight.png" alt="' . wfMsg('ow_suggest_next') . '"/></a></td>'.
         			'<td><a id="'. $name .'-suggest-close" href="javascript:void(0)" onclick="suggestCloseClicked(event, this)">[X]</a></td>' .
         		'</tr>' .
         	'</table></div>' .
@@ -134,12 +151,12 @@ function getStaticSuggest($name, $suggestions, $idColumns = 1, $value=0, $label=
 		$result .= '<input type="hidden" id="'. $name .'-suggest-id-columns" value="' . $idColumns. '"/>';
 
 	$result .=
-			'<a id="'. $name .'-suggest-link" class="suggest-link" onclick="suggestLinkClicked(event, this);" title="Click to change selection">' . $label . '</a>' .
+			'<a id="'. $name .'-suggest-link" class="suggest-link" onclick="suggestLinkClicked(event, this);" title="' . wfMsgSc("SuggestHint") . '">' . $label . '</a>' .
 		'</span>'.
         '<div class="suggest-drop-down" style="position: relative"><div id="'. $name .'-suggest-div" style="position: absolute; left: 0px; top: 0px; border: 1px solid #000000; display: none; background-color: white; padding: 4px">' .
         	'<div><table><tr><td>' .
 //        	'<input type="text" id="'. $name .'-suggest-text" autocomplete="off" onkeyup="suggestTextChanged(this)" style="width: 300px"></input>' .
-        	'</td><td><a id="'. $name .'-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">Clear</a></td><td><a id="'. $name .'-suggest-close" href="#'. $name . '-suggest-link" onclick="suggestCloseClicked(event, this)">[X]</a></td></tr></table></div>' .
+        	'</td><td><a id="'. $name .'-suggest-clear" href="javascript:void(0)" onclick="suggestClearClicked(event, this)">' . wfMsg('ow_suggest_clear') . '</a></td><td><a id="'. $name .'-suggest-close" href="#'. $name . '-suggest-link" onclick="suggestCloseClicked(event, this)">[X]</a></td></tr></table></div>' .
         	'<div>' . $suggestions .
         	//<table id="'. $name .'-suggest-table"><tr><td></td></tr></table>
         	'</div>'.
@@ -178,7 +195,7 @@ function getSubmitButton($name, $value) {
 	return '<input type="submit" name="'. $name .'" value="'. $value .'"/>'; 	
 }
 
-function getOptionPanel($fields, $action = '', $buttons = array("show" => "Show")) {
+function getOptionPanel($fields, $action = '', $buttons = array("show" => null)) {
 	global 
 		$wgTitle;
 
@@ -192,12 +209,16 @@ function getOptionPanel($fields, $action = '', $buttons = array("show" => "Show"
 		$result .= '<input type="hidden" name="action" value="' . $action . '"/>';
 
 	foreach($fields as $caption => $field) 
-		$result .= '<tr><th>' . $caption . ':</th><td class="option-field">' . $field . '</td></tr>';
+		$result .= '<tr><th>' . $caption . '</th><td class="option-field">' . $field . '</td></tr>';
 
 	$buttonHTML = "";
 	
 	foreach ($buttons as $name => $caption)
+	{
+		if ($caption == null)	# Default parameter/value => Show
+			$caption = wfMsg('ow_show');
 		$buttonHTML .= getSubmitButton($name, $caption);
+	}
 	
 	$result .=
 					'<tr><th/><td>' . $buttonHTML . '</td></tr>' .
@@ -208,7 +229,7 @@ function getOptionPanel($fields, $action = '', $buttons = array("show" => "Show"
 	return $result;
 }
 
-function getOptionPanelForFileUpload($fields, $action = '', $buttons = array("upload" => "Upload")) {
+function getOptionPanelForFileUpload($fields, $action = '', $buttons = array("upload" => null)) {
 	global 
 		$wgTitle;
 
@@ -222,12 +243,16 @@ function getOptionPanelForFileUpload($fields, $action = '', $buttons = array("up
 		$result .= '<input type="hidden" name="action" value="' . $action . '"/>';
 
 	foreach($fields as $caption => $field) 
-		$result .= '<tr><th>' . $caption . ':</th><td class="option-field">' . $field . '</td></tr>';
+		$result .= '<tr><th>' . $caption . '</th><td class="option-field">' . $field . '</td></tr>';
 
 	$buttonHTML = "";
 	
 	foreach ($buttons as $name => $caption)
+	{
+		if ($caption == null)	# Default parameter/value => Upload
+			$caption = wfMsg('ow_upload');
 		$buttonHTML .= getSubmitButton($name, $caption);
+	}
 	
 	$result .=
 					'<tr><th/><td>' . $buttonHTML . '</td></tr>' .

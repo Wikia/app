@@ -32,9 +32,34 @@ $aliases['bs'] = array(
 	'ImageTagging' => array( 'OznacavanjeSlika' ),
 );
 
+/** German (Deutsch) */
+$aliases['de'] = array(
+	'ImageTagging' => array( 'Bildmarkierung' ),
+);
+
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'ImageTagging' => array( 'Markěrowanje wobrazow' ),
+);
+
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'ImageTagging' => array( 'Markěrowanje wobrazow' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'ImageTagging' => array( 'Képcímkézés' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'ImageTagging' => array( 'Etiquettage de imagines' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'ImageTagging' => array( '画像のラベル付け', 'ラベル付画像' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -52,8 +77,23 @@ $aliases['no'] = array(
 	'ImageTagging' => array( 'Bildetagging' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'ImageTagging' => array( 'छायाचित्रवीजक' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'ImageTagging' => array( 'MabanoyaPicha' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'ImageTagging' => array( 'Pagtatatak ng larawan' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'ImageTagging' => array( 'DosyaEtiketleri' ),
 );
 

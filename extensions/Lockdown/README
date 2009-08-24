@@ -93,6 +93,17 @@ required the "userrights" permission (granted only to the "bureaucrat"
 group per default). This restriction can not be overridden using the
 Lockdown extension.
 
+=== $wgActionLockdown === 
+
+$wgActionLockdown allows you to specify for each actionwhich user groups
+have access to it. For example, to limit the use of the history page to
+logged in users, use this in LocalSettings.php:
+
+    $wgActionLockdown['history'] = array('user');
+
+Note that some actions can not be locked down this way. In particular, it
+will not work for the ajax action.
+
 
 === $wgNamespacePermissionLockdown ===
 

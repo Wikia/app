@@ -65,10 +65,9 @@ class ApiMain extends ApiBase {
 		'feedwatchlist' => 'ApiFeedWatchlist',
 		'help' => 'ApiHelp',
 		'paraminfo' => 'ApiParamInfo',
-		'purge' => 'ApiPurge',
-	);
 
-	private static $WriteModules = array (
+		// Write modules
+		'purge' => 'ApiPurge',
 		'rollback' => 'ApiRollback',
 		'delete' => 'ApiDelete',
 		'undelete' => 'ApiUndelete',
@@ -80,6 +79,7 @@ class ApiMain extends ApiBase {
 		'emailuser' => 'ApiEmailUser',
 		'watch' => 'ApiWatch',
 		'patrol' => 'ApiPatrol',
+		'import' => 'ApiImport',
 	);
 
 	/**
@@ -149,20 +149,10 @@ class ApiMain extends ApiBase {
 				wfDebug( "API: stripping user credentials for JSON callback\n" );
 				$wgUser = new User();
 			}
-
-			if (!$wgUser->isAllowed('read')) {
-				self::$Modules = array(
-					'login'  => self::$Modules['login'],
-					'logout' => self::$Modules['logout'],
-					'help'   => self::$Modules['help'],
-					);
-			}
 		}
 
-		global $wgAPIModules, $wgEnableWriteAPI; // extension modules
+		global $wgAPIModules; // extension modules
 		$this->mModules = $wgAPIModules + self :: $Modules;
-		if($wgEnableWriteAPI)
-			$this->mModules += self::$WriteModules;
 
 		$this->mModuleNames = array_keys($this->mModules);
 		$this->mFormats = self :: $Formats;
@@ -200,22 +190,10 @@ class ApiMain extends ApiBase {
 	}
 
 	/**
-	 * This method will simply cause an error if the write mode was disabled
-	 * or if the current user doesn't have the right to use it
+	 * Only kept for backwards compatibility
+	 * @deprecated Use isWriteMode() instead
 	 */
-	public function requestWriteMode() {
-		global $wgUser;
-		if (!$this->mEnableWrite)
-			$this->dieUsage('Editing of this wiki through the API' .
-			' is disabled. Make sure the $wgEnableWriteAPI=true; ' .
-			'statement is included in the wiki\'s ' .
-			'LocalSettings.php file', 'noapiwrite');
-		if (!$wgUser->isAllowed('writeapi'))
-			$this->dieUsage('You\'re not allowed to edit this ' .
-			'wiki through the API', 'writeapidenied');
-		if (wfReadOnly())
-			$this->dieUsageMsg(array('readonlytext'));
-	}
+	public function requestWriteMode() {}
 
 	/**
 	 * Set how long the response should be cached.
@@ -360,9 +338,11 @@ class ApiMain extends ApiBase {
 			}
 
 			$this->getResult()->reset();
+			$this->getResult()->disableSizeCheck();
 			// Re-add the id
-			if($this->mRequest->getCheck('requestid'))
-				$this->getResult()->addValue(null, 'requestid', $this->mRequest->getVal('requestid'));
+			$requestid = $this->getParameter('requestid');
+			if(!is_null($requestid))
+				$this->getResult()->addValue(null, 'requestid', $requestid);
 			$this->getResult()->addValue(null, 'error', $errMessage);
 
 		return $errMessage['code'];
@@ -373,8 +353,9 @@ class ApiMain extends ApiBase {
 	 */
 	protected function executeAction() {
 		// First add the id to the top element
-		if($this->mRequest->getCheck('requestid'))
-			$this->getResult()->addValue(null, 'requestid', $this->mRequest->getVal('requestid'));
+		$requestid = $this->getParameter('requestid');
+		if(!is_null($requestid))
+			$this->getResult()->addValue(null, 'requestid', $requestid);
 
 		$params = $this->extractRequestParams();
 
@@ -405,12 +386,24 @@ class ApiMain extends ApiBase {
 				header( 'X-Database-Lag: ' . intval( $lag ) );
 				// XXX: should we return a 503 HTTP error code like wfMaxlagError() does?
 				if( $wgShowHostnames ) {
-					ApiBase :: dieUsage( "Waiting for $host: $lag seconds lagged", 'maxlag' );
+					$this->dieUsage( "Waiting for $host: $lag seconds lagged", 'maxlag' );
 				} else {
-					ApiBase :: dieUsage( "Waiting for a database server: $lag seconds lagged", 'maxlag' );
+					$this->dieUsage( "Waiting for a database server: $lag seconds lagged", 'maxlag' );
 				}
 				return;
 			}
+		}
+
+		global $wgUser;
+		if ($module->isReadMode() && !$wgUser->isAllowed('read'))
+			$this->dieUsageMsg(array('readrequired'));
+		if ($module->isWriteMode()) {
+			if (!$this->mEnableWrite)
+				$this->dieUsageMsg(array('writedisabled'));
+			if (!$wgUser->isAllowed('writeapi'))
+				$this->dieUsageMsg(array('writerequired'));
+			if (wfReadOnly())
+				$this->dieUsageMsg(array('readonlytext'));
 		}
 
 		if (!$this->mInternalMode) {
@@ -460,6 +453,10 @@ class ApiMain extends ApiBase {
 		$printer->execute();
 		$printer->closePrinter();
 		$printer->profileOut();
+	}
+	
+	public function isReadMode() {
+		return false;
 	}
 
 	/**
@@ -664,7 +661,7 @@ class ApiMain extends ApiBase {
 	public function getVersion() {
 		$vers = array ();
 		$vers[] = 'MediaWiki: ' . SpecialVersion::getVersion() . "\n    http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/";
-		$vers[] = __CLASS__ . ': $Id: ApiMain.php 45752 2009-01-14 21:36:57Z catrope $';
+		$vers[] = __CLASS__ . ': $Id: ApiMain.php 50834 2009-05-20 20:10:47Z catrope $';
 		$vers[] = ApiBase :: getBaseVersion();
 		$vers[] = ApiFormatBase :: getBaseVersion();
 		$vers[] = ApiQueryBase :: getBaseVersion();

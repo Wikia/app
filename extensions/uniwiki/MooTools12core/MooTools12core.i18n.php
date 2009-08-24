@@ -29,11 +29,32 @@ $messages['ar'] = array(
 	'mootools12core-desc' => 'يضيف [http://mootools.net mootools-1.2-core-yc.js]، إطار جافاسكريبت مضغوط، لكل صفحة',
 );
 
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
+	'mootools12core-desc' => 'يضيف [http://mootools.net mootools-1.2-core-yc.js]، إطار جافاسكريبت مضغوط، لكل صفحة',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'mootools12core-desc' => 'Дадае на кожную старонку [http://mootools.net mootools-1.2-core-yc.js], невялікую бібліятэку JavaScript',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
-	'mootools12core-desc' => 'Добавя [http://mootools.net mootools-1.2-core-yc.js] към всяка страница',
+	'mootools12core-desc' => '!Добавя [http://mootools.net mootools-1.2-core-yc.js], компактна Джаваскрипт платформа, към всяка страница',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'mootools12core-desc' => 'Dodaje [http://mootools.net mootools-1.2-core-yc.js], kompaktni JavaScript framework, za svaku stranicu',
 );
 
 /** Czech (Česky)
@@ -72,6 +93,13 @@ $messages['es'] = array(
 	'mootools12core-desc' => 'Añade [http://mootools.net mootools-1.2-core-yc.js], un entorno JavaScript compacto, a cada página',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'mootools12core-desc' => 'Orri bakoitzari, JavaScript molde trinkoa, [http://mootools.net mootools-1.2-core-yc.js] gehitzen dio',
+);
+
 /** Finnish (Suomi)
  * @author Mobe
  */
@@ -81,10 +109,11 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author PieRRoMaN
  * @author Sherbrooke
  */
 $messages['fr'] = array(
-	'mootools12core-desc' => 'Ajoute [http://mootools.net mootools-1.2-core-yc.js], un framework JavaScript compacte, à chaque page',
+	'mootools12core-desc' => 'Ajoute [http://mootools.net mootools-1.2-core-yc.js], un framework JavaScript compact, à chaque page',
 );
 
 /** Galician (Galego)
@@ -92,6 +121,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'mootools12core-desc' => 'Engade [http://mootools.net mootools-1.2-core-yc.js], un armazón de JavaScript compacto, a cada páxina',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'mootools12core-desc' => 'Fiegt in jedi Syte [http://mootools.net mootools-1.2-core-yc.js], e JavaScript-Framework, yy',
 );
 
 /** Hebrew (עברית)
@@ -177,7 +213,7 @@ $messages['nn'] = array(
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
-	'mootools12core-desc' => 'Legger til [http://mootools.net mootools-1.2-core-yc.js] på hver side',
+	'mootools12core-desc' => 'Legger til [http://mootools.net mootools-1.2-core-yc.js], et kompakt rammeverk i JavaScript, på hver side',
 );
 
 /** Occitan (Occitan)
@@ -203,6 +239,13 @@ $messages['pt'] = array(
 	'mootools12core-desc' => 'Adiciona [http://mootools.net mootools-1.2-core-yc.js], uma infra-estrutura JavaScript compacta, a todas as páginas',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'mootools12core-desc' => 'Adiciona o [http://mootools.net mootools-1.2-core-yc.js], uma infra-estrutura JavaScript compacta, a todas as páginas',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -221,7 +264,7 @@ $messages['roa-tara'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'mootools12core-desc' => 'Добавляет на каждую страницу [http://mootools.net mootools-1.2-core-yc.js]',
+	'mootools12core-desc' => 'Добавляет на каждую страницу компактный JavaScript-каркас [http://mootools.net mootools-1.2-core-yc.js]',
 );
 
 /** Slovak (Slovenčina)
@@ -231,11 +274,18 @@ $messages['sk'] = array(
 	'mootools12core-desc' => 'Pridáva kompaktnú javascriptovú platformu [http://mootools.net mootools-1.2-core-yc.js] na každú stránku',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'mootools12core-desc' => 'Föiget [http://mootools.net mootools-1.2-core-yc.js], n JavaScript-Framework, in älke Siede ien',
+);
+
 /** Swedish (Svenska)
  * @author Najami
  */
 $messages['sv'] = array(
-	'mootools12core-desc' => 'Lägger till [http://mootools.net mootools-1.2-core-yc.js] på varje sida',
+	'mootools12core-desc' => 'Lägger till [http://mootools.net mootools-1.2-core-yc.js], ett kompakt ramverk i JavaScript, på varje sida',
 );
 
 /** Tagalog (Tagalog)
@@ -243,5 +293,19 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'mootools12core-desc' => 'Nagdaragdag ng [http://mootools.net mootools-1.2-core-yc.js], isang siksik na kaayusan ng balangkas ng JavaScript, sa bawat pahina',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'mootools12core-desc' => 'Her sayfaya [http://mootools.net mootools-1.2-core-yc.js], kompakt bir JavaScript çerçevesi, ekler',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'mootools12core-desc' => 'Thêm [http://mootools.net mootools-1.2-core-yc.js], một nền tảng JavaScript nhỏ gọn, vào mỗi trang',
 );
 

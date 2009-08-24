@@ -49,6 +49,9 @@ file = CodeReview/CodeReview.alias.php
 Collection
 file = Collection/Collection.alias.php
 
+CommunityVoice
+file = CommunityVoice/CommunityVoice.alias.php
+
 Configure
 file = Configure/Configure.alias.php
 
@@ -102,6 +105,9 @@ file = Eval/SpecialEval.alias.php
 
 Expand templates
 file = ExpandTemplates/ExpandTemplates.alias.php
+
+Farmer
+file = Farmer/Farmer.alias.php
 
 Find spam
 file = FindSpam/FindSpam.alias.php
@@ -174,6 +180,9 @@ file = NssMySQLAuth/NssMySQLAuth.alias.php
 
 Nuke
 file = Nuke/SpecialNuke.alias.php
+
+OpenID
+file = OpenID/OpenID.alias.php
 
 Oversight
 file = Oversight/HideRevision.alias.php

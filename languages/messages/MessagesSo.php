@@ -255,6 +255,10 @@ Gudagalahaaga waa la sameeyey. Ha' hilmaamin in aad wax ka bedesho {{SITENAME}} 
 'yourlanguage'               => 'luqad:',
 'yournick'                   => 'Naaneys:',
 'badsiglength'               => 'Naaneysta aad bey u dheertahay; waa in ay kayaraataa $1 erayo.',
+'yourgender'                 => 'Jinsi:',
+'gender-unknown'             => 'Aana la qeexin',
+'gender-male'                => 'Lab',
+'gender-female'              => 'Dhedig',
 'email'                      => 'E-boosto',
 'prefs-help-realname'        => 'Optional: if you choose to provide it this will be used for giving you attribution for your work.',
 'loginerror'                 => 'Qaladka gudagalista',
@@ -269,6 +273,13 @@ Gudagalahaaga waa la sameeyey. Ha' hilmaamin in aad wax ka bedesho {{SITENAME}} 
 'wrongpasswordempty'         => 'Ereysir aan waxba ku jirin lama ogola. Fadlan iskuday markale.',
 'passwordtooshort'           => 'Eraygaaga sirta ah waan mid aan jirin ama aad u gaaban. Waa in uu ugu yaraan ahaadaa $1 xarf(ood) kana duwanaadaa magaca gudagalkaaga.',
 'mailmypassword'             => 'E-boosto ku dir ereysirka',
+'passwordremindertext'       => 'Qof (laga yaabo in aad adiga tahay, kana soo galay cinwaanka-IP $1) ayaa u codsaday {{SITENAME}} eraysir cusub ($4). 
+Eraysir cusub oo ku meelgaar ah ee uu leeyahay "$2" ayaa la sameeyay waxaana loo diray "$3". 
+Hadii uu ahaa fikirkaaga, waxaad u baahantahay in aad gudaha u gashid dalbatidna eraysir cusub.
+Eraysirka ku meelgaarka ah wuxuu dhacaayaa {{PLURAL:$5|maalin|$5 maalmood}}.
+
+Hadii u qofkale sameeyay codsigaan, ama aad soo xasuusatay eraysirkaagii, 
+oo aadan u baahnayn in aad bedeshid, iska ilow farriintaan siina wado isticmaalista eraysirkaagi hore.',
 'noemail'                    => 'E-boosto lagama haayo isticmaalaha "$1".',
 'mailerror'                  => 'Waxaa dhacay qalad markii loo diraayey E-boosto: $1',
 'acct_creation_throttle_hit' => 'Waan ka xunahay, waxaad horey u sameysay $1 akoon. Ma sameynkartid midkale.',

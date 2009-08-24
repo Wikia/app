@@ -72,7 +72,7 @@ class SpecialOpenIDServer extends SpecialOpenID {
 		switch ($par) {
 		 case 'Login':
 			list($request, $sreg) = $this->FetchValues();
-			$result = $this->Login($request);
+			$result = $this->serverLogin($request);
 			if ($result) {
 				if (is_string($result)) {
 					$this->LoginForm($request, $result);
@@ -555,7 +555,7 @@ class SpecialOpenIDServer extends SpecialOpenID {
 		return true;
 	}
 
-	function Login($request) {
+	function serverLogin($request) {
 
 		global $wgRequest, $wgUser;
 

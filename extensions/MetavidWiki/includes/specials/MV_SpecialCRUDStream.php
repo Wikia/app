@@ -166,7 +166,7 @@ class MV_SpecialCRUDStream extends SpecialPage {
 		$wgOut->addHTML( $html );
 		return '';
 	}
-	function add_stream() {
+	function add_stream( $stream=null ) {
 		$out = '';
 		$mvTitle = new MV_Title( $this->stream_name );
 		 	
@@ -178,8 +178,9 @@ class MV_SpecialCRUDStream extends SpecialPage {
 				   '</span> ';
 		} else {
 			// get the stream pointer
-			$stream =& mvGetMVStream( array( 'name' => $this->stream_name ) );
-			// if the stream is inserted procced with page insertion
+			if(!$stream)
+				$stream =& mvGetMVStream( array( 'name' => $this->stream_name ) );
+			// if the stream is inserted proced with page insertion
 			if ( $stream->insertStream( $this->stream_type ) ) {
 				global $wgUser;
 				$sk = $wgUser->getSkin();
@@ -189,7 +190,7 @@ class MV_SpecialCRUDStream extends SpecialPage {
 				$wgArticle = new Article( $streamTitle );
 				$status = $wgArticle->doEdit( $this->stream_desc, wfMsg( 'mv_summary_add_stream' ) );
 				if ( $status === true || ( is_object( $status ) && $status->isOK() ) ) {
-					// stream inserted succesfully report to output							
+					// stream inserted sucesfully report to output							
 					$out = wfMsg('mv_stream_added', $sk->makeLinkObj( $streamTitle,  $this->stream_name ) );					 
 				} else {
 					$out = wfMsg( 'mv_error_stream_insert' );

@@ -50,6 +50,10 @@ class ApiHelp extends ApiBase {
 		return false;
 	}
 
+	public function isReadMode() {
+		return false;
+	}
+
 	public function getDescription() {
 		return array (
 			'Display this help screen.'
@@ -57,6 +61,6 @@ class ApiHelp extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiHelp.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id: ApiHelp.php 48091 2009-03-06 13:49:44Z catrope $';
 	}
 }

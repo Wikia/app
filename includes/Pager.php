@@ -304,20 +304,18 @@ abstract class IndexPager implements Pager {
 		if ( $query === null ) {
 			return $text;
 		}
-		if( $type == 'prev' || $type == 'next' ) {
-			$attrs = "rel=\"$type\"";
-		} elseif( $type == 'first' ) {
-			$attrs = "rel=\"start\"";
-		} else {
-			# HTML 4 has no rel="end" . . .
-			$attrs = '';
+
+		$attrs = array();
+		if( in_array( $type, array( 'first', 'prev', 'next', 'last' ) ) ) {
+			# HTML5 rel attributes
+			$attrs['rel'] = $type;
 		}
 
 		if( $type ) {
-			$attrs .= " class=\"mw-{$type}link\"" ;
+			$attrs['class'] = "mw-{$type}link";
 		}
-		return $this->getSkin()->makeKnownLinkObj( $this->getTitle(), $text,
-			wfArrayToCGI( $query, $this->getDefaultQuery() ), '', '', $attrs );
+		return $this->getSkin()->link( $this->getTitle(), $text,
+			$attrs, $query + $this->getDefaultQuery(), array('noclasses','known') );
 	}
 
 	/**
@@ -543,10 +541,10 @@ abstract class AlphabeticPager extends IndexPager {
 		
 		$pagingLinks = $this->getPagingLinks( $linkTexts );
 		$limitLinks = $this->getLimitLinks();
-		$limits = implode( ' | ', $limitLinks );
+		$limits = $wgLang->pipeList( $limitLinks );
 		
 		$this->mNavigationBar =
-			"({$pagingLinks['first']} | {$pagingLinks['last']}) " .
+			"(" . $wgLang->pipeList( array( $pagingLinks['first'], $pagingLinks['last'] ) ) . ") " .
 			wfMsgHtml( 'viewprevnext', $pagingLinks['prev'],
 			$pagingLinks['next'], $limits );
 
@@ -562,7 +560,7 @@ abstract class AlphabeticPager extends IndexPager {
 			if( $first ) {
 				$first = false;
 			} else {
-				$extra .= ' | ';
+				$extra .= wfMsgExt( 'pipe-separator' , 'escapenoentities' );
 			}
 
 			if( $order == $this->mOrderType ) {
@@ -622,9 +620,9 @@ abstract class ReverseChronologicalPager extends IndexPager {
 
 		$pagingLinks = $this->getPagingLinks( $linkTexts );
 		$limitLinks = $this->getLimitLinks();
-		$limits = implode( ' | ', $limitLinks );
+		$limits = $wgLang->pipeList( $limitLinks );
 		
-		$this->mNavigationBar = "({$pagingLinks['first']} | {$pagingLinks['last']}) " .
+		$this->mNavigationBar = "({$pagingLinks['first']}" . wfMsgExt( 'pipe-separator' , 'escapenoentities' ) . "{$pagingLinks['last']}) " .
 			wfMsgHtml("viewprevnext", $pagingLinks['prev'], $pagingLinks['next'], $limits);
 		return $this->mNavigationBar;
 	}
@@ -760,7 +758,8 @@ abstract class TablePager extends IndexPager {
 	}
 
 	function formatRow( $row ) {
-		$s = "<tr>\n";
+		$rowClass = $this->getRowClass( $row );
+		$s = "<tr class=\"$rowClass\">\n";
 		$fieldNames = $this->getFieldNames();
 		$this->mCurrentRow = $row;  # In case formatValue needs to know
 		foreach ( $fieldNames as $field => $name ) {
@@ -774,6 +773,10 @@ abstract class TablePager extends IndexPager {
 		}
 		$s .= "</tr>\n";
 		return $s;
+	}
+
+	function getRowClass($row) {
+		return '';
 	}
 
 	function getIndexField() {

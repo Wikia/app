@@ -9,8 +9,8 @@
 	$wgExtensionFunctions[] = 'wfSpecialExportTSV';
 
 	function wfSpecialExportTSV() {
-	        global $wgMessageCache;
-                $wgMessageCache->addMessages(array('exporttsv'=>'Wikidata: Export TSV'),'en');
+	        #global $wgMessageCache;
+            #    $wgMessageCache->addMessages(array('exporttsv'=>'Wikidata: Export TSV'),'en');
                         
 		class SpecialExportTSV extends SpecialPage {
 			
@@ -23,7 +23,7 @@
 				global $wgOut, $wgUser, $wgRequest;
 
 				if (!$wgUser->isAllowed('exporttsv')) {
-					$wgOut->addHTML('You do not have permission to do a tsv export.');
+					$wgOut->addHTML(wfMsg('ow_exporttsv_not_allowed'));
 					return false;
 				}
 				
@@ -43,9 +43,8 @@
 					for($i = 0; $i < count($isoCodes); $i++) {
 						$isoCodes[$i] = trim($isoCodes[$i]);
 						if (!getLanguageIdForIso639_3($isoCodes[$i])) {
-							$wgOut->setPageTitle('Export failed');
-							$wgOut->addHTML("<p>Unknown or incorrect language: ".$isoCodes[$i].".<br />");
-							$wgOut->addHTML("Languages must be ISO-639_3 language codes.</p>");
+							$wgOut->setPageTitle(wfMsg('ow_exporttsv_export_failed'));
+							$wgOut->addHTML(wfMsg('ow_impexptsv_unknown_lang', $isoCodes[$i]));
 							return false;
 						}
 					}
@@ -186,18 +185,15 @@
 					}
 										
 					// render the page
-					$wgOut->setPageTitle('Export a collection to tsv');
-					$wgOut->addHTML('<p>Export a collection to a tab separated text format that you can import in Excell or other spreadsheet software.<br />');
-					$wgOut->addHTML('Select a collection to export. In the languages text box, enter a comma separated list of ');
-					$wgOut->addHTML('ISO 639-3 languages codes. Start with the languages that you will be translating from (pick as many as you like) and ');
-					$wgOut->addHTML('finish with the ones you\'ll be translating to. Then click \'Create\' to create the file. </p>');
+					$wgOut->setPageTitle(wfMsg('ow_exporttsv_title'));
+					$wgOut->addHTML(wfMsg('ow_exporttsv_header'));
 					
 					$wgOut->addHTML(getOptionPanel(
 						array(
-							'Collection' => getSelect('collection', $collections, 'cid376322'),
-							'Languages' => getTextBox('languages', 'ita, eng, deu, fra, cat'),
+							wfMsg('ow_Collection_colon') => getSelect('collection', $collections, 'cid376322'),
+							wfMsg('ow_exporttsv_languages') => getTextBox('languages', 'ita, eng, deu, fra, cat'),
 						),
-						'',array('create' => 'Create')
+						'',array('create' => wfMsg('ow_create'))
 					));
 				}
 

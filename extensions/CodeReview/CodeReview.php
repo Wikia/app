@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 /**
  *
  * @author Brion Vibber
@@ -29,14 +29,14 @@ http://pecl.php.net/package/svn
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CodeReview',
-	'svn-date' => '$LastChangedDate: 2009-01-04 11:03:58 +0000 (Sun, 04 Jan 2009) $',
-	'svn-revision' => '$LastChangedRevision: 45391 $',
+	'svn-date' => '$LastChangedDate: 2009-03-18 21:14:33 +0000 (Wed, 18 Mar 2009) $',
+	'svn-revision' => '$LastChangedRevision: 48538 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CodeReview',
 	'author' => array( 'Brion Vibber', 'Aaron Schulz', 'Alexandre Emsenhuber', 'Chad Horohoe' ),
 	'descriptionmsg' => 'code-desc',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['ApiCodeUpdate'] = $dir . 'ApiCodeUpdate.php';
 $wgAutoloadClasses['ApiCodeDiff'] = $dir . 'ApiCodeDiff.php';
@@ -56,6 +56,7 @@ $wgAutoloadClasses['CodeAuthorListView'] = $dir . 'CodeAuthorListView.php';
 $wgAutoloadClasses['CodeStatusListView'] = $dir . 'CodeStatusListView.php';
 $wgAutoloadClasses['CodeTagListView'] = $dir . 'CodeTagListView.php';
 $wgAutoloadClasses['CodeCommentsListView'] = $dir . 'CodeCommentsListView.php';
+$wgAutoloadClasses['CodeReleaseNotes'] = $dir . 'CodeReleaseNotes.php';
 $wgAutoloadClasses['CodeComment'] = $dir . 'CodeComment.php';
 $wgAutoloadClasses['CodePropChange'] = $dir . 'CodePropChange.php';
 $wgAutoloadClasses['SpecialCode'] = $dir . 'SpecialCode.php';
@@ -76,11 +77,14 @@ $wgExtensionMessagesFiles['CodeReview'] = $dir . 'CodeReview.i18n.php';
 $wgExtensionAliasesFiles['CodeReview'] = $dir . 'CodeReview.alias.php';
 
 $wgAvailableRights[] = 'repoadmin';
+$wgAvailableRights[] = 'codereview-use';
 $wgAvailableRights[] = 'codereview-add-tag';
 $wgAvailableRights[] = 'codereview-remove-tag';
 $wgAvailableRights[] = 'codereview-post-comment';
 $wgAvailableRights[] = 'codereview-set-status';
 $wgAvailableRights[] = 'codereview-link-user';
+
+$wgGroupPermissions['*']['codereview-use'] = true;
 
 $wgGroupPermissions['user']['codereview-add-tag'] = true;
 $wgGroupPermissions['user']['codereview-remove-tag'] = true;
@@ -97,7 +101,7 @@ $wgSubversionProxy = false;
 $wgSubversionProxyTimeout = 30; // default 3 secs is too short :)
 
 // Bump the version number every time you change a CodeReview .css/.js file
-$wgCodeReviewStyleVersion = 3;
+$wgCodeReviewStyleVersion = 4;
 
 // The name of a repo which represents the code running on this wiki, used to highlight active revisions
 $wgWikiSVN = 'MediaWiki';
@@ -110,3 +114,6 @@ $wgSubversionPassword = false;
 
 // Leave this off by default until it works right
 $wgCodeReviewENotif = false;
+
+// What images can be used for client-side side-by-side comparisons?
+$wgCodeReviewImgRegex = '/\.(png|jpg|jpeg|gif)$/i';

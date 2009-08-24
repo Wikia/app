@@ -54,6 +54,13 @@ $messages['ar'] = array(
 	'languageselector-setlang' => 'ضبط',
 );
 
+/** Araucanian (Mapudungun)
+ * @author Lin linao
+ */
+$messages['arn'] = array(
+	'languageselector' => 'Dungun',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -103,6 +110,8 @@ $messages['br'] = array(
  */
 $messages['bs'] = array(
 	'languageselector' => 'Jezik',
+	'languageselector-desc' => 'Odabir jezika na svakoj stranici, također i za posjetioce',
+	'languageselector-setlang' => 'postavi',
 );
 
 /** Catalan (Català)
@@ -124,11 +133,29 @@ $messages['cs'] = array(
 	'languageselector-setlang' => 'nastavit',
 );
 
+/** Kashubian (Kaszëbsczi)
+ * @author Kaszeba
+ */
+$messages['csb'] = array(
+	'languageselector' => 'Jãzëk',
+	'languageselector-desc' => 'Wëbiérk jãzëka na kòżdi starnie, a téż dlô gòsców',
+	'languageselector-setlang' => 'nastôwi',
+);
+
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
  * @author ОйЛ
  */
 $messages['cu'] = array(
 	'languageselector' => 'ѩꙁꙑ́къ',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'languageselector' => 'Iaith',
+	'languageselector-desc' => 'Yn gosod botwm dewis iaith ar bob tudalen, sydd ar gael i ymwelwyr hefyd',
+	'languageselector-setlang' => 'gosod',
 );
 
 /** Danish (Dansk)
@@ -139,11 +166,12 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Als-Holder
  * @author Raimond Spekking
  */
 $messages['de'] = array(
 	'languageselector' => 'Sprache',
-	'languageselector-desc' => 'Sprachenauswahl auf jeder Seiten, auch für Besucher',
+	'languageselector-desc' => 'Sprachenauswahl auf jeder Seite, auch für Besucher',
 	'languageselector-setlang' => 'setzen',
 );
 
@@ -156,9 +184,13 @@ $messages['dsb'] = array(
 	'languageselector-setlang' => 'stajiś',
 );
 
-/** Ewe (Eʋegbe) */
+/** Ewe (Eʋegbe)
+ * @author Natsubee
+ */
 $messages['ee'] = array(
 	'languageselector' => 'Gbe',
+	'languageselector-desc' => 'Gbe tiala le axa ɖesiaɖe dzi, na ŋkɔmaŋlɔlawo hã',
+	'languageselector-setlang' => 'wɔe',
 );
 
 /** Greek (Ελληνικά)
@@ -203,6 +235,16 @@ $messages['ext'] = array(
 	'languageselector-setlang' => 'Acetal',
 );
 
+/** Persian (فارسی)
+ * @author Huji
+ * @author Vahid
+ */
+$messages['fa'] = array(
+	'languageselector' => 'زبان',
+	'languageselector-desc' => 'انتخاب کنندهٔ زبان در همهٔ صفحه‌ها باشد، و نیز برای مشاهده کنندگان',
+	'languageselector-setlang' => 'اعمال',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  * @author Nike
@@ -242,6 +284,15 @@ $messages['grc'] = array(
 	'languageselector-setlang' => 'τιθέναι',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'languageselector' => 'Sproch',
+	'languageselector-desc' => 'Sprochenuuswahl uf jedere Syte, au fir Bsuecher',
+	'languageselector-setlang' => 'setze',
+);
+
 /** Manx (Gaelg)
  * @author MacTire02
  */
@@ -275,6 +326,15 @@ $messages['hi'] = array(
 	'languageselector' => 'भाषा',
 	'languageselector-desc' => 'हर पन्नेपर भाषा-सिलेक्टर, भेंट देनेवालोंके लिये भी',
 	'languageselector-setlang' => 'सैट करें',
+);
+
+/** Croatian (Hrvatski)
+ * @author Suradnik13
+ */
+$messages['hr'] = array(
+	'languageselector' => 'Jezik',
+	'languageselector-desc' => 'Jezični izbornik na svakoj stranici, također i za posjetitelje',
+	'languageselector-setlang' => 'postavi',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -320,6 +380,7 @@ $messages['id'] = array(
  */
 $messages['io'] = array(
 	'languageselector' => 'Linguo',
+	'languageselector-setlang' => 'establisar',
 );
 
 /** Icelandic (Íslenska) */
@@ -398,6 +459,7 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'languageselector' => '언어',
+	'languageselector-desc' => '방문자에게도 모든 문서에 언어 선택기를 추가',
 	'languageselector-setlang' => '설정',
 );
 
@@ -408,6 +470,13 @@ $messages['ksh'] = array(
 	'languageselector' => 'Sproch',
 	'languageselector-desc' => 'Shprooche-Wahl op jede Sigk, och för namelose Metmaacher, un oohne Aanmëllde.',
 	'languageselector-setlang' => 'Setze',
+);
+
+/** Cornish (Kernewek)
+ * @author Kw-Moon
+ */
+$messages['kw'] = array(
+	'languageselector' => 'Yeth',
 );
 
 /** Latin (Latina)
@@ -569,10 +638,12 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
  * @author MF-Warburg
  */
 $messages['pt-br'] = array(
 	'languageselector' => 'Idioma',
+	'languageselector-desc' => 'Seletor de língua em todas as páginas, também para visitantes',
 	'languageselector-setlang' => 'selecionar',
 );
 
@@ -629,6 +700,13 @@ $messages['sk'] = array(
 	'languageselector' => 'Jazyk',
 	'languageselector-desc' => 'Výber jazyka na každej stránke, aj pre návštevníkov',
 	'languageselector-setlang' => 'nastaviť',
+);
+
+/** Slovenian (Slovenščina)
+ * @author Smihael
+ */
+$messages['sl'] = array(
+	'languageselector' => 'Jezik',
 );
 
 /** Serbian Cyrillic ekavian (ћирилица)
@@ -699,11 +777,30 @@ $messages['th'] = array(
 	'languageselector' => 'ภาษา',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'languageselector' => 'Wika',
+	'languageselector-desc' => 'Pampili ng wika na nasa ibabaw ng bawat pahina, para rin sa mga panauhin',
+	'languageselector-setlang' => 'itakda',
+);
+
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Karduelis
  */
 $messages['tr'] = array(
 	'languageselector' => 'Dil',
+	'languageselector-desc' => 'Her sayfada dil seçicisi, aynı zamanda ziyaretçiler için',
+	'languageselector-setlang' => 'ayar',
+);
+
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'languageselector' => 'Til',
 );
 
 /** Ukrainian (Українська)

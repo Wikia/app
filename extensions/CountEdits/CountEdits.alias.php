@@ -37,9 +37,19 @@ $aliases['de'] = array(
 	'CountEdits' => array( 'Beiträge zählen' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'CountEdits' => array( 'Pśinoski licyś' ),
+);
+
 /** Spanish (Español) */
 $aliases['es'] = array(
 	'CountEdits' => array( 'Contador_de_Ediciones' ),
+);
+
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'CountEdits' => array( 'Contador de edicións' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -55,6 +65,16 @@ $aliases['hsb'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'CountEdits' => array( 'Szerkesztések számolása' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'CountEdits' => array( 'Contar modificationes' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'CountEdits' => array( '編集回数の集計' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -92,8 +112,18 @@ $aliases['pl'] = array(
 	'CountEdits' => array( 'Licznik educji' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'CountEdits' => array( 'सम्पादन्‌गणन' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'CountEdits' => array( 'HesabuUhariri' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'CountEdits' => array( 'Bilangin ang pagbabago' ),
 );
 

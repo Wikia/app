@@ -15,7 +15,7 @@ class FormEditPage extends EditPage {
 		wfLoadExtensionMessages('SemanticForms');
 		$this->action = 'formedit';
 		$form_name = $wgRequest->getText('form', $form_name);
-		$this->form = Title::newFromText($form_name, SF_NS_FORM);
+		$this->form = Title::makeTitleSafe(SF_NS_FORM, $form_name);
 		$this->form_name = $form_name;
 	}
 	
@@ -38,11 +38,9 @@ class FormEditPage extends EditPage {
 		$target_title = $this->mArticle->getTitle();
 		$target_name = SFLinkUtils::titleString($target_title);
 		if ($target_title->exists()) {
-			require_once($sfgIP . '/specials/SF_EditData.php');
-			printEditForm($this->form_name, $target_name);
+			SFEditData::printEditForm($this->form_name, $target_name);
 		} else {
-			require_once($sfgIP . '/specials/SF_AddData.php');
-			printAddForm($this->form_name, $target_name, array());
+			SFAddData::printAddForm($this->form_name, $target_name, array());
 		}
 
 	}

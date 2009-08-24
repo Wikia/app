@@ -8,34 +8,28 @@
 $messages = array();
 
 $messages['en'] = array(
-	'makesysoptitle'       => 'Make a user into a sysop',
-	'makesysop-desc'       => 'Gives bureaucrats the ability to make users into sysops or bureaucrats',
+	'makesysoptitle'       => 'Make a user into an administrator',
+	'makesysop-desc'       => 'Gives bureaucrats the ability to make users into administrators or bureaucrats',
 	'makesysoptext'        => 'This form is used by bureaucrats to turn ordinary users into administrators. Type the name of the user in the box and press the button to make the user an administrator.',
 	'makesysopname'        => 'Name of the user:',
-	'makesysopsubmit'      => 'Make this user into a sysop',
-	'makesysopok'          => "<b>User \"$1\" is now a sysop</b>",
+	'makesysopsubmit'      => 'Make this user into an administrator',
+	'makesysopok'          => "<b>User \"$1\" is now an administrator</b>",
 	'makebureaucratok'     => "<b>User \"$1\" is now a bureaucrat</b>",
-	'makesysopfail'        => "<b>User \"$1\" could not be made into a sysop. (Did you enter the name correctly?)</b>",
+	'makesysopfail'        => "<b>User \"$1\" could not be made into an administrator. (Did you enter the name correctly?)</b>",
 	'makesysop-see-userrights' => 'See [[Special:Userrights]] for more options.',
 	'setbureaucratflag'    => 'Set bureaucrat flag',
 	'rights'               => 'Rights:',
 	'set_user_rights'      => 'Set user rights',
 	'set_rights_fail'      => "<b>User rights for \"$1\" could not be set. (Did you enter the name correctly?)</b>",
-	'makesysop'            => 'Make a user into a sysop',
+	'makesysop'            => 'Make a user into an administrator',
 	'already_sysop'        => 'This user is already an administrator',
 	'already_bureaucrat'   => 'This user is already a bureaucrat',
-	'group-steward'        => 'Stewards',
-	'group-steward-member' => 'Steward',
-	'grouppage-steward'    => '{{ns:project}}:Stewards',
-	'right-makesysop'      => 'Make users into sysops or bureaucrats',
+	'right-makesysop'      => 'Make users into administrators or bureaucrats',
 );
 
 $messages['af'] = array(
 	'already_sysop' => 'Hierdie gebruiker is al reeds \'n administrateur.',
 	'already_bureaucrat' => 'Hierdie gebruiker is al reeds \'n burokraat.',
-	'group-steward' => 'Waarde',
-	'group-steward-member' => 'Waard',
-	'grouppage-steward' => '{{ns:project}}:Waarde',
 );
 
 /** Arabic (العربية)
@@ -59,9 +53,6 @@ $messages['ar'] = array(
 	'makesysop'                => 'منح مستخدم صلاحيات إدارية',
 	'already_sysop'            => 'هذا المستخدم إداري بالفعل',
 	'already_bureaucrat'       => 'هذا المستخدم بيروقراط بالفعل',
-	'group-steward'            => 'مضيفون',
-	'group-steward-member'     => 'مضيف',
-	'grouppage-steward'        => '{{ns:project}}:مضيفون',
 	'right-makesysop'          => 'جعل المستخدمين مديري نظام أو بيروقراطيين',
 );
 
@@ -85,9 +76,6 @@ $messages['arz'] = array(
 	'makesysop'                => 'منح مستخدم صلاحيات إدارية',
 	'already_sysop'            => 'هذا المستخدم إدارى بالفعل',
 	'already_bureaucrat'       => 'هذا المستخدم بيروقراط بالفعل',
-	'group-steward'            => 'مضيفون',
-	'group-steward-member'     => 'مضيف',
-	'grouppage-steward'        => '{{ns:project}}:مضيفون',
 	'right-makesysop'          => 'جعل المستخدمين مديري نظام أو بيروقراطيين',
 );
 
@@ -111,9 +99,6 @@ $messages['ast'] = array(
 	'makesysop'                => "Convertir a un usuariu n'alministrador",
 	'already_sysop'            => 'Esti usuariu yá ye un alministrador',
 	'already_bureaucrat'       => 'Esti usuariu yá ye un burócrata',
-	'group-steward'            => 'Stewards',
-	'group-steward-member'     => 'Steward',
-	'grouppage-steward'        => '{{ns:project}}:Stewards',
 );
 
 $messages['az'] = array(
@@ -174,9 +159,6 @@ $messages['bg'] = array(
 	'makesysop'                => 'Превръщане на потребител в администратор',
 	'already_sysop'            => 'Този потребител беше вече администратор',
 	'already_bureaucrat'       => 'Този потребител беше вече бюрократ',
-	'group-steward'            => 'Стюарди',
-	'group-steward-member'     => 'Стюард',
-	'grouppage-steward'        => '{{ns:project}}:Стюарди',
 );
 
 /** Bengali (বাংলা)
@@ -190,9 +172,6 @@ $messages['bn'] = array(
 	'makesysop'            => 'একজন ব্যবহারকারীকে প্রশাসক বানানো হোক',
 	'already_sysop'        => 'এই ব্যবহারকারী ইতিমধ্যেই একজন প্রশাসক',
 	'already_bureaucrat'   => 'এই ব্যবহারকারী ইতিমধ্যেই একজন আমলা',
-	'group-steward'        => 'স্টিউয়ার্ডগণ',
-	'group-steward-member' => 'স্টিউয়ার্ড',
-	'grouppage-steward'    => '{{ns:project}}:স্টিউয়ার্ডগণ',
 );
 
 $messages['bpy'] = array(
@@ -266,8 +245,6 @@ $messages['co'] = array(
 	'rights' => 'Dritti:',
 	'already_sysop' => 'Istu utilizatore hè digià amministratore',
 	'already_bureaucrat' => 'Istu utilizatore hè digià burocratu',
-	'group-steward' => 'Steward',
-	'grouppage-steward' => '{{ns:project}}:Steward',
 );
 
 /** Czech (Česky)
@@ -289,9 +266,6 @@ $messages['cs'] = array(
 	'makesysop'                => 'Učinit uživatele správcem',
 	'already_sysop'            => 'Tento uživatel již je správce',
 	'already_bureaucrat'       => 'Tento uživatel již je byrokrat',
-	'group-steward'            => 'Stevardi',
-	'group-steward-member'     => 'Stevard',
-	'grouppage-steward'        => '{{ns:project}}:Stevardi',
 );
 
 $messages['csb'] = array(
@@ -350,9 +324,6 @@ $messages['de'] = array(
 	'makesysop'                => 'Mache einen Benutzer zum Administrator',
 	'already_sysop'            => 'Dieser Benutzer ist bereits ein Administrator.',
 	'already_bureaucrat'       => 'Dieser Benutzer ist bereits ein Bürokrat.',
-	'group-steward'            => 'Stewards',
-	'group-steward-member'     => 'Steward',
-	'grouppage-steward'        => '{{ns:project}}:Stewards',
 	'right-makesysop'          => 'Benutzer zu Administratoren und Bürokraten machen',
 );
 
@@ -388,9 +359,6 @@ $messages['eo'] = array(
 	'makesysop' => 'Igu uzanton administranto',
 	'already_sysop' => 'Tiu ĉi uzanto jam estas administranto.',
 	'already_bureaucrat' => 'Tiu ĉi uzanto jam estas burokrato',
-	'group-steward' => 'Stevardoj',
-	'group-steward-member' => 'Stevardo',
-	'grouppage-steward' => '{{ns:project}}:Stevardoj',
 );
 
 $messages['es'] = array(
@@ -457,9 +425,6 @@ $messages['fa'] = array(
 	'makesysop'                => 'مدیر کردن کاربران',
 	'already_sysop'            => 'این کاربر پیش از این هم مدیر بوده‌است',
 	'already_bureaucrat'       => 'این کاربر پیش از این هم دیوان‌سالار بوده‌است',
-	'group-steward'            => 'ویکیبدان',
-	'group-steward-member'     => 'ویکیبد',
-	'grouppage-steward'        => '{{ns:project}}:ویکیبدان',
 
 );
 
@@ -481,9 +446,6 @@ $messages['fi'] = array(
 	'makesysop'            => 'Tee käyttäjästä ylläpitäjä',
 	'already_sysop'        => 'Käyttäjä on jo ylläpitäjä',
 	'already_bureaucrat'   => 'Käyttäjä on jo byrokraatti',
-	'group-steward'        => 'ylivalvojat',
-	'group-steward-member' => 'ylivalvoja',
-	'grouppage-steward'    => '{{ns:project}}:ylivalvojat',
 );
 
 $messages['fo'] = array(
@@ -496,9 +458,6 @@ $messages['fo'] = array(
 	'rights' => 'Rættindi:',
 	'set_user_rights' => 'Stilla brúkararættindi',
 	'makesysop' => 'Ger ein brúkara til sysop',
-	'group-steward' => 'Ternur',
-	'group-steward-member' => 'Terna',
-	'grouppage-steward' => '{{ns:project}}:Ternur',
 );
 
 /** French (Français)
@@ -522,9 +481,6 @@ $messages['fr'] = array(
 	'makesysop'                => 'Donner les droits d’administrateur à un utilisateur',
 	'already_sysop'            => 'Cet utilisateur est déjà administrateur.',
 	'already_bureaucrat'       => 'Cet utilisateur est déjà bureaucrate.',
-	'group-steward'            => 'Stewards',
-	'group-steward-member'     => 'Steward',
-	'grouppage-steward'        => '{{ns:project}}:Steward',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -546,9 +502,6 @@ $messages['frp'] = array(
 	'makesysop'                => 'Balyér los drêts d’administrator a un utilisator',
 	'already_sysop'            => 'Ceti utilisator est ja administrator.',
 	'already_bureaucrat'       => 'Ceti utilisator est ja burôcrate.',
-	'group-steward'            => 'Stevârds',
-	'group-steward-member'     => 'Stevârd',
-	'grouppage-steward'        => '{{ns:project}}:Stevârds',
 );
 
 $messages['ga'] = array(
@@ -615,8 +568,6 @@ $messages['hak'] = array(
 $messages['haw'] = array(
 	'already_sysop'        => '‘O ‘ē he kahu kēia mea ho‘ohana.',
 	'already_bureaucrat'   => '‘O ‘ē he kuhina kēia mea ho‘ohana.',
-	'group-steward'        => 'Nā kuene',
-	'group-steward-member' => 'Kuene',
 );
 
 $messages['he'] = array(
@@ -636,9 +587,6 @@ $messages['he'] = array(
 	'makesysop'                => 'הפיכת משתמש למפעיל מערכת',
 	'already_sysop'            => 'משתמש זה הוא כבר מפעיל מערכת',
 	'already_bureaucrat'       => 'משתמש זה הוא כבר ביורוקרט',
-	'group-steward'            => 'דיילים',
-	'group-steward-member'     => 'דייל',
-	'grouppage-steward'        => '{{ns:project}}:דייל',
 	'right-makesysop'          => 'הפיכת משתמשים למפעילי מערכת או לביורוקרטים',
 );
 
@@ -662,9 +610,6 @@ $messages['hr'] = array(
 	'makesysop'                => 'Učini suradnika administratorom',
 	'already_sysop'            => 'Ovaj je suradnik već administrator',
 	'already_bureaucrat'       => 'Ovaj je suradnik već birokrat',
-	'group-steward'            => 'Stjuardi',
-	'group-steward-member'     => 'Stjuard',
-	'grouppage-steward'        => '{{ns:project}}:Stjuardi',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -687,9 +632,6 @@ $messages['hsb'] = array(
 	'makesysop'                => 'Wužiwarja k administratorej činić',
 	'already_sysop'            => 'Tutón wužiwar je hižo administrator.',
 	'already_bureaucrat'       => 'Tutón wužiwar je hižo běrokrat.',
-	'group-steward'            => 'Stewardźa',
-	'group-steward-member'     => 'steward',
-	'grouppage-steward'        => '{{ns:project}}:Stewardźa',
 );
 
 /** Hungarian (Magyar)
@@ -713,9 +655,6 @@ $messages['hu'] = array(
 	'makesysop'                => 'Felhasználó adminisztrátorrá tétele',
 	'already_sysop'            => 'Ez a felhasználó már adminisztrátor.',
 	'already_bureaucrat'       => 'Ez a felhasználó már bürokrata.',
-	'group-steward'            => 'Helytartók',
-	'group-steward-member'     => 'Helytartó',
-	'grouppage-steward'        => '{{ns:project}}:Gondnokság',
 );
 
 $messages['hy'] = array(
@@ -745,9 +684,6 @@ $messages['id'] = array(
 	'makesysop'            => 'Pemberian status pengurus',
 	'already_sysop'        => 'Pengguna ini telah berstatus pengurus',
 	'already_bureaucrat'   => 'Pengguna ini telah berstatus birokrat',
-	'group-steward'        => 'Steward',
-	'group-steward-member' => 'Steward',
-	'grouppage-steward'    => '{{ns:project}}:Steward',
 );
 
 /** Icelandic (Íslenska)
@@ -792,9 +728,6 @@ $messages['it'] = array(
 	'makesysop'                => 'Assegnazione dei privilegi di amministratore',
 	'already_sysop'            => 'Questo utente è già amministratore',
 	'already_bureaucrat'       => "L'utente è già burocrate",
-	'group-steward'            => 'Steward',
-	'group-steward-member'     => 'Steward',
-	'grouppage-steward'        => '{{ns:project}}:Steward',
 );
 
 $messages['ja'] = array(
@@ -811,9 +744,6 @@ $messages['ja'] = array(
 	'makesysop' => '利用者を{{int:group-sysop}}にする',
 	'already_sysop' => '利用者は既に{{int:group-sysop}}です。',
 	'already_bureaucrat' => '利用者は既に{{int:group-bureaucrat}}です。',
-	'group-steward' => 'スチュワード',
-	'group-steward-member' => '{{int:group-steward}}',
-	'grouppage-steward' => '{{ns:project}}:{{int:group-steward}}',
 );
 
 $messages['ka'] = array(
@@ -837,9 +767,6 @@ $messages['kk-arab'] = array(
 	'makesysop'                => 'قاتىسۋشىنى اكىمشى قىلۋ',
 	'already_sysop'            => 'بۇل قاتىسۋشىدا الداقاشان اكىمشى قۇقىقتارى بار',
 	'already_bureaucrat'       => 'بۇل قاتىسۋشىدا الداقاشان بىتىكشى قۇقىقتارى بار',
-	'group-steward'            => 'جەتەكشىلەر',
-	'group-steward-member'     => 'جەتەكشى',
-	'grouppage-steward'        => '{{ns:project}}:جەتەكشىلەر',
 );
 
 $messages['kk-cyrl'] = array(
@@ -858,9 +785,6 @@ $messages['kk-cyrl'] = array(
 	'makesysop'                => 'Қатысушыны әкімші қылу',
 	'already_sysop'            => 'Бұл қатысушыда алдақашан әкімші құқықтары бар',
 	'already_bureaucrat'       => 'Бұл қатысушыда алдақашан бітікші құқықтары бар',
-	'group-steward'            => 'Жетекшілер',
-	'group-steward-member'     => 'жетекші',
-	'grouppage-steward'        => '{{ns:project}}:Жетекшілер',
 );
 
 $messages['kk-latn'] = array(
@@ -879,9 +803,6 @@ $messages['kk-latn'] = array(
 	'makesysop'                => 'Qatıswşını äkimşi qılw',
 	'already_sysop'            => 'Bul qatıswşıda aldaqaşan äkimşi quqıqtarı bar',
 	'already_bureaucrat'       => 'Bul qatıswşıda aldaqaşan bitikşi quqıqtarı bar',
-	'group-steward'            => 'Jetekşiler',
-	'group-steward-member'     => 'jetekşi',
-	'grouppage-steward'        => '{{ns:project}}:Jetekşiler',
 );
 
 $messages['kn'] = array(
@@ -903,9 +824,6 @@ $messages['ko'] = array(
 	'makesysop' => '사용자에게 관리자 권한을 주기',
 	'already_sysop' => '이 사용자는 이미 관리자입니다.',
 	'already_bureaucrat' => '이 사용자는 이미 뷰로크랫입니다.',
-	'group-steward' => '스튜워드',
-	'group-steward-member' => '스튜워드',
-	'grouppage-steward' => 'Project:스튜워드',
 );
 
 $messages['ksh'] = array(
@@ -957,9 +875,6 @@ $messages['lb'] = array(
 	'makesysop'                => 'Aus engem Benotzer een Administrateur maachen',
 	'already_sysop'            => 'Dëse Benotzer ass schonn en Administrateur',
 	'already_bureaucrat'       => 'Dëse Benotzer ass scho Bürokrat',
-	'group-steward'            => 'Stewarden',
-	'group-steward-member'     => 'Steward',
-	'grouppage-steward'        => '{{ns:project}}:Stewarden',
 );
 
 /** Limburgish (Limburgs)
@@ -968,9 +883,6 @@ $messages['lb'] = array(
 $messages['li'] = array(
 	'already_sysop'        => 'Deze gebroeker is al systeemwèrker',
 	'already_bureaucrat'   => 'Deze gebroeker is al amtenaer',
-	'group-steward'        => 'Stewards',
-	'group-steward-member' => 'Steward',
-	'grouppage-steward'    => '{{ns:project}}:Stewards',
 );
 
 $messages['lo'] = array(
@@ -1008,9 +920,6 @@ $messages['mk'] = array(
 	'makesysop'            => 'Претвори го корисникот во администратор',
 	'already_sysop'        => 'Овој корисник веќе е администратор',
 	'already_bureaucrat'   => 'Овој корисник веќе е бирократ',
-	'group-steward'        => 'Стјуарди',
-	'group-steward-member' => 'Стјуард',
-	'grouppage-steward'    => '{{ns:project}}:Стјуарди',
 );
 
 $messages['nan'] = array(
@@ -1056,9 +965,6 @@ $messages['nl'] = array(
 	'makesysop'                => 'Een gebruiker beheerder maken',
 	'already_sysop'            => 'Deze gebruiker is al beheerder',
 	'already_bureaucrat'       => 'Deze gebruiker is al bureaucraat',
-	'group-steward'            => 'Stewards',
-	'group-steward-member'     => 'Steward',
-	'grouppage-steward'        => '{{ns:project}}:Stewards',
 );
 
 $messages['nn'] = array(
@@ -1096,9 +1002,6 @@ $messages['no'] = array(
 	'makesysop'                => 'Gjør en bruker til administrator',
 	'already_sysop'            => 'Den brukeren er allerede administrator',
 	'already_bureaucrat'       => 'Denne brukeren er allerede byråkrat',
-	'group-steward'            => 'Stewards',
-	'group-steward-member'     => 'Steward',
-	'grouppage-steward'        => 'Project:Stewards',
 );
 
 $messages['oc'] = array(
@@ -1138,9 +1041,6 @@ $messages['pl'] = array(
 	'makesysop' => 'Przyznaj użytkownikowi uprawnienia administratora',
 	'already_sysop' => 'Ten użytkownik jest już administratorem',
 	'already_bureaucrat' => 'Ten użytkownik jest już biurokratą',
-	'group-steward' => 'Stewardzi',
-	'group-steward-member' => 'Steward',#identical but defined
-	'grouppage-steward' => '{{ns:project}}:Stewardzi',
 );
 
 $messages['pms'] = array(
@@ -1158,9 +1058,6 @@ $messages['pms'] = array(
 	'makesysop' => 'Deje a n\'utent la qualìfica da aministrator',
 	'already_sysop' => 'St\'Utent-sì a l\'é già n\'aministrator (administrator)',
 	'already_bureaucrat' => 'St\'Utent-sì a l\'é già un Mangiapapé (bureaucrat)',
-	'group-steward' => 'Controlor',
-	'group-steward-member' => 'Controlor',
-	'grouppage-steward' => '{{ns:project}}:Controlor',
 );
 
 /** Portuguese (Português)
@@ -1182,18 +1079,12 @@ $messages['pt'] = array(
 	'makesysop'                => 'Tornar um utilizador num administrador',
 	'already_sysop'            => 'Este utilizador já é um administrador',
 	'already_bureaucrat'       => 'Este utilizador já é um burocrata',
-	'group-steward'            => 'Stewards',
-	'group-steward-member'     => 'Steward',
-	'grouppage-steward'        => '{{ns:project}}:Stewards',
 );
 
 $messages['rmy'] = array(
 	'makesysopsubmit' => 'Ker les administratoro kadale jenes',
 	'rights' => 'Chachimata (xakaya):',
 	'makesysop' => 'Ker administratores andar ekh acharutno jeno',
-	'group-steward' => 'Stewardurya',
-	'group-steward-member' => 'Stewardo',
-	'grouppage-steward' => '{{ns:project}}:Stewardurya',
 );
 
 $messages['ro'] = array(
@@ -1212,8 +1103,6 @@ Tastează numele utilizatorului în cutie şi apasă butonul pentru a face din u
 	'makesysop' => 'Acordarea permisiunilor de administrator',
 	'already_sysop' => 'Acest utilizator este deja administrator.',
 	'already_bureaucrat' => 'Acest utilizator este deja birocrat.',
-	'group-steward' => 'Stewarzi',
-	'grouppage-steward' => '{{ns:project}}:Stewarzi',
 );
 
 /** Russian (Русский)
@@ -1235,9 +1124,6 @@ $messages['ru'] = array(
 	'makesysop'                => 'Присвоить участнику статус администратора',
 	'already_sysop'            => 'Этот участник уже является администратором',
 	'already_bureaucrat'       => 'Этот участник уже является бюрократом',
-	'group-steward'            => 'Стюарды',
-	'group-steward-member'     => 'стюард',
-	'grouppage-steward'        => '{{ns:project}}:Стюарды',
 );
 
 $messages['sd'] = array(
@@ -1265,9 +1151,6 @@ Do poľa napíšte meno používateľa a potvrďte zmenu používateľa na sprá
 	'makesysop'                => 'Urob z používateľa správcu',
 	'already_sysop'            => 'Tento používateľ už je správca',
 	'already_bureaucrat'       => 'Tento používateľ už je byrokrat',
-	'group-steward'            => 'Stewardi',
-	'group-steward-member'     => 'Steward',
-	'grouppage-steward'        => '{{ns:project}}:Stewardi',
 );
 
 $messages['sl'] = array(
@@ -1284,9 +1167,6 @@ $messages['sl'] = array(
 	'makesysop'            => 'Povišanje uporabnikov v administratorje',
 	'already_sysop'        => 'Uporabnik je že administrator!',
 	'already_bureaucrat'   => 'Uporabnik je že birokrat!',
-	'group-steward'        => 'Upravniki',
-	'group-steward-member' => 'Upravnik',
-	'grouppage-steward'    => '{{ns:project}}:Upravniki',
 );
 
 $messages['sq'] = array(
@@ -1303,9 +1183,6 @@ $messages['sq'] = array(
 	'makesysop' => 'Jepni titullin administrues',
 	'already_sysop' => 'Ky përdorues është bërë administrues më parë',
 	'already_bureaucrat' => 'Ky përdorues është bërë burokrat më parë',
-	'group-steward' => 'Përgjegjës',
-	'group-steward-member' => 'Përgjegjës',
-	'grouppage-steward' => '{{ns:project}}:Përgjegjës',
 );
 
 $messages['sr-ec'] = array(
@@ -1322,9 +1199,6 @@ $messages['sr-ec'] = array(
 	'makesysop' => 'Давање административних овлашћења кориснику',
 	'already_sysop' => 'Овај корисник је већ администратор',
 	'already_bureaucrat' => 'Овај корисник је већ бирократа',
-	'group-steward' => 'Стјуарди',
-	'group-steward-member' => 'Стјуард',
-	'grouppage-steward' => '{{ns:project}}:стјуарди',
 );
 
 $messages['sr-el'] = array(
@@ -1341,9 +1215,6 @@ $messages['sr-el'] = array(
 	'makesysop' => 'Davanje administrativnih ovlašćenja korisniku',
 	'already_sysop' => 'Ovaj korisnik je već administrator',
 	'already_bureaucrat' => 'Ovaj korisnik je već birokrata',
-	'group-steward' => 'Stjuardi',
-	'group-steward-member' => 'Stjuard',
-	'grouppage-steward' => '{{ns:project}}:stjuardi',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1365,9 +1236,6 @@ $messages['stq'] = array(
 	'makesysop'            => 'Moak n Benutser tou Administrator',
 	'already_sysop'        => 'Dissen Benutser is al n Administrator.',
 	'already_bureaucrat'   => 'Dissen Benutser is al n Bürokroat.',
-	'group-steward'        => 'Stewards',
-	'group-steward-member' => 'Steward',
-	'grouppage-steward'    => '{{ns:project}}:Stewards',
 );
 
 $messages['su'] = array(
@@ -1385,8 +1253,6 @@ $messages['su'] = array(
 	'makesysop' => 'Ngangkat pamaké jadi kuncén',
 	'already_sysop' => 'Pamaké ieu geus boga kalungguhan kuncén',
 	'already_bureaucrat' => 'Pamaké ieu geus boga kalungguhan birokrat',
-	'group-steward' => 'Steward',
-	'grouppage-steward' => '{{ns:project}}:Steward',
 );
 
 $messages['sv'] = array(
@@ -1404,9 +1270,6 @@ $messages['sv'] = array(
 	'makesysop'            => 'Ge en användare administratörsrättigheter',
 	'already_sysop'        => 'Denna användare är redan administratör',
 	'already_bureaucrat'   => 'Denna användare är redan byråkrat',
-	'group-steward'        => 'Stewarder',
-	'group-steward-member' => 'Steward',
-	'grouppage-steward'    => '{{ns:project}}:Stewarder',
 );
 
 /** Telugu (తెలుగు)
@@ -1438,9 +1301,6 @@ $messages['tet'] = array(
 	'makesysop' => 'Fó kuana administradór',
 	'already_sysop' => 'Uza-na\'in ne\'e administradór tiha ona',
 	'already_bureaucrat' => 'Uza-na\'in ne\'e burokrata tiha ona',
-	'group-steward' => 'Steward sira',
-	'group-steward-member' => 'Steward',#identical but defined
-	'grouppage-steward' => '{{ns:project}}:Steward sira',
 );
 
 /** Tonga (faka-Tonga)
@@ -1458,8 +1318,6 @@ $messages['to'] = array(
 	'makesysop'            => 'Fai ha ʻetita ki ha pule fakafounga',
 	'already_sysop'        => 'Ko e ʻetitá ni kuo ʻosi fai pule',
 	'already_bureaucrat'   => 'Ko e ʻetitá ni kuo ʻosi fai pulelahi',
-	'group-steward'        => 'Kau setuate',
-	'group-steward-member' => 'Setuate',
 );
 
 /** Turkish (Türkçe)
@@ -1470,8 +1328,6 @@ $messages['tr'] = array(
 	'rights'             => 'Haklar:',
 	'already_sysop'      => 'Bu kullanıcı zaten yönetici',
 	'already_bureaucrat' => 'Bu kullanıcı zaten bürokrat',
-	'group-steward'      => 'Stewardlar',
-	'grouppage-steward'  => '{{ns:project}}:Stewardlar',
 );
 
 $messages['tt-latn'] = array(
@@ -1504,8 +1360,6 @@ $messages['uk'] = array(
 	'makesysop'            => 'Надати користувачу права адміністратора (sysop)',
 	'already_sysop'        => 'Цей користувач вже є адміністратором',
 	'already_bureaucrat'   => 'Цей користувач вже є бюрократом',
-	'group-steward'        => 'Стюарди',
-	'group-steward-member' => 'стюард',
 );
 
 $messages['ur'] = array(
@@ -1571,8 +1425,6 @@ $messages['wa'] = array(
 	'makesysop' => 'Diner a èn uzeu on livea di manaedjeu',
 	'already_sysop' => 'Cist uzeu ci a ddja l\' livea di manaedjeu',
 	'already_bureaucrat' => 'Cist uzeu ci a ddja l\' livea di mwaisse-manaedjeu',
-	'group-steward' => 'Mwaisse-manaedjeus tot avå',
-	'group-steward-member' => 'mwaisse-manaedjeu tot avå',
 );
 
 $messages['wuu'] = array(
@@ -1600,13 +1452,10 @@ $messages['yue'] = array(
 	'makesysop'            => '整一位用戶做操作員',
 	'already_sysop'        => '呢位用戶已經係一位管理員',
 	'already_bureaucrat'   => '呢位用戶已經係一位事務員',
-	'group-steward'        => '執行員',
-	'group-steward-member' => '執行員',
-	'grouppage-steward'    => '{{ns:project}}:執行員',
 	'right-makesysop'      => '整用戶做操作員或事務員',
 );
 
-$messages['zh-classical'] = array(
+$messages['lzh'] = array(
 	'makesysoptitle'       => '封有秩',
 	'makesysopname'        => '簿名：',
 	'makesysopsubmit'      => '封之有秩',
@@ -1633,9 +1482,6 @@ $messages['zh-hans'] = array(
 	'makesysop'            => '将一名用户设为操作员',
 	'already_sysop'        => '这位用户已经是一名管理员',
 	'already_bureaucrat'   => '这位用户已经是一名行政员',
-	'group-steward'        => '监管员',
-	'group-steward-member' => '监管员',
-	'grouppage-steward'    => '{{ns:project}}:监管员',
 	'right-makesysop'      => '将用户设置为操作员或行政员',
 );
 
@@ -1655,8 +1501,5 @@ $messages['zh-hant'] = array(
 	'makesysop'            => '將一名用戶設為操作員',
 	'already_sysop'        => '這位用戶已經是一名管理員',
 	'already_bureaucrat'   => '這位用戶已經是一名行政員',
-	'group-steward'        => '監管員',
-	'group-steward-member' => '監管員',
-	'grouppage-steward'    => '{{ns:project}}:監管員',
 	'right-makesysop'      => '將用戶設置為操作員或行政員',
 );

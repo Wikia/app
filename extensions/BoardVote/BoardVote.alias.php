@@ -2,7 +2,8 @@
 /**
  * Aliases for Special:BoardVote
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $aliases = array();
@@ -50,6 +51,11 @@ $aliases['de'] = array(
 	'BoardVote' => array( 'Kuratoriumswahl' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'BoardVote' => array( 'Wólba kuratoriuma' ),
+);
+
 /** Greek (Ελληνικά) */
 $aliases['el'] = array(
 	'BoardVote' => array( 'ΕκλογέςΣυμβουλίου' ),
@@ -58,6 +64,11 @@ $aliases['el'] = array(
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'BoardVote' => array( 'رای_به_هیئت_امنا' ),
+);
+
+/** French (Français) */
+$aliases['fr'] = array(
+	'BoardVote' => array( "Vote du conseil d'administration", 'VoteConseil' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -77,9 +88,19 @@ $aliases['hr'] = array(
 	'BoardVote' => array( 'Glasovanje_za_odbor' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'BoardVote' => array( 'Wolba kuratorija' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'BoardVote' => array( 'Kuratóriumválasztás' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'BoardVote' => array( 'Voto consilio' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -94,7 +115,12 @@ $aliases['ja'] = array(
 
 /** Korean (한국어) */
 $aliases['ko'] = array(
-	'BoardVote' => array( '이사회선거', '보드보트' ),
+	'BoardVote' => array( '보드보트' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'BoardVote' => array( 'Vörstandswahl' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -122,6 +148,11 @@ $aliases['nl'] = array(
 	'BoardVote' => array( 'Bestuursverkiezing' ),
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'BoardVote' => array( 'Styreval' ),
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'BoardVote' => array( 'Styrevalg' ),
@@ -135,5 +166,15 @@ $aliases['oc'] = array(
 /** Polish (Polski) */
 $aliases['pl'] = array(
 	'BoardVote' => array( 'Głosowanie' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'BoardVote' => array( 'मण्डलमतदान' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'BoardVote' => array( 'Halalan ng lupon' ),
 );
 

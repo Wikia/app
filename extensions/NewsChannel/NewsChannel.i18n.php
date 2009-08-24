@@ -73,6 +73,20 @@ $messages['ast'] = array(
 	'newschannel_submit_button' => "Crear fonte d'anuncies",
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'newschannel' => 'Канал навінаў',
+	'newschannel-desc' => 'Стварае канал навінаў на дынамічнай [[Special:NewsChannel|спэцыяльнай старонцы]]',
+	'newschannel_format' => 'Фармат:',
+	'newschannel_limit' => 'Ліміт:',
+	'newschannel_include_category' => 'Дадатковая катэгорыя:',
+	'newschannel_exclude_category' => 'Выключыць катэгорыю:',
+	'newschannel_submit_button' => 'Стварыць канал',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -81,6 +95,19 @@ $messages['bg'] = array(
 	'newschannel_limit' => 'Лимит:',
 	'newschannel_include_category' => 'Допълнителна категория:',
 	'newschannel_exclude_category' => 'Изключване на категория:',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'newschannel' => 'Kanal novosti',
+	'newschannel-desc' => 'Koristi kanal za novosti kao dinamičku [[Special:NewsChannel|posebnu stranicu]]',
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Ograničenje:',
+	'newschannel_include_category' => 'Dodatna kategorija:',
+	'newschannel_exclude_category' => 'Isključi kategoriju:',
+	'newschannel_submit_button' => 'Napravi fid',
 );
 
 /** Czech (Česky)
@@ -134,6 +161,17 @@ $messages['eo'] = array(
 	'newschannel_exclude_category' => 'Ekskludi kategorion:',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'newschannel' => 'Canal de noticias',
+	'newschannel_format' => 'Formato:',
+	'newschannel_limit' => 'Límite:',
+	'newschannel_include_category' => 'Categoría adicional:',
+	'newschannel_exclude_category' => 'Excluir categoría:',
+);
+
 /** Finnish (Suomi)
  * @author Str4nd
  */
@@ -178,6 +216,19 @@ $messages['gl'] = array(
 	'newschannel_submit_button' => 'Crear a fonte de novas',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'newschannel' => 'Nochrichte',
+	'newschannel-desc' => 'Ergänzt e Nochrichtekanal as dynamischi [[Special:NewsChannel|Spezialsyte]]',
+	'newschannel_format' => 'Format:',
+	'newschannel_limit' => 'Limit:',
+	'newschannel_include_category' => 'Zuesätzligi Kategorii:',
+	'newschannel_exclude_category' => 'Kategorii, wu uusgschlosse soll wäre:',
+	'newschannel_submit_button' => 'Feed aalege',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
@@ -216,6 +267,19 @@ $messages['ia'] = array(
 	'newschannel_include_category' => 'Categoria additional:',
 	'newschannel_exclude_category' => 'Excluder categoria:',
 	'newschannel_submit_button' => 'Crear syndication',
+);
+
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'newschannel' => 'ニュース・チャンネル',
+	'newschannel-desc' => '動的な[[Special:NewsChannel|特別ページ]]としてニュース・チャンネルを実装する',
+	'newschannel_format' => 'ファイル形式:',
+	'newschannel_limit' => '最大項目数:',
+	'newschannel_include_category' => '追加するカテゴリ:',
+	'newschannel_exclude_category' => '除外するカテゴリ:',
+	'newschannel_submit_button' => 'フィード作成',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -331,10 +395,26 @@ $messages['ps'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'newschannel' => 'Canal de "news"',
+	'newschannel-desc' => 'Implementa um canal de "news" como uma [[Special:NewsChannel|página especial]] dinâmica',
 	'newschannel_format' => 'Formato:',
 	'newschannel_limit' => 'Limite:',
 	'newschannel_include_category' => 'Categoria adicional:',
 	'newschannel_exclude_category' => 'Excluir categoria:',
+	'newschannel_submit_button' => 'Criar feed',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'newschannel' => 'Canal de notícias',
+	'newschannel-desc' => 'Implementa um canal de notícias como uma [[Special:NewsChannel|página especial]] dinâmica',
+	'newschannel_format' => 'Formato:',
+	'newschannel_limit' => 'Limite:',
+	'newschannel_include_category' => 'Categoria adicional:',
+	'newschannel_exclude_category' => 'Excluir categoria:',
+	'newschannel_submit_button' => 'Criar "feed"',
 );
 
 /** Russian (Русский)
@@ -381,6 +461,19 @@ $messages['sv'] = array(
 $messages['te'] = array(
 	'newschannel_limit' => 'పరిమితి:',
 	'newschannel_include_category' => 'అదనపు వర్గం:',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'newschannel' => 'Istasyon ng mga Bagong Balita',
+	'newschannel-desc' => 'Nagpapatupad ng isang estasyon ng mga bagong balita bilang isang masiglang [[Special:NewsChannel|natatanging pahina]]',
+	'newschannel_format' => 'Anyo/Pormat:',
+	'newschannel_limit' => 'Hangganan:',
+	'newschannel_include_category' => 'Karagdagang kaurian:',
+	'newschannel_exclude_category' => 'Huwag isali ang kaurian:',
+	'newschannel_submit_button' => 'Lumikha ng pasubo/pakain',
 );
 
 /** Ukrainian (Українська)

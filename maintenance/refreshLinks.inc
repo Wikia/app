@@ -136,41 +136,67 @@ function fixLinksFromArticle( $id ) {
 	$dbw->immediateCommit();
 }
 
-function deleteLinksFromNonexistent( $maxLag = 0 ) {
-	$fname = 'deleteLinksFromNonexistent';
-
+/*
+ * Removes non-existing links from pages from pagelinks, imagelinks,
+ * categorylinks, templatelinks and externallinks tables.
+ *
+ * @param $maxLag
+ * @param $batchSize The size of deletion batches
+ *
+ * @author Merlijn van Deen <valhallasw@arctus.nl>
+ */
+function deleteLinksFromNonexistent( $maxLag = 0, $batchSize = 100 ) {
 	wfWaitForSlaves( $maxLag );
-
+	
 	$dbw = wfGetDB( DB_MASTER );
 
-	$linksTables = array(
+	$lb = wfGetLBFactory()->newMainLB();
+	$dbr = $lb->getConnection( DB_SLAVE );
+	$dbr->bufferResults( false );
+	
+	$linksTables = array( // table name => page_id field
 		'pagelinks' => 'pl_from',
 		'imagelinks' => 'il_from',
 		'categorylinks' => 'cl_from',
 		'templatelinks' => 'tl_from',
 		'externallinks' => 'el_from',
 	);
-
-	$page = $dbw->tableName( 'page' );
-
-
+	
 	foreach ( $linksTables as $table => $field ) {
-		if ( !$dbw->ping() ) {
-			print "DB disconnected, reconnecting...";
-			while ( !$dbw->ping() ) {
-				print ".";
-				sleep(10);
+		print "Retrieving illegal entries from $table... ";
+		
+		// SELECT DISTINCT( $field ) FROM $table LEFT JOIN page ON $field=page_id WHERE page_id IS NULL;
+		$results = $dbr->select( array( $table, 'page' ),
+		              $field,
+		              array('page_id' => null ),
+		              __METHOD__,
+		              'DISTINCT',
+		              array( 'page' => array( 'LEFT JOIN', "$field=page_id"))
+		);
+		
+		$counter = 0;
+		$list = array();
+		print "0..";
+		
+		foreach( $results as $row ) {
+			$counter++;
+			$list[] = $row->$field;
+			if ( ( $counter % $batchSize ) == 0 ) {
+				wfWaitForSlaves(5);
+				$dbw->delete( $table, array( $field => $list ), __METHOD__ );
+				
+				print $counter . "..";
+				$list = array();
 			}
-			print "\n";
 		}
-
-		$pTable = $dbw->tableName( $table );
-		$sql = "DELETE $pTable FROM $pTable LEFT JOIN $page ON page_id=$field WHERE page_id IS NULL";
-
-		print "Deleting $table from non-existent articles...";
-		$dbw->query( $sql, $fname );
-		print " fixed " .$dbw->affectedRows() . " row(s)\n";
+		
+		print $counter;
+		if (count($list) > 0) {
+			$dbw->delete( $table, array( $field => $list ), __METHOD__ );
+		}
+		
+		print "\n";
 	}
+	
+	$lb->closeAll();
 }
-
-?>

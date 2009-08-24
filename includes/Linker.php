@@ -671,7 +671,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		$img = '';
 		$success = wfRunHooks('LinkerMakeExternalImage', array( &$url, &$alt, &$img ) );
 		if(!$success) {
-			wfDebug("Hook LinkerMakeExternalImage changed the output of external image with url {$url} and alt text {$alt} to {$img}", true);
+			wfDebug("Hook LinkerMakeExternalImage changed the output of external image with url {$url} and alt text {$alt} to {$img}\n", true);
 			return $img;
 		}
 		$params = array(
@@ -971,10 +971,13 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			}
 		}
 
-		if( $page ) {
-			$query = $query ? '&page=' . urlencode( $page ) : 'page=' . urlencode( $page );
-		}
+		# ThumbnailImage::toHtml() already adds page= onto the end of DjVu URLs
+		# So we don't need to pass it here in $query. However, the URL for the
+		# zoom icon still needs it, so we make a unique query for it. See bug 14771
 		$url = $title->getLocalURL( $query );
+		if( $page ) { 
+			$url = wfAppendQuery( $url, 'page=' . urlencode( $page ) );
+		}
 
 		$more = htmlspecialchars( wfMsg( 'thumbnail-more' ) );
 
@@ -1115,12 +1118,24 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		  wfMsg( $key ) );
 	}
 
-	/** @todo document */
+	/**
+	 * Make an external link
+	 * @param String $url URL to link to
+	 * @param String $text text of link
+	 * @param boolean $escape Do we escape the link text?
+	 * @param String $linktype Type of external link. Gets added to the classes
+	 * @param array $attribs Array of extra attributes to <a>
+	 * 
+	 * @TODO! @FIXME! This is a really crappy implementation. $linktype and 
+	 * 'external' are mashed into the class attrib for the link (which is made
+	 * into a string). Then, if we've got additional params in $attribs, we 
+	 * add to it. People using this might want to change the classes (or other
+	 * default link attributes), but passing $attribsText is just messy. Would 
+	 * make a lot more sense to make put the classes into $attribs, let the 
+	 * hook play with them, *then* expand it all at once. 
+	 */
 	function makeExternalLink( $url, $text, $escape = true, $linktype = '', $attribs = array() ) {
 		$attribsText = $this->getExternalLinkAttributes( $url, $text, 'external ' . $linktype );
-		if ( $attribs ) {
-			$attribsText .= Xml::expandAttributes( $attribs );
-		}
 		$url = htmlspecialchars( $url );
 		if( $escape ) {
 			$text = htmlspecialchars( $text );
@@ -1128,8 +1143,12 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		$link = '';
 		$success = wfRunHooks('LinkerMakeExternalLink', array( &$url, &$text, &$link, &$attribs, &$linktype, $this ) );
 		if(!$success) {
-			wfDebug("Hook LinkerMakeExternalLink changed the output of link with url {$url} and text {$text} to {$link}", true);
+			wfDebug("Hook LinkerMakeExternalLink changed the output of link with url {$url} and text {$text} to {$link}\n", true);
 			return $link;
+		}
+
+		if ( $attribs ) {
+			$attribsText .= Xml::expandAttributes( $attribs );
 		}
 
 		/* Wikia change begin - @author: Marooned, Inez Korczyński */
@@ -1170,7 +1189,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	 * @return string
 	 */
 	public function userToolLinks( $userId, $userText, $redContribsWhenNoEdits = false, $flags = 0, $edits=null ) {
-		global $wgUser, $wgDisableAnonTalk, $wgSysopUserBans;
+		global $wgUser, $wgDisableAnonTalk, $wgSysopUserBans, $wgLang;
 		$talkable = !( $wgDisableAnonTalk && 0 == $userId );
 		$blockable = ( $wgSysopUserBans || 0 == $userId ) && !$flags & self::TOOL_LINKS_NOBLOCK;
 
@@ -1196,7 +1215,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		}
 
 		if( $items ) {
-			return ' <span class="mw-usertoollinks">(' . implode( ' | ', $items ) . ')</span>';
+			return ' <span class="mw-usertoollinks">(' . $wgLang->pipeList( $items ) . ')</span>';
 		} else {
 			return '';
 		}
@@ -1908,14 +1927,29 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		# FIXME: Per standard MW behavior, a value of '-' means to suppress the
 		# attribute, but this is broken for accesskey: that might be a useful
 		# value.
-		if( $accesskey != ''
-		&& $accesskey != '-'
-		&& !wfEmptyMsg( "accesskey-$name", $accesskey ) ) {
+		if( $accesskey != '' && $accesskey != '-' && !wfEmptyMsg( "accesskey-$name", $accesskey ) ) {
 			wfProfileOut( __METHOD__ );
 			return $accesskey;
 		}
 
 		wfProfileOut( __METHOD__ );
 		return false;
+	}
+	
+	/**
+	 * Creates a (show/hide) link for deleting revisions/log entries
+	 *
+	 * @param array $query  Query parameters to be passed to link()
+	 * @param bool $restricted  Set to true to use a <strong> instead of a <span>
+	 *
+	 * @return string HTML <a> link to Special:Revisiondelete, wrapped in a
+	 * span to allow for customization of appearance with CSS
+	 */
+	public function revDeleteLink( $query = array(), $restricted = false ) {
+		$sp = SpecialPage::getTitleFor( 'Revisiondelete' );
+		$text = wfMsgHtml( 'rev-delundel' );
+		$tag = $restricted ? 'strong' : 'span';
+		$link = $this->link( $sp, $text, array(), $query, array( 'known', 'noclasses' ) );
+		return Xml::tags( $tag, array( 'class' => 'mw-revdelundel-link' ), "($link)" );
 	}
 }

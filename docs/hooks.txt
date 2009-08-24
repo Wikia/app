@@ -441,6 +441,7 @@ $isWatch: (No longer used)
 $section: (No longer used)
 $flags: Flags passed to Article::doEdit()
 $revision: New Revision of the article
+$baseRevId: the rev ID (or false) this edit was based on
 
 'ArticleUndelete': When one or more revisions of an article are restored
 $title: Title corresponding to the article restored
@@ -550,6 +551,13 @@ $user: User performing the edit
 Return true to allow the normal editor to be used, or false
 if implementing a custom editor, e.g. for a special namespace,
 etc.
+
+'NewDifferenceEngine': Called when a new DifferenceEngine object is made
+$title: the diff page title (nullable)
+&$oldId: the actual old Id to use in the diff
+&$newId: the actual new Id to use in the diff (0 means current)
+$old: the ?old= param value from the url
+$new: the ?new= param value from the url
 
 'DiffViewHeader': called before diff display
 $diff: DifferenceEngine object that's calling
@@ -829,6 +837,8 @@ $options: the options.  Will always include either 'known' or 'broken', and may
 &$url: the link url
 &$text: the link text
 &$link: the new link HTML (if returning false)
+&$attribs: the attributes to be applied.
+$linkType: The external link type
 
 'LinksUpdate': At the beginning of LinksUpdate::doUpdate() just before the actual update
 &$linksUpdate: the LinkUpdate object
@@ -838,6 +848,9 @@ $options: the options.  Will always include either 'known' or 'broken', and may
 
 'LinksUpdateConstructed': At the end of LinksUpdate() is contruction.
 &$linksUpdate: the LinkUpdate object
+
+'ListDefinedTags': When trying to find all defined tags.
+&$tags: The list of tags.
 
 'LoadAllMessages': called by MessageCache::loadAllMessages() to load extensions messages
 
@@ -884,7 +897,7 @@ $time: timestamp of the log entry (added in 1.12)
 'MagicWordMagicWords': When defining new magic word. DEPRECATED: Use LanguageGetMagic hook instead
 $magicWords: array of strings
 
-'MagicWordwgVariableIDs': When definig new magic words IDs. DEPRECATED: Use LanguageGetMagic hook instead
+'MagicWordwgVariableIDs': When definig new magic words IDs.
 $variableIDs: array of strings
 
 'MakeGlobalVariablesScript': called right before Skin::makeVariablesScript is executed   
@@ -1379,9 +1392,18 @@ $user: User object
 $user: User to get rights for
 &$rights: Current rights
 
+'UserIsBlockedGlobally': Check if user is blocked on all wikis.
+&$user: User object
+$ip: User's IP address
+&$blocked: Whether the user is blocked, to be modified by the hook
+
 'UserLoadDefaults': called when loading a default user
 $user: user object
 $name: user name
+
+'UserLoadFromDatabase': called when loading a user from the database
+$user: user object
+&$s: database query object
 
 'UserLoadFromSession': called to authenticate users on external/environmental means; occurs before session is loaded
 $user: user object being loaded
@@ -1443,6 +1465,10 @@ $user: User object
 
 'UserToggles': called when initialising User::$mToggles, use this to add new toggles
 $toggles: array of toggles to add
+
+'WantedPages::getSQL': called in WantedPagesPage::getSQL(), can be used to alter the SQL query which gets the list of wanted pages
+&$wantedPages: WantedPagesPage object
+&$sql: raw SQL query used to get the list of wanted pages
 
 'WatchArticle': before a watch is added to an article
 $user: user that will watch

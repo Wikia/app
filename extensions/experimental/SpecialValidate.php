@@ -563,7 +563,7 @@ function wfSpecialValidate( $page = '' ) {
 		global $wgOut, $wgUseValidation;
 		if( $wgUseValidation ) {
 			require_once ( 'SpecialValidate.php' ) ;
-			$wgOut->setPagetitle( wfMsg( 'validate' ) . ': ' . $this->mTitle->getPrefixedText() );
+			$wgOut->setPagetitle( wfMsg( 'validate' ) . wfMsg( 'colon-separator' ) . $this->mTitle->getPrefixedText() );
 			$wgOut->setRobotPolicy( 'noindex,follow' );
 			if( $this->mTitle->getNamespace() != 0 ) {
 				$wgOut->addHTML( wfMsg( 'val_validate_article_namespace_only' ) );

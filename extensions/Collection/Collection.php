@@ -61,16 +61,24 @@ $wgCollectionArticleNamespaces = array(
 	NS_PROJECT_TALK,
 	NS_MEDIAWIKI,
 	NS_MEDIAWIKI_TALK,
-	100, // Portal
-	101, // Portal talk
-	102, // Author
-	103, // Author talk
+	100,
+	101,
+	102,
+	103,
+	104,
+	105,
+	106,
+	107,
+	108,
+	109,
+	110,
+	111,
 );
 
-/** Namespace for "community collections" */
-$wgCommunityCollectionNamespace = NS_MEDIAWIKI;
+/** Namespace for "community books" */
+$wgCommunityCollectionNamespace = NS_PROJECT;
 
-/** Maximum no. of articles in a collection */
+/** Maximum no. of articles in a book */
 $wgCollectionMaxArticles = 500;
 
 /** Name of license */
@@ -92,16 +100,16 @@ $wgCollectionPortletForLoggedInUsersOnly = false;
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Collection',
-	'version' => '1.1',
+	'version' => $wgCollectionVersion,
 	'author' => 'PediaPress GmbH',
-	'svn-date' => '$LastChangedDate: 2008-12-18 08:28:22 +0000 (Thu, 18 Dec 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44757 $',
+	'svn-date' => '$LastChangedDate: 2009-03-15 07:37:40 +0000 (Sun, 15 Mar 2009) $',
+	'svn-revision' => '$LastChangedRevision: 48415 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Collection',
-	'description' => 'Collect articles, generate PDFs',
+	'description' => 'Create books',
 	'descriptionmsg' => 'coll-desc',
 );
 
-# register Special:Collection:
+# register Special:Book:
 
 $wgAutoloadClasses['Collection'] = $dir . 'Collection.body.php';
 $wgAutoloadClasses['CollectionPageTemplate'] = $dir . 'Collection.templates.php';
@@ -112,8 +120,8 @@ $wgAutoloadClasses['CollectionRenderingTemplate'] = $dir . 'Collection.templates
 $wgAutoloadClasses['CollectionFinishedTemplate'] = $dir . 'Collection.templates.php';
 $wgExtensionMessagesFiles['Collection'] = $dir . 'Collection.i18n.php';
 $wgExtensionAliasesFiles['Collection'] = $dir . 'Collection.alias.php';
-$wgSpecialPages['Collection'] = 'Collection';
-$wgSpecialPageGroups['Collection'] = 'pagetools';
+$wgSpecialPages['Book'] = 'Collection';
+$wgSpecialPageGroups['Book'] = 'pagetools';
 
 $wgHooks['SkinTemplateBuildNavUrlsNav_urlsAfterPermalink'][] = 'Collection::createNavURLs';
 $wgHooks['MonoBookTemplateToolboxEnd'][] = 'Collection::insertMonoBookToolboxLink';
@@ -129,7 +137,9 @@ function wfAjaxGetCollection() {
 	} else {
 		$collection = array();
 	}
-	return $json->encode( array( 'collection' => $collection ) );
+	$r = new AjaxResponse( $json->encode( array( 'collection' => $collection ) ) );
+  $r->setContentType( 'application/json' );
+  return $r;
 }
 
 $wgAjaxExportList[] = 'wfAjaxGetCollection';
@@ -141,7 +151,9 @@ function wfAjaxPostCollection( $collection='' ) {
 	}
 	$collection = $json->decode( $collection );
 	$_SESSION['wsCollection'] = $collection;
-	return $json->encode( array( 'collection' => $collection ) );
+	$r = new AjaxResponse( $json->encode( array( 'collection' => $collection ) ) );
+  $r->setContentType( 'application/json' );
+  return $r;
 }
 
 $wgAjaxExportList[] = 'wfAjaxPostCollection';
@@ -152,7 +164,9 @@ function wfAjaxGetMWServeStatus( $collection_id='', $writer='rl' ) {
 		'collection_id' => $collection_id,
 		'writer' => $writer
 	) );
-	return $json->encode( $result );
+  $r = new AjaxResponse( $json->encode( $result ) );
+  $r->setContentType( 'application/json' );
+  return $r;
 }
 
 $wgAjaxExportList[] = 'wfAjaxGetMWServeStatus';

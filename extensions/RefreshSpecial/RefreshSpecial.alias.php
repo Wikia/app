@@ -37,6 +37,11 @@ $aliases['fi'] = array(
 	'RefreshSpecial' => array( 'Toimintosivun päivitys' ),
 );
 
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'RefreshSpecial' => array( 'Actualizar a páxina especial' ),
+);
+
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'RefreshSpecial' => array( 'RefreshSpecial' ),
@@ -45,6 +50,16 @@ $aliases['gsw'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'RefreshSpecial' => array( 'Különleges frissítés' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'RefreshSpecial' => array( 'Refrescar special' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'RefreshSpecial' => array( '特別ページの更新' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -65,5 +80,10 @@ $aliases['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'RefreshSpecial' => array( 'Oppdater spesialsider' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'RefreshSpecial' => array( 'Natatanging pagsasariwa' ),
 );
 

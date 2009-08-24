@@ -223,6 +223,10 @@ class MV_SpecialExport {
 		// get the stream stream req
 		if ( $this->output_xml_header )
 		header( 'Content-Type: text/xml' );
+		header( "Pragma: public" );
+		$one_day = 60*60*24;
+		header("Expires: " . gmdate( "D, d M Y H:i:s", time() + $one_day  ) . " GM");  	
+		
 		// print the header:
 		print '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
 		/*
@@ -331,8 +335,8 @@ class MV_SpecialExport {
 		$wgTitle = Title::newFromText( $this->stream_name . '/' . $this->req_time, MV_NS_STREAM );
 		// do mvd_index query:
 		$mvd_rows = MV_Index::getMVDInRange( $streamTitle->getStreamId(),
-		$streamTitle->getStartTimeSeconds(),
-		$streamTitle->getEndTimeSeconds(), $tracks, $getText = false, 'Speech_by,Bill,category' );
+			$streamTitle->getStartTimeSeconds(),
+			$streamTitle->getEndTimeSeconds(), $tracks, $getText = false, 'Speech_by,Bill,category' );
 		// get the stream stream req
 		if ( $this->output_xml_header )
 			header( 'Content-Type: text/xml' );
@@ -514,13 +518,14 @@ echo $ns?>meta> </<?php echo $ns?>head>
 			// get Stream title for mvd match:
 			$mvTitle = new MV_Title( $mvd->wiki_title );
 			$stremTitle = Title::MakeTitle( MV_NS_STREAM, $mvTitle->getStreamName() . '/' . $mvTitle->getTimeRequest() );
-			$this->feed->outPutItem( $stremTitle, $MV_Overlay->getMVDhtml( $mvd, $absolute_links = true ) );
+			$this->feed->outPutItem( $mvTitle, $MV_Overlay->getMVDhtml( $mvd, $absolute_links = true ) );
 		}
 		$this->feed->outFooter();
 	}
 }
 class mvRSSFeed extends ChannelFeed {
 	function outHeader( $set_content_type=true ) {		
+		global $wgStyleVersion, $wgStylePath;
 		if( $set_content_type )
 			$this->httpHeaders();
 		
@@ -550,15 +555,17 @@ class mvRSSFeed extends ChannelFeed {
 		<?
 	}
 	function outPutItem( $wikiTitle, $desc_html = '' ) {
-		global $wgOut;
+		global $wgOut, $wgUser;
+		$sk = $wgUser->getSkin();
 		$mvTitle = new MV_Title( $wikiTitle );
 		$mStreamTitle = Title::makeTitle( MV_NS_STREAM, ucfirst( $mvTitle->getStreamName() ) . '/' . $mvTitle->getTimeRequest() );
 
 		// only output media RSS item if its valid media:
 		if ( !$mvTitle->doesStreamExist() )return ;
-
+		
+						
 		// @@todo this should be cached
-		$thumb_ref = $mvTitle->getStreamImageURL( '320x240', null, '', true );
+		$thumb_ref = $mvTitle->getFullStreamImageURL( '320x240', null, '', true );
 		if ( $desc_html == '' ) {
 			$article = new Article( $wikiTitle );
 			$wgOut->clearHTML();
@@ -566,6 +573,20 @@ class mvRSSFeed extends ChannelFeed {
 			$desc_html = $wgOut->getHTML();
 			$wgOut->clearHTML();
 		}
+		
+		//get the parent meta if allowed:
+		global $mvGetParentMeta;	
+		$pmvd=false;	
+		if( $mvGetParentMeta && strtolower( $mvTitle->getMvdTypeKey() ) == 'ht_en'){			
+			$pmvd = MV_Index::getParentAnnotativeLayers($mvTitle);		
+			
+			if( $pmvd->wiki_title){			
+				$pMvTitle =  new MV_Title( $pmvd->wiki_title );
+				$pAnnoStreamTitle = Title :: MakeTitle( MV_NS_STREAM, $pMvTitle->getNearStreamName( 0 ) );
+			}			
+		}
+		
+		
 		$desc_xml = '<![CDATA[
 			<center class="mv_rss_view_only">
 				<a href="' . htmlspecialchars( $mStreamTitle->getFullUrl() ) . '"><img src="' . $thumb_ref . '" border="0" /></a>
@@ -579,6 +600,7 @@ class mvRSSFeed extends ChannelFeed {
 			
 		$type_desc = ( $mvTitle->getMvdTypeKey() ) ? wfMsg( $mvTitle->getMvdTypeKey() ):'';
 		$time_desc = ( $mvTitle->getTimeDesc() ) ? $mvTitle->getTimeDesc():'';
+				
 		?>
 <item>
 <link>
@@ -590,18 +612,52 @@ $mvTitle->getStreamNameText() . ' ' .  $time_desc )?></title>
 <?php echo $desc_xml?>
 </description>
 <?php
-global $mvDefaultVideoQualityKey;
-//check a few different types:
-$stream_url = $mvTitle->getWebStreamURL($mvDefaultVideoQualityKey);
-if($stream_url !== false && isset( $mvVidQualityMsgKeyType[ $vid_key ]) ) {
-	echo '<enclosure name="'. wfMsg($vid_key) .'" type="video/ogg" url="'. mvRSSFeed::xmlEncode( $ogg_stream_url ) .'"/>';
+global $mvDefaultVideoQualityKey, $mvVidQualityMsgKeyType, $mvDefaultVideoHighQualityKey, $mvDefaultFlashQualityKey;
+//check a few different types in order of prefrence: 
+if( $stream_url = $mvTitle->getWebStreamURL($mvDefaultVideoHighQualityKey) ){
+	$mk = $mvDefaultVideoHighQualityKey;
+}else if( $stream_url = $mvTitle->getWebStreamURL($mvDefaultVideoQualityKey) ) {
+	$mk = $mvDefaultVideoQualityKey;	
+}else if( $stream_url = $mvTitle->getWebStreamURL($mvDefaultFlashQualityKey) ) {
+	$mk = $mvDefaultFlashQualityKey;
+}
+if($stream_url) {
+	echo '<enclosure name="'. wfMsg($mk) .'" type="video/ogg" '. 
+		'url="'. mvRSSFeed::xmlEncode( $stream_url ).'"/>';
 }
 ?>
+
 <comments>
 <?php echo mvRSSFeed::xmlEncode( $talkpage->getFullUrl() )?>
 </comments>
+<?php
+$person='';
+if($pmvd && $pmvd->Speech_by ){
+	$personTitle = Title :: newFromText( $pmvd->Speech_by );				
+?>
+<media:person label="<?php echo $personTitle->getText() ?>" url="<?php echo mvRSSFeed::xmlEncode( $personTitle->getFullURL() ); ?>
+<?php
+}
+//handle any parent clip tag info: 
+if( $pmvd ){ ?>
+<media:parent_clip label="<?php echo $parent_clip_desc ?>" url="<?php echo mvRSSFeed::xmlEncode( $pAnnoStreamTitle->getFullUrl() )  ?>" />
+	<?php if( $pmvd->Bill ){ 		
+		$bTitle = Title :: newFromText( $pmvd->Bill );
+		?>
+<media:bill label="<?php echo $bTitle->getText() ?>" url="<?php echo mvRSSFeed::xmlEncode( $bTitle->getFullURL() );?>" />		
+<?php }
+	if( $pmvd->category ){  
+		foreach($pmvd->category as $cat_titlekey ){ 
+			$cTitle = $cTitle = Title :: MakeTitle( NS_CATEGORY, $cat_titlekey );
+		?>
+		<media:category label="<?php echo $cTitle->getText()?>" url=<?php echo mvRSSFeed::xmlEncode( $cTitle->getFullUrl())  ?>" />
+<?php
+		}
+	}
+}
+?>
 <media:thumbnail
-	url="<?php echo mvRSSFeed::xmlEncode( $thumb_ref ) ?>" />
+	url="<?php echo mvRSSFeed::xmlEncode( $thumb_ref ) ?>" />	
 <media:roe_embed
 	url="<?php echo mvRSSFeed::xmlEncode( $mvTitle->getROEURL() )?>" />
 <media:group>

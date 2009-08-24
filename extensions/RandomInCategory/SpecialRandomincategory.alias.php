@@ -20,6 +20,16 @@ $aliases['arz'] = array(
 	'RandomInCategory' => array( 'عشوائى_فى_تصنيف' ),
 );
 
+/** German (Deutsch) */
+$aliases['de'] = array(
+	'RandomInCategory' => array( 'Zufällige Seite in Kategorie' ),
+);
+
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'RandomInCategory' => array( 'Pśipadny bok w kategoriji' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'RandomInCategory' => array( 'Satunnainen sivu luokasta' ),
@@ -28,6 +38,21 @@ $aliases['fi'] = array(
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'RandomInCategory' => array( 'Zuefelligi Kategori' ),
+);
+
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'RandomInCategory' => array( 'Připadna strona w kategoriji' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'RandomInCategory' => array( 'Aleatori in categoria' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'RandomInCategory' => array( 'カテゴリ中のランダムなページ' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -48,5 +73,15 @@ $aliases['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'RandomInCategory' => array( 'Tilfeldig fra kategori' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'RandomInCategory' => array( 'अविशिष्टवर्ग' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'RandomInCategory' => array( 'Alinmang kaurian' ),
 );
 

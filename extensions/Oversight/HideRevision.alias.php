@@ -45,6 +45,12 @@ $aliases['de'] = array(
 	'Oversight' => array( 'Oversight-Logbuch' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'HideRevision' => array( 'Wersiju schowaś' ),
+	'Oversight' => array( 'Protokol doglědowanjow' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'HideRevision' => array( 'پنهان_کردن_نسخه' ),
@@ -60,7 +66,7 @@ $aliases['fi'] = array(
 /** French (Français) */
 $aliases['fr'] = array(
 	'HideRevision' => array( 'Masquer révision', 'MasquerRevision' ),
-	'Oversight' => array( 'Superviser' ),
+	'Oversight' => array( 'Superviser', 'Superviseur', 'Supervision' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -83,6 +89,18 @@ $aliases['hr'] = array(
 	'Oversight' => array( 'Nadzor' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'HideRevision' => array( 'Wersiju schować' ),
+	'Oversight' => array( 'Protokol dohladowanjow' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'HideRevision' => array( 'Celar revision' ),
+	'Oversight' => array( 'Supervision' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'HideRevision' => array( 'Sembunyikan revisi' ),
@@ -103,6 +121,11 @@ $aliases['ko'] = array(
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'HideRevision' => array( 'Versioun verstoppen' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'HideRevision' => array( 'СокријРевизија' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -134,6 +157,17 @@ $aliases['pl'] = array(
 	'Oversight' => array( 'Rejestr ukrywania' ),
 );
 
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'HideRevision' => array( 'Ascunde modificarea' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'HideRevision' => array( 'आवृत्तीलुपयति' ),
+	'Oversight' => array( 'वृजावलोकन' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'HideRevision' => array( 'Dölj version' ),
@@ -142,5 +176,11 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'HideRevision' => array( 'FichaMatoleo' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'HideRevision' => array( 'Itago ang pagbabago' ),
+	'Oversight' => array( 'Maingat na pamamahala' ),
 );
 

@@ -17,6 +17,7 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
  	var $js_eval = false;
  	var $req = '';
  	var $mvd_tracks = array();
+ 	var $view_mode = '';
  	
  	function __construct( $init = array() ) {
  		foreach ( $init as $k => $v ) {
@@ -30,7 +31,16 @@ if ( !defined( 'MEDIAWIKI' ) )  die( 1 );
 		global $mvMVDTypeDefaultDisp, $mvMVDTypeAllAvailable;
 		// if already computed return: 
 		if ( count( $this->mvd_tracks ) != 0 )return $this->mvd_tracks;
+				 
+			
 		$user_tracks = $wgRequest->getVal( 'tracks' );
+
+		//set via overview request
+		if( $wgRequest->getVal('view') == 'overview'){
+			$this->view_mode = 'overview';
+			$user_tracks = 'anno_en';
+		}
+			
 		// print "USER TRACKS: " . $user_tracks;
 		if ( $user_tracks != '' ) {
 			$user_set = explode( ',', $user_tracks );

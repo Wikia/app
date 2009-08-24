@@ -10,7 +10,7 @@ function wfOutputHandler( $s ) {
 		$headers = apache_response_headers();
 		$isHTML = true;
 		foreach ( $headers as $name => $value ) {
-			if ( strtolower( $name ) == 'content-type' && strpos( $value, 'text/html' ) === false ) {
+			if ( strtolower( $name ) == 'content-type' && strpos( $value, 'text/html' ) === false && strpos( $value, 'application/xhtml+xml' ) === false ) {
 				$isHTML = false;
 				break;
 			}
@@ -123,10 +123,9 @@ function wfDoContentLength( $length ) {
  * Replace the output with an error if the HTML is not valid
  */
 function wfHtmlValidationHandler( $s ) {
-	global $IP;
-	$tidy = new tidy;
-	$tidy->parseString( $s, "$IP/includes/tidy.conf", 'utf8' );
-	if ( $tidy->getStatus() == 0 ) {
+
+	$errors = '';
+	if ( MWTidy::checkErrors( $s, $errors ) ) {
 		return $s;
 	}
 
@@ -134,7 +133,7 @@ function wfHtmlValidationHandler( $s ) {
 
 	$out = <<<EOT
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
 <head>
 <title>HTML validation error</title>
 <style>
@@ -147,7 +146,7 @@ li { white-space: pre }
 <ul>
 EOT;
 
-	$error = strtok( $tidy->errorBuffer, "\n" );
+	$error = strtok( $errors, "\n" );
 	$badLines = array();
 	while ( $error !== false ) {
 		if ( preg_match( '/^line (\d+)/', $error, $m ) ) {
@@ -158,8 +157,9 @@ EOT;
 		$error = strtok( "\n" );
 	}
 
-	$out .= '<pre>' . htmlspecialchars( $tidy->errorBuffer ) . '</pre>';
-	$out .= '<ol>';
+	$out .= '</ul>';
+	$out .= '<pre>' . htmlspecialchars( $errors ) . '</pre>';
+	$out .= "<ol>\n";
 	$line = strtok( $s, "\n" );
 	$i = 1;
 	while ( $line !== false ) {
@@ -168,7 +168,7 @@ EOT;
 		} else {
 			$out .= '<li>';
 		}
-		$out .= htmlspecialchars( $line ) . '</li>';
+		$out .= htmlspecialchars( $line ) . "</li>\n";
 		$line = strtok( "\n" );
 		$i++;
 	}

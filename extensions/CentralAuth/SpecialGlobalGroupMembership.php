@@ -15,6 +15,13 @@ class SpecialGlobalGroupMembership extends UserrightsPage {
 		global $wgUser;
 		$this->mGlobalUser = CentralAuthUser::getInstance( $wgUser );
 	}
+
+	function getSuccessURL() {
+		global $wgRequest;
+		$knownWikis = $this->mGlobalUser->listAttached();
+		$title = $this->getTitle( $this->mTarget );
+		return $title->getFullURL( 'wpKnownWiki='.urlencode( $knownWikis[0] ) );
+	}
 	
 	/**
 	 * Output a form to allow searching for a user

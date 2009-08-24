@@ -1,8 +1,9 @@
 <?php
-#coding: utf-8
-/** \file
-* \brief Internationalization file for the User Merge and Delete Extension.
-*/
+/**
+ * Internationalisation file for the User Merge and Delete Extension.
+ *
+ * @addtogroup Extensions
+ */
 
 $messages = array();
 
@@ -11,12 +12,13 @@ $messages['en'] = array(
 	'usermerge-desc'                => "[[Special:UserMerge|Merges references from one user to another user]] in the wiki database - will also delete old users following merge. Requires ''usermerge'' privileges",
 	'usermerge-badolduser' 		=> 'Invalid old username',
 	'usermerge-badnewuser' 		=> 'Invalid new username',
-	'usermerge-nonewuser' 		=> 'Empty new username - assuming merge to $1.<br />
-Click <u>Merge User</u> to accept.',
+	'usermerge-nonewuser' 		=> 'Empty new username - assuming merge to "$1".<br />
+Click "{{int:usermerge-submit}}" to accept.',
 	'usermerge-noolduser' 		=> 'Empty old username',
-	'usermerge-olduser' 		=> 'Old user (merge from)',
-	'usermerge-newuser' 		=> 'New user (merge to)',
-	'usermerge-deleteolduser' 	=> 'Delete old user?',
+	'usermerge-fieldset'            => 'Usernames to merge',
+	'usermerge-olduser' 		=> 'Old user (merge from):',
+	'usermerge-newuser' 		=> 'New user (merge to):',
+	'usermerge-deleteolduser' 	=> 'Delete old user',
 	'usermerge-submit' 		=> 'Merge user',
 	'usermerge-badtoken' 		=> 'Invalid edit token',
 	'usermerge-userdeleted' 	=> '$1 ($2) has been deleted.',
@@ -42,6 +44,15 @@ $messages['qqq'] = array(
 	'usermerge-desc' => 'Shown in [[Special:Version]] as a short description of this extension.{{doc-important|Do not translate links.}}',
 	'usermerge-badtoken' => '{{Identical|Invalid edit token}}',
 	'right-usermerge' => '{{doc-right}}',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'usermerge-badolduser' => 'Vär vanh kävutajan nimi',
+	'usermerge-badnewuser' => "Vär uz' kävutajan nimi",
+	'usermerge-deleteolduser' => 'Čuta poiš vanh kävutajan nimi?',
 );
 
 /** Arabic (العربية)
@@ -106,9 +117,33 @@ $messages['arz'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
 	'usermerge' => "Аб'яднаньне і выдаленьне рахункаў удзельнікаў",
+	'usermerge-desc' => "[[Special:UserMerge|Аб'ядноўвае спасылкі аднаго ўдзельніка на іншага]] ў базе зьвестак вікі — адначасова выдаляе старыя рахункі пасьля аб'яднаньня. Патрабуе правы на ''аб'яданьне рахункаў удзельнікаў''",
+	'usermerge-badolduser' => 'Няслушнае старое імя ўдзельніка',
+	'usermerge-badnewuser' => 'Няслушнае новае імя ўдзельніка',
+	'usermerge-nonewuser' => "Пустое імя ўдзельніка — мяркуецца аб'яднаньне з $1.<br />
+Націсьніце <u>Аб'яднаць рахункі ўдзельнікаў</u> каб пагадзіцца.",
+	'usermerge-noolduser' => 'Пустое старое імя ўдзельніка',
+	'usermerge-olduser' => "Стары ўдзельнік (аб'яднаць з)",
+	'usermerge-newuser' => "Новы ўдзельнік (аб'яднаць з)",
+	'usermerge-deleteolduser' => 'Выдаліць стары рахунак удзельніка?',
+	'usermerge-submit' => "Аб'яднаць рахункі ўдзельнікаў",
+	'usermerge-badtoken' => 'Няслушны знак рэдагаваньня',
+	'usermerge-userdeleted' => '$1 ($2) быў выдалены.',
+	'usermerge-userdeleted-log' => 'Выдалены рахунак удзельніка: $2 ($3)',
+	'usermerge-updating' => 'Абнаўленьне табліцы $1 ($2 да $3)',
+	'usermerge-success' => "Аб'яднаньне $1 ($2) з $3 ($4) скончанае.",
+	'usermerge-success-log' => "Удзельнік $2 ($3) аб'яднаны з $4 ($5)",
+	'usermerge-logpage' => "Журнал аб'яднаньня рахункаў удзельнікаў",
+	'usermerge-logpagetext' => "Гэта журнал аб'яднаньня рахункаў удзельнікаў.",
+	'usermerge-noselfdelete' => "Вы ня можаце выдаліць ці аб'яднаць уласны рахунак!",
+	'usermerge-unmergable' => "Немагчыма аб'яднаць рахунак удзельніка — ідэнтыфікатар ці імя былі пазначаны як неаб'яднальныя.",
+	'usermerge-protectedgroup' => "Немагчыма аб'яднаць рахунак удзельніка — удзельнік знаходзіцца ў абароненай групе.",
+	'right-usermerge' => "аб'яднаньне рахункаў удзельнікаў",
 );
 
 /** Bulgarian (Български)
@@ -189,6 +224,22 @@ $messages['br'] = array(
 	'usermerge-unmergable' => 'Dibosupl kendeuziñ adal un implijer - un niv. anaout pe un anv bet termenet evel digendeuzadus.',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'usermerge' => 'Spajanje i brisanje korisnika',
+	'usermerge-badolduser' => 'Nevaljano staro korisničko ime',
+	'usermerge-badnewuser' => 'Nevaljano novo korisničko ime',
+	'usermerge-noolduser' => 'Prazno staro korisničko ime',
+	'usermerge-deleteolduser' => 'Obriši starog korisnika?',
+	'usermerge-submit' => 'Spoji korisnika',
+	'usermerge-userdeleted' => '$1 ($2) je obrisan.',
+	'usermerge-userdeleted-log' => 'Obrisani korisnik: $2 ($3)',
+	'usermerge-logpage' => 'Zapisnik spajanja korisnika',
+	'right-usermerge' => 'Spajanje korisnika',
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
  */
@@ -226,11 +277,12 @@ $messages['de'] = array(
 	'usermerge-badolduser' => 'Ungültiger alter Benutzername',
 	'usermerge-badnewuser' => 'Ungültiger neuer Benutzername',
 	'usermerge-nonewuser' => 'Leerer neuer Benutzername - es wird eine Zusammenführung mit „$1“ vermutet.<br />
-Klicke auf <u>Benutzerkonten zusammenführen</u> zum Ausführen.',
+Klicke auf „{{int:usermerge-submit}}“ zum Ausführen.',
 	'usermerge-noolduser' => 'Leerer alter Benutzername',
-	'usermerge-olduser' => 'Alter Benutzername (zusammenführen von)',
-	'usermerge-newuser' => 'Neuer Benutzername (zusammenführen nach)',
-	'usermerge-deleteolduser' => 'Alten Benutzernamen löschen?',
+	'usermerge-fieldset' => 'Benutzernamen zum Zusammenführen',
+	'usermerge-olduser' => 'Alter Benutzername (zusammenführen von):',
+	'usermerge-newuser' => 'Neuer Benutzername (zusammenführen nach):',
+	'usermerge-deleteolduser' => 'Alten Benutzernamen löschen',
 	'usermerge-submit' => 'Benutzerkonten zusammenführen',
 	'usermerge-badtoken' => 'Ungültiges Bearbeiten-Token',
 	'usermerge-userdeleted' => '„$1“ ($2) wurde gelöscht.',
@@ -244,6 +296,35 @@ Klicke auf <u>Benutzerkonten zusammenführen</u> zum Ausführen.',
 	'usermerge-unmergable' => 'Zusammenführung nicht möglich - ID oder Benutzername wurde als nicht zusammenführbar definiert.',
 	'usermerge-protectedgroup' => 'Zusammenführung nicht möglich - Benutzername ist in einer geschützen Gruppe.',
 	'right-usermerge' => 'Benutzerkonten vereinen',
+);
+
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'usermerge' => 'Wužywarjow zjadnośiś a wulašowaś',
+	'usermerge-desc' => "[[Special:UserMerge|Zjadnośujo reference wót jadnogo wužywarja k drugemu wužywarjeju]] we wikijowej datowej bance - buźo teke wšych starych wužywarjow pó zjadnosénju lašowaś. Pomina se pšawa ''usermerge''",
+	'usermerge-badolduser' => 'Njepłaśiwe stare wužywarske mě',
+	'usermerge-badnewuser' => 'Njepłaśiwe nowe wužywarske mě',
+	'usermerge-nonewuser' => 'Prozne nowe wužywarske mě - góda se zjadnośenje k $1.<br />
+Klikni na <u>Wužywarja zjadnośiś</u>, aby wobkšuśił.',
+	'usermerge-noolduser' => 'Prozne stare wužywarske mě',
+	'usermerge-olduser' => 'Stare wužywarske mě (zjadnośiś wót)',
+	'usermerge-newuser' => 'Nowe wužywarske mě (zjadnośiś do)',
+	'usermerge-deleteolduser' => 'Starego wužywarja lašowaś?',
+	'usermerge-submit' => 'Wužywarja zjadnośiś',
+	'usermerge-badtoken' => 'Njepłaśiwy wobźěłowański token',
+	'usermerge-userdeleted' => '$1 ($2) jo se wulašował.',
+	'usermerge-userdeleted-log' => 'Wulašowany wužywaŕ: $2 ($3)',
+	'usermerge-updating' => 'Aktualizěrujo se tabela $1 ($2 do $3)',
+	'usermerge-success' => 'Zjadnosénje wot $1 ($2) do $3 ($4) jo skóńcone.',
+	'usermerge-success-log' => 'Wužywaŕ $2 ($3) jo se do $4 ($5) zjadnośił',
+	'usermerge-logpage' => 'Protokol wužywarskich zjadnośenjow',
+	'usermerge-logpagetext' => 'To jo protokol akcijow wužywarskich zjadnośenjow.',
+	'usermerge-noselfdelete' => 'Njamóžoš se ze sobu zjadnośiś!',
+	'usermerge-unmergable' => 'Zjadnosénja wót wužywarja njemóžno - ID abo wužywarske mě jo se ako njezjadnośujobne definěrowane.',
+	'usermerge-protectedgroup' => 'Zjadnośenje wót wužywarja njemóžno - wužywaŕ jo w šćitanej kupce.',
+	'right-usermerge' => 'Wužywarjow zjadnośiś',
 );
 
 /** Greek (Ελληνικά)
@@ -280,14 +361,33 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
 	'usermerge' => 'Fusionar y borrar usuarios',
+	'usermerge-desc' => "[[Special:UserMerge|Fusiona referencias de un usuario a otro usuario]] en la base de datos wiki - borrará también usuarios antiguos en la siguiente fusión. requiere ''usermerge'' privilegios",
+	'usermerge-badolduser' => 'Nombre de usuario antiguo inválido',
+	'usermerge-badnewuser' => 'Nombre de usuario nuevo inválido',
+	'usermerge-nonewuser' => 'Vaciar nuevo nombre de usuario - asumiendo que fue fusionado a $1.<br />
+Haga Click en "{{int:usermerge-submit}}" para aceptar.',
+	'usermerge-noolduser' => 'Vaciar antiguo nombre de usuario',
+	'usermerge-fieldset' => 'Nombres de usuario a fusionar',
+	'usermerge-olduser' => 'Antiguo usuario (fusionar de):',
+	'usermerge-newuser' => 'Nuevo usuario (fusionar a):',
+	'usermerge-deleteolduser' => 'Borrar antiguo usuario',
 	'usermerge-submit' => 'Fusionar usuario',
 	'usermerge-userdeleted' => '$1 ($2) ha sido borrado.',
 	'usermerge-userdeleted-log' => 'Usuario borrado: $2 ($3)',
+	'usermerge-updating' => 'Actualizando $1 tabla ($2 to $3)',
+	'usermerge-success' => 'Fusión de $1 ($2) a $3 ($4) está completada.',
+	'usermerge-success-log' => 'Usuario $2 ($3) fusionado a $4 ($5)',
+	'usermerge-logpage' => 'Registro de fusiones del usuario',
+	'usermerge-logpagetext' => 'Este es un registro de acciones de fusión de usuarios.',
+	'usermerge-noselfdelete' => 'Usted no puede borrarse o fusionarse a sí mismo!',
+	'usermerge-unmergable' => 'Incapaz de fusionar de usuario - ID o nombre ha sido definido como no fusionable.',
+	'usermerge-protectedgroup' => 'Incapaz de fusionar de usuario - Usuario está en un grupo protegido.',
 	'right-usermerge' => 'Fusionar usuarios',
 );
 
@@ -316,17 +416,18 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Huji
  * @author Meisam
  */
 $messages['fa'] = array(
-	'usermerge' => 'ادغام و پاک‌کردن کاربران',
+	'usermerge' => 'یکی کردن و حذف کردن کاربران',
 	'usermerge-badolduser' => 'نام کاربری قدیمی نامعتبر',
 	'usermerge-badnewuser' => 'نام کاربری جدید نامعتبر',
-	'usermerge-noolduser' => 'نام‌کاربری قدیمی خالی',
+	'usermerge-noolduser' => 'نام کاربری قدیمی خالی',
 	'usermerge-olduser' => 'کاربر قدیمی (ادغام از)',
 	'usermerge-newuser' => 'کاربر جدید (ادغام با)',
-	'usermerge-deleteolduser' => 'کاربر قدیمی پاک‌شود؟',
-	'usermerge-submit' => 'ادغام کاربر',
+	'usermerge-deleteolduser' => 'کاربر قدیمی حذف شود؟',
+	'usermerge-submit' => 'یکی کردن کاربر',
 	'usermerge-userdeleted' => '$1 ($2) پاک شد.',
 );
 
@@ -350,37 +451,39 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author Guillom
  * @author IAlex
  * @author McDutchie
+ * @author PieRRoMaN
  * @author Sherbrooke
  * @author Urhixidur
  */
 $messages['fr'] = array(
-	'usermerge' => 'Fusionner utilisateur et détruire',
+	'usermerge' => 'Fusionner et supprimer des utilisateurs',
 	'usermerge-desc' => "[[Special:UserMerge|Fusionne les références d’un utilisateur vers un autre]] dans la base de données wiki - supprimera aussi les anciens utilisateurs après la fusion. Nécessite le privilège ''usermerge''",
 	'usermerge-badolduser' => "Ancien nom d'utilisateur invalide",
 	'usermerge-badnewuser' => "Nouveau nom d'utilisateur invalide",
-	'usermerge-nonewuser' => "Nouveau nom d'utilisateur vide. Nous faisons l'hypothèse que vous voulez fusionner dans $1.
-
-Cliquez sur ''Fusionner utilisateur'' pour accepter.",
+	'usermerge-nonewuser' => "Nouveau nom d'utilisateur vide. Nous faisons l'hypothèse que vous voulez fusionner dans « $1 ».<br />
+Cliquez sur « {{int:usermerge-submit}} » pour accepter.",
 	'usermerge-noolduser' => "Ancien nom d'utilisateur vide",
-	'usermerge-olduser' => 'Ancien utilisateur (fusionner depuis)',
-	'usermerge-newuser' => 'Nouvel utilisateur (fusionner dans)',
-	'usermerge-deleteolduser' => 'Détruire l’ancien utilisateur ?',
-	'usermerge-submit' => 'Fusionner utilisateur',
-	'usermerge-badtoken' => 'Jeton d’édition invalide',
-	'usermerge-userdeleted' => '$1($2) est détruit.',
-	'usermerge-userdeleted-log' => 'Contributeur effacé : $2($3)',
+	'usermerge-fieldset' => 'Noms d’utilisateur à fusionner',
+	'usermerge-olduser' => 'Ancien utilisateur (fusionner depuis) :',
+	'usermerge-newuser' => 'Nouvel utilisateur (fusionner avec) :',
+	'usermerge-deleteolduser' => 'Supprimer l’ancien utilisateur',
+	'usermerge-submit' => "Fusionner l'utilisateur",
+	'usermerge-badtoken' => 'Jeton de modification invalide',
+	'usermerge-userdeleted' => '$1 ($2) a été supprimé.',
+	'usermerge-userdeleted-log' => 'Contributeur supprimé : $2 ($3)',
 	'usermerge-updating' => 'Mise à jour de la table $1 (de $2 à $3)',
-	'usermerge-success' => 'La fusion de $1($2) à $3($4) est terminée.',
-	'usermerge-success-log' => 'Contributeur $2($3) fusionné avec $4($5)',
-	'usermerge-logpage' => 'Journal des fusions de contributeurs',
-	'usermerge-logpagetext' => 'Ceci est un journal des actions de fusions de contributeurs.',
+	'usermerge-success' => 'La fusion de $1 ($2) à $3 ($4) est terminée.',
+	'usermerge-success-log' => 'Utilisateur $2 ($3) fusionné avec $4 ($5)',
+	'usermerge-logpage' => 'Journal des fusions de comptes utilisateur',
+	'usermerge-logpagetext' => "Voici un journal des actions de fusions d'utilisateurs.",
 	'usermerge-noselfdelete' => 'Vous ne pouvez pas vous supprimer ou vous fusionner vous-même !',
-	'usermerge-unmergable' => "Ne peut fusionner à partir d'un utilisateur, d'un numéro d'identification ou un nom qui ont été définis comme non fusionnables.",
-	'usermerge-protectedgroup' => "Impossible de fusionner à partir d'un utilisateur - l'utilisateur se trouve dans un groupe protégé.",
+	'usermerge-unmergable' => "Impossible de fusionner l'utilisateur : le numéro ou le nom a été défini comme non fusionnable.",
+	'usermerge-protectedgroup' => "Impossible de fusionner l'utilisateur : l'utilisateur est dans un groupe protégé.",
 	'right-usermerge' => 'Fusionner des utilisateurs',
 );
 
@@ -419,6 +522,36 @@ Prema en <u>Fusionar o usuario</u> para aceptar.',
 	'usermerge-unmergable' => 'Non se pode fusionar o usuario (o ID ou o nome foron definidos como "non fusionables").',
 	'usermerge-protectedgroup' => 'Non se pode fusionar o usuario (o usuario está nun frupo protexido).',
 	'right-usermerge' => 'Fusionar usuarios',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'usermerge' => 'Benutzerkonte zämmefiere un lesche',
+	'usermerge-desc' => "[[Special:UserMerge|Fiert Benutzerkonte in dr Wiki-Datebank zämme]] - s alt Benutzerkonto wird no dr Zämmefierig glescht. Bruucht s ''usermerge''-Rächt.",
+	'usermerge-badolduser' => 'Uugiltiger alter Benutzername',
+	'usermerge-badnewuser' => 'Uugiltiger nejer Benutzername',
+	'usermerge-nonewuser' => 'Läärer nejer Benutzername - s wird e Zämmefierig mit „$1“ vermuetet.<br />
+Klick uf "{{int:usermerge-submit}}" go s Uusfiere.',
+	'usermerge-noolduser' => 'Läärer alter Benutzername',
+	'usermerge-fieldset' => 'Benutzernäme, wu solle zämmegfiert wäre',
+	'usermerge-olduser' => 'Alter Benutzername (zämmefiere vu):',
+	'usermerge-newuser' => 'Nejer Benutzername (zämmefiere noch):',
+	'usermerge-deleteolduser' => 'Alte Benutzername lesche',
+	'usermerge-submit' => 'Benutzerkonte zämmefiere',
+	'usermerge-badtoken' => 'Uugiltig Bearbeite-Token',
+	'usermerge-userdeleted' => '„$1“ ($2) isch glescht wore.',
+	'usermerge-userdeleted-log' => 'Gleschter Benutzername: „$2“ ($3)',
+	'usermerge-updating' => 'Aktualisierig $1 Tabälle ($2 noch $3)',
+	'usermerge-success' => 'D Zämmefierig vu „$1“ ($2) noch „$3“ ($4) isch vollständig.',
+	'usermerge-success-log' => 'Benutzername „$2“ ($3) zämmegfiert mit „$4“ ($5)',
+	'usermerge-logpage' => 'Benutzerkonte-Zämmefierigs-Logbuech',
+	'usermerge-logpagetext' => 'Des isch s Logbuech vu dr Benutzerkonte-Zämmefierige.',
+	'usermerge-noselfdelete' => 'Zämmefierig mit sich sälber isch nit megli!',
+	'usermerge-unmergable' => 'Zämmefierig nit megli - ID oder Benutzername isch nit as zämmefierbar definiert.',
+	'usermerge-protectedgroup' => 'Zämmefierig nit megli - Benutzername isch in ere gschitze Gruppe.',
+	'right-usermerge' => 'Benutzerkonte zämmefiere',
 );
 
 /** Hebrew (עברית)
@@ -551,6 +684,7 @@ Clicca <u>Fusionar usator</u> pro acceptar.',
 );
 
 /** Indonesian (Bahasa Indonesia)
+ * @author IvanLanin
  * @author Rex
  */
 $messages['id'] = array(
@@ -576,7 +710,7 @@ Klik <u>Gabungkan Pengguna</u> untuk melanjutkan.',
 	'usermerge-noselfdelete' => 'Anda tidak dapat menghapus atau menggabungkan dari Anda sendiri!',
 	'usermerge-unmergable' => 'Tidak dapat menggabungkan dari pengguna ini - nomor ID atau nama akun ini telah ditandai sebagai akun yang tidak dapat digabungkan.',
 	'usermerge-protectedgroup' => 'Tidak dapat menggabungkan dari pengguna ini - pengguna ini termasuk dalam kelompok terproteksi.',
-	'right-usermerge' => 'Gabungkan pengguna',
+	'right-usermerge' => 'Menggabungkan pengguna',
 );
 
 /** Italian (Italiano)
@@ -588,12 +722,13 @@ $messages['it'] = array(
 	'usermerge-desc' => "[[Special:UserMerge|Unisce i riferimenti di un utente con quelli di un altro]] nel database della wiki e inoltre cancellerà il vecchio utente dopo l'unione. Richiede privilegi ''usermerge''",
 	'usermerge-badolduser' => 'Vecchio nome utente non valido',
 	'usermerge-badnewuser' => 'Nuovo nome utente non valido',
-	'usermerge-nonewuser' => "Nuovo nome utente vuoto - l'unione verrà effettuata con l'utente $1.<br />
-Fai clic su <u>Unisci Utente</u> per accettare.",
+	'usermerge-nonewuser' => 'Nuovo nome utente vuoto - l\'unione verrà effettuata con l\'utente "$1".<br />
+Fare clic su "{{int:usermerge-submit}}" per accettare.',
 	'usermerge-noolduser' => 'Vecchio nome utente vuoto',
-	'usermerge-olduser' => 'Vecchio utente (unisci da)',
-	'usermerge-newuser' => 'Nuovo utente (unisci a)',
-	'usermerge-deleteolduser' => 'Cancellare vecchio utente?',
+	'usermerge-fieldset' => 'Nomi utente da unire',
+	'usermerge-olduser' => 'Vecchio utente (unisci da):',
+	'usermerge-newuser' => 'Nuovo utente (unisci a):',
+	'usermerge-deleteolduser' => 'Cancella vecchio utente',
 	'usermerge-submit' => 'Unisci utente',
 	'usermerge-badtoken' => 'Edit token non valido',
 	'usermerge-userdeleted' => '$1 ($2) è stato cancellato.',
@@ -612,31 +747,33 @@ Fai clic su <u>Unisci Utente</u> per accettare.",
 /** Japanese (日本語)
  * @author Aotake
  * @author Fievarsty
+ * @author Fryed-peach
  * @author Mzm5zbC3
  */
 $messages['ja'] = array(
 	'usermerge' => '利用者の統合と削除',
-	'usermerge-desc' => "ウィキデータベース上における[[Special:UserMerge|一人の利用者を別の利用者へ統合する]] - また統合元の利用者を削除する（''usermerge''の権限が必要）",
+	'usermerge-desc' => "ウィキデータベース上における[[Special:UserMerge|ある利用者を別の利用者へ統合し]]、また統合元の利用者を削除する（「{{int:right-usermerge}}」権限 ''usermerge'' が必要）",
 	'usermerge-badolduser' => '無効な旧利用者名',
 	'usermerge-badnewuser' => '無効な新利用者名',
-	'usermerge-nonewuser' => '新しい利用者名の欄が空です - $1に統合します。<br />
-<u>利用者の統合</u>をクリックしてください。',
+	'usermerge-nonewuser' => '新しい利用者名の欄が空です。「$1」への統合と仮定します。<br />
+「{{int:usermerge-submit}}」をクリックして承認してください。',
 	'usermerge-noolduser' => '旧利用者名の欄が空です',
-	'usermerge-olduser' => '旧利用者（統合元）',
-	'usermerge-newuser' => '新利用者（統合先）',
-	'usermerge-deleteolduser' => '統合元の利用者を削除しますか?',
+	'usermerge-fieldset' => '統合すべき利用者名',
+	'usermerge-olduser' => '旧利用者 (統合元):',
+	'usermerge-newuser' => '新利用者 (統合先):',
+	'usermerge-deleteolduser' => '旧利用者を削除する',
 	'usermerge-submit' => '利用者の統合',
-	'usermerge-badtoken' => '無効な編集証拠',
+	'usermerge-badtoken' => '編集トークンが不正',
 	'usermerge-userdeleted' => '$1 ($2) は削除されました。',
-	'usermerge-userdeleted-log' => '利用者: $2 ($3) を削除しました。',
+	'usermerge-userdeleted-log' => '利用者: $2 ($3) を削除しました',
 	'usermerge-updating' => '$1 のテーブルを更新 ($2 を $3 へ)',
-	'usermerge-success' => '$1 ($2) を $3 ($4) へ安全に統合しました。',
-	'usermerge-success-log' => '$2 ($3) を $4 ($5) へ利用者を統合しました。',
+	'usermerge-success' => '$1 ($2) の $3 ($4) への統合が完了しました。',
+	'usermerge-success-log' => '利用者 $2 ($3) を $4 ($5) へ統合しました',
 	'usermerge-logpage' => '利用者統合記録',
 	'usermerge-logpagetext' => 'これは、利用者の統合を記録したものです。',
-	'usermerge-noselfdelete' => 'あなたは、自分から統合・削除をすることはできません!',
-	'usermerge-unmergable' => '利用者を統合することができません - IDまたは名前が統合不可能です。',
-	'usermerge-protectedgroup' => '利用者を統合できません - この利用者は、保護の対象となるグループです。',
+	'usermerge-noselfdelete' => 'あなたは、自身を統合あるいは削除することはできません。',
+	'usermerge-unmergable' => '利用者を統合できません。IDまたは名前が統合不可能となっています。',
+	'usermerge-protectedgroup' => '利用者を統合できません。この利用者は被保護グループに属しています。',
 	'right-usermerge' => '利用者を統合する',
 );
 
@@ -747,11 +884,12 @@ $messages['lb'] = array(
 	'usermerge-badolduser' => 'Ongëltegen ale Benotzernumm',
 	'usermerge-badnewuser' => 'Ongëltegen neie Benotzernumm',
 	'usermerge-nonewuser' => 'Eidele neie Benotzernumm - wahrscheinlech eng Zesummeféierung matt "$1".<br />
-Klickt op <u>Benotzerkonten zesammeféieren</u> wann Dir d\'accord sidd.',
+Klickt op "{{int:usermerge-submit}}" wann Dir d\'accord sidd.',
 	'usermerge-noolduser' => 'Eidelen ale Benotzernumm',
-	'usermerge-olduser' => 'Ale Benotzer (zesummeféiere vun)',
-	'usermerge-newuser' => 'Neie Benotzer (zusammenféiere mat)',
-	'usermerge-deleteolduser' => 'Ale Benotzer läschen?',
+	'usermerge-fieldset' => 'Benotzernimm fir zesummenzeféieren',
+	'usermerge-olduser' => 'Ale Benotzer (zesummeféiere vun):',
+	'usermerge-newuser' => 'Neie Benotzer (zusammenféiere mat):',
+	'usermerge-deleteolduser' => 'Ale Benotzer läschen',
 	'usermerge-submit' => 'Benotzerkonten zesummeféieren',
 	'usermerge-badtoken' => 'Ännerungs-Jeton net valabel',
 	'usermerge-userdeleted' => '$1 ($2) gouf geläscht.',
@@ -843,14 +981,15 @@ $messages['nah'] = array(
 $messages['nl'] = array(
 	'usermerge' => 'Gebruikers samenvoegen en verwijderen',
 	'usermerge-desc' => "Voegt een [[Special:UserMerge|speciale pagina]] toe om gebruikers samen te voegen en de oude gebruiker(s) te verwijderen (hiervoor is het recht ''usermerge'' nodig)",
-	'usermerge-badolduser' => 'Verkeerde oude gebruiker',
-	'usermerge-badnewuser' => 'Verkeerde nieuwe gebruiker',
-	'usermerge-nonewuser' => 'Nieuwe gebruiker is niet ingegeven - er wordt aangenomen dat er samengevoegd moet worden naar $1.<br />
-Klik <u>Gebruiker samenvoegen</u> om te aanvaarden.',
+	'usermerge-badolduser' => 'Ongeldige oude gebruiker',
+	'usermerge-badnewuser' => 'Ongeldige nieuwe gebruiker',
+	'usermerge-nonewuser' => 'De nieuwe gebruikersnaam is niet ingegeven - er wordt aangenomen dat er samengevoegd moet worden naar $1.<br />
+Klik "{{int:usermerge-submit}}" om de handeling uit te voeren.',
 	'usermerge-noolduser' => 'Oude gebruiker is niet ingegeven',
-	'usermerge-olduser' => 'Oude gebruiker (samenvoegen van)',
-	'usermerge-newuser' => 'Nieuwe gebruiker (samenvoegen naar)',
-	'usermerge-deleteolduser' => 'Oude gebruiker verwijderen?',
+	'usermerge-fieldset' => 'Samen te voegen gebruikersnamen',
+	'usermerge-olduser' => 'Oude gebruiker (samenvoegen van):',
+	'usermerge-newuser' => 'Nieuwe gebruiker (samenvoegen naar):',
+	'usermerge-deleteolduser' => 'Oude gebruiker verwijderen',
 	'usermerge-submit' => 'Gebruiker samenvoegen',
 	'usermerge-badtoken' => 'Ongeldig bewerkingstoken',
 	'usermerge-userdeleted' => '$1($2) is verwijderd.',
@@ -1012,6 +1151,7 @@ $messages['ps'] = array(
  * @author Lijealso
  * @author Malafaya
  * @author Sir Lestaty de Lioncourt
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'usermerge' => 'Fusão e eliminação de utilizadores',
@@ -1024,15 +1164,44 @@ Clique <u>Fundir Utilizador</u> para aceitar.',
 	'usermerge-olduser' => 'Utilizador antigo (fundir de)',
 	'usermerge-newuser' => 'Utilizador novo (fundir para)',
 	'usermerge-deleteolduser' => 'Apagar utilizador antigo?',
-	'usermerge-submit' => 'Limpar usuário',
+	'usermerge-submit' => 'Fundir utilizador',
 	'usermerge-badtoken' => 'Ficha de edição inválida',
 	'usermerge-userdeleted' => '$1 ($2) foi eliminado.',
-	'usermerge-userdeleted-log' => 'Usuário eliminado: $2 ($3)',
+	'usermerge-userdeleted-log' => 'Utilizador eliminado: $2 ($3)',
 	'usermerge-updating' => 'Actualizando tabela $1 ($2 para $3)',
 	'usermerge-success' => 'Fusão de $1 ($2) para $3 ($4) está completa.',
-	'usermerge-success-log' => 'Usuário $2 ($3) fundido com $4 ($5)',
+	'usermerge-success-log' => 'Utilizador $2 ($3) fundido com $4 ($5)',
 	'usermerge-logpage' => 'Registo de fusão de utilizadores',
 	'usermerge-logpagetext' => 'Este é um registo de acções de fusão de utilizadores.',
+	'usermerge-noselfdelete' => 'Você não pode apagar ou fundir a partir de si próprio!',
+	'usermerge-unmergable' => 'Não foi possível fundir o utilizador - Nome ou ID foi definido para não ser fundido.',
+	'usermerge-protectedgroup' => 'Não é possível fundir este utilizador - Utilizador está em um grupo protegido',
+	'right-usermerge' => 'Fundir utilizadores',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'usermerge' => 'Fusão e eliminação de utilizadores',
+	'usermerge-desc' => "[[Special:UserMerge|Unifica as referências de um utilizador em outro utilizador]] no banco de dados da wiki - também apagará o antigo utilizador após a fusão. Requer privilégio ''usermerge''",
+	'usermerge-badolduser' => 'Nome antigo inválido',
+	'usermerge-badnewuser' => 'Nome novo inválido',
+	'usermerge-nonewuser' => 'Novo nome de utilizador vazio - assumida fusão com $1.<br />
+Clique <u>Fundir Utilizador</u> para aceitar.',
+	'usermerge-noolduser' => 'Limpar nome antigo',
+	'usermerge-olduser' => 'Utilizador antigo (fundir de)',
+	'usermerge-newuser' => 'Utilizador novo (fundir para)',
+	'usermerge-deleteolduser' => 'Apagar utilizador antigo?',
+	'usermerge-submit' => 'Fundir utilizador',
+	'usermerge-badtoken' => 'Token de edição inválida',
+	'usermerge-userdeleted' => '$1 ($2) foi eliminado.',
+	'usermerge-userdeleted-log' => 'Utilizador eliminado: $2 ($3)',
+	'usermerge-updating' => 'Atualizando tabela $1 ($2 para $3)',
+	'usermerge-success' => 'Fusão de $1 ($2) para $3 ($4) está completa.',
+	'usermerge-success-log' => 'Utilizador $2 ($3) fundido com $4 ($5)',
+	'usermerge-logpage' => 'Registo de fusão de utilizadores',
+	'usermerge-logpagetext' => 'Este é um registro de ações de fusão de utilizadores.',
 	'usermerge-noselfdelete' => 'Você não pode apagar ou fundir a partir de si próprio!',
 	'usermerge-unmergable' => 'Não foi possível fundir o utilizador - Nome ou ID foi definido para não ser fundido.',
 	'usermerge-protectedgroup' => 'Não é possível fundir este utilizador - Utilizador está em um grupo protegido',
@@ -1048,6 +1217,14 @@ $messages['ro'] = array(
 	'usermerge-noolduser' => 'Nume de utilizator vechi gol',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'usermerge-badolduser' => 'Nome utende vecchije invalide',
+	'usermerge-badnewuser' => 'Nome utende nuève invalide',
+);
+
 /** Russian (Русский)
  * @author Ferrer
  * @author Illusion
@@ -1056,18 +1233,27 @@ $messages['ro'] = array(
  */
 $messages['ru'] = array(
 	'usermerge' => 'Объединение и удаление учётных записей',
+	'usermerge-desc' => "[[Special:UserMerge|Переводит связи с одного участника на другого]] в базе данных вики, старые пользователи будут удаляться. Требует прав ''usermerge''",
 	'usermerge-badolduser' => 'Неправильное старое имя участника',
 	'usermerge-badnewuser' => 'Неправильное новое имя участника',
+	'usermerge-nonewuser' => 'Пустое новое имя участника — при слиянии с $1.<br />
+Нажмите <u>Объединить участников</u>, чтобы подтвердить действие.',
+	'usermerge-noolduser' => 'Пустое старое имя участника',
 	'usermerge-olduser' => 'Старая учётная запись (объединить с)',
 	'usermerge-newuser' => 'Новая учётная запись (объединить в)',
 	'usermerge-deleteolduser' => 'Удалить старую учётную запись?',
 	'usermerge-submit' => 'Объединить участников',
+	'usermerge-badtoken' => 'Недействительный маркер правки',
 	'usermerge-userdeleted' => '$1 ($2) был удалён.',
 	'usermerge-userdeleted-log' => 'Удалён участник $2 ($3)',
+	'usermerge-updating' => 'Обновление таблицы $1 ($2 из $3)',
+	'usermerge-success' => 'Объединение $1 ($2) с $3 ($4) выполнено.',
 	'usermerge-success-log' => 'Участник $2 ($3) объединён в $4 ($5)',
 	'usermerge-logpage' => 'Журнал объединения участников',
 	'usermerge-logpagetext' => 'Это журнал объединения учётных записей.',
 	'usermerge-noselfdelete' => 'Вы не можете удалять или объединять себя самого!',
+	'usermerge-unmergable' => 'Невозможно объединить участников — идентификатор или имя было определено как необъединяемое.',
+	'usermerge-protectedgroup' => 'Невозможно объединить участников — участник относится к защищённой группе.',
 	'right-usermerge' => 'объединение участников',
 );
 
@@ -1104,6 +1290,28 @@ $messages['sk'] = array(
  */
 $messages['stq'] = array(
 	'usermerge' => 'Benutserkonten touhoopefiere un läskje',
+	'usermerge-desc' => "[[Special:UserMerge|Fiert Benutserkonten in ju Wiki-Doatenbank touhoope]] - dät oolde Benutserkonto wäd ätter ju Touhoopefierenge läsked. Ärfoardert dät ''usermerge''-Gjucht.",
+	'usermerge-badolduser' => 'Uungultigen oolden Benutsernoome',
+	'usermerge-badnewuser' => 'Uungultigen näien Benutsernoome',
+	'usermerge-nonewuser' => 'Loosen näien Benutsernoome - der is ne Touhoopefierenge mäd „$1“ fermoudjen.<br />
+Klik ap <u>Benutserkonten touhoopefiere</u> toun Uutfieren.',
+	'usermerge-noolduser' => 'Loosen oolden Benutsernoome',
+	'usermerge-olduser' => 'Oolden Benutsernoome (touhoopefieren fon)',
+	'usermerge-newuser' => 'Näien Benutsernoome (touhoopefieren ätter)',
+	'usermerge-deleteolduser' => 'Oolden Benutsernoome läskje?',
+	'usermerge-submit' => 'Benutserkonten touhoopefiere',
+	'usermerge-badtoken' => 'Uungultich Beoarbaidjen-Token',
+	'usermerge-userdeleted' => '„$1“ ($2) wuud läsked.',
+	'usermerge-userdeleted-log' => 'Läskeden Benutsernoome: „$2“ ($3)',
+	'usermerge-updating' => 'Aktualisierenge $1 Tabelle ($2 ätter $3)',
+	'usermerge-success' => 'Ju Touhoopefierenge fon „$1“ ($2) ätter „$3“ ($4) is fulboodich.',
+	'usermerge-success-log' => 'Benutsernoome „$2“ ($3) touhoopefierd mäd „$4“ ($5)',
+	'usermerge-logpage' => 'Benutserkonten-Touhoopefierenge-Logbouk',
+	'usermerge-logpagetext' => 'Dit is dät Logbouk fon do Benutserkonten-Touhoopefierengen.',
+	'usermerge-noselfdelete' => 'Touhoopefierenge mäd aan sälwen is nit muugelk!',
+	'usermerge-unmergable' => 'Touhoopefierenge nit muugelk - ID of Benutsernoome wuud as nit touhoopefierboar definierd.',
+	'usermerge-protectedgroup' => 'Touhoopefierenge nit muugelk - Benutsernoome is in ne schutsede Gruppe.',
+	'right-usermerge' => 'Benutserkonten fereenje',
 );
 
 /** Sundanese (Basa Sunda)
@@ -1276,6 +1484,18 @@ Nhất <u>Trộn Thành viên</u> để chấp nhận.',
 	'usermerge-unmergable' => 'Không thể trộn từ thành viên này - mã số hoặc tên đã được định nghĩa là không thể trộn.',
 	'usermerge-protectedgroup' => 'Không thể trộn từ thành viên này - thành viên này thuộc nhóm được bảo vệ.',
 	'right-usermerge' => 'Trộn thành viên',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'usermerge-badolduser' => 'Gebananem büik no lonöfon',
+	'usermerge-badnewuser' => 'Gebananem nulik no lonöfon',
+	'usermerge-noolduser' => 'Vagükön gebananemi büik',
+	'usermerge-deleteolduser' => 'Moükön gebani büik?',
+	'usermerge-userdeleted' => '$1 ($2) pemoükon.',
+	'usermerge-userdeleted-log' => 'Moükön gebani: $2 ($3)',
 );
 
 /** Yue (粵語) */

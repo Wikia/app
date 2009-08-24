@@ -29,7 +29,7 @@ class EditMessagesPage extends SpecialPage {
 		$encAction = $this->getTitle()->escapeFullUrl();
 
 		$wgOut->addHTML( "<form method=\"POST\" action=\"$encAction\">" );
-		$wgOut->addHTML( "<p><label>" . wfMsgHtml( 'editmsg-target' ) .
+		$wgOut->addHTML( "<p><label>" . wfMsgHtml( 'editmsg-target' ) . wfMsgHtml( 'word-separator' ) .
 			Xml::element( 'input', array( 'type' => 'text', 'name' => 'messageName',
 				'value' => $messageName, 'size' => 70 ) ) .
 			'</label></p>' );
@@ -223,8 +223,10 @@ class EditMessagesPage extends SpecialPage {
 
 		foreach ( $warnings as $warningType => $warnings2 ) {
 			if ( $warningsCount = count( $warnings2 ) ) {
+				global $wgLang;
+
 				$wgOut->addWikiMsg( 'editmsg-warning-' . $warningType,
-					implode( ', ', $warnings2 ), $warningsCount );
+					$wgLang->commaList( $warnings2 ), $warningsCount );
 				// is this really needed?
 				$warningsCount = 0;
 			}

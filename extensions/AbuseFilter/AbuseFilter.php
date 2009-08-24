@@ -17,9 +17,10 @@ if ( ! defined( 'MEDIAWIKI' ) )
 
 $dir = dirname(__FILE__);
 $wgExtensionCredits['other'][] = array(
-	'path'           => __FILE__,
 	'name'           => 'Abuse Filter',
 	'author'         => array('Andrew Garrett','River Tarnell', 'Victor Vasiliev'),
+	'svn-date'       => '$LastChangedDate: 2008-06-08 20:48:19 +1000 (Sun, 08 Jun 2008) $',
+	'svn-revision'   => '$LastChangedRevision: 36018 $',
 	'description'    => 'Applies automatic heuristics to edits.',
 	'descriptionmsg' => 'abusefilter-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:AbuseFilter',
@@ -44,7 +45,6 @@ $wgAutoloadClasses['AbuseFilterViewTestBatch'] = "$dir/Views/AbuseFilterViewTest
 $wgAutoloadClasses['AbuseFilterViewExamine'] = "$dir/Views/AbuseFilterViewExamine.php";
 $wgAutoloadClasses['AbuseFilterChangesList'] = "$dir/Views/AbuseFilterViewExamine.php";
 $wgAutoloadClasses['AbuseFilterViewDiff'] = "$dir/Views/AbuseFilterViewDiff.php";
-$wgAutoloadClasses['AbuseFilterViewImport'] = "$dir/Views/AbuseFilterViewImport.php";
 
 $wgAutoloadClasses['AbuseFilterVariableHolder'] = "$dir/AbuseFilterVariableHolder.php";
 $wgAutoloadClasses['AFComputedVariable'] = "$dir/AbuseFilterVariableHolder.php";
@@ -55,11 +55,6 @@ $wgSpecialPages['AbuseFilter'] = 'SpecialAbuseFilter';
 $wgSpecialPageGroups['AbuseLog'] = 'changes';
 $wgSpecialPageGroups['AbuseFilter'] = 'wiki';
 
-$wgAutoloadClasses['ApiQueryAbuseLog'] = "$dir/ApiQueryAbuseLog.php";
-$wgAPIListModules['abuselog'] = 'ApiQueryAbuseLog';
-$wgAutoloadClasses['ApiQueryAbuseFilters'] = "$dir/ApiQueryAbuseFilters.php";
-$wgAPIListModules['abusefilters'] = 'ApiQueryAbuseFilters';
-
 $wgHooks['EditFilterMerged'][] = 'AbuseFilterHooks::onEditFilterMerged';
 $wgHooks['GetAutoPromoteGroups'][] = 'AbuseFilterHooks::onGetAutoPromoteGroups';
 $wgHooks['AbortMove'][] = 'AbuseFilterHooks::onAbortMove';
@@ -68,8 +63,6 @@ $wgHooks['ArticleDelete'][] = 'AbuseFilterHooks::onArticleDelete';
 $wgHooks['RecentChange_save'][] = 'AbuseFilterHooks::onRecentChangeSave';
 $wgHooks['ListDefinedTags'][] = 'AbuseFilterHooks::onListDefinedTags';
 $wgHooks['LoadExtensionSchemaUpdates'][] = 'AbuseFilterHooks::onLoadExtensionSchemaUpdates';
-$wgHooks['ContributionsToolLinks'][] = 'AbuseFilterHooks::onContributionsToolLinks';
-$wgHooks['UploadVerification'][] = 'AbuseFilterHooks::onUploadVerification';
 
 $wgAvailableRights[] = 'abusefilter-modify';
 $wgAvailableRights[] = 'abusefilter-log-detail';
@@ -106,7 +99,7 @@ $wgAjaxExportList[] = 'AbuseFilter::ajaxGetFilter';
 $wgAjaxExportList[] = 'AbuseFilter::ajaxCheckFilterWithVars';
 
 // Bump the version number every time you change any of the .css/.js files
-$wgAbuseFilterStyleVersion = 9;
+$wgAbuseFilterStyleVersion = 8;
 
 $wgAbuseFilterRestrictedActions = array( 'block', 'degroup' );
 
@@ -114,10 +107,3 @@ $wgAbuseFilterRestrictedActions = array( 'block', 'degroup' );
 $wgAbuseFilterUDPPrefix = 'abusefilter:';
 $wgAbuseFilterUDPAddress = null;
 $wgAbuseFilterUDPPort = null;
-
-// Centralised filters
-$wgAbuseFilterCentralDB = null;
-$wgAbuseFilterIsCentral = false;
-
-// Block duration
-$wgAbuseFilterBlockDuration = 'indefinite';

@@ -358,9 +358,13 @@
 					css[props] = val;
 					props = css;					
 				}
-				json = player._api().fp_css(name, props);
-				extend(self, json);
-				return self;
+				try{
+					json = player._api().fp_css(name, props);
+					extend(self, json);
+					return self;
+				}catch(e){
+					js_log('flow player could not set css: ' + json);
+				}
 			},
 			
 			show: function() {
@@ -693,8 +697,12 @@ function Player(wrapper, params, conf) {
 			
 			self[name] = function(arg) {
 				if (!api) { return self; }
-				var ret = (arg === undefined) ? api["fp_" + name]() : api["fp_" + name](arg);
-				return ret == 'undefined' ? self : ret;
+				try{
+					var ret = (arg === undefined) ? api["fp_" + name]() : api["fp_" + name](arg);
+					return ret == 'undefined' ? self : ret;
+				}catch (e){
+					js_log('flowplayer could not access fp_ '+ name);
+				}
 			};			 
 		}
 	); 		
@@ -1547,6 +1555,7 @@ var flashEmbed = {
 	old_pid:0,
 	didSeekJump:false,
 	startedTimedPlayback:false,		
+	didDateStartTimeRestore:false,
     supports: {
     	'play_head':true, 
 	    'pause':true,
@@ -1579,8 +1588,7 @@ var flashEmbed = {
     postEmbedJS: function()
     {   
     	var _this = this;
-    	js_log('embedFlow: uri:'+ _this.media_element.selected_source.getURI(this.seek_time_sec)
-    			 +"\n"+ mv_embed_path + 'flowplayer/flowplayer-3.0.1.swf' ) ;
+    	js_log('embedFlow: uri:'+ _this.media_element.selected_source.getURI(this.seek_time_sec) + "\n"+ mv_embed_path + 'flowplayer/flowplayer-3.0.1.swf' ) ;
     	var flowConfig = { 
 		    clip: { 
 		        url: _this.media_element.selected_source.getURI(this.seek_time_sec), 		         
@@ -1598,10 +1606,15 @@ var flashEmbed = {
 				   right:'0px'
 				}	     		
     		},
-			screen: {
-				opacity: 0.2
-			}    	
+    		screen: {
+    			opacity : '1.0'
+    		}			
     	};
+    	
+    	//if in preview mode set grey and lower volume until "ready"
+    	if( this.preview_mode ){
+    		flowConfig.screen.opacity = 0.2;    	    	 
+    	}    	    	    
     	
 		$f(this.pid,  mv_embed_path + 'flowplayer/flowplayer-3.0.1.swf', flowConfig);    	    	  
 		//get the this.fla value: 		
@@ -1612,10 +1625,8 @@ var flashEmbed = {
     	})
     	this.fla.onResume( function(){
     		_this.parent_play();	//update the interface    
-    	});
-    	//hide by default (untill its ready) 
-    	this.fla.setVolume(0);
-    	
+    	});	    	    
+    	   
     	//start monitor: 
     	this.monitor();  
     	this.old_pid++;
@@ -1629,12 +1640,12 @@ var flashEmbed = {
             this.fla.play();			
             
             //on a resume make sure volume and opacity are correct 
-            this.fla.setVolume(90);
-        	$f().getPlugin('screen').css({'opacity':'1.0'}); 
+            this.restorePlayer(); 
         				
 			setTimeout('$j(\'#'+this.id+'\').get(0).monitor()', 250);
     	}
     },
+    //@@todo support mute
     toggleMute: function(){
     	parent_toggleMute();
     	this.getFLA();
@@ -1666,8 +1677,7 @@ var flashEmbed = {
 		    			this.fla.pause();  
 		    			
 		    			//restore volume and opacity 
-		    			this.fla.setVolume(90);
-        				$f().getPlugin('screen').css({'opacity':'1.0'});    	  	
+		    			this.restorePlayer(); 	  	
 		    		}
 		    	}
 	    	}
@@ -1676,33 +1686,47 @@ var flashEmbed = {
     monitor : function()
     {        	
     	var _this = this;
-    	//do monitor update: 
-	    if( ! this.monitorTimerId ){
-	    	if( $j('#'+this.id).length != 0 )	    
-	        	this.monitorTimerId = window.setInterval('$j(\'#'+_this.id+'\').get(0).monitor()', 250);	        
-	    }
-	    //set the start & end ntp
-		var end_ntp = (this.media_element.selected_source.end_ntp)?
-							this.media_element.selected_source.end_ntp : seconds2ntp(0);	
-		var start_ntp =  this.media_element.selected_source.start_ntp;
+    	//date time
+    	if( !this.dateStartTime ){
+    		var d = new Date();
+    		this.dateStartTime = d.getTime();
+    		
+    	}else{
+    		var d = new Date(); 	        			
+    		if( !this.didDateStartTimeRestore  && this.preview_mode)
+    			this.fla.setVolume(0);
+    			
+    		if( (d.getTime() - this.dateStartTime) > 6000  && !this.didDateStartTimeRestore){
+    			js_log('more than 6 seconds have passed since first monitor call issue restore');    			
+    			this.restorePlayer(); 
+    		}
+    	}      	    	    
 		              
         var flash_state = this.fla.getStatus();
+		//update the duration from the clip if its zero or not set: 
+		if( !this.duration || this.duration==0 ){
+			if( this.fla.getClip() ){
+				this.duration = this.fla.getClip().fullDuration;				
+				js_log('set duration via clip value: ' + this.getDuration() );
+			}
+		}
+		//update the duration ntp values: 
+		this.getDuration();		
+
         if( typeof flash_state == 'undefined' ){
         	 var flash_state = {
         	 	"time" : this.fla.getTime()
         	 };        	     
         	//we are not getting buffered data restore volume and opacity
-        	this.fla.setVolume(90);
-        	$f().getPlugin('screen').css({'opacity':'1.0'});    	
-        	     	
+        	this.restorePlayer();  	        	     	
         }else{
 	        //simplification of buffer state ... should move to support returning time rages like:
 	        //http://www.whatwg.org/specs/web-apps/current-work/#normalized-timeranges-object        	
 	        this.bufferedPercent = flash_state.bufferEnd / this.getDuration();	        	        	        
         }               
-        //set the current Time (based on timeFormat)
+        //set the current Time (based on timeFormat)        
         if( this.media_element.selected_source.timeFormat =='anx' ){
-        	this.currentTime = flash_state.time;
+        	this.currentTime = flash_state.time;        	  
         	//js_log('set buffer: ' + flash_state.bufferEnd + ' at time: ' + flash_state.time +' of total dur: ' + this.getDuration()); 
         }else{
         	this.currentTime = flash_state.time + this.media_element.selected_source.start_offset;        	        	
@@ -1713,47 +1737,58 @@ var flashEmbed = {
         	} 
         }                  
 		
-        if(this.currentTime > ntp2seconds(start_ntp) && !this.startedTimedPlayback){
-        	this.startedTimedPlayback=true;        	
-        	js_log("time is "+ this.currentTime + " started playback");    
-        	this.fla.setVolume(90);
-        	$f().getPlugin('screen').css({'opacity':'1.0'});    	
+        if(this.currentTime > ntp2seconds(this.start_ntp) && !this.startedTimedPlayback){
+        	var fail = false;
+        	try
+			{
+				this.restorePlayer();	        	
+			}
+			catch(err)
+			{
+				js_log('failed to set values');
+				fail = true;
+			}
+        	if(!fail)
+        		this.startedTimedPlayback=true;             		   	         	
         }
+        
         /* to support local seeks */
 		if(this.currentTime > 1 && this.seek_time_sec != 0 && !this.supportsURLTimeEncoding() )
 		{
 			js_log('flashEmbed: _local_ Seeking to ' + this.seek_time_sec);
 			this.fla.seek( this.seek_time_sec );
 			this.seek_time_sec = 0;
-		}
-        
-        //flash is giving bogus duration get from "this" (if available)
-		/*if(!this.media_element.selected_source.end_ntp  && this.fla.getDuration()>0)
-				this.media_element.selected_source.setDuration(this.fla.getDuration());
-		*/       
-		
-        if(!this.userSlide){			   		       		
-	        if((this.currentTime - ntp2seconds(start_ntp)) < 0){
-	        	this.setStatus('buffering...');
-	        	this.fla.setVolume(0);
-	        }else{        			   		       		
-		       	this.setStatus( seconds2ntp(this.currentTime) + '/' + end_ntp);      		
-		        this.setSliderValue((this.currentTime - ntp2seconds(start_ntp)) / (ntp2seconds(end_ntp)-ntp2seconds(start_ntp)) );
-	        }
-        }        
+		}        		        
         
         //checks to see if we reached the end of playback:	    	    
-        if(this.startedTimedPlayback && 
-        	( 	this.currentTime > (ntp2seconds(end_ntp)+1) 
+        if(this.duration && this.startedTimedPlayback && 
+        	( 	this.currentTime > (ntp2seconds(this.end_ntp)+1) 
         		|| 
-        		( this.currentTime > (ntp2seconds(end_ntp)-1) 
+        		( this.currentTime > (ntp2seconds(this.end_ntp)-1) 
         			&& this.prevTime == this.currentTime) )
         	){        		        	
-        	js_log('probbaly reached end of stream: '+this.currentTime);
+        	js_log('prbally reached end of stream: '+this.currentTime);
         	this.onClipDone();         	     
         }	    
+        
+        //update the status and check timmer via universal parent monitor
+        this.parent_monitor();
+        
+        
 	    this.prevTime = this.currentTime;    
-	    //js_log('cur perc loaded: ' + this.fla.getPercentLoaded() +' cur time : ' + (this.currentTime - ntp2seconds(start_ntp)) +' / ' +(ntp2seconds(end_ntp)-ntp2seconds(start_ntp)));
+	    //js_log('cur perc loaded: ' + this.fla.getPercentLoaded() +' cur time : ' + (this.currentTime - ntp2seconds(this.start_ntp)) +' / ' +(ntp2seconds(this.end_ntp)-ntp2seconds(this.start_ntp)));
+    },
+    restorePlayer:function(){    	
+    	if(!this.fla)
+    		this.getFLA();
+    	if(this.fla){
+    		js_log('f:do restorePlayer');
+    		this.fla.setVolume(90); 
+	    	$f().getPlugin('screen').css({'opacity':'1.0'} );  
+	    
+	    	//set the fallback date restore flag to true:
+	    	this.didDateStartTimeRestore=true;
+	    }
     },
     // get the embed fla object 
     getFLA : function (){

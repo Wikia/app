@@ -1,21 +1,19 @@
 <?php
 /**
  * A special page with the interface for blocking, viewing and unblocking
- * user names and IP addresses
+ * user names and IP addresses.
  *
  * @file
  * @ingroup Extensions
- * @author Bartek Łapiński <bartek at wikia-inc.com>, Piotr Molski <moli at wikia-inc.com>
- * @copyright Copyright © 2007, Wikia Inc.
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
-*/
+ */
 
 /**
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if( !defined('MEDIAWIKI') )
-	die();
+if( !defined( 'MEDIAWIKI' ) ){
+	die( "This is not a valid entry point.\n" );
+}
 
 class RegexBlockForm extends SpecialPage {
 	var $mRegexUnblockedAddress;
@@ -36,7 +34,7 @@ class RegexBlockForm extends SpecialPage {
 		$this->mFilter = $this->mRegexFilter = '';
 		$this->mError = $this->mMsg = '';
 		parent::__construct( 'RegexBlock'/*class*/, 'regexblock'/*restriction*/ );
-		wfLoadExtensionMessages('RegexBlock');
+		wfLoadExtensionMessages( 'RegexBlock' );
 	}
 
 	/**
@@ -68,7 +66,7 @@ class RegexBlockForm extends SpecialPage {
 		// Initial output
 		$this->mTitle = $this->getTitle();
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
-		$wgOut->setPageTitle( wfMsg('regexblock-page-title') );
+		$wgOut->setPageTitle( wfMsg( 'regexblock-page-title' ) );
 		$wgOut->setArticleRelated( false );
 
 		$this->mPosted = $wgRequest->wasPosted();
@@ -97,27 +95,27 @@ class RegexBlockForm extends SpecialPage {
 				$wgOut->setSubTitle( wfMsg( 'regexblock-unblock-success' ) );
 				$this->mMsg = wfMsgWikiHtml( 'regexblock-unblock-log', array( htmlspecialchars( $wgRequest->getVal( 'ip' ) ) ) );
 				break;
-			case 'failure_unblock': 
+			case 'failure_unblock':
 				$this->mError = wfMsgWikiHtml( 'regexblock-unblock-error', array( htmlspecialchars( $wgRequest->getVal( 'ip' ) ) ) );
 				break;
 			case 'stats':
 				$blckid = $wgRequest->getVal( 'blckid' );
-				$this->showStatsList($blckid);
-				break;	
-			case 'submit':			
-   				if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
-   					$this->mAction = $this->doSubmit();
+				$this->showStatsList( $blckid );
+				break;
+			case 'submit':
+				if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) ) ) {
+					$this->mAction = $this->doSubmit();
 				}
 				break;
-			case 'delete': 
+			case 'delete':
 				$this->deleteFromRegexBlockList();
 				break;
 		}
 
 		if ( !in_array( $this->mAction, array( 'submit', 'stats' ) ) ) {
 			$this->showForm();
-			unset($this->mError);
-			unset($this->mMsg);
+			unset( $this->mError );
+			unset( $this->mMsg );
 			$this->showRegexList();
 		}
 	}
@@ -128,7 +126,7 @@ class RegexBlockForm extends SpecialPage {
 	private function showForm() {
 		global $wgOut, $wgUser, $wgRequest;
 		wfProfileIn( __METHOD__ );
-   
+
 		$token = htmlspecialchars( $wgUser->editToken() );
 		$action = $this->mTitle->escapeLocalURL( "action=submit&".$this->makeListUrlParams() );
 		$err = $this->mError;
@@ -138,62 +136,69 @@ class RegexBlockForm extends SpecialPage {
 		$regexBlockAddress = ( empty( $this->mRegexBlockedAddress ) && ( $wgRequest->getVal( 'ip' ) != null ) &&
 			( $wgRequest->getVal( 'action' ) == null ) ) ? $wgRequest->getVal( 'ip' ) : $this->mRegexBlockedAddress;
 
-		$wgOut->addHTML('<div style="float:left; clear:both; margin-left: auto; margin-right:auto">');
+		$wgOut->addHTML( '<div style="float:left; clear:both; margin-left: auto; margin-right:auto">' );
 		if ( '' != $err ) {
 			$wgOut->setSubtitle( wfMsgHtml( 'formerror' ) );
-			$wgOut->addHTML('<h2 class="errorbox">'.$this->mError.'</h2>');
+			$wgOut->addHTML( '<h2 class="errorbox">'.$this->mError.'</h2>' );
 		} elseif ( $msg != '' ) {
-			$wgOut->addHTML('<h2 class="successbox">'.$this->mMsg.'</h2>');
+			$wgOut->addHTML( '<h2 class="successbox">'.$this->mMsg.'</h2>' );
 		}
-		$wgOut->addHTML('</div><div style="clear:both; width:auto;">'.wfMsgExt('regexblock-help', 'parse').'</div>
-		<fieldset style="width:90%; margin:auto;" align="center"><legend>'.wfMsg('regexblock-form-submit').'</legend>
+		$wgOut->addHTML('</div>
+		<div style="clear:both; width:auto;">'.wfMsgExt( 'regexblock-help', 'parse' ).'</div>
+		<fieldset style="width:90%; margin:auto;" align="center">
+			<legend>'.wfMsg( 'regexblock-form-submit' ).'</legend>
 		<form name="regexblock" method="post" action="'.$action.'">
 		<table border="0">
-		<tr>
-		<td align="right">'.wfMsg('regexblock-form-username').'</td>
-		<td align="left">
-			<input tabindex="1" name="wpRegexBlockedAddress" id="wpRegexBlockedAddress" size="40" value="'.$regexBlockAddress.'" style="border: 1px solid #2F6FAB;" />
-		</td>
-		</tr>
-		<tr>
-		<td align="right">'.ucfirst( wfMsg('regexblock-form-reason') ).'</td>
-		<td align="left">
-			<input tabindex="2" name="wpRegexBlockedReason" id="wpRegexBlockedReason" size="40" value="'.$this->mRegexBlockedReason.'" style="border: 1px solid #2F6FAB;" />
-		</td>
-		</tr>
-		<tr>
-		<td align="right">'.ucfirst( wfMsg('regexblock-form-expiry') ).'</td>
-		<td align="left">
-			<select name="wpRegexBlockedExpire" id="wpRegexBlockedExpire" tabindex="3" style="border: 1px solid #2F6FAB;">'."\n");
+			<tr>
+				<td align="right">'.wfMsg( 'regexblock-form-username' ).'</td>
+				<td align="left">
+					<input tabindex="1" name="wpRegexBlockedAddress" id="wpRegexBlockedAddress" size="40" value="'.$regexBlockAddress.'" style="border: 1px solid #2F6FAB;" />
+				</td>
+			</tr>
+			<tr>
+				<td align="right">'.wfMsg( 'regexblock-form-reason' ).'</td>
+				<td align="left">
+					<input tabindex="2" name="wpRegexBlockedReason" id="wpRegexBlockedReason" size="40" value="'.$this->mRegexBlockedReason.'" style="border: 1px solid #2F6FAB;" />
+				</td>
+			</tr>
+			<tr>
+				<td align="right">'.wfMsg( 'regexblock-form-expiry' ).'</td>
+				<td align="left">
+				<select name="wpRegexBlockedExpire" id="wpRegexBlockedExpire" tabindex="3" style="border: 1px solid #2F6FAB;">'."\n");
 		foreach( $expiries as $k => $v ) {
-			$selected = htmlspecialchars( ($k == $this->mRegexBlockedExpire) ) ? ' selected="selected"' : '';
-			$wgOut->addHTML('<option value="'.htmlspecialchars($v).'"'.$selected.'>'.htmlspecialchars($v).'</option>');
+			$selected = htmlspecialchars( ( $k == $this->mRegexBlockedExpire ) ) ? ' selected="selected"' : '';
+			$wgOut->addHTML('<option value="'.htmlspecialchars( $v ).'"'.$selected.'>'.htmlspecialchars( $v ).'</option>');
 		}
-		$wgOut->addHTML('</select>');
-		$checkExact = htmlspecialchars( ($this->mRegexBlockedExact) ) ? 'checked="checked"' : '';
-		$checkCreation = htmlspecialchars( ($this->mRegexBlockedCreation) ) ? 'checked="checked"' : '';
-		$wgOut->addHTML('</td></tr>
-						<tr>
-						<td align="right">&nbsp;</td>
-						<td align="left">
-							<input type="checkbox" tabindex="4" name="wpRegexBlockedExact" id="wpRegexBlockedExact" value="1" '.$checkExact.' />
-							<label for="wpRegexBlockedExact">'. ucfirst( wfMsg('regexblock-form-match') ) .'</label>
-						</td></tr>
-						<tr>
-						<td align="right">&nbsp;</td>
-						<td align="left">
-							<input type="checkbox" tabindex="5" name="wpRegexBlockedCreation" id="wpRegexBlockedCreation" value="1" '.$checkCreation.' />
-							<label for="wpRegexBlockedCreation">'.wfMsg('regexblock-form-account-block').'</label>
-						</td></tr>
-						<tr>
-						<td align="right">&nbsp;</td>
-						<td align="left">
-							<input tabindex="6" name="wpRegexBlockedSubmit" type="submit" value="'.wfMsg('regexblock-form-submit').'" style="color:#2F6FAB;" />
-						</td></tr></table>
-						<input type="hidden" name="wpEditToken" value="'.$token.'" />
-						</form>
-						</fieldset>
-						<br />');
+		$wgOut->addHTML( '</select>' );
+		$checkExact = htmlspecialchars( ( $this->mRegexBlockedExact ) ) ? 'checked="checked"' : '';
+		$checkCreation = htmlspecialchars( ( $this->mRegexBlockedCreation ) ) ? 'checked="checked"' : '';
+		$wgOut->addHTML('</td>
+			</tr>
+			<tr>
+				<td align="right">&nbsp;</td>
+				<td align="left">
+						<input type="checkbox" tabindex="4" name="wpRegexBlockedExact" id="wpRegexBlockedExact" value="1" '.$checkExact.' />
+						<label for="wpRegexBlockedExact">'. wfMsg( 'regexblock-form-match' ) .'</label>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">&nbsp;</td>
+				<td align="left">
+					<input type="checkbox" tabindex="5" name="wpRegexBlockedCreation" id="wpRegexBlockedCreation" value="1" '.$checkCreation.' />
+					<label for="wpRegexBlockedCreation">'.wfMsg( 'regexblock-form-account-block' ).'</label>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">&nbsp;</td>
+				<td align="left">
+					<input tabindex="6" name="wpRegexBlockedSubmit" type="submit" value="'.wfMsg( 'regexblock-form-submit' ).'" style="color:#2F6FAB;" />
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="wpEditToken" value="'.$token.'" />
+		</form>
+		</fieldset>
+		<br />');
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -201,7 +206,7 @@ class RegexBlockForm extends SpecialPage {
 	 * Show the list of regex blocks - current and expired, along with some controls (unblock, statistics, etc.)
 	 */
 	private function showRegexList() {
-		global $wgOut, $wgRequest, $wgMemc, $wgLang, $wgUser, $wgContLang;
+		global $wgOut, $wgLang, $wgUser, $wgContLang;
 
 		wfProfileIn( __METHOD__ );
 
@@ -210,66 +215,68 @@ class RegexBlockForm extends SpecialPage {
 
 		$regexData = new RegexBlockData();
 		$this->numResults = $regexData->fetchNbrResults();
-		$filter = 'filter=' . urlencode($this->mFilter) . '&rfilter=' . urlencode($this->mRegexFilter);
+		$filter = 'filter=' . urlencode( $this->mFilter ) . '&rfilter=' . urlencode( $this->mRegexFilter );
 		$pager = wfViewPrevNext( $this->mOffset, $this->mLimit, $wgContLang->specialpage( 'RegexBlock' ), $filter, ($this->numResults - $this->mOffset) <= $this->mLimit );
 
 		/* allow display by specific blockers only */
 		$blockers = $regexData->fetchBlockers();
 		$blocker_list = array();
 		if ( !empty( $blockers ) ) {
-			$blocker_list = $regexData->getBlockersData($this->mFilter, $this->mRegexFilter, $this->mLimit, $this->mOffset);
+			$blocker_list = $regexData->getBlockersData( $this->mFilter, $this->mRegexFilter, $this->mLimit, $this->mOffset );
 		}
 
 		/* make link to statistics */
 		$mSkin = $wgUser->getSkin();
-		$wgOut->addHTML('<br /><b>'.wfMsg('regexblock-currently-blocked').'</b>
-					<p>'.$pager.'</p>
-					<form name="regexlist" method="get" action="'.htmlspecialchars($action).'">
-					'.wfMsg('regexblock-view-blocked').'
-					<select name="filter">
-					<option value="">'.wfMsg('regexblock-view-all').'</option>');
+		$wgOut->addHTML('<br />
+			<b>'.wfMsg( 'regexblock-currently-blocked' ).'</b>
+			<p>'.$pager.'</p>
+			<form name="regexlist" method="get" action="'.htmlspecialchars( $action ).'">
+				'.wfMsg( 'regexblock-view-blocked' ).'
+				<select name="filter">
+					<option value="">'.wfMsg( 'regexblock-view-all' ).'</option>');
 
 		if ( is_array( $blockers ) ) {
 			foreach( $blockers as $id => $blocker ) {
 				$sel = htmlspecialchars( ( $this->mFilter == $blocker ) ) ? ' selected="selected"' : '';
-				$wgOut->addHTML('<option value="'.htmlspecialchars($blocker).'"'. $sel.'>'.htmlspecialchars($blocker).'</option>');
+				$wgOut->addHTML( '<option value="'.htmlspecialchars( $blocker ).'"'. $sel.'>'.htmlspecialchars( $blocker ).'</option>' );
 			}
 		}
 
-		$wgOut->addHTML('</select>&nbsp;'.wfMsg('regexblock-regex-filter').'<input type="text" name="rfilter" id="regex_filter" value="'.$this->mRegexFilter.'" />
-					<input type="submit" value="'.wfMsg('regexblock-view-go').'">
-					</form>
-					<br /><br />');
+		$wgOut->addHTML('</select>&nbsp;'.wfMsg( 'regexblock-regex-filter' ).'
+			<input type="text" name="rfilter" id="regex_filter" value="'.$this->mRegexFilter.'" />
+			<input type="submit" value="'.wfMsg( 'regexblock-view-go' ).'">
+			</form>
+		<br /><br />');
 		if ( !empty( $blockers ) ) {
-			$wgOut->addHTML('<ul>');
+			$wgOut->addHTML( '<ul>' );
 			$loop = 0;
-			$comma = " <b>&#183;</b> "; // the spaces here are intentional
+			$comma = ' <b>&#183;</b> '; // the spaces here are intentional
 			foreach( $blocker_list as $id => $row ) { 
 				$loop++;
 				$color_expire = "%s";
 				if ( 'infinite' == $row['expiry'] ) {
-					$row['expiry'] = wfMsg('regexblock-view-block-infinite');
+					$row['expiry'] = wfMsg( 'regexblock-view-block-infinite' );
 				} else {
 					if ( wfTimestampNow() > $row['expiry'] ) {
 						$color_expire = "<span style=\"color:#DC143C\">%s</span>";
 					}
-					$row['expiry'] = sprintf($color_expire, $wgLang->timeanddate( wfTimestamp( TS_MW, $row['expiry'] ), true ));
+					$row['expiry'] = sprintf( $color_expire, $wgLang->timeanddate( wfTimestamp( TS_MW, $row['expiry'] ), true ) );
 				}
 
-				$exact_match = (($row['exact_match']) ? wfMsg('regexblock-view-match') : wfMsg('regexblock-view-regex'));
-				$create_block = ($row['create_block']) ? wfMsg('regexblock-view-account') : '';
+				$exact_match = ( ( $row['exact_match'] ) ? wfMsg( 'regexblock-view-match' ) : wfMsg( 'regexblock-view-regex' ) );
+				$create_block = ( $row['create_block'] ) ? wfMsg( 'regexblock-view-account' ) : '';
 				$reason = '<i>'.$row['reason'].'</i>';
-				$stats_link = $mSkin->makeKnownLinkObj( $this->mTitle, wfMsg('regexblock-view-stats'), 'action=stats&blckid=' . urlencode($row['blckid']));
+				$stats_link = $mSkin->makeKnownLinkObj( $this->mTitle, wfMsg( 'regexblock-view-stats' ), 'action=stats&blckid=' . urlencode( $row['blckid'] ) );
 
 				$wgOut->addHTML('<li style="border-bottom:1px dashed #778899; padding-bottom:2px;font-size:11px">
 					<b><font style="color:#3B7F07; font-size:12px">'.$row['blckby_name'].'</font>'.$comma.$exact_match.$create_block.'</b>'.$comma.' 
-					('.wfMsg('regexblock-view-block-by').': <b>'.$row['blocker'].'</b>, '.$reason.') '.wfMsg('regexblock-view-time', $row['time']).$comma.' 
-					(<a href="'.$action_unblock.'&ip='.$row['ublock_ip'].'&blocker='.$row['ublock_blocker'].'">'.wfMsg('regexblock-view-block-unblock').'</a>) '.$comma.$row['expiry'].$comma.' ('.$stats_link.')
+					('.wfMsg( 'regexblock-view-block-by' ).' <b>'.$row['blocker'].'</b>, '.$reason.') '.wfMsg( 'regexblock-view-time', $row['time'] ).$comma.' 
+					(<a href="'.$action_unblock.'&ip='.$row['ublock_ip'].'&blocker='.$row['ublock_blocker'].'">'.wfMsg( 'regexblock-view-block-unblock' ).'</a>) '.$comma.$row['expiry'].$comma.' ('.$stats_link.')
 					</li>');
 			}
-			$wgOut->addHTML('</ul><br /><br /><p>'.$pager.'</p>');
+			$wgOut->addHTML( '</ul><br /><br /><p>'.$pager.'</p>' );
 		} else {
-			$wgOut->addWikiMsg('regexblock-view-empty');
+			$wgOut->addWikiMsg( 'regexblock-view-empty' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -290,27 +297,27 @@ class RegexBlockForm extends SpecialPage {
 
 	/* On submit */
 	private function doSubmit() {
-		global $wgOut, $wgUser, $wgMemc;
+		global $wgOut, $wgUser;
 
 		wfProfileIn( __METHOD__ );
 
 		/* empty name */
-		if ( strlen($this->mRegexBlockedAddress) == 0 ) {
-			$this->mError = wfMsg('regexblock-form-submit-empty');
+		if ( strlen( $this->mRegexBlockedAddress ) == 0 ) {
+			$this->mError = wfMsg( 'regexblock-form-submit-empty' );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		/* castrate regexes */
-		if ( RegexBlockData::isValidRegex($this->mRegexBlockedAddress) ) {
-			$this->mError = wfMsg('regexblock-form-submit-regex');
+		if ( RegexBlockData::isValidRegex( $this->mRegexBlockedAddress ) ) {
+			$this->mError = wfMsg( 'regexblock-form-submit-regex' );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		/* check expiry */
-		if ( strlen($this->mRegexBlockedExpire) == 0 ) {
-			$this->mError = wfMsg('regexblock-form-submit-expiry');
+		if ( strlen( $this->mRegexBlockedExpire ) == 0 ) {
+			$this->mError = wfMsg( 'regexblock-form-submit-expiry' );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -324,16 +331,16 @@ class RegexBlockForm extends SpecialPage {
 			}
 			$expiry = wfTimestamp( TS_MW, $expiry );
 		} else {
-			$expiry = $this->mRegexBlockedExpire;	
+			$expiry = $this->mRegexBlockedExpire;
 		}
 
-		$result = RegexBlockData::blockUser($this->mRegexBlockedAddress, $expiry, $this->mRegexBlockedExact, $this->mRegexBlockedCreation, $this->mRegexBlockedReason);
+		$result = RegexBlockData::blockUser( $this->mRegexBlockedAddress, $expiry, $this->mRegexBlockedExact, $this->mRegexBlockedCreation, $this->mRegexBlockedReason );
 		/* clear memcached */
 		$uname = $wgUser->getName();
-		RegexBlock::unsetKeys($this->mRegexBlockedAddress);
+		RegexBlock::unsetKeys( $this->mRegexBlockedAddress );
 
 		wfProfileOut( __METHOD__ );
-		
+
 		/* redirect */
 		$wgOut->redirect( $this->mTitle->getFullURL( 'action=success_block&ip=' .urlencode( $this->mRegexBlockedAddress )."&".$this->makeListUrlParams() ) );
 
@@ -344,7 +351,7 @@ class RegexBlockForm extends SpecialPage {
 	 * Remove name or address from list - without confirmation
 	 */
 	private function deleteFromRegexBlockList() {
-		global $wgOut, $wgRequest, $wgMemc, $wgUser;
+		global $wgOut, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
 
@@ -373,35 +380,45 @@ class RegexBlockForm extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 
-		$action = $this->mTitle->escapeLocalURL( $this->makeListUrlParams(true) );
+		$action = $this->mTitle->escapeLocalURL( $this->makeListUrlParams( true ) );
 		$skin = $wgUser->getSkin();
 
 		$regexData = new RegexBlockData();
-		$this->numStatResults = $regexData->fetchNbrStatResults($blckid);
-		$filter = 'action=stats&filter=' . urlencode($this->mFilter) . '&blckid=' . urlencode($blckid);
-		$pager = wfViewPrevNext($this->mOffset, $this->mLimit, $wgContLang->specialpage( 'RegexBlock' ), $filter, ($this->numStatResults - $this->mOffset) <= $this->mLimit );
+		$this->numStatResults = $regexData->fetchNbrStatResults( $blckid );
+		$filter = 'action=stats&filter=' . urlencode( $this->mFilter ) . '&blckid=' . urlencode( $blckid );
+		$pager = wfViewPrevNext( $this->mOffset, $this->mLimit, $wgContLang->specialpage( 'RegexBlock' ), $filter, ($this->numStatResults - $this->mOffset) <= $this->mLimit );
 
 		/* allow display by specific blockers only */
-		$blockInfo = $regexData->getRegexBlockById($blckid);
+		$blockInfo = $regexData->getRegexBlockById( $blckid );
 		$stats_list = array();
 		if ( !empty( $blockInfo ) && ( is_object( $blockInfo ) ) ) {
-			$stats_list = $regexData->getStatsData($blckid, $this->mLimit, $this->mOffset);
+			$stats_list = $regexData->getStatsData( $blckid, $this->mLimit, $this->mOffset );
 		}
 
-		$blocker_link = $skin->makeKnownLinkObj( $this->mTitle, $blockInfo->blckby_blocker, 'filter=' . urlencode($blockInfo->blckby_blocker) );
-		$blockername_link = $skin->makeKnownLinkObj( $this->mTitle, $blockInfo->blckby_name, 'rfilter=' . urlencode($blockInfo->blckby_name) );
+		$blocker_link = $skin->makeKnownLinkObj( $this->mTitle, $blockInfo->blckby_blocker, 'filter=' . urlencode( $blockInfo->blckby_blocker ) );
+		$blockername_link = $skin->makeKnownLinkObj( $this->mTitle, $blockInfo->blckby_name, 'rfilter=' . urlencode( $blockInfo->blckby_name ) );
+		$blockReason = ( $blockInfo->blckby_reason ) ? wfMsg( 'regexblock-form-reason' ) . $blockInfo->blckby_reason : wfMsg( 'regexblock-view-reason-default' );
 
-		$wgOut->addHTML('<h5>'.wfMsg('regexblock-stats-title').' <strong> '.$blockername_link.'</strong> ('.wfMsg('regexblock-view-block-by').': <b>'.$blocker_link.'</b>,&nbsp;<i>'.( ($blockInfo->blckby_reason) ? wfMsg('regexblock-form-reason') . $blockInfo->blckby_reason : wfMsg('regexblock-view-reason-default') ).'</i>)</h5><br />');
+		$wgOut->addHTML( '<h5>'.wfMsg( 'regexblock-stats-title' ).' <strong> '.$blockername_link.'</strong> ('.wfMsg( 'regexblock-view-block-by' ).' <b>'.$blocker_link.'</b>,&nbsp;<i>'. $blockReason .'</i>)</h5><br />' );
 		if ( !empty( $stats_list ) ) {
-			$wgOut->addHTML('<p>'.$pager.'</p><br /><ul>');
+			$wgOut->addHTML( '<p>'.$pager.'</p><br /><ul>' );
 			foreach( $stats_list as $id => $row ) {
 				$wgOut->addHTML('<li style="border-bottom:1px dashed #778899; padding-bottom:2px;font-size:11px">
-					'.wfMsg('regexblock-match-stats-record', array($row->stats_match, $row->stats_user, htmlspecialchars($row->stats_dbname), $wgLang->timeanddate( wfTimestamp( TS_MW, $row->stats_timestamp ), true ), $row->stats_ip) ).'
+					'.wfMsg( 'regexblock-match-stats-record',
+						array(
+							$row->stats_match,
+							$row->stats_user,
+							htmlspecialchars( $row->stats_dbname ),
+							$wgLang->timeanddate( wfTimestamp( TS_MW, $row->stats_timestamp ), true ),
+							$row->stats_ip
+						)
+					).'
 					</li>');
 			}
-			$wgOut->addHTML('</ul><br /><p>'.$pager.'</p>');
+			$wgOut->addHTML( '</ul><br />
+				<p>'.$pager.'</p>' );
 		} else {
-			$wgOut->addWikiMsg('regexblock-nodata-found');
+			$wgOut->addWikiMsg( 'regexblock-nodata-found' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -437,17 +454,17 @@ class RegexBlockData {
 		if ( empty( $cached ) ) {
 			$dbr = RegexBlock::getDB( DB_MASTER );
 
-			$oRes = $dbr->select( REGEXBLOCK_TABLE,
-				array("COUNT(*) AS cnt"),
-				array("blckby_blocker <> ''"), 
+			$res = $dbr->select( REGEXBLOCK_TABLE,
+				array( 'COUNT(*) AS cnt' ),
+				array( "blckby_blocker <> ''" ), 
 				__METHOD__
 			);
 
-			if ( $oRow = $dbr->fetchObject( $oRes ) ) {
-				$this->mNbrResults = $oRow->cnt;
+			if ( $row = $dbr->fetchObject( $res ) ) {
+				$this->mNbrResults = $row->cnt;
 			}
-			$dbr->freeResult($oRes);
-			$wgMemc->set($key, $this->mNbrResults, REGEXBLOCK_EXPIRE);
+			$dbr->freeResult( $res );
+			$wgMemc->set( $key, $this->mNbrResults, REGEXBLOCK_EXPIRE );
 		} else {
 			$this->mNbrResults = $cached;
 		}
@@ -478,7 +495,7 @@ class RegexBlockData {
 	 * @return $blocker_list
 	 */
 	public function getBlockersData( $current = '', $username = '', $limit, $offset ) {
-		global $wgLang, $wgUser;
+		global $wgLang;
 
 		wfProfileIn( __METHOD__ );
 
@@ -495,34 +512,34 @@ class RegexBlockData {
 			$conds = array("blckby_name LIKE {$dbr->addQuotes('%'.$username.'%')}");
 		}
 
-		$oRes = $dbr->select( REGEXBLOCK_TABLE,
-			array("blckby_id, blckby_name, blckby_blocker, blckby_timestamp, blckby_expire, blckby_create, blckby_exact, blckby_reason"),
+		$res = $dbr->select( REGEXBLOCK_TABLE,
+			array( 'blckby_id', 'blckby_name', 'blckby_blocker', 'blckby_timestamp', 'blckby_expire', 'blckby_create', 'blckby_exact', 'blckby_reason' ),
 			$conds,
 			__METHOD__,
-			array("LIMIT" => $limit, "OFFSET" => $offset, "ORDER BY" => "blckby_id desc")
+			array( 'LIMIT' => $limit, 'OFFSET' => $offset, 'ORDER BY' => 'blckby_id DESC' )
 		);
 
-		while( $oRow = $dbr->fetchObject($oRes) ) {
-			$ublock_ip = urlencode($oRow->blckby_name);
-			$ublock_blocker = urlencode($oRow->blckby_blocker);
-			$reason = ($oRow->blckby_reason) ? wfMsg('regexblock-form-reason') . $oRow->blckby_reason : wfMsg('regexblock-view-reason-default');
-			$time = $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->blckby_timestamp ), true );
+		while( $row = $dbr->fetchObject( $res ) ) {
+			$ublock_ip = urlencode( $row->blckby_name );
+			$ublock_blocker = urlencode( $row->blckby_blocker );
+			$reason = ( $row->blckby_reason ) ? wfMsg( 'regexblock-form-reason' ) . $row->blckby_reason : wfMsg( 'regexblock-view-reason-default' );
+			$time = $wgLang->timeanddate( wfTimestamp( TS_MW, $row->blckby_timestamp ), true );
 
 			/* put data to array */
 			$blocker_list[] = array(
-				'blckby_name' => $oRow->blckby_name,
-				'exact_match' => $oRow->blckby_exact,
-				'create_block' => $oRow->blckby_create,
-				'blocker' => $oRow->blckby_blocker,
+				'blckby_name' => $row->blckby_name,
+				'exact_match' => $row->blckby_exact,
+				'create_block' => $row->blckby_create,
+				'blocker' => $row->blckby_blocker,
 				'reason' => $reason,
 				'time' => $time,
 				'ublock_ip'	=> $ublock_ip,
 				'ublock_blocker' => $ublock_blocker,
-				'expiry' => $oRow->blckby_expire,
-				'blckid' => $oRow->blckby_id
+				'expiry' => $row->blckby_expire,
+				'blckid' => $row->blckby_id
 			);
 		}
-		$dbr->freeResult($oRes);
+		$dbr->freeResult( $res );
 
 		wfProfileOut( __METHOD__ );
 		return $blocker_list;
@@ -539,16 +556,16 @@ class RegexBlockData {
 		$nbrStats = 0;
 
 		$dbr = RegexBlock::getDB( DB_SLAVE );
-		$oRes = $dbr->select( REGEXBLOCK_STATS_TABLE,
-			array("COUNT(*) AS cnt"),
-			array("stats_blckby_id = '".intval($id)."'"),
+		$res = $dbr->select( REGEXBLOCK_STATS_TABLE,
+			array( 'COUNT(*) AS cnt' ),
+			array( 'stats_blckby_id' => intval( $id ) ),
 			__METHOD__
 		);
 
-		if ( $oRow = $dbr->fetchObject($oRes) ) {
-			$nbrStats = $oRow->cnt;
+		if ( $row = $dbr->fetchObject( $res ) ) {
+			$nbrStats = $row->cnt;
 		}
-		$dbr->freeResult($oRes);
+		$dbr->freeResult( $res );
 
 		wfProfileOut( __METHOD__ );
 		return $nbrStats;
@@ -568,18 +585,17 @@ class RegexBlockData {
 
 		/* from database */
 		$dbr = RegexBlock::getDB( DB_SLAVE );
-		$conds = array("stats_blckby_id = '".intval($id)."'");
-		$oRes = $dbr->select( REGEXBLOCK_STATS_TABLE,
-			array("stats_blckby_id", "stats_user", "stats_blocker", "stats_timestamp", "stats_ip", "stats_match", "stats_dbname"),
-			$conds,
+		$res = $dbr->select( REGEXBLOCK_STATS_TABLE,
+			array( 'stats_blckby_id', 'stats_user', 'stats_blocker', 'stats_timestamp', 'stats_ip', 'stats_match', 'stats_dbname' ),
+			array( 'stats_blckby_id' => intval( $id ) ),
 			__METHOD__,
-			array("LIMIT" => $limit, "OFFSET" => $offset, "ORDER BY" => "stats_timestamp DESC")
+			array( 'LIMIT' => $limit, 'OFFSET' => $offset, 'ORDER BY' => 'stats_timestamp DESC' )
 		);
 
-		while( $oRow = $dbr->fetchObject($oRes) ) {
-			$stats[] = $oRow;
+		while( $row = $dbr->fetchObject( $res ) ) {
+			$stats[] = $row;
 		}
-		$dbr->freeResult($oRes);
+		$dbr->freeResult( $res );
 
 		wfProfileOut( __METHOD__ );
 		return $stats;
@@ -596,16 +612,16 @@ class RegexBlockData {
 		$record = null;
 
 		$dbr = RegexBlock::getDB( DB_MASTER );
-		$oRes = $dbr->select( REGEXBLOCK_TABLE,
-			array("blckby_id", "blckby_name", "blckby_blocker", "blckby_timestamp", "blckby_expire", "blckby_create", "blckby_exact", "blckby_reason"),
-			array("blckby_id = '".intval($id)."'"),
+		$res = $dbr->select( REGEXBLOCK_TABLE,
+			array( 'blckby_id', 'blckby_name', 'blckby_blocker', 'blckby_timestamp', 'blckby_expire', 'blckby_create', 'blckby_exact', 'blckby_reason' ),
+			array( 'blckby_id' => intval( $id ) ),
 			__METHOD__
 		);
 
-		if( $oRow = $dbr->fetchObject($oRes) ) {
-			$record = $oRow;
+		if( $row = $dbr->fetchObject( $res ) ) {
+			$record = $row;
 		}
-		$dbr->freeResult($oRes);
+		$dbr->freeResult( $res );
 		
 		wfProfileOut( __METHOD__ );
 		return $record;
@@ -628,7 +644,7 @@ class RegexBlockData {
 		$dbw = RegexBlock::getDB( DB_MASTER );
 		$name = $wgUser->getName();
 
-		$oRes = $dbw->replace( REGEXBLOCK_TABLE,
+		$res = $dbw->replace( REGEXBLOCK_TABLE,
 			array( 'blckby_id', 'blckby_name' ),
 			array(
 				'blckby_id' => 'null',
@@ -636,8 +652,8 @@ class RegexBlockData {
 				'blckby_blocker' => $name, 
 				'blckby_timestamp' => wfTimestampNow(),
 				'blckby_expire' => $expiry,
-				'blckby_exact' => intval($exact),
-				'blckby_create' => intval($creation),
+				'blckby_exact' => intval( $exact ),
+				'blckby_create' => intval( $creation ),
 				'blckby_reason' => $reason
 			),
 			__METHOD__
@@ -653,11 +669,11 @@ class RegexBlockData {
 	 * @return array Array of block expiry times
 	 */
 	static public function getExpireValues() {
-		$expiry_values = explode( ",", wfMsg('regexblock-expire-duration') );
-		$expiry_text = array('1 hour', '2 hours', '4 hours', '6 hours', '1 day', '3 days', '1 week', '2 weeks', '1 month', '3 months', '6 months', '1 year', 'infinite');
+		$expiry_values = explode( ",", wfMsg( 'regexblock-expire-duration' ) );
+		$expiry_text = array( '1 hour', '2 hours', '4 hours', '6 hours', '1 day', '3 days', '1 week', '2 weeks', '1 month', '3 months', '6 months', '1 year', 'infinite' );
 
-		if ( !function_exists('array_combine') ) {
-			function array_combine($a, $b) {
+		if ( !function_exists( 'array_combine' ) ) {
+			function array_combine( $a, $b ) {
 				$out = array();
 				foreach( $a as $k => $v ) {
 					$out[$v] = $b[$k];
@@ -666,7 +682,7 @@ class RegexBlockData {
 			}
 		}
 
-		return array_combine($expiry_text, $expiry_values);
+		return array_combine( $expiry_text, $expiry_values );
 	}
 
 	/**
@@ -676,5 +692,5 @@ class RegexBlockData {
 	 */
 	static function isValidRegex( $text ) {
 		return ( sprintf( "%s", @preg_match("/{$text}/", 'regex') ) === '' );
-	}	
+	}
 }

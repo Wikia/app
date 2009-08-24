@@ -1,11 +1,11 @@
 ABC
 descmsg = abcdesc
-optional = abcsep, abcabc, abcpdf, abcps, abcmidi, abcvorbis
+optional = abcabc, abcpdf, abcps, abcmidi, abcvorbis
 
 Absentee Landlord
 
 Abuse Filter
-optional = abusefilter-history-action, abusefilter-edit-builder-op-bool-xor
+optional = abusefilter-edit-builder-op-bool-xor
 
 Advanced Random
 file = AdvancedRandom/SpecialAdvancedRandom.i18n.php
@@ -17,7 +17,7 @@ Ajax Show Editors
 descmsg = ajax-se-desc
 
 Amazon Plus
-optional = amazonplus-status, amazonplus-status-sep, amazonplus-currency
+optional = amazonplus-status, amazonplus-currency
 optional = amazonplus-cp-usd, amazonplus-cp-cad, amazonplus-cp-gbp, amazonplus-cp-eur
 optional = amazonplus-cp-jpy
 ignored = amazonplus-english
@@ -149,12 +149,14 @@ descmsg = code-desc
 
 Collection
 descmsg = coll-desc
-ignored = coll-template_blacklist_title
+ignored = coll-template_blacklist_title, coll-license_url
 
 Comment Pages
 ignored = commenttab-editintro, commenttab-preload
 
 Comment Spammer
+
+Community Voice
 
 Configure
 optional = configure-section-html, configure-section-ajax
@@ -182,7 +184,6 @@ file = ConfirmEdit/FancyCaptcha.i18n.php
 Contact Page
 
 Contribution Reporting
-optional = contribstats-percentage
 
 Contribution Scores
 
@@ -265,6 +266,8 @@ Expand Templates
 Extension Distributor
 descmsg = extdist-desc
 
+External Data
+
 Farmer
 optional = farmercreateurl
 ignored = farmerwikiurl, farmerinterwikiurl
@@ -298,6 +301,7 @@ file = FlaggedRevs/language/RatingHistory.i18n.php
 Flagged Revisions - Reviewed Pages
 id = ext-flaggedrevs-reviewedpages
 file = FlaggedRevs/language/ReviewedPages.i18n.php
+optional = reviewedpages-lev-0, reviewedpages-lev-1, reviewedpages-lev-2
 
 Flagged Revisions - Stabilization
 id = ext-flaggedrevs-stabilization
@@ -322,7 +326,6 @@ file = FlaggedRevs/language/UnstablePages.i18n.php
 Flagged Revisions - Validation Statistics
 id = ext-flaggedrevs-validationstatistics
 file = FlaggedRevs/language/ValidationStatistics.i18n.php
-optional = validationstatistics-nbr
 
 Find Spam
 
@@ -333,6 +336,12 @@ Force Preview
 Format Email
 descmsg = email-desc
 ignored = email_header
+
+Framed Video
+optional = framedvideo_position
+ignored = framedvideo_default_width, framedvideo_force_default_size, framedvideo_max_width, framedvideo_frames
+ignored = framedvideo_max_height, framedvideo_allow_full_screen, framedvideo_force_allow_full_screen, framedvideo_force_frames
+ignored = framedvideo_force_position
 
 Gadgets
 ignored = gadgets-definition
@@ -354,7 +363,7 @@ Google Analytics
 file = googleAnalytics/googleAnalytics.i18n.php
 
 Google Maps
-desc = Easily create maps with wiki-fied markers
+descmsg = gm-desc
 var = wgGoogleMapsMessages
 
 Go To Category
@@ -362,6 +371,8 @@ Go To Category
 Group Permissions Manager
 descmsg = grouppermissions-desc
 optional = grouppermissions-display
+
+Honeypot Integration
 
 HTMLets
 
@@ -394,8 +405,8 @@ file = intersection/DynamicPageList.i18n.php
 Interwiki Edit Page
 id = ext-interwiki
 file = Interwiki/SpecialInterwiki.i18n.php
-optional = interwiki_defaulturl, interwiki_local, interwiki_trans
-ignored = interwiki_logentry, interwiki_url
+optional = interwiki_defaulturl, interwiki_url
+ignored = interwiki_logentry
 
 Interwiki List
 
@@ -413,7 +424,7 @@ Language Selector
 Latex Doc
 
 Link OpenID
-optional = linkopenid-prefstext-xrdsurl
+optional = linkopenid-prefs, linkopenid-prefstext-xrdsurl
 
 Liquid Threads
 file = LiquidThreads/Lqt.i18n.php
@@ -441,11 +452,6 @@ Media Functions
 
 Meta Keywords
 optional = metakeywords, metadescription
-
-Metavid Wiki
-file = MetavidWiki/languages/MV_Messages.php
-optional = ao_file_64Kb_MPEG4, ao_file_256Kb_MPEG4, ao_file_MPEG1, ao_file_MPEG2
-optional = ao_file_flash_flv, ao_file_512Kb_MPEG4, ao_file_Ogg_Video
 
 Mibbit
 
@@ -517,6 +523,7 @@ Online Status
 ignored = onlinestatus-levels
 
 OpenID
+optional = openid-prefs
 
 Open Search Xml
 
@@ -538,6 +545,8 @@ descmsg = patrol-desc
 
 Pdf Handler
 descmsg = pdf-desc
+
+Pipe Escape
 
 Piwik
 optional = piwik
@@ -589,6 +598,10 @@ Random Users With Avatars
 descmsg = random-users-avatars-desc
 
 Record Admin
+ignored = recordadmin-title
+
+Redirect
+ignored = redirect-addnewaccount, redirect-userlogincomplete, redirect-userlogoutcomplete
 
 Refresh Special
 
@@ -620,6 +633,7 @@ Select Category
 
 Semantic Result Formats
 file = SemanticResultFormats/SRF_Messages.php
+optional = srf_icalendar_link, srf_vcard_link, srf_bibtex_link
 
 Semantic Drilldown
 file = SemanticDrilldown/languages/SD_Messages.php
@@ -636,7 +650,8 @@ file = SemanticMediaWiki/languages/SMW_Messages.php
 ignored = smw_ask_doculink, smw_service_online_maps, smw_uri_blacklist
 optional = smw_rss_link, smw_decseparator, smw_kiloseparator
 optional = smw_rss_description, smw_browse_more, specialpages-group-smw_group
-optional = smw_csv_link, smw_icalendar_link, smw_vcard_link
+optional = smw_csv_link
+optional = smw_json_link
 
 Shared User Rights
 descmsg = gblrights-desc
@@ -652,6 +667,7 @@ file = SignDocument/SpecialCreateSignDocument.i18n.php
 Sign Document Special
 file = SignDocument/SpecialSignDocument.i18n.php
 descmsg = signature-desc
+optional = sign-emailto
 
 Simple Anti Spam
 
@@ -666,9 +682,17 @@ descmsg = slippymap_desc
 Smooth Gallery
 ignored = smoothgallery-pagetext
 
+Social Profile - System Gifts
+id = ext-socialprofile-systemgifts
+file = SocialProfile/SystemGifts/SystemGift.i18n.php
+
 Social Profile - User Board
 id = ext-socialprofile-userboard
 file = SocialProfile/UserBoard/UserBoard.i18n.php
+
+Social Profile - User Gifts
+id = ext-socialprofile-usergifts
+file = SocialProfile/UserGifts/UserGifts.i18n.php
 
 Social Profile - User Profile
 id = ext-socialprofile-userprofile
@@ -683,6 +707,10 @@ file = SocialProfile/UserRelationship/UserRelationship.i18n.php
 Social Profile - User Stats
 id = ext-socialprofile-userstats
 file = SocialProfile/UserStats/UserStats.i18n.php
+
+Social Profile - User Welcome
+id = ext-socialprofile-userwelcome
+file = SocialProfile/UserWelcome/UserWelcome.i18n.php
 
 Spam Blacklist
 descmsg = spam-blacklist-desc
@@ -722,8 +750,8 @@ ignored = talkhere-title, talkhere-headtext, talkhere-afterinput
 ignored = talkhere-afterform
 
 Tasks
-ignored = tasks_search_limit
-optional = tasks_help_page_link, tasks_help_separator, tasks_creation_tasks
+ignored = tasks_search_limit, tasks_help_separator, tasks_creation_tasks, tasks_significance_order
+optional = tasks_help_page_link
 descmsg = tasks_desc
 
 Template Link
@@ -808,6 +836,7 @@ Uniwiki - Generic Edit Page
 id = ext-uniwiki-genericeditpage
 file = uniwiki/GenericEditPage/GenericEditPage.i18n.php
 descmsg = gep-desc
+optional = gep-categorypage
 
 Uniwiki - Javascript
 id = ext-uniwiki-javascript
@@ -836,13 +865,9 @@ User Images
 
 User Merge
 
-Username Blacklist
-
 User Rights Notification
 id = ext-userrightsnotif
 file = UserRightsNotif/UserRightsNotif.i18n.php
-
-User Welcome
 
 Vote
 
@@ -857,12 +882,15 @@ What Is My IP
 White List
 file = WhiteList/WhiteListEdit.i18n.php
 
+Whos Online
+
 Who Is Watching
 file = WhoIsWatching/SpecialWhoIsWatching.i18n.php
 
 Wikidata Language Manager
 var = wdMessages
 file = Wikidata/SpecialLanguages.i18n.php
+optional = ow_URL, ow_ID
 ignored = ow_editing_policy_url
 
 Wikihiero
@@ -872,6 +900,8 @@ Wikimedia Messages
 ignored = sidebar, robots.txt
 optional = grouppage-steward, grouppage-sysadmin, grouppage-Global_bot
 optional = grouppage-Global_rollback, grouppage-Ombudsmen, grouppage-coder
+optional = grouppage-Staff, shared-repo-name-shared
+prefix = wmf- | sidebar, grouppage-Staff, group-Staff, group-Staff-member
 
 Wiki Text Logged In Out
 

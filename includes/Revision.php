@@ -53,6 +53,10 @@ class Revision {
 			// Get the latest revision ID from the master
 			$dbw = wfGetDB( DB_MASTER );
 			$latest = $dbw->selectField( 'page', 'page_latest', $conds, __METHOD__ );
+			if ( $latest === false ) {
+				// Page does not exist
+				return null;
+			}
 			$conds['rev_id'] = $latest;
 		} else {
 			// Use a join to get the latest revision
@@ -363,6 +367,7 @@ class Revision {
 		} else {
 			throw new MWException( 'Revision constructor passed invalid row format.' );
 		}
+		$this->mUnpatrolled = NULL;
 	}
 
 	/**#@+
@@ -535,6 +540,27 @@ class Revision {
 	 */
 	public function isMinor() {
 		return (bool)$this->mMinorEdit;
+	}
+	
+	/**
+	 * @return int rcid of the unpatrolled row, zero if there isn't one
+	 */
+	public function isUnpatrolled() {
+		if( $this->mUnpatrolled !== NULL ) {
+			return $this->mUnpatrolled;
+		}
+		$dbr = wfGetDB( DB_SLAVE );
+		$this->mUnpatrolled = $dbr->selectField( 'recentchanges',
+			'rc_id',
+			array( // Add redundant user,timestamp condition so we can use the existing index
+				'rc_user_text'  => $this->getRawUserText(),
+				'rc_timestamp'  => $dbr->timestamp( $this->getTimestamp() ),
+				'rc_this_oldid' => $this->getId(),
+				'rc_patrolled'  => 0
+			),
+			__METHOD__
+		);
+		return (int)$this->mUnpatrolled;
 	}
 
 	/**
@@ -819,7 +845,8 @@ class Revision {
 				'rev_timestamp'  => $dbw->timestamp( $this->mTimestamp ),
 				'rev_deleted'    => $this->mDeleted,
 				'rev_len'	     => $this->mSize,
-				'rev_parent_id'  => $this->mParentId ? $this->mParentId : $this->getPreviousRevisionId( $dbw )
+				'rev_parent_id'  => is_null($this->mParentId) ?
+					$this->getPreviousRevisionId( $dbw ) : $this->mParentId
 			), __METHOD__
 		);
 
@@ -962,6 +989,10 @@ class Revision {
 	 */
 	static function getTimestampFromId( $title, $id ) {
 		$dbr = wfGetDB( DB_SLAVE );
+		// Casting fix for DB2
+		if ($id == '') {
+			$id = 0;
+		}
 		$conds = array( 'rev_id' => $id );
 		$conds['rev_page'] = $title->getArticleId();
 		$timestamp = $dbr->selectField( 'revision', 'rev_timestamp', $conds, __METHOD__ );

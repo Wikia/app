@@ -53,7 +53,7 @@ class LoginForm {
 	 */
 	function LoginForm( &$request, $par = '' ) {
 		global $wgLang, $wgAllowRealName, $wgEnableEmail;
-		global $wgAuth;
+		global $wgAuth, $wgRedirectOnLogin;
 
 		$this->mType = ( $par == 'signup' ) ? $par : $request->getText( 'type' ); # Check for [[Special:Userlogin/signup]]
 		$this->mName = $request->getText( 'wpName' );
@@ -77,6 +77,10 @@ class LoginForm {
 		$this->wpBirthYear = $request->getVal( 'wpBirthYear' );
 		$this->wpBirthMonth = $request->getVal( 'wpBirthMonth' );
 		$this->wpBirthDay = $request->getVal( 'wpBirthDay' );
+
+		if ( $wgRedirectOnLogin ) {
+			$this->mReturnTo = $wgRedirectOnLogin;
+		}
 
 		if( $wgEnableEmail ) {
 			$this->mEmail = $request->getText( 'wpEmail' );
@@ -639,7 +643,12 @@ class LoginForm {
 	 */
 	function mailPassword() {
 		global $wgUser, $wgOut, $wgAuth;
-
+		
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return false;
+		}
+		
 		if( !$wgAuth->allowPasswordChange() ) {
 			$this->mainLoginForm( wfMsg( 'resetpass_forbidden' ) );
 			return;
@@ -700,7 +709,7 @@ class LoginForm {
 	 * @private
 	 */
 	function mailPasswordInternal( $u, $throttle = true, $emailTitle = 'passwordremindertitle', $emailText = 'passwordremindertext' ) {
-		global $wgServer, $wgScript, $wgUser;
+		global $wgServer, $wgScript, $wgUser, $wgNewPasswordExpiry;
 
 		if ( '' == $u->getEmail() ) {
 			return new WikiError( wfMsg( 'noemail', $u->getName() ) );
@@ -716,7 +725,8 @@ class LoginForm {
 		$u->setNewpassword( $np, $throttle );
 		$u->saveSettings();
 
-		$m = wfMsg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript );
+		$m = wfMsgExt( $emailText, array( 'parsemag' ), $ip, $u->getName(), $np,
+				$wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 ) );
 		$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, null, 'TemporaryPassword' );
 
 		return $result;
@@ -1018,6 +1028,8 @@ class LoginForm {
 	 * @return string
 	 */
 	function makeLanguageSelector() {
+		global $wgLang;
+
 		$msg = wfMsgForContent( 'loginlanguagelinks' );
 		if( $msg != '' && !wfEmptyMsg( 'loginlanguagelinks', $msg ) ) {
 			$langs = explode( "\n", $msg );
@@ -1029,7 +1041,7 @@ class LoginForm {
 					$links[] = $this->makeLanguageSelectorLink( $parts[0], $parts[1] );
 				}
 			}
-			return count( $links ) > 0 ? wfMsgHtml( 'loginlanguagelabel', implode( ' | ', $links ) ) : '';
+			return count( $links ) > 0 ? wfMsgHtml( 'loginlanguagelabel', $wgLang->pipeList( $links ) ) : '';
 		} else {
 			return '';
 		}

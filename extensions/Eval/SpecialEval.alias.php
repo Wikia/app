@@ -38,6 +38,11 @@ $aliases['de'] = array(
 	'Eval' => array( 'Auswerten' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Eval' => array( 'Wugódnośiś' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'Eval' => array( 'Évaluer', 'Evaluer' ),
@@ -60,9 +65,19 @@ $aliases['he'] = array(
 	'Eval' => array( 'פירוש' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Eval' => array( 'Wuhódnoćić' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'Eval' => array( 'Evalye' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'Eval' => array( '評価', 'PHPコードとして評価' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -93,5 +108,15 @@ $aliases['no'] = array(
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
 	'Eval' => array( 'Evaluar' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Eval' => array( 'ईवाल्‌' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Eval' => array( 'Pagsusuri' ),
 );
 

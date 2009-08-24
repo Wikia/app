@@ -22,8 +22,8 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'metakeywords-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
-	'metakeywords' => "Optional message. '''(all)''' and '''(main)''' should not be translated.",
-	'metadescription' => "Optional message. '''(all)''' and '''(main)''' should not be translated.
+	'metakeywords' => "Optional message. '''(all)''' and '''(main)''' should not be translated. Leave all the wiki markup, including the spaces, as is. You can translate the text, including 'Leave this line exactly as it is'. The lines of this messages have one (1) leading space.",
+	'metadescription' => "Optional message. '''(all)''' and '''(main)''' should not be translated. Leave all the wiki markup, including the spaces, as is. You can translate the text, including 'Leave this line exactly as it is'. The lines of this messages have one (1) leading space.
 * $1 will not be replaced in this message.",
 );
 
@@ -39,11 +39,11 @@ $messages['af'] = array(
  */
 $messages['ar'] = array(
 	'metakeywords-desc' => 'يسمح بضبط وسوم <tt><nowiki><meta "keywords"></nowiki></tt> و <tt><nowiki><meta "description"></nowiki></tt> لكل نطاق',
-	'metakeywords' => '  # أضف السطور إلى هذه الصفحة بالصيغة "namespace|comma separated,keywords,to,add"
-  # معرفات النطاقات (all) و (main) تحدد افتراضيا لكل النطاقات والنطاق الصفري بالترتيب.',
-	'metadescription' => '  # أضف السطور إلى هذه الصفحة بالصيغة "namespace|description tag to set"
-  # معرفات النطاقات (all) و (main) تحدد افتراضيا لكل النطاقات والنطاق الصفري بالترتيب.
-  # أي وجود ل$1 سيستبدل بعنوان الصفحة الحالي.',
+	'metakeywords' => ' # أضف السطور إلى هذه الصفحة بالصيغة "namespace|comma separated,keywords,to,add"
+ # معرفات النطاقات (all) و (main) تحدد افتراضيا لكل النطاقات والنطاق الصفري بالترتيب.',
+	'metadescription' => ' # أضف السطور إلى هذه الصفحة بالصيغة "namespace|description tag to set"
+ # معرفات النطاقات (all) و (main) تحدد افتراضيا لكل النطاقات والنطاق الصفري بالترتيب.
+ # أي وجود ل$1 سيستبدل بعنوان الصفحة الحالي.',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -51,11 +51,25 @@ $messages['ar'] = array(
  */
 $messages['arz'] = array(
 	'metakeywords-desc' => 'يسمح بضبط وسوم <tt><nowiki><meta "keywords"></nowiki></tt> و <tt><nowiki><meta "description"></nowiki></tt> لكل نطاق',
-	'metakeywords' => '  # أضف السطور إلى هذه الصفحة بالصيغة "namespace|comma separated,keywords,to,add"
-  # معرفات النطاقات (all) و (main) تحدد افتراضيا لكل النطاقات والنطاق الصفرى بالترتيب.',
-	'metadescription' => '  # أضف السطور إلى هذه الصفحة بالصيغة "namespace|description tag to set"
-  # معرفات النطاقات (all) و (main) تحدد افتراضيا لكل النطاقات والنطاق الصفرى بالترتيب.
-  # أى وجود ل$1 سيستبدل بعنوان الصفحة الحالي.',
+	'metakeywords' => ' # أضف السطور إلى هذه الصفحة بالصيغة "namespace|comma separated,keywords,to,add"
+ # معرفات النطاقات (all) و (main) تحدد افتراضيا لكل النطاقات والنطاق الصفرى بالترتيب.',
+	'metadescription' => ' # أضف السطور إلى هذه الصفحة بالصيغة "namespace|description tag to set"
+ # معرفات النطاقات (all) و (main) تحدد افتراضيا لكل النطاقات والنطاق الصفرى بالترتيب.
+ # أى وجود ل$1 سيستبدل بعنوان الصفحة الحالي.',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'metakeywords-desc' => 'Дазваляе канфігураваць тэгі <tt><nowiki><meta "keywords"></nowiki></tt> і <tt><nowiki><meta "description"></nowiki></tt> для асобных прастораў назваў',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'metakeywords-desc' => 'Позволява конфигурирането на етикетите <tt><nowiki><meta "keywords"></nowiki></tt> и <tt><nowiki><meta "description"></nowiki></tt> за всяко именно пространство',
 );
 
 /** Bosnian (Bosanski)
@@ -77,6 +91,11 @@ $messages['cs'] = array(
  */
 $messages['de'] = array(
 	'metakeywords-desc' => 'Erlaubt die Konfiguration von <tt><nowiki><meta "keywords"></nowiki></tt>- und <tt><nowiki><meta "description"></nowiki></tt>-Tags pro Namensraum',
+	'metakeywords' => ' # Zeilen dieser Seite müssen das folgendes Format haben: „Namensraum|Mit Komma getrennte,Schlüsselwörter,die hinzugefügt,werden sollen“
+ # Die Namensraumidentifiktoren „(all)“ und „(main)“ erlauben einen Standard für alle Namensräume oder den Hauptnamensraum.',
+	'metadescription' => ' # Zeilen dieser Seite müssen das folgendes Format haben: "Namensraum|Beschreibung des zu setzenden Tags"
+ # Die Namensraumidentifiktoren „(all)“ und „(main)“ erlauben einen Standard für alle Namensräume oder den Hauptnamensraum.
+ # Jedes Auftreten von $1 wird durch den jeweiligen Seitentitel ersetzt.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -95,6 +114,7 @@ $messages['es'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
  * @author Verdy p
  */
 $messages['fr'] = array(
@@ -103,7 +123,7 @@ $messages['fr'] = array(
  # Les identificateurs d’espaces de noms (all) et (main) indiquent respectivement la valeur par défaut pour tous les espaces de noms et pour l’espace principal numéro 0.',
 	'metadescription' => ' # Ajoutez des lignes à cette page sous la forme "espaceDeNoms|Libellé de description à définir"
  # Les identificateurs d’espaces de noms (all) et (main) indiquent respectivement la valeur par défaut pour tous les espaces de noms et pour l’espace principal numéro 0.
- # Toutes les occurences de $1 seront remplacées par le titre de la page actuelle.',
+ # Toutes les occurrences de $1 seront remplacées par le titre de la page actuelle.',
 );
 
 /** Galician (Galego)
@@ -111,6 +131,20 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'metakeywords-desc' => 'Permite a configuración de <tt><nowiki><meta "keywords"></nowiki></tt> e mais de etiquetas <tt><nowiki><meta "description"></nowiki></tt> por espazo de nomes',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'metakeywords-desc' => 'Erlaubt d Konfiguration vu <tt><nowiki><meta "keywords"></nowiki></tt>- und <tt><nowiki><meta "description"></nowiki></tt>-Tag pro Namensruum',
+);
+
+/** Hebrew (עברית)
+ * @author YaronSh
+ */
+$messages['he'] = array(
+	'metakeywords-desc' => 'מתן האפשרות להגדרת תגיות <tt><nowiki><meta "keywords"></nowiki></tt> ו־<tt><nowiki><meta "description"></nowiki></tt> לכל מרחב שם בנפרד',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -125,11 +159,11 @@ $messages['hsb'] = array(
  */
 $messages['ia'] = array(
 	'metakeywords-desc' => 'Permitte le configuration del etiquettas <tt><nowiki><meta "keywords"></nowiki></tt> e <tt><nowiki><meta "description"></nowiki></tt> per spatio de nomines',
-	'metakeywords' => '  # Adde lineas a iste pagina in le forma "spatio de nomines|parolas clave,pro,adder,separate,con,commas"
-  # Le identificatores de spatio de nomines (all) e (main) specifica un predefinition pro tote le spatios de nomine, e le zeresime spatio de nomines, respectivemente.',
-	'metadescription' => '  # Adde lineas a iste pagina in le forma "spatio de nomines|etiquetta de description a definir"
-  # Le identificatores de spatio de nomines (all) e (main) specifica un predefinition pro tote le spatios de nomines e le zeresime spatio de nomines, respectivemente.
-  # Omne occurrentias de $1 essera reimplaciate per le titulo del pagina actual.',
+	'metakeywords' => ' # Adde lineas a iste pagina in le forma "spatio de nomines|parolas clave,pro,adder,separate,con,commas"
+ # Le identificatores de spatio de nomines (all) e (main) specifica un predefinition pro tote le spatios de nomine, e le zeresime spatio de nomines, respectivemente.',
+	'metadescription' => ' # Adde lineas a iste pagina in le forma "spatio de nomines|etiquetta de description a definir"
+ # Le identificatores de spatio de nomines (all) e (main) specifica un predefinition pro tote le spatios de nomines e le zeresime spatio de nomines, respectivemente.
+ # Omne occurrentias de $1 essera reimplaciate per le titulo del pagina actual.',
 );
 
 /** Japanese (日本語)
@@ -137,6 +171,11 @@ $messages['ia'] = array(
  */
 $messages['ja'] = array(
 	'metakeywords-desc' => '名前空間ごとに <tt><nowiki><meta "keywords"></nowiki></tt> および <tt><nowiki><meta "description"></nowiki></tt> タグの設定を可能にする',
+	'metakeywords' => ' # このページに "namespace|comma separated,keywords,to,add" という形式で行を追加します
+ # 名前空間識別子 (all) と (main) はそれぞれ、全名前空間と標準名前空間のデフォルトを指定します。',
+	'metadescription' => ' # このページに "namespace|description tag to set" という形式で行を追加します
+ # 名前空間識別子 (all) と (main) はそれぞれ、全名前空間と標準名前空間のデフォルトを指定します。
+ # $1 は現在のページの名前に置換されます。',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -148,10 +187,10 @@ $messages['ksh'] = array(
 # Appachtemang|Schlüsselwööter met Kommas,dozwesche,zom Enndraare
 # De Name (all) un (main) för et Appachtemang jevve en default för
 # all de Appachtemangs, udder de Wääte för dat Houp-Appachtemeng aan.',
-	'metadescription' => '# Donn Reije en dä Sigg hee endraare, wo dren steiht:
-# Appachtemang|Dä Tex fö de description (jede $1 weet dorsch der Siggetittel äsaz)
-# De Name (all) un (main) för et Appachtemang jevve en default för
-# all de Appachtemangs, udder de Wääte för dat Houp-Appachtemeng aan.',
+	'metadescription' => ' # Donn Reije en dä Sigg hee endraare, wo dren steiht:
+ # Appachtemang|Dä Tex fö de description (jede $1 weet dorsch der Siggetittel äsaz)
+ # De Name (all) un (main) för et Appachtemang jevve en default för
+ # all de Appachtemangs, udder de Wääte för dat Houp-Appachtemeng aan.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -159,6 +198,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'metakeywords-desc' => 'Erlaabt d\'Konfiguratioun vun <tt><nowiki><meta "keywords"></nowiki></tt> a <tt><nowiki><meta "description"></nowiki></tt> Tagen pro Nummraum',
+);
+
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'metakeywords-desc' => 'Verlöövt dat Instellen vun <tt><nowiki><meta "keywords"></nowiki></tt>- un <tt><nowiki><meta "description"></nowiki></tt>-Tags för elk Naamruum',
 );
 
 /** Dutch (Nederlands)
@@ -201,6 +247,13 @@ $messages['pt'] = array(
 	'metakeywords-desc' => 'Permite a configuração de tags <tt><nowiki><meta "keywords"></nowiki></tt> e <tt><nowiki><meta "description"></nowiki></tt> por domínio',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'metakeywords-desc' => 'Permite a configuração de tags <tt><nowiki><meta "keywords"></nowiki></tt> e <tt><nowiki><meta "description"></nowiki></tt> por domínio',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -215,11 +268,25 @@ $messages['sk'] = array(
 	'metakeywords-desc' => 'Umožňuje konfiguráciu značiek <tt><nowiki><meta "keywords"></nowiki></tt> a <tt><nowiki><meta "description"></nowiki></tt> v závislosti od menného priestoru',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'metakeywords-desc' => 'Lejon konfigurimin e kodeve <tt><nowiki><meta "keywords"></nowiki></tt> dhe <tt><nowiki><meta "description"></nowiki></tt> për çdo hapësirë',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
 $messages['sv'] = array(
 	'metakeywords-desc' => 'Möjliggör konfigurering av <tt><nowiki><meta "keywords"></nowiki></tt> och <tt><nowiki><meta "description"></nowiki></tt>-taggar per namnrymd',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'metakeywords-desc' => 'Nagpapahintulot ng pagsasaayos ng mga tatak na <tt><nowiki><meta "keywords"></nowiki></tt> at <tt><nowiki><meta "description"></nowiki></tt> sa bawat espasyo ng pangalan',
 );
 
 /** Vietnamese (Tiếng Việt)

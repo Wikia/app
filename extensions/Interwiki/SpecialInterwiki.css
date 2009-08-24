@@ -1,0 +1,42 @@
+
+/**
+ * CSS for Special:Interwiki
+ */
+
+table.mw-interwikitable {
+    margin: 1em 1em 1em 0;
+    background: #fdfdfd;
+    border: 1px #aaa solid;
+    border-collapse: collapse;
+}
+ 
+table.mw-interwikitable th,
+table.mw-interwikitable td  {
+    border:  1px #aaa solid;
+    padding: 0.2em;
+}
+ 
+table.mw-interwikitable th  {
+    background: #f2f2f2;
+    text-align: center;
+}
+
+table.mw-interwikitable.intro th  {
+    padding-right:  1.4ex;
+    vertical-align: top;
+}
+
+table.mw-interwikitable.intro th.mw-align-left  {
+    text-align: left;
+}
+
+table.mw-interwikitable.intro th.mw-align-right  {
+    text-align: right;
+}
+
+table.mw-interwikitable.body td.mw-interwikitable-local,
+table.mw-interwikitable.body td.mw-interwikitable-trans,
+table.mw-interwikitable.body td.mw-interwikitable-modify {
+    text-align: center;
+}
+

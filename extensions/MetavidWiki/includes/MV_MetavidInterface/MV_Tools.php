@@ -128,8 +128,12 @@
 						    	'js_eval' => $this->js_eval ) );
 	}
 	function render_menu() {
-		return '<a href="javascript:mv_tool_disp(\'stream_page\')">' . wfMsg( 'mv_stream_meta' ) . '</a>' . ' | ' .
-			'<a href="javascript:mv_tool_disp(\'menu\')">' . wfMsg( 'mv_stream_tool_heading' ) . '</a>';
+		global $wgLang;
+
+		return $wgLang->pipeList( array(
+			'<a href="javascript:mv_tool_disp(\'stream_page\')">' . wfMsg( 'mv_stream_meta' ) . '</a>',
+			'<a href="javascript:mv_tool_disp(\'menu\')">' . wfMsg( 'mv_stream_tool_heading' ) . '</a>'
+		) );
 	}
 
 	/* 

@@ -242,7 +242,7 @@ class SpecialAPC extends SpecialPage {
 			Xml::element( 'h2', null, wfMsg( 'viewapc-version-info' ) )
 		);
 
-		$rss = @file_get_contents('http://pecl.php.net/feeds/pkg_apc.rss');
+		$rss = Http::get( 'http://pecl.php.net/feeds/pkg_apc.rss' );
 		if (!$rss) {
 			$wgOut->addWikiMsg( 'viewapc-version-failed' );
 		} else {

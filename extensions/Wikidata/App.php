@@ -12,8 +12,8 @@ if (!defined('MEDIAWIKI')) die();
 
 $wgDefaultGoPrefix='Expression:';
 $wgHooks['BeforePageDisplay'][]='addWikidataHeader';
-$wgHooks['GetEditLinkTrail'][]='addWikidataEditLinkTrail'; #TODO merge with modifyTabs
-$wgHooks['GetHistoryLinkTrail'][]='addHistoryLinkTrail'; #TODO merge with modifyTabs
+#$wgHooks['GetEditLinkTrail'][]='addWikidataEditLinkTrail'; # non-standard hook; merged with modifyTabs
+#$wgHooks['GetHistoryLinkTrail'][]='addHistoryLinkTrail'; # non-standard hook; merged with modifyTabs
 $wgHooks['SkinTemplateTabs'][]='modifyTabs';
 $wgExtensionFunctions[]='initializeWikidata';
 
@@ -103,8 +103,18 @@ function addWikidataHeader() {
 	global $wgOut,$wgScriptPath;
 	$dc=wdGetDataSetContext();
 	$wgOut->addScript("<script type='text/javascript' src='{$wgScriptPath}/extensions/Wikidata/OmegaWiki/suggest.js'></script>");
-	$wgOut->addLink(array('rel'=>'stylesheet','type'=>'text/css','media'=>'screen, projection','href'=>"{$wgScriptPath}/extensions/Wikidata/OmegaWiki/suggest.css"));
-	$wgOut->addLink(array('rel'=>'stylesheet','type'=>'text/css','media'=>'screen, projection','href'=>"{$wgScriptPath}/extensions/Wikidata/OmegaWiki/tables.css"));                                                                                                                                                                    
+	
+	global $wgLang;
+	if ($wgLang->isRTL())
+	{
+		$wgOut->addLink(array('rel'=>'stylesheet','type'=>'text/css','media'=>'screen, projection','href'=>"{$wgScriptPath}/extensions/Wikidata/OmegaWiki/suggest-rtl.css"));
+		$wgOut->addLink(array('rel'=>'stylesheet','type'=>'text/css','media'=>'screen, projection','href'=>"{$wgScriptPath}/extensions/Wikidata/OmegaWiki/tables-rtl.css"));
+	}
+	else
+	{
+		$wgOut->addLink(array('rel'=>'stylesheet','type'=>'text/css','media'=>'screen, projection','href'=>"{$wgScriptPath}/extensions/Wikidata/OmegaWiki/suggest.css"));
+		$wgOut->addLink(array('rel'=>'stylesheet','type'=>'text/css','media'=>'screen, projection','href'=>"{$wgScriptPath}/extensions/Wikidata/OmegaWiki/tables.css"));
+	}                                                                                                                                                               
 	return true;
 }
 
@@ -146,6 +156,7 @@ function modifyTabs($skin, $content_actions) {
 	global $wgUser, $wgTitle, $wdTesting, $wgCommunity_dc, $wdShowEditCopy;
 	$dc=wdGetDataSetContext();
 	$ns=Namespace::get($wgTitle->getNamespace());
+	$editChanged = false;
 	if($ns->getHandlerClass()=='DefinedMeaning') {
 	
 		# Hackishly determine which DMID we're on by looking at the page title component
@@ -157,25 +168,41 @@ function modifyTabs($skin, $content_actions) {
 			$copyTitle=SpecialPage::getTitleFor('Copy');
 			#if(wdIsWikidataNs() && (!$wgUser->isAllowed('editwikidata-'.$dc) || $wdTesting)) {
 			if(wdIsWikidataNs() && $dc!=$wgCommunity_dc && $wdShowEditCopy) {
+				$editChanged = true;
 				$content_actions['edit']=array(
 				'class'=>false, 
-				'text'=>'edit copy', 
+				'text'=>wfMsg('ow_nstab_edit_copy'), 
 				'href'=>$copyTitle->getLocalUrl("action=copy&dmid=$dmid&dc1=$dc&dc2=$wgCommunity_dc")
 			);
 			}
 		 $content_actions['nstab-definedmeaning']=array(
 				 'class'=>'selected',
-				 'text'=>'defined meaning',
+				 'text'=>wfMsg('ow_nstab_definedmeaning'),
 				 'href'=>$wgTitle->getLocalUrl("dataset=$dc"));
 
 		}
 	}
+
+	// Add context dataset (old hooks 'GetEditLinkTrail' and 'GetHistoryLinkTrail')
+	if (!$editChanged && $content_actions['edit'] != null) {
+		addWikidataEditLinkTrail($linkTrail);
+		$content_actions['edit']['href'] = ($content_actions['edit']['href'] . $linkTrail);
+	}
+	addHistoryLinkTrail($linkTrail);
+	$content_actions['history']['href'] = ($content_actions['history']['href'] . $linkTrail);
+
 	return true;
 }
 
 function initializeWikidata() {
 	global $wgExtensionPreferences, $wdSiteContext, $wgPropertyToColumnFilters;
-		
+	
+	# Add extension messages to the cache (initialize it here because they will be needed below)
+	global $wgMessageCache, $wdMessages;
+	foreach( $wdMessages as $language => $translations ) {
+		$wgMessageCache->addMessages( $translations, $language );
+	}
+
 	$dbr =& wfGetDB(DB_MASTER);
 	$dbr->query("SET NAMES utf8");
 	
@@ -202,6 +229,13 @@ function initializeWikidata() {
 		
 	$wgRecordSetLanguage = 0;
 	
+	# malafaya: Set RTL according to user language
+	global $wgLang, $wgOut;
+	if ($wgLang->isRTL())
+	{
+		$wgOut->addHTML('<style type="text/css">/*<![CDATA[*/ @import "/index.php?title=MediaWiki:Gadget-rtl.css&action=raw&ctype=text/css"; /*]]>*/</style>');
+	}
+
 	return true;
 }
 

@@ -14,11 +14,24 @@ class I18nTags {
 	}
 
 	public static function plural( $data, $params, $parser ) {
-		$n = isset($params['n']) ? intval($params['n']) : intval(rand()/rand()*1020);
+		list( $from, $to ) = self::getRange( @$params['n'] );
 		$args = explode('|', $data);
 		$lang = self::languageObject( $params );
-		$t = $lang->convertPlural( $n, $args );
-		return wfMsgReplaceArgs($t, array($n, 'NOT DEFINED'));
+
+		$format = isset($params['format']) ? $params['format'] : '%s';
+		$format = str_replace( '\n', "\n", $format );
+
+		$s = '';
+		for( $i = $from; $i <= $to; $i++ ) {
+			$t = $lang->convertPlural( $i, $args );
+			$fmtn = $lang->formatNum($i);
+			$s .= str_replace(
+				array( '%d', '%s'), 
+				array( $i, wfMsgReplaceArgs( $t, array($fmtn) ) ),
+				$format
+			);
+		}
+		return $s;
 	}
 
 	public static function linktrail( $data, $params, $parser ) {
@@ -66,5 +79,22 @@ class I18nTags {
 	public static function languageObject( $params ) {
 		global $wgContLang;
 		return isset( $params['lang'] ) ? Language::factory( $params['lang'] ) : $wgContLang;
+	}
+
+	public static function getRange( $s, $min = false, $max = false) {
+		$matches = array();
+		if ( preg_match( '/(\d+)-(\d+)/', $s, $matches ) ) {
+			$from = $matches[1];
+			$to = $matches[2];
+		} else {
+			$from = $to = (int) $s;
+		}
+
+
+		if ( $from > $to ) {$UNDEFINED = $to; $to = $from; $from = $UNDEFINED;}
+		if ( $min !== false ) $from = max( $min, $from );
+		if ( $max !== false ) $to = min( $max, $to );
+
+		return array( $from, $to );
 	}
 }

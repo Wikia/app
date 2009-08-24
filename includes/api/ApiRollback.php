@@ -37,7 +37,6 @@ class ApiRollback extends ApiBase {
 	}
 
 	public function execute() {
-		$this->getMain()->requestWriteMode();
 		$params = $this->extractRequestParams();
 
 		$titleObj = NULL;
@@ -72,17 +71,21 @@ class ApiRollback extends ApiBase {
 
 		$info = array(
 			'title' => $titleObj->getPrefixedText(),
-			'pageid' => $details['current']->getPage(),
+			'pageid' => intval($details['current']->getPage()),
 			'summary' => $details['summary'],
-			'revid' => $titleObj->getLatestRevID(),
-			'old_revid' => $details['current']->getID(),
-			'last_revid' => $details['target']->getID()
+			'revid' => intval($titleObj->getLatestRevID()),
+			'old_revid' => intval($details['current']->getID()),
+			'last_revid' => intval($details['target']->getID())
 		);
 
 		$this->getResult()->addValue(null, $this->getModuleName(), $info);
 	}
 
 	public function mustBePosted() { return true; }
+
+	public function isWriteMode() {
+		return true;
+	}
 
 	public function getAllowedParams() {
 		return array (
@@ -119,6 +122,6 @@ class ApiRollback extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiRollback.php 48123 2009-03-07 13:02:30Z catrope $';
+		return __CLASS__ . ': $Id: ApiRollback.php 48122 2009-03-07 12:58:41Z catrope $';
 	}
 }

@@ -46,8 +46,8 @@ class TitleBlacklistHooks {
 				$message = 'titleblacklist-forbidden-move';
 			$err = wfMsgWikiHtml( $message,
 				htmlspecialchars( $blacklisted->getRaw() ),
-				htmlspecialchars( $nt->getFullText() ),
-				htmlspecialchars( $old->getFullText() ) );
+				htmlspecialchars( $old->getFullText() ),
+				htmlspecialchars( $nt->getFullText() ) );
 			return false;
 		}
 		return true;

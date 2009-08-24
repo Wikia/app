@@ -17,7 +17,7 @@ class SFTemplates extends SpecialPage {
 		wfLoadExtensionMessages('SemanticForms');
 	}
 
-	function execute() {
+	function execute($query) {
 		$this->setHeaders();
 		list( $limit, $offset ) = wfCheckLimits();
 		$rep = new TemplatesPage();

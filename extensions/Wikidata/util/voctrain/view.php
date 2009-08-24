@@ -126,7 +126,7 @@ class View {
 		<div class='datarow'><input type='radio' value='25' name='exercise_size' checked /><label>25</label></div><br/>
 		<div class='datarow'><input type='radio' value='50' name='exercise_size' /><label>50</label></div><br/>
 		<div class='datarow'><input type='radio' value='75' name='exercise_size' /><label>75</label></div><br/>
-		<div class='datarow'><input type='text' size='4' value='' name='exercise_size_other'>other</div><br/>
+		<div class='datarow'><input type='text' size='4' value='' name='exercise_size_other'><|other|></div><br/>
 		</fieldset>
 		</p>
 		<h2><|hiding|></h2>

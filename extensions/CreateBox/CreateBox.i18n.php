@@ -65,6 +65,13 @@ $messages['arz'] = array(
 <createbox>break=no</createbox>",
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'createbox-create' => 'Стварыць',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -76,7 +83,20 @@ $messages['bg'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'createbox-desc' => 'Specijalizirana kutija unosa za pravljenje stranice',
 	'createbox-create' => 'Napravi',
+	'createbox-exists' => "Žao nam je, \"'''{{FULLPAGENAME}}'''\" već postoji.
+
+Ne možete napraviti ovu stranicu, ali je možete [{{fullurl:{{FULLPAGENAME}}|action=edit}} urediti], [{{fullurl:{{FULLPAGENAME}}}} pročitati] ili odabrati pravljenje druge stranice koristeći kutiju ispod.
+
+<createbox>break=no</createbox>",
+);
+
+/** Catalan (Català)
+ * @author Loupeter
+ */
+$messages['ca'] = array(
+	'createbox-create' => 'Crear',
 );
 
 /** Corsican (Corsu) */
@@ -112,6 +132,13 @@ Njamóžoš tós ten bok napóraś, ale móžoš jen [{{fullurl:{{FULLPAGENAME}}
 <createbox>break=no</createbox>",
 );
 
+/** Greek (Ελληνικά)
+ * @author Konsnos
+ */
+$messages['el'] = array(
+	'createbox-create' => 'Δημιουργία',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -120,10 +147,23 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  */
 $messages['es'] = array(
 	'createbox-create' => 'Crear',
+	'createbox-exists' => "Disculpe, \"'''{{FULLPAGENAME}}'''\" ya existe.
+
+No puedes crear esta página, pero puedes [{{fullurl:{{FULLPAGENAME}}|action=edit}} editarla], [{{fullurl:{{FULLPAGENAME}}}} leerla], o escoger crear una página diferente usando la tabla de debajo.
+
+<createbox>break=no</createbox>",
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'createbox-create' => 'Sortu',
 );
 
 /** Finnish (Suomi)
@@ -173,6 +213,19 @@ Non pode crear esta páxina, pero pode [{{fullurl:{{FULLPAGENAME}}|action=edit}}
  */
 $messages['grc'] = array(
 	'createbox-create' => 'Ποεῖν',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'createbox-desc' => 'Speziäll Yygabfäld zum Aalege vu Syte',
+	'createbox-create' => 'Aalege',
+	'createbox-exists' => "Excusez, „'''{{FULLPAGENAME}}'''“ git s scho.
+
+Du chasch die Syte nit aalege, aber Du chasch si [{{fullurl:{{FULLPAGENAME}}|action=edit}} bearbeite], [{{fullurl:{{FULLPAGENAME}}}} läse] oder e anderi Syte aalege mit em Yygabfäld, wu do unte stoht.
+
+<createbox>break=no</createbox>",
 );
 
 /** Hakka (Hak-kâ-fa)
@@ -423,6 +476,20 @@ Você não pode criar esta página, mas pode [{{fullurl:{{FULLPAGENAME}}|action=
 <createbox>break=no</createbox>",
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'createbox-desc' => 'Inputbox especializado para a criação de páginas',
+	'createbox-create' => 'Criar',
+	'createbox-exists' => "Desculpe, \"'''{{FULLPAGENAME}}'''\" já existe.
+
+Você não pode criar esta página, mas pode [{{fullurl:{{FULLPAGENAME}}|action=edit}} editá-la],  
+[{{fullurl:{{FULLPAGENAME}}}} lê-la], ou optar por criar uma página diferente usando a caixa abaixo.
+
+<createbox>break=no</createbox>",
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -485,11 +552,57 @@ Du kan inte skapa den här sidan, men du kan [{{fullurl:{{FULLPAGENAME}}|action=
 <createbox>break=no</createbox>",
 );
 
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
+$messages['sw'] = array(
+	'createbox-create' => 'Anzisha kurasa',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'createbox-create' => 'సృష్టించు',
+	'createbox-exists' => "క్షమించండి, \"'''{{FULLPAGENAME}}'''\" ఇప్పటికే ఉంది.
+
+ఈ పేజీని మీరు సృష్టించలేరు, కానీ మీరు [{{fullurl:{{FULLPAGENAME}}|action=edit}} దీన్ని మార్చవచ్చు], [{{fullurl:{{FULLPAGENAME}}}} చదువవచ్చు], లేదా క్రింది పెట్టెని ఉపయోగించి మరో పేజీని సృష్టించవచ్చు.
+
+<createbox>break=no</createbox>",
+);
+
 /** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'createbox-create' => 'Эҷод',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'createbox-desc' => 'Natatanging lalagyang-kahon para sa paglikha ng pahina',
+	'createbox-create' => 'Likhain',
+	'createbox-exists' => "Paumanhin, umiiral na ang \"'''{{FULLPAGENAME}}'''\".
+
+Hindi mo malilikha ang pahinang ito, subalit maaari mong [{{fullurl:{{FULLPAGENAME}}|action=edit}} baguhin ito], [{{fullurl:{{FULLPAGENAME}}}} basahin ito], o piliing lumikha ng isang naiibang pahina na ginagamit ang kahong nasa ibaba.
+ 
+<createbox>break=no</createbox>",
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'createbox-desc' => 'Sayfası oluşturmak için özelleştirilmiş girdikutusu',
+	'createbox-create' => 'Oluştur',
+	'createbox-exists' => "Üzgünüz, \"'''{{FULLPAGENAME}}'''\" zaten mevcut.
+
+Bu sayfayı oluşturamazsınız, ancak [{{fullurl:{{FULLPAGENAME}}|action=edit}} değiştirebilir], [{{fullurl:{{FULLPAGENAME}}}} okuyabilir], ya da aşağıdaki kutuyu kullanarak farklı bir sayfa oluşturmayı seçebilirsiniz.
+
+<createbox>break=no</createbox>",
 );
 
 /** Ukrainian (Українська)
@@ -501,6 +614,19 @@ $messages['uk'] = array(
 	'createbox-exists' => "Даруйте, \"'''{{FULLPAGENAME}}'''\" вже існує.
 
 Ви не можете створити цю сторінку, але ви можете [{{fullurl:{{FULLPAGENAME}}|action=edit}} редагувати її], [{{fullurl:{{FULLPAGENAME}}}} переглянути її], або створити іншу сторінку, використовуючи поле нижче.
+
+<createbox>break=no</createbox>",
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'createbox-desc' => 'Inputbox specialixà par la creassion de pàxene',
+	'createbox-create' => 'Crèa',
+	'createbox-exists' => "Scusa, \"'''{{FULLPAGENAME}}'''\" la esiste de xà.
+
+No ti pol crear sta pàxena, ma ti pol [{{fullurl:{{FULLPAGENAME}}|action=edit}} modificarla], [{{fullurl:{{FULLPAGENAME}}}} lèxerla] o sièliere de crear na pàxena difarente doparando la casèla qua soto.
 
 <createbox>break=no</createbox>",
 );

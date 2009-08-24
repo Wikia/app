@@ -1,6 +1,9 @@
 <?php
 /** Yue (粵語)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -139,11 +142,13 @@ $linkTrail = '/^([a-z]+)(.*)$/sD';
 $messages = array(
 # User preference toggles
 'tog-underline'               => '連結加底線：',
-'tog-highlightbroken'         => '格式化連結 <a href="" class="new">好似咁</a>（又或者: 好似咁<a href="" class="internal">?</a>）.',
+'tog-highlightbroken'         => '格式化連結 <a href="" class="new">好似咁</a>（又或者: 好似咁<a href="" class="internal">?</a>）',
 'tog-justify'                 => '拍齊段落',
 'tog-hideminor'               => '最新更改唔顯示小修改',
-'tog-extendwatchlist'         => '展開監視清單去顯示合適嘅更改',
-'tog-usenewrc'                => '強化版最近更改（需要JavaScript）',
+'tog-hidepatrolled'           => '響最近修改度隱藏巡查過嘅編輯',
+'tog-newpageshidepatrolled'   => '響新頁清單度隱藏巡查過嘅版',
+'tog-extendwatchlist'         => '展開監視清單去顯示全部更改，唔係淨係最新嘅',
+'tog-usenewrc'                => '用強化版最近更改（需要JavaScript）',
 'tog-numberheadings'          => '標題自動編號',
 'tog-showtoolbar'             => '顯示修改工具列（需要JavaScript）',
 'tog-editondblclick'          => '撳兩下改嘢（需要JavaScript）',
@@ -151,7 +156,7 @@ $messages = array(
 'tog-editsectiononrightclick' => '可以撳右掣更改個別段落（需要JavaScript）',
 'tog-showtoc'                 => '多過三段時顯示目錄',
 'tog-rememberpassword'        => '響呢部電腦度記住我嘅密碼',
-'tog-editwidth'               => '全螢幕咁闊嘅修改欄',
+'tog-editwidth'               => '加闊修改欄到成個螢幕',
 'tog-watchcreations'          => '將我開嘅頁加入監視清單',
 'tog-watchdefault'            => '將我修改嘅頁加入監視清單',
 'tog-watchmoves'              => '將我移動嘅頁加入監視清單',
@@ -165,7 +170,7 @@ $messages = array(
 'tog-enotifminoredits'        => '小修改都要電郵通知我',
 'tog-enotifrevealaddr'        => '喺電郵通知信上面話畀人聽我嘅電郵地址',
 'tog-shownumberswatching'     => '顯示有幾多人監視',
-'tog-fancysig'                => '程式碼簽名（冇自動連結）',
+'tog-fancysig'                => '將簽名以維基字對待（冇自動連結）',
 'tog-externaleditor'          => '預設用外掛編輯器（高階者專用，需要響你部電腦度做一啲特別設定）',
 'tog-externaldiff'            => '預設用外掛比較器（高階者專用，需要響你部電腦度做一啲特別設定）',
 'tog-showjumplinks'           => '啟用 "跳至" 協助連結',
@@ -176,6 +181,7 @@ $messages = array(
 'tog-watchlisthideminor'      => '響監視清單度隱藏小修改',
 'tog-watchlisthideliu'        => '響監視清單度隱藏登入用戶',
 'tog-watchlisthideanons'      => '響監視清單度隱藏匿名用戶',
+'tog-watchlisthidepatrolled'  => '響監視清單度隱藏巡查過嘅編輯',
 'tog-nolangconversion'        => '唔要用字轉換',
 'tog-ccmeonemails'            => '當我寄電郵畀其他人嗰陣寄返封副本畀我',
 'tog-diffonly'                => '響差異下面唔顯示頁面內容',
@@ -514,35 +520,40 @@ $1',
 'userlogout'                 => '登出',
 'notloggedin'                => '未登入',
 'nologin'                    => '重未有戶口？ $1。',
-'nologinlink'                => '開一個新嘅戶口',
-'createaccount'              => '建立戶口',
+'nologinlink'                => '開個新戶口',
+'createaccount'              => '開戶口',
 'gotaccount'                 => '已經有戶口？ $1 。',
 'gotaccountlink'             => '登入',
 'createaccountmail'          => '用電郵',
-'badretype'                  => '你所入嘅密碼唔一致。',
-'userexists'                 => '你入嘅用戶名已經有人用緊，請揀過另外一個名。',
+'badretype'                  => '你入嘅密碼唔一致。',
+'userexists'                 => '你入嘅用戶名已經有人用咗，唔該揀過個名啦。',
 'youremail'                  => '電郵:',
 'username'                   => '用戶名:',
 'uid'                        => '用戶 ID:',
 'prefs-memberingroups'       => '{{PLURAL:$1|一|多}}組嘅成員:',
-'yourrealname'               => '真實姓名:',
-'yourlanguage'               => '語言:',
-'yourvariant'                => '字體變化:',
-'yournick'                   => '簽名:',
+'yourrealname'               => '真名:',
+'yourlanguage'               => '話:',
+'yourvariant'                => '變換:',
+'yournick'                   => '花名:',
 'badsig'                     => '無效嘅程式碼簽名。檢查吓 HTML 有無錯。',
-'badsiglength'               => '你嘅簽名太長喇。
-佢嘅長度一定要響$1個字元以下。',
+'badsiglength'               => '你嘅花名太長喇。
+唔長得過$1個字元。',
+'yourgender'                 => '性別:',
+'gender-unknown'             => '未指定',
+'gender-male'                => '男',
+'gender-female'              => '女',
+'prefs-help-gender'          => '可選: 用嚟整軟件性別指定。呢項資料將會被公開。',
 'email'                      => '電郵',
-'prefs-help-realname'        => '真名係可以選填嘅。
-如果你選擇提供佢，佢會用來喺有需要嘅時候標示你嘅作品。',
+'prefs-help-realname'        => '真名可以唔填。
+如果你畀埋佢，有需要嘅時候會用佢來標示你嘅工夫。',
 'loginerror'                 => '登入錯誤',
-'prefs-help-email'           => '電郵地址係可以選填嘅，但當你唔記得咗你個密碼嗰陣可以將新密碼寄番畀你。你亦可以等人可以響唔知你電郵地址嘅情況之下都可以聯絡你。',
+'prefs-help-email'           => '電郵地址可以唔填，但當你唔記得咗你個密碼嗰陣可以將新密碼寄番畀你。亦可以響人哋唔知你電郵地址嘅情況之下都可以聯絡你。',
 'prefs-help-email-required'  => '需要電郵地址。',
-'nocookiesnew'               => '已經建立咗戶口，但你未登入。 {{SITENAME}} 要用 cookies 嚟登入。你已經停咗用 cookies。麻煩啟用返先，然後再用你新嘅用戶名同密碼。',
-'nocookieslogin'             => '{{SITENAME}} 要用 cookies 嚟登入。你已經停用 cookies。請先啟用後再度試過喇。',
+'nocookiesnew'               => '已經開咗戶口，但你未登入。 {{SITENAME}} 要用 cookies 嚟登入。你已經熄咗佢。請你開咗再試。',
+'nocookieslogin'             => '{{SITENAME}} 登入要開 cookies。熄咗佢。請你開咗再試。',
 'noname'                     => '你未指定一個有效嘅用戶名。',
 'loginsuccesstitle'          => '登入成功',
-'loginsuccess'               => "'''你已經成功咁喺{{SITENAME}}登入做「$1」。'''",
+'loginsuccess'               => "'''「$1」登入咗{{SITENAME}}。'''",
 'nosuchuser'                 => '呢度冇叫做 "$1"嘅用戶。
 用戶名係有分大細楷嘅。
 請檢查你個名嘅輸入方法，或者[[Special:UserLogin/signup|建立一個新嘅戶口]]。',
@@ -557,6 +568,7 @@ $1',
 請求 {{SITENAME}} 嘅新密碼 ($4)。
 而家用戶 "$2" 嘅新臨時密碼設定咗做 "$3"。
 如果呢個係你所要求嘅，你就需要即刻登入，揀一個新嘅密碼。
+你個臨時密碼會響{{PLURAL:$5|一|$5}}日內過期。
 
 如果係其他人作出呢個請求，
 又或者你記得返你嘅密碼而又唔想再轉，
@@ -601,6 +613,10 @@ $1',
 'resetpass-wrong-oldpass'   => '無效嘅臨時或現有嘅密碼。
 你可能已經成功咁更改你嘅密碼，又或者重新請求過一個新嘅臨時密碼。',
 'resetpass-temp-password'   => '臨時密碼:',
+'resetpass-log'             => '密碼重設日誌',
+'resetpass-logtext'         => '下面係由管理員重設用戶密碼嘅日誌。',
+'resetpass-logentry'        => '改咗$1嘅密碼',
+'resetpass-comment'         => '改密碼嘅原因:',
 
 # Edit page toolbar
 'bold_sample'     => '粗體字',
@@ -678,7 +694,9 @@ $1',
 'loginreqlink'                     => '登入',
 'loginreqpagetext'                 => '你一定$1去睇其它嘅頁面。',
 'accmailtitle'                     => '密碼寄咗喇。',
-'accmailtext'                      => '「$1」嘅密碼已經寄咗去 $2。',
+'accmailtext'                      => "「[[User talk:$1|$1]]」嘅隨機產生密碼已經寄咗去 $2。
+
+呢個新戶口嘅密碼可以響登入咗之後嘅''[[Special:ChangePassword|改密碼]]''版度改佢。",
 'newarticle'                       => '(新)',
 'newarticletext'                   => "你連連過嚟嘅頁面重未存在。
 要起版新嘅，請你喺下面嗰格度輸入。(睇睇[[{{MediaWiki:Helppage}}|自助版]]拎多啲資料。)
@@ -701,17 +719,18 @@ $1',
 'userinvalidcssjstitle'            => "'''警告：''' 無叫做 \"\$1\" 嘅畫面。請記住自訂介面的 .css 和 .js 頁面時應使用細楷，例如：{{ns:user}}:Foo/monobook.css 而唔係 {{ns:user}}:Foo/Monobook.css 。",
 'updated'                          => '(己更新)',
 'note'                             => "'''留意:'''",
-'previewnote'                      => "'''請記住呢個只係預覽；更改嘅内容重未儲存！'''",
+'previewnote'                      => "'''請記住呢個只係預覽。'''
+更改嘅内容重未儲存！",
 'previewconflict'                  => '呢個預覽係反映如果你選擇儲存嘅話，嘅上面嘅文字編輯區裏面嘅字會儲存落嚟。',
-'session_fail_preview'             => "'''對唔住！由於小節嘅資料唔見咗，我哋唔能夠處理你嘅編輯。
-請再試過喇。如果仍然唔得嘅話，試下[[Special:UserLogout|登出]]，然後重新登入。'''",
+'session_fail_preview'             => "'''對唔住！由於小節嘅資料唔見咗，我哋唔能夠處理你嘅編輯。'''
+請再試過喇。如果仍然唔得嘅話，試下[[Special:UserLogout|登出]]，然後重新登入。",
 'session_fail_preview_html'        => "'''對唔住！有關嘅程序資料已經遺失，我哋唔能夠處理你嘅編輯。'''
 
 ''由於{{SITENAME}}已經開放咗原 HTML 碼，預覽已經隱藏落嚟以預防 JavaScript 嘅攻擊。''
 
-'''如果呢個係正當嘅編輯嘗試，請再試過。如果重係唔得嘅話，請先[[Special:UserLogout|登出]]然後再登入。'''",
-'token_suffix_mismatch'            => "'''因為你嘅用戶端度嘅編輯幣整壞咗一啲標點符號字元，你嘅編輯已經拒絕咗。個編輯已經拒絕，以防止嗰版嘅文字損毀。
-當你響度用緊一啲好多臭蟲，以網絡為主嘅匿名代理服務。'''",
+'''如果呢個係正當嘅編輯嘗試，請再試過。'''如果重係唔得嘅話，請先[[Special:UserLogout|登出]]然後再登入。",
+'token_suffix_mismatch'            => "'''因為你嘅用戶端度嘅編輯幣整壞咗一啲標點符號字元，你嘅編輯已經拒絕咗。'''個編輯已經拒絕，以防止嗰版嘅文字損毀。
+當你響度用緊一啲好多臭蟲，以網絡為主嘅匿名代理服務。",
 'editing'                          => '而家喺度編輯$1',
 'editingsection'                   => '而家喺度編輯$1 （小節）',
 'editingcomment'                   => '而家喺度編輯$1 （新小節）',
@@ -722,9 +741,9 @@ $1',
 你需要合併你嘅更改到原有嘅文字。
 喺你撳「儲存頁面」之後，'''只有'''喺上面嘅文字區會被儲存。",
 'yourtext'                         => '你嘅文字',
-'storedversion'                    => '已經儲存咗嘅版本',
-'nonunicodebrowser'                => "'''警告：你嘅瀏覽器係唔係用緊 Unicode 。而家暫時有個解決方法，方便你可以安全咁編輯呢版：唔係 ASCII 嘅字元會喺編輯框裏面用十六進位編碼顯示。'''",
-'editingold'                       => "'''警告：你而家係編輯緊喺呢一頁嘅過時版本。如果你儲存佢，喺呢個版本嘅任何更改都會被遺失。'''",
+'storedversion'                    => '已經儲存咗嘅修訂',
+'nonunicodebrowser'                => "'''警告：你嘅瀏覽器係唔係用緊 Unicode 。'''而家暫時有個解決方法，方便你可以安全咁編輯呢版：唔係 ASCII 嘅字元會喺編輯框裏面用十六進位編碼顯示。",
+'editingold'                       => "'''警告：你而家係編輯緊喺呢一頁嘅過時版本。'''如果你儲存佢，喺呢個版本嘅任何更改都會被遺失。",
 'yourdiff'                         => '差異',
 'copyrightwarning'                 => "請留意喺{{SITENAME}}度，所有喺呢度嘅貢獻會被考慮到喺$2之下發出（睇$1有更詳細嘅資訊）。如果你係唔想你編輯嘅文字無喇喇咁被分發，咁就唔好喺呢度遞交。
 
@@ -734,16 +753,16 @@ $1',
 
 你亦都要同我哋保證啲文字係你自己寫嘅，或者係由公有領域或相似嘅自由資源複製落嚟（睇$1有更詳細嘅資訊）。
 '''喺未有任何許可嘅情況之下千祈唔好遞交有版權嘅作品！'''",
-'longpagewarning'                  => "'''警告：呢一頁有 $1 kilobytes 咁長；有啲瀏覽器可能會喺就離或者超過 32kb 編輯頁面會出現一啲問題。
-請考慮分割呢個頁面到細啲嘅小節。'''",
-'longpageerror'                    => "'''錯誤：你所遞交嘅文字係有 $1 kilobytes 咁長，係長過最大嘅 $2 kilobytes。儲唔到你遞交嘅文字。'''",
-'readonlywarning'                  => "'''錯誤：料庫已經鎖住咗，以便定期保養。而家你唔可以儲起你嘅編輯。你可以儲啲文字落一份文字檔先。'''
+'longpagewarning'                  => "'''警告'''：呢一頁有 $1 kilobytes 咁長；有啲瀏覽器可能會喺就離或者超過 32kb 編輯頁面會出現一啲問題。
+請考慮分割呢個頁面到細啲嘅小節。",
+'longpageerror'                    => "'''錯誤：你所遞交嘅文字係有 $1 kilobytes 咁長，係長過最大嘅 $2 kilobytes。'''儲唔到你遞交嘅文字。",
+'readonlywarning'                  => "'''錯誤：料庫已經鎖住咗，以便定期保養。而家你唔可以儲起你嘅編輯。'''你可以儲啲文字落一份文字檔先。
 
 管理員嘅解釋： $1",
 'protectedpagewarning'             => "'''警告：呢版已經受到保護，只有管理員權限嘅用戶先至可以改。'''",
 'semiprotectedpagewarning'         => "'''注意：'''呢一頁已經鎖咗，只有已經註冊嘅用戶先至可以改。",
 'cascadeprotectedwarning'          => "'''警告：'''呢一頁已經鎖咗，只有管理員權限嘅用戶先至可以改，因為佢係響以下連串保護嘅{{PLURAL:$1|一|幾}}頁度包含咗：",
-'titleprotectedwarning'            => "'''警告：呢一版已經鎖咗，只有一啲用戶先至可以開到。'''",
+'titleprotectedwarning'            => "'''警告：呢一版已經鎖咗，需要一啲[[Special:ListGroupRights|指定權限]]先至可以開到。'''",
 'templatesused'                    => '喺呢一頁所用嘅模：',
 'templatesusedpreview'             => '喺呢一次預覽所用嘅模：',
 'templatesusedsection'             => '喺呢一小節所用嘅模：',
@@ -815,8 +834,8 @@ $1',
 'last'                   => '之前',
 'page_first'             => '最頭',
 'page_last'              => '最尾',
-'histlegend'             => "選擇唔同版本：響兩個唔同版本嘅圓框分別撳一下，再撳最底的「比較被選版本」掣以作比較。<br />
-說明：'''（{{int:cur}}）'''= 同現時修訂版本嘅差別，'''（{{int:last}}）'''= 與前一個修訂版本嘅差別，'''{{int:minoreditletter}}''' = 小修改。",
+'histlegend'             => "選擇唔同版本：響兩個唔同版本嘅圓框分別撳一下，再撳最底的「比較被選修訂」掣以作比較。<br />
+說明：'''（{{int:cur}}）'''= 同現時修訂版本嘅差別，'''（{{int:last}}）'''= 同前一個修訂版本嘅差別，'''{{int:minoreditletter}}''' = 小修改。",
 'history-fieldset-title' => '瀏覽歷史',
 'deletedrev'             => '[刪除咗]',
 'histfirst'              => '最早',
@@ -833,53 +852,65 @@ $1',
 試吓[[Special:Search|響哩個wiki度搵]]有關新頁面嘅資料。',
 
 # Revision deletion
-'rev-deleted-comment'         => '(評論已經移除咗)',
-'rev-deleted-user'            => '(用戶名已經移除咗)',
-'rev-deleted-event'           => '(日誌動作已經移除咗)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-呢頁嘅修訂喺公共檔案庫中已經被洗咗。
-喺[{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} 刪除日誌]裏面可能會有更詳細嘅資料。</div>',
-'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">
-呢頁嘅修訂喺公共檔案庫中已經洗咗。
-作為一個喺{{SITENAME}}嘅管理員，你可以去睇吓佢；
-喺[{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} 刪除日誌]裏面可能會有更詳細嘅資料。</div>',
-'rev-delundel'                => '顯示／隱藏',
-'revisiondelete'              => '刪除／反刪除修訂',
-'revdelete-nooldid-title'     => '無效嘅目標修訂',
-'revdelete-nooldid-text'      => '你一係重未指定一個目標修訂去進行呢個功能、
+'rev-deleted-comment'            => '(評論已經移除咗)',
+'rev-deleted-user'               => '(用戶名已經移除咗)',
+'rev-deleted-event'              => '(日誌動作已經移除咗)',
+'rev-deleted-text-permission'    => "呢頁嘅修訂已經被'''洗咗'''。
+喺[{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} 刪除日誌]裏面可能會有更詳細嘅資料。",
+'rev-deleted-text-view'          => "呢頁嘅修訂已經'''洗咗'''。
+作為嘅管理員，你可以去睇吓佢；
+喺[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]裏面可能會有更詳細嘅資料。",
+'rev-deleted-no-diff'            => "因為其中一次修訂'''洗咗'''，你唔可以睇呢個差異。
+響[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]度可能有更多嘅資料。",
+'rev-deleted-unhide-diff'        => "呢頁嘅其中一次修訂已經'''洗咗'''。
+喺[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]裏面可能會有更詳細嘅資料。
+作為管理員，如果你想繼續嘅話，可以仍然[$1 睇番呢次修訂]。",
+'rev-delundel'                   => '顯示／隱藏',
+'revisiondelete'                 => '刪除／反刪除修訂',
+'revdelete-nooldid-title'        => '無效嘅目標修訂',
+'revdelete-nooldid-text'         => '講清用邊個修訂去做呢樣嘢、
 所指定嘅修訂唔存在，或者你試緊去隱藏現時嘅修訂。',
-'revdelete-selected'          => "'''揀[[:$1]]嘅$2次修訂：'''",
-'logdelete-selected'          => "'''揀[[:$1]]嘅日誌事件：'''",
-'revdelete-text'              => "'''刪除咗嘅修訂係會仍然出現喺個頁面歷史以及日誌度，但係佢哋嘅文字內容係唔可以供公眾瀏覽。'''
-
-其他喺{{SITENAME}}嘅管理員仍然可以睇已經隱藏咗嘅內容，同埋可以透過同一個介面去反刪除佢，除非已經設定咗附加嘅限制。",
-'revdelete-legend'            => '設定可見性嘅限制',
-'revdelete-hide-text'         => '隱藏修訂嘅文字',
-'revdelete-hide-name'         => '隱藏動作同目標',
-'revdelete-hide-comment'      => '隱藏編輯註解',
-'revdelete-hide-user'         => '隱藏編輯者嘅用戶名／IP',
-'revdelete-hide-restricted'   => '應用呢嘅限制至操作員去鎖住呢個界面',
-'revdelete-suppress'          => '同時壓制由操作員以及其他用戶的資料',
-'revdelete-hide-image'        => '隱藏資料內容',
-'revdelete-unsuppress'        => '響已經恢復咗嘅修訂度移除限制',
-'revdelete-log'               => '記錄註解：',
-'revdelete-submit'            => '應用到已經選取嘅修訂',
-'revdelete-logentry'          => '已經更改[[$1]]嘅修訂可見性',
-'logdelete-logentry'          => '已經更改[[$1]]嘅事件可見性',
-'revdelete-success'           => "'''修訂可見性已經成功噉設定。'''",
-'logdelete-success'           => "'''事件可見性已經成功噉設定。'''",
-'revdel-restore'              => '改可見性',
-'pagehist'                    => '頁面歷史',
-'deletedhist'                 => '刪除咗嘅歷史',
-'revdelete-content'           => '內容',
-'revdelete-summary'           => '編輯摘要',
-'revdelete-uname'             => '用戶名',
-'revdelete-restricted'        => '已經應用限制到操作員',
-'revdelete-unrestricted'      => '已經拎走對於操作員嘅限制',
-'revdelete-hid'               => '隱藏 $1',
-'revdelete-unhid'             => '唔隱藏 $1',
-'revdelete-log-message'       => '$1嘅$2次修訂',
-'logdelete-log-message'       => '$1嘅$2個事件',
+'revdelete-nologtype-title'      => '無畀到紀錄類型',
+'revdelete-nologtype-text'       => '你未指定一種紀錄類型去做呢個動作。',
+'revdelete-toomanytargets-title' => '太多目標',
+'revdelete-toomanytargets-text'  => '你指定咗太多嘅目標去做呢個動作。',
+'revdelete-nologid-title'        => '無效嘅日誌項目',
+'revdelete-nologid-text'         => '你未指定一個目標日誌項目去進行呢個動作或者指定嘅項目唔存在。',
+'revdelete-selected'             => "'''揀[[:$1]]嘅$2次修訂：'''",
+'logdelete-selected'             => "'''揀[[:$1]]嘅日誌事件：'''",
+'revdelete-text'                 => "'''刪除咗嘅修訂係會仍然出現喺個頁面歷史以及日誌度，但係佢哋嘅文字內容係唔可以供公眾瀏覽。'''
+其他喺{{SITENAME}}嘅管理員仍然可以睇已經隱藏咗嘅內容，同埋可以透過同一個介面去反刪除佢，除非已經設定咗附加嘅限制。
+請確認你肯定去做嘅話，你就要明白到後果，同埋呢個程序符合[[{{MediaWiki:Policy-url}}|政策]]。",
+'revdelete-suppress-text'        => "壓制'''只'''應該響下面嘅情況之下進行:
+* 唔合適嘅個人資料
+*: ''屋企地址、電話號碼、社群保安號碼等。''",
+'revdelete-legend'               => '設定可見性嘅限制',
+'revdelete-hide-text'            => '隱藏修訂嘅文字',
+'revdelete-hide-name'            => '隱藏動作同目標',
+'revdelete-hide-comment'         => '隱藏編輯註解',
+'revdelete-hide-user'            => '隱藏編輯者嘅用戶名／IP',
+'revdelete-hide-restricted'      => '同時壓制由操作員以及其他用戶的資料',
+'revdelete-suppress'             => '同時壓制由操作員以及其他用戶的資料',
+'revdelete-hide-image'           => '隱藏資料內容',
+'revdelete-unsuppress'           => '響已經恢復咗嘅修訂度移除限制',
+'revdelete-log'                  => '記錄註解：',
+'revdelete-submit'               => '應用到已經選取嘅修訂',
+'revdelete-logentry'             => '已經更改[[$1]]嘅修訂可見性',
+'logdelete-logentry'             => '已經更改[[$1]]嘅事件可見性',
+'revdelete-success'              => "'''修訂可見性已經成功噉設定。'''",
+'logdelete-success'              => "'''事件可見性已經成功噉設定。'''",
+'revdel-restore'                 => '改可見性',
+'pagehist'                       => '頁面歷史',
+'deletedhist'                    => '刪除咗嘅歷史',
+'revdelete-content'              => '內容',
+'revdelete-summary'              => '編輯摘要',
+'revdelete-uname'                => '用戶名',
+'revdelete-restricted'           => '已經應用限制到操作員',
+'revdelete-unrestricted'         => '已經拎走對於操作員嘅限制',
+'revdelete-hid'                  => '隱藏 $1',
+'revdelete-unhid'                => '唔隱藏 $1',
+'revdelete-log-message'          => '$1嘅$2次修訂',
+'logdelete-log-message'          => '$1嘅$2個事件',
 
 # Suppression log
 'suppressionlog'     => '廢止日誌',
@@ -899,7 +930,7 @@ $1',
 'mergehistory-submit'              => '合併修訂',
 'mergehistory-empty'               => '無修訂可以合併',
 'mergehistory-success'             => '[[:$1]]嘅$3次修訂已經成功噉合併到[[:$2]]。',
-'mergehistory-fail'                => '唔可以進行歷史合併，請重新檢查嗰一版同埋時間參數。',
+'mergehistory-fail'                => '歷史合併唔到，請重新檢查嗰一版同埋時間參數。',
 'mergehistory-no-source'           => '來源頁$1唔存在。',
 'mergehistory-no-destination'      => '目的頁$1唔存在。',
 'mergehistory-invalid-source'      => '來源頁一定要係一個有效嘅標題。',
@@ -907,6 +938,7 @@ $1',
 'mergehistory-autocomment'         => '已經合併咗[[:$1]]去到[[:$2]]',
 'mergehistory-comment'             => '已經合併咗[[:$1]]去到[[:$2]]: $3',
 'mergehistory-same-destination'    => '來源頁同目的頁唔可以一樣',
+'mergehistory-reason'              => '原因:',
 
 # Merge log
 'mergelog'           => '合併日誌',
@@ -918,7 +950,7 @@ $1',
 'history-title'           => '"$1"嘅修訂歷史',
 'difference'              => '（修訂之間嘅差異）',
 'lineno'                  => '第$1行：',
-'compareselectedversions' => '比較被選嘅版本',
+'compareselectedversions' => '比較被選嘅修訂',
 'visualcomparison'        => '可見比較',
 'wikicodecomparison'      => 'Wikitext比較',
 'editundo'                => '復原',
@@ -992,6 +1024,9 @@ $1',
 'notextmatches'                    => '冇頁面文字符合',
 'prevn'                            => '前$1',
 'nextn'                            => '後$1',
+'prevn-title'                      => '前$1項結果',
+'nextn-title'                      => '後$1項結果',
+'shown-title'                      => '每版顯示$1項結果',
 'viewprevnext'                     => '去睇 ($1) ($2) ($3)',
 'searchmenu-legend'                => '搵嘢選項',
 'searchmenu-exists'                => "'''響呢個wiki度有一版叫做\"[[:\$1]]\"'''",
@@ -1078,6 +1113,7 @@ $1',
 'prefs-resetpass'           => '改密碼',
 'saveprefs'                 => '儲存',
 'resetprefs'                => '清除未保存嘅更改',
+'restoreprefs'              => '恢復全部預設設定',
 'textboxsize'               => '編輯中',
 'prefs-edit-boxsize'        => '編輯框大細',
 'rows'                      => '列：',
@@ -1091,7 +1127,7 @@ $1',
 'recentchangesdays-max'     => '(最多 $1 日)',
 'recentchangescount'        => '最近更改、版紀錄同日誌中嘅預設編輯數：',
 'savedprefs'                => '你嘅喜好設定已經儲存。',
-'timezonelegend'            => '時區',
+'timezonelegend'            => '時區:',
 'timezonetext'              => '¹你嘅本地時間同伺服器時間 (UTC) 之間嘅差，以鐘頭為單位。',
 'localtime'                 => '本地時間:',
 'timezoneselect'            => '時區:',
@@ -1100,12 +1136,24 @@ $1',
 'timezoneoffset'            => '偏移¹:',
 'servertime'                => '伺機器時間:',
 'guesstimezone'             => '由瀏覽器填上',
+'timezoneregion-africa'     => '非洲',
+'timezoneregion-america'    => '美洲',
+'timezoneregion-antarctica' => '南極洲',
+'timezoneregion-arctic'     => '北極',
+'timezoneregion-asia'       => '亞洲',
+'timezoneregion-atlantic'   => '大西洋',
+'timezoneregion-australia'  => '澳洲',
+'timezoneregion-europe'     => '歐洲',
+'timezoneregion-indian'     => '印度洋',
+'timezoneregion-pacific'    => '太平洋',
 'allowemail'                => '由其它用戶啟用電子郵件',
 'prefs-searchoptions'       => '搵嘢選項',
 'prefs-namespaces'          => '空間名',
 'defaultns'                 => '預設喺呢啲空間名搵嘢：',
 'default'                   => '預設',
 'files'                     => '檔案',
+'prefs-custom-css'          => '自定 CSS',
+'prefs-custom-js'           => '自定 JS',
 
 # User rights
 'userrights'                  => '用戶權限管理', # Not used as normal message but as header for the special page itself
@@ -1153,59 +1201,61 @@ $1',
 'grouppage-suppress'      => '{{ns:project}}:監督',
 
 # Rights
-'right-read'                 => '讀版',
-'right-edit'                 => '編輯版',
-'right-createpage'           => '開版（唔包討論版）',
-'right-createtalk'           => '開討論版',
-'right-createaccount'        => '開新用戶戶口',
-'right-minoredit'            => '標示小編輯',
-'right-move'                 => '搬版',
-'right-move-subpages'        => '搬版同埋佢哋嘅細版',
-'right-move-rootuserpages'   => '搬根用戶版',
-'right-movefile'             => '搬檔案',
-'right-suppressredirect'     => '搬版嗰陣唔開跳轉',
-'right-upload'               => '上載檔案',
-'right-reupload'             => '覆蓋現有嘅檔案',
-'right-reupload-own'         => '覆蓋由同一位上載嘅檔案',
-'right-reupload-shared'      => '於本地無視共用媒體檔案庫上嘅檔案',
-'right-upload_by_url'        => '由URL地址上載一個檔案',
-'right-purge'                => '唔需要確認之下清除網站快取',
-'right-autoconfirmed'        => '編輯半保護版',
-'right-bot'                  => '視為一個自動程序',
-'right-nominornewtalk'       => '小編輯唔引發新信息提示',
-'right-apihighlimits'        => '響API查詢度用更高嘅上限',
-'right-writeapi'             => '使用編寫嘅API',
-'right-delete'               => '刪版',
-'right-bigdelete'            => '刪大量歷史嘅版',
-'right-deleterevision'       => '刪同反刪版嘅指定修訂',
-'right-deletedhistory'       => '睇刪咗嘅項目，唔包同埋嘅字',
-'right-browsearchive'        => '搵刪咗嘅版',
-'right-undelete'             => '反刪版',
-'right-suppressrevision'     => '睇同恢復由操作員隱藏嘅修訂',
-'right-suppressionlog'       => '去睇私人嘅日誌',
-'right-block'                => '封鎖其他用戶唔畀編輯',
-'right-blockemail'           => '封鎖用戶唔畀寄電郵',
-'right-hideuser'             => '封鎖用戶名，對公眾隱藏',
-'right-ipblock-exempt'       => '繞過IP封鎖、自動封鎖同埋範圍封鎖',
-'right-proxyunbannable'      => '繞過Proxy嘅自動封鎖',
-'right-protect'              => '改保護等級同埋編輯保護版',
-'right-editprotected'        => '編輯保護版（無連串保護）',
-'right-editinterface'        => '編輯用戶界面',
-'right-editusercssjs'        => '編輯其他用戶嘅CSS同埋JS檔',
-'right-rollback'             => '快速反轉上位用戶對某一版嘅編輯',
-'right-markbotedits'         => '標示反轉編輯做機械人編輯',
-'right-noratelimit'          => '唔受利用率限制影響',
-'right-import'               => '由其它wiki度倒入版',
-'right-importupload'         => '由檔案上載度倒入版',
-'right-patrol'               => '標示其它嘅編輯做已巡查嘅',
-'right-autopatrol'           => '將自己嘅編輯自動標示做已巡查嘅',
-'right-patrolmarks'          => '去睇最近巡查標記更改',
-'right-unwatchedpages'       => '去睇未監視嘅版',
-'right-trackback'            => '遞交一個trackback',
-'right-mergehistory'         => '合併版歷史',
-'right-userrights'           => '編輯全部用戶嘅權限',
-'right-userrights-interwiki' => '編輯響其它wiki嘅用戶權限',
-'right-siteadmin'            => '鎖同解鎖資料庫',
+'right-read'                  => '讀版',
+'right-edit'                  => '編輯版',
+'right-createpage'            => '開版（唔包討論版）',
+'right-createtalk'            => '開討論版',
+'right-createaccount'         => '開新用戶戶口',
+'right-minoredit'             => '標示小編輯',
+'right-move'                  => '搬版',
+'right-move-subpages'         => '搬版同埋佢哋嘅細版',
+'right-move-rootuserpages'    => '搬根用戶版',
+'right-movefile'              => '搬檔案',
+'right-suppressredirect'      => '搬版嗰陣唔開跳轉',
+'right-upload'                => '上載檔案',
+'right-reupload'              => '覆蓋現有嘅檔案',
+'right-reupload-own'          => '覆蓋由同一位上載嘅檔案',
+'right-reupload-shared'       => '於本地無視共用媒體檔案庫上嘅檔案',
+'right-upload_by_url'         => '由一個URL上載檔案',
+'right-purge'                 => '唔需要確認之下清除網站快取',
+'right-autoconfirmed'         => '編輯半保護版',
+'right-bot'                   => '視為一個自動程序',
+'right-nominornewtalk'        => '小編輯唔引發新信息提示',
+'right-apihighlimits'         => '響API查詢度用更高嘅上限',
+'right-writeapi'              => '使用編寫嘅API',
+'right-delete'                => '刪版',
+'right-bigdelete'             => '刪大量歷史嘅版',
+'right-deleterevision'        => '刪同反刪版嘅指定修訂',
+'right-deletedhistory'        => '睇刪咗嘅項目，唔包同埋嘅字',
+'right-browsearchive'         => '搵刪咗嘅版',
+'right-undelete'              => '反刪版',
+'right-suppressrevision'      => '睇同恢復由操作員隱藏嘅修訂',
+'right-suppressionlog'        => '去睇私人嘅日誌',
+'right-block'                 => '封鎖其他用戶唔畀編輯',
+'right-blockemail'            => '封鎖用戶唔畀寄電郵',
+'right-hideuser'              => '封鎖用戶名，對公眾隱藏',
+'right-ipblock-exempt'        => '繞過IP封鎖、自動封鎖同埋範圍封鎖',
+'right-proxyunbannable'       => '繞過Proxy嘅自動封鎖',
+'right-protect'               => '改保護等級同埋編輯保護版',
+'right-editprotected'         => '編輯保護版（無連串保護）',
+'right-editinterface'         => '編輯用戶界面',
+'right-editusercssjs'         => '編輯其他用戶嘅CSS同埋JS檔',
+'right-rollback'              => '快速反轉上位用戶對某一版嘅編輯',
+'right-markbotedits'          => '標示反轉編輯做機械人編輯',
+'right-noratelimit'           => '唔受利用率限制影響',
+'right-import'                => '由其它wiki度倒入版',
+'right-importupload'          => '由檔案上載度倒入版',
+'right-patrol'                => '標示其它嘅編輯做已巡查嘅',
+'right-autopatrol'            => '將自己嘅編輯自動標示做已巡查嘅',
+'right-patrolmarks'           => '去睇最近巡查標記更改',
+'right-unwatchedpages'        => '去睇未監視嘅版',
+'right-trackback'             => '遞交一個trackback',
+'right-mergehistory'          => '合併版歷史',
+'right-userrights'            => '編輯全部用戶嘅權限',
+'right-userrights-interwiki'  => '編輯響其它wiki嘅用戶權限',
+'right-siteadmin'             => '鎖同解鎖資料庫',
+'right-reset-passwords'       => '重設其他用戶嘅密碼',
+'right-override-export-depth' => '倒出包含有五層深連版嘅頁面',
 
 # User rights log
 'rightslog'      => '用戶權限日誌',
@@ -1227,7 +1277,7 @@ $1',
 'action-upload'               => '上載呢個檔案',
 'action-reupload'             => '覆蓋呢個現有嘅檔案',
 'action-reupload-shared'      => '覆蓋響共用檔案庫上面嘅檔案',
-'action-upload_by_url'        => '由一個URL地址度上載檔案',
+'action-upload_by_url'        => '由一個URL度上載檔案',
 'action-writeapi'             => '用來寫API',
 'action-delete'               => '刪呢版',
 'action-deleterevision'       => '刪呢次修訂',
@@ -1315,6 +1365,7 @@ $1',
 'filename'                    => '檔名',
 'filedesc'                    => '摘要',
 'fileuploadsummary'           => '摘要：',
+'filereuploadsummary'         => '檔案改變:',
 'filestatus'                  => '版權狀態:',
 'filesource'                  => '來源:',
 'uploadedfiles'               => '上載檔案中',
@@ -1360,13 +1411,14 @@ $1',
 'overwroteimage'              => '已經上載咗"[[$1]]"嘅新版本',
 'uploaddisabled'              => '上載已停用',
 'uploaddisabledtext'          => '檔案上載已經停用。',
+'php-uploaddisabledtext'      => 'PHP 檔案上載已經停用。請檢查 file_uploads 設定。',
 'uploadscripted'              => '呢個檔案包含可能會誤被瀏覽器解釋執行嘅 HTML 或 script 代碼。',
 'uploadcorrupt'               => '呢個檔案已損壞或係用咗錯誤嘅副檔名。請檢查吓個檔案，然後再試下上載多次。',
 'uploadvirus'                 => '呢個檔案有病毒！詳情：$1',
 'sourcefilename'              => '來源檔名:',
 'destfilename'                => '目標檔名:',
 'upload-maxfilesize'          => '檔案最大限制大細: $1',
-'watchthisupload'             => '監視呢頁',
+'watchthisupload'             => '監視呢個檔案',
 'filewasdeleted'              => '呢個檔案所使用嘅名曾經上載後，跟住就刪除咗。你應該響重新上載佢之前檢查吓$1。',
 'upload-wasdeleted'           => "'''警告: 你而家上載嘅一個檔案係先前曾經刪除過嘅。'''
 
@@ -1408,41 +1460,38 @@ $1',
 'listfiles_count'       => '版本',
 
 # File description page
-'filehist'                       => '檔案歷史',
-'filehist-help'                  => '撳個日期／時間去睇響嗰個時間出現過嘅檔案。',
-'filehist-deleteall'             => '刪除全部',
-'filehist-deleteone'             => '刪除',
-'filehist-revert'                => '回復',
-'filehist-current'               => '現時',
-'filehist-datetime'              => '日期／時間',
-'filehist-thumb'                 => '縮圖',
-'filehist-thumbtext'             => '響$1嘅縮圖版本',
-'filehist-nothumb'               => '無縮圖',
-'filehist-user'                  => '用戶',
-'filehist-dimensions'            => '尺寸',
-'filehist-filesize'              => '檔案大細',
-'filehist-comment'               => '註解',
-'imagelinks'                     => '檔案連結',
-'linkstoimage'                   => '以下嘅$1個頁面連結到呢個檔案：',
-'linkstoimage-more'              => '多過$1版連過去呢個檔案。
+'filehist'                  => '檔案歷史',
+'filehist-help'             => '撳個日期／時間去睇響嗰個時間出現過嘅檔案。',
+'filehist-deleteall'        => '刪除全部',
+'filehist-deleteone'        => '刪除',
+'filehist-revert'           => '回復',
+'filehist-current'          => '現時',
+'filehist-datetime'         => '日期／時間',
+'filehist-thumb'            => '縮圖',
+'filehist-thumbtext'        => '響$1嘅縮圖版本',
+'filehist-nothumb'          => '無縮圖',
+'filehist-user'             => '用戶',
+'filehist-dimensions'       => '尺寸',
+'filehist-filesize'         => '檔案大細',
+'filehist-comment'          => '註解',
+'imagelinks'                => '檔案連結',
+'linkstoimage'              => '以下嘅$1個頁面連結到呢個檔案：',
+'linkstoimage-more'         => '多過$1版連過去呢個檔案。
 下面嘅表只係列示咗連去呢個檔案嘅最頭$1版。
 一個[[Special:WhatLinksHere/$2|完整嘅表]]可以提供。',
-'nolinkstoimage'                 => '冇個頁面連結到呢個檔案。',
-'morelinkstoimage'               => '去睇連到呢個檔案嘅[[Special:WhatLinksHere/$1|更多連結]]。',
-'redirectstofile'                => '下面嘅$1個檔案跳轉到呢個檔案:',
-'duplicatesoffile'               => '下面嘅$1個檔案係同呢個檔案重覆:',
-'sharedupload'                   => '呢個檔案係共用嘅上載，可以喺其他計劃中使用。“',
-'shareduploadwiki'               => '更多資訊請睇$1。',
-'shareduploadwiki-desc'          => '佢響共用檔案庫上面嘅$1描述響下面度顯示。',
-'shareduploadwiki-linktext'      => '檔案描述頁面',
-'shareduploadduplicate'          => '呢個檔案係同響個共用檔案庫嘅$1重覆。',
-'shareduploadduplicate-linktext' => '另一個檔案',
-'shareduploadconflict'           => '呢個檔案響共用檔案庫度嘅$1有同樣嘅檔名。',
-'shareduploadconflict-linktext'  => '另一個檔案',
-'noimage'                        => '冇同名嘅檔案存在，你可以$1。',
-'noimage-linktext'               => '上載佢',
-'uploadnewversion-linktext'      => '上載呢個檔案嘅一個新版本',
-'imagepage-searchdupe'           => '搵重覆檔案',
+'nolinkstoimage'            => '冇個頁面連結到呢個檔案。',
+'morelinkstoimage'          => '去睇連到呢個檔案嘅[[Special:WhatLinksHere/$1|更多連結]]。',
+'redirectstofile'           => '下面嘅$1個檔案跳轉到呢個檔案:',
+'duplicatesoffile'          => '下面嘅$1個檔案係同呢個檔案重覆 ([[Special:FileDuplicateSearch/$2|更多細節]]):',
+'sharedupload'              => '呢個檔案係出自$1，可以喺其他計劃中使用。', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'shareduploadwiki'          => '更多資訊請睇$1。',
+'shareduploadwiki-desc'     => '佢響嗰邊嘅$1描述響下面度顯示。',
+'shareduploadwiki-linktext' => '檔案描述頁面',
+'noimage'                   => '冇同名嘅檔案存在，你可以$1。',
+'noimage-linktext'          => '上載一個',
+'uploadnewversion-linktext' => '上載呢個檔案嘅一個新版本',
+'shared-repo-from'          => '出自 $1', # $1 is the repository name
+'shared-repo'               => '一個共用檔案庫', # used when shared-repo-NAME does not exist
 
 # File reversion
 'filerevert'                => '回復$1',
@@ -1464,7 +1513,7 @@ $1',
 'filedelete-success'          => "'''$1'''已經刪除咗。",
 'filedelete-success-old'      => "'''[[Media:$1|$1]]'''響 $2 $3 嘅版本已經刪除咗。",
 'filedelete-nofile'           => "'''$1'''唔存在。",
-'filedelete-nofile-old'       => "用指定嘅屬性，呢度係無'''$1'''響 $2 $3 嘅歸檔版本。",
+'filedelete-nofile-old'       => "用指定嘅屬性，呢度係無'''$1'''嘅歸檔版本。",
 'filedelete-otherreason'      => '其它／附加嘅原因:',
 'filedelete-reason-otherlist' => '其它原因',
 'filedelete-reason-dropdown'  => '
@@ -1559,6 +1608,7 @@ Template:搞清楚',
 'popularpages'            => '受歡迎嘅頁面',
 'wantedcategories'        => '被徵求嘅分類',
 'wantedpages'             => '被徵求嘅頁面',
+'wantedpages-badtitle'    => '響結果組嘅無效標題: $1',
 'wantedfiles'             => '被徵求嘅檔案',
 'wantedtemplates'         => '被徵求嘅模',
 'mostlinked'              => '有最多連結嘅頁面',
@@ -1582,7 +1632,9 @@ Template:搞清楚',
 'protectedtitlesempty'    => '響呢啲參數之下並無標題保護住。',
 'listusers'               => '用戶一覽',
 'listusers-editsonly'     => '只顯示有編輯嘅用戶',
+'listusers-creationsort'  => '按建立日期排序',
 'usereditcount'           => '$1次編輯',
+'usercreated'             => '響$1 $2建立',
 'newpages'                => '新頁',
 'newpages-username'       => '用戶名：',
 'ancientpages'            => '舊頁面',
@@ -1609,7 +1661,7 @@ Template:搞清楚',
 'specialloguserlabel'  => '用戶:',
 'speciallogtitlelabel' => '標題:',
 'log'                  => '日誌',
-'all-logs-page'        => '全部嘅日誌',
+'all-logs-page'        => '全部嘅公共日誌',
 'alllogstext'          => '響{{SITENAME}}度全部日誌嘅綜合顯示。你可以選擇一個日誌類型、用戶名、或者受影響嘅頁面，嚟縮窄顯示嘅範圍。',
 'logempty'             => '日誌中冇符合嘅項目。',
 'log-title-wildcard'   => '搵以呢個文字開始嘅標題',
@@ -1641,7 +1693,8 @@ Template:搞清楚',
 'special-categories-sort-abc'   => '跟字母排',
 
 # Special:DeletedContributions
-'deletedcontributions' => '已經刪除咗嘅用戶貢獻',
+'deletedcontributions'       => '已經刪除咗嘅用戶貢獻',
+'deletedcontributions-title' => '已經刪除咗嘅用戶貢獻',
 
 # Special:LinkSearch
 'linksearch'       => '外部連結',
@@ -1751,21 +1804,19 @@ Template:搞清楚',
 'enotif_anon_editor'           => '匿名用戶$1',
 'enotif_body'                  => '$WATCHINGUSERNAME先生／小姐你好,
 
-{{SITENAME}}嘅頁面$PAGETITLE已經由$PAGEEDITOR喺$PAGEEDITDATE$CHANGEDORCREATED，現時版本請睇$PAGETITLE_URL。
-
-The {{SITENAME}} page $PAGETITLE has been $CHANGEDORCREATED on $PAGEEDITDATE by $PAGEEDITOR, see $PAGETITLE_URL for the current version.
+{{SITENAME}}嘅頁面$PAGETITLE已經由$PAGEEDITOR喺$PAGEEDITDATE$CHANGEDORCREATED，現時修訂請睇$PAGETITLE_URL。
 
 $NEWPAGE
 
-編輯者留低嘅摘要：$PAGESUMMARY $PAGEMINOREDIT
+編輯者留低嘅撮要：$PAGESUMMARY $PAGEMINOREDIT
 
-連絡呢個編輯者:
+聯絡呢個編輯者:
 mail: $PAGEEDITOR_EMAIL
 wiki: $PAGEEDITOR_WIKI
 
-今後唔會再有進一步嘅通知，除非你再次訪問呢個頁面。你亦都可以喺你嘅監視清單度復位所有監視頁面嘅通知標誌。
+今後唔會再有進一步嘅通知，除非你再來呢版。你亦都可以喺你嘅監視清單度復位所有監視頁面嘅通知標誌。
 
-            {{SITENAME}}通知系統敬上
+            {{SITENAME}}通知系統
 
 --
 要修改你嘅監視清單設定，請睇{{fullurl:{{ns:special}}:Watchlist/edit}}
@@ -1815,13 +1866,13 @@ wiki: $PAGEEDITOR_WIKI
 
 上次對呢版嘅編輯係由[[User:$3|$3]]（[[User talk:$3|留言]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]）做嘅。',
 'editcomment'      => "編輯摘要係：\"''\$1''\"。", # only shown if there is an edit comment
-'revertpage'       => '已經反轉由[[Special:Contributions/$2|$2]]（[[User talk:$2|對話]]）所寫嘅編輯到[[User:$1|$1]]嘅最後版本。', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
-'rollback-success' => '已經反轉由$1所寫嘅編輯；恢復到$2嘅最後版本。',
+'revertpage'       => '已經反轉由[[Special:Contributions/$2|$2]]（[[User talk:$2|對話]]）所寫嘅編輯到[[User:$1|$1]]嘅最後修訂。', # Additionally available: $3: revid of the revision reverted to, $4: timestamp of the revision reverted to, $5: revid of the revision reverted from, $6: timestamp of the revision reverted from
+'rollback-success' => '已經反轉由$1所寫嘅編輯；恢復到$2嘅最後修訂。',
 'sessionfailure'   => '你嘅登入會話 (session) 好似有啲問題；為咗防止會話劫持，呢個操作已經取消。請撳「返轉頭」然後重新載入你嚟自嘅頁面，然後再試吓啦。',
 
 # Protect
 'protectlogpage'              => '保護日誌',
-'protectlogtext'              => '下面係一個保護同埋解除保護頁面嘅一覽表。睇吓[[Special:ProtectedPages|保護頁面一覽]]去拎現時進行緊嘅頁面保護一覽。',
+'protectlogtext'              => '下面係一個保護同埋解除保護頁面嘅一覽表。睇吓[[Special:ProtectedPages|保護頁面一覽]]去搵鎖咗嘅頁。',
 'protectedarticle'            => '已經保護 "[[$1]]"',
 'modifiedarticleprotection'   => '已經改咗 "[[$1]]" 嘅保護等級',
 'unprotectedarticle'          => '已經唔再保護 "[[$1]]"',
@@ -1862,7 +1913,7 @@ wiki: $PAGEEDITOR_WIKI
 ** 反生產性編輯戰
 ** 高流量頁',
 'protect-edit-reasonlist'     => '編輯保護原因',
-'protect-expiry-options'      => '兩個鐘頭:2 hours,一日:1 day,三日:3 days,一個禮拜:1 week,兩個禮拜:2 weeks,一個月:1 month,三個月:3 months,六個月:6 months,一年:1 year,終身:infinite', # display1:time1,display2:time2,...
+'protect-expiry-options'      => '一個鐘頭:1 hour,一日:1 day,三日:3 days,一個禮拜:1 week,兩個禮拜:2 weeks,一個月:1 month,三個月:3 months,六個月:6 months,一年:1 year,終身:infinite', # display1:time1,display2:time2,...
 'restriction-type'            => '許可:',
 'restriction-level'           => '限制等級:',
 'minimum-size'                => '最小大細',
@@ -1892,22 +1943,22 @@ wiki: $PAGEEDITOR_WIKI
 撳'''''重設'''''會清除註解文字同埋全部嘅核選盒。",
 'undeleterevisions'            => '$1個修訂都已經存檔',
 'undeletehistory'              => '如果你恢復呢個頁面，佢嘅所有修改歷史都會恢復返到嗰篇頁面嘅歷史度。如果喺佢刪除之後又新開咗同名嘅頁面，你恢復嘅修改歷史會顯示喺先前歷史度。',
-'undeleterevdel'               => '如果響最新修訂度部份刪除，噉反刪除就唔能夠進行。如果遇到呢種情況，你一定要反選或者反隱藏最新刪除咗嘅修訂。',
-'undeletehistorynoadmin'       => '呢一版已經刪咗。刪除嘅原因喺下面嘅摘要度，連同重有刪除之前編輯過呢個頁面嘅用戶嘅詳細資料。所刪除嘅版本嘅實際內容得管理員可以睇到。',
+'undeleterevdel'               => '如果響最新修訂度部份刪除，噉就反刪除唔到。如果遇到呢種情況，你一定要反選或者反隱藏最新刪除咗嘅修訂。',
+'undeletehistorynoadmin'       => '呢版刪咗。原因喺下面有講，連同重有刪除之前編輯過呢頁嘅用戶嘅詳細資料。所刪除嘅版本嘅實際內容得管理員可以睇到。',
 'undelete-revision'            => '已經刪除咗$1嗰陣（響$4 $5）由$3所寫嘅修訂:',
 'undeleterevision-missing'     => '唔正確或者遺失咗修訂。你可能有一個壞連結，或者嗰個修訂已經響存檔度恢復咗或者刪除咗。',
 'undelete-nodiff'              => '搵唔到之前嘅修訂。',
-'undeletebtn'                  => '恢復',
-'undeletelink'                 => '恢復',
+'undeletebtn'                  => '救返',
+'undeletelink'                 => '睇／救',
 'undeletereset'                => '重設',
 'undeleteinvert'               => '反選',
 'undeletecomment'              => '註解：',
-'undeletedarticle'             => '已經恢復咗"[[$1]]"',
-'undeletedrevisions'           => '$1個修訂已經恢復',
-'undeletedrevisions-files'     => '$1個修訂同$2個檔案已經恢復',
-'undeletedfiles'               => '$1個檔案已經恢復',
-'cannotundelete'               => '反刪除失敗；可能有其他人已經反刪除嗰一頁。',
-'undeletedpage'                => "<big>'''$1已經成功恢復'''</big>
+'undeletedarticle'             => '已經救返"[[$1]]"',
+'undeletedrevisions'           => '$1個修訂已經救返',
+'undeletedrevisions-files'     => '$1個修訂同$2個檔案已經救返',
+'undeletedfiles'               => '$1個檔案已經救返',
+'cannotundelete'               => '救唔到；可能有其他人已經救返嗰頁。',
+'undeletedpage'                => "<big>'''$1已經成功救返'''</big>
 
 最近嘅刪除同恢復記錄請睇[[Special:Log/delete]]。",
 'undelete-header'              => '睇吓[[Special:Log/delete|刪除日誌]]去睇之前刪除嘅頁頁。',
@@ -1936,7 +1987,7 @@ $1',
 'contributions-title' => '$1嘅用戶貢獻',
 'mycontris'           => '我嘅貢獻',
 'contribsub2'         => '$1嘅貢獻 ($2)',
-'nocontribs'          => '搵唔到符合呢啲條件嘅修改。',
+'nocontribs'          => '搵唔到符合呢啲條件嘅修改。', # Optional parameter: $1 is the user name
 'uctop'               => '(最頂)',
 'month'               => '由呢個月 (同更早):',
 'year'                => '由呢一年 (同更早):',
@@ -1945,6 +1996,7 @@ $1',
 'sp-contributions-newbies-sub'   => '新戶口嘅貢獻',
 'sp-contributions-newbies-title' => '新戶口嘅用戶貢獻',
 'sp-contributions-blocklog'      => '封鎖日誌',
+'sp-contributions-logs'          => '日誌',
 'sp-contributions-search'        => '搵貢獻',
 'sp-contributions-username'      => 'IP地址或用戶名：',
 'sp-contributions-submit'        => '搵',
@@ -1997,7 +2049,7 @@ $1',
 'ipboptions'                      => '兩個鐘頭:2 hours,一日:1 day,三日:3 days,一個禮拜:1 week,兩個禮拜:2 weeks,一個月:1 month,三個月:3 months,六個月:6 months,一年:1 year,終身:infinite', # display1:time1,display2:time2,...
 'ipbotheroption'                  => '其它',
 'ipbotherreason'                  => '其它／附加嘅原因:',
-'ipbhidename'                     => '響個封鎖日誌、現時嘅封鎖名單以用戶名單度隱藏用戶名',
+'ipbhidename'                     => '響編輯同名單度隱藏用戶名',
 'ipbwatchuser'                    => '監視呢位用戶嘅用戶頁同埋佢嘅討論頁',
 'ipballowusertalk'                => '當被封鎖嗰陣容許呢位用戶去編輯自己嘅討論版',
 'ipb-change-block'                => '用呢啲設定重新封鎖用戶',
@@ -2050,9 +2102,11 @@ $1',
 'block-log-flags-noemail'         => '封咗電郵',
 'block-log-flags-nousertalk'      => '唔可以編輯自己嘅討論版',
 'block-log-flags-angry-autoblock' => '加強自動封鎖已經啟用',
+'block-log-flags-hiddenname'      => '隱藏用戶名',
 'range_block_disabled'            => '操作員嘅建立範圍封鎖已經停用。',
 'ipb_expiry_invalid'              => '無效嘅期限。',
 'ipb_expiry_temp'                 => '隱藏用戶名封鎖定一定係要永久性嘅。',
+'ipb_hide_invalid'                => '唔能夠壓止呢個戶口；佢可能有太多編輯。',
 'ipb_already_blocked'             => '"$1"已經封鎖咗',
 'ipb-needreblock'                 => '== 已經封鎖咗 ==
 $1已經被封鎖。你係咪想更改呢個設定？',
@@ -2073,7 +2127,7 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 'unlockdb'            => '解除鎖定資料庫',
 'lockdbtext'          => '鎖定資料庫會暫停所有用戶去編輯頁面、更改佢哋嘅喜好設定、編輯佢哋嘅監視清單嘅能力，同埋其它需要喺資料庫中更改嘅動作。
 請確認你的確係需要要噉做，喺你嘅維護工作完成之後會解除鎖定資料庫。',
-'unlockdbtext'        => '解除資料庫鎖定以便其他用戶可以恢復進行編輯頁面、修改使用偏好、修改監視清單以及其他需要修改資料庫嘅操作。
+'unlockdbtext'        => '解資料庫嘅鎖，畀其他用戶編輯、修改設定、監視清單之類要改資料庫嘅操作。
 請確認你的而且確打算噉做。',
 'lockconfirm'         => '係，我真係想去鎖定資料庫。',
 'unlockconfirm'       => '係，我真係想去解除鎖定資料庫。',
@@ -2082,22 +2136,22 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 'locknoconfirm'       => '你未剔個確認框喎。',
 'lockdbsuccesssub'    => '資料庫鎖定已經成功',
 'unlockdbsuccesssub'  => '資料庫鎖定已成功移除',
-'lockdbsuccesstext'   => '資料庫現已鎖定。<br />
-請一定要記得喺完成系統維護工作之後[[Special:UnlockDB|解除資料庫嘅鎖定]]。',
-'unlockdbsuccesstext' => '資料庫鎖定現已解除。',
-'lockfilenotwritable' => '資料庫封鎖檔案係唔可以寫入嘅。要鎖定或解鎖資料庫，係需要由網頁伺服器中寫入。',
+'lockdbsuccesstext'   => '資料庫現已鎖住。<br />
+請一定要記得喺完成系統維護工作之後[[Special:UnlockDB|解鎖資料庫]]。',
+'unlockdbsuccesstext' => '資料庫鎖定現已解開。',
+'lockfilenotwritable' => '資料庫封鎖檔案係唔寫得嘅。要鎖定或解鎖資料庫，要由網頁伺服器度寫入。',
 'databasenotlocked'   => '資料庫而家冇鎖到。',
 
 # Move page
 'move-page'                    => '搬$1',
 'move-page-legend'             => '搬頁',
-'movepagetext'                 => "使用以下表格會將頁面改名，兼且連同搬埋佢嘅歷史過去。
-舊標題會變成指去新標題嘅跳轉頁。
+'movepagetext'                 => "用下面個表改版名，搬埋佢嘅歷史。
+舊標題會變做跳轉。
 你可以自動噉更新指到原先標題嘅跳轉。
-如果你揀咗唔去做嘅話，請務必要檢查吓有冇[[Special:Doubledirects|雙重跳轉]]或者[[Special:BrokenRedirects|死跳轉]]（嘅情況發生）。
+如果你揀咗唔去做嘅話，請務必要檢查吓有冇[[Special:DoubleRedirects|雙重跳轉]]或者[[Special:BrokenRedirects|死跳轉]]（嘅情況發生）。
 你有責任確保啲連結依然指去佢哋應該指去嘅地方。
 
-注意如果已經有一個同個新名同名嘅頁面，噉呢個頁面係搬'''唔到'''嘅，除非嗰個同名嘅頁面係空嘅或者佢係一個跳轉頁，兼且要之前冇編輯過（冇編輯歷史）先得。噉即係講萬一你搞錯咗，你可以將呢個頁面改返去佢改之前噉，你唔可以覆蓋一個現有嘅頁面。
+注意如果已經有一個同個新名同名嘅頁，噉呢個頁係搬'''唔到'''嘅，除非嗰個同名嘅頁係空嘅或者佢係一個跳轉頁，兼且要之前冇編輯過（冇編輯歷史）先得。噉即係講萬一你搞錯咗，你可以將呢個頁改返去佢改之前噉，你唔可以覆蓋一個現有嘅頁。
 
 '''警告！'''
 噉樣對於一個好多人經過嘅頁面嚟講可能係一個好大嘅同埋出人意表嘅修改；請你喺行動之前確認你清楚噉做嘅後果。",
@@ -2105,7 +2159,7 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 *新嘅頁面名下面已經有咗一個非空嘅討論頁，又或者
 *你唔剔下面個框。
 
-喺呢啲情況下，需要嘅話你唯有手動搬同合併個頁面。",
+喺呢啲情況下，需要嘅話你唯有手動搬同合併個頁。",
 'movearticle'                  => '搬頁:',
 'movenologin'                  => '未登入',
 'movenologintext'              => '你要係註冊用戶而且要[[Special:UserLogin|登入]]咗先可以搬頁',
@@ -2125,8 +2179,8 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 'talkexists'                   => "'''頁面本身已經成功搬咗，但係個討論頁搬唔到，因為已經有一個同名嘅討論頁。請手工合併佢哋。'''",
 'movedto'                      => '搬去',
 'movetalk'                     => '搬相應嘅討論頁',
-'move-subpages'                => '如果可以嘅話，搬全部嘅細頁',
-'move-talk-subpages'           => '如果可以嘅話，搬全部嘅細討論頁',
+'move-subpages'                => '搬細頁（上到去$1版）',
+'move-talk-subpages'           => '搬細討論頁（上到去$1版）',
 'movepage-page-exists'         => '版$1已經存在，唔可以自動噉覆寫。',
 'movepage-page-moved'          => '版$1已經搬到去$2。',
 'movepage-page-unmoved'        => '版$1唔可以搬到去$2。',
@@ -2136,6 +2190,9 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 'move-redirect-suppressed'     => '跳轉已壓制',
 'movelogpage'                  => '移動日誌',
 'movelogpagetext'              => '以下係全部搬過嘅頁面清單。',
+'movesubpage'                  => '{{PLURAL:$1|細頁|細頁}}',
+'movesubpagetext'              => '呢版有$1版細頁列示如下。',
+'movenosubpage'                => '呢版無細頁。',
 'movereason'                   => '原因',
 'revertmove'                   => '恢復',
 'delete_and_move'              => '刪除並移動',
@@ -2160,7 +2217,7 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 'export'            => '倒出/導出/匯出（Export）頁面',
 'exporttext'        => '你可以倒出文字、編輯某個頁面、編輯封裝（wrap）喺一啲XML度嘅一組頁面。呢啲嘢可以用MediaWiki透過[[Special:Import|倒入]]頁倒入去其他wiki度。
 
-要倒出頁面嘅話，就喺下面嘅文字框度打標題名，一行一個標題，然後揀你係要現時版本加上所有嘅舊版本同歷史，定係淨係要現時版本同最後編輯嘅相關資訊。
+要倒出頁面嘅話，就喺下面嘅文字框度打標題名，一行一個標題，然後揀你係要現時修訂加上所有嘅舊修訂同歷史，定係淨係要現時修訂同最後編輯嘅相關資訊。
 
 喺後面嗰種情況下，你亦都可以用一個連結，例如[[{{#Special:Export}}/{{MediaWiki:Mainpage}}]]對頁面"[[{{MediaWiki:Mainpage}}]]"。',
 'exportcuronly'     => '淨係包括而家嘅修訂版本，唔包括完整歷史',
@@ -2169,8 +2226,11 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 'export-submit'     => '倒出/導出/匯出',
 'export-addcattext' => '由分類度加入頁面：',
 'export-addcat'     => '加入',
+'export-addnstext'  => '由空間名度加入頁面：',
+'export-addns'      => '加入',
 'export-download'   => '另存做檔案',
 'export-templates'  => '包含模',
+'export-pagelinks'  => '包含到一個深度嘅連結版:',
 
 # Namespace 8 related
 'allmessages'               => '系統信息',
@@ -2199,7 +2259,8 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 修訂日期同編輯者會被保存落嚟。
 所有 transwiki 嘅倒入動作會響[[Special:Log/import|倒入日誌]]度記錄落嚟。',
 'import-interwiki-source'    => '來源 wiki／頁:',
-'import-interwiki-history'   => '複製呢一頁所有嘅歷史版本',
+'import-interwiki-history'   => '複製呢一頁所有嘅歷史修訂',
+'import-interwiki-templates' => '包含全部嘅模',
 'import-interwiki-submit'    => '倒入',
 'import-interwiki-namespace' => '目的空間名：',
 'import-upload-filename'     => '檔名:',
@@ -2252,7 +2313,7 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 'tooltip-ca-edit'                 => '你可以編輯呢一頁。請在儲存之前先預覽一吓。',
 'tooltip-ca-addsection'           => '開始新嘅小節',
 'tooltip-ca-viewsource'           => '呢一頁已經被保護。你可以睇吓呢一頁呢原始碼。',
-'tooltip-ca-history'              => '呢一頁之前嘅版本',
+'tooltip-ca-history'              => '呢一頁之前嘅修訂',
 'tooltip-ca-protect'              => '保護呢一頁',
 'tooltip-ca-delete'               => '刪除呢一頁',
 'tooltip-ca-undelete'             => '將呢個頁面還原到被刪除之前嘅狀態',
@@ -2278,27 +2339,27 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 'tooltip-t-upload'                => '上載檔案',
 'tooltip-t-specialpages'          => '所有特別頁嘅一覽',
 'tooltip-t-print'                 => '呢一版嘅可打印版本',
-'tooltip-t-permalink'             => '呢一版嘅哩個版本嘅永久連結',
+'tooltip-t-permalink'             => '呢一版嘅哩個修訂嘅永久連結',
 'tooltip-ca-nstab-main'           => '睇吓內容頁',
 'tooltip-ca-nstab-user'           => '睇吓用戶頁',
 'tooltip-ca-nstab-media'          => '睇吓媒體頁',
-'tooltip-ca-nstab-special'        => '呢個係一個特別頁；你唔能夠嗰一頁進行編輯。',
+'tooltip-ca-nstab-special'        => '呢度係特別頁，你修改唔到。',
 'tooltip-ca-nstab-project'        => '睇吓專案頁',
 'tooltip-ca-nstab-image'          => '睇吓檔案頁',
 'tooltip-ca-nstab-mediawiki'      => '睇吓系統信息',
 'tooltip-ca-nstab-template'       => '睇吓個模',
 'tooltip-ca-nstab-help'           => '睇吓幫助頁',
 'tooltip-ca-nstab-category'       => '睇吓分類頁',
-'tooltip-minoredit'               => '標為細嘅修訂',
-'tooltip-save'                    => '保存你嘅更改',
-'tooltip-preview'                 => '預覽你嘅修改，請喺保存之前先預覽一次先',
+'tooltip-minoredit'               => '標做細嘅修訂',
+'tooltip-save'                    => '保存你嘅修改',
+'tooltip-preview'                 => '預覽你嘅修改，保存之前請檢查一次先',
 'tooltip-diff'                    => '顯示你對頁面所作嘅修改',
-'tooltip-compareselectedversions' => '顯示該頁面兩個所選版本嘅唔同之處。',
-'tooltip-watch'                   => '將呢頁加到去你嘅監視清單度',
-'tooltip-recreate'                => '即使已經刪除過都要重新整過呢頁',
+'tooltip-compareselectedversions' => '顯示該頁面兩個所選修訂嘅唔同之處。',
+'tooltip-watch'                   => '加呢頁入你張監視清單',
+'tooltip-recreate'                => '即使已經刪過都要重新整過呢頁',
 'tooltip-upload'                  => '開始上載',
 'tooltip-rollback'                => '『反轉』可以一撳復原上一位貢獻者對呢版嘅編輯',
-'tooltip-undo'                    => '『復原』可以響編輯模式度開編輯表以便復原。容許響摘要度加入原因',
+'tooltip-undo'                    => '『復原』可以響編輯模式度開編輯表以便復原。佢容許響摘要度加入原因。',
 
 # Stylesheets
 'common.css'      => '/* 響呢度放 CSS 碼來改成個網站嘅畫面 */',
@@ -2345,7 +2406,7 @@ $1已經被封鎖。你係咪想更改呢個設定？',
 噉可能係由指去外部網站嘅連結引起。',
 'spamprotectionmatch' => '以下係觸發我哋嘅反垃圾過濾器嘅文字：$1',
 'spambot_username'    => 'MediaWiki垃圾清除',
-'spam_reverting'      => '恢復返去最後一個唔包含指去$1嘅連結嘅嗰個版本。',
+'spam_reverting'      => '恢復返去最後一個唔包含指去$1嘅連結嘅嗰個修訂。',
 'spam_blanking'       => '全部版本都含有指去$1嘅連結，留空',
 
 # Info page
@@ -2413,7 +2474,7 @@ $1',
 
 # Media information
 'mediawarning'         => "'''警告'''：呢個檔案可能有一啲惡意嘅程式編碼，如果執行佢嘅話，你嘅系統可能會被波及。<hr />",
-'imagemaxsize'         => '限制檔案述頁中嘅圖像細到：',
+'imagemaxsize'         => "圖像大細限制:<br />''(用響檔案描述頁)''",
 'thumbsize'            => '縮圖大細：',
 'widthheightpage'      => '$1×$2, $3版',
 'file-info'            => '(檔案大細：$1 ，MIME類型：$2)',
@@ -2481,6 +2542,7 @@ Variants for Chinese language
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags
@@ -2741,7 +2803,7 @@ Variants for Chinese language
 # Pseudotags used for GPSSpeedRef and GPSDestDistanceRef
 'exif-gpsspeed-k' => '千米/小時',
 'exif-gpsspeed-m' => '英里/小時',
-'exif-gpsspeed-n' => '浬',
+'exif-gpsspeed-n' => '浬/小時',
 
 # Pseudotags used for GPSTrackRef, GPSImgDirectionRef and GPSDestBearingRef
 'exif-gpsdirection-t' => '真實方向',
@@ -2762,7 +2824,7 @@ Variants for Chinese language
 'confirmemail'             => '確認電郵地址',
 'confirmemail_noemail'     => '你唔需要響你嘅[[Special:Preferences|用戶喜好設定]]度設定一個有效嘅電郵地址。',
 'confirmemail_text'        => '{{SITENAME}}需要你喺使用電郵功能之前驗證吓你嘅電郵地址。啟用下邊個掣嚟發封確認信去你個地址度。封信入面會附帶一條包含代碼嘅連結；喺你個瀏覽器度打開條連結嚟確認你嘅電郵地址係有效嘅。',
-'confirmemail_pending'     => '<div class="error">一個確認碼已經電郵咗畀你；如果你係啱啱開咗個新戶口嘅，你可以響請求一個新嘅確認碼之前等多幾分鐘等佢寄畀你。</div>',
+'confirmemail_pending'     => '一個確認碼已經電郵咗畀你；如果你係啱啱開咗個新戶口嘅，你可以響請求一個新嘅確認碼之前等多幾分鐘等佢寄畀你。',
 'confirmemail_send'        => '寄出確認碼。',
 'confirmemail_sent'        => '確認電郵已經寄出。',
 'confirmemail_oncreate'    => '一個確認碼已經寄送咗到嘅嘅電郵地址。
@@ -2797,10 +2859,9 @@ $5
 'scarytranscludetoolong'  => '[URL 太長]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">呢一版嘅過去追蹤：
-$1
-</div>',
-'trackbackremove'   => ' ([$1 刪除])',
+'trackbackbox'      => '呢一版嘅過去追蹤：<br />
+$1',
+'trackbackremove'   => '([$1 刪除])',
 'trackbacklink'     => '過去追蹤',
 'trackbackdeleteok' => '過去追蹤已經成功噉樣刪除。',
 
@@ -2814,7 +2875,11 @@ $1
 # action=purge
 'confirm_purge_button' => '肯定',
 'confirm-purge-top'    => '肯定要洗咗呢版個快取版本？',
-'confirm-purge-bottom' => '清理一版係會清除快取同埋強迫顯示最現時嘅版本。',
+'confirm-purge-bottom' => '清理一版係會清除快取同埋強迫顯示最現時嘅修訂。',
+
+# Separators for various lists, etc.
+'comma-separator' => '、',
+'word-separator'  => '',
 
 # Multipage image navigation
 'imgmultipageprev' => '← 上一版',
@@ -2920,7 +2985,7 @@ $1
 'specialpages'                   => '特別頁',
 'specialpages-note'              => '----
 * 標準特別頁。
-* <span class="mw-specialpagerestricted">有限制嘅特別頁。</span>',
+* <strong class="mw-specialpagerestricted">有限制嘅特別頁。</strong>',
 'specialpages-group-maintenance' => '維護報告',
 'specialpages-group-other'       => '其它特別頁',
 'specialpages-group-login'       => '登入／開戶口',
@@ -2944,7 +3009,30 @@ $1
 #呢啲將會同外面（已超連結嘅）圖像配合
 #嗰啲晒對到出來嘅會顯示做圖像，唔係嘅話就只係會顯示連結
 #有 # 開頭嘅行會當做註解
+#無分大細楷
 
 #響呢行上面入晒全部嘅regex。留番呢行一樣嘅字</pre>',
+
+# Special:Tags
+'tags'                    => '有效更改過嘅標籤',
+'tag-filter'              => '[[Special:Tags|標籤]]過濾器:',
+'tag-filter-submit'       => '過濾器',
+'tags-title'              => '標籤',
+'tags-intro'              => '呢一版列示咗個軟件標示嘅編輯，同埋佢哋嘅解釋。',
+'tags-tag'                => '內部標籤名',
+'tags-display-header'     => '響更改表嘅出現方式',
+'tags-description-header' => '解釋完整描述',
+'tags-hitcount-header'    => '加咗標籤嘅更改',
+'tags-edit'               => '編輯',
+'tags-hitcount'           => '$1次更改',
+
+# Database error messages
+'dberr-header'      => '呢個 wiki 出咗問題',
+'dberr-problems'    => '對唔住！呢一版出現咗一啲技術性問題。',
+'dberr-again'       => '試吓等多幾分種然後開試。',
+'dberr-info'        => '(唔能夠連繫個資料伺服器: $1)',
+'dberr-usegoogle'   => '響現階段你可以用 Google 去搵嘢。',
+'dberr-outofdate'   => '留意佢哋索引嘅內容可能會過時。',
+'dberr-cachederror' => '呢個係所要求版嘅快取複本，可能會過時。',
 
 );

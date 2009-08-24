@@ -5,13 +5,23 @@
  * @file
  * @ingroup Extensions
  */
- 
+
 // Drafts hooks
 class DraftHooks {
 	/**
 	 * ArticleSaveComplete hook
 	 */
-	public static function discard( &$article, &$user, &$text, &$summary, &$m, &$watchthis, &$section, &$flags, $rev ) {
+	public static function discard(
+		&$article,
+		&$user,
+		&$text,
+		&$summary,
+		&$m,
+		&$watchthis,
+		&$section,
+		&$flags,
+		$rev
+	) {
 		global $wgRequest;
 		// Check if the save occured from a draft
 		$draft = Draft::newFromID( $wgRequest->getIntOrNull( 'wpDraftID' ) );
@@ -22,19 +32,19 @@ class DraftHooks {
 		// Continue
 		return true;
 	}
-	
+
 	/**
 	 * EditPage::showEditForm:initial hook
 	 * Load draft...
 	 */
-	public static function loadForm( &$editpage ) {
+	public static function loadForm(
+		&$editpage
+	) {
 		global $wgUser, $wgRequest, $wgOut, $wgTitle, $wgLang;
-	
 		// Check permissions
 		if ( $wgUser->isAllowed( 'edit' ) && $wgUser->isLoggedIn() ) {
 			// Get draft
 			$draft = Draft::newFromID( $wgRequest->getIntOrNull( 'draft' ) );
-			
 			// Load form values
 			if ( $draft->exists() ) {
 				// Override initial values in the form with draft data
@@ -43,18 +53,21 @@ class DraftHooks {
 				$editpage->scrolltop = $draft->getScrollTop();
 				$editpage->minoredit = $draft->getMinorEdit() ? true : false;
 			}
-	
+
 			// Save draft on non-save submission
 			if ( $wgRequest->getVal( 'action' ) == 'submit' &&
 				$wgUser->editToken() == $wgRequest->getText( 'wpEditToken' ) )
 			{
 				// If the draft wasn't specified in the url, try using a form-submitted one
 				if ( !$draft->exists() ) {
-					$draft = Draft::newFromID( $wgRequest->getIntOrNull( 'wpDraftID' ) );
+					$draft = Draft::newFromID(
+						$wgRequest->getIntOrNull( 'wpDraftID' )
+					);
 				}
-	
 				// Load draft with info
-				$draft->setTitle( Title::newFromText( $wgRequest->getText( 'wpDraftTitle' ) ) );
+				$draft->setTitle( Title::newFromText(
+					$wgRequest->getText( 'wpDraftTitle' ) )
+				);
 				$draft->setSection( $wgRequest->getInt( 'wpSection' ) );
 				$draft->setStartTime( $wgRequest->getText( 'wpStarttime' ) );
 				$draft->setEditTime( $wgRequest->getText( 'wpEdittime' ) );
@@ -63,73 +76,83 @@ class DraftHooks {
 				$draft->setText( $wgRequest->getText( 'wpTextbox1' ) );
 				$draft->setSummary( $wgRequest->getText( 'wpSummary' ) );
 				$draft->setMinorEdit( $wgRequest->getInt( 'wpMinoredit', 0 ) );
-	
 				// Save draft
 				$draft->save();
-	
 				// Use the new draft id
 				$wgRequest->setVal( 'draft', $draft->getID() );
 			}
 		}
-	
 		// Internationalization
 		wfLoadExtensionMessages( 'Drafts' );
-		
-		$numDrafts = Draft::countDrafts( $wgTitle );
-		
+		$numDrafts = Drafts::num( $wgTitle );
 		// Show list of drafts
 		if ( $numDrafts  > 0 ) {
 			if ( $wgRequest->getText( 'action' ) !== 'submit' ) {
-				$wgOut->addHTML( Xml::openElement( 'div', array( 'id' => 'drafts-list-box' ) ) );
-				$wgOut->addHTML( Xml::element( 'h3', null, wfMsg( 'drafts-view-existing' ) ) );
-				Draft::ListDrafts( $wgTitle );
+				$wgOut->addHTML( Xml::openElement(
+					'div', array( 'id' => 'drafts-list-box' ) )
+				);
+				$wgOut->addHTML( Xml::element(
+					'h3', null, wfMsg( 'drafts-view-existing' ) )
+				);
+				Drafts::display( $wgTitle );
 				$wgOut->addHTML( Xml::closeElement( 'div' ) );
 			} else {
+				$jsWarn = "if( !wgAjaxSaveDraft.insync ) return confirm('" .
+					Xml::escapeJsString( wfMsgHTML( 'drafts-view-warn' ) ) .
+					"')";
 				$link = Xml::element( 'a',
 					array(
 						'href' => $wgTitle->getFullURL( 'action=edit' ),
-						'onclick' => "if( !wgAjaxSaveDraft.insync ) return confirm('" . Xml::escapeJsString( wfMsgHTML( 'drafts-view-warn' ) ) . "')"
+						'onclick' => $jsWarn
 					),
-					wfMsgExt( 'drafts-view-notice-link', array( 'parsemag' ), $wgLang->formatNum( $numDrafts ) )
+					wfMsgExt(
+						'drafts-view-notice-link',
+						array( 'parsemag' ),
+						$wgLang->formatNum( $numDrafts )
+					)
 				);
 				$wgOut->addHTML( wfMsgHTML( 'drafts-view-notice', $link ) );
 			}
 		}
-		
 		// Continue
 		return true;
 	}
-	
+
 	/**
 	 * EditFilter hook
 	 * Intercept the saving of an article to detect if the submission was from the non-javascript
 	 * save draft button
 	 */
-	public static function interceptSave( $editor, $text, $section, &$error ) {
+	public static function interceptSave(
+		$editor,
+		$text,
+		$section,
+		&$error
+	) {
 		global $wgRequest;
-	
 		// Don't save if the save draft button caused the submit
 		if ( $wgRequest->getText( 'wpDraftSave' ) !== '' ) {
 			// Modify the error so it's clear we want to remain in edit mode
 			$error = ' ';
 		}
-	
 		// Continue
 		return true;
 	}
-	
+
 	/**
 	 * EditPageBeforeEditButtons hook
 	 * Add draft saving controls
 	 */
-	public static function controls( &$editpage, &$buttons ) {
-		global $wgUser, $wgTitle, $wgRequest, $egDraftsAutoSaveWait;
-
+	public static function controls(
+		&$editpage,
+		&$buttons
+	) {
+		global $wgUser, $wgTitle, $wgRequest;
+		global $egDraftsAutoSaveWait, $egDraftsAutoSaveTimeout;
 		// Check permissions
 		if ( $wgUser->isAllowed( 'edit' ) && $wgUser->isLoggedIn() ) {
 			// Internationalization
 			wfLoadExtensionMessages( 'Drafts' );
-	
 			// Build XML
 			$buttons['savedraft'] = Xml::openElement( 'script',
 				array(
@@ -137,23 +160,22 @@ class DraftHooks {
 					'language' => 'javascript'
 				)
 			);
-
 			$buttonAttribs = array(
 				'id' => 'wpDraftSave',
 				'name' => 'wpDraftSave',
 				'tabindex' => 8,
 				'value' => wfMsg( 'drafts-save-save' ),
 			);
-
 			$accesskey = $wgUser->getSkin()->accesskey( 'drafts-save' );
 			if ( $accesskey !== false ) {
 				$buttonAttribs['accesskey'] = $accesskey;
 			}
-			$tooltip = $wgUser->getSkin()->titleAttrib( 'drafts-save', 'withaccess' );
+			$tooltip = $wgUser->getSkin()->titleAttrib(
+				'drafts-save', 'withaccess'
+			);
 			if ( $tooltip !== false ) {
 				$buttonAttribs['title'] = $tooltip;
 			}
-
 			$ajaxButton = Xml::escapeJsString(
 				Xml::element( 'input',
 					array( 'type' => 'button' ) + $buttonAttribs
@@ -175,6 +197,13 @@ class DraftHooks {
 					'type' => 'hidden',
 					'name' => 'wpDraftAutoSaveWait',
 					'value' => $egDraftsAutoSaveWait
+				)
+			);
+			$buttons['savedraft'] .= Xml::element( 'input',
+				array(
+					'type' => 'hidden',
+					'name' => 'wpDraftAutoSaveTimeout',
+					'value' => $egDraftsAutoSaveTimeout
 				)
 			);
 			$buttons['savedraft'] .= Xml::element( 'input',
@@ -208,6 +237,13 @@ class DraftHooks {
 			$buttons['savedraft'] .= Xml::element( 'input',
 				array(
 					'type' => 'hidden',
+					'name' => 'wpMsgSaving',
+					'value' => wfMsg( 'drafts-save-saving' )
+				)
+			);
+			$buttons['savedraft'] .= Xml::element( 'input',
+				array(
+					'type' => 'hidden',
 					'name' => 'wpMsgSaveDraft',
 					'value' => wfMsg( 'drafts-save-save' )
 				)
@@ -220,61 +256,83 @@ class DraftHooks {
 				)
 			);
 		}
-	
 		// Continue
 		return true;
 	}
-	
+
 	/**
 	 * AjaxAddScript hook
 	 * Add ajax support script
 	 */
-	public static function addJS( $out ) {
-		global $wgScriptPath;
-	
+	public static function addJS(
+		$out
+	) {
+		global $wgScriptPath, $wgJsMimeType, $wgDraftsStyleVersion;
 		// FIXME: assumes standard dir structure
 		// Add javascript to support ajax draft saving
-		$out->addScriptFile( $wgScriptPath . '/extensions/Drafts/Drafts.js' );
-	
+		$out->addInlineScript(
+			"var wgDraftsStyleVersion = \"$wgDraftsStyleVersion\";\n"
+		);
+		$out->addScript(
+			Xml::element(
+				'script',
+				array(
+					'type' => $wgJsMimeType,
+					'src' => $wgScriptPath . '/extensions/Drafts/Drafts.js?' .
+						$wgDraftsStyleVersion
+				),
+				'',
+				false
+			)
+		);
 		// Continue
 		return true;
 	}
-	
+
 	/**
 	 * BeforePageDisplay hook
-	 * Add ajax support script
+	 * Add css style sheet
 	 */
-	public static function addCSS( $out ) {
-		global $wgScriptPath;
-		
+	public static function addCSS(
+		$out
+	) {
+		global $wgScriptPath, $wgDraftsStyleVersion;
 		// FIXME: assumes standard dir structure
 		// Add css for various styles
 		$out->addLink(
 			array(
 				'rel' => 'stylesheet',
 				'type' => 'text/css',
-				'href' => $wgScriptPath . '/extensions/Drafts/Drafts.css',
+				'href' => $wgScriptPath . '/extensions/Drafts/Drafts.css?' .
+					$wgDraftsStyleVersion,
 			)
 		);
-	
 		// Continue
 		return true;
 	}
-	
+
 	/**
 	 * AJAX function export DraftHooks::AjaxSave
 	 * Respond to ajax queries
 	 */
-	public static function AjaxSave( $dtoken, $etoken, $id, $title, $section, $starttime, $edittime,
-		$scrolltop, $text, $summary, $minoredit )
-	{
+	public static function save(
+		$dtoken,
+		$etoken,
+		$id,
+		$title,
+		$section,
+		$starttime,
+		$edittime,
+		$scrolltop,
+		$text,
+		$summary,
+		$minoredit
+	) {
 		global $wgUser, $wgRequest;
-		
 		// Verify token
 		if ( $wgUser->editToken() == $etoken ) {
 			// Create Draft
 			$draft = Draft::newFromID( $id );
-		
 			// Load draft with info
 			$draft->setToken( $dtoken );
 			$draft->setTitle( Title::newFromText( $title ) );
@@ -286,10 +344,8 @@ class DraftHooks {
 			$draft->setText( $text );
 			$draft->setSummary( $summary );
 			$draft->setMinorEdit( $minoredit );
-		
 			// Save draft
 			$draft->save();
-		
 			// Return draft id to client (used for next save)
 			return (string) $draft->getID();
 		} else {

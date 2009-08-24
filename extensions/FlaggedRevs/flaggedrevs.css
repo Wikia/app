@@ -212,7 +212,7 @@
 .fr-icon-locked,
 .fr-icon-unlocked {
 	padding: 0px;
-	margin: 0px;
+	margin: 0em .2em 0em 0em;
 	width: 16px;
 	height: 16px;
 	float: left;
@@ -245,11 +245,9 @@
 	line-height: 1em;
 }
 
-.fr-hist-stable-user {
-	font-weight: bold;
-}
-
-.fr-hist-quality-user {
+.fr-hist-stable-user,
+.fr-hist-quality-user,
+.fr-hist-autoreviewed {
 	font-weight: bold;
 }
 
@@ -274,6 +272,10 @@
 
 .fr-unreviewed-unwatched {
 	background-color: #faebd7;
+}
+
+.fr-under-review {
+	background-color: yellow;
 }
 
 /* Review form */
@@ -327,17 +329,18 @@
 }
 
 .fr-rating-dave {
-	background-color: lightblue;
+	background-color: #E0ECF8;
 }
 
 .fr-rating-rave {
-	background-color: lightgreen;
+	background-color: #E0F8EC;
 }
 
 .fr-hiddenform {
 	display: none;
 }
 
+/* Reader feedback form */
 .fr_reader_feedback_graph {
 	width: 100%; 
 	overflow: auto;
@@ -353,4 +356,17 @@
 	max-height:410px;
 	overflow: auto;
 	font-size: 90%;
+}
+
+.fr_reader_feedback_table {
+	margin: 1em 1em 1em 0;
+	background: #f9f9f9;
+	border: 1px #AAA solid;
+	border-collapse: collapse;
+	font-size: 85%;
+}
+
+.fr_reader_feedback_table th, .fr_reader_feedback_table td {
+	border: 1px #AAA solid;
+	padding: 0.3em;
 }

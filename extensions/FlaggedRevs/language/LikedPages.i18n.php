@@ -15,6 +15,25 @@ $messages['en'] = array(
 	'likedpages-graphs' => 'rating data',
 );
 
+/** Message documentation (Message documentation)
+ * @author Pietrodn
+ */
+$messages['qqq'] = array(
+	'likedpages-list' => '{{identical|flaggedrevs-pagelist}}',
+	'likedpages-graphs' => '{{identical|flaggedrevs-graphs}}',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'likedpages' => 'Korktas arvoitud lehtpoled',
+	'likedpages-leg' => 'Ectä korktas arvoitud lehtpoled',
+	'likedpages-list' => 'Alemba om nimikirjutez, kus lehtpoled oma järgetud lugijoiden arvsanoiden mödhe.',
+	'likedpages-none' => 'Neciš nimikirjuteses ei ole lehtpolid.',
+	'likedpages-graphs' => 'andmused arvostelendas',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -51,10 +70,12 @@ $messages['bs'] = array(
 	'likedpages-none' => 'Nema stranica na ovom spisku',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author Umherirrender
+ */
 $messages['de'] = array(
 	'likedpages' => 'Hoch bewertete Seiten',
-	'likedpages-leg' => 'Suche nach hoch bewerteten Seiten',
+	'likedpages-leg' => 'Hoch bewertete Seiten suchen',
 	'likedpages-list' => 'Es folgt eine Liste von Seiten, sortiert nach der Leserbewertung.',
 	'likedpages-none' => 'Diese Liste enthält keine Einträge.',
 	'likedpages-graphs' => 'Bewertungsdaten',
@@ -82,6 +103,28 @@ $messages['eo'] = array(
 	'likedpages-graphs' => 'taksaj datenoj',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ * @author Sanbec
+ */
+$messages['es'] = array(
+	'likedpages' => 'Páginas altamente valoradas',
+	'likedpages-leg' => 'Encontrar páginas altamente valoradas',
+	'likedpages-none' => 'No hay páginas en esta lista',
+	'likedpages-graphs' => 'datos de valoración',
+);
+
+/** Basque (Euskara)
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'likedpages' => 'Balorazio oso ona duten orrialdeak',
+	'likedpages-leg' => 'Bilatu balorazio oso oneko orrialdeak',
+	'likedpages-list' => 'Azpian irakurtzailearen feedbak balorazioaren arabera ordenatutako orrialdeen zerrend abat dago.',
+	'likedpages-none' => 'Ez dago orrialderik zerrenda honetan',
+	'likedpages-graphs' => 'balorazio data',
+);
+
 /** Persian (فارسی)
  * @author Huji
  */
@@ -95,13 +138,14 @@ $messages['fa'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
  */
 $messages['fr'] = array(
-	'likedpages' => 'Pages hautement notées',
-	'likedpages-leg' => 'Chercher les pages bien notées',
-	'likedpages-list' => 'Voici, ci-dessous, une liste des pages triée en fonction de leur notation.',
+	'likedpages' => 'Pages ayant des évaluations élevées',
+	'likedpages-leg' => 'Chercher les pages ayant des évaluations élevées',
+	'likedpages-list' => 'Voici une liste des pages triées suivant leur évaluation par les lecteurs.',
 	'likedpages-none' => 'Il n’existe aucune page dans cette liste',
-	'likedpages-graphs' => 'Données de notation',
+	'likedpages-graphs' => "Données d'évaluation",
 );
 
 /** Galician (Galego)
@@ -120,6 +164,17 @@ $messages['gl'] = array(
  */
 $messages['grc'] = array(
 	'likedpages-graphs' => 'δεδομένα βαθμώσεως',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'likedpages' => 'Hoch gwärteti Syte',
+	'likedpages-leg' => 'Suech noch hoch gwärtete Syte',
+	'likedpages-list' => 'Do chunnt e Lischt vu Syte, wu sortiert sin noch dr Läserwärtig.',
+	'likedpages-none' => 'In däre Lischt het s kei Yyträg.',
+	'likedpages-graphs' => 'Wärtigsdate',
 );
 
 /** Hebrew (עברית)
@@ -167,6 +222,39 @@ $messages['id'] = array(
 	'likedpages-graphs' => 'data pemeringkatan',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'likedpages' => 'Pagine più gettonate',
+	'likedpages-leg' => 'Trova le pagine più gettonate',
+	'likedpages-list' => 'Di seguito è riportato un elenco di pagine ordinate per il loro feedback da parte dei lettori.',
+	'likedpages-none' => 'Non ci sono pagine in questo elenco',
+	'likedpages-graphs' => 'dati delle valutazioni',
+);
+
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'likedpages' => '評価の高いページ',
+	'likedpages-leg' => '評価の高いページを見つける',
+	'likedpages-list' => '以下ではページを読者による評価の順に整列して一覧します。',
+	'likedpages-none' => '表示すべきページはありません',
+	'likedpages-graphs' => '評価データ',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'likedpages' => '높게 평가된 문서',
+	'likedpages-leg' => '높게 평가된 문서 찾기',
+	'likedpages-list' => '다음은 독자의 평가에 따라 정렬된 문서의 목록입니다.',
+	'likedpages-none' => '이 목록에 문서가 없습니다.',
+	'likedpages-graphs' => '평가 데이터',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
@@ -194,6 +282,17 @@ $messages['nl'] = array(
 	'likedpages-list' => "Hier staan pagina's gesorteerd naar de waardering die lezers hebben gegeven.",
 	'likedpages-none' => "Er zijn geen pagina's weer te geven",
 	'likedpages-graphs' => 'waarderingsgegevens',
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'likedpages' => 'Sider vurderte som gode',
+	'likedpages-leg' => 'Finn sider vurderte som gode',
+	'likedpages-list' => 'Nedanfor er ei lista over sider sorterte etter lesarane sine vurderingar av dei.',
+	'likedpages-none' => 'Det finst ingen sider i denne lista',
+	'likedpages-graphs' => 'vurderingsdata',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -233,6 +332,17 @@ $messages['pl'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
+	'likedpages' => 'Páginas com avaliação alta',
+	'likedpages-leg' => 'Encontre páginas com avaliação alta',
+	'likedpages-list' => 'Abaixo está uma lista de páginas ordenadas pelas avaliações dos leitores',
+	'likedpages-none' => 'Não há páginas nesta lista',
+	'likedpages-graphs' => 'dados de avaliações',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'likedpages' => 'Páginas com avaliação alta',
 	'likedpages-leg' => 'Encontre páginas com avaliação alta',
 	'likedpages-list' => 'Abaixo está uma lista de páginas ordenadas pelas avaliações dos leitores',

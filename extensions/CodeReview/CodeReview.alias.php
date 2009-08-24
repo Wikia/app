@@ -27,7 +27,7 @@ $aliases['ar'] = array(
  * @author Meno25
  */
 $aliases['arz'] = array(
-	'Code' => array( 'كود' ),
+	'Code' => array( 'كود', 'مراجعة_الكود' ),
 	'RepoAdmin' => array( 'إدارة_المستودع' ),
 );
 
@@ -45,6 +45,11 @@ $aliases['bs'] = array(
 /** German (Deutsch) */
 $aliases['de'] = array(
 	'Code' => array( 'Quelltext' ),
+);
+
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Code' => array( 'Žrědłowy tekst' ),
 );
 
 /** Basque (Euskara) */
@@ -68,9 +73,20 @@ $aliases['hr'] = array(
 	'RepoAdmin' => array( 'Admin_repozitorija' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Code' => array( 'Žórłowy tekst' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'Code' => array( 'Kód' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Code' => array( 'Codice', 'Recension de codice' ),
+	'RepoAdmin' => array( 'Admin repo' ),
 );
 
 /** Japanese (日本語) */
@@ -84,9 +100,15 @@ $aliases['km'] = array(
 	'Code' => array( 'កូដ' ),
 );
 
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'Code' => array( '코드검토' ),
+	'RepoAdmin' => array( '저장소관리' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
-	'Code' => array( 'Code' ),
+	'Code' => array( 'Quelltext' ),
 );
 
 /** Macedonian (Македонски) */
@@ -105,6 +127,11 @@ $aliases['nl'] = array(
 	'RepoAdmin' => array( 'Repobeheer' ),
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Code' => array( 'Kode' ),
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'Code' => array( 'Kode' ),
@@ -116,9 +143,21 @@ $aliases['pl'] = array(
 	'RepoAdmin' => array( 'Administrowanie repozytorium' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Code' => array( 'संकूटसङ्केतावलोकन' ),
+	'RepoAdmin' => array( 'रेपोप्रचालक' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'Code' => array( 'Kodi', 'Onyesha kodi' ),
 	'RepoAdmin' => array( 'TaarifuMkabidhi' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Code' => array( 'Kodigo', 'Pagsusuri ng kodigo' ),
+	'RepoAdmin' => array( 'Tagapangasiwa ng repositoryo' ),
 );
 

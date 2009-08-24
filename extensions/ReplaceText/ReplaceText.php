@@ -4,7 +4,7 @@
  * allow administrators to do a global string find-and-replace on all the
  * content pages of a wiki.
  *
- * http://www.mediawiki.org/wiki/Extension:Text_Replace
+ * http://www.mediawiki.org/wiki/Extension:Replace_Text
  *
  * The special page created is 'Special:ReplaceText', and it provides
  * a form to do a global search-and-replace, with the changes to every
@@ -35,9 +35,10 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['ReplaceText'] = $dir . 'ReplaceText.i18n.php';
 $wgExtensionAliasesFiles['ReplaceText'] = $dir . 'ReplaceText.alias.php';
 $wgJobClasses['replaceText'] = 'ReplaceTextJob';
+$wgAvailableRights[] = 'replacetext';
 
 // This extension uses its own permission type, 'replacetext'
-$wgSpecialPages['ReplaceText'] = array('ReplaceText', 'replacetext');
+$wgSpecialPages['ReplaceText'] = 'ReplaceText';
 $wgSpecialPageGroups['ReplaceText'] = 'wiki';
 $wgAutoloadClasses['ReplaceText'] = $dir . 'SpecialReplaceText.php';
 $wgAutoloadClasses['ReplaceTextJob'] = $dir . 'ReplaceTextJob.php';

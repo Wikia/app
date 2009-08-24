@@ -56,7 +56,7 @@ class LogEntry extends UnlistedSpecialPage {
 				if ( $egLogEntryTimeStamp ) {
 					$newLine .= ' ' . gmdate( 'H:i' );
 				}
-				$newLine .= ': ' . str_replace( "\n", '<br />',
+				$newLine .= wfMsgForContent( 'colon-separator' ) . str_replace( "\n", '<br />',
 					trim( htmlspecialchars( $wgRequest->getText( 'line' ) ) )
 				);
 				

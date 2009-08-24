@@ -59,7 +59,21 @@ class ForeignAPIFile extends File {
 	}
 	
 	public function getMetadata() {
-		return serialize( (array)@$this->mInfo['metadata'] );
+		if ( isset( $this->mInfo['metadata'] ) ) {
+			return serialize( self::parseMetadata( $this->mInfo['metadata'] ) );
+		}
+		return null;
+	}
+	
+	public static function parseMetadata( $metadata ) {
+		if( !is_array( $metadata ) ) {
+			return $metadata;
+		}
+		$ret = array();
+		foreach( $metadata as $meta ) {
+			$ret[ $meta['name'] ] = self::parseMetadata( $meta['value'] );
+		}
+		return $ret;
 	}
 	
 	public function getSize() {
@@ -87,11 +101,11 @@ class ForeignAPIFile extends File {
 	}
 	
 	function getMimeType() {
-		if( empty( $info['mime'] ) ) {
+		if( !isset( $this->mInfo['mime'] ) ) {
 			$magic = MimeMagic::singleton();
-			$info['mime'] = $magic->guessTypesForExtension( $this->getExtension() );
+			$this->mInfo['mime'] = $magic->guessTypesForExtension( $this->getExtension() );
 		}
-		return $info['mime'];
+		return $this->mInfo['mime'];
 	}
 	
 	/// @fixme May guess wrong on file types that can be eg audio or video
@@ -146,8 +160,8 @@ class ForeignAPIFile extends File {
 	}
 	
 	function purgeDescriptionPage() {
-		global $wgMemc;
-		$url = $this->repo->getDescriptionRenderUrl( $this->getName() );
+		global $wgMemc, $wgContLang;
+		$url = $this->repo->getDescriptionRenderUrl( $this->getName(), $wgContLang->getCode() );
 		$key = wfMemcKey( 'RemoteFileDescription', 'url', md5($url) );
 		$wgMemc->delete( $key );
 	}

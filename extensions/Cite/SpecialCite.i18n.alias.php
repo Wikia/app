@@ -63,6 +63,11 @@ $aliases['de'] = array(
 	'Cite' => array( 'Zitierhilfe' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Cite' => array( 'Citěrowańska pomoc' ),
+);
+
 /** Greek (Ελληνικά) */
 $aliases['el'] = array(
 	'Cite' => array( 'Παραπομπή' ),
@@ -70,7 +75,7 @@ $aliases['el'] = array(
 
 /** Spanish (Español) */
 $aliases['es'] = array(
-	'Cite' => array( 'Citar' ),
+	'Cite' => array( 'Citar', 'Cita' ),
 );
 
 /** Finnish (Suomi) */
@@ -105,6 +110,11 @@ $aliases['hr'] = array(
 	'Cite' => array( 'Citiraj' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Cite' => array( 'Citowanska pomoc' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'Cite' => array( 'Site' ),
@@ -113,6 +123,11 @@ $aliases['ht'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'Cite' => array( 'Irodalomjegyzék' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Cite' => array( 'Citation' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -170,6 +185,11 @@ $aliases['nl'] = array(
 	'Cite' => array( 'Citeren' ),
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Cite' => array( 'Siter' ),
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'Cite' => array( 'Siteringshjelp' ),
@@ -200,6 +220,11 @@ $aliases['pt-br'] = array(
 	'Cite' => array( 'Citar' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Cite' => array( 'उद्धृत' ),
+);
+
 /** Albanian (Shqip) */
 $aliases['sq'] = array(
 	'Cite' => array( 'Citim' ),
@@ -218,5 +243,25 @@ $aliases['sw'] = array(
 /** Tetum (Tetun) */
 $aliases['tet'] = array(
 	'Cite' => array( 'Sita' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Cite' => array( 'Sipiin' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Cite' => array( 'KaynakGöster' ),
+);
+
+/** Simplified Chinese (‪中文(简体)‬) */
+$aliases['zh-hans'] = array(
+	'Cite' => array( '引用' ),
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$aliases['zh-hant'] = array(
+	'Cite' => array( '引用' ),
 );
 

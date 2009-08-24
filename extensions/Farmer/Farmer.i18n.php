@@ -127,23 +127,20 @@ Once an extension is registered, all wikis will be able to use it.',
 	'farmer-extensions-register-name'        => 'Name',
 	'farmer-extensions-register-includefile' => 'Include file',
 	'farmer-error-exists'                    => 'Cannot create wiki.  It already exists: $1',
-	'farmer-error-nodirconfig'               => 'configDirectory not found: ',
-	'farmer-error-defnotset'                 => 'Default wiki must be set',
-	'farmer-error-mapnotfound'               => 'Function to map wiki name in farm not found: ',
-	'farmer-error-nofileconfwrite'           => 'MediaWikiFarmer could not write the default wiki configuration file.',
-	'farmer-error-funcnotcall'               => 'Could not call function: ',
-	'farmer-error-noextwrite'                => 'Unable to write out extension file: ',
-	'farmer-error-wikicorrupt'               => 'Stored wiki is corrupt',
+	'farmer-error-noextwrite'                => 'Unable to write out extension file:',
 );
 
 /** Message documentation (Message documentation)
  * @author Darth Kule
+ * @author Fryed-peach
  * @author Jon Harald Søby
+ * @author Meno25
  * @author Purodha
  */
 $messages['qqq'] = array(
 	'farmer-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
-	'farmernewwikimainpage' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
+	'farmercreateurl' => '{{optional}}',
+	'farmernewwikimainpage' => 'Do not translate or change links.',
 	'farmer-about' => '{{Identical|About}}',
 	'farmer-list-wiki' => '{{Identical|List of wikis}}',
 	'farmer-createwiki' => '{{Identical|Create a wiki}}',
@@ -512,9 +509,14 @@ $messages['be-tarask'] = array(
 	'farmer-confirmsetting-title' => 'Назва: $1',
 	'farmer-confirmsetting-description' => 'Апісаньне: $1',
 	'farmer-description' => 'Апісаньне',
+	'farmer-button-confirm' => 'Пацьвердзіць',
+	'farmer-createwiki-user' => 'Імя ўдзельніка',
 	'farmer-createwiki-description' => 'Апісаньне',
+	'farmer-delete-form-submit' => 'Выдаліць',
+	'farmer-mainpage' => 'Галоўная старонка',
 	'farmer-basic-title1' => 'Назва',
 	'farmer-basic-description' => 'Апісаньне',
+	'farmer-basic-permission-upload' => 'Загрузка файлаў',
 	'farmer-yes' => 'Так',
 	'farmer-no' => 'Не',
 );
@@ -641,11 +643,20 @@ $messages['br'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'farmer-desc' => 'Upravljanje MediaWiki farmom',
+	'farmercreatesitename' => 'Ime sajta',
 	'farmercreatenextstep' => 'slijedeći korak',
 	'farmer-about' => 'O',
+	'farmer-list-wiki' => 'Spisak wikija',
 	'farmer-createwiki' => 'Napravi wiki',
+	'farmer-createwiki-text' => '[[$1|Napravite]] novi wiki sad!',
+	'farmer-admimistration-listupdate' => 'Ažuriranje spiska farme',
 	'farmer-administration-delete' => 'Obriši wiki',
 	'farmer-notavailable' => 'Nije dostupno',
+	'farmer-wikicreated' => 'Wiki je napravljen',
+	'farmer-wikicreated-text' => 'Vaš wiki je napravljen.
+Dostupan je na $1',
+	'farmer-wikiexists' => 'Wiki postoji',
 	'farmer-confirmsetting-name' => 'Ime: $1',
 	'farmer-confirmsetting-title' => 'Naslov: $1',
 	'farmer-description' => 'Opis',
@@ -653,9 +664,14 @@ $messages['bs'] = array(
 	'farmer-button-submit' => 'Pošalji',
 	'farmer-createwiki-form-help' => 'Pomoć',
 	'farmer-createwiki-user' => 'Korisničko ime',
+	'farmer-createwiki-name' => 'Ime wikija',
+	'farmer-createwiki-description' => 'Opis',
+	'farmer-delete-title' => 'Obriši wiki',
 	'farmer-delete-form-submit' => 'Obriši',
 	'farmer-mainpage' => 'Početna stranica',
 	'farmer-basic-title1' => 'Naslov',
+	'farmer-basic-permission' => 'Dopuštenja',
+	'farmer-basic-permission-upload' => 'Postavi datoteke',
 	'farmer-yes' => 'Da',
 	'farmer-no' => 'Ne',
 	'farmer-extensions-register-name' => 'Ime',
@@ -723,12 +739,14 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Als-Holder
  * @author ChrisiPK
  * @author Leithian
  * @author Melancholie
  * @author MichaelFrey
  * @author Pill
  * @author Revolus
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'farmer' => 'Farmer',
@@ -773,7 +791,7 @@ Bitte kehre zurück und versuche es mit einem anderen Namen",
 	'farmer-confirmsetting-text' => "Dein Wiki – '''$1''' – wird über http://$1.meineWikiFarm/ erreichbar sein.
 Der Projektnamensraum wird '''$2''' heißen.
 Links zu diesem Namensraum werden die Gestallt '''<nowiki>[[$2:Seitenname]]</nowiki>''' haben.
-Wenn alles korrekt ist, so bestätige dies mit einem Druck auf '''Bestätigen'''.",
+Wenn alles korrekt ist, so bestätige dies mit einem Klick auf '''Bestätigen'''.",
 	'farmer-button-confirm' => 'Bestätigen',
 	'farmer-button-submit' => 'Absenden',
 	'farmer-createwiki-form-title' => 'Ein Wiki erstellen',
@@ -807,7 +825,7 @@ Dieser Text beschreibt das Wiki und wird auf der Liste der Wikis angezeigt.',
 	'farmer-mainpage' => 'Hauptseite',
 	'farmer-basic-title' => 'Grundsätzliche Parameter',
 	'farmer-basic-title1' => 'Titel',
-	'farmer-basic-title1-text' => 'Dein Wiki hat keinen Titel. Bitte setzte ihn <b>jetzt</b>',
+	'farmer-basic-title1-text' => 'Dein Wiki hat keinen Titel. Bitte setze ihn <b>jetzt</b>',
 	'farmer-basic-description' => 'Beschreibung',
 	'farmer-basic-description-text' => 'Füge unten die Beschreibung deines Wikis ein',
 	'farmer-basic-permission' => 'Rechte',
@@ -845,13 +863,7 @@ Sobald eine Erweiterung registriert ist, können alle Wikis sie verwenden.',
 	'farmer-extensions-register-name' => 'Name',
 	'farmer-extensions-register-includefile' => 'Datei einbinden',
 	'farmer-error-exists' => 'Das Wiki kann nicht angelegt werden, weil es bereits existiert: $1',
-	'farmer-error-nodirconfig' => 'configDirectory nicht gefunden:',
-	'farmer-error-defnotset' => 'Es muss ein Standardwiki gesetzt werden',
-	'farmer-error-mapnotfound' => 'Funktion, um den Wikinamen in der Farm einzutragen, nicht gefunden:',
-	'farmer-error-nofileconfwrite' => 'MediaWikiFarmer konnte nicht schreibend auf die Standardkonfigurationsdatei des Wikis zugreifen.',
-	'farmer-error-funcnotcall' => 'Funktion konnte nicht aufgerufen werden:',
 	'farmer-error-noextwrite' => 'Schreiben der Erweiterungsdatei nicht möglich:',
-	'farmer-error-wikicorrupt' => 'Gespeichertes Wiki ist defekt',
 );
 
 /** German (formal address) (Deutsch (Sie-Form))
@@ -864,6 +876,128 @@ Mittels $1 können Sie die Benutzerrechte verwalten',
 	'farmer-extensions-register-text1' => 'Verwenden Sie die untenstehende Maske, um eine neue Erweiterung für die Farm zu registrieren.
 Sobald eine Erweiterung registriert ist, können alle Wikis sie verwenden.',
 	'farmer-extensions-register-text2' => "Geben Sie den Namen der PHP-Datei im ''Include file''-Parameter so an, wie Sie ihn in LocalSettings.php angeben würden.",
+);
+
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'farmer' => 'Farmaŕ',
+	'farmer-desc' => 'Farmu MediaWiki zastojaś',
+	'farmercantcreatewikis' => 'Njamóžoš wikije napóraś, dokulaž njamaš pšawo ("createwikis")',
+	'farmercreatesitename' => 'Mě sedła',
+	'farmercreatenextstep' => 'Pśiducy kšac',
+	'farmernewwikimainpage' => '== Witaj do swójogo wikija ==
+Jolic to cytaš, twój wiki jo korektnje instalěrowany.
+Móžoš [[Special:Farmer|swój wiki pśiměriś]].',
+	'farmer-about' => 'Wó',
+	'farmer-about-text' => 'MediaWiki Farmaŕ śi zmóžnja farmu wikijow MediaWiki zastojaś.',
+	'farmer-list-wiki' => 'Lisćina wikijow',
+	'farmer-list-wiki-text' => 'Wše wikije na {{GRAMMAR:lokatiw|{{SITENAME}}}} [[$1|nalicyś]]',
+	'farmer-createwiki' => 'Wiki napóraś',
+	'farmer-createwiki-text' => '[[$1|Napóraj]] něnto nowy wiki!',
+	'farmer-administration' => 'Zastojanje farmy',
+	'farmer-administration-extension' => 'Rozšyrjenja zastojaś',
+	'farmer-administration-extension-text' => 'Instalěrowane rozšyrjenja [[$1|zastojaś]].',
+	'farmer-admimistration-listupdate' => 'Aktualizacija lisćiny farmow',
+	'farmer-admimistration-listupdate-text' => 'Lisćinu wikijow na {{GRAMMAR:lokatiw|{{SITENAME}}}} [[$1|aktualizěrowaś]]',
+	'farmer-administration-delete' => 'Wiki lašowaś',
+	'farmer-administration-delete-text' => 'Wiki z farmy [[$1|lašowaś]]',
+	'farmer-administer-thiswiki' => 'Toś ten wiki administrěrowaś',
+	'farmer-administer-thiswiki-text' => 'Změny toś togo wikija [[$1|administrěrowaś]]',
+	'farmer-notavailable' => 'Njejo k dispoziciji',
+	'farmer-notavailable-text' => 'Tuta funkcija stoj jano w głownem wikiju k dispoziciji',
+	'farmer-wikicreated' => 'Wiki napórany',
+	'farmer-wikicreated-text' => 'Twój wiki jo se napórał.
+Jo pśistupny na $1',
+	'farmer-default' => 'Po standarźe nichten njama pšawa za toś ten wiki, mimo tebje.
+Móžoš wužywarske pšawa pśez $1 změniś.',
+	'farmer-wikiexists' => 'Wiki eksistěrujo',
+	'farmer-wikiexists-text' => "Wiki, kótaryž wopytujoš napóraś, '''$1''', južo eksistěrujo.
+Pšosym źi slědk a wopytaj druge mě.",
+	'farmer-confirmsetting' => 'Nastajenja wikija wobkšuśiś',
+	'farmer-confirmsetting-name' => 'Mě: $1',
+	'farmer-confirmsetting-title' => 'Titel: $1',
+	'farmer-confirmsetting-description' => 'Wopisanje: $1',
+	'farmer-description' => 'Wopisanje',
+	'farmer-confirmsetting-text' => "Twój wiki - '''$1''' - buźo pśistupny pśez http://$1.mójafarma.
+Projektowy mjenjowy rum buźo '''$2'''.
+Wótkaze k toś tomu mjenjowemu rumoju změju formu '''<nowiki>[[$2:Mě boka]]</nowiki>'''.
+Jolic to coš, tłoc na slědujucy tłocašk '''wobkšuśiś'''.",
+	'farmer-button-confirm' => 'Wobkšuśiś',
+	'farmer-button-submit' => 'Wótpósłaś',
+	'farmer-createwiki-form-title' => 'Wiki napóraś',
+	'farmer-createwiki-form-text1' => 'Wužyj slědujucy formular, aby napórał nowy wiki.',
+	'farmer-createwiki-form-help' => 'Pomoc',
+	'farmer-createwiki-form-text2' => "; Wiki name: Mě wikija.
+Wopśimujo jano pismiki a cyfry.
+Mě wikija buźo se ako źěl URL wužywaś, aby identificěrował twój wiki.
+Na pśikład, jolic zapódawaš '''titel''', ga twój wiki buźo pśistupny pśez <nowiki>http://</nowiki>'''titel'''.mójadomena.",
+	'farmer-createwiki-form-text3' => '; Wiki title: Titel wikija.
+Buźo se w titelu kuždego boka w twójom wikiju wužywaś.
+Buźo teke mjenjowy rum projekta a prefiks interwiki.',
+	'farmer-createwiki-form-text4' => '; Wopisanje: Wopisanje wikija.
+To jo tekstowe wopisanje wikija.
+To buźo se w lisćinje wikijow zwobraznjowaś.',
+	'farmer-createwiki-user' => 'Wužywarske mě',
+	'farmer-createwiki-name' => 'Mě wikija',
+	'farmer-createwiki-title' => 'Titel wikija',
+	'farmer-createwiki-description' => 'Wopisanje',
+	'farmer-updatedlist' => 'Lisćina zaktualizěrowana',
+	'farmer-notaccessible' => 'Njepśistupny',
+	'farmer-notaccessible-test' => 'Toś ta funkcija stoj jano w głownem wikiju farmy k dispoziciji',
+	'farmer-permissiondenied' => 'Pšawo wótpokazane',
+	'farmer-permissiondenied-text' => 'Njamaš pšawo wiki z farmy lašowaś',
+	'farmer-permissiondenied-text1' => 'Njamaš pšawo, aby měł pśistup na toś ten bok',
+	'farmer-deleting' => '$1 se lašujo',
+	'farmer-delete-title' => 'Wiki lašowaś',
+	'farmer-delete-text' => 'Pšosym wubjeŕ wiki, kótaryž coš lašowaś, ze slědujuceje lisćiny',
+	'farmer-delete-form' => 'Wubjeŕ wiki',
+	'farmer-delete-form-submit' => 'Lašowaś',
+	'farmer-listofwikis' => 'Lisćina wikijow',
+	'farmer-mainpage' => 'Głowny bok',
+	'farmer-basic-title' => 'Zakładne parametry',
+	'farmer-basic-title1' => 'Titel',
+	'farmer-basic-title1-text' => 'Twój wiki njama titel. Daj jaden <b>něnto</b>',
+	'farmer-basic-description' => 'Wopisanje',
+	'farmer-basic-description-text' => 'Zapódaj dołojce wopisanje swójogo wikija',
+	'farmer-basic-permission' => 'Pšawa',
+	'farmer-basic-permission-text' => 'Z pomocu slědujucego formulara jo móžno pšawa za wužywarjow toś togo wikija změniś.',
+	'farmer-basic-permission-visitor' => 'Pšawa za kuždego woglědowarja',
+	'farmer-basic-permission-visitor-text' => 'Slědujuce pšawa płaśe za kuždu wósobu, kótaraž woglědujo k toś tomu wikijoju',
+	'farmer-basic-permission-view' => 'Wšykne boki se woglědaś',
+	'farmer-basic-permission-edit' => 'Wšykne boki wobźěłaś',
+	'farmer-basic-permission-createpage' => 'Nowe boki napóraś',
+	'farmer-basic-permission-createtalk' => 'Diskusijne boki napóraś',
+	'farmer-basic-permission-move' => 'Boki pśesunuś',
+	'farmer-basic-permission-upload' => 'Dataje nagraś',
+	'farmer-basic-permission-reupload' => 'Dataje znowego nagraś (eksistěrujuce nagraśe pśepisaś)',
+	'farmer-basic-permission-minoredit' => 'Snadne změny dowóliś',
+	'farmer-yes' => 'Jo',
+	'farmer-no' => 'Ně',
+	'farmer-basic-permission-user' => 'Pšawa za pśizjawjonych wužywarjow',
+	'farmer-basic-permission-user-text' => 'Slědujuce pšawa płaśe za kuždu wósobu, kótaraž jo w toś tom wikiju pśizjawjona',
+	'farmer-setpermission' => 'Pšawa stajiś',
+	'farmer-defaultskin' => 'Standardna drastwa',
+	'farmer-defaultskin-button' => 'Standardnu drastwu nastajiś',
+	'farmer-extensions' => 'Aktiwne rozšyrjenja',
+	'farmer-extensions-button' => 'Aktiwne rozšyrjenja stajiś',
+	'farmer-extensions-extension-denied' => 'Njamaš pšawo toś tu funkciju wužywaś.
+Musyš cłonk kupki farmarskich administratorow byś.',
+	'farmer-extensions-invalid' => 'Njepłaśiwe rozšyrjenje',
+	'farmer-extensions-invalid-text' => 'Njejo było móžno rozšyrjenje pśidaś, dokulaž za zapśěegnjenje wubrana dataja njejo dała se namakaś.',
+	'farmer-extensions-available' => 'K dispoziciji stojece rozšyrjenja',
+	'farmer-extensions-noavailable' => 'Žedne rozšyrjenja zregistrěrowane',
+	'farmer-extensions-register' => 'Rozšyrjenje registrěrowaś',
+	'farmer-extensions-register-text1' => 'Wužyj slědujucy formular, aby registrěrował nowe rozšyrjenje pśi farmje.
+Gaž rozšyrjenje je zregistrěrowane, wše wikije mógu jo wužywaś.',
+	'farmer-extensions-register-text2' => "Za parameter ''Include file'' zapódaj mě PHP-dataje, ako by było w dataji LocalSettings.php.",
+	'farmer-extensions-register-text3' => "Jolic datajowe mě wopśimujo '''\$root''', ta wariabla buźo se pśez kórjenjowy zapis MediaWiki wuměnjaś.",
+	'farmer-extensions-register-text4' => 'Aktualne sćažki include su:',
+	'farmer-extensions-register-name' => 'Mě',
+	'farmer-extensions-register-includefile' => 'Dataju zapśěgnuś',
+	'farmer-error-exists' => 'Wiki njedajo se napóraś, eksistěrujo južo: $1',
+	'farmer-error-noextwrite' => 'Njemóžno dataju rozšyrjenja pisaś:',
 );
 
 /** Ewe (Eʋegbe) */
@@ -993,32 +1127,81 @@ Vi nepre estu membro de la ''farmeradmin'' grupo.",
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Jatrobat
  * @author Sanbec
  */
 $messages['es'] = array(
 	'farmercreatesitename' => 'Nombre del sitio',
+	'farmercreatenextstep' => 'Próximo paso',
+	'farmer-list-wiki' => 'Lista de wikis',
+	'farmer-createwiki' => 'Crear un wiki',
+	'farmer-createwiki-text' => '[[$1|Crear]] un nuevo wiki ahora!',
+	'farmer-administration-extension' => 'Administrar extensiones',
+	'farmer-administration-extension-text' => '[[$1|Administrar]] extensiones instaladas.',
+	'farmer-administration-delete' => 'Borrar un wiki',
+	'farmer-administer-thiswiki' => 'Administrar este wiki',
+	'farmer-notavailable' => 'No disponible',
+	'farmer-wikicreated' => 'Wiki creado',
+	'farmer-wikicreated-text' => 'Su wiki ha sido creado.
+Es accesible en $1',
+	'farmer-wikiexists' => 'El wiki existe',
+	'farmer-confirmsetting' => 'Confirmar configuraciones de wiki',
 	'farmer-confirmsetting-name' => 'Nombre: $1',
 	'farmer-confirmsetting-title' => 'Título: $1',
 	'farmer-confirmsetting-description' => 'Descripción: $1',
 	'farmer-description' => 'Descripción',
 	'farmer-button-confirm' => 'Confirmar',
 	'farmer-button-submit' => 'Enviar',
+	'farmer-createwiki-form-title' => 'Crear un wiki',
 	'farmer-createwiki-form-help' => 'Ayuda',
 	'farmer-createwiki-user' => 'Nombre de usuario',
+	'farmer-createwiki-name' => 'Nombre de wiki',
+	'farmer-createwiki-title' => 'Título de wiki',
 	'farmer-createwiki-description' => 'Descripción',
+	'farmer-updatedlist' => 'Lista actualizada',
+	'farmer-notaccessible' => 'No accesible',
+	'farmer-permissiondenied' => 'Permiso denegado',
+	'farmer-permissiondenied-text1' => 'No tiene permiso para acceder a esta página',
 	'farmer-deleting' => 'Borrando $1',
+	'farmer-delete-title' => 'Borrar wiki',
+	'farmer-delete-text' => 'Por favor seleccione el wiki de la lista de abajo que desea borrar',
+	'farmer-delete-form' => 'Seleccione un wiki',
 	'farmer-delete-form-submit' => 'Borrar',
+	'farmer-listofwikis' => 'Lista de wikis',
+	'farmer-mainpage' => 'Página Principal',
+	'farmer-basic-title' => 'Parámetros básicos',
 	'farmer-basic-title1' => 'Título',
 	'farmer-basic-description' => 'Descripción',
+	'farmer-basic-permission' => 'Permisos',
+	'farmer-basic-permission-visitor' => 'Permisos para todo visitante',
+	'farmer-basic-permission-visitor-text' => 'Los siguientes permisos serán aplicados a toda persona que visite este wiki',
+	'farmer-basic-permission-view' => 'Ver todas las páginas',
+	'farmer-basic-permission-edit' => 'Editar todas las páginas',
+	'farmer-basic-permission-createpage' => 'Crear nuevas páginas',
+	'farmer-basic-permission-createtalk' => 'Crear páginas de discusión',
+	'farmer-basic-permission-move' => 'Mover páginas',
 	'farmer-basic-permission-upload' => 'Subir archivos',
+	'farmer-basic-permission-minoredit' => 'Permitir ediciones menores',
 	'farmer-yes' => 'Sí',
 	'farmer-no' => 'No',
+	'farmer-setpermission' => 'Configurar permisos',
+	'farmer-defaultskin' => 'Piel por defecto',
+	'farmer-extensions' => 'Extensiones activas',
+	'farmer-extensions-button' => 'Configurar extensiones activas',
+	'farmer-extensions-invalid' => 'Extensión inválida',
+	'farmer-extensions-available' => 'Extensiones disponibles',
+	'farmer-extensions-noavailable' => 'Ninguna extensión está registrada',
+	'farmer-extensions-register' => 'Registrar extensión',
+	'farmer-extensions-register-text4' => 'Las actuales rutas incluídas son:',
 	'farmer-extensions-register-name' => 'Nombre',
+	'farmer-extensions-register-includefile' => 'Incluir archivo',
+	'farmer-error-exists' => 'No se puede crear wiki. Ya existe: $1',
 );
 
 /** Basque (Euskara)
+ * @author An13sa
  * @author Theklan
  */
 $messages['eu'] = array(
@@ -1030,7 +1213,7 @@ $messages['eu'] = array(
 	'farmercreatenextstep' => 'Hurrengo pausoa',
 	'farmernewwikimainpage' => '== Ongietorria zure wikira ==
 Hau irakurtzen bazaude zure wiki berria ondo instalatu da.
-[[Berezi:Nekazaria|Zure wikia aldatu]] ahal duzu.',
+[[Special:Farmer|Zure wikia aldatu]] ahal duzu.',
 );
 
 /** Finnish (Suomi)
@@ -1107,9 +1290,11 @@ Jos luet tätä, uusi wikisi on asennettu onnistuneesti. Voit halutessasi [[Spec
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Dereckson
  * @author Grondin
  * @author IAlex
+ * @author PieRRoMaN
  * @author Urhixidur
  * @author Verdy p
  */
@@ -1151,9 +1336,9 @@ Vous pouvez [[Special:Farmer|individualiser votre wiki]].',
 	'farmer-confirmsetting-description' => 'Description : $1',
 	'farmer-description' => 'Description',
 	'farmer-confirmsetting-text' => "Votre wiki, '''$1''', sera accessible depuis l’adresse http://$1.monsite.
-Le nom de l’espace du projet sera '''$2'''.
-Les liens vers cet espace aura la forme de '''<nowiki>[[$2:Nom de la page]]</nowiki>'''.
-Si c’est bien ce que vous voulez,  presser le bouton '''Confirmer''' ci-dessous.",
+L'espace de noms du projet sera '''$2'''.
+Les liens vers cet espace de noms seront de la forme '''<nowiki>[[$2:Nom de la page]]</nowiki>'''.
+Si c’est bien ce que vous voulez, cliquez sur le bouton '''Confirmer''' ci-dessous.",
 	'farmer-button-confirm' => 'Confirmer',
 	'farmer-button-submit' => 'Soumettre',
 	'farmer-createwiki-form-title' => 'Créer un Wiki',
@@ -1192,7 +1377,7 @@ Si c’est bien ce que vous voulez,  presser le bouton '''Confirmer''' ci-dessou
 	'farmer-basic-permission-edit' => 'Éditer toutes les pages',
 	'farmer-basic-permission-createpage' => 'Créer de nouvelles pages',
 	'farmer-basic-permission-createtalk' => 'Créer des pages de discussion',
-	'farmer-basic-permission-move' => 'Déplacer les pages',
+	'farmer-basic-permission-move' => 'Renommer les pages',
 	'farmer-basic-permission-upload' => 'Importer (téléverser) des fichiers',
 	'farmer-basic-permission-reupload' => 'Ré-importer (retéléverser) les fichiers (écrase les versions précédentes)',
 	'farmer-basic-permission-minoredit' => 'Autorise les corrections mineures',
@@ -1205,7 +1390,7 @@ Si c’est bien ce que vous voulez,  presser le bouton '''Confirmer''' ci-dessou
 	'farmer-defaultskin-button' => 'Configurer l’apparence par défaut',
 	'farmer-extensions' => 'Extensions actives',
 	'farmer-extensions-button' => 'Configurer les extensions actives',
-	'farmer-extensions-extension-denied' => 'Vous n’êtes pas habilité pour l’utilisation de cette fonctionnalité. Vous devez être membre des administrateurs de l’administration multi wikis.',
+	'farmer-extensions-extension-denied' => 'Vous n’êtes pas habilité{{GENDER:||e|(e)}} pour l’utilisation de cette fonctionnalité. Vous devez être membre des administrateurs de l’administration multi wikis.',
 	'farmer-extensions-invalid' => 'Extension invalide',
 	'farmer-extensions-invalid-text' => 'Nous ne pouvons ajouter cette extension car le fichier sélectionné pour l’inclusion est introuvable.',
 	'farmer-extensions-available' => 'Extensions disponibles',
@@ -1218,13 +1403,7 @@ Si c’est bien ce que vous voulez,  presser le bouton '''Confirmer''' ci-dessou
 	'farmer-extensions-register-name' => 'Nom',
 	'farmer-extensions-register-includefile' => 'Fichier à inclure',
 	'farmer-error-exists' => 'L’interface ne peut créer le Wiki.  Il existe déjà : $1',
-	'farmer-error-nodirconfig' => 'configDirectory introuvable :',
-	'farmer-error-defnotset' => 'Le wiki par défaut doit être défini.',
-	'farmer-error-mapnotfound' => 'La fonction inscrivant le nom du wiki dans la « ferme » est introuvable :',
-	'farmer-error-nofileconfwrite' => 'MediaWikiFarmer ne peut écrire le fichier de configuration du wiki par défaut.',
-	'farmer-error-funcnotcall' => 'La fonction suivante est introuvable :',
 	'farmer-error-noextwrite' => 'Impossible d’écrire le fichier d’extension suivant :',
-	'farmer-error-wikicorrupt' => 'Le wiki stocké est corrompu',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -1264,15 +1443,15 @@ Se está a ler isto, o seu novo wiki foi instalado correctamente.
 Pode [[Special:Farmer|personalizar o seu wiki]].',
 	'farmer-about' => 'Acerca de',
 	'farmer-about-text' => 'O granxeiro MediaWiki permítelle xestionar unha granxa de wikis MediaWiki.',
-	'farmer-list-wiki' => 'Listaxe dos wikis',
-	'farmer-list-wiki-text' => '[[$1|Listaxe]] de todos os sitios de {{SITENAME}}',
+	'farmer-list-wiki' => 'Lista dos wikis',
+	'farmer-list-wiki-text' => '[[$1|Lista]] de todos os sitios de {{SITENAME}}',
 	'farmer-createwiki' => 'Crear un wiki',
 	'farmer-createwiki-text' => '[[$1|Crear]] xa un novo wiki!',
 	'farmer-administration' => 'Administración da granxa',
 	'farmer-administration-extension' => 'Xestionar as extensións',
 	'farmer-administration-extension-text' => '[[$1|Administrar]] as extensións instaladas.',
-	'farmer-admimistration-listupdate' => 'Actualización da listaxe da granxa',
-	'farmer-admimistration-listupdate-text' => '[[$1|Actualizar]] a listaxe de wikis en {{SITENAME}}',
+	'farmer-admimistration-listupdate' => 'Actualización da lista da granxa',
+	'farmer-admimistration-listupdate-text' => '[[$1|Actualizar]] a lista de wikis en {{SITENAME}}',
 	'farmer-administration-delete' => 'Eliminar un wiki',
 	'farmer-administration-delete-text' => '[[$1|Borrar]] un wiki da granxa',
 	'farmer-administer-thiswiki' => 'Administrar este wiki',
@@ -1310,7 +1489,7 @@ Será usado no título de cada páxina no seu wiki.
 Tamén será o espazo de nomes e o prefixo do interwiki do proxecto.',
 	'farmer-createwiki-form-text4' => '; Descrición: descrición do wiki.
 Este é un texto descritivo sobre o wiki.
-Isto será amosado na listaxe dos wikis.',
+Isto será amosado na lista dos wikis.',
 	'farmer-createwiki-user' => 'Nome do usuario',
 	'farmer-createwiki-name' => 'Nome do wiki',
 	'farmer-createwiki-title' => 'Título do wiki',
@@ -1323,10 +1502,10 @@ Isto será amosado na listaxe dos wikis.',
 	'farmer-permissiondenied-text1' => 'Non ten permiso para acceder a esta páxina',
 	'farmer-deleting' => 'Eliminando $1',
 	'farmer-delete-title' => 'Eliminar o wiki',
-	'farmer-delete-text' => 'Por favor, seleccione o wiki que quere eliminar na listaxe de embaixo',
+	'farmer-delete-text' => 'Por favor, seleccione o wiki que quere eliminar na lista de embaixo',
 	'farmer-delete-form' => 'Seleccionar un wiki',
 	'farmer-delete-form-submit' => 'Eliminar',
-	'farmer-listofwikis' => 'Listaxe dos wikis',
+	'farmer-listofwikis' => 'Lista dos wikis',
 	'farmer-mainpage' => 'Portada',
 	'farmer-basic-title' => 'Parámetros básicos',
 	'farmer-basic-title1' => 'Título',
@@ -1369,13 +1548,7 @@ Unha vez que a extensión estea rexistrada, todos os wikis poderana usar.',
 	'farmer-extensions-register-name' => 'Nome',
 	'farmer-extensions-register-includefile' => 'Incluír o ficheiro',
 	'farmer-error-exists' => 'Non pode crear o wiki. Xa existe: $1',
-	'farmer-error-nodirconfig' => 'configDirectory non foi atopado:',
-	'farmer-error-defnotset' => 'A apariencia por defecto do wiki debe ser fixada',
-	'farmer-error-mapnotfound' => 'Non foi atopada a función para "mapear" o nome do wiki na granxa:',
-	'farmer-error-nofileconfwrite' => 'O granxeiro MediaWiki non pode escribir o ficheiro de configuración por defecto do wiki.',
-	'farmer-error-funcnotcall' => 'Non se puido chamar a función:',
 	'farmer-error-noextwrite' => 'Non pode escribir a extensión do ficheiro:',
-	'farmer-error-wikicorrupt' => 'O wiki gardado está corrompido',
 );
 
 /** Gothic
@@ -1412,10 +1585,125 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Holder
  * @author J. 'mach' wust
  */
 $messages['gsw'] = array(
+	'farmer' => 'Wiki-Buur',
+	'farmer-desc' => 'E MediaWiki-Hof verwalte',
+	'farmercantcreatewikis' => 'Du chasch kei Wiki aalege, wel Dir s Rächt („createwikis“) dezue fählt.',
+	'farmercreatesitename' => 'Name vu dr Website',
+	'farmercreatenextstep' => 'Nechschte Schritt',
+	'farmernewwikimainpage' => '== Willchu in Dyynem Wiki ==
+
+Wänn Du dää Täxt liisesch, no hesch Dyy nej Wiki inschtalliert.
+Du chasch s no Dyyne Winsch [[Special:Farmer|aapasse]].',
+	'farmer-about' => 'Iber',
+	'farmer-about-text' => 'MediaWiki-Farmer macht s Dir megli, mehreri MediaWiki z verwalte.',
+	'farmer-list-wiki' => 'Wiki uflischte',
+	'farmer-list-wiki-text' => '[[$1|Lischt]] vu allene Wiki uf {{SITENAME}}',
+	'farmer-createwiki' => 'E Wiki aalege',
+	'farmer-createwiki-text' => '[[$1|Leg]] jetz e nej Wiki aa.',
+	'farmer-administration' => 'Hof-Verwaltig',
+	'farmer-administration-extension' => 'Erwyterige verwalte',
+	'farmer-administration-extension-text' => '[[$1|Verwalt]] inschtallierti Erwyterige.',
+	'farmer-admimistration-listupdate' => 'Heflischt aktualisiere',
+	'farmer-admimistration-listupdate-text' => '[[$1|Aktualisier]] d Lischt vu dr Wiki uf {{SITENAME}}',
+	'farmer-administration-delete' => 'E Wiki lesche',
+	'farmer-administration-delete-text' => '[[$1|Lesch]] e Wiki vum Hof',
+	'farmer-administer-thiswiki' => 'Des Wiki verwalte',
+	'farmer-administer-thiswiki-text' => 'Des Wiki [[$1|verwalte]]',
+	'farmer-notavailable' => 'Nit verfiegbar',
+	'farmer-notavailable-text' => 'Des Feature isch numen im Hauptwiki verfiegbar',
+	'farmer-wikicreated' => 'Wiki aagleit',
+	'farmer-wikicreated-text' => 'Dyy Wiki isch aagleit wore.
+S isch doo: $1',
+	'farmer-default' => 'Am Aafang het nieme ußer Dir irgedweleni Rächt in däm Wiki.
+Mit $1 chasch d Benutzerrächt ändere',
+	'farmer-wikiexists' => 'Wiki git s',
+	'farmer-wikiexists-text' => "S Wiki – '''$1''' –, wu Du versuechsch aazlege, git s scho.
+Bitte gang zrugg un versuech s mit eme andere Name",
+	'farmer-confirmsetting' => 'Wiki-Yystellige bstätige',
+	'farmer-confirmsetting-name' => 'Name: $1',
+	'farmer-confirmsetting-title' => 'Titel: $1',
+	'farmer-confirmsetting-description' => 'Bschryybig: $1',
+	'farmer-description' => 'Bschryybig',
+	'farmer-confirmsetting-text' => "Dyy Wiki – '''$1''' – wird iber http://$1.meineWikiFarm/ erreichbar syy.
+Dr Projektnamensruum wird '''$2''' heiße.
+Gleicher zue däm Namensruum wäre d Gstalt '''<nowiki>[[$2:Sytename]]</nowiki>''' haa.
+Wänn alles korräkt isch, no bstätig des mit eme Druck uf '''Bstätige'''.",
+	'farmer-button-confirm' => 'Bstätige',
+	'farmer-button-submit' => 'Abschicke',
+	'farmer-createwiki-form-title' => 'E Wiki aalege',
+	'farmer-createwiki-form-text1' => 'Bruuch des Formular go ne nej Wiki aalege.',
+	'farmer-createwiki-form-help' => 'Hilf',
+	'farmer-createwiki-form-text2' => "; Wikiname: Dr Name vum Wiki.
+S derfe nume d Buechstaben A–Z un Zahle din syy.
+Dr Wikiname wird as Teil vu dr URL zum Wiki bruucht.
+Wänn Du zum Byypil '''Name''' aagisch, no wird d URL zum Wiki <nowiki>http://</nowiki>'''name'''.example.com/ heiße.",
+	'farmer-createwiki-form-text3' => '; Wikiname: Name vum Wiki.
+Er wird uf jedere Syte vum Wiki bruucht.
+Er wird au dr Titel vum Projäktnamensruum un vum Interwiki-Präfix syy.',
+	'farmer-createwiki-form-text4' => '; Bschryybig: Bschryybig vum Wiki.
+Dää Täxt bschrybt s Wiki un wird uf dr Lischt vu dr Wiki aazeigt.',
+	'farmer-createwiki-user' => 'Benutzername',
+	'farmer-createwiki-name' => 'Wikiname',
+	'farmer-createwiki-title' => 'Wikititel',
+	'farmer-createwiki-description' => 'Bschryybig',
+	'farmer-updatedlist' => 'Lischt aktualisiere',
+	'farmer-notaccessible' => 'Nit verfiegbar',
+	'farmer-notaccessible-test' => 'Des Feature isch numen im Elterewiki vum Hof verfiegbar',
+	'farmer-permissiondenied' => 'Zuegriff verweigeret',
+	'farmer-permissiondenied-text' => 'Du derfsch kei Wiki vum Hof lesche',
+	'farmer-permissiondenied-text1' => 'Du derfsch uf die Syte nit zuegryfe',
+	'farmer-deleting' => 'Am $1 lesche',
+	'farmer-delete-title' => 'Wiki lesche',
+	'farmer-delete-text' => 'Bitte wehl s Wiki, wu Du witt leschen, us dr Lischt uus',
+	'farmer-delete-form' => 'Wehl e Wiki',
+	'farmer-delete-form-submit' => 'Lesche',
+	'farmer-listofwikis' => 'Lischt vu dr Wiki',
+	'farmer-mainpage' => 'Hauptsyte',
+	'farmer-basic-title' => 'Grundsätzligi Parameter',
 	'farmer-basic-title1' => 'Titel',
+	'farmer-basic-title1-text' => 'Dyy Wiki het no kei Titel. Bitte setz en <b>jetz</b>',
+	'farmer-basic-description' => 'Bschryybig',
+	'farmer-basic-description-text' => 'Fieg unte d Bschryybig vu Dyynem Wiki yy',
+	'farmer-basic-permission' => 'Rächt',
+	'farmer-basic-permission-text' => 'Mit däm Formular isch s megli, d Benutzerrächt vum Wiki s ändere.',
+	'farmer-basic-permission-visitor' => 'Gaschträcht',
+	'farmer-basic-permission-visitor-text' => 'Die Rächt gälte fir Gescht im Wiki',
+	'farmer-basic-permission-view' => 'Alli Syten aaluege',
+	'farmer-basic-permission-edit' => 'Alli Syte bearbeite',
+	'farmer-basic-permission-createpage' => 'Neji Syten aalege',
+	'farmer-basic-permission-createtalk' => 'Diskussionssyten aalege',
+	'farmer-basic-permission-move' => 'Syte verschiebe',
+	'farmer-basic-permission-upload' => 'Dateie uffelade',
+	'farmer-basic-permission-reupload' => 'Dateien iberschryybe',
+	'farmer-basic-permission-minoredit' => 'Chleini Änderige mache',
+	'farmer-yes' => 'Jo',
+	'farmer-no' => 'Nei',
+	'farmer-basic-permission-user' => 'Rächt vu aagmäldete Benutzer',
+	'farmer-basic-permission-user-text' => 'Die Rächt gälte fir aagmäldeti Benutzer',
+	'farmer-setpermission' => 'Rächt setze',
+	'farmer-defaultskin' => 'Standardoberflächi',
+	'farmer-defaultskin-button' => 'Standardoberflächi setze',
+	'farmer-extensions' => 'Alli Erwyterige',
+	'farmer-extensions-button' => 'Aktivi Erwyterige setze',
+	'farmer-extensions-extension-denied' => 'Du derfsch des Feature nit verwände, wel dodefir mießtsch zu dr Ammanne vu däm Hof ghere',
+	'farmer-extensions-invalid' => 'Nit giltigi Erwyterig',
+	'farmer-extensions-invalid-text' => 'D Erwyterig het nit chenne zuegfiegt wäre, wel d Datei, wu zue dr Yybindig uusgwehlt woren isch, isch nit gfunde wore',
+	'farmer-extensions-available' => 'Verfiegbari Erwyterige',
+	'farmer-extensions-noavailable' => 'S sin kei Erwyterige regischtriert wore',
+	'farmer-extensions-register' => 'Erwyterig aamälde',
+	'farmer-extensions-register-text1' => 'Bruuch die Maschke unte go ne neji Erwyterig fir dr Hof regischtriere.
+Wänn e Erwyterig regischtriert isch, chenne alli Wiki si bruuche.',
+	'farmer-extensions-register-text2' => "Gib dr Name vu dr PHP-Datei im ''Include file''-Parameter eso aa, wie Du ne in LocalSettings.php tetsch aagee.",
+	'farmer-extensions-register-text3' => "Wänn s im Dateiname '''\$root''' din het, wird die Variable dur s MediaWiki-Wurzelverzeichnis ersetzt.",
+	'farmer-extensions-register-text4' => 'D Pfad, wu s aktuäll din het, sin:',
+	'farmer-extensions-register-name' => 'Name',
+	'farmer-extensions-register-includefile' => 'Datei yybinde',
+	'farmer-error-exists' => 'S Wiki cha nit aagleit wäre, wel s es scho git: $1',
+	'farmer-error-noextwrite' => 'D Erwyterigsdatei schryybe isch nit megli:',
 );
 
 /** Manx (Gaelg)
@@ -1756,7 +2044,7 @@ $messages['hsb'] = array(
 	'farmercreatesitename' => 'Mjeno sydła',
 	'farmercreatenextstep' => 'Přichodny krok',
 	'farmernewwikimainpage' => '== Witaj do twojeho Wikija ==
-Jeli to čitaš, je so twój nowy wiki korektnje instalował. 
+Jeli to čitaš, je so twój nowy wiki korektnje instalował.
 Móžeš [[Special:Farmer|swój wiki přiměrić]].',
 	'farmer-about' => 'Wo',
 	'farmer-about-text' => 'MediaWiki Farmer ći dowola farmu wikijow MediaWiki zrjadować.',
@@ -2092,13 +2380,7 @@ Quando un extension es registrate, tote le wikis potera usar lo.',
 	'farmer-extensions-register-name' => 'Nomine',
 	'farmer-extensions-register-includefile' => 'File de inclusion',
 	'farmer-error-exists' => 'Non pote crear wiki. Illo existe ja: $1',
-	'farmer-error-nodirconfig' => 'configDirectory non trovate:',
-	'farmer-error-defnotset' => 'Es necessari predefinir un wiki',
-	'farmer-error-mapnotfound' => 'Le function pro mappar le nomine del wiki in le ferma non es trovate:',
-	'farmer-error-nofileconfwrite' => 'MediaWikiFarmer non poteva scriber le file de configuration wiki predefinite.',
-	'farmer-error-funcnotcall' => 'Non poteva appellar function:',
 	'farmer-error-noextwrite' => 'Impossibile scriber al file de extension:',
-	'farmer-error-wikicorrupt' => 'Le wiki immagazinate es corrumpite',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -2114,6 +2396,15 @@ $messages['id'] = array(
 	'farmer-extensions-register-name' => 'Nama',
 );
 
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'farmer-confirmsetting-title' => 'Titulo: $1',
+	'farmer-basic-title1' => 'Titulo',
+	'farmer-yes' => 'Yes',
+);
+
 /** Icelandic (Íslenska)
  * @author S.Örvarr.S
  */
@@ -2127,6 +2418,8 @@ $messages['is'] = array(
  * @author Pietrodn
  */
 $messages['it'] = array(
+	'farmer' => 'Fattore',
+	'farmer-desc' => 'Gestisce una fattoria MediaWiki',
 	'farmercantcreatewikis' => "Non puoi creare wiki perché non possiedi i privilegi ''createwikis''",
 	'farmercreatesitename' => 'Nome sito',
 	'farmercreatenextstep' => 'Passo successivo',
@@ -2134,14 +2427,18 @@ $messages['it'] = array(
 Se stai leggendo questo messaggio, la tua wiki è stata installata correttamente.
 Puoi [[Special:Farm|personalizzare la tua wiki]].',
 	'farmer-about' => 'Informazioni',
+	'farmer-about-text' => 'MediaWiki Farmer ti consente di gestire una fattoria di wiki MediaWiki.',
 	'farmer-list-wiki' => 'Elenco di wiki',
 	'farmer-list-wiki-text' => '[[$1|Elenca]] tutte le wiki su {{SITENAME}}',
 	'farmer-createwiki' => 'Crea una wiki',
 	'farmer-createwiki-text' => '[[$1|Crea]] una nuova wiki ora!',
+	'farmer-administration' => 'Amministrazione della fattoria',
 	'farmer-administration-extension' => 'Gestisci estensioni',
 	'farmer-administration-extension-text' => '[[$1|Gestisci]] estensioni installate.',
+	'farmer-admimistration-listupdate' => 'Aggiornamento della lista della fattoria',
 	'farmer-admimistration-listupdate-text' => "[[$1|Aggiorna]] l'elenco delle wiki su {{SITENAME}}",
 	'farmer-administration-delete' => 'Cancella una wiki',
+	'farmer-administration-delete-text' => '[[$1|Elimina]] una wiki dalla fattoria',
 	'farmer-administer-thiswiki' => 'Amministra questa wiki',
 	'farmer-administer-thiswiki-text' => '[[$1|Amministra]] i cambiamenti a questa wiki',
 	'farmer-notavailable' => 'Non disponibile',
@@ -2184,7 +2481,9 @@ Sarà mostrato nell'elenco delle wiki.",
 	'farmer-createwiki-description' => 'Descrizione',
 	'farmer-updatedlist' => 'Elenco aggiornato',
 	'farmer-notaccessible' => 'Non accessibile',
+	'farmer-notaccessible-test' => 'Questa funzione è disponibile solo per la wiki genitore nella fattoria',
 	'farmer-permissiondenied' => 'Permesso negato',
+	'farmer-permissiondenied-text' => 'Non hai il permesso di eliminare una wiki dalla fattoria',
 	'farmer-permissiondenied-text1' => 'Non hai il permesso di accedere a questa pagina',
 	'farmer-deleting' => 'Cancellazione $1',
 	'farmer-delete-title' => 'Cancella wiki',
@@ -2219,20 +2518,21 @@ Sarà mostrato nell'elenco delle wiki.",
 	'farmer-defaultskin-button' => 'Imposta skin di default',
 	'farmer-extensions' => 'Attiva estensioni',
 	'farmer-extensions-button' => 'Imposta estensioni attive',
+	'farmer-extensions-extension-denied' => 'Non hai il permesso di utilizzare questa funzione.
+Devi essere un membro del gruppo farmeradmin',
 	'farmer-extensions-invalid' => 'Estensione non valida',
 	'farmer-extensions-invalid-text' => "Non è stato possibile aggiungere l'estensione perché il file selezionato per l'inclusione non può essere trovato",
 	'farmer-extensions-available' => 'Estensioni disponibile',
 	'farmer-extensions-noavailable' => 'Nessuna estensione è stata registrata',
 	'farmer-extensions-register' => 'Registra estensione',
+	'farmer-extensions-register-text1' => "Usa il modulo qui sotto per registrare una nuova estensione con la fattoria.
+Una volta che l'estensione sarà stata registrata, tutte le wiki potranno usarla.",
 	'farmer-extensions-register-text2' => "Per il parametro ''Include file'', inserisci il nome del file PHP come desideri in LocalSettings.php.",
 	'farmer-extensions-register-text3' => "Se il nome del file contiene '''\$root''', quella variabile sarà sostituita con la cartella principale di MediaWiki.",
 	'farmer-extensions-register-text4' => 'I percorsi attuali inclusi sono:',
 	'farmer-extensions-register-name' => 'Nome',
 	'farmer-extensions-register-includefile' => 'Includi file',
 	'farmer-error-exists' => 'Impossibile creare wiki. Esiste già :$1',
-	'farmer-error-nodirconfig' => 'configDirectory non trovata:',
-	'farmer-error-defnotset' => 'La wiki di default deve essere impostata',
-	'farmer-error-funcnotcall' => 'Impossibile richiamare funzione:',
 	'farmer-error-noextwrite' => 'Impossibile scrivere file estensione:',
 );
 
@@ -2242,18 +2542,115 @@ Sarà mostrato nell'elenco delle wiki.",
  * @author JtFuruhata
  */
 $messages['ja'] = array(
+	'farmer' => 'ウィキファーム管理',
+	'farmer-desc' => 'MediaWiki ファームを管理する',
 	'farmercantcreatewikis' => '新規ウィキ作成(createwikis)権限がないため、ウィキを作成できません',
 	'farmercreatesitename' => 'サイト名',
 	'farmercreatenextstep' => '次の手順',
+	'farmernewwikimainpage' => '== あなたのウィキにようこそ ==
+もしあなたがこれを読んでいるのなら、新しいウィキは正しくインストールされました。[[Special:Farmer|あなたのウィキをカスタマイズする]]ことができます。',
 	'farmer-about' => '解説',
+	'farmer-about-text' => 'MediaWiki Farmer を使うと MediaWiki のウィキファームを管理できるようになります。',
+	'farmer-list-wiki' => 'ウィキ一覧',
+	'farmer-list-wiki-text' => '{{SITENAME}} 上の全ウィキを[[$1|一覧する]]',
+	'farmer-createwiki' => 'ウィキを作成する',
+	'farmer-createwiki-text' => '新しいウィキを[[$1|作成する]]',
+	'farmer-administration' => 'ファーム管理',
+	'farmer-administration-extension' => '拡張機能を管理する',
+	'farmer-administration-extension-text' => 'インストール済みの拡張機能を[[$1|管理する]]',
+	'farmer-admimistration-listupdate' => 'ウィキ一覧を更新する',
+	'farmer-admimistration-listupdate-text' => '{{SITENAME}} 上のウィキ一覧を[[$1|更新する]]',
+	'farmer-administration-delete' => 'ウィキを削除する',
+	'farmer-administration-delete-text' => 'ウィキをファームから[[$1|削除する]]',
+	'farmer-administer-thiswiki' => 'このウィキを管理する',
+	'farmer-administer-thiswiki-text' => 'このウィキへの変更を[[$1|管理する]]',
+	'farmer-notavailable' => '利用不可',
+	'farmer-notavailable-text' => 'この機能はメインウィキでのみ利用可能です',
+	'farmer-wikicreated' => 'ウィキが作成されました',
+	'farmer-wikicreated-text' => 'あなたのウィキが作成されました。$1 でアクセス可能です',
+	'farmer-default' => '既定では、あなたを除く誰もこのウィキで許可をもっていません。利用者権限については $1 で変更できます',
+	'farmer-wikiexists' => 'ウィキが存在します',
+	'farmer-wikiexists-text' => "あなたが作成しようとしたウィキ '''$1''' は既に存在します。戻って別の名前を試してください。",
+	'farmer-confirmsetting' => 'ウィキの設定を確認する',
+	'farmer-confirmsetting-name' => '名前: $1',
 	'farmer-confirmsetting-title' => 'タイトル: $1',
+	'farmer-confirmsetting-description' => '概要: $1',
+	'farmer-description' => '概要',
+	'farmer-confirmsetting-text' => "あなたのウィキ '''$1''' は http://$1.myfarm でアクセスが可能になります。プロジェクト名前空間 '''$2'''になり、その名前空間へのリンクは '''<nowiki>[[$2:Page name]]</nowiki>''' という形式になります。これで希望通りならば、以下の'''確認'''ボタンを押してください。",
 	'farmer-button-confirm' => '確認',
+	'farmer-button-submit' => '送信',
+	'farmer-createwiki-form-title' => 'ウィキを作成する',
+	'farmer-createwiki-form-text1' => '新しいウィキを作成するには以下のフォームを使ってください。',
+	'farmer-createwiki-form-help' => 'ヘルプ',
+	'farmer-createwiki-form-text2' => "; ウィキ名: ウィキの名前。
+文字と数字のみから成る。ウィキ名はあなたのウィキを識別するURLの一部として使われます。例えば、'''title''' と入力すると、あなたのウィキは <nowiki>http://</nowiki>'''title'''.mydomain というような形式でアクセスされます。",
+	'farmer-createwiki-form-text3' => '; ウィキタイトル: ウィキのタイトル。
+あなたのウィキのすべてのページのタイトルで使われます。また、プロジェクト名前空間とインターウィキ接頭辞にもなります。',
+	'farmer-createwiki-form-text4' => '; 概要: ウィキの概要。
+ウィキについての解説文です。これはウィキ一覧で表示されます。',
 	'farmer-createwiki-user' => '利用者名',
+	'farmer-createwiki-name' => 'ウィキ名',
+	'farmer-createwiki-title' => 'ウィキタイトル',
+	'farmer-createwiki-description' => '概要',
+	'farmer-updatedlist' => '更新済みの一覧',
+	'farmer-notaccessible' => 'アクセス不可',
+	'farmer-notaccessible-test' => 'この機能はファームの親ウィキでのみ利用可能です',
 	'farmer-permissiondenied' => '不許可',
+	'farmer-permissiondenied-text' => 'あなたはファームからウィキを削除する許可がありません。',
+	'farmer-permissiondenied-text1' => 'あなたはこのページにアクセスする許可がありません',
+	'farmer-deleting' => '$1 を削除中',
+	'farmer-delete-title' => 'ウィキを削除する',
+	'farmer-delete-text' => '削除したいウィキを以下のリストから選んでください',
+	'farmer-delete-form' => 'ウィキを選択する',
 	'farmer-delete-form-submit' => '削除',
+	'farmer-listofwikis' => 'ウィキ一覧',
+	'farmer-mainpage' => 'メインページ',
+	'farmer-basic-title' => '基本的なパラメータ',
 	'farmer-basic-title1' => 'タイトル',
+	'farmer-basic-title1-text' => 'あなたのウィキにはタイトルがありません。<b>今</b>付けてください',
+	'farmer-basic-description' => '概要',
+	'farmer-basic-description-text' => 'あなたのウィキの概要を以下に書いてください',
+	'farmer-basic-permission' => '許可',
+	'farmer-basic-permission-text' => '以下のフォームを使うと、このウィキの利用者へ与える許可を変更することができます。',
+	'farmer-basic-permission-visitor' => 'すべての訪問者への許可',
+	'farmer-basic-permission-visitor-text' => '以下の許可はこのウィキを訪問したすべての人に適用されます',
+	'farmer-basic-permission-view' => 'すべてのページの閲覧',
+	'farmer-basic-permission-edit' => 'すべてのページの編集',
+	'farmer-basic-permission-createpage' => '新しいページの作成',
+	'farmer-basic-permission-createtalk' => 'ノートページの作成',
 	'farmer-basic-permission-move' => 'ページの移動',
-	'farmer-basic-permission-upload' => 'ファイルをアップロード',
+	'farmer-basic-permission-upload' => 'ファイルのアップロード',
+	'farmer-basic-permission-reupload' => 'ファイルの再アップロード (既存のものの上書き)',
+	'farmer-basic-permission-minoredit' => '細部の編集の許可',
+	'farmer-yes' => 'はい',
+	'farmer-no' => 'いいえ',
+	'farmer-basic-permission-user' => 'ログイン利用者への許可',
+	'farmer-basic-permission-user-text' => '以下の許可はこのウィキにログインしているすべての人に適用されます',
+	'farmer-setpermission' => '許可を設定',
+	'farmer-defaultskin' => 'デフォルトのスキン',
+	'farmer-defaultskin-button' => 'デフォルトのスキンを設定',
+	'farmer-extensions' => '利用する拡張機能',
+	'farmer-extensions-button' => '利用する拡張機能を設定',
+	'farmer-extensions-extension-denied' => 'あなたにはこの機能を使う許可がありません。ウィキファームの管理者グループ (farmeradmin) の一員である必要があります',
+	'farmer-extensions-invalid' => '無効な拡張機能',
+	'farmer-extensions-invalid-text' => 'インクルードすべきファイルが見つからなかったため、この拡張機能を追加することができませんでした',
+	'farmer-extensions-available' => '利用可能な拡張機能',
+	'farmer-extensions-noavailable' => '登録されている拡張機能はありません。',
+	'farmer-extensions-register' => '拡張機能を登録',
+	'farmer-extensions-register-text1' => '拡張機能をファームに新規登録するには以下のフォームを使ってください。拡張機能は一度登録されると、すべてのウィキで利用可能となります。',
+	'farmer-extensions-register-text2' => 'パラメータ「インクルードファイル」には、LocalSettings.php に記述するPHPファイルの名前を入力してください。',
+	'farmer-extensions-register-text3' => "ファイル名が '''\$root''' を含んでいる場合は、その変数が MediaWiki のルートディレクトリに置換されます。",
+	'farmer-extensions-register-text4' => '現在のインクルードパス:',
+	'farmer-extensions-register-name' => '名前',
+	'farmer-extensions-register-includefile' => 'インクルードファイル',
+	'farmer-error-exists' => 'ウィキを作成できません。既に存在しています: $1',
+	'farmer-error-nodirconfig' => 'configDirectory が見つかりません:',
+	'farmer-error-defnotset' => 'デフォルトのウィキを設定しなければなりません',
+	'farmer-error-mapnotfound' => 'ファーム内のウィキ名の対応付けをする関数が見つかりません:',
+	'farmer-error-nofileconfwrite' => 'MediaWikiFarmer はデフォルトウィキの設定ファイルに書き込むことができませんでした。',
+	'farmer-error-funcnotcall' => '関数の呼び出しに失敗しました:',
+	'farmer-error-noextwrite' => '拡張機能ファイルへの書き出しができません:',
+	'farmer-error-wikicorrupt' => '保存したウィキは破損しています',
 );
 
 /** Javanese (Basa Jawa)
@@ -2338,7 +2735,7 @@ $messages['km'] = array(
 	'farmercreatesitename' => 'ឈ្មោះតំបន់បណ្ដាញ',
 	'farmercreatenextstep' => 'ជំហានបន្ទាប់',
 	'farmernewwikimainpage' => '== សូមស្វាគមន៍ការមកកាន់វិគីរបស់លោកអ្នក ==
-ប្រសិនបើអ្នកកំពុងតែអាន មានន័យថាវិគីថ្មីរបស់លោកអ្នកត្រូវបានដំឡើងត្រឹមត្រូវហើយ។ 
+ប្រសិនបើអ្នកកំពុងតែអាន មានន័យថាវិគីថ្មីរបស់លោកអ្នកត្រូវបានដំឡើងត្រឹមត្រូវហើយ។
 
 អ្នក​អាច​[[Special:Farmer|ប្ដូរ​វិគី​របស់​អ្នក​តាមបំណង]]។',
 	'farmer-about' => 'អំពី',
@@ -2421,8 +2818,8 @@ $messages['krj'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'farmer' => 'Farmer',
-	'farmer-desc' => 'Donn en MediaWiki Farm verwallde.',
+	'farmer' => 'MediaWiki Farmer - ene Shtall voll Wikis',
+	'farmer-desc' => 'Donn ene Shtall voll MediaWiki Wikis verwallde.',
 	'farmercantcreatewikis' => 'Do kanns kei Wiki neu aanlääje. Do fäählt Der et Rääch dozo („<i lang="en">createwikis</i>“)',
 	'farmercreateurl' => 'URL',
 	'farmercreatesitename' => 'Dä Webßait iere Name',
@@ -2431,15 +2828,20 @@ $messages['ksh'] = array(
 Wann De dat heh lësse kannß, dann eß Ding Wiki öhndlesch opjesaz.
 Öm Dingem Wiki sing Ėnshtëllonge zerääsch ze maache, doh jangk op di Sigk [[Special:Farmer]].',
 	'farmer-about' => 'Üvver',
-	'farmer-about-text' => 'MediaWiki Farmer hellef Der, en Farm fun MediaWiki Wikis ze verwallde.',
+	'farmer-about-text' => 'MediaWiki Farmer hellef Der, ene Shtall voll met MediaWiki Wikis ze verwallde.',
 	'farmer-list-wiki' => 'Lėßß met_te Wikiiß',
 	'farmer-list-wiki-text' => 'Donn all de Wikis op dä {{SITENAME}} [[$1|oplist]]',
 	'farmer-createwiki' => 'E Wikki aanlääje',
 	'farmer-createwiki-text' => 'Donn jetz e [[$1|neu Wiki aanlääje]]!',
-	'farmer-administration' => 'MediaWiki Farm verwallde',
+	'farmer-administration' => 'Ene Shtall voll MediaWiki Wikis verwallde',
 	'farmer-administration-extension' => 'ßoffwäer-Zosätz verwallde',
+	'farmer-administration-extension-text' => 'Don de [[$1|enshtalleete Zosatz-Projramme verwallde]].',
+	'farmer-admimistration-listupdate' => 'Leß met Wikis op der neuste Shtand bränge',
+	'farmer-admimistration-listupdate-text' => 'Donn de {{SITENAME}} ier [[$1|Wiki Leß ändere]].',
 	'farmer-administration-delete' => 'E Wikki fott maache',
+	'farmer-administration-delete-text' => 'Donn [[$1|e Wiki hee fottlohße]].',
 	'farmer-administer-thiswiki' => 'Donn dit Wiki hee verwallde',
+	'farmer-administer-thiswiki-text' => 'Donn [[$1|dat Wiki hee verwallde]].',
 	'farmer-notavailable' => 'Ham_mer nit',
 	'farmer-notavailable-text' => 'Die Müjjeleschkeit hät mer bloß em Houpwiki',
 	'farmer-wikicreated' => 'Wikki aanjelaat',
@@ -2448,34 +2850,58 @@ Mer fengk et unger $1',
 	'farmer-default' => 'Shtandattmäßesch hät Keine ußer Dir öhnds_e Rääsch en dämm Wiki.
 Do kanns dä Metmaacher ier Rääschte em Wiki ändere övver: $1',
 	'farmer-wikiexists' => 'Dat Wikki jidd_et alldt',
+	'farmer-wikiexists-text' => 'Dat Wiki „$1“, wat De aanlääje wells, dat jidd-et ald.
+Bes esu joot, jangk zerök un versök ene andere Name.',
 	'farmer-confirmsetting' => 'Enstellunge för dat Wiki bestätije',
 	'farmer-confirmsetting-name' => 'Name: $1',
 	'farmer-confirmsetting-title' => 'Tittel: $1',
 	'farmer-confirmsetting-description' => 'Beschrievung: $1',
 	'farmer-description' => 'Beschrievung',
+	'farmer-confirmsetting-text' => "Ding Wiki met däm Name '''$1''' weed övver http://$1.myfarm zo fenge sin.
+Dä Name för dat Projäk_Appachtemang weed '''$2''' sin.
+Links op dat Appachtemang weed en dä Aat '''[<nowiki />[$2:Siggetittel]]''' sin.
+Wann dat dat es, wat De wells, dann klecks De dä Knopp „'''{{int:farmer-button-confirm}}'''“ unge.",
 	'farmer-button-confirm' => 'Beshtätije',
 	'farmer-button-submit' => 'Loß Jonn!',
 	'farmer-createwiki-form-title' => 'E nöü Wikki opmaache',
 	'farmer-createwiki-form-text1' => 'Övver dat Fommulaa hee kanns De e neu Wiki opmaache.',
 	'farmer-createwiki-form-help' => 'Hölp',
+	'farmer-createwiki-form-text2' => "; Däm Wiki singe Name :
+Do dren sin eckersch Bochshtave un Zeffere, sönß nix.
+Dä Name weed jebruch, öm als ene Deil en däm singe URL, op Ding Wiki ze zeije.
+Wann De hee zem Beishpell '''tittel''' enndräähß, dann weed Ding Wiki met däm URL <nowiki>http://</nowiki>'''tittel'''.mydomain/ ze fenge sin.",
+	'farmer-createwiki-form-text3' => '; Däm Wiki singe Tittel :
+Dä weed en jeede Sigg en Dingem Wiki als Tittel jebruch.
+Dä weed och dä Name vun däm Appachtemang met dä Sigge övver et Projäk waade.
+Zojoderläz es dä dä Försatz för de Engewiki-Lenks op Ding Wiki, wann De esu jet ennjeschalldt häs.',
+	'farmer-createwiki-form-text4' => '; Beschrievung :
+Dä Text beschrief Ding Wiki, un weed en dä Leß met de Wikis aanjezeich.',
 	'farmer-createwiki-user' => 'Metmaacher',
 	'farmer-createwiki-name' => 'Däm Wiki singe Name',
 	'farmer-createwiki-title' => 'Däm Wiki singe Tittel',
 	'farmer-createwiki-description' => 'Beschrievung',
 	'farmer-updatedlist' => 'Leß op der neuste Shtand brenge',
+	'farmer-notaccessible' => 'Nit zojänglesch',
+	'farmer-notaccessible-test' => 'Dat es en Müjjeleschkeit, die De bloß em Vatterwiki en dämm Shtall vun Wikis häß.',
 	'farmer-permissiondenied' => 'Dat es nit älaup',
+	'farmer-permissiondenied-text' => 'Do häs nit dat Rääsch, hee en dä Farm e Wiki fottzeschmiiße',
+	'farmer-permissiondenied-text1' => 'Do häs nit dat Rääsch, op hee die Sigg zozejriife',
 	'farmer-deleting' => '„$1“ weed fottjeschmeße',
 	'farmer-delete-title' => 'E Wikki fott maache',
+	'farmer-delete-text' => 'Donn dat Wiki uß dä Leß hee unge ußsöke, wat De fottschmiiße wells',
 	'farmer-delete-form' => 'Don e Wiki ußsöke',
 	'farmer-delete-form-submit' => 'Fott domet!',
 	'farmer-listofwikis' => 'Less fun de Wikis',
 	'farmer-mainpage' => 'Houpsigg',
 	'farmer-basic-title' => 'Grundläje Parammeetere',
 	'farmer-basic-title1' => 'Tittel',
+	'farmer-basic-title1-text' => 'Ding Wiki hät keine Tittel. Donn <b>jetz</b> eine aanjevve.',
 	'farmer-basic-description' => 'Beschrievung',
 	'farmer-basic-description-text' => 'Jif unge de Beschrievung för Ding Wiki en',
 	'farmer-basic-permission' => 'Rääschde',
+	'farmer-basic-permission-text' => 'Met dämm Fommulaa unge, kanns De de Rääschte för de Metmaachere en dämm Wiki ändere.',
 	'farmer-basic-permission-visitor' => '!!Fuzzy!!Räächte för Jeder Minsch ...........',
+	'farmer-basic-permission-visitor-text' => 'Hee die Rääschte kritt jede Besöker dä en hee dat Wiki kütt',
 	'farmer-basic-permission-view' => 'Alle Sigge beloore',
 	'farmer-basic-permission-edit' => 'Alle Sigge ändere',
 	'farmer-basic-permission-createpage' => 'Neu Sigge aanlääje',
@@ -2493,6 +2919,8 @@ Do kanns dä Metmaacher ier Rääschte em Wiki ändere övver: $1',
 	'farmer-defaultskin-button' => 'Standat-Övverfläsch Endraare!',
 	'farmer-extensions' => 'Aktive Zosäz för dem Wiki sing ßofwäer',
 	'farmer-extensions-button' => 'Donn de aktive Zosatz-ßoffwäer setze',
+	'farmer-extensions-extension-denied' => 'Do häs nit dat Rääsch, hee die Müjjleschkeit ze bruche.
+Doför möötß De ald en dä Metmaacher-Jropp <code lang="en">farmeradmin</code> sin.',
 	'farmer-extensions-invalid' => 'Onjöltijje Zosatz zom Wiki',
 	'farmer-extensions-invalid-text' => 'Dä Zosatz zom Wiki kunnt nit opjenumme un enjedraare wäde.
 Mer han die Datei nit jefonge, die enjefööch wäde mööt.',
@@ -2506,8 +2934,10 @@ Mer han die Datei nit jefonge, die enjefööch wäde mööt.',
 	'farmer-extensions-register-name' => 'Name',
 	'farmer-extensions-register-includefile' => '<i lang="en">include file</i>',
 	'farmer-error-exists' => 'Dat Wikki „$1“ jidd_et alldt. Dat kan_nid_norr_enß nöü aanjelaat wääde.',
+	'farmer-error-nodirconfig' => 'Han et Verzeichnis för de Kunfijurazjun (<code lang="en">configDirectory</code>) nit jefonge:',
 	'farmer-error-defnotset' => 'Et Standatt-Wiki moß jesaz sin',
 	'farmer-error-mapnotfound' => 'De Funxjohn, öm de Name vun de Wikis afzebellde, wood nit jefonge:',
+	'farmer-error-nofileconfwrite' => 'Mer kunnte nit en de Shtandadt_Kunfijjurazjuhns_Dattei för dat Wiki erin schriive.',
 	'farmer-error-funcnotcall' => 'Kunnt en Funxjohn nit oprohfe:',
 	'farmer-error-noextwrite' => 'Mer kunnte de Datei met dä Zosätz nit schriive:',
 	'farmer-error-wikicorrupt' => 'Wat doh als_e Wikki jesėschot wohr eß kappott.',
@@ -2852,8 +3282,16 @@ $messages['mt'] = array(
 	'farmer-createwiki-user' => 'Isem l-utent',
 );
 
+/** Mirandese (Mirandés)
+ * @author Malafaya
+ */
+$messages['mwl'] = array(
+	'farmer-mainpage' => 'Páigina Percipal',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
+ * @author Sura
  */
 $messages['myv'] = array(
 	'farmer' => 'Хермер',
@@ -2867,7 +3305,7 @@ $messages['myv'] = array(
 	'farmer-basic-permission-view' => 'Ванномс весе лопатнень',
 	'farmer-basic-permission-createpage' => 'Шкамс од лопат',
 	'farmer-basic-permission-move' => 'Печтевтемс лопатнень',
-	'farmer-basic-permission-upload' => 'Йовкстань хвайлат',
+	'farmer-basic-permission-upload' => 'Файлань ёвкстамо',
 	'farmer-yes' => 'Истя',
 	'farmer-no' => 'Арась',
 	'farmer-extensions-register-name' => 'Лемезэ',
@@ -2952,9 +3390,9 @@ U kunt uw [[Special:Farmer|wiki aanpassen]].',
 	'farmer-confirmsetting-title' => 'Titel: $1',
 	'farmer-confirmsetting-description' => 'Beschrijving: $1',
 	'farmer-description' => 'Beschrijving',
-	'farmer-confirmsetting-text' => "Uw wiki, '''$1''', zal bereikbaar zijn via http://$1.myfarm.
+	'farmer-confirmsetting-text' => "Uw wiki '''$1''' wordt bereikbaar via http://$1.myfarm.
 De projectnaamruimte wordt '''$2'''.
-Een link naar deze naamruimte wordt '''<nowiki>[[$2:Paginanaam]]</nowiki>'''.
+Een verwijzing naar deze naamruimte wordt '''<nowiki>[[$2:Paginanaam]]</nowiki>'''.
 Als dit in orde is, druk dan op de knop '''bevestigen'''.",
 	'farmer-button-confirm' => 'Bevestigen',
 	'farmer-button-submit' => 'Opslaan',
@@ -3073,7 +3511,10 @@ Gå tilbake og freist med eit anna namn.",
 	'farmer-confirmsetting-title' => 'Tittel: $1',
 	'farmer-confirmsetting-description' => 'Skildring: $1',
 	'farmer-description' => 'Skildring',
-	'farmer-confirmsetting-text' => "Wikien din, '''$1''', vil vera tilgjengeleg gjennom http://$1.myfarm. Prosjektnamnerommet vil vera '''$2'''. Lenkjer til namnerommet vil vera på forma '''<nowiki>[[$2:Sidenamn]]</nowiki>'''. Om dette er det du vil, trykk på knappen ''{{int:Farmer-button-confirm}}'' nedanfor.",
+	'farmer-confirmsetting-text' => "Wikien din, '''$1''', vil vera tilgjengeleg gjennom http://$1.myfarm.
+Prosjektnamnerommet vil vera '''$2'''.
+Lenkjer til namnerommet vil vera på forma '''<nowiki>[[$2:Sidenamn]]</nowiki>'''.
+Om dette er det du vil, trykk på knappen ''{{int:Farmer-button-confirm}}'' nedanfor.",
 	'farmer-button-confirm' => 'Stadfest',
 	'farmer-button-submit' => 'Lagra',
 	'farmer-createwiki-form-title' => 'Opprett ein wiki',
@@ -3144,13 +3585,7 @@ Når ei utviding er registrert, vil alle wikiane kunna nytta seg av ho.',
 	'farmer-extensions-register-name' => 'Namn',
 	'farmer-extensions-register-includefile' => 'Inkluder fil',
 	'farmer-error-exists' => 'Kan ikkje oppretta wikien. Han finst frå før: $1',
-	'farmer-error-nodirconfig' => 'fann ikkje configDirectory:',
-	'farmer-error-defnotset' => 'Må setja standardwiki',
-	'farmer-error-mapnotfound' => 'Funksjonen for å setja inn namnet på wikien i wikisamlinga vart ikkje funnen:',
-	'farmer-error-nofileconfwrite' => 'MediaWikiFarmer kunne ikkje skriva standardkonfigurasjonsfila.',
-	'farmer-error-funcnotcall' => 'Kunne ikkje ropa opp funksjon:',
 	'farmer-error-noextwrite' => 'Kunne ikkje skriva ut utvidingsfil:',
-	'farmer-error-wikicorrupt' => 'Den lagra wikien er øydelagd',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -3192,7 +3627,10 @@ Om du leser dette, har din nye wiki blitt installert korrekt. Du kan [[Special:F
 	'farmer-confirmsetting-title' => 'Tittel: $1',
 	'farmer-confirmsetting-description' => 'Beskrivelse: $1',
 	'farmer-description' => 'Beskrivelse',
-	'farmer-confirmsetting-text' => "Wikien din, '''$1''', vil være tilgjengelig via http://$1.myfarm. Prosjektnavnerommet vil være '''$2'''. Lenker til dette navnerommet vil være på formen '''<nowiki>[[$2:Sidenavn]]</nowiki>'''. Om dette er det du vil, trykk på knappen ''{{int:Farmer-button-confirm}}'' nedenunder.",
+	'farmer-confirmsetting-text' => "Wikien din, '''$1''', vil være tilgjengelig via http://$1.myfarm.
+Prosjektnavnerommet vil være '''$2'''.
+Lenker til dette navnerommet vil være på formen '''<nowiki>[[$2:Sidenavn]]</nowiki>'''.
+Om dette er det du vil, trykk på knappen ''{{int:Farmer-button-confirm}}'' nedenunder.",
 	'farmer-button-confirm' => 'Bekreft',
 	'farmer-button-submit' => 'Lagre',
 	'farmer-createwiki-form-title' => 'Opprett en wiki',
@@ -3260,13 +3698,7 @@ Om du leser dette, har din nye wiki blitt installert korrekt. Du kan [[Special:F
 	'farmer-extensions-register-name' => 'Navn',
 	'farmer-extensions-register-includefile' => 'Inkluder fil',
 	'farmer-error-exists' => 'Kan ikke opprette wikien. Den finnes allerede: $1',
-	'farmer-error-nodirconfig' => 'configDirectory ikke funnet:',
-	'farmer-error-defnotset' => 'Må sette standardwiki',
-	'farmer-error-mapnotfound' => 'Funksjonen for å sette inn wikiens navn i farmen ikke funnet:',
-	'farmer-error-nofileconfwrite' => 'MediaWikiFarmer kunne ikke skrive standardkonfigurasjonsfilen.',
-	'farmer-error-funcnotcall' => 'Kunne ikke rope opp funksjon:',
 	'farmer-error-noextwrite' => 'Kunne ikke skrive ut utvidelsesfil:',
-	'farmer-error-wikicorrupt' => 'Den lagrede wikien er ødelagt',
 );
 
 /** Northern Sotho (Sesotho sa Leboa)
@@ -3340,8 +3772,9 @@ Es accessible sus $1',
 	'farmer-confirmsetting-description' => 'Descripcion : $1',
 	'farmer-description' => 'Descripcion',
 	'farmer-confirmsetting-text' => "Vòstre wiki, '''$1''', serà accessible dempuèi l’adreça http://$1.monsite.
-
-Lo nom de l’espaci del projècte serà '''$2'''. Los ligams cap a aqueste espaci auràn la forma de '''<nowiki>[[$2:Nom de la pagina]]</nowiki>'''. S’es plan çò que volètz, picatz lo boton '''Confirmar''' çaijós.",
+Lo nom de l’espaci del projècte serà '''$2'''.
+Los ligams cap a aqueste espaci auràn la forma de '''<nowiki>[[$2:Nom de la pagina]]</nowiki>'''.
+S’es plan çò que volètz, picatz lo boton '''Confirmar''' çaijós.",
 	'farmer-button-confirm' => 'Confirmar',
 	'farmer-button-submit' => 'Sometre',
 	'farmer-createwiki-form-title' => 'Crear un Wiki',
@@ -3406,13 +3839,15 @@ Lo nom de l’espaci del projècte serà '''$2'''. Los ligams cap a aqueste espa
 	'farmer-extensions-register-name' => 'Nom',
 	'farmer-extensions-register-includefile' => 'Fichièr Include',
 	'farmer-error-exists' => 'L’interfàcia pòt pas crear lo Wiki. Existís ja : $1',
-	'farmer-error-nodirconfig' => 'configDirectory introbable :',
-	'farmer-error-defnotset' => 'Lo Wiki per defaut deu èsser definit.',
-	'farmer-error-mapnotfound' => 'La foncion planificant lo nom del wiki es introbabla :',
-	'farmer-error-nofileconfwrite' => 'MediaWikiFarmer pòt pas escriure lo fichièr de configuracion del wiki per defaut.',
-	'farmer-error-funcnotcall' => 'La foncion seguenta es introbabla :',
 	'farmer-error-noextwrite' => 'Impossible d’escriure lo fichièr d’extension seguent :',
-	'farmer-error-wikicorrupt' => 'Lo wiki estocat es corromput',
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Jose77
+ */
+$messages['or'] = array(
+	'farmer-createwiki-form-help' => 'ସାହାଜ୍ଯ',
+	'farmer-mainpage' => 'ପ୍ରଧାନ ପ୍ରୁଷ୍ଟ୍ଆ',
 );
 
 /** Ossetic (Иронау)
@@ -3525,7 +3960,7 @@ Opis będzie wyświetlany w spisie wiki.',
 	'farmer-basic-permission' => 'Uprawnienia',
 	'farmer-basic-permission-text' => 'Używając poniższego formularza, można zmienić uprawnienia dla użytkowników tej wiki.',
 	'farmer-basic-permission-visitor' => 'Uprawnienia dla wszystkich gości',
-	'farmer-basic-permission-visitor-text' => 'Poniższe uprawnienia zostaną użyte dla każdej osoby, która odwiedzi tą wiki',
+	'farmer-basic-permission-visitor-text' => 'Poniższe uprawnienia zostaną użyte dla każdej osoby, która odwiedzi tę wiki',
 	'farmer-basic-permission-view' => 'Widoczne wszystkie strony',
 	'farmer-basic-permission-edit' => 'Edycja dowolnej strony',
 	'farmer-basic-permission-createpage' => 'Tworzenie nowych stron',
@@ -3558,13 +3993,7 @@ Po zarejestrowaniu wszystkie wiki będą mogły korzystać z tego rozszerzenia.'
 	'farmer-extensions-register-name' => 'Nazwa',
 	'farmer-extensions-register-includefile' => 'Załącz plik',
 	'farmer-error-exists' => 'Nie można utworzyć wiki. Już istnieje: $1',
-	'farmer-error-nodirconfig' => 'Nie odnaleziono „configDirectory”:',
-	'farmer-error-defnotset' => 'Musi być ustawiona domyślna wiki',
-	'farmer-error-mapnotfound' => 'Nie odnaleziono funkcji do odwzorowania nazwy wiki:',
-	'farmer-error-nofileconfwrite' => 'Farmer MediaWiki nie może zapisać pliku z domyślną konfiguracją wiki.',
-	'farmer-error-funcnotcall' => 'Nie można wywołać funkcji:',
 	'farmer-error-noextwrite' => 'Nie można zapisać pliku rozszerzenia:',
-	'farmer-error-wikicorrupt' => 'Zapamiętana wiki jest uszkodzona',
 );
 
 /** Pashto (پښتو)
@@ -3720,6 +4149,117 @@ Se é isto que pretende, pressione o botão '''confirmar''' abaixo.",
 	'farmer-error-wikicorrupt' => 'O wiki armazenado está corrompido',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'farmer' => 'Farmer',
+	'farmer-desc' => 'Gerencie uma "farm" MediaWiki',
+	'farmercantcreatewikis' => 'Você não pode criar wikis porque não possui o privilégio "createwikis"',
+	'farmercreatesitename' => 'Nome do sítio',
+	'farmercreatenextstep' => 'Próximo passo',
+	'farmernewwikimainpage' => '== Bem-vindo ao seu Wiki ==
+Se está a ler isto, o seu wiki foi corretamente instalado.
+Pode agora [[Special:Farmer|personalizar o seu wiki]].',
+	'farmer-about' => 'Sobre',
+	'farmer-about-text' => 'MediaWiki Farmer permite-lhe gerenciar uma "farm" de wikis MediaWiki.',
+	'farmer-list-wiki' => 'Lista de Wikis',
+	'farmer-list-wiki-text' => '[[$1|Listar]] todos os wikis em {{SITENAME}}',
+	'farmer-createwiki' => 'Criar um Wiki',
+	'farmer-createwiki-text' => '[[$1|Criar]] um novo wiki já!',
+	'farmer-administration' => 'Administração da "Farm"',
+	'farmer-administration-extension' => 'Gerenciar Extensões',
+	'farmer-administration-extension-text' => '[[$1|Gerenciar]] extensões instaladas.',
+	'farmer-admimistration-listupdate' => 'Atualização da Lista da "Farm"',
+	'farmer-admimistration-listupdate-text' => '[[$1|Atualize]] a lista de wikis em {{SITENAME}}',
+	'farmer-administration-delete' => 'Apagar um Wiki',
+	'farmer-administration-delete-text' => '[[$1|Apagar]] um wiki da "farm"',
+	'farmer-administer-thiswiki' => 'Gerenciar este Wiki',
+	'farmer-administer-thiswiki-text' => '[[$1|Administrar]] alterações a este wiki',
+	'farmer-notavailable' => 'Não disponível',
+	'farmer-notavailable-text' => 'Esta funcionalidade só está disponível no wiki principal',
+	'farmer-wikicreated' => 'Wiki criado',
+	'farmer-wikicreated-text' => 'O seu wiki foi criado. Ele está acessível em $1',
+	'farmer-default' => 'Por padrão, ninguém tem permissões neste wiki à exceção de você. Pode alterar os privilégios dos utilizadores em $1',
+	'farmer-wikiexists' => 'O wiki existe',
+	'farmer-wikiexists-text' => "O wiki que está tentando criar, '''$1''', já existe. Por favor, volte e introduza um outro nome.",
+	'farmer-confirmsetting' => 'Confirmar Configuração do Wiki',
+	'farmer-confirmsetting-name' => 'Nome: $1',
+	'farmer-confirmsetting-title' => 'Título: $1',
+	'farmer-confirmsetting-description' => 'Descrição: $1',
+	'farmer-description' => 'Descrição',
+	'farmer-confirmsetting-text' => "O seu wiki, '''$1''', estará acessível através de http://$1.myfarm.
+O espaço nominal do projeto será '''$2'''.
+Ligações para este espaço nominal terão o formato '''<nowiki>[[$2:Nome da página]]</nowiki>'''.
+Se é isto que pretende, pressione o botão '''confirmar''' abaixo.",
+	'farmer-button-confirm' => 'Confirmar',
+	'farmer-button-submit' => 'Enviar',
+	'farmer-createwiki-form-title' => 'Criar um Wiki',
+	'farmer-createwiki-form-text1' => 'Utilize o formulário abaixo para criar um novo wiki.',
+	'farmer-createwiki-form-help' => 'Ajuda',
+	'farmer-createwiki-form-text2' => "; Nome do wiki: Contém apenas letras e números. O nome do wiki será usado como parte da URL para identificar o seu wiki. Por exemplo, se introduzir '''titulo''', então o seu wiki será acessado através de <nowiki>http://</nowiki>'''titulo'''.meudominio.",
+	'farmer-createwiki-form-text3' => '; Título do wiki: Será usado no título de cada página no seu wiki. Será também o espaço nominal de projeto e o prefixo interwiki.',
+	'farmer-createwiki-form-text4' => '; Descrição: Descrição do wiki. Este é a descrição textual sobre o wiki. Será mostrada na lista de wikis.',
+	'farmer-createwiki-user' => 'Nome de utilizador',
+	'farmer-createwiki-name' => 'Nome do Wiki',
+	'farmer-createwiki-title' => 'Título do Wiki',
+	'farmer-createwiki-description' => 'Descrição',
+	'farmer-updatedlist' => 'Lista atualizada',
+	'farmer-notaccessible' => 'Não acessível',
+	'farmer-notaccessible-test' => 'Esta funcionalidade só está disponível no wiki pai da "farm"',
+	'farmer-permissiondenied' => 'Permissão negada',
+	'farmer-permissiondenied-text' => 'Não tem permissão para apagar um wiki da "farm"',
+	'farmer-permissiondenied-text1' => 'Não tem permissão para acessar esta página',
+	'farmer-deleting' => 'Apagando $1',
+	'farmer-delete-title' => 'Apagar Wiki',
+	'farmer-delete-text' => 'Por favor, seleccione o wiki que deseja apagar na lista abaixo',
+	'farmer-delete-form' => 'Selecione um wiki',
+	'farmer-delete-form-submit' => 'Apagar',
+	'farmer-listofwikis' => 'Lista de Wikis',
+	'farmer-mainpage' => 'Página Principal',
+	'farmer-basic-title' => 'Parâmetros Básicos',
+	'farmer-basic-title1' => 'Título',
+	'farmer-basic-title1-text' => 'O seu wiki não tem um título. Escolha um <b>agora</b>',
+	'farmer-basic-description' => 'Descrição',
+	'farmer-basic-description-text' => 'Introduza a descrição do seu wiki abaixo',
+	'farmer-basic-permission' => 'Permissões',
+	'farmer-basic-permission-text' => 'Usando o seguinte formulário, é possível alterar as permissões dos utilizadores deste wiki.',
+	'farmer-basic-permission-visitor' => 'Permissões para cada visitante',
+	'farmer-basic-permission-visitor-text' => 'As seguinte permissões serão aplicadas a todas as pessoas que visitem este wiki',
+	'farmer-basic-permission-view' => 'Ver todas as páginas',
+	'farmer-basic-permission-edit' => 'Editar todas as páginas',
+	'farmer-basic-permission-createpage' => 'Criar novas páginas',
+	'farmer-basic-permission-createtalk' => 'Criar páginas de discussão',
+	'farmer-basic-permission-move' => 'Mover páginas',
+	'farmer-basic-permission-upload' => 'Carregar arquivos',
+	'farmer-basic-permission-reupload' => 'Re-carregar arquivos (substituindo existentes)',
+	'farmer-basic-permission-minoredit' => 'Permitir edições menores',
+	'farmer-yes' => 'Sim',
+	'farmer-no' => 'Não',
+	'farmer-basic-permission-user' => 'Permissões para Utilizadores Autenticados',
+	'farmer-basic-permission-user-text' => 'As seguintes permissões serão aplicadas a todas as pessoas que se autentiquem neste wiki',
+	'farmer-setpermission' => 'Aplicar Permissões',
+	'farmer-defaultskin' => 'Aparência (skin) Padrão',
+	'farmer-defaultskin-button' => 'Escolher Aparência (skin) Padrão',
+	'farmer-extensions' => 'Extensões Ativas',
+	'farmer-extensions-button' => 'Aplicar Extensões Ativas',
+	'farmer-extensions-extension-denied' => 'Você não tem permissão para usar esta funcionalidade.
+Você deve ser membro do grupo "farmeradmin"',
+	'farmer-extensions-invalid' => 'Extensão Inválida',
+	'farmer-extensions-invalid-text' => 'Não foi possível adicionar a extensão porque o arquivo seleciondo para inclusão não foi encontrado',
+	'farmer-extensions-available' => 'Extensões Disponíveis',
+	'farmer-extensions-noavailable' => 'Nenhuma extensão está registrada',
+	'farmer-extensions-register' => 'Registrar Extensão',
+	'farmer-extensions-register-text1' => 'Use o seguinte formulário para registrar uma nova extensão na "farm".  Uma vez registrada a extensão, todos os wikis poderão usá-la.',
+	'farmer-extensions-register-text2' => "Para o parâmetro ''Arquivo de Inclusão'', introduza o nome do arquivo PHP tal como ficaria em LocalSettings.php.",
+	'farmer-extensions-register-text3' => "Se o nome do arquivo contiver '''\$root''', essa variável será substituída pelo diretório raiz do MediaWiki.",
+	'farmer-extensions-register-text4' => 'Os caminhos de inclusão atuais são:',
+	'farmer-extensions-register-name' => 'Nome',
+	'farmer-extensions-register-includefile' => 'Arquivo de Inclusão',
+	'farmer-error-exists' => 'Não é possível criar wiki. Este já existe: $1',
+	'farmer-error-noextwrite' => 'Não foi possível escrever o arquivo de extensão:',
+);
+
 /** Tarifit (Tarifit)
  * @author Jose77
  */
@@ -3787,6 +4327,19 @@ $messages['ro'] = array(
 	'farmer-extensions-register-includefile' => 'Include fişier',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'farmercreatesitename' => "Nome d'u site",
+	'farmer-notavailable' => 'Non disponibbile',
+	'farmer-wikicreated' => 'Uicchi ccrejate',
+	'farmer-confirmsetting-name' => 'Nome: $1',
+	'farmer-confirmsetting-title' => 'Titele: $1',
+	'farmer-confirmsetting-description' => 'Descrizione: $1',
+	'farmer-description' => 'Descrizione',
+);
+
 /** Russian (Русский)
  * @author Kaganer
  * @author Александр Сигачёв
@@ -3798,7 +4351,7 @@ $messages['ru'] = array(
 	'farmercreatesitename' => 'Имя сайта',
 	'farmercreatenextstep' => 'Следующий шаг',
 	'farmernewwikimainpage' => '== Добро пожаловать в свой вики-проект ==
-Если вы читаете это сообщение, значит ваш новый вики-проект успешно и правильно установлен. 
+Если вы читаете это сообщение, значит ваш новый вики-проект успешно и правильно установлен.
 Теперь можно заняться [[Special:Farmer|дальнейшей настройкой]].',
 	'farmer-about' => 'О расширении',
 	'farmer-about-text' => 'Расширение «Фермер» (MediaWiki Farmer) позволяет вам управлять фермой (группой серверов) вики.',
@@ -3947,8 +4500,10 @@ Svoju wiki môžete [[Special:Farmer|prispôsobiť]].',
 	'farmer-confirmsetting-title' => 'Nadpis: $1',
 	'farmer-confirmsetting-description' => 'Popis: $1',
 	'farmer-description' => 'Popis',
-	'farmer-confirmsetting-text' => "Vaša wiki, '''$1''', bude prístupná na http://$1.myfarm. Menný priestor projekt bude '''$2'''.
-Odkazy na tento menný priestor budú v tvare '''<nowiki>[[$2:Názov stránky]]</nowiki>'''. Ak je toto čo chcete, stlačte tlačidlo '''Potvrdiť''' dolu.",
+	'farmer-confirmsetting-text' => "Vaša wiki, '''$1''', bude prístupná na http://$1.myfarm.
+Menný priestor projekt bude '''$2'''.
+Odkazy na tento menný priestor budú v tvare '''<nowiki>[[$2:Názov stránky]]</nowiki>'''.
+Ak je toto čo chcete, stlačte tlačidlo '''Potvrdiť''' dolu.",
 	'farmer-button-confirm' => 'Potvrdiť',
 	'farmer-button-submit' => 'Odoslať',
 	'farmer-createwiki-form-title' => 'Vytvoriť wiki',
@@ -4013,13 +4568,7 @@ Odkazy na tento menný priestor budú v tvare '''<nowiki>[[$2:Názov stránky]]<
 	'farmer-extensions-register-name' => 'Názov',
 	'farmer-extensions-register-includefile' => 'Include súbor',
 	'farmer-error-exists' => 'Nie je možné vytvoriť wiki. Už existuje: $1',
-	'farmer-error-nodirconfig' => 'configDirectory nebol nájdený:',
-	'farmer-error-defnotset' => 'Štandardná wiki musí byť nastavená',
-	'farmer-error-mapnotfound' => 'Funkcia na mapovanie názvu wiki vo farme nebola nájdená:',
-	'farmer-error-nofileconfwrite' => 'MediaWikiFarmer nemohol zapísať konfiguračný súbor štandardnej wiki.',
-	'farmer-error-funcnotcall' => 'Nebolo možné zavolať funkciu:',
 	'farmer-error-noextwrite' => 'Nebolo možné zapísať súbor rozšírenia:',
-	'farmer-error-wikicorrupt' => 'Uložená wiki je poškodená',
 );
 
 /** Serbian Cyrillic ekavian (ћирилица)
@@ -4396,6 +4945,134 @@ $messages['tg-cyrl'] = array(
 	'farmer-error-wikicorrupt' => 'Викии захирашуда хароб аст',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'farmer' => 'Magsasaka (tagapaglinang)',
+	'farmer-desc' => 'Pamahalaan ang isang linangan o "bukid" ng MediaWiki',
+	'farmercantcreatewikis' => 'Hindi mo nakayanang lumikha ng mga wiki kasi wala kang pribilehiyong lumikha ng mga wiki',
+	'farmercreatesitename' => 'Pangalan ng sityo',
+	'farmercreatenextstep' => 'Susunod na hakbang',
+	'farmernewwikimainpage' => '== Maligayang pagdating sa iyong wiki ==
+Kapag nababasa mo ito, nailuklok ng tama ang iyong bagong wiki.
+Maaari mong [[Special:Farmer|iayon sa nais mong disenyo ang iyong wiki]].',
+	'farmer-about' => 'Patungkol',
+	'farmer-about-text' => "Nagpapahintulot ang Magsasaka ng Mediawiki (''MediaWiki Farmer'') na mapamahalaan mo ang isang linangan ng mga wiki ng MediaWiki.",
+	'farmer-list-wiki' => 'Talaan ng mga wiki',
+	'farmer-list-wiki-text' => '[[$1|Itala]] ang lahat ng mga wiking nasa {{SITENAME}}',
+	'farmer-createwiki' => 'Lumikha ng isang wiki',
+	'farmer-createwiki-text' => '[[$1|Lumikha]] na ngayon ng isang bagong wiki!',
+	'farmer-administration' => 'Pangangasiwa ng linangan',
+	'farmer-administration-extension' => 'Pamahalaan ang mga karugtong',
+	'farmer-administration-extension-text' => '[[$1|Pamahalaan]] ang nakaluklok na mga karugtong.',
+	'farmer-admimistration-listupdate' => 'Pagsasapanahon ng talaan ng linangan',
+	'farmer-admimistration-listupdate-text' => '[[$1|Isapanahon]] ang talaan ng mga wiking nasa {{SITENAME}}',
+	'farmer-administration-delete' => 'Burahin ang isang wiki',
+	'farmer-administration-delete-text' => '[[$1|Burahin]] ang isang wiki mula sa linangan',
+	'farmer-administer-thiswiki' => 'Pangasiwaan ang wiking ito',
+	'farmer-administer-thiswiki-text' => '[[$1|Pangasiwaan]] ang mga pagbabago sa wiking ito',
+	'farmer-notavailable' => 'Hindi makukuha',
+	'farmer-notavailable-text' => 'Makukuha lamang ang kasangkapang-katangiang ito mula sa pangunahing wiki',
+	'farmer-wikicreated' => 'Nalikha na ang wiki',
+	'farmer-wikicreated-text' => 'Nalikha na ang iyong wiki.
+Mapupuntahan ito sa $1',
+	'farmer-default' => 'Bilang likas na katakdaan, walang ibang may mga kapahintulutan sa wiking ito maliban sa iyo.
+Mababago mo ang mga pribilehiyo ng tagagamit sa pamamagitan ng $1',
+	'farmer-wikiexists' => 'Umiiral na ang wiki',
+	'farmer-wikiexists-text' => "Umiiral na ang wiking '''$1''' na sinusubok mong likhain.
+Bumalik po lamang at sumubok ng iba pang pangalan.",
+	'farmer-confirmsetting' => 'Tiyakin ang mga katakdaan ng wiki',
+	'farmer-confirmsetting-name' => 'Pangalan: $1',
+	'farmer-confirmsetting-title' => 'Pamagat: $1',
+	'farmer-confirmsetting-description' => 'Paglalarawan: $1',
+	'farmer-description' => 'Paglalarawan',
+	'farmer-confirmsetting-text' => "Ang wiki mong '''$1''' ay mapupuntahan sa pamamagitan ng http://$1.myfarm.
+Ang espasyo ng pangalan ng proyekto ay magiging '''$2'''.
+Ang mga kawing papunta sa espasyo ng pangalang ito ay magiging nasa anyong '''<nowiki>[[$2:Page name]]</nowiki>'''.
+Kung ito ang nais mo, pindutin ang pindutang '''tiyakin''' na nasa ibaba.",
+	'farmer-button-confirm' => 'Tiyakin',
+	'farmer-button-submit' => 'Ipasa',
+	'farmer-createwiki-form-title' => 'Lumikha ng isang wiki',
+	'farmer-createwiki-form-text1' => 'Gamitin ang pormularyong nasa ibaba upang makalikha ng isang bagong wiki.',
+	'farmer-createwiki-form-help' => 'Tulong',
+	'farmer-createwiki-form-text2' => "; Pangalan ng wiki: Ang pangalan ng wiki.
+Naglalaman lamang ng mga titik at mga bilang.
+Gagamitin ang pangalan ng wiki bilang bahagi ng URL upang makilala ang iyong wiki.
+Halimbawa na, kapag pinasok mo ang '''pamagat''', mapupuntahan pagdaka ang wiki mo sa pamamagitan ng <nowiki>http://</nowiki>'''pamagat'''.mydomain.",
+	'farmer-createwiki-form-text3' => '; Pamagat ng wiki: Ang pamagat ng wiki.
+Gagamitin sa loob ng pamagat ng bawat isang pahinang nasa ibabaw ng iyong wiki.
+Magiging espasyo ng pangalan rin ng proyekto at unlapi ng ugnayang-wiki.',
+	'farmer-createwiki-form-text4' => '; Paglalarawan: Paglalarawan ng wiki.
+Isa itong teksto ng paglalarawan hinggil sa wiki.
+Ipapakita ito sa loob ng talaan ng wiki.',
+	'farmer-createwiki-user' => 'Pangalan ng tagagamit',
+	'farmer-createwiki-name' => 'Pangalan ng wiki',
+	'farmer-createwiki-title' => 'Pamagat ng wiki',
+	'farmer-createwiki-description' => 'Paglalarawan',
+	'farmer-updatedlist' => 'Naisapanahong talaan',
+	'farmer-notaccessible' => 'Hindi mapupuntahan',
+	'farmer-notaccessible-test' => 'Makukuha lamang ang kasangkapang-katangiang ito mula sa magulang na wiki na nasa loob ng linangan',
+	'farmer-permissiondenied' => 'Ipinagkait ang pahintulot',
+	'farmer-permissiondenied-text' => 'Walang kang pahintulot na burahin ang isang wiki mula sa linangan',
+	'farmer-permissiondenied-text1' => 'Wala kang pahintulot na mapuntahan ang pahinang ito',
+	'farmer-deleting' => 'Binubura ang $1',
+	'farmer-delete-title' => 'Burahin ang wiki',
+	'farmer-delete-text' => 'Pakipili ang wiking nais mong burahin mula sa talaang nasa ibaba',
+	'farmer-delete-form' => 'Pumili ng isang wiki',
+	'farmer-delete-form-submit' => 'Burahin',
+	'farmer-listofwikis' => 'Talaan ng mga wiki',
+	'farmer-mainpage' => 'Unang Pahina',
+	'farmer-basic-title' => 'Payak na mga parametro',
+	'farmer-basic-title1' => 'Pamagat',
+	'farmer-basic-title1-text' => 'Wala pang pamagat ang wiki mo. Magtakda ng isa <b>ngayon</b>',
+	'farmer-basic-description' => 'Paglalarawan',
+	'farmer-basic-description-text' => 'Itakda sa ibaba ang paglalarawan ng iyong wiki',
+	'farmer-basic-permission' => 'Mga kapahintulutan',
+	'farmer-basic-permission-text' => 'Sa pamamagitan ng pormularyong nasa ibaba, maaaring mangyaring baguhin ang mga pahintulot para sa mga tagagamit ng wiking ito.',
+	'farmer-basic-permission-visitor' => 'Mga kapahintulutan para sa bawat isang panauhin',
+	'farmer-basic-permission-visitor-text' => 'Ang sumusunod na mga kapahintulutan ay ihahain sa bawat isang taong dadalaw sa wiking ito',
+	'farmer-basic-permission-view' => 'Tingnan ang lahat ng mga pahina',
+	'farmer-basic-permission-edit' => 'Baguhin ang lahat ng mga pahina',
+	'farmer-basic-permission-createpage' => 'Lumikha ng bagong mga pahina',
+	'farmer-basic-permission-createtalk' => 'Lumikha ng mga pahina ng usapan',
+	'farmer-basic-permission-move' => 'Maglipat ng mga pahina',
+	'farmer-basic-permission-upload' => 'Magkarga ng mga talaksan',
+	'farmer-basic-permission-reupload' => 'Muling ikarga ang mga talaksan (patungan ang umiiral na pagkarga)',
+	'farmer-basic-permission-minoredit' => 'Payagan ang maliliit na mga pagbabago',
+	'farmer-yes' => 'Oo',
+	'farmer-no' => 'Hindi',
+	'farmer-basic-permission-user' => 'Mga kapahintulutan para sa nakalagdang mga tagagamit',
+	'farmer-basic-permission-user-text' => 'Ang sumusunod na mga kapahintulutan ay ihahain sa bawat isang taong lumagdang papasok sa wiking ito',
+	'farmer-setpermission' => 'Itakda ang mga pahintulot',
+	'farmer-defaultskin' => 'Likas na nakatakdang pabalat',
+	'farmer-defaultskin-button' => 'Itakda ang likas na nakatakdang pabalat',
+	'farmer-extensions' => 'Masisiglang mga karugtong',
+	'farmer-extensions-button' => 'Itakda ang masisiglang mga karugtong',
+	'farmer-extensions-extension-denied' => 'Wala kang pahintulot na gamitin ang kasangkapang-katangiang ito.
+Dapat na isa kang kasapi ng pangkat ng tagapangasiwa ng linangan.',
+	'farmer-extensions-invalid' => 'Hindi tanggap na karugtong',
+	'farmer-extensions-invalid-text' => 'Hindi namin maidagdag ang karugtong dahil hindi matagpuan ang talaksang napili para isama',
+	'farmer-extensions-available' => 'Mga makukuhang karugtong',
+	'farmer-extensions-noavailable' => 'Walang nakatalang mga karugtong',
+	'farmer-extensions-register' => 'Ipatala ang karugtong',
+	'farmer-extensions-register-text1' => 'Gamitin ang pormularyong nasa ibaba upang maipatala sa linangan ang bagong karugtong.
+Kapag naipatala na ang isang karugtong, magagamit na ito ng lahat ng mga wiki.',
+	'farmer-extensions-register-text2' => "Para sa parametrong ''Isama ang talaksan'', ipasok ang pangalan ng talaksang PHP na katulad ng sa ginagawa mo sa loob ng LocalSettings.php.",
+	'farmer-extensions-register-text3' => "Kapag naglalaman ang pangalan ng talaksan ng '''\$root''', ang pabagu-bagong halagang iyan ay mapapalitan ng ugat na direktoryo ng MediaWiki.",
+	'farmer-extensions-register-text4' => 'Ang pangkasalukuyang pansamang mga daanan ay:',
+	'farmer-extensions-register-name' => 'Pangalan',
+	'farmer-extensions-register-includefile' => 'Isama ang talaksan',
+	'farmer-error-exists' => 'Hindi malikha ang wiki. Umiiral na ito: $1',
+	'farmer-error-nodirconfig' => 'Hindi natagpuan ang configDirectory:',
+	'farmer-error-defnotset' => 'Dapat na itakda ang likas na nakatakdang wiki',
+	'farmer-error-mapnotfound' => 'Hindi natagpuan ang tungkulin upang maimapa ang pangalan ng wiki sa loob ng linangan:',
+	'farmer-error-nofileconfwrite' => 'Hindi maisulat ng MediaWikiFarmer ang talaksan ng pagkakaayos na para sa likas na nakatakdang wiki.',
+	'farmer-error-funcnotcall' => 'Hindi matawag ang tungkulin:',
+	'farmer-error-noextwrite' => 'Hindi nagawang maisulat palabas ang talaksan ng karugtong:',
+	'farmer-error-wikicorrupt' => 'Tiwali ang nakatabing wiki',
+);
+
 /** Turkish (Türkçe)
  * @author Karduelis
  * @author Mach
@@ -4407,12 +5084,13 @@ $messages['tr'] = array(
 	'farmer-about' => 'Hakkında',
 	'farmer-list-wiki' => 'Wikilerin listesi',
 	'farmer-confirmsetting-name' => 'İsim: $1',
+	'farmer-confirmsetting-title' => 'Başlık: $1',
 	'farmer-createwiki-form-help' => 'Yardım',
 	'farmer-createwiki-user' => 'Kullanıcı adı',
 	'farmer-createwiki-name' => 'Wiki adı',
 	'farmer-delete-form-submit' => 'Sil',
 	'farmer-listofwikis' => 'Wikilerin listesi',
-	'farmer-mainpage' => 'Ana Sayfa',
+	'farmer-mainpage' => 'Ana sayfa',
 	'farmer-basic-title1' => 'Başlık',
 	'farmer-basic-permission-view' => 'Bütün sayfaları izle',
 	'farmer-basic-permission-edit' => 'Bütün sayfaları değiştir',
@@ -4420,6 +5098,20 @@ $messages['tr'] = array(
 	'farmer-yes' => 'Evet',
 	'farmer-no' => 'Hayır',
 	'farmer-extensions-register-name' => 'İsim',
+);
+
+/** ئۇيغۇرچە (ئۇيغۇرچە)
+ * @author Alfredie
+ */
+$messages['ug-arab'] = array(
+	'farmer-createwiki-user' => 'ئىشلەتكۇچى ئىسمى',
+);
+
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'farmer-createwiki-user' => 'Ishletkuchi ismi',
 );
 
 /** Ukrainian (Українська)
@@ -4439,9 +5131,9 @@ $messages['vi'] = array(
 	'farmercantcreatewikis' => 'Bạn không thể tạo wiki vì bạn không có quyền createwikis',
 	'farmercreatesitename' => 'Tên trang',
 	'farmercreatenextstep' => 'Bước tiếp theo',
-	'farmernewwikimainpage' => '== Hoan nghênh bạn đến với Wiki của mình ==
+	'farmernewwikimainpage' => '== Hoan nghênh đã đến với Wiki của bạn ==
 Nếu bạn đang đọc câu này, wiki mới của bạn đã được cài đặt đúng đắn.
-Để điều chỉnh wiki của bạn, xin hãy vào [[Special:Farmer]].',
+Bạn có thể [[Special:Farmer|điều chỉnh wiki của mình]].',
 	'farmer-about' => 'Giới thiệu',
 	'farmer-about-text' => 'Nông trại MediaWiki cho phép bạn quản lý một nông trại gồm các wiki MediaWiki.',
 	'farmer-list-wiki' => 'Danh sách các Wiki',
@@ -4546,13 +5238,7 @@ Sau khi đã đăng ký một gói mở rộng, tất cả các wiki sẽ có th
 	'farmer-extensions-register-name' => 'Tên',
 	'farmer-extensions-register-includefile' => 'Nhúng tập tin',
 	'farmer-error-exists' => 'Không thể khởi tạo wiki.  Nó đã tồn tại: $1',
-	'farmer-error-nodirconfig' => 'Không tìm thấy configDirectory:',
-	'farmer-error-defnotset' => 'Wiki mặc định phải được thiết lập',
-	'farmer-error-mapnotfound' => 'Không tìm thấy hàm để chiếu các tên wiki:',
-	'farmer-error-nofileconfwrite' => 'MediaWikiFarmer không thể viết vào tập tin cấu hình của wiki mặc định.',
-	'farmer-error-funcnotcall' => 'Không thể gọi hàm:',
 	'farmer-error-noextwrite' => 'Không thể ghi ra tập tin mở rộng:',
-	'farmer-error-wikicorrupt' => 'Wiki lưu trữ bị hư',
 );
 
 /** Volapük (Volapük)
@@ -4627,6 +5313,7 @@ Atos pajonon su vükalised.',
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
 	'farmercreatesitename' => '网站名称',
@@ -4636,6 +5323,7 @@ $messages['zh-hans'] = array(
 	'farmer-createwiki' => '建立一个Wiki',
 	'farmer-wikicreated' => 'Wiki已被建立',
 	'farmer-wikiexists' => 'Wiki存在',
+	'farmer-confirmsetting-title' => '标题： $1',
 	'farmer-button-confirm' => '确认',
 	'farmer-button-submit' => '提交',
 	'farmer-createwiki-form-help' => '帮助',

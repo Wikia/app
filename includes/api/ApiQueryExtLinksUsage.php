@@ -110,7 +110,7 @@ class ApiQueryExtLinksUsage extends ApiQueryGeneratorBase {
 
 		$res = $this->select(__METHOD__);
 
-		$data = array ();
+		$result = $this->getResult();
 		$count = 0;
 		while ($row = $db->fetchObject($res)) {
 			if (++ $count > $limit) {
@@ -125,12 +125,16 @@ class ApiQueryExtLinksUsage extends ApiQueryGeneratorBase {
 					$vals['pageid'] = intval($row->page_id);
 				if ($fld_title) {
 					$title = Title :: makeTitle($row->page_namespace, $row->page_title);
-					$vals['ns'] = intval($title->getNamespace());
-					$vals['title'] = $title->getPrefixedText();
+					ApiQueryBase::addTitleInfo($vals, $title);
 				}
 				if ($fld_url)
 					$vals['url'] = $row->el_to;
-				$data[] = $vals;
+				$fit = $result->addValue(array('query', $this->getModuleName()), null, $vals);
+				if(!$fit)
+				{
+					$this->setContinueEnumParameter('offset', $offset + $count - 1);
+					break;
+				}
 			} else {
 				$resultPageSet->processDbRow($row);
 			}
@@ -138,9 +142,8 @@ class ApiQueryExtLinksUsage extends ApiQueryGeneratorBase {
 		$db->freeResult($res);
 
 		if (is_null($resultPageSet)) {
-			$result = $this->getResult();
-			$result->setIndexedTagName($data, $this->getModulePrefix());
-			$result->addValue('query', $this->getModuleName(), $data);
+			$result->setIndexedTagName_internal(array('query', $this->getModuleName()),
+					$this->getModulePrefix());
 		}
 	}
 
@@ -206,6 +209,6 @@ class ApiQueryExtLinksUsage extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryExtLinksUsage.php 43271 2008-11-06 22:38:42Z siebrand $';
+		return __CLASS__ . ': $Id: ApiQueryExtLinksUsage.php 47865 2009-02-27 16:03:01Z catrope $';
 	}
 }

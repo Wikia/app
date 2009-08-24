@@ -104,6 +104,10 @@ class MV_StreamImage {
 		}
 	}
 	function getStreamImageRaw( $stream_id, $req_time = null, $req_size = null ) {
+		//set out a long expire: 
+		//keep in the cache for a 90 days: 
+		header('Expires: ' . gmdate('D, d M Y H:i:s', time()+90*24*60*60) . ' GMT');
+		
 		// print "get raw img\n";
 		$req_time = MV_StreamImage::procRequestTime( $stream_id, $req_time );
 		list( $im_width, $im_height, $ext ) = MV_StreamImage::getSizeType( $req_size );
@@ -114,10 +118,7 @@ class MV_StreamImage {
 		$img_path = MV_StreamImage::getLocalImagePath( $stream_id, $req_time, $req_size );
 		list( $im_width, $im_height, $ext ) = MV_StreamImage::getSizeType( $req_size );
 		if ( $ext == 'jpg' )header( "Content-type: image/jpeg" );
-		if ( $ext == 'png' )header( "Content-type: image/png" );
-		//set out a long expire: 
-		//keep in the cache for a 90 days: 
-		header('Expires: ' . gmdate('D, d M Y H:i:s', time()+90*24*60*60) . ' GMT');
+		if ( $ext == 'png' )header( "Content-type: image/png" );		
 		// print "img path: $img_path";
 		// @@todo a redirect to real image (will serv from cache that way) 
 		if ( is_file( $img_path ) ) {

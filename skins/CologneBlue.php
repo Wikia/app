@@ -66,7 +66,7 @@ class SkinCologneBlue extends Skin {
 
 	function doAfterContent()
 	{
-		global $wgOut;
+		global $wgOut, $wgLang;
 
 		$s = "\n</div><br clear='all' />\n";
 
@@ -80,9 +80,11 @@ class SkinCologneBlue extends Skin {
 		$s .= "<td class='bottom' align='center' valign='top'>";
 
 		$s .= $this->bottomLinks();
-		$s .= "\n<br />" . $this->makeKnownLinkObj( Title::newMainPage() ) . " | "
-		  . $this->aboutLink() . " | "
-		  . $this->searchForm( wfMsg( "qbfind" ) );
+		$s .= $wgLang->pipeList( array(
+			"\n<br />" . $this->makeKnownLinkObj( Title::newMainPage() ),
+			$this->aboutLink(),
+			$this->searchForm( wfMsg( "qbfind" ) )
+		) );
 
 		$s .= "\n<br />" . $this->pageStats();
 
@@ -121,7 +123,7 @@ class SkinCologneBlue extends Skin {
 	}
 
 	function sysLinks() {
-		global $wgUser, $wgContLang, $wgTitle;
+		global $wgUser, $wgLang, $wgContLang, $wgTitle;
 		$li = $wgContLang->specialPage("Userlogin");
 		$lo = $wgContLang->specialPage("Userlogout");
 
@@ -132,29 +134,28 @@ class SkinCologneBlue extends Skin {
 			$q = "returnto={$rt}";
 		}
 
-		$s = "" .
-		  $this->mainPageLink()
-		  . " | " .
-		  $this->makeKnownLink( wfMsgForContent( "aboutpage" ), wfMsg( "about" ) )
-		  . " | " .
-		  $this->makeKnownLink( wfMsgForContent( "helppage" ), wfMsg( "help" ) )
-		  . " | " .
-		  $this->makeKnownLink( wfMsgForContent( "faqpage" ), wfMsg("faq") )
-		  . " | " .
-		  $this->specialLink( "specialpages" );
+		$s = array(
+			$this->mainPageLink(),
+			$this->makeKnownLink( wfMsgForContent( "aboutpage" ), wfMsg( "about" ) ),
+			$this->makeKnownLink( wfMsgForContent( "helppage" ), wfMsg( "help" ) ),
+			$this->makeKnownLink( wfMsgForContent( "faqpage" ), wfMsg("faq") ),
+			$this->specialLink( "specialpages" )
+		);
 
 		/* show links to different language variants */
-		$s .= $this->variantLinks();
-		$s .= $this->extensionTabLinks();
-		
-		$s .= " | ";
+		if( $this->variantLinks() ) {
+			$s[] = $this->variantLinks();
+		}
+		if( $this->extensionTabLinks() ) {
+			$s[] = $this->extensionTabLinks();
+		}
 		if ( $wgUser->isLoggedIn() ) {
-			$s .=  $this->makeKnownLink( $lo, wfMsg( "logout" ), $q );
+			$s[] = $this->makeKnownLink( $lo, wfMsg( "logout" ), $q );
 		} else {
-			$s .=  $this->makeKnownLink( $li, wfMsg( "login" ), $q );
+			$s[] = $this->makeKnownLink( $li, wfMsg( "login" ), $q );
 		}
 
-		return $s;
+		return $wgLang->pipeList( $s );
 	}
 
 	/**
@@ -262,7 +263,7 @@ class SkinCologneBlue extends Skin {
 
 		$s .= $this->menuHead( "qbspecialpages" )
 		  . $this->specialLink( "newpages" )
-		  . $sep . $this->specialLink( "imagelist" )
+		  . $sep . $this->specialLink( "listfiles" )
 		  . $sep . $this->specialLink( "statistics" );
 		if ( $wgUser->isLoggedIn() && $wgEnableUploads ) {
 			$s .= $sep . $this->specialLink( "upload" );
@@ -289,7 +290,7 @@ class SkinCologneBlue extends Skin {
 
 	function searchForm( $label = "" )
 	{
-		global $wgRequest;
+		global $wgRequest, $wgUseTwoButtonsSearchForm;
 
 		$search = $wgRequest->getText( 'search' );
 		$action = $this->escapeSearchLink();
@@ -298,8 +299,14 @@ class SkinCologneBlue extends Skin {
 
 		$s .= "<input type='text' id=\"searchInput{$this->searchboxes}\" class=\"mw-searchInput\" name=\"search\" size=\"14\" value=\""
 		  . htmlspecialchars(substr($search,0,256)) . "\" /><br />"
-		  . "<input type='submit' id=\"searchGoButton{$this->searchboxes}\" class=\"searchButton\" name=\"go\" value=\"" . htmlspecialchars( wfMsg( "searcharticle" ) ) . "\" />"
-		  . "<input type='submit' id=\"mw-searchButton{$this->searchboxes}\" class=\"searchButton\" name=\"fulltext\" value=\"" . htmlspecialchars( wfMsg( "search" ) ) . "\" /></form>";
+		  . "<input type='submit' id=\"searchGoButton{$this->searchboxes}\" class=\"searchButton\" name=\"go\" value=\"" . htmlspecialchars( wfMsg( "searcharticle" ) ) . "\" />";
+
+		if ($wgUseTwoButtonsSearchForm) 
+			$s .= "<input type='submit' id=\"mw-searchButton{$this->searchboxes}\" class=\"searchButton\" name=\"fulltext\" value=\"" . htmlspecialchars( wfMsg( "search" ) ) . "\" />\n";
+		else
+			$s .= '<div><a href="$action" rel="search">' . wfMsg ('powersearch-legend') . "</a></div>\n";
+		
+		$s .= '</form>';
 
 		// Ensure unique id's for search boxes made after the first
 		$this->searchboxes = $this->searchboxes == '' ? 2 : $this->searchboxes + 1;

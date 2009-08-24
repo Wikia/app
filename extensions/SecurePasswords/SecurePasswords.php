@@ -28,8 +28,8 @@ $wgExtensionCredits['other'][] = array(
 	'author'         => 'Ryan Schmidt',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:SecurePasswords',
 	'version'        => '1.1.1',
-	'svn-date'       => '$LastChangedDate: 2008-12-24 13:55:12 +0000 (Wed, 24 Dec 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 44998 $',
+	'svn-date'       => '$LastChangedDate: 2009-03-08 18:52:31 +0000 (Sun, 08 Mar 2009) $',
+	'svn-revision'   => '$LastChangedRevision: 48175 $',
 	'description'    => 'Creates more secure password hashes and adds a password strength checker',
 	'descriptionmsg' => 'securepasswords-desc',
 );
@@ -344,7 +344,7 @@ function efSecurePasswordsMessage( &$key, &$useDB, &$langCode, &$transform ) {
 		$msg .= ', ' . wfMsg( 'securepasswords-special', str_replace( '\\', '', $wgSecurePasswordsSpecialChars ) );
 	}
 	if( $wgValidPasswords['usercheck'] ) {
-		$msg .= ', ' . wfMsg( 'securepasswords-username' );
+		$msg .= ', ' . wfMsgExt( 'securepasswords-username', array( 'parsemag' ), $user->getName() );
 	}
 	if( $wgValidPasswords['wordcheck'] ) {
 		$msg .= ', ' . wfMsg( 'securepasswords-word' );

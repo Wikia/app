@@ -27,6 +27,12 @@ class SpecialMergeAccount extends SpecialPage {
 
 			return;
 		}
+		
+		if ( wfReadOnly() ) {
+			$wgOut->setPagetitle( wfMsg( 'readonly' ) );
+			$wgOut->addWikiMsg( 'readonlytext', wfReadOnlyReason() );
+			return;
+		}
 
 		global $wgUser, $wgRequest;
 		$this->mUserName = $wgUser->getName();

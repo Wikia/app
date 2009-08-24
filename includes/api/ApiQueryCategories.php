@@ -81,6 +81,19 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 
 		$this->addTables('categorylinks');
 		$this->addWhereFld('cl_from', array_keys($this->getPageSet()->getGoodTitles()));
+		if(!is_null($params['categories']))
+		{
+			$cats = array();
+			foreach($params['categories'] as $cat)
+			{
+				$title = Title::newFromText($cat);
+				if(!$title || $title->getNamespace() != NS_CATEGORY)
+					$this->setWarning("``$cat'' is not a category");
+				else
+					$cats[] = $title->getDBkey();
+			}
+			$this->addWhereFld('cl_to', $cats);
+		}
 		if(!is_null($params['continue'])) {
 			$cont = explode('|', $params['continue']);
 			if(count($cont) != 2)
@@ -112,6 +125,7 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 				$this->addWhere(array('pp_propname IS NULL'));
 		}
 
+		$this->addOption('USE INDEX', array('categorylinks' => 'cl_from'));
 		# Don't order by cl_from if it's constant in the WHERE clause
 		if(count($this->getPageSet()->getGoodTitles()) == 1)
 			$this->addOption('ORDER BY', 'cl_to');
@@ -123,8 +137,6 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 
 		if (is_null($resultPageSet)) {
 
-			$data = array();
-			$lastId = 0;	// database has no ID 0
 			$count = 0;
 			while ($row = $db->fetchObject($res)) {
 				if (++$count > $params['limit']) {
@@ -134,16 +146,8 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 							'|' . $this->keyToTitle($row->cl_to));
 					break;
 				}
-				if ($lastId != $row->cl_from) {
-					if($lastId != 0) {
-						$this->addPageSubItems($lastId, $data);
-						$data = array();
-					}
-					$lastId = $row->cl_from;
-				}
 
 				$title = Title :: makeTitle(NS_CATEGORY, $row->cl_to);
-
 				$vals = array();
 				ApiQueryBase :: addTitleInfo($vals, $title);
 				if ($fld_sortkey)
@@ -151,13 +155,14 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 				if ($fld_timestamp)
 					$vals['timestamp'] = wfTimestamp(TS_ISO_8601, $row->cl_timestamp);
 
-				$data[] = $vals;
+				$fit = $this->addPageSubItem($row->cl_from, $vals);
+				if(!$fit)
+				{
+					$this->setContinueEnumParameter('continue', $row->cl_from .
+							'|' . $this->keyToTitle($row->cl_to));
+					break;
+				}
 			}
-
-			if($lastId != 0) {
-				$this->addPageSubItems($lastId, $data);
-			}
-
 		} else {
 
 			$titles = array();
@@ -202,6 +207,9 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 				ApiBase :: PARAM_MAX2 => ApiBase :: LIMIT_BIG2
 			),
 			'continue' => null,
+			'categories' => array(
+				ApiBase :: PARAM_ISMULTI => true,
+			),
 		);
 	}
 
@@ -211,6 +219,7 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 			'limit' => 'How many categories to return',
 			'show' => 'Which kind of categories to show',
 			'continue' => 'When more results are available, use this to continue',
+			'categories' => 'Only list these categories. Useful for checking whether a certain page is in a certain category',
 		);
 	}
 
@@ -228,6 +237,6 @@ class ApiQueryCategories extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategories.php 44585 2008-12-14 17:39:50Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryCategories.php 50097 2009-05-01 06:35:57Z tstarling $';
 	}
 }

@@ -45,6 +45,11 @@ $aliases['de'] = array(
 	'CrossNamespaceLinks' => array( 'Seiten mit Links in andere Namensräume' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'CrossNamespaceLinks' => array( 'Wótkaze do drugich mjenjowych rumow' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'CrossNamespaceLinks' => array( 'Nimiavaruuksien väliset linkit' ),
@@ -67,6 +72,11 @@ $aliases['hr'] = array(
 	'CrossNamespaceLinks' => array( 'Poveznice_među_prostorima' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'CrossNamespaceLinks' => array( 'Wotkazy do druhich mjenowych rumow' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'CrossNamespaceLinks' => array( 'KwazeNonespasLyen' ),
@@ -75,6 +85,11 @@ $aliases['ht'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'CrossNamespaceLinks' => array( 'Névtérközi linkek' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'CrossNamespaceLinks' => array( 'Ligamines trans spatios de nomines' ),
 );
 
 /** Japanese (日本語) */
@@ -142,5 +157,20 @@ $aliases['pt'] = array(
 /** Brazilian Portuguese (Português do Brasil) */
 $aliases['pt-br'] = array(
 	'CrossNamespaceLinks' => array( 'Links espalhados em diversos espaços nominais', 'Links espalhados em diversos domínios', 'Ligações espalhadas em diversos espaços nominais' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'CrossNamespaceLinks' => array( 'आन्तरनामविश्वसम्बद्ध:' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'CrossNamespaceLinks' => array( 'Mga kawing ng pagtawid ng espasyo ng pangalan' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'CrossNamespaceLinks' => array( 'AlanlarArasıBağlantılar' ),
 );
 

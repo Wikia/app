@@ -81,6 +81,21 @@ function efParserFunctionsWords( $lang ) {
 		'titleparts' => array( 0, 'bagianjudul',  'titleparts' ),
 	);
 
+	/**
+	 * Yiddish
+	 */
+	$words['yi'] = array(
+		'expr'       => array( 0, 'רעכן',    'expr' ),
+		'if'         => array( 0, 'תנאי',    'if' ),
+		'ifeq'       => array( 0, 'גלייך',   'ifeq' ),
+		'ifexpr'     => array( 0, 'אויברעכן', 'ifexpr' ),
+		'switch'     => array( 0, 'קלייב',   'switch' ),
+		'default'    => array( 0, '#גרונט',  '#default' ),
+		'ifexist'    => array( 0, 'עקזיסט',  'ifexist' ),
+		'time'       => array( 0, 'צייט',    'time' ),
+		'timel'      => array( 0, 'צייטל',   'timel' ),
+	);
+
 	# English is used as a fallback, and the English synonyms are
 	# used if a translation has not been provided for a given word
 	return ( $lang == 'en' || !isset( $words[$lang] ) )

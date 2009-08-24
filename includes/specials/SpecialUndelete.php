@@ -744,10 +744,10 @@ class UndeleteForm {
 
 		if( $rev->isDeleted(Revision::DELETED_TEXT) ) {
 			if( !$rev->userCan(Revision::DELETED_TEXT) ) {
-				$wgOut->addWikiText( wfMsg( 'rev-deleted-text-permission' ) );
+				$wgOut->wrapWikiMsg( "<div class='mw-warning plainlinks'>\n$1</div>\n", 'rev-deleted-text-permission' );
 				return;
 			} else {
-				$wgOut->addWikiText( wfMsg( 'rev-deleted-text-view' ) );
+				$wgOut->wrapWikiMsg( "<div class='mw-warning plainlinks'>\n$1</div>\n", 'rev-deleted-text-view' );
 				$wgOut->addHTML( '<br/>' );
 				// and we are allowed to see...
 			}
@@ -1006,6 +1006,11 @@ class UndeleteForm {
 		# Show relevant lines from the deletion log:
 		$wgOut->addHTML( Xml::element( 'h2', null, LogPage::logName( 'delete' ) ) . "\n" );
 		LogEventsList::showLogExtract( $wgOut, 'delete', $this->mTargetObj->getPrefixedText() );
+		# Show relevant lines from the suppression log:
+		if( $wgUser->isAllowed( 'suppressionlog' ) ) {
+			$wgOut->addHTML( Xml::element( 'h2', null, LogPage::logName( 'suppress' ) ) . "\n" );
+			LogEventsList::showLogExtract( $wgOut, 'suppress', $this->mTargetObj->getPrefixedText() );
+		}
 
 		if( $this->mAllowed && ( $haveRevisions || $haveFiles ) ) {
 			# Format the user-visible controls (comment field, submission button)
@@ -1142,19 +1147,15 @@ class UndeleteForm {
 		$comment = $sk->revComment( $rev );
 		$revdlink = '';
 		if( $wgUser->isAllowed( 'deleterevision' ) ) {
-			$revdel = SpecialPage::getTitleFor( 'Revisiondelete' );
 			if( !$rev->userCan( Revision::DELETED_RESTRICTED ) ) {
 			// If revision was hidden from sysops
-				$del = wfMsgHtml('rev-delundel');
+				$revdlink = Xml::tags( 'span', array( 'class'=>'mw-revdelundel-link' ), '('.wfMsgHtml('rev-delundel').')' );
 			} else {
-				$del = $sk->makeKnownLinkObj( $revdel,
-					wfMsgHtml('rev-delundel'),
-					'target=' . $this->mTargetObj->getPrefixedUrl() . "&artimestamp=$ts" );
-				// Bolden oversighted content
-				if( $rev->isDeleted( Revision::DELETED_RESTRICTED ) )
-					$del = "<strong>$del</strong>";
+				$query = array( 'target' => $this->mTargetObj->getPrefixedDBkey(),
+					'artimestamp[]' => $ts
+				);
+				$revdlink = $sk->revDeleteLink( $query, $rev->isDeleted( Revision::DELETED_RESTRICTED ) );
 			}
-			$revdlink = "<tt>(<small>$del</small>)</tt>";
 		}
 
 		return "<li>$checkBox $revdlink ($last) $pageLink . . $userLink $stxt $comment</li>";
@@ -1188,20 +1189,15 @@ class UndeleteForm {
 		$comment = $this->getFileComment( $file, $sk );
 		$revdlink = '';
 		if( $wgUser->isAllowed( 'deleterevision' ) ) {
-			$revdel = SpecialPage::getTitleFor( 'Revisiondelete' );
 			if( !$file->userCan(File::DELETED_RESTRICTED ) ) {
 			// If revision was hidden from sysops
-				$del = wfMsgHtml('rev-delundel');
+				$revdlink = Xml::tags( 'span', array( 'class'=>'mw-revdelundel-link' ), '('.wfMsgHtml('rev-delundel').')' );
 			} else {
-				$del = $sk->makeKnownLinkObj( $revdel,
-					wfMsgHtml('rev-delundel'),
-					'target=' . $this->mTargetObj->getPrefixedUrl() .
-					'&fileid=' . $row->fa_id );
-				// Bolden oversighted content
-				if( $file->isDeleted( File::DELETED_RESTRICTED ) )
-					$del = "<strong>$del</strong>";
+				$query = array( 'target' => $this->mTargetObj->getPrefixedDBkey(),
+					'fileid' => $row->fa_id
+				);
+				$revdlink = $sk->revDeleteLink( $query, $file->isDeleted( File::DELETED_RESTRICTED ) );
 			}
-			$revdlink = "<tt>(<small>$del</small>)</tt>";
 		}
 		return "<li>$checkBox $revdlink $pageLink . . $userLink $data $comment</li>\n";
 	}

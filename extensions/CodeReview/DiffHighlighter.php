@@ -4,7 +4,7 @@
  * Highlight a SVN diff for easier readibility
  */
 class CodeDiffHighlighter {
-	
+
 	/**
 	 * Main entry point. Given a diff text, highlight it
 	 * and wrap it in a div
@@ -16,7 +16,7 @@ class CodeDiffHighlighter {
 			$this->splitLines( $text ) .
 			"</pre>\n";
 	}
-	
+
 	/**
 	 * Given a bunch of text, split it into individual
 	 * lines, color them, then put it back into one big
@@ -29,7 +29,7 @@ class CodeDiffHighlighter {
 			array_map( array( $this, 'colorLine' ),
 				explode( "\n", $text ) ) );
 	}
-	
+
 	/**
 	 * Turn a diff line into a properly formatted string suitable
 	 * for output
@@ -40,7 +40,7 @@ class CodeDiffHighlighter {
 		list( $element, $attribs ) = $this->tagForLine( $line );
 		return Xml::element( $element, $attribs, $line );
 	}
-	
+
 	/**
 	 * Take a line of a diff and apply the appropriate stylings
 	 * @param $line string Line to check
@@ -55,10 +55,10 @@ class CodeDiffHighlighter {
 			' ' => array( 'span', array() ),
 			);
 		$first = substr( $line, 0, 1 );
-		if( isset( $tags[$first] ) )
+		if ( isset( $tags[$first] ) )
 			return $tags[$first];
 		else
 			return $default;
 	}
-	
+
 }

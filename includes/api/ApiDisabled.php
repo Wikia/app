@@ -48,6 +48,10 @@ class ApiDisabled extends ApiBase {
 		$this->dieUsage("The ``{$this->getModuleName()}'' module has been disabled.", 'moduledisabled');
 	}
 
+	public function isReadMode() {
+		return false;
+	}
+
 	public function getAllowedParams() {
 		return array ();
 	}
@@ -67,6 +71,6 @@ class ApiDisabled extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiDisabled.php 41268 2008-09-25 20:50:50Z catrope $';
+		return __CLASS__ . ': $Id: ApiDisabled.php 48091 2009-03-06 13:49:44Z catrope $';
 	}
 }

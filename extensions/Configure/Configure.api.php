@@ -265,7 +265,7 @@ class ApiConfigure extends ApiBase {
 				case 'promotion-conds':
 					$opToName = array_flip( array( 'or' => '|', 'and' => '&', 'xor' => '^', 'not' => '!' ) );
 					$condsName = array( 1 => 'editcount', 2 => 'age', 3 => 'emailconfirmed',
-						4 => 'in-groups', 5 => 'is-ip', 6 => 'ip-in-range' );
+						4 => 'in-groups', 5 => 'is-ip', 6 => 'ip-in-range', 7 => 'age-from-first-edit' );
 					$validOps = array_keys( $opToName );
 
 					$settingRet['values'] = array();
@@ -368,6 +368,6 @@ class ApiConfigure extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: Configure.api.php 44900 2008-12-22 14:43:13Z ialex $';
+		return __CLASS__ . ': $Id: Configure.api.php 45729 2009-01-14 16:20:05Z ialex $';
 	}
 }

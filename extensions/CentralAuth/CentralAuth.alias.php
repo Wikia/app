@@ -92,6 +92,31 @@ $aliases['de'] = array(
 	'GlobalUsers' => array( 'Globale Benutzerliste' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'CentralAuth' => array( 'Zjadnośenje kontow' ),
+	'AutoLogin' => array( 'Awtomatiske pśizjawjenje' ),
+	'MergeAccount' => array( 'Konta zjadnośiś' ),
+	'GlobalGroupMembership' => array( 'Globalne wužywarske pšawa' ),
+	'GlobalGroupPermissions' => array( 'Globalne kupkowe pšawa' ),
+	'EditWikiSets' => array( 'Wikisajźby wobźěłaś' ),
+	'GlobalUsers' => array( 'Globalna lisćina wužywarjow' ),
+);
+
+/** Greek (Ελληνικά) */
+$aliases['el'] = array(
+	'AutoLogin' => array( 'ΑυτόματηΣύνδεση' ),
+	'MergeAccount' => array( 'ΣυγχώνευσηΛογαριασμού' ),
+	'GlobalGroupMembership' => array( 'ΚαθολικάΔικαιώματαΧρηστών' ),
+	'GlobalGroupPermissions' => array( 'ΚαθολικέςΆδειεςΧρηστών' ),
+	'GlobalUsers' => array( 'ΚαθολικοίΧρήστες' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'GlobalUsers' => array( 'Usuarios_globales' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'CentralAuth' => array( 'ورود_متمرکز' ),
@@ -113,12 +138,19 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'AutoLogin' => array( 'Login automatique', 'LoginAutomatique', 'LoginAuto' ),
+	'AutoLogin' => array( 'Connexion automatique', 'ConnexionAutomatique', 'ConnexionAuto', 'Login automatique', 'LoginAutomatique', 'LoginAuto' ),
 	'MergeAccount' => array( 'Fusionner le compte', 'FusionnerLeCompte' ),
 	'GlobalGroupMembership' => array( 'Permissions globales', 'PermissionGlobales' ),
 	'GlobalGroupPermissions' => array( 'Droits des groupes globaux', 'DroitsDesGroupesGlobaux' ),
 	'EditWikiSets' => array( 'Modifier les sets de wikis', 'ModifierLesSetsDeWiki' ),
 	'GlobalUsers' => array( 'Utilisateurs globaux', 'UtilisateursGlobaux' ),
+);
+
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'MergeAccount' => array( 'Fusionar contas' ),
+	'GlobalGroupMembership' => array( 'Dereitos de usuario globais' ),
+	'GlobalUsers' => array( 'Usuarios globais' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -156,15 +188,37 @@ $aliases['hr'] = array(
 	'GlobalUsers' => array( 'Globalni_suradnici' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'CentralAuth' => array( 'Zjednoćenje kontow' ),
+	'AutoLogin' => array( 'Awtomatiske přizjewjenje' ),
+	'MergeAccount' => array( 'Konta zjednoćić' ),
+	'GlobalGroupMembership' => array( 'Globalne wužiwarske prawa' ),
+	'GlobalGroupPermissions' => array( 'Globalne skupinske prawa' ),
+	'EditWikiSets' => array( 'Wikisadźby wobdźěłać' ),
+	'GlobalUsers' => array( 'Globalni wužiwarjo' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'CentralAuth' => array( 'Központi azonosítás' ),
 	'AutoLogin' => array( 'Automatikus bejelentkezés' ),
-	'MergeAccount' => array( 'Felhasználói fiókok egyesítése' ),
-	'GlobalGroupMembership' => array( 'Globális felhasználói jogok' ),
-	'GlobalGroupPermissions' => array( 'Globális felhasználói engedélyek' ),
+	'MergeAccount' => array( 'Szerkesztői fiókok egyesítése', 'Felhasználói fiókok egyesítése' ),
+	'GlobalGroupMembership' => array( 'Globális szerkesztői jogok', 'Globális felhasználói jogok' ),
+	'GlobalGroupPermissions' => array( 'Globális szerkesztői engedélyek', 'Globális felhasználói engedélyek' ),
 	'EditWikiSets' => array( 'Wikicsoportok szerkesztése' ),
-	'GlobalUsers' => array( 'Globális felhasználólista', 'Felhasználók globális listája' ),
+	'GlobalUsers' => array( 'Globális szerkesztőlista', 'Globális felhasználólista', 'Felhasználók globális listája' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'CentralAuth' => array( 'Auth central' ),
+	'AutoLogin' => array( 'Autosession', 'AutoSession' ),
+	'MergeAccount' => array( 'Fusionar conto' ),
+	'GlobalGroupMembership' => array( 'Derectos global de usatores', 'Membrato global de gruppos' ),
+	'GlobalGroupPermissions' => array( 'Permissiones global de gruppos' ),
+	'EditWikiSets' => array( 'Modificar sets de wikis' ),
+	'GlobalUsers' => array( 'Usatores global' ),
 );
 
 /** Japanese (日本語) */
@@ -188,7 +242,7 @@ $aliases['km'] = array(
 $aliases['ko'] = array(
 	'MergeAccount' => array( '계정합치기', '사용자합치기' ),
 	'GlobalGroupMembership' => array( '공통권한조정' ),
-	'GlobalUsers' => array( '공통계정목록' ),
+	'GlobalUsers' => array( '통합계정목록', '공통계정목록' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -254,6 +308,13 @@ $aliases['nl'] = array(
 	'GlobalUsers' => array( 'GlobaleGebruikers' ),
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'MergeAccount' => array( 'Kontosamanslåing' ),
+	'GlobalGroupMembership' => array( 'Globale brukarrettar' ),
+	'GlobalUsers' => array( 'Globale brukarar' ),
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'CentralAuth' => array( 'Enhetlig innlogging' ),
@@ -279,6 +340,8 @@ $aliases['oc'] = array(
 $aliases['pl'] = array(
 	'CentralAuth' => array( 'Zarządzanie kontem uniwersalnym' ),
 	'MergeAccount' => array( 'Łączenie kont', 'Konto uniwersalne' ),
+	'GlobalGroupMembership' => array( 'Globalne uprawnienia' ),
+	'GlobalGroupPermissions' => array( 'Globalne uprawnienia grup' ),
 	'GlobalUsers' => array( 'Spis kont uniwersalnych' ),
 );
 
@@ -294,6 +357,22 @@ $aliases['ro'] = array(
 	'GlobalUsers' => array( 'Utilizatori globali' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'CentralAuth' => array( 'मध्यवर्तीप्रामान्य' ),
+	'AutoLogin' => array( 'स्वयमेवप्रवेश' ),
+	'MergeAccount' => array( 'उपयोजकसंज्ञासंयोग' ),
+	'GlobalGroupMembership' => array( 'वैश्विकसदस्याधिकार' ),
+	'GlobalGroupPermissions' => array( 'वैश्विकगटसंमती' ),
+	'EditWikiSets' => array( 'सम्पादनविकिगट' ),
+	'GlobalUsers' => array( 'वैश्विकयोजक' ),
+);
+
+/** Sundanese (Basa Sunda) */
+$aliases['su'] = array(
+	'MergeAccount' => array( 'GabungRekening' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'CentralAuth' => array( 'Gemensam inloggning' ),
@@ -305,5 +384,27 @@ $aliases['sv'] = array(
 $aliases['sw'] = array(
 	'AutoLogin' => array( 'IngiaEFnyewe' ),
 	'MergeAccount' => array( 'KusanyaAkaunti' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'CentralAuth' => array( 'Lundayan ng pahintulot' ),
+	'AutoLogin' => array( 'Kusang paglagda' ),
+	'MergeAccount' => array( 'Pagsanibin ang akawnt' ),
+	'GlobalGroupMembership' => array( 'Mga karapatan ng pandaigdigang tagagamit', 'Kasapian sa pandaigdigang pangkat' ),
+	'GlobalGroupPermissions' => array( 'Mga kapahintulutan ng pandaigdigang pangkat' ),
+	'EditWikiSets' => array( 'Mga pangkat ng pamamatnugot ng wiki' ),
+	'GlobalUsers' => array( 'Pandaigdigang mga tagagamit' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'MergeAccount' => array( 'HesapBirleştirmeDurumu' ),
+	'GlobalUsers' => array( 'KüreselKullanıcılar' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'GlobalUsers' => array( 'UtentiGlobali' ),
 );
 

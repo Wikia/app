@@ -47,11 +47,13 @@ require_once( "$IP/includes/Namespace.php" );
 require_once( "$IP/includes/ProfilerStub.php" );
 require_once( "$IP/includes/GlobalFunctions.php" );
 require_once( "$IP/includes/Hooks.php" );
+require_once( "$IP/includes/Exception.php" );
 
 # If we get an exception, the user needs to know
 # all the details
 $wgShowExceptionDetails = true;
-
+$wgShowSQLErrors = true;
+wfInstallExceptionHandler();
 ## Databases we support:
 
 $ourdb = array();
@@ -67,19 +69,23 @@ $ourdb['postgres']['compile']    = 'pgsql';
 $ourdb['postgres']['bgcolor']    = '#aaccff';
 $ourdb['postgres']['rootuser']   = 'postgres';
 
-/*** SQLITE DISABLED -- USE MEDIAWIKI 1.15 */
-#$ourdb['sqlite']['fullname']      = 'SQLite';
-#$ourdb['sqlite']['havedriver']    = 0;
-#$ourdb['sqlite']['compile']       = 'pdo_sqlite';
-#$ourdb['sqlite']['bgcolor']       = '#b1ebb1';
-#$ourdb['sqlite']['rootuser']      = '';
-/************************************/
+$ourdb['sqlite']['fullname']      = 'SQLite';
+$ourdb['sqlite']['havedriver']    = 0;
+$ourdb['sqlite']['compile']       = 'pdo_sqlite';
+$ourdb['sqlite']['bgcolor']       = '#b1ebb1';
+$ourdb['sqlite']['rootuser']      = '';
 
 $ourdb['mssql']['fullname']      = 'MSSQL';
 $ourdb['mssql']['havedriver']    = 0;
 $ourdb['mssql']['compile']       = 'mssql not ready'; # Change to 'mssql' after includes/DatabaseMssql.php added;
 $ourdb['mssql']['bgcolor']       = '#ffc0cb';
 $ourdb['mssql']['rootuser']      = 'administrator';
+
+$ourdb['ibm_db2']['fullname']   = 'DB2';
+$ourdb['ibm_db2']['havedriver'] = 0;
+$ourdb['ibm_db2']['compile']    = 'ibm_db2';
+$ourdb['ibm_db2']['bgcolor']    = '#ffeba1';
+$ourdb['ibm_db2']['rootuser']   = 'db2admin';
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -621,6 +627,12 @@ print "<li style='font-weight:bold;color:green;font-size:110%'>Environment check
 	## MSSQL specific
 	// We need a second field so it doesn't overwrite the MySQL one
 	$conf->DBprefix2 = importPost( "DBprefix2" );
+	
+	## DB2 specific:
+	// New variable in order to have a different default port number
+	$conf->DBport_db2   = importPost( "DBport_db2",      "50000" );
+	$conf->DBmwschema   = importPost( "DBmwschema",  "mediawiki" );
+	$conf->DBcataloged  = importPost( "DBcataloged",  "cataloged" );
 
 	$conf->ShellLocale = getShellLocale( $conf->LanguageCode );
 
@@ -644,6 +656,8 @@ if( $conf->DBpassword != $conf->DBpassword2 ) {
 }
 if( !preg_match( '/^[A-Za-z_0-9]*$/', $conf->DBprefix ) ) {
 	$errs["DBprefix"] = "Invalid table prefix";
+} else {
+	untaint( $conf->DBprefix, TC_MYSQL );
 }
 
 error_reporting( E_ALL );
@@ -720,7 +734,7 @@ $conf->MCServers = importRequest( "MCServers" );
 /* Test memcached servers */
 
 if ( $conf->Shm == 'memcached' && $conf->MCServers ) {
-	$conf->MCServerArray = array_map( 'trim', explode( ',', $conf->MCServers ) );
+	$conf->MCServerArray = wfArrayMap( 'trim', explode( ',', $conf->MCServers ) );
 	foreach ( $conf->MCServerArray as $server ) {
 		$error = testMemcachedServer( $server );
 		if ( $error ) {
@@ -792,6 +806,9 @@ if( $conf->posted && ( 0 == count( $errs ) ) ) {
 			$wgDBprefix = $conf->DBprefix2;
 		}
 
+		## DB2 specific:
+		$wgDBcataloged = $conf->DBcataloged;
+		
 		$wgCommandLineMode = true;
 		if (! defined ( 'STDERR' ) )
 			define( 'STDERR', fopen("php://stderr", "wb"));
@@ -802,7 +819,9 @@ if( $conf->posted && ( 0 == count( $errs ) ) ) {
 		$wgTitle = Title::newFromText( "Installation script" );
 		error_reporting( E_ALL );
 		print "<li>Loading class: " . htmlspecialchars( $dbclass ) . "</li>\n";
-		$dbc = new $dbclass;
+		if ( $conf->DBtype != 'sqlite' ) {
+			$dbc = new $dbclass;
+		}
 
 		if( $conf->DBtype == 'mysql' ) {
 			$mysqlOldClient = version_compare( mysql_get_client_info(), "4.1.0", "lt" );
@@ -867,12 +886,71 @@ if( $conf->posted && ( 0 == count( $errs ) ) ) {
 			} #conn. att.
 
 			if( !$ok ) { continue; }
+		}
+		else if( $conf->DBtype == 'ibm_db2' ) {
+			if( $useRoot ) {
+				$db_user = $conf->RootUser;
+				$db_pass = $conf->RootPW;
+			} else {
+				$db_user = $wgDBuser;
+				$db_pass = $wgDBpassword;
+			}
+			
+			echo( "<li>Attempting to connect to database \"" . htmlspecialchars( $wgDBname ) . 
+				"\" as \"" . htmlspecialchars( $db_user ) . "\"..." );
+			$wgDatabase = $dbc->newFromParams($wgDBserver, $db_user, $db_pass, $wgDBname, 1);
+			if (!$wgDatabase->isOpen()) {
+				print " error: " . htmlspecialchars( $wgDatabase->lastError() ) . "</li>\n";
+			} else {
+				$myver = $wgDatabase->getServerVersion();
+			}
+			if (is_callable(array($wgDatabase, 'initial_setup'))) $wgDatabase->initial_setup('', $wgDBname);
 
+		} elseif ( $conf->DBtype == 'sqlite' ) {
+			if ("$wgSQLiteDataDir" == '') {
+				$wgSQLiteDataDir = dirname($_SERVER['DOCUMENT_ROOT']).'/data';
+			}
+			echo "<li>Attempting to connect to SQLite database at \"" . 
+				htmlspecialchars( $wgSQLiteDataDir ) .  "\"";
+			if ( !is_dir( $wgSQLiteDataDir ) ) {
+				if ( is_writable( dirname( $wgSQLiteDataDir ) ) ) {
+					$ok = wfMkdirParents( $wgSQLiteDataDir, $wgSQLiteDataDirMode );
+				} else {
+					$ok = false;
+				}
+				if ( !$ok ) {
+					echo ": cannot create data directory</li>";
+					$errs['SQLiteDataDir'] = 'Enter a valid data directory';
+					continue;
+				}
+			}
+			if ( !is_writable( $wgSQLiteDataDir ) ) {
+				echo ": data directory not writable</li>";
+				$errs['SQLiteDataDir'] = 'Enter a writable data directory';
+				continue;
+			}
+			$dataFile = "$wgSQLiteDataDir/$wgDBname.sqlite";
+			if ( file_exists( $dataFile ) && !is_writable( $dataFile ) ) {
+				echo ": data file not writable</li>";
+				$errs['SQLiteDataDir'] = "$wgDBname.sqlite is not writable";
+				continue;
+			}
+			$wgDatabase = new DatabaseSqlite( false, false, false, $wgDBname, 1 );
+			if (!$wgDatabase->isOpen()) {
+				print ": error: " . htmlspecialchars( $wgDatabase->lastError() ) . "</li>\n";
+				$errs['SQLiteDataDir'] = 'Could not connect to database';
+				continue;
+			} else {
+				$myver = $wgDatabase->getServerVersion();
+			}
+			if (is_callable(array($wgDatabase, 'initial_setup'))) $wgDatabase->initial_setup('', $wgDBname);
+			echo "ok</li>\n";
 		} else { # not mysql
 			error_reporting( E_ALL );
 			$wgSuperUser = '';
 			## Possible connect as a superuser
-			if( $useRoot && $conf->DBtype != 'sqlite' ) {
+			// Changed !mysql to postgres check since it seems to only apply to postgres
+			if( $useRoot && $conf->DBtype == 'postgres' ) {
 				$wgDBsuperuser = $conf->RootUser;
 				echo( "<li>Attempting to connect to database \"postgres\" as superuser \"" . 
 					htmlspecialchars( $wgDBsuperuser ) . "\"..." );
@@ -1126,6 +1204,8 @@ if( $conf->posted && ( 0 == count( $errs ) ) ) {
 			$revid = $revision->insertOn( $wgDatabase );
 			$article->updateRevisionOn( $wgDatabase, $revision );
 		}
+		// Now that all database work is done, make sure everything is committed
+		$wgDatabase->commit();
 
 		/* Write out the config file now that all is well */
 		print "<li style=\"list-style: none\">\n";
@@ -1450,10 +1530,6 @@ if( count( $errs ) ) {
 	</div>
 	</fieldset>
 
-	<?php 
-		# SQLITE DISABLED -- USE MEDIAWIKI 1.15
-		if (false):
-	?>
 	<?php database_switcher('sqlite'); ?>
 	<div class="config-desc">
 		<b>NOTE:</b> SQLite only uses the <i>Database name</i> setting above, the user, password and root settings are ignored.
@@ -1470,11 +1546,6 @@ if( count( $errs ) ) {
 	</div>
 	</fieldset>
 
-	<?php 
-		# SQLITE DISABLED -- USE MEDIAWIKI 1.15
-		endif
-	?>
-
 	<?php database_switcher('mssql'); ?>
 	<div class="config-input"><?php
 		aField( $conf, "DBprefix2", "Database table prefix:" );
@@ -1487,6 +1558,25 @@ if( count( $errs ) ) {
 		<p>Avoid exotic characters; something like <tt>mw_</tt> is good.</p>
 	</div>
 	</fieldset>
+	
+	<?php database_switcher('ibm_db2'); ?>
+	<div class="config-input"><?php
+		aField( $conf, "DBport_db2", "Database port:" );
+	?></div>
+	<div class="config-input"><?php
+		aField( $conf, "DBmwschema", "Schema for mediawiki:" );
+	?></div>
+	<div>Select one:</div>
+		<ul class="plain">
+		<li><?php aField( $conf, "DBcataloged", "Cataloged (DB2 installed locally)", "radio", "cataloged" ); ?></li>
+		<li><?php aField( $conf, "DBcataloged", "Uncataloged (remote DB2 through ODBC)", "radio", "uncataloged" ); ?></li>
+		</ul>
+	<div class="config-desc">
+		<p>If you need to share one database between multiple wikis, or
+		between MediaWiki and another web application, you may specify
+		a different schema to avoid conflicts.</p>
+	</div>
+	</fieldset>
 
 	<div class="config-input" style="padding:2em 0 3em">
 		<label class='column'>&nbsp;</label>
@@ -1495,7 +1585,7 @@ if( count( $errs ) ) {
 </div>
 </form>
 <script type="text/javascript">
-window.onload = toggleDBarea(<?php echo Xml::encodeJsVar( $conf->DBtype ); ?>,
+window.onload = toggleDBarea( <?php echo Xml::encodeJsVar( $conf->DBtype ); ?>,
 <?php
 	## If they passed in a root user name, don't populate it on page load
 	echo strlen(importPost('RootUser', '')) ? 0 : 1;
@@ -1627,7 +1717,7 @@ function writeLocalSettings( $conf ) {
 	}
 
 	# Add slashes to strings for double quoting
-	$slconf = array_map( "escapePhpString", get_object_vars( $conf ) );
+	$slconf = wfArrayMap( "escapePhpString", get_object_vars( $conf ) );
 	if( $conf->License == 'gfdl1_2' || $conf->License == 'pd' || $conf->License == 'gfdl1_3' ) {
 		# Needs literal string interpolation for the current style path
 		$slconf['RightsIcon'] = $conf->RightsIcon;
@@ -1657,6 +1747,12 @@ function writeLocalSettings( $conf ) {
 		$dbsettings =
 "# MSSQL specific settings
 \$wgDBprefix         = \"{$slconf['DBprefix2']}\";";
+	} elseif( $conf->DBtype == 'ibm_db2' ) {
+		$dbsettings =
+"# DB2 specific settings
+\$wgDBport_db2       = \"{$slconf['DBport_db2']}\";
+\$wgDBmwschema       = \"{$slconf['DBmwschema']}\";
+\$wgDBcataloged      = \"{$slconf['DBcataloged']}\";";
 	} else {
 		// ummm... :D
 		$dbsettings = '';
@@ -1806,6 +1902,7 @@ function importVar( &$var, $name, $default = "" ) {
 	} else {
 		$retval = $default;
 	}
+	taint( $retval );
 	return $retval;
 }
 
@@ -2007,7 +2104,7 @@ function getShellLocale( $wikiLang ) {
 		return false;
 	}
 
-	$lines = array_map( 'trim', $lines );
+	$lines = wfArrayMap( 'trim', $lines );
 	$candidatesByLocale = array();
 	$candidatesByLang = array();
 	foreach ( $lines as $line ) {
@@ -2051,6 +2148,17 @@ function getShellLocale( $wikiLang ) {
 	return false;
 }
 
+function wfArrayMap( $function, $input ) {
+	$ret = array_map( $function, $input );
+	foreach ( $ret as $key => $value ) {
+		$taint = istainted( $input[$key] );
+		if ( $taint ) {
+			taint( $ret[$key], $taint );
+		}
+	}
+	return $ret;
+}
+
 ?>
 
 	<div class="license">
@@ -2077,13 +2185,12 @@ function getShellLocale( $wikiLang ) {
 <div id="column-one">
 	<div class="portlet" id="p-logo">
 	  <a style="background-image: url(../skins/common/images/mediawiki.png);"
-	    href="http://www.mediawiki.org/"
+	    href="../"
 	    title="Main Page"></a>
 	</div>
 	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
 	<div class='portlet'><div class='pBody'>
 		<ul>
-			<li><strong><a href="http://www.mediawiki.org/">MediaWiki home</a></strong></li>
 			<li><a href="../README">Readme</a></li>
 			<li><a href="../RELEASE-NOTES">Release notes</a></li>
 			<li><a href="../docs/">Documentation</a></li>
@@ -2091,7 +2198,7 @@ function getShellLocale( $wikiLang ) {
 			<li><a href="http://www.mediawiki.org/wiki/Manual:Contents">Administrator's Guide</a></li>
 			<li><a href="http://www.mediawiki.org/wiki/Manual:FAQ">FAQ</a></li>
 		</ul>
-		<p style="font-size:90%;margin-top:1em">MediaWiki is Copyright © 2001-2008 by Magnus Manske, Brion Vibber,
+		<p style="font-size:90%;margin-top:1em">MediaWiki is Copyright © 2001-2009 by Magnus Manske, Brion Vibber,
 		 Lee Daniel Crocker, Tim Starling, Erik Möller, Gabriel Wicke, Ævar Arnfjörð Bjarmason, Niklas Laxström,
 		 Domas Mituzas, Rob Church, Yuri Astrakhan, Aryeh Gregor, Aaron Schulz and others.</p>
 	</div></div>

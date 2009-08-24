@@ -1335,6 +1335,11 @@ class CentralAuthUser extends AuthPluginUser {
 					 $row->lu_attached_timestamp ),
 				'attachedMethod' => $row->lu_attached_method,
 			);
+			
+			// Just for fun, add local user data.
+			// Displayed in the steward interface.
+			$wikis[$row->lu_wiki] = array_merge( $wikis[$row->lu_wiki],
+												$this->localUserData( $row->lu_wiki ) );
 		}
 		$dbw->freeResult( $result );
 
@@ -1422,11 +1427,13 @@ class CentralAuthUser extends AuthPluginUser {
 		// And while we're in here, look for user blocks :D
 		$blocks = array();
 		$result = $db->select( 'ipblocks',
-			array( 'ipb_expiry' ),
+			array( 'ipb_expiry', 'ipb_reason' ),
 			array( 'ipb_user' => $data['id'] ),
 			__METHOD__ );
 		foreach( $result as $row ) {
 			if( Block::decodeExpiry( $row->ipb_expiry ) > wfTimestampNow() ) {
+				$data['block-expiry'] = $row->ipb_expiry;
+				$data['block-reason'] = $row->ipb_reason;
 				$data['blocked'] = true;
 			}
 		}

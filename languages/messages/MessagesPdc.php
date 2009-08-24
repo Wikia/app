@@ -98,4 +98,7 @@ $messages = array(
 # Special:NewFiles
 'ilsubmit' => 'Guuck uff',
 
+# Special:Tags
+'tags-edit' => 'ennere',
+
 );

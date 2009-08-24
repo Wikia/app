@@ -99,15 +99,17 @@ class CentralAuthHooks {
 			return true;
 		}
 		
-		// On other wikis
+		// On other domains
 		global $wgCentralAuthAutoLoginWikis;
 		if ( !$wgCentralAuthAutoLoginWikis ) {
+			wfLoadExtensionMessages( 'SpecialCentralAuth' );
+			$inject_html .= wfMsgExt( 'centralauth-login-no-others', 'parsemag' );
 			return true;
 		}
 
 		wfLoadExtensionMessages( 'SpecialCentralAuth' );
 		$inject_html .= '<div class="centralauth-login-box"><p>' . 
-			wfMsg( 'centralauth-login-progress' ) . "</p>\n<p>";
+			wfMsgExt( 'centralauth-login-progress', array( 'parsemag' ), $user->getName() ) . "</p>\n<p>";
 		foreach( $wgCentralAuthAutoLoginWikis as $alt => $wiki ) {
 			$data = array(
 				'userName' => $user->getName(),
@@ -216,14 +218,22 @@ class CentralAuthHooks {
 	
 	static function onUserLogoutComplete( &$user, &$inject_html, $userName ) {
 		global $wgCentralAuthCookies, $wgCentralAuthAutoLoginWikis;
-		if( !$wgCentralAuthCookies || !$wgCentralAuthAutoLoginWikis ) {
+		if( !$wgCentralAuthCookies ) {
 			// Nothing to do.
+			return true;
+		} elseif ( !$wgCentralAuthAutoLoginWikis ) {
+			wfLoadExtensionMessages( 'SpecialCentralAuth' );
+			$inject_html .= wfMsgExt( 'centralauth-logout-no-others', 'parse' );
 			return true;
 		}
 		
 		$centralUser = CentralAuthUser::getInstance( $user );
 		
 		if (!$centralUser->exists() || !$centralUser->isAttached()) {
+			return true;
+		} elseif ( !$wgCentralAuthAutoLoginWikis ) {
+			wfLoadExtensionMessages( 'SpecialCentralAuth' );
+			$inject_html .= wfMsgExt( 'centralauth-logout-no-others', 'parse' );
 			return true;
 		}
 
@@ -379,21 +389,32 @@ class CentralAuthHooks {
 			return false;
 		}
 
+	   // Check for validity of username
+	   if ( !User::isValidUserName( $userName ) ) {
+		   wfDebug( __METHOD__.": Invalid username\n" );
+		   $session = CentralAuthUser::getSession();
+		   $session['auto-create-blacklist'][] = wfWikiID();
+		   CentralAuthUser::setSession( $session );
+		   return false;
+	   }
+
+
 		// Checks passed, create the user
 		wfDebug( __METHOD__.": creating new user\n" );
 		$user->loadDefaults( $userName );
 		$user->addToDatabase();
+		$user->addNewUserLogEntryAutoCreate();
 
 		$wgAuth->initUser( $user, true );
 		$wgAuth->updateUser( $user );
 
+		# Notify hooks (e.g. Newuserlog)
+		wfRunHooks( 'AuthPluginAutoCreate', array( $user ) );
+
 		# Update user count
 		$ssUpdate = new SiteStatsUpdate( 0, 0, 0, 0, 1 );
 		$ssUpdate->doUpdate();
-
-		# Notify hooks (e.g. Newuserlog)
-		wfRunHooks( 'AuthPluginAutoCreate', array( $user ) );
-		$user->addNewUserLogEntryAutoCreate();
+		
 		return true;
 	}
 
@@ -448,6 +469,17 @@ class CentralAuthHooks {
 			}
 		}
 		
+		return true;
+	}
+	
+	static function onMakeGlobalVariablesScript( $groups ) {
+		global $wgUser;
+		if ( !$wgUser->isAnon() ) {
+			$centralUser = CentralAuthUser::getInstance( $wgUser );
+			if ($centralUser->exists() && $centralUser->isAttached()) {
+				$groups['wgGlobalGroups'] = $centralUser->getGlobalGroups();
+			}
+		}
 		return true;
 	}
 

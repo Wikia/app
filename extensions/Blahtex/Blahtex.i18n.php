@@ -417,7 +417,11 @@ $messages['br'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'math_noblahtex' => 'Ne može se izvršiti blahtex, koji bi trebao biti na $1',
+	'math-desc' => 'MathML izlaz za &lt;math&gt; oznake',
+	'math_CannotChangeDirectory' => 'Ne mogu promijeniti radni direktorijum',
 	'math_IllegalCharacter' => 'Nevaljan znak u unosu',
+	'math_IllegalCommandInTextMode' => 'Komanda "$1" nije valjana u tekstualnom modu',
 	'math_IllegalFinalBackslash' => 'Nevaljana kosa crta "\\" na kraju unosa',
 	'math_MissingOpenBraceAfter' => 'Nedostaje otvorena zagrada "{" poslije "$1"',
 	'math_MissingOpenBraceAtEnd' => 'Nedostaje otvorena zagrada "{" na kraju unosa',
@@ -499,8 +503,10 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Als-Holder
  * @author ChrisiPK
  * @author Revolus
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'math_noblahtex' => 'blahtex konnte in $1 nicht ausgeführt werden.',
@@ -528,7 +534,7 @@ Vielleicht magst du „$2“ stattdessen verwenden?',
 	'math_IllegalDelimiter' => 'Ungültiges Trennzeichen hinter „$1“',
 	'math_IllegalFinalBackslash' => 'Ungültiger Backslash „\\“ am Ende der Eingabe',
 	'math_IllegalNestedFontEncodings' => 'Zeichenkodierungsanweisungen können nicht geschachtelt werden',
-	'math_IllegalRedefinition' => 'Die Anweiung „$1“ wurde bereits definiert. Du kannst sie nicht überschreiben',
+	'math_IllegalRedefinition' => 'Die Anweisung „$1“ wurde bereits definiert. Du kannst sie nicht überschreiben',
 	'math_InvalidColour' => 'Die Farbe „$1“ ist ungültig',
 	'math_InvalidUtf8Input' => 'Die Eingabe ist keine gültige UTF-8-Zeichenkette',
 	'math_LatexFontNotSpecified' => 'Es wurde keine LaTeX-Schriftart für „$1” angegeben',
@@ -536,9 +542,9 @@ Vielleicht magst du „$2“ stattdessen verwenden?',
 	'math_MismatchedBeginAndEnd' => 'Die öffnende Anweisung „$1“ entspricht nicht der schließenden „$2“',
 	'math_MisplacedLimits' => 'Die Anweisung „$1“ kann nur hinter einem mathematischen Operator vorkommen.
 Überlege es dir „\\mathop“ zu verwenden.',
-	'math_MissingCommandAfterNewcommand' => 'Fehlender oder ungültiger Befehlsname nach "\\newcommand".
+	'math_MissingCommandAfterNewcommand' => 'Fehlender oder ungültiger Befehlsname nach „\\newcommand“.
 Es muss genau ein Befehl definiert werden;
-er muss mit einem umgekehrten Schrägstrich (Backslash) "\\" beginnen und darf nur alphabetische Zeichen enthalten.',
+er muss mit einem umgekehrten Schrägstrich (Backslash) „\\“ beginnen und darf nur alphabetische Zeichen enthalten.',
 	'math_MissingDelimiter' => 'Fehlendes Trennzeichen hinter „$1“',
 	'math_MissingOpenBraceAfter' => 'Öffnende Klammer „{“ hinter „$1“ fehlt',
 	'math_MissingOpenBraceAtEnd' => 'Öffnende Klammer „{“ am Ende der Eingabe fehlt',
@@ -555,8 +561,8 @@ Versuche die problematischen Zeichen in „\\text{…}“ einzuschließen.',
 	'math_TooManyMathmlNodes' => 'Der MathML-Verarbeitungsbaum enthält zu viele Knoten',
 	'math_TooManyTokens' => 'Die Eingabe ist zu lang',
 	'math_UnavailableSymbolFontCombination' => 'Das Symbol „$1“ ist in der Schriftart „$2“ nicht vorhanden',
-	'math_UnexpectedNextCell' => 'Die Anweisung „&amp;“ kann nur zwischen in einem „\\begin … \\block“-Block stehen',
-	'math_UnexpectedNextRow' => 'Die Anweisung „\\\\“ kann nur zwischen in einem „\\begin … \\block“-Block stehen',
+	'math_UnexpectedNextCell' => 'Die Anweisung „&amp;“ kann nur in einem „\\begin … \\block“-Block stehen',
+	'math_UnexpectedNextRow' => 'Die Anweisung „\\\\“ kann nur in einem „\\begin … \\block“-Block stehen',
 	'math_UnmatchedBegin' => '„\\begin“ ohne zugehöriges „\\end“',
 	'math_UnmatchedCloseBrace' => 'Schließende Klammer „}” ohne zugehörige öffnende Klammer „{”',
 	'math_UnmatchedEnd' => '„\\end” ohne zugehöriges „\\begin”',
@@ -570,11 +576,84 @@ Versuche die problematischen Zeichen in „\\text{…}“ einzuschließen.',
 Probiere die Anweisung „$3{…}“ aus.',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'math_noblahtex' => 'blahtex njedajo se wuwjesć, kótaryž by  měła pla $1 byś',
+	'math-desc' => 'Wudaśe MathML za toflicki &lt;math&gt;',
+	'math_AmbiguousInfix' => '"$1" jo how wěcej zmysłowy.
+Wopytaj pśidatne wugibnjone spinki "{ ... }" wužywaś, aby wótpórał wěcejzmysłowosć.',
+	'math_CannotChangeDirectory' => 'Źěłowy zapis njedajo se změniś',
+	'math_CannotCreateTexFile' => 'tex-dataja njedajo se napóraś',
+	'math_CannotRunDvipng' => 'dvipng njedajo se wuwjesć',
+	'math_CannotRunLatex' => 'latex njedajo se wuwjesć',
+	'math_CannotWritePngDirectory' => 'Njejo móžno do PNG-zapisa pisaś',
+	'math_CannotWriteTexFile' => 'Njejo móžno do tex-dataje pisaś',
+	'math_CasesRowTooBig' => 'W kuždej smužce bloka "cases" stej jano dwa zapis móžno',
+	'math_DoubleSubscript' => 'Dwa indeksa na samkej bazy.
+Jano jaden indeks jo dowólony.',
+	'math_DoubleSuperscript' => 'Dwa eksponenta na samkej bazy.
+Jano jaden eksponent jo dowólony.',
+	'math_IllegalCharacter' => 'Njedowólone znamješko w zapódaśu',
+	'math_IllegalCommandInMathMode' => 'Pśikaz "$1" njejo dowólony w modusu math',
+	'math_IllegalCommandInMathModeWithHint' => 'Pśikaz "$1" njejo dowólony w modusu math.
+Snaź coš město togo "$2" wužywaś?',
+	'math_IllegalCommandInTextMode' => 'Pśikaz "$1" njejo dowólony w tekstowem modusu',
+	'math_IllegalCommandInTextModeWithHint' => 'Pśikaz "$1" njejo dowólony w tekstowem modusu.
+Snaź coš město togo "$2" wužywaś?',
+	'math_IllegalDelimiter' => 'Njedowólone źěleńske znamuško slězy "$1"',
+	'math_IllegalFinalBackslash' => 'Njedowólona nawopacna nakósna smužka "\\" na kóńcu zapódaśa',
+	'math_IllegalNestedFontEncodings' => 'Pśikaze znamješkowego kodowanja njesměju se zašachtelikaś',
+	'math_IllegalRedefinition' => 'Pśikaz "$1" jo južo definěrowany, njamóžoš jen hyšći raz definěrowaś',
+	'math_InvalidColour' => 'Barwa "$1" jo njepłaśiwa',
+	'math_InvalidUtf8Input' => 'Zapódawański tekst njejo płaśiwy rěd znamješkow UTF-8',
+	'math_LatexFontNotSpecified' => 'Za "$1" njejo žedne pismo LaTeX pódane',
+	'math_LatexPackageUnavailable' => 'Njemóžno PNG kresliś, dokulaž pakśik LaTeX "$1" njestoj k dispoziciji',
+	'math_MismatchedBeginAndEnd' => 'Pśikaza "$1" a "$2" se njemakatej',
+	'math_MisplacedLimits' => 'Pśikaz "$1" móžo jano za matematiskim operatorom wustupowaś.
+Rozmysl wó wužywanju "\\mathop".',
+	'math_MissingCommandAfterNewcommand' => 'Felujuce abo njedowólone nowe pśikazowe mě "\\newcommand".
+Musy rowno jaden pśikaz definěrowany byś;
+musy se z nawopacneju nakósneju smužku "\\" zachopiś a smějo jano alfabetiske znamješka wopśimjeś.',
+	'math_MissingDelimiter' => 'Felujuce źěleńske znamuško za "$1"',
+	'math_MissingOpenBraceAfter' => 'Felujuca wócynjajuca wugibnjona spinka "&#123;" za "$1"',
+	'math_MissingOpenBraceAtEnd' => 'Felujuca wócynjajuca wugibnjona spinka "&#123;" na kóńcu zapódaśa',
+	'math_MissingOpenBraceBefore' => 'Felujuca wócynjajuca wugibnjona spinka "&#123;" pśed "$1"',
+	'math_MissingOrIllegalParameterCount' => 'Felujuca abo njedowólona licba w definiciji "$1".
+Musy to jadnotliwa cyfra mjazy 1 a inkluziwnje 9 byś.',
+	'math_MissingOrIllegalParameterIndex' => 'Felujucy abo njedowólony parametrowy indeks w definiciji "$1"',
+	'math_NonAsciiInMathMode' => 'Znamješka nic-ASCII směju se jano w tekstowem modusu wužywaś.
+Wopytaj problematiske znamješka pśez "\\text{...}" wobedaś.',
+	'math_NotEnoughArguments' => 'Nic dosć argumentow za "$1" pśepódane',
+	'math_PngIncompatibleCharacter' => 'PNG njedajo se ze znamuškom $1 korektnje napóraś',
+	'math_ReservedCommand' => 'Pśikaz "$1" jo za interne wužywanje pśez blahtex rezerwěrowany',
+	'math_SubstackRowTooBig' => 'W kuždej smužce bloka "substack" móžo jano jaden zapisk byś',
+	'math_TooManyMathmlNodes' => 'Jo pśewjele sukow w bomje MathML',
+	'math_TooManyTokens' => 'Zapódaśe jo pśedłujko',
+	'math_UnavailableSymbolFontCombination' => 'Symbol "$1" njestoj w pismje "$2" k dispoziciji',
+	'math_UnexpectedNextCell' => 'Pśikaz "&" móžo jano w bloku "\\begin ... \\end" wustupowaś',
+	'math_UnexpectedNextRow' => 'Pśikaz "\\\\" móžo jano w bloku "\\begin ... \\end" wustupowaś',
+	'math_UnmatchedBegin' => '"\\begin" bźez pśisłušajucego "\\end"',
+	'math_UnmatchedCloseBrace' => 'Zacynjajuca wugibnjona spinka "<nowiki>}</nowiki>" bźez pśisłušajuceje wócynjajuceje wugibnjoneje spinki "<nowiki>{</nowiki>"',
+	'math_UnmatchedEnd' => '"\\end" bźez pśisłušajucego "\\begin"',
+	'math_UnmatchedLeft' => '"\\left" bźez pśisłušajucego "\\right"',
+	'math_UnmatchedOpenBrace' => 'Wócynjajuca wugibnjona spinka "<nowiki>{</nowiki>" bźez pśisłušajuceje zacynjajuceje wugibnjoneje spinki "<nowiki>}</nowiki>"',
+	'math_UnmatchedOpenBracket' => 'Wócynjajuca rožkata spinka "<nowiki>[</nowiki>" bźez pśisłušajuceje zacynjajuceje rožkateje spinki "<nowiki>]</nowiki>"',
+	'math_UnmatchedRight' => '"\\right" bźez pśisłušajucego "\\left"',
+	'math_UnrecognisedCommand' => 'Njespóznaty pśikaz "$1"',
+	'math_WrongFontEncoding' => 'Symbol "$1" njesmějo w znamješkowem kodowanju "$2" wustupowaś',
+	'math_WrongFontEncodingWithHint' => 'Symbol "$1" njesmějo w znamješkowem kodowanju "$2" wustupowaś.
+Wopytaj pśikaz "$3{...}" wužywaś.',
+);
+
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Konsnos
  */
 $messages['el'] = array(
 	'math_InvalidColour' => 'Το χρώμα "$1" είναι άκυρο',
+	'math_UnrecognisedCommand' => 'Άγνωστη εντολή "$1"',
 );
 
 /** Esperanto (Esperanto)
@@ -628,6 +707,60 @@ $messages['eo'] = array(
 	'math_WrongFontEncodingWithHint' => 'La simbolo "$1" eble ne aperos en tiparo kodprezento "$2" (provu uzi la komandon "$3{...}" anstataŭe)',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ * @author Drini
+ */
+$messages['es'] = array(
+	'math_noblahtex' => 'No se puede ejecutar blahtex, que deberia estar en $1',
+	'math-desc' => 'Salida MathML para etiquetas &lt;math&gt;',
+	'math_AmbiguousInfix' => 'Colocación ambigua de "$1".
+Intenta usar llaves adicionales "{ ... }" para precisar.',
+	'math_CannotChangeDirectory' => 'No se puede cambiar directorio actual',
+	'math_CannotCreateTexFile' => 'No se puede crear archivo tex',
+	'math_CannotRunDvipng' => 'No se puede ejecutar dvipng',
+	'math_CannotRunLatex' => 'No se puede ejecutar latex',
+	'math_CannotWritePngDirectory' => 'No se puede escribir al directorio de salida PNG',
+	'math_CannotWriteTexFile' => 'No se puede escribir en el archivo tex',
+	'math_CasesRowTooBig' => 'Sólo puede haber dos entradas en cada línea de un bloque "cases" (casos).',
+	'math_DoubleSubscript' => 'Se encontraron dos subíndices anexos a una misma base.
+Sólo se permite uno.',
+	'math_DoubleSuperscript' => 'Se encontraro dos superíndices anexos a una misma base.
+Sólo se permite uno.',
+	'math_IllegalCharacter' => 'Caracter ilegal en la entrada',
+	'math_IllegalCommandInMathMode' => 'El comando "$1" es ilegal en modo matemático',
+	'math_IllegalCommandInMathModeWithHint' => 'El comando "$1" es ilegal en modo matemático.
+¿Quizás querías usar "$2" ?',
+	'math_IllegalCommandInTextMode' => 'El comando "$1" es ilegal en modo texto',
+	'math_IllegalCommandInTextModeWithHint' => 'El comando $1$ es ilegal en modo texto.
+¿Quizás querías usar "$2" ?',
+	'math_IllegalDelimiter' => 'Delimitador ilegal a continuación de "$1"',
+	'math_IllegalFinalBackslash' => 'Barra ilegal "\\" al final de la entrada',
+	'math_IllegalNestedFontEncodings' => 'Comandos de codificación de fuentes no pueden estar anidados',
+	'math_IllegalRedefinition' => 'El comando "$1" ya ha sido definido; usted no puede redefinirlo',
+	'math_InvalidColour' => 'El color "$1" es inválido',
+	'math_LatexFontNotSpecified' => 'Ninguna fuente LaTeX ha sido especificada para "$1"',
+	'math_MismatchedBeginAndEnd' => 'Comandos "$1" y "$2" no coinciden',
+	'math_TooManyMathmlNodes' => 'Hay demasiados nodos en el árbol MathML',
+	'math_TooManyTokens' => 'La entrada es demasiado larga',
+	'math_UnrecognisedCommand' => 'Comando irreconocible "$1"',
+);
+
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'math_CannotCreateTexFile' => 'Ezin da tex fitxategia sortu',
+	'math_CannotRunDvipng' => 'dvipng ezin da exekutatu',
+	'math_CannotRunLatex' => 'latex ezin da exekutatu',
+	'math_CannotWriteTexFile' => 'Ezin da tex fitxategia idatzi',
+	'math_InvalidColour' => '"$1" kolorea ez da baliozkoa',
+	'math_MismatchedBeginAndEnd' => '"$1" eta "$2" komandoek ez datoz bat',
+	'math_UnexpectedNextCell' => '"&" komandoa "\\begin ... \\end" blokearen barruan egon daiteke bakarrik',
+	'math_UnexpectedNextRow' => '"\\\\" komandoa "\\begin ... \\end" blokearen barruan egon daiteke bakarrik',
+	'math_UnrecognisedCommand' => '"$1" komandoa ezezaguna da',
+);
+
 /** Persian (فارسی)
  * @author Mardetanha
  */
@@ -676,10 +809,11 @@ Ehkä sinun piti käyttää komentoa ”$2”?',
  * @author Grondin
  * @author Sherbrooke
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'math_noblahtex' => 'Ne peut exécuter blahtex, qui devrait être à $1',
-	'math-desc' => 'Sortie MathML pour les balises &lt;math&gt;',
+	'math-desc' => 'Rendu MathML du contenu des balises &lt;math&gt;',
 	'math_AmbiguousInfix' => "La position de « $1 » est ambiguë (ajouter des balises additionnelles « { ... } » peut lever l'ambiguïté)",
 	'math_CannotChangeDirectory' => 'Ne peut changer de dossier de travail',
 	'math_CannotCreateTexFile' => 'Ne peut créer un fichier tex',
@@ -863,6 +997,77 @@ $messages['grc'] = array(
 	'math_LatexFontNotSpecified' => 'Οὐδεμία γραμματοσειρά LaTeX κεκαθωρισμένη ἐστὶν διὰ τὴν "$1"',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'math_noblahtex' => 'blahtex het nit chenne uusgfiert wäre in $1',
+	'math-desc' => 'MathML-Uusgab fir &lt;math&gt;-Tag',
+	'math_AmbiguousInfix' => 'An däre Stell isch „$1“ mehdytig.
+Versuech wyteri gschwungeni Chlammere „{ … }“ yyzfiege go d Yygab eidytig z mache.',
+	'math_CannotChangeDirectory' => 'Arbetsverzeichnis het nit chenne gwägslet wäre',
+	'math_CannotCreateTexFile' => 'tex-Datei het nit chenne aagleit wäre',
+	'math_CannotRunDvipng' => 'dvipng het nit chenne uusgfiert wäre',
+	'math_CannotRunLatex' => 'latex het nit chenne uusgfiert wäre',
+	'math_CannotWritePngDirectory' => 'S PNG-Verzeichnis isch nit bschryybbar',
+	'math_CannotWriteTexFile' => 'S isch nit megli gsi in d tex-Datei z schryybe',
+	'math_CasesRowTooBig' => 'Pro Zyylete vun eme „cases“-Block cha s nume zwee Yyträg gee',
+	'math_DoubleSubscript' => 'S sin zwee Indices an dr glyyche Basis vorchu.
+Nume ei Index isch erlaubt.',
+	'math_DoubleSuperscript' => 'S sin zwee Exponente an dr glyyche Basis vorchu.
+Nume ein Exponent isch erlaubt.',
+	'math_IllegalCharacter' => 'Nit giltig Zeiche in dr Yygab',
+	'math_IllegalCommandInMathMode' => 'm mathematische Modus isch d Aawyysig „$1“ nit erlaubt',
+	'math_IllegalCommandInMathModeWithHint' => 'Im mathematische Modus isch d Aawyysig „$1“ nit erlaubt.
+Villicht witt „$2“ defir bruuche?',
+	'math_IllegalCommandInTextMode' => 'Im Texmodus isch d Aawyysig „$1“ nit erlaubt',
+	'math_IllegalCommandInTextModeWithHint' => 'Im Textmodus isch d Aawyysig „$1“ nit erlaubt.
+Villicht witt „$2“ defir bruuche?',
+	'math_IllegalDelimiter' => 'Nit giltig Trännzeiche hinter „$1“',
+	'math_IllegalFinalBackslash' => 'Nit giltige Backslash „\\“ am Änd vu dr Yygab',
+	'math_IllegalNestedFontEncodings' => 'Zeichekodierisgaawyysige hän nit chenne gschachtlet wäre',
+	'math_IllegalRedefinition' => 'D Aawyysig „$1“ isch scho definiert wore. Du chasch si nit iberschryybe',
+	'math_InvalidColour' => 'D Farb „$1“ isch nit giltig',
+	'math_InvalidUtf8Input' => 'D Yygab isch kei giltigi UTF-8-Zeichechette',
+	'math_LatexFontNotSpecified' => 'S isch kei LaTeX-Schriftart fir „$1” aagee wore',
+	'math_LatexPackageUnavailable' => 'D PNG het nit chenne aagleit wäre, wel s LaTeX-Paket „$1“ nit verfiegbar isch',
+	'math_MismatchedBeginAndEnd' => 'D Aaweisig „$1“ passt nit zue „$2“',
+	'math_MisplacedLimits' => 'D Aawyysig „$1“ cha nume hinter eme mathematische Operator vorchu.
+Iberleg Dir s „\\mathop“ z neh.',
+	'math_MissingCommandAfterNewcommand' => 'Befählsname no „\\newcommand“ fählt oder isch nit giltig.
+S muess genau ei Befähl definiert wäre;
+är muess mit eme umgchehrte Schregstrich (Backslash) „\\“ aafange un s derf nume alfabetischi Zeichen din haa.',
+	'math_MissingDelimiter' => 'Trännzeiche hinter „$1“ fählt',
+	'math_MissingOpenBraceAfter' => 'Ufigi Chlammere „{“ hinter „$1“ fählt',
+	'math_MissingOpenBraceAtEnd' => 'Ufigi Chlammere „{“ am Änd vu dr Yygab fählt',
+	'math_MissingOpenBraceBefore' => 'Ufigi Chlammere „{“ vor „$1“ fählt',
+	'math_MissingOrIllegalParameterCount' => 'Parameterzahl in dr Definition vu „$1“ fählt oder isch nit giltig.
+S muess e einzelni Ziffer zwische 1 un 9 syy.',
+	'math_MissingOrIllegalParameterIndex' => 'Parameterindex in dr Definition vu „$1“ fählt oder isch nit giltig',
+	'math_NonAsciiInMathMode' => 'Sonderzeiche (Nit-ASCII-Zeiche) derfe nume im Textmodus bruucht wäre
+Versuech di problematische Zeiche in „\\text{…}“ yyzschliesse.',
+	'math_NotEnoughArguments' => 'S sin nit gnue Parameter fir „$1“ ibergee wore',
+	'math_PngIncompatibleCharacter' => 'PNG mit em Zeiche $1 chenne nit korräkt aagleit wäre',
+	'math_ReservedCommand' => 'D Aawyysig „$1“ isch fir di intärn Verwändig in blahtex reserviert',
+	'math_SubstackRowTooBig' => 'Pro Zyylete vun eme „substack“-Block derf s nume ei Yytrag gee',
+	'math_TooManyMathmlNodes' => 'Im MathML-Verarbeitigsbaum het s zvyyl Chnote',
+	'math_TooManyTokens' => 'D Yygab isch z lang',
+	'math_UnavailableSymbolFontCombination' => 'S Symbol „$1“ git s in dr Schriftart „$2“ nit',
+	'math_UnexpectedNextCell' => 'D Aawyysig „&amp;“ cha nume in eme „\\begin … \\block“-Block stoh',
+	'math_UnexpectedNextRow' => 'D Aawyysig „\\\\“ cha nume in eme „\\begin … \\block“-Block stoh',
+	'math_UnmatchedBegin' => '„\\begin“ ohni zuegherig „\\end“',
+	'math_UnmatchedCloseBrace' => 'Zuenigi Chlammere „}” ohni zuegherigi ufigi Chlammere „{”',
+	'math_UnmatchedEnd' => '„\\end” ohni zuegherig „\\begin”',
+	'math_UnmatchedLeft' => '„\\left” ohni zuegherig „\\right”',
+	'math_UnmatchedOpenBrace' => 'Ufigi Chlammere „{” ohni zuegherigi zuenigi Chlammere „}”',
+	'math_UnmatchedOpenBracket' => 'Ufigi Chlammere „[” ohni zuegherigi zuenigi Chlammere „]”',
+	'math_UnmatchedRight' => '„\\right” ohni zuegherig „\\left”',
+	'math_UnrecognisedCommand' => 'Nit bekannti Aawyysig „$1“',
+	'math_WrongFontEncoding' => 'S Symbol „$1“ derf in dr Zeichekodierig „$2“ nit vorchu',
+	'math_WrongFontEncodingWithHint' => 'S Symbol „$1“ derf in dr Zeichekodierig „$2“ nit vorchu
+Versuech d Aawyysig „$3{…}“.',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
@@ -1008,9 +1213,11 @@ $messages['hi'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dnik
+ * @author SpeedyGonsales
  */
 $messages['hr'] = array(
 	'math_noblahtex' => 'Ne mogu izvršiti blahtex, koji bi trebao biti na $1',
+	'math-desc' => "MathML izlaz za &lt;math&gt; ''tagove''",
 	'math_AmbiguousInfix' => 'Dvosmisleno smješten "$1" (probajte koristiti dodatne zagrade "{ ... }" da pojasnite)',
 	'math_CannotChangeDirectory' => 'Ne mogu promijeniti direktorij (folder)',
 	'math_CannotCreateTexFile' => 'Ne mogu kreirati tex-datoteku',
@@ -1022,11 +1229,11 @@ $messages['hr'] = array(
 	'math_DoubleSubscript' => 'Nađena dva supskripta spojena na istu bazu (samo jedan je dozvoljen)',
 	'math_DoubleSuperscript' => 'Nađena dva superskripta spojena na istu bazu (samo jedan je dozvoljen)',
 	'math_IllegalCharacter' => 'Nedozvoljeni znak u ulazu',
-	'math_IllegalCommandInMathMode' => 'Nedozvoljena naredba u matematičkom načinu',
+	'math_IllegalCommandInMathMode' => 'Naredba "$1" nije dozvoljena u matematičkom načinu',
 	'math_IllegalCommandInMathModeWithHint' => 'Naredba "$1" je nedozvoljena u matematičkom načinu (možda ste namjeravali koristiti "$2"?)',
 	'math_IllegalCommandInTextMode' => 'Naredba "$1" nije dozvoljena u tekstualnom načinu',
 	'math_IllegalCommandInTextModeWithHint' => 'Naredba "$1" je nedozvoljena u tekstualnom načinu (možda ste namjeravali koristiti "$2"?)',
-	'math_IllegalDelimiter' => 'Nedozvoljeni graničnik (delimiter)',
+	'math_IllegalDelimiter' => 'Nedozvoljeni graničnik (delimiter) poslije "$1"',
 	'math_IllegalFinalBackslash' => 'Nedozvoljena obrnuta kosa crta "\\" na kraju ulaza',
 	'math_IllegalNestedFontEncodings' => 'Naredbe za kodiranje fontova ne mogu biti ugnježđene',
 	'math_IllegalRedefinition' => 'Naredba "$1" je već definirana, ne možete je redefinirati',
@@ -1060,7 +1267,7 @@ $messages['hr'] = array(
 	'math_UnmatchedOpenBrace' => 'Nađena otvorena vitičasta zagrada "{" bez pripadne zatvorene zagrade "}"',
 	'math_UnmatchedOpenBracket' => 'Nađena otvorena uglata zagrada "[" bez pripadne zatvorene zagrade "]"',
 	'math_UnmatchedRight' => 'Nađen \\right bez pripadnog \\left',
-	'math_UnrecognisedCommand' => 'Neprepoznata naredba',
+	'math_UnrecognisedCommand' => 'Neprepoznata naredba "$1"',
 	'math_WrongFontEncoding' => 'Znak "$1" se ne može pojaviti u kodiranju fonta "$2"',
 	'math_WrongFontEncodingWithHint' => 'Znak "$1" se ne može pojaviti u kodiranju fonta "$2" (probajte koristiti naredbu "$3{...}")',
 );
@@ -1466,7 +1673,7 @@ Do kanns et nit norr_ens faßlääje udder övverschriive.',
 	'math_InvalidColour' => 'De Färv „<code>$1</code>“ es verkeeht.',
 	'math_InvalidUtf8Input' => 'En däm Täxstöck es kei jöltesch UTF-8 dren.',
 	'math_LatexFontNotSpecified' => 'För „<code>$1</code>“ es kei LaTeX-Schreffaat aanjejovve.',
-	'math_LatexPackageUnavailable' => 'Kunnt die <code>PNG</code>-Datei nit opboue, weil dat LaTeX-Pakätt „$<code>1“</code> nit do es.',
+	'math_LatexPackageUnavailable' => 'Kunnt die <code>PNG</code>-Datei nit opboue, weil dat LaTeX-Pakätt „$1“ nit do es.',
 	'math_MismatchedBeginAndEnd' => 'De Kommandos „<code>$1</code>“ un „<code>$2</code>“ donn nit zosamme paße.',
 	'math_MisplacedLimits' => 'Dat Kommando „<code>$1</code>“ darf bloß henger enem matemattesche Opperaator opdouche.
 Övverlääch ens, „<code>\\mathop</code>“ ze bruche.',
@@ -1486,7 +1693,7 @@ Do mööt en einzel Zeffer „<code>1</code>“…„<code>9</code>“… sen.',
 	'math_NotEnoughArguments' => 'Et sen nit jenooch Parrameetere för „<code>$1</code>“ do.',
 	'math_PngIncompatibleCharacter' => 'En <code>PNG</code>-Datei mt däm Zeiche „<code>$1</code>“ dren kunnt nit ööndlech opjebout wäde.',
 	'math_ReservedCommand' => 'Dat Kommando „<code>$1</code>“ es reserveet för entärrne Aufjabe vun <code>blahtex</code>.',
-	'math_SubstackRowTooBig' => 'Et darf bloß eine Enndraach en jede Reih för ene „<code>$1</code>substack“-Block jevve.',
+	'math_SubstackRowTooBig' => 'Et darf bloß eine Enndraach en jede Reih för ene „<code lang="en">>substack</code>“-Block jevve.',
 	'math_TooManyMathmlNodes' => 'Dä Boum met dä Date vum MathML hät ze vill einzel Knote.',
 	'math_TooManyTokens' => 'Dat Täxstöck es zo lang.',
 	'math_UnavailableSymbolFontCombination' => 'Dat Sümbohl „$1“ deiht en dä Schreff „$2“ nit vörkumme.',
@@ -1642,7 +1849,7 @@ $messages['nds'] = array(
 $messages['nl'] = array(
 	'math_noblahtex' => 'Blahtex kan niet uitgevoerd worden. Het programma zou hier moeten staan: $1',
 	'math-desc' => 'MathML-uitvoer voor &lt;math&gt; tags',
-	'math_AmbiguousInfix' => 'Ambigue plaatsing van "$1" (probeer het op te lossen met accolades "{ ... }" om te disambigueren)',
+	'math_AmbiguousInfix' => 'Ambigue plaatsing van "$1" (probeer het op te lossen met accolades "{ … }" om te disambigueren)',
 	'math_CannotChangeDirectory' => 'Kan de werkmap niet wijzigen',
 	'math_CannotCreateTexFile' => 'Kan geen tex-bestand aanmaken',
 	'math_CannotRunDvipng' => 'Kan dvipng niet uitvoeren',
@@ -1674,7 +1881,7 @@ $messages['nl'] = array(
 	'math_MissingOpenBraceBefore' => 'Ontbrekende openende accolade "{" na "$1"',
 	'math_MissingOrIllegalParameterCount' => 'Ontbrekende of een ongeldig aantal parameters in de definitie van "$1" (dit moet één cijfer zijn tussen 1 en 9)',
 	'math_MissingOrIllegalParameterIndex' => 'Ontbrekende of ongeldige parameterindex in de definitie van "$1"',
-	'math_NonAsciiInMathMode' => 'Niet-ASCII karakters mogen enkel in text-modus gebruikt worden (tracht de probleemkarakters te plaatsen tussen "\\text{...}")',
+	'math_NonAsciiInMathMode' => 'Niet-ASCII karakters mogen enkel in text-modus gebruikt worden (tracht de probleemkarakters te plaatsen tussen "\\text{…}")',
 	'math_NotEnoughArguments' => 'Er werden niet genoeg argumenten opgegeven voor "$1"',
 	'math_PngIncompatibleCharacter' => 'Het is niet mogelijk om een correcte PNG te maken met het karakter $1',
 	'math_ReservedCommand' => 'Het commando "$1" is gereserveerd voor intern gebruik door blahtex',
@@ -1682,8 +1889,8 @@ $messages['nl'] = array(
 	'math_TooManyMathmlNodes' => 'Er zijn te veel nodes in de boomstructuur van MathML',
 	'math_TooManyTokens' => 'De invoer is te lang',
 	'math_UnavailableSymbolFontCombination' => 'Het symbool "$1" is niet beschikbaar in het lettertype "$2"',
-	'math_UnexpectedNextCell' => 'Het commando "&" kan alleen voorkomen in een "\\begin ... \\end" constructie',
-	'math_UnexpectedNextRow' => 'Het commando "\\\\" kan alleen voorkomen in een "\\begin ... \\end" constructie',
+	'math_UnexpectedNextCell' => 'Het commando "&" kan alleen voorkomen in een "\\begin … \\end" constructie',
+	'math_UnexpectedNextRow' => 'Het commando "\\\\" kan alleen voorkomen in een "\\begin … \\end" constructie',
 	'math_UnmatchedBegin' => 'Er is een "\\begin" zonder bijbehorende "\\end"',
 	'math_UnmatchedCloseBrace' => 'Er is een accolade sluiten "}" zonder bijbehorende accolade openen "{"',
 	'math_UnmatchedEnd' => 'Er is een "\\end" zonder bijbehorende "\\begin"',
@@ -1693,7 +1900,7 @@ $messages['nl'] = array(
 	'math_UnmatchedRight' => 'Er is een "\\right" zonder bijbehorende "\\left"',
 	'math_UnrecognisedCommand' => 'Commando "$1" niet herkend',
 	'math_WrongFontEncoding' => 'Het symbool "$1" mag niet voorkomen in lettertypecodering "$2"',
-	'math_WrongFontEncodingWithHint' => 'Het symbool "$1" mag niet voorkomen in lettertypecodering "$2". Probeer het commando "$3{...}" te gebruiken.',
+	'math_WrongFontEncodingWithHint' => 'Het symbool "$1" mag niet voorkomen in lettertypecodering "$2". Probeer het commando "$3{…}" te gebruiken.',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -1887,65 +2094,66 @@ $messages['oc'] = array(
 $messages['pl'] = array(
 	'math_noblahtex' => 'Nie udało sie uruchomić rozszerzenia blahtex, które powinno znajdować się w $1',
 	'math-desc' => 'Informacje wyjściowe znaczników &lt;math&gt; w MathML',
-	'math_AmbiguousInfix' => 'Niejednoznaczne ustawienie "$1" (spróbuj użyć dodatkowych nawiasów "{ ... }" by ujednoznacznić)',
+	'math_AmbiguousInfix' => 'Niejednoznaczne ustawienie „$1” (spróbuj użyć dodatkowych nawiasów „{ ... }” by ujednoznacznić)',
 	'math_CannotChangeDirectory' => 'Nie można zmienić katalogu roboczego',
 	'math_CannotCreateTexFile' => 'Nie udało się stworzyć pliku tex',
 	'math_CannotRunDvipng' => 'Nie można uruchomić dvipng',
 	'math_CannotRunLatex' => 'Nie można uruchomić LaTeX-a',
 	'math_CannotWritePngDirectory' => 'Nie można zapisać do wyjściowego katalogu PNG',
 	'math_CannotWriteTexFile' => 'Nie można pisać do pliku tex',
-	'math_CasesRowTooBig' => 'W każdym wierszu bloku "cases" mogą być jedynie dwa wpisy',
+	'math_CasesRowTooBig' => 'W każdym wierszu bloku „cases” mogą być jedynie dwa wpisy',
 	'math_DoubleSubscript' => 'Znaleziono dwa indeksy dolne dołączone do tej samej bazy.
 Możliwe jest korzystanie tylko z jednego.',
 	'math_DoubleSuperscript' => 'Znaleziono dwa indeksy górne dołączone do tej samej bazy.
 Możliwe jest korzystanie tylko z jednego.',
 	'math_IllegalCharacter' => 'Nieprawidłowy znak w danych wejściowych',
-	'math_IllegalCommandInMathMode' => 'Polecenie "$1" jest niedozwolne w trybie matematycznym',
-	'math_IllegalCommandInMathModeWithHint' => 'Polecenie "$1" jest niedozwolone w trybie matematycznym (może miałeś na myśli "$2"?)',
-	'math_IllegalCommandInTextMode' => 'Polecenie "$1" jest niedozwolone w trybie tekstowym',
-	'math_IllegalCommandInTextModeWithHint' => 'Polecenie "$1" nie jest dozwolone w trybie tekstowym
-Podobnym poleceniem jest "$2".',
-	'math_IllegalDelimiter' => 'Niedozwolony separator przed "$1"',
-	'math_IllegalFinalBackslash' => 'Niedozwolony backslash "\\" na końcu wejścia',
+	'math_IllegalCommandInMathMode' => 'Polecenie „$1” jest niedozwolone w trybie obliczeń',
+	'math_IllegalCommandInMathModeWithHint' => 'Polecenie „$1” jest niedozwolone w trybie obliczeń (może miałeś na myśli „$2”?)',
+	'math_IllegalCommandInTextMode' => 'Polecenie „$1” jest niedozwolone w trybie tekstowym',
+	'math_IllegalCommandInTextModeWithHint' => 'Polecenie „$1” nie jest dozwolone w trybie tekstowym
+Podobnym poleceniem jest „$2”.',
+	'math_IllegalDelimiter' => 'Niedozwolony separator przed „$1”',
+	'math_IllegalFinalBackslash' => 'Niedozwolony backslash „\\” na końcu wejścia',
 	'math_IllegalNestedFontEncodings' => 'Komendy kodowania czcionek nie mogą być zagnieżdżane',
-	'math_IllegalRedefinition' => 'Polecenie "$1" jest już zdefiniowane; nie możesz go redefiniować',
-	'math_InvalidColour' => 'Kolor "$1" jest niepoprawny',
+	'math_IllegalRedefinition' => 'Polecenie „$1” jest już zdefiniowane; nie możesz go przedefiniować',
+	'math_InvalidColour' => 'Kolor „$1” jest niepoprawny',
 	'math_InvalidUtf8Input' => 'Ciąg danych wejściowych nie był zgodny z UTF-8',
-	'math_LatexFontNotSpecified' => 'Nie określono czcionki LaTeX-a dla "$1"',
-	'math_LatexPackageUnavailable' => 'Nie udało się wygenerować pliku w formacie PNG, ponieważ pakiet "$1" LaTeX nie jest dostępny',
-	'math_MismatchedBeginAndEnd' => 'Polecenia "$1" i "$2" nie pasują',
-	'math_MisplacedLimits' => 'Polecenie "$1" może wystąpić tylko po operatorze matematycznym.
-Zaleca sie skorzystanie z "\\mathop".',
-	'math_MissingCommandAfterNewcommand' => 'Brakująca lub nieprawidłowa nazwa nowego polecenia za "\\newcommand".
+	'math_LatexFontNotSpecified' => 'Nie określono czcionki LaTeX-a dla „$1”',
+	'math_LatexPackageUnavailable' => 'Nie udało się wygenerować pliku w formacie PNG, ponieważ pakiet „$1” LaTeX nie jest dostępny',
+	'math_MismatchedBeginAndEnd' => 'Polecenia „$1” i „$2” nie pasują',
+	'math_MisplacedLimits' => 'Polecenie „$1” może wystąpić tylko po operatorze matematycznym.
+Zaleca sie skorzystanie z „\\mathop”.',
+	'math_MissingCommandAfterNewcommand' => 'Brakująca lub nieprawidłowa nazwa nowego polecenia za „\\newcommand”.
 Musi to być definicja dokładnie jednego polecenia,
-zaczynać się od ukośnika lewego "\\" i zawierać wyłącznie litery.',
-	'math_MissingDelimiter' => 'Brak separatora po "$1"',
-	'math_MissingOpenBraceAfter' => 'Brak otwierającego nawiasu klamrowego "{" po "$1"',
-	'math_MissingOpenBraceAtEnd' => 'Brakujący nawias otwierający "{" na końcu wejścia',
-	'math_MissingOpenBraceBefore' => 'Brakujący nawias otwierający "{" przed "$1"',
-	'math_MissingOrIllegalParameterCount' => 'Brakujący lub nieprawidłowy licznik liczby parametrów w definicji "$1".
+zaczynać się od ukośnika lewego „\\” i zawierać wyłącznie litery.',
+	'math_MissingDelimiter' => 'Brak separatora po „$1”',
+	'math_MissingOpenBraceAfter' => 'Brak otwierającego nawiasu klamrowego „{” po „$1”',
+	'math_MissingOpenBraceAtEnd' => 'Brakujący nawias otwierający „{” na końcu',
+	'math_MissingOpenBraceBefore' => 'Brakujący nawias otwierający „{” przed „$1”',
+	'math_MissingOrIllegalParameterCount' => 'Brakujący lub nieprawidłowy licznik liczby parametrów w definicji „$1”.
 Musi to być pojedyncza cyfra z zakresu od 1 do 9 włącznie.',
-	'math_MissingOrIllegalParameterIndex' => 'Brakujący lub nieprawidłowy indeks parametru w definicji "$1".',
-	'math_NonAsciiInMathMode' => 'Znaki spoza ASCII mogą być użyte jedynie w trybie tekstowym (spróbuj zamknąć znaki w "\\text{...}")',
-	'math_NotEnoughArguments' => 'Zbyt mało argumentów dla "$1"',
+	'math_MissingOrIllegalParameterIndex' => 'Brakujący lub nieprawidłowy indeks parametru w definicji „$1”.',
+	'math_NonAsciiInMathMode' => 'Znaki spoza ASCII mogą być użyte jedynie w trybie tekstowym (spróbuj zamknąć znaki w „\\text{...}”)',
+	'math_NotEnoughArguments' => 'Zbyt mało argumentów dla „$1”',
 	'math_PngIncompatibleCharacter' => 'Nie można poprawnie wygenerować pliku PNG zawierającego znak $1',
-	'math_ReservedCommand' => 'Polecenie "$1" jest zarezerwowane do wewnętrznego użycia przez blahtex',
-	'math_SubstackRowTooBig' => 'W każdym wierszu bloku "substack" może być tylko jeden wpis',
+	'math_ReservedCommand' => 'Polecenie „$1” jest zarezerwowane do wewnętrznego użycia przez blahtex',
+	'math_SubstackRowTooBig' => 'W każdym wierszu bloku „substack” może być tylko jeden wpis',
 	'math_TooManyMathmlNodes' => 'Zbyt dużo węzłów w drzewie MathML',
 	'math_TooManyTokens' => 'Zbyt długie dane wejściowe',
-	'math_UnavailableSymbolFontCombination' => 'Brak znaku "$1" w czcionce "$2"',
-	'math_UnexpectedNextCell' => 'Polecenie "&" może występować jedynie wewnątrz bloku "\\begin ... \\end"',
-	'math_UnexpectedNextRow' => 'Polecenie "\\\\" może występować jedynie wewnątrz bloku "\\begin ... \\end"',
-	'math_UnmatchedBegin' => 'Napotkano "\\begin" bez odpowiadającego "\\end"',
-	'math_UnmatchedCloseBrace' => 'Napotkano na nawias zamykający "}" bez bez odpowiadającego mu nawiasu otwierającego "{"',
-	'math_UnmatchedEnd' => 'Napotkano "\\end" bez odpowiadającego "\\begin"',
-	'math_UnmatchedLeft' => 'Napotkano "\\left" bez pasującego "\\right"',
-	'math_UnmatchedOpenBrace' => 'Napotkano na nawias otwierający "{" bez bez odpowiadającego mu nawiasu zamykającego "}"',
-	'math_UnmatchedOpenBracket' => 'Napotkano na nawias otwierający "[" bez bez odpowiadającego mu nawiasu zamykającego "]"',
-	'math_UnmatchedRight' => 'Napotkano na "\\right" bez odpowiadającego mu "\\left"',
-	'math_UnrecognisedCommand' => 'Nierozpoznane polecenie "$1"',
-	'math_WrongFontEncoding' => 'Symbol "$1" może się nie pojawić przy kodowaniu czcionką "$2"',
-	'math_WrongFontEncodingWithHint' => 'Znak "$1" może nie występować w czcionce "$2" (spróbuj użyć polecenia "$3{...}")',
+	'math_UnavailableSymbolFontCombination' => 'Brak znaku „$1” w czcionce „$2”',
+	'math_UnexpectedNextCell' => 'Polecenie „&” może występować jedynie wewnątrz bloku „\\begin ... \\end”',
+	'math_UnexpectedNextRow' => 'Polecenie „\\\\” może występować jedynie wewnątrz bloku „\\begin ... \\end”',
+	'math_UnmatchedBegin' => 'Napotkano „\\begin” bez odpowiadającego „\\end”',
+	'math_UnmatchedCloseBrace' => 'Napotkano na nawias zamykający „}” bez bez odpowiadającego mu nawiasu otwierającego „{”',
+	'math_UnmatchedEnd' => 'Napotkano „\\end” bez odpowiadającego „\\begin”',
+	'math_UnmatchedLeft' => 'Napotkano „\\left” bez pasującego „\\right”',
+	'math_UnmatchedOpenBrace' => 'Napotkano nawias otwierający „{” bez odpowiadającego mu nawiasu zamykającego „}”',
+	'math_UnmatchedOpenBracket' => 'Napotkano nawias otwierający „[” bez odpowiadającego mu nawiasu zamykającego „]”',
+	'math_UnmatchedRight' => 'Napotkano „\\right” bez odpowiadającego mu „\\left”',
+	'math_UnrecognisedCommand' => 'Nierozpoznane polecenie „$1”',
+	'math_WrongFontEncoding' => 'Symbol „$1” może być niewidoczny przy kodowaniu czcionką „$2”',
+	'math_WrongFontEncodingWithHint' => 'Znak „$1” może nie występować w czcionce „$2”.
+Spróbuj użyć polecenia „$3{...}”.',
 );
 
 /** Portuguese (Português)
@@ -2006,6 +2214,67 @@ $messages['pt'] = array(
 	'math_UnrecognisedCommand' => 'Comando "$1" não reconhecido',
 	'math_WrongFontEncoding' => 'O símbolo "$1" não pode aparecer na codificação de tipo de letra "$2"',
 	'math_WrongFontEncodingWithHint' => 'O símbolo "$1" não pode aparecer na codificação de tipo de letra "$2" (experimente usar o comando "$3{...}")',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'math_noblahtex' => 'Não é possível executar blahtex, que deveria estar em $1',
+	'math-desc' => 'Resultado MathML para marcas &lt;math&gt;',
+	'math_AmbiguousInfix' => 'Posicionamento ambíguo de "$1" (experimente usar chaves adicionais "{ ... }" para desfazer a ambiguidade)',
+	'math_CannotChangeDirectory' => 'Não foi possível mudar diretório de trabalho',
+	'math_CannotCreateTexFile' => 'Não foi possível criar arquivo tex',
+	'math_CannotRunDvipng' => 'Não foi possível executar dvipng',
+	'math_CannotRunLatex' => 'Não é possível executar latex',
+	'math_CannotWritePngDirectory' => 'Não foi possível escrever no diretório de saída de PNGs',
+	'math_CannotWriteTexFile' => 'Não foi possível escrever para arquivo tex',
+	'math_CasesRowTooBig' => 'Só pode haver duas entradas em cada linha de um bloco "cases"',
+	'math_DoubleSubscript' => 'Foram encontrados dois subscritos ligados à mesma base.
+Apenas um é permitido',
+	'math_DoubleSuperscript' => 'Foram encontrados dois superscritos ligados à mesma base (apenas um é permitido)',
+	'math_IllegalCharacter' => 'Caractere inválido nos dados introduzidos',
+	'math_IllegalCommandInMathMode' => 'O comando "$1" é inválido em modo matemático',
+	'math_IllegalCommandInMathModeWithHint' => 'O comando "$1" é inválido em modo matemático (talvez pretendesse usar "$2"?)',
+	'math_IllegalCommandInTextMode' => 'O comando "$1" é inválido em modo de texto',
+	'math_IllegalCommandInTextModeWithHint' => 'O comando "$1" é inválido em modo de texto (talvez pretendesse usar "$2"?)',
+	'math_IllegalDelimiter' => 'Delimitador inválido após "$1"',
+	'math_IllegalFinalBackslash' => 'Barra inversa "\\" inválida no fim dos dados introduzidos',
+	'math_IllegalNestedFontEncodings' => 'Comandos de codificação de tipo de letra não podem ser encapsulados uns nos outros',
+	'math_IllegalRedefinition' => 'O comando "$1" já foi definido; não é possível redefini-lo',
+	'math_InvalidColour' => 'A cor "$1" é inválida',
+	'math_InvalidUtf8Input' => 'O texto introduzido não é UTF-8 válido',
+	'math_LatexFontNotSpecified' => 'Nenhum tipo de letra LaTeX foi especificado para "$1"',
+	'math_LatexPackageUnavailable' => 'Impossível criar PNG porque o pacote LaTeX "$1" não está disponível',
+	'math_MismatchedBeginAndEnd' => 'Os comandos "$1" e "$2" não correspondem',
+	'math_MisplacedLimits' => 'O comando "$1" apenas pode aparecer depois de um operador matemático (considere a utilização de "\\mathop")',
+	'math_MissingCommandAfterNewcommand' => 'Nome de novo comando em falta ou inválido após "\\newcommand" (tem de haver exatamente um comando definido; este deverá começar com barra invertida "\\" e conter apenas caracteres alfabéticos)',
+	'math_MissingDelimiter' => 'Falta delimitador depois de "$1"',
+	'math_MissingOpenBraceAfter' => 'Falta chave de abertura "{" depois de "$1"',
+	'math_MissingOpenBraceAtEnd' => 'Falta chave de abertura "{" no fim do texto introduzido',
+	'math_MissingOpenBraceBefore' => 'Falta chave de abertura "{" antes de "$1"',
+	'math_MissingOrIllegalParameterCount' => 'Parâmetros em falta ou em número inválido na definição de "$1" (deverá ser um único dígito entre 1 e 9 inclusive)',
+	'math_MissingOrIllegalParameterIndex' => 'Índice de parâmetro em falta ou inválido na definição de "$1"',
+	'math_NonAsciiInMathMode' => 'Caracteres não ASCII só podem ser usados em modo de texto (experimente inscrever os caracteres problemáticos dentro de "\\text{...}")',
+	'math_NotEnoughArguments' => 'Não foram fornecidos argumentos suficientes para "$1"',
+	'math_PngIncompatibleCharacter' => 'Não foi possível gerar corretamente o PNG contendo o caractere $1',
+	'math_ReservedCommand' => 'O comando "$1" está reservado para uso interno pelo blahtex',
+	'math_SubstackRowTooBig' => 'Só pode haver uma entrada em cada linha de um bloco "substack"',
+	'math_TooManyMathmlNodes' => 'Há nós demais na árvore MathML',
+	'math_TooManyTokens' => 'O texto introduzido é longo demais',
+	'math_UnavailableSymbolFontCombination' => 'O símbolo "$1" não está disponível na fonte "$2"',
+	'math_UnexpectedNextCell' => 'O comando "&" só pode aparecer dentro de um bloco "\\begin ... \\end"',
+	'math_UnexpectedNextRow' => 'O comando "\\\\" apenas pode aparecer dentro de um bloco "\\begin ... \\end"',
+	'math_UnmatchedBegin' => 'Foi encontrado "\\begin" sem "\\end" correspondente',
+	'math_UnmatchedCloseBrace' => 'Foi encontrada chave de fechamento "{" sem chave de abertura "}" correspondente',
+	'math_UnmatchedEnd' => 'Foi encontrado "\\end" sem "\\begin" correspondente',
+	'math_UnmatchedLeft' => 'Foi encontrado "\\left" sem "\\right" correspondente',
+	'math_UnmatchedOpenBrace' => 'Foi encontrada chave de abertura "{" sem chaveta de fechamento "}" correspondente',
+	'math_UnmatchedOpenBracket' => 'Foi encontrado colchete de abertura "[" sem colchete de fechamento "]" correspondente',
+	'math_UnmatchedRight' => 'Foi encontrado "\\right" sem "\\left" correspondente',
+	'math_UnrecognisedCommand' => 'Comando "$1" não reconhecido',
+	'math_WrongFontEncoding' => 'O símbolo "$1" não pode aparecer na codificação de fonte "$2"',
+	'math_WrongFontEncodingWithHint' => 'O símbolo "$1" não pode aparecer na codificação de fonte "$2" (experimente usar o comando "$3{...}")',
 );
 
 /** Romanian (Română)
@@ -2486,6 +2755,77 @@ $messages['th'] = array(
 	'math_TooManyTokens' => 'สิ่งที่ใส่ลงไปยาวเกินกว่าที่ระบบจะรับได้',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'math_noblahtex' => 'Hindi maisakatuparan ang blahtex, na dapat na nasa $1',
+	'math-desc' => 'Kinalabasang MathML para sa mga tatak na &lt;math&gt;',
+	'math_AmbiguousInfix' => 'Alanganin ang pagkakalagay ng "$1".
+Subuking gumamit ng dagdag na mga brakete "{ ... }" upang maging malinaw.',
+	'math_CannotChangeDirectory' => 'Hindi mabago ang direktoryong panggawain',
+	'math_CannotCreateTexFile' => 'Hindi malikha ang talaksang tex',
+	'math_CannotRunDvipng' => 'Hindi mapaandar ang dvipng',
+	'math_CannotRunLatex' => 'Hindi mapaandar ang latex',
+	'math_CannotWritePngDirectory' => 'Hindi maisulat sa kinalabasang direktoryong PNG',
+	'math_CannotWriteTexFile' => 'Hindi maisulat sa talaksang tex',
+	'math_CasesRowTooBig' => 'Maaaring magkaroon lamang ng dalawang mga ipinasok sa loob ng bawat pahalang na hanay ng isang bloke ng "mga kaso"',
+	'math_DoubleSubscript' => 'Nakatagpo ng dalawang pang-ibabang mga panitik na nakakabit sa magkaparehong pamulaan.
+Isa lamang ang pinapahintulutan.',
+	'math_DoubleSuperscript' => 'Nakatagpo ng dalawang pang-itaas na mga panitik na nakakabit sa magkaparehong pamulaan.
+Isa lamang ang pinapahintulutan.',
+	'math_IllegalCharacter' => 'May labag na panitik sa ipinasok',
+	'math_IllegalCommandInMathMode' => 'Ang utos na "$1" ay labag sa modalidad na pangmatematika',
+	'math_IllegalCommandInMathModeWithHint' => 'Ang utos na "$1" ay labag sa modalidad na pangmatematika
+Marahil ang "$2" ang talagang binabalak mong gamitin?',
+	'math_IllegalCommandInTextMode' => 'Ang utos na "$1" ay labag sa modalidad na pangteksto',
+	'math_IllegalCommandInTextModeWithHint' => 'Ang utos na "$1" ay labag sa modalidad na pangteksto
+Marahil ang "$2" ang talagang binabalak mong gamitin?',
+	'math_IllegalDelimiter' => 'May labag na panghangga na sumusunod sa "$1"',
+	'math_IllegalFinalBackslash' => 'May labag na bantas na pabalik-pahilis "\\" sa hulihan ng ipinasok',
+	'math_IllegalNestedFontEncodings' => 'Ang mga kautusan sa pagsasakodigo ng uri ng titik ay maaaring hindi nakalangkay',
+	'math_IllegalRedefinition' => 'Nabigyang kahulugan na ang kautusang "$1"; hindi mo na ito maaaring pakahuluganan pang muli',
+	'math_InvalidColour' => 'Hindi tanggap ang kulay na "$1"',
+	'math_InvalidUtf8Input' => 'Ang bagting na ipinasok ay hindi isang tanggap na UTF-8',
+	'math_LatexFontNotSpecified' => 'Walang uri ng titik ng LaTeX na tinukoy para sa "$1"',
+	'math_LatexPackageUnavailable' => 'Hindi nagawang ihain ang PNG dahil hindi makuha ang paketeng "$1" ng LaTeX',
+	'math_MismatchedBeginAndEnd' => 'Hindi nagtutugma ang mga kautusang "$1" at "$2"',
+	'math_MisplacedLimits' => 'Ang utos na "$1" ay maaaring lumitaw lamang pagkaraan ng tagapagpaandar (\'\'operator\'\') ng matematika.
+Isaalang-alang ang paggamit ng "\\mathop".',
+	'math_MissingCommandAfterNewcommand' => 'Nawawala o labag na pangalan ng bagong kautusan pagkaraan ng "\\newcommand".
+Dapat na may tamang-tamang nag-iisang utos lamang na binibigyan ng kahulugan;
+dapat itong magsimula na mayroong isang bantas na pabalik-pahilis "\\" at naglalaman lamang ng alpabetikong mga panitik.',
+	'math_MissingDelimiter' => 'Kulang ng panghangga pagkaraan ng "$1"',
+	'math_MissingOpenBraceAfter' => 'Kulang ng pambukas na brakete "{" pagkaraan ng "$1"',
+	'math_MissingOpenBraceAtEnd' => 'Kulang ng pambukas na brakete "{" sa hulihan ng ipinasok',
+	'math_MissingOpenBraceBefore' => 'Kulang ng pambukas na brakete "{" bago sumapit ang "$1"',
+	'math_MissingOrIllegalParameterCount' => "Nawawala o labag na bilang ng parametro sa kahulugan ng \"\$1\".
+Dapat na isahang tambilang (''digit'') sa pagitan ng 1 at 9 na kasama ang lahat at mga nabanggit.",
+	'math_MissingOrIllegalParameterIndex' => 'Nawawala o labag na talatuntunan ng parametro sa kahulugan ng "$1"',
+	'math_NonAsciiInMathMode' => 'Ang mga panitik na hindi ASCII ay maaaring gamitin lamang sa modalidad na pangteksto
+Subuking ilakip ang suliraning mga panitik sa loob ng "\\text{...}".',
+	'math_NotEnoughArguments' => 'Hindi sapat ang ibinigay na mga argumento o pangangatwiran para sa "$1"',
+	'math_PngIncompatibleCharacter' => 'Hindi naging tama ang pagkakagawa ng PNG na naglalaman ng panitik na $1',
+	'math_ReservedCommand' => 'Ang utos na "$1" ay nakalaan lamang para sa panloob na paggamit ng blahtex',
+	'math_SubstackRowTooBig' => "Maaaring magkaroon lamang ng isang ipapasok sa loob ng bawat pahalang na hanay ng isang tipak ng \"kabahaging salansan\" (''substack'')",
+	'math_TooManyMathmlNodes' => "Napakarami ng mga bugkol (''node'') sa loob ng puno ng MathML",
+	'math_TooManyTokens' => 'Napakahaba ng ipinasok',
+	'math_UnavailableSymbolFontCombination' => 'Ang sagisag na "$1" ay hindi makukuha mula sa uri ng titik na "$2"',
+	'math_UnexpectedNextCell' => 'Ang kautusang "&" ay maaaring lumitaw lamang sa loob ng isang tipak ng "\\begin ... \\end"',
+	'math_UnexpectedNextRow' => 'Ang kautusang "\\\\" ay maaaring lumitaw lamang sa loob ng isang tipak ng "\\begin ... \\end"',
+	'math_UnmatchedBegin' => 'Nakatagpo ng "\\begin" na wala ang katugmang "\\end"',
+	'math_UnmatchedCloseBrace' => 'Nakatagpo ng pansarang brakete "}" na wala ang katugmang pambukas na brakete "{"',
+	'math_UnmatchedEnd' => 'Nakatagpo ng "\\end" na wala ang katugmang "\\begin"',
+	'math_UnmatchedLeft' => 'Nakatagpo ng "\\left" na wala ang katugmang "\\right"',
+	'math_UnmatchedOpenBrace' => 'Nakatagpo ng pambukas na brakete "{" na wala ang katugmang pansarang brakete "}"',
+	'math_UnmatchedOpenBracket' => 'Nakatagpo ng pambukas na kasingay "[" na wala ang katugmang pansarang kasingay "]"',
+	'math_UnmatchedRight' => 'Nakatagpo ng "\\right" na wala ang katugmang pansarang "\\left"',
+	'math_UnrecognisedCommand' => 'Hindi nakikilalang utos ang "$1"',
+	'math_WrongFontEncoding' => 'Ang sagisag na "$1" ay hindi maaaring lumitaw sa pagsasakodigong "$2" ng uri ng titik',
+	'math_WrongFontEncodingWithHint' => 'Ang sagisag na "$1" ay hindi maaaring lumitaw sa pagsasakodigong "$2" ng uri ng titik.
+Subuking gamitin ang "$3{...}" na kautusan.',
+);
+
 /** Ukrainian (Українська)
  * @author Ahonc
  */
@@ -2622,6 +2962,8 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'math_CannotChangeDirectory' => 'Vobaragiviär no kanon pavotükön',
+	'math_CannotCreateTexFile' => 'Ragiv fomätü tex no kanon pajafön',
+	'math_InvalidColour' => 'Köl: „$1“ no lonöfon',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

@@ -23,37 +23,45 @@ Would you like to edit the existing page?',
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'createpage-desc' => 'Short description of the extension, shown in [[Special:Version]].{{doc-important|Do not translate or change links.}}',
+	'createpage_submitbutton' => '{{Identical|Submit}}',
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  * @author Ouda
  */
 $messages['ar'] = array(
 	'createpage' => 'أنشئ صفحة',
-	'createpage-desc' => 'أضف [[خاص:أنشئ صفحة|صفحة خاصة]] لإنشاء صفحات جديدة',
+	'createpage-desc' => 'يضيف [[Special:CreatePage|صفحة خاصة]] لإنشاء صفحات جديدة',
 	'createpage_submitbutton' => 'إرسال',
-	'createpage_instructions' => 'أدخل عنوان الصفحة التي تريد أنشائها',
+	'createpage_instructions' => 'أدخل عنوان الصفحة التي تريد إنشاءها',
 	'createpage_entertitle' => 'من فضلك أدخل عنوان لصفحتك',
+	'createpage_titleexists' => 'صفحة بالعنوان [[$1]] موجودة بالفعل.
+هل تريد تعديل الصفحة الموجودة؟',
 	'createpage_tryagain' => 'لا. أريد إنشاء صفحة جديدة بعنوان مميز.',
 	'createpage_editexisting' => 'نعم. أريد المساهمة للصفحة الموجودة.',
+	'createpage-badtitle' => '"$1" لا يمكن استخدامها كعنوان صفحة',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
  * @author Ouda
  * @author Ramsis II
  */
 $messages['arz'] = array(
 	'createpage' => 'أنشئ صفحة',
+	'createpage-desc' => 'يضيف [[Special:CreatePage|صفحة خاصة]] لإنشاء صفحات جديدة',
 	'createpage_submitbutton' => 'تنفيذ',
-	'createpage_instructions' => 'أدخل عنوان الصفحة التي تريد أنشائها',
+	'createpage_instructions' => 'أدخل عنوان الصفحة التى تريد إنشاءها',
 	'createpage_entertitle' => 'من فضلك أدخل عنوان لصفحتك',
-	'createpage_titleexists' => 'في صفحه موجوده بالفعل بالعنوان[[$1]] .
+	'createpage_titleexists' => 'فى صفحه موجوده بالفعل بالعنوان[[$1]] .
 عايز تعدل الصفحه الموجوده؟',
 	'createpage_tryagain' => 'لا. أريد إنشاء صفحة جديدة بعنوان مميز.',
 	'createpage_editexisting' => 'نعم. أريد المساهمة للصفحة الموجودة',
@@ -62,11 +70,19 @@ $messages['arz'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
 	'createpage' => 'Стварыць старонку',
+	'createpage-desc' => 'Дадае [[Special:CreatePage|спэцыяльную старонку]] для стварэньня новых старонак',
+	'createpage_submitbutton' => 'Адправіць',
 	'createpage_instructions' => 'Увядзіце назву старонкі, якую Вы жадаеце стварыць:',
 	'createpage_entertitle' => 'Калі ласка, увядзіце назву Вашай старонкі.',
+	'createpage_titleexists' => 'Старонка з назвай [[$1]] ужо існуе.
+Вы жадаеце рэдагаваць існуючую старонку?',
+	'createpage_tryagain' => 'Не. Я жадаю стварыць новую старонку зь іншай назвай.',
+	'createpage_editexisting' => 'Так. Я жадаю рэдагаваць існуючую старонку.',
+	'createpage-badtitle' => 'Немагчыма выкарыстоўваць «$1» у якасьці назвы старонкі',
 );
 
 /** Bulgarian (Български)
@@ -97,6 +113,7 @@ $messages['bs'] = array(
 Da li želite uređivati postojeću stranicu?',
 	'createpage_tryagain' => 'Ne. Želim napraviti novu stranicu sa različitim naslovom.',
 	'createpage_editexisting' => 'Da. Želim doprinositi na postojećoj stranici.',
+	'createpage-badtitle' => '"$1" se ne može koristiti kao naslov stranice',
 );
 
 /** Czech (Česky)
@@ -163,15 +180,19 @@ $messages['eo'] = array(
 	'createpage-badtitle' => '"$1" ne povas esti uzata kiel paĝa titolo',
 );
 
-/** Spanish (Español) */
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
 $messages['es'] = array(
 	'createpage' => 'Crear una página',
+	'createpage-desc' => 'Agregar una [[Special:CreatePage|página especial]] para crear nuevas páginas',
 	'createpage_submitbutton' => 'Enviar',
 	'createpage_instructions' => 'Ingresa el título de la página que deseas crear:',
 	'createpage_entertitle' => 'Ingresa un título para tu página.',
 	'createpage_titleexists' => 'Ya existe una página con el título [[$1]]. ¿Quieres editar la página que ya existe?',
 	'createpage_tryagain' => 'No – quiero crear una página nueva con un título diferente.',
 	'createpage_editexisting' => 'Sí – quiero contribuir a la página que ya existe.',
+	'createpage-badtitle' => '"$1" no puede ser usada como un título de página',
 );
 
 /** Basque (Euskara)
@@ -180,27 +201,33 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'createpage' => 'Orri bat sortu',
+	'createpage-desc' => '[[Special:CreatePage|Orri berezi bat]] gehitzen du orri berriak sortzeko',
 	'createpage_submitbutton' => 'Bidali',
+	'createpage_instructions' => 'Idatzi sortu nahi duzun orriaren izenburua:',
 	'createpage_entertitle' => 'Zure orrirako izenburu bat sartu mesedez.',
+	'createpage_titleexists' => '[[$1]] izenburua duen orria dagoeneko badago.
+Sortutako orria aldatu nahiko al zenuke?',
 	'createpage_tryagain' => 'Ez. Orrialde berri bat sortu nahi dut izenburu desberdinarekin.',
+	'createpage_editexisting' => 'Bai. Sortutako orrian lagundu nahi dut.',
 	'createpage-badtitle' => '"$1" ezin da orrialdearen izenburua bezala erabili.',
 );
 
 /** French (Français)
  * @author Grondin
  * @author IAlex
+ * @author PieRRoMaN
  * @author Sherbrooke
  */
 $messages['fr'] = array(
 	'createpage' => 'Créer une page',
-	'createpage-desc' => 'Ajouter une [[Special:CreatePage|page spéciale]] pour créer des nouvelles pages',
+	'createpage-desc' => 'Ajoute une [[Special:CreatePage|page spéciale]] pour créer des nouvelles pages',
 	'createpage_submitbutton' => 'Soumettre',
-	'createpage_instructions' => 'Entrer le titre de la page que vous désirez créer :',
+	'createpage_instructions' => 'Entrez le titre de la page que vous souhaitez créer :',
 	'createpage_entertitle' => 'Veuillez entrer un titre pour votre page.',
-	'createpage_titleexists' => 'Une page ayant pour titre [[$1]] existe déjà.
-Désirez-vous modifier cette dernière ?',
+	'createpage_titleexists' => 'Une page existe déjà sous le nom [[$1]].
+Désirez-vous modifier la page existante ?',
 	'createpage_tryagain' => 'Non, je désire créer une nouvelle page avec un titre distinct.',
-	'createpage_editexisting' => 'Oui, je désire contribuer dans cette page existante.',
+	'createpage_editexisting' => 'Oui, je désire contribuer à la page existante.',
 	'createpage-badtitle' => '« $1 » ne peut pas être utilisé comme nom de page',
 );
 
@@ -218,6 +245,29 @@ Quere editar esta páxina?',
 	'createpage_tryagain' => 'Non. Quero crear unha páxina nova cun título distinto.',
 	'createpage_editexisting' => 'Si. Quero contribuír á páxina existente.',
 	'createpage-badtitle' => '"$1" non pode ser usado como o título dunha páxina',
+);
+
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Crazymadlover
+ */
+$messages['grc'] = array(
+	'createpage_submitbutton' => 'Ὑποβάλλειν',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'createpage' => 'Neji Syte aalege',
+	'createpage-desc' => 'Fiegt e [[Special:CreatePage|Spezialsyte]] fir s Aalege vu neje Syte dezue',
+	'createpage_submitbutton' => 'Schicke',
+	'createpage_instructions' => 'Gib dr Name vu dr Syte yy, wu Du witt nej aalege:',
+	'createpage_entertitle' => 'Titel fir Dyyni Syte.',
+	'createpage_titleexists' => 'E Syte mit em Name [[$1]] git s scho.
+Mechtsch die Syte, wu s scho het, bearbeite?',
+	'createpage_tryagain' => 'Nei - Ich will e neji Syte aalege mit eme andere Titel.',
+	'createpage_editexisting' => 'Jo - Ich will die Syte, wu s scho het, bearbeite.',
+	'createpage-badtitle' => '„$1“ cha nit as Sytetitel bruucht wäre',
 );
 
 /** Hebrew (עברית)
@@ -270,10 +320,19 @@ Vole tu modificar le pagina existente?',
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
+	'createpage' => 'ページ作成',
+	'createpage-desc' => '新しいページを作成するための[[Special:CreatePage|特別ページ]]を追加する',
 	'createpage_submitbutton' => '送信',
+	'createpage_instructions' => '作成したいページの名前を入力:',
+	'createpage_entertitle' => 'ページの名前を入力してください。',
+	'createpage_titleexists' => '[[$1]] という名前のページは既に存在します。既存のページを編集しますか？',
+	'createpage_tryagain' => 'いいえ。別の名前でページを新規作成します。',
+	'createpage_editexisting' => 'はい。既存のページへ投稿します。',
+	'createpage-badtitle' => '「$1」はページ名に使えません。',
 );
 
 /** Javanese (Basa Jawa)
@@ -344,7 +403,7 @@ Wëll Dir déi Säit veränneren?',
  * @author Brest
  */
 $messages['mk'] = array(
-	'createpage' => 'Креирај страница',
+	'createpage' => 'Создади страница',
 	'createpage-desc' => 'Додава [[Special:CreatePage|специјална страница]] за креирање на нови страници',
 	'createpage_submitbutton' => 'Потврди',
 	'createpage_instructions' => 'Внесете наслов на страницата која сакате да ја креирате:',
@@ -419,6 +478,13 @@ La volètz modificar ?",
 	'createpage-badtitle' => '« $1 » pòt pas èsser utilizat coma nom de pagina',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'createpage_submitbutton' => 'Афтæ уæд',
+);
+
 /** Polish (Polski)
  * @author Leinad
  */
@@ -442,15 +508,35 @@ $messages['pnb'] = array(
 	'createpage_submitbutton' => 'پیجو',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'createpage' => 'Criar uma página',
+	'createpage-desc' => 'Adiciona uma [[Special:CreatePage|página especial]] para criar novas páginas',
+	'createpage_submitbutton' => 'Submeter',
+	'createpage_instructions' => 'Introduza o título da página que pretende criar:',
+	'createpage_entertitle' => 'Por favor, introduza um título para a sua página.',
+	'createpage_titleexists' => 'Um página com o título [[$1]] já existe.
+Deseja editar a página existente?',
+	'createpage_tryagain' => 'Não. Quero criar uma nova página com um título diferente.',
+	'createpage_editexisting' => 'Sim. Quero contribuir para a página existente.',
+	'createpage-badtitle' => '"$1" não pode ser usado como título de página',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
 $messages['pt-br'] = array(
 	'createpage' => 'Criar uma página',
+	'createpage-desc' => 'Adiciona uma [[Special:CreatePage|página especial]] para criar novas páginas',
 	'createpage_submitbutton' => 'Criar',
 	'createpage_instructions' => 'Digite o título da página que você gostaria de criar:',
 	'createpage_entertitle' => 'Digite um título para sua página.',
 	'createpage_titleexists' => 'Uma página com o título, [[$1]], já existe. Você gostaria de editar a página existente?',
 	'createpage_tryagain' => 'Não - Eu quero criar uma nova página com outro título.',
 	'createpage_editexisting' => 'Sim - Eu quero editar a página existente.',
+	'createpage-badtitle' => '"$1" não pode ser usado como título de página',
 );
 
 /** Romanian (Română)
@@ -499,6 +585,22 @@ $messages['sk'] = array(
 	'createpage_tryagain' => 'Nie, chcem vytvoriť novú stránku s iným názovm.',
 	'createpage_editexisting' => 'Áno, chcem prispieť k existujúcej stránke.',
 	'createpage-badtitle' => '„$1“ nemožno použiť ako názov stránky',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'createpage' => 'Näie Sieden moakje',
+	'createpage-desc' => 'Föiget ne [[Special:CreatePage|Spezioalsiede]] foar dät Moakjen fon näie Sieden bietou',
+	'createpage_submitbutton' => 'Seende',
+	'createpage_instructions' => 'Reek dän Noome fon dän tou moakjene Siede ien:',
+	'createpage_entertitle' => 'Tittel foar dien Siede',
+	'createpage_titleexists' => 'Ne Siede mäd dän Noome [[$1]] bestoant al.
+Moatest Du ju bestoundene Siede beoarbaidje?',
+	'createpage_tryagain' => 'Noa - Iek moate ne näie Siede mäd n uur Tittel anlääse.',
+	'createpage_editexisting' => 'Jee - Iek moate ju bestoundene Siede beoarbaidje.',
+	'createpage-badtitle' => '"$1" kon nit as Siedentittel bruukt wäide',
 );
 
 /** Swedish (Svenska)
@@ -579,6 +681,22 @@ $messages['uk'] = array(
  */
 $messages['vi'] = array(
 	'createpage' => 'Tạo trang',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'createpage' => 'Jafön padi',
+	'createpage-desc' => 'Läükön [[Special:CreatePage|padi patik]] ad jafön padis nulik',
+	'createpage_submitbutton' => 'Sedön',
+	'createpage_instructions' => 'Penolös tiädi pada, keli vilol jafön:',
+	'createpage_entertitle' => 'Penolös tiädi pro pad olik.',
+	'createpage_titleexists' => 'Pad labü tiäd: [[$1]] ya dabinon.
+Vilol-li redakön padi dabinöl at?',
+	'createpage_tryagain' => 'No. Vilol jafön padi nulik labü tiädi votik.',
+	'createpage_editexisting' => 'Si. Vilol keblünön pade dabinöl.',
+	'createpage-badtitle' => '„$1“ no dalon pagebön as padatiäd',
 );
 
 /** Wolof (Wolof)

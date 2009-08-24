@@ -133,6 +133,7 @@ $messages['arz'] = array(
  */
 $messages['be-tarask'] = array(
 	'dt_viewxml_categories' => 'Катэгорыі',
+	'dt_viewxml_namespaces' => 'Прасторы назваў',
 	'dt_xml_namespace' => 'Прастора назваў',
 	'dt_xml_page' => 'Старонка',
 	'dt_xml_title' => 'Назва',
@@ -159,7 +160,9 @@ $messages['bg'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'dt-desc' => 'Omogućuje uvoz i izvoz struktuiranih podataka koje sadržane u pozivima šablona',
 	'viewxml' => 'Pregledaj XML',
+	'dt_viewxml_docu' => 'Molimo Vas odaberite unutar slijedećih kategorija i imenskih prostora za pregled u XML formatu.',
 	'dt_viewxml_categories' => 'Kategorije',
 	'dt_viewxml_namespaces' => 'Imenski prostori',
 	'dt_viewxml_simplifiedformat' => 'Pojednostavljeni format',
@@ -168,6 +171,8 @@ $messages['bs'] = array(
 	'dt_xml_field' => 'Polje',
 	'dt_xml_name' => 'Naziv',
 	'dt_xml_title' => 'Naslov',
+	'dt_xml_id' => 'ID',
+	'dt_xml_freetext' => 'Slobodni tekst',
 );
 
 /** Catalan (Català)
@@ -199,13 +204,14 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Als-Holder
  * @author Krabina
  * @author Revolus
  */
 $messages['de'] = array(
 	'dt-desc' => 'Ermöglicht den Import und Export von strukturierten Daten, die in Aufrufen von Vorlagen verwendet werden.',
 	'viewxml' => 'XML ansehen',
-	'dt_viewxml_docu' => 'Bitte wähle aus, welche Kategorien und Namensräme im XML-Format angezeigt werden sollen.',
+	'dt_viewxml_docu' => 'Bitte wähle aus, welche Kategorien und Namensräume im XML-Format angezeigt werden sollen.',
 	'dt_viewxml_categories' => 'Kategorien',
 	'dt_viewxml_namespaces' => 'Namensräume',
 	'dt_viewxml_simplifiedformat' => 'Vereinfachtes Format',
@@ -268,12 +274,15 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'viewxml' => 'Ver XML',
 	'dt_viewxml_categories' => 'Categorías',
 	'dt_viewxml_namespaces' => 'Espacios de nombres',
+	'dt_viewxml_simplifiedformat' => 'Formato simplificado',
 	'dt_xml_namespace' => 'Espacio de nombres',
 	'dt_xml_page' => 'Página',
 	'dt_xml_name' => 'Nombre',
@@ -353,7 +362,7 @@ $messages['gl'] = array(
 	'dt_xml_freetext' => 'Texto Libre',
 );
 
-/** Gothic (𐌲𐌿𐍄𐌹𐍃𐌺)
+/** Gothic
  * @author Jocke Pirat
  */
 $messages['got'] = array(
@@ -376,10 +385,23 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Holder
  * @author J. 'mach' wust
  */
 $messages['gsw'] = array(
+	'dt-desc' => 'Macht dr Import un dr Export vu strukturierte Date megli, wu in Ufrief vu Vorlage bruucht wäre.',
+	'viewxml' => 'XML aaluege',
+	'dt_viewxml_docu' => 'Bitte wehl uus, weli Kategorien un Namensryym im XML-Format solle aazeigt wäre.',
+	'dt_viewxml_categories' => 'Kategorie',
+	'dt_viewxml_namespaces' => 'Namensryym',
+	'dt_viewxml_simplifiedformat' => 'Vereifacht Format',
+	'dt_xml_namespace' => 'Namensruum',
+	'dt_xml_page' => 'Syte',
+	'dt_xml_field' => 'Fäld',
+	'dt_xml_name' => 'Name',
 	'dt_xml_title' => 'Titel',
+	'dt_xml_id' => 'ID',
+	'dt_xml_freetext' => 'Freje Täxt',
 );
 
 /** Manx (Gaelg)
@@ -516,6 +538,13 @@ $messages['id'] = array(
 	'dt_xml_title' => 'Judul',
 );
 
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'dt_xml_title' => 'Titulo',
+);
+
 /** Icelandic (Íslenska)
  * @author S.Örvarr.S
  */
@@ -525,20 +554,31 @@ $messages['is'] = array(
 );
 
 /** Italian (Italiano)
+ * @author BrokenArrow
  * @author Darth Kule
  */
 $messages['it'] = array(
+	'dt-desc' => "Permette l'importazione e l'esportazione di dati strutturati contenuti in chiamate a template",
+	'viewxml' => 'Vedi XML',
+	'dt_viewxml_docu' => 'Selezionare tra le categorie e namespace indicati di seguito quelli da visualizzare in formato XML.',
 	'dt_viewxml_categories' => 'Categorie',
 	'dt_viewxml_namespaces' => 'Namespace',
+	'dt_viewxml_simplifiedformat' => 'Formato semplificato',
+	'dt_xml_namespace' => 'Namespace',
+	'dt_xml_page' => 'Pagina',
+	'dt_xml_field' => 'Campo',
 	'dt_xml_name' => 'Nome',
 	'dt_xml_title' => 'Titolo',
+	'dt_xml_id' => 'ID',
+	'dt_xml_freetext' => 'Testo libero',
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'dt-desc' => 'テンプレート呼び出しに関わるデータ構造の入出力を行う',
+	'dt-desc' => 'テンプレート呼び出しに関わる構造化データのインポートおよびエクスポートを可能にする',
 	'viewxml' => 'XML表示',
 	'dt_viewxml_docu' => 'XML形式で表示するカテゴリや名前空間を以下から選択してください。',
 	'dt_viewxml_categories' => 'カテゴリ',
@@ -614,6 +654,14 @@ $messages['ksh'] = array(
 	'dt_xml_freetext' => 'Freije Täx',
 );
 
+/** Cornish (Kernewek)
+ * @author Kw-Moon
+ */
+$messages['kw'] = array(
+	'dt_viewxml_categories' => 'Klasyansow',
+	'dt_xml_page' => 'Folen',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -651,6 +699,7 @@ $messages['lt'] = array(
  * @author Сай
  */
 $messages['mhr'] = array(
+	'dt_xml_namespace' => 'Лӱм-влакын кумдыкышт',
 	'dt_xml_page' => 'Лаштык',
 );
 
@@ -687,6 +736,13 @@ $messages['mr'] = array(
 	'dt_xml_title' => 'शीर्षक',
 	'dt_xml_id' => 'क्रमांक (आयडी)',
 	'dt_xml_freetext' => 'मुक्त मजकूर',
+);
+
+/** Mirandese (Mirandés)
+ * @author Malafaya
+ */
+$messages['mwl'] = array(
+	'dt_xml_page' => 'Páigina',
 );
 
 /** Erzya (Эрзянь)
@@ -859,6 +915,25 @@ $messages['pt'] = array(
 	'dt_xml_freetext' => 'Texto Livre',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'dt-desc' => 'Permite a importação e exportação de dados estruturados contidos em chamadas de predefinições',
+	'viewxml' => 'Ver XML',
+	'dt_viewxml_docu' => 'Por favor, selecione dentre as categorias e espaços nominais seguintes para ver em formato XML.',
+	'dt_viewxml_categories' => 'Categorias',
+	'dt_viewxml_namespaces' => 'Espaços nominais',
+	'dt_viewxml_simplifiedformat' => 'Formato simplificado',
+	'dt_xml_namespace' => 'Espaço nominal',
+	'dt_xml_page' => 'Página',
+	'dt_xml_field' => 'Campo',
+	'dt_xml_name' => 'Nome',
+	'dt_xml_title' => 'Título',
+	'dt_xml_id' => 'ID',
+	'dt_xml_freetext' => 'Texto Livre',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -882,6 +957,7 @@ $messages['roa-tara'] = array(
 	'viewxml' => "Vide l'XML",
 	'dt_viewxml_categories' => 'Categorije',
 	'dt_viewxml_namespaces' => 'Namespace',
+	'dt_viewxml_simplifiedformat' => 'Formate semblifichete',
 	'dt_xml_namespace' => 'Namespace',
 	'dt_xml_page' => 'Pàgene',
 	'dt_xml_field' => 'Cambe',
@@ -1046,16 +1122,51 @@ $messages['th'] = array(
 	'dt_xml_namespace' => 'เนมสเปซ',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'dt-desc' => 'Nagpapahintulot sa pagaangkat at pagluluwas ng nakaayos nang mga datong nasa loob ng mga pagtawag sa suleras',
+	'viewxml' => 'Tingnan ang XML',
+	'dt_viewxml_docu' => 'Pumili po lamang mula sa sumusunod na mga kaurian at mga espasyo ng pangalan upang makita ang anyong XML.',
+	'dt_viewxml_categories' => 'Mga kaurian',
+	'dt_viewxml_namespaces' => 'Mga espasyo ng pangalan',
+	'dt_viewxml_simplifiedformat' => 'Pinapayak na anyo',
+	'dt_xml_namespace' => 'Espasyo ng pangalan',
+	'dt_xml_page' => 'Pahina',
+	'dt_xml_field' => 'Hanay',
+	'dt_xml_name' => 'Pangalan',
+	'dt_xml_title' => 'Pamagat',
+	'dt_xml_id' => 'ID',
+	'dt_xml_freetext' => 'Malayang Teksto',
+);
+
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Karduelis
  * @author Mach
  */
 $messages['tr'] = array(
+	'dt-desc' => 'Şablon çağrılarında içerilen yapısal verilerin içe ve dışa aktarımına izin verir',
+	'viewxml' => "XML'i gör",
+	'dt_viewxml_docu' => 'Lütfen, XML formatında görüntülemek için aşağıdaki kategori ve ad alanları arasından seçin.',
 	'dt_viewxml_categories' => 'Kategoriler',
-	'dt_viewxml_namespaces' => 'İsim alanları',
+	'dt_viewxml_namespaces' => 'Alan adları',
+	'dt_viewxml_simplifiedformat' => 'Basitleştirilmiş format',
+	'dt_xml_namespace' => 'Alan adı',
 	'dt_xml_page' => 'Sayfa',
+	'dt_xml_field' => 'Alan',
 	'dt_xml_name' => 'İsim',
 	'dt_xml_title' => 'Başlık',
+	'dt_xml_id' => 'ID',
+	'dt_xml_freetext' => 'Özgür Metin',
+);
+
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'dt_xml_page' => 'Bet',
 );
 
 /** Ukrainian (Українська)

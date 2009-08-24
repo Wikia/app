@@ -263,6 +263,8 @@ $messages = array(
 'restorelink'             => '{{PLURAL:$1|گۆڕانکاریی سڕاو|$1 یەک گۆڕانکاریی سڕاو}}',
 'site-rss-feed'           => 'RSS FEED ـی $1',
 'site-atom-feed'          => 'Atom Feed ـی $1',
+'page-rss-feed'           => 'RSS Feed ـی "$1"',
+'page-atom-feed'          => 'Atom Feed ـی "$1"',
 'red-link-title'          => '$1 (پەڕە بوونی نییە)',
 
 # Short words for each namespace, by default used in the namespace tab in monobook
@@ -279,33 +281,38 @@ $messages = array(
 
 # Main script and global functions
 'nosuchaction'      => 'كرداری به‌م شێوه‌یه‌ نییه‌',
-'nosuchactiontext'  => 'ئه‌و كرده‌یه‌ی كه‌ له‌ URL دا هاتووه‌ نه‌ناسراوه‌',
+'nosuchactiontext'  => 'ئەو چالاکییەی لە لایەن بەستەرەوە دیاریکراوە ناتەواوە.
+لەوانەیە بە هەڵە بەستەرەکەت نووسیبێت، یان بەستەرێکی هەڵەی بە دواوە بێت.
+لەوانەیە ئەمە نیشانەی هەڵەیەک بێت لەو نەرمەکاڵایەی کە بەکاردێت لە لایەن {{SITENAME}}.',
 'nosuchspecialpage' => 'په‌ڕه‌ی تایبه‌تی له‌و شێوه‌یه‌ نییه‌',
 'nospecialpagetext' => "<big>''په‌ڕه‌یكی تایبه‌ت ده‌خوازیت كه‌ بوونی نییه‌'''</big>
 
 لیستی په‌ڕه‌ تایبه‌تییه‌كان له‌ [[Special:SpecialPages|لیسته‌ی په‌ڕه‌ تایبه‌ته‌كان]] ده‌توانرێت ببینرێت.",
 
 # General errors
-'error'              => 'هه‌ڵه‌',
-'databaseerror'      => 'هه‌ڵه‌ له‌ بنكه‌دراوه‌دا هه‌یه‌',
-'readonly'           => 'بنکەدراوە داخراوە',
-'missing-article'    => 'دانەگە (دەیتابەیس) نەیتوانی دەقی لاپەڕەیەک بدۆزێتەوە کە دەبوا بیدۆزایەتوە، بەناوی "$1" $2 .
+'error'                => 'هه‌ڵه‌',
+'databaseerror'        => 'هه‌ڵه‌ له‌ بنكه‌دراوه‌دا هه‌یه‌',
+'readonly'             => 'بنکەدراوە داخراوە',
+'missing-article'      => 'دانەگە (دەیتابەیس) نەیتوانی دەقی لاپەڕەیەک بدۆزێتەوە کە دەبوا بیدۆزایەتوە، بەناوی "$1" $2 .
 
 This is usually caused by following an outdated diff or history link to a page that has been deleted.
 
 ئەگەر وا نەبێت، ئەوا ڕەنگە گرفتێکت لەم نەرمامێرە دا ھەبێت، کە تۆ پێت زانیوە..
 تکایە ئەم بە یەکێک لە ئەندامانی [[Special:ListUsers/sysop|administrator]] ڕاپۆرت بدە، و ناونیشانی URLـەکەی پێ بدە.',
-'missingarticle-rev' => '(پیاچوونەوە#: $1)',
-'readonly_lag'       => 'بنكه‌دراوه‌كه‌ به‌شێوه‌ی خۆكار به‌ندكراوه‌، له‌كاتێكدا بنكه‌دراوه‌ی ڕاژه‌كاره‌كه‌ ڕۆڵی له‌خۆگرتن ده‌گێڕێت',
-'internalerror'      => 'هه‌ڵه‌یه‌كی ناوخۆیی ڕویدا',
-'internalerror_info' => 'هه‌ڵه‌ی ناوخۆیی: $1',
-'filecopyerror'      => 'په‌ڕگه‌ی „$1“ ڕوونوس نابێت بۆ „$2“ .',
-'filerenameerror'    => 'ناوی په‌ڕگه‌ی "$1" نه‌گۆڕدرا بۆ "$2".',
-'filedeleteerror'    => 'بسڕدرێته‌وه‌"$1" نه‌توانرا په‌ڕگه‌ی',
-'filenotfound'       => 'په‌ڕگه‌ی "$1" نه‌دۆزرایه‌وه‌',
-'badtitle'           => 'ناونیشانێكی بێ كه‌ڵك',
-'viewsource'         => 'سه‌رچاوه‌ ببینه‌',
-'viewsourcefor'      => 'بۆ $1',
+'missingarticle-rev'   => '(پیاچوونەوە#: $1)',
+'readonly_lag'         => 'بنكه‌دراوه‌كه‌ به‌شێوه‌ی خۆكار به‌ندكراوه‌، له‌كاتێكدا بنكه‌دراوه‌ی ڕاژه‌كاره‌كه‌ ڕۆڵی له‌خۆگرتن ده‌گێڕێت',
+'internalerror'        => 'هه‌ڵه‌یه‌كی ناوخۆیی ڕویدا',
+'internalerror_info'   => 'هه‌ڵه‌ی ناوخۆیی: $1',
+'filecopyerror'        => 'په‌ڕگه‌ی „$1“ ڕوونوس نابێت بۆ „$2“ .',
+'filerenameerror'      => 'ناوی په‌ڕگه‌ی "$1" نه‌گۆڕدرا بۆ "$2".',
+'filedeleteerror'      => 'بسڕدرێته‌وه‌"$1" نه‌توانرا په‌ڕگه‌ی',
+'directorycreateerror' => 'نەتوانرا بوخچەی "$1"دروست بکرێت.',
+'filenotfound'         => 'په‌ڕگه‌ی "$1" نه‌دۆزرایه‌وه‌',
+'cannotdelete'         => 'نەتوانرا پەڕە یان پەڕگەی دیاریکراو بسڕدرێتەوە.
+لەوانەیە پێشتر لە لایەن کەسێکی ترەوە سڕدرابێتەوە.',
+'badtitle'             => 'ناونیشانێكی بێ كه‌ڵك',
+'viewsource'           => 'سه‌رچاوه‌ ببینه‌',
+'viewsourcefor'        => 'بۆ $1',
 
 # Login and logout pages
 'logouttitle'             => 'دەرچوونی بەکارهێنەر',
@@ -342,6 +349,10 @@ This is usually caused by following an outdated diff or history link to a page t
 'yourvariant'             => 'زاراوە:',
 'yournick'                => 'نازناو',
 'badsig'                  => 'ئیمزاكه‌ هه‌ڵه‌یه‌، ته‌ماشای كۆدی HTML بكه‌‌',
+'yourgender'              => 'جنس:',
+'gender-unknown'          => 'ئاشکرا نەکراو',
+'gender-male'             => 'پیاو',
+'gender-female'           => 'ژن',
 'email'                   => 'E-mail',
 'prefs-help-realname'     => 'ناوی ڕاستی دڵخوازە.
 ئەگەر پێت خۆش بێت بیدەی، زۆرتر ڕاتدەکێشێت بۆ کارەکانت.',
@@ -405,36 +416,37 @@ This is usually caused by following an outdated diff or history link to a page t
 'hr_tip'          => 'هێڵی ئاسۆیی (ده‌گمه‌ن به‌كاری بهێنه‌)',
 
 # Edit pages
-'summary'                => 'پوختە:',
-'subject'                => 'بابه‌ت / سه‌روتار:',
-'minoredit'              => 'ئەم گۆڕانکاری‌یە بچووکە',
-'watchthis'              => 'چاودێڕی ئه‌م په‌ڕه‌یه‌ بكه‌',
-'savearticle'            => 'پاشەکەوتکردنی پەرە',
-'preview'                => 'پێشبینین',
-'showpreview'            => 'پێشبینینی پەڕە',
-'showlivepreview'        => 'پێشبینینی ڕاسته‌وخۆ',
-'showdiff'               => 'گۆڕانكارییه‌كان نیشانبده‌',
-'anoneditwarning'        => "'''وشیار بە:''' نەچوویتەتە ژوورەوە.
+'summary'                          => 'پوختە:',
+'subject'                          => 'بابه‌ت / سه‌روتار:',
+'minoredit'                        => 'ئەم گۆڕانکاری‌یە بچووکە',
+'watchthis'                        => 'چاودێڕی ئه‌م په‌ڕه‌یه‌ بكه‌',
+'savearticle'                      => 'پاشەکەوتکردنی پەرە',
+'preview'                          => 'پێشبینین',
+'showpreview'                      => 'پێشبینینی پەڕە',
+'showlivepreview'                  => 'پێشبینینی ڕاسته‌وخۆ',
+'showdiff'                         => 'گۆڕانكارییه‌كان نیشانبده‌',
+'anoneditwarning'                  => "'''وشیار بە:''' نەچوویتەتە ژوورەوە.
 ئەدرەسی ئەکەت لە مێژووی ئەم پەڕە دا تۆمار دەکرێ.",
-'missingsummary'         => "'''وە بیر خستنەوە:''' پوختەیەکت نەنووسیوە بۆ چۆنیەتی گۆڕانکارییەکەت.
+'missingsummary'                   => "'''وە بیر خستنەوە:''' پوختەیەکت نەنووسیوە بۆ چۆنیەتی گۆڕانکارییەکەت.
 ئەگەر جارێکی تر پاشکەوت کردن لێبدەی، بێ پوختە تۆمار دەکرێ.",
-'missingcommenttext'     => 'تکایە لە خوارەوە شرۆڤەیەک بنووسە.',
-'summary-preview'        => 'پێشبینینی کورتە:',
-'newarticle'             => '(نوێ)',
-'newarticletext'         => "بە دوای بەستەری پەڕەیەک کەوتووی کە ھێشتا دروست نەکراوە. <br /> بۆ دروست کردنی پەڕەکە، لە چوارچێوەکەی خوارەوە دەست کە بە تایپ کردن. (بۆ زانیاری زورتر[[یارمەتی|{{MediaWiki:Helppage}}]] ببینە). <br />  ئەگەر بە ھەڵەوە ھاتویتە ئەگرە، لە سەر دوگمەی '''back'''ی وێبگەڕەکەت کلیک کە.",
-'previewnote'            => "'''لە بیرت بێت کە ئەمە تەنها پێشبینینە.
+'missingcommenttext'               => 'تکایە لە خوارەوە شرۆڤەیەک بنووسە.',
+'summary-preview'                  => 'پێشبینینی کورتە:',
+'newarticle'                       => '(نوێ)',
+'newarticletext'                   => "بە دوای بەستەری پەڕەیەک کەوتووی کە ھێشتا دروست نەکراوە. <br /> بۆ دروست کردنی پەڕەکە، لە چوارچێوەکەی خوارەوە دەست کە بە تایپ کردن. (بۆ زانیاری زورتر[[یارمەتی|{{MediaWiki:Helppage}}]] ببینە). <br />  ئەگەر بە ھەڵەوە ھاتویتە ئەگرە، لە سەر دوگمەی '''back'''ی وێبگەڕەکەت کلیک کە.",
+'previewnote'                      => "'''لە بیرت بێت کە ئەمە تەنها پێشبینینە.
 گۆڕانکارییەکانت تا ئێستا پاشەکەوت نەکراون!'''",
-'editing'                => 'دەستکاریکردنی $1',
-'editingsection'         => 'گۆڕاندنی: $1 (بەش)',
-'editingcomment'         => 'گۆڕاندنی $1 (بەشی  نوێ)',
-'copyrightwarning'       => "تکایە ئاگادار بن کە ھەموو بەشدارییەک بۆ  {{SITENAME}} وا فەرز ئەکرێت کە لە ژێر «$2» بڵاو دەبێتەوە (بۆ ئاگاداری زۆرتر $1 سەیر کە). ئەگەر ناتەوێ نوسراوەکەت بێ‌ڕەحمانە دەستکاری بکرێت و  بە دڵخواز دیسان بڵاو ببێتەوە، لەگرە پێشکەشی مەکە. ھەروەھا بەڵین ئەدەی کە خۆت ئەمەت نووسیوە، یان لە سەرچاوەیەکی بە دەسەڵاتی گشتی ''(public domain)'' یان سەرچاوەیەکی ھاوتا لەبەرت‌گرتوەتەو.
+'editing'                          => 'دەستکاریکردنی $1',
+'editingsection'                   => 'گۆڕاندنی: $1 (بەش)',
+'editingcomment'                   => 'گۆڕاندنی $1 (بەشی  نوێ)',
+'copyrightwarning'                 => "تکایە ئاگادار بن کە ھەموو بەشدارییەک بۆ  {{SITENAME}} وا فەرز ئەکرێت کە لە ژێر «$2» بڵاو دەبێتەوە (بۆ ئاگاداری زۆرتر $1 سەیر کە). ئەگەر ناتەوێ نوسراوەکەت بێ‌ڕەحمانە دەستکاری بکرێت و  بە دڵخواز دیسان بڵاو ببێتەوە، لەگرە پێشکەشی مەکە. ھەروەھا بەڵین ئەدەی کە خۆت ئەمەت نووسیوە، یان لە سەرچاوەیەکی بە دەسەڵاتی گشتی ''(public domain)'' یان سەرچاوەیەکی ھاوتا لەبەرت‌گرتوەتەو.
 '''«بەرھەمێک کە مافی لەبەرگرتنەوەی پارێزراوە، بێ ئیجازە  بڵاو مەکەرەوە.»'''",
-'templatesused'          => 'ئەو قاڵبانە کە لەم پەڕەیەدا بە کارھێنراون:',
-'templatesusedpreview'   => 'ئەو قاڵبانە کە لەم پێشبینینەدا بە کارھێنراون:',
-'templatesusedsection'   => 'ئەو قاڵبانە کە لەم بەشەدا بە کارھێنراون:',
-'template-protected'     => '(پارێزراو)',
-'template-semiprotected' => '(نیوەپارێزراو)',
-'deleted-notice'         => 'ئەم پەڕەیە سڕدراوەتەوە.
+'templatesused'                    => 'ئەو قاڵبانە کە لەم پەڕەیەدا بە کارھێنراون:',
+'templatesusedpreview'             => 'ئەو قاڵبانە کە لەم پێشبینینەدا بە کارھێنراون:',
+'templatesusedsection'             => 'ئەو قاڵبانە کە لەم بەشەدا بە کارھێنراون:',
+'template-protected'               => '(پارێزراو)',
+'template-semiprotected'           => '(نیوەپارێزراو)',
+'permissionserrorstext-withaction' => 'دەسەڵاتت نییە بۆ $2 لەبەر ئەم {{PLURAL:$1|هۆکارە|هۆکارانە}}ی خوارەوە:',
+'deleted-notice'                   => 'ئەم پەڕەیە سڕدراوەتەوە.
 لۆگی سڕینەوە بۆ پەڕەکە لە خوارەوە دابینکراوە.',
 
 # History pages
@@ -470,6 +482,7 @@ This is usually caused by following an outdated diff or history link to a page t
 'revertmerge' => 'لەیەک جیاکردنەوە',
 
 # Diffs
+'history-title'           => 'مێژووی پیاچوونەوەکانی "$1"',
 'difference'              => '(جیاوازی نێوان پیاچوونەوەکان)',
 'lineno'                  => 'ھێڵی  $1:',
 'compareselectedversions' => 'ھەڵسەنگاندنی وەشانە ھەڵبژاردراوەکان',
@@ -527,6 +540,7 @@ This is usually caused by following an outdated diff or history link to a page t
 'prefs-resetpass'          => 'تێپەڕوشە بگۆڕە',
 'saveprefs'                => 'پاشکەوت',
 'resetprefs'               => 'گۆڕانکارییە پاشکەوت نەکراوەکان پاک بکەرەوە',
+'restoreprefs'             => 'ھەموو تەنزیمەکان ببەرەوە بۆ حاڵەتی بنچینەیی',
 'textboxsize'              => 'دەستکاری کردن',
 'prefs-edit-boxsize'       => 'قەبارەی پەنجەرەی گۆڕانکاری.',
 'rows'                     => 'ڕێز:',
@@ -544,6 +558,8 @@ This is usually caused by following an outdated diff or history link to a page t
 'defaultns'                => 'لە حاڵەتی بنەڕەت لەم بۆشایی ناوانەدا بگەڕە:',
 'default'                  => 'بنچینەیی',
 'files'                    => 'پەڕگەکان',
+'prefs-custom-css'         => 'CSSی دڵخواز',
+'prefs-custom-js'          => 'JSی دڵخواز',
 
 # Groups
 'group-sysop'      => 'بەڕێوبەران',
@@ -559,8 +575,10 @@ This is usually caused by following an outdated diff or history link to a page t
 
 # Associated actions - in the sentence "You do not have permission to X"
 'action-edit' => 'دەستکاری ئەم پەڕەیە بکە',
+'action-move' => 'گواستنەوەی ئەم پەڕە',
 
 # Recent changes
+'nchanges'             => '$1 {{PLURAL:$1|گۆڕانکاری|گۆڕانکاری}}',
 'recentchanges'        => 'دوایین گۆڕانکارییەکان',
 'recentchanges-legend' => 'هەڵبژاردنەکانی دوا گۆڕانکارییەکان',
 'rcnote'               => "لە خوارەوەدا {{PLURAL:$1|'''۱''' گۆڕانکاری |دوایین '''$1''' گۆڕانکارییەکان}} لە دوایین {{PLURAL:$2|ڕۆژ|'''$2''' ڕۆژەوە}} ، تا $5، $4 دەبینن.",
@@ -590,10 +608,10 @@ This is usually caused by following an outdated diff or history link to a page t
 'recentchangeslinked-page'    => 'ناوی پەڕە:',
 
 # Upload
-'upload'             => 'پەڕگەیەک بار بکە',
-'uploadbtn'          => 'پەڕگە بار بکە',
-'reupload'           => 'دیسان بار بکە',
-'uploadtext'         => "فۆرمی خوارەوە بەکاربێنن بۆ بارکردنی پەڕگە.
+'upload'              => 'پەڕگەیەک بار بکە',
+'uploadbtn'           => 'پەڕگە بار بکە',
+'reupload'            => 'دیسان بار بکە',
+'uploadtext'          => "فۆرمی خوارەوە بەکاربێنن بۆ بارکردنی پەڕگە.
 بۆ بینینی ئەو پەڕگانە کە پێشتر بار کراون بڕۆ بۆ [[Special:FileList|لیستی پەڕگە بارکراوەکان]]، ھەروەھا
 [[Special:Log/upload|ڕەشنووسی بارکردنەکان]] و [[Special:Log/delete|رەشنووسی سڕینەوەکان]].
 
@@ -604,23 +622,24 @@ to use the full version of the file
 to use a 200 pixel wide rendition in a box in the left margin with 'alt text' as description
 * '''<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>'''
 for directly linking to the file without displaying the file",
-'upload-permitted'   => 'نەوعە پەڕگە قەبووڵ کراوەکان: $1.',
-'uploadlogpage'      => 'لۆگ باربکە',
-'filename'           => 'ناوی پەڕگە',
-'filedesc'           => 'پوختە',
-'fileuploadsummary'  => 'پوختە:',
-'filestatus'         => 'بارودۆخی مافی لەبەرگرتنەوە:',
-'filesource'         => 'سەرچاوە:',
-'ignorewarnings'     => 'گوێ مەدە بە ئاگادارییەکان',
-'uploadwarning'      => 'ئاگادارییەکانی بارکردن',
-'savefile'           => 'پەڕگە پاشەکەوت بکە',
-'uploadedimage'      => '"[[$1]]" بار کراو',
-'overwroteimage'     => 'وەشانێ نوێی "[[$1]]" بار کرا',
-'uploaddisabled'     => 'بارکردن قەدەخە کراوە',
-'sourcefilename'     => 'ناوی پەڕگەی سەرچاوە:',
-'destfilename'       => 'ناوی مەبەست:',
-'upload-maxfilesize' => 'ئەو پەری قەبارەی فایل: $1',
-'watchthisupload'    => 'چاودێڕی ئەم پەڕە بکە',
+'upload-permitted'    => 'نەوعە پەڕگە قەبووڵ کراوەکان: $1.',
+'uploadlogpage'       => 'لۆگ باربکە',
+'filename'            => 'ناوی پەڕگە',
+'filedesc'            => 'پوختە',
+'fileuploadsummary'   => 'پوختە:',
+'filereuploadsummary' => 'گۆرانکارییەکانی پەڕگە:',
+'filestatus'          => 'بارودۆخی مافی لەبەرگرتنەوە:',
+'filesource'          => 'سەرچاوە:',
+'ignorewarnings'      => 'گوێ مەدە بە ئاگادارییەکان',
+'uploadwarning'       => 'ئاگادارییەکانی بارکردن',
+'savefile'            => 'پەڕگە پاشەکەوت بکە',
+'uploadedimage'       => '"[[$1]]" بار کراو',
+'overwroteimage'      => 'وەشانێ نوێی "[[$1]]" بار کرا',
+'uploaddisabled'      => 'بارکردن قەدەخە کراوە',
+'sourcefilename'      => 'ناوی پەڕگەی سەرچاوە:',
+'destfilename'        => 'ناوی مەبەست:',
+'upload-maxfilesize'  => 'ئەو پەری قەبارەی فایل: $1',
+'watchthisupload'     => 'چاودێڕی ئەم پەڕە بکە',
 
 # Special:ListFiles
 'imgfile'        => 'پەڕگە',
@@ -717,6 +736,7 @@ for directly linking to the file without displaying the file",
 'linksearch' => 'بەستەرە دەرەکییەکان',
 
 # Special:Log/newusers
+'newuserlogpage'          => 'لۆگی دروست کردنی بەکارھێنەر',
 'newuserlog-create-entry' => 'بەکارھێنەری نوێ',
 
 # Special:ListGroupRights
@@ -725,6 +745,8 @@ for directly linking to the file without displaying the file",
 
 # E-mail user
 'emailuser'       => 'بۆ ئەم بەکارھێنەرە E-Mail بنێرە',
+'emailpage'       => 'ئیمەیل بۆ بەکارھێنەر',
+'defemailsubject' => 'ئیمەیلی {{SITENAME}}',
 'emailfrom'       => 'لە:',
 'emailto'         => 'بۆ:',
 'emailsubject'    => 'بابەت:',
@@ -776,11 +798,16 @@ for directly linking to the file without displaying the file",
 'delete-confirm'        => 'سڕینەوەی "$1"',
 'delete-legend'         => 'سڕینەوە',
 'historywarning'        => 'ئاگاداری: ئەم پەڕە کە ئەتەوێ بیسڕیتەوە مێژووی ھەیە',
+'actioncomplete'        => 'چالاکی دوایی هاو.',
 'deletedarticle'        => '"[[$1]]" سڕدرایەوە',
 'dellogpage'            => 'لۆگی سڕینەوە',
 'deletecomment'         => 'ھۆکاری سڕینەوە:',
 'deleteotherreason'     => 'ھۆکاری دیکە:',
 'deletereasonotherlist' => 'ھۆکاری دیکە',
+'deletereason-dropdown' => '* ھۆکاری سڕینەوە
+** داواکاریی نووسەر
+** تێکدانی مافی لەبەرگرتنەوە
+** خراپکاری',
 
 # Rollback
 'rollbacklink' => 'گەڕاندنەوە',
@@ -818,7 +845,7 @@ for directly linking to the file without displaying the file",
 'restriction-level'           => 'ئاستی سنووردارکردن:',
 
 # Undelete
-'undeletelink'     => 'گێڕاندنەوە',
+'undeletelink'     => 'بینین/گێڕاندنەوە',
 'undeletedarticle' => '"[[$1]]" گێڕدرایەوە',
 
 # Namespace form on various pages
@@ -837,19 +864,21 @@ for directly linking to the file without displaying the file",
 
 'sp-contributions-newbies'     => 'تەنھا بەشدارییەکانی بەکارھێنەرە تازەکان نیشان بدە',
 'sp-contributions-newbies-sub' => 'لە بەکارھێنەرە تازەکانەوە',
-'sp-contributions-blocklog'    => 'لۆگی بلۆککردن',
+'sp-contributions-blocklog'    => 'لۆگی بەربەستن',
 'sp-contributions-search'      => 'گەڕین بۆ بەشدارییەکان',
 'sp-contributions-username'    => 'ئەدرەسی IP یان بەکارھێنەر:',
 'sp-contributions-submit'      => 'بگەڕە',
 
 # What links here
-'whatlinkshere'           => 'بەسراوەکان بە ئێرەوە',
-'whatlinkshere-title'     => 'ئەو پەڕانەی بەستەرکراون بۆ "$1"',
-'whatlinkshere-page'      => 'پەڕە:',
-'isimage'                 => 'بەستەری وێنە',
-'whatlinkshere-links'     => '← بەستەرەکان',
-'whatlinkshere-hidelinks' => '$1 بەستەر',
-'whatlinkshere-filters'   => 'پاڵێوەرەکان',
+'whatlinkshere'            => 'بەسراوەکان بە ئێرەوە',
+'whatlinkshere-title'      => 'ئەو پەڕانەی بەستەرکراون بۆ "$1"',
+'whatlinkshere-page'       => 'پەڕە:',
+'isredirect'               => 'پەڕە ئاڕاستە بکە',
+'isimage'                  => 'بەستەری وێنە',
+'whatlinkshere-links'      => '← بەستەرەکان',
+'whatlinkshere-hideredirs' => '$1 ئاڕاستەکراو هەیە',
+'whatlinkshere-hidelinks'  => '$1 بەستەر',
+'whatlinkshere-filters'    => 'پاڵێوەرەکان',
 
 # Block/unblock
 'blockip'                  => 'بەکارھێنەر ئاستەنگ بکە',
@@ -863,7 +892,7 @@ for directly linking to the file without displaying the file",
 'block-log-flags-nocreate' => 'دروستکردنی هەژمار ناچالاککراوە',
 
 # Move page
-'movepagetext'   => "لە ڕێگەی ئەم فۆرمەی خوارەوە ناوی پەڕە دەگۆڕدرێت، وە ھەموو مێژووەکەی دەگوازێتەوە بۆ ناوی نوێ.
+'movepagetext'        => "لە ڕێگەی ئەم فۆرمەی خوارەوە ناوی پەڕە دەگۆڕدرێت، وە ھەموو مێژووەکەی دەگوازێتەوە بۆ ناوی نوێ.
 ئەگەر لە بەشی گەڕان ناوە کۆنەکەی پێ بدەی بە شێوەی خۆکار پەڕەکە دەگوازرێتەوە بۆ ناوە نوێکە .
 تۆ دەتوانی ئەو بەستەری ئاڵوگۆرانە بگۆڕی کە بەشێوەی خۆکار دەچێنە سەر لاپەڕەی ئەسڵی
 ئەگەر ناتەوێت ئەم کارە بکەی، دڵنیا بە کە [[Special:DoubleRedirects|دوبلەکان]]   یان [[Special:BrokenRedirects|شکاوەکان]] تاقی بکەیتەوە.
@@ -878,19 +907,23 @@ for directly linking to the file without displaying the file",
 '''ئاگاداریی'''
 ئەمە دەتوانێت گۆڕانێکی زۆر نابەجێ و چاوەڕوانەکراو بێت لە لاپەڕەیەکی ناسراو؛
 تکایە پێش گۆڕینی ناو باش بیر لە ئاکامەکەی بکەوە.",
-'movearticle'    => 'ئەم لاپەڕە بگوازەوە:',
-'newtitle'       => 'بۆ ناوێکی نوێ:',
-'move-watch'     => 'ئەم لاپەڕە چاودێری بکە',
-'movepagebtn'    => 'ئەم لاپەڕە بگوازەوە',
-'pagemovedsub'   => 'گواستنەوە بە سەرکەوتوویی جێبەجێ کرا',
-'movepage-moved' => '<big>\'\'\'"$1" گوازراوەتەوە بۆ "$2"\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
-'articleexists'  => 'لاپەڕەیەک بەم ناوە ھەیە، یان ئەو ناوەی تۆ ھەڵتبژاردووە بایەخدار نیە.
+'movearticle'         => 'ئەم لاپەڕە بگوازەوە:',
+'newtitle'            => 'بۆ ناوێکی نوێ:',
+'move-watch'          => 'ئەم لاپەڕە چاودێری بکە',
+'movepagebtn'         => 'ئەم لاپەڕە بگوازەوە',
+'pagemovedsub'        => 'گواستنەوە بە سەرکەوتوویی جێبەجێ کرا',
+'movepage-moved'      => '<big>\'\'\'"$1" گوازراوەتەوە بۆ "$2"\'\'\'</big>', # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'articleexists'       => 'لاپەڕەیەک بەم ناوە ھەیە، یان ئەو ناوەی تۆ ھەڵتبژاردووە بایەخدار نیە.
 تکایە ناوێکی دیکە ھەڵبژێرە',
-'movedto'        => 'بوو بە',
-'movetalk'       => 'پەڕەی گوفتوگۆکەشی بگۆزەرەوە',
-'movelogpage'    => 'لۆگ بگوازەوە',
-'movereason'     => 'بە ھۆی:',
-'revertmove'     => 'پێچەوانەکردنەوە',
+'movedto'             => 'بوو بە',
+'movetalk'            => 'پەڕەی گوفتوگۆکەشی بگۆزەرەوە',
+'move-subpages'       => 'ھەموو ژێرپەڕەکانیشی (بە ئەندازەی $1) بگۆزەرەوە، ئەگەر بیبێت',
+'move-talk-subpages'  => 'ھەموو ژێرپەڕەکانی (بە ئەندارەی $1) پەڕەی گوفتوگۆکەشی بگۆزەرەوە، ئەگەر بیبێت',
+'1movedto2_redir'     => 'بە ڕەوانکردنەوە، $1 ڕۆیشتە جێگەی $2',
+'movelogpage'         => 'لۆگ بگوازەوە',
+'movereason'          => 'بە ھۆی:',
+'revertmove'          => 'پێچەوانەکردنەوە',
+'move-leave-redirect' => 'ڕەوانکردنەوەیەک دابنە بۆ پەڕە نوێکە',
 
 # Export
 'export' => 'پەڕەکان هەناردە بکە',

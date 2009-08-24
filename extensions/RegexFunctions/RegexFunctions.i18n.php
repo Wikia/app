@@ -32,6 +32,27 @@ $messages['arz'] = array(
 	'regexfunctions-desc' => 'دوال محلل تعبيرات منتظمة',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'regexfunctions-desc' => 'Функцыі парсэра для працы з рэгулярнымі выразамі',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'regexfunctions-desc' => 'Regularni izraz parserskih funkcija',
+);
+
+/** Catalan (Català)
+ * @author SMP
+ */
+$messages['ca'] = array(
+	'regexfunctions-desc' => 'Funcions parser amb expressions regulars (regexp)',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'regexfunctions-desc' => 'Parserfunktionen für reguläre Ausdrücke',
@@ -78,6 +99,20 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'regexfunctions-desc' => 'Funcións de análise de expresións regulares',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'regexfunctions-desc' => 'Parserfunktione fir reguläri Uusdrick',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
+$messages['he'] = array(
+	'regexfunctions-desc' => 'פונקציות פענוח לביטויים רגולריים',
 );
 
 /** Croatian (Hrvatski)
@@ -129,6 +164,20 @@ $messages['lb'] = array(
 	'regexfunctions-desc' => 'Parserfunktioune fir regulär Ausdréck',
 );
 
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'regexfunctions-desc' => 'Regelierexpressieparserfunksje',
+);
+
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'regexfunctions-desc' => 'Parserfunktionen för reguläre Utdrück',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -157,6 +206,14 @@ $messages['oc'] = array(
 	'regexfunctions-desc' => 'Foncions parsers de las expressions regularas',
 );
 
+/** Polish (Polski)
+ * @author Matma Rex
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'regexfunctions-desc' => 'Funkcje parsera obsługi wyrażeń regularnych',
+);
+
 /** Portuguese (Português)
  * @author Waldir
  */
@@ -164,11 +221,25 @@ $messages['pt'] = array(
 	'regexfunctions-desc' => 'funções do analisador (parser) para expressões regulares',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'regexfunctions-desc' => 'Funções de análise (parser) para expressões regulares',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'regexfunctions-desc' => 'Funcţii de parsare a expresiilor regulate',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'regexfunctions-desc' => "Funziune d'u 'nderprete de le espressiune regolere",
 );
 
 /** Slovak (Slovenčina)
@@ -185,10 +256,24 @@ $messages['sv'] = array(
 	'regexfunctions-desc' => 'Parserfunktioner för Reguljära uttryck',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'regexfunctions-desc' => 'Mga tungkuling pambanghay ng pangkaraniwang pagsasaad',
+);
+
 /** Ukrainian (Українська)
  * @author AS
  */
 $messages['uk'] = array(
 	'regexfunctions-desc' => 'Парсерні функції регулярних виразів',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'regexfunctions-desc' => 'Hàm phân tích biểu thức chính quy',
 );
 

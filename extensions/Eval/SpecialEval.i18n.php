@@ -55,6 +55,18 @@ $messages['bg'] = array(
 	'eval_code' => 'Код',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'eval' => 'Ocjenjivanje',
+	'eval-desc' => 'Dodaje [[Special:Eval|interfejs]] za funkciju <code>eval()</code>',
+	'eval_submit' => 'Ocijeni',
+	'eval_escape' => 'Sakrij izlaz',
+	'eval_out' => 'Izlaz',
+	'eval_code' => 'Kod',
+);
+
 /** Czech (Česky)
  * @author Danny B.
  */
@@ -102,6 +114,16 @@ $messages['eo'] = array(
 	'eval_code' => 'Kodo',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'eval-desc' => 'Agrega [[Special:Eval|una interface]] a la función <code>eval()</code>',
+	'eval_submit' => 'Evaluar',
+	'eval_out' => 'Salida',
+	'eval_code' => 'Código',
+);
+
 /** Finnish (Suomi)
  * @author Str4nd
  */
@@ -141,6 +163,18 @@ $messages['gl'] = array(
  */
 $messages['grc'] = array(
 	'eval_code' => 'Κῶδιξ',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'eval' => 'Rächne',
+	'eval-desc' => 'Füiet e [[Special:Eval|Benutzerschnittstell]] fir d <code>eval()</code>-Funktion zue',
+	'eval_submit' => 'Berächne',
+	'eval_escape' => 'Uusgab maschkiere',
+	'eval_out' => 'Uusgab',
+	'eval_code' => 'Code',
 );
 
 /** Manx (Gaelg)
@@ -204,6 +238,18 @@ $messages['ia'] = array(
 	'eval-desc' => 'Adde [[Special:Eval|un interfacie]] al function <code>eval()</code>',
 	'eval_submit' => 'Evalutar',
 	'eval_escape' => 'Escappar output',
+	'eval_out' => 'Output',
+	'eval_code' => 'Codice',
+);
+
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'eval' => 'Eval',
+	'eval-desc' => "Aggiunge [[Special:Eval|un'interfaccia]] alla funzione <code>eval()</code>",
+	'eval_submit' => 'Valuta',
+	'eval_escape' => "Fai l'escaping dell'output",
 	'eval_out' => 'Output',
 	'eval_code' => 'Codice',
 );
@@ -352,6 +398,30 @@ $messages['pt'] = array(
 	'eval_code' => 'Código',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'eval' => 'Eval',
+	'eval-desc' => 'Adiciona [[Special:Eval|uma interface]] à função <code>eval()</code>',
+	'eval_submit' => 'Resolver',
+	'eval_escape' => 'Resultado em "escape"',
+	'eval_out' => 'Resultado',
+	'eval_code' => 'Código',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'eval' => 'Eval',
+	'eval-desc' => "Aggiunge [[Special:Eval|'n'inderfacce]] a 'a funziona <code>eval()</code>",
+	'eval_submit' => 'Valute',
+	'eval_escape' => "Lasse 'u resultete",
+	'eval_out' => 'Resultete',
+	'eval_code' => 'Codece',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -411,6 +481,18 @@ $messages['tg-cyrl'] = array(
 	'eval_escape' => 'Раҳойи тавлид',
 	'eval_out' => 'Тавлид',
 	'eval_code' => 'Рамз',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'eval' => 'Suri',
+	'eval-desc' => 'Nagdaragdag ng [[Special:Eval|isang ugnayang-hangganan]] sa tungkuling <code>eval()</code>',
+	'eval_submit' => 'Suriin',
+	'eval_escape' => 'Kinalabasan ng pagtakas',
+	'eval_out' => 'Kinalabasan',
+	'eval_code' => 'Kodigo',
 );
 
 /** Turkish (Türkçe)

@@ -58,12 +58,21 @@ $messages['bn'] = array(
 	'contributionseditcount' => 'এ ব্যবহারকারীর $1 সম্পাদনা হয়েছে।',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'contributionseditcount' => 'Ovaj korisnik ima $1 izmjena.',
+	'contributionseditcount-desc' => 'Prikazuje brojač izmjena na [[Special:Contributions|stranici doprinosa korisnika]]',
+);
+
 /** Catalan (Català)
  * @author Jordi Roqué
+ * @author SMP
  */
 $messages['ca'] = array(
 	'contributionseditcount' => 'Aquest usuari té $1 contribucions.',
-	'contributionseditcount-desc' => 'Mostra un recompte de contribucions a [[Special:Contributions]]',
+	'contributionseditcount-desc' => "Mostra un recompte d'edicions a [[Special:Contributions|la pàgina de contribucions d'usuari]]",
 );
 
 /** Czech (Česky)
@@ -93,9 +102,11 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Konsnos
  */
 $messages['el'] = array(
 	'contributionseditcount' => 'Αυτός ο χρήστης έχει κάνει $1 επεξεργασίες.',
+	'contributionseditcount-desc' => 'Εμφανίζει τον αριθμό επεξεργασιών στην [[Special:Contributions|σελίδα συνεισφοράς χρήστη]]',
 );
 
 /** Esperanto (Esperanto)
@@ -132,11 +143,12 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Cedric31
  * @author Grondin
+ * @author PieRRoMaN
  * @author Sherbrooke
  */
 $messages['fr'] = array(
-	'contributionseditcount' => 'Cet utilisateur a {{PLURAL:$1|$1 édition|$1 éditions}}.',
-	'contributionseditcount-desc' => 'Affiche un compteur d’éditions sur [[Special:Contributions|la page de contribution de l’utilisateur]]',
+	'contributionseditcount' => 'Cet utilisateur a {{PLURAL:$1|$1 modification|$1 modifications}}.',
+	'contributionseditcount-desc' => 'Affiche un compteur de modifications sur la [[Special:Contributions|page des contributions de l’utilisateur]]',
 );
 
 /** Galician (Galego)
@@ -147,6 +159,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'contributionseditcount' => 'Este usuario ten $1 edicións.',
 	'contributionseditcount-desc' => 'Mostra a conta de edicións na [[Special:Contributions|páxina de contribucións dun usuario]]',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'contributionseditcount' => 'Dää Benutzer het $1 Bearbeitieg.',
+	'contributionseditcount-desc' => 'Zeigt e Byytragszeller uf dr [[Special:Contributions|Byytragssyte vum Benutzer]] aa',
 );
 
 /** Hebrew (עברית)
@@ -386,11 +406,27 @@ $messages['pt'] = array(
 	'contributionseditcount-desc' => 'Mostra uma contagem de edições na [[Special:Contributions|página de contribuições do utilizador]]',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'contributionseditcount' => 'Este utilizador tem $1 edições.',
+	'contributionseditcount-desc' => 'Mostra uma contagem de edições na [[Special:Contributions|página de contribuições do utilizador]]',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'contributionseditcount' => 'Acest utilizator are $1 modificări.',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'contributionseditcount' => "St'utende ha fatte $1 cangiaminde.",
+	'contributionseditcount-desc' => "Face vedè 'nu cunde de le cangiaminnde sus a [[Special:Contributions|pàgene de le condrebbute de l'utende]]",
 );
 
 /** Russian (Русский)
@@ -471,6 +507,14 @@ $messages['th'] = array(
 	'contributionseditcount' => 'ผู้ใช้คนนี้ได้แก้ไขทั้งหมด $1 ครั้ง',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'contributionseditcount' => 'Mayroong $1 mga pamamatnugot ang tagagamit na ito.',
+	'contributionseditcount-desc' => 'Nagpapakita ng bilang ng pamamatnugot sa ibabaw ng [[Special:Contributions|pahina ng mga ambag ng tagagamit]]',
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
@@ -484,7 +528,7 @@ $messages['vec'] = array(
  */
 $messages['vi'] = array(
 	'contributionseditcount' => 'Thành viên này có $1 lần sửa đổi.',
-	'contributionseditcount-desc' => 'Hiển thị số lần sửa đổi tại [[Special:Contributions]]',
+	'contributionseditcount-desc' => 'Hiển thị số lần sửa đổi tại [[Special:Contributions|trang đóng góp của tôi]]',
 );
 
 /** Volapük (Volapük)
@@ -501,6 +545,7 @@ $messages['vo'] = array(
  */
 $messages['yi'] = array(
 	'contributionseditcount' => 'דער באַניצער האט $1 רעדאַקטירונגען.',
+	'contributionseditcount-desc' => 'ווײַזט אַ רעדאַקטירונג רעכענונג אויפֿן [[Special:Contributions|באניצער בײַשטײַערונגען בלאַט]]',
 );
 
 /** Yoruba (Yorùbá)

@@ -6,22 +6,26 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class QualityOversight extends SpecialPage
 {
-    function __construct() {
+    public function __construct() {
         SpecialPage::SpecialPage( 'QualityOversight' );
 		wfLoadExtensionMessages( 'FlaggedRevs' );
 		wfLoadExtensionMessages( 'QualityOversight' );
     }
 
-    function execute( $par ) {
+    public function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest, $wgFlaggedRevsNamespaces, $wgFlaggedRevsOversightAge;
 		
 		$this->setHeaders();
 		$wgOut->addHTML( wfMsgExt('qualityoversight-list', array('parse') ) );
 		
 		$this->namespace = $wgRequest->getInt( 'namespace' );
-		$this->level = $wgRequest->getInt( 'level' );
+		$this->level = $wgRequest->getIntOrNull( 'level' );
 		$this->status = $wgRequest->getIntOrNull( 'status' );
 		$this->automatic = $wgRequest->getIntOrNull( 'automatic' );
+		$this->user = $wgRequest->getVal( 'user' );
+		# Check if the user exists
+		$usertitle = Title::makeTitleSafe( NS_USER, $this->user );
+		$u = $usertitle ? User::idFromName( $this->user ) : false;
 		
 		# Show options
 		$this->showForm();
@@ -32,15 +36,18 @@ class QualityOversight extends SpecialPage
 			return;
 		}
 		
-		# Get cutoff time
 		$dbr = wfGetDB( DB_SLAVE );
-		$cutoff_unixtime = time() - $wgFlaggedRevsOversightAge;
-		$cutoff_unixtime = $cutoff_unixtime - ($cutoff_unixtime % 86400);
-		$cutoff = $dbr->addQuotes( $dbr->timestamp( $cutoff_unixtime ) );
+		# Get extra query conds
+		$conds = array( 'log_namespace' => $this->namespace, 'log_action' => $actions );
+		# Get cutoff time (mainly for performance)
+		if( !$u ) {
+			$cutoff_unixtime = time() - $wgFlaggedRevsOversightAge;
+			$cutoff = $dbr->addQuotes( $dbr->timestamp( $cutoff_unixtime ) );
+			$conds[] = "log_timestamp >= $cutoff";
+		}
 		# Create a LogPager item to get the results and a LogEventsList item to format them...
 		$loglist = new LogEventsList( $wgUser->getSkin(), $wgOut, 0 );
-		$pager = new LogPager( $loglist, 'review', '', '', '', 
-			array( 'log_namespace' => $this->namespace, 'log_action' => $actions, "log_timestamp >= $cutoff" ) );
+		$pager = new LogPager( $loglist, 'review', $this->user, '', '', $conds );
 		# Insert list
 		$logBody = $pager->getBody();
 		if( $logBody ) {
@@ -63,7 +70,8 @@ class QualityOversight extends SpecialPage
 			'<fieldset><legend>' . wfMsgHtml('qualityoversight-legend') . '</legend><p>' .
 			Xml::hidden( 'title', $wgTitle->getPrefixedDBKey() ) .
 			FlaggedRevsXML::getNamespaceMenu( $this->namespace ) . '&nbsp;' .
-			FlaggedRevsXML::getLevelMenu( $this->level ) . '&nbsp;' .
+			FlaggedRevsXML::getLevelMenu( $this->level, 'revreview-filter-all', 1 ) . '&nbsp;' .
+			Xml::inputLabel( wfMsg( 'specialloguserlabel' ), 'user', 'user', 20, $this->user ) . '<br/>' .
 			FlaggedRevsXML::getStatusFilterMenu( $this->status ) . '&nbsp;' .
 			FlaggedRevsXML::getAutoFilterMenu( $this->automatic ) . '&nbsp;' .
 			Xml::submitButton( wfMsg( 'go' ) ) .

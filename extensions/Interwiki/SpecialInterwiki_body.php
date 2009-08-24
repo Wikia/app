@@ -206,21 +206,48 @@ class SpecialInterwiki extends SpecialPage {
 		}	
 	}
 
+	function trans_local( $tl, $msg0, $msg1 ) {
+		if( $tl==='0' )
+			return $msg0;
+		if( $tl==='1' )
+			return $msg1;
+		return htmlspecialchars( $tl );
+	}
+
 	function showList( $admin ) {
-		global $wgUser, $wgOut; 
+		global $wgUser, $wgOut, $wgScriptPath;
+
+		$wgOut->addExtensionStyle( "{$wgScriptPath}/extensions/Interwiki/SpecialInterwiki.css" );
+
 		$prefixmessage = wfMsgHtml( 'interwiki_prefix' );
 		$urlmessage = wfMsgHtml( 'interwiki_url' );
 		$localmessage = wfMsgHtml( 'interwiki_local' );
 		$transmessage = wfMsgHtml( 'interwiki_trans' );
+		$message_0 = wfMsgHtml( 'interwiki_0' );
+		$message_1 = wfMsgHtml( 'interwiki_1' );
 
+		$out = '
+<table width="100%" cellspacing="0" cellpadding="0" border="0" style="border:0" class="mw-interwikitable intro">
+<tr><th class="mw-align-left">' . $prefixmessage . '</th><td>' . wfMsgExt( 'interwiki_prefix_intro', 'parseinline' ) . '</td></tr>
+<tr><th class="mw-align-left">' . $urlmessage . '</th><td>' . wfMsgExt( 'interwiki_url_intro', 'parseinline' ) . '</td></tr>
+<tr><th class="mw-align-left">' . $localmessage . '</th><td>' . wfMsgExt( 'interwiki_local_intro', 'parseinline' ) . '</td></tr>
+<tr><th class="mw-align-right">' . $message_0 . '</th><td>' . wfMsgExt( 'interwiki_local_0_intro', 'parseinline' ) . '</td></tr>
+<tr><th class="mw-align-right">' . $message_1 . '</th><td>' . wfMsgExt( 'interwiki_local_1_intro', 'parseinline' ) . '</td></tr>
+<tr><th class="mw-align-left">' . $transmessage . '</th><td>' . wfMsgExt( 'interwiki_trans_intro', 'parseinline' ) . '</td></tr>
+<tr><th class="mw-align-right">' . $message_1 . '</th><td>' . wfMsgExt( 'interwiki_trans_1_intro', 'parseinline' ) . '</td></tr>
+<tr><th class="mw-align-right">' . $message_0 . '</th><td>' . wfMsgExt( 'interwiki_trans_0_intro', 'parseinline' ) . '</td></tr>
+</table>
+';
 		$wgOut->addWikiMsg( 'interwiki_intro' );
+		$wgOut->addHTML( $out );
+		$wgOut->addWikiMsg( 'interwiki_intro_footer' );
 		$selfTitle = $this->getTitle();
 
 		if ( $admin ) {
 			$skin = $wgUser->getSkin();
 			$addtext = wfMsgHtml( 'interwiki_addtext' );
 			$addlink = $skin->link( $selfTitle, $addtext, array(), array( 'action' => 'add' ) );
-			$wgOut->addHTML( '<ul>' . '<li>' . $addlink . '</li>' . '</ul>' );
+			$wgOut->addHTML( '<p>' . $addlink . '</p>' );
 		}
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -232,21 +259,20 @@ class SpecialInterwiki extends SpecialPage {
 		}
 		
 		$out = "
-		<br />
-		<table width='100%' style='border:1px solid #aaa;' class='wikitable'>
+		<table width='100%' class='mw-interwikitable body'>
 		<tr id='interwikitable-header'><th>$prefixmessage</th> <th>$urlmessage</th> <th>$localmessage</th> <th>$transmessage</th>";
 		if( $admin ) {
 			$deletemessage = wfMsgHtml( 'delete' );
 			$editmessage = wfMsgHtml( 'edit' );
-			$out .= "<th>$editmessage</th>";
+			$out .= '<th>'.wfMsgHtml( 'interwiki_edit' ).'</th>';
 		}
 		$out .= "</tr>\n";
 		
 		while( $s = $res->fetchObject() ) {
 			$prefix = htmlspecialchars( $s->iw_prefix );
 			$url = htmlspecialchars( $s->iw_url );
-			$trans = htmlspecialchars( $s->iw_trans );
-			$local = htmlspecialchars( $s->iw_local );
+			$trans = $this->trans_local( $s->iw_trans, $message_0, $message_1 );
+			$local = $this->trans_local( $s->iw_local, $message_0, $message_1 );
 			$out .= "<tr class='mw-interwikitable-row'>
 				<td class='mw-interwikitable-prefix'>$prefix</td>
 				<td class='mw-interwikitable-url'>$url</td>

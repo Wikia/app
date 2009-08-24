@@ -17,7 +17,7 @@ Usage:
     php updateLinks.php [--start <ID> | --updateonly <CALL> ]
 
     --help             : This help message
-    --<ID>             : The ID of the existing user to use as the "reviewer" (you can find your ID at Special:Preferences)
+    --<ID>             : The ID of the starting rev
 	--<CALL>           : One of revs,pages,templates, or images
 
 TEXT;
@@ -38,7 +38,7 @@ if( $updateonly && in_array($updateonly,$actions) ) {
 
 update_flaggedrevs($start);
 
-update_flaggedpages($start);
+update_flaggedpages();
 
 update_flaggedtemplates($start);
 

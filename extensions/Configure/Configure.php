@@ -17,7 +17,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Configure',
 	'description' => 'Allow authorised users to configure the wiki via a web-based interface',
 	'descriptionmsg' => 'configure-desc',
-	'version' => '0.11.5 (1.14 branch-3)',
+	'version' => '0.13.7',
 );
 
 # Configuration part
@@ -37,6 +37,16 @@ $wgConfigureFilesPath = "$IP/serialized";
  * Database used to store the configuration, if $wgConfigureHandler is 'db'
  */
 $wgConfigureDatabase = 'config';
+
+/**
+ * Whether to allow to defer a part of efConfigureSetup() until the cache
+ * objects are set by MediaWiki instead of doing it in efConfigureSetup().
+ * It is only used if $wgConfigureHandler is 'db'.
+ * If you want to use $wgConfigureExtensionsVar (see below), you may need to
+ * set it to false, otherwise the variables won't be set in efConfigureSetup()
+ * but later.
+ */
+$wgConfigureAllowDeferSetup = true;
 
 /**
  * Path for file-system cache, only works when $wgConfigureHandler is 'db'.
@@ -78,6 +88,10 @@ $wgConfigureExtDir = "$IP/extensions/";
  *   extensions-all right
  * - edit-restricted: list of settings that only be modified by users with
  *   extensions-all right
+ * - extensions-dependencies: list of extensions that must be enabled so that
+ *   this extension can be enabled too
+ * - settings-dependencies: array mapping settings to their values that must be
+ *   set so that this extension can be enabled
  * - schema: put it to true if the extension requires a database schema change
  * - url: url to the documentation page
  */
@@ -88,6 +102,10 @@ $wgConfigureAdditionalExtensions = array();
  * include the file.
  * You'll need to handle the variable and include yourself the extension's file.
  * Format is $wgConfigureExtensionsVar['ExtensionName'] = 'VarName';
+ *
+ * WARNING: If you use database handler, you may need to set
+ * $wgConfigureAllowDeferSetup = false;
+ * to use it correctly.
  */
 $wgConfigureExtensionsVar = array();
 
@@ -148,7 +166,7 @@ $wgConfigureUpdateCacheEpoch = false;
 /**
  * Styles versions, you shouldn't change it
  */
-$wgConfigureStyleVersion = '19';
+$wgConfigureStyleVersion = '20';
 
 # Adding new rights...
 $wgAvailableRights[] = 'configure';
@@ -223,6 +241,7 @@ define( 'CONF_SETTINGS_BOTH', 3 );
 
 # Helper for configuration settings
 $wgAutoloadClasses['ConfigurationSettings'] = $dir . 'Configure.settings.php';
+$wgAutoloadClasses['TxtDef'] = $dir . 'TxtDef.php';
 
 # Groups
 $wgSpecialPageGroups['Configure'] = 'wiki';

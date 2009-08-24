@@ -26,6 +26,7 @@ class Gifts {
 	static function addGift( $gift_name, $gift_description, $gift_access = 0 ){
 		global $wgUser;
 
+		// FIXME: undefined variable user_to
 		$user_id_to = User::idFromName($user_to);
 		$dbw = wfGetDB( DB_MASTER );
 
@@ -63,6 +64,7 @@ class Gifts {
 			FROM {$dbr->tableName( 'gift' )} WHERE gift_id = {$id} LIMIT 0,1";
 		$res = $dbr->query($sql);
 		$row = $dbr->fetchObject( $res );
+		$gift = '';
 		if( $row ){
 			$gift['gift_id']= $row->gift_id;	
 			$gift['gift_name']= $row->gift_name;	

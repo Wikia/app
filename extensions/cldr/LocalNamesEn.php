@@ -118,6 +118,12 @@ $names = array(
  */
 'lfn'        => 'Lingua Franca Nova',
 
+/* Not in CLDR 1.6.1. Literary Chinese language
+ * http://www.sil.org/iso639-3/documentation.asp?id=lzh
+ * Added 2009-01-22.
+ */
+'lzh'        => 'Literary Chinese',
+
 /* Not in CLDR 1.6.1. Mari language
  * http://www.ethnologue.org/show_language.asp?code=mhr
  * Added 2008-05-22.
@@ -193,6 +199,19 @@ $names = array(
  */
 'tcy'        => 'Tulu',
 
+
+/* Not in CLDR 1.6.1. Finnic Uralic language.
+ * http://www.ethnologue.org/show_language.asp?code=vep
+ * Added 2009-01-24.
+ */
+'vep'        => 'Veps',
+
+/* Not in CLDR 1.6.1. Estonian language.
+ * http://www.sil.org/iso639-3/documentation.asp?id=vro
+ * Added 2009-01-24.
+ */
+'vro'        => 'Võro',
+
 /* Not in CLDR 1.6.1. Chinese language.
  * http://www.ethnologue.org/show_language.asp?code=wuu
  * Added 2007-12-02.
@@ -219,6 +238,8 @@ $names = array(
 'crh-cyrl'     => 'Crimean Turkish (Cyrillic)',
 'crh-latn'     => 'Crimean Turkish (Latin)',
 'de-formal'    => 'German (formal address)',
+'gan-hans'     => 'Simplified Gan script',
+'gan-hant'     => 'Traditional Gan script',
 'glk'          => 'Gilaki',
 'ike-cans'     => 'Eastern Canadian (Unified Canadian Aboriginal Syllabics)',
 'ike-latn'     => 'Eastern Canadian (Latin)',

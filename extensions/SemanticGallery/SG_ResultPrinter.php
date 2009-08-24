@@ -6,6 +6,7 @@ if (!defined('MEDIAWIKI')) die();
  */
 class SemanticGallery_ResultPrinter extends SMWResultPrinter
 {
+
 	public function getResult($results, $params, $outputmode)
 	{
 		// skip checks, results with 0 entries are normal
@@ -13,7 +14,8 @@ class SemanticGallery_ResultPrinter extends SMWResultPrinter
 		return $this->getResultText($results, SMW_OUTPUT_HTML);
 	}
 
-	public function getResultText($res, $outputmode)
+
+	public function getResultText($results, $outputmode)
 	{
 		global $smwgIQRunningNumber, $wgUser, $wgParser;
 		$skin = $wgUser->getSkin();
@@ -32,30 +34,32 @@ class SemanticGallery_ResultPrinter extends SMWResultPrinter
 		if ( isset($this->m_params['heights']) )
 			$ig->setHeights( $this->m_params['heights'] );
 
-		while ($row = $res->getNext()) {
+		while ($row = $results->getNext()) {
 			$firstField = $row[0];
 			$imgTitle = $firstField->getNextObject()->getTitle();
 
+			// Is there a property queried for display with ?property
 			if ( isset($row[1]) ) {
-				//$imgCaption = $this->recursiveTagParse( trim( $row[1]->getNextObject()-> ) ); // TODO: Support captions
-				$imgCaption = $imgTitle->getBaseText();
+				$imgCaption = $row[1]->getNextObject();
+				if ( is_object($imgCaption) ) {
+					$imgCaption = $imgCaption->getShortText( SMW_OUTPUT_HTML, $this->getLinker(true) );
+					$imgCaption = $wgParser->recursiveTagParse($imgCaption);
+				}
 			}
-			else {
+
+			if ( empty($imgCaption) ) {
 				$imgCaption = $imgTitle->getBaseText();
-				$imgCaption = preg_replace('#\.[^.]+$#', '', $imgCaption);
+				$imgCaption = preg_replace('#\.[^.]+$#', '', $imgCaption); // Remove image extension
 			}
 
 			$ig->add( $imgTitle, $imgCaption );
 
-			# Only add real images (bug #5586)
+			// Only add real images (bug #5586)
 			if ( $imgTitle->getNamespace() == NS_IMAGE ) {
 				$wgParser->mOutput->addImage( $imgTitle->getDBkey() );
 			}
 		}
 
-		$result = $ig->toHTML();
-
-
-		return array($result, 'noparse' => 'true', 'isHTML' => 'true');
+		return array($ig->toHTML(), 'nowiki' => true, 'isHTML' => true);
 	}
 }

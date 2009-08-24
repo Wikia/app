@@ -38,6 +38,11 @@ $aliases['de'] = array(
 	'ImportUsers' => array( 'Benutzer importieren' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'ImportUsers' => array( 'Wužywarjow importěrowaś' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'ImportUsers' => array( 'Tuo käyttäjiä' ),
@@ -45,7 +50,7 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'ImportUsers' => array( 'ImporterUtilisateur' ),
+	'ImportUsers' => array( 'Importer utilisateurs', 'ImporterUtilisateurs', 'ImporterUtilisateur' ),
 );
 
 /** Galician (Galego) */
@@ -85,6 +90,11 @@ $aliases['hu'] = array(
 	'ImportUsers' => array( 'Szerkesztők importálása' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'ImportUsers' => array( 'Importar usatores' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'ImportUsers' => array( 'Impor pengguna' ),
@@ -92,7 +102,7 @@ $aliases['id'] = array(
 
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'ImportUsers' => array( 'インポートユーザー' ),
+	'ImportUsers' => array( '利用者のインポート', 'インポートユーザー' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -103,6 +113,11 @@ $aliases['km'] = array(
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'ImportUsers' => array( 'Benotzer importéieren' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'ImportUsers' => array( 'УвизНаКорисници' ),
 );
 
 /** Malay (Bahasa Melayu) */
@@ -149,6 +164,16 @@ $aliases['ps'] = array(
 	'ImportUsers' => array( 'کارونکي واردول' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'ImportUsers' => array( 'आयातयोजक:' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'ImportUsers' => array( 'ImportoPërdorues' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'ImportUsers' => array( 'Importera användare' ),
@@ -162,5 +187,10 @@ $aliases['sw'] = array(
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'ImportUsers' => array( 'นำเข้าผู้ใช้' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'ImportUsers' => array( 'Mag-angkat ng mga tagagamit' ),
 );
 

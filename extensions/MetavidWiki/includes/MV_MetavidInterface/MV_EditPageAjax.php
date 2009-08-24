@@ -372,7 +372,7 @@
 			if ( !isset( $this->article->mvTitle ) ) {
 				$this->mvTitle = new MV_Title( $this->mTitle->getDBkey() );
 			}
-			$editFormType = strtolower( $this->mvTitle->getTypeMarker() );
+			$editFormType = strtolower( $this->mvTitle->getMvdTypeKey() );
 		} else {
 			// check if its seq type: 
 			if ( $this->mvd_id == 'seq' ) {
@@ -469,7 +469,7 @@
 			if ( isset( $this->mArticle ) && isset( $this->mArticle->mRevision ) ) {
 			// Let sysop know that this will make private content public if saved
 				if ( $this->mArticle->mRevision->isDeleted( Revision::DELETED_TEXT ) ) {
-					$wgOut->addWikiText( wfMsg( 'rev-deleted-text-view' ) );
+					$wgOut->wrapWikiMsg( "<div class='mw-warning plainlinks'>\n$1</div>\n", 'rev-deleted-text-view' );
 				}
 				if ( !$this->mArticle->mRevision->isCurrent() ) {
 					$this->mArticle->setOldSubtitle( $this->mArticle->mRevision->getId() );
@@ -723,6 +723,7 @@ END
 
 		// $wgOut->addWikiText( $copywarn );
 		$wgOut->addHTML( $this->editFormTextAfterWarn );
+		$separator = wfMsgExt( 'pipe-separator' , 'escapenoentities' );
 		$wgOut->addHTML( "
 {$metadata}
 {$editsummary}
@@ -734,7 +735,7 @@ END
 		$wgOut->addHTML(
 "<div class='editButtons'>
 {$buttonshtml}
-	<span class='editHelp'>{$cancel} | {$edithelp}</span>
+	<span class='editHelp'>{$cancel}{$separator}{$edithelp}</span>
 </div><!-- editButtons -->
 </div><!-- editOptions -->" );
 

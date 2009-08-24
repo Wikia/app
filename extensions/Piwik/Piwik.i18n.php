@@ -19,10 +19,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Purodha
  */
 $messages['qqq'] = array(
 	'piwik-desc' => 'Short description of the Piwik extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'piwik-countries' => '{{Identical|Country}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -67,6 +69,17 @@ $messages['ast'] = array(
 	'piwik-browsers' => 'Navegadores',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'piwik-desc' => 'Устаўляе скрыпт Piwik для назіраньня ў старонкі MediaWiki і дадае [[Special:Piwik|статыстыку]]',
+	'piwik-lastvisits' => 'Апошнія наведваньні',
+	'piwik-countries' => 'Краіны',
+	'piwik-browsers' => 'Браўзэры',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -75,6 +88,16 @@ $messages['bg'] = array(
 	'piwik-lastvisits' => 'Последни посещения',
 	'piwik-countries' => 'Държави',
 	'piwik-browsers' => 'Браузъри',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'piwik-desc' => 'Ubacuje Piwik skriptu na MedijaViki stranice za praćenje i dodavanje [[Special:Piwik|nekih statističkih podataka]]',
+	'piwik-lastvisits' => 'Zadnje posjete',
+	'piwik-countries' => 'Države',
+	'piwik-browsers' => 'Preglednici',
 );
 
 /** Catalan (Català)
@@ -148,6 +171,13 @@ $messages['es'] = array(
 	'piwik-browsers' => 'Navegadores',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'piwik-countries' => 'Herrialdeak',
+);
+
 /** Finnish (Suomi)
  * @author Str4nd
  */
@@ -175,6 +205,16 @@ $messages['gl'] = array(
 	'piwik-lastvisits' => 'Últimas visitas',
 	'piwik-countries' => 'Países',
 	'piwik-browsers' => 'Navegadores',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'piwik-desc' => 'Fiegt e Piwik-Skript yy zum Tracking in MediaWiki-Syten un ergänzt e [[Special:Piwik|Spezialsyte]] mit e paar Statischtike',
+	'piwik-lastvisits' => 'Letschti Bsuech',
+	'piwik-countries' => 'Länder',
+	'piwik-browsers' => 'Browser',
 );
 
 /** Hebrew (עברית)
@@ -227,6 +267,16 @@ $messages['it'] = array(
 	'piwik-lastvisits' => 'Ultime visite',
 	'piwik-countries' => 'Paesi',
 	'piwik-browsers' => 'Browser',
+);
+
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'piwik-desc' => '追跡と[[Special:Piwik|統計]]のために Piwki スクリプトを MediaWiki ページに挿入する',
+	'piwik-lastvisits' => '最新の訪問',
+	'piwik-countries' => '国',
+	'piwik-browsers' => 'ブラウザ',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -328,6 +378,16 @@ $messages['pt'] = array(
 	'piwik-browsers' => 'Browsers',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'piwik-desc' => 'Insere o script Piwik em páginas MediaWiki para rastreio e adiciona [[Special:Piwik|algumas estatísticas]]',
+	'piwik-lastvisits' => 'Últimas visitas',
+	'piwik-countries' => 'Países',
+	'piwik-browsers' => 'Navegadores',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -352,6 +412,16 @@ $messages['sk'] = array(
 	'piwik-lastvisits' => 'Posledné návštevy',
 	'piwik-countries' => 'Krajiny',
 	'piwik-browsers' => 'Prehliadače',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'piwik-desc' => 'Föiget n Piwik-Skript tou n Tracking in MediaWiki-Sieden ien un fergrattert ne [[Special:Piwik|Spezioalsiede]] mäd eenige Statistike',
+	'piwik-lastvisits' => 'Lääste Besäike',
+	'piwik-countries' => 'Lounde',
+	'piwik-browsers' => 'Browsere',
 );
 
 /** Sundanese (Basa Sunda)
@@ -382,6 +452,26 @@ $messages['te'] = array(
 	'piwik-lastvisits' => 'చివరి సందర్శనలు',
 	'piwik-countries' => 'దేశాలు',
 	'piwik-browsers' => 'విహారిణులు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'piwik-desc' => "Nagsisingit ng panitik na ''Piwik'' sa mga pahina ng MediaWiki para sa paghanap ng bakas at nagdaragdag ng [[Special:Piwik|ilang mga estadistika]]",
+	'piwik-lastvisits' => 'Huling mga pagdalaw',
+	'piwik-countries' => 'Mga bansa',
+	'piwik-browsers' => 'Mga pantingin-tingin',
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'piwik-desc' => 'Inserìsse un script Piwik in te le pàxene MediaWiki par xontar [[Special:Piwik|alcune statìsteghe]]',
+	'piwik-lastvisits' => 'Ùltime vìsite',
+	'piwik-countries' => 'Paesi',
+	'piwik-browsers' => 'Browser',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -20,6 +20,7 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Lejonel
+ * @author PieRRoMaN
  * @author Raymond
  */
 $messages['qqq'] = array(
@@ -28,7 +29,7 @@ $messages['qqq'] = array(
 	'watchers_link_title' => 'In Watchers extension. The text for the link to Special:Watchers in the toolbox.',
 	'watchers_error_article' => 'In Watchers extension. Error message which is displayed when trying to use Special:Watchers for a page that does no exist.',
 	'watchers_noone_watches' => 'In Watchers extension. Used in Special:Watchers for pages which are not on the watchlist of any user.',
-	'watchers_x_or_more' => 'In Watchers extension. Used in Special:Watchers for pages that has at least a certain number of watching users.
+	'watchers_x_or_more' => 'In Watchers extension. Used in Special:Watchers for pages that have at least a certain number of watching users.
 
 $1 is an integer (specified in the configuration of the wiki).',
 	'watchers_less_than_x' => 'In Watchlist extension. Used in Special:Watchers for pages that has less than a certain number of watching users.
@@ -114,6 +115,22 @@ $messages['avk'] = array(
 	'watchers_less_than_x' => 'Le $1 korik tid suzdas va batu bu.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
+ */
+$messages['be-tarask'] = array(
+	'watchers' => 'Назіральнікі',
+	'watchers-desc' => 'Паказвае, [[Special:Watchers|якія ўдзельнікі маюць старонку ў сваім сьпісе назіраньня]]',
+	'watchers_link_title' => 'Хто назірае за гэтай старонкай?',
+	'watchers_error_article' => "'''Памылка:''' старонка не існуе.",
+	'watchers_header' => '{{PLURAL:$2|Удзельнік, які назірае|Удзельнікі, які назіраюць}} за старонкай «$1»',
+	'watchers_noone_watches' => 'Ніхто не назірае за гэтай старонкай.',
+	'watchers_x_or_more' => 'За гэтай старонкай назірае $1 ці болей удзельнікаў.',
+	'watchers_less_than_x' => 'За гэтай старонкай назірае меней $1 {{PLURAL:$1|удзельніка|удзельнікаў|удзельнікаў}}.',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -147,19 +164,27 @@ $messages['bn'] = array(
  */
 $messages['br'] = array(
 	'watchers' => 'Evezhierien',
+	'watchers-desc' => 'Diskwel a ra [[Special:Watchers|peseurt implijerien o deus enrollet pajennoù en o roll evezhiañ]]',
 	'watchers_link_title' => "Piv a vez oc'h evezhiañ ar bajenn-mañ ?",
 	'watchers_error_article' => "<b>Fazi :</b> n'eus ket eus ar bajenn-se.",
-	'watchers_header' => 'Tud a heuilh "$1"',
+	'watchers_header' => '{{PLURAL:$2|Den|Tud}} a heuilh "$1"',
 	'watchers_noone_watches' => 'Den ebet ne heuilh ar bajenn-mañ.',
-	'watchers_x_or_more' => "$1 a dud pe muioc'h a heuilh ar bajenn-mañ.",
-	'watchers_less_than_x' => "Nebeutoc'h eget $1 implijer o deus lakaet ar bajenn-mañ war evezh.",
+	'watchers_x_or_more' => "$1 {{PLURAL:$1|den|den}} pe muioc'h zo renablet ar bajenn-mañ en o roll evezhiañ.",
+	'watchers_less_than_x' => "Nebeutoc'h eget $1 {{PLURAL:$1|implijer|implijer}} zo renablet ar bajenn-mañ en o roll evezhiañ.",
 );
 
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'watchers' => 'Posmatrači',
+	'watchers-desc' => 'Prikazuje [[Special:Watchers|koji korisnici imaju stranicu na svom spisku za praćenje]]',
+	'watchers_link_title' => 'Ko prati ovu stranicu?',
 	'watchers_error_article' => "'''Greška:''' Stranica ne postoji.",
+	'watchers_header' => '{{PLURAL:$2|Korisnik koji prati|Korisnici koji prate}} "$1"',
+	'watchers_noone_watches' => 'Niko ne posmatra ovu stranicu.',
+	'watchers_x_or_more' => '$1 ili više {{PLURAL:$1|korisnika ima|korisnika imaju}} ovu stranicu na svom spisku praćenja.',
+	'watchers_less_than_x' => 'Manje od $1 {{PLURAL:$1|korisnika ima|korisnika imaju}} ovu stranicu na svom spisku praćenja.',
 );
 
 /** Czech (Česky)
@@ -174,6 +199,20 @@ $messages['cs'] = array(
 	'watchers_noone_watches' => 'Nikdo nesleduje tuto stránku',
 	'watchers_x_or_more' => '$1 nebo více uživatelů sleduje tuto stránku.',
 	'watchers_less_than_x' => 'Méně než $1 {{PLURAL:|uživatel sleduje|uživatelé sledují|uživatelů sleduje}} tuto stránku.',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'watchers' => 'Gwylwyr',
+	'watchers-desc' => 'Yn dangos rhestr y [[Special:Watchers|gwylwyr sydd yn dilyn hynt rhyw dudalen]]',
+	'watchers_link_title' => "Pwy sy'n dilyn hynt y dudalen hon?",
+	'watchers_error_article' => "'''Gwall:''' Nid yw'r dudalen yn bod.",
+	'watchers_header' => '{{PLURAL:$2|Defnyddwyr|Defnyddiwr|Defnyddwyr|Defnyddwyr|Defnyddwyr|Defnyddwyr}} sy\'n dilyn hynt "$1"',
+	'watchers_noone_watches' => 'Nid oes neb yn dilyn hynt y dudalen hon.',
+	'watchers_x_or_more' => "Mae'r dudalen hon ar restr gwylio o leiaf $1 {{PLURAL:$1||defnyddiwr|ddefnyddiwr|o ddefnyddwyr|o ddefnyddwyr|o ddefnyddwyr}}.",
+	'watchers_less_than_x' => "Mae'r dudalen hon ar restr gwylio llai na(g) $1 {{PLURAL:$1||defnyddiwr|ddefnyddiwr|o ddefnyddwyr|o ddefnyddwyr|o ddefnyddwyr}}.",
 );
 
 /** German (Deutsch)
@@ -207,14 +246,15 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
  */
 $messages['el'] = array(
 	'watchers' => 'Παρατηρητές',
 	'watchers_link_title' => 'Ποιος παρατηρεί αυτήν τη σελίδα;',
 	'watchers_error_article' => '<b>Σφάλμα:</b> Η σελίδα δεν υπάρχει.',
 	'watchers_noone_watches' => 'Κανείς δεν παρατηρεί αυτήν την σελίδα.',
-	'watchers_x_or_more' => '$1 ή περισσότεροι άνθρωποι παρατηρούν αυτήν τη σελίδα.',
-	'watchers_less_than_x' => 'Λιγότεροι από $1 άνθρωποι παρακολουθούν αυτήν την σελίδα.',
+	'watchers_x_or_more' => '$1 ή περισσότεροι {{PLURAL:$1|χρήστης παρακολουθεί|χρήστες παρακολουθούν}} αυτήν τη σελίδα.',
+	'watchers_less_than_x' => '$1 ή λιγότεροι {{PLURAL:$1|χρήστης παρακολουθεί|χρήστες παρακολουθούν}} αυτήν τη σελίδα.',
 );
 
 /** Esperanto (Esperanto)
@@ -232,20 +272,29 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Fluence
  * @author Imre
  */
 $messages['es'] = array(
 	'watchers' => 'Vigilantes',
+	'watchers-desc' => 'Muestra [[Special:Watchers|aquellos usuarios que tienen una página en sus listas de vigilancia]]',
+	'watchers_link_title' => 'Quién vigila esta página?',
 	'watchers_error_article' => "'''Error:''' La página no existe.",
+	'watchers_header' => '{{PLURAL:$2|usuario quien está|Usuarios quienes están}} vigilando "$1"',
+	'watchers_noone_watches' => 'Nadie vigila esta página.',
+	'watchers_x_or_more' => '$1 o más {{PLURAL:$1|usuario|usuarios}} tienen esta página en sus listas de vigilancia.',
+	'watchers_less_than_x' => 'menos de $1 {{PLURAL:$1|usuario|usuarios}} tienen esta página en su lista de vigilancia.',
 );
 
 /** Basque (Euskara)
  * @author Kobazulo
  */
 $messages['eu'] = array(
+	'watchers' => 'Zaintzaileak',
 	'watchers_link_title' => 'Nork begiratzen du orrialde hau?',
 	'watchers_error_article' => "'''Errorea:''' Orrialde hau ez da existitzen.",
+	'watchers_header' => '"$1" zaintzen ari {{PLURAL:$2|den erabaltzailea|diren erabaltzaileak}}',
 );
 
 /** Finnish (Suomi)
@@ -265,18 +314,19 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
  * @author Sherbrooke
  * @author Urhixidur
  * @author Zetud
  */
 $messages['fr'] = array(
-	'watchers' => 'Observateurs',
-	'watchers-desc' => 'Afficher [[Special:Watchers|les utilisateurs qui ont une page dans leur liste de suivi]]',
-	'watchers_link_title' => 'Qui suit cette page ?',
+	'watchers' => 'Suiveurs',
+	'watchers-desc' => 'Affiche [[Special:Watchers|quels utilisateurs ont une page dans leur liste de suivi]]',
+	'watchers_link_title' => 'Qui a cette page en suivi ?',
 	'watchers_error_article' => '<b>Erreur :</b> La page n’existe pas.',
 	'watchers_header' => '{{PLURAL:$2|Utilisateur qui suit|Utilisateurs qui suivent}} « $1 »',
 	'watchers_noone_watches' => 'Personne ne suit cette page.',
-	'watchers_x_or_more' => '$1 utilisateurs voire même {{PLURAL:$1|un autre|plusieurs autres}} ont cette page dans leur liste de suivi.',
+	'watchers_x_or_more' => '$1 utilisateur{{PLURAL:$1||s}} ou plus ont cette page dans leur liste de suivi.',
 	'watchers_less_than_x' => 'Moins {{PLURAL:$1|d’un utilisateur suit|de $1 utilisateurs suivent}} cette page.',
 );
 
@@ -293,6 +343,20 @@ $messages['gl'] = array(
 	'watchers_noone_watches' => 'Ninguén vixia esta páxina',
 	'watchers_x_or_more' => '$1 ou máis {{PLURAL:$1|usuarios|usuarios}} están vixiando esta páxina.',
 	'watchers_less_than_x' => 'Menos de $1 {{PLURAL:$1|usuarios|usuarios}} están vixiando esta páxina.',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'watchers' => 'Beobachter',
+	'watchers-desc' => 'Zeigt, [[Special:Watchers|wievyyl Benutzer]] e Seite uf ihre Beobachtigslischt hän.',
+	'watchers_link_title' => 'Wär beobachtet die Syte?',
+	'watchers_error_article' => "'''Fähler:''' Syte git s nit.",
+	'watchers_header' => '{{PLURAL:$2|Benutzer, wu „$1“ beobachtet|Benutzer, wu „$1“ beobachte}}',
+	'watchers_noone_watches' => 'S git kei Benutzer, wu die Syte beobachte.',
+	'watchers_x_or_more' => '$1 oder meh {{PLURAL:$1|Benutzer|Benutzer}} beobachte die Syte.',
+	'watchers_less_than_x' => 'Weniger as {{PLURAL:$1|$1 Benutzer|$1 Benutzer}} beobachte die Syte.',
 );
 
 /** Hebrew (עברית)
@@ -365,6 +429,20 @@ $messages['it'] = array(
 	'watchers_noone_watches' => 'La pagina non è osservata da alcun utente.',
 	'watchers_x_or_more' => 'La pagina è osservata da almeno $1 {{PLURAL:$1|utente|utenti}}.',
 	'watchers_less_than_x' => 'La pagina è osservata da meno di $1 {{PLURAL:$1|utente|utenti}}.',
+);
+
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'watchers' => 'ウォッチしている利用者',
+	'watchers-desc' => '[[Special:Watchers|どの利用者がページをウォッチリストに入れている]]のか表示する',
+	'watchers_link_title' => '誰がこのページをウォッチしているのか',
+	'watchers_error_article' => "'''エラー:''' ページが存在しません。",
+	'watchers_header' => '「$1」をウォッチしている利用者',
+	'watchers_noone_watches' => '誰もこのページをウォッチしていません。',
+	'watchers_x_or_more' => '$1人以上の利用者がこのページをウォッチリストに入れています。',
+	'watchers_less_than_x' => '$1人未満の利用者がこのページをウォッチリストに入れています。',
 );
 
 /** Javanese (Basa Jawa)
@@ -530,6 +608,14 @@ $messages['oc'] = array(
 	'watchers_less_than_x' => 'Mens {{PLURAL:$1|d’un utilizaire seguís|de $1 utilizaires seguisson}} aquesta pagina.',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'watchers' => 'Цæстдарджытæ',
+	'watchers_link_title' => 'Чи йæ цæст дары ацы фарсмæ?',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  * @author Maikking
@@ -538,7 +624,7 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'watchers' => 'Obserwujący',
-	'watchers-desc' => 'Pokazuje, [[Special:Watchers|którzy użytkownicy mają stroną w obserwowanych]]',
+	'watchers-desc' => 'Pokazuje [[Special:Watchers|użytkowników, którzy mają stroną w obserwowanych]]',
 	'watchers_link_title' => 'Kto obserwuje tę stronę?',
 	'watchers_error_article' => '<b>Błąd:</b> Strona nie istnieje',
 	'watchers_header' => '{{PLURAL:$2|Obserwujący|Obserwujący}} „$1”',
@@ -561,9 +647,25 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
+	'watchers' => 'Vigiadores',
+	'watchers-desc' => 'Mostra [[Special:Watchers|quais utilizadores têm uma dada página na sua lista de vigiados]]',
+	'watchers_link_title' => 'Quem está vigiando esta página?',
+	'watchers_error_article' => '<b>Erro:</b> Página inexistente.',
+	'watchers_header' => '{{PLURAL:$2|Utilizador que está|Utilizadores que estão}} vigiando "$1"',
+	'watchers_noone_watches' => 'Ninguém está vigiando esta página.',
+	'watchers_x_or_more' => '$1 ou mais {{PLURAL:$1|pessoa está|pessoas estão}} vigiando esta página.',
+	'watchers_less_than_x' => 'Menos de $1 {{PLURAL:$1|pessoa está|pessoas estão}} vigiando esta página.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'watchers' => 'Vigiadores',
 	'watchers-desc' => 'Mostra [[Special:Watchers|quais utilizadores têm uma dada página na sua lista de vigiados]]',
 	'watchers_link_title' => 'Quem está vigiando esta página?',
 	'watchers_error_article' => '<b>Erro:</b> Página inexistente.',
@@ -590,11 +692,13 @@ $messages['ro'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'watchers' => 'Наблюдающие',
+	'watchers-desc' => 'Показывает [[Special:Watchers|участников, которые включили страницу в свой список наблюдения]]',
 	'watchers_link_title' => 'Кто следит за этой страницей?',
 	'watchers_error_article' => '<b>ошибка:</b> статьи не существует.',
 	'watchers_header' => '{{PLURAL:$2|Участник|Участники}}, наблюдающие за страницей "$1"',
 	'watchers_noone_watches' => 'Никто не следит за этой страницей.',
-	'watchers_x_or_more' => 'За этой страницей наблюдают $1 или более {{PLURAL:$1|участников|участника|участников}}.',
+	'watchers_x_or_more' => 'За этой страницей {{PLURAL:$1|наблюдает|наблюдают}} $1 или более участников.',
 	'watchers_less_than_x' => 'За этой страницей {{PLURAL:$1|наблюдает|наблюдают}} менее $1 {{PLURAL:$1|участника|участников|участников}}.',
 );
 
@@ -610,6 +714,20 @@ $messages['sk'] = array(
 	'watchers_noone_watches' => 'Nikto nesleduje túto stránku.',
 	'watchers_x_or_more' => '$1 alebo viac používateľov sleduje túto stránku.{{PLURAL:$1||}}',
 	'watchers_less_than_x' => 'Menej ako $1 {{PLURAL:$1|používateľ sleduje|používatelia sledujú|používateľov sleduje}} túto stránku.',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'watchers' => 'Beooboachtere',
+	'watchers-desc' => 'Wiest, [[Special:Watchers|wofuul Benutsere]] ne Siede ap hiere Beooboachtengslieste hääbe',
+	'watchers_link_title' => 'Wäl beooboachtet disse Siede?',
+	'watchers_error_article' => "'''Failer:''' Siede existiert nit.",
+	'watchers_header' => '{{PLURAL:$2|Benutser, die „$1“ beooboachtet|Benutsere, do „$1“ beooboachtje}}',
+	'watchers_noone_watches' => 'Dät rakt neen Benutsere, do disse Siede beooboachtje.',
+	'watchers_x_or_more' => '$1 of moor {{PLURAL:$1|Benutsere|Benutsere}} beooboachtje disse Siede.',
+	'watchers_less_than_x' => 'Minner as {{PLURAL:$1|$1 Benutsere|$1 Benutsere}} beooboachtje disse Siede.',
 );
 
 /** Swedish (Svenska)

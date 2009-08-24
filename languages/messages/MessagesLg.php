@@ -362,7 +362,7 @@ oba ku gano agali ku lupapula luno.<br />
 'imagelinks'          => 'Empapula eziriko enyunzi ezigguka ku kifaananyi kino',
 'linkstoimage'        => 'Empapula eziriko enyunzi ezigguka ku fayiro eno ze zino:',
 'nolinkstoimage'      => 'Tewali mpapula ziriko nyunzi ezigguka ku fayiro eno.',
-'sharedupload'        => "Fayiro eno y'emu esobola okuba nga empapula nyingi zigikozesa",
+'sharedupload'        => "Fayiro eno y'emu esobola okuba nga empapula nyingi zigikozesa", # $1 is the repo name, $2 is shareduploadwiki(-desc)
 
 # Random page
 'randompage' => 'Nondera olupapula muwawa',
@@ -551,6 +551,7 @@ Bw\'oba oyagala okulekerawo okulugoberera, nyiga ku kigambo "Suula" awo ku bbali
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength", # Do not translate list items
 
 # External editor support

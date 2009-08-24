@@ -65,6 +65,20 @@ $messages['bcc'] = array(
 	'mibbit' => 'می بیت گپ(Mibbit Chat)',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'mibbit' => 'Размовы з дапамогай Mibbit',
+	'mibbit-desc' => 'Дадае [[Special:Mibbit|спэцыяльную старонку]], якая дазваляе размаўляць зь іншымі ўдзельнікамі {{GRAMMAR:родны|{{SITENAME}}}} ў рэжыме рэальнага часу',
+	'mibbit-header' => 'Гэта спэцыяльная старонка дазваляе Вам узаемадзейнічаць у рэальным часе з іншымі удзельнікамі {{GRAMMAR:родны|{{SITENAME}}}}.
+Каб далучыцца, проста націсьніце кнопку «Далучыцца».
+Калі Вы ўвайшлі ў сыстэму, Вашае імя ўдзельніка будзе выкарыстанае па змоўчваньні.
+Ананімныя ўдзельнікі атрымаюць аўтаматычна створаныя імёны, але іх можна будзе зьмяніць.',
+	'right-mibbit' => 'размовы з дапамогай Mibbit',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -89,6 +103,19 @@ Evit kevreañ, klikit war ar bouton \"Kevreañ\" zo bet rakleuniet.
 Ul lesanv a vo lakaet d'an implijerien dianv dre ziouer met gallout a ra bezañ cheñchet.",
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'mibbit' => 'Mibbit dopisivanje',
+	'mibbit-desc' => 'Dodaje [[Special:Mibbit|posebnu stranicu]] koja se koristi za dopisivanje u stvarnom vremenu sa drugim wiki korisnicima',
+	'mibbit-header' => 'Ova posebna stranica Vam omogućuje da sarađujete u stvarnom vremenu sa drugim korisnicima na wiki.
+Da bi se konektovali, jednostavno kliknite na dugme "Konektuj".
+Ako ste već prijavljeni, bit će uneseno Vaše korisničko ime kao nadimak.
+Anonimni korisnicima će biti dodijeljeno automatski generisano ime, ali se ono može promijeniti.',
+	'right-mibbit' => 'Omogućeno korištenje Mibbit dopisivanja',
+);
+
 /** Catalan (Català)
  * @author SMP
  */
@@ -104,15 +131,16 @@ Els usuaris anònims en tindran un d'automàtic, però els podeu canviar.",
 
 /** Czech (Česky)
  * @author Matěj Grabovský
+ * @author Mormegil
  */
 $messages['cs'] = array(
 	'mibbit' => 'Mibbit Chat',
-	'mibbit-desc' => 'Přidáva [[Special:Mibbit|speciální stránku]], pomocí které můžete komunikovat s ostatními uživateli wiki v reálném čase',
-	'mibbit-header' => 'Tato speciální stránka Vám umožňuje spolupracovat v reálném čase s ostatními uživateli wiki.
+	'mibbit-desc' => 'Přidává [[Special:Mibbit|speciální stránku]], pomocí které můžete komunikovat s ostatními uživateli wiki v reálném čase',
+	'mibbit-header' => 'Tato speciální stránka vám umožňuje spolupracovat v reálném čase s ostatními uživateli wiki.
 Připojíte se jednoduše stisknutím tlačítka „Připojit“.
 Pokud jste přihlášený, vaše uživatelské jméno se vyplní automaticky.
-Anonymním uživatelům se jméno vygeneruje automaticky, ale je možné ho změnit.',
-	'right-mibbit' => 'Používat Mibbit chat',
+Anonymním uživatelům se přidělí automaticky vygenerované jméno, ale je možné ho změnit.',
+	'right-mibbit' => 'Používání Mibbit chatu',
 );
 
 /** German (Deutsch)
@@ -159,18 +187,34 @@ $messages['eo'] = array(
 	'right-mibbit' => 'Rajtigita por uzi babilejon Mibbit',
 );
 
+/** Spanish (Español)
+ * @author Meno25
+ */
+$messages['es'] = array(
+	'mibbit' => 'Chat Mibbit',
+	'mibbit-desc' => 'Añade una [[Special:Mibbit|página especial]] para chatear en tiempo real con otros usuarios del wiki',
+	'mibbit-header' => 'Esta página especial te permite colaborar o charlar en tiempo real con otros usuarios del wiki.
+Para conectar presiona simplemente el botón "Connect".
+Si estás identificado, tu nick habrá sido preescrito.
+Los usuarios anónimos tienen un nick generado automáticamente, pero puede cambiarse.',
+	'right-mibbit' => 'Con permiso para usar el chat Mibbit',
+);
+
 /** French (Français)
+ * @author Crochet.david
+ * @author Delhovlyn
  * @author Grondin
+ * @author PieRRoMaN
  * @author Urhixidur
  */
 $messages['fr'] = array(
 	'mibbit' => 'Clavardage Mibbit',
 	'mibbit-desc' => 'Ajoute une [[Special:Mibbit|page spéciale]] permettant le clavardage en temps réel avec les autres utilisateurs du wiki',
-	'mibbit-header' => 'Cette page spéciale vous autorise à collaborer en temps réel avec les autres utilisateurs du wiki.
-Pour commencer, il suffit de cliquer le bouton « Connect ».
-Si vous êtes connecté, votre pseudo sera déjà instruit.
-Les utilisateurs anonymes se verront attribuer un pseudo créé automatiquement, mais qui peut être modifié.',
-	'right-mibbit' => "Autorise l'utilisation du Chat Mibbit",
+	'mibbit-header' => "Cette page spéciale vous permet de collaborer en temps réel avec d'autres utilisateurs du wiki.
+Pour vous connecter, cliquez simplement sur le bouton « Connect ».
+Si vous êtes enregistré{{GENDER:||e|(e)}}, votre pseudonyme est prédéfini à l'aide de votre nom d'utilisateur.
+Pour les utilisateurs anonymes, un pseudonyme est créé automatiquement, mais celui-ci peut être modifié.",
+	'right-mibbit' => 'Clavarder avec Mibbit',
 );
 
 /** Galician (Galego)
@@ -184,6 +228,19 @@ Para conectarse simplemente prema no botón "Conectar".
 Se está rexistrado o seu nome de usuario será fixado por defecto.
 Aos usuarios anónimos concederáselles un nome automático, que pode ser cambiado.',
 	'right-mibbit' => 'Autorizado para usar a conversa Mibbit',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'mibbit' => 'Mibbit-Chat',
+	'mibbit-desc' => 'Ergänzt e [[Special:Mibbit|Spezialsyte]] zum in Ächtzyt mit andere Benutzer z chatte',
+	'mibbit-header' => 'Die Spezialsyte macht s Dir megli, mit andere Benutzer in Ächtzyt zämmezschaffe.
+Go d Verbindig härstelle, druck uf „Verbinde“-Schaltflächi.
+Wänn Du aagmäldet bisch, wird Dyy Nickname automatisch yytreit.
+Anonyme Benutzer wird e Nickname zuegwise, dää cha aber gänderet wäre.',
+	'right-mibbit' => 'Derf dr Mibbit-Chat bruuche',
 );
 
 /** Hebrew (עברית)
@@ -320,9 +377,9 @@ $messages['lb'] = array(
 	'mibbit' => 'Mibbit Chat',
 	'mibbit-desc' => 'Setzt eng [[Special:Mibbit|Spezialsäit]] derbäi fir mat anere WikiBenotzer ze chatten',
 	'mibbit-header' => 'Dëst ass eng Spezialsäit déi Iech et erlaabt fir an Echtzäit mat anere Benotzer vun der Wiki zesummenzeschaffen.
-Fir iech ze verbannen klickt einfach op de "Verbannen" Knäppchen.
-Wann dir erageloggec sidd da gëtt äre Nickmae virausgefëllt.
-Déi anonyme Benotzer kréien automatesch e Nckname zougedeelt, den si awer änner kënnen.',
+Fir Iech ze verbannen klickt einfach op de "Verbannen" Knäppchen.
+Wann dir erageloggec sidd da gëtt äre Nickname virausgefëllt.
+Déi anonym Benotzer kréien automatesch e Nickname zougedeelt, den si awer ännere kënnen.',
 	'right-mibbit' => 'Däerf de Mibbit-Chat benotzen',
 );
 
@@ -401,6 +458,7 @@ Los utilizaires anonims se veràn atribuir un escais creat automaticament, mas p
 
 /** Polish (Polski)
  * @author Sp5uhe
+ * @author ToSter
  */
 $messages['pl'] = array(
 	'mibbit' => 'Czat Mibbit',
@@ -409,6 +467,7 @@ $messages['pl'] = array(
 Żeby się podłączyć po prostu kliknij przycisk „Connect”.
 Jeżeli jesteś zalogowany, Twoja nazwa użytkownika zostanie wpisana jako nazwa domyślna.
 Użytkownicy anonimowi otrzymują losowy identyfikator, ale mogą go zmienić.',
+	'right-mibbit' => 'Korzystanie z czatu Mibbit',
 );
 
 /** Portuguese (Português)
@@ -420,9 +479,30 @@ $messages['pt'] = array(
 	'mibbit-desc' => 'Adiciona uma [[Special:Mibbit|página especial]] usada para falar em tempo real com outros utilizadores do wiki',
 	'mibbit-header' => 'Esta página especial permite a colaboração em tempo real com outros utilizadores da wiki.
 Para ligar-se basta carregar no botão "Connect".
-Se estiver logado, o seu nome de usuário será preenchido automaticamente.
+Se estiver logado, o seu nome de utilizador será preenchido automaticamente.
 Utilizadores anónimos recebem um nick gerado aleatoriamente, mas este pode ser alterado.',
 	'right-mibbit' => 'Autorizado a usar o chat Mibbit',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'mibbit' => 'Bate-papo Mibbit',
+	'mibbit-desc' => 'Adiciona uma [[Special:Mibbit|página especial]] usada para falar em tempo real com outros utilizadores do wiki',
+	'mibbit-header' => 'Esta página especial permite a colaboração em tempo real com outros utilizadores da wiki.
+Para ligar-se basta clicar no botão "Connect".
+Se estiver autenticado, o seu nome de utilizador será preenchido automaticamente.
+Utilizadores anônimos recebem um apelido gerado aleatoriamente, mas este pode ser alterado.',
+	'right-mibbit' => 'Autorizado a usar o Bate-papo Mibbit',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'mibbit' => 'Chat mibbit',
+	'right-mibbit' => "Permitte de ausà 'a chat Mibbit",
 );
 
 /** Russian (Русский)
@@ -489,6 +569,19 @@ $messages['th'] = array(
 ถ้าคุณล็อกอินก่อนหน้านี้แล้ว ชื่อเล่นของคุณจะถูกใส่ไว้โดยอัตโนมัติ
 ผู้ใช้นิรนามจะมีชื่อให้อยู่แล้ว แต่สามารถเปลี่ยนได้',
 	'right-mibbit' => 'อนุญาตให้ผู้ใช้สามารถใช้มิบบิทแชต',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'mibbit' => 'Talastasang Mibbit',
+	'mibbit-desc' => 'Nagdaragdag ng isang [[Special:Mibbit|natatanging pahina]]ng ginagamit sa pakikipagtalastasan sa iba pang mga tagagamit ng wiki habang nasa loob ng tunay na panahon',
+	'mibbit-header' => 'Nagpapahintulot ang natatanging pahinang ito na makapagtulungan ka sa iba pang mga tagagamit ng wiki habang nasa loob ng tunay na panahon.
+Upang umugnay pindutin lamang ang pindutang "Umugnay".
+Kung nakalagda ka na kusang nilagyan na ng laman ang bansag mo.
+Ang hindi nagpapakilalang mga tagagamit ay binibigyan ng isang kusang nilikha, ngunit maaari itong baguhin.',
+	'right-mibbit' => 'Pinayagan gumamit ng talastasang Mibbit',
 );
 
 /** Vietnamese (Tiếng Việt)

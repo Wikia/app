@@ -88,7 +88,10 @@ $wgFileStore['accountcreds']['directory'] = "{$wgUploadDirectory}/accountcreds";
 $wgFileStore['accountcreds']['url'] = null; // Private
 $wgFileStore['accountcreds']['hash'] = 3;
 
+# Restrict account creation
 $wgGroupPermissions['*']['createaccount'] = false;
+$wgGroupPermissions['user']['createaccount'] = false;
+# Grant account queue rights
 $wgGroupPermissions['bureaucrat']['confirmaccount'] = true;
 # This right has the request IP show when confirming accounts
 $wgGroupPermissions['bureaucrat']['requestips'] = true;

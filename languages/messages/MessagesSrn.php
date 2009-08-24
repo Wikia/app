@@ -72,8 +72,8 @@ $specialPageAliases = array(
 	'Mostlinked'                => array( 'PasatekiPeprewoysi' ),
 	'Mostlinkedcategories'      => array( 'PasatekiGuru' ),
 	'Mostlinkedtemplates'       => array( 'PasatekiAnkra' ),
-	'Mostcategories'            => array( 'PasaGuru' ),
 	'Mostimages'                => array( 'PasaGefre' ),
+	'Mostcategories'            => array( 'PasaGuru' ),
 	'Mostrevisions'             => array( 'PasaKenki' ),
 	'Fewestrevisions'           => array( 'MenaKenki' ),
 	'Shortpages'                => array( 'SyartuPeprewoysi' ),
@@ -105,6 +105,47 @@ $specialPageAliases = array(
 	'Listbots'                  => array( 'Botrey' ),
 	'Search'                    => array( 'Suku' ),
 	'Withoutinterwiki'          => array( 'NoInterwiki' ),
+);
+
+$magicWords = array(
+	'redirect'              => array( '0', '#STIR', '#DOORVERWIJZING', '#REDIRECT' ),
+	'notoc'                 => array( '0', '__NOINOT__', '__GEENINHOUD__', '__NOTOC__' ),
+	'nogallery'             => array( '0', '__NOPIKTURAMA__', '__GEEN_GALERIJ__', '__NOGALLERY__' ),
+	'forcetoc'              => array( '0', '__INOTDWENGI__', '__INHOUD_DWINGEN__', '__FORCEERINHOUD__', '__FORCETOC__' ),
+	'toc'                   => array( '0', '__INOT__', '__INHOUD__', '__TOC__' ),
+	'noeditsection'         => array( '0', '__NOKENKISKAKI__', '__NIETBEWERKBARESECTIE__', '__NOEDITSECTION__' ),
+	'currentmonth'          => array( '1', 'CURRENTMOTNH', 'DISIMUN', 'HUIDIGEMAAND', 'CURRENTMONTH' ),
+	'currentmonthname'      => array( '1', 'DISIMUNNEN', 'HUIDIGEMAANDNAAM', 'CURRENTMONTHNAME' ),
+	'currentmonthnamegen'   => array( '1', 'DISIMUNNENGEN', 'HUIDIGEMAANDGEN', 'CURRENTMONTHNAMEGEN' ),
+	'currentmonthabbrev'    => array( '1', 'DISIMUNSH', 'HUIDIGEMAANDAFK', 'CURRENTMONTHABBREV' ),
+	'currentday'            => array( '1', 'DISIDEY', 'HUIDIGEDAG', 'CURRENTDAY' ),
+	'currentday2'           => array( '1', 'DISIDEY2', 'HUIDIGEDAG2', 'CURRENTDAY2' ),
+	'currentdayname'        => array( '1', 'DISIDEYNEN', 'HUIDIGEDAGNAAM', 'CURRENTDAYNAME' ),
+	'currentyear'           => array( '1', 'DISIYARI', 'HUIDIGJAAR', 'CURRENTYEAR' ),
+	'currenttime'           => array( '1', 'DISITEN', 'HUIDIGETIJD', 'CURRENTTIME' ),
+	'currenthour'           => array( '1', 'DISIYURU', 'HUIDIGUUR', 'CURRENTHOUR' ),
+	'localmonth'            => array( '1', 'PRESIMUN', 'PLAATSELIJKEMAAND', 'LOKALEMAAND', 'LOCALMONTH' ),
+	'localmonthname'        => array( '1', 'PRESIMUNNEN', 'PLAATSELIJKEMAANDNAAM', 'LOKALEMAANDNAAM', 'LOCALMONTHNAME' ),
+	'localmonthnamegen'     => array( '1', 'PRESIMUNNENGEN', 'PLAATSELIJKEMAANDNAAMGEN', 'LOKALEMAANDNAAMGEN', 'LOCALMONTHNAMEGEN' ),
+	'localmonthabbrev'      => array( '1', 'PRESIMUNSH', 'PLAATSELIJKEMAANDAFK', 'LOKALEMAANDAFK', 'LOCALMONTHABBREV' ),
+	'localday'              => array( '1', 'PRESIDEY', 'PLAATSELIJKEDAG', 'LOKALEDAG', 'LOCALDAY' ),
+	'localday2'             => array( '1', 'PRESIDEY2', 'PLAATSELIJKEDAG2', 'LOKALEDAG2', 'LOCALDAY2' ),
+	'localdayname'          => array( '1', 'PRESIDEYNEN', 'PLAATSELIJKEDAGNAAM', 'LOKALEDAGNAAM', 'LOCALDAYNAME' ),
+	'localyear'             => array( '1', 'PRESIYARI', 'PLAATSELIJKJAAR', 'LOKAALJAAR', 'LOCALYEAR' ),
+	'localtime'             => array( '1', 'PRESITEN', 'PLAATSELIJKETIJD', 'LOKALETIJD', 'LOCALTIME' ),
+	'localhour'             => array( '1', 'PRESIYURU', 'PLAATSELIJKUUR', 'LOKAALUUR', 'LOCALHOUR' ),
+	'numberofpages'         => array( '1', 'PAPIRANUMRO', 'AANTALPAGINAS', 'AANTALPAGINA\'S', 'AANTALPAGINA’S', 'NUMBEROFPAGES' ),
+	'numberofarticles'      => array( '1', 'PAPIRALEGIMNUMRO', 'AANTALARTIKELEN', 'NUMBEROFARTICLES' ),
+	'numberoffiles'         => array( '1', 'GEFRENUMRO', 'AANTALBESTANDEN', 'NUMBEROFFILES' ),
+	'numberofusers'         => array( '1', 'MASYINNUMRO', 'AANTALGEBRUIKERS', 'NUMBEROFUSERS' ),
+	'numberofedits'         => array( '1', 'KENKINUMRO', 'AANTALBEWERKINGEN', 'NUMBEROFEDITS' ),
+	'pagename'              => array( '1', 'PAPIRANEN', 'PAGINANAAM', 'PAGENAME' ),
+	'pagenamee'             => array( '1', 'PAPIRANENE', 'PAGINANAAME', 'PAGENAMEE' ),
+	'namespace'             => array( '1', 'NENPREKI', 'NAAMRUIMTE', 'NAMESPACE' ),
+	'namespacee'            => array( '1', 'NENPREKIE', 'NAAMRUIMTEE', 'NAMESPACEE' ),
+	'talkspace'             => array( '1', 'TAKIPREKI', 'OVERLEGRUIMTE', 'TALKSPACE' ),
+	'talkspacee'            => array( '1', 'TAKIPREKIE', 'OVERLEGRUIMTEE', 'TALKSPACEE' ),
+	'special'               => array( '0', 'spesyal', 'speciaal', 'special' ),
 );
 
 $messages = array(
@@ -795,7 +836,7 @@ Papira ini [[Special:Watchlist|yu Tan Luku réy]] '''fatu'''.",
 'imagelinks'                => 'File nen miti',
 'linkstoimage'              => '{{PLURAL:$1|A papira|$1 Den papira}} disi e kebroike a file disi:',
 'nolinkstoimage'            => 'Nowan papira e miti kon na a file disi.',
-'sharedupload'              => 'A file disi lai poti fu prati én tra project kan kebroiki en.',
+'sharedupload'              => 'A file disi lai poti fu prati én tra project kan kebroiki en.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'shareduploadwiki'          => 'Si $1 fu pasa infrumasi.',
 'shareduploadwiki-linktext' => 'gefreinfrumasi',
 'noimage'                   => 'No wan file de nanga a nen disi. Yu kan $1.',
@@ -929,7 +970,8 @@ Papira ini [[Special:Watchlist|yu Tan Luku réy]] '''fatu'''.",
 'categories' => 'Den grupu',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Trowe kenki fu masyin',
+'deletedcontributions'       => 'Trowe kenki fu masyin',
+'deletedcontributions-title' => 'Trowe kenki fu masyin',
 
 # Special:ListUsers
 'listusersfrom'      => 'Masyin libi si fu:',
@@ -1192,6 +1234,7 @@ Trawan o kibri.
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # External editor support

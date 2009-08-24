@@ -10,7 +10,7 @@ $messages = array();
 $messages['en'] = array(
 	'editmessages-desc'        => '[[Special:EditMessages|Web-based editing]] of large numbers of Messages*.php files',
 	'editmessages'             => 'Edit messages',
-	'editmsg-target'           => 'Target message: ',
+	'editmsg-target'           => 'Target message:',
 	'editmsg-search'           => 'Search',
 	'editmsg-show-list'        => 'Showing values for message name "$1"',
 	'editmsg-get-patch'        => 'Generate patch',
@@ -47,6 +47,14 @@ $messages['krl'] = array(
  */
 $messages['niu'] = array(
 	'editmsg-search' => 'Kumi',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'editmessages' => 'Redaktiruida tedotused',
+	'editmsg-search' => 'Ectä',
 );
 
 /** Afrikaans (Afrikaans)
@@ -110,8 +118,8 @@ $messages['arz'] = array(
 	'editmsg-warning-parse1' => '* تعبير اسم الرسالة المنتظم لم يطابق: $1',
 	'editmsg-warning-parse2' => '* حرف اقتباس متوقع بعد السهم: $1',
 	'editmsg-warning-parse3' => '* نهاية خيط القيمة لم يتم العثور عليه: $1',
-	'editmsg-warning-file' => '* غلطات في قراية الفايل اتقابلت كمان في {{PLURAL:$2|اللغه دي|اللغات دي}}: $1',
-	'editmsg-warning-mismatch' => '* النص الاصلاني ماكانش عنده القيمه المتوقعه {{PLURAL:$2|للغه دي|للغات دي}}: $1',
+	'editmsg-warning-file' => '* غلطات فى قراية الفايل اتقابلت كمان فى {{PLURAL:$2|اللغه دى|اللغات دى}}: $1',
+	'editmsg-warning-mismatch' => '* النص الاصلانى ماكانش عنده القيمه المتوقعه {{PLURAL:$2|للغه دى|للغات دى}}: $1',
 	'editmsg-apply-patch' => 'تنفيذ الباتش',
 	'editmsg-no-patch' => 'غير قادر على تنفيذ أمر "patch"',
 	'editmsg-patch-failed' => 'الباتش فشلت مع حالة خروج $1',
@@ -158,8 +166,22 @@ $messages['bn'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'editmessages-desc' => '[[Special:EditMessages|Uređivanje zasnovano na webu]] velikog broja datoteka tipa Messages*.php',
+	'editmessages' => 'Uređivanje poruka',
+	'editmsg-target' => 'Ciljna poruka:',
 	'editmsg-search' => 'Traži',
+	'editmsg-show-list' => 'Prikazuje vrijednosti za poruku s naslovom "$1"',
+	'editmsg-get-patch' => 'Generiraj patch',
+	'editmsg-new-search' => 'Nova pretraga',
+	'editmsg-warning-parse1' => '* Ime poruke regex se ne slaže: $1',
+	'editmsg-warning-parse2' => '* Nakon strelice očekivan je znak navodnika: $1',
+	'editmsg-warning-parse3' => '* Nije pronađen znak završetka linije: $1',
 	'editmsg-warning-file' => '* Greške pri čitanju datoteke su se desile kod {{PLURAL:$2|slijedećeg|slijedećih}} jezika: $1',
+	'editmsg-warning-mismatch' => '* Prvobitni tekst nije imao očekivanu vrijednost za {{PLURAL:$2|slijedeći jezik|slijedeće jezike}}: $1',
+	'editmsg-apply-patch' => 'Primijeni patch',
+	'editmsg-no-patch' => 'Nemoguće izvršiti "patch" komandu',
+	'editmsg-patch-failed' => 'Patch nije uspio sa izlaznom porukom $1',
+	'editmsg-patch-success' => 'Uspješno primijenjen patch.',
 );
 
 /** Catalan (Català)
@@ -217,7 +239,7 @@ $messages['de'] = array(
  * @author Michawiki
  */
 $messages['dsb'] = array(
-	'editmessages-desc' => '[[SpeciaL:EditMessages|Wobźěłowanje]] wulkeje licby datajow Messages*.php we Webje',
+	'editmessages-desc' => '[[Special:EditMessages|Wobźěłowanje]] wulkeje licby datajow Messages*.php we Webje',
 	'editmessages' => 'Powěźeńki wobźěłaś',
 	'editmsg-target' => 'Celowa powěźeńka:',
 	'editmsg-search' => 'Pytaś',
@@ -261,12 +283,22 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author David0811
  * @author Jatrobat
  */
 $messages['es'] = array(
 	'editmessages' => 'Editando mensajes',
+	'editmsg-target' => 'Mensaje objetivo:',
 	'editmsg-search' => 'Buscar',
+	'editmsg-show-list' => 'Mostrando valores para el nombre de mensaje "$1"',
+	'editmsg-get-patch' => 'Generar parche',
+	'editmsg-new-search' => 'Nueva búsqueda',
+	'editmsg-warning-file' => '* Errores de lectura de archivo fueron encontrados para los siguientes {{PLURAL:$2|lenguaje|lenguajes}}: $1',
+	'editmsg-warning-mismatch' => '* El texto original no tuvo el valor esperado para los siguientes {{PLURAL:$2|lenguaje|lenguajes}}: $1',
+	'editmsg-apply-patch' => 'Aplicar parche',
+	'editmsg-no-patch' => 'Incapaz de ejecutar comando "parche"',
+	'editmsg-patch-success' => 'Parchado exitosamente.',
 );
 
 /** Estonian (Eesti)
@@ -380,6 +412,28 @@ $messages['grc'] = array(
 	'editmsg-patch-success' => 'Ἐπιτυχῶς συνερραμένη.',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'editmessages-desc' => '[[Special:EditMessages|Webbasiert Bearbeite]] vun ere große Aazahl vu Messages*.php-Dateie',
+	'editmessages' => 'Syschtemnochricht bearbeite',
+	'editmsg-target' => 'Syschtemnochricht, wu soll bearbeitet wäre:',
+	'editmsg-search' => 'Sueche',
+	'editmsg-show-list' => 'Inhalt vu dr Syschtemnochricht „$1“',
+	'editmsg-get-patch' => 'Leg Patch aa',
+	'editmsg-new-search' => 'Neji Suechi',
+	'editmsg-warning-parse1' => '* Regex trifft uf kei Syschtemnochricht zue: $1',
+	'editmsg-warning-parse2' => '* Aafierigszeiche noch Pfyyl erwartet: $1',
+	'editmsg-warning-parse3' => '* Änd vu dr Zeichechette nit gfunde: $1',
+	'editmsg-warning-file' => '* S het e Dateiläsefähler fir die {{PLURAL:$2|Sproch|Sproche}} gee: $1',
+	'editmsg-warning-mismatch' => '* Dr Originaltäxt het nit dr erwartet Wärt fir die {{PLURAL:$2|Sproch|Sproche}}: $1',
+	'editmsg-apply-patch' => 'Patch aawände',
+	'editmsg-no-patch' => 'Patch-Kommando cha nit aagwändet wäre',
+	'editmsg-patch-failed' => 'Patch isch fählgschlaa mit em exit-Status $1.',
+	'editmsg-patch-success' => 'Erfolgryych patcht.',
+);
+
 /** Manx (Gaelg)
  * @author MacTire02
  */
@@ -393,6 +447,13 @@ $messages['gv'] = array(
  */
 $messages['hak'] = array(
 	'editmsg-search' => 'Chhìm-cháu',
+);
+
+/** Hawaiian (Hawai`i)
+ * @author Kalani
+ */
+$messages['haw'] = array(
+	'editmsg-search' => 'Huli',
 );
 
 /** Hebrew (עברית)
@@ -411,8 +472,8 @@ $messages['he'] = array(
 	'editmsg-warning-parse1' => '* הביטוי הרגולרי של שם ההודעה לא תואם: $1',
 	'editmsg-warning-parse2' => '* דרושים גרשיים לאחר החץ: $1',
 	'editmsg-warning-parse3' => '* סוף ערך המחרוזת לא נמצא: $1',
-	'editmsg-warning-file' => '* אירעו שגיאות קריאת קובץ בשפות הבאות: $1',
-	'editmsg-warning-mismatch' => '* לטקסט המקורי אין את הערך הצפוי בשפות הבאות: $1',
+	'editmsg-warning-file' => '* אירעו שגיאות קריאת קובץ ב{{PLURAL:$2|שפה הבאה|שפות הבאות}}: $1',
+	'editmsg-warning-mismatch' => '* לטקסט המקורי אין את הערך הצפוי ב{{PLURAL:$2|שפה הבאה|שפות הבאות}}: $1',
 	'editmsg-apply-patch' => 'החלת הטלאי',
 	'editmsg-no-patch' => 'לא ניתן להפעיל את הפקודה "patch"',
 	'editmsg-patch-failed' => 'החלת הטלאי נכשלה עם מצב יציאה $1',
@@ -530,9 +591,25 @@ $messages['id'] = array(
 
 /** Italian (Italiano)
  * @author Darth Kule
+ * @author Pietrodn
  */
 $messages['it'] = array(
+	'editmessages-desc' => '[[Special:EditMessages|Modifica via web]] di un gran numero di file Messages*.php',
+	'editmessages' => 'Modifica messaggi',
+	'editmsg-target' => 'Messaggio interessato:',
 	'editmsg-search' => 'Ricerca',
+	'editmsg-show-list' => 'Sono visualizzati i valori per il nome di messaggio "$1"',
+	'editmsg-get-patch' => 'Genera patch',
+	'editmsg-new-search' => 'Nuova ricerca',
+	'editmsg-warning-parse1' => '* Regex del nome di messaggio non ha trovato: $1',
+	'editmsg-warning-parse2' => '* Era atteso un carattere di citazione dopo la freccia: $1',
+	'editmsg-warning-parse3' => '* Stringa di fine del valore non trovata: $1',
+	'editmsg-warning-file' => '* Sono stati riscontrati errori di lettura file per {{PLURAL:$2|la seguente lingua|le seguenti lingue}}: $1',
+	'editmsg-warning-mismatch' => '* Il testo originale non aveva il valore atteso per {{PLURAL:$2|la seguente lingua|le seguenti lingue}}: $1',
+	'editmsg-apply-patch' => 'Applica la patch',
+	'editmsg-no-patch' => 'Impossibile eseguire il comando "patch"',
+	'editmsg-patch-failed' => 'La patch è fallita con stato di uscita $1',
+	'editmsg-patch-success' => 'Patchato con successo.',
 );
 
 /** Japanese (日本語)
@@ -633,6 +710,14 @@ $messages['ku-latn'] = array(
 	'editmsg-search' => 'Lêbigere',
 );
 
+/** Cornish (Kernewek)
+ * @author Kw-Moon
+ */
+$messages['kw'] = array(
+	'editmsg-search' => 'Hwilas',
+	'editmsg-new-search' => 'Hwilas nowyth',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -655,10 +740,19 @@ $messages['lb'] = array(
 	'editmsg-patch-success' => 'gepatched!',
 );
 
+/** Lingua Franca Nova (Lingua Franca Nova)
+ * @author Malafaya
+ */
+$messages['lfn'] = array(
+	'editmsg-search' => 'Xerca',
+);
+
 /** Lithuanian (Lietuvių)
+ * @author Homo
  * @author Tomasdd
  */
 $messages['lt'] = array(
+	'editmessages' => 'Redaguoti pranešimus',
 	'editmsg-search' => 'Ieškoti',
 );
 
@@ -704,6 +798,20 @@ $messages['mr'] = array(
 	'editmsg-no-patch' => '"patch" क्रिया करता आलेली नाही',
 	'editmsg-patch-failed' => '$1 अशी स्थिती दाखवून पॅच रद्द झालेला आहे',
 	'editmsg-patch-success' => 'पॅच यशस्वी.',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Diagramma Della Verita
+ */
+$messages['ms'] = array(
+	'editmessages-desc' => '[[Special:EditMessages|Penyuntingan berasaskan laman web]] berdasarkan fail Messages*.php',
+	'editmessages' => 'Sunting pesanan',
+	'editmsg-target' => 'Mesej target:',
+	'editmsg-search' => 'Carian',
+	'editmsg-show-list' => 'Senaraikan maklumat mesej tajuk "$1"',
+	'editmsg-get-patch' => 'Lakukan penyesuaian',
+	'editmsg-new-search' => 'Carian baru',
+	'editmsg-warning-parse1' => '* Nama mesej regex tidak tepat: $1',
 );
 
 /** Erzya (Эрзянь)
@@ -810,6 +918,13 @@ $messages['oc'] = array(
 	'editmsg-patch-success' => 'Patch aplicat amb succès.',
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Jose77
+ */
+$messages['or'] = array(
+	'editmsg-search' => 'ସନ୍ଧାନ',
+);
+
 /** Ossetic (Иронау)
  * @author Amikeco
  */
@@ -855,10 +970,39 @@ $messages['pt'] = array(
 	'editmsg-target' => 'Mensagem alvo:',
 	'editmsg-search' => 'Pesquisar',
 	'editmsg-show-list' => 'Mostrando valores para o nome de mensagem "$1"',
+	'editmsg-get-patch' => 'Gerar correcção',
 	'editmsg-new-search' => 'Nova pesquisa',
+	'editmsg-warning-parse1' => '* Expressão regular de nome de mensagem sem qualquer correspondência: $1',
 	'editmsg-warning-parse2' => '* Caracter de aspa esperado após seta: $1',
 	'editmsg-warning-parse3' => '* Fim de cadeia de caracteres de valor não encontrado: $1',
 	'editmsg-warning-file' => 'Erros de leitura de ficheiro foram encontrados para {{PLURAL:$2|a seguinte língua|as seguintes línguas}}: $1',
+	'editmsg-warning-mismatch' => '* O texto original não tinha o valor esperado para {{PLURAL:$2|a seguinte língua|as seguintes línguas}}: $1',
+	'editmsg-apply-patch' => 'Aplicar correcção',
+	'editmsg-no-patch' => 'Não foi possível executar comando de correcção "patch"',
+	'editmsg-patch-failed' => 'Aplicação de correcção falhou com estado de saída $1',
+	'editmsg-patch-success' => 'Correcção aplicada com sucesso.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'editmessages-desc' => '[[Special:EditMessages|Edição baseada em web]] de um grande número de arquivos Messages*.php',
+	'editmessages' => 'Editar mensagens',
+	'editmsg-target' => 'Mensagem alvo:',
+	'editmsg-search' => 'Pesquisar',
+	'editmsg-show-list' => 'Mostrando valores para o nome de mensagem "$1"',
+	'editmsg-get-patch' => 'Gerar correção',
+	'editmsg-new-search' => 'Nova pesquisa',
+	'editmsg-warning-parse1' => '* Expressão regular de nome de mensagem sem qualquer correspondência: $1',
+	'editmsg-warning-parse2' => '* Caractere de aspa esperado após seta: $1',
+	'editmsg-warning-parse3' => '* Fim de cadeia de caracteres de valor não encontrado: $1',
+	'editmsg-warning-file' => 'Erros de leitura de arquivo foram encontrados para {{PLURAL:$2|a seguinte língua|as seguintes línguas}}: $1',
+	'editmsg-warning-mismatch' => '* O texto original não tinha o valor esperado para {{PLURAL:$2|a seguinte língua|as seguintes línguas}}: $1',
+	'editmsg-apply-patch' => 'Aplicar correção',
+	'editmsg-no-patch' => 'Não foi possível executar comando de correção "patch"',
+	'editmsg-patch-failed' => 'Aplicação de correção falhou com estado de saída $1',
+	'editmsg-patch-success' => 'Correção aplicada com sucesso.',
 );
 
 /** Tarifit (Tarifit)
@@ -1022,6 +1166,29 @@ $messages['th'] = array(
 	'editmsg-patch-success' => 'ติดตั้งแพตช์สมบูรณ์',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'editmessages-desc' => '[[Special:EditMessages|Nakabatay sa web na pagbago]] ng malakihang mga bilang ng mga talaksang Messages*.php',
+	'editmessages' => 'Baguhin ang mga mensahe',
+	'editmsg-target' => 'Puntiryang mensahe:',
+	'editmsg-search' => 'Maghanap',
+	'editmsg-show-list' => 'Ipinapakita ang mga halaga para sa pangalan ng mensaheng "$1"',
+	'editmsg-get-patch' => 'Gumawa ng pantapal',
+	'editmsg-new-search' => 'Bagong paghahanap',
+	'editmsg-warning-parse1' => '* Hindi tugma ang pangkaraniwang pagsasaad ng pangalan ng mensahe: $1',
+	'editmsg-warning-parse2' => '* Inaasahan ang panandang pambanggit pagkaraan ng pana: $1',
+	'editmsg-warning-parse3' => '* Hindi natagpuan ang bagting ng wakas ng halaga: $1',
+	'editmsg-warning-file' => '* Nakaranas ng mga kamalian sa pagbasa ng talaksan para sa sumusunod na {{PLURAL:$2|wika|mga wika}}: $1',
+	'editmsg-warning-mismatch' => '* Wala sa orihinal na teksto ang inaasahang halaga para sa sumusunod na
+{{PLURAL:$2|wika|mga wika}}: $1',
+	'editmsg-apply-patch' => 'Ilagay ang pantapal',
+	'editmsg-no-patch' => 'Hindi naisagawa ang utos na maglagay ng "pantapal"',
+	'editmsg-patch-failed' => 'Nabigo ang pantapal sa kalagayang paglabas na $1',
+	'editmsg-patch-success' => 'Matagumpay na natapalan.',
+);
+
 /** Turkish (Türkçe)
  * @author Mach
  */
@@ -1062,11 +1229,27 @@ $messages['vi'] = array(
 	'editmsg-patch-success' => 'Vá thành công.',
 );
 
+/** Volapük (Volapük)
+ * @author Malafaya
+ */
+$messages['vo'] = array(
+	'editmsg-new-search' => 'Suk nulik',
+);
+
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
 $messages['yi'] = array(
 	'editmsg-search' => 'זוכן',
 	'editmsg-new-search' => 'ניי זוכן',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wmr89502270
+ */
+$messages['zh-hans'] = array(
+	'editmessages' => '编辑消息',
+	'editmsg-search' => '搜索',
+	'editmsg-new-search' => '新搜索',
 );
 

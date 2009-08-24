@@ -1,11 +1,14 @@
 <?php
 /**
- * Aliases for special pages
+ * Aliases for WhatIsMyIP extension.
  *
+ * @file
+ * @ingroup Extensions
  */
 
 $aliases = array();
 
+/** English */
 $aliases['en'] = array(
 	'WhatIsMyIP' => array( 'WhatIsMyIP' ),
 );
@@ -34,9 +37,19 @@ $aliases['de'] = array(
 	'WhatIsMyIP' => array( 'Meine IP-Adresse' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'WhatIsMyIP' => array( 'Moja IP-adresa' ),
+);
+
 /** Divehi (ދިވެހިބަސް) */
 $aliases['dv'] = array(
 	'WhatIsMyIP' => array( 'އަހަރެންގެ އައި.ޕީ އަކީ' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'WhatIsMyIP' => array( 'Mi_IP', 'Cuál_es_mi_IP' ),
 );
 
 /** Persian (فارسی) */
@@ -52,6 +65,11 @@ $aliases['fi'] = array(
 /** French (Français) */
 $aliases['fr'] = array(
 	'WhatIsMyIP' => array( 'Quelle est mon IP', 'QuelleEstMonIP' ),
+);
+
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'WhatIsMyIP' => array( 'Cal é a miña IP' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -72,6 +90,16 @@ $aliases['hsb'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'WhatIsMyIP' => array( 'Mi az IP-címem' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'WhatIsMyIP' => array( 'Que es mi IP' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'WhatIsMyIP' => array( '自分のIPアドレス' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -109,13 +137,38 @@ $aliases['oc'] = array(
 	'WhatIsMyIP' => array( 'Quina es mon IP', 'QuinaEsMonIP' ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'WhatIsMyIP' => array( 'Moje IP' ),
+);
+
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'WhatIsMyIP' => array( 'زما آی پي پته څه ده' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'WhatIsMyIP' => array( 'मदियअङ्कसंकेतकिमस्ती' ),
+);
+
 /** Albanian (Shqip) */
 $aliases['sq'] = array(
 	'WhatIsMyIP' => array( 'IPjaIme' ),
 );
 
+/** Sundanese (Basa Sunda) */
+$aliases['su'] = array(
+	'WhatIsMyIP' => array( 'NaonIPKuring' ),
+);
+
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'WhatIsMyIP' => array( 'ไอพีของฉัน' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'WhatIsMyIP' => array( 'Ano ang IP ko' ),
 );
 

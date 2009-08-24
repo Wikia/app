@@ -111,6 +111,33 @@ $aliases['hu'] = array(
 	'UserBoard' => array( 'Felhasználói üzenőfal' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'AddRelationship' => array( 'Adder relation' ),
+	'PopulateUserProfiles' => array( 'Impler profilos de usatores' ),
+	'RemoveAvatar' => array( 'Remover avatar' ),
+	'RemoveRelationship' => array( 'Remover relation' ),
+	'SendBoardBlast' => array( 'Inviar colpo de tabuliero' ),
+	'TopFansByStatistic' => array( 'Admiratores supreme per statistica' ),
+	'TopUsers' => array( 'Usatores supreme' ),
+	'TopUsersRecent' => array( 'Usatores supreme recente' ),
+	'ToggleUserPage' => array( 'Cambiar pagina de usator' ),
+	'UpdateEditCounts' => array( 'Actualisar numeros de modificationes' ),
+	'UpdateProfile' => array( 'Actualisar profilos' ),
+	'UploadAvatar' => array( 'Cargar avatar' ),
+	'UserBoard' => array( 'Tabuliero de usator' ),
+	'ViewRelationshipRequests' => array( 'Vider requestas de relation' ),
+	'ViewRelationships' => array( 'Vider relationes' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'RemoveAvatar' => array( 'アバター削除' ),
+	'UpdateEditCounts' => array( '編集回数の更新' ),
+	'UpdateProfile' => array( 'プロフィール更新' ),
+	'UploadAvatar' => array( 'アバターアップロード' ),
+);
+
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'TopUsers' => array( 'អ្នកប្រើប្រាស់សកម្មបំផុត' ),
@@ -122,7 +149,8 @@ $aliases['lb'] = array(
 	'PopulateUserProfiles' => array( 'Benotzerprofiler ausfëllen' ),
 	'RemoveAvatar' => array( 'Avatar ewechhuelen' ),
 	'RemoveRelationship' => array( 'Relatioun ewechhuelen' ),
-	'UpdateEditCounts' => array( 'Zielen vun den Ännerungen aktualiséieren' ),
+	'TopUsers' => array( 'Top-Benotzer' ),
+	'UpdateEditCounts' => array( 'Ziele vun den Ännerungen aktualiséieren' ),
 	'UpdateProfile' => array( 'Profil eroplueden' ),
 	'UploadAvatar' => array( 'Avatar eroplueden' ),
 	'ViewRelationshipRequests' => array( 'Ufroen vu Relatiounen weisen' ),
@@ -181,10 +209,33 @@ $aliases['no'] = array(
 	'UploadAvatar' => array( 'Oppdater profilbilde' ),
 );
 
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'UpdateProfile' => array( 'پېژنليک تازه کول' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'AddRelationship' => array( 'WekaMahusiano' ),
 	'PopulateUserProfiles' => array( 'JazaProfailizaMtumiaji' ),
 	'RemoveRelationship' => array( 'OndoaMahusiano' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'AddRelationship' => array( 'Idagdag ang kaugnayan' ),
+	'PopulateUserProfiles' => array( 'Paramihin ang mga talaan ng katangian ng tagagamit' ),
+	'RemoveAvatar' => array( 'Tanggalin ang huwaran', 'Tanggalin ang abatar' ),
+	'RemoveRelationship' => array( 'Tanggalin ang ugnayan' ),
+	'TopFansByStatistic' => array( 'Tampok na mga tagahanga ayon sa estadistika' ),
+	'TopUsers' => array( 'Tampok na mga tagagamit' ),
+	'TopUsersRecent' => array( 'Kamakailang tampok na mga tagagamit' ),
+	'ToggleUserPage' => array( 'Galawin ang pahina ng tagagamit' ),
+	'UpdateEditCounts' => array( 'Isapanahon ang bilang ng pamamatnugot' ),
+	'UpdateProfile' => array( 'Isapanahon ang talaan ng katangian' ),
+	'UploadAvatar' => array( 'Ikarga ang huwaran' ),
+	'UserBoard' => array( 'Pisara ng tagagamit' ),
+	'ViewRelationshipRequests' => array( 'Tingnan ang mga hiling ng kaugnayan' ),
+	'ViewRelationships' => array( 'Tingnan ang mga kaugnayan' ),
 );
 

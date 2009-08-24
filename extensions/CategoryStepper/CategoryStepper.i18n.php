@@ -81,6 +81,15 @@ $messages['br'] = array(
 	'categorystepper-start' => '(penn-kentañ ar rummad)',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'categorystepper-desc' => 'Prikazuje kutiju izlistavanja kategorije koja omogućuje da se ide naprijed i nazad po abecedi kroz jednu ili više kategorija u kojima je stranica',
+	'categorystepper-end' => '(Kraj kategorije)',
+	'categorystepper-start' => '(Početak kategorije)',
+);
+
 /** Czech (Česky)
  * @author Li-sung
  * @author Matěj Grabovský
@@ -126,6 +135,14 @@ $messages['eo'] = array(
 	'categorystepper-start' => '(Komenco de kategorio)',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'categorystepper-end' => '(fin de categoría)',
+	'categorystepper-start' => '(comienzo de categoría)',
+);
+
 /** Basque (Euskara)
  * @author An13sa
  */
@@ -146,9 +163,10 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author Louperivois
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'categorystepper-desc' => 'Affiche une boîte de catégorie sur des pages qui sont indiquées dans une catégorie',
+	'categorystepper-desc' => 'Affiche une boîte de catégories permettant de visiter alphabétiquement de l’une à l’autre la (ou les) catégorie(s) dont une page est membre.',
 	'categorystepper-end' => '(Fin de catégorie)',
 	'categorystepper-start' => '(Début de catégorie)',
 );
@@ -179,6 +197,16 @@ $messages['gsw'] = array(
 $messages['gv'] = array(
 	'categorystepper-end' => '(Jerrey y ronney)',
 	'categorystepper-start' => '(Toshiaght y ronney)',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ * @author YaronSh
+ */
+$messages['he'] = array(
+	'categorystepper-desc' => 'הצגת תיבת צעידה בין הקטגוריות, כדי לתת את האפשרות לנווט קדימה ואחורה בסדר אלפביתי בין קטגוריה אחת או יותר אשר בהן נמצא דף',
+	'categorystepper-end' => '(סוף הקטגוריה)',
+	'categorystepper-start' => '(תחילת הקטגוריה)',
 );
 
 /** Hindi (हिन्दी)
@@ -225,6 +253,15 @@ $messages['is'] = array(
 	'categorystepper-start' => '(Upphaf flokks)',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'categorystepper-desc' => 'Visualizza una casella stepper per le categorie che permette di navigare avanti e indietro in ordine alfabetico attraverso una o più categorie di una pagina',
+	'categorystepper-end' => '(Fine della categoria)',
+	'categorystepper-start' => '(Inizio della categoria)',
+);
+
 /** Japanese (日本語)
  * @author JtFuruhata
  */
@@ -251,6 +288,14 @@ $messages['km'] = array(
 	'categorystepper-start' => '(ការចាប់ផ្តើមនៃចំណាត់ថ្នាក់ក្រុម)',
 );
 
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'categorystepper-end' => '(분류의 끝)',
+	'categorystepper-start' => '(분류의 시작)',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
@@ -275,6 +320,15 @@ $messages['lb'] = array(
 $messages['lo'] = array(
 	'categorystepper-end' => '(ຈົບໝວດ)',
 	'categorystepper-start' => '(ເລິ່ມໝວດ)',
+);
+
+/** Macedonian (Македонски)
+ * @author Brest
+ */
+$messages['mk'] = array(
+	'categorystepper-desc' => 'Прикажува навигациска кутија за навигација низ азбучна листа на категории на страница',
+	'categorystepper-end' => '(Крај на категорија)',
+	'categorystepper-start' => '(Почеток на категорија)',
 );
 
 /** Malayalam (മലയാളം)
@@ -367,12 +421,29 @@ $messages['pt'] = array(
 	'categorystepper-start' => '(Início da categoria)',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'categorystepper-desc' => 'Apresenta uma caixa de passo de categorias que permite a uma pessoa navegar alfabeticamente para a frente e para trás através de uma ou mais categorias a que pertence uma página',
+	'categorystepper-end' => '(Fim da categoria)',
+	'categorystepper-start' => '(Início da categoria)',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'categorystepper-end' => '(Sfârşitul categoriei)',
 	'categorystepper-start' => '(Începutul categoriei)',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'categorystepper-end' => "(Fine d'a categorije)",
+	'categorystepper-start' => "(Inizie d'a categorije)",
 );
 
 /** Russian (Русский)
@@ -441,6 +512,7 @@ $messages['ta'] = array(
  * @author వైజాసత్య
  */
 $messages['te'] = array(
+	'categorystepper-desc' => 'ఒక పేజీని లోని వర్గాలకి అక్షరానుసారంగా వెనక్కి ముందుకీ వెళ్ళగలిగే వీలుని కల్పించే వర్గ స్టెపర్ పెట్టెని చూపిస్తుంది',
 	'categorystepper-end' => '(వర్గపు చివర)',
 	'categorystepper-start' => '(వర్గపు మొదలు)',
 );
@@ -461,6 +533,24 @@ $messages['th'] = array(
 	'categorystepper-start' => '(เริ่มหมวดหมู่)',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'categorystepper-desc' => 'Nagpapakita ng isang kahong hakbangan ng kaurian na nagpapahintulot sa isa na alpabetikong makapaglibot pasulong at paurong sa pamamagitan ng isa o mas marami pang mga kauriang kinapapalooban ng isang pahina',
+	'categorystepper-end' => '(Wakas ng kaurian)',
+	'categorystepper-start' => '(Simula ng kaurian)',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'categorystepper-desc' => 'Bir sayfanın içinde bulunduğu bir veya daha fazla kategoride, alfabetik olarak ileri ve geri dolaşıma izin veren bir kategori basamaklayıcı kutusu gösterir',
+	'categorystepper-end' => '(Kategori sonu)',
+	'categorystepper-start' => '(Kategori başlangıcı)',
+);
+
 /** Ukrainian (Українська)
  * @author Ahonc
  */
@@ -468,6 +558,15 @@ $messages['uk'] = array(
 	'categorystepper-desc' => 'Показує навігаційну панель, яка дозволяє переходити вперед і назад за алфавітним списом вмісту категорії, до якої належить сторінка',
 	'categorystepper-end' => '(кінець категорії)',
 	'categorystepper-start' => '(початок категорії)',
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'categorystepper-desc' => 'Mostra un quadro de le categorie permetendoghe ai utenti de navigar avanti e indrìo alfabeticamente atraverso le varie categorie de cui fa parte na pàxena',
+	'categorystepper-end' => '(Fine de la categoria)',
+	'categorystepper-start' => '(Scominsio de la categoria)',
 );
 
 /** Vietnamese (Tiếng Việt)

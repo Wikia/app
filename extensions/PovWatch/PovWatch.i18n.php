@@ -41,9 +41,12 @@ Click the button below to subscribe.',
 	'povwatch_added'                   => 'added',
 	'right-povwatch_admin'             => 'Administer user rights for adding pages to watchlists of other users',
 	'right-povwatch_user'              => 'Add pages to watchlists of other users',
+	'action-povwatch_admin'            => 'administer user rights for PovWatch',
+	'action-povwatch_user'             => 'add this page to the watchlist of another user',
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Meno25
  * @author Purodha
@@ -54,7 +57,9 @@ $messages['qqq'] = array(
 	'povwatch_comment' => '{{Identical|Log comment}}',
 	'povwatch_added' => '{{Identical|Added}}',
 	'right-povwatch_admin' => '{{doc-right}}',
-	'right-povwatch_user' => '{{doc-right}}',
+	'right-povwatch_user' => '{{doc-right|povwatch user}}',
+	'action-povwatch_admin' => '{{doc-action}}',
+	'action-povwatch_user' => '{{doc-action}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -109,10 +114,13 @@ $messages['ar'] = array(
 	'povwatch_added' => 'تمت الإضافة',
 	'right-povwatch_admin' => 'إدارة صلاحيات المستخدم لإضافة الصفحات إلى قوائم مراقبة المستخدمين الآخرين',
 	'right-povwatch_user' => 'إضافة صفحات إلى قوائم مراقبة مستخدمين آخرين',
+	'action-povwatch_admin' => 'إدارة صلاحيات المستخدم لمراقبة بي أو في',
+	'action-povwatch_user' => 'إضافة هذه الصفحة إلى قائمة مراقبة مستخدم آخر',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
+ * @author Ramsis II
  */
 $messages['arz'] = array(
 	'povwatch' => 'مراقبة بى أو في',
@@ -148,13 +156,51 @@ $messages['arz'] = array(
 	'povwatch_added' => 'تمت الإضافة',
 	'right-povwatch_admin' => 'إدارة صلاحيات المستخدم لإضافة الصفحات إلى قوائم مراقبة المستخدمين الآخرين',
 	'right-povwatch_user' => 'إضافة صفحات إلى قوائم مراقبة مستخدمين آخرين',
+	'action-povwatch_admin' => 'ادارة حقوق اليوزر فى الـ PovWatch',
+	'action-povwatch_user' => 'ضيف الصفحه دى لـ ليستة المراقبه بتاعة يوزر تانى',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
+	'povwatch' => 'Нагляд за нэўтральнасьцю пункту гледжаньня',
+	'povwatch_desc' => 'Пашырэньне для [[Special:PovWatch|даданьня старонак да сьпісаў назіраньня]] іншых удзельнікаў',
+	'povwatch_no_session' => 'Памылка: немагчыма даслаць форму з прычыны страты зьвестак сэсіі.',
+	'povwatch_not_allowed_push' => 'Вы ня можаце дадаваць старонкі да сьпісаў назіраньня, таму што Вы не зьяўляецеся адміністратарам нагляду за нэўтральнасьцю пункту гледжаньня.',
+	'povwatch_already_subscribed' => 'Вы ўжо падпісаны на нагляд за нэўтральнасьцю пункту гледжаньня',
+	'povwatch_subscribed' => 'Цяпер Вы падпісаны на нагляд за нэўтральнасьцю пункту гледжаньня',
+	'povwatch_not_subscribed' => 'Вы не падпісаны на нагляд за нэўтральнасьцю пункту гледжаньня, таму і ня можаце адпісацца.',
+	'povwatch_unsubscribed' => 'Цяпер Вы адпісаліся ад нагляду за нэўтральнасьцю пункту гледжаньня',
+	'povwatch_invalid_title' => 'Пазначаная назва — няслушная',
+	'povwatch_pushed' => '[[$1]] была пасьпяхова дададзеная да $2 {{PLURAL:$2|сьпісу назіраньня|сьпісаў назіраньня|сьпісаў назіраньня}}',
+	'povwatch_intro' => 'Нагляд за нэўтральнасьцю пункту гледжаньня — сэрвіс, які дазваляе схавана дадаваць старонкі да сьпісаў назіраньня падпісаных адміністратараў.
+
+Журнал апошніх даданьняў да сьпісаў назіраньня можна праглядзець на [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Даступны на [[Special:PovWatch/subscribers|сьпісе падпісчыкаў]].',
+	'povwatch_subscriber_list_intro' => '<strong>Сьпіс падпісчыкаў</strong>',
+	'povwatch_not_allowed_subscribers' => 'Вам не дазволена праглядаць сьпіс падпісчыкаў нагляду за нэўтральнасьцю пункту гледжаньня.',
+	'povwatch_unknown_subpage' => 'Невядомая падстаронка.',
+	'povwatch_push' => 'Распаўсюдзіць',
+	'povwatch_push_intro' => 'Карыстайцеся формай пададзенай ніжэй, каб дадаць старонкі ў сьпісы назіраньняў падпісаных удзельнікаў.
+Калі ласка, будзьце ўважлівы набіраючы назву: могуць быць даданы нават неіснуючыя старонкі, і няма ніякай магчымасьці выдаліць назву, калі яна была ўжо дададзеная.',
 	'povwatch_title' => 'Назва:',
+	'povwatch_comment' => 'Камэнтар журнала:',
+	'povwatch_no_log' => 'У журнале няма запісаў.',
+	'povwatch_no_subscribers' => 'Няма падпісчыкаў.',
+	'povwatch_unsubscribe_intro' => 'Вы падпісаны на нагляд за нэўтральнасьцю пункту гледжаньня.
+Націсьніце кнопку ніжэй, каб адпісацца.',
+	'povwatch_unsubscribe' => 'Адпісацца',
+	'povwatch_subscribe_intro' => 'Вы не падпісаны на нагляд за нэўтральнасьцю пункту гледжаньня.
+Націсьніце кнопку ніжэй, каб падпісацца.',
+	'povwatch_subscribe' => 'Падпісацца',
+	'povwatch_added' => 'дададзены',
+	'right-povwatch_admin' => 'адміністраваньне правоў удзельнікаў дадаваць старонкі ў сьпісы назіраньняў іншых удзельнікаў',
+	'right-povwatch_user' => 'даданьне старонак у сьпісы назіраньняў іншых удзельнікаў',
+	'action-povwatch_admin' => 'адміністраваньне правоў удзельнікаў для нагляду за нэўтральнасьцю пункту гледжаньня',
+	'action-povwatch_user' => 'дадаць гэтую старонку ў сьпіс назіраньня іншага ўдзельніка',
 );
 
 /** Bulgarian (Български)
@@ -191,7 +237,41 @@ $messages['bg'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Proširenje za [[Special:PovWatch|postavljanje stranica na spisak praćenja]] drugih korisnika',
+	'povwatch_no_session' => 'Greška: ne može se poslati obrazac zbog gubitka podataka sesije.',
+	'povwatch_not_allowed_push' => 'Vi niste administrator za PovWatch, ne možete postavljati stranice na spiskove praćenja.',
+	'povwatch_already_subscribed' => 'Već ste prijavljeni na PovWatch',
+	'povwatch_subscribed' => 'Sada ste prijavljeni na PovWatch',
+	'povwatch_not_subscribed' => 'Niste prijavljeni na PovWatch, tako da se ne možete odjaviti.',
+	'povwatch_unsubscribed' => 'Sada ste odjavljeni sa PovWatch',
+	'povwatch_invalid_title' => 'Navedeni naslov je bio nevaljan.',
+	'povwatch_pushed' => '[[$1]] je uspješno postavljen na {{PLURAL:$2|spisak praćenja|spiskove praćenja}} korisnika $2.',
+	'povwatch_intro' => 'PovWatch je servis koji omogućuje da se sporne stranice diskretno postave na spiskove praćenja prijavljenih administratora.
+
+Zapisnik nedavno postavljenih stranica je dostupan na [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Dostupan je [[Special:PovWatch/subscribers|spisak prijavljenih]].',
+	'povwatch_subscriber_list_intro' => '<strong>Spisak prijavljenih</strong>',
+	'povwatch_not_allowed_subscribers' => 'Nije Vam dopušteno da pregledate spisak prijavljenih na PovWatch.',
+	'povwatch_unknown_subpage' => 'Nepoznata podstanica.',
+	'povwatch_push' => 'Postavi',
+	'povwatch_push_intro' => 'Koristite obrazac ispod da postavite stranice na spiskove praćenja prijavljenih korisnika.
+Molimo da budete pažljivi pri unosu naslova: mogu biti dodani čak i naslovi koji nepostoje, a nema načina da se naslov ukloni ako se jednom postavi.',
 	'povwatch_title' => 'Naslov:',
+	'povwatch_comment' => 'Komentar zapisa:',
+	'povwatch_no_log' => 'Nema stavki zapisa.',
+	'povwatch_no_subscribers' => 'Nema prijavljenih.',
+	'povwatch_unsubscribe_intro' => 'Prijavljeni ste na PovWatch.
+Kliknite na dugme dole da bi ste se odjavili.',
+	'povwatch_unsubscribe' => 'Odjavi se',
+	'povwatch_subscribe_intro' => 'Niste prijavljeni na PovWatch.
+Kliknite na dugme ispod da se prijavite.',
+	'povwatch_subscribe' => 'Prijavi se',
+	'povwatch_added' => 'dodano',
+	'right-povwatch_admin' => 'Upravljanje sa korisničkim pravima za dodavanje stranica na spiskove praćenje drugih korisnika',
+	'right-povwatch_user' => 'Dodavanje stranica na spiskove praćenja drugih korisnika',
+	'action-povwatch_admin' => 'uređujete prava korisnika za PovWatch',
+	'action-povwatch_user' => 'dodajete ovu stranicu na spisak praćenja drugog korisnika',
 );
 
 /** Catalan (Català)
@@ -202,10 +282,13 @@ $messages['ca'] = array(
 );
 
 /** Danish (Dansk)
+ * @author Byrial
  * @author Jon Harald Søby
  */
 $messages['da'] = array(
 	'povwatch_title' => 'Titel:',
+	'action-povwatch_admin' => 'administrere brugerrettigheder til PovWatch',
+	'action-povwatch_user' => 'tilføje denne side til en anden brugers overvågningsliste',
 );
 
 /** German (Deutsch)
@@ -243,15 +326,92 @@ Bitte beachte: auch nicht vorhandene Seiten können hinzugefügt werde und es gi
 	'povwatch_subscribe_intro' => 'Du bist nicht für PovWatch registriert. Klicke auf die Schaltfläche, um dich anzumelden.',
 	'povwatch_subscribe' => 'Registrieren',
 	'povwatch_added' => 'hinzugefügt',
-	'right-povwatch_admin' => 'Administriere Benutzerrechte zur Hinzufügung von Seiten zur Beobachtungsliste anderer Benutzer',
+	'right-povwatch_admin' => 'Das Benutzerrecht Zuteilen oder Entziehen, Seiten zur Beobachtungsliste anderer Benutzer hinzufügen zu dürfen',
 	'right-povwatch_user' => 'Hinzufügen von Seiten zur Beobachtungsliste anderer Benutzer',
+	'action-povwatch_admin' => 'Rechte für PovWatch zu verwalten',
+	'action-povwatch_user' => 'füge diese Seite zu der Beobachtungsliste eines anderen Benutzers hinzu',
+);
+
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Rozšyrjenje za [[Special:PovWatch|pśidanje bokow wobglědowańkam]] drugich wužywarjow',
+	'povwatch_no_session' => 'Zmólka: Formular njejo se dał wótpósłaś, dokulaž su se zgubili pósejźeńske daty.',
+	'povwatch_not_allowed_push' => 'Njejsy administrator PovWatch, njamóžoš boki wobglědowańkam pśidaś.',
+	'povwatch_already_subscribed' => 'Sy južo za PovWatch zregistrěrowany',
+	'povwatch_subscribed' => 'Sy něnto za PovWatch zregistrěrowany',
+	'povwatch_not_subscribed' => 'Njejsy za PovWatch zregistrěrowany, wótzjawjenje jo togodla njemóžno.',
+	'povwatch_unsubscribed' => 'Sy něnto z PovWatch wótzjawjony',
+	'povwatch_invalid_title' => 'Pódany titel jo był njepłaśiwy',
+	'povwatch_pushed' => '[[$1]] jo se pśidał $2 {{PLURAL:$2|wužywarskej wobglědowańce|wužywarskima wobglědowańkoma|wužywarskim wobglědowańkam|wužywarskim wobglědowańkam}}',
+	'povwatch_intro' => 'PovWatch jo słužba, kótaraž dowólujo zwadne boki wobglědowańkam zregistrěrowanych administratorow pśidaś.
+
+Protokol nejnowšych pśidanjow wobglědowańkam stoj na boku [[Special:PovWatch/log]] k dispoziciji.',
+	'povwatch_subscriber_list' => '[[Special:PovWatch/subscribers|Lisćina zregistrěrowanych wužywarjow]] stoj k dispoziciji.',
+	'povwatch_subscriber_list_intro' => '<strong>Lisćina zregistrěrowanych wužywarjow</strong>',
+	'povwatch_not_allowed_subscribers' => 'Njamaš pšawo se lišćinu zregistrěrowanych wužywarjow PovWatch woglědaś.',
+	'povwatch_unknown_subpage' => 'Njeznaty pódbok.',
+	'povwatch_push' => 'Pśidaś',
+	'povwatch_push_intro' => 'Wužyj slědujucy formular, aby pśidał boki wobglědowańkam zregistrěrowanych wužywarjow.
+Pšosym buź wobglědniwy pśi pisanju titela: teke njeeksistěrujuce boko daju se pśidaś, a njejo žedna móžnosć, aby titel wótpórało, gaž jo pśidany.',
+	'povwatch_title' => 'Titel:',
+	'povwatch_comment' => 'Protokolowy komentar:',
+	'povwatch_no_log' => 'W protokolu zapiski njejsu.',
+	'povwatch_no_subscribers' => 'Njejsu zregistrěrowane wužywarje.',
+	'povwatch_unsubscribe_intro' => 'Sy za PovWatch zregistrěrowany.
+Klikni na slědujucy tłocašk, aby se wótzjawił.',
+	'povwatch_unsubscribe' => 'Wótzjawiś se',
+	'povwatch_subscribe_intro' => 'Njejsy za PovWatch zregistrěrowany.
+Klikni na slědujucy tłocašk, aby se zregistrěrował.',
+	'povwatch_subscribe' => 'Registrěrowaś',
+	'povwatch_added' => 'pśidany',
+	'right-povwatch_admin' => 'Wužywarske pšawa za pśidanje bokow wobglědowańkam drugich wužiwarjow zastojaś',
+	'right-povwatch_user' => 'Boki wobglědowańkam drugich wužywarjow pśidaś',
+	'action-povwatch_admin' => 'wužywarske pšawa za PovWatch zastojaś',
+	'action-povwatch_user' => 'toś ten bok wobglědowańce drugego wužywarja pśidaś',
 );
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Dead3y3
  */
 $messages['el'] = array(
+	'povwatch_desc' => 'Επέκταση για την [[Special:PovWatch|προώθηση σελίδων στις λίστες παρακολούθησης]] άλλων χρηστών',
+	'povwatch_no_session' => 'Σφάλμα: Η φόρμα δεν υποβλήθηκε λόγω απώλειας δεδομένων συνεδρίας.',
+	'povwatch_not_allowed_push' => 'Δεν είσαστε ένας διαχειριστής PovWatch, δεν μπορείτε να προωθήσετε σελίδες σε λίστες παρακολούθησης.',
+	'povwatch_already_subscribed' => 'Είσαστε ήδη εγγεγραμμένος στο PovWatch',
+	'povwatch_subscribed' => 'Τώρα είσαστε εγγεγραμμένος στο PovWatch',
+	'povwatch_not_subscribed' => 'Δεν είσαστε εγγεγραμμένος στο PovWatch, οπότε δεν μπορείτε να αποχωρήσετε από αυτό.',
+	'povwatch_unsubscribed' => 'Τώρα αποχωρήσατε από το PovWatch',
+	'povwatch_invalid_title' => 'O καθορισμένος τίτλος ήταν άκυρος',
+	'povwatch_pushed' => 'Η σελίδα [[$1]] προωθήθηκε επιτυχώς {{PLURAL:$2|στην $2 λίστα|στις $2 λίστες}} παρακολούθησης χρήστη/χρήστριας',
+	'povwatch_intro' => 'Η επέκταση PovWatch είναι μια υπηρεσία η οποία επιτρέπει σε επίμαχες σελίδες να προωθηθούν διακριτικά στις λίστες παρακολούθησης των εγγεγραμμένων στην επέκταση διαχειριστών.
+
+Ένα αρχείο καταγραφής των πρόσφατων προωθήσεων σε λίστες παρακολούθησης είναι διαθέσιμο στη σελίδα [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Ένας [[Special:PovWatch/subscribers|κατάλογος των συνδρομητών]] είναι διαθέσιμος.',
+	'povwatch_subscriber_list_intro' => '<strong>Κατάλογος συνδρομητών</strong>',
+	'povwatch_not_allowed_subscribers' => 'Δεν επιτρέπεται να δείτε τον κατάλογο συνδρομητών της επέκτασης PovWatch',
+	'povwatch_unknown_subpage' => 'Άγνωστη υποσελίδα.',
+	'povwatch_push' => 'Προώθηση',
+	'povwatch_push_intro' => 'Χρησιμοποιήστε την φόρμα παρακάτω για να προωθήσετε σελίδες στις λίστες παρακολούθησης των εγγεγραμμένων χρηστών.<br />
+Παρακαλώ να είστε προσεκτικοί καθώς πληκτρολογείτε τον τίτλο: ακόμη και ανύπαρκτοι τίτλοι μπορούν να προστεθούν, και δεν υπάρχει κανένας τρόπος να αφαιρέσετε ένα τίτλος αφότου αυτός έχει προωθηθεί.',
 	'povwatch_title' => 'Τίτλος:',
+	'povwatch_comment' => 'Σχόλιο αρχείου καταγραφής:',
+	'povwatch_no_log' => 'Δεν υπάρχουν εγγραφές στο αρχείο καταγραφής.',
+	'povwatch_no_subscribers' => 'Δεν υπάρχουν συνδρομητές.',
+	'povwatch_unsubscribe_intro' => 'Είσαστε εγγεγραμμένοι στην επέκταση PovWatch.<br />
+Κάντε κλιψκ στο κουμπί παρακάτω για να διαγραφείτε.',
+	'povwatch_unsubscribe' => 'Διαγραφή',
+	'povwatch_subscribe_intro' => 'Δεν είσαστε εγγεγραμμένοι στην επέκταση PovWatch.<br />
+Κάντε κλικ στο κουμπί παρακάτω για να εγγραφείτε.',
+	'povwatch_subscribe' => 'Εγγραφή',
+	'povwatch_added' => 'προστέθηκε',
+	'right-povwatch_admin' => 'Διαχείριση δικαιωμάτων χρηστών για την προσθήκη σελίδων στις λίστες παρακολούθησης άλλων χρηστών',
+	'right-povwatch_user' => 'Προσθήκη σελίδων στις λίστες παρακολούθησης άλλων χρηστών',
+	'action-povwatch_admin' => 'να διαχειριστείτε δικαιώματα χρηστών για την επέκταση PovWatch',
+	'action-povwatch_user' => 'να προσθέσετε αυτή τη σελίδα στην λίστα παρακολούθησης ενός άλλου χρήστη',
 );
 
 /** Esperanto (Esperanto)
@@ -259,68 +419,128 @@ $messages['el'] = array(
  * @author Yekrats
  */
 $messages['eo'] = array(
+	'povwatch_no_session' => 'Eraro: Ne eblis enigi formularon pro perdo de seancaj datenoj.',
 	'povwatch_invalid_title' => 'La enigita titolo estis nevalida',
+	'povwatch_pushed' => '[[$1]] estis sukcese pelita al $2 {{PLURAL:$2|uzula atentaro|uzulaj atentaroj}}',
+	'povwatch_subscriber_list_intro' => '<strong>Listo de abonantoj</strong>',
 	'povwatch_unknown_subpage' => 'Nekonata subpaĝo.',
+	'povwatch_push' => 'Premi',
 	'povwatch_title' => 'Titolo:',
 	'povwatch_comment' => 'Komento por protokolo:',
 	'povwatch_no_log' => 'Ne estas protokolaj linioj.',
+	'povwatch_no_subscribers' => 'Ne estas abonantoj.',
 	'povwatch_unsubscribe' => 'Ellistiĝi',
 	'povwatch_subscribe' => 'Enskribiĝi',
 	'povwatch_added' => 'aldonita',
+	'right-povwatch_admin' => 'Administri uzulajn rajtojn por aldoni paĝojn al atentaroj de aliaj uzantoj',
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
+ * @author Dferg
  * @author Imre
+ * @author Remember the dot
+ * @author Sanbec
  */
 $messages['es'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Extensión para [[Special:PovWatch|meter páginas en las listas de seguimiento]] de otros usuarios',
+	'povwatch_not_allowed_push' => 'No eres un administrador PovWatch, no puedes enviar páginas listas de vigilancia.',
+	'povwatch_already_subscribed' => 'Ya está suscrito en PovWatch',
+	'povwatch_subscribed' => 'Estás ahora suscrito a PovWatch',
+	'povwatch_not_subscribed' => 'No estás suscrito a PovWatch, por tanto no puedes desuscribirte.',
+	'povwatch_unsubscribed' => 'Estás ahora desuscrito de PovWatch',
+	'povwatch_invalid_title' => 'El título especificado fue inválido',
+	'povwatch_pushed' => '[[$1]] ha sido enviado exitosamente a las {{PLURAL:$2|lista de vigilancia|listas de vigilancias}} del usuario $2',
+	'povwatch_intro' => 'PovWatch es un servicio el cual permite a las páginas polémicas ser discretamente enviadas a la lista de vigilancia de administradores suscritos.
+
+Un registro de envios recientes a una lista de vigilancia esta disponible en [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Una [[Special:PovWatch/subscribers|lista de suscriptores]] está disponible.',
+	'povwatch_subscriber_list_intro' => '<strong>Lista de suscriptores</strong>',
+	'povwatch_not_allowed_subscribers' => 'No se le permite ver la lista de suscriptores PovWatch.',
+	'povwatch_unknown_subpage' => 'Subpágina desconocida.',
+	'povwatch_push' => 'Presionar',
+	'povwatch_push_intro' => 'Usar el formulario de abajo para enviar páginas a la lista de vigilancia de usuarios suscritos.
+Por favor se cuidadoso escribiendo el título: aún títulos inexistentes pueden ser agregados, y no hay forma de remover un título una vez que ha sido enviado.',
 	'povwatch_title' => 'Título:',
+	'povwatch_comment' => 'Comentario del registro:',
+	'povwatch_no_log' => 'No existen elementos.',
+	'povwatch_no_subscribers' => 'No hay suscriptores.',
+	'povwatch_unsubscribe_intro' => 'Usted está subscribido a PovWatch.
+Haga clic en el botón abajo para desubscribirse.',
+	'povwatch_unsubscribe' => 'desuscribir',
+	'povwatch_subscribe_intro' => 'Usted no está subscribido a PovWatch.
+Haga clic en el botón abajo para subscribirse.',
+	'povwatch_subscribe' => 'Suscribir',
+	'povwatch_added' => 'agregado',
+	'right-povwatch_admin' => 'Administrar derechos de usuario para agregar páginas a las listas de vigilancia de otros usuarios',
+	'right-povwatch_user' => 'Agregar páginas a las listas de seguimiento de otros usuarios',
+	'action-povwatch_admin' => 'Administrar derechos de usuario de PovWatch',
+	'action-povwatch_user' => 'agregar esta página a la lista de seguimiento de otro usuario',
+);
+
+/** Persian (فارسی)
+ * @author Huji
+ * @author Mardetanha
+ */
+$messages['fa'] = array(
+	'povwatch_title' => 'عنوان:',
+	'povwatch_added' => 'افزوده شد',
 );
 
 /** Finnish (Suomi)
  * @author Str4nd
  */
 $messages['fi'] = array(
+	'povwatch_unknown_subpage' => 'Tuntematon alasivu.',
 	'povwatch_subscribe' => 'Tilaa',
+	'povwatch_added' => 'lisätty',
 );
 
 /** French (Français)
  * @author Grondin
  * @author IAlex
  * @author McDutchie
+ * @author PieRRoMaN
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'povwatch' => 'Surveillance des guerres d’éditions',
+	'povwatch' => 'PovWatch',
 	'povwatch_desc' => 'Extension permettant d’[[Special:PovWatch|ajouter des pages à la liste de suivi]] d’autres utilisateurs',
-	'povwatch_no_session' => 'Erreur : Impossible de soumettre le formulaire à la suite de la perte des données de la session.',
-	'povwatch_not_allowed_push' => 'Vous n’êtes pas un administrateur pour la surveillance des guerres d’édition. Vous ne pouvez pas ajouter les pages dans la liste correspondante.',
-	'povwatch_already_subscribed' => 'Vous êtes déjà inscrit pour la surveillance des guerres d’édition.',
-	'povwatch_subscribed' => 'Vous êtes maintenant inscrit pour la surveillance des guerres d’édition.',
-	'povwatch_not_subscribed' => 'Vous n’êtes pas inscrit pour la surveillance des guerres d’édition. Par conséquent, vous ne pouvez pas résilier d’inscription.',
-	'povwatch_unsubscribed' => 'Votre inscription pour la surveillance des guerres d’édition est maintenant résiliée.',
+	'povwatch_no_session' => 'Erreur : impossible de soumettre le formulaire par suite d’une perte des données de session.',
+	'povwatch_not_allowed_push' => 'Vous n’êtes pas un administrateur de PovWatch. Vous ne pouvez pas ajouter les pages dans la liste correspondante.',
+	'povwatch_already_subscribed' => 'Vous êtes déjà inscrit à PovWatch.',
+	'povwatch_subscribed' => 'Vous êtes maintenant inscrit à PovWatch.',
+	'povwatch_not_subscribed' => 'Vous n’êtes pas inscrit à PovWatch, vous ne pouvez donc pas résilier d’inscription.',
+	'povwatch_unsubscribed' => 'Votre inscription a PovWatch est maintenant résiliée.',
 	'povwatch_invalid_title' => 'Le titre indiqué est invalide.',
-	'povwatch_pushed' => '[[$1]] a été inscrite avec succès dans {{PLURAL:$2|la liste|les listes}} de surveillance de $2 {{PLURAL:$2|utilisateur|utilisateurs}}',
-	'povwatch_intro' => 'La surveillance des guerres d’édition est un service qui autorise la surveillance discrète des pages conflictuelles. Ceux-ci peuvent être inscrits dans la liste de surveillance des administrateurs enregistrés.
+	'povwatch_pushed' => "[[$1]] a été ajoutée à la liste de suivi {{PLURAL:$2|d'un utilisateur|de $2 utilisateurs}}.",
+	'povwatch_intro' => "PovWatch est un service qui permet d'ajouter implicitement les pages controversées dans la liste de suivi des administrateurs qui le souhaitent.
 
-Un journal de surveillance des pages inscrites est disponible sur [[Special:PovWatch/log]].',
+Un journal des pages récemment ajoutées à la liste est disponible sur [[Special:PovWatch/log]].",
 	'povwatch_subscriber_list' => 'Une [[Special:PovWatch/subscribers|liste des abonnés]] est disponible.',
 	'povwatch_subscriber_list_intro' => '<strong>Liste des abonnés</strong>',
-	'povwatch_not_allowed_subscribers' => 'Vous n’avez pas la permission de visionner la liste des personnes inscrites pour la surveillance des guerres d’édition.',
+	'povwatch_not_allowed_subscribers' => 'Vous n’êtes pas autorisé à consulter la liste des utilisateurs inscrits à PovWatch.',
 	'povwatch_unknown_subpage' => 'Sous-page inconnue.',
 	'povwatch_push' => 'Inscrire',
-	'povwatch_push_intro' => 'Utilisez le formulaire ci-dessous pour inscrire les pages dans la liste de suivi affectée aux utilisateurs abonnés.
+	'povwatch_push_intro' => 'Utilisez le formulaire ci-dessous pour placer des pages dans la liste de suivi des utilisateurs abonnés.
 Inscrivez scrupuleusement le titre : une page inexistante peut être spécifiée, et il n’existe aucun moyen de la retirer une fois inscrite.',
 	'povwatch_title' => 'Titre :',
-	'povwatch_comment' => 'Commentaire du journal :',
+	'povwatch_comment' => 'Commentaire pour le journal :',
 	'povwatch_no_log' => 'Il n’existe aucune entrée dans le journal.',
-	'povwatch_no_subscribers' => 'Il n’existe aucune personne abonnée.',
-	'povwatch_unsubscribe_intro' => 'Vous êtes inscrit à la liste de surveillance des guerres d’édition. Cliquez sur le bouton ci-dessous pour vous désinscrire.',
-	'povwatch_unsubscribe' => 'Résilier',
-	'povwatch_subscribe_intro' => 'Vous n’êtes pas inscrit sur la liste de surveillance des guerres d’édition. Cliquez sur le bouton ci-dessous pour vous inscrire.',
-	'povwatch_subscribe' => 'Souscrire',
+	'povwatch_no_subscribers' => "Personne n'est abonné.",
+	'povwatch_unsubscribe_intro' => 'Vous êtes abonné à PovWatch.
+Cliquez sur le bouton ci-dessous pour résilier votre abonnement.',
+	'povwatch_unsubscribe' => "Résilier l'abonnement",
+	'povwatch_subscribe_intro' => 'Vous n’êtes pas abonné à PovWatch.
+Cliquez sur le bouton ci-dessous pour vous abonner.',
+	'povwatch_subscribe' => "S'abonner",
 	'povwatch_added' => 'ajouté',
-	'right-povwatch_admin' => "Administrer les droits d’utilisateur pour l'ajout des pages à la liste de suivi des autres utilisateurs.",
-	'right-povwatch_user' => 'Ajoute des pages à la liste de suivi des autres utilisateurs',
+	'right-povwatch_admin' => 'Administrer les droits d’utilisateur pour ajouter des pages à la liste de suivi d’autres utilisateurs.',
+	'right-povwatch_user' => "Ajouter des pages à la liste de suivi d'autres utilisateurs",
+	'action-povwatch_admin' => "administrer les droits d'utilisateur pour PovWatch",
+	'action-povwatch_user' => 'ajouter cette page à la liste de suivi d’un autre utilisateur',
 );
 
 /** Galician (Galego)
@@ -329,24 +549,24 @@ Inscrivez scrupuleusement le titre : une page inexistante peut être spécifiée
  */
 $messages['gl'] = array(
 	'povwatch' => 'PovWatch',
-	'povwatch_desc' => 'Extensión para [[Special:PovWatch|empurrar páxinas á listaxe de vixilancia]] doutros usuarios',
+	'povwatch_desc' => 'Extensión para [[Special:PovWatch|empurrar páxinas á lista de vixilancia]] doutros usuarios',
 	'povwatch_no_session' => 'Erro: non se pode enviar o formulario debido a unha perda dos datos de inicio da sesión.',
-	'povwatch_not_allowed_push' => 'Non é un administrador PovWatch, non pode empurrar páxinas ás listaxes de vixilancia doutros.',
+	'povwatch_not_allowed_push' => 'Non é un administrador PovWatch, non pode empurrar páxinas ás listas de vixilancia doutros.',
 	'povwatch_already_subscribed' => 'Vostede está aínda subscrito a PovWatch',
 	'povwatch_subscribed' => 'Vostede está agora subscrito a PovWatch',
 	'povwatch_not_subscribed' => 'Non ten unha subscrición a PovWatch, polo que non a pode cancelar.',
 	'povwatch_unsubscribed' => 'Cancelouse a súa subscrición a PovWatch',
 	'povwatch_invalid_title' => 'O título especificado foi non válido',
 	'povwatch_pushed' => '"[[$1]]" foi engadida con éxito {{PLURAL:$2|á páxina|ás páxinas}} de vixilancia de $2',
-	'povwatch_intro' => 'PovWatch é un servizo que permite que páxinas polémicas sexan "empurradas" discretamente ás listaxes de vixilancia dos adminitradores subscritos.
+	'povwatch_intro' => 'PovWatch é un servizo que permite que páxinas polémicas sexan "empurradas" discretamente ás listas de vixilancia dos adminitradores subscritos.
 
-un rexistro dos "empurróns" ás listaxes de vixilancia recentes está dispoñible en [[Special:PovWatch/log]].',
-	'povwatch_subscriber_list' => 'Unha [[Special:PovWatch/subscribers|listaxe de subscritores]] está dispoñíbel.',
-	'povwatch_subscriber_list_intro' => '<strong>Listaxe dos subscritores</strong>',
-	'povwatch_not_allowed_subscribers' => 'Non ten permiso para ver a listaxe de subscrición de PovWatch.',
+un rexistro dos "empurróns" ás listas de vixilancia recentes está dispoñible en [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Unha [[Special:PovWatch/subscribers|lista de subscritores]] está dispoñíbel.',
+	'povwatch_subscriber_list_intro' => '<strong>Lista dos subscritores</strong>',
+	'povwatch_not_allowed_subscribers' => 'Non ten permiso para ver a lista de subscrición de PovWatch.',
 	'povwatch_unknown_subpage' => 'Subpáxina descoñecida.',
 	'povwatch_push' => 'Empurrar',
-	'povwatch_push_intro' => 'Use o formulario de embaixo para "empurrar" páxinas ás listaxes de vixilancia dos usuarios subscritos.
+	'povwatch_push_intro' => 'Use o formulario de embaixo para "empurrar" páxinas ás listas de vixilancia dos usuarios subscritos.
 Por favor, sexa coidadoso ao teclear o título: incluso os títulos non existentes poden ser engadidos e non hai forma de eliminar un título unha vez que este foi "empurrado".',
 	'povwatch_title' => 'Título:',
 	'povwatch_comment' => 'Comentario do rexistro:',
@@ -359,8 +579,10 @@ Faga clic no botón de embaixo para cancelar a subscrición.',
 Faga clic no botón de embaixo para subscribirse.',
 	'povwatch_subscribe' => 'Subscribir',
 	'povwatch_added' => 'engadido',
-	'right-povwatch_admin' => 'Administrar os dereitos de usuario para engadir páxinas ás listaxes de vixilancia doutros usuarios',
-	'right-povwatch_user' => 'Engadir páxinas á listaxe de vixilancia doutros usuarios',
+	'right-povwatch_admin' => 'Administrar os dereitos de usuario para engadir páxinas ás listas de vixilancia doutros usuarios',
+	'right-povwatch_user' => 'Engadir páxinas á lista de vixilancia doutros usuarios',
+	'action-povwatch_admin' => 'administrar os dereitos de usuario PovWatch',
+	'action-povwatch_user' => 'engadir esta páxina á lista de vixilancia doutro usuario',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -368,6 +590,45 @@ Faga clic no botón de embaixo para subscribirse.',
  */
 $messages['grc'] = array(
 	'povwatch_title' => 'Ἐπιγραφή:',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Erwyterig zum [[Special:PovWatch|Syte zue dr Beobachtigslischt]] vu andere Benutzer zuezfiege',
+	'povwatch_no_session' => 'Fähler: Formulardate chenne nit verarbeitet wäre, wel d Sitzigsdate verlore gange sin.',
+	'povwatch_not_allowed_push' => 'Du bisch kei PovWatch-Adminischtrator un chasch in keine främde Beobachtigslischte Syte zuefiege.',
+	'povwatch_already_subscribed' => 'Du bisch scho fir PovWatch regischtriert',
+	'povwatch_subscribed' => 'Du bisch jetz fir PovWatch regischtriert',
+	'povwatch_not_subscribed' => 'Du bisch nit fir PovWatch regischtriert; e Abmäldig isch wäge däm nit megli.',
+	'povwatch_unsubscribed' => 'Du bisch jetz vu PovWatch abgmäldet',
+	'povwatch_invalid_title' => 'Dr Sytename, wu Du aagee hesch, isch nit giltig',
+	'povwatch_pushed' => '[[$1]] isch erfolgryych {{PLURAL:$2|in d Beobachtigslischt vun eme Benutzer|in d Beobachtigslischte vu $2 Benutzer}} zuegfiegt wore.',
+	'povwatch_intro' => 'PovWatch isch e Service zum umstritteni Syten diskret in d Beobachtigslischte vu regischtrierte Ammanne yyzfiege.
+
+E Logbuech vu dr Syte, wu iber PovWatch yygfiegt wore sin, isch unter [[Special:PovWatch/log]] verfiegbar.',
+	'povwatch_subscriber_list' => 'E [[Special:PovWatch/subscribers|Lischt vu dr regischtrierte Benutzer]] isch verfiegbar.',
+	'povwatch_subscriber_list_intro' => '<strong>Lischt vu dr regischtrierte Benutzer</strong>',
+	'povwatch_not_allowed_subscribers' => 'Du derfsch d PovWatch-Benutzerlischt nit aaluege.',
+	'povwatch_unknown_subpage' => 'Nit bekannti Untersyte',
+	'povwatch_push' => 'Zuefiege',
+	'povwatch_push_intro' => 'Bruuch s Formular go Syte in d Beobachtigslischte vu dr regischtrierte Benutzer yyzfiege.
+Bitte gib Acht: au Syte, wu s nit git, chenne yygfiegt wäre un s git kei Wääg, des derno ruckgängig z mache.',
+	'povwatch_title' => 'Sytenname:',
+	'povwatch_comment' => 'Logbuech-Kommentar:',
+	'povwatch_no_log' => 'Im Logbuech het s kei Yyträg.',
+	'povwatch_no_subscribers' => 'S git kei regischtrierti Benutzer.',
+	'povwatch_unsubscribe_intro' => 'Du bisch fir PovWatch regischtriert. Druck uf d Schaltflächi go Di abmälde.',
+	'povwatch_unsubscribe' => 'Abmälde',
+	'povwatch_subscribe_intro' => 'Du bisch nit fir PovWatch regischtriert. Druck uf d Schaltflächi go di aamälde.',
+	'povwatch_subscribe' => 'Regischtriere',
+	'povwatch_added' => 'zuegfiegt',
+	'right-povwatch_admin' => 'S Benutzerrächt gee oder ewägneh, Syte in d Beobachtigslischte vu andere Benutzer yyfiege z derfe',
+	'right-povwatch_user' => 'Yyfiege vu Syte in d Beobachtigslischt vu andere Benutzer',
+	'action-povwatch_admin' => 'Rächt fir PovWatch verwalte',
+	'action-povwatch_user' => 'fieg die Syte in d Beobachtigslischt vun eme andere Benutzer yy',
 );
 
 /** Manx (Gaelg)
@@ -382,7 +643,7 @@ $messages['gv'] = array(
  * @author YaronSh
  */
 $messages['he'] = array(
-	'povwatch' => 'PovWatch',
+	'povwatch' => 'מערכת PovWatch',
 	'povwatch_desc' => '[[Special:PovWatch|דחיפת דפים לרשימת המעקב]] של משתמשים אחרים',
 	'povwatch_no_session' => 'שגיאה: לא ניתן לשלוח את הטופס עקב אובדן מידע הכניסה.',
 	'povwatch_not_allowed_push' => 'אינכם מנהלי PovWatch, לא תוכלו לדחוף דפים לרשימות מעקב.',
@@ -415,6 +676,8 @@ $messages['he'] = array(
 	'povwatch_added' => 'נוסף',
 	'right-povwatch_admin' => 'ניהול הרשאות המשתמש להוספת דפים לרשימות המעקב של משתמשים אחרים',
 	'right-povwatch_user' => 'הוספת דפים לרשימות המעקב של משתמשים אחרים',
+	'action-povwatch_admin' => 'לנהל את הרשאות המשתמש של PovWatch',
+	'action-povwatch_user' => 'להוסיף דף זה לרשימת המעקב של משתמש אחר',
 );
 
 /** Hindi (हिन्दी)
@@ -439,6 +702,7 @@ $messages['hi'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
+ * @author SpeedyGonsales
  */
 $messages['hr'] = array(
 	'povwatch' => 'Predbilježeno praćenje',
@@ -474,6 +738,8 @@ Kliknite na tipku ispod za upisivanje u sustav.',
 	'povwatch_added' => 'dodano',
 	'right-povwatch_admin' => 'Upravljanje suradničkim pravima za dodavanje stranica u popis praćenja drugih suradnika',
 	'right-povwatch_user' => 'Dodavanje stranica u popis praćenja drugih suradnika',
+	'action-povwatch_admin' => 'uredi suradnička prava za PovWatch ekstenziju',
+	'action-povwatch_user' => 'dodaj stranicu na listu praćenih stranica drugog suradnika',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -510,6 +776,8 @@ Protokol aktualnych wobkedźbowankow steji na [[Special:PovWatch/log]] k dispozi
 	'povwatch_added' => 'přidaty',
 	'right-povwatch_admin' => 'Wužiwarske prawa za přidawanje stronow k wobkeďzbowankam druhich wužiwarjow administrować',
 	'right-povwatch_user' => 'Strony k wobkedźbowankam druhich wužiwarjow přidać',
+	'action-povwatch_admin' => 'wužiwarske prawa za PovWatch administrować',
+	'action-povwatch_user' => 'tutu stronu wobkedźbowankam druheho wužiwarja přidać',
 );
 
 /** Hungarian (Magyar)
@@ -556,6 +824,8 @@ Clicca le button infra pro inscriber te.',
 	'povwatch_added' => 'addite',
 	'right-povwatch_admin' => 'Gerer le derectos del usatores a mitter paginas in le observatorios de altere usatores',
 	'right-povwatch_user' => 'Mitter paginas in le observatorios de altere usatores',
+	'action-povwatch_admin' => 'administrar le derectos de usator pro PovWatch',
+	'action-povwatch_user' => 'adder iste pagina al observatorio de un altere usator',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -565,18 +835,92 @@ $messages['id'] = array(
 	'povwatch_title' => 'Judul:',
 );
 
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'povwatch_title' => 'Titulo:',
+	'povwatch_added' => 'adjuntita',
+);
+
 /** Italian (Italiano)
  * @author Darth Kule
+ * @author Pietrodn
  */
 $messages['it'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Estensione per [[Special:PovWatch|aggiungere pagine negli osservati speciali]] di altri utenti',
+	'povwatch_no_session' => 'Errore: Impossibile inviare il modulo a causa di una perdita dei dati di sessione.',
+	'povwatch_not_allowed_push' => 'Non sei un amministratore PovWatch, non è possibile aggiungere le pagine nelle liste degli osservati speciali.',
+	'povwatch_already_subscribed' => 'Sei già iscritto a PovWatch',
+	'povwatch_subscribed' => 'Sei ora iscritto a PovWatch',
+	'povwatch_not_subscribed' => 'Non sei iscritto a PovWatch, quindi non puoi cancellarti.',
+	'povwatch_unsubscribed' => 'Ti sei ora cancellato da PovWatch',
+	'povwatch_invalid_title' => 'Il titolo specificato non era valido',
+	'povwatch_pushed' => '[[$1]] è stato aggiunto con successo {{PLURAL:$2|alla lista degli osservati speciali|alle $2 liste degli osservati speciali}} utente',
+	'povwatch_intro' => 'PovWatch è un servizio che consente di aggiungere discretamente le pagine dibattute alle liste degli osservati speciali degli amministratori iscritti.
+
+Un registro delle aggiunte recenti agli osservati speciali è disponibile presso [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'È disponibile un [[Special:PovWatch/subscribers|elenco degli iscritti]].',
+	'povwatch_subscriber_list_intro' => '<strong>Elenco degli iscritti</strong>',
+	'povwatch_not_allowed_subscribers' => 'Non sei autorizzato a visualizzare l&#39;elenco degli iscritti a PovWatch.',
+	'povwatch_unknown_subpage' => 'Sottopagina sconosciuta.',
+	'povwatch_push' => 'Aggiungi',
+	'povwatch_push_intro' => 'Usa il modulo sottostante per aggiungere pagine alle liste degli osservati speciali degli utenti iscritti.
+Per favore sii attento a digitare il titolo: possono essere aggiunti persino i titoli inesistenti e non vi è alcun modo per rimuovere un titolo una volta che è stato aggiunto.',
 	'povwatch_title' => 'Titolo:',
+	'povwatch_comment' => 'Registra commento:',
+	'povwatch_no_log' => 'Non ci sono occorrenze nel registro.',
+	'povwatch_no_subscribers' => 'Non vi sono iscritti.',
+	'povwatch_unsubscribe_intro' => 'Sei iscritto a PovWatch.
+Clicca sul pulsante qui sotto per cancellarti.',
+	'povwatch_unsubscribe' => 'Cancellati',
+	'povwatch_subscribe_intro' => 'Non sei iscritto aa PovWatch.
+Clicca sul pulsante qui sotto per iscriverti.',
+	'povwatch_subscribe' => 'Iscriviti',
+	'povwatch_added' => 'aggiunto',
+	'right-povwatch_admin' => 'Amministra i diritti utente per l&#39;aggiunta di pagine alle liste degli osservati speciali di altri utenti',
+	'right-povwatch_user' => 'Aggiungi pagine alle liste degli osservati speciali di altri utenti',
+	'action-povwatch_admin' => 'gestire i diritti degli utenti per PovWatch',
+	'action-povwatch_user' => 'aggiungere questa pagina alla lista degli osservati speciali di un altro utente',
 );
 
 /** Japanese (日本語)
  * @author Fryed-peach
  */
 $messages['ja'] = array(
-	'povwatch_title' => 'タイトル:',
+	'povwatch' => '編集合戦の監視',
+	'povwatch_desc' => '[[Special:PovWatch|ページを他の利用者のウォッチリストに追加]]する拡張機能',
+	'povwatch_no_session' => 'エラー: セッション・データが失われたため、フォームを送信できませんでした。',
+	'povwatch_not_allowed_push' => 'あなたは編集合戦の監視ができる管理者ではなく、ウォッチリストにページを入れることはできません。',
+	'povwatch_already_subscribed' => 'あなたは編集合戦の監視を既に購読しています',
+	'povwatch_subscribed' => 'あなたは編集合戦の監視を現在購読しています',
+	'povwatch_not_subscribed' => 'あなたは編集合戦の監視を購読していないため、購読停止はできません。',
+	'povwatch_unsubscribed' => 'あなたは編集合戦の監視を購読停止しました',
+	'povwatch_invalid_title' => '指定したページ名は無効です',
+	'povwatch_pushed' => '[[$1]] を $2人の利用者のウォッチリストに追加しました',
+	'povwatch_intro' => '編集合戦の監視は、購読している管理者のウォッチリストに議論の起きやすいページをこっそりと入れることができるようにするサービスです。
+
+最近のウォッチリストへの追加記録は [[Special:PovWatch/log]] で閲覧可能です。',
+	'povwatch_subscriber_list' => '[[Special:PovWatch/subscribers|購読者一覧]]の閲覧が可能です。',
+	'povwatch_subscriber_list_intro' => '<strong>購読者一覧</strong>',
+	'povwatch_not_allowed_subscribers' => 'あなたには編集合戦の監視の購読者一覧を閲覧することが許可されていません。',
+	'povwatch_unknown_subpage' => '不明なサブページ',
+	'povwatch_push' => '追加',
+	'povwatch_push_intro' => 'このフォームを使って購読利用者のウォッチリストにページを追加します。ページ名の入力には注意してください。存在しないページでも追加でき、一度追加されるとページを除去する方法はないためです。',
+	'povwatch_title' => 'ページ名:',
+	'povwatch_comment' => '要約:',
+	'povwatch_no_log' => '記録項目はありません。',
+	'povwatch_no_subscribers' => '購読者はいません。',
+	'povwatch_unsubscribe_intro' => 'あなたは編集合戦の監視を購読しています。購読を停止するには以下のボタンを押します。',
+	'povwatch_unsubscribe' => '購読停止',
+	'povwatch_subscribe_intro' => 'あなたは編集合戦の監視を購読していません。購読を開始するには以下のボタンを押してください。',
+	'povwatch_subscribe' => '購読',
+	'povwatch_added' => '追加完了',
+	'right-povwatch_admin' => '他の利用者のウォッチリストへのページ追加のための利用者権限を管理する',
+	'right-povwatch_user' => '他の利用者のウォッチリストにページを追加する',
+	'action-povwatch_admin' => '編集合戦の監視の利用者権限管理',
+	'action-povwatch_user' => 'このページの他利用者のウォッチリストへの追加',
 );
 
 /** Javanese (Basa Jawa)
@@ -609,13 +953,67 @@ $messages['km'] = array(
 	'povwatch_added' => 'បានបន្ថែម',
 );
 
+/** Korean (한국어)
+ * @author Kwj2772
+ * @author Yknok29
+ */
+$messages['ko'] = array(
+	'povwatch_pushed' => '[[$1]] 문서가 $2명의 사용자 주시문서 목록에 성공적으로 추가되었습니다.',
+	'povwatch_subscriber_list_intro' => '<strong>수신자 목록</strong>',
+	'povwatch_title' => '제목:',
+	'povwatch_no_subscribers' => '수신자가 없습니다.',
+	'povwatch_unsubscribe' => '수신 해제',
+	'povwatch_subscribe' => '수신',
+	'povwatch_added' => '덧붙이는',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
+	'povwatch' => 'PovWatch',
 	'povwatch_desc' => 'Määt et müjjelesch, [[Special:PovWatch|Sigge op anderlüx Oppassleste ze donn]].',
+	'povwatch_no_session' => 'Fähler: De Date en dämm Fommulaa kunnte nicht beärbeidt wäde.
+De Date för Ding Setzung wohre fott. Versöhk et noch ens.',
+	'povwatch_not_allowed_push' => 'Do beß keine <i lang="en">PovWatch</i>-Köbes, Do kanns kein Sigge op anderlüx Oppassleste donn.',
+	'povwatch_already_subscribed' => 'Do bes ald för {{int:povwatch}} enjeschrevve.',
+	'povwatch_subscribed' => 'Do bes jez för {{int:povwatch}} enjeschrevve.',
+	'povwatch_not_subscribed' => 'Do bes nit för {{int:povwatch}} enjeschrevve, alsu kanns De Desch nit ußdraare.',
+	'povwatch_unsubscribed' => 'Do bes jez bei {{int:povwatch}} wider ußjedraare.',
+	'povwatch_invalid_title' => 'Dä aanjejovve Tettel es nit jöltesch',
+	'povwatch_pushed' => 'De Sigg „[[$1]]“ es jetz op {{PLURAL:$2|einem Metmaacher sing Oppassleß|$2 Metmaacher ier Oppassleste|keinem sing Oppassleß}} drop jesatz.',
+	'povwatch_intro' => '{{int:povwatch}} es ene Deens, dä et müjjelesch määt, Sigge op anderlüx Oppassleste ennzedraare.
+Dat määt mer met Sigge, woh mer meint, dat dat nüüdesch wöhr.
+Wä esu Sigge op singe Oppassless enjedraare krijje well, moß dat extra zohlohße,
+un sesch doför beim {{int:povwatch}} enschriive.
+
+En Leß met de neußte Endraarunge op anderlüx Oppassleß kam_mer sesch
+op dä Sigg [[Special:PovWatch/log]] aanbekike.',
+	'povwatch_subscriber_list' => 'En [[Special:PovWatch/subscribers|Leß met de {{int:povwatch}}-Metmaachere]] jidd_et och.',
+	'povwatch_subscriber_list_intro' => '<strong>Leß met de enjedraare Metmaacher</strong>',
+	'povwatch_not_allowed_subscribers' => 'Do häs nit dat Rääsch, Der de Leß met de bei {{int:povwatch}} enjeschrevve Metmaacher aanzeloore.',
+	'povwatch_unknown_subpage' => 'De Ungersigg jidd_et nit.',
+	'povwatch_push' => 'Loß Jonn! Dobeidonn!',
+	'povwatch_push_intro' => 'Met dämm Fommulaa unge kanns De Sigge op der Metmaacher ier Oppassleste
+donn, die sesch bei {{int:povwatch}} enjeschrevve han.
+Beß vörseschtesch, wann de Tittele vun Sigge schrievs, selvs Tittele, wo
+et noch jaa kei Sigg för jitt, kanns De op anderlüx Oppassleste donn,
+un wat do eimohl drop esm kanns Do nit mieh dovun fott nämme.',
 	'povwatch_title' => 'Siggetittel:',
+	'povwatch_comment' => 'Endraach för en et Logbooch:',
+	'povwatch_no_log' => 'En däm Logboch es nix dren.',
+	'povwatch_no_subscribers' => 'Et sin kein Metmaacher för {{int:povwatch}} enjedraare.',
+	'povwatch_unsubscribe_intro' => 'Do bes bei {{int:povwatch}} ennjeschrevve.
+Onge övver der Knopp kanns de Desch ußdraare lohße.',
+	'povwatch_unsubscribe' => 'Ußdraare!',
+	'povwatch_subscribe_intro' => 'Do bes noch nit bei {{int:povwatch}} ennjeschrevve.
+Onge övver der Knopp kanns de Desch endraare lohße.',
+	'povwatch_subscribe' => 'Ennschriive!',
 	'povwatch_added' => 'dobei jedonn',
+	'right-povwatch_admin' => 'Dat Rääsch, Sigge en anderlüx Oppassleste erin donn ze dörfe, Jevve un Fottnämme',
+	'right-povwatch_user' => 'Sigge op Oppassleste vun ander Metmaacher drop donn',
+	'action-povwatch_admin' => 'Metmaacher-Rääschte för {{int:povwatch}} ze verjävve',
+	'action-povwatch_user' => 'die Sigg op Einem sing Oppassleß ze säze',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -656,7 +1054,10 @@ Klickt the Knäppchen hei ënnendrënner fir iech ofzemelden.",
 Klickt op de Knäppchen hei ënnendrënner fir iech anzeschreiwen.",
 	'povwatch_subscribe' => 'Aschreiwen',
 	'povwatch_added' => 'derbäigesat',
+	'right-povwatch_admin' => "D'Benotzerrechter, fir Säiten op d'Iwwerwaachungslëschte vun anere Benotzer derbäizesetzen, verwalten",
 	'right-povwatch_user' => 'Säiten op Iwwerwaachungslëschte vun anere Benotzer derbäisetzen',
+	'action-povwatch_admin' => 'Benotzerrechter fir PovWatch ze verwalten',
+	'action-povwatch_user' => "dës Säit op d'iwwerwaachungslëscht vun engem anere Benotzer derbäizesetzen",
 );
 
 /** Limburgish (Limburgs)
@@ -665,6 +1066,7 @@ Klickt op de Knäppchen hei ënnendrënner fir iech anzeschreiwen.",
  */
 $messages['li'] = array(
 	'povwatch' => 'POV-Beloer',
+	'povwatch_desc' => "[[Special:PovWatch|Speciale pagina]] om pagina's op de volglies van angere gebroekers te plaatse",
 	'povwatch_no_session' => "Fout: 't formeleer kós neet verwèrk waere ómdet de sessiegegaeves verlaore zeen gegange.",
 	'povwatch_not_allowed_push' => "De bis geine administrator van PovWatch en kèns gein pazjena's op volglieste zètte.",
 	'povwatch_already_subscribed' => 'Doe bös al geabonneertdj op POV-Beloer',
@@ -672,7 +1074,7 @@ $messages['li'] = array(
 	'povwatch_not_subscribed' => 'De bis neet geabonneerd op PovWatch, dus de kèns neet oetsjrieve.',
 	'povwatch_unsubscribed' => 'Doe bös oetgesjreve van POV-Beloer',
 	'povwatch_invalid_title' => 'De opgegaeve pazjenanaam is óngeljig',
-	'povwatch_pushed' => '[[$1]] is succesvol toegeweze aan $2 volglies van gebroekers.',
+	'povwatch_pushed' => '[[$1]] is succesvol toegeweze aan de volglies ven $2 {{PLURAL:$2|gebroeker|gebroekers}}.',
 	'povwatch_intro' => "POV-Beloer is 'ne deens dae 't meugelik maak geveulige pazjena's discreet op de volglies van geabonneerdje administrators te zitte.
 
 'n Logbook mit recènt toegeweze pazjena's op volglies is te bekieke op [[Special:PovWatch/log]].",
@@ -691,6 +1093,10 @@ $messages['li'] = array(
 	'povwatch_subscribe_intro' => 'Doe bös neet ingesjreve veur POV-Beloer. Klik op de óngerstäönde knoep óm uch te abonnere.',
 	'povwatch_subscribe' => 'Abonnere',
 	'povwatch_added' => 'toegevoeg',
+	'right-povwatch_admin' => "Beheer gebruikersrechten veur 't toevoege van artikele aan de volglies van angere gebroekers",
+	'right-povwatch_user' => "Pagina's toevoege aan de volglies van anger gebroekers",
+	'action-povwatch_admin' => 'rechte te behere veur PovWatch',
+	'action-povwatch_user' => 'deze pagina toe te voege aan de volglies van een andere gebroeker',
 );
 
 /** Malayalam (മലയാളം)
@@ -758,6 +1164,45 @@ $messages['mr'] = array(
 	'right-povwatch_user' => 'इतर सदस्यांच्या पहार्‍याच्या सूचीत पाने वाढवा',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Aviator
+ * @author Izzudin
+ */
+$messages['ms'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Penyambung untuk [[Special:PovWatch|menerbitkan laman ke dalam senarai pantau]] pengguna lain',
+	'povwatch_no_session' => 'Ralat: Borang tidak dapat diserahkan kerana kehilangan data sesi.',
+	'povwatch_not_allowed_push' => 'Anda bukan pentadbir PovWatch. Anda tidak boleh menerbitkan laman ke dalam senarai pantau pengguna.',
+	'povwatch_already_subscribed' => 'Anda telah pun menyertai PovWatch',
+	'povwatch_subscribed' => 'Anda telah menyertai PovWatch',
+	'povwatch_not_subscribed' => 'Anda tidak menyertai PovWatch. Oleh itu, anda tidak boleh berhenti daripada menyertainya.',
+	'povwatch_unsubscribed' => 'Anda telah berhenti daripada menyertai PovWatch',
+	'povwatch_invalid_title' => 'Tajuk yang dinyatakan tidak sah',
+	'povwatch_pushed' => '[[$1]] telah diterbitkan ke dalam $2 senarai pantau pengguna',
+	'povwatch_intro' => 'PovWatch ialah servis yang membenarkan laman kontroversi dimasukkan secara senyap ke dalam senarai pantau penyelia.
+
+Log untuk senarai pantau yang dimasukkan terkini boleh didapati di [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Anda boleh melihat [[Special:PovWatch/subscribers|senarai peserta]].',
+	'povwatch_subscriber_list_intro' => '<strong>Senarai peserta</strong>',
+	'povwatch_not_allowed_subscribers' => 'Anda tidak dibenarkan melihat senarai peserta PovWatch.',
+	'povwatch_unknown_subpage' => 'Sublaman tidak dikenali.',
+	'povwatch_push' => 'Terbit',
+	'povwatch_push_intro' => 'Gunakan borang berikut untuk menerbitkan laman-laman yang dikehendaki ke dalam senarai pantau peserta. Tajuk bagi laman yang tidak wujud boleh ditambah, namun tidak boleh dibuang balik selepas diterbitkan. Oleh itu, sila taip setiap tajuk laman dengan cermat.',
+	'povwatch_title' => 'Tajuk:',
+	'povwatch_comment' => 'Ulasan log:',
+	'povwatch_no_log' => 'Tiada entri log.',
+	'povwatch_no_subscribers' => 'Tiada peserta.',
+	'povwatch_unsubscribe_intro' => 'Anda sedang menyertai PovWatch. Klik butang di bawah untuk berhenti menjadi peserta.',
+	'povwatch_unsubscribe' => 'Berhenti menyertai',
+	'povwatch_subscribe_intro' => 'Anda tidak menyertai PovWatch. Klik butang di bawah untuk mendaftar sebagai peserta.',
+	'povwatch_subscribe' => 'Sertai',
+	'povwatch_added' => 'ditambah',
+	'right-povwatch_admin' => 'Mentadbir hak pengguna untuk menambah laman ke dalam senarai pantau pengguna lain',
+	'right-povwatch_user' => 'Menambah laman ke dalam senarai pantau pengguna lain',
+	'action-povwatch_admin' => 'selia hak pengguna untuk PovWatch',
+	'action-povwatch_user' => 'menambah laman ini ke dalam senarai pantau pengguna lain',
+);
+
 /** Erzya (Эрзянь)
  * @author Botuzhaleny-sodamo
  */
@@ -771,6 +1216,47 @@ $messages['myv'] = array(
 $messages['nah'] = array(
 	'povwatch_title' => 'Tōcāitl:',
 	'povwatch_added' => 'ōmocēntili',
+);
+
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Extension för dat [[Special:PovWatch|Tofögen vun Sieden to de Oppasslistlist]] vun annere Brukers',
+	'povwatch_no_session' => 'Fehler: Dat Formular kunn nich verarbeidt warrn, de Sitzungsdaten sünd verloren gahn.',
+	'povwatch_not_allowed_push' => 'Du büst keen PovWatch-Administrater, du kannst keen Sieden to de Oppasslist vun annere Brukers tofögen.',
+	'povwatch_already_subscribed' => 'Du büst al för PovWatch anmellt',
+	'povwatch_subscribed' => 'Du büst nu för PovWatch anmellt',
+	'povwatch_not_subscribed' => 'Du büst gornich för PovWatch anmellt un kannst di dorüm ok nich afmellen.',
+	'povwatch_unsubscribed' => 'Du büst nu vun PovWatch afmellt',
+	'povwatch_invalid_title' => 'De angeven Titel weer ungüllig',
+	'povwatch_pushed' => '[[$1]] is to de Oppasslist vun {{PLURAL:$2|een Bruker|$2 Brukers}} toföögt worrn.',
+	'povwatch_intro' => 'PovWatch is en Deenst, de Sieden, de en Oppasser bruukt, op de Oppasslist vun anmellt Administraters totofögen.
+
+En Logbook vun de över PovWatch toföögt Sieden steit ünner [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'En [[Special:PovWatch/subscribers|List vun de anmellt Brukers]] is verföögbor.',
+	'povwatch_subscriber_list_intro' => '<strong>List vun anmellt Brukers</strong>',
+	'povwatch_not_allowed_subscribers' => 'Du dröffst de PovWatch-Brukerlist nich ankieken.',
+	'povwatch_unknown_subpage' => 'Unbekannte Ünnersied.',
+	'povwatch_push' => 'Tofögen',
+	'povwatch_push_intro' => 'Bruuk dit Formular, dat du Sieden to de Oppasslistlist vun anmellt Brukers toföögst.
+Wees vörsichtig bi’t Schrieven vun de Siedennaams. Ok Sieden, de dat gornich gifft, köönt toföögt warrn un dat geit nich wedder trüchtodreihn, wenn du de Sieden eerst toföögt hest.',
+	'povwatch_title' => 'Titel:',
+	'povwatch_comment' => 'Logbook-Kommentar:',
+	'povwatch_no_log' => 'Gifft keen Logbookindrääg.',
+	'povwatch_no_subscribers' => 'Nüms is anmellt.',
+	'povwatch_unsubscribe_intro' => 'Du büst för PovWatch anmellt.
+Klick op den Knopp, dat du di afmellst.',
+	'povwatch_unsubscribe' => 'Abo afmellen',
+	'povwatch_subscribe_intro' => 'Du büst för PovWatch nich anmellt.
+Klick op den Knopp, dat du di anmellst.',
+	'povwatch_subscribe' => 'Abonneren',
+	'povwatch_added' => 'toföögt',
+	'right-povwatch_admin' => 'Dat Brukerrecht towiesen, Sieden to de Oppasslist vun annere Brukers totofögen',
+	'right-povwatch_user' => 'Tofögen vun Sieden to de Oppasslist vun annere Brukers',
+	'action-povwatch_admin' => 'Brukerrechten för PovWatch to verwalten',
+	'action-povwatch_user' => 'disse Sied to de Oppasslist vun en annern Bruker totofögen',
 );
 
 /** Dutch (Nederlands)
@@ -810,6 +1296,8 @@ Wees voorzichtig bij het invoeren van de pagina: zelfs niet-bestaande pagina's k
 	'povwatch_added' => 'toegevoegd',
 	'right-povwatch_admin' => 'Beheer gebruikersrechten voor het toevoegen van artikelen aan de volglijst van andere gebruikers',
 	'right-povwatch_user' => "Pagina's toevoegen aan de volglijst van andere gebruikers",
+	'action-povwatch_admin' => 'rechten te beheren voor PovWatch',
+	'action-povwatch_user' => 'deze pagina toe te voegen aan de volglijst van een andere gebruiker',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -849,7 +1337,9 @@ Trykk på knappen nedanfor for å abonnera.',
 	'povwatch_subscribe' => 'Abonner',
 	'povwatch_added' => 'lagt til',
 	'right-povwatch_admin' => 'Handsama brukarrettar for kven som kan leggja til sider i overvakingslistene til andre brukarar.',
-	'right-povwatch_user' => 'Leggja til sider overvakingslistene til andre brukarar.',
+	'right-povwatch_user' => 'Leggja til sider i overvakingslistene til andre brukarar.',
+	'action-povwatch_admin' => 'handsama brukarrettar for PovWatch',
+	'action-povwatch_user' => 'leggja til denne sida på overvakingslista til ein annan brukar',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -888,6 +1378,8 @@ Vær forsiktig når du skriver inn tittelen; også ikke-eksisterende sider kan l
 	'povwatch_added' => 'lagt til',
 	'right-povwatch_admin' => 'Administrere brukerrettigheter for hvem som kan legge til sider i andre brukeres overvåkningslister',
 	'right-povwatch_user' => 'Legge til sider i andres overvåkningslister',
+	'action-povwatch_admin' => 'administrere brukerrettigheter for PovWatch',
+	'action-povwatch_user' => 'legge denne siden til overvåkningslista til en annen bruker',
 );
 
 /** Northern Sotho (Sesotho sa Leboa)
@@ -929,6 +1421,8 @@ $messages['oc'] = array(
 	'povwatch_added' => 'apondut',
 	'right-povwatch_admin' => "Administrar los dreches d’utilizaire per l'ajust de paginas a la lista de seguit dels autres utilizaires.",
 	'right-povwatch_user' => 'Apond de paginas a la lista de seguit dels autres utilizaires',
+	'action-povwatch_admin' => "administrar los dreches d'utilizaire per PovWatch",
+	'action-povwatch_user' => "apondre aquesta pagina a la lista de seguit d'autres utilizaires",
 );
 
 /** Ossetic (Иронау)
@@ -942,7 +1436,41 @@ $messages['os'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'povwatch' => 'Strażnik POV',
+	'povwatch_desc' => 'Rozszerzenie służące [[Special:PovWatch|do wstawiania stron na listę obserwowanych]] innych użytkowników',
+	'povwatch_no_session' => 'Błąd! Nie można zapisać formularza z powodu utraty danych sesji.',
+	'povwatch_not_allowed_push' => 'Nie jesteś administratorem „Strażnika POV”, dlatego nie możesz wstawiać stron na listę obserwowanych.',
+	'povwatch_already_subscribed' => 'Prenumerujesz już w obserwowanych „Strażnika POV”',
+	'povwatch_subscribed' => 'Zaprenumerowałeś w obserwowanych „Strażnika POV”',
+	'povwatch_not_subscribed' => 'Nie prenumerujesz w obserwowanych „Strażnika POV”, więc nie możesz zakończyć prenumeraty.',
+	'povwatch_unsubscribed' => 'Zaprzestałeś prenumeraty w obserwowanych „Strażnika POV”',
+	'povwatch_invalid_title' => 'Podany tytuł jest nieprawidłowy',
+	'povwatch_pushed' => '[[$1]] został dodany do obserwowanych u $2 {{PLURAL:$2|użytkownika|użytkowników}}',
+	'povwatch_intro' => '„Strażnik POV” jest mechanizmem, który umożliwia administratorom tej usługi w dyskretny sposób dodawać strony do listy obserwowanych innych użytkowników.
+
+Rejestr ostatnich operacji dodawania dostępny jest na stronie [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Dostępna jest [[Special:PovWatch/subscribers|lista prenumerujących]].',
+	'povwatch_subscriber_list_intro' => '<strong>Lista prenumerujących</strong>',
+	'povwatch_not_allowed_subscribers' => 'Nie masz uprawnień aby zobaczyć listę prenumerujących „Strażnika POV”.',
+	'povwatch_unknown_subpage' => 'Nieznana podstrona.',
+	'povwatch_push' => 'Dodaj',
+	'povwatch_push_intro' => 'Użyj formularza aby dodać stronę do listy obserwowanych użytkowników prenumerujących „Strażnika POV”.
+Uważnie wprowadź tytuł - możesz dodać nieistniejący artykuł, a nie będziesz miał później możliwości usunięcia raz dodanego tytułu.',
 	'povwatch_title' => 'Tytuł:',
+	'povwatch_comment' => 'Komentarz',
+	'povwatch_no_log' => 'Brak wpisów w rejestrze.',
+	'povwatch_no_subscribers' => 'Brak prenumeratorów.',
+	'povwatch_unsubscribe_intro' => 'Prenumerujesz „Strażnika POV”
+Kliknij guzik poniżej jeśli chcesz zaprzestać prenumeraty.',
+	'povwatch_unsubscribe' => 'Zakończ prenumeratę',
+	'povwatch_subscribe_intro' => 'Nie prenumerujesz „Strażnika POV”.
+Kliknij guzik poniżej aby zaprenumerować.',
+	'povwatch_subscribe' => 'Zaprenumeruj',
+	'povwatch_added' => 'dodano',
+	'right-povwatch_admin' => 'Uprawnienia administratora „Strażnika POV” umożliwiające dodawanie stron do listy obserwowanych innych użytkowników',
+	'right-povwatch_user' => 'Dodawanie stron do listy obserwowanych przez innych użytkowników',
+	'action-povwatch_admin' => 'administrowania uprawnieniami użytkowników „Strażnika POV”',
+	'action-povwatch_user' => 'dodania tej strony do listy obserwowanych innego użytkownika',
 );
 
 /** Pashto (پښتو)
@@ -969,7 +1497,7 @@ $messages['pt'] = array(
 	'povwatch_not_subscribed' => 'Você não está inscrito no PovWatch, por isso não pode remover sua inscrição.',
 	'povwatch_unsubscribed' => 'Você não está mais inscrito na lista do PovWatch',
 	'povwatch_invalid_title' => 'O título especificado é inválido',
-	'povwatch_pushed' => '[[$1]] foi adicionada com sucesso à lista de páginas vigiadas de {{PLURAL:$2|$2 usuário|$2 usuários}}',
+	'povwatch_pushed' => '[[$1]] foi adicionada com sucesso à lista de páginas vigiadas de {{PLURAL:$2|$2 utilizador|$2 utilizadores}}',
 	'povwatch_intro' => 'PovWatch é um serviço que permite que páginas sejam discretamente adicionadas para a lista de artigos vigiados de administradores subscritos.
 
 Um registro das recentes páginas adicionadas na lista de artigos vigiados está disponível na página [[Special:PovWatch/log]].',
@@ -993,6 +1521,49 @@ Clique no botão abaixo para subscrever.',
 	'povwatch_added' => 'adicionado',
 	'right-povwatch_admin' => 'Administrar privilégios do utilizador para adicionar páginas nas listas de artigos vigiados de outros utilizadores',
 	'right-povwatch_user' => 'Adicionar páginas na lista de artigos vigiados de outros utilizadores',
+	'action-povwatch_admin' => 'administrar direitos de utilizador para o PovWatch',
+	'action-povwatch_user' => 'adicionar esta página à lista de vigiados de outro utilizador',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Extensão para [[Special:PovWatch|adicionar páginas nas listas de artigos vigiados]] de outros utilizadores',
+	'povwatch_no_session' => 'Erro: Não foi possível enviar o formulário devido a perda de dados da sessão.',
+	'povwatch_not_allowed_push' => 'Você não é um administrador PovWatch, você não pode adicionar páginas em listas de artigos vigiados.',
+	'povwatch_already_subscribed' => 'Você já esta inscrito para o PovWatch',
+	'povwatch_subscribed' => 'Você agora está inscrito para o Povwatch',
+	'povwatch_not_subscribed' => 'Você não está inscrito no PovWatch, por isso não pode remover sua inscrição.',
+	'povwatch_unsubscribed' => 'Você não está mais inscrito no PovWatch',
+	'povwatch_invalid_title' => 'O título especificado é inválido',
+	'povwatch_pushed' => '[[$1]] foi adicionada com sucesso à lista de páginas vigiadas de {{PLURAL:$2|$2 utilizador|$2 utilizadores}}',
+	'povwatch_intro' => 'PovWatch é um serviço que permite que páginas sejam discretamente adicionadas para a lista de artigos vigiados de administradores inscritos.
+
+Um registro das páginas adicionadas recentemente na lista de artigos vigiados está disponível na página [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Uma [[Special:PovWatch/subscribers|lista de inscritos]] está disponível.',
+	'povwatch_subscriber_list_intro' => '<strong>Lista de inscritos</strong>',
+	'povwatch_not_allowed_subscribers' => 'Você não tem permissão para visualizar a lista de inscritos no PovWatch.',
+	'povwatch_unknown_subpage' => 'Subpágina desconhecida.',
+	'povwatch_push' => 'Enviar',
+	'povwatch_push_intro' => 'Utilize o formulário abaixo para adicionar páginas na lista de artigos vigiados de utilizadores inscritos.
+Tenha cuidado ao digitar o título: mesmo os títulos que não existem podem ser adicionados, e não há uma maneira de remover um título depois de ter sido adicionado.',
+	'povwatch_title' => 'Título:',
+	'povwatch_comment' => 'Registrar comentário:',
+	'povwatch_no_log' => 'Não há regitros',
+	'povwatch_no_subscribers' => 'Não existem inscritos.',
+	'povwatch_unsubscribe_intro' => 'Você está inscrito no PovWatch.
+Clique no botão abaixo para remover sua inscrição.',
+	'povwatch_unsubscribe' => 'Cancelar inscrição',
+	'povwatch_subscribe_intro' => 'Você não está inscrito no PovWatch.
+Clique no botão abaixo para inscrever-se.',
+	'povwatch_subscribe' => 'Inscrever-se',
+	'povwatch_added' => 'adicionado',
+	'right-povwatch_admin' => 'Administrar privilégios do utilizador para adicionar páginas nas listas de artigos vigiados de outros utilizadores',
+	'right-povwatch_user' => 'Adicionar páginas na lista de artigos vigiados de outros utilizadores',
+	'action-povwatch_admin' => 'administrar direitos de utilizador para o PovWatch',
+	'action-povwatch_user' => 'adicionar esta página à lista de vigiados de outro utilizador',
 );
 
 /** Romanian (Română)
@@ -1044,7 +1615,50 @@ $messages['ru'] = array(
 	'povwatch_subscribe_intro' => 'Вы не подписаны на НтзНадзор. Нажмите кнопку ниже, чтобы подписаться.',
 	'povwatch_subscribe' => 'Подписаться',
 	'povwatch_added' => 'добавлен',
+	'right-povwatch_admin' => 'управление правом участников добавлять страницы в чужие списки наблюдения',
 	'right-povwatch_user' => 'Добавлять страницы в список наблюдения других участников',
+	'action-povwatch_admin' => 'управлять правами участников для НтзНадзора',
+	'action-povwatch_user' => 'добавить эту страницу в список наблюдения другого участника',
+);
+
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Сирэйдэри атын киһи [[Special:PovWatch|кэтээн көрүүтүн тиһигэр киллэрэргэ]] туһаныллар тупсарыы',
+	'povwatch_no_session' => 'Алҕас: Ситим быстан форма кыайан ыытыллыбата.',
+	'povwatch_not_allowed_push' => 'PovWatch дьаһабыла буолбатаххын, онон сирэйдэри кэтэбил тиһигэр эбэр кыаҕыҥ суох эбит.',
+	'povwatch_already_subscribed' => 'PovWatch сурутуутугар бэлиэр суруппут эбиккин',
+	'povwatch_subscribed' => 'PovWatch сурутуутугар дьэ суруттуҥ',
+	'povwatch_not_subscribed' => 'PovWatch сурутуутугар суруппатах эбиккин, онон ол сурутуугун сотор кыаҕыҥ суох буоллаҕа.',
+	'povwatch_unsubscribed' => 'PovWatch сурутуутутун тохтоттуҥ',
+	'povwatch_invalid_title' => 'Ааттаммыт бас сыыһалаах',
+	'povwatch_pushed' => '[[$1]] $2 кыттааччы кэтээн көрүүтүн {{PLURAL:$2|тиһигэр|тиһиктэригэр}} сөпкө киирдэ',
+	'povwatch_intro' => 'PovWatch - дьаһабыллар кэтээн көрүүлэригэр мөккүөрдээх сирэйдэри атыттартан кистээн киллэрэр сулууспа.
+
+Соторутааҕыта кэтэбилгэ угуллубут сирэйдэр тиһиктэрэ манна баар [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => '[[Special:PovWatch/subscribers|Сурутааччылар тиһиктэрэ]] баар.',
+	'povwatch_subscriber_list_intro' => '<strong>Сурутааччылар тиһиктэрэ</strong>',
+	'povwatch_not_allowed_subscribers' => 'Эн PovWatch сурутааччыларын тиһигин көрөр кыаҕыҥ суох.',
+	'povwatch_unknown_subpage' => 'Биллибэт алын сирэй.',
+	'povwatch_push' => 'Угарга',
+	'povwatch_push_intro' => 'Аллара баар форманы туһанан суруттарбыт кыттааччылар кэтиир сирэйдэригэр туһааннаах сирэйдэри киллэр. Ааты таларгытыгар сэрэнээр: суох да ааттар эбиллиэхтэрин сөп, ону төттөрү сотор кыах суох буолуо.',
+	'povwatch_title' => 'Аата:',
+	'povwatch_comment' => 'Сурунаал быһаарыыта:',
+	'povwatch_no_log' => 'Сурунаалга сурук суох.',
+	'povwatch_no_subscribers' => 'Сурутааччылар суохтар.',
+	'povwatch_unsubscribe_intro' => 'PovWatch сурутуутугар суруттуҥ.
+Аллараа тимэҕи баттаан сурутууттан аккаастаныаххын сөп.',
+	'povwatch_unsubscribe' => 'Сурутууттан аккаастаныы',
+	'povwatch_subscribe_intro' => 'PovWatch сурутууга суруппатаххын.
+Аллараа тимэҕи баттаан сурутуоххун сөп.',
+	'povwatch_subscribe' => 'Сурутуу',
+	'povwatch_added' => 'эбилиннэ',
+	'right-povwatch_admin' => 'кыттааччылар атын кыттааччылар кэтээһиннэригэр сирэйдэри эбэллэрин салайыы',
+	'right-povwatch_user' => 'Атын кыттааччылар кэтээһиннэригэр сирэй эбээһин',
+	'action-povwatch_admin' => 'PovWatch анаан кыттааччылар бырааптарын салайыы',
+	'action-povwatch_user' => 'бу сирэйи атын кыттааччы кэтээһинигэр киллэр',
 );
 
 /** Slovak (Slovenčina)
@@ -1081,6 +1695,8 @@ Záznam posledných zoznamov sledovaných stránok sa nachádza na [[Special:Pov
 	'povwatch_added' => 'pridaný',
 	'right-povwatch_admin' => 'Spravovať oprávnenie pridávať stránky do zoznamu sledovaných ostatných používateľov',
 	'right-povwatch_user' => 'Pridávať stránku do zoznamu sledovaných ostatných používateľov',
+	'action-povwatch_admin' => 'spravovať práva používateľov PovWatch',
+	'action-povwatch_user' => 'pridať túto stránku na zoznam sledovaných stránok iného používateľa',
 );
 
 /** Serbian Cyrillic ekavian (ћирилица)
@@ -1088,6 +1704,45 @@ Záznam posledných zoznamov sledovaných stránok sa nachádza na [[Special:Pov
  */
 $messages['sr-ec'] = array(
 	'povwatch_title' => 'Наслов:',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Ärwiederenge, uum [[Special:PovWatch|Sieden fon ju Beoboachtengslieste]] fon uur Benutsere bietoutouföigjen',
+	'povwatch_no_session' => 'Failer: Formulardoaten konnen nit feroarbaided wäide, deer do Sittengsdoaten ferlädden geen sunt.',
+	'povwatch_not_allowed_push' => 'Du bäst naan PovWatch-Administrator un koast froamde Beooboachtengsliesten neen Sieden bietouföigje.',
+	'povwatch_already_subscribed' => 'Du bäst al foar PovWatch registrierd',
+	'povwatch_subscribed' => 'Du bäst nu foar Povwatch registrierd',
+	'povwatch_not_subscribed' => 'Du bäst nit foar PovWatch registrierd; ne Oumäldenge is deeruum nit muugelk.',
+	'povwatch_unsubscribed' => 'Du bäst nu fon PovWatch oumälded',
+	'povwatch_invalid_title' => 'Die anroate Siedennoome is uungultich',
+	'povwatch_pushed' => '[[$1]] wuud mäd Ärfoulch {{PLURAL:$2|ju Beooboachtengslieste fon n Benutser|do Beooboachtungsliesten fon $2 Benutsere}} bietouföiged.',
+	'povwatch_intro' => 'PovWatch is n Service, uum uumstriedede Sieden diskret do Beooboachtengsliesten fon registrierde Administratore bietoutouföigjen.
+
+N Logbouk fon do uur PovWatch bietouföigede Sieden is ferföichboar unner [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Ne [[Special:PovWatch/subscribers|Lieste fon do registrierde Benutsere]] is ferföichboar.',
+	'povwatch_subscriber_list_intro' => '<strong>Lieste fon do registrierde Benutsere</strong>',
+	'povwatch_not_allowed_subscribers' => 'Du hääst neen Begjuchtigenge, ju PovWatch-Benutserlieste ientoukiekjen.',
+	'povwatch_unknown_subpage' => 'Uunbekoande Unnersiede',
+	'povwatch_push' => 'Bietouföigje',
+	'povwatch_push_intro' => 'Benuts dät Formular, uum Sieden an do Beooboachtengsliesten mäd registrierde Benutsere bietoutouföigjen.
+Beoachtje: uk nit foarhoundene Sieden konnen bietouföiged wäide un dät rakt naan Wai, dät tourääch tou traalen.',
+	'povwatch_title' => 'Siedennoome:',
+	'povwatch_comment' => 'Logbouk-Kommentoar:',
+	'povwatch_no_log' => 'Dät Logbouk änthaalt neen Iendraage.',
+	'povwatch_no_subscribers' => 'Dät rakt neen registrierde Benutsere.',
+	'povwatch_unsubscribe_intro' => 'Du bäst foar Povwatch registrierd. Klik ap dän Knoop unner, uum die antoumäldjen.',
+	'povwatch_unsubscribe' => 'Oumäldje',
+	'povwatch_subscribe_intro' => 'Du bäst nit foar PovWatch registrierd. Klik ap dän Knoop unner, uum die antoumäldjen.',
+	'povwatch_subscribe' => 'Registrierje',
+	'povwatch_added' => 'bietouföiged',
+	'right-povwatch_admin' => 'Dät Benutsergjucht touluuke of äntluuke, Sieden tou ju Beooboachtengslieste fon uur Benutsere bietouföigje tou duuren',
+	'right-povwatch_user' => 'Bietouföigjen fon Sieden tou ju Beooboachtengslieste fon uur Benutsere',
+	'action-povwatch_admin' => 'Gjuchte foar PovWatch tou ferwaltjen',
+	'action-povwatch_user' => 'föigje disse Siede tou ju Beoboachtengslieste fon n uur Benutser bietou',
 );
 
 /** Swedish (Svenska)
@@ -1130,6 +1785,8 @@ Klicka på knappen nedan för att abonnera.',
 	'povwatch_added' => 'tillaggd',
 	'right-povwatch_admin' => 'Administrera användarrättigheter för tilläggande av sidor i andra användares bevakningslistor',
 	'right-povwatch_user' => 'Lägga till sidor i andra användares bevakningslistor',
+	'action-povwatch_admin' => 'hantera användarrättigheter för PovWatch',
+	'action-povwatch_user' => 'lägg till denna sida till bevakningslistan för en annan användare',
 );
 
 /** Telugu (తెలుగు)
@@ -1161,11 +1818,87 @@ $messages['tg-cyrl'] = array(
 	'povwatch_title' => 'Унвон:',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Karugtong para [[Special:PovWatch|pagtulak ng mga pahina patungo sa ibabaw ng mga talaan ng binabantayan]] ng ibang mga tagagamit',
+	'povwatch_no_session' => 'Kamalian: Hindi maipasa ang pormularyo dahil sa isang kawalan ng nakalaang oras/panahon na nakalaan para sa dato.',
+	'povwatch_not_allowed_push' => "Hindi ka isang tagapangasiwa ng ''PovWatch'', hindi mo maitutulak ang mga pahina patungo sa mga talaan ng binabantayan.",
+	'povwatch_already_subscribed' => "Tumatanggap ka na ng sipi ng ''PovWatch''",
+	'povwatch_subscribed' => "Tatanggap ka na ngayon ng sipi ng ''PovWatch''",
+	'povwatch_not_subscribed' => "Hindi ka pa tumatanggap ng sipi ng ''PovWatch'', kaya't hindi ka maaaring humiling na huwag tumanggap ng sipi.",
+	'povwatch_unsubscribed' => "Hindi na ngayon tatanggap ng sipi ng ''PovWatch''",
+	'povwatch_invalid_title' => 'Hindi tanggap ang tinukoy na pamagat',
+	'povwatch_pushed' => 'Matagumpay na naitulak ang [[$1]] patungo sa $2 {{PLURAL:$2|talaan ng binabantayan|mga talaan ng binabantayan}} ng tagagamit',
+	'povwatch_intro' => "Ang ''PovWatch'' ay isang paglilingkod/serbisyo na nagpapahintulot sa mga pahinang sumasalungat/maaaring pagtalunan na matahimik na maitulat patungo sa ibabaw ng mga talaan ng binabantayan ng mga tagapangasiwang tumatanggap ng sipi.
+
+Makakakuha mula sa [[Special:PovWatch/log]] ng isang talaan ng kamakailang naitulak na mga talaan ng binabantayan.",
+	'povwatch_subscriber_list' => 'Makakakuha ng isang [[Special:PovWatch/subscribers|talaan ng mga tumatanggap ng sipi]].',
+	'povwatch_subscriber_list_intro' => '<strong>Talaan ng mga tumatanggap ng sipi</strong>',
+	'povwatch_not_allowed_subscribers' => "Hindi ka pinapahintulutang matingnan ang talaan ng mga tumatanggap ng sipi ng ''PovWatch''.",
+	'povwatch_unknown_subpage' => 'Hindi alam na kabahaging pahina.',
+	'povwatch_push' => 'Itulak',
+	'povwatch_push_intro' => 'Gamitin ang pormularyo sa ibaba upang maitulak ang mga pahina patungo sa ibabaw ng mga talaan ng binabantayan ng mga tagagamit na tumatanggap ng sipi.
+Mangyaring mag-ingat lamang sa pagmamakinilya ng pamagat: maidaragdag ang kahit mga pamagat na hindi pa umiiral, at walang paraan para matanggal ang isang pamagat kapag naitulak na ito palabas.',
+	'povwatch_title' => 'Pamagat:',
+	'povwatch_comment' => 'Tala ng kumento/puna:',
+	'povwatch_no_log' => 'Wala pang mga nakapasok/entrada sa tala.',
+	'povwatch_no_subscribers' => 'Walang mga tumatanggap ng sipi.',
+	'povwatch_unsubscribe_intro' => "Tumatanggap ka ng sipi ng ''PovWatch''.
+Pindutin ang pindutan sa ibaba upang huwag nang tumanggap ng sipi.",
+	'povwatch_unsubscribe' => 'Pahintuin na ang pagtanggap ng sipi',
+	'povwatch_subscribe_intro' => "Hindi ka pa tumatanggap ng sipi ng ''PovWatch''.
+Pindutin ang pindutan sa ibaba upang tumanggap ng sipi.",
+	'povwatch_subscribe' => 'Pumayag na tumanggap ng sipi',
+	'povwatch_added' => 'naidagdag na',
+	'right-povwatch_admin' => 'Pangasiwaan ang mga karapatan ng tagagamit para sa pagdaragdag ng mga pahina sa mga talaan ng binabantayan ng iba pang mga tagagamit',
+	'right-povwatch_user' => 'Magdagdag ng mga pahina sa mga talaan ng binabantayan ng iba pang mga tagagamit',
+	'action-povwatch_admin' => 'pangasiwaan ang mga karapatan ng tagagamit para sa PovWatch',
+	'action-povwatch_user' => 'idagdag ang pahinang ito sa talaan ng binabantayan ng iba pang tagagamit',
+);
+
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Karduelis
  */
 $messages['tr'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Sayfaları, diğer kullanıcıların [[Special:PovWatch|izleme listelerine itmek]] için eklenti',
+	'povwatch_no_session' => 'Hata: Oturumdaki veri kaybından dolayı form gönderilemedi.',
+	'povwatch_not_allowed_push' => 'Bir PovWatch yöneticisi değilsiniz, izleme listelerine sayfa itemezsiniz.',
+	'povwatch_already_subscribed' => "PovWatch'a zaten abonesiniz",
+	'povwatch_subscribed' => "PovWatch'a abone oldunuz",
+	'povwatch_not_subscribed' => "PovWatch'a abone değilsiniz, bu yüzden aboneliğinizi iptal edemezsiniz.",
+	'povwatch_unsubscribed' => 'PovWatch aboneliğiniz iptal edildi',
+	'povwatch_invalid_title' => 'Belirtilen başlık geçersizdi',
+	'povwatch_pushed' => '[[$1]] $2 kullanıcının {{PLURAL:$2|izleme listesine|izleme listelerine}} başarıyla itildi.',
+	'povwatch_intro' => 'PovWatch, tartışmalı sayfaların abone olan yöneticilerin izleme listelerine ihtiyaten itilmesine izin veren bir servistir.
+
+Son izleme listesi itmelerinin günlüğü, [[Special:PovWatch/günlük]] sayfasında mevcuttur.',
+	'povwatch_subscriber_list' => 'Bir [[Special:PovWatch/subscribers|abone listesi]] mevcut.',
+	'povwatch_subscriber_list_intro' => '<strong>Abone listesi</strong>',
+	'povwatch_not_allowed_subscribers' => 'PovWatch abone listesini görmeye izniniz yok.',
+	'povwatch_unknown_subpage' => 'Bilinmeyen altsayfa.',
+	'povwatch_push' => 'İt',
+	'povwatch_push_intro' => 'Abone kullanıcıların izleme listelerine sayfaları itmek için aşağıdaki formu kullanın.
+Lütfen başlığı yazarken dikkatli olun: varolmayan sayfalar bile eklenebilir, ve bir kere itildikten sonra başlığı geri alma yolu yoktur.',
 	'povwatch_title' => 'Başlık:',
+	'povwatch_comment' => 'Günlük yorumu:',
+	'povwatch_no_log' => 'Hiç günlük girdisi yok.',
+	'povwatch_no_subscribers' => 'Abone yok.',
+	'povwatch_unsubscribe_intro' => "PovWatch'a abone oldunuz.
+Abonelikten çıkmak için aşağıdaki düğmeye tıklayın.",
+	'povwatch_unsubscribe' => 'Abonelikten çık',
+	'povwatch_subscribe_intro' => "PovWatch'a abone değilsiniz.
+Abone olmak için aşağıdaki düğmeye tıklayın.",
+	'povwatch_subscribe' => 'Abone ol',
+	'povwatch_added' => 'eklendi',
+	'right-povwatch_admin' => 'Diğer kullanıcıların izleme listesine sayfa eklemek için kullanıcı haklarını yönet',
+	'right-povwatch_user' => 'Diğer kullanıcıların izleme listelerine sayfa ekle',
+	'action-povwatch_admin' => 'PovWatch için kullanıcı haklarını yönetmeye',
+	'action-povwatch_user' => 'bu sayfayı başka bir kullanıcının izleme listesine eklemeye',
 );
 
 /** Ukrainian (Українська)
@@ -1173,6 +1906,47 @@ $messages['tr'] = array(
  */
 $messages['uk'] = array(
 	'povwatch_title' => 'Назва:',
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'povwatch' => 'PovWatch',
+	'povwatch_desc' => 'Estension par [[Special:PovWatch|xontar pàxene sui osservati speciali]] de altri utenti',
+	'povwatch_no_session' => "Eròr: No se gà podesto inviar el mòdulo parché xe 'ndà persi i dati de la session.",
+	'povwatch_not_allowed_push' => 'No te sì mia un aministrador de PovWatch, no te poli xontar pàxene ai osservati speciali.',
+	'povwatch_already_subscribed' => 'Te sì zà iscrito a PovWatch',
+	'povwatch_subscribed' => 'Desso te sì iscrito a PovWatch',
+	'povwatch_not_subscribed' => 'No te sì mia iscrito a PovWatch, quindi no te poli disiscrìvarte.',
+	'povwatch_unsubscribed' => 'Desso te te sì disiscrito da PovWatch',
+	'povwatch_invalid_title' => "El tìtolo indicà no'l xe valido",
+	'povwatch_pushed' => "[[$1]] xe stà zontà su i {{PLURAL:$2|osservati speciali|osservati speciali}} de l'utente $2",
+	'povwatch_intro' => 'PovWatch el xe un servissio che el parmete de xontar, in maniera discreta, pàxene controverse ai osservati speciali dei aministradori iscriti al servissio.
+
+Un registro dei ultimi inserimenti el se cata su [[Special:PovWatch/log]].',
+	'povwatch_subscriber_list' => 'Se pol consultar la [[Special:PovWatch/subscribers|lista dei iscriti]].',
+	'povwatch_subscriber_list_intro' => '<strong>Lista dei iscriti</strong>',
+	'povwatch_not_allowed_subscribers' => 'No te ghè el parmesso de vardar la lista dei iscriti a PovWatch.',
+	'povwatch_unknown_subpage' => 'Sotopàxena sconossiùa.',
+	'povwatch_push' => 'Inviar',
+	'povwatch_push_intro' => 'Dòpara el mòdulo qua de soto par xontar pàxene sui osservati speciali dei utenti iscriti.
+Par piaser stà tento a scrìvar ben el tìtolo: anca pàxene che no esiste le se pol xontar, e no ghe xe modo de cavar un tìtolo na olta che el xe stà inserìo.',
+	'povwatch_title' => 'Titolo:',
+	'povwatch_comment' => 'Comento par el registro:',
+	'povwatch_no_log' => 'No ghe xe comenti in tel registro.',
+	'povwatch_no_subscribers' => 'No ghe xe iscriti.',
+	'povwatch_unsubscribe_intro' => 'Te sì iscrito a PovWatch.
+Struca el boton qua soto par disiscrìvarte.',
+	'povwatch_unsubscribe' => 'Disiscrìvete',
+	'povwatch_subscribe_intro' => 'No te sì mia iscrito a PovWatch.
+Struca el boton qua soto par iscrìvarte.',
+	'povwatch_subscribe' => 'Iscrìvete',
+	'povwatch_added' => 'zontà',
+	'right-povwatch_admin' => 'Diriti de utente aministrador par xontar pàxene ai osservati speciali de altri utenti',
+	'right-povwatch_user' => 'Zonta pàxene ai osservati speciali de altri utenti',
+	'action-povwatch_admin' => 'aministra i parmessi dei utenti par PovWatch',
+	'action-povwatch_user' => "zonta sta pàxena ai osservati speciali de n'altro utente",
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1213,6 +1987,8 @@ Nhấn vào nút phía dưới để đăng ký.',
 	'povwatch_added' => 'được thêm vào',
 	'right-povwatch_admin' => 'Quản lý quyền thành viên để đưa trang vào danh sách thành viên của người khác',
 	'right-povwatch_user' => 'Thêm trang vào danh sách theo dõi của thành viên khác',
+	'action-povwatch_admin' => 'quản trị quyền thành viên cho PovWatch',
+	'action-povwatch_user' => 'thêm trang này vào danh sách theo dõi của người khác',
 );
 
 /** Volapük (Volapük)

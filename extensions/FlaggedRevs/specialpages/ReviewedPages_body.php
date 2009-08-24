@@ -6,14 +6,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class ReviewedPages extends SpecialPage
 {
-    function __construct() {
-        SpecialPage::SpecialPage( 'ReviewedPages' );
+	public function __construct() {
+		SpecialPage::SpecialPage( 'ReviewedPages' );
 		wfLoadExtensionMessages( 'ReviewedPages' );
 		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
-    function execute( $par ) {
-        global $wgRequest, $wgUser, $wgFlaggedRevValues, $wgFlaggedRevPristine;
+	public function execute( $par ) {
+		global $wgRequest, $wgUser, $wgFlaggedRevPristine;
 
 		$this->setHeaders();
 		$this->skin = $wgUser->getSkin();
@@ -21,24 +21,34 @@ class ReviewedPages extends SpecialPage
 		# Check if there is a featured level
 		$maxType = FlaggedRevs::pristineVersions() ? 2 : 1;
 		$this->namespace = $wgRequest->getInt( 'namespace' );
-		$this->type = $wgRequest->getInt( 'level' );
-		$this->type = $this->type <= $maxType ? $this->type : 0;
+		$this->type = $wgRequest->getInt( 'level', -1 );
+		$this->type = min($this->type,$maxType);
+		$this->hideRedirs = $wgRequest->getBool( 'hideredirs', true );
 		
 		$this->showForm();
 		$this->showPageList();
 	}
 
-	function showForm() {
+	public function showForm() {
 		global $wgOut, $wgTitle, $wgScript, $wgFlaggedRevsNamespaces;
 
 		$form = Xml::openElement( 'form',
 			array( 'name' => 'reviewedpages', 'action' => $wgScript, 'method' => 'get' ) );
 		$form .= "<fieldset><legend>".wfMsg('reviewedpages-leg')."</legend>\n";
-		
+
+		// show/hide links
+		$showhide = array( wfMsgHtml( 'show' ), wfMsgHtml( 'hide' ) );
+		$onoff = 1 - $this->hideRedirs;
+		$link = $this->skin->link( $this->getTitle(), $showhide[$onoff], array(),
+			 array( 'hideredirs' => $onoff, 'namespace' => $this->namespace )
+		);
+		$showhideredirs = wfMsgHtml( 'whatlinkshere-hideredirs', $link );
+
 		if( count($wgFlaggedRevsNamespaces) > 1 ) {
-			$form .= FlaggedRevsXML::getNamespaceMenu( $this->namespace ) . '&nbsp;';
+			$form .= FlaggedRevsXML::getNamespaceMenu( $this->namespace ) . ' ';
 		}
-		$form .= self::getLevelMenu( $this->type );
+		$form .= FlaggedRevsXML::getLevelMenu( $this->type ) . ' ';
+		$form .= $showhideredirs . ' ';
 
 		$form .= " ".Xml::submitButton( wfMsg( 'go' ) );
 		$form .= Xml::hidden( 'title', $wgTitle->getPrefixedDBKey() );
@@ -47,10 +57,10 @@ class ReviewedPages extends SpecialPage
 		$wgOut->addHTML( $form );
 	}
 
-	function showPageList() {
+	protected function showPageList() {
 		global $wgOut, $wgUser, $wgLang;
 
-		$pager = new ReviewedPagesPager( $this, array(), $this->type, $this->namespace );
+		$pager = new ReviewedPagesPager( $this, array(), $this->type, $this->namespace, $this->hideRedirs );
 		if( $pager->getNumRows() ) {
 			$wgOut->addHTML( wfMsgExt('reviewedpages-list', array('parse') ) );
 			$wgOut->addHTML( $pager->getNavigationBar() );
@@ -61,7 +71,7 @@ class ReviewedPages extends SpecialPage
 		}
 	}
 
-	function formatRow( $row ) {
+	public function formatRow( $row ) {
 		global $wgLang, $wgUser;
 
 		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
@@ -69,10 +79,11 @@ class ReviewedPages extends SpecialPage
 
 		$stxt = '';
 		if( !is_null($size = $row->page_len) ) {
-			if($size == 0)
+			if( $size == 0 )
 				$stxt = ' <small>' . wfMsgHtml('historyempty') . '</small>';
 			else
-				$stxt = ' <small>' . wfMsgExt('historysize', array('parsemag'), $wgLang->formatNum( $size ) ) . '</small>';
+				$stxt = ' <small>' . wfMsgExt('historysize', array('parsemag'),
+					$wgLang->formatNum( $size ) ) . '</small>';
 		}
 
 		$SVtitle = SpecialPage::getTitleFor( 'Stableversions' );
@@ -83,21 +94,6 @@ class ReviewedPages extends SpecialPage
 
 		return "<li>$link $stxt ($list) [$best]</li>";
 	}
-	
-	/**
-	* Get a selector of review levels
-	* @param int $selected, selected level
-	*/
-	public static function getLevelMenu( $selected=null ) {
-		$form = Xml::openElement( 'select', array('name' => 'level') );
-		$form .= Xml::option( wfMsg( "reviewedpages-lev-0" ), 0, $selected==0 );
-		if( FlaggedRevs::qualityVersions() )
-			$form .= Xml::option( wfMsg( "reviewedpages-lev-1" ), 1, $selected==1 );
-		if( FlaggedRevs::pristineVersions() )
-			$form .= Xml::option( wfMsg( "reviewedpages-lev-2" ), 2, $selected==2 );
-		$form .= Xml::closeElement('select')."\n";
-		return $form;
-	}
 }
 
 /**
@@ -106,7 +102,7 @@ class ReviewedPages extends SpecialPage
 class ReviewedPagesPager extends AlphabeticPager {
 	public $mForm, $mConds, $namespace, $type;
 
-	function __construct( $form, $conds = array(), $type=0, $namespace=0 ) {
+	function __construct( $form, $conds = array(), $type=0, $namespace=0, $hideRedirs=1 ) {
 		$this->mForm = $form;
 		$this->mConds = $conds;
 		$this->type = $type;
@@ -119,6 +115,7 @@ class ReviewedPagesPager extends AlphabeticPager {
 			$namespace = empty($wgFlaggedRevsNamespaces) ? -1 : $wgFlaggedRevsNamespaces[0]; 	 
 		}
 		$this->namespace = $namespace;
+		$this->hideRedirs = $hideRedirs;
 
 		parent::__construct();
 	}
@@ -130,13 +127,20 @@ class ReviewedPagesPager extends AlphabeticPager {
 	function getQueryInfo() {
 		$conds = $this->mConds;
 		$conds[] = 'page_id = fp_page_id';
-		$conds['fp_quality'] = $this->type;
-		$conds['page_namespace'] = $this->namespace;
+		$index = 'PRIMARY';
+		if( $this->type >= 0 ) {
+			$conds['fp_quality'] = $this->type;
+			$index = 'fp_quality_page';
+		}
+		if( $this->hideRedirs ) {
+			$conds['page_is_redirect'] = 0;
+		}
+		$conds['page_namespace'] = $this->namespace; // Sanity check NS
 		return array(
 			'tables' => array('flaggedpages','page'),
 			'fields' => 'page_namespace,page_title,page_len,fp_page_id',
 			'conds'  => $conds,
-			'options' => array( 'USE INDEX' => array('flaggedpages' => 'fp_quality_page') )
+			'options' => array( 'USE INDEX' => array('flaggedpages' => $index,'page' => 'PRIMARY') )
 		);
 	}
 

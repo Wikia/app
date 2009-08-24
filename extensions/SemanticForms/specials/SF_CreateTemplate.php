@@ -22,7 +22,7 @@ class SFCreateTemplate extends SpecialPage {
 		wfLoadExtensionMessages('SemanticForms');
 	}
 
-	function execute() {
+	function execute($query) {
 		$this->setHeaders();
 		doSpecialCreateTemplate();
 	}
@@ -105,7 +105,7 @@ function doSpecialCreateTemplate() {
 				if ($wgRequest->getVal('del_' . $old_id) != '') {
 					# do nothing - this field won't get added to the new list
 				} else {
-					$field = SFTemplateField::newWithValues($val, $wgRequest->getVal('label_' . $old_id));
+					$field = SFTemplateField::create($val, $wgRequest->getVal('label_' . $old_id));
 					$field->semantic_property = $wgRequest->getVal('semantic_property_' . $old_id);
 					$field->is_list = $wgRequest->getCheck('is_list_' . $old_id);
 					$fields[] = $field;
@@ -129,7 +129,7 @@ function doSpecialCreateTemplate() {
 		} else {
 			// redirect to wiki interface
 			$wgOut->setArticleBodyOnly(true);
-			$title = Title::newFromText($template_name, NS_TEMPLATE);
+			$title = Title::makeTitleSafe(NS_TEMPLATE, $template_name);
 			$full_text = SFTemplateField::createTemplateText($template_name, $fields, $category, $aggregating_property, $aggregation_label, $template_format);
 			// HTML-encode
 			$full_text = str_replace('"', '&quot;', $full_text);

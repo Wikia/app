@@ -9,10 +9,6 @@
  *
  * extended styles for metavid extension
  */
-/*annotative layers */
-.anno_en{
-	background:#DDD;
-} 
 .mvd_page_image{
 	float:left;
 	padding-right:5px;
@@ -528,4 +524,33 @@ ul#metaResults li.prevnext {margin-left:3px; margin-right:10px;}
 }
 #suggestionsInner{
 	background:#FFF;
+}
+
+/* for dialog boxes */
+.dlbox-centered 
+{
+	display:none;
+	position:fixed;
+	background:#DDD;
+	border:3px solid #AAA;
+ 	font-size:115%;".
+	width:40%;
+	height:50%;
+	/*margin: -20% 10% -20% 10%;*/
+	padding: 10px;
+	z-index:100;
+}
+.dlbox-overlay{
+	display:none;
+	background:#000;
+	cursor:wait;
+	height:100%;
+	left:0;
+	position:fixed;
+	top:0;
+	width:100%;
+	z-index:99;
+	filter:alpha(opacity=60);
+	-moz-opacity: 0.6;
+	opacity: 0.6;
 }

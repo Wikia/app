@@ -10,22 +10,46 @@
 class SFTemplateField {
 	var $field_name;
 	var $label;
-	var $semantic_field;
 	var $semantic_property;
-	var $is_relation;
 	var $field_type;
 	var $possible_values;
 	var $is_list;
 
-	function newWithValues($name, $label) {
+	static function create($name, $label) {
 		$f = new SFTemplateField();
 		$f->field_name = trim(str_replace('\\', '', $name));
 		$f->label = trim(str_replace('\\', '', $label));
 		return $f;
 	}
 
+	/**
+	 * Create an SFTemplateField object based on the corresponding field
+	 * in the template definition (which we first have to find)
+	 */
+	static function createFromList($field_name, $all_fields, $strict_parsing) {
+		// see if this field matches one of the fields defined for
+		// the template it's part of - if it is, use all available
+		// information about that field; if it's not, either create
+		// an object for it or not, depending on whether the
+		// template has a 'strict' setting in the form definition
+		$the_field = null;
+		foreach ($all_fields as $cur_field) {
+			if ($field_name == $cur_field->field_name) {
+				$the_field = $cur_field;
+				break;
+			}
+		}
+		if ($the_field == null) {
+			if ($strict_parsing) {
+				return null;
+			}
+			$the_field = new SFTemplateField();
+		}
+		return $the_field;
+	}
+
 	function setTypeAndPossibleValues() {
-		$proptitle = Title::newFromText($this->semantic_field, SMW_NS_PROPERTY);
+		$proptitle = Title::makeTitleSafe(SMW_NS_PROPERTY, $this->semantic_property);
 		if ($proptitle === NULL)
 			return;
 		$store = smwfGetStore();
@@ -44,7 +68,7 @@ class SFTemplateField {
 
 		foreach ($allowed_values as $value) {
 			// HTML-unencode each value
-			$this->possible_values[] = html_entity_decode($value->getXSDValue());
+			$this->possible_values[] = html_entity_decode($value->getWikiValue());
 		}
 		// HACK - if there were any possible values, set the field
 		// type to be 'enumeration', regardless of what the actual type is
@@ -53,30 +77,45 @@ class SFTemplateField {
 		}
 	}
 
-	// setSemanticData() - called when template is parsed during the creation
-	// of a form
-	function setSemanticData($semantic_field, $is_relation, $is_list) {
-		$this->semantic_field = str_replace('\\', '', $semantic_field);
-		$this->is_relation = $is_relation;
+	/**
+	 * Called when template is parsed during the creation of a form
+	 */
+	function setSemanticProperty($semantic_property) {
+		$this->semantic_property = str_replace('\\', '', $semantic_property);
 		$this->possible_values = array();
-		$this->is_list = $is_list;
 		// set field type and possible values, if any
 		$this->setTypeAndPossibleValues();
 	}
 
+	/**
+	 * Returns whether the semantic property represented by this field
+	 * has the passed-in type constant (e.g., '_str', '_wpg')
+	 */
+	function propertyIsOfType($type_constant) {
+                global $smwgContLang;
+                $datatypeLabels =  $smwgContLang->getDatatypeLabels();
+                $page_type = $datatypeLabels[$type_constant];
+		return ($this->field_type == $page_type);
+	}
+
 	function createTemplateText($template_name, $template_fields, $category, $aggregating_property, $aggregating_label, $template_format) {
-		$text = "<noinclude>\n";
-		$text .= wfMsgForContent('sf_template_docu', $template_name) . "\n";
-		$text .= "<pre>\n";
-		$text .= "{{" . $template_name;
+		$template_header = wfMsgForContent('sf_template_docu', $template_name);
+		$text =<<<END
+<noinclude>
+$template_header
+<pre>
+
+END;
+		$text .= '{{' . $template_name;
 		if (count($template_fields) > 0) { $text .= "\n"; }
 		foreach ($template_fields as $field) {
 			$text .= "|" . $field->field_name . "=\n";
 		}
-		$text .= "}}\n";
-		$text .= "</pre>\n";
-		$text .= wfMsgForContent('sf_template_docufooter') . "\n";
+		$template_footer = wfMsgForContent('sf_template_docufooter');
 		$text .=<<<END
+}}
+</pre>
+$template_footer
 </noinclude><includeonly>
 
 END;

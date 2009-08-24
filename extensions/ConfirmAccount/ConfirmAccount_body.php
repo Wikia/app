@@ -15,9 +15,9 @@ class ConfirmAccountsPage extends SpecialPage
         SpecialPage::SpecialPage('ConfirmAccounts','confirmaccount');
     }
 
-    function execute( $par ) {
-        global $wgRequest, $wgOut, $wgUser, $wgAccountRequestTypes;
-        
+	function execute( $par ) {
+		global $wgRequest, $wgOut, $wgUser, $wgAccountRequestTypes, $wgLang;
+
 		if( !$wgUser->isAllowed( 'confirmaccount' ) ) {
 			$wgOut->permissionRequired( 'confirmaccount' );
 			return;
@@ -81,7 +81,7 @@ class ConfirmAccountsPage extends SpecialPage
 
 		$this->skin = $wgUser->getSkin();
 		
-		$titleObj = Title::makeTitle( NS_SPECIAL, "ConfirmAccounts/{$this->specialPageParameter}" );
+		$titleObj = SpecialPage::getTitleFor( 'ConfirmAccounts', $this->specialPageParameter );
 		
 		# Show other sub-queue links. Grey out the current one.
 		# When viewing a request, show them all.
@@ -91,27 +91,45 @@ class ConfirmAccountsPage extends SpecialPage
 			$listLink = wfMsgHtml( 'confirmaccount-showopen' );
 		}
 		if( $this->acrID || !$this->showHeld ) {
-			$listLink .= ' | '.$this->skin->makeKnownLinkObj( $titleObj, 
-				wfMsgHtml( 'confirmaccount-showheld' ), wfArrayToCGI( array( 'wpShowHeld' => 1 ) ) );
+			$listLink = $wgLang->pipeList( array(
+				$listLink,
+				$this->skin->makeKnownLinkObj( $titleObj, 
+					wfMsgHtml( 'confirmaccount-showheld' ), wfArrayToCGI( array( 'wpShowHeld' => 1 ) ) )
+			) );
 		} else {
-			$listLink .= ' | '.wfMsgHtml( 'confirmaccount-showheld' );
+			$listLink = $wgLang->pipeList( array(
+				$listLink,
+				wfMsgHtml( 'confirmaccount-showheld' )
+			) );
 		}
 		if( $this->acrID || !$this->showRejects ) {
-			$listLink .= ' | '.$this->skin->makeKnownLinkObj( $titleObj, wfMsgHtml( 'confirmaccount-showrej' ),
-				wfArrayToCGI( array( 'wpShowRejects' => 1 ) ) );
+			$listLink = $wgLang->pipeList( array(
+				$listLink,
+				$this->skin->makeKnownLinkObj( $titleObj, wfMsgHtml( 'confirmaccount-showrej' ),
+					wfArrayToCGI( array( 'wpShowRejects' => 1 ) ) )
+			) );
 		} else {
-			$listLink .= ' | '.wfMsgHtml( 'confirmaccount-showrej' );
+			$listLink = $wgLang->pipeList( array(
+				$listLink,
+				wfMsgHtml( 'confirmaccount-showrej' )
+			) );
 		}
 		if( $this->acrID || !$this->showStale ) {
-			$listLink .= ' | '.$this->skin->makeKnownLinkObj( $titleObj, wfMsgHtml( 'confirmaccount-showexp' ),
-				wfArrayToCGI( array( 'wpShowStale' => 1 ) ) );
+			$listLink = $wgLang->pipeList( array(
+				$listLink,
+				$this->skin->makeKnownLinkObj( $titleObj, wfMsgHtml( 'confirmaccount-showexp' ),
+					wfArrayToCGI( array( 'wpShowStale' => 1 ) ) )
+			) );
 		} else {
-			$listLink .= ' | '.wfMsgHtml( 'confirmaccount-showexp' );
+			$listLink = $wgLang->pipeList( array(
+				$listLink,
+				wfMsgHtml( 'confirmaccount-showexp' )
+			) );
 		}
 		
 		# Say what queue we are in...
 		if( $this->queueType != -1 ) {
-			$titleObj = Title::makeTitle( NS_SPECIAL, 'ConfirmAccounts' );
+			$titleObj = $this->getTitle();
 			$viewall = $this->skin->makeKnownLinkObj( $titleObj, wfMsgHtml('confirmaccount-all') );
 		
 			$wgOut->setSubtitle( "<strong>" . wfMsgHtml('confirmaccount-type') . " <i>" .
@@ -133,7 +151,7 @@ class ConfirmAccountsPage extends SpecialPage
 	}
 	
 	function showQueues() {
-		global $wgOut, $wgAccountRequestTypes;
+		global $wgOut, $wgAccountRequestTypes, $wgLang;
 		
 		$wgOut->addWikiText( wfMsg('confirmaccount-maintext') );
 		
@@ -143,7 +161,7 @@ class ConfirmAccountsPage extends SpecialPage
 		$dbr = wfGetDB( DB_SLAVE );
 		# List each queue
 		foreach( $wgAccountRequestTypes as $i => $params ) {
-			$titleObj = Title::makeTitle( NS_SPECIAL, "ConfirmAccounts/{$params[0]}" );
+			$titleObj = SpecialPage::getTitleFor( 'ConfirmAccounts', $params[0] );
 		
 			$open = '<b>'.$this->skin->makeKnownLinkObj( $titleObj, wfMsgHtml( 'confirmaccount-q-open' ),
 				wfArrayToCGI( array('wpShowHeld' => 0) ) ).'</b>';
@@ -169,7 +187,8 @@ class ConfirmAccountsPage extends SpecialPage
 				__METHOD__ );
 			$rejects .= " [$count]";
 				
-			$wgOut->addHTML( "<li><i>".wfMsgHtml("confirmaccount-type-$i")."</i> ($open | $held | $rejects | $stale)</li>" );
+			$wgOut->addHTML( "<li><i>".wfMsgHtml("confirmaccount-type-$i")."</i> (" .
+				$wgLang->pipeList( array( $open, $held, $rejects, $stale ) ) . ")</li>" );
 		}
 		$wgOut->addHTML( '</ul>' );
 	}
@@ -177,7 +196,7 @@ class ConfirmAccountsPage extends SpecialPage
 	function showForm( $msg='' ) {
 		global $wgOut, $wgUser, $wgLang, $wgAccountRequestTypes;
 		
-		$titleObj = Title::makeTitle( NS_SPECIAL, "ConfirmAccounts/{$this->specialPageParameter}" );
+		$titleObj = SpecialPage::getTitleFor( 'ConfirmAccounts', $this->specialPageParameter );
 		
 		$row = $this->getRequest();
 		if( !$row || $row->acr_rejected && !$this->showRejects ) {
@@ -330,10 +349,9 @@ class ConfirmAccountsPage extends SpecialPage
 
 		$form .= "<div id='wpComment'><p>".wfMsgHtml('confirmaccount-reason')."</p>\n";
 		$form .= "<p><textarea name='wpReason' id='wpReason' rows='3' cols='80' style='width:80%; display=block;'>" .
-			htmlspecialchars($this->reason) .
-			"</textarea></p></div>\n";
+			htmlspecialchars($this->reason) . "</textarea></p></div>\n";
 		$form .= "<p>".Xml::submitButton( wfMsgHtml( 'confirmaccount-submit') )."</p>\n";
-		$form .= Xml::hidden( 'title', $titleObj->getPrefixedUrl() )."\n";
+		$form .= Xml::hidden( 'title', $titleObj->getPrefixedDBKey() )."\n";
 		$form .= Xml::hidden( 'action', 'reject' );
 		$form .= Xml::hidden( 'acrid', $row->acr_id );
 		$form .= Xml::hidden( 'wpShowRejects', $this->showRejects );
@@ -374,7 +392,7 @@ class ConfirmAccountsPage extends SpecialPage
 	
 	function doSubmit() {
 		global $wgOut, $wgUser;
-		$titleObj = Title::makeTitle( NS_SPECIAL, "ConfirmAccounts/{$this->specialPageParameter}" );
+		$titleObj = SpecialPage::getTitleFor( 'ConfirmAccounts', $this->specialPageParameter );
 		$row = $this->getRequest( true );
 		if( !$row ) {
 			$wgOut->addHTML( wfMsgHtml('confirmaccount-badid') );
@@ -645,7 +663,7 @@ class ConfirmAccountsPage extends SpecialPage
 				$utalk->doEdit( $welcome . ' ~~~~', wfMsg('confirmaccount-wsum'), EDIT_MINOR );
 			}
 			# Finally, done!!!
-			$this->showSuccess( $this->submitType, $user->getName(), $error );
+			$this->showSuccess( $this->submitType, $user->getName(), array($error) );
 		} else if( $this->submitType === 'hold' ) {
 			global $wgUser;
 			# Make proxy user to email a message
@@ -764,7 +782,7 @@ class ConfirmAccountsPage extends SpecialPage
 	function showSuccess( $titleObj, $name = NULL, $errors = array() ) {
 		global $wgOut;
 
-		$titleObj = Title::makeTitle( NS_SPECIAL, "ConfirmAccounts/{$this->specialPageParameter}" );
+		$titleObj = SpecialPage::getTitleFor( 'ConfirmAccounts', $this->specialPageParameter );
 		$wgOut->setPagetitle( wfMsgHtml('actioncomplete') );
 		if( $this->submitType == 'accept' ) {
 			$wgOut->addWikiText( wfMsg( "confirmaccount-acc", $name ) );
@@ -785,7 +803,7 @@ class ConfirmAccountsPage extends SpecialPage
 	function showList() {
 		global $wgOut, $wgUser, $wgLang;
 		
-		$titleObj = Title::makeTitle( NS_SPECIAL, "ConfirmAccounts/{$this->specialPageParameter}" );
+		$titleObj = SpecialPage::getTitleFor( 'ConfirmAccounts', $this->specialPageParameter );
 		
 		# Output the list
 		$pager = new ConfirmAccountsPager( $this, array(), 
@@ -878,7 +896,7 @@ class ConfirmAccountsPage extends SpecialPage
 	function formatRow( $row ) {
 		global $wgLang, $wgUser, $wgUseRealNamesOnly, $wgAllowRealName;
 
-		$titleObj = Title::makeTitle( NS_SPECIAL, "ConfirmAccounts/{$this->specialPageParameter}" );
+		$titleObj = SpecialPage::getTitleFor( 'ConfirmAccounts', $this->specialPageParameter );
 		if( $this->showRejects || $this->showStale ) {
 			$link = $this->skin->makeKnownLinkObj( $titleObj, wfMsgHtml('confirmaccount-review'), 
 				'acrid='.$row->acr_id.'&wpShowRejects=1' );
@@ -921,7 +939,7 @@ class ConfirmAccountsPage extends SpecialPage
 			htmlspecialchars($row->acr_email) . $econf.'</td></tr>';
 		# Truncate this, blah blah...
 		$bio = htmlspecialchars($row->acr_bio);
-		$preview = $wgLang->truncate( $bio, 400 );
+		$preview = $wgLang->truncate( $bio, 400, '' );
 		if( strlen($preview) < strlen($bio) ) {
 			$preview = substr( $preview, 0, strrpos($preview,' ') );
 			$preview .= " . . .";
@@ -967,7 +985,7 @@ class ConfirmAccountsPager extends ReverseChronologicalPager {
 	}
 	
 	function getTitle() {
-		return Title::makeTitle( NS_SPECIAL, "ConfirmAccounts/{$this->mForm->specialPageParameter}" );
+		return SpecialPage::getTitleFor( 'ConfirmAccounts', $this->mForm->specialPageParameter );
 	}
 	
 	function formatRow( $row ) {

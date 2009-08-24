@@ -14,22 +14,20 @@ class PatrolLog {
 	 * @param mixed $change Change identifier or RecentChange object
 	 * @param bool $auto Was this patrol event automatic?
 	 */
-	public static function record( $change, $auto = false ) {
-		if( !( is_object( $change ) && $change instanceof RecentChange ) ) {
-			$change = RecentChange::newFromId( $change );
-			if( !is_object( $change ) )
+	public static function record( $rc, $auto = false ) {
+		if( !( $rc instanceof RecentChange ) ) {
+			$rc = RecentChange::newFromId( $rc );
+			if( !is_object( $rc ) )
 				return false;
 		}
-		$title = Title::makeTitleSafe( $change->getAttribute( 'rc_namespace' ),
-					$change->getAttribute( 'rc_title' ) );
+		$title = Title::makeTitleSafe( $rc->getAttribute( 'rc_namespace' ), $rc->getAttribute( 'rc_title' ) );
 		if( is_object( $title ) ) {
-			$params = self::buildParams( $change, $auto );
-			$log = new LogPage( 'patrol', false ); # False suppresses RC entries
+			$params = self::buildParams( $rc, $auto );
+			$log = new LogPage( 'patrol', false, $auto ? "skipUDP" : "UDP" ); # False suppresses RC entries
 			$log->addEntry( 'patrol', $title, '', $params );
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	/**
@@ -41,12 +39,8 @@ class PatrolLog {
 	 * @return string
 	 */
 	public static function makeActionText( $title, $params, $skin ) {
-		# This is a bit of a hack, but...if $skin is not a Skin, then *do nothing*
-		# -- this is fine, because the action text we would be queried for under
-		# these conditions would have gone into recentchanges, which we aren't
-		# supposed to be updating
+		list( $cur, /* $prev */, $auto ) = $params;
 		if( is_object( $skin ) ) {
-			list( $cur, /* $prev */, $auto ) = $params;
 			# Standard link to the page in question
 			$link = $skin->makeLinkObj( $title );
 			if( $title->exists() ) {
@@ -64,7 +58,8 @@ class PatrolLog {
 			# Put it all together
 			return wfMsgHtml( 'patrol-log-line', $diff, $link, $auto );
 		} else {
-			return '';
+			$text = $title->getPrefixedText();
+			return wfMsgForContent( 'patrol-log-line', wfMsgHtml('patrol-log-diff',$cur), "[[$text]]", '' );
 		}
 	}
 

@@ -5,7 +5,7 @@ class ContributionHistory extends SpecialPage {
 	}
 
 	function execute( $language = NULL ) {
-		global $wgRequest, $wgOut, $wgTitle;
+		global $wgRequest, $wgOut, $wgTitle, $wgLang;
 
 		if ( !preg_match( '/^[a-z-]+$/', $language ) ) {
 			$language = 'en';
@@ -75,7 +75,7 @@ class ContributionHistory extends SpecialPage {
 		);
 		$pagingDiv = Xml::openElement( 'div',
 				array( 'align' => 'right', 'style' => 'padding-bottom:20px' ) ) .
-			implode( " | ", $pagingLinks ) .
+			$wgLang->pipeList( $pagingLinks ) .
 			Xml::closeElement( 'div' );
 		$output .= $pagingDiv;
 		

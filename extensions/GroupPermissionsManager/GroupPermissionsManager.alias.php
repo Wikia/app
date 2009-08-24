@@ -47,9 +47,17 @@ $aliases['de'] = array(
 	'SortPermissions' => array( 'Rechte sortieren' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'GroupPermissions' => array( 'Kupkowe pšawa' ),
+	'RemoveUnusedGroups' => array( 'Njewužywane kupki wótpóraś' ),
+	'SortPermissions' => array( 'Pšawa sortěrowaś' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
-	'GroupPermissions' => array( 'Permission des groupes' ),
+	'GroupPermissions' => array( 'Permissions des groupes', 'Permission des groupes' ),
+	'SortPermissions' => array( 'Trier les permissions' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -66,6 +74,13 @@ $aliases['hr'] = array(
 	'SortPermissions' => array( 'Raspored_prava' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'GroupPermissions' => array( 'Skupinske prawa' ),
+	'RemoveUnusedGroups' => array( 'Njewužiwane skupiny wotstronić' ),
+	'SortPermissions' => array( 'Prawa sortěrować' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'GroupPermissions' => array( 'Csoportos engedélyek' ),
@@ -73,10 +88,18 @@ $aliases['hu'] = array(
 	'SortPermissions' => array( 'Engedélyek rendezése' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'GroupPermissions' => array( 'Permissiones de gruppos' ),
+	'RemoveUnusedGroups' => array( 'Eliminar gruppos non usate' ),
+	'SortPermissions' => array( 'Ordinar permissiones' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'GroupPermissions' => array( 'グループパーミッション' ),
-	'SortPermissions' => array( 'ソートパーミッション' ),
+	'GroupPermissions' => array( 'グループ権限' ),
+	'RemoveUnusedGroups' => array( '未使用グループ除去' ),
+	'SortPermissions' => array( '権限の分類' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -118,8 +141,27 @@ $aliases['no'] = array(
 	'SortPermissions' => array( 'Sorter tillatelser' ),
 );
 
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'GroupPermissions' => array( 'Permission dels gropes' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'GroupPermissions' => array( 'गटसंमती' ),
+	'RemoveUnusedGroups' => array( 'अप्रयूक्तगटत्यजति' ),
+	'SortPermissions' => array( 'अनुज्ञासंविचिनोति' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'GroupPermissions' => array( 'Gruppbehörigheter' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'GroupPermissions' => array( 'Mga kapahintulutan ng pangkat' ),
+	'RemoveUnusedGroups' => array( 'Tanggalin ang mga pangkat na hindi ginagamit' ),
+	'SortPermissions' => array( 'Mga pahintulot sa pagsasama-sama' ),
 );
 

@@ -44,6 +44,14 @@ $messages['br'] = array(
 	'catfeed-desc' => 'Implijout a ra bitoù evit boueta an degasadennoù nevez. Sevel a ra stumm ur bajenn, ar pezh zo emsav-tre evit Wikinews.',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'catfeed-desc' => 'Koristi bitove iz fida nedavnih promjena.
+Pravi verziju in-page, naročito korisna za Wikivijesti.',
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
  */
@@ -99,6 +107,14 @@ $messages['gl'] = array(
 Crear versións dentro dunha páxina, útil especialmente nas Galinovas.',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'catfeed-desc' => 'Nutzt Teil vu dr Letschte-Änderige-Newsfeeds.
+E yybetteti Version aalege; bsundersch fir Wikinews nitzli.',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  */
@@ -152,11 +168,28 @@ $messages['lb'] = array(
 Leet eng nei Versioun an der Säit unn, besonnesch nëtzlech fir Wikinews',
 );
 
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'catfeed-desc' => "Gebroek informatie oet de recente wieziginge.
+Maak 'n versie binne 'n pagina.
+In 't biezunjer henjig veur Wikinews",
+);
+
 /** Marathi (मराठी)
  * @author Kaustubh
  */
 $messages['mr'] = array(
 	'catfeed-desc' => 'अलीकडील बदलांमधील फीड्स वापरते. पानातच आवृत्ती तयार होते, विकिन्युज साठी विशेष उपयुक्त.',
+);
+
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'catfeed-desc' => 'Bruukt Delen vun de Toletzt-Ännert-Newsfeeds.
+Maakt en inbunnen Version; besünners praktisch för Wikinews.',
 );
 
 /** Dutch (Nederlands)
@@ -212,6 +245,13 @@ $messages['pt'] = array(
 	'catfeed-desc' => 'Usa pedaços de "feeds" de alterações recentes. Cria uma versão dentro de uma página, especialmente útil para Wikinotícias.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'catfeed-desc' => 'Usa partes do "feed" das alterações recentes. Cria uma versão dentro de uma página, especialmente útil para o Wikinotícias.',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -234,11 +274,35 @@ $messages['sk'] = array(
 	'catfeed-desc' => 'Používa kúsky z kanálov posledných zmien. Vytvorí verziu v rámci stránky. Obzvlášť užitočné pre Wikinews.',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'catfeed-desc' => 'Nutset Deele fon ju Lääste-Annerengen-Newsfeeds.
+Moakjen fon ne ienbäädede Version; besunners foar Wikinews nutselk.',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
 $messages['sv'] = array(
 	'catfeed-desc' => 'Använder information från senaste ändringarna. Man kan skapa versioner för användning till innehållssidor, något som är speciellt användbart för Wikinews.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'catfeed-desc' => 'ఇటీవలి మార్పుల ఫీడుల నుండి అంకాలని వాడుకుంటుంది.
+పేజీ-లో సంచికని సృష్టించండి, వికీన్యూస్&zwnj;కి ఉపయోగకరం',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'catfeed-desc' => "Gumagamit ng maliliit na mga piraso mula sa isinubong kamakailang mga pagbabago.
+Lumikha ng bersyong nasa loob ng pahina, partikular na magagamit para sa Wikibalita (''Wikinews'').",
 );
 
 /** Ukrainian (Українська)

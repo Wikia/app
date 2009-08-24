@@ -38,16 +38,18 @@ class SpecialContributors extends IncludableSpecialPage {
 	
 	private function showInclude() {
 		wfProfileIn( __METHOD__ );
-		global $wgOut;
+
+		global $wgOut, $wgContentLang;
+
 		if( is_object( $this->target ) ) {
 			if( $this->target->exists() ) {
 				$names = array();
 				list( $contributors, $others ) = $this->getMainContributors();
 				foreach( $contributors as $username => $info )
 					$names[] = $username;
-				$output = implode( ', ', $names );
+				$output = $wgContentLang->listToText( $names );
 				if( $others > 0 )
-					$output .= ' ' . wfMsgForContent( 'contributors-others', $others );
+					$output .= wgMsgForContent( 'word-separator' ) . wfMsgForContent( 'contributors-others', $wgContentLang->formatNum( $others ) );
 				$wgOut->addHTML( htmlspecialchars( $output ) );
 			} else {
 				$wgOut->addHTML( '<p>' . htmlspecialchars( wfMsgForContent( 'contributors-nosuchpage', $this->target->getPrefixedText() ) ) . '</p>' );

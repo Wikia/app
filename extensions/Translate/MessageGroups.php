@@ -459,7 +459,7 @@ class CoreMostUsedMessageGroup extends CoreMessageGroup {
 	public function exportToFile( MessageCollection $messages, $authors ) { return 'Not supported'; }
 
 	function getDefinitions() {
-		$data = file_get_contents( dirname( __FILE__ ) . '/wikimedia-mostused.txt' );
+		$data = file_get_contents( dirname( __FILE__ ) . '/wikimedia-mostused-2009.txt' );
 		$messages = explode( "\n", $data );
 		$contents = Language::getMessagesFor( 'en' );
 		$definitions = array();
@@ -639,7 +639,7 @@ class MessageGroups {
 		}
 
 		global $wgTranslateCategory, $wgTranslateCC;
-		wfLoadExtensionMessages( 'Translate' );
+/*		wfLoadExtensionMessages( 'Translate' );
 		$cat = Category::newFromName( wfMsgForContent( 'translate-tag-category' ) );
 		$titles = $cat->getMembers();
 		foreach ( $titles as $t ) {
@@ -649,7 +649,7 @@ class MessageGroups {
 			$wgTranslateCC[$id]->setLabel( $title );
 			$wgTranslateCC[$id]->setDescription( wfMsgNoTrans( 'translate-tag-page-desc', $title ) );
 
-		}
+		}*/
 
 		global $wgTranslateCC;
 		wfRunHooks( 'TranslatePostInitGroups', array( &$wgTranslateCC ) );

@@ -27,3 +27,13 @@ $aliases['arz'] = array(
 	'Piwik' => array( 'بيويك' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Piwik' => array( 'पिविकि' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Piwik' => array( 'Piwik' ),
+);
+

@@ -374,8 +374,8 @@ class Parser
 
 		$text = Sanitizer::normalizeCharReferences( $text );
 
-		if (($wgUseTidy and $this->mOptions->mTidy) or $wgAlwaysUseTidy) {
-			$text = self::tidy($text);
+		if ( ( $wgUseTidy && $this->mOptions->mTidy ) || $wgAlwaysUseTidy ) {
+			$text = MWTidy::tidy( $text );
 		} else {
 			# attempt to sanitize at least some nesting problems
 			# (bug #2702 and quite a few others)
@@ -648,126 +648,14 @@ class Parser
 		$this->mStripState->general->setPair( $rnd, $text );
 		return $rnd;
 	}
-
+	
 	/**
-	 * Interface with html tidy, used if $wgUseTidy = true.
-	 * If tidy isn't able to correct the markup, the original will be
-	 * returned in all its glory with a warning comment appended.
-	 *
-	 * Either the external tidy program or the in-process tidy extension
-	 * will be used depending on availability. Override the default
-	 * $wgTidyInternal setting to disable the internal if it's not working.
-	 *
-	 * @param string $text Hideous HTML input
-	 * @return string Corrected HTML output
-	 * @public
-	 * @static
+	 * Interface with html tidy
+	 * @deprecated Use MWTidy::tidy()
 	 */
-	function tidy( $text ) {
-		global $wgTidyInternal;
-
-		$wrappedtext = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"'.
-' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html>'.
-'<head><title>test</title></head><body>'.$text.'</body></html>';
-
-		# Tidy is known to clobber tabs; convert 'em to entities
-		$wrappedtext = str_replace("\t", '&#9;', $wrappedtext);
-
-		if( $wgTidyInternal ) {
-			$correctedtext = self::internalTidy( $wrappedtext );
-		} else {
-			$correctedtext = self::externalTidy( $wrappedtext );
-		}
-		if( is_null( $correctedtext ) ) {
-			wfDebug( "Tidy error detected!\n" );
-			return $text . "\n<!-- Tidy found serious XHTML errors -->\n";
-		}
-
-		# Convert the tabs back from entities
-		$correctedtext = str_replace('&#9;', "\t", $correctedtext);
-
-		return $correctedtext;
-	}
-
-	/**
-	 * Spawn an external HTML tidy process and get corrected markup back from it.
-	 *
-	 * @private
-	 * @static
-	 */
-	function externalTidy( $text ) {
-		global $wgTidyConf, $wgTidyBin, $wgTidyOpts;
-		wfProfileIn( __METHOD__ );
-
-		$cleansource = '';
-		$opts = ' -utf8';
-
-		$descriptorspec = array(
-			0 => array('pipe', 'r'),
-			1 => array('pipe', 'w'),
-			2 => array('file', wfGetNull(), 'a')
-		);
-		$pipes = array();
-		if( function_exists('proc_open') ) {
-			$process = proc_open("$wgTidyBin -config $wgTidyConf $wgTidyOpts$opts", $descriptorspec, $pipes);
-			if (is_resource($process)) {
-				// Theoretically, this style of communication could cause a deadlock
-				// here. If the stdout buffer fills up, then writes to stdin could
-				// block. This doesn't appear to happen with tidy, because tidy only
-				// writes to stdout after it's finished reading from stdin. Search
-				// for tidyParseStdin and tidySaveStdout in console/tidy.c
-				fwrite($pipes[0], $text);
-				fclose($pipes[0]);
-				while (!feof($pipes[1])) {
-					$cleansource .= fgets($pipes[1], 1024);
-				}
-				fclose($pipes[1]);
-				proc_close($process);
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-
-		if( $cleansource == '' && $text != '') {
-			// Some kind of error happened, so we couldn't get the corrected text.
-			// Just give up; we'll use the source text and append a warning.
-			return null;
-		} else {
-			return $cleansource;
-		}
-	}
-
-	/**
-	 * Use the HTML tidy PECL extension to use the tidy library in-process,
-	 * saving the overhead of spawning a new process.
-	 *
-	 * 'pear install tidy' should be able to compile the extension module.
-	 *
-	 * @private
-	 * @static
-	 */
-	function internalTidy( $text ) {
-		global $wgTidyConf, $IP, $wgDebugTidy;
-		wfProfileIn( __METHOD__ );
-
-		$tidy = new tidy;
-		$tidy->parseString( $text, $wgTidyConf, 'utf8' );
-		$tidy->cleanRepair();
-		if( $tidy->getStatus() == 2 ) {
-			// 2 is magic number for fatal error
-			// http://www.php.net/manual/en/function.tidy-get-status.php
-			$cleansource = null;
-		} else {
-			$cleansource = tidy_get_output( $tidy );
-		}
-		if ( $wgDebugTidy && $tidy->getStatus() > 0 ) {
-			$cleansource .= "<!--\nTidy reports:\n" .
-				str_replace( '-->', '--&gt;', $tidy->errorBuffer ) .
-				"\n-->";
-		}
-
-		wfProfileOut( __METHOD__ );
-		return $cleansource;
+	public static function tidy( $text ) {
+		wfDeprecated( __METHOD__ );
+		return MWTidy::tidy( $text );	
 	}
 
 	/**
@@ -1020,7 +908,7 @@ class Parser
 
 		$text = $this->doDoubleUnderscore( $text );
 		$text = $this->doHeadings( $text );
-		if($this->mOptions->getUseDynamicDates()) {
+		if( $this->mOptions->getUseDynamicDates() ) {
 			$df = DateFormatter::getInstance();
 			$text = $df->reformat( $this->mOptions->getDateFormat(), $text );
 		}
@@ -1038,7 +926,7 @@ class Parser
 
 		# replaceInternalLinks may sometimes leave behind
 		# absolute URLs, which have to be masked to hide them from replaceExternalLinks
-		$text = str_replace($this->mUniqPrefix."NOPARSE", "", $text);
+		$text = str_replace($this->mUniqPrefix.'NOPARSE', '', $text);
 
 		$text = $this->doMagicLinks( $text );
 		$text = $this->formatHeadings( $text, $isMain );
@@ -1075,16 +963,16 @@ class Parser
 	}
 
 	function magicLinkCallback( $m ) {
-		if ( isset( $m[1] ) && strval( $m[1] ) !== '' ) {
+		if ( isset( $m[1] ) && $m[1] !== '' ) {
 			# Skip anchor
 			return $m[0];
-		} elseif ( isset( $m[2] ) && strval( $m[2] ) !== '' ) {
+		} elseif ( isset( $m[2] ) && $m[2] !== '' ) {
 			# Skip HTML element
 			return $m[0];
-		} elseif ( isset( $m[3] ) && strval( $m[3] ) !== '' ) {
+		} elseif ( isset( $m[3] ) && $m[3] !== '' ) {
 			# Free external link
 			return $this->makeFreeExternalLink( $m[0] );
-		} elseif ( isset( $m[4] ) && strval( $m[4] ) !== '' ) {
+		} elseif ( isset( $m[4] ) && $m[4] !== '' ) {
 			# RFC or PMID
 			if ( substr( $m[0], 0, 3 ) === 'RFC' ) {
 				$keyword = 'RFC';
@@ -1102,7 +990,7 @@ class Parser
 			$sk = $this->mOptions->getSkin();
 			$la = $sk->getExternalLinkAttributes( $url, $keyword.$id );
 			return "<a href=\"{$url}\"{$la}>{$keyword} {$id}</a>";
-		} elseif ( isset( $m[5] ) && strval( $m[5] ) !== '' ) {
+		} elseif ( isset( $m[5] ) && $m[5] !== '' ) {
 			# ISBN
 			$isbn = $m[5];
 			$num = strtr( $isbn, array(
@@ -1168,7 +1056,7 @@ class Parser
 
 			# Not an image, make a link
 			$text = $sk->makeExternalLink( $url, $description, true, 'free',
-				$this->getExternalLinkAttribs() );
+				$this->getExternalLinkAttribs( $url ) );
 			/* Wikia change end */
 			# Register it in the output object...
 			# Replace unnecessary URL escape codes with their equivalent characters
@@ -1463,12 +1351,6 @@ class Parser
 
 			$url = Sanitizer::cleanUrl( $url );
 
-			if ( $this->mOptions->mExternalLinkTarget ) {
-				$attribs = array( 'target' => $this->mOptions->mExternalLinkTarget );
-			} else {
-				$attribs = array();
-			}
-
 			/* Wikia change begin - @author: Marooned */
 			/* Wysiwyg: mark element and add metadata to wysiwyg array */
 			if(!empty($wgWysiwygParserEnabled)) {
@@ -1480,8 +1362,8 @@ class Parser
 			# This means that users can paste URLs directly into the text
 			# Funny characters like &ouml; aren't valid in URLs anyway
 			# This was changed in August 2004
-			$s .= $sk->makeExternalLink( $url, $text, false, $linktype, $this->getExternalLinkAttribs() )
-				. $dtrail . $trail;
+			$s .= $sk->makeExternalLink( $url, $text, false, $linktype,
+				$this->getExternalLinkAttribs( $url ) ) . $dtrail . $trail;
 
 			# Register link in the output object.
 			# Replace unnecessary URL escape codes with the referenced character
@@ -1494,12 +1376,36 @@ class Parser
 		return $s;
 	}
 
-	function getExternalLinkAttribs() {
+	/**
+	 * Get an associative array of additional HTML attributes appropriate for a
+	 * particular external link.  This currently may include rel => nofollow
+	 * (depending on configuration, namespace, and the URL's domain) and/or a
+	 * target attribute (depending on configuration).
+	 *
+	 * @param string $url Optional URL, to extract the domain from for rel =>
+	 *   nofollow if appropriate
+	 * @return array Associative array of HTML attributes
+	 */
+	function getExternalLinkAttribs( $url = false ) {
 		$attribs = array();
 		global $wgNoFollowLinks, $wgNoFollowNsExceptions;
 		$ns = $this->mTitle->getNamespace();
 		if( $wgNoFollowLinks && !in_array($ns, $wgNoFollowNsExceptions) ) {
 			$attribs['rel'] = 'nofollow';
+
+			global $wgNoFollowDomainExceptions;
+			if ( $wgNoFollowDomainExceptions ) {
+				$bits = wfParseUrl( $url );
+				if ( is_array( $bits ) && isset( $bits['host'] ) ) {
+					foreach ( $wgNoFollowDomainExceptions as $domain ) {
+						if( substr( $bits['host'], -strlen( $domain ) )
+						== $domain ) {
+							unset( $attribs['rel'] );
+							break;
+						}
+					}
+				}
+			}
 		}
 		if ( $this->mOptions->getExternalLinkTarget() ) {
 			$attribs['target'] = $this->mOptions->getExternalLinkTarget();
@@ -1793,7 +1699,7 @@ class Parser
 			wfProfileOut( __METHOD__."-misc" );
 			wfProfileIn( __METHOD__."-title" );
 			$nt = Title::newFromText( $this->mStripState->unstripNoWiki($link) );
-			if( !$nt ) {
+			if( $nt === NULL ) {
 				$s .= $prefix . '[[' . $line;
 				wfProfileOut( __METHOD__."-title" );
 				continue;
@@ -2003,11 +1909,12 @@ class Parser
 			# NS_MEDIA is a pseudo-namespace for linking directly to a file
 			# FIXME: Should do batch file existence checks, see comment below
 			if( $ns == NS_MEDIA ) {
+				wfProfileIn( __METHOD__."-media" );
 				/* Wikia change begin - @author: Marooned */
 				if(!empty($wgWysiwygParserEnabled)) {
 					$FCKtmp = Wysiwyg_SetRefId('internal link: media', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce), false);
 					$s .= $prefix . $FCKtmp . $trail;
-				} else { //original actio
+				} else { //original action
 					# Give extensions a chance to select the file revision for us
 					$skip = $time = false;
 					wfRunHooks( 'BeforeParserMakeImageLinkObj', array( &$this, &$nt, &$skip, &$time ) );
@@ -2021,6 +1928,7 @@ class Parser
 					$this->mOutput->addImage( $nt->getDBkey() );
 				}
 				/* Wikia change end */
+				wfProfileOut( __METHOD__."-media" );
 				continue;
 			}
 
@@ -2035,6 +1943,7 @@ class Parser
 				}
 			}
 
+			wfProfileIn( __METHOD__."-always_known" );
 			# Some titles, such as valid special pages or files in foreign repos, should
 			# be shown as bluelinks even though they're not included in the page table
 			#
@@ -2065,6 +1974,7 @@ class Parser
 				}
 			}
 			/* Wikia change end */
+			wfProfileOut( __METHOD__."-always_known" );
 		}
 		wfProfileOut( __METHOD__ );
 		return $holders;
@@ -2872,6 +2782,12 @@ class Parser
 				$this->mOutput->setFlag( 'vary-revision' );
 				wfDebug( __METHOD__ . ": {{REVISIONTIMESTAMP}} used, setting vary-revision...\n" );
 				return $this->getRevisionTimestamp();
+			case 'revisionuser':
+                                // Let the edit saving system know we should parse the page
+                                // *after* a revision ID has been assigned. This is for null edits.
+				$this->mOutput->setFlag( 'vary-revision' );
+				wfDebug( __METHOD__ . ": {{REVISIONUSER}} used, setting vary-revision...\n" );
+				return $this->getRevisionUser();
 			case 'namespace':
 				return str_replace('_',' ',$wgContLang->getNsText( $this->mTitle->getNamespace() ) );
 			case 'namespacee':
@@ -2918,6 +2834,8 @@ class Parser
 				return $this->mVarCache[$index] = $wgContLang->formatNum( SiteStats::images() );
 			case 'numberofusers':
 				return $this->mVarCache[$index] = $wgContLang->formatNum( SiteStats::users() );
+			case 'numberofactiveusers':
+				return $this->mVarCache[$index] = $wgContLang->formatNum( SiteStats::activeUsers() );
 			case 'numberofpages':
 				return $this->mVarCache[$index] = $wgContLang->formatNum( SiteStats::pages() );
 			case 'numberofadmins':
@@ -3028,11 +2946,10 @@ class Parser
 	 * @private
 	 */
 	function replaceVariables( $text, $frame = false, $argsOnly = false ) {
-		# Prevent too big inclusions
-		if( strlen( $text ) > $this->mOptions->getMaxIncludeSize() ) {
+		# Is there any text? Also, Prevent too big inclusions!
+		if ( strlen( $text ) < 1 || strlen( $text ) > $this->mOptions->getMaxIncludeSize() ) {
 			return $text;
 		}
-
 		wfProfileIn( __METHOD__ );
 
 		if ( $frame === false ) {
@@ -3108,7 +3025,7 @@ class Parser
 	 * @private
 	 */
 	function braceSubstitution( $piece, $frame ) {
-		global $wgContLang, $wgAllowDisplayTitle, $wgNonincludableNamespaces;
+		global $wgContLang, $wgNonincludableNamespaces;
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__.'-setup' );
 
@@ -3279,12 +3196,6 @@ class Parser
 				if($wgContLang->hasVariants() && $title->getArticleID() == 0){
 					$wgContLang->findVariantLink( $part1, $title, true );
 				}
-				# Do infinite loop check
-				if ( !$frame->loopCheck( $title ) ) {
-					$found = true;
-					$text = '<span class="error">' . wfMsgForContent( 'parser-template-loop-warning', $titleText ) . '</span>';
-					wfDebug( __METHOD__.": template loop broken at '$titleText'\n" );
-				}
 				# Do recursion depth check
 				$limit = $this->mOptions->getMaxTemplateDepth();
 				if ( $frame->depth >= $limit ) {
@@ -3333,6 +3244,14 @@ class Parser
 					$isChildObj = true;
 				}
 				$found = true;
+			}
+
+			# Do infinite loop check
+			# This has to be done after redirect resolution to avoid infinite loops via redirects
+			if ( !$frame->loopCheck( $title ) ) {
+				$found = true;
+				$text = '<span class="error">' . wfMsgForContent( 'parser-template-loop-warning', $titleText ) . '</span>';
+				wfDebug( __METHOD__.": template loop broken at '$titleText'\n" );
 			}
 			wfProfileOut( __METHOD__ . '-loadtpl' );
 		}
@@ -3662,6 +3581,7 @@ class Parser
 						throw new MWException( '<html> extension tag encountered unexpectedly' );
 					}
 				case 'nowiki':
+					$content = strtr($content, array('-{' => '-&#123;', '}-' => '&#125;-'));
 					/* Wikia change begin - @author: Marooned */
 					if(!empty($wgWysiwygParserEnabled)) {
 						$output = Wysiwyg_SetRefId('nowiki', array('text' => &$content), false);
@@ -3771,6 +3691,7 @@ class Parser
 	 */
 	function doDoubleUnderscore( $text ) {
 		global $wgWysiwygParserEnabled;
+		wfProfileIn( __METHOD__ );
 		// The position of __TOC__ needs to be recorded
 		$mw = MagicWord::get( 'toc' );
 		if( $mw->match( $text ) ) {
@@ -3820,12 +3741,12 @@ class Parser
 		} elseif( isset( $this->mDoubleUnderscores['index'] ) ) {
 			$this->mOutput->setIndexPolicy( 'index' );
 		}
-
 		/* Wikia change begin - @author: Marooned */
 		if(!empty($wgWysiwygParserEnabled)) {
 			$text = str_replace('<!--MWTOC-->', '__TOC__', $text);
 		}
 		/* Wikia change end */
+		wfProfileOut( __METHOD__ );
 		return $text;
 	}
 
@@ -3855,7 +3776,7 @@ class Parser
 		}
 
 		# Inhibit editsection links if requested in the page
-		if ( isset( $this->mDoubleUnderscores['noeditsection'] ) ) {
+		if ( isset( $this->mDoubleUnderscores['noeditsection'] )  || $this->mOptions->getIsPrintable() ) {
 			$showEditLink = 0;
 		}
 
@@ -3873,6 +3794,12 @@ class Parser
 		# link added via __NEWSECTIONLINK__
 		if ( isset( $this->mDoubleUnderscores['newsectionlink'] ) ) {
 			$this->mOutput->setNewSection( true );
+		}
+
+		# Allow user to remove the "new section"
+		# link via __NONEWSECTIONLINK__
+		if ( isset( $this->mDoubleUnderscores['nonewsectionlink'] ) ) {
+			$this->mOutput->hideNewSection( true );
 		}
 
 		# if the string __FORCETOC__ (not case-sensitive) occurs in the HTML,
@@ -4158,13 +4085,13 @@ class Parser
 	 *
 	 * @param string $text the text to transform
 	 * @param Title &$title the Title object for the current article
-	 * @param User &$user the User object describing the current user
+	 * @param User $user the User object describing the current user
 	 * @param ParserOptions $options parsing options
 	 * @param bool $clearState whether to clear the parser state first
 	 * @return string the altered wiki markup
 	 * @public
 	 */
-	function preSaveTransform( $text, &$title, $user, $options, $clearState = true ) {
+	function preSaveTransform( $text, Title $title, $user, $options, $clearState = true ) {
 		$this->mOptions = $options;
 		$this->setTitle( $title );
 		$this->setOutputType( self::OT_WIKI );
@@ -4204,6 +4131,15 @@ class Parser
 			putenv( 'TZ='.$wgLocaltimezone );
 			$ts = date( 'YmdHis', $unixts );
 			$tz = date( 'T', $unixts );  # might vary on DST changeover!
+
+			/* Allow translation of timezones trough wiki. date() can return
+			 * whatever crap the system uses, localised or not, so we cannot
+			 * ship premade translations.
+			 */
+			$key = 'timezone-' . strtolower( trim( $tz ) );
+			$value = wfMsgForContent( $key );
+			if ( !wfEmptyMsg( $key, $value ) ) $tz = $value;
+
 			putenv( 'TZ='.$oldtz );
 		}
 
@@ -5072,7 +5008,11 @@ class Parser
 			// Output the replacement text
 			// Add two newlines on -- trailing whitespace in $newText is conventionally
 			// stripped by the editor, so we need both newlines to restore the paragraph gap
-			$outText .= $newText . "\n\n";
+			// Only add trailing whitespace if there is newText
+			if($newText != "") {
+				$outText .= $newText . "\n\n";
+			}
+
 			while ( $node ) {
 				$outText .= $frame->expand( $node, PPFrame::RECOVER_ORIG );
 				$node = $node->getNextSibling();
@@ -5136,6 +5076,22 @@ class Parser
 			wfProfileOut( __METHOD__ );
 		}
 		return $this->mRevisionTimestamp;
+	}
+
+	/**
+	 * Get the name of the user that edited the last revision
+	 */
+	function getRevisionUser() {
+		// if this template is subst: the revision id will be blank,
+		// so just use the current user's name
+		if( $this->mRevisionId ) {
+			$revision = Revision::newFromId( $this->mRevisionId );
+			$revuser = $revision->getUserText();
+		} else {
+			global $wgUser;
+			$revuser = $wgUser->getName();
+		}
+		return $revuser;
 	}
 
 	/**
@@ -5288,6 +5244,102 @@ class Parser
 			}
 		}
 		return $out;
+	}
+
+	function serialiseHalfParsedText( $text ) {
+		$data = array();
+		$data['text'] = $text;
+
+		// First, find all strip markers, and store their
+		//  data in an array.
+		$stripState = new StripState;
+		$pos = 0;
+		while( ( $start_pos = strpos( $text, $this->mUniqPrefix, $pos ) ) && ( $end_pos = strpos( $text, self::MARKER_SUFFIX, $pos ) ) ) {
+			$end_pos += strlen( self::MARKER_SUFFIX );
+			$marker = substr( $text, $start_pos, $end_pos-$start_pos );
+
+			if ( !empty( $this->mStripState->general->data[$marker] ) ) {
+				$replaceArray = $stripState->general;
+				$stripText = $this->mStripState->general->data[$marker];
+			} elseif ( !empty( $this->mStripState->nowiki->data[$marker] ) ) {
+				$replaceArray = $stripState->nowiki;
+				$stripText = $this->mStripState->nowiki->data[$marker];
+			} else {
+				throw new MWException( "Hanging strip marker: '$marker'." );
+			}
+
+			$replaceArray->setPair( $marker, $stripText );
+			$pos = $end_pos;
+		}
+		$data['stripstate'] = $stripState;
+
+		// Now, find all of our links, and store THEIR
+		//  data in an array! :)
+		$links = array( 'internal' => array(), 'interwiki' => array() );
+		$pos = 0;
+
+		// Internal links
+		while( ( $start_pos = strpos( $text, '<!--LINK ', $pos ) ) ) {
+			list( $ns, $trail ) = explode( ':', substr( $text, $start_pos + strlen( '<!--LINK ' ) ), 2 );
+
+			$ns = trim($ns);
+			if (empty( $links['internal'][$ns] )) {
+				$links['internal'][$ns] = array();
+			}
+
+			$key = trim( substr( $trail, 0, strpos( $trail, '-->' ) ) );
+			$links['internal'][$ns][] = $this->mLinkHolders->internals[$ns][$key];
+			$pos = $start_pos + strlen( "<!--LINK $ns:$key-->" );
+		}
+
+		$pos = 0;
+
+		// Interwiki links
+		while( ( $start_pos = strpos( $text, '<!--IWLINK ', $pos ) ) ) {
+			$data = substr( $text, $start_pos );
+			$key = trim( substr( $data, 0, strpos( $data, '-->' ) ) );
+			$links['interwiki'][] = $this->mLinkHolders->interwiki[$key];
+			$pos = $start_pos + strlen( "<!--IWLINK $key-->" );
+		}
+		
+		$data['linkholder'] = $links;
+
+		return $data;
+	}
+
+	function unserialiseHalfParsedText( $data, $intPrefix = null /* Unique identifying prefix */ ) {
+		if (!$intPrefix)
+			$intPrefix = $this->getRandomString();
+		
+		// First, extract the strip state.
+		$stripState = $data['stripstate'];
+		$this->mStripState->general->merge( $stripState->general );
+		$this->mStripState->nowiki->merge( $stripState->nowiki );
+
+		// Now, extract the text, and renumber links
+		$text = $data['text'];
+		$links = $data['linkholder'];
+
+		// Internal...
+		foreach( $links['internal'] as $ns => $nsLinks ) {
+			foreach( $nsLinks as $key => $entry ) {
+				$newKey = $intPrefix . '-' . $key;
+				$this->mLinkHolders->internals[$ns][$newKey] = $entry;
+
+				$text = str_replace( "<!--LINK $ns:$key-->", "<!--LINK $ns:$newKey-->", $text );
+			}
+		}
+
+		// Interwiki...
+		foreach( $links['interwiki'] as $key => $entry ) {
+			$newKey = "$intPrefix-$key";
+			$this->mLinkHolders->interwikis[$newKey] = $entry;
+
+			$text = str_replace( "<!--IWLINK $key-->", "<!--IWLINK $newKey-->", $text );
+		}
+
+		// Should be good to go.
+		return $text;
 	}
 }
 

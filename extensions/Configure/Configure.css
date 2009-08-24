@@ -35,7 +35,6 @@ td.config-col-form fieldset > legend {
 
 ul.configtoc {
 	vertical-align: top;
-	max-height: 500px;
 }
 
 ul.configtoc, ul.configtoc > li > ul {

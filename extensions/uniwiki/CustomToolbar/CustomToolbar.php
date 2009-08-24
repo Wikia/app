@@ -22,7 +22,7 @@ if (!defined('MEDIAWIKI'))
 
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'CustomToolbar',
-	'author'         => 'Mark Johnston, Adam Mckaig, Evan Wheeler',
+	'author'         => array( 'Mark Johnston', 'Adam Mckaig', 'Evan Wheeler' ),
 	'version'        => '0.1',
 	'description'    => 'Extension to build an extensible toolbar for MediaWiki',
 	'descriptionmsg' => 'ct-desc',
@@ -43,7 +43,7 @@ $wgFileExtensions = array( 'png', 'gif', 'jpg', 'jpeg', 'ogg', 'mp3', 'wav', 'do
 //these will get thumbnails and image links
 $ct_uploadable_images = array('png', 'gif', 'jpg', 'jpeg' );
 //these will get media links
-$ct_uploadable_attachments = array('ogg', 'mp3', 'wav', 'doc', 'xls', 'csv', 'bmp', 'ppt', 'pdf', 'txt', 'rm', 'mov', 'avi' );
+//$ct_uploadable_attachments = array('ogg', 'mp3', 'wav', 'doc', 'xls', 'csv', 'bmp', 'ppt', 'pdf', 'txt', 'rm', 'mov', 'avi' );
 
 
 
@@ -71,7 +71,7 @@ function CustomToolbar_turnOffToolbar() {
 }
 
 function CustomToolbar_addAssets(&$out) {
-	global $wgScriptPath, $wgCustomToolbarMessages, $wgLanguageCode;
+	global $wgScriptPath, $wgCustomToolbarMessages, $wgLanguageCode, $wgUser;
 
 	/* add all messages for the current lang by iterating the
 	 * global array, and converting it into a javascript hash */
@@ -85,6 +85,7 @@ function CustomToolbar_addAssets(&$out) {
 	$out->addInlineScript($js);
 
 	$path = "$wgScriptPath/extensions/uniwiki/CustomToolbar";
+	$out->addScript("<script type='text/javascript'>var AllowUserToUpload = ".($wgUser->isAllowed( 'upload' ) ? "true" : "false").";</script>\n");
 	$out->addScript("<script type='text/javascript' src='$path/Element.Forms.js'></script>\n");
 	$out->addScript("<script type='text/javascript' src='$path/CustomToolbar.js'></script>\n");
 	$out->addScript("<style type='text/css'>@import '$path/style.css';</style>\n");
@@ -118,7 +119,7 @@ class CustomToolbarUploadForm extends UploadForm {
 	/* Some code poached from Travis Derouin's <travis@wikihow.com>
 	 * UploadPopup extension
 	 */
-	var $mType, $mSection, $mCaption;
+	var $mType, $mSection, $mCaption, $mDestFile;
 
 	function CustomToolbarUploadForm(&$request) {
 		$this->mType = $request->getVal('type');
@@ -129,23 +130,50 @@ class CustomToolbarUploadForm extends UploadForm {
 
 	function execute() {
 		// override MW's UploadForm with only the bits we want
-		global $wgOut, $wgStylePath;
+		global $wgOut, $wgStylePath, $wgRequest;
 		$wgOut->setArticleBodyOnly(true);
 		$wgOut->addHTML("
  			<html>
                 <head>
-                    <title>". wfMsg('ct_upload', $this->mType) . " </title>
+                    <title>". wfMsg('ct_upload', htmlspecialchars( $this->mType ) ) . " </title>
                 </head>
             	<body>");
-		$wgOut->addHTML("<h2>". wfMsg('ct_upload', $this->mType) . " </h2>");
+		$wgOut->addHTML("<h2>". wfMsg('ct_upload', htmlspecialchars( $this->mType ) ) . " </h2>");
 		UploadForm::execute();
+		$titleObj = SpecialPage::getTitleFor( 'CustomToolbarUpload' );
         $wgOut->addHTML("
+				<script type='text/javascript'>
+				var myForm = document.getElementById('uploadwarning');
+				if(myForm != null) {
+					myForm.action='".$titleObj->getLocalURL( 'action=submit' )."';
+					var el = document.createElement('input');
+				    el.type = 'hidden';
+				    el.name = 'wpDestFileWarningAck';
+				    el.value = '".$wgRequest->GetVal("wpDestFileWarningAck")."';
+					el.id = 'wpDestFileWarningAck'
+				    myForm.appendChild(el);
+					
+					var el2 = document.createElement('input');
+				    el2.type = 'hidden';
+				    el2.name = 'wpDestFile';
+				    el2.value = '".$wgRequest->GetVal("wpDestFile")."';
+					el2.id = 'wpDestFile'
+				    myForm.appendChild(el2);
+					
+					var el3 = document.createElement('input');
+				    el3.type = 'hidden';
+				    el3.name = 'type';
+				    el3.value = '".$wgRequest->GetVal("type")."';
+					el3.id = 'type'
+				    myForm.appendChild(el3);
+				}
+				</script>
 				</body>
         	</html>");
 	}
 
 	function mainUploadForm( $msg = '') {
-		global $wgOut, $wgScriptPath, $wgStylePath;
+		global $wgOut, $wgScriptPath, $wgStylePath, $wgRequest;
 		if ( '' != $msg ) {
 			$sub = wfMsgHtml( 'uploaderror' );
 			$wgOut->addHTML( "<h2>{$sub}</h2>\n" .
@@ -174,12 +202,14 @@ class CustomToolbarUploadForm extends UploadForm {
 		 * This parameter doesn't seem to be used for anything other than raising warnings,
 		 * all of which we are ignoring ... for better or for worse
 		 */
+		 
+		//Fixed the 3rd table row, since it was missing it's <tr> and </tr> tags! -- Tom Maaswinkel
 		$wgOut->addHTML( "
-				<form id='upload' name='uploadform' method='post' enctype='multipart/form-data' action=\"$action\" '>
+				<form id='upload' name='uploadform' method='post' enctype='multipart/form-data' action=\"$action\">
 					<table border='0'>
 						<tr>
 							<td align='left'><img src='{$icon_path}1.png' alt='1.' />
-								<label for='wpUploadFile'>{$source_filename}:</label></td>
+								<label for='wpUploadFile'>{$source_filename}</label></td>
 							<td align='left'>
 								<input type='file' name='wpUploadFile' id='wpUploadFile' "
 								. ($this->mDestFile?"":"onchange=\"opener.Uniwiki.CustomToolbar.fillDestFilename(document.getElementById('wpUploadFile').value, document.getElementById('wpDestFile') )\" ") . "size='40' />
@@ -187,21 +217,24 @@ class CustomToolbarUploadForm extends UploadForm {
 						</tr>
 						<tr>
 				            <td align='left'><img src='{$icon_path}2.png' alt='2.' />
-								<label for='wpCaption'>{$caption}:</label></td>
+								<label for='wpCaption'>{$caption}</label></td>
 				            <td align='left'>
-				        			<input type='text' name=\"wpCaption\" size='40'\"/>
+				        			<input type='text' name=\"wpCaption\" size='40' />
 				        	</td>
 						</tr>
+						<tr>
 							<td align='left'><img src='{$icon_path}3.png' alt='3.' />
 								<label for='wpUpload'>{$submit}</label></td>
 							<td align='left'><input type='submit' name='wpUpload' value=\"{$upload_button}\" />
 							<input type='button' name='wpCancel' onclick='window.close()' value=\"{$cancel_button}\"/></td>
+						</tr>
 						<tr>
 							<td></td>
 							<td>
-								<input type='hidden' name='wpIgnoreWarning' id='wpIgnoreWarning' value='true' checked/>
+								
 								<input type='hidden' name='wpDestFileWarningAck' id='wpDestFileWarningAck' value='{$this->mSection}'/>
 								<input type='hidden' name='wpDestFile' id='wpDestFile' />
+								<input type='hidden' name='type' id='type' value='".$wgRequest->getVal("type")."' />
 							</td>
 						</tr>
 					</table>
@@ -210,7 +243,7 @@ class CustomToolbarUploadForm extends UploadForm {
 	}
 
 	function showSuccess(&$file) {
-		global $wgOut, $ct_uploadable_images, $ct_uploadable_attachments;
+		global $wgOut, $ct_uploadable_images, $ct_uploadable_attachments,$wgRequest;
 
 		//styles copied from monobook/main.css
 		//modified to not float the whole preview to the right
@@ -272,10 +305,16 @@ class CustomToolbarUploadForm extends UploadForm {
 		//make wiki markup for the file
 		$ext = explode('.', $file->mDestName );
 		$extension = $ext[count( $ext ) - 1];
-		if (in_array($extension, $ct_uploadable_images )){
+		$filelink = "";
+		
+		//Fix by Tom Maaswinkel for bug #16535
+		//If the file has an image extension and you are uploading an image (not an attachment)
+		//Then use the Image tag
+		if (in_array(strtolower($extension), $ct_uploadable_images ) && strtolower($wgRequest->getVal("type")) == "image" ){
 			$file_link = '[[' . 'Image:' . $file->mDestName .  '|thumb|' . $file->mCaption . ']]';
 		}
-		elseif (in_array($extension, $ct_uploadable_attachments )){
+		else // Otherwise use the Media tag (we're uploading an attachment)
+		{
         	$file_link = '[[' . 'Media:' . $file->mDestName . '|' . $file->mCaption . ']]';
 		}
 

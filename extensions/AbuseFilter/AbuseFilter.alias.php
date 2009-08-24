@@ -66,12 +66,6 @@ $aliases['fr'] = array(
 	'AbuseFilter' => array( 'Filtre antiabus', 'Filtre anti-abus', 'FiltreAntiabus', "Filtre d'abus", 'FiltredAbus', 'FilterAbus' ),
 );
 
-/** Franco-Provençal (Arpetan) */
-$aliases['frp'] = array(
-	'AbuseLog' => array( 'Jornal des abus', 'JornalDesAbus' ),
-	'AbuseFilter' => array( "Filtro d'abus", 'FiltroDAbus' ),
-);
-
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'AbuseLog' => array( 'Rexistro de abusos' ),
@@ -82,20 +76,6 @@ $aliases['gl'] = array(
 $aliases['gsw'] = array(
 	'AbuseLog' => array( 'Missbruchsfilter-Logbuech' ),
 	'AbuseFilter' => array( 'Missbruchsfilter' ),
-);
-
-/** Gujarati (ગુજરાતી) */
-$aliases['gu'] = array(
-	'AbuseLog' => array( 'દુરુપયોગ લોગ' ),
-	'AbuseFilter' => array( 'દુરુપયોગ ગળણી' ),
-);
-
-/** Hebrew (עברית)
- * @author Rotem Liss
- */
-$aliases['he'] = array(
-	'AbuseLog' => array( 'יומן_ההשחתות' ),
-	'AbuseFilter' => array( 'מסנן_ההשחתות' ),
 );
 
 /** Upper Sorbian (Hornjoserbsce) */
@@ -128,27 +108,15 @@ $aliases['ja'] = array(
 	'AbuseFilter' => array( '不正利用フィルター' ),
 );
 
-/** Ripoarisch (Ripoarisch) */
-$aliases['ksh'] = array(
-	'AbuseLog' => array( 'Logbooch vum Meßbruchsfellter' ),
-	'AbuseFilter' => array( 'Meßbruchsfellter' ),
-);
-
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'AbuseLog' => array( 'Lëscht vum Mëssbrauch' ),
 	'AbuseFilter' => array( 'Mëssbrauchsfilter' ),
 );
 
-/** Marathi (मराठी) */
-$aliases['mr'] = array(
-	'AbuseLog' => array( 'दुरूपयोगनोंदी' ),
-	'AbuseFilter' => array( 'दुरूपयोगगाळणी' ),
-);
-
 /** Maltese (Malti) */
 $aliases['mt'] = array(
-	'AbuseLog' => array( 'ReġistruAbbuż' ),
+	'AbuseLog' => array( 'LogAbbuż' ),
 	'AbuseFilter' => array( 'FiltruAbbuż' ),
 );
 
@@ -228,17 +196,5 @@ $aliases['tl'] = array(
 $aliases['vec'] = array(
 	'AbuseLog' => array( 'RegistroAbusi' ),
 	'AbuseFilter' => array( 'FiltroAbusi' ),
-);
-
-/** Simplified Chinese (‪中文(简体)‬) */
-$aliases['zh-hans'] = array(
-	'AbuseLog' => array( '过滤日志' ),
-	'AbuseFilter' => array( '防滥用过滤器' ),
-);
-
-/** Traditional Chinese (‪中文(繁體)‬) */
-$aliases['zh-hant'] = array(
-	'AbuseLog' => array( '過濾日誌' ),
-	'AbuseFilter' => array( '防濫用過濾器' ),
 );
 

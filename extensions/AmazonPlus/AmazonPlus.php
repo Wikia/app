@@ -47,7 +47,7 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'AmazonPlus',
 	'description'    => 'A highly customizable extension to display Amazon information',
 	'descriptionmsg' => 'amazonplus-desc',
-	'version'        => '0.3.1',
+	'version'        => '0.4.0',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:AmazonPlus',
 	'author'         => 'Ryan Schmidt',
 );
@@ -84,7 +84,7 @@ function efAmazonPlusSetup() {
 
 # Set up the javascript
 function efAmazonPlusJavascript( &$out, $sk ) {
-	global $wgScriptPath;
+	global $wgScriptPath, $wgAmazonPlusJSVersion;
 	$src = $wgScriptPath . "/extensions/AmazonPlus/AmazonPlus.js?$wgAmazonPlusJSVersion";
 	$out->addScript( '<script type="text/javascript" src="' . $src . '"></script>' . "\n" );
 	return true;
@@ -98,6 +98,9 @@ function efAmazonPlusRender( $input, $args, $parser ) {
 
 	# Parse out template parameters only before getting setting up the class so {{{1}}} and the like work
 	$input = $parser->replaceVariables( $input, false, true );
+	foreach( $args as $key => $arg ) {
+		$args[$key] = $parser->replaceVariables( $arg, false, true );
+	}
 
 	$am = new AmazonPlus( $title, $args, $input );
 	if ( !$am instanceOf AmazonPlus ) {
@@ -437,7 +440,7 @@ class AmazonPlus {
 		foreach ( $extra as $val ) {
 			$msg = wfMsg( $val );
 			if ( $msg == '' ) continue;
-			if ( $i++ != 0 ) $params .= wfMsg( 'amazonplus-status-sep' );
+			if ( $i++ != 0 ) $params .= wfMsg( 'comma-separator' );
 			$params .= $msg;
 		}
 		if ( $params ) $app = ' ' . wfMsg( 'amazonplus-status', $params );

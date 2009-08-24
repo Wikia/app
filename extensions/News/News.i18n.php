@@ -35,6 +35,13 @@ $messages['be-tarask'] = array(
 	'newsextension-desc' => 'Паказаць налады апошніх зьменаў як старонкі вікі ці у выглядзе RSS ці Atom',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'newsextension-desc' => 'Pokazuje prilagođene nedavne izmjene na wiki stranicama ili kao RSS ili atom',
+);
+
 /** German (Deutsch)
  * @author Melancholie
  */
@@ -89,6 +96,20 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'newsextension-desc' => 'Amosa uns cambios recentes personalizados nas páxinas dun wiki ou como unha fonte de noticias RSS ou Atom',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'newsextension-desc' => 'Zeigt aapassti, individuälli „Letschti Änderige“ in ere Syte oder as RSS- oder Atom-Feed.',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
+$messages['he'] = array(
+	'newsextension-desc' => 'הצגת השינויים האחרונים באופן מותאם אישית, בדף ויקי או כהזנות RSS או Atom',
 );
 
 /** Hindi (हिन्दी)
@@ -156,6 +177,13 @@ $messages['mr'] = array(
 	'newsextension-desc' => 'एखाद्या विकिवरील पानांमध्ये झालेले अलीकडील बदल आरएसएस फीड किंवा ऍटम फीड च्या स्वरुपात दर्शविते',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'newsextension-desc' => 'Wiest anpasst „Toletzt ännert“ inbunnen in Wikisieden oder as RSS- oder Atom-Feed.',
+);
+
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
@@ -199,6 +227,13 @@ $messages['pt'] = array(
 	'newsextension-desc' => 'Mostra mudanças recentes personalizadas numa página wiki ou como uma fonte RSS ou Atom',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'newsextension-desc' => 'Mostra mudanças recentes personalizadas numa página wiki ou como uma fonte RSS ou Atom',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -232,6 +267,20 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'newsextension-desc' => 'Visar skräddarsydda senaste ändringar på en wikisida, eller en RSS- eller Atom-matning',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'newsextension-desc' => 'సరికూర్చిన ఇటీవలి మార్పులని ఒక వికీ పేజీలో కానీ లేదా RSS లేదా ఆటమ్ ఫీడుగానీ చూపిస్తుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'newsextension-desc' => 'Nagpapakita ng ipinasadyang kamakailang mga pagbabago sa isang pahina ng wiki o bilang pakaing RSS o Atom',
 );
 
 /** Vèneto (Vèneto)

@@ -256,9 +256,13 @@ $messages['bg'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'crosswikiblock-expiry' => 'Ističe:',
 	'crosswikiblock-reason' => 'Razlog:',
+	'crosswikiblock-submit' => 'Blokiraj ovog korisnika',
 	'crosswikiblock-autoblock' => 'Automatski blokiraj zadnju IP adresu koju je koristio ovaj korisnik i sve druge IP adrese s kojih je on pokušao uređivati',
 	'crosswikiunblock-reason' => 'Razlog:',
+	'crosswikiunblock-submit' => 'Deblokiraj ovog korisnika',
+	'crosswikiblock-nousername' => 'Nije navedeno korisničko ime',
 	'crosswikiblock-alreadyblocked' => 'Korisnik $3 je već blokiran.',
 );
 
@@ -285,14 +289,15 @@ $messages['cs'] = array(
 );
 
 /** Danish (Dansk)
+ * @author Byrial
  * @author Jon Harald Søby
  */
 $messages['da'] = array(
 	'crosswikiblock-reason' => 'Begrundelse:',
 	'crosswikiblock-submit' => 'Bloker denne bruger',
-	'crosswikiblock-nocreate' => 'Forhindre oprettelse af brugerkonti',
+	'crosswikiblock-nocreate' => 'Forhindr oprettelse af brugerkontoer',
 	'crosswikiblock-autoblock' => 'Spærre den IP-adresse, der bruges af denne bruger samt automatisk alle følgende, hvorfra han foretager ændringer eller forsøger at anlægge brugerkonti',
-	'crosswikiblock-noemail' => 'Spærre brugerens adgang til at sende mail',
+	'crosswikiblock-noemail' => 'Spær brugerens adgang til at sende e-mail',
 	'crosswikiunblock-reason' => 'Begrundelse:',
 );
 
@@ -339,7 +344,7 @@ Zurück zu:
 Zurück zu:
 * [[Special:CrosswikiBlock|Sperrformular]]
 * [[$4]]",
-	'crosswikiunblock-local' => 'Lokale Sperren werden über dieses Interfache nicht unterstützt. Bitte benutze [[Special:IPBlockList|{{int:ipblocklist}}]].',
+	'crosswikiunblock-local' => 'Lokale Sperren werden über dieses Formular nicht unterstützt. Bitte benutze [[Special:IPBlockList|{{int:ipblocklist}}]].',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -441,11 +446,48 @@ Reen:
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
+ * @author Dferg
  * @author Imre
  */
 $messages['es'] = array(
+	'crosswikiblock-desc' => 'Permite bloquear a usuarios en otras wikis usando una [[Special:Crosswikiblock|página especial]]',
+	'crosswikiblock' => 'Bloquear al usuario en otra wiki',
+	'crosswikiblock-header' => 'Esta página le permite bloquear a un usuario en otra wiki.
+Por favor, verifique si está autorizado a actuar en esa wiki y que sus acciones siguen las políticas.',
+	'crosswikiblock-target' => 'Dirección IP o nombre de usuario y wiki de destino:',
+	'crosswikiblock-expiry' => 'Duración:',
 	'crosswikiblock-reason' => 'Motivo:',
+	'crosswikiblock-submit' => 'Bloquear al usuario',
+	'crosswikiblock-anononly' => 'Bloquear sólo usuarios anónimos',
+	'crosswikiblock-nocreate' => 'Prevenir la creación de cuenta de usuario',
+	'crosswikiblock-autoblock' => 'Bloquear automáticamente la dirección IP usada por este usuario, y cualquier IP posterior desde la cual intente editar',
+	'crosswikiblock-noemail' => 'Prevenir el envío de correo electrónico',
+	'crosswikiunblock' => 'Desbloquear usuario en otra wiki',
+	'crosswikiunblock-header' => 'Esta página permite desbloquear usuarios en otra wiki.
+Por favor verifique si estás permitido de actuar en este wiki y tus acciones cumplen todas las políticas.',
 	'crosswikiunblock-reason' => 'Motivo:',
+	'crosswikiunblock-submit' => 'Desbloquear este usuario',
+	'crosswikiunblock-success' => "Usuario '''$1''' desbloqueado exitosamente.
+
+Retornar a:
+* [[Special:CrosswikiBlock|Formulario de bloqueo]]
+* [[$2]]",
+	'crosswikiblock-nousername' => 'Ningún nombre de usuario fue dado',
+	'crosswikiblock-local' => 'Bloqueos locales no están soportados a través de esta interface. Usar [[Special:BlockIP|{{int:blockip}}]]',
+	'crosswikiblock-dbnotfound' => 'Base de datos $1 no existe',
+	'crosswikiblock-noname' => '"$1" no es un nombre de usuario válido.',
+	'crosswikiblock-nouser' => 'Usuario "$3" no es encontrado.',
+	'crosswikiblock-noexpiry' => 'Expiración inválida: $1.',
+	'crosswikiblock-noreason' => 'Sin razón especificada.',
+	'crosswikiblock-alreadyblocked' => 'Usuario "$3" ya está bloqueado.',
+	'crosswikiblock-noblock' => 'Este usuario no está bloqueado.',
+	'crosswikiblock-success' => "Usuario '''$3''' bloqueado existosamente.
+
+Retorne a:
+* [[Special:CrosswikiBlock|Formulario de bloqueo]]
+* [[$4]]",
+	'crosswikiunblock-local' => 'Desbloqueos locales no están soportados a través de esta interface. Usar [[Special:IPBlockList|{{int:ipblocklist}}]]',
 );
 
 /** Estonian (Eesti)
@@ -519,17 +561,18 @@ Palaa:
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author IAlex
  * @author Meithal
+ * @author PieRRoMaN
  * @author Urhixidur
  */
 $messages['fr'] = array(
 	'crosswikiblock-desc' => "Permet de bloquer des utilisateurs sur d'autres wikis en utilisant [[Special:Crosswikiblock|une page spéciale]]",
 	'crosswikiblock' => 'Bloquer un utilisateur sur un autre wiki',
 	'crosswikiblock-header' => 'Cette page permet de bloquer un utilisateur sur un autre wiki.
-
-Vérifiez si vous êtes habilité pour agir sur ce wiki et que vos actions respectent toutes les règles.',
+Vérifiez si vous êtes habilité{{GENDER:||e|(e)}} pour agir sur ce wiki et que vos actions respectent toutes les règles.',
 	'crosswikiblock-target' => "Adresse IP ou nom d'utilisateur et wiki de destination :",
 	'crosswikiblock-expiry' => 'Expiration :',
 	'crosswikiblock-reason' => 'Motif :',
@@ -556,7 +599,7 @@ Revenir à :
 	'crosswikiblock-nouser' => 'L’utilisateur « $3 » est introuvable.',
 	'crosswikiblock-noexpiry' => 'Date ou durée d’expiration incorrecte : $1.',
 	'crosswikiblock-noreason' => 'Aucun motif indiqué.',
-	'crosswikiblock-notoken' => 'Édition prise incorrecte.',
+	'crosswikiblock-notoken' => 'Jeton de modification invalide.',
 	'crosswikiblock-alreadyblocked' => 'L’utilisateur « $3 » est déjà bloqué.',
 	'crosswikiblock-noblock' => "Cet utilisateur n'est pas bloqué en écriture.",
 	'crosswikiblock-success' => "L’utilisateur '''$3''' a été bloqué avec succès.
@@ -624,7 +667,7 @@ Voltar a:
 	'crosswikiunblock-local' => 'Os desbloqueos locais non están soportados mediante esta interface. Use [[Special:IPBlockList|{{int:ipblocklist}}]]',
 );
 
-/** Gothic (𐌲𐌿𐍄𐌹𐍃𐌺)
+/** Gothic
  * @author Jocke Pirat
  */
 $messages['got'] = array(
@@ -638,6 +681,51 @@ $messages['got'] = array(
 $messages['grc'] = array(
 	'crosswikiblock-reason' => 'Αἰτία:',
 	'crosswikiunblock-reason' => 'Αἰτία:',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'crosswikiblock-desc' => 'Erlaubt d Sperri vu Benutzer in andere Wiki iber e [[Special:Crosswikiblock|Spezialsyte]]',
+	'crosswikiblock' => 'Benutzer in eme andere Wiki sperre',
+	'crosswikiblock-header' => 'Die Spezialsyte erlaubt d Sperri vun eme Benutzer in eme andere Wiki.
+Bitte prief, eb Du s Rächt hesch, in däm andere Wiki z sperre un eb Dyy Aktion dr Richtlinie vu sälem Wiki entspricht.',
+	'crosswikiblock-target' => 'IP-Adräss oder Benutzername un Ziilwiki:',
+	'crosswikiblock-expiry' => 'Sperrduur:',
+	'crosswikiblock-reason' => 'Grund:',
+	'crosswikiblock-submit' => 'IP-Adräss/Benutzer sperre',
+	'crosswikiblock-anononly' => 'Nume anonyme Benutzer sperre',
+	'crosswikiblock-nocreate' => 'Aalege vu Benutzerkonte verhindere',
+	'crosswikiblock-autoblock' => 'Di aktuäll vu däm Benutzer bruucht IP-Adräss sperre, dezue automatisch  alli wytere, wun er dervu uus versuecht Bearbeitige z mache oder e Benutzerkonto aazlege.',
+	'crosswikiblock-noemail' => 'Eme Benutzer s Verschicke vu E-Mail sperre',
+	'crosswikiunblock' => 'D Sperri vun eme Benutzer in eme andere Wiki ufhebe',
+	'crosswikiunblock-header' => 'Die Spezialsyte erlaubt s Ufhebe vun ere Benutzersperri in eme andere Wiki.
+Bitte prief, eb Du s Rächt hesch, in däm andere Wiki z sperren un eb Dyy Aktion dr Richtlinie vu sälem Wiki entspricht.',
+	'crosswikiunblock-user' => 'IP-Adräss, Benutzername oder Sperr-ID und Ziilwiki:',
+	'crosswikiunblock-reason' => 'Grund:',
+	'crosswikiunblock-submit' => 'Sperri fir IP-Adräss/Benutzer ufhebe',
+	'crosswikiunblock-success' => "D Sperri vum Benutzer '''„$1“''' erfolgryych ufghobe.
+
+Zrugg zue:
+* [[Special:CrosswikiBlock|Sperrformular]]
+* [[$2]]",
+	'crosswikiblock-nousername' => 'S isch kei Benutzername aagee wore',
+	'crosswikiblock-local' => 'Lokali Sperrine wäre dur des Interface nit unterstitzt. Verwänd [[Special:BlockIP|{{int:blockip}}]]',
+	'crosswikiblock-dbnotfound' => 'Datebank $1 git s nit',
+	'crosswikiblock-noname' => '„$1“ isch kei giltige Benutzername.',
+	'crosswikiblock-nouser' => 'Benutzer „$3“ nit gfunde.',
+	'crosswikiblock-noexpiry' => 'Nit giltigi Sperrduur: $1.',
+	'crosswikiblock-noreason' => 'Kei Grund aagee.',
+	'crosswikiblock-notoken' => 'Nit giltig Bearbeitigs-Token.',
+	'crosswikiblock-alreadyblocked' => 'Benutzer „$3“ ish scho gsperrt.',
+	'crosswikiblock-noblock' => 'Dää Benutzer isch nit gsperrt.',
+	'crosswikiblock-success' => "Benutzer '''„$3“''' erfolgryych gsperrt.
+
+Zrugg zue:
+* [[Special:CrosswikiBlock|Sperrformular]]
+* [[$4]]",
+	'crosswikiunblock-local' => 'Lokali Sperrine wäre iber des Interface nit unterstitzt. Bitte verwänd [[Special:IPBlockList|{{int:ipblocklist}}]].',
 );
 
 /** Manx (Gaelg)
@@ -839,6 +927,14 @@ $messages['id'] = array(
 	'crosswikiblock-reason' => 'Alasan:',
 	'crosswikiunblock-reason' => 'Alasan:',
 	'crosswikiblock-notoken' => 'Token penyuntingan tidak sah.',
+);
+
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'crosswikiblock-expiry' => 'Expiro:',
+	'crosswikiblock-anononly' => 'Blokusez nur anonimala uzanti',
 );
 
 /** Icelandic (Íslenska)
@@ -1132,6 +1228,31 @@ Zréck op:
 	'crosswikiunblock-local' => 'Op dëser Säit kënne lokal Spären net opgehuewe ginn. Benotzt w.e.g. [[Special:IPBlockList|{{int:ipblocklist}}]]',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Homo
+ */
+$messages['lt'] = array(
+	'crosswikiblock-reason' => 'Priežastis:',
+	'crosswikiblock-submit' => 'Blokuoti šį naudotoją',
+	'crosswikiblock-anononly' => 'Blokuoti tik anoniminius naudotojus',
+	'crosswikiblock-autoblock' => 'Automatiškai blokuoti paskutinį naudotojo naudotą IP adresą, ir visus kitus adresus, iš kurių mėgins redaguoti',
+	'crosswikiunblock-reason' => 'Priežastis:',
+	'crosswikiunblock-submit' => 'Atblokuoti šį naudotoją',
+	'crosswikiunblock-success' => "Naudotojas '''$1''' sėkmingai atblokuotas.
+
+Grįžti į:
+* [[Special:CrosswikiBlock|Blokavimo forma]]
+* [[$2]]",
+	'crosswikiblock-nousername' => 'Nenurodytas joks naudotojo vardas',
+	'crosswikiblock-nouser' => 'Naudotojas "$3" nerastas.',
+	'crosswikiblock-noreason' => 'Nenurodyta priežastis.',
+	'crosswikiblock-success' => "Naudotojas '''$3''' sėkmingai užblokuotas.
+
+Grįžti į:
+* [[Special:CrosswikiBlock|Blokavimo forma]]
+* [[$4]]",
+);
+
 /** Moksha (Мокшень)
  * @author Khazar II
  */
@@ -1248,6 +1369,7 @@ $messages['myv'] = array(
 	'crosswikiblock-expiry' => 'Таштомома шказо:',
 	'crosswikiblock-reason' => 'Тувталось:',
 	'crosswikiunblock-reason' => 'Тувталось:',
+	'crosswikiblock-alreadyblocked' => 'Теиця "$3" уш саймас саезь.',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -1406,6 +1528,14 @@ Tilbake til:
 	'crosswikiunblock-local' => 'Lokale blokkeringer støttes ikke via dette grensesnittet. Bruk [[Special:IPBlockList|{{int:ipblocklist}}]].',
 );
 
+/** Novial (Novial)
+ * @author Malafaya
+ */
+$messages['nov'] = array(
+	'crosswikiblock-reason' => 'Resone:',
+	'crosswikiunblock-reason' => 'Resone:',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -1458,6 +1588,7 @@ Tornar cap a :
 $messages['os'] = array(
 	'crosswikiblock-reason' => 'Аххос:',
 	'crosswikiunblock-reason' => 'Аххос:',
+	'crosswikiblock-dbnotfound' => 'Бæрæггæнæнты базæ нæй',
 );
 
 /** Polish (Polski)
@@ -1479,7 +1610,7 @@ Upewnij się czy masz prawo to zrobić i czy to co robisz jest w zgodzie z zasad
 	'crosswikiblock-anononly' => 'Zablokuj tylko anonimowych użytkowników',
 	'crosswikiblock-nocreate' => 'Zablokuj tworzenie konta',
 	'crosswikiblock-autoblock' => 'Zablokuj ostatni adres IP tego użytkownika i automatycznie wszystkie kolejne, z których będzie próbował edytować',
-	'crosswikiblock-noemail' => 'Zablokuj możliwość wysyłania e-maili',
+	'crosswikiblock-noemail' => 'Zablokuj możliwość wysyłania e‐maili',
 	'crosswikiunblock' => 'Odblokuj użytkownika na innych wiki',
 	'crosswikiunblock-header' => 'Ta strona pozwala na odblokowanie użytkownika na innych wiki.
 Upewnij się czy masz prawo to zrobić i czy to co robisz jest w zgodzie z zasadami.',
@@ -1494,8 +1625,8 @@ Wróć do:
 	'crosswikiblock-nousername' => 'Nie wprowadzono nazwy użytkownika',
 	'crosswikiblock-local' => 'Lokalne blokowanie nie jest możliwe przy pomocy tego interfejsu. Użyj strony [[Special:BlockIP|blokowania adresów IP]].',
 	'crosswikiblock-dbnotfound' => 'Baza $1 nie istnieje',
-	'crosswikiblock-noname' => '"$1" nie jest poprawną nazwą użytkownika.',
-	'crosswikiblock-nouser' => 'Nie znaleziono użytkownika "$3".',
+	'crosswikiblock-noname' => '„$1” nie jest poprawną nazwą użytkownika.',
+	'crosswikiblock-nouser' => 'Nie odnaleziono użytkownika „$3”.',
 	'crosswikiblock-noexpiry' => 'Nieprawidłowy czas blokady: $1.',
 	'crosswikiblock-noreason' => 'Nie podano powodu.',
 	'crosswikiblock-notoken' => 'Nieprawidłowy żeton edycji.',
@@ -1542,7 +1673,7 @@ Por favor, verifique se tem permissão para agir neste wiki e as suas acções r
 	'crosswikiunblock-user' => 'Nome de utilizador, endereço IP ou ID de bloqueio e wiki destino:',
 	'crosswikiunblock-reason' => 'Motivo:',
 	'crosswikiunblock-submit' => 'Desbloquear este utilizador',
-	'crosswikiunblock-success' => "Usuário '''$1''' desbloqueado com sucesso.
+	'crosswikiunblock-success' => "Utilizador '''$1''' desbloqueado com sucesso.
 
 Regressar a:
 * [[Special:CrosswikiBlock|Formulário de bloqueio]]
@@ -1563,6 +1694,51 @@ Voltar para:
 * [[Special:CrosswikiBlock|Formulário de bloqueio]]
 * [[$4]]",
 	'crosswikiunblock-local' => 'Desbloqueios locais são podem ser efectuados a partir deste interface. Use [[Special:IPBlockList|{{int:ipblocklist}}]]',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'crosswikiblock-desc' => 'Permite bloquear utilizadores em outros wikis usando uma [[Special:Crosswikiblock|página especial]]',
+	'crosswikiblock' => 'Bloquear utilizador em outro wiki',
+	'crosswikiblock-header' => 'Esta página permite bloquear um utilizador em outro wiki.
+Por favor, verifique se tem permissão para agir neste wiki e se as suas ações respeitam todas as políticas.',
+	'crosswikiblock-target' => 'Endereço IP ou nome de utilizador e wiki destino:',
+	'crosswikiblock-expiry' => 'Expiração:',
+	'crosswikiblock-reason' => 'Motivo:',
+	'crosswikiblock-submit' => 'Bloquear este utilizador',
+	'crosswikiblock-anononly' => 'Bloquear apenas utilizadores anônimos',
+	'crosswikiblock-nocreate' => 'Impedir criação de conta',
+	'crosswikiblock-autoblock' => 'Bloquear automaticamente o último endereço IP usado por este utilizador, e qualquer endereço IP subsequente a partir do qual ele tente editar',
+	'crosswikiblock-noemail' => 'Impedir utilizador de enviar email',
+	'crosswikiunblock' => 'Desbloquear utilizador em outro wiki',
+	'crosswikiunblock-header' => 'Esta página permite desbloquear um utilizador em outro wiki.
+Por favor, verifique se tem permissão para agir neste wiki e se as suas ações respeitam todas as políticas.',
+	'crosswikiunblock-user' => 'Nome de utilizador, endereço IP ou ID de bloqueio e wiki destino:',
+	'crosswikiunblock-reason' => 'Motivo:',
+	'crosswikiunblock-submit' => 'Desbloquear este utilizador',
+	'crosswikiunblock-success' => "Utilizador '''$1''' desbloqueado com sucesso.
+
+Regressar a:
+* [[Special:CrosswikiBlock|Formulário de bloqueio]]
+* [[$2]]",
+	'crosswikiblock-nousername' => 'Nenhum nome de utilizador foi introduzido',
+	'crosswikiblock-local' => 'Bloqueios locais não podem ser efetuados a partir deste interface. Use [[Special:BlockIP|{{int:blockip}}]]',
+	'crosswikiblock-dbnotfound' => 'A base de dados $1 não existe',
+	'crosswikiblock-noname' => '"$1" não é um nome de utilizador válido.',
+	'crosswikiblock-nouser' => 'O utilizador "$3" não foi encontrado.',
+	'crosswikiblock-noexpiry' => 'Expiração inválida: $1.',
+	'crosswikiblock-noreason' => 'Nenhum motivo especificado.',
+	'crosswikiblock-notoken' => 'Identificador de edição inválido.',
+	'crosswikiblock-alreadyblocked' => 'O utilizador $3 já está bloqueado.',
+	'crosswikiblock-noblock' => 'Este utilizador não está bloqueado.',
+	'crosswikiblock-success' => "Utilizador '''$3''' bloqueado com sucesso.
+
+Voltar para:
+* [[Special:CrosswikiBlock|Formulário de bloqueio]]
+* [[$4]]",
+	'crosswikiunblock-local' => 'Desbloqueios locais são podem ser efetuados a partir deste interface. Use [[Special:IPBlockList|{{int:ipblocklist}}]]',
 );
 
 /** Romanian (Română)
@@ -1891,6 +2067,51 @@ $messages['tg-cyrl'] = array(
 Баргардед ба:
 * [[Special:CrosswikiBlock|Форми бастан]]
 * [[$4]]",
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'crosswikiblock-desc' => 'Nagpapahintulot na mahadlangan ang mga tagagamit sa ibang mga wiki na ginagamitan ng isang [[Special:Crosswikiblock|natatanging pahina]]',
+	'crosswikiblock' => 'Hadlangan ang tagagamit sa ibang wiki',
+	'crosswikiblock-header' => 'Nagpapahintulot ang pahinang ito na hadlangan ang tagagamit sa ibang wiki.
+Pakisuri kung may pahintulot kang kumilos sa wiking ito at kung tumutugma ang mga kilos mo sa lahat ng mga patakaran.',
+	'crosswikiblock-target' => 'Adres ng IP o pangalan ng tagagamit at kapupuntahang wiki:',
+	'crosswikiblock-expiry' => 'Katapusan:',
+	'crosswikiblock-reason' => 'Dahilan:',
+	'crosswikiblock-submit' => 'Hadlangan ang tagagamit na ito',
+	'crosswikiblock-anononly' => 'Hadlangan lamang ang hindi nakikilalang mga tagagamit',
+	'crosswikiblock-nocreate' => 'Pigilan ang paglikha ng akawnt',
+	'crosswikiblock-autoblock' => 'Kusang hadlangan ang huling adres ng IP na ginamit ng tagagamit na ito, at alin mang susunod na mga adres na IP na susubukin nilang panggalingan upang makapamatnugot',
+	'crosswikiblock-noemail' => 'Pigilang makapagpadala ng e-liham ang tagagamit',
+	'crosswikiunblock' => 'Huwag hadlangan ang tagagamit sa ibang wiki',
+	'crosswikiunblock-header' => 'Nagpapahintulot ang pahinang ito na tanggalin ang pagkakahadlang ng tagagamit sa ibang wiki.
+Pakisuri kung may pahintulot kang kumilos sa wiking ito at ang tumutugma ang kilos mo sa lahat ng mga patakaran.',
+	'crosswikiunblock-user' => 'Pangalan ng tagagamit, adres ng IP o ID ng paghadlang at kapupuntahang wiki:',
+	'crosswikiunblock-reason' => 'Dahilan:',
+	'crosswikiunblock-submit' => 'Huwag hadlangan ang tagagamit na ito',
+	'crosswikiunblock-success' => "Matagumpay na tinanggal ang hadlang ng tagagamit na si '''$1'''.
+
+Magbalik sa:
+* [[Special:CrosswikiBlock|Pormularyo ng paghadlang]]
+* [[$2]]",
+	'crosswikiblock-nousername' => 'Walang ibinigay na pangalan ng tagagamit',
+	'crosswikiblock-local' => 'Hindi sinusuportahan ang pampook na mga paghahadlang sa pamamagitan ng ugnayang hangganang ito. Gamitin ang [[Special:BlockIP|{{int:blockip}}]]',
+	'crosswikiblock-dbnotfound' => 'Hindi umiiral ang kalipunan ng datong $1',
+	'crosswikiblock-noname' => 'Ang "$1" ay isang hindi tanggap na pangalan ng tagagamit.',
+	'crosswikiblock-nouser' => 'Hindi natagpuan ang tagagamit na si "$3".',
+	'crosswikiblock-noexpiry' => 'Hindi tanggap na wakas ng bisa: $1.',
+	'crosswikiblock-noreason' => 'Walang tinukoy na dahilan.',
+	'crosswikiblock-notoken' => 'Hindi tanggap na tanda ng pagbago.',
+	'crosswikiblock-alreadyblocked' => 'Hinahadlangan na ang tagagamit na si $3.',
+	'crosswikiblock-noblock' => 'Hindi hinahadlangan ang tagagamit na ito.',
+	'crosswikiblock-success' => "Matagumpay na nahadlangan ang tagagamit na si '''$3'''.
+
+Magbalik sa:
+* [[Special:CrosswikiBlock|Pormularyo ng paghadlang]]
+* [[$4]]",
+	'crosswikiunblock-local' => 'Hindi tinatangkilik ang pampook na mga paghahadlang sa pamamagitan ng ugnayang-hangganang ito. Gamitin ang [[Special:IPBlockList|{{int:ipblocklist}}]]',
 );
 
 /** Turkish (Türkçe)

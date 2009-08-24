@@ -28,15 +28,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgExtensionMessagesFiles['MinimumNameLength'] = dirname(__FILE__) . '/MinimumNameLength.i18n.php';
-$wgExtensionFunctions[] = 'efMinimumNameLengthSetup';
-
-/**
- * Extension setup function
- */
-function efMinimumNameLengthSetup() {
-	global $wgHooks;
-	$wgHooks['AbortNewAccount'][] = 'efMinimumNameLength';
-}
+$wgHooks['AbortNewAccount'][] = 'efMinimumNameLength';
 
 /**
  * Hooks account creation and checks the

@@ -49,7 +49,7 @@ class Player {
 	static function newFromTitle( $title, $options, $sizeDefault = 'imagesize' ) {
 		wfLoadExtensionMessages( 'Player' );
 
-		$image = Image::newFromTitle( $title );
+		$image = wfFindFile( $title );
 		if ( !$image->exists() ) {
 			throw new PlayerException(wfMsg("player-not-found"), 404);
 		}
@@ -379,7 +379,7 @@ class Player {
 		$thumbstyle = '';
 		$thumbimg = NULL;
 		$thumbname = @$attributes['thumb'];
-		if ($thumbname) $thumbimg = Image::newFromName( $thumbname );
+		if ($thumbname) $thumbimg = wfFindFile( $thumbname );
 
 		if ($thumbimg && $thumbimg->exists()) {
 			$tni = $thumbimg->getThumbnail( $this->width, $this->height );

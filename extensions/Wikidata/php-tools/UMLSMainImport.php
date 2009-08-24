@@ -19,7 +19,7 @@ global
 	$beginTime, $wgCommandLineMode, $wgUser, $numberOfBytes, $wdDefaultViewDataSet;
 
 function getUserId($real_name){
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query( "SELECT user_id FROM user where user_real_name = '$real_name'" );
 	if ( $row = $dbr->fetchObject( $queryResult ) ){
 		return( $row->user_id );

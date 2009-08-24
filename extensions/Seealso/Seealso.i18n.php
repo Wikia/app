@@ -37,6 +37,13 @@ $messages['ar'] = array(
 	'seealso-desc' => "عناوين 'See also' مترجمة باستخدام الوسم <code><nowiki><seealso></nowiki></code>.",
 );
 
+/** Aramaic (ܐܪܡܝܐ)
+ * @author Basharh
+ */
+$messages['arc'] = array(
+	'seealso' => 'ܐܦ ܚܙܝ',
+);
+
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
@@ -68,6 +75,22 @@ $messages['bg'] = array(
 $messages['br'] = array(
 	'seealso' => 'Gwelet ivez',
 	'seealso-desc' => "Talbenn 'Gwelet ivez' lec'helaet dre implijout ar valizenn <code><nowiki><seealso></nowiki></code>",
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'seealso' => 'Također pogledajte',
+	'seealso-desc' => "Lokalizirani 'Također pogledajte' naslovi koristeći oznaku <code><nowiki><seealso></nowiki></code>",
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'seealso' => 'Gweler hefyd',
+	'seealso-desc' => "Pennawdau 'Gweler hefyd' wedi eu cyfieithu gyda'r tag <code><nowiki><seealso></nowiki></code>",
 );
 
 /** German (Deutsch)
@@ -103,17 +126,29 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Sanbec
  */
 $messages['es'] = array(
 	'seealso' => 'Véase también',
+	'seealso-desc' => "Traducidos 'See also' encabezados usando la etiqueta <code><nowiki><seealso></nowiki></code>",
 );
 
 /** Basque (Euskara)
  * @author Kobazulo
+ * @author Theklan
  */
 $messages['eu'] = array(
 	'seealso' => 'Ikus, gainera',
+	'seealso-desc' => "Lokalizatutako 'Ikus gainera' izenburuak <code><nowiki><seealso></nowiki></code> etiketa erabiliz",
+);
+
+/** Persian (فارسی)
+ * @author Vahid
+ */
+$messages['fa'] = array(
+	'seealso' => 'جستارهای وابسته',
+	'seealso-desc' => 'بومی‌سازی سر صفحه «جستارهای وابسته»  با استفاده از برچسب <code><nowiki><seealso></nowiki></code>',
 );
 
 /** Finnish (Suomi)
@@ -179,6 +214,13 @@ $messages['ia'] = array(
 	'seealso-desc' => 'Capites "Vide etiam" localisate per medio del etiquetta <code><nowiki><seealso></nowiki></code>',
 );
 
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'seealso' => 'Videz anke',
+);
+
 /** Icelandic (Íslenska)
  * @author S.Örvarr.S
  */
@@ -222,6 +264,13 @@ $messages['kk-cyrl'] = array(
  */
 $messages['km'] = array(
 	'seealso' => 'សូមមើលផងដែរ',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'seealso' => '함께 보기',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -335,11 +384,20 @@ $messages['pt'] = array(
 	'seealso-desc' => "Títulos de secção 'Ver também' localizados usando a tag <code><nowiki><seealso></nowiki></code>",
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'seealso' => 'Ver também',
+	'seealso-desc' => "Títulos de seção 'Ver também' localizados usando a marca <code><nowiki><seealso></nowiki></code>",
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
 	'seealso' => 'Vide pure',
+	'seealso-desc' => "Localizze le testete 'Vide pure' ausanne 'u tag <code><nowiki><seealso></nowiki></code>",
 );
 
 /** Russian (Русский)
@@ -363,6 +421,7 @@ $messages['sk'] = array(
  */
 $messages['stq'] = array(
 	'seealso' => 'Sjuch uk',
+	'seealso-desc' => 'Lokalisierde Sjuch-uk-Uurschrifte middels <code><nowiki><seealso></nowiki></code>',
 );
 
 /** Sundanese (Basa Sunda)
@@ -444,9 +503,11 @@ $messages['vo'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
 	'seealso' => '参见',
+	'seealso-desc' => '使用标签<code><nowiki><seealso></nowiki></code>本地化“参见”标题',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

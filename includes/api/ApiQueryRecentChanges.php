@@ -97,25 +97,6 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 		$this->addWhereRange('rc_timestamp', $params['dir'], $params['start'], $params['end']);
 		$this->addWhereFld('rc_namespace', $params['namespace']);
 		$this->addWhereFld('rc_deleted', 0);
-		if($params['titles'])
-		{
-			$lb = new LinkBatch;
-			foreach($params['titles'] as $t)
-			{
-				$obj = Title::newFromText($t);
-				$lb->addObj($obj);
-				if($obj->getNamespace() < 0)
-				{
-					// LinkBatch refuses these, but we need them anyway
-					if(!array_key_exists($obj->getNamespace(), $lb->data))
-						$lb->data[$obj->getNamespace()] = array();
-					$lb->data[$obj->getNamespace()][$obj->getDBKey()] = 1;
-				}
-			}
-			$where = $lb->constructSet('rc', $this->getDB());
-			if($where != '')
-				$this->addWhere($where);
-		}
 
 		if(!is_null($params['type']))
 				$this->addWhereFld('rc_type', $this->parseRCType($params['type']));
@@ -211,9 +192,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 		$this->token = $params['token'];
 		$this->addOption('LIMIT', $params['limit'] +1);
 
-		$data = array ();
 		$count = 0;
-
 		/* Perform the actual query. */
 		$db = $this->getDB();
 		$res = $this->select(__METHOD__);
@@ -230,16 +209,20 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 			$vals = $this->extractRowInfo($row);
 
 			/* Add that row's data to our final output. */
-			if($vals)
-				$data[] = $vals;
+			if(!$vals)
+				continue;
+			$fit = $this->getResult()->addValue(array('query', $this->getModuleName()), null, $vals);
+			if(!$fit)
+			{
+				$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->rc_timestamp));
+				break;
+			}
 		}
 
 		$db->freeResult($res);
 
 		/* Format the result */
-		$result = $this->getResult();
-		$result->setIndexedTagName($data, 'rc');
-		$result->addValue('query', $this->getModuleName(), $data);
+		$this->getResult()->setIndexedTagName_internal(array('query', $this->getModuleName()), 'rc');
 	}
 
 	/**
@@ -329,7 +312,7 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 			$vals['patrolled'] = '';
 
 		if ($this->fld_loginfo && $row->rc_type == RC_LOG) {
-			$vals['logid'] = $row->rc_logid;
+			$vals['logid'] = intval($row->rc_logid);
 			$vals['logtype'] = $row->rc_log_type;
 			$vals['logaction'] = $row->rc_log_action;
 			ApiQueryLogEvents::addLogParams($this->getResult(),
@@ -394,9 +377,6 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 				ApiBase :: PARAM_ISMULTI => true,
 				ApiBase :: PARAM_TYPE => 'namespace'
 			),
-			'titles' => array(
-				ApiBase :: PARAM_ISMULTI => true
-			),
 			'prop' => array (
 				ApiBase :: PARAM_ISMULTI => true,
 				ApiBase :: PARAM_DFLT => 'title|timestamp|ids',
@@ -457,7 +437,6 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 			'end' => 'The timestamp to end enumerating.',
 			'dir' => 'In which direction to enumerate.',
 			'namespace' => 'Filter log entries to only this namespace(s)',
-			'titles' => 'Filter log entries to only these page titles',
 			'prop' => 'Include additional pieces of information',
 			'token' => 'Which tokens to obtain for each change',
 			'show' => array (
@@ -480,6 +459,6 @@ class ApiQueryRecentChanges extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryRecentChanges.php 44719 2008-12-17 16:34:01Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryRecentChanges.php 50094 2009-05-01 06:24:09Z tstarling $';
 	}
 }

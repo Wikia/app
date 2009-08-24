@@ -283,6 +283,15 @@ $messages['grc'] = array(
 	'backforth-prev' => 'Προηγουμέναι ($1)',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'backforth-next' => 'Negschti ($1)',
+	'backforth-desc' => 'Ergänzt alfabetischi „Negschti“- un „Vorigi“-Navigations-Gleicher am Sytechopf.',
+	'backforth-prev' => 'Vorigi ($1)',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author דניאל ב.
@@ -307,6 +316,7 @@ $messages['hi'] = array(
  */
 $messages['hr'] = array(
 	'backforth-next' => 'Slijedeći ($1)',
+	'backforth-desc' => 'Dodaje poveznice "Sljedeća" i "Prethodna" na vrh stranica',
 	'backforth-prev' => 'Prethodni ($1)',
 );
 
@@ -433,6 +443,14 @@ $messages['ksh'] = array(
 	'backforth-prev' => 'Förije ($1)',
 );
 
+/** Cornish (Kernewek)
+ * @author Kw-Moon
+ */
+$messages['kw'] = array(
+	'backforth-next' => 'Nessa ($1)',
+	'backforth-prev' => 'Kyns ($1)',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -440,6 +458,15 @@ $messages['lb'] = array(
 	'backforth-next' => 'Nächst ($1)',
 	'backforth-desc' => 'Setzt "Nächst"- a "Vireg"-Navigatiounslinke uewen op de Säiten derbäi',
 	'backforth-prev' => '($1) virdrun',
+);
+
+/** Limburgish (Limburgs)
+ * @author Pahles
+ */
+$messages['li'] = array(
+	'backforth-next' => 'Volgende ($1)',
+	'backforth-desc' => 'Voog alfabetische links nao "Veurige" en "Volgende" pagina toe bovenaan pagina\'s',
+	'backforth-prev' => 'Veurige ($1)',
 );
 
 /** Lithuanian (Lietuvių)
@@ -454,7 +481,7 @@ $messages['lt'] = array(
  * @author Brest
  */
 $messages['mk'] = array(
-	'backforth-next' => 'Следно ($1)',
+	'backforth-next' => 'Следна ($1)',
 	'backforth-desc' => 'Додава "Следна" и "Претходна" врски на врвот од азбучниот индекс',
 	'backforth-prev' => 'Претходна ($1)',
 );
@@ -566,11 +593,12 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author Derbeth
+ * @author Sp5uhe
  * @author Wpedzich
  */
 $messages['pl'] = array(
 	'backforth-next' => 'Następny ($1)',
-	'backforth-desc' => 'Dodaje linki wyszukiwania alfabetycznego "Poprzedni" i "Następny" na początku strony',
+	'backforth-desc' => 'Dodaje linki wyszukiwania alfabetycznego „Poprzedni” i „Następny” na początku strony',
 	'backforth-prev' => 'Poprzedni ($1)',
 );
 
@@ -595,6 +623,15 @@ $messages['ps'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'backforth-next' => 'Próximo ($1)',
+	'backforth-desc' => 'Adiciona as ligações de paginação alfabética "Seguinte" e "Anterior" ao topo das páginas',
+	'backforth-prev' => 'Anterior ($1)',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'backforth-next' => 'Próximo ($1)',
 	'backforth-desc' => 'Adiciona as ligações de paginação alfabética "Seguinte" e "Anterior" ao topo das páginas',
 	'backforth-prev' => 'Anterior ($1)',
@@ -708,6 +745,7 @@ $messages['ta'] = array(
  */
 $messages['te'] = array(
 	'backforth-next' => 'తర్వాత ($1)',
+	'backforth-desc' => 'పేజీల పై భాగాన "తర్వాత" మరియు "గత" అనే అక్షరానుసార పేజీకరణ లింకులును చేరుస్తుంది',
 	'backforth-prev' => 'గత ($1)',
 );
 
@@ -733,6 +771,15 @@ $messages['tg-cyrl'] = array(
  */
 $messages['th'] = array(
 	'backforth-next' => 'ต่อไป ($1)',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'backforth-next' => 'Susunod ($1)',
+	'backforth-desc' => 'Nagdaragdag ng alpabetikong pagpapahinang may mga kawing na "Susunod" at "Sinundan" sa ibabaw ng mga pahina',
+	'backforth-prev' => 'Sinundan ($1)',
 );
 
 /** Turkish (Türkçe)

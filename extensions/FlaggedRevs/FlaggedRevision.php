@@ -88,7 +88,8 @@ class FlaggedRevision {
 				'rev_page = fr_page_id',
 				'rev_deleted & '.Revision::DELETED_TEXT => 0 ),
 			__METHOD__,
-			$options );
+			$options
+		);
 		# Sorted from highest to lowest, so just take the first one if any
 		if( $row ) {
 			$frev = new FlaggedRevision( $row );
@@ -104,14 +105,13 @@ class FlaggedRevision {
 	 * @param int $flags
 	 * @returns mixed FlaggedRevision (null on failure)
 	 */
-	public static function newFromStable( $title, $flags = 0 ) {
+	public static function newFromStable( Title $title, $flags = 0 ) {
 		$columns = self::selectFields();
 		# If we want the text, then get the text flags too
 		if( $flags & FR_TEXT ) {
 			$columns += self::selectTextFields();
 		}
 		$options = array();
-		$row = null;
 		# Short-circuit query
 		$pageId = $title->getArticleID( $flags & FR_FOR_UPDATE ? GAID_FOR_UPDATE : 0 );
 		# Short-circuit query
@@ -125,17 +125,21 @@ class FlaggedRevision {
 				$columns,
 				array( 'fp_page_id' => $pageId,
 					'fr_page_id = fp_page_id',
-					'fp_stable = fr_rev_id' ),
-				__METHOD__  );
-			if( !$row )
-				return null;
+					'fr_rev_id = fp_stable' ),
+				__METHOD__
+			);
+			if( !$row ) return null;
 		} else {
-			if( $flags & FR_FOR_UPDATE )
-				$options[] = 'FOR UPDATE';
+			global $wgFlaggedRevsReviewForDefault;
+			$row = null;
 			# Get visiblity settings...
 			$config = FlaggedRevs::getPageVisibilitySettings( $title, true );
+			if( !$config['override'] && $wgFlaggedRevsReviewForDefault ) {
+				return $row; // page is not reviewable; no stable version
+			}
 			$dbw = wfGetDB( DB_MASTER );
 			$options['ORDER BY'] = 'fr_rev_id DESC';
+			if( $flags & FR_FOR_UPDATE ) $options[] = 'FOR UPDATE';
 			# Look for the latest pristine revision...
 			if( FlaggedRevs::pristineVersions() && $config['select'] != FLAGGED_VIS_LATEST ) {
 				$prow = $dbw->selectRow( array('flaggedrevs','revision'),
@@ -144,18 +148,19 @@ class FlaggedRevision {
 						'fr_quality = 2',
 						'rev_id = fr_rev_id',
 						'rev_page = fr_page_id',
-						'rev_deleted & '.Revision::DELETED_TEXT => 0),
+						'rev_deleted & '.Revision::DELETED_TEXT => 0 ),
 					__METHOD__,
-					$options );
+					$options
+				);
 				# Looks like a plausible revision
-				$row = $prow ? $prow : null;
+				$row = $prow ? $prow : $row;
 			}
+			if( $row && $config['select'] == FLAGGED_VIS_PRISTINE ) {
+				// we have what we want already
 			# Look for the latest quality revision...
-			if( FlaggedRevs::qualityVersions() && $config['select'] != FLAGGED_VIS_LATEST ) {
-				// If we found a pristine rev above, this one must be newer, unless
-				// we specifically want pristine revs to have precedence...
-				$newerClause = ($row && $config['select'] != FLAGGED_VIS_PRISTINE) ?
-					"fr_rev_id > {$row->fr_rev_id}" : "1 = 1";
+			} else if( FlaggedRevs::qualityVersions() && $config['select'] != FLAGGED_VIS_LATEST ) {
+				// If we found a pristine rev above, this one must be newer...
+				$newerClause = $row ? "fr_rev_id > {$row->fr_rev_id}" : "1 = 1";
 				$qrow = $dbw->selectRow( array('flaggedrevs','revision'),
 					$columns,
 					array( 'fr_page_id' => $pageId,
@@ -163,9 +168,10 @@ class FlaggedRevision {
 						$newerClause,
 						'rev_id = fr_rev_id',
 						'rev_page = fr_page_id',
-						'rev_deleted & '.Revision::DELETED_TEXT => 0),
+						'rev_deleted & '.Revision::DELETED_TEXT => 0 ),
 					__METHOD__,
-					$options );
+					$options
+				);
 				$row = $qrow ? $qrow : $row;
 			}
 			# Do we have one? If not, try the latest reviewed revision...
@@ -175,11 +181,11 @@ class FlaggedRevision {
 					array( 'fr_page_id' => $pageId,
 						'rev_id = fr_rev_id',
 						'rev_page = fr_page_id',
-						'rev_deleted & '.Revision::DELETED_TEXT => 0),
+						'rev_deleted & '.Revision::DELETED_TEXT => 0 ),
 					__METHOD__,
-					$options );
-				if( !$row )
-					return null;
+					$options
+				);
+				if( !$row ) return null;
 			}
 		}
 		$frev = new FlaggedRevision( $row );
@@ -192,10 +198,12 @@ class FlaggedRevision {
 	*
 	* @param array $tmpRows template version rows
 	* @param array $fileRows file version rows
+	* @param bool $auto autopatrolled
 	* @return bool success
 	*/
-	public function insertOn( $tmpRows, $fileRows ) {
+	public function insertOn( $tmpRows, $fileRows, $auto = false ) {
 		$textFlags = 'dynamic';
+		if( $auto ) $textFlags .= ',auto';
 		$this->mFlags = explode(',',$textFlags);
 		$dbw = wfGetDB( DB_MASTER );
 		# Our review entry

@@ -14,7 +14,7 @@
  * @defgroup SMW Semantic MediaWiki
  */
 
-define('SMW_VERSION','1.5b-SVN');
+define('SMW_VERSION','1.5e-SVN');
 
 // constants for displaying the factbox
 define('SMW_FACTBOX_HIDDEN', 1);
@@ -122,9 +122,8 @@ function enableSemantics($namespace = '', $complete = false) {
 	$wgAutoloadClasses['SMWEmbeddedResultPrinter']  = $smwgIP . '/includes/SMW_QP_Embedded.php';
 	$wgAutoloadClasses['SMWTemplateResultPrinter']  = $smwgIP . '/includes/SMW_QP_Template.php';
 	$wgAutoloadClasses['SMWRSSResultPrinter']       = $smwgIP . '/includes/SMW_QP_RSSlink.php';
-	$wgAutoloadClasses['SMWiCalendarResultPrinter'] = $smwgIP . '/includes/SMW_QP_iCalendar.php';
-	$wgAutoloadClasses['SMWvCardResultPrinter']     = $smwgIP . '/includes/SMW_QP_vCard.php';
 	$wgAutoloadClasses['SMWCsvResultPrinter']       = $smwgIP . '/includes/SMW_QP_CSV.php';
+	$wgAutoloadClasses['SMWJSONResultPrinter']      = $smwgIP . '/includes/SMW_QP_JSONlink.php';
 	//// datavalues
 	$wgAutoloadClasses['SMWDataValueFactory']       = $smwgIP . '/includes/SMW_DataValueFactory.php';
 	$wgAutoloadClasses['SMWDataValue']              = $smwgIP . '/includes/SMW_DataValue.php';
@@ -169,6 +168,7 @@ function enableSemantics($namespace = '', $complete = false) {
 	$wgAutoloadClasses['SMWDisjunction']            = $smwgIP . '/includes/storage/SMW_Description.php';
 	$wgAutoloadClasses['SMWSomeProperty']           = $smwgIP . '/includes/storage/SMW_Description.php';
 	$wgAutoloadClasses['SMWSQLStore2']              = $smwgIP . '/includes/storage/SMW_SQLStore2.php';
+	$wgAutoloadClasses['SMWSQLHelpers']             = $smwgIP . '/includes/storage/SMW_SQLHelpers.php';
 	// Do not autoload RAPStore, since some special pages load all autoloaded classes, which causes
 	// troubles with RAP store if RAP is not installed (require_once fails).
 	//$wgAutoloadClasses['SMWRAPStore']             = $smwgIP . '/includes/storage/SMW_RAPStore.php';

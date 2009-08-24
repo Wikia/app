@@ -66,6 +66,23 @@ Cumulative statistics means that for each interval the number of edits in that i
 	'usagestatistics-editpages' => "Text in usage statistics graph. Parameter $1 can be either 'cumulative' ({{msg|Usagestatisticscumulative-text}}) or 'incremental' ({{msg|Usagestatisticsincremental-text}})",
 );
 
+/** Veps (Vepsan kel')
+ * @author Triple-ADHD-AS
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'usagestatisticsinterval' => 'Interval',
+	'usagestatisticstype' => 'Tip',
+	'usagestatisticsstart' => 'Augotiždat',
+	'usagestatisticsend' => 'Lopdat',
+	'usagestatisticssubmit' => 'Generiruida statistikad',
+	'usagestatisticsnostart' => 'Olgat hüväd, kirjutagat augotiždat',
+	'usagestatisticsnoend' => 'Olgat hüväd, kirjutagat lopdat',
+	'usagestatisticsintervalday' => 'Päiv',
+	'usagestatisticsintervalweek' => 'Nedal’',
+	'usagestatisticsintervalmonth' => 'Ku',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Arnobarnard
  * @author Naudefj
@@ -195,9 +212,34 @@ $messages['avk'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
+ * @author Zedlik
  */
 $messages['be-tarask'] = array(
+	'specialuserstats' => 'Статыстыка выкарыстаньня',
+	'usagestatistics' => 'Статыстыка выкарыстаньня',
+	'usagestatistics-desc' => 'Паказвае статыстыку для індывідуальных удзельнікаў і статыстыку для ўсёй вікі',
+	'usagestatisticsfor' => '<h2>Статыстыка выкарыстаньня для ўдзельніка [[User:$1|$1]]</h2>',
+	'usagestatisticsforallusers' => '<h2>Статыстыка выкарыстаньня для ўсіх удзельнікаў</h2>',
+	'usagestatisticsinterval' => 'Пэрыяд',
 	'usagestatisticstype' => 'Тып',
+	'usagestatisticsstart' => 'Дата пачатку',
+	'usagestatisticsend' => 'Дата канца',
+	'usagestatisticssubmit' => 'Згенэраваць статыстыку',
+	'usagestatisticsnostart' => 'Калі ласка, пазначце дату пачатку',
+	'usagestatisticsnoend' => 'Калі ласка, пазначце дату канца',
+	'usagestatisticsbadstartend' => '<b>Няслушная дата <i>пачатку</i> і/ці <i>канца</i>!</b>',
+	'usagestatisticsintervalday' => 'Дзень',
+	'usagestatisticsintervalweek' => 'Тыдзень',
+	'usagestatisticsintervalmonth' => 'Месяц',
+	'usagestatisticsincremental' => 'Павялічваючыся',
+	'usagestatisticsincremental-text' => 'павялічваючыся',
+	'usagestatisticscumulative' => 'Агульны',
+	'usagestatisticscumulative-text' => 'агульны',
+	'usagestatisticscalselect' => 'Выбраць',
+	'usagestatistics-editindividual' => 'Індывідуальная статыстыка рэдагаваньняў удзельніка $1',
+	'usagestatistics-editpages' => 'Індывідуальная статыстыка старонак удзельніка $1',
 );
 
 /** Bulgarian (Български)
@@ -255,6 +297,7 @@ $messages['br'] = array(
 	'usagestatistics' => 'Stadegoù implijout',
 	'usagestatistics-desc' => 'Diskouez a ra stadegoù personel an implijerien hag an implij war ar wiki en e bezh',
 	'usagestatisticsfor' => '<h2>Stadegoù implijout evit [[User:$1|$1]]</h2>',
+	'usagestatisticsforallusers' => '<h2>Stadegoù implij evit an holl implijerien</h2>',
 	'usagestatisticsinterval' => 'Esaouenn',
 	'usagestatisticstype' => 'Seurt',
 	'usagestatisticsstart' => 'Deiziad kregiñ',
@@ -306,12 +349,14 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author Jordi Roqué
+ * @author SMP
  */
 $messages['ca'] = array(
 	'specialuserstats' => "Estadístiques d'ús",
 	'usagestatistics' => "Estadístiques d'ús",
 	'usagestatistics-desc' => "Mostrar estadístiques d'ús d'usuaris individuals i globals del wiki",
 	'usagestatisticsfor' => "<h2>Estadístiques d'ús de [[User:$1|$1]]</h2>",
+	'usagestatisticsforallusers' => "<h2>Estadístiques d'ús per tots els usuaris</h2>",
 	'usagestatisticsinterval' => 'Interval',
 	'usagestatisticstype' => 'Tipus',
 	'usagestatisticsstart' => "Data d'inici",
@@ -433,8 +478,11 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
  */
 $messages['el'] = array(
+	'specialuserstats' => 'Στατιστικά χρήσης',
+	'usagestatistics' => 'Στατιστικά χρήσης',
 	'usagestatisticstype' => 'Τύπος',
 	'usagestatisticsintervalday' => 'Ημέρα',
 	'usagestatisticsintervalweek' => 'Εβδομάδα',
@@ -472,20 +520,34 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'specialuserstats' => 'Estadísticas de uso',
+	'usagestatistics' => 'Estadísticas de uso',
+	'usagestatistics-desc' => 'Mostrar usuario individual y vista general de estadísticas de uso del wiki',
+	'usagestatisticsfor' => '<h2>Estadísticas de uso para [[User:$1|$1]]</h2>',
+	'usagestatisticsforallusers' => '<h2>Estadísticas de uso para todos los usuarios</h2>',
 	'usagestatisticsinterval' => 'Intervalo',
 	'usagestatisticstype' => 'Tipo',
 	'usagestatisticsstart' => 'Fecha de inicio',
 	'usagestatisticsend' => 'Fecha de fin',
+	'usagestatisticssubmit' => 'Generar estadísticas',
+	'usagestatisticsnostart' => 'Por favor especifique una fecha de inicio',
 	'usagestatisticsnoend' => 'Especifique una fecha de fin, por favor',
 	'usagestatisticsbadstartend' => '<b>¡La fecha de <i>inicio</i> o la de <i>fin</i> es incorrecta!</b>',
 	'usagestatisticsintervalday' => 'Día',
 	'usagestatisticsintervalweek' => 'Semana',
 	'usagestatisticsintervalmonth' => 'Mes',
+	'usagestatisticsincremental' => 'Creciente',
+	'usagestatisticsincremental-text' => 'creciente',
+	'usagestatisticscumulative' => 'Acumulativo',
+	'usagestatisticscumulative-text' => 'Acumulativo',
 	'usagestatisticscalselect' => 'Seleccionar',
+	'usagestatistics-editindividual' => 'Estadísticas de ediciones de usuario individual $1',
+	'usagestatistics-editpages' => 'Estadísticas de páginas de usuario individual $1',
 );
 
 /** Estonian (Eesti)
@@ -518,7 +580,17 @@ $messages['eu'] = array(
 	'usagestatisticsintervalday' => 'Eguna',
 	'usagestatisticsintervalweek' => 'Astea',
 	'usagestatisticsintervalmonth' => 'Hilabetea',
+	'usagestatisticsincremental' => 'Inkrementala',
+	'usagestatisticsincremental-text' => 'inkrementala',
 	'usagestatisticscalselect' => 'Aukeratu',
+);
+
+/** Persian (فارسی)
+ * @author BlueDevil
+ * @author Huji
+ */
+$messages['fa'] = array(
+	'usagestatisticsstart' => 'تاریخ آغاز',
 );
 
 /** Finnish (Suomi)
@@ -557,21 +629,22 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
  * @author Sherbrooke
  */
 $messages['fr'] = array(
 	'specialuserstats' => "Statistiques d'utilisation",
-	'usagestatistics' => 'Statistiques Utilisation',
-	'usagestatistics-desc' => 'Affiche les statistiques individuelles des utilisateurs ainsi que l’utilisation sur l’ensemble du wiki.',
-	'usagestatisticsfor' => '<h2>Statistiques Utilisation pour [[User:$1|$1]]</h2>',
-	'usagestatisticsforallusers' => '<h2>Statistiques utilisation pour tous les utilisateurs</h2>',
+	'usagestatistics' => "Statistiques d'utilisation",
+	'usagestatistics-desc' => "Affiche les statistiques d'utilisation par utilisateur et pour l'ensemble du wiki",
+	'usagestatisticsfor' => "<h2>Statistiques d'utilisation pour [[User:$1|$1]]</h2>",
+	'usagestatisticsforallusers' => "<h2>Statistiques d'utilisation pour tous les utilisateurs</h2>",
 	'usagestatisticsinterval' => 'Intervalle',
 	'usagestatisticstype' => 'Type',
 	'usagestatisticsstart' => 'Date de début',
 	'usagestatisticsend' => 'Date de fin',
 	'usagestatisticssubmit' => 'Générer les statistiques',
-	'usagestatisticsnostart' => 'Entrer une date de début',
-	'usagestatisticsnoend' => 'Entrer une date de fin',
+	'usagestatisticsnostart' => 'Veuillez spécifier une date de début',
+	'usagestatisticsnoend' => 'Veuillez spécifier une date de fin',
 	'usagestatisticsbadstartend' => '<b>Mauvais format de date de <i>début</i> ou de <i>fin</i> !</b>',
 	'usagestatisticsintervalday' => 'Jour',
 	'usagestatisticsintervalweek' => 'Semaine',
@@ -581,8 +654,8 @@ $messages['fr'] = array(
 	'usagestatisticscumulative' => 'Cumulatif',
 	'usagestatisticscumulative-text' => 'cumulatives',
 	'usagestatisticscalselect' => 'Sélectionner',
-	'usagestatistics-editindividual' => 'Éditions statistiques $1 par utilisateur',
-	'usagestatistics-editpages' => 'Statistiques $1 des pages par seul utilisateur',
+	'usagestatistics-editindividual' => 'Statistiques $1 des modifications par utilisateur',
+	'usagestatistics-editpages' => 'Statistiques $1 des pages par utilisateur',
 );
 
 /** Irish (Gaeilge)
@@ -632,6 +705,35 @@ $messages['gl'] = array(
 $messages['grc'] = array(
 	'usagestatisticstype' => 'Τύπος',
 	'usagestatisticsintervalmonth' => 'Μήν',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'specialuserstats' => 'Nutzigs-Statischtik',
+	'usagestatistics' => 'Nutzigs-Statischtik',
+	'usagestatistics-desc' => 'Zeigt individuälli Benutzer- un allgmeini Wiki-Nutzigsstatischtiken aa',
+	'usagestatisticsfor' => '<h2>Nutzigs-Statischtik fir [[User:$1|$1]]</h2>',
+	'usagestatisticsforallusers' => '<h2>Nutzigs-Statischtik fir alli Benutzer</h2>',
+	'usagestatisticsinterval' => 'Zytruum',
+	'usagestatisticstype' => 'Berächnigsart',
+	'usagestatisticsstart' => 'Start-Datum',
+	'usagestatisticsend' => 'Änd-Datum',
+	'usagestatisticssubmit' => 'Statischtik generiere',
+	'usagestatisticsnostart' => 'Start-Datum yygee',
+	'usagestatisticsnoend' => 'Änd-Datum yygee',
+	'usagestatisticsbadstartend' => '<b>Falsch <i>Start-Datum</i> oder <i>Änd-Datum</i> !</b>',
+	'usagestatisticsintervalday' => 'Tag',
+	'usagestatisticsintervalweek' => 'Wuche',
+	'usagestatisticsintervalmonth' => 'Monet',
+	'usagestatisticsincremental' => 'Inkrementell',
+	'usagestatisticsincremental-text' => 'obsgi',
+	'usagestatisticscumulative' => 'Kumulativ',
+	'usagestatisticscumulative-text' => 'ghyflet',
+	'usagestatisticscalselect' => 'Wehl',
+	'usagestatistics-editindividual' => 'Individuälli Bearbeitigsstatischtike fir Benutzer $1',
+	'usagestatistics-editpages' => 'Individuälli Sytestatischtike fir Benutzer $1',
 );
 
 /** Hebrew (עברית)
@@ -773,6 +875,37 @@ $messages['is'] = array(
 	'usagestatisticsintervalday' => 'Dagur',
 	'usagestatisticsintervalweek' => 'Vika',
 	'usagestatisticsintervalmonth' => 'Mánuður',
+);
+
+/** Italian (Italiano)
+ * @author BrokenArrow
+ * @author Darth Kule
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'specialuserstats' => 'Statistiche di utilizzo',
+	'usagestatistics' => 'Statistiche di utilizzo',
+	'usagestatistics-desc' => 'Mostra le statistiche di utilizzo individuali per utente e globali per il sito',
+	'usagestatisticsfor' => '<h2>Statistiche di utilizzo per [[User:$1|$1]]</h2>',
+	'usagestatisticsforallusers' => '<h2>Statistiche di utilizzo per tutti gli utenti</h2>',
+	'usagestatisticsinterval' => 'Periodo',
+	'usagestatisticstype' => 'Tipo',
+	'usagestatisticsstart' => 'Data di inizio',
+	'usagestatisticsend' => 'Data di fine',
+	'usagestatisticssubmit' => 'Genera statistiche',
+	'usagestatisticsnostart' => 'Specificare una data iniziale',
+	'usagestatisticsnoend' => 'Specificare una data di fine',
+	'usagestatisticsbadstartend' => '<b>Data <i>iniziale</i> o <i>finale</i> errata.</b>',
+	'usagestatisticsintervalday' => 'Giorno',
+	'usagestatisticsintervalweek' => 'Settimana',
+	'usagestatisticsintervalmonth' => 'Mese',
+	'usagestatisticsincremental' => 'Incrementali',
+	'usagestatisticsincremental-text' => 'incrementali',
+	'usagestatisticscumulative' => 'Cumulative',
+	'usagestatisticscumulative-text' => 'cumulative',
+	'usagestatisticscalselect' => 'Seleziona',
+	'usagestatistics-editindividual' => 'Statistiche $1 sulle modifiche per singolo utente',
+	'usagestatistics-editpages' => 'Statistiche $1 sulle pagine per singolo utente',
 );
 
 /** Japanese (日本語)
@@ -1005,7 +1138,13 @@ $messages['mr'] = array(
  * @author Botuzhaleny-sodamo
  */
 $messages['myv'] = array(
+	'usagestatisticsstart' => 'Ушодома чи',
+	'usagestatisticsend' => 'Прядома чи',
+	'usagestatisticsintervalday' => 'Чи',
+	'usagestatisticsintervalweek' => 'Тарго',
 	'usagestatisticsintervalmonth' => 'Ковось',
+	'usagestatisticscumulative' => 'Весемезэ',
+	'usagestatisticscumulative-text' => 'весемезэ',
 );
 
 /** Low German (Plattdüütsch)
@@ -1139,6 +1278,18 @@ $messages['oc'] = array(
 	'usagestatistics-editpages' => 'Estatisticas $1 de las paginas per utilizaire individual',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'usagestatisticstype' => 'Тип',
+	'usagestatisticsstart' => 'Кæдæй',
+	'usagestatisticsend' => 'Кæдмæ',
+	'usagestatisticsintervalday' => 'Бон',
+	'usagestatisticsintervalweek' => 'Къуыри',
+	'usagestatisticsintervalmonth' => 'Мæй',
+);
+
 /** Polish (Polski)
  * @author Leinad
  * @author McMonster
@@ -1217,6 +1368,35 @@ $messages['pt'] = array(
 	'usagestatistics-editpages' => 'Estatísticas $1 de páginas de utilizador individual',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'specialuserstats' => 'Estatísticas de uso',
+	'usagestatistics' => 'Estatísticas de uso',
+	'usagestatistics-desc' => 'Mostrar estatísticas de utilizadores individuais e de uso geral da wiki',
+	'usagestatisticsfor' => '<h2>Estatísticas de utilização para [[User:$1|$1]]</h2>',
+	'usagestatisticsforallusers' => '<h2>Estatísticas de utilização para todos os utilizadores</h2>',
+	'usagestatisticsinterval' => 'Intervalo',
+	'usagestatisticstype' => 'Tipo',
+	'usagestatisticsstart' => 'Data de Início',
+	'usagestatisticsend' => 'Data de Fim',
+	'usagestatisticssubmit' => 'Gerar Estatísticas',
+	'usagestatisticsnostart' => 'Por favor indique uma data de início',
+	'usagestatisticsnoend' => 'Por favor indique uma data de término',
+	'usagestatisticsbadstartend' => '<b>Datas de <i>início</i> e/ou <i>término</i> inválidas!</b>',
+	'usagestatisticsintervalday' => 'Dia',
+	'usagestatisticsintervalweek' => 'Semana',
+	'usagestatisticsintervalmonth' => 'Mês',
+	'usagestatisticsincremental' => 'Incremental',
+	'usagestatisticsincremental-text' => 'incrementais',
+	'usagestatisticscumulative' => 'Cumulativo',
+	'usagestatisticscumulative-text' => 'cumulativas',
+	'usagestatisticscalselect' => 'Escolher',
+	'usagestatistics-editindividual' => 'Estatísticas $1 de edição de utilizador individual',
+	'usagestatistics-editpages' => 'Estatísticas $1 de páginas de utilizador individual',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -1237,9 +1417,17 @@ $messages['ro'] = array(
 $messages['roa-tara'] = array(
 	'specialuserstats' => "Statisteche d'use",
 	'usagestatistics' => "Statisteche d'use",
+	'usagestatistics-desc' => "Face vedè le statisteche d'use de le utinde individuale e de tutte l'utinde de Uicchi",
+	'usagestatisticsfor' => "<h2>Statisteche d'use pe [[User:$1|$1]]</h2>",
+	'usagestatisticsforallusers' => "<h2>Statisteche d'use pe tutte l'utinde</h2>",
 	'usagestatisticsinterval' => 'Intervalle',
 	'usagestatisticstype' => 'Tipe',
+	'usagestatisticsstart' => 'Date de inizie',
+	'usagestatisticsend' => 'Date de fine',
 	'usagestatisticssubmit' => 'Ccreje le statisteche',
+	'usagestatisticsnostart' => "Pe piacere mitte 'na date de inizie",
+	'usagestatisticsnoend' => "Pe piacere mitte 'na date de fine",
+	'usagestatisticsbadstartend' => "<b>Date de <i>inizie</i> e/o <i>fine</i> cu l'errore!</b>",
 	'usagestatisticsintervalday' => 'Sciúrne',
 	'usagestatisticsintervalweek' => 'Sumáne',
 	'usagestatisticsintervalmonth' => 'Mese',
@@ -1247,6 +1435,7 @@ $messages['roa-tara'] = array(
 	'usagestatisticsincremental-text' => 'ingremendele',
 	'usagestatisticscumulative' => 'Cumulative',
 	'usagestatisticscumulative-text' => 'cumulative',
+	'usagestatisticscalselect' => 'Selezzione',
 	'usagestatistics-editindividual' => "Statisteche sus a le cangiaminde de l'utende $1",
 	'usagestatistics-editpages' => "Statisteche sus a le pàggene de l'utende $1",
 );
@@ -1260,14 +1449,27 @@ $messages['roa-tara'] = array(
 $messages['ru'] = array(
 	'specialuserstats' => 'Статистика использования',
 	'usagestatistics' => 'Статистика использования',
+	'usagestatistics-desc' => 'Показывает индивидуальную для участника и общую для вики статистику использования',
 	'usagestatisticsfor' => '<h2>Статистика использования для участника [[User:$1|$1]]</h2>',
 	'usagestatisticsforallusers' => '<h2>Статистика использования для всех участников</h2>',
 	'usagestatisticsinterval' => 'Интервал',
 	'usagestatisticstype' => 'Тип',
+	'usagestatisticsstart' => 'Начальная дата',
+	'usagestatisticsend' => 'Конечная дата',
+	'usagestatisticssubmit' => 'Сформировать статистику',
+	'usagestatisticsnostart' => 'Пожалуйста, укажите начальную дату',
+	'usagestatisticsnoend' => 'Пожалуйста, укажите конечную дату',
+	'usagestatisticsbadstartend' => '<b>Неправильная <i>начальная</i> и/или <i>конечная</i> дата!</b>',
 	'usagestatisticsintervalday' => 'День',
 	'usagestatisticsintervalweek' => 'Неделя',
 	'usagestatisticsintervalmonth' => 'Месяц',
+	'usagestatisticsincremental' => 'Возрастающая',
+	'usagestatisticsincremental-text' => 'возростающая',
+	'usagestatisticscumulative' => 'Совокупная',
+	'usagestatisticscumulative-text' => 'совокупная',
 	'usagestatisticscalselect' => 'Выбрать',
+	'usagestatistics-editindividual' => 'Статистика $1 для индивидуальных правок',
+	'usagestatistics-editpages' => 'Статистика $1 для страниц участника',
 );
 
 /** Slovak (Slovenčina)
@@ -1297,6 +1499,35 @@ $messages['sk'] = array(
 	'usagestatisticscalselect' => 'Vybrať',
 	'usagestatistics-editindividual' => 'Štatistika úprav jednotlivého používateľa $1',
 	'usagestatistics-editpages' => 'Štatistika stránok jednotlivého používateľa $1',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'specialuserstats' => 'Nutsengs-Statistik',
+	'usagestatistics' => 'Nutsengs-Statistik',
+	'usagestatistics-desc' => 'Wiest individuelle Benutser- un algemeene Wiki-Nutsengsstatistiken an',
+	'usagestatisticsfor' => '<h2>Nutsengs-Statistik foar [[User:$1|$1]]</h2>',
+	'usagestatisticsforallusers' => '<h2>Nutsengs-Statistik foar aal Benutsere</h2>',
+	'usagestatisticsinterval' => 'Tiedruum',
+	'usagestatisticstype' => 'Bereekenengsoard',
+	'usagestatisticsstart' => 'Start-Doatum',
+	'usagestatisticsend' => 'Eend-Doatum',
+	'usagestatisticssubmit' => 'Statistik generierje',
+	'usagestatisticsnostart' => 'Start-Doatum ienreeke',
+	'usagestatisticsnoend' => 'Eend-Doatum ienreeke',
+	'usagestatisticsbadstartend' => '<b>Uunpaasend/failerhaft <i>Start-Doatum</i> of <i>Eend-Doatum</i> !</b>',
+	'usagestatisticsintervalday' => 'Dai',
+	'usagestatisticsintervalweek' => 'Wiek',
+	'usagestatisticsintervalmonth' => 'Mound',
+	'usagestatisticsincremental' => 'Inkrementell',
+	'usagestatisticsincremental-text' => 'apstiegend',
+	'usagestatisticscumulative' => 'Kumulativ',
+	'usagestatisticscumulative-text' => 'hööped',
+	'usagestatisticscalselect' => 'Wääl',
+	'usagestatistics-editindividual' => 'Individuelle Beoarbaidengsstatistike foar Benutser $1',
+	'usagestatistics-editpages' => 'Individuelle Siedenstatistike foar Benutser $1',
 );
 
 /** Swedish (Svenska)
@@ -1428,6 +1659,9 @@ $messages['tr'] = array(
 	'usagestatisticsinterval' => 'Zaman',
 	'usagestatisticsstart' => 'Başlangıç tarihi',
 	'usagestatisticsend' => 'Bitiş tarihi',
+	'usagestatisticsintervalday' => 'Gün',
+	'usagestatisticsintervalweek' => 'Hafta',
+	'usagestatisticsintervalmonth' => 'Ay',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -1451,12 +1685,23 @@ $messages['vi'] = array(
 
 /** Volapük (Volapük)
  * @author Malafaya
+ * @author Smeira
  */
 $messages['vo'] = array(
+	'specialuserstats' => 'Gebamastatits',
+	'usagestatistics' => 'Gebamastatits',
+	'usagestatisticstype' => 'Sot',
+	'usagestatisticsstart' => 'Primadät',
+	'usagestatisticsend' => 'Finadät',
 	'usagestatisticssubmit' => 'Jafön Statitis',
+	'usagestatisticsnostart' => 'Penolös primadäti',
+	'usagestatisticsnoend' => 'Penolös finadäti',
 	'usagestatisticsintervalday' => 'Del',
 	'usagestatisticsintervalweek' => 'Vig',
 	'usagestatisticsintervalmonth' => 'Mul',
+	'usagestatisticscalselect' => 'Välön',
+	'usagestatistics-editindividual' => 'Redakamastatits tefü geban: $1',
+	'usagestatistics-editpages' => 'Padastatits tefü geban: $1',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

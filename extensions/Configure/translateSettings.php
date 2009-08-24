@@ -38,7 +38,6 @@ wfLoadExtensionMessages( 'ConfigureSettings' );
 foreach ( $settingNames as $name ) {
 
 	if ( !wfEmptyMsg( "configure-setting-$name", wfMsg( "configure-setting-$name" ) ) ) {
-		print "\$$name already translated!\n";
 		continue;
 	}
 

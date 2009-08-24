@@ -11,7 +11,7 @@
 
 class NssMySQLAuthPlugin extends AuthPlugin {
 	static function initialize() {
-		global $wgAuth, $wgHooks;
+		global $wgAuth, $wgHooks, $wgGroupPermissions;
 		global $wgNssMySQLAuthDB;
 		$wgAuth = new self( $wgNssMySQLAuthDB );
 
@@ -20,6 +20,10 @@ class NssMySQLAuthPlugin extends AuthPlugin {
 		$wgHooks['UserSetEmail'][]		= array( $wgAuth, 'onUserSetEmail' );
 		$wgHooks['UserRights'][]		= array( $wgAuth, 'onUserRights' );
 
+		foreach ( $wgAuth->getAllGroups() as $group ) {
+			if ( !isset( $wgGroupPermissions[$group] ) )
+				$wgGroupPermissions[$group] = array();
+		}		
 		
 		wfLoadExtensionMessages( 'nssmysqlauth' );
 	}
@@ -220,5 +224,15 @@ class NssMySQLAuthPlugin extends AuthPlugin {
 		$dbw->insert( 'passwd', $insert, __METHOD__ );
 
 		return $password;
+	}
+	
+	function getAllGroups() {
+		$dbr = $this->getDB( DB_SLAVE );
+		$res = $dbr->select( 'groups', 'grp_name', array(), __METHOD__ );
+		$groups = array();
+		while ( $row = $res->fetchObject() )
+			$groups[] = $row->grp_name;
+		$res->free();
+		return $groups;
 	}
 }

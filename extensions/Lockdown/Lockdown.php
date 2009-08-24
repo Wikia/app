@@ -41,8 +41,10 @@ $wgExtensionCredits['other'][] = array(
 
 $wgNamespacePermissionLockdown = array();
 $wgSpecialPageLockdown = array();
+$wgActionLockdown = array();
 
 $wgHooks['userCan'][] = 'lockdownUserCan';
+$wgHooks['MediaWikiPerformAction'][] = 'lockdownMediawikiPerformAction';
 
 function lockdownUserCan($title, $user, $action, &$result) {
 	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead;
@@ -77,11 +79,12 @@ function lockdownUserCan($title, $user, $action, &$result) {
 	}
 	else {
 		$groups = @$wgNamespacePermissionLockdown[$ns][$action];
-		if (!$groups) $groups = @$wgNamespacePermissionLockdown['*'][$action];
-		if (!$groups) $groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown['*'][$action];
+		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown[$ns]['*'];
 	}
 
-	if (!$groups) return true;
+	if ( $groups === NULL ) return true;
+	if ( count( $groups ) == 0 ) return false;
 
 	#print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
 	#print_r($groups);
@@ -106,3 +109,20 @@ function lockdownUserCan($title, $user, $action, &$result) {
 	}
 }
 
+function lockdownMediawikiPerformAction ($output, $article, $title, $user, $request, $wiki) {
+	global $wgActionLockdown;
+
+	$action = $wiki->getVal( 'Action' );
+
+	if ( !isset( $wgActionLockdown[$action] ) ) return true;
+
+	$groups = $wgActionLockdown[$action];
+	if ( $groups === NULL ) return true;
+	if ( count( $groups ) == 0 ) return false;
+
+	$ugroups = $user->getEffectiveGroups();
+	$match = array_intersect($ugroups, $groups);
+	
+	if ( $match ) return true;
+	else return false;
+}

@@ -1,0 +1,10 @@
+To install this extension run the following commands in a terminal while in this
+directory:
+
+	phpize
+	./configure --enable-load_txt_def
+	make
+
+The module will be in the "modules" subdirectory, its name is "load_txt_def.so"
+on UNIX and "load_txt_def.dll" on Windows. You'll need to put it in your php
+extensions directory and enable it in your php.ini

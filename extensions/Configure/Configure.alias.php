@@ -76,7 +76,26 @@ $aliases['de'] = array(
 /** Lower Sorbian (Dolnoserbski) */
 $aliases['dsb'] = array(
 	'Configure' => array( 'Konfigurěrowaś' ),
+	'Extensions' => array( 'Rozšyrjenja' ),
 	'ViewConfig' => array( 'Konfiguraciju pokazaś' ),
+);
+
+/** Greek (Ελληνικά) */
+$aliases['el'] = array(
+	'Configure' => array( 'Ρύθμιση' ),
+	'Extensions' => array( 'Επεκτάσεις' ),
+	'ViewConfig' => array( 'ΕπισκόπησηΡυθμίσεων' ),
+);
+
+/** Esperanto (Esperanto) */
+$aliases['eo'] = array(
+	'Configure' => array( 'Konfiguri' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'Configure' => array( 'Configurar' ),
+	'Extensions' => array( 'Extensiones' ),
 );
 
 /** Finnish (Suomi) */
@@ -146,6 +165,13 @@ $aliases['hu'] = array(
 	'ViewConfig' => array( 'Beállítások megtekintése', 'Beállítás nézőke' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Configure' => array( 'Configurar' ),
+	'Extensions' => array( 'Extensiones' ),
+	'ViewConfig' => array( 'Vider config' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'Configure' => array( 'Konfigurasi' ),
@@ -213,6 +239,11 @@ $aliases['nl'] = array(
 	'ViewConfig' => array( 'InstellingenBekijken' ),
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Extensions' => array( 'Utvidingar' ),
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'Configure' => array( 'Konfigurer' ),
@@ -252,6 +283,19 @@ $aliases['ro'] = array(
 	'Extensions' => array( 'Extensii' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Configure' => array( 'संरूपण' ),
+	'Extensions' => array( 'विस्तार' ),
+	'ViewConfig' => array( 'संकूटसङ्केतपश्यति' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Configure' => array( 'Konfiguro' ),
+	'Extensions' => array( 'Zgjerime' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Configure' => array( 'Konfigurera' ),
@@ -264,5 +308,18 @@ $aliases['sw'] = array(
 	'Configure' => array( 'Ingiza' ),
 	'Extensions' => array( 'Panua' ),
 	'ViewConfig' => array( 'OnyeshaIngizo' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Configure' => array( 'Isaayos' ),
+	'Extensions' => array( 'Mga karugtong' ),
+	'ViewConfig' => array( 'Tingnan ang pagkakaayos' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'Configure' => array( 'Configura' ),
+	'Extensions' => array( 'Estensioni' ),
 );
 

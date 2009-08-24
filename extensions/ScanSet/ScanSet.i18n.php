@@ -32,6 +32,24 @@ $messages['qqq'] = array(
 	'scanset_prev' => '{{Identical|Prev}}',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'scanset-desc' => 'Skaniruidud Groszan Andreasan kollekcijaspäi (CD/DVD) ottud kuvalehtpoliden läbikacmine.',
+	'scanset_no_name' => 'Viga: pidab kirjutada kuviden kollekcijan nimi, ozutesikš, &lt;scanset name="EB1911" /&gt;.',
+	'scanset_invalid_name' => 'Viga: kuviden kollekcijan nimi om vär, vai mugošt kollekcijad ei ole.',
+	'scanset_unrecognised_index_format' => 'Viga: tundmatoi indeksan format',
+	'scanset_opendir_error' => 'Viga: ei voi avaita $1-failhodrad',
+	'scanset_no_files' => 'Viga: neciš failhodras ei ole failoid.',
+	'scanset_no_volumes' => 'Viga: ei voi löuta lehtikoiden failhodroid',
+	'scanset_missing_index_file' => 'Viga: indeksan $1-fail ei ole löutud',
+	'scanset_index_file_error' => 'Viga: Indeksan failas $1-rives om viga',
+	'scanset_invalid_volume' => 'Viga: Vär lehtik',
+	'scanset_next' => "Jäl'ghine &gt;",
+	'scanset_prev' => '&lt; Edeline',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Arnobarnard
  * @author Naudefj
@@ -291,6 +309,24 @@ $messages['dsb'] = array(
 	'scanset_prev' => '&lt; Slědny',
 );
 
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'scanset-desc' => 'Δείτε εικόνες σαρωμένων σελίδων από τις συλλογές CD/DVD του Andreas Grosz',
+	'scanset_no_name' => 'Σφάλμα: Πρέπει να ορίσετε ένα όνομα συλλογής σάρωσης, π.χ. &lt;scanset name="EB1911" /&gt;.',
+	'scanset_invalid_name' => 'Σφάλμα: Άκυρη ή ανύπαρκτη συλλογή σάρωσης.',
+	'scanset_unrecognised_index_format' => 'Σφάλμα: Άγνωστη μορφή ευρετηρίου',
+	'scanset_opendir_error' => 'Σφάλμα: Δεν μπορεί να ανοικτεί ο κατάλογος $1',
+	'scanset_no_files' => 'Σφάλμα: Δεν υπάρχουν αρχεία στον καθορισμένο κατάλογο.',
+	'scanset_no_volumes' => 'Σφάλμα: Δεν βρέθηκαν κατάλογοι τόμων',
+	'scanset_missing_index_file' => 'Σφάλμα: Το αρχείο ευρετηρίου $1 δεν βρέθηκε',
+	'scanset_index_file_error' => 'Σφάλμα: Σφάλμα στη μορφή αρχείου ευρετηρίου στη γραμμή $1',
+	'scanset_invalid_volume' => 'Σφάλμα: Άκυρος τόμος',
+	'scanset_next' => 'Επόμενο &gt;',
+	'scanset_prev' => '&lt; Προηγούμενο',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -310,12 +346,19 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Remember the dot
  */
 $messages['es'] = array(
 	'scanset-desc' => 'Ver imágenes escaneadas de los conjuntos CD/DVD de Andreas Grosz',
 	'scanset_unrecognised_index_format' => 'Error: Índice de formato desconocido',
 	'scanset_opendir_error' => 'Error: No se puede abrir el directorio $1',
+	'scanset_no_files' => 'Error: Sin archivos presentes en el directorio especificado.',
+	'scanset_no_volumes' => 'Error: directorios de volúmenes no encontrados',
+	'scanset_missing_index_file' => 'Error: Archivo de índices $1 no encontrado',
+	'scanset_invalid_volume' => 'Error: Volumen inválido',
+	'scanset_next' => 'Siguiente &gt;',
+	'scanset_prev' => '&lt; Anterior',
 );
 
 /** Persian (فارسی)
@@ -359,18 +402,19 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Dereckson
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'scanset-desc' => 'Affiche les images numérisées à partir des paramétrages CD/DVD d’Andréas Grosz',
-	'scanset_no_name' => 'Error : Vous devez spécifier un nom pour le scanset, par exemple &lt;scanset name="EB1911" /&gt;.',
-	'scanset_invalid_name' => 'Error : set invalide ou manquant',
-	'scanset_unrecognised_index_format' => "Error : Format d'index inconnu",
-	'scanset_opendir_error' => "Error : Erreur, impossible d'ouvrir le répertoire $1",
-	'scanset_no_files' => 'Error : Le répertoire spécifié est vide.',
-	'scanset_no_volumes' => 'Error : Aucun répertoire trouvé sur ce disque',
-	'scanset_missing_index_file' => "Error : Fichier d'index $1 manquant",
-	'scanset_index_file_error' => "Error : Erreur à la ligne $1 du fichier d'index",
-	'scanset_invalid_volume' => 'Error : Volume non valide',
+	'scanset_no_name' => 'Erreur : vous devez spécifier un nom pour l’ensemble de documents numérisés, par exemple &lt;scanset name="EB1911" /&gt;.',
+	'scanset_invalid_name' => 'Erreur : ensemble de documents numérisés invalide ou manquant.',
+	'scanset_unrecognised_index_format' => 'Erreur : format d’index inconnu',
+	'scanset_opendir_error' => 'Erreur : impossible d’ouvrir le répertoire $1',
+	'scanset_no_files' => 'Erreur : le répertoire spécifié ne contient aucun fichier.',
+	'scanset_no_volumes' => 'Erreur : répertoires de volume introuvables',
+	'scanset_missing_index_file' => 'Erreur : fichier d’index $1 introuvable',
+	'scanset_index_file_error' => 'Erreur : format de fichier d’index erroné à la ligne $1',
+	'scanset_invalid_volume' => 'Erreur : volume invalide',
 	'scanset_next' => 'Suivant &gt;',
 	'scanset_prev' => '&lt; Précédent',
 );
@@ -418,6 +462,24 @@ $messages['gl'] = array(
  */
 $messages['grc'] = array(
 	'scanset_next' => 'Ἑπομέναι &gt;',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'scanset-desc' => 'Gscannti Syte vum CD/DVD-Set vum Andreas Groszs aazeige',
+	'scanset_no_name' => 'Fähler: Du muesch e Scan-Set-Name aagee, z. B. &lt;scanset name="EB1911" /&gt;.',
+	'scanset_invalid_name' => 'Fähler: Scan-Set isch nit giltig oder fählt',
+	'scanset_unrecognised_index_format' => 'Error: Indexformat isch nit bekannt',
+	'scanset_opendir_error' => 'Fähler: S Verzeichnis $1 cha nit ufgmacht wäre',
+	'scanset_no_files' => 'Fähler: Im Verzeichnis, wu aagee woren isch, het s keini Dateie.',
+	'scanset_no_volumes' => 'Fähler: Kei Volume-Verzeichnis gfunde',
+	'scanset_missing_index_file' => 'Fähler: Indexdatei $1 isch nit gfunde wore',
+	'scanset_index_file_error' => 'Fähler: Fähler im Format vu dr Indexdatei in dr Zyylete $1',
+	'scanset_invalid_volume' => 'Fähler: Nit giltig Volume',
+	'scanset_next' => 'Negscht →',
+	'scanset_prev' => '← Vorig',
 );
 
 /** Hebrew (עברית)
@@ -631,9 +693,11 @@ $messages['km'] = array(
 );
 
 /** Korean (한국어)
+ * @author Ilovesabbath
  * @author Kwj2772
  */
 $messages['ko'] = array(
+	'scanset_no_name' => '에러: 스캔셋 이름을 정해야 합니다. (예:&lt;scanset name="EB1911" /&gt;.)',
 	'scanset_next' => '다음 &gt;',
 	'scanset_prev' => '&lt; 이전',
 );
@@ -654,6 +718,14 @@ $messages['ksh'] = array(
 	'scanset_invalid_volume' => 'Fähler mem <i lang="en">ScanSet</i> Befäähl: En onjöltije Schief.',
 	'scanset_next' => 'Nääks →',
 	'scanset_prev' => '← Vörijje',
+);
+
+/** Cornish (Kernewek)
+ * @author Kw-Moon
+ */
+$messages['kw'] = array(
+	'scanset_next' => 'Nessa &gt;',
+	'scanset_prev' => '&lt; Kyns',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -853,20 +925,27 @@ $messages['oc'] = array(
 	'scanset_prev' => '&lt; Precedent',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'scanset_no_files' => 'Рæдыд: амынд файлдоны мидæг файлтæ нæй.',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'scanset-desc' => 'Prezentuje zeskanowane obrazy z kolekcji w formacie Andreas Grosz CD/DVD',
-	'scanset_no_name' => 'Error: Musisz określić nazwę kolekcji obrazów, np. &lt;scanset name="Biblia Gdańska" /&gt;.',
-	'scanset_invalid_name' => 'Error: Brak kolekcji lub kolekcja nieprawidłowa.',
-	'scanset_unrecognised_index_format' => 'Error: Nieznany format indeksu',
-	'scanset_opendir_error' => 'Error: Błąd otwarcia katalogu $1',
-	'scanset_no_files' => 'Error: Brak plików we wskazanym katalogu',
-	'scanset_no_volumes' => 'Error: Nie znaleziono słownika woluminu',
-	'scanset_missing_index_file' => 'Error: Brak pliku indeksowego $1',
-	'scanset_index_file_error' => 'Error: Błąd w formacie pliku indeksowego w linii $1',
-	'scanset_invalid_volume' => 'Error: Nieprawidłowy wolumin',
+	'scanset_no_name' => 'Błąd – musisz określić nazwę kolekcji obrazów, np. &lt;scanset name="Biblia Gdańska" /&gt;.',
+	'scanset_invalid_name' => 'Błąd – brak kolekcji lub kolekcja nieprawidłowa.',
+	'scanset_unrecognised_index_format' => 'Błąd – nieznany format indeksu',
+	'scanset_opendir_error' => 'Błąd – błąd otwarcia katalogu $1',
+	'scanset_no_files' => 'Błąd – brak plików we wskazanym katalogu.',
+	'scanset_no_volumes' => 'Błąd – nie znaleziono słownika woluminu',
+	'scanset_missing_index_file' => 'Błąd – brak pliku indeksowego $1',
+	'scanset_index_file_error' => 'Błąd – błąd w formacie pliku indeksowego w linii $1',
+	'scanset_invalid_volume' => 'Błąd – nieprawidłowy wolumin',
 	'scanset_next' => 'Nast. &gt;',
 	'scanset_prev' => '&lt; Poprz.',
 );
@@ -894,6 +973,24 @@ $messages['pt'] = array(
 	'scanset_missing_index_file' => 'Error: o ficheiro de índice $1 não foi encontrado',
 	'scanset_index_file_error' => 'Error: erro no formato de ficheiro-índice na linha $1',
 	'scanset_invalid_volume' => 'Error: livro inválido',
+	'scanset_next' => 'Próximo &gt;',
+	'scanset_prev' => '&lt; Anterior',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'scanset-desc' => 'Ver imagens de páginas digitalizadas do conjunto de CD/DVD de Andreas Grosz',
+	'scanset_no_name' => 'Erro: É necessário especificar um nome de conjunto de digitalizações (por exemplo, &lt;scanset name="EB1911" /&gt;).',
+	'scanset_invalid_name' => 'Erro: conjunto de digitalizações inválido ou não encontrado.',
+	'scanset_unrecognised_index_format' => 'Erro: formato de índice desconhecido',
+	'scanset_opendir_error' => 'Erro: não é possível abrir o diretório $1',
+	'scanset_no_files' => 'Erro: não há arquivos no diretório especificado.',
+	'scanset_no_volumes' => 'Erro: não foram encontrados diretórios',
+	'scanset_missing_index_file' => 'Erro: o arquivo de índice $1 não foi encontrado',
+	'scanset_index_file_error' => 'Erro: erro no formato de arquivo índice na linha $1',
+	'scanset_invalid_volume' => 'Erro: volume inválido',
 	'scanset_next' => 'Próximo &gt;',
 	'scanset_prev' => '&lt; Anterior',
 );
@@ -984,6 +1081,7 @@ $messages['sr-ec'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
+	'scanset-desc' => 'Deerstaalenge fon scande Sieden fon Andreas Groszs CD/DVD-Set',
 	'scanset_no_name' => 'Error: Der mout n Scan-Set-Noome anroat wäide, t.B. &lt;scanset name="EB1911" /&gt;.',
 	'scanset_invalid_name' => 'Error: Uungultich of failjend Scan-Set.',
 	'scanset_unrecognised_index_format' => 'Error: Uunbekoand Indexformoat',
@@ -1079,8 +1177,19 @@ $messages['tl'] = array(
 
 /** Turkish (Türkçe)
  * @author Erkan Yilmaz
+ * @author Joseph
  */
 $messages['tr'] = array(
+	'scanset-desc' => "Taranmış sayfa resimlerini Andreas Grosz'ın CD/DVD setlerinden görüntüle",
+	'scanset_no_name' => 'Hata: Bir tarama seti ismi girmelisiniz, ör, &lt;scanset name="EB1911" /&gt;.',
+	'scanset_invalid_name' => 'Hata: Geçersiz ya da eksik tarama seti.',
+	'scanset_unrecognised_index_format' => 'Hata: Bilinmeyen endeks formatı',
+	'scanset_opendir_error' => 'Hata: $1 dizini açılamıyor',
+	'scanset_no_files' => 'Hata: Belirtilen dizinde hiç dosya bulunmuyor.',
+	'scanset_no_volumes' => 'Hata: Hiç cilt dizini bulunamadı',
+	'scanset_missing_index_file' => 'Hata: $1 endeks dosyası bulunamadı',
+	'scanset_index_file_error' => 'Hata: $1. satırdaki endeks dosyası formatında hata',
+	'scanset_invalid_volume' => 'Hata: Geçersiz cilt',
 	'scanset_next' => 'Sonraki &gt;',
 	'scanset_prev' => '&lt; Önceki',
 );
@@ -1142,8 +1251,11 @@ $messages['vi'] = array(
 
 /** Volapük (Volapük)
  * @author Malafaya
+ * @author Smeira
  */
 $messages['vo'] = array(
+	'scanset_opendir_error' => 'Pöl: ragiviär: $1 no maifikon',
+	'scanset_no_files' => 'Pöl: Ragivs nonik dabinons in ragiviär pavilöl.',
 	'scanset_next' => 'Sököl &gt;',
 	'scanset_prev' => '&lt; Büik',
 );

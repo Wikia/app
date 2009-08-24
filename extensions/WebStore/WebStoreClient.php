@@ -35,7 +35,7 @@ class WebStoreClient extends FileStore {
 		}
 		wfRestoreWarnings();
 		if ( !$response ) {
-			$this->setError( 'webstore_invalid_response', $text );
+			$this->setError( 'webstore_invalid_response', $text ) . "\n";
 			return false;
 		}
 		if ( $response->errors ) {
@@ -51,13 +51,13 @@ class WebStoreClient extends FileStore {
 				$errors[] = wfMsgReal( $message, $params );
 			}
 			if ( count( $errors ) == 1 ) {
-				$this->lastError = wfMsg( 'webstore_backend_error', $errors[0] );
+				$this->lastError = wfMsg( 'webstore_backend_error', $errors[0] ) . "\n";
 			} else {
 				$errorsText = '';
 				foreach ( $errors as $error ) {
 					$errorsText .= '* ' . str_replace( "\n", ' ', $error );
 				}
-				$this->lastError = wfMsg( 'webstore_backend_error', $errorsText );
+				$this->lastError = wfMsg( 'webstore_backend_error', $errorsText ) . "\n";
 			}
 		}
 		return $response;

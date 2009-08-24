@@ -74,6 +74,15 @@ class ApiPurge extends ApiBase {
 		$this->getResult()->addValue(null, $this->getModuleName(), $result);
 	}
 
+	public function mustBePosted() {
+		global $wgUser;
+		return $wgUser->isAnon();
+	}
+
+	public function isWriteMode() {
+		return true;
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'titles' => array(
@@ -101,6 +110,6 @@ class ApiPurge extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiPurge.php 41020 2008-09-19 00:21:03Z demon $';
+		return __CLASS__ . ': $Id: ApiPurge.php 48091 2009-03-06 13:49:44Z catrope $';
 	}
 }

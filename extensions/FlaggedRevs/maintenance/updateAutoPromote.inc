@@ -3,7 +3,7 @@
 
 function update_autopromote() {
 	global $wgContentNamespaces, $wgFlaggedRevsAutopromote;
-	$batchSize = 25;
+	$batchSize = 20;
 	echo "Populating and updating flaggedrevs_promote table\n";
 
 	$db = wfGetDB( DB_SLAVE );
@@ -50,16 +50,11 @@ function update_autopromote() {
 				__METHOD__,
 				array( 'LIMIT' => max($wgFlaggedRevsAutopromote['uniqueContentPages'],50) )
 			);
-			$p['uniqueContentPages'] = $db->numRows( $sres );
-			# Get reviewed edits
-			$sres = $db->select( array('revision','flaggedrevs'), '1',
-				array( 'rev_user' => $user->getID(),
-					'fr_page_id = rev_page',
-					'fr_rev_id = rev_id' ),
-				__METHOD__,
-				array( 'LIMIT' => max($wgFlaggedRevsAutopromote['totalReviewedEdits'],500) )
-			);
-			$p['reviewedEdits'] = $db->numRows( $sres );
+			$uniquePages = array();
+			foreach( $sres as $row ) {
+				$uniquePages[] = $row->rev_page;
+			}
+			$p['uniqueContentPages'] = implode($uniquePages,',');
 		
 			if( $oldp != $p ) {
 				FlaggedRevs::saveUserParams( $user->getId(), $p );

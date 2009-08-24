@@ -89,16 +89,12 @@ function append_to_wiki_page( $wgTitle, $append_text, $unique = true ) {
 		$cur_text .= "\n\n" . $append_text;
 		// do the edit:
 		$sum_txt = 'metavid append';
-		$wgArticle->doEdit( $cur_text, $sum_txt );
+		$wgArticle->doEdit( $cur_text, $sum_txt , EDIT_FORCE_BOT);
 		print "did append on " . $wgTitle->getDBkey() . "\n";
 	} else {
 		print "append request to empty page... creating\n";
 		do_update_wiki_page( $wgTitle, $append_text );
 	}
-}
-// @@todo protect page:
-function protoect_wiki_page( $wgTilte ) {
-
 }
 function do_update_wiki_page( $wgTitle, $wikiText, $ns = null, $forceUpdate = false ) {
 	global $botUserName;
@@ -159,7 +155,7 @@ function do_update_wiki_page( $wgTitle, $wikiText, $ns = null, $forceUpdate = fa
 	// got here do the edit:
 	$sum_txt = 'metavid bot insert';
 
-	$wgArticle->doEdit( $wikiText, $sum_txt );
+	$wgArticle->doEdit( $wikiText, $sum_txt, EDIT_FORCE_BOT );
 	print "did edit on " . $wgTitle->getNsText() . ':' . $wgTitle->getDBkey() . "\n";
 	// die;
 }
@@ -193,7 +189,7 @@ function text_number( $n )
     return $new_n;
 }
  function url_exists( $url ) {
-        $url = str_replace( "http://", "", $url );
+    $url = str_replace( "http://", "", $url );
     if ( strstr( $url, "/" ) ) {
         $url = explode( "/", $url, 2 );
         $url[1] = "/" . $url[1];

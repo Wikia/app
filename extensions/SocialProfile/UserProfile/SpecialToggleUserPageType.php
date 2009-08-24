@@ -59,7 +59,7 @@ class SpecialToggleUserPage extends UnlistedSpecialPage {
 		);
 
 		$key = wfMemcKey( 'user', 'profile', 'info', $wgUser->getID() );
-		$wgMemc->delete($key);
+		$wgMemc->delete( $key );
 
 		if( $user_page_type == 1 && !$wgUser->isBlocked() ){
 			$user_page = Title::makeTitle( NS_USER, $wgUser->getName() );
@@ -69,7 +69,7 @@ class SpecialToggleUserPage extends UnlistedSpecialPage {
 			$user_wiki_title = Title::makeTitle( NS_USER_WIKI, $wgUser->getName() );
 			$user_wiki = new Article( $user_wiki_title );
 			if( !$user_wiki->exists() ){
-				$user_wiki->doEdit( $user_page_content, "import user wiki" );
+				$user_wiki->doEdit( $user_page_content, 'import user wiki' );
 			}
 		}
 		$title = Title::makeTitle( NS_USER, $wgUser->getName() );

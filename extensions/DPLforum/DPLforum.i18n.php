@@ -22,12 +22,21 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author Darth Kule
  * @author Jon Harald Søby
+ * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'dplforum-desc' => 'Short description of the DPLforum extension, shown on [[Special:Version]].',
-	'dplforum-by' => '* $1 is username',
+	'dplforum-by' => '* $1 is a username',
 	'dplforum-never' => '{{Identical|Never}}',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'dplforum-never' => 'Nikonz',
+	'dplforum-toofew' => 'DPL-forum: Vähähk kategorijoid!',
 );
 
 /** Arabic (العربية)
@@ -153,6 +162,17 @@ $messages['eo'] = array(
 	'dplforum-toomany' => 'DPL-Forumo: Tro multaj da kategorioj!',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'dplforum-by' => 'por $1',
+	'dplforum-edited' => '- ültimo editado',
+	'dplforum-never' => 'Nunca',
+	'dplforum-toofew' => 'Foro DPL: muy pocas categorías!',
+	'dplforum-toomany' => 'Foro DPL: demasiadas categorías!',
+);
+
 /** Persian (فارسی)
  * @author Huji
  */
@@ -218,6 +238,18 @@ $messages['grc'] = array(
 	'dplforum-never' => 'Οὔποτε',
 	'dplforum-toofew' => 'Ἀγορὰ DPL: Τὰ μάλα ὀλίγαι κατηγορίαι!',
 	'dplforum-toomany' => 'Ἀγορὰ DPL: Τὰ μάλα πολλαὶ κατηγορίαι!',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'dplforum-desc' => 'DPL-basierti Forumserwyterig',
+	'dplforum-by' => 'dur $1',
+	'dplforum-edited' => '- Zletscht bearbeitet',
+	'dplforum-never' => 'Nie',
+	'dplforum-toofew' => 'DPL Forum: Zwenig Kategorie!',
+	'dplforum-toomany' => 'DPL Forum: Zvyyl Kategorie!',
 );
 
 /** Hebrew (עברית)
@@ -432,6 +464,7 @@ $messages['nn'] = array(
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
+ * @author Laaknor
  */
 $messages['no'] = array(
 	'dplforum-desc' => 'DPL-basert forumutvidelse',
@@ -455,6 +488,7 @@ $messages['oc'] = array(
 );
 
 /** Polish (Polski)
+ * @author Leinad
  * @author McMonster
  * @author Sp5uhe
  * @author Wpedzich
@@ -487,6 +521,18 @@ $messages['pt'] = array(
 	'dplforum-never' => 'Nunca',
 	'dplforum-toofew' => 'DPL Forum: Categorias em número insuficiente!',
 	'dplforum-toomany' => 'DPL Forum: Demasiadas categorias!',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'dplforum-desc' => 'Extensão de fórum baseada em DPL',
+	'dplforum-by' => 'por $1',
+	'dplforum-edited' => '- Última edição',
+	'dplforum-never' => 'Nunca',
+	'dplforum-toofew' => 'DPL Forum: Categorias em número insuficiente!',
+	'dplforum-toomany' => 'DPL Forum: Categorias em excesso!',
 );
 
 /** Romanian (Română)
@@ -526,11 +572,23 @@ $messages['scn'] = array(
  */
 $messages['sk'] = array(
 	'dplforum-desc' => 'Rozšírenie DPL fórum',
-	'dplforum-by' => ', $1',
+	'dplforum-by' => 'napísal $1',
 	'dplforum-edited' => '- posledná úprava',
 	'dplforum-never' => 'Nikdy',
 	'dplforum-toofew' => 'DPL fórum: Príliš málo kategórií!',
 	'dplforum-toomany' => 'DPL fórum: Príliš mnoho kategórií!',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'dplforum-desc' => 'DPL-basierde Forumsärwiederenge',
+	'dplforum-by' => 'truch $1',
+	'dplforum-edited' => '- Toulääst beoarbaided',
+	'dplforum-never' => 'Sieläärge nit',
+	'dplforum-toofew' => 'DPL Forum: Tou min Kategorien!',
+	'dplforum-toomany' => 'DPL Forum: Tou fuul Kategorien!',
 );
 
 /** Swedish (Svenska)
@@ -546,6 +604,13 @@ $messages['sv'] = array(
 	'dplforum-toomany' => 'DPL-forum: För många kategorier!',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'dplforum-by' => '$1 చే',
+);
+
 /** Tetum (Tetun)
  * @author MF-Warburg
  */
@@ -558,7 +623,7 @@ $messages['tet'] = array(
  */
 $messages['tl'] = array(
 	'dplforum-desc' => 'Karugtong na nakabatay sa talakayang DPL',
-	'dplforum-by' => 'ni $1',
+	'dplforum-by' => 'ni (sa pamamagitan ni) $1',
 	'dplforum-edited' => '- Huling nabago',
 	'dplforum-never' => 'Hindi kailanman',
 	'dplforum-toofew' => 'Talakayang DPL: Napakakaunting mga kaurian!',
@@ -566,10 +631,16 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Karduelis
  */
 $messages['tr'] = array(
+	'dplforum-desc' => 'DPL-temelli forum eklentisi',
+	'dplforum-by' => '$1 tarafından',
+	'dplforum-edited' => '- Son değiştirme',
 	'dplforum-never' => 'Asla',
+	'dplforum-toofew' => 'DPL Forum: Çok az kategori!',
+	'dplforum-toomany' => 'DPL Forum: Çok fazla kategori!',
 );
 
 /** Ukrainian (Українська)
@@ -597,6 +668,7 @@ $messages['vec'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
@@ -613,5 +685,12 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'dplforum-never' => 'Neai',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wmr89502270
+ */
+$messages['zh-hans'] = array(
+	'dplforum-never' => '从不',
 );
 

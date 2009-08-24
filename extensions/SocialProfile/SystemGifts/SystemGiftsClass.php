@@ -177,6 +177,7 @@ class SystemGifts {
 			{$limit_sql}";
 
 		$res = $dbr->query($sql);
+		$gifts = '';
 		while( $row = $dbr->fetchObject( $res ) ) {
 			$gifts[] = array(
 				'id' => $row->gift_id,

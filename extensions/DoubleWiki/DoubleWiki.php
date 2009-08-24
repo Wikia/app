@@ -27,8 +27,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'DoubleWiki',
 	'author' => 'ThomasV',
 	'url' => 'http://wikisource.org/wiki/Wikisource:DoubleWiki_Extension',
-	'svn-date' => '$LastChangedDate: 2008-07-04 02:22:09 +0000 (Fri, 04 Jul 2008) $',
-	'svn-revision' => '$LastChangedRevision: 37016 $',
+	'svn-date' => '$LastChangedDate: 2009-02-16 22:40:45 +0000 (Mon, 16 Feb 2009) $',
+	'svn-revision' => '$LastChangedRevision: 47341 $',
 	'description'    => 'Displays a page and its translation from another wiki on two columns of the same page',
 	'descriptionmsg' => 'doublewiki-desc',
 );
@@ -74,10 +74,10 @@ function addMatchedText ( &$parserOutput , &$text ) {
 				#add prefixes to internal links, in order to prevent duplicates
 				$translation = preg_replace("/<a href=\"#(.*?)\"/i","<a href=\"#l_\\1\"",
 							    $translation );
-				$translation = preg_replace("/<font id=\"(.*?)\"/i","<font id=\"l_\\1\"",
+				$translation = preg_replace("/<li id=\"(.*?)\"/i","<li id=\"l_\\1\"",
 							    $translation );
 				$text = preg_replace("/<a href=\"#(.*?)\"/i","<a href=\"#r_\\1\"", $text );
-				$text = preg_replace("/<font id=\"(.*?)\"/i","<font id=\"r_\\1\"", $text );
+				$text = preg_replace("/<li id=\"(.*?)\"/i","<li id=\"r_\\1\"", $text );
 
 				#add tags before h2 and h3 sections
 				$translation = preg_replace("/<h2>/i","<div title=\"@@h2\"></div>\n<h2>", 

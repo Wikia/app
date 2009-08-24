@@ -147,14 +147,13 @@ class AbuseFilterPager extends TablePager {
 
 	function getQueryInfo() {
 		$dbr = wfGetDB( DB_SLAVE );
+		#$this->mConds[] = 'afa_filter=af_id';
 		$abuse_filter = $dbr->tableName( 'abuse_filter' );
 		return array( 
-			'tables' => array('abuse_filter'),
+			'tables' => array('abuse_filter', 'abuse_filter_action'),
 			'fields' => array( 
 				'af_id', 
-				'af_enabled',
-				'af_deleted',
-				'af_global',
+				'(af_enabled | af_deleted << 1) AS status',
 			 	'af_public_comments', 
 				'af_hidden', 
 				'af_hit_count', 
@@ -164,6 +163,10 @@ class AbuseFilterPager extends TablePager {
 				'af_actions' 
 			),
 			'conds' => $this->mConds,
+			'options' => array( 'GROUP BY' => 'af_id' ),
+			'join_conds' => array( 
+				'abuse_filter_action' => array( 'LEFT JOIN', 'afa_filter=af_id' ) 
+			) 
 		);
 	}
 
@@ -217,19 +220,12 @@ class AbuseFilterPager extends TablePager {
 				}
 				return htmlspecialchars( implode( ', ', $displayActions ) );
 			case 'status':
-				$statuses = array();
-				if ($row->af_deleted)
-					$statuses[] = wfMsgExt( 'abusefilter-deleted', 'parseinline' );
-				elseif ($row->af_enabled)
-					$statuses[] = wfMsgExt( 'abusefilter-enabled', 'parseinline' );
+				if ($value & 2)
+					return wfMsgExt( 'abusefilter-deleted', 'parseinline' );
+				elseif ($value & 1)
+					return wfMsgExt( 'abusefilter-enabled', 'parseinline' );
 				else
-					$statuses[] = wfMsgExt( 'abusefilter-disabled', 'parseinline' );
-				
-				global $wgAbuseFilterIsCentral;
-				if ($row->af_global && $wgAbuseFilterIsCentral)
-					$statuses[] = wfMsgExt( 'abusefilter-status-global', 'parseinline' );
-					
-				return $wgLang->commaList( $statuses );
+					return wfMsgExt( 'abusefilter-disabled', 'parseinline' );
 			case 'af_hidden':
 				$msg = $value ? 'abusefilter-hidden' : 'abusefilter-unhidden';
 				return wfMsgExt( $msg, 'parseinline' );
@@ -255,15 +251,10 @@ class AbuseFilterPager extends TablePager {
 						$row->af_user, 
 						$row->af_user_text 
 					);
-				$user = $row->af_user_text;
 				return wfMsgExt( 
 					'abusefilter-edit-lastmod-text', 
 					array( 'replaceafter', 'parseinline' ), 
-					array( $wgLang->timeanddate( $value, true ),
-						$userLink,
-						$wgLang->date( $value, true ),
-						$wgLang->time( $value, true ),
-						$user ) 
+					array( $wgLang->timeanddate( $value, true ), $userLink ) 
 				);
 			default:
 				throw new MWException( "Unknown row type $name!" );
@@ -275,9 +266,9 @@ class AbuseFilterPager extends TablePager {
 	}
 
 	function getRowClass( $row ) {
-		if ($row->af_enabled) {
+		if ($row->status & 1) {
 			return 'mw-abusefilter-list-enabled';
-		} elseif ($row->af_deleted) {
+		} elseif ($row->status & 2) {
 			return 'mw-abusefilter-list-deleted';
 		} else {
 			return 'mw-abusefilter-list-disabled';

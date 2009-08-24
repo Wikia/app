@@ -30,6 +30,20 @@ $messages['arz'] = array(
 	'navigationpopups-desc' => 'يحمل منبثقات سكريبتات إبحار لوبين فى ميدياويكي',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'navigationpopups-desc' => 'Загружае скрыпты навігацыі Lupin ў MediaWiki',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'navigationpopups-desc' => 'Učitava Lupinove navigacijske skripne popupove u MedijaViki',
+);
+
 /** Catalan (Català)
  * @author SMP
  */
@@ -65,6 +79,13 @@ $messages['es'] = array(
 	'navigationpopups-desc' => "Carga las ventanas emergentes de navegación de ''Lupin'' en MediaWiki",
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'navigationpopups-desc' => 'Lupinen nabigazio script popup-ak kargatzen ditu MediaWikin',
+);
+
 /** Finnish (Suomi)
  * @author Mobe
  * @author Nike
@@ -85,6 +106,20 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'navigationpopups-desc' => 'Carga emerxentes de escritura de navegación Lupin en MediaWiki',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'navigationpopups-desc' => 'Ladet d Lupin-Navigationsskript-Popup (MediaWiki)',
+);
+
+/** Hebrew (עברית)
+ * @author YaronSh
+ */
+$messages['he'] = array(
+	'navigationpopups-desc' => 'טעינת חלוניות הסקריפטים לניווט של Lupin במדיה־ויקי',
 );
 
 /** Hindi (हिन्दी)
@@ -150,6 +185,13 @@ $messages['mr'] = array(
 	'navigationpopups-desc' => 'मीडियाविकि मध्ये ल्युपिनच्या नेव्हिगेशन स्क्रीप्ट्स पॉप-अप्स लोड करतो',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'navigationpopups-desc' => 'Läädt Lupin sien Navigationsskript-Popups in MediaWiki',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -178,6 +220,20 @@ $messages['oc'] = array(
 	'navigationpopups-desc' => 'Carga, dins mèdiawiki, los escripts de las fenèstras de navigacion de Lupin',
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'navigationpopups-desc' => 'Carrega janelas de pop-up dos scripts de navegação de Lupin no MediaWiki',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'navigationpopups-desc' => 'Carrega janelas de pop-up dos scripts de navegação de Lupin no MediaWiki',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -199,11 +255,32 @@ $messages['sk'] = array(
 	'navigationpopups-desc' => 'Načíta Lupinove vyskakovacie navigačné skripty v MediaWiki',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'navigationpopups-desc' => 'Hapë skripte navigacioni, të Lupin-it, në MediaWiki',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
 $messages['sv'] = array(
 	'navigationpopups-desc' => 'Laddar Lunins popupnavigationsskript i MediaWiki',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'navigationpopups-desc' => "Nagkakarga sa MediaWiki ng pangpaglilibot na mga panitik ng mga \"sulpot-litaw\" (''popup'') ni Lupin",
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'navigationpopups-desc' => 'Carga i script dei popup de navigassion de Lupin in MediaWiki',
 );
 
 /** Vietnamese (Tiếng Việt)

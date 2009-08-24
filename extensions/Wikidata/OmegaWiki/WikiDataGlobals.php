@@ -23,7 +23,7 @@ global
 	$wgCollectionMembershipAttributeName,
 	$wgDefinedMeaningAttributesAttributeName,
 	$wgDefinedMeaningAttributeName,
-	$wgDefinedMeaningReferenceAttributeName,
+#	$wgDefinedMeaningReferenceAttributeName,
 	$wgDefinitionAttributeName,
 	$wgLanguageAttributeName,
 	$wgExactMeaningsAttributeName,
@@ -40,7 +40,6 @@ global
 	$wgOptionAttributeOptionsAttributeName,
 	$wgOptionAttributeValuesAttributeName,
 	$wgOtherDefinedMeaningAttributeName,
-	$wgPopupAnnotationName, 
 	$wgRelationsAttributeName, 
 	$wgRelationTypeAttributeName, 
 	$wgSourceAttributeName,
@@ -69,8 +68,8 @@ $wgCollectionAttributeName = "Collection";
 $wgCollectionMembershipAttributeName = "Collection membership";
 $wgDefinitionAttributeName = "Definition";
 $wgDefinedMeaningAttributesAttributeName = "Annotation";
-$wgDefinedMeaningAttributeName = "Defined meaning";
-$wgDefinedMeaningReferenceAttributeName = "Defined meaning";
+#$wgDefinedMeaningAttributeName = "Defined meaning";
+#$wgDefinedMeaningReferenceAttributeName = "Defined meaning";
 $wgExactMeaningsAttributeName = "Exact meanings";
 $wgExpressionAttributeName = "Expression";
 $wgExpressionMeaningsAttributeName = "Expression meanings";
@@ -85,7 +84,6 @@ $wgOptionAttributeOptionAttributeName = "Option";
 $wgOptionAttributeOptionsAttributeName = "Options";
 $wgOptionAttributeValuesAttributeName = "Options";
 $wgOtherDefinedMeaningAttributeName = "Other defined meaning";
-$wgPopupAnnotationName = "Annotation";
 $wgRelationsAttributeName = "Relations";
 $wgRelationTypeAttributeName = "Relation type";
 $wgSpellingAttributeName = "Spelling";
@@ -155,10 +153,12 @@ $wgGotoSourceTemplates = array();	// Map of collection id => GotoSourceTemplate
 
 global
 	$wgDefinedMeaningPageTitlePrefix,
-	$wgExpressionPageTitlePrefix;
+	//$wgExpressionPageTitlePrefix;
+	$wgUseExpressionPageTitlePrefix;
 	
 $wgDefinedMeaningPageTitlePrefix = "";
-$wgExpressionPageTitlePrefix = "Multiple meanings";
+//$wgExpressionPageTitlePrefix = "Multiple meanings"; # Now it's localizable
+$wgUseExpressionPageTitlePrefix = true;	# malafaya: Use the expression prefix "Multiple meanings:" from message ow_Multiple_meanings
 
 // Search page
 

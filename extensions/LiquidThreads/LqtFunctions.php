@@ -1,14 +1,16 @@
 <?php
-if (!defined('MEDIAWIKI'))
+if ( !defined( 'MEDIAWIKI' ) )
 	die();
 
-function efArrayDefault($name, $key, $default) {
+/*
+* Get a value from a global array if it exists, otherwise use $default
+*/
+function efArrayDefault( $name, $key, $default ) {
 	global $$name;
-	if( isset($$name) && is_array($$name) && array_key_exists($key, $$name) ) {
+	if ( isset( $$name ) && is_array( $$name ) && array_key_exists( $key, $$name ) ) {
 		$foo = $$name;
 		return $foo[$key];
-	}
-	else {
+	} else {
 		return $default;
 	}
 }
@@ -21,13 +23,13 @@ function efArrayDefault($name, $key, $default) {
 function efInsertIntoAssoc( $new_key, $new_value, $before, &$original_array ) {
 	$ordered = array();
 	$i = 0;
-	foreach($original_array as $key=>$value) {
-		$ordered[$i] = array($key, $value);
+	foreach ( $original_array as $key => $value ) {
+		$ordered[$i] = array( $key, $value );
 		$i += 1;
 	}
 	$new_assoc = array();
-	foreach($ordered as $pair) {
-		if( $pair[0] == $before ) {
+	foreach ( $ordered as $pair ) {
+		if ( $pair[0] == $before ) {
 			$new_assoc[$new_key] = $new_value;
 		}
 		$new_assoc[$pair[0]] = $pair[1];
@@ -35,53 +37,57 @@ function efInsertIntoAssoc( $new_key, $new_value, $before, &$original_array ) {
 	$original_array = $new_assoc;
 }
 
-function efVarDump($value) {
+function efVarDump( $value ) {
 	global $wgOut;
 	ob_start();
-	var_dump($value);
-	$tmp=ob_get_contents();
+	var_dump( $value );
+	$tmp = ob_get_contents();
 	ob_end_clean();
-	$wgOut->addHTML(/*'<pre>' . htmlspecialchars($tmp,ENT_QUOTES) . '</pre>'*/ $tmp);
+	$wgOut->addHTML( /*'<pre>' . htmlspecialchars($tmp,ENT_QUOTES) . '</pre>'*/ $tmp );
 }
 
-function efThreadTable($ts) {
+function efThreadTable( $ts ) {
 	global $wgOut;
-	$wgOut->addHTML('<table>');
-	foreach($ts as $t)
-		efThreadTableHelper($t, 0);
-	$wgOut->addHTML('</table>');
+	$wgOut->addHTML( '<table>' );
+	foreach ( $ts as $t )
+		efThreadTableHelper( $t, 0 );
+	$wgOut->addHTML( '</table>' );
 }
 
-function efThreadTableHelper($t, $indent) {
+function efThreadTableHelper( $t, $indent ) {
 	global $wgOut;
-	$wgOut->addHTML('<tr>');
-	$wgOut->addHTML('<td>' . $indent);
-	$wgOut->addHTML('<td>' . $t->id());
-	$wgOut->addHTML('<td>' . $t->title()->getPrefixedText());
-	$wgOut->addHTML('</tr>');
-	foreach($t->subthreads() as $st)
-		efThreadTableHelper($st, $indent + 1);
+	$wgOut->addHTML( '<tr>' );
+	$wgOut->addHTML( '<td>' . $indent );
+	$wgOut->addHTML( '<td>' . $t->id() );
+	$wgOut->addHTML( '<td>' . $t->title()->getPrefixedText() );
+	$wgOut->addHTML( '</tr>' );
+	foreach ( $t->subthreads() as $st )
+		efThreadTableHelper( $st, $indent + 1 );
 }
 
 function wfLqtBeforeWatchlistHook( &$conds, &$tables, &$join_conds, &$fields ) {
 	global $wgOut, $wgUser;
 
+	if ( !in_array( 'page', $tables ) ) {
+		$tables[] = 'page';
+		$join_conds['page'] = array( 'LEFT JOIN', 'rc_cur_id=page_id' );
+	}
 	$conds[] = "page_namespace != " . NS_LQT_THREAD;
 
-	$talkpage_messages = NewMessages::newUserMessages($wgUser);
-	$tn = count($talkpage_messages);
+	$talkpage_messages = NewMessages::newUserMessages( $wgUser );
+	$tn = count( $talkpage_messages );
 
-	$watch_messages = NewMessages::watchedThreadsForUser($wgUser);
-	$wn = count($watch_messages);
+	$watch_messages = NewMessages::watchedThreadsForUser( $wgUser );
+	$wn = count( $watch_messages );
 
-	if( $tn == 0 && $wn == 0 )
+	if ( $tn == 0 && $wn == 0 )
 		return true;
 
 	LqtView::addJSandCSS();
 	wfLoadExtensionMessages( 'LiquidThreads' );
-	$messages_url = SpecialPage::getPage('NewMessages')->getTitle()->getFullURL();
+	$messages_url = SpecialPage::getPage( 'NewMessages' )->getTitle()->getFullURL();
 	$new_messages = wfMsg ( 'lqt-new-messages' );
-	$wgOut->addHTML(<<< HTML
+	$wgOut->addHTML( <<< HTML
 		<a href="$messages_url" class="lqt_watchlist_messages_notice">
 			&#x2712; {$new_messages}
 		</a>

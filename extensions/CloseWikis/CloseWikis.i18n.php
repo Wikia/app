@@ -108,7 +108,7 @@ $messages['arz'] = array(
 	'closewikis-page-err-closed' => 'الويكى مغلق بالفعل',
 	'closewikis-page-err-opened' => 'الويكى ليس مغلقا',
 	'closewikis-list' => 'قائمة الويكيات المغلقة',
-	'closewikis-list-intro' => 'هذه القائمة تحتوى على الويكيات التي تم إغلاقها بواسطة المضيفين.',
+	'closewikis-list-intro' => 'هذه القائمة تحتوى على الويكيات التى تم إغلاقها بواسطة المضيفين.',
 	'closewikis-list-header-wiki' => 'الويكى',
 	'closewikis-list-header-by' => 'أغلق بواسطة',
 	'closewikis-list-header-timestamp' => 'أغلق فى',
@@ -152,8 +152,20 @@ $messages['bg'] = array(
  */
 $messages['bs'] = array(
 	'closewikis-desc' => 'Omogućava zatvaranje wiki projekata u wiki farmama',
+	'closewikis-page-close-wiki' => 'Wiki:',
+	'closewikis-page-close-success' => 'Wiki uspješno zatvoren',
+	'closewikis-page-reopen-wiki' => 'Wiki:',
 	'closewikis-page-reopen-reason' => 'Razlog:',
+	'closewikis-page-reopen-success' => 'Wiki uspješno ponovno otvoren',
+	'closewikis-page-err-closed' => 'Wiki je već zatvoren',
+	'closewikis-page-err-opened' => 'Wiki nije zatvoren',
+	'closewikis-list' => 'Spisak zatvorenih wikija',
+	'closewikis-list-header-wiki' => 'Wiki',
+	'closewikis-list-header-by' => 'Zatvorio',
+	'closewikis-list-header-timestamp' => 'Zatvoreno dana',
 	'closewikis-list-header-dispreason' => 'Navedeni razlog',
+	'closewikis-log-close' => 'zatvoreno $2',
+	'closewikis-log-reopen' => 'ponovno otvoreno $2',
 );
 
 /** Czech (Česky)
@@ -291,8 +303,43 @@ $messages['eo'] = array(
 	'right-closewikis' => 'Fermi vikiojn',
 );
 
+/** Spanish (Español)
+ * @author BicScope
+ */
+$messages['es'] = array(
+	'closewikis-desc' => 'Permitir cerrar sitios wiki en granjas wiki',
+	'closewikis-page' => 'Cerrar wiki',
+	'closewikis-page-close' => 'Cerrar wiki',
+	'closewikis-page-close-wiki' => 'Wiki:',
+	'closewikis-page-close-dreason' => 'Razón (especificada):',
+	'closewikis-page-close-reason' => 'Razón (inicial):',
+	'closewikis-page-close-submit' => 'Cerrar',
+	'closewikis-page-close-success' => 'La wiki ha sido cerrada satisfactoriamente',
+	'closewikis-page-reopen' => 'Reabrir  wiki',
+	'closewikis-page-reopen-wiki' => 'Wiki:',
+	'closewikis-page-reopen-reason' => 'Razón:',
+	'closewikis-page-reopen-submit' => 'Reabrir',
+	'closewikis-page-reopen-success' => 'La wiki ha sido reabierta satisfactoriamente',
+	'closewikis-page-err-nowiki' => 'Ha entrado un nombre wiki inválido',
+	'closewikis-page-err-closed' => 'La wiki ya está cerrada',
+	'closewikis-page-err-opened' => 'La wiki no está cerrada',
+	'closewikis-list' => 'Lista de wikis cerradas:',
+	'closewikis-list-intro' => 'Ésta lista contiene wikis que fueron cerradas por administradores (stewards).',
+	'closewikis-list-header-wiki' => 'Wiki',
+	'closewikis-list-header-by' => 'Cerrada por',
+	'closewikis-list-header-timestamp' => 'Cerrada el',
+	'closewikis-list-header-dispreason' => 'Razón',
+	'closewikis-log' => 'Registro de wikis cerradas',
+	'closewikis-log-header' => 'He aquí un registro de todas las wikis cerradas y reabiertas hechas por administradores (stewards)',
+	'closewikis-log-close' => '$2 cerrada',
+	'closewikis-log-reopen' => '$2 reabierta',
+	'right-editclosedwikis' => 'Editar wikis cerradas',
+	'right-closewikis' => 'Cerrar wikis',
+);
+
 /** Estonian (Eesti)
  * @author Avjoska
+ * @author KalmerE.
  */
 $messages['et'] = array(
 	'closewikis-page' => 'Sulge wiki',
@@ -310,6 +357,7 @@ $messages['et'] = array(
 	'closewikis-page-err-closed' => 'Wiki on juba suletud',
 	'closewikis-page-err-opened' => 'Wiki ei ole suletud',
 	'closewikis-list' => 'Suletud wikide list',
+	'closewikis-list-header-wiki' => 'Viki',
 );
 
 /** Basque (Euskara)
@@ -445,6 +493,40 @@ $messages['grc'] = array(
 	'closewikis-page-reopen-submit' => 'Ἀνοίγειν πάλιν',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'closewikis-desc' => 'Macht s Zuemache megli vun eme einzelne Wiki in eme Wikihof',
+	'closewikis-page' => 'Wiki zuemache.',
+	'closewikis-page-close' => 'Wiki zuemache',
+	'closewikis-page-close-wiki' => 'Wiki:',
+	'closewikis-page-close-dreason' => 'Aazeigter Grund:',
+	'closewikis-page-close-reason' => 'Grund, wu in s Logbuech yytrait wird:',
+	'closewikis-page-close-submit' => 'Zuemache',
+	'closewikis-page-close-success' => 'Wiki mit Erfolg zuegmacht',
+	'closewikis-page-reopen' => 'Wiki wider ufmache',
+	'closewikis-page-reopen-wiki' => 'Wiki:',
+	'closewikis-page-reopen-reason' => 'Grund:',
+	'closewikis-page-reopen-submit' => 'Wider ufmache',
+	'closewikis-page-reopen-success' => 'Wiki mit Erfolg wider ufgmacht',
+	'closewikis-page-err-nowiki' => 'Uugiltig Wiki aagee',
+	'closewikis-page-err-closed' => 'Wiki isch scho zuegmacht',
+	'closewikis-page-err-opened' => 'Wiki isch nit zuegmacht',
+	'closewikis-list' => 'Lischt vu Wiki, wu zuegmacht sin',
+	'closewikis-list-intro' => 'In däre Lischt het s Wiki, wu vu Steward zuegmacht wore sin.',
+	'closewikis-list-header-wiki' => 'Wiki',
+	'closewikis-list-header-by' => 'Zuegmacht vu',
+	'closewikis-list-header-timestamp' => 'Zuegmacht am',
+	'closewikis-list-header-dispreason' => 'Aazeigte Grund',
+	'closewikis-log' => 'Logbuech iber zuegmachti Wiki',
+	'closewikis-log-header' => 'In däm Logbuech het s alli Wiki, wu vu Steward zuegmacht un wider ufgmacht wore sin.',
+	'closewikis-log-close' => 'het $2 zuegmacht',
+	'closewikis-log-reopen' => 'het $2 wider ufgmacht',
+	'right-editclosedwikis' => 'Zuegmachti Wiki bearbeite',
+	'right-closewikis' => 'Wiki zuemache',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
@@ -557,8 +639,8 @@ $messages['ia'] = array(
 	'closewikis-page' => 'Clauder wiki',
 	'closewikis-page-close' => 'Clauder wiki',
 	'closewikis-page-close-wiki' => 'Wiki:',
-	'closewikis-page-close-dreason' => 'Motivo (monstrate):',
-	'closewikis-page-close-reason' => 'Motivo (registrate):',
+	'closewikis-page-close-dreason' => 'Motivo (public):',
+	'closewikis-page-close-reason' => 'Motivo (pro le registro):',
 	'closewikis-page-close-submit' => 'Clauder',
 	'closewikis-page-close-success' => 'Wiki claudite con successo',
 	'closewikis-page-reopen' => 'Reaperir wiki',
@@ -569,11 +651,18 @@ $messages['ia'] = array(
 	'closewikis-page-err-nowiki' => 'Le wiki specificate es invalide',
 	'closewikis-page-err-closed' => 'Iste wiki es ja claudite',
 	'closewikis-page-err-opened' => 'Le wiki non es claudite',
+	'closewikis-list' => 'Lista de wikis claudite',
+	'closewikis-list-intro' => 'Iste lista contine wikis que ha essite claudite per stewards.',
+	'closewikis-list-header-wiki' => 'Wiki',
+	'closewikis-list-header-by' => 'Claudite per',
+	'closewikis-list-header-timestamp' => 'Claudite le',
+	'closewikis-list-header-dispreason' => 'Motivo public',
 	'closewikis-log' => 'Registro de clausura de wikis',
 	'closewikis-log-header' => 'Ecce un registro de tote le clausuras e reaperturas de wikis facite per stewards',
 	'closewikis-log-close' => 'claudeva $2',
 	'closewikis-log-reopen' => 'reaperiva $2',
 	'right-editclosedwikis' => 'Modificar wikis claudite',
+	'right-closewikis' => 'Clauder wikis',
 );
 
 /** Italian (Italiano)
@@ -613,17 +702,37 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Aotake
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'closewikis-page' => '閉鎖されたウィキ',
-	'closewikis-page-close' => '閉鎖されたウィキ',
+	'closewikis-desc' => 'ウィキファーム内のウィキサイトを閉鎖できるようにする',
+	'closewikis-page' => 'ウィキを閉鎖する',
+	'closewikis-page-close' => 'ウィキを閉鎖する',
 	'closewikis-page-close-wiki' => 'ウィキ:',
+	'closewikis-page-close-dreason' => '理由 (表示用):',
+	'closewikis-page-close-reason' => '理由 (記録用):',
 	'closewikis-page-close-submit' => '閉鎖',
-	'closewikis-page-close-success' => '正常に閉鎖されたウィキ',
+	'closewikis-page-close-success' => 'ウィキの閉鎖に成功しました',
+	'closewikis-page-reopen' => 'ウィキを再開する',
 	'closewikis-page-reopen-wiki' => 'ウィキ:',
 	'closewikis-page-reopen-reason' => '理由:',
+	'closewikis-page-reopen-submit' => '再開',
+	'closewikis-page-reopen-success' => 'ウィキの再開に成功しました',
+	'closewikis-page-err-nowiki' => '無効なウィキが指定されました',
+	'closewikis-page-err-closed' => 'ウィキは既に閉鎖されています',
+	'closewikis-page-err-opened' => 'ウィキは閉鎖されていません',
+	'closewikis-list' => '閉鎖されたウィキの一覧',
+	'closewikis-list-intro' => 'このリストにはスチュワードによって閉鎖されたウィキが載っています。',
 	'closewikis-list-header-wiki' => 'ウィキ',
+	'closewikis-list-header-by' => '閉鎖者',
+	'closewikis-list-header-timestamp' => '閉鎖日',
+	'closewikis-list-header-dispreason' => '表示理由',
+	'closewikis-log' => 'ウィキ閉鎖記録',
+	'closewikis-log-header' => 'これはスチュワードによるすべてのウィキの閉鎖および再開の記録です',
+	'closewikis-log-close' => '$2 を閉鎖',
+	'closewikis-log-reopen' => '$2 を再開',
+	'right-editclosedwikis' => '閉鎖されたウィキを編集する',
 	'right-closewikis' => 'ウィキを閉鎖する',
 );
 
@@ -881,12 +990,26 @@ $messages['pl'] = array(
 	'closewikis-page' => 'Zamknij wiki',
 	'closewikis-page-close' => 'Zamknij wiki',
 	'closewikis-page-close-wiki' => 'Wiki:',
+	'closewikis-page-close-dreason' => 'Powód (oficjalny)',
+	'closewikis-page-close-reason' => 'Powód (zapamiętany)',
 	'closewikis-page-close-submit' => 'Zamknij',
+	'closewikis-page-close-success' => 'Wiki została zamknięta',
+	'closewikis-page-reopen' => 'Otwórz wiki ponownie',
+	'closewikis-page-reopen-wiki' => 'Wiki:',
+	'closewikis-page-reopen-reason' => 'Powód',
+	'closewikis-page-reopen-submit' => 'Otwórz ponownie',
+	'closewikis-page-reopen-success' => 'Wiki została ponownie otwarta',
+	'closewikis-page-err-nowiki' => 'Określono nieprawidłową wiki',
 	'closewikis-page-err-closed' => 'Wiki została zamknięta',
 	'closewikis-page-err-opened' => 'Wiki nie została zamknięta',
+	'closewikis-list' => 'Lista zamkniętych wiki',
+	'closewikis-list-intro' => 'Lista zawiera wiki, które zostały zamknięte przez stewardów.',
 	'closewikis-list-header-wiki' => 'Wiki',
 	'closewikis-list-header-by' => 'Zamknięta przez',
 	'closewikis-list-header-timestamp' => 'Zamknięta',
+	'closewikis-list-header-dispreason' => 'Oficjalny powód',
+	'closewikis-log' => 'Rejestr zamkniętych wiki',
+	'closewikis-log-header' => 'Poniżej znajduje się rejestr wszystkich wiki zamkniętych lub ponownie otwartych przez stewardów',
 	'closewikis-log-close' => 'zamknięta $2',
 	'closewikis-log-reopen' => 'powtórnie otwarta $2',
 	'right-editclosedwikis' => 'Edytuj zamknięte projekty wiki',
@@ -914,12 +1037,52 @@ $messages['pt'] = array(
 	'closewikis-page-err-nowiki' => 'A wiki especificada é inválida',
 	'closewikis-page-err-closed' => 'Wiki já está fechada',
 	'closewikis-page-err-opened' => 'Esta wiki não está fechada',
+	'closewikis-list' => 'Lista de wikis fechados',
+	'closewikis-list-intro' => 'Esta lista contém wikis que foram fechados por stewards.',
 	'closewikis-list-header-wiki' => 'Wiki',
+	'closewikis-list-header-by' => 'Fechado por',
+	'closewikis-list-header-timestamp' => 'Fechado em',
+	'closewikis-list-header-dispreason' => 'Razão apresentada',
 	'closewikis-log' => 'Registro de Wikis fechadas',
 	'closewikis-log-header' => 'Aqui está um registro de todas as wikis que foram fechadas ou reabertas por stewards',
 	'closewikis-log-close' => 'fechada $2',
 	'closewikis-log-reopen' => 'reaberta $2',
 	'right-editclosedwikis' => 'Editar wikis fechadas',
+	'right-closewikis' => 'Fechar wikis',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'closewikis-desc' => 'Permite fechar uma wiki em sites com múltiplos wikis',
+	'closewikis-page' => 'Fechar wiki',
+	'closewikis-page-close' => 'Fechar wiki',
+	'closewikis-page-close-wiki' => 'Wiki:',
+	'closewikis-page-close-dreason' => 'Razão (exibida):',
+	'closewikis-page-close-reason' => 'Razão (registrada):',
+	'closewikis-page-close-submit' => 'Fechar',
+	'closewikis-page-close-success' => 'Wiki foi fechada com sucesso',
+	'closewikis-page-reopen' => 'Reabrir wiki',
+	'closewikis-page-reopen-wiki' => 'Wiki:',
+	'closewikis-page-reopen-reason' => 'Razão:',
+	'closewikis-page-reopen-submit' => 'Reabrir',
+	'closewikis-page-reopen-success' => 'Wiki reaberta com sucesso',
+	'closewikis-page-err-nowiki' => 'A wiki especificada é inválida',
+	'closewikis-page-err-closed' => 'Wiki já está fechada',
+	'closewikis-page-err-opened' => 'Esta wiki não está fechada',
+	'closewikis-list' => 'Lista de wikis fechados',
+	'closewikis-list-intro' => 'Esta lista contém wikis que foram fechados por stewards.',
+	'closewikis-list-header-wiki' => 'Wiki',
+	'closewikis-list-header-by' => 'Fechado por',
+	'closewikis-list-header-timestamp' => 'Fechada em',
+	'closewikis-list-header-dispreason' => 'Razão apresentada',
+	'closewikis-log' => 'Registro de Wikis fechadas',
+	'closewikis-log-header' => 'Aqui está um registro de todas as wikis que foram fechadas ou reabertas por stewards',
+	'closewikis-log-close' => 'fechada $2',
+	'closewikis-log-reopen' => 'reaberta $2',
+	'right-editclosedwikis' => 'Editar wikis fechadas',
+	'right-closewikis' => 'Fechar wikis',
 );
 
 /** Romanian (Română)
@@ -1046,11 +1209,18 @@ $messages['stq'] = array(
 	'closewikis-page-err-nowiki' => 'Uungultich Wiki anroat',
 	'closewikis-page-err-closed' => 'Wiki is al sleeten',
 	'closewikis-page-err-opened' => 'Wiki is nit sleeten',
+	'closewikis-list' => 'Lieste fon sleetene Wikis',
+	'closewikis-list-intro' => 'Disse Lieste änthaalt Wikis, do der fon Stewards sleeten wuuden.',
+	'closewikis-list-header-wiki' => 'Wiki',
+	'closewikis-list-header-by' => 'Sleeten fon:',
+	'closewikis-list-header-timestamp' => 'Sleeten an n',
+	'closewikis-list-header-dispreason' => 'Anwiesden Gruund',
 	'closewikis-log' => 'Wikisluutengs-Logbouk',
 	'closewikis-log-header' => 'Dit Logbouk wiest aal Sluutengen un Wiereepengen fon Wikis truch Stewards oun.',
 	'closewikis-log-close' => 'sloot $2',
 	'closewikis-log-reopen' => 'eepende $2 wier',
 	'right-editclosedwikis' => 'Sleetene Wikis beoarbaidje',
+	'right-closewikis' => 'Wikis sluute',
 );
 
 /** Swedish (Svenska)
@@ -1107,8 +1277,43 @@ $messages['tet'] = array(
 	'closewikis-list-header-wiki' => 'Wiki',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'closewikis-desc' => 'Nagpapahintulot na maisara ang mga sityo ng wiking nasa loob ng mga linangan ng wiki',
+	'closewikis-page' => 'Isara ang wiki',
+	'closewikis-page-close' => 'Isara ang wiki',
+	'closewikis-page-close-wiki' => 'Wiki:',
+	'closewikis-page-close-dreason' => 'Dahilan (ipinapakita):',
+	'closewikis-page-close-reason' => 'Dahilan (nakatala):',
+	'closewikis-page-close-submit' => 'Isara',
+	'closewikis-page-close-success' => 'Matagumpay na naisara ang wiki',
+	'closewikis-page-reopen' => 'Buksang muli ang wiki',
+	'closewikis-page-reopen-wiki' => 'Wiki:',
+	'closewikis-page-reopen-reason' => 'Dahilan:',
+	'closewikis-page-reopen-submit' => 'Buksang muli',
+	'closewikis-page-reopen-success' => 'Matagumpay na nabuksang muli ang wiki',
+	'closewikis-page-err-nowiki' => 'Hindi tanggap ang tinukoy na wiki',
+	'closewikis-page-err-closed' => 'Nakasarado na ang wiki',
+	'closewikis-page-err-opened' => 'Hindi pa nakasara ang wiki',
+	'closewikis-list' => 'Talaan ng isinarang mga wiki',
+	'closewikis-list-intro' => 'Naglalaman ang talaang ito ng mga wiking isinarado ng mga katiwala.',
+	'closewikis-list-header-wiki' => 'Wiki',
+	'closewikis-list-header-by' => 'Isinara ni',
+	'closewikis-list-header-timestamp' => 'Isinara noong',
+	'closewikis-list-header-dispreason' => 'Ipinapakitang dahilan',
+	'closewikis-log' => 'Talaan ng pagsasara ng mga wiki',
+	'closewikis-log-header' => 'Narito ang isang talaan ng lahat ng mga pagsasara ng wiki at mga muling pagbubukas na ginawa ng mga katiwala',
+	'closewikis-log-close' => 'isinara ang $2',
+	'closewikis-log-reopen' => 'binuksang muli ang $2',
+	'right-editclosedwikis' => 'Baguhin ang nakasarang mga wiki',
+	'right-closewikis' => 'Isara ang mga wiki',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'closewikis-desc' => 'Cho phép đóng cửa các wiki trong mạng wiki',
@@ -1127,11 +1332,18 @@ $messages['vi'] = array(
 	'closewikis-page-err-nowiki' => 'Định rõ wiki không hợp lệ',
 	'closewikis-page-err-closed' => 'Wiki đã bị đóng cửa',
 	'closewikis-page-err-opened' => 'Wiki chưa bị đóng cửa',
+	'closewikis-list' => 'Danh sách các wiki đã đóng',
+	'closewikis-list-intro' => 'Danh này bao gồm các wiki đã được tiếp viên đóng lại.',
+	'closewikis-list-header-wiki' => 'Wiki',
+	'closewikis-list-header-by' => 'Đóng bởi',
+	'closewikis-list-header-timestamp' => 'Đóng vào ngày',
+	'closewikis-list-header-dispreason' => 'Lý do được hiển thị',
 	'closewikis-log' => 'Nhật trình đóng cửa wiki',
 	'closewikis-log-header' => 'Đây là danh sách các tác vụ đóng cửa wiki và mở cửa lại wiki được thực hiện bởi tiếp viên.',
 	'closewikis-log-close' => 'đóng cửa $2',
 	'closewikis-log-reopen' => 'mở cửa lại $2',
 	'right-editclosedwikis' => 'Sửa đổi các wiki bị đóng cửa',
+	'right-closewikis' => 'Đóng wiki',
 );
 
 /** Volapük (Volapük)

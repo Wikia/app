@@ -1,6 +1,9 @@
 <?php
 /** Icelandic (Íslenska)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -123,27 +126,6 @@ $magicWords = array(
 	'special'             => array( 0, "kerfissíða", "special" ),
 );
 
-$namespaceNames = array(
-	NS_MEDIA          => 'Miðill',
-	NS_SPECIAL        => 'Kerfissíða',
-	NS_MAIN	          => '',
-	NS_TALK	          => 'Spjall',
-	NS_USER           => 'Notandi',
-	NS_USER_TALK      => 'Notandaspjall',
-	# NS_PROJECT set by $wgMetaNamespace
-	NS_PROJECT_TALK   => '$1spjall',
-	NS_FILE           => 'Mynd',
-	NS_FILE_TALK      => 'Myndaspjall',
-	NS_MEDIAWIKI      => 'Melding',
-	NS_MEDIAWIKI_TALK => 'Meldingarspjall',
-	NS_TEMPLATE       => 'Snið',
-	NS_TEMPLATE_TALK  => 'Sniðaspjall',
-	NS_HELP           => 'Hjálp',
-	NS_HELP_TALK      => 'Hjálparspjall',
-	NS_CATEGORY       => 'Flokkur',
-	NS_CATEGORY_TALK  => 'Flokkaspjall',
-);
-
 $specialPageAliases = array(
 	'DoubleRedirects'           => array( 'Tvöfaldar tilvísanir' ),
 	'BrokenRedirects'           => array( 'Brotnar tilvísanir' ),
@@ -173,8 +155,8 @@ $specialPageAliases = array(
 	'Mostlinked'                => array( 'Mest ítengt' ),
 	'Mostlinkedcategories'      => array( 'Mest ítengdu flokkar' ),
 	'Mostlinkedtemplates'       => array( 'Mest ítengdu snið' ),
-	'Mostcategories'            => array( 'Flestir flokkar' ),
 	'Mostimages'                => array( 'Flestar myndir' ),
+	'Mostcategories'            => array( 'Flestir flokkar' ),
 	'Mostrevisions'             => array( 'Flestar útgáfur' ),
 	'Fewestrevisions'           => array( 'Fæstar útgáfur' ),
 	'Shortpages'                => array( 'Stuttar síður' ),
@@ -605,7 +587,7 @@ Ekki gleyma að breyta [[Special:Preferences|{{SITENAME}}-stillingunum]] þínum
 'yourdomainname'             => 'Þitt lén:',
 'login'                      => 'Innskrá',
 'nav-login-createaccount'    => 'Innskrá / Búa til aðgang',
-'loginprompt'                => 'Þú verður að leyfa vefkökur til þess að geta [[Special:UserLogin|skráð þig inn á {{SITENAME}}]].',
+'loginprompt'                => 'Þú verður að leyfa vefkökur til þess að geta skráð þig inn á {{SITENAME}}.',
 'userlogin'                  => 'Innskrá / Búa til aðgang',
 'logout'                     => 'Útskráning',
 'userlogout'                 => 'Útskrá',
@@ -629,6 +611,11 @@ Ekki gleyma að breyta [[Special:Preferences|{{SITENAME}}-stillingunum]] þínum
 'badsig'                     => 'Ógild hrá undirskrift. Athugaðu HTML-kóða.',
 'badsiglength'               => 'Undirskriftin er of löng.
 Hún þarf að vera færri en $1 {{PLURAL:$1|rittákn|rittákn}}.',
+'yourgender'                 => 'Kyn:',
+'gender-unknown'             => 'Óskilgreint',
+'gender-male'                => 'Karl',
+'gender-female'              => 'Kona',
+'prefs-help-gender'          => 'Valfrjálst: notað til að aðgreina kynin í meldingum hugbúnaðarins. Þessar upplýsingar verða aðgengilegar öllum.',
 'email'                      => 'Tölvupóstur',
 'prefs-help-realname'        => 'Alvöru nafn er valfrjálst.
 Ef þú kýst að gefa það upp, verður það notað til að gefa þér heiður af verkum þínum.',
@@ -1350,27 +1337,25 @@ Gjörðu svo vel og endurnefndu skrána og hladdu henni inn aftur.',
 'listfiles_description' => 'Lýsing',
 
 # File description page
-'filehist'                       => 'Breytingaskrá skjals',
-'filehist-help'                  => 'Smelltu á dagsetningu eða tímasetningu til að sjá hvernig hún leit þá út.',
-'filehist-deleteall'             => 'eyða öllu',
-'filehist-deleteone'             => 'eyða',
-'filehist-revert'                => 'taka aftur',
-'filehist-current'               => 'núverandi',
-'filehist-datetime'              => 'Dagsetning/Tími',
-'filehist-user'                  => 'Notandi',
-'filehist-dimensions'            => 'Víddir',
-'filehist-filesize'              => 'Stærð skráar',
-'filehist-comment'               => 'Athugasemd',
-'imagelinks'                     => 'Skráatenglar',
-'linkstoimage'                   => 'Eftirfarandi {{PLURAL:$1|síða tengist|$1 síður tengjast}} í þessa skrá:',
-'nolinkstoimage'                 => 'Engar síður tengja í þessa skrá.',
-'sharedupload'                   => 'Þessari skrá er deilt meðal annarra verkefna og nýtist því þar.',
-'shareduploadwiki-linktext'      => 'skráarlýsingarsíða',
-'shareduploadduplicate-linktext' => 'önnur skrá',
-'shareduploadconflict-linktext'  => 'önnur skrá',
-'noimage'                        => 'Engin skrá með þessu nafni er til, en þú getur $1.',
-'noimage-linktext'               => 'hlaða einni inn',
-'uploadnewversion-linktext'      => 'Hlaða inn nýrri útgáfu af þessari skrá',
+'filehist'                  => 'Breytingaskrá skjals',
+'filehist-help'             => 'Smelltu á dagsetningu eða tímasetningu til að sjá hvernig hún leit þá út.',
+'filehist-deleteall'        => 'eyða öllu',
+'filehist-deleteone'        => 'eyða',
+'filehist-revert'           => 'taka aftur',
+'filehist-current'          => 'núverandi',
+'filehist-datetime'         => 'Dagsetning/Tími',
+'filehist-user'             => 'Notandi',
+'filehist-dimensions'       => 'Víddir',
+'filehist-filesize'         => 'Stærð skráar',
+'filehist-comment'          => 'Athugasemd',
+'imagelinks'                => 'Skráatenglar',
+'linkstoimage'              => 'Eftirfarandi {{PLURAL:$1|síða tengist|$1 síður tengjast}} í þessa skrá:',
+'nolinkstoimage'            => 'Engar síður tengja í þessa skrá.',
+'sharedupload'              => 'Þessari skrá er deilt meðal annarra verkefna og nýtist því þar.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'shareduploadwiki-linktext' => 'skráarlýsingarsíða',
+'noimage'                   => 'Engin skrá með þessu nafni er til, en þú getur $1.',
+'noimage-linktext'          => 'hlaða einni inn',
+'uploadnewversion-linktext' => 'Hlaða inn nýrri útgáfu af þessari skrá',
 
 # File reversion
 'filerevert'         => 'Taka aftur $1',
@@ -1477,6 +1462,7 @@ Farið er með síðu sem aðgreiningarsíðu ef að hún inniheldur snið sem v
 'wantedcategories'        => 'Eftirsóttir flokkar',
 'wantedpages'             => 'Eftirsóttar síður',
 'wantedfiles'             => 'Eftirsóttar skrár',
+'wantedtemplates'         => 'Eftirsótt snið',
 'mostlinked'              => 'Mest ítengdu síður',
 'mostlinkedcategories'    => 'Mest ítengdu flokkar',
 'mostlinkedtemplates'     => 'Mest ítengdu snið',
@@ -1518,7 +1504,7 @@ Farið er með síðu sem aðgreiningarsíðu ef að hún inniheldur snið sem v
 'log'                  => 'Aðgerðaskrár',
 'all-logs-page'        => 'Allar aðgerðir',
 'alllogstext'          => 'Safn allra aðgerðaskráa {{SITENAME}}.
-Þú getur takmarkað listann með því að velja tegund aðgerðaskráar, notandarnafn, eða síðu.',
+Þú getur takmarkað listann með því að velja tegund aðgerðaskráar, notandanafn, eða síðu.',
 'logempty'             => 'Engin slík aðgerð fannst.',
 'log-title-wildcard'   => 'Leita að titlum sem byrja á þessum texta',
 
@@ -1549,7 +1535,8 @@ Sjá einnig [[Special:WantedCategories|eftirsótta flokka]].',
 'special-categories-sort-abc'   => 'raða eftir stafrófinu',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Eyddar breytingar notenda',
+'deletedcontributions'       => 'Eyddar breytingar notanda',
+'deletedcontributions-title' => 'Eyddar breytingar notanda',
 
 # Special:LinkSearch
 'linksearch'    => 'Leita að vefföngum',
@@ -1687,6 +1674,7 @@ Sjáðu [[Special:ProtectedPages|listann yfir verndaðar síður]] fyrir núvera
 'protectedarticle'            => 'verndaði „[[$1]]“',
 'modifiedarticleprotection'   => 'breytti verndunarstigi fyrir "[[$1]]"',
 'unprotectedarticle'          => 'afverndaði „[[$1]]“',
+'movedarticleprotection'      => 'verndunarstilling hefur verið færð frá „[[$2]]“ á „[[$1]]“',
 'protect-title'               => 'Vernda „$1“',
 'prot_1movedto2'              => '[[$1]] færð á [[$2]]',
 'protect-legend'              => 'Verndunarstaðfesting',
@@ -1768,7 +1756,7 @@ Skoðaðu [[Special:Log/delete|eyðingaskrána]] til að skoða eyðingar og end
 'contributions-title' => 'Framlög notanda $1',
 'mycontris'           => 'Framlög',
 'contribsub2'         => 'Eftir $1 ($2)',
-'nocontribs'          => 'Engar breytingar fundnar sem passa við þessa viðmiðun.',
+'nocontribs'          => 'Engar breytingar fundnar sem passa við þessa viðmiðun.', # Optional parameter: $1 is the user name
 'uctop'               => '(nýjast)',
 'month'               => 'Frá mánuðinum (og fyrr):',
 'year'                => 'Frá árinu (og fyrr):',
@@ -1931,8 +1919,8 @@ Vinsamlegast veldu annan titil.',
 Gjörðu svo vel og færðu hana handvirkt.'''",
 'movedto'                   => 'fært á',
 'movetalk'                  => 'Færa meðfylgjandi spjallsíðu',
-'move-subpages'             => 'Færa allar undirsíður ef það er hægt',
-'move-talk-subpages'        => 'Færa allar undirsíður spjallsíðunnar ef það er hægt',
+'move-subpages'             => 'Færa undirstíður (upp að $1)',
+'move-talk-subpages'        => 'Færa undirstíður spjallsíðunnar (upp að $1)',
 'movepage-page-exists'      => 'Síðan $1 er nú þegar til og er ekki hægt að yfirskrifa sjálfkrafa.',
 'movepage-page-moved'       => 'Síðan $1 hefur verið færð á $2.',
 'movepage-page-unmoved'     => 'Ekki var hægt að færa síðuna $1 á $2.',
@@ -2132,6 +2120,7 @@ Allir innflutningar eru skráð í [[Special:Log/import|innflutningsskránna]].'
 'patrol-log-header' => 'Þetta er skrá yfir yfirfarna breytingar.',
 'patrol-log-line'   => 'merkti $1 eftir $2 sem yfirfarið $3',
 'patrol-log-auto'   => '(sjálfkrafa)',
+'patrol-log-diff'   => 'útgáfa $1',
 
 # Image deletion
 'deletedrevision'       => 'Eydd gömul útgáfu $1',
@@ -2190,6 +2179,7 @@ Ef skránni hefur verið breytt, kann að vera að einhverjar upplýsingar eigi 
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags
@@ -2253,11 +2243,9 @@ Ef skránni hefur verið breytt, kann að vera að einhverjar upplýsingar eigi 
 'confirmemail'             => 'Staðfesta netfang',
 'confirmemail_noemail'     => 'Þú hefur ekki gefið upp gilt netfang í [[Special:Preferences|notandastillingum]] þínum.',
 'confirmemail_text'        => '{{SITENAME}} krefst þess að þú staðfestir netfangið þitt áður en að þú getur notað eiginleika tengt því. Smelltu á hnappinn að neðan til að fá staðfestingarpóst sendan á netfangið. Pósturinn mun innihalda tengil með kóða í sér; opnaðu tengilinn í vafranum til að staðfesta að netfangið sé rétt.',
-'confirmemail_pending'     => '<div class="error">
-Þú hefur nú þegar fengið staðfestingarpóst sendann; ef það er stutt síðan
+'confirmemail_pending'     => 'Þú hefur nú þegar fengið staðfestingarpóst sendann; ef það er stutt síðan
 þú bjóst til aðganginn þinn, væri ráð að býða í nokkrar mínútur eftir póstinum
-áður en að þú byður um að fá nýjan kóða sendann.
-</div>',
+áður en að þú byður um að fá nýjan kóða sendann.',
 'confirmemail_send'        => 'Senda staðfestingarkóða með tölvupósti',
 'confirmemail_sent'        => 'Staðfestingartölvupóstur sendur.',
 'confirmemail_oncreate'    => 'Staðfestingarkóði hefur verði sendur á netfangið.
@@ -2292,11 +2280,9 @@ $5
 'scarytranscludetoolong' => '[vefslóðin er of löng]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">
-Varanlegir tenglar fyrir þessa grein:<br />
-$1
-</div>',
-'trackbackremove'   => '([$1 {{PLURAL:$1|eydd|eyddar}}])',
+'trackbackbox'      => 'Varanlegir tenglar fyrir þessa grein:<br />
+$1',
+'trackbackremove'   => '([$1 eydd])',
 'trackbacklink'     => 'Varanlegur tengill',
 'trackbackdeleteok' => 'Varanlega tenglinum var eytt.',
 
@@ -2403,5 +2389,11 @@ Vinsamlegast staðfestu að þú viljir endurvekja hana.",
 
 # Special:BlankPage
 'blankpage' => 'Tóm síða',
+
+# Special:Tags
+'tags-edit' => 'breyta',
+
+# Database error messages
+'dberr-usegoogle' => 'Þú getur notað Google til að leita á meðan.',
 
 );

@@ -19,6 +19,7 @@ This message is to notify you that at $3 user $4 $5.",
 	'categorywatch-catmoveout' => "moved $1 out of category $2 into $3",
 	'categorywatch-catadd' => "added $1 to category $2",
 	'categorywatch-catsub' => "removed $1 from category $2",
+	'categorywatch-autocat' => "Automatically watched by $1",
 );
 
 /** Message documentation (Message documentation)
@@ -107,6 +108,7 @@ Ova poruka služi da Vas obavijesti da je dana $3 korisnik $4 $5.',
 	'categorywatch-catmoveout' => 'premjestio $1 iz kategorije $2 u $3',
 	'categorywatch-catadd' => 'dodao $1 u kategoriju $2',
 	'categorywatch-catsub' => 'uklonio $1 iz kategorije $2',
+	'categorywatch-autocat' => 'Automatski pregledano od strane $1',
 );
 
 /** Czech (Česky)
@@ -125,8 +127,23 @@ Toto je oznámení, že $3 uživatel $4 $5.',
 	'categorywatch-catsub' => 'odstranil $1 z kategorie $2',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'categorywatch-desc' => "Yn hysbysu defnyddwyr sy'n dilyn hynt rhyw gategori bod aelodaeth y categori wedi newid",
+	'categorywatch-emailbody' => 'Cyfarchion $1. Anfonwyd y neges hon atoch am fod y categori "$2" ar eich rhestr gwylio.
+Diben y neges yw eich hysbysu bod y defnyddiwr $4 $5 am $3.',
+	'categorywatch-emailsubject' => 'Symudiadau ar y categori "$1"',
+	'categorywatch-catmovein' => "wedi symud $1 o'r categori $3 ac i'r categori $2",
+	'categorywatch-catmoveout' => "wedi symud $1 o'r categori $2 ac i'r categori $3",
+	'categorywatch-catadd' => "wedi ychwanegu $1 i'r categori $2",
+	'categorywatch-catsub' => "wedi tynnu $1 o'r categori $2",
+);
+
 /** German (Deutsch)
  * @author ChrisiPK
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'categorywatch-desc' => 'Erweitert die Beobachtungsliste, sodass man Hinweise bekommt, wenn Seiten in beobachtete Kategorien eingetragen oder aus ihnen entfernt werden.',
@@ -137,6 +154,7 @@ Diese Nachricht meldet dir, dass Benutzer $4 um $3 $5.',
 	'categorywatch-catmoveout' => '$1 von Kategorie $2 in $3 verschoben hat',
 	'categorywatch-catadd' => '$1 zu Kategorie $2 hinzugefügt hat',
 	'categorywatch-catsub' => '$1 aus Kategorie $2 entfernt hat',
+	'categorywatch-autocat' => 'Automatisch beobachtet von $1',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -150,6 +168,7 @@ $messages['dsb'] = array(
 	'categorywatch-catmoveout' => 'jo pśesunuł $1 z kategorije $2 do $3',
 	'categorywatch-catadd' => 'jo pśidał $1 ku kategoriji $2',
 	'categorywatch-catsub' => 'jo wupórał $1 z kategorije $2',
+	'categorywatch-autocat' => 'Wót $1 awtomatiski wobglědowany',
 );
 
 /** Esperanto (Esperanto)
@@ -164,6 +183,19 @@ $messages['eo'] = array(
 	'categorywatch-catmoveout' => 'movis $1 el kategorio $2 en $3',
 	'categorywatch-catadd' => 'aldonis $1 al kategorio $2',
 	'categorywatch-catsub' => 'eligis $1 de kategorio $2',
+);
+
+/** Spanish (Español)
+ * @author Baiji
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'categorywatch-emailbody' => 'Hola $1, estás recibiendo este mensaje debido a que estás revisando la categoría "$2".
+Este mensaje es para notificarte que el $3 el usuario $4 $5.',
+	'categorywatch-catmovein' => '$1 trasladado a la categoría $2 desde $3',
+	'categorywatch-catmoveout' => '$1 retirado de la categoría $2 a $3',
+	'categorywatch-catadd' => 'agregado $1 a categoría $2',
+	'categorywatch-catsub' => '$1 retirado de la categoría $2',
 );
 
 /** Basque (Euskara)
@@ -195,17 +227,19 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author IAlex
+ * @author Verdy p
  * @author Zetud
  */
 $messages['fr'] = array(
-	'categorywatch-desc' => 'Étend la fonctionnalité de la liste de suivi pour inclure la notification des modifications des membres des catégories suivies.',
-	'categorywatch-emailbody' => 'Bonjour $1, vous avez reçu ce message parce que vous êtes en train de suivre la catégorie « $2 ».
-Ce message est destiné à vous informer que le $3 l’utilisateur $4 $5.',
-	'categorywatch-emailsubject' => 'Activité comprenant la catégorie suivie « $1 »',
-	'categorywatch-catmovein' => 'a déplacé $1 dans la catégorie $2 depuis $3',
-	'categorywatch-catmoveout' => 'a déplacé $1 de la catégorie $2 vers $3',
-	'categorywatch-catadd' => 'a ajouté $1 dans la catégorie $2',
-	'categorywatch-catsub' => 'a retiré $1 de la catégorie $2',
+	'categorywatch-desc' => 'Étend la fonctionnalité de la liste de suivi afin d’y inclure la notification des modifications de la liste des membres des catégories suivies.',
+	'categorywatch-emailbody' => 'Bonjour $1, vous avez reçu ce message parce que vous avez inclu la catégorie « $2 » dans votre liste de suivi.
+Ce message vous informe que le $3, l’utilisateur $4 $5.',
+	'categorywatch-emailsubject' => 'Activité concernant la catégorie suivie « $1 »',
+	'categorywatch-catmovein' => 'a inclu la page $1 dans la catégorie $2 en la retirant de $3',
+	'categorywatch-catmoveout' => 'a retiré la page $1 de la catégorie $2 en l’incluant dans $3',
+	'categorywatch-catadd' => 'a inclu la page $1 dans la catégorie $2',
+	'categorywatch-catsub' => 'a retiré la page $1 de la catégorie $2',
+	'categorywatch-autocat' => 'Suivie automatiquement par $1',
 );
 
 /** Galician (Galego)
@@ -220,6 +254,37 @@ Esta mensaxe serve para notificarlle que o $3 o usuario $4 $5.',
 	'categorywatch-catmoveout' => 'moveu $1 desde a categoría $2 á $3',
 	'categorywatch-catadd' => 'engadiu $1 á categoría $2',
 	'categorywatch-catsub' => 'eliminou $1 da categoría $2',
+	'categorywatch-autocat' => 'Vixiado automaticamente por $1',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'categorywatch-desc' => 'Erwyteret d Beobachtigslischt, ass mer Hiiwyys iberchunnt, wänn Syten in beobachtete Kategorien yytragen oder au ene usegnuu wäre.',
+	'categorywatch-emailbody' => 'Sali $1, Du chunnsch die Nochricht iber, wel Du d Kategorii „$2“ beobachte tuesch.
+Die Nochricht mäldet Dir, ass Benutzer $4 am $3 $5.',
+	'categorywatch-emailsubject' => 'Bearbeitig, wu di beobachtet Kategorii „$1“ betrifft',
+	'categorywatch-catmovein' => '$1 in Kategorii $2 vu $3 verschobe het',
+	'categorywatch-catmoveout' => '$1 vu Kategorii $2 in $3 verschobe het',
+	'categorywatch-catadd' => '$1 zue dr Kategorii $2 zuegfiegt het',
+	'categorywatch-catsub' => '$1 us dr Kategorii $2 usegnuu het',
+	'categorywatch-autocat' => 'Automatisch beobachtet dur $1',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ * @author YaronSh
+ */
+$messages['he'] = array(
+	'categorywatch-desc' => 'הרחבת יכולות רשימת המעקב להכללת התרעות אודות שינויים בדפים החברים בקטגוריות שבמעקב',
+	'categorywatch-emailbody' => 'היי $1, הודעה זו התקבלה כיוון שאתם עוקבים אחר הקטגוריה "$2".
+הודעה זו נועדה להודיע לכם שב־$3 המשתמש $4 $5.',
+	'categorywatch-emailsubject' => 'פעילויות בהן מעורבת הקטגוריה שבמעקב "$1"',
+	'categorywatch-catmovein' => 'העביר את $1 להקטגוריה $2 מהקטגוריה $3',
+	'categorywatch-catmoveout' => 'העביר את $1 אל מחוץ לקטגוריה $2 אל הקטגוריה $3',
+	'categorywatch-catadd' => 'הוסיף את $1 לקטגוריה $2',
+	'categorywatch-catsub' => 'הסיר את $1 מהקטגוריה $2',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -233,6 +298,7 @@ $messages['hsb'] = array(
 	'categorywatch-catmoveout' => 'přesuny $1 z kategorije $2 do $3',
 	'categorywatch-catadd' => 'přida $1 kategoriji $2',
 	'categorywatch-catsub' => 'wotstroni $1 z kategorije $2',
+	'categorywatch-autocat' => 'Wot $1 awtomatisce wobkedźbowany',
 );
 
 /** Hungarian (Magyar)
@@ -264,6 +330,7 @@ Iste message es pro notificar te que, le $3, le usator $4 $5.',
 );
 
 /** Italian (Italiano)
+ * @author BrokenArrow
  * @author Darth Kule
  */
 $messages['it'] = array(
@@ -282,18 +349,20 @@ Questo messaggio ti avverte che alle $3 l\'utente $4 $5.',
  */
 $messages['ja'] = array(
 	'categorywatch-desc' => 'ウォッチリスト機能を拡張し、ウォッチしているカテゴリにおける所属構成の変更を通知するようにする',
-	'categorywatch-emailbody' => 'こんにちは $1、あなたが「$2」カテゴリをウォッチしているため、このメッセージを受け取りました。$3に利用者 $4 が$5ことをお知らせします。',
+	'categorywatch-emailbody' => 'こんにちは $1 さん、あなたが「$2」カテゴリをウォッチしているため、このメッセージを送りました。$3 に利用者 $4 が$5ことをお知らせします。',
 	'categorywatch-emailsubject' => 'ウォッチしているカテゴリ「$1」に関する変更',
 	'categorywatch-catmovein' => '$1をカテゴリ$2へ$3から移した',
 	'categorywatch-catmoveout' => '$1をカテゴリ$2から$3へ移した',
 	'categorywatch-catadd' => '$1をカテゴリ$2に加えた',
 	'categorywatch-catsub' => '$1をカテゴリ$2から外した',
+	'categorywatch-autocat' => '$1 により自動的にウォッチされました',
 );
 
 /** Korean (한국어)
  * @author Kwj2772
  */
 $messages['ko'] = array(
+	'categorywatch-desc' => '주시된 분류에 포함되는 문서의 분류 변경을 알리도록 주시문서 목록 기능을 확장',
 	'categorywatch-emailbody' => '$1님 안녕하세요. 당신은 "$2" 분류를 주시하고 있기 때문에 이 메시지를 수신하였습니다.
 이 메시지는 $3에 $4가 $5하였다는 것을 알리고자 전달되었습니다.',
 	'categorywatch-emailsubject' => '주시된 분류 "$1"에 대한 바뀜',
@@ -321,6 +390,7 @@ Ene Jrooss vun der {{SITENAME}}.',
 	'categorywatch-catmoveout' => '"$1" uss de Saachjropp "$2" erus jenomme un en de Saachjropp "$3" jedonn.',
 	'categorywatch-catadd' => '"$1" en de Saachjropp "$2" jedonn.',
 	'categorywatch-catsub' => '"$1" uss de Saachjropp "$2" eruss jenumme.',
+	'categorywatch-autocat' => 'Automattesch op {{GENDER:$1|däm $1 singe|däm $1 sing|däm Metmaacher $1 singe|dä $ ier|däm $1 singe}} Oppassleß',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -335,6 +405,20 @@ Dëse Message informéiert iech datt den $3 Auer de Benotzer $4 $5.',
 	'categorywatch-catmoveout' => "$1 aus der Kategorie $2 an d'Kategorie $3 geréckelt huet",
 	'categorywatch-catadd' => "$1 an d'Kategorie $2 derbäigesat huet",
 	'categorywatch-catsub' => '$1 aus der Kategorie $2 erausgeholl huet',
+);
+
+/** Macedonian (Македонски)
+ * @author Brest
+ */
+$messages['mk'] = array(
+	'categorywatch-desc' => 'Проширување на функциите на набљудувана листа, известување за промени врз членови од набљудувани категории',
+	'categorywatch-emailbody' => 'Здраво $1, ја добивте оваа порака бидејќи ја набљудувате категоријата "$2".
+Оваа порака ве известува дека на $3 корисникот $4 $5.',
+	'categorywatch-emailsubject' => 'Активности поврзани со набљудувана категорија "$1"',
+	'categorywatch-catmovein' => 'преместено $1 во категорија $2 од $3',
+	'categorywatch-catmoveout' => 'преместено $1 од категорија $2 во $3',
+	'categorywatch-catadd' => 'додадено $1 во категорија $2',
+	'categorywatch-catsub' => 'избришано $1 од категорија $2',
 );
 
 /** Dutch (Nederlands)
@@ -352,6 +436,7 @@ Hierbij ontvangt u de melding dat gebruiker $4 op $6 om $7 $5.',
 	'categorywatch-catmoveout' => '$1 van categorie $2 naar $3 heeft verplaatst',
 	'categorywatch-catadd' => '$1 aan categorie $2 heeft toegevoegd',
 	'categorywatch-catsub' => '$1 uit categorie $2 heeft verwijderd.',
+	'categorywatch-autocat' => 'Automatisch gevolgd door $1',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -427,6 +512,21 @@ Esta mensagem serve para o notificar de que, em $3, o utilizador $4 $5.',
 	'categorywatch-catsub' => 'removeu $1 da categoria $2',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'categorywatch-desc' => 'Estende a funcionalidade da lista de vigiados para incluir notificações sobre alterações nos membros de categorias vigiadas',
+	'categorywatch-emailbody' => 'Olá, $1.
+Você recebeu esta mensagem porque está vigiando a categoria "$2".
+Esta mensagem serve para notificá-lo de que, em $3, o utilizador $4 $5.',
+	'categorywatch-emailsubject' => 'Atividade envolvendo a categoria vigiada "$1"',
+	'categorywatch-catmovein' => 'moveu $1 para a categoria $2 a partir de $3',
+	'categorywatch-catmoveout' => 'moveu $1 da categoria $2 para $3',
+	'categorywatch-catadd' => 'adicionou $1 à categoria $2',
+	'categorywatch-catsub' => 'removeu $1 da categoria $2',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -462,12 +562,12 @@ Stu mèssagge avène mannete pe notificà a te ca \'u $3 l\'utende $4 $5.',
 $messages['ru'] = array(
 	'categorywatch-desc' => 'Расширяет функциональность списка наблюдения возможностью уведомлений об изменениях в страницах, входящих в некоторую категорию',
 	'categorywatch-emailbody' => 'Привет $1, вы получили это сообщение, потому что следите за категорией «$2»
-Это сообщение уведомляет вас о $3 участника $4 $5.',
+Это сообщение уведомляет вас о том, что $3 участник $4 $5.',
 	'categorywatch-emailsubject' => 'Изменения, затрагивающие наблюдаемую категорию «$1»',
-	'categorywatch-catmovein' => 'перенесён $1 в категорию $2 из $3',
-	'categorywatch-catmoveout' => 'перенесён $1 из категории $2 в $3',
-	'categorywatch-catadd' => 'добавлено $1 в категорию $2',
-	'categorywatch-catsub' => 'удалено $1 из категории $2',
+	'categorywatch-catmovein' => 'перенёс $1 в категорию $2 из $3',
+	'categorywatch-catmoveout' => 'перенёс $1 из категории $2 в $3',
+	'categorywatch-catadd' => 'добавил $1 в категорию $2',
+	'categorywatch-catsub' => 'удалил $1 из категории $2',
 );
 
 /** Slovak (Slovenčina)
@@ -482,6 +582,21 @@ Toto je oznam, že $3 používateľ $4 $5.',
 	'categorywatch-catmoveout' => 'presunul $1 z kategórie $2 do $3',
 	'categorywatch-catadd' => 'pridal $1 do kategórie $2',
 	'categorywatch-catsub' => 'odstránil $1 z kategórie $2',
+	'categorywatch-autocat' => 'Automaticky sleduje $1',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'categorywatch-desc' => 'Ärwiedert ju Beooboachtengslieste, sodät me Waiwiesengen kricht, wan Sieden in beooboachtede Kategorien iendrain of deeruut wächhoald wäide.',
+	'categorywatch-emailbody' => 'Moin $1, du krichst disse Ättergjucht, wült du ju Kategorie „$2“ beooboachtest.
+Disse Ättergjucht mäldet die, dät Benutser $4 uum $3 $5.',
+	'categorywatch-emailsubject' => 'Beoarbaidenge beträffend beooboachtede Kategorie "$1"',
+	'categorywatch-catmovein' => '$1 in Kategorie $2 fon $3 ferschäuwen häd',
+	'categorywatch-catmoveout' => '$1 fon Kategorie $2 in $3 ferschäuwen häd',
+	'categorywatch-catadd' => '$1 tou Kategorie $2 bietouföiged häd',
+	'categorywatch-catsub' => '$1 uut Kategorie $2 wächhoald häd',
 );
 
 /** Swedish (Svenska)
@@ -497,6 +612,20 @@ Detta meddelande meddelar dig att $3 användare $4 $5.',
 	'categorywatch-catmoveout' => 'flyttade $1 från kategori $2 till $3',
 	'categorywatch-catadd' => 'la till $1 i kategori $2',
 	'categorywatch-catsub' => 'tog bort $1 från kategori $2',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'categorywatch-desc' => 'గమనిస్తున్న వర్గాల్లోని సభ్యత్వపు మార్పుల గురించి గమనింపులు చూపించేలా వీక్షణ జాబితా సౌలభ్యాన్ని విస్తరిస్తుంది',
+	'categorywatch-emailbody' => 'హాయ్ $1, మీరు "$2" అనే వర్గాన్ని గమనిస్తున్నందున మీకీ సందేశం వచ్చింది.
+$3కి వాడుకరి $4 $5 తెలియజేయడంకోసం ఈ సందేశం.',
+	'categorywatch-emailsubject' => 'గమనిస్తున్న వర్గం "$1"లో జరుగుతున్న కలాపాలు',
+	'categorywatch-catmovein' => '$1 పేజీని $3 వర్గం నుండి $2కి మార్చారని',
+	'categorywatch-catmoveout' => '$1 పేజీని $2 వర్గం నుండి $3కి మార్చారని',
+	'categorywatch-catadd' => '$1 పేజీని $2 వర్గంలో చేర్చారని',
+	'categorywatch-catsub' => '$1 పేజీని $2 వర్గం నుండి తొలగించారని',
 );
 
 /** Tagalog (Tagalog)
@@ -518,13 +647,14 @@ Ang mensaheng ito ay para ipagbigay-alam sa iyo na noong $3 si tagagamit $4 ang 
  */
 $messages['vi'] = array(
 	'categorywatch-desc' => 'Mở rộng chức năng của danh sách theo dõi để thêm thông báo về sự thay đổi trang thành viên của thể loại được theo dõi',
-	'categorywatch-emailbody' => 'Xin chào $1, bạn nhận được thư này vì bạn đang theo dõi thể loại    	 	 	 	“$2”.
+	'categorywatch-emailbody' => 'Xin chào $1, bạn nhận được thư này vì bạn đang theo dõi thể loại “$2”.
 Chúng tôi muốn báo cho bạn biết là vào lúc $3, thành viên $4 $5.',
 	'categorywatch-emailsubject' => 'Hoạt động liên quan đến thể loại đang được theo dõi “$1”',
 	'categorywatch-catmovein' => 'đã di chuyển $1 vào thể loại $2 từ $3',
 	'categorywatch-catmoveout' => 'đã di chuyển $1 ra khỏi thể loại $2 đến $3',
 	'categorywatch-catadd' => 'đã thêm $1 vào thể loại $2',
 	'categorywatch-catsub' => 'đã bỏ $1 ra khỏi thể loại $2',
+	'categorywatch-autocat' => 'Tự động theo dõi bởi $1',
 );
 
 /** Volapük (Volapük)

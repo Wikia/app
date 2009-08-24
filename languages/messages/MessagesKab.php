@@ -583,15 +583,11 @@ Ahat yettumḥa neɣ yettbeddel isem-is.
 'rev-deleted-comment'         => '(awennit yettwakes)',
 'rev-deleted-user'            => '(isem n wemseqdac yettwakes)',
 'rev-deleted-event'           => '(asekcem yettwakkes)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-Tasiwelt-agi n tettwakkes seg weɣbar azayez.
-Waqila yella kter n talɣut deg [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} aɣmis n umḥay].
-</div>',
-'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">
-Tasiwelt-agi n tettwakkes seg weɣbar azayez.
+'rev-deleted-text-permission' => 'Tasiwelt-agi n tettwakkes seg weɣbar azayez.
+Waqila yella kter n talɣut deg [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} aɣmis n umḥay].',
+'rev-deleted-text-view'       => 'Tasiwelt-agi n tettwakkes seg weɣbar azayez.
 Kečč d anedbal, tzemreḍ a t-twaliḍ
-Waqila yella kter n talɣut [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} aɣmis n umḥay].
-</div>',
+Waqila yella kter n talɣut [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} aɣmis n umḥay].',
 'rev-delundel'                => 'ssken/ffer',
 'revisiondelete'              => 'Mḥu/kkes amḥay tisiwal',
 'revdelete-nooldid-title'     => 'Ulac nnican i tasiwelt',
@@ -850,7 +846,7 @@ Ma tesɛiḍ tugna-nni s resolution tameqqrant, azen-it, ma ulac beddel isem-is.
 'imagelinks'                => 'Izdayen',
 'linkstoimage'              => 'isebtar-agi sɛan azday ar afaylu-agi',
 'nolinkstoimage'            => 'Ulaḥedd seg isebtar sɛan azday ar afaylu-agi.',
-'sharedupload'              => 'Afaylu-yagi yettuseqdac sɣur wiki tiyaḍ.',
+'sharedupload'              => 'Afaylu-yagi yettuseqdac sɣur wiki tiyaḍ.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'shareduploadwiki'          => 'Ẓer $1 iwakken ad tessneḍ kter.',
 'shareduploadwiki-linktext' => 'Asebter n weglam n ufaylu',
 'noimage'                   => 'Afaylu s yisem-agi ulac-it, tzemreḍ ad $1.',
@@ -1138,7 +1134,7 @@ G leɛnayek wekki ɣef taqeffalt "Back/Précédent" n browser/explorateur inek, 
 'contributions' => 'Tikkin n wemseqdac',
 'mycontris'     => 'Tikkin inu',
 'contribsub2'   => 'n $1 ($2)',
-'nocontribs'    => 'Ur yufi ara abddel i tebɣiḍ.',
+'nocontribs'    => 'Ur yufi ara abddel i tebɣiḍ.', # Optional parameter: $1 is the user name
 'uctop'         => '(taneggarut)',
 
 'sp-contributions-newbies'     => 'Ssken tikkin n yimseqdacen imaynuten kan',
@@ -1427,10 +1423,8 @@ Please visit [http://www.mediawiki.org/wiki/Localisation MediaWiki Localisation]
 'confirmemail_text'       => 'Deg wiki-yagi, yessefk ad tvalidiḍ tansa n email inek
 qbel ad tesseqdceḍ iḍaɣaren n email. Tella taqeffalt d akessar, wekki fell-as
 iwakken yettwazen ungal n usentem semail. Email-nni yesɛa azady, ldi-t.',
-'confirmemail_pending'    => '<div class="error">
-Yettwazen-ak yagi ungal n usentem; lukan txelqeḍ isem wemseqdac tura kan,
-ahat yessefk ad tegguniḍ cwiṭ qbel ad tɛreḍeḍ ad testeqsiḍ ɣef ungal amaynut.
-</div>',
+'confirmemail_pending'    => 'Yettwazen-ak yagi ungal n usentem; lukan txelqeḍ isem wemseqdac tura kan,
+ahat yessefk ad tegguniḍ cwiṭ qbel ad tɛreḍeḍ ad testeqsiḍ ɣef ungal amaynut.',
 'confirmemail_send'       => 'Azen-iyi-d angal n usentem s e-mail iwakken ad snetmeɣ.',
 'confirmemail_sent'       => 'E-mail yettwazen iwakken ad tsentmeḍ.',
 'confirmemail_oncreate'   => 'Angal n usentem yettwazen ar tansa n e-mail inek.
@@ -1462,11 +1456,9 @@ ad yemmut ass $4.',
 'scarytranscludetoolong'  => '[URL d aɣezfan bezzaf; suref-aɣ]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">
-Izdayen n zdeffir n umagrad-agi:<br />
-$1
-</div>',
-'trackbackremove'   => ' ([$1 Mḥu])',
+'trackbackbox'      => 'Izdayen n zdeffir n umagrad-agi:<br />
+$1',
+'trackbackremove'   => '([$1 Mḥu])',
 'trackbacklink'     => 'Azday n zdeffir',
 'trackbackdeleteok' => 'Azday n zdeffir yettumḥa.',
 

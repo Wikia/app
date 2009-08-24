@@ -5,7 +5,7 @@ class CodeRevisionTagView extends CodeRevisionListView {
 		parent::__construct( $repoName );
 		$this->mTag = $tag;
 	}
-	
+
 	function getPager() {
 		return new SvnRevTagTablePager( $this, $this->mTag );
 	}
@@ -16,7 +16,7 @@ class SvnRevTagTablePager extends SvnRevTablePager {
 		parent::__construct( $view );
 		$this->mTag = $tag;
 	}
-	
+
 	function getQueryInfo() {
 		$info = parent::getQueryInfo();
 		$info['tables'][] = 'code_tags';
@@ -26,7 +26,7 @@ class SvnRevTagTablePager extends SvnRevTablePager {
 		return $info;
 	}
 
-	function getTitle(){
+	function getTitle() {
 		$repo = $this->mRepo->getName();
 		return SpecialPage::getTitleFor( 'Code', "$repo/tag/$this->mTag" );
 	}

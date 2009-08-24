@@ -45,6 +45,21 @@ $aliases['bs'] = array(
 $aliases['de'] = array(
 	'RequestAccount' => array( 'Benutzerkonto beantragen' ),
 	'ConfirmAccounts' => array( 'Benutzerkonto bestätigen' ),
+	'UserCredentials' => array( 'Benutzerangaben' ),
+);
+
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'RequestAccount' => array( 'Póžedanje na konto' ),
+	'ConfirmAccounts' => array( 'Konto wobkšuśiś' ),
+	'UserCredentials' => array( 'Wužywarske pódaśa' ),
+);
+
+/** Greek (Ελληνικά) */
+$aliases['el'] = array(
+	'RequestAccount' => array( 'ΑίτησηΛογαριασμού' ),
+	'ConfirmAccounts' => array( 'ΕπιβεβαίωσηΛογαριασμού' ),
+	'UserCredentials' => array( 'ΣυστάσειςΧρήστη' ),
 );
 
 /** Finnish (Suomi) */
@@ -61,6 +76,7 @@ $aliases['fr'] = array(
 
 /** Galician (Galego) */
 $aliases['gl'] = array(
+	'RequestAccount' => array( 'Solicitar unha conta' ),
 	'ConfirmAccounts' => array( 'Confirmar a conta' ),
 );
 
@@ -90,6 +106,7 @@ $aliases['hr'] = array(
 $aliases['hsb'] = array(
 	'RequestAccount' => array( 'Konto požadać' ),
 	'ConfirmAccounts' => array( 'Konto potwjerdźić' ),
+	'UserCredentials' => array( 'Wužywarske podaća' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
@@ -102,6 +119,20 @@ $aliases['hu'] = array(
 	'RequestAccount' => array( 'Felhasználói fiók igénylése' ),
 	'ConfirmAccounts' => array( 'Felhasználói fiók megerősítése' ),
 	'UserCredentials' => array( 'Felhasználói ajánlólevél' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'RequestAccount' => array( 'Requestar conto' ),
+	'ConfirmAccounts' => array( 'Confirmar contos' ),
+	'UserCredentials' => array( 'Referentias del usator' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'RequestAccount' => array( 'アカウント申請', 'アカウント登録申請' ),
+	'ConfirmAccounts' => array( 'アカウントの承認', 'アカウント申請の承認', 'アカウント登録申請の承認' ),
+	'UserCredentials' => array( '利用者信頼情報' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -118,6 +149,7 @@ $aliases['ko'] = array(
 $aliases['lb'] = array(
 	'RequestAccount' => array( 'Benotzerkont ufroen' ),
 	'ConfirmAccounts' => array( 'Benotzerkont confirméieren' ),
+	'UserCredentials' => array( 'Benotzerinformatiounen' ),
 );
 
 /** Macedonian (Македонски) */
@@ -177,6 +209,25 @@ $aliases['pt-br'] = array(
 	'UserCredentials' => array( 'Credenciais de usuário' ),
 );
 
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'RequestAccount' => array( 'Cerere cont' ),
+	'ConfirmAccounts' => array( 'Confirmă conturi' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'RequestAccount' => array( 'उपयोजकसंज्ञाविनन्ती' ),
+	'ConfirmAccounts' => array( 'उपयोजकसंज्ञापुष्टिकरोति' ),
+	'UserCredentials' => array( 'उपयोजकविश्वासपत्त्र' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'RequestAccount' => array( 'KërkoLlogari' ),
+	'ConfirmAccounts' => array( 'KonfirmoLlogaritë' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'ConfirmAccounts' => array( 'Bekräfta konto' ),
@@ -191,5 +242,12 @@ $aliases['sw'] = array(
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'ConfirmAccounts' => array( 'ยืนยันบัญชีผู้ใช้' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'RequestAccount' => array( 'Hilingin ang kuwenta', 'HilingKuwenta' ),
+	'ConfirmAccounts' => array( 'Tiyakin ang mga kuwenta' ),
+	'UserCredentials' => array( 'Mga katibayan ng katangian ng tagagamit' ),
 );
 

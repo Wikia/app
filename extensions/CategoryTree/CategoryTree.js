@@ -58,6 +58,7 @@ var categoryTreeRetryMsg = "Please wait a moment and try again.";
       categoryTreeLoadChildren(cat, options, div)
     }
 
+	// FIXME Why can't this just use uneval()?
     function categoryTreeEncodeValue(value) {
           switch (typeof value) {
               case 'function': 
@@ -146,3 +147,12 @@ var categoryTreeRetryMsg = "Please wait a moment and try again.";
       var opt = categoryTreeEncodeValue(options);
       sajax_do_call( "efCategoryTreeAjaxWrapper", [cat, opt, 'json'] , f );
     }
+    
+    // Re-show the CategoryTreeToggles.
+    addOnloadHook( function() {
+    	var toggles = getElementsByClassName( document, 'span', 'CategoryTreeToggle' );
+    	
+    	for( var i = 0; i<toggles.length; ++i ) {
+    		toggles[i].style.display = 'inline';
+    	}
+    } );

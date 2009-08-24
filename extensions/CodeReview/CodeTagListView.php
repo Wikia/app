@@ -12,10 +12,9 @@ class CodeTagListView extends CodeView {
 		$tags = $this->mRepo->getTagList();
 		$name = $this->mRepo->getName();
 		$text = '';
-		foreach( $tags as $tag ) {
+		foreach ( $tags as $tag ) {
 			$text .= "* [[Special:Code/$name/tag/$tag|$tag]]\n";
 		}
 		$wgOut->addWikiText( $text );
 	}
 }
-

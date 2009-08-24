@@ -82,7 +82,7 @@ class ApiLogin extends ApiBase {
 				wfRunHooks('UserLoginComplete', array(&$wgUser, &$injected_html));
 
 				$result['result'] = 'Success';
-				$result['lguserid'] = $wgUser->getId();
+				$result['lguserid'] = intval($wgUser->getId());
 				$result['lgusername'] = $wgUser->getName();
 				$result['lgtoken'] = $wgUser->getToken();
 				$result['cookieprefix'] = $wgCookiePrefix;
@@ -114,7 +114,7 @@ class ApiLogin extends ApiBase {
 			case LoginForm :: THROTTLED :
 				global $wgPasswordAttemptThrottle;
 				$result['result'] = 'Throttled';
-				$result['wait'] = $wgPasswordAttemptThrottle['seconds'];
+				$result['wait'] = intval($wgPasswordAttemptThrottle['seconds']);
 				break;
 			default :
 				ApiBase :: dieDebug(__METHOD__, "Unhandled case value: {$authRes}");
@@ -124,6 +124,10 @@ class ApiLogin extends ApiBase {
 	}
 
 	public function mustBePosted() { return true; }
+
+	public function isReadMode() {
+		return false;
+	}
 
 	public function getAllowedParams() {
 		return array (
@@ -158,6 +162,6 @@ class ApiLogin extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiLogin.php 45275 2009-01-01 02:02:03Z simetrical $';
+		return __CLASS__ . ': $Id: ApiLogin.php 48091 2009-03-06 13:49:44Z catrope $';
 	}
 }

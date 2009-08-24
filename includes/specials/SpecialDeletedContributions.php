@@ -26,9 +26,13 @@ class DeletedContribsPager extends IndexPager {
 	}
 
 	function getQueryInfo() {
+		global $wgUser;
 		list( $index, $userCond ) = $this->getUserCond();
 		$conds = array_merge( $userCond, $this->getNamespaceCond() );
-
+		// Paranoia: avoid brute force searches (bug 17792)
+		if( !$wgUser->isAllowed( 'suppressrevision' ) ) {
+			$conds[] = 'ar_deleted & ' . Revision::DELETED_USER . ' = 0';
+		}
 		return array(
 			'tables' => array( 'archive' ),
 			'fields' => array(
@@ -36,7 +40,7 @@ class DeletedContribsPager extends IndexPager {
 				'ar_user', 'ar_user_text', 'ar_deleted'
 			),
 			'conds' => $conds,
-			'options' => array( 'FORCE INDEX' => $index )
+			'options' => array( 'USE INDEX' => $index )
 		);
 	}
 
@@ -62,6 +66,8 @@ class DeletedContribsPager extends IndexPager {
 	}
 
 	function getNavigationBar() {
+		global $wgLang;
+
 		if ( isset( $this->mNavigationBar ) ) {
 			return $this->mNavigationBar;
 		}
@@ -74,9 +80,9 @@ class DeletedContribsPager extends IndexPager {
 
 		$pagingLinks = $this->getPagingLinks( $linkTexts );
 		$limitLinks = $this->getLimitLinks();
-		$limits = implode( ' | ', $limitLinks );
+		$limits = $wgLang->pipeList( $limitLinks );
 
-		$this->mNavigationBar = "({$pagingLinks['first']} | {$pagingLinks['last']}) " .
+		$this->mNavigationBar = "(" . $wgLang->pipeList( array( $pagingLinks['first'], $pagingLinks['last'] ) ) . ") " .
 			wfMsgExt( 'viewprevnext', array( 'parsemag' ), $pagingLinks['prev'], $pagingLinks['next'], $limits );
 		return $this->mNavigationBar;
 	}
@@ -113,7 +119,7 @@ class DeletedContribsPager extends IndexPager {
 				'user_text'  => $row->ar_user_text,
 				'timestamp'  => $row->ar_timestamp,
 				'minor_edit' => $row->ar_minor_edit,
-				'rev_deleted' => $row->ar_deleted,
+				'deleted' => $row->ar_deleted,
 				) );
 
 		$page = Title::makeTitle( $row->ar_namespace, $row->ar_title );
@@ -203,6 +209,8 @@ class DeletedContributionsPage extends SpecialPage {
 		}
 
 		global $wgUser, $wgOut, $wgLang, $wgRequest;
+
+		$wgOut->setPageTitle( wfMsgExt( 'deletedcontributions-title', array( 'parsemag' ) ) );
 
 		$options = array();
 
@@ -306,7 +314,7 @@ class DeletedContributionsPage extends SpecialPage {
 				
 			wfRunHooks( 'ContributionsToolLinks', array( $id, $nt, &$tools ) );
 
-			$links = implode( ' | ', $tools );
+			$links = $wgLang->pipeList( $tools );
 		}
 
 		// Old message 'contribsub' had one parameter, but that doesn't work for

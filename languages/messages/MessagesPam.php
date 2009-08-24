@@ -674,13 +674,11 @@ Subukan me ing [[Special:Search|searching on the wiki]] para kareng bayung bulun
 'rev-deleted-comment'         => '(milako ya ing komentu)',
 'rev-deleted-user'            => '(talagamit lagyu milako ya)',
 'rev-deleted-event'           => '(ing gawang pamaglog milako ya)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-Milako ya king simpanan a pangmalda (public archives) ining pamanalili king bulung.
-Mapaliaring ating detalle king [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} tala ding mebura (deletion log)].</div>',
-'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">
-Milako ya king simpanan malda (public archives) ining pamanaliling bulung.
+'rev-deleted-text-permission' => 'Milako ya king simpanan a pangmalda (public archives) ining pamanalili king bulung.
+Mapaliaring ating detalle king [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} tala ding mebura (deletion log)].',
+'rev-deleted-text-view'       => 'Milako ya king simpanan malda (public archives) ining pamanaliling bulung.
 Anting talapanibala ning {{SITENAME}}, maliari meng akit;
-mapaliaring maki detalle king [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} tala ding mebura (deletion log)].</div>',
+mapaliaring maki detalle king [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} tala ding mebura (deletion log)].',
 'rev-delundel'                => 'pakit/salikot',
 'revisiondelete'              => 'Ilako/e-ilako ing pamanalili',
 'revdelete-nooldid-title'     => 'E ustung pamanaliling target',
@@ -1122,32 +1120,27 @@ Miyalilan ing pamanayus nung i-click ya ing pamagat ning kolum (column header).'
 'listfiles_description' => 'Pamilarawan (description)',
 
 # File description page
-'filehist'                       => 'Amlat ning simpan (File history)',
-'filehist-help'                  => 'Mag-click kang petsa/oras ba meng akit ing itsura ning simpan aniang panaun a ita.',
-'filehist-deleteall'             => 'buran ing eganagana',
-'filehist-deleteone'             => 'buran ya ini',
-'filehist-revert'                => 'isubli',
-'filehist-current'               => 'salukuyan',
-'filehist-datetime'              => 'Petsa/Oras',
-'filehist-user'                  => 'Talagamit',
-'filehist-dimensions'            => 'Sukad',
-'filehist-filesize'              => 'Dagul ning simpan (file size)',
-'filehist-comment'               => 'Komentu/Puna',
-'imagelinks'                     => 'Deng suglung',
-'linkstoimage'                   => 'Makasuglung la king simpan a reti deng makatuking bulung:',
-'nolinkstoimage'                 => 'Alang bulung a pakasuglung king simpan (file) a ini.',
-'sharedupload'                   => 'Abe-abe yang milulan (shared upload) ya ing simpan a ini, at mapalyaring gagamitan de murin deng aliwang proyektu.',
-'shareduploadwiki'               => 'Pakilawe me ing $1 para king karagdagang impormasiun.',
-'shareduploadwiki-desc'          => 'Makabili ya king lalam ing pamilarawan (description) ketang kayang $1.',
-'shareduploadwiki-linktext'      => 'bulung ning pamilarawan simpan (file description page)',
-'shareduploadduplicate'          => 'Kapareu (duplicate) ne ning $1 ibat king simpanan pangkabilugan (shared repository) ing simpan (file) a ini.',
-'shareduploadduplicate-linktext' => 'aliwang simpan (file)',
-'shareduploadconflict'           => 'Pareu ya lagyu ing simpan a ini king $1 ibat king simpanan pangkabilugan (shared repository).',
-'shareduploadconflict-linktext'  => 'aliwang simpan (file)',
-'noimage'                        => 'Alang simpan a anti kaniyan lagyu; malyari kang $1.',
-'noimage-linktext'               => 'ilulan ya',
-'uploadnewversion-linktext'      => 'Maglulan bayung bersion na niting simpan',
-'imagepage-searchdupe'           => 'Maintun simpan a mipapareu (duplicate files)',
+'filehist'                  => 'Amlat ning simpan (File history)',
+'filehist-help'             => 'Mag-click kang petsa/oras ba meng akit ing itsura ning simpan aniang panaun a ita.',
+'filehist-deleteall'        => 'buran ing eganagana',
+'filehist-deleteone'        => 'buran ya ini',
+'filehist-revert'           => 'isubli',
+'filehist-current'          => 'salukuyan',
+'filehist-datetime'         => 'Petsa/Oras',
+'filehist-user'             => 'Talagamit',
+'filehist-dimensions'       => 'Sukad',
+'filehist-filesize'         => 'Dagul ning simpan (file size)',
+'filehist-comment'          => 'Komentu/Puna',
+'imagelinks'                => 'Deng suglung',
+'linkstoimage'              => 'Makasuglung la king simpan a reti deng makatuking bulung:',
+'nolinkstoimage'            => 'Alang bulung a pakasuglung king simpan (file) a ini.',
+'sharedupload'              => 'Abe-abe yang milulan (shared upload) ya ing simpan a ini, at mapalyaring gagamitan de murin deng aliwang proyektu.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'shareduploadwiki'          => 'Pakilawe me ing $1 para king karagdagang impormasiun.',
+'shareduploadwiki-desc'     => 'Makabili ya king lalam ing pamilarawan (description) ketang kayang $1.',
+'shareduploadwiki-linktext' => 'bulung ning pamilarawan simpan (file description page)',
+'noimage'                   => 'Alang simpan a anti kaniyan lagyu; malyari kang $1.',
+'noimage-linktext'          => 'ilulan ya',
+'uploadnewversion-linktext' => 'Maglulan bayung bersion na niting simpan',
 
 # File reversion
 'filerevert'                => 'Isubli ya ing $1',
@@ -1319,7 +1312,8 @@ Malyari meng kitiran ing panimanman o akakit, kapamilatan ning pamamili ning nun
 'special-categories-sort-abc'   => 'surian lang tukituki agpang keng kulitan',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Deng ambag da reng talagamit a mebura',
+'deletedcontributions'       => 'Deng ambag da reng talagamit a mebura',
+'deletedcontributions-title' => 'Deng ambag da reng talagamit a mebura',
 
 # Special:ListUsers
 'listusersfrom'      => 'Ipakit la reng talagamit magumpisa king:',
@@ -1585,7 +1579,7 @@ $1',
 'contributions' => 'Ambag da reng gagamit',
 'mycontris'     => 'Deng kakung ambag',
 'contribsub2'   => 'Para $1 ($2)',
-'nocontribs'    => 'Alang pamagbayung pareu/tutud kareng kundisiung deti.',
+'nocontribs'    => 'Alang pamagbayung pareu/tutud kareng kundisiung deti.', # Optional parameter: $1 is the user name
 'uctop'         => '(babo)',
 'month'         => 'Manibat king bulan a (at minuna pa):',
 'year'          => 'Manibat banuang (at minuna pa):',
@@ -2033,6 +2027,7 @@ Detang aliwa tambing (by default) lang makasalikut.
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags
@@ -2241,8 +2236,8 @@ mo aluban detang pamangamit a maki kaugnayan king e-mail. I-click me ing button
 king lalam ba yang magparlang e-mail kekang babye patune. Kayabe ya ketang e-mail
 ing metung a suglung a maki code; ibili me ketang kekang browser itang suglung
 ba mung patutwan a ustu ya ing kekang e-mail address.',
-'confirmemail_pending'     => '<div class="error">Atin nang miparalang confirmation code keka kapamilatan ning e-mail;
-nung kaibat-ibat mu pamung miglalang e-mail account, panayan me pamung datang kilub ning mapilan a minutu bayu ka maniad bayung code.</div>',
+'confirmemail_pending'     => 'Atin nang miparalang confirmation code keka kapamilatan ning e-mail;
+nung kaibat-ibat mu pamung miglalang e-mail account, panayan me pamung datang kilub ning mapilan a minutu bayu ka maniad bayung code.',
 'confirmemail_send'        => 'Magparla kang confirmation code',
 'confirmemail_sent'        => 'Patutuan ing e-mail miparla ya.',
 'confirmemail_oncreate'    => 'Ating miparalang confirmation code ketang kekang e-mail address.
@@ -2279,7 +2274,7 @@ Mayari/mapasu ya ining confirmation code keng $4.',
 'scarytranscludetoolong' => '[Masiadu yang makaba ing URL; pasensia na ka]',
 
 # Trackbacks
-'trackbackremove' => ' ([$1 Buran])',
+'trackbackremove' => '([$1 Buran])',
 
 # Delete conflict
 'deletedwhileediting' => 'Kapiadian: Mebura ya ing bulung ini kaibat mung migumpisang mag-edit!',

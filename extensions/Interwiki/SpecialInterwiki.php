@@ -19,8 +19,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'SpecialInterwiki',
 	'url'            => 'http://mediawiki.org/wiki/Extension:SpecialInterwiki',
 	'description'    => 'Adds a [[Special:Interwiki|special page]] to view and edit the interwiki table',
-	'svn-date'       => '$LastChangedDate: 2008-07-09 22:17:33 +0000 (Wed, 09 Jul 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 37451 $',
+	'svn-date'       => '$LastChangedDate: 2009-02-10 00:40:30 +0000 (Tue, 10 Feb 2009) $',
+	'svn-revision'   => '$LastChangedRevision: 47067 $',
 	'author'         => array( 'Stephanie Amanda Stevens', 'SPQRobin', 'others' ),
 	'descriptionmsg' => 'interwiki-desc',
 );
@@ -30,6 +30,7 @@ $wgExtensionMessagesFiles['Interwiki'] = $dir . 'SpecialInterwiki.i18n.php';
 $wgExtensionAliasesFiles['Interwiki'] = $dir . 'SpecialInterwiki.alias.php';
 
 $wgSpecialPages['Interwiki'] = 'SpecialInterwiki';
+$wgSpecialPageGroups['Interwiki'] = 'wiki';
 $wgAutoloadClasses['SpecialInterwiki'] = $dir . 'SpecialInterwiki_body.php';
 
 $wgAvailableRights[] = 'interwiki';

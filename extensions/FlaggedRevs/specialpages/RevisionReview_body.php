@@ -23,12 +23,12 @@ class RevisionReview extends UnlistedSpecialPage
 	var $dims = array();
 	var $unapprovedTags = 0;
 	
-    function __construct() {
+    public function __construct() {
 		parent::__construct( 'RevisionReview', 'review' );
 		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
-    function execute( $par ) {
+    public function execute( $par ) {
         global $wgRequest, $wgUser, $wgOut;
 		$confirm = $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) );
 		if( $wgUser->isAllowed( 'review' ) ) {
@@ -154,7 +154,11 @@ class RevisionReview extends UnlistedSpecialPage
 		// Basic permission check
 		if( $wgUser->isAllowed( 'review' ) ) {
 			if( $wgUser->isBlocked() ) {
-				return '<err#>';
+				wfLoadExtensionMessages( 'FlaggedRevs' );
+				$blocklist = SpecialPage::getTitleFor( 'Ipblocklist' );
+				$blocklog = $blocklist->getFullUrl( 'ip=' . urlencode('#'.$wgUser->getBlockId()) );
+				return '<err#><h2>'.wfMsgHtml('blockedtitle').'</h2>'.
+					wfMsgExt('revreview-blocked','parseinline',$blocklog);
 			}
 		} else {
 			return '<err#>';
@@ -232,7 +236,7 @@ class RevisionReview extends UnlistedSpecialPage
 			return '<err#>';
 		}
 		// Incomplete review?
-		if( !$form->oldid ) {
+		if( !$form->oldid || is_null($form->page) ) {
 			return '<err#>';
 		}
 		if( $form->unapprovedTags && $form->unapprovedTags < count( FlaggedRevs::getDimensions() ) ) {
@@ -265,7 +269,7 @@ class RevisionReview extends UnlistedSpecialPage
 	 * Show revision review form
 	 */
 	private function showRevision() {
-		global $wgOut, $wgUser, $wgTitle, $wgFlaggedRevComments, $wgFlaggedRevTags, $wgFlaggedRevValues;
+		global $wgOut, $wgUser, $wgTitle, $wgFlaggedRevComments;
 
 		if( $this->unapprovedTags )
 			$wgOut->addWikiText( '<strong>' . wfMsg( 'revreview-toolow' ) . '</strong>' );
@@ -294,9 +298,10 @@ class RevisionReview extends UnlistedSpecialPage
 
 		$formradios = array();
 		# Dynamically contruct our radio options
-		foreach( $wgFlaggedRevTags as $tag => $minQL ) {
+		foreach( FlaggedRevs::getDimensions() as $tag => $levels ) {
 			$formradios[$tag] = array();
-			for ($i=0; $i <= $wgFlaggedRevValues; $i++) {
+			$x = count($levels); // number of levels AND zero
+			for( $i=0; $i < $x; $i++ ) {
 				$formradios[$tag][] = array( "revreview-$tag-$i", "wp$tag", $i );
 			}
 			$form .= '<td><strong>' . wfMsgHtml( "revreview-$tag" ) . '</strong></td><td width=\'20\'></td>';
@@ -363,7 +368,7 @@ class RevisionReview extends UnlistedSpecialPage
 		$difflink = '(' . $this->skin->makeKnownLinkObj( $this->page, wfMsgHtml('diff'),
 			'&diff=' . $rev->getId() . '&oldid=prev' ) . ')';
 		$revlink = $this->skin->makeLinkObj( $this->page, $date, 'oldid=' . $rev->getId() );
-		return "<li> $difflink $revlink " . $this->skin->revUserLink($rev) . " " . $this->skin->revComment($rev) . "</li>";
+		return "<li>$difflink $revlink " . $this->skin->revUserLink($rev) . " " . $this->skin->revComment($rev) . "</li>";
 	}
 
 	public function submit() {
@@ -583,6 +588,8 @@ class RevisionReview extends UnlistedSpecialPage
 				$synced = false;
 			else if( $oldfrev->getComment() != $this->notes )
 				$synced = false;
+			else if( $oldfrev->getQuality() != $quality )
+				$synced = false;
 			# Don't review if the same
 			if( $synced ) {
 				wfProfileOut( __METHOD__ );
@@ -594,7 +601,7 @@ class RevisionReview extends UnlistedSpecialPage
 		# Our review entry
  		$flaggedRevision = new FlaggedRevision( array(
 			'fr_rev_id'        => $rev->getId(),
-			'fr_page_id'       => $this->page->getArticleID(),
+			'fr_page_id'       => $rev->getPage(),
 			'fr_user'          => $wgUser->getId(),
 			'fr_timestamp'     => wfTimestampNow(),
 			'fr_comment'       => $this->notes,
@@ -607,6 +614,8 @@ class RevisionReview extends UnlistedSpecialPage
 
 		$dbw->begin();
 		$flaggedRevision->insertOn( $tmpset, $imgset );
+		# Avoid any lag issues
+		$this->page->resetArticleId( $rev->getPage() );
 		# Update recent changes
 		self::updateRecentChanges( $this->page, $rev->getId(), $this->rcid, true );
 		# Update the article review log
@@ -656,16 +665,6 @@ class RevisionReview extends UnlistedSpecialPage
 		}
 		# Update link tracking. This will trigger our hook to add stable links too...
 		$u->doUpdate();
-		
-		# Update user stats if this rev was not flagged
-		if( !$oldfrev && $rev->getRawUser() ) {
-			global $wgFlaggedRevsAutopromote;
-			$p = FlaggedRevs::getUserParams( $rev->getRawUser() );
-			$p['reviewedEdits'] = isset($p['reviewedEdits']) ? $p['reviewedEdits'] : 0;
-			$p['reviewedEdits']++;
-			if( $wgFlaggedRevsAutopromote['totalReviewedEdits'] >= $p['reviewedEdits'] )
-				FlaggedRevs::saveUserParams( $rev->getRawUser(), $p );
-		}
 
 		$dbw->commit();
 		# Purge cache/squids for this page and any page that uses it
@@ -753,7 +752,7 @@ class RevisionReview extends UnlistedSpecialPage
 	 */
 	public static function userCan( $tag, $value ) {
 		global $wgFlagRestrictions, $wgUser;
-
+		# No restrictions -> full access
 		if( !isset($wgFlagRestrictions[$tag]) )
 			return true;
 		# Validators always have full access
@@ -778,20 +777,20 @@ class RevisionReview extends UnlistedSpecialPage
 	 * @returns bool
 	 */
 	public static function userCanSetFlags( $flags, $oldflags = array() ) {
-		global $wgUser, $wgFlaggedRevTags, $wgFlaggedRevValues;
-		
+		global $wgUser;
 		if( !$wgUser->isAllowed('review') ) {
 			return false;
 		}
 		# Check if all of the required site flags have a valid value
 		# that the user is allowed to set.
-		foreach( $wgFlaggedRevTags as $qal => $minQL ) {
+		foreach( FlaggedRevs::getDimensions() as $qal => $levels ) {
 			$level = isset($flags[$qal]) ? $flags[$qal] : 0;
+			$highest = count($levels) - 1; // highest valid level
 			if( !self::userCan($qal,$level) ) {
 				return false;
 			} else if( isset($oldflags[$qal]) && !self::userCan($qal,$oldflags[$qal]) ) {
 				return false;
-			} else if( $level < 0 || $level > $wgFlaggedRevValues ) {
+			} else if( $level < 0 || $level > $highest ) {
 				return false;
 			}
 		}
@@ -805,12 +804,11 @@ class RevisionReview extends UnlistedSpecialPage
 		# Olders edits be marked as patrolled now...
 		$dbw->update( 'recentchanges',
 			array( 'rc_patrolled' => $patrol ? 1 : 0 ),
-			array( 'rc_namespace' => $title->getNamespace(),
-				'rc_title' => $title->getDBKey(),
+			array( 'rc_cur_id' => $title->getArticleId(),
 				$patrol ? "rc_this_oldid <= $revId" : "rc_this_oldid = $revId" ),
 			__METHOD__,
 			// Performance
-			array( 'USE INDEX' => 'rc_namespace_title', 'LIMIT' => 50 )
+			array( 'USE INDEX' => 'rc_cur_id', 'LIMIT' => 50 )
 		);
 		# New page patrol may be enabled. If so, the rc_id may be the first
 		# edit and not this one. If it is different, mark it too.
@@ -864,11 +862,11 @@ class RevisionReview extends UnlistedSpecialPage
 	{
 		global $wgFlaggedRevsLogInRC;
 		wfLoadExtensionMessages( 'FlaggedRevs' );
-		$log = new LogPage( 'review', ($auto ? false : $wgFlaggedRevsLogInRC) );
+		$log = new LogPage( 'review', $auto ? false : $wgFlaggedRevsLogInRC, $auto ? "skipUDP" : "UDP" );
 		# ID, accuracy, depth, style
 		$ratings = array();
 		foreach( $dims as $quality => $level ) {
-			$ratings[] = wfMsgForContent( "revreview-$quality" ) . ": " . 
+			$ratings[] = wfMsgForContent( "revreview-$quality" ) . wfMsgForContent( 'colon-separator' ) . 
 				wfMsgForContent("revreview-$quality-$level");
 		}
 		$isAuto = ($auto && !FlaggedRevs::isQuality($dims)); // Paranoid check

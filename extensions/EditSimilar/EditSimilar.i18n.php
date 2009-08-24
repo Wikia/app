@@ -2,6 +2,7 @@
 /**
  * Internationalisation file for the EditSimilar extension
  *
+ * @file
  * @ingroup Extensions
  */
 
@@ -12,25 +13,27 @@ $messages = array();
  * @author Łukasz 'TOR' Garczewski
  */
 $messages['en'] = array(
-	'editsimilar-desc'                           => 'Encourages users to edit a similar page after saving a page',
-	'editsimilar-thanks'                         => 'Thank you for your contribution.
+	'editsimilar-desc' => 'Encourages users to edit a similar page after saving a page',
+	'editsimilar-thanks' => 'Thank you for your contribution.
 Check out these related pages: $1.',
-	'editsimilar-thanks-singleresult'            => 'Thank you for your contribution.
+	'editsimilar-thanks-singleresult' => 'Thank you for your contribution.
 Check out this related page: $1.',
-	'editsimilar-thanks-notsimilar'              => 'Thank you for your contribution.
+	'editsimilar-thanks-notsimilar' => 'Thank you for your contribution.
 These pages could also use your help: $1.',
 	'editsimilar-thanks-notsimilar-singleresult' => 'Thank you for your contribution.
 This page could also use your help: $1.',
-	'editsimilar-thankyou'                       => 'Thank you for your contribution, $1!',
-	'editsimilar-link-disable'                   => 'set preferences',
-	'tog-edit-similar'                           => 'Enable similar pages suggestions',
+	'editsimilar-thankyou' => 'Thank you for your contribution, $1!',
+	'editsimilar-link-disable' => 'set preferences',
+	'tog-edit-similar' => 'Enable similar pages suggestions',
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  */
 $messages['qqq'] = array(
 	'editsimilar-desc' => 'Extension description displayed on [[Special:Version]].',
+	'editsimilar-thankyou' => '* $1 is a username.',
 );
 
 /** Afrikaans (Afrikaans)
@@ -90,6 +93,24 @@ $messages['bg'] = array(
 	'tog-edit-similar' => 'Включване на предположенията за сходни страници',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'editsimilar-desc' => 'Ohrabruje korisnike za uređuju slične stranice nakon spremanja stranice',
+	'editsimilar-thanks' => 'Hvala Vam za Vaš doprinos.
+Pogledajte ove povezane stranice: $1.',
+	'editsimilar-thanks-singleresult' => 'Hvala Vam za Vaš doprinos.
+Pogledajte ovu sličnu stranicu: $1.',
+	'editsimilar-thanks-notsimilar' => 'Hvala Vam za Vaš doprinos.
+Ove stranice Vam također mogu pomoći: $1.',
+	'editsimilar-thanks-notsimilar-singleresult' => 'Hvala Vam za Vaš doprinos.
+Ova stranica Vam također može pomoći: $1.',
+	'editsimilar-thankyou' => 'Korisniče $1, hvala Vam za Vaš doprinos!',
+	'editsimilar-link-disable' => 'postavi postavke',
+	'tog-edit-similar' => 'Omogući sugestije za slične stranice',
+);
+
 /** German (Deutsch)
  * @author ChrisiPK
  * @author Leithian
@@ -128,6 +149,13 @@ Toś ten bok by teke twóju pomoc trjebał: $1',
 	'tog-edit-similar' => 'Naraźenja za pódobne boki zmóžniś',
 );
 
+/** Greek (Ελληνικά)
+ * @author Konsnos
+ */
+$messages['el'] = array(
+	'editsimilar-desc' => 'Παροτρύνει τους χρήστες να επεξεργαστούν παρόμοιες σελίδες αφού αποθήκευσαν μία σελίδα',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -142,6 +170,19 @@ Jen paĝoj kiuj ankaŭ bezonas vian helpon: $1.',
 Ĉi tiu paĝo ankaŭ povas uzi vian helpon: $1.',
 	'editsimilar-thankyou' => 'Dankon pro via kontribuo, $1!',
 	'editsimilar-link-disable' => 'fari preferojn',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'editsimilar-desc' => 'Animaa usuarios a editar una página similar después de grabar una página',
+	'editsimilar-thanks-notsimilar' => 'Gracias por tu contribución.
+Estas páginas podrían también usar tu ayuda: $1.',
+	'editsimilar-thanks-notsimilar-singleresult' => 'Gracias por tu contribución.
+Esta página podría también usar tu ayuda: $1.',
+	'editsimilar-thankyou' => 'Gracias por tu contribución, $1!',
+	'tog-edit-similar' => 'Habilitar sugerencias de páginas similares',
 );
 
 /** Finnish (Suomi)
@@ -207,6 +248,24 @@ Esta páxina pode tamén precisar da súa axuda: $1.',
  */
 $messages['grc'] = array(
 	'editsimilar-link-disable' => 'τιθέναι τὰς προαιρέσεις',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'editsimilar-desc' => 'Schlat Benutzer noch em Spychere vun ere Syte vor, e ähnligi Syte z bearbeite',
+	'editsimilar-thanks' => 'Dankschen fir Dyy Byytrag.
+Lueg au die ähnlige Syte aa: $1.',
+	'editsimilar-thanks-singleresult' => 'Dankschen fir Dyy Byytrag.
+Lueg au die Syten aa: $1.',
+	'editsimilar-thanks-notsimilar' => 'Dankschen fir Dyy Byytrag.
+Die Syte chennte au ne Hilf syy: $1.',
+	'editsimilar-thanks-notsimilar-singleresult' => 'Dankschen fir Dyy Byytrag.
+Die Syte chennte au ne Hilf syy: $1.',
+	'editsimilar-thankyou' => 'Dankschen fir Dyy Byytrag, $1!',
+	'editsimilar-link-disable' => 'Yystellige setze',
+	'tog-edit-similar' => 'Vorschleg fir ähnligi Syten aazeige',
 );
 
 /** Hebrew (עברית)
@@ -298,6 +357,20 @@ Anche questa pagina potrebbe usufruire del tuo aiuto: $1.',
 	'editsimilar-thankyou' => 'Grazie per il tuo contributo, $1!',
 	'editsimilar-link-disable' => 'imposta preferenze',
 	'tog-edit-similar' => 'Attiva suggerimenti di pagine simili',
+);
+
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'editsimilar-desc' => '利用者がページを保存した後に、類似のページを編集するよう勧める',
+	'editsimilar-thanks' => '投稿ありがとうございます。関連するこれらのページにも目を通してみてください: $1。',
+	'editsimilar-thanks-singleresult' => '投稿ありがとうございます。関連するこのページにも目を通してみてください: $1。',
+	'editsimilar-thanks-notsimilar' => '投稿ありがとうございます。これらのページにもあなたの助けが活かせるかもしれません: $1。',
+	'editsimilar-thanks-notsimilar-singleresult' => '投稿ありがとうございます。このページにもあなたの助けが活かせるかもしれません: $1。',
+	'editsimilar-thankyou' => '$1さん、投稿ありがとうございます!',
+	'editsimilar-link-disable' => '設定する',
+	'tog-edit-similar' => '類似ページの提案を有効にする',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -418,9 +491,12 @@ Aquesta pagina deuriá aver, ela tanben, besonh de vòstra ajuda : $1.',
 
 /** Polish (Polski)
  * @author Bartek Łapiński
+ * @author Matma Rex
+ * @author Sp5uhe
  * @author Łukasz 'TOR' Garczewski
  */
 $messages['pl'] = array(
+	'editsimilar-desc' => 'Zachęca do edycji podobnego artykułu po zapisaniu strony',
 	'editsimilar-thanks' => 'Dzięki za edycję!
 Zerknij też na podobne artykuły: $1.',
 	'editsimilar-thanks-singleresult' => 'Dzięki za edycję!
@@ -450,6 +526,24 @@ Esta página também poderia beneficiar da sua ajuda: $1.',
 	'editsimilar-thankyou' => 'Obrigado pela sua contribuição, $1!',
 	'editsimilar-link-disable' => 'configurar preferências',
 	'tog-edit-similar' => 'Activar sugestões de páginas semelhantes',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'editsimilar-desc' => 'Encoraja os utilizadores a editarem uma página semelhante depois de gravar uma página',
+	'editsimilar-thanks' => 'Obrigado pela sua contribuição.
+Veja estas páginas relacionadas: $1.',
+	'editsimilar-thanks-singleresult' => 'Obrigado pela sua contribuição.
+Veja esta página relacionada: $1.',
+	'editsimilar-thanks-notsimilar' => 'Obrigado pela sua contribuição.
+Estas páginas também poderiam ser beneficiadas por sua ajuda: $1.',
+	'editsimilar-thanks-notsimilar-singleresult' => 'Obrigado pela sua contribuição.
+Esta página também poderia ser beneficiada por sua ajuda: $1.',
+	'editsimilar-thankyou' => 'Obrigado pela sua contribuição, $1!',
+	'editsimilar-link-disable' => 'configurar preferências',
+	'tog-edit-similar' => 'Ativar sugestões de páginas semelhantes',
 );
 
 /** Romanian (Română)
@@ -514,6 +608,24 @@ Den här sidan kan också behöva din hjälp: $1.',
 	'editsimilar-thankyou' => 'Tack för ditt bidrag, $1!',
 	'editsimilar-link-disable' => 'ändra inställningar',
 	'tog-edit-similar' => 'Slå på förslag för liknande sidor',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'editsimilar-desc' => 'Humihimok sa mga tagagamit na bumago ng isang katulad na pahina pagkaraan magsagip ng isang pahina',
+	'editsimilar-thanks' => 'Salamat sa iyong ambag.
+Suriin ang kaugnay na mga pahinang ito: $1.',
+	'editsimilar-thanks-singleresult' => 'Salamat sa iyong ambag. 
+Suriin ang kaugnay na pahinang ito: $1.',
+	'editsimilar-thanks-notsimilar' => 'Salamat sa iyong ambag. 
+Mapapakinabangan din ng mga pahinang ito ang tulong mo: $1.',
+	'editsimilar-thanks-notsimilar-singleresult' => 'Salamat sa iyong ambag. 
+Mapapakinabangan din ng pahinang ito ang tulong mo: $1.',
+	'editsimilar-thankyou' => 'Salamat sa iyong ambag, $1!',
+	'editsimilar-link-disable' => 'itakda ang mga kagustuhan',
+	'tog-edit-similar' => 'Paganahin ang mga mungkahi para sa katulad na mga pahina',
 );
 
 /** Turkish (Türkçe)

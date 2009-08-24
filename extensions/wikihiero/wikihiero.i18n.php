@@ -125,6 +125,13 @@ $messages['dsb'] = array(
 	'wikihiero-desc' => 'Pśidawa toflicku <tt>&lt;hiero&gt;</tt> za zwobraznjenje hieroglyfow',
 );
 
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'wikihiero-desc' => 'Προσθέτει την ετικέτα <tt>&lt;hiero&gt;</tt> για την εμφάνιση ιερογλυφικών',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -162,9 +169,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
  */
 $messages['fr'] = array(
-	'wikihiero-desc' => 'Ajoute la balise <tt>&lt;hiero&gt;</tt> pour afficher les hiéroglyphes',
+	'wikihiero-desc' => 'Ajoute la balise <tt>&lt;hiero&gt;</tt> pour afficher des hiéroglyphes',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -179,6 +187,13 @@ $messages['frp'] = array(
  */
 $messages['gl'] = array(
 	'wikihiero-desc' => 'Engade a etiqueta <tt>&lt;hiero&gt;</tt> para amosar hieroglifos (hieroglyph)',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'wikihiero-desc' => 'Fiegt s <tt>&lt;hiero&gt;</tt>-Tag fir d Formatierig vu Hieroglyphe yy',
 );
 
 /** Hebrew (עברית)
@@ -239,10 +254,11 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Aotake
+ * @author Fryed-peach
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'wikihiero-desc' => '象形文字を表示する <tt>&lt;hiero&gt;</tt> タグを追加する',
+	'wikihiero-desc' => 'ヒエログリフを表示する <tt>&lt;hiero&gt;</tt> タグを追加する',
 );
 
 /** Jutish (Jysk)
@@ -295,10 +311,11 @@ $messages['li'] = array(
 );
 
 /** Lithuanian (Lietuvių)
+ * @author Garas
  * @author Hugo.arg
  */
 $messages['lt'] = array(
-	'wikihiero-desc' => 'Prideda <tt>&lt;hieroglifas&gt;</tt> tagus, kad rodyti hieroglifą',
+	'wikihiero-desc' => 'Prideda <tt>&lt;hiero&gt;</tt> gaires rodyti hieroglifus',
 );
 
 /** Marathi (मराठी)
@@ -364,6 +381,13 @@ $messages['pt'] = array(
 	'wikihiero-desc' => 'Adiciona a marca <tt>&lt;hiero&gt;</tt> para apresentar hieróglifos',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'wikihiero-desc' => 'Adiciona a marca <tt>&lt;hiero&gt;</tt> para exibir hieróglifos',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -406,11 +430,25 @@ $messages['sk'] = array(
 	'wikihiero-desc' => 'Pridáva značku <tt>&lt;hiero&gt;</tt> na zobrazovanie hieroglyfov',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'wikihiero-desc' => 'Vendosë kodin <tt>&lt;hiero&gt;</tt> për të shfaqur hieroglifë',
+);
+
 /** Serbian Cyrillic ekavian (ћирилица)
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'wikihiero-desc' => 'Додаје <tt>&lt;hiero&gt;</tt> ознаку за приказ хијероглифа.',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'wikihiero-desc' => 'Föiget dät <tt>&lt;hiero&gt;</tt>-Tag tou ju Formatierenge fon Hieroglyphen bietou',
 );
 
 /** Sundanese (Basa Sunda)
@@ -453,6 +491,13 @@ $messages['tg-cyrl'] = array(
  */
 $messages['tl'] = array(
 	'wikihiero-desc' => 'Nagdaragdag ng tatak na <tt>&lt;hiro&gt;</tt> upang mapalitaw ang mga hiroglipikong panitik (hiroglip)',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'wikihiero-desc' => 'Hiyeroglifleri görüntülemek için <tt>&lt;hiero&gt;</tt> etiketini ekler',
 );
 
 /** Ukrainian (Українська)

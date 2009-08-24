@@ -41,6 +41,7 @@ $wgGrammarForms['be-tarask'] = array(
 		'ВікіНавіны'  => 'ВікіНавін',
 		'ВікіСлоўнік' => 'ВікіСлоўніка',
 		'Вікіпэдыя'   => 'Вікіпэдыі',
+		'Фундацыя «Вікімэдыя»' => 'Фундацыі «Вікімэдыя»'
 	),
 	# akusative
 	'вінавальны' => array(
@@ -48,6 +49,7 @@ $wgGrammarForms['be-tarask'] = array(
 		'ВікіНавіны'  => 'ВікіНавіны',
 		'ВікіСлоўнік' => 'ВікіСлоўнік',
 		'Вікіпэдыя'   => 'Вікіпэдыю',
+		'Фундацыя «Вікімэдыя»' => 'Фундацыю «Вікімэдыя»'
 	),
 	# prepositional
 	'месны' => array(
@@ -57,6 +59,7 @@ $wgGrammarForms['be-tarask'] = array(
 		'ВікіНавіны'  => 'ВікіНавінах',
 		'ВікіСлоўнік' => 'ВікіСлоўніку',
 		'Вікіпэдыя'   => 'Вікіпэдыі',
+		'Фундацыя «Вікімэдыя»' => 'Фундацыі «Вікімэдыя»'
 	),
 ); # be-tarask
 
@@ -503,7 +506,10 @@ $wgGrammarForms['hu'] = array(
 
 $wgGrammarForms['la'] = array(
 	'genitive' => array(
-		'Vicifons' => 'Vicifontis'
+		'Vicimedia Communia' => 'Vicimediorum Communium',
+	),
+	'ablative' => array(
+		'Vicimedia Communia' => 'Vicimediis Communibus',
 	),
 ); # la
 

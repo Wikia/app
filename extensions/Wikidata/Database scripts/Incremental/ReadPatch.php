@@ -77,7 +77,7 @@ function ReadSQLFile( $database, $pattern, $prefix, $filename ){
 }
 
 function getUserId( $userName ){
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$result = $dbr->query( "select user_id from user where user_name = '$userName'" );
 	if ( $row = $dbr->fetchObject( $result ) ){
 		return $row->user_id;

@@ -16,6 +16,7 @@ class SGMUtils {
 	 */
 	function functionRender( &$parser, $coordinates = '1,1', $zoom = '14', $type = 'G_NORMAL_MAP', $control_class = 'GSmallMapControl', $class = 'pmap', $width = '200', $height = '200', $style = '' ) {
 		global $wgJsMimeType, $wgGoogleMapsKey, $wgGoogleMapsOnThisPage;
+		global $wgLang;
 
 		if (!$wgGoogleMapsOnThisPage) {$wgGoogleMapsOnThisPage = 0;}
 		$wgGoogleMapsOnThisPage++;
@@ -23,10 +24,10 @@ class SGMUtils {
 		list($lat, $lon) = SGMUtils::getLatLon($coordinates);
 
 		$output =<<<END
-<script src="http://maps.google.com/maps?file=api&v=2&key=$wgGoogleMapsKey" type="$wgJsMimeType"></script>
+<script src="http://maps.google.com/maps?file=api&v=2&key=$wgGoogleMapsKey&hl={$wgLang->getCode()}" type="$wgJsMimeType"></script>
 <script type="text/javascript"> function createMarker(point, label) {  var marker = new GMarker(point);  GEvent.addListener(marker, 'click', function() { marker.openInfoWindowHtml(label, GInfoWindoOptions.maxWidth=100); });  return marker;  }  function addLoadEvent(func) {  var oldonload = window.onload;  if (typeof oldonload == 'function') {  window.onload = function() {  oldonload();  func();  };  } else {  window.onload = func;  }  }  window.unload = GUnload;</script>
 <div id="map$wgGoogleMapsOnThisPage" class="$class" style="$style" ></div>
-<script type="text/javascript"> function makeMap{$wgGoogleMapsOnThisPage}() { if (GBrowserIsCompatible()) {var map = new GMap2(document.getElementById("map{$wgGoogleMapsOnThisPage}"), {size: new GSize('$width', '$height')}); map.addControl(new {$control_class}()); map.addControl(new GMapTypeControl()); map.setCenter(new GLatLng({$lat}, {$lon}), {$zoom}, {$type}); var point = new GLatLng({$lat}, {$lon}); var marker = new GMarker(point); map.addOverlay(marker); } else { document.write('should show map'); } } addLoadEvent(makeMap{$wgGoogleMapsOnThisPage});</script>
+<script type="text/javascript"> function makeMap{$wgGoogleMapsOnThisPage}() { if (GBrowserIsCompatible()) {var map = new GMap2(document.getElementById("map{$wgGoogleMapsOnThisPage}"), {size: new GSize('$width', '$height')}); map.addControl(new {$control_class}()); map.addControl(new GMapTypeControl()); map.setCenter(new GLatLng({$lat}, {$lon}), {$zoom}, {$type}); var point = new GLatLng({$lat}, {$lon}); var marker = new GMarker(point); map.addOverlay(marker); } else { } } addLoadEvent(makeMap{$wgGoogleMapsOnThisPage});</script>
 
 END;
 
@@ -171,24 +172,25 @@ END;
 
 END;
 
-		// map div
-		$text .= '<div id="sm_map'.$wgGoogleMapsOnThisPage.'" class="'.$class.'"></div>';
-
 		//geocoder HTML
 		wfLoadExtensionMessages( 'SemanticGoogleMaps' );
+		$enter_address_here_text = wfMsg('semanticgooglemaps-enteraddresshere');
 		$lookup_coordinates_text = wfMsg('semanticgooglemaps_lookupcoordinates');
 		$text .= <<<END
 	<p>
-		<input size="60" id= "geocode" name="geocode" value="" type="text">
-		<a href="#" onClick="showAddress(document.forms['createbox'].geocode.value); return false">$lookup_coordinates_text</a>
+		<input size="30" id= "geocode" name="geocode" value="$enter_address_here_text" style="color: #707070" onFocus="if (this.value=='$enter_address_here_text') {this.value=''}" type="text">
+		<input type="submit" onClick="showAddress(document.forms['createbox'].geocode.value); return false" value="$lookup_coordinates_text" />
 	</p>
-	<br />
 
 END;
 
+		// map div
+		$text .= '<div id="sm_map'.$wgGoogleMapsOnThisPage.'" class="'.$class.'"></div>';
+
 		// map Javascript
+		global $wgLang;
 		$text .= <<<END
-<script src="http://maps.google.com/maps?file=api&v=2&key=$wgGoogleMapsKey" type="$wgJsMimeType"></script>
+<script src="http://maps.google.com/maps?file=api&v=2&key=$wgGoogleMapsKey&hl={$wgLang->getCode()}" type="$wgJsMimeType"></script>
 <script type="text/javascript">
 function showAddress(address) {
 	makeMap{$wgGoogleMapsOnThisPage}();

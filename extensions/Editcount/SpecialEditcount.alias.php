@@ -38,6 +38,11 @@ $aliases['de'] = array(
 	'Editcount' => array( 'Beitragszähler' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Editcount' => array( 'Licak změnow' ),
+);
+
 /** Spanish (Español) */
 $aliases['es'] = array(
 	'Editcount' => array( 'Ediciones_de_Usuario' ),
@@ -55,7 +60,7 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'Editcount' => array( 'CompteurÉdition', 'CompteurEdition' ),
+	'Editcount' => array( 'Compteur de modifications', 'CompteurModifications', 'CompteurEditions', 'CompteurÉditions', "Compteur d'éditions", 'CompteurÉdition', 'CompteurEdition' ),
 );
 
 /** Galician (Galego) */
@@ -80,6 +85,11 @@ $aliases['hr'] = array(
 	'Editcount' => array( 'Brojač_izmjena' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Editcount' => array( 'Ličak změnow' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'Editcount' => array( 'KonteEdit' ),
@@ -90,9 +100,19 @@ $aliases['hu'] = array(
 	'Editcount' => array( 'Szerkesztések száma' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Editcount' => array( 'Numero de modificationes' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'Editcount' => array( 'Jumlah suntingan' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'Editcount' => array( '編集回数' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -147,6 +167,11 @@ $aliases['oc'] = array(
 	'Editcount' => array( 'ComptadorEdicion' ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'Editcount' => array( 'Licznik edycji' ),
+);
+
 /** Portuguese (Português) */
 $aliases['pt'] = array(
 	'Editcount' => array( 'Contador de edições' ),
@@ -162,6 +187,11 @@ $aliases['qu'] = array(
 	'Editcount' => array( 'RuraqpaLlamkapusqankuna' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Editcount' => array( 'गणनसम्पादन्‌' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Editcount' => array( 'Redigeringsräknare' ),
@@ -170,5 +200,10 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'Editcount' => array( 'Idadiyakuhariri' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Editcount' => array( 'Bilang ng pamamatnugot' ),
 );
 

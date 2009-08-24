@@ -53,6 +53,21 @@ $messages['arz'] = array(
 	'logentry-invalidtoken' => 'نص غير صحيح',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'logentry-invalidpage' => 'Ungültige Seitn',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'logentry' => 'StavkaZapisa',
+	'logentry-invalidpage' => 'Nevaljana stranica',
+);
+
 /** German (Deutsch)
  * @author Melancholie
  */
@@ -90,6 +105,13 @@ $messages['eo'] = array(
 	'logentry-invalidtoken' => 'Malvalida ĵetono',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'logentry-invalidpage' => 'Página inválida',
+);
+
 /** Finnish (Suomi)
  * @author Str4nd
  * @author Vililikku
@@ -123,6 +145,27 @@ $messages['gl'] = array(
 	'logentry' => 'Entrada do rexistro',
 	'logentry-invalidpage' => 'Páxina inválida',
 	'logentry-invalidtoken' => 'Ficha inválida',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'logentry-append' => 'Aafiege',
+	'logentry-parserhook-desc' => 'Die Tag-Erwyterig bietet e Formular zum Aahänge/Voraastelle in Logbuechsyte',
+	'logentry-specialpage-desc' => 'Die Tag-Erwyterig bietet d Ufbereitig fir s Aahänge an Logbuechsyte',
+	'logentry' => 'Logbuechyytrag',
+	'logentry-invalidpage' => 'Nit giltigi Syte',
+	'logentry-invalidtoken' => 'Nit giltig Token',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ * @author YaronSh
+ */
+$messages['he'] = array(
+	'logentry-append' => 'הוספה',
+	'logentry-invalidpage' => 'דף בלתי תקין',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -160,6 +203,18 @@ $messages['ia'] = array(
 	'logentry-invalidtoken' => 'Indicio invalide',
 );
 
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'logentry-append' => '追加',
+	'logentry-parserhook-desc' => 'このタグ拡張機能はログページの先頭または末尾に項目を追加するフォームを提供します',
+	'logentry-specialpage-desc' => 'このタグ拡張機能はログページに項目を追加する処理を提供します',
+	'logentry' => 'ログ項目',
+	'logentry-invalidpage' => '無効なページ',
+	'logentry-invalidtoken' => '無効な字句',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Thearith
  */
@@ -184,6 +239,7 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'logentry-append' => 'Derbäisetzen',
+	'logentry-invalidpage' => 'Net valabel Säit',
 );
 
 /** Nahuatl (Nāhuatl)
@@ -210,7 +266,11 @@ $messages['nl'] = array(
  */
 $messages['nn'] = array(
 	'logentry-append' => 'Legg til',
+	'logentry-parserhook-desc' => 'Denne merkeutvidinga gjev eit skjema for å leggja til element etter/føre på loggsider',
+	'logentry-specialpage-desc' => 'Denne merkeutvidinga gjev handsaming for leggja til element på loggsider',
+	'logentry' => 'Loggelement',
 	'logentry-invalidpage' => 'Ugyldig sida',
+	'logentry-invalidtoken' => 'Ugyldig token',
 );
 
 /** Occitan (Occitan)
@@ -223,6 +283,30 @@ $messages['oc'] = array(
 	'logentry' => 'Jornal de las entradas',
 	'logentry-invalidpage' => 'Pagina incorrècta',
 	'logentry-invalidtoken' => 'Presa incorrècta',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'logentry-append' => 'Acrescentar',
+	'logentry-parserhook-desc' => 'Esta extensão de marca fornece uma forma de acrescentar ao início/fim de páginas de registo',
+	'logentry-specialpage-desc' => 'Esta extensão de marca fornece processamento para acrescentar a páginas de registo',
+	'logentry' => 'Entrada de Registo',
+	'logentry-invalidpage' => 'Página inválida',
+	'logentry-invalidtoken' => 'Token inválido',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'logentry-append' => 'Acrescentar',
+	'logentry-parserhook-desc' => 'Esta extensão de marca fornece uma forma de acrescentar dados ao início/fim de páginas de registro',
+	'logentry-specialpage-desc' => 'Esta extensão de marca fornece processamento para acrescentar dados a páginas de registro',
+	'logentry' => 'Entrada de Registro',
+	'logentry-invalidpage' => 'Página inválida',
+	'logentry-invalidtoken' => 'Token inválido',
 );
 
 /** Russian (Русский)
@@ -246,11 +330,30 @@ $messages['sk'] = array(
 	'logentry-invalidtoken' => 'Neplatný token',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'logentry-invalidpage' => 'Faqe jovalide',
+);
+
 /** Swedish (Svenska)
  * @author Najami
  */
 $messages['sv'] = array(
 	'logentry-invalidpage' => 'Ogiltig sida',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'logentry-append' => 'Idugtong',
+	'logentry-parserhook-desc' => 'Ang karugtong na tatak na ito ay nagbibigay ng isang pormularyo para sa pagdurugtong sa huli/harap ng mga pahina ng pagtatala',
+	'logentry-specialpage-desc' => 'Ang karugtong na tatak na ito ay nagbibigay ng pagpoproseso ng pagdurugtong sa mga pahina ng pagtatala',
+	'logentry' => 'Pagpapasok sa Tala',
+	'logentry-invalidpage' => 'Hindi tanggap na pahina',
+	'logentry-invalidtoken' => 'Hindi tanggap na pananda',
 );
 
 /** Volapük (Volapük)

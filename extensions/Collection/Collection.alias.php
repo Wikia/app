@@ -10,155 +10,200 @@ $aliases = array();
 
 /** English */
 $aliases['en'] = array(
-	'Collection' => array( 'Collection' ),
+	'Book' => array( 'Book', 'Collection' ),
 );
 
 /** Arabic (العربية)
  * @author Meno25
  */
 $aliases['ar'] = array(
-	'Collection' => array( 'مجموعة' ),
+	'Book' => array( 'كتاب', 'مجموعة' ),
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Meno25
  */
 $aliases['arz'] = array(
-	'Collection' => array( 'مجموعة' ),
+	'Book' => array( 'كتاب', 'مجموعة' ),
 );
 
 /** Assamese (অসমীয়া) */
 $aliases['as'] = array(
-	'Collection' => array( 'সংগ্ৰহ' ),
+	'Book' => array( 'সংগ্ৰহ' ),
 );
 
 /** Breton (Brezhoneg) */
 $aliases['br'] = array(
-	'Collection' => array( 'Dastumad' ),
+	'Book' => array( 'Dastumad' ),
 );
 
 /** Bosnian (Bosanski) */
 $aliases['bs'] = array(
-	'Collection' => array( 'Kolekcija' ),
+	'Book' => array( 'Kolekcija' ),
 );
 
 /** German (Deutsch) */
 $aliases['de'] = array(
-	'Collection' => array( 'Sammlung' ),
+	'Book' => array( 'Buch', 'Sammlung' ),
+);
+
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Book' => array( 'Knigły', 'zběrka' ),
 );
 
 /** Greek (Ελληνικά) */
 $aliases['el'] = array(
-	'Collection' => array( 'Συλλογή' ),
+	'Book' => array( 'Συλλογή' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'Book' => array( 'Libro', 'Libros', 'Colección', 'Colecciones' ),
 );
 
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
-	'Collection' => array( 'Kokoelma' ),
+	'Book' => array( 'Kirja', 'Kokoelma' ),
+);
+
+/** French (Français) */
+$aliases['fr'] = array(
+	'Book' => array( 'Livre' ),
 );
 
 /** Galician (Galego) */
 $aliases['gl'] = array(
-	'Collection' => array( 'Colección' ),
+	'Book' => array( 'Libro' ),
 );
 
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
-	'Collection' => array( 'Sammlig' ),
+	'Book' => array( 'Sammlig' ),
 );
 
 /** Hebrew (עברית) */
 $aliases['he'] = array(
-	'Collection' => array( 'אוסף' ),
+	'Book' => array( 'ספר', 'אוסף' ),
 );
 
 /** Croatian (Hrvatski) */
 $aliases['hr'] = array(
-	'Collection' => array( 'Zbirka' ),
+	'Book' => array( 'Zbirka' ),
+);
+
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Book' => array( 'Kniha', 'zběrka' ),
 );
 
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
-	'Collection' => array( 'Gyűjtemény', 'Gyűjtemények' ),
+	'Book' => array( 'Könyv', 'Könyvek', 'Gyűjtemény', 'Gyűjtemények' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Book' => array( 'Libro' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
-	'Collection' => array( 'Koleksi' ),
+	'Book' => array( 'Koleksi' ),
 );
 
 /** Italian (Italiano) */
 $aliases['it'] = array(
-	'Collection' => array( 'Raccolta' ),
+	'Book' => array( 'Raccolta' ),
 );
 
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'Collection' => array( 'コレクション' ),
+	'Book' => array( 'ブック', 'コレクション' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
-	'Collection' => array( 'ការចងក្រង' ),
+	'Book' => array( 'ការចងក្រង' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
-	'Collection' => array( 'Sammlung' ),
+	'Book' => array( 'Sammlung' ),
 );
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
-	'Collection' => array( 'Колекција' ),
+	'Book' => array( 'Книга', 'Колекција' ),
 );
 
 /** Maltese (Malti) */
 $aliases['mt'] = array(
-	'Collection' => array( 'Kollezzjoni' ),
+	'Book' => array( 'Kollezzjoni' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
 $aliases['nds-nl'] = array(
-	'Collection' => array( 'Verzameling' ),
+	'Book' => array( 'Verzameling' ),
 );
 
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
-	'Collection' => array( 'Collectie', 'Verzameling' ),
+	'Book' => array( 'Collectie', 'Verzameling' ),
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Book' => array( 'Bok' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
-	'Collection' => array( 'Samling' ),
+	'Book' => array( 'Samling' ),
 );
 
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
-	'Collection' => array( 'Colleccion' ),
+	'Book' => array( 'Colleccion' ),
 );
 
 /** Polish (Polski) */
 $aliases['pl'] = array(
-	'Collection' => array( 'Kolekcja' ),
+	'Book' => array( 'Książka', 'Kolekcja' ),
 );
 
 /** Portuguese (Português) */
 $aliases['pt'] = array(
-	'Collection' => array( 'Colecção', 'Coleção' ),
+	'Book' => array( 'Livro', 'Colecção', 'Coleção' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
 $aliases['pt-br'] = array(
-	'Collection' => array( 'Coleção', 'Colecção' ),
+	'Book' => array( 'Coleção', 'Colecção' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Book' => array( 'समुच्यय' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Book' => array( 'Libra', 'Koleksion' ),
 );
 
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
-	'Collection' => array( 'Samling' ),
+	'Book' => array( 'Bok', 'Samling' ),
 );
 
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
-	'Collection' => array( 'Kusanya' ),
+	'Book' => array( 'Kusanya' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Book' => array( 'Aklat', 'Kalipunan' ),
 );
 

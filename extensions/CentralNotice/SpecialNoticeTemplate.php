@@ -80,12 +80,12 @@ class SpecialNoticeTemplate extends UnlistedSpecialPage {
 			}
 		}
 
-                // Handle viewiing of a template in all languages
-                if ( $sub == 'view' && $wgRequest->getVal( 'wpUserLanguage' ) == 'all' ) {
-                        $template =  $wgRequest->getVal( 'template' );
-                        $this->showViewAvailable( $template );
-                        return;
-                }
+		// Handle viewiing of a template in all languages
+		if ( $sub == 'view' && $wgRequest->getVal( 'wpUserLanguage' ) == 'all' ) {
+			$template =  $wgRequest->getVal( 'template' );
+			$this->showViewAvailable( $template );
+			return;
+		}
 
 		// Handle viewing a specific template
 		if ( $sub == 'view' && $wgRequest->getText( 'template' ) != '' ) {
@@ -365,7 +365,7 @@ class SpecialNoticeTemplate extends UnlistedSpecialPage {
 		$htmlOut .= Xml::openElement( 'table', array ( 'cellpadding' => 9 ) );
 		list( $lsLabel, $lsSelect ) = Xml::languageSelector( $wpUserLang );
 
-                $newPage = SpecialPage::getTitleFor( 'NoticeTemplate', 'view' );
+		$newPage = SpecialPage::getTitleFor( 'NoticeTemplate', 'view' );
                  
 		$htmlOut .= Xml::tags( 'tr', null,
 			Xml::tags( 'td', null, $lsLabel ) .
@@ -410,62 +410,63 @@ class SpecialNoticeTemplate extends UnlistedSpecialPage {
 			$htmlOut .= Xml::closeElement( 'form' );
 		}
 
-                /*
-                 * Show Clone form
-                 */
-                if ( $this->editable ) { 
-                        $htmlOut .= Xml::openElement ( 'form', 
-                                array(
-                                        'method' => 'post',
-                                        'action' => SpecialPage::getTitleFor( 'NoticeTemplate', 'clone' )->getLocalUrl()
-                                )
-                        );
+		/*
+		 * Show Clone form
+		 */
+		if ( $this->editable ) { 
+			$htmlOut .= Xml::openElement ( 'form', 
+				array(
+					'method' => 'post',
+					'action' => SpecialPage::getTitleFor( 'NoticeTemplate', 'clone' )->getLocalUrl()
+				)
+			);
 
-                        $htmlOut .= Xml::fieldset( wfMsg( 'centralnotice-clone-notice' ) );
-                        $htmlOut .= Xml::openElement( 'table', array( 'cellpadding' => 9 ) );
-                        $htmlOut .= Xml::openElement( 'tr' );
-                        $htmlOut .= Xml::inputLabel( 'Name:', 'newTemplate', 'newTemplate, 25');
-                        $htmlOut .= Xml::submitButton( wfMsg( 'centralnotice-clone' ), array ( 'id' => 'clone' ) );
-                        $htmlOut .= Xml::hidden( 'oldTemplate', $currentTemplate );
+			$htmlOut .= Xml::fieldset( wfMsg( 'centralnotice-clone-notice' ) );
+			$htmlOut .= Xml::openElement( 'table', array( 'cellpadding' => 9 ) );
+			$htmlOut .= Xml::openElement( 'tr' );
+			$htmlOut .= Xml::inputLabel( 'Name:', 'newTemplate', 'newTemplate, 25');
+			$htmlOut .= Xml::submitButton( wfMsg( 'centralnotice-clone' ), array ( 'id' => 'clone' ) );
+			$htmlOut .= Xml::hidden( 'oldTemplate', $currentTemplate );
 
-                        $htmlOut .= Xml::closeElement( 'tr' );
-                        $htmlOut .= Xml::closeElement( 'table' );
-                        $htmlOut .= Xml::closeElement( 'form' );
-                }
+			$htmlOut .= Xml::closeElement( 'tr' );
+			$htmlOut .= Xml::closeElement( 'table' );
+			$htmlOut .= Xml::closeElement( 'fieldset' );
+			$htmlOut .= Xml::closeElement( 'form' );
+		}
 
-                // Output HTML
-                $wgOut->addHTML( $htmlOut );
-        }
+		// Output HTML
+		$wgOut->addHTML( $htmlOut );
+	}
 
-        public function showViewAvailable( $template ) {
-            global $wgOut, $wgUser;
+	public function showViewAvailable( $template ) {
+		global $wgOut, $wgUser;
 
-            // Testing to see if bumping up the memory limit lets meta preview
-            ini_set( 'memory_limit', '120M' );
+		// Testing to see if bumping up the memory limit lets meta preview
+		ini_set( 'memory_limit', '120M' );
 
-            $sk = $wgUser->getSkin();
+		$sk = $wgUser->getSkin();
 
-            // Pull all available text for a template
-            $langs = array_keys( $this->getTranslations( $template ) );
-            $htmlOut = '';
+		// Pull all available text for a template
+		$langs = array_keys( $this->getTranslations( $template ) );
+		$htmlOut = '';
     
-            foreach( $langs as $lang ) {
-                // Link and Preview all available translations
-                $viewPage = SpecialPage::getTitleFor( 'NoticeTemplate', 'view' );
-                $render = new SpecialNoticeText();
-                $render->project = 'wikipedia';
-                $render->language = $lang;
-                $htmlOut .= Xml::tags( 'td', array( 'valign' => 'top' ),
-                        $sk->makeLinkObj( $viewPage,
-                                $lang,
-                                'template=' . urlencode( $template ) . "&wpUserLanguage=$lang") . 
-                        Xml::fieldset( wfMsg( 'centralnotice-preview' ),
-                                $render->getHtmlNotice( $template )
-                        )
-                );
-            }
-            return $wgOut->addHtml( $htmlOut );
-        }
+		foreach( $langs as $lang ) {
+			// Link and Preview all available translations
+			$viewPage = SpecialPage::getTitleFor( 'NoticeTemplate', 'view' );
+			$render = new SpecialNoticeText();
+			$render->project = 'wikipedia';
+			$render->language = $lang;
+			$htmlOut .= Xml::tags( 'td', array( 'valign' => 'top' ),
+				$sk->makeLinkObj( $viewPage,
+					$lang,
+					'template=' . urlencode( $template ) . "&wpUserLanguage=$lang") . 
+				Xml::fieldset( wfMsg( 'centralnotice-preview' ),
+					$render->getHtmlNotice( $template )
+				)
+			);
+		}
+		return $wgOut->addHtml( $htmlOut );
+	}
             
 	private function updateMessage( $text, $translation, $lang, $token = false ) {
 		global $wgUser;
@@ -613,7 +614,7 @@ class SpecialNoticeTemplate extends UnlistedSpecialPage {
          */
         public function cloneTemplate( $source, $dest ) {
             // Reset the timer as updates on meta take a long time
-            set_time_limit( 60 );
+            set_time_limit( 300 );
             // Pull all possible langs
             $langs = $this->getTranslations( $source );
             

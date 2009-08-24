@@ -244,7 +244,7 @@ class Maintenance extends SpecialPage {
 			case 'deleteRevision':
 				$delete = $wgRequest->getText( 'wpDelete' );
 				$revisions = explode( "\n", $delete );
-				$wgOut->addWikiMsg( 'maintenance-revdelete', implode( ', ', $revisions ), wfWikiID() );
+				$wgOut->addWikiMsg( 'maintenance-revdelete', implode( ', ', $revisions ), wfWikiID(), count( $revisions ) );
 				$affected = 0;
 				// Switch the user here from the current user to Delete page script
 				$OldUser = $wgUser;

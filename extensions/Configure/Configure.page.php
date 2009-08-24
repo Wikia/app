@@ -11,6 +11,7 @@ abstract class ConfigurationPage extends SpecialPage {
 	protected $mCanEdit = true;
 	protected $conf;
 	protected $mConfSettings;
+	protected $mIsPreview = false;
 
 	/**
 	 * Constructor
@@ -30,7 +31,7 @@ abstract class ConfigurationPage extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgUser, $wgRequest, $wgOut, $wgConf, $wgConfigureWikis;
+		global $wgUser, $wgRequest, $wgOut, $wgConf, $wgConfigureWikis, $wgLang;
 
 		$this->setHeaders();
 
@@ -63,7 +64,7 @@ abstract class ConfigurationPage extends SpecialPage {
 				}
 				if ( is_array( $wgConfigureWikis ) && !in_array( $wiki, $wgConfigureWikis ) ) {
 					$wgOut->wrapWikiMsg( '<div class="errorbox"><strong>$1</strong></div>',
-						array( 'configure-transwiki-not-in-range', $wiki, implode( ', ', $wgConfigureWikis ) ) );
+						array( 'configure-transwiki-not-in-range', $wiki, $wgLang->commaList( $wgConfigureWikis ) ) );
 					return;
 				}
 			}
@@ -108,7 +109,8 @@ abstract class ConfigurationPage extends SpecialPage {
 				$this->showForm();
 			break;
 		case 'diff':
-			$this->conf = $this->importFromRequest();
+			$this->conf = $this->importFromRequest() + $this->conf;
+			$this->mIsPreview = true;
 			$this->showDiff();
 		case 'initial':
 		default:
@@ -161,6 +163,15 @@ abstract class ConfigurationPage extends SpecialPage {
 			$allowed = $wgUser->isAllowed( $this->mRestriction . '-interwiki' );
 		}
 		return $allowed;
+	}
+
+	/**
+	 * Accessor for $this->conf
+	 *
+	 * @return array
+	 */
+	public function getConf() {
+		return $this->conf;
 	}
 
 	/**
@@ -311,18 +322,19 @@ abstract class ConfigurationPage extends SpecialPage {
 
 		if ( $version = $wgRequest->getVal( 'version' ) ) {
 			if ( $version == 'default' || $wgConf->versionExists( $version ) ) {
-				$conf = $wgConf->getOldSettings( $version );
-
 				if ( $version == 'default' ) { ## Hacky special case.
-					$conf[$this->mWiki] = $conf['default'];
+					$this->conf = $wgConf->getDefaultsForWiki( $this->mWiki );
+				} else {
+					$conf = $wgConf->getOldSettings( $version );
+
+					if ( !isset( $conf[$this->mWiki] ) ) {
+						$wgOut->wrapWikiMsg( '<div class="errorbox">$1</div>',
+							array( 'configure-old-not-available', $version ) );
+						return false;
+					}
+					$this->conf = $conf[$this->mWiki];
 				}
 
-				if ( !isset( $conf[$this->mWiki] ) ) {
-					$wgOut->wrapWikiMsg( '<div class="errorbox">$1</div>',
-						array( 'configure-old-not-available', $version ) );
-					return false;
-				}
-				$this->conf = $conf[$this->mWiki];
 				$current = null;
 				foreach ( $this->conf as $name => $value ) {
 					if ( $this->canBeMerged( $name, $value ) ) {
@@ -405,8 +417,8 @@ abstract class ConfigurationPage extends SpecialPage {
 			$text .= "</li>\n</ul>\n";
 		}
 		$link = SpecialPage::getTitleFor( 'ViewConfig' );
-		$text .= Xml::tags( 'p', null, $skin->makeKnownLinkObj( $link, wfMsgHtml( 'configure-view-all-versions' ) ) );
-		$text .= Xml::tags( 'p', null, $skin->makeKnownLinkObj( $link, wfMsgHtml( 'configure-view-default' ), 'version=default' ) );
+		$text .= Xml::tags( 'p', null, $skin->link( $link, wfMsgHtml( 'configure-view-all-versions' ), array(), array(), array( 'known' ) ) );
+		$text .= Xml::tags( 'p', null, $skin->link( $link, wfMsgHtml( 'configure-view-default' ), array(), array( 'version' => 'default' ), array( 'known' ) ) );
 
 		$text .= '</fieldset>';
 		return $text;
@@ -566,7 +578,7 @@ abstract class ConfigurationPage extends SpecialPage {
 								} else {
 									$val = $wgRequest->getCheck( $id );
 								}
-								if ($val)
+								if ( $val )
 									$settings[$name][$group][$right] = true;
 							} else if ( $wgRequest->getCheck( $id ) ) {
 								$settings[$name][$group][] = $right;
@@ -600,7 +612,8 @@ abstract class ConfigurationPage extends SpecialPage {
 				case 'promotion-conds':
 					$options = array( 'or' => '|', 'and' => '&', 'xor' => '^', 'not' => '!' );
 					$conds = array( APCOND_EDITCOUNT => 'int', APCOND_AGE => 'int', APCOND_EMAILCONFIRMED => 'bool',
-						APCOND_INGROUPS => 'array', APCOND_ISIP => 'text', APCOND_IPINRANGE => 'text' );
+						APCOND_INGROUPS => 'array', APCOND_ISIP => 'text', APCOND_IPINRANGE => 'text',
+						APCOND_AGE_FROM_EDIT => 'int' );
 
 					if ( isset( $_REQUEST['wp' . $name . '-vals'] ) ) {
 						$groups = explode( "\n", trim( $wgRequest->getText( 'wp' . $name . '-vals' ) ) );
@@ -697,7 +710,7 @@ abstract class ConfigurationPage extends SpecialPage {
 			}
 
 			if ( array_key_exists( $name, $settings ) ) {
-				$settings[$name] = $this->cleanupSetting( $name, $settings[$name] );
+				$settings[$name] = $this->cleanupSetting( $name, $settings[$name], $type );
 				if ( $settings[$name] === null )
 					unset( $settings[$name] );
 			}
@@ -713,10 +726,10 @@ abstract class ConfigurationPage extends SpecialPage {
 	 * @param $val Mixed: setting value
 	 * @return Mixed
 	 */
-	protected function cleanupSetting( $name, $val ) {
+	protected function cleanupSetting( $name, $val, $type ) {
 		global $wgConf;
 
-		if (!empty($val) || $val) {
+		if ( !empty( $val ) || $val || $type == 'bool' ) {
 			return $val;
 		}
 
@@ -725,7 +738,7 @@ abstract class ConfigurationPage extends SpecialPage {
 			$list = $this->mConfSettings->getEmptyValues();
 
 		static $defaults = null;
-		if ($defaults === null)
+		if ( $defaults === null )
 			$defaults = $wgConf->getDefaultsForWiki( $this->mWiki );
 
 		if ( array_key_exists( $name, $list ) ) {
@@ -856,7 +869,8 @@ abstract class ConfigurationPage extends SpecialPage {
 
 	/** Show a hidden-by-default search form */
 	protected function buildSearchForm() {
-		$form = wfMsgExt( 'configure-js-search-prompt', 'parseinline' ) . '&nbsp;' . Xml::element( 'input', array( 'id' => 'configure-search-input', 'size' => 45 ) );
+		$form = wfMsgExt( 'configure-js-search-prompt', 'parseinline' ) . wfMsgExt( 'word-separator', array( 'escapenoentities' ) ) .
+			Xml::element( 'input', array( 'id' => 'configure-search-input', 'size' => 45 ) );
 		$form = Xml::tags( 'p', null, $form ) . "\n" . Xml::openElement( 'ul', array('id' => 'configure-search-results') ) . '</ul>';
 		$form = Xml::fieldset( wfMsg( 'configure-js-search-legend' ), $form, array( 'style' => 'display: none;', 'id' => 'configure-search-form' ) );
 		return $form;
@@ -1014,10 +1028,10 @@ abstract class ConfigurationPage extends SpecialPage {
 					"\n</pre>";
 			}
 			$text = wfMsgExt( 'configure-arrayinput-oneperline', 'parseinline' );
-			$text .= "<textarea id='wp{$conf}' name='wp{$conf}' cols='30' rows='8' style='width: 95%;'>\n";
+			$text .= "<textarea id='wp{$conf}' name='wp{$conf}' cols='30' rows='8' style='width: 95%;'>";
 			if ( is_array( $default ) )
 				$text .= implode( "\n", $default );
-			$text .= "\n</textarea>\n";
+			$text .= "</textarea>\n";
 			return $text;
 		}
 		if ( $type == 'assoc' ) {
@@ -1267,6 +1281,7 @@ abstract class ConfigurationPage extends SpecialPage {
 				}
 				$all = array_diff( $all, $this->getSettingValue( 'wgImplicitGroups' ) );
 			}
+			sort($all);
 			$groupdesc = wfMsgHtml( 'configure-desc-group' );
 			$valdesc = wfMsgExt( "configure-setting-$conf-value", 'parseinline' );
 
@@ -1319,7 +1334,8 @@ abstract class ConfigurationPage extends SpecialPage {
 	public static function buildPromotionCondsSettingRow( $conf, $allowed, $group, $groupConds ){
 		static $options = array( 'or' => '|', 'and' => '&', 'xor' => '^', 'not' => '!' );
 		static $conds = array( APCOND_EDITCOUNT => 'int', APCOND_AGE => 'int', APCOND_EMAILCONFIRMED => 'bool',
-			APCOND_INGROUPS => 'array', APCOND_ISIP => 'text', APCOND_IPINRANGE => 'text' );
+			APCOND_INGROUPS => 'array', APCOND_ISIP => 'text', APCOND_IPINRANGE => 'text',
+			APCOND_AGE_FROM_EDIT => 'int' );
 
 		$row = '<div class="configure-biglist promotion-conds-element">';
 		$row .= wfMsgHtml( 'configure-condition-operator' ) . ' ';

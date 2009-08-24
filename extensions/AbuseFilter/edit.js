@@ -144,10 +144,6 @@ function editWarnMessage() {
 	window.location = wgScript + '?title=MediaWiki:'+encodeURIComponent( message )+'&action=edit';
 }
 
-function afShowExport() {
-	document.getElementById( 'mw-abusefilter-export' ).style.display = 'block';
-}
-
 addOnloadHook( function() {
 	addHandler( document.getElementById( wgFilterBoxName ), 'keyup', function() {
 		el = document.getElementById( 'mw-abusefilter-syntaxresult' );
@@ -172,10 +168,4 @@ addOnloadHook( function() {
 	}
 
 	setupActions();
-	
-	var exporter = document.getElementById( 'mw-abusefilter-export' );
-	
-	if (exporter ) {
-		exporter.style.display = 'none';
-	}
 } );

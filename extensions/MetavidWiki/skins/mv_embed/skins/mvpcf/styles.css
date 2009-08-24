@@ -12,11 +12,12 @@
 .modal_editor {
 	background:#AAA none repeat scroll 0 0;
 	border:3px solid #666666;
-	left:10%;
-	top:5%;	
+	left:2px;
+	top:2px;
+	right:2px;
 	position:fixed;
-	width:80%;
-	height:90%;	
+	width:99%;
+	height:99%;	
 	z-index:100;
 }
 .mv_track {
@@ -88,7 +89,7 @@ div.floatleft, table.floatleft {
 .videoPlayer a:hover {color: #75a5e4; text-decoration: underline;}
 .videoPlayer img, .videoPlayer img a, .videoPlayer img a:hover {border: 0;}
 
-.videoPlayer h1, h2, h3, h4, h5, h6 {color: #242424; margin: 5px 0; padding: 0;}
+.videoPlayer h1, .videoPlayer h2, .videoPlayer h3, .videoPlayer h4, .videoPlayer h5, .videoPlayer h6 {color: #242424; margin: 5px 0; padding: 0;}
 .videoPlayer h1 {font-size: 24px;}
 .videoPlayer h2 {font-size: 18px;}
 .videoPlayer h3 {font-size: 16px;}
@@ -255,7 +256,7 @@ div.floatleft, table.floatleft {
 	z-index: 4;
 	float: right;
 	display: inline;
-	margin: -13px 0 0 0;
+	margin: -12px 0 0 0;
 	background: url(images/player_seek_right.png) 0 0 no-repeat;
 }
 .videoPlayer .seeker .mv_progress{
@@ -284,6 +285,7 @@ div.floatleft, table.floatleft {
 	position: relative;
 	z-index: 6;
 	margin: -13px 0 0 0px;
+	float: left;
 	cursor: pointer;
 }
 .tt_highlight{
@@ -492,41 +494,54 @@ div.floatleft, table.floatleft {
 	width: 15px;height:19px; top: 0px; bottom: 0px; left: 0px;
 	background: transparent url(images/slider_handle_green.gif) no-repeat scroll 0% 0%;
 }
-.ui-dragSpan {filter: alpha(opacity=70); -moz-opacity: .7; background-color:#AAF; position:absolute; left: 10px; right:10px;height:19px;  }
-
-#remote search css:
-
-ul.rsd_cp_tabs {	
-	border-bottom:1px solid #CCCCCC;
-	display:inline;
-	list-style-image:none;
-	list-style-position:outside;
-	list-style-type:none;	
-	z-index:2;			
+.ui-dragSpan {
+	filter: alpha(opacity=70); 
+	-moz-opacity: .7;
+	background-color:#AAF; 
+	position:absolute; 
+	left: 10px; 
+	right:10px;
+	height:19px;  
 }
-ul.rsd_cp_tabs li.rsd_selected {
-	background:#FFFFFF none repeat scroll 0 0;
-	border-bottom:0;
-	padding-bottom:11px;
-	padding-top:12px;	
-}
-ul.rsd_cp_tabs li {
+
+div.rsd_cp_tab_container{
 	display:inline;
 	margin:0;
-	padding:10px 0 0;
+	padding:5px 2px 10px 2px;
 	background:#F7F7F7 url(remote_search/tab-bg.png) repeat-x scroll left bottom;
-	border:1px solid #777;
-	padding-bottom:10px;
+	border:1px solid #777;	
 	margin-left:7px;
 	cursor:pointer;
+	float:left;
+	width:auto;
 }
+div.rsd_cp_tab {
+	display:inline;
+	margin:0;
+	padding:5px 2px 10px 2px;
+	background:#F7F7F7 url(remote_search/tab-bg.png) repeat-x scroll left bottom;
+	border:1px solid #777;	
+	margin-left:7px;
+	cursor:pointer;
+	float:left;
+	width:auto;
+	position:relative;
+}
+
+div.rsd_selected {
+	background:#FFFFFF none repeat scroll 0 0;	
+	border-bottom:0;
+	padding-top:6px;
+	z-index:2;
+}
+
 .rsd_results_container{
 	position:absolute;
 	left:2px;
 	right:2px;
 	top:100px;
 	bottom:2px;
-	z-index:-1;
+	z-index:200;
 	overflow:auto;
 }
 #rsd_results {
@@ -536,14 +551,30 @@ ul.rsd_cp_tabs li {
 	background:#FFF;	
 	left:2px;
 	right:2px;
-	bottom:2px;
-	z-index:-1;
+	bottom:2px;	
 	overflow:auto;
 	position:absolute;
 	top:75px;
 }
 #rsd_resource_edit{
 	z-index:2;
+}
+.rsd_license{
+	position:absolute;
+	bottom:0px;
+	left:0px;
+}
+.rsd_license img{
+	float:left;
+}
+.rsd_license span{
+	float:left;
+	background:#FFF;
+	color:#200;
+	font-size:x-small;
+	filter:alpha(opacity=70);
+	-moz-opacity:0.7;
+	opacity:0.7;
 }
 .mv_clip_box_result{
 	padding:10px;
@@ -558,6 +589,7 @@ ul.rsd_cp_tabs li {
 	padding:10px;
 	border: thin solid #BBB;
 	clear:both;
+	position:relative;
 }
 .mv_clip_list_result_over{
 	padding:10px;

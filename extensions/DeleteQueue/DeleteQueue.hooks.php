@@ -23,48 +23,32 @@ class DeleteQueueHooks {
 
 		$selected = false;
 
-		if (in_array( $action, array( 'delnom', 'delreview' ) ) ) {
-			$selected = true;
-		}
-
 		wfLoadExtensionMessages( 'DeleteQueue' );
 
 		if ($queue == '') {
 			$actions['deletequeue'] = array(
 				'text' => wfMsg('deletequeue-action'),
- 				'href' => $st->mTitle->getLocalUrl( 'action=deletequeue' ),
- 				'class' => $selected ? 'selected' : false,
-			);
+ 				'href' => $st->mTitle->getLocalUrl( 'action=deletequeue' )
+ 			);
 		} else {
-			if ( $wgUser->isAllowed( "$queue-review" ) ) {
-				$actions['delreview'] = array(
-					'text' => wfMsg("deletequeue-review$queue-tab"),
-					'href' => $st->mTitle->getLocalUrl( 'action=delreview' ),
-					'class' => $selected ? 'selected' : false );
-			}
-
 			$actions['deletequeue'] = array(
 				'text' => wfMsg('deletequeue-action-queued'),
-				'href' => $st->mTitle->getLocalUrl( 'action=deletequeue' ),
-				'class' => ($action == 'delvote') ? 'selected' : false );
+				'href' => SpecialPage::getTitleFor(
+							'DeleteQueue',
+							"case/".$dqi->getCaseID() )->getLocalURL()
+				);
 		}
 
 		return true;
 	}
 
 	public static function onUnknownAction( $action, $article ) {
-		if ( $action == 'delnom' ) {
-			wfLoadExtensionMessages( 'DeleteQueue' );
-			global $wgRequest;
-			$queue = $wgRequest->getVal( 'queue' );
-			DeleteQueueInterface::processNominationAction( $article, $queue );
-
-			return false;
-		} elseif ( $action == 'deletequeue' ) {
+		if ( $action == 'deletequeue' ) {
 			wfLoadExtensionMessages( 'DeleteQueue' );
 			global $wgOut;
 
-			$wgOut->setPageTitle( wfMsg( 'deletequeue-action-title', $article->mTitle->getPrefixedText() ) );
+			$wgOut->setPageTitle( wfMsg( 'deletequeue-action-title',
+										$article->mTitle->getPrefixedText() ) );
 			
 			$dqi = DeleteQueueItem::newFromArticle( $article );
 			
@@ -74,24 +58,6 @@ class DeleteQueueHooks {
 				self::onArticleViewHeader( $article );
 				$wgOut->addWikiMsg( 'deletequeue-action-text-queued' );
 			}
-			return false;
-		} elseif ( $action == 'delreview' ) {
-			wfLoadExtensionMessages( 'DeleteQueue' );
-
-			$rf = new DeleteQueueReviewForm($article);
-			$rf->form();
-
-			return false;
-		} elseif ($action == 'delvote') {
-			wfLoadExtensionMessages( 'DeleteQueue' );
-
-			DeleteQueueInterface::processVoteAction( $article );
-			return false;
-		} elseif ($action == 'delviewvotes') {
-			wfLoadExtensionMessages( 'DeleteQueue' );
-
-			DeleteQueueInterface::showVotes( $article );
-
 			return false;
 		}
 
@@ -123,6 +89,8 @@ class DeleteQueueHooks {
 		$options[] = $dqi->getReason();
 		$expiry = wfTimestamp( TS_UNIX, $dqi->getExpiry() );
 		$options[] = $wgLang->timeanddate( $expiry );
+		$options[] = $wgLang->date( $expiry );
+		$options[] = $wgLang->time( $expiry );
 		if ($queue == 'deletediscuss') {
 			$options[] = $dqi->getDiscussionPage()->mTitle->getPrefixedText();
 		}

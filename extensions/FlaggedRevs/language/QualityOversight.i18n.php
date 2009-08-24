@@ -22,6 +22,15 @@ $messages['qqq'] = array(
 	'qualityoversight-legend' => '{{Flagged Revs}}',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'qualityoversight' => 'Ladun revizor',
+	'qualityoversight-list' => 'Necil lehtolel om tantoižiden vahvištusiden da ladunpindoiden heitmižiden nimikirjutez.',
+	'qualityoversight-legend' => 'Ecmine kodvindoiden aigkirjas',
+);
+
 /** Aragonese (Aragonés)
  * @author Juanpabl
  */
@@ -65,6 +74,23 @@ $messages['bg'] = array(
 	'qualityoversight' => 'Качествен надзор',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'qualityoversight' => 'Nadzor kvalitete',
+	'qualityoversight-list' => 'Ova stranica prikazuje nedavna odobrenja i uklanjanja revizija.',
+	'qualityoversight-legend' => 'Traži nedavne zapise pregleda',
+);
+
+/** Catalan (Català)
+ * @author SMP
+ */
+$messages['ca'] = array(
+	'qualityoversight-list' => 'Aquesta pàgina llista les aprovacions i depreciacions recents de revisions.',
+	'qualityoversight-legend' => 'Cerca els registres de revisions recents',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  * @author Umherirrender
@@ -91,6 +117,15 @@ $messages['eo'] = array(
 	'qualityoversight' => 'Atentado de bonkvalito',
 	'qualityoversight-list' => 'Ĉi tiu paĝo montras kaj lastatempajn aprobojn kaj malvalidigojn de versioj.',
 	'qualityoversight-legend' => 'Serĉi lastajn protokolerojn',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'qualityoversight' => 'Vigilancia de calidad',
+	'qualityoversight-list' => 'Esta página enumera las más recientes aprobaciones y depreciaciones de revisiones.',
+	'qualityoversight-legend' => 'Buscar lista de revisiones recientes',
 );
 
 /** Persian (فارسی)
@@ -183,17 +218,22 @@ $messages['id'] = array(
 
 /** Italian (Italiano)
  * @author Darth Kule
+ * @author Pietrodn
  */
 $messages['it'] = array(
+	'qualityoversight' => 'Supervisione della qualità',
+	'qualityoversight-list' => 'Questa pagina elenca le più recenti approvazioni e deprezzamenti delle revisioni.',
 	'qualityoversight-legend' => 'Cerca i log delle revisioni recenti',
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'qualityoversight' => 'クオリティーオーバーサイト',
-	'qualityoversight-legend' => '最近のレビュー記録を検索',
+	'qualityoversight' => '品質監督',
+	'qualityoversight-list' => 'このページでは最近の特定版承認および棄却を一覧しています。',
+	'qualityoversight-legend' => '最近の査読記録を検索',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -240,6 +280,15 @@ $messages['nl'] = array(
 	'qualityoversight-legend' => 'Recente eindredactielogboeken bekijken',
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'qualityoversight' => 'Kvalitetsoversikt',
+	'qualityoversight-list' => 'Denne sida syner dei siste godkjende og degraderte sideversjonane.',
+	'qualityoversight-legend' => 'Søk i loggen over dei siste vurderingane',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
@@ -274,6 +323,15 @@ $messages['pt'] = array(
 	'qualityoversight' => 'Observatório da qualidade',
 	'qualityoversight-list' => 'Esta página lista aprovações e depreciações recentes de edições confiáveis.',
 	'qualityoversight-legend' => 'Pesquisar nos registos de análises recentes',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'qualityoversight' => 'Observatório da qualidade',
+	'qualityoversight-list' => 'Esta página lista aprovações e depreciações recentes de edições confiáveis.',
+	'qualityoversight-legend' => 'Pesquisar nos registros de análises recentes',
 );
 
 /** Tarandíne (Tarandíne)
@@ -329,6 +387,15 @@ $messages['tl'] = array(
 	'qualityoversight' => 'Pagiingat na pangkaantasan ng uri (kalidad)',
 	'qualityoversight-list' => 'Nagtatala ang pahinang ito ng pinakakamakailan lamang na mga pagpayag at pagbaba ng halaga/katururan ng mga pagbabago.',
 	'qualityoversight-legend' => 'Maghanap sa mga talaan ng mga kamakailang pagsusuri',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'qualityoversight' => 'Kalite gözetimi',
+	'qualityoversight-list' => 'Bu sayfa, en yeni onaylamaları ve revizyonların yıpranmalarını listeler.',
+	'qualityoversight-legend' => 'Yakın zamandaki gözden geçirme günlüklerini ara',
 );
 
 /** Ukrainian (Українська)

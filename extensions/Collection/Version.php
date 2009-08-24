@@ -22,5 +22,3 @@
  */
 
 $wgCollectionVersion = "1.1";
-
-?>

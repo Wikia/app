@@ -28,22 +28,34 @@ $messages['qqq'] = array(
 	'gur-desc' => 'Short desciption of this extension.
 Shown in [[Special:Version]].
 Do not translate or change tag names, or link anchors.',
+	'gur-rightslog-entry' => 'Similar to {{msg-mw|Rightslogentry}}.',
 	'right-userrights-global' => '{{doc-right}}',
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author Ouda
  */
 $messages['ar'] = array(
+	'globaluserrights' => 'التحكم بصلاحيات المستخدمين العامة',
+	'gur-desc' => 'إدارة سهلة [[Special:GlobalUserRights|لصلاحيات المستخدمين العامة]]',
 	'gur-rightslog-name' => 'سجل الحقوق العالمي',
+	'gur-rightslog-header' => 'هذا سجل بالتغييرات للصلاحيات العامة.',
+	'gur-rightslog-entry' => 'غير عضوية المجموعة العامة ل$1 من $2 إلى $3',
 	'right-userrights-global' => 'إدارة سجل الحقوق العالمي',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Ouda
+ * @author Ramsis II
  */
 $messages['arz'] = array(
+	'globaluserrights' => 'ادارة حقوق اليوزر العامه',
+	'gur-desc' => 'ادارة سهله لـ[[Special:GlobalUserRights|حقوق اليوزر العامه]]',
 	'gur-rightslog-name' => 'سجل الحقوق العالمي',
+	'gur-rightslog-header' => 'دا سجل بالتغييرات اللى حصلت للحقوق العامه',
+	'gur-rightslog-entry' => 'عضوية المجموعه العامه اتغيرت لـ  $1 من $2 و بقت $3',
+	'right-userrights-global' => 'إدارة سجل الحقوق العامه',
 );
 
 /** Bulgarian (Български)
@@ -105,6 +117,28 @@ $messages['eo'] = array(
 	'right-userrights-global' => 'Administri ĝeneralajn uzulajn rajtojn',
 );
 
+/** Spanish (Español)
+ * @author Baiji
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'globaluserrights' => 'Administración global de derechos de usuario',
+	'gur-rightslog-name' => 'Registro de permisos globales',
+	'gur-rightslog-header' => 'Esto es un registro de cambios a los derechos globales.',
+	'gur-rightslog-entry' => 'cambiada membresía de grupo global para $1 de $2 a $3',
+	'right-userrights-global' => 'Administrar derechos de usuario global',
+);
+
+/** Estonian (Eesti)
+ * @author KalmerE.
+ * @author Ker
+ */
+$messages['et'] = array(
+	'globaluserrights' => 'Kasutaja globaal õiguste haldamine',
+	'gur-desc' => 'Lihtne [[Special:GlobalUserRights|globaalkasutaja õiguste]] haldamine',
+	'gur-rightslog-name' => 'Globaal õiguste logiraamat',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  */
@@ -141,6 +175,18 @@ $messages['gl'] = array(
 	'right-userrights-global' => 'Xestionar os dereitos de usuario globais',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'globaluserrights' => 'Wältwyti Benutzerrächtverwaltig',
+	'gur-desc' => 'Eifachi Verwaltig vu [[Special:GlobalUserRights|wältwyte Benutzerrächt]]',
+	'gur-rightslog-name' => 'Wältwyt Rächt-Logbuech',
+	'gur-rightslog-header' => 'Des isch e Logbuech vu dr Änderige an wältwyte Benutzerrächt.',
+	'gur-rightslog-entry' => 'het di wältwyt Gruppezuegherigkeit fir $1 vu $2 uf $3 gänderet',
+	'right-userrights-global' => 'Wältwyti Benutzerrächt verwalte',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -165,6 +211,31 @@ $messages['ia'] = array(
 	'right-userrights-global' => 'Gerer le derectos global de usatores',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'globaluserrights' => 'Gestione dei Diritti Utente Globali',
+	'gur-desc' => 'Amministrazione facile dei [[Special:GlobalUserRights|diritti utente globali]]',
+	'gur-rightslog-name' => 'Registro dei diritti globali',
+	'gur-rightslog-header' => 'Questo è un registro dei cambiamenti ai diritti globali.',
+	'gur-rightslog-entry' => "ha cambiato l'appartenenza ai gruppi globali per $1 da $2 a $3",
+	'right-userrights-global' => 'Gestisce i diritti utente globali',
+);
+
+/** Japanese (日本語)
+ * @author Fievarsty
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'globaluserrights' => 'グローバル利用者権限管理',
+	'gur-desc' => '簡単な[[Special:GlobalUserRights|グローバル利用者権限]]を管理する',
+	'gur-rightslog-name' => 'グローバル権限変更記録',
+	'gur-rightslog-header' => 'これはグローバル権限の変更記録です。',
+	'gur-rightslog-entry' => '$1 のグローバル利用者権限を $2 から $3 へ変更しました',
+	'right-userrights-global' => 'グローバル利用者権限を管理する',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Thearith
  */
@@ -181,6 +252,7 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'gur-rightslog-name' => '공통 권한 기록',
+	'gur-rightslog-entry' => '$1의 공통 권한을 $2에서 $3으로 변경',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -267,11 +339,47 @@ $messages['pl'] = array(
 	'right-userrights-global' => 'Zarządzanie globalnymi uprawnieniami użytkownika',
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'globaluserrights' => 'Gestão de Permissões de Utilizadores Globais',
+	'gur-desc' => 'Administração fácil das [[Special:GlobalUserRights|permissões de utilizadores globais]]',
+	'gur-rightslog-name' => 'Registo de permissões globais',
+	'gur-rightslog-header' => 'Este é um registo das alterações às permissões globais.',
+	'gur-rightslog-entry' => 'alterou o grupo global de $1, de $2 para $3',
+	'right-userrights-global' => 'Gerir permissões de utilizadores globais',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'globaluserrights' => 'Gerenciamento de Permissões de Utilizadores Globais',
+	'gur-desc' => 'Administração fácil das [[Special:GlobalUserRights|permissões de utilizadores globais]]',
+	'gur-rightslog-name' => 'Registro de permissões globais',
+	'gur-rightslog-header' => 'Este é um registro das alterações às permissões globais.',
+	'gur-rightslog-entry' => 'alterou o grupo global de $1, de $2 para $3',
+	'right-userrights-global' => 'Gerenciar permissões de utilizadores globais',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'gur-rightslog-name' => 'Jurnal drepturi globale',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'globaluserrights' => 'Gestione de le deritte utinde globale',
+	'gur-desc' => "Facile amministrazione de le [[Special:GlobalUserRights|deritte de l'utinde globale]]",
+	'gur-rightslog-name' => 'Archivije de le deritte globale',
+	'gur-rightslog-header' => "Quiste jè 'n'archivije de le cangiaminde sus a le deritte globale.",
+	'gur-rightslog-entry' => "membre d'u gruppe globale cangete pe $1 da $2 a $3",
+	'right-userrights-global' => "Gestisce le deritte de l'utinde globale",
 );
 
 /** Slovak (Slovenčina)
@@ -296,5 +404,17 @@ $messages['tl'] = array(
 	'gur-rightslog-header' => 'Isa itong talaan ng mga pagbabago sa pandaigdigang mga karapatan.',
 	'gur-rightslog-entry' => 'binago ang kasapian ng pandaigdigang kapangkatan para kay $1 mula $2 patungo sa $3',
 	'right-userrights-global' => 'Pamahalaan ang mga karapatan ng pandaigdigang tagagamit',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wmr89502270
+ */
+$messages['zh-hans'] = array(
+	'globaluserrights' => '全域用户权限管理',
+	'gur-desc' => '简单的[[Special:GlobalUserRights|全域用户权限]]管理信息',
+	'gur-rightslog-name' => '全域权限历史记录',
+	'gur-rightslog-header' => '这是改变全域用户权限的历史记录',
+	'gur-rightslog-entry' => '为$1改变全域用户组权限自$2到$3',
+	'right-userrights-global' => '管理全域用户权限',
 );
 

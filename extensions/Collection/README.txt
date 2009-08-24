@@ -139,11 +139,7 @@ Installation and Configuration of the Collection Extension
    Namespace for "community collections", i.e. the namespace where non-personal
    article collection pages are saved.
    
-   Example: If you keep the default, ``NS_MEDIAWIKI`` and have a non-localized
-   (i.e. English) *MediaWiki* installation, collections are saved as subpages of
-   ``MediaWiki:Collections``.
-   
-   Default is ``NS_MEDIAWIKI``.
+   Default is ``NS_PROJECT``.
   
   *$wgCollectionMaxArticles (integer)*
    Maximum number of articles allowed in a collection.
@@ -181,7 +177,7 @@ Installation and Configuration of the Collection Extension
   the following code::
 
     <?php
-      if(isset($GLOBALS['wgSpecialPages']['Collection'])) {
+      if(isset($GLOBALS['wgSpecialPages']['Book'])) {
          Collection::printPortlet();
       }
     ?>
@@ -191,9 +187,9 @@ Installation and Configuration of the Collection Extension
   one day). Adjust session.cookie_lifetime and session.gc_maxlifetime in your
   ``php.ini`` accordingly.
 
-* Add a help page (e.g. ``Help:Collections`` for wikis in English language)
-  with the wikitext from on of the supplied files in the ``helppages/`` and
-  adjust it according to your wiki-specific setup.
+* Add a help page (e.g. ``Help:Books`` for wikis in English language).
+  A repository of help pages in different languages can be found on
+  `Meta-Wiki`_.
 
 .. _mwlib: http://code.pediapress.com/wiki/wiki/mwlib
 .. _MediaWiki: http://www.mediawiki.org/
@@ -201,3 +197,4 @@ Installation and Configuration of the Collection Extension
 .. _`Wikimedia Foundation`: http://wikimediafoundation.org/
 .. _`Commonwealth of Learning`: http://www.col.org/
 .. _`MediaWiki API`: http://www.mediawiki.org/wiki/API
+.. _`Meta-Wiki`: http://meta.wikimedia.org/wiki/Book_tool/Help/Books

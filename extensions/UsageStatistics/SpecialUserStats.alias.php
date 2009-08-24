@@ -42,6 +42,11 @@ $aliases['de'] = array(
 	'SpecialUserStats' => array( 'Benutzerstatistik' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'SpecialUserStats' => array( 'Wužywarska statistika' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'SpecialUserStats' => array( 'آمار_کاربر' ),
@@ -52,14 +57,29 @@ $aliases['fr'] = array(
 	'SpecialUserStats' => array( 'StatistiquesUtilisateur' ),
 );
 
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'SpecialUserStats' => array( 'Estatísticas do usuario' ),
+);
+
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'SpecialUserStats' => array( 'Benutzerstatischtik' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'SpecialUserStats' => array( 'Wužiwarska statistika' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'SpecialUserStats' => array( 'Felhasználói statisztika', 'Felhasználóstatisztika' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'SpecialUserStats' => array( 'Statisticas de usatores', 'Statisticas special de usatores' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -104,6 +124,16 @@ $aliases['no'] = array(
 	'SpecialUserStats' => array( 'Brukerstatistikk' ),
 );
 
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'SpecialUserStats' => array( 'EstatisticasUtilizaire' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'SpecialUserStats' => array( 'सदस्यसांख्यिकी' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'SpecialUserStats' => array( 'Användarstatistik' ),
@@ -112,5 +142,10 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'SpecialUserStats' => array( 'TakwimuzaMtumiaji', 'TakwimumaalumzaMtumiaji' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'SpecialUserStats' => array( 'Mga estadistika ng tagagamit', 'Mga estadistika ng natatanging tagagamit' ),
 );
 

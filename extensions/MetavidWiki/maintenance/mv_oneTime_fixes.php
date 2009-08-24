@@ -14,6 +14,7 @@ options:
 	--offset [val]	//start on a given offset (in case things don't finish
 
 actions: 
+	revert_last_edits --num_edits [X] //reverts last X edits (do --dry first) 
 	strip_speech_by  //strips extra speech by text
 	update_stream_desc //updates stream desc
 	update_archive_org_files [stream_name] //updates pointers to archive.org mp4 streaming
@@ -25,6 +26,12 @@ EOT;
 $mvDryRun = ( isset( $options['dry'] ) ) ? true:false;
 
 switch ( $args[0] ) {
+	case 'revert_last_edits': 
+		if( !$options['num_edits'] )
+			die('we need a number of edits to revert');
+					
+		do_revert_by_time( $args[1] );
+	break;
 	case 'strip_speech_by' :
 		strip_speech_by();
 	break;
@@ -41,6 +48,33 @@ switch ( $args[0] ) {
 		$stream_name = (isset( $args[1] ))?$args[1]:''; 		
 		run_archive_org_update( $stream_name );
 	break;
+}
+function do_revert_by_time( $num ){
+	global $mvDryRun;
+	$dbr = wfGetDB( DB_READ );
+	$dbw = wfGetDB( DB_WRITE );
+	$sql = " SELECT *
+FROM `recentchanges`
+ORDER BY `recentchanges`.`rc_timestamp` DESC
+LIMIT 0, {$num}";	
+	
+	$result = $dbr->query( $sql );	
+	//get the first last 10 	
+	while ( $rc_edit = $dbr->fetchObject( $result ) ) {			
+		//if(!$mvDryRun)
+		//get the -1 revision	
+		if($rc_edit->rc_last_oldid != 0 ){
+			$rev = Revision::newFromId( $rc_edit->rc_last_oldid );
+			$rTitle = Title::makeTitle( $rc_edit->rc_namespace, $rc_edit->rc_title );
+			//$rev = Revision::newFromTitle( $title, $rc_edit->rc_this_oldid );
+			$old_text = $rev->getRawText();
+			print "Revert one edit on: " . $rc_edit->rc_title . "\n";
+			if(!$mvDryRun){
+				do_update_wiki_page( $rTitle, $old_text, MV_NS_STREAM, $force = true );
+			}		
+		}
+		//do_update_wiki_page( $streamTitle, $out, MV_NS_STREAM, $force = true );	
+	}	
 }
 function run_archive_org_update($stream_name=''){
 	//first get all the streams: 			
@@ -72,8 +106,7 @@ function run_archive_org_update($stream_name=''){
 				}
 			}
 			//now that we keept categories force update the page:			
-			do_update_wiki_page( $streamTitle, $out, MV_NS_STREAM, $force = true );
-			
+			do_update_wiki_page( $streamTitle, $out, MV_NS_STREAM, $force = true );			
 		}
 	}
 }

@@ -16,138 +16,159 @@ require_once 'deleteDefaultMessages.php';
 require_once( "$IP/includes/Hooks.php" );
 
 /**
- * List of update functions to call on a MySQL-based MediaWiki installation,
- * in sequence. First item is function name, rest are parameters to pass.
+ * List of update functions to call for each DB type, in sequence. First item 
+ * is function name, rest are parameters to pass.
  */
-$wgMysqlUpdates = array(
-	// 1.2
-	// update_passwords obsolete
-	array( 'add_field', 'ipblocks',      'ipb_id',           'patch-ipblocks.sql' ),
-	array( 'add_field', 'ipblocks',      'ipb_expiry',       'patch-ipb_expiry.sql' ),
-	array( 'do_interwiki_update' ),
-	array( 'do_index_update' ),
-	// do_linkscc_update obsolete
-	array( 'add_table', 'hitcounter',                        'patch-hitcounter.sql' ),
-	array( 'add_field', 'recentchanges', 'rc_type',          'patch-rc_type.sql' ),
+$wgUpdates = array(
+	'mysql' => array(
+		// 1.2
+		// update_passwords obsolete
+		array( 'add_field', 'ipblocks',      'ipb_id',           'patch-ipblocks.sql' ),
+		array( 'add_field', 'ipblocks',      'ipb_expiry',       'patch-ipb_expiry.sql' ),
+		array( 'do_interwiki_update' ),
+		array( 'do_index_update' ),
+		// do_linkscc_update obsolete
+		array( 'add_table', 'hitcounter',                        'patch-hitcounter.sql' ),
+		array( 'add_field', 'recentchanges', 'rc_type',          'patch-rc_type.sql' ),
+		
+		// 1.3
+		array( 'add_field', 'user',          'user_real_name',   'patch-user-realname.sql' ),
+		array( 'add_table', 'querycache',                        'patch-querycache.sql' ),
+		array( 'add_table', 'objectcache',                       'patch-objectcache.sql' ),
+		array( 'add_table', 'categorylinks',                     'patch-categorylinks.sql' ),
+		// do_linkscc_1_3_update obsolete
+		array( 'do_old_links_update' ),
+		array( 'fix_ancient_imagelinks' ),
+		array( 'add_field', 'recentchanges', 'rc_ip',            'patch-rc_ip.sql' ),
+		
+		// 1.4
+		array( 'do_image_name_unique_update' ),
+		array( 'add_field', 'recentchanges', 'rc_id',            'patch-rc_id.sql' ),
+		array( 'add_field', 'recentchanges', 'rc_patrolled',     'patch-rc-patrol.sql' ),
+		array( 'add_table', 'logging',                           'patch-logging.sql' ),
+		// do_user_rights_update obsolete
+		array( 'add_field', 'user',          'user_token',       'patch-user_token.sql' ),
+		// old, old_articleid, patch-remove-old-title-namespace.sql obsolete
+		// user_groups, patch-userlevels.sql obsolete
+		// do_group_update() obsolete
+		array( 'do_watchlist_update' ),
+		array( 'do_user_update' ),
+		// do_copy_newtalk_to_watchlist obsolete
+		
+		// 1.5
+		array( 'do_schema_restructuring' ),
+		array( 'add_field', 'logging',       'log_params',       'patch-log_params.sql' ),
+		array( 'check_bin', 'logging',       'log_title',        'patch-logging-title.sql', ),
+		array( 'add_field', 'archive',       'ar_rev_id',        'patch-archive-rev_id.sql' ),
+		array( 'add_field', 'page',          'page_len',         'patch-page_len.sql' ),
+		array( 'do_inverse_timestamp' ),
+		array( 'do_text_id' ),
+		array( 'add_field', 'revision',      'rev_deleted',      'patch-rev_deleted.sql' ),
+		array( 'add_field', 'image',         'img_width',        'patch-img_width.sql' ),
+		array( 'add_field', 'image',         'img_metadata',     'patch-img_metadata.sql' ),
+		array( 'add_field', 'user',          'user_email_token', 'patch-user_email_token.sql' ),
+		array( 'add_field', 'archive',       'ar_text_id',       'patch-archive-text_id.sql' ),
+		array( 'do_namespace_size' ),
+		array( 'add_field', 'image',         'img_media_type',   'patch-img_media_type.sql' ),
+		array( 'do_pagelinks_update' ),
+		array( 'do_drop_img_type' ),
+		array( 'do_user_unique_update' ),
+		array( 'do_user_groups_update' ),
+		array( 'add_field', 'site_stats',    'ss_total_pages',   'patch-ss_total_articles.sql' ),
+		array( 'add_table', 'user_newtalk',                      'patch-usernewtalk2.sql' ),
+		array( 'add_table', 'transcache',                        'patch-transcache.sql' ),
+		array( 'add_field', 'interwiki',     'iw_trans',         'patch-interwiki-trans.sql' ),
+		array( 'add_table', 'trackbacks',                        'patch-trackbacks.sql' ),
+		
+		// 1.6
+		array( 'do_watchlist_null' ),
+		// do_image_index_update obsolete
+		array( 'do_logging_timestamp_index' ),
+		array( 'add_field', 'ipblocks',        'ipb_range_start',  'patch-ipb_range_start.sql' ),
+		array( 'do_page_random_update' ),
+		array( 'add_field', 'user',            'user_registration','patch-user_registration.sql' ),
+		array( 'do_templatelinks_update' ),
+		array( 'add_table', 'externallinks',                       'patch-externallinks.sql' ),
+		array( 'add_table', 'job',                                 'patch-job.sql' ),
+		array( 'add_field', 'site_stats',      'ss_images',        'patch-ss_images.sql' ),
+		array( 'add_table', 'langlinks',                           'patch-langlinks.sql' ),
+		array( 'add_table', 'querycache_info',                     'patch-querycacheinfo.sql' ),
+		array( 'add_table', 'filearchive',                         'patch-filearchive.sql' ),
+		array( 'add_field', 'ipblocks',        'ipb_anon_only',    'patch-ipb_anon_only.sql' ),
+		array( 'do_rc_indices_update' ),
+		
+		// 1.9
+		array( 'add_field', 'user',          'user_newpass_time', 'patch-user_newpass_time.sql' ),
+		array( 'add_table', 'redirect',                           'patch-redirect.sql' ),
+		array( 'add_table', 'querycachetwo', 'patch-querycachetwo.sql' ),
+		array( 'add_field', 'ipblocks',      'ipb_enable_autoblock', 'patch-ipb_optional_autoblock.sql' ),
+		array( 'do_backlinking_indices_update' ),
+		array( 'add_field', 'recentchanges', 'rc_old_len',        'patch-rc_len.sql' ),
+		array( 'add_field', 'user',          'user_editcount',    'patch-user_editcount.sql' ),
+		
+		// 1.10
+		array( 'do_restrictions_update' ),
+		array( 'add_field', 'logging',       'log_id',           'patch-log_id.sql' ),
+		array( 'add_field', 'revision',      'rev_parent_id',    'patch-rev_parent_id.sql' ),
+		array( 'add_field', 'page_restrictions', 'pr_id',        'patch-page_restrictions_sortkey.sql' ),
+		array( 'add_field', 'revision',      'rev_len',          'patch-rev_len.sql' ),
+		array( 'add_field', 'recentchanges', 'rc_deleted',       'patch-rc_deleted.sql' ),
+		array( 'add_field', 'logging',       'log_deleted',      'patch-log_deleted.sql' ),
+		array( 'add_field', 'archive',       'ar_deleted',       'patch-ar_deleted.sql' ),
+		array( 'add_field', 'ipblocks',      'ipb_deleted',      'patch-ipb_deleted.sql' ),
+		array( 'add_field', 'filearchive',   'fa_deleted',       'patch-fa_deleted.sql' ),
+		array( 'add_field', 'archive',       'ar_len',           'patch-ar_len.sql' ),
+		
+		// 1.11
+		array( 'add_field', 'ipblocks',      'ipb_block_email',  'patch-ipb_emailban.sql' ),
+		array( 'do_categorylinks_indices_update' ),
+		array( 'add_field', 'oldimage',      'oi_metadata',      'patch-oi_metadata.sql'),
+		array( 'do_archive_user_index' ),
+		array( 'do_image_user_index' ),
+		array( 'do_oldimage_user_index' ),
+		array( 'add_field', 'archive',       'ar_page_id',       'patch-archive-page_id.sql'),
+		array( 'add_field', 'image',         'img_sha1',         'patch-img_sha1.sql' ),
 
-	// 1.3
-	array( 'add_field', 'user',          'user_real_name',   'patch-user-realname.sql' ),
-	array( 'add_table', 'querycache',                        'patch-querycache.sql' ),
-	array( 'add_table', 'objectcache',                       'patch-objectcache.sql' ),
-	array( 'add_table', 'categorylinks',                     'patch-categorylinks.sql' ),
-	// do_linkscc_1_3_update obsolete
-	array( 'do_old_links_update' ),
-	array( 'add_field', 'recentchanges', 'rc_ip',            'patch-rc_ip.sql' ),
+		// 1.12
+		array( 'add_table', 'protected_titles',                  'patch-protected_titles.sql' ),
+		
+		// 1.13
+		array( 'add_field', 'ipblocks',      'ipb_by_text',      'patch-ipb_by_text.sql' ),
+		array( 'add_table', 'page_props',                        'patch-page_props.sql' ),
+		array( 'add_table', 'updatelog',                         'patch-updatelog.sql' ),
+		array( 'add_table', 'category',                          'patch-category.sql' ),
+		array( 'do_category_population' ),
+		array( 'add_field', 'archive',       'ar_parent_id',     'patch-ar_parent_id.sql'),
+		array( 'add_field', 'user_newtalk',  'user_last_timestamp', 'patch-user_last_timestamp.sql'),
+		array( 'do_populate_parent_id' ),
+		array( 'check_bin', 'protected_titles', 'pt_title',      'patch-pt_title-encoding.sql', ),
+		array( 'maybe_do_profiling_memory_update' ),
+		array( 'do_filearchive_indices_update' ),
+		
+		// 1.14
+		array( 'add_field', 'site_stats',     'ss_active_users',  'patch-ss_active_users.sql' ),
+		array( 'do_active_users_init' ),
+		array( 'add_field', 'ipblocks',     'ipb_allow_usertalk',  'patch-ipb_allow_usertalk.sql' ),
+		//array( 'do_unique_pl_tl_il' ),
 
-	// 1.4
-	array( 'do_image_name_unique_update' ),
-	array( 'add_field', 'recentchanges', 'rc_id',            'patch-rc_id.sql' ),
-	array( 'add_field', 'recentchanges', 'rc_patrolled',     'patch-rc-patrol.sql' ),
-	array( 'add_table', 'logging',                           'patch-logging.sql' ),
-	// do_user_rights_update obsolete
-	array( 'add_field', 'user',          'user_token',       'patch-user_token.sql' ),
-	// old, old_articleid, patch-remove-old-title-namespace.sql obsolete
-	// user_groups, patch-userlevels.sql obsolete
-	// do_group_update() obsolete
-	array( 'do_watchlist_update' ),
-	array( 'do_user_update' ),
-	// do_copy_newtalk_to_watchlist obsolete
+		// 1.15
+		array( 'add_table', 'change_tag',			   'patch-change_tag.sql' ),
+		array( 'add_table', 'tag_summary',			   'patch-change_tag.sql' ),
+		array( 'add_table', 'valid_tag',			   'patch-change_tag.sql' ),
+	),
 
-	// 1.5
-	array( 'do_schema_restructuring' ),
-	array( 'add_field', 'logging',       'log_params',       'patch-log_params.sql' ),
-	array( 'check_bin', 'logging',       'log_title',        'patch-logging-title.sql', ),
-	array( 'add_field', 'archive',       'ar_rev_id',        'patch-archive-rev_id.sql' ),
-	array( 'add_field', 'page',          'page_len',         'patch-page_len.sql' ),
-	array( 'do_inverse_timestamp' ),
-	array( 'do_text_id' ),
-	array( 'add_field', 'revision',      'rev_deleted',      'patch-rev_deleted.sql' ),
-	array( 'add_field', 'image',         'img_width',        'patch-img_width.sql' ),
-	array( 'add_field', 'image',         'img_metadata',     'patch-img_metadata.sql' ),
-	array( 'add_field', 'user',          'user_email_token', 'patch-user_email_token.sql' ),
-	array( 'add_field', 'archive',       'ar_text_id',       'patch-archive-text_id.sql' ),
-	array( 'do_namespace_size' ),
-	array( 'add_field', 'image',         'img_media_type',   'patch-img_media_type.sql' ),
-	array( 'do_pagelinks_update' ),
-	array( 'do_drop_img_type' ),
-	array( 'do_user_unique_update' ),
-	array( 'do_user_groups_update' ),
-	array( 'add_field', 'site_stats',    'ss_total_pages',   'patch-ss_total_articles.sql' ),
-	array( 'add_table', 'user_newtalk',                      'patch-usernewtalk2.sql' ),
-	array( 'add_table', 'transcache',                        'patch-transcache.sql' ),
-	array( 'add_field', 'interwiki',     'iw_trans',         'patch-interwiki-trans.sql' ),
-	array( 'add_table', 'trackbacks',                        'patch-trackbacks.sql' ),
+	'sqlite' => array(
+		// 1.14
+		array( 'add_field', 'site_stats',     'ss_active_users',  'patch-ss_active_users.sql' ),
+		array( 'do_active_users_init' ),
+		array( 'add_field', 'ipblocks',     'ipb_allow_usertalk',  'patch-ipb_allow_usertalk.sql' ),
+		array( 'sqlite_initial_indexes' ),
 
-	// 1.6
-	array( 'do_watchlist_null' ),
-	// do_image_index_update obsolete
-	array( 'do_logging_timestamp_index' ),
-	array( 'add_field', 'ipblocks',        'ipb_range_start',  'patch-ipb_range_start.sql' ),
-	array( 'do_page_random_update' ),
-	array( 'add_field', 'user',            'user_registration','patch-user_registration.sql' ),
-	array( 'do_templatelinks_update' ),
-	array( 'add_table', 'externallinks',                       'patch-externallinks.sql' ),
-	array( 'add_table', 'job',                                 'patch-job.sql' ),
-	array( 'add_field', 'site_stats',      'ss_images',        'patch-ss_images.sql' ),
-	array( 'add_table', 'langlinks',                           'patch-langlinks.sql' ),
-	array( 'add_table', 'querycache_info',                     'patch-querycacheinfo.sql' ),
-	array( 'add_table', 'filearchive',                         'patch-filearchive.sql' ),
-	array( 'add_field', 'ipblocks',        'ipb_anon_only',    'patch-ipb_anon_only.sql' ),
-	array( 'do_rc_indices_update' ),
-
-	// 1.9
-	array( 'add_field', 'user',          'user_newpass_time', 'patch-user_newpass_time.sql' ),
-	array( 'add_table', 'redirect',                           'patch-redirect.sql' ),
-	array( 'add_table', 'querycachetwo', 'patch-querycachetwo.sql' ),
-	array( 'add_field', 'ipblocks',      'ipb_enable_autoblock', 'patch-ipb_optional_autoblock.sql' ),
-	array( 'do_backlinking_indices_update' ),
-	array( 'add_field', 'recentchanges', 'rc_old_len',        'patch-rc_len.sql' ),
-	array( 'add_field', 'user',          'user_editcount',    'patch-user_editcount.sql' ),
-
-	// 1.10
-	array( 'do_restrictions_update' ),
-	array( 'add_field', 'logging',       'log_id',           'patch-log_id.sql' ),
-	array( 'add_field', 'revision',      'rev_parent_id',    'patch-rev_parent_id.sql' ),
-	array( 'add_field', 'page_restrictions', 'pr_id',        'patch-page_restrictions_sortkey.sql' ),
-	array( 'add_field', 'revision',      'rev_len',          'patch-rev_len.sql' ),
-	array( 'add_field', 'recentchanges', 'rc_deleted',       'patch-rc_deleted.sql' ),
-	array( 'add_field', 'logging',       'log_deleted',      'patch-log_deleted.sql' ),
-	array( 'add_field', 'archive',       'ar_deleted',       'patch-ar_deleted.sql' ),
-	array( 'add_field', 'ipblocks',      'ipb_deleted',      'patch-ipb_deleted.sql' ),
-	array( 'add_field', 'filearchive',   'fa_deleted',       'patch-fa_deleted.sql' ),
-	array( 'add_field', 'archive',       'ar_len',           'patch-ar_len.sql' ),
-
-	// 1.11
-	array( 'add_field', 'ipblocks',      'ipb_block_email',  'patch-ipb_emailban.sql' ),
-	array( 'do_categorylinks_indices_update' ),
-	array( 'add_field', 'oldimage',      'oi_metadata',      'patch-oi_metadata.sql'),
-	array( 'do_archive_user_index' ),
-	array( 'do_image_user_index' ),
-	array( 'do_oldimage_user_index' ),
-	array( 'add_field', 'archive',       'ar_page_id',       'patch-archive-page_id.sql'),
-	array( 'add_field', 'image',         'img_sha1',         'patch-img_sha1.sql' ),
-
-	// 1.12
-	array( 'add_table', 'protected_titles',                  'patch-protected_titles.sql' ),
-
-	// 1.13
-	array( 'add_field', 'ipblocks',      'ipb_by_text',      'patch-ipb_by_text.sql' ),
-	array( 'add_table', 'page_props',                        'patch-page_props.sql' ),
-	array( 'add_table', 'updatelog',                         'patch-updatelog.sql' ),
-	array( 'add_table', 'category',                          'patch-category.sql' ),
-	array( 'do_category_population' ),
-	array( 'add_field', 'archive',       'ar_parent_id',     'patch-ar_parent_id.sql'),
-	array( 'add_field', 'user_newtalk',  'user_last_timestamp', 'patch-user_last_timestamp.sql'),
-	array( 'do_populate_parent_id' ),
-	array( 'check_bin', 'protected_titles', 'pt_title',      'patch-pt_title-encoding.sql', ),
-	array( 'maybe_do_profiling_memory_update' ),
-	array( 'do_filearchive_indices_update' ),
-	array( 'update_password_format' ),
-
-	// 1.14
-	array( 'add_field', 'site_stats',     'ss_active_users',  'patch-ss_active_users.sql' ),
-	array( 'do_active_users_init' ),
-	array( 'add_field', 'ipblocks',     'ipb_allow_usertalk',  'patch-ipb_allow_usertalk.sql' )
+		// 1.15
+		array( 'add_table', 'change_tag',			   'patch-change_tag.sql' ),
+		array( 'add_table', 'tag_summary',			   'patch-change_tag.sql' ),
+		array( 'add_table', 'valid_tag',			   'patch-change_tag.sql' ),
+	),
 );
 
 /**
@@ -238,41 +259,6 @@ function add_index( $table, $index, $patch, $fullpath=false ) {
 			dbsource( archive($patch), $wgDatabase );
 		}
 		wfOut( "ok\n" );
-	}
-}
-
-function do_revision_updates() {
-	global $wgSoftwareRevision;
-	if ( $wgSoftwareRevision < 1001 ) {
-		update_passwords();
-	}
-}
-
-function update_passwords() {
-	wfDebugDieBacktrace( "This function needs to be updated or removed.\n" );
-
-	global $wgDatabase;
-	$fname = "Update script: update_passwords()";
-	wfOut( "\nIt appears that you need to update the user passwords in your\n" .
-	  "database. If you have already done this (if you've run this update\n" .
-	  "script once before, for example), doing so again will make all your\n" .
-	  "user accounts inaccessible, so be sure you only do this once.\n" .
-	  "Update user passwords? (yes/no)" );
-
-	$resp = readconsole();
-    if ( ! ( "Y" == $resp{0} || "y" == $resp{0} ) ) { return; }
-
-	$sql = "SELECT user_id,user_password FROM user";
-	$source = $wgDatabase->query( $sql, $fname );
-
-	while ( $row = $wgDatabase->fetchObject( $source ) ) {
-		$id = $row->user_id;
-		$oldpass = $row->user_password;
-		$newpass = md5( "{$id}-{$oldpass}" );
-
-		$sql = "UPDATE user SET user_password='{$newpass}' " .
-		  "WHERE user_id={$id}";
-		$wgDatabase->query( $sql, $fname );
 	}
 }
 
@@ -764,6 +750,19 @@ function do_old_links_update() {
 	}
 }
 
+function fix_ancient_imagelinks() {
+	global $wgDatabase;
+	$info = $wgDatabase->fieldInfo( 'imagelinks', 'il_from' );
+	if ( $info && $info->type() === 'string' ) {
+		wfOut( "Fixing ancient broken imagelinks table.\n" );
+		wfOut( "NOTE: you will have to run maintenance/refreshLinks.php after this.\n" );
+		dbsource( archive( 'patch-fix-il_from.sql' ) );
+		wfOut( "ok\n" );
+	} else {
+		wfOut( "...il_from OK\n" );
+	}
+}
+
 function do_user_unique_update() {
 	global $wgDatabase;
 	$duper = new UserDupes( $wgDatabase );
@@ -1075,11 +1074,13 @@ function do_all_updates( $shared = false, $purge = true ) {
 	}
 
 	# Run core updates in sequence...
-	global $wgMysqlUpdates;
-	foreach( $wgMysqlUpdates as $params ) {
-		$func = array_shift( $params );
-		call_user_func_array( $func, $params );
-		flush();
+	global $wgUpdates;
+	if ( isset( $wgUpdates[$wgDBtype] ) ) {
+		foreach( $wgUpdates[$wgDBtype] as $params ) {
+			$func = array_shift( $params );
+			call_user_func_array( $func, $params );
+			flush();
+		}
 	}
 
 	/// @fixme clean up this mess too!
@@ -1116,10 +1117,9 @@ function do_all_updates( $shared = false, $purge = true ) {
 
 function archive($name) {
 	global $wgDBtype, $IP;
-	switch ($wgDBtype) {
-	case "postgres":
-		return "$IP/maintenance/postgres/archives/$name";
-	default:
+	if ( file_exists( "$IP/maintenance/$wgDBtype/archives/$name" ) ) {
+		return "$IP/maintenance/$wgDBtype/archives/$name";
+	} else {
 		return "$IP/maintenance/archives/$name";
 	}
 }
@@ -1228,30 +1228,33 @@ function do_populate_parent_id() {
 	 */
 }
 
-function update_password_format() {
-	/*
-	if ( update_row_exists( 'password format' ) ) {
-		wfOut( "...password hash format already changed\n" );
+function sqlite_initial_indexes() {
+	global $wgDatabase;
+	if ( update_row_exists( 'initial_indexes' ) ) {
+		wfOut( "...have initial indexes\n" );
 		return;
 	}
-
-	wfOut( "Updating password hash format..." );
-
-	global $wgDatabase, $wgPasswordSalt;
-	$user = $wgDatabase->tableName( 'user' );
-	if ( $wgPasswordSalt ) {
-		$sql = "UPDATE $user SET user_password=CONCAT(':B:', user_id, ':', user_password) " .
-			"WHERE user_password NOT LIKE ':%'";
-	} else {
-		$sql = "UPDATE $user SET user_password=CONCAT(':A:', user_password) " .
-			"WHERE user_password NOT LIKE ':%'";
-	}
-	$wgDatabase->query( $sql, __METHOD__ );
-	$wgDatabase->insert( 'updatelog', array( 'ul_key' => 'password format' ), __METHOD__ );
-
+	wfOut( "Adding initial indexes..." );
+	$wgDatabase->sourceFile( archive( 'initial-indexes.sql' ) );
 	wfOut( "done\n" );
-	 */
 }
+
+function do_unique_pl_tl_il() {
+	global $wgDatabase;
+	$info = $wgDatabase->indexInfo( 'pagelinks', 'pl_namespace' );
+	if( is_array($info) && !$info[0]->Non_unique ) {
+		wfOut( "...pl_namespace, tl_namespace, il_to indices are already UNIQUE.\n" );
+	} else {
+		wfOut( "Making pl_namespace, tl_namespace and il_to indices UNIQUE... " );
+		dbsource( archive( 'patch-pl-tl-il-unique.sql' ), $wgDatabase );
+		wfOut( "ok\n" );
+	}
+}
+
+/***********************************************************************
+ * Start PG crap
+ * TODO: merge with above
+ ***********************************************************************/
 
 function
 pg_describe_table($table)
@@ -1417,6 +1420,7 @@ function do_postgres_updates() {
 		wfOut( "Adding in schema \"$wgDBts2schema\" to search_path for user \"$wgDBuser\"\n" );
 		$search_path = "$search_path, $wgDBts2schema";
 	}
+	$search_path = str_replace( ', ,', ',', $search_path);
 	if( array_key_exists( 'search_path', $conf ) === false || $search_path != $conf['search_path'] ) {
 		$wgDatabase->doQuery( "ALTER USER $wgDBuser SET search_path = $search_path" );
 		$wgDatabase->doQuery( "SET search_path = $search_path" );
@@ -1459,6 +1463,9 @@ function do_postgres_updates() {
 		array("protected_titles",  "patch-protected_titles.sql"),
 		array("redirect",          "patch-redirect.sql"),
 		array("updatelog",         "patch-updatelog.sql"),
+		array('change_tag',        'patch-change_tag.sql'),
+		array('tag_summary',        'patch-change_tag.sql'),
+		array('valid_tag',        'patch-change_tag.sql'),
 	);
 
 	$newcols = array(
@@ -1467,23 +1474,24 @@ function do_postgres_updates() {
 		array("archive",       "ar_page_id",           "INTEGER"),
 		array("archive",       "ar_parent_id",         "INTEGER"),
 		array("image",         "img_sha1",             "TEXT NOT NULL DEFAULT ''"),
+		array("ipblocks",      "ipb_allow_usertalk",   "SMALLINT NOT NULL DEFAULT 0"),
 		array("ipblocks",      "ipb_anon_only",        "SMALLINT NOT NULL DEFAULT 0"),
 		array("ipblocks",      "ipb_by_text",          "TEXT NOT NULL DEFAULT ''"),
 		array("ipblocks",      "ipb_block_email",      "SMALLINT NOT NULL DEFAULT 0"),
 		array("ipblocks",      "ipb_create_account",   "SMALLINT NOT NULL DEFAULT 1"),
 		array("ipblocks",      "ipb_deleted",          "SMALLINT NOT NULL DEFAULT 0"),
 		array("ipblocks",      "ipb_enable_autoblock", "SMALLINT NOT NULL DEFAULT 1"),
-		array("ipblocks",      "ipb_allow_usertalk",   "SMALLINT NOT NULL DEFAULT 0"),
 		array("filearchive",   "fa_deleted",           "SMALLINT NOT NULL DEFAULT 0"),
 		array("logging",       "log_deleted",          "SMALLINT NOT NULL DEFAULT 0"),
 		array("logging",       "log_id",               "INTEGER NOT NULL PRIMARY KEY DEFAULT nextval('log_log_id_seq')"),
 		array("logging",       "log_params",           "TEXT"),
 		array("mwuser",        "user_editcount",       "INTEGER"),
+		array("mwuser",        "user_hidden",          "SMALLINT NOT NULL DEFAULT 0"),
 		array("mwuser",        "user_newpass_time",    "TIMESTAMPTZ"),
 		array("oldimage",      "oi_deleted",           "SMALLINT NOT NULL DEFAULT 0"),
-		array("oldimage",      "oi_metadata",          "BYTEA NOT NULL DEFAULT ''"),
-		array("oldimage",      "oi_media_type",        "TEXT"),
 		array("oldimage",      "oi_major_mime",        "TEXT NOT NULL DEFAULT 'unknown'"),
+		array("oldimage",      "oi_media_type",        "TEXT"),
+		array("oldimage",      "oi_metadata",          "BYTEA NOT NULL DEFAULT ''"),
 		array("oldimage",      "oi_minor_mime",        "TEXT NOT NULL DEFAULT 'unknown'"),
 		array("oldimage",      "oi_sha1",              "TEXT NOT NULL DEFAULT ''"),
 		array("page_restrictions", "pr_id",            "INTEGER NOT NULL UNIQUE DEFAULT nextval('pr_id_val')"),
@@ -1495,11 +1503,11 @@ function do_postgres_updates() {
 		array("recentchanges", "rc_new_len",           "INTEGER"),
 		array("recentchanges", "rc_old_len",           "INTEGER"),
 		array("recentchanges", "rc_params",            "TEXT"),
-		array("revision",      "rev_len",              "INTEGER"),
 		array("revision",      "rev_deleted",          "SMALLINT NOT NULL DEFAULT 0"),
-		array("user_newtalk",  "user_last_timestamp",  "TIMESTAMPTZ"),
-		array("site_stats",    "ss_active_users",      "INTEGER DEFAULT '-1'"),
+		array("revision",      "rev_len",              "INTEGER"),
 		array("revision",      "rev_parent_id",        "INTEGER DEFAULT NULL"),
+		array("site_stats",    "ss_active_users",      "INTEGER DEFAULT '-1'"),
+		array("user_newtalk",  "user_last_timestamp",  "TIMESTAMPTZ"),
 	);
 
 
@@ -1526,7 +1534,7 @@ function do_postgres_updates() {
 		array("ipblocks",     "ipb_enable_autoblock", "smallint", "CASE WHEN ipb_enable_autoblock=' ' THEN 0 ELSE ipb_enable_autoblock::smallint END DEFAULT 1"),
 		array("ipblocks",     "ipb_block_email", "smallint", "CASE WHEN ipb_block_email=' ' THEN 0 ELSE ipb_block_email::smallint END DEFAULT 0"),
 		array("ipblocks",     "ipb_address",     "text",     "ipb_address::text"),
-		array("ipblocks",     "ipb_deleted",     "smallint", "ipb_deleted::smallint"),
+		array("ipblocks",     "ipb_deleted",     "smallint", "ipb_deleted::smallint DEFAULT 0"),
 		array("math",         "math_inputhash",  "bytea",    "decode(math_inputhash,'escape')"),
 		array("math",         "math_outputhash", "bytea",    "decode(math_outputhash,'escape')"),
 		array("mwuser",       "user_token",      "text",     ""),
@@ -1552,12 +1560,20 @@ function do_postgres_updates() {
 		array("user_newtalk", "user_ip",         "text",     "host(user_ip)"),
 	);
 
+	# table, column, nullability
+	$nullchanges = array(
+		array("oldimage", "oi_bits",       "NULL"),
+		array("oldimage", "oi_timestamp",  "NULL"),
+		array("oldimage", "oi_major_mime", "NULL"),
+		array("oldimage", "oi_minor_mime", "NULL"),
+	);
+
 	$newindexes = array(
 		array("archive",       "archive_user_text",  "(ar_user_text)"),
 		array("image",         "img_sha1",           "(img_sha1)"),
 		array("oldimage",      "oi_sha1",            "(oi_sha1)"),
 		array("revision",      "rev_text_id_idx",    "(rev_text_id)"),
-		array("recentchanges", "rc_timestamp_nobot", "(rc_timestamp) WHERE rc_bot = 0"),
+		array("recentchanges", "rc_timestamp_bot",   "(rc_timestamp) WHERE rc_bot = 0"),
 		array("templatelinks", "templatelinks_from", "(tl_from)"),
 		array("watchlist",     "wl_user",            "(wl_user)"),
 	);
@@ -1638,6 +1654,34 @@ function do_postgres_updates() {
 		}
 	}
 
+	foreach ($nullchanges as $nc) {
+		$fi = $wgDatabase->fieldInfo($nc[0], $nc[1]);
+		if (is_null($fi)) {
+			wfOut( "... error: expected column $nc[0].$nc[1] to exist\n" );
+			exit(1);
+		}
+		if ($fi->nullable()) {
+			## It's NULL - does it need to be NOT NULL?
+			if ('NOT NULL' === $nc[2]) {
+				wfOut( "Changing \"$nc[0].$nc[1]\" to not allow NULLs\n" );
+				$wgDatabase->query( "ALTER TABLE $nc[0] ALTER $nc[1] SET NOT NULL" );
+			}
+			else {
+				wfOut( "... column \"$nc[0].$nc[1]\" is already set as NULL\n" );
+			}
+		}
+		else {
+			## It's NOT NULL - does it need to be NULL?
+			if ('NULL' === $nc[2]) {
+				wfOut( "Changing \"$nc[0].$nc[1]\" to allow NULLs\n" );
+				$wgDatabase->query( "ALTER TABLE $nc[0] ALTER $nc[1] DROP NOT NULL" );
+			}
+			else {
+				wfOut( "... column \"$nc[0].$nc[1]\" is already set as NOT NULL\n" );
+			}
+		}
+	}
+
 	if ($wgDatabase->fieldInfo('oldimage','oi_deleted')->type() !== 'smallint') {
 		wfOut( "Changing \"oldimage.oi_deleted\" to type \"smallint\"\n" );
 		$wgDatabase->query( "ALTER TABLE oldimage ALTER oi_deleted DROP DEFAULT" );
@@ -1667,7 +1711,7 @@ function do_postgres_updates() {
 	}
 
 	if ($wgDatabase->hasConstraint("oldimage_oi_name_fkey")) {
-		wfOut( "Making foriegn key on table \"oldimage\" (to image) a cascade delete\n" );
+		wfOut( "Making foreign key on table \"oldimage\" (to image) a cascade delete\n" );
 		$wgDatabase->query( "ALTER TABLE oldimage DROP CONSTRAINT oldimage_oi_name_fkey" );
 		$wgDatabase->query( "ALTER TABLE oldimage ADD CONSTRAINT oldimage_oi_name_fkey_cascade ".
 			"FOREIGN KEY (oi_name) REFERENCES image(img_name) ON DELETE CASCADE" );
@@ -1754,7 +1798,12 @@ function do_postgres_updates() {
 			continue;
 		}
 		wfOut( "Creating index \"$ni[1]\" on table \"$ni[0]\"\n" );
-		dbsource($ni[2]);
+		if ( preg_match( '/^\(/', $ni[2] ) ) {
+			$wgDatabase->query( "CREATE INDEX $ni[1] ON $ni[0] $ni[2]" );
+		}
+		else {
+			dbsource($ni[2]);
+		}
 	}
 
 	# Tweak the page_title tsearch2 trigger to filter out slashes
@@ -1773,8 +1822,8 @@ function do_postgres_updates() {
 			'ctype' => 'U',
 			'mw_version' => $wgVersion,
 			'pg_version' => $version,
-			'sql_version' => '$LastChangedRevision: 46891 $',
-			'sql_date' => '$LastChangedDate: 2009-02-06 04:54:47 +0000 (Fri, 06 Feb 2009) $',
+			'sql_version' => '$LastChangedRevision: 51640 $',
+			'sql_date' => '$LastChangedDate: 2009-06-09 12:58:05 +0000 (Tue, 09 Jun 2009) $',
 		) );
 	return;
 }

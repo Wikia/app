@@ -1,0 +1,185 @@
+Remote wiki processing.
+
+The code in this directory (/remote) is desinged to allow the
+processing of wiki reputation on a different server and/or network
+than the MediaWiki servers which host the actual wiki.
+
+====Directory Structure====
+
+analysis/
+
+This directory contains the ocaml source code which does the wiki
+processing.
+It also has a mod_python implementation for communicating with the
+MediaWiki server.
+
+It has the following source files:
+
+* server.py
+
+A mod_python web-server, it returns colored markup on request. It also
+records votes.
+
+* server.ml
+
+A depricated implementation of the wikitrust server. It is a
+standalone server, and does not require Apache. 
+
+* server_coloring_dispatcher.ml 
+
+This is the top-level file for processing wikitext and votes.
+
+* tmpfile.ml
+
+Very basic code which create a unique temp file.
+
+* wikipedia_api.ml
+
+A library which communicated with a mediawiki api. It also talks to a
+user-id mapping program, currently running on the toolserver.
+
+* mediawiki/extensions/Trust/
+
+All of the PHP code for the revised remote trust extension.
+
+===Setup===
+
+On Ubuntu,
+
+apt-get install libapache2-mod-python
+
+Link or copy server.py to an Apache directory.
+Enable mod_python for this site with 
+
+SetHandler python-program
+PythonHandler server
+# Turn of for production
+PythonDebug On
+# adjust for your installation.
+PythonPath "['/var/www/wikis/coloring'] + sys.path"
+
+Replace /var/www/wikis/coloring with the path to your server.py
+
+Test that everything is working by going to 
+http://192.168.135.130:10302/
+
+(replace 192.168.135.130:10302 with your ip address and port).
+
+You should see the text "bad".
+
+Now, you need to install these ocaml packages:
+netsys,netclient,camlzip
+
+apt-get install libzip-ocaml-dev
+
+For netsys and netclient however, it is needed to install from source
+(this one source tarball does both packages):
+
+wget http://download.camlcity.org/download/ocamlnet-2.2.9.tar.gz
+tar -zxf ocamlnet-2.2.9.tar.gz
+cd ocamlnet-2.2.9/
+./configure -with-nethttpd
+make all
+make opt
+make install
+
+Now, try compiling the ocaml files.
+
+make all
+make allopt
+
+At this point, the following binay programs should be created:
+
+server -- Depricated in faivor of server.py
+dispatcher -- Actually processes edits and votes
+
+Remote Trust requires a seperate MediaWiki type database in which to
+run. The easiest way to get this is to set up a dumy MW instalation,
+using the web-based form to create the initial db,
+and then run the sql/create_db.php script. The arguments for this are:
+sql/create_db.php path_to_mw_instalation db_root_user_name [remove]
+
+Now, setup the php component.
+
+In your mediawiki instalation, link the following files into
+wikitrust/mediawiki/extensions/Trust:
+
+RemoteTrust.i18n.php -> ../../../remote/mediawiki/extensions/Trust/RemoteTrust.i18n.php
+RemoteTrustImpl.php -> ../../../remote/mediawiki/extensions/Trust/RemoteTrustImpl.php
+RemoteTrust.php -> ../../../remote/mediawiki/extensions/Trust/RemoteTrust.php
+RemoteTrustUpdate.php -> ../../../remote/mediawiki/extensions/Trust/RemoteTrustUpdate.php
+
+Update LocalSettings.php, replacing ``all" old trust values with these values:
+
+# Trust extension
+$wgUseTidy = true;
+$wgUseAjax = true;
+$wgShowVoteButton = true; // If true, the vote button is shown.
+$wgTrustCmd = $IP . "/eval_online_wiki"; 
+$wgTrustLog = "/tmp/{$wgDBname}-trust.log";
+$wgTrustDebugLog = "/tmp/{$wgDBname}-trust-debug.log";
+$wgRepSpeed = 1.0;
+$wgContentServerURL = "http://localhost:10302/?";
+
+require_once( $IP . "/extensions/Gadgets/Gadgets.php" );
+require_once( $IP . "/extensions/Trust/RemoteTrust.php" );
+
+Update wgContentServerURL to point to the web server you set up for
+mod_python earlier.
+
+Lastly, add the Gadgets widget to your installation. Instructions are
+provided here:
+http://www.mediawiki.org/wiki/Extension:Gadgets
+
+Configure WikiTrust to run via Gadgets.
+Go here:
+http://192.168.135.130/testwiki/index.php/MediaWiki:Gadgets-definition
+
+And set the text to be:
+* WikiTrust|wikitrust.js
+
+You must be logged in as the WikiSysop admin user to do this.
+
+Now, log in as a regular user. Click on "my preferences", "Gadgets".
+Check the box for WikiTrust.
+
+===Running===
+
+You are now ready to try running the system.
+Click on a check-trust tab. You should get a message stating that
+trust for this page is not availible.
+
+Laucnch the dispatcher program to color the requested page.
+In remote/analysis, do:
+
+./dispatcher --help 
+
+This shows all of the availible options.
+
+For general purpose, do:
+
+./dispatcher -db_user wikiuser -db_name wikidb -db_pass password
+-db_host localhost -db_port 3306 -wiki_api
+http://192.168.135.130/testwiki/api.php -user_id_api
+http://toolserver.org/~Ipye/UserName2UserId.php
+
+Update -wiki_api to point to the api.php page you want to target for
+requests for wiki-text. -user_id_api is a small program which returns
+the Wikipedia UserID for a username, because it is not exposed via the
+API currently.
+
+Run this in the forground for debugging, and in general as a deamon process.
+
+It prints out information about the edits and votes processed.
+With dispatcher running, the wikitrust extension should work exactly
+as before.
+
+
+
+
+
+
+
+
+
+===Run===

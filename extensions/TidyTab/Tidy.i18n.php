@@ -21,6 +21,14 @@ $messages['qqq'] = array(
 	'tidy-desc' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'tidy' => 'Tark',
+	'untidy' => 'Čočoi',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -37,6 +45,24 @@ $messages['arz'] = array(
 	'tidy-desc' => 'يضيف لسان تيدى أو أنتيدى (معتمدا على $wgUseTidy) فى الصفحات العادية سامحا بتجاوز إعدادات تيدى HTML العامة لرؤية واحدة',
 	'tidy' => 'ترتيب',
 	'untidy' => 'لا ترتيب',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'tidy-desc' => 'Дадае закладку «акуратны HTML» альбо «неакуратны HTML» (у залежнасьці ад $wgUseTidy) на старонкі, што дазваляе зьмяняць глябальную ўстаноўку «акуратнасьці HTML» для асобных старонак',
+	'tidy' => 'Акуратны HTML',
+	'untidy' => 'Неакуратны HTML',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'tidy-desc' => 'Dodaje jezičak za redanje ili uklanjanje redanja (zavisno od $wgUseTidy) na obične stranice dajući mogućnost za zaobilaženje općih HTML postavki redanja za pojedinačni pregled',
+	'tidy' => 'Poredaj',
+	'untidy' => 'Ukloni redanje',
 );
 
 /** Czech (Česky)
@@ -76,6 +102,14 @@ $messages['eo'] = array(
 	'untidy' => 'Malordigi',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'tidy' => 'Organizado',
+	'untidy' => 'Desorganizado',
+);
+
 /** Basque (Euskara)
  * @author An13sa
  */
@@ -104,6 +138,15 @@ $messages['gl'] = array(
 	'untidy' => 'Desordenado',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'tidy-desc' => 'Fiegt uf normale Syte ne Ryter „giltig“ un e Ryter „uugiltig“ yy (abhängig vu $wgUseTidy) go di global HTML-Tidy-Yystellig fir e einzelni Betrachtig iberschryybe z chenne.',
+	'tidy' => 'Ordne',
+	'untidy' => 'Nit ordne',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
@@ -130,6 +173,15 @@ $messages['ia'] = array(
 	'tidy-desc' => 'Adde un scheda "nettar" o "disnettar" (dependente de $wgUseTidy) in paginas normal permittente ultrapassar le configuration global del nettamento de HTML pro un singule visualisation',
 	'tidy' => 'Nettar',
 	'untidy' => 'Disnettar',
+);
+
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'tidy-desc' => '通常ページでグローバルな HTML Tidy 利用設定 ($wgUseTidy) を一画面単位でオーバーライドできるようにするタブを追加する',
+	'tidy' => 'Tidy を使う',
+	'untidy' => 'Tidy を使わない',
 );
 
 /** Javanese (Basa Jawa)
@@ -217,10 +269,30 @@ $messages['pl'] = array(
 	'untidy' => 'Anuluj uporządkowanie',
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'tidy-desc' => 'Adiciona uma pestana arrumado ou desarrumado (dependendo de $wgUseTidy) em páginas normais, permitindo sobrepor a configuração de arrumação de HTML global para uma vista única',
+	'tidy' => 'Arrumado',
+	'untidy' => 'Desarrumado',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'tidy-desc' => 'Adiciona uma aba arrumada ou não (dependendo de $wgUseTidy) em páginas normais, permitindo sobrepor a configuração de arrumação de HTML global para uma vista única',
+	'tidy' => 'Arrumado',
+	'untidy' => 'Desarrumado',
+);
+
 /** Russian (Русский)
  * @author Kaganer
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'tidy-desc' => 'Добавляет на обычные страницы вкладки tidy и untidy (в зависимости от $wgUseTidy), позволяющие переопределять для конкретного просмотра глобальную настройку HTML tidy',
 	'tidy' => 'Упорядочить',
 	'untidy' => 'Разупорядочить',
 );
@@ -238,6 +310,7 @@ $messages['sk'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
+	'tidy-desc' => 'Föiget ap normoale Sieden n Rieder „gultich“ un n Rieder „uungultich“ ien (ouhongich fon $wgUseTidy), uum ju globoale HTML-Tidy-Ienstaalenge foar ne eenpelde Betrachtenge uurschrieuwe tou konnen.',
 	'tidy' => 'Oardenje',
 	'untidy' => 'Nit oardenje',
 );
@@ -275,5 +348,14 @@ $messages['tl'] = array(
 $messages['uk'] = array(
 	'tidy' => 'Впорядкувати',
 	'untidy' => 'Розпорядкувати',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'tidy-desc' => 'Thêm một thẻ gọn gàng hoặc không gọn gàng (tùy vào $wgUseTidy) trên các trang thông thường để cho phép ghi đè lên thiết lập gọn gàng của HTML toàn cục cho một trang cụ thể',
+	'tidy' => 'Gọn gàng',
+	'untidy' => 'Không gọn gàng',
 );
 

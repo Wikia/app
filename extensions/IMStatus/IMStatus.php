@@ -66,6 +66,8 @@ function wfIMStatusPCR()
 	$wgParser->setHook( "yahoo", "RenderYahoo" );
 }
 
+// FIXME: below should be put in its own class file and use PARSERFIRSTCALLINIT to optimise resource usage
+
 //NB: a nice list of styles and actions: http://cubicpath.syncleus.com/wiki/index.php/Cubicpath:Add-ons
 
 /**********************************************
@@ -79,9 +81,10 @@ function RenderAIM( $input, $argv )
 	// to get help as a user, use <aim help/>
 
 	// sanitize input
-    $input = htmlspecialchars($input,ENT_QUOTES);
+	$input = htmlspecialchars($input,ENT_QUOTES);
+
 	// get custom parameters
-    if( isset( $argv['style'] ) )
+	if( isset( $argv['style'] ) )
 	{
 		$style = $argv['style'];
 		if( !in_array( $style, array("presence", "api") ) ) $style = $style_default;
@@ -94,7 +97,7 @@ function RenderAIM( $input, $argv )
 		wfLoadExtensionMessages('IMStatus');
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;aim style="[style]"&gt;['. wfMsg("imstatus_your_name", "AIM") .']&lt;/aim&gt;</span>';
-		$output .= '<ul><li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_possible_val") .': "presence" '. wfMsg("imstatus_or") .' "api". '. wfMsg("imstatus_default") .': '.$style_default.'.';
+		$output .= '<ul><li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_possible_val") .': "presence" '. wfMsg("imstatus_or") .' "api". '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'.';
 		$output .= '<ul><li>'. wfMsg("imstatus_aim_presence", "&#34;presence&#34;") .'</li>';
 		$output .='<li>'. wfMsg("imstatus_aim_api", "&#34;api&#34;") .'</li></ul></li></ul>';
 		$output .= '<span style="color:green;">'. wfMsg("imstatus_example") .': &lt;aim style="api"&gt;PatheticCockroach&lt;/aim&gt;</span></div>';
@@ -119,7 +122,7 @@ function RenderAIM( $input, $argv )
 		}
 	}
 	// sends output
-    return $output;
+	return $output;
 }
 
 /**********************************************
@@ -205,7 +208,7 @@ function RenderICQ( $input, $argv )
 		wfLoadExtensionMessages('IMStatus');
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;icq style="[style]"&gt;['. wfMsg("imstatus_icq_id") .']&lt;/icq&gt;</span>';
-		$output .= '<ul><li>style: '. wfMsg("imstatus_icq_style") .' '. wfMsg("imstatus_default") .': '.$style_default.'.</li></ul>';
+		$output .= '<ul><li>style: '. wfMsg("imstatus_icq_style") .' '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'.</li></ul>';
 		$output .= '<span style="color:green;">'. wfMsg("imstatus_example") .': &lt;icq style="2"&gt;984231&lt;/icq&gt;</span></div>';
 	}
 	else $output = '<a href="http://www.icq.com/people/about_me.php?uin='.$input.'&action='.$action.'"><img src="http://status.icq.com/online.gif?icq='.$input.'&img='.$style.'" alt="ICQ status"/></a>';
@@ -240,7 +243,7 @@ function RenderLiveMessenger( $input, $argv )
 		wfLoadExtensionMessages('IMStatus');
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;livemessenger style="[style]"&gt;['. wfMsg("imstatus_live_code") .']&lt;/livemessenger&gt;</span>';
-		$output .= '<ul><li>style: "button", "icon" '. wfMsg("imstatus_or") .' "window". '. wfMsg("imstatus_default") .': '.$style_default.'.</li>';
+		$output .= '<ul><li>style: "button", "icon" '. wfMsg("imstatus_or") .' "window". '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'.</li>';
 		$output .= '<li>'. wfMsg("imstatus_live_get_code", "http://settings.messenger.live.com/applications/CreateHtml.aspx", "invitee=", "@apps.messenger") .'</li></ul>';
 		$output .= '<span style="color:green;">'. wfMsg("imstatus_example") .': &lt;livemessenger style="button"&gt;8ebac9521f6e99e2&lt;/livemessenger&gt;</span></div>';
 	}
@@ -267,7 +270,7 @@ function RenderLiveMessenger( $input, $argv )
 		}
 	}
 	// sends output
-    return $output;
+	return $output;
 }
 
 
@@ -354,13 +357,13 @@ function RenderSkype( $input, $argv )
 	}
 
 	// prepares outupt
-    if(isset($argv['help']))
+	if(isset($argv['help']))
 	{
 		wfLoadExtensionMessages('IMStatus');
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;skype style="[style]" action="[action]"&gt;['. wfMsg("imstatus_your_name", "Skype") .']&lt;/skype&gt;</span>';
-		$output .= '<ul><li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_default") .': '.$style_default.'. '. wfMsg("imstatus_possible_val") .': "add","chat","call","sendfile","userinfo","voicemail","balloon","bigclassic","smallclassic","smallicon","mediumicon".</li>';
-		$output .= '<li>action: '. wfMsg("imstatus_action") .'. '. wfMsg("imstatus_default") .': '.$action_default.'. '. wfMsg("imstatus_possible_val") .': "add","chat","call","sendfile","userinfo","voicemail".</li></ul>';
+		$output .= '<ul><li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'. '. wfMsg("imstatus_possible_val") .': "add","chat","call","sendfile","userinfo","voicemail","balloon","bigclassic","smallclassic","smallicon","mediumicon".</li>';
+		$output .= '<li>action: '. wfMsg("imstatus_action") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$action_default.'. '. wfMsg("imstatus_possible_val") .': "add","chat","call","sendfile","userinfo","voicemail".</li></ul>';
 		$output .= wfMsg("imstatus_details_saa", '<a href="http://www.skype.com/share/buttons/wizard.html">Skype button wizard</a>'). '<br/>';
 		$output .= wfMsg("imstatus_skype_nbstyle") .'<br/>';
 		$output .= '<span style="color:green;">'. wfMsg("imstatus_example") .': &lt;skype style="mediumicon" action="chat"&gt;PatheticCockroach&lt;/skype&gt;</span></div>';
@@ -368,10 +371,10 @@ function RenderSkype( $input, $argv )
 	else
 	{
 		$output = '<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>';
-	    $output .= '<a href="skype:'.$input.'?'.$action.'">'.$image.'</a>';
+		$output .= '<a href="skype:'.$input.'?'.$action.'">'.$image.'</a>';
 	}
 	// sends output
-    return $output;
+	return $output;
 }
 
 
@@ -449,20 +452,20 @@ function RenderXfire( $input, $argv )
 	}
 
 	// prepares outupt
-    if(isset($argv['help']))
+	if(isset($argv['help']))
 	{
 		wfLoadExtensionMessages('IMStatus');
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;xfire size="[size]" style="[style]" action="[action]"&gt;['. wfMsg("imstatus_your_name", "Xfire") .']&lt;/xfire&gt;</span>';
-		$output .= '<ul><li>size: '. wfMsg("imstatus_xfire_size", "0", "4") .' '. wfMsg("imstatus_default") .': '.$size_default.'.</li>';
-		$output .= '<li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_default") .': '.$style_default.'. '. wfMsg("imstatus_possible_val") .': "bg","sh","co","sf","os","wow".</li>';
-		$output .= '<li>action: '. wfMsg("imstatus_action") .'. '. wfMsg("imstatus_default") .': '.$action_default.'. '. wfMsg("imstatus_possible_val") .': "add","profile".</li></ul>';
+		$output .= '<ul><li>size: '. wfMsg("imstatus_xfire_size", "0", "4") .' '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$size_default.'.</li>';
+		$output .= '<li>style: '. wfMsg("imstatus_style") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'. '. wfMsg("imstatus_possible_val") .': "bg","sh","co","sf","os","wow".</li>';
+		$output .= '<li>action: '. wfMsg("imstatus_action") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$action_default.'. '. wfMsg("imstatus_possible_val") .': "add","profile".</li></ul>';
 		$output .= wfMsg("imstatus_details_saa", '<a href="http://www.xfire.com/miniprofile/">Xfire - Miniprofile Instructions</a>') .'<br/>';
 		$output .= '<span style="color:green;">'. wfMsg("imstatus_example") .': &lt;xfire size="3" style="bg" action="add"&gt;PatheticCockroach&lt;/xfire&gt;</span></div>';
 	}
 	else $output = '<a href="'.$link_url.'">'.$image.'</a>';
 	// sends output
-    return $output;
+	return $output;
 }
 
 
@@ -538,13 +541,13 @@ function RenderYahoo( $input, $argv )
 	}
 
 	// prepares outupt
-    if(isset($argv['help']))
+	if(isset($argv['help']))
 	{
 		wfLoadExtensionMessages('IMStatus');
 
 		$output = '<div><span style="color:blue;">'. wfMsg("imstatus_syntax") .': &lt;yahoo style="[style]" action="[action]"&gt;['. wfMsg("imstatus_your_name", "Yahoo") .']&lt;/xfire&gt;</span>';
-		$output .= '<ul><li>style: '. wfMsg("imstatus_yahoo_style", "0", "2", "3", "4") .' '. wfMsg("imstatus_default") .': '.$style_default.'.</li>';
-		$output .= '<li>action: '. wfMsg("imstatus_action") .'. '. wfMsg("imstatus_default") .': '.$action_default.'. '. wfMsg("imstatus_possible_val") .': "addfriend","call","sendim".</li></ul>';
+		$output .= '<ul><li>style: '. wfMsg("imstatus_yahoo_style", "0", "2", "3", "4") .' '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$style_default.'.</li>';
+		$output .= '<li>action: '. wfMsg("imstatus_action") .'. '. wfMsg("imstatus_default") .wfMsg( 'colon-separator' ).$action_default.'. '. wfMsg("imstatus_possible_val") .': "addfriend","call","sendim".</li></ul>';
 		$output .= wfMsg("imstatus_details_saa", '<a href="http://geocities.yahoo.com/v/ao/pre.html">Yahoo! Presence</a>') .'<br/>';
 		$output .= '<span style="color:green;">'. wfMsg("imstatus_example") .': &lt;yahoo style="2" action="sendim"&gt;PatheticCockroach&lt;/yahoo&gt;</span></div>';
 	}

@@ -11,8 +11,8 @@ $wgExtensionCredits['other'][] = array(
 	'author'         => 'Merrick Schaefer, Mark Johnston, Evan Wheeler and Adam Mckaig (at UNICEF)',
 	'description'    => 'Supplements the edit page with something more usable',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Uniwiki_Generic_Edit_Page',
-	'svn-date'       => '$LastChangedDate: 2008-11-18 17:14:45 +0000 (Tue, 18 Nov 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 43681 $',
+	'svn-date'       => '$LastChangedDate: 2009-03-06 21:14:41 +0000 (Fri, 06 Mar 2009) $',
+	'svn-revision'   => '$LastChangedRevision: 48098 $',
 	'descriptionmsg' => 'gep-desc',
 );
 
@@ -29,6 +29,7 @@ $wgSuggestCategoryRecipient = $wgEmergencyContact;
 $wgUseCategoryPage          = false;
 $wgRequireCategory          = false;
 $wgGenericEditPageWhiteList = array( NS_MAIN );
+$wgAllowSimilarTitles		= true;
 
 /* not configurable. in fact,
  * it's a big ugly hack */
@@ -237,7 +238,7 @@ function UW_GenericEditPage_extractCategoriesIntoBox( &$text ) {
 					// only if a category name was entered...
 					var cat_name = field.value.trim();
 					if (cat_name != '') {
-						sajax_do_call ('emailSuggestion', [cat_name], function (msg) {
+						sajax_do_call ('UW_GenericEditPage_emailSuggestion', [cat_name], function (msg) {
 
 							/* got response from the server, append it after the
 							 * suggest form (so subsequent suggestions are injected
@@ -287,7 +288,7 @@ function UW_GenericEditPage_renderSectionBox ( $sections ) {
 	";
 
 	for ( $i = 1; $i < count ( $sections ); $i++ ) {
-		if ( $sections[$i]['required'] ) {
+		if ( !empty($sections[$i]['required']) ) {
 
 			/* required sections are checked and disabled, but...
 			 * this doesn't pass a value back to the server! so
@@ -342,7 +343,7 @@ function UW_GenericEditPage_renderSectionBox ( $sections ) {
 
 function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 	global $wgHooks, $wgParser, $wgTitle, $wgRequest, $wgUser, $wgCategoryBox, $wgSectionBox, $wgRequireCategory;
-	global $wgGenericEditPageClass, $wgSwitchMode, $wgGenericEditPageWhiteList;
+	global $wgGenericEditPageClass, $wgSwitchMode, $wgGenericEditPageWhiteList, $wgAllowSimilarTitles;
 
 	// disable this whole thing on conflict and comment pages
 	if ( $editor->section == "new" || $editor->isConflict )
@@ -439,8 +440,7 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 
 	/* special case: if the first (un-named) section has text in the layout,
 	 * but not in the page, copy it. otherwise, use the page text (even if empty) */
-	// FIXME: Undefined offset:  0 in scenario without layout
-	$result[] = ( $layout[0]['text'] && !$page[0]['text'] ) ? $layout[0] : $page[0];
+	$result[] = ( !empty($layout[0]) && $layout[0]['text'] && !$page[0]['text'] ) ? $layout[0] : $page[0];
 
 	/* only show the un-named section if it is being used. as
 	 * default, do not encourage people to use it by showing it */
@@ -467,9 +467,11 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 
 		// if this section is already in the result,
 		// then skip to the next page section
-		for ( $j = 0; $j < count ( $result ); $j++ ) {
-			if ( $page[$i]['title'] == $result[$j]['title'] )
-				continue 2;
+		if(!$wgAllowSimilarTitles){
+			for ( $j = 0; $j < count ( $result ); $j++ ) {
+				if (!empty($result[$j]['title']) && $page[$i]['title'] == $result[$j]['title'] )
+					continue 2;
+			}
 		}
 
 		/* this page section has not been added yet!
@@ -479,7 +481,7 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 		$insert_at = null;
 
 		for ( $j = 0; $j < count ( $result ); $j++ ) {
-			if ( $result[$j]['title'] == $page[$i - 1]['title'] ) {
+			if (!empty($result[$j]['title']) && $result[$j]['title'] == $page[$i - 1]['title'] ) {
 				$insert_at = $j + 1;
 				break;
 			}
@@ -589,10 +591,9 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 
 
 		// if this section has a title, show it
-		// FIXME: Undefined index: title in scenario without layout
-		if ( $result[$i]['title'] ) {
+		if ( !empty($result[$i]['title']) ) {
 			$title = $result[$i]['title'];
-			if ( $result[$i]['lock-header'] ) {
+			if (!empty($result[$i]['lock-header']) &&  $result[$i]['lock-header'] ) {
 				$out->addHTML ( "<h2>$title</h2>" );
 				$out->addHTML ( "<input type='hidden' name='title-$i' value='$title' />" );
 			} else {
@@ -607,8 +608,7 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 		/* always add a textarea, whether or
 		 * not it is currently in use. titles
 		 * without text are kind of useless */
-		// FIXME: Undefined index: lock-text in scenario without layout
-		if ( $result[$i]['lock-text'] ) {
+		if ( !empty($result[$i]['lock-text']) ) {
 
 			/* render the wiki markup into HTML, the old-school
 			 * way which actually works, unlike recursiveTagParse() */
@@ -617,7 +617,8 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 			$out->addHTML ( "<div class='locked-text' id='locked-text-$i'>" . $text . "</div>" );
 		} else {
 			// add the editable text for this section
-			$text = htmlspecialchars ( $result[$i]['text'], ENT_QUOTES );
+			$text = (empty($result[$i]['text'])) ? "" : $result[$i]['text'];
+			$text = htmlspecialchars ($text , ENT_QUOTES );
 			$out->addHTML ( "<textarea name='section-$i' class='editor'>$text</textarea>" );
 		}
 
@@ -654,8 +655,8 @@ function UW_GenericEditPage_displayEditPage ( $editor, $out ) {
 
 
 	// pass the layout name back, to be re-appended
-	// FIXME: Undefined offset: 0 in scenario without layout
-	$out->addHTML ( "<input type='hidden' name='layout-name' value='{$layout[0]['name']}' />" );
+	if(!empty($layout))
+		$out->addHTML ( "<input type='hidden' name='layout-name' value='{$layout[0]['name']}' />" );
 
 
 	// build the sidebar (cats, sections) in its entirety
@@ -703,7 +704,7 @@ function UW_GenericEditPage_combineBeforeSave ( &$editpage_Obj ) {
 	 * pressing the "switch mode" button, then
 	 * set a global to do some jiggery-pokery
 	 * in the displayEditPage function, later */
-	if ( isset( $data['switch-mode'] ) )
+	if ( isset( $data['switch-mode'] ) and strlen( $data['switch-mode']) > 0)
 		$wgSwitchMode = true;
 
 	/* if we are editing in classic mode,
@@ -754,8 +755,8 @@ function UW_GenericEditPage_combineBeforeSave ( &$editpage_Obj ) {
 	/* put the section titles and text
 	 * back into the default textbox */
 	foreach ( array_keys ( $nodes ) as $k ) {
-		if ( $nodes[$k]['title'] ) $editpage_Obj->textbox1 .= $nodes[$k]['title'];
-		if ( $nodes[$k]['text'] )  $editpage_Obj->textbox1 .= $nodes[$k]['text'];
+		if ( !empty($nodes[$k]['title']) ) $editpage_Obj->textbox1 .= $nodes[$k]['title'];
+		if ( !empty($nodes[$k]['text']) )  $editpage_Obj->textbox1 .= $nodes[$k]['text'];
 	}
 
 	// then add back the categories

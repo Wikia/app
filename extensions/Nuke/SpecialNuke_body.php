@@ -21,6 +21,13 @@ class SpecialNuke extends SpecialPage {
 		$this->outputHeader();
 
 		$target = $wgRequest->getText( 'target', $par );
+
+		// Normalise name
+		if ( $target !== '' ) {
+			$user = User::newFromName( $target );
+			if ( $user ) $target = $user->getName();
+		}
+
 		$reason = $wgRequest->getText( 'wpReason',
 			wfMsgForContent( 'nuke-defaultreason', $target ) );
 		$posted = $wgRequest->wasPosted() &&
@@ -39,22 +46,18 @@ class SpecialNuke extends SpecialPage {
 	}
 
 	function promptForm() {
-		global $wgUser, $wgOut;
-		$sk =& $wgUser->getSkin();
+		global $wgOut;
 
-		$nuke = Title::makeTitle( NS_SPECIAL, 'Nuke' );
-		$submit = Xml::element( 'input', array( 'type' => 'submit', 'value' => wfMsgHtml( 'nuke-submit-user' ) ) );
+		$input = Xml::input( 'target', 40 );
+		$submit = Xml::submitButton( wfMsg( 'nuke-submit-user' ) );
 
-		$wgOut->addWikiText( wfMsg( 'nuke-tools' ) );
-		$wgOut->addHTML( Xml::element( 'form', array(
-				'action' => $nuke->getLocalURL( 'action=submit' ),
-				'method' => 'post' ),
-				null ) .
-			Xml::element( 'input', array(
-				'type' => 'text',
-				'size' => 40,
-				'name' => 'target' ) ) .
-			"\n$submit\n" );
+		$wgOut->addWikiMsg( 'nuke-tools' );
+		$wgOut->addHTML(
+			Xml::openElement( 'form', array(
+				'action' => $this->getTitle()->getLocalURL( 'action=submit' ),
+				'method' => 'post' )
+			) . "$input\n$submit\n"
+		);
 
 		$wgOut->addHTML( "</form>" );
 	}
@@ -63,54 +66,54 @@ class SpecialNuke extends SpecialPage {
 		global $wgUser, $wgOut, $wgLang;
 
 		$pages = $this->getNewPages( $username );
-		$escapedName = wfEscapeWikiText( $username );
+
 		if( count( $pages ) == 0 ) {
-			$wgOut->addWikiText( wfMsg( 'nuke-nopages', $escapedName ) );
+			$wgOut->addWikiMsg( 'nuke-nopages', $username );
 			return $this->promptForm();
 		}
-		$wgOut->addWikiText( wfMsg( 'nuke-list', $escapedName ) );
+		$wgOut->addWikiMsg( 'nuke-list', $username );
 
 		$nuke = $this->getTitle();
-		$submit = Xml::element( 'input', array( 'type' => 'submit', 'value' => wfMsgHtml( 'nuke-submit-delete' ) ) );
+		$submit = Xml::submitButton( wfMsg( 'nuke-submit-delete' ) );
 
-		$wgOut->addHTML( Xml::element( 'form', array(
-			'action' => $nuke->getLocalURL( 'action=delete' ),
-			'method' => 'post' ),
-			null ) .
-			"\n<div>" .
-			wfMsgHtml( 'deletecomment' ) . ' ' .
-			Xml::element( 'input', array(
-				'name' => 'wpReason',
-				'value' => $reason,
-				'size' => 60 ) ) .
-			"</div><br />" .
-			$submit .
-			Xml::element( 'input', array(
-				'type' => 'hidden',
-				'name' => 'wpEditToken',
-				'value' => $wgUser->editToken() ) ) .
-			"\n<ul>\n" );
+		$wgOut->addHTML(
+			Xml::openElement( 'form', array(
+				'action' => $nuke->getLocalURL( 'action=delete' ),
+				'method' => 'post' )
+			) .
+			Xml::hidden( 'wpEditToken', $wgUser->editToken() ) .
+			Xml::inputLabel(
+				wfMsg( 'deletecomment' ), 'wpReason', 'wpReason', 60, $reason
+			) . '<br /><br />' .
+			Xml::submitButton( wfMsg( 'nuke-submit-delete' ) )
+		);
 
-		$sk =& $wgUser->getSkin();
+		$wgOut->addHTML( '<ul>' );
+
+		$sk = $wgUser->getSkin();
 		foreach( $pages as $info ) {
 			list( $title, $edits ) = $info;
 			$image = $title->getNamespace() == NS_IMAGE ? wfLocalFile( $title ) : false;
 			$thumb = $image && $image->exists() ? $image->getThumbnail( 120, 120 ) : false;
+
+			$changes = wfMsgExt( 'nchanges', 'parsemag', $wgLang->formatNum( $edits ) );
 			
 			$wgOut->addHTML( '<li>' .
-				Xml::element( 'input', array(
-					'type' => 'checkbox',
-					'name' => "pages[]",
-					'value' => $title->getPrefixedDbKey(),
-					'checked' => 'checked' ) ) .
+				Xml::check( 'pages[]', true,
+					array( 'value' =>  $title->getPrefixedDbKey() )
+				) .
 				'&nbsp;' .
 				( $thumb ? $thumb->toHtml( array( 'desc-link' => true ) ) : '' ) .
 				$sk->makeKnownLinkObj( $title ) .
 				'&nbsp;(' .
-				$sk->makeKnownLinkObj( $title, wfMsgExt( 'nchanges', array( 'parsemag' ), $wgLang->formatNum( $edits ) ), 'action=history' ) .
+				$sk->makeKnownLinkObj( $title, $changes, 'action=history' ) .
 				")</li>\n" );
 		}
-		$wgOut->addHTML( "</ul>\n$submit</form>" );
+		$wgOut->addHTML(
+			"</ul>\n" .
+			Xml::submitButton( wfMsg( 'nuke-submit-delete' ) ) .
+			"</form>"
+		);
 	}
 
 	function getNewPages( $username ) {

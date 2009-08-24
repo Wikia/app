@@ -25,6 +25,11 @@ $namespaceNames = array(
 	NS_CATEGORY_TALK    => 'Categoria_Discute',
 );
 
+$specialPageAliases = array(
+	'Newimages'                 => array( 'FixesNova' ),
+	'Newpages'                  => array( 'PajesNova' ),
+);
+
 $messages = array(
 # User preference toggles
 'tog-underline'               => 'Sulinia lias:',
@@ -301,6 +306,9 @@ $messages = array(
 'yourrealname'            => 'Nom vera:',
 'yourlanguage'            => 'Lingua:',
 'yournick'                => 'Suscrive:',
+'yourgender'              => 'Seso:',
+'gender-male'             => 'Mas',
+'gender-female'           => 'Fema',
 'email'                   => 'Eposta',
 'prefs-help-realname'     => 'Tu nom vera no es obligada, ma si tu vole dona tu nom vera, el va es usada per onora tu per tu labora.',
 'loginerror'              => 'Era de entra',
@@ -470,16 +478,26 @@ La arcivo de sutraes per esta paje es asi per conveni:",
 'powersearch'               => 'Xerca avansada',
 
 # Preferences page
-'preferences'       => 'Preferis',
-'mypreferences'     => 'Me preferis',
-'skin-preview'      => 'Previde',
-'math'              => 'Matematica',
-'saveprefs'         => 'Fisa',
-'rows'              => 'Linias:',
-'columns'           => 'Colonas:',
-'searchresultshead' => 'Xerca',
-'savedprefs'        => 'Tu preferis es fisada',
-'files'             => 'Fixes',
+'preferences'               => 'Preferis',
+'mypreferences'             => 'Me preferis',
+'skin-preview'              => 'Previde',
+'math'                      => 'Matematica',
+'saveprefs'                 => 'Fisa',
+'rows'                      => 'Linias:',
+'columns'                   => 'Colonas:',
+'searchresultshead'         => 'Xerca',
+'savedprefs'                => 'Tu preferis es fisada',
+'timezoneregion-africa'     => 'Africa',
+'timezoneregion-america'    => 'America',
+'timezoneregion-antarctica' => 'Antartica',
+'timezoneregion-arctic'     => 'Artica',
+'timezoneregion-asia'       => 'Asia',
+'timezoneregion-atlantic'   => 'Mar Atlantica',
+'timezoneregion-australia'  => 'Australia',
+'timezoneregion-europe'     => 'Europa',
+'timezoneregion-indian'     => 'Mar Indian',
+'timezoneregion-pacific'    => 'Mar Pasifica',
+'files'                     => 'Fixes',
 
 # User rights
 'userrights'     => 'Dirije de la diretos de usores', # Not used as normal message but as header for the special page itself
@@ -562,7 +580,7 @@ Pajes a [[Special:Watchlist|tu lista de pajes oservada]] es en leteras '''forte'
 'imagelinks'                => 'Lias de fix',
 'linkstoimage'              => 'Esta {{PLURAL:$1|paje|pajes}} lia a esta fix:',
 'nolinkstoimage'            => 'Es no pajes ce lia a esta fix.',
-'sharedupload'              => 'Esta fix es parti es pote es usada par otra projetas.',
+'sharedupload'              => 'Esta fix es parte de $1 e pote es usada par otra projetas.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'noimage'                   => 'Es no fix con esta nom, ma tu pote $1.',
 'noimage-linktext'          => 'envia un',
 'uploadnewversion-linktext' => 'Envia un varia nova de esta fix',
@@ -926,6 +944,7 @@ Si la fix ia es cambiada de se stato orijinal, alga detalias pote no es clara en
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags

@@ -144,8 +144,10 @@ $messages['bs'] = array(
 
 /** Catalan (Català)
  * @author Paucabot
+ * @author SMP
  */
 $messages['ca'] = array(
+	'intersection-desc' => "Genera una llista d'elements recents en una categoria o en la intersecció de diverses.",
 	'intersection_toomanycats' => 'Error: Massa categories!',
 	'intersection_toofewcats' => 'Error: Massa poques categories!',
 	'intersection_noresults' => 'Error: Cap resultat!',
@@ -187,6 +189,17 @@ $messages['dsb'] = array(
 	'intersection_noincludecats' => 'Zmólka: Musyš nanejmjenjej jadnu kategoriju zapśěgnuś abo mjenjowy rum pódaś!',
 );
 
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'intersection-desc' => 'Έχει ως έξοδο μια μη αριθμημένη λίστα των πιο πρόσφατων στοιχείων σε μια κατηγορία, ή μια τομή μερικών κατηγοριών',
+	'intersection_toomanycats' => 'Σφάλμα: Πάρα πολλές κατηγορίες!',
+	'intersection_toofewcats' => 'Σφάλμα: Πολύ λίγες κατηγορίες!',
+	'intersection_noresults' => 'Σφάλμα: Δεν υπάρχουν αποτελέσματα!',
+	'intersection_noincludecats' => 'Σφάλμα: Πρέπει να περιλάβετε τουλάχιστον μία κατηγορία, ή να ορίσετε μια περιοχή ονομάτων!',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -209,6 +222,16 @@ $messages['es'] = array(
 	'intersection_toofewcats' => 'Error: ¡Muy pocas categorías!',
 	'intersection_noresults' => 'Error: ¡Sin resultados!',
 	'intersection_noincludecats' => 'Error: ¡Necesita incluir al menos una categoría, o especificar un espacio de nombres!',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'intersection_toomanycats' => 'Errorea: Kategoria gehiegi!',
+	'intersection_toofewcats' => 'Errorea: Kategoria gutxiegi!',
+	'intersection_noresults' => 'Errorea: Emaitzarik ez!',
+	'intersection_noincludecats' => 'Errorea: Gutxienez kategoria bat gehitu edo izen bat zehaztu behar duzu!',
 );
 
 /** Persian (فارسی)
@@ -236,12 +259,13 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'intersection-desc' => 'Affiche une liste, à puces, des articles les plus récents dans une catégorie, ou à partir d’une combinaison de plusieurs catégories.',
-	'intersection_toomanycats' => 'DynamicPageList : Trop de catégories !',
-	'intersection_toofewcats' => 'DynamicPageList : Pas assez de catégories !',
-	'intersection_noresults' => 'DynamicPageList : Aucun résultat !',
+	'intersection_toomanycats' => 'DynamicPageList : trop de catégories !',
+	'intersection_toofewcats' => 'DynamicPageList : pas assez de catégories !',
+	'intersection_noresults' => 'DynamicPageList : aucun résultat !',
 	'intersection_noincludecats' => 'Error : vous devez inclure au moins une catégorie, ou préciser un nom d’espace !',
 );
 
@@ -274,6 +298,17 @@ $messages['gl'] = array(
 $messages['grc'] = array(
 	'intersection_noresults' => 'Σφάλμα: οὐδὲν ἀποτέλεσμα',
 	'intersection_noincludecats' => 'Σφάλμα: Ἔξεστί σοι περιλαμβάνειν μίαν τοὐλάχιστον κατηγορίαν, ἢ καθορίζειν ὀνοματεῖον τι!',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'intersection-desc' => 'Usgabe vun ere Lischt vu dr aktuällschte Yyträg in ere Kategorii, oder vu dr Schnittmängi vu mehrere Kategorie',
+	'intersection_toomanycats' => 'Fähler: Zvyyl Kategorie!',
+	'intersection_toofewcats' => 'Fähler: Zwenig Kategorie!',
+	'intersection_noresults' => 'Fähler: Kei Ergebnis!',
+	'intersection_noincludecats' => 'Fähler: S muess zmindescht ei Kategorii yybunde wäre oder gib e Namensruum aa!',
 );
 
 /** Hebrew (עברית)
@@ -356,6 +391,16 @@ $messages['id'] = array(
 	'intersection_noincludecats' => 'DynamicPageList: Anda perlu mencantumkan paling tidak satu kategori, atau menyebutkan satu ruang nama!',
 );
 
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'intersection_toomanycats' => 'Eroro: Tro multa kategorii!',
+	'intersection_toofewcats' => 'Eroro: Tro poka kategorii!',
+	'intersection_noresults' => 'Eroro: Nula rezultaji!',
+	'intersection_noincludecats' => 'Eroro: Vu mustas inkluzar adminime un kategorio, o specigez nomaro!',
+);
+
 /** Italian (Italiano)
  * @author BrokenArrow
  * @author Darth Kule
@@ -413,6 +458,17 @@ $messages['km'] = array(
 	'intersection_noincludecats' => 'កំហុស​៖ អ្នក​ត្រូវតែ​មាន​ចំណាត់ថ្នាក់ក្រុម​មួយយ៉ាងតិច ឬ សំដៅ​មួយ​លំហឈ្មោះ​!',
 );
 
+/** Korean (한국어)
+ * @author Kwj2772
+ * @author Yknok29
+ */
+$messages['ko'] = array(
+	'intersection_toomanycats' => '에러: 분류가 너무 많습니다!',
+	'intersection_toofewcats' => '에러: 분류가 너무 적습니다!',
+	'intersection_noresults' => '오류: 결과가 없습니다!',
+	'intersection_noincludecats' => '에러: 최소한 하나의 분류에 포함시켜 주시거나 이름공간을 명확히 적어 주세요!',
+);
+
 /** Ripoarisch (Ripoarisch)
  * @author Purodha
  */
@@ -428,6 +484,7 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'intersection-desc' => 'Generéiert eng Lëscht mat de rezentesten Androungen an eng Kategorie, oder an eng Intersektioun vu méi Kategorien',
 	'intersection_toomanycats' => 'Dynamesch Säite-Lëscht: Zevill Kategorien!',
 	'intersection_toofewcats' => 'Dynamesch Säite-Lëscht: Ze wéineg Kategorien!',
 	'intersection_noresults' => 'Dynamesch Säite-Lëscht: Kee Resultat!',
@@ -461,6 +518,13 @@ $messages['lt'] = array(
 $messages['lv'] = array(
 	'intersection_toomanycats' => 'Kļūda: pārāk daudz kategoriju!',
 	'intersection_toofewcats' => 'Kļūda: pārāk maz kategoriju!',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'intersection_toomanycats' => 'DynamicPageList : Be laotra ny sokajy',
 );
 
 /** Malayalam (മലയാളം)
@@ -500,6 +564,7 @@ $messages['ms'] = array(
  * @author Slomox
  */
 $messages['nds'] = array(
+	'intersection-desc' => 'Wiest en List mit de aktuellsten Indrääg in en Kategorie, oder de Snittmengd vun mehr Kategorien',
 	'intersection_toomanycats' => 'Fehler: Toveel Kategorien!',
 	'intersection_toofewcats' => 'Fehler: To wenig Kategorien!',
 	'intersection_noresults' => 'Fehler: Nix funnen!',
@@ -512,10 +577,10 @@ $messages['nds'] = array(
  */
 $messages['nl'] = array(
 	'intersection-desc' => 'Geeft als uitvoer een ongenummerde lijst met de meest recent toegevoegde items in een categorie, of een combinatie van categorieën',
-	'intersection_toomanycats' => 'Error: Te veel categorieën!',
-	'intersection_toofewcats' => 'Error: Te weinig categorieën!',
-	'intersection_noresults' => 'Error: Geen resultaten!',
-	'intersection_noincludecats' => 'Error: U moet tenminste een categorie of een naamruimte opgeven!',
+	'intersection_toomanycats' => 'Fout: Te veel categorieën!',
+	'intersection_toofewcats' => 'Fout: Te weinig categorieën!',
+	'intersection_noresults' => 'Fout: Geen resultaten!',
+	'intersection_noincludecats' => 'Fout: U moet tenminste een categorie of een naamruimte opgeven!',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -551,15 +616,22 @@ $messages['oc'] = array(
 	'intersection_noincludecats' => 'Error : avètz besonh d’inclure almens una categoria, o de precisar un nom d’espaci !',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'intersection_toomanycats' => 'Рæдыд: æгæр бирæ категоритæ!',
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
 $messages['pl'] = array(
 	'intersection-desc' => 'Zwraca listę wypunktowaną najnowszych elementów w kategorii lub grupie kilku kategorii',
-	'intersection_toomanycats' => 'Error: Zbyt wiele kategorii!',
-	'intersection_toofewcats' => 'Error: Zbyt mało kategorii!',
-	'intersection_noresults' => 'Error: Brak wyników!',
-	'intersection_noincludecats' => 'Error: Musisz załączyć co najmniej jedną kategorię lub określić przestrzeń nazw!',
+	'intersection_toomanycats' => 'Błąd – zbyt wiele kategorii!',
+	'intersection_toofewcats' => 'Błąd – zbyt mało kategorii!',
+	'intersection_noresults' => 'Błąd – brak wyników!',
+	'intersection_noincludecats' => 'Błąd – musisz załączyć co najmniej jedną kategorię lub określić przestrzeń nazw!',
 );
 
 /** Portuguese (Português)
@@ -572,6 +644,17 @@ $messages['pt'] = array(
 	'intersection_toofewcats' => 'Error: Poucas categorias!',
 	'intersection_noresults' => 'Error: Sem resultados!',
 	'intersection_noincludecats' => 'Error: É necessário incluir no mínimo uma categoria ou especificar um espaço nominal!',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'intersection-desc' => 'Exibe uma lista pontuada dos itens mais recentes presentes numa categoria, ou uma intersecção de várias categorias',
+	'intersection_toomanycats' => 'Erro: Categorias demais!',
+	'intersection_toofewcats' => 'Erro: Poucas categorias!',
+	'intersection_noresults' => 'Erro: Sem resultados!',
+	'intersection_noincludecats' => 'Erro: É necessário incluir no mínimo uma categoria ou especificar um espaço nominal!',
 );
 
 /** Romanian (Română)
@@ -589,6 +672,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'intersection-desc' => "Fa assè 'na liste cu le palle de le urteme urteme artichele ca stonne jndr'à 'na categorije, o 'n'interseziona de cchiù categorije",
 	'intersection_toomanycats' => 'Errore: Troppe categorije!',
 	'intersection_toofewcats' => 'Errore: Troppe picche categorije!',
 	'intersection_noresults' => 'Errore: Nisciune resultete!',
@@ -691,6 +775,17 @@ $messages['tl'] = array(
 	'intersection_toofewcats' => 'Kamalian: Napakakaunti ng mga kaurian!',
 	'intersection_noresults' => 'Kaurian: Walang mga kinalabasan/resulta!',
 	'intersection_noincludecats' => 'Kamalian: Kinakailangan mong magsama ng kahit na isang kaurian, o tumukoy ng isang espasyo ng pangalan!',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'intersection-desc' => 'Bir kategoride, yada birçok kategorinin kesişiminde bulunan en son öğelerin, madde işaretli listesini üretir',
+	'intersection_toomanycats' => 'Hata: Çok fazla kategori!',
+	'intersection_toofewcats' => 'Hata: Çok az kategori!',
+	'intersection_noresults' => 'Hata: Sonuç yok!',
+	'intersection_noincludecats' => 'Hata: En az bir kategori eklemeli, ya da bir ad alanı belirtmelisiniz!',
 );
 
 /** Ukrainian (Українська)

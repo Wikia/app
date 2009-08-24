@@ -63,6 +63,17 @@ $messages['ast'] = array(
 	'msfunc_div_zero' => 'Divisón por cero',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'msfunc_desc' => 'Калекцыя матэматычных і статыстычных функцыяў',
+	'msfunc_nan' => 'Вынік не зьяўляецца лікай',
+	'msfunc_inf' => 'Вынік зьяўляецца бясконцасьцю',
+	'msfunc_div_zero' => 'Дзяленьне на нуль',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -83,10 +94,21 @@ $messages['bn'] = array(
 	'msfunc_div_zero' => 'শূন্য দিয়ে বিভাজন',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'msfunc_desc' => 'Kolekcija matematičkih i statističkih funkcija',
+	'msfunc_nan' => 'Vrijednost rezultata nije broj',
+	'msfunc_inf' => 'Vrijednost rezultata je beskonačnost',
+	'msfunc_div_zero' => 'Dijeljenje s nulom',
+);
+
 /** Catalan (Català)
  * @author SMP
  */
 $messages['ca'] = array(
+	'msfunc_desc' => 'Una coŀlecció de funcions matemàtiques i estadístiques',
 	'msfunc_nan' => 'El resultat no és un nombre',
 	'msfunc_inf' => 'El resultat té valor infinit',
 	'msfunc_div_zero' => 'Divisió entre zero',
@@ -136,10 +158,22 @@ $messages['eo'] = array(
 	'msfunc_div_zero' => 'Divido per nulo',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'msfunc_desc' => 'Una colección de funciones matemáticas y estadísticas',
+	'msfunc_nan' => 'Valor de resultado no es un número',
+	'msfunc_inf' => 'Valor de resultado es infinito',
+	'msfunc_div_zero' => 'División por cero',
+);
+
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  */
 $messages['eu'] = array(
+	'msfunc_desc' => 'Matematikako eta estatistikako funtzio-sorta',
 	'msfunc_nan' => 'Azken balioa ez da zenbakia',
 	'msfunc_inf' => 'Azken balioa infinito da',
 	'msfunc_div_zero' => 'Zeroz zatitu',
@@ -176,6 +210,16 @@ $messages['gl'] = array(
 	'msfunc_nan' => 'O valor resultante non é un número',
 	'msfunc_inf' => 'O valor resultante é infinito',
 	'msfunc_div_zero' => 'División por cero',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'msfunc_desc' => 'E Sammlig vu mathematischen un statischtische Funktione',
+	'msfunc_nan' => 'Ergebniswärt isch kei Zahl',
+	'msfunc_inf' => 'Ergebniswärt isch uuändlig',
+	'msfunc_div_zero' => 'Division dur Null',
 );
 
 /** Hebrew (עברית)
@@ -372,8 +416,10 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author Derbeth
+ * @author Leinad
  */
 $messages['pl'] = array(
+	'msfunc_desc' => 'Zbiór funkcji matematycznych i statystycznych',
 	'msfunc_nan' => 'Wartość wynikowa nie jest liczbą',
 	'msfunc_inf' => 'Wartość wynikowa to nieskończoność',
 	'msfunc_div_zero' => 'Dzielenie przez zero',
@@ -409,6 +455,16 @@ $messages['pt'] = array(
 	'msfunc_div_zero' => 'Divisão por zero',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'msfunc_desc' => 'Uma coleção de funções matemáticas e estatísticas',
+	'msfunc_nan' => 'Valor resultante não é um número',
+	'msfunc_inf' => 'Valor resultante é infinito',
+	'msfunc_div_zero' => 'Divisão por zero',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -417,6 +473,13 @@ $messages['ro'] = array(
 	'msfunc_nan' => 'Valoarea rezultată nu este număr',
 	'msfunc_inf' => 'Valoarea rezultată este infinit',
 	'msfunc_div_zero' => 'Împărţire la zero',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'msfunc_div_zero' => 'Divisione pe zero',
 );
 
 /** Russian (Русский)
@@ -479,6 +542,7 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'msfunc_desc' => 'గణిత మరియు గణాంక విధుల (functions) సేకరణ',
 	'msfunc_nan' => 'ఫలితపు విలువ సంఖ్య కాదు',
 	'msfunc_inf' => 'ఫలితపు విలువ అనంతము',
 	'msfunc_div_zero' => 'సున్నాతో భాగాహారం',
@@ -491,10 +555,31 @@ $messages['th'] = array(
 	'msfunc_div_zero' => 'ตัวหารเป็นศูนย์',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'msfunc_desc' => 'Isang kalipunan ng mga tungkuling pangmatematika at pang-estadistika',
+	'msfunc_nan' => 'Hindi isang bilang ang kinalabasang halaga',
+	'msfunc_inf' => 'Walang hangganan ang kinalabasang halaga',
+	'msfunc_div_zero' => 'Hatiin sa pamamagitan ng wala',
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'msfunc_desc' => 'Na racolta de funsion matemàteghe e statìsteghe',
+	'msfunc_nan' => "El risultato no'l xe un nùmaro",
+	'msfunc_inf' => 'El risultato el xe infinìo',
+	'msfunc_div_zero' => 'Division par xero',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
 $messages['vi'] = array(
+	'msfunc_desc' => 'Tập hợp các hàm toàn học và thống kê',
 	'msfunc_nan' => 'Kết quả trả về không phải là số',
 	'msfunc_inf' => 'Kết quả trả về là vô hạn',
 	'msfunc_div_zero' => 'Chia cho zero',

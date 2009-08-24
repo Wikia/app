@@ -47,6 +47,24 @@ $messages['qqq'] = array(
 	'player-goto-file' => '{{Identical|File}}',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'player' => 'Plejer',
+	'player-title' => 'Plejer',
+	'player-playertitle' => 'Plejer: $1',
+	'player-file' => 'Failan nimi',
+	'player-play' => 'Väta',
+	'player-not-allowed' => 'laskmatoi format',
+	'player-not-found' => 'ei voi löuta failad',
+	'player-invalid-title' => 'petuzline pälkirjutez',
+	'player-clicktoplay' => 'Väta $1',
+	'player-goto-player' => 'plejer',
+	'player-goto-page' => "Lehtpol'",
+	'player-goto-file' => 'fail',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Arnobarnard
  * @author Naudefj
@@ -65,6 +83,7 @@ $messages['af'] = array(
  * @author Codex Sinaiticus
  */
 $messages['am'] = array(
+	'player-title' => 'ተጫዋች',
 	'player-file' => 'የፋይል ስም',
 	'player-not-found' => 'ፋይል አልተገኘም',
 );
@@ -130,9 +149,22 @@ $messages['ast'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'player' => 'Прайгравальнік',
+	'player-desc' => 'Убудаваны мультымэдыя-прайгравальнік, які выкарыстоўвае агульныя дапаўненьні браўзэра, і [[Special:Player|спэцыяльная старонка]]',
+	'player-title' => 'Прайгравальнік',
+	'player-playertitle' => 'Прайгравальнік: $1',
+	'player-file' => 'Назва файла',
+	'player-play' => 'Прайграць',
+	'player-not-allowed' => 'недазволены фармат',
+	'player-not-found' => 'файл ня знойдзены',
+	'player-invalid-title' => 'няслушная назва',
+	'player-clicktoplay' => 'Прайграць $1',
+	'player-goto-player' => 'прайгравальнік',
 	'player-goto-page' => 'Старонка',
+	'player-goto-file' => 'файл',
 );
 
 /** Bulgarian (Български)
@@ -197,6 +229,7 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Als-Holder
  * @author Melancholie
  * @author Revolus
  */
@@ -209,7 +242,7 @@ $messages['de'] = array(
 	'player-play' => 'Abspielen',
 	'player-not-allowed' => 'Unerlaubtes Format',
 	'player-not-found' => 'Datei nicht gefunden',
-	'player-invalid-title' => 'ungültiger name',
+	'player-invalid-title' => 'ungültiger Name',
 	'player-clicktoplay' => '$1 abspielen',
 	'player-goto-player' => 'Player',
 	'player-goto-page' => 'Seite',
@@ -270,18 +303,32 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'player' => 'Reproductor',
+	'player-title' => 'Reproductor',
+	'player-playertitle' => 'Reproductor: $1',
+	'player-file' => 'Nombre de archivo',
+	'player-play' => 'Reproducir',
+	'player-not-allowed' => 'formato no permitido',
 	'player-not-found' => 'archivo no encontrado',
+	'player-invalid-title' => 'título inválido',
+	'player-clicktoplay' => 'Reproducir $1',
+	'player-goto-player' => 'reproductor',
 	'player-goto-page' => 'Página',
+	'player-goto-file' => 'archivo',
 );
 
 /** Basque (Euskara)
+ * @author An13sa
  * @author Theklan
  */
 $messages['eu'] = array(
+	'player-file' => 'Fitxategiaren izena',
+	'player-goto-page' => 'Orria',
 	'player-goto-file' => 'fitxategia',
 );
 
@@ -354,19 +401,50 @@ $messages['gl'] = array(
 	'player-goto-file' => 'ficheiro',
 );
 
-/** Gothic (𐌲𐌿𐍄𐌹𐍃𐌺)
+/** Gothic
  * @author Jocke Pirat
  */
 $messages['got'] = array(
 	'player-goto-file' => 'feilans',
 );
-
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
  */
 $messages['grc'] = array(
 	'player-invalid-title' => 'Ἄκυρος ἐπιγραφή',
 	'player-goto-file' => 'Ἀρχεῖον',
+);
+
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Crazymadlover
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'player' => 'Παίκτης',
+	'player-title' => 'Παίκτης',
+	'player-invalid-title' => 'Ἄκυρος ἐπιγραφή',
+	'player-goto-player' => 'παίκτης',
+	'player-goto-page' => 'Δέλτος',
+	'player-goto-file' => 'Ἀρχεῖον',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'player' => 'Spiler',
+	'player-desc' => 'Yybettet Multimedia-Playback iber Browser-Plugin, wu bruucht wäre, un e [[Special:Player|Spezialsyte]]',
+	'player-title' => 'Spiler',
+	'player-playertitle' => 'Spiler: $1',
+	'player-file' => 'Dateiname',
+	'player-play' => 'Abspile',
+	'player-not-allowed' => 'Nit erlaubt Format',
+	'player-not-found' => 'Datei nit gfunde',
+	'player-invalid-title' => 'Nit giltige Name',
+	'player-clicktoplay' => '$1 abspile',
+	'player-goto-player' => 'Spiler',
+	'player-goto-page' => 'Syte',
+	'player-goto-file' => 'Datei',
 );
 
 /** Manx (Gaelg)
@@ -523,10 +601,12 @@ $messages['is'] = array(
 );
 
 /** Italian (Italiano)
+ * @author BrokenArrow
  * @author Darth Kule
  */
 $messages['it'] = array(
 	'player' => 'Player',
+	'player-desc' => 'Riproduzione integrata di contenuti multimediali mediante i consueti plugin per browser e una [[Special:Player|pagina speciale]]',
 	'player-title' => 'Player',
 	'player-playertitle' => 'Player: $1',
 	'player-file' => 'Nome del file',
@@ -546,7 +626,18 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'player' => 'プレイヤー',
+	'player-desc' => '一般的なブラウザ用プラグインを利用したマルチメディアの埋め込み再生と[[Special:Player|再生用特別ページ]]',
+	'player-title' => 'プレイヤー',
+	'player-playertitle' => 'プレイヤー: $1',
 	'player-file' => 'ファイル名',
+	'player-play' => '再生',
+	'player-not-allowed' => '許可されていない形式',
+	'player-not-found' => 'ファイルが見つかりません',
+	'player-invalid-title' => '無効な名前',
+	'player-clicktoplay' => '$1 を再生',
+	'player-goto-player' => 'プレイヤー',
+	'player-goto-page' => 'ページ',
+	'player-goto-file' => 'ファイル',
 );
 
 /** Javanese (Basa Jawa)
@@ -646,8 +737,11 @@ $messages['lb'] = array(
 	'player-title' => 'Spiller',
 	'player-playertitle' => 'Spiller: $1',
 	'player-file' => 'Numm vum Fichier',
+	'player-play' => 'Spillen',
 	'player-not-allowed' => 'Format den net erlaabt ass',
 	'player-not-found' => 'Fichier net fonnt',
+	'player-invalid-title' => 'net valabelen Titel',
+	'player-clicktoplay' => '$1 spillen',
 	'player-goto-page' => 'Säit',
 	'player-goto-file' => 'Fichier',
 );
@@ -665,6 +759,15 @@ $messages['li'] = array(
 $messages['mhr'] = array(
 	'player-goto-page' => 'Лаштык',
 	'player-goto-file' => 'файл',
+);
+
+/** Macedonian (Македонски)
+ * @author Brest
+ */
+$messages['mk'] = array(
+	'player-file' => 'Име на податотека',
+	'player-goto-page' => 'Страница',
+	'player-goto-file' => 'податотека',
 );
 
 /** Malayalam (മലയാളം)
@@ -710,6 +813,13 @@ $messages['mr'] = array(
  */
 $messages['mt'] = array(
 	'player-file' => 'Isem il-fajl',
+);
+
+/** Mirandese (Mirandés)
+ * @author Malafaya
+ */
+$messages['mwl'] = array(
+	'player-goto-page' => 'Páigina',
 );
 
 /** Erzya (Эрзянь)
@@ -892,14 +1002,54 @@ $messages['pt'] = array(
 	'player-goto-file' => 'ficheiro',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'player' => 'Reprodutor',
+	'player-desc' => 'Reprodução multimídia incorporada usando plugins comuns de navegadores e uma [[Special:Player|página especial]]',
+	'player-title' => 'Reprodutor',
+	'player-playertitle' => 'Reprodutor: $1',
+	'player-file' => 'Nome do arquivo',
+	'player-play' => 'Reproduzir',
+	'player-not-allowed' => 'formato não permitido',
+	'player-not-found' => 'arquivo não encontrado',
+	'player-invalid-title' => 'título inválido',
+	'player-clicktoplay' => 'Reproduzir $1',
+	'player-goto-player' => 'reprodutor',
+	'player-goto-page' => 'Página',
+	'player-goto-file' => 'arquivo',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
+	'player-title' => 'Jucător',
 	'player-file' => 'Nume fişier',
 	'player-invalid-title' => 'titlu incorect',
+	'player-goto-player' => 'jucător',
 	'player-goto-page' => 'Pagină',
 	'player-goto-file' => 'fişier',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'player' => 'Sciucatore',
+	'player-desc' => "Playback multimediale a scatola gnore ausanne le plugin d'u browser comune e 'na [[Special:Player|pàgena speciale]]",
+	'player-title' => 'Sciucatore',
+	'player-playertitle' => 'Sciucatore: $1',
+	'player-file' => "Nome d'u file",
+	'player-play' => 'Sciueche',
+	'player-not-allowed' => 'formate non permesse',
+	'player-not-found' => 'file non acchiate',
+	'player-invalid-title' => 'titele invalide',
+	'player-clicktoplay' => 'Sciueche $1',
+	'player-goto-player' => 'sciucatore',
+	'player-goto-page' => 'Pàgene',
+	'player-goto-file' => 'file',
 );
 
 /** Russian (Русский)
@@ -952,6 +1102,7 @@ $messages['sr-ec'] = array(
  */
 $messages['stq'] = array(
 	'player' => 'Player',
+	'player-desc' => 'Ienbääded Multimedia-Playback uur gebruukelke Browser-Plugins, as uk ne [[Special:Player|Spezioalsiede]]',
 	'player-title' => 'Player',
 	'player-playertitle' => 'Player: $1',
 	'player-file' => 'Doatäinoome',
@@ -1024,14 +1175,51 @@ $messages['tg-cyrl'] = array(
 	'player-goto-file' => 'парванда',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'player' => 'Tagapagpaandar/pampatugtog',
+	'player-desc' => "Nakabaong pampaandar/pampatugtog ng maramihang midya na ginagamitan ng mga pampasak/pampasok na pang-pangkaraniwang pantingin-tingin (''browser''), at isang [[Special:Player|natatangging pahina]]",
+	'player-title' => 'Tagapagpaandar/pampatugtog',
+	'player-playertitle' => 'Pampaandar/pampatugtog: $1',
+	'player-file' => 'Pangalan ng talaksan',
+	'player-play' => 'Paandarin/patugtugin',
+	'player-not-allowed' => 'Hindi pinapahintulutang anyo/pormat',
+	'player-not-found' => 'hindi natagpuan ang talaksan',
+	'player-invalid-title' => 'hindi tanggap na pamagat',
+	'player-clicktoplay' => 'Paandarin/patugtugin ang $1',
+	'player-goto-player' => 'pampaandar/pampatugtog',
+	'player-goto-page' => 'Pahina',
+	'player-goto-file' => 'talaksan',
+);
+
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Karduelis
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'player' => 'Oynatıcı',
+	'player-desc' => 'Ortak tarayıcı eklentileri, ve bir [[Special:Player|özel sayfa]] kullanarak gömülü çokluortam oynatımı',
+	'player-title' => 'Oynatıcı',
+	'player-playertitle' => 'Oynatıcı: $1',
 	'player-file' => 'Dosya adı',
+	'player-play' => 'Oynat',
+	'player-not-allowed' => 'izin verilmeyen format',
+	'player-not-found' => 'dosya bulunamadı',
+	'player-invalid-title' => 'geçersiz başlık',
+	'player-clicktoplay' => '$1 oynat',
+	'player-goto-player' => 'oynatıcı',
 	'player-goto-page' => 'Sayfa',
 	'player-goto-file' => 'Dosya',
+);
+
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'player-goto-page' => 'Bet',
 );
 
 /** Vèneto (Vèneto)
@@ -1083,10 +1271,16 @@ $messages['vo'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
+	'player' => '播放器',
 	'player-title' => '播放器',
+	'player-file' => '文件名',
 	'player-not-found' => '找不到文件',
+	'player-clicktoplay' => '播放$1',
+	'player-goto-player' => '播放器',
+	'player-goto-page' => '页面',
 	'player-goto-file' => '文件',
 );
 

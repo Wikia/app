@@ -29,6 +29,11 @@ $aliases['de'] = array(
 	'TemplateLink' => array( 'Vorlagenlink' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'TemplateLink' => array( 'Pśedłogowy wótkaz' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'TemplateLink' => array( 'پیوند_الگو' ),
@@ -37,6 +42,16 @@ $aliases['fa'] = array(
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'TemplateLink' => array( 'Vorlagegleich' ),
+);
+
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'TemplateLink' => array( 'Předłohowy wotkaz' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'TemplateLink' => array( 'Ligamine verso patrono' ),
 );
 
 /** Japanese (日本語) */
@@ -67,5 +82,15 @@ $aliases['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'TemplateLink' => array( 'Mallenke' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'TemplateLink' => array( 'बिंबधरसम्बद्धम्' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'TemplateLink' => array( 'Kawing sa suleras' ),
 );
 

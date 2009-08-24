@@ -82,6 +82,24 @@ $messages['arz'] = array(
 	'importfreeimages_returntoform' => "أو، اضغط <a href='$1'>هنا</a> للعودة إلى نتائج بحثك",
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'importfreeimages' => 'Importian vu freie Büidln',
+	'importfreeimages_owner' => 'Autor',
+	'importfreeimages_importthis' => 'importian',
+	'importfreeimages_promptuserforfilename' => 'Gib bittschee an Zieldateinãmen ei:',
+	'importfreeimages_returntoform' => "Oda klick <a href='$1'>då hea</a>, damid'st auf'd Seitn mid de Suachergebnisse zruck kimmst.",
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'importfreeimages_owner' => 'Аўтар',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -104,7 +122,19 @@ $messages['bg'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'importfreeimages' => 'Uvoz slobodnih slika',
+	'importfreeimages-desc' => 'Omogućuje način [[Special:ImportFreeImages|uvoza pravilno licenciranih slika]] sa [http://www.flickr.com flickr]',
+	'importfreeimages_description' => 'Ova stranica omogućava pretragu pravilno licenciranih slika sa flickr i njihov uvoz u Vaš wiki.',
+	'importfreeimages_noapikey' => 'Niste podesili Vaš Flickr API ključ.
+Da bi ste to učinili, molimo uzmite API ključ [http://www.flickr.com/services/api/misc.api_keys.html odavde] i postavite wgFlickrAPIKey u datoteci ImportFreeImages.php.',
+	'importfreeimages_nophotosfound' => "Nije pronađena nijedna slika po Vašem upitu pretrage '$1', pokušajte ponovno.",
+	'importfreeimages_invalidurl' => 'URL "$1" nije valjana Flickr slika.',
 	'importfreeimages_owner' => 'Autor',
+	'importfreeimages_importthis' => 'uvezi ovo',
+	'importfreeimages_next' => 'slijedeća $1',
+	'importfreeimages_filefromflickr' => '$ od {{GENDER:$2|korisnika|korisnice}} <b>[$2]</b> sa flickr. Prvobitni URL',
+	'importfreeimages_promptuserforfilename' => 'Molimo unesite ime odredišne datoteke:',
+	'importfreeimages_returntoform' => "ili kliknite <a href='$1'>ovdje</a> za povratak na Vaše rezultate pretrage",
 );
 
 /** Catalan (Català)
@@ -215,10 +245,24 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
+ * @author Drini
  * @author Imre
  */
 $messages['es'] = array(
+	'importfreeimages' => 'Importar imágenes libres',
+	'importfreeimages-desc' => 'Provea una manera de [[Special:ImportFreeImages|importar adecuadamente fotografías licensiadas]] de [http://www.flickr.com flickr]',
+	'importfreeimages_description' => 'Esta página le permite buscar correctamente fotografías licensiadas de flickr e importarlas dentro de su wiki.',
+	'importfreeimages_noapikey' => 'No has configurado tu Clave API Flickr
+Para hacerlo, por favor obtén una [http://www.flickr.com/services/api/misc.api_keys.html clave API] y configura wgFlickrAPIKey en ImportFreeImages.php.',
+	'importfreeimages_nophotosfound' => "Ninguna fotografía fue encontrada para sus criterios de búsqueda '$1', por favor intente nuevamente",
+	'importfreeimages_invalidurl' => 'El URL "$1" no es una imagen Flickr válida.',
 	'importfreeimages_owner' => 'Autor',
+	'importfreeimages_importthis' => 'Importe esto',
+	'importfreeimages_next' => 'Próximo $1',
+	'importfreeimages_filefromflickr' => '$1 por usuario <b>[$2]</b> de flickr. URL original',
+	'importfreeimages_promptuserforfilename' => 'Por favor ingresar un nombre de archivo de destino',
+	'importfreeimages_returntoform' => "O, haga click <a href='$1'>aquí</a> para retornar a sus resultados de búsqueda",
 );
 
 /** Persian (فارسی)
@@ -261,6 +305,7 @@ Tehdäksesi niin, hanki API-avain [http://www.flickr.com/services/api/misc.api_k
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author Urhixidur
  */
@@ -268,7 +313,8 @@ $messages['fr'] = array(
 	'importfreeimages' => 'Importer des Images Libres',
 	'importfreeimages-desc' => 'Fournit un moyen d’importer des photographies sous licence appropriée depuis flickr.',
 	'importfreeimages_description' => 'Cette page vous permet de rechercher des images sous licences appropriées depuis flickr et de les importer dans votre wiki.',
-	'importfreeimages_noapikey' => 'Vous n’avez pas configuré votre Clef API Flickr. Pour ce faire, vous êtes prié d’obtenir une clef API à partir de [http://www.flickr.com/services/api/misc.api_keys.html ce lien] et de configurer wgFlickrAPIKey dans ImportFreeImages.php.',
+	'importfreeimages_noapikey' => 'Vous n’avez pas configuré votre Clef API Flickr.
+Pour ce faire, vous êtes prié{{GENDER:||e|(e)}} d’obtenir une clef API à partir de [http://www.flickr.com/services/api/misc.api_keys.html ce lien] et de configurer wgFlickrAPIKey dans ImportFreeImages.php.',
 	'importfreeimages_nophotosfound' => "Aucune photo n’a été trouvée à partir de vos critères de recherches  '$1', veuillez essayer à nouveau.",
 	'importfreeimages_invalidurl' => "L'adresse « $1 » n’est pas une image Flickr correcte.",
 	'importfreeimages_owner' => 'Auteur',
@@ -314,6 +360,24 @@ $messages['grc'] = array(
 	'importfreeimages_owner' => 'Δημιουργός',
 	'importfreeimages_importthis' => 'τόδε εἰσάγειν',
 	'importfreeimages_next' => 'Ἑπόμεναι $1',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'importfreeimages' => 'Freji Bilder importiere',
+	'importfreeimages-desc' => 'Macht  dr [[Special:ImportFreeImages|Import vu freje Bilder]] vu [http://www.flickr.com Flickr] megli',
+	'importfreeimages_description' => 'Die Syte erlaubt Dir, in Flickr no Bilder unter ere freje Lizänz z sueche un die derno in Dyy Wiki z importiere.',
+	'importfreeimages_noapikey' => 'Du hesch no kei Flickr-API-Schlissel konfiguriert. Bitte stell [http://www.flickr.com/services/api/misc.api_keys.html do] ne Aatrag und setz e derno in $wgFlickrAPIKey in ImportFreeImages.php yy.',
+	'importfreeimages_nophotosfound' => 'S sin keini Foto mit dr Suechkriterie „$1“ gfunde wore.',
+	'importfreeimages_invalidurl' => 'D URL „$1“ isch kei giltig Flickr-Bild.',
+	'importfreeimages_owner' => 'Autor',
+	'importfreeimages_importthis' => 'importiere',
+	'importfreeimages_next' => 'Negschti $1',
+	'importfreeimages_filefromflickr' => '$1 vu Benutzer <b>[$2]</b> vu flickr. Original URL',
+	'importfreeimages_promptuserforfilename' => 'Bitte gib e Ziil-Dateiname yy:',
+	'importfreeimages_returntoform' => "Oder druck <a href='$1'>do</a> go uf d Syte mit dr Suechergebniss zruggzchu.",
 );
 
 /** Manx (Gaelg)
@@ -452,6 +516,13 @@ Untuk melakukannya, Anda harus mendapatkan sebuah kunci API dari [http://www.fli
 	'importfreeimages_returntoform' => "Atau, klik <a href='$1'>di sini</a> untuk kembali ke hasil pencarian Anda",
 );
 
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'importfreeimages_owner' => 'Autoro',
+);
+
 /** Italian (Italiano)
  * @author Darth Kule
  */
@@ -475,7 +546,18 @@ Per farlo richiedi una chiave API [http://www.flickr.com/services/api/misc.api_k
  * @author Fryed-peach
  */
 $messages['ja'] = array(
+	'importfreeimages' => 'フリーの画像をインポート',
+	'importfreeimages-desc' => '[http://www.flickr.com Flickr] から[[Special:ImportFreeImages|適切にライセンスされた写真をインポートする]]手段を提供する',
+	'importfreeimages_description' => 'このページを使うと、Flickr で適切にライセンスされた画像を検索し、あなたのウィキにインポートすることができます。',
+	'importfreeimages_noapikey' => 'あなたの Flickr APIキーが設定されていません。[http://www.flickr.com/services/api/misc.api_keys.html こちら]でAPIキーを取得して、ImportFreeImages.php 内で wgFlickrAPIKey に設定してください。',
+	'importfreeimages_nophotosfound' => '検索条件「$1」に適う写真は見つかりませんでした。もう一度試してください。',
+	'importfreeimages_invalidurl' => 'URL "$1" は有効な Flickr 画像ではありません。',
 	'importfreeimages_owner' => '著者',
+	'importfreeimages_importthis' => 'これをインポート',
+	'importfreeimages_next' => '次 $1',
+	'importfreeimages_filefromflickr' => 'Flickr の利用者 <b>[$2]</b> による $1。元のURL',
+	'importfreeimages_promptuserforfilename' => '変更先ファイル名を入力してください:',
+	'importfreeimages_returntoform' => "もしくは、<a href='$1'>ここ</a>をクリックして検索結果に戻ります",
 );
 
 /** Javanese (Basa Jawa)
@@ -556,6 +638,13 @@ $messages['lb'] = array(
 	'importfreeimages_filefromflickr' => '$1 vum Benotzer <b>[$2]</b> vun flickr. Original URL',
 	'importfreeimages_promptuserforfilename' => 'Gitt w.e.g een Numm fir den neie fichier un:',
 	'importfreeimages_returntoform' => "oder, klickt <a href='$1'>heihinn</a> fir op d'Resultat vun ärer Sich zréckzegoen",
+);
+
+/** Lingua Franca Nova (Lingua Franca Nova)
+ * @author Malafaya
+ */
+$messages['lfn'] = array(
+	'importfreeimages_owner' => 'Autor',
 );
 
 /** Malayalam (മലയാളം)
@@ -732,14 +821,17 @@ $messages['os'] = array(
 
 /** Polish (Polski)
  * @author Derbeth
+ * @author Leinad
  * @author Maikking
  * @author McMonster
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'importfreeimages' => 'Import grafik z odpowiednią licencją.',
+	'importfreeimages' => 'Import grafik na odpowiednich licencjach',
 	'importfreeimages-desc' => 'Umożliwia [[Special:ImportFreeImages|import grafik z odpowiednią licencją]] z [http://www.flickr.com flickra]',
 	'importfreeimages_description' => 'Ta strona pozwala na wyszukiwanie na serwisie flickr zdjęć z odpowiednią licencją i na ich import do wiki.',
+	'importfreeimages_noapikey' => 'Nie masz skonfigurowanego klucza API Flickr.
+Klucz API można uzyskać [http://www.flickr.com/services/api/misc.api_keys.html tutaj], a następnie należy ustawić wgFlickrAPIKey w ImportFreeImages.php.',
 	'importfreeimages_nophotosfound' => 'Żadne zdjęcie nie zostało odnalezione na podstawie kryterium „$1”. Spróbuj ponownie.',
 	'importfreeimages_invalidurl' => 'Adres URL „$1” nie jest prawidłowym odwołaniem do obrazka w serwisie Flickr.',
 	'importfreeimages_owner' => 'Autor',
@@ -776,11 +868,37 @@ $messages['pt'] = array(
 	'importfreeimages_returntoform' => "Ou clique <a href='$1'>aqui</a> para voltar aos resultados da sua pesquisa",
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'importfreeimages' => 'Importar imagens livres',
+	'importfreeimages-desc' => 'Provê uma forma de [[Special:ImportFreeImages|importar fotografias devidamente licenciadas]] do [http://www.flickr.com flickr].',
+	'importfreeimages_description' => 'Esta página permite-lhe procurar fotografias devidamente licenciadas no flickr e importá-las para o seu wiki.',
+	'importfreeimages_noapikey' => 'Você não configurou a sua chave de API Flickr. Para fazê-lo, por favor obtenha uma chave de API [http://www.flickr.com/services/api/misc.api_keys.html aqui] e atribua-a a wgFlickrAPIKey em ImportFreeImages.php.',
+	'importfreeimages_nophotosfound' => "Nenhuma fotografia foi encontrada segundo o seu critério de busca '$1'; por favor, tente de novo.",
+	'importfreeimages_invalidurl' => 'A URL "$1" não é uma imagem válida do Flickr.',
+	'importfreeimages_owner' => 'Autor',
+	'importfreeimages_importthis' => 'importar isto',
+	'importfreeimages_next' => 'Próximas $1',
+	'importfreeimages_filefromflickr' => '$1 pelo utilizador <b>[$2]</b> do flickr. URL original',
+	'importfreeimages_promptuserforfilename' => 'Por favor, introduza um nome de arquivo destino:',
+	'importfreeimages_returntoform' => "Ou clique <a href='$1'>aqui</a> para voltar aos resultados da sua pesquisa",
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'importfreeimages_owner' => 'Autor',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'importfreeimages_owner' => 'Autore',
+	'importfreeimages_promptuserforfilename' => "Pe piacere scrive 'u nome d'u file de destinazione:",
 );
 
 /** Russian (Русский)
@@ -799,6 +917,13 @@ $messages['ru'] = array(
 	'importfreeimages_filefromflickr' => '$1 авторства <b>[$2]</b> с Flickr. Исходный адрес',
 	'importfreeimages_promptuserforfilename' => 'Пожалуйста, введите новое имя файла:',
 	'importfreeimages_returntoform' => "Или нажмите <a href='$1'>здесь</a>, чтобы вернуться к вашим результатам поиска.",
+);
+
+/** Sardinian (Sardu)
+ * @author Marzedu
+ */
+$messages['sc'] = array(
+	'importfreeimages_owner' => 'Autore',
 );
 
 /** Sicilian (Sicilianu)
@@ -944,10 +1069,23 @@ Upang magawa ito, kumuha lamang ng isang susi ng API mula [http://www.flickr.com
 );
 
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Mach
  */
 $messages['tr'] = array(
+	'importfreeimages' => 'Özgür resimleri içe aktar',
+	'importfreeimages-desc' => "[http://www.flickr.com Flickr]'dan [[Special:ImportFreeImages|uygun lisanslanmış fotoğrafları içe aktarmak için]] bir yol sağlar.",
+	'importfreeimages_description' => "Bu sayfa Flickr'dan uygun lisanslı fotoğrafları aramanıza ve vikinize aktarmanıza izin verir.",
+	'importfreeimages_noapikey' => "Flickr API Anahtarınızı yapılandırmadınız.
+Bunu yapmak için, [http://www.flickr.com/services/api/misc.api_keys.html buradan] bir API anahtarı alın ve ImportFreeImages.php'de wgFlickrAPIKey'i ayarlayın.",
+	'importfreeimages_nophotosfound' => "Arama kriteriniz '$1' için hiçbir fotoğraf bulunamadı, lütfen tekrar deneyin.",
+	'importfreeimages_invalidurl' => '"$1" URLsi geçerli bir Flickr resmi değil.',
+	'importfreeimages_owner' => 'Yazar',
+	'importfreeimages_importthis' => 'bunu içe aktar',
 	'importfreeimages_next' => 'Sonraki $1',
+	'importfreeimages_filefromflickr' => "$1 Flickr'daki <b>[$2]</b> kullanıcısı tarafından. Orjinal URL",
+	'importfreeimages_promptuserforfilename' => 'Lütfen bir hedef dosya adı girin:',
+	'importfreeimages_returntoform' => "Ya da, arama sonuçlarınıza dönmek için <a href='$1'>buraya</a> tıklayın",
 );
 
 /** Ukrainian (Українська)

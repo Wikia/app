@@ -91,7 +91,7 @@
 
 class SFParserFunctions {
 
-	function registerFunctions( &$parser ) {
+	static function registerFunctions( &$parser ) {
 		$parser->setFunctionHook('forminput', array('SFParserFunctions', 'renderFormInput'));
 		$parser->setFunctionHook('formlink', array('SFParserFunctions', 'renderFormLink'));
 		if( defined( get_class( $parser ) . '::SFH_OBJECT_ARGS' ) ) {
@@ -104,7 +104,7 @@ class SFParserFunctions {
 		return true;
 	}
 
-	function languageGetMagic( &$magicWords, $langCode = "en" ) {
+	static function languageGetMagic( &$magicWords, $langCode = "en" ) {
 		switch ( $langCode ) {
 		default:
 			$magicWords['forminput'] = array ( 0, 'forminput' );
@@ -115,7 +115,7 @@ class SFParserFunctions {
 		return true;
 	}
 
-	function renderFormLink (&$parser, $inFormName = '', $inLinkStr = '', $inLinkType='', $inQueryStr = '') {
+	static function renderFormLink (&$parser, $inFormName = '', $inLinkStr = '', $inLinkType='', $inQueryStr = '') {
 		$ad = SpecialPage::getPage('AddData');
 		$link_url = $ad->getTitle()->getLocalURL() . "/$inFormName";
 		$link_url = str_replace(' ', '_', $link_url);
@@ -133,7 +133,7 @@ class SFParserFunctions {
 		return $parser->insertStripItem($str, $parser->mStripState);
 	}
 
-	function renderFormInput (&$parser, $inFormName = '', $inSize = '25', $inValue = '', $inButtonStr = '', $inQueryStr = '') {
+	static function renderFormInput (&$parser, $inFormName = '', $inSize = '25', $inValue = '', $inButtonStr = '', $inQueryStr = '') {
 		$ap = SpecialPage::getPage('AddPage');
 		$ap_url = $ap->getTitle()->getLocalURL();
 		$str = <<<END
@@ -172,7 +172,7 @@ END;
 	/**
 	 * {{#arraymap:value|delimiter|var|formula|new_delimiter}}
 	 */
-	function renderArrayMap( &$parser, $value = '', $delimiter = ',', $var = 'x', $formula = 'x', $new_delimiter = ', ' ) {
+	static function renderArrayMap( &$parser, $value = '', $delimiter = ',', $var = 'x', $formula = 'x', $new_delimiter = ', ' ) {
 		// let '\n' represent newlines - chances that anyone will
 		// actually need the '\n' literal are small
 		$delimiter = str_replace('\n', "\n", $delimiter);
@@ -193,7 +193,7 @@ END;
 	 * SFH_OBJ_ARGS
 	 * {{#arraymap:value|delimiter|var|formula|new_delimiter}}
 	 */
-	function renderArrayMapObj( &$parser, $frame, $args ) {
+	static function renderArrayMapObj( &$parser, $frame, $args ) {
 		# Set variables
 		$value         = isset($args[0]) ? trim($frame->expand($args[0])) : '';
 		$delimiter     = isset($args[1]) ? trim($frame->expand($args[1])) : ',';
@@ -221,7 +221,7 @@ END;
 	/**
 	 * {{#arraymaptemplate:value|template|delimiter|new_delimiter}}
 	 */
-	function renderArrayMapTemplate( &$parser, $value = '', $template = '', $delimiter = ',', $new_delimiter = ', ' ) {
+	static function renderArrayMapTemplate( &$parser, $value = '', $template = '', $delimiter = ',', $new_delimiter = ', ' ) {
 		# let '\n' represent newlines
 		$delimiter = str_replace('\n', "\n", $delimiter);
 		$values_array = explode($parser->mStripState->unstripNoWiki($delimiter), $value);
@@ -242,7 +242,7 @@ END;
 	 * SFH_OBJ_ARGS
 	 * {{#arraymaptemplate:value|template|delimiter|new_delimiter}}
 	 */
-	function renderArrayMapTemplateObj( &$parser, $frame, $args ) {
+	static function renderArrayMapTemplateObj( &$parser, $frame, $args ) {
 		# Set variables
 		$value         = isset($args[0]) ? trim($frame->expand($args[0])) : '';
 		$template      = isset($args[1]) ? trim($frame->expand($args[1])) : '';

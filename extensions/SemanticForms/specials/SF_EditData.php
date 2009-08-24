@@ -21,36 +21,30 @@ class SFEditData extends SpecialPage {
 		wfLoadExtensionMessages('SemanticForms');
 	}
 
-	function execute($query = '') {
+	function execute($query) {
+		global $wgRequest;
 		$this->setHeaders();
-		doSpecialEditData($query);
-	}
-}
+		$form_name = $wgRequest->getVal('form');
+		$target_name = $wgRequest->getVal('target');
 
-function doSpecialEditData($query = '') {
-	global $wgRequest;
+		// if query string did not contain these variables, try the URL
+		if (! $form_name && ! $target_name) {
+			$queryparts = explode('/', $query, 2);
+			$form_name = $queryparts[0];
+			$target_name = $queryparts[1];
+		}
 
-	$form_name = $wgRequest->getVal('form');
-	$target_name = $wgRequest->getVal('target');
-
-	// if query string did not contain these variables, try the URL
-	if (! $form_name && ! $target_name) {
-		$queryparts = explode('/', $query, 2);
-		$form_name = $queryparts[0];
-		$target_name = $queryparts[1];
+		self::printEditForm($form_name, $target_name);
 	}
 
-	printEditForm($form_name, $target_name);
-}
-
-function printEditForm($form_name, $target_name) {
+static function printEditForm($form_name, $target_name) {
 	global $wgOut, $wgRequest, $wgScriptPath, $sfgScriptPath, $sfgFormPrinter, $sfgYUIBase;
 
 	wfLoadExtensionMessages('SemanticForms');
 
 	$javascript_text = "";
 	// get contents of form definition file
-	$form_title = Title::newFromText($form_name, SF_NS_FORM);
+	$form_title = Title::makeTitleSafe(SF_NS_FORM, $form_name);
 	// get contents of target page
 	$target_title = Title::newFromText($target_name);
 
@@ -105,45 +99,9 @@ END;
 			$text .= $form_text;
 		}
 	}
-	$mainCssUrl = $sfgScriptPath . '/skins/SF_main.css';
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen, projection",
-		'href' => $mainCssUrl
-	));
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen, projection",
-		'href' => $sfgYUIBase . "autocomplete/assets/skins/sam/autocomplete.css"
-	));
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen, projection",
-		'href' => $sfgScriptPath . '/skins/SF_yui_autocompletion.css'
-	));
-	$wgOut->addLink( array(
-		'rel' => 'stylesheet',
-		'type' => 'text/css',
-		'media' => "screen, projection",
-		'href' => $sfgScriptPath . '/skins/floatbox.css'
-	));
-	$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'yahoo/yahoo-min.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'dom/dom-min.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'event/event-min.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'get/get-min.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'connection/connection-min.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'json/json-min.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'datasource/datasource-min.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'autocomplete/autocomplete-min.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' . $sfgScriptPath . '/libs/SF_yui_autocompletion.js"></script>' . "\n");
-	$wgOut->addScript('<script type="text/javascript" src="' . $sfgScriptPath . '/libs/floatbox.js"></script>' . "\n");
-	global $wgFCKEditorDir;
-	if ($wgFCKEditorDir)
-		$wgOut->addScript('<script type="text/javascript" src="' . "$wgScriptPath/$wgFCKEditorDir" . '/fckeditor.js"></script>' . "\n");
+	SFUtils::addJavascriptAndCSS();
 	$wgOut->addScript('		<script type="text/javascript">' . "\n" . $javascript_text . '</script>' . "\n");
-	$wgOut->setRobotPolicy( 'noindex,nofollow' );
 	$wgOut->addHTML($text);
+}
+
 }

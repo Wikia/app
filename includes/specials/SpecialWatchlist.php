@@ -54,7 +54,7 @@ function wfSpecialWatchlist( $par ) {
 	/* bool  */ 'hideBots'  => (int)$wgUser->getBoolOption( 'watchlisthidebots' ),
 	/* bool  */ 'hideAnons' => (int)$wgUser->getBoolOption( 'watchlisthideanons' ),
 	/* bool  */ 'hideLiu'   => (int)$wgUser->getBoolOption( 'watchlisthideliu' ),
-	/* bool  */ 'hidePatrolled' => (int)$wgUser->getBoolOption( 'watchlisthidepatrolled' ), // TODO
+	/* bool  */ 'hidePatrolled' => (int)$wgUser->getBoolOption( 'watchlisthidepatrolled' ),
 	/* bool  */ 'hideOwn'   => (int)$wgUser->getBoolOption( 'watchlisthideown' ),
 	/* ?     */ 'namespace' => 'all',
 	/* ?     */ 'invert'    => false,
@@ -96,7 +96,7 @@ function wfSpecialWatchlist( $par ) {
 	}
 
 	$dbr = wfGetDB( DB_SLAVE, 'watchlist' );
-	list( $page, $watchlist, $recentchanges ) = $dbr->tableNamesN( 'page', 'watchlist', 'recentchanges' );
+	$recentchanges = $dbr->tableName( 'recentchanges' );
 
 	$watchlistCount = $dbr->selectField( 'watchlist', 'COUNT(*)',
 		array( 'wl_user' => $uid ), __METHOD__ );
@@ -159,10 +159,12 @@ function wfSpecialWatchlist( $par ) {
 	if( $wgUser->getOption( 'extendwatchlist' )) {
 		$andLatest='';
  		$limitWatchlist = intval( $wgUser->getOption( 'wllimit' ) );
+		$usePage = false;
 	} else {
 	# Top log Ids for a page are not stored
 		$andLatest = 'rc_this_oldid=page_latest OR rc_type=' . RC_LOG;
 		$limitWatchlist = 0;
+		$usePage = true;
 	}
 
 	# Show a message about slave lag, if applicable
@@ -189,12 +191,11 @@ function wfSpecialWatchlist( $par ) {
 	}
 	$form .= '<hr />';
 	
-	$tables = array( 'recentchanges', 'watchlist', 'page' );
+	$tables = array( 'recentchanges', 'watchlist' );
 	$fields = array( "{$recentchanges}.*" );
 	$conds = array();
 	$join_conds = array(
 		'watchlist' => array('INNER JOIN',"wl_user='{$uid}' AND wl_namespace=rc_namespace AND wl_title=rc_title"),
-		'page'      => array('LEFT JOIN','rc_cur_id=page_id')
 	);
 	$options = array( 'ORDER BY' => 'rc_timestamp DESC' );
 	if( $wgShowUpdatedMarker ) {
@@ -212,7 +213,16 @@ function wfSpecialWatchlist( $par ) {
 	if( $andHideAnons ) $conds[] = $andHideAnons;
 	if( $andHidePatrolled ) $conds[] = $andHidePatrolled;
 	if( $nameSpaceClause ) $conds[] = $nameSpaceClause;
-	
+
+	$rollbacker = $wgUser->isAllowed('rollback');
+	if ( $usePage || $rollbacker ) {
+		$tables[] = 'page';
+		$join_conds['page'] = array('LEFT JOIN','rc_cur_id=page_id');
+		if ($rollbacker) 
+			$fields[] = 'page_latest';
+	}
+
+	ChangeTags::modifyDisplayQuery( $tables, $fields, $conds, $join_conds, $options, '' );
 	wfRunHooks('SpecialWatchlistQuery', array(&$conds,&$tables,&$join_conds,&$fields) );
 	
 	$res = $dbr->select( $tables, $fields, $conds, __METHOD__, $options, $join_conds );
@@ -279,7 +289,7 @@ function wfSpecialWatchlist( $par ) {
 	# Namespace filter and put the whole form together.
 	$form .= $wlInfo;
 	$form .= $cutofflinks;
-	$form .= implode( ' | ', $links );
+	$form .= $wgLang->pipeList( $links );
 	$form .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $thisTitle->getLocalUrl() ) );
 	$form .= '<hr /><p>';
 	$form .= Xml::label( wfMsg( 'namespace' ), 'namespace' ) . '&nbsp;';
@@ -317,6 +327,8 @@ function wfSpecialWatchlist( $par ) {
 			$linkBatch->add( NS_USER, $userNameUnderscored );
 		}
 		$linkBatch->add( NS_USER_TALK, $userNameUnderscored );
+
+		$linkBatch->add( $row->rc_namespace, $row->rc_title );
 	}
 	$linkBatch->execute();
 	$dbr->dataSeek( $res, 0 );
@@ -348,7 +360,7 @@ function wfSpecialWatchlist( $par ) {
 			$rc->numberofWatchingusers = 0;
 		}
 
-		$s .= $list->recentChangesLine( $rc, $updated );
+		$s .= $list->recentChangesLine( $rc, $updated, $counter );
 	}
 	$s .= $list->endRecentChangesList();
 
@@ -380,6 +392,8 @@ function wlDaysLink( $d, $page, $options = array() ) {
  * Returns html
  */
 function wlCutoffLinks( $days, $page = 'Watchlist', $options = array() ) {
+	global $wgLang;
+
 	$hours = array( 1, 2, 6, 12 );
 	$days = array( 1, 3, 7 );
 	$i = 0;
@@ -392,8 +406,8 @@ function wlCutoffLinks( $days, $page = 'Watchlist', $options = array() ) {
 	}
 	return wfMsgExt('wlshowlast',
 		array('parseinline', 'replaceafter'),
-		implode(' | ', $hours),
-		implode(' | ', $days),
+		$wgLang->pipeList( $hours ),
+		$wgLang->pipeList( $days ),
 		wlDaysLink( 0, $page, $options ) );
 }
 

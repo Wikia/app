@@ -11,45 +11,18 @@ function mv_embed_iframe() {
 		die('your version of php lacks <b>filter_input()</b> function</br>');
 	}	
 	//default to null media in not provided:	
-	$query_ary = explode('&', $_SERVER['QUERY_STRING']);
-	$row_url = $width = $height ='';
-	//rejoin url (could not find the standard encoding for Get URL in requests)	
-	foreach($query_ary as $get_pair_str){
-		 list($key, $val) = explode('=' ,$get_pair_str,2);
-		 if( $key=='width' )
-		 	$width = (int) $val;
-		 
-		 if( $key == 'height' )
-		 	$height = (int) $val;
-		 	
-		 if( $key == 'roe_url' )
-		 	$roe_url = $val;	
-		 
-		 if( $key == 'size' ){
-		 	list( $width, $height ) = explode('x', $val);
-		 	$width = (int) $width;
-		 	$height = (int) $height;
-		 }
-		 	
-		 if( substr($get_pair_str, 0, 4) == 'amp;' )
-		 	$roe_url.= '&' . str_replace('amp;','', $key) .'='. $val;
-	}	
-	if( $roe_url == '' ){
-		die('not valid or missing roe url');
-	}
-		
-	if( $width=='' ){
-		$width=400;
-	}	
-	if( $height=='' ){
-		$height=300;
-	}
-		
+	$stream_name = ( isset($_GET['sn']) )? $_GET['sn'] : die('no stream name provided');
+	$time =	  ( isset($_GET['t']) )? $_GET['t']: '';	
+	$width =  ( isset($_GET['width'])  )? intval( $_GET['width'] ) 	: '400';
+	$height = ( isset($_GET['height']) )? intval( $_GET['height'] ) 	: '300';		//
+	
+	$roe_url = 'http://metavid.org/wiki/Special:MvExportStream?feed_format=roe&stream_name=' . htmlspecialchars( $stream_name ) . 
+					'&t=' . htmlspecialchars( $time );
 	//everything good output page: 
 	output_page(array(
 		'roe_url' => $roe_url,
-		'width' => $width,
-		'height' => $height,
+		'width' 	=> $width,
+		'height'	=> $height,
 	));
 }
 function output_page($params){
@@ -73,10 +46,39 @@ function output_page($params){
 		<script type="text/javascript" src="mv_embed.js"></script>
 	</head>
 	<body>
-		<video roe="<?php echo htmlspecialchars( $roe_url )?>" width="<?php echo htmlspecialchars( $width )?>"
+		<video roe="<?php echo $roe_url ?>" width="<?php echo htmlspecialchars( $width )?>"
 			   height="<?php echo htmlspecialchars( $height )?>"></video>	
 	</body>
 	</html>
 <?
+}
+
+/**
+ * JS escape function copied from MediaWiki's Xml::escapeJsString()
+ */
+function escapeJsString( $string ) {
+	// See ECMA 262 section 7.8.4 for string literal format
+	$pairs = array(
+		"\\" => "\\\\",
+		"\"" => "\\\"",
+		'\'' => '\\\'',
+		"\n" => "\\n",
+		"\r" => "\\r",
+
+		# To avoid closing the element or CDATA section
+		"<" => "\\x3c",
+		">" => "\\x3e",
+
+		# To avoid any complaints about bad entity refs
+		"&" => "\\x26",
+
+		# Work around https://bugzilla.mozilla.org/show_bug.cgi?id=274152
+		# Encode certain Unicode formatting chars so affected
+		# versions of Gecko don't misinterpret our strings;
+		# this is a common problem with Farsi text.
+		"\xe2\x80\x8c" => "\\u200c", // ZERO WIDTH NON-JOINER
+		"\xe2\x80\x8d" => "\\u200d", // ZERO WIDTH JOINER
+	);
+	return strtr( $string, $pairs );
 }
 ?>

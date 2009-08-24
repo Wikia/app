@@ -29,6 +29,11 @@ $aliases['bs'] = array(
 	'InspectCache' => array( 'ProvjeriKes' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'InspectCache' => array( 'Cache inspicěrowaś' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'InspectCache' => array( 'Tutki välimuistia' ),
@@ -39,9 +44,19 @@ $aliases['fr'] = array(
 	'InspectCache' => array( 'InspecterCache' ),
 );
 
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'InspectCache' => array( 'Inspeccionar a caché' ),
+);
+
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'InspectCache' => array( 'Cache inschpiziere' ),
+);
+
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'InspectCache' => array( 'Pufrowak inspektować' ),
 );
 
 /** Hungarian (Magyar) */
@@ -49,9 +64,19 @@ $aliases['hu'] = array(
 	'InspectCache' => array( 'Gyorsítótár vizsgálat' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'InspectCache' => array( 'Inspectar cache' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'InspectCache' => array( 'Inspeksi tembolok' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'InspectCache' => array( 'キャッシュの点検' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -74,8 +99,18 @@ $aliases['oc'] = array(
 	'InspectCache' => array( "Inspectar l'amagatal", 'InspectarAmagatal' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'InspectCache' => array( 'संगणकसंस्मृतिपरिक्षती' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'InspectCache' => array( 'ChunguzaMabaki' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'InspectCache' => array( 'Suriin ang nakakubling taguan' ),
 );
 

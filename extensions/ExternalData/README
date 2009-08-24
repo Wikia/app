@@ -1,0 +1,61 @@
+External Data extension
+
+        Version 0.5.2
+        Yaron Koren and Michael Dale
+
+This is free software licensed under the GNU General Public License. Please
+see http://www.gnu.org/copyleft/gpl.html for further details, including the
+full text and terms of the license.
+
+== Overview ==
+
+External Data is an extension to MediaWiki that allows for retrieving data
+in CSV, JSON and XML formats from both external URLs and local wiki pages.
+
+The extension defines three parser functions, #get_external_data,
+#external_value and #for_external_table:
+
+#get_external_data retrieves the data from a URL that holds XML, CSV or
+JSON, and assigns it to local variables or arrays.
+
+#external_value displays the value of any retrieved variable, or the
+first value if it's an array.
+
+#for_external_table applies processing onto multiple rows retrieved by
+#get_external_data.
+
+In addition, the extension defines a new special page, 'GetData', that
+exports selected rows from a wiki page that holds CSV data, in a format that
+is readable by #get_external_data.
+
+For more information, see the extension homepage at:
+http://www.mediawiki.org/wiki/Extension:External_Data
+
+== Requirements ==
+
+This version of the External Data extension requires MediaWiki 1.8 or higher.
+
+== Installation ==
+
+To install the extension, place the entire 'ExternalData' directory
+within your MediaWiki 'extensions' directory, then add the following
+line to your 'LocalSettings.php' file:
+
+     require_once( "$IP/extensions/ExternalData/ED_Settings.php" );
+
+To cache the data from the URLs being accessed, you can call the contents
+of ExternalData.sql in your database, then add the following to
+LocalSettings.php:
+
+     $edgCacheTable = 'ed_url_cache';
+
+Finally, you can also set for string replacements to be done on the URLs you
+call, for instance to hide API keys:
+
+     $edgStringReplacements['MY_API_KEY'] = 'abcd1324';
+
+== Contact ==
+
+Comments, questions, suggestions and bug reports are welcome, and can
+be placed on the Talk page for the extension, or sent to Yaron at
+yaron57@gmail.com.

@@ -42,14 +42,29 @@ $aliases['de'] = array(
 	'Contributors' => array( 'Autoren' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Contributors' => array( 'Awtory' ),
+);
+
 /** Greek (Ελληνικά) */
 $aliases['el'] = array(
 	'Contributors' => array( 'Συνεισφέροντες' ),
 );
 
+/** Esperanto (Esperanto) */
+$aliases['eo'] = array(
+	'Contributors' => array( 'Kontribuantoj' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'Contributors' => array( 'Contributeurs' ),
+);
+
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'Contributors' => array( 'Contribuíntes' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -70,6 +85,11 @@ $aliases['hr'] = array(
 /** Upper Sorbian (Hornjoserbsce) */
 $aliases['hsb'] = array(
 	'Contributors' => array( 'Awtorojo' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Contributors' => array( 'Contributores' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -112,6 +132,11 @@ $aliases['nl'] = array(
 	'Contributors' => array( 'Bijdragers' ),
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Contributors' => array( 'Bidragsytarar' ),
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'Contributors' => array( 'Bidragsytere' ),
@@ -127,6 +152,11 @@ $aliases['pl'] = array(
 	'Contributors' => array( 'Autorzy' ),
 );
 
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'Contributors' => array( 'ونډه وال' ),
+);
+
 /** Brazilian Portuguese (Português do Brasil) */
 $aliases['pt-br'] = array(
 	'Contributors' => array( 'Contribuidores', 'Colaboradores' ),
@@ -137,8 +167,28 @@ $aliases['ro'] = array(
 	'Contributors' => array( 'Contribuitori' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Contributors' => array( 'योगदाता' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Contributors' => array( 'Kontribues' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'Contributors' => array( 'Wachangiaji' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Contributors' => array( 'Mga tagapag-ambag' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'Contributors' => array( 'Contribudori' ),
 );
 

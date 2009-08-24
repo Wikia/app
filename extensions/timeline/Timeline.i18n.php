@@ -1,12 +1,14 @@
 <?php
 /**
- * Internationalisation file for Timeline extension.
+ * Internationalisation file for EasyTimeline extension.
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $messages = array();
 
+/** English */
 $messages['en'] = array(
 	'timeline-desc' => 'Adds <tt>&lt;timeline&gt;</tt> tag to create timelines',
 );
@@ -75,6 +77,14 @@ $messages['bg'] = array(
 	'timeline-desc' => 'Добавя етикета <tt>&lt;timeline&gt;</tt> за създаване на времеви линии',
 );
 
+/** Bengali (বাংলা)
+ * @author Abdullah Harun Jewel
+ */
+$messages['bn'] = array(
+	'timeline-desc' => 'সময়সীমা নির্ধারণ
+সময়সীমা নির্ধারণ ট্যাগ ব্যবহার করতে যুক্ত করুন: <tt>&lt;timeline&gt;</tt>',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -108,6 +118,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'timeline-desc' => 'Pśidawa toflicku <tt>&lt;timeline&gt;</tt> za napóranje casoweje bałki',
+);
+
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'timeline-desc' => 'Προσθέτει την ετικέτα <tt>&lt;timeline&gt;</tt> για την δημιουργία χρονολογιών',
 );
 
 /** Esperanto (Esperanto)
@@ -171,6 +188,13 @@ $messages['fur'] = array(
  */
 $messages['gl'] = array(
 	'timeline-desc' => 'Engade a etiqueta <tt>&lt;timeline&gt;</tt> para crear liñas de tempo',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'timeline-desc' => 'Fiegt s <tt>&lt;timeline&gt;</tt>-Tag fir s Aalege vu Zytleischte yy',
 );
 
 /** Hebrew (עברית)
@@ -286,10 +310,11 @@ $messages['li'] = array(
 );
 
 /** Lithuanian (Lietuvių)
+ * @author Garas
  * @author Vpovilaitis
  */
 $messages['lt'] = array(
-	'timeline-desc' => 'Laiko grafiko sukūrimui įstatyk žymę <tt>&lt;timeline&gt;</tt>',
+	'timeline-desc' => 'Sukuria laiko grafikus naudojant gairę <tt>&lt;timeline&gt;</tt>',
 );
 
 /** Malayalam (മലയാളം)
@@ -362,6 +387,20 @@ $messages['pt'] = array(
 	'timeline-desc' => 'Adiciona a marca <tt>&lt;timeline&gt;</tt> para criar linhas temporais',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'timeline-desc' => 'Adiciona a marca <tt>&lt;timeline&gt;</tt> para criar linhas de tempo',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'timeline-desc' => "Aggiunge 'u tag <tt>&lt;timeline&gt;</tt> pe ccreà le linee de timbe",
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -397,6 +436,13 @@ $messages['sr-ec'] = array(
 	'timeline-desc' => 'Додаје <tt>&lt;timeline&gt;</tt> ознаку за стварање временских оса.',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'timeline-desc' => 'Föiget dät <tt>&lt;timeline&gt;</tt>-Tag tou dät Moakjen fon Tiedliesten bietou',
+);
+
 /** Sundanese (Basa Sunda)
  * @author Kandar
  */
@@ -430,6 +476,13 @@ $messages['tg-cyrl'] = array(
  */
 $messages['tl'] = array(
 	'timeline-desc' => "Nagdaragdag ng tatak na <tt>&lt;pana-panahon&gt;</tt> upang makalikha ng mga pana-panahon (''timeline'')",
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'timeline-desc' => 'Zaman çizelgesi oluşturmak için <tt>&lt;timeline&gt;</tt> etiketini ekler',
 );
 
 /** Ukrainian (Українська)

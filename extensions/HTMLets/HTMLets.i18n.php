@@ -32,6 +32,13 @@ $messages['arz'] = array(
 	'htmlets-desc' => 'يسمح لك باستخدام صيغ HTML من الملفات باستخدام وسم <tt><nowiki><htmlet></nowiki></tt>',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'htmlets-desc' => 'Dopunjava oznaku <tt><nowiki><htmlet></nowiki></tt> za ubacivanje HTML snippeta',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  */
@@ -53,6 +60,13 @@ $messages['eo'] = array(
 	'htmlets-desc' => 'Permesas al vi enigi HTML-kodpecojn de dosieroj uzante la etikedon <tt><nowiki><htmlet></nowiki></tt>',
 );
 
+/** Spanish (Español)
+ * @author Sanbec
+ */
+$messages['es'] = array(
+	'htmlets-desc' => 'Permite incorporar fragmentos de HTML desde archivos por medio de la etiqueta <tt><nowiki><htmlet></nowiki></tt>',
+);
+
 /** Basque (Euskara)
  * @author Theklan
  */
@@ -72,6 +86,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'htmlets-desc' => 'Déixalle introducir liñas de conversa HTML dende ficheiros usando a etiqueta <tt><nowiki><htmlet></nowiki></tt>',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'htmlets-desc' => 'Ergänzt s <tt><nowiki><htmlet></nowiki></tt>-Tag zum Yyfiege vu HTML-Schnipfel',
 );
 
 /** Hebrew (עברית)
@@ -100,6 +121,13 @@ $messages['hsb'] = array(
  */
 $messages['ia'] = array(
 	'htmlets-desc' => 'Permitte incorporar fragmentos HTML ab files per medio del etiquetta <tt><nowiki><htmlet></nowiki></tt>',
+);
+
+/** Italian (Italiano)
+ * @author Uno
+ */
+$messages['it'] = array(
+	'htmlets-desc' => 'Permette di includere frammenti di codice HTML da file usando il tag <tt><nowiki><htmlet></nowiki></tt>',
 );
 
 /** Japanese (日本語)
@@ -162,7 +190,14 @@ $messages['oc'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'htmlets-desc' => 'Permite-lhe incluir "inline" blocos de HTML a partir de ficheiros usando a marca <tt><nowiki><htmlet></nowiki></tt>',
+	'htmlets-desc' => 'Permite-lhe incluir em linha fragmentos de HTML a partir de ficheiros usando a marca <tt><nowiki><htmlet></nowiki></tt>',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'htmlets-desc' => 'Permite-lhe inserir blocos de HTML a partir de arquivos usando a marca <tt><nowiki><htmlet></nowiki></tt>',
 );
 
 /** Tarandíne (Tarandíne)
@@ -186,12 +221,33 @@ $messages['sk'] = array(
 	'htmlets-desc' => 'Umožňuje vkladať kúsky HTML kódu zo súborov pomocou značky <tt><nowiki><htmlet></nowiki></tt>',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'htmlets-desc' => 'Benutset dät <tt><nowiki><htmlet></nowiki></tt>-Tag toun Ienföigjen fon HTML-Snipsele',
+);
+
 /** Swedish (Svenska)
  * @author Lejonel
  * @author M.M.S.
  */
 $messages['sv'] = array(
 	'htmlets-desc' => 'Låter dig infoga HTML-kod från filer med hjälp av taggen <tt><nowiki><htmlet></nowiki></tt>',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'htmlets-desc' => '<tt><nowiki><htmlet></nowiki></tt> అనే ట్యాగుని ఉపయోగించడం ద్వారా ఫైళ్ళనుండి HTML ముక్కలని పేజీలలో చేర్చుకోనిస్తుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'htmlets-desc' => 'Nagpapahintulot sa iyo na maihanay sa guhit ang maliliit na mga piraso ng HTML mula sa mga talaksan na ginagamit ang tatak na <tt><nowiki><htmlet></nowiki></tt>',
 );
 
 /** Vietnamese (Tiếng Việt)

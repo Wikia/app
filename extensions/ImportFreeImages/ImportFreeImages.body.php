@@ -69,7 +69,7 @@ class ImportFreeImages extends SpecialPage {
 
 		$import = $wgRequest->getVal( 'url', '' );
 		if( $wgRequest->wasPosted() && $import != '' ) {
-			if( wfIFI_handleUpload( $f, $import ) )
+			if( $this->wfIFI_handleUpload( $f, $import ) )
 				return;
 			$wgOut->addHTML('<hr/>');
 		}
@@ -333,7 +333,7 @@ class ImportFreeImages extends SpecialPage {
 			$warning = '<li>'.wfMsgExt( 'fileexists', '', $dlink ).'</li>';
 
 			// use our own upload warning as we dont have a 'reupload' feature
-			wfIFI_uploadWarning( $u, $warning );
+			$this->wfIFI_uploadWarning( $u, $warning );
 			return true;
 		} elseif( !$nt->userCan( 'create' ) ) {
 			$wgOut->showPermissionsErrorPage( $nt->getUserPermissionsErrors( 'create', $wgUser ) );

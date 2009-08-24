@@ -1,6 +1,9 @@
 <?php
 /** Chinese (Taiwan) (‪中文(台灣)‬)
  *
+ * See MessagesQqq.php for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
  * @ingroup Language
  * @file
  *
@@ -8,6 +11,7 @@
  * @author BobChao
  * @author Roc michael
  * @author Urhixidur
+ * @author Wong128hk
  * @author לערי ריינהארט
  */
 
@@ -34,112 +38,22 @@ $namespaceNames = array(
 	NS_CATEGORY_TALK    => '分類討論'
 );
 
-
-$bookstoreList = array(
-	'博客來書店' => 'http://www.books.com.tw/exep/prod/booksfile.php?item=$1',
-	'三民書店' => 'http://www.sanmin.com.tw/page-qsearch.asp?ct=search_isbn&qu=$1',
-	'天下書店' => 'http://www.cwbook.com.tw/search/result1.jsp?field=2&keyWord=$1',
-	'新絲路書店' => 'http://www.silkbook.com/function/Search_list_book_data.asp?item=5&text=$1'
-);
-
 $messages = array(
 # User preference toggles
-'tog-underline'               => '鏈結標注底線',
-'tog-highlightbroken'         => '毀壞的鏈結格式<a href="" class="new">像這樣</a> (或者像這個<a href="" class="internal">?</a>)',
-'tog-justify'                 => '段落對齊',
-'tog-hideminor'               => '近期變動中隱藏細微修改',
-'tog-extendwatchlist'         => '增強監視清單以顯示所有可用更改',
-'tog-usenewrc'                => '增強版近期變動 (JavaScript)',
-'tog-numberheadings'          => '標題自動編號',
-'tog-showtoolbar'             => '顯示編輯工具欄',
-'tog-editondblclick'          => '雙擊編輯頁面 (JavaScript)',
-'tog-editsection'             => '允許通過點擊[編輯]連結編輯段落',
-'tog-editsectiononrightclick' => '允許右擊標題編輯段落 (JavaScript)',
-'tog-showtoc'                 => '顯示目錄 (針對一頁超過3個標題的頁面)',
-'tog-rememberpassword'        => '在這部電腦上記住我的密碼',
-'tog-editwidth'               => '編輯欄位已有最大寬度',
-'tog-watchcreations'          => '將我建立的頁面加入監視列表',
-'tog-watchdefault'            => '將我更改的頁面加入監視列表',
-'tog-watchmoves'              => '將我移動的頁面加入監視列表',
-'tog-watchdeletion'           => '將我刪除的頁面加入監視列表',
-'tog-minordefault'            => '預設將編輯設定為細微修改',
-'tog-previewontop'            => '在編輯框上方顯示預覽',
-'tog-previewonfirst'          => '第一次編輯時顯示原文內容的預覽',
-'tog-nocache'                 => '停用頁面快取',
-'tog-enotifwatchlistpages'    => '當我監視的頁面改變時發電子郵件給我',
-'tog-enotifusertalkpages'     => '當我的對話頁發生改變時發電子郵件給我',
-'tog-enotifminoredits'        => '即使是頁面的細微修改也向我發電子郵件',
-'tog-enotifrevealaddr'        => '在通知郵件中顯示我的電子郵件位址',
-'tog-shownumberswatching'     => '顯示監視數目',
-'tog-fancysig'                => '使用原始簽名 (不產生自動連結)',
-'tog-externaleditor'          => '預設使用外部編輯器',
-'tog-externaldiff'            => '預設使用外部差異比對',
-'tog-showjumplinks'           => '啟用「跳轉到」訪問連結',
-'tog-uselivepreview'          => '使用即時預覽 (JavaScript) (試驗中)',
-'tog-forceeditsummary'        => '當沒有輸入摘要時提醒我',
-'tog-watchlisthideown'        => '監視列表中隱藏我的編輯',
-'tog-watchlisthidebots'       => '監視列表中隱藏機器人的編輯',
-'tog-watchlisthideminor'      => '監視列表中隱藏細微修改',
-'tog-nolangconversion'        => '不進行用字轉換',
-'tog-ccmeonemails'            => '當我寄電子郵件給其他使用者時，也寄一份複本到我的信箱。',
-'tog-diffonly'                => '在比較兩個修訂版本差異時不顯示頁面內容',
-'tog-showhiddencats'          => '顯示隱藏分類',
-
-'underline-always'  => '總是使用',
-'underline-never'   => '從不使用',
-'underline-default' => '瀏覽器預設',
-
-# Dates
-'sunday'        => '星期日',
-'monday'        => '星期一',
-'tuesday'       => '星期二',
-'wednesday'     => '星期三',
-'thursday'      => '星期四',
-'friday'        => '星期五',
-'saturday'      => '星期六',
-'sun'           => '日',
-'mon'           => '一',
-'tue'           => '二',
-'wed'           => '三',
-'thu'           => '四',
-'fri'           => '五',
-'sat'           => '六',
-'january'       => '1月',
-'february'      => '2月',
-'march'         => '3月',
-'april'         => '4月',
-'may_long'      => '5月',
-'june'          => '6月',
-'july'          => '7月',
-'august'        => '8月',
-'september'     => '9月',
-'october'       => '10月',
-'november'      => '11月',
-'december'      => '12月',
-'january-gen'   => '一月',
-'february-gen'  => '二月',
-'march-gen'     => '三月',
-'april-gen'     => '四月',
-'may-gen'       => '五月',
-'june-gen'      => '六月',
-'july-gen'      => '七月',
-'august-gen'    => '八月',
-'september-gen' => '九月',
-'october-gen'   => '十月',
-'november-gen'  => '十一月',
-'december-gen'  => '十二月',
-'jan'           => '1月',
-'feb'           => '2月',
-'mar'           => '3月',
-'apr'           => '4月',
-'may'           => '5月',
-'jun'           => '6月',
-'jul'           => '7月',
-'aug'           => '8月',
-'sep'           => '9月',
-'oct'           => '10月',
-'nov'           => '11月',
-'dec'           => '12月',
+'tog-underline'            => '鏈結標注底線',
+'tog-hideminor'            => '近期變動中隱藏細微修改',
+'tog-usenewrc'             => '增強版近期變動 (JavaScript)',
+'tog-watchcreations'       => '將我建立的頁面加入監視列表',
+'tog-watchdefault'         => '將我更改的頁面加入監視列表',
+'tog-watchmoves'           => '將我移動的頁面加入監視列表',
+'tog-watchdeletion'        => '將我刪除的頁面加入監視列表',
+'tog-minordefault'         => '預設將編輯設定為細微修改',
+'tog-enotifwatchlistpages' => '當我監視的頁面改變時發電子郵件給我',
+'tog-shownumberswatching'  => '顯示監視數目',
+'tog-uselivepreview'       => '使用即時預覽 (JavaScript) (試驗中)',
+'tog-watchlisthideminor'   => '監視列表中隱藏細微修改',
+'tog-ccmeonemails'         => '當我寄電子郵件給其他使用者時，也寄一份複本到我的信箱。',
+'tog-norollbackdiff'       => '進行回退後略過差異比較',
 
 # Categories related messages
 'category_header'               => '類別「$1」中的頁面',
@@ -152,7 +66,7 @@ $messages = array(
 'category-article-count'        => '{{PLURAL:$2|這個分類中只有以下的頁面。|這個分類中有以下的$1個頁面，共有$2個頁面。}}',
 'listingcontinuesabbrev'        => '續',
 
-'mainpagetext'      => "<big>'''已成功安裝 MediaWiki!'''</big>",
+'mainpagetext'      => "<big>'''已成功安裝 MediaWiki。'''</big>",
 'mainpagedocfooter' => '請參閱 [http://meta.wikimedia.org/wiki/Help:Contents 使用者手冊] 以獲得使用此 wiki 軟體的訊息！
 
 == 入門 ==
@@ -411,7 +325,7 @@ $2',
 'loginsuccesstitle'          => '登入成功',
 'loginsuccess'               => '你現在以 "$1"的身份登入{{SITENAME}}。',
 'nosuchuser'                 => '找不到使用者 "$1"。
-檢查您的拼寫，或者用下面的表格建立一個新帳號。',
+檢查您的拼寫，或者用下面的表格[[Special:UserLogin/signup|建立一個新帳號]]。',
 'nosuchusershort'            => '沒有一個名為「<nowiki>$1</nowiki>」的使用者。請檢查您輸入的文字是否有錯誤。',
 'nouserspecified'            => '你需要指定一個使用者帳號。',
 'wrongpassword'              => '您輸入的密碼錯誤，請再試一次。',
@@ -513,7 +427,7 @@ $2',
 'noarticletext'             => '此頁目前沒有內容，您可以在其它頁[[Special:Search/{{PAGENAME}}|搜尋此頁標題]]或[{{fullurl:{{NAMESPACE}}:{{PAGENAME}}|action=edit}} 編輯此頁]。',
 'userpage-userdoesnotexist' => '使用者帳號「$1」未曾建立。請在建立／編輯這個頁面前先檢查一下。',
 'clearyourcache'            => "'''注意:''' 在儲存以後, 您必須清除瀏覽器的快取才能看到所作出的改變。 '''Mozilla / Firefox / Safari:''' 按著 ''Shift'' 再點擊''重新整理''(或按下''Ctrl-Shift-R''，在蘋果Mac上按下''Cmd-Shift-R'')；'''IE:''' 按著 ''Ctrl'' 再點擊 ''重新整理''，或按下 ''Ctrl-F5''；'''Konqueror:''' 只需點擊 ''重新整理''；'''Opera:''' 使用者需要在 ''工具-設定'' 中完整地清除它們的快取。",
-'usercssjsyoucanpreview'    => "'''提示:''' 在保存前請用'顯示預覧'按鈕來測試您新的 CSS/JS 。",
+'usercssjsyoucanpreview'    => "'''提示:''' 在保存前請用'顯示預覽'按鈕來測試您新的 CSS/JS 。",
 'usercsspreview'            => "'''注意您只是在預覽您的個人 CSS, 還沒有儲存﹗'''",
 'userjspreview'             => "'''注意您只是在測試／預覽您的個人 JavaScript，還沒有儲存﹗'''",
 'userinvalidcssjstitle'     => "'''警告:''' 不存在面板\"\$1\"。注意自訂的 .css 和 .js 頁要使用小寫標題，例如，{{ns:user}}:Foo/monobook.css 不同於 {{ns:user}}:Foo/Monobook.css。",
@@ -569,6 +483,8 @@ $2',
 
 你應該要考慮一下繼續編輯這一個頁面是否合適。
 為方便起見，這一個頁面的刪除記錄已經在下面提供:",
+'edit-hook-aborted'         => '編輯被鉤取消。
+它並無給出解釋。',
 
 # "Undo" feature
 'undo-success' => '該編輯可以被撤銷。請檢查以下對比以核實這正是您想做的，然後儲存以下更改以完成撤銷編輯。',
@@ -614,12 +530,10 @@ $2',
 'rev-deleted-comment'         => '(註釋已移除)',
 'rev-deleted-user'            => '(使用者名已移除)',
 'rev-deleted-event'           => '(項目已移除)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">該頁面修訂已經被從公共文件中移除。
-在[{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。</div>',
-'rev-deleted-text-view'       => "<div class='mw-warning plainlinks'>
-該頁面修訂已經被從公共文件中移除。作為此網站的管理員，您可以檢視它；
-在[{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。
-</div>",
+'rev-deleted-text-permission' => '該頁面修訂已經被從公共文件中移除。
+在[{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。',
+'rev-deleted-text-view'       => '該頁面修訂已經被從公共文件中移除。作為此網站的管理員，您可以檢視它；
+在[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} 刪除日誌]中您可能會檢視到詳細的訊息。',
 'rev-delundel'                => '顯示/隱藏',
 'revisiondelete'              => '刪除/復原刪除修訂',
 'revdelete-nooldid-title'     => '沒有目標修訂',
@@ -935,7 +849,7 @@ $2',
 'filehist-comment'          => '註解',
 'imagelinks'                => '連結',
 'nolinkstoimage'            => '沒有頁面連接到本檔案。',
-'sharedupload'              => '該檔案是一個共享上傳，它可能在其它項目中被應用。',
+'sharedupload'              => '該檔案是一個共享上傳，它可能在其它項目中被應用。 $2', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'shareduploadwiki'          => '請參閱$1以了解其相關資訊。',
 'shareduploadwiki-linktext' => '檔案描述頁面',
 'noimage'                   => '不存在此名稱的檔案，您可以$1。',
@@ -1261,7 +1175,7 @@ $NEWPAGE
 以下是'''$1'''現時的保護級別:",
 'protect-locked-access'       => "您的帳號權限不能修改保護級別。
 以下是'''$1'''現時的保護級別:",
-'protect-cascadeon'           => '以下的{{PLURAL:$1|一個|多個}}頁面包含着本頁面的同時，啟動了連鎖保護，因此本頁面目前也被保護，未能編輯。您可以設定本頁面的保護級別，但這並不會對連鎖保護有所影響。',
+'protect-cascadeon'           => '以下的{{PLURAL:$1|一個|多個}}頁面包含著本頁面的同時，啟動了連鎖保護，因此本頁面目前也被保護，未能編輯。您可以設定本頁面的保護級別，但這並不會對連鎖保護有所影響。',
 'protect-default'             => '(預設)',
 'protect-fallback'            => '需要"$1"的許可',
 'protect-level-autoconfirmed' => '禁止未註冊使用者',
@@ -1332,7 +1246,7 @@ $1',
 'contributions' => '使用者編修記錄',
 'mycontris'     => '我的編修記錄',
 'contribsub2'   => '$1的編修記錄 ($2)',
-'nocontribs'    => '沒有找到符合特徵的更改。',
+'nocontribs'    => '沒有找到符合特徵的更改。', # Optional parameter: $1 is the user name
 'uctop'         => ' (最新修改)',
 'month'         => '從該月份 (或更早):',
 'year'          => '從該年份 (或更早):',
@@ -1459,8 +1373,8 @@ $1',
 'databasenotlocked'   => '資料庫沒有鎖定。',
 
 # Move page
-'move-page-legend'        => '移動頁面',
-'movepagetext'            => "用下面的表單來重新命名一個頁面，並將其修訂沿革同時移動到新頁面。
+'move-page-legend'         => '移動頁面',
+'movepagetext'             => "用下面的表單來重新命名一個頁面，並將其修訂沿革同時移動到新頁面。
 老的頁面將成為新頁面的重定向頁。
 連結到老頁面的連結並不會自動更改；
 請檢查雙重或損壞重定向連結。
@@ -1474,40 +1388,41 @@ $1',
 <b>警告！</b>
 對一個經常被訪問的頁面而言這可能是一個重大與唐突的更改；
 請在行動前先了結其所可能帶來的後果。",
-'movepagetalktext'        => "有關的對話頁（如果有的話）將被自動與該頁面一起移動，'''除非'''：
+'movepagetalktext'         => "有關的對話頁（如果有的話）將被自動與該頁面一起移動，'''除非'''：
 *您將頁面移動到不同的名字空間；
 *新頁面已經有一個包含內容的對話頁，或者
 *您不勾選下面的覆選框。
 
 在這些情況下，您在必要時必須手工移動或合併頁面。",
-'movearticle'             => '移動頁面:',
-'movenologin'             => '未登入',
-'movenologintext'         => '您必須是一名登記使用者並且[[Special:UserLogin|登入]]
+'movearticle'              => '移動頁面:',
+'movenologin'              => '未登入',
+'movenologintext'          => '您必須是一名登記使用者並且[[Special:UserLogin|登入]]
 後才可移動一個頁面。',
-'movenotallowed'          => '您在這個wiki中度並沒有許可權去移動頁面。',
-'newtitle'                => '新標題:',
-'move-watch'              => '監視此頁',
-'movepagebtn'             => '移動頁面',
-'pagemovedsub'            => '移動成功',
-'movepage-moved'          => "<big>'''「$1」已經移動到「$2」'''</big>", # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
-'articleexists'           => '該名字的頁面已經存在，或者您選擇的名字無效。請再選一個名字。',
-'talkexists'              => '頁面本身移動成功，
+'movenotallowed'           => '您在這個wiki中度並沒有許可權去移動頁面。',
+'newtitle'                 => '新標題:',
+'move-watch'               => '監視此頁',
+'movepagebtn'              => '移動頁面',
+'pagemovedsub'             => '移動成功',
+'movepage-moved'           => "<big>'''「$1」已經移動到「$2」'''</big>", # The two titles are passed in plain text as $3 and $4 to allow additional goodies in the message.
+'articleexists'            => '該名字的頁面已經存在，或者您選擇的名字無效。請再選一個名字。',
+'talkexists'               => '頁面本身移動成功，
 但是由於新標題下已經有對話頁存在，所以對話頁無法移動。請手工合併兩個頁面。',
-'movedto'                 => '移動到',
-'movetalk'                => '如果可能的話，請同時移動對話頁。',
-'1movedto2'               => '[[$1]]移動到[[$2]]',
-'1movedto2_redir'         => '[[$1]]透過重定向移動到[[$2]]',
-'movelogpage'             => '移動日誌',
-'movelogpagetext'         => '以下是已經移動的頁面清單:',
-'movereason'              => '原因',
-'revertmove'              => '復原該移動',
-'delete_and_move'         => '刪除並移動',
-'delete_and_move_text'    => '==需要刪除==
+'movedto'                  => '移動到',
+'movetalk'                 => '如果可能的話，請同時移動對話頁。',
+'1movedto2'                => '[[$1]]移動到[[$2]]',
+'1movedto2_redir'          => '[[$1]]透過重定向移動到[[$2]]',
+'move-redirect-suppressed' => '已禁止重新定向',
+'movelogpage'              => '移動日誌',
+'movelogpagetext'          => '以下是已經移動的頁面清單:',
+'movereason'               => '原因',
+'revertmove'               => '復原該移動',
+'delete_and_move'          => '刪除並移動',
+'delete_and_move_text'     => '==需要刪除==
 
 目標頁面"[[:$1]]"已經存在。你確認需要刪除原頁面並以進行移動嗎？',
-'delete_and_move_confirm' => '是的，刪除此頁面',
-'delete_and_move_reason'  => '刪除以便移動',
-'selfmove'                => '原始標題與目標標題相同，您不能移動一頁覆蓋本身。',
+'delete_and_move_confirm'  => '是的，刪除此頁面',
+'delete_and_move_reason'   => '刪除以便移動',
+'selfmove'                 => '原始標題與目標標題相同，您不能移動一頁覆蓋本身。',
 
 # Export
 'export'            => '匯出頁面',
@@ -1637,6 +1552,8 @@ $1',
 'tooltip-watch'                   => '將此頁加入您的監視列表',
 'tooltip-recreate'                => '重建該頁面，無論是否被刪除。',
 'tooltip-upload'                  => '開始上傳',
+'tooltip-rollback'                => '『{{int:rollbacklink}}』可以一按恢復上一位貢獻者對這個頁面的編輯',
+'tooltip-undo'                    => '『{{int:editundo}}』可以在編輯模式上開啟編輯表格以便復原。它容許在摘要中加入原因。',
 
 # Stylesheets
 'common.css'   => '/* 此處的 CSS 將應用於所有的面板 */',
@@ -2043,9 +1960,7 @@ Variants for Chinese language
 'confirmemail_text'       => '此網站要求您在使用郵件功能之前驗證您的電子郵件地址。
 點擊以下按鈕可向您的郵箱發送一封確認郵件。該郵件包含有一行代碼連結；
 請在您的瀏覽器中加載此連結以確認您的電子郵件地址是有效的。',
-'confirmemail_pending'    => '<div class="error">
-一個確認代碼已經被發送到您的郵箱，您可能需要等幾分鐘才能收到。如果無法收到，請在申請一個新的確認碼！
-</div>',
+'confirmemail_pending'    => '一個確認代碼已經被發送到您的郵箱，您可能需要等幾分鐘才能收到。如果無法收到，請在申請一個新的確認碼！',
 'confirmemail_send'       => '郵發確認代碼',
 'confirmemail_sent'       => '確認郵件已發送。',
 'confirmemail_oncreate'   => '一個確認代碼已經被發送到您的郵箱。該代碼並不要求您進行登錄，
@@ -2066,11 +1981,9 @@ Variants for Chinese language
 'scarytranscludetoolong'  => '[抱歉，URL 地址太長]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">
-此頁面的引用:<br />
-$1
-</div>',
-'trackbackremove'   => '([$1删除])',
+'trackbackbox'      => '此頁面的引用:<br />
+$1',
+'trackbackremove'   => '([$1刪除])',
 'trackbacklink'     => '迴響',
 'trackbackdeleteok' => 'Trackback 刪除成功。',
 
@@ -2141,7 +2054,11 @@ $1
 'watchlisttools-raw'  => '編輯原始監視列表',
 
 # Special:Version
-'version' => '版本', # Not used as normal message but as header for the special page itself
+'version'                       => '版本', # Not used as normal message but as header for the special page itself
+'version-parserhooks'           => '語法鉤',
+'version-hooks'                 => '鉤',
+'version-parser-function-hooks' => '語法函數鉤',
+'version-hook-name'             => '鉤名',
 
 # Special:SpecialPages
 'specialpages' => '特殊頁面',

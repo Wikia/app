@@ -48,7 +48,7 @@ class BitmapHandler extends ImageHandler {
 
 	function doTransform( $image, $dstPath, $dstUrl, $params, $flags = 0 ) {
 		global $wgUseImageMagick, $wgImageMagickConvertCommand, $wgImageMagickTempDir;
-		global $wgCustomConvertCommand;
+		global $wgCustomConvertCommand, $wgUseImageResize;
 		global $wgSharpenParameter, $wgSharpenReductionThreshold;
 		global $wgMaxAnimatedGifArea;
 
@@ -74,6 +74,8 @@ class BitmapHandler extends ImageHandler {
 
 		if ( !$dstPath ) {
 			// No output path available, client side scaling only
+			$scaler = 'client';
+		} elseif( !$wgUseImageResize ) {
 			$scaler = 'client';
 		} elseif ( $wgUseImageMagick ) {
 			$scaler = 'im';

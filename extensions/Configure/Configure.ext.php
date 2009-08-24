@@ -14,16 +14,20 @@ class WebExtension {
 	protected $mEditRestricted;
 	protected $mName;
 	protected $mDbChange;
+	protected $mExtensionsDependencies;
+	protected $mSettingsDependencies;
 	protected $mInputCallback = null;
 	protected $mDir;
 	protected $mFile;
 	protected $mDoc;
 	protected $mExtVar = null;
+	protected $mObj = null;
+	protected $mTempActivated = null;
 
 	/**
 	 * Construct a new object.
 	 *
-	 * @param array $conf
+	 * @param $conf Array
 	 */
 	public function __construct( /*array*/ $conf ) {
 		global $wgConfigureExtensionsVar;
@@ -32,11 +36,13 @@ class WebExtension {
 		$this->mSettings = isset( $conf['settings'] ) ? $conf['settings'] : array();
 		$this->mDbChange = isset( $conf['schema'] ) && $conf['schema'];
 		$this->mDir = isset( $conf['dir'] ) ? $conf['dir'] : $conf['name'];
-		$this->mFile = isset( $conf['file'] ) ? $conf['file'] : $conf['name'] . '.php' ;
+		$this->mFile = isset( $conf['file'] ) ? $conf['file'] : $conf['name'] . '.php';
 		$this->mArrays = isset( $conf['array'] ) ? $conf['array'] : array();
 		$this->mEmptyValues = isset( $conf['empty'] ) ? $conf['empty'] : array();
 		$this->mViewRestricted = isset( $conf['view-restricted'] ) ? $conf['view-restricted'] : array();
 		$this->mEditRestricted = isset( $conf['edit-restricted'] ) ? $conf['edit-restricted'] : array();
+		$this->mExtensionsDependencies = isset( $conf['extensions-dependencies'] ) ? $conf['extensions-dependencies'] : array();
+		$this->mSettingsDependencies = isset( $conf['settings-dependencies'] ) ? $conf['settings-dependencies'] : array();
 		$this->mDoc = isset( $conf['url'] ) ? $conf['url'] : null;
  		if ( isset( $wgConfigureExtensionsVar[$this->mName] ) ) {
  			$this->mExtVar = $wgConfigureExtensionsVar[$this->mName];
@@ -116,6 +122,26 @@ class WebExtension {
 	}
 
 	/**
+	 * Get the list of extensions that needs to be activated so that this
+	 * extension can work
+	 *
+	 * @return array
+	 */
+	public function getExtensionsDependencies() {
+		return $this->mExtensionsDependencies;
+	}
+
+	/**
+	 * Get the associative array mapping settings to their values needed by this
+	 * extension
+	 *
+	 * @return array
+	 */
+	public function getSettingsDependencies() {
+		return $this->mSettingsDependencies;
+	}
+
+	/**
 	 * Get a url for the description of this extension (or null)
 	 *
 	 * @return string or null
@@ -135,18 +161,61 @@ class WebExtension {
 	}
 
 	/**
+	 * Prettify boolean settings to be correctly displayed
+	 *
+	 * @return String 
+	 */
+	public static function prettifyForDisplay( $val ) {
+		if ( is_bool( $val ) )
+			return wfBoolToStr( $val );
+		return $val;
+	}
+
+	/**
 	 * Generate html to configure this extension
 	 *
-	 * @return XHTML
+	 * @return String: XHTML
 	 */
 	public function getHtml() {
 		if ( !$this->isInstalled() )
 			return '';
 		$ret = '<fieldset><legend>' . htmlspecialchars( $this->mName ) . '</legend>';
-		if ( $this->mDbChange ) {
-			$warn = wfMsgExt( 'configure-ext-schemachange', array( 'parseinline' ) );
-			$ret .= "<span class=\"errorbox\">{$warn}</span><br clear=\"left\" />\n";
+		if ( count( $errors = $this->checkSettingsDependencies() ) ) {
+			$ret .= "<span class=\"errorbox\">";
+			$ret .= wfMsgExt( 'configure-ext-settings-dep-errors', array( 'parseinline' ), count( $errors ) );
+			$ret .= "<ul>\n";
+			foreach ( $errors as $err ) {
+				list( $setting, $req, $cur ) = $err;
+				$setting = '$'.$setting;
+				$req = self::prettifyForDisplay( $req );
+				$cur = self::prettifyForDisplay( $cur );
+				$ret .= '<li>' . wfMsgExt( 'configure-ext-settings-dep-error', array( 'parseinline' ), $setting, $req, $cur ) . "</li>\n";
+			}
+			return $ret . "</ul>\n</span>\n</fieldset>";
 		}
+
+		$warnings = array();
+
+		if ( $this->mDbChange ) {
+			$warnings[] = wfMsgExt( 'configure-ext-schemachange', array( 'parseinline' ) );
+		}
+		if ( count( $this->mExtensionsDependencies ) ) {
+			global $wgLang;
+			$warnings[] = wfMsgExt( 'configure-ext-ext-dependencies', array( 'parseinline' ), $wgLang->listToText( $this->mExtensionsDependencies ), count( $this->mExtensionsDependencies ) );
+		}
+
+		if ( count( $warnings ) ) {
+			$ret .= "<span class=\"errorbox\">\n";
+			if ( count( $warnings ) > 1 ) {
+				$ret .= "<ul>\n<li>";
+				$ret .= implode( "</li>\n<li>", $warnings );
+				$ret .= "</li>\n</ul>";
+			} else {
+				$ret .= $warnings[0];
+			}
+			$ret .= "</span><br clear=\"left\" />\n";
+		}
+
 		$use = wfMsgExt( 'configure-ext-use', array( 'parseinline' ) );
 		$ret .= "<h2>{$use}</h2>\n";
 		$ret .= "<table class=\"configure-table configure-table-ext\"><tr><td>\n";
@@ -176,6 +245,44 @@ class WebExtension {
 	}
 
 	/**
+	 * Check for settings dependencies
+	 *
+	 * @return Boolean: Success
+	 */
+	public function checkSettingsDependencies() {
+		if ( !$this->mObj instanceof ConfigurationPage )
+			throw new MWException( 'WebExtension::checkSettingsDependencies() called without prior call to WebExtension::setPageObj()' );
+
+		if ( !count( $this->mSettingsDependencies ) )
+			return array();
+
+		$ret = array();
+		$conf = $this->mObj->getConf();
+		foreach ( $this->mSettingsDependencies as $setting => $value ) {
+			if ( array_key_exists( $setting, $conf ) )
+				$actual = $conf[$setting];
+			else
+				$actual = $GLOBALS[$setting];
+			 
+			if ( $actual !== $value ) {
+				$ret[] = array( $setting, $value, $actual );
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	 * Whether the definition file can be included to get default values
+	 *
+	 * @return Boolean
+	 */
+	public function canIncludeFile() {
+		if( !file_exists( $this->getFile() ) )
+			return false;
+		return !count( $this->checkSettingsDependencies() );
+	}
+
+	/**
 	 * Return the name of the check that's used to select whether the extension
 	 * should be activated
 	 */
@@ -183,7 +290,7 @@ class WebExtension {
  		if( $this->useVariable() )
  			return 'wp'.$this->mExtVar;
  		else
- 			return 'wpUse'.$this->mName;
+ 			return 'wpUse'.str_replace( ' ', '_', $this->mName );
 	}
 
   	/**
@@ -200,13 +307,19 @@ class WebExtension {
  		return $this->mExtVar;
  	}
 
+	public function setTempActivated( $val = null ) {
+		return wfSetVar( $this->mTempActivated, $val );
+	}
+
 	/**
 	 * Is this extension activated?
 	 *
-	 * @return bool
+	 * @return Boolean
 	 */
 	public function isActivated() {
-		if( $this->useVariable() ) {
+		if( $this->mTempActivated !== null ) {
+			return $this->mTempActivated;
+		} else if( $this->useVariable() ) {
  			return isset( $GLOBALS[$this->getVariable()] ) && $GLOBALS[$this->getVariable()];
  		} else {
  			global $wgConf;
@@ -217,7 +330,7 @@ class WebExtension {
 	/**
 	 * Is this extension installed so that it can be used?
 	 *
-	 * @return bool
+	 * @return Boolean
 	 */
 	public function isInstalled() {
  		if( $this->useVariable() ) {

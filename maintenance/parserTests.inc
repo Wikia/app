@@ -353,6 +353,9 @@ class ParserTest {
 					else {
 						$data['options'] = $this->chomp( $data['options'] );
 					}
+					if (!isset( $data['config'] ) )
+						$data['config'] = '';
+					
 					if (preg_match('/\\bdisabled\\b/i', $data['options'])
 						|| !preg_match("/{$this->regex}/i", $data['test'])) {
 						# disabled test
@@ -364,7 +367,9 @@ class ParserTest {
 						$this->chomp( $data['test'] ),
 						$this->chomp( $data['input'] ),
 						$this->chomp( $data['result'] ),
-						$this->chomp( $data['options'] ) );
+						$this->chomp( $data['options'] ),
+						$this->chomp( $data['config']   )
+						);
 					$ok = $ok && $result;
 					$this->recorder->record( $this->chomp( $data['test'] ), $result );
 					$data = array();
@@ -414,12 +419,12 @@ class ParserTest {
 	 * @param string $result Result to output
 	 * @return bool
 	 */
-	private function runTest( $desc, $input, $result, $opts ) {
+	private function runTest( $desc, $input, $result, $opts, $config ) {
 		if( $this->showProgress ) {
 			$this->showTesting( $desc );
 		}
 
-		$this->setupGlobals($opts);
+		$this->setupGlobals($opts, $config);
 
 		$user = new User();
 		$options = ParserOptions::newFromUser( $user );
@@ -502,7 +507,7 @@ class ParserTest {
 	 * Set up the global variables for a consistent environment for each test.
 	 * Ideally this should replace the global configuration entirely.
 	 */
-	private function setupGlobals($opts = '') {
+	private function setupGlobals($opts = '', $config = '') {
 		if( !isset( $this->uploadDir ) ) {
 			$this->uploadDir = $this->setupUploadDir();
 		}
@@ -545,6 +550,7 @@ class ParserTest {
 			'wgMaxTocLevel' => $maxtoclevel,
 			'wgCapitalLinks' => true,
 			'wgNoFollowLinks' => true,
+			'wgNoFollowDomainExceptions' => array(),
 			'wgThumbnailScriptPath' => false,
 			'wgUseTeX' => false,
 			'wgLocaltimezone' => 'UTC',
@@ -564,7 +570,20 @@ class ParserTest {
 			'wgForeignFileRepos' => array(),
 			'wgLinkHolderBatchSize' => $linkHolderBatchSize,
 			'wgEnforceHtmlIds' => true,
+			'wgExternalLinkTarget' => false,
+			'wgAlwaysUseTidy' => false,
 			);
+
+		if ($config) {
+			$configLines = explode( "\n", $config );
+			
+			foreach( $configLines as $line ) {
+				list( $var, $value ) = explode( '=', $line, 2 );
+				
+				$settings[$var] = eval("return $value;" );
+			}
+		}
+		
 		$this->savedGlobals = array();
 		foreach( $settings as $var => $val ) {
 			$this->savedGlobals[$var] = $GLOBALS[$var];
@@ -613,7 +632,7 @@ class ParserTest {
 	 * the db will be visible to later tests in the run.
 	 */
 	private function setupDatabase() {
-		global $wgDBprefix;
+		global $wgDBprefix, $wgDBtype;
 		if ( $this->databaseSetupDone ) {
 			return;
 		}
@@ -635,15 +654,16 @@ class ParserTest {
 		$db = wfGetDB( DB_MASTER );
 		$tables = $this->listTables();
 
-		if (!(strcmp($db->getServerVersion(), '4.1') < 0 and stristr($db->getSoftwareLink(), 'MySQL'))) {
+		if ( !( $wgDBtype == 'mysql' && strcmp( $db->getServerVersion(), '4.1' ) < 0 ) ) {
 			# Database that supports CREATE TABLE ... LIKE
-			global $wgDBtype;
+			
 			if( $wgDBtype == 'postgres' ) {
 				$def = 'INCLUDING DEFAULTS';
+				$temporary = 'TEMPORARY';
 			} else {
 				$def = '';
 			}
-			foreach ($tables as $tbl) {
+			foreach ( $tables as $tbl ) {
 				# Clean up from previous aborted run.  So that table escaping
 				# works correctly across DB engines, we need to change the pre-
 				# fix back and forth so tableName() works right.
@@ -652,11 +672,11 @@ class ParserTest {
 				$this->changePrefix( 'parsertest_' );
 				$newTableName = $db->tableName( $tbl );
 
-				if ( $db->tableExists( $tbl ) ) {
-					$db->query("DROP TABLE $newTableName");
+				if ( $db->tableExists( $tbl ) && $wgDBtype != 'postgres' ) {
+					$db->query( "DROP TABLE $newTableName" );
 				}
 				# Create new table
-				$db->query("CREATE $temporary TABLE $newTableName (LIKE $oldTableName $def)");
+				$db->query( "CREATE $temporary TABLE $newTableName (LIKE $oldTableName $def)" );
 			}
 		} else {
 			# Hack for MySQL versions < 4.1, which don't support

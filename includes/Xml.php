@@ -172,6 +172,36 @@ class Xml {
 			. implode( "\n", $options )
 			. self::closeElement( 'select' );
 	}
+	
+	/**
+	 * @param $year Integer
+	 * @param $month Integer
+	 * @return string Formatted HTML
+	 */
+	public static function dateMenu( $year, $month ) {
+		# Offset overrides year/month selection
+		if( $month && $month !== -1 ) {
+			$encMonth = intval( $month );
+		} else {
+			$encMonth = '';
+		}
+		if( $year ) {
+			$encYear = intval( $year );
+		} else if( $encMonth ) {
+			$thisMonth = intval( gmdate( 'n' ) );
+			$thisYear = intval( gmdate( 'Y' ) );
+			if( intval($encMonth) > $thisMonth ) {
+				$thisYear--;
+			}
+			$encYear = $thisYear;
+		} else {
+			$encYear = '';
+		}
+		return Xml::label( wfMsg( 'year' ), 'year' ) . ' '.
+			Xml::input( 'year', 4, $encYear, array('id' => 'year', 'maxlength' => 4) ) . ' '.
+			Xml::label( wfMsg( 'month' ), 'month' ) . ' '.
+			Xml::monthSelector( $encMonth, -1 );
+	}
 
 	/**
 	 *
@@ -641,7 +671,6 @@ class Xml {
 	
 		foreach( $fields as $labelmsg => $input ) {
 			$id = "mw-$labelmsg";
-			
 			$form .= Xml::openElement( 'tr', array( 'id' => $id ) );
 			$form .= Xml::tags( 'td', array('class' => 'mw-label'), wfMsgExt( $labelmsg, array('parseinline') ) );
 			$form .= Xml::openElement( 'td', array( 'class' => 'mw-input' ) ) . $input . Xml::closeElement( 'td' );
@@ -649,7 +678,7 @@ class Xml {
 		}
 
 		if( $submitLabel ) {
-			$form .= Xml::openElement( 'tr', array( 'id' => $id ) );
+			$form .= Xml::openElement( 'tr' );
 			$form .= Xml::tags( 'td', array(), '' );
 			$form .= Xml::openElement( 'td', array( 'class' => 'mw-submit' ) ) . Xml::submitButton( wfMsg( $submitLabel ) ) . Xml::closeElement( 'td' );
 			$form .= Xml::closeElement( 'tr' );

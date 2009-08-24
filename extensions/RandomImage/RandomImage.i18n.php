@@ -32,6 +32,21 @@ $messages['arz'] = array(
 	'randomimage-desc' => 'يوفر ميديا عشوائية باستخدام <tt>&lt;randomimage /&gt;</tt>',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'randomimage-desc' => 'Дазваляе выпадкова выбіраць мэдыя-файлы з дапамогай тэга <tt>&lt;randomimage /&gt;</tt>',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'randomimage-desc' => 'Omogućuje odabir slučajnih multimedijalnih datoteka koristeći <tt>&lt;randomimage /&gt;</tt>',
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
  */
@@ -67,6 +82,13 @@ $messages['es'] = array(
 	'randomimage-desc' => 'Proporciona un archivo multimedia al azar usando <tt>&lt;randomimage /&gt;</tt>',
 );
 
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'randomimage-desc' => 'Ausazko hautagailu multimedia sortzen du <tt>&lt;randomimage /&gt;</tt> kodea idatziz',
+);
+
 /** Persian (فارسی)
  * @author Huji
  */
@@ -94,6 +116,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'randomimage-desc' => 'Proporciona un seleccionador multimedia ao chou usando <tt>&lt;randomimage /&gt;</tt>',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'randomimage-desc' => 'Fiegt s <tt>&lt;randomimage /&gt;</tt>-Tag dryy fir zum Aazeige vun eme zuefellige Bild',
 );
 
 /** Hebrew (עברית)
@@ -173,6 +202,13 @@ $messages['ms'] = array(
 	'randomimage-desc' => 'Membekalkan pemilih media rawak menggunakan <tt>&lt;randomimage /&gt;</tt>',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'randomimage-desc' => 'Föögt mit <tt>&lt;randomimage /&gt;</tt> en Tag to, tofällige Biller to wiesen',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -215,6 +251,13 @@ $messages['pt'] = array(
 	'randomimage-desc' => 'Providencia um selector de media aleatória usando <tt>&lt;randomimage /&gt;</tt>',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'randomimage-desc' => 'Provê um seletor de media aleatória usando <tt>&lt;randomimage /&gt;</tt>',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -243,6 +286,20 @@ $messages['sk'] = array(
 	'randomimage-desc' => 'Poskytuje náhodný výber multimediálnych súborov pomocou značky <tt>&lt;randomimage /&gt;</tt>',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'randomimage-desc' => 'Mundëson hapje të rastësishme të mediave duke përdorur <tt>&lt;randomimage /&gt;</tt>',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'randomimage-desc' => 'Föiget dät <tt>&lt;randomimage /&gt;</tt>-Tag toun Anwiesen fon ne toufällige Bielde bietou',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -262,6 +319,13 @@ $messages['tg-cyrl'] = array(
  */
 $messages['tl'] = array(
 	'randomimage-desc' => 'Nagbibigay ng isang tagapili ng alin mang midya sa pamamagitan ng paggamit ng <tt>&lt;randomimage /&gt;</tt>',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'randomimage-desc' => '<tt>&lt;randomimage /&gt;</tt> kullanarak bir rasgele ortam alıcısı sağlar',
 );
 
 /** Ukrainian (Українська)

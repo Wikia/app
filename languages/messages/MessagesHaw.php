@@ -33,6 +33,15 @@ $namespaceAliases = array(
 	'Kūkākūkā_o_kiʻi' => NS_FILE_TALK,
 );
 
+$specialPageAliases = array(
+	'Userlogout'                => array( 'Haʻalele' ),
+	'Preferences'               => array( 'Makemake' ),
+	'Watchlist'                 => array( 'PapaNānāPono' ),
+	'Recentchanges'             => array( 'NāLoliHou' ),
+	'Upload'                    => array( 'Hoʻohui' ),
+	'Randompage'                => array( 'Kaulele' ),
+);
+
 $magicWords = array(
 	'currentmonth'          => array( '1', 'KĒIAMAHINA', 'CURRENTMONTH' ),
 	'currentmonthname'      => array( '1', 'KĒIAINOAMAHINA', 'CURRENTMONTHNAME' ),
@@ -516,7 +525,8 @@ Ke hoʻohiki nei ʻoe iā kākou: ua kākau ʻoe i kēia kikokikona na ʻo ʻoe 
 'categories' => 'Nā mahele',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Nā ha‘awina o ka inoa mea ho‘ohana i kāpae ‘ia ai',
+'deletedcontributions'       => 'Nā ha‘awina o ka inoa mea ho‘ohana i kāpae ‘ia ai',
+'deletedcontributions-title' => 'Nā ha‘awina o ka inoa mea ho‘ohana i kāpae ‘ia ai',
 
 # Special:ListUsers
 'listusers-submit' => 'Hō‘ike',

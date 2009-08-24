@@ -74,6 +74,13 @@ $messages['bn'] = array(
 	'fixedimage-desc' => '<tt><nowiki><fundraising></nowiki></tt> ট্যাগ চিত্র হিসেবে যোগ করো',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'fixedimage-desc' => 'Dodaje oznaku <tt><nowiki><fundraising></nowiki></tt> kao sliku',
+);
+
 /** Catalan (Català)
  * @author Paucabot
  */
@@ -149,6 +156,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'fixedimage-desc' => 'Engade a etiqueta <tt><nowiki><fundraising></nowiki></tt> como unha imaxe',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'fixedimage-desc' => 'Ergänzt s <tt><nowiki><fundraising></nowiki></tt>-Tag',
 );
 
 /** Hebrew (עברית)
@@ -319,6 +333,13 @@ $messages['pt'] = array(
 	'fixedimage-desc' => 'Adiciona a marca <tt><nowiki><fundraising></nowiki></tt> como uma imagem',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'fixedimage-desc' => 'Adiciona a marca <tt><nowiki><fundraising></nowiki></tt> como uma imagem',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -347,11 +368,25 @@ $messages['sk'] = array(
 	'fixedimage-desc' => 'Pridáva značku <tt><nowiki><fundraising></nowiki></tt> ako obrázok',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'fixedimage-desc' => 'Vendos shenjë <tt><nowiki><fundraising></nowiki></tt> në figurë',
+);
+
 /** Serbian Cyrillic ekavian (ћирилица)
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'fixedimage-desc' => 'Додаје ознаку <tt><nowiki><fundraising></nowiki></tt> као слику.',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'fixedimage-desc' => 'Nambahkeun tag <tt><nowiki><fundraising></nowiki></tt> salaku gambar',
 );
 
 /** Swedish (Svenska)
@@ -367,6 +402,13 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'fixedimage-desc' => '<tt><nowiki><fundraising></nowiki></tt> అనే టాగుని బొమ్మగా చేరుస్తుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'fixedimage-desc' => 'Nagdaragdag ng tatak na <tt><nowiki><fundraising></nowiki></tt> bilang isang larawan',
 );
 
 /** Ukrainian (Українська)
@@ -388,6 +430,13 @@ $messages['vec'] = array(
  */
 $messages['vi'] = array(
 	'fixedimage-desc' => 'Thêm thẻ <tt><nowiki><fundraising></nowiki></tt> để thành một hình',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'fixedimage-desc' => 'לייגט צו <tt><nowiki><fundraising></nowiki></tt>טאַג אלס בילד',
 );
 
 /** Yue (粵語)

@@ -24,6 +24,8 @@ Options:
   --skip      Languages to skip, comma separated list
   --hours     Consider changes from last N hours
   --summarize Group languages by group prefix
+  --threshold Percentage required for export
+  --groups    Commalist of groups to export
 
 EOT
 );
@@ -64,6 +66,18 @@ if ( isset( $options['skip'] ) ) {
 	$skip = array();
 }
 
+if ( isset( $options['groups'] ) ) {
+	$groupsFilter = array_map( 'trim', explode( ',', $options['groups'] ) );
+} else {
+	$groupsFilter = array();
+}
+
+if ( isset( $options['threshold'] ) ) {
+	$threshold = $options['threshold'];
+} else {
+	$threshold = false;
+}
+
 
 $rows = TranslateUtils::translationChanges( $hours );
 $index = TranslateUtils::messageIndex();
@@ -82,17 +96,21 @@ foreach ( $rows as $row ) {
 	if ( strpos( $row->rc_title, '/' ) !== false ) {
 		$code = $row->lang;
 	}
-
-	if ( $group && $code && !in_array( $code, $skip ) ) {
-		$exports[$group][$code] = true;
+	if ( $group && ( !count($groupsFilter) || in_array( $group, $groupsFilter ) ) ) {
+		if ( $code && !in_array( $code, $skip ) ) {
+			$exports[$group][$code] = true;
+		}
 	}
 }
 
 ksort( $exports );
+
 $notice = array();
 foreach ( $exports as $group => $languages ) {
 	$languages = array_keys( $languages );
 	sort( $languages );
+	$languages = checkThreshold( $group, $languages, $threshold );
+
 	$languagelist = implode( ', ', $languages );
 	STDOUT( str_replace(
 		array( '$GROUP', '$LANG', '$TARGET' ),
@@ -107,6 +125,34 @@ foreach ( $exports as $group => $languages ) {
 	} else {
 		$notice[$group] = $languages;
 	}
+}
+
+function checkThreshold( $group, $languages, $threshold ) {
+	if ( $threshold === false ) return $languages;
+	$qualify = array();
+
+	$g = MessageGroups::singleton()->getGroup( $group );
+	foreach ( $languages as $code ) {
+		// Initialise messages
+		$collection = $g->initCollection( $code );
+		$collection->filter( 'optional' );
+		// Store the count of real messages for later calculation.
+		$total = count( $collection );
+
+		// Fill translations in for counting
+		$g->fillCollection( $collection );
+
+		// Count fuzzy first
+		$collection->filter( 'fuzzy' );
+
+		// Count the completion percent
+		$collection->filter( 'translated', false );
+		$translated = count( $collection );
+
+		if ( $translated/$total > $threshold/100 ) $qualify[] = $code;
+	}
+	return $qualify;
+
 }
 
 foreach ( $notice as $group => $languages ) {

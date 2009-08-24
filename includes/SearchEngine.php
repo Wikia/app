@@ -80,8 +80,13 @@ class SearchEngine {
 			if (is_null($title))
 				return NULL;
 
-			if ( $title->getNamespace() == NS_SPECIAL || $title->isExternal() 
-			     || $title->exists() ) {
+			if ( $title->getNamespace() == NS_SPECIAL || $title->isExternal() || $title->exists() ) {
+				return $title;
+			}
+			
+			# See if it still otherwise has content is some sane sense
+			$article = MediaWiki::articleFromTitle( $title );
+			if( $article->hasViewableContent() ) {
 				return $title;
 			}
 
@@ -403,7 +408,7 @@ class SearchEngine {
 		if($wgMWSuggestTemplate)		
 			return $wgMWSuggestTemplate;
 		else 
-			return $wgServer . $wgScriptPath . '/api.php?action=opensearch&search={searchTerms}&namespace={namespaces}';
+			return $wgServer . $wgScriptPath . '/api.php?action=opensearch&search={searchTerms}&namespace={namespaces}&suggest';
 	}
 }
 
@@ -1165,12 +1170,12 @@ class SearchHighlighter {
                 continue;
             }
             --$contextlines;
-            $pre = $wgContLang->truncate( $m[1], -$contextchars, ' ... ' );
+            $pre = $wgContLang->truncate( $m[1], -$contextchars );
 
             if ( count( $m ) < 3 ) {
                 $post = '';
             } else {
-                $post = $wgContLang->truncate( $m[3], $contextchars, ' ... ' );
+                $post = $wgContLang->truncate( $m[3], $contextchars );
             }
 
             $found = $m[2];

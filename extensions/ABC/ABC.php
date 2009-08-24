@@ -6,7 +6,7 @@
  * freely. This software is provided 'as-is', without any express or implied
  * warranty.
  */
-/* $Id: ABC.php 42782 2008-10-29 19:49:04Z raymond $ */
+/* $Id: ABC.php 47659 2009-02-22 13:52:20Z raymond $ */
 
 if (!defined('MEDIAWIKI'))
 	die();
@@ -56,8 +56,8 @@ $wgExtensionCredits['parserhooks'][] = array(
 	'name'           => 'ABC',
 	'author'         => 'River Tarnell',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:ABC',
-	'svn-date'       => '$LastChangedDate: 2008-10-29 19:49:04 +0000 (Wed, 29 Oct 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 42782 $',
+	'svn-date'       => '$LastChangedDate: 2009-02-22 13:52:20 +0000 (Sun, 22 Feb 2009) $',
+	'svn-revision'   => '$LastChangedRevision: 47659 $',
 	'description'    => 'Adds <tt>&lt;abc&gt;</tt> tag to format ABC music',
 	'descriptionmsg' => 'abcdesc',
 );
@@ -86,8 +86,8 @@ global	$wgParser, $wgOut, $abcOggHandler;
 function
 efABCRender($input, $args, $parser) {
 global	$abcPath, $abcURL, $abc2midi, $abctimidity, $abcOggHandler,
-	$abcDelayedRendering;
-	
+	$abcDelayedRendering, $wgLang;
+
 	if ($abcPath == false || $abcURL == false)
 		return 'Error: $abcPath and $abcURL must be set to use the ABC extension.';
 
@@ -100,22 +100,22 @@ global	$abcPath, $abcURL, $abc2midi, $abctimidity, $abcOggHandler,
 	$float = "left";
 	if (isset($args['float']) && $args['float'] == 'right')
 		$float = "right";
-		
+
 	$abc = preg_replace("/^\n+/", "", $input);
 	$hash = sha1($input);
 	$error = "";
-	
+
 	$hashbits = array(
 		substr($hash, 0, 2),
 		substr($hash, 2, 2),
 		substr($hash, 4, 2));
 	$directory = "{$hashbits[0]}/{$hashbits[1]}/{$hashbits[2]}";
 	$filename = "$abcPath/$directory/$hash";
-	
+
 	if (!@file_exists("$abcPath/$directory"))
 		if (!@mkdir("$abcPath/$directory", 0777, true))
 			return "Cannot create directory \"$abcPath/$directory\".";
-		
+
 	/*
 	 * Try to extract the title from the ABC.  This is used as the
 	 * alt text for the image.
@@ -123,7 +123,7 @@ global	$abcPath, $abcURL, $abc2midi, $abctimidity, $abcOggHandler,
 	$title = "Unknown song";
 	if (preg_match("/^T:\s*(.*)$/m", $input, $matches))
 		$title = $matches[1];
-	
+
 	if (!abcCreateABC($abc, $filename, $error))
 		return str_replace("\n", "<br />", htmlspecialchars($error));
 
@@ -141,7 +141,7 @@ global	$abcPath, $abcURL, $abc2midi, $abctimidity, $abcOggHandler,
 			if (!abcCreateVorbis($abc, $filename, $error))
 				return str_replace("\n", "<br />", htmlspecialchars($error));
 	}
-	
+
 	/*
 	 * Succeeded to create all the output formats, return the
 	 * output.  We produce an image from the PNG, and include
@@ -154,7 +154,7 @@ global	$abcPath, $abcURL, $abc2midi, $abctimidity, $abcOggHandler,
 	$e_pdfpath = htmlspecialchars("$abcURL/$directory/$hash.pdf");
 	$e_midipath = htmlspecialchars("$abcURL/$directory/$hash.mid");
 	$e_vorbispath = htmlspecialchars("$abcURL/$directory/$hash.ogg");
-	
+
 	$links = array();
 	$links[] = "<a href=\"$e_abcpath\">" . wfMsg('abcabc') . "</a>";
 	$links[] = "<a href=\"$e_pspath\">" . wfMsg('abcps') . "</a>";
@@ -163,12 +163,11 @@ global	$abcPath, $abcURL, $abc2midi, $abctimidity, $abcOggHandler,
 		$links[] = "<a href=\"$e_midipath\">" . wfMsg('abcmidi') . "</a>";
 	if ($abctimidity)
 		$links[] = "<a href=\"$e_vorbispath\">" . wfMsg('abcvorbis') . "</a>";
-		
-	$e_dllinks = wfMsg('abcdownload') . " " .
-		join(" " . wfMsg('abcsep') . " ", $links);
-	
+
+	$e_dllinks = wfMsg('abcdownload') . " " . $wgLang->pipeList( $links );
+
 	$ogghtml = "";
-	
+
 	if ($abcOggHandler) {
 		$oh = new OggTransformOutput(null,
 			"$filename.ogg", false,
@@ -176,7 +175,7 @@ global	$abcPath, $abcURL, $abc2midi, $abctimidity, $abcOggHandler,
 			"$filename.ogg", false);
 		$ogghtml = $oh->toHtml(array('alt' => $title));
 	}
-	
+
 	$output = <<<EOF
 <div style="float: $float; border: solid 1px #aaaaaa; margin: 0.2em;" class="abc-music">
 	<img src="$e_imgpath" alt="$e_title" />

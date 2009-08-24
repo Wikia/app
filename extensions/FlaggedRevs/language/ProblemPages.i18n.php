@@ -15,6 +15,25 @@ $messages['en'] = array(
 	'problempages-graphs' => 'rating data',
 );
 
+/** Message documentation (Message documentation)
+ * @author Pietrodn
+ */
+$messages['qqq'] = array(
+	'problempages-list' => '{{identical|flaggedrevs-pagelist}}',
+	'problempages-graphs' => '{{identical|flaggedrevs-graphs}}',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'problempages' => 'Hondoin arvoitud lehtpoled',
+	'problempages-leg' => 'Hondoin arvoitud lehtpoliden ecind',
+	'problempages-list' => 'Lugijoil järgetud heiden arvsanoiden mödhe lehtpoled (nimikirjutez).',
+	'problempages-none' => 'Neciš nimikirjuteses ei ole lehtpolid',
+	'problempages-graphs' => 'andmused arvostelendas',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -58,10 +77,11 @@ $messages['bg'] = array(
 /** German (Deutsch)
  * @author Raimond Spekking
  * @author UV
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'problempages' => 'Niedrig bewertete Seiten',
-	'problempages-leg' => 'Finde niedrig bewertete Seiten',
+	'problempages-leg' => 'Niedrig bewertete Seiten suchen',
 	'problempages-list' => 'Es folgt eine Liste von Seiten, sortiert nach der Leserbewertung.',
 	'problempages-none' => 'Diese Liste enthält keine Seiten',
 	'problempages-graphs' => 'Bewertungsdaten',
@@ -89,6 +109,16 @@ $messages['eo'] = array(
 	'problempages-graphs' => 'datenoj de taksado',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'problempages' => 'Páginas pobremente valoradas',
+	'problempages-leg' => 'Encontrar páginas subvaluadas',
+	'problempages-none' => 'No hay páginas en esta lista',
+	'problempages-graphs' => 'Datos de rating',
+);
+
 /** Persian (فارسی)
  * @author Huji
  */
@@ -112,13 +142,14 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
  */
 $messages['fr'] = array(
-	'problempages' => 'Pages mal notées',
-	'problempages-leg' => 'Trouver les pages mal notées',
-	'problempages-list' => 'Voici, ci-dessous, une liste des pages triées en fonction de la notation de leurs lecteurs.',
+	'problempages' => 'Pages ayant des mauvaises évaluations',
+	'problempages-leg' => 'Trouver les pages ayant des évaluations faibles',
+	'problempages-list' => 'Voici une liste des pages triées suivant leur évaluation par les lecteurs.',
 	'problempages-none' => 'Il n’y a aucune page dans cette liste',
-	'problempages-graphs' => 'données de notation',
+	'problempages-graphs' => "données d'évaluation",
 );
 
 /** Galician (Galego)
@@ -198,9 +229,25 @@ $messages['id'] = array(
 
 /** Italian (Italiano)
  * @author Darth Kule
+ * @author Pietrodn
  */
 $messages['it'] = array(
+	'problempages' => 'Pagine valutate scarsamente',
+	'problempages-leg' => 'Trova pagine valutate scarsamente',
+	'problempages-list' => 'Di seguito è riportato un elenco di pagine ordinate per il loro feedback da parte dei lettori.',
 	'problempages-none' => 'Non ci sono pagine in questo elenco',
+	'problempages-graphs' => 'dati delle valutazioni',
+);
+
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'problempages' => '評価の低いページ',
+	'problempages-leg' => '評価の低いページを見つける',
+	'problempages-list' => '以下ではページを読者による評価の順に整列して一覧します。',
+	'problempages-none' => '表示すべきページはありません',
+	'problempages-graphs' => '評価データ',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -209,6 +256,17 @@ $messages['it'] = array(
 $messages['km'] = array(
 	'problempages' => 'ទំព័រមានបញ្ហា',
 	'problempages-none' => 'មិនមានទំព័រនៅក្នុងបញ្ជីនេះទេ',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'problempages' => '낮게 평가된 문서',
+	'problempages-leg' => '낮게 평가된 문서 찾기',
+	'problempages-list' => '다음은 독자의 평가에 따라 정렬된 문서의 목록입니다.',
+	'problempages-none' => '이 목록에 문서가 없습니다.',
+	'problempages-graphs' => '평가 데이터',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -259,16 +317,21 @@ $messages['nl'] = array(
  * @author Harald Khan
  */
 $messages['nn'] = array(
+	'problempages' => 'Sider vurderte som dårlege',
+	'problempages-leg' => 'Finn sider vurderte som dårlege',
+	'problempages-list' => 'Nedanfor er ei lista over sider sorterte etter lesarane sine vurderingar av dei.',
 	'problempages-none' => 'Det finst ingen sider i denne lista',
+	'problempages-graphs' => 'vuderingsdata',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Harald Khan
  * @author Jon Harald Søby
  */
 $messages['no'] = array(
 	'problempages' => 'Sider med lav vurdering',
 	'problempages-leg' => 'Finn sider med lav vurdering',
-	'problempages-list' => 'Nedenfor er en lite over sider sortert etter lesernes vurdering av dem',
+	'problempages-list' => 'Nedenfor er en liste over sider sortert etter lesernes vurdering av dem',
 	'problempages-none' => 'Det er ingen sider i denne listen',
 	'problempages-graphs' => 'vurderingsdata',
 );
@@ -301,6 +364,17 @@ $messages['pl'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
+	'problempages' => 'Páginas com fraca avaliação',
+	'problempages-leg' => 'Pesquisar páginas com baixa avaliação',
+	'problempages-list' => 'Segue-se uma lista de páginas ordenada de acordo com a avaliação dos leitores.',
+	'problempages-none' => 'Não há páginas nesta listagem',
+	'problempages-graphs' => 'dados de avaliações',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'problempages' => 'Páginas com fraca avaliação',
 	'problempages-leg' => 'Pesquisar páginas com baixa avaliação',
 	'problempages-list' => 'Segue-se uma lista de páginas ordenada de acordo com a avaliação dos leitores.',

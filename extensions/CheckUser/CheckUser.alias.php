@@ -50,9 +50,19 @@ $aliases['de'] = array(
 	'CheckUser' => array( 'Checkuser' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'CheckUser' => array( 'Kontrolny wužywaŕ' ),
+);
+
 /** Greek (Ελληνικά) */
 $aliases['el'] = array(
 	'CheckUser' => array( 'ΈλεγχοςΧρήστη' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'CheckUser' => array( 'Comprobar_usuario', 'Checkuser' ),
 );
 
 /** Persian (فارسی) */
@@ -67,7 +77,7 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'CheckUser' => array( 'Vérificateur d’adresse', 'VérificateurAdresse', 'VerificateurAdresse' ),
+	'CheckUser' => array( "Vérificateur d'utilisateur", "Vérificateur d'utilisateurs", 'VérificateurUtilisateur', 'VérificateurUtilisateurs', 'Vérificateur d’adresse', 'VérificateurAdresse', 'VerificateurAdresse' ),
 );
 
 /** Galician (Galego) */
@@ -92,6 +102,11 @@ $aliases['hr'] = array(
 	'CheckUser' => array( 'Provjeri_suradnika' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'CheckUser' => array( 'Kontrolny wužiwar' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'CheckUser' => array( 'TchekeItilizatè' ),
@@ -100,6 +115,11 @@ $aliases['ht'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'CheckUser' => array( 'IP-ellenőr' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'CheckUser' => array( 'Verificar usator' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -164,6 +184,16 @@ $aliases['oc'] = array(
 	'CheckUser' => array( 'Verificator d’adreça', 'VerificatorAdreça', 'VerificatorAdreca' ),
 );
 
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'CheckUser' => array( 'Verifică utilizator' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'CheckUser' => array( 'योजकपरिक्षक' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'CheckUser' => array( 'MtumiajiMwangalizi' ),
@@ -172,6 +202,11 @@ $aliases['sw'] = array(
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'CheckUser' => array( 'ตรวจสอบผู้ใช้' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'CheckUser' => array( 'Suriin ang tagagamit' ),
 );
 
 /** Turkish (Türkçe) */

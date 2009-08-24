@@ -34,6 +34,16 @@ $aliases['de'] = array(
 	'WatchSubpages' => array( 'Unterseiten beobachten' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'WatchSubpages' => array( 'Pódboki wobglědowaś' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'WatchSubpages' => array( 'Vigilar_subpáginas' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'WatchSubpages' => array( 'پی‌گیری_زیرصفحه‌ها' ),
@@ -41,7 +51,12 @@ $aliases['fa'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'WatchSubpages' => array( 'VoirSousPages' ),
+	'WatchSubpages' => array( 'Voir les sous-pages', 'VoirSousPages' ),
+);
+
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'WatchSubpages' => array( 'Vixiar as subpáxinas' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -62,6 +77,16 @@ $aliases['hsb'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'WatchSubpages' => array( 'Aloldalak figyelése' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'WatchSubpages' => array( 'Observar subpaginas' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'WatchSubpages' => array( 'サブページのウォッチ' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -89,8 +114,23 @@ $aliases['no'] = array(
 	'WatchSubpages' => array( 'Overvåk undersider' ),
 );
 
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'WatchSubpages' => array( 'VeireSosPaginas' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'WatchSubpages' => array( 'उपपृष्ठनिरीक्षा' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'WatchSubpages' => array( 'AngaliaKurasandogo' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'WatchSubpages' => array( 'Bantayan ang kabahaging mga pahina' ),
 );
 

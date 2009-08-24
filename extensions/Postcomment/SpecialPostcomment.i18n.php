@@ -37,6 +37,16 @@ $messages['qqq'] = array(
 	'postcomment_replyto' => '$1 is the user that has posted previous comment. For example see http://www.wikihow.com/Discussion:Main-Page',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'postcomment_post' => 'Oigeta',
+	'postcomment_on' => 'Avaita',
+	'postcomment_said' => 'sanui',
+	'postcomment_invalidrequest' => 'Petuzline küzund.',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -73,6 +83,25 @@ $messages['arz'] = array(
 	'postcomment_nopostingtoadd' => 'لا رسالة للإضافة.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'postcomment_desc' => 'Дазваляе ўдзельнікам адпраўляць камэнтары непасрэдна на старонкі абмеркаваньня.',
+	'postcomment_discussionprotected' => 'Гэтая старонка абмеркаваньня была абароненая ад даданьня новых паведамленьняў.',
+	'postcomment_notloggedin' => 'Вы не ўвайшлі ў сыстэму.',
+	'postcomment_youareloggedinas' => 'Вы ўвайшлі ў сыстэму як $1',
+	'postcomment_addcommentdiscussionpage' => 'Дадаць Ваш камэнтар на гэтую старонку абмеркаваньня',
+	'postcomment_leavemessagefor' => 'Пакіньце паведамленьне для $1',
+	'postcomment_post' => 'Адправіць',
+	'postcomment_on' => 'Уключыць',
+	'postcomment_said' => 'паведаміў(-ла)',
+	'postcomment_invalidrequest' => 'Няслушны запыт.',
+	'postcomment_replyto' => 'Адказаць $1',
+	'postcomment_nopostingtoadd' => 'Няма паведамленьня для даданьня.',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -88,6 +117,24 @@ $messages['bg'] = array(
 	'postcomment_invalidrequest' => 'Невалидна заявка.',
 	'postcomment_replyto' => 'Отговор до $1',
 	'postcomment_nopostingtoadd' => 'Няма коментар за добавяне.',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'postcomment_desc' => 'Omogućuje korisnicima da postave komentare direktno na stranice za razgovor.',
+	'postcomment_discussionprotected' => 'Ova stranica za razgovor je zaštićena od daljnjih komentara.',
+	'postcomment_notloggedin' => 'Niste prijavljeni.',
+	'postcomment_youareloggedinas' => 'Prijavljeni ste kao $1',
+	'postcomment_addcommentdiscussionpage' => 'Dodajte Vaš komentar na stranicu za razgovor',
+	'postcomment_leavemessagefor' => 'Ostavi poruku za $1',
+	'postcomment_post' => 'Pošalji',
+	'postcomment_on' => 'Dana',
+	'postcomment_said' => 'je napisao',
+	'postcomment_invalidrequest' => 'Nevaljan upit.',
+	'postcomment_replyto' => 'Odgovor za $1',
+	'postcomment_nopostingtoadd' => 'Nema ništa za dodati.',
 );
 
 /** Czech (Česky)
@@ -171,6 +218,38 @@ $messages['eo'] = array(
 	'postcomment_nopostingtoadd' => 'Neniu afiŝaĵo aldonebla.',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ * @author Drini
+ */
+$messages['es'] = array(
+	'postcomment_desc' => 'Permite a los usuarios enviar comentarios directamente en las páginas de discusión.',
+	'postcomment_discussionprotected' => 'Esta página de discusión ha sido protegido de envíos adicionales.',
+	'postcomment_notloggedin' => 'No has ingresado al sistema.',
+	'postcomment_youareloggedinas' => 'Has ingresado como $1',
+	'postcomment_addcommentdiscussionpage' => 'Agregar tu comentario en esta página de discusión',
+	'postcomment_leavemessagefor' => 'Dejar un mensaje para $1',
+	'postcomment_post' => 'Enviar',
+	'postcomment_on' => 'el',
+	'postcomment_said' => 'dijo',
+	'postcomment_invalidrequest' => 'Solicitud inválida.',
+	'postcomment_replyto' => 'Responder a $1',
+	'postcomment_nopostingtoadd' => 'No hay mensaje qué añadir.',
+);
+
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'postcomment_notloggedin' => 'Ez duzu saioa hasi.',
+	'postcomment_youareloggedinas' => '$1 bezala saioa hasi duzu',
+	'postcomment_addcommentdiscussionpage' => 'Eztabaida orrialde honetan zure iruzkina erantsi',
+	'postcomment_leavemessagefor' => '$1 lankideari mezua utzi',
+	'postcomment_post' => 'Bidali',
+	'postcomment_said' => 'esan du',
+	'postcomment_replyto' => '$1 lankideari erantzun',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  * @author Vililikku
@@ -187,6 +266,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Dereckson
  * @author Grondin
  * @author McDutchie
@@ -195,8 +275,8 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'postcomment_desc' => 'Permet aux utilisateurs d’envoyer des commentaires directement dans les pages de discussion',
 	'postcomment_discussionprotected' => 'La page de discussion a été protégée en écriture.',
-	'postcomment_notloggedin' => "Vous n'êtes pas identifié.",
-	'postcomment_youareloggedinas' => "Vous n'êtes pas identifié en tant que $1.",
+	'postcomment_notloggedin' => "Vous n'êtes pas identifié{{GENDER:||e|(e)}}.",
+	'postcomment_youareloggedinas' => 'Vous êtes identifié{{GENDER:||e|(e)}} en tant que $1.',
 	'postcomment_addcommentdiscussionpage' => 'Ajoutez un commentaire sur cette page de discussion',
 	'postcomment_leavemessagefor' => 'Laissez un message pour $1',
 	'postcomment_post' => 'Publier',
@@ -225,6 +305,24 @@ $messages['gl'] = array(
 	'postcomment_invalidrequest' => 'Petición non válida.',
 	'postcomment_replyto' => 'Respostar a $1',
 	'postcomment_nopostingtoadd' => 'Non pongas a engadir.',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'postcomment_desc' => 'Benutzer s Kommentiere uf Diskussionssyten erlaube',
+	'postcomment_discussionprotected' => 'Die Diskussionssyte isch gsperrt wore fir wyteri Zuefiegige.',
+	'postcomment_notloggedin' => 'Du isch it aagmäldet.',
+	'postcomment_youareloggedinas' => 'Du bisch jetz as $1 aagmäldet.',
+	'postcomment_addcommentdiscussionpage' => 'Fieg Dyy Kommentar uf däre Diskussionssyte dezue',
+	'postcomment_leavemessagefor' => '$1 e Nochricht hinterloo',
+	'postcomment_post' => 'Schicke',
+	'postcomment_on' => 'Am',
+	'postcomment_said' => 'het gschribe',
+	'postcomment_invalidrequest' => 'Nit giltigi Aafrog.',
+	'postcomment_replyto' => 'Antwort an $1',
+	'postcomment_nopostingtoadd' => 'Nyt zum Zuefiege',
 );
 
 /** Hebrew (עברית)
@@ -343,6 +441,24 @@ $messages['it'] = array(
 	'postcomment_nopostingtoadd' => 'Nessun post da aggiungere.',
 );
 
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'postcomment_desc' => '利用者がコメントを直接ノートページに投稿できるようにする。',
+	'postcomment_discussionprotected' => 'このノートページはこれ以上の投稿ができないように保護されています。',
+	'postcomment_notloggedin' => 'あなたはログインしていません。',
+	'postcomment_youareloggedinas' => 'あなたは $1 としてログインしています',
+	'postcomment_addcommentdiscussionpage' => 'このノートページにコメントを追加する',
+	'postcomment_leavemessagefor' => '$1 に伝言を残す',
+	'postcomment_post' => '投稿',
+	'postcomment_on' => '時刻:',
+	'postcomment_said' => 'の発言',
+	'postcomment_invalidrequest' => '無効な要求。',
+	'postcomment_replyto' => '$1 に返信',
+	'postcomment_nopostingtoadd' => '追加すべき投稿はありません。',
+);
+
 /** Javanese (Basa Jawa)
  * @author Meursault2004
  */
@@ -399,7 +515,7 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'postcomment_desc' => "Erlaabt et de Benotzer Bemierkungen direkt op d'Diskussiounssäiten ze schreiwen.",
 	'postcomment_discussionprotected' => 'Dës Diskussiounssäit gouf fir weider Ännerunge gespaart.',
-	'postcomment_notloggedin' => 'Dir sidd net ugemeld.',
+	'postcomment_notloggedin' => 'Dir sidd net ugemellt.',
 	'postcomment_youareloggedinas' => 'Dir sidd als $1 ugemelt',
 	'postcomment_addcommentdiscussionpage' => "Schreiwt är Bmierkung op d'Diskussiounssäit",
 	'postcomment_leavemessagefor' => 'E Message fir de(n) $1 hannerloossen',
@@ -533,13 +649,22 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author Maire
+ * @author Sp5uhe
+ * @author ToSter
  */
 $messages['pl'] = array(
+	'postcomment_desc' => 'Pozwól użytkownikom wpisywać komentarze bezpośrednio do stron dyskusji.',
 	'postcomment_discussionprotected' => 'Ta strona dyskusji została zabezpieczona. Nie można już dodawać wpisów.',
 	'postcomment_notloggedin' => 'Nie jesteś zalogowany/-a.',
 	'postcomment_youareloggedinas' => 'Jesteś zalogowany/-a jako $1',
 	'postcomment_addcommentdiscussionpage' => 'Dodaj komentarz na tej stronie dyskusji',
 	'postcomment_leavemessagefor' => 'Zostaw wiadomość dla $1',
+	'postcomment_post' => 'Wyślij',
+	'postcomment_on' => 'O',
+	'postcomment_said' => 'napisał',
+	'postcomment_invalidrequest' => 'Nieprawidłowe żądanie.',
+	'postcomment_replyto' => 'Odpowiedz $1',
+	'postcomment_nopostingtoadd' => 'Brak wiadomości do dodania.',
 );
 
 /** Pashto (پښتو)
@@ -572,11 +697,36 @@ $messages['pt'] = array(
 	'postcomment_nopostingtoadd' => 'Nenhum comentário a adicionar.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'postcomment_desc' => 'Permite que utilizadores coloquem comentários diretamente em páginas de discussão.',
+	'postcomment_discussionprotected' => 'Esta página de discussão foi protegida contra mais comentários.',
+	'postcomment_notloggedin' => 'Você não se encontra autenticado.',
+	'postcomment_youareloggedinas' => 'Você está autenticado como $1',
+	'postcomment_addcommentdiscussionpage' => 'Acrescente o seu comentário a esta página de discussão',
+	'postcomment_leavemessagefor' => 'Deixe uma mensagem para $1',
+	'postcomment_post' => 'Colocar',
+	'postcomment_on' => 'Em',
+	'postcomment_said' => 'disse',
+	'postcomment_invalidrequest' => 'Pedido inválido.',
+	'postcomment_replyto' => 'Resposta a $1',
+	'postcomment_nopostingtoadd' => 'Nenhum comentário a adicionar.',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'postcomment_invalidrequest' => 'Cerere incorectă.',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'postcomment_invalidrequest' => 'Richieste invalide.',
 );
 
 /** Russian (Русский)
@@ -633,6 +783,24 @@ $messages['sk'] = array(
 	'postcomment_nopostingtoadd' => 'Niet pridať aký príspevok.',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'postcomment_desc' => 'Benutsere dät Kommentierjen ap Diskussionssieden ferlööwje',
+	'postcomment_discussionprotected' => 'Disse Diskussionssiede wuud juunuur fääre Bietouföigjen speerd.',
+	'postcomment_notloggedin' => 'Du bäst nit anmälded.',
+	'postcomment_youareloggedinas' => 'Du bäst nu as $1 anmälded.',
+	'postcomment_addcommentdiscussionpage' => 'Föich din Kommentoar ap disse Diskussionssiede bietou',
+	'postcomment_leavemessagefor' => '$1 ne Ättergjucht bääteläite',
+	'postcomment_post' => 'Seende',
+	'postcomment_on' => 'An n',
+	'postcomment_said' => 'schreeuw',
+	'postcomment_invalidrequest' => 'Uungultige Anfroage.',
+	'postcomment_replyto' => 'Oantwoud an $1',
+	'postcomment_nopostingtoadd' => 'Niks toun Bietouföigjen.',
+);
+
 /** Swedish (Svenska)
  * @author Boivie
  * @author M.M.S.
@@ -681,6 +849,13 @@ $messages['tg-cyrl'] = array(
 	'postcomment_replyto' => 'Посух ба $1',
 );
 
+/** Thai (ไทย)
+ * @author Ans
+ */
+$messages['th'] = array(
+	'postcomment_desc' => 'ให้ผู้ใช้สามารถแสดงความเห็นลงในหน้าอภิปรายได้โดยตรง',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -700,10 +875,22 @@ $messages['tl'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Karduelis
  */
 $messages['tr'] = array(
+	'postcomment_desc' => 'Kullanıcıların doğrudan tartışma sayfalarına yorum göndermelerine izin verir.',
+	'postcomment_discussionprotected' => 'Bu tartışma sayfası ileriki gönderimler için koruma altındadır.',
+	'postcomment_notloggedin' => 'Oturum açmadınız.',
+	'postcomment_youareloggedinas' => '$1 olarak oturum açmadınız',
+	'postcomment_addcommentdiscussionpage' => 'Bu tartışma sayfasına yorumunuzu ekleyin',
+	'postcomment_leavemessagefor' => '$1 için bir mesaj bırakın',
 	'postcomment_post' => 'Posta',
+	'postcomment_on' => 'Tarihinde',
+	'postcomment_said' => 'dedi ki',
+	'postcomment_invalidrequest' => 'Geçersiz istek.',
+	'postcomment_replyto' => "$1'e cevap ver",
+	'postcomment_nopostingtoadd' => 'Eklenecek gönderi yok.',
 );
 
 /** Ukrainian (Українська)
@@ -763,6 +950,7 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (‪中文(简体)‬)
  * @author Gzdavidwong
+ * @author Wmr89502270
  */
 $messages['zh-hans'] = array(
 	'postcomment_desc' => '允许用户直接在讨论页添加评论。',
@@ -775,6 +963,7 @@ $messages['zh-hans'] = array(
 	'postcomment_said' => '说',
 	'postcomment_invalidrequest' => '无效请求。',
 	'postcomment_replyto' => '回复$1',
+	'postcomment_nopostingtoadd' => '没有可加入的评论。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

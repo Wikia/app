@@ -19,7 +19,8 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
  	var $parserOutput = null;
  	var $oddEvenToggle = true;
  	var $mvd_pages = array();
- 	/*structures the component output and call html code generation */
+ 	
+/*structures the component output and call html code generation */
  	function getHTML() {
  		switch( $this->req ) {
  			case 'stream_transcripts':
@@ -30,12 +31,14 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
  			break;
  		}
 	}
+	
 	// renders recent changes in the MVD namespace 
 	function do_Recentchanges() {
 		global $wgOut;
 		// quick and easy way: 
 		$wgOut->addWikiText( '{{Special:Recentchanges/namespace=' . MV_NS_MVD . '}}' );
 	}
+	
 	function do_stream_transcripts() {
 		global $wgOut;
 		$this->procMVDReqSet();
@@ -54,6 +57,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 			$this->get_transcript_pages();
 		$wgOut->addHTML( "</div>" );
 	}
+	
 	function render_full() {
 		global $wgOut;
  		// "<div >" . 		 					 	
@@ -64,6 +68,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
  		$wgOut->addHTML( $this->render_controls() );
  		
 	}
+	
 	function render_controls() {
 		return '<div class="layers">	
 				<ul>
@@ -77,15 +82,19 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 				</div>';
 	}
 	function render_menu() {
+		global $wgLang;
+
 		$base_title = '';
 		// set the base title to the stream name: 
 		if ( isset( $this->mv_interface->article->mvTitle ) ) {
 			$base_title = $this->mv_interface->article->mvTitle->getStreamName();
 		}
 		// '<a title="'.wfMsg('mv_search_stream_title').'" href="javascript:mv_tool_disp(\'search\')">'.wfMsg('mv_search_stream').'</a>'
-		return '<a title="' . htmlspecialchars( wfMsg( 'mv_mang_layers_title' ) ) . '" href="javascript:mv_tool_disp(\'mang_layers\')">' . wfMsg( 'mv_mang_layers' ) . '</a>' .
-			' | ' .	'<a title="' . htmlspecialchars( wfMsg( 'mv_new_ht_en' ) ) . '" href="javascript:mv_disp_add_mvd(\'ht_en\')">' . wfMsg( 'mv_new_ht_en' ) . '</a>' .
-			' | ' . '<a href="javascript:mv_disp_add_mvd(\'anno_en\')">' . wfMsg( 'mv_new_anno_en' ) . '</a>';
+		return $wgLang->pipeList( array(
+			'<a title="' . htmlspecialchars( wfMsg( 'mv_mang_layers_title' ) ) . '" href="javascript:mv_tool_disp(\'mang_layers\')">' . wfMsg( 'mv_mang_layers' ) . '</a>',
+			'<a title="' . htmlspecialchars( wfMsg( 'mv_new_ht_en' ) ) . '" href="javascript:mv_disp_add_mvd(\'ht_en\')">' . wfMsg( 'mv_new_ht_en' ) . '</a>',
+			'<a href="javascript:mv_disp_add_mvd(\'anno_en\')">' . wfMsg( 'mv_new_anno_en' ) . '</a>'
+		) );
 	}
 	/* output caption div links */
 	function get_video_timeline() {
@@ -117,6 +126,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		// global $mvgIP;
 		// require_once($mvgIP . '/includes/MV_Index.php');
 		$dbr =& wfGetDB( DB_SLAVE );
+		global $wgRequest;
 		$mvd_rows = & MV_Index::getMVDInRange( $this->mv_interface->article->mvTitle->getStreamId(),
 							$this->mv_interface->article->mvTitle->getStartTimeSeconds(),
 							$this->mv_interface->article->mvTitle->getEndTimeSeconds(),
@@ -340,18 +350,20 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 						case 'speech_by':
 						case 'spoken_by':
 							$pTitle = Title::newFromText( $smw_attr_val );
-							$pimg = mv_get_person_img( $smw_attr_val );
-							$pre_text_html .= '<p class="mvd_page_image">';
-							
-							if ( $mvd_page != '' ) {
-								$pre_text_html .= $play_link_o;
-								$added_play_link = true;
+							if( $pTitle->exists() ){
+								$pimg = mv_get_person_img( $smw_attr_val );
+								$pre_text_html .= '<p class="mvd_page_image">';
+								
+								if ( $mvd_page != '' ) {
+									$pre_text_html .= $play_link_o;
+									$added_play_link = true;
+								}
+								$pre_text_html .= '<img width="44" alt="' . $pTitle->getText() . '" ' .
+													'src="' . htmlspecialchars( $pimg->getURL() ) . '">';
+								if ( $mvd_page != '' )
+									$pre_text_html .= $play_link_img_close;
+								$pre_text_html .= '</p>';
 							}
-							$pre_text_html .= '<img width="44" alt="' . $pTitle->getText() . '" ' .
-												'src="' . htmlspecialchars( $pimg->getURL() ) . '">';
-							if ( $mvd_page != '' )
-								$pre_text_html .= $play_link_img_close;
-							$pre_text_html .= '</p>';
 						break;
 					}
 					// @@todo we should just use semantic mediaWikis info box with some custom style .
@@ -1006,7 +1018,7 @@ $smwgShowFactbox = SMW_FACTBOX_HIDDEN;
 		MV_MVD::onEdit( $this->mvd_pages, $mvd_id );
 		// run the delete function: 
 		$article->doDelete( $_REQUEST['wpReason'] );
-		// check if delete happend
+		// check if delete
 		if ( $article->exists() ) {
 			return  php2jsObj( array( 'status' => 'error',
 									'error_txt' => $wgOut->getHTML() ) );

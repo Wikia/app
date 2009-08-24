@@ -5,220 +5,47 @@
  * @file
  * @ingroup Extensions
  */
- 
-// Draft Class
-class Draft {
-	
-	/* Fields */
 
-	private $_exists = false;
-	private $_id;
-	private $_token;
-	private $_userID;
-	private $_title;
-	private $_section;
-	private $_starttime;
-	private $_edittime;
-	private $_savetime;
-	private $_scrolltop ;
-	private $_text;
-	private $_summary;
-	private $_minoredit;
+abstract class Drafts {
 
-	/* Functions */
+	/* Static Functions */
 
-	public function __construct( $id = null, $autoload = true ) {
-		// If an ID is a number the existence is actually checked on load
-		// If an ID is false the existance is always false durring load
-		$this->_id = $id;
-
-		# Load automatically
-		if ( $autoload ) {
-			$this->load();
-		}
-	}
-
-	private function load() {
+	public static function num(
+		&$title = null,
+		$userID = null
+	) {
 		global $wgUser;
-		
-		// Verify the ID has been set
-		if ( $this->_id === null ) {
-			return;
-		}
-		
-		// Get db connection
-		$dbw = wfGetDB( DB_MASTER );
-
-		// Select drafts from the database matching ID - can be 0 or 1 results
-		$result = $dbw->select( 'drafts',
-			array( '*' ),
-			array(
-				'draft_id' => (int) $this->_id,
-				'draft_user' => (int) $wgUser->getID()
-			),
-			__METHOD__
-		);
-		if ( $result === false ) {
-			return;
-		}
-
-		// Get the row
-		$row = $dbw->fetchRow( $result );
-		if ( !is_array( $row ) || count( $row ) == 0 ) {
-			return;
-		}
-
-		// Synchronize data
-		$this->_token = $row['draft_token'];
-		$this->_title = Title::makeTitle( $row['draft_namespace'], $row['draft_title'] );
-		$this->_section = $row['draft_section'];
-		$this->_starttime = $row['draft_starttime'];
-		$this->_edittime = $row['draft_edittime'];
-		$this->_savetime = $row['draft_savetime'];
-		$this->_scrolltop = $row['draft_scrolltop'];
-		$this->_text = $row['draft_text'];
-		$this->_summary = $row['draft_summary'];
-		$this->_minoredit = $row['draft_minoredit'];
-
-		// Update state
-		$this->_exists = true;
-
-		return;
-	}
-
-	public function save() {
-		global $wgUser, $wgRequest;
-	
-		// Get db connection
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->begin();
-		
-		// Build data
-		$data = array(
-			'draft_token' => (int) $this->getToken(),
-			'draft_user' => (int) $wgUser->getID(),
-			'draft_namespace' => (int) $this->_title->getNamespace(),
-			'draft_title' => (string) $this->_title->getDBKey(),
-			'draft_page' => (int) $this->_title->getArticleId(),
-			'draft_section' => $this->_section == '' ? null : (int) $this->_section,
-			'draft_starttime' => $dbw->timestamp( $this->_starttime ),
-			'draft_edittime' => $dbw->timestamp( $this->_edittime ),
-			'draft_savetime' => $dbw->timestamp( $this->_savetime ),
-			'draft_scrolltop' => (int) $this->_scrolltop,
-			'draft_text' => (string) $this->_text,
-			'draft_summary' => (string) $this->_summary,
-			'draft_minoredit' => (int) $this->_minoredit
-		);
-
-		// Save data
-		if ( $this->_exists === true ) {
-			$dbw->update( 'drafts',
-				$data,
-				array(
-					'draft_id' => (int) $this->_id,
-					'draft_user' => (int) $wgUser->getID()
-				),
-				__METHOD__
-			);
-		} else {
-			$existingRow = $dbw->selectField( 'drafts', 'draft_token',
-				array(
-					'draft_namespace' => $data['draft_namespace'],
-					'draft_title' => $data['draft_title'],
-					'draft_user' => $data['draft_user'],
-					'draft_token' => $data['draft_token']
-				),
-				__METHOD__
-			);
-			
-			// Check if token has been used already for this article
-			if ( $existingRow === false ) {
-				$dbw->insert( 'drafts', $data, __METHOD__ );
-				$this->_id = $dbw->insertId();
-				// Update state
-				$this->_exists = true;
-			}
-		}
-		
-		$dbw->commit();
-		
-		// Return success
-		return true;
-	}
-
-	public function discard( $user = null ) {
-		global $wgUser;
-		
-		// Use $wgUser as a fallback
-		$user = $user === null ? $wgUser : $user;
-		
-		// Get db connection
-		$dbw = wfGetDB( DB_MASTER );
-
-		// Delete data
-		$dbw->delete( 'drafts',
-			array(
-				'draft_id' => $this->_id,
-				// FIXME: ID is already a primary key
-				'draft_user' =>  $user->getID()
-			),
-			__METHOD__
-		);
-
-		$this->_exists = false;
-	}
-	
-	public static function newFromID( $id, $autoload = true ) {
-		return new Draft( $id, $autoload );
-	}
-	
-	public static function newFromRow( $row ) {
-		$draft = new Draft( $row['draft_id'], false );
-		$draft->setToken( $row['draft_token'] );
-		$draft->setTitle( Title::makeTitle( $row['draft_namespace'], $row['draft_title'] ) );
-		$draft->setSection( $row['draft_section'] );
-		$draft->setStartTime( $row['draft_starttime'] );
-		$draft->setEditTime( $row['draft_edittime'] );
-		$draft->setSaveTime( $row['draft_savetime'] );
-		$draft->setScrollTop( $row['draft_scrolltop'] );
-		$draft->setText( $row['draft_text'] );
-		$draft->setSummary( $row['draft_summary'] );
-		$draft->setMinorEdit( $row['draft_minoredit'] );
-		return $draft;
-	}
-	
-	public static function countDrafts( &$title = null, $userID = null ) {
-		global $wgUser;
-		
-		Draft::cleanDrafts();
-		
-		// Get db connection
+		// Removes expired drafts for a more accurate count
+		self::clean();
+		// Get database connection
 		$dbr = wfGetDB( DB_SLAVE );
-		
-		// Build where clause
+		// Builds where clause
 		$where = array();
+		// Checks if a specific title was given
 		if ( $title !== null ) {
+			// Adds specific title to conditions
 			$where['draft_namespace'] = $title->getNamespace();
 			$where['draft_title'] = $title->getDBKey();
 		}
+		// Checks if specific user was given
 		if ( $userID !== null ) {
+			// Adds specific user to condition
 			$where['draft_user'] = $userID;
 		} else {
+			// Adds current user as condition
 			$where['draft_user'] = $wgUser->getID();
 		}
-		
 		// Get a list of matching drafts
 		return $dbr->selectField( 'drafts', 'count(*)', $where, __METHOD__ );
 	}
-	
-	public static function cleanDrafts() {
+
+	public static function clean() {
 		global $egDraftsLifeSpan;
-		
-		// Get db connection
+		// Get database connection
 		$dbw = wfGetDB( DB_MASTER );
-		
-		// Remove drafts that are more than $wgDraftsLifeSpan days old
+		// Sets cuttoff as age longer than $wgDraftsLifeSpan days old
 		$cutoff = wfTimestamp( TS_UNIX ) - ( $egDraftsLifeSpan * 60 * 60 * 24 );
+		// Removes expired drafts from database
 		$dbw->delete( 'drafts',
 			array(
 				'draft_savetime < ' . $dbw->addQuotes( $dbw->timestamp( $cutoff ) )
@@ -226,59 +53,78 @@ class Draft {
 			__METHOD__
 		);
 	}
-	
-	public static function getDrafts( $title = null, $userID = null ) {
+
+	public static function get(
+		$title = null,
+		$userID = null
+	) {
 		global $wgUser;
-		
-		Draft::cleanDrafts();
-		
-		// Get db connection
+		// Removes expired drafts for a more accurate list
+		Drafts::clean();
+		// Gets database connection
 		$dbw = wfGetDB( DB_MASTER );
-		
-		// Build where clause
+		// Builds where clause
 		$where = array();
+		// Checks if specific title was given
 		if ( $title !== null ) {
+			// Gets page id from title
 			$pageId = $title->getArticleId();
+			// Checks if page id exists
 			if ( $pageId ) {
+				// Adds specific page id to conditions
 				$where['draft_page'] = $pageId;
 			} else {
+				// Adds new page information to conditions
 				$where['draft_page'] = 0; // page not created yet
 				$where['draft_namespace'] = $title->getNamespace();
 				$where['draft_title'] = $title->getDBKey();
 			}
 		}
+		// Checks if a specific user was given
 		if ( $userID !== null ) {
+			// Adds specific user to conditions
 			$where['draft_user'] = $userID;
 		} else {
+			// Adds current user to conditions
 			$where['draft_user'] = $wgUser->getID();
 		}
-		
-		// Create an array of matching drafts
-		$drafts = array();
+		// Gets matching drafts from database
 		$result = $dbw->select( 'drafts', '*', $where, __METHOD__ );
 		if ( $result ) {
+			// Creates an array of matching drafts
+			$drafts = array();
 			while ( $row = $dbw->fetchRow( $result ) ) {
-				// Add a new draft to the list from the row
+				// Adds a new draft to the list from the row
 				$drafts[] = Draft::newFromRow( $row );
 			}
 		}
-		
-		// Return array of matching drafts
+		// Returns array of matching drafts or null id there were none
 		return count( $drafts ) ? $drafts : null;
 	}
-	
-	public static function listDrafts( &$title = null, $user = null ) {
+
+	public static function display(
+		&$title = null,
+		$user = null
+	) {
 		global $wgOut, $wgRequest, $wgUser, $wgLang;
-		
-		// Get draftID
+		// Gets draftID
 		$currentDraft = Draft::newFromID( $wgRequest->getIntOrNull( 'draft' ) );
-		
 		// Output HTML for list of drafts
-		$drafts = Draft::getDrafts( $title, $user );
+		$drafts = Drafts::get( $title, $user );
 		if ( count( $drafts ) > 0 ) {
+			global $egDraftsLifeSpan;
 			// Internationalization
 			wfLoadExtensionMessages( 'Drafts' );
-			
+			// Add a summary, on Special:Drafts only
+			if( !$title || $title->getNamespace() == NS_SPECIAL ) {
+				$wgOut->wrapWikiMsg(
+					'<div class="mw-drafts-summary">$1</div>',
+					array(
+						'drafts-view-summary',
+						$wgLang->formatNum( $egDraftsLifeSpan )
+					)
+				);
+			}
 			// Build XML
 			$wgOut->addHTML(
 				Xml::openElement( 'table',
@@ -313,43 +159,44 @@ class Draft {
 			);
 			$wgOut->addHTML( Xml::element( 'th' ) );
 			$wgOut->addHTML( Xml::closeElement( 'tr' ) );
-			
 			// Add existing drafts for this page and user
 			foreach ( $drafts as $draft ) {
 				// Get article title text
 				$htmlTitle = $draft->getTitle()->getEscapedText();
-				
 				// Build Article Load link
-				$urlLoad = $draft->getTitle()->getFullUrl( 'action=edit&draft=' . urlencode( $draft->getID() ) );
-				
+				$urlLoad = $draft->getTitle()->getFullUrl( 'action=edit&draft=' .
+					urlencode( $draft->getID() )
+				);
 				// Build discard link
-				$urlDiscard = sprintf( '%s?discard=%s&token=%s',
-					SpecialPage::getTitleFor( 'Drafts' )->getFullUrl(),
-					urlencode( $draft->getID() ),
-					urlencode( $wgUser->editToken() )
+				$urlDiscard = SpecialPage::getTitleFor( 'Drafts' )->getFullUrl(
+					sprintf( 'discard=%s&token=%s',
+						urlencode( $draft->getID() ),
+						urlencode( $wgUser->editToken() )
+					)
 				);
 				// If in edit mode, return to editor
-				if ( $wgRequest->getText( 'action' ) == 'edit' || $wgRequest->getText( 'action' ) == 'submit' ) {
+				if (
+					$wgRequest->getText( 'action' ) == 'edit' ||
+					$wgRequest->getText( 'action' ) == 'submit'
+				) {
 					$urlDiscard .= '&returnto=' . urlencode( 'edit' );
 				}
-				
 				// Append section to titles and links
 				if ( $draft->getSection() !== null ) {
 					// Detect section name
 					$lines = explode( "\n", $draft->getText() );
-					
+
 					// If there is any content in the section
 					if ( count( $lines ) > 0 ) {
 						$htmlTitle .= '#' . htmlspecialchars(
 							trim( trim( substr( $lines[0], 0, 255 ), '=' ) )
 						);
 					}
-					
 					// Modify article link and title
 					$urlLoad .= '&section=' . urlencode( $draft->getSection() );
-					$urlDiscard .= '&section=' . urlencode( $draft->getSection() );
+					$urlDiscard .= '&section=' .
+						urlencode( $draft->getSection() );
 				}
-				
 				// Build XML
 				$wgOut->addHTML( Xml::openElement( 'tr' ) );
 				$wgOut->addHTML(
@@ -364,7 +211,11 @@ class Draft {
 					Xml::element( 'a',
 						array(
 							'href' => $urlLoad,
-							'style' => 'font-weight:' . ( $currentDraft->getID() == $draft->getID() ? 'bold' : 'normal' )
+							'style' => 'font-weight:' .
+								(
+									$currentDraft->getID() == $draft->getID() ?
+									'bold' : 'normal'
+								)
 						),
 						$htmlTitle
 					)
@@ -387,11 +238,15 @@ class Draft {
 						)
 					)
 				);
+				$jsClick = "if( wgDraft.getState() !== 'unchanged' )" .
+					"return confirm('" .
+					Xml::escapeJsString( wfMsgHTML( 'drafts-view-warn' ) ) .
+					"')";
 				$wgOut->addHTML(
 					Xml::element( 'a',
 						array(
 							'href' => $urlDiscard,
-							'onclick' => "if( !wgAjaxSaveDraft.insync ) return confirm('" . Xml::escapeJsString( wfMsgHTML( 'drafts-view-warn' ) ) . "')"
+							'onclick' => $jsClick
 						),
 						wfMsg( 'drafts-view-discard' )
 					)
@@ -400,102 +255,310 @@ class Draft {
 				$wgOut->addHTML( Xml::closeElement( 'tr' ) );
 			}
 			$wgOut->addHTML( Xml::closeElement( 'table' ) );
-
 			// Return number of drafts
 			return count( $drafts );
 		}
 		return 0;
 	}
-	
+}
+
+class Draft {
+
+	/* Members */
+
+	private $exists = false;
+	private $id;
+	private $token;
+	private $userID;
+	private $title;
+	private $section;
+	private $starttime;
+	private $edittime;
+	private $savetime;
+	private $scrolltop ;
+	private $text;
+	private $summary;
+	private $minoredit;
+
+	/* Static Functions */
+
+	public static function newFromID(
+		$id,
+		$autoload = true
+	) {
+		return new Draft( $id, $autoload );
+	}
+
+	public static function newFromRow(
+		$row
+	) {
+		$draft = new Draft( $row['draft_id'], false );
+		$draft->setToken( $row['draft_token'] );
+		$draft->setTitle( Title::makeTitle( $row['draft_namespace'], $row['draft_title'] ) );
+		$draft->setSection( $row['draft_section'] );
+		$draft->setStartTime( $row['draft_starttime'] );
+		$draft->setEditTime( $row['draft_edittime'] );
+		$draft->setSaveTime( $row['draft_savetime'] );
+		$draft->setScrollTop( $row['draft_scrolltop'] );
+		$draft->setText( $row['draft_text'] );
+		$draft->setSummary( $row['draft_summary'] );
+		$draft->setMinorEdit( $row['draft_minoredit'] );
+		return $draft;
+	}
+
 	public static function newToken() {
 		return wfGenerateToken();
-	}
-	
-	/* States */
-	public function exists() {
-		return $this->_exists;
 	}
 
 	/* Properties */
 
-	public function getID() {
-		return $this->_id;
+	public function exists() {
+		return $this->exists;
 	}
 
-	public function setToken( $token ) {
-		$this->_token = $token;
+	public function getID() {
+		return $this->id;
+	}
+
+	public function setToken(
+		$token
+	) {
+		$this->token = $token;
 	}
 	public function getToken() {
-		return $this->_token;
+		return $this->token;
 	}
 
-	public function getUserID( $userID ) {
-		$this->_userID = $userID;
+	public function getUserID(
+		$userID
+	) {
+		$this->userID = $userID;
 	}
 	public function setUserID() {
-		return $this->_userID;
+		return $this->userID;
 	}
 
 	public function getTitle() {
-		return $this->_title;
+		return $this->title;
 	}
-	public function setTitle( $title ) {
-		$this->_title = $title;
+	public function setTitle(
+		$title
+	) {
+		$this->title = $title;
 	}
 
 	public function getSection() {
-		return $this->_section;
+		return $this->section;
 	}
-	public function setSection( $section ) {
-		$this->_section = $section;
+	public function setSection(
+		$section
+	) {
+		$this->section = $section;
 	}
 
 	public function getStartTime() {
-		return $this->_starttime;
+		return $this->starttime;
 	}
-	public function setStartTime( $starttime ) {
-		$this->_starttime = $starttime;
+	public function setStartTime(
+		$starttime
+	) {
+		$this->starttime = $starttime;
 	}
 
 	public function getEditTime() {
-		return $this->_edittime;
+		return $this->edittime;
 	}
-	public function setEditTime( $edittime ) {
-		$this->_edittime = $edittime;
+	public function setEditTime(
+		$edittime
+	) {
+		$this->edittime = $edittime;
 	}
 
 	public function getSaveTime() {
-		return $this->_savetime;
+		return $this->savetime;
 	}
-	public function setSaveTime( $savetime ) {
-		$this->_savetime = $savetime;
+	public function setSaveTime(
+		$savetime
+	) {
+		$this->savetime = $savetime;
 	}
 
 	public function getScrollTop() {
-		return $this->_scrolltop;
+		return $this->scrolltop;
 	}
-	public function setScrollTop( $scrolltop ) {
-		$this->_scrolltop = $scrolltop;
+	public function setScrollTop(
+		$scrolltop
+	) {
+		$this->scrolltop = $scrolltop;
 	}
 
 	public function getText() {
-		return $this->_text;
+		return $this->text;
 	}
-	public function setText( $text ) {
-		$this->_text = $text;
+	public function setText(
+		$text
+	) {
+		$this->text = $text;
 	}
 
 	public function getSummary() {
-		return $this->_summary;
+		return $this->summary;
 	}
-	public function setSummary( $summary ) {
-		$this->_summary = $summary;
+	public function setSummary(
+		$summary
+	) {
+		$this->summary = $summary;
 	}
 
 	public function getMinorEdit() {
-		return $this->_minoredit;
+		return $this->minoredit;
 	}
-	public function setMinorEdit( $minoredit ) {
-		$this->_minoredit = $minoredit;
+	public function setMinorEdit(
+		$minoredit
+	) {
+		$this->minoredit = $minoredit;
+	}
+
+	/* Functions */
+
+	public function __construct(
+		$id = null,
+		$autoload = true
+	) {
+		// If an ID is a number the existence is actually checked on load
+		// If an ID is false the existance is always false durring load
+		$this->id = $id;
+		// Load automatically
+		if ( $autoload ) {
+			$this->load();
+		}
+	}
+
+	private function load() {
+		global $wgUser;
+		// Checks if the ID of the draft was set
+		if ( $this->id === null ) {
+			// Exists immediately
+			return;
+		}
+		// Gets database connection
+		$dbw = wfGetDB( DB_MASTER );
+		// Gets drafts for this article and user from database
+		$result = $dbw->select( 'drafts',
+			array( '*' ),
+			array(
+				'draft_id' => (int) $this->id,
+				'draft_user' => (int) $wgUser->getID()
+			),
+			__METHOD__
+		);
+		// Checks if query returned any results
+		if ( $result === false ) {
+			// Exists immediately
+			return;
+		}
+		// Fetches the row of the draft from the result
+		$row = $dbw->fetchRow( $result );
+		// Checks if the row is not an array or is an empty array
+		if ( !is_array( $row ) || count( $row ) == 0 ) {
+			// Exists immediately
+			return;
+		}
+		// Synchronizes data
+		$this->token = $row['draft_token'];
+		$this->title = Title::makeTitle(
+			$row['draft_namespace'], $row['draft_title']
+		);
+		$this->section = $row['draft_section'];
+		$this->starttime = $row['draft_starttime'];
+		$this->edittime = $row['draft_edittime'];
+		$this->savetime = $row['draft_savetime'];
+		$this->scrolltop = $row['draft_scrolltop'];
+		$this->text = $row['draft_text'];
+		$this->summary = $row['draft_summary'];
+		$this->minoredit = $row['draft_minoredit'];
+		// Updates state
+		$this->exists = true;
+	}
+
+	public function save() {
+		global $wgUser, $wgRequest;
+		// Gets database connection
+		$dbw = wfGetDB( DB_MASTER );
+		$dbw->begin();
+		// Builds insert/update information
+		$data = array(
+			'draft_token' => (int) $this->getToken(),
+			'draft_user' => (int) $wgUser->getID(),
+			'draft_namespace' => (int) $this->title->getNamespace(),
+			'draft_title' => (string) $this->title->getDBKey(),
+			'draft_page' => (int) $this->title->getArticleId(),
+			'draft_section' =>
+				$this->section == '' ? null : (int) $this->section,
+			'draft_starttime' => $dbw->timestamp( $this->starttime ),
+			'draft_edittime' => $dbw->timestamp( $this->edittime ),
+			'draft_savetime' => $dbw->timestamp( $this->savetime ),
+			'draft_scrolltop' => (int) $this->scrolltop,
+			'draft_text' => (string) $this->text,
+			'draft_summary' => (string) $this->summary,
+			'draft_minoredit' => (int) $this->minoredit
+		);
+		// Checks if draft already exists
+		if ( $this->exists === true ) {
+			// Updates draft information
+			$dbw->update( 'drafts',
+				$data,
+				array(
+					'draft_id' => (int) $this->id,
+					'draft_user' => (int) $wgUser->getID()
+				),
+				__METHOD__
+			);
+		} else {
+			// Gets a draft token exists for the current user and article
+			$existingRow = $dbw->selectField( 'drafts', 'draft_token',
+				array(
+					'draft_namespace' => $data['draft_namespace'],
+					'draft_title' => $data['draft_title'],
+					'draft_user' => $data['draft_user'],
+					'draft_token' => $data['draft_token']
+				),
+				__METHOD__
+			);
+			// Checks if token existed, meaning it has been used already for
+			// this article
+			if ( $existingRow === false ) {
+				// Inserts row in the database
+				$dbw->insert( 'drafts', $data, __METHOD__ );
+				// Gets the id of the newly inserted row
+				$this->id = $dbw->insertId();
+				// Updates state
+				$this->exists = true;
+			}
+		}
+		// Commits any processed changes
+		$dbw->commit();
+		// Returns success
+		return true;
+	}
+
+	public function discard(
+		$user = null
+	) {
+		global $wgUser;
+		// Uses $wgUser as a fallback
+		$user = $user === null ? $wgUser : $user;
+		// Gets database connection
+		$dbw = wfGetDB( DB_MASTER );
+		// Deletes draft from database (verifying propper user to avoid hacking!)
+		$dbw->delete( 'drafts',
+			array(
+				'draft_id' => $this->id,
+				'draft_user' =>  $user->getID()
+			),
+			__METHOD__
+		);
+		// Updates state
+		$this->exists = false;
 	}
 }

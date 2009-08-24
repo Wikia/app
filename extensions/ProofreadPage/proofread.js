@@ -1,7 +1,11 @@
 // Author : ThomasV - License : GPL
 
+//todo : 
+//add a state for empty pages : detect if textbox is empty
+//use the API
 
-function proofreadpage_init_tabs(){
+
+function pr_init_tabs(){
 
 	var a = document.getElementById("p-cactions");
 	if (!a) return;
@@ -43,10 +47,10 @@ function proofreadpage_init_tabs(){
 
 
 
-function proofreadpage_image_url(requested_width){
-        var image_url;
+function pr_image_url(requested_width){
+	var image_url;
 
-        if(self.proofreadPageExternalURL) {
+	if(self.proofreadPageExternalURL) {
 		image_url = proofreadPageExternalURL; 
 	}
 	else {
@@ -71,7 +75,7 @@ function proofreadpage_image_url(requested_width){
 
 
 
-function proofreadpage_make_edit_area(container,text){
+function pr_make_edit_area(container,text){
 
 	re = /^<noinclude>([\s\S]*?)\n*<\/noinclude>([\s\S]*)<noinclude>([\s\S]*?)<\/noinclude>\n$/;
 	m = text.match(re);
@@ -106,7 +110,7 @@ function proofreadpage_make_edit_area(container,text){
 		}
 	}
 
-        //escape & character
+	//escape & character
 	pageBody = pageBody.split("&").join("&amp;")
 	pageHeader = pageHeader.split("&").join("&amp;")
 	pageFooter = pageFooter.split("&").join("&amp;")
@@ -124,18 +128,18 @@ function proofreadpage_make_edit_area(container,text){
 	var previewButton = document.getElementById("wpPreview"); 
 	var diffButton = document.getElementById("wpDiff")
 	if(saveButton){
-		saveButton.onclick = proofreadPageFillForm;
-		previewButton.onclick = proofreadPageFillForm;
-		diffButton.onclick = proofreadPageFillForm;
+		saveButton.onclick = pr_fill_form;
+		previewButton.onclick = pr_fill_form;
+		diffButton.onclick = pr_fill_form;
 	} 
 	else {
+		//make the text area readonly
 		container.firstChild.nextSibling.setAttribute("readonly","readonly");
 	}
-
 }
 
 
-function proofreadpage_toggle_visibility() {
+function pr_toggle_visibility() {
 
 	var box = document.getElementById("wpTextbox1");
 	var h = document.getElementById("prp_header"); 
@@ -151,70 +155,202 @@ function proofreadpage_toggle_visibility() {
 	}
 }
 
+function pr_toggle_layout() {
+
+	if (!self.pr_horiz)
+		pr_fill_table(true);
+	else
+		pr_fill_table(false);
+  
+}
 
 
 
-function proofreadpage_default_setup() {
+//vertical mode
+self.vertHeight = 0;
+var ImgWidth  = 0;
 
-	self.displayWidth = 400; //default value
+function pr_content(image_url){
+  
+	if (self.vertHeight == 0) {
+		if(document.selection  && !is_gecko)
+			self.vertHeight=Math.ceil(document.body.clientHeight*0.4);
+		else
+			self.vertHeight=Math.ceil(window.innerHeight*0.4);
+	}
+	var s = "<div style=\"overflow: auto; height: " + self.vertHeight + "px; width: 100%;\">";
+	s = s + "<img id=\"ProofReadImage\" src=\""+ image_url +"\" alt=\""+ image_url +"\"";
+	s = s + " width=\"" + ImgWidth +"\"></div>";		
+	return s;
+}
 
-	if (parseInt(navigator.appVersion)>3) {
-		if (navigator.appName.indexOf("Microsoft")!=-1) {
-			displayWidth = parseInt(document.body.offsetWidth/2-70);
-		} else {
-			displayWidth = parseInt(window.innerWidth/2-70);
-		}
+
+function pr_zoom(value) {
+
+	if(!document.getElementById("ImageContainer")) return;
+	
+	var PrImage = document.getElementById("ProofReadImage");
+ 
+	if (value == 0) 
+		PrImage.width = document.getElementById("ImageContainer").offsetWidth-20;
+	else 
+		PrImage.width = PrImage.width + value;
+ 
+	ImgWidth = PrImage.width;
+ 
+	if(document.selection  && !is_gecko) {
+		//IE: 
+		document.getElementById("ImageContainer").innerHTML = pr_content(PrImage.src);
+	}
+} 
+
+
+
+
+
+function  pr_fill_table(horizontal_layout){
+
+	//remove existing body  
+	if(self.table.firstChild){
+		self.table.removeChild(self.table.firstChild);
 	}
 
-        var image_url = proofreadpage_image_url(displayWidth);
+	//create table body
+	var t_body = document.createElement("tbody");
+	self.table.appendChild(t_body);
+	var cell_left  = document.createElement("td");
+	var cell_right = document.createElement("td");
+  
+	if(!proofreadPageIsEdit) horizontal_layout=false;
 
-	if(self.DisplayHeight) self.TextBoxHeight = DisplayHeight;
-	else self.TextBoxHeight = 700;
+	//first setup the layout
+	if(!horizontal_layout) {
+		var t_row = document.createElement("tr");
+		t_row.setAttribute("valign","top");
+		cell_left.style.cssText = "width:50%; padding-right:0.5em;";
+		cell_right.setAttribute("rowspan","3");
+		t_row.appendChild(cell_left);
+		t_row.appendChild(cell_right);
+		t_body.appendChild(t_row);
+	}
+	else {
+		var t_row1 = document.createElement("tr");
+		var t_row2 = document.createElement("tr");
+		t_body.appendChild(t_row2);	  
+		t_body.appendChild(t_row1);	  
+		t_row1.appendChild(cell_left);
+		t_row2.appendChild(cell_right);
+	}
+	
 
+	//create image and text containers
+	var image_container = document.createElement("div");
+	image_container.setAttribute("id", "ImageContainer");
+	cell_right.appendChild(image_container);
+	cell_left.appendChild(self.text_container);
+
+
+	//fill the image container
+	if(!horizontal_layout){
+
+		self.pr_horiz = false;
+		var displayWidth = 400;
+		if (parseInt(navigator.appVersion)>3) {
+			if (navigator.appName.indexOf("Microsoft")!=-1) {
+				displayWidth = parseInt(document.body.offsetWidth/2-70);
+			}
+			else {
+				displayWidth = parseInt(window.innerWidth/2-70);
+			}
+		}
+		//this function sets self.DisplayHeight
+		var image_url = pr_image_url(displayWidth); 
+		
+		if(self.DisplayHeight) 
+			self.TextBoxHeight = DisplayHeight;
+		else 
+			self.TextBoxHeight = 700;
+
+		//fill image container	
+		if(!proofreadPageIsEdit) {
+			var image = document.createElement("img");
+			image.setAttribute("src", image_url); 
+			image.style.cssText = "padding:0;margin:0;border:0;";
+			image_container.appendChild(image);
+		}
+		else{
+			var image_url = proofreadPageViewURL;
+			var s = "<div style=\"overflow: auto; width: 100%; height:"+self.DisplayHeight+"px;\">";
+			s = s + "<img id=\"ProofReadImage\" src=\""+ image_url +"\" alt=\""+ image_url +"\"";
+			s = s + " width=\"" + displayWidth +"\"></div>";
+			image_container.innerHTML = s;
+			document.getElementById("wpTextbox1").style.cssText = "height:"+(self.TextBoxHeight-7)+"px";
+			pr_zoom(0);
+		}
+		//document.getElementById("contentSub").appendChild(ImageContainer);
+		
+	}
+	else{
+		self.pr_horiz = true;
+		image_container.innerHTML = pr_content(proofreadPageViewURL);
+		
+		if(proofreadPageIsEdit){
+			document.getElementById("wpTextbox1").style.cssText = "height:"+self.vertHeight+"px";
+			pr_zoom(0);
+		}
+	}
+}
+
+
+
+
+
+
+
+function pr_setup() {
+
+	self.table = document.createElement("table");
+	self.text_container = document.createElement("div");
+	self.image_container = document.createElement("div");
+	table.setAttribute("id", "textBoxTable");
+	table.style.cssText = "width:100%;";
+
+	//fill table
+    if(self.proofreadpage_default_layout=='horizontal') 
+		pr_fill_table(true);
+	else
+		pr_fill_table(false);
+
+	//insert the image    
 	if(proofreadPageIsEdit) {
 		var text = document.getElementById("wpTextbox1"); 
-		if (!text) return;
 	}
 	else { 
 		var text = document.getElementById("bodyContent"); 
-		if(!text) return;
 	}
-
-
-	//image 
-	var image = document.createElement("img");
-	image.setAttribute("src", image_url); 
-	image.style.cssText = "padding:0;margin:0;border:0;";
-
-	//container
-	//useful for hooking elements to the image, eg href or zoom.
-	var container = document.createElement("div");
-	container.setAttribute("id", "proofreadImage");
-	container.appendChild(image);
-
-	var table = document.createElement("table");
-	table.setAttribute("id", "textBoxTable");
-	table.style.cssText = "width:100%;";
-	var t_body = document.createElement("tbody");
-	var t_row = document.createElement("tr");
-	t_row.setAttribute("valign","top");
-	var cell_left = document.createElement("td");
-	cell_left.style.cssText = "width:50%; padding-right:0.5em;";
-	var cell_right = document.createElement("td");
-	cell_right.appendChild(container);
-	cell_right.setAttribute("rowspan","3");
-	t_row.appendChild(cell_left);
-	t_row.appendChild(cell_right);
-	t_body.appendChild(t_row);
-	table.appendChild(t_body);
-
-    
+	if(!text) return;
 	var f = text.parentNode; 
 	var new_text = f.removeChild(text);
 
 	if(proofreadPageIsEdit) {
-		proofreadpage_make_edit_area(cell_left,new_text.value);
+		pr_make_edit_area(self.text_container,new_text.value);
+		var copywarn = document.getElementById("editpage-copywarn");
+		f.insertBefore(table,copywarn);
+		
+	}
+	else {
+		self.text_container.appendChild(new_text);
+		f.appendChild(self.table);
+	}
+  
+	//add buttons  
+	if(proofreadPageIsEdit) {
+
 		var toolbar = document.getElementById("toolbar");
+		/*var f = tb.parentNode; 
+		 var toolbar = f.removeChild(tb);
+		 self.text_container.insertBefore(toolbar,self.text_container.firstChild);*/
+
 		if(toolbar){
 			var image = document.createElement("img");
 			image.width = 23;
@@ -225,24 +361,65 @@ function proofreadpage_default_setup() {
 			image.alt = proofreadPageMessageToggleHeaders;
 			image.title = proofreadPageMessageToggleHeaders;
 			image.style.cursor = "pointer";
-			image.onclick = proofreadpage_toggle_visibility;
+			image.onclick = pr_toggle_visibility;
 			toolbar.appendChild(image);
+			
+			var image3 = document.createElement("img");
+			image3.width = 23;
+			image3.height = 22;
+			image3.border = 0;
+			image3.className = "mw-toolbar-proofread";
+			image3.style.cursor = "pointer";
+			image3.alt = "-";
+			image3.title = "zoom out";
+			image3.src = wgScriptPath+"/extensions/ProofreadPage/Button_zoom_out.png";
+			image3.onclick = new Function("pr_zoom(-50);");
+			toolbar.appendChild(image3);
+			
+			var image4 = document.createElement("img");
+			image4.width = 23;
+			image4.height = 22;
+			image4.border = 0;
+			image4.className = "mw-toolbar-proofread";
+			image4.style.cursor = "pointer";
+			image4.alt = "-";
+			image4.title = "reset zoom";
+			image4.src = wgScriptPath+"/extensions/ProofreadPage/Button_examine.png";
+			image4.onclick = new Function("pr_zoom(0);");
+			toolbar.appendChild(image4);
+			
+			var image2 = document.createElement("img");
+			image2.width = 23;
+			image2.height = 22;
+			image2.border = 0;
+			image2.className = "mw-toolbar-proofread";
+			image2.style.cursor = "pointer";
+			image2.alt = "+";
+			image2.title = "zoom in";
+			image2.src = wgScriptPath+"/extensions/ProofreadPage/Button_zoom_in.png";
+			image2.onclick = new Function("pr_zoom(50);");
+			toolbar.appendChild(image2);
+			
+			var image1 = document.createElement("img");
+			image1.width = 23;
+			image1.height = 22;
+			image1.className = "mw-toolbar-editbutton";
+			image1.src = wgScriptPath+'/extensions/ProofreadPage/Button_multicol.png';
+			image1.border = 0;
+			image1.alt = " ";
+			image1.title = "vertical/horizontal layout";
+			image1.style.cursor = "pointer";
+			image1.onclick = pr_toggle_layout;
+			toolbar.appendChild(image1);
+
 		}
-		copywarn = document.getElementById("editpage-copywarn");
-		f.insertBefore(table,copywarn);
-		document.getElementById("wpTextbox1").style.cssText = "height:"+(TextBoxHeight-7)+"px";
-
-	} else {
-		cell_left.appendChild(new_text);
-		f.appendChild(table);
 	}
-
 }
 
 
 
 
-function proofreadPageFillForm() {
+function pr_fill_form() {
 	var form = document.getElementById("editform");
 	var header = form.elements["headerTextbox"];
 	var footer = form.elements["footerTextbox"];
@@ -258,186 +435,12 @@ function proofreadPageFillForm() {
 		form.elements["wpTextbox1"].value = h+form.elements["wpTextbox1"].value+f;
 		form.elements["wpTextbox1"].setAttribute('readonly',"readonly");
 	}
-
 }
 
 
 
 
-
-
-/*
- *  Mouse Zoom.  Credits: http://valid.tjp.hu/zoom/
- */
-
-// global vars
-var lastxx, lastyy, xx, yy;
-
-var zp_clip;  //zp_clip is the large image
-var zp_container;
-
-var zoomamount_h=2; 
-var zoomamount_w=2; 
-var zoom_status=''; 
-
-var ieox=0; var ieoy=0; 
-var ffox=0; var ffoy=0;
-
-
-//mouse move
-function zoom_move(evt) {
-
-	if(zoom_status != 1) { return false;}
-
-	if(typeof(evt) == 'object') {
-		evt = evt?evt:window.event?window.event:null; if(!evt){ return false;}
-		if(evt.pageX) {
-			xx=evt.pageX - ffox;
-			yy=evt.pageY - ffoy;
-		}
-		else {
-			if(typeof(document.getElementById("proofreadImage")+1) == 'number') {return true;} 
-			xx=evt.clientX - ieox;
-			yy=evt.clientY - ieoy;
-		}
-	}
-	else { 
-		xx = lastxx; 
-		yy = lastyy; 
-	}
-	lastxx = xx; 
-        lastyy = yy;
-
-	//new
-        zp_clip.style.margin = 
-                  ((yy > objh )?(objh*(1-zoomamount_h)):(yy*(1-zoomamount_h))) + 'px 0px 0px '
-		+ ((xx > objw )?(objw*(1-zoomamount_w)):(xx*(1-zoomamount_w)))
-		+ 'px';
-
-	return false;
-}
-
-
-
-
-
-
-function zoom_off() {
-	zp_container.style.width='0px';
-	zp_container.style.height='0px';
-	zoom_status = 0;
-}
-
-
-
-
-function countoffset() {
-	zme=document.getElementById("proofreadImage");
-	ieox=0; ieoy=0;
-	for(zmi=0;zmi<50;zmi++) {
-		if(zme+1 == 1) { 
-			break;
-		} 
-		else {
-			ieox+=zme.offsetLeft; 
-			ieoy+=zme.offsetTop;
-		}
-		zme=zme.offsetParent; 
-	}
-	ffox=ieox;
-	ffoy=ieoy;
-	ieox-=document.body.scrollLeft;
-	ieoy-=document.body.scrollTop;
-}
-
-
-
-
-function zoom_mouseup(evt) {
-
-	 evt = evt?evt:window.event?window.event:null; 
-	 if(!evt) return false;
-
-	 //only left button; see http://unixpapa.com/js/mouse.html for why it is this complicated
-	 if(evt.which == null) {
-	 	if(evt.button != 1) return false;
-	 } else {
-		if(evt.which > 1) return false;
-	 }
-
-	if(zoom_status == 0) {
-       		zoom_on(evt);
-		return false;
-		}
-	 else if(zoom_status == 1) {
-		zoom_status = 2;
-		return false;
-	 }
-	 else if(zoom_status == 2) {
-	 	zoom_off(); 
-		return false;
-	 }
-	 return false;
-}
-
-
-function zoom_on(evt) {
-	evt = evt?evt:window.event?window.event:null; if(!evt){ return false;}
-	zoom_status=1;
-
-	if(evt.pageX) {
-		countoffset();
-		lastxx=evt.pageX - ffox; 
-		lastyy=evt.pageY - ffoy;
-		} 
-	else {
-		countoffset();
-		lastxx=evt.clientX - ieox;
-		lastyy=evt.clientY - ieoy; 
-	}
-
-	zoomamount_h = zp_clip.height/objh;
-	zoomamount_w = zp_clip.width/objw;
-
-        zp_container.style.margin = '0px 0px 0px 0px';
-	zp_container.style.width = objw+'px';
-	zp_container.style.height = objh+'px';
-
-	zoom_move('');
-	return false;
-}
-
-
-function proofreadPageZoom(){
-
-	if(navigator.appName == "Microsoft Internet Explorer") return;
-	if(!self.proofreadPageViewURL) return;
-	if(self.DisplayWidth>800) return;
-
-	zp = document.getElementById("proofreadImage");
-	if(zp){
-		var hires_url = proofreadpage_image_url(800);
-		self.objw = zp.firstChild.width;
-		self.objh = zp.firstChild.height;
-
-		zp.setAttribute("onmouseup","zoom_mouseup(event);" );
-		zp.setAttribute("onmousemove","zoom_move(event);" );
-
-		zp_container = document.createElement("div");
-		zp_container.style.cssText ="position:absolute; width:0; height:0; overflow:hidden;";
-		zp_clip = document.createElement("img");
-		zp_clip.setAttribute("src", hires_url);
-		zp_clip.style.cssText = "padding:0;margin:0;border:0;";
-		zp_container.appendChild(zp_clip);
-		zp.insertBefore(zp_container,zp.firstChild); 
-
-	}
-}
-
-
-
-
-function proofreadpage_init() {
+function pr_init() {
 
 	if( document.getElementById("proofreadImage")) return;
 
@@ -450,7 +453,7 @@ function proofreadpage_init() {
 	if(!self.proofreadPageViewURL) {
 		var text = document.getElementById("wpTextbox1"); 
 		if (text) {
-			proofreadPageIsEdit = true;
+			var proofreadPageIsEdit = true;
 			re = /<span class="hiddenStructure" id="pageURL">\[http:\/\/(.*?)\]<\/span>/;
 			m = re.exec(text.value);
 			if( m ) { 
@@ -458,7 +461,7 @@ function proofreadpage_init() {
 			}
 		} 
 		else {
-			proofreadPageIsEdit = false;
+			var proofreadPageIsEdit = false;
 			text = document.getElementById("bodyContent"); 
 			try { 
 				var a = document.getElementById("pageURL");
@@ -473,28 +476,38 @@ function proofreadpage_init() {
 
 	if(!self.proofreadPageViewURL && !self.proofreadPageExternalURL) return;
 
-	if( self.proofreadpage_setup ) 
-
-	     proofreadpage_setup(
+	if( self.proofreadpage_setup ) {
+	  
+	    proofreadpage_setup(
 		proofreadPageWidth,
 		proofreadPageHeight, 
 		proofreadPageIsEdit);
 
-	else proofreadpage_default_setup();
+	}
+	else pr_setup();
 }
 
 
 
-addOnloadHook(proofreadpage_init);
-addOnloadHook(proofreadpage_init_tabs);
-hookEvent("load", proofreadPageZoom);
+addOnloadHook(pr_init);
+addOnloadHook(pr_init_tabs);
 
 
+function pr_initzoom(){
+	if(document.getElementById("wpTextbox1")){
+		if(self.pr_horiz)
+			document.getElementById("wpTextbox1").style.cssText = "height:"+self.vertHeight+"px";
+		else
+			document.getElementById("wpTextbox1").style.cssText = "height:"+(self.TextBoxHeight-7)+"px";
+		pr_zoom(0);
+	}
+}
+hookEvent("load", pr_initzoom );
 
 
 /*Quality buttons*/
 
-function proofreadpage_add_quality(form,value){
+function pr_add_quality(form,value){
  
 	var text="";
 	switch(value){
@@ -515,9 +528,9 @@ function proofreadpage_add_quality(form,value){
 }
 
 
-function proofreadpage_add_quality_buttons(){
+function pr_add_quality_buttons(){
 
-        if(self.proofreadpage_no_quality_buttons) return;
+    if(self.proofreadpage_no_quality_buttons) return;
 
 	var ig  = document.getElementById("wpWatchthis");
 	if(!ig) return;
@@ -538,11 +551,11 @@ function proofreadpage_add_quality_buttons(){
 	}
 	var f = document.createElement("span");
 	f.innerHTML = 
-' <span class="quality2"> <input type="radio" name="quality" onclick="proofreadpage_add_quality(this.form,2)"> </span>'
-+'<span class="quality1"> <input type="radio" name="quality" onclick="proofreadpage_add_quality(this.form,1)"> </span>'
-+'<span class="quality3"> <input type="radio" name="quality" onclick="proofreadpage_add_quality(this.form,3)"> </span>';
+' <span class="quality2"> <input type="radio" name="quality" onclick="pr_add_quality(this.form,2)"> </span>'
++'<span class="quality1"> <input type="radio" name="quality" onclick="pr_add_quality(this.form,1)"> </span>'
++'<span class="quality3"> <input type="radio" name="quality" onclick="pr_add_quality(this.form,3)"> </span>';
 	if(show4) f.innerHTML = f.innerHTML 
-+ '<span class="quality4"> <input type="radio" name="quality" onclick="proofreadpage_add_quality(this.form,4)"> </span>';
++ '<span class="quality4"> <input type="radio" name="quality" onclick="pr_add_quality(this.form,4)"> </span>';
 	f.innerHTML = f.innerHTML + '&nbsp;'+proofreadPageMessageStatus;
 	ig.parentNode.insertBefore(f,ig.nextSibling.nextSibling.nextSibling);
 	if(m) { 
@@ -557,4 +570,4 @@ function proofreadpage_add_quality_buttons(){
 
  
 
-addOnloadHook(proofreadpage_add_quality_buttons);
+addOnloadHook(pr_add_quality_buttons);

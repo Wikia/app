@@ -102,6 +102,20 @@ $messages['dsb'] = array(
 	'ajax-qp-desc' => 'AJAX pśidaś, aby se boki kaž [[Special:Shortpages|{{int:shortpages}}]] wótpšašali',
 );
 
+/** Ewe (Eʋegbe)
+ * @author Natsubee
+ */
+$messages['ee'] = array(
+	'ajax-qp-desc' => 'Tsɔ AJAX kpe ɖe axa tɔxewo abe [[Special:Shortpages|{{int:shortpages}}]] ŋu',
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'ajax-qp-desc' => 'Προσθήκη AJAX σε σελίδες query όπως οι [[Special:Shortpages|{{int:shortpages}}]]',
+);
+
 /** Spanish (Español)
  * @author Ascánder
  */
@@ -110,10 +124,18 @@ $messages['es'] = array(
 );
 
 /** Basque (Euskara)
+ * @author An13sa
  * @author Theklan
  */
 $messages['eu'] = array(
-	'ajax-qp-desc' => '[[Berezi:Shortpages|{{int:shortpages}}]] bezalako orrialdeak bilatzeko AJAX pixka bat gehitzen du',
+	'ajax-qp-desc' => '[[Special:Shortpages|{{int:shortpages}}]] bezalako orrialdeak bilatzeko AJAX pixka bat gehitzen du',
+);
+
+/** Persian (فارسی)
+ * @author Huji
+ */
+$messages['fa'] = array(
+	'ajax-qp-desc' => 'افزدون اندکی AJAX به صفحه‌های جستجو نظیر [[Special:Shortpages|{{int:shortpages}}]]',
 );
 
 /** Finnish (Suomi)
@@ -137,6 +159,20 @@ $messages['gl'] = array(
 	'ajax-qp-desc' => 'Engadir algún AJAX a QueryPages tales como [[Special:Shortpages|{{int:shortpages}}]]',
 );
 
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'ajax-qp-desc' => 'Προσθέτει προγραμματιστικὴ γραφὴ AJAX εἰς δέλτους πεύσεως ὅπως ἡ [[Special:Shortpages|{{int:shortpages}}]]',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'ajax-qp-desc' => 'Fiegt AJAX-Funktione in Spezialsyten yy, wie [[Special:Shortpages|{{int:shortpages}}]]',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
@@ -150,6 +186,13 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'ajax-qp-desc' => 'पृच्छापन्नोंमें [[Special:Shortpages|{{int:shortpages}}]] जैसे AJAX बढायें',
+);
+
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'ajax-qp-desc' => 'Dodaj AJAX za upite stranica poput [[Special:Shortpages|{{int:shortpages}}]]',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -253,6 +296,13 @@ $messages['nah'] = array(
 	'ajax-qp-desc' => 'Ticcēntilīz AJAX ic tiquimpōhuāz zāzanilli quemeh [[Special:Shortpages|{{int:shortpages}}]]',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'ajax-qp-desc' => 'Föögt wat AJAX to an Spezialsieden so as [[Special:Shortpages|{{int:shortpages}}]]',
+);
+
 /** Nedersaksisch (Nedersaksisch)
  * @author Servien
  */
@@ -316,6 +366,13 @@ $messages['pt'] = array(
 	'ajax-qp-desc' => 'Adiciona algum AJAX a QueryPages tal como [[Special:Shortpages|{{int:shortpages}}]]',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'ajax-qp-desc' => 'Adiciona algum AJAX a QueryPages tal como [[Special:Shortpages|{{int:shortpages}}]]',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -335,6 +392,13 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'ajax-qp-desc' => 'Добавляет немного AJAX в QueryPages, например, [[Special:Shortpages|{{int:shortpages}}]]',
+);
+
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'ajax-qp-desc' => 'Query сирэйдэригэр AJAX эбэр, холобур, [[Special:Shortpages|{{int:shortpages}}]]',
 );
 
 /** Slovak (Slovenčina)
@@ -365,11 +429,25 @@ $messages['sv'] = array(
 	'ajax-qp-desc' => 'Lägger till AJAX-funktioner på vissa specialsidor, som t.ex. [[Special:Shortpages|{{int:shortpages}}]]',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'ajax-qp-desc' => '[[Special:Shortpages|{{int:shortpages}}]] లాంటి క్వెరీ పేజీలకి కొంచెం అజాక్సుని చేరుస్తుంది',
+);
+
 /** Tajik (Cyrillic) (Тоҷикӣ (Cyrillic))
  * @author Ibrahim
  */
 $messages['tg-cyrl'] = array(
 	'ajax-qp-desc' => 'Илова кардани чанде аз АҶАКС ба СаҳифаҳоиПурсиш монанди [[Special:Shortpages|{{int:shortpages}}]]',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'ajax-qp-desc' => 'Magdagdag ng ilang AJAX sa mga pahina ng pagtatanong na katulad ng [[Special:Shortpages|{{int:shortpages}}]]',
 );
 
 /** Turkish (Türkçe)

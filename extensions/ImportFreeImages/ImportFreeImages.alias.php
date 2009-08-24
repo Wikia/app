@@ -37,6 +37,11 @@ $aliases['de'] = array(
 	'ImportFreeImages' => array( 'Freie Bilder importieren' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'ImportFreeImages' => array( 'Liche wobraze importěrowaś' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'ImportFreeImages' => array( 'Tuo vapaita kuvia' ),
@@ -52,9 +57,24 @@ $aliases['gsw'] = array(
 	'ImportFreeImages' => array( 'Freji Bilder importiere' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'ImportFreeImages' => array( 'Swobodne wobrazy importować' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'ImportFreeImages' => array( 'Szabad képek importálása' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'ImportFreeImages' => array( 'Importar imagines libere' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'ImportFreeImages' => array( 'フリー画像のインポート', 'フリーの画像をインポート' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -82,6 +102,21 @@ $aliases['no'] = array(
 	'ImportFreeImages' => array( 'Importer frie bilder' ),
 );
 
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'ImportFreeImages' => array( 'ImportarImatgesLiures' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'ImportFreeImages' => array( 'आयातमुक्तछायाचित्र' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'ImportFreeImages' => array( 'ImportoFiguraFalas' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'ImportFreeImages' => array( 'Importera fria bilder' ),
@@ -90,5 +125,10 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'ImportFreeImages' => array( 'IngizaPichaHuria' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'ImportFreeImages' => array( 'Mag-angkat ng malayang mga larawan' ),
 );
 

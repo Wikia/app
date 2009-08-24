@@ -15,7 +15,7 @@ require_once ("$preIP/extensions/wikia/LangRedirect/LangRedirect.php") ;
  *
  * ----------
  *
- * Copyright (C) 2001-2008 Magnus Manske, Brion Vibber, Lee Daniel Crocker,
+ * Copyright (C) 2001-2009 Magnus Manske, Brion Vibber, Lee Daniel Crocker,
  * Tim Starling, Erik Möller, Gabriel Wicke, Ævar Arnfjörð Bjarmason,
  * Niklas Laxström, Domas Mituzas, Rob Church, Yuri Astrakhan, Aryeh Gregor,
  * Aaron Schulz and others.
@@ -34,6 +34,8 @@ require_once ("$preIP/extensions/wikia/LangRedirect/LangRedirect.php") ;
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @file
  */
 
 
@@ -47,7 +49,7 @@ wfProfileIn( 'main-misc-setup' );
 OutputPage::setEncodings(); # Not really used yet
 
 $maxLag = $wgRequest->getVal( 'maxlag' );
-if( !is_null($maxLag) && !$mediaWiki->checkMaxLag( $maxLag ) ) {
+if( !is_null( $maxLag ) && !$mediaWiki->checkMaxLag( $maxLag ) ) {
 	exit;
 }
 
@@ -73,7 +75,7 @@ if( $wgUseAjax && $action == 'ajax' ) {
 	exit;
 }
 
-if( $wgUseFileCache && isset($wgTitle) ) {
+if( $wgUseFileCache && isset( $wgTitle ) ) {
 	wfProfileIn( 'main-try-filecache' );
 	// Raw pages should handle cache control on their own,
 	// even when using file cache. This reduces hits from clients.

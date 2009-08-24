@@ -57,7 +57,7 @@ function efConfigureAjax( $setting, $group ) {
  * @param $wiki String
  */
 function efConfigureSetup( $wiki = 'default' ) {
-	global $wgConf, $wgConfigureFilesPath, $wgConfigureExtDir;
+	global $wgConf, $wgConfigureFilesPath, $wgConfigureExtDir, $wgConfigureHandler, $wgConfigureAllowDeferSetup;
 	wfProfileIn( __FUNCTION__ );
 	# Create the new configuration object...
 	$oldConf = $wgConf;
@@ -73,8 +73,7 @@ function efConfigureSetup( $wiki = 'default' ) {
 
 	$wgConf->snapshotDefaults();
 
-	global $wgConfigureHandler;
-	if ( $wgConfigureHandler == 'db' ) {
+	if ( $wgConfigureAllowDeferSetup && $wgConfigureHandler == 'db' ) {
 		// Defer to after caches and database are set up.
 		global $wgHooks;
 		$wgHooks['SetupAfterCache'][] = array( 'efConfigureInitialise' );

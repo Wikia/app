@@ -2,7 +2,8 @@
 /**
  * Aliases for Special:Contact
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $aliases = array();
@@ -48,14 +49,29 @@ $aliases['de'] = array(
 	'Contact' => array( 'Kontakt' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Contact' => array( 'Kontakt' ),
+);
+
 /** Greek (Ελληνικά) */
 $aliases['el'] = array(
 	'Contact' => array( 'Επαφή' ),
 );
 
+/** Esperanto (Esperanto) */
+$aliases['eo'] = array(
+	'Contact' => array( 'Kontakti' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'Contact' => array( 'Contactar' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
-	'Contact' => array( 'Yhteystiedot' ),
+	'Contact' => array( 'Ota yhteyttä' ),
 );
 
 /** Galician (Galego) */
@@ -95,6 +111,11 @@ $aliases['hu'] = array(
 	'Contact' => array( 'Kapcsolat' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Contact' => array( 'Contacto' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'Contact' => array( 'Kontak' ),
@@ -105,9 +126,19 @@ $aliases['ja'] = array(
 	'Contact' => array( '連絡先' ),
 );
 
+/** Georgian (ქართული) */
+$aliases['ka'] = array(
+	'Contact' => array( 'კონტაქტი' ),
+);
+
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'Contact' => array( 'ទំនាក់ទំនង' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'Contact' => array( '문의' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -138,6 +169,11 @@ $aliases['nds-nl'] = array(
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
 	'Contact' => array( 'Contactpagina' ),
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Contact' => array( 'Kontakt' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -177,6 +213,16 @@ $aliases['ro'] = array(
 	'Contact' => array( 'Contact' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Contact' => array( 'सम्पर्क' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Contact' => array( 'Kontakto' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Contact' => array( 'Kontakt' ),
@@ -187,6 +233,11 @@ $aliases['sw'] = array(
 	'Contact' => array( 'Mawasiliano' ),
 );
 
+/** Telugu (తెలుగు) */
+$aliases['te'] = array(
+	'Contact' => array( 'సంప్రదించు' ),
+);
+
 /** Tetum (Tetun) */
 $aliases['tet'] = array(
 	'Contact' => array( 'Kontaktu' ),
@@ -195,5 +246,10 @@ $aliases['tet'] = array(
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'Contact' => array( 'ติดต่อ' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Contact' => array( 'Makipag-ugnayan' ),
 );
 

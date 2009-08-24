@@ -19,8 +19,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Gadgets',
-	'svn-date' => '$LastChangedDate: 2008-11-06 22:20:29 +0000 (Thu, 06 Nov 2008) $',
-	'svn-revision' => '$LastChangedRevision: 43269 $',
+	'svn-date' => '$LastChangedDate: 2009-03-10 17:06:04 +0000 (Tue, 10 Mar 2009) $',
+	'svn-revision' => '$LastChangedRevision: 48268 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://mediawiki.org/wiki/Extension:Gadgets',
 	'description' => 'lets users select custom javascript gadgets',
@@ -41,7 +41,7 @@ $wgAutoloadClasses['SpecialGadgets'] = $dir . 'SpecialGadgets.php';
 $wgSpecialPages['Gadgets'] = 'SpecialGadgets';
 $wgSpecialPageGroups['Gadgets'] = 'wiki';
 
-function wfGadgetsArticleSaveComplete( &$article, &$wgUser, &$text ) {
+function wfGadgetsArticleSaveComplete( &$article, &$wgUser, $text ) {
 	//update cache if MediaWiki:Gadgets-definition was edited
 	$title = $article->mTitle;
 	if( $title->getNamespace() == NS_MEDIAWIKI && $title->getText() == 'Gadgets-definition' ) {
@@ -73,7 +73,7 @@ function wfLoadGadgetsStructured( $forceNewText = NULL ) {
 	global $wgMemc;
 
 	static $gadgets = NULL;
-	if ( $gadgets !== NULL && $forceNewText !== NULL ) return $gadgets;
+	if ( $gadgets !== NULL && $forceNewText === NULL ) return $gadgets;
 
 	$key = wfMemcKey( 'gadgets-definition' );
 

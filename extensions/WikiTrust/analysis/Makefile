@@ -30,7 +30,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # Vars we use in our rules to build ocaml programs
-PACKAGES = unix,str,vec,mapmin,hashtbl_bounded,fileinfo,intvmap,extlib,mysql,netsys,netclient,camlzip,xml-light,sexplib.syntax 
+PACKAGES = unix,str,vec,mapmin,hashtbl_bounded,fileinfo,intvmap,extlib,mysql,sexplib.syntax 
 SYNTAX = camlp4o
 OUR_LIBS = evalwiki.cma
 OUR_LIBS_OPT = evalwiki.cmxa
@@ -72,11 +72,11 @@ OCAMLOPT_FLAGS=$(INCLUDES)
 # one for the optimizing compilation. 
 OUR_ONLINE_OBJS = online_types.cmo online_db.cmo online_revision.cmo \
 	db_page.cmo online_page.cmo online_log.cmo event_feed.cmo  \
-	online_command_line.cmo tmpfile.cmo wikipedia_api.cmo \
+	online_command_line.cmo \
 
 OUR_OPT_ONLINE_OBJS = online_types.cmx online_db.cmx online_revision.cmx \
 	db_page.cmx online_page.cmx online_log.cmx event_feed.cmx \
-	online_command_line.cmx tmpfile.cmx wikipedia_api.cmx \
+	online_command_line.cmx \
 
 
 online_eval: $(OUR_ONLINE_OBJS) 
@@ -91,37 +91,21 @@ vote_revision: $(OUR_ONLINE_OBJS)
 vote_revisionopt: $(OUR_OPT_ONLINE_OBJS)
 	$(OCAMLOPT) -linkpkg -o vote_revision $(OCAMLOPT_FLAGS) $(OUR_LIBS_OPT) $(OUR_OPT_ONLINE_OBJS) vote_revision.ml
 
-server: $(OUR_ONLINE_OBJS) 
-	$(OCAMLC) -package "netstring,netcgi2,unix,nethttpd-for-netcgi2,netplex" -linkpkg -o server $(OCAML_CFLAGS) $(OUR_LIBS) $(OUR_ONLINE_OBJS) -thread server.ml 
-
-serveropt: $(OUR_OPT_ONLINE_OBJS)
-	$(OCAMLOPT) -package "netstring,netcgi2,unix,nethttpd-for-netcgi2,netplex" -linkpkg -o server $(OCAMLOPT_FLAGS) $(OUR_LIBS_OPT) $(OUR_OPT_ONLINE_OBJS) -thread server.ml 
-
-dispatcher: $(OUR_ONLINE_OBJS) 	
-	$(OCAMLC) -linkpkg -o dispatcher $(OCAML_CFLAGS) $(OUR_LIBS) $(OUR_ONLINE_OBJS) server_coloring_dispatcher.ml 
-
-dispatcheropt: $(OUR_OPT_ONLINE_OBJS)
-	$(OCAMLOPT) -linkpkg -o dispatcher $(OCAMLOPT_FLAGS) $(OUR_LIBS_OPT) $(OUR_OPT_ONLINE_OBJS) server_coloring_dispatcher.ml
-
 all:
 	cd ../batch/analysis; make all
 	make online_eval
 	make vote_revision
-	make server
-	make dispatcher
 
 allopt:
 	cd ../batch/analysis; make allopt
 	make online_evalopt
 	make vote_revisionopt
-	make serveropt
-	make dispatcheropt
 
 universe: all allopt
 
 clean:
 	cd ../batch/analysis; make clean
-	rm -f *.o *.cmo *.cmx *.cmi .depends run_harness eval_online_wiki vote_revision server dispatcher
+	rm -f *.o *.cmo *.cmx *.cmi .depends run_harness eval_online_wiki vote_revision
 
 # Boilerplate code for building ocaml dependencies.
 

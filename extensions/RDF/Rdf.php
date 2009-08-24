@@ -644,7 +644,7 @@ if (defined('MEDIAWIKI')) {
 							'MwRdfImage');
 
 		while ($res && $row = $dbr->fetchObject($res)) {
-			$img = Image::newFromName($row->il_to);
+			$img = wfFindFile($row->il_to);
 			if ($img->exists()) {
 				$iuri = $img->getURL();
 				if ($iuri[0] == '/') {

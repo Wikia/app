@@ -1,7 +1,7 @@
 <?php
 /**
  * A special page holding a form that allows the user to create a semantic
- * property (an attribute or relation).
+ * property.
  *
  * @author Yaron Koren
  */
@@ -18,13 +18,13 @@ class SFCreateProperty extends SpecialPage {
 		wfLoadExtensionMessages('SemanticForms');
 	}
 
-	function execute() {
+	function execute($query) {
 		$this->setHeaders();
 		doSpecialCreateProperty();
 	}
 }
 
-function createPropertyText($property_type, $allowed_values_str) {
+function createPropertyText($property_type, $default_form, $allowed_values_str) {
 	global $smwgContLang;
 
 	wfLoadExtensionMessages('SemanticForms');
@@ -38,6 +38,12 @@ function createPropertyText($property_type, $allowed_values_str) {
 		$type_tag = "[[{$spec_props[SMW_SP_HAS_TYPE]}::$property_type]]";
 	}
 	$text = wfMsgForContent('sf_property_isproperty', $type_tag);
+	if ($default_form != '') {
+		global $sfgContLang;
+		$sf_prop_labels = $sfgContLang->getPropertyLabels();
+		$default_form_tag = "[[{$sf_prop_labels[SF_SP_HAS_DEFAULT_FORM]}::$default_form]]";
+		$text .= ' ' . wfMsgForContent('sf_property_linkstoform', $default_form_tag);
+	}
 	if ($allowed_values_str != '') {
 		$text .= "\n\n" . wfMsgForContent('sf_property_allowedvals');
 		// replace the comma substitution character that has no chance of
@@ -69,6 +75,7 @@ function doSpecialCreateProperty() {
 	# cycle through the query values, setting the appropriate local variables
 	$property_name = $wgRequest->getVal('property_name');
 	$property_type = $wgRequest->getVal('property_type');
+	$default_form = $wgRequest->getVal('default_form');
 	$allowed_values = $wgRequest->getVal('values');
 
 	$save_button_text = wfMsg('savearticle');
@@ -84,9 +91,8 @@ function doSpecialCreateProperty() {
 		} else {
 			# redirect to wiki interface
 			$wgOut->setArticleBodyOnly(true);
-			$namespace = SMW_NS_PROPERTY;
-			$title = Title::newFromText($property_name, $namespace);
-			$full_text = createPropertyText($property_type, $allowed_values);
+			$title = Title::makeTitleSafe(SMW_NS_PROPERTY, $property_name);
+			$full_text = createPropertyText($property_type, $default_form, $allowed_values);
 			// HTML-encode
 			$full_text = str_replace('"', '&quot;', $full_text);
 			$text = SFUtils::printRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false, null, null);
@@ -98,8 +104,13 @@ function doSpecialCreateProperty() {
 	$datatype_labels = $smwgContLang->getDatatypeLabels();
 
 	$javascript_text =<<<END
-function toggleAllowedValues() {
-	var values_div = document.getElementById("allowed_values");
+function toggleDefaultForm(property_type) {
+	var default_form_div = document.getElementById("default_form_div");
+	if (property_type == '{$datatype_labels['_wpg']}') {
+		default_form_div.style.display = "";
+	} else {
+		default_form_div.style.display = "none";
+	}
 }
 
 END;
@@ -116,15 +127,20 @@ END;
 	<p>$name_label <input size="25" name="property_name" value="">
 	<span style="color: red;">$property_name_error_str</span>
 	$type_label
-	<select id="property_dropdown" name="property_type" onChange="toggleAllowedValues();">
+	<select id="property_dropdown" name="property_type" onChange="toggleDefaultForm(this.value);">
 END;
 	foreach ($datatype_labels as $label) {
 		$text .= "	<option>$label</option>\n";
 	}
 
+	$default_form_input = wfMsg('sf_createproperty_linktoform');
 	$values_input = wfMsg('sf_createproperty_allowedvalsinput');
 	$text .=<<<END
 	</select>
+	<div id="default_form_div" style="padding: 5px 0 5px 0; margin: 7px 0 7px 0;">
+	<p>$default_form_input
+	<input size="20" name="default_form" value=""></p>
+	</div>
 	<div id="allowed_values" style="margin-bottom: 15px;">
 	<p>$values_input</p>
 	<p><input size="80" name="values" value=""></p>

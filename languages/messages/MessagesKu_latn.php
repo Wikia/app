@@ -637,9 +637,7 @@ Sedemê qedexekirinê ji $3 ev e: ''$2''",
 # Revision deletion
 'rev-deleted-comment'         => '(nivîs hate jêbirin)',
 'rev-deleted-user'            => '(navî bikarhêner hate jêbirin)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-Ev verzyona vê rûpelê hatîye jêbirin. Belkî înformasyon di [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} reşahîya jêbirinê] da hebin.
-</div>',
+'rev-deleted-text-permission' => 'Ev verzyona vê rûpelê hatîye jêbirin. Belkî înformasyon di [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} reşahîya jêbirinê] da hebin.',
 'rev-delundel'                => 'nîşan bide/veşêre',
 'revisiondelete'              => 'Rêvîsyona jêbibe/dîsa çêke',
 'revdelete-legend'            => 'Guherandina qebûlkirina dîtinê',
@@ -1057,7 +1055,8 @@ Binêre [[Special:WantedCategories|kategorîyên xastî]].',
 'special-categories-sort-abc'   => 'hatîye rêzkirin li gorî alfabeyê',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Guherandinên bikarhênerekî yê jêbirî',
+'deletedcontributions'       => 'Guherandinên bikarhênerekî yê jêbirî',
+'deletedcontributions-title' => 'Guherandinên bikarhênerekî yê jêbirî',
 
 # Special:LinkSearch
 'linksearch-ok' => 'Lêbigere',

@@ -18,7 +18,7 @@ function getOwLanguageNames($purge=false) {
 	indicated by $code, with fallbacks in English where the language names
 	aren't present in that language. */
 function getLangNames($code) {
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$names = array();
 	$sql = getSQLForLanguageNames($code);
 	$lang_res = $dbr->query($sql);
@@ -104,7 +104,7 @@ function getSQLForLanguageNames($lang_code) {
 }
 
 function getLanguageIdForName($name) {
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query("SELECT language_id FROM language_names WHERE language_name=".$dbr->addQuotes($name));
 	
 	if ($languageId = $dbr->fetchObject($queryResult))

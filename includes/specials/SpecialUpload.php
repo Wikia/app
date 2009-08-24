@@ -63,6 +63,8 @@ class UploadForm {
 		$this->mDesiredDestName   = $request->getText( 'wpDestFile' );
 		$this->mIgnoreWarning     = $request->getCheck( 'wpIgnoreWarning' );
 		$this->mComment           = $request->getText( 'wpUploadDescription' );
+		$this->mForReUpload       = $request->getBool( 'wpForReUpload' );
+		$this->mReUpload          = $request->getCheck( 'wpReUpload' );
 
 		# Check for [[Special:Upload/Filename.ext]]
 		if ('' == $this->mDesiredDestName && '' != $par) {
@@ -78,8 +80,6 @@ class UploadForm {
 		# Placeholders for text injection by hooks (empty per default)
 		$this->uploadFormTextTop = "";
 		$this->uploadFormTextAfterSummary = "";
-
-		$this->mReUpload          = $request->getCheck( 'wpReUpload' );
 		$this->mUploadClicked     = $request->getCheck( 'wpUpload' );
 
 		$this->mLicense           = $request->getText( 'wpLicense' );
@@ -161,7 +161,7 @@ class UploadForm {
 	 * Returns true if there was an error, false otherwise
 	 */
 	private function curlCopy( $url, $dest ) {
-		global $wgUser, $wgOut;
+		global $wgUser, $wgOut, $wgHTTPProxy;
 
 		if( !$wgUser->isAllowed( 'upload_by_url' ) ) {
 			$wgOut->permissionRequired( 'upload_by_url' );
@@ -189,6 +189,9 @@ class UploadForm {
 		curl_setopt( $ch, CURLOPT_TIMEOUT, 10); # 10 seconds timeout
 		curl_setopt( $ch, CURLOPT_LOW_SPEED_LIMIT, 512); # 0.5KB per second minimum transfer speed
 		curl_setopt( $ch, CURLOPT_URL, $url);
+		if( $wgHTTPProxy ) {
+			curl_setopt( $ch, CURLOPT_PROXY, $wgHTTPProxy );
+		}
 		curl_setopt( $ch, CURLOPT_WRITEFUNCTION, array( $this, 'uploadCurlCallback' ) );
 		curl_exec( $ch );
 		$error = curl_errno( $ch ) ? true : false;
@@ -233,6 +236,12 @@ class UploadForm {
 	function execute() {
 		global $wgUser, $wgOut;
 		global $wgEnableUploads;
+
+		# Check php's file_uploads setting
+		if( !wfIniGetBool( 'file_uploads' ) ) {
+			$wgOut->showErrorPage( 'uploaddisabled', 'php-uploaddisabledtext', array( $this->mDesiredDestName ) );
+			return;
+		}
 
 		# Check uploading enabled
 		if( !$wgEnableUploads ) {
@@ -385,7 +394,7 @@ class UploadForm {
 
 		if( !wfRunHooks( 'UploadForm:BeforeProcessing', array( &$this ) ) )
 		{
-			wfDebug( "Hook 'UploadForm:BeforeProcessing' broke processing the file." );
+			wfDebug( "Hook 'UploadForm:BeforeProcessing' broke processing the file.\n" );
 			return self::BEFORE_PROCESSING;
 		}
 
@@ -517,11 +526,13 @@ class UploadForm {
 		if ( ! $this->mIgnoreWarning ) {
 			$warning = '';
 
-			global $wgCapitalLinks;
-			if( $wgCapitalLinks ) {
-				$filtered = ucfirst( $filtered );
+			$comparableName = str_replace( ' ', '_', $basename );
+			global $wgCapitalLinks, $wgContLang;
+			if ( $wgCapitalLinks ) {
+				$comparableName = $wgContLang->ucfirst( $comparableName );
 			}
-			if( $basename != $filtered ) {
+
+			if( $comparableName !== $filtered ) {
 				$warning .=  '<li>'.wfMsgHtml( 'badfilename', htmlspecialchars( $this->mDestName ) ).'</li>';
 			}
 
@@ -554,7 +565,7 @@ class UploadForm {
 				$warning .= self::getExistsWarning( $this->mLocalFile );
 			}
 			
-			$warning .= $this->getDupeWarning( $this->mTempPath, $finalExt );
+			$warning .= $this->getDupeWarning( $this->mTempPath, $finalExt, $nt );
 			
 			if( $warning != '' ) {
 				/**
@@ -570,8 +581,10 @@ class UploadForm {
 		 * Try actually saving the thing...
 		 * It will show an error form on failure.
 		 */
-		$pageText = self::getInitialPageText( $this->mComment, $this->mLicense,
-			$this->mCopyrightStatus, $this->mCopyrightSource );
+		if( !$this->mForReUpload ) {
+			$pageText = self::getInitialPageText( $this->mComment, $this->mLicense,
+				$this->mCopyrightStatus, $this->mCopyrightSource );
+		}	
 
 		$status = $this->mLocalFile->upload( $this->mTempPath, $this->mComment, $pageText,
 			File::DELETE_SOURCE, $this->mFileProps );
@@ -761,7 +774,7 @@ class UploadForm {
 	 * Check for duplicate files and throw up a warning before the upload
 	 * completes.
 	 */
-	function getDupeWarning( $tempfile, $extension ) {
+	function getDupeWarning( $tempfile, $extension, $destinationTitle ) {
 		$hash = File::sha1Base36( $tempfile );
 		$dupes = RepoGroup::singleton()->findBySha1( $hash );
 		$archivedImage = new ArchivedFile( null, 0, $hash.".$extension" );
@@ -770,8 +783,12 @@ class UploadForm {
 			$msg = "<gallery>";
 			foreach( $dupes as $file ) {
 				$title = $file->getTitle();
-				$msg .= $title->getPrefixedText() .
-					"|" . $title->getText() . "\n";
+				# Don't throw the warning when the titles are the same, it's a reupload
+				# and highly redundant.
+				if ( !$title->equals( $destinationTitle ) || !$this->mForReUpload ) {
+					$msg .= $title->getPrefixedText() .
+						"|" . $title->getText() . "\n";
+				}
 			}
 			$msg .= "</gallery>";
 			return "<li>" .
@@ -873,6 +890,7 @@ class UploadForm {
 	 */
 	function unsaveUploadedFile() {
 		global $wgOut;
+		if( !$this->mTempPath ) return true; // nothing to delete
 		$repo = RepoGroup::singleton()->getLocalRepo();
 		$success = $repo->freeTemp( $this->mTempPath );
 		if ( ! $success ) {
@@ -971,7 +989,7 @@ wgUploadAutoFill = {$autofill};
 
 		if( !wfRunHooks( 'UploadForm:initial', array( &$this ) ) )
 		{
-			wfDebug( "Hook 'UploadForm:initial' broke output of the upload form" );
+			wfDebug( "Hook 'UploadForm:initial' broke output of the upload form\n" );
 			return false;
 		}
 
@@ -991,7 +1009,7 @@ wgUploadAutoFill = {$autofill};
 			}
 
 			// Show the relevant lines from deletion log (for still deleted files only)
-			if( $title instanceof Title && $title->isDeleted() > 0 && !$title->exists() ) {
+			if( $title instanceof Title && $title->isDeletedQuick() && !$title->exists() ) {
 				$this->showDeletionLog( $wgOut, $title->getPrefixedText() );
 			}
 		}
@@ -1070,7 +1088,8 @@ wgUploadAutoFill = {$autofill};
 		$sourcefilename = wfMsgExt( 'sourcefilename', array( 'parseinline', 'escapenoentities' ) );
         $destfilename = wfMsgExt( 'destfilename', array( 'parseinline', 'escapenoentities' ) ); 
 		
-		$summary = wfMsgExt( 'fileuploadsummary', 'parseinline' );
+		$msg = $this->mForReUpload ? 'filereuploadsummary' : 'fileuploadsummary';
+		$summary = wfMsgExt( $msg, 'parseinline' );
 
 		$licenses = new Licenses();
 		$license = wfMsgExt( 'license', array( 'parseinline' ) );
@@ -1084,10 +1103,9 @@ wgUploadAutoFill = {$autofill};
 
 		$encDestName = htmlspecialchars( $this->mDesiredDestName );
 
-		$watchChecked = $this->watchCheck()
-			? 'checked="checked"'
-			: '';
-		$warningChecked = $this->mIgnoreWarning ? 'checked' : '';
+		$watchChecked = $this->watchCheck() ? 'checked="checked"' : '';
+		# Re-uploads should not need "file exist already" warnings
+		$warningChecked = ($this->mIgnoreWarning || $this->mForReUpload) ? 'checked="checked"' : '';
 
 		// Prepare form for upload or upload/copy
 		if( $wgAllowCopyUploads && $wgUser->isAllowed( 'upload_by_url' ) ) {
@@ -1122,8 +1140,8 @@ wgUploadAutoFill = {$autofill};
 			$warningRow = '';
 			$destOnkeyup = '';
 		}
-
 		$encComment = htmlspecialchars( $this->mComment );
+		
 
 		$wgOut->addHTML(
 			 Xml::openElement( 'form', array( 'method' => 'post', 'action' => $titleObj->getLocalURL(),
@@ -1151,10 +1169,26 @@ wgUploadAutoFill = {$autofill};
 				<td class='mw-label'>
 					<label for='wpDestFile'>{$destfilename}</label>
 				</td>
-				<td class='mw-input'>
-					<input tabindex='2' type='text' name='wpDestFile' id='wpDestFile' size='60'
-						value=\"{$encDestName}\" onchange='toggleFilenameFiller()' $destOnkeyup />
-				</td>
+				<td class='mw-input'>"
+		);
+		if( $this->mForReUpload ) {
+			$wgOut->addHTML(
+				Xml::hidden( 'wpDestFile', $this->mDesiredDestName, array('id'=>'wpDestFile','tabindex'=>2) ) .
+				"<tt>" .
+				$encDestName .
+				"</tt>"
+			);
+		}
+		else {
+			$wgOut->addHTML(
+				"<input tabindex='2' type='text' name='wpDestFile' id='wpDestFile' size='60'
+						value=\"{$encDestName}\" onchange='toggleFilenameFiller()' $destOnkeyup />"
+			);
+		}
+		
+
+		$wgOut->addHTML(
+				"</td>
 			</tr>
 			<tr>
 				<td class='mw-label'>
@@ -1168,8 +1202,8 @@ wgUploadAutoFill = {$autofill};
 			</tr>
 			<tr>"
 		);
-
-		if ( $licenseshtml != '' ) {
+		# Re-uploads should not need license info
+		if ( !$this->mForReUpload && $licenseshtml != '' ) {
 			global $wgStylePath;
 			$wgOut->addHTML( "
 					<td class='mw-label'>
@@ -1195,7 +1229,7 @@ wgUploadAutoFill = {$autofill};
 			}
 		}
 
-		if ( $wgUseCopyrightUpload ) {
+		if ( !$this->mForReUpload && $wgUseCopyrightUpload ) {
 			$filestatus = wfMsgExt( 'filestatus', 'escapenoentities' );
 			$copystatus =  htmlspecialchars( $this->mCopyrightStatus );
 			$filesource = wfMsgExt( 'filesource', 'escapenoentities' );
@@ -1227,7 +1261,7 @@ wgUploadAutoFill = {$autofill};
 				<td>
 					<input tabindex='7' type='checkbox' name='wpWatchthis' id='wpWatchthis' $watchChecked value='true' />
 					<label for='wpWatchthis'>" . wfMsgHtml( 'watchthisupload' ) . "</label>
-					<input tabindex='8' type='checkbox' name='wpIgnoreWarning' id='wpIgnoreWarning' value='true' $warningChecked/>
+					<input tabindex='8' type='checkbox' name='wpIgnoreWarning' id='wpIgnoreWarning' value='true' $warningChecked />
 					<label for='wpIgnoreWarning'>" . wfMsgHtml( 'ignorewarnings' ) . "</label>
 				</td>
 			</tr>
@@ -1235,19 +1269,23 @@ wgUploadAutoFill = {$autofill};
 			<tr>
 				<td></td>
 					<td class='mw-input'>
-						<input tabindex='9' type='submit' name='wpUpload' value=\"{$ulb}\"" . $wgUser->getSkin()->tooltipAndAccesskey( 'upload' ) . " />
+						<input tabindex='9' type='submit' name='wpUpload' value=\"{$ulb}\"" .
+							$wgUser->getSkin()->tooltipAndAccesskey( 'upload' ) . " />
 					</td>
 			</tr>
 			<tr>
 				<td></td>
 				<td class='mw-input'>"
 		);
-		$wgOut->addWikiText( wfMsgForContent( 'edittools' ) );
+		$wgOut->addHTML( '<div class="mw-editTools">' );
+		$wgOut->addWikiMsgArray( 'edittools', array(), array( 'content' ) );
+		$wgOut->addHTML( '</div>' );
 		$wgOut->addHTML( "
 				</td>
 			</tr>" .
 			Xml::closeElement( 'table' ) .
 			Xml::hidden( 'wpDestFileWarningAck', '', array( 'id' => 'wpDestFileWarningAck' ) ) .
+			Xml::hidden( 'wpForReUpload', $this->mForReUpload, array( 'id' => 'wpForReUpload' ) ) .
 			Xml::closeElement( 'fieldset' ) .
 			Xml::closeElement( 'form' )
 		);
@@ -1664,7 +1702,7 @@ wgUploadAutoFill = {$autofill};
 				}
 			}
 
-			wfDebug( __METHOD__.": FOUND VIRUS! scanner feedback: $output" );
+			wfDebug( __METHOD__.": FOUND VIRUS! scanner feedback: $output \n" );
 			return $output;
 		}
 	}
@@ -1701,7 +1739,7 @@ wgUploadAutoFill = {$autofill};
 	 * @access private
 	 */
 	function cleanupTempFile() {
-		if ( $this->mRemoveTempFile && file_exists( $this->mTempPath ) ) {
+		if ( $this->mRemoveTempFile && $this->mTempPath && file_exists( $this->mTempPath ) ) {
 			wfDebug( "SpecialUpload::cleanupTempFile: Removing temporary file {$this->mTempPath}\n" );
 			unlink( $this->mTempPath );
 		}

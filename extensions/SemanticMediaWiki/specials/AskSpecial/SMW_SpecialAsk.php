@@ -21,6 +21,9 @@ class SMWAskPage extends SpecialPage {
 	protected $m_printouts = array();
 	protected $m_editquery = false;
 
+	// MW 1.13 compatibilty
+	private static $pipeseparator = '|';
+
 	/**
 	 * Constructor
 	 */
@@ -30,8 +33,11 @@ class SMWAskPage extends SpecialPage {
 	}
 
 	function execute( $p ) {
-		global $wgOut, $wgRequest, $smwgQEnabled, $smwgRSSEnabled;
+		global $wgOut, $wgRequest, $smwgQEnabled, $smwgRSSEnabled, $smwgMW_1_14;
 		wfProfileIn('doSpecialAsk (SMW)');
+		if ($smwgMW_1_14) { // since MW 1.14.0 this is governed by a message
+			SMWAskPage::$pipeseparator = wfMsgExt( 'pipe-separator' , 'escapenoentities' );
+		}
 		if ( ($wgRequest->getVal( 'query' ) != '') ) { // old processing
 			$this->executeSimpleAsk();
 			SMWOutputs::commitToOutputPage($wgOut); // make sure locally collected output data is pushed to the output!
@@ -52,7 +58,7 @@ class SMWAskPage extends SpecialPage {
 		// This code rather hacky since there are many ways to call that special page, the most involved of
 		// which is the way that this page calls itself when data is submitted via the form (since the shape
 		// of the parameters then is governed by the UI structure, as opposed to being governed by reason).
-		global $wgRequest;
+		global $wgRequest, $smwgQMaxInlineLimit;
 
 		// First make all inputs into a simple parameter list that can again be parsed into components later.
 
@@ -132,6 +138,7 @@ class SMWAskPage extends SpecialPage {
 				 $this->m_params['limit'] = ($this->m_params['format'] == 'rss')?10:20; // standard limit for RSS
 			}
 		}
+		$this->m_params['limit'] = min($this->m_params['limit'], $smwgQMaxInlineLimit);
 
 		$this->m_editquery = ( $wgRequest->getVal( 'eq' ) != '' ) || ('' == $this->m_querystring );
 	}
@@ -221,7 +228,7 @@ class SMWAskPage extends SpecialPage {
 
 
 	protected function getInputForm($printoutstring, $urltail) {
-		global $wgUser, $smwgQSortingSupport;
+		global $wgUser, $smwgQSortingSupport, $wgLang;
 		$skin = $wgUser->getSkin();
 		$result = '';
 
@@ -255,14 +262,16 @@ class SMWAskPage extends SpecialPage {
 					$i++;
 				}
 				$result .= '<input type="hidden" name="sc" value="' . $i . '"/>';
-				$result .= '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask',$urltail . '&eq=yes&sc=1')) . '">' . wfMsg('smw_add_sortcondition') . '</a>'; // note that $urltail uses a , separated list for sorting, so setting sc to 1 always adds one new condition
+				$result .= '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask',$urltail . '&eq=yes&sc=1')) . '" rel="nofollow">' . wfMsg('smw_add_sortcondition') . '</a>'; // note that $urltail uses a , separated list for sorting, so setting sc to 1 always adds one new condition
 			}
 			$result .= '<br /><input type="submit" value="' . wfMsg('smw_ask_submit') . '"/>' .
-			           '<input type="hidden" name="eq" value="yes"/>' .
-			           ' <a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask',$urltail)) . '">' . wfMsg('smw_ask_hidequery') . '</a> | <a href="' . htmlspecialchars(wfMsg('smw_ask_doculink')) . '">' . wfMsg('smw_ask_help') . '</a>' .
-			           "\n</form><br />";
+				'<input type="hidden" name="eq" value="yes"/>' .
+					' <a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask',$urltail)) . '" rel="nofollow">' . wfMsg('smw_ask_hidequery') . '</a> ' .
+					SMWAskPage::$pipeseparator .
+					' <a href="' . htmlspecialchars(wfMsg('smw_ask_doculink')) . '">' . wfMsg('smw_ask_help') . '</a>' .
+				"\n</form><br />";
 		} else {
-			$result .= '<p><a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask',$urltail . '&eq=yes')) . '">' . wfMsg('smw_ask_editquery') . '</a></p>';
+			$result .= '<p><a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask',$urltail . '&eq=yes')) . '" rel="nofollow">' . wfMsg('smw_ask_editquery') . '</a></p>';
 		}
 		return $result;
 	}
@@ -271,13 +280,13 @@ class SMWAskPage extends SpecialPage {
 	 * Build the navigation for some given query result, reuse url-tail parameters
 	 */
 	protected function getNavigationBar($res, $urltail) {
-		global $wgUser, $smwgQMaxLimit;
+		global $wgUser, $smwgQMaxInlineLimit;
 		$skin = $wgUser->getSkin();
 		$offset = $this->m_params['offset'];
 		$limit  = $this->m_params['limit'];
 		// prepare navigation bar
 		if ($offset > 0) {
-			$navigation = '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . max(0,$offset-$limit) . '&limit=' . $limit . $urltail)) . '">' . wfMsg('smw_result_prev') . '</a>';
+			$navigation = '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . max(0,$offset-$limit) . '&limit=' . $limit . $urltail)) . '" rel="nofollow">' . wfMsg('smw_result_prev') . '</a>';
 		} else {
 			$navigation = wfMsg('smw_result_prev');
 		}
@@ -285,22 +294,18 @@ class SMWAskPage extends SpecialPage {
 		$navigation .= '&nbsp;&nbsp;&nbsp;&nbsp; <b>' . wfMsg('smw_result_results') . ' ' . ($offset+1) . '&ndash; ' . ($offset + $res->getCount()) . '</b>&nbsp;&nbsp;&nbsp;&nbsp;';
 
 		if ($res->hasFurtherResults())
-			$navigation .= ' <a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . ($offset+$limit) . '&limit=' . $limit . $urltail)) . '">' . wfMsg('smw_result_next') . '</a>';
+			$navigation .= ' <a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . ($offset+$limit) . '&limit=' . $limit . $urltail)) . '" rel="nofollow">' . wfMsg('smw_result_next') . '</a>';
 		else $navigation .= wfMsg('smw_result_next');
 
-		$max = false; $first=true;
+		$first=true;
 		foreach (array(20,50,100,250,500) as $l) {
-			if ($max) continue;
+			if ($l > $smwgQMaxInlineLimit) break;
 			if ($first) {
 				$navigation .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(';
 				$first = false;
-			} else $navigation .= ' | ';
-			if ($l > $smwgQMaxLimit) {
-				$l = $smwgQMaxLimit;
-				$max = true;
-			}
+			} else $navigation .= ' ' . SMWAskPage::$pipeseparator . ' ';
 			if ( $limit != $l ) {
-				$navigation .= '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . $offset . '&limit=' . $l . $urltail)) . '">' . $l . '</a>';
+				$navigation .= '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . $offset . '&limit=' . $l . $urltail)) . '" rel="nofollow">' . $l . '</a>';
 			} else {
 				$navigation .= '<b>' . $l . '</b>';
 			}
@@ -353,13 +358,13 @@ class SMWAskPage extends SpecialPage {
 
 			// prepare navigation bar
 			if ($offset > 0)
-				$navigation = '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . max(0,$offset-$limit) . '&limit=' . $limit . '&query=' . urlencode($query) . '&sort=' . urlencode($sort) .'&order=' . urlencode($order))) . '">' . wfMsg('smw_result_prev') . '</a>';
+				$navigation = '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . max(0,$offset-$limit) . '&limit=' . $limit . '&query=' . urlencode($query) . '&sort=' . urlencode($sort) .'&order=' . urlencode($order))) . '" rel="nofollow">' . wfMsg('smw_result_prev') . '</a>';
 			else $navigation = wfMsg('smw_result_prev');
 
 			$navigation .= '&nbsp;&nbsp;&nbsp;&nbsp; <b>' . wfMsg('smw_result_results') . ' ' . ($offset+1) . '&ndash; ' . ($offset + $res->getCount()) . '</b>&nbsp;&nbsp;&nbsp;&nbsp;';
 
 			if ($res->hasFurtherResults())
-				$navigation .= ' <a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . ($offset+$limit) . '&limit=' . $limit . '&query=' . urlencode($query) . '&sort=' . urlencode($sort) .'&order=' . urlencode($order))) . '">' . wfMsg('smw_result_next') . '</a>';
+				$navigation .= ' <a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . ($offset+$limit) . '&limit=' . $limit . '&query=' . urlencode($query) . '&sort=' . urlencode($sort) .'&order=' . urlencode($order))) . '" rel="nofollow">' . wfMsg('smw_result_next') . '</a>';
 			else $navigation .= wfMsg('smw_result_next');
 
 			$max = false; $first=true;
@@ -368,13 +373,13 @@ class SMWAskPage extends SpecialPage {
 				if ($first) {
 					$navigation .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(';
 					$first = false;
-				} else $navigation .= ' | ';
+				} else $navigation .= ' ' . SMWAskPage::$pipeseparator . ' ';
 				if ($l > $smwgQMaxLimit) {
 					$l = $smwgQMaxLimit;
 					$max = true;
 				}
 				if ( $limit != $l ) {
-					$navigation .= '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . $offset . '&limit=' . $l . '&query=' . urlencode($query) . '&sort=' . urlencode($sort) .'&order=' . urlencode($order))) . '">' . $l . '</a>';
+					$navigation .= '<a href="' . htmlspecialchars($skin->makeSpecialUrl('Ask','offset=' . $offset . '&limit=' . $l . '&query=' . urlencode($query) . '&sort=' . urlencode($sort) .'&order=' . urlencode($order))) . '" rel="nofollow">' . $l . '</a>';
 				} else {
 					$navigation .= '<b>' . $l . '</b>';
 				}

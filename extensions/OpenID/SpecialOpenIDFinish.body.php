@@ -35,7 +35,7 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 		SpecialPage::SpecialPage("OpenIDFinish", '', false);
 	}
 
-	function execute($par) {
+	function execute( $par) {
 
 		global $wgUser, $wgOut, $wgRequest;
 
@@ -45,58 +45,64 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 
 		# Shouldn't work if you're already logged in.
 
-		if ($wgUser->getID() != 0) {
+		if ( $wgUser->getID() != 0 ) {
 			$this->alreadyLoggedIn();
 			return;
 		}
 
 		$consumer = $this->getConsumer();
 
-		switch ($par) {
+		switch ( $par ) {
 		 case 'ChooseName':
-			list($openid, $sreg) = $this->fetchValues();
-			if (!isset($openid)) {
-				wfDebug("OpenID: aborting in ChooseName because identity_url is missing\n");
+			list( $openid, $sreg) = $this->fetchValues();
+			if ( !isset( $openid ) ) {
+				wfDebug( "OpenID: aborting in ChooseName because identity_url is missing\n" );
 				$this->clearValues();
 				# No messing around, here
-				$wgOut->showErrorPage('openiderror', 'openiderrortext');
+				$wgOut->showErrorPage( 'openiderror', 'openiderrortext' );
 				return;
 			}
 
-			if ($wgRequest->getCheck('wpCancel')) {
+			if ( $wgRequest->getCheck( 'wpCancel' ) ) {
 				$this->clearValues();
-				$wgOut->showErrorPage('openidcancel', 'openidcanceltext');
+				$wgOut->showErrorPage( 'openidcancel', 'openidcanceltext' );
 				return;
 			}
 
-			$choice = $wgRequest->getText('wpNameChoice');
-			$nameValue = $wgRequest->getText('wpNameValue');
+			$choice = $wgRequest->getText( 'wpNameChoice' );
+			$nameValue = $wgRequest->getText( 'wpNameValue' );
 
 			if ($choice == 'existing') {
-				$user = $this->attachUser($openid, $sreg,
-										  $wgRequest->getText('wpExistingName'),
-										  $wgRequest->getText('wpExistingPassword'));
-				
-				if (!$user) {
-					$this->chooseNameForm($openid, $sreg, 'wrongpassword');
+				$user = $this->attachUser( $openid, $sreg,
+					$wgRequest->getText( 'wpExistingName' ),
+					$wgRequest->getText( 'wpExistingPassword' )
+				);
+
+				if ( !$user ) {
+					$this->chooseNameForm( $openid, $sreg, 'wrongpassword' );
 					return;
+				}
+
+				if ($wgRequest->getText( 'wpUpdateUserInfo' ))
+				{
+					$this->updateUser( $user, $sreg );
 				}
 			} else {
-				$name = $this->getUserName($openid, $sreg, $choice, $nameValue);
+				$name = $this->getUserName( $openid, $sreg, $choice, $nameValue);
 
-				if (!$name || !$this->userNameOK($name)) {
-					wfDebug("OpenID: Name not OK: '$name'\n");
-					$this->chooseNameForm($openid, $sreg);
+				if ( !$name || !$this->userNameOK( $name ) ) {
+					wfDebug( "OpenID: Name not OK: '$name'\n" );
+					$this->chooseNameForm( $openid, $sreg );
 					return;
 				}
 				
-				$user = $this->createUser($openid, $sreg, $name);
+				$user = $this->createUser( $openid, $sreg, $name );
 			}
 
-			if (!isset($user)) {
-				wfDebug("OpenID: aborting in ChooseName because we could not create user object\n");
+			if ( !isset( $user ) ) {
+				wfDebug( "OpenID: aborting in ChooseName because we could not create user object\n" );
 				$this->clearValues();
-				$wgOut->showErrorPage('openiderror', 'openiderrortext');
+				$wgOut->showErrorPage( 'openiderror', 'openiderrortext' );
 				return;
 			}
 
@@ -104,71 +110,74 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 
 			$this->clearValues();
 
-			$this->finishLogin($response->identity_url);
+			$this->finishLogin( $response->identity_url );
 			break;
 
 		 default: # No parameter, returning from a server
 
-			$response = $consumer->complete($this->scriptUrl('OpenIDFinish'));
+			$response = $consumer->complete( $this->scriptUrl( 'OpenIDFinish' ) );
 
-			if (!isset($response)) {
-				wfDebug("OpenID: aborting in auth because no response was recieved\n");
-				$wgOut->showErrorPage('openiderror', 'openiderrortext');
+			if ( !isset( $response ) ) {
+				wfDebug( "OpenID: aborting in auth because no response was recieved\n" );
+				$wgOut->showErrorPage( 'openiderror', 'openiderrortext' );
 				return;
 			}
 
-			switch ($response->status) {
+			switch ( $response->status ) {
 			 case Auth_OpenID_CANCEL:
 				// This means the authentication was cancelled.
-				$wgOut->showErrorPage('openidcancel', 'openidcanceltext');
+				$wgOut->showErrorPage( 'openidcancel', 'openidcanceltext' );
 				break;
 			 case Auth_OpenID_FAILURE:
-				wfDebug("OpenID: error message '" . $response->message . "'\n");
-				$wgOut->showErrorPage('openidfailure', 'openidfailuretext',
-								  array(($response->message) ? $response->message : ''));
+				wfDebug( "OpenID: error message '" . $response->message . "'\n" );
+				$wgOut->showErrorPage( 'openidfailure', 'openidfailuretext',
+								  array( ( $response->message ) ? $response->message : '' ) );
 				break;
 			 case Auth_OpenID_SUCCESS:
 				// This means the authentication succeeded.
 				$openid = $response->getDisplayIdentifier();
-				$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
+				$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse( $response );
 				$sreg = $sreg_resp->contents();
 
 				if (!isset($openid)) {
-					wfDebug("OpenID: aborting in auth success because display identifier is missing\n");
-					$wgOut->showErrorPage('openiderror', 'openiderrortext');
+					wfDebug( "OpenID: aborting in auth success because display identifier is missing\n" );
+					$wgOut->showErrorPage( 'openiderror', 'openiderrortext' );
 					return;
 				}
 
-				$user = $this->getUser($openid);
+				$user = $this->getUser( $openid );
 
-				if (isset($user)) {
-					$this->updateUser($user, $sreg); # update from server
+				if ( isset( $user ) )
+				{
+					if ($user->getOption('openid-update-userinfo-on-login'))
+					{
+						$this->updateUser( $user, $sreg); # update from server
+					}
 				} else {
 					# For easy names
-					$name = $this->createName($openid, $sreg);
-					if ($name) {
-						$user = $this->createUser($openid, $sreg, $name);
+					$name = $this->createName( $openid, $sreg );
+					if ( $name ) {
+						$user = $this->createUser( $openid, $sreg, $name );
 					} else {
 					# For hard names
-						$this->saveValues($openid, $sreg);
-						$this->chooseNameForm($openid, $sreg);
+						$this->saveValues( $openid, $sreg );
+						$this->chooseNameForm( $openid, $sreg );
 						return;
 					}
 				}
 
-				if (!isset($user)) {
-					wfDebug("OpenID: aborting in auth success because we could not create user object\n");
-					$wgOut->showErrorPage('openiderror', 'openiderrortext');
+				if ( !isset( $user ) ) {
+					wfDebug( "OpenID: aborting in auth success because we could not create user object\n" );
+					$wgOut->showErrorPage( 'openiderror', 'openiderrortext' );
 				} else {
 					$wgUser = $user;
-					$this->finishLogin($openid);
+					$this->finishLogin( $openid );
 				}
 			}
 		}
 	}
 
-	function finishLogin($openid) {
-
+	function finishLogin( $openid ) {
 		global $wgUser, $wgOut;
 
 		$wgUser->SetupSession();
@@ -187,37 +196,37 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 		$wgOut->setArticleRelated( false );
 		$wgOut->addWikiText( wfMsg( 'openidsuccess', $wgUser->getName(), $openid ) );
 		$wgOut->addHtml( $inject_html );
-		$wgOut->returnToMain(false, $this->returnTo());
+		$wgOut->returnToMain( false, $this->returnTo() );
 	}
 
-	function loginSetCookie($openid) {
+	function loginSetCookie( $openid ) {
 		global $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookiePrefix;
 		global $wgOpenIDCookieExpiration;
 
 		$exp = time() + $wgOpenIDCookieExpiration;
 
-		setcookie($wgCookiePrefix.'OpenID', $openid, $exp, $wgCookiePath, $wgCookieDomain, $wgCookieSecure);
+		setcookie( $wgCookiePrefix.'OpenID', $openid, $exp, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
 	}
 
-	function chooseNameForm($openid, $sreg, $messagekey = NULL) {
+	function chooseNameForm( $openid, $sreg, $messagekey = NULL ) {
 
 		global $wgOut, $wgUser, $wgOpenIDOnly;
 		
 		$sk = $wgUser->getSkin();
 		if ($messagekey) {
-			$message = wfMsg($messagekey);
-		} else if (array_key_exists('nickname', $sreg)) {
-			$message = wfMsg('openidnotavailable', $sreg['nickname']);
+			$message = wfMsg( $messagekey );
+		} else if ( array_key_exists( 'nickname', $sreg ) ) {
+			$message = wfMsg( 'openidnotavailable', $sreg['nickname'] );
 		} else {
-			$message = wfMsg('openidnotprovided');
+			$message = wfMsg( 'openidnotprovided' );
 		}
-		$instructions = wfMsg('openidchooseinstructions');
-		$wgOut->addHTML("<p>{$message}</p>" .
-						"<p>{$instructions}</p>" .
-						'<form action="' . $sk->makeSpecialUrl('OpenIDFinish/ChooseName') . '" method="POST">');
+		$instructions = wfMsg( 'openidchooseinstructions' );
+		$wgOut->addHTML( "<p>{$message}</p>" .
+						 "<p>{$instructions}</p>" .
+						 '<form action="' . $sk->makeSpecialUrl( 'OpenIDFinish/ChooseName' ) . '" method="POST">' );
 		$def = false;
 
-		if (!$wgOpenIDOnly) {
+		if ( !$wgOpenIDOnly ) {
 			# Let them attach it to an existing user
 			
 			# Grab the UserName in the cookie if it exists
@@ -227,69 +236,95 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 			if ( isset( $_COOKIE["{$wgCookiePrefix}UserName"] ) ) {
 				$name = trim( $_COOKIE["{$wgCookiePrefix}UserName"] );
 			}
+
+			# show OpenID Attributes
+			$oidAttributesToAccept = array('fullname', 'nickname', 'email', 'language');
+			$oidAttributes = array();
+
+			foreach ($oidAttributesToAccept as $oidAttr)
+			{
+				if ($oidAttr == 'fullname' && !$wgAllowRealName)
+				{
+					next;
+				}
+
+				if ( array_key_exists( $oidAttr, $sreg )) {
+					$oidAttributes[] = '<div>'.wfMsg( "openid$oidAttr" ).': <i>'.$sreg[$oidAttr].'</i></div>';
+				}
+			}
+
+			$oidAttributesUpdate = '';
+			if (count($oidAttributes) > 0)
+			{
+				$oidAttributesUpdate = '<div style="margin-left: 25px">'.
+					'<input type="checkbox" name="wpUpdateUserInfo" id="wpUpdateUserInfo">' .
+					'<label for="wpUpdateUserInfo">' . wfMsg( "openidupdateuserinfo" ) .
+					'<div style="margin-left: 25px">'.implode('', $oidAttributes).'</div>'.
+					'</label></div>';
+			}
 			
-			$wgOut->addHTML("<input type='radio' name='wpNameChoice' id='wpNameChoiceExisting' value='existing' /> " .
-							"<label for='wpNameChoiceExisting'>" . wfMsg("openidchooseexisting") . "</label> " .
-							"<input type='text' name='wpExistingName' id='wpExistingName' size='16' value='{$name}'> " .
-							"<label for='wpExistingPassword'>" . wfMsg("openidchoosepassword") . "</label> " .
-							"<input type='password' name='wpExistingPassword' size='8' /><br />");
+			$wgOut->addHTML("<div><input type='radio' name='wpNameChoice' id='wpNameChoiceExisting' value='existing' />" .
+				"<label for='wpNameChoiceExisting'>" . wfMsg( "openidchooseexisting" ) . "</label> " .
+				"<input type='text' name='wpExistingName' id='wpExistingName' size='16' value='{$name}'> " .
+				"<label for='wpExistingPassword'>" . wfMsg( "openidchoosepassword" ) . "</label> " .
+				"<input type='password' name='wpExistingPassword' size='8' /> " .
+				$oidAttributesUpdate . "</div>\n" );
 		}
 		
 		# These options won't exist if we can't get them.
 
-		if (array_key_exists('fullname', $sreg) && $this->userNameOK($sreg['fullname'])) {
-			$wgOut->addHTML("<input type='radio' name='wpNameChoice' id='wpNameChoiceFull' value='full' " .
-							((!$def) ? "checked = 'checked'" : "") . " />" .
-							"<label for='wpNameChoiceFull'>" . wfMsg("openidchoosefull", $sreg['fullname']) . "</label><br />");
+		if ( array_key_exists( 'fullname', $sreg ) && $this->userNameOK( $sreg['fullname'] ) ) {
+			$wgOut->addHTML( "<div><input type='radio' name='wpNameChoice' id='wpNameChoiceFull' value='full' " .
+							( ( !$def ) ? "checked = 'checked'" : "" ) . " />" .
+							"<label for='wpNameChoiceFull'>" . wfMsg( "openidchoosefull", $sreg['fullname'] ) . "</label></div>\n" );
 			$def = true;
 		}
 
-		$idname = $this->toUserName($openid);
+		$idname = $this->toUserName( $openid );
 
-		if ($idname && $this->userNameOK($idname)) {
-			$wgOut->addHTML("<input type='radio' name='wpNameChoice' id='wpNameChoiceUrl' value='url' " .
-							((!$def) ? "checked = 'checked'" : "") . " />" .
-							"<label for='wpNameChoiceUrl'>" . wfMsg("openidchooseurl", $idname) . "</label><br />");
+		if ( $idname && $this->userNameOK( $idname ) ) {
+			$wgOut->addHTML( "<div><input type='radio' name='wpNameChoice' id='wpNameChoiceUrl' value='url' " .
+							( ( !$def ) ? "checked = 'checked'" : "" ) . " />" .
+							"<label for='wpNameChoiceUrl'>" . wfMsg( "openidchooseurl", $idname ) . "</label></div>\n" );
 			$def = true;
 		}
 
 		# These are always available
 
-		$wgOut->addHTML("<input type='radio' name='wpNameChoice' id='wpNameChoiceAuto' value='auto' " .
-							((!$def) ? "checked = 'checked'" : "") . " />" .
-							"<label for='wpNameChoiceAuto'>" . wfMsg("openidchooseauto", $this->automaticName($sreg)) . "</label><br />");
+		$wgOut->addHTML( "<div><input type='radio' name='wpNameChoice' id='wpNameChoiceAuto' value='auto' " .
+							( ( !$def ) ? "checked = 'checked'" : "" ) . " />" .
+							"<label for='wpNameChoiceAuto'>" . wfMsg( "openidchooseauto", $this->automaticName( $sreg ) ) . "</label></div>\n");
 
 		$def = true;
 
-		$wgOut->addHTML("<input type='radio' name='wpNameChoice' id='wpNameChoiceManual' value='manual' " .
+		$wgOut->addHTML("<div><input type='radio' name='wpNameChoice' id='wpNameChoiceManual' value='manual' " .
 						" checked='off' />" .
-						"<label for='wpNameChoiceManual'>" . wfMsg("openidchoosemanual") . "</label> " .
-						"<input type='text' name='wpNameValue' id='wpNameValue' size='16' /><br />");
+						"<label for='wpNameChoiceManual'>" . wfMsg( "openidchoosemanual" ) . "</label> " .
+						"<input type='text' name='wpNameValue' id='wpNameValue' size='16' /></div>\n");
 
-		$ok = wfMsg('login');
-		$cancel = wfMsg('cancel');
+		$ok = wfMsg( 'login' );
+		$cancel = wfMsg( 'cancel' );
 
-		$wgOut->addHTML("<input type='submit' name='wpOK' value='{$ok}' /> <input type='submit' name='wpCancel' value='{$cancel}' />");
-		$wgOut->addHTML("</form>");
+		$wgOut->addHTML( "<input type='submit' name='wpOK' value='{$ok}' /> <input type='submit' name='wpCancel' value='{$cancel}' />" );
+		$wgOut->addHTML( "</form>" );
 	}
 
-	function canLogin($openid_url) {
-
+	function canLogin( $openid_url ) {
 		global $wgOpenIDConsumerDenyByDefault, $wgOpenIDConsumerAllow, $wgOpenIDConsumerDeny;
 
-		if ($this->isLocalUrl($openid_url)) {
+		if ( $this->isLocalUrl( $openid_url ) ) {
 			return false;
 		}
 
-		if ($wgOpenIDConsumerDenyByDefault) {
+		if ( $wgOpenIDConsumerDenyByDefault ) {
 			$canLogin = false;
-			foreach ($wgOpenIDConsumerAllow as $allow) {
-				if (preg_match($allow, $openid_url)) {
-					wfDebug("OpenID: $openid_url matched allow pattern $allow.\n");
+			foreach ( $wgOpenIDConsumerAllow as $allow ) {
+				if ( preg_match( $allow, $openid_url ) ) {
+					wfDebug( "OpenID: $openid_url matched allow pattern $allow.\n" );
 					$canLogin = true;
-					foreach ($wgOpenIDConsumerDeny as $deny) {
-						if (preg_match($deny, $openid_url)) {
-							wfDebug("OpenID: $openid_url matched deny pattern $deny.\n");
+					foreach ( $wgOpenIDConsumerDeny as $deny ) {
+						if ( preg_match( $deny, $openid_url ) ) {
+							wfDebug( "OpenID: $openid_url matched deny pattern $deny.\n" );
 							$canLogin = false;
 							break;
 						}
@@ -299,13 +334,13 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 			}
 		} else {
 			$canLogin = true;
-			foreach ($wgOpenIDConsumerDeny as $deny) {
-				if (preg_match($deny, $openid_url)) {
-					wfDebug("OpenID: $openid_url matched deny pattern $deny.\n");
+			foreach ( $wgOpenIDConsumerDeny as $deny ) {
+				if ( preg_match( $deny, $openid_url ) ) {
+					wfDebug( "OpenID: $openid_url matched deny pattern $deny.\n" );
 					$canLogin = false;
-					foreach ($wgOpenIDConsumerAllow as $allow) {
-						if (preg_match($allow, $openid_url)) {
-							wfDebug("OpenID: $openid_url matched allow pattern $allow.\n");
+					foreach ( $wgOpenIDConsumerAllow as $allow ) {
+						if ( preg_match( $allow, $openid_url ) ) {
+							wfDebug( "OpenID: $openid_url matched allow pattern $allow.\n" );
 							$canLogin = true;
 							break;
 						}
@@ -317,61 +352,52 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 		return $canLogin;
 	}
 
-	function isLocalUrl($url) {
-
+	function isLocalUrl( $url ) {
 		global $wgServer, $wgArticlePath;
 
 		$pattern = $wgServer . $wgArticlePath;
-		$pattern = str_replace('$1', '(.*)', $pattern);
-		$pattern = str_replace('?', '\?', $pattern);
+		$pattern = str_replace( '$1', '(.*)', $pattern );
+		$pattern = str_replace( '?', '\?', $pattern );
 
-		return preg_match('|^' . $pattern . '$|', $url);
+		return preg_match( '|^' . $pattern . '$|', $url );
 	}
 
 	# Find the user with the given openid, if any
 
-	function getUser($openid) {
+	function getUser( $openid ) {
 		global $wgSharedDB, $wgDBprefix;
 
-		if (isset($wgSharedDB)) {
+		if ( isset( $wgSharedDB ) ) {
 			$tableName = "`$wgSharedDB`.${wgDBprefix}user_openid";
 		} else {
 			$tableName = 'user_openid';
 		}
 
-		$dbr =& wfGetDB( DB_SLAVE );
-		$id = $dbr->selectField($tableName, 'uoi_user',
-								array('uoi_openid' => $openid));
-		if ($id) {
-			$name = User::whoIs($id);
-			return User::newFromName($name);
+		$dbr = wfGetDB( DB_SLAVE );
+		$id = $dbr->selectField(
+			$tableName,
+			'uoi_user',
+			array( 'uoi_openid' => $openid ),
+			__METHOD__
+		);
+		if ( $id ) {
+			return User::newFromID( $id );
 		} else {
 			return NULL;
 		}
 	}
 
-	function updateUser($user, $sreg) {
+	function updateUser( $user, $sreg ) {
 		global $wgAllowRealName;
 
 		# FIXME: only update if there's been a change
+		$user->setOption('nickname', array_key_exists( 'nickname', $sreg )
+			? $sreg['nickname'] : '');
 
-		if ( array_key_exists( 'nickname', $sreg ) ) {
-			$user->setOption( 'nickname', $sreg['nickname'] );
-		} else {
-			$user->setOption('nickname', '');
-		}
+		$user->setEmail( array_key_exists( 'email', $sreg ) ? $sreg['email'] : '' );
 
-		if ( array_key_exists( 'email', $sreg ) ) {
-			$user->setEmail( $sreg['email'] );
-		} else {
-			$user->setEmail( '' );
-		}
-
-		if ( array_key_exists( 'fullname', $sreg ) && $wgAllowRealName) {
-			$user->setRealName($sreg['fullname']);
-		} else {
-			$user->setRealName( '' );
-		}
+		$user->setRealName( (array_key_exists( 'fullname', $sreg ) && $wgAllowRealName)
+			? $sreg['fullname'] : '');
 
 		if ( array_key_exists( 'language', $sreg ) ) {
 			# FIXME: check and make sure the language exists
@@ -541,33 +567,35 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addWikiText( wfMsg( 'openidalreadyloggedin', $wgUser->getName() ) );
-		$wgOut->returnToMain(false, $this->returnTo() );
+		$wgOut->returnToMain( false, $this->returnTo() );
 	}
 
-	function getUserUrl($user) {
+	static function getUserUrl( $user ) {
 		$openid_url = null;
 
-		if (isset($user) && $user->getId() != 0) {
+		if ( isset( $user ) && $user->getId() != 0 ) {
 			global $wgSharedDB, $wgDBprefix;
-			if (isset($wgSharedDB)) {
+			if ( isset( $wgSharedDB ) ) {
 				$tableName = "`${wgSharedDB}`.${wgDBprefix}user_openid";
 			} else {
 				$tableName = 'user_openid';
 			}
 
-			$dbr =& wfGetDB( DB_SLAVE );
-			$res = $dbr->select(array($tableName),
-								array('uoi_openid'),
-								array('uoi_user' => $user->getId()),
-								'SpecialOpenIDFinish::getUserUrl');
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select(
+				array( $tableName ),
+				array( 'uoi_openid' ),
+				array( 'uoi_user' => $user->getId() ),
+				__METHOD__
+			);
 
 			# This should return 0 or 1 result, since user is unique
 			# in the table.
 
-			while ($res && $row = $dbr->fetchObject($res)) {
+			while ( $row = $res->fetchObject() ) {
 				$openid_url = $row->uoi_openid;
 			}
-			$dbr->freeResult($res);
+			$res->free();
 		}
 		return $openid_url;
 	}
@@ -586,13 +614,13 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 	}
 
 	function clearValues() {
-		unset($_SESSION['openid_consumer_identity']);
-		unset($_SESSION['openid_consumer_sreg']);
+		unset( $_SESSION['openid_consumer_identity'] );
+		unset( $_SESSION['openid_consumer_sreg'] );
 		return true;
 	}
 
 	function fetchValues() {
-		return array($_SESSION['openid_consumer_identity'], $_SESSION['openid_consumer_sreg']);
+		return array( $_SESSION['openid_consumer_identity'], $_SESSION['openid_consumer_sreg'] );
 	}
 
 	function returnTo() {
@@ -604,15 +632,15 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 	}
 
 	function getUserName($openid, $sreg, $choice, $nameValue) {
-		switch ($choice) {
+		switch ( $choice ) {
 		 case 'full':
-			return ((array_key_exists('fullname', $sreg)) ? $sreg['fullname'] : null);
+			return ( ( array_key_exists( 'fullname', $sreg ) ) ? $sreg['fullname'] : null );
 			break;
 		 case 'url':
-			return $this->toUserName($openid);
+			return $this->toUserName( $openid );
 			break;
 		 case 'auto':
-			return $this->automaticName($sreg);
+			return $this->automaticName( $sreg );
 			break;
 		 case 'manual':
 			return $nameValue;
@@ -621,29 +649,28 @@ class SpecialOpenIDFinish extends SpecialOpenID {
 		}
 	}
 
-	function automaticName($sreg) {
-		if (array_key_exists('nickname', $sreg) && # try auto-generated from nickname
-			strlen($sreg['nickname']) > 0) {
-			return $this->firstAvailable($sreg['nickname']);
+	function automaticName( $sreg ) {
+		if ( array_key_exists( 'nickname', $sreg ) && # try auto-generated from nickname
+			strlen( $sreg['nickname']) > 0 ) {
+			return $this->firstAvailable( $sreg['nickname'] );
 		} else { # try auto-generated
-			return $this->firstAvailable(wfMsg('openidusernameprefix'));
+			return $this->firstAvailable( wfMsg( 'openidusernameprefix' ) );
 		}
 	}
 	
-	function attachUser($openid, $sreg, $name, $password) {
+	function attachUser( $openid, $sreg, $name, $password ) {
 
-		$user = User::newFromName($name);
+		$user = User::newFromName( $name );
 
-		if (!$user) {
+		if ( !$user ) {
 			return NULL;
 		}
 		
-		if (!$user->checkPassword($password)) {
+		if ( !$user->checkPassword( $password ) ) {
 			return NULL;
 		}
 		
-		$this->setUserUrl($user, $openid);
-		$this->updateUser($user, $sreg);
+		$this->setUserUrl( $user, $openid );
 		
 		return $user;
 	}

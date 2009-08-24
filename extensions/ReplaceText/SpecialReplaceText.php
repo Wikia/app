@@ -12,7 +12,7 @@ class ReplaceText extends SpecialPage {
 		wfLoadExtensionMessages('ReplaceText');
 	}
 
-	function execute( $para ) {
+	function execute( $query ) {
 		global $wgUser, $wgOut;
 
 		if ( ! $wgUser->isAllowed('replacetext') ) {
@@ -66,8 +66,15 @@ function doSpecialReplaceText() {
 		$replacement_params['target_str'] = $target_str;
 		$replacement_params['replacement_str'] = $replacement_str;
 		$replacement_params['edit_summary'] = wfMsgForContent('replacetext_editsummary', $target_str, $replacement_str);
+		$replacement_params['create_redirect'] = false;
 		foreach ($wgRequest->getValues() as $key => $value) {
-			if ($value == 'on') {
+			if ($key == 'create-redirect' && $value == '1') {
+				$replacement_params['create_redirect'] = true;
+			}
+		}
+		$jobs = array();
+		foreach ($wgRequest->getValues() as $key => $value) {
+			if ($value == '1') {
 				if (strpos($key, 'move-') !== false) {
 					$title = Title::newFromId(substr($key, 5));
 					$replacement_params['move_page'] = true;
@@ -81,6 +88,10 @@ function doSpecialReplaceText() {
 		Job::batchInsert( $jobs );
 		$num_modified_pages = count($jobs);
 		$wgOut->addHTML( wfMsgExt( 'replacetext_success', array( 'escape', 'parsemag' ), $target_str, $replacement_str, $num_modified_pages) );
+		// link back to starting form
+		$rt_title = Title::makeTitleSafe( NS_SPECIAL, 'ReplaceText' );
+		$sk = $wgUser->getSkin();
+		$wgOut->addHTML( '<p>' . $sk->makeKnownLinkObj( $rt_title, wfMsg( 'replacetext_return' ) ) . '</p>' );
 	} elseif ( $wgRequest->getCheck('target_str') ) { // very long elseif, look for "end elseif"
 		$dbr =& wfGetDB( DB_SLAVE );
 		$fname = 'doSpecialReplaceText';
@@ -155,12 +166,12 @@ function doSpecialReplaceText() {
 		$res = $dbr->query($sql);
 		$contextchars = $wgUser->getOption( 'contextchars', 40 );
 		while( $row = $dbr->fetchObject( $res ) ) {
-			$title = Title::newFromText($row->title, $row->namespace);
+			$title = Title::makeTitleSafe($row->namespace, $row->title);
 			$article_text = $row->text;
 			$target_pos = strpos($article_text, $target_str);
-			$context_str = str_replace($angle_brackets, $escaped_angle_brackets, $wgContLang->truncate(substr($article_text, 0, $target_pos), -$contextchars, '...' ));
+			$context_str = str_replace($angle_brackets, $escaped_angle_brackets, $wgContLang->truncate(substr($article_text, 0, $target_pos), -$contextchars ) );
 			$context_str .= "<span class=\"searchmatch\">" . str_replace($angle_brackets, $escaped_angle_brackets, substr($article_text, $target_pos, strlen($target_str))) . "</span>";
-			$context_str .= str_replace($angle_brackets, $escaped_angle_brackets, $wgContLang->truncate(substr($article_text, $target_pos + strlen($target_str)), $contextchars, '...' ));
+			$context_str .= str_replace($angle_brackets, $escaped_angle_brackets, $wgContLang->truncate(substr($article_text, $target_pos + strlen($target_str)), $contextchars ) );
 			$found_titles[] = array($title, $context_str);
 			$num_modified_pages++;
 		}
@@ -172,11 +183,11 @@ function doSpecialReplaceText() {
 	ORDER BY p.page_namespace, p.page_title";
 			$res = $dbr->query($sql2);
 			while( $row = $dbr->fetchObject( $res ) ) {
-				$title = Title::newFromText($row->title, $row->namespace);
+				$title = Title::makeTitleSafe($row->namespace, $row->title);
 				// see if this move can happen
 				$cur_page_name = str_replace('_', ' ', $row->title);
 				$new_page_name = str_replace($target_str, $replacement_str, $cur_page_name);
-				$new_title = Title::newFromText($new_page_name, $row->namespace);
+				$new_title = Title::makeTitleSafe($row->namespace, $new_page_name);
 				$err = $title->isValidMoveOperation($new_title);
 				if ($title->userCanMove(true) && (! is_array($err))) {
 					$titles_for_move[] = $title;
@@ -188,6 +199,10 @@ function doSpecialReplaceText() {
 		}
 		if ($num_modified_pages == 0) {
 			$wgOut->addHTML(wfMsg('replacetext_noreplacement', $target_str));
+			// link back to starting form
+			$rt_title = Title::makeTitleSafe( NS_SPECIAL, 'ReplaceText' );
+			$sk = $wgUser->getSkin();
+			$wgOut->addHTML( '<p>' . $sk->makeKnownLinkObj( $rt_title, wfMsg( 'replacetext_return' ) ) . '</p>' );
 		} else {
 		$javascript_text =<<<END
 <script type="text/javascript">
@@ -225,13 +240,17 @@ END;
 END;
 		foreach ($found_titles as $value_pair) {
 			list($title, $context_str) = $value_pair;
-			$text .= "<input type=\"checkbox\" name=\"{$title->getArticleID()}\" checked /> {$skin->makeLinkObj( $title, $title->prefix($title->getText()) )} - <small>$context_str</small><br />\n";
+			$text .= Xml::check($title->getArticleID(), true);
+			$text .= " " . $skin->makeLinkObj( $title, $title->prefix($title->getText()) ) . " - <small>$context_str</small><br />\n";
   		}
 		if (count($titles_for_move) > 0) {
-			$text .= "<p>$choose_pages_for_move_label</p>\n";
+			$text .= "<br />\n<p>$choose_pages_for_move_label</p>\n";
 			foreach ($titles_for_move as $title) {
-				$text .= "<input type=\"checkbox\" name=\"move-{$title->getArticleID()}\" checked /> {$skin->makeLinkObj( $title, $title->prefix($title->getText()) )}<br />\n";
+				$text .= Xml::check('move-' . $title->getArticleID(), true);
+				$text .= " " . $skin->makeLinkObj( $title, $title->prefix($title->getText()) ) . "<br />\n";
  	 		}
+			$text .= '<p>' . wfMsg('replacetext_savemovedpages') . wfMsg('colon-separator');
+			$text .= Xml::check('create-redirect', true) . "</p>\n";
 		}
 		$text .=<<<END
 	<p><input type="Submit" name="replace" value="$replace_label"></p>

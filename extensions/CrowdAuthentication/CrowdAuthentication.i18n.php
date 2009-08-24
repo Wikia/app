@@ -37,6 +37,13 @@ $messages['arz'] = array(
 	'crowdauthentication-desc' => 'إضافة تأكيد لحشد الأتلاسيان',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'crowdauthentication-desc' => 'Dodatak potvrde za Atlassian Crowd',
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
  */
@@ -94,6 +101,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'crowdauthentication-desc' => 'Complemento de autentificación para Atlassian Crowd',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'crowdauthentication-desc' => 'Authentisierig-Erwyterig fir Atlassian Crowd',
 );
 
 /** Hebrew (עברית)
@@ -208,6 +222,13 @@ $messages['pt'] = array(
 	'crowdauthentication-desc' => 'Plugin de autenticação para Atlassian Crowd',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'crowdauthentication-desc' => 'Plugin de autenticação para Atlassian Crowd',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -241,6 +262,20 @@ $messages['stq'] = array(
  */
 $messages['sv'] = array(
 	'crowdauthentication-desc' => 'Verifieringsprogramtillägg för Atlassian Crowd',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'crowdauthentication-desc' => 'అట్లాసియన్ క్రౌడ్ కొరకై అధీకరణ ప్లగిన్',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'crowdauthentication-desc' => "Pampasak ng pagpapatunay para sa ''Atlassian Crowd''",
 );
 
 /** Vèneto (Vèneto)

@@ -29,8 +29,8 @@
 $wgExtensionFunctions[] = 'setupCatRSSExtension';
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Category Feed',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2009-02-13 19:13:48 +0000 (Fri, 13 Feb 2009) $',
+	'svn-revision' => '$LastChangedRevision: 47224 $',
 	'author' => 'Gabriel Wicke',
 	'description' => 'Uses bits from recentchanges feeds. Create in-page version, especially useful for wikinews',
 	'descriptionmsg' => 'catfeed-desc',
@@ -144,7 +144,7 @@ function setupCatRSSExtension() {
 			$text = preg_replace( array_keys($rules), array_values($rules), $text); 
 			
 			# only return the first few chars for now
-			$shorttext = $wgContLang->truncate( trim( $text ), 145, '...' );
+			$shorttext = $wgContLang->truncate( trim( $text ), 145 );
 			return htmlspecialchars( $shorttext );
 		}
 		

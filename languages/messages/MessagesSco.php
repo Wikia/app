@@ -20,6 +20,8 @@ $messages = array(
 'tog-highlightbroken'         => 'Format brucken airtins <a href="" class="new">like this</a> (alternative: like this<a href="" class="internal">?</a>).',
 'tog-justify'                 => 'Justifee paragraphs',
 'tog-hideminor'               => 'Hide smaa edits in recent chynges',
+'tog-hidepatrolled'           => 'Hide patrolled edits in recent chynges',
+'tog-newpageshidepatrolled'   => 'Hide patrolled pages frae the new page list',
 'tog-extendwatchlist'         => 'Mak watchleet bigger tae shaw aw chynges',
 'tog-usenewrc'                => 'Enhanced recent chynges (no for aa brousers)',
 'tog-numberheadings'          => 'Auto-nummer heidins',
@@ -54,6 +56,7 @@ $messages = array(
 'tog-watchlisthideminor'      => 'Dinna shaw sma edits on ma watchleet',
 'tog-watchlisthideliu'        => 'Hide edits by loggit in uisers frae the watchleet',
 'tog-watchlisthideanons'      => 'Hide edits by nameless uisers frae the watchleet',
+'tog-watchlisthidepatrolled'  => 'Hide patrolled edits frae the watchlist',
 'tog-ccmeonemails'            => 'Gie me copies o emails A write tae ither uisers',
 'tog-diffonly'                => 'Dinna shaw page contents ablo diffs',
 'tog-showhiddencats'          => 'Shaw hidden categories',
@@ -646,21 +649,18 @@ It micht hae been deletit frae the wiki, or the name micht hae been chynged.
 Try [[Special:Search|rakin on the wiki]] for new pages ye micht be interestit in.',
 
 # Revision deletion
-'rev-deleted-comment'         => '(jottin removit)',
-'rev-deleted-user'            => '(uisername removit)',
-'rev-deleted-event'           => '(entry removit)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-This page revision haes been removit frae the public archives.
-There micht be parteeculars in the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log].
-</div>',
-'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">
-This page revision haes been removit frae the public archives.
+'rev-deleted-comment'            => '(jottin removit)',
+'rev-deleted-user'               => '(uisername removit)',
+'rev-deleted-event'              => '(entry removit)',
+'rev-deleted-text-permission'    => 'This page revision haes been removit frae the public archives.
+There micht be parteeculars in the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log].',
+'rev-deleted-text-view'          => 'This page revision haes been removit frae the public archives.
 Acause yer an admeenistrator on this site, ye can leuk at it;
-there micht be parteeculars in the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log].
-</div>',
-'rev-delundel'                => 'shaw/scug',
-'revisiondelete'              => 'Delete/undelete revisions',
-'revdelete-nooldid-title'     => 'Nae target revision',
+there micht be parteeculars in the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log].',
+'rev-delundel'                   => 'shaw/scug',
+'revisiondelete'                 => 'Delete/undelete revisions',
+'revdelete-nooldid-title'        => 'Nae target revision',
+'revdelete-toomanytargets-title' => 'Ower mony targets',
 
 # Diffs
 'difference'              => '(Difference atween revisions)',
@@ -949,7 +949,7 @@ afore it wis delete. The actual text o thir deletit reveisions is available tae 
 # Contributions
 'contributions' => 'Uiser contreibutions',
 'mycontris'     => 'Ma contreibutions',
-'nocontribs'    => 'Nae chynges wis funnd matchin thae criteria.',
+'nocontribs'    => 'Nae chynges wis funnd matchin thae criteria.', # Optional parameter: $1 is the user name
 'uctop'         => ' (tap)',
 'month'         => 'Frae month (an afore):',
 'year'          => 'Frae year (an afore):',

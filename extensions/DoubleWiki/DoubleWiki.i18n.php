@@ -12,7 +12,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
- * @author Raimond Spekking
+ * @author Raymond
  */
 $messages['qqq'] = array(
 	'doublewiki-desc' => 'Extension description displayed on [[Special:Version]]',
@@ -96,6 +96,13 @@ $messages['cs'] = array(
 	'doublewiki-desc' => 'Zobrazí stránku a její překlad z jiné wiki ve dvou sloupcích na jedné straně',
 );
 
+/** Danish (Dansk)
+ * @author Byrial
+ */
+$messages['da'] = array(
+	'doublewiki-desc' => 'Viser en side og dens oversættelse fra en anden wiki i to kolonner på samme side',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  */
@@ -108,6 +115,13 @@ $messages['de'] = array(
  */
 $messages['dsb'] = array(
 	'doublewiki-desc' => 'Zwobraznja bok a jogo pśełožk z drugego wikija w dwěma słupikoma samkego boka',
+);
+
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'doublewiki-desc' => 'Εμφανίζει μια σελίδα και την μετάφρασή της από ένα άλλο wiki, σε δύο στήλες της ίδιας σελίδας.',
 );
 
 /** Esperanto (Esperanto)
@@ -164,6 +178,13 @@ $messages['frp'] = array(
  */
 $messages['gl'] = array(
 	'doublewiki-desc' => 'Amosa unha páxina e a súa tradución doutro wiki en dúas columnas na mesma páxina',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'doublewiki-desc' => 'Zeigt e Syte un ihri Ibersetzig us eme andere Wiki zwoospaltig uf derglyyche Syte aa',
 );
 
 /** Hebrew (עברית)
@@ -349,6 +370,13 @@ $messages['pt'] = array(
 	'doublewiki-desc' => 'Apresenta uma página e a sua tradução de outro wiki em duas colunas da mesma página',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'doublewiki-desc' => 'Apresenta uma página e a sua tradução de outro wiki em duas colunas da mesma página',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -382,6 +410,13 @@ $messages['sah'] = array(
  */
 $messages['sk'] = array(
 	'doublewiki-desc' => 'Zobrazí stránku a jej preklad z inej wiki v dvoch stĺpcoch na jednej stránke',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'doublewiki-desc' => 'Paraqet një faqe dhe përkthimin nga një wiki tjetër në dy kolona në faqen e njejtë',
 );
 
 /** Serbian Cyrillic ekavian (ћирилица)
@@ -466,6 +501,13 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'doublewiki-desc' => 'Jonön padi sa tradutod onik se vük votik su padüls tel pada ot',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'doublewiki-desc' => 'ווײַזט א בלאַט און זיין איבערזעצונג פון אַן אַנדער וויקי אויף צוויי עמודים אין איין בלאַט',
 );
 
 /** Yue (粵語)

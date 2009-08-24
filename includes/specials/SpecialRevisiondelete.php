@@ -7,87 +7,81 @@
  * @ingroup SpecialPage
  */
 
-function wfSpecialRevisiondelete( $par = null ) {
-	global $wgOut, $wgRequest, $wgUser;
-	# Handle our many different possible input types
-	$target = $wgRequest->getText( 'target' );
-	$oldid = $wgRequest->getArray( 'oldid' );
-	$artimestamp = $wgRequest->getArray( 'artimestamp' );
-	$logid = $wgRequest->getArray( 'logid' );
-	$img = $wgRequest->getArray( 'oldimage' );
-	$fileid = $wgRequest->getArray( 'fileid' );
-	# For reviewing deleted files...
-	$file = $wgRequest->getVal( 'file' );
-	# If this is a revision, then we need a target page
-	$page = Title::newFromUrl( $target );
-	if( is_null($page) ) {
-		$wgOut->addWikiMsg( 'undelete-header' );
-		return;
-	}
-	# Only one target set at a time please!
-	$i = (bool)$file + (bool)$oldid + (bool)$logid + (bool)$artimestamp + (bool)$fileid + (bool)$img;
-	if( $i !== 1 ) {
-		$wgOut->showErrorPage( 'revdelete-nooldid-title', 'revdelete-nooldid-text' );
-		return;
-	}
-	# Logs must have a type given
-	if( $logid && !strpos($page->getDBKey(),'/') ) {
-		$wgOut->showErrorPage( 'revdelete-nooldid-title', 'revdelete-nooldid-text' );
-		return;
-	}
-	# Either submit or create our form
-	$form = new RevisionDeleteForm( $page, $oldid, $logid, $artimestamp, $fileid, $img, $file );
-	if( $wgRequest->wasPosted() ) {
-		$form->submit( $wgRequest );
-	} else if( $oldid || $artimestamp ) {
-		$form->showRevs();
-	} else if( $fileid || $img ) {
-		$form->showImages();
-	} else if( $logid ) {
-		$form->showLogItems();
-	}
-	# Show relevant lines from the deletion log. This will show even if said ID
-	# does not exist...might be helpful
-	$wgOut->addHTML( "<h2>" . htmlspecialchars( LogPage::logName( 'delete' ) ) . "</h2>\n" );
-	LogEventsList::showLogExtract( $wgOut, 'delete', $page->getPrefixedText() );
-	if( $wgUser->isAllowed( 'suppressionlog' ) ){
-		$wgOut->addHTML( "<h2>" . htmlspecialchars( LogPage::logName( 'suppress' ) ) . "</h2>\n" );
-		LogEventsList::showLogExtract( $wgOut, 'suppress', $page->getPrefixedText() );
-	}
-}
+class SpecialRevisionDelete extends UnlistedSpecialPage {
 
-/**
- * Implements the GUI for Revision Deletion.
- * @ingroup SpecialPage
- */
-class RevisionDeleteForm {
-	/**
-	 * @param Title $page
-	 * @param array $oldids
-	 * @param array $logids
-	 * @param array $artimestamps
-	 * @param array $fileids
-	 * @param array $img
-	 * @param string $file
-	 */
-	function __construct( $page, $oldids, $logids, $artimestamps, $fileids, $img, $file ) {
-		global $wgUser, $wgOut;
+	public function __construct() {
+		parent::__construct( 'Revisiondelete', 'deleterevision' );
+		$this->includable( false );
+	}
 
-		$this->page = $page;
+	public function execute( $par ) {
+		global $wgOut, $wgUser, $wgRequest;
+		if( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+		if( !$wgUser->isAllowed( 'deleterevision' ) ) {
+			$wgOut->permissionRequired( 'deleterevision' );
+			return;
+		}
+		$this->skin =& $wgUser->getSkin();
+		# Set title and such
+		$this->setHeaders();
+		$this->outputHeader();
+		$this->wasPosted = $wgRequest->wasPosted();
+		# Handle our many different possible input types
+		$this->target = $wgRequest->getText( 'target' );
+		$this->oldids = $wgRequest->getArray( 'oldid' );
+		$this->artimestamps = $wgRequest->getArray( 'artimestamp' );
+		$this->logids = $wgRequest->getArray( 'logid' );
+		$this->oldimgs = $wgRequest->getArray( 'oldimage' );
+		$this->fileids = $wgRequest->getArray( 'fileid' );
 		# For reviewing deleted files...
-		if( $file ) {
-			$oimage = RepoGroup::singleton()->getLocalRepo()->newFromArchiveName( $page, $file );
+		$this->file = $wgRequest->getVal( 'file' );
+		# Only one target set at a time please!
+		$i = (bool)$this->file + (bool)$this->oldids + (bool)$this->logids
+			+ (bool)$this->artimestamps + (bool)$this->fileids + (bool)$this->oldimgs;
+		# No targets?
+		if( $i == 0 ) {
+			$wgOut->showErrorPage( 'notargettitle', 'notargettext' );
+			return;
+		}
+		# Too many targets?
+		if( $i !== 1 ) {
+			$wgOut->showErrorPage( 'revdelete-toomanytargets-title', 'revdelete-toomanytargets-text' );
+			return;
+		}
+		$this->page = Title::newFromUrl( $this->target );
+		# If we have revisions, get the title from the first one
+		# since they should all be from the same page. This allows 
+		# for more flexibility with page moves...
+		if( count($this->oldids) > 0 ) {
+			$rev = Revision::newFromId( $this->oldids[0] );
+			$this->page = $rev ? $rev->getTitle() : $this->page;
+		}
+		# We need a target page!
+		if( is_null($this->page) ) {
+			$wgOut->addWikiMsg( 'undelete-header' );
+			return;
+		}
+		# Logs must have a type given
+		if( $this->logids && !strpos($this->page->getDBKey(),'/') ) {
+			$wgOut->showErrorPage( 'revdelete-nologtype-title', 'revdelete-nologtype-text' );
+			return;
+		}
+		# For reviewing deleted files...show it now if allowed
+		if( $this->file ) {
+			$oimage = RepoGroup::singleton()->getLocalRepo()->newFromArchiveName( $this->page, $this->file );
 			$oimage->load();
 			// Check if user is allowed to see this file
 			if( !$oimage->userCan(File::DELETED_FILE) ) {
 				$wgOut->permissionRequired( 'suppressrevision' );
 			} else {
-				$this->showFile( $file );
+				$this->showFile( $this->file );
 			}
 			return;
 		}
-		$this->skin = $wgUser->getSkin();
-		# Give a link to the log for this page
+		# Give a link to the logs/hist for this page
 		if( !is_null($this->page) && $this->page->getNamespace() > -1 ) {
 			$links = array();
 
@@ -101,39 +95,65 @@ class RevisionDeleteForm {
 			if( $wgUser->isAllowed('undelete') ) {
 				$undelete = SpecialPage::getTitleFor( 'Undelete' );
 				$links[] = $this->skin->makeKnownLinkObj( $undelete, wfMsgHtml( 'deletedhist' ),
-					wfArrayToCGI( array( 'target' => $this->page->getPrefixedUrl() ) ) );
+					wfArrayToCGI( array( 'target' => $this->page->getPrefixedDBkey() ) ) );
 			}
 			# Logs themselves don't have histories or archived revisions
 			$wgOut->setSubtitle( '<p>'.implode($links,' / ').'</p>' );
 		}
+		# Lock the operation and the form context
+		$this->secureOperation();
+		# Either submit or create our form
+		if( $this->wasPosted ) {
+			$this->submit( $wgRequest );
+		} else if( $this->deleteKey == 'oldid' || $this->deleteKey == 'artimestamp' ) {
+			$this->showRevs();
+		} else if( $this->deleteKey == 'fileid' || $this->deleteKey == 'oldimage' ) {
+			$this->showImages();
+		} else if( $this->deleteKey == 'logid' ) {
+			$this->showLogItems();
+		}
+		# Show relevant lines from the deletion log. This will show even if said ID
+		# does not exist...might be helpful
+		$wgOut->addHTML( "<h2>" . htmlspecialchars( LogPage::logName( 'delete' ) ) . "</h2>\n" );
+		LogEventsList::showLogExtract( $wgOut, 'delete', $this->page->getPrefixedText() );
+		if( $wgUser->isAllowed( 'suppressionlog' ) ){
+			$wgOut->addHTML( "<h2>" . htmlspecialchars( LogPage::logName( 'suppress' ) ) . "</h2>\n" );
+			LogEventsList::showLogExtract( $wgOut, 'suppress', $this->page->getPrefixedText() );
+		}
+	}
+
+	private function secureOperation() {
+		global $wgUser;
+		$this->deleteKey = '';
 		// At this point, we should only have one of these
-		if( $oldids ) {
-			$this->revisions = $oldids;
+		if( $this->oldids ) {
+			$this->revisions = $this->oldids;
 			$hide_content_name = array( 'revdelete-hide-text', 'wpHideText', Revision::DELETED_TEXT );
-			$this->deleteKey='oldid';
-		} else if( $artimestamps ) {
-			$this->archrevs = $artimestamps;
+			$this->deleteKey = 'oldid';
+		} else if( $this->artimestamps ) {
+			$this->archrevs = $this->artimestamps;
 			$hide_content_name = array( 'revdelete-hide-text', 'wpHideText', Revision::DELETED_TEXT );
-			$this->deleteKey='artimestamp';
-		} else if( $img ) {
-			$this->ofiles = $img;
+			$this->deleteKey = 'artimestamp';
+		} else if( $this->oldimgs ) {
+			$this->ofiles = $this->oldimgs;
 			$hide_content_name = array( 'revdelete-hide-image', 'wpHideImage', File::DELETED_FILE );
-			$this->deleteKey='oldimage';
-		} else if( $fileids ) {
-			$this->afiles = $fileids;
+			$this->deleteKey = 'oldimage';
+		} else if( $this->fileids ) {
+			$this->afiles = $this->fileids;
 			$hide_content_name = array( 'revdelete-hide-image', 'wpHideImage', File::DELETED_FILE );
-			$this->deleteKey='fileid';
-		} else if( $logids ) {
-			$this->events = $logids;
+			$this->deleteKey = 'fileid';
+		} else if( $this->logids ) {
+			$this->events = $this->logids;
 			$hide_content_name = array( 'revdelete-hide-name', 'wpHideName', LogPage::DELETED_ACTION );
-			$this->deleteKey='logid';
+			$this->deleteKey = 'logid';
 		}
 		// Our checkbox messages depends one what we are doing,
 		// e.g. we don't hide "text" for logs or images
 		$this->checks = array(
 			$hide_content_name,
 			array( 'revdelete-hide-comment', 'wpHideComment', Revision::DELETED_COMMENT ),
-			array( 'revdelete-hide-user', 'wpHideUser', Revision::DELETED_USER ) );
+			array( 'revdelete-hide-user', 'wpHideUser', Revision::DELETED_USER )
+		);
 		if( $wgUser->isAllowed('suppressrevision') ) {
 			$this->checks[] = array( 'revdelete-hide-restricted', 'wpHideRestricted', Revision::DELETED_RESTRICTED );
 		}
@@ -161,9 +181,8 @@ class RevisionDeleteForm {
 	/**
 	 * This lets a user set restrictions for live and archived revisions
 	 */
-	function showRevs() {
-		global $wgOut, $wgUser, $action;
-
+	private function showRevs() {
+		global $wgOut, $wgUser;
 		$UserAllowed = true;
 
 		$count = ($this->deleteKey=='oldid') ?
@@ -174,7 +193,7 @@ class RevisionDeleteForm {
 		$wgOut->addHTML( "<ul>" );
 
 		$where = $revObjs = array();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_MASTER );
 		
 		$revisions = 0;
 		// Live revisions...
@@ -183,10 +202,11 @@ class RevisionDeleteForm {
 			foreach( $this->revisions as $revid ) {
 				$where[] = intval($revid);
 			}
-			$whereClause = 'rev_id IN(' . implode(',',$where) . ')';
 			$result = $dbr->select( array('revision','page'), '*',
-				array( 'rev_page' => $this->page->getArticleID(),
-					$whereClause, 'rev_page = page_id' ),
+				array(
+					'rev_page' => $this->page->getArticleID(),
+					'rev_id' => $where,
+					'rev_page = page_id' ),
 				__METHOD__ );
 			while( $row = $dbr->fetchObject( $result ) ) {
 				$revObjs[$row->rev_id] = new Revision( $row );
@@ -197,7 +217,7 @@ class RevisionDeleteForm {
 					continue;
 				} else if( !$revObjs[$revid]->userCan(Revision::DELETED_RESTRICTED) ) {
 				// If a rev is hidden from sysops
-					if( $action != 'submit') {
+					if( !$this->wasPosted ) {
 						$wgOut->permissionRequired( 'suppressrevision' );
 						return;
 					}
@@ -211,34 +231,35 @@ class RevisionDeleteForm {
 		} else {
 			// Run through and pull all our data in one query
 			foreach( $this->archrevs as $timestamp ) {
-				$where[] = $dbr->addQuotes( $timestamp );
+				$where[] = $dbr->timestamp( $timestamp );
 			}
-			$whereClause = 'ar_timestamp IN(' . implode(',',$where) . ')';
 			$result = $dbr->select( 'archive', '*',
-				array( 'ar_namespace' => $this->page->getNamespace(),
+				array(
+					'ar_namespace' => $this->page->getNamespace(),
 					'ar_title' => $this->page->getDBKey(),
-						$whereClause ),
+					'ar_timestamp' => $where ),
 				__METHOD__ );
 			while( $row = $dbr->fetchObject( $result ) ) {
-				$revObjs[$row->ar_timestamp] = new Revision( array(
-				'page'       => $this->page->getArticleId(),
-				'id'         => $row->ar_rev_id,
-				'text'       => $row->ar_text_id,
-				'comment'    => $row->ar_comment,
-				'user'       => $row->ar_user,
-				'user_text'  => $row->ar_user_text,
-				'timestamp'  => $row->ar_timestamp,
-				'minor_edit' => $row->ar_minor_edit,
-				'text_id'    => $row->ar_text_id,
-				'deleted'    => $row->ar_deleted,
-				'len'        => $row->ar_len) );
+				$timestamp = wfTimestamp( TS_MW, $row->ar_timestamp );
+				$revObjs[$timestamp] = new Revision( array(
+					'page'       => $this->page->getArticleId(),
+					'id'         => $row->ar_rev_id,
+					'text'       => $row->ar_text_id,
+					'comment'    => $row->ar_comment,
+					'user'       => $row->ar_user,
+					'user_text'  => $row->ar_user_text,
+					'timestamp'  => $timestamp,
+					'minor_edit' => $row->ar_minor_edit,
+					'text_id'    => $row->ar_text_id,
+					'deleted'    => $row->ar_deleted,
+					'len'        => $row->ar_len) );
 			}
 			foreach( $this->archrevs as $timestamp ) {
 				if( !isset($revObjs[$timestamp]) ) {
 					continue;
 				} else if( !$revObjs[$timestamp]->userCan(Revision::DELETED_RESTRICTED) ) {
 				// If a rev is hidden from sysops
-					if( $action != 'submit') {
+					if( !$this->wasPosted ) {
 						$wgOut->permissionRequired( 'suppressrevision' );
 						return;
 					}
@@ -255,8 +276,8 @@ class RevisionDeleteForm {
 		}
 		
 		$wgOut->addHTML( "</ul>" );
-
-		$wgOut->addWikiMsg( 'revdelete-text' );
+		// Explanation text
+		$this->addUsageText();
 
 		// Normal sysops can always see what they did, but can't always change it
 		if( !$UserAllowed ) return;
@@ -284,11 +305,8 @@ class RevisionDeleteForm {
 			Xml::openElement( 'fieldset' ) .
 			xml::element( 'legend', null,  wfMsg( 'revdelete-legend' ) )
 		);
-		// FIXME: all items checked for just one rev are checked, even if not set for the others
-		foreach( $this->checks as $item ) {
-			list( $message, $name, $field ) = $item;
-			$wgOut->addHTML( Xml::tags( 'div', null, Xml::checkLabel( wfMsg( $message ), $name, $name, $bitfields & $field ) ) );
-		}
+
+		$wgOut->addHTML( $this->buildCheckBoxes( $bitfields ) );
 		foreach( $items as $item ) {
 			$wgOut->addHTML( Xml::tags( 'p', null, $item ) );
 		}
@@ -299,39 +317,35 @@ class RevisionDeleteForm {
 			Xml::closeElement( 'fieldset' ) .
 			Xml::closeElement( 'form' ) . "\n"
 		);
-
 	}
 
 	/**
 	 * This lets a user set restrictions for archived images
 	 */
-	function showImages() {
-		// What is $action doing here???
-		global $wgOut, $wgUser, $action, $wgLang;
-
+	private function showImages() {
+		global $wgOut, $wgUser, $wgLang;
 		$UserAllowed = true;
 
 		$count = ($this->deleteKey=='oldimage') ? count($this->ofiles) : count($this->afiles);
-		$wgOut->addWikiMsg( 'revdelete-selected',
-			$this->page->getPrefixedText(),
+		$wgOut->addWikiMsg( 'revdelete-selected', $this->page->getPrefixedText(),
 			$wgLang->formatNum($count) );
 
 		$bitfields = 0;
 		$wgOut->addHTML( "<ul>" );
 
 		$where = $filesObjs = array();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_MASTER );
 		// Live old revisions...
 		$revisions = 0;
 		if( $this->deleteKey=='oldimage' ) {
 			// Run through and pull all our data in one query
 			foreach( $this->ofiles as $timestamp ) {
-				$where[] = $dbr->addQuotes( $timestamp.'!'.$this->page->getDBKey() );
+				$where[] = $timestamp.'!'.$this->page->getDBKey();
 			}
-			$whereClause = 'oi_archive_name IN(' . implode(',',$where) . ')';
 			$result = $dbr->select( 'oldimage', '*',
-				array( 'oi_name' => $this->page->getDBKey(),
-					$whereClause ),
+				array(
+					'oi_name' => $this->page->getDBKey(),
+					'oi_archive_name' => $where ),
 				__METHOD__ );
 			while( $row = $dbr->fetchObject( $result ) ) {
 				$filesObjs[$row->oi_archive_name] = RepoGroup::singleton()->getLocalRepo()->newFileFromRow( $row );
@@ -345,7 +359,7 @@ class RevisionDeleteForm {
 					continue;
 				} else if( !$filesObjs[$archivename]->userCan(File::DELETED_RESTRICTED) ) {
 					// If a rev is hidden from sysops
-					if( $action != 'submit' ) {
+					if( !$this->wasPosted ) {
 						$wgOut->permissionRequired( 'suppressrevision' );
 						return;
 					}
@@ -362,10 +376,10 @@ class RevisionDeleteForm {
 			foreach( $this->afiles as $id ) {
 				$where[] = intval($id);
 			}
-			$whereClause = 'fa_id IN(' . implode(',',$where) . ')';
 			$result = $dbr->select( 'filearchive', '*',
-				array( 'fa_name' => $this->page->getDBKey(),
-					$whereClause ),
+				array(
+					'fa_name' => $this->page->getDBKey(),
+					'fa_id' => $where ),
 				__METHOD__ );
 			while( $row = $dbr->fetchObject( $result ) ) {
 				$filesObjs[$row->fa_id] = ArchivedFile::newFromRow( $row );
@@ -376,7 +390,7 @@ class RevisionDeleteForm {
 					continue;
 				} else if( !$filesObjs[$fileid]->userCan(File::DELETED_RESTRICTED) ) {
 					// If a rev is hidden from sysops
-					if( $action != 'submit' ) {
+					if( !$this->wasPosted ) {
 						$wgOut->permissionRequired( 'suppressrevision' );
 						return;
 					}
@@ -394,9 +408,9 @@ class RevisionDeleteForm {
 		}
 		
 		$wgOut->addHTML( "</ul>" );
-
-		$wgOut->addWikiMsg('revdelete-text' );
-		//Normal sysops can always see what they did, but can't always change it
+		// Explanation text
+		$this->addUsageText();
+		// Normal sysops can always see what they did, but can't always change it
 		if( !$UserAllowed ) return;
 
 		$items = array(
@@ -421,11 +435,8 @@ class RevisionDeleteForm {
 				'id' => 'mw-revdel-form-filerevisions' ) ) .
 			Xml::fieldset( wfMsg( 'revdelete-legend' ) )
 		);
-		// FIXME: all items checked for just one file are checked, even if not set for the others
-		foreach( $this->checks as $item ) {
-			list( $message, $name, $field ) = $item;
-			$wgOut->addHTML( Xml::tags( 'div', null, Xml::checkLabel( wfMsg( $message ), $name, $name, $bitfields & $field ) ) );
-		}
+
+		$wgOut->addHTML( $this->buildCheckBoxes( $bitfields ) );
 		foreach( $items as $item ) {
 			$wgOut->addHTML( "<p>$item</p>" );
 		}
@@ -442,26 +453,27 @@ class RevisionDeleteForm {
 	/**
 	 * This lets a user set restrictions for log items
 	 */
-	function showLogItems() {
-		global $wgOut, $wgUser, $action, $wgMessageCache, $wgLang;
-
+	private function showLogItems() {
+		global $wgOut, $wgUser, $wgMessageCache, $wgLang;
 		$UserAllowed = true;
+
 		$wgOut->addWikiMsg( 'logdelete-selected', $wgLang->formatNum( count($this->events) ) );
 
 		$bitfields = 0;
 		$wgOut->addHTML( "<ul>" );
 
 		$where = $logRows = array();
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_MASTER );
 		// Run through and pull all our data in one query
 		$logItems = 0;
 		foreach( $this->events as $logid ) {
 			$where[] = intval($logid);
 		}
 		list($log,$logtype) = explode( '/',$this->page->getDBKey(), 2 );
-		$whereClause = "log_type = '$logtype' AND log_id IN(" . implode(',',$where) . ")";
 		$result = $dbr->select( 'logging', '*',
-			array( $whereClause ),
+			array(
+				'log_type' => $logtype,
+				'log_id' => $where ),
 			__METHOD__ );
 		while( $row = $dbr->fetchObject( $result ) ) {
 			$logRows[$row->log_id] = $row;
@@ -473,7 +485,7 @@ class RevisionDeleteForm {
 				continue;
 			} else if( !LogEventsList::userCan( $logRows[$logid],Revision::DELETED_RESTRICTED) ) {
 			// If an event is hidden from sysops
-				if( $action != 'submit') {
+				if( !$this->wasPosted ) {
 					$wgOut->permissionRequired( 'suppressrevision' );
 					return;
 				}
@@ -484,13 +496,13 @@ class RevisionDeleteForm {
 			$bitfields |= $logRows[$logid]->log_deleted;
 		}
 		if( !$logItems ) {
-			$wgOut->showErrorPage( 'revdelete-nooldid-title', 'revdelete-nooldid-text' );
+			$wgOut->showErrorPage( 'revdelete-nologid-title', 'revdelete-nologid-text' );
 			return;
 		}
 		
 		$wgOut->addHTML( "</ul>" );
-
-		$wgOut->addWikiMsg( 'revdelete-text' );
+		// Explanation text
+		$this->addUsageText();
 		// Normal sysops can always see what they did, but can't always change it
 		if( !$UserAllowed ) return;
 
@@ -511,11 +523,8 @@ class RevisionDeleteForm {
 				'id' => 'mw-revdel-form-logs' ) ) .
 			Xml::fieldset( wfMsg( 'revdelete-legend' ) )
 		);
-		// FIXME: all items checked for just on event are checked, even if not set for the others
-		foreach( $this->checks as $item ) {
-			list( $message, $name, $field ) = $item;
-			$wgOut->addHTML( Xml::tags( 'div', null, Xml::checkLabel( wfMsg( $message ), $name, $name, $bitfields & $field ) ) );
-		}
+		
+		$wgOut->addHTML( $this->buildCheckBoxes( $bitfields ) );
 		foreach( $items as $item ) {
 			$wgOut->addHTML( "<p>$item</p>" );
 		}
@@ -528,21 +537,47 @@ class RevisionDeleteForm {
 			Xml::closeElement( 'form' ) . "\n"
 		);
 	}
+	
+	private function addUsageText() {
+		global $wgOut, $wgUser;
+		$wgOut->addWikiMsg( 'revdelete-text' );
+		if( $wgUser->isAllowed( 'suppressrevision' ) ) {
+			$wgOut->addWikiMsg( 'revdelete-suppress-text' );
+		}
+	}
+	
+	/**
+	* @param int $bitfields, aggregate bitfield of all the bitfields
+	* @returns string HTML
+	*/
+	private function buildCheckBoxes( $bitfields ) {
+		$html = '';
+		// FIXME: all items checked for just one rev are checked, even if not set for the others
+		foreach( $this->checks as $item ) {
+			list( $message, $name, $field ) = $item;
+			$line = Xml::tags( 'div', null, Xml::checkLabel( wfMsg($message), $name, $name,
+				$bitfields & $field ) );
+			if( $field == Revision::DELETED_RESTRICTED ) $line = "<b>$line</b>";
+			$html .= $line;
+		}
+		return $html;
+	}
 
 	/**
 	 * @param Revision $rev
 	 * @returns string
 	 */
 	private function historyLine( $rev ) {
-		global $wgLang;
+		global $wgLang, $wgUser;
 
 		$date = $wgLang->timeanddate( $rev->getTimestamp() );
 		$difflink = $del = '';
 		// Live revisions
 		if( $this->deleteKey=='oldid' ) {
-			$revlink = $this->skin->makeLinkObj( $this->page, $date, 'oldid=' . $rev->getId() );
+			$tokenParams = '&unhide=1&token='.urlencode( $wgUser->editToken( $rev->getId() ) );
+			$revlink = $this->skin->makeLinkObj( $this->page, $date, 'oldid='.$rev->getId() . $tokenParams );
 			$difflink = '(' . $this->skin->makeKnownLinkObj( $this->page, wfMsgHtml('diff'),
-				'diff=' . $rev->getId() . '&oldid=prev' ) . ')';
+				'diff=' . $rev->getId() . '&oldid=prev' . $tokenParams ) . ')';
 		// Archived revisions
 		} else {
 			$undelete = SpecialPage::getTitleFor( 'Undelete' );
@@ -552,7 +587,7 @@ class RevisionDeleteForm {
 			$difflink = '(' . $this->skin->makeKnownLinkObj( $undelete, wfMsgHtml('diff'),
 				"target=$target&diff=prev&timestamp=" . $rev->getTimestamp() ) . ')';
 		}
-
+		// Check permissions; items may be "suppressed"
 		if( $rev->isDeleted(Revision::DELETED_TEXT) ) {
 			$revlink = '<span class="history-deleted">'.$revlink.'</span>';
 			$del = ' <tt>' . wfMsgHtml( 'deletedrev' ) . '</tt>';
@@ -561,8 +596,10 @@ class RevisionDeleteForm {
 				$difflink = '(' . wfMsgHtml('diff') . ')';
 			}
 		}
+		$userlink = $this->skin->revUserLink( $rev );
+		$comment = $this->skin->revComment( $rev );
 
-		return "<li> $difflink $revlink ".$this->skin->revUserLink( $rev )." ".$this->skin->revComment( $rev )."$del</li>";
+		return "<li>$difflink $revlink $userlink $comment{$del}</li>";
 	}
 
 	/**
@@ -704,9 +741,13 @@ class RevisionDeleteForm {
 	/**
 	 * @param WebRequest $request
 	 */
-	function submit( $request ) {
+	private function submit( $request ) {
 		global $wgUser, $wgOut;
-
+		# Check edit token on submission
+		if( $this->wasPosted && !$wgUser->matchEditToken( $request->getVal('wpEditToken') ) ) {
+			$wgOut->addWikiMsg( 'sessionfailure' );
+			return false;
+		}
 		$bitfield = $this->extractBitfield( $request );
 		$comment = $request->getText( 'wpReason' );
 		# Can the user set this field?
@@ -812,10 +853,10 @@ class RevisionDeleter {
 		foreach( $items as $revid ) {
 			$where[] = intval($revid);
 		}
-		$whereClause = 'rev_id IN(' . implode(',',$where) . ')';
 		$result = $this->dbw->select( 'revision', '*',
-			array( 'rev_page' => $title->getArticleID(),
-				$whereClause ),
+			array(
+				'rev_page' => $title->getArticleID(),
+				'rev_id' => $where ),
 			__METHOD__ );
 		while( $row = $this->dbw->fetchObject( $result ) ) {
 			$revObjs[$row->rev_id] = new Revision( $row );
@@ -869,27 +910,28 @@ class RevisionDeleter {
 		$Id_set = array();
 		// Run through and pull all our data in one query
 		foreach( $items as $timestamp ) {
-			$where[] = $this->dbw->addQuotes( $timestamp );
+			$where[] = $this->dbw->timestamp( $timestamp );
 		}
-		$whereClause = 'ar_timestamp IN(' . implode(',',$where) . ')';
 		$result = $this->dbw->select( 'archive', '*',
-			array( 'ar_namespace' => $title->getNamespace(),
+			array(
+				'ar_namespace' => $title->getNamespace(),
 				'ar_title' => $title->getDBKey(),
-					$whereClause ),
+				'ar_timestamp' => $where ),
 			__METHOD__ );
 		while( $row = $this->dbw->fetchObject( $result ) ) {
-			$revObjs[$row->ar_timestamp] = new Revision( array(
-			'page'       => $title->getArticleId(),
-			'id'         => $row->ar_rev_id,
-			'text'       => $row->ar_text_id,
-			'comment'    => $row->ar_comment,
-			'user'       => $row->ar_user,
-			'user_text'  => $row->ar_user_text,
-			'timestamp'  => $row->ar_timestamp,
-			'minor_edit' => $row->ar_minor_edit,
-			'text_id'    => $row->ar_text_id,
-			'deleted'    => $row->ar_deleted,
-			'len'        => $row->ar_len) );
+			$timestamp = wfTimestamp( TS_MW, $row->ar_timestamp );
+			$revObjs[$timestamp] = new Revision( array(
+				'page'       => $title->getArticleId(),
+				'id'         => $row->ar_rev_id,
+				'text'       => $row->ar_text_id,
+				'comment'    => $row->ar_comment,
+				'user'       => $row->ar_user,
+				'user_text'  => $row->ar_user_text,
+				'timestamp'  => $timestamp,
+				'minor_edit' => $row->ar_minor_edit,
+				'text_id'    => $row->ar_text_id,
+				'deleted'    => $row->ar_deleted,
+				'len'        => $row->ar_len) );
 		}
 		// To work!
 		foreach( $items as $timestamp ) {
@@ -939,12 +981,12 @@ class RevisionDeleter {
 		$set = array();
 		// Run through and pull all our data in one query
 		foreach( $items as $timestamp ) {
-			$where[] = $this->dbw->addQuotes( $timestamp.'!'.$title->getDBKey() );
+			$where[] = $timestamp.'!'.$title->getDBKey();
 		}
-		$whereClause = 'oi_archive_name IN(' . implode(',',$where) . ')';
 		$result = $this->dbw->select( 'oldimage', '*',
-			array( 'oi_name' => $title->getDBKey(),
-				$whereClause ),
+			array(
+				'oi_name' => $title->getDBKey(),
+				'oi_archive_name' => $where ),
 			__METHOD__ );
 		while( $row = $this->dbw->fetchObject( $result ) ) {
 			$filesObjs[$row->oi_archive_name] = RepoGroup::singleton()->getLocalRepo()->newFileFromRow( $row );
@@ -1034,10 +1076,9 @@ class RevisionDeleter {
 		foreach( $items as $id ) {
 			$where[] = intval($id);
 		}
-		$whereClause = 'fa_id IN(' . implode(',',$where) . ')';
 		$result = $this->dbw->select( 'filearchive', '*',
 			array( 'fa_name' => $title->getDBKey(),
-				$whereClause ),
+				'fa_id' => $where ),
 			__METHOD__ );
 		while( $row = $this->dbw->fetchObject( $result ) ) {
 			$filesObjs[$row->fa_id] = ArchivedFile::newFromRow( $row );
@@ -1091,9 +1132,10 @@ class RevisionDeleter {
 			$where[] = intval($logid);
 		}
 		list($log,$logtype) = explode( '/',$title->getDBKey(), 2 );
-		$whereClause = "log_type ='$logtype' AND log_id IN(" . implode(',',$where) . ")";
 		$result = $this->dbw->select( 'logging', '*',
-			array( $whereClause ),
+			array(
+				'log_type' => $logtype,
+				'log_id' => $where ),
 			__METHOD__ );
 		while( $row = $this->dbw->fetchObject( $result ) ) {
 			$logRows[$row->log_id] = $row;

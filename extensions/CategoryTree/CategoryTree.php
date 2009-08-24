@@ -66,7 +66,7 @@ $wgCategoryTreeSidebarRoot = NULL;
 $wgCategoryTreeHijackPageCategories = false; # EXPERIMENTAL! NOT YET FOR PRODUCTION USE! Main problem is general HTML/CSS layout cruftiness.
 
 $wgCategoryTreeExtPath = $wgExtensionsPath . '/CategoryTree'; # Wikia change - RT #11231
-$wgCategoryTreeVersion = '4';  #NOTE: bump this when you change the CSS or JS files!
+$wgCategoryTreeVersion = '5';  #NOTE: bump this when you change the CSS or JS files!
 $wgCategoryTreeUseCategoryTable = version_compare( $wgVersion, "1.13", '>=' );
 
 $wgCategoryTreeOmitNamespace = CT_HIDEPREFIX_CATEGORIES;
@@ -110,8 +110,8 @@ $wgExtensionAliasesFiles['CategoryTree'] = dirname(__FILE__) . '/CategoryTreePag
 $wgExtensionFunctions[] = 'efCategoryTree';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CategoryTree',
-	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44056 $',
+	'svn-date' => '$LastChangedDate: 2009-03-09 11:54:39 +0000 (Mon, 09 Mar 2009) $',
+	'svn-revision' => '$LastChangedRevision: 48218 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CategoryTree',
 	'description' => 'Dynamically navigate the category structure',
@@ -119,8 +119,8 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'CategoryTree',
-	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44056 $',
+	'svn-date' => '$LastChangedDate: 2009-03-09 11:54:39 +0000 (Mon, 09 Mar 2009) $',
+	'svn-revision' => '$LastChangedRevision: 48218 $',
 	'author' => 'Daniel Kinzler',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CategoryTree',
 	'description' => 'Dynamically navigate the category structure',
@@ -229,7 +229,7 @@ function efCategoryTreeGetMagic( &$magicWords, $langCode ) {
  * This loads CategoryTreeFunctions.php and calls CategoryTree::ajax()
  */
 function efCategoryTreeAjaxWrapper( $category, $options, $enc = '' ) {
-	global $wgCategoryTreeHTTPCache, $wgSquidMaxAge, $wgUseSquid;
+	global $wgCategoryTreeHTTPCache, $wgSquidMaxage, $wgUseSquid;
 
 	if ( is_string( $options ) ) {
 		$options = CategoryTree::decodeOptions( $options, $enc );
@@ -241,8 +241,8 @@ function efCategoryTreeAjaxWrapper( $category, $options, $enc = '' ) {
 	$depth = efCategoryTreeCapDepth( $ct->getOption('mode'), $depth );
 	$response = $ct->ajax( $category, $depth );
 
-	if ( $wgCategoryTreeHTTPCache && $wgSquidMaxAge && $wgUseSquid ) {
-		$response->setCacheDuration( $wgSquidMaxAge );
+	if ( $wgCategoryTreeHTTPCache && $wgSquidMaxage && $wgUseSquid ) {
+		$response->setCacheDuration( $wgSquidMaxage );
 		$response->setVary( 'Accept-Encoding, Cookie' ); #cache for anons only
 		#TODO: purge the squid cache when a category page is invalidated
 	}

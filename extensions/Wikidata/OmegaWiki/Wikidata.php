@@ -204,8 +204,8 @@ class DefaultWikidataApplication {
 
 		$wgOut->addHTML(getOptionPanel(
 			array(
-				'Transaction' => getSuggest('transaction','transaction', array(), $transactionId, getTransactionLabel($transactionId), array(0, 2, 3)),
-				'Show record life span' => getCheckBox('show-record-life-span',$this->showRecordLifeSpan)
+				wfMsg('ow_history_transaction') => getSuggest('transaction','transaction', array(), $transactionId, getTransactionLabel($transactionId), array(0, 2, 3)),
+				wfMsg('ow_history_show_life_span') => getCheckBox('show-record-life-span',$this->showRecordLifeSpan)
 			),
 			'history'
 		));

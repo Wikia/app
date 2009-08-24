@@ -14,14 +14,13 @@ class SpecialGlobalBlock extends SpecialPage {
 		global $wgOut, $wgRequest, $wgUser;
 		$this->setHeaders();
 
-		$this->loadParameters();
+		$this->loadParameters( $par );
 
 		$wgOut->setPageTitle( wfMsg( 'globalblocking-block' ) );
 		$wgOut->setRobotPolicy( "noindex,nofollow" );
 		$wgOut->setArticleRelated( false );
 		$wgOut->enableClientCache( false );
 
-		// We expect one error message, the "pages in the special namespace cannot be edited" one.
 		if (!$this->userCanExecute( $wgUser )) {
 			$this->displayRestrictionError();
 			return;
@@ -37,111 +36,107 @@ class SpecialGlobalBlock extends SpecialPage {
 				return;
 			}
 		}
-
-		$errorstr = '';
-
-		if (is_array($errors) && count($errors)>0) {			
-			foreach ( $errors as $error ) {
-				if (is_array($error)) {
-					$msg = array_shift($error);
-				} else {
-					$msg = $error;
-					$error = array();
-				}
-				$errorstr .= Xml::tags( 'li', null, wfMsgExt( $msg, array( 'parseinline' ), $error ) );
+		
+		if ($this->mModifyForm) {
+			$dbr = GlobalBlocking::getGlobalBlockingSlave();
+			$block = $dbr->selectRow( 'globalblocks',
+									'*',
+									array( 'gb_address' => $this->mAddress ),
+									__METHOD__ );
+			if ($block->gb_expiry == 'infinity') {
+				$this->mExpirySelection = 'indefinite';
+			} else {
+				$this->mExpiry = wfTimestamp( TS_ISO_8601, $block->gb_expiry );
 			}
-			
-			$errorstr = wfMsgExt( 'globalblocking-block-errors', array( 'parse' ), array( count( $errors ) ) ) . Xml::tags( 'ul', null, $errorstr );
-			
-			$errorstr = Xml::tags( 'div', array( 'class' => 'error' ), $errorstr );
+			$this->mAnonOnly = $block->gb_anon_only;
+			$this->mReason = $block->gb_reason;
+		}
+		
+		$errorstr = null;
+
+		if (is_array($errors) && count($errors)>0) {
+			$errorstr = $this->formatErrors( $errors );
 		}
 		
 		$this->form( $errorstr );
 	}
+	
+	function formatErrors( $errors ) {
+		$errorstr = '';
+		foreach ( $errors as $error ) {
+			if (is_array($error)) {
+				$msg = array_shift($error);
+			} else {
+				$msg = $error;
+				$error = array();
+			}
+			$errorstr .= Xml::tags( 'li', null, wfMsgExt( $msg, array( 'parseinline' ), $error ) );
+			
+			// Special case
+			if ($msg == 'globalblocking-block-alreadyblocked') {
+				$this->mModifyForm = true;
+			}
+		}
+		
+		$errorstr = Xml::tags( 'ul', null, $errorstr );
+		$header = wfMsgExt( 'globalblocking-block-errors',
+								'parse',
+								array(count( $errors ))
+							);
+		$errorstr = "$header\n$errorstr";
+		
+		$errorstr = Xml::tags( 'div', array( 'class' => 'error' ), $errorstr );
+		
+		return $errorstr;
+	}
 
-	function loadParameters() {
+	function loadParameters( $par ) {
 		global $wgRequest;
-		$this->mAddress = $wgRequest->getText( 'wpAddress' );
+		$this->mAddress = trim( $wgRequest->getText( 'wpAddress' ) );
+		if (!$this->mAddress)
+			$this->mAddress = $par;
+			
 		$this->mReason = $wgRequest->getText( 'wpReason' );
 		$this->mExpiry = $this->mExpirySelection = $wgRequest->getText( 'wpExpiry' );
 		if ($this->mExpiry == 'other') {
 			$this->mExpiry = $wgRequest->getText( 'wpExpiryOther' );
 		}
-		$this->mAnonOnly = $wgRequest->getCheck( 'wpAnonOnly' );
+		$this->mAnonOnly = $wgRequest->getBool( 'wpAnonOnly' );
+		$this->mModify = $wgRequest->getBool( 'wpModify' );
+		$this->mModifyForm = $wgRequest->getCheck( 'modify' );
 	}
 
 	function trySubmit() {
-		global $wgUser,$wgDBname,$wgOut;
-		$errors = array();
+		global $wgOut, $wgUser;
+		$options = array();
+		$skin = $wgUser->getSkin();
 		
-		## Purge expired blocks.
-		GlobalBlocking::purgeExpired();
-
-		## Validate input
-		$ip = IP::sanitizeIP( $this->mAddress );
-
-		if (!IP::isIPAddress($ip)) {
-			// Invalid IP address.
-			$errors[] = array( 'globalblocking-block-ipinvalid', $ip );
-		}
-
-		$expiry = Block::parseExpiryInput( $this->mExpiry );
-		
-		if ( false === $expiry ) {
-			$errors[] = array( 'globalblocking-block-expiryinvalid', $this->mExpiry );
-		}
-		
-		if (GlobalBlocking::getGlobalBlockId($ip)) {
-			$errors[] = array( 'globalblocking-block-alreadyblocked', $ip );
-		}
-	
-		// Check for too-big ranges.
-		list( $range_start, $range_end ) = IP::parseRange( $ip );
-		
-		if (substr( $range_start, 0, 4 ) != substr( $range_end, 0, 4 )) {
-			// Range crosses a /16 boundary.
-			$errors[] = array( 'globalblocking-block-bigrange', $ip );
-		}
-		
-		// Normalise the range
-		if ($range_start != $range_end) {
-			$ip = Block::normaliseRange( $ip );
-		}
-		
-		if (count($errors)>0)
-			return $errors;
-
-		// We're a-ok.
-		$dbw = GlobalBlocking::getGlobalBlockingMaster();
-
-		$row = array();
-		$row['gb_address'] = $ip;
-		$row['gb_by'] = $wgUser->getName();
-		$row['gb_by_wiki'] = $wgDBname;
-		$row['gb_reason'] = $this->mReason;
-		$row['gb_timestamp'] = $dbw->timestamp(wfTimestampNow());
-		$row['gb_anon_only'] = $this->mAnonOnly;
-		$row['gb_expiry'] = Block::encodeExpiry($expiry, $dbw);
-		list( $row['gb_range_start'], $row['gb_range_end'] ) = array( $range_start, $range_end );
-
-		$dbw->insert( 'globalblocks', $row, __METHOD__ );
-
-		// Log it.
-		$logParams = array();
-		$logParams[] = $this->mExpiry;
 		if ($this->mAnonOnly)
-			$logParams[] = wfMsgForContent( 'globalblocking-list-anononly' );
-
-		$page = new LogPage( 'gblblock' );
-
-		$page->addEntry( 'gblock', SpecialPage::getTitleFor( 'Contributions', $ip ), $this->mReason, $logParams );
-
-		$wgOut->addWikitext( wfMsg('globalblocking-block-success', $ip ) );
-		$wgOut->setSubtitle( wfMsg( 'globalblocking-block-successsub' ) );
+			$options[] = 'anon-only';
+		if ($this->mModify)
+			$options[] = 'modify';
 		
-		$link = $wgUser->getSkin()->makeKnownLinkObj( SpecialPage::getTitleFor( 'GlobalBlockList' ), wfMsg( 'globalblocking-return' ) );
+		$errors = GlobalBlocking::block( $this->mAddress, $this->mReason, $this->mExpiry, $options );
+		
+		if ( count($errors) ) {
+			return $errors;
+		}
+		
+		if ($this->mModify) {
+			$textMessage = 'globalblocking-modify-success';
+			$subMessage = 'globalblocking-modify-successsub';
+		} else {
+			$textMessage = 'globalblocking-block-success';
+			$subMessage = 'globalblocking-block-successsub';
+		}
+		
+		$wgOut->addWikitext( wfMsg($textMessage, $this->mAddress ) );
+		$wgOut->setSubtitle( wfMsg( $subMessage ) );
+		
+		$link = $skin->link( SpecialPage::getTitleFor( 'GlobalBlockList' ),
+							wfMsg( 'globalblocking-return' ) );
 		$wgOut->addHTML( $link );
-
+		
 		return array();
 	}
 
@@ -151,23 +146,38 @@ class SpecialGlobalBlock extends SpecialPage {
 		$form = '';
 
 		// Introduction
-		$wgOut->addWikiMsg( 'globalblocking-block-intro' );
+		if ($this->mModifyForm) {
+			$wgOut->addWikiMsg( 'globalblocking-modify-intro' );
+		} else {
+			$wgOut->addWikiMsg( 'globalblocking-block-intro' );
+		}
 		
 		// Add errors
 		$wgOut->addHTML( $error );
 
 		$form .= Xml::openElement( 'fieldset' ) .
 			Xml::element( 'legend', null, wfMsg( 'globalblocking-block-legend' ) );
-
 		$form .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgScript, 'name' => 'uluser' ) );
 		$form .= Xml::hidden( 'title',  SpecialPage::getTitleFor('GlobalBlock')->getPrefixedText() );
 
 		$fields = array ();
 
 		// Who to block
-		$fields['ipaddress'] = Xml::input( 'wpAddress', 45, $this->mAddress );
+		$fields['ipaddress'] =
+			Xml::input( 'wpAddress',
+				45,
+				$this->mAddress,
+				array('id' => 'mw-globalblock-address' )
+			);
+		
 		// Why to block them
-		$fields['globalblocking-block-reason'] = Xml::input( 'wpReason', 45, $this->mReason );
+		$fields['globalblocking-block-reason'] =
+			Xml::input(
+				'wpReason',
+					45,
+					$this->mReason,
+					array( 'id' => 'mw-globalblock-reason' )
+				);
 
 		// How long to block them for
 		if ( ( $dropdown = wfMsgNoTrans( 'globalblocking-expiry-options' ) ) != '-') {
@@ -179,22 +189,49 @@ class SpecialGlobalBlock extends SpecialPage {
 		}
 		
 		if ($dropdown == false ) {
-			$fields['globalblocking-block-expiry'] = Xml::input( 'wpExpiry', 45, $this->mExpiry );
+			$fields['globalblocking-block-expiry'] =
+				Xml::input(
+					'wpExpiry',
+					45,
+					$this->mExpiry,
+					array( 'id' => 'mw-globalblock-expiry' )
+				);
 		} else {
-			$fields['globalblocking-block-expiry'] = $this->buildExpirySelector( 'wpExpiry', 'wpExpiry', $this->mExpirySelection, $dropdown );
-			$fields['globalblocking-block-expiry-otherfield'] = Xml::input( 'wpExpiryOther', 45, $this->mExpiry == $this->mExpirySelection ? '' : $this->mExpiry );
+			$fields['globalblocking-block-expiry'] =
+				$this->buildExpirySelector(
+					'wpExpiry',
+					'mw-globalblock-expiry-selector',
+					$this->mExpirySelection,
+					$dropdown
+				);
+			$fields['globalblocking-block-expiry-otherfield'] =
+				Xml::input(
+					'wpExpiryOther',
+					45,
+					$this->mExpiry == $this->mExpirySelection ? '' : $this->mExpiry,
+					array( 'id' => 'mw-globalblock-expiry-other' )
+				);
 		}
 
 		// Block all users, or just anonymous ones
-		$fields['globalblocking-block-options'] = Xml::checkLabel( wfMsg( 'ipbanononly' ), 'wpAnonOnly', 'wpAnonOnly', $this->mAnonOnly );
+		$fields['globalblocking-block-options'] =
+			Xml::checkLabel(
+				wfMsg( 'ipbanononly' ),
+				'wpAnonOnly',
+				'mw-globalblock-anon-only',
+				$this->mAnonOnly
+			);
 
 		// Build a form.
-		$form .= Xml::buildForm( $fields, 'globalblocking-block-submit' );
+		$submitMsg = $this->mModifyForm
+			? 'globalblocking-modify-submit' : 'globalblocking-block-submit';
+		$form .= Xml::buildForm( $fields, $submitMsg );
 
 		$form .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
+		if ($this->mModifyForm)
+			$form .= Xml::hidden( 'wpModify', 1 );
 
 		$form .= Xml::closeElement( 'form' );
-
 		$form .= Xml::closeElement( 'fieldset' );
 
 		$wgOut->addHTML( $form );

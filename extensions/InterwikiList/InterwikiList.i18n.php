@@ -1,16 +1,23 @@
 <?php
-
-// Internationalization file for Extension:InterwikiList
+/**
+ * Internationalisation file for InterwikiList extension.
+ *
+ * @file
+ * @ingroup Extensions
+ */
 
 $messages = array();
 
-$messages['en'] = array (
-                'interwikilist'          => 'Interwiki list',
-                'interwikilist-desc'     => 'Adds a [[Special:Interwikilist|special page]] to view available interwiki links',
-                'interwikilist-linkname' => 'Interwiki link',
-                'interwikilist-target'   => 'Target URL',
-				'interwikilist-filter'   => 'Filter list',
-				'interwikilist-prefix'   => 'Interwiki prefix:',
+/** English
+ * @author Chad Horohoe
+ */
+$messages['en'] = array(
+	'interwikilist' => 'Interwiki list',
+	'interwikilist-desc' => 'Adds a [[Special:Interwikilist|special page]] to view available interwiki links',
+	'interwikilist-linkname' => 'Interwiki link',
+	'interwikilist-target' => 'Target URL',
+	'interwikilist-filter' => 'Filter list',
+	'interwikilist-prefix' => 'Interwiki prefix:',
 );
 
 /** Message documentation (Message documentation)
@@ -93,6 +100,13 @@ $messages['cs'] = array(
 	'interwikilist-prefix' => 'Interwiki prefix:',
 );
 
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'interwikilist-prefix' => 'Rhagddodiad rhyngwici:',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  */
@@ -128,6 +142,17 @@ $messages['eo'] = array(
 	'interwikilist-prefix' => 'Intervikia prefikso:',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'interwikilist' => 'Lista interwiki',
+	'interwikilist-desc' => 'Agrega una [[Special:Interwikilist|página especial]] para ver vínculos interwiki disponibles',
+	'interwikilist-linkname' => 'Vínculo interwiki',
+	'interwikilist-filter' => 'Lista de filtros',
+	'interwikilist-prefix' => 'Prefijo interwiki:',
+);
+
 /** Estonian (Eesti)
  * @author Avjoska
  */
@@ -138,11 +163,12 @@ $messages['et'] = array(
 );
 
 /** Basque (Euskara)
+ * @author An13sa
  * @author Theklan
  */
 $messages['eu'] = array(
 	'interwikilist' => 'Interwiki zerrenda',
-	'interwikilist-desc' => 'Erabil daitezkeen interwiki loturen [[Berezi:Interwikilist|orrialde berezi]] bat gehitzen du',
+	'interwikilist-desc' => 'Erabil daitezkeen interwiki loturen [[Special:Interwikilist|orrialde berezi]] bat gehitzen du',
 	'interwikilist-linkname' => 'Interwiki lotura',
 	'interwikilist-target' => 'URL helburua',
 	'interwikilist-filter' => 'Iragazkien zerrenda',
@@ -209,6 +235,18 @@ $messages['grc'] = array(
 	'interwikilist-target' => 'URL-στόχος',
 	'interwikilist-filter' => 'Κατάλογος διηθητηρίων',
 	'interwikilist-prefix' => 'Πρόθεμα διαϝίκι:',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'interwikilist' => 'Interwiki-Lischt',
+	'interwikilist-desc' => 'Ergänzt e [[Special:Interwikilist|Spezialsyte]] zum verfiegbari Interwiki-Gleicher aazeige',
+	'interwikilist-linkname' => 'Interwiki-Gleich',
+	'interwikilist-target' => 'Ziil-URL',
+	'interwikilist-filter' => 'Lischt filtere',
+	'interwikilist-prefix' => 'Interwiki-Präfix:',
 );
 
 /** Hebrew (עברית)
@@ -331,7 +369,7 @@ $messages['nl'] = array(
 	'interwikilist' => 'Interwikilijst',
 	'interwikilist-desc' => 'Voegt een [[Special:Interwikilist|speciale pagina]] toe om de beschikbare interwikiverwijzingen te bekijken',
 	'interwikilist-linkname' => 'Interwikiverwijzing',
-	'interwikilist-target' => 'Doel URL',
+	'interwikilist-target' => 'Doel-URL',
 	'interwikilist-filter' => 'Lijst filteren',
 	'interwikilist-prefix' => 'Interwikivoorvoegsel:',
 );
@@ -385,6 +423,30 @@ $messages['pl'] = array(
 	'interwikilist-prefix' => 'Przedrostek interwiki:',
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'interwikilist' => 'Lista de interwikis',
+	'interwikilist-desc' => 'Adiciona uma [[Special:Interwikilist|página especial]] para ver as ligações interwiki disponíveis',
+	'interwikilist-linkname' => 'Ligação interwiki',
+	'interwikilist-target' => 'URL alvo',
+	'interwikilist-filter' => 'Lista de filtros',
+	'interwikilist-prefix' => 'Prefixo interwiki:',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'interwikilist' => 'Lista de interwikis',
+	'interwikilist-desc' => 'Adiciona uma [[Special:Interwikilist|página especial]] para ver as ligações interwiki disponíveis',
+	'interwikilist-linkname' => 'Ligação interwiki',
+	'interwikilist-target' => 'URL alvo',
+	'interwikilist-filter' => 'Lista de filtros',
+	'interwikilist-prefix' => 'Prefixo interwiki:',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -427,6 +489,54 @@ $messages['sv'] = array(
 	'interwikilist-target' => 'Måladress',
 	'interwikilist-filter' => 'Filterlista',
 	'interwikilist-prefix' => 'Interwikiprefix:',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'interwikilist' => 'అంతర్వికీల జాబితా',
+	'interwikilist-desc' => 'అందుబాటులో ఉన్న అంతర్వికీ లింకులుని చూపించడానికి ఒక [[Special:Interwikilist|ప్రత్యేక పేజీ]]ని చేరుస్తుంది',
+	'interwikilist-linkname' => 'అంతర్వికీ లింకు',
+	'interwikilist-target' => 'లక్ష్యిత URL',
+	'interwikilist-filter' => 'జాబితా వడపోత',
+	'interwikilist-prefix' => 'అంతర్వికీ ఉపసర్గ:',
+);
+
+/** Turkmen (Türkmençe)
+ * @author Hanberke
+ */
+$messages['tk'] = array(
+	'interwikilist' => 'Wikiara sanawy',
+	'interwikilist-desc' => 'Elýeterli wikiara çykgytlary görmek için bir [[Special:Interwikilist|ýörite sahypa]] goşýar',
+	'interwikilist-linkname' => 'Wikiara çykgyt',
+	'interwikilist-target' => 'Maksat edilýän URL',
+	'interwikilist-filter' => 'Filtr sanawy',
+	'interwikilist-prefix' => 'Wikiara prefiksi:',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'interwikilist' => "Talaan ng ugnayang-wiki (''interwiki'')",
+	'interwikilist-desc' => "Nagdaragdag ng [[Special:Interwikilist|natatanging pahina]] upang matanaw ang makukuhang mga kawing ng ugnayang-wiki (''interwiki'')",
+	'interwikilist-linkname' => "Kawing ng ugnayang-wiki (''interwiki'')",
+	'interwikilist-target' => 'Pinupukol/Puntiryang URL',
+	'interwikilist-filter' => 'Talaan ng pansala',
+	'interwikilist-prefix' => "Unlapi ng ugnayang-wiki (''interwiki''):",
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'interwikilist' => 'Vikilerarası listesi',
+	'interwikilist-desc' => 'Uygun vikilerarası bağlantıları görmek için bir [[Special:Interwikilist|özel sayfa]] ekler',
+	'interwikilist-linkname' => 'Vikilerarası bağlantı',
+	'interwikilist-target' => 'Hedef URL',
+	'interwikilist-filter' => 'Listeyi filtrele',
+	'interwikilist-prefix' => 'Vikilerarası öneki:',
 );
 
 /** Ukrainian (Українська)

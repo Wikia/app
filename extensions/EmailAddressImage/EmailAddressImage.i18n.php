@@ -42,6 +42,13 @@ $messages['bg'] = array(
 	'emailaddressimage-desc' => 'Добавя <tt>&lt;email&gt;</tt> за показване на адреси за е-поща като картинки',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'emailaddressimage-desc' => 'Dodaje oznaku <tt>&lt;email&gt;</tt> za prikaz e-mail adrese u vidu slike',
+);
+
 /** Czech (Česky)
  * @author Li-sung
  */
@@ -103,6 +110,13 @@ $messages['gl'] = array(
 	'emailaddressimage-desc' => 'Engade <tt>&lt;email&gt;</tt> para amosar un enderezo de correo electrónico como unha imaxe',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'emailaddressimage-desc' => 'Ergänzt s <tt>&lt;email&gt;</tt>-Tag go ne E-Mail-Adräss as Bild aazzeige',
+);
+
 /** Hebrew (עברית)
  * @author Agbad
  * @author Rotemliss
@@ -137,6 +151,13 @@ $messages['hu'] = array(
  */
 $messages['ia'] = array(
 	'emailaddressimage-desc' => 'Adde <tt>&lt;email&gt;</tt> pro monstrar un adresse de e-mail como imagine',
+);
+
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'emailaddressimage-desc' => 'Aggiunge <tt>&lt;email&gt;</tt> per visualizzare un indirizzo e-mail come immagine',
 );
 
 /** Japanese (日本語)
@@ -196,6 +217,13 @@ $messages['mr'] = array(
 	'emailaddressimage-desc' => 'एखादा इमेल पत्ता चित्र म्हणून दर्शविण्यासाठी लागणारी <tt>&lt;email&gt;</tt> खूण वाढविते',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'emailaddressimage-desc' => 'Föögt dat <tt>&lt;email&gt;</tt>-Tag to, E-Mail-Adressen as Bild dortostellen',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -228,7 +256,7 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'emailaddressimage-desc' => 'Dodaje znacznik <tt>&lt;email&gt;</tt> pozwalający wyświetlić adres e-mail jako obrazek.',
+	'emailaddressimage-desc' => 'Dodaje znacznik <tt>&lt;email&gt;</tt> pozwalający wyświetlić adres e‐mail jako obrazek.',
 );
 
 /** Pashto (پښتو)
@@ -242,6 +270,13 @@ $messages['ps'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'emailaddressimage-desc' => 'Adiciona <tt>&lt;email&gt;</tt> para apresentar um endereço de e-mail como imagem',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'emailaddressimage-desc' => 'Adiciona <tt>&lt;email&gt;</tt> para apresentar um endereço de e-mail como imagem',
 );
 
@@ -273,6 +308,13 @@ $messages['sk'] = array(
 	'emailaddressimage-desc' => 'Pridáva značku <tt>&lt;email&gt;</tt> na zobrazenie emailu vo forme obrázka',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'emailaddressimage-desc' => 'Vendosë kodin <tt>&lt;email&gt;</tt> që të paraqesë adresën e postës elektronike si figurë',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -301,6 +343,13 @@ $messages['tg-cyrl'] = array(
 	'emailaddressimage-desc' => 'Барои намои нишонаи почтаи электронӣ чун акс <tt>&lt;email&gt;</tt>-ро илова мекунад',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'emailaddressimage-desc' => 'Nagdaragdag ng <tt>&lt;email&gt;</tt> upang ipakita ang isang adres ng e-liham bilang isang larawan',
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
@@ -320,6 +369,13 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'emailaddressimage-desc' => 'Läükon eli <tt>&lt;email&gt;</tt> ad jonön ladeti leäktronik as magod',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'emailaddressimage-desc' => 'לייגט צו <tt>&lt;email&gt;</tt> צו ווײַזן אן ע-פאסט אדרעס אלס בילד',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

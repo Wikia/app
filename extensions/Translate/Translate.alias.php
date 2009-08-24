@@ -96,14 +96,20 @@ $aliases['da'] = array(
 $aliases['de'] = array(
 	'Translate' => array( 'Übersetzen' ),
 	'Magic' => array( 'Erweitertes Übersetzen' ),
+	'TranslationChanges' => array( 'Übersetzungsänderungen' ),
 	'TranslationStats' => array( 'Übersetzungsstatistik' ),
+	'Translations' => array( 'Übersetzungen' ),
+	'LanguageStats' => array( 'Sprachstatistiken' ),
 );
 
 /** Lower Sorbian (Dolnoserbski) */
 $aliases['dsb'] = array(
 	'Translate' => array( 'Přełožiś' ),
-	'Magic' => array( 'Rozšyrjone pśełoženje' ),
-	'TranslationChanges' => array( 'Změny pśełoženja' ),
+	'Magic' => array( 'Rozšyrjone pśełožowanje' ),
+	'TranslationChanges' => array( 'Změny pśełožkow' ),
+	'TranslationStats' => array( 'Statistika pśełožkow' ),
+	'Translations' => array( 'Pśełožki' ),
+	'LanguageStats' => array( 'Rěcne statistiki' ),
 );
 
 /** Divehi (ދިވެހިބަސް) */
@@ -144,6 +150,8 @@ $aliases['gl'] = array(
 	'Magic' => array( 'Tradución avanzada' ),
 	'TranslationChanges' => array( 'Cambios na tradución' ),
 	'TranslationStats' => array( 'Estatísticas da tradución' ),
+	'Translations' => array( 'Traducións' ),
+	'LanguageStats' => array( 'Estatísticas da lingua' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -175,7 +183,10 @@ $aliases['hr'] = array(
 $aliases['hsb'] = array(
 	'Translate' => array( 'Přełožić' ),
 	'Magic' => array( 'Rozšěrjene přełožowanje', 'Magiske' ),
+	'TranslationChanges' => array( 'Změny přełožkow' ),
 	'TranslationStats' => array( 'Statistika přełožkow' ),
+	'Translations' => array( 'Přełožki' ),
+	'LanguageStats' => array( 'Rěčne statistiki' ),
 );
 
 /** Haitian (Kreyòl ayisyen) */
@@ -193,6 +204,16 @@ $aliases['hu'] = array(
 	'TranslationStats' => array( 'Fordítási statisztika' ),
 	'Translations' => array( 'Fordítások' ),
 	'LanguageStats' => array( 'Nyelvi statisztika' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Translate' => array( 'Traducer' ),
+	'Magic' => array( 'Traduction avantiate', 'Magia' ),
+	'TranslationChanges' => array( 'Cambios de traduction' ),
+	'TranslationStats' => array( 'Statisticas de traduction' ),
+	'Translations' => array( 'Traductiones' ),
+	'LanguageStats' => array( 'Statisticas de linguas' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -234,6 +255,13 @@ $aliases['ksh'] = array(
 	'Magic' => array( 'Extras', 'Extras Översäze', 'ExtrasÖversäze' ),
 	'TranslationChanges' => array( 'Översaz', 'Översaz Änderonge', 'ÖversazÄnderonge' ),
 	'TranslationStats' => array( 'Statistik vun fun de Övversäzung', 'Övversäzungszahle', 'Statistik vun fun de Övversäzong', 'Övversäzongszahle' ),
+	'Translations' => array( 'Övversätzunge' ),
+	'LanguageStats' => array( 'Shtatistike_vu_de_Shprooche' ),
+);
+
+/** Cornish (Kernewek) */
+$aliases['kw'] = array(
+	'Translations' => array( 'Treylyansow' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -319,6 +347,8 @@ $aliases['no'] = array(
 	'Magic' => array( 'Avansert oversettelse', 'Avansert oversetting', 'Magi' ),
 	'TranslationChanges' => array( 'Oversettelsesendringer', 'Oversettingsendringer' ),
 	'TranslationStats' => array( 'Oversettelsesstatistikk' ),
+	'Translations' => array( 'Oversettelser' ),
+	'LanguageStats' => array( 'Språkstatistikk' ),
 );
 
 /** Occitan (Occitan) */
@@ -326,6 +356,7 @@ $aliases['oc'] = array(
 	'Translate' => array( 'Traduire', 'Tradusir' ),
 	'Magic' => array( 'Traduccion avançada', 'Traduccionavançada', 'Traduccion avancada', 'Traduccionavancada' ),
 	'TranslationChanges' => array( 'Modificacions de las traduccions', 'Modificacionsdelastraduccions' ),
+	'Translations' => array( 'Traduccions', 'Reviradas' ),
 );
 
 /** Polish (Polski) */
@@ -343,6 +374,7 @@ $aliases['ps'] = array(
 	'Translate' => array( 'ژباړل' ),
 	'Magic' => array( 'پرمختللې ژباړه، کوډګريز' ),
 	'TranslationChanges' => array( 'دژباړې بدلونونه' ),
+	'Translations' => array( 'ژباړې' ),
 );
 
 /** Portuguese (Português) */
@@ -366,12 +398,39 @@ $aliases['ro'] = array(
 	'Translate' => array( 'Tradu' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Translate' => array( 'भाषांतर' ),
+	'Magic' => array( 'प्रगतभाषांतरमाया' ),
+	'TranslationChanges' => array( 'भाषांतरपरिवर्त' ),
+	'TranslationStats' => array( 'भाषांतरसांख्यिकी' ),
+	'Translations' => array( 'भाषांतर' ),
+	'LanguageStats' => array( 'भाषासांख्यिकी' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Translate' => array( 'Përkthe' ),
+);
+
+/** Sundanese (Basa Sunda) */
+$aliases['su'] = array(
+	'Translate' => array( 'Tarjamah' ),
+	'Magic' => array( 'TarjamahTeleb' ),
+	'TranslationChanges' => array( 'ParobahanTarjamah' ),
+	'TranslationStats' => array( 'StatTarjamah' ),
+	'Translations' => array( 'Tarjamahan' ),
+	'LanguageStats' => array( 'StatBasa' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Translate' => array( 'Översätt' ),
 	'Magic' => array( 'Avancerad översättning' ),
 	'TranslationChanges' => array( 'Översättningsändringar' ),
 	'TranslationStats' => array( 'Översättningsstatistik' ),
+	'Translations' => array( 'Översättningar' ),
+	'LanguageStats' => array( 'Språkstatistik' ),
 );
 
 /** Swahili (Kiswahili) */
@@ -387,12 +446,34 @@ $aliases['sw'] = array(
 $aliases['te'] = array(
 	'Translate' => array( 'అనువాదం' ),
 	'TranslationChanges' => array( 'అనువాదమార్పులు' ),
+	'Translations' => array( 'అనువాదాలు' ),
 );
 
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'Translate' => array( 'แปล' ),
 	'TranslationStats' => array( 'สถิติการแปล' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Translate' => array( 'Isalinwika' ),
+	'Magic' => array( 'Mas masulong na pagsasalinwika', 'Salamangka' ),
+	'TranslationChanges' => array( 'Mga pagbabago sa salinwika' ),
+	'TranslationStats' => array( 'Mga estadistika ng salinwika' ),
+	'Translations' => array( 'Mga salinwika' ),
+	'LanguageStats' => array( 'Mga estadistika ng wika' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Translate' => array( 'Çeviri' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'Translate' => array( 'Tradusi' ),
+	'Translations' => array( 'Tradussioni' ),
 );
 
 /** Wolof (Wolof) */

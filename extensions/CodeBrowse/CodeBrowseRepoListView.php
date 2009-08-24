@@ -13,20 +13,20 @@ class CodeBrowseRepoListView extends CodeBrowseView {
 		
 		$text = '';
 		foreach( $repos as $repo ){
+			global $wgLang;
+
 			$name = $repo->getName();
 			$text .= "* '''[[Special:CodeBrowse/$name|$name]]''' (";
-			$text .= "[[Special:Code/$name|".wfMsgHtml( 'code-log' )."]]";
-			$text .= " | [[Special:Code/$name/comments|".wfMsgHtml( 'code-notes' )."]]";
-			$text .= " | [[Special:Code/$name/tag|".wfMsgHtml( 'code-tags' )."]]";
-			$text .= " | [[Special:Code/$name/author|".wfMsgHtml( 'code-authors' )."]]";
+			$links[] = "[[Special:Code/$name|" . wfMsgHtml( 'code-log' ) . "]]";
+			$links[] = "[[Special:Code/$name/comments|" . wfMsgHtml( 'code-notes' ) . "]]";
+			$links[] = "[[Special:Code/$name/tag|" . wfMsgHtml( 'code-tags' ) . "]]";
+			$links[] = "[[Special:Code/$name/author|" . wfMsgHtml( 'code-authors' ) . "]]";
+			$text .= $wgLang->pipeList( $links );
 			$text .= ")\n";
 		}
 		
 		return $text;
-		
 	}
-	
-	
 }
 
 class CodeRepoListView {

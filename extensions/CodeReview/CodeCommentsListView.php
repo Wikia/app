@@ -12,10 +12,10 @@ class CodeCommentsListView extends CodeView {
 	function execute() {
 		global $wgOut;
 		$pager = $this->getPager();
-		$wgOut->addHTML( 
+		$wgOut->addHTML(
 			$pager->getNavigationBar() .
-			$pager->getLimitForm() . 
-			$pager->getBody() . 
+			$pager->getLimitForm() .
+			$pager->getBody() .
 			$pager->getNavigationBar()
 		);
 	}
@@ -31,7 +31,7 @@ class CodeCommentsListView extends CodeView {
 // Pager for CodeRevisionListView
 class CodeCommentsTablePager extends TablePager {
 
-	function __construct( CodeCommentsListView $view ){
+	function __construct( CodeCommentsListView $view ) {
 		global $IP;
 		$this->mView = $view;
 		$this->mRepo = $view->mRepo;
@@ -40,24 +40,24 @@ class CodeCommentsTablePager extends TablePager {
 		parent::__construct();
 	}
 
-	function isFieldSortable( $field ){
+	function isFieldSortable( $field ) {
 		return $field == 'cr_timestamp';
 	}
 
-	function getDefaultSort(){ return 'cc_timestamp'; }
+	function getDefaultSort() { return 'cc_timestamp'; }
 
-	function getQueryInfo(){
+	function getQueryInfo() {
 		return array(
 			'tables' => array( 'code_comment', 'code_rev' ),
 			'fields' => array_keys( $this->getFieldNames() ),
 			'conds' => array( 'cc_repo_id' => $this->mRepo->getId() ),
-			'join_conds' => array( 
+			'join_conds' => array(
 				'code_rev' => array( 'LEFT JOIN', 'cc_repo_id = cr_repo_id AND cc_rev_id = cr_id' )
 			)
 		);
 	}
 
-	function getFieldNames(){
+	function getFieldNames() {
 		return array(
 			'cc_timestamp' => wfMsg( 'code-field-timestamp' ),
 			'cc_user_text' => wfMsg( 'code-field-user' ),
@@ -68,9 +68,9 @@ class CodeCommentsTablePager extends TablePager {
 		);
 	}
 
-	function formatValue( $name, $value ){
+	function formatValue( $name, $value ) {
 		global $wgUser, $wgLang;
-		switch( $name ){
+		switch( $name ) {
 		case 'cc_rev_id':
 			return $this->mView->mSkin->link(
 				SpecialPage::getTitleFor( 'Code', $this->mRepo->getName() . '/' . $value . '#code-comments' ),
@@ -86,18 +86,18 @@ class CodeCommentsTablePager extends TablePager {
 			return $this->mView->messageFragment( $value );
 		case 'cc_text':
 			# Truncate this, blah blah...
-			return htmlspecialchars( $wgLang->truncate( $value, 300, '...' ) );
+			return htmlspecialchars( $wgLang->truncate( $value, 300 ) );
 		case 'cc_timestamp':
 			global $wgLang;
 			return $wgLang->timeanddate( $value, true );
 		}
 	}
-	
+
 	// Note: this function is poorly factored in the parent class
 	function formatRow( $row ) {
 		global $wgWikiSVN;
 		$class = "mw-codereview-status-{$row->cr_status}";
-		if($this->mRepo->mName == $wgWikiSVN){
+		if ( $this->mRepo->mName == $wgWikiSVN ) {
 			$class .= " mw-codereview-" . ( $row->cc_rev_id <= $this->mCurSVN ? 'live' : 'notlive' );
 		}
 		return str_replace(
@@ -107,7 +107,7 @@ class CodeCommentsTablePager extends TablePager {
 				parent::formatRow( $row ) );
 	}
 
-	function getTitle(){
+	function getTitle() {
 		return SpecialPage::getTitleFor( 'Code', $this->mRepo->getName() . '/comments' );
 	}
 }

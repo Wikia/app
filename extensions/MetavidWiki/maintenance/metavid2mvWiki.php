@@ -90,10 +90,13 @@ actions:
 		'all_sync_past_date' --date [mm/dd/yy] all in_sync streams past date (-d option required)
 		[stream_name] will insert all records for the given stream name
 		'people' [person_name] will insert all the people articles optional followed by a person name
-		'bill' [bill_key]? ...empty bill key will insert all bills based on gov track subject page
+		'bill' [bill_key]? ...empty bill key will insert all bills based on gov track subject page		
 		'interest' will insert interests (uses people as base so run people first)
 		'update_templates' will update templates & some semantic properties
 		'file_check' checks inserted streams file urls/pointers
+		'do_stream_date_check'
+		'do_remove_orphaned_streams' 
+		'mvd_consistancy_check' makes sure all mvd text layers are consistent  
 
 EOT;
 	exit ();
@@ -117,7 +120,7 @@ switch ( $args[0] ) {
 	case 'all_sync_past_date':
 		if ( !isset( $options['date'] ) )die( 'date missing' . "\n" );
 		do_stream_insert( 'all_sync_past_date' );
-	break;
+	break;	
 	case 'people' :
 		$force = ( isset( $options['force'] ) ) ? true:false;
 		$person_name = ( isset( $args[1] ) ) ? $args[1]:'';
@@ -130,19 +133,28 @@ switch ( $args[0] ) {
 	case 'interest':
 		do_people_insert( $lookUpInterest = true );
 	break;
+	case 'file_check':
+		do_stream_file_check();
+	break;
+	case 'do_stream_date_check':
+		do_stream_date_check();
+	break;
+	case 'do_remove_orphaned_streams':
+		do_remove_orphaned_streams();
+	break;
 	case 'update_templates' :
 		$force = ( isset( $options['force'] ) ) ? true:false;
 		include_once( 'metavid_gov_templates.php' );
 		upTemplates( $force );
 	break;
 	// by default treat the argument as a stream name:
-	case 'mvd_error_check':
-
+	case 'mvd_consistancy_check':
+		mvd_consistancy_check();
 	break;
 	case 'rm_congress_persons':
 		do_rm_congress_persons();
 	break;
 	default :
 		do_stream_insert( 'stream', $args[0] );
-	break;
+	break;	
 }

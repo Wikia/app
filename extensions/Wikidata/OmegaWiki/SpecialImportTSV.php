@@ -9,8 +9,8 @@
 	$wgExtensionFunctions[] = 'wfSpecialImportTSV';
 
 	function wfSpecialImportTSV() {
-	        global $wgMessageCache;
-                $wgMessageCache->addMessages(array('importtsv'=>'Wikidata: Import TSV'),'en');
+	        #global $wgMessageCache;
+            #    $wgMessageCache->addMessages(array('importtsv'=>'Wikidata: Import TSV'),'en');
                         
 		class SpecialImportTSV extends SpecialPage {
 			
@@ -22,15 +22,15 @@
 
 				global $wgOut, $wgUser, $wgRequest;
 
-				$wgOut->setPageTitle("Import TSV");
+				$wgOut->setPageTitle(wfMsg('ow_importtsv_title1'));
 				if (!$wgUser->isAllowed('importtsv')) {
-					$wgOut->addHTML('You do not have permission to do a tsv import.');
+					$wgOut->addHTML(wfMsg('ow_importtsv_not_allowed'));
 					return false;
 				}
 				
 				$dbr =& wfGetDB(DB_MASTER);
 				$dc = wdGetDataSetcontext();
-				$wgOut->setPageTitle('Importing TSV data');
+				$wgOut->setPageTitle(wfMsg('ow_importtsv_importing'));
 				setlocale(LC_ALL, 'en_US.UTF-8');				
 				if ($wgRequest->getFileName('tsvfile')) {
 					
@@ -52,9 +52,8 @@
 					$maxLineLength = 0;
 					while ($myLine = fgets($file)) {
 						if (!preg_match('/./u', $myLine)) {
-							$wgOut->setPageTitle('Import failed');
-							$wgOut->addHTML("<p>This doesn't appear to be a UTF-8 encoded file. The file <i>must</i> be UTF-8 encoded. ");
-							$wgOut->addHTML("Make sure your application has saved or exported the file correctly.</p>");
+							$wgOut->setPageTitle(wfMsg('ow_importtsv_import_failed'));
+							$wgOut->addHTML(wfMsg('ow_importtsv_not_utf8'));
 							return false;
 						}
 						$maxLineLength = max($maxLineLength, strlen($myLine)+2);
@@ -65,8 +64,8 @@
 					$columns = fgetcsv($file, $maxLineLength, "\t");
 					// somehow testing for $columns[0] fails sometimes. Byte Order Mark?
 					if (!$columns || count($columns) <= 2 || $columns[1] != "defining expression") {
-						$wgOut->setPageTitle('Import failed');
-						$wgOut->addHTML("<p>This does not appear to be a valid tsv file.</p>");
+						$wgOut->setPageTitle(wfMsg('ow_importtsv_import_failed'));
+						$wgOut->addHTML(wfMsg('ow_importtsv_not_tsv'));
 						return false;
 					}
 					for ($i = 2; $i < count($columns); $i++) {
@@ -75,17 +74,14 @@
 						if ($baseName == "definition" || $baseName == "translations") {
 							$langCode = substr($columnName, strrpos($columnName, '_')+1);
 							if (!getLanguageIdForIso639_3($langCode)) {
-								$wgOut->setPageTitle('Import failed');
-								$wgOut->addHTML("<p>Unknown or incorrect language: $langCode. <br />");
-								$wgOut->addHTML("Languages must be ISO-639_3 language codes.</p>");
+								$wgOut->setPageTitle(wfMsg('ow_importtsv_import_failed'));
+								$wgOut->addHTML(wfMsg('ow_impexptsv_unknown_lang', $langCode));
 								return false;
 							}
 						}
 						else { // column name does not start with definition or translations. 
-								$wgOut->setPageTitle('Import failed');
-								$wgOut->addHTML("<p>Incorrect column name<br />");
-								$wgOut->addHTML("Columns should be named 'definition_iso' ");
-								$wgOut->addHTML("or 'translations_iso', where iso is the language code.</p>");
+								$wgOut->setPageTitle(wfMsg('ow_importtsv_import_failed'));
+								$wgOut->addHTML(wfMsg('ow_importtsv_bad_columns', $columnName));
 								return false;
 						}
 						
@@ -97,13 +93,13 @@
 					//
 					
 					if ($testRun) {
-						$wgOut->setPageTitle('Test run for importing TSV data');
+						$wgOut->setPageTitle(wfMsg('ow_importtsv_test_run_title'));
 					}
 					else {	
-						$wgOut->setPageTitle('Importing TSV data');
+						$wgOut->setPageTitle(wfMsg('ow_importtsv_importing'));
 					}
 					
-					startNewTransaction($wgUser->getID(), wfGetIP(), "Bulk import via SpecialImportTSV", $dc);
+					startNewTransaction($wgUser->getID(), wfGetIP(), "Bulk import via Special:ImportTSV", $dc);	# this string shouldn't be localized because it will be stored in the db
 					
 					$row = "";
 					$line = 1; // actually 2, 1 was the header, but increased at the start of while
@@ -208,36 +204,31 @@
 						}
 					}
 					
-					
 					if ($definitions == 0 && $translations == 0) {
-						$wgOut->addHTML("<br />Nothing added");
+						$wgOut->addHTML("<br />");
 						if ($testRun) {
-							$wgOut->addHTML(" (you did a test run)");
+							$wgOut->addHTML(wfMsg('ow_importtsv_nothing_added_test'));
 						}
-						$wgOut->addHTML(".<br />");
+						else {
+							$wgOut->addHTML(wfMsg('ow_importtsv_nothing_added'));
+						}
+						$wgOut->addHTML("<br />");
 					}
 					else {
-						$wgOut->addHTML("<br />Added $definitions definitions and $translations translations.<br />");
+						$wgOut->addHTML("<br />" . wfMsgExt('ow_importtsv_results', 'parsemag', $definitions, $translations) . "<br />");
 					}
 						
 				}
 				else {
 					// render the page
-					$wgOut->setPageTitle('Import definitions and translations.');
-					$wgOut->addHTML('<p>Import translations and definitions from a a tab delimited text file that you may have exported from OpenOffice.org, ' .
-							'Excel or other spreadsheet software.</p> ' .
-							'<p>The format of the file must be the same as the files exported on the ExportTSV page. If you\'ve changed the column names, ' .
-							'the import will fail. If you\'ve changed the id or the defining expression of any defined meaning, that line will be ignored. ' .
-							'If you\'ve added columns, they must be in the form \'definitions_iso\' or \'translations_iso\', where iso is an ISO-639_3 language code.</p>');
-					$wgOut->addHTML('<p>If the \'test run\' box is checked, any actions that would be taken are reported, but no changes are actually made. You are encouraged' .
-							'to do a test run before you do an actual import.</p>');
+					$wgOut->setPageTitle(wfMsg('ow_importtsv_title2'));
+					$wgOut->addHTML(wfMsg('ow_importtsv_header'));
 					
 					$wgOut->addHTML(getOptionPanelForFileUpload(
 						array(
-							'TSV File' => getFileField('tsvfile'),
-							'Test run' => getCheckBox('testrun', true)
-						),
-						'',array('upload' => 'Upload')
+							wfMsg('ow_importtsv_file') => getFileField('tsvfile'),
+							wfMsg('ow_importtsv_test_run') => getCheckBox('testrun', true)
+						)
 					));
 				}
 

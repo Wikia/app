@@ -399,6 +399,7 @@ Bonvolu elekti alian nomon.',
 );
 
 /** Spanish (Español)
+ * @author Muro de Aguas
  * @author Sanbec
  * @author Titoxd
  */
@@ -407,6 +408,7 @@ $messages['es'] = array(
 	'blacklistedusername' => 'Nombre de usuario no permitido',
 	'blacklistedusernametext' => 'El nombre de usuario que has seleccionado está en la [[MediaWiki:Usernameblacklist|lista de nombres no permitidos]]. Por favor, elige otro.',
 	'usernameblacklist-invalid-lines' => '{{PLURAL:$1|La siguiente línea|Las siguientes líneas}} en la lista negra de nombres de usuario no {{PLURAL:$1|es válida|son válidas}}; por favor, corríge{{PLURAL:la|las}} antes de guardar:',
+	'right-uboverride' => 'Ignorar la lista negra de usuarios',
 );
 
 /** Basque (Euskara) */
@@ -540,6 +542,25 @@ $messages['gl'] = array(
 </pre>',
 	'usernameblacklist-invalid-lines' => '{{PLURAL:$1|A liña seguinte|As liñas seguintes}} na listaxe negra de nomes de usuario {{PLURAL:$1|non é válida|non son válidas}}; corríxa{{PLURAL:$1|a|as}} antes de gardar:',
 	'right-uboverride' => 'Ignorar os nomes de usuario da listaxe negra (blacklist)',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'usernameblacklist-desc' => 'Ergänzt e [[MediaWiki:Usernameblacklist|Lischt vu nit gwinschte Benutzernäme]], wu s Aalege vun ene uf dr Grundlag vu reguläre Usdrick unterbunde wird',
+	'blacklistedusername' => 'Benutzername uf dr Sperrlischt',
+	'blacklistedusernametext' => 'Dr gwehlt Benutzername stoht uf dr [[MediaWiki:Usernameblacklist|Lischt vu nit gwinschte Benutzernäme]]. Bitte wehl e andere.',
+	'usernameblacklist' => '<pre>
+# Yyträg in däre Lischt sind Teil vun eme reguläre Usdruck,
+# wu bi dr Priefig vu Nejaamäldige uf nit gwinschti Benutzernäme aagwändet wird.
+# Jedi Zyylete muess mit eme * aafange, z.B.
+#
+# * Foo
+# * [Bb]ar
+</pre>',
+	'usernameblacklist-invalid-lines' => 'Die {{PLURAL:$1|Zyylete|Zyylete}} in dr Lischt vu nit gwinschte Benutzernäme {{PLURAL:$1|isch|sin}} nit giltig; bitte korrigier si vor em Spychere:',
+	'right-uboverride' => 'D Lischt vu nit gwinschte Benutzernäme ußer Chraft setze',
 );
 
 /** Hakka (Hak-kâ-fa)
@@ -1055,6 +1076,7 @@ Kies alstublieft een andere naam.',
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Eirik
  * @author Frokor
+ * @author Harald Khan
  */
 $messages['nn'] = array(
 	'usernameblacklist-desc' => 'Legg til ei [[MediaWiki:Usernameblacklist|liste over svartelista brukarnamn]] for å hindre bruk av brukarnamn som inneheld eit eller fleire regulære uttrykk.',
@@ -1069,7 +1091,7 @@ $messages['nn'] = array(
 # * [Bb]jarne
 </pre>',
 	'usernameblacklist-invalid-lines' => '{{PLURAL:$1|Denne lina|Desse linene}} i lista over svartelista brukarnamn er {{PLURAL:$1|ugyldig|ugyldige}}, ver venleg og rett {{PLURAL:$1|henne|dei}} før du lagrar:',
-	'right-uboverride' => 'Overkøyr svartelista over brukarnamn',
+	'right-uboverride' => 'Overkøyra svartelista over brukarnamn',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -1249,6 +1271,7 @@ $messages['sr-ec'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
+	'usernameblacklist-desc' => 'Föiget ne [[MediaWiki:Usernameblacklist|Lieste fon nit wonskede Benutsernoomen]] bietou, do der ap Basis fon reguläre Uutdrukke nit moaked wäide konnen',
 	'blacklistedusername' => 'Benutsernoome ap ju Speerlieste',
 	'blacklistedusernametext' => 'Die wäälde Benutsernoome stoant ap ju [[MediaWiki:Usernameblacklist|Lieste fon do speerde Benutsernoomen]]. Wääl n uur Noome.',
 	'usernameblacklist' => '<pre>
@@ -1260,6 +1283,7 @@ $messages['stq'] = array(
 # * [Bb]ar
 </pre>',
 	'usernameblacklist-invalid-lines' => '{{PLURAL:$1|Ju foulgjende Riege|Do foulgjende Riegen}} in ju Lieste fon nit-wonskede Benutsernoomen {{PLURAL:$1|is|sunt}} uungultich; korrigier do foar dät Spiekerjen:',
+	'right-uboverride' => 'Buute Kraft sätten fon ju Lieste fon nit wonskede Benutsernoomen',
 );
 
 /** Sundanese (Basa Sunda)
@@ -1378,10 +1402,23 @@ Pumili lamang ng ibang pangalan.',
 	'right-uboverride' => 'Daigin (pangibabawan) ang talaan ng pinagbabawalang pangalan ng tagagamit',
 );
 
-/** Turkish (Türkçe) */
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
 $messages['tr'] = array(
+	'usernameblacklist-desc' => 'Bir veya daha fazla düzenli ifade ile eşleşen kullanıcı hesaplarının oluşturulmasını kısıtlamak için bir [[MediaWiki:Usernameblacklist|kullanıcı adı kara listesi]] ekler',
 	'blacklistedusername' => 'Kara listedeki kullanıcılar',
 	'blacklistedusernametext' => 'Seçtiğiniz isim [[MediaWiki:Usernameblacklist|Kara listedeki kullanıcılar]] listesinde sıralanan bir kullanıcı adıyla aynı isme sahiptir. Lütfen başka bir kullanıcı adı seçiniz.',
+	'usernameblacklist' => '<pre>
+# Kullanıcı adları kayıt için karalistelenirken, bu listedeki
+# girdiler düzenli tanımların parçası olarak kullanılacaktır.
+# Her öğe madde imli listenin parçası olmalıdır, ör:
+#
+# * Foo
+# * [Bb]ar
+</pre>',
+	'usernameblacklist-invalid-lines' => 'Kullanıcı adı karalistesindeki şu {{PLURAL:$1|satır|satırlar}} geçersiz; lütfen kaydetmeden önce düzeltin:',
+	'right-uboverride' => 'Kullanıcı adı karalistesini geçersiz kıl',
 );
 
 /** Ukrainian (Українська)
@@ -1441,6 +1478,15 @@ $messages['vi'] = array(
 </pre>',
 	'usernameblacklist-invalid-lines' => '{{PLURAL:$1|Dòng|Những dòng}} sau đây trong Danh sách đen về tên người dùng bị sai; xin hãy sửa chữa {{PLURAL:$1|nó|chúng}} trước khi lưu:',
 	'right-uboverride' => 'Bỏ qua danh sách tên người dùng bị cấm',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'blacklistedusername' => 'Gebananem in blägalised',
+	'usernameblacklist-invalid-lines' => '{{PLURAL:$1|Ked|Keds}} sököl blägaliseda gebananemas no {{PLURAL:$1|lonöfon|lonöfons}}; gudükumolös {{PLURAL:$1|oni|onis}} bü dakip:',
+	'right-uboverride' => 'Nedemön blägalisedi gebananemas',
 );
 
 /** Yue (粵語)

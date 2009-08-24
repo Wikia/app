@@ -10,10 +10,10 @@
     visibility: hidden;
 }
 
-.clearfix {display: inline-block;}
+.clearfix { display: inline-block; }
 
 /* Hides from IE-mac \*/
-* html .clearfix {height: 1%;}
+* html .clearfix { height: 1%; }
 /* End hide from IE-mac */
 
 .firstHeading {
@@ -64,7 +64,7 @@
 }
 
 .user-section-heading {
-	background:url('http://images.wikia.com/common/wikiany/images/title_line.gif?1') repeat-x scroll 0px 80%;
+	background:url('../images/title_line.gif') repeat-x scroll 0px 80%;
 	width:100%;
 	line-height:22px;
 	margin:0px 0px 8px 0px;
@@ -565,6 +565,14 @@
 
 .profile-tab a:hover {
 	color:#466C2C;
+}
+
+.profile-tab a:visited {
+	color: #FFFFFF !important;
+}
+
+.profile-tab-on a:visited {
+	color: #FFFFFF !important;
 }
 
 .profile-update-button {

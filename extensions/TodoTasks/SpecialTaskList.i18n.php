@@ -31,14 +31,19 @@ Your friendly %s notification system",
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Purodha
+ * @author Siebrand
  */
 $messages['qqq'] = array(
 	'tasklist-parser-desc' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
 	'tasklist-special-desc' => 'Short description of the extension, shown on [[Special:Version]]. Do not translate or change links.',
 	'tasklistincorrectuser' => '{{Identical|Incorrect username}}',
 	'tasklistbyname' => '{{Identical|Todo list for}}',
+	'tasklistemailbody' => "* 1st %s is the URL of the page a task is created for
+* 2nd %s is the URL of the user's task list page
+* 3rd %s is the site name",
 );
 
 /** Faeag Rotuma (Faeag Rotuma)
@@ -46,6 +51,14 @@ $messages['qqq'] = array(
  */
 $messages['rtm'] = array(
 	'tasklistincorrectuser' => 'Seseva',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'tasklistemail' => 'Kalliž %s',
+	'tasklistprojdisp' => 'Ozutada',
 );
 
 /** Afrikaans (Afrikaans)
@@ -116,6 +129,38 @@ $messages['arz'] = array(
 نظام إخطار %s الصديق',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
+ */
+$messages['be-tarask'] = array(
+	'tasklist' => 'Сьпіс заданьняў',
+	'tasklist-parser-desc' => 'Дадае функцыю парсэра <nowiki>{{#todo:}}</nowiki> для прызначэньня заданьняў',
+	'tasklist-special-desc' => 'Дадае спэцыяльную старонку для прагляду [[Special:TaskList|прызначаных заданьняў]]',
+	'tasklistbyproject' => 'Сьпіс заданьняў па праектах',
+	'tasklistunknownproject' => 'Невядомы праект',
+	'tasklistunspecuser' => 'Непазначаны ўдзельнік',
+	'tasklistincorrectuser' => 'Няслушнае імя ўдзельніка',
+	'tasklistemail' => 'Паважаны %s',
+	'tasklistemailsubject' => '[%s] Зьмена сьпісу заданьняў',
+	'tasklistmytasks' => 'Мае заданьні',
+	'tasklistbyprojectbad' => "Няслушны праект '''%s'''.
+Сьпіс слушных праектаў глядзіце на [[MediaWiki:TodoTasksValidProjects]].",
+	'tasklistbyprojname' => "Прызначана заданьне для '''%s'''",
+	'tasklistchooseproj' => 'Выберыце праект:',
+	'tasklistprojdisp' => 'Паказаць',
+	'tasklistbyname' => '== Сьпіс заданьняў для %s ==',
+	'tasklistnoprojects' => "Памылка: верагодна Вы ўключылі '''\$wgUseProjects''', але яшчэ не стварылі [[MediaWiki:TodoTasksValidProjects]]. Глядзіце падрабязнасьці ў [http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 інструкцыях па ўсталёўцы].",
+	'tasklistemailbody' => ',
+
+Нехта прызначыў Вам новае заданьне ў %s.
+
+Каб паглядзець поўны сьпіс заданьняў, перайдзіце на %s.
+
+Ваша сыстэма паведамленьняў %s',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -134,6 +179,21 @@ $messages['bg'] = array(
 	'tasklistprojdisp' => 'Показване',
 	'tasklistbyname' => '== Списък със задачи за %s ==',
 	'tasklistnoprojects' => "Грешка: Изглежда сте включили '''\$wgUseProjects''', но не сте създали [[MediaWiki:TodoTasksValidProjects]]. За повече информация, прегледайте [http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 инструкциите за инсталация].",
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'tasklist' => 'Spisak zadataka',
+	'tasklistbyproject' => 'Spisak zadataka po projektima',
+	'tasklistincorrectuser' => 'Netačno korisničko ime',
+	'tasklistemail' => 'Poštovani %s',
+	'tasklistmytasks' => 'Moji zadaci',
+	'tasklistbyprojname' => "Dodijeljeni zadaci za '''%s'''",
+	'tasklistchooseproj' => 'Odaberite projekat:',
+	'tasklistprojdisp' => 'Prikaz',
+	'tasklistbyname' => '== Spisak za uraditi za %s ==',
 );
 
 /** Czech (Česky)
@@ -249,16 +309,39 @@ Por listo de validaj projektoj, vidu [[MediaWiki:TodoTasksValidProjects]].",
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'tasklist' => 'Lista de tareas',
+	'tasklist-parser-desc' => 'Agrega <nowiki>{{#todo:}}</nowiki> funciones de analizador para tareas asignadas',
+	'tasklist-special-desc' => 'Agrega una página especial para revisar [[Special:TaskList|asignamientos de tareas]]',
+	'tasklistbyproject' => 'Lista de tareas por proyecto',
 	'tasklistunknownproject' => 'Proyecto desconocido',
+	'tasklistunspecuser' => 'Usuario no especificado',
 	'tasklistincorrectuser' => 'Nombre de usuario incorrecto',
+	'tasklistemail' => 'Querido %s',
+	'tasklistemailsubject' => '[%s] Cambio de lista de tareas',
+	'tasklistmytasks' => 'Mis tareas',
+	'tasklistbyprojectbad' => "Proyecto '''%s''' no es un proyecto válido.
+Para una lista de proyectos válido, vea [[MediaWiki:TodoTasksValidProjects]].",
+	'tasklistbyprojname' => "Tareas asignadas para '''%s'''",
+	'tasklistchooseproj' => 'Seleccionar proyecto:',
+	'tasklistprojdisp' => 'Exhibir',
+	'tasklistbyname' => '== Lista de quehaceres para %s ==',
+	'tasklistemailbody' => ',
+
+Alguien ha asignado una nueva Tarea para usted en %s.
+
+Para ver su lista completa de Tareas vaya a %s.
+
+Su sistema de notificación amigable %s',
 );
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  */
 $messages['eu'] = array(
 	'tasklist' => 'Egitekoen zerrenda',
@@ -266,7 +349,9 @@ $messages['eu'] = array(
 	'tasklistunknownproject' => 'Proiektu ezezaguna',
 	'tasklistunspecuser' => 'Zehaztugabeko lankidea',
 	'tasklistincorrectuser' => 'Lankide izen okerra',
+	'tasklistemail' => '%s estimatua',
 	'tasklistmytasks' => 'Nire eginkizunak',
+	'tasklistchooseproj' => 'Proiektua hautatu:',
 	'tasklistprojdisp' => 'Erakutsi',
 );
 
@@ -283,31 +368,32 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author McDutchie
+ * @author PieRRoMaN
  * @author Sherbrooke
  * @author Urhixidur
  */
 $messages['fr'] = array(
 	'tasklist' => 'Liste de tâches',
 	'tasklist-parser-desc' => 'Ajoute <nowiki>{{#todo:}}</nowiki> une fonction parseur pour assigner des tâches',
-	'tasklist-special-desc' => 'Ajoute une page spéciale pour réviser [[Special:TaskList|la liste des tâches assignées]]',
+	'tasklist-special-desc' => 'Ajoute une page spéciale pour réviser les [[Special:TaskList|tâches assignées]]',
 	'tasklistbyproject' => 'Liste de tâches par projet',
 	'tasklistunknownproject' => 'Projet inconnu',
-	'tasklistunspecuser' => 'Contributeur inconnu',
-	'tasklistincorrectuser' => 'Pseudonyme incorrect',
+	'tasklistunspecuser' => 'Utilisateur non spécifié',
+	'tasklistincorrectuser' => "Nom d'utilisateur incorrect",
 	'tasklistemail' => 'Cher %s',
-	'tasklistemailsubject' => '[%s] Changement à la liste de tâches',
+	'tasklistemailsubject' => '[%s] Modification dans la liste de tâches',
 	'tasklistmytasks' => 'Mes tâches',
-	'tasklistbyprojectbad' => "Le projet '''%s''' n'est pas valide. Consulter la [[MediaWiki:TodoTasksValidProjects|liste des projets]].",
+	'tasklistbyprojectbad' => "Le projet '''%s''' n'est pas valide. Pour une liste des projets valides, voir [[MediaWiki:TodoTasksValidProjects]].",
 	'tasklistbyprojname' => "Tâches assignées pour '''%s'''.",
-	'tasklistchooseproj' => 'Sélectionnez un projet :',
+	'tasklistchooseproj' => 'Sélectionner un projet :',
 	'tasklistprojdisp' => 'Afficher',
-	'tasklistbyname' => '== Liste de tâches à faire pour %s ==',
-	'tasklistnoprojects' => "Erreur : il semble que vous ayez activé '''\$wgUseProjects''', mais sans avoir créé [[MediaWiki:TodoTasksValidProjects]]. Prière de lire les [http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 instructions d'installation] pour plus de détails.",
+	'tasklistbyname' => '== Liste de tâches pour %s ==',
+	'tasklistnoprojects' => "Erreur : il semble que vous ayez activé '''\$wgUseProjects''', mais sans avoir créé [[MediaWiki:TodoTasksValidProjects]]. Consultez les [http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 instructions d'installation] pour plus de détails.",
 	'tasklistemailbody' => ',
 
 Quelqu’un vous a assigné une nouvelle tâche sur %s.
 
-Pour voir votre liste complète des tâches à effectuer, allez sur %s.
+Pour voir la liste complète de vos tâches, allez sur %s.
 
 Votre bien aimable système de notification de %s',
 );
@@ -318,17 +404,17 @@ Votre bien aimable système de notification de %s',
  * @author Xosé
  */
 $messages['gl'] = array(
-	'tasklist' => 'Listaxe de Tarefas',
+	'tasklist' => 'Lista de Tarefas',
 	'tasklist-parser-desc' => 'engade a función de análise <nowiki>{{#todo:}}</nowiki> para asignar tarefas',
 	'tasklist-special-desc' => 'Engade unha páxina especial para revisar [[Special:TaskList|as tarefas asignadas]]',
-	'tasklistbyproject' => 'Listaxe de Tarefas por Proxecto',
+	'tasklistbyproject' => 'Lista de Tarefas por Proxecto',
 	'tasklistunknownproject' => 'Proxecto descoñecido',
 	'tasklistunspecuser' => 'Usuario sen especificar',
 	'tasklistincorrectuser' => 'Nome de usuario incorrecto',
 	'tasklistemail' => 'Querido %s',
-	'tasklistemailsubject' => '[%s] Cambio na Listaxe de Tarefas',
+	'tasklistemailsubject' => '[%s] Cambio na Lista de Tarefas',
 	'tasklistmytasks' => 'As miñas tarefas',
-	'tasklistbyprojectbad' => "O Proxecto '''%s''' non é un proxecto válido. Para unha listaxe de proxectos válidos, vexa
+	'tasklistbyprojectbad' => "O Proxecto '''%s''' non é un proxecto válido. Para unha lista de proxectos válidos, vexa
 [[MediaWiki:TodoTasksValidProjects]].",
 	'tasklistbyprojname' => "Tarefas asignadas a '''%s'''",
 	'tasklistchooseproj' => 'Seleccionar Proxecto:',
@@ -342,6 +428,35 @@ Alguén asignoulle unha nova tarefa en %s.
 Para ver a súa lista completa de tarefas vaia a %s.
 
 O seu sistema agradable de notificacións %s',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'tasklist' => 'Ufgabelischt',
+	'tasklist-parser-desc' => 'Fiegt d Parserfunktion <nowiki>{{#todo:}}</nowiki> zum Zueordne vu Ufgabe zue',
+	'tasklist-special-desc' => 'Fiegt e Spezialsyte fir d Nochpriefig vu [[Special:TaskList|Ufgabezueteilige]] zue',
+	'tasklistbyproject' => 'Ufgabelischt pro Projäkt',
+	'tasklistunknownproject' => 'Nit bekannt Projäkt',
+	'tasklistunspecuser' => 'Uubstimmter Benutzername',
+	'tasklistincorrectuser' => 'Falscher Benutzername',
+	'tasklistemail' => 'Sali %s',
+	'tasklistemailsubject' => '[%s]-Ufgabelischt Änderige',
+	'tasklistmytasks' => 'Myyni Ufgabe',
+	'tasklistbyprojectbad' => "Projäkt '''%s''' git s nit. Fir e Lischt vu giltige Projäkt lueg [[MediaWiki:TodoTasksValidProjects]].",
+	'tasklistbyprojname' => "Zuegwiseni Ufgabe fir '''%s'''",
+	'tasklistchooseproj' => 'Projäkt uswehle:',
+	'tasklistprojdisp' => 'Aazeige',
+	'tasklistbyname' => '== Ufgabelischt fir %s ==',
+	'tasklistnoprojects' => "Fähler: S siht eso uus wie wänn '''\$wgUseProjects''' aktiviert wär, aber d Syte [[MediaWiki:TodoTasksValidProjects]] sin nit aagleit. Lueg d [http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 Installationsaawyysige] fir meh Detail.",
+	'tasklistemailbody' => ',
+
+Eber het Dir e neji Ufgab bi %s zuegordnet.
+
+Go Dyy komplett Ufgabelischt bschaue lueg %s.
+
+Dyy fryndli %s-Benochrichtungssyschtem',
 );
 
 /** Hebrew (עברית)
@@ -435,11 +550,33 @@ Le systema de notification de %s',
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'tasklist' => 'タスクリスト',
-	'tasklistprojdisp' => 'ディスプレイ',
+	'tasklist' => '課題リスト',
+	'tasklist-parser-desc' => '課題割り当てのための <nowiki>{{#todo:}}</nowiki> パーサー関数を加える',
+	'tasklist-special-desc' => '[[Special:TaskList|課題割り当て]]を見直すための特別ページを追加する',
+	'tasklistbyproject' => 'プロジェクト別課題リスト',
+	'tasklistunknownproject' => '不明なプロジェクト',
+	'tasklistunspecuser' => '利用者未指定',
+	'tasklistincorrectuser' => '不正確な利用者名',
+	'tasklistemail' => '%s さんへ',
+	'tasklistemailsubject' => '[%s] 課題リストの変更',
+	'tasklistmytasks' => '自分の課題',
+	'tasklistbyprojectbad' => "プロジェクト「'''%s'''」は有効なプロジェクトではありません。有効なプロジェクトのリストは、[[MediaWiki:TodoTasksValidProjects]]をご覧ください。",
+	'tasklistbyprojname' => "'''%s''' の割り当て済み課題",
+	'tasklistchooseproj' => 'プロジェクトを選択:',
+	'tasklistprojdisp' => '表示',
+	'tasklistbyname' => '== %s がすべきことのリスト ==',
+	'tasklistnoprojects' => "エラー: あなたは '''\$wgUseProjects''' を有効にしているようですが、[[MediaWiki:TodoTasksValidProjects]] を作成していません。詳細は[http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 インストール手順]をご覧ください。",
+	'tasklistemailbody' => '、
+
+どなたかが、%s であなたに新しい課題を割り当てられました。
+
+%s で、あなたに割り当てられている課題の完全なリストを確認できます。
+
+%s 通知システムより',
 );
 
 /** Javanese (Basa Jawa)
@@ -778,7 +915,7 @@ $messages['pt'] = array(
 	'tasklist-special-desc' => 'Adiciona uma página especial para a revisão de [[Special:TaskList|atribuições de tarefas]]',
 	'tasklistbyproject' => 'Lista de Tarefas por Projecto',
 	'tasklistunknownproject' => 'projecto deconhecido',
-	'tasklistunspecuser' => 'Usuário não especificado',
+	'tasklistunspecuser' => 'Utilizador não especificado',
 	'tasklistincorrectuser' => 'Nome de utilizador incorrecto',
 	'tasklistemail' => 'Caro %s',
 	'tasklistemailsubject' => '[%s] Mudança na lista de tarefas',
@@ -789,6 +926,44 @@ Para uma lista de projectos válidos, ver [[MediaWiki:TodoTasksValidProjects]]."
 	'tasklistchooseproj' => 'Seleccione Projecto:',
 	'tasklistprojdisp' => 'Mostrar',
 	'tasklistbyname' => '== Lista de tarefas de %s ==',
+	'tasklistnoprojects' => "Erro: Aparentemente você activou '''\$wgUseProjects''', mas não criou [[MediaWiki:TodoTasksValidProjects]]. Veja as [http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 Instruções de Instalação] para mais detalhes.",
+	'tasklistemailbody' => ',
+
+Alguém atribuiu-lhe uma nova Tarefa em %s.
+
+Para ver a sua Lista de Tarefas completa, vá a %s.
+
+O seu sistema de notificação amigável',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'tasklist' => 'Lista de Tarefas',
+	'tasklist-parser-desc' => 'Adiciona a função do analisador (parser) <nowiki>{{#todo:}}</nowiki> para a atribuição de tarefas',
+	'tasklist-special-desc' => 'Adiciona uma página especial para a revisão de [[Special:TaskList|atribuições de tarefas]]',
+	'tasklistbyproject' => 'Lista de Tarefas por Projeto',
+	'tasklistunknownproject' => 'Projeto deconhecido',
+	'tasklistunspecuser' => 'Utilizador não especificado',
+	'tasklistincorrectuser' => 'Nome de utilizador incorreto',
+	'tasklistemail' => 'Caro %s',
+	'tasklistemailsubject' => '[%s] Mudança na lista de tarefas',
+	'tasklistmytasks' => 'Minhas tarefas',
+	'tasklistbyprojectbad' => "Projeto '''%s''' não é um projeto válido.
+Para uma lista de projetos válidos, ver [[MediaWiki:TodoTasksValidProjects]].",
+	'tasklistbyprojname' => "Tarefas atribuídas a '''%s'''",
+	'tasklistchooseproj' => 'Selecione Projeto:',
+	'tasklistprojdisp' => 'Mostrar',
+	'tasklistbyname' => '== Lista de tarefas de %s ==',
+	'tasklistnoprojects' => "Erro: Aparentemente você ativou '''\$wgUseProjects''', mas não criou [[MediaWiki:TodoTasksValidProjects]]. Veja as [http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 Instruções de Instalação] para mais detalhes.",
+	'tasklistemailbody' => ',
+
+Alguém atribuiu-lhe uma nova Tarefa em %s.
+
+Para ver a sua Lista de Tarefas completa, vá a %s.
+
+O seu sistema de notificação amigável de %s',
 );
 
 /** Romanian (Română)
@@ -808,16 +983,39 @@ $messages['roa-tara'] = array(
 	'tasklistunknownproject' => 'Pruggette scanusciute',
 	'tasklistemail' => '%s Belle mie',
 	'tasklistchooseproj' => "Scacchie 'u pruggette:",
+	'tasklistprojdisp' => 'Fa vedè',
 );
 
 /** Russian (Русский)
  * @author Ferrer
  * @author Rubin
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'tasklist' => 'Список задачь',
+	'tasklist-parser-desc' => 'Добавляет функцию парсера <nowiki>{{#todo:}}</nowiki> для назначения задач',
+	'tasklist-special-desc' => 'Добавляет служебную страницу для просмотра [[Special:TaskList|назначенных задач]]',
+	'tasklistbyproject' => 'Список задач по проектам',
 	'tasklistunknownproject' => 'Неизвестный проект',
+	'tasklistunspecuser' => 'Неизвестный участник',
+	'tasklistincorrectuser' => 'Неправильное имя участника',
+	'tasklistemail' => 'Уважаемый(ая) %s',
+	'tasklistemailsubject' => '[%s] Изменение списка задач',
 	'tasklistmytasks' => 'Мои задачи',
+	'tasklistbyprojectbad' => "Проект '''%s''' не является корректным.
+Список действующих проектов можно посмотреть на [[MediaWiki:TodoTasksValidProjects]].",
+	'tasklistbyprojname' => "Назначенный задачи для '''%s'''",
 	'tasklistchooseproj' => 'Выберите проект:',
+	'tasklistprojdisp' => 'Показать',
+	'tasklistbyname' => '== Список задач для %s ==',
+	'tasklistnoprojects' => "Ошибка. Похоже, что вы включили '''\$wgUseProjects''', но не создали [[MediaWiki:TodoTasksValidProjects]]. Подробнее см. в [http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 Руководстве по установке].",
+	'tasklistemailbody' => ',
+
+Кто-то назначил для вас новую задачу в %s.
+
+Что просмотреть весь список задач, обратитесь к %s.
+
+Ваша система уведомления %s.',
 );
 
 /** Slovak (Slovenčina)
@@ -854,6 +1052,8 @@ Váš priateľský upozorňovací systém %s',
  */
 $messages['stq'] = array(
 	'tasklist' => 'Apgoawenlieste',
+	'tasklist-parser-desc' => 'Föiget ju Parserfunktion <nowiki>{{#todo:}}</nowiki> toun Tou-oardenjen fon Apgoawen bietou',
+	'tasklist-special-desc' => 'Föiget ne Spezioalsiede foar ju Ätterpröiwenge fon [[Special:TaskList|Apgoawentoudeelengen]] bietou',
 	'tasklistbyproject' => 'Apgoawenlieste pro  Projekt',
 	'tasklistunknownproject' => 'Uunbekoand Projekt',
 	'tasklistunspecuser' => 'Uunbestimde Benutsernoome',
@@ -868,6 +1068,13 @@ $messages['stq'] = array(
 	'tasklistbyname' => '== Apgoawenlieste foar %s ==',
 	'tasklistnoprojects' => "Failer: Dät sjucht so uut, as wan '''\$wgUseProjects''' aktivierd waas, man der wuuden neen Sieden [[MediaWiki:TodoTasksValidProjects]] moaked. Sjuch do
 [http://www.mediawiki.org/wiki/Extension:Todo_Tasks#Step_8 Installationsanwiesengen] foar wiedere Details.",
+	'tasklistemailbody' => ',
+
+Wäl häd die ne näie Apgoawe bie %s tou-oardend.
+
+Toun Bekiekjen fon dien komplette Apgoawenlieste sjuch %s.
+
+Dien früntelk %s-Bescheed-täl-System',
 );
 
 /** Swedish (Svenska)
@@ -968,15 +1175,26 @@ Ang iyong palakaibigang sistemang tagapagbigay ng ulat ng %s',
  */
 $messages['tr'] = array(
 	'tasklist' => 'Görev listesi',
+	'tasklistunknownproject' => 'Bilinmeyen proje',
+	'tasklistincorrectuser' => 'Yanlış kullanıcı adı',
 	'tasklistmytasks' => 'Görevlerim',
+	'tasklistchooseproj' => 'Proje seçin:',
 	'tasklistprojdisp' => 'Gösteri',
 );
 
 /** Volapük (Volapük)
  * @author Malafaya
+ * @author Smeira
  */
 $messages['vo'] = array(
+	'tasklist' => 'Vobodalised',
+	'tasklistunknownproject' => 'Proyeg nesevädik',
+	'tasklistincorrectuser' => 'Gebananem neverätik',
 	'tasklistemail' => 'O %s löfik',
+	'tasklistmytasks' => 'Vobods obik',
+	'tasklistbyprojectbad' => "Proyeg: '''%s''' no lonöfon.
+Kanol tuvön lisedi proyegas lonöföl su pad: [[MediaWiki:TodoTasksValidProjects]].",
+	'tasklistchooseproj' => 'Välön proyega:',
 );
 
 /** Chinese (China) (‪中文(中国大陆)‬) */

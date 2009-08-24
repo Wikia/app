@@ -11,11 +11,6 @@ class AbuseFilterViewTestBatch extends AbuseFilterView {
 		global $wgOut, $wgUser, $wgRequest;
 		
 		AbuseFilter::disableConditionLimit();
-		
-		if (!$wgUser->isAllowed( 'abusefilter-modify' ) ) {
-			$wgOut->addWikiMsg( 'abusefilter-mustbeeditor' );
-			return;
-		}
 
 		$this->loadParameters();
 		
@@ -43,6 +38,7 @@ class AbuseFilterViewTestBatch extends AbuseFilterView {
 			);
 		$output = Xml::tags( 'div', array( 'id' => 'mw-abusefilter-test-editor' ), $output );
 
+		// Removed until I can distinguish between positives and negatives :)
  		$output .= Xml::tags( 'p', null, Xml::checkLabel( wfMsg( 'abusefilter-test-shownegative' ), 'wpShowNegative', 'wpShowNegative', $this->mShowNegative ) );
 
 		// Selectory stuff
@@ -52,9 +48,6 @@ class AbuseFilterViewTestBatch extends AbuseFilterView {
 			Xml::input( 'wpTestPeriodStart', 45, $this->mTestPeriodStart );
 		$selectFields['abusefilter-test-period-end'] = 
 			Xml::input( 'wpTestPeriodEnd', 45, $this->mTestPeriodEnd );
-		$selectFields['abusefilter-test-page'] =
-			Xml::input( 'wpTestPage', 45, $this->mTestPage );
-			
 		$output .= Xml::buildForm( $selectFields, 'abusefilter-test-submit' );
 		
 		$output .= Xml::hidden( 'title', $this->getTitle("test")->getPrefixedText() );
@@ -92,11 +85,6 @@ class AbuseFilterViewTestBatch extends AbuseFilterView {
 		if ($this->mTestPeriodEnd) {
 			$conds[] = 'rc_timestamp <= ' . 
 				$dbr->addQuotes( $dbr->timestamp( strtotime( $this->mTestPeriodEnd ) ) );
-		}
-		if ($this->mTestPage) {
-			$title = Title::newFromText( $this->mTestPage );
-			$conds['rc_namespace'] = $title->getNamespace();
-			$conds['rc_title'] = $title->getDBkey();
 		}
 
 		// Get our ChangesList
@@ -139,7 +127,6 @@ class AbuseFilterViewTestBatch extends AbuseFilterView {
 		$testUsername = $wgRequest->getText( 'wpTestUser' );
 		$this->mTestPeriodEnd = $wgRequest->getText( 'wpTestPeriodEnd' );
 		$this->mTestPeriodStart = $wgRequest->getText( 'wpTestPeriodStart' );
-		$this->mTestPage = $wgRequest->getText( 'wpTestPage' );
 
 		if ( !$this->mFilter 
 			&& count($this->mParams) > 1 

@@ -47,13 +47,14 @@ Please wait for the existing action to complete.',
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Jon Harald Søby
  * @author M.M.S.
  * @author Purodha
  */
 $messages['qqq'] = array(
 	'imagetagging-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
-	'imagetagging-article' => '{{Identical/Page}}',
+	'imagetagging-article' => '{{Identical|Page}}',
 	'imagetagging-imghistory' => '{{Identical|History}}',
 	'imagetagging-tagcancel-button' => '{{Identical|Cancel}}',
 );
@@ -71,6 +72,16 @@ $messages['rtm'] = array(
 $messages['niu'] = array(
 	'imagetagging-imghistory' => 'Liu onoono atu ki tua',
 	'imagetagging-tagcancel-button' => 'Tiaki',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'imagetagging-article' => "Lehtpol':",
+	'imagetagging-articletotag' => "Lehtpol' virgates",
+	'imagetagging-imghistory' => 'Istorii',
+	'imagetagging-tag-button' => 'Virg',
 );
 
 /** Afrikaans (Afrikaans)
@@ -182,7 +193,9 @@ $messages['arz'] = array(
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
+	'imagetagging-article' => 'Старонка:',
 	'imagetagging-imghistory' => 'Гісторыя',
+	'imagetagging-tagcancel-button' => 'Адмяніць',
 );
 
 /** Bulgarian (Български)
@@ -203,8 +216,16 @@ $messages['bg'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'imagetagging-desc' => 'Omogućuje korisniku da odabere regione uklopljene slike i poveže ih sa željenom stranicom',
 	'imagetagging-article' => 'Stranica:',
 	'imagetagging-imghistory' => 'Historija',
+	'imagetagging-images' => 'slike',
+	'imagetagging-inthisimage' => 'Na ovoj slici: $1',
+	'imagetagging-new' => '<sup><span style="color:red">Novo!</span></sup>',
+	'imagetagging-tagcancel-button' => 'Odustani',
+	'imagetagging-imagetag-seemoreimages' => 'Vidi više slika od "$1" ($2)',
+	'imagetagging-taggedimages-title' => 'Slike od "$1"',
+	'imagetagging-taggedimages-displaying' => 'Prikazane su $1 - $2 od $3 slika iz "$4"',
 );
 
 /** Czech (Česky)
@@ -248,12 +269,14 @@ $messages['cy'] = array(
  * @author ChrisiPK
  * @author DaSch
  * @author Melancholie
+ * @author Purodha
  * @author Revolus
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'taggedimages' => 'Bilder mit Tags',
 	'imagetagging-desc' => 'Ermöglicht es Benutzern, Bereiche von eingebetteten Bildern auszuwählen und diese mit einer Seite zu verknüpfen',
-	'imagetagging-addimagetag' => 'Tags hinzufügen',
+	'imagetagging-addimagetag' => 'Markierungen auf diesem Bild zufügen',
 	'imagetagging-article' => 'Seite:',
 	'imagetagging-articletotag' => 'Seite, die getaggt wird',
 	'imagetagging-canteditothermessage' => 'Du kannst diese Seite nicht bearbeiten, weil du entweder keine Berechtigung dazu hast oder weil die Seite aus einem anderen Grund gesperrt ist.',
@@ -261,15 +284,15 @@ $messages['de'] = array(
 	'imagetagging-images' => 'Bild',
 	'imagetagging-inthisimage' => 'In diesem Bild: $1',
 	'imagetagging-logentry' => 'Tag auf Seite [[$1]] wurde durch $2 entfernt',
-	'imagetagging-log-tagged' => 'Bild [[$1|$2]] wurde von $4 mit [[$3]] getagged',
+	'imagetagging-log-tagged' => 'Bild [[$1|$2]] wurde von $4 markiert und mit [[$3]] verlinkt',
 	'imagetagging-new' => '<sup><span style="color:red">Neu!</span></sup>',
 	'imagetagging-removetag' => 'Tag entfernen',
 	'imagetagging-done-button' => 'Tagging erledigt',
 	'imagetagging-tag-button' => 'Taggen',
 	'imagetagging-tagcancel-button' => 'Abbrechen',
 	'imagetagging-tagging-instructions' => 'Klick auf Personen oder Dinge in dem Bild um sie mit einem Tag zu versehen.',
-	'imagetagging-addingtag' => 'Füge Tag hinzu…',
-	'imagetagging-removingtag' => 'Entferne Tag…',
+	'imagetagging-addingtag' => 'Füge Tag hinzu …',
+	'imagetagging-removingtag' => 'Entferne Tag …',
 	'imagetagging-addtagsuccess' => 'Hinzugefügte Tags.',
 	'imagetagging-removetagsuccess' => 'Entfernte Tags.',
 	'imagetagging-canteditneedloginmessage' => 'Du kannst diese Seite nicht bearbeiten.
@@ -295,6 +318,44 @@ Möglicherweise müssen Sie sich anmelden, um Bilder zu taggen.
 Möchten Sie sich jetzt anmelden?',
 	'imagetagging-oneactionatatimemessage' => 'Es ist nur eine gleichzeitige Tagging-Aktion erlaubt.
 Bitte warten Sie, bis die momentane Aktion abgeschlossen ist.',
+);
+
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'taggedimages' => 'Wobznamjenjone wobraze',
+	'imagetagging-desc' => 'Zmóžnja wužywarjeju regiony ze zasajźonego wobraza wubraś a bok z toś tym regionom zwězaś',
+	'imagetagging-addimagetag' => 'Toś ten wobraz wobznamjeniś',
+	'imagetagging-article' => 'Bok:',
+	'imagetagging-articletotag' => 'Bok, kótaryž ma se wobznamjeniś',
+	'imagetagging-canteditothermessage' => 'Njamóžoš toś ten bok wobźěłaś, pak, dokulaž njamaš pšawa, aby to cynił, pak, dokulaž bok jo zastajony z drugich pśicynow.',
+	'imagetagging-imghistory' => 'Stawizny',
+	'imagetagging-images' => 'wobraze',
+	'imagetagging-inthisimage' => 'W toś tom wobrazu: $1',
+	'imagetagging-logentry' => 'Wobznamjenje k bokoju [[$1]] wót $2 wótpórane',
+	'imagetagging-log-tagged' => 'Wobraz [[$1|$2]] jo se wobznamjenił k bokoju [[$3]] wót $4',
+	'imagetagging-new' => '<sup><span style="color:red">Nowy!</span></sup>',
+	'imagetagging-removetag' => 'Wobznamjenje wótpóraś',
+	'imagetagging-done-button' => 'Wobznamjenjowanje wótbyte',
+	'imagetagging-tag-button' => 'Wobznamjeniś',
+	'imagetagging-tagcancel-button' => 'Pśetergnuś',
+	'imagetagging-tagging-instructions' => 'Klikni na luźi abo wěcy we wobrazu, aby je wobznamjenił.',
+	'imagetagging-addingtag' => 'Wobznamjenje se pśidawa...',
+	'imagetagging-removingtag' => 'Wobznamjenje se wótwónoźujo...',
+	'imagetagging-addtagsuccess' => 'Pśidane wobznamjenje.',
+	'imagetagging-removetagsuccess' => 'Wótpórane wobznamjenje.',
+	'imagetagging-canteditneedloginmessage' => 'Njamóžoš toś ten bok wobźěłaś.
+Snaź musyš se pśizjawiś, aby wobznamjenił wobraze.
+Coš se něnto pśizjawiś?',
+	'imagetagging-oneactionatatimemessage' => 'Jano jadna wobznamjenjowańska akcija jo naraz dowólona.
+Pšosym cakaj, až eksistěrujuca akcija jo se skóńcyła.',
+	'imagetagging-oneuniquetagmessage' => 'Toś ten wobraz ma južo wobznamjenje z toś tym mjenim.',
+	'imagetagging-imagetag-seemoreimages' => 'Glědaj dalšne wobraze wót "$1" ($2)',
+	'imagetagging-taggedimages-title' => 'Wobraze wót "$1"',
+	'imagetagging-taggedimages-displaying' => '{{PLURAL:$1|Zwobraznjujo|Zwobraznjujotej|Zwobraznjuju|Zwobraznjujo}} se $1 -  $2 z $3 wobrazow wót "$4"',
+	'tag-logpagename' => 'Protokol wobznamjenjowanja',
+	'tag-logpagetext' => 'To jo protokol wšych pśidanjow a wótpóranjow wobrazowych wobznamjenjow.',
 );
 
 /** Esperanto (Esperanto)
@@ -332,12 +393,30 @@ Eble tial vi devas ensaluti por aldoni etikedojn al bildoj.
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  */
 $messages['es'] = array(
+	'taggedimages' => 'imágenes etiquetadas',
+	'imagetagging-addimagetag' => 'Etiquetar esta imagen',
 	'imagetagging-article' => 'Página:',
+	'imagetagging-articletotag' => 'Página a etiquetar',
 	'imagetagging-imghistory' => 'Historial',
+	'imagetagging-images' => 'imágenes',
+	'imagetagging-inthisimage' => 'En esta imagen : $1',
+	'imagetagging-new' => '<sup><span style="color:red">Nuevo!</span></sup>',
+	'imagetagging-removetag' => 'remover etiqueta',
+	'imagetagging-done-button' => 'Etiquetado hecho',
+	'imagetagging-tag-button' => 'Etiqueta',
 	'imagetagging-tagcancel-button' => 'Cancelar',
+	'imagetagging-addingtag' => 'Agregando etiqueta...',
+	'imagetagging-removingtag' => 'Removiendo etiqueta...',
+	'imagetagging-addtagsuccess' => 'Etiqueta agregada.',
+	'imagetagging-removetagsuccess' => 'Etiqueta removida.',
+	'imagetagging-oneuniquetagmessage' => 'Esta imagen ya tiene una etiqueta con este nombre.',
+	'imagetagging-imagetag-seemoreimages' => 'Ver más imágenes de "$1" ($2)',
+	'imagetagging-taggedimages-title' => 'Imágenes de "$1"',
+	'imagetagging-taggedimages-displaying' => 'Mostrando $1 - $2 de $3 imágenes de "$4"',
 );
 
 /** Finnish (Suomi)
@@ -473,13 +552,51 @@ $messages['grc'] = array(
 	'imagetagging-tagcancel-button' => 'Ἀκυροῦν',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'taggedimages' => 'Bilder mit Tag',
+	'imagetagging-desc' => 'Macht s Benutzer megli, Berych vu yybettete Bilder uuszwehlen un die mit ere Syte z verchnipfe',
+	'imagetagging-addimagetag' => 'Tag zue däm Bild zuefiege',
+	'imagetagging-article' => 'Syte:',
+	'imagetagging-articletotag' => 'Syte, wu taggt wird',
+	'imagetagging-canteditothermessage' => 'Du chasch die Syte nit bearbeite, wel Du kei Berächtigung dezu hesch oder wel d Syten us eme andre Grund gsperrt isch.',
+	'imagetagging-imghistory' => 'Versione',
+	'imagetagging-images' => 'Bilder',
+	'imagetagging-inthisimage' => 'In däm Bild: $1',
+	'imagetagging-logentry' => 'Tag uf dr Syte [[$1]] isch dur $2 usegnuh wore',
+	'imagetagging-log-tagged' => 'Bild [[$1|$2]] isch vu $4 mit [[$3]] taggt wore',
+	'imagetagging-new' => '<sup><span style="color:red">Nej!</span></sup>',
+	'imagetagging-removetag' => 'Tag useneh',
+	'imagetagging-done-button' => 'Tagging isch gmacht',
+	'imagetagging-tag-button' => 'Tagge',
+	'imagetagging-tagcancel-button' => 'Abbräche',
+	'imagetagging-tagging-instructions' => 'Druck uf Lyt oder Ding im Bild go si tagge.',
+	'imagetagging-addingtag' => 'Fiegt e Tag zue ...',
+	'imagetagging-removingtag' => 'Nimmt Tag use ...',
+	'imagetagging-addtagsuccess' => 'Zuegfiegti Tag.',
+	'imagetagging-removetagsuccess' => 'Tag, wu usegnuh wore sin.',
+	'imagetagging-canteditneedloginmessage' => 'Du chasch die Syte nit bearbeite.
+Villicht muesch Di aamälde go Bilder tagge.
+Mechtsch Di jetz aamälde?',
+	'imagetagging-oneactionatatimemessage' => 'Nume ei Tagging-Aktion isch ufeimol erlaubt.
+Bitte wart, bis di momentan Aktion abgschlossen isch.',
+	'imagetagging-oneuniquetagmessage' => 'Des Bild het scho ne Tag mit däm Name.',
+	'imagetagging-imagetag-seemoreimages' => 'Lueg meh Bilder vu „$1“ ($2)',
+	'imagetagging-taggedimages-title' => 'Bilder vu „$1“',
+	'imagetagging-taggedimages-displaying' => 'Aazeigt wäre $1 - $2 vu $3 Bilder us „$4“',
+	'tag-logpagename' => 'Tagging-Logbuech',
+	'tag-logpagetext' => 'Des isch e Logbuech vu allene Bildertag, wu zuegfiegt un usegnuh wore sin.',
+);
+
 /** Hawaiian (Hawai`i)
  * @author Kalani
  * @author Singularity
  */
 $messages['haw'] = array(
 	'imagetagging-article' => '‘Ao‘ao:',
-	'imagetagging-imghistory' => 'Mo‘olelo',
+	'imagetagging-imghistory' => 'Mōʻaukala',
 );
 
 /** Hebrew (עברית)
@@ -526,6 +643,44 @@ $messages['he'] = array(
  */
 $messages['hr'] = array(
 	'imagetagging-article' => 'Stranica',
+);
+
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'taggedimages' => 'Woznamjenjene wobrazy',
+	'imagetagging-desc' => 'Zmóžnja wužiwarjej regiony zasadźeneho wobraza wubrać a stronu z tym regionom zwjazać',
+	'imagetagging-addimagetag' => 'Tutón wobraz woznamjenić',
+	'imagetagging-article' => 'Strona:',
+	'imagetagging-articletotag' => 'Strona, kotraž ma so woznamjenić',
+	'imagetagging-canteditothermessage' => 'Njemóžeš tutu stronu wobdźěłać, pak, dokelž nimaš prawa, zo by to činił, pak, dokelž strona je z druhich přičinow zawrjena.',
+	'imagetagging-imghistory' => 'Stawizny',
+	'imagetagging-images' => 'Wobrazy',
+	'imagetagging-inthisimage' => 'W tutej wobrazu: $1',
+	'imagetagging-logentry' => 'Woznamjenjenje na stronje [[$1]] wot $2 wotstronjene',
+	'imagetagging-log-tagged' => 'Wobraz [[$1|$2]] bu na stronje [[$3]] wot $4 woznamjenjeny',
+	'imagetagging-new' => '<sup><span style="color:red">Nowy!</span></sup>',
+	'imagetagging-removetag' => 'Woznamjenjenje wotstronić',
+	'imagetagging-done-button' => 'Woznamjenjowanje sčinjene',
+	'imagetagging-tag-button' => 'Woznamjenjenje',
+	'imagetagging-tagcancel-button' => 'Přetorhnyć',
+	'imagetagging-tagging-instructions' => 'Klikń na ludźi abo wěcy we wobrazu, zo by je woznamjenił.',
+	'imagetagging-addingtag' => 'Woznamjenjenje so přidawa...',
+	'imagetagging-removingtag' => 'Woznamjenjenje so wotstronja...',
+	'imagetagging-addtagsuccess' => 'Woznamjenjenje přidate.',
+	'imagetagging-removetagsuccess' => 'Woznamjenjenje wotstronjene.',
+	'imagetagging-canteditneedloginmessage' => 'Njemóžeš tutu stronu wobdźěłać.
+Snano dyrbiš so přizjewić, zo by wobrazy woznamjenił.
+Chceš so nětko přizjewić?',
+	'imagetagging-oneactionatatimemessage' => 'Jenož akcija woznamjenjowanja naraz je dowolena.
+Prošu čakaj, doniž eksistowaca akcija njeje so skónčena.',
+	'imagetagging-oneuniquetagmessage' => 'Tutón wobraz je hižo woznamjenjenje z tutym mjenom.',
+	'imagetagging-imagetag-seemoreimages' => 'Hlej dalše wobrazy wot "$1" ($2)',
+	'imagetagging-taggedimages-title' => 'Wobrazy wot "$1"',
+	'imagetagging-taggedimages-displaying' => '{{PLURAL:$1|Zwobraznja|Zwobraznjetej|Zowbraznjeja|Zwobraznja}} so $1 - $2 z $3 wobrazow wot "$4"',
+	'tag-logpagename' => 'Protokol woznamjenjowanja',
+	'tag-logpagetext' => 'To je protokol wšěch přidatych a wotstronjenych wobrazowych woznamjenjenjow.',
 );
 
 /** Hungarian (Magyar)
@@ -584,9 +739,41 @@ $messages['id'] = array(
 
 /** Italian (Italiano)
  * @author Darth Kule
+ * @author Pietrodn
  */
 $messages['it'] = array(
+	'taggedimages' => 'Immagini taggate',
+	'imagetagging-desc' => "Consente a un utente di selezionare regioni di un'immagine inclusa e associare una pagina con quella regione",
+	'imagetagging-addimagetag' => 'Tagga questa immagine',
+	'imagetagging-article' => 'Pagina:',
+	'imagetagging-articletotag' => 'Pagina da taggare',
+	'imagetagging-canteditothermessage' => 'Non puoi modificare questa pagina, o perché non hai i diritti per farlo, o perché la pagina è bloccata per altri motivi.',
 	'imagetagging-imghistory' => 'Cronologia',
+	'imagetagging-images' => 'immagini',
+	'imagetagging-inthisimage' => 'In questa immagine: $1',
+	'imagetagging-logentry' => 'Rimosso il tag alla pagina [[$1]] da parte di $2',
+	'imagetagging-log-tagged' => "L'immagine [[$1|$2]], è stata taggata alla pagina [[$3]] da $4",
+	'imagetagging-new' => '<span style="color:red"><sup>Nuovo!</sup></span>',
+	'imagetagging-removetag' => 'rimuovi tag',
+	'imagetagging-done-button' => 'Tagging eseguito',
+	'imagetagging-tag-button' => 'Tagga',
+	'imagetagging-tagcancel-button' => 'Annulla',
+	'imagetagging-tagging-instructions' => "Fai clic su persone o cose nell'immagine per taggarle.",
+	'imagetagging-addingtag' => 'Aggiungo il tag…',
+	'imagetagging-removingtag' => 'Rimuovo il tag…',
+	'imagetagging-addtagsuccess' => 'Tag aggiunto.',
+	'imagetagging-removetagsuccess' => 'Tag rimosso.',
+	'imagetagging-canteditneedloginmessage' => 'Non puoi modificare questa pagina.
+Può essere perché è necessario effettuare il login per taggare le immagini.
+Vuoi effettuare il login adesso?',
+	'imagetagging-oneactionatatimemessage' => "È permessa solo un'azione di tag alla volte.
+Per favore aspetta che venga completata l'azione esistente.",
+	'imagetagging-oneuniquetagmessage' => 'Questa immagine ha già un tag con questo nome.',
+	'imagetagging-imagetag-seemoreimages' => 'Vedi più immagini di "$1" ($2)',
+	'imagetagging-taggedimages-title' => 'Immagini di "$1"',
+	'imagetagging-taggedimages-displaying' => 'Visualizzo $1 - $2 di $3 immagini di "$4"',
+	'tag-logpagename' => 'Registro dei tag',
+	'tag-logpagetext' => 'Questo è un registro di tutte le aggiunte e rimozioni dei tag immagine.',
 );
 
 /** Japanese (日本語)
@@ -594,10 +781,35 @@ $messages['it'] = array(
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
+	'taggedimages' => 'ラベル付画像',
+	'imagetagging-desc' => '利用者がページ中の画像の領域を選択し、その領域にページを関連付けることをできるようにする',
+	'imagetagging-addimagetag' => 'この画像をラベル付け',
+	'imagetagging-article' => 'ページ:',
+	'imagetagging-articletotag' => 'ラベルを付けるページ',
+	'imagetagging-canteditothermessage' => 'あなたは必要な権限をもっていないか、ページがその他の理由でロックされているため、このページを編集できません。',
 	'imagetagging-imghistory' => '履歴',
-	'imagetagging-removetag' => 'タグの削除',
-	'imagetagging-tag-button' => 'タグ',
-	'imagetagging-tagcancel-button' => 'キャンセル',
+	'imagetagging-images' => '画像',
+	'imagetagging-inthisimage' => 'この画像中: $1',
+	'imagetagging-logentry' => '$2 が付けたページ [[$1]] へのラベルを除去',
+	'imagetagging-log-tagged' => '$4 が画像 [[$1|$2]] に [[$3]] をラベル付け',
+	'imagetagging-new' => '<sup><span style="color:red">新!</span></sup>',
+	'imagetagging-removetag' => 'ラベルを除去',
+	'imagetagging-done-button' => 'ラベル付け完了',
+	'imagetagging-tag-button' => 'ラベル',
+	'imagetagging-tagcancel-button' => '中止',
+	'imagetagging-tagging-instructions' => '画像中でラベル付けしたい人物や風物をクリックしてください。',
+	'imagetagging-addingtag' => 'ラベル追加中…',
+	'imagetagging-removingtag' => 'ラベル除去中…',
+	'imagetagging-addtagsuccess' => 'ラベル追加完了。',
+	'imagetagging-removetagsuccess' => 'ラベル除去完了。',
+	'imagetagging-canteditneedloginmessage' => 'あなたはこの画像を編集できません。画像にラベル付けするにはログインしなければならないことがあります。今ログインしますか？',
+	'imagetagging-oneactionatatimemessage' => 'ラベル付けの操作は一度に一回しかできません。前の操作が完了するのを待ってください。',
+	'imagetagging-oneuniquetagmessage' => 'この画像は既にこの名前でラベル付けされています。',
+	'imagetagging-imagetag-seemoreimages' => '「$1」($2) の画像をもっと見る',
+	'imagetagging-taggedimages-title' => '「$1」の画像',
+	'imagetagging-taggedimages-displaying' => '「$4」の画像$3個中 $1 - $2個目を表示しています',
+	'tag-logpagename' => 'ラベル付け記録',
+	'tag-logpagetext' => 'これはすべての画像ラベルの追加と除去の記録です。',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -633,18 +845,39 @@ $messages['kri'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'taggedimages' => 'Belder met Links drop',
-	'imagetagging-desc' => 'Määt et müjjelesch, ene Link op en Sigg em Wiki op Aandeile fun enem Beld ze pussizjeneere.',
+	'taggedimages' => 'Belder met Makeerunge drop',
+	'imagetagging-desc' => 'Määt et müjjelesch, ene Link op en Sigg em Wiki op Aandeile ov Berette fun enem Beld ze pussizjeneere.',
+	'imagetagging-addimagetag' => 'Makeerunge op dat Beld donn',
 	'imagetagging-article' => 'Sigg:',
+	'imagetagging-articletotag' => 'De Sigg zom Makeere',
 	'imagetagging-canteditothermessage' => 'Do kanns di Sigg he nit ändere. Entweder häs De nit dat Rääsch dozoh, udder de Sigg es sönsworöm jesperrt.',
 	'imagetagging-imghistory' => 'Versione',
 	'imagetagging-images' => 'Belder',
 	'imagetagging-inthisimage' => 'En dämm Beld: $1',
+	'imagetagging-logentry' => '!!Fuzzy!!Dä Metmaacher $2 hät de Makeerung op de Sigg [[$1]] fott jenumme.',
+	'imagetagging-log-tagged' => 'Dat Beld [[$1|$2]] es vum $4 makeet, un ene Berett met dä Sigg [[$3]] verlengk woode.',
 	'imagetagging-new' => '<sup><span style="color:red">Neu!</span></sup>',
+	'imagetagging-removetag' => 'Makeerung fottnämme',
+	'imagetagging-done-button' => 'Fädesch met Makeere!',
+	'imagetagging-tag-button' => 'Makeere!',
 	'imagetagging-tagcancel-button' => 'Draanjevve',
+	'imagetagging-tagging-instructions' => 'Kleck op Lück odder Saache op däm Beld, öm se ze makeere.',
+	'imagetagging-addingtag' => 'Makeerung dobei donn…',
+	'imagetagging-removingtag' => 'Makeerung fottnämme…',
+	'imagetagging-addtagsuccess' => 'Makeerung dobei jedonn.',
+	'imagetagging-removetagsuccess' => 'Makeerung fottjenumme.',
+	'imagetagging-canteditneedloginmessage' => 'Do kanns die Sigg hee nit ändere.
+Künnt sin, et es weil de enjelogg sin moß, öm Belder ze makeere.
+Wells de jez enlogge?',
+	'imagetagging-oneactionatatimemessage' => 'Nur ein Makeerung op eijmol es müjjelich.
+Donn drop wade, bes dä Vörjang fädesch es, dä jraad em Jang es.',
+	'imagetagging-oneuniquetagmessage' => 'Dat belld hät alld_en Makeerung met däm Name.',
 	'imagetagging-imagetag-seemoreimages' => 'Mieh Belder fun „$1“ beloore ($2)',
 	'imagetagging-taggedimages-title' => 'Belder fun „$1“',
 	'imagetagging-taggedimages-displaying' => 'Ben $1 am Zeije – $2 fun $3 Belder en „$4“',
+	'tag-logpagename' => 'Logboch övver de Makeerunge',
+	'tag-logpagetext' => 'Dat hee es dat Logboch met all dä Makeerungs-Vörjäng
+(dobeijedonn un fott jenumme) aan Belder.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -744,6 +977,13 @@ $messages['mr'] = array(
  */
 $messages['mt'] = array(
 	'imagetagging-tagcancel-button' => 'Annulla',
+);
+
+/** Mirandese (Mirandés)
+ * @author Malafaya
+ */
+$messages['mwl'] = array(
+	'imagetagging-article' => 'Páigina:',
 );
 
 /** Erzya (Эрзянь)
@@ -917,11 +1157,19 @@ Esperatz la fin de l’accion en cors.",
 	'tag-logpagetext' => 'Aquò es lo jornal de totes los ajustons e de totas las supressions de las balisas d’imatge.',
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Jose77
+ */
+$messages['or'] = array(
+	'imagetagging-imghistory' => 'ଇତିହାସ',
+);
+
 /** Ossetic (Иронау)
  * @author Amikeco
  */
 $messages['os'] = array(
 	'imagetagging-imghistory' => 'Истори',
+	'imagetagging-tagcancel-button' => 'Нæ бæззы',
 );
 
 /** Polish (Polski)
@@ -935,25 +1183,83 @@ $messages['pl'] = array(
 );
 
 /** Portuguese (Português)
+ * @author 555
  * @author MF-Warburg
  * @author Malafaya
- * @author 555
+ * @author Waldir
  */
 $messages['pt'] = array(
+	'taggedimages' => 'Imagens etiquetadas',
+	'imagetagging-desc' => 'Permite que um utilizador selecione uma região de uma imagem incorporada e associe uma página a essa região',
+	'imagetagging-addimagetag' => 'Etiquetar esta imagem',
+	'imagetagging-article' => 'Página:',
+	'imagetagging-articletotag' => 'Página a etiquetar',
+	'imagetagging-canteditothermessage' => 'Você não pode editar esta página, porque não possui permissões para isso, ou porque a página está bloqueada por outros motivos.',
 	'imagetagging-imghistory' => 'Histórico',
+	'imagetagging-images' => 'imagens',
+	'imagetagging-inthisimage' => 'Nesta imagem: $1',
+	'imagetagging-logentry' => 'Removida etiqueta para a página [[$1]] por $2',
+	'imagetagging-log-tagged' => 'A etiqueta da imagem [[$1|$2]] para a página [[$3]] foi adicionada por $4',
+	'imagetagging-new' => '<sup><span style="color:red">Nova!</span></sup>',
+	'imagetagging-removetag' => 'Remover etiqueta',
+	'imagetagging-done-button' => 'A etiqueta foi adicionada',
+	'imagetagging-tag-button' => 'Etiquetar',
 	'imagetagging-tagcancel-button' => 'Cancelar',
+	'imagetagging-tagging-instructions' => 'Clique em pessoas ou objetos na imagem para os etiquetar.',
+	'imagetagging-addingtag' => 'A adicionar etiqueta…',
+	'imagetagging-removingtag' => 'A remover etiqueta…',
+	'imagetagging-addtagsuccess' => 'Etiqueta adicionada.',
+	'imagetagging-removetagsuccess' => 'Etiqueta removida.',
+	'imagetagging-canteditneedloginmessage' => 'Você não pode editar esta página.
+Poderá ser porque você precisa de se autenticar para etiquetar imagens.
+Deseja autenticar-se agora?',
+	'imagetagging-oneactionatatimemessage' => 'Apenas uma ação de etiquetagem é permitida de cada vez.
+Por favor, aguarde que a ação existente finalize.',
+	'imagetagging-oneuniquetagmessage' => 'Esta imagem já tem uma etiqueta com este nome.',
+	'imagetagging-imagetag-seemoreimages' => 'Ver mais imagens de "$1" ($2)',
+	'imagetagging-taggedimages-title' => 'Imagens de "$1"',
+	'imagetagging-taggedimages-displaying' => 'A mostrar $1 - $2 de $3 imagens de "$4"',
+	'tag-logpagename' => 'Registo de etiquetagens',
+	'tag-logpagetext' => 'Este é um registo de todas as adições e remoções de etiquetas de imagens.',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
  * @author Enqd
  */
 $messages['pt-br'] = array(
 	'taggedimages' => 'Imagens marcadas',
+	'imagetagging-desc' => 'Permite que um utilizador selecione uma região de uma imagem incorporada e associe uma página a essa região',
 	'imagetagging-addimagetag' => 'Marcar esta imagem',
+	'imagetagging-article' => 'Página:',
+	'imagetagging-articletotag' => 'Página a etiquetar',
+	'imagetagging-canteditothermessage' => 'Você não pode editar esta página, porque não possui permissões para isso, ou porque a página está bloqueada por outros motivos.',
+	'imagetagging-imghistory' => 'Histórico',
 	'imagetagging-images' => 'imagens',
+	'imagetagging-inthisimage' => 'Nesta imagem: $1',
+	'imagetagging-logentry' => 'Removida etiqueta para a página [[$1]] por $2',
+	'imagetagging-log-tagged' => 'A etiqueta da imagem [[$1|$2]] para a página [[$3]] foi adicionada por $4',
+	'imagetagging-new' => '<sup><span style="color:red">Nova!</span></sup>',
+	'imagetagging-removetag' => 'Remover etiqueta',
 	'imagetagging-done-button' => 'Marcação concluída',
 	'imagetagging-tag-button' => 'Marcar',
 	'imagetagging-tagcancel-button' => 'Cancelar',
+	'imagetagging-tagging-instructions' => 'Clique em pessoas ou objetos na imagem para os etiquetar.',
+	'imagetagging-addingtag' => 'Adicionando etiqueta…',
+	'imagetagging-removingtag' => 'Removendo etiqueta...',
+	'imagetagging-addtagsuccess' => 'Etiqueta adicionada.',
+	'imagetagging-removetagsuccess' => 'Etiqueta removida.',
+	'imagetagging-canteditneedloginmessage' => 'Você não pode editar esta página.
+Pode ser porque você precise se autenticar para etiquetar imagens.
+Deseja autenticar-se agora?',
+	'imagetagging-oneactionatatimemessage' => 'Apenas uma ação de etiquetagem é permitida de cada vez.
+Por favor, aguarde que a ação existente finalize.',
+	'imagetagging-oneuniquetagmessage' => 'Esta imagem já tem uma etiqueta com este nome.',
+	'imagetagging-imagetag-seemoreimages' => 'Ver mais imagens de "$1" ($2)',
+	'imagetagging-taggedimages-title' => 'Imagens de "$1"',
+	'imagetagging-taggedimages-displaying' => 'Mostrando $1 - $2 de $3 imagens de "$4"',
+	'tag-logpagename' => 'Registro de etiquetagens',
+	'tag-logpagetext' => 'Este é um registro de todas as adições e remoções de etiquetas de imagens.',
 );
 
 /** Tarifit (Tarifit)
@@ -1043,6 +1349,44 @@ Počkajte prosím, kým sa dokončí prebiehajúca operácia.',
 	'tag-logpagetext' => 'Toto je záznam všetkých pridaní a odstránení značiek obrázkov.',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'taggedimages' => 'Bielden mäd Tags',
+	'imagetagging-desc' => 'Moaket dät Benutsere muugelk, Beräkke fon ienbäädede Bielden uuttouwäälen un do mäd ne Siede tou ferknätten',
+	'imagetagging-addimagetag' => 'Markierengen ap disse Bielde touföigje',
+	'imagetagging-article' => 'Siede:',
+	'imagetagging-articletotag' => 'Siede, ju der tagged wäd',
+	'imagetagging-canteditothermessage' => 'Du koast disse Siede nit beoarbaidje, deeruum dät du neen Begjuchtigenge deertou hääst of deeruum dät ju Siede uut n uur Gruund speerd is.',
+	'imagetagging-imghistory' => 'Versione:',
+	'imagetagging-images' => 'Bielde',
+	'imagetagging-inthisimage' => 'In disse Bielde: $1',
+	'imagetagging-logentry' => 'Tag ap Siede [[$1]] wuud fon $2 wächhoald',
+	'imagetagging-log-tagged' => 'Bielde [[$1|$2]] wuud fon $4 markierd un mäd [[$3]] ferlinked',
+	'imagetagging-new' => '<sup><span style="color:red">Näi !</span></sup>',
+	'imagetagging-removetag' => 'Tag wächhoalje',
+	'imagetagging-done-button' => 'Tagging däin',
+	'imagetagging-tag-button' => 'Tagje',
+	'imagetagging-tagcancel-button' => 'Oubreeke',
+	'imagetagging-tagging-instructions' => 'Klik ap Persone of Dingere in ju Bielde uum do mäd n Tag tou fersjoon.',
+	'imagetagging-addingtag' => 'Tag bietouföigje ...',
+	'imagetagging-removingtag' => 'Tag wächhoalje ...',
+	'imagetagging-addtagsuccess' => 'Bietouföigede Tags',
+	'imagetagging-removetagsuccess' => 'Wächhoalde Tags.',
+	'imagetagging-canteditneedloginmessage' => 'Du koast disse Siede nit beoarbaidje.
+Muugelkerwiese moast du die anmäldje, uum Bielden tou tagjen.
+Moatest du die nu anmäldje?',
+	'imagetagging-oneactionatatimemessage' => 'Der is man een gliektiedige Tagging-Aktion ferlööwed.
+Täif jädden, bit ju momentoane Aktion ousleeten is.',
+	'imagetagging-oneuniquetagmessage' => 'Disse Bielde häd al n Tag mäd dissen Noome.',
+	'imagetagging-imagetag-seemoreimages' => 'Sjuch moor Bielden fon "$1" ($2)',
+	'imagetagging-taggedimages-title' => 'Bielden fon "$1"',
+	'imagetagging-taggedimages-displaying' => 'Anwiesd wäide $1 - $2 fon $3 Bielden uut "$4"',
+	'tag-logpagename' => 'Tagging-Logbouk',
+	'tag-logpagetext' => 'Dit is n Logbouk fon aal do bietouföigede un wächhoalde Bieldetags.',
+);
+
 /** Sundanese (Basa Sunda)
  * @author Irwangatot
  */
@@ -1110,6 +1454,44 @@ $messages['tet'] = array(
 	'imagetagging-tagcancel-button' => 'Para',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'taggedimages' => 'Mga larawang natatakan na',
+	'imagetagging-desc' => 'Nagpapahintulot sa isang tagagamit na makapili ng mga rehiyon ng isang nakabaong larawan at iugnay ang isang pahina sa ganyang rehiyon',
+	'imagetagging-addimagetag' => 'Tatakan ang larawang ito',
+	'imagetagging-article' => 'Pahina:',
+	'imagetagging-articletotag' => 'Pahinang tatatakan',
+	'imagetagging-canteditothermessage' => 'Hindi mo mababago ang pahinang ito, maaaring dahil wala kang mga karapatang gawin ito o sapagkat ikinandado ang pahina dahil sa iba pang mga kadahilanan.',
+	'imagetagging-imghistory' => 'Kasaysayan',
+	'imagetagging-images' => 'mga larawan',
+	'imagetagging-inthisimage' => 'Sa loob ng larawang ito: $1',
+	'imagetagging-logentry' => 'Tinangal ni $2 ang tatak na nasa pahinang [[$1]]',
+	'imagetagging-log-tagged' => 'Itinatak ni $4 ang larawang [[$1|$2]] sa pahinang [[$3]]',
+	'imagetagging-new' => '<sup><span style="color:red">Bago!</span></sup>',
+	'imagetagging-removetag' => 'tanggalin ang tatak',
+	'imagetagging-done-button' => 'Tapos na ang pagtatatak',
+	'imagetagging-tag-button' => 'Tatakan',
+	'imagetagging-tagcancel-button' => 'Huwag ituloy',
+	'imagetagging-tagging-instructions' => 'Pindutin ang mga tao o mga bagay na nasa loob ng larawan upang matatakan sila.',
+	'imagetagging-addingtag' => 'Idinadagdag ang tatak...',
+	'imagetagging-removingtag' => 'Tinatanggal ang tatak...',
+	'imagetagging-addtagsuccess' => 'Idinagdag ang tatak.',
+	'imagetagging-removetagsuccess' => 'Tinanggal ang tatak.',
+	'imagetagging-canteditneedloginmessage' => 'Hindi mo mababago ang pahinang ito.
+Maaaring kailangan mong lumagda muna upang makapagtatak ng mga larawan.
+Nais mo bang lumagda na ngayon?',
+	'imagetagging-oneactionatatimemessage' => 'Isang galaw ng pagtatatak lamang sa isang panahon ang pinapahintulutan.
+Pakihintay lamang na mabuo muna ang umiiral na kilos.',
+	'imagetagging-oneuniquetagmessage' => 'Ang larawang ito ay mayroon nang isang tatak na may ganitong pangalan.',
+	'imagetagging-imagetag-seemoreimages' => 'Tingnan ang mas marami pang mga larawan ng "$1" ($2)',
+	'imagetagging-taggedimages-title' => 'Mga larawan ng "$1"',
+	'imagetagging-taggedimages-displaying' => 'Ipinapakita ang $1 - $2 ng $3 mga larawan ng "$4"',
+	'tag-logpagename' => 'Tala ng pagtatatak',
+	'tag-logpagetext' => 'Isa itong talaan ng lahat ng mga pagdaragdag at mga pagtatanggal ng tatak ng larawan.',
+);
+
 /** Turkish (Türkçe)
  * @author Joseph
  * @author Karduelis
@@ -1122,6 +1504,13 @@ $messages['tr'] = array(
 	'imagetagging-taggedimages-title' => '"$1" resimleri',
 );
 
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'imagetagging-article' => 'Bet:',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
@@ -1131,6 +1520,7 @@ $messages['vi'] = array(
 	'imagetagging-addimagetag' => 'Gắn thẻ hình này',
 	'imagetagging-article' => 'Trang:',
 	'imagetagging-articletotag' => 'Trang gắn thẻ',
+	'imagetagging-canteditothermessage' => 'Bạn không thể sửa đổi trang này, có thể do bạn không có quyền thực hiện hoặc do trang bị khóa vì một lý do nào khác.',
 	'imagetagging-imghistory' => 'Lịch sử',
 	'imagetagging-images' => 'hình',
 	'imagetagging-inthisimage' => 'Trong hình này: $1',
@@ -1155,5 +1545,14 @@ Xin hãy chờ tác vụ hoàn thành.',
 	'imagetagging-imagetag-seemoreimages' => 'Xem nhiều hình của "$1" hơn ($2)',
 	'imagetagging-taggedimages-title' => 'Hình của "$1"',
 	'imagetagging-taggedimages-displaying' => 'Hiển thị $1 - $2 trong tổng số $3 hình của "$4"',
+	'tag-logpagename' => 'Gắn thẻ cho nhật trình',
+	'tag-logpagetext' => 'Đây là nhật trình ghi lại tất cả tác vụ thêm và bỏ thẻ hình ảnh.',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wmr89502270
+ */
+$messages['zh-hans'] = array(
+	'imagetagging-article' => '页面：',
 );
 

@@ -108,6 +108,23 @@ Dai inaakò kan mga operador sa site na ini an mga responsibilidad para mga kome
 	'talkhere-collapse' => 'tagôon an editor',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'talkhere-desc' => 'Дадае старонку абмеркаваньня да старонкі',
+	'talkhere-foottext' => 'Камэнтары ўверсе маглі быць пакінутыя наведвальнікамі.
+
+Адміністратары гэтага сайта ня могуць несьці адказнасьць за зьмест падобных камэнтараў.',
+	'talkhere-talkpage' => 'старонка абмеркаваньня',
+	'talkhere-notalk' => "''(камэнтараў пакуль няма)''",
+	'talkhere-addcomment' => 'дадаць камэнтар',
+	'talkhere-beforeinput' => 'Вы можаце дадаць камэнтар ніжэй',
+	'talkhere-loading' => 'загрузка рэдактара…',
+	'talkhere-collapse' => 'схаваць рэдактар',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -125,10 +142,28 @@ $messages['bg'] = array(
 	'talkhere-collapse' => 'скриване на редактора',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'talkhere-desc' => 'Stavlja stranicu za razgovor u stranicu',
+	'talkhere-foottext' => 'Gornji komentari su postavljeni od strane posjetioca.
+
+Operatori ovog sajta ne preuzimaju odgovornost za sadržaj tih komentara.',
+	'talkhere-talkpage' => 'stranica za razgovor',
+	'talkhere-notalk' => "''(nema još komentara)''",
+	'talkhere-addcomment' => 'dodaj komentar',
+	'talkhere-beforeinput' => 'Možete dodati komentar ispod',
+	'talkhere-loading' => 'učitavam uređivač...',
+	'talkhere-collapse' => 'sakrij uređivač',
+);
+
 /** Catalan (Català)
  * @author Jordi Roqué
+ * @author SMP
  */
 $messages['ca'] = array(
+	'talkhere-desc' => 'Posa la pàgina de discussió dins la pàgina',
 	'talkhere-foottext' => "Els comentaris anteriors poden haver estat escrits per visitants.
 
 Els operadors d'aquest lloc no poden responsabilitzar-se dels continguts d'aquests comentaris.",
@@ -157,6 +192,7 @@ Provozovatelé této stránky nenesou odpovědnost za obsah takových komentář
 );
 
 /** German (Deutsch)
+ * @author Als-Holder
  * @author Daniel Kinzler, brightbyte.de
  * @author Melancholie
  * @author Umherirrender
@@ -165,7 +201,7 @@ $messages['de'] = array(
 	'talkhere-desc' => 'Baut die Diskussionsseite in eine Seite ein',
 	'talkhere-foottext' => 'Die obigen Kommentare wurden möglicherweise von Besuchern hinterlassen.
 
-Die Betreiber dieser Webseite können keine Verantwortung für den Inhalt diser Kommentare übernehmen.',
+Die Betreiber dieser Webseite können keine Verantwortung für den Inhalt dieser Kommentare übernehmen.',
 	'talkhere-talkpage' => 'Diskussionsseite',
 	'talkhere-notalk' => "''(Noch keine Kommentare)''",
 	'talkhere-addcomment' => 'Kommentar hinzufügen',
@@ -220,20 +256,33 @@ La operaciistoj de la retejo ne estas respondeca pri la enhavo de tiaj komentoj.
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Lin linao
  */
 $messages['es'] = array(
+	'talkhere-desc' => 'Poner la página de discusión dentro de la página',
+	'talkhere-foottext' => 'Los comentarios de arriba pueden haber sido dejados por visitantes.
+
+El operador de este sitio no puede tener responsabilidad por el contenido de tales comentarios.',
 	'talkhere-talkpage' => 'página de discusión',
+	'talkhere-notalk' => "''(aún sin comentarios)''",
 	'talkhere-addcomment' => 'agregar comentario',
+	'talkhere-beforeinput' => 'Usted puede agregar un comentario debajo',
+	'talkhere-loading' => 'Cargando editor...',
 	'talkhere-collapse' => 'ocultar editor',
 );
 
 /** Basque (Euskara)
  * @author An13sa
  * @author Kobazulo
+ * @author Theklan
  */
 $messages['eu'] = array(
+	'talkhere-desc' => 'Eztabaida orrialdea orrialdean bertan jartzen du',
+	'talkhere-foottext' => 'Goiko iruzkinak bisitariek utzi dituzte.
+
+Gune honetako arudradunek ezin dute mezu horien gaineko ardurarik hartu.',
 	'talkhere-talkpage' => 'eztabaida orria',
 	'talkhere-notalk' => "''(oraindik iruzkinik gabe)''",
 	'talkhere-addcomment' => 'iruzkina erantsi',
@@ -301,6 +350,22 @@ Os operadores deste sitio non poden asumir a responsabilidade polo contido de di
 	'talkhere-beforeinput' => 'Vostede pode engadir un comentario a continuación',
 	'talkhere-loading' => 'cargando editor...',
 	'talkhere-collapse' => 'ocultar editor',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'talkhere-desc' => 'Böut d Diskussionssyte in e Syten yy',
+	'talkhere-foottext' => 'D Kommentar dobe sin megligerwyys vu Bsuecher gschribe wore.
+
+D Betryyber vu däre Netzsyte chenne kei Verantwortig fir dr Inhalt vu däne Kommentar iberneh.',
+	'talkhere-talkpage' => 'Diskussionssyte',
+	'talkhere-notalk' => "''(No kei Kommentar)''",
+	'talkhere-addcomment' => 'Kommentar zuefiege',
+	'talkhere-beforeinput' => 'Kommentar bitte unte yygee',
+	'talkhere-loading' => 'Am Lade vum Editor …',
+	'talkhere-collapse' => 'Editor verstecke',
 );
 
 /** Hebrew (עברית)
@@ -384,11 +449,20 @@ Operator situs ini tidak bertanggung jawab atas isi komentar-komentar tersebut.'
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
+	'talkhere-desc' => 'ノートページを主ページの中に置く',
+	'talkhere-foottext' => '以上のコメントはサイトの訪問者によるものかもしれません。
+
+このサイトの運営者はそのようなコメントの内容について責任を取ることはできません。',
 	'talkhere-talkpage' => '会話ページ',
+	'talkhere-notalk' => "''(まだコメントなし)''",
 	'talkhere-addcomment' => 'コメントの追加',
+	'talkhere-beforeinput' => '以下にコメントを追加できます',
+	'talkhere-loading' => 'エディタを読み込み中…',
+	'talkhere-collapse' => 'エディタを非表示',
 );
 
 /** Javanese (Basa Jawa)
@@ -549,7 +623,7 @@ De beheerders van deze site dragen geen verantwoordelijkheid voor de inhoud van 
 	'talkhere-notalk' => "''(nog geen opmerkingen)''",
 	'talkhere-addcomment' => 'opmerking toevoegen',
 	'talkhere-beforeinput' => 'Voeg uw opmerking hieronder toe',
-	'talkhere-loading' => 'editor aan het laden...',
+	'talkhere-loading' => 'Bezig met het laden van de tekstverwerker…',
 	'talkhere-collapse' => 'editor verbergen',
 );
 
@@ -648,6 +722,7 @@ $messages['ps'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
+	'talkhere-desc' => 'Coloca a página de discussão dentro da página',
 	'talkhere-foottext' => 'Os comentários acima podem ter sido deixados por visitantes.
 
 Os responsáveis por este site não podem ser responsabilizados pelo conteúdo desses comentários.',
@@ -655,6 +730,22 @@ Os responsáveis por este site não podem ser responsabilizados pelo conteúdo d
 	'talkhere-notalk' => "''(sem comentários de momento)''",
 	'talkhere-addcomment' => 'adicionar comentário',
 	'talkhere-beforeinput' => 'Pode adicionar uma comentário abaixo',
+	'talkhere-loading' => 'carregando editor...',
+	'talkhere-collapse' => 'esconder editor',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'talkhere-desc' => 'Coloca a página de discussão dentro da página',
+	'talkhere-foottext' => 'Os comentários acima podem ter sido deixados por visitantes.
+
+Os responsáveis por este site não podem ser responsabilizados pelo conteúdo desses comentários.',
+	'talkhere-talkpage' => 'discussão',
+	'talkhere-notalk' => "''(sem comentários até o momento)''",
+	'talkhere-addcomment' => 'adicionar comentário',
+	'talkhere-beforeinput' => 'Você pode adicionar uma comentário abaixo',
 	'talkhere-loading' => 'carregando editor...',
 	'talkhere-collapse' => 'esconder editor',
 );
@@ -672,6 +763,7 @@ $messages['ro'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'talkhere-desc' => 'Помещает страницу обсуждения на страницу',
 	'talkhere-foottext' => 'Вы можете оставить свои комментарии к этой статье в нижней части страницы.
 
 Администраторы этого сайта не несут ответственность за содержание комментариев к статьям, расположенным на сайте.',
@@ -798,9 +890,17 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Vinhtantran
  */
 $messages['vi'] = array(
+	'talkhere-desc' => 'Đặt trang thảo luận vào trang',
+	'talkhere-foottext' => 'Các lời bình luận ở trên có thể do những khách viếng thăm ghi lại.
+
+Những người điều hành trang này không chịu trách nhiệm cho nội dung của các bình luận đó.',
 	'talkhere-talkpage' => 'trang thảo luận',
+	'talkhere-notalk' => "''(chưa có bình luận)''",
+	'talkhere-addcomment' => 'thêm bình luận',
+	'talkhere-beforeinput' => 'Bạn có thể thêm bình luận vào phía dưới',
 	'talkhere-loading' => 'đang nạp bộ soạn…',
 	'talkhere-collapse' => 'giấu bộ soạn',
 );

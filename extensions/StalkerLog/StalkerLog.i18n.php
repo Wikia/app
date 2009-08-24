@@ -42,6 +42,18 @@ $messages['arz'] = array(
 	'stalkerlog-log-text' => 'ده سجل بعمليات تسجيل الدخول والخروج لليوزرز.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'stalkerlog-desc' => 'Дадае [[Special:Log/stalkerlog|журнал]] уваходу і выхаду ўдзельнікаў',
+	'stalkerlog-log-login' => 'уваходы.',
+	'stalkerlog-log-logout' => 'выхады.',
+	'stalkerlog-log-type' => 'Журнал аўтэнтыфікацыі ўдзельнікаў',
+	'stalkerlog-log-text' => 'Гэта журнал уваходаў і выхадаў удзельнікаў.',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -50,6 +62,15 @@ $messages['bg'] = array(
 	'stalkerlog-log-login' => 'влезе в системата.',
 	'stalkerlog-log-logout' => 'излезе от системата.',
 	'stalkerlog-log-text' => 'Тази страница съдържа дневник на потребителските влизания и излизания.',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'stalkerlog-log-login' => 'prijavljen.',
+	'stalkerlog-log-logout' => 'odjavljen.',
+	'stalkerlog-log-type' => 'Zapisnik korisničke potvrde',
 );
 
 /** Czech (Česky)
@@ -64,12 +85,13 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Als-Holder
  * @author Revolus
  */
 $messages['de'] = array(
 	'stalkerlog-desc' => 'Fügt ein [[Special:Log/stalkerlog|Logbuch]] der An- und Abmeldungen hinzu',
-	'stalkerlog-log-login' => 'abgemeldet.',
-	'stalkerlog-log-logout' => 'angemeldet.',
+	'stalkerlog-log-login' => 'angemeldet.',
+	'stalkerlog-log-logout' => 'abgemeldet.',
 	'stalkerlog-log-type' => 'Authentifizierungslogbuch',
 	'stalkerlog-log-text' => 'Dies ist das Logbuch der An- und Abmeldungen.',
 );
@@ -94,6 +116,15 @@ $messages['eo'] = array(
 	'stalkerlog-log-logout' => 'elsalutis.',
 	'stalkerlog-log-type' => 'Protokolo pri aŭtentokontrolo',
 	'stalkerlog-log-text' => 'Jen protokolo pri ensalutoj kaj elsaltuoj de uzantoj.',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'stalkerlog-log-login' => 'Conectado',
+	'stalkerlog-log-logout' => 'Desconectado',
+	'stalkerlog-log-type' => 'Registro de autenticación de usuario',
 );
 
 /** Basque (Euskara)
@@ -137,6 +168,17 @@ $messages['gl'] = array(
 	'stalkerlog-log-logout' => 'saíu do sistema.',
 	'stalkerlog-log-type' => 'Rexistro de autenticación de usuario',
 	'stalkerlog-log-text' => 'Este é un rexistro de accesos e saídas do sistema.',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'stalkerlog-desc' => 'Fiegt e [[Special:Log/stalkerlog|Logbuech]] vu dr Aa- und Abmäldige zue',
+	'stalkerlog-log-login' => 'aagmäldet.',
+	'stalkerlog-log-logout' => 'abgmäldet.',
+	'stalkerlog-log-type' => 'Authentifizierigslogbuech',
+	'stalkerlog-log-text' => 'Des isch s Logbuech vu dr Aa- un Abmäldige.',
 );
 
 /** Hebrew (עברית)
@@ -188,9 +230,10 @@ $messages['it'] = array(
 /** Japanese (日本語)
  * @author Aotake
  * @author Fievarsty
+ * @author Fryed-peach
  */
 $messages['ja'] = array(
-	'stalkerlog-desc' => '利用者のログインとログアウトの[[Special:Log/stalkerlog|ログ]]を追加する',
+	'stalkerlog-desc' => '利用者のログインとログアウトの[[Special:Log/stalkerlog|記録]]を追加する',
 	'stalkerlog-log-login' => 'ログインしました。',
 	'stalkerlog-log-logout' => 'ログアウトしました。',
 	'stalkerlog-log-type' => '利用者認証記録',
@@ -315,6 +358,39 @@ $messages['pl'] = array(
 	'stalkerlog-log-text' => 'To jest rejestr logowań i wylogowań użytkowników.',
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'stalkerlog-desc' => 'Adiciona [[Special:Log/stalkerlog|um registo]] de autenticações e desautenticações de utilizadores',
+	'stalkerlog-log-login' => 'autenticado.',
+	'stalkerlog-log-logout' => 'desautenticado.',
+	'stalkerlog-log-type' => 'Registo de autenticação de utilizadores',
+	'stalkerlog-log-text' => 'Este é um registo de autenticações e desautenticações de utilizadores.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'stalkerlog-desc' => 'Adiciona [[Special:Log/stalkerlog|um registro]] de autenticações e desautenticações de utilizadores',
+	'stalkerlog-log-login' => 'autenticado.',
+	'stalkerlog-log-logout' => 'desautenticado.',
+	'stalkerlog-log-type' => 'Registro de autenticação de utilizadores',
+	'stalkerlog-log-text' => 'Este é um registro de autenticações e desautenticações de utilizadores.',
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'stalkerlog-desc' => 'Добавляет [[Special:Log/stalkerlog|журнал]] представлений системе и завершения сеансов участников',
+	'stalkerlog-log-login' => 'представился системе.',
+	'stalkerlog-log-logout' => 'завершил сеанс.',
+	'stalkerlog-log-type' => 'Журнал аутентификации участников',
+	'stalkerlog-log-text' => 'Это журнал, регистрирующий представления системе (вход) и завершение сеанса (выход) участников.',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -344,6 +420,7 @@ $messages['te'] = array(
 	'stalkerlog-desc' => 'వాడుకరుల యొక్క ప్రవేశ మరియు నిష్క్రమణల [[Special:Log/stalkerlog|చిట్టా]]ని చేరుస్తుంది',
 	'stalkerlog-log-login' => 'లోనికి ప్రవేశించారు.',
 	'stalkerlog-log-logout' => 'నిష్క్రమించారు.',
+	'stalkerlog-log-type' => 'వాడుకరి అధీకరణల చిట్టా',
 	'stalkerlog-log-text' => 'ఇది వాడుకరి ప్రవేశాలు మరియు నిష్క్రమణల చిట్టా.',
 );
 
@@ -356,6 +433,26 @@ $messages['tl'] = array(
 	'stalkerlog-log-logout' => 'hindi na nakalagda.',
 	'stalkerlog-log-type' => 'Talaan ng pagpapatotoo ng tagagamit',
 	'stalkerlog-log-text' => 'Isa itong talaan ng mga mga paglagda at pag-alis mula sa pagkakalagda ng tagagamit.',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'stalkerlog-desc' => 'Thêm [[Special:Log/stalkerlog|nhật trình]] ghi lại các lần đăng nhập và đăng xuất của thành viên',
+	'stalkerlog-log-login' => 'đã đăng nhập.',
+	'stalkerlog-log-logout' => 'đã đăng xuất.',
+	'stalkerlog-log-type' => 'Nhật trình xác minh người dùng',
+	'stalkerlog-log-text' => 'Đây là nhật trình ghi lại các lần đăng nhập và đăng xuất của người dùng.',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'stalkerlog-log-login' => 'enunädon oki.',
+	'stalkerlog-log-logout' => 'esänunädon oki.',
+	'stalkerlog-log-text' => 'Is palisedons nunädams e sänunädams gebanas.',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

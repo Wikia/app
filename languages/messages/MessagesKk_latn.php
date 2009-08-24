@@ -1054,13 +1054,11 @@ Osığan qatıstı jaña betterdi [[{{#special:Search}}|bul wïkïden izdewdi]] 
 'rev-deleted-comment'         => '(mändeme alastaldı)',
 'rev-deleted-user'            => '(qatıswşı atı alastaldı)',
 'rev-deleted-event'           => '(jwrnal jazbası alastaldı)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-Bul bettiñ tüzetwi barşa murağattarınan alastalğan.
-Mında [{{fullurl:{{#special:Log}}/delete|page={{FULLPAGENAMEE}}}} joyw jwrnalında] egjeý-tegjeý mälimetteri bolwı mümkin.</div>',
-'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">
-Osı bettiñ tüzetwi barşa murağattarınan alastalğan.
+'rev-deleted-text-permission' => 'Bul bettiñ tüzetwi barşa murağattarınan alastalğan.
+Mında [{{fullurl:{{#special:Log}}/delete|page={{FULLPAGENAMEE}}}} joyw jwrnalında] egjeý-tegjeý mälimetteri bolwı mümkin.',
+'rev-deleted-text-view'       => 'Osı bettiñ tüzetwi barşa murağattarınan alastalğan.
 {{SITENAME}} äkimşisi bop sonı köre alasız;
-[{{fullurl:{{#special:Log}}/delete|page={{FULLPAGENAMEE}}}} joyw jwrnalında] egjeý-tegjeý mälmetteri bolwı mümkin.</div>',
+[{{fullurl:{{#special:Log}}/delete|page={{FULLPAGENAMEE}}}} joyw jwrnalında] egjeý-tegjeý mälmetteri bolwı mümkin.',
 'rev-delundel'                => 'körset/jasır',
 'revisiondelete'              => 'Tüzetwlerdi joyw/joywdı boldırmaw',
 'revdelete-nooldid-title'     => 'Nısana tüzetw jaramsız',
@@ -1516,35 +1514,30 @@ Bağannıñ bas jolın nuqığanda surıptawdıñ rettewi özgertiledi.',
 'listfiles_description' => 'Sïpattaması',
 
 # File description page
-'filehist'                       => 'Faýl tarïxı',
-'filehist-help'                  => 'Faýldıñ qaý waqıtta qalaý körinetin üşin Kün-aý/Waqıt degendi nuqıñız.',
-'filehist-deleteall'             => 'barlığın joý',
-'filehist-deleteone'             => 'joý',
-'filehist-revert'                => 'qaýtar',
-'filehist-current'               => 'ağımdağı',
-'filehist-datetime'              => 'Kün-aý/Waqıt',
-'filehist-user'                  => 'Qatıswşı',
-'filehist-dimensions'            => 'Ölşemderi',
-'filehist-filesize'              => 'Faýl mölşeri',
-'filehist-comment'               => 'Mändemesi',
-'imagelinks'                     => 'Siltemeler',
-'linkstoimage'                   => 'Bul faýlğa kelesi {{PLURAL:$1|bet|$1 bet}} silteýdi:',
-'nolinkstoimage'                 => 'Bul faýlğa eş bet siltemeýdi.',
-'morelinkstoimage'               => 'Bul faýldıñ [[{{#special:Whatlinkshere}}/$1|köbirek siltemelerin]] qaraw.',
-'redirectstofile'                => 'Kelesi {{PLURAL:$1|faýl|$1 faýl}} bul faýlğa aýdaýdı:',
-'duplicatesoffile'               => 'Kelesi {{PLURAL:$1|faýl bul faýldıñ telnusqası|$1 faýl bul faýldıñ telnusqaları}}:',
-'sharedupload'                   => 'Bul faýl ortaq qoýmağa qotarıp berilgen sondıqtan basqa jobalarda qoldanwı mümkin.',
-'shareduploadwiki'               => 'Bılaýğı aqparat üşin $1 degendi qarañız.',
-'shareduploadwiki-desc'          => 'Bul $1 degen faýldıñ ortaq qoýmadağı mälimetteri tömende körsetiledi.',
-'shareduploadwiki-linktext'      => 'faýldıñ sïpattama beti',
-'shareduploadduplicate'          => 'Bul faýl ortaq qoýmadağı $1 faýlınıñ telnusqası.',
-'shareduploadduplicate-linktext' => 'özge faýl',
-'shareduploadconflict'           => 'Bul faýl atawı ortaq qoýmadağı $1 faýlımen däl keledi',
-'shareduploadconflict-linktext'  => 'özge faýl',
-'noimage'                        => 'Bılaý atalğan faýl joq, $1 mümkindigiñiz bar.',
-'noimage-linktext'               => 'bunı qotarıp ber',
-'uploadnewversion-linktext'      => 'Bul faýldıñ jaña nusqasın qotarıp berw',
-'imagepage-searchdupe'           => 'Faýl telnusqaların izdew',
+'filehist'                  => 'Faýl tarïxı',
+'filehist-help'             => 'Faýldıñ qaý waqıtta qalaý körinetin üşin Kün-aý/Waqıt degendi nuqıñız.',
+'filehist-deleteall'        => 'barlığın joý',
+'filehist-deleteone'        => 'joý',
+'filehist-revert'           => 'qaýtar',
+'filehist-current'          => 'ağımdağı',
+'filehist-datetime'         => 'Kün-aý/Waqıt',
+'filehist-user'             => 'Qatıswşı',
+'filehist-dimensions'       => 'Ölşemderi',
+'filehist-filesize'         => 'Faýl mölşeri',
+'filehist-comment'          => 'Mändemesi',
+'imagelinks'                => 'Siltemeler',
+'linkstoimage'              => 'Bul faýlğa kelesi {{PLURAL:$1|bet|$1 bet}} silteýdi:',
+'nolinkstoimage'            => 'Bul faýlğa eş bet siltemeýdi.',
+'morelinkstoimage'          => 'Bul faýldıñ [[{{#special:Whatlinkshere}}/$1|köbirek siltemelerin]] qaraw.',
+'redirectstofile'           => 'Kelesi {{PLURAL:$1|faýl|$1 faýl}} bul faýlğa aýdaýdı:',
+'duplicatesoffile'          => 'Kelesi {{PLURAL:$1|faýl bul faýldıñ telnusqası|$1 faýl bul faýldıñ telnusqaları}}:',
+'sharedupload'              => 'Bul faýl ortaq qoýmağa qotarıp berilgen sondıqtan basqa jobalarda qoldanwı mümkin.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'shareduploadwiki'          => 'Bılaýğı aqparat üşin $1 degendi qarañız.',
+'shareduploadwiki-desc'     => 'Bul $1 degen faýldıñ ortaq qoýmadağı mälimetteri tömende körsetiledi.',
+'shareduploadwiki-linktext' => 'faýldıñ sïpattama beti',
+'noimage'                   => 'Bılaý atalğan faýl joq, $1 mümkindigiñiz bar.',
+'noimage-linktext'          => 'bunı qotarıp ber',
+'uploadnewversion-linktext' => 'Bul faýldıñ jaña nusqasın qotarıp berw',
 
 # File reversion
 'filerevert'                => '$1 degendi qaýtarw',
@@ -1721,7 +1714,8 @@ Mında taqırıp atında qoldalmaýtın birqatar tañbalar bolwı mümkin.',
 'special-categories-sort-abc'   => 'älipbïmen surıptaw',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Qatıswşınıñ joýılğan ülesi',
+'deletedcontributions'       => 'Qatıswşınıñ joýılğan ülesi',
+'deletedcontributions-title' => 'Qatıswşınıñ joýılğan ülesi',
 
 # Special:LinkSearch
 'linksearch'       => 'Sırtqı siltemelerdi izdew',
@@ -2005,7 +1999,7 @@ $1',
 'contributions' => 'Qatıswşı ülesi',
 'mycontris'     => 'Ülesim',
 'contribsub2'   => '$1 ($2) ülesi',
-'nocontribs'    => 'Osı izdew şartına säýkes özgerister tabılğan joq.',
+'nocontribs'    => 'Osı izdew şartına säýkes özgerister tabılğan joq.', # Optional parameter: $1 is the user name
 'uctop'         => ' (üsti)',
 'month'         => 'Mına aýdan (jäne erterekten):',
 'year'          => 'Mına jıldan (jäne erterekten):',
@@ -2182,8 +2176,8 @@ Osı oraýda, qalawıñız bolsa, betti qoldan jıljıta ne qosa alasız.",
 Bunı qolmen qosıñız.'''",
 'movedto'                 => 'mınağan jıljıtıldı:',
 'movetalk'                => 'Qawımdastı talqılaw betin jıljıtw',
-'move-subpages'           => 'Barlıq betşelerin jıljıtw, eger qoldanbalı bolsa',
-'move-talk-subpages'      => 'Talqılaw betiniñ barlıq betşelerin jıljıtw, eger qoldanbalı bolsa',
+'move-subpages'           => 'Barlıq betşelerin jıljıtw',
+'move-talk-subpages'      => 'Talqılaw betiniñ barlıq betşelerin jıljıtw',
 'movepage-page-exists'    => '$1 degen bet aldaqaşan bar jäne üstine özdiktik jazılmaýdı.',
 'movepage-page-moved'     => '$1 degen bet $2 degenge jıljıtıldı.',
 'movepage-page-unmoved'   => '$1 degen bet $2 degenge jıljıtılmaýdı.',
@@ -2495,6 +2489,7 @@ Basqaları ädepkiden jasırıladı.
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags
@@ -2766,8 +2761,8 @@ Basqaları ädepkiden jasırıladı.
 Öziñizdiñ mekenjaýıñızğa quptaw xatın jöneltw üşin tömendegi batırmanı nuqıñız.
 Xattıñ işinde kodı bar silteme kiristirmek; 
 e-poşta jaýıñızdıñ jaramdılığın quptaw üşin siltemeni şolğıştıñ mekenjaý jolağına engizip aşıñız.',
-'confirmemail_pending'     => '<div class="error">Quptaw kodı aldaqaşan xatpen jiberiligen;
-eger jwıqta tirkelseñiz, jaña kodın suratw aldınan xat kelwin birşama mïnöt küte turıñız.</div>',
+'confirmemail_pending'     => 'Quptaw kodı aldaqaşan xatpen jiberiligen;
+eger jwıqta tirkelseñiz, jaña kodın suratw aldınan xat kelwin birşama mïnöt küte turıñız.',
 'confirmemail_send'        => 'Quptaw kodın jöneltw',
 'confirmemail_sent'        => 'Quptaw xatı jöneltildi.',
 'confirmemail_oncreate'    => 'Quptaw kodı e-poşta mekenjaýıñızğa jöneltildi.
@@ -2807,10 +2802,8 @@ Quptaw kodı merzimi bitetin kezi: $4.',
 'scarytranscludetoolong'  => '[URL tım uzın; ğafw etiñiz]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">Bul bettiñ añıstawları:
-
-$1
-</div>',
+'trackbackbox'      => 'Bul bettiñ añıstawları:<br />
+$1',
 'trackbackremove'   => '([$1 Joyw])',
 'trackbacklink'     => 'Añıstaw',
 'trackbackdeleteok' => 'Añıstaw sätti joýıldı.',

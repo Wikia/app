@@ -103,14 +103,21 @@ $messages['bn'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'globalusage' => 'Globalna upotreba datoteke',
+	'globalusage-desc' => '[[Special:GlobalUsage|Posebna stranica]] za pregled globalne upotrebe datoteke',
 	'globalusage-ok' => 'Traži',
+	'globalusage-text' => 'Pretraga globalne upotrebe datoteke.',
 );
 
 /** Catalan (Català)
  * @author Jordi Roqué
+ * @author SMP
  */
 $messages['ca'] = array(
+	'globalusage' => 'Ús global de fitxar',
+	'globalusage-desc' => "[[Special:GlobalUsage|Pàgina especial]] per a veure l'ús global del fitxer",
 	'globalusage-ok' => 'Cerca',
+	'globalusage-text' => "Cerca l'ús global del fitxer.",
 );
 
 /** Chamorro (Chamoru)
@@ -165,10 +172,14 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Jatrobat
  */
 $messages['es'] = array(
+	'globalusage' => 'Uso de archivo global',
+	'globalusage-desc' => '[[Special:GlobalUsage|Página especial]] para ver uso de archivo global',
 	'globalusage-ok' => 'Buscar',
+	'globalusage-text' => 'Buscar uso de archivo global',
 );
 
 /** Estonian (Eesti)
@@ -180,14 +191,25 @@ $messages['et'] = array(
 	'globalusage-text' => 'Otsi globaalset failikasutust.',
 );
 
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'globalusage' => 'Fitxategiaren erabilera orokorra',
+	'globalusage-desc' => 'Fitxategiaren erabilera orokorra ikusteko [[Special:GlobalUsage|orrialde berezia]]',
+	'globalusage-ok' => 'Bilatu',
+	'globalusage-text' => 'Fitxategiaren erabilera orokorra bilatu.',
+);
+
 /** French (Français)
  * @author Grondin
  * @author Meithal
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'globalusage' => 'Usage global du fichier',
 	'globalusage-desc' => '[[Special:GlobalUsage|Page spéciale]] pour voir l’usage global d’une image',
-	'globalusage-ok' => 'Recherche',
+	'globalusage-ok' => 'Rechercher',
 	'globalusage-text' => "Rechercher l'usage global du fichier",
 );
 
@@ -215,6 +237,16 @@ $messages['grc'] = array(
 	'globalusage-ok' => 'Ζητεῖν',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'globalusage' => 'Wältwyti Dateinutzig',
+	'globalusage-desc' => '[[Special:GlobalUsage|Spezialsyte]] zu Aazeige, in welene Projäkt d Dateien vun eme gmeinsam gnutzte Repositoriums verwändet wäre',
+	'globalusage-ok' => 'Sueche',
+	'globalusage-text' => 'Wältwyt no Dateinutzige sueche',
+);
+
 /** Manx (Gaelg)
  * @author MacTire02
  */
@@ -227,6 +259,13 @@ $messages['gv'] = array(
  */
 $messages['hak'] = array(
 	'globalusage-ok' => 'Chhìm-cháu',
+);
+
+/** Hawaiian (Hawai`i)
+ * @author Kalani
+ */
+$messages['haw'] = array(
+	'globalusage-ok' => 'Huli',
 );
 
 /** Hebrew (עברית)
@@ -388,10 +427,19 @@ $messages['lb'] = array(
 	'globalusage-text' => 'No der globaler Notzung vum Fichier sichen.',
 );
 
+/** Lingua Franca Nova (Lingua Franca Nova)
+ * @author Malafaya
+ */
+$messages['lfn'] = array(
+	'globalusage-ok' => 'Xerca',
+);
+
 /** Lithuanian (Lietuvių)
+ * @author Homo
  * @author Tomasdd
  */
 $messages['lt'] = array(
+	'globalusage' => 'Visuotinis failo naudojimas',
 	'globalusage-ok' => 'Ieškoti',
 );
 
@@ -478,6 +526,13 @@ $messages['oc'] = array(
 	'globalusage-text' => "Recercar l'usatge global del fichièr",
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Jose77
+ */
+$messages['or'] = array(
+	'globalusage-ok' => 'ସନ୍ଧାନ',
+);
+
 /** Ossetic (Иронау)
  * @author Amikeco
  */
@@ -486,6 +541,7 @@ $messages['os'] = array(
 );
 
 /** Polish (Polski)
+ * @author Leinad
  * @author Maikking
  * @author Sp5uhe
  */
@@ -493,6 +549,7 @@ $messages['pl'] = array(
 	'globalusage' => 'Globalne użycie pliku',
 	'globalusage-desc' => '[[Special:GlobalUsage|Strona specjalna]] raportująca globalnie wykorzystanie pliku',
 	'globalusage-ok' => 'Szukaj',
+	'globalusage-text' => 'Globalne wyszukiwanie użycia pliku.',
 );
 
 /** Pashto (پښتو)
@@ -516,6 +573,16 @@ $messages['pt'] = array(
 	'globalusage-text' => 'Pesquisar utilização global de ficheiro.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'globalusage' => 'Utilização global de arquivos',
+	'globalusage-desc' => '[[Special:GlobalUsage|Página especial]] para consultar a utilização global de arquivos',
+	'globalusage-ok' => 'Busca',
+	'globalusage-text' => 'Pesquisar utilização global de arquivos.',
+);
+
 /** Tarifit (Tarifit)
  * @author Jose77
  */
@@ -528,6 +595,13 @@ $messages['rif'] = array(
  */
 $messages['ro'] = array(
 	'globalusage-ok' => 'Caută',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'globalusage-ok' => 'Cirche',
 );
 
 /** Russian (Русский)
@@ -561,7 +635,10 @@ $messages['sr-ec'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
+	'globalusage' => 'Globoale Doatäinutsenge',
 	'globalusage-desc' => '[[Special:GlobalUsage|Spezioalsiede]] toun Anwiesen, in wäkke Projekte do Doatäie fon n gemeensoam nutsed Repositorium ferwoand wäide',
+	'globalusage-ok' => 'Säike',
+	'globalusage-text' => 'Globoale Säike ätter Doatäinutsengen.',
 );
 
 /** Sundanese (Basa Sunda)
@@ -630,6 +707,26 @@ $messages['th'] = array(
 	'globalusage-ok' => 'ค้นหา',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'globalusage' => 'Paggamit ng pandaigdigang talaksan',
+	'globalusage-desc' => '[[Special:GlobalUsage|Natatanging pahina]] upang makita ang paggamit ng pandaigdigang talaksan',
+	'globalusage-ok' => 'Maghanap',
+	'globalusage-text' => 'Maghanap ng paggamit ng pandaigdigang talaksan.',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'globalusage' => 'Küresel dosya kullanımı',
+	'globalusage-desc' => 'Küresel dosya kullanımını görmek için [[Special:GlobalUsage|özel sayfa]]',
+	'globalusage-ok' => 'Ara',
+	'globalusage-text' => 'Küresel dosya kullanımını ara.',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
@@ -639,6 +736,16 @@ $messages['vi'] = array(
 	'globalusage-desc' => '[[Special:GlobalUsage|Trang đặc biệt]] để xem tập tin này đang dùng ở đâu trên toàn hệ thống',
 	'globalusage-ok' => 'Tìm kiếm',
 	'globalusage-text' => 'Tìm cách dùng tập tin toàn cục.',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'globalusage' => 'Ragivigeb Valöpik',
+	'globalusage-desc' => '[[Special:GlobalUsage|Pad patik]] ad logön ragivigebi valöpik',
+	'globalusage-ok' => 'Sukön',
+	'globalusage-text' => 'Sükön ragivigebi valöpik.',
 );
 
 /** Yiddish (ייִדיש)

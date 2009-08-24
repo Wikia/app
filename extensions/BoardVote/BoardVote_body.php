@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) {
+if( !defined('MEDIAWIKI') ) {
 	die( "Not a valid entry point\n" );
 }
 
@@ -8,8 +8,11 @@ class BoardVotePage extends UnlistedSpecialPage {
 	var $mHasVoted, $mAction, $mUserKey, $mId, $mFinished;
 	var $mDb;
 
-	function __construct() {
-		parent::__construct( "Boardvote" );
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		parent::__construct( 'BoardVote' );
 	}
 
 	function getUserFromRemote( $sid, $casid, $db, $site, $lang ) {
@@ -113,11 +116,11 @@ class BoardVotePage extends UnlistedSpecialPage {
 
 		$this->mPosted = $wgRequest->wasPosted();
 		if ( method_exists( $wgRequest, 'getArray' ) ) {
-			$this->mVotedFor = $wgRequest->getArray( "candidate", array() );
+			$this->mVotedFor = $wgRequest->getArray( 'candidate', array() );
 		} else {
-			$this->mVotedFor = $wgRequest->getVal( "candidate", array() );
+			$this->mVotedFor = $wgRequest->getVal( 'candidate', array() );
 		}
-		$this->mId = $wgRequest->getInt( "id", 0 );
+		$this->mId = $wgRequest->getInt( 'id', 0 );
 		$this->mValidVote = $this->mPosted ? $this->validVote() : false;
 
 		$this->mHasVoted = $this->hasVoted();
@@ -125,12 +128,16 @@ class BoardVotePage extends UnlistedSpecialPage {
 		if ( $par ) {
 			$this->mAction = $par;
 		} else {
-			$this->mAction = $wgRequest->getText( "action" );
+			$this->mAction = $wgRequest->getText( 'action' );
 		}
 	}
 
-
-	function execute( $par ) {
+	/**
+	 * Show the special page
+	 *
+	 * @param $par Mixed: parameter passed to the page or null
+	 */
+	public function execute( $par ) {
 		global $wgOut, $wgBoardVoteStartDate, $wgBoardVoteEndDate;
 
 		wfLoadExtensionMessages( 'BoardVote' );
@@ -144,28 +151,27 @@ class BoardVotePage extends UnlistedSpecialPage {
 		}
 
 		if ( $this->mUserKey ) {
-			$wgOut->addWikiText( wfMsg( 'boardvote_welcome', wfEscapeWikiText( $this->mUserKey ) ) );
+			$wgOut->addWikiMsg( 'boardvote_welcome', wfEscapeWikiText( $this->mUserKey ) );
 		}
 
 		if ( wfTimestampNow() < $wgBoardVoteStartDate && !$this->isAdmin() ) {
-			$wgOut->addWikiText( wfMsg( 'boardvote_notstarted' ) );
+			$wgOut->addWikiMsg( 'boardvote_notstarted' );
 			return;
 		}
 
 		if ( $this->mBlocked ) {
-			$wgOut->addWikiText( wfMsg( 'boardvote_blocked' ) );
+			$wgOut->addWikiMsg( 'boardvote_blocked' );
 			return;
 		}
 
 		if ( $this->mBot ) {
-			$wgOut->addWikiText( wfMsg( 'boardvote_bot' ) );
+			$wgOut->addWikiMsg( 'boardvote_bot' );
 			return;
 		}
 
 		if ( wfTimestampNow() > $wgBoardVoteEndDate ) {
 			$this->mFinished = true;
-
-			$wgOut->addWikiText( wfMsg( 'boardvote_closed' ) );
+			$wgOut->addWikiMsg( 'boardvote_closed' );
 		} else {
 			$this->mFinished = false;
 		}
@@ -202,7 +208,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 
 	function displayEntry() {
 		global $wgOut;
-		$wgOut->addWikiText( wfMsg( "boardvote_entry" ) );
+		$wgOut->addWikiMsg( 'boardvote_entry' );
 	}
 
 	function getDB() {
@@ -212,8 +218,8 @@ class BoardVotePage extends UnlistedSpecialPage {
 			$this->mDb = new Database( $wgBoardVoteDBServer, $wgDBuser, $wgDBpassword,
 				$wgBoardVoteDB, /*failfn*/false, /*flags*/0, /*prefix*/'' );
 			if ( !$this->mDb->isOpen() ) {
-					// This should be handled inside the constructor, but we'll check just in case
-					throw new MWException( "DB connection failed unexpectedly" );
+				// This should be handled inside the constructor, but we'll check just in case
+				throw new MWException( "DB connection failed unexpectedly" );
 			}
 		}
 		return $this->mDb;
@@ -222,7 +228,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 	function hasVoted() {
 		$dbr =& $this->getDB();
 		$row = $dbr->selectRow( 'vote_log', array( "1" ),
-		  array( "log_user_key" => $this->mUserKey ), "BoardVotePage::getUserVote" );
+		  array( 'log_user_key' => $this->mUserKey ), __METHOD__ );
 		if ( $row === false ) {
 			return false;
 		} else {
@@ -232,19 +238,16 @@ class BoardVotePage extends UnlistedSpecialPage {
 
 	function logVote() {
 		global $wgUser, $wgDBname, $wgOut, $wgGPGPubKey, $wgRequest;
-		$fname = "BoardVotePage::logVote";
 
 		$now = wfTimestampNow();
 		$record = $this->getRecord();
 		$encrypted = $this->encrypt( $record );
 		$gpgKey = file_get_contents( $wgGPGPubKey );
 		$dbw =& $this->getDB();
-		$log = $dbw->tableName( "vote_log" );
 
 		# Mark previous votes as old
 		$encKey = $dbw->strencode( $this->mUserKey );
-		$sql = "UPDATE $log SET log_current=0 WHERE log_user_key='$encKey'";
-		$dbw->query( $sql, $fname );
+		$dbw->update( 'vote_log', array( 'log_current' => 0 ), array( 'log_user_key' => $encKey ), __METHOD__ );
 
 		# Add vote to log
 		$xff = @$_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -254,42 +257,43 @@ class BoardVotePage extends UnlistedSpecialPage {
 
 		$tokenMatch = $wgUser->matchEditToken( $wgRequest->getVal( 'edit_token' ) );
 
-		$dbw->insert( $log, array(
-			"log_user" => 0,
-			"log_user_text" => '',
-			"log_user_key" => $this->mUserKey,
-			"log_wiki" => $wgDBname,
-			"log_record" => $encrypted,
-			"log_ip" => wfGetIP(),
-			"log_xff" => $xff,
-			"log_ua" => $_SERVER['HTTP_USER_AGENT'],
-			"log_timestamp" => $now,
-			"log_current" => 1,
-			"log_token_match" => $tokenMatch ? 1 : 0,
-		), $fname );
+		$dbw->insert( 'vote_log', array(
+			'log_user' => 0,
+			'log_user_text' => '',
+			'log_user_key' => $this->mUserKey,
+			'log_wiki' => $wgDBname,
+			'log_record' => $encrypted,
+			'log_ip' => wfGetIP(),
+			'log_xff' => $xff,
+			'log_ua' => $_SERVER['HTTP_USER_AGENT'],
+			'log_timestamp' => $now,
+			'log_current' => 1,
+			'log_token_match' => $tokenMatch ? 1 : 0,
+		), __METHOD__ );
 
-		$wgOut->addWikiText( wfMsg( "boardvote_entered", $record, $gpgKey, $encrypted ) );
+		$wgOut->addWikiMsg( 'boardvote_entered', $record, $gpgKey, $encrypted );
 	}
 
 	function displayVote() {
 		global $wgBoardCandidates, $wgOut;
 
-		$thisTitle = Title::makeTitle( NS_SPECIAL, "Boardvote" );
+		$thisTitle = SpecialPage::getTitleFor( 'BoardVote' );
 		$action = $thisTitle->escapeLocalURL( "action=vote" );
 		if ( $this->mHasVoted ) {
-			$intro = wfMsg( "boardvote_intro_change" );
+			$intro = wfMsg( 'boardvote_intro_change' );
 		} else {
-			$intro = wfMsg( "boardvote_intro" );
+			global $wgUser;
+			$intro = wfMsgExt( 'boardvote_intro', array( 'parsemag' ), $wgUser->getName() );
 		}
 
-		$ok = wfMsgHtml( "boardvote_submit" );
+		$ok = wfMsgHtml( 'boardvote_submit' );
 
 		$candidates = array();
 		foreach( $wgBoardCandidates as $i => $candidate ) {
 			$candidates[] = array( $i, $candidate );
 		}
 
-		srand ((float)microtime()*1000000);
+		srand( (float)microtime() * 1000000 );
 		shuffle( $candidates );
 
 		$text = "
@@ -306,7 +310,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 		  <td><input name=\"submit\" type=\"submit\" value=\"$ok\">
 		  <input type='hidden' name='edit_token' value=\"{$token}\" /></td>
 		  </tr></table></form>";
-		$text .= wfMsg( "boardvote_footer" );
+		$text .= wfMsg( 'boardvote_footer' );
 		$wgOut->addHTML( $text );
 	}
 
@@ -343,7 +347,7 @@ class BoardVotePage extends UnlistedSpecialPage {
 
 	function displayInvalidVoteError() {
 		global $wgOut;
-		$wgOut->addWikiText( wfMsg( "boardvote_invalidentered" ) );
+		$wgOut->addWikiMsg( 'boardvote_invalidentered' );
 	}
 
 	function getRecord() {
@@ -417,28 +421,26 @@ class BoardVotePage extends UnlistedSpecialPage {
 	}
 
 	function displayList() {
-		global $wgOut, $wgOutputEncoding, $wgLang, $wgUser;
+		global $wgOut, $wgLang, $wgUser;
 
 		$userRights = $wgUser->getRights();
 		$admin = $this->isAdmin();
 		$dbr =& $this->getDB();
-		$log = $dbr->tableName( "vote_log" );
 
-		$sql = "SELECT * FROM $log ORDER BY log_user_key";
-		$res = $dbr->query( $sql, "BoardVotePage::list" );
+		$res = $dbr->select( 'vote_log', '*', array(), __METHOD__, array( 'ORDER BY' => 'log_user_key' ) );
 		if ( $dbr->numRows( $res ) == 0 ) {
-			$wgOut->addWikiText( wfMsg( "boardvote_novotes" ) );
+			$wgOut->addWikiMsg( 'boardvote_novotes' );
 			return;
 		}
-		$thisTitle = Title::makeTitle( NS_SPECIAL, "Boardvote" );
+		$thisTitle = SpecialPage::getTitleFor( 'BoardVote' );
 		$sk = $wgUser->getSkin();
-		$dumpLink = $sk->makeKnownLinkObj( $thisTitle, wfMsg( "boardvote_dumplink" ), "action=dump" );
+		$dumpLink = $sk->makeKnownLinkObj( $thisTitle, wfMsg( 'boardvote_dumplink' ), "action=dump" );
 
-		$intro = wfMsg( "boardvote_listintro", $dumpLink );
-		$hTime = wfMsg( "boardvote_time" );
-		$hUser = wfMsg( "boardvote_user" );
-		$hIp = wfMsg( "boardvote_ip" );
-		$hUa = wfMsg( "boardvote_ua" );
+		$intro = wfMsg( 'boardvote_listintro', $dumpLink );
+		$hTime = wfMsg( 'boardvote_time' );
+		$hUser = wfMsg( 'boardvote_user' );
+		$hIp = wfMsg( 'boardvote_ip' );
+		$hUa = wfMsg( 'boardvote_ua' );
 
 		$s = "$intro <table border=1><tr><th>
 			$hUser
@@ -476,10 +478,10 @@ class BoardVotePage extends UnlistedSpecialPage {
 
 			if ( $admin ) {
 				if ( $row->log_strike ) {
-					$strikeLink = $sk->makeKnownLinkObj( $thisTitle, wfMsg( "boardvote_unstrike" ),
+					$strikeLink = $sk->makeKnownLinkObj( $thisTitle, wfMsg( 'boardvote_unstrike' ),
 					  "action=unstrike&id={$row->log_id}" );
 				} else {
-					$strikeLink = $sk->makeKnownLinkObj( $thisTitle, wfMsg( "boardvote_strike" ),
+					$strikeLink = $sk->makeKnownLinkObj( $thisTitle, wfMsg( 'boardvote_strike' ),
 					  "action=strike&id={$row->log_id}" );
 				}
 
@@ -499,14 +501,12 @@ class BoardVotePage extends UnlistedSpecialPage {
 	}
 
 	function dump() {
-		global $wgOut, $wgOutputEncoding, $wgLang;
+		global $wgOut, $wgLang;
 		$dbr =& $this->getDB();
-		$log = $dbr->tableName( "vote_log" );
 
-		$sql = "SELECT log_record FROM $log WHERE log_current=1 AND log_strike=0";
-		$res = $dbr->query( $sql, DB_SLAVE, "BoardVotePage::list" );
+		$res = $dbr->select( 'vote_log', array( 'log_record' ), array( 'log_current' => 1, 'log_strike' => 0 ), __METHOD__ );
 		if ( $dbr->numRows( $res ) == 0 ) {
-			$wgOut->addWikiText( wfMsg( "boardvote_novotes" ) );
+			$wgOut->addWikiMsg( 'boardvote_novotes' );
 			return;
 		}
 
@@ -518,10 +518,16 @@ class BoardVotePage extends UnlistedSpecialPage {
 		$wgOut->addHTML( $s );
 	}
 
+	/**
+	 * Checks if the user is allowed to administrate board elections
+	 * by checking for the 'boardvote' user right
+	 *
+	 * @return boolean: true if the user has 'boardvote' right, otherwise false
+	 */
 	function isAdmin() {
 		global $wgUser;
 		$userRights = $wgUser->getRights();
-		if ( in_array( "boardvote", $userRights ) ) {
+		if ( in_array( 'boardvote', $userRights ) ) {
 			return true;
 		} else {
 			return false;
@@ -532,17 +538,15 @@ class BoardVotePage extends UnlistedSpecialPage {
 		global $wgOut;
 
 		$dbw =& $this->getDB();
-		$log = $dbw->tableName( "vote_log" );
 
 		if ( !$this->isAdmin() ) {
-			$wgOut->addWikiText( wfMsg( "boardvote_needadmin" ) );
+			$wgOut->addWikiMsg( 'boardvote_needadmin' );
 			return;
 		}
 		$value = $unstrike ? 0 : 1;
-		$sql = "UPDATE $log SET log_strike=$value WHERE log_id=$id";
-		$dbw->query( $sql, "BoardVotePage::strike" );
+		$dbw->update( 'vote_log', array( 'log_strike' => $value ), array( 'log_id' => $id ), __METHOD__ );
 
-		$title = Title::makeTitle( NS_SPECIAL, "Boardvote" );
+		$title = SpecialPage::getTitleFor( 'BoardVote' );
 		$wgOut->redirect( $title->getFullURL( "action=list" ) );
 	}
 

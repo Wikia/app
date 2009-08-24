@@ -28,6 +28,17 @@ $messages['qqq'] = array(
 {{Identical|Configuration}}',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'unstablepages' => 'Stabilitomad lehtpoled',
+	'unstablepages-stable' => 'Stabiline versii',
+	'unstablepages-text' => 'Kehtpoled, kudambiden täht om ičeksaz sätud järgenduz "ozutada mustkirjutuz augotižjärgendusen mödhe" (nimikirjutez).',
+	'unstablepages-none' => 'Neciš nimikirjuteses ei ole lehtpolid',
+	'unstablepages-config' => 'Järgendused',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  */
@@ -63,6 +74,14 @@ $messages['be-tarask'] = array(
 	'unstablepages-config' => 'Канфігурацыя',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'unstablepages' => 'Nestabilne stranice',
+	'unstablepages-stable' => 'stabilna verzija',
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
  */
@@ -95,6 +114,17 @@ $messages['dsb'] = array(
 	'unstablepages-text' => 'Slědujo lisćina bokow, kótarež su se manuelnje konfigurěrowali, aby pokazali nacerjeńsku wersiju ako standardne wopśimjeśe za wobglědowarjow.',
 	'unstablepages-none' => 'Toś ta lisćina njewopśimujo boki',
 	'unstablepages-config' => 'Konfiguracija',
+);
+
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'unstablepages' => 'Ασταθείς σελίδες',
+	'unstablepages-stable' => 'σταθερή έκδοση',
+	'unstablepages-text' => 'Παρακάτω είναι ένας κατάλογος των σελίδων που είναι χειροκίνητα ρυθμισμένες να εμφανίζουν την πρόχειρη έκδοση ως το προεπιλεγμένο περιεχόμενο σελίδας για τους αναγνώστες.',
+	'unstablepages-none' => 'Δεν υπάρχουν σελίδες σε αυτό τον κατάλογο',
+	'unstablepages-config' => 'Ρύθμιση',
 );
 
 /** Esperanto (Esperanto)
@@ -151,11 +181,13 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'unstablepages' => 'Pages instables',
+	'unstablepages' => 'Pages non stables',
 	'unstablepages-stable' => 'version stable',
-	'unstablepages-text' => 'Ci-dessous se trouve une liste de pages configurées manuellement pour afficher la version brouillon comme contenu de page par défaut pour les relecteurs.',
+	'unstablepages-text' => 'Ci-dessous se trouve une liste des pages configurées manuellement pour que le contenu de leur version brouillon soit affiché par défaut pour les lecteurs.',
 	'unstablepages-none' => 'Il n’y a aucune page dans cette liste.',
 	'unstablepages-config' => 'Configuration',
 );
@@ -202,6 +234,17 @@ $messages['he'] = array(
 	'unstablepages-text' => 'להלן רשימת הדפים שהוגדרו ידנית להציג לקוראים את גרסת הטיוטה כברירת מחדל.',
 	'unstablepages-none' => 'אין דפים ברשימה זו.',
 	'unstablepages-config' => 'תצורה',
+);
+
+/** Croatian (Hrvatski)
+ * @author Dalibor Bosits
+ */
+$messages['hr'] = array(
+	'unstablepages' => 'Nestabilne stranice',
+	'unstablepages-stable' => 'stabilna inačica',
+	'unstablepages-text' => 'Ovo je popis stranica kojima je ručno postavljen nacrt kao glavni sadržaj stranice za gledatelje.',
+	'unstablepages-none' => 'Nema stranica na ovom popisu',
+	'unstablepages-config' => 'Konfiguracija',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -257,6 +300,18 @@ $messages['it'] = array(
 	'unstablepages-text' => 'Di seguito sono elencate le pagine configurate manualmente in modo tale da mostrare per default le versioni di bozza ai visitatori.',
 	'unstablepages-none' => 'Nessuna pagina in questo elenco',
 	'unstablepages-config' => 'Configurazione',
+);
+
+/** Japanese (日本語)
+ * @author Aotake
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'unstablepages' => '固定されていないページ',
+	'unstablepages-stable' => '固定版',
+	'unstablepages-text' => '以下では候補版を既定で閲覧者に表示するよう手動で設定されたページを一覧します。',
+	'unstablepages-none' => '表示すべきページはありません',
+	'unstablepages-config' => '設定',
 );
 
 /** Javanese (Basa Jawa)
@@ -316,6 +371,8 @@ $messages['lb'] = array(
 $messages['mk'] = array(
 	'unstablepages' => 'Нестабилна страница',
 	'unstablepages-stable' => 'стабилна верзија',
+	'unstablepages-text' => 'Следи листа на страници рачно конфигурирани кои прикажуваат работни верзии како основна содржина за прегледувачите.',
+	'unstablepages-none' => 'Нема страници во оваа листа',
 	'unstablepages-config' => 'Конфигурација',
 );
 
@@ -346,6 +403,7 @@ $messages['nl'] = array(
 $messages['nn'] = array(
 	'unstablepages' => 'Ustabile sider',
 	'unstablepages-stable' => 'stabil versjon',
+	'unstablepages-text' => 'Under er ei lista over sider manuelt sette til å syna utkastet som standardinnhald for lesarar.',
 	'unstablepages-none' => 'Det finst ingen sider i denne lista',
 	'unstablepages-config' => 'Konfigurasjon',
 );
@@ -363,12 +421,13 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author Leinad
+ * @author Sp5uhe
  * @author ToSter
  */
 $messages['pl'] = array(
-	'unstablepages' => 'Strony z domyślnie pokazywaną wersją bieżącą',
+	'unstablepages' => 'Strony z domyślnie prezentowaną wersją bieżącą',
 	'unstablepages-stable' => 'wersja przejrzana',
-	'unstablepages-text' => 'Poniżej znajduje się lista stron skonfigurowanych tak, że bieżąca wersja jest pokazywana domyślnie dla czytelników.',
+	'unstablepages-text' => 'Poniżej znajduje się lista stron tak skonfigurowanych, by czytelnikom domyślnie prezentowana była ich wersja robocza.',
 	'unstablepages-none' => 'Brak stron na tej liście',
 	'unstablepages-config' => 'Konfiguracja',
 );
@@ -380,6 +439,17 @@ $messages['pt'] = array(
 	'unstablepages' => 'Páginas instáveis',
 	'unstablepages-stable' => 'versão estável',
 	'unstablepages-text' => 'Abaixo encontra-se uma lista de página manualmente configuradas para mostrar aos leitores a versão rascunho como conteúdo por defeito da página.',
+	'unstablepages-none' => 'Não há páginas nesta lista',
+	'unstablepages-config' => 'Configuração',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'unstablepages' => 'Páginas instáveis',
+	'unstablepages-stable' => 'versão estável',
+	'unstablepages-text' => 'Abaixo encontra-se uma lista de página manualmente configuradas para mostrar aos leitores a versão rascunho como conteúdo da página por omissão.',
 	'unstablepages-none' => 'Não há páginas nesta lista',
 	'unstablepages-config' => 'Configuração',
 );
@@ -424,6 +494,13 @@ $messages['sk'] = array(
 	'unstablepages-text' => 'Toto je zoznam stránok, ktoré boli ručne nastavené, aby sa zobrazovala ich verzia návrhu ako štandardná stránka s obsahom pre čitateľov.',
 	'unstablepages-none' => 'Tento zoznam neobsahuje žiadne stránky',
 	'unstablepages-config' => 'Nastavenie',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'unstablepages-config' => 'Konfigurim',
 );
 
 /** Swedish (Svenska)

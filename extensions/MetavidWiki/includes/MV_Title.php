@@ -44,6 +44,10 @@
  		// print "mv_title stream name: " . $this->stream_name. "\n";
  	}
  	function inheritTitle( & $title ) {
+ 		if( !is_object($title)){
+ 			//print_r( debug_backtrace() );
+ 			return false; 		
+ 		}
  		foreach ( $title as $k => $v ) {
  			$this->$k = $v;
  		}
@@ -90,6 +94,18 @@
 		if ( $sn == '' )$sn =  $this->stream_name;
 		return ucfirst( str_replace( '_', ' ', $sn ) );
 	}
+	function getStreamNameDate(){
+		$d = $this->mvStream->getStreamStartDate();
+		if(!isset($d) || $d==0)
+			return $this->getStreamNameText();
+		$sn_parts = split('_',$this->stream_name);		
+		//remove the date part of the array: 
+		array_pop( $sn_parts);
+		foreach($sn_parts as & $sp)
+			$sp = ucfirst($sp);			
+		$sn = (count($sn_parts)>1)? implode(' ', $sn_parts): $sp[0];
+		return $sn .' on '. date('M jS, Y',$d);
+	}
 	/*
 	 * makes title like db key:
 	 */
@@ -107,7 +123,6 @@
 		}
 		return false;
 	}
-	function getTypeMarker() { return $this->type_marker; }
 	function getWikiTitle() { return $this->wiki_title; }
 	function getStartTime() { return $this->start_time; }
 	function setStartTimeNtp($start_time){
@@ -119,11 +134,20 @@
 	}
  	function getTimeRequest() { return $this->start_time . '/' . $this->end_time; }
 	function getMwTitle() { return Title::MakeTitle( MV_NS_MVD, $this->wiki_title ); }
+	
 	function setStartEndIfEmpty() {
-		global $mvDefaultStreamViewLength;
+		global $mvDefaultStreamViewLength, $wgRequest;
+		//if overview mode override the time settings: 
+		if( $wgRequest->getVal('view') == 'overview' ){
+			$this->start_time_sec = 0;
+			$this->start_time = seconds2ntp( $this->start_time_sec ); 
+			$this->end_time_sec = $this->getDuration();
+			$this->end_time = seconds2ntp( $this->end_time_sec );
+		}
+		
 		if ( $this->start_time == null ) {
 			$this->start_time_sec = 0;
- 			$this->start_time = seconds2ntp( $this->start_time_sec );
+ 			$this->start_time = seconds2ntp( $this->start_time_sec ); 			
  		} else {
  			$this->start_time_sec = ntp2seconds( $this->start_time );
 		}
@@ -170,8 +194,11 @@
 		$stream = & mvGetMVStream( $this->stream_name );
 		return $stream->getDuration();
 	}
+	function getSegmentDuration(){
+		return $this->getEndTimeSeconds() - $this->getStartTimeSeconds();
+	}
 	function getSegmentDurationNTP( $short_time = false ) {
-		return seconds2ntp( $this->getEndTimeSeconds() - $this->getStartTimeSeconds(), $short_time );
+		return seconds2ntp( $this->getSegmentDuration(), $short_time );
 	}
 	/*
 	 * returns a near by stream range:
@@ -181,8 +208,8 @@
 		
 		$stream = & mvGetMVStream( $this->stream_name );
 	
-		if ( $range == null )$range = $mvDefaultClipRange;
-		if ( $length == null )$length = $mvDefaultClipLength;
+		if ( $range === null )$range = $mvDefaultClipRange;
+		if ( $length === null )$length = $mvDefaultClipLength;		
 		
 		// subtract $range seconds from the start time:
 		$start_t = $this->getStartTimeSeconds()  - $range;

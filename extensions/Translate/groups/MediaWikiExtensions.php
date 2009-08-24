@@ -46,6 +46,18 @@ class PremadeMediawikiExtensionGroups {
 						}
 						$newgroup[$key] = array_merge( $newgroup[$key], $values );
 						break;
+					case 'prefix':
+						list( $prefix, $messages ) = array_map( 'trim', explode( '|', $value, 2 ) );
+						if ( isset( $newgroup['prefix'] ) && $newgroup['prefix'] !== $prefix ) {
+							throw new MWException( "Only one prefix supported: {$newgroup['prefix']} !== $prefix" );
+						}
+						$newgroup['prefix'] = $prefix;
+
+						if ( !isset( $newgroup['mangle'] ) ) $newgroup['mangle'] = array();
+
+						$messages = array_map( 'trim', explode( ',', $messages ) );
+						$newgroup['mangle'] = array_merge( $newgroup['mangle'], $messages );
+						break;
 					default:
 						throw new MWException( "Unknown key:" . $key );
 					}
@@ -92,7 +104,7 @@ class PremadeMediawikiExtensionGroups {
 				'descmsg' => $descmsg,
 			);
 
-			$copyvars = array( 'ignored', 'optional', 'var', 'desc' );
+			$copyvars = array( 'ignored', 'optional', 'var', 'desc', 'prefix', 'mangle' );
 			foreach ( $copyvars as $var ) {
 				if ( isset( $g[$var] ) ) {
 					$newgroup[$var] = $g[$var];
@@ -139,6 +151,15 @@ class PremadeMediawikiExtensionGroups {
 		$info = $this->groups[$id];
 		$group = ExtensionMessageGroup::factory( $info['name'], $id );
 		$group->setMessageFile( $info['file'] );
+
+		if ( isset( $info['prefix'] ) ) {
+			$mangler = new StringMatcher( $info['prefix'], $info['mangle'] );
+			$group->setMangler( $mangler );
+			$info['ignored'] = $mangler->mangle( $info['ignored'] );
+			$info['optional'] = $mangler->mangle( $info['optional'] );
+		}
+
+
 		if ( !empty( $info['var'] ) ) $group->setVariableName( $info['var'] );
 		if ( !empty( $info['optional'] ) ) $group->setOptional( $info['optional'] );
 		if ( !empty( $info['ignored'] ) ) $group->setIgnored( $info['ignored'] );
@@ -147,10 +168,11 @@ class PremadeMediawikiExtensionGroups {
 		} else {
 			$group->setDescriptionMsg( $info['descmsg'] );
 		}
+
+
 		$group->setType( 'mediawiki' );
 		return $group;
 	}
-
 }
 
 class AllMediawikiExtensionsGroup extends ExtensionMessageGroup {
@@ -253,6 +275,7 @@ class AllWikiaExtensionsGroup extends AllMediawikiExtensionsGroup {
 		'ext-lookupuser',
 		'ext-multiupload',
 		'ext-parserfunctions',
+		'ext-poem',
 		'ext-randomimage',
 		'ext-spamblacklist',
 		'ext-stringfunctions',
@@ -286,6 +309,7 @@ class AllWikihowExtensionsGroup extends AllMediawikiExtensionsGroup {
 	protected $wikihowextensions = array(
 		'ext-antispoof',
 		'ext-blocktitles',
+		'ext-checkuser',
 		'ext-cite',
 		'ext-confirmedit',
 		'ext-formatemail',
@@ -298,6 +322,7 @@ class AllWikihowExtensionsGroup extends AllMediawikiExtensionsGroup {
 		'ext-renameuser',
 		'ext-spamblacklist',
 		'ext-spamdifftool',
+		'ext-syntaxhighlightgeshi',
 		'ext-youtubeauthsub',
 	);
 
@@ -324,58 +349,63 @@ class AllWikimediaExtensionsGroup extends AllMediawikiExtensionsGroup {
 	protected $classes = null;
 
 	protected $wmfextensions = array(
-		'ext-inputbox', // used on all wikis by all users
-		'ext-wikimediamessages',
-		'ext-cite',
-		'ext-citespecial',
-		'ext-confirmedit',
-		'ext-confirmeditfancycaptcha',
-		'ext-categorytree',
-		'ext-dismissablesitenotice',
-		'ext-expandtemplates',
-		'ext-parserfunctions',
-		'ext-crossnamespacelinks',
-		'ext-ogghandler',
-		'ext-imagemap',
-		'ext-labeledsectiontransclusion',
-		'ext-mwsearch',
-		'ext-contributionreporting', // temporary for fundraiser
-		'ext-contributiontracking', // temporary for fundraiser
-		'ext-sitematrix',
-		'ext-gadgets',
-		'ext-centralauth',
-		'ext-collection', // wikibooks
-		'ext-charinsert', // limited UI use (Special:Version and errors in usage mostly)
-		'ext-syntaxhighlightgeshi',
-		'ext-timeline',
-		'ext-wikihiero',
-		'ext-oai',
-		'ext-newusermessage',
-		'ext-doublewiki',
-		'ext-intersection',
-		'ext-proofreadpage',
-		'ext-quiz',
-		'ext-scanset',
-		'ext-skinperpage',
-		'ext-trustedxff',
+		'ext-abusefilter', // test.wikipedia.org
 		'ext-antibot',  // anti spam and such (usually all wikis)
 		'ext-antispoof',
+		'ext-assertedit', // bots
+		'ext-boardvote', // used rarely
+		'ext-categorytree',
+		'ext-centralauth',
+		'ext-centralnotice', // used rarely
+		'ext-charinsert',
+		'ext-checkuser',
+		'ext-cite',
+		'ext-citespecial',
+		'ext-codereview', // MediaWiki.org
+		'ext-collection', // Wikibooks
+		'ext-confirmedit',
+		'ext-confirmeditfancycaptcha',
+		'ext-contactpage', // on nl.wp and wikimediafoundation.org
+		'ext-contributionreporting', // temporary for fundraiser
+		'ext-contributiontracking', // temporary for fundraiser
+		'ext-crossnamespacelinks',
+		'ext-dismissablesitenotice',
+		'ext-doublewiki', // Wikisource
+		'ext-drafts', // test.wikipedia.org
+		'ext-expandtemplates',
+		'ext-extensiondistributor', // MediaWiki.org
+		'ext-gadgets',
+		'ext-globalblocking',
+		'ext-imagemap',
+		'ext-inputbox',
+		'ext-intersection',
+		'ext-labeledsectiontransclusion', // Wikisource
+		'ext-mwsearch',
+		'ext-newusermessage',
+		'ext-nuke',
+		'ext-oai',
+		'ext-ogghandler',
 		'ext-opensearchxml',
-		'ext-spamblacklist',
+		'ext-oversight',
+		'ext-parserfunctions',
+		'ext-poem',
+		'ext-povwatch', // test.wikipedia.org
+		'ext-proofreadpage', // Wikisource
+		'ext-quiz',
+		'ext-renameuser',
 		'ext-simpleantispam',
+		'ext-sitematrix',
+		'ext-scanset',
+		'ext-skinperpage', // Wikimediafoundation.org
+		'ext-spamblacklist',
+		'ext-syntaxhighlightgeshi',
+		'ext-timeline',
 		'ext-titleblacklist',
 		'ext-titlekey',
 		'ext-torblock',
-		'ext-usernameblacklist',
-		'ext-checkuser', // sysop or higher only
-		'ext-globalblocking',
-		'ext-nuke',
-		'ext-oversight',
-		'ext-renameuser',
-		'ext-assertedit', // bots
-		'ext-centralnotice', // used rarely
-		'ext-codereview', // only on mediawiki.org
-		'ext-boardvote', // used rarely
+		'ext-trustedxff',
+		'ext-wikihiero',
+		'ext-wikimediamessages',
 	);
 
 	protected function init() {
@@ -407,6 +437,7 @@ class AllWikitravelExtensionsGroup extends AllMediawikiExtensionsGroup {
 		'ext-openid',
 		'ext-parserfunctions',
 		'ext-renameuser',
+		'ext-stringfunctions',
 	);
 
 	protected function init() {
@@ -466,10 +497,13 @@ class AllSocialProfileExtensionsGroup extends AllMediawikiExtensionsGroup {
 	protected $classes = null;
 
 	protected $socialprofileextensions = array(
+		'ext-socialprofile-systemgifts',
 		'ext-socialprofile-userboard',
+		'ext-socialprofile-usergifts',
 		'ext-socialprofile-userprofile',
 		'ext-socialprofile-userrelationship',
 		'ext-socialprofile-userstats',
+		'ext-socialprofile-userwelcome',
 	);
 
 	protected function init() {

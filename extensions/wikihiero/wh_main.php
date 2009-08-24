@@ -968,7 +968,7 @@ function WikiHieroHTML($hiero, $scale=WH_SCALE_DEFAULT, $line=false) {
 		$html .= WH_TABLE_S."<tr>\n".$tableContentHtml."</tr>".WH_TABLE_E;
 	}
 
-	return "<table border='0' cellspacing='0' cellpadding='0' style='display:inline;' class='mw-hierotable'><tr><td>\n$html\n</td></tr></table>";
+	return "<table border='0' cellspacing='0' cellpadding='0' style='display:inline;' class='mw-hierotable' dir='ltr'><tr><td>\n$html\n</td></tr></table>";
 }
 
 //------------------------------------------------------------------------

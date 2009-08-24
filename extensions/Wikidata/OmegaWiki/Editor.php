@@ -674,7 +674,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 		$headerRows = getStructureAsTableHeaderRows($visibleStructure, $columnOffset, $idPath);
 
 		if ($this->allowRemove)
-			$headerRows[0] = '<th class="remove" rowspan="' . count($headerRows) . '"><img src="'.$wgStylePath.'/amethyst/delete.png" title="Mark rows to remove" alt="Remove"/></th>' . $headerRows[0];
+			$headerRows[0] = '<th class="remove" rowspan="' . count($headerRows) . '"><img src="'.$wgStylePath.'/amethyst/delete.png" title="' . wfMsgSc("RemoveHint") . '" alt="' . wfMsgSc("Remove") . '"/></th>' . $headerRows[0];
 
 		if ($this->repeatInput)
 			$headerRows[0] .= '<th class="add" rowspan="' . count($headerRows) . '">Input rows</th>';
@@ -775,7 +775,7 @@ class RecordSetTableEditor extends RecordSetEditor {
 		
 		# + is add new Fo o(but grep this file for Add.png for more)
 		if ($allowRemove)
-			$result .= '<td class="add"><img src="'.$wgScriptPath.'/extensions/Wikidata/Images/Add.png" title="Enter new rows to add" alt="Add"/></td>' . EOL;
+			$result .= '<td class="add"><img src="'.$wgScriptPath.'/extensions/Wikidata/Images/Add.png" title="' . wfMsgSc("AddHint") . '" alt="Add"/></td>' . EOL;
 
 		$result .= $this->getStructureAsAddCells($idPath, $this);
 
@@ -1277,11 +1277,11 @@ abstract class SelectEditor extends ScalarEditor {
 class ClassAttributesTypeEditor extends SelectEditor {
 	protected function getOptions() {
 		return array(
-			'DM' => 'Defined meaning', 
-			'TRNS' => 'Translatable text', 
-			'TEXT' => 'Plain text', 
-			'URL' => 'Link', 
-			'OPTN' => 'Option list'
+			'DM' => wfMsg('ow_class_attr_type_dm'), 
+			'TRNS' => wfMsg('ow_class_attr_type_xlate'), 
+			'TEXT' => wfMsg('ow_class_attr_type_plain'), 
+			'URL' => wfMsg('ow_class_attr_type_link'), 
+			'OPTN' => wfMsg('ow_class_attr_type_option')
 		);
 	}
 }
@@ -2067,14 +2067,14 @@ class RollBackEditor extends ScalarEditor {
 		$operation = $value->operation;
 		
 		if ($isLatest) {
-			$options = array('do-nothing' => 'Do nothing');
+			$options = array('do-nothing' => wfMsg('ow_transaction_no_action'));
 			
 			if ($this->hasValueFields) {
-				$previousVersionLabel = 'Previous version';
+				$previousVersionLabel = wfMsg('ow_transaction_previous_version');
 				$rollBackChangeHandler = 'rollBackOptionChanged(this);';
 			}
 			else {
-				$previousVersionLabel = 'Restore';
+				$previousVersionLabel = wfMsg('ow_transaction_restore');
 				$rollBackChangeHandler = '';
 			}
 				
@@ -2082,7 +2082,7 @@ class RollBackEditor extends ScalarEditor {
 				$options['previous-version'] = $previousVersionLabel;
 			
 			if ($operation != 'Removed')
-				$options['remove'] = 'Remove';
+				$options['remove'] = wfMsg('ow_transaction_remove');
 		
 			$result = getSelect($idPath->getId(), $options, 'do-nothing', $rollBackChangeHandler);
 		
@@ -2262,7 +2262,7 @@ class ObjectPathEditor extends Viewer {
 	
 	protected function resolveRelation($objectId) {
 		$dc=wdGetDataSetContext();
-		$dbr = &wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		$queryResult = $dbr->query(
 			"SELECT meaning1_mid, relationtype_mid, meaning2_mid" .
 			" FROM {$dc}_meaning_relations" .
@@ -2279,7 +2279,7 @@ class ObjectPathEditor extends Viewer {
 	}
 	
 	protected function resolveAttribute($objectId, $tableName) {
-		$dbr = &wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		$queryResult = $dbr->query(
 			"SELECT object_id, attribute_mid" .
 			" FROM " . $tableName .
@@ -2296,7 +2296,7 @@ class ObjectPathEditor extends Viewer {
 
 	protected function resolveTranslatedContent($objectId) {
 		$dc=wdGetDataSetContext();
-		$dbr = &wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		$queryResult = $dbr->query(
 			"SELECT defined_meaning_id" .
 			" FROM {$dc}_defined_meaning" .
@@ -2312,7 +2312,7 @@ class ObjectPathEditor extends Viewer {
 
 	protected function resolveSyntrans($objectId) {
 		$dc=wdGetDataSetContext();
-		$dbr = &wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		$queryResult = $dbr->query(
 			"SELECT spelling, defined_meaning_id" .
 			" FROM {$dc}_syntrans, {$dc}_expression" .

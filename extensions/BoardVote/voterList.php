@@ -52,5 +52,3 @@ for ( $user = 1; $user <= $maxUser; $user++ ) {
 	}
 }
 fclose( $listFile );
-
-?>

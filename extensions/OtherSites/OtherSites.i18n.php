@@ -38,6 +38,14 @@ $messages['arz'] = array(
 	'othersites-desc' => 'ينقل وصلات الإنترويكى غير وصلات اللغة إلى مكانها الخاص',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'othersites' => 'Іншыя сайты',
+	'othersites-desc' => 'Пераносіць інтэрвікі-спасылкі іншыя чым моўныя спасылкі ў іх уласных партлетах',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -50,6 +58,7 @@ $messages['bg'] = array(
  */
 $messages['bs'] = array(
 	'othersites' => 'Ostale stranice',
+	'othersites-desc' => 'Premješta interwiki linkove pored linkova jezika u njihov vlastiti portlet',
 );
 
 /** Catalan (Català)
@@ -100,6 +109,20 @@ $messages['es'] = array(
 	'othersites-desc' => 'Mueve los enlaces interwiki que no sean de idioma a una caja separada',
 );
 
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'othersites' => 'Bestelako tokiak',
+);
+
+/** Persian (فارسی)
+ * @author Vahid
+ */
+$messages['fa'] = array(
+	'othersites' => 'دیگر وبگاه‌ها',
+);
+
 /** Finnish (Suomi)
  * @author Vililikku
  */
@@ -122,6 +145,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'othersites' => 'outros sitios',
 	'othersites-desc' => 'Move as ligazóns interwiki diferentes ás ligazóns á lingua no seu propio portal',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'othersites' => 'Anderi Syte',
+	'othersites-desc' => 'Verschiebt Interwikigleicher in e eigene Chaschte, wänn si kei Sprochgleicher sin',
 );
 
 /** Hebrew (עברית)
@@ -228,12 +259,28 @@ $messages['oc'] = array(
 	'othersites-desc' => "Deplaça los ligams interwiki autres que los ligams ligats a la lenga de lors compausants d'interfàcia pròpris.",
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'othersites' => 'Inne witryny',
+	'othersites-desc' => 'Przesuwa linki interwiki inne niż łącza językowe do ich własnych portletów',
+);
+
 /** Portuguese (Português)
  * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
 	'othersites' => 'Outros sites',
+	'othersites-desc' => 'Move ligações interwiki que não sejam ligações de linguagem para o seu próprio "portlet"',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'othersites' => 'Outros sítios',
 	'othersites-desc' => 'Move ligações interwiki que não sejam ligações de linguagem para o seu próprio "portlet"',
 );
 
@@ -267,6 +314,21 @@ $messages['sk'] = array(
 	'othersites-desc' => 'Presunie interwiki odkazy okrem odkazov na iné jazyky do ich vlastných portletov.',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'othersites' => 'Faqet tjera',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'othersites' => 'uur Sieden',
+	'othersites-desc' => 'Ferschuft Interwikilinks in ne oaine Box, fals jo neen Sproaklinke deerstaale',
+);
+
 /** Swedish (Svenska)
  * @author Najami
  */
@@ -280,6 +342,7 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'othersites' => 'ఇతర సైట్లు',
+	'othersites-desc' => 'భాషల లింకులుకాని అంతర్వికీ లింకులని వాటి స్వంత కలుగులోనికి తరలిస్తుంది',
 );
 
 /** Tagalog (Tagalog)
@@ -290,11 +353,39 @@ $messages['tl'] = array(
 	'othersites-desc' => "Naglilipat ng mga kawing na pang-ugnayang-wiki bukod pa sa ibang mga kawing na pangwikang nasa kani-kanilang pangsariling daanang-daungan (''portlet'')",
 );
 
+/** Turkish (Türkçe)
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'othersites' => 'Diğer siteler',
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'othersites' => 'Altri siti',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'othersites' => 'các trang mạng khác',
 	'othersites-desc' => 'Di chuyển các liên kết liên wiki chứ không di chuyển liên kết ngôn ngữ trong chính portley của nó',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'othersites' => 'Bevüresodatopäds votik',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wmr89502270
+ */
+$messages['zh-hans'] = array(
+	'othersites' => '其他网站',
 );
 

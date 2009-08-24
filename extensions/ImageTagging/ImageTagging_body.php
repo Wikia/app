@@ -60,7 +60,7 @@ class TaggedImages extends SpecialPage {
 
 			$res = $db->query($SQL);
 		while ($o = $db->fetchObject($res)) {
-			$img = Image::newFromName($o->img_name);
+			$img = wfFindFile($o->img_name);
 			$this->add($img, '');
 		}
 		$db->freeResult($res);
@@ -211,7 +211,7 @@ class TaggedImages extends SpecialPage {
 
 			$nb = '';
 			$textlink = $this->mShowFilename ?
-			$sk->makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 20, '...' ) ) ) . "<br />\n" :
+			$sk->makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 20 ) ) ) . "<br />\n" :
 			'';
 
 			$s .= ($i%4==0) ? '<tr>' : '';

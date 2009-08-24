@@ -37,11 +37,25 @@ $messages['arz'] = array(
 	'googleadsense-desc' => 'يضيف [http://www.google.com/adsense جوجل أدسنس] إلى الشريط الجانبي',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'googleadsense-desc' => 'Fügt [http://www.google.com/adsense Google AdSense] zu da Sidebar dazua',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'googleadsense-desc' => 'Добавя [http://www.google.com/adsense Google AdSense] в страничната лента',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'googleadsense-desc' => 'Dodaje [http://www.google.com/adsense Google AdSense] u alatnu traku',
 );
 
 /** Czech (Česky)
@@ -107,12 +121,26 @@ $messages['gl'] = array(
 	'googleadsense-desc' => 'Engade [http://www.google.com/adsense Google AdSense] á barra lateral',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'googleadsense-desc' => 'Fiegt [http://www.google.com/adsense Google AdSense] in d Syteleischte yy',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
  */
 $messages['he'] = array(
 	'googleadsense-desc' => 'הוספת [http://www.google.com/adsense Google AdSense] לסרגל הצד',
+);
+
+/** Croatian (Hrvatski)
+ * @author Suradnik13
+ */
+$messages['hr'] = array(
+	'googleadsense-desc' => 'Dodaje [http://www.google.com/adsense Google AdSense] u izbornik',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -178,6 +206,13 @@ $messages['lb'] = array(
 	'googleadsense-desc' => 'Setzt [http://www.google.com/adsense Google AdSense] an déi säitlech Navigatiounslëscht derbäi',
 );
 
+/** Lithuanian (Lietuvių)
+ * @author Garas
+ */
+$messages['lt'] = array(
+	'googleadsense-desc' => 'Prideda [http://www.google.com/adsense Google AdSense] į šoninę juostą',
+);
+
 /** Malay (Bahasa Melayu)
  * @author Diagramma Della Verita
  */
@@ -213,6 +248,13 @@ $messages['oc'] = array(
 	'googleadsense-desc' => 'Apond [http://www.google.com/adsense Google AdSense] a la barra laterala',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'googleadsense-desc' => '[http://www.google.com/adsense Рекламæ Google AdSense] навигацион панельмæ бафтауы',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  */
@@ -231,6 +273,13 @@ $messages['ps'] = array(
  * @author Waldir
  */
 $messages['pt'] = array(
+	'googleadsense-desc' => 'Adiciona o [http://www.google.com/adsense Google AdSense] à barra lateral',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'googleadsense-desc' => 'Adiciona o [http://www.google.com/adsense Google AdSense] à barra lateral',
 );
 
@@ -270,6 +319,27 @@ $messages['sk'] = array(
 	'googleadsense-desc' => 'Pridá do postranného panela [http://www.google.com/adsense Google AdSense]',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'googleadsense-desc' => 'Vendosë [http://www.google.com/adsense Google AdSense] në kolonat anësore',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'googleadsense-desc' => 'Föiget [http://www.google.com/adsense Google AdSense] an ju Sidebar bietou',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'googleadsense-desc' => 'Nambahkeun [http://www.google.com/adsense Google AdSense] kana bar gigir',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -277,11 +347,25 @@ $messages['sv'] = array(
 	'googleadsense-desc' => 'Lägger till [http://www.google.com/adsense Google AdSense] till sidpanelen',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'googleadsense-desc' => '[http://www.google.com/adsense గూగుల్ ఆడ్‌సెన్స్]ని ప్రక్కపట్టీకి చేరుస్తుంది',
+);
+
 /** Thai (ไทย)
  * @author Manop
  */
 $messages['th'] = array(
 	'googleadsense-desc' => 'เพิ่ม [http://www.google.com/adsense กูเกิลแอดเซนส์ (Google AdSense)] ไว้ที่แถบด้านข้าง',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'googleadsense-desc' => 'Nagdaragdag ng [http://www.google.com/adsense Google AdSense] sa panggilid na halang',
 );
 
 /** Turkish (Türkçe)

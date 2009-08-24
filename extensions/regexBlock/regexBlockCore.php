@@ -6,14 +6,10 @@
  *
  * @file
  * @ingroup Extensions
- * @author Bartek Łapiński <bartek(at)wikia-inc.com>
- * @author Piotr Molski <moli@wikia-inc.com>
- * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
- * @copyright Copyright © 2007, Wikia Inc.
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
-*/
+ */
 
 class RegexBlock {
+
 	/**
 	 * Prepare data by getting blockers
 	 * @param $current_user User: current user
@@ -45,7 +41,7 @@ class RegexBlock {
 	/**
 	 * Get a database object
 	 */
-	public function getDB( $db ){
+	public static function getDB( $db ){
 		global $wgRegexBlockDatabase;
 		return wfGetDB( $db, array(), $wgRegexBlockDatabase );
 	}
@@ -81,10 +77,10 @@ class RegexBlock {
 			/* get from database */
 			$dbr = self::getDB( $master ? DB_MASTER : DB_SLAVE );
 			$res = $dbr->select( REGEXBLOCK_TABLE,
-				array("blckby_blocker"),
-				array("blckby_blocker <> ''"),
+				array( 'blckby_blocker' ),
+				array( "blckby_blocker <> ''" ),
 				__METHOD__,
-				array("GROUP BY" => "blckby_blocker")
+				array( 'GROUP BY' => 'blckby_blocker' )
 			);
 			while( $row = $res->fetchObject() ) {
 				$blockers_array[] = $row->blckby_blocker;
@@ -133,7 +129,7 @@ class RegexBlock {
 				if ( ( $ret !== false ) && ( is_array( $ret ) ) ) {
 					$ret['match'] = $ip;
 					$ret['ip'] = 1;
-					$result = self::setUserData($user, $ip, $ret['blocker'], $ret);
+					$result = self::setUserData( $user, $ip, $ret['blocker'], $ret );
 				}
 			}
 		}
@@ -147,7 +143,7 @@ class RegexBlock {
 
 		/* Make regex */
 		$regexes = array();
-		$regexStart = ($exact) ? '/^(' : '/(';
+		$regexStart = ( $exact ) ? '/^(' : '/(';
 		$regexEnd = '';
 		if ( !empty( $exact ) ) {
 			$regexEnd = ')$/';
@@ -161,7 +157,7 @@ class RegexBlock {
 			if( $build == '' ) {
 				$build = $line;
 			} elseif( strlen( $build ) + strlen( $line ) > $batchSize ) {
-				$regexes[] = /*$regexStart . */str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $build) ) /*. $regexEnd*/;
+				$regexes[] = /*$regexStart . */str_replace( '/', '\/', preg_replace( '|\\\*/|', '/', $build ) ) /*. $regexEnd*/;
 				$build = $line;
 			} else {
 				$build .= '|';
@@ -170,7 +166,7 @@ class RegexBlock {
 		}
 
 		if( $build !== false ) {
-			$regexes[] = /*$regexStart . */str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $build) ) /*. $regexEnd*/;
+			$regexes[] = /*$regexStart . */str_replace( '/', '\/', preg_replace( '|\\\*/|', '/', $build ) ) /*. $regexEnd*/;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -228,8 +224,8 @@ class RegexBlock {
 			foreach( $blockers as $blocker ) {
 				$res = $dbr->select(
 					REGEXBLOCK_TABLE,
-					array("blckby_id", "blckby_name", "blckby_exact"),
-					array("blckby_blocker = {$dbr->addQuotes($blocker)}"),
+					array( 'blckby_id', 'blckby_name', 'blckby_exact' ),
+					array( "blckby_blocker = {$dbr->addQuotes($blocker)}" ),
 					__METHOD__
 				);
 
@@ -330,12 +326,12 @@ class RegexBlock {
 			if ( empty( $cached ) || ( !is_object( $cached ) ) ) {
 				/* get from database */
 				$dbr = self::getDB( DB_MASTER );
-				$where = array("blckby_name LIKE '%{$single}%'");
-				if ( !empty($iregex) ) {
-					$where = array("blckby_name = " . $dbr->addQuotes($single));
+				$where = array( "blckby_name LIKE '%{$single}%'" );
+				if ( !empty( $iregex ) ) {
+					$where = array( "blckby_name = " . $dbr->addQuotes( $single ) );
 				}
 				$res = $dbr->select( REGEXBLOCK_TABLE,
-					array("blckby_id", "blckby_timestamp", "blckby_expire", "blckby_blocker", "blckby_create", "blckby_exact", "blckby_reason"),
+					array( 'blckby_id', 'blckby_timestamp', 'blckby_expire', 'blckby_blocker', 'blckby_create', 'blckby_exact', 'blckby_reason' ),
 					$where,
 					__METHOD__
 				);
@@ -350,7 +346,7 @@ class RegexBlock {
 			}
 
 			/* check conditions */
-			if ( is_object($blocked) ) {
+			if ( is_object( $blocked ) ) {
 				$ret = self::expireNameCheck( $blocked );
 				if ( $ret !== false ) {
 					$ret['match'] = $single;
@@ -360,7 +356,7 @@ class RegexBlock {
 					return $ret;
 				} else {
 					/* clean up an obsolete block */
-					self::clearExpired($single, $blocked->blckby_blocker);
+					self::clearExpired( $single, $blocked->blckby_blocker );
 				}
 			}
 		}
@@ -378,8 +374,8 @@ class RegexBlock {
 	public static function expireNameCheck( $blocked ) {
 		$ret = false;
 		wfProfileIn( __METHOD__ );
-		if( is_object($blocked) ) {
-			if ( (wfTimestampNow () <= $blocked->blckby_expire) || ('infinite' == $blocked->blckby_expire) ) {
+		if( is_object( $blocked ) ) {
+			if ( ( wfTimestampNow () <= $blocked->blckby_expire ) || ( 'infinite' == $blocked->blckby_expire ) ) {
 				$ret = array(
 					'blckid' => $blocked->blckby_id,
 					'create' => $blocked->blckby_create,
@@ -432,7 +428,7 @@ class RegexBlock {
 	 * @param $blckid
 	 */
 	public static function updateStats( $user, $user_ip, $blocker, $match, $blckid ) {
-		global $wgSharedDB, $wgDBname;
+		global $wgDBname;
 
 		$result = false;
 		wfProfileIn( __METHOD__ );
@@ -477,37 +473,37 @@ class RegexBlock {
 			return false;
 		}
 
-		$ips = isset($blocker_block_data['ips']) ? $blocker_block_data['ips'] : null;
-		$names = isset($blocker_block_data['regex']) ? $blocker_block_data['regex'] : null;
-		$exact = isset($blocker_block_data['exact']) ? $blocker_block_data['exact'] : null;
+		$ips = isset( $blocker_block_data['ips'] ) ? $blocker_block_data['ips'] : null;
+		$names = isset( $blocker_block_data['regex'] ) ? $blocker_block_data['regex'] : null;
+		$exact = isset( $blocker_block_data['exact'] ) ? $blocker_block_data['exact'] : null;
 		// backward compatibility ;)
 		$result = $blocker_block_data;
 
 		/* check IPs */
-		if ( (!empty($ips)) && (in_array($user_ip, $ips)) ) {
-			$result['ips']['matches'] = array($user_ip);
-			wfDebugLog('RegexBlock', "Found some IPs to block: ". implode(",", $result['ips']['matches']). "\n");
+		if ( ( !empty( $ips ) ) && ( in_array( $user_ip, $ips ) ) ) {
+			$result['ips']['matches'] = array( $user_ip );
+			wfDebugLog( 'RegexBlock', "Found some IPs to block: ". implode( ",", $result['ips']['matches'] ). "\n" );
 		}
 
 		/* check regexes */
 		if ( ( !empty( $result['regex'] ) ) && ( is_array( $result['regex'] ) ) ) {
 			$result['regex']['matches'] = self::performMatch( $result['regex'], $user->getName() );
 			if( !empty( $result['regex']['matches'] ) ) {
-				wfDebugLog('RegexBlock', "Found some regexes to block: ". implode(",", $result['regex']['matches']). "\n");
+				wfDebugLog( 'RegexBlock', "Found some regexes to block: ". implode( ",", $result['regex']['matches'] ). "\n" );
 			}
 		}
 
 		/* check names of user */
-		$exact = ( is_array( $exact ) ) ? $exact : array($exact);
+		$exact = ( is_array( $exact ) ) ? $exact : array( $exact );
 		if ( ( !empty( $exact ) ) && ( in_array( $user->getName(), $exact ) ) ) {
 			$key = array_search( $user->getName(), $exact );
 			$result['exact']['matches'] = array($exact[$key]);
-			wfDebugLog('RegexBlock', "Found some users to block: ". implode(",", $result['exact']['matches']). "\n");
+			wfDebugLog( 'RegexBlock', "Found some users to block: ". implode( ",", $result['exact']['matches'] ). "\n" );
 		}
 
-		unset($ips);
-		unset($names);
-		unset($exact);
+		unset( $ips );
+		unset( $names );
+		unset( $exact );
 
 		/**
 		 * Run expire checks for all matched values
@@ -555,12 +551,8 @@ class RegexBlock {
 
 		wfLoadExtensionMessages( 'RegexBlock' );
 
-		if ( empty( $wgContactLink ) ) {
-			$wgContactLink = '[[Special:Contact|contact us]]';
-		}
-
 		if ( is_array( $valid ) ) {
-			$user->mBlockedby = User::idFromName($blocker);
+			$user->mBlockedby = User::idFromName( $blocker );
 			if ( $valid['reason'] != '' ) {
 				/* a reason was given, display it */
 				$user->mBlockreason = $valid['reason'];
@@ -573,7 +565,7 @@ class RegexBlock {
 				if ( $valid['ip'] == 1 ) {
 					/* we blocked by IP */
 					$user->mBlockreason = wfMsg( 'regexblock-reason-ip', $wgContactLink );
-				} else if ($valid['exact'] == 1) {
+				} else if( $valid['exact'] == 1 ) {
 					/* we blocked by username exact match */
 					$user->mBlockreason = wfMsg( 'regexblock-reason-name', $wgContactLink );
 				}
@@ -625,4 +617,23 @@ class RegexBlock {
 
 		wfProfileOut( __METHOD__ );
 	}
+
+	/**
+	 * Add a link to Special:RegexBlock on Special:Contributions/USERNAME
+	 * pages if the user has 'regexblock' permission
+	 * @return true
+	 */
+	public static function loadContribsLink( $id, $nt, &$links ){
+		global $wgUser;
+		if( $wgUser->isAllowed( 'regexblock' ) ) {
+			wfLoadExtensionMessages( 'RegexBlock' );
+			$links[] = $wgUser->getSkin()->makeKnownLinkObj(
+				SpecialPage::getTitleFor( 'RegexBlock' ),
+				wfMsgHtml( 'regexblock' ),
+				'&ip=' . urlencode( $nt->getText() )
+			);
+		}
+		return true;
+	}
+
 }

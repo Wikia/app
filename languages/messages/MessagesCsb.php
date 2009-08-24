@@ -5,6 +5,7 @@
  * @file
  *
  * @author Kaszeba
+ * @author Leinad
  * @author MinuteElectron
  * @author Warszk
  * @author לערי ריינהארט
@@ -332,6 +333,8 @@ Przemëszlë dolmaczënié na [http://translatewiki.net/wiki/Main_Page?setlang=c
 'badsig'                     => 'Òchëbny pòdpisënk, sprôwdzë tadżi HTML.',
 'badsiglength'               => 'Pòdpisënk je za dłudżi. 
 Mô bëc mni jakno $1 {{PLURAL:$1|znak|znaczi/znaków}}.',
+'gender-male'                => 'Chłop',
+'gender-female'              => 'Białka',
 'email'                      => 'E-mail',
 'prefs-help-realname'        => 'Prôwdzewi miono je òptacjowé a czej je dôsz, òstanié ùżëté do pòdpisaniô Twòjégò wkłôdu',
 'loginerror'                 => 'Fela logòwaniô',
@@ -350,7 +353,14 @@ Spróbùjë znowa.',
 Mùszi zamëkac w se co nômni $1 {{PLURAL:$1|céch|céchë|céchów}} ë bëc jinszô jakno Twòje miono brëkòwnika.',
 'mailmypassword'             => 'Wëslë nową parolã e-mailą',
 'passwordremindertitle'      => 'Nowô doczasnô parola dlô {{SITENAME}}',
-'passwordremindertext'       => 'Chtos (prôwdëjuwerno Të, z adresë $1) pòprosëł ò wësłanié nowi parolë dopùscënkù do {{SITENAME}} ($4). Aktualnô parola dlô brëkòwnika "$2" je "$3". Nôlepi mdze czej wlogùjesz sã terô ë zarô zmienisz parolã.',
+'passwordremindertext'       => 'Chtos (gwës Të, z adresë $1) pòprosëł ò wësłanié nowi 
+parolë dlô {{SITENAME}} ($4). Aktualnô parola dlô brëkòwnika 
+"$2" òsta ùsôdzonô ë nastôwionô jakno "$3". Jeżlë to bëło twòją 
+jintencëją, mùszisz sã terô wlogòwac ë zmienic swòją parolã. 
+Nowô parola je wôznô {{PLURAL:$5|dzéń|$5 dni}}. 
+Jeżlë chto jinszi wësłôł to zapëtanié, abò pamiãtôsz swòją parolã 
+ë chcesz jã dali bez zmianë brëkòwac, zjignorëje to wiadło ë 
+robi dali ze starną parolą.',
 'noemail'                    => 'W baze ni ma email-adresë dlô brëkòwnika "$1".',
 'acct_creation_throttle_hit' => 'Môsz ùsôdzoné ju {{PLURAL:$1|1 kònto|$1 kontów}}. 
 Ni mòżesz miec ju wicy.',

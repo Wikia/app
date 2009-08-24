@@ -44,7 +44,6 @@ class CategoryPager extends AlphabeticPager {
 	}
 	
 	function getQueryInfo() {
-		global $wgRequest;
 		return array(
 			'tables' => array( 'category' ),
 			'fields' => array( 'cat_title','cat_pages' ),
@@ -61,6 +60,7 @@ class CategoryPager extends AlphabeticPager {
 	function getDefaultQuery() {
 		parent::getDefaultQuery();
 		unset( $this->mDefaultQuery['from'] );
+		return $this->mDefaultQuery;
 	}
 #	protected function getOrderTypeMessages() {
 #		return array( 'abc' => 'special-categories-sort-abc',

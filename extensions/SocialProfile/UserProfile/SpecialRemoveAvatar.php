@@ -6,7 +6,7 @@ class RemoveAvatar extends SpecialPage {
 	 * Constructor
 	 */
 	function __construct(){
-		parent::__construct('RemoveAvatar'/*class*/, 'avatarremove'/*restriction*/);
+		parent::__construct( 'RemoveAvatar'/*class*/, 'avatarremove'/*restriction*/ );
 	}
 
 	/**
@@ -16,7 +16,7 @@ class RemoveAvatar extends SpecialPage {
 	 */
 	public function execute( $user ){
 		global $wgUser, $wgOut, $wgRequest, $wgUploadAvatarInRecentChanges;
-		wfLoadExtensionMessages('SocialProfileUserProfile');
+		wfLoadExtensionMessages( 'SocialProfileUserProfile' );
 
 		$this->title = SpecialPage::getTitleFor( 'RemoveAvatar' );
 
@@ -44,15 +44,15 @@ class RemoveAvatar extends SpecialPage {
 			return;
 		}
 
-		$wgOut->setPageTitle( wfMsg('avatarupload-removeavatar') );
+		$wgOut->setPageTitle( wfMsg( 'avatarupload-removeavatar' ) );
 
-		if( $wgRequest->getVal('user') != '' ){
-			$wgOut->redirect( $this->title->getFullURL() . "/" . $wgRequest->getVal('user') );
+		if( $wgRequest->getVal( 'user' ) != '' ){
+			$wgOut->redirect( $this->title->getFullURL() . '/' . $wgRequest->getVal( 'user' ) );
 		}
 
 		// If the request was POSTed, then delete the avatar
 		if( $wgRequest->wasPosted() ) {
-			$user_id = $wgRequest->getVal('user_id');
+			$user_id = $wgRequest->getVal( 'user_id' );
 			$user_deleted = User::newFromId( $user_id );
 			$user_deleted->loadFromDatabase();
 
@@ -65,10 +65,13 @@ class RemoveAvatar extends SpecialPage {
 			if( !$wgUploadAvatarInRecentChanges ){
 				$log->updateRecentChanges = false;
 			}
-			$log->addEntry( wfMsg( 'user-profile-picture-log' ), $wgUser->getUserPage(), wfMsg( 'user-profile-picture-log-delete-entry', $user_deleted->getName() ) );
-
-			$wgOut->addHTML( '<div>' . wfMsg('avatarupload-removesuccess') . '</div>' );
-			$wgOut->addHTML( '<div><a href="' . $this->title->escapeFullURL() . '">' . wfMsg('avatarupload-removeanother') . '</a></div>' );
+			$log->addEntry(
+				wfMsg( 'user-profile-picture-log' ),
+				$wgUser->getUserPage(),
+				wfMsg( 'user-profile-picture-log-delete-entry', $user_deleted->getName() )
+			);
+			$wgOut->addHTML( '<div>' . wfMsg( 'avatarupload-removesuccess' ) . '</div>' );
+			$wgOut->addHTML( '<div><a href="' . $this->title->escapeFullURL() . '">' . wfMsg( 'avatarupload-removeanother' ) . '</a></div>' );
 		} else {
 			if( $user ){
 				$wgOut->addHTML( $this->showUserAvatar( $user ) );
@@ -82,10 +85,10 @@ class RemoveAvatar extends SpecialPage {
 	 * Show the form for retrieving a user's current avatar
 	 */
 	function showUserForm(){
-		$output = '<form method="get" name="avatar">
-				<b>' . wfMsg('username') . '</b>
-				<input type="text" name="user">
-				<input type="submit" value="' . wfMsg('search') . '">
+		$output = '<form method="get" name="avatar" action="">
+				<b>' . wfMsg( 'username' ) . '</b>
+				<input type="text" name="user" />
+				<input type="submit" value="' . wfMsg( 'search' ) . '" />
 			</form>';
 		return $output;
 	}
@@ -95,16 +98,17 @@ class RemoveAvatar extends SpecialPage {
 	 */
 	function showUserAvatar( $user_name ){
 		$user_name = str_replace( '_', ' ', $user_name ); // replace underscores with spaces
-		$user_id = User::idFromName($user_name);
+		$user_id = User::idFromName( $user_name );
 
 		$avatar = new wAvatar( $user_id, 'l' );
 
-		$output = '<div><b>' . wfMsg('avatarupload-currentavatar', $user_name). '</b></div><p>';
-		$output .= "<div>{$avatar->getAvatarURL()}</div><p><p>";
-		$output .= "<div><form method=\"post\" name=\"avatar\">
-				<input type=\"hidden\" name=\"user_id\" value=\"{$user_id}\">
-				<input type=\"submit\" value=\"" . wfMsg('delete') . "\">
-			</form></div>";
+		$output = '<div><b>' . wfMsg( 'avatarupload-currentavatar', $user_name ). '</b></div>';
+		$output .= "<div>{$avatar->getAvatarURL()}</div>";
+		$output .= '<div><form method="post" name="avatar" action="">
+				<input type="hidden" name="user_id" value="'. $user_id .'" />
+				<br />
+				<input type="submit" value="' . wfMsg( 'delete' ) . '" />
+			</form></div>';
 		return $output;
 	}
 
@@ -118,10 +122,10 @@ class RemoveAvatar extends SpecialPage {
 	function deleteImage( $id, $size ){
 		global $wgUploadDirectory, $wgDBname, $wgMemc;
 		$avatar = new wAvatar( $id, $size );
-		$files = glob($wgUploadDirectory . "/avatars/" . $wgDBname . "_" . $id .  "_" . $size . "*");
-		$img  = basename($files[0]);
-		if( $img ){
-			unlink($wgUploadDirectory . "/avatars/" .  $img);
+		$files = glob( $wgUploadDirectory . '/avatars/' . $wgDBname . '_' . $id .  '_' . $size . "*" );
+		$img = basename( $files[0] );
+		if( $img && $img[0] ){
+			unlink( $wgUploadDirectory . '/avatars/' .  $img );
 		}
 
 		// clear cache

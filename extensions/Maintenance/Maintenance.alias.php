@@ -44,6 +44,11 @@ $aliases['de'] = array(
 	'Maintenance' => array( 'Wartung' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Maintenance' => array( 'Wótwardowanje' ),
+);
+
 /** Basque (Euskara) */
 $aliases['eu'] = array(
 	'Maintenance' => array( 'Mantenimendua' ),
@@ -79,6 +84,11 @@ $aliases['hsb'] = array(
 	'Maintenance' => array( 'Wothladowanje' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Maintenance' => array( 'Mantenentia' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'Maintenance' => array( 'Pemeliharaan' ),
@@ -92,6 +102,11 @@ $aliases['ja'] = array(
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'Maintenance' => array( 'ការថែទាំ' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'Maintenance' => array( '정비' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -129,6 +144,16 @@ $aliases['pt-br'] = array(
 	'Maintenance' => array( 'Manutenção' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Maintenance' => array( 'निर्वहण' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Maintenance' => array( 'Mirëmbajtje' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Maintenance' => array( 'Underhåll' ),
@@ -137,5 +162,10 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'Maintenance' => array( 'Matengenezo' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Maintenance' => array( 'Pagpapanatili' ),
 );
 

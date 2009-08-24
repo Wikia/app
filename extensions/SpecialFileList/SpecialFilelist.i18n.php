@@ -74,9 +74,31 @@ $messages['avk'] = array(
 	'filelist-show-gallery' => 'Nedira va ginsa',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'filelist' => 'Dateilistn',
+	'filelist-desc' => "d'[[Special:Filelist|Spezialseitn]] zum Ãnzoang vu aufeglådne Datein",
+	'filelist-show-list' => "d'Listn ãnzoang",
+	'filelist-show-gallery' => "d'Galerie ãnzoang",
+	'filelist-image-desc' => 'åbsteignd',
+);
+
 /** Belarusian (Беларуская) */
 $messages['be'] = array(
 	'filelist-image-desc' => 'апісанне',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'filelist' => 'Сьпіс файлаў',
+	'filelist-desc' => '[[Special:Filelist|Спэцыяльная старонка]] са сьпісам загружаных файлаў',
+	'filelist-show-list' => 'Паказаць сьпіс',
+	'filelist-show-gallery' => 'Паказаць галерэю',
+	'filelist-image-desc' => 'апісаньне',
 );
 
 /** Bulgarian (Български)
@@ -94,6 +116,17 @@ $messages['bg'] = array(
 /** Bengali (বাংলা) */
 $messages['bn'] = array(
 	'filelist-image-desc' => 'বিবরণ',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'filelist' => 'Spisak datoteka',
+	'filelist-desc' => '[[Special:Filelist|Posebna stranica]] za prikazivanje postavljenih datoteka',
+	'filelist-show-list' => 'Pokaži spisak',
+	'filelist-show-gallery' => 'Pokaži galeriju',
+	'filelist-image-desc' => 'spisak',
 );
 
 /** Catalan (Català)
@@ -158,6 +191,13 @@ $messages['dsb'] = array(
 	'filelist-image-desc' => 'Zespominanje',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'filelist-image-desc' => 'ανεβ',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -184,6 +224,7 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'filelist' => 'Fitxategi zerrenda',
+	'filelist-desc' => '[[Special:Filelist|Orri berezia]] igotako fitxategiak zerrendatzeko',
 	'filelist-show-list' => 'Zerrenda erakutsi',
 	'filelist-show-gallery' => 'Galeria erakutsi',
 );
@@ -200,11 +241,6 @@ $messages['fi'] = array(
 	'filelist-image-desc' => 'kuvaus',
 );
 
-/** Võro (Võro) */
-$messages['fiu-vro'] = array(
-	'filelist-image-desc' => 'seletüs',
-);
-
 /** Faroese (Føroyskt) */
 $messages['fo'] = array(
 	'filelist-image-desc' => 'lýs',
@@ -213,9 +249,10 @@ $messages['fo'] = array(
 /** French (Français)
  * @author Grondin
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'filelist' => 'Liste des fichiers',
+	'filelist' => 'Liste de fichiers',
 	'filelist-desc' => 'Page spéciale pour énumérer les fichiers téléchargés.',
 	'filelist-show-list' => 'Voir la liste',
 	'filelist-show-gallery' => 'Voir la galerie',
@@ -237,11 +274,22 @@ $messages['gan'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'filelist' => 'Listaxe de arquivos',
+	'filelist' => 'Lista de arquivos',
 	'filelist-desc' => '[[Special:Filelist|Páxina especial]] para listar ficheiros cargados',
-	'filelist-show-list' => 'Amosar a listaxe',
+	'filelist-show-list' => 'Amosar a lista',
 	'filelist-show-gallery' => 'Amosar galería',
 	'filelist-image-desc' => 'desc',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'filelist' => 'Dateilischt',
+	'filelist-desc' => '[[Special:Filelist|Spezialsyte]] zum di uffegladene Datei aazeige',
+	'filelist-show-list' => 'Zeig Lischt',
+	'filelist-show-gallery' => 'Zeig Galerii',
+	'filelist-image-desc' => 'nidsgi',
 );
 
 /** Hakka (Hak-kâ-fa) */
@@ -317,10 +365,15 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
 	'filelist' => 'ファイルリスト',
+	'filelist-desc' => 'アップロードされたファイルを一覧表示する[[Special:Filelist|特別ページ]]',
+	'filelist-show-list' => '一覧表示',
+	'filelist-show-gallery' => 'ギャラリー表示',
+	'filelist-image-desc' => '概要',
 );
 
 /** Javanese (Basa Jawa)
@@ -531,8 +584,14 @@ $messages['pt'] = array(
 	'filelist-image-desc' => 'desc',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
 $messages['pt-br'] = array(
+	'filelist' => 'Lista de arquivos',
+	'filelist-desc' => '[[Special:Filelist|Página Especial]] para listar arquivos carregados',
+	'filelist-show-list' => 'Mostrar lista',
+	'filelist-show-gallery' => 'Mostrar galeria',
 	'filelist-image-desc' => 'desc',
 );
 
@@ -556,9 +615,14 @@ $messages['roa-tara'] = array(
 
 /** Russian (Русский)
  * @author Innv
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'filelist' => 'Список файлов',
+	'filelist-desc' => '[[Special:Filelist|Служебная страница]], выводящая список загруженных файлов',
+	'filelist-show-list' => 'Показать список',
+	'filelist-show-gallery' => 'Показать галерею',
+	'filelist-image-desc' => 'по убыванию',
 );
 
 /** Yakut (Саха тыла) */
@@ -651,8 +715,9 @@ $messages['ta'] = array(
  */
 $messages['te'] = array(
 	'filelist' => 'ఫైళ్ళ జాబితా',
-	'filelist-desc' => 'ఎగుమతైన ఫైళ్ళ జాబితాని చూపించడానికి ప్రత్యేక పేజీ',
+	'filelist-desc' => 'ఎగుమతైన ఫైళ్ళ జాబితాని చూపించడానికి [[Special:Filelist|ప్రత్యేక పేజీ]]',
 	'filelist-show-list' => 'జాబితాని చూపించు',
+	'filelist-show-gallery' => 'కొలువుని చూపించు',
 	'filelist-image-desc' => 'వివరణ',
 );
 
@@ -682,6 +747,9 @@ $messages['tl'] = array(
  */
 $messages['tr'] = array(
 	'filelist' => 'Dosya listesi',
+	'filelist-desc' => 'Yüklenen dosyaların listesi için: [[Special:Filelist|dosya listesi]]',
+	'filelist-show-list' => 'Listeyi gör',
+	'filelist-show-gallery' => 'Galeri göster',
 );
 
 /** Ukrainian (Українська)
@@ -702,8 +770,14 @@ $messages['vec'] = array(
 	'filelist-image-desc' => 'desc',
 );
 
-/** Vietnamese (Tiếng Việt) */
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
 $messages['vi'] = array(
+	'filelist' => 'Danh sách tập tin',
+	'filelist-desc' => '[[Special:Filelist|Trang đặc biệt]] để liệt kê các tập tin được tải lên',
+	'filelist-show-list' => 'Hiển thị danh sách',
+	'filelist-show-gallery' => 'Hiển thị trưng bày hình ảnh',
 	'filelist-image-desc' => 'miêu tả',
 );
 
@@ -717,6 +791,11 @@ $messages['vo'] = array(
 	'filelist-show-list' => 'Jonön lisedi',
 	'filelist-show-gallery' => 'Jonön magodemi',
 	'filelist-image-desc' => 'bep',
+);
+
+/** Võro (Võro) */
+$messages['vro'] = array(
+	'filelist-image-desc' => 'seletüs',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

@@ -11,13 +11,13 @@ INSTALLATION:
 1. Rename this directory to extensions/LiquidThreads inside your
    MediaWiki directory.
 2. Add database tables from lqt.sql using the sql.php MediaWiki tool.
-   (On Unix, if the current directory is the MediaWiki root directory, you can 
+   (On Unix, if the current directory is the MediaWiki root directory, you can
    say "php maintenance/sql.php extensions/LiquidThreads/lqt.sql".)
    If you haven't created the AdminSettings.php file, you will have to do that
    first; see http://www.mediawiki.org/wiki/Manual:AdminSettings.php
    Alternatively, you can run lqt.sql manually (you can use the command
    "mysql -u $USER -p -e 'source lqt.sql'" on Unix), but you might have to
-   edit it first, and replace the /*$wgDBprefix*/ and /*$wgDBTableOptions*/ 
+   edit it first, and replace the /*$wgDBprefix*/ and /*$wgDBTableOptions*/
    strings with the corresponding settings.
 3. Add this line to the end of your LocalSettings.php:
    require_once('extensions/LiquidThreads/LiquidThreads.php');

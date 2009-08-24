@@ -39,6 +39,21 @@ $aliases['hr'] = array(
 	'PovWatch' => array( 'Predbilježeno_praćenje' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'PovWatch' => array( 'PovWatch' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'PovWatch' => array( 'Observa PdV' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'PovWatch' => array( '編集合戦の監視' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
 $aliases['nds-nl'] = array(
 	'PovWatch' => array( 'Staandpuntsvolglieste' ),
@@ -49,8 +64,18 @@ $aliases['nl'] = array(
 	'PovWatch' => array( 'PovVolglijst' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'PovWatch' => array( 'पक्षवृत्तीनिरिक्षा' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'PovWatch' => array( 'Povövervakning' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'PovWatch' => array( 'Pagbantay sa POV' ),
 );
 

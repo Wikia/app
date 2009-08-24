@@ -473,7 +473,8 @@ class NCL extends EnhancedChangesList {
 		}
 
 		if( $items ) {
-			$data = array( "wgUserInfo$rci" => '(' . implode( ' | ', $items ) . ')' );
+			global $wgLang;
+			$data = array( "wgUserInfo$rci" => '(' . $wgLang->pipeList( $items ) . ')' );
 
 			return array($tl, $data);
 		} else {

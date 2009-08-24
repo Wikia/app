@@ -37,6 +37,16 @@ $aliases['hr'] = array(
 	'LookupUser' => array( 'Pogledaj_suradnika' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'LookupUser' => array( 'Cercar usator' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'LookupUser' => array( '利用者情報調査', '利用者情報を調査' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'LookupUser' => array( 'Benotzer nokucken' ),
@@ -57,8 +67,18 @@ $aliases['no'] = array(
 	'LookupUser' => array( 'Finn bruker' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'LookupUser' => array( 'योजकपश्यन्तु' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'LookupUser' => array( 'TafutaMtumiaji' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'LookupUser' => array( 'Hanapin ang tagagamit' ),
 );
 

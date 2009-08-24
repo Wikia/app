@@ -33,6 +33,13 @@ $messages['arz'] = array(
 	'contributorsaddon-desc' => 'يضيف منبثقات JS onMouseOver إلى وصلات "المساهمون الأساسيون"',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'contributorsaddon-desc' => "Dodaje JavaScript popupove na linkove ''Glavnih urednika''",
+);
+
 /** Czech (Česky)
  * @author Danny B.
  */
@@ -89,6 +96,13 @@ $messages['gl'] = array(
 	'contributorsaddon-desc' => 'Engade emerxentes JS onMouseOver ás ligazóns das "Colaboradores principais"',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'contributorsaddon-desc' => 'Fiegt onMouseOver-Popups dur JavaScript zue dr Gleicher vu dr Hauptautore dezue',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  */
@@ -117,11 +131,19 @@ $messages['ia'] = array(
 	'contributorsaddon-desc' => 'Adde pop-ups via onMouseOver in JS al ligamines "Contributores principal"',
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'contributorsaddon-desc' => 'Aggiunge dei popup JavaScript ai collegamenti "Principali contributori"',
+);
+
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'contributorsaddon-desc' => 'JavaScriptのonMouseOverを用いて、"主な投稿者"へのリンクをポップアップする',
+	'contributorsaddon-desc' => 'JavaScript を用いて、「主な投稿者」へのリンクをポップアップする',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -150,7 +172,7 @@ $messages['mr'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'contributorsaddon-desc' => 'Voegt "JavaScript-popups toe aan de link "Belangrijkste bijdragers"',
+	'contributorsaddon-desc' => 'Voegt "JavaScript-popups toe aan de verwijzing "Belangrijkste bijdragers"',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -195,6 +217,13 @@ $messages['pt'] = array(
 	'contributorsaddon-desc' => 'Adiciona janelas "popup" JS do tipo onMouseOver às ligações de "Principais Contribuidores"',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'contributorsaddon-desc' => 'Adiciona janelas "popup" via JavaScript às ligações de "Principais Contribuidores"',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -216,11 +245,32 @@ $messages['sk'] = array(
 	'contributorsaddon-desc' => 'Pridáva vyskakovacie okná nad odkazy „Hlavní prispievatelia“',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'contributorsaddon-desc' => 'Vendosë dritare JavaScript në lidhjet "Kontribuuesit kryesorë"',
+);
+
 /** Swedish (Svenska)
  * @author Lejonel
  */
 $messages['sv'] = array(
 	'contributorsaddon-desc' => 'Lägger till popup-rutor för länken till "Huvudsakliga bidragsgivare", med hjälp av JavaScript',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'contributorsaddon-desc' => '"ముఖ్య తోడ్పాటుదారుల" లింకులకి జావాస్క్రిప్టు పాపప్పులను చేరుస్తుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'contributorsaddon-desc' => 'Nagdaragdag ng "sulpot-litaw" (\'\'popups\'\') sa mga kawingan ng "Pangunahing mga tagapag-ambag"',
 );
 
 /** Vèneto (Vèneto)

@@ -26,7 +26,7 @@ if (!defined('MEDIAWIKI')) {
 	exit( 1 );
 }
 
-define('MEDIAWIKI_OPENID_VERSION', '0.8.2');
+define('MEDIAWIKI_OPENID_VERSION', '0.8.4dev');
 
 # CONFIGURATION VARIABLES
 
@@ -105,10 +105,6 @@ $wgOpenIDClientOnly = false;
 
 # END CONFIGURATION VARIABLES
 
-$wgExtensionFunctions[] = 'setupOpenID';
-
-$wgExtensionMessagesFiles['OpenID'] = dirname(__FILE__) . '/OpenID.i18n.php';
-
 $wgExtensionCredits['other'][] = array(
 	'name' => 'OpenID',
 	'version' => MEDIAWIKI_OPENID_VERSION,
@@ -121,177 +117,38 @@ $wgExtensionCredits['other'][] = array(
 function OpenIDGetServerPath() {
 	$rel = 'Auth/OpenID/Server.php';
 
-	foreach (explode(PATH_SEPARATOR, get_include_path()) as $pe) {
+	foreach ( explode( PATH_SEPARATOR, get_include_path() ) as $pe ) {
 		$full = $pe . DIRECTORY_SEPARATOR . $rel;
-		if (file_exists($full)) {
+		if ( file_exists( $full ) ) {
 			return $full;
 		}
 	}
 	return $rel;
 }
 
-# Gets stored in the session, needs to be reified before our setup
-$wgAutoloadClasses['Auth_OpenID_CheckIDRequest'] = OpenIDGetServerPath();
-$wgExtensionMessagesFiles['OpenID'] = dirname(__FILE__) . '/OpenID.i18n.php';
-# Autoload for special pages
+$dir = dirname( __FILE__ ) . '/';
+$wgExtensionMessagesFiles['OpenID'] = $dir . 'OpenID.i18n.php';
+$wgExtensionAliasesFiles['OpenID'] = $dir . 'OpenID.alias.php';
 
-foreach (array('Login', 'Finish', 'Convert', 'Server', 'XRDS') as $sub) {
-	$wgAutoloadClasses['SpecialOpenID' . $sub] = dirname(__FILE__) . '/SpecialOpenID' . $sub . '.body.php';
-	$wgSpecialPages['OpenID'.$sub] = array('SpecialOpenID'.$sub);
-}
+$wgAutoloadClasses['OpenIDHooks'] = $dir . 'OpenID.hooks.php';
 
 # Autoload common parent with utility methods
+$wgAutoloadClasses['SpecialOpenID'] = $dir . 'SpecialOpenID.body.php';
 
-$wgAutoloadClasses['SpecialOpenID'] = dirname(__FILE__) . '/SpecialOpenID.body.php';
+$wgAutoloadClasses['SpecialOpenIDLogin'] = $dir . 'SpecialOpenIDLogin.body.php';
+$wgAutoloadClasses['SpecialOpenIDFinish'] = $dir . 'SpecialOpenIDFinish.body.php';
+$wgAutoloadClasses['SpecialOpenIDConvert'] = $dir . 'SpecialOpenIDConvert.body.php';
+$wgAutoloadClasses['SpecialOpenIDServer'] = $dir . 'SpecialOpenIDServer.body.php';
+$wgAutoloadClasses['SpecialOpenIDXRDS'] = $dir . 'SpecialOpenIDXRDS.body.php';
 
-$wgHooks['PersonalUrls'][] = 'OpenIDPersonalUrls';
-$wgHooks['UserToggles'][] = 'OpenIDUserToggles';
-$wgHooks['ArticleViewHeader'][] = 'OpenIDArticleViewHeader';
-# Add any aliases for the special page.
-$wgHooks['LanguageGetSpecialPageAliases'][] = 'OpenIDLocalizedPageName'; 
-# Typo in versions of MW earlier than 1.11.x (?)
-$wgHooks['LangugeGetSpecialPageAliases'][] = 'OpenIDLocalizedPageName'; # Add any aliases for the special page.
+# Gets stored in the session, needs to be reified before our setup
+$wgAutoloadClasses['Auth_OpenID_CheckIDRequest'] = OpenIDGetServerPath();
 
-function setupOpenID() {
-	global $wgSpecialPages, $wgOpenIDOnly, $wgOpenIDClientOnly;
-	
-	if ($wgOpenIDOnly) {
-		$wgSpecialPages['Userlogin'] = array('SpecialRedirectToSpecial', 'Userlogin', 'OpenIDLogin');
-		# Used in 1.12.x and above
-		$wgSpecialPages['CreateAccount'] = array('SpecialRedirectToSpecial', 'CreateAccount', 'OpenIDLogin');
-	}
-
-	# Special pages are added at global scope; remove server-related ones
-	# if client-only flag is set
-	
-	if ($wgOpenIDClientOnly) {
-		foreach (array('Server', 'XRDS') as $k) {
-			if (array_key_exists($k, $wgSpecialPages)) {
-				unset($wgSpecialPages[$k]);
-			}
-		}
-	}
-	
-	return true;
-}
-
-function OpenIDLocalizedPageName(&$specialPageArray, $code) {
-		
-	# The localized title of the special page is among the messages of the extension:
-	wfLoadExtensionMessages('OpenID');
-
-	foreach (array('Login', 'Finish', 'Convert', 'Server', 'XRDS') as $sub) {
-		$text = wfMsg('openid' . strtolower($sub));
-		# Convert from title in text form to DBKey and put it into the alias array:
-		$title = Title::newFromText($text);
-		$specialPageArray['OpenID'.$sub][] = 'OpenID' . $sub;
-		$specialPageArray['OpenID'.$sub][] = $title->getDBKey();
-	}
-
-	return true;
-}
-
-# Hook is called whenever an article is being viewed
-
-function OpenIDArticleViewHeader(&$article, &$outputDone, &$pcache ) {
-	global $wgOut, $wgOpenIDClientOnly;
-
-	$nt = $article->getTitle();
-
-	// If the page being viewed is a user page,
-	// generate the openid.server META tag and output
-	// the X-XRDS-Location.  See the OpenIDXRDS
-	// special page for the XRDS output / generation
-	// logic.
-
-	if ($nt &&
-		($nt->getNamespace() == NS_USER) &&
-		strpos($nt->getText(), '/') === false)
-	{
-		$user = User::newFromName($nt->getText());
-		if ($user && $user->getID() != 0) {
-			$openid = SpecialOpenID::getUserUrl($user);
-			if (isset($openid) && strlen($openid) != 0) {
-				global $wgOpenIDShowUrlOnUserPage;
-
-				if ($wgOpenIDShowUrlOnUserPage == 'always' ||
-					($wgOpenIDShowUrlOnUserPage == 'user' && !$user->getOption('hideopenid')))
-				{
-					global $wgOpenIDLoginLogoUrl;
-
-					$url = SpecialOpenID::OpenIDToUrl($openid);
-					$disp = htmlspecialchars($openid);
-					$wgOut->setSubtitle("<span class='subpages'>" .
-										"<img src='$wgOpenIDLoginLogoUrl' alt='OpenID' />" .
-										"<a href='$url'>$disp</a>" .
-										"</span>");
-				}
-			} else {
-				# Add OpenID data iif its allowed
-				if (!$wgOpenIDClientOnly) {
-					$st = Title::makeTitleSafe(NS_SPECIAL, 'OpenIDServer');
-					$wgOut->addLink(array('rel' => 'openid.server',
-										  'href' => $st->getFullURL()));
-					$wgOut->addLink(array('rel' => 'openid2.provider',
-										  'href' => $st->getFullURL()));
-					$rt = Title::makeTitle(NS_SPECIAL, 'OpenIDXRDS/'.$user->getName());
-					$wgOut->addMeta('http:X-XRDS-Location', $rt->getFullURL());
-					header('X-XRDS-Location', $rt->getFullURL());
-				}
-			}
-		}
-	}
-
-	return TRUE;
-}
-
-function OpenIDPersonalUrls(&$personal_urls, &$title) {
-	global $wgHideOpenIDLoginLink, $wgUser, $wgLang, $wgOut, $wgOpenIDOnly;
-
-	if (!$wgHideOpenIDLoginLink && $wgUser->getID() == 0) {
-		$wgOut->addHeadItem('openidloginstyle', OpenIDLoginStyle());
-		$sk = $wgUser->getSkin();
-		$returnto = ($title->getPrefixedUrl() == $wgLang->specialPage( 'Userlogout' )) ?
-		  '' : ('returnto=' . $title->getPrefixedURL());
-
-		$personal_urls['openidlogin'] = array(
-											  'text' => wfMsg('openidlogin'),
-											  'href' => $sk->makeSpecialUrl( 'OpenIDLogin', $returnto ),
-											  'active' => $title->isSpecial( 'OpenIDLogin' )
-											  );
-		
-		if ($wgOpenIDOnly) {
-			# remove other login links
-			foreach (array('login', 'anonlogin') as $k) {
-				if (array_key_exists($k, $personal_urls)) {
-					unset($personal_urls[$k]);
-				}
-			}
-		}
-	}
-
-	return true;
-}
-
-function OpenIDUserToggles(&$extraToggles) {
-	global $wgOpenIDShowUrlOnUserPage;
-
-	if ($wgOpenIDShowUrlOnUserPage == 'user') {
-		$extraToggles[] = 'hideopenid';
-	}
-
-	return true;
-}
-
-function OpenIDLoginStyle() {
-	global $wgOpenIDLoginLogoUrl;
-		return <<<EOS
-<style type='text/css'>
-li#pt-openidlogin {
-  background: url($wgOpenIDLoginLogoUrl) top left no-repeat;
-  padding-left: 20px;
-  text-transform: none;
-}
-</style>
-EOS;
-}
+$wgHooks['PersonalUrls'][] = 'OpenIDHooks::onPersonalUrls';
+$wgHooks['ArticleViewHeader'][] = 'OpenIDHooks::onArticleViewHeader';
+$wgHooks['SpecialPage_initList'][] = 'OpenIDHooks::onSpecialPage_initList';
+$wgHooks['LoadExtensionSchemaUpdates'][] = 'OpenIDHooks::onLoadExtensionSchemaUpdates';
+$wgHooks['RenderPreferencesForm'][] = 'OpenIDHooks::onRenderPreferencesForm';
+$wgHooks['InitPreferencesForm'][] = 'OpenIDHooks::onInitPreferencesForm';
+$wgHooks['ResetPreferences'][] = 'OpenIDHooks::onResetPreferences';
+$wgHooks['SavePreferences'][] = 'OpenIDHooks::onSavePreferences';

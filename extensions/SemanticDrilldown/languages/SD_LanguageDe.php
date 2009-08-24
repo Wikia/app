@@ -11,13 +11,14 @@ class SD_LanguageDe extends SD_Language {
         //always start upper-case
 	// category properties
 	SD_SP_HAS_FILTER  => 'Hat Filter',
+	SD_SP_HAS_DRILLDOWN_TITLE  => 'Hat Drilldown Titel',
 	// filter properties
 	SD_SP_COVERS_PROPERTY  => 'Betrifft Attribut',
 	SD_SP_HAS_VALUE  => 'Hat Wert',
 	SD_SP_GETS_VALUES_FROM_CATEGORY => 'Erhält Werte aus der Kategorie',
 	SD_SP_USES_TIME_PERIOD => 'Verwendet Zeitangabe',
 	SD_SP_REQUIRES_FILTER => 'Benötigt Filter',
-        SD_SP_HAS_LABEL  => 'Hat Bezeichnung'
+	SD_SP_HAS_LABEL  => 'Hat Bezeichnung',
 );
 
 var $m_Namespaces = array(

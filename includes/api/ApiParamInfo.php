@@ -41,6 +41,7 @@ class ApiParamInfo extends ApiBase {
 		// Get parameters
 		$params = $this->extractRequestParams();
 		$result = $this->getResult();
+		$queryObj = new ApiQuery($this->getMain(), 'query');
 		$r = array();
 		if(is_array($params['modules']))
 		{
@@ -61,7 +62,6 @@ class ApiParamInfo extends ApiBase {
 		}
 		if(is_array($params['querymodules']))
 		{
-			$queryObj = new ApiQuery($this->getMain(), 'query');
 			$qmodArr = $queryObj->getModules();
 			foreach($params['querymodules'] as $qm)
 			{
@@ -77,6 +77,13 @@ class ApiParamInfo extends ApiBase {
 			}
 			$result->setIndexedTagName($r['querymodules'], 'module');
 		}
+		if($params['mainmodule'])
+			$r['mainmodule'] = $this->getClassInfo($this->getMain());
+		if($params['pagesetmodule'])
+		{
+			$pageSet = new ApiPageSet($queryObj);
+			$r['pagesetmodule'] = $this->getClassInfo($pageSet);
+		}
 		$result->addValue(null, $this->getModuleName(), $r);
 	}
 
@@ -86,6 +93,12 @@ class ApiParamInfo extends ApiBase {
 		$retval['classname'] = get_class($obj);
 		$retval['description'] = (is_array($obj->getDescription()) ? implode("\n", $obj->getDescription()) : $obj->getDescription());
 		$retval['prefix'] = $obj->getModulePrefix();
+		if($obj->isReadMode())
+			$retval['readrights'] = '';
+		if($obj->isWriteMode())
+			$retval['writerights'] = '';
+		if($obj->mustBePosted())
+			$retval['mustbeposted'] = '';
 		$allowedParams = $obj->getFinalParams();
 		if(!is_array($allowedParams))
 			return $retval;
@@ -140,6 +153,10 @@ class ApiParamInfo extends ApiBase {
 		return $retval;
 	}
 
+	public function isReadMode() {
+		return false;
+	}
+
 	public function getAllowedParams() {
 		return array (
 			'modules' => array(
@@ -147,7 +164,9 @@ class ApiParamInfo extends ApiBase {
 			),
 			'querymodules' => array(
 				ApiBase :: PARAM_ISMULTI => true
-			)
+			),
+			'mainmodule' => false,
+			'pagesetmodule' => false,
 		);
 	}
 
@@ -155,6 +174,8 @@ class ApiParamInfo extends ApiBase {
 		return array (
 			'modules' => 'List of module names (value of the action= parameter)',
 			'querymodules' => 'List of query module names (value of prop=, meta= or list= parameter)',
+			'mainmodule' => 'Get information about the main (top-level) module as well',
+			'pagesetmodule' => 'Get information about the pageset module (providing titles= and friends) as well',
 		);
 	}
 
@@ -169,6 +190,6 @@ class ApiParamInfo extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiParamInfo.php 41653 2008-10-04 15:03:03Z catrope $';
+		return __CLASS__ . ': $Id: ApiParamInfo.php 48091 2009-03-06 13:49:44Z catrope $';
 	}
 }

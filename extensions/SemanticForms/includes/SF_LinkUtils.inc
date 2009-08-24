@@ -42,7 +42,8 @@ class SFLinkUtils {
 	}
 
 	/**
-	 * A very similar function, to get the non-URL-encoded title string
+	 * A very similar function to titleURLString(), to get the
+	 * non-URL-encoded title string
 	 */
 	static function titleString($title) {
 		$namespace = $title->getNsText();
@@ -56,21 +57,27 @@ class SFLinkUtils {
 	 * Gets the default form specified, if any, for a specific page
 	 * (which should be a category, property, or namespace page)
 	 */
-	function getDefaultForm($page_title, $page_namespace) {
+	static function getDefaultForm($page_title, $page_namespace) {
 		if ($page_title == NULL)
 			return null;
 
 		global $sfgContLang;
 		$store = smwfGetStore();
-		$title = Title::newFromText($page_title, $page_namespace);
+		$title = Title::makeTitleSafe($page_namespace, $page_title);
 		// we can do this easily if we're using SMW 1.4 or higher
 		if (class_exists('SMWPropertyValue')) {
 			$default_form_property = SMWPropertyValue::makeProperty('_SF_DF');
 			$res = $store->getPropertyValues($title, $default_form_property);
 			if (isset($res[0]))
 				return $res[0]->getTitle()->getText();
-			else
-				return null;
+			// if we're using a non-English language, check for the English string as well
+			if (! $sfgContLang instanceof SF_LanguageEn) {
+				$backup_default_form_property = SMWPropertyValue::makeProperty('_SF_DF_BACKUP');
+				$res = $store->getPropertyValues($title, $backup_default_form_property);
+				if (isset($res[0]))
+					return $res[0]->getTitle()->getText();
+			}
+			return null;
 		}
 
 		// otherwise, it's a bit more complex
@@ -108,21 +115,27 @@ class SFLinkUtils {
 	 * Gets the alternate forms specified, if any, for a specific page
 	 * (which should always be a property page)
 	 */
-	function getAlternateForms($page_title, $page_namespace) {
+	static function getAlternateForms($page_title, $page_namespace) {
 		if ($page_title == NULL)
 			return array();
 
 		global $sfgContLang;
 		$store = smwfGetStore();
-		$title = Title::newFromText($page_title, $page_namespace);
+		$title = Title::makeTitleSafe($page_namespace, $page_title);
 		// we can do this easily if we're using SMW 1.4 or higher
 		if (class_exists('SMWPropertyValue')) {
 			$alternate_form_property = SMWPropertyValue::makeProperty('_SF_AF');
 			$res = $store->getPropertyValues($title, $alternate_form_property);
 			// there could be multiple alternate forms
 			$form_names = array();
-			foreach ($res as $wiki_page_value) {
+			foreach ($res as $wiki_page_value)
 				$form_names[] = $wiki_page_value->getTitle()->getText();
+			// if we're using a non-English language, check for the English string as well
+			if (! $sfgContLang instanceof SF_LanguageEn) {
+				$backup_alternate_form_property = SMWPropertyValue::makeProperty('_SF_AF_BACKUP');
+				$res = $store->getPropertyValues($title, $backup_alternate_form_property);
+				foreach ($res as $wiki_page_value)
+					$form_names[] = $wiki_page_value->getTitle()->getText();
 			}
 			return $form_names;
 		}
@@ -160,15 +173,15 @@ class SFLinkUtils {
 	 * corresponding 'add data' link, if any such properties are defined
 	 */
 	static function getAddDataLinkForPage($target_page_title, $page_title, $page_namespace) {
-		$form_name = SFLinkUtils::getDefaultForm($page_title, $page_namespace);
-		$alt_forms = SFLinkUtils::getAlternateForms($page_title, $page_namespace);
+		$form_name = self::getDefaultForm($page_title, $page_namespace);
+		$alt_forms = self::getAlternateForms($page_title, $page_namespace);
 		if (! $form_name && count($alt_forms) == 0)
 			return null;
 		$ad = SpecialPage::getPage('AddData');
 		if ($form_name)
-			$add_data_url = $ad->getTitle()->getLocalURL() . "/" . $form_name . "/" . SFLinkUtils::titleURLString($target_page_title);
+			$add_data_url = $ad->getTitle()->getLocalURL() . "/" . $form_name . "/" . self::titleURLString($target_page_title);
 		else
-			$add_data_url = $ad->getTitle()->getLocalURL() . "/" . SFLinkUtils::titleURLString($target_page_title);
+			$add_data_url = $ad->getTitle()->getLocalURL() . "/" . self::titleURLString($target_page_title);
 		foreach ($alt_forms as $i => $alt_form) {
 			$add_data_url .= (strpos($add_data_url, "?")) ? "&" : "?";
 			$add_data_url .= "alt_form[$i]=$alt_form";
@@ -178,10 +191,10 @@ class SFLinkUtils {
 
 	/**
 	 * Sets the URL for form-based adding of a nonexistent (broken-linked,
-	 * AKA red-linked) page
+	 * AKA red-linked) page, for MediaWiki 1.13
 	 */
 	static function setBrokenLink_1_13(&$linker, $title, $query, &$u, &$style, &$prefix, &$text, &$inside, &$trail) {
-		$link = SFLinkUtils::addDataLink($title);
+		$link = self::addDataLink($title);
 		if ($link != '')
 			$u = $link;
 		return true;
@@ -193,7 +206,7 @@ class SFLinkUtils {
 	 */
 	static function setBrokenLink($linker, $target, $options, $text, &$attribs, &$ret) {
 		if (in_array('broken', $options)) {
-			$link = SFLinkUtils::addDataLink($target);
+			$link = self::addDataLink($target);
 			if ($link != '') {
 				$attribs['href'] = $link;
 			}
@@ -206,12 +219,12 @@ class SFLinkUtils {
 		// getAddDataLinkForPage() returns a value with any of
 		// them, return that
 		$store = smwfGetStore();
-		$title_text = SFLinkUtils::titleString($title);
+		$title_text = self::titleString($title);
 		$value = SMWDataValueFactory::newTypeIDValue('_wpg', $title_text);
 		$incoming_properties = $store->getInProperties($value);
 		foreach ($incoming_properties as $property) {
 			$property_title = SFUtils::getPropertyName($property);
-			if ($add_data_link = SFLinkUtils::getAddDataLinkForPage($title, $property_title, SMW_NS_PROPERTY)) {
+			if ($add_data_link = self::getAddDataLinkForPage($title, $property_title, SMW_NS_PROPERTY)) {
 				return $add_data_link;
 			}
 		}
@@ -225,7 +238,7 @@ class SFLinkUtils {
 			wfLoadExtensionMessages('SemanticForms');
 			$namespace = wfMsgForContent('sf_blank_namespace');
 		}
-		if ($add_data_link = SFLinkUtils::getAddDataLinkForPage($title, $namespace, NS_PROJECT)) {
+		if ($add_data_link = self::getAddDataLinkForPage($title, $namespace, NS_PROJECT)) {
 			return $add_data_link;
 		}
 		// if nothing found still, return null
@@ -260,13 +273,13 @@ class SFLinkUtils {
 
 	/**
 	 * Get the form used to edit this article: either the default form for
-	 * a category that this article belongs to (if there is one), or the
+	 * a category that this article belongs to, if there is one, or the
 	 * default form for the article's namespace, if there is one
 	 */
 	static function getFormForArticle($obj) {
-		$categories = SFLinkUtils::getCategoriesForArticle($obj);
+		$categories = self::getCategoriesForArticle($obj);
 		foreach ($categories as $category) {
-			if ($form_name = SFLinkUtils::getDefaultForm($category, NS_CATEGORY)) {
+			if ($form_name = self::getDefaultForm($category, NS_CATEGORY)) {
 				return $form_name;
 			}
 		}
@@ -279,7 +292,7 @@ class SFLinkUtils {
 			wfLoadExtensionMessages('SemanticForms');
 			$namespace = wfMsgForContent('sf_blank_namespace');
 		}
-		return SFLinkUtils::getDefaultForm($namespace, NS_PROJECT);
+		return self::getDefaultForm($namespace, NS_PROJECT);
 	}
 
 }

@@ -8,8 +8,9 @@
 	$wgExtensionFunctions[] = 'wfSpecialImportLangNames';
 	function wfSpecialImportLangNames() {
 
-	global $wgMessageCache;
-	$wgMessageCache->addMessages(array('importlangnames'=>'Wikidata: Import language names'),'en');
+	# Moved to SpecialLanguages.i18n.php
+	#global $wgMessageCache;
+	#$wgMessageCache->addMessages(array('importlangnames'=>'Wikidata: Import language names'),'en');
 
 		class SpecialImportLangNames extends SpecialPage {
 			function SpecialImportLangNames() {
@@ -22,14 +23,14 @@
 				$dc="uw";
 				require_once('Transaction.php');
 
-				$wgOut->setPageTitle('Import Language Names');
+				$wgOut->setPageTitle(wfMsg('importlangnames_title'));
 
 				if (!$wgUser->isAllowed('languagenames')) {
-					$wgOut->addHTML('You do not have permission to import language names.');
+					$wgOut->addHTML(wfMsg('importlangnames_not_allowed'));
 					return false;
 				}
 
-				$dbr = &wfGetDB(DB_MASTER);
+				$dbr = wfGetDB(DB_MASTER);
 
 				/* Get collection ID for "ISO 639-3 codes" collection. */
 				$sql = "SELECT collection_id FROM {$dc}_collection" .
@@ -63,7 +64,7 @@
 							$wgOut->addHTML('<br />' . "\n");
 						else
 							$first = false;
-						$wgOut->addHTML('Language names for "' . $iso_code . '" added.');
+						$wgOut->addHTML(wfMsg('importlangnames_added', $iso_code));
 
 						/* Add current language to list of portals/DMs. */
 						$sql = "SELECT spelling FROM {$dc}_expression" .
@@ -81,7 +82,7 @@
 							$wgOut->addHTML('<br />' . "\n");
 						else
 							$first = false;
-						$wgOut->addHTML('<strong>No language entry for "' . $iso_code . '" found! </strong>');
+						$wgOut->addHTML(wfMsg('importlangnames_not_found', $iso_code));
 						continue;
 					}
 					$lang_id = $this->fetchResult($dbr->fetchRow($lang_id_res));
@@ -114,7 +115,7 @@
 
 			/* XXX: This is probably NOT the proper way to do this. It should be refactored. */
 			function addDMsListToPage($content,$page) {
-				$dbr = &wfGetDB(DB_MASTER);
+				$dbr = wfGetDB(DB_MASTER);
 
 				/* Get ID of the page we want to put the list on. */
 				$sql = 'SELECT page_id FROM page' .

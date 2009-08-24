@@ -48,9 +48,7 @@ abstract class File_Ogg_Media extends File_Ogg_Bitstream
      * Length of the stream in seconds
      */
     var $_streamLength;
-	
-    /* Start offset of the stream in seconds */
-    var $_startOffset = 0;
+
     /*function File_Ogg_Media($streamSerial, $streamData, $filePointer)
     {
         File_Ogg_Bitstream::File_Ogg_Bitstream($streamSerial, $streamData, $filePointer);
@@ -225,13 +223,5 @@ abstract class File_Ogg_Media extends File_Ogg_Bitstream
     function getLength()
     {
         return $this->_streamLength;
-    }
-    /**
-     * Get the start offset of the stream in seconds
-     *
-     * @return float
-     */
-    function getStartOffset(){
-    	return $this->_startOffset;
     }
 }

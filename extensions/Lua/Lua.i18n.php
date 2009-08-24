@@ -160,6 +160,16 @@ $messages['eo'] = array(
 	'lua_overflow_time' => 'Atingis maksimuma tempo de operaciado',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'lua_error' => 'Error en línea $1',
+	'lua_extension_notfound' => 'Extensión Lua no configurada',
+	'lua_interp_notfound' => 'Intérprete Lua no encontrado',
+	'lua_error_internal' => 'Error interno',
+);
+
 /** Finnish (Suomi)
  * @author Mobe
  * @author Nike
@@ -222,6 +232,35 @@ $messages['gl'] = array(
  */
 $messages['grc'] = array(
 	'lua_error_internal' => 'Ἐσώτερον σφάλμα',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'lua_desc' => 'Erwyteret dr Parser mit ere Unterstitzig fir yybetteti Bleck vum [http://www.lua.org/ Lua]-Code',
+	'lua_error' => 'Fähler in dr Zyyle $1',
+	'lua_extension_notfound' => 'Lua-Erwyterig nit konfiguriert',
+	'lua_interp_notfound' => 'Lua-Interpreter nit gfunde',
+	'lua_error_internal' => 'Intärne Fähler',
+	'lua_overflow_recursion' => 'An di maximal Aazahl vu Rekursione chu',
+	'lua_overflow_loc' => 'An di maximal Zyylenaazahl vum Code chu',
+	'lua_overflow_time' => 'An di maximal Uusfierigsduur chu',
+);
+
+/** Hebrew (עברית)
+ * @author Rotemliss
+ * @author YaronSh
+ */
+$messages['he'] = array(
+	'lua_desc' => 'הרחבת המפענח לתמיכה במקטעים של קוד [http://www.lua.org/ Lua]',
+	'lua_error' => 'שגיאה בשורה $1',
+	'lua_extension_notfound' => 'הרחבת ה־Lua לא מוגדרת',
+	'lua_interp_notfound' => 'מנוע הפירוש של Lua לא נמצא',
+	'lua_error_internal' => 'שגיאה פנימית',
+	'lua_overflow_recursion' => 'מגבלת הרקורסיה הושגה',
+	'lua_overflow_loc' => 'מגבלת מספר שורות הקוד המירבי הושגה',
+	'lua_overflow_time' => 'זמן הריצה המירבי הושג',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -307,6 +346,7 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'lua_error' => 'Feeler an der Linn $1',
+	'lua_extension_notfound' => 'Lua-Erweiderung net configuréiert',
 	'lua_error_internal' => 'Interne Feeler',
 );
 
@@ -373,6 +413,41 @@ $messages['oc'] = array(
 	'lua_overflow_time' => 'Durada maximala d’execucion atencha',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'lua_error_internal' => 'Мидæг рæдыд',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'lua_desc' => 'Estende o analisador "parser" com suporte para blocos incorporados de código [http://www.lua.org/ Lua]',
+	'lua_error' => 'Erro na linha $1',
+	'lua_extension_notfound' => 'Extensão Lua não configurada',
+	'lua_interp_notfound' => 'Interpretador Lua não encontrado',
+	'lua_error_internal' => 'Erro interno',
+	'lua_overflow_recursion' => 'Limite de chamadas recursivas atingido',
+	'lua_overflow_loc' => 'Limite máximo de linhas de código atingido',
+	'lua_overflow_time' => 'Tempo máximo de execução atingido',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'lua_desc' => 'Estende o analisador (parser) com suporte para blocos incorporados de código [http://www.lua.org/ Lua]',
+	'lua_error' => 'Erro na linha $1',
+	'lua_extension_notfound' => 'Extensão Lua não configurada',
+	'lua_interp_notfound' => 'Interpretador Lua não encontrado',
+	'lua_error_internal' => 'Erro interno',
+	'lua_overflow_recursion' => 'Limite de chamadas recursivas atingido',
+	'lua_overflow_loc' => 'Limite máximo de linhas de código atingido',
+	'lua_overflow_time' => 'Tempo máximo de execução atingido',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -405,6 +480,27 @@ $messages['sk'] = array(
 	'lua_overflow_recursion' => 'Bol dosiahnutý limit rekurzie',
 	'lua_overflow_loc' => 'Bol dosiahnutý limit počtu riadkov kódu',
 	'lua_overflow_time' => 'Bol dosiahnutý limit času behu',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'lua_error_internal' => 'అంతర్గత పొరపాటు',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'lua_desc' => 'Nagpapalawig sa banghay na may suporta para sa nakabaong mga bloke ng kodigong [http://www.lua.org/ Lua]',
+	'lua_error' => 'Kamalian sa guhit na $1',
+	'lua_extension_notfound' => 'Hindi nakaayos ang karugtong na Lua',
+	'lua_interp_notfound' => 'Hindi natagpuan ang pampaunawa ng Lua',
+	'lua_error_internal' => 'Panloob na kamalian',
+	'lua_overflow_recursion' => 'Naabot na ang hangganan ng pagtawag sa sarili',
+	'lua_overflow_loc' => 'Naabot na ang pinakamataas na hangganan ng guhit ng kodigo',
+	'lua_overflow_time' => 'Naabot na ang pinakamataas na panahon ng pagsasakatuparan',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -26,8 +26,8 @@ if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'Cite',
-	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44056 $',
+	'svn-date' => '$LastChangedDate: 2009-02-12 18:02:27 +0000 (Thu, 12 Feb 2009) $',
+	'svn-revision' => '$LastChangedRevision: 47190 $',
 	'author' => 'Ævar Arnfjörð Bjarmason',
 	'description' => 'Adds <nowiki><ref[ name=id]></nowiki> and <nowiki><references/></nowiki> tags, for citations', // kept for b/c
 	'descriptionmsg' => 'cite_desc',
@@ -44,6 +44,11 @@ define( 'CITE_DEFAULT_GROUP', '');
  * groups; or remove all references from this file to enable unconditionally
  */
 $wgAllowCiteGroups = true; 
+
+/**
+ * An emergency optimisation measure for caching cite <references /> output.
+ */
+$wgCiteCacheReferences = false;
 
 function wfCite() {
 	new Cite;

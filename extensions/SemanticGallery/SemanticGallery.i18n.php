@@ -31,6 +31,20 @@ $messages['ar'] = array(
 	'semanticgallery-desc' => 'يضيف صيغة خرج معرض إلى استعلامات سيمانتيك ميدياويكي الداخلية',
 );
 
+/** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
+ */
+$messages['arz'] = array(
+	'semanticgallery-desc' => 'يضيف صيغة خرج معرض إلى استعلامات سيمانتيك ميدياويكn الداخلية',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'semanticgallery-desc' => 'Дадае выходны фармат галерэі ў запыты Semantic MediaWiki',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -71,6 +85,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'semanticgallery-desc' => 'Engade unha galería de formato de saída ás dúbidas SMW en liña',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'semanticgallery-desc' => 'Setzt in SMW-Inline-Abfroge e Galerienuusgabformat dryy',
 );
 
 /** Hebrew (עברית)
@@ -116,6 +137,20 @@ $messages['lb'] = array(
 	'semanticgallery-desc' => 'Setzt a Semantic MediaWiki-Ufroen e Gallerie-Output-Format derbäi',
 );
 
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'semanticgallery-desc' => "Voog 'n galerieoetveurformaat toe aan zeukopdrachte via Semantic MediaWiki",
+);
+
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'semanticgallery-desc' => 'Föögt en Galerie to SMW-Affragen to',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -123,11 +158,39 @@ $messages['nl'] = array(
 	'semanticgallery-desc' => 'Voegt een galerijuitvoerformaat toe aan zoekopdrachten via Semantic MediaWiki',
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'semanticgallery-desc' => 'Legg til ei galleriutdataformatering på SMW-spørjingar',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'semanticgallery-desc' => 'Apond un format de sortida de la galariá dins las requèstas en linha de SMW',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'semanticgallery-desc' => 'Adiciona uma formato de saída tipo galeria a comandos embebidos SMW',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'semanticgallery-desc' => 'Adiciona uma formato de saída tipo galeria a comandos SMW embebidos',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'semanticgallery-desc' => "Aggiunge 'nu formete de resultete p'a gallerie  ausanne le inderrogaziune SMW inline",
 );
 
 /** Slovak (Slovenčina)
@@ -142,5 +205,12 @@ $messages['sk'] = array(
  */
 $messages['tl'] = array(
 	'semanticgallery-desc' => 'Nagdaragdag ng mga inilalabas ng mga produktong na nasa anyong pangtanghalan (galerya) sa mga nasa loob ng hanay na mga katanunang pang-SMW',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'semanticgallery-desc' => 'Thêm một định dạng xuất thư viện hình ảnh vào truy vấn ngay trong SMW',
 );
 

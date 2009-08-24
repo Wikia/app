@@ -31,7 +31,7 @@ class WantedPagesPage extends QueryPage {
 		$dbr = wfGetDB( DB_SLAVE );
 		$pagelinks = $dbr->tableName( 'pagelinks' );
 		$page      = $dbr->tableName( 'page' );
-		$sql =   "SELECT 'Wantedpages' AS type,
+		$sql = "SELECT 'Wantedpages' AS type,
 			        pl_namespace AS namespace,
 			        pl_title AS title,
 			        COUNT(*) AS value
@@ -47,7 +47,7 @@ class WantedPagesPage extends QueryPage {
 			 GROUP BY pl_namespace, pl_title
 			 HAVING COUNT(*) > $count";
 
-		wfRunHooks( 'WantedPages::getSQL', array( &$this, &$sql ) ); // wikia: Bartek
+		wfRunHooks( 'WantedPages::getSQL', array( &$this, &$sql ) );
 		return $sql;
 	}
 
@@ -88,7 +88,7 @@ class WantedPagesPage extends QueryPage {
 			return null; // this is a band aid solution but I give up )-: see RT#14387
 		} else {
 			$tsafe = htmlspecialchars( $result->title );
-			return "Invalid title in result set; {$tsafe}";
+			return wfMsg( 'wantedpages-badtitle', $tsafe );
 		}
 	}
 

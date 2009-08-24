@@ -33,7 +33,8 @@ class ReplaceTextJob extends Job {
 			$new_page_name = str_replace($this->params['target_str'], $this->params['replacement_str'], $cur_page_name);
 			$new_title = Title::newFromText($new_page_name, $this->title->getNamespace());
 			$reason = $this->params['edit_summary'];
-			$this->title->moveTo($new_title, true, $reason);
+			$create_redirect = $this->params['create_redirect'];
+			$this->title->moveTo($new_title, true, $reason, $create_redirect);
 			$wgUser = $actual_user;
 		} else {
 			$article = new Article($this->title);

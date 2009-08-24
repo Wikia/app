@@ -28,11 +28,13 @@ class SMWConceptValue extends SMWDataValue {
 		return true;
 	}
 
-	protected function parseXSDValue($value, $unit) {
-		// normally not used, store should use setValues
-		$this->clear();
-		$this->m_concept = $value;
-		$this->m_caption = $this->m_concept; // this is our output text
+	protected function parseDBkeys($args) {
+		$this->m_concept = $args[0];
+		$this->m_caption = $args[0]; // is this useful?
+		$this->m_docu = $args[1]?smwfXMLContentEncode($args[1]):'';
+		$this->m_queryfeatures = $args[2];
+		$this->m_size = $args[3];
+		$this->m_depth = $args[4];
 	}
 
 	protected function clear() {
@@ -44,6 +46,7 @@ class SMWConceptValue extends SMWDataValue {
 	}
 
 	public function getShortWikiText($linked = NULL) {
+		$this->unstub();
 		return $this->m_caption;
 	}
 
@@ -67,11 +70,13 @@ class SMWConceptValue extends SMWDataValue {
 		}
 	}
 
-	public function getXSDValue() {
-		return $this->getWikiValue(); // no XML encoding in DB for concepts, simplifies direct access in store
+	public function getDBkeys() {
+		$this->unstub();
+		return array($this->m_concept, $this->m_docu, $this->m_queryfeatures, $this->m_size, $this->m_depth);
 	}
 
 	public function getWikiValue(){
+		$this->unstub();
 		return str_replace(array('&lt;','&gt;','&amp;'),array('<','>','&'), $this->m_concept);
 	}
 
@@ -97,7 +102,7 @@ class SMWConceptValue extends SMWDataValue {
 			return NULL;
 		}
 	}
-	
+
 	public function descriptionToExpData($desc, &$exact) {
 		if ( ($desc instanceof SMWConjunction) || ($desc instanceof SMWDisjunction) ) {
 			$result = new SMWExpData(new SMWExpElement(''));
@@ -137,12 +142,12 @@ class SMWConceptValue extends SMWDataValue {
 			$result->addPropertyObjectValue(SMWExporter::getSpecialElement('owl', 'onProperty'),
 			                                new SMWExpData(SMWExporter::getResourceElement($desc->getProperty())));
 			$subdata = $this->descriptionToExpData($desc->getDescription(), $exact);
-			if ( ($desc->getDescription() instanceof SMWValueDescription) && 
+			if ( ($desc->getDescription() instanceof SMWValueDescription) &&
 			     ($desc->getDescription()->getComparator() == SMW_CMP_EQ) ) {
 				$result->addPropertyObjectValue(SMWExporter::getSpecialElement('owl', 'hasValue'), $subdata);
 			} else {
 				if ($subdata === false) {
-					$owltype = SMWExporter::getOWLPropertyType($desc->getProperty()->getTypeID());
+					$owltype = SMWExporter::getOWLPropertyType($desc->getProperty()->getPropertyTypeID());
 					if ($owltype == 'ObjectProperty') {
 						$subdata = new SMWExpData(SMWExporter::getSpecialElement('owl','Thing'));
 					} elseif ($owltype == 'DatatypeProperty') {
@@ -169,39 +174,39 @@ class SMWConceptValue extends SMWDataValue {
 		return $result;
 	}
 
-	/**
-	 * Special features for Type:Code formating.
-	 */
-	protected function getCodeDisplay($value, $scroll = false) {
-		$result = str_replace( array('<', '>', ' ', '://', '=', "'"), array('&lt;', '&gt;', '&nbsp;', '<!-- -->://<!-- -->', '&#x003D;', '&#x0027;'), $value);
-		if ($scroll) {
-			$result = "<div style=\"height:5em; overflow:auto;\">$result</div>";
-		}
-		return "<pre>$result</pre>";
+	/// Return the concept's defining text (in SMW query syntax)
+	public function getConceptText() {
+		$this->unstub();
+		return $this->m_concept;
 	}
 
-	public function setValues($concept, $docu, $queryfeatures, $size, $depth) {
-		$this->setUserValue($concept); // must be called to make object valid (parent implementation)
-		$this->m_docu = $docu?smwfXMLContentEncode($docu):'';
-		$this->m_queryfeatures = $queryfeatures;
-		$this->m_size = $size;
-		$this->m_depth = $depth;
-	}
-
+	/// Return the optional concept documentation.
 	public function getDocu() {
+		$this->unstub();
 		return $this->m_docu;
 	}
 
+	/// Return the concept's size (a metric used to estimate computation complexity).
 	public function getSize() {
+		$this->unstub();
 		return $this->m_size;
 	}
 
+	/// Return the concept's depth (a metric used to estimate computation complexity).
 	public function getDepth() {
+		$this->unstub();
 		return $this->m_depth;
 	}
 
+	/// Return the concept's query feature bit field (a metric used to estimate computation complexity).
 	public function getQueryFeatures() {
+		$this->unstub();
 		return $this->m_queryfeatures;
+	}
+
+	/// @deprecated Use setDBkeys(). This method will vanish before SMW 1.6
+	public function setValues($concept, $docu, $queryfeatures, $size, $depth) {
+		$this->setDBkeys(array($concept, $docu, $queryfeatures, $size, $depth));
 	}
 
 }

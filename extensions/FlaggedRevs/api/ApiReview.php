@@ -161,6 +161,6 @@ class ApiReview extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id$';
+		return __CLASS__ . ': $Id: ApiReview.php 48520 2009-03-18 19:13:35Z ialex $';
 	}
 }
