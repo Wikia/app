@@ -45,6 +45,13 @@ $messages['avk'] = array(
 	'nstab-comments' => 'Sebuks',
 );
 
+/** Bavarian (Boarisch)
+ * @author Man77
+ */
+$messages['bar'] = array(
+	'nstab-comments' => 'Kommentar',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -67,6 +74,14 @@ $messages['bs'] = array(
 $messages['cs'] = array(
 	'commentpages-desc' => 'Diskusní stránky hlavního jmenného prostoru',
 	'nstab-comments' => 'Komentář',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'commentpages-desc' => 'Tudalennau sylwadau ar gyfer y prif barth',
+	'nstab-comments' => 'Sylwadau',
 );
 
 /** German (Deutsch)
@@ -102,6 +117,23 @@ $messages['es'] = array(
 	'nstab-comments' => 'Comentario',
 );
 
+/** Basque (Euskara)
+ * @author Kobazulo
+ * @author Theklan
+ */
+$messages['eu'] = array(
+	'commentpages-desc' => 'Izentarte nagusirako iruzkin orrialdeak',
+	'nstab-comments' => 'Iruzkina',
+);
+
+/** Persian (فارسی)
+ * @author Momeni
+ */
+$messages['fa'] = array(
+	'commentpages-desc' => 'صفحه‌های توضیح برای فضای نام اصلی',
+	'nstab-comments' => 'تفسیر',
+);
+
 /** French (Français)
  * @author Grondin
  */
@@ -124,6 +156,14 @@ $messages['gl'] = array(
 $messages['grc'] = array(
 	'commentpages-desc' => 'Δέλτοι σχολίων διὰ τὸ κύριον ὀνοματεῖον',
 	'nstab-comments' => 'Σχολιασμός',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'commentpages-desc' => 'Syten im Haupt-Namensruum kommentiere',
+	'nstab-comments' => 'Kommentar',
 );
 
 /** Manx (Gaelg)
@@ -174,11 +214,27 @@ $messages['ia'] = array(
 	'nstab-comments' => 'Commentario',
 );
 
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'commentpages-desc' => 'Komentez pagini en chefa nomaro',
+	'nstab-comments' => 'Komento',
+);
+
 /** Icelandic (Íslenska)
  * @author S.Örvarr.S
  */
 $messages['is'] = array(
 	'nstab-comments' => 'Skýring',
+);
+
+/** Italian (Italiano)
+ * @author BrokenArrow
+ */
+$messages['it'] = array(
+	'commentpages-desc' => 'Pagine di commenti per il namespace principale',
+	'nstab-comments' => 'Commenti',
 );
 
 /** Japanese (日本語)
@@ -306,6 +362,14 @@ $messages['pt'] = array(
 	'nstab-comments' => 'Comentário',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'commentpages-desc' => 'Páginas de comentários para o espaço nominal principal',
+	'nstab-comments' => 'Comentário',
+);
+
 /** Quechua (Runa Simi)
  * @author AlimanRuna
  */
@@ -377,12 +441,37 @@ $messages['tg-cyrl'] = array(
 	'nstab-comments' => 'Тафсир',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'commentpages-desc' => 'Pahina ng mga puna para pangunang espasyo ng pangalan',
+	'nstab-comments' => 'Kumentaryo',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'commentpages-desc' => 'Ana ad alanı için yorum sayfaları',
+	'nstab-comments' => 'Yorum',
+);
+
 /** Ukrainian (Українська)
  * @author Ahonc
  */
 $messages['uk'] = array(
 	'commentpages-desc' => 'Сторінки коментарів для основного простору назв',
 	'nstab-comments' => 'Коментар',
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'commentpages-desc' => 'Pàxene de comento par el namespace prinsipale',
+	'nstab-comments' => 'Comento',
 );
 
 /** Vietnamese (Tiếng Việt)

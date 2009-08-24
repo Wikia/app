@@ -35,11 +35,25 @@ $messages['arz'] = array(
 	'pnghandler-desc' => 'يغير حجم PNG باستخدام pngds',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'pnghandler-desc' => 'Зьмена памеру выяваў у фармаце PNG з дапамогай «pngds»',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'pnghandler-desc' => 'Преоразмеряване на PNG с помощта на pngds',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'pnghandler-desc' => 'Mijenja veličinu PNGova koristeći pngds',
 );
 
 /** Czech (Česky)
@@ -78,6 +92,13 @@ $messages['es'] = array(
 	'pnghandler-desc' => 'Escalar PNG usando pngds',
 );
 
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'pnghandler-desc' => 'PNG formatudun irudiei tamaina aldatu pngds erabiliz',
+);
+
 /** Finnish (Suomi)
  * @author Nike
  */
@@ -97,6 +118,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'pnghandler-desc' => 'Dálles outro tamaño aos ficheiros PNG usando pngds',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'pnghandler-desc' => 'Ändere d Greßi vu PNG mit Hilf vu „pngds“',
 );
 
 /** Hebrew (עברית)
@@ -176,6 +204,13 @@ $messages['mr'] = array(
 	'pnghandler-desc' => 'pngds चा वापर करून पीएनजी संचिकांचा आकार बदला',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'pnghandler-desc' => 'Ännert de Grött vun PNGs mit Hülp vun „pngds“',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -218,6 +253,13 @@ $messages['pt'] = array(
 	'pnghandler-desc' => 'Redimensiona PNGs usando pngds',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'pnghandler-desc' => 'Redimensiona PNGs usando pngds',
+);
+
 /** Romanian (Română)
  * @author Firilacroco
  */
@@ -246,11 +288,32 @@ $messages['sr-ec'] = array(
 	'pnghandler-desc' => 'Промени величину ПНГ слика користећи pngds',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'pnghandler-desc' => 'Annerje ju Grööte fon PNGs mäd Hilfe von „pngds“',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
 $messages['sv'] = array(
 	'pnghandler-desc' => 'Ändra storleken på PNG-bilder med pngds',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'pnghandler-desc' => 'pngdsని ఉపయోగించి PNGల పరిమాణాన్ని మార్చండి',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'pnghandler-desc' => "Muling bigyan ng sukat ang mga PNG sa pamamagitan ng paggamit ng ''pngds''",
 );
 
 /** Vèneto (Vèneto)

@@ -11,6 +11,7 @@ Wikipedia rocks!<ref>Proceeds of Rockology, vol. XXI</ref>
 !! result
 <p>Wikipedia rocks!<sup id="cite_ref-0" class="reference"><a href="#cite_note-0" title="">[1]</a></sup>
 </p>
+<br /><strong class="error">Cite error: <code>&lt;ref&gt;</code> tags exist, but no <code>&lt;references/&gt;</code> tag was found</strong>
 !! end
 
 !! test
@@ -129,6 +130,7 @@ Templating<ref>Text<!--comment--></ref>
 !! result
 <p>1337<sup id="cite_ref-0" class="reference"><a href="#cite_note-0" title="">[1]</a></sup>
 </p>
+<br /><strong class="error">Cite error: <code>&lt;ref&gt;</code> tags exist, but no <code>&lt;references/&gt;</code> tag was found</strong>
 !! end
 
 !! test
@@ -236,8 +238,8 @@ refs with no content must have a name</strong>
 </p><p><strong class="error">Cite error: Invalid <code>&lt;references&gt;</code> tag;
 no input is allowed. Use <code>&lt;references /&gt;</code></strong>
 </p><p><strong class="error">Cite error: Invalid <code>&lt;references&gt;</code> tag;
-no parameters are allowed.
-Use <code>&lt;references /&gt;</code></strong>
+parameter "group" is allowed only.
+Use <code>&lt;references /&gt;</code>, or <code>&lt;references group="..." /&gt;</code></strong>
 </p>
 <ol class="references"><li id="cite_note-0"><a href="#cite_ref-0" title="">↑</a> Also zero, but differently! (Normal ref)</li>
 <li id="cite_note-bar"><a href="#cite_ref-bar_0" title="">↑</a> <strong class="error">Cite error: Invalid <code>&lt;ref&gt;</code> tag;

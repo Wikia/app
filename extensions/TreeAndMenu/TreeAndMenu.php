@@ -14,7 +14,7 @@
 
 if (!defined('MEDIAWIKI')) die('Not an entry point.');
 
-define('TREEANDMENU_VERSION','1.0.8, 2008-12-08');
+define('TREEANDMENU_VERSION','1.0.9, 2009-02-15');
 
 # Set any unset images to default titles
 if (!isset($wgTreeViewImages) || !is_array($wgTreeViewImages)) $wgTreeViewImages = array();
@@ -62,15 +62,15 @@ class TreeAndMenu {
 		
 		# Update general tree paths and properties
 		$this->baseDir  = dirname(__FILE__);
-		$this->baseUrl  = preg_replace('|^.+(?=[/\\\\]extensions)|', $wgScriptPath, $this->baseDir);
 		$this->baseUrl  = str_replace('\\', '/', $this->baseDir);
+		$this->baseUrl  = preg_replace('|^.+(?=/ext)|', $wgScriptPath, $this->baseDir);
 		$this->useLines = $wgTreeViewShowLines ? 'true' : 'false';
 		$this->uniq     = uniqid($this->uniqname);
 
 		# Convert image titles to file paths and store as JS to update dTree
 		foreach ($wgTreeViewImages as $k => $v) {
 			$title = Title::newFromText($v,NS_IMAGE);
-			$image = Image::newFromTitle($title);
+			$image = wfFindFile($title);
 			$v = $image && $image->exists() ? $image->getURL() : $wgTreeViewImages[$k];
 			$this->images .= "tree.icon['$k'] = '$v';";
 			}

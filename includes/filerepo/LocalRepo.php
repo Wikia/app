@@ -10,18 +10,6 @@ class LocalRepo extends FSRepo {
 	var $fileFromRowFactory = array( 'LocalFile', 'newFromRow' );
 	var $oldFileFromRowFactory = array( 'OldLocalFile', 'newFromRow' );
 
-	function getSlaveDB() {
-		return wfGetDB( DB_SLAVE );
-	}
-
-	function getMasterDB() {
-		return wfGetDB( DB_MASTER );
-	}
-
-	function getMemcKey( $key ) {
-		return wfWikiID( $this->getSlaveDB() ) . ":{$key}";
-	}
-
 	function newFileFromRow( $row ) {
 		if ( isset( $row->img_name ) ) {
 			return call_user_func( $this->fileFromRowFactory, $row, $this );
@@ -79,28 +67,12 @@ class LocalRepo extends FSRepo {
 		}
 		return $status;
 	}
-
+	
 	/**
-	 * Function link Title::getArticleID().
-	 * We can't say Title object, what database it should use, so we duplicate that function here.
+	 * Checks if there is a redirect named as $title
+	 *
+	 * @param Title $title Title of image
 	 */
-	protected function getArticleID( $title ) {
-		if( !$title instanceof Title ) {
-			return 0;
-		}
-		$dbr = $this->getSlaveDB();
-		$id = $dbr->selectField(
-			'page',	// Table
-			'page_id',	//Field
-			array(	//Conditions
-				'page_namespace' => $title->getNamespace(),
-				'page_title' => $title->getDBKey(),
-			),
-			__METHOD__	//Function name
-		);
-		return $id;
-	}
-
 	function checkRedirect( $title ) {
 		global $wgMemc;
 
@@ -140,11 +112,29 @@ class LocalRepo extends FSRepo {
 		return $targetTitle;
 	}
 
-	function invalidateImageRedirect( $title ) {
-		global $wgMemc;
-		$memcKey = $this->getMemcKey( "image_redirect:" . md5( $title->getPrefixedDBkey() ) );
-		$wgMemc->delete( $memcKey );
+
+	/**
+	 * Function link Title::getArticleID().
+	 * We can't say Title object, what database it should use, so we duplicate that function here.
+	 */
+	protected function getArticleID( $title ) {
+		if( !$title instanceof Title ) {
+			return 0;
+		}
+		$dbr = $this->getSlaveDB();
+		$id = $dbr->selectField(
+			'page',	// Table
+			'page_id',	//Field
+			array(	//Conditions
+				'page_namespace' => $title->getNamespace(),
+				'page_title' => $title->getDBKey(),
+			),
+			__METHOD__	//Function name
+		);
+		return $id;
 	}
+
+
 	
 	function findBySha1( $hash ) {
 		$dbr = $this->getSlaveDB();

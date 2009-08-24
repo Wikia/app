@@ -48,21 +48,21 @@ class StalepagesPage extends QueryPage
 	}
 
 	function getPageHeader() {
-		global $wgOut;
-		return $wgOut->parse( wfMsg( 'stalepages-summary', 270) );
+		global $wgStalePagesDays;
+		return wfMsgExt( 'stalepages-summary', array( 'parse' ), $wgStalePagesDays );
 	}
 
 	function isSyndicated() { return false; }
 
 	function getSQL() {
-		global $wgDBtype;
+		global $wgDBtype, $wgStalePagesDays;
 		$db = wfGetDB( DB_SLAVE );
 		$page = $db->tableName( 'page' );
 		$revision = $db->tableName( 'revision' );
 		$epoch = $wgDBtype == 'mysql' ? 'UNIX_TIMESTAMP(rev_timestamp)' :
 			'EXTRACT(epoch FROM rev_timestamp)';
 
-		$date = mktime() - (60*60*24*270);	//ranomish
+		$date = mktime() - ( 60 * 60 * 24 * $wgStalePagesDays ); //ranomish
 		$dateString = $db->timestamp($date);
 
 		return

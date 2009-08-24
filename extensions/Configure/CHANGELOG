@@ -1,15 +1,115 @@
 This file lists changes on this extension.
 Localisation updates are done on betawiki and aren't listed here.
 
-1.14 branch-3 - 21 January 2009
-  Fixed a bug on Special:Extensions, default settings values are now correctly
-  displayed.
+0.13.7 - 24 March 2009
+  Added $wgExportFromNamespaces.
 
-1.14 branch-2 - 17 January 2009
+0.13.6 - 23 March 2009
+  Updated AbuseFilter and FlaggedRevs extensions.
+
+0.13.5 - 20 March 2009
+  * Updated CodeReview and FlaggedRevs extensions.
+  * Fixed a bug when using PostgresSQL with database handler: old versions
+    were inaccessible
+
+0.13.4 - 19 March 2009
+  Added the possibility to pass some definitions to load_txt_def.
+  Users who compiled an older version of load_txt_def must recompile it.
+
+0.13.3 - 17 March 2009
+  Added $wgTiffThumbnailType.
+
+0.13.2 - 13 March 2009
+  * extensions activation is now correct when previewing
+  * Fixed some PHP errors in Special:Extensions
+
+0.13.1 - 12 March 2009
+  (bug 17112) Added dependencies checking for extensions.
+
+0.13.0 - 11 March 2009
+  Rewrote extension definitions handling, now using text file.
+
+
+0.12.11 - 7 March 2009
+  * Added documentation url for Find Spam
+  * Fixed $wgCentralAuthAutoLoginWikis array type
+  * Marked that CentralNotice requires a schema change
+
+0.12.10 - 6 March 2009
+  Updated ParserFunctions' documentation link.
+
+0.12.9 - 5 March 2009
+  The left column on Special:Extension no longer overlaps the bottom of the
+  page.
+
+0.12.8 - 3 March 2009
+  Updated FlaggedRevs and Cite extensions.
+
+0.12.7 - 2 March 2009
+  Added $wgSummarySpamRegex and $wgAPIMaxUncachedDiffs.
+
+0.12.6 - 25 February 2009
+  Added $wgUseTagFilter.
+
+0.12.5 - 24 February 2009
+  Added foreign key constraint in the PostgreSQL's schema.
+  User who used Configure.pg.sql schema in older versions can use the
+  patch-cs_id_fkey.pg.sql patch.
+
+0.12.4 - 19 February 2009
+  Groups in $wgGroupPermissions are now sorted alphabetically.
+
+0.12.3 - 18 February 2009
+  Added $wgAPIMaxResultSize, $wgShowDebug, $wgPreprocessorCacheThreshold and
+  $wgExportMaxLinkDepth.
+
+0.12.2 - 9 February 2009
+  (bug 17403) Boolean settings set to false when the default value is true are
+  now properly recognised.
+
+0.12.1 - 7 February 2009
+  * Updated AbuseFilter and FlaggedRevs extensions
+  * Removed obsolete extensions DeletedContributions, LinkSearch and Newuserlog
+
+0.12.0 - 6 February 2009
+  Added support for PostgreSQL when using database handler.
+
+
+0.11.16 - 2 February 2009
+  * Added new section "Pages" on Special:Configure
+  * Changed order of some sections
+
+0.11.15 - 29 January 2009
+  New setting $wgConfigureAllowDeferSetup to allow to defer part of
+  efConfigureSetup() when using database handler.
+
+0.11.14 - 26 January 2009
+  Added $wgMaxRedirects, $wgInvalidRedirectTargets, $wgNoFollowDomainExceptions
+  and $wgUseTwoButtonsSearchForm.
+
+0.11.13 - 25 January 2009
+  Added support for ImportUsers extension.
+
+0.11.12 - 21 January 2009
+  * Added support for all Uniwiki extensions
+  * Fixed a bug on Special:Extensions, default settings values are now correctly
+    displayed.
+
+0.11.11 - 19 January 2009
+  Added support for StalePages extension.
+
+0.11.10 - 17 January 2009
   Fixed "You are not allowed to read this setting" error for all settings on
   Special:Extensions when $wgConfigureEditableSettings is an non-empty array.
 
-1.14 branch-1 - 10 January 2009
+0.11.9 - 16 January 2009
+  Added support for $wgNewPasswordExpiry.
+
+0.11.8 - 14 January 2009
+  Added support for APCOND_AGE_FROM_EDIT condition of $wgAutopromote.
+
+0.11.7 - 10 January 2009
+  * Added support for Redirect extension
   * Fixed Special:Extensions: was sometimes throwing an error when saving the
     configuration
   * (bug 16953) Fixed error on Special:Configure and Special:ViewConfig
@@ -17,6 +117,9 @@ Localisation updates are done on betawiki and aren't listed here.
   * Enabled extension are no more resetted when after an edit on
     Special:Configure
 
+0.11.6 - 7 January 2009
+  * Added support for OpenID, NewUserMessage and ReplaceText extensions.
+  * Updated GoogleAdSense extension.
 
 0.11.5 - 31 December 2008
   Fixed Special:Extensions: some settings using radio buttons had no radio
@@ -111,7 +214,7 @@ Localisation updates are done on betawiki and aren't listed here.
     Special:Extensions
   * Added links for the user who made each config change.
   THIS REQUIRES A DATABASE SCHEMA UPDATE FOR PEOPLE USING DATABASE HANDLER.
-  Please apply configure.patch-1.sql if you used the database schema on an
+  Please apply patch-cv_user_reason.sql if you used the database schema on an
   older version than this one.
 
 0.10.6 - 24 November 2008

@@ -138,14 +138,7 @@ var wgOggPlayer = {
 	'debug': function( s ) {
 		//alert(s);
 	},
-	'supportedMimeType': function(mimetype) {
-		for (var i = navigator.plugins.length; i-- > 0; ) {
-		    var plugin = navigator.plugins[i];
-		    if (typeof plugin[mimetype] != "undefined")
-		      return true;
-		}
-		return false;
-	},
+
 	// Detect client capabilities
 	'detect': function() {
 		if (this.detectionDone) {
@@ -200,12 +193,8 @@ var wgOggPlayer = {
 			if( wgOggPlayer.safari ){
 				try{
 					var dummyvid = document.createElement("video");
-					if (dummyvid.canPlayType && dummyvid.canPlayType("video/ogg;codecs=\"theora,vorbis\"") == "probably")
+					if (dummyvid.canPlayType("video/ogg;codecs=\"theora,vorbis\"") == "probably")
 					{
-						this.clientSupports['videoElement'] = true;
-					} else if(this.supportedMimeType('video/ogg')) {
-						/* older versions of safari do not support canPlayType,
-						   but xiph qt registers mimetype via quicktime plugin */
 						this.clientSupports['videoElement'] = true;
 					} else {
 						/* could add some user nagging to install the xiph qt */
@@ -542,17 +531,15 @@ var wgOggPlayer = {
 
 	'embedVideoElement': function ( elt, params ) {
 		var id = elt.id + "_obj";
-		var html =
+		elt.innerHTML =
 			'<div><video' + 
 				' id=' + this.hq( id ) + 
 				' width=' + this.hq( params.width ) + 
 				' height=' + this.hq( params.height ) + 
 				' src=' + this.hq( params.videoUrl ) +
-				' autoplay="true"';
-		if (!this.safari)
-			html += ' controls="true"';
-		html += ' ></video></div>';
-		elt.innerHTML = html;
+				' autoplay="1"' +
+				' controls="1"' +
+				' /></div>';
 	},
 
 	'embedOggPlugin': function ( elt, params, player ) {

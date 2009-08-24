@@ -37,6 +37,16 @@ $aliases['de'] = array(
 	'CloseWiki' => array( 'Wiki schließen' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'CloseWiki' => array( 'Wiki zacyniś' ),
+);
+
+/** Basque (Euskara) */
+$aliases['eu'] = array(
+	'CloseWiki' => array( 'WikiaItxi' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
 	'CloseWiki' => array( 'Pechar o wiki' ),
@@ -52,14 +62,24 @@ $aliases['hr'] = array(
 	'CloseWiki' => array( 'Zatvori_wiki' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'CloseWiki' => array( 'Wiki začinić' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'CloseWiki' => array( 'Wiki bezárása' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'CloseWiki' => array( 'Clauder wiki' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'CloseWiki' => array( '閉鎖ウィキ', '閉鎖されたウィキ' ),
+	'CloseWiki' => array( 'ウィキ閉鎖', 'ウィキを閉鎖する' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -70,6 +90,11 @@ $aliases['km'] = array(
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'CloseWiki' => array( 'Wiki zoumaachen' ),
+);
+
+/** Macedonian (Македонски) */
+$aliases['mk'] = array(
+	'CloseWiki' => array( 'ЗатвореноВики' ),
 );
 
 /** Maltese (Malti) */
@@ -92,8 +117,28 @@ $aliases['no'] = array(
 	'CloseWiki' => array( 'Steng wiki' ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'CloseWiki' => array( 'Zamknij wiki' ),
+);
+
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'CloseWiki' => array( 'ويکي تړل' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'CloseWiki' => array( 'वृविकि' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'CloseWiki' => array( 'FungaWiki' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'CloseWiki' => array( 'Isara ang wiki' ),
 );
 

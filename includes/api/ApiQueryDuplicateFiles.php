@@ -86,9 +86,7 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 		$res = $this->select(__METHOD__);
 		$db = $this->getDB();
 		$count = 0;
-		$data = array();
 		$titles = array();
-		$lastName = '';
 		while($row = $db->fetchObject($res))
 		{
 			if(++$count > $params['limit'])
@@ -104,27 +102,23 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 				$titles[] = Title::makeTitle(NS_FILE, $row->dup_name);
 			else
 			{
-				if($row->orig_name != $lastName)
-				{
-					if($lastName != '')
-					{
-						$this->addPageSubItems($images[$lastName], $data);
-						$data = array();
-					}
-					$lastName = $row->orig_name;
-				}
-						
-				$data[] = array(
+				$r = array(
 					'name' => $row->dup_name,
 					'user' => $row->dup_user_text,
 					'timestamp' => wfTimestamp(TS_ISO_8601, $row->dup_timestamp)
 				);
+				$fit = $this->addPageSubItem($images[$row->orig_name], $r);
+				if(!$fit)
+				{
+					$this->setContinueEnumParameter('continue',
+							$this->keyToTitle($row->orig_name) . '|' .
+							$this->keyToTitle($row->dup_name));
+					break;
+				}
 			}
 		}
 		if(!is_null($resultPageSet))
 			$resultPageSet->populateFromTitles($titles);
-		else if($lastName != '')
-			$this->addPageSubItems($images[$lastName], $data);
 		$db->freeResult($res);
 	}
 
@@ -153,12 +147,12 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 	}
 
 	protected function getExamples() {
-		return array (	'api.php?action=query&titles=Image:Albert_Einstein_Head.jpg&prop=duplicatefiles',
+		return array (	'api.php?action=query&titles=File:Albert_Einstein_Head.jpg&prop=duplicatefiles',
 				'api.php?action=query&generator=allimages&prop=duplicatefiles',
 			);
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryDuplicateFiles.php 44121 2008-12-01 17:14:30Z vyznev $';
+		return __CLASS__ . ': $Id: ApiQueryDuplicateFiles.php 48215 2009-03-09 10:44:34Z catrope $';
 	}
 }

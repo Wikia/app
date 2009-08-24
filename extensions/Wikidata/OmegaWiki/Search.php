@@ -25,7 +25,7 @@ class Search extends DefaultWikidataApplication {
 	
 	function searchText($text) {
 		$dc=wdGetDataSetContext();
-		$dbr = &wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		
 		$sql = "SELECT INSTR(LCASE({$dc}_expression.spelling), LCASE(". $dbr->addQuotes("$text") .")) as position, {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id ".
 				"FROM {$dc}_expression, {$dc}_syntrans ".

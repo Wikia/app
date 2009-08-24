@@ -12,11 +12,10 @@ class CodeAuthorListView extends CodeView {
 		$authors = $this->mRepo->getAuthorList();
 		$name = $this->mRepo->getName();
 		$text = wfMsg( 'code-authors-text' ) . "\n";
-		foreach( $authors as $user ) {
-			if( $user )
+		foreach ( $authors as $user ) {
+			if ( $user )
 				$text .= "* [[Special:Code/$name/author/$user|$user]]\n";
 		}
 		$wgOut->addWikiText( $text );
 	}
 }
-

@@ -370,7 +370,8 @@ function wfReviewExtensionAfterToolbox( &$tpl ) {
 			<form method='post' id="review_sidebar">
 <?php
 	if ( $did_update_review )
-		print wfMsgForContent ( 'review_has_been_stored' ) . "<br />" ;
+		print '<span id="review_has_been_stored">' .
+			wfMsgForContent ( 'review_has_been_stored' ) . '</span><br />' ;
 	print wfMsgForContent ( 'review_your_review' ) . "<br />" ;
 	foreach( $wgReviewExtensionTopics as $topic ) {
 ?>
@@ -580,9 +581,11 @@ function wfReviewExtensionFunction () {
 				}
 				$ret .= $skin->makeLinkObj ( $user->getUserPage() , $user->getName() ) ;
 				$ret .= "<br />" ;
-				$ret .= $skin->makeLinkObj ( $wgTitle ,
-							wfMsgForContent('review_user_reviews') ,
-							"mode=view_user_reviews&{$user_reviews}" ) ;
+				$ret .= $skin->makeLinkObj (
+					$wgTitle ,
+					wfMsgExt( 'review_user_reviews', array( 'content', 'parsemag' ), $user->getName() ),
+					"mode=view_user_reviews&{$user_reviews}"
+				);
 			} else {
 				# Individual revision
 				$page_id = $title->getArticleID() ;
@@ -623,13 +626,14 @@ function wfReviewExtensionFunction () {
 							) ;
 							$ret .= "<br />" . htmlentities ( $data[$type]->comment ) ;
 						} else {
-							$ret .= wfMsgForContent ( 'review_statistic_cell' ,
-											sprintf ( "%1.1f" , $average ) ,
-											$data[$type]->max ,
-											$data[$type]->total_count ,
-											$data[$type]->total_count - $data[$type]->anon_count ,
-											$data[$type]->anon_count
-							) ;
+							$ret .= wfMsgExt( 'review_statistic_cell' ,
+								array( 'content', 'parsemag' ),
+								sprintf ( "%1.1f" , $average ) ,
+								$data[$type]->max ,
+								$data[$type]->total_count ,
+								$data[$type]->total_count - $data[$type]->anon_count ,
+								$data[$type]->anon_count
+							);
 						}
 						$ret .= "</div>" ;
 					} else {
@@ -713,7 +717,8 @@ function wfReviewExtensionFunction () {
 			$out .= "<form method='post' id='review_page_version'>" ;
 			
 			if ( $did_update_review )
-				$out .= wfMsgForContent ( 'review_has_been_stored' ) . "<br />" ;
+				$out .= '<span id="review_has_been_stored">' .
+					wfMsgForContent ( 'review_has_been_stored' ) . '</span><br />' ;
 			
 			$out .= wfMsgForContent ( 'review_your_review' ) . "<br />" ;
 			$out .= "<table border='1' width='100%'>" ;
@@ -860,7 +865,7 @@ function wfReviewExtensionFunction () {
 				} else {
 					# View the pages reviewed by a user
 					$data = $this->get_list_of_pages_reviewed_by_user ( $theuser ) ;
-					$out .= "<h2>" . wfMsgForContent ( 'review_user_page_list' ) . "</h2>\n" ;
+					$out .= "<h2>" . wfMsgExt( 'review_user_page_list', array( 'content', 'parsemag' ), $theuser->getName() ) . "</h2>\n" ;
 					$data2 = array () ;
 					if ( $user_id == 0 )
 						$user_link = "user_ip=".$user_ip ;

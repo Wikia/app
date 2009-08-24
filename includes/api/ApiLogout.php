@@ -50,6 +50,10 @@ class ApiLogout extends ApiBase {
 		wfRunHooks( 'UserLogoutComplete', array(&$wgUser, &$injected_html, $oldName) );
 	}
 
+	public function isReadMode() {
+		return false;
+	}
+
 	public function getAllowedParams() {
 		return array ();
 	}
@@ -71,6 +75,6 @@ class ApiLogout extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiLogout.php 43522 2008-11-15 01:23:39Z brion $';
+		return __CLASS__ . ': $Id: ApiLogout.php 48091 2009-03-06 13:49:44Z catrope $';
 	}
 }

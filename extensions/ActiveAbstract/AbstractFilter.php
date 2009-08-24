@@ -52,7 +52,7 @@ class AbstractFilter {
 	function writeOpenPage( $page, $string ) {
 		global $wgSitename;
 		$this->title = Title::makeTitle( $page->page_namespace, $page->page_title );
-		$title = $wgSitename . ': ' . $this->title->getPrefixedText();
+		$title = $wgSitename . wfMsg( 'colon-separator' ) . $this->title->getPrefixedText();
 		
 		$xml = "<doc>\n";
 		$xml .= Xml::element( 'title', null, $this->_variant( $title ) ) . "\n";

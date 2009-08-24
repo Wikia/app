@@ -144,6 +144,14 @@ class SiteMatrix {
 		return !empty( $this->matrix[$major][$minor] );
 	}
 
+	# FIXME: Function does not work any longer:
+	# 2008-01-09 04:08 Tim: migrated all locked wikis from $wgReadOnly(File) to permissions-based locking,
+	# so that stewards can edit the alternate project links, and so that various MediaWiki components don't break on page view
+
+	# From http://noc.wikimedia.org/conf/highlight.php?file=InitialiseSettings.php: 
+	# 'wgReadOnlyFile' => array(
+	# 	# Now soft-locked via closed.dblist:
+
 	public function isClosed( $minor, $major ) {
 		global $wgConf;
 
@@ -363,6 +371,6 @@ class ApiQuerySiteMatrix extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: SiteMatrix_body.php 37923 2008-07-22 20:53:43Z ialex $';
+		return __CLASS__ . ': $Id: SiteMatrix_body.php 45542 2009-01-08 04:46:58Z raymond $';
 	}
 }

@@ -5,17 +5,25 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-wfLoadExtensionMessages( 'FindSpam' );
-
 class FindSpamPage extends SpecialPage {
 
-	function FindSpamPage() {
-		SpecialPage::SpecialPage( 'FindSpam', 'findspam' );
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		parent::__construct( 'FindSpam'/*class*/, 'findspam'/*restriction*/ );
 	}
 
-	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgTitle, $wgLocalDatabases, $wgUser;
+	/**
+	 * Show the special page
+	 *
+	 * @param $par Mixed: parameter passed to the page
+	 */
+	public function execute( $par ) {
+		global $wgRequest, $wgOut, $wgLocalDatabases, $wgUser;
 		global $wgConf, $wgCanonicalNamespaceNames, $wgLang;
+
+		wfLoadExtensionMessages( 'FindSpam' );
 		$this->setHeaders();
 
 		# Check permissions
@@ -35,13 +43,13 @@ class FindSpamPage extends SpecialPage {
 		$wgOut->addHTML( $form );
 
 		if ( $ip ) {
-			$dbr =& wfGetDB( DB_READ );
-			$s  = '';
+			$dbr = wfGetDB( DB_SLAVE );
+			$s = '';
 
 			foreach ( $wgLocalDatabases as $db ) {
 				$sql = "SELECT rc_namespace,rc_title,rc_timestamp,rc_user_text,rc_last_oldid FROM $db.recentchanges WHERE rc_ip='" . $dbr->strencode( $ip ) .
 				  "' AND rc_this_oldid=0";
-				$res = $dbr->query( $sql, "findspam.php" );
+				$res = $dbr->query( $sql, __METHOD__ );
 				list( $site, $lang ) = $wgConf->siteFromDB( $db );
 				if ( $lang == 'meta' ) {
 					$baseUrl = "http://meta.wikimedia.org";
@@ -63,10 +71,10 @@ class FindSpamPage extends SpecialPage {
 						$user = urlencode( $row->rc_user_text );
 						#$rollbackText = wfMsg( 'rollback' );
 						$diffText = wfMsg( 'diff' );
-						#$rollbackUrl = "$baseUrl/w/wiki.phtml?title=$encTitle&action=rollback&from=$user";
-						$diffUrl = "$baseUrl/w/wiki.phtml?title=$encTitle&diff=0&oldid=0";
+						#$rollbackUrl = "$baseUrl/w/index.php?title=$encTitle&action=rollback&from=$user";
+						$diffUrl = "$baseUrl/w/index.php?title=$encTitle&diff=0&oldid=0";
 						if ( $row->rc_last_oldid ) {
-							$lastLink = "[$baseUrl/w/wiki.phtml?title=$encTitle&oldid={$row->rc_last_oldid}&action=edit last]";
+							$lastLink = "[$baseUrl/w/index.php?title=$encTitle&oldid={$row->rc_last_oldid}&action=edit last]";
 						}
 
 						$date = $wgLang->timeanddate( $row->rc_timestamp );
@@ -76,9 +84,9 @@ class FindSpamPage extends SpecialPage {
 				}
 			}
 			if ( $s == '' ) {
-				$s = wfMsg('findspam-notextfound');
+				$s = wfMsg( 'findspam-notextfound' );
 			}
-			$wgOut->addWikiText( $s."<br />" );
+			$wgOut->addWikiText( $s.'<br />' );
 		}
 	}
 }

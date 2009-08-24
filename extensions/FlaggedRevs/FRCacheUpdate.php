@@ -1,72 +1,132 @@
 <?php
 
-class FRCacheUpdate extends HTMLCacheUpdate
-{
+class FRCacheUpdate {
+	public $mTitle, $mTable;
+    public $mRowsPerJob, $mRowsPerQuery;
+
+    public function __construct( $titleTo ) {
+        global $wgUpdateRowsPerJob, $wgUpdateRowsPerQuery;
+        $this->mTitle = $titleTo;
+        $this->mTable = 'flaggedrevs_tracking';
+        $this->mRowsPerJob = $wgUpdateRowsPerJob;
+        $this->mRowsPerQuery = $wgUpdateRowsPerQuery;
+    }
+
 	public function doUpdate() {
 		global $wgFlaggedRevsCacheUpdates;
 		if( !isset($wgFlaggedRevsCacheUpdates) ) {
-			$wgFlaggedRevsCacheUpdates = array();
+			$wgFlaggedRevsCacheUpdates = array(); // temp var
 		}
-		# No duplicates...
 		$key = $this->mTitle->getPrefixedDBKey();
-		if( isset($wgFlaggedRevsCacheUpdates[$key]) ) {
-			return;
-		}
+		if( isset($wgFlaggedRevsCacheUpdates[$key]) )
+			return; // No duplicates...
 		# Fetch the IDs
-		$cond = $this->getToCondition();
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( $this->mTable, $this->getFromField(), $cond, __METHOD__ );
-		if( $dbr->numRows( $res ) != 0 ) {
-			$this->insertJobs( $res );
+		$res = $dbr->select( $this->mTable, $this->getFromField(),
+			$this->getToCondition(), __METHOD__ );
+		if( $dbr->numRows($res) > 0 ) {
+			# Do it right now?
+			if( $dbr->numRows($res) <= $this->mRowsPerJob ) {
+				$this->invalidateIDs( $res );
+			# Defer to job queue...
+			} else {
+				$this->insertJobs( $res );
+			}
 		}
-		$wgFlaggedRevsCacheUpdates[$key] = 1;
+		$wgFlaggedRevsCacheUpdates[$key] = 1; // No duplicates...
 	}
 
-	function insertJobs( ResultWrapper $res ) {
+	protected function insertJobs( ResultWrapper $res ) {
 		$numRows = $res->numRows();
+		if( !$numRows ) return; // sanity check
 		$numBatches = ceil( $numRows / $this->mRowsPerJob );
-		$realBatchSize = $numRows / $numBatches;
+		$realBatchSize = ceil( $numRows / $numBatches );
 		$start = false;
 		$jobs = array();
 		do {
-			for ( $i = 0; $i <= $realBatchSize - 1; $i++ ) {
+			$first = $last = false; // first/last page_id of this batch
+			# Get $realBatchSize items (or less if not enough)...
+			for( $i = 0; $i < $realBatchSize; $i++ ) {
 				$row = $res->fetchRow();
+				# Is there another row?
 				if( $row ) {
 					$id = $row[0];
+					$last = $id; // $id is the last page_id of this batch
+					if( $first === false )
+						$first = $id; // set first page_id of this batch
+				# Out of rows?
 				} else {
 					$id = false;
 					break;
 				}
+            }
+			# Insert batch into the queue if there is anything there
+			if( $first ) {
+				$params = array(
+					'table' => $this->mTable,
+					'start' => $first,
+					'end'   => $last,
+				);
+				$jobs[] = new FRCacheUpdateJob( $this->mTitle, $params );
 			}
-			$params = array(
-				'table' => $this->mTable,
-				'start' => $start,
-				'end' => ( $id !== false ? $id - 1 : false ),
-			);
-			$jobs[] = new FRCacheUpdateJob( $this->mTitle, $params );
-			$start = $id;
-		} while ( $start );
+            $start = $id; // Where the last ID left off
+		} while( $start );
 		Job::batchInsert( $jobs );
+    }
+
+	public function getFromField() {
+		return 'ftr_from';
 	}
 
-	function getPrefix() {
-		return 'ftr';
+	public function getToCondition() {
+		return array( 'ftr_namespace' => $this->mTitle->getNamespace(),
+			'ftr_title' => $this->mTitle->getDBkey() );
 	}
+	
+	/**
+     * Invalidate a set of IDs, right now
+     */
+    public function invalidateIDs( ResultWrapper $res ) {
+        global $wgUseFileCache, $wgUseSquid;
+        if( $res->numRows() == 0 ) return; // sanity check
 
-	function getFromField() {
-		return $this->getPrefix() . '_from';
-	}
+        $dbw = wfGetDB( DB_MASTER );
+        $timestamp = $dbw->timestamp();
+        $done = false;
 
-	function getToCondition() {
-		if( $this->mTable !== 'flaggedrevs_tracking' ) {
-			throw new MWException( 'Invalid table type in ' . __CLASS__ );
-		}
-		$prefix = $this->getPrefix();
-		return array(
-			"{$prefix}_namespace" => $this->mTitle->getNamespace(),
-			"{$prefix}_title"     => $this->mTitle->getDBkey()
-		);
-	}
+        while( !$done ) {
+            # Get all IDs in this query into an array
+            $ids = array();
+            for( $i = 0; $i < $this->mRowsPerQuery; $i++ ) {
+                $row = $res->fetchRow();
+                if( $row ) {
+                    $ids[] = $row[0];
+                } else {
+                    $done = true;
+                    break;
+                }
+            }
+            if( count($ids) == 0 ) break;
+            # Update page_touched
+            $dbw->update( 'page', array( 'page_touched' => $timestamp ),
+				array( 'page_id' => $ids ), __METHOD__ );
+            # Update static caches
+            if( $wgUseSquid || $wgUseFileCache ) {
+                $titles = Title::newFromIDs( $ids );
+				# Update squid cache
+                if( $wgUseSquid ) {
+                    $u = SquidUpdate::newFromTitles( $titles );
+                    $u->doUpdate();
+                }
+                # Update file cache
+                if( $wgUseFileCache ) {
+                    foreach( $titles as $title ) {
+                        HTMLFileCache::clearFileCache( $title );
+                    }
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -90,8 +150,8 @@ class FRCacheUpdateJob extends Job {
 	}
 
 	function run() {
-		$update = new FRCacheUpdate( $this->title, $this->table );
-
+		$update = new FRCacheUpdate( $this->title );
+		# Get query conditions
 		$fromField = $update->getFromField();
 		$conds = $update->getToCondition();
 		if( $this->start ) {
@@ -101,10 +161,11 @@ class FRCacheUpdateJob extends Job {
 			$conds[] = "$fromField <= {$this->end}";
 		}
 
+		# Run query to get page Ids
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( $this->table, $fromField, $conds, __METHOD__ );
+		# Invalidate the pages
 		$update->invalidateIDs( $res );
-
 		return true;
 	}
 }

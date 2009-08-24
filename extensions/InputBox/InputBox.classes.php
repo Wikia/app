@@ -16,6 +16,8 @@ class InputBox {
 	private $mWidth = 50;
 	private $mPreload = '';
 	private $mEditIntro = '';
+	private $mSummary = '';
+	private $mMinor = '';
 	private $mPage = '';
 	private $mBR = 'yes';
 	private $mDefaultText = '';
@@ -156,7 +158,7 @@ class InputBox {
 
 			// Line break
 			$htmlOut .= $this->mBR;
-		} else if( $type == 'search') {
+		} else if( $type == 'search' ) {
 			// Go button
 			$htmlOut .= Xml::element( 'input',
 				array(
@@ -178,6 +180,12 @@ class InputBox {
 				'value' => $this->mSearchButtonLabel
 			)
 		);
+		
+		// Hidden fulltext param for IE (bug 17161)
+		if( $type == 'fulltext' ) {
+			$htmlOut .= Xml::hidden( 'fulltext', 'Search' );
+		}
+		
 		$htmlOut .= Xml::closeElement( 'form' );
 		$htmlOut .= Xml::closeElement( 'div' );
 
@@ -307,6 +315,20 @@ class InputBox {
 				'type' => 'hidden',
 				'name' => 'editintro',
 				'value' => $this->mEditIntro,
+			)
+		);
+		$htmlOut .= Xml::openElement( 'input',
+			array(
+				'type' => 'hidden',
+				'name' => 'summary',
+				'value' => $this->mSummary,
+			)
+		);
+		$htmlOut .= Xml::openElement( 'input',
+			array(
+				'type' => 'hidden',
+				'name' => 'minor',
+				'value' => $this->mMinor,
 			)
 		);
 		if ( $this->mType == 'comment' ) {
@@ -452,6 +474,8 @@ class InputBox {
 			'preload' => 'mPreload',
 			'page' => 'mPage',
 			'editintro' => 'mEditIntro',
+			'summary' => 'mSummary',
+			'minor' => 'mMinor',
 			'break' => 'mBR',
 			'default' => 'mDefaultText',
 			'bgcolor' => 'mBGColor',

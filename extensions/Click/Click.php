@@ -101,7 +101,7 @@ function efClickParserFunction_Render( &$parser, $target = '', $image = '', $wid
 
 	// Add image element, or use alt text on it's own if image doesn't exist.
 	$imagetitle = Title::newFromText( $image );
-	if( is_object( $imagetitle ) ) $imageimage = Image::newFromTitle( $imagetitle );
+	if( is_object( $imagetitle ) ) $imageimage = wfFindFile( $imagetitle );
 	if( isset( $imageimage ) && is_object( $imagetitle ) && is_object( $imageimage ) && $imageimage->exists() ) {
 		// Display image.
 		if( !$width ) $width = $imageimage->getWidth();

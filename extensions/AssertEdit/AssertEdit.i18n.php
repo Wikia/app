@@ -204,11 +204,12 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'assert_edit_title' => "Échec de l'insertion",
-	'assert_edit_desc' => 'Ajoute des éditions d’insertion pour l’utilisation par des bots',
-	'assert_edit_message' => "L'insertion indiquée ($1) a échoué.",
+	'assert_edit_title' => 'Échec de l’assertion',
+	'assert_edit_desc' => 'Ajoute des assertions de modification pour l’utilisation par des bots',
+	'assert_edit_message' => 'L’assertion indiquée ($1) a échoué.',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -395,11 +396,12 @@ $messages['lb'] = array(
 
 /** Limburgish (Limburgs)
  * @author Ooswesthoesbes
+ * @author Pahles
  */
 $messages['li'] = array(
-	'assert_edit_title' => 'Bevestiging mislukdj.',
+	'assert_edit_title' => 'Bevestiging mislök.',
 	'assert_edit_desc' => 'Maak rolbevestiginge meugelik veur gebroek door bots',
-	'assert_edit_message' => 'De gevraogdje bevestiging ($1) mislukdje.',
+	'assert_edit_message' => 'De gevraogde bevestiging ($1) mislökde.',
 );
 
 /** Malayalam (മലയാളം)
@@ -427,6 +429,24 @@ $messages['ms'] = array(
 	'assert_edit_title' => 'Penegasan gagal',
 	'assert_edit_desc' => 'Menambahkan penegasan suntingan untuk digunakan oleh bot',
 	'assert_edit_message' => 'Penegasan yang dinyatakan ($1) gagal.',
+);
+
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'assert_edit_title' => 'Oplagen för dat Ännern kunnen nich sekerstellt warrn',
+	'assert_edit_desc' => 'Maakt dat Tofögen vun Oplagen för dat Ännern mööglich',
+	'assert_edit_message' => 'De angeven Oplaag ($1) för dat Ännern kunn nich sekerstellt warrn.',
+);
+
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'assert_edit_title' => 'Bevestiging mislok',
+	'assert_edit_desc' => 'Maak rolbevestigingen meugelijk veur gebruuk deur bots.',
+	'assert_edit_message' => 'De evreugen bevestiging ($1) is mislok.',
 );
 
 /** Dutch (Nederlands)
@@ -478,6 +498,15 @@ $messages['pl'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'assert_edit_title' => 'A asserção falhou',
+	'assert_edit_desc' => 'Adiciona asserções de edição para o uso por bots',
+	'assert_edit_message' => 'A asserção especificada ($1) falhou.',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'assert_edit_title' => 'A asserção falhou',
 	'assert_edit_desc' => 'Adiciona asserções de edição para o uso por bots',
 	'assert_edit_message' => 'A asserção especificada ($1) falhou.',
@@ -597,6 +626,15 @@ $messages['tl'] = array(
 	'assert_edit_title' => 'Nabigo ang paggigiit (pagtatanggol)',
 	'assert_edit_desc' => "Nagdaragdag ng mga panggigiit (pagtatanggol) na pampagbabago na magagamit ng mga ''bot''",
 	'assert_edit_message' => 'Nabigo ang tinukoy na panggigiit/pagtatanggol ($1).',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'assert_edit_title' => 'Açıklama başarısız oldu',
+	'assert_edit_desc' => 'Botlar tarafından kullanılmak için değişiklik açıklamaları ekler',
+	'assert_edit_message' => 'Belirtilen açıklama ($1) başarısız oldu.',
 );
 
 /** Ukrainian (Українська)

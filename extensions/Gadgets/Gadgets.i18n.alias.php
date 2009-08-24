@@ -45,6 +45,11 @@ $aliases['de'] = array(
 	'Gadgets' => array( 'Helferlein' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Gadgets' => array( 'Gadgety' ),
+);
+
 /** Greek (Ελληνικά) */
 $aliases['el'] = array(
 	'Gadgets' => array( 'Εργαλεία', 'Προσαρτήματα' ),
@@ -52,7 +57,7 @@ $aliases['el'] = array(
 
 /** Spanish (Español) */
 $aliases['es'] = array(
-	'Gadgets' => array( 'Artilugios' ),
+	'Gadgets' => array( 'Artilugios', 'Accesorios' ),
 );
 
 /** Basque (Euskara) */
@@ -75,6 +80,11 @@ $aliases['gsw'] = array(
 	'Gadgets' => array( 'Hälferli' ),
 );
 
+/** Hawaiian (Hawai`i) */
+$aliases['haw'] = array(
+	'Gadgets' => array( 'Hāmeʻa' ),
+);
+
 /** Hebrew (עברית)
  * @author Rotem Liss
  */
@@ -87,6 +97,11 @@ $aliases['hr'] = array(
 	'Gadgets' => array( 'Dodaci' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Gadgets' => array( 'Gadgety' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'Gadgets' => array( 'Gajèt' ),
@@ -95,6 +110,11 @@ $aliases['ht'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'Gadgets' => array( 'Segédeszközök' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Gadgets' => array( 'Gadgetes' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -144,7 +164,12 @@ $aliases['nds-nl'] = array(
 
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
-	'Gadgets' => array( 'Extensies' ),
+	'Gadgets' => array( 'Uitbreidingen', 'Extensies' ),
+);
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Gadgets' => array( 'Tilleggsfunksjonar' ),
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
@@ -177,6 +202,16 @@ $aliases['ro'] = array(
 	'Gadgets' => array( 'Gadgeturi' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Gadgets' => array( 'सुविधा (गॅजेट)' ),
+);
+
+/** Slovenian (Slovenščina) */
+$aliases['sl'] = array(
+	'Gadgets' => array( 'Vticniki' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Gadgets' => array( 'Finesser' ),
@@ -185,5 +220,15 @@ $aliases['sv'] = array(
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'Gadgets' => array( 'อุปกรณ์เสริม', 'แกเจต' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Gadgets' => array( 'Mga gadyet' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'Gadgets' => array( 'Strumenti' ),
 );
 

@@ -61,11 +61,11 @@ var quicktimeEmbed = {
 				if ( done ) {
 					window.clearInterval( this_.qtTimers[this_.pid] );
 					if ( !xiphQtVersion || xiphQtVersion == '0.0' ) {
-						$j(this_).html(getMsg('ogg-no-xiphqt'));						
+						$j(this_).html(gM('ogg-no-xiphqt'));						
 						/*var div = document.createElement( 'div' );
 						div.className = 'ogg-player-options';
 						div.style.cssText = 'width:' + ( params.width - 10 ) + 'px;'
-						div.innerHTML = this_.getMsg( 'ogg-no-xiphqt' );
+						div.innerHTML = this_.gM( 'ogg-no-xiphqt' );
 						var optionsDiv = document.getElementById( params.id + '_options_box' );
 						if ( optionsDiv ) {
 							elt.insertBefore( div, optionsDiv.parentNode );

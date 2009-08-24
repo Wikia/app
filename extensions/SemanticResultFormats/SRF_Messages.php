@@ -8,14 +8,29 @@
 $messages = array();
 
 /** English
- * @author Yaron Koren
  */
 $messages['en'] = array(
 	// user messages
+	// format "calendar"
 	'srfc_previousmonth' => 'Previous month',
 	'srfc_nextmonth'     => 'Next month',
 	'srfc_today'         => 'Today',
 	'srfc_gotomonth'     => 'Go to month',
+	// format "vCard"
+	'srf_vcard_link'     => 'vCard',
+	// format "iCalendar"
+	'srf_icalendar_link' => 'iCalendar',
+	// format "BibTeX"
+	'srf_bibtex_link'    => 'BibTeX',
+);
+
+/** Message documentation (Message documentation)
+ * @author Raymond
+ */
+$messages['qqq'] = array(
+	'srf_vcard_link' => '{{optional}}',
+	'srf_icalendar_link' => '{{optional}}',
+	'srf_bibtex_link' => '{{optional}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -23,6 +38,7 @@ $messages['en'] = array(
  */
 $messages['af'] = array(
 	'srfc_gotomonth' => 'Gaan na maand',
+	'srf_icalendar_link' => 'iKalender',
 );
 
 /** Amharic (አማርኛ)
@@ -40,6 +56,9 @@ $messages['ar'] = array(
 	'srfc_nextmonth' => 'الشهر التالي',
 	'srfc_today' => 'اليوم',
 	'srfc_gotomonth' => 'اذهب إلى شهر',
+	'srf_vcard_link' => 'في كارد',
+	'srf_icalendar_link' => 'آي كالندر',
+	'srf_bibtex_link' => 'بب تكس',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -50,6 +69,18 @@ $messages['arz'] = array(
 	'srfc_nextmonth' => 'الشهر التالي',
 	'srfc_today' => 'اليوم',
 	'srfc_gotomonth' => 'اذهب إلى شهر',
+	'srf_vcard_link' => 'فى كارد',
+	'srf_icalendar_link' => 'آى كالندر',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'srfc_previousmonth' => 'Папярэдні месяц',
+	'srfc_nextmonth' => 'Наступны месяц',
+	'srfc_today' => 'Сёньня',
+	'srfc_gotomonth' => 'Перайсьці да месяца',
 );
 
 /** Bulgarian (Български)
@@ -69,6 +100,16 @@ $messages['br'] = array(
 	'srfc_nextmonth' => 'Miz a zeu',
 	'srfc_today' => 'Hiziv',
 	'srfc_gotomonth' => "Mont d'ar miz",
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'srfc_previousmonth' => 'Prethodni mjesec',
+	'srfc_nextmonth' => 'Slijedeći mjesec',
+	'srfc_today' => 'Danas',
+	'srfc_gotomonth' => 'Idi na mjesec',
 );
 
 /** German (Deutsch)
@@ -93,11 +134,13 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Omnipaedista
  */
 $messages['el'] = array(
 	'srfc_previousmonth' => 'Προηγούμενος μήνας',
 	'srfc_nextmonth' => 'Επόμενος μήνας',
 	'srfc_today' => 'Σήμερα',
+	'srfc_gotomonth' => 'Μετάβαση στον μήνα',
 );
 
 /** Esperanto (Esperanto)
@@ -108,14 +151,19 @@ $messages['eo'] = array(
 	'srfc_nextmonth' => 'Posta monato',
 	'srfc_today' => 'Hodiaŭ',
 	'srfc_gotomonth' => 'Iru al monato',
+	'srf_icalendar_link' => 'iKalendaro',
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'srfc_previousmonth' => 'Mes anterior',
+	'srfc_nextmonth' => 'Próximo mes',
 	'srfc_today' => 'Hoy',
+	'srfc_gotomonth' => 'Ir al mes',
 );
 
 /** Basque (Euskara)
@@ -155,6 +203,8 @@ $messages['fr'] = array(
 	'srfc_nextmonth' => 'Mois suivant',
 	'srfc_today' => "Aujourd'hui",
 	'srfc_gotomonth' => 'Aller vers le mois',
+	'srf_vcard_link' => 'vCarte',
+	'srf_icalendar_link' => 'iCalendrier',
 );
 
 /** Galician (Galego)
@@ -166,6 +216,8 @@ $messages['gl'] = array(
 	'srfc_nextmonth' => 'Mes seguinte',
 	'srfc_today' => 'Hoxe',
 	'srfc_gotomonth' => 'Ir ao mes',
+	'srf_vcard_link' => 'vTarxeta',
+	'srf_icalendar_link' => 'iCalendario',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -173,6 +225,16 @@ $messages['gl'] = array(
  */
 $messages['grc'] = array(
 	'srfc_today' => 'Σήμερον',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'srfc_previousmonth' => 'Vorige Monet',
+	'srfc_nextmonth' => 'Negschte Monet',
+	'srfc_today' => 'Hit',
+	'srfc_gotomonth' => 'Gang zum Monet',
 );
 
 /** Manx (Gaelg)
@@ -202,6 +264,7 @@ $messages['hi'] = array(
 	'srfc_nextmonth' => 'अगला महिना',
 	'srfc_today' => 'आज़',
 	'srfc_gotomonth' => 'महिनेपर चलें',
+	'srf_icalendar_link' => 'आइकैलेंडर',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -212,6 +275,14 @@ $messages['hsb'] = array(
 	'srfc_nextmonth' => 'Přichodny měsac',
 	'srfc_today' => 'Dźensa',
 	'srfc_gotomonth' => 'Dźi k měsacej',
+);
+
+/** Haitian (Kreyòl ayisyen)
+ * @author Jvm
+ * @author Masterches
+ */
+$messages['ht'] = array(
+	'srf_icalendar_link' => 'iKalandrye',
 );
 
 /** Hungarian (Magyar)
@@ -260,6 +331,7 @@ $messages['jv'] = array(
 	'srfc_nextmonth' => 'Sasi sabanjuré',
 	'srfc_today' => 'Dina iki',
 	'srfc_gotomonth' => 'Tumuju menyang sasi',
+	'srf_icalendar_link' => 'iKalèndher',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -281,6 +353,8 @@ $messages['ksh'] = array(
 	'srfc_nextmonth' => 'Jangk nohm näkßte Moohnd',
 	'srfc_today' => 'Hück',
 	'srfc_gotomonth' => 'Jangk noh däm Moohnd',
+	'srf_vcard_link' => '<i lang="en">vCard</i>',
+	'srf_icalendar_link' => '<i lang="en">iCalendar</i>',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -291,6 +365,7 @@ $messages['lb'] = array(
 	'srfc_nextmonth' => 'Nächste Mount',
 	'srfc_today' => 'Haut',
 	'srfc_gotomonth' => 'Géi op de Mount',
+	'srf_icalendar_link' => 'iKalenner',
 );
 
 /** Lithuanian (Lietuvių)
@@ -311,6 +386,7 @@ $messages['ml'] = array(
 	'srfc_nextmonth' => 'അടുത്ത മാസം',
 	'srfc_today' => 'ഇന്ന്',
 	'srfc_gotomonth' => 'മാസത്തിലേക്ക് പോവുക',
+	'srf_icalendar_link' => 'iകലണ്ടര്‍',
 );
 
 /** Marathi (मराठी)
@@ -321,6 +397,7 @@ $messages['mr'] = array(
 	'srfc_nextmonth' => 'पुढचा महीना',
 	'srfc_today' => 'आज',
 	'srfc_gotomonth' => 'महीन्याकडे चला',
+	'srf_icalendar_link' => 'इ-कैलेंडर',
 );
 
 /** Erzya (Эрзянь)
@@ -371,6 +448,7 @@ $messages['no'] = array(
 	'srfc_nextmonth' => 'Neste måned',
 	'srfc_today' => 'I dag',
 	'srfc_gotomonth' => 'Gå til måned',
+	'srf_icalendar_link' => 'iKalender',
 );
 
 /** Occitan (Occitan)
@@ -381,6 +459,8 @@ $messages['oc'] = array(
 	'srfc_nextmonth' => 'Mes seguent',
 	'srfc_today' => 'Uèi',
 	'srfc_gotomonth' => 'Anar cap al mes',
+	'srf_vcard_link' => 'vCarta',
+	'srf_icalendar_link' => 'iCalendièr',
 );
 
 /** Polish (Polski)
@@ -407,6 +487,17 @@ $messages['ps'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'srfc_previousmonth' => 'Mês anterior',
+	'srfc_nextmonth' => 'Mês seguinte',
+	'srfc_today' => 'Hoje',
+	'srfc_gotomonth' => 'Ir para mês',
+	'srf_icalendar_link' => 'iCalendário',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'srfc_previousmonth' => 'Mês anterior',
 	'srfc_nextmonth' => 'Mês seguinte',
 	'srfc_today' => 'Hoje',
@@ -440,6 +531,7 @@ $messages['ru'] = array(
 	'srfc_nextmonth' => 'Следующий месяц',
 	'srfc_today' => 'Сегодня',
 	'srfc_gotomonth' => 'Перейти к месяцу',
+	'srf_icalendar_link' => 'iКалендарь',
 );
 
 /** Slovak (Slovenčina)
@@ -460,6 +552,7 @@ $messages['sv'] = array(
 	'srfc_nextmonth' => 'Nästa månad',
 	'srfc_today' => 'Idag',
 	'srfc_gotomonth' => 'Gå till månad',
+	'srf_icalendar_link' => 'iKalender',
 );
 
 /** Telugu (తెలుగు)
@@ -490,6 +583,17 @@ $messages['tl'] = array(
 	'srfc_nextmonth' => 'Susunod na buwan',
 	'srfc_today' => 'Ngayong araw na ito',
 	'srfc_gotomonth' => 'Pumunta sa buwan',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'srfc_previousmonth' => 'Önceki ay',
+	'srfc_nextmonth' => 'Sonraki ay',
+	'srfc_today' => 'Bugün',
+	'srfc_gotomonth' => 'Aya git',
 );
 
 /** Vèneto (Vèneto)

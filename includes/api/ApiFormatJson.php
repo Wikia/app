@@ -61,7 +61,7 @@ class ApiFormatJson extends ApiFormatBase {
 		// Some versions of PHP have a broken json_encode, see PHP bug 
 		// 46944. Test encoding an affected character (U+20000) to 
 		// avoid this.
-		if (!function_exists('json_encode') || $this->getIsHtml() || strtolower(json_encode("\xf0\xa0\x80\x80")) != '\ud840\udc00') {
+		if (!function_exists('json_encode') || $this->getIsHtml() || strtolower(json_encode("\xf0\xa0\x80\x80")) != '"\ud840\udc00"') {
 			$json = new Services_JSON();
 			$this->printText($prefix . $json->encode($this->getResultData(), $this->getIsHtml()) . $suffix);
 		} else {
@@ -89,6 +89,6 @@ class ApiFormatJson extends ApiFormatBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFormatJson.php 45682 2009-01-12 19:06:33Z raymond $';
+		return __CLASS__ . ': $Id: ApiFormatJson.php 48713 2009-03-23 19:58:07Z catrope $';
 	}
 }

@@ -15,7 +15,7 @@ if (!defined('MEDIAWIKI')) die();
 // credits
 $wgExtensionCredits['parserhook'][] = array(
 	'name'            => 'Semantic Google Maps',
-	'version'         => '0.5',
+	'version'         => '0.6.1',
 	'author'          => array( 'Robert Buzink', 'Yaron Koren' ),
 	'url'             => 'http://www.mediawiki.org/wiki/Extension:Semantic_Google_Maps',
 	'description'     => 'Allows users to edit and display semantic coordinate data using Google Maps',

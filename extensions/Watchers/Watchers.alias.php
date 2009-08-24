@@ -38,9 +38,24 @@ $aliases['de'] = array(
 	'Watchers' => array( 'Beobachter' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Watchers' => array( 'Wobglědowarje' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'Watchers' => array( 'پی‌گیری‌کنندگان' ),
+);
+
+/** French (Français) */
+$aliases['fr'] = array(
+	'Watchers' => array( 'Suiveurs', 'Suiveur' ),
+);
+
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'Watchers' => array( 'Vixilantes' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -63,6 +78,16 @@ $aliases['hu'] = array(
 	'Watchers' => array( 'Figyelők' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Watchers' => array( 'Observatores' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'Watchers' => array( 'ウォッチしている利用者' ),
+);
+
 /** Khmer (ភាសាខ្មែរ) */
 $aliases['km'] = array(
 	'Watchers' => array( 'អ្នកតាមដាន' ),
@@ -75,7 +100,7 @@ $aliases['ksh'] = array(
 
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
-	'Watchers' => array( 'Iwwerwacher' ),
+	'Watchers' => array( 'Iwwerwaacher' ),
 );
 
 /** Macedonian (Македонски) */
@@ -95,8 +120,33 @@ $aliases['no'] = array(
 	'Watchers' => array( 'Overvåkere' ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'Watchers' => array( 'Obserwujący' ),
+);
+
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'Watchers' => array( 'کتونکي' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Watchers' => array( 'पश्यक्‌' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'Watchers' => array( 'Waangalizi' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Watchers' => array( 'Mga tagapagbantay' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'Watchers' => array( 'Osservadori' ),
 );
 

@@ -105,7 +105,6 @@ class ImagePage extends Article {
 		} else {
 			# Just need to set the right headers
 			$wgOut->setArticleFlag( true );
-			$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			$wgOut->setPageTitle( $this->mTitle->getPrefixedText() );
 			$this->viewUpdates();
 		}
@@ -117,8 +116,6 @@ class ImagePage extends Article {
 				$wgOut->addWikiText( $fol );
 			}
 			$wgOut->addHTML( '<div id="shared-image-desc">' . $this->mExtraDescription . '</div>' );
-		} else {
-			$this->checkSharedConflict();
 		}
 
 		$this->closeShowImage();
@@ -129,11 +126,9 @@ class ImagePage extends Article {
 			array( 'id' => 'filelinks' ),
 			wfMsg( 'imagelinks' ) ) . "\n" );
 		$this->imageDupes();
-		// TODO: We may want to find local images redirecting to a foreign 
-		// file: "The following local files redirect to this file"
-		if( $this->img->isLocal() ) {
-			$this->imageRedirects();
-		}
+		# TODO! FIXME! For some freaky reason, we can't redirect to foreign images.
+		# Yet we return metadata about the target. Definitely an issue in the FileRepo
+		$this->imageRedirects();
 		$this->imageLinks();
 
 		if( $showmeta ) {
@@ -472,6 +467,7 @@ EOT
 			$title = SpecialPage::getTitleFor( 'Upload' );
 			$link = $sk->makeKnownLinkObj($title, wfMsgHtml('noimage-linktext'),
 				'wpDestFile=' . urlencode( $this->displayImg->getName() ) );
+			$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			$wgOut->addHTML( wfMsgWikiHtml( 'noimage', $link ) );
 		}
 	}
@@ -486,17 +482,18 @@ EOT
 
 		$descUrl = $this->img->getDescriptionUrl();
 		$descText = $this->img->getDescriptionText();
-		$s = "<div class='sharedUploadNotice'>" . wfMsgWikiHtml( 'sharedupload' );
+		$msg = '';
 		if( $descUrl ) {
 			$sk = $wgUser->getSkin();
 			$link = $sk->makeExternalLink( $descUrl, wfMsg( 'shareduploadwiki-linktext' ) );
 			$msg = ( $descText ) ? 'shareduploadwiki-desc' : 'shareduploadwiki';
 			$msg = wfMsgExt( $msg, array( 'parseinline', 'replaceafter' ), $link );
-			if( $msg != '-' ) {
-				# Show message only if not voided by local sysops
-				$s .= $msg;
+			if( $msg == '-' ) {
+				$msg = '';
 			}
 		}
+		$s  = "<div class='sharedUploadNotice'>";
+		$s .= wfMsgWikiHtml( 'sharedupload', $this->img->getRepo()->getDisplayName(), $msg );
 		$s .= "</div>";
 		$wgOut->addHTML( $s );
 
@@ -505,58 +502,10 @@ EOT
 		}
 	}
 
-	/*
-	 * Check for files with the same name on the foreign repos.
-	 */
-	protected function checkSharedConflict() {
-		global $wgOut, $wgUser;
-		
-		$repoGroup = RepoGroup::singleton();
-		if( !$repoGroup->hasForeignRepos() ) {
-			return;
-		}
-		
-		$this->loadFile();
-		if( !$this->img->isLocal() ) {
-			return;
-		}
-
-		$this->dupFile = null;
-		$repoGroup->forEachForeignRepo( array( $this, 'checkSharedConflictCallback' ) );
-		
-		if( !$this->dupFile )
-			return;
-		$dupfile = $this->dupFile;
-		$same = (
-			($this->img->getSha1() == $dupfile->getSha1()) &&
-			($this->img->getSize() == $dupfile->getSize())
-		);
-
-		$sk = $wgUser->getSkin();
-		$descUrl = $dupfile->getDescriptionUrl();
-		if( $same ) {
-			$link = $sk->makeExternalLink( $descUrl, wfMsg( 'shareduploadduplicate-linktext' ) );
-			$wgOut->addHTML( '<div id="shared-image-dup">' . wfMsgWikiHtml( 'shareduploadduplicate', $link ) . '</div>' );
-		} else {
-			$link = $sk->makeExternalLink( $descUrl, wfMsg( 'shareduploadconflict-linktext' ) );
-			$wgOut->addHTML( '<div id="shared-image-conflict">' . wfMsgWikiHtml( 'shareduploadconflict', $link ) . '</div>' );
-		}
-	}
-
-	public function checkSharedConflictCallback( $repo ) {
-		$this->loadFile();
-		$dupfile = $repo->newFile( $this->img->getTitle() );
-		if( $dupfile && $dupfile->exists() ) {
-			$this->dupFile = $dupfile;
-			return $dupfile->exists();
-		}
-		return false;
-	}
-
 	public function getUploadUrl() {
 		$this->loadFile();
 		$uploadTitle = SpecialPage::getTitleFor( 'Upload' );
-		return $uploadTitle->getFullUrl( 'wpDestFile=' . urlencode( $this->img->getName() ) );
+		return $uploadTitle->getFullUrl( 'wpDestFile=' . urlencode( $this->img->getName() ) . '&wpForReUpload=1' );
 	}
 
 	/**
@@ -579,10 +528,6 @@ EOT
 			$ulink = $sk->makeExternalLink( $this->getUploadUrl(), wfMsg( 'uploadnewversion-linktext' ) );
 			$wgOut->addHTML( "<li><div class='plainlinks'>{$ulink}</div></li>" );
 		}
-
-		# Link to Special:FileDuplicateSearch
-		$dupeLink = $sk->makeKnownLinkObj( SpecialPage::getTitleFor( 'FileDuplicateSearch', $this->mTitle->getDBkey() ), wfMsgHtml( 'imagepage-searchdupe' ) );
-		$wgOut->addHTML( "<li>{$dupeLink}</li>" );
 
 		# External editing link
 		$elink = $sk->makeKnownLinkObj( $this->mTitle, wfMsgHtml( 'edit-externally' ), 'action=edit&externaledit=true&mode=file' );
@@ -697,19 +642,21 @@ EOT
 
 		$wgOut->addHTML( "<div id='mw-imagepage-section-duplicates'>\n" );
 		$wgOut->addWikiMsg( 'duplicatesoffile',
-			$wgLang->formatNum( count( $dupes ) )
+			$wgLang->formatNum( count( $dupes ) ), $this->mTitle->getDBkey()
 		);
 		$wgOut->addHTML( "<ul class='mw-imagepage-duplicates'>\n" );
 
 		$sk = $wgUser->getSkin();
 		foreach ( $dupes as $file ) {
+			$fromSrc = '';
 			if( $file->isLocal() )
 				$link = $sk->makeKnownLinkObj( $file->getTitle(), "" );
 			else {
 				$link = $sk->makeExternalLink( $file->getDescriptionUrl(),
 					$file->getTitle()->getPrefixedText() );
+				$fromSrc = wfMsg( 'shared-repo-from', $file->getRepo()->getDisplayName() );
 			}
-			$wgOut->addHTML( "<li>{$link}</li>\n" );
+			$wgOut->addHTML( "<li>{$link} {$fromSrc}</li>\n" );
 		}
 		$wgOut->addHTML( "</ul></div>\n" );
 	}
@@ -921,7 +868,8 @@ class ImageHistoryList {
 				'alt' => wfMsg( 'filehist-thumbtext', $wgLang->timeAndDate( $timestamp, true ) ),
 				'file-link' => true,
 			);
-			$row .= '</td><td>' . $thumbnail->toHtml( $options );
+			$row .= '</td><td>' . ( $thumbnail ? $thumbnail->toHtml( $options ) : 
+													wfMsgHtml( 'filehist-nothumb' ) );
 		} else {
 			$row .= '</td><td>' . wfMsgHtml( 'filehist-nothumb' );
 		}

@@ -482,10 +482,15 @@ abstract class ComplexMessages {
 	#
 	# Export
 	#
+	public function validate( &$errors = array() ) {  }
 
 	public function export() {
+		$errors = array();
+		$this->validate( $errors );
 		$groups = $this->getGroups();
 		$text = '';
+
+		foreach( $errors as $_ ) $text .= "#!!# $_\n";
 
 		foreach ( $groups as $group => $data ) {
 
@@ -614,6 +619,33 @@ class SpecialPageAliasesCM extends ComplexMessages {
 	public function highlight( $key, $values ) {
 		if ( count( $values ) ) $values[0] = "<b>$values[0]</b>";
 		return $values;
+	}
+
+	public function validate( &$errors = array() ) {
+		$used = array();
+		foreach ( array_keys( $this->data ) as $group ) {
+			foreach ( $this->getIterator( $group ) as $key ) {
+				$values = $this->val( $group, self::LANG_CURRENT, $key );
+				foreach ( $values as $i => $_ ) {
+					$title = Title::makeTitleSafe( NS_SPECIAL, $_ );
+					if ( $title === null ) {
+						$errors[] = "$_ is invalid title in $key";
+						continue;
+					} else {
+						$text = $title->getText();
+						$dbkey = $title->getDBKey();
+						if( $text !== $_ && $dbkey !== $_ ) {
+							$errors[] = "$_ is not in normalised form, which is $text or $dbkey";
+						}
+						if ( isset($used[$dbkey]) ) {
+							$errors[] = "$_ is used twice for $used[$dbkey] and $key";
+							continue;
+						}
+						$used[$dbkey] = $key;
+					}
+				}
+			}
+		}
 	}
 
 }

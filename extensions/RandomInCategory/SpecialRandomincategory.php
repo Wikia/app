@@ -14,9 +14,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Random in category',
-	'svn-date' => '$LastChangedDate: 2008-09-05 14:09:21 +0000 (Fri, 05 Sep 2008) $',
-	'svn-revision' => '$LastChangedRevision: 40488 $',
+	'svn-date' => '$LastChangedDate: 2009-01-07 11:49:46 +0000 (Wed, 07 Jan 2009) $',
+	'svn-revision' => '$LastChangedRevision: 45494 $',
 	'author' => 'VasilievVV',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:RandomInCategory',
 	'description' => 'Special page to get a random page in category',
 	'descriptionmsg' => 'randomincategory-desc',
 );

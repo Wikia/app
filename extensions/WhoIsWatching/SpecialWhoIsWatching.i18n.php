@@ -77,11 +77,13 @@ $messages['avk'] = array(
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
 	'whoiswatching' => 'Хто назірае за старонкай',
+	'whoiswatching-desc' => 'Паказвае сьпіс удзельнікаў, якія назіраюць за вікі-старонкай',
 	'specialwhoiswatchingthepage' => 'Хто назірае за %s',
-	'specialwhoiswatchingusage' => 'Гэтая спэцыяльная старонка не можа выкарыстоўвацца самастойна.
+	'specialwhoiswatchingusage' => 'Гэтая спэцыяльная старонка ня можа выкарыстоўвацца самастойна.
 Калі ласка, карыстайцеся старонкай [[MediaWiki:Number_of_watching_users_pageview]] для вызначэньня ўваходнага пункту на гэту спэцыяльную старонку.',
 	'specialwhoiswatchingaddusers' => 'Дадаць удзельнікаў, якія будуць назіраюць за старонкай',
 	'specialwhoiswatchingaddbtn' => 'Дадаць выбраных удзельнікаў',
@@ -214,8 +216,12 @@ $messages['et'] = array(
  * @author Theklan
  */
 $messages['eu'] = array(
-	'whoiswatching' => 'Nor dago ikusten wiki orrialde bat',
-	'whoiswatching-desc' => 'Wiki orrialde bat begiratzen ari diren erabiltzaileen zerrenda ematen du.',
+	'whoiswatching' => 'Nor ari da wiki orrialde bat zaintzen',
+	'whoiswatching-desc' => 'Wiki orrialde bat zaintzen ari diren erabiltzaileen zerrenda ematen du.',
+	'specialwhoiswatchingthepage' => 'Nor ari da %s zaintzen',
+	'specialwhoiswatchingusage' => 'Orri berezi hau ezin da bere kabuz erabili.
+Mesedez [[MediaWiki:Number_of_watching_users_pageview]] orria erabili sarrerako puntu bat definitzeko orri berezi honi.',
+	'specialwhoiswatchingaddusers' => 'Lankideak gehitu orrialdea zaintzeko',
 	'specialwhoiswatchingaddbtn' => 'Gehitu aukeratutako lankideak',
 );
 
@@ -237,13 +243,15 @@ $messages['fi'] = array(
  * @author Dereckson
  * @author Grondin
  * @author McDutchie
+ * @author PieRRoMaN
  * @author Sherbrooke
  */
 $messages['fr'] = array(
-	'whoiswatching' => 'Utilisateurs regardant une page du wiki',
+	'whoiswatching' => 'Qui suit une page wiki',
 	'whoiswatching-desc' => 'Fournit une liste des utilisateurs qui suivent une page wiki',
-	'specialwhoiswatchingthepage' => 'Utilisateurs regardant %s',
-	'specialwhoiswatchingusage' => "Cette page spéciale ne peut être utilisée seule. Passez par [[MediaWiki:Number_of_watching_users_pageview]] pour définir un point d'entrée vers cette page spéciale.",
+	'specialwhoiswatchingthepage' => 'Qui suit %s',
+	'specialwhoiswatchingusage' => "Cette page spéciale ne peut être utilisée seule.
+Veuillez utiliser la page [[MediaWiki:Number_of_watching_users_pageview]] pour définir un point d'entrée vers cette page spéciale.",
 	'specialwhoiswatchingaddusers' => 'Ajouter les utilisateurs pour suivre la page',
 	'specialwhoiswatchingaddbtn' => 'Ajouter les utilisateurs sélectionnés',
 );
@@ -260,6 +268,19 @@ $messages['gl'] = array(
 [[MediaWiki:Number_of_watching_users_pageview]] para definir un punto de entrada a esta páxina especial.',
 	'specialwhoiswatchingaddusers' => 'Engadir os usuarios para vixiar a páxina',
 	'specialwhoiswatchingaddbtn' => 'Engadir os usuarios seleccionados',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'whoiswatching' => 'Wär beobachtet e Syte',
+	'whoiswatching-desc' => 'Zeigt e Lischt vu Benutzer, wu ne Syte beobachte',
+	'specialwhoiswatchingthepage' => 'Wär beobachtet %s',
+	'specialwhoiswatchingusage' => 'Die Spezialsyte cha nit elai bruucht wäre.
+Bitte definier iber d Syte [[MediaWiki:Number_of_watching_users_pageview]] e Aafangssyte fir die Spezialsyte.',
+	'specialwhoiswatchingaddusers' => 'Fieg Benutzer zum Beobachte vu dr Syte dezue',
+	'specialwhoiswatchingaddbtn' => 'Fieg Benutzer dezue',
 );
 
 /** Hebrew (עברית)
@@ -328,10 +349,12 @@ Per favor usa le pagina [[MediaWiki:Number_of_watching_users_pageview]] pro defi
 );
 
 /** Italian (Italiano)
+ * @author BrokenArrow
  * @author Pietrodn
  */
 $messages['it'] = array(
 	'whoiswatching' => 'Chi sta osservando una pagina wiki',
+	'whoiswatching-desc' => 'Elenca i nomi degli utenti che tengono sotto osservazione una pagina wiki',
 	'specialwhoiswatchingthepage' => 'Chi sta osservando %s',
 	'specialwhoiswatchingusage' => 'Questa pagina speciale non può essere usata da sola. Per favore usa la pagina [[MediaWiki:Number_of_watching_users_pageview]] per definire un punto di entrata per questa pagina speciale.',
 	'specialwhoiswatchingaddusers' => 'Aggiungi utenti ad osservare la pagina',
@@ -343,9 +366,9 @@ $messages['it'] = array(
  * @author Fryed-peach
  */
 $messages['ja'] = array(
-	'whoiswatching' => '誰がページをウォッチしているのか',
+	'whoiswatching' => 'ページをウォッチしている利用者',
 	'whoiswatching-desc' => 'ページをウォッチしている利用者の一覧を提供する',
-	'specialwhoiswatchingthepage' => '誰が%sをウォッチしているのか',
+	'specialwhoiswatchingthepage' => '%s をウォッチしている利用者',
 	'specialwhoiswatchingusage' => 'この特別ページは単独では利用できません。この特別ページへのエントリーポイントを定義するためには [[MediaWiki:Number_of_watching_users_pageview]] を使用してください。',
 	'specialwhoiswatchingaddusers' => '利用者のウォッチリストにページを追加',
 	'specialwhoiswatchingaddbtn' => '選択した利用者を追加',
@@ -507,6 +530,13 @@ $messages['oc'] = array(
 	'specialwhoiswatchingaddbtn' => 'Apondre los utilizaires seleccionats',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'whoiswatching' => 'Чи йæ цæст дары фарсмæ',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  * @author Maikking
@@ -569,6 +599,13 @@ Te rugăm să foloseşti pagina [[MediaWiki:Number_of_watching_users_pageview]] 
 	'specialwhoiswatchingaddbtn' => 'Adaugă utilizatorii selectaţi',
 );
 
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'specialwhoiswatchingaddbtn' => "Aggiunge l'utinde selezionate",
+);
+
 /** Russian (Русский)
  * @author Aleksandrit
  * @author Ferrer
@@ -600,6 +637,7 @@ $messages['sk'] = array(
  */
 $messages['stq'] = array(
 	'whoiswatching' => 'Wäl beooboachtet ne Siede',
+	'whoiswatching-desc' => 'Wiest ne Lieste fon Benutsere an, do ne Siede beooboachtje',
 	'specialwhoiswatchingthepage' => 'Wäl beooboachtet %s',
 	'specialwhoiswatchingusage' => 'Disse Spezioalsiede kon nit ap sik sälwen anwoand wäide. Definier uur ju Siede [[MediaWiki:Number_of_watching_users_pageview]] ne Ienstiegssiede foar disse Spezioalsiede.',
 	'specialwhoiswatchingaddusers' => 'Föich Benutser tou dät Bekiekjen fon ju Siede bietou.',

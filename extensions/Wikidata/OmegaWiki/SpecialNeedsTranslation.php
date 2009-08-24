@@ -6,8 +6,8 @@
 	require_once("Wikidata.php");
 
 	function wfSpecialNeedsTranslation() {
-	        global $wgMessageCache;
-                $wgMessageCache->addMessages(array('needstranslation'=>'Wikidata: Expressions needing translation'),'en');
+	        #global $wgMessageCache;
+            #    $wgMessageCache->addMessages(array('needstranslation'=>'Wikidata: Expressions needing translation'),'en');
                 
 		class SpecialNeedsTranslation extends SpecialPage {
 			function SpecialNeedsTranslation() {
@@ -23,7 +23,7 @@
 				require_once("ViewInformation.php");
 
 				initializeOmegaWikiAttributes(new ViewInformation());
-				$wgOut->setPageTitle('Expressions needing translation');
+				$wgOut->setPageTitle(wfMsg('ow_needs_xlation_title'));
 
                                 $destinationLanguageId = array_key_exists('to-lang', $_GET)? $_GET['to-lang']:'';
 				$collectionId = array_key_exists('collection', $_GET) ? $_GET['collection'] : '';
@@ -31,14 +31,14 @@
                                                                 
 				$wgOut->addHTML(getOptionPanel(
 					array(
-						'Destination language' => getSuggest('to-lang', 'language', array(), $destinationLanguageId, languageIdAsText($destinationLanguageId)),
-						'Source language' => getSuggest('from-lang', 'language', array(), $sourceLanguageId, languageIdAsText($sourceLanguageId)),
-						'Collection' => getSuggest('collection', 'collection', array(), $collectionId, collectionIdAsText($collectionId))
+						wfMsg('ow_needs_xlation_dest_lang') => getSuggest('to-lang', 'language', array(), $destinationLanguageId, languageIdAsText($destinationLanguageId)),
+						wfMsg('ow_needs_xlation_source_lang') => getSuggest('from-lang', 'language', array(), $sourceLanguageId, languageIdAsText($sourceLanguageId)),
+						wfMsg('ow_Collection_colon') => getSuggest('collection', 'collection', array(), $collectionId, collectionIdAsText($collectionId))
 					)
 				));
 
 				if ($destinationLanguageId == '')
-					$wgOut->addHTML('<p>Please specify a destination language.</p>');
+					$wgOut->addHTML('<p>' . wfMsg('ow_needs_xlation_no_dest_lang') . '</p>');
 				else
 					$this->showExpressionsNeedingTranslation($sourceLanguageId,$destinationLanguageId,$collectionId);
 			}
@@ -55,7 +55,7 @@
 				require_once("Editor.php");
 				require_once("WikiDataAPI.php");
 
-				$dbr = &wfGetDB(DB_SLAVE);
+				$dbr = wfGetDB(DB_SLAVE);
 
 				$sql = 'SELECT source_expression.expression_id AS source_expression_id, source_expression.language_id AS source_language_id, source_expression.spelling AS source_spelling, source_syntrans.defined_meaning_id AS source_defined_meaning_id' .
 					" FROM ({$dc}_syntrans source_syntrans, {$dc}_expression source_expression)";
@@ -83,7 +83,7 @@
 					' LIMIT 100';
 
 				$queryResult = $dbr->query($sql);
-				$definitionAttribute = new Attribute("definition", "Definition", "definition");
+				$definitionAttribute = new Attribute("definition", wfMsg("ow_Definition"), "definition");
 				$recordSet = new ArrayRecordSet(new Structure($o->definedMeaningId, $o->expressionId, $o->expression, $definitionAttribute), new Structure($o->definedMeaningId, $o->expressionId));
 
 				while ($row = $dbr->fetchObject($queryResult)) {

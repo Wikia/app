@@ -178,8 +178,8 @@ class AbuseFilterHistoryPager extends TablePager {
 		if ($name == 'afh_flags') {
 			// This is a bit freaky, but it works. 
 			// Basically, returns true if any of those filters are in the $changed array.
-			$filters = array( 'af_enabled', 'af_hidden', 'af_deleted', 'af_global' );
-			if ( count( array_diff( $filters, $changed ) ) < count($filters) ) {
+			$filters = array( 'af_enabled', 'af_hidden', 'af_deleted' );
+			if ( count( array_diff( $filters, $changed ) ) < 3 ) {
 				$fieldChanged = true;
 			}
 		} elseif ( in_array( $mappings[$name], $changed ) ) {

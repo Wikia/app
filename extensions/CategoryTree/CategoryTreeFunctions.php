@@ -550,7 +550,7 @@ class CategoryTree {
 
 			$wikiLink = $special->getLocalURL( 'target=' . $t->getPartialURL() . '&' . $this->getOptionsAsUrlParameters() );
 
-			if ( $s !== '' ) $s .= ' | ';
+			if ( $s !== '' ) $s .= wfMsgExt( 'pipe-separator' , 'escapenoentities' );
 
 			$s .= Xml::openElement( 'span', array( 'class' => 'CategoryTreeItem' ) );
 			$s .= Xml::openElement( 'a', array( 'class' => 'CategoryTreeLabel', 'href' => $wikiLink ) ) . $label . Xml::closeElement( 'a' );
@@ -658,6 +658,7 @@ class CategoryTree {
 			if ( $load ) $linkattr[ 'id' ] = $load;
 
 			$linkattr[ 'class' ] = "CategoryTreeToggle";
+			$linkattr['style'] = 'display: none;'; // Unhidden by JS
 
 			/*if ( $count === 0 ) {
 				$tag = 'span';

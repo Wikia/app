@@ -6,13 +6,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class StableVersions extends UnlistedSpecialPage
 {
-    function __construct() {
+    public function __construct() {
         UnlistedSpecialPage::UnlistedSpecialPage( 'StableVersions' );
 		wfLoadExtensionMessages( 'StableVersions' );
 		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
-    function execute( $par ) {
+    public function execute( $par ) {
         global $wgRequest, $wgUser, $wgOut;
 
 		$this->setHeaders();
@@ -32,7 +32,7 @@ class StableVersions extends UnlistedSpecialPage
 		$this->showStableList();
 	}
 
-	function showStableList() {
+	protected function showStableList() {
 		global $wgOut, $wgUser;
 		# Must be a content page
 		if( !FlaggedRevs::isPageReviewable( $this->page ) ) {
@@ -53,7 +53,7 @@ class StableVersions extends UnlistedSpecialPage
 		}
 	}
 
-	function formatRow( $row ) {
+	public function formatRow( $row ) {
 		global $wgLang, $wgUser;
 
 		$time = $wgLang->timeanddate( wfTimestamp(TS_MW, $row->rev_timestamp), true );

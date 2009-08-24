@@ -45,6 +45,8 @@ function wfSpecialBlockip( $par ) {
 class IPBlockForm {
 	var $BlockAddress, $BlockExpiry, $BlockReason;
 #	var $BlockEmail;
+	// The maximum number of edits a user can have and still be hidden
+	const HIDEUSER_CONTRIBLIMIT = 1000;
 
 	function IPBlockForm( $par ) {
 		global $wgRequest, $wgUser, $wgBlockAllowsUTEdit;
@@ -106,6 +108,19 @@ class IPBlockForm {
 				( $currentBlock->mAddress == $this->BlockAddress ) ) ) {
 					$wgOut->addWikiMsg( 'ipb-needreblock', $this->BlockAddress );
 					$alreadyBlocked = true;
+					# Set the block form settings to the existing block
+					$this->BlockAnonOnly = $currentBlock->mAnonOnly;
+					$this->BlockCreateAccount = $currentBlock->mCreateAccount;
+					$this->BlockEnableAutoblock = $currentBlock->mEnableAutoblock;
+					$this->BlockEmail = $currentBlock->mBlockEmail;
+					$this->BlockHideName = $currentBlock->mHideName;
+					$this->BlockAllowUsertalk = $currentBlock->mAllowUsertalk;
+					if( $currentBlock->mExpiry == 'infinity' ) {
+						$this->BlockOther = 'indefinite';
+					} else {
+						$this->BlockOther = wfTimestamp( TS_ISO_8601, $currentBlock->mExpiry );
+					}
+					$this->BlockReason = $currentBlock->mReason;
 			}
 		}
 
@@ -238,11 +253,11 @@ class IPBlockForm {
 			$wgOut->addHTML("
 				<tr id='wpEnableHideUser'>
 					<td>&nbsp;</td>
-					<td class='mw-input'>" .
+					<td class='mw-input'><strong>" .
 						Xml::checkLabel( wfMsg( 'ipbhidename' ),
 							'wpHideName', 'wpHideName', $this->BlockHideName,
 							array( 'tabindex' => '10' ) ) . "
-					</td>
+					</strong></td>
 				</tr>"
 			);
 		}
@@ -363,7 +378,7 @@ class IPBlockForm {
 		$reasonstr = $this->BlockReasonList;
 		if ( $reasonstr != 'other' && $this->BlockReason != '' ) {
 			// Entry from drop down menu + additional comment
-			$reasonstr .= ': ' . $this->BlockReason;
+			$reasonstr .= wfMsgForContent( 'colon-separator' ) . $this->BlockReason;
 		} elseif ( $reasonstr == 'other' ) {
 			$reasonstr = $this->BlockReason;
 		}
@@ -381,9 +396,18 @@ class IPBlockForm {
 			return array('ipb_expiry_invalid');
 		}
 		
-		if( $this->BlockHideName && $expiry != 'infinity' ) {
-			// Bad expiry.
-			return array('ipb_expiry_temp');
+		if( $this->BlockHideName ) {
+			if( !$userId ) {
+				// IP users should not be hidden
+				$this->BlockHideName = false;
+			} else if( $expiry !== 'infinity' ) {
+				// Bad expiry.
+				return array('ipb_expiry_temp');
+			} else if( User::edits($userId) > self::HIDEUSER_CONTRIBLIMIT ) {
+				// Typically, the user should have a handful of edits.
+				// Disallow hiding users with many edits for performance.
+				return array('ipb_hide_invalid');
+			}
 		}
 
 		# Create block
@@ -391,13 +415,18 @@ class IPBlockForm {
 		$block = new Block( $this->BlockAddress, $userId, $wgUser->getId(),
 			$reasonstr, wfTimestampNow(), 0, $expiry, $this->BlockAnonOnly,
 			$this->BlockCreateAccount, $this->BlockEnableAutoblock, $this->BlockHideName,
-			$this->BlockEmail, isset( $this->BlockAllowUsertalk ) ? $this->BlockAllowUsertalk : $wgBlockAllowsUTEdit );
+			$this->BlockEmail, isset( $this->BlockAllowUsertalk ) ? $this->BlockAllowUsertalk : $wgBlockAllowsUTEdit
+		);
 
+		# Should this be privately logged?
+		$suppressLog = (bool)$this->BlockHideName;
 		if ( wfRunHooks('BlockIp', array(&$block, &$wgUser)) ) {
-
+			# Try to insert block. Is there a conflicting block?
 			if ( !$block->insert() ) {
+				# Show form unless the user is already aware of this...
 				if ( !$this->BlockReblock ) {
 					return array( 'ipb_already_blocked' );
+				# Otherwise, try to update the block...
 				} else {
 					# This returns direct blocks before autoblocks/rangeblocks, since we should
 					# be sure the user is blocked by now it should work for our purposes
@@ -405,18 +434,40 @@ class IPBlockForm {
 					if( $block->equals( $currentBlock ) ) {
 						return array( 'ipb_already_blocked' );
 					}
+					# If the name was hidden and the blocking user cannot hide
+					# names, then don't allow any block changes...
+					if( $currentBlock->mHideName && !$wgUser->isAllowed('hideuser') ) {
+						return array( 'hookaborted' );
+					}
 					$currentBlock->delete();
 					$block->insert();
+					# If hiding/unhiding a name, this should go in the private logs
+					$suppressLog = $suppressLog || (bool)$currentBlock->mHideName;
 					$log_action = 'reblock';
+					# Unset _deleted fields if requested
+					if( $currentBlock->mHideName && !$this->BlockHideName ) {
+						self::unsuppressUserName( $this->BlockAddress, $userId );
+					}
 				}
 			} else {
 				$log_action = 'block';
 			}
 			wfRunHooks('BlockIpComplete', array($block, $wgUser));
 
-			if ( $this->BlockWatchUser ) { 
+			# Set *_deleted fields if requested
+			if( $this->BlockHideName ) {
+				self::suppressUserName( $this->BlockAddress, $userId );
+			}
+
+			if ( $this->BlockWatchUser &&
+				# Only show watch link when this is no range block
+				$block->mRangeStart == $block->mRangeEnd) {
 				$wgUser->addWatch ( Title::makeTitle( NS_USER, $this->BlockAddress ) );
 			}
+			
+			# Block constructor sanitizes certain block options on insert
+			$this->BlockEmail = $block->mBlockEmail;
+			$this->BlockEnableAutoblock = $block->mEnableAutoblock;
 
 			# Prepare log parameters
 			$logParams = array();
@@ -424,16 +475,70 @@ class IPBlockForm {
 			$logParams[] = $this->blockLogFlags();
 
 			# Make log entry, if the name is hidden, put it in the oversight log
-			$log_type = ($this->BlockHideName) ? 'suppress' : 'block';
+			$log_type = $suppressLog ? 'suppress' : 'block';
 			$log = new LogPage( $log_type );
 			$log->addEntry( $log_action, Title::makeTitle( NS_USER, $this->BlockAddress ),
 			  $reasonstr, $logParams );
 
 			# Report to the user
 			return array();
-		}
-		else
+		} else {
 			return array('hookaborted');
+		}
+	}
+	
+	public static function suppressUserName( $name, $userId ) {
+		$op = '|'; // bitwise OR
+		return self::setUsernameBitfields( $name, $userId, $op );
+	}
+	
+	public static function unsuppressUserName( $name, $userId ) {
+		$op = '&'; // bitwise AND
+		return self::setUsernameBitfields( $name, $userId, $op );
+	}
+	
+	private static function setUsernameBitfields( $name, $userId, $op ) {
+		if( $op !== '|' && $op !== '&' )
+			return false; // sanity check
+		$dbw = wfGetDB( DB_MASTER );
+		$delUser = Revision::DELETED_USER | Revision::DELETED_RESTRICTED;
+		$delAction = LogPage::DELETED_ACTION | Revision::DELETED_RESTRICTED;
+		# Normalize user name
+		$userTitle = Title::makeTitleSafe( NS_USER, $name );
+		$userDbKey = $userTitle->getDBKey();
+		# To suppress, we OR the current bitfields with Revision::DELETED_USER
+		# to put a 1 in the username *_deleted bit. To unsuppress we AND the
+		# current bitfields with the inverse of Revision::DELETED_USER. The
+		# username bit is made to 0 (x & 0 = 0), while others are unchanged (x & 1 = x).
+		# The same goes for the sysop-restricted *_deleted bit.
+		if( $op == '&' ) {
+			$delUser = "~{$delUser}";
+			$delAction = "~{$delAction}";
+		}
+		# Hide name from live edits
+		$dbw->update( 'revision', array("rev_deleted = rev_deleted $op $delUser"),
+			array('rev_user' => $userId), __METHOD__ );
+		# Hide name from deleted edits
+		$dbw->update( 'archive', array("ar_deleted = ar_deleted $op $delUser"),
+			array('ar_user_text' => $name), __METHOD__ );
+		# Hide name from logs
+		$dbw->update( 'logging', array("log_deleted = log_deleted $op $delUser"),
+			array('log_user' => $userId, "log_type != 'suppress'"), __METHOD__ );
+		$dbw->update( 'logging', array("log_deleted = log_deleted $op $delAction"),
+			array('log_namespace' => NS_USER, 'log_title' => $userDbKey,
+				"log_type != 'suppress'"), __METHOD__ );
+		# Hide name from RC
+		$dbw->update( 'recentchanges', array("rc_deleted = rc_deleted $op $delUser"),
+			array('rc_user_text' => $name), __METHOD__ );
+		# Hide name from live images
+		$dbw->update( 'oldimage', array("oi_deleted = oi_deleted $op $delUser"),
+			array('oi_user_text' => $name), __METHOD__ );
+		# Hide name from deleted images
+		# WMF - schema change pending
+		# $dbw->update( 'filearchive', array("fa_deleted = fa_deleted $op $delUser"),
+		#	array('fa_user_text' => $name), __METHOD__ );
+		# Done!
+		return true;
 	}
 
 	/**
@@ -487,7 +592,7 @@ class IPBlockForm {
 		global $wgBlockAllowsUTEdit;
 		$flags = array();
 		if( $this->BlockAnonOnly && IP::isIPAddress( $this->BlockAddress ) )
-					// when blocking a user the option 'anononly' is not available/has no effect -> do not write this into log
+			// when blocking a user the option 'anononly' is not available/has no effect -> do not write this into log
 			$flags[] = 'anononly';
 		if( $this->BlockCreateAccount )
 			$flags[] = 'nocreate';
@@ -497,6 +602,8 @@ class IPBlockForm {
 			$flags[] = 'noemail';
 		if ( !$this->BlockAllowUsertalk && $wgBlockAllowsUTEdit )
 			$flags[] = 'nousertalk';
+		if ( $this->BlockHideName )
+			$flags[] = 'hiddenname';
 		return implode( ',', $flags );
 	}
 
@@ -506,14 +613,14 @@ class IPBlockForm {
 	 * @return string
 	 */
 	protected function getConvenienceLinks() {
-		global $wgUser;
+		global $wgUser, $wgLang;
 		$skin = $wgUser->getSkin();
 		if( $this->BlockAddress )
 			$links[] = $this->getContribsLink( $skin );
 		$links[] = $this->getUnblockLink( $skin );
 		$links[] = $this->getBlockListLink( $skin );
 		$links[] = $skin->makeLink ( 'MediaWiki:Ipbreason-dropdown', wfMsgHtml( 'ipb-edit-dropdown' ) );
-		return '<p class="mw-ipb-conveniencelinks">' . implode( ' | ', $links ) . '</p>';
+		return '<p class="mw-ipb-conveniencelinks">' . $wgLang->pipeList( $links ) . '</p>';
 	}
 	
 	/**

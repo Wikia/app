@@ -3,15 +3,16 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if( !defined( 'MEDIAWIKI' ) )
-	die();
+if ( !defined( 'MEDIAWIKI' ) ){
+	die( "This is not a valid entry point.\n" );
+}
 
 class SpamRegex extends SpecialPage {
 
 	/**
-	* Constructor
-	*/
-	function __construct() {
+	 * Constructor
+	 */
+	public function __construct() {
 		parent::__construct( 'SpamRegex', 'spamregex' );
 		wfLoadExtensionMessages( 'SpamRegex' );
 	}
@@ -21,17 +22,22 @@ class SpamRegex extends SpecialPage {
 	 *
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
-	function execute( $par ) {
+	public function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest;
 
+		# No access for blocked users
 		if ( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
 			return;
 		}
+
+		# Can't use the special page if database is locked...
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return;
 		}
+
+		# And we'll also be needing the correct user rights in order to proceed
 		if ( !$wgUser->isAllowed( 'spamregex' ) ) {
 			$this->displayRestrictionError();
 			return;
@@ -101,7 +107,7 @@ class spamRegexList {
 		global $wgOut, $wgRequest, $wgLang;
 
 		/* on error, display error */
-		if ( "" != $err ) {
+		if ( '' != $err ) {
 			$wgOut->addHTML( "<p class='error'>{$err}</p>\n" );
 		}
 
@@ -121,24 +127,25 @@ class spamRegexList {
 
 			$res = $dbr->select( 'spam_regex', '*', array(), __METHOD__, array( 'LIMIT' => $limit, 'OFFSET' => $offset ) );
 			while ( $row = $res->fetchObject() ) {
-				$time = $wgLang->timeanddate( wfTimestamp( TS_MW, $row->spam_timestamp ), true );
-				$ublock_ip = urlencode($row->spam_text);
+				$date = $wgLang->date( wfTimestamp( TS_MW, $row->spam_timestamp ), true );
+				$time = $wgLang->time( wfTimestamp( TS_MW, $row->spam_timestamp ), true );
+				$ublock_ip = urlencode( $row->spam_text );
 				$desc = '';
 				if ( $row->spam_textbox == 1 ) {
 					$desc .= wfMsg( 'spamregex-text' );
 				}
 				if ( $row->spam_summary == 1 ) {
 					if ( $row->spam_textbox == 1 ) {
-						$desc .= " ";
+						$desc .= ' ';
 					}
 					$desc .= wfMsg( 'spamregex-summary-log' );
 				}
-				$wgOut->addHTML( "<ul>" );
-				$wgOut->addWikiText( wfMsg( 'spamregex-log-1', $row->spam_text, $desc, $action_unblock, $ublock_ip ) . $row->spam_user . wfMsg( 'spamregex-log-2', $time ) );
-				$wgOut->addHTML( "</ul>" );
+				$wgOut->addHTML( '<ul>' );
+				$wgOut->addWikiMsg( 'spamregex-log', $row->spam_text, $desc, $action_unblock, $ublock_ip, $row->spam_user, $date, $time );
+				$wgOut->addHTML( '</ul>' );
 			}
 			$res->free();
-			$wgOut->addHTML( "</form>" );
+			$wgOut->addHTML( '</form>' );
 			$this->showPrevNext( $wgOut );
 		}
 		wfProfileOut( __METHOD__ );
@@ -147,7 +154,7 @@ class spamRegexList {
 	/* remove from list - without confirmation */
 	function deleteFromList() {
 		wfProfileIn( __METHOD__ );
-		global $wgOut, $wgRequest, $wgUser;
+		global $wgOut, $wgRequest;
 		$text = urldecode( $wgRequest->getVal( 'text' ) );
 		/* delete */
 		$dbw = wfSpamRegexGetDB( DB_MASTER );
@@ -165,7 +172,7 @@ class spamRegexList {
 	}
 
 	/**
-	 * fetch number of all rows
+	 * Fetch number of all rows
 	 * Use memcached if possible
 	 */
 	function fetchNumResults() {
@@ -198,7 +205,7 @@ class spamRegexList {
 	static function validateRegex( $text ) {
 		try {
 			$test = @preg_match("/{$text}/", 'Whatever');
-			if( !is_int($test) ) {
+			if( !is_int( $test ) ) {
 				throw new Exception("error!");
 			}
 		}
@@ -231,12 +238,12 @@ class spamRegexList {
 		global $wgContLang, $wgRequest;
 		list( $limit, $offset ) = $wgRequest->getLimitOffset();
 		$html = wfViewPrevNext(
-				$offset,
-				$limit,
-				$wgContLang->specialpage( 'SpamRegex' ),
-				'',
-				($this->numResults - $offset) <= $limit
-			);
+			$offset,
+			$limit,
+			$wgContLang->specialpage( 'SpamRegex' ),
+			'',
+			($this->numResults - $offset) <= $limit
+		);
 		$out->addHTML( '<p>' . $html . '</p>' );
 	}
 }
@@ -263,7 +270,7 @@ class spamRegexForm {
 		$titleObj = SpecialPage::getTitleFor( 'SpamRegex' );
 		$action = $titleObj->escapeLocalURL( "action=submit&".spamRegexList::getListBits() );
 
-		if ( "" != $err ) {
+		if ( '' != $err ) {
 			$wgOut->setSubtitle( wfMsgHtml( 'formerror' ) );
 			$wgOut->addHTML( "<p class='error'>{$err}</p>\n" );
 		}
@@ -301,10 +308,10 @@ class spamRegexForm {
 				addOnloadHook (SpamRegexEnhanceControls);
 			</script>"
 		);
-		$phraseblock = wfMsgExt( 'spamregex-phrase-block', array( 'parseinline' ) );
-		$phraseblocktext = wfMsgExt( 'spamregex-phrase-block-text', array( 'parseinline' ) );
-		$phraseblocksummary = wfMsgExt( 'spamregex-phrase-block-summary', array( 'parseinline' ) );
-		$blockphrase = wfMsgExt('spamregex-block-submit', array( 'escapenoentities' ) );
+		$phraseblock = wfMsgExt( 'spamregex-phrase-block', 'parseinline' );
+		$phraseblocktext = wfMsgExt( 'spamregex-phrase-block-text', 'parseinline' );
+		$phraseblocksummary = wfMsgExt( 'spamregex-phrase-block-summary', 'parseinline' );
+		$blockphrase = wfMsgExt( 'spamregex-block-submit', 'escapenoentities' );
 		$wgOut->addHTML("
 <form name=\"spamregex\" method=\"post\" action=\"{$action}\">
 	<table border=\"0\">
@@ -341,24 +348,24 @@ class spamRegexForm {
 
 	/* on success */
 	function showSuccess() {
-		global $wgOut, $wgRequest;
+		global $wgOut;
 		$wgOut->setPageTitle( wfMsg( 'spamregex-page-title-2' ) );
 		$wgOut->setSubTitle( wfMsg( 'spamregex-block-success' ) );
-
-		$wgOut->addWikiMsg('spamregex-block-message', $this->mBlockedPhrase);
+		$wgOut->addWikiMsg( 'spamregex-block-message', $this->mBlockedPhrase );
 	}
 
 	/* on submit */
 	function doSubmit() {
 		wfProfileIn( __METHOD__ );
-		global $wgOut, $wgUser, $wgMemc;
+		global $wgOut, $wgUser;
 
 		/* empty name */
-		if ( strlen($this->mBlockedPhrase) == 0 ) {
+		if ( strlen( $this->mBlockedPhrase ) == 0 ) {
 			$this->showForm( wfMsgHtml( 'spamregex-warning-1' ) );
 			wfProfileOut( __METHOD__ );
 			return;
 		}
+
 		/* validate expression */
 		if ( !$simple_regex = spamRegexList::validateRegex( $this->mBlockedPhrase ) ) {
 			$this->showForm( wfMsgHtml( 'spamregex-error-1' ) );

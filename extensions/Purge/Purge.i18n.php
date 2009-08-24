@@ -16,9 +16,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Purodha
  */
 $messages['qqq'] = array(
+	'purge' => '{{Identical|Purge}}',
 	'purge-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
 );
 
@@ -38,11 +40,27 @@ $messages['arz'] = array(
 	'purge-desc' => 'يضيف لسان إفراغ للكاش فى كل الصفحات العادية ويتفادى تحقق الكاش للمستخدمين المجهولين مما يسمح بإفراغ الكاش بشكل سريع',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'purge' => 'ачысьціць',
+	'purge-desc' => 'Дадае закладку ачысткі на ўсе звычайныя старонкі і прапускае праверку ачысткі для ананімных удзельнікаў, для хуткай ачысткі кэшу',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'purge' => 'изчистване',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'purge' => 'očisti',
+	'purge-desc' => 'Dodaje jezičak za čišćenje na svim običnim stranicama i zaobilazi provjeru čišćanja za anonimne korisnike omogućujući brzo pražnjenje keša',
 );
 
 /** Catalan (Català)
@@ -109,6 +127,14 @@ $messages['gl'] = array(
 	'purge-desc' => 'Engade unha lapela "Purgar" en todas as páxinas normais e salta a comprobación de purgar para os usuarios anónimos, permitindo unha purga rápida da caché',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'purge' => 'Cache lääre',
+	'purge-desc' => 'Ergänzt e „Lääre“-Ryter fir alli normale Syten fir e schnälli Cache-Leschig und umgoht d Lääre-Priefig fir anonymi Benutzer',
+);
+
 /** Hebrew (עברית)
  * @author YaronSh
  */
@@ -121,6 +147,13 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'purge' => 'साफ करें (purge)',
+);
+
+/** Croatian (Hrvatski)
+ * @author Suradnik13
+ */
+$messages['hr'] = array(
+	'purge' => 'očisti',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -205,6 +238,7 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'purge' => 'eidel maachen',
+	'purge-desc' => "Setzt e \"Purge\" Onglet op all normal Säiten derbäi, an iwwerspréngt d ''Purge''-Kontroll fir anonym Benotzer fir den Tëschespäicher (Cache) séier eidelzemaachen",
 );
 
 /** Lithuanian (Lietuvių)
@@ -286,6 +320,14 @@ $messages['pt'] = array(
 	'purge-desc' => 'Adiciona uma pestana para purgar em todas as páginas normais, e ultrapassa a verificação de purga para utilizadores anónimos, permitindo um purga rápida da cache',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'purge' => 'purgar',
+	'purge-desc' => 'Adiciona uma aba para purgar em todas as páginas normais, e ultrapassa a verificação de purga para utilizadores anônimos, permitindo um purga rápida da cache',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -307,6 +349,7 @@ $messages['sk'] = array(
  */
 $messages['stq'] = array(
 	'purge' => 'Cache loosmoakje',
+	'purge-desc' => 'Föiget n „Purge“-Rieder tou foar aal normoale Sieden tou ju gaue Cache-Löösenge un uumgungt ju Purge-Wröige foar anonyme Benutsere',
 );
 
 /** Swedish (Svenska)
@@ -322,6 +365,14 @@ $messages['sv'] = array(
  */
 $messages['th'] = array(
 	'purge' => 'ล้างแคช',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'purge' => 'purgahin/linisin',
+	'purge-desc' => 'Nagdaragdag ng isang panglaylay/tab na pampurga/panlinis sa ibabaw ng lahat ng pangkaraniwang mga pahina, at lumalaktaw sa pagsusuri ng pagpurga para sa mga hindi nagpapakilalang mga tagagamit na nagpapahintulot sa mabilisang pagpurga ng taguan',
 );
 
 /** Tonga (faka-Tonga)

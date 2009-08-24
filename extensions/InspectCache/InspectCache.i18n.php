@@ -39,6 +39,20 @@ $messages['niu'] = array(
 	'inspectcache-delete' => 'Tamate',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'inspectcache-ok' => 'OK',
+	'inspectcache-general' => 'Ühthine keš',
+	'inspectcache-parser' => 'Parseran keš',
+	'inspectcache-message' => 'Tedotusiden keš',
+	'inspectcache-get' => 'Sada',
+	'inspectcache-delete' => 'Čuta poiš',
+	'inspectcache-deleted' => 'Keš om čutud poiš',
+	'inspectcache-list' => 'Kaik avadimed',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Arnobarnard
  */
@@ -98,6 +112,7 @@ $messages['arz'] = array(
  */
 $messages['be-tarask'] = array(
 	'inspectcache-ok' => 'Добра',
+	'inspectcache-delete' => 'Выдаліць',
 );
 
 /** Bulgarian (Български)
@@ -128,7 +143,16 @@ Diverkañ',
  * @author CERminator
  */
 $messages['bs'] = array(
+	'inspectcache' => 'Provjeri keš',
+	'inspectcache-desc' => 'Jednostavni alat za pronalaženje grešaka za provjeru sadržaja dijeljenog keša',
+	'inspectcache-ok' => 'U redu',
+	'inspectcache-general' => 'Opći keš',
+	'inspectcache-parser' => 'Keš parsera',
+	'inspectcache-message' => 'Keš poruka',
+	'inspectcache-get' => 'Preuzmi',
 	'inspectcache-delete' => 'Obriši',
+	'inspectcache-deleted' => 'Obrisani keš',
+	'inspectcache-list' => 'Izlistaj',
 );
 
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
@@ -199,11 +223,24 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Sanbec
  */
 $messages['es'] = array(
 	'inspectcache-ok' => 'Aceptar',
+	'inspectcache-general' => 'Cache general',
+	'inspectcache-get' => 'Obtener',
 	'inspectcache-delete' => 'Borrar',
+	'inspectcache-deleted' => 'cache borrado',
+	'inspectcache-list' => 'Lista',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'inspectcache-ok' => 'Ados',
+	'inspectcache-delete' => 'Ezabatu',
 );
 
 /** Finnish (Suomi)
@@ -256,7 +293,7 @@ $messages['gl'] = array(
 	'inspectcache-get' => 'Obter',
 	'inspectcache-delete' => 'Eliminar',
 	'inspectcache-deleted' => 'Caché eliminada',
-	'inspectcache-list' => 'Listaxe',
+	'inspectcache-list' => 'Lista',
 );
 
 /** Gothic
@@ -274,6 +311,22 @@ $messages['grc'] = array(
 	'inspectcache-ok' => 'εἶεν',
 	'inspectcache-delete' => 'Σβεννύναι',
 	'inspectcache-list' => 'Καταλογή',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'inspectcache' => 'Cache aaluege',
+	'inspectcache-desc' => 'E eifach Diagnoswärchzyyg fir Inhalt vum teilte Zwischespycher',
+	'inspectcache-ok' => 'Isch guet',
+	'inspectcache-general' => 'Allgmeine Cache',
+	'inspectcache-parser' => 'Parser-Cache',
+	'inspectcache-message' => 'Nochrichte-Cache',
+	'inspectcache-get' => 'Hole',
+	'inspectcache-delete' => 'Lesche',
+	'inspectcache-deleted' => 'Gleschte Cache',
+	'inspectcache-list' => 'Lischt',
 );
 
 /** Manx (Gaelg)
@@ -405,7 +458,16 @@ $messages['it'] = array(
  * @author Fryed-peach
  */
 $messages['ja'] = array(
+	'inspectcache' => 'キャッシュの点検',
+	'inspectcache-desc' => '共有キャッシュの中身を点検するための簡素なデバッグツール',
 	'inspectcache-ok' => 'OK',
+	'inspectcache-general' => '一般キャッシュ',
+	'inspectcache-parser' => 'パーサーキャッシュ',
+	'inspectcache-message' => 'メッセージキャッシュ',
+	'inspectcache-get' => '取得',
+	'inspectcache-delete' => '削除',
+	'inspectcache-deleted' => '削除済みキャッシュ',
+	'inspectcache-list' => '一覧',
 );
 
 /** Javanese (Basa Jawa)
@@ -453,7 +515,7 @@ $messages['krj'] = array(
  */
 $messages['ksh'] = array(
 	'inspectcache' => '<i lang="en">Cache</i> beloore',
-	'inspectcache-desc' => 'En eifach Werkzeuch för däm jemeinsamme <i lang="en">cache</i> singe Enhallt ußzelässe.',
+	'inspectcache-desc' => 'En eifach Werkzüch för däm jemeinsamme <i lang="en">cache</i> singe Enhallt enshpezeere.',
 	'inspectcache-ok' => 'OK',
 	'inspectcache-general' => 'Jemeinsame <i lang="en">cache</i>',
 	'inspectcache-parser' => 'Em <i lang="en">Parser</i> singe <i lang="en">cache</i>',
@@ -660,6 +722,22 @@ $messages['pt'] = array(
 	'inspectcache-list' => 'Listar',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'inspectcache' => 'Inspecionar cache',
+	'inspectcache-desc' => 'Uma ferramenta simples de depuração para inspecionar o conteúdo da cache compartilhada',
+	'inspectcache-ok' => 'OK',
+	'inspectcache-general' => 'Cache geral',
+	'inspectcache-parser' => 'Cache do analisador (parser)',
+	'inspectcache-message' => 'Cache de mensagens',
+	'inspectcache-get' => 'Buscar',
+	'inspectcache-delete' => 'Apagar',
+	'inspectcache-deleted' => 'Cache Apagada',
+	'inspectcache-list' => 'Listar',
+);
+
 /** Tarifit (Tarifit)
  * @author Jose77
  */
@@ -801,11 +879,36 @@ $messages['th'] = array(
 	'inspectcache-ok' => 'ตกลง',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'inspectcache' => 'Suriin ang taguan',
+	'inspectcache-desc' => 'Isang payak na kagamitang pangtanggal ng depekto upang masuri ang mga nilalaman ng pinagsasaluhang taguan',
+	'inspectcache-ok' => "Sige/Ayos 'yan",
+	'inspectcache-general' => 'Taguang panlahat',
+	'inspectcache-parser' => 'Taguan ng banghay',
+	'inspectcache-message' => 'Taguan ng mensahe',
+	'inspectcache-get' => 'Kuhanin',
+	'inspectcache-delete' => 'Burahin',
+	'inspectcache-deleted' => 'Burahin ang taguan',
+	'inspectcache-list' => 'Talaan',
+);
+
 /** Turkish (Türkçe)
  * @author Joseph
+ * @author Karduelis
  */
 $messages['tr'] = array(
 	'inspectcache-ok' => 'Tamam',
+	'inspectcache-delete' => 'Sil',
+);
+
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'inspectcache-ok' => 'Maqul',
 );
 
 /** Ukrainian (Українська)

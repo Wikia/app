@@ -37,7 +37,7 @@ function update_flaggedrevs( $start = null ) {
 				$quality = FlaggedRevs::isQuality( $tags ) ? 1 : 0;
 			}
 			$time = $sha1 = $file = null;
-			# Check for file version to see if stored the old way...
+			# Check for file version to see if it's stored the old way...
 			if( !$row->fr_img_name && $row->page_namespace == NS_IMAGE ) {
 				$irow = $db->selectRow( 'flaggedimages',
 					array( 'fi_img_timestamp', 'fi_img_sha1' ),
@@ -89,7 +89,7 @@ function update_flaggedrevs( $start = null ) {
 }
 
 function update_flaggedpages( $start = null ) {
-	echo "Populating and correcting flaggedpages columns\n";
+	echo "Populating and correcting flaggedpages/flaggedpage_config columns\n";
 	
 	$BATCH_SIZE = 500;
 	
@@ -105,38 +105,53 @@ function update_flaggedpages( $start = null ) {
 	$end += $BATCH_SIZE - 1;
 	$blockStart = $start;
 	$blockEnd = $start + $BATCH_SIZE - 1;
-	$count = 0;
-	$deleted = 0;
+	$count = $deleted = $fixed = 0;
 	while( $blockEnd <= $end ) {
 		echo "...doing page_id from $blockStart to $blockEnd\n";
 		$cond = "page_id BETWEEN $blockStart AND $blockEnd";
-		$res = $db->select( 'page', array('page_id','page_namespace','page_title','page_latest'), $cond, __FUNCTION__ );
+		$res = $db->select( 'page', array('page_id','page_namespace','page_title','page_latest'),
+			$cond, __FUNCTION__ );
 		# Go through and update the de-normalized references...
+		$db->begin();
 		foreach( $res as $row ) {
-			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+			$title = Title::newFromRow( $row );
+			$article = new Article( $title );
 			# Replaces new fields into flaggedpages
 			$frev = FlaggedRevision::newFromStable( $title, FR_FOR_UPDATE );
 			# Update fp_stable, fp_quality, and fp_reviewed
-			$db->begin();
 			if( $frev ) {
-				$article = new Article( $title );
-				FlaggedRevs::updateArticleOn( $article, $frev->getRevId(), $row->page_latest );
+				FlaggedRevs::updateArticleOn( $article, $frev->getRevision(), $row->page_latest );
 			# Somethings broke? Delete the row...
 			} else {
-				$db->delete( 'flaggedpages', 
-					array( 'fp_page_id' => $row->page_id ),
-					__FUNCTION__ );
-				if( $db->affectedRows() > 0 )
-					$deleted++;
+				$db->delete( 'flaggedpages', array( 'fp_page_id' => $row->page_id ), __FUNCTION__ );
+				if( $db->affectedRows() > 0 ) $deleted++;
 			}
-			$db->commit();
+			# Get the latest revision
+			$revRow = $db->selectRow( 'revision', '*', array('rev_page' => $row->page_id), __FUNCTION__,
+				array('ORDER BY' => 'rev_timestamp DESC') );
+			# Correct page_latest if needed (import/files made plenty of bad rows)
+			if( $revRow ) {
+				$revision = new Revision( $revRow );
+				if( $article->updateIfNewerOn( $db, $revision ) )
+					$fixed++;
+			}
 			$count++;
 		}
+		# Remove manual config settings that simply restate the site defaults
+		$db->delete( 'flaggedpage_config',
+			array( "fpc_page_id BETWEEN $blockStart AND $blockEnd",
+				'fpc_select'   => FlaggedRevs::getPrecedence(),
+				'fpc_override' => intval( FlaggedRevs::showStableByDefault() )
+			),
+			__FUNCTION__
+		);
+		$deleted = $deleted + $db->affectedRows();
+		$db->commit();
 		$blockStart += $BATCH_SIZE;
 		$blockEnd += $BATCH_SIZE;
 		wfWaitForSlaves( 5 );
 	}
-	echo "flaggedpage columns update complete ... {$count} rows [{$deleted} deleted]\n";
+	echo "flaggedpage columns update complete ... {$count} rows [{$fixed} fixed] [{$deleted} deleted]\n";
 }
 
 function update_flaggedtemplates( $start = null ) {

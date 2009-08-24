@@ -94,9 +94,9 @@ curs = connection.cursor()
 
 # clear out the pull db if requested
 if do_clear: 
-  curs.execute("delete from text")     
-  curs.execute("delete from page")     
-  curs.execute("delete from revision")
+  curs.execute("delete from "+ini_config.get('db', 'prefix')+"text")     
+  curs.execute("delete from "+ini_config.get('db', 'prefix')+"page")     
+  curs.execute("delete from "+ini_config.get('db', 'prefix')+"revision")
   connection.commit()
 
 for dump in dumps:

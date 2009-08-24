@@ -21,8 +21,8 @@
 $wgExtensionCredits['parserhook'][] = array(
 	'name'           => 'Gnuplot',
 	'author'         => 'Christina Pöpper',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2009-03-19 12:34:14 +0000 (Thu, 19 Mar 2009) $',
+	'svn-revision' => '$LastChangedRevision: 48578 $',
 	'description'    => 'Adds the tag <code><nowiki><gnuplot></nowiki></code> to use Gnuplot',
 	'descriptionmsg' => 'gnuplot-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:Gnuplot',
@@ -147,6 +147,6 @@ function getOutputName ( $gnuplotsrc ) {
  * Output  : the filesystem path for the file
  */
 function getSourceDataPath ( $name ) {
-	$h = Image::newFromName($name);
+	$h = wfFindFile($name);
 	return $h->exists() ? $h->getImagePath() : null;
 }

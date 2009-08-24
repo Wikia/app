@@ -647,15 +647,11 @@ Preba [[Special:Search|landeandu]] entri las nuevas páhinas de la güiqui.',
 'rev-deleted-comment'         => '(comentáriu esborrau)',
 'rev-deleted-user'            => '(nombri d´usuáriu esborrau)',
 'rev-deleted-event'           => '(entrá esborrá)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-La revisión desta páhina á siu esborrá.
-Es posibri qu\'aiga detallis nel [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rustrihu d\'esborrau].
-</div>',
-'rev-deleted-text-view'       => "<div class=\"mw-warning plainlinks\">
-Esta revisión de la páhina á siu esborrá enus archivus púbricus.
+'rev-deleted-text-permission' => "La revisión desta páhina á siu esborrá.
+Es posibri qu'aiga detallis nel [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rustrihu d'esborrau].",
+'rev-deleted-text-view'       => "Esta revisión de la páhina á siu esborrá enus archivus púbricus.
 Cumu alministraol d'esti güiqui, t'es posibri vela;
-puei bel detallis nel [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rustrihu d'esborrau].
-</div>",
+puei bel detallis nel [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rustrihu d'esborrau].",
 'rev-delundel'                => 'muestral/açonchal',
 'revisiondelete'              => 'Esborral/arrecuperal revisionis',
 'revdelete-nooldid-title'     => 'Nu ai una revisión destinu',
@@ -1058,13 +1054,12 @@ Pursa nel entítulu la coluna pa chambal el ordin.',
 'imagelinks'                => 'Atihus',
 'linkstoimage'              => '{{PLURAL:$1|El siguienti artículu atiha|Los siguientis $1 artículus atihan}} a esti archivu:',
 'nolinkstoimage'            => 'Nu ai denguna páhina qu´atihi a esti archivu.',
-'sharedupload'              => 'Esti archivu está compartiu i puei gastalsi dendi otrus proyeutus.',
+'sharedupload'              => 'Esti archivu está compartiu i puei gastalsi dendi otrus proyeutus.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'shareduploadwiki'          => 'Pa mas enhormación, puei consurtal $1.',
 'shareduploadwiki-linktext' => 'páhina e descrición el archivu',
 'noimage'                   => 'Nu desisti dengún archivu llamau asina, pueis $1.',
 'noimage-linktext'          => 'empuntalu',
 'uploadnewversion-linktext' => 'Empuntal una nueva velsión d´esti archivu',
-'imagepage-searchdupe'      => 'Landeal archivus dupricaus',
 
 # File reversion
 'filerevert'                => 'Revertil $1',
@@ -1228,7 +1223,8 @@ Pursa nel entítulu la coluna pa chambal el ordin.',
 'special-categories-sort-abc'   => 'ordenal alfabeticamenti',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Contribucionis el usuáriu esborrás',
+'deletedcontributions'       => 'Contribucionis el usuáriu esborrás',
+'deletedcontributions-title' => 'Contribucionis el usuáriu esborrás',
 
 # Special:LinkSearch
 'linksearch'    => 'Atihus estelnus',
@@ -1487,7 +1483,7 @@ $1',
 'contributions-title' => 'Contribucionis del usuáriu a $1',
 'mycontris'           => 'Los mis endirguis',
 'contribsub2'         => 'Pa $1 ($2)',
-'nocontribs'          => "Nu s'alcuentrun chambus con esus criterius.",
+'nocontribs'          => "Nu s'alcuentrun chambus con esus criterius.", # Optional parameter: $1 is the user name
 'uctop'               => '(úrtimu chambu)',
 'month'               => 'Mes:',
 'year'                => 'Añu:',
@@ -1906,6 +1902,7 @@ Cualisquiel otru atihu ena mesma línia se consierará ececión, p.s. páhinas o
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags
@@ -2126,11 +2123,9 @@ Cualisquiel otru atihu ena mesma línia se consierará ececión, p.s. páhinas o
 'confirmemail'             => 'Confirmal email',
 'confirmemail_noemail'     => 'Nu as escrebiu una direción d´email correta enas tus [[Special:Preferences|preferéncias]].',
 'confirmemail_text'        => "{{SITENAME}} requieri que confirmis la tu direción d'email enantis de gastal las huncionis de correu. Ativa el botón d'embahu pa envial un correu e confirmación a la tu direción. El correu incluirá un atihu con un cóigu; sigui el atihu pa confirmal la tu direción d'email.",
-'confirmemail_pending'     => '<div class="error">
-Un coigu e confirmación s\'á enviau a la tu direción d\'email; si acabihas de
+'confirmemail_pending'     => "Un coigu e confirmación s'á enviau a la tu direción d'email; si acabihas de
 crial la tu cuenta, aspera duranti angunus minutus a que te chegui el
-correu enantis de solicital otru coigu.
-</div>',
+correu enantis de solicital otru coigu.",
 'confirmemail_send'        => 'Envial un coigu e confirmación pol email',
 'confirmemail_sent'        => 'Email de confirmación enviau.',
 'confirmemail_oncreate'    => "S'á enviau un cóigu e confirmación a la tu direción de correu eletrónicu.
@@ -2169,11 +2164,9 @@ El coigu de confirmación caucará a las $4.',
 'scarytranscludetoolong'  => '[La URL es mu larga]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">
-Trackbacks pa esti artículu:<br />
-$1
-</div>',
-'trackbackremove'   => ' ([$1 Esborral])',
+'trackbackbox'      => 'Trackbacks pa esti artículu:<br />
+$1',
+'trackbackremove'   => '([$1 Esborral])',
 'trackbackdeleteok' => "El trackback s'á esborrau corretamenti.",
 
 # Delete conflict

@@ -28,8 +28,11 @@ class MV_SequencePage extends Article {
 	/*
 	 * returns the xml output of the sequence with all wiki-text templates/magic words swapped out
 	 * also resolves all image and media locations with absolute paths.
+	 *@param $partial_node_set  'full' (the full nodeset) 
+	 * 							'seq' (just seq elements)  
+	 * 							'transition' (just transition elements)
 	 */
-	function getSequenceSMIL(){
+	function getSequenceSMIL( $partial_node_set='full' ){
 		global $wgParser,$wgOut, $wgUser, $wgEnableParserCache;		
 		//temporally stop cache:  
 		$wgEnableParserCache=false;
@@ -48,7 +51,7 @@ class MV_SequencePage extends Article {
 	    $this->resolveHLRD_to_SMIL();
 	    	    	    	    	    
 	    //@@todo get parser Output Object (maybe cleaner way to do this? 
-	    //maybe parser cache is not the right place for this?) 
+	    //maybe parser cache is not the right place to cache the sequence xml? ) 
 	    $parserOutput = $wgParser->parse('', $this->mTitle, ParserOptions::newFromUser( $wgUser ));	    
 	    //output header: 	    
 	    $parserOutput->mText.=$this->smilDoc->saveXML();
@@ -136,10 +139,8 @@ class MV_SequencePage extends Article {
 		if(!is_null($nodeAttr)){ 
 			foreach($nodeAttr as $atrr){
 				if($atrr->nodeName=='uri'){
-					//pull in node content
 					$node_uri = $atrr->nodeValue;					
-				}				
-				//print "$attr = ".  $atrr->nodeValue . "\n";
+				}
 			}
 		}		
 		
@@ -156,7 +157,13 @@ class MV_SequencePage extends Article {
  				//top level ref includes of pages in the main namespace not supported
  			break;
  			case MV_NS_SEQUENCE:
- 				//type sequence ..@@todo transclude the sequence into present sequence (try to avoid id) 
+ 				//type sequence ..@@todo transclude the sequence into present sequence
+ 				//@@todo we should 
+ 				//change the node type to "par" to group the sequence under a single element (helpfull for editor representation)  
+				/*$parElm = $node->ownerDocument->createElement('par');
+ 				
+				$seqArticle = new MV_SequencePage( $uriTitle );
+ 				$seqArticle->getSequenceSMIL();*/
  			break;
  			case MV_NS_STREAM:
  				global $mvDefaultVideoQualityKey, $mvDefaultFlashQualityKey;
@@ -206,34 +213,47 @@ class MV_SequencePage extends Article {
  				//if template look for template parameters:
  				$templateText = '{{'. $uriTitle->getText();
  				$addedParamFlag=false;
- 				while ($node->childNodes->length){
- 					if($node->firstChild->nodeName=='param'){
+ 				$paramVars = Array();
+ 				while ( $node->childNodes->length ){
+ 					if( $node->firstChild->nodeName=='param' ){
  						$param = & $node->firstChild;
  						//make sure we have a name:  
- 						if($param->hasAttribute('name')){
+ 						if( $param->hasAttribute('name') ){ 					
  							//we have parameters:
  							$templateText.= "|\n";
  							$templateText .= $param->getAttribute('name') . '=';
  							//try and get the value from the value attribute or innerHTML
  							if($param->hasAttribute('value')){
  								$templateText .= $param->getAttribute('value');
+ 								$paramVars[ $param->getAttribute('name') ] = $param->getAttribute('value');
  							}else{
  								//grab from inner html:
+ 								$inerHTML ='';
  								while ($param->childNodes->length){
- 									$templateText .= $param->ownerDocument->saveXML( $param->firstChild );	
- 									$param->removeChild( $param->firstChild );
- 								} 								
+ 									$inerHTML .= $param->ownerDocument->saveXML( $param->firstChild ); 										
+ 									$param->removeChild( $param->firstChild ); 									
+ 								} 	
+ 								$templateText .= $inerHTML;
+ 								$paramVars[ $param->getAttribute('name') ] = $inerHTML;							
  							} 							
  						}
  						$addedParamFlag=true;
  					}
- 					$node->removeChild($node->firstChild);
+ 					$node->removeChild($node->firstChild); 					
  				}
  				//close up the template wikiText call:
  				$templateText.=($addedParamFlag)?"\n}}":'}}';
  				//$parserOutput = $wgParser->parse($templateText  ,$this->mTitle, ParserOptions::newFromUser( $wgUser ));
  				//print "should parse: \n $templateText";
  				$this->parseInnerWikiText($node, $templateText);
+ 				//re-add the param nodes
+ 				$phtml='';
+				foreach($paramVars as $name=>$val){
+ 					$phtml.='<param name="' . htmlentities($name) . '">' . htmlentities($val) . '</param>';
+ 				}
+ 				$f = $node->ownerDocument->createDocumentFragment();
+ 				$f->appendXML(  $phtml );
+				$node->appendChild($f); 
  			break;
  			case NS_IMAGE:
  			case NS_FILE:

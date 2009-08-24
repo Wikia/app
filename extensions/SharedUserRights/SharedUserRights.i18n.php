@@ -51,6 +51,19 @@ $messages['arz'] = array(
 	'gblrights-rights-entry' => 'غير عضوية المجموعة العامة ل$1 من $2 إلى $3',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
+ */
+$messages['be-tarask'] = array(
+	'shareduserrights' => 'Кіраваньне агульнымі паміж праектамі правамі ўдзельніка',
+	'gblrights-desc' => 'Простае [[Special:SharedUserRights|кіраваньне глябальнымі правамі ўдзельнікаў]]',
+	'gblrights-logpage' => 'Журнал глябальных правоў удзельнікаў',
+	'gblrights-pagetext' => 'Гэта журнал усіх зьменаў, зробленых у глябальных правах у групе праектаў вікі',
+	'gblrights-rights-entry' => 'зьменены ўдзел у глябальных групах для $1 з $2 на $3',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -104,15 +117,25 @@ $messages['eo'] = array(
 	'gblrights-pagetext' => 'Jen protokolo por ĉiu de la ŝanĝoj faritaj al la vikiara tabelo de ĝeneralaj rajtoj',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'shareduserrights' => 'Administración de derechos de usuario compartido',
+	'gblrights-desc' => '[[Special:SharedUserRights|Administración de derechos de usuario global]] fácil',
+	'gblrights-rights-entry' => 'cambiado membresía de grupo global para $1 de $2 a $3',
+);
+
 /** French (Français)
  * @author IAlex
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'shareduserrights' => "Gestion des droits d'utilisateur partagés",
-	'gblrights-desc' => "[[Special:SharedUserRights|gestion simple des droits d'utilisateur partagés]]",
-	'gblrights-logpage' => 'Historique des droits globaux',
-	'gblrights-pagetext' => "Ceci est l'historique de toutes les modification effectuées dans la table globale des droits d'utilisateur",
-	'gblrights-rights-entry' => "a modifié l'appartenance globale aux groupes pour $1 de $2 à $3",
+	'shareduserrights' => 'Gestion des droits d’utilisateur partagés',
+	'gblrights-desc' => '[[Special:SharedUserRights|Gestion simple des droits d’utilisateur partagés]]',
+	'gblrights-logpage' => 'Journal des droits partagés',
+	'gblrights-pagetext' => 'Voici l’historique de toutes les modifications apportées à la table des droits partagés d’utilisateur pour la famille wiki',
+	'gblrights-rights-entry' => 'a modifié l’appartenance aux groupes globaux pour $1 de $2 à $3',
 );
 
 /** Irish (Gaeilge)
@@ -131,6 +154,17 @@ $messages['gl'] = array(
 	'gblrights-logpage' => 'Rexistro de dereitos globais',
 	'gblrights-pagetext' => 'Este é un rexistro de todos os cambios feitos na táboa de dereitos globais da familia wiki',
 	'gblrights-rights-entry' => 'cambiou o grupo global ao que pertence "$1" de $2 a $3',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'shareduserrights' => 'Gmeinsami Benutzerrächtverwaltig',
+	'gblrights-desc' => 'Eifachi [[Special:SharedUserRights|wältwyti Benutzerrächtverwaltig]]',
+	'gblrights-logpage' => 'Wältwyt Rächt-Logbuech',
+	'gblrights-pagetext' => 'In däm Logbuech het s alli Änderige, wu an dr wältwyte Rächttabälle vu dr Wikifamilie gmacht wore sin.',
+	'gblrights-rights-entry' => 'het di wältwyt Gruppezuegherigkeit fir $1 vu $2 uf $3 gänderet',
 );
 
 /** Hebrew (עברית)
@@ -167,6 +201,17 @@ $messages['ia'] = array(
 	'gblrights-rights-entry' => 'cambiava le membrato de gruppos global pro $1 de $2 a $3',
 );
 
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'shareduserrights' => '共有利用者権限管理',
+	'gblrights-desc' => '簡単な[[Special:SharedUserRights|グローバル利用者権限管理]]',
+	'gblrights-logpage' => 'グローバル権限記録',
+	'gblrights-pagetext' => 'これはこのウィキファミリーのグローバル利用者権限テーブルに対するすべての変更の記録です',
+	'gblrights-rights-entry' => '$1 のグローバルグループ所属を $2 から $3 に変更',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Thearith
  */
@@ -201,6 +246,7 @@ $messages['lb'] = array(
 	'shareduserrights' => 'Administratioun vun de gedeelte Benotzerrechter',
 	'gblrights-desc' => 'Einfach [[Special:SharedUserRights|Administratioun vun de globale Benotzerrechter]]',
 	'gblrights-logpage' => 'Lëscht vun de globale Rechter',
+	'gblrights-pagetext' => 'Dëst ass e Logbuch vun allen Ännerungen déi un der Tabell vun de globale Rechter vun der Wikifamill gemaach ginn',
 	'gblrights-rights-entry' => 'huet déi global Benotzerrechter vum $1 vun $2 op $3 geännert',
 );
 
@@ -239,13 +285,36 @@ $messages['oc'] = array(
 
 /** Polish (Polski)
  * @author Leinad
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'shareduserrights' => 'Wspólne zarządzanie uprawnieniami użytkownika',
-	'gblrights-desc' => 'Łatwe zarządzanie [[Special:SharedUserRights|globalnymi uprawnieniami użytkownika]]',
+	'shareduserrights' => 'Zarządzanie wspólnymi między projektami uprawnieniami użytkownika',
+	'gblrights-desc' => 'Łatwe zarządzanie [[Special:SharedUserRights|globalnymi uprawnieniami użytkowników]]',
 	'gblrights-logpage' => 'Rejestr globalnych uprawnień',
-	'gblrights-pagetext' => 'To jest rejestr wszystkich zmian w globalnych uprawnieniach dokonanych dla grupy projektów wiki',
+	'gblrights-pagetext' => 'To jest rejestr wszystkich zmian w globalnych uprawnieniach wykonanych dla grupy projektów wiki',
 	'gblrights-rights-entry' => 'zmienił globalną przynależność $1 do grup ($2 → $3)',
+);
+
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'shareduserrights' => 'Gestão de Permissões de Utilizadores Partilhadas',
+	'gblrights-desc' => '[[Special:SharedUserRights|Administração de permissões de utilizadores globais]] fácil',
+	'gblrights-logpage' => 'Registo de Permissões Globais',
+	'gblrights-pagetext' => 'Este é um registo de todas as alterações feitas à tabela de permissões globais da família de wikis',
+	'gblrights-rights-entry' => 'alterou grupo global de $1, de $2 para $3',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'shareduserrights' => 'Gestão de Permissões de Utilizadores Compartilhadas',
+	'gblrights-desc' => '[[Special:SharedUserRights|Administração global de permissões de utilizadores]] fácil',
+	'gblrights-logpage' => 'Registo de Permissões Globais',
+	'gblrights-pagetext' => 'Este é um registro de todas as alterações feitas à tabela de permissões globais da família de wikis',
+	'gblrights-rights-entry' => 'alterou grupo global de $1, de $2 para $3',
 );
 
 /** Russian (Русский)
@@ -283,6 +352,13 @@ $messages['tl'] = array(
 	'gblrights-logpage' => 'Talaan ng mga Karapatang Pandaigdigan',
 	'gblrights-pagetext' => 'Isa itong talaan ng lahat ng mga pagbabagong ginawa sa tabla ng mga karapatang pandaigdigan ng mag-anak ng wiki',
 	'gblrights-rights-entry' => 'binago ang kasapian sa pandaigidigang pangkat para kay $1 mula $2 patungo sa $3',
+);
+
+/** Turkish (Türkçe)
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'gblrights-logpage' => 'Küresel Kullanıcı Hakları Kayıtları',
 );
 
 /** Ukrainian (Українська)

@@ -260,6 +260,7 @@ class SpecialUploadAvatar extends UnlistedSpecialPage {
 		if($origWidth < $thumbWidth)$thumbWidth = $origWidth;
 		$thumbHeight = ($thumbWidth * $origHeight / $origWidth);
 		if($thumbHeight < $thumbWidth)$border = " -bordercolor white  -border  0x" . (($thumbWidth - $thumbHeight) / 2);
+		// FIXME: Notice: Undefined variable: border		
 		if($TypeCode == 2)exec("convert -size " . $thumbWidth . "x" . $thumbWidth . " -resize " . $thumbWidth . " -crop " . $thumbWidth . "x" . $thumbWidth . "+0+0   -quality 100 " . $border . " " . $imageSrc . " " . $this->avatarUploadDirectory . "/" . $imgDest . ".jpg");
 		if($TypeCode == 1)exec("convert -size " . $thumbWidth . "x" . $thumbWidth . " -resize " . $thumbWidth . " -crop " . $thumbWidth . "x" . $thumbWidth . "+0+0 " . $imageSrc . " " . $border . " " . $this->avatarUploadDirectory . "/" . $imgDest . ".gif");
 		if($TypeCode == 3)exec("convert -size " . $thumbWidth . "x" . $thumbWidth . " -resize " . $thumbWidth . " -crop " . $thumbWidth . "x" . $thumbWidth . "+0+0 " . $imageSrc . " " . $this->avatarUploadDirectory . "/" . $imgDest . ".png");
@@ -333,11 +334,13 @@ class SpecialUploadAvatar extends UnlistedSpecialPage {
 
 		$key = wfMemcKey( 'user', 'profile', 'avatar', $wgUser->getID() , 'ml' );
 		$data = $wgMemc->delete( $key );
+		// FIXME: Notice: Undefined variable: type
 		if( $type > 0 ){
 			//$dbr = wfGetDB( DB_SLAVE );
 			//$sql = "UPDATE user set user_avatar = " . $type . " WHERE user_id = " . $wgUser->mId;
 			//$res = $dbr->query($sql);
 		} else {
+			// FIXME: Notice: Undefined variable: stash
 			$wgOut->fileCopyError( $tempName, $stash );
 		}
 		return $type;

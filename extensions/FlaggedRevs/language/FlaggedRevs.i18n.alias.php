@@ -19,7 +19,7 @@ $aliases['en'] = array(
 	'ReaderFeedback' => array( 'ReaderFeedback' ),
 	'ReviewedPages' => array( 'ReviewedPages' ),
 	'RevisionReview' => array( 'RevisionReview' ),
-	'Stabilization' => array( 'Stabilization' ),
+	'Stabilization' => array( 'Stabilization', 'Stabilisation' ),
 	'StablePages' => array( 'StablePages' ),
 	'StableVersions' => array( 'StableVersions' ),
 	'UnreviewedPages' => array( 'UnreviewedPages' ),
@@ -130,6 +130,24 @@ $aliases['de'] = array(
 	'ValidationStatistics' => array( 'Markierungsstatistik' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'LikedPages' => array( 'Kwalitne boki' ),
+	'OldReviewedPages' => array( 'Zasej njepśeglědane boki' ),
+	'ProblemPages' => array( 'Problematiske boki' ),
+	'QualityOversight' => array( 'Kwalitna kontrola' ),
+	'RatingHistory' => array( 'Stawizny pógódnośenjow' ),
+	'ReaderFeedback' => array( 'Pógódnośenja cytarjow' ),
+	'ReviewedPages' => array( 'Pśeglědane boki' ),
+	'RevisionReview' => array( 'Wersijowe pśeglědanje' ),
+	'Stabilization' => array( 'Stabilizacija' ),
+	'StablePages' => array( 'Stabilne boki' ),
+	'StableVersions' => array( 'Stabilne wersije' ),
+	'UnreviewedPages' => array( 'Njepśeglědane boki' ),
+	'UnstablePages' => array( 'Njestabilne boki' ),
+	'ValidationStatistics' => array( 'Statistika pśeglědanjow' ),
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -141,6 +159,11 @@ $aliases['eo'] = array(
 	'StablePages' => array( 'StabilajPaĝoj' ),
 	'StableVersions' => array( 'StabilajVersioj' ),
 	'UnreviewedPages' => array( 'NekontrolitajPaĝoj' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'UnreviewedPages' => array( 'Páginas_sin_revisar' ),
 );
 
 /** Persian (فارسی) */
@@ -166,19 +189,24 @@ $aliases['fa'] = array(
  * @author Verdy p
  */
 $aliases['fr'] = array(
+	'LikedPages' => array( 'Pages appréciées' ),
 	'OldReviewedPages' => array( 'AnciennesPagesRelues' ),
 	'ProblemPages' => array( 'PagesProblematiques' ),
 	'QualityOversight' => array( 'SuperviseurQualité' ),
 	'ReviewedPages' => array( 'Pages révisées' ),
+	'RevisionReview' => array( 'Relecture des révisions' ),
 	'StablePages' => array( 'PagesStables' ),
 	'StableVersions' => array( 'VersionsStables' ),
 	'UnreviewedPages' => array( 'PagesNonRelues' ),
+	'UnstablePages' => array( 'Pages instables' ),
+	'ValidationStatistics' => array( 'Statistiques de validation' ),
 );
 
 /** Galician (Galego)
  * @author Toliño
  */
 $aliases['gl'] = array(
+	'LikedPages' => array( 'Páxinas ligadas' ),
 	'OldReviewedPages' => array( 'Páxinas revisadas hai tempo' ),
 	'ProblemPages' => array( 'Páxinas problemáticas' ),
 	'QualityOversight' => array( 'Revisión de calidade' ),
@@ -229,6 +257,24 @@ $aliases['hr'] = array(
 	'StablePages' => array( 'Stabilne_stranice' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'LikedPages' => array( 'Kwalitne strony' ),
+	'OldReviewedPages' => array( 'Zaso njepřehladane strony' ),
+	'ProblemPages' => array( 'Problematiske strony' ),
+	'QualityOversight' => array( 'Kwalitna kontrola' ),
+	'RatingHistory' => array( 'Stawizny pohódnoćenjow' ),
+	'ReaderFeedback' => array( 'Pohódnoćenjow čitarjow' ),
+	'ReviewedPages' => array( 'Přehladane strony' ),
+	'RevisionReview' => array( 'Wersijowe přehladanje' ),
+	'Stabilization' => array( 'Stabilizacija' ),
+	'StablePages' => array( 'Stabilne strony' ),
+	'StableVersions' => array( 'Stabilne wersije' ),
+	'UnreviewedPages' => array( 'Njepřehladane strony' ),
+	'UnstablePages' => array( 'Njestabilne strony' ),
+	'ValidationStatistics' => array( 'Statistika přehladanjow' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'LikedPages' => array( 'Jónak ítélt lapok' ),
@@ -245,6 +291,23 @@ $aliases['hu'] = array(
 	'UnreviewedPages' => array( 'Ellenőrizetlen lapok' ),
 	'UnstablePages' => array( 'Nem rögzített lapok', 'Rögzítetlen lapok' ),
 	'ValidationStatistics' => array( 'Ellenőrzési statisztika' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'LikedPages' => array( 'Paginas ligate' ),
+	'OldReviewedPages' => array( 'Paginas revidite ancian' ),
+	'ProblemPages' => array( 'Paginas problematic' ),
+	'QualityOversight' => array( 'Supervision de qualitate' ),
+	'RatingHistory' => array( 'Historia de evalutationes' ),
+	'ReaderFeedback' => array( 'Reactiones de lectores' ),
+	'ReviewedPages' => array( 'Paginas revidite' ),
+	'RevisionReview' => array( 'Recension de versiones' ),
+	'StablePages' => array( 'Paginas stabile' ),
+	'StableVersions' => array( 'Versiones stabile' ),
+	'UnreviewedPages' => array( 'Paginas non revidite' ),
+	'UnstablePages' => array( 'Paginas non stabile' ),
+	'ValidationStatistics' => array( 'Statisticas de validation' ),
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -266,12 +329,35 @@ $aliases['id'] = array(
 	'ValidationStatistics' => array( 'Statistik validasi', 'StatistikValidasi' ),
 );
 
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'LikedPages' => array( '評価の高いページ' ),
+	'OldReviewedPages' => array( '古くなった査読済みページ' ),
+	'ProblemPages' => array( '評価の低いページ', '問題のあるページ' ),
+	'QualityOversight' => array( '品質監督' ),
+	'RatingHistory' => array( '評価履歴', 'ページ評価履歴' ),
+	'ReaderFeedback' => array( '読者評価' ),
+	'ReviewedPages' => array( '査読済みページ' ),
+	'RevisionReview' => array( '特定版の査読' ),
+	'Stabilization' => array( '採択', 'ページの採択' ),
+	'StablePages' => array( '安定ページ' ),
+	'StableVersions' => array( '安定版', '採用版' ),
+	'UnreviewedPages' => array( '未査読ページ', '査読待ちページ' ),
+	'UnstablePages' => array( '非安定ページ' ),
+	'ValidationStatistics' => array( '判定統計' ),
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
  */
 $aliases['km'] = array(
 	'LikedPages' => array( 'ទំពរ​មាន​តំណភ្ជាប់' ),
 	'ProblemPages' => array( 'ទំព័រមានបញ្ហា' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'ReaderFeedback' => array( '독자피드백' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -296,7 +382,9 @@ $aliases['lb'] = array(
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
 	'LikedPages' => array( 'БараниСтраници' ),
+	'OldReviewedPages' => array( 'СтариОценетиСтраници' ),
 	'ProblemPages' => array( 'ПроблематичниСтраници' ),
+	'RatingHistory' => array( 'ИсторијаНаОценување' ),
 	'ReviewedPages' => array( 'ПрегледаниСтраници' ),
 	'Stabilization' => array( 'Стабилизација' ),
 	'StablePages' => array( 'СтабилниСтраници' ),
@@ -375,6 +463,24 @@ $aliases['nl'] = array(
 	'ValidationStatistics' => array( 'Eindredactiestatistieken', 'StatistiekenEindredactie' ),
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'LikedPages' => array( 'Lika sider' ),
+	'OldReviewedPages' => array( 'Gamle vurderte sider' ),
+	'ProblemPages' => array( 'Problemsider' ),
+	'QualityOversight' => array( 'Kvalitetsoversyn' ),
+	'RatingHistory' => array( 'Vurderingsoversyn' ),
+	'ReaderFeedback' => array( 'Vurderingshistorikk' ),
+	'ReviewedPages' => array( 'Vurderte sider' ),
+	'RevisionReview' => array( 'Versjonsvurdering' ),
+	'Stabilization' => array( 'Stabilisering' ),
+	'StablePages' => array( 'Stabile sider' ),
+	'StableVersions' => array( 'Stabile versjonar' ),
+	'UnreviewedPages' => array( 'Ikkje-vurderte sider' ),
+	'UnstablePages' => array( 'Ustabile sider' ),
+	'ValidationStatistics' => array( 'Valideringsstatistikk' ),
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
@@ -405,7 +511,7 @@ $aliases['oc'] = array(
 	'StablePages' => array( 'Paginas establas', 'PaginasEstablas' ),
 	'StableVersions' => array( 'Versions establas', 'VersionsEstablas' ),
 	'UnreviewedPages' => array( 'Paginas pas relegidas', 'PaginasPasRelegidas' ),
-	'UnstablePages' => array( 'Paginas instablas', 'PaginasInstablas' ),
+	'UnstablePages' => array( 'Paginas instablas', 'PaginasInstablas', 'PaginasPas Relegidas' ),
 );
 
 /** Polish (Polski)
@@ -466,6 +572,24 @@ $aliases['pt-br'] = array(
 	'ValidationStatistics' => array( 'Estatísticas de validação' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'LikedPages' => array( 'इष्टपृष्ठ' ),
+	'OldReviewedPages' => array( 'पूर्वतनआवलोकीतपृष्ठ:' ),
+	'ProblemPages' => array( 'समस्यापृष्ठ' ),
+	'QualityOversight' => array( 'गुणपूर्णवृजावलोकन' ),
+	'RatingHistory' => array( 'मुल्यांकनइतिहास' ),
+	'ReaderFeedback' => array( 'वाचकप्रतिक्रिया' ),
+	'ReviewedPages' => array( 'समसमीक्षीतपृष्ठ:' ),
+	'RevisionReview' => array( 'आवृत्तीसमसमीक्षा' ),
+	'Stabilization' => array( 'स्वास्थ्य' ),
+	'StablePages' => array( 'स्वस्थपृष्ठ' ),
+	'StableVersions' => array( 'स्वस्थआवृत्ती' ),
+	'UnreviewedPages' => array( 'असमसमीक्षीतपृष्ठ:' ),
+	'UnstablePages' => array( 'अस्थीरपृष्ठ' ),
+	'ValidationStatistics' => array( 'उपयोगितासिद्धीसांख्यिकी' ),
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -477,6 +601,16 @@ $aliases['sk'] = array(
 	'StablePages' => array( 'StabilnéStránky' ),
 	'StableVersions' => array( 'StabilnéVerzie' ),
 	'UnreviewedPages' => array( 'NeskontrolovanéStránky' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'ProblemPages' => array( 'FaqetProblem' ),
+	'RatingHistory' => array( 'HistoriaeVlerësimit' ),
+	'Stabilization' => array( 'Stabilizim' ),
+	'StablePages' => array( 'FaqetStabile' ),
+	'StableVersions' => array( 'VerzionetStabile' ),
+	'UnstablePages' => array( 'FaqetJoStabile' ),
 );
 
 /** Serbian Cyrillic ekavian (ћирилица)
@@ -510,6 +644,7 @@ $aliases['sv'] = array(
 	'StablePages' => array( 'Stabila sidor' ),
 	'StableVersions' => array( 'Stabila versioner' ),
 	'UnreviewedPages' => array( 'Ogranskade sidor' ),
+	'UnstablePages' => array( 'Ostabila sidor' ),
 	'ValidationStatistics' => array( 'Valideringsstatistik' ),
 );
 
@@ -527,6 +662,24 @@ $aliases['sw'] = array(
 	'ValidationStatistics' => array( 'TakwimuIliyosahihi' ),
 );
 
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'LikedPages' => array( 'Nagustuhang mga pahina' ),
+	'OldReviewedPages' => array( 'Nasuring lumang mga pahina' ),
+	'ProblemPages' => array( 'Mga pahinang may suliranin' ),
+	'QualityOversight' => array( 'Maingat na pamamahala ng kalidad' ),
+	'RatingHistory' => array( 'Kasaysayan ng pag-aantas' ),
+	'ReaderFeedback' => array( 'Balik-ulat ng mambabasa' ),
+	'ReviewedPages' => array( 'Sinuring mga pahina' ),
+	'RevisionReview' => array( 'Pagsusuri ng pagbabago' ),
+	'Stabilization' => array( 'Pagpapatatag', 'pagpapatibay' ),
+	'StablePages' => array( 'Matatag na mga pahina' ),
+	'StableVersions' => array( 'Matatag na mga bersyon' ),
+	'UnreviewedPages' => array( 'Mga pahina hindi pa nasusuri' ),
+	'UnstablePages' => array( 'Hindi matatag na mga pahina' ),
+	'ValidationStatistics' => array( 'Mga estadistika ng pagtitiyak' ),
+);
+
 /** Vèneto (Vèneto)
  * @author Candalua
  */
@@ -537,6 +690,8 @@ $aliases['vec'] = array(
 	'StablePages' => array( 'PagineStabili' ),
 	'StableVersions' => array( 'VersionStabili' ),
 	'UnreviewedPages' => array( 'PagineNonRiesaminà' ),
+	'UnstablePages' => array( 'PagineMiaStabili' ),
+	'ValidationStatistics' => array( 'StatìstegheDeValidassion' ),
 );
 
 /** Vietnamese (Tiếng Việt)

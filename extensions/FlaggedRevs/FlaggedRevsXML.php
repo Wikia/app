@@ -4,8 +4,10 @@ class FlaggedRevsXML {
 	/**
 	 * Get a selector of reviewable namespaces
 	 * @param int $selected, namespace selected
+	 * @param $all Mixed: Value of an item denoting all namespaces, or null to omit
+	 * @returns string
 	 */
-	public static function getNamespaceMenu( $selected=null ) {
+	public static function getNamespaceMenu( $selected=null, $all=null ) {
 		global $wgContLang, $wgFlaggedRevsNamespaces;
 		wfLoadExtensionMessages( 'FlaggedRevs' );
 		$s = "<label for='namespace'>" . wfMsgHtml('namespace') . "</label>";
@@ -20,9 +22,12 @@ class FlaggedRevsXML {
 		}
 		$s .= "\n<select id='namespace' name='namespace' class='namespaceselector'>\n";
 		$arr = $wgContLang->getFormattedNamespaces();
+		if( !is_null($all) ) {
+			$arr = array( $all => wfMsg( 'namespacesall' ) ) + $arr; // should be first
+		}
 		foreach( $arr as $index => $name ) {
-			# Content only
-			if($index < NS_MAIN || !in_array($index, $wgFlaggedRevsNamespaces) ) {
+			# Content pages only (except 'all')
+			if( $index !== $all && !in_array($index, $wgFlaggedRevsNamespaces) ) {
 				continue;
 			}
 			$name = $index !== 0 ? $name : wfMsg('blanknamespace');
@@ -39,13 +44,33 @@ class FlaggedRevsXML {
 	/**
 	 * Get a selector of review levels
 	 * @param int $selected, selected level
+	 * @param string $all, all selector msg?
+	 * @param int $max max level?
 	 */
-	public static function getLevelMenu( $selected=null ) {
+	public static function getLevelMenu( $selected=null, $all='revreview-filter-all', $max=2 ) {
 		wfLoadExtensionMessages( 'FlaggedRevs' );
-		$s = Xml::openElement( 'select', array('name' => 'level') );
-		$s .= Xml::option( wfMsg( "revreview-filter-level-0" ), 0, $selected===0 );
+		$s = "<label for='wpLevel'>" . wfMsgHtml('revreview-levelfilter') . "</label>&nbsp;";
+		$s .= Xml::openElement( 'select', array('name' => 'level','id' => 'wpLevel') );
+		if( $all !== false )
+			$s .= Xml::option( wfMsg( $all ), -1, $selected===-1 );
+		$s .= Xml::option( wfMsg( 'revreview-lev-sighted' ), 0, $selected===0 );
 		if( FlaggedRevs::qualityVersions() )
-			$s .= Xml::option( wfMsg( "revreview-filter-level-1" ), 1, $selected===1 );
+			$s .= Xml::option( wfMsg( 'revreview-lev-quality' ), 1, $selected===1 );
+		if( $max >= 2 && FlaggedRevs::pristineVersions() )
+			$s .= Xml::option( wfMsg( 'revreview-lev-pristine' ), 2, $selected===2 );
+		# Note: Pristine not tracked at sp:QualityOversight (counts as quality)
+		$s .= Xml::closeElement('select')."\n";
+		return $s;
+	}
+	
+	public static function getPrecedenceMenu( $selected=null ) {
+		wfLoadExtensionMessages( 'FlaggedRevs' );
+		$s = Xml::openElement( 'select', array('name' => 'precedence','id' => 'wpPrecedence') );
+		$s .= Xml::option( wfMsg( 'revreview-lev-sighted' ), FLAGGED_VIS_LATEST, $selected==FLAGGED_VIS_LATEST );
+		if( FlaggedRevs::qualityVersions() )
+			$s .= Xml::option( wfMsg( 'revreview-lev-quality' ), FLAGGED_VIS_QUALITY, $selected==FLAGGED_VIS_QUALITY );
+		if( FlaggedRevs::pristineVersions() )
+			$s .= Xml::option( wfMsg( 'revreview-lev-pristine' ), FLAGGED_VIS_PRISTINE, $selected==FLAGGED_VIS_PRISTINE );
 		$s .= Xml::closeElement('select')."\n";
 		return $s;
 	}
@@ -56,8 +81,8 @@ class FlaggedRevsXML {
 	 */
 	public static function getStatusFilterMenu( $selected=null ) {
 		wfLoadExtensionMessages( 'FlaggedRevs' );
-		$s  = "<label for='status'>" . wfMsgHtml('revreview-statusfilter') . "</label>&nbsp;";
-		$s .= Xml::openElement( 'select', array('name' => 'status') );
+		$s = "<label for='wpStatus'>" . wfMsgHtml('revreview-statusfilter') . "</label>&nbsp;";
+		$s .= Xml::openElement( 'select', array('name' => 'status','id' => 'wpStatus') );
 		$s .= Xml::option( wfMsg( "revreview-filter-all" ), -1, $selected===-1 );
 		$s .= Xml::option( wfMsg( "revreview-filter-approved" ), 1, $selected===1 );
 		$s .= Xml::option( wfMsg( "revreview-filter-reapproved" ), 2, $selected===2 );
@@ -72,8 +97,8 @@ class FlaggedRevsXML {
 	 */
 	public static function getAutoFilterMenu( $selected=null ) {
 		wfLoadExtensionMessages( 'FlaggedRevs' );
-		$s  = "<label for='approved'>" . wfMsgHtml('revreview-typefilter') . "</label>&nbsp;";
-		$s .= Xml::openElement( 'select', array('name' => 'automatic') );
+		$s = "<label for='wpApproved'>" . wfMsgHtml('revreview-typefilter') . "</label>&nbsp;";
+		$s .= Xml::openElement( 'select', array('name' => 'automatic','id' => 'wpApproved') );
 		$s .= Xml::option( wfMsg( "revreview-filter-all" ), -1, $selected===-1 );
 		$s .= Xml::option( wfMsg( "revreview-filter-manual" ), 0, $selected===0 );
 		$s .= Xml::option( wfMsg( "revreview-filter-auto" ), 1, $selected===1 );
@@ -87,8 +112,8 @@ class FlaggedRevsXML {
 	 */
 	public static function getTagMenu( $selected = '' ) {
 		wfLoadExtensionMessages( 'FlaggedRevs' );
-		$s  = "<label for='ratingtag'>" . wfMsgHtml('revreview-tagfilter') . "</label>&nbsp;";
-		$s .= Xml::openElement( 'select', array('name' => 'ratingtag', 'id' => 'ratingtag') );
+		$s  = "<label for='wpRatingTag'>" . wfMsgHtml('revreview-tagfilter') . "</label>&nbsp;";
+		$s .= Xml::openElement( 'select', array('name' => 'ratingtag', 'id' => 'wpRatingTag') );
 		foreach( FlaggedRevs::getFeedbackTags() as $tag => $weight ) {
 			$s .= Xml::option( wfMsg( "readerfeedback-$tag" ), $tag, $selected===$tag );
 		}
@@ -125,17 +150,16 @@ class FlaggedRevsXML {
 	 * Generates a review box/tag
 	 */
     public static function addTagRatings( $flags, $prettyBox = false, $css='' ) {
-        global $wgFlaggedRevTags;
 		wfLoadExtensionMessages( 'FlaggedRevs' );
         $tag = '';
         if( $prettyBox ) {
         	$tag .= "<table id='mw-revisionratings-box' align='center' class='$css' cellpadding='0'>";
 		}
-		foreach( FlaggedRevs::getDimensions() as $quality => $value ) {
+		foreach( FlaggedRevs::getDimensions() as $quality => $x ) {
 			$level = isset( $flags[$quality] ) ? $flags[$quality] : 0;
 			$encValueText = wfMsgHtml("revreview-$quality-$level");
             $level = $flags[$quality];
-            $minlevel = $wgFlaggedRevTags[$quality];
+            $minlevel = FlaggedRevs::getMinQL( $quality );
             if( $level >= $minlevel )
                 $classmarker = 2;
             elseif( $level > 0 )

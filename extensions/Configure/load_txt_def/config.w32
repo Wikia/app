@@ -1,0 +1,9 @@
+// $Id$
+// vim:ft=javascript
+
+ARG_ENABLE( "load_txt_def", "enable load_txt_def support", "no" );
+
+if ( PHP_LOAD_TXT_DEF != "no" ) {
+	EXTENSION( "load_txt_def", "load_txt_def.c" );
+}
+

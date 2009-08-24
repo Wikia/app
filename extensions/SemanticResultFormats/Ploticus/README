@@ -1,0 +1,223 @@
+== Overview ==
+SRF-Ploticus is a query printer for Semantic MediaWiki that uses
+Ploticus to create plots, charts and graphics out of query results.
+
+== Installation ==
+The following should be installed and running.
+
+1) Semantic MediaWiki
+2) Ploticus 2.41 (http://ploticus.sourceforge.net).  
+
+When both required systems are up and running, you can install this extension like
+any other semantic result printer (refer to the Semantic Result Formats README for that).
+
+LocalSettings.php Modifications:
+-------------------------------
+ * $srfgPloticusPath (REQUIRED)
+   - path to ploticus executable. Typically /usr/bin/ploticus (Debian/Ubuntu) or /usr/bin/pl (RedHat/CentOS, most other envs)
+ 
+ * $srfgEnvSettings (default: '')
+   - Ploticus behavior can be further modified by setting environment variables.  You can pass this env vars using this setting.
+     E.g. if you plan to use alternate TrueType fonts in your plot.
+       GDFONTPATH=/usr/share/fonts/truetype/freefont:/usr/share/fonts/truetype/msttcorefonts
+       
+     E.g. if you plan to use additional fonts in SWF files
+       SWF_FONTS_DIR=/usr/share/ming/fonts/ttf-dejavu/fdb
+       
+     E.g. if you plan to set global ploticus config parameters with a config file.
+     See ./ploticus-addons/ploticus.config for a sample config file and http://ploticus.sourceforge.net/doc/config.html for more info.
+       PLOTICUS_CONFIG=/etc/ploticus/ploticus.config
+     
+    Remember, you can pass multiple environment variables, e.g.
+      GDFONTPATH=/usr/share/fonts/truetype/freefont PLOTICUS_CONFIG=/etc/ploticus/ploticus.config
+   
+ * $srfgPloticusCacheAgeHours (default: 168 - 7 days)
+   - number of hours cached plot files are stored in the ploticus cache before they are forcibly purged.
+   Set to 0 if you prefer to purge the cache manually.
+   This is required, especially with liveupdating plots, since changing query results will "orphan" plot cache files as the computed hash filename
+   will change even if the query definition itself is NOT changed.
+
+   This setting will only work if the SRF_Ploticus_cleanCache.php script is scheduled on cron.  Typically, it should only be run once a day.   
+   For example, run cleanCache at midnight, logging results to /var/log/ploticus_cleanCache.log:
+
+   0 0 * * * /usr/bin/php /var/www/wiki/extension/SemanticResultFormats/Ploticus/SRF_Ploticus_cleanCache.php -v 2>&1 > /var/log/ploticus_cleanCache.log
+  
+   If you're having problems running cleanCache, set the MW_INSTALL_PATH environment variable.  E.g.
+   
+   0 0 * * * MW_INSTALL_PATH=/var/www/wiki /usr/bin/php /var/www/wiki/extension/SemanticResultFormats/Ploticus/SRF_Ploticus_cleanCache.php -v 2>&1 > /var/log/ploticus_cleanCache.log
+
+ * $wgEnableUploads (default: false - this is a MediaWiki setting)
+   - must be true. Be sure the upload directory has the proper permissions.  (see http://www.mediawiki.org/wiki/Manual:$wgUploadPath)
+   If you MUST use SRF-Ploticus without enabling uploads, you can manually create the 'ploticus' directory under the
+   MediaWiki upload directory (Typically, MW_INSTALL_PATH/images).  Further, under the ploticus directory, subdirectories from
+   0 to f hex (e.g. 0,1,2...9,a,b,c,d,e,f) should also be created, all with permission 777.
+
+== Configuration and Usage ==
+
+The SRF-ploticus Result Format has the following parameters:
+
+ * ploticusmode (enum/optional)
+   - set to 'prefab' (default) or 'script'
+ 
+ * ploticusparams (string/required)
+   - in prefab mode, this should be set to prefab cmdline parameters.
+   Line endings can be used to split the prefab commandline for readability.
+   
+   In script mode, set to a ploticus script.  Line endings to separate directives
+   can and should be used in script mode.  Otherwise, the ploticus script parser will fail.
+        
+ * imageformat (enum/optional)
+   - png (default), gif, jpeg, svg, svgz, swf, eps, ps, drawdump and drawdumpa (drawdump append).
+   Availability of format depends on how ploticus is built.  When using svgz, make sure Apache
+   is configured properly, i.e. you have the svgz mime-type and svgz encoding.
+        AddType image/svg+xml svg svgz
+        AddEncoding gzip svgz
+        
+ * titletext (string/optional)
+   - text displayed underneath the chart.  Its also displayed on mouseover for raster formats (PNG/JPEG/GIF) and
+   when imagemaps are not used.
+ 
+ * showcsv (bool/optional)
+   - 0 (default). When 1, displays link to CSV file used to generate plot.  Beware that the CSV
+   ALWAYS shows the latest query result, which may sometimes fall out of sync with the "cached" plot.
+   (See liveupdating, showtimestamp & updatefrequency parameters below)
+   
+   Also note that the Inline query headers parameter influences how the CSV file is generated.
+   If "headers=show", a header row will be inserted.
+   
+   Keep in mind that most Ploticus prefabs automatically create legends when header=show is set.
+   If you want to suppress legends, be sure to specify the legend parameter accordingly.
+   (http://ploticus.sourceforge.net/doc/prefab_stdparms.html#legend)
+ 
+ * debug (bool/optional)
+   - 0 (default). When 1, displays ploticus prefab cmdline or script used to generate plot.
+   It also invokes ploticus itself in debug mode and creates a link to the debug file.
+   Also turns showcsv on and bypasses the ploticus "cache".
+        
+ * liveupdating (bool/optional)
+   - 1 (default). When 1, will check if the query result has changed and regenerate the plot if so.
+   Otherwise, when 0, the plot will only be generated once and stored in the ploticus "cache", even
+   if the query results have changed.
+
+ * updatefrequency (secs/optional)
+   - 3600 (default). Specifies how old a plot should be before its regenerated even if the underlying
+   result data has not changed.
+   If you do not want to "cache" a plot, set updatefrequency to 0.
+    
+ * showtimestamp (bool/optional)
+   - 0 (default). Shows timestamp when the plot was last regenerated.
+   Its recommended to set showtimestamp to 1 when liveupdating is 0 or when updatefrequency > 0.
+   
+ * showrefresh (bool/optional)
+   - 0 (default).  Shows a Refresh link to force refresh of the WHOLE article.
+   
+ * showimagelink (bool/optional)
+   - 0 (default).  Shows a link to open the plot image in a separate window.
+   Especially useful for SVG and SWF file formats since they are scalable formats.
+
+ * width (string/optional)
+   - sets the width of the plot proper in pixel/percent units (e.g. 100, 80%).
+   This is especially useful for vector formats (SWF, SVG, EPS, PS)
+   
+ * height (string/optional)
+   - sets the height of the plot proper in pixel/percent units.
+   This is especially useful for vector formats (SWF, SVG, EPS, PS)
+   
+ * tblwidth (string/optional)
+   - sets the width of SRF-Ploticus result HTML table (which contains the plot) in pixel/percent units.
+   If not set, the table will fit the width of the generated plot.  For vector formats (svg, svgz, swf),
+   you may want to set this to "100%".
+   
+ * tblheight (string/optional)
+   - sets the height of the SRF-Ploticus result HTML table in pixel/percent units.  Normally left unset.
+   Remember that this is for the ENTIRE HTML table, which may include additional rows (action buttons/debug info)
+   and not just for the plot image.
+   
+ * drawdumpoutput (string/optional)
+   - this parameter is only processed in prefab mode when imageformat is set to drawdump or drawdumpa.
+   (In script mode, use the %WORKINGDIR% keyword in your script when producing drawdumps)
+   Specifies the filename to which the drawdump output will be stored in the ploticus cache directory.
+
+PREFAB MODE
+===========
+In prefab mode, ploticusparams expects commandline parameters that one would normally use when
+invoking stand-alone ploticus in prefab mode.
+
+However, the following Ploticus commandline prefab parameters should NOT be specified:
+ * data - automatically generated by the extension
+ * output - automatically generated by the extension
+ * format (e.g. -png, -gif, etc.) - use the SRF-ploticus imageformat parameter.
+ * debug - use the SRF-Ploticus debug parameter instead
+ 
+SCRIPT MODE
+===========
+In script mode, ploticusparams should be set to a ploticus script.
+
+Two special keywords can be used in the script body (case-sensitive):
+ * %DATAFILE.CSV% - replaced with fully qualified path to result CSV file generated by the inline query
+ * %WORKINGDIR% - replaced with SRF-ploticus cache directory.  This is useful when creating drawdump/drawdumpa
+   files in script mode.
+ 
+For security reasons, the passed script is also "sanitized" and the following ploticus directives are disabled:
+ * #include
+ * #shell
+ * #sql
+ * #write
+ * #cat
+ 
+                                      ======= USAGE NOTES =========
+
+Overlaying and combining plots from multiple queries
+====================================================
+By specifying drawdump or drawdumpa in the imageformat, you can overlay and/or combine plots from multiple
+SRF-Ploticus queries into one graphic image / result.
+
+Standard Ploticus drawdump processing practices should be used, that is:
+ - the first query should use the drawdump imageformat and specify the SRF-Ploticus drawdumpoutput parameter
+ to be used for the combined plot.
+      
+      ...
+      ploticusmode=prefab
+      imageformat=drawdump
+      drawdumpoutput=mydump
+      ploticusparams= -prefab scat "rectangle= 1 1 3 3" ....
+      ...
+ 
+ - subsequent queries should use the drawdumpa (drawdump append) imageformat, making sure to use the
+ SAME drawdumpoutput SRF-Ploticus parameter as the first query.
+ 
+      ...
+      ploticusmode=prefab
+      imageformat=drawdumpa
+      drawdumpoutput=mydump
+      ploticusparams= -prefab scat "rectangle= 4 1 6 3" ....
+      ...
+      
+ - the last SRF-Ploticus call to display the combined plot should be a prefab draw command, e.g.
+ 
+      ...
+      ploticusmode=prefab
+      imageformat=png
+      ploticusparams= -prefab draw dumpfile=mydump
+      ...
+      
+   where mydump is the name of the file passed to the drawdumpoutput parameter in the earlier SRF-Ploticus queries.
+
+
+Imagemaps:
+=========
+Client-side imagemaps are automatically generated by SRF-Ploticus if it detects the clickmap directive.
+
+Typically, imagemaps "links/labels" should be set to resolve to "Article URL/Article Name".
+Note that imagemaps are only valid for PNG, GIF, JPEG and SVG.
+
+CREDITS:
+=======
+SRF-Ploticus is only possible because of all the great work done
+by Steve Grubb (stevegrubb@gmail.com) in creating Ploticus.
+Ploticus is distributed via the GPL license (http://ploticus.sourceforge.net/doc/Copyright.html),
+which is compatible with the GPL license under which Semantic Result Formats is distributed.
+
+
+For up-to-date documentation and examples please refer to
+http://semantic-mediawiki.org/wiki/Help:Ploticus_format

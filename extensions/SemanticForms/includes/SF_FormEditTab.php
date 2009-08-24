@@ -121,11 +121,9 @@ class SFFormEditTab {
 		$target_title = $article->getTitle();
 		$target_name = SFLinkUtils::titleString($target_title);
 		if ($target_title->exists()) {
-			require_once($sfgIP . '/specials/SF_EditData.php');
-			printEditForm($form_name, $target_name);
+			SFEditData::printEditForm($form_name, $target_name);
 		} else {
-			require_once($sfgIP . '/specials/SF_AddData.php');
-			printAddForm($form_name, $target_name, array());
+			SFAddData::printAddForm($form_name, $target_name, array());
 		}
 		return false;
 	}

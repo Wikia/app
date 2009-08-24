@@ -56,7 +56,7 @@ class MV_SpecialMediaSearch {
 		'spoken_by',
 		'category',
 		'date_range', // search in a given date range
-		'bill' // match against a given bill 
+		'bill' // match against a given bill
 		// not yet active:
 		// 'stream_name', //search within a particular stream
 		// 'layers'	 //specify a specific meta-layer set
@@ -206,7 +206,7 @@ class MV_SpecialMediaSearch {
 					) );
 				break;
 				default:
-					// empty filter: 
+					// empty filter:
 					$this->filters = array (
 							array (
 								't' => 'match',
@@ -258,7 +258,7 @@ class MV_SpecialMediaSearch {
 	function doSearch( $log_search = true ) {
 		global $mvEnableSearchDigest;
 		$mvIndex = new MV_Index();
-		
+
 		global $wgRequest;
 
 		$this->results = $mvIndex->doUnifiedFiltersQuery( $this->filters );
@@ -270,7 +270,7 @@ class MV_SpecialMediaSearch {
 			$this->limit = $mvIndex->limit;
 		if ( isset ( $mvIndex->order ) )
 			$this->order = $mvIndex->order;
-			
+
 		// do search digest (if global config, function req and num_results fit criteria)
 		if ( $mvEnableSearchDigest &&
 			$wgRequest->getVal( 'tl' ) != '1' &&
@@ -281,7 +281,7 @@ class MV_SpecialMediaSearch {
 			$dbr = & wfGetDB( DB_READ );
 			// print_r($this->filters);
 			// print "Adding to mv_search_digest : ". $this->getFilterDesc($query_key = true) . "\n";
-			// print var_dump(debug_backtrace());			
+			// print var_dump(debug_backtrace());
 			// @@todo non-blocking insert... is that supported in mysql/php?
 			$dbw->insert( 'mv_search_digest', array (
 				'query_key' => $this->getFilterDesc( $query_key = true ),
@@ -300,7 +300,7 @@ class MV_SpecialMediaSearch {
 				), 'filters' => serialize( $this->filters ) ) );
 			}
 		}
-			
+
 	}
 	/*list all the meta *layer* types */
 	function powerSearchOptions() {
@@ -325,7 +325,7 @@ class MV_SpecialMediaSearch {
 		global $mvDefaultClipRange;
 		$sk = $wgUser->getSkin();
 		$o = '';
-		
+
 		$o .= '<h5 class="search_results_header">' . wfMsg( 'mv_results_for', $this->getFilterDesc() ) .  '</h5>';
 
 		$o .= '<div id="resultsArea">
@@ -345,7 +345,7 @@ class MV_SpecialMediaSearch {
 			wfMsg( 'mv_results_found', $rs, $re, number_format( $this->numResultsFound ) ) .
 			'</li>';
 		}
-		// check order prefrence:
+		// check order
 		$prevnext = '';
 		// pagging
 		if ( $this->numResultsFound > $this->limit ) {
@@ -354,19 +354,19 @@ class MV_SpecialMediaSearch {
 		}
 		$br = '<br>';
 		$enddash = '';
-	
+
 		$sTitle = Title :: MakeTitle( NS_SPECIAL, 'MvExportSearch' );
-	
-		// force host for script (should be a better way to do this) 
+
+		// force host for script (should be a better way to do this)
 		if ( !isset( $_SERVER['HTTP_HOST'] ) )
-			$_SERVER['HTTP_HOST'] = 'metavid.ucsc.edu';
-			
+			$_SERVER['HTTP_HOST'] = 'metavid.org';
+
 		// make miro link:
 		$o .= '<li class="subscribe"><a href="http://subscribe.getMiro.com/?url1=' .
 		'http%3A%2F%2F' . $_SERVER['HTTP_HOST'] . htmlspecialchars( $sTitle->escapeLocalURL( $this->get_httpd_filters_query() ) ) . '" ' .
 		'title="Subscribe with Miro"><img src="' . $wgStylePath . '/mvpcf/images/button_subscribe.png" alt="Miro Video Player" border="0" /></a></li>';
-		
-		// make rss link:		
+
+		// make rss link:
 		$o .= '<li class="rss">';
 		$o .= 	$sk->makeKnownLinkObj( $sTitle, 'RSS', $this->get_httpd_filters_query() );
 		$o .= '</li>';
@@ -386,7 +386,7 @@ class MV_SpecialMediaSearch {
 			$br = '';
 			$enddash = ' - ';
 		}
-		
+
 		$o .= '</ul>';
 
 		// output results:
@@ -397,8 +397,47 @@ class MV_SpecialMediaSearch {
 							'bill' => array()
 						);
 		$o .= '	<ul id="results">';
+		//setup the MV_index:
+		$mvIndex = new MV_Index();			
 		foreach ( $this->results as $inx => & $mvd ) {
-			$mvTitle = new MV_Title( $mvd->wiki_title );
+			$mvTitle = new MV_Title( $mvd->wiki_title );			
+			
+			//get parent meta if requested: 
+			global $mvGetParentMeta;						
+			$pmeta_out = '';		
+			if( $mvGetParentMeta && strtolower( $mvTitle->getMvdTypeKey() ) == 'ht_en'){						
+				$pmvd = $mvIndex->getParentAnnotativeLayers($mvTitle);				
+								
+				if( $pmvd->wiki_title ){											
+					$pMvTitle =  new MV_Title( $pmvd->wiki_title );
+					$pAnnoStreamLink = Title :: MakeTitle( MV_NS_STREAM, $pMvTitle->getNearStreamName( 0 ) );
+					$clip_desc_txt = 'Segment';
+					if($pmvd->Speech_by){	
+						$personTitle = Title :: newFromText( $pmvd->Speech_by );
+						$clip_desc_txt = 'Speech By ' . $personTitle->getText();
+					}					
+						
+					$pmeta_out.='This '. $sk->makeKnownLinkObj($pAnnoStreamLink, seconds2Description ( $mvTitle->getSegmentDuration(), true, true ) ).
+								' clip is part of a larger '. 
+								$sk->makeKnownLinkObj($pAnnoStreamLink, seconds2Description ( $pMvTitle->getSegmentDuration(), true, true ) ) . ' Speech';
+					if($pmvd->category){
+						$pmeta_out.='<br>Covering: ';
+						$coma='';
+						foreach($pmvd->category as $cat_titlekey ){
+							$cTitle = $cTitle = Title :: MakeTitle( NS_CATEGORY, $cat_titlekey );
+							$pmeta_out .= $coma . $sk->makeKnownLinkObj( $cTitle, $cTitle->getText() );
+							$coma=', ';
+							assoc_array_increment( $sideBarLinkBucket, 'category', $cat_titlekey );
+						}
+					}
+					if($pmvd->Bill){
+						$pmeta_out.='<br>Bill: ';						
+						$bTitle = Title :: newFromText( $pmvd->Bill );
+						$pmeta_out .= $sk->makeKnownLinkObj( $bTitle, $bTitle->getText() );		
+						assoc_array_increment( $sideBarLinkBucket, 'bill', $pmvd->Bill );					
+					}					
+				}
+			}						
 			$mvd_cnt_links = '';
 			if ( isset ( $mvd->spoken_by ) ) {
 				$ptitle = Title :: MakeTitle( NS_MAIN, $mvd->spoken_by );
@@ -432,13 +471,13 @@ class MV_SpecialMediaSearch {
 				}
 			}
 			// link directly to the current range:
-			//if the clip length is < $mvDefaultClipLength get range: 
-			global $mvDefaultClipLength;
-			if($mvTitle->getDuration() < $mvDefaultClipLength){
+			//if the clip length is < $mvDefaultClipLength get range:
+			global $mvDefaultClipLength;			
+			if( $mvTitle->getSegmentDuration() < $mvDefaultClipLength){		
 				$mvStreamTitle = Title :: MakeTitle( MV_NS_STREAM, $mvTitle->getNearStreamName( $mvDefaultClipRange ) );
 			}else{
-				$mvStreamTitle = Title :: MakeTitle( MV_NS_STREAM, $mvTitle->getNearStreamName( 0 ) );
-			}
+				$mvStreamTitle = Title :: MakeTitle( MV_NS_STREAM, $mvTitle->getNearStreamName( 0 ) );				
+			}			
 			// $mvTitle->getStreamName() .'/'.$mvTitle->getStartTime() .'/'. $mvTitle->getEndTime() );
 			$mvd_text = $mvd->text;
 
@@ -461,12 +500,14 @@ class MV_SpecialMediaSearch {
 					</div>
 					<div class="result_meta">
 						<span class="views">Views: ' . htmlspecialchars( $mvd->view_count ) . '</span>
-						<span class="duration">' . wfMsg( 'mv_duration_label' ) . ':' . htmlspecialchars( $mvTitle->getSegmentDurationNTP( $short_time = true ) ) . '</span>
-						<span class="comments">Comments: NYA</span>
+						<span class="duration">' . wfMsg( 'mv_duration_label' ) . ':' . htmlspecialchars( $mvTitle->getSegmentDurationNTP( $short_time = true ) ) . '</span>						
 						<span class="playinline"><a href="javascript:mv_pl(\'' . htmlspecialchars( $mvd->id ) . '\')">' .
 			wfMsg( 'mv_play_inline' ) . '</a></span>
-										</div>
-									</li>';
+										</div>';
+					if($pmeta_out!=''){
+						$o .='<div class="parent_meta">'.$pmeta_out.'</div>';
+					}
+					$o.='</li>';
 		}
 		$o .= '</ul>';
 		// add in prev-next at bottom too:
@@ -565,172 +606,13 @@ class MV_SpecialMediaSearch {
 		$o .= '<div style="clear:both;"></div>';
 		return $o;
 	}
-	/*function getResultsHTML() {
-		global $mvgIP, $wgOut, $mvgScriptPath, $mvgContLang, $wgUser, $wgParser;
-		$sk = & $wgUser->getSkin();
-		$o = '';
-		if ($this->outputContainer)
-			$o .= '<div id="mv_search_results_container">';
 
-		//for each stream range:
-		if (count($this->results) == 0) {
-			$o .= '<h2><span class="mw-headline">' . wfMsg('mv_search_no_results') . '</span></h2>';
-			if ($this->outputContainer)
-				$o .= '</div>';
-			return $o;
-		} else {
-			if ($this->outputInlineHeader) {
-				$o .= '<h2>
-							<span class="mw-headline">' . wfMsg('mv_media_matches') . '</span>
-						</h2>';
-				$title = Title :: MakeTitle(NS_SPECIAL, 'MediaSearch');
-				$o .= $sk->makeKnownLinkObj($title, wfMsg('mv_advaced_search'), $this->get_httpd_filters_query());
-			}
-		}
-		//media pagging: (only display if we have num of results > limit
-		$prevnext = mvViewPrevNext($this->offset, $this->limit, SpecialPage :: getTitleFor('MediaSearch'), $this->get_httpd_filters_query(), ($this->num < $this->limit));
-		//$o .= "<br /><span id=\"mv_search_pagging\">{$prevnext}</span>\n";		
-		//add the rss link:
-		$sTitle = Title :: MakeTitle(NS_SPECIAL, 'MvExportSearch');
-		$o .= '<span style="float:right;">';
-		$o .= $sk->makeKnownLinkObj($sTitle, '<img border="0" src="' . $mvgScriptPath . '/skins/images/feed-icon-28x28.png">', $this->get_httpd_filters_query());
-		$o .= '</span>';
-		//add the results bar:
-		$o .= $this->getResultsBar();
-		//print_r($this->results);
-		foreach ($this->results as $stream_id => & $stream_set) {
-			$matches = 0;
-			$stream_out = $mvTitle = '';
-			foreach ($stream_set as & $srange) {
-				$cat_html = $mvd_out = '';
-				$range_match = 0;
-				foreach ($srange['rows'] as $inx => & $mvd) {
-					$matches++;
-					$mvTitle = new MV_Title($mvd->wiki_title);
-
-					//retrieve only the first article:
-					//$title = Title::MakeTitle(MV_NS_MVD, $mvd->wiki_title);
-					//$article = new Article($title);
-
-					$bgcolor = MV_Overlay :: getMvdBgColor($mvd);
-					//output indent if not the first and count more than one
-					if (count($srange['rows']) != 1 && $inx != 0)
-						$mvd_out .= '&nbsp; &nbsp; &nbsp; &nbsp;';
-					//'<img src="'. $mvgScriptPath . '/skins/images/film.png">'
-					//$mvd_out .= '<div class="mv_rtdesc" title="' . wfMsg('mv_expand_play') . '"  '.
-					//				'> ';
-					$mvd_out .= '<img style="float:left;width:84px;cursor:pointer;border:solid #' .htmlspecialchars($bgcolor) . '" ' .
-					' onclick="mv_ex(\'' . htmlspecialchars($mvd->id) . '\')" width="80" height="60" src="' . htmlspecialchars($mvTitle->getStreamImageURL('icon')) . '">';
-					$mvd_out .= '</div>';
-					$mvd_out .= '<b>' . htmlspecialchars($mvTitle->getTimeDesc()) . '</b>&nbsp;';
-					$mvd_cnt_links = '';
-					if (isset ($mvd->spoken_by)) {
-						$ptitle = Title :: MakeTitle(NS_MAIN, $mvd->spoken_by);
-						$mvd_cnt_links .= wfMsg('mv_search_spoken_by') . ': ' . $sk->makeKnownLinkObj($ptitle);
-						$mvd_cnt_links .= '<br>';
-					}
-					if ($this->outputSeqLinks == true) {
-						$mvd_cnt_links .= '&nbsp;<a href="javascript:mv_add_to_seq({mvclip:\'' .
-						htmlspecialchars($mvTitle->getStreamName()) . '/' . htmlspecialchars($mvTitle->getTimeRequest()) . '\',' .
-						'src:\'' .htmlspecialchars($mvTitle->getWebStreamURL()) . '\',' .
-						'img_url:\'' . htmlspecialchars($mvTitle->getStreamImageURL()) . '\'})">' .
-						'<img style="cursor:pointer;" ' .
-						'title="' . wfMsg('mv_seq_add_end') . '" ' .
-						'src="' . $mvgScriptPath . '/skins/mv_embed/images/application_side_expand.png">' . wfMsg('mv_seq_add_end') . '</a>';
-					}
-					$mvd_cnt_links .= '<a title="' . htmlspecialchars(wfMsg('mv_expand_play')) . '" href="javascript:mv_ex(\'' . $mvd->id . '\')">' .
-					'<img id="mv_img_ex_' . htmlspecialchars($mvd->id) . '"  src="' . htmlspecialchars($mvgScriptPath) . '/skins/images/closed.png">' .
-					'<span id="mv_watch_clip_' . htmlspecialchars($mvd->id) . '">' . wfMsg('mv_watch_clip') . '</span>' .
-					'<span style="display:none;" id="mv_close_clip_' . htmlspecialchars($mvd->id) . '">' . wfMsg('mv_close_clip') . '</span>' .
-					'</a>' .
-					'&nbsp;&nbsp;';
-					//output control links:
-					//make stream title link:
-					$mvStreamTitle = Title :: MakeTitle(MV_NS_STREAM, $mvTitle->getNearStreamName());
-					//$mvTitle->getStreamName() .'/'.$mvTitle->getStartTime() .'/'. $mvTitle->getEndTime() );
-					$mvd_cnt_links .= $sk->makeKnownLinkObj($mvStreamTitle, '<img border="1" src="' . $mvgScriptPath . '/skins/images/run_mv_stream.png"> ' . wfMsg('mv_improve_transcript'), '', '', '', '', ' title="' . htmlspecialchars(wfMsg('mv_view_in_stream_interface')) . '" ');
-					$mvd_cnt_links .= '<br>';
-					//$title = MakeTitle::()
-					//don't inclue link to wiki page (too confusing)
-					//$mvd_out .='&nbsp;';
-					$mvdTitle = Title :: MakeTitle(MV_NS_MVD, $mvd->wiki_title);
-					//$mvd_out .= $sk->makeKnownLinkObj($mvdTitle, '<img border="0" src="' . $mvgScriptPath . '/skins/images/run_mediawiki.png">', '', '', '', '', ' title="' . wfMsg('mv_view_wiki_page') . '" ');
-
-					$mvd_out .= '<span id="mvr_desc_' . htmlspecialchars($mvd->id) . '">';
-
-					if (!isset ($mvd->toplq))
-						$mvd->toplq = false;
-					//output short desc send partial regEx:
-					if (!$mvd->toplq) {
-						$mvd_out .= $this->termHighlight($mvd->text, implode('|', $this->getTerms()));
-					} else {
-						if ($mvdTitle->exists() && !isset ($mvd->text)) {
-							//grab the article text:
-							$curRevision = Revision :: newFromTitle($mvdTitle);
-							$wikiText = $curRevision->getText();
-						} else {
-							$wikiText = & $mvd->text;
-						}
-						//@@todo parse category info if present
-						$cat_html = '';
-						//run via parser to add in Category info:
-						$parserOptions = ParserOptions :: newFromUser($wgUser);
-						$parserOptions->setEditSection(false);
-						$parserOptions->setTidy(true);
-						$title = Title :: MakeTitle(MV_NS_MVD, $mvd->wiki_title);
-						$parserOutput = $wgParser->parse($wikiText, $title, $parserOptions);
-						$cats = $parserOutput->getCategories();
-						foreach ($cats as $catkey => $title_str) {
-							$catTitle = Title :: MakeTitle(NS_CATEGORY, $catkey);
-							$cat_html .= ' ' . $sk->makeKnownLinkObj($catTitle);
-						}
-						//add category pre-text:
-						//if ($cat_html != '')
-						//$mvd_out.= wfMsg('Categories') . ':' . $cat_html;
-						$mvd_out .= $cat_html;
-
-						$mvd_out .= (count($srange['rows']) - 1 == 1) ? wfMsg('mv_match_text_one') : wfMsg('mv_match_text', count($srange['rows']) - 1);
-						//$wgOut->addCategoryLinks( $parserOutput->getCategories() );
-						//$cat_html = $sk->getCategories();
-						//empty out the categories
-						//$wgOut->mCategoryLinks = array();
-					}
-					$mvd_out .= '</span>';
-					$mvd_out .= '<br>' . $mvd_cnt_links;
-					$mvd_out .= '<div style="display:block;clear:both;padding-top:4px;padding-bottom:4px;"/>';
-					$mvd_out .= '<div id="mvr_' . htmlspecialchars($mvd->id) . '" style="display:none;background:#' . htmlspecialchars($bgcolor) . ';" ></div>';
-				}
-				$stream_out .= $mvd_out;
-				//if(count($srange['rows'])!=1){
-				//	$stream_out .= '&nbsp;' . $cat_html . ' In range:' .
-				//	seconds2ntp($srange['s']) . ' to ' . seconds2ntp($srange['e']) .
-				//	wfMsg('mv_match_text', count($srange['rows'])).'<br />' . "\n";
-				//	$stream_out .= $mvd_out;
-				//}else{
-				//	$stream_out .= $mvd_out;
-				//}
-			}
-			$nsary = $mvgContLang->getNamespaces();
-			//output stream name and mach count
-			//$o.='<br /><img class="mv_stream_play_button" name="'.$nsary[MV_NS_STREAM].':' .
-			//	$mvTitle->getStreamName() .
-			//		'" align="left" src="'.$mvgScriptPath.'/skins/mv_embed/images/vid_play_sm.png">';
-			
-			$o .= '<h3>' . htmlspecialchars($mvTitle->getStreamNameText());
-			$o .= ($matches == 1) ? wfMsg('mv_match_text_one') : wfMsg('mv_match_text', $matches);
-			$o .= '</h3>';
-			$o .= '<div id="mv_stream_' . htmlspecialchars($stream_id) . '">' . $stream_out . '</div>';
-		}
-		if ($this->outputContainer)
-			$o .= '</div>';
-		return $o;
-	}*/
 	function getTerms() {
 		$ret_ary = $cat_ary = array ();
 		foreach ( $this->filters as $filter ) {
 			switch ( $filter['t'] ) {
-				case 'match' :					
-					$ret_ary = array_merge($ret_ary, explode(' ', $filter['v']));				
+				case 'match' :
+					$ret_ary = array_merge($ret_ary, explode(' ', $filter['v']));
 				break;
 				case 'spoken_by' :
 				case 'stream_name' :
@@ -791,12 +673,12 @@ class MV_SpecialMediaSearch {
 				continue;
 			}
 			-- $contextlines;
-			$pre = $wgContLang->truncate( $m[1], - $contextchars, '...' );
+			$pre = $wgContLang->truncate( $m[1], - $contextchars );
 
 			if ( count( $m ) < 3 ) {
 				$post = '';
 			} else {
-				$post = $wgContLang->truncate( $m[3], $contextchars, '...' );
+				$post = $wgContLang->truncate( $m[3], $contextchars );
 			}
 
 			$found = $m[2];
@@ -810,7 +692,7 @@ class MV_SpecialMediaSearch {
 		}
 		// if we found no matches just return the first line:
 		if ( $extract == '' )
-			return ' ' . $wgContLang->truncate( $text, ( $contextchars * 2 ), '...' ) . '';
+			return ' ' . $wgContLang->truncate( $text, ( $contextchars * 2 ) ) . '';
 		// wfProfileOut( "$fname-extract" );
 		// wfProfileOut( $fname );
 		// return "<li>{$link} ({$size}){$extract}</li>\n";
@@ -979,9 +861,9 @@ class MV_SpecialMediaSearch {
 					if ( $f['t'] != 'match' ) // no desc for text search
 						$o .= ( $query_key ) ? $a : $a . wfMsg( 'mv_' . $f['t'] ) . ' ';
 				if ( $f['t'] == 'date_range' ) { // handle special case of date range:
-					$o .= wfMsg( 'mv_time_separator', $bo . htmlspecialchars( $f['vs'] ) . $bc, $bo . htmlspecialchars( $f['ve'] ) . $bc );
+					$o .= ' '+ wfMsg( 'mv_time_separator', $bo . htmlspecialchars( $f['vs'] ) . $bc, $bo . htmlspecialchars( $f['ve'] ) . $bc );
 				} else {
-					$o .= $bo . str_replace( '_', ' ', htmlspecialchars( $f['v'] ) ) . $bc;
+					$o .=' '. $bo . str_replace( '_', ' ', htmlspecialchars( $f['v'] ) ) . $bc .' ';
 				}
 			}
 		}
@@ -1107,10 +989,10 @@ class MV_SpecialMediaSearch {
 	}
 	function auto_complete_category( $category, $val, $result_limit = '5', $format = 'ac_line', & $match_count = '' ) {
 		$dbr = & wfGetDB( DB_SLAVE );
-		//do value pre-proccessing if bill type: 
+		//do value pre-proccessing if bill type:
 		if($category=='Bill')
 			$val = MV_SpecialMediaSearch::bill_formater( $val );
-		
+
 		$result = $dbr->select( 'categorylinks', 'cl_sortkey', array (
 			'cl_to' => $category,
 			'`cl_sortkey` LIKE \'%' . mysql_escape_string( $val
@@ -1127,29 +1009,29 @@ class MV_SpecialMediaSearch {
 			$out .= MV_SpecialMediaSearch :: format_ac_line( $row->cl_sortkey, $val, '', 'no_image', $format );
 		}
 		return $out;
-	}	
+	}
 	/*@@todo cache result for given values*/
 	function auto_complete_person( $val, $result_limit = '5', $format = 'ac_line', & $match_count = '', & $person_ary = array() ) {
 		$dbr = & wfGetDB( DB_SLAVE );
-		
+
 		//first check the nick names:
 		$nick_rows = MV_SpecialMediaSearch::getViaNickname($val, $result_limit);
-		foreach($nick_rows as $person){ 
+		foreach($nick_rows as $person){
 			$person_ary[$person]=true;
 		}
-		
+
 		$result = $dbr->select( 'categorylinks', 'cl_sortkey', array (
 			'cl_to' => 'Person',
 			'`cl_sortkey` LIKE \'%' . mysql_escape_string( $val
 		) . '%\' COLLATE latin1_general_ci' ), __METHOD__, array (
 			'LIMIT' => $result_limit
-		) );		
+		) );
 		$out = '';
 		while ( $row = $dbr->fetchObject( $result ) ) {
 			$person_name = $row->cl_sortkey;
 			$person_ary[$person_name] = true;
 		}
-		
+
 		if(count($person_ary)==0)
 			return '';
 
@@ -1159,7 +1041,7 @@ class MV_SpecialMediaSearch {
 			$personTitle = Title :: makeTitle( NS_MAIN, $person_name );
 			if ( $personTitle->exists() ) {
 				// dont try and get person full name from semantic table if available
-				$person_full_name = $person_name;				
+				$person_full_name = $person_name;
 				// format and output the line:
 				$out .= MV_SpecialMediaSearch :: format_ac_line( $person_full_name, $val, '', MV_SpecialMediaSearch :: getPersonImageURL( $person_name ), $format );
 			}
@@ -1169,28 +1051,28 @@ class MV_SpecialMediaSearch {
 		return $out;
 	}
 	//returns results via nickname via semantic query:
-	function getViaNickname($partname, $limit=5){		
-		//split the nickname via spaces: 
+	function getViaNickname($partname, $limit=5){
+		//split the nickname via spaces:
 		$nick_parts = split('_', str_replace(' ', '_',$partname));
 		$query_string='';
 		$or='';
 		foreach($nick_parts as $pname){
-			$query_string.= $or .' [[Nickname::~*'.ucfirst($pname).'*]] OR [[Nickname::'.ucfirst($pname).']] ';
+			$query_string.= $or . ' [[Nickname::~*'.ucfirst($pname).'*]] OR [[Nickname::'.ucfirst($pname).']] ';
 			$or=' OR ';
-		}		
+		}
 		$params=array('format' => 'broadtable',
     				  'offset' => 0,
-					  'limit'	=>$limit);					
+					  'limit'	=>$limit);
 		$results = array();
 		$queryobj = SMWQueryProcessor::createQuery($query_string, $params, false, '', array());
-		$queryobj->querymode = SMWQuery::MODE_INSTANCES; 
+		$queryobj->querymode = SMWQuery::MODE_INSTANCES;
 		$res = smwfGetStore()->getQueryResult($queryobj);
-		
+
 		for($i=0;$i< $res->getCount();$i++){
-			$v =  $res->getNext();			
-			$v = current(current($v)->getContent());			
-			array_push( $results,$v->getXSDValue());
-		}			
+			$v =  $res->getNext();
+			$v = current(current($v)->getContent());
+			array_push( $results, $v->getXSDValue());
+		}
 		return $results;
 	}
 	function getPersonImageURL( $person_name ) {
@@ -1199,7 +1081,6 @@ class MV_SpecialMediaSearch {
 		if ( !$imgTitle->exists() ) {
 			$imgTitle = Title :: makeTitle( NS_IMAGE, MV_MISSING_PERSON_IMG );
 		}
-
 		$img = wfFindFile( $imgTitle );
 		if ( !$img ) {
 			$img = wfLocalFile( $imgTitle );
@@ -1209,7 +1090,7 @@ class MV_SpecialMediaSearch {
 	function bill_formater($val){
 		$val = preg_replace('/[Ss]\.?\s?([0-9])/','S._$1',$val);
 		$val = preg_replace('/[Hh]\.?[Rr]\.?\s?([0-9])/','H.R._$1',$val);
-		$val = preg_replace('/[Hh][Rr][Ee][Ss]\.?\s?([0-9])/','HRes._$1',$val);		
+		$val = preg_replace('/[Hh][Rr][Ee][Ss]\.?\s?([0-9])/','HRes._$1',$val);
 		return $val;
 	}
 	function format_ac_line( & $page_title, $val, $prefix = '', $img_link = 'no_image', $format = 'ac_line' ) {

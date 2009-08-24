@@ -48,6 +48,17 @@ $messages['arz'] = array(
 	'rightfunctions-ns' => '(من حماية نطاق)',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'rightfunctions-desc' => 'Функцыі парсэра заснаваныя на дазволах',
+	'rightfunctions-casc' => '(з каскаднай абароны)',
+	'rightfunctions-local' => '(з лякальнай старонкі)',
+	'rightfunctions-ns' => '(з абароны прасторы назваў)',
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
@@ -86,6 +97,13 @@ $messages['eo'] = array(
 	'rightfunctions-casc' => '(de kaskadaj fontoj)',
 	'rightfunctions-local' => '(de loka paĝo)',
 	'rightfunctions-ns' => '(de nomspaca protektado)',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'rightfunctions-local' => '(de página local)',
 );
 
 /** French (Français)
@@ -164,6 +182,16 @@ $messages['ia'] = array(
  */
 $messages['it'] = array(
 	'rightfunctions-desc' => 'Funzioni del parser basate sui permessi',
+);
+
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'rightfunctions-desc' => 'パーミッションベースのパーサー関数',
+	'rightfunctions-casc' => '(カスケード元より)',
+	'rightfunctions-local' => '(ローカルページより)',
+	'rightfunctions-ns' => '(名前空間保護より)',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -247,6 +275,26 @@ $messages['pl'] = array(
 	'rightfunctions-desc' => 'Funkcje parsera pracujące na uprawnieniach',
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'rightfunctions-desc' => 'Funções do "parser" baseadas em permissões',
+	'rightfunctions-casc' => '(de fontes em cascata)',
+	'rightfunctions-local' => '(de página local)',
+	'rightfunctions-ns' => '(de protecção de espaços nominais)',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'rightfunctions-desc' => 'Funções do analisador (parser) baseadas em permissões',
+	'rightfunctions-casc' => '(de fontes em cascata)',
+	'rightfunctions-local' => '(de página local)',
+	'rightfunctions-ns' => '(de proteção de espaços nominais)',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -283,10 +331,23 @@ $messages['te'] = array(
 	'rightfunctions-local' => '(స్థానిక పేజీ నుండి)',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'rightfunctions-desc' => 'Mga tungkuling pambanghay na nakabatay sa kapahintulutan',
+	'rightfunctions-casc' => '(mula sa mga pinagmumulang baita-baitang)',
+	'rightfunctions-local' => '(mula sa pampook/lokal na pahina)',
+	'rightfunctions-ns' => '(mula sa pagsasanggalang ng espasyo ng pangalan)',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'rightfunctions-desc' => 'Hàm cú pháp dựa trên sự cấp phép',
+	'rightfunctions-casc' => '(từ nguồn xếp tầng)',
+	'rightfunctions-local' => '(từ trang nội bộ)',
+	'rightfunctions-ns' => '(từ khóa không gian tên)',
 );
 

@@ -170,7 +170,7 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 	 * @return string HTML
 	 */
 	function getGroupStats( $code, $suppressComplete = false ) {
-		global $wgUser;
+		global $wgUser, $wgLang;
 
 		$out = '';
 
@@ -221,8 +221,8 @@ class SpecialLanguageStats extends IncludableSpecialPage {
 				continue;
 			}
 
-			$translatedPercentage = @sprintf( '%.2f%%', 100 * $translated / $total );
-			$fuzzyPercentage = @sprintf( '%.2f%%', 100 * $fuzzy / $total );
+			$translatedPercentage = wfMsg( 'percent', $wgLang->formatNum( round( 100 * $translated / $total, 2 ) ) );
+			$fuzzyPercentage = wfMsg( 'percent', $wgLang->formatNum( round( 100 * $fuzzy / $total, 2 ) ) );
 
 			$translateTitle = SpecialPage::getTitleFor( 'Translate' );
 			$pageParameters = "group=" . $g->getId() . "&language=" . $code;

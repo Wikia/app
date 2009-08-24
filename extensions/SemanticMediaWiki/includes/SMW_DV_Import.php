@@ -39,7 +39,7 @@ class SMWImportValue extends SMWDataValue {
 
 		//browse list in smw_import_* for section
 		list($onto_uri,$onto_name) = explode('|',array_shift($msglines),2);
-		
+
 		if ( ' ' == $onto_uri[0]) $onto_uri = mb_substr($onto_uri,1); // tolerate initial space
 
 		$this->m_uri = $onto_uri;
@@ -79,7 +79,7 @@ class SMWImportValue extends SMWDataValue {
 // 			$this_ns = SMWParseData::getSMWData($parser)->getSubject()->getNamespace();
 // 			$error = NULL;
 // 			switch ($elemtype) {
-// 				case SMW_NS_PROPERTY: case NS_CATEGORY:	
+// 				case SMW_NS_PROPERTY: case NS_CATEGORY:
 // 					if ($this_ns != $elemtype) {
 // 						$error = wfMsgForContent('smw_nonright_importtype',$value, $wgContLang->getNsText($elemtype));
 // 					}
@@ -92,14 +92,14 @@ class SMWImportValue extends SMWDataValue {
 // 				case -1:
 // 					$error = wfMsgForContent('smw_no_importelement',$value);
 // 			}
-// 
+//
 // 			if (NULL != $error) {
 // 				$this->addError($error);
 // 				return true;
 // 			}
 // 		}
 
-		//create String to be returned by getShort/LongWikiText		
+		//create String to be returned by getShort/LongWikiText
 		$this->m_wikilink = "[".$this->m_uri." ".$this->m_value."] (".$this->m_name.")";
 
 		//check whether caption is set, otherwise assign link statement to caption
@@ -110,8 +110,8 @@ class SMWImportValue extends SMWDataValue {
 		return true;
 	}
 
-	protected function parseXSDValue($value, $unit) {
-		$parts = explode(' ', $value, 3);
+	protected function parseDBkeys($args) {
+		$parts = explode(' ', $args[0], 3);
 		if (array_key_exists(0,$parts)) {
 			$this->m_namespace = $parts[0];
 		}
@@ -150,8 +150,8 @@ class SMWImportValue extends SMWDataValue {
 		}
 	}
 
-	public function getXSDValue() {
-		return $this->m_namespace . ' ' . $this->m_section . ' ' . $this->m_uri;
+	public function getDBkeys() {
+		return array($this->m_namespace . ' ' . $this->m_section . ' ' . $this->m_uri);
 	}
 
 	public function getWikiValue(){

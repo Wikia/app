@@ -172,6 +172,7 @@ class SFFormPrinter {
     $section_start = 0;
     $free_text_was_included = false;
     $free_text_preload_page = null;
+    $free_text_components = array();
     $all_values_for_template = array();
     // unencode and HTML-encoded representations of curly brackets and
     // pipes - this is a hack to allow for forms to include templates
@@ -367,7 +368,7 @@ class SFFormPrinter {
           // template, then delete them from the array, so we can get the
           // next group next time - the next() command for arrays doesn't
           // seem to work here
-         if ((! $source_is_page) && $allow_multiple && $wgRequest) {
+          if ((! $source_is_page) && $allow_multiple && $wgRequest) {
             $all_instances_printed = true;
             if ($old_template_name != $template_name) {
               $all_values_for_template = $wgRequest->getArray($query_template_name);
@@ -389,6 +390,11 @@ class SFFormPrinter {
         // end template processing
         // =====================================================
         } elseif ($tag_title == 'end template') {
+          if ($source_is_page) {
+            // add any unhandled template fields in the page as hidden variables
+            if (isset($template_contents))
+              $form_text .= SFFormUtils::unhandledFieldsHTML($template_contents);
+          }
           // remove this tag, reset some variables, and close off form HTML tag
           $section = substr_replace($section, '', $brackets_loc, $brackets_end_loc + 3 - $brackets_loc);
           $template_name = null;
@@ -418,6 +424,7 @@ class SFFormPrinter {
           $field_args = array();
           $default_value = "";
           $possible_values = null;
+          $semantic_property = null;
           $preload_page = null;
           for ($i = 2; $i < count($tag_components); $i++) {
             $component = trim($tag_components[$i]);
@@ -437,6 +444,8 @@ class SFFormPrinter {
               $field_args['no autocomplete'] = true;
             } elseif ($component == 'remote autocompletion') {
               $field_args['remote autocompletion'] = true;
+            } elseif ($component == 'edittools') { // free text only
+              $free_text_components[] = 'edittools';
             } else {
               $sub_components = explode('=', $component);
               if (count($sub_components) == 2) {
@@ -452,12 +461,44 @@ class SFFormPrinter {
                     // this variable is not used
                     $preload_page = $sub_components[1];
                   }
+                } elseif ($sub_components[0] == 'autocomplete on property') {
+                  // HACK - we need to figure out if this property is a
+                  // relation or attribute, i.e. whether it points to wiki
+                  // pages or not; so construct an SFTemplateField object
+                  // with this property, and determine it that way
+                  $property_name = $sub_components[1];
+                  $dummy_field = new SFTemplateField();
+                  $dummy_field->setSemanticProperty($property_name);
+                  if ($dummy_field->propertyIsOfType('_wpg'))
+                    $field_args['autocomplete field type'] = 'relation';
+                  else
+                    $field_args['autocomplete field type'] = 'attribute';
+                  $field_args['autocompletion source'] = $sub_components[1];
+                } elseif ($sub_components[0] == 'autocomplete on') { // for backwards-compatibility
+                  $field_args['autocomplete field type'] = 'category';
+                  $field_args['autocompletion source'] = $sub_components[1];
+                } elseif ($sub_components[0] == 'autocomplete on category') {
+                  $field_args['autocomplete field type'] = 'category';
+                  $field_args['autocompletion source'] = $sub_components[1];
+                } elseif ($sub_components[0] == 'autocomplete on concept') {
+                  $field_args['autocomplete field type'] = 'concept';
+                  $field_args['autocompletion source'] = $sub_components[1];
+                } elseif ($sub_components[0] == 'autocomplete on namespace') {
+                  $field_args['autocomplete field type'] = 'namespace';
+                  $autocompletion_source = $sub_components[1];
+                  // special handling for "main" (blank) namespace
+                  if ($autocompletion_source == "")
+                    $autocompletion_source = "main";
+                  $field_args['autocompletion source'] = $autocompletion_source;
                 } elseif ($sub_components[0] == 'values') {
-                  $possible_values = explode(',', $sub_components[1]);
+                  // remove whitespaces from list
+                  $possible_values = array_map('trim', explode(',', $sub_components[1]));
                 } elseif ($sub_components[0] == 'values from category') {
                   $possible_values = SFUtils::getAllPagesForCategory($sub_components[1], 10);
                 } elseif ($sub_components[0] == 'values from concept') {
                   $possible_values = SFUtils::getAllPagesForConcept($sub_components[1]);
+                } elseif ($sub_components[0] == 'property') {
+                  $semantic_property = $sub_components[1];
                 } else {
                   $field_args[$sub_components[0]] = $sub_components[1];
                 }
@@ -490,12 +531,16 @@ class SFFormPrinter {
             $cur_value = $default_value;
           }
 
-          // if the user is starting to edit a page, and that page contains
-          // the current template being processed, get the current template
-          // field's value in the existing page
+          // if the user is editing a page, and that page contains a call to
+          // the template being processed, get the current field's value
+          // from the template call
           if ($source_is_page && (! empty($existing_template_text))) {
             if (isset($template_contents[$field_name])) {
               $cur_value = $template_contents[$field_name];
+              // now remove this value from $template_contents, so that
+              // at the end we can have a list of all the fields that
+              // weren't handled by the form
+              unset($template_contents[$field_name]);
             } else
               $cur_value = '';
             if ($cur_value) {
@@ -521,6 +566,18 @@ class SFFormPrinter {
               $sfgTabIndex++;
               $sfgFieldNum++;
               list($new_text, $new_javascript_text) = SFFormInputs::textAreaHTML('<free_text>', 'free_text', false, ($form_is_disabled || $is_restricted), $field_args);
+              if (in_array('edittools', $free_text_components)) {
+                // borrowed from EditPage::showEditTools()
+                $options[] = 'parse';
+                $edittools_text = wfMsgExt( 'edittools', array( 'parse' ), array( 'content' ) );
+
+                $new_text .=<<<END
+		<div class="mw-editTools">
+		$edittools_text
+		</div>
+
+END;
+              }
               $fields_javascript_text .= $new_javascript_text;
             }
             $free_text_was_included = true;
@@ -650,13 +707,21 @@ class SFFormPrinter {
             // it's a restricted field and user doesn't have sysop privileges
             $is_disabled = ($form_is_disabled ||
               ($is_restricted && (! $wgUser || ! $wgUser->isAllowed('editrestrictedfields'))));
-            // create an SFFormTemplateField instance based on all the
+            // create an SFFormField instance based on all the
             // parameters in the form definition, and any information from
             // the template definition (contained in the $all_fields parameter)
-            $form_field = SFFormTemplateField::createFromDefinition($field_name, $input_name,
+            $form_field = SFFormField::createFromDefinition($field_name, $input_name,
               $is_mandatory, $is_hidden, $is_uploadable, $possible_values, $is_disabled,
               $is_list, $input_type, $field_args, $all_fields, $strict_parsing);
-            // if this is not part of a 'multiple' template, incrememt the
+            // if a property was set in the form definition, overwrite whatever
+            // is set in the template field - this is somewhat of a hack, since
+            // parameters set in the form definition are meant to go into the
+            // SFFormField object, not the SFTemplateField object it contains;
+            // it seemed like too much work, though, to create an
+            // SFFormField::setSemanticProperty() function just for this call
+            if ($semantic_property != null)
+               $form_field->template_field->setSemanticProperty($semantic_property);
+            // if this is not part of a 'multiple' template, increment the
             // global tab index (used for correct tabbing)
             if (! $field_args['part_of_multiple'])
               $sfgTabIndex++;
@@ -671,7 +736,7 @@ class SFFormPrinter {
                 ($cur_value == '' || $cur_value == 'now')) {
               if ($input_type == 'date' || $input_type == 'datetime' ||
                   $input_type == 'datetime with timezone' ||
-                  ($input_type == '' && $form_field->template_field->field_type == 'Date')) {
+                  ($input_type == '' && $form_field->template_field->propertyIsOfType('_dat'))) {
                 $cur_time = time();
                 $year = date("Y", $cur_time);
                 $month = date("n", $cur_time);
@@ -747,7 +812,7 @@ class SFFormPrinter {
               $info_id = "info_" . $sfgFieldNum;
               if ($is_mandatory) {
                 if ($input_type == 'date' || $input_type == 'datetime' || $input_type == 'datetime with timezone' ||
-                    ($input_type == '' && $form_field->template_field->field_type == 'Date')) {
+                    ($input_type == '' && $form_field->template_field->propertyIsOfType('_dat'))) {
                   $sfgJSValidationCalls[] = "validate_mandatory_field ('$input_id" . "_month', '$info_id')";
                   $sfgJSValidationCalls[] = "validate_mandatory_field ('$input_id" . "_day', '$info_id')";
                   $sfgJSValidationCalls[] = "validate_mandatory_field ('$input_id" . "_year', '$info_id')";
@@ -766,8 +831,9 @@ class SFFormPrinter {
                     }
                   } elseif (($form_field->template_field->is_list && $form_field->template_field->field_type == 'enumeration' && $input_type != 'listbox') || ($input_type == 'checkboxes')) {
                     $sfgJSValidationCalls[] = "validate_mandatory_checkboxes('$input_id', '$info_id')";
-                  // if it's not a radiobutton...
-                  } elseif ($input_type != 'radiobutton' && $form_field->template_field->field_type != 'enumeration') {
+                  } elseif ($input_type == 'radiobutton') {
+                    $sfgJSValidationCalls[] = "validate_mandatory_radiobutton('$input_id', '$info_id')";
+                  } else {
                     $sfgJSValidationCalls[] = "validate_mandatory_field('$input_id', '$info_id')";
                   }
                 }
@@ -789,7 +855,11 @@ class SFFormPrinter {
           for ($i = 2; $i < count($tag_components); $i++) {
             $component = $tag_components[$i];
             $sub_components = explode('=', $component);
-            if (count($sub_components) == 2) {
+            if (count($sub_components) == 1) {
+              if ($sub_components[0] == 'edittools') {
+                $free_text_components[] = 'edittools';
+              }
+            } elseif (count($sub_components) == 2) {
               if ($sub_components[0] == 'label') {
                 $input_label = $sub_components[1];
               }
@@ -865,6 +935,9 @@ class SFFormPrinter {
           // call is already more than one line
           if (strpos($template_text, "\n"))
             $template_text .= "\n";
+          // if we're editing an existing page, and there were fields in
+          // the template call not handled by this form, preserve those
+          $template_text .= SFFormUtils::addUnhandledFields();
           $template_text .= "}}";
           $data_text .= $template_text . "\n";
           // if there is a placeholder in the text, we know that we are
@@ -1115,7 +1188,7 @@ END;
     global $smwgContLang;
 
     // also get the actual field, with all the semantic information (type is
-    // SFTemplateField, instead of SFFormTemplateField)
+    // SFTemplateField, instead of SFFormField)
     $template_field = $form_field->template_field;
 
     if ($form_field->is_hidden) {
@@ -1133,24 +1206,8 @@ END;
       // values for this input type with all other properties set in
       // the form definition, plus some semantic-related arguments
       $hook_values = $this->mInputTypeHooks[$form_field->input_type];
-      $default_args = $hook_values[1];
-      $other_args = $form_field->field_args;
-      // if the set of possible values were set in the form definition,
-      // go with that
-      if ($form_field->possible_values != null)
-        $other_args['possible_values'] = $form_field->possible_values;
-      else
-        $other_args['possible_values'] = $template_field->possible_values;
-      // the fact that this is a list can be specified in either the
-      // template or the form
-      $other_args['is_list'] = ($template_field->is_list || $form_field->is_list);
-      if ($template_field->is_relation)
-        $other_args['is_relation'] = true;
-      if ($template_field->semantic_field != '')
-        $other_args['semantic_field_name'] = $template_field->semantic_field;
-      // merge default values and values from form - put the default values
-      // first, so that if there's a conflict they'll be overridden
-      $funcArgs[] = array_merge($default_args, $other_args);
+      $other_args = $form_field->getArgumentsForInputCall($hook_values[1]);
+      $funcArgs[] = $other_args;
       list($text, $javascript_text) = call_user_func_array($hook_values[0], $funcArgs);
     } else { // input type not defined in form
       $field_type = $template_field->field_type;
@@ -1158,35 +1215,22 @@ END;
       if ($field_type != '' &&
           array_key_exists($field_type, $this->mSemanticTypeHooks) &&
           isset($this->mSemanticTypeHooks[$field_type][$is_list])) {
-        $hook_values = $this->mSemanticTypeHooks[$field_type][$is_list];
         $funcArgs = array();
         $funcArgs[] = $cur_value;
         $funcArgs[] = $form_field->input_name;
         $funcArgs[] = $form_field->is_mandatory;
         $funcArgs[] = $form_field->is_disabled;
-        // merge default values and values from form - put the default values
-        // first, so that if there's a conflict they'll be overridden
-        $other_args = array_merge($hook_values[1], $form_field->field_args);
-        if ($form_field->possible_values != null)
-          $other_args['possible_values'] = $form_field->possible_values;
-        else
-          $other_args['possible_values'] = $template_field->possible_values;
-        if ($template_field->is_relation)
-          $other_args['is_relation'] = true;
-        if ($template_field->semantic_field != '')
-          $other_args['semantic_field_name'] = $template_field->semantic_field;
+        $hook_values = $this->mSemanticTypeHooks[$field_type][$is_list];
+        $other_args = $form_field->getArgumentsForInputCall($hook_values[1]);
         $funcArgs[] = $other_args;
         list($text, $javascript_text) = call_user_func_array($hook_values[0], $funcArgs);
       } else { // anything else
-        $other_args = $form_field->field_args;
-        // set field to be a list if that was specified in the form definition
+        $other_args = $form_field->getArgumentsForInputCall();
+        // special call to ensure that a list input is the right default size
         if ($form_field->is_list) {
-          $other_args['is_list'] = true;
           if (! array_key_exists('size', $other_args))
             $other_args['size'] = 100;
         }
-        if ($form_field->possible_values != null)
-          $other_args['possible_values'] = $form_field->possible_values;
         list($text, $javascript_text) = SFFormInputs::textEntryHTML($cur_value, $form_field->input_name, $form_field->is_mandatory, $form_field->is_disabled, $other_args);
       }
     }

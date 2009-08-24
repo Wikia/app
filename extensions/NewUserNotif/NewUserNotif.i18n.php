@@ -77,6 +77,18 @@ $messages['avk'] = array(
 $2 warzafa favesikpata su zo redur koe $3 ko $4.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'newusernotifsubj' => 'Паведамленьне аб новым удзельніку для $1',
+	'newusernotif-desc' => 'Дасылае паведамленьне па электроннай пошце пры стварэньні новых рахункаў',
+	'newusernotifbody' => 'Прывітаньне, $1,
+
+Новы рахунак, $2, быў створаны $3 $4.',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -86,6 +98,28 @@ $messages['bg'] = array(
 	'newusernotifbody' => 'Здравейте $1,
 
 В $3 беше регистрирана нова потребителска сметка, $2, на $4.',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'newusernotifsubj' => 'Obavještenje o novom korisniku na $1',
+	'newusernotif-desc' => 'Šalje obavještenje putem e-maila kada pri pravljenju novog korisničkog računa',
+	'newusernotifbody' => 'Zdravo $1,
+
+Novi korisnički račun, $2, je napravljen na $3 u $4.',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'newusernotifsubj' => 'Hysbysiad am ddefnyddiwr newydd ar $1',
+	'newusernotif-desc' => 'Yn anfon e-bost yn hysbysu bod cyfrif defnyddiwr newydd wedi ei sefydlu',
+	'newusernotifbody' => "Cyfarchion $1,
+
+Mae cyfrif newydd o'r enw $2 wedi cael ei sefydlu ar $3 am $4.",
 );
 
 /** German (Deutsch)
@@ -119,6 +153,17 @@ $messages['eo'] = array(
 	'newusernotifbody' => 'Saluton $1,
 
 Nova konto por uzanto, $2, estis kreita je $3 $4.',
+);
+
+/** Spanish (Español)
+ * @author Sanbec
+ */
+$messages['es'] = array(
+	'newusernotifsubj' => 'Notificación de un nuevo usuario en $1',
+	'newusernotif-desc' => 'Envía un aviso por correo electrónico cuando se crean cuentas de usuario',
+	'newusernotifbody' => 'Hola $1:
+
+Ha sido creada una nueva cuenta de usuario, $2, en $3 a las $4',
 );
 
 /** Finnish (Suomi)
@@ -163,6 +208,17 @@ $messages['gl'] = array(
 	'newusernotifbody' => 'Ola $1,
 
 Unha nova conta de usuario, $2, foi creada sobre $3 en $4.',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'newusernotifsubj' => 'Benochrichtung vu $1 iber e nej Benutzerskonto',
+	'newusernotif-desc' => 'Verschickt E-Mail-Benochrichtigunge bim Aalege vu neje Benutzerkonte',
+	'newusernotifbody' => 'Sali $1,
+
+E nej Benutzerkonto, $2, isch am $4 uf $3 aagleit wore.',
 );
 
 /** Hebrew (עברית)
@@ -286,9 +342,7 @@ $messages['ksh'] = array(
 	'newusernotifbody' => 'Jooden Daach $1,
 
 Ene neue Metmaacher mem Name "$2"
-es aam $5 öm $6 Uhr en de $3 neu aanjemeldt woode.
-
-Ene Jrooss vun de {{SITENAME}}',
+es aam $5 öm $6 Uhr en de $3 neu aanjemeldt woode.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -413,9 +467,14 @@ Uma nova conta de utilizador, $2, foi criada em $3 em $4.',
 
 /** Brazilian Portuguese (Português do Brasil)
  * @author Carla404
+ * @author Eduardo.mps
  */
 $messages['pt-br'] = array(
 	'newusernotifsubj' => 'Notificação de novo usuário para $1',
+	'newusernotif-desc' => 'Envia uma notificação por e-mail quando uma conta de utilizador é criada',
+	'newusernotifbody' => 'Olá, $1,
+
+Uma nova conta de utilizador, $2, foi criada em $3 em $4.',
 );
 
 /** Russian (Русский)
@@ -512,10 +571,24 @@ $messages['tg-cyrl'] = array(
 Ҳисоби корбарии ҷадид, $2, дар $3 дар $4 эҷод шуд.',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'newusernotifsubj' => 'Pabatid na pambagong tagagamit para kay $1',
+	'newusernotif-desc' => 'Nagpapadala ng isang pabatid na pang-e-liham kapag nalikha ang bagong mga kuwenta ng tagagamit',
+	'newusernotifbody' => 'Kumusta ka $1,
+
+Isang bagong kuwenta/akawnt, $2, ang nalikha na sa $3 noong $4.',
+);
+
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Srhat
  */
 $messages['tr'] = array(
+	'newusernotifsubj' => '$1 için yeni kullanıcı bildirisi',
+	'newusernotif-desc' => 'Kullanıcı hesapları oluşturulduğunda e-posta bildirisi yolla',
 	'newusernotifbody' => "Merhaba $1
 
 Yeni kullanıcı hesabı, $2,$3 üzerinde $4'te oluşturuldu.",
@@ -547,6 +620,8 @@ Một tài khoản thành viên mới, $2, đã được tạo ra trên $3 lúc 
  * @author Smeira
  */
 $messages['vo'] = array(
+	'newusernotifsubj' => 'Nunod gebaan nulik demü $1',
+	'newusernotif-desc' => 'Sedon nunodi leäktronik ven gebanakals pajafons',
 	'newusernotifbody' => 'Glidis, o $1!
 
 Gebanakal nulik: $2, pejafon su $3 tü $4.',

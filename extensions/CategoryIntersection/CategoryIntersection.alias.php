@@ -99,7 +99,12 @@ $aliases['hu'] = array(
 
 /** Interlingua (Interlingua) */
 $aliases['ia'] = array(
-	'CategoryIntersection' => array( 'Intersection de categorias', 'IntersectionDeCategorias' ),
+	'CategoryIntersection' => array( 'Intersection de categorias' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'CategoryIntersection' => array( 'カテゴリ交差' ),
 );
 
 /** Javanese (Basa Jawa) */
@@ -119,7 +124,7 @@ $aliases['lb'] = array(
 
 /** Macedonian (Македонски) */
 $aliases['mk'] = array(
-	'CategoryIntersection' => array( 'ПресекНаКатегории' ),
+	'CategoryIntersection' => array( 'ПресекНаКатегории', 'Пресен на категории' ),
 );
 
 /** Marathi (मराठी) */
@@ -154,7 +159,7 @@ $aliases['pl'] = array(
 
 /** Portuguese (Português) */
 $aliases['pt'] = array(
-	'CategoryIntersection' => array( 'Intersecção de categorias' ),
+	'CategoryIntersection' => array( 'Intersecção de categorias', 'Interseção de categorias' ),
 );
 
 /** Brazilian Portuguese (Português do Brasil) */
@@ -170,6 +175,11 @@ $aliases['ro'] = array(
 /** Russian (Русский) */
 $aliases['ru'] = array(
 	'CategoryIntersection' => array( 'Пересечение категорий' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'CategoryIntersection' => array( 'वर्गविभाजन' ),
 );
 
 /** Tachelhit (Tašlḥiyt) */
@@ -200,6 +210,11 @@ $aliases['sv'] = array(
 /** Telugu (తెలుగు) */
 $aliases['te'] = array(
 	'CategoryIntersection' => array( 'వర్గం ఖండన' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'CategoryIntersection' => array( 'Pinagsangahan ng kaurian', 'Sangahan ng kaurian' ),
 );
 
 /** Ukrainian (Українська) */

@@ -351,8 +351,7 @@ function addTableMetadataEditors($editor, ViewInformation $viewInformation) {
 }
 
 function getDefinitionEditor(ViewInformation $viewInformation) {
-	global
-		$wgPopupAnnotationName, $definitionMeaningName;
+	global $definitionMeaningName;
 
 	$o=OmegaWikiAttributes::getInstance();
 
@@ -383,7 +382,7 @@ function getDefinitionEditor(ViewInformation $viewInformation) {
 		
 	$editor->addEditor(new PopUpEditor(
 		createDefinitionObjectAttributesEditor($viewInformation, $o->objectAttributes, wfMsgSc("Property"), wfMsgSc("Value"), $o->definedMeaningId, $definitionMeaningName, $viewInformation->getLeftOverAttributeFilter()),	
-		$wgPopupAnnotationName
+		wfMsgSc("PopupAnnotation")
 	));
 
 	return $editor;	
@@ -518,7 +517,7 @@ function getClassAttributesEditor(ViewInformation $viewInformation) {
 	$tableEditor->addEditor(new ClassAttributesLevelDefinedMeaningEditor($o->classAttributeLevel, new SimplePermissionController(false), true));
 	$tableEditor->addEditor(new DefinedMeaningReferenceEditor($o->classAttributeAttribute, new SimplePermissionController(false), true));
 	$tableEditor->addEditor(new ClassAttributesTypeEditor($o->classAttributeType, new SimplePermissionController(false), true));
-	$tableEditor->addEditor(new PopupEditor(getOptionAttributeOptionsEditor(), 'Options'));
+	$tableEditor->addEditor(new PopupEditor(getOptionAttributeOptionsEditor(), wfMsg('ow_OptionAttributeOptions')));
 
 	addTableMetadataEditors($tableEditor, $viewInformation);
 	
@@ -526,8 +525,7 @@ function getClassAttributesEditor(ViewInformation $viewInformation) {
 }
 
 function getSynonymsAndTranslationsEditor(ViewInformation $viewInformation) {
-	global
-		$wgPopupAnnotationName, $synTransMeaningName;
+	global $synTransMeaningName;
 
 	$o=OmegaWikiAttributes::getInstance();
 
@@ -548,7 +546,7 @@ function getSynonymsAndTranslationsEditor(ViewInformation $viewInformation) {
 	
 	$tableEditor->addEditor(new PopUpEditor(
 		createObjectAttributesEditor($viewInformation, $o->objectAttributes, wfMsgSc("Property"), wfMsgSc("Value"), $o->syntransId, $synTransMeaningName, $viewInformation->getLeftOverAttributeFilter()), 
-		$wgPopupAnnotationName
+		wfMsgSc("PopupAnnotation")
 	));
 
 	addTableMetadataEditors($tableEditor, $viewInformation);
@@ -576,7 +574,7 @@ function getDefinedMeaningAttributeValuesEditor(ViewInformation $viewInformation
 
 function getDefinedMeaningReciprocalRelationsEditor(ViewInformation $viewInformation) {
 	global
-		$relationsObjectAttributesEditor, $relationMeaningName, $wgPopupAnnotationName;
+		$relationsObjectAttributesEditor, $relationMeaningName;
 
 	$o=OmegaWikiAttributes::getInstance();
 
@@ -588,7 +586,7 @@ function getDefinedMeaningReciprocalRelationsEditor(ViewInformation $viewInforma
 	
 	$editor->addEditor(new PopUpEditor(
 		createObjectAttributesEditor($viewInformation, $o->objectAttributes, wfMsgSc("Property"), wfMsgSc("Value"), $o->relationId, $relationMeaningName, $viewInformation->getLeftOverAttributeFilter()), 
-		$wgPopupAnnotationName
+		wfMsgSc("PopupAnnotation")
 	));
 
 	addTableMetadataEditors($editor, $viewInformation);
@@ -732,7 +730,7 @@ function getExpressionMeaningsEditor(Attribute $attribute, $allowAdd, ViewInform
 	$definedMeaningEditor = getDefinedMeaningEditor($viewInformation);
 
 	$definedMeaningCaptionEditor = new DefinedMeaningHeaderEditor($o->definedMeaningId, new SimplePermissionController(false), true, 75);
-	$definedMeaningCaptionEditor->setAddText("New exact meaning");
+	$definedMeaningCaptionEditor->setAddText(wfMsg('ow_NewExactMeaning'));
 
 	$expressionMeaningsEditor = new RecordSetListEditor($attribute, new SimplePermissionController(true), new ShowEditFieldChecker(true), new AllowAddController($allowAdd), false, $allowAdd, new ExpressionMeaningController($viewInformation->filterLanguageId), 3, false);
 	$expressionMeaningsEditor->setCaptionEditor($definedMeaningCaptionEditor);

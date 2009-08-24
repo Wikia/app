@@ -125,10 +125,11 @@ class ExtensionDistributorPage extends SpecialPage {
 			$wgOut->addHTML( Xml::element( 'option', array( 'value' => $extension ), $extension ) . "\n" );
 		}
 
-		$wgOut->addHTML( "</select>" .
-			Xml::element( 'input', array( 'type' => 'submit', 'name' => 'extdist_submit', 
-				'value' => wfMsg( 'extdist-submit-extension' ) ) ) .
-			"</form>\n" );
+		$wgOut->addHTML(
+			Xml::closeElement( 'select' ) . ' ' .
+			Xml::submitButton( wfMsg( 'extdist-submit-extension' ), array( 'name' => 'extdist_submit' ) ) .
+			Xml::closeElement( 'form' ) . "\n"
+		);
 	}
 
 	function showVersionSelector( $extensionName ) {
@@ -167,10 +168,10 @@ class ExtensionDistributorPage extends SpecialPage {
 			$wgOut->addHTML( Xml::element( 'option', 
 				array( 'value' => $branchPath ), $branchName ) . "\n" );
 		}
-		$wgOut->addHTML( "</select>" .
-			Xml::element( 'input', array( 'type' => 'submit', 'name' => 'extdist_submit', 
-				'value' => wfMsg( 'extdist-submit-version' ) ) ) . 
-			"</form>\n"
+		$wgOut->addHTML(
+			Xml::closeElement( 'select' ) . ' ' .
+			Xml::submitButton( wfMsg( 'extdist-submit-version' ), array( 'name' => 'extdist_submit' ) ) .
+			Xml::closeElement( 'form' ) . "\n"
 	   	);
 	}
 

@@ -35,6 +35,27 @@ $messages['arz'] = array(
 	'formatsearch-desc' => 'تنضيف صفحة نتايج التدوير',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'formatsearch-desc' => 'Чысьціць старонку з вынікамі пошуку',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'formatsearch-desc' => 'Почиства страницата с резултати от търсенето',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'formatsearch-desc' => 'Čisti stranicu pretrage',
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
  */
@@ -86,10 +107,11 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author PieRRoMaN
  * @author Sherbrooke
  */
 $messages['fr'] = array(
-	'formatsearch-desc' => 'Nettoyer la page de résultats de recherche',
+	'formatsearch-desc' => 'Nettoie la page de résultats des recherches',
 );
 
 /** Galician (Galego)
@@ -97,6 +119,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'formatsearch-desc' => 'Limpa a páxina dos resultados da busca',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'formatsearch-desc' => 'Macht d Suechergebnissyte läär',
 );
 
 /** Hebrew (עברית)
@@ -128,10 +157,11 @@ $messages['ia'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Mizusumashi
  */
 $messages['ja'] = array(
-	'formatsearch-desc' => '検索結果ページをクリーンアップする',
+	'formatsearch-desc' => '検索結果ページを整理する',
 );
 
 /** Javanese (Basa Jawa)
@@ -211,11 +241,25 @@ $messages['pt'] = array(
 	'formatsearch-desc' => 'Limpa a página de resultados de pesquisa',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'formatsearch-desc' => 'Limpa a página de resultados de pesquisa',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'formatsearch-desc' => 'Curăţă pagina cu rezultatele căutării',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'formatsearch-desc' => "Pulizze 'a pàgene de le resultete d'a ricerche",
 );
 
 /** Russian (Русский)
@@ -230,6 +274,20 @@ $messages['ru'] = array(
  */
 $messages['sk'] = array(
 	'formatsearch-desc' => 'Vyčistí stránku s výsledkami vyhľadávania',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'formatsearch-desc' => 'Pastron faqen e rezultateve të kërkimit',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'formatsearch-desc' => 'Moaket ju Säikresultoat-Siede loos',
 );
 
 /** Sundanese (Basa Sunda)
@@ -253,11 +311,25 @@ $messages['tl'] = array(
 	'formatsearch-desc' => 'Naglilinis ng pahina ng lumabas na mga resulta matapos ang paghahanap',
 );
 
+/** Turkish (Türkçe)
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'formatsearch-desc' => 'Arama sonuçları sayfasını temizler',
+);
+
 /** Ukrainian (Українська)
  * @author Aleksandrit
  */
 $messages['uk'] = array(
 	'formatsearch-desc' => 'Упорядковує сторінку видачі результатів пошуку',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'formatsearch-desc' => 'Dọn dẹp trang kết quả tìm kiếm',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

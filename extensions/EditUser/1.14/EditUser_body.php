@@ -107,7 +107,8 @@ class EditUser extends SpecialPage {
 			$wgOut->addWikiText( wfMsg( 'edituser-nouser' ) );
 			return;
 		}
-		if( $targetuser->isAllowed('edituser-exempt') ) {
+		#Allow editing self via this interface
+		if( $targetuser->isAllowed( 'edituser-exempt' ) && $targetuser->getName() != $wgUser->getName() ) {
 			$wgOut->addWikiText( wfMsg( 'edituser-exempt' ) );
 			return;
 		}

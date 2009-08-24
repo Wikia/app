@@ -45,9 +45,19 @@ $aliases['de'] = array(
 	'Renameuser' => array( 'Benutzer umbenennen' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Renameuser' => array( 'Wužywarja pśemjeniś' ),
+);
+
 /** Divehi (ދިވެހިބަސް) */
 $aliases['dv'] = array(
 	'Renameuser' => array( 'މެމްބަރުގެ ނަން ބަދަލު ކުރައްވާ' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'Renameuser' => array( 'Cambiar_el_nombre_de_usuario', 'Renombrar_usuario', 'Cambiar_nombre_usuario' ),
 );
 
 /** Finnish (Suomi) */
@@ -57,7 +67,7 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'Renameuser' => array( 'RenommerUtilisateur', 'Renommer Utilisateur' ),
+	'Renameuser' => array( 'Renommer utilisateur', 'RenommerUtilisateur', 'Renommer Utilisateur' ),
 );
 
 /** Galician (Galego) */
@@ -95,6 +105,11 @@ $aliases['ht'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'Renameuser' => array( 'Szerkesztő átnevezése' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Renameuser' => array( 'Renominar usator' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -184,6 +199,11 @@ $aliases['pt-br'] = array(
 	'Renameuser' => array( 'Renomear utilizador', 'Renomear usuário' ),
 );
 
+/** Romanian (Română) */
+$aliases['ro'] = array(
+	'Renameuser' => array( 'Redenumire utilizator' ),
+);
+
 /** Albanian (Shqip) */
 $aliases['sq'] = array(
 	'Renameuser' => array( 'RiemërtoPërdorues' ),
@@ -202,5 +222,10 @@ $aliases['sw'] = array(
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'Renameuser' => array( 'เปลี่ยนชื่อผู้ใช้' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Renameuser' => array( 'Muling pangalan ang tagagamit' ),
 );
 

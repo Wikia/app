@@ -66,6 +66,17 @@ $messages['bg'] = array(
 $2',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'email-desc' => 'Omogućuje prilagođena zaglavlja/fusnote za dodavanje na korisničke e-mailove',
+	'email_footer' => '----------------------------------------------------------------------------
+Ovaj e-mail Vam je poslan putem e-mail sistema sa stranice {{SITENAME}} od strane $1.
+
+$2',
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
  * @author Mormegil
@@ -88,9 +99,11 @@ Anfonodd $1 yr e-bost hwn atoch trwy system e-bost ((SITENAME)).
 $2',
 );
 
-/** German (Deutsch) */
+/** German (Deutsch)
+ * @author Umherirrender
+ */
 $messages['de'] = array(
-	'email-desc' => 'Erlaubt Benutzern persönliche Kopf- und Fusszeilen in der E-Mail Funktion zu verwenden',
+	'email-desc' => 'Erlaubt Benutzern persönliche Kopf- und Fusszeilen in der E-Mail-Funktion zu verwenden',
 	'email_footer' => '----------------------------------------------------------------------------
 Diese E-Mail wurde dir von $1 über das {{SITENAME}}-E-Mail-System zugesandt.
 
@@ -126,6 +139,16 @@ $messages['es'] = array(
 	'email-desc' => 'Permite configurar encabezados y pies para añadir a los correos electrónicos del usuario.',
 	'email_footer' => '----------------------------------------------------------------------------
 Este correo ha sido enviado por $1 a través del sistema de correo electrónico de {{SITENAME}}.
+
+$2',
+);
+
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'email_footer' => '----------------------------------------------------------------------------
+E-posta hau $1 erabiltzaileak bidali dizu {{SITENAME}} e-posta sistemaren bidez.
 
 $2',
 );
@@ -182,6 +205,17 @@ $messages['grc'] = array(
 	'email-desc' => 'Ἐπιτρέπει ταῖς συνήθεσι ἐπικεφαλίσι/ὑποσημειώσεσι προστεθειμέναι εἶναι εἰς τὰς ἐπιστολὰς τῶν χρωμένων',
 	'email_footer' => '----------------------------------------------------------------------------
 Ἥδε ἡ ἐπιστολὴ ἐστάλη πρὸς ἐσὲ μέσῳ τοῦ συστήματος ἠλεκτρονικοῦ ταχυδρομείου τοῦ {{SITENAME}} ὑπὸ τὸν $1.
+
+$2',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'email-desc' => 'Erlaubt Benutzer persenligi Chopf- un Fuesszyylete in dr E-Mail Funktion z verwände',
+	'email_footer' => '----------------------------------------------------------------------------
+Die E-Mail isch Dir vu $1 iber s {{SITENAME}}-E-Mail-Syschtem zuegschickt wore.
 
 $2',
 );
@@ -407,7 +441,7 @@ Aqueste corrièr vos es estat mandat gràcia al sistèma de messatjariá de {{SI
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'email-desc' => 'Umożliwia dodanie nagłówka i stopki do wiadomości e-mail wysyłanych do użytkowników.',
+	'email-desc' => 'Umożliwia dodanie nagłówka i stopki do wiadomości e‐mail wysyłanych do użytkowników.',
 	'email_footer' => '---------------------------------------------------------------------------
 Ta wiadomość została wysłana poprzez system pocztowy {{SITENAME}} przez $1.
 
@@ -428,6 +462,17 @@ $2',
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'email-desc' => 'Permite que sejam adicionados cabeçalhos/rodapés personalizados aos emails dos utilizadores.',
+	'email_footer' => '----------------------------------------------------------------------------
+Este email foi enviado pelo sistema de email de {{SITENAME}} por $1.
+
+$2',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'email-desc' => 'Permite que sejam adicionados cabeçalhos/rodapés personalizados aos emails dos utilizadores.',
 	'email_footer' => '----------------------------------------------------------------------------
 Este email foi enviado pelo sistema de email de {{SITENAME}} por $1.
@@ -471,6 +516,7 @@ $2',
  * @author Pyt
  */
 $messages['stq'] = array(
+	'email-desc' => 'Ferlööwet Benutsere persöönelke Kop- un Fout-Riegen in ju E-mail-Funktion tou ferweenden',
 	'email_footer' => '----------------------------------------------------------------------------
 Disse E-Mail wuude die fon $1 uur dät {{SITENAME}}-E-Mail-System tousoand.
 
@@ -493,6 +539,7 @@ $2',
  * @author Veeven
  */
 $messages['te'] = array(
+	'email-desc' => 'ప్రత్యేక హెడర్లు/ఫూటర్లను వాడుకరి ఈమెయిళ్ళకి చేర్చుకోనిస్తుంది',
 	'email_footer' => '----------------------------------------------------------------------------
 {{SITENAME}} ఈ-మెయిల్ వ్యవస్థ ద్వారా $1 మీకు ఈ సందేశాన్ని పంపించారు.
 
@@ -515,6 +562,17 @@ $messages['tl'] = array(
 	'email-desc' => 'Nagpapahintulot sa mga pinasadyang/pasadyang mga paulo/talababa na maidagdag sa mga e-liham ng tagagamit',
 	'email_footer' => '----------------------------------------------------------------------------
 Ipinadala sa iyo ni $1 ang e-liham na ito sa pamamagitan ng sistemang pang-e-liham ng {{SITENAME}}. 
+
+$2',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'email-desc' => 'Kullnıcı e-postalarına özel başlık/altbilgi eklenmesine izin verir',
+	'email_footer' => '----------------------------------------------------------------------------
+Bu e-posta size {{SITENAME}} e-posta sistemi aracılığıyla $1 tarafından gönderildi.
 
 $2',
 );

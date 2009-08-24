@@ -67,7 +67,12 @@ $aliases['hu'] = array(
 
 /** Interlingua (Interlingua) */
 $aliases['ia'] = array(
-	'AdvancedRandom' => array( 'AleatoriAvantiate' ),
+	'AdvancedRandom' => array( 'Aleatori avantiate' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'AdvancedRandom' => array( '高度なおまかせ表示' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -90,5 +95,15 @@ $aliases['nl'] = array(
  */
 $aliases['no'] = array(
 	'AdvancedRandom' => array( 'Avansert_tilfeldig_side' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'AdvancedRandom' => array( 'प्रगताअविशीष्ट' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'AdvancedRandom' => array( 'Mas masulong na paghanap ng alin mang pahina' ),
 );
 

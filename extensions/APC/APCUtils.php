@@ -25,6 +25,6 @@ class APCUtils {
 	public static function formatReqPerS( $number ) {
 		global $wgLang;
 		return wfMsgExt( 'viewapc-rps', 'parsemag',
-			$wgLang->formatNum( sprintf("%.2f", $number ), true ) );
+			$wgLang->formatNum( sprintf( "%.2f", $number ) ) );
 	}
 }

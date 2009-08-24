@@ -35,6 +35,27 @@ $messages['arz'] = array(
 	'preloader-desc' => 'يوفر نص بويلربلات مخصص لكل نطاق للصفحات الجديدة',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'preloader-desc' => 'Дадае тыпавыя тэксты для новых старонак, якія магчыма настройваць па прасторах назваў',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'preloader-desc' => 'Omogućuje unos po imenskom prostoru prilagodljivih šablona za nove stranice',
+);
+
+/** Danish (Dansk)
+ * @author Byrial
+ */
+$messages['da'] = array(
+	'preloader-desc' => 'Giver en forhåndsbestemt starttekst for nye sider for hvert navnerum',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  */
@@ -83,6 +104,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'preloader-desc' => 'Proporciona, para as páxinas novas, ventás de texto personalizable para os nomes dos espazos',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'preloader-desc' => 'Macht s megli pro Namensruum aapassbarei Vorlage zuezfiege bim Aalege vu neje Syte',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -134,6 +162,13 @@ $messages['mr'] = array(
 	'preloader-desc' => 'नवीन पानांसाठी बदलता येण्याजोगी नामविश्व बॉइलरप्लेट देते',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'preloader-desc' => 'Verlöövt dat Tofögen vun ännerbore Vörlagen, de för elk Naamruum bi’t Opstellen vun ne’e Sieden wiest warrt',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -169,6 +204,13 @@ $messages['pt'] = array(
 	'preloader-desc' => 'Fornece textos-modelo para novas páginas, persnonalizáveis por domínio',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'preloader-desc' => 'Fornece textos-modelo para novas páginas, personalizáveis por domínio',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -190,11 +232,32 @@ $messages['sk'] = array(
 	'preloader-desc' => 'Poskytuje prispôsobiteľný šablónový text pre nové stránky na báze menných priestorov',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'preloader-desc' => 'Moaket dät Bietouföigjen muugelk fon pro Noomensruum anpaasboare Foarloagen bie dät Moakjen fon näie Sieden',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
 $messages['sv'] = array(
 	'preloader-desc' => 'Ger en egendefinierad förhandsladdad text för nya sidor',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'preloader-desc' => 'కొత్త పేజీలకి పేరుబరివారీగా మార్చుకొనగలిగే మూస పాఠ్యాన్ని అందిస్తుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'preloader-desc' => 'Nagbibigay na maipapasadyang pang-bawat espasyo ng pangalang teksto ng pakuluang-bakal para sa bagong mga pahina',
 );
 
 /** Vietnamese (Tiếng Việt)

@@ -1,0 +1,4 @@
+require_once( "$IP/extensions/UserMerge/UserMerge.php" );
+# Assign the usermerge right to a usergroup, i.e. to the bureaucrats:
+$wgGroupPermissions['bureaucrat']['usermerge'] = true;
+

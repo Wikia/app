@@ -31,6 +31,8 @@ function wfSisterDisplay( $out ) {
 }
 
 function wfSisterList( $sites ) {
+	global $wgLang;
+
 	foreach( $sites as $site ) {
 		$bits[] = Xml::element( 'a',
 			array(
@@ -42,7 +44,7 @@ function wfSisterList( $sites ) {
 	}
 	return "<div class=\"mw_sistersites\">" .
 		"Sister sites: " .
-		implode( " | ", $bits ) .
+		$wgLang->pipeList( $bits ) .
 		"</div>\n";
 }
 

@@ -25,6 +25,7 @@ class MessageChecks {
 		'freecol' => array(
 			'checkFreeColMissingVars',
 			'checkFreeColExtraVars',
+			'checkFreeColEscapes',
 		),
 		'mantis' => array(
 			'checkPrintfMissingVars',
@@ -111,7 +112,7 @@ class MessageChecks {
 		if ( $count = count( $missing ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-parameters',
-				implode( ', ', $missing ),
+				$wgLang->commalist( $missing ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		}
@@ -137,7 +138,7 @@ class MessageChecks {
 		if ( $count = count( $missing ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-parameters-unknown',
-				implode( ', ', $missing ),
+				$wgLang->commalist( $missing ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		}
@@ -173,7 +174,7 @@ class MessageChecks {
 		if ( $count = count( $balance ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-balance',
-				implode( ', ', $balance ),
+				$wgLang->commalist( $balance ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		}
@@ -212,7 +213,7 @@ class MessageChecks {
 		if ( $count = count( $links ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-links',
-				implode( ', ', $links ),
+				$wgLang->commalist( $links ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		}
@@ -252,7 +253,7 @@ class MessageChecks {
 		if ( $count = count( $wrongTags ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-xhtml',
-				implode( ', ', $wrongTags ),
+				$wgLang->commalist( $wrongTags ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		}
@@ -357,7 +358,7 @@ class MessageChecks {
 		if ( $count = count( $missing ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-parameters',
-				implode( ', ', $missing ),
+				$wgLang->commaList( $missing ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		} else {
@@ -383,8 +384,22 @@ class MessageChecks {
 		if ( $count = count( $missing ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-parameters-unknown',
-				implode( ', ', $missing ),
+				$wgLang->commaList( $missing ),
 				$wgLang->formatNum( $count ) );
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	protected function checkFreeColEscapes( TMessage $message, $code, &$desc = null ) {
+		$varPattern = '\\\\[^nt\'"]';
+		preg_match_all( "/$varPattern/U", $message->translation, $transVars );
+
+		if ( $count = count( $transVars[0] ) ) {
+			global $wgLang;
+			$desc = array( 'translate-checks-escape',
+				'<tt><nowiki>' . $wgLang->commaList( $transVars[0] ) . '</nowiki></tt>' );
 			return true;
 		} else {
 			return false;
@@ -409,7 +424,7 @@ class MessageChecks {
 		if ( $count = count( $missing ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-parameters',
-				implode( ', ', $missing ),
+				$wgLang->commaList( $missing ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		} else {
@@ -433,7 +448,7 @@ class MessageChecks {
 		if ( $count = count( $missing ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-parameters-unknown',
-				implode( ', ', $missing ),
+				$wgLang->commaList( $missing ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		} else {
@@ -459,7 +474,7 @@ class MessageChecks {
 		if ( $count = count( $missing ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-parameters',
-				implode( ', ', $missing ),
+				$wgLang->commaList( $missing ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		} else {
@@ -483,7 +498,7 @@ class MessageChecks {
 		if ( $count = count( $missing ) ) {
 			global $wgLang;
 			$desc = array( 'translate-checks-parameters-unknown',
-				implode( ', ', $missing ),
+				$wgLang->commaList( $missing ),
 				$wgLang->formatNum( $count ) );
 			return true;
 		} else {

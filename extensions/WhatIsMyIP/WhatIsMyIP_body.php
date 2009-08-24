@@ -1,27 +1,35 @@
 <?php
-
-if (!defined('MEDIAWIKI')) {
+/**
+ * Main class for WhatIsMyIP
+ * @file
+ * @ingroup Extensions
+ */
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension named WhatIsMyIP.\n";
-	exit(1);
+	exit( 1 );
 }
 
 class WhatIsMyIP extends SpecialPage {
-	function  __construct() {
-		parent::__construct('WhatIsMyIP' /*class*/);
+
+	/**
+	 * Constructor
+	 */
+	public function  __construct() {
+		parent::__construct( 'WhatIsMyIP'/*class*/, 'whatismyip'/*restriction*/ );
 	}
 
-	function WhatIsMyIP(){
-		SpecialPage::SpecialPage( 'WhatIsMyIP', 'whatismyip' );
-	}
-
-	function execute(){
+	/**
+	 * Show the special page
+	 *
+	 * @param $par Mixed: parameter passed to the page or null
+	 */
+	public function execute( $par ){
 		global $wgOut;
 
-		wfLoadExtensionMessages('WhatIsMyIP');
+		wfLoadExtensionMessages( 'WhatIsMyIP' );
 
-		$wgOut->setPageTitle(wfMsg('whatismyip'));
-		// $wgOut->addWikiText( wfMsg('whatismyip-username'). " $user" );
+		$wgOut->setPageTitle( wfMsg( 'whatismyip' ) );
 		$ip = wfGetIP();
-		$wgOut->addWikiText( wfMsg('whatismyip-out'). " $ip" );
+		$wgOut->addWikiText( wfMsg( 'whatismyip-out' ). " $ip" );
 	}
 }

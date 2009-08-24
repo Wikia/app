@@ -27,6 +27,17 @@ $namespaceNames = array(
 	NS_CATEGORY_TALK    => 'Poledišano_ya_Setensele',
 );
 
+$magicWords = array(
+	'currentmonth'          => array( '1', 'KGWEDI_BJALE', 'CURRENTMONTH' ),
+	'currentmonthname'      => array( '1', 'LEINA_KGWEDI_BJALE', 'CURRENTMONTHNAME' ),
+	'currentday'            => array( '1', 'LEHONO_LETSATSI', 'CURRENTDAY' ),
+	'currentday2'           => array( '1', 'LEHONO_LETSATSI2', 'CURRENTDAY2' ),
+	'currentdayname'        => array( '1', 'LEHONO_LETSATSILEINA', 'CURRENTDAYNAME' ),
+	'currentyear'           => array( '1', 'NGWAGA_BJALE', 'CURRENTYEAR' ),
+	'currenttime'           => array( '1', 'NAKO_BJALE', 'CURRENTTIME' ),
+	'currenthour'           => array( '1', 'IRI_BJALE', 'CURRENTHOUR' ),
+);
+
 $messages = array(
 # User preference toggles
 'tog-underline'               => 'Tsenya mothalafase go dihlomaganyo:',
@@ -613,7 +624,7 @@ Matlakala ago ba [[Special:Watchlist|lenanong la gago la matlakala ditlhapetšo]
 'imagelinks'                => 'Hlamaganyago',
 'linkstoimage'              => '{{PLURAL:$1|Letlakala le ke |$1 ya matlakala a}} latelago a hlomaganya go faele ye:',
 'nolinkstoimage'            => 'Gago matlakala a hlomaganyago faeleng ye.',
-'sharedupload'              => 'Faele ye e hlakanetšwe ka fao e kabe e šumišwa ke ditirotherwa tše dingwe.',
+'sharedupload'              => 'Faele ye e hlakanetšwe ka fao e kabe e šumišwa ke ditirotherwa tše dingwe.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'noimage'                   => 'Ga gona faele ya leina le, efela  o ka $1.',
 'noimage-linktext'          => 'Lokele ye tee',
 'uploadnewversion-linktext' => 'Lokela peoletšo ye mphsa ya faele',
@@ -724,7 +735,8 @@ Matlakala ago ba [[Special:Watchlist|lenanong la gago la matlakala ditlhapetšo]
 'categories' => 'Dihlopha',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Diabe tša mošomiši tšeo di phumutšwego',
+'deletedcontributions'       => 'Diabe tša mošomiši tšeo di phumutšwego',
+'deletedcontributions-title' => 'Diabe tša mošomiši tšeo di phumutšwego',
 
 # Special:LinkSearch
 'linksearch-ok' => 'Fetleka',
@@ -1040,6 +1052,7 @@ letlakala la seswantšho ge tafola ya metadata e bulwa. Tše dingwe tša di ''fi
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength", # Do not translate list items
 
 # EXIF tags

@@ -2,8 +2,6 @@
 
 /**
  * A class to print query results in a monthly calendar.
- *
- * @author Yaron Koren
  */
 
 if (!defined('MEDIAWIKI')) die();
@@ -13,7 +11,24 @@ $wgAutoloadClasses['SRFCHistoricalDate'] = $srfgIP . '/Calendar/SRFC_HistoricalD
 
 class SRFCalendar extends SMWResultPrinter {
 
+	protected $mTemplate = '';
+	protected $mUserParam = '';
+
+	protected function readParameters($params,$outputmode) {
+		SMWResultPrinter::readParameters($params,$outputmode);
+
+		if (array_key_exists('template', $params)) {
+			$this->mTemplate = trim($params['template']);
+		}
+		if (array_key_exists('userparam', $params)) {
+			$this->mUserParam = trim($params['userparam']);
+		}
+	}
+
 	public function getResult($results, $params, $outputmode) {
+		$this->isHTML = false;
+		$this->hasTemplates = false;
+
 		// skip checks, results with 0 entries are normal
 		$this->readParameters($params, $outputmode);
 		return $this->getResultText($results, SMW_OUTPUT_HTML);
@@ -28,38 +43,54 @@ class SRFCalendar extends SMWResultPrinter {
 		// print all result rows
 		while ( $row = $res->getNext() ) {
 			$date = $title = $text = $color = "";
-			foreach ($row as $i => $field) {
-				$pr = $field->getPrintRequest();
-				if ($i == 2)
-					$text .= " (";
-				elseif ($i > 2)
-					$text .= ", ";
-				while ( ($object = $field->getNextObject()) !== false ) {
-					if ($object->getTypeID() == '_dat') { // use shorter "LongText" for wikipage
-						// don't add date values to the display
-					} elseif ($object->getTypeID() == '_wpg') { // use shorter "LongText" for wikipage
-						if ($i == 0) {
-							$title = Title::newFromText($object->getShortWikiText(false));
+			
+			if ($this->mTemplate != '') { // build template code
+				$this->hasTemplates = true;
+				if ($this->mUserParam)
+					$text = "|userparam=$this->mUserParam";
+				foreach ($row as $i => $field) {
+					$pr = $field->getPrintRequest();
+					$text .= '|' . ($i + 1) . '=';
+					while ( ($object = $field->getNextObject()) !== false ) {
+						if ($object->getTypeID() == '_dat') {
+							$test .= SRFCalendar::formatDateStr($object);
+						} elseif ($object->getTypeID() == '_wpg') { // use shorter "LongText" for wikipage
+							$text .= $object->getLongText($outputmode, NULL);
 						} else {
-							$text .= $pr->getHTMLText($skin) . " " . $object->getLongText($outputmode, $skin);
+							$text .= $object->getShortText($outputmode, NULL);
 						}
-					} else {
-						$text .= $pr->getHTMLText($skin) . " " . $object->getShortText($outputmode, $skin);
-					}
-					if ($pr->getMode() == SMWPrintRequest::PRINT_PROP && $pr->getTypeID() == '_dat') {
-						if (method_exists('SMWTimeValue', 'getYear')) { // SMW 1.4 and higher
-							// for some reason, getMonth() and getDay() sometimes return a number with a leading zero -
-							// get rid of it using (int)
-							$date = $object->getYear() . '-' . (int)$object->getMonth() . '-' . (int)$object->getDay();
-						} else {
-							$date = date("Y-n-j", $event_date->getNumericValue());
+						if ($pr->getMode() == SMWPrintRequest::PRINT_PROP && $pr->getTypeID() == '_dat') {
+							$date = SRFCalendar::formatDateStr($object);
 						}
-
 					}
 				}
+			} else {  // build simple text
+				foreach ($row as $i => $field) {
+					$pr = $field->getPrintRequest();
+					if ($i == 2)
+						$text .= " (";
+					elseif ($i > 2)
+						$text .= ", ";
+					while ( ($object = $field->getNextObject()) !== false ) {
+						if ($object->getTypeID() == '_dat') { // use shorter "LongText" for wikipage
+							// don't add date values to the display
+						} elseif ($object->getTypeID() == '_wpg') { // use shorter "LongText" for wikipage
+							if ($i == 0) {
+								$title = Title::newFromText($object->getShortWikiText(false));
+							} else {
+								$text .= $pr->getHTMLText($skin) . " " . $object->getLongText($outputmode, $skin);
+							}
+						} else {
+							$text .= $pr->getHTMLText($skin) . " " . $object->getShortText($outputmode, $skin);
+						}
+						if ($pr->getMode() == SMWPrintRequest::PRINT_PROP && $pr->getTypeID() == '_dat') {
+							$date = SRFCalendar::formatDateStr($object);
+						}
+					}
+				}
+				if ($i > 1)
+					$text .= ")";
 			}
-			if ($i > 1)
-				$text .= ")";
 			if ($date != '') {
 				// handle the 'color=' value, whether it came
 				// from a compound query or a regular one
@@ -92,6 +123,17 @@ class SRFCalendar extends SMWResultPrinter {
 		if ($int == '12') {return wfMsg('december'); }
 		// keep it simple - if it's '1' or anything else, return January
 		return wfMsg('january');
+	}
+
+
+	function formatDateStr($object) {
+		if (method_exists('SMWTimeValue', 'getYear')) { // SMW 1.4 and higher
+			// for some reason, getMonth() and getDay() sometimes return a number with a leading zero -
+			// get rid of it using (int)
+			return $object->getYear() . '-' . (int)$object->getMonth() . '-' . (int)$object->getDay();
+		} else {
+			return date("Y-n-j", $event_date->getNumericValue());
+		}
 	}
 
 	function displayCalendar($events) {
@@ -253,14 +295,25 @@ END;
 			foreach ($events as $event) {
 				list($event_title, $other_text, $event_date, $color) = $event;
 				if ($event_date == $date_str) {
-					$event_name = str_replace('_', ' ', $event_title->getPrefixedDbKey());
-					if ($color != '') {
-						$event_url = $event_title->getPrefixedDbKey();
-						$event_str = '<a href="' . $event_url . '" style="color: ' . $color . '">' . $event_name . "</a>";
+					if ($this->mTemplate != '') {
+						$templatetext = '{{' . $this->mTemplate . $other_text . '}}';
+						$templatetext = $wgParser->replaceVariables($templatetext);
+						$templatetext = $wgParser->recursiveTagParse($templatetext);
+						if ($color != '') {
+							$text .= '<span style="color: ' . $color . '">' . $templatetext . '</span>';
+						} else {
+							$text .= $templatetext;
+						}
 					} else {
-						$event_str = $skin->makeLinkObj($event_title, $event_name);
+						$event_name = str_replace('_', ' ', $event_title->getPrefixedDbKey());
+						if ($color != '') {
+							$event_url = $event_title->getPrefixedDbKey();
+							$event_str = '<a href="' . $event_url . '" style="color: ' . $color . '">' . $event_name . "</a>";
+						} else {
+							$event_str = $skin->makeLinkObj($event_title, $event_name);
+						}
+						$text .= "$event_str $other_text\n\n";
 					}
-					$text .= "$event_str $other_text\n\n";
 				}
 			}
 			$text .=<<<END

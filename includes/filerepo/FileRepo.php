@@ -294,16 +294,22 @@ abstract class FileRepo {
 	 * MediaWiki this means action=render. This should only be called by the
 	 * repository's file class, since it may return invalid results. User code
 	 * should use File::getDescriptionText().
+	 * @param string $name Name of image to fetch
+	 * @param string $lang Language to fetch it in, if any.
 	 */
-	function getDescriptionRenderUrl( $name ) {
+	function getDescriptionRenderUrl( $name, $lang = null ) {
+		$query = 'action=render';
+		if ( !is_null( $lang ) ) {
+			$query .= '&uselang=' . $lang;
+		}
 		if ( isset( $this->scriptDirUrl ) ) {
 			return $this->scriptDirUrl . '/index.php?title=' .
 				wfUrlencode( 'Image:' . $name ) .
-				'&action=render';
+				"&$query";
 		} else {
 			$descUrl = $this->getDescriptionUrl( $name );
 			if ( $descUrl ) {
-				return wfAppendQuery( $descUrl, 'action=render' );
+				return wfAppendQuery( $descUrl, $query );
 			} else {
 				return false;
 			}
@@ -511,7 +517,8 @@ abstract class FileRepo {
 	function cleanupDeletedBatch( $storageKeys ) {}
 
 	/**
-	 * Checks if there is a redirect named as $title
+	 * Checks if there is a redirect named as $title. If there is, return the
+	 * title object. If not, return false.
 	 * STUB
 	 *
 	 * @param Title $title Title of image
@@ -522,14 +529,44 @@ abstract class FileRepo {
 
 	/**
 	 * Invalidates image redirect cache related to that image
-	 * STUB
 	 *
 	 * @param Title $title Title of image
-	 */
+	 */	
 	function invalidateImageRedirect( $title ) {
+		global $wgMemc;
+		$memcKey = $this->getMemcKey( "image_redirect:" . md5( $title->getPrefixedDBkey() ) );
+		$wgMemc->delete( $memcKey );
 	}
 	
 	function findBySha1( $hash ) {
 		return array();
+	}
+	
+	/**
+	 * Get the human-readable name of the repo. 
+	 * @return string
+	 */
+	public function getDisplayName() {
+		// We don't name our own repo, return nothing
+		if ( $this->name == 'local' ) {
+			return null;
+		}
+		$repoName = wfMsg( 'shared-repo-name-' . $this->name );
+		if ( !wfEmptyMsg( 'shared-repo-name-' . $this->name, $repoName ) ) {
+			return $repoName;
+		}
+		return wfMsg( 'shared-repo' ); 
+	}
+	
+	function getSlaveDB() {
+		return wfGetDB( DB_SLAVE );
+	}
+
+	function getMasterDB() {
+		return wfGetDB( DB_MASTER );
+	}
+	
+	function getMemcKey( $key ) {
+		return wfWikiID( $this->getSlaveDB() ) . ":{$key}";
 	}
 }

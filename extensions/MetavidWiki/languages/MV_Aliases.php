@@ -66,6 +66,25 @@ $aliases['gsw'] = array(
 	'MediaSearch' => array( 'Medie-Suech' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'MediaSearch' => array( 'Recerca de multimedia' ),
+	'Mv_Add_Stream' => array( 'Metavid Adder fluxo' ),
+	'MVAdmin' => array( 'Metavid Administration' ),
+	'MvExportAsk' => array( 'Metavid Exportar consulta' ),
+	'MvExportSearch' => array( 'Metavid Exportar recerca' ),
+	'MvExportSequence' => array( 'Metavid Exportar sequentia' ),
+	'MvExportStream' => array( 'Metavid Exportar fluxo' ),
+	'Mv_List_Streams' => array( 'Metavid Lista de fluxos' ),
+	'MV_SpecialSearch' => array( 'Metavid Recerca special' ),
+	'MvVideoFeed' => array( 'Metavid Syndication video' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'MediaSearch' => array( 'メディア検索' ),
+);
+
 /** Luxembourgish (Lëtzebuergesch) */
 $aliases['lb'] = array(
 	'MediaSearch' => array( 'Medie sichen' ),
@@ -95,6 +114,25 @@ $aliases['no'] = array(
 	'MediaSearch' => array( 'Mediesøk' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'MediaSearch' => array( 'मिडीयाशोध' ),
+	'Mv_Add_Stream' => array( 'मेवि_वृद्धी_प्रवाह' ),
+	'MVAdmin' => array( 'मेविपचालक' ),
+	'MvExportAsk' => array( 'मेविनिर्यातविनन्ती' ),
+	'MvExportSearch' => array( 'मेविनिर्यातशोध' ),
+	'MvExportSequence' => array( 'मेविनिर्यातअनुक्रम' ),
+	'MvExportStream' => array( 'मेविनिर्यातप्रवाह' ),
+	'Mv_List_Streams' => array( 'मेवि_सूची_प्रवाह' ),
+	'MV_SpecialSearch' => array( 'मेवि_विशेषशोध' ),
+	'MvVideoFeed' => array( 'मेविचलछायाप्रविष्टी' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'MediaSearch' => array( 'KërkimMediash' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'MediaSearch' => array( 'Mediasökning' ),
@@ -103,5 +141,19 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'MediaSearch' => array( 'TafutaPicha' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'MediaSearch' => array( 'Paghahanap ng midya' ),
+	'Mv_Add_Stream' => array( 'Daloy ng pagdaragdag ng MV' ),
+	'MVAdmin' => array( 'Tagapangasiwa ng MV' ),
+	'MvExportAsk' => array( 'Pagtatanong ng pagluluwas ng MV' ),
+	'MvExportSearch' => array( 'Paghanap ng pagluluwas ng MV' ),
+	'MvExportSequence' => array( 'Pagkakasunud-sunod ng pagluluwas ng MV' ),
+	'MvExportStream' => array( 'Daloy ng pagluluwas ng MV' ),
+	'Mv_List_Streams' => array( 'Talaan ng mga daloy ng MV' ),
+	'MV_SpecialSearch' => array( 'Natatanging paghahanap ng MV' ),
+	'MvVideoFeed' => array( 'Pasubo ng palabas na MV' ),
 );
 

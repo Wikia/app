@@ -36,14 +36,15 @@ class MV_Stream {
 		// convert the object to an array
 		if ( is_object( $initVal ) )
 			$initVal = get_object_vars( $initVal );
+			
 		if ( is_array( $initVal ) ) {
 			foreach ( $initVal as $key => $val ) {
-				// make sure the key exisit and is not private
+				// make sure the key is present and is not private
 				if ( isset ( $this-> $key ) && $key[0] != '_' ) {
 					$this-> $key = $val;
 				}
 			}
-		}
+		}		
 		// normalize stream title: 		
 	}
 	function newStreamByName( $name ) {
@@ -60,11 +61,6 @@ class MV_Stream {
 
 	function doesStreamExist() {
 		return $this->db_load_stream();
-	}
-	// removes the stream from the db:
-	function deleteDB() {
-		$dbw = & wfGetDB( DB_WRITE );
-		$dbw->delete( 'mv_streams', array( 'id' => $this->id ) );
 	}
 	function db_load_stream() {
 		$dbr = & wfGetDB( DB_SLAVE );
@@ -97,6 +93,14 @@ class MV_Stream {
 			return $this->name;
 		} else {
 			return $this->name;
+		}
+	}
+	function getStreamStartDate(){
+		if( $this->date_start_time == '' ){
+			$this->db_load_stream();
+			return $this->date_start_time;
+		}else{
+			return $this->date_start_time;
 		}
 	}
 	/*
@@ -218,7 +222,21 @@ class MV_Stream {
 					$article->doDelete( 'parent stream removed' );
 			}
  		}
+ 		//remove the stream db entries and images:  
+ 		$this->deleteDB();
  		return true;
+	}
+	// removes the stream from the db:
+	function deleteDB() {
+		$dbw = & wfGetDB( DB_WRITE );		
+		//remove any MVD index items: 
+		MV_Index::remove_by_stream_id(  $this->id  );		
+		//remove any digest 
+		$dbw->delete('mv_clipview_digest', array('stream_id'=> $this->id ));
+		//remove any images
+		$dbw->delete('mv_stream_images', array('stream_id'	=> $this->id));
+		//remove pointers to any files:				
+		$dbw->delete( 'mv_stream_files', array( 'stream_id' => $this->id ));
 	}
 	function updateStreamDB() {
 		$dbw = & wfGetDB( DB_WRITE );

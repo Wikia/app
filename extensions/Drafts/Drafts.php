@@ -4,7 +4,7 @@
  *
  * @file
  * @ingroup Extensions
- * 
+ *
  * This file contains the main include file for the Drafts extension of
  * MediaWiki.
  *
@@ -30,22 +30,30 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Trevor Parscal',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Drafts',
 	'description' => 'Save and view draft versions of pages',
-	'svn-date' => '$LastChangedDate: 2008-10-31 11:06:41 +0000 (Fri, 31 Oct 2008) $',
-	'svn-revision' => '$LastChangedRevision: 42891 $',
+	'svn-date' => '$LastChangedDate: 2009-02-03 00:36:59 +0000 (Tue, 03 Feb 2009) $',
+	'svn-revision' => '$LastChangedRevision: 46751 $',
 	'description-msg' => 'drafts-desc',
 );
 
 // Shortcut to this extension directory
 $dir = dirname( __FILE__ ) . '/';
 
+# Bump the version number every time you change any of the .css/.js files
+$wgDraftsStyleVersion = 2;
+
 // Seconds of inactivity after change before autosaving
 // Use the value 0 to disable autosave
 $egDraftsAutoSaveWait = 120;
+
+// Seconds to wait until giving up on a response from the server
+// Use the value 0 to disable autosave
+$egDraftsAutoSaveTimeout = 10;
 
 // Days to keep drafts around before automatic deletion
 $egDraftsLifeSpan = 30;
 
 // Save and View components
+$wgAutoloadClasses['Drafts'] = $dir . 'Drafts.classes.php';
 $wgAutoloadClasses['Draft'] = $dir . 'Drafts.classes.php';
 $wgAutoloadClasses['DraftHooks'] = $dir . 'Drafts.hooks.php';
 
@@ -55,6 +63,7 @@ $wgExtensionAliasesFiles['Drafts'] = $dir . 'Drafts.alias.php';
 
 // Register the Drafts special page
 $wgSpecialPages['Drafts'] = 'DraftsPage';
+$wgSpecialPageGroups['Drafts'] = 'pagetools';
 $wgAutoloadClasses['DraftsPage'] = $dir . 'Drafts.pages.php';
 
 // Register save interception to detect non-javascript draft saving
@@ -70,7 +79,7 @@ $wgHooks['EditPageBeforeEditButtons'][] = 'DraftHooks::controls';
 $wgHooks['EditPage::showEditForm:initial'][] = 'DraftHooks::loadForm';
 
 // Register ajax response hook
-$wgAjaxExportList[] = 'DraftHooks::AjaxSave';
+$wgAjaxExportList[] = 'DraftHooks::save';
 
 // Register ajax add script hook
 $wgHooks['AjaxAddScript'][] = 'DraftHooks::addJS';

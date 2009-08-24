@@ -120,8 +120,18 @@ $aliases['no'] = array(
 	'Interwiki' => array( 'Interwiki' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Interwiki' => array( 'आंन्तरविकि' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'Interwiki' => array( 'Viungovyawiki' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Interwiki' => array( 'Kawing-wiki' ),
 );
 

@@ -1,7 +1,6 @@
 <?php
 /**
- * Protect against register_globals vulnerabilities.
- * This line must be present before any global variable is referenced.
+ * Default settings for Semantic Forms
  */
 if (!defined('MEDIAWIKI')) die();
 
@@ -59,13 +58,14 @@ $sfgMaxAutocompleteValues = 1000;
 # by default all will see it.
 ###
 $sfgRenameEditTabs = false;
-$wgGroupPermissions['*'    ]['viewedittab']   = true;
+$wgGroupPermissions['*']['viewedittab']   = true;
 $wgAvailableRights[] = 'viewedittab';
 
 ###
 # Permission to edit form fields defined as 'restricted'
 ###
 $wgGroupPermissions['sysop']['editrestrictedfields'] = true;
+$wgAvailableRights[] = 'editrestrictedfields';
 
 ###
 # List separator character

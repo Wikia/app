@@ -60,6 +60,15 @@ $messages['avk'] = array(
 	'usercontactlink-baduser' => 'Favesikyoltaj',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'usercontactlink-baduser' => 'няслушнае імя ўдзельніка',
+	'usercontactlink-desc' => 'Дае магчымасьць простага даданьня подпісу ўдзельніка з дапамогай устаўкі ^^^user^^^',
+);
+
 /** Bulgarian (Български)
  * @author Spiritia
  */
@@ -106,6 +115,13 @@ $messages['dsb'] = array(
 	'usercontactlink-desc' => 'Dawa móžnosć jadnorje a konsistentnje druge wužywarske mjenja z pomocu syntakse ^^^wužywaŕ^^^ pśidaś',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'usercontactlink-baduser' => 'λανθασμένο όνομα χρήστη',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -129,10 +145,11 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Huji
  * @author Meisam
  */
 $messages['fa'] = array(
-	'usercontactlink-baduser' => 'نام‌کاربری نادرست',
+	'usercontactlink-baduser' => 'نام کاربری نادرست',
 );
 
 /** Finnish (Suomi)
@@ -145,10 +162,11 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
  */
 $messages['fr'] = array(
 	'usercontactlink-baduser' => 'nom d’utilisateur incorrect',
-	'usercontactlink-desc' => "Fournit la possiblité d'ajouter simplement et avec consistance d'autres noms d'utilisateurs en utilisant la syntaxe ^^^user^^^",
+	'usercontactlink-desc' => "Permet d'ajouter simplement et avec consistance d'autres noms d'utilisateurs en utilisant la syntaxe ^^^user^^^",
 );
 
 /** Galician (Galego)
@@ -158,6 +176,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'usercontactlink-baduser' => 'nome de usuario non correcto',
 	'usercontactlink-desc' => 'Proporciona a capacidade de engadir sinxela e consistentemente outros nomes de usuario usando a sintaxe ^^^user^^^',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'usercontactlink-baduser' => 'falscher Benutzername',
+	'usercontactlink-desc' => 'Macht s megli, Benutzername eifach mit ^^^Benutzer^^^ z vergleiche',
 );
 
 /** Hebrew (עברית)
@@ -329,6 +355,14 @@ $messages['pt'] = array(
 	'usercontactlink-desc' => 'Fornece a possibilidade de addicionar de forma simples e consistente outros nomes de utilizador, usando a sintaxe ^^^user^^^',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'usercontactlink-baduser' => 'nome de utilizador incorreto',
+	'usercontactlink-desc' => 'Fornece a possibilidade de adicionar de forma simples e consistente outros nomes de utilizador, usando a sintaxe ^^^user^^^',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -338,9 +372,11 @@ $messages['ro'] = array(
 
 /** Russian (Русский)
  * @author Ferrer
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'usercontactlink-baduser' => 'некорректное имя участника',
+	'usercontactlink-desc' => 'Предоставляет возможность легко добавить имена других участников с помощью синтаксиса ^^^участник^^^',
 );
 
 /** Slovak (Slovenčina)
@@ -351,11 +387,19 @@ $messages['sk'] = array(
 	'usercontactlink-desc' => 'Poskytuje možnosť jednoducho a konzistentne pridávať mená ostatných používateľov pomocou syntaxe ^^^používateľ^^^',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'usercontactlink-baduser' => 'llogari jo korrekte',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
 $messages['stq'] = array(
 	'usercontactlink-baduser' => 'falsken Benutsernoome',
+	'usercontactlink-desc' => 'Moaket et muugelk, Benutsernoomen eenfach mäd ^^^Benutser^^^ tou ferlinkjen',
 );
 
 /** Swedish (Svenska)
@@ -396,11 +440,27 @@ $messages['tr'] = array(
 	'usercontactlink-baduser' => 'Hatalı kullanıcı adı',
 );
 
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'usercontactlink-baduser' => 'nome utente mia justo',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'usercontactlink-baduser' => 'tên hiệu không đúng',
+	'usercontactlink-desc' => 'Cung cấp khả năng thêm tên thành viên khác một cách đơn giản và nhất quán sử dụng cú pháp ^^^user^^^',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'usercontactlink-baduser' => 'gebananem neveräton',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

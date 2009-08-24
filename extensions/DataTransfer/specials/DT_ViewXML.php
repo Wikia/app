@@ -1,6 +1,6 @@
 <?php
 /**
- * Shows list of all forms on the site.
+ * Displays an interface to let the user export pages from the wiki in XML form
  *
  * @author Yaron Koren
  */
@@ -27,7 +27,7 @@ class DTViewXML extends SpecialPage {
 
 function getCategoriesList() {
 	global $wgContLang, $dtgContLang;
-	$dt_props = $dtgContLang->getSpecialPropertiesArray();
+	$dt_props = $dtgContLang->getPropertyLabels();
 	$exclusion_cat_name = str_replace(' ', '_', $dt_props[DT_SP_IS_EXCLUDED_FROM_XML]);
 	$exclusion_cat_full_name = $wgContLang->getNSText(NS_CATEGORY) . ':' . $exclusion_cat_name;
 	$dbr = wfGetDB( DB_SLAVE );
@@ -66,7 +66,7 @@ function getNamespacesList() {
 function getGroupings() {
   global $dtgContLang;
 
-  $dt_props = $dtgContLang->getSpecialPropertiesArray();
+  $dt_props = $dtgContLang->getPropertyLabels();
   $xml_grouping_prop = str_replace(' ', '_', $dt_props[DT_SP_HAS_XML_GROUPING]);
 
   global $smwgIP;
@@ -241,7 +241,7 @@ function getXMLForPage($title, $simplified_format, $groupings, $depth=0) {
 
   // if this page belongs to the exclusion category, exit
   $parent_categories = $title->getParentCategoryTree(array());
-  $dt_props = $dtgContLang->getSpecialPropertiesArray();
+  $dt_props = $dtgContLang->getPropertyLabels();
   //$exclusion_category = $title->newFromText($dt_props[DT_SP_IS_EXCLUDED_FROM_XML], NS_CATEGORY);
   $exclusion_category = $wgContLang->getNSText(NS_CATEGORY) . ':' . str_replace(' ', '_', $dt_props[DT_SP_IS_EXCLUDED_FROM_XML]);
   if (treeContainsElement($parent_categories, $exclusion_category))
@@ -491,31 +491,38 @@ function doSpecialViewXML() {
 		$text .= "</Pages>";
 		print $text;
 	} else {
-	$text = "<form action=\"\" method=\"get\">\n";
-	$text .= "<p>" . wfMsg('dt_viewxml_docu') . "</p>\n";
-	$text .= "<h2>" . wfMsg('dt_viewxml_categories') . "</h2>\n";
-	$categories = getCategoriesList();
-	foreach ($categories as $category) {
-		$title = Title::makeTitle( NS_CATEGORY, $category );
-		$link = $skin->makeLinkObj( $title, $title->getText() );
-		$text .= "<input type=\"checkbox\" name=\"categories[$category]\" /> $link <br />\n";
-	}
-	$text .= "<h2>" . wfMsg('dt_viewxml_namespaces') . "</h2>\n";
-	$namespaces = getNamespacesList();
-	foreach ($namespaces as $namespace) {
-		if ($namespace == 0) {
-			$ns_name = "Main";
-		} else {
-			$ns_name = $wgCanonicalNamespaceNames["$namespace"];
+		// set 'title' as hidden field, in case there's no URL niceness
+		global $wgContLang;
+		$mw_namespace_labels = $wgContLang->getNamespaces();
+		$special_namespace = $mw_namespace_labels[NS_SPECIAL];
+		$text =<<<END
+	<form action="" method="get">
+	<input type="hidden" name="title" value="$special_namespace:ViewXML">
+
+END;
+		$text .= "<p>" . wfMsg('dt_viewxml_docu') . "</p>\n";
+		$text .= "<h2>" . wfMsg('dt_viewxml_categories') . "</h2>\n";
+		$categories = getCategoriesList();
+		foreach ($categories as $category) {
+			$title = Title::makeTitle( NS_CATEGORY, $category );
+			$link = $skin->makeLinkObj( $title, $title->getText() );
+			$text .= "<input type=\"checkbox\" name=\"categories[$category]\" /> $link <br />\n";
 		}
-		$ns_name = str_replace('_', ' ', $ns_name);
-		$text .= "<input type=\"checkbox\" name=\"namespaces[$namespace]\" /> $ns_name <br />\n";
-	}
-	$text .= "<br /><p><input type=\"checkbox\" name=\"simplified_format\" /> " . wfMsg('dt_viewxml_simplifiedformat') . "</p>\n";
-	$text .= "<input type=\"submit\" value=\"" . wfMsg('viewxml') . "\">\n";
-	$text .= "</form>\n";
+		$text .= "<h2>" . wfMsg('dt_viewxml_namespaces') . "</h2>\n";
+		$namespaces = getNamespacesList();
+		foreach ($namespaces as $namespace) {
+			if ($namespace == 0) {
+				$ns_name = "Main";
+			} else {
+				$ns_name = $wgCanonicalNamespaceNames["$namespace"];
+			}
+			$ns_name = str_replace('_', ' ', $ns_name);
+			$text .= "<input type=\"checkbox\" name=\"namespaces[$namespace]\" /> $ns_name <br />\n";
+		}
+		$text .= "<br /><p><input type=\"checkbox\" name=\"simplified_format\" /> " . wfMsg('dt_viewxml_simplifiedformat') . "</p>\n";
+		$text .= "<input type=\"submit\" value=\"" . wfMsg('viewxml') . "\">\n";
+		$text .= "</form>\n";
 
-	$wgOut->addHTML($text);
-
+		$wgOut->addHTML($text);
 	}
 }

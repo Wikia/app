@@ -32,6 +32,11 @@ $aliases['bs'] = array(
 	'ContributionScores' => array( 'DoprinosiBodovi' ),
 );
 
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'ContributionScores' => array( 'Puntuación das contribucións' ),
+);
+
 /** Hebrew (עברית) */
 $aliases['he'] = array(
 	'ContributionScores' => array( 'דירוג_תרומות' ),
@@ -42,9 +47,19 @@ $aliases['hu'] = array(
 	'ContributionScores' => array( 'Szerkesztési pontok' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'ContributionScores' => array( 'Scores de contributiones' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'ContributionScores' => array( 'Peringkat kontribusi' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'ContributionScores' => array( '貢献得点', '貢献スコア' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -77,8 +92,18 @@ $aliases['pl'] = array(
 	'ContributionScores' => array( 'Punkty za edycje' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'ContributionScores' => array( 'योगदानप्राप्ताङ्क' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'ContributionScores' => array( 'Bidragspoäng' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'ContributionScores' => array( 'Mga puntos ng ambag' ),
 );
 

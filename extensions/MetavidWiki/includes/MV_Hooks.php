@@ -197,8 +197,7 @@ function mvDeleteHook( &$article, &$user, &$reason ) {
 	if ( $article->mTitle->getNamespace() == MV_NS_MVD ) {
 		// remove article with that title: 
 		MV_Index::remove_by_wiki_title( $article->mTitle->getDBkey() );
-	} else if ( $article->mTitle->getNamespace() == MV_NS_STREAM ) {
-		MV_Index::remove_by_stream_id( $article->mvTitle->mvStream->getStreamId() );
+	} else if ( $article->mTitle->getNamespace() == MV_NS_STREAM ) {		
 		$article->mvTitle->mvStream->deleteDB();
 	}
 	return true; // always return true, in order not to stop MW's hook processing!

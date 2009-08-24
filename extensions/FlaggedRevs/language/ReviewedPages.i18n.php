@@ -9,12 +9,12 @@ $messages = array();
 
 $messages['en'] = array(
 	'reviewedpages' => 'Reviewed pages',
-	'reviewedpages-leg' => 'List pages reviewed to a certain level',
+	'reviewedpages-leg' => 'List pages by highest level',
 	'reviewedpages-list' => 'The following pages have been reviewed to the specified level',
 	'reviewedpages-none' => 'There are no pages in this list',
-	'reviewedpages-lev-0' => 'Sighted',
-	'reviewedpages-lev-1' => 'Quality',
-	'reviewedpages-lev-2' => 'Featured',
+	'reviewedpages-lev-0' => '{{int:revreview-lev-sighted}}',
+	'reviewedpages-lev-1' => '{{int:revreview-lev-quality}}',
+	'reviewedpages-lev-2' => '{{int:revreview-lev-pristine}}',
 	'reviewedpages-all' => 'reviewed versions',
 	'reviewedpages-best' => 'prime revision',
 );
@@ -35,6 +35,21 @@ $messages['qqq'] = array(
 {{Identical|Featured}}',
 	'reviewedpages-all' => '{{Flagged Revs}}',
 	'reviewedpages-best' => '{{Flagged Revs}}',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'reviewedpages' => 'Kodvdud lehtpoled',
+	'reviewedpages-leg' => 'Lehtpoled, kudambad oma sanuded märitud arvsanan (nimikirjutez)',
+	'reviewedpages-list' => 'Nened lehtpoled oma kodvdud da arvosteldud ozutadud pindaks',
+	'reviewedpages-none' => 'Neciš nimikirjuteses ei ole lehtpolid',
+	'reviewedpages-lev-0' => 'Arvosteldud',
+	'reviewedpages-lev-1' => 'Lopuližikš kodvdud',
+	'reviewedpages-lev-2' => 'Valitud',
+	'reviewedpages-all' => 'kodvdud versijad',
+	'reviewedpages-best' => 'parahim versii',
 );
 
 /** Aragonese (Aragonés)
@@ -226,10 +241,19 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  */
 $messages['es'] = array(
+	'reviewedpages' => 'Páginas revisadas',
+	'reviewedpages-leg' => 'Lista de páginas revisadas a un cierto nivel',
+	'reviewedpages-list' => 'Las siguientes páginas han sido revisadas al nivel especificado',
+	'reviewedpages-none' => 'No hay páginas en esta lista',
+	'reviewedpages-lev-0' => 'Visto',
 	'reviewedpages-lev-1' => 'Calidad',
+	'reviewedpages-lev-2' => 'Destacado',
+	'reviewedpages-all' => 'versiones revisadas',
+	'reviewedpages-best' => 'revisión de primera',
 );
 
 /** Basque (Euskara)
@@ -267,17 +291,19 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Dereckson
  * @author Grondin
+ * @author IAlex
+ * @author PieRRoMaN
  */
 $messages['fr'] = array(
 	'reviewedpages' => 'Pages passées en revue',
-	'reviewedpages-leg' => 'Liste des pages passées en revue à un certain niveau',
+	'reviewedpages-leg' => 'Liste des pages par plus haut niveau',
 	'reviewedpages-list' => 'Les pages suivantes ont été passées en revue au niveau spécifié',
 	'reviewedpages-none' => 'Cette liste est vide',
-	'reviewedpages-lev-0' => 'Vu',
-	'reviewedpages-lev-1' => 'Qualité',
-	'reviewedpages-lev-2' => 'Mis en avant',
+	'reviewedpages-lev-0' => 'Visualisée',
+	'reviewedpages-lev-1' => 'De qualité',
+	'reviewedpages-lev-2' => 'Distinguée',
 	'reviewedpages-all' => 'versions passées en revue',
-	'reviewedpages-best' => 'Révision principale',
+	'reviewedpages-best' => 'version principale',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -301,9 +327,9 @@ $messages['frp'] = array(
  */
 $messages['gl'] = array(
 	'reviewedpages' => 'Páxinas revisadas',
-	'reviewedpages-leg' => 'Listaxe das páxinas revisadas a un certo nivel',
+	'reviewedpages-leg' => 'Lista das páxinas revisadas a un certo nivel',
 	'reviewedpages-list' => 'As seguintes páxinas foron revisadas a un nivel específico',
-	'reviewedpages-none' => 'Non hai páxinas nesta listaxe',
+	'reviewedpages-none' => 'Non hai páxinas nesta lista',
 	'reviewedpages-lev-0' => 'Revisado',
 	'reviewedpages-lev-1' => 'Calidade',
 	'reviewedpages-lev-2' => 'Destacado',
@@ -315,9 +341,11 @@ $messages['gl'] = array(
  * @author Omnipaedista
  */
 $messages['grc'] = array(
+	'reviewedpages' => 'Ἐπιθεωρημέναι δέλτοι',
 	'reviewedpages-lev-0' => 'θεωρημένη',
 	'reviewedpages-lev-1' => 'ποιοτικὴ ἔκδοσις',
 	'reviewedpages-lev-2' => 'Ἐξαίρετος',
+	'reviewedpages-all' => 'ἀναθεωρημέναι ἐκδόσεις',
 	'reviewedpages-best' => 'πρωτίστη ἀναθεώρησις',
 );
 
@@ -325,14 +353,14 @@ $messages['grc'] = array(
  * @author Als-Holder
  */
 $messages['gsw'] = array(
-	'reviewedpages' => 'Lischt vu dr Syte, wu gsichtet sin',
+	'reviewedpages' => 'Lischt vu dr Syte, wu vum Fäldhieter gsäh sin',
 	'reviewedpages-leg' => 'Lischt vu dr Syte, wu sicher vum Fäldhieter aagluegt sin',
 	'reviewedpages-list' => 'Die Syte sin gsichtet un hän dr Status, wu aagee isch, iberchu',
 	'reviewedpages-none' => 'Die Lischt isch läär.',
-	'reviewedpages-lev-0' => 'Gsichtet',
+	'reviewedpages-lev-0' => 'Vum Fäldhieter gsäh',
 	'reviewedpages-lev-1' => 'Prieft',
 	'reviewedpages-lev-2' => 'Bsundersch glunge',
-	'reviewedpages-all' => 'gsichteti Versione',
+	'reviewedpages-all' => 'Vum Fäldhieter aagluegti Versione',
 	'reviewedpages-best' => 'leschti Version, wu am hegschte gwärtet woren isch',
 );
 
@@ -342,7 +370,7 @@ $messages['gsw'] = array(
  */
 $messages['he'] = array(
 	'reviewedpages' => 'דפים שנבדקו',
-	'reviewedpages-leg' => 'רשימת הדפים שאושרו עד רמה מסוימת',
+	'reviewedpages-leg' => 'רשימת הדפים שאושרו לפי הרמה הגבוהה ביותר',
 	'reviewedpages-list' => 'הדפים הבאים אושרו עד לרמה שצוינה',
 	'reviewedpages-none' => 'אין דפים ברשימה זו',
 	'reviewedpages-lev-0' => 'נצפה',
@@ -447,37 +475,44 @@ $messages['id'] = array(
 
 /** Icelandic (Íslenska)
  * @author S.Örvarr.S
+ * @author Spacebirdy
  */
 $messages['is'] = array(
+	'reviewedpages-lev-0' => 'Yfirfarið',
 	'reviewedpages-lev-1' => 'Gæði',
 );
 
 /** Italian (Italiano)
  * @author Darth Kule
+ * @author Pietrodn
  */
 $messages['it'] = array(
 	'reviewedpages' => 'Pagine revisionate',
+	'reviewedpages-leg' => 'Elenca le pagine revisionate a un certo livello',
+	'reviewedpages-list' => 'Le seguenti pagine sono state revisionate al livello specificato',
 	'reviewedpages-none' => 'Non ci sono pagine in questo elenco',
 	'reviewedpages-lev-0' => 'Visionata',
 	'reviewedpages-lev-1' => 'Qualità',
 	'reviewedpages-lev-2' => 'Ottima',
 	'reviewedpages-all' => 'versioni revisionate',
+	'reviewedpages-best' => 'versione migliore',
 );
 
 /** Japanese (日本語)
  * @author Aotake
+ * @author Fryed-peach
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'reviewedpages' => '査読済のページ',
-	'reviewedpages-leg' => 'ページの査読結果レベル',
-	'reviewedpages-list' => '以下は、指定された査読結果レベルのページです',
-	'reviewedpages-none' => '一覧に表示するページがありません。',
-	'reviewedpages-lev-0' => '採用',
-	'reviewedpages-lev-1' => '内容充実',
-	'reviewedpages-lev-2' => '秀逸',
+	'reviewedpages' => '査読済みページ',
+	'reviewedpages-leg' => '査読により一定水準以上の評価を受けたページを一覧する',
+	'reviewedpages-list' => '以下は、査読結果が指定した水準にあるページです',
+	'reviewedpages-none' => '表示すべきページはありません',
+	'reviewedpages-lev-0' => '{{int:revreview-lev-sighted}}',
+	'reviewedpages-lev-1' => '{{int:revreview-lev-quality}}',
+	'reviewedpages-lev-2' => '{{int:revreview-lev-pristine}}',
 	'reviewedpages-all' => '全査読済版',
-	'reviewedpages-best' => '優良版',
+	'reviewedpages-best' => '最良版',
 );
 
 /** Jutish (Jysk)
@@ -585,6 +620,21 @@ $messages['li'] = array(
 	'reviewedpages-best' => 'beste versie',
 );
 
+/** Macedonian (Македонски)
+ * @author Brest
+ */
+$messages['mk'] = array(
+	'reviewedpages' => 'Оценувани страници',
+	'reviewedpages-leg' => 'Листа на страници оценувани до одредено ниво',
+	'reviewedpages-list' => 'Следните страници биле оценувани до наведеното ниво',
+	'reviewedpages-none' => 'Нема страници во оваа листа',
+	'reviewedpages-lev-0' => 'Прегледани',
+	'reviewedpages-lev-1' => 'Квалитетни',
+	'reviewedpages-lev-2' => 'Одлични',
+	'reviewedpages-all' => 'оценувани верзии',
+	'reviewedpages-best' => 'главна ревизија',
+);
+
 /** Malayalam (മലയാളം)
  * @author Shijualex
  */
@@ -657,8 +707,15 @@ $messages['nl'] = array(
  * @author Harald Khan
  */
 $messages['nn'] = array(
+	'reviewedpages' => 'Vurderte sider',
+	'reviewedpages-leg' => 'Syn sider vurderte som eit visst nivå',
+	'reviewedpages-list' => 'Dei fylgjande sidene har vortne vurderte som det oppgjevne nivået',
+	'reviewedpages-none' => 'Det finst ingen sider i denne lista',
 	'reviewedpages-lev-0' => 'Vurdert',
 	'reviewedpages-lev-1' => 'Kvalitet',
+	'reviewedpages-lev-2' => 'Utmerka',
+	'reviewedpages-all' => 'vurderte versjonar',
+	'reviewedpages-best' => 'beste versjon',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -737,6 +794,21 @@ $messages['pt'] = array(
 	'reviewedpages-best' => 'edição principal',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'reviewedpages' => 'Páginas analisadas',
+	'reviewedpages-leg' => 'Listar páginas que tenham sido analisadas em um nível específico',
+	'reviewedpages-list' => 'As páginas a seguir foram analisadas no nível especificado',
+	'reviewedpages-none' => 'Não há páginas nesta lista',
+	'reviewedpages-lev-0' => 'Objetiva',
+	'reviewedpages-lev-1' => 'Qualidade',
+	'reviewedpages-lev-2' => 'Exemplar',
+	'reviewedpages-all' => 'edições analisadas',
+	'reviewedpages-best' => 'edição principal',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -803,6 +875,13 @@ $messages['sk'] = array(
 	'reviewedpages-lev-2' => 'Odporúčané',
 	'reviewedpages-all' => 'skontrolované verzie',
 	'reviewedpages-best' => 'primárna revízia',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'reviewedpages-lev-1' => 'Kualiteti',
 );
 
 /** Serbian Cyrillic ekavian (ћирилица)
@@ -914,7 +993,7 @@ $messages['tr'] = array(
 	'reviewedpages' => 'Gözden geçirilmiş sayfalar',
 	'reviewedpages-leg' => 'Belirli bir seviyede gözden geçirilmiş sayfaları listele',
 	'reviewedpages-list' => 'Sıradaki sayfalar belirlenen seviyede gözden geçirilmiştir',
-	'reviewedpages-none' => 'Listede hiç sayfa yok',
+	'reviewedpages-none' => 'Bu listede hiç sayfa yok',
 	'reviewedpages-lev-0' => 'Gözlenmiş',
 	'reviewedpages-lev-1' => 'Kalite',
 	'reviewedpages-lev-2' => 'Özellikli',

@@ -148,7 +148,7 @@ function getSuggestions() {
 	//wfdebug("]]]".$sql."\n");
 	$queryResult = $dbr->query($sql);
 	
-	$o->id = new Attribute("id", "ID", "id");
+	$o->id = new Attribute("id", wfMsg('ow_ID'), "id");
 	
 	# == Process query
 	switch($query) {
@@ -321,6 +321,7 @@ function getSQLToSelectPossibleAttributesForLanguage($definedMeaningId, $attribu
 
 	$dbr =& wfGetDB(DB_SLAVE);
 	$sql = 
+		'SELECT attribute_mid, MAX(spelling) as spelling FROM (' .
 		'SELECT attribute_mid, spelling' .
 		" FROM {$dc}_bootstrapped_defined_meanings, {$dc}_class_attributes, {$dc}_syntrans, {$dc}_expression" .
 		" WHERE {$dc}_bootstrapped_defined_meanings.name = " . $dbr->addQuotes($attributesLevel) .
@@ -351,6 +352,8 @@ function getSQLToSelectPossibleAttributesForLanguage($definedMeaningId, $attribu
 				' )'.
 				$defaultClassRestriction .
 		')';
+
+	$sql .= ') AS filtered GROUP BY attribute_mid';
 
 	//if ($language="<ANY>") {
 	//	$sql .=
@@ -435,8 +438,8 @@ function getRelationTypeAsRecordSet($queryResult) {
 	
 	$dbr =& wfGetDB(DB_SLAVE);
 	
-	$relationTypeAttribute = new Attribute("relation-type", "Relation type", "short-text");
-	$collectionAttribute = new Attribute("collection", "Collection", "short-text");
+	$relationTypeAttribute = new Attribute("relation-type", wfMsg('ow_RelationType'), "short-text");
+	$collectionAttribute = new Attribute("collection", wfMsg('ow_Collection'), "short-text");
 	
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $relationTypeAttribute, $collectionAttribute), new Structure($o->id));
 	
@@ -455,8 +458,8 @@ function getClassAsRecordSet($queryResult) {
 	$o=OmegaWikiAttributes::getInstance();
 	
 	$dbr =& wfGetDB(DB_SLAVE);
-	$classAttribute = new Attribute("class", "Class", "short-text");
-	$collectionAttribute = new Attribute("collection", "Collection", "short-text");
+	$classAttribute = new Attribute("class", wfMsg('ow_Class'), "short-text");
+	$collectionAttribute = new Attribute("collection", wfMsg('ow_Collection'), "short-text");
 	
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $classAttribute, $collectionAttribute), new Structure($o->id));
 	
@@ -475,7 +478,7 @@ function getDefinedMeaningAttributeAsRecordSet($queryResult) {
 	
 	$dbr =& wfGetDB(DB_SLAVE);
 	
-	$definedMeaningAttributeAttribute = new Attribute("defined-meaning-attribute", "Relation type", "short-text");
+	$definedMeaningAttributeAttribute = new Attribute("defined-meaning-attribute", wfMsg('ow_RelationType'), "short-text");
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $definedMeaningAttributeAttribute), new Structure($o->id));
 	
 	while ($row = $dbr->fetchObject($queryResult)) 
@@ -493,7 +496,7 @@ function getTextAttributeAsRecordSet($queryResult) {
 	
 	$dbr =& wfGetDB(DB_SLAVE);
 	
-	$textAttributeAttribute = new Attribute("text-attribute", "Text attribute", "short-text");
+	$textAttributeAttribute = new Attribute("text-attribute", wfMsg('ow_TextAttributeHeader'), "short-text");
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $textAttributeAttribute), new Structure($o->id));
 	
 	while ($row = $dbr->fetchObject($queryResult)) 
@@ -511,7 +514,7 @@ function getLinkAttributeAsRecordSet($queryResult) {
 	
 	$dbr =& wfGetDB(DB_SLAVE);
 	
-	$linkAttributeAttribute = new Attribute("link-attribute", "Link attribute", "short-text");
+	$linkAttributeAttribute = new Attribute("link-attribute", wfMsg('ow_LinkAttributeHeader'), "short-text");
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $linkAttributeAttribute), new Structure($o->id));
 	
 	while ($row = $dbr->fetchObject($queryResult)) 
@@ -547,7 +550,7 @@ function getOptionAttributeAsRecordSet($queryResult) {
 	
 	$dbr =& wfGetDB(DB_SLAVE);
 	
-	$optionAttributeAttribute = new Attribute("option-attribute", "Option attribute", "short-text");
+	$optionAttributeAttribute = new Attribute("option-attribute", wfMsg('ow_OptionAttributeHeader'), "short-text");
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $optionAttributeAttribute), new Structure($o->id));
 	
 	while ($row = $dbr->fetchObject($queryResult)) 
@@ -564,12 +567,12 @@ function getDefinedMeaningAsRecordSet($queryResult) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dbr =& wfGetDB(DB_SLAVE);
-	$spellingAttribute = new Attribute("spelling", "Spelling", "short-text");
-	$languageAttribute = new Attribute("language", "Language", "language");
+	$spellingAttribute = new Attribute("spelling", wfMsg('ow_Spelling'), "short-text");
+	$languageAttribute = new Attribute("language", wfMsg('ow_Language'), "language");
 	
 	$expressionStructure = new Structure("defined-meaning", $spellingAttribute, $languageAttribute);
-	$definedMeaningAttribute = new Attribute(null, "Defined meaning", $expressionStructure);
-	$definitionAttribute = new Attribute("definition", "Definition", "definition");
+	$definedMeaningAttribute = new Attribute(null, wfMsg('ow_DefinedMeaning'), $expressionStructure);
+	$definitionAttribute = new Attribute("definition", wfMsg('ow_Definition'), "definition");
 	
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $definedMeaningAttribute, $definitionAttribute), new Structure($o->id));
 	
@@ -598,7 +601,7 @@ function getClassAttributeLevelAsRecordSet($queryResult) {
 	
 	$dbr =& wfGetDB(DB_SLAVE);
 	
-	$classAttributeLevelAttribute = new Attribute("class-attribute-level", "Level", "short-text");
+	$classAttributeLevelAttribute = new Attribute("class-attribute-level", wfMsg('ow_ClassAttributeLevel'), "short-text");
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $classAttributeLevelAttribute), new Structure($o->id));
 	
 	while ($row = $dbr->fetchObject($queryResult)) 
@@ -615,7 +618,7 @@ function getCollectionAsRecordSet($queryResult) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dbr =& wfGetDB(DB_SLAVE);
-	$collectionAttribute = new Attribute("collection", "Collection", "short-text");
+	$collectionAttribute = new Attribute("collection", wfMsg('ow_Collection'), "short-text");
 	
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $collectionAttribute), new Structure($o->id));
 	
@@ -633,7 +636,7 @@ function getLanguageAsRecordSet($queryResult) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dbr =& wfGetDB(DB_SLAVE);
-	$languageAttribute = new Attribute("language", "Language", "short-text");
+	$languageAttribute = new Attribute("language", wfMsg('ow_Language'), "short-text");
 	
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $languageAttribute), new Structure($o->id));
 	
@@ -652,9 +655,9 @@ function getTransactionAsRecordSet($queryResult) {
 	
 	$dbr =& wfGetDB(DB_SLAVE);
 	
-	$userAttribute = new Attribute("user", "User", "short-text");
-	$timestampAttribute = new Attribute("timestamp", "Time", "timestamp");
-	$summaryAttribute = new Attribute("summary", "Summary", "short-text");
+	$userAttribute = new Attribute("user", wfMsg('ow_User'), "short-text");
+	$timestampAttribute = new Attribute("timestamp", wfMsg('ow_Time'), "timestamp");
+	$summaryAttribute = new Attribute("summary", wfMsg('ow_transaction_summary'), "short-text");
 	
 	$recordSet = new ArrayRecordSet(new Structure($o->id, $userAttribute, $timestampAttribute, $summaryAttribute), new Structure($o->id));
 	

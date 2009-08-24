@@ -12,71 +12,79 @@
  *
  */
 
-$root = dirname(__FILE__);
+$wgExtensionCredits['specialpage'][] = array(
+	'name' => 'Farmer',
+	'author' => 'Gregory Szorc <gregory.szorc@case.edu>',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:Farmer',
+	'description' => 'Manage a MediaWiki farm',
+	'descriptionmsg' => 'farmer-desc',
+	'version' => '0.0.4'
+);
 
-require_once $root . '/MediaWikiFarmer.php';
-require_once $root . '/MediaWikiFarmer_Wiki.php';
-require_once $root . '/MediaWikiFarmer_Extension.php';
-$wgExtensionMessagesFiles['MediaWikiFarmer'] = $root . '/Farmer.i18n.php';
-
+/**
+ * Extension's configuration
+ */
 $wgFarmerSettings = array(
-    'configDirectory'           =>  realpath(dirname(__FILE__)) . '/configs/',
-    'defaultWiki'               =>  '',
-    'wikiIdentifierFunction'    =>  array('MediaWikiFarmer', '_matchByURLHostname'),
-    'matchRegExp'   =>  '',
-    'matchOffset'   =>  null,
-    'matchServerNameSuffix'    =>   '',
+	//Path to the directory that holds settings for wikis
+	'configDirectory'           =>  realpath( dirname( __FILE__ ) ) . '/configs/',
 
-    'onUnknownWiki'             =>  array('MediaWikiFarmer', '_redirectTo'),
-    'redirectToURL'             =>  '',
+	// Default wiki
+	'defaultWiki'               =>  '',
 
-    'dbAdminUser'               =>  'root',
-    'dbAdminPassword'           =>  '',
+	// Function used to identify the wiki to use
+	'wikiIdentifierFunction'    =>  array( 'MediaWikiFarmer', '_matchByURLHostname' ),
+	'matchRegExp'               =>  '',
+	'matchOffset'               =>  null,
+	'matchServerNameSuffix'     =>   '',
 
-    'newDbSourceFile'           =>  realpath(dirname(__FILE__)) . '/daughterwiki.sql',
+	// Function to call for unknown wiki
+	'onUnknownWiki'             =>  array( 'MediaWikiFarmer', '_redirectTo' ),
+	// If onUnknownWiki calls MediaWikiFarmer::_redirectTo (default), url to redirect to
+	'redirectToURL'             =>  '',
 
+	// Wheter to use $wgConf to get some settings
+	'useWgConf'                 => false,
+
+	// File used to create tables for new wikis
+	'newDbSourceFile'           =>  "$IP/maintenance/tables.sql",
+
+	// Get DB name and table prefix for a wiki
+	'dbFromWikiFunction'        => array( 'MediaWikiFarmer', '_prefixTable' ),
     'dbTablePrefixSeparator'    =>  '',
     'dbTablePrefix'             =>  '',
 
-    'defaultMessagesFunction'    =>  array('MediaWikiFarmer', '_getDefaultMessages'),
+	// user name and password for MySQL admin user
+	'dbAdminUser'               =>  'root',
+	'dbAdminPassword'           =>  '',
 
-    'perWikiStorageRoot'        => '',
-    'defaultSkin'               => 'monobook',
+	// Per-wiki image storage, filesystem path
+	'perWikiStorageRoot'        => '',
+	// Url
+	'perWikiStorageUrl'         => '',
+
+	// default skin
+	'defaultSkin'               => 'monobook',
 );
 
-$wgExtensionFunctions[] = 'MediaWikiFarmer_Initialize';
+$root = dirname( __FILE__ ) . '/';
 
-/**
- * These should really go in the initialize function, but MediaWiki initializes
- * $wgUser before the extensions are initialized.  Seems like weird behavior,
- * but OK.
- */
+$wgExtensionMessagesFiles['MediaWikiFarmer'] = $root . 'Farmer.i18n.php';
+
+$wgExtensionAliasesFiles['MediaWikiFarmer'] = $root . 'Farmer.alias.php';
+
+$wgAutoloadClasses['MediaWikiFarmer'] = $root . 'MediaWikiFarmer.php';
+$wgAutoloadClasses['MediaWikiFarmer_Extension'] = $root . 'MediaWikiFarmer_Extension.php';
+$wgAutoloadClasses['MediaWikiFarmer_Wiki'] = $root . 'MediaWikiFarmer_Wiki.php';
+$wgAutoloadClasses['SpecialFarmer'] = $root . 'SpecialFarmer.php';
+
+$wgSpecialPages['Farmer'] = 'SpecialFarmer';
+$wgSpecialPageGroups['Farmer'] = 'wiki';
+
+# New permissions
+$wgAvailableRights[] = 'farmeradmin';
+$wgAvailableRights[] = 'createwiki';
+
 $wgGroupPermissions['*']['farmeradmin'] = false;
 $wgGroupPermissions['sysop']['farmeradmin'] = true;
 $wgGroupPermissions['*']['createwiki'] = false;
 $wgGroupPermissions['sysop']['createwiki'] = true;
-$wgAvailableRights[] = 'farmeradmin';
-$wgAvailableRights[] = 'createwiki';
-
-function MediaWikiFarmer_Initialize()
-{
-	wfLoadExtensionMessages( 'MediaWikiFarmer' );
-    $wgFarmer = MediaWikiFarmer::getInstance();
-    $wgExtensionCredits = MediaWikiFarmer::getMWVariable('wgExtensionCredits');
-    $wgMessageCache = MediaWikiFarmer::getMWVariable('wgMessageCache');
-
-    $wgExtensionCredits['specialpage'][] = array(
-        'name'=>'Farmer',
-        'author'=>'Gregory Szorc <gregory.szorc@case.edu>',
-        'url'=>'http://wiki.case.edu/User:Gregory.Szorc',
-        'description'=>'Manage a MediaWiki farm',
-	'descriptionmsg' => 'farmer-desc',
-        'version'=>'0.0.3'
-    );
-
-
-    require_once dirname(__FILE__) . '/MediaWikiFarmer_SpecialPage.php';
-
-    //I would use the new method, but it didn't work for me...
-    SpecialPage::addPage( new SpecialFarmer );
-}

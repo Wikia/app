@@ -112,6 +112,6 @@ $remove_scripts[$wgDBprefix.'wikitrust_user'] = array("DROP TABLE
 $remove_scripts[$wgDBprefix.'wikitrust_missing_revs'] = array("DROP TABLE
 ".$wgDBprefix."wikitrust_missing_revs");
 
-$remove_index_scripts[$wgDBprefix . "revision"]['wikitrust_revision_id_timestamp_idx'] = "DROP INDEX wikitrust_revision_id_timestamp_idx ON revision";
+$remove_index_scripts[$wgDBprefix . "revision"]['wikitrust_revision_id_timestamp_idx'] = "DROP INDEX wikitrust_revision_id_timestamp_idx ON ".$wgDBprefix."revision";
 
 ?>

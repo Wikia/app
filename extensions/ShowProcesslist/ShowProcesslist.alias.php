@@ -34,6 +34,11 @@ $aliases['de'] = array(
 	'ShowProcesslist' => array( 'Prozessliste anzeigen' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'ShowProcesslist' => array( 'Lisćinu procesow pokazaś' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'ShowProcesslist' => array( 'Prosessilistaus' ),
@@ -49,14 +54,29 @@ $aliases['he'] = array(
 	'ShowProcesslist' => array( 'הצגת_רשימת_תהליכים' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'ShowProcesslist' => array( 'Lisćinu procesow pokazać' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'ShowProcesslist' => array( 'Folyamatlista mutatása' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'ShowProcesslist' => array( 'Monstrar lista de processos' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'ShowProcesslist' => array( 'Daftar proses' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'ShowProcesslist' => array( 'プロセス一覧表示' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -82,5 +102,10 @@ $aliases['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'ShowProcesslist' => array( 'Vis prosessliste' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'ShowProcesslist' => array( 'Ipakita ang talaan ng proseso' ),
 );
 

@@ -42,7 +42,6 @@ class LuceneSearch extends SearchEngine {
 	 * 
 	 * 1) rewrite namespaces into standardized form 
 	 * e.g. image:clouds -> [6]:clouds
-	 * e.g. help,wp:npov -> [12,4]:npov
 	 * 
 	 * 2) rewrite localizations of "search everything" keyword
 	 * e.g. alle:heidegger -> all:heidegger
@@ -86,77 +85,51 @@ class LuceneSearch extends SearchEngine {
 			return trim($ret);
 		}
 		
-		for($i = 0 ; $i < $qlen ; $i++){
-			$c = $query[$i];
-
-			// ignore chars in quotes
-			if($inquotes && $c!='"'); 
-			// check if $c is valid prefix character
-			else if(($c >= 'a' && $c <= 'z') ||
-				 ($c >= 'A' && $c <= 'Z') ||
-				 $c == '_' || $c == '-' || $c ==','){
-				if($len == 0){
-					$start = $i; // begin of token
-					$len = 1;
-				} else
-					$len++;	
-			// check for utf-8 chars
-			} else if(($c >= "\xc0" && $c <= "\xff")){ 
-				$utf8len = 1;
-				for($j = $i+1; $j < $qlen; $j++){ // fetch extra utf-8 bytes
-					if($query[$j] >= "\x80" && $query[$j] <= "\xbf")
-						$utf8len++;
-					else
-						break;
-				}
-				if($len == 0){
-					$start = $i;
-					$len = $utf8len;
-				} else
-					$len += $utf8len;
-				$i = $j - 1;  // we consumed the chars
-			// check for end of prefix (i.e. semicolon)
-			} else if($c == ':' && $len !=0){
-				$rewrite = array(); // here we collect namespaces 
-				$prefixes = explode(',',substr($query,$start,$len));
-				// iterate thru comma-separated list of prefixes
-				foreach($prefixes as $prefix){
-					$index = $wgContLang->getNsIndex($prefix);
-					
-					// check for special prefixes all/incategory
-					if($prefix == $allkeyword){
-						$rewrite = 'all';
-						break;
-					// check for localized names of namespaces
-					} else if($index !== false)
-						$rewrite[] = $index;					
-				}
-				$translated = null;
-				if($rewrite === 'all')
-					$translated = $rewrite;
-				else if(count($rewrite) != 0)
-					$translated = '['.implode(',',array_unique($rewrite)).']';
-
-				if(isset($translated)){
-					// append text before the prefix, and then the prefix
-					$rewritten .= substr($query,$rindex,$start-$rindex);
-					$rewritten .= $translated . ':';
-					$rindex = $i+1;
-				}
-				
-				$len = 0;
-			} else{ // end of token
-				if($c == '"') // get in/out of quotes
-					$inquotes = !$inquotes;
-				
-				$len = 0;
+		global $wgCanonicalNamespaceNames, $wgNamespaceAliases;
+		$nsNamesRaw = array_merge($wgContLang->getNamespaces(), $wgCanonicalNamespaceNames, 
+			array_keys( array_merge($wgNamespaceAliases, $wgContLang->namespaceAliases) ) );
+			
+		# add all namespace names w/o spaces
+		$nsNames = array();
+		foreach($nsNamesRaw as $ns){
+			if( $ns != ''){
+				$nsNames[] = $ns;
+				$nsNames[] = str_replace('_',' ',$ns);
 			}
-				
 		}
-		// add rest of the original query that doesn't need rewritting
-		$rewritten .= substr($query,$rindex,$qlen-$rindex);
+
+		$regexp = implode('|',array_unique( $nsNames ));
+		
+		# rewrite the query by replacing valid namespace names
+		$parts = preg_split('/(")/',$query,-1,PREG_SPLIT_DELIM_CAPTURE);
+		$inquotes = false;
+		$rewritten = '';
+		foreach($parts as $part){
+			if( $part == '"'){ # stuff in quote doesnt get rewritten
+				$rewritten .= $part;
+				$inquotes = !$inquotes;
+			} elseif( $inquotes ){
+				$rewritten .= $part;				
+			} else{
+				# replace namespaces
+				$r = preg_replace_callback('/(^|[ :])('.$regexp.'):/i',array($this,'replaceNamespace'),$part);
+				# replace to backend all: notation
+				$rewritten .= str_replace($allkeyword.':', 'all:', $r);
+			}
+		}		
 		wfProfileOut($fname);
 		return $rewritten;
+	}
+	
+	/** callback to replace namespace names to internal notation, e.g. User: -> [2]: */ 
+	function replaceNamespace($matches){
+		global $wgContLang;
+		$inx = $wgContLang->getNsIndex(str_replace(' ', '_', $matches[2]));
+		if ($inx === false)
+			return $matches[0];
+		else
+			return $matches[1]."[$inx]:";
+		
 	}
 	
 	function acceptListRedirects() {
@@ -490,13 +463,14 @@ class LuceneSearchSet extends SearchResultSet {
 			}
 		}
 
+		// Search server will be in local network but may not trigger checks on
+		// Http::isLocal(), so suppress usage of $wgHTTPProxy if enabled.
+		$curlOpts = array( CURLOPT_PROXY => '' );
+		
 		wfDebug( "Fetching search data from $searchUrl\n" ); 
 		wfSuppressWarnings();
 		wfProfileIn( $fname.'-contact-'.$host );
-		global $wgHTTPProxy;
-		$httpProxy = $wgHTTPProxy; $wgHTTPProxy = false;
-		$data = Http::get( $searchUrl, $wgLuceneSearchTimeout );
-		$wgHTTPProxy = $httpProxy;
+		$data = Http::get( $searchUrl, $wgLuceneSearchTimeout, $curlOpts );
 		wfProfileOut( $fname.'-contact-'.$host );
 		wfRestoreWarnings();
 		if( $data === false ) {

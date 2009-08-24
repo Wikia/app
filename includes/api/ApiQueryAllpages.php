@@ -135,8 +135,8 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 		$this->addOption('LIMIT', $limit+1);
 		$res = $this->select(__METHOD__);
 
-		$data = array ();
 		$count = 0;
+		$result = $this->getResult();
 		while ($row = $db->fetchObject($res)) {
 			if (++ $count > $limit) {
 				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
@@ -147,10 +147,16 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 
 			if (is_null($resultPageSet)) {
 				$title = Title :: makeTitle($row->page_namespace, $row->page_title);
-				$data[] = array(
+				$vals = array(
 					'pageid' => intval($row->page_id),
 					'ns' => intval($title->getNamespace()),
 					'title' => $title->getPrefixedText());
+				$fit = $result->addValue(array('query', $this->getModuleName()), null, $vals);
+				if(!$fit)
+				{
+					$this->setContinueEnumParameter('from', $this->keyToTitle($row->page_title));
+					break;
+				}
 			} else {
 				$resultPageSet->processDbRow($row);
 			}
@@ -158,9 +164,7 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 		$db->freeResult($res);
 
 		if (is_null($resultPageSet)) {
-			$result = $this->getResult();
-			$result->setIndexedTagName($data, 'p');
-			$result->addValue('query', $this->getModuleName(), $data);
+			$result->setIndexedTagName_internal(array('query', $this->getModuleName()), 'p');
 		}
 	}
 
@@ -264,6 +268,6 @@ class ApiQueryAllpages extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllpages.php 44863 2008-12-20 23:54:04Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryAllpages.php 46845 2009-02-05 14:30:59Z catrope $';
 	}
 }

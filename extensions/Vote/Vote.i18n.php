@@ -62,6 +62,17 @@ $messages['niu'] = array(
 	'vote-login-link' => 'hu ki loto',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'vote-view-results' => "Nähta rezul'tatad",
+	'vote-results' => "Änestusen rezul'tatad",
+	'vote-results-choice' => 'Valičend',
+	'vote-results-count' => 'Lugumär',
+	'vote-login-link' => 'kirjutadas sistemha',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Arnobarnard
  * @author Naudefj
@@ -168,11 +179,28 @@ $messages['bcl'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
+	'vote' => 'Галасаваньне',
+	'vote-desc' => 'Надае магчымасьць простага галасаваньня',
+	'vote-header' => "Вы можаце галасаваць за '''Вышэйшага Ўладара Сьвету''' тут!",
+	'vote-current' => "Ваш цяперашні голас адданы за '''$1'''.",
+	'vote-legend' => 'Прагаласаваць альбо зьмяніць голас',
 	'vote-caption' => 'Ваш выбар:',
+	'vote-choices' => 'джокер|Джокер
+пінгвін|Пінгвін
+загадка|Загадка',
+	'vote-submit' => 'Галасаваць',
 	'vote-registered' => 'Ваш голас быў залічаны.',
 	'vote-view-results' => 'Паказаць вынікі',
+	'vote-results' => 'Вынікі галасаваньня',
+	'vote-results-choice' => 'Выбар',
+	'vote-results-count' => 'Колькасьць',
+	'vote-results-none' => 'Няма галасоў адданых за гэты час.',
+	'vote-login' => 'Каб галасаваць Вам трэба $1.',
+	'vote-login-link' => 'увайсьці ў сыстэму',
 	'vote-invalid-choice' => 'Вы павінны выбраць адзін з прапанаваных варыянтаў.',
 );
 
@@ -246,8 +274,25 @@ sfinks|Sfinks',
  * @author CERminator
  */
 $messages['bs'] = array(
+	'vote' => 'Glasanje',
+	'vote-desc' => 'Omogućuje jednostavne mogućnosti glasanja',
+	'vote-header' => "Ovdje možete glasati za '''Vrhovnog vladara nad vladarima Svijeta'''!",
+	'vote-current' => "Vaš trenutni glas je za '''$1'''.",
+	'vote-legend' => 'Postavite ili dopunite glas',
+	'vote-caption' => 'Vaš odabir:',
+	'vote-choices' => 'joker|Džoker
+penguin|Pingvin
+riddler|Zagonetka',
+	'vote-submit' => 'Glasaj',
+	'vote-registered' => 'Vaš glas je registrovan.',
+	'vote-view-results' => 'Pogledaj rezultate',
+	'vote-results' => 'Rezultati glasanja',
+	'vote-results-choice' => 'Izbor',
 	'vote-results-count' => 'Brojanje',
+	'vote-results-none' => 'Do sada nisu dati glasovi.',
+	'vote-login' => 'Morate se $1 za glasanje.',
 	'vote-login-link' => 'prijavi se',
+	'vote-invalid-choice' => 'Morate odabrati jednu od ponuđenih opcija.',
 );
 
 /** Czech (Česky)
@@ -273,6 +318,31 @@ riddler|Riddler',
 	'vote-login' => 'Abyste mohli hlasovat, musíte $1.',
 	'vote-login-link' => 'se přihlásit',
 	'vote-invalid-choice' => 'Musíte vybrat jednu z dostupných možností',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'vote' => 'Pleidleisio',
+	'vote-desc' => 'Yn cynnal etholiad syml',
+	'vote-header' => "Gallwch ethol '''Ymerawdwr y Bydysawd''' fan hyn!",
+	'vote-current' => "Rydych wedi dewis '''$1''' ar hyn o bryd.",
+	'vote-legend' => 'Bwrw pleidlais neu ei newid',
+	'vote-caption' => 'Eich dewis:',
+	'vote-choices' => 'joker|The Joker
+penguin|The Penguin
+riddler|The Riddler',
+	'vote-submit' => 'Bwrw pleidlais',
+	'vote-registered' => 'Cofnodwyd eich pleidlais.',
+	'vote-view-results' => 'Edrych ar y canlyniadau',
+	'vote-results' => "Canlyniadau'r bleidlais",
+	'vote-results-choice' => 'Y dewis',
+	'vote-results-count' => 'Cyfrif',
+	'vote-results-none' => 'Nid oes neb wedi pleidleisio eto.',
+	'vote-login' => 'Rhaid $1 i bleidleisio.',
+	'vote-login-link' => 'mewngofnodi',
+	'vote-invalid-choice' => "Rhaid dewis un o'r dewisiadau a gynigwyd.",
 );
 
 /** Danish (Dansk)
@@ -309,6 +379,31 @@ riddler|Riddler',
 	'vote-login' => 'Du musst $1, um abstimmen zu können.',
 	'vote-login-link' => 'dich anmelden',
 	'vote-invalid-choice' => 'Du musst eine der möglichen Optionen wählen.',
+);
+
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'vote' => 'Głosowaś',
+	'vote-desc' => 'Dawa jadnore napšašowańske móžnosći',
+	'vote-header' => "Móžoš how za '''Nanejwušego kněza swěta''' glosowaś!",
+	'vote-current' => "Twój aktualny głos jo za '''$1'''.",
+	'vote-legend' => 'Swój głos wótedaś abo změniś',
+	'vote-caption' => 'Twójo wuzwólenje:',
+	'vote-choices' => 'joker|Joker
+penguin|Penguin
+riddler|Riddler',
+	'vote-submit' => 'Głosowaś',
+	'vote-registered' => 'Twój głos jo se zregistrěrował.',
+	'vote-view-results' => 'Wuslědki pokazaś',
+	'vote-results' => 'Wuslědki wótgłosowanja',
+	'vote-results-choice' => 'Wuzwólenje',
+	'vote-results-count' => 'Licba',
+	'vote-results-none' => 'Dotychměst głose njejsu se wótedali.',
+	'vote-login' => 'Musyš $1, aby wótgłosował.',
+	'vote-login-link' => 'se pśizjawiś',
+	'vote-invalid-choice' => 'Musyš jadnu z k dispoziciji stojecych opcijow wubraś.',
 );
 
 /** Greek (Ελληνικά)
@@ -348,17 +443,31 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Fluence
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
 	'vote' => 'Votar',
+	'vote-desc' => 'Provea capacidades de encuesta simple',
+	'vote-header' => "Usted puede votar por '''Supremo Señor Feudal del Mundo''' aquí!",
 	'vote-current' => "Tu voto actual es para '''$1'''.",
+	'vote-legend' => 'Reemplazar o enmendar voto',
+	'vote-caption' => 'Su selección:',
+	'vote-choices' => 'bufón|El Bufón
+pingüino|El Pingüino
+adivinador|Adivinador',
 	'vote-submit' => 'Votar',
+	'vote-registered' => 'Su voto ha sido registrado.',
 	'vote-view-results' => 'Ver resultados',
+	'vote-results' => 'Resultados de votación',
 	'vote-results-choice' => 'Selección',
+	'vote-results-count' => 'Contar',
+	'vote-results-none' => 'Ningún voto ha sido emitido en este momento.',
+	'vote-login' => 'Usted debe $1 votar.',
 	'vote-login-link' => 'entrar',
+	'vote-invalid-choice' => 'Usted debe seleccionar una de las opciones disponibles.',
 );
 
 /** Estonian (Eesti)
@@ -385,6 +494,9 @@ $messages['et'] = array(
 $messages['eu'] = array(
 	'vote' => 'Bozkatu',
 	'vote-caption' => 'Zure aukeraketa:',
+	'vote-choices' => 'joker|Jokerra
+penguin|Pinguinoa
+riddler|Riddlerra',
 	'vote-submit' => 'Bozkatu',
 	'vote-registered' => 'Zure bozka erregistratu da.',
 	'vote-view-results' => 'Ikusi emaitzak',
@@ -457,11 +569,12 @@ riddler|Arvuuttaja',
  * @author Ashar Voultoiz
  * @author Grondin
  * @author Meithal
+ * @author PieRRoMaN
  * @author Urhixidur
  */
 $messages['fr'] = array(
 	'vote' => 'Vote',
-	'vote-desc' => 'Fournit les possibilités d’élection simple.',
+	'vote-desc' => 'Permet de mettre en place des sondages simplement',
 	'vote-header' => "Vous pouvez voter pour le '''maître de l'Univers''' ici !",
 	'vote-current' => "Votre vote actuel est pour '''$1'''.",
 	'vote-legend' => 'Placer ou modifier un vote',
@@ -520,6 +633,38 @@ riddler|Riddler',
  */
 $messages['grc'] = array(
 	'vote-login-link' => 'συνδεῖσθαι',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'vote' => 'Wähle',
+	'vote-desc' => 'Bietet eifach Umfrogefähigkeite',
+	'vote-header' => "Du chasch doo dr '''Oberscht Oberherr vu dr Wält''' wähle!",
+	'vote-current' => "Dyyni aktuäll Stimm isch fir '''$1'''.",
+	'vote-legend' => 'Abstimme',
+	'vote-caption' => 'Dyyni Stimm:',
+	'vote-choices' => 'joker|Dr Joker
+penguin|Dr Pinguin
+riddler|Riddler',
+	'vote-submit' => 'Abstimme',
+	'vote-registered' => 'Dyyni Stimm isch regischtriert wore.',
+	'vote-view-results' => 'Ergebniss zeige',
+	'vote-results' => 'Wahlergebniss',
+	'vote-results-choice' => 'Wahl',
+	'vote-results-count' => 'Aazahl',
+	'vote-results-none' => 'S sin no kei Stimme abgee wore.',
+	'vote-login' => 'Du muesch $1 zum abstimme z chenne.',
+	'vote-login-link' => 'Di aamälde',
+	'vote-invalid-choice' => 'Du muesch eini vu dr meglige Optione wähle.',
+);
+
+/** Hawaiian (Hawai`i)
+ * @author Kalani
+ */
+$messages['haw'] = array(
+	'vote-login-link' => 'ʻeʻe',
 );
 
 /** Hebrew (עברית)
@@ -658,21 +803,46 @@ $messages['id'] = array(
 );
 
 /** Italian (Italiano)
+ * @author Aushulz
  * @author Cruccone
  */
 $messages['it'] = array(
 	'vote' => 'Vota',
 	'vote-current' => "Il tuo voto corrente è per '''$1'''.",
 	'vote-caption' => 'La tua selezione:',
+	'vote-submit' => 'Vota',
+	'vote-registered' => 'Il tuo voto è stato registrato.',
+	'vote-view-results' => 'Vedi risultati',
+	'vote-results' => 'Risultati della votazione',
+	'vote-results-choice' => 'Scelta',
+	'vote-results-none' => 'Non è stato espresso alcun voto.',
+	'vote-invalid-choice' => 'Devi selezionare una delle possibili opzioni.',
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
+	'vote' => '投票',
+	'vote-desc' => '簡素な投票機能を提供する',
+	'vote-header' => "あなたはここで'''世界最高君主'''に投票することができます！",
+	'vote-current' => "あなたは現在'''$1'''に投票しています。",
+	'vote-legend' => '投票または票の修正',
+	'vote-caption' => 'あなたの選択:',
+	'vote-choices' => 'joker|The Joker
+penguin|The Penguin
+riddler|Riddler',
+	'vote-submit' => '投票',
+	'vote-registered' => 'あなたの投票を受け付けました。',
+	'vote-view-results' => '結果を表示',
+	'vote-results' => '投票結果',
 	'vote-results-choice' => '選択',
-	'vote-results-count' => 'カウント',
+	'vote-results-count' => '票数',
+	'vote-results-none' => '現時点までになされた投票はありません。',
+	'vote-login' => '投票するには$1しなければなりません。',
 	'vote-login-link' => 'ログイン',
+	'vote-invalid-choice' => 'あなたは選択肢のうち1つを選ばなければなりません。',
 );
 
 /** Javanese (Basa Jawa)
@@ -751,6 +921,7 @@ Laachsack|Dä Laachsack',
  */
 $messages['lb'] = array(
 	'vote' => 'Ofstëmmen',
+	'vote-desc' => 'Erméiglecht einfach Ënfroen',
 	'vote-header' => "Dir kënnt hei iwwer den '''Supreme Overlord of the World''' ofstëmmen!",
 	'vote-current' => "Är aktuell Stëmm ass fir '''$1'''.",
 	'vote-legend' => 'Stëmm ofginn oder änneren',
@@ -783,6 +954,14 @@ $messages['lt'] = array(
 	'vote-view-results' => 'Žiūrėti rezultatus',
 	'vote-results' => 'Balsavimo rezultatai',
 	'vote-login-link' => 'registruotis',
+);
+
+/** Malagasy (Malagasy)
+ * @author Jagwar
+ */
+$messages['mg'] = array(
+	'vote-results-none' => 'Tsy nisy vato nalatsaka ankehitriny.',
+	'vote-login-link' => 'hiditra',
 );
 
 /** Malayalam (മലയാളം)
@@ -948,7 +1127,7 @@ sphinx|Esfinx',
 	'vote-results-choice' => 'Causida',
 	'vote-results-count' => 'Compte',
 	'vote-results-none' => 'Cap de vòte es pas estat efectuat a aqueste moment.',
-	'vote-login' => 'Devètz $1 per votar.',
+	'vote-login' => 'Vos cal vos $1 per votar.',
 	'vote-login-link' => 'vos connectar',
 	'vote-invalid-choice' => 'Vos cal causir una de las opcions disponiblas.',
 );
@@ -1017,15 +1196,19 @@ Gioanin|Gioanin',
  */
 $messages['ps'] = array(
 	'vote' => 'رايه ورکول',
+	'vote-desc' => 'په ساده توګه د رايو ورکولو آسانتياوې برابروي',
 	'vote-current' => "ستاسو اوسنۍ رايه د '''$1''' لپاره ورکړ شوې.",
 	'vote-caption' => 'ستاسو ټاکنه:',
 	'vote-submit' => 'رايه ورکول',
 	'vote-registered' => 'ستاسو رايه ثبته شوه.',
 	'vote-view-results' => 'پايلې کتل',
 	'vote-results' => 'د رايو پايلې',
+	'vote-results-choice' => 'خوښه',
 	'vote-results-count' => 'شمېرل',
+	'vote-results-none' => 'تر دم مهاله هېڅ کومه رايه نه ده ورکړ شوې.',
 	'vote-login' => 'ددې لپاره چې تاسو رايه ورکړی نو پکار ده چې $1.',
 	'vote-login-link' => 'ننوتل',
+	'vote-invalid-choice' => 'بايد چې د شتو خوښو نه يوه وټاکۍ.',
 );
 
 /** Portuguese (Português)
@@ -1035,6 +1218,7 @@ $messages['ps'] = array(
  */
 $messages['pt'] = array(
 	'vote' => 'Votar',
+	'vote-desc' => 'Fornece funcionalidades simples de sondagem',
 	'vote-header' => "Pode votar no '''Senhor Supremo do Mundo''' aqui!",
 	'vote-current' => "O seu voto actual é a favor de '''$1'''.",
 	'vote-legend' => 'Colocar ou corrigir voto',
@@ -1055,11 +1239,29 @@ riddler|Enigmático',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
  * @author GKnedo
  */
 $messages['pt-br'] = array(
 	'vote' => 'Votar',
+	'vote-desc' => 'Fornece funcionalidades simples de enquetes',
+	'vote-header' => "Pode votar no '''Senhor Supremo do Mundo''' aqui!",
+	'vote-current' => "O seu voto atual é a favor de '''$1'''.",
+	'vote-legend' => 'Colocar ou corrigir voto',
+	'vote-caption' => 'Sua seleção:',
+	'vote-choices' => 'joker|O Curinga
+penguin|O Pinguim
+riddler|O Charada',
+	'vote-submit' => 'Votar',
+	'vote-registered' => 'O seu voto foi registrado.',
 	'vote-view-results' => 'Ver resultados',
+	'vote-results' => 'Resultado da votação',
+	'vote-results-choice' => 'Escolha',
+	'vote-results-count' => 'Contagem',
+	'vote-results-none' => 'De momento ainda não foram submetidos votos.',
+	'vote-login' => 'Terá de $1 para votar.',
+	'vote-login-link' => 'autenticar-se',
+	'vote-invalid-choice' => 'Deverá seleccionar uma das opções disponíveis.',
 );
 
 /** Romanian (Română)
@@ -1098,6 +1300,7 @@ $messages['roa-tara'] = array(
  */
 $messages['ru'] = array(
 	'vote' => 'Голосование',
+	'vote-desc' => 'Предоставляет средства для проведения простых голосований',
 	'vote-header' => "Вы можете проголосовать за '''Высшего повелителя мира''' здесь!",
 	'vote-current' => "Ваш текущий голос за '''$1'''.",
 	'vote-legend' => 'Проголосовать или изменить голос',
@@ -1144,9 +1347,47 @@ riddler|Riddler',
 
 /** Albanian (Shqip)
  * @author Ergon
+ * @author Puntori
  */
 $messages['sq'] = array(
 	'vote' => 'Voto',
+	'vote-current' => "Vota juaj momentale është pë '''$1'''.",
+	'vote-caption' => 'Zgjedhja juaj:',
+	'vote-submit' => 'Votoni',
+	'vote-registered' => 'Vota juaj u regjistrua.',
+	'vote-view-results' => 'Shiko rezultatet',
+	'vote-results' => 'Rezultatet e votimit',
+	'vote-results-choice' => 'Zgjedhja',
+	'vote-results-count' => 'Numërimi',
+	'vote-results-none' => 'Asnjë votë nuk është regjistruar në këtë kohë.',
+	'vote-login' => '$1 për të votuar.',
+	'vote-login-link' => 'kyçu',
+	'vote-invalid-choice' => 'Duhet të zgjidhni një nga zgjedhjet e mundshme.',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'vote' => 'Wääljen',
+	'vote-desc' => 'Bjut eenfache Uumfroage-Muugelkhaide',
+	'vote-header' => "Du koast hier dän '''Bupperste Buppeheer fon de Waareld''' wäälje!",
+	'vote-current' => "Dien aktuelle Stämme is foar '''$1'''",
+	'vote-legend' => 'Oustämme',
+	'vote-caption' => 'Dien Stämme:',
+	'vote-choices' => 'joker|Die Joker
+penguin|Die Pinguin
+riddler|Riddler',
+	'vote-submit' => 'Oustämme',
+	'vote-registered' => 'Dien Stämme wuud registrierd.',
+	'vote-view-results' => 'Resultoate wiese',
+	'vote-results' => 'Woal-Resultoate',
+	'vote-results-choice' => 'Woal',
+	'vote-results-count' => 'Antaal',
+	'vote-results-none' => 'Der wuuden noch neen Stämmen ouroat.',
+	'vote-login' => 'Du moast $1, uum oustämme tou konnen.',
+	'vote-login-link' => 'die anmäldje',
+	'vote-invalid-choice' => 'Du moast een fon do muugelke Optione wäälje.',
 );
 
 /** Sundanese (Basa Sunda)
@@ -1165,9 +1406,11 @@ $messages['su'] = array(
 
 /** Swedish (Svenska)
  * @author Lejonel
+ * @author Najami
  */
 $messages['sv'] = array(
 	'vote' => 'Rösta',
+	'vote-desc' => 'Ger enkla omröstningsmöjligheter',
 	'vote-header' => "Här kan du rösta fram '''Världens Enväldige Härskare'''!",
 	'vote-current' => "Ditt nuvarande val är '''$1'''.",
 	'vote-legend' => 'Rösta eller ändra din röst',
@@ -1293,6 +1536,13 @@ $messages['tr'] = array(
 	'vote-results-count' => 'Sayma',
 );
 
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'vote-login-link' => 'kirish',
+);
+
 /** Ukrainian (Українська)
  * @author Ahonc
  * @author Aleksandrit
@@ -1337,9 +1587,21 @@ $messages['vi'] = array(
 
 /** Volapük (Volapük)
  * @author Malafaya
+ * @author Smeira
  */
 $messages['vo'] = array(
+	'vote' => 'Vögodön',
+	'vote-current' => "Vögod anuik ola stüton gebani: '''$1'''.",
+	'vote-caption' => 'Väl olik:',
 	'vote-submit' => 'Vögodön',
+	'vote-registered' => 'Vögod olik peregistaron.',
+	'vote-view-results' => 'Logön sekis',
+	'vote-results' => 'Vögodamaseks',
+	'vote-results-choice' => 'Väl',
+	'vote-results-none' => 'Vögods nonik pegivons ün tim at.',
+	'vote-login' => 'Mutol $1 ad vögodön.',
+	'vote-login-link' => 'nunädön oki',
+	'vote-invalid-choice' => 'Mutol välön bali välas gebidik.',
 );
 
 /** Yue (粵語)

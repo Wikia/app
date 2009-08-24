@@ -14,6 +14,10 @@ class SFUtils {
 		$sf_props = $sfgContLang->getPropertyLabels();
 		SMWPropertyValue::registerProperty('_SF_DF', '__spf', $sf_props[SF_SP_HAS_DEFAULT_FORM], true);
 		SMWPropertyValue::registerProperty('_SF_AF', '__spf', $sf_props[SF_SP_HAS_ALTERNATE_FORM], true);
+		// also initialize hardcoded English values, if it's a non-English-language wiki
+		SMWPropertyValue::registerProperty('_SF_DF_BACKUP', '__spf', 'Has default form', true);
+		SMWPropertyValue::registerProperty('_SF_AF_BACKUP', '__spf', 'Has alternate form', true);
+
 		return true;
 	}
 
@@ -23,10 +27,9 @@ class SFUtils {
 	static function linkText($namespace, $name, $text = NULL) {
 		global $wgContLang;
 
-		$inText = $wgContLang->getNsText($namespace) . ':' . $name;
-		$title = Title::newFromText( $inText );
+		$title = Title::makeTitleSafe( $namespace, $name );
 		if ($title === NULL) {
-			return $inText; // TODO maybe report an error here?
+			return $name; // TODO maybe report an error here?
 		}
 		if ( NULL === $text ) $text = $title->getText();
 		$l = new Linker();
@@ -83,6 +86,53 @@ END;
 	}
 
 	/**
+	 * Includes the necessary Javascript and CSS files for the form
+	 * to display and work correctly
+	 */
+	static function addJavascriptAndCSS() {
+		global $wgOut, $sfgScriptPath, $sfgYUIBase, $wgScriptPath, $wgFCKEditorDir;
+
+		$mainCssUrl = $sfgScriptPath . '/skins/SF_main.css';
+		$wgOut->addLink( array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'media' => "screen, projection",
+			'href' => $mainCssUrl
+		));
+		$wgOut->addLink( array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'media' => "screen, projection",
+			'href' => $sfgYUIBase . "autocomplete/assets/skins/sam/autocomplete.css"
+		));
+		$wgOut->addLink( array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'media' => "screen, projection",
+			'href' => $sfgScriptPath . '/skins/SF_yui_autocompletion.css'
+		));
+		$wgOut->addLink( array(
+			'rel' => 'stylesheet',
+			'type' => 'text/css',
+			'media' => "screen, projection",
+			'href' => $sfgScriptPath . '/skins/floatbox.css'
+		));
+		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'yahoo/yahoo-min.js"></script>' . "\n");
+		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'dom/dom-min.js"></script>' . "\n");
+		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'event/event-min.js"></script>' . "\n");
+		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'get/get-min.js"></script>' . "\n");
+		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'connection/connection-min.js"></script>' . "\n");
+		$wgOut->addScript('<script type="text/javascript" src="' . $sfgYUIBase . 'json/json-min.js"></script>' . "\n");
+		$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'datasource/datasource-min.js"></script>' . "\n");
+		$wgOut->addScript('<script type="text/javascript" src="' .  $sfgYUIBase . 'autocomplete/autocomplete-min.js"></script>' . "\n");
+		$wgOut->addScript('<script type="text/javascript" src="' . $sfgScriptPath . '/libs/SF_yui_autocompletion.js"></script>' . "\n");
+		$wgOut->addScript('<script type="text/javascript" src="' . $sfgScriptPath . '/libs/floatbox.js"></script>' . "\n");
+		if ($wgFCKEditorDir)
+			$wgOut->addScript('<script type="text/javascript" src="' . "$wgScriptPath/$wgFCKEditorDir" . '/fckeditor.js"></script>' . "\n");
+		$wgOut->addMeta('robots','noindex,nofollow');
+	}
+
+	/**
 	 * A helper function to generate a property object given its name,
 	 * since the class for properties changed from Title to
 	 * SMWPropertyValue in SMW 1.4
@@ -91,7 +141,7 @@ END;
 		if (class_exists('SMWPropertyValue'))
 			return SMWPropertyValue::makeProperty($property_name);
 		else
-			return Title::newFromText($property_name, SMW_NS_PROPERTY);
+			return Title::makeTitleSafe(SMW_NS_PROPERTY, $property_name);
 	}
 
 	/**
@@ -140,86 +190,29 @@ END;
 		return $str;
 	}
 
-
-	static function getAllValuesForProperty_orig($is_relation, $property_name, $substring = null) {
-		global $sfgMaxAutocompleteValues;
-
-		$fname = "getAllValuesForProperty_orig";
-		$values = array();
-		$db = wfGetDB( DB_SLAVE );
-		$sql_options = array();
-		$sql_options['LIMIT'] = $sfgMaxAutocompleteValues;
-		$property_field = ($is_relation) ? 'relation_title' : 'attribute_title';
-		$value_field = ($is_relation) ? 'object_title' : 'value_xsd';
-		$property_table = ($is_relation) ? 'smw_relations' : 'smw_attributes';
-		$conditions = "$property_field = '$property_name'";
-		if ($substring != null) {
-			$substring = str_replace(' ', '_', strtolower($substring));
-			$substring = str_replace('_', '\_', $substring);
-			$substring = str_replace("'", "\'", $substring);
-			$conditions .= " AND (LOWER($value_field) LIKE '" . $substring . "%' OR LOWER($value_field) LIKE '%\_" . $substring . "%')";
-		}
-		$sql_options['ORDER BY'] = $value_field;
-		$res = $db->select( $db->tableName($property_table),
-			"DISTINCT $value_field",
-			$conditions, $fname, $sql_options);
-		while ($row = $db->fetchRow($res)) {
-			if ($substring != null) {
-				$values[] = array('title' => str_replace('_', ' ', $row[0]));
-			} else {
-				$cur_value = str_replace("'", "\'", $row[0]);
-				$values[] = str_replace('_', ' ', $cur_value);
-			}
-		}
-		$db->freeResult($res);
-		return $values;
-	}
-
-	static function getAllValuesForProperty_1_2($property_name, $substring = null) {
+	/*
+	 * This function, unlike the others, doesn't take in a substring
+	 * because it uses the SMW data store, which can't perform
+	 * case-insensitive queries; for queries with a substring, the
+	 * function SFAutocompletAPI::getAllValuesForProperty() exists.
+	 */
+	static function getAllValuesForProperty($property_name) {
 		global $sfgMaxAutocompleteValues;
 
 		$store = smwfGetStore();
 		$requestoptions = new SMWRequestOptions();
 		$requestoptions->limit = $sfgMaxAutocompleteValues;
-		if ($substring != null) {
-			$requestoptions->addStringCondition($substring, SMWStringCondition::STRCOND_PRE);
-		}
 		$property = SFUtils::createProperty($property_name);
 		$data_values = $store->getPropertyValues(null, $property, $requestoptions);
 		$values = array();
 		foreach ($data_values as $dv) {
 			// getPropertyValues() gets many repeat values - we want
 			// only one of each value
-			$string_value = str_replace('_', ' ', $dv->getXSDValue());
-			$string_value = str_replace("'", "\'", $string_value);
+			$string_value = str_replace('_', ' ', $dv->getWikiValue());
 			if (array_search($string_value, $values) === false)
 				$values[] = $string_value;
 		}
-		// if there was a substring specified, also find values that
-		// have it after a space, not just at the beginning of the value
-		if ($substring != null) {
-			$requestoptions2 = new SMWRequestOptions();
-			$requestoptions2->limit = $sfgMaxAutocompleteValues;
-			$requestoptions2->addStringCondition(" $substring", SMWStringCondition::STRCOND_MID);
-			$data_values = $store->getPropertyValues(null, $property, $requestoptions2);
-			foreach ($data_values as $dv) {
-				$string_value = str_replace('_', ' ', $dv->getXSDValue());
-				if (array_search($string_value, $values) === false)
-					$values[] = $string_value;
-			}
-		}
-		if ($substring == null)
-			return $values;
-		else {
-			$autocomplete_vals = array();
-			foreach ($values as $value) {
-				// if these values are being returned for remote
-				// autocompletion, undo the apostrophe-escaping
-				$value = str_replace("\'", "'", $value);
-				$autocomplete_vals[] = array('title' => $value);
-			}
-			return $autocomplete_vals;
-		}
+		return $values;
 	}
 
 	/*
@@ -233,6 +226,7 @@ END;
 
 		$db = wfGetDB( DB_SLAVE );
 		$fname = "getAllPagesForCategory";
+		$top_category = str_replace(' ', '_', $top_category);
 		$categories = array($top_category);
 		$checkcategories = array($top_category);
 		$pages = array();
@@ -264,7 +258,7 @@ END;
 							} else {
 								$cur_value = str_replace("_", " ", $row['page_title']);
 								if ($substring == null)
-									$pages[] = str_replace("'", "\'", $cur_value);
+									$pages[] = $cur_value;
 								else
 									$pages[] = array('title' => $cur_value);
 								// return if we've reached the maximum number of allowed values
@@ -300,7 +294,10 @@ END;
 			$requestoptions->addStringCondition($substring, SMWStringCondition::STRCOND_PRE);
 		}
 */
-		$concept = Title::newFromText($concept_name, SMW_NS_CONCEPT);
+		$concept = Title::makeTitleSafe(SMW_NS_CONCEPT, $concept_name);
+		// escape if there's a problem
+		if ($concept == null)
+			return array();
 		$desc = new SMWConceptDescription($concept);
 		$printout = new SMWPrintRequest(SMWPrintRequest::PRINT_THIS, "");
 		$desc->addPrintRequest($printout);
@@ -321,7 +318,7 @@ END;
 		global $wgContLang;
 		$namespaces = $wgContLang->getNamespaces();
 		$db = wfGetDB( DB_SLAVE );
-		$fname = "getAllPagesForNamespace";
+		$fname = "SFUtils::getAllPagesForNamespace";
 		$pages = array();
 		foreach ($namespaces as $ns_code => $ns_name) {
 			if ($ns_name == $namespace_name) {

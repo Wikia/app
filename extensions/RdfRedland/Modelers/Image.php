@@ -43,7 +43,7 @@ class MwRdf_Image_Modeler extends MwRdf_Modeler {
 		array('il_from = ' . $this->Agent->getTitle()->getArticleID()),
 		'MwRdfImage');
 		while ($res && $row = $dbr->fetchObject($res)) {
-			$img = Image::newFromName($row->il_to);
+			$img = wfFindFile($row->il_to);
 			if ( ! $img->exists() ) continue;
 			$iuri = $img->getURL();
 			if ($iuri[0] == '/') $iuri = $wgServer . $iuri;

@@ -35,8 +35,15 @@ $wgHooks['ArticleViewHeader'][] = 'DeleteQueueHooks::onArticleViewHeader';
 $wgAutoloadClasses['SpecialDeleteQueue'] = $dir.'SpecialDeleteQueue.php';
 $wgAutoloadClasses['DeleteQueueHooks'] = $dir.'DeleteQueue.hooks.php';
 $wgAutoloadClasses['DeleteQueueInterface'] = $dir.'DeleteQueueInterface.php';
-$wgAutoloadClasses['DeleteQueueReviewForm'] = $dir.'ReviewForm.php';
 $wgAutoloadClasses['DeleteQueueItem'] = $dir."DeleteQueueItem.php";
+
+// Views
+$wgAutoloadClasses['DeleteQueueView'] = "$dir/Views/DeleteQueueView.php";
+$wgAutoloadClasses['DeleteQueueViewList'] = "$dir/Views/DeleteQueueViewList.php";
+$wgAutoloadClasses['DeleteQueueViewNominate'] = "$dir/Views/DeleteQueueViewNominate.php";
+$wgAutoloadClasses['DeleteQueueViewVote'] = "$dir/Views/DeleteQueueViewVote.php";
+$wgAutoloadClasses['DeleteQueueViewCase'] = "$dir/Views/DeleteQueueViewCase.php";
+$wgAutoloadClasses['DeleteQueueViewReview'] = "$dir/Views/DeleteQueueViewReview.php";
 
 $wgAvailableRights[] = 'speedy-nominate';
 $wgAvailableRights[] = 'speedy-review';
@@ -64,3 +71,5 @@ $wgSpecialPages['DeleteQueue'] = 'SpecialDeleteQueue';
 
 $wgExtraNamespaces[140] = 'Deletion';
 define('NS_DELETION', 140);
+
+$wgDeleteQueueStyleVersion = 1;

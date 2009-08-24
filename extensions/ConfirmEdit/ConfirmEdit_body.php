@@ -54,7 +54,8 @@ class CaptchaSpecialPage extends UnlistedSpecialPage {
 		$instance = ConfirmEditHooks::getInstance();
 		switch( $par ) {
 		case "image":
-			return $instance->showImage();
+			if( method_exists($instance,'showImage') )
+				return $instance->showImage();
 		case "help":
 		default:
 			return $instance->showHelp();
@@ -478,8 +479,7 @@ class SimpleCaptcha {
 	 * @return bool true to continue saving, false to abort and show a captcha form
 	 */
 	function confirmEdit( &$editPage, $newtext, $section, $merged = false ) {
-		global $wgTitle;
-		if( is_null( $wgTitle ) ) {
+		if( defined('MW_API') ) {
 			# API mode
 			# The CAPTCHA was already checked and approved 
 			return true;

@@ -3,7 +3,8 @@
  * Speclial:Contact, a contact form for visitors.
  * Based on SpecialEmailUser.php
  *
- * @addtogroup SpecialPage
+ * @file
+ * @ingroup SpecialPage
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
  * @license GNU General Public Licence 2.0 or later
@@ -14,34 +15,31 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-global $IP; #needed when called from the autoloader
-require_once("$IP/includes/UserMailer.php");
-
 /**
- *
+ * Provides the contact form
+ * @ingroup SpecialPage
  */
 class SpecialContact extends SpecialPage {
 
 	/**
 	 * Constructor
 	 */
-	function __construct() {
-		global $wgOut;
-		SpecialPage::SpecialPage( 'Contact', '', true );
+	public function __construct() {
+		parent::__construct( 'Contact' );
 	}
 
 	/**
 	 * Main execution function
-	 * @param $par Parameters passed to the page
+	 *
+	 * @param $par Mixed: Parameters passed to the page
 	 */
-	function execute( $par ) {
+	public function execute( $par ) {
 		global $wgUser, $wgOut, $wgRequest, $wgEnableEmail, $wgContactUser;
 
 		wfLoadExtensionMessages( 'ContactPage' );
-		$fname = "SpecialContact::execute";
 
 		if( !$wgEnableEmail || !$wgContactUser ) {
-			$wgOut->showErrorPage( "nosuchspecialpage", "nospecialpagetext" );
+			$wgOut->showErrorPage( 'nosuchspecialpage', 'nospecialpagetext' );
 			return;
 		}
 
@@ -50,16 +48,16 @@ class SpecialContact extends SpecialPage {
 		$nu = User::newFromName( $wgContactUser );
 		if( is_null( $nu ) || !$nu->canReceiveEmail() ) {
 			wfDebug( "Target is invalid user or can't receive.\n" );
-			$wgOut->showErrorPage( "noemailtitle", "noemailtext" );
+			$wgOut->showErrorPage( 'noemailtitle', 'noemailtext' );
 			return;
 		}
 
 		$f = new EmailContactForm( $nu );
 
-		if ( "success" == $action ) {
-			wfDebug( "$fname: success.\n" );
-			$f->showSuccess( );
-		} else if ( "submit" == $action && $wgRequest->wasPosted() && $f->hasAllInfo() ) {
+		if ( 'success' == $action ) {
+			wfDebug( __METHOD__ . ": success.\n" );
+			$f->showSuccess();
+		} else if ( 'submit' == $action && $wgRequest->wasPosted() && $f->hasAllInfo() ) {
 			$token = $wgRequest->getVal( 'wpEditToken' );
 
 			if( $wgUser->isAnon() ) {
@@ -71,23 +69,23 @@ class SpecialContact extends SpecialPage {
 			}
 
 			if ( !$tokenOk ) {
-				wfDebug( "$fname: bad token (".($wgUser->isAnon()?'anon':'user')."): $token\n" );
-				$wgOut->addWikiText( wfMsg( 'sessionfailure' ) );
+				wfDebug( __METHOD__ . ": bad token (".( $wgUser->isAnon() ? 'anon' : 'user' )."): $token\n" );
+				$wgOut->addWikiMsg( 'sessionfailure' );
 				$f->showForm();
 			} else if ( !$f->passCaptcha() ) {
-				wfDebug( "$fname: captcha failed" );
-				$wgOut->addWikiText( wfMsg( 'contactpage-captcha-failed' ) ); //TODO: provide a message for this!
+				wfDebug( __METHOD__ . ": captcha failed" );
+				$wgOut->addWikiMsg( 'contactpage-captcha-failed' );
 				$f->showForm();
 			} else if ( !User::isValidEmailAddr($wgRequest->getVal('wpFromAddress')) ) {
 				wfDebug( "$fname: incorrect e-mail" );
 				$wgOut->addWikiText( wfMsg( 'contactpage-email-failed' ) );
 				$f->showForm();
 			} else {
-				wfDebug( "$fname: submit\n" );
+				wfDebug( __METHOD__ . ": submit\n" );
 				$f->doSubmit();
 			}
 		} else {
-			wfDebug( "$fname: form\n" );
+			wfDebug( __METHOD__ . ": form\n" );
 			$f->showForm();
 		}
 	}
@@ -95,13 +93,13 @@ class SpecialContact extends SpecialPage {
 
 /**
  * @todo document
- * @addtogroup SpecialPage
+ * @ingroup SpecialPage
  */
 class EmailContactForm {
 
 	var $target;
 	var $text, $subject;
-	var $cc_me;     // Whether user requested to be sent a separate copy of their email.
+	var $cc_me; // Whether user requested to be sent a separate copy of their email.
 
 	/**
 	 * @param User $target
@@ -118,12 +116,12 @@ class EmailContactForm {
 		$this->fromname = $wgRequest->getText( 'wpFromName' );
 		$this->fromaddress = $wgRequest->getText( 'wpFromAddress' );
 
-		if ($wgUser->isLoggedIn()) {
-			if (!$this->fromname) $this->fromname = $wgUser->getName();
-			if (!$this->fromaddress) $this->fromaddress = $wgUser->getEmail();
+		if( $wgUser->isLoggedIn() ) {
+			if( !$this->fromname ) $this->fromname = $wgUser->getName();
+			if( !$this->fromaddress ) $this->fromaddress = $wgUser->getEmail();
 		}
 
-		//prepare captcha if applicable
+		// prepare captcha if applicable
 		if ( $this->useCaptcha() ) {
 			$captcha = ConfirmEditHooks::getInstance();
 			$captcha->trigger = 'contactpage';
@@ -156,11 +154,11 @@ class EmailContactForm {
 
 		#TODO: show captcha
 
-		$wgOut->setPagetitle( wfMsg( "contactpage-title" ) );
-		$wgOut->addWikiText( wfMsg( "contactpage-pagetext" ) );
+		$wgOut->setPageTitle( wfMsg( 'contactpage-title' ) );
+		$wgOut->addWikiMsg( 'contactpage-pagetext' );
 
-		if ( $this->subject === "" ) {
-			$this->subject = wfMsgForContent( "contactpage-defsubject" );
+		if ( $this->subject === '' ) {
+			$this->subject = wfMsgForContent( 'contactpage-defsubject' );
 		}
 
 		$msgSuffix = $wgContactRequireAll ? '-required' : '';
@@ -244,8 +242,8 @@ function checkForm() {
 
 	function useCaptcha() {
 		global $wgCaptchaClass, $wgCaptchaTriggers, $wgUser;
-		if ( !$wgCaptchaClass ) return false; //no captcha installed
-		if ( !@$wgCaptchaTriggers['contactpage'] ) return false; //don't trigger on contact form
+		if ( !$wgCaptchaClass ) return false; // no captcha installed
+		if ( !@$wgCaptchaTriggers['contactpage'] ) return false; // don't trigger on contact form
 
 		if( $wgUser->isAllowed( 'skipcaptcha' ) ) {
 			wfDebug( "EmailContactForm::useCaptcha: user group allows skipping captcha\n" );
@@ -257,7 +255,7 @@ function checkForm() {
 
 	function getCaptcha() {
 		global $wgCaptcha;
-		if ( !$this->useCaptcha() ) return ""; 
+		if ( !$this->useCaptcha() ) return ''; 
 
 		wfSetupSession(); #NOTE: make sure we have a session. May be required for captchas to work.
 
@@ -274,7 +272,7 @@ function checkForm() {
 		return $wgCaptcha->passCaptcha();
 	}
 
-	function doSubmit( ) {
+	function doSubmit() {
 		global $wgOut;
 		global $wgEnableEmail, $wgUserEmailUseReplyTo, $wgEmergencyContact;
 		global $wgContactUser, $wgContactSender, $wgContactSenderName;
@@ -282,88 +280,84 @@ function checkForm() {
 		$csender = $wgContactSender ? $wgContactSender : $wgEmergencyContact;
 		$cname = $wgContactSenderName;
 
-		$fname = 'EmailContactForm::doSubmit';
+		wfDebug( __METHOD__ . ": start\n" );
 
-		wfDebug( "$fname: start\n" );
-
-		$to = new MailAddress( $this->target );
-		$replyto = NULL;
+		$targetAddress = new MailAddress( $this->target );
+		$replyto = null;
+		$contactSender = new MailAddress( $csender, $cname );
 
 		if ( !$this->fromaddress ) {
-			$from = new MailAddress( $csender, $cname );
-		}
-		else if ( $wgUserEmailUseReplyTo ) {
-			$from = new MailAddress( $csender, $cname );
-			$replyto = new MailAddress( $this->fromaddress, $this->fromname );
-		}
-		else {
-			$from = new MailAddress( $this->fromaddress, $this->fromname );
+			$submitterAddress = $contactSender;
+		} else {
+			$submitterAddress = new MailAddress( $this->fromaddress, $this->fromname );
+			if ( $wgUserEmailUseReplyTo ) {
+				$replyto = $submitterAddress;
+			}
 		}
 
 		$subject = trim( $this->subject );
 
-		if ( $subject === "" ) {
-			$subject = wfMsgForContent( "contactpage-defsubject" );
+		if ( $subject === '' ) {
+			$subject = wfMsgForContent( 'contactpage-defsubject' );
 		}
 
-		if ( $this->fromname !== "" ) {
-			$subject = wfMsgForContent( "contactpage-subject-and-sender", $subject, $this->fromname );
+		if ( $this->fromname !== '' ) {
+			$subject = wfMsgForContent( 'contactpage-subject-and-sender', $subject, $this->fromname );
+		} else if ( $this->fromaddress !== '' ) {
+			$subject = wfMsgForContent( 'contactpage-subject-and-sender', $subject, $this->fromaddress );
 		}
-		else if ( $this->fromaddress !== "" ) {
-			$subject = wfMsgForContent( "contactpage-subject-and-sender", $subject, $this->fromaddress );
+
+		if( !wfRunHooks( 'ContactForm', array( &$targetAddress, &$replyto, &$subject, &$this->text ) ) ) {
+			wfDebug( __METHOD__ . ": aborted by hook\n" );
+			return;
 		}
 
-		if( wfRunHooks( 'ContactForm', array( &$to, &$replyto, &$subject, &$this->text ) ) ) {
+		wfDebug( __METHOD__ . ": sending mail from ".$submitterAddress->toString().
+			" to ".$targetAddress->toString().
+			" replyto ".( $replyto == null ? '-/-' : $replyto->toString() )."\n" );
 
-			wfDebug( "$fname: sending mail from ".$from->toString()." to ".$to->toString()." replyto ".($replyto==null?'-/-':$replyto->toString())."\n" );
+		$mailResult = UserMailer::send( $targetAddress, $submitterAddress, $subject, $this->text, $replyto, null, 'SpecialContact' );
 
-			#HACK: in MW 1.9, replyto must be a string, in MW 1.10 it must be an object!
-			$ver = preg_replace( '![^\d._+]!', '', $GLOBALS['wgVersion'] );
-			$replyaddr = $replyto == null
-					? NULL : version_compare( $ver, '1.10', '<' )
-						? $replyto->toString() : $replyto;
+		if( WikiError::isError( $mailResult ) ) {
+			$wgOut->addWikiMsg( 'usermailererror' ) . $mailResult->getMessage();
+			wfDebug( __METHOD__ . ": got error from UserMailer: " . $mailResult->getMessage() . "\n" );
+			return;
+		}
 
-			$mailResult = userMailer( $to, $from, $subject, $this->text, $replyaddr, 'SpecialContact' );
-
-			if( WikiError::isError( $mailResult ) ) {
-				$wgOut->addWikiText( wfMsg( "usermailererror" ) . $mailResult->getMessage());
-			} else {
-
-				// if the user requested a copy of this mail, do this now,
-				// unless they are emailing themselves, in which case one copy of the message is sufficient.
-				if ($this->cc_me && $replyto) {
-					$cc_subject = wfMsg('emailccsubject', $this->target->getName(), $subject);
-					if( wfRunHooks( 'ContactForm', array( &$from, &$replyto, &$cc_subject, &$this->text ) ) ) {
-						wfDebug( "$fname: sending cc mail from ".$from->toString()." to ".$replyto->toString()."\n" );
-						$ccResult = userMailer( $replyto, $from, $cc_subject, $this->text, null, 'SpecialContact' );
-						if( WikiError::isError( $ccResult ) ) {
-							// At this stage, the user's CC mail has failed, but their
-							// original mail has succeeded. It's unlikely, but still, what to do?
-							// We can either show them an error, or we can say everything was fine,
-							// or we can say we sort of failed AND sort of succeeded. Of these options,
-							// simply saying there was an error is probably best.
-							$wgOut->addWikiText( wfMsg( "usermailererror" ) . $ccResult);
-							return;
-						}
-					}
+		// if the user requested a copy of this mail, do this now,
+		// unless they are emailing themselves, in which case one copy of the message is sufficient.
+		if( $this->cc_me && $this->fromaddress ) {
+			$cc_subject = wfMsg('emailccsubject', $this->target->getName(), $subject);
+			if( wfRunHooks( 'ContactForm', array( &$submitterAddress, &$contactSender, &$cc_subject, &$this->text ) ) ) {
+				wfDebug( __METHOD__ . ": sending cc mail from ".$contactSender->toString().
+					" to ".$submitterAddress->toString()."\n" );
+				$ccResult = UserMailer::send( $submitterAddress, $contactSender, $cc_subject, $this->text, null, null, 'SpecialContact' );
+				if( WikiError::isError( $ccResult ) ) {
+					// At this stage, the user's CC mail has failed, but their
+					// original mail has succeeded. It's unlikely, but still, what to do?
+					// We can either show them an error, or we can say everything was fine,
+					// or we can say we sort of failed AND sort of succeeded. Of these options,
+					// simply saying there was an error is probably best.
+					$wgOut->addWikiText( wfMsg( 'usermailererror' ) . $ccResult );
+					return;
 				}
-
-				wfDebug( "$fname: success\n" );
-
-				$titleObj = SpecialPage::getTitleFor( "Contact" );
-				$wgOut->redirect( $titleObj->getFullURL( "action=success" ) );
-				wfRunHooks( 'ContactFromComplete', array( $to, $replyto, $subject, $this->text ) );
 			}
 		}
 
-		wfDebug( "$fname: end\n" );
+		wfDebug( __METHOD__ . ": success\n" );
+
+		$titleObj = SpecialPage::getTitleFor( 'Contact' );
+		$wgOut->redirect( $titleObj->getFullURL( "action=success" ) );
+		wfRunHooks( 'ContactFromComplete', array( $targetAddress, $replyto, $subject, $this->text ) );
+
+		wfDebug( __METHOD__ . ": end\n" );
 	}
 
-	function showSuccess( ) {
+	function showSuccess() {
 		global $wgOut;
 
-		$wgOut->setPagetitle( wfMsg( "emailsent" ) );
-		$wgOut->addWikiText( wfMsg( "emailsenttext" ) );
+		$wgOut->setPageTitle( wfMsg( 'emailsent' ) );
+		$wgOut->addWikiMsg( 'emailsenttext' );
 
 		$wgOut->returnToMain( false );
 	}

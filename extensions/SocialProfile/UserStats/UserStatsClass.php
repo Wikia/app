@@ -114,7 +114,7 @@ class UserStatsTrack {
 
 	function incStatField( $field, $val = 1 ){
 		global $wgUser, $IP, $wgDBprefix, $wgMemc, $wgSitename, $wgSystemGifts, $wgUserStatsTrackWeekly, $wgUserStatsTrackMonthly, $wgUserStatsPointValues;
-		if( !$wgUser->isBot() && !$wgUser->isAnon() && $this->stats_fields[$field] ) {
+		if( !$wgUser->isAllowed( 'bot' ) && !$wgUser->isAnon() && $this->stats_fields[$field] ) {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->update( 'user_stats',
 				array( $this->stats_fields[$field]."=".$this->stats_fields[$field]."+{$val}" ),
@@ -159,7 +159,7 @@ class UserStatsTrack {
 
 	function decStatField( $field, $val = 1 ){
 		global $wgUser, $wgUserStatsTrackWeekly, $wgUserStatsTrackMonthly;
-		if( !$wgUser->isBot() && !$wgUser->isAnon() && $this->stats_fields[$field] ) {
+		if( !$wgUser->isAllowed( 'bot' ) && !$wgUser->isAnon() && $this->stats_fields[$field] ) {
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->update( 'user_stats',
 				array( $this->stats_fields[$field]."=".$this->stats_fields[$field]."-{$val}" ),
@@ -426,6 +426,7 @@ class UserStatsTrack {
 		if( $row ){
 			// recaculate point total
 			$new_total_points = 1000;
+			// FIXME: Invalid argument supplied for foreach()
 			foreach( $this->point_values as $point_field => $point_value ){
 				if( $this->stats_fields[$point_field] ){
 					$field = $this->stats_fields[$point_field];
@@ -459,6 +460,7 @@ class UserStatsTrack {
 			}
 			$this->clearCache();
 		}
+		// FIXME: Undefined variable: stats_data
 		return $stats_data;
 	}
 }

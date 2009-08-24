@@ -484,6 +484,11 @@ Bu saytnıñ [[Special:Preferences|sazlamalarını]] şahsıñızğa köre deñi
 'yournick'                   => 'Siziñ lağabıñız (imzalarda kösterilecek):',
 'badsig'                     => 'Yañlış imza. HTML tegleriniñ doğrulığını baqıñız.',
 'badsiglength'               => 'Qarardan ziyade uzun imzadır, $1 ziyade işaretten ibaret olması mümkün degil.',
+'yourgender'                 => 'Cınıs:',
+'gender-unknown'             => 'Belgilenmegen',
+'gender-male'                => 'Erkek',
+'gender-female'              => 'Qadın',
+'prefs-help-gender'          => 'Mecburiy degil: wiki tarafından doğru cınıs adreslevi içün qullanıla. Bu malümat umumiy olacaq.',
 'email'                      => 'E-mail',
 'prefs-help-realname'        => 'Adıñız (mecburiy degildir): Eger belgileseñiz, saifelerdeki deñişikliklerini kimniñ yapqanını köstermek içün qullanılacaq.',
 'loginerror'                 => 'Oturım açma hatası',
@@ -504,10 +509,10 @@ Lütfen, tekrar etiñiz.',
 'passwordtooshort'           => 'Paroliñiz pek qısqa. Eñ az $1 arif ve ya raqamdan ibaret olmalı.',
 'mailmypassword'             => 'Yañı parol yiber',
 'passwordremindertitle'      => '{{grammar:genitive|{{SITENAME}}}} qullanıcınıñ parol hatırlatuvı',
-'passwordremindertext'       => 'Birev (belki de bu sizsiñiz) $1 IP adresinden {{SITENAME}} saytı içün ($4) yañı qullanıcı parolini istedi.
-$2 qullanıcısı içün yañı parol budır <code>$3</code>.
+'passwordremindertext'       => 'Birev (belki de bu sizsiñiz, $1 IP adresinden) {{SITENAME}} saytı içün ($4) yañı qullanıcı parolini istedi.
+$2 qullanıcısına vaqtınca <code>$3</code> paroli yaratıldı. Eger bu kerçekten de siziñ istegiñiz olğan olsa, oturım açıp yañı bir parol yaratmañız kerektir. Muvaqqat paroliñizniñ müddeti {{PLURAL:$5|1 kün|$5 kün}} içinde dolacaq.
 
-Eger de yañı parol talap etmegen olsañız ya da eski paroliñizni bilseñiz bunı diqqatqa almayıp eski paroliñizni qullanıp olasıñız.',
+Eger de yañı parol talap etmegen olsañız ya da eski paroliñizni hatırlap endi onı deñiştirmege istemeseñiz, bu mektüpni diqqatqa almayıp eski paroliñizni qullanmağa devam etip olasıñız.',
 'noemail'                    => '$1 adlı qullanıcı içün e-mail belgilenmedi.',
 'passwordsent'               => 'Yañı parol e-mail yolunen qullanıcınıñ belgilegen $1 adresine yiberildi. Parolni alğan soñ tekrar kiriş yapıñız.',
 'blocked-mailpassword'       => 'IP adresiñizden saifeler deñiştirüv yasaqlı, parol hatırlatuv funktsiyası da blok etildi.',
@@ -618,7 +623,9 @@ IP adresiñiz — $3, blok etüv identifikatorı — #$5. Lütfen, administrator
 'loginreqlink'                     => 'oturım aç',
 'loginreqpagetext'                 => 'Başqa saifelerni baqmaq içün $1 borclusıñız.',
 'accmailtitle'                     => 'Parol yollandı',
-'accmailtext'                      => '$1 içün parol mında yollandı: $2.',
+'accmailtext'                      => "[[User talk:$1|$1]] içün tesadufiy işaretlerden yaratılğan parol $2 adresine yollandı.
+
+Bu yañı esap içün parol, kiriş yapqandan soñ ''[[Special:ChangePassword|parolni deñiştir]]'' bölüginde deñiştirilip olur.",
 'newarticle'                       => '(Yañı)',
 'newarticletext'                   => "Siz bu bağlantınen şimdilik yoq olğan saifege avuştıñız. Yañı bir saife yaratmaq içün aşağıda bulunğan pencerege metin yazıñız (tafsilâtlı malümat almaq içün [[{{MediaWiki:Helppage}}|yardım saifesine]] baqıñız). Bu saifege tesadüfen avuşqan olsañız, brauzeriñizdeki '''keri''' dögmesine basıñız.",
 'anontalkpagetext'                 => "----''Bu muzakere saifesi şimdilik qayd olunmağan ya da oturımını açmağan adsız (anonim) qullanıcığa mensüptir. İdentifikatsiya içün IP adres işletile. 
@@ -1044,7 +1051,7 @@ Sutun serlevasına bir basuv sortirlemeniñ tertibini deñiştirir.',
 'imagelinks'                => 'Fayl bağlantıları',
 'linkstoimage'              => 'Bu faylğa bağlantı olğan $1 saife:',
 'nolinkstoimage'            => 'Bu faylğa bağlanğan saife yoq.',
-'sharedupload'              => 'Bu fayl ortaq fezağa yüklengen ve diger proyektlerde de qullanılğan bir fayl ola bilir.',
+'sharedupload'              => 'Bu fayl $1 saytına yüklengen ve diger proyektlerde de qullanılıp оla.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'shareduploadwiki'          => 'Tafsilâtnı $1 saifesinde tapmaq mümkün.',
 'shareduploadwiki-linktext' => 'fayl malümat saifesi',
 'noimage'                   => 'Bu isimde fayl yoq, amma siz $1.',
@@ -1376,7 +1383,7 @@ Bu saifeniñ qorçalav seviyesini deñiştirip olasıñız, amma kaskadlı qorç
 'contributions-title' => '$1 qullanıcısınıñ isseleri',
 'mycontris'           => 'isselerim',
 'contribsub2'         => '$1 ($2)',
-'nocontribs'          => 'Bu kriteriylerge uyğan deñişiklik tapılamadı',
+'nocontribs'          => 'Bu kriteriylerge uyğan deñişiklik tapılamadı', # Optional parameter: $1 is the user name
 'uctop'               => '(soñki)',
 'month'               => 'Bu ay (ve ondan erte):',
 'year'                => 'Bu sene (ve ondan erte):',
@@ -1678,6 +1685,7 @@ Er satır * işaretinen başlamalı. Satırnıñ birinci bağlantısı qоşmağ
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags
@@ -1749,10 +1757,8 @@ Er satır * işaretinen başlamalı. Satırnıñ birinci bağlantısı qоşmağ
 'confirmemail'             => 'E-mail adresini tasdıqla',
 'confirmemail_noemail'     => '[[Special:Preferences|Qullanıcı sazlamalarıñızda]] dоğru bir e-mail adresiñiz yoq.',
 'confirmemail_text'        => '{{SITENAME}} saytınıñ e-mail funktsiyalarını qullanmazdan evel e-mail adresiñizniñ tasdıqlanması kerek. Adresiñizge tasdıq e-mail mektübini yollamaq içün aşağıdaki dögmeni basıñız. Yollanacaq beyanatta adresiñizni tasdıqlamaq içün brauzeriñiznen irişip olacaq, tasdıq kodu olğan bir bağlantı olacaq.',
-'confirmemail_pending'     => '<div class="error">
-Tasdıq kodu endi sizge yollandı.
-Eger esabıñıznı keçenleri açsa ediñiz, belki de yañnı kodnı bir daa sorağanıñızda, biraz beklemek kerek olur.
-</div>',
+'confirmemail_pending'     => 'Tasdıq kodu endi sizge yollandı.
+Eger esabıñıznı keçenleri açsa ediñiz, belki de yañnı kodnı bir daa sorağanıñızda, biraz beklemek kerek olur.',
 'confirmemail_send'        => 'Tasdıq kodunı yolla',
 'confirmemail_sent'        => 'Tasdıq e-mail mektübini yollandı.',
 'confirmemail_oncreate'    => 'Belgilegen e-mail adresiñizge tasdıq kodunen mektüp yollandı.
@@ -1790,11 +1796,9 @@ Bu tasdıq kodu $4 tarihına qadar qullanılıp olacaq.',
 'scarytranscludetoolong'  => '[URL adresi çoq uzun]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">
-Bu saife içün trackback:<br />
-$1
-</div>',
-'trackbackremove'   => ' ([$1 yoq et])',
+'trackbackbox'      => 'Bu saife içün trackback:<br />
+$1',
+'trackbackremove'   => '([$1 yoq et])',
 'trackbacklink'     => 'Trackback',
 'trackbackdeleteok' => 'Trackback muvafaqiyetnen yoq etildi.',
 

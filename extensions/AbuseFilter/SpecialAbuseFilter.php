@@ -22,6 +22,9 @@ class SpecialAbuseFilter extends SpecialPage {
 
 		$this->loadParameters( $subpage );
 		$wgOut->setPageTitle( wfMsg( 'abusefilter-management' ) );
+		$wgOut->setRobotPolicy( "noindex,nofollow" );
+		$wgOut->setArticleRelated( false );
+		$wgOut->enableClientCache( false );
 
 		// Are we allowed?
 		if ( !$wgUser->isAllowed( 'abusefilter-view' ) ) {
@@ -39,15 +42,7 @@ class SpecialAbuseFilter extends SpecialPage {
 		$this->mHistoryID = null;
 		$pageType = 'home';
 		
-		$params = explode( '/', $subpage );
-		
-		// Filter by removing blanks.
-		foreach( $params as $index => $param ) {
-			if ($param === '') {
-				unset( $params[$index] );
-			}
-		}
-		$params = array_values( $params );
+		$params = array_filter( explode( '/', $subpage ) );
 		
 		if ($subpage == 'tools') {
 			$view = 'AbuseFilterViewTools';
@@ -93,11 +88,6 @@ class SpecialAbuseFilter extends SpecialPage {
 			$this->mFilter = $subpage;
 			$view = 'AbuseFilterViewEdit';
 			$pageType = 'edit';
-		}
-		
-		if ( $subpage == 'import' ) {
-			$view = 'AbuseFilterViewImport';
-			$pageType = 'import';
 		}
 		
 		// Links at the top

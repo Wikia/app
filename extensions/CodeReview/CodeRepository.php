@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class CodeRepository {
 	static $userLinks = array();
@@ -17,13 +17,13 @@ class CodeRepository {
 			array( 'repo_name' => $name ),
 			__METHOD__ );
 
-		if( $row ) {
+		if ( $row ) {
 			return self::newFromRow( $row );
 		} else {
 			return null;
 		}
 	}
-	
+
 	public static function newFromId( $id ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$row = $dbw->selectRow(
@@ -34,10 +34,10 @@ class CodeRepository {
 				'repo_path',
 				'repo_viewvc',
 				'repo_bugzilla' ),
-			array( 'repo_id' => intval($id) ),
+			array( 'repo_id' => intval( $id ) ),
 			__METHOD__ );
 
-		if( $row ) {
+		if ( $row ) {
 			return self::newFromRow( $row );
 		} else {
 			return null;
@@ -46,7 +46,7 @@ class CodeRepository {
 
 	static function newFromRow( $row ) {
 		$repo = new CodeRepository();
-		$repo->mId = intval($row->repo_id);
+		$repo->mId = intval( $row->repo_id );
 		$repo->mName = $row->repo_name;
 		$repo->mPath = $row->repo_path;
 		$repo->mViewVc = $row->repo_viewvc;
@@ -54,11 +54,11 @@ class CodeRepository {
 		return $repo;
 	}
 
-	static function getRepoList(){
+	static function getRepoList() {
 		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->select( 'code_repo', '*', array(), __METHOD__ );
 		$repos = array();
-		foreach( $res as $row ){
+		foreach ( $res as $row ) {
 			$repos[] = self::newFromRow( $row );
 		}
 		return $repos;
@@ -72,11 +72,11 @@ class CodeRepository {
 		return $this->mName;
 	}
 
-	public function getPath(){
+	public function getPath() {
 		return $this->mPath;
 	}
 
-	public function getViewVcBase(){
+	public function getViewVcBase() {
 		return $this->mViewVc;
 	}
 
@@ -84,7 +84,7 @@ class CodeRepository {
 	 * Return a bug URL or false.
 	 */
 	public function getBugPath( $bugId ) {
-		if( $this->mBugzilla ) {
+		if ( $this->mBugzilla ) {
 			return str_replace( '$1',
 				urlencode( $bugId ), $this->mBugzilla );
 		}
@@ -101,52 +101,52 @@ class CodeRepository {
 		);
 		return intval( $row );
 	}
-	
+
 	public function getAuthorList() {
 		global $wgMemc;
 		$key = wfMemcKey( 'codereview', 'authors', $this->getId() );
 		$authors = $wgMemc->get( $key );
-		if( is_array($authors) ) {
+		if ( is_array( $authors ) ) {
 			return $authors;
 		}
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 
+		$res = $dbr->select(
 			'code_rev',
 			array( 'cr_author', 'MAX(cr_timestamp) AS time' ),
 			array( 'cr_repo_id' => $this->getId() ),
 			__METHOD__,
-			array( 'GROUP BY' => 'cr_author', 
+			array( 'GROUP BY' => 'cr_author',
 				'ORDER BY' => 'time DESC', 'LIMIT' => 500 )
 		);
 		$authors = array();
-		while( $row = $dbr->fetchObject( $res ) ) {
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$authors[] = $row->cr_author;
 		}
-		$wgMemc->set( $key, $authors, 3600*24*3 );
+		$wgMemc->set( $key, $authors, 3600 * 24 * 3 );
 		return $authors;
 	}
-	
+
 	public function getTagList() {
 		global $wgMemc;
 		$key = wfMemcKey( 'codereview', 'tags', $this->getId() );
 		$tags = $wgMemc->get( $key );
-		if( is_array($tags) ) {
+		if ( is_array( $tags ) ) {
 			return $tags;
 		}
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 
+		$res = $dbr->select(
 			'code_tags',
 			array( 'ct_tag', 'COUNT(*) AS revs' ),
 			array( 'ct_repo_id' => $this->getId() ),
 			__METHOD__,
-			array( 'GROUP BY' => 'ct_tag', 
+			array( 'GROUP BY' => 'ct_tag',
 				'ORDER BY' => 'revs DESC', 'LIMIT' => 500 )
 		);
 		$tags = array();
-		while( $row = $dbr->fetchObject( $res ) ) {
+		while ( $row = $dbr->fetchObject( $res ) ) {
 			$tags[] = $row->ct_tag;
 		}
-		$wgMemc->set( $key, $tags, 3600*24*3 );
+		$wgMemc->set( $key, $tags, 3600 * 24 * 3 );
 		return $tags;
 	}
 
@@ -166,7 +166,7 @@ class CodeRepository {
 			),
 			__METHOD__
 		);
-		if( !$row )
+		if ( !$row )
 			throw new MWException( 'Failed to load expected revision data' );
 		return CodeRevision::newFromRow( $this, $row );
 	}
@@ -182,34 +182,34 @@ class CodeRepository {
 
 		$rev1 = $rev - 1;
 		$rev2 = $rev;
-		
+
 		$revision = $this->getRevision( $rev );
-		if( $revision == null || !$revision->isDiffable() ) {
+		if ( $revision == null || !$revision->isDiffable() ) {
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		# Try memcached...
 		$key = wfMemcKey( 'svn', md5( $this->mPath ), 'diff', $rev1, $rev2 );
-		if( $useCache === 'skipcache' ) {
+		if ( $useCache === 'skipcache' ) {
 			$data = NULL;
 		} else {
 			$data = $wgMemc->get( $key );
 		}
 
 		# Try the database...
-		if( !$data && $useCache != 'skipcache' ) {
+		if ( !$data && $useCache != 'skipcache' ) {
 			$dbr = wfGetDB( DB_SLAVE );
-			$row = $dbr->selectRow( 'code_rev', 
+			$row = $dbr->selectRow( 'code_rev',
 				array( 'cr_diff', 'cr_flags' ),
 				array( 'cr_repo_id' => $this->mId, 'cr_id' => $rev, 'cr_diff IS NOT NULL' ),
 				__METHOD__
 			);
-			if( $row ) {
+			if ( $row ) {
 				$flags = explode( ',', $row->cr_flags );
 				$data = $row->cr_diff;
 				// If the text was fetched without an error, convert it
-				if( $data !== false && in_array( 'gzip', $flags ) ) {
+				if ( $data !== false && in_array( 'gzip', $flags ) ) {
 					# Deal with optional compression of archived pages.
 					# This can be done periodically via maintenance/compressOld.php, and
 					# as pages are saved if $wgCompressRevisions is set.
@@ -219,16 +219,16 @@ class CodeRepository {
 		}
 
 		# Generate the diff as needed...
-		if( !$data && $useCache !== 'cached' ) {
+		if ( !$data && $useCache !== 'cached' ) {
 			$svn = SubversionAdaptor::newFromRepo( $this->mPath );
 			$data = $svn->getDiff( '', $rev1, $rev2 );
 			// Store to cache
-			$wgMemc->set( $key, $data, 3600*24*3 );
+			$wgMemc->set( $key, $data, 3600 * 24 * 3 );
 			// Permanent DB storage
 			$storedData = $data;
 			$flags = Revision::compressRevisionText( $storedData );
 			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update( 'code_rev', 
+			$dbw->update( 'code_rev',
 				array( 'cr_diff' => $storedData, 'cr_flags' => $flags ),
 				array( 'cr_repo_id' => $this->mId, 'cr_id' => $rev ),
 				__METHOD__
@@ -250,7 +250,7 @@ class CodeRepository {
 		}
 		return false;
 	}
-	
+
 	/*
 	 * Link the $author to the wikiuser $user
 	 * @param string $author
@@ -259,7 +259,7 @@ class CodeRepository {
 	 */
 	public function linkUser( $author, User $user ) {
 		// We must link to an existing user
-		if( !$user->getId() ) {
+		if ( !$user->getId() ) {
 			return false;
 		}
 		$dbw = wfGetDB( DB_MASTER );
@@ -275,7 +275,7 @@ class CodeRepository {
 			array( 'IGNORE' )
 		);
 		// If the last query already found a row, then update it.
-		if( !$dbw->affectedRows() ) {
+		if ( !$dbw->affectedRows() ) {
 			$dbw->update(
 				'code_authors',
 				array( 'ca_user_text' => $user->getName() ),
@@ -308,13 +308,13 @@ class CodeRepository {
 		self::$userLinks[$author] = false;
 		return ( $dbw->affectedRows() > 0 );
 	}
-	
-	/* 
+
+	/*
 	 * returns a User object if $author has a wikiuser associated,
 	 * or false
 	 */
 	public function authorWikiUser( $author ) {
-		if( isset( self::$userLinks[$author] ) )
+		if ( isset( self::$userLinks[$author] ) )
 			return self::$userLinks[$author];
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -328,9 +328,9 @@ class CodeRepository {
 			__METHOD__
 		);
 		$user = null;
-		if( $wikiUser )
+		if ( $wikiUser )
 			$user = User::newFromName( $wikiUser );
-		if( $user instanceof User )
+		if ( $user instanceof User )
 			$res = $user;
 		else
 			$res = false;

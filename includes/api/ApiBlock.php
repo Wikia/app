@@ -50,7 +50,6 @@ class ApiBlock extends ApiBase {
 	 */
 	public function execute() {
 		global $wgUser, $wgBlockAllowsUTEdit;
-		$this->getMain()->requestWriteMode();
 		$params = $this->extractRequestParams();
 
 		if($params['gettoken'])
@@ -94,7 +93,7 @@ class ApiBlock extends ApiBase {
 			$this->dieUsageMsg($retval);
 
 		$res['user'] = $params['user'];
-		$res['userID'] = $userID;
+		$res['userID'] = intval($userID);
 		$res['expiry'] = ($expiry == Block::infinity() ? 'infinite' : wfTimestamp(TS_ISO_8601, $expiry));
 		$res['reason'] = $params['reason'];
 		if($params['anononly'])
@@ -114,6 +113,10 @@ class ApiBlock extends ApiBase {
 	}
 
 	public function mustBePosted() { return true; }
+
+	public function isWriteMode() {
+		return true;
+	}
 
 	public function getAllowedParams() {
 		return array (
@@ -163,6 +166,6 @@ class ApiBlock extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiBlock.php 43677 2008-11-18 15:21:04Z catrope $';
+		return __CLASS__ . ': $Id: ApiBlock.php 48091 2009-03-06 13:49:44Z catrope $';
 	}
 }

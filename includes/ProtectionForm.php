@@ -235,7 +235,7 @@ class ProtectionForm {
 		$reasonstr = $this->mReasonSelection;
 		if ( $reasonstr != 'other' && $this->mReason != '' ) {
 			// Entry from drop down menu + additional comment
-			$reasonstr .= ': ' . $this->mReason;
+			$reasonstr .= wfMsgForContent( 'colon-separator' ) . $this->mReason;
 		} elseif ( $reasonstr == 'other' ) {
 			$reasonstr = $this->mReason;
 		}
@@ -374,7 +374,8 @@ class ProtectionForm {
 					</tr></table>";
 			}
 			# Add custom expiry field
-			$attribs = array( 'id' => "mwProtect-$action-expires", 'onkeyup' => 'ProtectionForm.updateExpiry(this)' ) + $this->disabledAttrib;
+			$attribs = array( 'id' => "mwProtect-$action-expires",
+				'onkeyup' => 'ProtectionForm.updateExpiry(this)' ) + $this->disabledAttrib;
 			$out .= "<table><tr>
 					<td class='mw-label'>" .
 						$mProtectother .

@@ -172,6 +172,9 @@ class RecentChange
 
 		# Set the ID
 		$this->mAttribs['rc_id'] = $dbw->insertId();
+		
+		# Notify extensions
+		wfRunHooks( 'RecentChange_save', array( &$this ) );
 
 		# Notify external application via UDP
 		if( $wgRC2UDPEnabled && $wgRC2UDPAddress && ( !$this->mAttribs['rc_bot'] || !$wgRC2UDPOmitBots ) ) {
@@ -218,9 +221,14 @@ class RecentChange
 			}
 		}
 		// temporary code end
-
-		# Notify extensions
-		wfRunHooks( 'RecentChange_save', array( &$this ) );
+	}
+	
+	public function notifyRC2UDP() {
+		global $wgRC2UDPAddress, $wgRC2UDPOmitBots;
+		# Notify external application via UDP
+		if( $wgRC2UDPAddress && ( !$this->mAttribs['rc_bot'] || !$wgRC2UDPOmitBots ) ) {
+			self::sendToUDP( $this->getIRCLine() );
+		}
 	}
 
 	/**
@@ -252,12 +260,12 @@ class RecentChange
 	}
 
 	/**
-	 * Remove newlines and carriage returns
+	 * Remove newlines, carriage returns and decode html entites
 	 * @param string $line
 	 * @return string
 	 */
 	public static function cleanupForIRC( $text ) {
-		return str_replace(array("\n", "\r"), array("", ""), $text);
+		return Sanitizer::decodeCharReferences( str_replace( array( "\n", "\r" ), array( "", "" ), $text ) );
 	}
 
 	/**
@@ -343,9 +351,7 @@ class RecentChange
 	{
 		if( !$ip ) {
 			$ip = wfGetIP();
-			if( !$ip ) {
-				$ip = '';
-			}
+			if( !$ip ) $ip = '';
 		}
 
 		$rc = new RecentChange;
@@ -397,9 +403,7 @@ class RecentChange
 	{
 		if( !$ip ) {
 			$ip = wfGetIP();
-			if( !$ip ) {
-				$ip = '';
-			}
+			if( !$ip ) $ip = '';
 		}
 
 		$rc = new RecentChange;
@@ -445,12 +449,9 @@ class RecentChange
 	public static function notifyMove( $timestamp, &$oldTitle, &$newTitle, &$user, $comment, $ip='', $overRedir = false )
 	{
 		global $wgRequest;
-
 		if( !$ip ) {
 			$ip = wfGetIP();
-			if( !$ip ) {
-				$ip = '';
-			}
+			if( !$ip ) $ip = '';
 		}
 
 		$rc = new RecentChange;
@@ -498,16 +499,27 @@ class RecentChange
 		RecentChange::notifyMove( $timestamp, $oldTitle, $newTitle, $user, $comment, $ip, true );
 	}
 
-	public static function notifyLog( $timestamp, &$title, &$user, $actionComment, $ip='',
-	   $type, $action, $target, $logComment, $params, $newId=0 )
+	public static function notifyLog( $timestamp, &$title, &$user, $actionComment, $ip='', $type, 
+		$action, $target, $logComment, $params, $newId=0 )
+	{
+		global $wgLogRestrictions;
+		# Don't add private logs to RC!
+		if( isset($wgLogRestrictions[$type]) && $wgLogRestrictions[$type] != '*' ) {
+			return false;
+		}
+		$rc = self::newLogEntry( $timestamp, $title, $user, $actionComment, $ip, $type, $action,
+			$target, $logComment, $params, $newId );
+		$rc->save();
+		return true;
+	}
+
+	public static function newLogEntry( $timestamp, &$title, &$user, $actionComment, $ip='',
+		$type, $action, $target, $logComment, $params, $newId=0 )
 	{
 		global $wgRequest;
-
 		if( !$ip ) {
 			$ip = wfGetIP();
-			if( !$ip ) {
-				$ip = '';
-			}
+			if( !$ip ) $ip = '';
 		}
 
 		$rc = new RecentChange;
@@ -543,7 +555,7 @@ class RecentChange
 			'lastTimestamp' => 0,
 			'actionComment' => $actionComment, // the comment appended to the action, passed from LogPage
 		);
-		$rc->save();
+		return $rc;
 	}
 
 	# Initialises the members of this object from a mysql row object
@@ -614,7 +626,7 @@ class RecentChange
 		return $trail;
 	}
 
-	protected function getIRCLine() {
+	public function getIRCLine() {
 		global $wgUseRCPatrol, $wgUseNPPatrol, $wgRC2UDPInterwikiPrefix, $wgLocalInterwiki;
 
 		// FIXME: Would be good to replace these 2 extract() calls with something more explicit
@@ -668,7 +680,11 @@ class RecentChange
 			$flag = $rc_log_action;
 		} else {
 			$comment = self::cleanupForIRC( $rc_comment );
-			$flag = ($rc_new ? "N" : "") . ($rc_minor ? "M" : "") . ($rc_bot ? "B" : "");
+			$flag = '';
+			if( !$rc_patrolled && ($wgUseRCPatrol || $rc_new && $wgUseNPPatrol) ) {
+				$flag .= '!';
+			}
+			$flag .= ($rc_new ? "N" : "") . ($rc_minor ? "M" : "") . ($rc_bot ? "B" : "");
 		}
 
 		if ( $wgRC2UDPInterwikiPrefix === true ) {

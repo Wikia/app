@@ -16,10 +16,12 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  */
 $messages['qqq'] = array(
 	'authors-desc' => 'Short description of the extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'authors_authors' => '{{Identical|Author}}',
 );
 
 /** Arabic (العربية)
@@ -32,18 +34,23 @@ $messages['ar'] = array(
 );
 
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
  * @author Ramsis II
  */
 $messages['arz'] = array(
+	'authors-desc' => 'يلحق قائمة بالمساهمين للصفحات',
 	'authors_authors' => 'المؤلفين',
 	'authors_anonymous' => 'مش معروف',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'authors-desc' => 'Дадае сьпіс аўтараў на старонкі',
 	'authors_authors' => 'Аўтары',
+	'authors_anonymous' => 'Ананім',
 );
 
 /** Bulgarian (Български)
@@ -53,6 +60,15 @@ $messages['bg'] = array(
 	'authors-desc' => 'Добавя списък на редакторите към страниците',
 	'authors_authors' => 'Автори',
 	'authors_anonymous' => 'Анонимни',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'authors-desc' => 'Dodaje spisak urednika na stranice',
+	'authors_authors' => 'Autori',
+	'authors_anonymous' => 'Anonimni',
 );
 
 /** Czech (Česky)
@@ -131,10 +147,11 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author McDutchie
+ * @author PieRRoMaN
  * @author Sherbrooke
  */
 $messages['fr'] = array(
-	'authors-desc' => 'Ajouter aux pages une liste des contributeurs',
+	'authors-desc' => 'Ajoute une liste des contributeurs dans les pages',
 	'authors_authors' => 'Auteurs',
 	'authors_anonymous' => 'Anonyme',
 );
@@ -153,6 +170,15 @@ $messages['gl'] = array(
 	'authors-desc' => 'Adxunta unha lista dos contribuíntes ás páxinas',
 	'authors_authors' => 'Autores',
 	'authors_anonymous' => 'Anónimos',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'authors-desc' => 'Hänkt an Syten e Lischt vu dr Autore aa',
+	'authors_authors' => 'Autore',
+	'authors_anonymous' => 'Anonym',
 );
 
 /** Hebrew (עברית)
@@ -183,10 +209,11 @@ $messages['ia'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Mizusumashi
  */
 $messages['ja'] = array(
-	'authors-desc' => 'ページへの投稿者のリストを追加',
+	'authors-desc' => '各ページへ投稿者のリストを追加する',
 	'authors_authors' => '著作者',
 	'authors_anonymous' => '匿名',
 );
@@ -223,6 +250,13 @@ $messages['lb'] = array(
 	'authors-desc' => "Setzt eng Lëscht vun den Auteuren op d'Säiten derbäi",
 	'authors_authors' => 'Auteuren',
 	'authors_anonymous' => 'Anonym',
+);
+
+/** Lingua Franca Nova (Lingua Franca Nova)
+ * @author Malafaya
+ */
+$messages['lfn'] = array(
+	'authors_authors' => 'Autores',
 );
 
 /** Macedonian (Македонски)
@@ -269,6 +303,13 @@ $messages['oc'] = array(
 	'authors_anonymous' => 'Anomin',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'authors_authors' => 'Автортæ',
+);
+
 /** Polish (Polski)
  * @author Leinad
  */
@@ -295,6 +336,15 @@ $messages['pt'] = array(
 	'authors_anonymous' => 'Anónimo(s)',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'authors-desc' => 'Acrescenta uma lista de contribuidores às páginas',
+	'authors_authors' => 'Autores',
+	'authors_anonymous' => 'Anônimo(s)',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -302,6 +352,15 @@ $messages['ro'] = array(
 	'authors-desc' => 'Adaugă o listă de contribuitori la sfârşitul paginilor',
 	'authors_authors' => 'Autori',
 	'authors_anonymous' => 'Anonim',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'authors-desc' => "Appenne 'na liste de condrebbutore a le pàggene",
+	'authors_authors' => 'Autore',
+	'authors_anonymous' => 'Anonime',
 );
 
 /** Russian (Русский)
@@ -323,12 +382,30 @@ $messages['sk'] = array(
 	'authors_anonymous' => 'Anonym',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'authors-desc' => 'Honget an Sieden ne Lieste fon Autore an',
+	'authors_authors' => 'Autore',
+	'authors_anonymous' => 'Anonym',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
 $messages['te'] = array(
 	'authors_authors' => 'రచయితలు',
 	'authors_anonymous' => 'అజ్ఞాత',
+);
+
+/** Thai (ไทย)
+ * @author Ans
+ */
+$messages['th'] = array(
+	'authors-desc' => 'ใส่รายชื่อผู้ร่วมเขียนไว้ท้ายหน้า',
+	'authors_authors' => 'ผู้เขียน',
+	'authors_anonymous' => 'นิรนาม',
 );
 
 /** Tagalog (Tagalog)
@@ -340,6 +417,13 @@ $messages['tl'] = array(
 	'authors_anonymous' => 'Hindi nagpapakilala (anonimo)',
 );
 
+/** Turkish (Türkçe)
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'authors_anonymous' => 'Anonimler',
+);
+
 /** Ukrainian (Українська)
  * @author Aleksandrit
  */
@@ -349,12 +433,33 @@ $messages['uk'] = array(
 	'authors_anonymous' => 'Анонім',
 );
 
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'authors-desc' => 'Xonta a le pàxene na lista de contribudori',
+	'authors_authors' => 'Autori',
+	'authors_anonymous' => 'Anonimo',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Vinhtantran
  */
 $messages['vi'] = array(
+	'authors-desc' => 'Nối một danh sách những người đóng góp vào trang',
 	'authors_authors' => 'Tác giả',
 	'authors_anonymous' => 'Vô danh',
+);
+
+/** Volapük (Volapük)
+ * @author Malafaya
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'authors-desc' => 'Lenlagon lisedi padekeblünanas',
+	'authors_authors' => 'Lautans',
+	'authors_anonymous' => 'Nennemik',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

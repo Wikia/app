@@ -24,7 +24,7 @@ class SFUploadWindow extends UnlistedSpecialPage {
 		wfLoadExtensionMessages('SemanticForms');
 	}
 
-	function execute() {
+	function execute($query) {
 		$this->setHeaders();
 		doSpecialUploadWindow();
 	}

@@ -89,6 +89,25 @@ $3',
 	'latexdoc-desc' => 'Съвместно редактиране на документи на LaTeX',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'latexdoc_no_text' => 'Stranica ne sadrži tekst, ne može se generirati DVI',
+	'latexdoc_cant_create_dir' => 'Ne može se napraviti privremeni direktorijum $1',
+	'latexdoc_cant_write' => 'Ne mogu pisati u datoteku $1',
+	'latexdoc_error' => 'LaTeX greška
+
+Komanda: $1
+
+Izlaz: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Preuzmi DVI',
+	'latexdoc_get_pdf' => 'Napravi PDF',
+	'latexdoc-desc' => 'Zajedničko uređivanje LaTeX dokumenata',
+);
+
 /** German (Deutsch)
  * @author Leithian
  * @author Melancholie
@@ -146,6 +165,18 @@ Eligo: $2
 $3',
 	'latexdoc_get_dvi' => 'Akiri DVI',
 	'latexdoc_get_pdf' => 'Akiri PDF-on',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'latexdoc_no_text' => 'La página no contiene texto, no se puede generar DVI',
+	'latexdoc_cant_create_dir' => 'No se puede crear directorio temporal $1',
+	'latexdoc_cant_write' => 'No se puede escribir al archivo $1',
+	'latexdoc_get_dvi' => 'Obtener DVI',
+	'latexdoc_get_pdf' => 'Obtener PDF',
+	'latexdoc-desc' => 'Edición colaborativa de documentos LaTeX',
 );
 
 /** Finnish (Suomi)
@@ -207,6 +238,25 @@ $3',
 	'latexdoc_get_dvi' => 'Obter DVI',
 	'latexdoc_get_pdf' => 'Obter PDF',
 	'latexdoc-desc' => 'Edición colaborativa de documentos LaTeX',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'latexdoc_no_text' => 'In dr Syte het s kei Täxt, DVI cha nit generiert wäre',
+	'latexdoc_cant_create_dir' => 'Temporär Verzeichnis $1 cha nit aagleit wäre',
+	'latexdoc_cant_write' => 'Datei $1 cha nit gschribe wäre',
+	'latexdoc_error' => 'LaTeX-Fähler
+
+Ufruef: $1
+
+Uusgab: $2
+
+$3',
+	'latexdoc_get_dvi' => 'DVI abelade',
+	'latexdoc_get_pdf' => 'PDF abelade',
+	'latexdoc-desc' => 'Gmeinschaftligs Bearbeite vu LaTeX-Dokumänt',
 );
 
 /** Hebrew (עברית)
@@ -305,6 +355,25 @@ $3',
 	'latexdoc-desc' => 'Modification collaborative de documentos LaTeX',
 );
 
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'latexdoc_no_text' => 'ページには文章がなく、DVIを生成できません',
+	'latexdoc_cant_create_dir' => '一時ディレクトリ $1 を作成できません',
+	'latexdoc_cant_write' => 'ファイル $1 へ書き込めません',
+	'latexdoc_error' => 'LaTeX エラー
+
+コマンド: $1
+
+出力: $2
+
+$3',
+	'latexdoc_get_dvi' => 'DVIを取得',
+	'latexdoc_get_pdf' => 'PDFを取得',
+	'latexdoc-desc' => 'LaTeX 文書の共同編集',
+);
+
 /** Javanese (Basa Jawa)
  * @author Meursault2004
  */
@@ -388,8 +457,16 @@ $messages['lb'] = array(
 	'latexdoc_no_text' => 'Et ass keen Text op der Säit, den DVI kann net gemaach ginn',
 	'latexdoc_cant_create_dir' => 'Den temporäre Repertoire $1 kann net ugeluecht ginn',
 	'latexdoc_cant_write' => 'Et ass net méiglech na de Fichier $1 ze schreiwen',
+	'latexdoc_error' => 'LaTeX-Feeler
+
+Opruf: $1
+
+Resultat: $2
+
+$3',
 	'latexdoc_get_dvi' => 'DVI kréien',
 	'latexdoc_get_pdf' => 'PDF kréien',
+	'latexdoc-desc' => 'Kollektivt Ännere vu LaTeX Dokumenter',
 );
 
 /** Malayalam (മലയാളം)
@@ -516,6 +593,25 @@ $3',
 	'latexdoc-desc' => 'Documento Latex',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'latexdoc_no_text' => 'A página não contém qualquer texto, não é possível gerar DVI',
+	'latexdoc_cant_create_dir' => 'Não foi possível criar o diretório temporário $1',
+	'latexdoc_cant_write' => 'Não foi possível escrever no arquivo $1',
+	'latexdoc_error' => 'Erro LaTeX
+
+Comando: $1
+
+Resultado: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Obter DVI',
+	'latexdoc_get_pdf' => 'Obter PDF',
+	'latexdoc-desc' => 'Edição colaborativa de documentos LaTeX',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -634,6 +730,25 @@ $3',
 	'latexdoc_get_dvi' => 'Гирифтани DVI',
 	'latexdoc_get_pdf' => 'Гирифтани PDF',
 	'latexdoc-desc' => 'Вироиши ҳамдастии парвандаҳои LaTeX',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'latexdoc_no_text' => 'Walang lamang teksto ang pahina, hindi magawa ang DVI',
+	'latexdoc_cant_create_dir' => 'Hindi malikha ang pansamantalang direktoryong $1',
+	'latexdoc_cant_write' => 'Hindi maisulat sa talaksang $1',
+	'latexdoc_error' => 'Kamalian ng LaTeX
+
+Utos: $1
+
+Kinalabasan: $2
+
+$3',
+	'latexdoc_get_dvi' => 'Kuhanin ang DVI',
+	'latexdoc_get_pdf' => 'Kuhanin ang PDF',
+	'latexdoc-desc' => 'Tulungang pamamatnugot ng mga kasulatang LaTeX',
 );
 
 /** Vietnamese (Tiếng Việt)

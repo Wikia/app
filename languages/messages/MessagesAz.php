@@ -456,6 +456,7 @@ Açıqlama: (hh) = hal-hazırkı versiya ilə olan fərqlər,
 'timezoneoffset'        => 'Vaxt fərqı¹',
 'servertime'            => 'Server vaxtı',
 'guesstimezone'         => 'Brouzerdən götür',
+'timezoneregion-africa' => 'Afrika',
 'allowemail'            => 'Digər istifadəçilər mənə e-məktub göndərəbilir',
 'defaultns'             => 'Susmaya görə bu ad fəzalarında axtar:',
 'files'                 => 'Fayllar',
@@ -563,13 +564,10 @@ Bu səhifə üçün silmə qeydləri aşağıda göstərilmişdir:",
 'listfiles_user' => 'İstifadəçi',
 
 # File description page
-'imagelinks'                     => 'İstifadə edilən səhifələr',
-'shareduploadwiki-linktext'      => 'fayl təsvir səhifəsi',
-'shareduploadduplicate-linktext' => 'başqa fayl',
-'shareduploadconflict'           => 'Bu fayl ortaq mediya anbarındakı $1 faylı ilə eyni adı daşıyır.',
-'shareduploadconflict-linktext'  => 'başqa fayl',
-'noimage-linktext'               => 'faylı yüklə',
-'uploadnewversion-linktext'      => 'Bu faylın yeni versiyasını yüklə',
+'imagelinks'                => 'İstifadə edilən səhifələr',
+'shareduploadwiki-linktext' => 'fayl təsvir səhifəsi',
+'noimage-linktext'          => 'faylı yüklə',
+'uploadnewversion-linktext' => 'Bu faylın yeni versiyasını yüklə',
 
 # File deletion
 'filedelete'                  => '$1 adlı faylı sil',
@@ -839,7 +837,7 @@ Məqalələrin bərpa edilməsi və silinməsi haqqında son dəyişiklikləri n
 # Contributions
 'contributions' => 'İstifadəçi köməkləri',
 'mycontris'     => 'Köməklərim',
-'nocontribs'    => 'Bu kriteriyaya uyğun redaktələr tapılmadı',
+'nocontribs'    => 'Bu kriteriyaya uyğun redaktələr tapılmadı', # Optional parameter: $1 is the user name
 'uctop'         => '(son)',
 'month'         => 'Ay',
 'year'          => 'Axtarışa bu tarixdən etibarən başla:',

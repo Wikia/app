@@ -41,7 +41,7 @@ function wfSpecialSearch( $par = '' ) {
 		|| !is_null( $wgRequest->getVal( 'offset' )) 
 		|| !is_null( $wgRequest->getVal( 'searchx' )) )
 	{
-		$searchPage->showResults( $search, 'search' );
+		$searchPage->showResults( $search );
 	} else {
 		$searchPage->goResult( $search );
 	}
@@ -74,6 +74,7 @@ class SpecialSearch {
 		$this->active = 'advanced';
 		$this->sk = $user->getSkin();
 		$this->didYouMeanHtml = ''; # html of did you mean... link
+		$this->fulltext = $request->getVal('fulltext'); 
 	}
 
 	/**
@@ -163,9 +164,13 @@ class SpecialSearch {
 
 		// did you mean... suggestions
 		if( $textMatches && $textMatches->hasSuggestion() ) {
-			$st = SpecialPage::getTitleFor( 'Search' );			
+			$st = SpecialPage::getTitleFor( 'Search' );
+			# mirror Go/Search behaviour of original request ..
+			$didYouMeanParams = array( 'search' => $textMatches->getSuggestionQuery() );
+			if($this->fulltext != NULL)
+				$didYouMeanParams['fulltext'] = $this->fulltext;				
 			$stParams = wfArrayToCGI( 
-				array( 'search' => $textMatches->getSuggestionQuery(), 'fulltext' 	=> wfMsg('search') ),
+				$didYouMeanParams,
 				$this->powerSearchOptions()
 			);
 			$suggestLink = $sk->makeKnownLinkObj( $st,
@@ -610,7 +615,8 @@ class SpecialSearch {
 
 		$redirect = Xml::check( 'redirs', $this->searchRedirects, array( 'value' => '1', 'id' => 'redirs' ) );
 		$redirectLabel = Xml::label( wfMsg( 'powersearch-redir' ), 'redirs' );
-		$searchField = Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'powerSearchText' ) );
+		$searchField = Xml::inputLabel( wfMsg('powersearch-field'), 'search', 'powerSearchText', 50, $term,
+			array( 'type' => 'text') );
 		$searchButton = Xml::submitButton( wfMsg( 'powersearch' ), array( 'name' => 'fulltext' )) . "\n";
 		$searchTitle = SpecialPage::getTitleFor( 'Search' );
 		
@@ -630,10 +636,9 @@ class SpecialSearch {
 			"<hr style=\"clear: both;\" />\n".			
 			$redirectText ."\n".
 			"<div style=\"padding-top:2px;padding-bottom:2px;\">".
-			wfMsgExt( 'powersearch-field', array( 'parseinline' ) ) .
-			"&nbsp;" .
 			$searchField .
 			"&nbsp;" .
+			Xml::hidden( 'fulltext', 'Advanced search' ) . "\n" .
 			$searchButton .
 			"</div>".
 			"</form>";
@@ -666,7 +671,7 @@ class SpecialSearch {
 	}
 
 	protected function formHeader( $term ) {
-		global $wgContLang, $wgCanonicalNamespaceNames;
+		global $wgContLang, $wgCanonicalNamespaceNames, $wgLang;
 
 		$sep = '&nbsp;&nbsp;&nbsp;';
 		$out = Xml::openElement('div', array( 'style' => 'padding-bottom:0.5em;' ) );
@@ -680,7 +685,7 @@ class SpecialSearch {
 		// search profiles headers
 		$m = wfMsg( 'searchprofile-articles' );
 		$tt = wfMsg( 'searchprofile-articles-tooltip', 
-			implode( ', ', SearchEngine::namespacesAsText( SearchEngine::defaultNamespaces() ) ) );
+			$wgLang->commaList( SearchEngine::namespacesAsText( SearchEngine::defaultNamespaces() ) ) );
 		if( $this->active == 'default' ) {
 			$out .= Xml::element( 'strong', array( 'title'=>$tt ), $m );	
 		} else {
@@ -697,22 +702,10 @@ class SpecialSearch {
 			$out .= $this->makeSearchLink( $imageTextForm, array( NS_FILE ) , $m, $tt );
 		}
 		$out .= $sep;
-		
-		/*
-		$m = wfMsg( 'searchprofile-articles-and-proj' );
-		$tt = wfMsg( 'searchprofile-project-tooltip', 
-			implode( ', ', SearchEngine::namespacesAsText( SearchEngine::defaultAndProjectNamespaces() ) ) );
-		if( $this->active == 'withproject' ) {
-			$out .= Xml::element( 'strong', array( 'title'=>$tt ), $m );	
-		} else {
-			$out .= $this->makeSearchLink( $bareterm, SearchEngine::defaultAndProjectNamespaces(), $m, $tt );
-		}
-		$out .= $sep;
-		*/
-		
+
 		$m = wfMsg( 'searchprofile-project' );
 		$tt = wfMsg( 'searchprofile-project-tooltip', 
-			implode( ', ', SearchEngine::namespacesAsText( SearchEngine::projectNamespaces() ) ) );
+			$wgLang->commaList( SearchEngine::namespacesAsText( SearchEngine::projectNamespaces() ) ) );
 		if( $this->active == 'project' ) {
 			$out .= Xml::element( 'strong', array( 'title'=>$tt ), $m );	
 		} else {
@@ -765,6 +758,7 @@ class SpecialSearch {
 		$out .= Xml::hidden( "redirs", (int)$this->searchRedirects );
 		// Term box
 		$out .= Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'searchText' ) ) . "\n";
+		$out .= Xml::hidden( 'fulltext', 'Search' );
 		$out .= Xml::submitButton( wfMsg( 'searchbutton' ), array( 'name' => 'fulltext' ) );
 		$out .= ' (' . wfMsgExt('searchmenu-help',array('parseinline') ) . ')';
 		$out .= Xml::closeElement( 'form' );
@@ -872,6 +866,7 @@ class SpecialSearchOld {
 		}
 
 		$this->searchRedirects = $request->getcheck( 'redirs' ) ? true : false;
+		$this->fulltext = $request->getVal('fulltext'); 
 	}
 
 	/**
@@ -913,22 +908,22 @@ class SpecialSearchOld {
 		
 		/*
 		This headline has no purpose and has been commented out by Christian and Danny.
-		$wgOut->wrapWikiMsg( "==$1==\n", 'notitlematches' );
+		$extra = $wgOut->parse( '=='.wfMsgNoTrans( 'notitlematches' )."==\n" );
 		if( $t->quickUserCan( 'create' ) && $t->quickUserCan( 'edit' ) ) {
-			$wgOut->addWikiMsg( 'noexactmatch', wfEscapeWikiText( $term ) );
+			$extra .= wfMsgExt( 'noexactmatch', 'parse', wfEscapeWikiText( $term ) );
 		} else {
-			$wgOut->addWikiMsg( 'noexactmatch-nocreate', wfEscapeWikiText( $term ) );
+			$extra .= wfMsgExt( 'noexactmatch-nocreate', 'parse', wfEscapeWikiText( $term ) );
 		}
 		*/
 
-		return $this->showResults( $term );
+		$this->showResults( $term, $extra );
 	}
 
 	/**
 	 * @param string $term
-	 * @public
+	 * @param string $extra Extra HTML to add after "did you mean"
 	 */
-	function showResults( $term ) {
+	public function showResults( $term, $extra = '' ) {
 		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgUser;
 		$sk = $wgUser->getSkin();
@@ -939,7 +934,7 @@ class SpecialSearchOld {
 		$search->showRedirects = $this->searchRedirects;
 		$search->prefix = $this->mPrefix;
 		$term = $search->transformSearchTerm($term);
-		
+
 		$this->setupPage( $term );
 
 		$rewritten = $search->replacePrefixes($term);
@@ -948,22 +943,27 @@ class SpecialSearchOld {
 
 		// did you mean... suggestions
 		if($textMatches && $textMatches->hasSuggestion()){
-			$st = SpecialPage::getTitleFor( 'Search' );			
-			$stParams = wfArrayToCGI( array( 
-					'search' 	=> $textMatches->getSuggestionQuery(), 
-					'fulltext' 	=> wfMsg('search')),
-					$this->powerSearchOptions());
-					
+			$st = SpecialPage::getTitleFor( 'Search' );
+			
+			# mirror Go/Search behaviour of original request		
+			$didYouMeanParams = array( 'search' => $textMatches->getSuggestionQuery() );
+			if($this->fulltext != NULL)
+				$didYouMeanParams['fulltext'] = $this->fulltext;				
+			$stParams = wfArrayToCGI( 
+				$didYouMeanParams,
+				$this->powerSearchOptions()
+			);	
+
 			$suggestLink = $sk->makeKnownLinkObj( $st,
 				$textMatches->getSuggestionSnippet(),
 				$stParams );
-			 		
+
 			$wgOut->addHTML('<div class="searchdidyoumean">'.wfMsg('search-suggest',$suggestLink).'</div>');
 		}
 
-		$wgOut->addWikiMsg( 'searchresulttext' );
+		$wgOut->addHTML( $extra );
 
-		wfRunHooks( 'SearchBeforeResults', array( &$this, &$term ) );
+		$wgOut->wrapWikiMsg( "<div class='mw-searchresult'>\n$1</div>", 'searchresulttext' );
 
 		if( '' === trim( $term ) ) {
 			// Empty query -- straight view of search form
@@ -1463,10 +1463,11 @@ class SpecialSearchOld {
 		$searchField = Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'powerSearchText' ) );
 		$searchButton = Xml::submitButton( wfMsg( 'powersearch' ), array( 'name' => 'fulltext' ) ) . "\n";
 		$searchTitle = SpecialPage::getTitleFor( 'Search' );
+		$searchHiddens = Xml::hidden( 'title', $searchTitle->getPrefixedText() ) . "\n";
+		$searchHiddens .= Xml::hidden( 'fulltext', 'Advanced search' ) . "\n";
 		
 		$out = Xml::openElement( 'form', array(	'id' => 'powersearch', 'method' => 'get', 'action' => $wgScript ) ) .
-			Xml::fieldset( wfMsg( 'powersearch-legend' ),
-				Xml::hidden( 'title', $searchTitle->getPrefixedText() ) . "\n" .
+			Xml::fieldset( wfMsg( 'powersearch-legend' ),				
 				"<p>" .
 				wfMsgExt( 'powersearch-ns', array( 'parseinline' ) ) .
 				"</p>\n" .
@@ -1479,6 +1480,7 @@ class SpecialSearchOld {
 				"&nbsp;" .
 				$searchField .
 				"&nbsp;" .
+				$searchHiddens . 
 				$searchButton ) .
 			"</form>";
 
@@ -1503,13 +1505,14 @@ class SpecialSearchOld {
 			'action' => $wgScript
 		));
 		$searchTitle = SpecialPage::getTitleFor( 'Search' );
-		$out .= Xml::hidden( 'title', $searchTitle->getPrefixedText() );
 		$out .= Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'searchText' ) ) . ' ';
 		foreach( SearchEngine::searchableNamespaces() as $ns => $name ) {
 			if( in_array( $ns, $this->namespaces ) ) {
 				$out .= Xml::hidden( "ns{$ns}", '1' );
 			}
 		}
+		$out .= Xml::hidden( 'title', $searchTitle->getPrefixedText() );
+		$out .= Xml::hidden( 'fulltext', 'Search' );
 		$out .= Xml::submitButton( wfMsg( 'searchbutton' ), array( 'name' => 'fulltext' ) );
 		$out .= Xml::closeElement( 'form' );
 

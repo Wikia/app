@@ -38,11 +38,30 @@ $messages['arz'] = array(
 	'pdf_page_error' => 'رقم الصفحة ليس فى النطاق',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'pdf-desc' => 'Апрацоўшчык для прагляду PDF-файлаў у выглядзе выяваў',
+	'pdf_no_metadata' => 'Немагчыма атрымаць мэта-зьвесткі з PDF-файла',
+	'pdf_page_error' => 'Нумар старонкі паза дыяпазонам',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'pdf_no_metadata' => 'невъзможно е да бъдат извлечени метаданни от PDF',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'pdf-desc' => 'Uređivač za pregled PDF datoteka u modu za slike',
+	'pdf_no_metadata' => 'Ne mogu se naći metapodaci u PDFu',
+	'pdf_page_error' => 'Broj stranice nije u rasponu',
 );
 
 /** Catalan (Català)
@@ -125,6 +144,15 @@ $messages['gl'] = array(
 	'pdf-desc' => 'Manipulador para ver ficheiros PDF no modo de imaxes',
 	'pdf_no_metadata' => 'non se puideron obter os metadatos do PDF',
 	'pdf_page_error' => 'O número da páxina non está no rango',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'pdf-desc' => 'Schnittstell fir d Aasicht vu PDF-Dateien im Bilder-Modus',
+	'pdf_no_metadata' => 'Kei Metadate im PDF vorhande.',
+	'pdf_page_error' => 'Sytezahl usserhalb vum Dokumänt.',
 );
 
 /** Hebrew (עברית)
@@ -212,6 +240,7 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'pdf-desc' => '"Programm" den et erméiglecht PDF-Fichieren als Bild ze kucken',
 	'pdf_no_metadata' => 'Meta-Informatiounen aus dem PDF Dokument kënnen net gelies ginn',
 	'pdf_page_error' => "D'Säitenzuel ass net an dem Beräich.",
 );
@@ -293,6 +322,24 @@ $messages['pt'] = array(
 	'pdf_page_error' => 'Número de página fora do intervalo',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'pdf-desc' => 'Manuseador de visualização de arquivos PDF em modo de imagem',
+	'pdf_no_metadata' => 'Não foi possível obter os metadados do PDF',
+	'pdf_page_error' => 'Número de página fora do intervalo',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'pdf-desc' => 'Gestore pe vedè le file PDF in mode immaggine',
+	'pdf_no_metadata' => "Non ge pozze pigghià le metadata da 'u PDF",
+	'pdf_page_error' => "Numere de pàgene fore da l'indervalle",
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -315,6 +362,7 @@ $messages['sk'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
+	'pdf-desc' => 'Snitsteede foar dät Bekiekjen fon PDF-Doatäie in dän Bielde-Modus',
 	'pdf_no_metadata' => 'Neen Metadoaten in dät PDF deer.',
 	'pdf_page_error' => 'Siedentaal buute Riege.',
 );
@@ -328,6 +376,15 @@ $messages['sv'] = array(
 	'pdf_page_error' => 'Sidnummer överstiger antal sidor i dokumentet',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'pdf-desc' => 'Tagapaghawak para sa pagtanaw ng mga talaksang PDF na nasa modalidad na panglarawan',
+	'pdf_no_metadata' => 'Hindi makuha ang dato ng meta mula sa PDF',
+	'pdf_page_error' => 'Wala sa sakop ang bilang ng pahina',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
@@ -339,18 +396,21 @@ $messages['vi'] = array(
 
 /** Yue (粵語) */
 $messages['yue'] = array(
+	'pdf-desc'        => '響圖像模式睇PDF檔嘅處理器',
 	'pdf_no_metadata' => '唔能夠響PDF度拎metadata',
-	'pdf_page_error' => '頁數唔響範圍度',
+	'pdf_page_error'  => '頁數唔響範圍度',
 );
 
 /** Simplified Chinese (‪中文(简体)‬) */
 $messages['zh-hans'] = array(
+	'pdf-desc'        => '在图像方式中PDF档的处理器',
 	'pdf_no_metadata' => '无法在PDF中撷取元数据',
 	'pdf_page_error' => '页数不在范围中',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */
 $messages['zh-hant'] = array(
+	'pdf-desc'        => '在圖像模式中PDF檔的處理器',
 	'pdf_no_metadata' => '無法在PDF中擷取元數據',
 	'pdf_page_error' => '頁數不在範圍中',
 );

@@ -12,12 +12,12 @@ CodeReview.loadDiff = function(repo, rev) {
 			injectSpinner(CodeReview.diffTarget(), 'codereview-diff');
 			xmlhttp.open("GET", path, true);
 			xmlhttp.onreadystatechange=function(){
-				if (xmlhttp.readyState==4) {	        		
+				if (xmlhttp.readyState==4) {
 					CodeReview.decodeAndShowDiff(xmlhttp.responseText);
 					removeSpinner('codereview-diff');
 				}
 			};
-			xmlhttp.send(null);     	
+			xmlhttp.send(null);
 		} catch (e) {
 			if (window.location.hostname == "localhost") {
 				alert("Your browser blocks XMLHttpRequest to 'localhost', try using a real hostname for development/testing.");

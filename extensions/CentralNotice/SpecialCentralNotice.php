@@ -92,27 +92,27 @@ class CentralNotice extends SpecialPage {
 				}
 			}
                         
-                        // Handle setting preferred
-                        $preferredNotices = $wgRequest->getArray( 'preferred' );
-                        if ( isset( $preferredNotices ) ) {
-                                // Set since this is a single display
-                                if ( $method == 'listNoticeDetail' ) {
-                                    $notice = $wgRequest->getVal ( 'notice' );
-			            CentralNoticeDB::updatePreferred( $notice, '1' );
-                                }
-                                else {
-                                    // Build list of notices to unset 
-                                    $unsetNotices = array_diff( $this->getNoticesName(), $preferredNotices );
+			// Handle setting preferred
+			$preferredNotices = $wgRequest->getArray( 'preferred' );
+			if ( isset( $preferredNotices ) ) {
+				// Set since this is a single display
+				if ( $method == 'listNoticeDetail' ) {
+					$notice = $wgRequest->getVal ( 'notice' );
+					CentralNoticeDB::updatePreferred( $notice, '1' );
+				}
+				else {
+					// Build list of notices to unset 
+					$unsetNotices = array_diff( $this->getNoticesName(), $preferredNotices );
 
-                                    // Set flag accordingly
-                                    foreach( $preferredNotices as $notice ) {
-                                            CentralNoticeDB::updatePreferred( $notice, '1' );
-                                    }
-                                    foreach( $unsetNotices as $notice ) {
-                                            CentralNoticeDB::updatePreferred( $notice, '0' );
-                                    }
-                                }
-                        }               
+					// Set flag accordingly
+					foreach( $preferredNotices as $notice ) {
+						CentralNoticeDB::updatePreferred( $notice, '1' );
+					}
+					foreach( $unsetNotices as $notice ) {
+						CentralNoticeDB::updatePreferred( $notice, '0' );
+					}
+				}
+			}               
 
 			$noticeName = $wgRequest->getVal( 'notice' );
 
@@ -645,29 +645,33 @@ class CentralNotice extends SpecialPage {
 		}
 
 		// Catch for no templates so that we dont' double message
-		if( $this->editable ) {
-			if ( $output_assigned == '' && $output_templates == '' ) {
-				$htmlOut .= wfMsg( 'centralnotice-no-templates' );
-				$htmlOut .= Xml::element( 'p' );
-				$newPage = SpecialPage::getTitleFor( 'NoticeTemplate/add' );
-				$sk = $wgUser->getSkin();
-                		$htmlOut .= $sk->makeLinkObj( $newPage, wfMsgHtml( 'centralnotice-add-template' ) );
-				$htmlOut .= Xml::element( 'p' );
-			} elseif ( $output_assigned == '' ) {
-				$htmlOut .= wfMsg( 'centralnotice-no-templates-assigned' );
-				$htmlOut .= $output_templates; 
-			} else {
-				$htmlOut .= $output_assigned;
-				$htmlOut .= $output_templates;				
+		if ( $output_assigned == '' && $output_templates == '' ) {
+			$htmlOut .= wfMsg( 'centralnotice-no-templates' );
+			$htmlOut .= Xml::element( 'p' );
+			$newPage = SpecialPage::getTitleFor( 'NoticeTemplate', 'add' );
+			$sk = $wgUser->getSkin();
+               		$htmlOut .= $sk->makeLinkObj( $newPage, wfMsgHtml( 'centralnotice-add-template' ) );
+			$htmlOut .= Xml::element( 'p' );
+		} elseif ( $output_assigned == '' ) {
+			$htmlOut .= wfMsg( 'centralnotice-no-templates-assigned' );
+			if( $this->editable ) {
+				$htmlOut .= $output_templates;
 			}
+		} else {
+			$htmlOut .= $output_assigned;
+			if( $this->editable ) {
+				$htmlOut .= $output_templates;
+			}			
 		}
-		$htmlOut .= Xml::tags( 'tr', null,
-			Xml::tags( 'td', array( 'collspan' => 2 ),
-				Xml::submitButton( wfMsg( 'centralnotice-modify' ) )
-			)
-		);
-			
-		$htmlOut .= Xml::closeElement( 'form' );
+
+		if( $this->editable ) {
+			$htmlOut .= Xml::tags( 'tr', null,
+				Xml::tags( 'td', array( 'collspan' => 2 ),
+					Xml::submitButton( wfMsg( 'centralnotice-modify' ) )
+				)
+			);
+			$htmlOut .= Xml::closeElement( 'form' );
+		}
 		$wgOut->addHTML( $htmlOut );
 	}
 
@@ -982,11 +986,12 @@ class CentralNotice extends SpecialPage {
 		}
 		return $templateNames;
 	}
+
 	/**
 	 * Lookup function for active notice under a given language and project
 	 * Returns an id for the running notice
 	 */
-	function selectNoticeTemplates( $project, $language ) {
+	static function selectNoticeTemplates( $project, $language ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$encTimestamp = $dbr->addQuotes( $dbr->timestamp() );
 		$res = $dbr->select(

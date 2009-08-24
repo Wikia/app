@@ -57,11 +57,30 @@ $messages['arz'] = array(
 	'multiboilerplate-submit' => 'تحميل',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'multiboilerplate-desc' => 'Дазваляе ўдзельнікам выбіраць тыповыя тэксты са сьпісу над полем рэдагаваньня',
+	'multiboilerplate-legend' => 'Выбар узору',
+	'multiboilerplate-submit' => 'Загрузіць',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'multiboilerplate-submit' => 'Зареждане',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'multiboilerplate-desc' => 'Omogućuje da se odabere tekstualni šablon sa opadajućeg spisak smještenog iznad obrasca za uređivanje pri uređivanju stranica',
+	'multiboilerplate-legend' => 'Odaberi tekstualni šablon',
+	'multiboilerplate-submit' => 'Učitaj',
 );
 
 /** German (Deutsch)
@@ -98,6 +117,20 @@ $messages['eo'] = array(
 	'multiboilerplate-submit' => 'Alŝuti',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'multiboilerplate-submit' => 'Cargar',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'multiboilerplate-submit' => 'Kargatu',
+);
+
 /** French (Français)
  * @author Grondin
  */
@@ -128,6 +161,15 @@ $messages['gl'] = array(
  */
 $messages['grc'] = array(
 	'multiboilerplate-submit' => 'φορτίζειν',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'multiboilerplate-desc' => 'Macht s megli e Täxtvorlag us em Uuswahlchaschte iber em Bearbeitigsformular uuszwehle derwylscht d Syte bearbeitet wird',
+	'multiboilerplate-legend' => 'Täxtvorlag uuswehle',
+	'multiboilerplate-submit' => 'Lade',
 );
 
 /** Hawaiian (Hawai`i)
@@ -164,10 +206,13 @@ $messages['ia'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
-	'multiboilerplate-submit' => 'ロード',
+	'multiboilerplate-desc' => 'ページ編集時に編集フォームの上のドロップダウンボックスから定型句を選択できるようにする',
+	'multiboilerplate-legend' => '定型句の選択',
+	'multiboilerplate-submit' => '読み込み',
 );
 
 /** Javanese (Basa Jawa)
@@ -232,6 +277,8 @@ $messages['nl'] = array(
  * @author Harald Khan
  */
 $messages['nn'] = array(
+	'multiboilerplate-desc' => 'Syner ein boks på toppen av endringssida for å velja og lasta ein standardtekst',
+	'multiboilerplate-legend' => 'Vel standardtekst',
 	'multiboilerplate-submit' => 'Last',
 );
 
@@ -277,6 +324,15 @@ $messages['pt'] = array(
 	'multiboilerplate-submit' => 'Carregar',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'multiboilerplate-desc' => 'Permite que um texto-modelo seja selecionado de uma lista suspensa localizada acima do formulário de edição, quando se edita páginas',
+	'multiboilerplate-legend' => 'Selecione o texto-modelo',
+	'multiboilerplate-submit' => 'Carregar',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -309,6 +365,22 @@ $messages['sv'] = array(
  */
 $messages['th'] = array(
 	'multiboilerplate-submit' => 'โหลด',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'multiboilerplate-desc' => 'Nagpapahintulot na makapili ng isang "pakuluang-bakal" mula sa isang kahong bumabagsak pababa na nasa itaas ng pormularyong pampatnugot (pambago) kapag nagbabago ng mga pahina',
+	'multiboilerplate-legend' => 'Pumili ng pakuluang-bakal',
+	'multiboilerplate-submit' => 'Ikarga',
+);
+
+/** Turkish (Türkçe)
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'multiboilerplate-submit' => 'Yükle',
 );
 
 /** Vietnamese (Tiếng Việt)

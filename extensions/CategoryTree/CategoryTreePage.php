@@ -76,7 +76,7 @@ class CategoryTreePage extends SpecialPage {
 			if ( $title && $title->getArticleID() ) {
 				$wgOut->addHTML( Xml::openElement( 'div', array( 'class' => 'CategoryTreeParents' ) ) );
 				$wgOut->addHTML( wfMsgExt( 'categorytree-parents', 'parseinline' ) );
-				$wgOut->addHTML( ': ' );
+				$wgOut->addHTML( wfMsg( 'colon-separator' ) );
 
 				$parents = $this->tree->renderParents( $title );
 

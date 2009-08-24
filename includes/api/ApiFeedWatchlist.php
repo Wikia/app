@@ -89,7 +89,7 @@ class ApiFeedWatchlist extends ApiBase {
 			$data = $module->getResultData();
 
 			$feedItems = array ();
-			foreach ($data['query']['watchlist'] as $info) {
+			foreach ((array)$data['query']['watchlist'] as $info) {
 				$feedItems[] = $this->createFeedItem($info);
 			}
 
@@ -175,6 +175,6 @@ class ApiFeedWatchlist extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFeedWatchlist.php 35098 2008-05-20 17:13:28Z ialex $';
+		return __CLASS__ . ': $Id: ApiFeedWatchlist.php 46848 2009-02-05 15:31:06Z catrope $';
 	}
 }

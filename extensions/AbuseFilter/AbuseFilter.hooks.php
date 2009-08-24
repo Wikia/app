@@ -138,9 +138,8 @@ class AbuseFilterHooks {
 		## This is a pretty awful hack.
 		$dbr = wfGetDB( DB_SLAVE );
 
-		$res = $dbr->select( array( 'abuse_filter_action', 'abuse_filter' ), 'afa_parameters', 
-			array( 'afa_consequence' => 'tag', 'af_enabled' => true ), __METHOD__, array(),
-			array( 'abuse_filter' => array( 'inner join', 'afa_filter=af_id' ) ) );
+		$res = $dbr->select( 'abuse_filter_action', 'afa_parameters', 
+			array( 'afa_consequence' => 'tag' ), __METHOD__ );
 
 		while( $row = $res->fetchObject() ) {
 			$emptyTags = array_filter( 
@@ -152,72 +151,30 @@ class AbuseFilterHooks {
 	}
 
 	public static function onLoadExtensionSchemaUpdates() {
-		global $wgExtNewTables, $wgExtNewFields, $wgExtPGNewFields, $wgExtPGAlteredFields, $wgExtNewIndexes, $wgDBtype;
+		global $wgExtNewTables, $wgExtNewFields, $wgExtPGNewFields, $wgExtNewIndexes, $wgDBtype;
 
 		$dir = dirname( __FILE__ );
 		
 		// DB updates
 		if( $wgDBtype == 'mysql' ) {
-			$wgExtNewTables[] = array( 'abuse_filter', "$dir/abusefilter.tables.sql" );
-			$wgExtNewTables[] = array( 'abuse_filter_history', "$dir/db_patches/patch-abuse_filter_history.sql" );
-			$wgExtNewFields[] = array( 'abuse_filter_history', 'afh_changed_fields', "$dir/db_patches/patch-afh_changed_fields.sql" );
-			$wgExtNewFields[] = array( 'abuse_filter', 'af_deleted', "$dir/db_patches/patch-af_deleted.sql" );
-			$wgExtNewFields[] = array( 'abuse_filter', 'af_actions', "$dir/db_patches/patch-af_actions.sql" );
-			$wgExtNewFields[] = array( 'abuse_filter', 'af_global', "$dir/db_patches/patch-global_filters.sql" );
+			$wgExtNewTables = array_merge( $wgExtNewTables,
+				    array(
+						  array( 'abuse_filter', "$dir/abusefilter.tables.sql" ),
+						  array( 'abuse_filter_history', "$dir/db_patches/patch-abuse_filter_history.sql" ),
+						  array( 'abuse_filter_history', 'afh_changed_fields', "$dir/db_patches/patch-afh_changed_fields.sql" ),
+						  array( 'abuse_filter', 'af_deleted', "$dir/db_patches/patch-af_deleted.sql" ),
+						  array( 'abuse_filter', 'af_actions', "$dir/db_patches/patch-af_actions.sql" ),
+					) );
 		} else if ( $wgDBtype == 'postgres' ) {
 			$wgExtNewTables = array_merge( $wgExtNewTables,
 				    array(
 						  array( 'abuse_filter', "$dir/abusefilter.tables.pg.sql" ),
 						  array( 'abuse_filter_history', "$dir/db_patches/patch-abuse_filter_history.pg.sql" ),
 					) );
+			$wgExtPGNewFields[] = array('abuse_filter', 'af_deleted', "SMALLINT NOT NULL DEFAULT 0" );
 			$wgExtPGNewFields[] = array('abuse_filter', 'af_actions', "TEXT NOT NULL DEFAULT ''" );
-			$wgExtPGNewFields[] = array('abuse_filter', 'af_deleted', 'SMALLINT NOT NULL DEFAULT 0' );
-			$wgExtPGNewFields[] = array('abuse_filter', 'af_global',  'SMALLINT NOT NULL DEFAULT 0' );
-
-			$wgExtPGNewFields[] = array('abuse_filter_log', 'afl_wiki',    'TEXT' );
-			$wgExtPGNewFields[] = array('abuse_filter_log', 'afl_deleted', 'SMALLINT' );
-			$wgExtPGAlteredFields[] = array('abuse_filter_log', 'afl_filter', 'TEXT' );
-
 			$wgExtNewIndexes[] = array('abuse_filter_log', 'abuse_filter_log_ip', "(afl_ip)");
 		}
 		return true;
 	}
-	
-	public static function onContributionsToolLinks( $id, $nt, &$tools )
-	{
-	    global $wgUser;
-	    wfLoadExtensionMessages( 'AbuseFilter' );
-        if( $wgUser->isAllowed( 'abusefilter-log' ) ) {
-    	    $sk = $wgUser->getSkin();
-	    	$tools[] = $sk->link(
-	    			SpecialPage::getTitleFor( 'AbuseLog' ),
-	    			wfMsg( 'abusefilter-log-linkoncontribs' ),
-	    			array( 'title' =>
-	    				wfMsgExt( 'abusefilter-log-linkoncontribs-text', 'parseinline' ) ),
-	    			array( 'wpSearchUser' => $nt->getText() )
-	    		);
-		}
-		return true;
-    }
-    
-    public static function onUploadVerification($saveName, $tempName, &$error) {
-		$vars = new AbuseFilterVariableHolder;
-		
-		global $wgUser;
-		$vars->addHolder( AbuseFilterVariableHolder::merge(
-							AbuseFilter::generateUserVars( $wgUser ),
-							AbuseFilter::generateTitleVars( Title::newFromText($saveName), 'FILE' )
-				) );
-				
-		$vars->setVar( 'ACTION', 'upload' );
-		$vars->setVar( 'file_sha1', sha1_file( $tempName ) ); // TODO share with save
-		
-		$filter_result = AbuseFilter::filterAction( $vars, Title::newFromText( $saveName ) );
-		
-		if ( is_string($filter_result) ) {
-			$error = $filter_result;
-		}
-		
-		return $filter_result == '' || $filter_result === true;
-    }
 }

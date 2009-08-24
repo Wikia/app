@@ -74,9 +74,10 @@ $messages['es'] = array(
 /** French (Français)
  * @author Grondin
  * @author IAlex
+ * @author PieRRoMaN
  */
 $messages['fr'] = array(
-	'gotocategory-desc' => "Vérifier les termes des recherches envers l'espace de noms « Catégorie: » pour la fonctionnalité « Aller à la page »",
+	'gotocategory-desc' => "Vérifie les termes des recherches envers l'espace de noms « Catégorie: » pour la fonctionnalité « Aller à la page »",
 );
 
 /** Galician (Galego)
@@ -84,6 +85,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'gotocategory-desc' => 'Comproba os termos da procura contra o espazo de nomes Categoría: para "Ir" a partir da funcionalidade "saltar a unha páxina"',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'gotocategory-desc' => 'Prieft Suechbegriff gege dr Kategorie-Namensruum fir d „Gang diräkt zue dr Syte“-Funktionalität',
 );
 
 /** Hebrew (עברית)
@@ -107,6 +115,13 @@ $messages['ia'] = array(
 	'gotocategory-desc' => "Cerca parolas etiam in le spatio de nomines Categoria: a fin de possibilisar le function 'ir al pagina'",
 );
 
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'gotocategory-desc' => "Controlla i termini di ricerca con il namespace Categoria: per la funzionalità di 'salta alla pagina' di Vai",
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
@@ -126,6 +141,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'gotocategory-desc' => "Iwwerpréift Sichbegreffer géint den Nummraum-Kategorien fir d'fonctioun 'Op d'Säit sprangen'",
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'gotocategory-desc' => "Doorzeuk ouch de naamrummdje Category: veur zeuktèrm óm 'nao paasj gaon' meugelik tö make",
 );
 
 /** Marathi (मराठी)
@@ -167,7 +189,14 @@ $messages['oc'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
-	'gotocategory-desc' => "Verifica termos de pesquisa num espaço nominal Categoria: para a funcionalidade Ir 'saltar para página'",
+	'gotocategory-desc' => "Verifica termos de pesquisa no espaço nominal Categoria: para a funcionalidade Ir 'saltar para página'",
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'gotocategory-desc' => "Verifica termos de pesquisa no espaço nominal Categoria: para a funcionalidade Ir 'saltar para página'",
 );
 
 /** Tarandíne (Tarandíne)
@@ -191,6 +220,20 @@ $messages['sk'] = array(
 	'gotocategory-desc' => 'Vyhľadá slová v mennom priestore Kategória: pomocou funkcie „Ísť na stránku“',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'gotocategory-desc' => 'Wröiget Säikbegriepe juun dän Kategorien-Noomensruum foar ju "Gung fluks tou ju Siede"-Funktionoalität',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'gotocategory-desc' => "Pariksa istilah nu disungsi dina namespace Kategori: pikeun fungsi Jung 'luncat ka kaca'",
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -198,10 +241,24 @@ $messages['sv'] = array(
 	'gotocategory-desc' => 'Checkar sökord upp mot kategorinamnrymden för "Gå"-funktionaliteten i sökboxen',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'gotocategory-desc' => "Nagsusuri ng mga salitang panghanap laban sa espasyo ng pangalang Kaurian: para sa sa katungkulang Gawin 'tumalon papunta sa pahina'",
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'gotocategory-desc' => "Kiểm tra cụm từ tìm kiếm trong không gian tên Thể loại: để dùng cho chức năng Xem 'nhảy ngay tới trang'",
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wmr89502270
+ */
+$messages['zh-hans'] = array(
+	'gotocategory-desc' => "检查的搜索字词的种类：名字空间的到'跳转到页'的功能",
 );
 

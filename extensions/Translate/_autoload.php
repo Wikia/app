@@ -68,6 +68,7 @@ $wgAutoloadClasses['TranslateToolbox'] = $dir . 'utils/ToolBox.php';
 
 # predefined groups
 $wgAutoloadClasses['PremadeMediawikiExtensionGroups'] = $dir . 'groups/MediaWikiExtensions.php';
+$wgAutoloadClasses['CommonistMessageGroup'] = $dir . 'groups/Commonist.php';
 $wgAutoloadClasses['FreeColMessageGroup'] = $dir . 'groups/FreeCol.php';
 $wgAutoloadClasses['MantisMessageGroup'] = $dir . 'groups/Mantis.php';
 

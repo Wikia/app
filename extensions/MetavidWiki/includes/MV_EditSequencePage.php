@@ -19,11 +19,11 @@ class MV_EditSequencePage extends EditPage {
  		mvAddGlobalJSVariables( array( 'mvSeqExportUrl' => $seqPlayer->getExportUrl() ) );
  		//add the "switch" link to the top of the page 		
  		$wgOut->addHTML('<span id="swich_seq_links">
-	 			<a id="swich_seq_text" 
+	 			<a id="swich_seq_text" style="display:none"
 	 			    href="javascript:mv_do_sequence_edit_swap(\'text\')">'.
 	 			    wfMsg('mv_sequence_edit_text') . 
 	 			'</a>' . 		
-	 			'<a id="switch_seq_wysiwyg" style="display:none"
+	 			'<a id="switch_seq_wysiwyg" 
 	 				href="javascript:mv_do_sequence_edit_swap(\'seq_update\')">' .
 	 			  	wfMsg('mv_sequence_edit_visual_editor') .
 	 			'</a>' . 

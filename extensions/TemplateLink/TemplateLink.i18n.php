@@ -67,12 +67,33 @@ $messages['bcl'] = array(
 	'templatelink_empty' => 'Kaipuhan mong suplayan an parametro.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'templatelink' => 'Спасылка на шаблён',
+	'templatelink_desc' => 'Гэта пашырэньне паказвае шаблён як новую старонку',
+	'templatelink_empty' => 'Вам неабходна пазначыць парамэтар.',
+	'templatelink_newtitle' => '$1 (пераўтвораны)',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'templatelink_desc' => 'Това разширение може да показва шаблон като нова страница',
 	'templatelink_empty' => 'Необходимо е да се въведе параметър.',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'templatelink' => 'Link šablona',
+	'templatelink_desc' => 'Ovo proširenje pokazuje šablon kao novu stranicu',
+	'templatelink_empty' => 'Morate navesti parametar.',
+	'templatelink_newtitle' => '$1 (zamijenjeno)',
 );
 
 /** Czech (Česky)
@@ -122,6 +143,16 @@ $messages['eo'] = array(
 	'templatelink_newtitle' => '$1 (transinkluzivita)',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'templatelink' => 'Vínculo de plantilla',
+	'templatelink_desc' => 'Esta extensión puede mostrar una plantilla como una nueva página',
+	'templatelink_empty' => 'Usted tiene que proveer un parámetro.',
+	'templatelink_newtitle' => '$1 (transcluído)',
+);
+
 /** Basque (Euskara)
  * @author An13sa
  * @author Kobazulo
@@ -152,6 +183,16 @@ $messages['gl'] = array(
 	'templatelink_desc' => 'Esta extensión pode amosar un modelo como unha páxina nova',
 	'templatelink_empty' => 'Vostede ten que proporcionar un parámetro.',
 	'templatelink_newtitle' => '$1 (transcluído)',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'templatelink' => 'Vorlage-Gleich',
+	'templatelink_desc' => 'Die Erwyterig cha ne Vorlag as neji Syten aazeige',
+	'templatelink_empty' => 'Du muesch no ei Parameter aagee',
+	'templatelink_newtitle' => '$1 (ersetzt)',
 );
 
 /** Hebrew (עברית)
@@ -337,9 +378,33 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Lijealso
+ * @author Malafaya
  */
 $messages['pt'] = array(
+	'templatelink' => 'Ligação de predefinição',
+	'templatelink_desc' => 'Esta extensão pode mostrar uma predefinição como uma nova página',
 	'templatelink_empty' => 'Deverá fornecer um parâmetro',
+	'templatelink_newtitle' => '$1 (transcluído)',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'templatelink' => 'Ligação de predefinição',
+	'templatelink_desc' => 'Esta extensão pode mostrar uma predefinição como uma nova página',
+	'templatelink_empty' => 'Você deverá fornecer um parâmetro',
+	'templatelink_newtitle' => '$1 (transcluído)',
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'templatelink' => 'Ссылка на шаблон',
+	'templatelink_desc' => 'Это расширение может показывать шаблоны как новые страницы',
+	'templatelink_empty' => 'Вы должны указать параметр.',
+	'templatelink_newtitle' => '$1 (включение)',
 );
 
 /** Slovak (Slovenčina)
@@ -415,6 +480,25 @@ $messages['vec'] = array(
 	'templatelink_desc' => 'Sta estension la pode mostrar un modèl come nova pàxena',
 	'templatelink_empty' => 'Ti gà da fornir un parametro.',
 	'templatelink_newtitle' => '$1 (trasclusión)',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'templatelink' => 'Liên kết tiêu banr',
+	'templatelink_desc' => 'Bộ mở rộng này có thể hiển thị một tiêu bản như một trang mới',
+	'templatelink_empty' => 'Bạn phải cung cấp một tham số.',
+	'templatelink_newtitle' => '$1 (được nhúng)',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'templatelink' => 'Samafomotayüm',
+	'templatelink_desc' => 'Veitükumam at kanon jonön samafomoti as pad nulik.',
+	'templatelink_empty' => 'Mutol gevön parameti.',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

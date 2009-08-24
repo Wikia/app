@@ -9,14 +9,14 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 'Not an entry point.' );
 }
 
-define('SRF_VERSION', '1.4.1');
+define('SRF_VERSION', '1.4.3');
 
 $srfgScriptPath = $wgScriptPath . '/extensions/SemanticResultFormats';
 $srfgIP = $IP . '/extensions/SemanticResultFormats';
 $wgExtensionMessagesFiles['SemanticResultFormats'] = $srfgIP . '/SRF_Messages.php';
 $wgExtensionFunctions[] = 'srffSetup';
 
-$srfgFormats = array('calendar', 'eventline', 'timeline', 'sum', 'average', 'min', 'max');
+$srfgFormats = array('icalendar', 'vcard', 'bibtex', 'calendar', 'eventline', 'timeline', 'sum', 'average', 'min', 'max');
 
 function srffSetup() {
 	global $srfgFormats, $wgExtensionCredits;
@@ -26,8 +26,8 @@ function srffSetup() {
 	$wgExtensionCredits['other'][]= array(
 		'name' => 'Semantic Result Formats',
 		'version' => SRF_VERSION,
-		'author' => "[http://simia.net Denny&nbsp;Vrandecic], Frank Dengler, Yaron Koren and Nathan Yergler",
-		'url' => 'http://www.semantic-mediawiki.org/wiki/Help:Semantic_Result_Formats',
+		'author' => "Frank Dengler, [http://steren.fr Steren Giannini], Fabian Howahl, Yaron Koren, [http://korrekt.org Markus Krötzsch], Joel Natividad, [http://simia.net Denny&nbsp;Vrandecic], Nathan Yergler",
+		'url' => 'http://semantic-mediawiki.org/wiki/Help:Semantic_Result_Formats',
 		'description' => 'Additional formats for Semantic MediaWiki inline queries. Available formats: ' . $formats_list
 	);
 }
@@ -37,31 +37,53 @@ function srffInitFormat( $format ) {
 
 	$class = '';
 	$file = '';
-	if ($format == 'graph') {
-		$class = 'SRFGraph';
-		$file = $srfgIP . '/GraphViz/SRF_Graph.php';
+	switch ($format) {
+		case 'timeline': case 'eventline':
+			$class = 'SRFTimeline';
+			$file = $srfgIP . '/Timeline/SRF_Timeline.php';
+		break;
+		case 'vcard':
+			$class = 'SRFvCard';
+			$file = $srfgIP . '/vCard/SRF_vCard.php';
+		break;
+		case 'icalendar':
+			$class = 'SRFiCalendar';
+			$file = $srfgIP . '/iCalendar/SRF_iCalendar.php';
+		break;
+		case 'bibtex':
+			$class = 'SRFBibTeX';
+			$file = $srfgIP . '/BibTeX/SRF_BibTeX.php';
+		break;
+		case 'calendar':
+			$class = 'SRFCalendar';
+			$file = $srfgIP . '/Calendar/SRF_Calendar.php';
+		breaK;
+		case  'sum': case 'average': case 'min': case 'max':
+			$class = 'SRFMath';
+			$file = $srfgIP . '/Math/SRF_Math.php';
+		break;
+		case 'exhibit':
+			$class = 'SRFExhibit';
+			$file = $srfgIP . '/Exhibit/SRF_Exhibit.php';
+		break;
+		case 'googlebar':
+			$class = 'SRFGoogleBar';
+			$file = $srfgIP . '/GoogleCharts/SRF_GoogleBar.php';
+		break;
+		case 'googlepie':
+			$class = 'SRFGooglePie';
+			$file = $srfgIP . '/GoogleCharts/SRF_GooglePie.php';
+		break;
+		case 'ploticus':
+			$class = 'SRFPloticus';
+			$file = $srfgIP . '/Ploticus/SRF_Ploticus.php';
+		break;
+		case 'graph':
+			$class = 'SRFGraph';
+			$file = $srfgIP . '/GraphViz/SRF_Graph.php';
+		break;
 	}
-	if ($format == 'googlebar') {
-		$class = 'SRFGoogleBar';
-		$file = $srfgIP . '/GoogleCharts/SRF_GoogleBar.php';
-	}
-	if ($format == 'googlepie') {
-		$class = 'SRFGooglePie';
-		$file = $srfgIP . '/GoogleCharts/SRF_GooglePie.php';
-	}
-	if ($format == 'timeline' || $format == 'eventline') {
-		$class = 'SRFTimeline';
-		$file = $srfgIP . '/Timeline/SRF_Timeline.php';
-	}
-	if ($format == 'calendar') {
-		$class = 'SRFCalendar';
-		$file = $srfgIP . '/Calendar/SRF_Calendar.php';
-	}
-	if ($format == 'sum' || $format == 'average' || $format == 'min' || $format == 'max') {
-		$class = 'SRFMath';
-		$file = $srfgIP . '/Math/SRF_Math.php';
-	}
-	if (($class != '') && ($file)) {
+	if (($class) && ($file)) {
 		$smwgResultFormats[$format] = $class;
 		$wgAutoloadClasses[$class] = $file;
 	}

@@ -210,6 +210,8 @@ $messages = array(
 'tog-highlightbroken'         => 'Formatiraj pokvarene veze <a href="" class="new">ovako</a> (alternativa: ovako<a href="" class="internal">?</a>).',
 'tog-justify'                 => 'Uravnaj pasuse',
 'tog-hideminor'               => 'Sakrij male izmene u spisku skorašnjih izmena',
+'tog-hidepatrolled'           => 'Sakrij patrolirane izmene u skorašnjim izmenama',
+'tog-newpageshidepatrolled'   => 'Sakrij patrolirane stranice sa spiska novih stranica',
 'tog-extendwatchlist'         => 'Poboljšan spisak nadgledanja',
 'tog-usenewrc'                => 'Poboljšan spisak skorašnjih izmena (zahteva JavaScript)',
 'tog-numberheadings'          => 'Automatski numeriši podnaslove',
@@ -244,6 +246,7 @@ $messages = array(
 'tog-watchlisthideminor'      => 'Sakrij male izmene sa spiska nadgledanja',
 'tog-watchlisthideliu'        => 'Sakrij izmene prijavljenih korisnika sa spiska nadgledanja',
 'tog-watchlisthideanons'      => 'Sakrij izmene anonimnih korisnika sa spiska nadgledanja',
+'tog-watchlisthidepatrolled'  => 'Sakrij patrolirane izmene sa spiska nadgledanja',
 'tog-nolangconversion'        => 'Isključi konverziju varijanti',
 'tog-ccmeonemails'            => 'Pošalji mi kopije imejlova koje šaljem drugim korisnicima',
 'tog-showhiddencats'          => 'Prikaži skrivene kategorije',
@@ -778,15 +781,11 @@ Pokušajte [[Special:Search|da pretražite viki]] za relevantne nove strane.',
 # Revision deletion
 'rev-deleted-comment'         => '(komentar uklonjen)',
 'rev-deleted-user'            => '(korisničko ime uklonjeno)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-Revizija ove stranice je uklonjena iz javnih arhiva.
-Moguće da ima više detalja u [{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} istoriji brisanja].
-</div>',
-'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">
-Revizija ove stranice je uklonjena iz javnih arhiva.
+'rev-deleted-text-permission' => 'Revizija ove stranice je uklonjena iz javnih arhiva.
+Moguće da ima više detalja u [{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} istoriji brisanja].',
+'rev-deleted-text-view'       => 'Revizija ove stranice je uklonjena iz javnih arhiva.
 Kao administrator, možete da je pogledate;
-Moguće da ima više detalja u [{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} istoriji brisanja].
-</div>',
+Moguće da ima više detalja u [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} istoriji brisanja].',
 'rev-delundel'                => 'pokaži/sakrij',
 'revisiondelete'              => 'Obriši/vrati reviziju',
 'revdelete-nooldid-title'     => 'Nema odabrane revizije',
@@ -884,6 +883,7 @@ koje sadrže sve izraze koji se traže će se pojaviti u rezultatu).",
 'timezoneoffset'           => 'Odstupanje¹',
 'servertime'               => 'Vreme na serveru',
 'guesstimezone'            => 'Popuni iz brauzera',
+'timezoneregion-africa'    => 'Afrika',
 'allowemail'               => 'Omogući e-poštu od drugih korisnika',
 'defaultns'                => 'Po standardu traži u ovim imenskim prostorima:',
 'default'                  => 'standard',
@@ -1028,7 +1028,7 @@ molimo vratite se i pošaljite ovaj fajl pod novim imenom. [[File:$1|thumb|cente
 'imagelinks'                => 'Upotreba slike',
 'linkstoimage'              => 'Sledeće stranice koriste ovaj fajl:',
 'nolinkstoimage'            => 'Nema stranica koje koriste ovaj fajl.',
-'sharedupload'              => 'Ova slika je sa zajedničke ostave i možda je koriste ostali projekti.',
+'sharedupload'              => 'Ova slika je sa zajedničke ostave i možda je koriste ostali projekti.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'shareduploadwiki'          => 'Molimo pogledajte $1 za dalje informacije.',
 'shareduploadwiki-linktext' => 'strana za opis fajla',
 'noimage'                   => 'Ne postoji fajl sa ovim imenom, možete ga $1',
@@ -1142,7 +1142,8 @@ Možete suziti pregled odabirom tipa istorije, korisničkog imena ili tražene s
 'categoriespagetext' => 'Sledeće kategorije već postoje na vikiju',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Obrisane izmene',
+'deletedcontributions'       => 'Obrisane izmene',
+'deletedcontributions-title' => 'Obrisane izmene',
 
 # Special:ListUsers
 'listusersfrom' => 'Prikaži korisnike počevši od:',
@@ -1335,7 +1336,7 @@ Pogledajte [[{{ns:special}}:Log/delete|istoriju brisanja]] za spisak skorašnjih
 'contributions' => 'Prilozi korisnika',
 'mycontris'     => 'Moji prilozi',
 'contribsub2'   => 'Za $1 ($2)',
-'nocontribs'    => 'Nisu nađene promene koje zadovoljavaju ove uslove.',
+'nocontribs'    => 'Nisu nađene promene koje zadovoljavaju ove uslove.', # Optional parameter: $1 is the user name
 'uctop'         => ' (vrh)',
 
 'sp-contributions-newbies-sub' => 'Za novajlije',
@@ -1684,6 +1685,7 @@ Svi transviki uvozi su zabeleženi u [[Posebno:Log/import|istoriji uvoza]].',
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags
@@ -1974,10 +1976,8 @@ Ako ovo *niste* vi, ne pratite vezu. Ovaj kod za potvrdu će isteći u $4.',
 'scarytranscludetoolong'  => '[URL je predugačak; žao nam je]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">
-Vraćanja za ovaj članak:<br />
-$1
-</div>',
+'trackbackbox'      => 'Vraćanja za ovaj članak:<br />
+$1',
 'trackbackremove'   => '([$1 Brisanje])',
 'trackbacklink'     => 'Vraćanje',
 'trackbackdeleteok' => 'Vraćanje je uspešno obrisano.',

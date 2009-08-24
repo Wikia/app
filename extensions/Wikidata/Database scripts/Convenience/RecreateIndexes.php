@@ -34,7 +34,7 @@ ob_end_flush();
  */
 function retrieve_datasets(){
 	$prefixes = array();
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query("select set_prefix from wikidata_sets");
 	while ($datasetRecord = $dbr->fetchObject($queryResult) ) {
 		array_push( $prefixes, $datasetRecord->set_prefix );

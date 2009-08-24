@@ -30,6 +30,17 @@ class ForeignAPIRepo extends FileRepo {
 			$this->scriptDirUrl = dirname( $this->mApiBase );
 		}
 	}
+	
+	/**
+	 * Per docs in FileRepo, this needs to return false if we don't support versioned
+	 * files. Well, we don't.
+	 */
+	function newFile( $title, $time = false ) {
+		if ( $time ) {
+			return false;
+		}
+		return parent::newFile( $title, $time );
+	}
 
 /**
  * No-ops
@@ -109,7 +120,7 @@ class ForeignAPIRepo extends FileRepo {
 		$ret = array();
 		if ( isset( $results['query']['allimages'] ) ) {
 			foreach ( $results['query']['allimages'] as $img ) {
-				$ret[] = new ForeignAPIFile( Title::makeTitle( NS_IMAGE, $img['name'] ), $this, $img );
+				$ret[] = new ForeignAPIFile( Title::makeTitle( NS_FILE, $img['name'] ), $this, $img );
 			}
 		}
 		return $ret;

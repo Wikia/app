@@ -9,7 +9,7 @@ if ( php_sapi_name() !== 'cli' ) {
 	exit( 1 );
 }
 
-$wgExtDistWorkingCopy = '/home/wikipedia/ExtensionDistributor/mw-snapshot';
+$wgExtDistWorkingCopy = '/mnt/upload5/private/ExtensionDistributor/mw-snapshot';
 svnExecute();
 
 function svnValidate( $s ) {

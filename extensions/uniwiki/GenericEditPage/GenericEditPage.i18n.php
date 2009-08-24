@@ -34,6 +34,7 @@ Add some using the tools in the menu bar.',
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
  */
@@ -42,6 +43,24 @@ $messages['qqq'] = array(
 	'gep-categories' => '{{Identical|Categories}}',
 	'gep-addcategorybutton' => '{{Identical|Add}}',
 	'gep-addsectionbutton' => '{{Identical|Add}}',
+	'gep-categorypage' => '{{optional}}',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'gep-categories' => 'Kategorijad',
+	'gep-addcategory' => 'Ližata kategorii',
+	'gep-addcategorybutton' => 'Ližata',
+	'gep-suggestcategory' => 'Nevoda kategorii',
+	'gep-suggestcategorybutton' => 'Oigeta',
+	'gep-sections' => 'Jagused',
+	'gep-sectionnotdisabled' => 'Ei sa saubata nece jaguz',
+	'gep-addsection' => 'Ližata jaguz',
+	'gep-addsectionbutton' => 'Ližata',
+	'gep-classicmode' => 'Klassine režim',
+	'gep-genericmode' => 'Ühthine režim',
 );
 
 /** Amharic (አማርኛ)
@@ -52,12 +71,15 @@ $messages['am'] = array(
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author OsamaK
  * @author Ouda
  * @author ترجمان05
  */
 $messages['ar'] = array(
+	'gep-desc' => 'يدعم نافذة التعديل لتكون أفضل للمستخدم',
 	'gep-emailsubject' => '[$1] اقتراح التصنيف: $2',
+	'gep-emailbody' => 'المستخدم "$1" اقترح التصنيف "$2" للموقع "$3".',
 	'gep-emailfailure' => 'للأسف ، أقتراحك لا يمكن أن يتم',
 	'gep-emailsuccess' => 'شكرا لاقتراح التصنيف: $1.',
 	'gep-categories' => 'تصنيفات',
@@ -71,15 +93,19 @@ $messages['ar'] = array(
 	'gep-addsectionbutton' => 'أضف',
 	'gep-classicmode' => 'النمط التقليدي',
 	'gep-genericmode' => 'النمط العام',
+	'gep-nosectioninstructions' => 'لا توجد أقسام في هذه الصفحة.
+أضف البعض باستخدام الأدوات في شريط القائمة.',
 	'gep-nocategories' => 'من فضلك أختار على الأقل تصنيف واحد قبل الحفظ',
 	'gep-categorypage' => 'MediaWiki:Editpagetags',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
  * @author Ghaly
+ * @author Meno25
  * @author Ramsis II
  */
 $messages['arz'] = array(
+	'gep-desc' => 'يدعم نافذة التعديل لتكون أفضل للمستخدم',
 	'gep-emailsubject' => '[$1] اقتراح التصنيف: $2',
 	'gep-emailbody' => 'اليوزر "$1" اقترح التصنيف"$2" للموقع"$3".',
 	'gep-emailfailure' => 'متاسفين،الاقتراح بتاعك ماينفعش يتنفذ',
@@ -102,18 +128,30 @@ $messages['arz'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
+	'gep-desc' => 'Дапаўняе старонку рэдагаваньня, каб зрабіць яе больш зручнай для ўдзельніка',
 	'gep-emailsubject' => '[$1] Прапанаваная катэгорыя: $2',
+	'gep-emailbody' => 'Удзельнік «$1» прапанаваў катэгорыю «$2» для сайта «$3».',
+	'gep-emailfailure' => 'Прабачце, Вашая прапанова ня можа быць апрацаваная.',
 	'gep-emailsuccess' => 'Дзякуй за прапанову катэгорыі «$1».',
 	'gep-categories' => 'Катэгорыі',
 	'gep-addcategory' => 'Дадаць катэгорыю',
 	'gep-addcategorybutton' => 'Дадаць',
 	'gep-suggestcategory' => 'Прапанаваць катэгорыю',
+	'gep-suggestcategorybutton' => 'Даслаць',
 	'gep-sections' => 'Сэкцыі',
+	'gep-sectionnotdisabled' => 'Гэтая сэкцыя ня можа быць адключаная',
 	'gep-addsection' => 'Дадаць сэкцыю',
 	'gep-addsectionbutton' => 'Дадаць',
+	'gep-classicmode' => 'Клясычны рэжым',
+	'gep-genericmode' => 'Агульны рэжым',
+	'gep-nosectioninstructions' => 'На гэтай старонцы няма сэкцыяў.
+Дадайце іх з дапамогай інструмэнтаў у мэню.',
+	'gep-nocategories' => 'Калі ласка, выберыце хаця б адну катэгорыю перад захаваньнем',
+	'gep-categorypage' => 'MediaWiki:Editpagetags',
 );
 
 /** Bulgarian (Български)
@@ -121,18 +159,61 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'gep-emailbody' => 'Потребител „$1“ предложи категория „$2“ за сайта „$3“.',
+	'gep-emailfailure' => 'За съжаление предложението не може да бъде обработено.',
+	'gep-emailsuccess' => 'Благодарности за предложената категория: $1.',
 	'gep-categories' => 'Категории',
 	'gep-addcategory' => 'Добавяне на категория',
 	'gep-addcategorybutton' => 'Добавяне',
+	'gep-suggestcategory' => 'Предлагане на категория',
 	'gep-suggestcategorybutton' => 'Изпращане',
 	'gep-sections' => 'Раздели',
 	'gep-sectionnotdisabled' => 'Този раздел не може да бъде изключен',
 	'gep-addsection' => 'Добавяне на раздел',
 	'gep-addsectionbutton' => 'Добавяне',
 	'gep-nosectioninstructions' => 'Тази страница не съдържа раздели.
-Раздели могат да бъдат добавяни чрез инструментите в дясно.',
+Раздели могат да бъдат добавяни чрез менюто.',
 	'gep-nocategories' => 'Преди да съхраните, изберете поне една категория',
 	'gep-categorypage' => 'MediaWiki:Editpagetags',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'gep-desc' => "Klokaat a ra ar furmskrid kemmañ evit ma vo un tres plijusoc'h gantañ",
+	'gep-emailsubject' => '[$1] Kinnig rummad : $2',
+	'gep-emailbody' => 'Kinniget en deus an implijer "$1" ar rummad "$2" evit al lec\'hienn "$3".',
+	'gep-emailfailure' => "Ho tigarez, n'eus ket bet gallet plediñ gant ho kinnig.",
+	'gep-emailsuccess' => 'Trugarez da vezañ kinniget ar rummad : $1.',
+	'gep-categories' => 'Rummadoù',
+	'gep-addcategory' => 'Ouzhpennañ ur rummad',
+	'gep-addcategorybutton' => 'Ouzhpennañ',
+	'gep-suggestcategory' => 'Kinnig ur rummad all',
+	'gep-suggestcategorybutton' => 'Kas',
+	'gep-sections' => 'Rannoù',
+	'gep-sectionnotdisabled' => "N'haller ket diweredekaat ar rann-mañ",
+	'gep-addsection' => 'Ouzhpennañ ur rann',
+	'gep-addsectionbutton' => 'Ouzhpennañ',
+	'gep-classicmode' => 'Mod klasel',
+	'gep-genericmode' => 'Mod hollek',
+	'gep-nosectioninstructions' => "N'eus rann ebet war ar bajenn-mañ.
+Ouzhpennit-int en ur ober gant ostilhoù barrenn al lañserioù.",
+	'gep-nocategories' => 'Diuzit ur rummad da nebeutañ a-raok enrollañ.',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'gep-emailfailure' => 'Žao nam je, Vaš prijedlog nije mogao biti obrađen.',
+	'gep-categories' => 'Kategorije',
+	'gep-addcategory' => 'Dodaj kategoriju',
+	'gep-addcategorybutton' => 'Dodaj',
+	'gep-suggestcategory' => 'Predloži kategoriju',
+	'gep-suggestcategorybutton' => 'Pošalji',
+	'gep-addsection' => 'Dodaj sekciju',
+	'gep-addsectionbutton' => 'Dodaj',
+	'gep-classicmode' => 'Klasični način',
 );
 
 /** Czech (Česky)
@@ -215,6 +296,14 @@ Pśidaj někotare z rědami w menijowej kšomje.',
 	'gep-categorypage' => 'MediaWiki:Editpagetags',
 );
 
+/** Greek (Ελληνικά)
+ * @author Crazymadlover
+ */
+$messages['el'] = array(
+	'gep-addcategorybutton' => 'Προσθήκη',
+	'gep-addsectionbutton' => 'Προσθήκη',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -264,10 +353,12 @@ $messages['es'] = array(
 	'gep-nosectioninstructions' => 'No hay secciones en esta página.
 Agrega algunas secciones utilizando las herramientas en la barra de menús.',
 	'gep-nocategories' => 'Selecciona por lo menos una categoría antes de guardar',
+	'gep-categorypage' => 'MediaWiki:Editpagetags',
 );
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  */
 $messages['eu'] = array(
 	'gep-emailfailure' => 'Barkatu, zure iradokizuna ezin izan da prozesatu.',
@@ -275,23 +366,37 @@ $messages['eu'] = array(
 	'gep-addcategory' => 'Kategoria gehitu',
 	'gep-addcategorybutton' => 'Gehitu',
 	'gep-suggestcategory' => 'Kategoria iradokitu',
+	'gep-suggestcategorybutton' => 'Bidali',
 	'gep-sections' => 'Atalak',
 	'gep-addsection' => 'Saila gehitu',
 	'gep-addsectionbutton' => 'Gehitu',
+	'gep-classicmode' => 'Modu klasikoa',
+	'gep-genericmode' => 'Modu generikoa',
 	'gep-nocategories' => 'Mesedez aukeratu kategoria bat gutxienez gorde baino lehen',
 );
 
+/** Finnish (Suomi)
+ * @author Silvonen
+ */
+$messages['fi'] = array(
+	'gep-addcategory' => 'Lisää luokka',
+	'gep-addcategorybutton' => 'Lisää',
+	'gep-addsectionbutton' => 'Lisää',
+);
+
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author IAlex
+ * @author PieRRoMaN
  * @author Sherbrooke
  */
 $messages['fr'] = array(
-	'gep-desc' => 'Suppléer le formulaire de modification pour être plus facile à utiliser',
+	'gep-desc' => 'Complète le formulaire de modification pour être plus convivial',
 	'gep-emailsubject' => '[$1] Suggestion de catégorie : $2',
 	'gep-emailbody' => "L'utilisateur « $1 » a suggéré la catégorie « $2 » pour le site « $3 ».",
 	'gep-emailfailure' => "Désolé, votre suggestion n'a pas pu être effectuée.",
-	'gep-emailsuccess' => 'Merci pour avoir suggéré la catégorie : $1.',
+	'gep-emailsuccess' => "Merci d'avoir suggéré la catégorie : $1.",
 	'gep-categories' => 'Catégories',
 	'gep-addcategory' => 'Ajouter une catégorie',
 	'gep-addcategorybutton' => 'Ajouter',
@@ -342,6 +447,32 @@ $messages['grc'] = array(
 	'gep-categories' => 'Κατηγορίαι',
 	'gep-addcategorybutton' => 'Προστιθέναι',
 	'gep-addsectionbutton' => 'Προστιθέναι',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'gep-desc' => 'Zuesätz zue dr Bearbeitigssyte go die benutzerfryndliger z mache',
+	'gep-emailsubject' => '[$1] Vorschlag Kategorii: $2',
+	'gep-emailbody' => 'Benutzer „$1“ het d Kategorii „$2“ fir d Syte „$3“ uusgwehlt.',
+	'gep-emailfailure' => 'Leider het Dyy Vorschlag nit chenne verarbeitet wäre.',
+	'gep-emailsuccess' => 'Dankschen, ass Du Kategorie $1 vorgschlaa hesch.',
+	'gep-categories' => 'Kategorie',
+	'gep-addcategory' => 'E Kategorii yyfiege',
+	'gep-addcategorybutton' => 'Yyfiege',
+	'gep-suggestcategory' => 'E Kategorii vorschlaa',
+	'gep-suggestcategorybutton' => 'Schicke',
+	'gep-sections' => 'Abschnitt',
+	'gep-sectionnotdisabled' => 'Dää Abschnitt cha nit ufghobe wäre',
+	'gep-addsection' => 'E Abschnitt yyfiege',
+	'gep-addsectionbutton' => 'Yyfiege',
+	'gep-classicmode' => 'Normaler Modus',
+	'gep-genericmode' => 'Generälle Modus',
+	'gep-nosectioninstructions' => 'Die Syte het kei Abschnitt.
+Mit dr Wärchzyyg an dr Syte chenne Abschnitt yygfiegt wäre.',
+	'gep-nocategories' => 'Bitte vor em Abspychere zmindescht ei Kategorii uussueche',
+	'gep-categorypage' => 'MediaWiki:Editpagetags',
 );
 
 /** Hebrew (עברית)
@@ -399,6 +530,7 @@ Přidaj někotre z pomocu nastrojow w menijowej lajsće.',
 
 /** Hungarian (Magyar)
  * @author Dani
+ * @author Dorgan
  */
 $messages['hu'] = array(
 	'gep-desc' => 'Felhasználóbarátabbá teszi a szerkesztőlapot',
@@ -450,16 +582,28 @@ Adde alcunes con le instrumentos in le barra de menu.',
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
+	'gep-desc' => '編集ページをよりユーザーフレンドリーになるよう補完する',
+	'gep-emailsubject' => '[$1] カテゴリ提案: $2',
+	'gep-emailbody' => '利用者「$1」がサイト $3 にカテゴリ「$2」を提案しました。',
+	'gep-emailfailure' => 'すみません、あなたの提案は処理できませんでした。',
+	'gep-emailsuccess' => 'カテゴリ「$1」を提案いただきありがとうございます。',
 	'gep-categories' => 'カテゴリ',
 	'gep-addcategory' => 'カテゴリの追加',
 	'gep-addcategorybutton' => '追加',
+	'gep-suggestcategory' => 'カテゴリを提案',
 	'gep-suggestcategorybutton' => '送信',
 	'gep-sections' => 'セクション',
+	'gep-sectionnotdisabled' => 'このセクションは無効にできません',
 	'gep-addsection' => 'セクションの追加',
 	'gep-addsectionbutton' => '追加',
+	'gep-classicmode' => 'クラシック・モード',
+	'gep-genericmode' => 'ジェネリック・モード',
+	'gep-nosectioninstructions' => 'このページにはセクションがありません。メニューバーのツールを使って追加してください。',
+	'gep-nocategories' => '保存前に最低でも1つはカテゴリを選んでください',
 );
 
 /** Javanese (Basa Jawa)
@@ -575,6 +719,13 @@ $messages['mk'] = array(
 	'gep-sections' => 'Секции',
 );
 
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'gep-categories' => 'Категорият',
+);
+
 /** Nedersaksisch (Nedersaksisch)
  * @author Servien
  */
@@ -661,6 +812,13 @@ Apondètz-ne en utilizant los espleches dins la barra de menut.',
 	'gep-categorypage' => 'MediaWiki:Editpagetags',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'gep-categories' => 'Категоритæ',
+);
+
 /** Polish (Polski)
  * @author Derbeth
  * @author Leinad
@@ -702,17 +860,33 @@ $messages['ps'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'gep-desc' => 'Suplementa a página de edição por forma a ser mais amigável',
+	'gep-emailsubject' => '[$1] Sugestão de categoria: $2',
 	'gep-emailbody' => 'O utilizador "$1" sugeriu a categoria "$2" para o sítio "$3".',
+	'gep-emailfailure' => 'Desculpe, a sua sugestão não pôde ser processada.',
 	'gep-emailsuccess' => 'Obrigado por sugerir a categoria: $1.',
 	'gep-categories' => 'Categorias',
+	'gep-addcategory' => 'Adicionar uma categoria',
 	'gep-addcategorybutton' => 'Adicionar',
+	'gep-suggestcategory' => 'Sugerir uma categoria',
+	'gep-suggestcategorybutton' => 'Submeter',
+	'gep-sections' => 'Secções',
+	'gep-sectionnotdisabled' => 'Esta secção não pode ser desativada',
+	'gep-addsection' => 'Adicionar uma secção',
 	'gep-addsectionbutton' => 'Adicionar',
 	'gep-classicmode' => 'Modo clássico',
 	'gep-genericmode' => 'Modo genérico',
+	'gep-nosectioninstructions' => 'Não há quaisquer seleções nesta página.
+Adicione algumas utilizando as ferramentas na barra de menu.',
+	'gep-nocategories' => 'Por favor, selecione pelo menos uma categoria antes de gravar',
+	'gep-categorypage' => 'MediaWiki:MarcasPáginaEdição',
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
 $messages['pt-br'] = array(
+	'gep-desc' => 'Suplementa a página de edição de forma a ser mais amigável',
 	'gep-emailsubject' => 'Sugestão de categoria de [$1] : $2',
 	'gep-emailbody' => 'O usuário "$1" sugeriu a categoria "$2" para o site "$3".',
 	'gep-emailfailure' => 'Não foi possível processar a sua sugestão.',
@@ -729,7 +903,7 @@ $messages['pt-br'] = array(
 	'gep-classicmode' => 'Modo Clássico',
 	'gep-genericmode' => 'Modo Genérico',
 	'gep-nosectioninstructions' => 'Não há seções nesta página.
-Use as ferramentas à direita para incluir algumas seções.',
+Adicione algumas utilizando as ferramentas na barra de menu.',
 	'gep-nocategories' => 'Selecione, no mínimo, uma categoria antes de salvar',
 );
 
@@ -797,7 +971,7 @@ $messages['ru'] = array(
 	'gep-classicmode' => 'Классический режим',
 	'gep-genericmode' => 'Общий режим',
 	'gep-nosectioninstructions' => 'На этой странице нет разделов.
-Вы можете их добавить с помощью инструментов, размещённых справа.',
+Добавьте их с помощью инструментов из меню.',
 	'gep-nocategories' => 'Пожалуйста, выберите перед сохранением хотя бы одну категорию',
 	'gep-categorypage' => 'MediaWiki:Editpagetags',
 );
@@ -828,6 +1002,32 @@ Pomocou nástrojov v paneli s ponukou ich môžete pridať.',
 	'gep-categorypage' => 'MediaWiki:Editpagetags',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'gep-desc' => 'Tousätse tou ju Beoarbaidengssiede, uum ju benutserfründelk tou moakjen',
+	'gep-emailsubject' => '[$1] Foarsleek Kategorie: $2',
+	'gep-emailbody' => 'Benutser „$1“ häd ju Kategorie „$2“ foar ju Siede „$3“ uutwääld.',
+	'gep-emailfailure' => 'Dät is spietelk, man din Foarsleek kuud nit feroarbaided wäide.',
+	'gep-emailsuccess' => 'Tonk foar dän Foarsleek fon ju Kategorie: $1.',
+	'gep-categories' => 'Kategorien',
+	'gep-addcategory' => 'Ne Kategorie ienföigje',
+	'gep-addcategorybutton' => 'Ienföigje',
+	'gep-suggestcategory' => 'Ne Kategorie foarslo',
+	'gep-suggestcategorybutton' => 'Seende',
+	'gep-sections' => 'Ousnitte',
+	'gep-sectionnotdisabled' => 'Dissen Ousnit kon nit aphieuwed wäide',
+	'gep-addsection' => 'N Ousnit ienföigje',
+	'gep-addsectionbutton' => 'Ienföigje',
+	'gep-classicmode' => 'Normoalen Modus',
+	'gep-genericmode' => 'Generellen Modus',
+	'gep-nosectioninstructions' => 'Disse Siede häd neen Ousnitte.
+Mäd do Reewen an ju Siede konnen wäkke bietouföiged wäide.',
+	'gep-nocategories' => 'Foar dät Ouspiekerjen toumindest een Kategorie uutsäike',
+	'gep-categorypage' => 'MediaWiki:Editpagetags',
+);
+
 /** Swedish (Svenska)
  * @author Najami
  */
@@ -843,8 +1043,10 @@ $messages['sv'] = array(
  * @author Veeven
  */
 $messages['te'] = array(
+	'gep-desc' => 'దిద్దుబాటు పేజీ మరింత స్నేహశీలంగా ఉండేలా తోడ్పడుతుంది',
 	'gep-emailsubject' => '[$1] వర్గ సూచన: $2',
 	'gep-emailbody' => '"$3" సైటు కొరకు "$1" అనే వాడుకరి "$2" వర్గాన్ని సూచించారు.',
+	'gep-emailfailure' => 'క్షమించండి, మీ సలహాని పంపించలేకపోయాం.',
 	'gep-emailsuccess' => '$1 అనే వర్గాన్ని సూచించినందుకు కృతజ్ఞతలు.',
 	'gep-categories' => 'వర్గాలు',
 	'gep-addcategory' => 'ఒక వర్గాన్ని చేర్చండి',
@@ -852,10 +1054,11 @@ $messages['te'] = array(
 	'gep-suggestcategory' => 'ఒక వర్గాన్ని సూచించండి',
 	'gep-suggestcategorybutton' => 'దాఖలుచెయ్యి',
 	'gep-sections' => 'విభాగాలు',
+	'gep-sectionnotdisabled' => 'ఈ విభాగాన్ని తీసివేయలేరు',
 	'gep-addsection' => 'ఒక విభాగాన్ని చేర్చండి',
 	'gep-addsectionbutton' => 'చేర్చు',
 	'gep-nosectioninstructions' => 'ఈ పేజీలో విభాగాలేమీ లేవు.
-కుడివైపునున్న పనిముట్లని ఉపయోగించి కొన్ని చేర్చండి.',
+మెనూ పట్టీలోని పనిముట్లని ఉపయోగించి కొన్ని చేర్చండి.',
 	'gep-nocategories' => 'భద్రపరిచేముంది కనీసం ఒక్క వర్గాన్నైనా ఎంచుకోండి',
 );
 
@@ -892,6 +1095,18 @@ $messages['tl'] = array(
 Magdagdag ng ilan sa pamamagitan ng mga pilian ng mga kagamitang nasa kanan.',
 	'gep-nocategories' => 'Pumili lamang ng kahit isang kaurian bago sagipin',
 	'gep-categorypage' => 'MediaWiki:Pagbabagopahinamgatatak',
+);
+
+/** Turkish (Türkçe)
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'gep-categories' => 'Kategoriler',
+	'gep-addcategory' => 'kategori ekle',
+	'gep-addcategorybutton' => 'Ekle',
+	'gep-addsectionbutton' => 'Ekle',
+	'gep-classicmode' => 'Klasik kip',
+	'gep-genericmode' => 'Genel kip',
 );
 
 /** Ukrainian (Українська)
@@ -943,6 +1158,7 @@ $messages['vo'] = array(
 	'gep-sectionnotdisabled' => 'Diläd at no kanon panemögükön',
 	'gep-addsection' => 'Läükön dilädi',
 	'gep-addsectionbutton' => 'Läükön',
+	'gep-nocategories' => 'Välolös kladi pu bali bü dakip',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

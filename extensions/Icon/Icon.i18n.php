@@ -21,6 +21,13 @@ $messages['qqq'] = array(
 	'icon-desc' => 'Short description of this extension, shown on [[Special:Version]]. Do not translate or change links.',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'icon-badimage' => 'Hond kuva',
+);
+
 /** Arabic (العربية)
  * @author Meno25
  * @author ترجمان05
@@ -58,6 +65,15 @@ $messages['bg'] = array(
 	'icon-desc' => 'Позволява да се използват картинките като икони и като иконни препратки',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'icon-badimage' => 'Loša slika',
+	'icon-badwidth' => 'Loša širina',
+	'icon-desc' => 'Omogućuje upotrebu slika kao ikona i linkova ikona',
+);
+
 /** Czech (Česky)
  * @author Danny B.
  */
@@ -73,6 +89,7 @@ $messages['cs'] = array(
 $messages['cy'] = array(
 	'icon-badimage' => 'Delwedd wallus',
 	'icon-badwidth' => 'Lled gwallus',
+	'icon-desc' => 'Yn defnyddio delweddau fel eiconau a chysylltiadau ar ffurf eicon',
 );
 
 /** German (Deutsch)
@@ -101,6 +118,25 @@ $messages['eo'] = array(
 	'icon-badimage' => 'Malbona bildo',
 	'icon-badwidth' => 'Fuŝa Larĝo',
 	'icon-desc' => 'Permesas al vi utiligi bildojn kiel ikonojn kaj ikonligilojn',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'icon-badimage' => 'Mala imagen',
+	'icon-badwidth' => 'Mal ancho',
+	'icon-desc' => 'Permite a usted usar imágenes como íconos y vínculos de íconos',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ * @author Kobazulo
+ */
+$messages['eu'] = array(
+	'icon-badimage' => 'Okerreko irudia',
+	'icon-badwidth' => 'Okerreko zabalera',
+	'icon-desc' => 'Irudiak ikono eta ikono lotura bezala erabiltzea baimentzen dizu',
 );
 
 /** Finnish (Suomi)
@@ -142,6 +178,15 @@ $messages['grc'] = array(
 	'icon-desc' => 'Ἐπιτρέπει σοι χρῆσθαι εἰκόνας ὡς εἴδωλα καὶ ὡς σύνδεσμους εἰς εἴδωλα',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'icon-badimage' => 'Kaputt Bild',
+	'icon-badwidth' => 'Falschi Breiti',
+	'icon-desc' => 'Macht s megli Bilder as Icon un Icon-Gleicher z bruuche',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  */
@@ -162,10 +207,12 @@ $messages['hi'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dnik
+ * @author Suradnik13
  */
 $messages['hr'] = array(
 	'icon-badimage' => 'Loša slika',
 	'icon-badwidth' => 'Loša širina',
+	'icon-desc' => 'Omogućava rabiti slike kao ikonice i poveznice s ikonicama',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -193,6 +240,23 @@ $messages['ia'] = array(
 	'icon-badimage' => 'Mal imagine',
 	'icon-badwidth' => 'Latitude invalide',
 	'icon-desc' => 'Permitte usar imagines como icones e ligamines in forma de icone',
+);
+
+/** Ido (Ido)
+ * @author Malafaya
+ */
+$messages['io'] = array(
+	'icon-badimage' => 'Mala imajo',
+	'icon-badwidth' => 'Mala larjeso',
+);
+
+/** Italian (Italiano)
+ * @author Uno
+ */
+$messages['it'] = array(
+	'icon-badimage' => 'Immagine non valida',
+	'icon-badwidth' => 'Larghezza non valida',
+	'icon-desc' => 'Permette di usare le immagini come icone e icone con link',
 );
 
 /** Japanese (日本語)
@@ -308,15 +372,16 @@ $messages['nah'] = array(
 $messages['nl'] = array(
 	'icon-badimage' => 'Onjuist bestand',
 	'icon-badwidth' => 'Onjuiste breedte',
-	'icon-desc' => 'Maakt het mogelijk om afbeeldingen als iconen en icoonlinks te gebruiken',
+	'icon-desc' => 'Maakt het mogelijk om afbeeldingen als iconen en icoonverwijzingen te gebruiken',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  */
 $messages['nn'] = array(
+	'icon-badimage' => 'Dårleg bilete',
 	'icon-badwidth' => 'Dårleg breidd',
-	'icon-desc' => 'Lèt det nytta bilete som ikon og ikonlekkjer.',
+	'icon-desc' => 'Lèt deg nytta bilete som ikon og ikonlekkjer.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -364,11 +429,27 @@ $messages['pt'] = array(
 	'icon-desc' => 'Permite-lhe usar imagens como ícones e ligações de ícones',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'icon-badimage' => 'Imagem Inválida',
+	'icon-badwidth' => 'Largura Inválida',
+	'icon-desc' => 'Permite-lhe usar imagens como ícones e ligações de ícones',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'icon-badwidth' => 'Lăţime incorectă',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'icon-badimage' => 'Immaggine cattiva',
 );
 
 /** Russian (Русский)
@@ -395,6 +476,7 @@ $messages['sk'] = array(
 $messages['stq'] = array(
 	'icon-badimage' => 'Defekte Bielde',
 	'icon-badwidth' => 'Falske Bratte',
+	'icon-desc' => 'Moaket ju Ferweendenge muugelk fon Bielden as Icons un Icon-Links',
 );
 
 /** Sundanese (Basa Sunda)
@@ -403,6 +485,7 @@ $messages['stq'] = array(
 $messages['su'] = array(
 	'icon-badimage' => 'Gambar joré',
 	'icon-badwidth' => 'Ukuran teu loyog',
+	'icon-desc' => 'Bisa dipaké pikeun ngasupkeun gambar salaku ikon jeung ikon tumbu',
 );
 
 /** Swedish (Svenska)
@@ -440,11 +523,29 @@ $messages['th'] = array(
 	'icon-badimage' => 'ภาพเสีย',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'icon-badimage' => 'Masamang larawan',
+	'icon-badwidth' => 'Masamang lapad',
+	'icon-desc' => 'Nagpapahintulot na magamit mo ang mga larawan bilang mga sagisag o mga kawing ng sagisag',
+);
+
 /** Turkish (Türkçe)
  * @author Karduelis
  */
 $messages['tr'] = array(
 	'icon-badimage' => 'Kötü resim',
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'icon-badimage' => 'Imagine mia valida',
+	'icon-badwidth' => 'Larghessa mia valida',
+	'icon-desc' => 'Permete de doparar le imagini come icone e icone con colegamento',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -463,6 +564,13 @@ $messages['vi'] = array(
 $messages['vo'] = array(
 	'icon-badimage' => 'Magod badik',
 	'icon-badwidth' => 'Vidot badik',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wmr89502270
+ */
+$messages['zh-hans'] = array(
+	'icon-badimage' => '损坏的图像',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬) */

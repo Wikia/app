@@ -61,6 +61,16 @@ $messages['bcl'] = array(
 	'selectcategory-title' => 'Magpilì nin mga kategorya',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'selectcategory-title' => 'Выбар катэгорый',
+	'selectcategory-desc' => 'Дазваляе ўдзельніку выбіраць з існуючых катэгорый пад час рэдагаваньня старонкі',
+	'selectcategory-subtitle' => 'Shift+клік мышкі выбірае некалькі суседніх элемэнтаў, Ctrl+клік мышкі выбірае элемэнты, якія знаходзяцца ня побач.',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -69,6 +79,15 @@ $messages['bg'] = array(
 	'selectcategory-title' => 'Избор на категории',
 	'selectcategory-desc' => 'Позволява на потребителя при редактиране на страница да избира и добавя от съществуващите категории',
 	'selectcategory-subtitle' => 'Shift + ляв бутон на мишката за избор на множество последователни записи, Ctrl + ляв бутон на мишката за избор на непоследователни записи.',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'selectcategory-title' => 'Odaberi kategorije',
+	'selectcategory-desc' => 'Omogućuje korisniku da odabere neku od postojećih kategorija pri uređivanju stranice',
+	'selectcategory-subtitle' => 'Pritisnite Shift i mišem odaberite više poredanih stavki, pritisnite Ctrl i mišem odaberite stavke koje nisu poredane.',
 );
 
 /** German (Deutsch)
@@ -103,6 +122,14 @@ $messages['el'] = array(
 $messages['eo'] = array(
 	'selectcategory-title' => 'Elektu kategoriojn',
 	'selectcategory-desc' => 'Permesas al la uzanto selekti de ekzistantaj kategorioj kiam redaktante paĝojn',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'selectcategory-title' => 'Seleccionar categorías',
+	'selectcategory-desc' => 'Permite a los usuarios seleccionar de categorías existentes cuando editen una página',
 );
 
 /** Basque (Euskara)
@@ -152,10 +179,12 @@ $messages['gl'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Holder
  * @author Manuel Schneider <manuel.schneider@wikimedia.ch>
  */
 $messages['gsw'] = array(
 	'selectcategory-title' => 'Kategori ussueche',
+	'selectcategory-desc' => 'Macht s fir dr Benutzer megli, bim Bearbeite vun ere Syte us Kategorie, wu s het, uuszwehle',
 	'selectcategory-subtitle' => 'Gross-Muus go verschiedeni Iiträg hintrenander go uswähle, Strg-Muus go einzelni Iiträg go uswähle',
 );
 
@@ -344,6 +373,22 @@ $messages['pt'] = array(
 	'selectcategory-subtitle' => 'Shift-clique para seleccionar múltiplas entradas contíguas, Ctrl-clique para seleccionar entradas não-contíguas.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'selectcategory-title' => 'Selecionar categorias',
+	'selectcategory-desc' => 'Permitir ao utilizador selecionar a partir das categorias existentes quando editar uma página',
+	'selectcategory-subtitle' => 'Shift-clique para selecionar múltiplas entradas contíguas, Ctrl-clique para selecionar entradas não-contíguas.',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'selectcategory-title' => 'Selezione le categorije',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -367,6 +412,7 @@ $messages['sk'] = array(
  */
 $messages['stq'] = array(
 	'selectcategory-title' => 'Kategorien uutwääle',
+	'selectcategory-desc' => 'Moaket et dän Benutser muugelk, bie dät Beoarbaidjen fon ne Siede uut bestoundene Kategorien uuttouwäälen',
 	'selectcategory-subtitle' => 'Shift-Muus uum moorere ätterfoulgjende Iendraage tou (de-)selektierjen, Strg-Muus uum eenpelde Iendraage tou (de-)selektierjen.',
 );
 
@@ -384,6 +430,7 @@ $messages['sv'] = array(
  */
 $messages['te'] = array(
 	'selectcategory-title' => 'వర్గాలను ఎంచుకోండి',
+	'selectcategory-desc' => 'ఒక పేజీని సరిదిద్దుతున్నప్పుడు ప్రస్తుతమున్న వర్గాల్లోనుండి వర్గాలని ఎన్నుకునే వీలుని కల్పిస్తుంది',
 );
 
 /** Thai (ไทย)

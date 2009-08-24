@@ -28,7 +28,8 @@ $wgExtensionCredits['other'][] = array(
 	'author'        => 'Roan Kattouw',
 	'url'           => 'http://www.mediawiki.org/wiki/Extension:EditOwn',
 	'version'       => '1.0.1',
-	'description'   => 'Users without the editall right can only edit pages they\'ve created',
+	'description'   => 'Users without the editall right can only edit ' .
+				'pages they\'ve created',
 	'descriptionmsg' => 'editown-desc',
 );
 
@@ -37,38 +38,52 @@ $wgExtensionMessagesFiles['EditOwn'] = dirname(__FILE__) . '/EditOwn.i18n.php';
 $wgHooks['userCan'][] = 'EditOwn';
 
 $wgEditOwnExcludedNamespaces = array();
+$wgEditOwnActions = array('edit');
 
-function EditOwn($title, $user, $action, &$result) {
-		static $cache = array();
-		global $wgEditOwnExcludedNamespaces;
-		if(!is_array($wgEditOwnExcludedNamespaces))
-				// Prevent PHP from whining
-				$wgEditOwnExcludedNamespaces = array();
-		
-		if($action != 'edit' || $user->isAllowed('editall') || in_array($title->getNamespace(), $wgEditOwnExcludedNamespaces)) {
-				$result = null;
-				return true;
-		}
-		
-		if(isset($cache[$user->getName()][$title->getArticleId()])) {
-				$result = $cache[$user->getName()][$title->getArticleId()];
-				return is_null($result);
-		}
-		
-		// Since there's no easy way to get the first revision, we'll just do a DB query
-		$dbr = wfGetDB(DB_SLAVE);
-		$res = $dbr->select('revision', Revision::selectFields(),
-							array('rev_page' => $title->getArticleId()),
-							__METHOD__, array('ORDER BY' => 'rev_timestamp ASC', 'LIMIT' => 1));
-		if(!($row = $dbr->fetchObject($res))) {
-				// Nonexistent title? Creation is allowed
-				$result = $cache[$user->getName()][$title->getArticleId()] = null;
-				return true;
-		}
-		$rev = new Revision($row);
-		if($user->getName() == $rev->getRawUserText()) {
-				$result = $cache[$user->getName()][$title->getArticleId()] = null;
-				return true;
-		}
-		return($result = $cache[$user->getName()][$title->getArticleId()] = false);
+function EditOwn($title, $user, $action, &$result)
+{
+	static $cache = array();
+	global $wgEditOwnExcludedNamespaces, $wgEditOwnActions;
+	if(!is_array($wgEditOwnExcludedNamespaces))
+		// Prevent PHP from whining
+		$wgEditOwnExcludedNamespaces = array();
+
+	if(!in_array($action, $wgEditOwnActions) ||
+		$user->isAllowed('editall')||
+		in_array($title->getNamespace(), $wgEditOwnExcludedNamespaces))
+	{
+		$result = null;
+		return true;
+	}
+
+	if(isset($cache[$user->getName()][$title->getArticleId()]))
+	{
+		$result = $cache[$user->getName()][$title->getArticleId()];
+		return is_null($result);
+	}
+
+	// Since there's no easy way to get the first revision,
+	// we'll just do a DB query
+	$dbr = wfGetDb(DB_SLAVE);
+	$res = $dbr->select('revision', Revision::selectFields(),
+			array('rev_page' => $title->getArticleId()),
+			__METHOD__, array('ORDER BY' => 'rev_timestamp',
+				'LIMIT' => 1));
+	$row = $dbr->fetchObject($res);
+	if(!$row)
+	{
+		// Nonexistent title? Creation is allowed
+		$cache[$user->getName()][$title->getArticleId()] = null;
+		$result = null;
+		return true;
+	}
+	$rev = new Revision($row);
+	if($user->getName() == $rev->getRawUserText()) {
+		$cache[$user->getName()][$title->getArticleId()] = null;
+		$result = null;
+		return true;
+	}
+	$cache[$user->getName()][$title->getArticleId()] = false;
+	$result = false;
+	return false;
 }

@@ -703,10 +703,10 @@ Alesané miturut $3 yaiku ''$2''",
 'rev-deleted-comment'         => '(komentar dibusak)',
 'rev-deleted-user'            => '(jeneng panganggo dibusak)',
 'rev-deleted-event'           => '(isi dibusak)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">Riwayat revisi kaca iki wis dibusak saka arsip umum.
-Detil mbokmenawa kasedyakaké ing  [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} log pambusakan].</div>',
-'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">Riwayat revisi kaca iki wis dibusak saka arsip umum.
-Minangka sawijning pangurus situs, panjenengan bisa mirsani; detil mbokmenawa kasedyakaké ing [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} log pambusakan].</div>',
+'rev-deleted-text-permission' => 'Riwayat revisi kaca iki wis dibusak saka arsip umum.
+Detil mbokmenawa kasedyakaké ing  [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} log pambusakan].',
+'rev-deleted-text-view'       => 'Riwayat revisi kaca iki wis dibusak saka arsip umum.
+Minangka sawijning pangurus situs, panjenengan bisa mirsani; detil mbokmenawa kasedyakaké ing [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} log pambusakan].',
 'rev-delundel'                => 'tuduhna/delikna',
 'revisiondelete'              => 'Busak/batal busak revisi',
 'revdelete-nooldid-title'     => 'Target revisi ora ditemokaké',
@@ -1267,41 +1267,36 @@ Klik sirahé kolom kanggo ngowahi urutan.',
 'listfiles_description' => 'Dèskripsi',
 
 # File description page
-'filehist'                       => 'Sajarah berkas',
-'filehist-help'                  => 'Klik ing tanggal/wektu kanggo deleng berkas iki ing wektu iku.',
-'filehist-deleteall'             => 'busaken kabèh',
-'filehist-deleteone'             => 'busaken iki',
-'filehist-revert'                => 'balèkna',
-'filehist-current'               => 'saiki iki',
-'filehist-datetime'              => 'Tanggal/Wektu',
-'filehist-thumb'                 => "Miniatur (''thumbnail'')",
-'filehist-thumbtext'             => 'Miniatur kanggo versi ing $1',
-'filehist-nothumb'               => 'Ora ana miniatur',
-'filehist-user'                  => 'Panganggo',
-'filehist-dimensions'            => 'Ukuran',
-'filehist-filesize'              => 'Gedhené berkas',
-'filehist-comment'               => 'Komentar',
-'imagelinks'                     => 'Pranala gambar',
-'linkstoimage'                   => 'Kaca-kaca sing kapacak iki duwé {{PLURAL:$1|pranala|$1 pranala}} menyang berkas iki:',
-'linkstoimage-more'              => 'Luwih saka $1 {{PLURAL:$1|kaca|kaca-kaca}} nduwèni pranala menyang berkas iki.
+'filehist'                  => 'Sajarah berkas',
+'filehist-help'             => 'Klik ing tanggal/wektu kanggo deleng berkas iki ing wektu iku.',
+'filehist-deleteall'        => 'busaken kabèh',
+'filehist-deleteone'        => 'busaken iki',
+'filehist-revert'           => 'balèkna',
+'filehist-current'          => 'saiki iki',
+'filehist-datetime'         => 'Tanggal/Wektu',
+'filehist-thumb'            => "Miniatur (''thumbnail'')",
+'filehist-thumbtext'        => 'Miniatur kanggo versi ing $1',
+'filehist-nothumb'          => 'Ora ana miniatur',
+'filehist-user'             => 'Panganggo',
+'filehist-dimensions'       => 'Ukuran',
+'filehist-filesize'         => 'Gedhené berkas',
+'filehist-comment'          => 'Komentar',
+'imagelinks'                => 'Pranala gambar',
+'linkstoimage'              => 'Kaca-kaca sing kapacak iki duwé {{PLURAL:$1|pranala|$1 pranala}} menyang berkas iki:',
+'linkstoimage-more'         => 'Luwih saka $1 {{PLURAL:$1|kaca|kaca-kaca}} nduwèni pranala menyang berkas iki.
 Dhaftar ing ngisor nuduhaké {{PLURAL:$1|kaca pisanan kanthi pranala langsung|$1 kaca kanthi pranala langsung}} menyang berkas iki.
 [[Special:WhatLinksHere/$2|dhaftar pepak]] uga ana.',
-'nolinkstoimage'                 => 'Ora ana kaca sing nyambung menyang berkas iki.',
-'morelinkstoimage'               => 'Ndeleng [[Special:WhatLinksHere/$1|luwih akèh pranala]] menyang berkas iki.',
-'redirectstofile'                => '{{PLURAL:$1|berkas kaalihaké|$1 berkas-berkas kaalihaké}} menyang berkas iki:',
-'duplicatesoffile'               => 'Ing ngisor iki {{PLURAL:$1|berkas arupa duplikat|$1 berkas-berkas arupa duplikat}} saka berkas iki:',
-'sharedupload'                   => 'Berkas iki sawijining pangunggahan bebarengan sing uga bisa dienggo déning proyèk-proyèk liyané.',
-'shareduploadwiki'               => 'Mangga mirsani $1 kanggo informasi sabanjuré.',
-'shareduploadwiki-desc'          => 'Dhèskripsi ing $1 ditampilaké ing ngisor.',
-'shareduploadwiki-linktext'      => 'kaca dèskripsi berkas',
-'shareduploadduplicate'          => 'Berkas iki sawijining duplikat $1 saka khazanah binagi.',
-'shareduploadduplicate-linktext' => 'Berkas liya',
-'shareduploadconflict'           => 'Berkas iki duwé jeneng padha karo $1 saka khazanah binagi.',
-'shareduploadconflict-linktext'  => 'Berkas liya',
-'noimage'                        => 'Ora ana berkas mawa jeneng iku, nanging panjenengan bisa $1.',
-'noimage-linktext'               => 'ngunggahaké sawiji',
-'uploadnewversion-linktext'      => 'Unggahna vèrsi sing luwih anyar tinimbang gambar iki',
-'imagepage-searchdupe'           => 'Golèk berkas duplikat',
+'nolinkstoimage'            => 'Ora ana kaca sing nyambung menyang berkas iki.',
+'morelinkstoimage'          => 'Ndeleng [[Special:WhatLinksHere/$1|luwih akèh pranala]] menyang berkas iki.',
+'redirectstofile'           => '{{PLURAL:$1|berkas kaalihaké|$1 berkas-berkas kaalihaké}} menyang berkas iki:',
+'duplicatesoffile'          => 'Ing ngisor iki {{PLURAL:$1|berkas arupa duplikat|$1 berkas-berkas arupa duplikat}} saka berkas iki:',
+'sharedupload'              => 'Berkas iki saka $1 lan bisa digunakaké déning proyèk-proyèk liya.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'shareduploadwiki'          => 'Mangga mirsani $1 kanggo informasi sabanjuré.',
+'shareduploadwiki-desc'     => 'Dhèskripsi ing $1 ditampilaké ing ngisor.',
+'shareduploadwiki-linktext' => 'kaca dèskripsi berkas',
+'noimage'                   => 'Ora ana berkas mawa jeneng iku, nanging panjenengan bisa $1.',
+'noimage-linktext'          => 'ngunggahaké sawiji',
+'uploadnewversion-linktext' => 'Unggahna vèrsi sing luwih anyar tinimbang gambar iki',
 
 # File reversion
 'filerevert'                => 'Balèkna $1',
@@ -1501,7 +1496,8 @@ Deleng uga [[Special:WantedCategories|kategori-kategori sing diperlokaké]].',
 'special-categories-sort-abc'   => 'urutna miturut abjad',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Kontribusi panganggo sing dibusak',
+'deletedcontributions'       => 'Kontribusi panganggo sing dibusak',
+'deletedcontributions-title' => 'Kontribusi panganggo sing dibusak',
 
 # Special:LinkSearch
 'linksearch'       => 'Pranala jaba',
@@ -1802,7 +1798,7 @@ $1',
 'contributions-title' => 'Kontribusi panganggo kanggo $1',
 'mycontris'           => 'Kontribusiku',
 'contribsub2'         => 'Kanggo $1 ($2)',
-'nocontribs'          => 'Ora ditemokaké owah-owahan sing cocog karo kritéria kasebut iku.',
+'nocontribs'          => 'Ora ditemokaké owah-owahan sing cocog karo kritéria kasebut iku.', # Optional parameter: $1 is the user name
 'uctop'               => ' (dhuwur)',
 'month'               => 'Wiwit sasi (lan sadurungé):',
 'year'                => 'Wiwit taun (lan sadurungé):',
@@ -1862,7 +1858,7 @@ Lebokna alesan panjenengan ing ngisor iki (contoné njupuk conto kaca sing wis t
 'ipboptions'                      => '2 jam:2 hours,1 dina:1 day,3 dina:3 days,1 minggu:1 week,2 minggu:2 weeks,1 sasi:1 month,3 sasi:3 months,6 sasi:6 months,1 taun:1 year,tanpa wates:infinite', # display1:time1,display2:time2,...
 'ipbotheroption'                  => 'liyané',
 'ipbotherreason'                  => 'Alesan liya/tambahan',
-'ipbhidename'                     => 'Delikna jeneng panganggo utawa alamat IP saka log pamblokiran, daftar blokir aktif, sarta daftar panganggo',
+'ipbhidename'                     => 'Delikna jeneng panganggo saka suntingan lan dhaptar',
 'ipbwatchuser'                    => 'Ngawasi kaca panganggo lan kaca-kaca dhiskusi panganggo iki',
 'ipballowusertalk'                => 'Idinaké panganggo iki nyunting kaca wicarané dhéwé nalika diblokir',
 'ipb-change-block'                => 'Blokir manèh panganggo kanthi sèting iki',
@@ -1986,8 +1982,8 @@ Ing kasus-kasus iku, yèn panjenengan gayuh, panjenengan bisa mindhahaké utawa 
 'talkexists'                => 'Kaca iku kasil dipindhahaké, nanging kaca dhiskusi saka kaca iku ora bisa dipindhahaké amerga wis ana kaca dhiskusi ing irah-irahan (judhul) sing anyar. Mangga kaca-kaca dhiskusi wau digabung sacara manual.',
 'movedto'                   => 'dipindhah menyang',
 'movetalk'                  => 'Pindahna kaca dhiskusi sing ana gandhèngané.',
-'move-subpages'             => 'Pindhahen kabèh anak-kaca, yèn ana',
-'move-talk-subpages'        => 'Pindhahen kabèh anak-kaca wicara, yèn ana',
+'move-subpages'             => 'Pindhahen kabèh anak-kaca',
+'move-talk-subpages'        => 'Pindhahen kabèh anak-kaca wicara',
 'movepage-page-exists'      => 'Kaca $1 wis ana lan ora bisa ditindhes sacara otomatis.',
 'movepage-page-moved'       => 'Kaca $1 wis dipindhah menyang $2.',
 'movepage-page-unmoved'     => 'Kaca $1 ora bisa dialihaké menyang $2.',
@@ -2271,7 +2267,8 @@ Pranala-pranala sabanjuré ing baris sing padha dianggep minangka ''pengecualian
 * model
 * datetimeoriginal
 * exposuretime
-* fnumber', # Do not translate list items
+* fnumber
+* isospeedratings', # Do not translate list items
 
 # EXIF tags
 'exif-imagewidth'                  => 'Jembar',
@@ -2553,8 +2550,8 @@ Pranala-pranala sabanjuré ing baris sing padha dianggep minangka ''pengecualian
 'confirmemail_text'        => '{{SITENAME}} ngwajibaké panjenengan ndhedhes utawa konfirmasi alamat e-mail panjenengan sadurungé bisa nganggo fitur-fitur e-mail.
 Pencèten tombol ing ngisor iki kanggo ngirim sawijining kode konfirmasi arupa sawijining pranala;
 Tuladen pranala iki ing panjlajah wèb panjenengan kanggo ndhedhes yèn alamat e-mail panjenengan pancèn bener.',
-'confirmemail_pending'     => '<div class="error">Sawijining kode konfirmasi wis dikirim menyang alamat e-mail panjenengan;
-yèn panjenengan lagi waé nggawé akun utawa rékening panjenengan, mangga nunggu sawetara menit nganti layang iku tekan sadurungé nyuwun kode anyar manèh.</div>',
+'confirmemail_pending'     => 'Sawijining kode konfirmasi wis dikirim menyang alamat e-mail panjenengan;
+yèn panjenengan lagi waé nggawé akun utawa rékening panjenengan, mangga nunggu sawetara menit nganti layang iku tekan sadurungé nyuwun kode anyar manèh.',
 'confirmemail_send'        => 'Kirim kode konfirmasi',
 'confirmemail_sent'        => 'E-mail mawa kode konfirmasi wis dikirim.',
 'confirmemail_oncreate'    => 'Sawijining kode pandhedhesan (konfirmasi) wis dikirim menyang alamat e-mail panjenengan.
@@ -2588,10 +2585,8 @@ Konfirmasi iki bakal kadaluwarsa ing $4.',
 'scarytranscludetoolong'  => '[URL-é kedawan]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">
-Ngrunut bali kanggo artikel iki:<br />
-$1
-</div>',
+'trackbackbox'      => 'Ngrunut bali kanggo artikel iki:<br />
+$1',
 'trackbackremove'   => '([$1 Busak])',
 'trackbacklink'     => 'Lacak balik',
 'trackbackdeleteok' => 'Pelacakan balik bisa dibusak.',

@@ -75,6 +75,13 @@ $messages['bs'] = array(
 	'skinperpage-desc' => 'Dodaje oznaku <tt>&lt;skin&gt;</tt> za upotrebu različitih koža na stranici',
 );
 
+/** Catalan (Català)
+ * @author SMP
+ */
+$messages['ca'] = array(
+	'skinperpage-desc' => "Afegeix l'etiqueta de sintaxi <tt>&lt;skin&gt;</tt> que permet usar diferents aparences per pàgina",
+);
+
 /** Czech (Česky)
  * @author Danny B.
  */
@@ -96,6 +103,13 @@ $messages['dsb'] = array(
 	'skinperpage-desc' => 'Pśidawa toflicku <tt>&lt;skin&gt;</tt> za wužywanje rozdźělnych skinow na bok',
 );
 
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'skinperpage-desc' => 'Προσθέτει την ετικέτα <tt>&lt;skin&gt;</tt> για την χρήση διαφορετικών skins ανά σελίδα',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -108,6 +122,13 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'skinperpage-desc' => 'Añade elemento <tt>&lt;skin&gt;</tt> para usar una piel diferente por página',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'skinperpage-desc' => '<tt>&lt;skin&gt;</tt> erabiltzen du orriko skin ezberdinak erabiltzeko',
 );
 
 /** Persian (فارسی) */
@@ -134,6 +155,20 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'skinperpage-desc' => 'Engade a etiqueta <tt>&lt;skin&gt;</tt> para usar diferentes apariencias por páxina',
+);
+
+/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
+ * @author Omnipaedista
+ */
+$messages['grc'] = array(
+	'skinperpage-desc' => 'Προσθέτει τὸ προσάρτημα <tt>&lt;skin&gt;</tt> διὰ τὴν χρῆσιν διαφόρων ὅψεων ἀνὰ δέλτον',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'skinperpage-desc' => 'Ergänzt s <tt>&lt;skin&gt;</tt>-Tag, zum pro Syte unterschidligi Skin z nutze',
 );
 
 /** Hebrew (עברית)
@@ -304,6 +339,20 @@ $messages['pt'] = array(
 	'skinperpage-desc' => 'Adiciona a tag <tt>&lt;skin&gt;</tt> para usar temas diferentes por página',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'skinperpage-desc' => 'Adiciona a marca <tt>&lt;skin&gt;</tt> para usar temas diferentes por página',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'skinperpage-desc' => "Aggiunge 'u tag <tt>&lt;skin&gt;</tt> pe ausà diffeernde skin pe pàgene",
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -325,11 +374,25 @@ $messages['sk'] = array(
 	'skinperpage-desc' => 'Pridáva značku <tt>&lt;skin&gt;</tt>, ktorá umožňuje na jednotlivej stránke použiť odlišnú tému vzhľadu',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'skinperpage-desc' => 'Vendosë kodin <tt>&lt;skin&gt;</tt> për të përdorur pamje të ndryshme për çdo faqe',
+);
+
 /** Serbian Cyrillic ekavian (ћирилица)
  * @author Millosh
  */
 $messages['sr-ec'] = array(
 	'skinperpage-desc' => 'Додаје ознаку <tt>&lt;skin&gt;</tt> за коришћење различитих кожа на различитим странама.',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'skinperpage-desc' => 'Föiget dät <tt>&lt;skin&gt;</tt>-Tag bietou, uum pro Siede unnerscheedelke Skins tou nutsjen',
 );
 
 /** Sundanese (Basa Sunda)
@@ -346,11 +409,25 @@ $messages['sv'] = array(
 	'skinperpage-desc' => 'Lägger till <tt>&lt;skin&gt;</tt>-taggen för att använda olika utseenden per sida',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'skinperpage-desc' => 'పేజీకొక అలంకారాన్ని వాడటానికై వీలుగా  <tt>&lt;skin&gt;</tt> అన్న ట్యాగుని చేరుస్తుంది',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
 $messages['tl'] = array(
 	'skinperpage-desc' => "Nagdaragdag ng tatak na <tt>&lt;pabalat&gt;</tt> upang gumamit/makagamit ng iba't ibang mga pabalat sa bawat pahina",
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'skinperpage-desc' => 'Her sayfada farklı dış görünüm kullanmak için <tt>&lt;skin&gt;</tt> etiketini ekler',
 );
 
 /** Ukrainian (Українська)

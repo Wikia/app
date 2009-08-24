@@ -8,8 +8,8 @@ require_once("Utilities.php");
 
 
 function wfSpecialTransaction() {
-        global $wgMessageCache;
-                $wgMessageCache->addMessages(array('transaction'=>'Wikidata: Transaction log'),'en');
+        #global $wgMessageCache;
+        #        $wgMessageCache->addMessages(array('transaction'=>'Wikidata: Transaction log'),'en');
                 
 	class SpecialTransaction extends SpecialPage {
 		function SpecialTransaction() {
@@ -80,10 +80,10 @@ function wfSpecialTransaction() {
 					'<div class="option-panel">'.
 						'<table cellpadding="0" cellspacing="0">' .
 							'<tr>' .
-								'<th>' . wfMsgSc("summary") . ': </th>' .
+								'<th>' . wfMsg("summary") . ': </th>' .
 								'<td class="option-field">' . getTextBox("summary") .'</td>' .
 							'</tr>' .
-							'<tr><th/><td>'. getSubmitButton("roll-back", "Roll back") .'</td></tr>'.
+							'<tr><th/><td>'. getSubmitButton("roll-back", wfMsg('ow_transaction_rollback_button')) .'</td></tr>'.
 						'</table>' .
 					'</div>'.
 					'</form>'
@@ -105,7 +105,7 @@ function getFilterOptionsPanel($fromTransactionId, $transactionCount, $userName,
 	
 	return getOptionPanel(
 		array(
-			"From transaction" => 
+			wfMsg('ow_transaction_from_transaction') => 
 				getSuggest(
 					'from-transaction', 
 					'transaction',
@@ -114,27 +114,26 @@ function getFilterOptionsPanel($fromTransactionId, $transactionCount, $userName,
 					getTransactionLabel($fromTransactionId), 
 					array(0, 2, 3)
 				),
-			"Count" => 
+			wfMsg('ow_transaction_count') => 
 				getSelect('transaction-count',
 					$countOptions,
 					$transactionCount 
 				),
-			"User name" => getTextBox('user-name', $userName),
-			"Show roll back controls" => getCheckBox('show-roll-back-options', $showRollBackOptions)
-		),
-		'',
-		array("show" => "Show")
+			wfMsg('ow_transaction_user') => getTextBox('user-name', $userName),
+			wfMsg('ow_transaction_show_rollback') => getCheckBox('show-roll-back-options', $showRollBackOptions)
+		)
 	); 
 }
 
 function initializeAttributes() {
 
+	# malafaya: probably all these attributes need localization
 	$o=OmegaWikiAttributes::getInstance();
-	$o->operation = new Attribute('operation', 'Operation', 'text');
-	$o->isLatest = new Attribute('is-latest', 'Is latest', 'boolean');
+	$o->operation = new Attribute('operation', wfMsg('ow_transaction_operation'), 'text');
+	$o->isLatest = new Attribute('is-latest', wfMsg('ow_transaction_is_latest'), 'boolean');
 
 	$o->rollBackStructure = new Structure($o->isLatest, $o->operation);
-	$o->rollBack = new Attribute('roll-back', 'Roll back', $o->rollBackStructure);
+	$o->rollBack = new Attribute('roll-back', wfMsg('ow_transaction_rollback_header'), $o->rollBackStructure);
 	
 	$o->addTransactionId = new Attribute('add-transaction-id', 'Add transaction ID', 'identifier');
 		
@@ -144,7 +143,7 @@ function initializeAttributes() {
 	$o->translatedContentId = new Attribute('translated-content-id', 'Translated content ID', 'object-id');
 
 	$o->rollBackTranslatedContentStructure = new Structure($o->isLatest, $o->operation, $o->translatedContentHistory);
-	$o->rollBackTranslatedContent = new Attribute('roll-back', 'Roll back', $o->rollBackTranslatedContentStructure);
+	$o->rollBackTranslatedContent = new Attribute('roll-back', wfMsg('ow_transaction_rollback_header'), $o->rollBackTranslatedContentStructure);
 
 	$o->updatedDefinitionStructure = new Structure(
 		$o->rollBackTranslatedContent,
@@ -157,7 +156,7 @@ function initializeAttributes() {
 		$o->isLatest
 	);		
 	
-	$o->updatedDefinition = new Attribute('updated-definition', 'Definition', $o->updatedDefinitionStructure);
+	$o->updatedDefinition = new Attribute('updated-definition', wfMsg('ow_Definition'), $o->updatedDefinitionStructure);
 
 	$o->updatedSyntransesStructure = new Structure(
 		$o->syntransId,
@@ -169,10 +168,10 @@ function initializeAttributes() {
 		$o->operation
 	); 
 	
-	$o->updatedSyntranses = new Attribute('updated-syntranses', 'Synonyms and translations', $o->updatedSyntransesStructure);
+	$o->updatedSyntranses = new Attribute('updated-syntranses', wfMsg('ow_SynonymsAndTranslations'), $o->updatedSyntransesStructure);
 	
-	$o->firstMeaning = new Attribute('first-meaning', "First defined meaning", $o->definedMeaningReferenceStructure);
-	$o->secondMeaning = new Attribute('second-meaning', "Second defined meaning", $o->definedMeaningReferenceStructure);
+	$o->firstMeaning = new Attribute('first-meaning', wfMsg('ow_transaction_first_dm'), $o->definedMeaningReferenceStructure);
+	$o->secondMeaning = new Attribute('second-meaning', wfMsg('ow_transaction_second_dm'), $o->definedMeaningReferenceStructure);
 
 	$o->updatedRelationsStructure = new Structure(
 		$o->rollBack,
@@ -184,9 +183,9 @@ function initializeAttributes() {
 		$o->isLatest
 	);
 	
-	$o->updatedRelations = new Attribute('updated-relations', 'Relations', $o->updatedRelationsStructure);
+	$o->updatedRelations = new Attribute('updated-relations', wfMsg('ow_Relations'), $o->updatedRelationsStructure);
 	
-	$o->classMember = new Attribute('class-member', 'Class member', $o->definedMeaningReferenceStructure);
+	$o->classMember = new Attribute('class-member', wfMsg('ow_transaction_class_member'), $o->definedMeaningReferenceStructure);
 	
 	$o->updatedClassMembershipStructure = new Structure(
 		$o->rollBack,
@@ -197,11 +196,11 @@ function initializeAttributes() {
 		$o->isLatest
 	);
 	
-	$o->updatedClassMembership = new Attribute('updated-class-membership', 'Class membership', $o->updatedClassMembershipStructure);
+	$o->updatedClassMembership = new Attribute('updated-class-membership', wfMsg('ow_ClassMembership'), $o->updatedClassMembershipStructure);
 	
 
 		
-	$o->collectionMember = new Attribute('collection-member', 'Collection member', $o->definedMeaningReferenceStructure);
+	$o->collectionMember = new Attribute('collection-member', wfMsg('ow_CollectionMember'), $o->definedMeaningReferenceStructure);
 	$o->collectionMemberId = new Attribute('collection-member-id', 'Collection member identifier', 'defined-meaning-id');
 	
 	$o->updatedCollectionMembershipStructure = new Structure(
@@ -214,13 +213,13 @@ function initializeAttributes() {
 		$o->operation
 	);
 	
-	$o->updatedCollectionMembership = new Attribute('updated-collection-membership', 'Collection membership', $o->updatedCollectionMembershipStructure);
+	$o->updatedCollectionMembership = new Attribute('updated-collection-membership', wfMsg('ow_CollectionMembership'), $o->updatedCollectionMembershipStructure);
 	
 
 		
-	$o->objectId = new Attribute('object-id', 'Object', 'object-id');
+	$o->objectId = new Attribute('object-id', wfMsg('ow_transaction_object'), 'object-id');
 	$o->valueId = new Attribute('value-id', 'Value identifier', 'object-id');
-	$o->attribute = new Attribute('attribute', 'Attribute', $o->definedMeaningReferenceStructure);
+	$o->attribute = new Attribute('attribute', wfMsg('ow_ClassAttributeAttribute'), $o->definedMeaningReferenceStructure);
 		
 
 		
@@ -281,8 +280,8 @@ function initializeAttributes() {
 
 
 	$o->classId = new Attribute('class-attribute-id', 'Class attribute id', 'object-id');
-	$o->level = new Attribute('level', 'Level', $o->definedMeaningReferenceStructure);
-	$o->type = new Attribute('type', 'Type', 'text');
+	$o->level = new Attribute('level', wfMsg('ow_ClassAttributeLevel'), $o->definedMeaningReferenceStructure);
+	$o->type = new Attribute('type', wfMsg('ow_ClassAttributeType'), 'text');
 
 	$o->updatedClassAttributesStructure = new Structure(
 		$o->rollBack,
@@ -295,10 +294,10 @@ function initializeAttributes() {
 		$o->isLatest
 	);
 	
-	$o->updatedClassAttributes = new Attribute('updated-class-attributes', 'Class attributes', $o->updatedClassAttributesStructure);
+	$o->updatedClassAttributes = new Attribute('updated-class-attributes', wfMsg('ow_ClassAttributes'), $o->updatedClassAttributesStructure);
 
-	$o->alternativeDefinitionText = new Attribute('alternative-definition-text', 'Definition', $o->translatedTextStructure);
-	$o->source = new Attribute('source', 'Source', $o->definedMeaningReferenceStructure);
+	$o->alternativeDefinitionText = new Attribute('alternative-definition-text', wfMsg('ow_Definition'), $o->translatedTextStructure);
+	$o->source = new Attribute('source', wfMsg('ow_Source'), $o->definedMeaningReferenceStructure);
 
 	$o->updatedAlternativeDefinitionsStructure = new Structure(
 		$o->rollBack,
@@ -311,7 +310,7 @@ function initializeAttributes() {
 		$o->isLatest
 	);	
 
-	$o->updatedAlternativeDefinitions = new Attribute('updated-alternative-definitions', 'Alternative definitions', $o->updatedAlternativeDefinitionsStructure);
+	$o->updatedAlternativeDefinitions = new Attribute('updated-alternative-definitions', wfMsg('ow_AlternativeDefinitions'), $o->updatedAlternativeDefinitionsStructure);
 
 		
 	$o->updatedAlternativeDefinitionTextStructure = new Structure(
@@ -446,7 +445,7 @@ function getTranslatedContentHistory($translatedContentId, $languageId, $isLates
 	$recordSet = new ArrayRecordSet($o->translatedContentHistoryStructure, $o->translatedContentHistoryKeyStructure);
 	
 	if ($isLatest) {
-		$dbr = &wfGetDB(DB_SLAVE);
+		$dbr = wfGetDB(DB_SLAVE);
 		$queryResult = $dbr->query(
 			"SELECT text_text, add_transaction_id, remove_transaction_id " .
 			" FROM {$dc}_translated_content, {$dc}_text" .
@@ -489,7 +488,7 @@ function getUpdatedDefinedMeaningDefinitionRecordSet($transactionId) {
 
 	$dc=wdGetDataSetContext();		
 		
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT defined_meaning_id, translated_content_id, language_id, text_text, " . 
 			getOperationSelectColumn("{$dc}_translated_content", $transactionId) . ', ' .
@@ -524,7 +523,7 @@ function getUpdatedAlternativeDefinitionsRecordSet($transactionId) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dc=wdGetDataSetContext();	
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT meaning_mid, meaning_text_tcid, source_id, " . 
 			getOperationSelectColumn("{$dc}_alt_meaningtexts", $transactionId) . ', ' .
@@ -562,7 +561,7 @@ function getUpdatedAlternativeDefinitionTextRecordSet($transactionId) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dc=wdGetDataSetContext();	
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT meaning_mid, translated_content_id, source_id, language_id, text_text, " . 
 			getOperationSelectColumn("{$dc}_translated_content", $transactionId) . ', ' .
@@ -600,7 +599,7 @@ function getUpdatedSyntransesRecordSet($transactionId, $dc=null) {
 	$o=OmegaWikiAttributes::getInstance();
 	$dc=wdGetDataSetContext($dc);			
 	
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT syntrans_sid, defined_meaning_id, {$dc}_syntrans.expression_id, language_id, spelling, identical_meaning, " . 
 			getOperationSelectColumn("{$dc}_syntrans", $transactionId) . ', ' .
@@ -660,7 +659,7 @@ function getUpdatedRelationsRecordSet($transactionId) {
 
 	$dc=wdGetDataSetContext();	
 
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT relation_id, meaning1_mid, meaning2_mid, relationtype_mid, " . 
 			getOperationSelectColumn("{$dc}_meaning_relations", $transactionId) . ', ' .
@@ -693,7 +692,7 @@ function getUpdatedClassMembershipRecordSet($transactionId) {
 
 	$dc=wdGetDataSetContext();	
 	
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT class_membership_id, class_mid, class_member_mid, " . 
 		getOperationSelectColumn("{$dc}_class_membership", $transactionId) . ', ' .
@@ -724,7 +723,7 @@ function getUpdatedCollectionMembershipRecordSet($transactionId) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dc=wdGetDataSetContext();		
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT {$dc}_collection_contents.collection_id, collection_mid, member_mid, internal_member_id, " . 
 			getOperationSelectColumn("{$dc}_collection_contents", $transactionId) . ', ' .
@@ -759,7 +758,7 @@ function getUpdatedClassAttributesRecordSet($transactionId) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dc=wdGetDataSetContext();	
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT object_id, class_mid, level_mid, attribute_mid, attribute_type, " . 
 			getOperationSelectColumn("{$dc}_class_attributes", $transactionId) . ', ' .
@@ -803,7 +802,7 @@ function getUpdatedLinkRecordSet($transactionId) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dc=wdGetDataSetContext();		
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT value_id, object_id, attribute_mid, url, label, " . 
 		getOperationSelectColumn("{$dc}_url_attribute_values", $transactionId) . ', ' .
@@ -835,7 +834,7 @@ function getUpdatedTextRecordSet($transactionId) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dc=wdGetDataSetContext();		
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT value_id, object_id, attribute_mid, text, " . 
 		getOperationSelectColumn("{$dc}_text_attribute_values", $transactionId) . ', ' .
@@ -867,7 +866,7 @@ function getUpdatedTranslatedTextPropertyRecordSet($transactionId) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dc=wdGetDataSetContext();	
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT value_id, object_id, attribute_mid, value_tcid, " . 
 			getOperationSelectColumn("{$dc}_translated_content_attribute_values", $transactionId) . ', ' .
@@ -903,7 +902,7 @@ function getUpdatedTranslatedTextRecordSet($transactionId) {
 	$o=OmegaWikiAttributes::getInstance();
 
 	$dc=wdGetDataSetContext();	
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT value_id, object_id, attribute_mid, translated_content_id, language_id, text_text, " . 
 			getOperationSelectColumn("{$dc}_translated_content", $transactionId) . ', ' .
@@ -1378,7 +1377,7 @@ function rollBackTranslatedContent($idStack, $rollBackAction, $translatedContent
 function getTranslatedContentFromHistory($translatedContentId, $languageId, $addTransactionId) {
 
 	$dc=wdGetDataSetContext();	
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT text_text " .
 		" FROM {$dc}_translated_content, {$dc}_text " .

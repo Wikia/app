@@ -35,6 +35,21 @@ $aliases['he'] = array(
 	'SpamRegex' => array( 'ביטויי_ספאם' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'SpamRegex' => array( 'Spamowe regularne wurazy' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'SpamRegex' => array( 'Regex antispam', 'Regex anti-spam' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'SpamRegex' => array( 'スパム正規表現フィルター' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
 $aliases['nds-nl'] = array(
 	'SpamRegex' => array( 'Spam_regeliere_expressie' ),
@@ -48,5 +63,10 @@ $aliases['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'SpamRegex' => array( 'Regulære uttrykk mot spam' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'SpamRegex' => array( 'Karaniwang pagsasaad ng manlulusob' ),
 );
 

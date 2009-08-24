@@ -61,8 +61,6 @@ class ApiQueryExternalLinks extends ApiQueryBase {
 		$db = $this->getDB();
 		$res = $this->select(__METHOD__);
 
-		$data = array();
-		$lastId = 0;	// database has no ID 0
 		$count = 0;
 		while ($row = $db->fetchObject($res)) {
 			if (++$count > $params['limit']) {
@@ -71,23 +69,15 @@ class ApiQueryExternalLinks extends ApiQueryBase {
 				$this->setContinueEnumParameter('offset', @$params['offset'] + $params['limit']);
 				break;
 			}
-			if ($lastId != $row->el_from) {
-				if($lastId != 0) {
-					$this->addPageSubItems($lastId, $data);
-					$data = array();
-				}
-				$lastId = $row->el_from;
-			}
-
 			$entry = array();
 			ApiResult :: setContent($entry, $row->el_to);
-			$data[] = $entry;
+			$fit = $this->addPageSubItem($row->el_from, $entry);
+			if(!$fit)
+			{
+				$this->setContinueEnumParameter('offset', @$params['offset'] + $count - 1);
+				break;
+			}
 		}
-
-		if($lastId != 0) {
-			$this->addPageSubItems($lastId, $data);
-		}
-
 		$db->freeResult($res);
 	}
 
@@ -123,6 +113,6 @@ class ApiQueryExternalLinks extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryExternalLinks.php 37270 2008-07-07 17:32:22Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryExternalLinks.php 46845 2009-02-05 14:30:59Z catrope $';
 	}
 }

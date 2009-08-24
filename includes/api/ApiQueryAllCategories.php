@@ -103,21 +103,25 @@ class ApiQueryAllCategories extends ApiQueryGeneratorBase {
 				$item = array();
 				$result->setContent( $item, $titleObj->getText() );
 				if( isset( $prop['size'] ) ) {
-					$item['size'] = $row->cat_pages;
+					$item['size'] = intval($row->cat_pages);
 					$item['pages'] = $row->cat_pages - $row->cat_subcats - $row->cat_files;
-					$item['files'] = $row->cat_files;
-					$item['subcats'] = $row->cat_subcats;
+					$item['files'] = intval($row->cat_files);
+					$item['subcats'] = intval($row->cat_subcats);
 				}
 				if( isset( $prop['hidden'] ) && $row->cat_hidden )
 					$item['hidden'] = '';
-				$categories[] = $item;
+				$fit = $result->addValue(array('query', $this->getModuleName()), null, $item);
+				if(!$fit)
+				{
+					$this->setContinueEnumParameter('from', $this->keyToTitle($row->cat_title));
+					break;
+				}
 			}
 		}
 		$db->freeResult($res);
 
 		if (is_null($resultPageSet)) {
-			$result->setIndexedTagName($categories, 'c');
-			$result->addValue('query', $this->getModuleName(), $categories);
+			$result->setIndexedTagName_internal(array('query', $this->getModuleName()), 'c');
 		} else {
 			$resultPageSet->populateFromTitles($pages);
 		}
@@ -171,6 +175,6 @@ class ApiQueryAllCategories extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllCategories.php 44590 2008-12-14 20:24:23Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryAllCategories.php 47865 2009-02-27 16:03:01Z catrope $';
 	}
 }

@@ -26,7 +26,7 @@ class SpecialViewRelationships extends SpecialPage {
 	 * @param $params Mixed: parameter(s) passed to the page or null
 	 */
 	public function execute( $params ) {
-		global $wgUser, $wgOut, $wgRequest, $wgUserRelationshipScripts;
+		global $wgUser, $wgOut, $wgRequest, $wgUserRelationshipScripts, $wgLang;
 
 		wfLoadExtensionMessages( 'SocialProfileUserRelationship' );
 
@@ -46,7 +46,7 @@ class SpecialViewRelationships extends SpecialPage {
 		 * It will automatically return them to the ViewRelationships page
 		 */
 		if( $wgUser->getID() == 0 && $user_name == '' ){
-			$wgOut->setPagetitle( wfMsg('ur-error-page-title') );
+			$wgOut->setPageTitle( wfMsg('ur-error-page-title') );
 			$login = SpecialPage::getTitleFor( 'UserLogin' );
 			$wgOut->redirect( $login->escapeFullURL('returnto=Special:ViewRelationships') );
 			return false;
@@ -71,7 +71,7 @@ class SpecialViewRelationships extends SpecialPage {
 		 * Error message for username that does not exist (from URL)
 		 */
 		if( $user_id == 0 ){
-			$wgOut->setPagetitle( wfMsg('ur-error-title') );
+			$wgOut->setPageTitle( wfMsg('ur-error-title') );
 			$out .= '<div class="relationship-error-message">
 				'.wfMsg('ur-error-message-no-user').'
 			</div>
@@ -101,9 +101,9 @@ class SpecialViewRelationships extends SpecialPage {
 		#$invite_contacts_link = SpecialPage::getTitleFor( 'InviteContacts' );
 
 		if( $rel_type == 1 ) {
-			$output .= $wgOut->setPagetitle( wfMsg( 'ur-title-friend', $rel->user_name ) );
+			$output .= $wgOut->setPageTitle( wfMsg( 'ur-title-friend', $rel->user_name ) );
 			$total = $friend_count;
-			$rem = wfMsg('ur-remove-relationship-friend');
+			$rem = wfMsg( 'ur-remove-relationship-friend' );
 			$output .= '<div class="back-links">
 			<a href="'.$back_link->escapeFullURL().'">'.wfMsg( 'ur-backlink', $rel->user_name ).'</a>
 		</div>
@@ -111,9 +111,9 @@ class SpecialViewRelationships extends SpecialPage {
 			wfMsgExt( 'ur-relationship-count-friends', 'parsemag', $rel->user_name, $total, $invite_contacts_link->escapeFullURL() ).
 		'</div>';
 		} else {
-			$output .= $wgOut->setPagetitle( wfMsg( 'ur-title-foe', $rel->user_name ) );
+			$output .= $wgOut->setPageTitle( wfMsg( 'ur-title-foe', $rel->user_name ) );
 			$total = $foe_count;
-			$rem = wfMsg('ur-remove-relationship-foe');
+			$rem = wfMsg( 'ur-remove-relationship-foe' );
 			$output .= '<div class="back-links">
 			<a href="'.$back_link->escapeFullURL().'">'.wfMsg( 'ur-backlink', $rel->user_name ).'</a>
 		</div>
@@ -159,12 +159,16 @@ class SpecialViewRelationships extends SpecialPage {
 						</div>
 					<div class=\"relationship-actions\">";
 				if( $indivRelationship == false ) {
-					$output .= "<a href=\"".$add_relationship_link->escapeFullURL('user='.$user_safe.'&rel_type=1')."\">".wfMsg('ur-add-friend')."</a> |
-						<a href=\"".$add_relationship_link->escapeFullURL('user='.$user_safe.'&rel_type=2')."\">".wfMsg('ur-add-foe')."</a> | ";
+					$output .= $wgLang->pipeList( array(
+						'<a href="' . $add_relationship_link->escapeFullURL( 'user=' . $user_safe . '&rel_type=1' ) . '">' . wfMsg( 'ur-add-friend' ) . '</a>&nbsp;',
+						'&nbsp;<a href="' . $add_relationship_link->escapeFullURL( 'user=' . $user_safe . '&rel_type=2' ) . '">' . wfMsg( 'ur-add-foe' ) . '</a>&nbsp;',
+						''
+					) );
 				} else if( $user_name == $wgUser->getName() ) {
-					$output .= "<a href=\"".$remove_relationship_link->escapeFullURL('user='.$user_safe)."\">".$rem."</a> | ";
+					$output .= '<a href="'.$remove_relationship_link->escapeFullURL( 'user=' . $user_safe ) . '">' . $rem . '</a>&nbsp;';
+					$output .= wfMsgExt( 'pipe-separator', 'escapenoentities' );
 				}
-				$output .= "<a href=\"".$give_gift_link->escapeFullURL('user='.$user_safe)."\">".wfMsg('ur-give-gift')."</a>";
+				$output .= '&nbsp;<a href="'.$give_gift_link->escapeFullURL( 'user=' . $user_safe ).'">'.wfMsg( 'ur-give-gift' ).'</a>';
 
 				$output .= '</div>
 					<div class="cleared"></div>

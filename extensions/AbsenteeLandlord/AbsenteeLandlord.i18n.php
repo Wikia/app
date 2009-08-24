@@ -9,7 +9,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'absenteelandlord-reason' => 'The database has been automatically locked due to inactivity from the sysops.',
+	'absenteelandlord-reason' => 'The database has been automatically locked due to inactivity from the administrators.',
 	'absenteelandlord-desc'   => 'Auto-locks the wiki database if the sysops are all inactive for some time',
 );
 
@@ -295,12 +295,28 @@ $messages['jv'] = array(
 	'absenteelandlord-desc' => 'Ngunci sacara otomatis basis data wiki yèn para opsis ora aktif sawetara wektu',
 );
 
+/** Georgian (ქართული)
+ * @author Sopho
+ */
+$messages['ka'] = array(
+	'absenteelandlord-reason' => 'მონაცემთა ბაზა ავტომატურად დაიხურა ადმინისტრატორების უაქტივობის გამო.',
+	'absenteelandlord-desc' => 'ავტომატურად ხურავს ვიკის მონაცემთა ბაზას, თუ არცერთი ადმინისტრატორი არ არის აქტიური გარკვეული ხნის განმავლობაში.',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
  */
 $messages['km'] = array(
 	'absenteelandlord-reason' => 'មូលដ្ឋានទិន្នន័យត្រូវបានចាក់សោដោយស្វ័យប្រវត្តិ ដោយសារតែអ្នកថែទាំប្រព័ន្ឋគ្មានសកម្មភាព។',
 	'absenteelandlord-desc' => 'ចាក់សោមូលដ្ឋានទិន្នន័យដោយស្វ័យប្រវត្តិ ប្រសិនបើអ្នកថែទាំប្រព័ន្ឋទាំងអស់គ្នាគ្មានសកម្មភាពក្នុងរយៈពេលមួយ',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'absenteelandlord-reason' => '관리자의 부재로 인해 데이터베이스가 자동으로 잠겼습니다.',
+	'absenteelandlord-desc' => '모든 관리자가 일정한 기간동안 활동하지 않으면 자동으로 위키 데이터베이스를 잠금',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -321,10 +337,11 @@ $messages['lb'] = array(
 
 /** Limburgish (Limburgs)
  * @author Ooswesthoesbes
+ * @author Pahles
  */
 $messages['li'] = array(
-	'absenteelandlord-reason' => 'De database is automatisch aafgeslaote waenges inactiviteit vanne behieërders.',
-	'absenteelandlord-desc' => "Sluut de database automatisch wen de behieërders allemaol gedurendje 'ne bepaoldje tied inactief zeen",
+	'absenteelandlord-reason' => 'De database is automatisch aafgesjlote waeges inactiviteit van de systeemwèrkers.',
+	'absenteelandlord-desc' => "Sjleet de database automatisch es de systeemwèrkers allemaol 'ne bepaolde tied inactief zien",
 );
 
 /** Lumbaart (Lumbaart)
@@ -424,6 +441,14 @@ $messages['pt'] = array(
 	'absenteelandlord-desc' => 'Bloqueia a base dados do wiki automaticamente se todos os sysops estiverem inactivos por algum tempo',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'absenteelandlord-reason' => 'A base de dados foi automaticamente bloqueada devido à inatividade dos sysops.',
+	'absenteelandlord-desc' => 'Bloqueia a base dados do wiki automaticamente se todos os sysops estiverem inativos por algum tempo',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -496,6 +521,14 @@ $messages['su'] = array(
 $messages['sv'] = array(
 	'absenteelandlord-reason' => 'Databasen har låsts automatiskt på grund av att administratörerna inte har varit aktiva.',
 	'absenteelandlord-desc' => 'Låser automatiskt wikins databas om alla administratörer är frånvarande under en viss tid',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'absenteelandlord-reason' => 'Kusang ikinandado ang kalipunan ng dato dahil sa kawalan ng kasiglahan mula sa mga tagapangasiwa.',
+	'absenteelandlord-desc' => 'Kusang nagkakandado ng kalipunan ng dato kapag hindi masigla ang lahat ng mga tagapagpaandar ng sistema sa loob ng ilang panahon',
 );
 
 /** Turkish (Türkçe)

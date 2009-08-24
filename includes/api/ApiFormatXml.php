@@ -89,6 +89,11 @@ class ApiFormatXml extends ApiFormatBase {
 					if ($this->mDoubleQuote)
 						$subElemContent = $this->doubleQuote($subElemContent);
 					unset ($elemValue['*']);
+					
+					// Add xml:space="preserve" to the
+					// element so XML parsers will leave
+					// whitespace in the content alone
+					$elemValue['xml:space'] = 'preserve';
 				} else {
 					$subElemContent = null;
 				}
@@ -106,14 +111,6 @@ class ApiFormatXml extends ApiFormatBase {
 					if (is_string($subElemValue) && $this->mDoubleQuote)
 						$subElemValue = $this->doubleQuote($subElemValue);
 					
-					// Replace spaces with underscores
-					$newSubElemId = str_replace(' ', '_', $subElemId);
-					if($newSubElemId != $subElemId) {
-						$elemValue[$newSubElemId] = $subElemValue;
-						unset($elemValue[$subElemId]);
-						$subElemId = $newSubElemId;
-					}
-
 					if (gettype($subElemId) === 'integer') {
 						$indElements[] = $subElemValue;
 						unset ($elemValue[$subElemId]);
@@ -175,6 +172,6 @@ class ApiFormatXml extends ApiFormatBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFormatXml.php 44588 2008-12-14 19:14:21Z demon $';
+		return __CLASS__ . ': $Id: ApiFormatXml.php 50217 2009-05-05 13:12:16Z tstarling $';
 	}
 }

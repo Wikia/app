@@ -11,7 +11,7 @@
 
 class BadImageList {
 
-	function check( $name ) {
+	public static function check( $name ) {
 		wfProfileIn( __METHOD__ );
 		static $titles = array();
 		if( !isset( $titles[$name] ) ) {
@@ -28,13 +28,13 @@ class BadImageList {
 		return $titles[$name];
 	}
 
-	function checkReal( $name ) {
-		$dbr =& wfGetDB( DB_SLAVE );
+	private static function checkReal( $name ) {
+		$dbr = wfGetDB( DB_SLAVE );
 		$res = $dbr->selectField( 'bad_images', 'COUNT(*)', array( 'bil_name' => $name ), __METHOD__ );
 		return $res > 0;
 	}
 	
-	function add( $name, $user, $reason ) {
+	public static function add( $name, $user, $reason ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$dbw =& wfGetDB( DB_MASTER );
@@ -43,7 +43,7 @@ class BadImageList {
 		wfProfileOut( __METHOD__ );
 	}
 	
-	function remove( $name ) {
+	public static function remove( $name ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		$dbw =& wfGetDB( DB_MASTER );
@@ -52,12 +52,12 @@ class BadImageList {
 		wfProfileOut( __METHOD__ );
 	}
 
-	function cache( $name, $value ) {
+	private static function cache( $name, $value ) {
 		global $wgMemc;
 		$wgMemc->set( BadImageList::key( $name ), $value ? 'yes' : 'no', 900 );
 	}
 	
-	function key( $name ) {
+	private static function key( $name ) {
 		return wfMemcKey( 'badimage', $name );
 	}
 

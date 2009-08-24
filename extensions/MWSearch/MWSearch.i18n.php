@@ -117,6 +117,13 @@ $messages['dsb'] = array(
 	'mwsearch-desc' => 'Tykac MWSearch',
 );
 
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'mwsearch-desc' => 'Πρόσθετο MWSearch',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -154,9 +161,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author IAlex
  */
 $messages['fr'] = array(
-	'mwsearch-desc' => 'Plug-in Recherches MW',
+	'mwsearch-desc' => 'Plug-in pour les recherches dans MediaWiki',
 );
 
 /** Galician (Galego)
@@ -164,6 +172,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'mwsearch-desc' => 'Complemento de procura MediaWiki',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'mwsearch-desc' => 'Hintergrundprozäss fir d Lucene-Suechmaschin',
 );
 
 /** Hebrew (עברית)
@@ -391,6 +406,13 @@ $messages['sr-ec'] = array(
 	'mwsearch-desc' => 'MWSearch додатак',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'mwsearch-desc' => 'Bäätergruundprozess foar ju Lucene-Säikmaschine',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -419,6 +441,13 @@ $messages['tl'] = array(
 	'mwsearch-desc' => "Pampasak na MWHanapin (''MWSearch'')",
 );
 
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'mwsearch-desc' => 'MWSearch eklentisi',
+);
+
 /** Ukrainian (Українська)
  * @author Ahonc
  */
@@ -438,6 +467,13 @@ $messages['vec'] = array(
  */
 $messages['vi'] = array(
 	'mwsearch-desc' => 'Plugin MWSearch',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'mwsearch-desc' => 'program: MWSearch',
 );
 
 /** Yue (粵語)

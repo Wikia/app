@@ -38,6 +38,16 @@ $aliases['de'] = array(
 	'NewestPages' => array( 'Neueste Seiten' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'NewestPages' => array( 'Nejnowše boki' ),
+);
+
+/** Greek (Ελληνικά) */
+$aliases['el'] = array(
+	'NewestPages' => array( 'ΝεότερεςΣελίδες' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'NewestPages' => array( 'تازه‌ترین_صفحه‌ها' ),
@@ -63,14 +73,29 @@ $aliases['hr'] = array(
 	'NewestPages' => array( 'Najnovije_stranice' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'NewestPages' => array( 'Najnowše strony' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'NewestPages' => array( 'Legújabb lapok' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'NewestPages' => array( 'Paginas le plus nove' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'NewestPages' => array( 'Halaman terbaru' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'NewestPages' => array( '新規作成されたページ' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -115,9 +140,24 @@ $aliases['no'] = array(
 	'NewestPages' => array( 'Siste sider', 'Nyeste sider' ),
 );
 
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'NewestPages' => array( 'ترټولو نوي مخونه' ),
+);
+
 /** Brazilian Portuguese (Português do Brasil) */
 $aliases['pt-br'] = array(
 	'NewestPages' => array( 'Páginas mais novas' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'NewestPages' => array( 'अतिनूतनपृष्ठ' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'NewestPages' => array( 'FaqeteReja' ),
 );
 
 /** Swedish (Svenska) */
@@ -128,5 +168,15 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'NewestPages' => array( 'KurasaMpya' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'NewestPages' => array( 'Pinakabagong mga pahina' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'NewestPages' => array( 'YeniMaddeler' ),
 );
 

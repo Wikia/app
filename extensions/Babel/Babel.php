@@ -10,8 +10,8 @@
  *
  * @link http://www.mediawiki.org/wiki/Extension:Babel
  *
- * @author MinuteElectron <minuteelectron@googlemail.com>
- * @copyright Copyright © 2008 MinuteElectron.
+ * @author Robert Leverington <minuteelectron@googlemail.com>
+ * @copyright Copyright © 2008 - 2009 Robert Leverington.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
@@ -21,8 +21,8 @@ if( !defined( 'MEDIAWIKI' ) ) die( 'Invalid entry point.' );
 // Register extension credits.
 $wgExtensionCredits[ 'parserhook' ][] = array(
 	'name'            => 'Babel',
-	'version'         => '1.0',
-	'author'          => 'MinuteElectron',
+	'version'         => '1.2.3',
+	'author'          => 'Robert Leverington',
 	'url'             => 'http://www.mediawiki.org/wiki/Extension:Babel',
 	'description'     => 'Adds a parser function to allow automated generation of a babel userbox column with the ability to include custom templates.',
 	'descriptionmsg'  => 'babel-desc',
@@ -39,18 +39,20 @@ if( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
 $wgHooks[ 'LanguageGetMagic' ][] = 'BabelStatic::Magic';
 $wgHooks[ 'AbortNewAccount'  ][] = 'BabelAutoCreate::RegisterAbort';
 
+$dir = dirname( __FILE__ );
+
 // Register internationalisation file.
-$wgExtensionMessagesFiles[ 'Babel' ] = dirname( __FILE__ ) . '/Babel.i18n.php';
+$wgExtensionMessagesFiles[ 'Babel' ] = $dir . '/Babel.i18n.php';
 
 // Register autoload classes.
-$wgAutoloadClasses[ 'Babel'           ] = dirname( __FILE__ ) . '/Babel.class.php';
-$wgAutoloadClasses[ 'BabelStatic'     ] = dirname( __FILE__ ) . '/BabelStatic.class.php';
-$wgAutoloadClasses[ 'BabelAutoCreate' ] = dirname( __FILE__ ) . '/BabelAutoCreate.class.php';
+$wgAutoloadClasses[ 'Babel'              ] = $dir . '/Babel.class.php';
+$wgAutoloadClasses[ 'BabelLanguageCodes' ] = $dir . '/BabelLanguageCodes.class.php';
+$wgAutoloadClasses[ 'BabelStatic'        ] = $dir . '/BabelStatic.class.php';
+$wgAutoloadClasses[ 'BabelAutoCreate'    ] = $dir . '/BabelAutoCreate.class.php';
 
 // Configuration setttings.
-$wgBabelUseLevelZeroCategory         = false;
-$wgBabelUseSimpleCategories          = false;
-$wgBabelUseMainCategories            = true;
-$wgLanguageCodesFiles                = array();
-$wgLanguageCodesFiles[ 'ISO_639_1' ] = dirname( __FILE__ ) . '/codes/ISO_639_1.php';
-$wgLanguageCodesFiles[ 'ISO_639_3' ] = dirname( __FILE__ ) . '/codes/ISO_639_3.php';
+$wgBabelUseLevelZeroCategory = false;
+$wgBabelUseSimpleCategories  = false;
+$wgBabelUseMainCategories    = true;
+$wgBabelLanguageCodesFile    = $dir . '/codes.txt';
+$wgBabelCachePrefix          = 'babel';

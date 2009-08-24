@@ -68,6 +68,17 @@ $messages['arz'] = array(
 	'searchbox-namespaces' => 'النطاقات:',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'searchbox-desc' => 'Дазваляе уключэньні форму пошуку',
+	'searchbox-search' => 'Пошук',
+	'searchbox-go' => 'Перайсьці',
+	'searchbox-namespaces' => 'Прасторы назваў:',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -87,6 +98,16 @@ $messages['br'] = array(
 	'searchbox-namespaces' => 'Esaouennoù anv :',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'searchbox-desc' => 'Omogućuje uključenja u obrasce za traženje',
+	'searchbox-search' => 'Traži',
+	'searchbox-go' => 'Idi',
+	'searchbox-namespaces' => 'Imenski prostori:',
+);
+
 /** Czech (Česky)
  * @author Danny B.
  */
@@ -95,6 +116,15 @@ $messages['cs'] = array(
 	'searchbox-search' => 'Hledat',
 	'searchbox-go' => 'Jít na',
 	'searchbox-namespaces' => 'Jmenné prostory:',
+);
+
+/** Kashubian (Kaszëbsczi)
+ * @author Kaszeba
+ */
+$messages['csb'] = array(
+	'searchbox-desc' => 'Zezwôlô na dodanié fòrmùlara szëkbë',
+	'searchbox-search' => 'Szëkba',
+	'searchbox-go' => 'Biéj',
 );
 
 /** German (Deutsch) */
@@ -125,10 +155,13 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  */
 $messages['es'] = array(
+	'searchbox-desc' => 'Permitir inclusión de formularios de búsqueda',
 	'searchbox-search' => 'Buscar',
+	'searchbox-go' => 'Ir',
 	'searchbox-namespaces' => 'Espacios de nombres:',
 );
 
@@ -139,6 +172,13 @@ $messages['es'] = array(
 $messages['eu'] = array(
 	'searchbox-search' => 'Bilatu',
 	'searchbox-go' => 'Joan',
+);
+
+/** Fulah (Fulfulde)
+ * @author Amkoullel
+ */
+$messages['ff'] = array(
+	'searchbox-search' => 'Ɗaɓɓitude',
 );
 
 /** Finnish (Suomi)
@@ -178,6 +218,13 @@ $messages['gl'] = array(
  */
 $messages['grc'] = array(
 	'searchbox-namespaces' => 'Ὀνοματεῖα:',
+);
+
+/** Hawaiian (Hawai`i)
+ * @author Kalani
+ */
+$messages['haw'] = array(
+	'searchbox-search' => 'Huli',
 );
 
 /** Hebrew (עברית)
@@ -241,6 +288,15 @@ $messages['ja'] = array(
 	'searchbox-namespaces' => '名前空間:',
 );
 
+/** Georgian (ქართული)
+ * @author Sopho
+ */
+$messages['ka'] = array(
+	'searchbox-search' => 'ძიება',
+	'searchbox-go' => 'გადასვლა',
+	'searchbox-namespaces' => 'სახელთა სივრცეები:',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
  */
@@ -268,6 +324,22 @@ $messages['lb'] = array(
 	'searchbox-search' => 'Sichen',
 	'searchbox-go' => 'Lass',
 	'searchbox-namespaces' => 'Nummraim:',
+);
+
+/** Lingua Franca Nova (Lingua Franca Nova)
+ * @author Malafaya
+ */
+$messages['lfn'] = array(
+	'searchbox-search' => 'Xerca',
+);
+
+/** Macedonian (Македонски)
+ * @author Brest
+ */
+$messages['mk'] = array(
+	'searchbox-search' => 'Барај',
+	'searchbox-go' => 'Оди',
+	'searchbox-namespaces' => 'Именски простори:',
 );
 
 /** Malay (Bahasa Melayu)
@@ -330,11 +402,27 @@ $messages['oc'] = array(
 	'searchbox-namespaces' => 'Espacis de nom :',
 );
 
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Jose77
+ */
+$messages['or'] = array(
+	'searchbox-search' => 'ସନ୍ଧାନ',
+);
+
 /** Ossetic (Иронау)
  * @author Amikeco
  */
 $messages['os'] = array(
 	'searchbox-search' => 'Агур',
+);
+
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'searchbox-search' => 'Szukaj',
+	'searchbox-go' => 'Idź',
+	'searchbox-namespaces' => 'Przestrzenie nazw',
 );
 
 /** Pashto (پښتو)
@@ -345,12 +433,24 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Malafaya
  * @author Waldir
  */
 $messages['pt'] = array(
+	'searchbox-desc' => 'Permite a inclusão de formulários de pesquisa',
 	'searchbox-search' => 'Pesquisar',
 	'searchbox-go' => 'Ir',
 	'searchbox-namespaces' => 'Domínios:',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'searchbox-desc' => 'Permite a inclusão de formulários de pesquisa',
+	'searchbox-search' => 'Pesquisar',
+	'searchbox-go' => 'Ir',
+	'searchbox-namespaces' => 'Espaços Nominais:',
 );
 
 /** Romanian (Română)
@@ -358,6 +458,16 @@ $messages['pt'] = array(
  */
 $messages['ro'] = array(
 	'searchbox-namespaces' => 'Spaţiu de nume:',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'searchbox-desc' => "Permitte l'inglusione de le schermete de ricerche",
+	'searchbox-search' => 'Cirche',
+	'searchbox-go' => 'Veje',
+	'searchbox-namespaces' => 'Namespace:',
 );
 
 /** Russian (Русский)
@@ -376,6 +486,16 @@ $messages['sk'] = array(
 	'searchbox-search' => 'Hľadať',
 	'searchbox-go' => 'Vykonať',
 	'searchbox-namespaces' => 'Menné priestory:',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'searchbox-desc' => 'Moaket dät Ienbienden muugelk fon n Säikformular',
+	'searchbox-search' => 'Säik',
+	'searchbox-go' => 'OK',
+	'searchbox-namespaces' => 'Noomensruume:',
 );
 
 /** Swedish (Svenska)
@@ -404,6 +524,44 @@ $messages['tl'] = array(
 	'searchbox-search' => 'Maghanap',
 	'searchbox-go' => 'Gawin na',
 	'searchbox-namespaces' => 'Mga espasyo ng pangalan:',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'searchbox-desc' => 'Arama formları eklenmesine izin verir',
+	'searchbox-search' => 'Ara',
+	'searchbox-go' => 'Git',
+	'searchbox-namespaces' => 'Alan adları:',
+);
+
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'searchbox-go' => 'Köchüsh',
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'searchbox-desc' => "Permeti l'inclusion de mòduli de riserca",
+	'searchbox-search' => 'Serca',
+	'searchbox-go' => 'Và',
+	'searchbox-namespaces' => 'Namespace:',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'searchbox-desc' => 'Cho phép nhúng hộp tìm kiếm',
+	'searchbox-search' => 'Tìm kiếm',
+	'searchbox-go' => 'Xem',
+	'searchbox-namespaces' => 'Không gian tên:',
 );
 
 /** Volapük (Volapük)

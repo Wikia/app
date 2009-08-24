@@ -17,6 +17,7 @@ function wfRelationshipRequestResponse( $response, $request_id ){
 		$user_id_from = User::idFromName($user_name_from);
 		$rel_type = strtolower($request[0]['type']);
 
+		// FIXME: Notice: Undefined index: response 
 		$rel->updateRelationshipRequestStatus($request_id, $_POST['response']);
 
 		$avatar = new wAvatar($user_id_from, 'l');

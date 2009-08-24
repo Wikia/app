@@ -39,6 +39,11 @@ $aliases['de'] = array(
 	'Vote' => array( 'Abstimmen' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Vote' => array( 'Wótgłosowaś' ),
+);
+
 /** Divehi (ދިވެހިބަސް) */
 $aliases['dv'] = array(
 	'Vote' => array( 'ވޯޓް' ),
@@ -74,14 +79,34 @@ $aliases['gsw'] = array(
 	'Vote' => array( 'Abstimme' ),
 );
 
+/** Hawaiian (Hawai`i) */
+$aliases['haw'] = array(
+	'Vote' => array( 'Koho' ),
+);
+
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Vote' => array( 'Wothłosować' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'Vote' => array( 'Szavazás' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Vote' => array( 'Votar', 'Voto' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'Vote' => array( 'Beri suara' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'Vote' => array( '投票' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -124,6 +149,11 @@ $aliases['oc'] = array(
 	'Vote' => array( 'Votar' ),
 );
 
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'Vote' => array( 'رايه ورکول' ),
+);
+
 /** Romanian (Română) */
 $aliases['ro'] = array(
 	'Vote' => array( 'Votează' ),
@@ -134,9 +164,19 @@ $aliases['roa-tara'] = array(
 	'Vote' => array( 'Vote' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Vote' => array( 'मत' ),
+);
+
 /** Albanian (Shqip) */
 $aliases['sq'] = array(
 	'Vote' => array( 'Voto' ),
+);
+
+/** Sundanese (Basa Sunda) */
+$aliases['su'] = array(
+	'Vote' => array( 'Milih' ),
 );
 
 /** Swedish (Svenska) */
@@ -152,5 +192,15 @@ $aliases['sw'] = array(
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'Vote' => array( 'โหวต' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Vote' => array( 'Bumoto' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'Vote' => array( 'Vota' ),
 );
 

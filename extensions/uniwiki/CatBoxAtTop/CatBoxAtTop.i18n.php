@@ -41,17 +41,20 @@ $messages['ar'] = array(
 );
 
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
  * @author Ramsis II
  */
 $messages['arz'] = array(
-	'catboxattop-desc' => 'بيضيف صندوء التصنيف في يمين الصفحه من فوق',
+	'catboxattop-desc' => 'بيضيف صندوء التصنيف فى يمين الصفحه من فوق',
 	'catboxattop-categories' => 'تصانيف',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
  */
 $messages['be-tarask'] = array(
+	'catboxattop-desc' => 'Дадае поле катэгорыяў у верхні правы кут старонак',
 	'catboxattop-categories' => 'Катэгорыі',
 );
 
@@ -130,10 +133,11 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
  * @author Sherbrooke
  */
 $messages['fr'] = array(
-	'catboxattop-desc' => 'Ajouter une boîte de catégorie en haut à droite des pages',
+	'catboxattop-desc' => 'Ajoute une boîte de catégorie en haut à droite des pages',
 	'catboxattop-categories' => 'Catégories',
 );
 
@@ -159,6 +163,14 @@ $messages['gl'] = array(
 $messages['grc'] = array(
 	'catboxattop-desc' => 'Προσθέτει κυτίον κατηγοριῶν τινὰ εἰς τὸ ἄνω δεξιὸν μέρος τῆς δέλτου',
 	'catboxattop-categories' => 'Κατηγορίαι',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'catboxattop-desc' => 'Fiegt in Syten obe rächts e Kategoriechäschtli yy',
+	'catboxattop-categories' => 'Kategorie',
 );
 
 /** Hebrew (עברית)
@@ -256,6 +268,13 @@ $messages['oc'] = array(
 	'catboxattop-categories' => 'Categorias',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'catboxattop-categories' => 'Категоритæ',
+);
+
 /** Polish (Polski)
  * @author Leinad
  */
@@ -286,11 +305,27 @@ $messages['pt'] = array(
 	'catboxattop-categories' => 'Categorias',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'catboxattop-desc' => 'Acrescenta uma caixa de categorias na zona superior direita das páginas',
+	'catboxattop-categories' => 'Categorias',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'catboxattop-categories' => 'Categorii',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'catboxattop-desc' => "Aggiunge 'nu scatele de le categorije sus a vanna destre d'a pàgene",
+	'catboxattop-categories' => 'Categorije',
 );
 
 /** Russian (Русский)
@@ -309,10 +344,19 @@ $messages['sk'] = array(
 	'catboxattop-categories' => 'Kategórie',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'catboxattop-desc' => 'Föiget in Sieden buppe gjuchts ne Kategorienbox ien',
+	'catboxattop-categories' => 'Kategorien',
+);
+
 /** Swedish (Svenska)
  * @author Najami
  */
 $messages['sv'] = array(
+	'catboxattop-desc' => 'Lägger till en kategoribox uppe till höger på sidor',
 	'catboxattop-categories' => 'Kategorier',
 );
 
@@ -338,6 +382,15 @@ $messages['tl'] = array(
 	'catboxattop-categories' => 'Mga kaurian',
 );
 
+/** Turkish (Türkçe)
+ * @author Joseph
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'catboxattop-desc' => 'Sayfaların sağ üst kısmına bir kategori kutusu ekler',
+	'catboxattop-categories' => 'Kategoriler',
+);
+
 /** Ukrainian (Українська)
  * @author Aleksandrit
  */
@@ -348,9 +401,18 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Vinhtantran
  */
 $messages['vi'] = array(
+	'catboxattop-desc' => 'Thêm một hộp thể loại vào góc trên bên trái trang',
 	'catboxattop-categories' => 'Thể loại',
+);
+
+/** Volapük (Volapük)
+ * @author Malafaya
+ */
+$messages['vo'] = array(
+	'catboxattop-categories' => 'Klads',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

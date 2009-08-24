@@ -29,6 +29,11 @@ $aliases['de'] = array(
 	'Form' => array( 'Eingabefeld' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Form' => array( 'Formular' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'Form' => array( 'فرم' ),
@@ -57,6 +62,11 @@ $aliases['hsb'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'Form' => array( 'Űrlap' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Form' => array( 'Formulario' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -109,6 +119,11 @@ $aliases['oc'] = array(
 	'Form' => array( 'Formulari' ),
 );
 
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Form' => array( 'Formë' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'Form' => array( 'Formulär' ),
@@ -117,5 +132,10 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'Form' => array( 'Fomu' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Form' => array( 'Pormularyo' ),
 );
 

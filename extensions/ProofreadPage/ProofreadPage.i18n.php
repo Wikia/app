@@ -41,15 +41,39 @@ Remarks||10',
  * @author Aleator
  * @author Jon Harald Søby
  * @author Purodha
+ * @author Yknok29
  */
 $messages['qqq'] = array(
 	'proofreadpage_desc' => 'Short description of the Proofreadpage extension, shown in [[Special:Version]]. Do not translate or change links.',
 	'proofreadpage_namespace' => '{{Identical|Page}}',
 	'proofreadpage_index_namespace' => '{{Identical|Index}}',
+	'proofreadpage_image' => '그림',
 	'proofreadpage_index' => '{{Identical|Index}}',
 	'proofreadpage_nextpage' => '{{Identical|Next page}}',
 	'proofreadpage_prevpage' => '{{Identical|Previous page}}',
 	'proofreadpage_toggleheaders' => 'Tooltip at right "+" button, at Wikisources, at namespace "Page".',
+	'proofreadpage_js_attributes' => '작가 제목 연도 출판사',
+	'proofreadpage_index_attributes' => '도서 정보',
+);
+
+/** Veps (Vepsan kel')
+ * @author Triple-ADHD-AS
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'proofreadpage_namespace' => 'Lehtpol’',
+	'proofreadpage_index_namespace' => 'Indeks',
+	'proofreadpage_image' => 'kuva',
+	'proofreadpage_index' => 'Indeks',
+	'proofreadpage_nextpage' => "Jäl'ghine lehtpol'",
+	'proofreadpage_prevpage' => "Edeline lehtpol'",
+	'proofreadpage_header' => 'Pälkirjutez (ei ele mülütadud)',
+	'proofreadpage_body' => 'Lehtpolen tüvi (mülütadas):',
+	'proofreadpage_quality1_category' => 'Ei ole lugetud kodvaks',
+	'proofreadpage_quality2_category' => 'Problematine',
+	'proofreadpage_quality3_category' => 'Om lugetud kodvaks',
+	'proofreadpage_quality4_category' => 'Kodvdud da hüvästadud',
+	'proofreadpage_index_listofpages' => 'Lehtpoliden nimikirjutez',
 );
 
 /** Afrikaans (Afrikaans)
@@ -587,17 +611,44 @@ $messages['ee'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Dead3y3
  * @author ZaDiak
  */
 $messages['el'] = array(
+	'proofreadpage_desc' => 'Επίτρεψε εύκολη σύγκριση κειμένου με την πρωτότυπη σάρωση',
 	'proofreadpage_namespace' => 'Σελίδα',
-	'proofreadpage_image' => 'Εικόνα',
+	'proofreadpage_index_namespace' => 'Ευρετήριο',
+	'proofreadpage_image' => 'εικόνα',
+	'proofreadpage_index' => 'Ευρετήριο',
 	'proofreadpage_nextpage' => 'Επόμενη σελίδα',
 	'proofreadpage_prevpage' => 'Προηγούμενη σελίδα',
 	'proofreadpage_header' => 'Επικεφαλίδα (noinclude):',
+	'proofreadpage_body' => 'Σώμα σελίδας (προς εσωκλεισμό):',
 	'proofreadpage_footer' => 'Κατακλείδα (noinclude):',
+	'proofreadpage_toggleheaders' => 'ενάλλαξε την ορατότητα των τμημάτων noinclude',
+	'proofreadpage_quality1_category' => 'Δεν έχει γίνει proofreading',
 	'proofreadpage_quality2_category' => 'Προβληματική',
-	'proofreadpage_quality4_category' => 'Αναγνωρίστηκε',
+	'proofreadpage_quality3_category' => 'Έχει γίνει proofreading',
+	'proofreadpage_quality4_category' => 'Εγκρίθηκε',
+	'proofreadpage_index_listofpages' => 'Κατάλογος σελίδων',
+	'proofreadpage_image_message' => 'Σύνδεσμος προς τη σελίδα ευρετηρίου',
+	'proofreadpage_page_status' => 'Κατάσταση σελίδας',
+	'proofreadpage_js_attributes' => 'Συγγραφέας Τίτλος Έτος Εκδότης',
+	'proofreadpage_index_attributes' => 'Συγγραφέας
+
+Τίτλος
+
+Έτος|Έτος έκδοσης
+
+Εκδότης
+
+Πηγή
+
+Εικόνα|Εξώφυλλο
+
+Σελίδες||20
+
+Σχόλια||10',
 );
 
 /** Esperanto (Esperanto)
@@ -666,6 +717,29 @@ Fuente
 Imagen|Imagen de cubierta
 Páginas||20
 Comentarios||10',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'proofreadpage_namespace' => 'Orria',
+	'proofreadpage_index_namespace' => 'Aurkibidea',
+	'proofreadpage_image' => 'irudi',
+	'proofreadpage_index' => 'Aurkibidea',
+	'proofreadpage_nextpage' => 'Hurrengo orria',
+	'proofreadpage_prevpage' => 'Aurreko orria',
+	'proofreadpage_index_listofpages' => 'Orri zerrenda',
+	'proofreadpage_image_message' => 'Aurkibide orrira lotu',
+	'proofreadpage_js_attributes' => 'Egilea Izenburua Urtea Argitaratzailea',
+	'proofreadpage_index_attributes' => 'Egilea
+Izenburua
+Urtea|Argitalpen urtea
+Argitaratzailea
+Iturria
+Irudia|estalki irudia
+Orriak||20
+Oharrak||10',
 );
 
 /** Persian (فارسی)
@@ -743,9 +817,10 @@ Huomautuksia||10',
  * @author Dereckson
  * @author Grondin
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'proofreadpage_desc' => 'Permet une comparaison facile entre le texte et la numérisation originale',
+	'proofreadpage_desc' => 'Permet une comparaison facile entre le texte et sa numérisation originale',
 	'proofreadpage_namespace' => 'Page',
 	'proofreadpage_index_namespace' => 'Index',
 	'proofreadpage_image' => 'image',
@@ -753,15 +828,15 @@ $messages['fr'] = array(
 	'proofreadpage_nextpage' => 'Page suivante',
 	'proofreadpage_prevpage' => 'Page précédente',
 	'proofreadpage_header' => 'En-tête (noinclude) :',
-	'proofreadpage_body' => 'Contenu (transclusion) :',
+	'proofreadpage_body' => 'Contenu (par transclusion) :',
 	'proofreadpage_footer' => 'Pied de page (noinclude) :',
 	'proofreadpage_toggleheaders' => 'masquer/montrer les sections noinclude',
-	'proofreadpage_quality1_category' => 'Page non corrigée',
-	'proofreadpage_quality2_category' => 'Page à problème',
-	'proofreadpage_quality3_category' => 'Page corrigée',
-	'proofreadpage_quality4_category' => 'Page validée',
+	'proofreadpage_quality1_category' => 'Non corrigée',
+	'proofreadpage_quality2_category' => 'Problématique',
+	'proofreadpage_quality3_category' => 'Corrigée',
+	'proofreadpage_quality4_category' => 'Validée',
 	'proofreadpage_index_listofpages' => 'Liste des pages',
-	'proofreadpage_image_message' => "Lien vers l'index",
+	'proofreadpage_image_message' => 'Lien vers la page d’index',
 	'proofreadpage_page_status' => 'État de la page',
 	'proofreadpage_js_attributes' => 'Auteur Titre Année Éditeur',
 	'proofreadpage_index_attributes' => 'Auteur
@@ -771,7 +846,7 @@ Année|Année de publication
 Source
 Image|Image en couverture
 Pages||20
-Commentaires||10',
+Remarques||10',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -857,7 +932,7 @@ $messages['gl'] = array(
 	'proofreadpage_quality2_category' => 'Problemático',
 	'proofreadpage_quality3_category' => 'Corrixir',
 	'proofreadpage_quality4_category' => 'Validado',
-	'proofreadpage_index_listofpages' => 'Listaxe de páxinas',
+	'proofreadpage_index_listofpages' => 'Lista de páxinas',
 	'proofreadpage_image_message' => 'Ligazón a páxina do índice',
 	'proofreadpage_page_status' => 'Status da páxina',
 	'proofreadpage_js_attributes' => 'Autor Título Ano Publicación',
@@ -887,10 +962,37 @@ $messages['grc'] = array(
 );
 
 /** Swiss German (Alemannisch)
+ * @author Als-Holder
  * @author J. 'mach' wust
  */
 $messages['gsw'] = array(
+	'proofreadpage_desc' => 'Macht e eifache Verglyych vu Täxt mit em Originalscan megli',
+	'proofreadpage_namespace' => 'Syte',
+	'proofreadpage_index_namespace' => 'Index',
+	'proofreadpage_image' => 'Scan',
+	'proofreadpage_index' => 'Index',
+	'proofreadpage_nextpage' => 'Negschti Syte',
 	'proofreadpage_prevpage' => 'Vorderi Syte',
+	'proofreadpage_header' => 'Chopfzyylete (noinclude):',
+	'proofreadpage_body' => 'Täxtlyyb (Transklusion):',
+	'proofreadpage_footer' => 'Fueßzyylete (noinclude):',
+	'proofreadpage_toggleheaders' => 'noinclude-Abschnit yy-/uusblände',
+	'proofreadpage_quality1_category' => 'Nit korrigiert',
+	'proofreadpage_quality2_category' => 'Korrekturprobläm',
+	'proofreadpage_quality3_category' => 'Korrigiert',
+	'proofreadpage_quality4_category' => 'Fertig',
+	'proofreadpage_index_listofpages' => 'Sytelischt',
+	'proofreadpage_image_message' => 'Gleich zue dr Indexsyte',
+	'proofreadpage_page_status' => 'Sytestatus',
+	'proofreadpage_js_attributes' => 'Autor Titel Johr Verlag',
+	'proofreadpage_index_attributes' => 'Autor
+Titel
+Johr|Johr vu dr Vereffetlichung
+Verlag
+Quälle
+Bild|Titelbild
+Syte||20
+Aamerkige||10',
 );
 
 /** Manx (Gaelg)
@@ -1105,10 +1207,11 @@ $messages['hy'] = array(
 	'proofreadpage_index_listofpages' => 'Էջերի ցանկ',
 	'proofreadpage_image_message' => 'Հղում ինդեքսի էջին',
 	'proofreadpage_page_status' => 'Էջի կարգավիճակ',
+	'proofreadpage_js_attributes' => 'Հեղինակ Անվանում Տարի Հրատարակություն',
 	'proofreadpage_index_attributes' => 'Author|Հեղինակ
 Title|Անվանում
 Year|Հրատարակման տարեթիվ
-Publisher|Հրատարակիչ
+Publisher|Հրատարակություն
 Source|Աղբյուր
 Image|Կազմի պատկեր
 Pages|Էջեր|20
@@ -1192,6 +1295,8 @@ $messages['io'] = array(
 	'proofreadpage_index' => 'Indexo',
 	'proofreadpage_nextpage' => 'Sequanta pagino',
 	'proofreadpage_prevpage' => 'Antea pagino',
+	'proofreadpage_index_listofpages' => 'Pagino-listo',
+	'proofreadpage_page_status' => 'Stando di pagino',
 );
 
 /** Icelandic (Íslenska)
@@ -1340,11 +1445,26 @@ Cathetan||10',
 
 /** Georgian (ქართული)
  * @author Malafaya
+ * @author Sopho
  */
 $messages['ka'] = array(
 	'proofreadpage_namespace' => 'გვერდი',
 	'proofreadpage_index_namespace' => 'ინდექსი',
 	'proofreadpage_image' => 'სურათი',
+	'proofreadpage_index' => 'ინდექსი',
+	'proofreadpage_nextpage' => 'შემდეგი გვერდი',
+	'proofreadpage_prevpage' => 'წინა გვერდი',
+	'proofreadpage_quality2_category' => 'პრობლემატური',
+	'proofreadpage_index_listofpages' => 'გვერდების სია',
+	'proofreadpage_page_status' => 'გვერდის სტატუსი',
+	'proofreadpage_index_attributes' => 'ავტორი
+სათაური
+წელი|გამოცემის წელი
+გამომცემელი
+წყარო
+გამოსახულება|ყდის გამოსახულება
+გვერდები||20
+შენიშვნები||10',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1382,9 +1502,28 @@ $messages['km'] = array(
 
 /** Korean (한국어)
  * @author Kwj2772
+ * @author Yknok29
  */
 $messages['ko'] = array(
+	'proofreadpage_namespace' => '쪽수',
+	'proofreadpage_index_namespace' => '목록',
 	'proofreadpage_image' => '그림',
+	'proofreadpage_index' => '목록',
+	'proofreadpage_nextpage' => '다음 페이지',
+	'proofreadpage_prevpage' => '이전 페이지',
+	'proofreadpage_quality2_category' => '문제 있음',
+	'proofreadpage_index_listofpages' => '문서 목록',
+	'proofreadpage_image_message' => '목록 페이지로 연결됩니다.',
+	'proofreadpage_page_status' => '문서 상태',
+	'proofreadpage_js_attributes' => '작가 제목 연도 출판사',
+	'proofreadpage_index_attributes' => '저자
+제목
+연도|출판연도
+출판사
+출처
+그림|책 표지
+쪽수||20
+비평||10',
 );
 
 /** Kinaray-a (Kinaray-a)
@@ -1427,6 +1566,13 @@ Sigge||20
 Aanmerkunge||10',
 );
 
+/** Cornish (Kernewek)
+ * @author Kw-Moon
+ */
+$messages['kw'] = array(
+	'proofreadpage_namespace' => 'Folen',
+);
+
 /** Latin (Latina)
  * @author SPQRobin
  */
@@ -1446,6 +1592,7 @@ $messages['lb'] = array(
 	'proofreadpage_nextpage' => 'Nächst Säit',
 	'proofreadpage_prevpage' => 'Säit virdrun',
 	'proofreadpage_header' => 'Entête (noinclude):',
+	'proofreadpage_body' => 'Inhalt vun der Säit (Transklusioun):',
 	'proofreadpage_footer' => 'Foussnote (noinclude):',
 	'proofreadpage_quality1_category' => 'Net verbessert',
 	'proofreadpage_quality2_category' => 'Problematesch',
@@ -1664,6 +1811,13 @@ Jumlah halaman||20
 Catatan||10',
 );
 
+/** Mirandese (Mirandés)
+ * @author Malafaya
+ */
+$messages['mwl'] = array(
+	'proofreadpage_namespace' => 'Páigina',
+);
+
 /** Erzya (Эрзянь)
  * @author Amdf
  * @author Botuzhaleny-sodamo
@@ -1872,6 +2026,9 @@ Comentaris||10',
  */
 $messages['os'] = array(
 	'proofreadpage_namespace' => 'Фарс',
+	'proofreadpage_image' => 'ныв',
+	'proofreadpage_nextpage' => 'Фæдылдзог фарс',
+	'proofreadpage_prevpage' => 'Раздæры фарс',
 );
 
 /** Polish (Polski)
@@ -1889,10 +2046,10 @@ $messages['pl'] = array(
 	'proofreadpage_body' => 'Treść strony (załączany fragment):',
 	'proofreadpage_footer' => 'Stopka (noinclude):',
 	'proofreadpage_toggleheaders' => 'zmień widoczność sekcji noinclude',
-	'proofreadpage_quality1_category' => 'Niesprawdzone',
-	'proofreadpage_quality2_category' => 'Problematyczne',
-	'proofreadpage_quality3_category' => 'Sprawdzone',
-	'proofreadpage_quality4_category' => 'Sprawdzone',
+	'proofreadpage_quality1_category' => 'Nieskorygowana',
+	'proofreadpage_quality2_category' => 'Problemy',
+	'proofreadpage_quality3_category' => 'Skorygowana',
+	'proofreadpage_quality4_category' => 'Uwierzytelniona',
 	'proofreadpage_index_listofpages' => 'Spis stron',
 	'proofreadpage_image_message' => 'Link do strony indeksowej',
 	'proofreadpage_page_status' => 'Status strony',
@@ -1903,7 +2060,7 @@ Rok|Rok publikacji
 Wydawca
 Źródło
 Ilustracja|Okładka
-Stron||20
+Strony||20
 Uwagi||10',
 );
 
@@ -1982,6 +2139,62 @@ Páginas||20
 Notas||10',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'proofreadpage_desc' => 'Permite a comparação fácil de um texto com a sua digitalização original',
+	'proofreadpage_namespace' => 'Página',
+	'proofreadpage_index_namespace' => 'Índice',
+	'proofreadpage_image' => 'imagem',
+	'proofreadpage_index' => 'Índice',
+	'proofreadpage_nextpage' => 'Próxima página',
+	'proofreadpage_prevpage' => 'Página anterior',
+	'proofreadpage_header' => 'Cabeçalho (em modo noinclude):',
+	'proofreadpage_body' => 'Corpo de página (em modo de transclusão):',
+	'proofreadpage_footer' => 'Rodapé (em modo noinclude):',
+	'proofreadpage_toggleheaders' => 'tornar as seções noinclude visíveis',
+	'proofreadpage_quality1_category' => 'Não revistas',
+	'proofreadpage_quality2_category' => 'Problemáticas',
+	'proofreadpage_quality3_category' => 'Revistas e corrigidas',
+	'proofreadpage_quality4_category' => 'Validadas',
+	'proofreadpage_index_listofpages' => 'Lista de páginas',
+	'proofreadpage_image_message' => 'Link para a página de índice',
+	'proofreadpage_page_status' => 'Estado da página',
+	'proofreadpage_js_attributes' => 'Autor Título Ano Editora',
+	'proofreadpage_index_attributes' => 'Autor
+Título
+Ano|Ano de publicação
+Editora
+Fonte
+Imagem|Imagem de capa
+Páginas||20
+Notas||10',
+);
+
+/** Quechua (Runa Simi)
+ * @author AlimanRuna
+ */
+$messages['qu'] = array(
+	'proofreadpage_namespace' => "P'anqa",
+	'proofreadpage_index_namespace' => 'Yuyarina',
+	'proofreadpage_image' => 'rikcha',
+	'proofreadpage_index' => 'Yuyarina',
+	'proofreadpage_nextpage' => "Qatiq p'anqa",
+	'proofreadpage_prevpage' => "Ñawpaq p'anqa",
+	'proofreadpage_header' => "Uma siq'i (mana ch'aqtana):",
+	'proofreadpage_body' => "P'anqa kurku (ch'aqtanapaq):",
+	'proofreadpage_footer' => "Chaki siq'i (mana ch'aqtana):",
+	'proofreadpage_index_attributes' => "Qillqaq
+Qillqa suti
+Wata|Liwruchasqap watan
+Liwruchaq
+Pukyu
+Rikcha|Qata rikcha
+P'anqakuna||20
+Willapusqakuna||10",
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  * @author Mihai
@@ -2005,6 +2218,20 @@ Sursă
 Imagine|Imagine copertă
 Pagini||20
 Comentarii||10',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'proofreadpage_index_attributes' => "Autore
+Titele
+Anne|Anne de pubblicazione
+Pubblicatore
+Sorgende
+Immaggine|Immaggine d'a coprtine
+Paggène||20
+Note||10",
 );
 
 /** Russian (Русский)
@@ -2153,6 +2380,7 @@ $messages['sr-ec'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
+	'proofreadpage_desc' => 'Moaket dät mäkkelk Ferglieken muugelk fon Text mäd dän Originoalscan',
 	'proofreadpage_namespace' => 'Siede',
 	'proofreadpage_index_namespace' => 'Index',
 	'proofreadpage_image' => 'Scan',
@@ -2170,6 +2398,7 @@ $messages['stq'] = array(
 	'proofreadpage_index_listofpages' => 'Siedenlieste',
 	'proofreadpage_image_message' => 'Ferbiendenge tou ju Indexsiede',
 	'proofreadpage_page_status' => 'Siedenstoatus',
+	'proofreadpage_js_attributes' => 'Autor Tittel Jier Ferlaach',
 	'proofreadpage_index_attributes' => 'Autor
 Tittel
 Jier|Ärschienengsjier
@@ -2387,18 +2616,30 @@ Mga puna||10',
 
 /** Turkish (Türkçe)
  * @author Erkan Yilmaz
+ * @author Joseph
  * @author Mach
  * @author Runningfridgesrule
  * @author Suelnur
  */
 $messages['tr'] = array(
+	'proofreadpage_desc' => 'Orijinal taramayla metnin kolayca karşılaştırılmasına izin verir',
 	'proofreadpage_namespace' => 'Sayfa',
 	'proofreadpage_index_namespace' => 'Endeks',
-	'proofreadpage_image' => 'Resim',
+	'proofreadpage_image' => 'resim',
 	'proofreadpage_index' => 'Dizin',
 	'proofreadpage_nextpage' => 'Gelecek sayfa',
 	'proofreadpage_prevpage' => 'Önceki sayfa',
+	'proofreadpage_header' => 'Başlık (içerme):',
+	'proofreadpage_body' => 'Sayfa gövdesi (çapraz eklenecek):',
+	'proofreadpage_footer' => 'Alt bilgi (içerme):',
+	'proofreadpage_toggleheaders' => 'içerilmeyen bölümlerinin görünürlüğünü değiştir',
+	'proofreadpage_quality1_category' => 'Düzeltilmemiş',
+	'proofreadpage_quality2_category' => 'Sorunlu',
+	'proofreadpage_quality3_category' => 'Düzelt',
+	'proofreadpage_quality4_category' => 'Doğrulanmış',
 	'proofreadpage_index_listofpages' => 'Sayfalar listesi',
+	'proofreadpage_image_message' => 'Endeks sayfasına bağlantı',
+	'proofreadpage_page_status' => 'Sayfa durumu',
 	'proofreadpage_js_attributes' => 'Yazar Başlık Yıl Yayımcı',
 	'proofreadpage_index_attributes' => 'Yazar
 Başlık
@@ -2416,6 +2657,15 @@ Açıklamalar||10',
 $messages['ts'] = array(
 	'proofreadpage_namespace' => 'Tluka',
 	'proofreadpage_index_namespace' => 'Nxaxamelo',
+);
+
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'proofreadpage_namespace' => 'Bet',
+	'proofreadpage_nextpage' => 'Kéyinki bet',
+	'proofreadpage_prevpage' => 'Aldinqi bet',
 );
 
 /** Ukrainian (Українська)

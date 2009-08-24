@@ -39,6 +39,13 @@ $messages['bg'] = array(
 	'gnuplot-desc' => 'Добавя етикет <code><nowiki><gnuplot></nowiki></code> за използване на Gnuplot',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'gnuplot-desc' => 'Dodaje oznaku <code><nowiki><gnuplot></nowiki></code> za upotrebu Gnuplot',
+);
+
 /** Czech (Česky)
  * @author Danny B.
  */
@@ -98,6 +105,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'gnuplot-desc' => 'Engade a etiqueta <code><nowiki><gnuplot></nowiki></code> para usar Gnuplot',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'gnuplot-desc' => 'Fiegt s <code><nowiki><gnuplot></nowiki></code>-Tag yy zum Gnuplot verwände',
 );
 
 /** Hebrew (עברית)
@@ -255,6 +269,27 @@ $messages['sk'] = array(
 	'gnuplot-desc' => 'Pridáva značku <code><nowiki><gnuplot></nowiki></code> pre použitie Gnuplot',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'gnuplot-desc' => 'E vendos kodin <code><nowiki><gnuplot></nowiki></code> për të përdorur Gnuplot',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'gnuplot-desc' => 'Föiget dän <code><nowiki><gnuplot></nowiki></code>-Tag bietou, uum Gnuplot tou ferweenden',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'gnuplot-desc' => 'Nambahkeun tag <code><nowiki><gnuplot></nowiki></code> pikeun maké Gnuplot',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -274,6 +309,20 @@ $messages['te'] = array(
  */
 $messages['th'] = array(
 	'gnuplot-desc' => 'ใส่แท็ก <code><nowiki><gnuplot></nowiki></code> เพื่อใช้งานนิวพลอต (Gnuplot)',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'gnuplot-desc' => 'Nagdaragdag ng tatak na <code><nowiki><gnuplot></nowiki></code> upang magamit ang Gnuplot',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'gnuplot-desc' => 'Gnuplot kullanmak için <code><nowiki><gnuplot></nowiki></code> etiketini ekler',
 );
 
 /** Vèneto (Vèneto)

@@ -77,6 +77,13 @@ $messages['bs'] = array(
 	'yui-desc' => 'Kolekcija korisnih alata i kontrola, napisanih u JavaScript',
 );
 
+/** Catalan (Català)
+ * @author SMP
+ */
+$messages['ca'] = array(
+	'yui-desc' => "Un conjunt d'utilitats i controls en JavaScript",
+);
+
 /** Czech (Česky)
  * @author Matěj Grabovský
  */
@@ -139,6 +146,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'yui-desc' => 'Unha colección de utilidades e controis escritos en JavaScript',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'yui-desc' => 'E Sammlig vu Wärchzyyg un Styyrelemänt, wu in JavaScript gschribe sin',
 );
 
 /** Hebrew (עברית)
@@ -215,7 +229,7 @@ $messages['km'] = array(
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'yui-desc' => 'En Aanzahl Hellfe un Projrämmscher en JavaSkrepp',
+	'yui-desc' => 'En Aanzahl Hellfer un Projrämmscher en JavaSkrepp',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -244,6 +258,27 @@ $messages['mk'] = array(
  */
 $messages['mr'] = array(
 	'yui-desc' => 'जावा स्क्रिप्टने लिहीलेल्या सुविधा आणि नियंत्रणांचा संच',
+);
+
+/** Malay (Bahasa Melayu)
+ * @author Diagramma Della Verita
+ */
+$messages['ms'] = array(
+	'yui-desc' => 'Set kawalan dan  kemudahan, ditulis dalam JavaScript',
+);
+
+/** Maltese (Malti)
+ * @author Chrisportelli
+ */
+$messages['mt'] = array(
+	'yui-desc' => "Sett ta' bżonnijiet u kontrolli, miktubin bil-JavaScript",
+);
+
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'yui-desc' => 'En Sett Warktüüch un Stüürelementen in JavaScript schreven',
 );
 
 /** Nedersaksisch (Nedersaksisch)
@@ -305,6 +340,13 @@ $messages['pt'] = array(
 	'yui-desc' => 'Um conjunto de utilitários e controlos, escritos em JavaScript',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'yui-desc' => 'Um conjunto de utilitários e controles, escritos em JavaScript',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -331,6 +373,20 @@ $messages['ru'] = array(
  */
 $messages['sk'] = array(
 	'yui-desc' => 'Sada nástrojov napísaných v JavaScripte',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'yui-desc' => 'Një tërësi shërbimesh dhe kontrollesh të shkruara në JavaScript',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'yui-desc' => 'Ne Samlenge in JavaScript schrieuwene Reewen un Stjuurelemente',
 );
 
 /** Sundanese (Basa Sunda)

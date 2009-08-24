@@ -83,7 +83,7 @@ class PdfBook {
 			else {
 				$articles = array();
 				if ($title->getNamespace() == NS_CATEGORY) {
-					$db     = &wfGetDB(DB_SLAVE);
+					$db     = wfGetDB(DB_SLAVE);
 					$cat    = $db->addQuotes($title->getDBkey());
 					$result = $db->select(
 						'categorylinks',

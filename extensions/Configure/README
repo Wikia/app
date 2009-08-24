@@ -20,17 +20,27 @@ LocalSettings.php:
 
 $wgConfigureEditableSettings = array();
 
+=== Optimisation ===
+
+The definition file for Special:Extensions (i.e. configurable extensions)
+is in a plain text format and will need to be parsed when accessing e.g.
+Special:Extensions or Special:ViewConfig. To speed up this operation, a PHP
+extension is provided in the load_txt_def subdirectory. If you want to install
+it, please read load_txt_def/INSTALL for instructions. Once installed, Configure
+will automatically use it.
+
 == Configuration ==
 
 The extension will require to store the configuration either:
 * a directory that have to be writable by the web server. The default path is
   the $IP/serialized directory, that means the "serialized" directory in the
   wiki root path. You can change it in $wgConfigureFilesPath.
-* a database in which the configure.sql patch is applied, by default the
-  database is "config", you can change its name in $wgConfigureDatabase. To use
-  this, you'll need to define all your database and memcached settings before
-  calling efConfigureSetup() or it simply won't work. Those settings will not be
-  editable in Special:Configure.
+* a database in which the configure.sql (or configure.pg.sql if you use
+  PostgreSQL) patch is applied, by default the database is "config", you can
+  change its name in $wgConfigureDatabase. To use this, you'll need to define
+  all your database and memcached settings before calling efConfigureSetup() or
+  it simply won't work. Those settings will not be editable in
+  Special:Configure.
 You can select file storage or database storage by changing $wgConfigureHandler
 to "files" (default) to use files or "db" to use the database.
 Don't forget to override all that variables between the time you include the

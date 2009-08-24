@@ -97,7 +97,16 @@ $aliases['fi'] = array(
 
 /** Galician (Galego) */
 $aliases['gl'] = array(
+	'Ask' => array( 'Preguntar' ),
+	'Browse' => array( 'Navegar' ),
+	'ExportRDF' => array( 'Exportar RDF' ),
+	'PageProperty' => array( 'Propiedades da páxina' ),
+	'Properties' => array( 'Propiedades' ),
+	'SearchByProperty' => array( 'Procurar por propiedades' ),
+	'SemanticStatistics' => array( 'Estatísticas semánticas' ),
 	'Types' => array( 'Tipos' ),
+	'UnusedProperties' => array( 'Propiedades sen uso' ),
+	'WantedProperties' => array( 'Propiedades requiridas' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -139,6 +148,38 @@ $aliases['hu'] = array(
 	'URIResolver' => array( 'URI-feloldó' ),
 	'UnusedProperties' => array( 'Nem használt tulajdonságok' ),
 	'WantedProperties' => array( 'Keresett tulajdonságok' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Ask' => array( 'Consultar' ),
+	'Browse' => array( 'Percurrer' ),
+	'ExportRDF' => array( 'Exportar RDF' ),
+	'PageProperty' => array( 'Proprietate de pagina' ),
+	'Properties' => array( 'Proprietates' ),
+	'SMWAdmin' => array( 'Admin SMW' ),
+	'SearchByProperty' => array( 'Cercar per proprietate' ),
+	'SemanticStatistics' => array( 'Statisticas semantic' ),
+	'Types' => array( 'Typos' ),
+	'URIResolver' => array( 'Resolvitor de URIs' ),
+	'UnusedProperties' => array( 'Proprietates non usate' ),
+	'WantedProperties' => array( 'Proprietates dsesirate' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'Ask' => array( '問い合わせ', '意味的検索' ),
+	'Browse' => array( '閲覧' ),
+	'ExportRDF' => array( 'RDFエクスポート' ),
+	'PageProperty' => array( 'ページプロパティ' ),
+	'Properties' => array( 'プロパティ' ),
+	'SMWAdmin' => array( 'SMW管理' ),
+	'SearchByProperty' => array( 'プロパティによる検索' ),
+	'SemanticStatistics' => array( '意味的統計' ),
+	'Types' => array( '型' ),
+	'URIResolver' => array( 'URIリゾルバー' ),
+	'UnusedProperties' => array( '使われていないプロパティ' ),
+	'WantedProperties' => array( '望まれているプロパティ' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -221,9 +262,24 @@ $aliases['oc'] = array(
 	'WantedProperties' => array( 'Proprietats demandadas', 'ProprietatsDemandadas' ),
 );
 
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'Ask' => array( 'پوښتل' ),
+	'PageProperty' => array( 'د مخ ځانتياوې' ),
+	'Properties' => array( 'ځانتياوې' ),
+	'Types' => array( 'ډولونه' ),
+	'UnusedProperties' => array( 'ناکارېدلې ځانتياوې' ),
+);
+
 /** Romanian (Română) */
 $aliases['ro'] = array(
 	'Browse' => array( 'Răsfoieşte' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Ask' => array( 'Pyet' ),
+	'Browse' => array( 'Sille' ),
 );
 
 /** Swahili (Kiswahili) */
@@ -231,5 +287,28 @@ $aliases['sw'] = array(
 	'Ask' => array( 'Uliza' ),
 	'Browse' => array( 'Fungua' ),
 	'Types' => array( 'Aina' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Ask' => array( 'Magtanong' ),
+	'Browse' => array( 'Tumingin-tingin' ),
+	'ExportRDF' => array( 'Iluwas ang RDF' ),
+	'PageProperty' => array( 'Pag-aari ng pahina' ),
+	'Properties' => array( 'Mga pag-aari' ),
+	'SMWAdmin' => array( 'Tagapangasiwa ng SMW' ),
+	'SearchByProperty' => array( 'Maghanap ayon sa pag-aari' ),
+	'SemanticStatistics' => array( 'Mga estadistika ng semantiko' ),
+	'Types' => array( 'Mga uri' ),
+	'URIResolver' => array( 'Tagapaglutas ng URI' ),
+	'UnusedProperties' => array( 'Mga pag-aaring hindi ginagamit' ),
+	'WantedProperties' => array( 'Mga pag-aaring ninanais' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'Browse' => array( 'Sfója' ),
+	'Properties' => array( 'Proprietà' ),
+	'Types' => array( 'Tipi' ),
 );
 

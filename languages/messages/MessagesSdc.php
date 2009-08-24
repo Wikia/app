@@ -53,8 +53,8 @@ $specialPageAliases = array(
 	'Mostlinked'                => array( 'PàginiPiùRiciamaddi' ),
 	'Mostlinkedcategories'      => array( 'CateguriPiùRiciamaddi' ),
 	'Mostlinkedtemplates'       => array( 'MudelliPiùRiciamaddi' ),
-	'Mostcategories'            => array( 'PàginiCunPiùCateguri' ),
 	'Mostimages'                => array( 'ImmaginiPiùRiciamaddi' ),
+	'Mostcategories'            => array( 'PàginiCunPiùCateguri' ),
 	'Mostrevisions'             => array( 'PàginiCunPiùRibisioni' ),
 	'Fewestrevisions'           => array( 'PàginiCunMancuRibisioni' ),
 	'Shortpages'                => array( 'PàginiPiùCorthi' ),
@@ -726,15 +726,11 @@ Ippiegazioni: (curr) = diffarènzi cu la versioni currenti, (priz) = diffarènzi
 'rev-deleted-comment'         => '(cummentu buggaddu)',
 'rev-deleted-user'            => '(innòmu utenti buggaddu)',
 'rev-deleted-event'           => '(azioni di lu rigisthru buggadda)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-Chistha versioni di la pàgina è isthadda buggadda da l\'archìbi visìbiri a lu pùbbriggu.
-Cunsulthà lu [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rigisthru di canzilladdura] pa althri dettàgli.
-</div>',
-'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">
-Chistha versioni di la pàgina è isthadda buggadda da l\'archìbi visìbiri a lu pùbbriggu.
-Lu testhu pò assé visuarizzaddu soru da l\'amministhradori di lu situ.
-Cunsulthà lu [{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} rigisthru di canzilladdura] pa althri dettàgli.
-</div>',
+'rev-deleted-text-permission' => "Chistha versioni di la pàgina è isthadda buggadda da l'archìbi visìbiri a lu pùbbriggu.
+Cunsulthà lu [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rigisthru di canzilladdura] pa althri dettàgli.",
+'rev-deleted-text-view'       => "Chistha versioni di la pàgina è isthadda buggadda da l'archìbi visìbiri a lu pùbbriggu.
+Lu testhu pò assé visuarizzaddu soru da l'amministhradori di lu situ.
+Cunsulthà lu [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} rigisthru di canzilladdura] pa althri dettàgli.",
 'rev-delundel'                => 'musthra/cua',
 'revisiondelete'              => 'Canzella o ricùpara versioni',
 'revdelete-nooldid-title'     => 'Versioni nò ippizzificadda',
@@ -1069,7 +1065,7 @@ Pa piazeri verifigga si vói carriggà avveru chisthu file; inogghi v'è lu rigi
 'imagelinks'                => "Cullegamenti a l'immàgina",
 'linkstoimage'              => "{{PLURAL:$1|La sighenti pàgina pùnta|Li sighenti $1 pàgini pùntani}} a l'immàgina:",
 'nolinkstoimage'            => "Nisciuna pàgina cunteni cullegamenti a l'immàgina.",
-'sharedupload'              => 'Chisthu file è unu carriggamentu cundibisu; pó assé dunca utirizaddu da più prugetti wiki.',
+'sharedupload'              => 'Chisthu file è unu carriggamentu cundibisu; pó assé dunca utirizaddu da più prugetti wiki.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'shareduploadwiki'          => 'Védi $1 pa althri infuimmazioni.',
 'shareduploadwiki-linktext' => 'la reratiba pàgina di deschrizioni',
 'noimage'                   => "Un file cun chisth'innòmmu nò isisthi, vói $1 tu?",
@@ -1451,7 +1447,7 @@ $1",
 'contributions' => 'Cuntributi utenti',
 'mycontris'     => "li me' cuntributi",
 'contribsub2'   => 'Pa $1 ($2)',
-'nocontribs'    => 'Nò so isthaddi acciappaddi mudìfigghi cunfòimmi a li critéri sciubaraddi.',
+'nocontribs'    => 'Nò so isthaddi acciappaddi mudìfigghi cunfòimmi a li critéri sciubaraddi.', # Optional parameter: $1 is the user name
 'uctop'         => '(ulthima pa la pàgina)',
 'month'         => 'A parthì da lu mesi (e prizzidenti):',
 'year'          => "A parthì da l'anni (e prizzidenti):",
@@ -1844,6 +1840,7 @@ So cunsidaraddi soru l'erenchi puntaddi (righi ch'ischumenzani cu' lu caràtteri
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength", # Do not translate list items
 
 # EXIF tags
@@ -1923,9 +1920,7 @@ So cunsidaraddi soru l'erenchi puntaddi (righi ch'ischumenzani cu' lu caràtteri
 'confirmemail'            => 'Cunfèimma indirizzu di postha erettrònica',
 'confirmemail_noemail'    => "Nò è isthaddu indicaddu un'indirizzu postha erettrònica vàriddu i' li pròpri [[Special:Preferences|prifirenzi]].",
 'confirmemail_text'       => "{{SITENAME}} dumanda la verifigga di l'indirizzu di postha erettrònica primma di pudé l'usà. Incalchà lu buttoni in giossu pa invià una prigonta di cunfèimma a lu propriu indirizzu; i' l'imbasciadda è prisenti un cullegamentu chi cunteni un còdizi. Visità lu cullegamentu cu' lu proprio nabiggadori pa cunfèimmà chi l'indirizzu è vàriddu.",
-'confirmemail_pending'    => '<div class="error">
-Un còdizi di cunfèimma è già isthaddu inviaddu pa postha erettrònica; si la registhrazioni è isthadda cridda da poggu, è nezzessàriu aisittà l\'arribu di lu còdizi pa calchi minutu primma di dumandanni unu nobu.
-</div>',
+'confirmemail_pending'    => "Un còdizi di cunfèimma è già isthaddu inviaddu pa postha erettrònica; si la registhrazioni è isthadda cridda da poggu, è nezzessàriu aisittà l'arribu di lu còdizi pa calchi minutu primma di dumandanni unu nobu.",
 'confirmemail_send'       => 'Invia un còdizi di cunfèimma via postha erettrònica.',
 'confirmemail_sent'       => 'Imbasciadda di postha erettrònica di cunfèimma inviaddu.',
 'confirmemail_oncreate'   => "Un còdizi di cunfèimma è isthaddu inviaddu a l'indirizzu di postha erettrònica indicaddu. Lu còdizi nò è nezzessàriu pa intrà i' lu situ, ma pa abirità tutti li funzioni liaddi a la postha erettrònica.",
@@ -1957,11 +1952,9 @@ Chistu còdizi di cunfèimma ischadrà automatiggamenti a li \$4.",
 'scarytranscludetoolong'  => '[Errori: URL troppu longu]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">
-Infuimmazioni di tracciamentu pa chistha pàgina:<br />
-$1
-</div>',
-'trackbackremove'   => ' ([$1 Elimina])',
+'trackbackbox'      => 'Infuimmazioni di tracciamentu pa chistha pàgina:<br />
+$1',
+'trackbackremove'   => '([$1 Elimina])',
 'trackbacklink'     => 'Tracciamentu',
 'trackbackdeleteok' => 'Infuimmazioni di tracciamentu eliminaddi.',
 

@@ -19,11 +19,11 @@ $linkPrefixExtension = true;
 
 $namespaceNames = array(
 	NS_MEDIA            => 'Срѣ́дьства',
-	NS_SPECIAL          => 'Наро_чьна',
+	NS_SPECIAL          => 'Наро́чьна',
 	NS_TALK             => 'Бєсѣ́да',
 	NS_USER             => 'По́льꙃєватєл҄ь',
 	NS_USER_TALK        => 'По́льꙃєватєлꙗ_бєсѣ́да',
-	NS_PROJECT_TALK     => '{{grammar:genitive|$1}}_бєсѣ́да',
+	NS_PROJECT_TALK     => '{{GRAMMAR:genitive|$1}}_бєсѣ́да',
 	NS_FILE             => 'Дѣ́ло',
 	NS_FILE_TALK        => 'Дѣ́ла_бєсѣ́да',
 	NS_MEDIAWIKI        => 'MediaWiki',
@@ -54,6 +54,11 @@ $namespaceAliases = array(
 	'Помощи_бесѣда'                  => NS_HELP_TALK,
 	'Катигорї'                      => NS_CATEGORY,
 	'Катигорїѩ_бесѣда'               => NS_CATEGORY_TALK,
+);
+
+$magicWords = array(
+	'redirect'              => array( '0', '#ПРѢНАПРАВЛЄНИѤ', '#REDIRECT' ),
+	'language'              => array( '0', '#ѨꙀꙐКЪ:', '#LANGUAGE:' ),
 );
 
 $defaultDateFormat = 'mdy';
@@ -418,7 +423,8 @@ $messages = array(
 'categories' => 'катигорі́ѩ',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'пони́чьжєнꙑ добродѣꙗ́ниꙗ',
+'deletedcontributions'       => 'пони́чьжєнꙑ добродѣꙗ́ниꙗ',
+'deletedcontributions-title' => 'пони́чьжєнꙑ добродѣꙗ́ниꙗ',
 
 # Special:LinkSearch
 'linksearch-ok' => 'ищи́',

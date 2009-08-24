@@ -18,8 +18,8 @@ $dir = dirname(__FILE__);
 $wgExtensionCredits['other'][] = array(
 	'name'           => 'TorBlock',
 	'author'         => 'Andrew Garrett',
-	'svn-date'       => '$LastChangedDate: 2008-06-08 10:48:19 +0000 (Sun, 08 Jun 2008) $',
-	'svn-revision'   => '$LastChangedRevision: 36018 $',
+	'svn-date'       => '$LastChangedDate: 2009-03-05 02:43:05 +0000 (Thu, 05 Mar 2009) $',
+	'svn-revision'   => '$LastChangedRevision: 48042 $',
 	'description'    => 'Prevents Tor exit nodes from editing a wiki',
 	'descriptionmsg' => 'torblock-desc',
 	'url'            => 'http://www.mediawiki.org/wiki/Extension:TorBlock',
@@ -33,6 +33,10 @@ $wgHooks['AbortAutoblock'][] = 'TorBlock::onAbortAutoblock';
 $wgHooks['GetAutoPromoteGroups'][] = 'TorBlock::onGetAutoPromoteGroups';
 $wgHooks['GetBlockedStatus'][] = 'TorBlock::onGetBlockedStatus';
 $wgHooks['AutopromoteCondition'][] = 'TorBlock::onAutopromoteCondition';
+$wgHooks['RecentChange_save'][] = 'TorBlock::onRecentChangeSave';
+$wgHooks['ListDefinedTags'][] = 'TorBlock::onListDefinedTags';
+$wgHooks['AbuseFilter-filterAction'][] = 'TorBlock::onAbuseFilterFilterAction';
+$wgHooks['AbuseFilter-builder'][] = 'TorBlock::onAbuseFilterBuilder';
 
 // Define new autopromote condition
 define('APCOND_TOR', 'tor'); // Numbers won't work, we'll get collisions
@@ -76,3 +80,6 @@ $wgTorIPs = array( '208.80.152.2' );
  * Disable existing blocks of Tor nodes
  */
 $wgTorDisableAdminBlocks = true;
+
+/** Mark tor edits as such */
+$wgTorTagChanges = true;

@@ -90,6 +90,21 @@ $messages['akz'] = array(
 	'ogg-more' => 'Maatàasasi...',
 );
 
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'ogg-play' => 'Väta',
+	'ogg-pause' => 'Pauz',
+	'ogg-stop' => 'Azotada',
+	'ogg-play-video' => 'Ozutada video',
+	'ogg-play-sound' => 'Väta kulundad',
+	'ogg-more' => 'Enamba...',
+	'ogg-dismiss' => 'Peitta',
+	'ogg-download' => 'Jügutoitta fail',
+	'ogg-desc-link' => 'Informacii neciš failas',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  * @author SPQRobin
@@ -769,20 +784,6 @@ Por favor <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_dow
 	'ogg-desc-link' => 'Sobre este archivo',
 );
 
-/** Estonian (Eesti)
- * @author Silvar
- */
-$messages['et'] = array(
-	'ogg-play' => 'Mängi',
-	'ogg-pause' => 'Paus',
-	'ogg-stop' => 'Peata',
-	'ogg-play-video' => 'Mängi videot',
-	'ogg-play-sound' => 'Mängi heli',
-	'ogg-no-player' => 'Kahjuks, ei paista su süsteemis olevat ühtki ühilduvat multimeedia programmi.
-Palun lae omale tarkvara <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">siit alla</a>.',
-	'ogg-dismiss' => 'Sulge',
-);
-
 /** Basque (Euskara)
  * @author An13sa
  * @author Theklan
@@ -1003,7 +1004,7 @@ $messages['gl'] = array(
 	'ogg-pause' => 'Deter',
 	'ogg-stop' => 'Parar',
 	'ogg-play-video' => 'Reproducir vídeo',
-	'ogg-play-sound' => 'Reproducir o son',
+	'ogg-play-sound' => 'Reproducir son',
 	'ogg-no-player' => 'Parece que o seu sistema non dispón de software de reprodución axeitado. <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">Instale un reprodutor</a>.',
 	'ogg-no-xiphqt' => 'Parece que non dispón do compoñente XiphQT para QuickTime. QuickTime non pode reproducir ficheiros Ogg sen este componente. <a href="http://www.mediawiki.org/wiki/Extension:OggHandler/Client_download">Instale XiphQT</a> ou escolla outro reprodutor.',
 	'ogg-player-videoElement' => 'Soporte do navegador nativo',
@@ -2070,10 +2071,10 @@ $messages['nn'] = array(
 	'ogg-short-audio' => 'Ogg $1-lydfil, $2',
 	'ogg-short-video' => 'Ogg $1-videofil, $2',
 	'ogg-short-general' => 'Ogg $1-mediafil, $2',
-	'ogg-long-audio' => '(Ogg $1-lydfil, lengd $2, $3)',
-	'ogg-long-video' => '(Ogg $1-videofil, lengd $2, $4×$5 pikslar, $3)',
-	'ogg-long-multiplexed' => '(Samansett ogg lyd-/videofil, $1, lengd $2, $4×$5 pikslar, $3 til saman)',
-	'ogg-long-general' => '(Ogg mediafil, lengd $2, $3)',
+	'ogg-long-audio' => '(Ogg $1-lydfil, lengde $2, $3)',
+	'ogg-long-video' => '(Ogg $1-videofil, lengde $2, $4×$5 pikslar, $3)',
+	'ogg-long-multiplexed' => '(Samansett ogg lyd-/videofil, $1, lengde $2, $4×$5 pikslar, $3 til saman)',
+	'ogg-long-general' => '(Ogg mediafil, lengde $2, $3)',
 	'ogg-long-error' => '(Ugyldig ogg-fil: $1)',
 	'ogg-play' => 'Spel av',
 	'ogg-pause' => 'Pause',
@@ -2536,7 +2537,6 @@ $messages['sq'] = array(
 /** Serbian Cyrillic ekavian (ћирилица)
  * @author Millosh
  * @author Sasa Stefanovic
- * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'ogg-desc' => 'Руковаоц ogg Теора и Ворбис фајловима са јаваскрипт плејером',
@@ -2553,8 +2553,8 @@ $messages['sr-ec'] = array(
 	'ogg-stop' => 'Стоп',
 	'ogg-play-video' => 'Пусти видео',
 	'ogg-play-sound' => 'Пусти звук',
-	'ogg-player-videoElement' => 'Уграђена подршка у браузер',
-	'ogg-player-oggPlugin' => 'Плагин за браузер',
+	'ogg-player-videoElement' => '<video> елемент',
+	'ogg-player-oggPlugin' => 'плагин за ogg',
 	'ogg-player-thumbnail' => 'још увек само слика',
 	'ogg-player-soundthumb' => 'нема плејера',
 	'ogg-player-selected' => '(означено)',
@@ -2886,24 +2886,6 @@ $messages['vec'] = array(
 	'ogg-desc-link' => 'Informazion su sto file',
 );
 
-/** Veps (Vepsan kel')
- * @author Игорь Бродский
- */
-$messages['vep'] = array(
-	'ogg-play' => 'Väta',
-	'ogg-pause' => 'Pauz',
-	'ogg-stop' => 'Azotada',
-	'ogg-play-video' => 'Ozutada video',
-	'ogg-play-sound' => 'Väta kulundad',
-	'ogg-player-soundthumb' => 'Ei ole plejerad',
-	'ogg-player-selected' => '(valitud)',
-	'ogg-use-player' => 'Kävutada plejer:',
-	'ogg-more' => 'Enamba...',
-	'ogg-dismiss' => 'Peitta',
-	'ogg-download' => 'Jügutoitta fail',
-	'ogg-desc-link' => 'Informacii neciš failas',
-);
-
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  */
@@ -2946,11 +2928,6 @@ $messages['vo'] = array(
 	'ogg-dismiss' => 'Färmükön',
 	'ogg-download' => 'Donükön ragivi',
 	'ogg-desc-link' => 'Tefü ragiv at',
-);
-
-/** Walloon (Walon) */
-$messages['wa'] = array(
-	'ogg-dismiss' => 'Clôre',
 );
 
 /** Yue (粵語) */

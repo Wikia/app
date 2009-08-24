@@ -432,8 +432,7 @@ E à di jessi di almancul {{PLURAL:$1|1 caratar|$1 caratars}} e jessi difarente 
 'mailmypassword'            => 'Mande une gnove peraule clâf ae me direzion di pueste eletroniche',
 'passwordremindertitle'     => 'Gnove peraule clâf temporanie par {{SITENAME}}',
 'passwordremindertext'      => 'Cualchidun (probabilmentri tu, de direzion IP $1) al à domandât une gnove peraule clâf par jentrâ in {{SITENAME}} ($4).
-Une peraule clâf temporanee par l\'utent "$2" e je stade creade e impuestade a "$3".
-Se cheste e jere la tô intenzion tu varâs di jentrâ e sielzi une gnove peraule clâf cumò.
+Une peraule clâf temporanie par l\'utent "$2" e je stade creade e impuestade a "$3". Se cheste e jere la tô intenzion, tu varâs di jentrâ e sielzi une gnove peraule clâf cumò. La to peraule clâf temporanie e scjadarà daspò {{PLURAL:$5|une zornade|$5 zornadis}}.
 
 Se no tu âs domandât tu chest o se tu âs cjatât la peraule clâf e no tu vuelis plui cambiâle, tu puedis ignorâ chest messaç e continuâ a doprâ la vecje peraule clâf.',
 'noemail'                   => 'Nissune direzion email regjistrade par l\'utent "$1".',
@@ -687,6 +686,7 @@ Leiende: (cur) = difarencis cun la version atuâl, (prec) = difarencis cun la ve
 'prefs-resetpass'           => 'Cambie la peraule clâf',
 'saveprefs'                 => 'Salve lis preferencis',
 'resetprefs'                => 'Predeterminât',
+'restoreprefs'              => 'Torne a lis impostazions predeterminadis',
 'textboxsize'               => 'Cambiament',
 'prefs-edit-boxsize'        => 'Dimensions dal barcon pai cambiaments.',
 'rows'                      => 'Riis',
@@ -835,7 +835,7 @@ Par includi une figure intune pagjine, dopre un leam inte form
 'imagelinks'                => 'Leams de figure',
 'linkstoimage'              => '{{PLURAL:$1|La pagjine ca sot e je leade|Lis $1 pagjinis ca sot a son leadis}} a cheste figure:',
 'nolinkstoimage'            => 'No son pagjinis leadis a chest file.',
-'sharedupload'              => 'Chest file al è condivîs e al pues jessi doprât di altris progjets.',
+'sharedupload'              => 'Chest file al è condivîs e al pues jessi doprât di altris progjets.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'shareduploadwiki'          => 'Cjale par plasê la [pagjine di descrizion dal file $1] par altris informazions.',
 'shareduploadwiki-desc'     => 'La descrizion su la $1 intal dipuesit condividût e ven mostrade ca sot.',
 'shareduploadwiki-linktext' => 'pagjine di descrizion dal file',
@@ -976,7 +976,8 @@ Cjale ancje lis [[Special:WantedCategories|categoriis desideradis]].',
 'categoriesfrom'     => 'Mostre lis categoriis scomençant di:',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Contribûts dal utent eliminâts',
+'deletedcontributions'       => 'Contribûts dal utent eliminâts',
+'deletedcontributions-title' => 'Contribûts dal utent eliminâts',
 
 # Special:LinkSearch
 'linksearch'    => 'Leams esternis',
@@ -1131,7 +1132,7 @@ Tu puedis cambiâ il nivel di protezion di cheste pagjine, ma chest nol varà ef
 'contributions-title' => 'Contribûts di $1',
 'mycontris'           => 'Miei contribûts',
 'contribsub2'         => 'Par $1 ($2)',
-'nocontribs'          => 'Nissun cambiament che al rispiete chescj criteris cjatât.',
+'nocontribs'          => 'Nissun cambiament che al rispiete chescj criteris cjatât.', # Optional parameter: $1 is the user name
 'uctop'               => ' (su)',
 'month'               => 'Scomençant dal mês (e prime):',
 'year'                => 'Scomençant dal an (e prime):',
@@ -1383,6 +1384,7 @@ Se il file al è stât cambiât rispiet al so stât origjinâl, cualchi informaz
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags

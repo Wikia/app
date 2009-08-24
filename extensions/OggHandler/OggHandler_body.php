@@ -3,7 +3,7 @@
 // TODO: Fix core printable stylesheet. Descendant selectors suck.
 
 class OggHandler extends MediaHandler {
-	const OGG_METADATA_VERSION = 2;
+	const OGG_METADATA_VERSION = 1;
 
 	static $magicDone = false;
 
@@ -130,7 +130,7 @@ class OggHandler extends MediaHandler {
 						'group' => $stream->getGroup(),
 						'type' => $stream->getType(),
 						'vendor' => $stream->getVendor(),
-						'length' => $stream->getLength(),						
+						'length' => $stream->getLength(),
 						'size' => $stream->getSize(),
 						'header' => $stream->getHeader(),
 						'comments' => $stream->getComments()
@@ -138,9 +138,7 @@ class OggHandler extends MediaHandler {
 				}
 			}
 			$metadata['streams'] = $streams;
-			$metadata['length'] = $f->getLength();				
-			//get the offset of the file (in cases where the file is a segment copy)		
-			$metadata['offset'] = $f->getStartOffset();					
+			$metadata['length'] = $f->getLength();
 		} catch ( PEAR_Exception $e ) {
 			// File not found, invalid stream, etc.
 			$metadata['error'] = array(
@@ -180,7 +178,6 @@ class OggHandler extends MediaHandler {
 		$srcHeight = $file->getHeight();
 		$height = $srcWidth == 0 ? $srcHeight : $width * $srcHeight / $srcWidth;
 		$length = $this->getLength( $file );
-		$offset = $this->getOffset( $file );		
 		$noPlayer = isset( $params['noplayer'] );
 		$noIcon = isset( $params['noicon'] );
 
@@ -209,16 +206,16 @@ class OggHandler extends MediaHandler {
 			} else {
 				$width = $params['width'];
 			}
-			return new OggAudioDisplay( $file, $file->getURL(), $width, $height, $length, $dstPath, $noIcon, $offset );
+			return new OggAudioDisplay( $file, $file->getURL(), $width, $height, $length, $dstPath, $noIcon );
 		}
 
 		// Video thumbnail only
 		if ( $noPlayer ) {
-			return new ThumbnailImage( $file, $dstUrl, $width, $height, $dstPath , $noIcon, $offset);
+			return new ThumbnailImage( $file, $dstUrl, $width, $height, $dstPath );
 		}
 
 		if ( $flags & self::TRANSFORM_LATER ) {
-			return new OggVideoDisplay( $file, $file->getURL(), $dstUrl, $width, $height, $length, $dstPath, $noIcon, $offset);
+			return new OggVideoDisplay( $file, $file->getURL(), $dstUrl, $width, $height, $length, $dstPath );
 		}
 
 		$thumbTime = false;
@@ -316,14 +313,6 @@ class OggHandler extends MediaHandler {
 			return 0;
 		} else {
 			return $metadata['length'];
-		}
-	}
-	function getOffset( $file ){
-		$metadata = $this->unpackMetadata( $file->getMetadata() );
-		if ( !$metadata || isset( $metadata['error'] ) || !isset( $metadata['offset']) ) {
-			return 0;
-		} else {
-			return $metadata['offset'];
 		}
 	}
 
@@ -497,7 +486,7 @@ class OggTransformOutput extends MediaTransformOutput {
 	static $serial = 0;
 
 	function __construct( $file, $videoUrl, $thumbUrl, $width, $height, $length, $isVideo, 
-		$path, $noIcon = false, $offset ) 
+		$path, $noIcon = false ) 
 	{
 		$this->file = $file;
 		$this->videoUrl = $videoUrl;
@@ -505,7 +494,6 @@ class OggTransformOutput extends MediaTransformOutput {
 		$this->width = round( $width );
 		$this->height = round( $height );
 		$this->length = round( $length );
-		$this->offset = round( $offset );
 		$this->isVideo = $isVideo;
 		$this->path = $path;
 		$this->noIcon = $noIcon;
@@ -526,7 +514,6 @@ class OggTransformOutput extends MediaTransformOutput {
 			$url = $this->videoUrl;
 		}
 		$length = intval( $this->length );
-		$offset = intval( $this->offset );
 		$width = intval( $this->width );
 		$height = intval( $this->height );
 		$alt = empty( $options['alt'] ) ? $this->file->getTitle()->getText() : $options['alt'];
@@ -559,7 +546,7 @@ class OggTransformOutput extends MediaTransformOutput {
 				//$thumbDivAttribs = array( 'style' => 'text-align: right;' );
 			}
 			$msgStartPlayer = wfMsg( 'ogg-play-sound' );
-			$playerHeight = 35;
+			$playerHeight = 0;
 		}
 
 		// Set $thumb to the thumbnail img tag, or the thing that goes where 
@@ -604,7 +591,6 @@ class OggTransformOutput extends MediaTransformOutput {
 			'width' => $width,
 			'height' => $playerHeight,
 			'length' => $length,
-			'offset' => $offset,
 			'linkUrl' => $linkUrl,
 			'isVideo' => $this->isVideo ) );
 
@@ -637,14 +623,14 @@ class OggTransformOutput extends MediaTransformOutput {
 }
 
 class OggVideoDisplay extends OggTransformOutput {
-	function __construct( $file, $videoUrl, $thumbUrl, $width, $height, $length, $path, $noIcon=false, $offset=0 ) {
-		parent::__construct( $file, $videoUrl, $thumbUrl, $width, $height, $length, true, $path, false, $offset );
+	function __construct( $file, $videoUrl, $thumbUrl, $width, $height, $length, $path ) {
+		parent::__construct( $file, $videoUrl, $thumbUrl, $width, $height, $length, true, $path, false );
 	}
 }
 
 class OggAudioDisplay extends OggTransformOutput {
-	function __construct( $file, $videoUrl, $width, $height, $length, $path, $noIcon = false, $offset=0 ) {
-		parent::__construct( $file, $videoUrl, false, $width, $height, $length, false, $path, $noIcon, $offset );
+	function __construct( $file, $videoUrl, $width, $height, $length, $path, $noIcon = false ) {
+		parent::__construct( $file, $videoUrl, false, $width, $height, $length, false, $path, $noIcon );
 	}
 }
 

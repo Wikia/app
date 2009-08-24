@@ -406,22 +406,32 @@ class ExtParserFunctions {
 		$invalidTime = false;
 		
 		if ( class_exists( 'DateTime' ) ) { #PHP >= 5.2
-			try { #the DateTime constructor must be used because it throws exceptions when errors occur, whereas date_create appears to just output a warning that can't really be detected from within the code
-				if ( $date !== '' ) {
-					$dateObject = new DateTime( $date );
-				} else {
-					$dateObject = new DateTime(); #use current date and time
-				}
-				
+			# the DateTime constructor must be used because it throws exceptions 
+			# when errors occur, whereas date_create appears to just output a warning 
+			# that can't really be detected from within the code
+			try {
+				# Determine timezone
 				if ( $local ) {
-					if ( isset( $wgLocaltimezone ) ) { #convert to MediaWiki local timezone if set
-						$dateObject->setTimeZone( new DateTimeZone( $wgLocaltimezone ) );
-					} #otherwise leave in PHP default
+					 # convert to MediaWiki local timezone if set
+					if ( isset( $wgLocaltimezone ) ) {
+						$tz = new DateTimeZone( $wgLocaltimezone );
+					} else {
+						$tz = new DateTimeZone( 'UTC' );
+					}
 				} else {
-					#if local time was not requested, convert to UTC
-					$dateObject->setTimeZone( new DateTimeZone( 'UTC' ) );
+					# if local time was not requested, convert to UTC
+					$tz = new DateTimeZone( 'UTC' );
 				}
-				
+
+				# Parse date
+				if ( $date !== '' ) {
+					$dateObject = new DateTime( $date, $tz );
+				} else {
+					# use current date and time
+					$dateObject = new DateTime( 'now', $tz );
+				}
+
+				# Generate timestamp
 				$ts = $dateObject->format( 'YmdHis' );
 			} catch (Exception $ex) {
 				$invalidTime = true;

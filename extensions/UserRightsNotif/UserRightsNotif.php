@@ -34,11 +34,11 @@ if( defined( 'MEDIAWIKI' ) ) {
 	}
 
 	function efUserRightsNotifier( &$user, $added, $removed ) {
-		global $wgUserRightsNotif;
+		global $wgUserRightsNotif, $wgContentLang;
 		if( $user->canReceiveEmail() ) {
 			global $wgUser, $wgSitename, $wgContLang;
-			$added = is_array( $added ) ? implode( ', ', $added ) : '';
-			$removed = is_array( $removed ) ? implode( ', ', $removed ) : '';
+			$added = is_array( $added ) ? $wgContentLang->commaList( $added ) : '';
+			$removed = is_array( $removed ) ? $wgContentLang->commaList( $removed ) : '';
 			$subject = wfMsg( 'userrightsnotifysubject', $wgSitename );
 			$message = wfMsg( 'userrightsnotifybody', $user->getName(), $wgSitename, $wgUser->getName(), $wgContLang->timeAndDate( wfTimestampNow() ), $added, $removed );
 			$user->sendMail( $subject, $message, $wgUserRightsNotif['sender'], null, 'UserRightsNotification' );

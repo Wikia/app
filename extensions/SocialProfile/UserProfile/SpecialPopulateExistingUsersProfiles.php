@@ -26,24 +26,24 @@ class SpecialPopulateUserProfiles extends SpecialPage {
 	 * @param $params Mixed: parameter(s) passed to the page or null
 	 */
 	public function execute( $params ) {
-		global $wgRequest, $IP, $wgOut, $wgUser, $wgMemc;
+		global $wgRequest, $wgOut, $wgUser;
 
 		if( !in_array( 'staff', $wgUser->getGroups() ) ){
-			$wgOut->errorpage('error', 'badaccess');
+			$wgOut->errorpage( 'error', 'badaccess' );
 			return '';
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
 		$res = $dbw->select( 'page',
-					array( 'page_title' ),
-					array( 'page_namespace' => NS_USER ),
-					__METHOD__,
-					''
-				);
+			array( 'page_title' ),
+			array( 'page_namespace' => NS_USER ),
+			__METHOD__,
+			''
+		);
 
 		$count = 0; // To avoid an annoying PHP notice
 
-		while( $row = $dbr->fetchObject($res) ){
+		while( $row = $dbw->fetchObject( $res ) ){
 			$user_name_title = Title::newFromDBkey( $row->page_title );
 			$user_name = $user_name_title->getText();
 			$user_id = User::idFromName( $user_name );
@@ -54,7 +54,6 @@ class SpecialPopulateUserProfiles extends SpecialPage {
 
 				$s = $dbw->selectRow( 'user_profile', array( 'up_user_id' ), array( 'up_user_id' => $user_id ), __METHOD__ );
 				if ( $s === false ) {
-					$dbw = wfGetDB( DB_MASTER );
 					$dbw->insert( 'user_profile',
 						array(
 							'up_user_id' => $user_id,
@@ -66,6 +65,7 @@ class SpecialPopulateUserProfiles extends SpecialPage {
 			}
 		}
 
+		wfLoadExtensionMessages( 'SocialProfileUserProfile' );
 		$wgOut->addHTML( wfMsgExt( 'populate-user-profile-done', 'parsemag', $count ) );
 	}
 }

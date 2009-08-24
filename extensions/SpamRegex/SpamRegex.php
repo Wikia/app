@@ -2,9 +2,12 @@
 /**
  * SpamRegex - A special page with the interface for blocking, viewing and unblocking of unwanted phrases
  *
+ * @file
  * @ingroup Extensions
- * @author Bartek Łapiński
- * @version 1.2
+ * @author Bartek Łapiński <bartek(at)wikia-inc.com>
+ * @author Alexandre Emsenhuber
+ * @author Jack Phoenix <jack@countervandalism.net>
+ * @version 1.2.2
  * @link http://www.mediawiki.org/wiki/Extension:SpamRegex Documentation
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
@@ -13,8 +16,9 @@
  * Protect against register_globals vulnerabilities.
  * This line must be present before any global variable is referenced.
  */
-if ( !defined('MEDIAWIKI') )
-	die();
+if ( !defined( 'MEDIAWIKI' ) ){
+	die( "This is not a valid entry point.\n" );
+}
 
 /* for memcached - expiration time */
 define('SPAMREGEX_EXPIRE', 0);
@@ -26,8 +30,8 @@ define('SPAMREGEX_SUMMARY', 1);
 // Extension credits
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Regular Expression Spam Block',
-	'version' => '1.2',
-	'author' => 'Bartek Łapiński',
+	'version' => '1.2.2',
+	'author' => array( 'Bartek Łapiński', 'Alexandre Emsenhuber', 'Jack Phoenix' ),
 	'url' => 'http://www.mediawiki.org/wiki/Extension:SpamRegex',
 	'description' => 'Filters out unwanted phrases in edited pages, based on regular expressions',
 	'descriptionmsg' => 'spamregex-desc',

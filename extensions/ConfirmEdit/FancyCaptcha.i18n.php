@@ -102,9 +102,10 @@ $messages['bcc'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
-	'fancycaptcha-addurl' => 'Вашае рэдагаваньне ўтрымлівае новыя зьнешнія спасылкі.
+	'fancycaptcha-addurl' => 'Вашае рэдагаваньне ўтрымлівае новыя вонкавыя спасылкі.
 У мэтах абароны ад спаму, калі ласка, увядзіце словы, якія паказаныя ў выяве ([[Special:Captcha/help|болей інфармацыі]]):',
 	'fancycaptcha-badlogin' => 'У мэтах абароны ад аўтаматычнага злому пароляў, калі ласка, увядзіце словы, якія паказаныя ў выяве ([[Special:Captcha/help|болей інфармацыі]]):',
 	'fancycaptcha-createaccount' => 'У мэтах абароны ад аўтаматычнага стварэньня рахункаў, калі ласка, увядзіце словы, якія паказаныя ў выяве ([[Special:Captcha/help|болей інфармацыі]]):',
@@ -310,14 +311,6 @@ $messages['fi'] = array(
 	'fancycaptcha-edit' => 'Muokkauksesi sisältää uusia linkkejä muille sivuille. Kirjoita kuvan sisältämät sanat alla olevaan tekstikenttään ([[Special:Captcha/help|lisätietoja]]):',
 );
 
-/** Võro (Võro)
- * @author Võrok
- */
-$messages['fiu-vro'] = array(
-	'fancycaptcha-badlogin' => 'Salasõna automaatsõ vällänuhkmisõ vasta kirodaq pildi päält sõnaq alanolõvahe kasti
-([[Special:Captcha/help|Abiteedüs]]):',
-);
-
 /** Faroese (Føroyskt)
  * @author Spacebirdy
  */
@@ -328,14 +321,15 @@ $messages['fo'] = array(
 
 /** French (Français)
  * @author Sherbrooke
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'fancycaptcha-addurl' => 'Votre modification inclut de nouveaux liens externes. Pour vérifier qu’il ne s’agit pas de pourriel, veuillez entrer les mots qui apparaissent dans la boîte ci-dessous ([[Special:Captcha|plus d’informations]]) :',
-	'fancycaptcha-badlogin' => 'Pour aider à vous protéger contre le piratage de compte par mots de passe automatiques, merci d’entrer les mots qui s’affichent dans cette boîte ([[Special:Captcha/help|Aide]]) :',
-	'fancycaptcha-createaccount' => 'Comme protection contre les créations de compte abusives, veuillez entrer les mots
-ci-dessous dans la boîte ([[Special:Captcha/help|plus d’informations]]) :',
-	'fancycaptcha-create' => 'Votre modification inclut de nouveaux liens externes. Pour vérifier qu’il ne s’agit pas de pourriel, veuillez entrer les mots qui apparaissent dans la boîte ci-dessous ([[Special:Captcha|plus d’informations]]) :',
-	'fancycaptcha-edit' => 'Votre modification inclut de nouveaux liens externes. Pour vérifier qu’il ne s’agit pas de pourriel, veuillez entrer les mots qui apparaissent dans la boîte ci-dessous ([[Special:Captcha|plus d’informations]]) :',
+	'fancycaptcha-addurl' => 'Votre modification inclut de nouveaux liens externes.
+Pour vérifier qu’il ne s’agit pas de pourriel automatisés, veuillez entrer les mots qui apparaissent dans la boîte ci-dessous ([[Special:Captcha|plus d’informations]]) :',
+	'fancycaptcha-badlogin' => 'Afin de nous aider à prévenir le cassage des mots de passe par des automates, veuillez entrer les mots qui apparaissent dans la boîte ci-dessous ([[Special:Captcha/help|plus d’informations]]) :',
+	'fancycaptcha-createaccount' => 'Afin de nous aider à lutter contre les créations automatiques de comptes, veuillez entrer les mots qui apparaissent dans la boîte ci-dessous ([[Special:Captcha/help|plus d’informations]]) :',
+	'fancycaptcha-create' => 'Pour créer la page, veuillez entrer les mots qui apparaissent dans la boîte ci-dessous ([[Special:Captcha|plus d’informations]]) :',
+	'fancycaptcha-edit' => 'Pour modifier cette page, veuillez entrer les mots qui apparaissent dans la boîte ci-dessous ([[Special:Captcha|plus d’informations]]) :',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -375,6 +369,18 @@ automatizado, introduza as palabras que aparecen na páxina de embaixo ([[Specia
 ([[Special:Captcha/help|máis información]]):',
 	'fancycaptcha-edit' => 'Para editar esta páxina, introduza as palabras que aparecen na caixa de embaixo
 ([[Special:Captcha/help|máis información]]):',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'fancycaptcha-addurl' => 'In Dyynere Bearbeitig het s neiji externi Gleicher.
+Zum Schutz vor automatisiertem Spamming gib des Wort in s Fäld unten yy. Druck derno nomol uf „Syte spychere“ [[Special:Captcha/help|(Frogen oder Probläm?)]].',
+	'fancycaptcha-badlogin' => 'Zum Schutz vor ere Kompromittierig vu Dyynm Benutzerkonto gib des Wort in s Fäld unten yy [[Special:Captcha/help|(Frogen oder Probläm?)]]:',
+	'fancycaptcha-createaccount' => 'Zum Schutz vor ere automatisierte Aalag vu Benutzerkonte gib bitte des Wort in s Fäld unten yy ([[Special:Captcha/help|Frogen oder Probläm?]]):',
+	'fancycaptcha-create' => 'Zum d Syten aalege gib des Wort in s Fäld unten yy [[Special:Captcha/help|(Frogen oder Probläm?)]].',
+	'fancycaptcha-edit' => 'Zum d Syte bearbeite gib des Wort in s Fäld unten yy [[Special:Captcha/help|(Frogen oder Probläm?)]].',
 );
 
 /** Hebrew (עברית)
@@ -426,12 +432,13 @@ $messages['hsb'] = array(
 );
 
 /** Hungarian (Magyar)
+ * @author Adam78
  * @author Dorgan
  */
 $messages['hu'] = array(
 	'fancycaptcha-addurl' => 'A szerkesztésed új külső hivatkozásokat tartalmaz. Az automatizált spamek megelőzése miatt kérjük, hogy add meg a lenti keretben olvasható szavakat ([[Special:Captcha/help|további segítség]]):',
 	'fancycaptcha-badlogin' => 'Hogy az automatizált jelszópróbálkozásokat megelőzzük, kérjük, hogy add meg a lenti keretben olvasható szavakat ([[Special:Captcha/help|további segítség]]):',
-	'fancycaptcha-createaccount' => 'A felhasználói fiókok automatizált létrehozásának elkerülésére kérlek írd be az alább megjelenő szót a szövegdobozba ([[Special:Captcha/help|segítség]]):',
+	'fancycaptcha-createaccount' => 'A felhasználói fiókok automatizált létrehozásának elkerülésére, kérlek, írd be az alább megjelenő szót a szövegdobozba ([[Special:Captcha/help|segítség]]):',
 	'fancycaptcha-create' => 'A lap létrehozásához kérjük, hogy add meg a lenti keretben olvasható szavakat ([[Special:Captcha/help|további segítség]]):',
 	'fancycaptcha-edit' => 'A szerkesztésed új külső linkeket tartalmaz. A spam-robotok elleni védekezés elősegítésére kérlek írd be az alább megjelenő szót a szövegdobozba ([[Special:Captcha/help|segítség]]):',
 );
@@ -471,13 +478,15 @@ $messages['it'] = array(
 	'fancycaptcha-edit' => "La modifica richiesta aggiunge dei collegamenti esterni alla pagina; come misura precauzionale contro l'inserimento automatico di spam, si prega di inserire nella casella sottostante la parola che compare distorta in questa immagine ([[Special:Captcha/help|come funziona?]]):",
 );
 
-/** Japanese (日本語) */
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
 $messages['ja'] = array(
-	'fancycaptcha-addurl' => 'あなたの編集には新たに外部リンクが追加されています。自動で実行されるスパム行為防止のため、編集を有効にするには以下のボックスに表示される確認用の文字列を入力してください （[[Special:Captcha/help|詳細]]）:',
-	'fancycaptcha-badlogin' => '自動化スクリプトによるパスワードクラック攻撃を防止するため、以下のボックスに表示される確認用の文字列を入力してください （[[Special:Captcha/help|詳細]]）:',
-	'fancycaptcha-createaccount' => '自動で実行されるスパム行為防止のため、アカウントを登録するには以下のボックスに表示される確認用の文字列を入力してください。([[Special:Captcha/help|詳細]])',
-	'fancycaptcha-create' => 'ページを作成するには以下のボックスに表示される確認用の文字列を入力してください。 （[[Special:Captcha/help|詳細]]）',
-	'fancycaptcha-edit' => 'このページを編集するには以下のボックスに表示される確認用の文字列を入力してください。 （[[Special:Captcha/help|詳細]]）',
+	'fancycaptcha-addurl' => 'あなたの編集では新たな外部リンクが追加されています。自動で実行されるスパム行為防止のため、編集を有効にするには以下のボックスに表示される確認用の文字列を入力してください ([[Special:Captcha/help|詳細]]):',
+	'fancycaptcha-badlogin' => '自動化スクリプトによるパスワードクラック攻撃を防止するため、以下のボックスに表示される確認用の文字列を入力してください ([[Special:Captcha/help|詳細]]):',
+	'fancycaptcha-createaccount' => '自動で実行されるスパム行為防止のため、アカウントを登録するには以下のボックスに表示される確認用の文字列を入力してください ([[Special:Captcha/help|詳細]]):',
+	'fancycaptcha-create' => 'ページを作成するには以下のボックスに表示される確認用の文字列を入力してください ([[Special:Captcha/help|詳細]]):',
+	'fancycaptcha-edit' => 'このページを編集するには以下のボックスに表示される確認用の文字列を入力してください ([[Special:Captcha/help|詳細]]):',
 );
 
 /** Jutish (Jysk)
@@ -784,6 +793,17 @@ $messages['pt'] = array(
 	'fancycaptcha-edit' => 'Para editar esta página, por favor, introduza as palavras exibidas na seguinte caixa ([[Special:Captcha/help|mais informações]]):',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'fancycaptcha-addurl' => "A sua edição inclui novas ligações externas. Como prevenção contra sistemas automatizados que inserem ''spam'', por favor, introduza as palavras exibidas na seguinte caixa ([[Special:Captcha/help|mais informações]]):",
+	'fancycaptcha-badlogin' => 'Como prevenção contra formas automatizadas de descoberta de palavras-chave, por favor, introduza as palavras exibidas na seguinte caixa ([[Special:Captcha/help|mais informações]]):',
+	'fancycaptcha-createaccount' => 'Como prevenção contra sistemas automatizados de criação de contas, por favor, introduza as palavras exibidas na seguinte caixa ([[Special:Captcha/help|mais informações]]):',
+	'fancycaptcha-create' => 'Para criar a página, por favor, introduza as palavras exibidas na seguinte caixa ([[Special:Captcha/help|mais informações]]):',
+	'fancycaptcha-edit' => 'Para editar esta página, por favor, introduza as palavras exibidas na seguinte caixa ([[Special:Captcha/help|mais informações]]):',
+);
+
 /** Romanian (Română)
  * @author Mihai
  */
@@ -933,12 +953,16 @@ Upang makatulong sa pagsasanggalang laban sa kusang pinapadalang mga \"manluluso
 );
 
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Runningfridgesrule
  */
 $messages['tr'] = array(
 	'fancycaptcha-addurl' => 'Değişikliğiniz yeni dış bağlantılar içeriyor.
 Otomatik spamdan korunmak için, lütfen aşağıdaki sözcükleri kutunun içine yazın ([[Special:Captcha/help|ayrıntılı bilgiler]]):',
 	'fancycaptcha-badlogin' => 'Otomatik parola çözülmesinden korunmak için, lütfen aşağıdaki sözcükleri kutunun içine yazın ([[Special:Captcha/help|ayrıntılı bilgiler]]):',
+	'fancycaptcha-createaccount' => 'Otomatik hesap oluşturmaya karşı korumaya yardım etmek için, lütfen aşağıdaki kutuda görünen kelimeleri girin ([[Special:Captcha/help|daha fazla bilgi]]):',
+	'fancycaptcha-create' => 'Sayfayı oluşturmak için, lütfen aşağıdaki kutuda görünen kelimeleri girin ([[Special:Captcha/help|daha fazla bilgi]]):',
+	'fancycaptcha-edit' => 'Bu sayfayı değiştirmek için, lütfen aşağıdaki kutuda görünen kelimeleri girin ([[Special:Captcha/help|daha fazla bilgi]]):',
 );
 
 /** Ukrainian (Українська)
@@ -985,6 +1009,14 @@ $messages['vo'] = array(
 	'fancycaptcha-createaccount' => 'Ad jelön siti ta kalijafam itjäfidik, penolös, begö! vödis dono pejonölis in bokil ([[Special:Captcha/help|nüns pluik]]):',
 	'fancycaptcha-create' => 'Ad jafön padi at, penolös, begö! vödis dono pejonöls in bokil ([[Special:Captcha/help|nüns pluik]]):',
 	'fancycaptcha-edit' => 'Ad redakön padi at, penolös, begö! vödis dono pejonölis ini bokil ([[Special:Captcha/help|nüns pluik]]):',
+);
+
+/** Võro (Võro)
+ * @author Võrok
+ */
+$messages['vro'] = array(
+	'fancycaptcha-badlogin' => 'Salasõna automaatsõ vällänuhkmisõ vasta kirodaq pildi päält sõnaq alanolõvahe kasti
+([[Special:Captcha/help|Abiteedüs]]):',
 );
 
 /** Yue (粵語) */

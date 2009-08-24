@@ -16,7 +16,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
- * @author Raimond Spekking
+ * @author Raymond
  */
 $messages['qqq'] = array(
 	'randomrootpage-desc' => 'Extension description displayed on [[Special:Version]]',
@@ -38,12 +38,28 @@ $messages['arz'] = array(
 	'randomrootpage-desc' => '[[Special:Randomrootpage|صفحة خاصة]] تعرض صفحة جذر عشوائية',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'randomrootpage' => 'Выпадковая карэнная старонка',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Спэцыяльная старонка]], якая выбірае выпадковую карэнную старонку',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'randomrootpage' => 'Случайна начална страница',
 	'randomrootpage-desc' => '[[Special:Randomrootpage|Специална страница]], която извлича случайна начална страница',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'randomrootpage' => 'Slučajna root stranica',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Posebna stranica]] koja poziva slučajnu root stranicu',
 );
 
 /** Czech (Česky)
@@ -100,6 +116,14 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'randomrootpage' => 'Páxina raíz ao chou',
 	'randomrootpage-desc' => '[[Special:Randomrootpage|Páxina especial]] que procura unha páxina raíz ao chou',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'randomrootpage' => 'Zuefelligi Stammsyte',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Spezialsyte]] zum e zuefelligi Stammsyte ufzruefe',
 );
 
 /** Hindi (हिन्दी)
@@ -204,6 +228,22 @@ $messages['oc'] = array(
 	'randomrootpage-desc' => "[[Special:Randomrootpage|Pagina especiala]] que va quérre una pagina raiç a l'azard",
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'randomrootpage' => 'Página raiz aleatória',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Página especial]] que busca uma página raiz aleatória',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'randomrootpage' => 'Página raiz aleatória',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Página especial]] que busca uma página raiz aleatória',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -220,6 +260,14 @@ $messages['sk'] = array(
 	'randomrootpage-desc' => '[[Special:Randomrootpage|Špeciálna stránka]], ktorá zobrazuje náhodnú koreňovú stránku',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'randomrootpage' => 'Toufällige Stamsiede',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Spezioalsiede]] uum ne toufällige Stamsiede aptouroupen',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -233,6 +281,21 @@ $messages['sv'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'randomrootpage' => 'Саҳифаи решавии тасодуфӣ',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'randomrootpage' => 'Alin mang pinag-ugatang/pinagmulang pahina',
+	'randomrootpage-desc' => '[[Special:Randomrootpage|Natatanging pahina]]ng kumukuha sa isang pinag-ugatang pahina ayon sa ibinibigay ng pagkakataon',
+);
+
+/** Turkish (Türkçe)
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'randomrootpage' => 'Rastgele kök sayfası',
 );
 
 /** Vietnamese (Tiếng Việt)

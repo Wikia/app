@@ -39,6 +39,11 @@ $aliases['de'] = array(
 	'UserMerge' => array( 'Benutzerkonten vereinigen' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'UserMerge' => array( 'Konta zjadnośiś' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'UserMerge' => array( 'ادغام_کاربر' ),
@@ -51,7 +56,7 @@ $aliases['fi'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'UserMerge' => array( 'Fusionner les utilisateurs', 'FusionnerLesUtilisateur', 'Fusionner utilisateurs', 'FusionnerUtilisateurs', 'Fusionner utilisateur', 'FusionnerUtilisateur' ),
+	'UserMerge' => array( 'Fusionner les utilisateurs', 'FusionnerLesUtilisateurs', 'Fusionner utilisateurs', 'FusionnerUtilisateurs', 'Fusionner utilisateur', 'FusionnerUtilisateur' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -74,9 +79,19 @@ $aliases['hu'] = array(
 	'UserMerge' => array( 'Felhasználók egyesítése' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'UserMerge' => array( 'Fusionar usatores' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
 	'UserMerge' => array( '利用者の統合' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'UserMerge' => array( '계정병합' ),
 );
 
 /** Ripoarisch (Ripoarisch) */
@@ -107,5 +122,15 @@ $aliases['no'] = array(
 /** Occitan (Occitan) */
 $aliases['oc'] = array(
 	'UserMerge' => array( 'Fusionar los utilizaires', 'FusionarLosUtilizaire', 'Fusionar utilizaires', 'FusionarUtilizaires', 'Fusionar utilizaire', 'FusionarUtilizaire' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'UserMerge' => array( 'सदस्यसंयोग' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'UserMerge' => array( 'Pagsasanib ng tagagamit' ),
 );
 

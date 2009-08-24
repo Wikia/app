@@ -40,6 +40,11 @@ $aliases['de'] = array(
 	'Nuke' => array( 'Massenlöschung' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Nuke' => array( 'Wulašowanje z kopicami' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'Nuke' => array( 'حذف_دسته‌جمعی' ),
@@ -55,6 +60,11 @@ $aliases['gsw'] = array(
 	'Nuke' => array( 'Masseleschig' ),
 );
 
+/** Hawaiian (Hawai`i) */
+$aliases['haw'] = array(
+	'Nuke' => array( 'Luku' ),
+);
+
 /** Hebrew (עברית)
  * @author Rotem Liss
  */
@@ -62,9 +72,29 @@ $aliases['he'] = array(
 	'Nuke' => array( 'מחיקה_מרובה' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Nuke' => array( 'Masowe wušmórnjenje' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'Nuke' => array( 'Kiírtás' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Nuke' => array( 'Deler in massa' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'Nuke' => array( 'まとめて削除', '一括削除' ),
+);
+
+/** Korean (한국어) */
+$aliases['ko'] = array(
+	'Nuke' => array( '문서대량삭제' ),
 );
 
 /** Nedersaksisch (Nedersaksisch) */
@@ -85,5 +115,15 @@ $aliases['no'] = array(
 /** Polish (Polski) */
 $aliases['pl'] = array(
 	'Nuke' => array( 'Masowe usuwanie' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Nuke' => array( 'न्यूक' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Nuke' => array( 'Malawakang pagbura' ),
 );
 

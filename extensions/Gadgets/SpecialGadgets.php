@@ -78,7 +78,7 @@ class SpecialGadgets extends SpecialPage {
 				$wgOut->addHTML( "<li>" );
 				$wgOut->addHTML( "$ttext &nbsp; &nbsp; [$lnk]<br />" );
 
-				$wgOut->addHTML( wfMsgHTML("gadgets-uses") . ": " );
+				$wgOut->addHTML( wfMsgHTML( "gadgets-uses" ) . wfMsg( 'colon-separator' ) );
 
 				$first = true;
 				foreach ( $code as $codePage ) {

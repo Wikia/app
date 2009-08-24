@@ -35,7 +35,7 @@ $wgRequestTime = microtime();
 
 $wgGisVersion = '0.5alpha';
 
-include_once ( "gissettings.php" ) ;
+require_once ( "gissettings.php" ) ;
 
 if ( isset ( $wikibasedir ) )
 	{

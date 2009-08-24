@@ -277,6 +277,7 @@ class SDUtils {
 	}
 
 	function booleanToString($bool_value) {
+		wfLoadExtensionMessages('SemanticMediaWiki');
 		$words_field_name = ($bool_value == true) ? 'smw_true_words' : 'smw_false_words';
 		$words_array = explode(',', wfMsgForContent($words_field_name));
 		// go with the value in the array that tends to be "yes" or

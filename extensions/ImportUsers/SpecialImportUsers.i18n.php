@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'importusers-desc'                    => '[[Special:ImportUsers|Imports users]] in bulk from CSV-file; encoding: UTF-8',
 	'importusers-uploadfile'              => 'Upload file',
 	'importusers-form-caption'            => 'Input CSV-file (UTF-8)' ,
-	'importusers-form-file'               => 'User file format (csv): ',
+	'importusers-form-file'               => 'User file format (csv):',
 	'importusers-form-replace-present'    => 'Replace existing users' ,
 	'importusers-form-button'             => 'Import' ,
 	'importusers-user-added'              => 'User <b>%s</b> has been added.' ,
@@ -28,9 +28,11 @@ $messages['en'] = array(
 	'importusers-password'                => 'password',
 	'importusers-email'                   => 'e-mail',
 	'importusers-realname'                => 'real name',
+	'right-import_users' => 'Import users in bulk',
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Kaustubh
  * @author Purodha
@@ -47,6 +49,8 @@ $messages['qqq'] = array(
 	'importusers-password' => '{{Identical|Password}}',
 	'importusers-email' => '{{Identical|E-mail}}',
 	'importusers-realname' => '{{Identical|Real name}}',
+	'right-import_users' => '{{doc-right}}',
+	'action-import_users' => '{{doc-action}}',
 );
 
 /** Faeag Rotuma (Faeag Rotuma)
@@ -111,6 +115,8 @@ $messages['ar'] = array(
 	'importusers-password' => 'كلمة السر',
 	'importusers-email' => 'البريد الإلكتروني',
 	'importusers-realname' => 'الاسم الحقيقي',
+	'right-import_users' => 'استيراد المستخدمين بشكل كمي',
+	'action-import_users' => 'استيراد المستخدمين بشكل كمي',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -137,6 +143,15 @@ $messages['arz'] = array(
 	'importusers-password' => 'كلمة السر',
 	'importusers-email' => 'البريد الإلكتروني',
 	'importusers-realname' => 'الاسم الحقيقي',
+	'right-import_users' => 'استيراد المستخدمين بشكل كمى',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'importusers-password' => 'пароль',
+	'importusers-email' => 'Адрас электроннай пошты',
 );
 
 /** Bulgarian (Български)
@@ -163,10 +178,27 @@ $messages['bg'] = array(
  * @author CERminator
  */
 $messages['bs'] = array(
+	'importusers' => 'Uvoz korisnika',
+	'importusers-desc' => '[[Special:ImportUsers|Uvozi korisnike]] u grupi iz CSV-datoteke; kodiranje: UTF-8',
+	'importusers-uploadfile' => 'Postavi datoteku',
+	'importusers-form-caption' => 'Unos CSV-datoteke (UTF-8)',
+	'importusers-form-file' => 'Format korisničke datoteke (csv):',
+	'importusers-form-replace-present' => 'Zamijeni postojeće korisnike',
+	'importusers-form-button' => 'Uvezi',
+	'importusers-user-added' => 'Korisnik <b>%s</b> je dodan.',
+	'importusers-user-present-update' => 'Korisnik <b>%s</b> već postoji. Ažuriran.',
+	'importusers-user-present-not-update' => 'Korisnik <b>%s</b> već postoji. Nije ažuriran.',
+	'importusers-user-invalid-format' => 'Korisnički podaci na liniji #%s nisu u valjanom formatu ili su prazni. Preskočeno.',
 	'importusers-log' => 'Zapisnik uvoza',
 	'importusers-log-summary' => 'Sažetak',
 	'importusers-log-summary-all' => 'Sve',
+	'importusers-log-summary-added' => 'Dodan',
+	'importusers-log-summary-updated' => 'Ažurirano',
+	'importusers-login-name' => 'Ime pri prijavi',
 	'importusers-password' => 'šifra',
+	'importusers-email' => 'e-mail',
+	'importusers-realname' => 'pravo ime',
+	'right-import_users' => 'Uvoz korisnika u grupi',
 );
 
 /** Catalan (Català)
@@ -238,6 +270,7 @@ $messages['da'] = array(
 );
 
 /** German (Deutsch)
+ * @author Als-Holder
  * @author MF-Warburg
  */
 $messages['de'] = array(
@@ -261,6 +294,7 @@ $messages['de'] = array(
 	'importusers-password' => 'Passwort',
 	'importusers-email' => 'E-Mail',
 	'importusers-realname' => 'Echter Name',
+	'right-import_users' => 'Benutzerdaten in großem Umfang importieren',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -287,6 +321,8 @@ $messages['dsb'] = array(
 	'importusers-password' => 'gronidło',
 	'importusers-email' => 'e-mail',
 	'importusers-realname' => 'napšawdne mě',
+	'right-import_users' => 'Wužywarjow z kopicami importěrowaś',
+	'action-import_users' => 'wužywarjow z kopicami importěrowaś',
 );
 
 /** Greek (Ελληνικά)
@@ -319,23 +355,44 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  * @author Piolinfax
  */
 $messages['es'] = array(
+	'importusers' => 'Importar usuarios',
 	'importusers-uploadfile' => 'Subir archivo',
+	'importusers-form-replace-present' => 'Reemplazar usuarios existentes',
 	'importusers-form-button' => 'Importar',
+	'importusers-user-added' => 'Usuario <b>%s</b> ha sido agregado.',
 	'importusers-log-summary' => 'Sumario',
 	'importusers-log-summary-all' => 'Todos',
+	'importusers-log-summary-added' => 'Agregado',
+	'importusers-log-summary-updated' => 'Actualizado',
 	'importusers-password' => 'contraseña',
 	'importusers-email' => 'correo electrónico',
 	'importusers-realname' => 'nombre real',
+	'right-import_users' => 'Importar usuarios en borrador',
 );
 
 /** Basque (Euskara)
  * @author An13sa
+ * @author Kobazulo
  */
 $messages['eu'] = array(
+	'importusers' => 'Lankideak inportatu',
+	'importusers-uploadfile' => 'Fitxategia igo',
+	'importusers-form-file' => 'Lankidearen fitxategiaren formatua (csv):',
+	'importusers-form-replace-present' => 'Existitzen diren lankideak ordeztu',
+	'importusers-form-button' => 'Inportatu',
+	'importusers-user-added' => '<b>%s</b> lankidea gehitu da.',
+	'importusers-user-present-update' => '<b>%s</b> erabiltzailea jada existitzen da. Eguneratua.',
+	'importusers-user-present-not-update' => '<b>%s</b> lankidea jada existitzen da. Ez da eguneratu.',
+	'importusers-log-summary-added' => 'Gehitua',
+	'importusers-log-summary-updated' => 'Eguneratua',
+	'importusers-login-name' => 'Saioa hasteko izena',
+	'importusers-password' => 'pasahitza',
+	'importusers-email' => 'e-posta',
 	'importusers-realname' => 'benetako izena',
 );
 
@@ -368,6 +425,7 @@ $messages['fi'] = array(
 );
 
 /** French (Français)
+ * @author IAlex
  * @author Urhixidur
  */
 $messages['fr'] = array(
@@ -391,6 +449,8 @@ $messages['fr'] = array(
 	'importusers-password' => 'mot de passe',
 	'importusers-email' => 'adresse courriel',
 	'importusers-realname' => 'nom réel',
+	'right-import_users' => 'Importer des utilisateurs en masse',
+	'action-import_users' => 'importer des utilisateurs en masse',
 );
 
 /** Western Frisian (Frysk)
@@ -426,6 +486,8 @@ $messages['gl'] = array(
 	'importusers-password' => 'contrasinal',
 	'importusers-email' => 'correo electrónico',
 	'importusers-realname' => 'nome real',
+	'right-import_users' => 'Importar usuarios en masa',
+	'action-import_users' => 'importar usuarios en masa',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -440,6 +502,33 @@ $messages['grc'] = array(
 	'importusers-password' => 'σύνθημα',
 	'importusers-email' => 'ἠλ-ταχυδρομεῖον',
 	'importusers-realname' => 'ἀληθὲς ὄνομα',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'importusers' => 'Benutzer importiere',
+	'importusers-desc' => '[[Special:ImportUsers|Importiert Benutzer]] us ere CSV-Datei; Codierig: UTF-8',
+	'importusers-uploadfile' => 'Datei uffelade',
+	'importusers-form-caption' => 'CSV-Datei (UTF-8)',
+	'importusers-form-file' => 'Benutzerdateiformat (csv):',
+	'importusers-form-replace-present' => 'Benutzer, wu s git, ersetze',
+	'importusers-form-button' => 'Importiere',
+	'importusers-user-added' => 'Dr Benutzer <b>%s</b> isch importiert wore.',
+	'importusers-user-present-update' => 'E Benutzer <b>%s</b> git s scho. Aktualisiert.',
+	'importusers-user-present-not-update' => 'E Benutzer <b>%s</b> git s scho. Nit aktualisiert.',
+	'importusers-user-invalid-format' => 'D Benutzerdate in dr Zyyle #%s hän e nit giltig Format oder sin läär. Ibergumpe.',
+	'importusers-log' => 'Benutzerimport-Logbuech',
+	'importusers-log-summary' => 'Zämmefassig',
+	'importusers-log-summary-all' => 'Alli',
+	'importusers-log-summary-added' => 'Zuegfiegt',
+	'importusers-log-summary-updated' => 'Aktualisiert',
+	'importusers-login-name' => 'Benutzername',
+	'importusers-password' => 'Passwort',
+	'importusers-email' => 'E-Mail',
+	'importusers-realname' => 'Ächte Name',
+	'right-import_users' => 'Benutzerdate im große Umfang importiere',
 );
 
 /** Manx (Gaelg)
@@ -492,6 +581,8 @@ $messages['he'] = array(
 	'importusers-password' => 'סיסמה',
 	'importusers-email' => 'דוא"ל',
 	'importusers-realname' => 'שם אמיתי',
+	'right-import_users' => 'ייבוא משתמשים מרובים',
+	'action-import_users' => 'לייבא משתמשים מרובים',
 );
 
 /** Hindi (हिन्दी)
@@ -532,6 +623,7 @@ $messages['hil'] = array(
 
 /** Croatian (Hrvatski)
  * @author Dalibor Bosits
+ * @author Suradnik13
  */
 $messages['hr'] = array(
 	'importusers' => 'Uvezi suradnike',
@@ -554,6 +646,7 @@ $messages['hr'] = array(
 	'importusers-password' => 'lozinka',
 	'importusers-email' => 'elektronička pošta',
 	'importusers-realname' => 'pravo ime',
+	'right-import_users' => 'Uvezi suradnike u grupu',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -580,6 +673,8 @@ $messages['hsb'] = array(
 	'importusers-password' => 'hesło',
 	'importusers-email' => 'e-mejl',
 	'importusers-realname' => 'woprawdźite mjeno',
+	'right-import_users' => 'Wužiwarjow z masami importować',
+	'action-import_users' => 'wužiwarjow z masami importować',
 );
 
 /** Interlingua (Interlingua)
@@ -606,6 +701,7 @@ $messages['ia'] = array(
 	'importusers-password' => 'contrasigno',
 	'importusers-email' => 'e-mail',
 	'importusers-realname' => 'nomine real',
+	'right-import_users' => 'Importar usatores in massa',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -634,12 +730,28 @@ $messages['it'] = array(
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
+	'importusers' => '利用者のインポート',
+	'importusers-desc' => 'CSVファイル (文字コード: UTF-8) から一括して[[Special:ImportUsers|利用者をインポート]]',
+	'importusers-uploadfile' => 'アップロード',
+	'importusers-form-caption' => 'CSVファイルを入力してください (UTF-8)',
+	'importusers-form-file' => '利用者ファイル形式 (csv):',
+	'importusers-form-replace-present' => '既存利用者を置き換える',
 	'importusers-form-button' => 'インポート',
-	'importusers-log' => 'インポートログ',
+	'importusers-user-added' => '利用者 <b>%s</b> を追加しました。',
+	'importusers-user-present-update' => '利用者 <b>%s</b> が既に存在します。更新しました。',
+	'importusers-user-present-not-update' => '利用者 <b>%s</b> が既に存在します。更新しませんでした。',
+	'importusers-user-invalid-format' => '%s行目の利用者データは不正な形式であるか空です。飛ばしました。',
+	'importusers-log' => 'インポート記録',
 	'importusers-log-summary' => '要約',
 	'importusers-log-summary-all' => 'すべて',
+	'importusers-log-summary-added' => '追加',
+	'importusers-log-summary-updated' => '更新',
 	'importusers-login-name' => 'ログイン名',
 	'importusers-password' => 'パスワード',
+	'importusers-email' => 'メールアドレス',
+	'importusers-realname' => '実名',
+	'right-import_users' => '利用者を一括インポートする',
+	'action-import_users' => '利用者の一括インポート',
 );
 
 /** Javanese (Basa Jawa)
@@ -743,6 +855,8 @@ $messages['ksh'] = array(
 	'importusers-password' => 'Paßwoot',
 	'importusers-email' => '<i lang="en">e-mail</i>',
 	'importusers-realname' => 'Dinge richtije Name',
+	'right-import_users' => 'Date övver Metmaachere em  Knubbel empotteere',
+	'action-import_users' => 'Metmaacher ier Date em Knubbel ze empotteere',
 );
 
 /** Latin (Latina)
@@ -776,6 +890,7 @@ $messages['lb'] = array(
 	'importusers-password' => 'Passwuert',
 	'importusers-email' => 'E-Mailadress',
 	'importusers-realname' => 'richtege Numm',
+	'right-import_users' => 'Benotzer a grousser Zuel importéieren',
 );
 
 /** Eastern Mari (Олык Марий)
@@ -886,6 +1001,8 @@ $messages['nl'] = array(
 	'importusers-password' => 'wachtwoord',
 	'importusers-email' => 'e-mail',
 	'importusers-realname' => 'echte naam',
+	'right-import_users' => 'Gebruikers in bulk importeren',
+	'action-import_users' => 'gebruikers in bulk te importeren',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -913,6 +1030,8 @@ $messages['nn'] = array(
 	'importusers-password' => 'passord',
 	'importusers-email' => 'e-post',
 	'importusers-realname' => 'verkeleg namn',
+	'right-import_users' => 'Importera fleire brukarar samstundes',
+	'action-import_users' => 'importer fleire brukarar samstundes',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -965,6 +1084,15 @@ $messages['oc'] = array(
 	'importusers-password' => 'Senhal',
 	'importusers-email' => 'adreça de corrièr electronic',
 	'importusers-realname' => 'nom vertadièr',
+	'right-import_users' => "Importar d'utilizaires en massa",
+	'action-import_users' => "importar d'utilizaires en massa",
+);
+
+/** Oriya (ଓଡ଼ିଆ)
+ * @author Jose77
+ */
+$messages['or'] = array(
+	'importusers-log-summary' => 'ସାରକଥା',
 );
 
 /** Ossetic (Иронау)
@@ -1010,8 +1138,9 @@ $messages['pl'] = array(
 	'importusers-log-summary-updated' => 'Zmodyfikowano',
 	'importusers-login-name' => 'Nazwa użytkownika',
 	'importusers-password' => 'hasło',
-	'importusers-email' => 'e-mail',
+	'importusers-email' => 'e‐mail',
 	'importusers-realname' => 'imię i nazwisko',
+	'right-import_users' => 'Hurtowe importowanie kont użytkowników',
 );
 
 /** Pashto (پښتو)
@@ -1052,6 +1181,35 @@ $messages['pt'] = array(
 	'importusers-password' => 'palavra-chave',
 	'importusers-email' => 'email',
 	'importusers-realname' => 'nome real',
+	'right-import_users' => 'Importar utilizadores em bloco',
+	'action-import_users' => 'importar utilizadores em bloco',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'importusers' => 'Importar Utilizadores',
+	'importusers-desc' => '[[Special:ImportUsers|Importa utilizadores]] em bloco de um arquivo CSV; codificação: UTF-8',
+	'importusers-uploadfile' => 'Carregar arquivo',
+	'importusers-form-caption' => 'Arquivo CSV de entrada (UTF-8)',
+	'importusers-form-file' => 'Formato do arquivo de utilizadores (csv):',
+	'importusers-form-replace-present' => 'Substituir utilizadores existentes',
+	'importusers-form-button' => 'Importar',
+	'importusers-user-added' => 'Utilizador <b>%s</b> foi adicionado.',
+	'importusers-user-present-update' => 'Utilizador <b>%s</b> já existe. Atualizado.',
+	'importusers-user-present-not-update' => 'Utilizador <b>%s</b> já existe. Não foi atualizado.',
+	'importusers-user-invalid-format' => 'Dados de utilizador na linha #%s têm um formato inválido ou estão vazios. Passado à frente.',
+	'importusers-log' => 'Registro de importação',
+	'importusers-log-summary' => 'Sumário',
+	'importusers-log-summary-all' => 'Todos',
+	'importusers-log-summary-added' => 'Adicionado',
+	'importusers-log-summary-updated' => 'Atualizado',
+	'importusers-login-name' => 'Nome de conta',
+	'importusers-password' => 'palavra-chave',
+	'importusers-email' => 'e-mail',
+	'importusers-realname' => 'nome real',
+	'right-import_users' => 'Importar utilizadores em bloco',
 );
 
 /** Tarifit (Tarifit)
@@ -1155,6 +1313,8 @@ $messages['sk'] = array(
 	'importusers-password' => 'heslo',
 	'importusers-email' => 'email',
 	'importusers-realname' => 'skutočné meno',
+	'right-import_users' => 'Hromadne importovať používateľov',
+	'action-import_users' => 'hromadne importovať používateľov',
 );
 
 /** Seeltersk (Seeltersk)
@@ -1162,7 +1322,7 @@ $messages['sk'] = array(
  */
 $messages['stq'] = array(
 	'importusers' => 'Benutsere importierje',
-	'importusers-desc' => 'Importiert Benutsere uut ne CSV-Doatäi; Codierenge: UTF-8',
+	'importusers-desc' => '[[Special:ImportUsers|Importiert Benutsere]] uut ne CSV-Doatäi; Codierenge: UTF-8',
 	'importusers-uploadfile' => 'Doatäi hoochleede',
 	'importusers-form-caption' => 'CSV-Doatäi (UTF-8)',
 	'importusers-form-file' => 'Benutserdoatäiformoat (csv):',
@@ -1181,6 +1341,7 @@ $messages['stq'] = array(
 	'importusers-password' => 'Paaswoud',
 	'importusers-email' => 'E-Mail',
 	'importusers-realname' => 'Ächten Noome',
+	'right-import_users' => 'Benutserdoaten in grooten Uumfang importierje',
 );
 
 /** Sundanese (Basa Sunda)
@@ -1194,6 +1355,7 @@ $messages['su'] = array(
  * @author Jon Harald Søby
  * @author Lejonel
  * @author M.M.S.
+ * @author Najami
  */
 $messages['sv'] = array(
 	'importusers' => 'Importera användare',
@@ -1216,6 +1378,14 @@ $messages['sv'] = array(
 	'importusers-password' => 'lösenord',
 	'importusers-email' => 'e-post',
 	'importusers-realname' => 'riktigt namn',
+	'right-import_users' => 'Importera flera användare samtidigt',
+);
+
+/** Swahili (Kiswahili)
+ * @author Lloffiwr
+ */
+$messages['sw'] = array(
+	'importusers-log-summary' => 'Muhtasari',
 );
 
 /** Tamil (தமிழ்)
@@ -1278,13 +1448,63 @@ $messages['th'] = array(
 	'importusers-log-summary-all' => 'ทั้งหมด',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'importusers' => 'Umangkat ng mga tagagamit',
+	'importusers-desc' => '[[Special:ImportUsers|Mga tagagamit ng pag-aangkat]] na bugsuan/bultuhan mula sa talaksang CSV; pagsasakodigo: UTF-8',
+	'importusers-uploadfile' => 'Ikarga ang talaksan',
+	'importusers-form-caption' => 'Ipasok ang talaksang CSV (UTF-8)',
+	'importusers-form-file' => 'Pormat/anyo ng talaksan ng tagagamit (csv):',
+	'importusers-form-replace-present' => 'Palitan ang umiiral na mga tagagamit',
+	'importusers-form-button' => 'Angkatin',
+	'importusers-user-added' => 'Idinagdag ang tagagamit na si <b>%s</b>.',
+	'importusers-user-present-update' => 'Umiiral na ang tagagamit na si <b>%s</b>. Isinapanahon.',
+	'importusers-user-present-not-update' => 'Umiiral na ang tagagamit na si <b>%s</b>. Hindi isinapanahon.',
+	'importusers-user-invalid-format' => 'Hindi tanggap ang anyo/pormat o walang laman ang dato ng tagagamit na nasa guhit na #%s. Nilaktawan.',
+	'importusers-log' => 'Tala ng pag-aangkat',
+	'importusers-log-summary' => 'Buod',
+	'importusers-log-summary-all' => 'Lahat',
+	'importusers-log-summary-added' => 'Idinagdag',
+	'importusers-log-summary-updated' => 'Naisapanahon',
+	'importusers-login-name' => 'Pangalang panglagda',
+	'importusers-password' => 'hudyat',
+	'importusers-email' => 'e-liham',
+	'importusers-realname' => 'totoong pangalan',
+	'right-import_users' => 'Umangkat ng bunton ng mga tagagamit',
+	'action-import_users' => 'umangkat ng bunton ng tagagamit',
+);
+
+/** Turkish (Türkçe)
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'importusers-uploadfile' => 'Dosya yükle',
+	'importusers-log-summary' => 'Özet',
+	'importusers-log-summary-all' => 'Hepsi',
+	'importusers-log-summary-added' => 'Eklendi',
+	'importusers-log-summary-updated' => 'Güncellendi',
+	'importusers-login-name' => 'Giriş adı',
+	'importusers-password' => 'Parola',
+	'importusers-email' => 'E-posta',
+	'importusers-realname' => 'gerçek isminiz',
+);
+
+/** Uighur (Latin) (Uyghurche‎ / ئۇيغۇرچە (Latin))
+ * @author Jose77
+ */
+$messages['ug-latn'] = array(
+	'importusers-email' => 'élxet:',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'importusers' => 'Nhập khẩu Thành viên',
-	'importusers-desc' => 'Nhập nhiều thành viên từ tậptin CSV; mã hóa: UTF-8',
+	'importusers-desc' => '[[Special:ImportUsers|Nhập nhiều thành viên]] từ tập tin CSV; mã hóa: UTF-8',
 	'importusers-uploadfile' => 'Tải tập tin lên',
 	'importusers-form-caption' => 'Tập CSV đầu vào (UTF-8)',
 	'importusers-form-file' => 'Định dạng tập tin người dùng (csv):',
@@ -1303,6 +1523,7 @@ $messages['vi'] = array(
 	'importusers-password' => 'mật khẩu',
 	'importusers-email' => 'thư điện tử',
 	'importusers-realname' => 'tên thật',
+	'right-import_users' => 'Nhập nhiều thành viên',
 );
 
 /** Volapük (Volapük)
@@ -1330,5 +1551,12 @@ $messages['vo'] = array(
 	'importusers-password' => 'letavöd',
 	'importusers-email' => 'ladet leäktronik',
 	'importusers-realname' => 'nem jenöfik',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'importusers-form-button' => 'אימפארט',
 );
 

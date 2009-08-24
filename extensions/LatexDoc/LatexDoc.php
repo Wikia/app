@@ -138,6 +138,7 @@ class LatexDoc {
 			  'action=latexdoc&ext=pdf' );
 			$htmlLatex = nl2br( htmlspecialchars( $text ) );
 
+			// FIXME: hard coded pipe-separator (use $wgLang->pipeList( array ) if possible.
 			$framedLatex = <<<ENDTEXT
 $dviLink | $pdfLink
 <hr />

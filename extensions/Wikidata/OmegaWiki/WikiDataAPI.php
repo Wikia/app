@@ -79,7 +79,7 @@ function getExpression($expressionId, $dc=null) {
 function newObjectId($table) {
 	$dc=wdGetDataSetContext();
 
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("INSERT INTO {$dc}_objects (`table`, `UUID`) VALUES (". $dbr->addQuotes($table) . ", UUID())");
 
 	return $dbr->insertId();
@@ -88,7 +88,7 @@ function newObjectId($table) {
 function getTableNameWithObjectId($objectId) {
 	$dc=wdGetDataSetContext();
 
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT `table`" .
 		" FROM {$dc}_objects" .
@@ -105,7 +105,7 @@ function getExpressionId($spelling, $languageId) {
 
 	$dc=wdGetDataSetContext();
 
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$sql = "SELECT expression_id FROM {$dc}_expression " .
 			'WHERE spelling=binary '. $dbr->addQuotes($spelling) . ' AND language_id=' . $languageId .
 			' AND '. getLatestTransactionRestriction("{$dc}_expression");
@@ -120,7 +120,7 @@ function createExpressionId($spelling, $languageId) {
 	
 	$expressionId = newObjectId("{$dc}_expression");
 
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$spelling = $dbr->addQuotes($spelling);
 
 	$dbr->query("INSERT INTO {$dc}_expression(expression_id, spelling, language_id, add_transaction_id) values($expressionId, $spelling, $languageId, ". getUpdateTransactionId() .")");
@@ -134,7 +134,7 @@ function getPageTitle($spelling) {
 
 
 function createPage($namespace, $title) {
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$title = $dbr->addQuotes($title);
 	$timestamp = $dbr->timestamp(); 
 	$sql = "select page_id from page where page_namespace = $namespace and page_title = $title";
@@ -152,7 +152,7 @@ function createPage($namespace, $title) {
 }
 
 function setPageLatestRevision($pageId, $latestRevision) {
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$sql = "update page set page_latest=$latestRevision where page_id=$pageId";	
 	$dbr->query($sql);
 }
@@ -160,7 +160,7 @@ function createInitialRevisionForPage($pageId, $comment) {
 	global
 		$wgUser;
 		
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$userId = $wgUser->getID();	
 	$userName = $dbr->addQuotes($wgUser->getName());
 	$comment = $dbr->addQuotes($comment);
@@ -221,7 +221,7 @@ function createSynonymOrTranslation($definedMeaningId, $expressionId, $identical
 	if ($synonymId == 0)
 		$synonymId = newObjectId("{$dc}_syntrans");
 	
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$identicalMeaningInteger = (int) $identicalMeaning;	
 	$sql = "insert into {$dc}_syntrans(syntrans_sid, defined_meaning_id, expression_id, identical_meaning, add_transaction_id) ".
 	       "values($synonymId, $definedMeaningId, $expressionId, $identicalMeaningInteger, ". getUpdateTransactionId() .")";
@@ -233,7 +233,7 @@ function expressionIsBoundToDefinedMeaning($definedMeaningId, $expressionId) {
 		$dataSet;
 	
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	
 	$queryResult = $dbr->query(
 		selectLatest(
@@ -255,7 +255,7 @@ function addSynonymOrTranslation($spelling, $languageId, $definedMeaningId, $ide
 }
 	
 function getMaximum($field, $table) {
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$sql = "select max($field) as maximum from $table";
 	$queryResult = $dbr->query($sql);
 	
@@ -551,7 +551,7 @@ function updateTranslatedText($setId, $languageId, $text) {
  
 function createText($text) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$text = $dbr->addQuotes($text);
 	$sql = "insert into {$dc}_text(text_text) values($text)";	
 	$dbr->query($sql);
@@ -562,7 +562,7 @@ function createText($text) {
 function createTranslatedContent($translatedContentId, $languageId, $textId) {
 	$dc=wdGetDataSetContext();
 
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$sql = "insert into {$dc}_translated_content(translated_content_id,language_id,text_id,add_transaction_id) values($translatedContentId, $languageId, $textId, ". getUpdateTransactionId() .")";	
 	$dbr->query($sql);
 	
@@ -577,7 +577,7 @@ function translatedTextExists($textId, $languageId) {
 	if (is_null($languageId))
 		throw new Exception("languageId is null");
 
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT translated_content_id" .
 		" FROM {$dc}_translated_content" .
@@ -601,7 +601,7 @@ function addTranslatedTextIfNotPresent($translatedContentId, $languageId, $text)
 
 function getDefinedMeaningDefinitionId($definedMeaningId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query("SELECT meaning_text_tcid FROM {$dc}_defined_meaning WHERE defined_meaning_id=$definedMeaningId " .
 								" AND " . getLatestTransactionRestriction("{$dc}_defined_meaning"));
 
@@ -609,7 +609,7 @@ function getDefinedMeaningDefinitionId($definedMeaningId) {
 }
 
 function updateDefinedMeaningDefinitionId($definedMeaningId, $definitionId) {
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dc=wdGetDataSetContext();
 	$dbr->query("UPDATE {$dc}_defined_meaning SET meaning_text_tcid=$definitionId WHERE defined_meaning_id=$definedMeaningId" .
 				" AND " . getLatestTransactionRestriction("{$dc}_defined_meaning"));
@@ -637,7 +637,7 @@ function addDefinedMeaningDefinition($definedMeaningId, $languageId, $text) {
 
 function createDefinedMeaningAlternativeDefinition($definedMeaningId, $translatedContentId, $sourceMeaningId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("INSERT INTO {$dc}_alt_meaningtexts (meaning_mid, meaning_text_tcid, source_id, add_transaction_id) " .
 			    "VALUES ($definedMeaningId, $translatedContentId, $sourceMeaningId, " . getUpdateTransactionId() . ")");
 }
@@ -651,14 +651,14 @@ function addDefinedMeaningAlternativeDefinition($definedMeaningId, $languageId, 
 
 function removeTranslatedText($translatedContentId, $languageId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("UPDATE {$dc}_translated_content SET remove_transaction_id=". getUpdateTransactionId() . 
 				" WHERE translated_content_id=$translatedContentId AND language_id=$languageId AND remove_transaction_id IS NULL");
 }
 
 function removeTranslatedTexts($translatedContentId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("UPDATE {$dc}_translated_content SET remove_transaction_id=". getUpdateTransactionId() . 
 				" WHERE translated_content_id=$translatedContentId AND remove_transaction_id IS NULL");
 }
@@ -672,7 +672,7 @@ function removeDefinedMeaningAlternativeDefinition($definedMeaningId, $definitio
 //	removeTranslatedTexts($definitionId);
 
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("UPDATE {$dc}_alt_meaningtexts SET remove_transaction_id=" . getUpdateTransactionId() .
 				" WHERE meaning_text_tcid=$definitionId AND meaning_mid=$definedMeaningId" .
 				" AND remove_transaction_id IS NULL");
@@ -687,7 +687,7 @@ function removeDefinedMeaningDefinition($definedMeaningId, $languageId) {
 
 function definedMeaningInCollection($definedMeaningId, $collectionId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query("SELECT collection_id FROM {$dc}_collection_contents WHERE collection_id=$collectionId AND member_mid=$definedMeaningId " .
 								"AND ". getLatestTransactionRestriction("{$dc}_collection_contents"));
 	
@@ -696,7 +696,7 @@ function definedMeaningInCollection($definedMeaningId, $collectionId) {
 
 function addDefinedMeaningToCollection($definedMeaningId, $collectionId, $internalId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("INSERT INTO {$dc}_collection_contents(collection_id, member_mid, internal_member_id, add_transaction_id) " .
 					"VALUES ($collectionId, $definedMeaningId, ". $dbr->addQuotes($internalId) .", ". getUpdateTransactionId() .")");
 }
@@ -708,7 +708,7 @@ function addDefinedMeaningToCollectionIfNotPresent($definedMeaningId, $collectio
 
 function getDefinedMeaningFromCollection($collectionId, $internalMemberId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$query = "SELECT member_mid FROM {$dc}_collection_contents WHERE collection_id=$collectionId AND internal_member_id=". $dbr->addQuotes($internalMemberId) . " AND " .getLatestTransactionRestriction("{$dc}_collection_contents");
 	$queryResult = $dbr->query( $query );
 	
@@ -720,7 +720,7 @@ function getDefinedMeaningFromCollection($collectionId, $internalMemberId) {
 
 function removeDefinedMeaningFromCollection($definedMeaningId, $collectionId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("UPDATE {$dc}_collection_contents SET remove_transaction_id=" . getUpdateTransactionId() .
 				" WHERE collection_id=$collectionId AND member_mid=$definedMeaningId AND remove_transaction_id IS NULL");	
 }
@@ -760,7 +760,7 @@ function addCollection($definedMeaningId, $collectionType) {
 	$dc=wdGetDataSetContext();
 	$collectionId = newObjectId("{$dc}_collection");
 	
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("INSERT INTO {$dc}_collection(collection_id, collection_mid, collection_type, add_transaction_id)" .
 				" VALUES($collectionId, $definedMeaningId, '$collectionType', ". getUpdateTransactionId() .")");
 	
@@ -774,7 +774,7 @@ function addDefinedMeaning($definingExpressionId) {
 	$definedMeaningId = newObjectId("{$dc}_defined_meaning"); 
 	
 	//wfDebug( "addDefinedMeaning(): $definedMeaningId has to be inserted to the database $dc" ); 
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("INSERT INTO {$dc}_defined_meaning(defined_meaning_id, expression_id, add_transaction_id) values($definedMeaningId, $definingExpressionId, ". getUpdateTransactionId() .")");
 	
 	//wfDebug( "addDefinedMeaning(): after $definedMeaningId has been inserted in the database" ); 
@@ -804,7 +804,7 @@ function addTextAttributeValue($objectId, $textAttributeId, $text) {
 
 function createTextAttributeValue($textValueAttributeId, $objectId, $textAttributeId, $text) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query(
 		"INSERT INTO {$dc}_text_attribute_values (value_id, object_id, attribute_mid, text, add_transaction_id) " .
 		"VALUES ($textValueAttributeId, $objectId, $textAttributeId, " . $dbr->addQuotes($text) . ", ". getUpdateTransactionId() .")"
@@ -813,7 +813,7 @@ function createTextAttributeValue($textValueAttributeId, $objectId, $textAttribu
 
 function removeTextAttributeValue($textValueAttributeId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("UPDATE {$dc}_text_attribute_values SET remove_transaction_id=". getUpdateTransactionId() .
 				" WHERE value_id=$textValueAttributeId" .
 				" AND remove_transaction_id IS NULL");	
@@ -827,7 +827,7 @@ function updateTextAttributeValue($text, $textValueAttributeId) {
 
 function getTextValueAttribute($textValueAttributeId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT object_id, attribute_mid, text" .
 		" FROM {$dc}_text_attribute_values" .
@@ -846,7 +846,7 @@ function addLinkAttributeValue($objectId, $linkAttributeId, $url, $label = "") {
 
 function createLinkAttributeValue($linkValueAttributeId, $objectId, $linkAttributeId, $url, $label = "") {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query(
 		"INSERT INTO {$dc}_url_attribute_values (value_id, object_id, attribute_mid, url, label, add_transaction_id) " .
 		"VALUES ($linkValueAttributeId, $objectId, $linkAttributeId, " . $dbr->addQuotes($url) . ", " . $dbr->addQuotes($label) . ", ". getUpdateTransactionId() .")"
@@ -855,7 +855,7 @@ function createLinkAttributeValue($linkValueAttributeId, $objectId, $linkAttribu
 
 function removeLinkAttributeValue($linkValueAttributeId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query(
 		"UPDATE {$dc}_url_attribute_values SET remove_transaction_id=". getUpdateTransactionId() .
 		" WHERE value_id=$linkValueAttributeId" .
@@ -871,7 +871,7 @@ function updateLinkAttributeValue($linkValueAttributeId, $url, $label = "") {
 
 function getLinkValueAttribute($linkValueAttributeId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query(
 		"SELECT object_id, attribute_mid, url" .
 		" FROM {$dc}_url_attribute_values WHERE value_id=$linkValueAttributeId " .
@@ -883,7 +883,7 @@ function getLinkValueAttribute($linkValueAttributeId) {
 
 function createTranslatedTextAttributeValue($valueId, $objectId, $attributeId, $translatedContentId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query("INSERT INTO {$dc}_translated_content_attribute_values (value_id, object_id, attribute_mid, value_tcid, add_transaction_id) " .
 			    "VALUES ($valueId, $objectId, $attributeId, $translatedContentId, ". getUpdateTransactionId() .")");
 }
@@ -899,7 +899,7 @@ function addTranslatedTextAttributeValue($objectId, $attributeId, $languageId, $
 
 function getTranslatedTextAttribute($valueId) {
 	$dc=wdGetDataSetContext();
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query("SELECT value_id, object_id, attribute_mid, value_tcid FROM {$dc}_translated_content_attribute_values WHERE value_id=$valueId " .
 								" AND " . getLatestTransactionRestriction("{$dc}_translated_content_attribute_values"));
 
@@ -917,7 +917,7 @@ function removeTranslatedTextAttributeValue($valueId) {
 	// back easier.      
 //	removeTranslatedTexts($translatedTextAttribute->value_tcid);  
 
-	$dbr = &wfGetDB(DB_MASTER);
+	$dbr = wfGetDB(DB_MASTER);
 	$dbr->query(
 		"UPDATE {$dc}_translated_content_attribute_values" .
 		" SET remove_transaction_id=". getUpdateTransactionId() .
@@ -1284,7 +1284,7 @@ function createConceptMapping($concepts, $override_transaction=null) {
 }
 
 function getMapping( $dc, $collid, $dm_id ){
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$queryResult = $dbr->query( "select internal_member_id from {$dc}_collection_contents where collection_id = $collid AND member_mid = $dm_id" );
 	if ( $record = $dbr->fetchObject($queryResult) ){
 		return $record->internal_member_id;

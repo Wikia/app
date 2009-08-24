@@ -38,9 +38,14 @@ $aliases['de'] = array(
 	'EditUser' => array( 'Benutzereinstellungen bearbeiten' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'EditUser' => array( 'Wužywarske nastajenja wobźěłaś' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
-	'EditUser' => array( 'EditerUtilisateur', 'ÉditerUtilisateur', 'Éditer l’utilisateur' ),
+	'EditUser' => array( 'Modifier l’utilisateur', 'ModifierUtilisateur', 'EditerUtilisateur', 'ÉditerUtilisateur', 'Éditer l’utilisateur' ),
 );
 
 /** Galician (Galego) */
@@ -65,6 +70,11 @@ $aliases['hr'] = array(
 	'EditUser' => array( 'Uredi_suradnika' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'EditUser' => array( 'Wužiwarske nastajenja wobdźěłać' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'EditUser' => array( 'EditeItilizatè' ),
@@ -73,6 +83,16 @@ $aliases['ht'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'EditUser' => array( 'Szerkesztő szerkesztése' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'EditUser' => array( 'Modificar usator' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'EditUser' => array( '利用者情報の編集' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -112,6 +132,11 @@ $aliases['oc'] = array(
 	'EditUser' => array( 'EditarUtilizaire', 'Editar l’utilizaire' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'EditUser' => array( 'सम्पादन्‌योजक' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'EditUser' => array( 'Redigera användare' ),
@@ -125,5 +150,10 @@ $aliases['sw'] = array(
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'EditUser' => array( 'แก้ไขผู้ใช้' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'EditUser' => array( 'Baguhin ang tagagamit' ),
 );
 

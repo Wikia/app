@@ -40,27 +40,31 @@ Uniwiki.CustomToolbar = {
 			'caption':  wfMsg('ct_image_caption'),
 			'tip':      wfMsg('ct_image_tip'),
 			'func':	function(textarea) {
+				//Hack to check if user is allowed to upload
+				if(!AllowUserToUpload) {
+					alert("Please login first before you try to upload");
+				} else {
+					/* Unless we are in the classic-mode textbox,
+					* pass the section id number so that we know
+					* where to add the image back into the page
+					* (the name of the textarea will always match
+					* the id of the section) */
+					if (textarea.name == "wpTextbox1") var section = textarea.name;
+					else var section = textarea.name.replace(/\D/g, '');
 
-				/* Unless we are in the classic-mode textbox,
-				* pass the section id number so that we know
-				* where to add the image back into the page
-				* (the name of the textarea will always match
-				* the id of the section) */
-				if (textarea.name == "wpTextbox1") var section = textarea.name;
-				else var section = textarea.name.replace(/\D/g, '');
+					/* open the upload form in a popup window
+					 * (this shold be moved to an iframe) */
+					popup = open(
+						wgServer + wgScript + "/Special:CustomToolbarUpload?type=image&section=" + section,
+						null, "scrollbars=yes, status=no, width=600, height=400"
+					);
 
-				/* open the upload form in a popup window
- 				 * (this shold be moved to an iframe) */
-				popup = open(
-					wgServer + wgScript + "/Special:CustomToolbarUpload?type=image&section=" + section,
-					null, "scrollbars=yes, status=no, width=600, height=400"
-				);
-
-				/* check if the popup window wasn't blocked; if
-				* it was, then display a notice to let the user
-				* know that we didn't set them up the bomb */
-				if (popup != null && popup.opener != null) popup.opener = self;
-				else alert (wfMsg('ct_popupblocked'));
+					/* check if the popup window wasn't blocked; if
+					* it was, then display a notice to let the user
+					* know that we didn't set them up the bomb */
+					if (popup != null && popup.opener != null) popup.opener = self;
+					else alert (wfMsg('ct_popupblocked'));
+				}
 			}
 		},
 		'attachment': {
@@ -68,27 +72,32 @@ Uniwiki.CustomToolbar = {
 			'caption':  wfMsg('ct_attachment_caption'),
 			'tip':      wfMsg('ct_attachment_tip'),
 			'func':	function(textarea) {
+				//Hack to check if user is allowed to upload
+				if(!AllowUserToUpload) {
+					alert("Please login first before you try to upload");
+				} else {
 
-				/* Unless we are in the classic-mode textbox,
-				* pass the section id number so that we know
-				* where to add the image back into the page
-				* (the name of the textarea will always match
-				* the id of the section) */
-				if (textarea.name == "wpTextbox1") var section = textarea.name;
-				else var section = textarea.name.replace(/\D/g, '');
+					/* Unless we are in the classic-mode textbox,
+					* pass the section id number so that we know
+					* where to add the image back into the page
+					* (the name of the textarea will always match
+					* the id of the section) */
+					if (textarea.name == "wpTextbox1") var section = textarea.name;
+					else var section = textarea.name.replace(/\D/g, '');
 
-				/* open the upload form in a popup window
- 				 * (this shold be moved to an iframe) */
-				popup = open(
-					wgServer + wgScript + "/Special:CustomToolbarUpload?type=attachment&section=" + section,
-					null, "scrollbars=no, status=no, width=600, height=400"
-				);
+					/* open the upload form in a popup window
+					 * (this shold be moved to an iframe) */
+					popup = open(
+						wgServer + wgScript + "/Special:CustomToolbarUpload?type=attachment&section=" + section,
+						null, "scrollbars=no, status=no, width=600, height=400"
+					);
 
-				/* check if the popup window wasn't blocked; if
-				* it was, then display a notice to let the user
-				* know that we didn't set them up the bomb */
-				if (popup != null && popup.opener != null) popup.opener = self;
-				else alert (wfMsg('ct_popupblocked'));
+					/* check if the popup window wasn't blocked; if
+					* it was, then display a notice to let the user
+					* know that we didn't set them up the bomb */
+					if (popup != null && popup.opener != null) popup.opener = self;
+					else alert (wfMsg('ct_popupblocked'));
+				}
 			}
 		},
         'user': {

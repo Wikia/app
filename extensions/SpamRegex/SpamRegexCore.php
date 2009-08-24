@@ -64,8 +64,8 @@ class SpamRegexHooks {
 			foreach( $s_phrases as $s_phrase ) {
 				if ( preg_match( $s_phrase, $reason, $s_matches ) ) {
 					wfLoadExtensionMessages( 'SpamRegex' );
-					$error .= wfMsgExt( 'spamregex-move', array( 'parseinline' ) ) . ' ';
-					$error .= wfMsgExt( 'spamprotectionmatch', array( 'parseinline' ), "<nowiki>{$s_matches[0]}</nowiki>" );
+					$error .= wfMsgExt( 'spamregex-move', 'parseinline' ) . wfMsg( 'word_separator' );
+					$error .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$s_matches[0]}</nowiki>" );
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
@@ -91,7 +91,7 @@ class SpamRegexHooks {
 			$res = $dbr->select( 'spam_regex', 'spam_text', array( $field => 1 ), __METHOD__ );
 			while ( $row = $res->fetchObject() ) {
 				$concat = $row->spam_text;
-				$phrases [] = "/" . $concat . "/i" ;
+				$phrases[] = "/" . $concat . "/i";
 			}
 			$wgMemc->set( $key, $phrases, 0 );
 			$res->free();

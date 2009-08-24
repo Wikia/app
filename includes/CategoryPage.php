@@ -20,17 +20,14 @@ class CategoryPage extends Article {
 		if ( isset( $diff ) && $diffOnly )
 			return Article::view();
 
-		if(!wfRunHooks('CategoryPageView', array(&$this))) return;
+		if( !wfRunHooks( 'CategoryPageView', array( &$this ) ) )
+			return;
 
 		if ( NS_CATEGORY == $this->mTitle->getNamespace() ) {
 			$this->openShowCategory();
 		}
 
 		Article::view();
-
-		# If the article we've just shown is in the "Image" namespace,
-		# follow it with the history list and link list for the image
-		# it describes.
 
 		if ( NS_CATEGORY == $this->mTitle->getNamespace() ) {
 			$this->closeShowCategory();
@@ -79,7 +76,7 @@ class CategoryViewer {
 		$this->from = $from;
 		$this->until = $until;
 		$this->limit = $wgCategoryPagingLimit;
-		$this->cat = Category::newFromName( $title->getDBKey() );
+		$this->cat = Category::newFromTitle( $title );
 	}
 
 	/**
@@ -193,9 +190,10 @@ class CategoryViewer {
 	 */
 	function addPage( $title, $sortkey, $pageLength, $isRedirect = false ) {
 		global $wgContLang;
+		$titletext = $wgContLang->convert( $title->getPrefixedText() );
 		$this->articles[] = $isRedirect
-			? '<span class="redirect-in-category">' . $this->getSkin()->makeKnownLinkObj( $title ) . '</span>'
-			: $this->getSkin()->makeSizeLinkObj( $pageLength, $title );
+			? '<span class="redirect-in-category">' . $this->getSkin()->makeKnownLinkObj( $title, $titletext ) . '</span>'
+			: $this->getSkin()->makeSizeLinkObj( $pageLength, $title, $titletext );
 		$this->articles_start_char[] = $wgContLang->convert( $wgContLang->firstChar( $sortkey ) );
 	}
 
@@ -209,7 +207,7 @@ class CategoryViewer {
 	}
 
 	function doCategoryQuery() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'category' );
 		if( $this->from != '' ) {
 			$pageCondition = 'cl_sortkey >= ' . $dbr->addQuotes( $this->from );
 			$this->flip = false;
@@ -319,7 +317,7 @@ class CategoryViewer {
 			$countmsg = $this->getCountMessage( $rescnt, $dbcnt, 'file' );
 
 			return "<div id=\"mw-category-media\">\n" .
-			'<h2>' . wfMsg( 'category-media-header', htmlspecialchars($this->title->getText()) ) . "</h2>\n" .
+			'<h2>' . wfMsg( 'category-media-header', htmlspecialchars( $this->title->getText() ) ) . "</h2>\n" .
 			$countmsg . $this->gallery->toHTML() . "\n</div>";
 		} else {
 			return '';
@@ -460,12 +458,12 @@ class CategoryViewer {
 		$sk = $this->getSkin();
 		$limitText = $wgLang->formatNum( $limit );
 
-		$prevLink = htmlspecialchars( wfMsg( 'prevn', $limitText ) );
+		$prevLink = wfMsgExt( 'prevn', array( 'escape', 'parsemag' ), $limitText );
 		if( $first != '' ) {
 			$prevLink = $sk->makeLinkObj( $title, $prevLink,
 				wfArrayToCGI( $query + array( 'until' => $first ) ) );
 		}
-		$nextLink = htmlspecialchars( wfMsg( 'nextn', $limitText ) );
+		$nextLink = wfMsgExt( 'nextn', array( 'escape', 'parsemag' ), $limitText );
 		if( $last != '' ) {
 			$nextLink = $sk->makeLinkObj( $title, $nextLink,
 				wfArrayToCGI( $query + array( 'from' => $last ) ) );

@@ -39,6 +39,16 @@ $messages['arz'] = array(
 	'signaturelogentry' => 'وقع الوثيقة $1',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'signaturelogpage' => 'Журнал подпісаў',
+	'signature-desc' => 'Уключае [[Special:SignDocument|падпісаньне]] дакумэнта',
+	'signaturelogpagetext' => 'Гэта журнал [[Special:SignDocument|усіх подпісаў, даданых да дакумэнтаў]].',
+	'signaturelogentry' => 'падпісаў дакумэнт $1',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
@@ -47,6 +57,16 @@ $messages['bg'] = array(
 	'signature-desc' => 'Позволява [[Special:SignDocument|подписването на документи]]',
 	'signaturelogpagetext' => 'Тази страница съдържа дневник на [[Special:SignDocument|всички подписи, добавяни към документите]].',
 	'signaturelogentry' => 'подписа документа $1',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'signaturelogpage' => 'Zapisnik potpisivanja',
+	'signature-desc' => 'Omogućuje [[Special:SignDocument|potpisivanje]] dokumenata',
+	'signaturelogpagetext' => 'Ovo je zapisnik [[Special:SignDocument|svih potpisa dodanih u dokumente]].',
+	'signaturelogentry' => 'potpisan dokument $1',
 );
 
 /** German (Deutsch)
@@ -88,12 +108,23 @@ $messages['eo'] = array(
 	'signaturelogentry' => 'subskribas la dokumenton $1',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'signaturelogpage' => 'Registro de firma',
+	'signature-desc' => 'Habilita [[Special:SignDocument|firma]] de documentos',
+	'signaturelogpagetext' => 'Este es un registro de [[Special:SignDocument|todas las firmas agregadas a los documentos]].',
+	'signaturelogentry' => 'firmado el documento $1',
+);
+
 /** Basque (Euskara)
+ * @author An13sa
  * @author Theklan
  */
 $messages['eu'] = array(
 	'signaturelogpage' => 'Sinatze loga',
-	'signature-desc' => 'Dokumentuak [[Berezi:DokumentuaSinatu|sinatzea]] baimentzen du',
+	'signature-desc' => 'Dokumentuak [[Special:SignDocument|sinatzea]] baimentzen du',
 );
 
 /** Finnish (Suomi)
@@ -129,6 +160,16 @@ $messages['gl'] = array(
 	'signaturelogentry' => 'asinou o documento $1',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'signaturelogpage' => 'Signature-Logbuech',
+	'signature-desc' => 'Macht s megli Dokumänt z [[Special:SignDocument|unterzeichne]]',
+	'signaturelogpagetext' => 'Des isch s [[Special:SignDocument|Signature-Logbuech fir Dokumänt]].',
+	'signaturelogentry' => 'het s Dokumänt $1 unterschribe',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
@@ -158,6 +199,16 @@ $messages['ia'] = array(
 	'signature-desc' => 'Permitte le [[Special:SignDocument|signatura]] de documentos',
 	'signaturelogpagetext' => 'Isto es un registro de [[Special:SignDocument|tote le signaturas addite a documentos]].',
 	'signaturelogentry' => 'signava le documento $1',
+);
+
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
+$messages['ja'] = array(
+	'signaturelogpage' => '署名記録',
+	'signature-desc' => '文書に[[Special:SignDocument|署名]]できるようにする',
+	'signaturelogpagetext' => 'これは[[Special:SignDocument|文書に付けられたすべての署名]]の記録です。',
+	'signaturelogentry' => '文書 $1 に署名',
 );
 
 /** Javanese (Basa Jawa)
@@ -286,6 +337,16 @@ $messages['pt'] = array(
 	'signaturelogentry' => 'assinou o documento $1',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'signaturelogpage' => 'Registro de assinaturas',
+	'signature-desc' => 'Permite a [[Special:SignDocument|assinatura]] de documentos',
+	'signaturelogpagetext' => 'Este é um registro de [[Special:SignDocument|todas as assinaturas adicionadas a documentos]].',
+	'signaturelogentry' => 'assinou o documento $1',
+);
+
 /** Russian (Русский)
  * @author Kaganer
  * @author Александр Сигачёв
@@ -346,13 +407,23 @@ $messages['tl'] = array(
 	'signaturelogentry' => 'nilagdaan na ang kasulatang $1',
 );
 
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'signaturelogpage' => 'Registro de le firme',
+	'signature-desc' => 'Permete de [[Special:SignDocument|firmar]] i documenti',
+	'signaturelogpagetext' => 'Sto qua el xe un registro de [[Special:SignDocument|tute le firme xontà ai documenti]].',
+	'signaturelogentry' => 'gà firmà el documento $1',
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Vinhtantran
  */
 $messages['vi'] = array(
 	'signaturelogpage' => 'Nhật trình chữ ký',
 	'signature-desc' => 'Cho phép tài liệu [[Special:SignDocument|được ký]]',
-	'signaturelogpagetext' => 'Đây là nhật trình tất cả các chữ ký được thêm vào văn bản thông qua [[Special:SignDocument]].',
+	'signaturelogpagetext' => 'Đây là nhật trình [[Special:SignDocument|tất cả các chữ ký được thêm vào văn bản]].',
 	'signaturelogentry' => 'đã ký tài liệu $1',
 );
 

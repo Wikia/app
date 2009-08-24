@@ -6,15 +6,12 @@ if ( !defined( 'MEDIAWIKI' ) ) die();
  * Bits taken from SpecialPrefixindex.php and TranslateTasks.php
  *
  * @author Siebrand Mazeland
+ * @author Niklas Laxstörm
  * @copyright Copyright © 2008 Siebrand Mazeland
+ * @copyright Copyright © 2009 Niklas Laxström
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 class SpecialTranslations extends SpecialAllpages {
-	// Inherit $maxPerPage
-
-	// Define other properties
-	protected $nsfromMsg = 'translate-messagename';
-
 	function __construct(){
 		parent::__construct( 'Translations' );
 	}
@@ -31,47 +28,47 @@ class SpecialTranslations extends SpecialAllpages {
 		$this->setHeaders();
 		$this->outputHeader();
 
+		$title = null;
+
 		if( $this->including() ){
 			$title = Title::newFromText( $par );
-			if( $title instanceof Title ){
-				$message = $title->getText();
-				$namespace = $title->getNamespace();
-
-				$this->showTranslations( $namespace, $message );
-			} else {
+			if( !$title ){
 				$wgOut->addWikiMsg( 'translate-translations-including-no-param' );
-			}
-		} else {
-			# GET values
-			$message = $wgRequest->getVal( 'message' );
-			$namespace = $wgRequest->getInt( 'namespace' );
-
-			if( isset( $message ) && $message != '' ){
-				$this->showTranslations( $namespace, $message );
 			} else {
-				$title = Title::newFromText( $par );
-				if( $title instanceof Title ){
-					$message = $title->getText();
-					$namespace = $title->getNamespace();
-	
-					$this->showTranslations( $namespace, $message );
-				} else {
-					$wgOut->addHTML( $this->namespaceMessageForm( $namespace, null ) );
-				}
+				$this->showTranslations( $title );
 			}
+			return;
+		}
+
+
+		# GET values
+		$message = $wgRequest->getText( 'message' );
+		$namespace = $wgRequest->getInt( 'namespace' );
+		if ( $message !== '' ) {
+			$title = Title::newFromText( $message, $namespace );
+		} else {
+			$title = Title::newFromText( $par );
+		}
+
+		if ( !$title ) {
+			$title = Title::makeTitle( NS_MEDIAWIKI, '' );
+			$wgOut->addHTML( $this->namespaceMessageForm( $title ) );
+		} else {
+			$wgOut->addHTML( $this->namespaceMessageForm( $title ) . '<br />');
+			$this->showTranslations( $title );
 		}
 	}
 
 	/**
-	* HTML for the top form
-	* @param integer $namespace A namespace constant (default NS_MAIN).
-	* @param string $from dbKey we are starting listing at.
+	* Message input fieldset
 	*/
-	function namespaceMessageForm( $namespace = NS_MAIN, $message = '' ) {
+	function namespaceMessageForm( Title $title = null ) {
 		global $wgContLang, $wgScript, $wgTranslateMessageNamespaces;
 		$t = $this->getTitle();
 
 		$namespaces = new XmlSelect( 'namespace' );
+		$namespaces->setDefault( $title->getNamespace() );
+
 		foreach ($wgTranslateMessageNamespaces as $ns ) {
 			$namespaces->addOption( $wgContLang->getFormattedNsText( $ns ), $ns );
 		}
@@ -87,12 +84,12 @@ class SpecialTranslations extends SpecialAllpages {
 				Xml::label( wfMsg( 'translate-translations-messagename' ), 'message' ) .
 				"</td>
 				<td class='mw-input'>" .
-					Xml::input( 'message', 30, str_replace('_',' ',$message), array( 'id' => 'message' ) ) .
+					Xml::input( 'message', 30, $title->getText(), array( 'id' => 'message' ) ) .
 				"</td>
 			</tr>
 			<tr>
 				<td class='mw-label'>" .
-					Xml::label( wfMsg( 'namespace' ), 'namespace' ) .
+					Xml::label( wfMsg( 'translate-translations-project' ), 'namespace' ) .
 				"</td>
 				<td class='mw-input'>" .
 					$namespaces->getHTML() . ' ' .
@@ -106,89 +103,93 @@ class SpecialTranslations extends SpecialAllpages {
 		return $out;
 	}
 
-	/**
-	 * @param integer $namespace (Default NS_MAIN)
-	 * @param string $from list all pages from this name (default FALSE)
-	 */
-	function showTranslations( $namespace = NS_MAIN, $message ) {
+	function showTranslations( Title $title ) {
 		global $wgOut, $wgUser, $wgContLang, $wgLang;
 
 		$sk = $wgUser->getSkin();
 
-		$messageList = $this->getNamespaceKeyAndText( $namespace, $message );
-		list( $namespace, $message, $pageName ) = $messageList;
-		$title = Title::newFromText( $message, $namespace );
+		$namespace = $title->getNamespace();
+		$message = $title->getDBKey();
 
 		$inMessageGroup = TranslateUtils::messageKeyToGroup( $title->getNamespace(), $title->getBaseText() );
 
-		if( !$this->including() )
-			$wgOut->addHTML( $this->namespaceMessageForm( $namespace, $message ) );
-
 		if( !$inMessageGroup ) {
-			if( $namespace ) {
-				$out = wfMsg( 'translate-translations-no-message', $title->getPrefixedText() );
-			} else {
-				$out = wfMsg( 'translate-translations-no-message', $message );
-			}
-		} else {
-			$dbr = wfGetDB( DB_SLAVE );
-
-			$res = $dbr->select( 'page',
-				array( 'page_namespace', 'page_title' ),
-				array(
-					'page_namespace' => $namespace,
-					'page_title LIKE \'' . $dbr->escapeLike( $message ) .'\/%\'',
-				),
-				__METHOD__,
-				array(
-					'ORDER BY'  => 'page_title',
-					'USE INDEX' => 'name_title',
-				)
-			);
-
-			if( $res->numRows() ) {
-				$titles = array();
-				foreach ( $res as $s ) { $titles[] = $s->page_title; }
-				$pageInfo = TranslateUtils::getContents( $titles, $namespace );
-
-				// Adapted version of TranslateUtils:makeListing() by Nikerabbit
-				$out = TranslateUtils::tableHeader();
-
-				foreach ( $res as $s ) {
-					$key = $s->page_title;
-					$t = Title::makeTitle( $s->page_namespace, $key );
-
-					$niceTitle = htmlspecialchars( $wgLang->truncate( $key, - 30, '…' ) );
-
-					if ( 1 || $wgUser->isAllowed( 'translate' ) ) {
-						$tools['edit'] = $sk->makeKnownLinkObj( $t, $niceTitle, "action=edit&loadgroup=$inMessageGroup" );
-					} else {
-						$tools['edit'] = '';
-					}
-
-					$anchor = 'msg_' . $key;
-					$anchor = Xml::element( 'a', array( 'name' => $anchor, 'href' => "#$anchor" ), "↓" );
-
-					$extra = '';
-
-					$leftColumn = $anchor . $tools['edit'] . $extra;
-					$out .= Xml::tags( 'tr', array( 'class' => 'def' ),
-						Xml::tags( 'td', null, $leftColumn ) .
-						Xml::tags( 'td', null, TranslateUtils::convertWhiteSpaceToHTML( $pageInfo[$key][0] ) )
-					);
-				}
-				TranslateUtils::injectCSS();
-
-				$out .= Xml::closeElement( 'table' );
-			} else {
-				if( $namespace ) {
-					$out = wfMsg( 'translate-translations-none', $title->getPrefixedText() );
-				} else {
-					$out = wfMsg( 'translate-translations-none', $message );
-				}
-			}
-
+			$wgOut->addWikiMsg( 'translate-translations-no-message', $title->getPrefixedText() );
+			return;
 		}
+
+		$dbr = wfGetDB( DB_SLAVE );
+
+		$res = $dbr->select( 'page',
+			array( 'page_namespace', 'page_title' ),
+			array(
+				'page_namespace' => $namespace,
+				'page_title LIKE \'' . $dbr->escapeLike( $message ) .'\/%\'',
+			),
+			__METHOD__,
+			array(
+				'ORDER BY'  => 'page_title',
+				'USE INDEX' => 'name_title',
+			)
+		);
+
+		if( !$res->numRows() ) {
+			$wgOut->addWikiMsg( 'translate-translations-no-message', $title->getPrefixedText() );
+			return;
+		}
+
+		// Normal output
+		$titles = array();
+		foreach ( $res as $s ) { $titles[] = $s->page_title; }
+		$pageInfo = TranslateUtils::getContents( $titles, $namespace );
+
+
+		$tableheader = Xml::openElement( 'table', array(
+			'class'   => 'mw-sp-translate-table',
+			'border'  => '1',
+			'cellspacing' => '0' )
+		);
+
+		$tableheader .= Xml::openElement( 'tr' );
+		$tableheader .= Xml::element( 'th', null, wfMsg( 'allmessagesname' ) );
+		$tableheader .= Xml::element( 'th', null, wfMsg( 'allmessagescurrent' ) );
+		$tableheader .= Xml::closeElement( 'tr' );
+
+
+		// Adapted version of TranslateUtils:makeListing() by Nikerabbit
+		$out = $tableheader;
+
+		foreach ( $res as $s ) {
+			$key = $s->page_title;
+			$t = Title::makeTitle( $s->page_namespace, $key );
+
+			$niceTitle = htmlspecialchars( $this->getTheCode( $s->page_title ) );
+
+			if ( !$wgUser->isAllowed( 'translate' ) ) {
+				$tools['edit'] = $sk->makeKnownLinkObj( $t, $niceTitle, "action=edit&loadgroup=$inMessageGroup" );
+			} else {
+				$tools['edit'] = $sk->makeKnownLinkObj( $t, $niceTitle );
+			}
+
+			$anchor = 'msg_' . $key;
+			$anchor = Xml::element( 'a', array( 'name' => $anchor, 'href' => "#$anchor" ), "↓" );
+
+			$extra = '';
+
+			$leftColumn = $anchor . $tools['edit'] . $extra;
+			$out .= Xml::tags( 'tr', array( 'class' => 'def' ),
+				Xml::tags( 'td', null, $leftColumn ) .
+				Xml::tags( 'td', null, TranslateUtils::convertWhiteSpaceToHTML( $pageInfo[$key][0] ) )
+			);
+		}
+		TranslateUtils::injectCSS();
+
+		$out .= Xml::closeElement( 'table' );
 		$wgOut->addHTML( $out );
+	}
+
+	public function getTheCode( $name ) {
+		$from = strrpos( $name, '/' );
+		return substr( $name, $from+1 );
 	}
 }

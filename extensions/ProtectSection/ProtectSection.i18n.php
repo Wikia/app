@@ -53,6 +53,16 @@ $messages['avk'] = array(
 	'protectsection_forbidden' => 'Poun',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'protectsection_desc' => 'Дазваляе аўтарызаваным удзельнікам абараняць часткі старонак з дапамогай тэгу <tt>&lt;protect&gt;</tt>',
+	'protectsection_add_remove' => 'Вы спрабуеце дадаць ці выдаліць абароненую сэкцыю',
+	'protectsection_modify' => 'Вы спрабуеце зьмяніць абаронены тэкст',
+	'protectsection_forbidden' => 'Забаронены',
+);
+
 /** Bulgarian (Български)
  * @author Spiritia
  */
@@ -61,6 +71,16 @@ $messages['bg'] = array(
 	'protectsection_add_remove' => 'Опитахте се да добавите или премахнете защитен раздел.',
 	'protectsection_modify' => 'Опитахте се да промените защитен текст.',
 	'protectsection_forbidden' => 'Забранен достъп',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'protectsection_desc' => 'Omogućuje potvrđenim korisnicima da zaštite dijelove stranice koristeći oznaku <tt>&lt;protect&gt;</tt>',
+	'protectsection_add_remove' => 'Pokušavate da dodate ili uklonite zaštićenu sekciju',
+	'protectsection_modify' => 'Pokušavate da mijenjate zaštićeni tekst',
+	'protectsection_forbidden' => 'Zabranjeno',
 );
 
 /** Catalan (Català)
@@ -103,9 +123,13 @@ $messages['eo'] = array(
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
  * @author Imre
  */
 $messages['es'] = array(
+	'protectsection_desc' => 'Permite a usuarios autorizados proteger partes de una página usando la etiqueta <tt>&lt;proteger&gt;</tt>',
+	'protectsection_add_remove' => 'usted trató de agregar o remover una sección de protección',
+	'protectsection_modify' => 'usted trató de modificar un texto protegido',
 	'protectsection_forbidden' => 'Prohibido',
 );
 
@@ -150,6 +174,16 @@ $messages['gl'] = array(
 	'protectsection_add_remove' => 'Tentou engadir ou eliminar unha sección protexida',
 	'protectsection_modify' => 'Tentou modificar un texto protexido',
 	'protectsection_forbidden' => 'Prohibido',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'protectsection_desc' => 'Erlaubt berächtigte Benutzer, Teil vun ere Syte mit em <tt>&lt;protect&gt;</tt>-Tag z schitze.',
+	'protectsection_add_remove' => 'Du hesch versuecht, e gschitzte Abschnitt zuezfiegen oder usezneh.',
+	'protectsection_modify' => 'Du hesch versuecht, e gschitzte Täxt z bearbeite.',
+	'protectsection_forbidden' => 'Verbotte',
 );
 
 /** Hebrew (עברית)
@@ -345,6 +379,16 @@ $messages['pt'] = array(
 	'protectsection_forbidden' => 'Proibido',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'protectsection_desc' => 'Permite que utilizadores autorizados protejam partes de uma página usando a marca <tt>&lt;protect&gt;</tt>',
+	'protectsection_add_remove' => 'Você tentou adicionar ou remover uma seção protegida',
+	'protectsection_modify' => 'Você tentou modificar texto protegido',
+	'protectsection_forbidden' => 'Proibido',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -368,6 +412,7 @@ $messages['sk'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
+	'protectsection_desc' => 'Ferlööwet begjuchtigede Benutsere, Deele fon ne Siede anhound fon dät <tt>&lt;protect&gt;</tt>-Tag tou schutsjen.',
 	'protectsection_add_remove' => 'Du hääst fersoacht, n schutseden Ousnit bietoutouföigjen of wächtouhoaljen.',
 	'protectsection_modify' => 'Du hääst fersoacht, n schutseden Text tou beoarbaidjen.',
 	'protectsection_forbidden' => 'Ferbeeden',
@@ -398,6 +443,16 @@ $messages['tg-cyrl'] = array(
 	'protectsection_forbidden' => 'Мамнӯъ',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'protectsection_desc' => 'Nagpapahintulot sa mga pinapayagang mga tagagamit na isanggalang ang mga bahagi ng isang pahina sa pamamagitan ng tatak na <tt>&lt;protect&gt;</tt>',
+	'protectsection_add_remove' => 'Sinubukan mong magdagdag o magtanggal ng isang nakasanggalang na seksyon',
+	'protectsection_modify' => 'Sinubukan mong baguhin ang nakasanggalang na teksto',
+	'protectsection_forbidden' => 'Ipinagbabawal',
+);
+
 /** Turkish (Türkçe)
  * @author Karduelis
  */
@@ -419,6 +474,7 @@ $messages['vec'] = array(
  * @author Vinhtantran
  */
 $messages['vi'] = array(
+	'protectsection_desc' => 'Cho phép những thành viên ủy quyền được khóa một phần trang bằng cách dùng thẻ <tt>&lt;protect&gt;</tt>',
 	'protectsection_add_remove' => 'Bạn đng cố thêm hoặc xóa một đề mục bị khóa',
 	'protectsection_modify' => 'Bạn đang cố sửa đổi đoạn văn bản bị khóa',
 	'protectsection_forbidden' => 'Bị cấm',

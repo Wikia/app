@@ -22,43 +22,70 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Purodha
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'layouts-desc' => 'Short description of this extension, shown on [[Special:Version]].',
+	'layouts_continue' => '{{Identical|Continue}}',
+	'layouts_unknown' => '{{Identical|Unknown}}',
+);
+
+/** Veps (Vepsan kel')
+ * @author Triple-ADHD-AS
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'layouts_title' => "Säta lehtpol'",
+	'layouts_unknown' => 'Tundmatoi',
 );
 
 /** Arabic (العربية)
+ * @author Meno25
  * @author Ouda
  */
 $messages['ar'] = array(
+	'layouts-desc' => 'يضيف للصفحات المنشأة حديثا "هيئات" يمكن تعديلها لتشجيع هيكل متشابه للصفحات',
 	'layouts_title' => 'إنشاء صفحة',
 	'layouts_chooselayout' => 'أختار تنسيق ل$1',
 	'layouts_nolayout' => 'لا يوجد تصميم',
 	'layouts_continue' => 'أستمرار',
 	'layouts_choosecategory' => 'أختار تصنيف ل$1',
 	'layouts_unknown' => 'غير معروف',
+	'layouts_tagline' => "هذه الصفحة تم توليدها بواسطة هيئة '''$1'''.",
 );
 
 /** Egyptian Spoken Arabic (مصرى)
+ * @author Meno25
  * @author Ouda
  * @author Ramsis II
  */
 $messages['arz'] = array(
-	'layouts_title' => 'ابتدي صفحه',
+	'layouts-desc' => 'يضيف للصفحات المنشأة حديثا "هيئات" يمكن تعديلها لتشجيع هيكل متشابه للصفحات',
+	'layouts_title' => 'ابتدى صفحه',
 	'layouts_chooselayout' => 'أختار تنسيق ل$1',
 	'layouts_nolayout' => 'لا يوجد تصميم',
 	'layouts_continue' => 'استمر',
 	'layouts_choosecategory' => 'اختار تصنيف لـ $1:',
 	'layouts_unknown' => 'مش معروف',
+	'layouts_tagline' => "هذه الصفحة تم توليدها بواسطة هيئة '''$1'''.",
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
+	'layouts-desc' => 'Запаўняе новыя старонкі «макетамі» для заахвочваньня ўжываньня агульнай структуры старонак',
 	'layouts_title' => 'Стварыць старонку',
+	'layouts_chooselayout' => 'Выбар макету для $1:',
+	'layouts_nolayout' => 'Няма макету',
+	'layouts_continue' => 'Працягваць',
+	'layouts_choosecategory' => 'Выбар катэгорыі для $1:',
+	'layouts_unknown' => 'Невядомы',
+	'layouts_tagline' => "Гэта старонка была створаная з дапамогай макету '''$1'''.",
 );
 
 /** Bulgarian (Български)
@@ -75,14 +102,32 @@ $messages['bg'] = array(
 	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
 );
 
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'layouts-desc' => 'Poblañ ar pajennoù nevez-krouet gant ur "pajennaozañ" kemmus a-benn broudañ kaout ur framm boutin d\'an holl bajennoù',
+	'layouts_title' => 'Krouiñ ur bajenn',
+	'layouts_chooselayout' => 'Dibab ar pajennaozañ evit $1 :',
+	'layouts_nolayout' => 'Tamm pajennaozañ ebet',
+	'layouts_continue' => "Kenderc'hel",
+	'layouts_choosecategory' => 'Krouiñ ur rummad evit $1 :',
+	'layouts_unknown' => 'Dianav',
+	'layouts_tagline' => "Savet eo bet ar bajenn-mañ gant ar pajennaozañ '''$1'''",
+);
+
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'layouts-desc' => 'Puni novonapravljene stranice za "izgledima" koji se mogu uređivati da bi ohrabrili pravljenje stranica standardizovane strukture',
 	'layouts_title' => 'Napravi stranicu',
+	'layouts_chooselayout' => 'Izaberi izgled za $1:',
+	'layouts_nolayout' => 'Bez izgleda',
 	'layouts_continue' => 'Nastavi',
 	'layouts_choosecategory' => 'Izaberi kategoriju za $1:',
 	'layouts_unknown' => 'Nepoznato',
+	'layouts_tagline' => "Ova stranica je generisana putem '''$1''' izgleda.",
 );
 
 /** Czech (Česky)
@@ -128,6 +173,13 @@ $messages['dsb'] = array(
 	'layouts_choosecategory' => 'Kategoriju za $1 wubraś:',
 	'layouts_unknown' => 'Njeznaty',
 	'layouts_tagline' => "Toś ten bok jo se napórał z wugótowanim '''$1'''.",
+);
+
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'layouts_unknown' => 'Άγνωστο',
 );
 
 /** Esperanto (Esperanto)
@@ -185,9 +237,10 @@ $messages['fi'] = array(
  * @author Grondin
  * @author IAlex
  * @author Sherbrooke
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'layouts-desc' => "Peupler les pages nouvellement créées avec des « mises en page » modifiables afin d'encourager une structure commune à toutes les pages",
+	'layouts-desc' => 'Remplit les pages nouvellement créées à l’aide de « mises en page » modifiables afin d’encourager une structure commune à toutes les pages',
 	'layouts_title' => 'Créer une page',
 	'layouts_chooselayout' => 'Choisir une mise en page pour $1 :',
 	'layouts_nolayout' => 'Aucune mise en page',
@@ -218,6 +271,20 @@ $messages['gl'] = array(
 	'layouts_unknown' => 'Descoñecido',
 	'layouts_tagline' => "Esta páxina foi xerada coa distribución '''$1'''.",
 	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'layouts-desc' => 'Fiegt nej aagleite Syte bearbeitbari „Gstaltige“ zue go ne einheitligi Struktur vu Syte z ferdere',
+	'layouts_title' => 'Neji Syte aalege',
+	'layouts_chooselayout' => 'Suech e Format us fir $1:',
+	'layouts_nolayout' => 'Kei Format',
+	'layouts_continue' => 'Wyter',
+	'layouts_choosecategory' => 'Suech e Kategorie uus fir $1:',
+	'layouts_unknown' => 'Nit bekannt',
+	'layouts_tagline' => "Die Syte isch mit em '''$1'''-Layout aagleit wore.",
 );
 
 /** Hebrew (עברית)
@@ -273,6 +340,21 @@ $messages['ia'] = array(
 	'layouts-layoutcategorypage' => 'MediaWiki:Modificaretiquettasdepaginas',
 );
 
+/** Japanese (日本語)
+ * @author Fryed-peach
+ * @author Hosiryuhosi
+ */
+$messages['ja'] = array(
+	'layouts-desc' => 'ページ構成の共通化をすすめるため、編集可能な「レイアウト」を利用してページを新規作成できるようにする',
+	'layouts_title' => 'ページを作成',
+	'layouts_chooselayout' => '$1 のレイアウトを選択:',
+	'layouts_nolayout' => 'レイアウトなし',
+	'layouts_continue' => '続行',
+	'layouts_choosecategory' => '$1 のカテゴリを選択:',
+	'layouts_unknown' => '不明',
+	'layouts_tagline' => "このページは '''$1''' レイアウトを利用して生成されました。",
+);
+
 /** Javanese (Basa Jawa)
  * @author Pras
  */
@@ -319,12 +401,21 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
+	'layouts-desc' => 'Verännerbar "Layouten" op nei-ugeluechte Säiten setzen fir eng gemeinsam Struktur fir Säiten z\'ënnerstetzen',
 	'layouts_title' => 'Eng Säit uleeën',
 	'layouts_chooselayout' => 'E Layout fir $1 eraussichen:',
 	'layouts_nolayout' => 'Kee Layout',
 	'layouts_continue' => 'Weider',
 	'layouts_choosecategory' => 'Wielt eng Kategorie fir $1:',
 	'layouts_unknown' => 'Onbekannt',
+	'layouts_tagline' => "Dës Säit gouf mam '''$1''' Layout generéiert.",
+);
+
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'layouts_unknown' => 'Апак содань',
 );
 
 /** Dutch (Nederlands)
@@ -397,14 +488,24 @@ $messages['ps'] = array(
 
 /** Portuguese (Português)
  * @author Malafaya
+ * @author Waldir
  */
 $messages['pt'] = array(
+	'layouts-desc' => 'Preencher as páginas recém-criadas com modelos editáveis para fomentar uma estrutura comum para as páginas',
 	'layouts_title' => 'Criar uma página',
+	'layouts_chooselayout' => 'Escolha um modelo para $1:',
+	'layouts_nolayout' => 'Nenhum modelo',
+	'layouts_continue' => 'Continuar',
 	'layouts_choosecategory' => 'Escolha uma categoria para $1:',
+	'layouts_unknown' => 'Desconhecido',
+	'layouts_tagline' => "Esta página foi gerada pelo modelo '''$1'''.",
 );
 
-/** Brazilian Portuguese (Português do Brasil) */
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
 $messages['pt-br'] = array(
+	'layouts-desc' => 'Preencher as páginas recém-criadas com modelos editáveis para fomentar uma estrutura comum para as páginas',
 	'layouts_title' => 'Criar uma página',
 	'layouts_chooselayout' => 'Escolher um Layout para o $1:',
 	'layouts_nolayout' => 'Sem layout',
@@ -421,6 +522,14 @@ $messages['ro'] = array(
 	'layouts_title' => 'Creează o pagină',
 	'layouts_continue' => 'Continuă',
 	'layouts_choosecategory' => 'Alegeţi o categorie pentru $1:',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'layouts_title' => "Ccreje 'na vosce",
+	'layouts_unknown' => 'Scanusciute',
 );
 
 /** Russian (Русский)
@@ -451,6 +560,20 @@ $messages['sk'] = array(
 	'layouts_unknown' => 'Neznáme',
 	'layouts_tagline' => "Túto stránku vytvorilo rozloženie '''$1'''.",
 	'layouts-layoutcategorypage' => 'MediaWiki:Editpagetags',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'layouts-desc' => 'Bestukket frisk moakede Sieden mäd beoarbaidboare „Gestaltengen“, uum ne eenhaidlike Struktur fon Sieden tou föärderjen',
+	'layouts_title' => 'Näie Siede moakje',
+	'layouts_chooselayout' => 'Säik n Formoat foar $1 uut:',
+	'layouts_nolayout' => 'Neen Formoat',
+	'layouts_continue' => 'Fääre',
+	'layouts_choosecategory' => 'Säik ne Kategorie foar $1 uut:',
+	'layouts_unknown' => 'Uunbekoand',
+	'layouts_tagline' => "Disse Siede wuud mäd dät '''$1''' moaked.",
 );
 
 /** Swedish (Svenska)
@@ -490,13 +613,33 @@ $messages['tl'] = array(
 	'layouts-layoutcategorypage' => 'MediaWiki:Baguhinpahinamgatatak',
 );
 
+/** Turkish (Türkçe)
+ * @author Joseph
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'layouts_title' => 'Bir sayfa oluştur',
+	'layouts_chooselayout' => '$1 için bir düzen seçin:',
+	'layouts_nolayout' => 'Düzen yok',
+	'layouts_continue' => 'Devam',
+	'layouts_choosecategory' => '$1 için bir kategori seçin:',
+	'layouts_unknown' => 'Bilinmiyor',
+	'layouts_tagline' => "Bu sayfa '''$1''' düzeni ile oluşturulmuştur.",
+);
+
 /** Vietnamese (Tiếng Việt)
  * @author Minh Nguyen
+ * @author Vinhtantran
  */
 $messages['vi'] = array(
+	'layouts-desc' => 'Tập hợp các trang mới được khởi tạo bằng "kiểu trình bày" cho phép thay đổi để khuyến khích một cấu trúc chung cho các trang',
 	'layouts_title' => 'Tạo trang',
+	'layouts_chooselayout' => 'Chọn một kiểu trình bày cho $1:',
+	'layouts_nolayout' => 'Không có kiểu trình bày',
 	'layouts_continue' => 'Tiếp tục',
+	'layouts_choosecategory' => 'Chọn một thể loại cho $1:',
 	'layouts_unknown' => 'Không biết',
+	'layouts_tagline' => "Trang này được tạo ra theo cách trình bày '''$1'''.",
 );
 
 /** Volapük (Volapük)
@@ -504,6 +647,7 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'layouts_title' => 'Jafön padi',
+	'layouts_continue' => 'Föfiö!',
 	'layouts_choosecategory' => 'Välön kladi pro $1:',
 	'layouts_unknown' => 'Nesevädik',
 );

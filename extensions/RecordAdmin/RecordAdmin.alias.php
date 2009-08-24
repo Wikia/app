@@ -22,7 +22,7 @@ $aliases['arz'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'RecordAdmin' => array( 'GérerEnregistrement', 'GererEnregistrement', 'Gérer enregistrement' ),
+	'RecordAdmin' => array( 'Gérer enregistrement', 'GérerEnregistrement', 'GererEnregistrement' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -30,13 +30,38 @@ $aliases['gsw'] = array(
 	'RecordAdmin' => array( 'Ammann yytrage' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'RecordAdmin' => array( 'Gestion de datos' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'RecordAdmin' => array( '記録管理' ),
+);
+
 /** Dutch (Nederlands) */
 $aliases['nl'] = array(
 	'RecordAdmin' => array( 'Gegevensbeheer' ),
 );
 
+/** Occitan (Occitan) */
+$aliases['oc'] = array(
+	'RecordAdmin' => array( 'GerirEnregistrament', 'Gerir Enregistrament' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'RecordAdmin' => array( 'प्रचालकअङ्कन' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'RecordAdmin' => array( 'RekodizaMkabidhi' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'RecordAdmin' => array( 'Tagapangasiwa ng talaan' ),
 );
 

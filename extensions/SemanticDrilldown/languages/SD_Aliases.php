@@ -50,6 +50,11 @@ $aliases['de'] = array(
 	'Filters' => array( 'Filter' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Filters' => array( 'Filtry' ),
+);
+
 /** Persian (فارسی) */
 $aliases['fa'] = array(
 	'BrowseData' => array( 'مرور_داده' ),
@@ -63,8 +68,15 @@ $aliases['fi'] = array(
 	'Filters' => array( 'Suotimet' ),
 );
 
+/** French (Français) */
+$aliases['fr'] = array(
+	'CreateFilter' => array( 'Créer filtre', 'CréerFiltre' ),
+	'Filters' => array( 'Filtres' ),
+);
+
 /** Galician (Galego) */
 $aliases['gl'] = array(
+	'CreateFilter' => array( 'Crear un filtro' ),
 	'Filters' => array( 'Filtros' ),
 );
 
@@ -90,6 +102,20 @@ $aliases['hu'] = array(
 	'BrowseData' => array( 'Adatok böngészése' ),
 	'CreateFilter' => array( 'Szűrőkészítés' ),
 	'Filters' => array( 'Szűrők' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'BrowseData' => array( 'Percurrer datos' ),
+	'CreateFilter' => array( 'Crear filtro' ),
+	'Filters' => array( 'Filtros' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'BrowseData' => array( 'データ閲覧' ),
+	'CreateFilter' => array( 'フィルター作成' ),
+	'Filters' => array( 'フィルター一覧' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -140,9 +166,21 @@ $aliases['oc'] = array(
 	'Filters' => array( 'Filtres' ),
 );
 
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'CreateFilter' => array( 'چاڼګر جوړول' ),
+	'Filters' => array( 'چاڼګرونه' ),
+);
+
 /** Romanian (Română) */
 $aliases['ro'] = array(
 	'Filters' => array( 'Filtre' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'CreateFilter' => array( 'KrijoFiltrues' ),
+	'Filters' => array( 'Filtruesit' ),
 );
 
 /** Swedish (Svenska) */
@@ -155,5 +193,18 @@ $aliases['sw'] = array(
 	'BrowseData' => array( 'FunguaData' ),
 	'CreateFilter' => array( 'UndaChujio' ),
 	'Filters' => array( 'Machujio' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'BrowseData' => array( 'Tumingin-tingin sa dato' ),
+	'CreateFilter' => array( 'Likhain ang pansala' ),
+	'Filters' => array( 'Mga pansala' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'CreateFilter' => array( 'CreaFiltro' ),
+	'Filters' => array( 'Filtri' ),
 );
 

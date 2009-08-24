@@ -6,8 +6,8 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Central Auth',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CentralAuth',
-	'svn-date' => '$LastChangedDate: 2008-12-31 22:42:11 +0000 (Wed, 31 Dec 2008) $',
-	'svn-revision' => '$LastChangedRevision: 45262 $',
+	'svn-date' => '$LastChangedDate: 2009-03-04 05:12:35 +0000 (Wed, 04 Mar 2009) $',
+	'svn-revision' => '$LastChangedRevision: 48012 $',
 	'author' => 'Brion Vibber',
 	'description'    => 'Merge accounts across a wiki farm',
 	'descriptionmsg' => 'centralauth-desc',
@@ -17,8 +17,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'MergeAccount',
 	'author'         => 'Brion Vibber',
 	'url'            => 'http://meta.wikimedia.org/wiki/Help:Unified_login',
-	'svn-date' => '$LastChangedDate: 2008-12-31 22:42:11 +0000 (Wed, 31 Dec 2008) $',
-	'svn-revision' => '$LastChangedRevision: 45262 $',
+	'svn-date' => '$LastChangedDate: 2009-03-04 05:12:35 +0000 (Wed, 04 Mar 2009) $',
+	'svn-revision' => '$LastChangedRevision: 48012 $',
 	'description'    => '[[Special:MergeAccount|Merge multiple accounts]] for Single User Login',
 	'descriptionmsg' => 'centralauth-mergeaccount-desc',
 );
@@ -171,6 +171,7 @@ $wgHooks['UserGetRights'][] = 'CentralAuthHooks::onUserGetRights';
 $wgHooks['UserSetCookies'][] = 'CentralAuthHooks::onUserSetCookies';
 $wgHooks['UserLoadDefaults'][] = 'CentralAuthHooks::onUserLoadDefaults';
 $wgHooks['getUserPermissionsErrorsExpensive'][] = 'CentralAuthHooks::onGetUserPermissionsErrorsExpensive';
+$wgHooks['MakeGlobalVariablesScript'][] = 'CentralAuthHooks::onMakeGlobalVariablesScript';
 
 // For interaction with the Special:Renameuser extension
 $wgHooks['RenameUserWarning'][] = 'CentralAuthHooks::onRenameUserWarning';
@@ -207,6 +208,7 @@ $wgLogActions['globalauth/unlock'] = 'centralauth-log-entry-unlock';
 $wgLogActions['globalauth/hide']   = 'centralauth-log-entry-hide';
 $wgLogActions['globalauth/unhide'] = 'centralauth-log-entry-unhide';
 $wgLogActions['globalauth/lockandhid'] = 'centralauth-log-entry-lockandhide';
+$wgLogActions['globalauth/setstatus'] = 'centralauth-log-entry-chgstatus';
 
 $wgLogTypes[]                          = 'gblrights';
 $wgLogNames['gblrights']               = 'centralauth-rightslog-name';

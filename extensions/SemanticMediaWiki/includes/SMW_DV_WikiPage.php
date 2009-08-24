@@ -6,9 +6,13 @@
 
 /**
  * This datavalue implements special processing suitable for defining
- * wikipages as values of properties. This value container currently
- * behaves somewhat special in that its xsdvalue is not contained all
- * relevant information (it just gives the DB-Key, not the namespace).
+ * wikipages as values of properties. In contrast to most other types
+ * of values, wiki pages are determined by multiple components, as
+ * retruned by their getDBkeys() method: DBkey, namespace, interwiki
+ * prefix and sortkey. The last of those has a somewhat nonstandard
+ * behaviour, since it is not attached to every wiki page value, but
+ * only to those that represent page subjects, which define the sortkey
+ * globally for all places where this page value occurs.
  *
  * @author Nikolas Iwan
  * @author Markus Krötzsch
@@ -16,7 +20,6 @@
  */
 class SMWWikiPageValue extends SMWDataValue {
 
-	protected $m_value = ''; // the raw string passed to that datavalue, rough version of prefixedtext
 	protected $m_textform = ''; // the isolated title as text
 	protected $m_dbkeyform = ''; // the isolated title in DB form
 	protected $m_interwiki = ''; // interwiki prefix or '', actually stored in SMWSQLStore2
@@ -39,7 +42,7 @@ class SMWWikiPageValue extends SMWDataValue {
 	 */
 	static public function makePage($title, $namespace, $sortkey = '', $interwiki = '') {
 		$page = new SMWWikiPageValue('_wpg');
-		$page->setValues($title,$namespace,false,$interwiki,$sortkey);
+		$page->setDBkeys(array($title,$namespace,$interwiki,$sortkey));
 		return $page;
 	}
 
@@ -71,12 +74,20 @@ class SMWWikiPageValue extends SMWDataValue {
 	}
 
 	protected function parseUserValue($value) {
+		global $wgContLang;
 		$value = ltrim(rtrim($value,' ]'),' ['); // support inputs like " [[Test]] "
 		if ($value != '') {
-			$this->m_value = $value;
-			$this->m_title = NULL;
-			$this->m_dbkeyform = NULL;
-			if ($this->getTitle() !== NULL) {
+			$this->m_title = Title::newFromText($value, $this->m_fixNamespace);
+			///TODO: Escape the text so users can see any punctuation problems (bug 11666).
+			if ($this->m_title === NULL) {
+				wfLoadExtensionMessages('SemanticMediaWiki');
+				$this->addError(wfMsgForContent('smw_notitle', $value));
+			} elseif ( ($this->m_fixNamespace != NS_MAIN) &&
+				 ($this->m_fixNamespace != $this->m_title->getNamespace()) ) {
+				wfLoadExtensionMessages('SemanticMediaWiki');
+				$this->addError(wfMsgForContent('smw_wrong_namespace', $wgContLang->getNsText($this->m_fixNamespace)));
+			}
+			if ($this->m_title !== NULL) {
 				$this->m_textform = $this->m_title->getText();
 				$this->m_dbkeyform = $this->m_title->getDBkey();
 				$this->m_interwiki = $this->m_title->getInterwiki();
@@ -87,7 +98,7 @@ class SMWWikiPageValue extends SMWDataValue {
 				if ($this->m_caption === false) {
 					$this->m_caption = $value;
 				}
-			} // else: no action, errors are reported by getTitle()
+			}
 		} else {
 			wfLoadExtensionMessages('SemanticMediaWiki');
 			$this->addError(wfMsgForContent('smw_notitle', $value));
@@ -97,66 +108,41 @@ class SMWWikiPageValue extends SMWDataValue {
 		}
 	}
 
-	protected function parseXSDValue($value, $unit) { // (ignore "unit")
-		// This method in its current for is not really useful for init, since the XSD value is just
-		// the (dbkey) title string without the namespace.
-		/// FIXME: change this to properly use a prefixed title string, in case someone wants to use this
-		$this->m_stubdata = array($value,(($this->m_fixNamespace!=NS_MAIN)?$this->m_fixNamespace:$this->m_namespace),false,'','');
-	}
-
-	protected function unstub() {
-		if (is_array($this->m_stubdata)) {
-			global $wgContLang;
-			$this->m_dbkeyform = $this->m_stubdata[0];
-			$this->m_namespace = $this->m_stubdata[1];
-			$this->m_interwiki = $this->m_stubdata[3];
-			$this->m_sortkey   = $this->m_stubdata[4];
-			$this->m_textform = str_replace('_', ' ', $this->m_dbkeyform);
-			if ($this->m_interwiki == '') {
-				$this->m_title = Title::makeTitle($this->m_namespace, $this->m_dbkeyform);
-				$this->m_prefixedtext = $this->m_title->getPrefixedText();
-			} else { // interwiki title objects must be built from full input texts
-				$nstext = $wgContLang->getNSText($this->m_namespace);
-				$this->m_prefixedtext = $this->m_interwiki . ($this->m_interwiki != ''?':':'') . 
-				                        $nstext . ($nstext != ''?':':'') . $this->m_textform;
-				$this->m_title = Title::newFromText($this->m_prefixedtext);
-			}
-			$this->m_caption = $this->m_prefixedtext;
-			$this->m_value = $this->m_prefixedtext;
-			if ($this->m_stubdata[2] === NULL) {
-				$this->m_id = 0;
-				$linkCache =& LinkCache::singleton();
-				$linkCache->addBadLinkObj($this->m_title); // prefill link cache, save lookups
-			} elseif ($this->m_stubdata[2] === false) {
-				$this->m_id = false;
-			} else {
-				$this->m_id = $this->m_stubdata[2];
-				$linkCache =& LinkCache::singleton();
-				$linkCache->addGoodLinkObj($this->m_id, $this->m_title); // prefill link cache, save lookups
-			}
-			$this->m_stubdata = false;
+	protected function parseDBkeys($args) {
+		$this->m_dbkeyform = $args[0];
+		$this->m_namespace = array_key_exists(1,$args)?$args[1]:$this->m_fixNamespace;
+		$this->m_interwiki = array_key_exists(2,$args)?$args[2]:'';
+		$this->m_sortkey   = array_key_exists(3,$args)?$args[3]:'';
+		$this->m_textform = str_replace('_', ' ', $this->m_dbkeyform);
+		$this->m_id = false;
+		$this->m_title = NULL;
+		$this->m_prefixedtext = false;
+		$this->m_caption = false;
+		if ( ($this->m_fixNamespace != NS_MAIN) && ( $this->m_fixNamespace != $this->m_namespace) ) {
+			wfLoadExtensionMessages('SemanticMediaWiki');
+			$this->addError(wfMsgForContent('smw_notitle', $this->getPrefixedText()));
 		}
 	}
 
 	public function getShortWikiText($linked = NULL) {
 		$this->unstub();
-		if ( ($linked === NULL) || ($linked === false) || (!$this->isValid()) || ($this->m_caption == '') ) {
-			return $this->m_caption;
+		if ( ($linked === NULL) || ($linked === false) || (!$this->isValid()) || ($this->m_caption === '') ) {
+			return $this->getCaption();
 		} else {
-			return '[[:' . str_replace("'", '&#x0027;', $this->m_prefixedtext) .
-			        ($this->m_fragment?"#$this->m_fragment":'') . '|' . $this->m_caption . ']]';
+			return '[[:' . str_replace("'", '&#x0027;', $this->getPrefixedText()) .
+			        ($this->m_fragment?"#$this->m_fragment":'') . '|' . $this->getCaption() . ']]';
 		}
 	}
 
 	public function getShortHTMLText($linker = NULL) {
 		$this->unstub();
-		if ( ($linker === NULL) || (!$this->isValid()) || ($this->m_caption == '') ) {
-			return htmlspecialchars($this->m_caption);
+		if ( ($linker === NULL) || (!$this->isValid()) || ($this->m_caption === '') ) {
+			return htmlspecialchars($this->getCaption());
 		} else {
 			if ($this->getNamespace() == NS_MEDIA) { /// NOTE: this extra case is indeed needed
-				return $linker->makeMediaLinkObj($this->getTitle(), $this->m_caption);
+				return $linker->makeMediaLinkObj($this->getTitle(), $this->getCaption());
 			} else {
-				return $linker->makeLinkObj($this->getTitle(), $this->m_caption);
+				return $linker->makeLinkObj($this->getTitle(), $this->getCaption());
 			}
 		}
 	}
@@ -172,11 +158,11 @@ class SMWWikiPageValue extends SMWDataValue {
 			return $this->getErrorText();
 		}
 		if ( ($linked === NULL) || ($linked === false) ) {
-			return $this->m_prefixedtext;
+			return $this->getPrefixedText();
 		} elseif ($this->m_namespace == NS_IMAGE) { // embed images instead of linking to their page
-			 return '[[' . str_replace("'", '&#x0027;', $this->m_prefixedtext) . '|' . $this->m_textform . '|frameless|border|text-top]]';
+			 return '[[' . str_replace("'", '&#x0027;', $this->getPrefixedText()) . '|' . $this->m_textform . '|frameless|border|text-top]]';
 		} else { // this takes care of all other cases, esp. it is right for Media:
-			return '[[:' . str_replace("'", '&#x0027;', $this->m_prefixedtext) . '|' . $this->m_textform . ']]';
+			return '[[:' . str_replace("'", '&#x0027;', $this->getPrefixedText()) . '|' . $this->m_textform . ']]';
 		}
 	}
 
@@ -186,7 +172,7 @@ class SMWWikiPageValue extends SMWDataValue {
 			return $this->getErrorText();
 		}
 		if ($linker === NULL) {
-			return htmlspecialchars($this->m_prefixedtext);
+			return htmlspecialchars($this->getPrefixedText());
 		} else {
 			if ($this->getNamespace() == NS_MEDIA) { // this extra case is really needed
 				return $linker->makeMediaLinkObj($this->getTitle(), $this->m_textform);
@@ -196,9 +182,9 @@ class SMWWikiPageValue extends SMWDataValue {
 		}
 	}
 
-	public function getXSDValue() {
+	public function getDBkeys() {
 		$this->unstub();
-		return $this->m_dbkeyform;
+		return array($this->m_dbkeyform, $this->m_namespace, $this->m_interwiki, $this->getSortkey());
 	}
 
 	public function getWikiValue() {
@@ -207,16 +193,16 @@ class SMWWikiPageValue extends SMWDataValue {
 			return $this->getText();
 		} elseif ($this->m_namespace == NS_CATEGORY) {
 			// escape to enable use in links; todo: not generally required/suitable :-/
-			return ':' . $this->m_prefixedtext;
+			return ':' . $this->getPrefixedText();
 		} else {
-			return $this->m_prefixedtext;
+			return $this->getPrefixedText();
 		}
 	}
 
 	public function getHash() {
 		$this->unstub();
-		if ($this->isValid()) { // assume that XSD value + unit say all
-			return $this->m_prefixedtext;
+		if ($this->isValid()) {
+			return $this->getPrefixedText();
 		} else {
 			return implode("\t", $this->m_errors);
 		}
@@ -224,7 +210,7 @@ class SMWWikiPageValue extends SMWDataValue {
 
 	protected function getServiceLinkParams() {
 		$this->unstub();
-		// Create links to mapping services based on a wiki-editable message. The parameters 
+		// Create links to mapping services based on a wiki-editable message. The parameters
 		// available to the message are:
 		// $1: urlencoded article name (no namespace)
 		return array(rawurlencode(str_replace('_',' ',$this->m_dbkeyform)));
@@ -259,38 +245,20 @@ class SMWWikiPageValue extends SMWDataValue {
 
 	/**
 	 * Return according Title object or NULL if no valid value was set.
-	 * If using a base value, this method also checks whether the given namespace
-	 * is appropriate. Whenever this method sets the title page, it also implements
-	 * error reporting, i.e. the object might become invalid when calling this
-	 * function.
 	 */
 	public function getTitle() {
-		global $wgContLang;
 		$this->unstub();
-		if ($this->m_title === NULL){
-			if ($this->m_dbkeyform != '') {
+		if ($this->m_title === NULL) {
+			if ($this->m_interwiki == '') {
 				$this->m_title = Title::makeTitle($this->m_namespace, $this->m_dbkeyform);
-				if ($this->m_title === NULL) { // should not normally happen, but anyway ...
-					wfLoadExtensionMessages('SemanticMediaWiki');
-					$this->addError(wfMsgForContent('smw_notitle', $wgContLang->getNsText($this->m_namespace) . ':' . $this->m_dbkeyform));
-					$this->m_dbkeyform = '';
-				}
-			} elseif ($this->m_value != ''){
-				$this->m_title = Title::newFromText($this->m_value, $this->m_fixNamespace);
-				///TODO: Escape the text so users can see any punctuation problems (bug 11666).
-				if ($this->m_title === NULL) {
-					wfLoadExtensionMessages('SemanticMediaWiki');
-					$this->addError(wfMsgForContent('smw_notitle', $this->m_value));
-				} elseif ( ($this->m_fixNamespace != NS_MAIN) &&
-				     ($this->m_fixNamespace != $this->m_title->getNamespace()) ) {
-					wfLoadExtensionMessages('SemanticMediaWiki');
-					$this->addError(wfMsgForContent('smw_wrong_namespace', $wgContLang->getNsText($this->m_fixNamespace)));
-				}
-			} else {
-				wfLoadExtensionMessages('SemanticMediaWiki');
-				$this->addError(wfMsgForContent('smw_notitle', ''));
-				return NULL; //not possible to create title from empty string
+			} else { // interwiki title objects must be built from full input texts
+				$this->m_title = Title::newFromText($this->getPrefixedText());
 			}
+		}
+		if ($this->m_title === NULL) { // should not normally happen, but anyway ...
+			wfLoadExtensionMessages('SemanticMediaWiki');
+			$this->addError(wfMsgForContent('smw_notitle', $wgContLang->getNsText($this->m_namespace) . ':' . $this->m_dbkeyform));
+			$this->m_dbkeyform = '';
 		}
 		return $this->m_title;
 	}
@@ -329,15 +297,26 @@ class SMWWikiPageValue extends SMWDataValue {
 	 * to use this method in places where only MediaWiki Title keys are allowed.
 	 */
 	public function getDBkey() {
-		return $this->getXSDValue();
+		$this->unstub();
+		return $this->m_dbkeyform;
 	}
 
-	/**
-	 * Get text label for this value.
-	 */
+	/// Get text label for this value.
 	public function getText() {
 		$this->unstub();
 		return str_replace('_',' ',$this->m_dbkeyform);
+	}
+
+	/// Get the prefixed text for this value, including a localised namespace prefix.
+	public function getPrefixedText() {
+		global $wgContLang;
+		$this->unstub();
+		if ($this->m_prefixedtext === false) {
+			$nstext = $wgContLang->getNSText($this->m_namespace);
+			$this->m_prefixedtext = $this->m_interwiki . ($this->m_interwiki != ''?':':'') .
+									$nstext . ($nstext != ''?':':'') . $this->m_textform;
+		}
+		return $this->m_prefixedtext;
 	}
 
 	/**
@@ -365,27 +344,23 @@ class SMWWikiPageValue extends SMWDataValue {
 	}
 
 	/**
-	 * Set all basic values for this datavalue to the extent these are
-	 * available. Simplifies and speeds up creation from stored data.
-	 *
-	 * @todo Rethink our standard set interfaces for datavalues to make wikipage
-	 * fit better with the rest.
-	 */
-	public function setValues($dbkey, $namespace, $id = false, $interwiki = '', $sortkey = '') {
-		$this->setXSDValue($dbkey,''); // just used to trigger standard parent class methods!
-		if ( ($this->m_fixNamespace != NS_MAIN) && ( $this->m_fixNamespace != $namespace) ) {
-			wfLoadExtensionMessages('SemanticMediaWiki');
-			$this->addError(wfMsgForContent('smw_notitle', str_replace('_',' ',$dbkey)));
-		}
-		$this->m_stubdata = array($dbkey, $namespace, $id, $interwiki, $sortkey);
-	}
-
-	/**
 	 * Init this data value object based on a given Title object.
 	 */
 	public function setTitle($title) {
-		$this->setValues($title->getDBkey(), $title->getNamespace(), false, $title->getInterwiki());
+		$this->setDBkeys(array($title->getDBkey(), $title->getNamespace(), $title->getInterwiki(), ''));
 		$this->m_title = $title;
+	}
+
+	/// Get the (default) caption for this value.
+	protected function getCaption() {
+		return $this->m_caption !== false?$this->m_caption:$this->getPrefixedText();
+	}
+
+	/**
+	 * @deprecated Use setDBkeys()
+	 */
+	public function setValues($dbkey, $namespace, $id = false, $interwiki = '', $sortkey = '') {
+		$this->setDBkeys(array($dbkey,$namespace,$interwiki,$sortkey));
 	}
 
 }

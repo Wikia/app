@@ -13,12 +13,12 @@ class ReaderFeedback extends UnlistedSpecialPage
 	var $validatedParams = '';
 	var $commentary = '';
 	
-    function __construct() {
+    public function __construct() {
         UnlistedSpecialPage::UnlistedSpecialPage( 'ReaderFeedback', 'feedback' );
 		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
-    function execute( $par ) {
+    public function execute( $par ) {
         global $wgRequest, $wgUser, $wgOut;
 		$confirm = $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ) );
 		if( $wgUser->isAllowed( 'feedback' ) ) {
@@ -164,13 +164,17 @@ class ReaderFeedback extends UnlistedSpecialPage
 		$graphLink = SpecialPage::getTitleFor( 'RatingHistory' )->getFullUrl( 'target='.$form->page->getPrefixedUrl() );
 		$talk = $form->page->getTalkPage();
 		
+		wfLoadExtensionMessages( 'RatingHistory' );
+		$tallyTable = FlaggedRevs::getVoteAggregates( $form->page, 31, $form->dims );
+		
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin();
 		$ok = ( $bot || $form->submit() ); // don't submit for mindless drones
 		$dbw->commit();
 		if( $ok ) {
 			return '<suc#>'.wfMsgExt( 'readerfeedback-success', array('parseinline'), 
-				$form->page->getPrefixedText(), $graphLink, $talk->getFullUrl( 'action=edit&section=new' ) );
+				$form->page->getPrefixedText(), $graphLink, $talk->getFullUrl( 'action=edit&section=new' ) ) .
+				'<h4>'.wfMsgHtml('ratinghistory-table')."</h4>\n$tallyTable";
 		} else {
 			return '<err#>'.wfMsgExt( 'readerfeedback-voted', array('parseinline'), 
 				$form->page->getPrefixedText(), $graphLink, $talk->getFullUrl( 'action=edit&section=new' ) );
@@ -201,8 +205,7 @@ class ReaderFeedback extends UnlistedSpecialPage
 		# Use page_latest if $revId not given
 		$revId = $revId ? $revId : $title->getLatestRevID( GAID_FOR_UPDATE );
 		$rev = Revision::newFromTitle( $title, $revId );
-		if( !$rev )
-			return false; // shouldn't happen; just in case
+		if( !$rev ) return false; // shouldn't happen; just in case
 		# Check if this revision is by this user...
 		if( $rev->getUserText() === $wgUser->getName() ) {
 			# Check if the previous revisions is theirs and they
@@ -219,10 +222,10 @@ class ReaderFeedback extends UnlistedSpecialPage
 		# Check if user already voted before...
 		$dbw = wfGetDB( DB_MASTER );
 		if( $wgUser->getId() ) {
-			$ipSafe = $dbw->strencode( wfGetIP() );
+			$ipSafe = $dbw->addQuotes( wfGetIP() );
 			$userVoted = $dbw->selectField( 'reader_feedback', '1', 
 				array( 'rfb_rev_id' => $revId, 
-					"(rfb_user = ".$wgUser->getId().") OR (rfb_user = 0 AND rfb_ip = '$ipSafe')" ), 
+					"(rfb_user = ".$wgUser->getId().") OR (rfb_user = 0 AND rfb_ip = $ipSafe)" ), 
 				__METHOD__ );
 			if( $userVoted ) {
 				return true;
@@ -250,7 +253,8 @@ class ReaderFeedback extends UnlistedSpecialPage
 		global $wgUser;
 		$dbw = wfGetDB( DB_MASTER );
 		# Get date timestamp...
-		$date = str_pad( substr( wfTimestampNow(), 0, 8 ), 14, '0' );
+		$now = wfTimestampNow();
+		$date = str_pad( substr( $now, 0, 8 ), 14, '0' );
 		if( count($this->dims) == 0 )
 			return false;
 		$ratings = $this->flattenRatings( $this->dims );
@@ -273,7 +277,7 @@ class ReaderFeedback extends UnlistedSpecialPage
 			'rfb_rev_id'    => $this->oldid,
 			'rfb_user'      => $wgUser->getId(),
 			'rfb_ip'        => $ip,
-			'rfb_timestamp' => $dbw->timestamp(),
+			'rfb_timestamp' => $dbw->timestamp( $now ),
 			'rfb_ratings'   => $ratings
 		);
 		# Make sure initial page data is there to begin with...
@@ -291,7 +295,7 @@ class ReaderFeedback extends UnlistedSpecialPage
 		$dbw->insert( 'reader_feedback', $insertRow, __METHOD__, 'IGNORE' );
 		$dbw->insert( 'reader_feedback_history', $insertRows, __METHOD__, 'IGNORE' );
 		# Update aggregate data for this page over time...
-		$touched = $dbw->timestamp( wfTimestampNow() );
+		$touched = $dbw->timestamp( $now );
 		$overall = 0;
 		$insertRows = array();
 		foreach( $this->dims as $tag => $val ) {

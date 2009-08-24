@@ -24,9 +24,14 @@ $aliases['arz'] = array(
 	'ProfileMonitor' => array( 'مراقب_الملف' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'ProfileMonitor' => array( 'Analyse de rendimento' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'ProfileMonitor' => array( 'プロフィールモニター' ),
+	'ProfileMonitor' => array( 'プロファイリングデータ', 'プロファイルモニター' ),
 );
 
 /** Dutch (Nederlands) */
@@ -37,5 +42,15 @@ $aliases['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'ProfileMonitor' => array( 'Profilmonitor' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'ProfileMonitor' => array( 'व्यक्तिविवरणावेक्षते' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'ProfileMonitor' => array( 'Tagapagmatyag ng talaan ng katangian' ),
 );
 

@@ -6,13 +6,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class LikedPages extends SpecialPage
 {
-    function __construct() {
+    public function __construct() {
         SpecialPage::SpecialPage( 'LikedPages' );
 		wfLoadExtensionMessages( 'LikedPages' );
 		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
-    function execute( $par ) {
+    public function execute( $par ) {
         global $wgRequest, $wgOut, $wgUser;
 		$this->setHeaders();
 		if( $wgUser->isAllowed( 'feedback' ) ) {
@@ -74,10 +74,11 @@ class LikedPages extends SpecialPage
 		$hist = $this->skin->makeKnownLinkObj( $title, wfMsgHtml('hist'), 'action=history' );
 		$stxt = '';
 		if( !is_null($size = $row->page_len) ) {
-			if($size == 0)
+			if( $size == 0 )
 				$stxt = ' <small>' . wfMsgHtml('historyempty') . '</small>';
 			else
-				$stxt = ' <small>' . wfMsgExt('historysize', array('parsemag'), $wgLang->formatNum( $size ) ) . '</small>';
+				$stxt = ' <small>' . wfMsgExt('historysize', array('parsemag'),
+					$wgLang->formatNum( $size ) ) . '</small>';
 		}
 		$ratinghist = SpecialPage::getTitleFor( 'RatingHistory' );
 		$graph = $this->skin->makeKnownLinkObj( $ratinghist, wfMsg('likedpages-graphs'), 

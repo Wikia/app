@@ -365,6 +365,7 @@ $messages['da'] = array(
 /** German (Deutsch)
  * @author Metalhead64
  * @author Raimond Spekking
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'antispoof-desc' => 'Verhindert die Erstellung von Benutzerkonten mit gemischten Zeichensätzen, verwirrenden und ähnlichen Benutzernamen',
@@ -379,7 +380,7 @@ $messages['de'] = array(
 	'antispoof-noletters' => 'Es sind keine Buchstaben enthalten.',
 	'antispoof-mixedscripts' => 'Es sind Zeichen unterschiedlicher Schriftsysteme enthalten.',
 	'antispoof-tooshort' => 'Der kanonisierte Name ist zu kurz.',
-	'antispoof-ignore' => 'Ignoriere Ähnlichkeitsprüfung',
+	'antispoof-ignore' => 'Ähnlichkeitsprüfung ignorieren',
 	'right-override-antispoof' => 'Außer Kraft setzen der Benutzernamens-Ähnlichkeitsprüfung',
 );
 
@@ -406,10 +407,13 @@ $messages['dsb'] = array(
 /** Greek (Ελληνικά)
  * @author Badseed
  * @author Dead3y3
+ * @author Omnipaedista
  * @author ZaDiak
  */
 $messages['el'] = array(
 	'antispoof-desc' => 'Μπλοκάρει τη δημιουργία λογαριασμών με χαρακτήρες μικτής γραφής, συγχεχυμένα και παρόμοια ονόματα χρηστών.',
+	'antispoof-conflict-top' => 'Το όνομα "$1" είναι υπερβολικά όμοιο με {{PLURAL:$2|τον υπάρχοντα λογαριασμό|τους ακόλουθους $2 λογαριασμούς}}:',
+	'antispoof-conflict-bottom' => 'Διαλέξτε ένα διαφορετικό όνομα.',
 	'antispoof-name-illegal' => 'Το όνομα "$1" δεν επιτρέπεται, για την αποτροπή συγκεχυμένων ή απατηλών ονομάτων χρηστών: $2. Παρακαλώ διαλέξτε ένα άλλο όνομα.',
 	'antispoof-badtype' => 'Εσφαλμένος τύπος δεδομένων',
 	'antispoof-empty' => 'Κενή συμβολοσειρά',
@@ -420,6 +424,7 @@ $messages['el'] = array(
 	'antispoof-mixedscripts' => 'Περιέχει ανεμιγμένους ασύμβατους χαρακτήρες γραπτού κειμένου',
 	'antispoof-tooshort' => 'Κανονικοποιημένο όνομα πολύ μικρό',
 	'antispoof-ignore' => 'Αγνόησε ελέγχους spoofing',
+	'right-override-antispoof' => 'Υπερκάλυψη των ελέγχων εξαπάτησης',
 );
 
 /** Esperanto (Esperanto)
@@ -468,8 +473,11 @@ $messages['es'] = array(
 	'right-override-antispoof' => 'Anula las comprobaciones de suplantación',
 );
 
-/** Basque (Euskara) */
+/** Basque (Euskara)
+ * @author Kobazulo
+ */
 $messages['eu'] = array(
+	'antispoof-conflict-bottom' => 'Mesedez, beste izen bat aukeratu.',
 	'antispoof-name-illegal' => '"$1" izena ez dago onartuta gaizkiulertuak saihesteko: $2. Beste izen bat hautatu mesedez.',
 	'antispoof-badtype' => 'Datu mota ezegokia',
 	'antispoof-empty' => 'Kate hutsa',
@@ -524,22 +532,24 @@ $messages['fi'] = array(
  * @author Louperivois
  * @author Sherbrooke
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'antispoof-desc' => "Bloque, avec un script mixte, la création des comptes par des noms d'utilisateur similaires ou pouvant prêter à confusion",
+	'antispoof-desc' => 'Bloque la création de compte avec des noms d’utilisateur similaires, utilisant diverses écritures, ou pouvant prêter à confusion',
 	'antispoof-conflict-top' => 'Le nom « $1 » est trop similaire {{PLURAL:$2|au compte existant|aux $2 comptes suivants}} :',
 	'antispoof-conflict-bottom' => 'Veuillez choisir un autre nom.',
-	'antispoof-name-illegal' => "Le nom d'utilisateur « $1 » n’est pas autorisé à cause de sa ressemblance avec « $2 ». Veuillez choisir un autre nom.",
+	'antispoof-name-illegal' => 'Le nom d’utilisateur « $1 » n’est pas autorisé à cause de sa similitude pouvant porter à confusion avec « $2 ».
+Veuillez choisir un autre nom.',
 	'antispoof-badtype' => 'Mauvais type de données',
 	'antispoof-empty' => 'Chaîne vide',
 	'antispoof-blacklisted' => 'Contient un caractère interdit',
 	'antispoof-combining' => 'Commence avec une marque combinatoire',
 	'antispoof-unassigned' => 'Contient un caractère non assigné ou désuet',
 	'antispoof-noletters' => 'Ne contient aucune lettre',
-	'antispoof-mixedscripts' => 'Contient plusieurs scripts incompatibles',
+	'antispoof-mixedscripts' => 'Contient plusieurs écritures incompatibles',
 	'antispoof-tooshort' => 'Nom canonique trop court',
 	'antispoof-ignore' => 'Ignorer les vérifications de tromperie',
-	'right-override-antispoof' => "Court-circuiter les vérifications contre le ''spoofing''",
+	'right-override-antispoof' => 'Court-circuiter les vérifications de tromperie',
 );
 
 /** Cajun French (Français cadien)
@@ -588,7 +598,7 @@ $messages['gl'] = array(
 	'antispoof-combining' => 'Principia cun carácter de combinación',
 	'antispoof-unassigned' => 'Contén un carácter sen asignar ou desaconsellado',
 	'antispoof-noletters' => 'Non contén ningunha letra',
-	'antispoof-mixedscripts' => 'Contén guións mesturados incompatíbeis',
+	'antispoof-mixedscripts' => 'Contén guións incompatibles mesturados',
 	'antispoof-tooshort' => 'Nome curto de máis',
 	'antispoof-ignore' => 'Ignorar as comprobacións parodia (spoofing)',
 	'right-override-antispoof' => 'Ignorar as comprobacións parodia (spoofing)',
@@ -600,6 +610,7 @@ $messages['gl'] = array(
 $messages['grc'] = array(
 	'antispoof-badtype' => 'Κακὸς τύπος δεδομένων',
 	'antispoof-empty' => 'Κενὴ συμβολοσειρά',
+	'right-override-antispoof' => 'Ὑπερκάλυψις τῶν ἐλέγχων ἐξαπατήσεως',
 );
 
 /** Swiss German (Alemannisch)
@@ -607,6 +618,9 @@ $messages['grc'] = array(
  * @author Hendergassler
  */
 $messages['gsw'] = array(
+	'antispoof-desc' => 'Verhinderet s Aalege vu Benutzerkonte mit gmischlete Zeichesätz, Benutzernäme wu verwirre oder ähnligs',
+	'antispoof-conflict-top' => 'Dr Name „$1“ isch {{PLURAL:$2|däm Benutzerkonto|däne $2 Benutzerkonte}} zue ähnli:',
+	'antispoof-conflict-bottom' => 'Bitte wehl e andere Name.',
 	'antispoof-name-illegal' => 'Dr Name "$1" isch nit gstattet, wel s e Problem chennt gee mit "$2". <br />Nimm e andre Name.',
 	'antispoof-badtype' => 'Datetyp isch nit giltig.',
 	'antispoof-empty' => 'Läär Fäld',
@@ -617,6 +631,7 @@ $messages['gsw'] = array(
 	'antispoof-mixedscripts' => 'S sin Zeiche vo unterschidlige Schriftsyschtem din enthalte.',
 	'antispoof-tooshort' => 'Dr kanonisiert Name isch z churz.',
 	'antispoof-ignore' => 'Ignorier d Ähnlichkeitspriefig',
+	'right-override-antispoof' => 'D Benutzernäme-Ähnligkeitspriefig usser Chraft setze',
 );
 
 /** Gujarati (ગુજરાતી) */
@@ -965,12 +980,18 @@ $messages['km'] = array(
  * @author ToePeu
  */
 $messages['ko'] = array(
+	'antispoof-desc' => '여러 문자 체계를 섞은 이름이나, 혼동될 수 있고 비슷한 이름의 계정 생성을 막음',
 	'antispoof-conflict-top' => '계정 이름 "$1"은 {{PLURAL:$2|다음 계정|다음 $2개의 계정}}과 너무 비슷합니다:',
 	'antispoof-conflict-bottom' => '다른 이름을 선택해주세요.',
 	'antispoof-name-illegal' => '‘$1’ 사용자 이름은 다음의 이유로 인해 가입이 금지되었습니다: $2. 다른 이름으로 가입해주세요.',
 	'antispoof-badtype' => '잘못된 자료형',
 	'antispoof-empty' => '빈 문자열',
 	'antispoof-blacklisted' => '사용이 금지된 문자를 포함하고 있습니다.',
+	'antispoof-combining' => '혼합된 문자로 시작됩니다.',
+	'antispoof-unassigned' => '코드가 부여되지 않거나 잘못된 문자를 포함하고 있습니다.',
+	'antispoof-noletters' => '어떤 문자도 포함하고 있지 않습니다.',
+	'antispoof-mixedscripts' => '여러 문자 체계가 섞여 있습니다.',
+	'antispoof-tooshort' => '고유 이름이 너무 짧습니다.',
 	'antispoof-ignore' => '안티스푸프 검사를 무시',
 	'right-override-antispoof' => '혼란을 줄 수 있는 계정 이름 금지(안티스푸프)를 무시',
 );
@@ -1029,6 +1050,8 @@ Sicht iech w.e.g. een anere Benotzernumm.',
  */
 $messages['li'] = array(
 	'antispoof-desc' => "Blokkeert 't aanmake van gebroekers mit miedere sjrifte, verwarrende en geliekmakende gebroekersname",
+	'antispoof-conflict-top' => 'De naam "$1" liek te zeer op de volgende zeendje {{PLURAL:$2|gebroeker|$2 gebroekers}}:',
+	'antispoof-conflict-bottom' => "Kees 'ne angere naam.",
 	'antispoof-name-illegal' => 'De naam "$1" is net toegestaon óm verwarring of vervörmdje gebroekersname te veurkómme: $2. Kees estebleef \'ne angere naam.',
 	'antispoof-badtype' => 'Verkeerd datatype',
 	'antispoof-empty' => 'Laege string',
@@ -1154,6 +1177,24 @@ $messages['nds'] = array(
 	'right-override-antispoof' => 'De Kuntrull op ähnliche Brukernaams ümgahn',
 );
 
+/** Nedersaksisch (Nedersaksisch)
+ * @author Servien
+ */
+$messages['nds-nl'] = array(
+	'antispoof-desc' => "Blokkeert 't anmaken van gebrukers mit meerdere schriffen, verwarrende en soortgelieke gebrukersnamen",
+	'antispoof-conflict-top' => 'De naam "$1" liek te veule op de volgende bestaonde {{PLURAL:$2|gebruker|$2 gebrukers}}:',
+	'antispoof-conflict-bottom' => 'Kies een aandere naam.',
+	'antispoof-name-illegal' => 'De naam "$1" is neet toe-estaon, um verwarring of lillijke gebrukersnamen te veurkoemen: $2. Kies een aandere naam.',
+	'antispoof-empty' => 'Leeg veld',
+	'antispoof-blacklisted' => 'Bevat tekens dee-j neet gebruken maggen',
+	'antispoof-combining' => 'Begint mit een ecombineerd markteken',
+	'antispoof-unassigned' => 'Bevat een neet toe-ewezen of ongewunst teken',
+	'antispoof-noletters' => 'Bevat gien letters',
+	'antispoof-mixedscripts' => 'Bevat onverenigbaore schrifsystemen',
+	'antispoof-tooshort' => 'De naam dee-j in-evoerd hemmen is te kort.',
+	'antispoof-ignore' => 'Controle op soortgelieke gebrukersnamen negeren',
+);
+
 /** Dutch (Nederlands)
  * @author Erwin85
  * @author Siebrand
@@ -1164,7 +1205,7 @@ $messages['nl'] = array(
 	'antispoof-conflict-bottom' => 'Kies een andere naam.',
 	'antispoof-name-illegal' => 'De naam "$1" is niet toegestaan om verwarring of gefingeerde gebruikersnamen te voorkomen: $2.
 Kies een andere naam.',
-	'antispoof-badtype' => 'Verkeerd datatype',
+	'antispoof-badtype' => 'Ongeldig datatype',
 	'antispoof-empty' => 'Lege string',
 	'antispoof-blacklisted' => 'Bevat verboden karakter',
 	'antispoof-combining' => 'Begint met een gecombineerd merkteken',
@@ -1340,10 +1381,25 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
  * @author Heldergeovane
  */
 $messages['pt-br'] = array(
+	'antispoof-desc' => 'Impede a criação de contas com escrita mista, e nomes de utilizador confusos e semelhantes',
+	'antispoof-conflict-top' => 'O nome "$1" é demasiado semelhante {{PLURAL:$2|ao da seguinte conta já existente|aos das seguintes $2 contas}}',
+	'antispoof-conflict-bottom' => 'Por favor, escolha outro nome.',
+	'antispoof-name-illegal' => 'O nome "$1" não é permitido para prevenir que seja confundido com outro (ou que seja feito algum trocadilho): já existe $2. 
+Por favor, escolha outro nome.',
+	'antispoof-badtype' => 'Formato de dados incorreto',
+	'antispoof-empty' => 'Linha vazia',
+	'antispoof-blacklisted' => 'Contém caracteres proibidos',
+	'antispoof-combining' => 'Inicia com um caractere de combinação',
+	'antispoof-unassigned' => 'Contém caracteres não reconhecidos ou depreciados',
+	'antispoof-noletters' => 'Não contém nenhuma letra',
+	'antispoof-mixedscripts' => 'Contém scripts de escrita incompatíveis mesclados',
 	'antispoof-tooshort' => 'Nome canônico curto demais',
+	'antispoof-ignore' => 'Ignorar verificações de "spoofing"',
+	'right-override-antispoof' => 'Sobrepor verificações de spoofing',
 );
 
 /** Quechua (Runa Simi)
@@ -1407,6 +1463,8 @@ $messages['ru'] = array(
  */
 $messages['sah'] = array(
 	'antispoof-desc' => 'Атын дьону булкуйар уонна атын дьон ааттарыгар майгынныыр хас да омук суругун-бичигин туһанан ааттанары бобор.',
+	'antispoof-conflict-top' => '"$1" диэн аат урут бэлиэтэммит {{PLURAL:$2|аакка|$2 аакка}} наһаа майгынныыр:',
+	'antispoof-conflict-bottom' => 'Бука диэн, атын ааты тал эрэ.',
 	'antispoof-name-illegal' => '"$1" диэн аат $2 диэн ааттары кытта буккулубаттарын туһугар бобуллар. Онон атын ааты толкуйдаа.',
 	'antispoof-badtype' => 'Сыыһа тииптээх дааннайдар',
 	'antispoof-empty' => 'Кураанах устуруока',
@@ -1493,6 +1551,8 @@ $messages['sr-el'] = array(
  */
 $messages['stq'] = array(
 	'antispoof-desc' => 'Ferhinnert dät Moakjen fon Benutserkonten mäd miskede Teekensatse, fertoogede un äänelke Benutsernoomen',
+	'antispoof-conflict-top' => 'Die Noome „$1“ is {{PLURAL:$2|dät existierjende Benutserkonto|do foulgjende $2 Benutserkonten}} tou äänelk:',
+	'antispoof-conflict-bottom' => 'Wääl n uur Noome.',
 	'antispoof-name-illegal' => 'Die wonskede Benutsernoome „$1“ is nit ferlööwed. Gruund: $2<br />Wääl n uur Benutsernoome.',
 	'antispoof-badtype' => 'Ungultigen Doatentyp',
 	'antispoof-empty' => 'Loos Fäild',
@@ -1611,14 +1671,24 @@ $messages['to'] = array(
 );
 
 /** Turkish (Türkçe)
+ * @author Joseph
  * @author Srhat
  */
 $messages['tr'] = array(
+	'antispoof-desc' => 'Karışık-betikli, kafa karıştırıcı ve benzer kullanıcı adlarıyla hesap oluşturulmasını engeller',
+	'antispoof-conflict-top' => '"$1" adı, şu {{PLURAL:$2|mevcut hesaba|$2 hesaba}} çok benziyor:',
+	'antispoof-conflict-bottom' => 'Lütfen başka bir isim seçin.',
 	'antispoof-name-illegal' => '$2 hesabıyla karışmaması için "$1" ismine izin verilmemektedir. Lütfen başka bir kullanıcı adı seçiniz.',
 	'antispoof-badtype' => 'Bozuk veri tipi',
 	'antispoof-empty' => 'Boş dizi',
 	'antispoof-blacklisted' => 'Karalisteye alınmış karakter içerir.',
+	'antispoof-combining' => 'Kaynaştırma işaretiyle başlıyor',
+	'antispoof-unassigned' => 'Atanmamış ya da onaylanmamış karakter içeriyor',
 	'antispoof-noletters' => 'Hiç harf içermez',
+	'antispoof-mixedscripts' => 'Uyumsuz karışık betikler içeriyor',
+	'antispoof-tooshort' => 'Standartlaştırılmış isim çok kısa',
+	'antispoof-ignore' => 'Aldatıcı kontrolleri ihmal et',
+	'right-override-antispoof' => 'Aldatıcı kontrolleri gerçersiz kıl',
 );
 
 /** Ukrainian (Українська)

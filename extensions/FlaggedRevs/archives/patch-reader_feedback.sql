@@ -1,9 +1,9 @@
 -- This stores reader feedback data to curb double-voting
 CREATE TABLE /*$wgDBprefix*/reader_feedback (
   -- Foreign key to revision.rev_id
-  rfb_rev_id integer NOT NULL,
+  rfb_rev_id integer unsigned NOT NULL,
   -- Foreign key to user.user_id
-  rfb_user integer NOT NULL,
+  rfb_user integer unsigned NOT NULL,
   rfb_ip varchar(255) NOT NULL default '',
   -- No double voting!
   PRIMARY KEY (rfb_rev_id,rfb_user,rfb_ip)
@@ -24,12 +24,12 @@ CREATE TABLE /*$wgDBprefix*/reader_feedback_history (
 -- This stores reader feedback data
 CREATE TABLE /*$wgDBprefix*/reader_feedback_pages (
   -- Foreign key to page.page_id
-  rfp_page_id integer NOT NULL,
+  rfp_page_id integer unsigned NOT NULL,
   rfp_tag char(20) NOT NULL default '',
   -- Value in last few days (14)
   rfp_ave_val real NOT NULL default 0,
   -- And said total (used as threshold)
-  rfp_count integer NOT NULL default 0,
+  rfp_count integer unsigned NOT NULL default 0,
   rfp_touched char(14) NOT NULL default '',
   PRIMARY KEY (rfp_page_id,rfp_tag),
   INDEX rfp_tag_val_page (rfp_tag,rfp_ave_val,rfp_page_id)

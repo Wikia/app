@@ -319,7 +319,7 @@ class ApiWikiData extends ApiBase {
 		return $this->printer;
 	}
 	
-	protected function getAllowedParams() {
+	public function getAllowedParams() {
 		return array (
 			'type' => array (
 				ApiBase :: PARAM_DFLT => 'expression',
@@ -371,7 +371,7 @@ class ApiWikiData extends ApiBase {
 		);
 	}
 
-	protected function getParamDescription() {
+	public function getParamDescription() {
 		return array (
 			'type' => array (
 				'Query type.',
@@ -417,7 +417,7 @@ class ApiWikiData extends ApiBase {
 		);
 	}
 
-	protected function getDescription() {
+	public function getDescription() {
 		return array (
 			'This module provides an API to WikiData.'
 		);

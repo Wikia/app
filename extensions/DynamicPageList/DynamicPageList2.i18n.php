@@ -96,7 +96,7 @@ class DPL2_i18n
              * $0: prefix_dpl_clview where 'prefix' is the prefix of your mediawiki table names
              * $1: SQL query to create the prefix_dpl_clview on your mediawiki DB
              */
-            'dpl2_log_' . self::FATAL_NOCLVIEW => "ERROR: Cannot perform logical operations on the Uncategorized pages (e.g. with the 'category' parameter) because the $0 view does not exist on the database! Help: have the DB admin execute this query: <code>$1</code>.",
+            'dpl2_log_' . self::FATAL_NOCLVIEW => "ERROR: Cannot perform logical operations on the Uncategorized pages (f.e. with the 'category' parameter) because the $0 view does not exist on the database! Help: have the database administrator execute this query: <code>$1</code>.",
             'dpl2_log_' . self::FATAL_OPENREFERENCES => 'ERROR: specifying "openreferences" is incompatible with some other option you specified. See the manual for details.',
 
             // WARN

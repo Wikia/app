@@ -63,12 +63,31 @@ $messages['arz'] = array(
 	'spl3_nosubpages' => '$1 لا تمتلك أى صفحات فرعية لوضعها فى قائمة.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'spl3-desc' => 'Аўтаматычна стварае сьпіс падстаронак з дапамогай тэга <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Невядомае значэньне парамэтра $1.',
+	'spl3_nosubpages' => '$1 ня мае падстаронак.',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'spl3-desc' => 'Автоматично създава списък на подстраниците с помощта на етикета <code><nowiki><splist /></nowiki></code>',
 	'spl3_nosubpages' => '$1 не съдържа подстраници, които да бъдат показани.',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'spl3-desc' => 'Automatski napravljen spisak podstranica stranice koja koristi oznaku <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Nepoznata vrijednost za opciju $1.',
+	'spl3_nosubpages' => '$1 nema podstranica za prikaz.',
 );
 
 /** Catalan (Català)
@@ -93,7 +112,7 @@ $messages['cs'] = array(
  * @author Raimond Spekking
  */
 $messages['de'] = array(
-	'spl3-desc' => 'Automatisches Erstellen einer Liste von Unterseiten zu eine Seite mit Hilfe des <tt><nowiki><splist /></nowiki></tt>-Tags.',
+	'spl3-desc' => 'Automatisches Erstellen einer Liste von Unterseiten zu einer Seite mit Hilfe des <tt><nowiki><splist /></nowiki></tt>-Tags.',
 	'spl3_debug' => 'Unbekannter Wert für Option $1.',
 	'spl3_nosubpages' => '$1 hat keine Unterseiten.',
 );
@@ -116,6 +135,15 @@ $messages['eo'] = array(
 	'spl3_nosubpages' => '$1 havas neniujn subpaĝojn por listigi.',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'spl3-desc' => 'Crea automáticamente una lista de las subpáginas de una página usando la etiqueta <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Valor desconocido para opción $1.',
+	'spl3_nosubpages' => '$1 no tiene subpáginas a listar.',
+);
+
 /** French (Français)
  * @author Grondin
  * @author Urhixidur
@@ -132,7 +160,16 @@ $messages['fr'] = array(
 $messages['gl'] = array(
 	'spl3-desc' => 'Crea automaticamente unha lista das subpáxinas dunha páxina usando a etiqueta <code><nowiki><splist /></nowiki></code>',
 	'spl3_debug' => 'Valor descoñecido para a opción $1.',
-	'spl3_nosubpages' => '$1 non ten subpáxinas para poñer nunha listaxe.',
+	'spl3_nosubpages' => '$1 non ten subpáxinas para poñer nunha lista.',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'spl3-desc' => 'E Lischt vu Untersyte zuen ere Syte mit em <tt><nowiki><splist /></nowiki></tt>-Tag automatisch aalege.',
+	'spl3_debug' => 'Nit bekannter Wärt fir Option $1.',
+	'spl3_nosubpages' => '$1 het kei Untersyte.',
 );
 
 /** Hebrew (עברית)
@@ -279,12 +316,30 @@ $messages['pt'] = array(
 	'spl3_nosubpages' => '$1 não tem subpáginas para listar.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'spl3-desc' => 'Cria automaticamente uma lista das subpáginas de uma página usando a marca <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Valor desconhecido para a opção $1.',
+	'spl3_nosubpages' => '$1 não tem subpáginas para listar.',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
 $messages['ro'] = array(
 	'spl3_debug' => 'Valoare necunoscută pentru opţiunea $1.',
 	'spl3_nosubpages' => '$1 nu are subpagini pentru afişat.',
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'spl3-desc' => 'Автоматически создаёт список подстраниц некоторой страницы, использующей тег <code><nowiki><splist /></nowiki></code>',
+	'spl3_debug' => 'Неизвестное значение параметра $1.',
+	'spl3_nosubpages' => '$1 не имеет подстраниц для включения в список.',
 );
 
 /** Slovak (Slovenčina)
@@ -346,6 +401,13 @@ $messages['vi'] = array(
 	'spl3-desc' => 'Tự động tạo danh sách các trang con của một trang nào đó bằng cách sử dụng thẻ <code><nowiki><splist /></nowiki></code>',
 	'spl3_debug' => 'Giá trị không rõ đối với tùy chọn $1.',
 	'spl3_nosubpages' => '$1 không có trang con nào cả.',
+);
+
+/** Volapük (Volapük)
+ * @author Smeira
+ */
+$messages['vo'] = array(
+	'spl3_nosubpages' => 'Pad: $1 no labon donapadis ad palisedön.',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

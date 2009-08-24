@@ -44,7 +44,7 @@ div.tleft, div.floatleft, table.floatleft {
 }
 
 /* Fix link icons */
-.external {
+.external, a.feedlink {
 	padding: 0 !important;
 	background: none !important;
 }
@@ -151,3 +151,9 @@ html > body div.pBody ul li {
 html > body div#mw_contentholder ul#filetoc {
 	display: block;
 }
+
+/* Special:Prefixindex styling */
+td#mw-prefixindex-nav-form  {
+	text-align: left;
+}
+

@@ -66,8 +66,8 @@ $specialPageAliases = array(
 	'Mostlinked'                => array( 'Ko\'p siltelgenler' ),
 	'Mostlinkedcategories'      => array( 'Ko\'p paydalanılg\'an kategoriyalar' ),
 	'Mostlinkedtemplates'       => array( 'Ko\'p paydalanılg\'an shablonlar' ),
-	'Mostcategories'            => array( 'Ko\'p kategoriyalang\'anlar' ),
 	'Mostimages'                => array( 'Ko\'p paydalanılg\'an su\'wretler' ),
+	'Mostcategories'            => array( 'Ko\'p kategoriyalang\'anlar' ),
 	'Mostrevisions'             => array( 'Ko\'p du\'zetilgenler' ),
 	'Fewestrevisions'           => array( 'Az du\'zetilgenler' ),
 	'Shortpages'                => array( 'Qqısqa betler' ),
@@ -1244,31 +1244,28 @@ Barlıq mag'lıwmat tu'rin (sonın' ishinde sa'wbet betlerdi, shablonlardı h.t.
 'listfiles_description' => 'Kommentariy',
 
 # File description page
-'filehist'                       => 'Fayl tariyxı',
-'filehist-help'                  => "Aldın usı fayl qanday ko'riniste bolg'anın ko'riw ushin ku'n-ay/waqıt degendi basın'.",
-'filehist-deleteall'             => "ha'mmesin o'shir",
-'filehist-deleteone'             => "o'shiriw",
-'filehist-revert'                => 'qaytarıw',
-'filehist-current'               => "ha'zirgi",
-'filehist-datetime'              => "Sa'ne/Waqıt",
-'filehist-thumb'                 => 'Miniatyurası',
-'filehist-thumbtext'             => "$1 waqtındag'ı nusqanın' miniatyurası",
-'filehist-nothumb'               => 'Miniatyurası joq',
-'filehist-user'                  => 'Paydalanıwshı',
-'filehist-dimensions'            => "O'lshemleri",
-'filehist-filesize'              => "Fayldın' ha'jmi",
-'filehist-comment'               => 'Kommentariy',
-'imagelinks'                     => 'Fayl siltewleri',
-'linkstoimage'                   => "To'mendegi {{PLURAL:$1|bet|$1 bet}} bul faylg'a siltelgen:",
-'nolinkstoimage'                 => "Bul faylg'a hesh bir bet siltelmegen.",
-'sharedupload'                   => "Bul ortalıq fayl ha'm basqa proektlerde paydalanılsa boladı.",
-'shareduploadwiki-linktext'      => "fayl juwmag'ının' beti",
-'shareduploadduplicate-linktext' => 'basqa fayl',
-'shareduploadconflict-linktext'  => 'basqa fayl',
-'noimage'                        => "Bunday atlı fayl joq, biraq sizde $1 mu'mkinshiligi bar.",
-'noimage-linktext'               => 'usını aploud qılıw',
-'uploadnewversion-linktext'      => "Bul fayldın' jan'a nusqasın aploud qılıw",
-'imagepage-searchdupe'           => "Qaytalang'an fayllardı izlew",
+'filehist'                  => 'Fayl tariyxı',
+'filehist-help'             => "Aldın usı fayl qanday ko'riniste bolg'anın ko'riw ushin ku'n-ay/waqıt degendi basın'.",
+'filehist-deleteall'        => "ha'mmesin o'shir",
+'filehist-deleteone'        => "o'shiriw",
+'filehist-revert'           => 'qaytarıw',
+'filehist-current'          => "ha'zirgi",
+'filehist-datetime'         => "Sa'ne/Waqıt",
+'filehist-thumb'            => 'Miniatyurası',
+'filehist-thumbtext'        => "$1 waqtındag'ı nusqanın' miniatyurası",
+'filehist-nothumb'          => 'Miniatyurası joq',
+'filehist-user'             => 'Paydalanıwshı',
+'filehist-dimensions'       => "O'lshemleri",
+'filehist-filesize'         => "Fayldın' ha'jmi",
+'filehist-comment'          => 'Kommentariy',
+'imagelinks'                => 'Fayl siltewleri',
+'linkstoimage'              => "To'mendegi {{PLURAL:$1|bet|$1 bet}} bul faylg'a siltelgen:",
+'nolinkstoimage'            => "Bul faylg'a hesh bir bet siltelmegen.",
+'sharedupload'              => '$1 ortalıq faylı basqa proektlerde paydalanılsa boladı.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'shareduploadwiki-linktext' => "fayl juwmag'ının' beti",
+'noimage'                   => "Bunday atlı fayl joq, biraq sizde $1 mu'mkinshiligi bar.",
+'noimage-linktext'          => 'usını aploud qılıw',
+'uploadnewversion-linktext' => "Bul fayldın' jan'a nusqasın aploud qılıw",
 
 # File reversion
 'filerevert'                => '$1 degendi qaytarıw',
@@ -1940,6 +1937,7 @@ Eger fayl jaratılg'anınan keyin o'zgertilgen bolsa, geybir parametrleri o'zger
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength", # Do not translate list items
 
 # EXIF tags
@@ -1992,7 +1990,7 @@ $5
 Bul tastıyıqlaw kodının' pitetug'ın waqtı: $4.",
 
 # Trackbacks
-'trackbackremove' => " ([$1 O'shir])",
+'trackbackremove' => "([$1 O'shir])",
 
 # Delete conflict
 'recreate' => 'Qaytadan jaratıw',

@@ -27,11 +27,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 class SpecialGlobalGroupPermissions extends SpecialPage
 {
 	function __construct() {
-		parent::__construct('GlobalGroupPermissions', 'globalgrouppermissions');
+		parent::__construct( 'GlobalGroupPermissions' );
 		wfLoadExtensionMessages('SpecialCentralAuth');
 	}
 	
-	function userCanExecute($user) {		
+	function userCanEdit($user) {		
 		$globalUser = CentralAuthUser::getInstance( $user );
 		
 		## Should be a global user
@@ -96,30 +96,37 @@ class SpecialGlobalGroupPermissions extends SpecialPage
 
 		$wgOut->addHTML( Xml::closeElement( 'ul' ) . Xml::closeElement( 'fieldset' ) );
 
-		// "Create a group" prompt
-		$html = Xml::openElement( 'fieldset' ) . Xml::element( 'legend', null, wfMsg( 'centralauth-newgroup-legend' ) );
-		$html .= wfMsgExt( 'centralauth-newgroup-intro', array( 'parse' ) );
-		$html .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgScript, 'name' => 'centralauth-globalgroups-newgroup' ) );
-		$html .= Xml::hidden( 'title',  SpecialPage::getTitleFor('GlobalGroupPermissions')->getPrefixedText() );
-		
-		$fields = array( 'centralauth-globalgroupperms-newgroupname' => Xml::input( 'wpGroup' ) );
-		
-		$html .= Xml::buildForm( $fields, 'centralauth-globalgroupperms-creategroup-submit' );
-		$html .= Xml::closeElement( 'form' );
-		$html .= Xml::closeElement( 'fieldset' );
-		
-		$wgOut->addHTML( $html );
+		if ( $this->userCanEdit( $wgUser ) ) {
+			// "Create a group" prompt
+			$html = Xml::openElement( 'fieldset' ) . Xml::element( 'legend', null, wfMsg( 'centralauth-newgroup-legend' ) );
+			$html .= wfMsgExt( 'centralauth-newgroup-intro', array( 'parse' ) );
+			$html .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgScript, 'name' => 'centralauth-globalgroups-newgroup' ) );
+			$html .= Xml::hidden( 'title',  SpecialPage::getTitleFor('GlobalGroupPermissions')->getPrefixedText() );
+			
+			$fields = array( 'centralauth-globalgroupperms-newgroupname' => Xml::input( 'wpGroup' ) );
+			
+			$html .= Xml::buildForm( $fields, 'centralauth-globalgroupperms-creategroup-submit' );
+			$html .= Xml::closeElement( 'form' );
+			$html .= Xml::closeElement( 'fieldset' );
+			
+			$wgOut->addHTML( $html );
+		}
 	}
 	
 	function buildGroupView( $group ) {
 		global $wgOut, $wgUser, $wgScript;
 		
+		$editable = $this->userCanEdit( $wgUser );
+		
 		$wgOut->setSubtitle( wfMsg( 'centralauth-editgroup-subtitle', $group ) );
 		
 		$html = Xml::openElement( 'fieldset' ) . Xml::element( 'legend', null, wfMsg( 'centralauth-editgroup-fieldset', $group ) );
-		$html .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => SpecialPage::getTitleFor('GlobalGroupPermissions', $group)->getLocalUrl(), 'name' => 'centralauth-globalgroups-newgroup' ) );
-		$html .= Xml::hidden( 'wpGroup', $group );
-		$html .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
+		
+		if ( $editable ) {
+			$html .= Xml::openElement( 'form', array( 'method' => 'post', 'action' => SpecialPage::getTitleFor('GlobalGroupPermissions', $group)->getLocalUrl(), 'name' => 'centralauth-globalgroups-newgroup' ) );
+			$html .= Xml::hidden( 'wpGroup', $group );
+			$html .= Xml::hidden( 'wpEditToken', $wgUser->editToken() );
+		}
 		
 		$fields = array();
 		
@@ -129,11 +136,16 @@ class SpecialGlobalGroupPermissions extends SpecialPage
 		$fields['centralauth-editgroup-members'] = wfMsgExt( 'centralauth-editgroup-members-link', array( 'parseinline' ), $group, User::getGroupMember( $group ) );
 		$fields['centralauth-editgroup-restrictions'] = $this->buildWikiSetSelector($group);
 		$fields['centralauth-editgroup-perms'] = $this->buildCheckboxes($group);
-		$fields['centralauth-editgroup-reason'] = Xml::input( 'wpReason' );
 		
-		$html .= Xml::buildForm( $fields, 'centralauth-editgroup-submit' );
+		if ( $editable ) {
+			$fields['centralauth-editgroup-reason'] = Xml::input( 'wpReason', 60 );
+		}
 		
-		$html .= Xml::closeElement( 'form' );
+		$html .= Xml::buildForm( $fields,  $editable ? 'centralauth-editgroup-submit' : null );
+		
+		if ($editable)
+			$html .= Xml::closeElement( 'form' );
+		
 		$html .= Xml::closeElement( 'fieldset' );
 		
 		$wgOut->addHTML( $html );
@@ -144,6 +156,10 @@ class SpecialGlobalGroupPermissions extends SpecialPage
 	function buildWikiSetSelector( $group ) {
 		$sets = WikiSet::getAllWikiSets();
 		$default = WikiSet::getWikiSetForGroup( $group );
+		
+		global $wgUser;
+		if ( !$this->userCanEdit( $wgUser ) )
+			return htmlspecialchars( $default );
 
 		$select = new XmlSelect( 'set', 'wikiset', $default );
 		$select->addOption( wfMsg( 'centralauth-editgroup-noset' ), '0' );
@@ -156,6 +172,9 @@ class SpecialGlobalGroupPermissions extends SpecialPage
 	}
 
 	function buildCheckboxes( $group ) {
+	
+		global $wgUser;
+		$editable = $this->userCanEdit( $wgUser );
 		
 		$rights = User::getAllRights();
 		$assignedRights = $this->getAssignedRights( $group );
@@ -163,15 +182,23 @@ class SpecialGlobalGroupPermissions extends SpecialPage
 		sort($rights);
 		
 		$checkboxes = array();
+		$attribs = array();
+		
+		if (!$editable)
+			$attribs['disabled'] = 'disabled';
 		
 		foreach( $rights as $right ) {
 			# Build a checkbox.
 			$checked = in_array( $right, $assignedRights );
 			
-			$checkbox = Xml::checkLabel( User::getRightDescription( $right ), 
-				"wpRightAssigned-$right", "wpRightAssigned-$right", $checked );
+			$desc = htmlspecialchars(User::getRightDescription( $right )) . ' (' .
+						Xml::element( 'tt', null, $right ).')';
 			
-			$checkboxes[] = "<li>$checkbox</li>";
+			$checkbox = Xml::check( "wpRightAssigned-$right", $checked, $attribs );
+			$label = Xml::tags( 'label', array( 'for' => "wpRightAssigned-$right" ),
+					$desc );
+			
+			$checkboxes[] = "<li>$checkbox&nbsp;$label</li>";
 		}
 		
 		$count = count($checkboxes);
@@ -203,7 +230,11 @@ class SpecialGlobalGroupPermissions extends SpecialPage
 	}
 	
 	function doSubmit( $group ) {
-		global $wgRequest,$wgOut,$wgScript;
+		global $wgRequest,$wgOut,$wgScript,$wgUser;
+		
+		// Paranoia -- the edit token shouldn't match anyway
+		if (!$this->userCanEdit( $wgUser ))
+			return;
 		
 		$newRights = array();
 		$addRights = array();

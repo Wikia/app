@@ -89,6 +89,19 @@ if ( !function_exists( 'array_diff_key' ) ) {
 	}
 }
 
+// Support for Wietse Venema's taint feature
+if ( !function_exists( 'istainted' ) ) {
+	function istainted( $var ) {
+		return 0;
+	}
+	function taint( $var, $level = 0 ) {}
+	function untaint( $var, $level = 0 ) {}
+	define( 'TC_HTML', 1 );
+	define( 'TC_SHELL', 1 );
+	define( 'TC_MYSQL', 1 );
+	define( 'TC_PCRE', 1 );
+	define( 'TC_SELF', 1 );
+}
 /// @endcond
 
 
@@ -337,12 +350,14 @@ function wfErrorLog( $text, $file ) {
  */
 function wfLogProfilingData() {
 	global $wgRequestTime, $wgDebugLogFile, $wgDebugRawPage, $wgRequest;
-	global $wgProfiler, $wgUser;
-	if ( !isset( $wgProfiler ) )
-		return;
-
+	global $wgProfiler, $wgProfileLimit, $wgUser;
+	# Profiling must actually be enabled...
+	if( !isset( $wgProfiler ) ) return;
+	# Get total page request time
 	$now = wfTime();
 	$elapsed = $now - $wgRequestTime;
+	# Only show pages that longer than $wgProfileLimit time (default is 0)
+	if( $elapsed <= $wgProfileLimit ) return;
 	$prof = wfGetProfilingOutput( $wgRequestTime, $elapsed );
 	$forward = '';
 	if( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )
@@ -433,7 +448,7 @@ function wfGetLangObj( $langcode = false ){
 		return Language::factory( $langcode );
 
 	# $langcode is a string, but not a valid language code; use content language.
-	wfDebug( 'Invalid language code passed to wfGetLangObj, falling back to content language.' );
+	wfDebug( "Invalid language code passed to wfGetLangObj, falling back to content language.\n" );
 	return $wgContLang;
 }
 
@@ -773,7 +788,7 @@ function wfAbruptExit( $error = false ){
 			wfDebug("WARNING: Abrupt exit in $file at line $line\n");
 		}
 	} else {
-		wfDebug('WARNING: Abrupt exit\n');
+		wfDebug("WARNING: Abrupt exit\n");
 	}
 
 	wfLogProfilingData();
@@ -897,18 +912,35 @@ function wfReportTime() {
  * murky circumstances, which may be triggered in part by stub objects
  * or other fancy talkin'.
  *
- * Will return an empty array if Zend Optimizer is detected, otherwise
- * the output from debug_backtrace() (trimmed).
+ * Will return an empty array if Zend Optimizer is detected or if
+ * debug_backtrace is disabled, otherwise the output from
+ * debug_backtrace() (trimmed).
  *
  * @return array of backtrace information
  */
 function wfDebugBacktrace() {
+	static $disabled = null;
+
 	if( extension_loaded( 'Zend Optimizer' ) ) {
 		wfDebug( "Zend Optimizer detected; skipping debug_backtrace for safety.\n" );
 		return array();
-	} else {
-		return array_slice( debug_backtrace(), 1 );
 	}
+
+	if ( is_null( $disabled ) ) {
+		$disabled = false;
+		$functions = explode( ',', ini_get( 'disable_functions' ) );
+		$functions = array_map( 'trim', $functions );
+		$functions = array_map( 'strtolower', $functions );
+		if ( in_array( 'debug_backtrace', $functions ) ) {
+			wfDebug( "debug_backtrace is in disabled_functions\n" );
+			$disabled = true;
+		}
+	}
+	if ( $disabled ) {
+		return array();
+	}
+
+	return array_slice( debug_backtrace(), 1 );
 }
 
 function wfBacktrace() {
@@ -964,7 +996,8 @@ function wfBacktrace() {
  */
 function wfShowingResults( $offset, $limit ) {
 	global $wgLang;
-	return wfMsgExt( 'showingresults', array( 'parseinline' ), $wgLang->formatNum( $limit ), $wgLang->formatNum( $offset+1 ) );
+	return wfMsgExt( 'showingresults', array( 'parseinline' ), $wgLang->formatNum( $limit ),
+		$wgLang->formatNum( $offset+1 ) );
 }
 
 /**
@@ -972,18 +1005,28 @@ function wfShowingResults( $offset, $limit ) {
  */
 function wfShowingResultsNum( $offset, $limit, $num ) {
 	global $wgLang;
-	return wfMsgExt( 'showingresultsnum', array( 'parseinline' ), $wgLang->formatNum( $limit ), $wgLang->formatNum( $offset+1 ), $wgLang->formatNum( $num ) );
+	return wfMsgExt( 'showingresultsnum', array( 'parseinline' ), $wgLang->formatNum( $limit ), 
+		$wgLang->formatNum( $offset+1 ), $wgLang->formatNum( $num ) );
 }
 
 /**
- * @todo document
+ * Generate (prev x| next x) (20|50|100...) type links for paging
+ * @param $offset string
+ * @param $limit int
+ * @param $link string
+ * @param $query string, optional URL query parameter string
+ * @param $atend bool, optional param for specified if this is the last page
  */
 function wfViewPrevNext( $offset, $limit, $link, $query = '', $atend = false ) {
 	global $wgLang;
 	$fmtLimit = $wgLang->formatNum( $limit );
-	$prev = wfMsg( 'prevn', $fmtLimit );
-	$next = wfMsg( 'nextn', $fmtLimit );
-
+	# Get prev/next link display text
+	$prev = wfMsgHtml( 'prevn', $fmtLimit );
+	$next = wfMsgHtml( 'nextn', $fmtLimit );
+	# Get prev/next link title text
+	$pTitle = wfMsgExt( 'prevn-title', array('parsemag','escape'), $fmtLimit );
+	$nTitle = wfMsgExt( 'nextn-title', array('parsemag','escape'), $fmtLimit );
+	# Fetch the title object
 	if( is_object( $link ) ) {
 		$title =& $link;
 	} else {
@@ -992,44 +1035,58 @@ function wfViewPrevNext( $offset, $limit, $link, $query = '', $atend = false ) {
 			return false;
 		}
 	}
-
-	if ( 0 != $offset ) {
+	# Make 'previous' link
+	if( 0 != $offset ) {
 		$po = $offset - $limit;
-		if ( $po < 0 ) { $po = 0; }
+		$po = max($po,0);
 		$q = "limit={$limit}&offset={$po}";
-		if ( '' != $query ) { $q .= '&'.$query; }
-		$plink = '<a href="' . $title->escapeLocalUrl( $q ) . "\" class=\"mw-prevlink\">{$prev}</a>";
-	} else { $plink = $prev; }
-
+		if( $query != '' ) {
+			$q .= '&'.$query;
+		}
+		$plink = '<a href="' . $title->escapeLocalUrl( $q ) . "\" title=\"{$pTitle}\" class=\"mw-prevlink\">{$prev}</a>";
+	} else { 
+		$plink = $prev;
+	}
+	# Make 'next' link
 	$no = $offset + $limit;
-	$q = 'limit='.$limit.'&offset='.$no;
-	if ( '' != $query ) { $q .= '&'.$query; }
-
-	if ( $atend ) {
+	$q = "limit={$limit}&offset={$no}";
+	if( $query != '' ) {
+		$q .= '&'.$query;
+	}
+	if( $atend ) {
 		$nlink = $next;
 	} else {
-		$nlink = '<a href="' . $title->escapeLocalUrl( $q ) . "\" class=\"mw-nextlink\">{$next}</a>";
+		$nlink = '<a href="' . $title->escapeLocalUrl( $q ) . "\" title=\"{$nTitle}\" class=\"mw-nextlink\">{$next}</a>";
 	}
-	$nums = wfNumLink( $offset, 20, $title, $query ) . ' | ' .
-	  wfNumLink( $offset, 50, $title, $query ) . ' | ' .
-	  wfNumLink( $offset, 100, $title, $query ) . ' | ' .
-	  wfNumLink( $offset, 250, $title, $query ) . ' | ' .
-	  wfNumLink( $offset, 500, $title, $query );
-
+	# Make links to set number of items per page
+	$nums = $wgLang->pipeList( array( 
+		wfNumLink( $offset, 20, $title, $query ),
+		wfNumLink( $offset, 50, $title, $query ),
+		wfNumLink( $offset, 100, $title, $query ),
+		wfNumLink( $offset, 250, $title, $query ),
+		wfNumLink( $offset, 500, $title, $query )
+	) );
 	return wfMsg( 'viewprevnext', $plink, $nlink, $nums );
 }
 
 /**
- * @todo document
+ * Generate links for (20|50|100...) items-per-page links
+ * @param $offset string
+ * @param $limit int
+ * @param $title Title
+ * @param $query string, optional URL query parameter string
  */
-function wfNumLink( $offset, $limit, &$title, $query = '' ) {
+function wfNumLink( $offset, $limit, $title, $query = '' ) {
 	global $wgLang;
-	if ( '' == $query ) { $q = ''; }
-	else { $q = $query.'&'; }
-	$q .= 'limit='.$limit.'&offset='.$offset;
-
+	if( $query == '' ) { 
+		$q = '';
+	} else { 
+		$q = $query.'&';
+	}
+	$q .= "limit={$limit}&offset={$offset}";
 	$fmtLimit = $wgLang->formatNum( $limit );
-	$s = '<a href="' . $title->escapeLocalUrl( $q ) . "\" class=\"mw-numlink\">{$fmtLimit}</a>";
+	$lTitle = wfMsgExt('shown-title',array('parsemag','escape'),$limit);
+	$s = '<a href="' . $title->escapeLocalUrl( $q ) . "\" title=\"{$lTitle}\" class=\"mw-numlink\">{$fmtLimit}</a>";
 	return $s;
 }
 
@@ -1730,6 +1787,11 @@ define('TS_ORACLE', 6);
 define('TS_POSTGRES', 7);
 
 /**
+ * DB2 format time
+ */
+define('TS_DB2', 8);
+
+/**
  * @param mixed $outputtype A timestamp in one of the supported formats, the
  *                          function will autodetect which format is supplied
  *                          and act accordingly.
@@ -1790,6 +1852,8 @@ function wfTimestamp($outputtype=TS_UNIX,$ts=0) {
 			return gmdate( 'd-M-y h.i.s A', $uts) . ' +00:00';
 		case TS_POSTGRES:
 			return gmdate( 'Y-m-d H:i:s', $uts) . ' GMT';
+		case TS_DB2:
+			return gmdate( 'Y-m-d H:i:s', $uts);
 		default:
 			throw new MWException( 'wfTimestamp() called with illegal output type.');
 	}
@@ -1874,7 +1938,7 @@ function wfGetCachedNotice( $name ) {
 			$parserMemc->set( $key, array( 'html' => $parsed, 'hash' => md5( $notice ) ), 600 );
 			$notice = $parsed;
 		} else {
-			wfDebug( 'wfGetCachedNotice called for ' . $name . ' with no $wgOut available' );
+			wfDebug( 'wfGetCachedNotice called for ' . $name . ' with no $wgOut available'."\n" );
 			$notice = '';
 		}
 	}
@@ -1969,10 +2033,15 @@ function wfTempDir() {
  *
  * @param string $dir Full path to directory to create
  * @param int $mode Chmod value to use, default is $wgDirectoryMode
+ * @param string $caller Optional caller param for debugging.
  * @return bool
  */
-function wfMkdirParents( $dir, $mode = null ) {
+function wfMkdirParents( $dir, $mode = null, $caller = null ) {
 	global $wgDirectoryMode;
+
+	if ( !is_null( $caller ) ) {
+		wfDebug( "$caller: called wfMkdirParents($dir)" );
+	}
 
 	if( strval( $dir ) === '' || file_exists( $dir ) )
 		return true;
@@ -2143,11 +2212,26 @@ function wfIniGetBool( $setting ) {
 function wfShellExec( $cmd, &$retval=null ) {
 	global $IP, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
 
-	if( wfIniGetBool( 'safe_mode' ) ) {
-		wfDebug( "wfShellExec can't run in safe_mode, PHP's exec functions are too broken.\n" );
+	static $disabled;
+	if ( is_null( $disabled ) ) {
+		$disabled = false;
+		if( wfIniGetBool( 'safe_mode' ) ) {
+			wfDebug( "wfShellExec can't run in safe_mode, PHP's exec functions are too broken.\n" );
+			$disabled = true;
+		}
+		$functions = explode( ',', ini_get( 'disable_functions' ) );
+		$functions = array_map( 'trim', $functions );
+		$functions = array_map( 'strtolower', $functions );
+		if ( in_array( 'passthru', $functions ) ) {
+			wfDebug( "passthru is in disabled_functions\n" );
+			$disabled = true;
+		}
+	}
+	if ( $disabled ) {
 		$retval = 1;
 		return "Unable to run external programs in safe mode.";
 	}
+
 	wfInitShellLocale();
 
 	if ( php_uname( 's' ) == 'Linux' ) {
@@ -2359,9 +2443,16 @@ function wfMergeErrorArrays(/*...*/) {
 }
 
 /**
- * Make a URL index, appropriate for the el_index field of externallinks.
+ * parse_url() work-alike, but non-broken.  Differences:
+ *
+ * 1) Does not raise warnings on bad URLs (just returns false)
+ * 2) Handles protocols that don't use :// (e.g., mailto: and news:) correctly
+ * 3) Adds a "delimiter" element to the array, either '://' or ':' (see (2))
+ *
+ * @param string $url A URL to parse
+ * @return array Bits of the URL in an associative array, per PHP docs
  */
-function wfMakeUrlIndex( $url ) {
+function wfParseUrl( $url ) {
 	global $wgUrlProtocols; // Allow all protocols defined in DefaultSettings/LocalSettings.php
 	wfSuppressWarnings();
 	$bits = parse_url( $url );
@@ -2369,12 +2460,12 @@ function wfMakeUrlIndex( $url ) {
 	if ( !$bits ) {
 		return false;
 	}
+
 	// most of the protocols are followed by ://, but mailto: and sometimes news: not, check for it
-	$delimiter = '';
-	if ( in_array( $bits['scheme'] . '://' , $wgUrlProtocols ) ) {
-		$delimiter = '://';
-	} elseif ( in_array( $bits['scheme'] .':' , $wgUrlProtocols ) ) {
-		$delimiter = ':';
+	if ( in_array( $bits['scheme'] . '://', $wgUrlProtocols ) ) {
+		$bits['delimiter'] = '://';
+	} elseif ( in_array( $bits['scheme'] . ':', $wgUrlProtocols ) ) {
+		$bits['delimiter'] = ':';
 		// parse_url detects for news: and mailto: the host part of an url as path
 		// We have to correct this wrong detection
 		if ( isset ( $bits['path'] ) ) {
@@ -2384,6 +2475,15 @@ function wfMakeUrlIndex( $url ) {
 	} else {
 		return false;
 	}
+
+	return $bits;
+}
+
+/**
+ * Make a URL index, appropriate for the el_index field of externallinks.
+ */
+function wfMakeUrlIndex( $url ) {
+	$bits = wfParseUrl( $url );
 
 	// Reverse the labels in the hostname, convert to lower case
 	// For emails reverse domainpart only
@@ -2406,7 +2506,7 @@ function wfMakeUrlIndex( $url ) {
 	}
 	// Reconstruct the pseudo-URL
 	$prot = $bits['scheme'];
-	$index = "$prot$delimiter$reversedHost";
+	$index = $prot . $bits['delimiter'] . $reversedHost;
 	// Leave out user and password. Add the port, path, query and fragment
 	if ( isset( $bits['port'] ) )      $index .= ':' . $bits['port'];
 	if ( isset( $bits['path'] ) ) {

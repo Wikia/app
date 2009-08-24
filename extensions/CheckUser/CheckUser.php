@@ -14,8 +14,8 @@ $wgExtensionAliasesFiles['CheckUser'] = $dir . 'CheckUser.alias.php';
 $wgExtensionCredits['specialpage'][] = array(
 	'author' => array( 'Tim Starling', 'Aaron Schulz' ),
 	'name' => 'CheckUser',
-	'svn-date' => '$LastChangedDate: 2008-11-30 03:15:22 +0000 (Sun, 30 Nov 2008) $',
-	'svn-revision' => '$LastChangedRevision: 44056 $',
+	'svn-date' => '$LastChangedDate: 2009-02-16 17:27:53 +0000 (Mon, 16 Feb 2009) $',
+	'svn-revision' => '$LastChangedRevision: 47323 $',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CheckUser',
 	'description' => 'Grants users with the appropriate permission the ability to check user\'s IP addresses and other information',
 	'descriptionmsg'=> 'checkuser-desc',	
@@ -33,6 +33,8 @@ $wgCUDMaxAge = 3 * 30 * 24 * 3600; // 3 months
 
 # Mass block limits
 $wgCheckUserMaxBlocks = 200;
+
+$wgCheckUserStyleVersion = 4;
 
 # Recent changes data hook
 global $wgHooks;
@@ -131,7 +133,6 @@ function efUpdateCUPasswordResetData( $user, $ip, $account ) {
 	$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 	$rcRow = array(
 		'cuc_id'         => $cuc_id,
-		'cuc_page_id'    => 0,
 		'cuc_namespace'  => NS_USER,
 		'cuc_title'      => '',
 		'cuc_minor'      => 0,
@@ -180,7 +181,6 @@ function efUpdateCUEmailData( $to, $from, $subject, $text ) {
 	$cuc_id = $dbw->nextSequenceValue( 'cu_changes_cu_id_seq' );
 	$rcRow = array(
 		'cuc_id'         => $cuc_id,
-		'cuc_page_id'    => 0,
 		'cuc_namespace'  => NS_USER,
 		'cuc_title'      => '',
 		'cuc_minor'      => 0,

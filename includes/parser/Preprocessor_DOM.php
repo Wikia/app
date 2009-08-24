@@ -6,6 +6,8 @@
 class Preprocessor_DOM implements Preprocessor {
 	var $parser, $memoryLimit;
 
+	const CACHE_VERSION = 1;
+
 	function __construct( $parser ) {
 		$this->parser = $parser;
 		$mem = ini_get( 'memory_limit' );
@@ -63,9 +65,63 @@ class Preprocessor_DOM implements Preprocessor {
 	 */
 	function preprocessToObj( $text, $flags = 0 ) {
 		wfProfileIn( __METHOD__ );
-		wfProfileIn( __METHOD__.'-makexml' );
+		global $wgMemc, $wgPreprocessorCacheThreshold;
+		
+		$xml = false;
+		$cacheable = strlen( $text ) > $wgPreprocessorCacheThreshold;
+		if ( $cacheable ) {
+			wfProfileIn( __METHOD__.'-cacheable' );
 		global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgCategorySelectEnabled;
 
+			$cacheKey = wfMemcKey( 'preprocess-xml', md5($text), $flags );
+			$cacheValue = $wgMemc->get( $cacheKey );
+			if ( $cacheValue ) {
+				$version = substr( $cacheValue, 0, 8 );
+				if ( intval( $version ) == self::CACHE_VERSION ) {
+					$xml = substr( $cacheValue, 8 );
+					// From the cache
+					wfDebugLog( "Preprocessor", "Loaded preprocessor XML from memcached (key $cacheKey)" );
+				}
+			}
+		}
+		if ( $xml === false ) {
+			if ( $cacheable ) {
+				wfProfileIn( __METHOD__.'-cache-miss' );
+				$xml = $this->preprocessToXml( $text, $flags );
+				$cacheValue = sprintf( "%08d", self::CACHE_VERSION ) . $xml;
+				$wgMemc->set( $cacheKey, $cacheValue, 86400 );
+				wfProfileOut( __METHOD__.'-cache-miss' );
+				wfDebugLog( "Preprocessor", "Saved preprocessor XML to memcached (key $cacheKey)" );
+			} else {
+				$xml = $this->preprocessToXml( $text, $flags );
+			}
+
+		}
+		wfProfileIn( __METHOD__.'-loadXML' );
+		$dom = new DOMDocument;
+		wfSuppressWarnings();
+		$result = $dom->loadXML( $xml );
+		wfRestoreWarnings();
+		if ( !$result ) {
+			// Try running the XML through UtfNormal to get rid of invalid characters
+			$xml = UtfNormal::cleanUp( $xml );
+			$result = $dom->loadXML( $xml );
+			if ( !$result ) {
+				throw new MWException( __METHOD__.' generated invalid XML' );
+			}
+		}
+		$obj = new PPNode_DOM( $dom->documentElement );
+		wfProfileOut( __METHOD__.'-loadXML' );
+		if ( $cacheable ) {
+			wfProfileOut( __METHOD__.'-cacheable' );
+		}
+		wfProfileOut( __METHOD__ );
+		return $obj;
+	}
+	
+	function preprocessToXml( $text, $flags = 0 ) {
+		global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgCategorySelectEnabled;
+		wfProfileIn( __METHOD__ );
 		$rules = array(
 			'{' => array(
 				'end' => '}',
@@ -333,7 +389,9 @@ class Preprocessor_DOM implements Preprocessor {
 				} else {
 					$attrEnd = $tagEndPos;
 					// Find closing tag
-					if ( preg_match( "/<\/$name\s*>/i", $text, $matches, PREG_OFFSET_CAPTURE, $tagEndPos + 1 ) ) {
+					if ( preg_match( "/<\/" . preg_quote( $name, '/' ) . "\s*>/i", 
+							$text, $matches, PREG_OFFSET_CAPTURE, $tagEndPos + 1 ) ) 
+					{
 						$inner = substr( $text, $tagEndPos + 1, $matches[0][1] - $tagEndPos - 1 );
 						$i = $matches[0][1] + strlen( $matches[0][0] );
 						$close = '<close>' . htmlspecialchars( $matches[0][0] ) . '</close>';
@@ -628,24 +686,9 @@ class Preprocessor_DOM implements Preprocessor {
 		$stack->rootAccum .= '</root>';
 		$xml = $stack->rootAccum;
 
-		wfProfileOut( __METHOD__.'-makexml' );
-		wfProfileIn( __METHOD__.'-loadXML' );
-		$dom = new DOMDocument;
-		wfSuppressWarnings();
-		$result = $dom->loadXML( $xml );
-		wfRestoreWarnings();
-		if ( !$result ) {
-			// Try running the XML through UtfNormal to get rid of invalid characters
-			$xml = UtfNormal::cleanUp( $xml );
-			$result = $dom->loadXML( $xml );
-			if ( !$result ) {
-				throw new MWException( __METHOD__.' generated invalid XML' );
-			}
-		}
-		$obj = new PPNode_DOM( $dom->documentElement );
-		wfProfileOut( __METHOD__.'-loadXML' );
 		wfProfileOut( __METHOD__ );
-		return $obj;
+		
+		return $xml;
 	}
 }
 
@@ -891,7 +934,6 @@ class PPFrame_DOM implements PPFrame {
 		if ( is_string( $root ) ) {
 			return $root;
 		}
-		wfProfileIn( __METHOD__ );
 
 		if ( ++$this->parser->mPPNodeCount > $this->parser->mOptions->mMaxPPNodeCount )
 		{
@@ -901,6 +943,7 @@ class PPFrame_DOM implements PPFrame {
 		if ( $expansionDepth > $this->parser->mOptions->mMaxPPExpandDepth ) {
 			return '<span class="error">Expansion depth limit exceeded</span>';
 		}
+		wfProfileIn( __METHOD__ );
 		++$expansionDepth;
 
 		if ( $root instanceof PPNode_DOM ) {

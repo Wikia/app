@@ -665,15 +665,11 @@ Che a verìfica con la [[Special:Search|pàgina d'arserca]] se a-i fusso mai dj'
 'rev-deleted-comment'         => '(coment gavà)',
 'rev-deleted-user'            => '(stranòm gavà)',
 'rev-deleted-event'           => '(element gavà)',
-'rev-deleted-text-permission' => "<div class=\"mw-warning plainlinks\">
-Costa revision  dla pàgina-sì a l'é staita gavà via da 'nt j'archivi pùblich.
-A peul esse che a sio restajne chèich marca ant ël [{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} Registr ëd jë scancelament].
-</div>",
-'rev-deleted-text-view'       => "<div class=\"mw-warning plainlinks\">
-Costa revision dla pàgina-sì a l'é staita gavà via da 'nt j'archivi pùblich.
+'rev-deleted-text-permission' => "Costa revision  dla pàgina-sì a l'é staita gavà via da 'nt j'archivi pùblich.
+A peul esse che a sio restajne chèich marca ant ël [{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} Registr ëd jë scancelament].",
+'rev-deleted-text-view'       => "Costa revision dla pàgina-sì a l'é staita gavà via da 'nt j'archivi pùblich.
 Coma aministrator d'ës sit-sì chiel a peul ës-ciairela;
-a peul esse che a sio restajne chèich marca ant ël [{{fullurl:Special:Log/delete|page={{PAGENAMEE}}}} Registr ëd jë scancelament].
-</div>",
+a peul esse che a sio restajne chèich marca ant ël [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} Registr ëd jë scancelament].",
 'rev-delundel'                => 'mostra/stërma',
 'revisiondelete'              => 'Scancela/disdëscancela revision',
 'revdelete-nooldid-title'     => 'Version nen specificà',
@@ -1055,14 +1051,13 @@ Ch'a-i bata 'n colp col rat ansima a j'antestassion dle colòne për cangé órd
 'imagelinks'                => 'Anliure a le figure',
 'linkstoimage'              => "Le pàgine sì sota a l'han andrinta dj'anliure a sta figura-sì:",
 'nolinkstoimage'            => "Pa gnun-a pàgina che a l'abia n'anliura a sta figura-sì.",
-'sharedupload'              => "St'archivi-sì a l'é stait carià an comun; donca a peul esse dovrà antra vàire proget wiki diferent.",
+'sharedupload'              => "St'archivi-sì a l'é stait carià an comun; donca a peul esse dovrà antra vàire proget wiki diferent.", # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'shareduploadwiki'          => 'Che as varda $1 për savejne dë pì.',
 'shareduploadwiki-desc'     => "La descrission ch'a-i resta ansima a $1 as ës-ciàira ambelessì sota.",
 'shareduploadwiki-linktext' => "pàgina dë spiegon dl'archivi",
 'noimage'                   => 'A-i é pa gnun archivi che as ciama parej, a peul $1.',
 'noimage-linktext'          => 'carijlo',
 'uploadnewversion-linktext' => "Carié na version neuva dë st'archivi-sì",
-'imagepage-searchdupe'      => "Arsërca dj'archivi dobi",
 
 # File reversion
 'filerevert'                => "Buta torna $1 tanme ch'a l'era",
@@ -1230,7 +1225,8 @@ A peul sern-se n'arsultà pì strèit ën selessionand na sòrt ëd registr sola
 'special-categories-sort-abc'   => 'òrdiné për alfabétich',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Modìfiche faite da utent scancelà',
+'deletedcontributions'       => 'Modìfiche faite da utent scancelà',
+'deletedcontributions-title' => 'Modìfiche faite da utent scancelà',
 
 # Special:LinkSearch
 'linksearch'       => "Sërchè antra j'anliure dla Ragnà",
@@ -1492,7 +1488,7 @@ $1",
 'contributions' => "Contribussion dë st'Utent-sì",
 'mycontris'     => 'Mie contribussion',
 'contribsub2'   => 'Për $1 ($2)',
-'nocontribs'    => "A l'é pa trovasse gnun-a modìfica che a fussa conforma a costi criteri-sì",
+'nocontribs'    => "A l'é pa trovasse gnun-a modìfica che a fussa conforma a costi criteri-sì", # Optional parameter: $1 is the user name
 'uctop'         => ' (ùltima dla pàgina)',
 'month'         => 'Mèis:',
 'year'          => 'Ann:',
@@ -1934,6 +1930,7 @@ J'anliure ch'a-i ven-o dapress, ant sla midema riga, as conto për ecession (vis
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength", # Do not translate list items
 
 # EXIF tags
@@ -2216,9 +2213,8 @@ për fesse mandé un messa ëd conferma a soa adrëssa eletrònica.
 Andrinta al messagi a-i sara n'anliura (URL) con andrinta un còdes.
 Che a deurba st'anliura andrinta a sò programa ëd navigassion (browser)
 për confermé che soa adrëssa a l'é pròpe cola.",
-'confirmemail_pending'    => '<div class="error">
-I l\'oma già mandaje sò còdes ëd conferma;
-se a l\'ha pen-a creasse sò cont, miraco a venta che a speta dontre minute che a-j riva ant la pòsta, nopà che ciamene un neuv.</div>',
+'confirmemail_pending'    => "I l'oma già mandaje sò còdes ëd conferma;
+se a l'ha pen-a creasse sò cont, miraco a venta che a speta dontre minute che a-j riva ant la pòsta, nopà che ciamene un neuv.",
 'confirmemail_send'       => 'Manda un còdes ëd conferma për pòsta eletrònica',
 'confirmemail_sent'       => "Ël messagi ëd conferma a l'é stait mandà.",
 'confirmemail_oncreate'   => "Un còdes ëd conferma a l'é stait mandà a soa adrëssa ëd pòsta eletrònica.
@@ -2255,11 +2251,9 @@ Cost còdes ëd conferma a l'é bon fin-a al \$4.",
 'scarytranscludetoolong'  => '[Eror: anliura tròp longa]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">
-Anformassion për feje ël traciament a sta vos-sì:<br />
-$1
-</div>',
-'trackbackremove'   => ' ([$1 Gava via])',
+'trackbackbox'      => 'Anformassion për feje ël traciament a sta vos-sì:<br />
+$1',
+'trackbackremove'   => '([$1 Gava via])',
 'trackbacklink'     => 'Traciament',
 'trackbackdeleteok' => "J'anformassion për fé traciament a son staite gavà via.",
 

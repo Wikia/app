@@ -101,8 +101,9 @@ class ApiQueryAllLinks extends ApiQueryGeneratorBase {
 
 		$res = $this->select(__METHOD__);
 
-		$data = array ();
+		$pageids = array ();
 		$count = 0;
+		$result = $this->getResult();
 		while ($row = $db->fetchObject($res)) {
 			if (++ $count > $limit) {
 				// We've reached the one extra which shows that there are additional pages to be had. Stop here...
@@ -120,10 +121,17 @@ class ApiQueryAllLinks extends ApiQueryGeneratorBase {
 					$vals['fromid'] = intval($row->pl_from);
 				if ($fld_title) {
 					$title = Title :: makeTitle($params['namespace'], $row->pl_title);
-					$vals['ns'] = intval($title->getNamespace());
-					$vals['title'] = $title->getPrefixedText();
+					ApiQueryBase::addTitleInfo($vals, $title);
 				}
-				$data[] = $vals;
+				$fit = $result->addValue(array('query', $this->getModuleName()), null, $vals);
+				if(!$fit)
+				{
+					if($params['unique'])
+						$this->setContinueEnumParameter('from', $this->keyToTitle($row->pl_title));
+					else
+						$this->setContinueEnumParameter('continue', $this->keyToTitle($row->pl_title) . "|" . $row->pl_from);
+					break;
+				}
 			} else {
 				$pageids[] = $row->pl_from;
 			}
@@ -131,9 +139,7 @@ class ApiQueryAllLinks extends ApiQueryGeneratorBase {
 		$db->freeResult($res);
 
 		if (is_null($resultPageSet)) {
-			$result = $this->getResult();
-			$result->setIndexedTagName($data, 'l');
-			$result->addValue('query', $this->getModuleName(), $data);
+			$result->setIndexedTagName_internal(array('query', $this->getModuleName()), 'l');
 		} else {
 			$resultPageSet->populateFromPageIDs($pageids);
 		}
@@ -190,6 +196,6 @@ class ApiQueryAllLinks extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllLinks.php 45850 2009-01-17 20:03:25Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryAllLinks.php 47865 2009-02-27 16:03:01Z catrope $';
 	}
 }

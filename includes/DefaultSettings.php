@@ -33,7 +33,7 @@ if ( !defined( 'MW_PHP4' ) ) {
 }
 
 /** MediaWiki version number */
-$wgVersion			= '1.14.1';
+$wgVersion			= '1.15.1';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -224,6 +224,10 @@ $wgFileStore['deleted']['hash'] = 3;         ///< 3-level subdirectory split
  *                      equivalent to the corresponding member of $wgDBservers
  *    tablePrefix       Table prefix, the foreign wiki's $wgDBprefix
  *    hasSharedCache    True if the wiki's shared cache is accessible via the local $wgMemc
+ * 
+ * ForeignAPIRepo:
+ *    apibase              Use for the foreign API's URL
+ *    apiThumbCacheExpiry  How long to locally cache thumbs for
  *
  * The default is to initialise these arrays from the MW<1.11 backwards compatible settings:
  * $wgUploadPath, $wgThumbnailScriptPath, $wgSharedUploadDirectory, etc.
@@ -274,7 +278,8 @@ $wgUrlProtocols = array(
 	'nntp://', // @bug 3808 RFC 1738
 	'worldwind://',
 	'mailto:',
-	'news:'
+	'news:',
+	'svn://',
 );
 
 /** internal name of virus scanner. This servers as a key to the $wgAntivirusSetup array.
@@ -519,6 +524,11 @@ $wgUserEmailUseReplyTo = false;
  * emails for a given account. This is to prevent abuse by mail flooding.
  */
 $wgPasswordReminderResendTime = 24;
+
+/**
+ * The time, in seconds, when an emailed temporary password expires.
+ */
+$wgNewPasswordExpiry  = 3600 * 24 * 7;
 
 /**
  * SMTP Mode
@@ -977,7 +987,7 @@ $wgReadOnly             = null;
 $wgReadOnlyFile         = false; ///< defaults to "{$wgUploadDirectory}/lock_yBgMBwiR";
 
 /**
- * Filename for debug logging. 
+ * Filename for debug logging. See http://www.mediawiki.org/wiki/How_to_debug
  * The debug log file should be not be publicly accessible if it is used, as it
  * may contain private data. 
  */
@@ -1027,6 +1037,13 @@ $wgDebugDumpSql         = false;
  * in production.
  */
 $wgDebugLogGroups       = array();
+
+/**
+ * Display debug data at the bottom of the main content area.
+ *
+ * Useful for developers and technical users trying to working on a closed wiki.
+ */
+$wgShowDebug            = false;
 
 /**
  * Show the contents of $wgHooks in Special:Version
@@ -1240,6 +1257,8 @@ $wgGroupPermissions['bureaucrat']['userrights']  = true;
 $wgGroupPermissions['bureaucrat']['noratelimit'] = true;
 // Permission to change users' groups assignments across wikis
 #$wgGroupPermissions['bureaucrat']['userrights-interwiki'] = true;
+// Permission to export pages including linked pages regardless of $wgExportMaxLinkDepth
+#$wgGroupPermissions['bureaucrat']['override-export-depth'] = true;
 
 #$wgGroupPermissions['sysop']['deleterevision']  = true;
 // To hide usernames from users and Sysops
@@ -1287,7 +1306,7 @@ $wgGroupsRemoveFromSelf = array();
 /**
  * Set of available actions that can be restricted via action=protect
  * You probably shouldn't change this.
- * Translated trough restriction-* messages.
+ * Translated through restriction-* messages.
  */
 $wgRestrictionTypes = array( 'edit', 'move' );
 
@@ -1349,6 +1368,10 @@ $wgAutoConfirmCount = 0;
  *   array( APCOND_EMAILCONFIRMED ), *OR*
  *   array( APCOND_EDITCOUNT, number of edits ), *OR*
  *   array( APCOND_AGE, seconds since registration ), *OR*
+ *   array( APCOND_INGROUPS, group1, group2, ... ), *OR*
+ *   array( APCOND_ISIP, ip ), *OR*
+ *   array( APCOND_IPINRANGE, range ), *OR*
+ *   array( APCOND_AGE_FROM_EDIT, seconds since first edit ), *OR*
  *   similar constructs defined by extensions.
  *
  * If $wgEmailAuthentication is off, APCOND_EMAILCONFIRMED will be true for any
@@ -1446,7 +1469,7 @@ $wgCacheEpoch = '20030516000000';
  * to ensure that client-side caches don't keep obsolete copies of global
  * styles.
  */
-$wgStyleVersion = '195';
+$wgStyleVersion = '207';
 
 
 # Server-side caching:
@@ -1974,6 +1997,7 @@ $wgMediaHandlers = array(
 	'image/jpeg' => 'BitmapHandler',
 	'image/png' => 'BitmapHandler',
 	'image/gif' => 'BitmapHandler',
+	'image/tiff' => 'TiffHandler',
 	'image/x-ms-bmp' => 'BmpHandler',
 	'image/x-bmp' => 'BmpHandler',
 	'image/svg+xml' => 'SvgHandler', // official
@@ -2052,6 +2076,16 @@ $wgMaxImageArea = 1.25e7;
  */
 $wgMaxAnimatedGifArea = 1.0e6;
 /**
+ * Browsers don't support TIFF inline generally...
+ * For inline display, we need to convert to PNG or JPEG.
+ * Note scaling should work with ImageMagick, but may not with GD scaling.
+ *  // PNG is lossless, but inefficient for photos
+ *  $wgTiffThumbnailType = array( 'png', 'image/png' );
+ *  // JPEG is good for photos, but has no transparency support. Bad for diagrams.
+ *  $wgTiffThumbnailType = array( 'jpg', 'image/jpeg' );
+ */
+$wgTiffThumbnailType = false;
+/**
  * If rendered thumbnail files are older than this timestamp, they
  * will be rerendered on demand as if the file didn't already exist.
  * Update if there is some need to force thumbs and SVG rasterizations
@@ -2081,9 +2115,8 @@ $wgIgnoreImageErrors = false;
  */
 $wgGenerateThumbnailOnParse = true;
 
-/** Obsolete, always true, kept for compatibility with extensions */
+/** Whether or not to use image resizing */
 $wgUseImageResize = true;
-
 
 /** Set $wgCommandLineMode if it's not set already, to avoid notices */
 if( !isset( $wgCommandLineMode ) ) {
@@ -2252,9 +2285,26 @@ $wgExportMaxHistory = 0;
 
 $wgExportAllowListContributors = false ;
 
+/**
+ * If non-zero, Special:Export accepts a "pagelink-depth" parameter
+ * up to this specified level, which will cause it to include all
+ * pages linked to from the pages you specify. Since this number
+ * can become *insanely large* and could easily break your wiki,
+ * it's disabled by default for now.
+ *
+ * There's a HARD CODED limit of 5 levels of recursion to prevent a
+ * crazy-big export from being done by someone setting the depth
+ * number too high. In other words, last resort safety net.
+ */
+$wgExportMaxLinkDepth = 0;
 
 /**
- * Edits matching these regular expressions in body text or edit summary
+ * Whether to allow the "export all pages in namespace" option
+ */
+$wgExportFromNamespaces = false;
+
+/**
+ * Edits matching these regular expressions in body text
  * will be recognised as spam and rejected automatically.
  *
  * There's no administrator override on-wiki, so be careful what you set. :)
@@ -2263,6 +2313,9 @@ $wgExportAllowListContributors = false ;
  * See http://en.wikipedia.org/wiki/Regular_expression
  */
 $wgSpamRegex = array();
+
+/** Same as the above except for edit summaries */
+$wgSummarySpamRegex = array();
 
 /** Similarly you can get a function to do the job. The function will be given
  * the following args:
@@ -2374,6 +2427,8 @@ $wgDefaultUserOptions = array(
 	'rclimit'                 => 50,
 	'wllimit'                 => 250,
 	'hideminor'               => 0,
+	'hidepatrolled'           => 0,
+	'newpageshidepatrolled'   => 0,
 	'highlightbroken'         => 1,
 	'stubthreshold'           => 0,
 	'previewontop'            => 1,
@@ -2413,11 +2468,13 @@ $wgDefaultUserOptions = array(
 	'watchlisthideown'        => 0,
 	'watchlisthideanons'      => 0,
 	'watchlisthideliu'        => 0,
+	'watchlisthidepatrolled'  => 0,
 	'watchcreations'          => 0,
 	'watchdefault'            => 0,
 	'watchmoves'              => 0,
 	'watchdeletion'           => 0,
 	'noconvertlink'           => 0,
+	'gender'                  => 'unknown',
 );
 
 /** Whether or not to allow and use real name fields. Defaults to true. */
@@ -2504,7 +2561,7 @@ $wgAutoloadClasses = array();
  * $wgExtensionCredits[$type][] = array(
  * 	'name' => 'Example extension',
  *  'version' => 1.9,
- *  'svn-revision' => '$LastChangedRevision: 53178 $',
+ *  'svn-revision' => '$LastChangedRevision: 53179 $',
  *	'author' => 'Foo Barstein',
  *	'url' => 'http://wwww.example.com/Example%20Extension/',
  *	'description' => 'An example extension',
@@ -2724,6 +2781,9 @@ $wgBrowserBlackList = array(
  *
  * This variable is currently used ONLY for signature formatting, not for
  * anything else.
+ *
+ * Timezones can be translated by editing MediaWiki messages of type
+ * timezone-nameinlowercase like timezone-utc.
  */
 # $wgLocaltimezone = 'GMT';
 # $wgLocaltimezone = 'PST8PDT';
@@ -2754,17 +2814,17 @@ $wgLocalTZoffset = null;
 
 
 /**
- * When translating messages with wfMsg(), it is not always clear what should be
- * considered UI messages and what shoud be content messages.
+ * When translating messages with wfMsg(), it is not always clear what should
+ * be considered UI messages and what should be content messages.
  *
- * For example, for regular wikipedia site like en, there should be only one
- * 'mainpage', therefore when getting the link of 'mainpage', we should treate
- * it as content of the site and call wfMsgForContent(), while for rendering the
- * text of the link, we call wfMsg(). The code in default behaves this way.
- * However, sites like common do offer different versions of 'mainpage' and the
- * like for different languages. This array provides a way to override the
- * default behavior. For example, to allow language specific mainpage and
- * community portal, set
+ * For example, for the English Wikipedia, there should be only one 'mainpage',
+ * so when getting the link for 'mainpage', we should treat it as site content
+ * and call wfMsgForContent(), but for rendering the text of the link, we call
+ * wfMsg(). The code behaves this way by default. However, sites like the
+ * Wikimedia Commons do offer different versions of 'mainpage' and the like for
+ * different languages. This array provides a way to override the default
+ * behavior. For example, to allow language-specific main page and community
+ * portal, set
  *
  * $wgForceUIMsgAsContentMsg = array( 'mainpage', 'portal-url' );
  */
@@ -2965,6 +3025,7 @@ $wgSpecialPageGroups = array(
 	'Newimages'                 => 'changes',
 	'Newpages'                  => 'changes',
 	'Log'                       => 'changes',
+	'Tags'			    => 'changes',
 
 	'Upload'                    => 'media',
 	'Listfiles'                 => 'media',
@@ -3071,6 +3132,19 @@ $wgNoFollowLinks = true;
  * See Language.php for a list of namespaces.
  */
 $wgNoFollowNsExceptions = array();
+
+/**
+ * If this is set to an array of domains, external links to these domain names
+ * (or any subdomains) will not be set to rel="nofollow" regardless of the
+ * value of $wgNoFollowLinks.  For instance:
+ *
+ * $wgNoFollowDomainExceptions = array( 'en.wikipedia.org', 'wiktionary.org' );
+ *
+ * This would add rel="nofollow" to links to de.wikipedia.org, but not
+ * en.wikipedia.org, wiktionary.org, en.wiktionary.org, us.en.wikipedia.org,
+ * etc.
+ */
+$wgNoFollowDomainExceptions = array();
 
 /**
  * Default robot policy.  The default policy is to encourage indexing and fol-
@@ -3214,6 +3288,12 @@ $wgRateLimitLog = null;
  *  $wgRateLimitsExcludedGroups = array( 'sysop', 'bureaucrat' );
  */
 $wgRateLimitsExcludedGroups = array();
+
+/**
+ * Array of IPs which should be excluded from rate limits.
+ * This may be useful for whitelisting NAT gateways for conferences, etc.
+ */
+$wgRateLimitsExcludedIPs = array();
 
 /**
  * On Special:Unusedimages, consider images "used", if they are put
@@ -3490,6 +3570,18 @@ $wgAPIListModules = array();
 $wgAPIMaxDBRows = 5000;
 
 /**
+ * The maximum size (in bytes) of an API result.
+ * Don't set this lower than $wgMaxArticleSize*1024
+ */
+$wgAPIMaxResultSize = 8388608;
+
+/**
+ * The maximum number of uncached diffs that can be retrieved in one API
+ * request. Set this to 0 to disable API diffs altogether
+ */
+$wgAPIMaxUncachedDiffs = 1;
+
+/**
  * Parser test suite files to be run by parserTests.php when no specific
  * filename is passed to it.
  *
@@ -3600,6 +3692,25 @@ $wgMaximumMovedPages = 100;
 $wgFixDoubleRedirects = false;
 
 /**
+ * Max number of redirects to follow when resolving redirects.
+ * 1 means only the first redirect is followed (default behavior).
+ * 0 or less means no redirects are followed.
+ */
+$wgMaxRedirects = 1;
+
+/**
+ * Array of invalid page redirect targets.
+ * Attempting to create a redirect to any of the pages in this array
+ * will make the redirect fail.
+ * Userlogout is hard-coded, so it does not need to be listed here.
+ * (bug 10569) Disallow Mypage and Mytalk as well.
+ *
+ * As of now, this only checks special pages. Redirects to pages in
+ * other namespaces cannot be invalidated by this variable.
+ */
+$wgInvalidRedirectTargets = array( 'Filepath', 'Mypage', 'Mytalk' );
+ 
+/**
  * Array of namespaces to generate a sitemap for when the
  * maintenance/generateSitemap.php script is run, or false if one is to be ge-
  * nerated for all namespaces.
@@ -3631,10 +3742,10 @@ $wgPasswordAttemptThrottle = array( 'count' => 5, 'seconds' => 300 );
 $wgEdititis = false;
 
 /**
-* Enable the UniversalEditButton for browsers that support it
-* (currently only Firefox with an extension)
-* See http://universaleditbutton.org for more background information
-*/
+ * Enable the UniversalEditButton for browsers that support it
+ * (currently only Firefox with an extension)
+ * See http://universaleditbutton.org for more background information
+ */
 $wgUniversalEditButton = true;
 
 /**
@@ -3643,5 +3754,47 @@ $wgUniversalEditButton = true;
  * and the functionality will be enabled universally.
  */
 $wgEnforceHtmlIds = true;
+
+/**
+ * Search form behavior
+ * true = use Go & Search buttons
+ * false = use Go button & Advanced search link
+ */
+$wgUseTwoButtonsSearchForm = true;
+
+/**
+ * Preprocessor caching threshold
+ */
+$wgPreprocessorCacheThreshold = 1000;
+
+/**
+ * Allow filtering by change tag in recentchanges, history, etc
+ * Has no effect if no tags are defined in valid_tag.
+ */
+$wgUseTagFilter = true;
+
+/**
+ * Allow redirection to another page when a user logs in.
+ * To enable, set to a string like 'Main Page'
+ */
+$wgRedirectOnLogin = null;
+
+/**
+ * Characters to prevent during new account creations.
+ * This is used in a regular expression character class during
+ * registration (regex metacharacters like / are escaped).
+ */
+$wgInvalidUsernameCharacters = '@';
+
+/**
+ * Character used as a delimiter when testing for interwiki userrights
+ * (In Special:UserRights, it is possible to modify users on different
+ * databases if the delimiter is used, e.g. Someuser@enwiki).
+ *
+ * It is recommended that you have this delimiter in
+ * $wgInvalidUsernameCharacters above, or you will not be able to
+ * modify the user rights of those users via Special:UserRights
+ */
+$wgUserrightsInterwikiDelimiter = '@';
 
 require_once( "$IP/includes/wikia/DefaultSettings.php" );

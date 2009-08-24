@@ -9,8 +9,9 @@
 	$wgExtensionFunctions[] = 'wfSpecialAddCollection';
 
 	function wfSpecialAddCollection() {
-	        global $wgMessageCache;
-                $wgMessageCache->addMessages(array('addcollection'=>'Wikidata: Add collection'),'en');
+	# Moved to SpecialLanguages.i18n.php
+	#        global $wgMessageCache;
+    #            $wgMessageCache->addMessages(array('addcollection'=>'Wikidata: Add collection'),'en');
                         
 		class SpecialAddCollection extends SpecialPage {
 			function SpecialAddCollection() {
@@ -28,7 +29,7 @@
 					return false;
 				}
 
-				$dbr = &wfGetDB(DB_MASTER);
+				$dbr = wfGetDB(DB_MASTER);
 
 				if ($wgRequest->getText('collection')) {
 					require_once('WikiDataAPI.php');
@@ -38,7 +39,7 @@
 					$collectionName = $wgRequest->getText('collection');
 					startNewTransaction($wgUser->getID(), wfGetIP(), 'Add collection ' . $collectionName);
 					bootstrapCollection($collectionName,$wgRequest->getText('language'),$wgRequest->getText('type'), $dc);
-					$wgOut->addHTML('<strong>Collection ' . $collectionName . ' added.</strong><br />');	
+					$wgOut->addHTML(wfMsg('ow_collection_added', $collectionName) . "<br />" );	
 				}
 				$datasets=wdGetDatasets();
 				$datasetarray['']=wfMsgSc("none_selected");
@@ -48,12 +49,12 @@
 
 				$wgOut->addHTML(getOptionPanel(
 					array(
-						'Collection name' => getTextBox('collection'),
-						'Language of name' => getSuggest('language','language'),
-						'Collection type' => getSelect('type',array('' => 'None','RELT' => 'RELT','LEVL' => 'LEVL','CLAS' => 'CLAS', 'MAPP' => 'MAPP')),
-						'Dataset' => getSelect('dataset',$datasetarray)
+						'Collection name:' => getTextBox('collection'),
+						'Language of name:' => getSuggest('language','language'),
+						'Collection type:' => getSelect('type',array('' => 'None','RELT' => 'RELT','LEVL' => 'LEVL','CLAS' => 'CLAS', 'MAPP' => 'MAPP')),
+						'Dataset:' => getSelect('dataset',$datasetarray)
 					),
-					'',array('create' => 'Create')
+					'',array('create' => wfMsg('ow_create'))
 				));
 			}
 		}

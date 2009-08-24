@@ -41,6 +41,11 @@ $aliases['bcl'] = array(
 	'CategoryTree' => array( 'KahoyNinKategorya' ),
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца)) */
+$aliases['be-tarask'] = array(
+	'CategoryTree' => array( 'Дрэва_катэгорыяў' ),
+);
+
 /** Bulgarian (Български) */
 $aliases['bg'] = array(
 	'CategoryTree' => array( 'Дърво на категориите' ),
@@ -135,6 +140,11 @@ $aliases['hu'] = array(
 	'CategoryTree' => array( 'Kategóriafa' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'CategoryTree' => array( 'Arbore de categorias' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'CategoryTree' => array( 'Pohon kategori' ),
@@ -153,6 +163,11 @@ $aliases['km'] = array(
 /** Korean (한국어) */
 $aliases['ko'] = array(
 	'CategoryTree' => array( '분류트리' ),
+);
+
+/** Ripoarisch (Ripoarisch) */
+$aliases['ksh'] = array(
+	'CategoryTree' => array( 'Saachjruppeboum' ),
 );
 
 /** Latin (Latina) */
@@ -200,6 +215,11 @@ $aliases['nl'] = array(
 	'CategoryTree' => array( 'Categorieboom' ),
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'CategoryTree' => array( 'Kategoritre' ),
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'CategoryTree' => array( 'Kategoritre' ),
@@ -235,6 +255,11 @@ $aliases['ro'] = array(
 	'CategoryTree' => array( 'Arborele categoriilor' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'CategoryTree' => array( 'वर्गवृक्ष:' ),
+);
+
 /** Swedish (Svenska) */
 $aliases['sv'] = array(
 	'CategoryTree' => array( 'Kategoriträd' ),
@@ -243,6 +268,16 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'CategoryTree' => array( 'SafuyaJamii' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'CategoryTree' => array( 'Puno ng kaurian' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'CategoryTree' => array( 'KategoriHiyerarşisi' ),
 );
 
 /** Vèneto (Vèneto) */

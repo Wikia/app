@@ -161,13 +161,10 @@ class SpecialForm extends SpecialPage {
 
 		# On error, show the form again with some error text.
 
-		if ($missedFields) {
-			if (count($missedFields) > 1) {
-				$msg = wfMsg('formrequiredfieldpluralerror', $wgLang->listToText($missedFields));
-			} else {
-				$msg = wfMsg('formrequiredfielderror', $missedFields[0]);
-			}
-			$this->showForm($form, $msg);
+		$missedFieldsCount = count( $missedFields );
+		if ( $missedFieldsCount > 0 ) {
+			$msg = wfMsgExt( 'formrequiredfielderror', 'parsemag', $wgLang->listToText( $missedFields ), $missedFieldsCount );
+			$this->showForm( $form, $msg );
 			return;
 		}
 
@@ -449,7 +446,7 @@ class FormField {
 			  Xml::closeElement('textarea');
 			break;
 		 case 'text':
-			return Xml::element('label', array('for' => $this->name), $this->label) . ": " .
+			return Xml::element( 'label', array( 'for' => $this->name ), $this->label ) . wfMsg( 'colon-separator' ) .
 			  Xml::element('input', array('type' => 'text',
 									   'name' => $this->name,
 									   'id' => $this->name,
@@ -463,7 +460,7 @@ class FormField {
 			if ($def == 'checked') {
 				$attrs['checked'] = 'checked';
 			}
-			return Xml::element('label', array('for' => $this->name), $this->label) . ": " .
+			return Xml::element( 'label', array( 'for' => $this->name ), $this->label ) . wfMsg( 'colon-separator' ) .
 			  Xml::element('input', $attrs);
 			break;
 		 case 'radio':
@@ -491,7 +488,7 @@ class FormField {
 									 $item);
 			}
 
-			return Xml::element('label', array('for' => $this->name), $this->label) . ": " .
+			return Xml::element( 'label', array( 'for' => $this->name ), $this->label ) . wfMsg( 'colon-separator' ) .
 			  Xml::openElement('select', array('name' => $this->name, 'id' => $this->name)) .
 			  implode("", $items) .
 		      Xml::closeElement('select');

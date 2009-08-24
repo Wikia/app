@@ -23,6 +23,12 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 			$this->displayRestrictionError();
 			return;
 		}
+		
+		global $wgApplyGlobalBlocks;
+		if (!$wgApplyGlobalBlocks) {
+			$this->addWikiMsg( 'globalblocking-whitelist-notapplied' );
+			return;
+		}
 
 		$errors = '';
 
@@ -61,7 +67,7 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 
 	function loadParameters() {
 		global $wgRequest;
-		$this->mAddress = Block::normaliseRange( $wgRequest->getText( 'address' ) );
+		$this->mAddress = Block::normaliseRange( trim( $wgRequest->getText( 'address' ) ) );
 		$this->mReason = $wgRequest->getText( 'wpReason' );
 		$this->mWhitelistStatus = $wgRequest->getCheck( 'wpWhitelistStatus' );
 		$this->mEditToken = $wgRequest->getText( 'wpEditToken' );
@@ -108,7 +114,7 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 			$dbw->replace( 'global_block_whitelist', array( 'gbw_id' ), $row, __METHOD__ );
 
 			$page = new LogPage( 'gblblock' );
-			$page->addEntry( 'whitelist', SpecialPage::getTitleFor( 'Contributions', $ip ), $this->mReason );
+			$page->addEntry( 'whitelist', Title::makeTitleSafe( NS_USER, $ip ), $this->mReason );
 			
 			$wgOut->addWikiMsg( 'globalblocking-whitelist-whitelisted', $ip, $id );
 		} else {
@@ -116,7 +122,7 @@ class SpecialGlobalBlockStatus extends SpecialPage {
 			$dbw->delete( 'global_block_whitelist', array( 'gbw_id' => $id ), __METHOD__ );
 			
 			$page = new LogPage( 'gblblock' );
-			$page->addEntry( 'dwhitelist', SpecialPage::getTitleFor( 'Contributions', $ip ), $this->mReason );
+			$page->addEntry( 'dwhitelist', Title::makeTitleSafe( NS_USER, $ip ), $this->mReason );
 			$wgOut->addWikiMsg( 'globalblocking-whitelist-dewhitelisted', $ip, $id );
 		}
 		

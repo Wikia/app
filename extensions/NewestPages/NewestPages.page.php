@@ -123,6 +123,8 @@ class NewestPages extends IncludableSpecialPage {
 	}
 
 	function makeLimitLinks() {
+		global $wgLang;
+
 		$limits = array( 10, 20, 30, 50, 100, 150 );
 		foreach( $limits as $limit ) {
 			if( $limit != $this->limit ) {
@@ -131,7 +133,7 @@ class NewestPages extends IncludableSpecialPage {
 				$links[] = (string)$limit;
 			}
 		}
-		return( wfMsgHtml( 'newestpages-limitlinks', implode( ' | ', $links ) ) );
+		return( wfMsgHtml( 'newestpages-limitlinks', $wgLang->pipeList( $links ) ) );
 	}
 
 	function makeRedirectToggle() {

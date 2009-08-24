@@ -33,7 +33,7 @@ function wfSpecialDatasearch() {
 		protected $meaningAttribute;
 
 		function SpecialDatasearch() {
-			SpecialPage::SpecialPage('Datasearch');
+			SpecialPage::SpecialPage('DataSearch');
 		}
 
 		function execute($parameter) {
@@ -56,21 +56,21 @@ function wfSpecialDatasearch() {
 
 			$wgOut->setPageTitle(wfMsg('search'));
 
-			$this->spellingAttribute = new Attribute("found-word", "Found word", "short-text");
-			$this->languageAttribute = new Attribute("language", "Language", "language");
+			$this->spellingAttribute = new Attribute("found-word", wfMsg('datasearch_found_word'), "short-text");
+			$this->languageAttribute = new Attribute("language", wfMsg('ow_Language'), "language");
 
 			$this->expressionStructure = new Structure($this->spellingAttribute, $this->languageAttribute);
-			$this->expressionAttribute = new Attribute("expression", "Expression", $this->expressionStructure);
+			$this->expressionAttribute = new Attribute("expression", wfMsg('ow_Expression'), $this->expressionStructure);
 
-			$this->definedMeaningAttribute = new Attribute("defined-meaning", "Defined meaning", $definedMeaningReferenceType);
-			$this->definitionAttribute = new Attribute("definition", "Definition", "definition");
+			$this->definedMeaningAttribute = new Attribute("defined-meaning", wfMsg('ow_DefinedMeaning'), $definedMeaningReferenceType);
+			$this->definitionAttribute = new Attribute("definition", wfMsg('ow_Definition'), "definition");
 
 			$this->meaningStructure = new Structure($this->definedMeaningAttribute, $this->definitionAttribute);
-			$this->meaningAttribute = new Attribute("meaning", "Meaning", $this->meaningStructure);
+			$this->meaningAttribute = new Attribute("meaning", wfMsg('datasearch_meaning'), $this->meaningStructure);
 
-			$this->externalIdentifierAttribute = new Attribute("external-identifier", "External identifier", "short-text");
-			$this->collectionAttribute = new Attribute("collection", "Collection", $definedMeaningReferenceType);
-			$this->collectionMemberAttribute = new Attribute("collection-member", "Collection member", $definedMeaningReferenceType);
+			$this->externalIdentifierAttribute = new Attribute("external-identifier", wfMsg('datasearch_ext_identifier'), "short-text");
+			$this->collectionAttribute = new Attribute("collection", wfMsg('ow_Collection'), $definedMeaningReferenceType);
+			$this->collectionMemberAttribute = new Attribute("collection-member", wfMsg('ow_CollectionMember'), $definedMeaningReferenceType);
 
 			$this->externalIdentifierMatchStructure = new Structure(
 				$this->externalIdentifierAttribute,
@@ -130,22 +130,22 @@ function wfSpecialDatasearch() {
 
 			$languageName = languageIdAsText($languageId);
 			$options = array();
-			$options['Search text'] = getTextBox('search-text', $searchText);
+			$options[wfMsg('datasearch_search_text')] = getTextBox('search-text', $searchText);
 
 			if ($wgFilterLanguageId == 0)
-				$options['Language'] = getSuggest('language', "language", array(), $languageId, $languageName);
+				$options[wfMsg('datasearch_language')] = getSuggest('language', "language", array(), $languageId, $languageName);
 			else
 				$languageId = $wgFilterLanguageId;
 
-			$options['Collection'] = getSuggest('collection', 'collection', array(), $collectionId, collectionIdAsText($collectionId));
+			$options[wfMsg('ow_Collection_colon')] = getSuggest('collection', 'collection', array(), $collectionId, collectionIdAsText($collectionId));
 
 			if ($wgShowSearchWithinWordsOption)
-				$options['Within words'] = getCheckBox('within-words', $withinWords);
+				$options[wfMsg('datasearch_within_words')] = getCheckBox('within-words', $withinWords);
 			else
 				$withinWords = $wgSearchWithinWordsDefaultValue;
 
 			if ($wgShowSearchWithinExternalIdentifiersOption)
-				$options['Within external identifiers'] = getCheckBox('within-external-identifiers', $withinExternalIdentifiers);
+				$options[wfMsg('datasearch_within_ext_ids')] = getCheckBox('within-external-identifiers', $withinExternalIdentifiers);
 			else
 				$withinExternalIdentifiers = $wgSearchWithinExternalIdentifiersDefaultValue;
 
@@ -153,26 +153,25 @@ function wfSpecialDatasearch() {
 
 			if ($withinWords) {
 				if ($languageId != 0 && $languageName != "")
-					$languageText = " in <i>" . $languageName . "</i> ";
+					$wgOut->addHTML('<h1>' . wfMsg('datasearch_match_words_lang', $languageName, $searchText) . '</h1>');
 				else
-					$languageText = " ";
+					$wgOut->addHTML('<h1>' . wfMsg('datasearch_match_words', $searchText) . '</h1>');
 
-				$wgOut->addHTML('<h1>Words' . $languageText . 'matching <i>'. $searchText . '</i> and associated meanings</h1>');
-				$wgOut->addHTML('<p>Showing only a maximum of 100 matches.</p>');
+				$wgOut->addHTML('<p>' . wfMsgExt('datasearch_showing_only', 'parsemag', 100) . '</p>');
 
 				$wgOut->addHTML($this->searchWords($searchText, $collectionId, $languageId));
 			}
 
 			if ($withinExternalIdentifiers) {
-				$wgOut->addHTML('<h1>External identifiers matching <i>'. $searchText . '</i></h1>');
-				$wgOut->addHTML('<p>Showing only a maximum of 100 matches.</p>');
+				$wgOut->addHTML('<h1>'.wfMsg('datasearch_match_ext_ids', $searchText) . '</i></h1>');
+				$wgOut->addHTML('<p>' . wfMsgExt('datasearch_showing_only', 'parsemag', 100) . '</p>');
 
 				$wgOut->addHTML($this->searchExternalIdentifiers($searchText, $collectionId));
 			}
 		}
 
 		function getSpellingRestriction($spelling, $tableColumn) {
-			$dbr = &wfGetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE);
 
 			if (trim($spelling) != '')
 				return " AND " . $tableColumn . " LIKE " . $dbr->addQuotes("%$spelling%");
@@ -188,7 +187,7 @@ function wfSpecialDatasearch() {
 		}
 
 		function getPositionSelectColumn($spelling, $tableColumn) {
-			$dbr = &wfGetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE);
 
 			if (trim($spelling) != '')
 				return "INSTR(LCASE(" . $tableColumn . "), LCASE(". $dbr->addQuotes("$spelling") .")) as position, ";
@@ -198,7 +197,7 @@ function wfSpecialDatasearch() {
 
 		function searchWords($text, $collectionId, $languageId) {
 			$dc=wdGetDataSetContext();
-			$dbr = &wfGetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE);
 
 			$sql =
 				"SELECT ". $this->getPositionSelectColumn($text, "{$dc}_expression.spelling") ." {$dc}_syntrans.defined_meaning_id AS defined_meaning_id, {$dc}_expression.spelling AS spelling, {$dc}_expression.language_id AS language_id ".
@@ -274,7 +273,7 @@ function wfSpecialDatasearch() {
 
 		function searchExternalIdentifiers($text, $collectionId) {
 			$dc=wdGetDataSetContext();
-			$dbr = &wfGetDB(DB_SLAVE);
+			$dbr = wfGetDB(DB_SLAVE);
 
 			$sql =
 				"SELECT ". $this->getPositionSelectColumn($text, "{$dc}_collection_contents.internal_member_id") ." {$dc}_collection_contents.member_mid AS member_mid, {$dc}_collection_contents.internal_member_id AS external_identifier, {$dc}_collection.collection_mid AS collection_mid ".

@@ -11,7 +11,7 @@ full text and terms of the licence.
 
 Replace Text is an extension to MediaWiki that creates a new special page,
 Special:ReplaceText, available to administrators only (defined as anyone
-who has 'delete' privileges on pages), that does a text find-and-replace
+who has the 'replacetext' privilege), that does a text find-and-replace
 on all pages in the wiki, except the Talk pages and the ones in the wiki's
 own project namespace. Both the contents of pages and their titles can be
 modified. The search is case-sensitive.
@@ -29,7 +29,7 @@ http://www.mediawiki.org/wiki/Extension:Replace_Text
 
 == Requirements ==
 
-This version of the Replace Text extension requires MediaWiki 1.8 or higher.
+This version of the Replace Text extension requires MediaWiki 1.11 or higher.
 
 == Installation ==
 
@@ -38,6 +38,12 @@ within your MediaWiki 'extensions' directory, then add the following
 line to your 'LocalSettings.php' file:
 
      require_once( "$IP/extensions/ReplaceText/ReplaceText.php" );
+
+In order to perform replacements, you must have the 'replacetext' permssion;
+if you are an administrator on your wiki, the easiest way to do this is to
+also add the following line:
+
+     $wgGroupPermissions['sysop']['replacetext'] = true;
 
 == Contact ==
 

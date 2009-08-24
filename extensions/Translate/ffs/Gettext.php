@@ -22,8 +22,10 @@ class GettextFormatReader extends SimpleFormatReader {
 			return '';
 		}
 		$data = file_get_contents( $this->filename );
-		$length = strpos( $data, "msgid" );
-		return substr( $data, 0, $length );
+		$start = (int) strpos( $data, '# --');
+		if ( $start ) $start += 5;
+		$end = (int) strpos( $data, "msgid" );
+		return substr( $data, $start, $end-$start );
 	}
 
 	public function parseFile() {
@@ -146,7 +148,7 @@ class GettextFormatReader extends SimpleFormatReader {
 				$snippet = preg_replace( "/[^$wgLegalTitleChars]/", ' ', $snippet );
 				$snippet = preg_replace( "/[:&%\/_]/", ' ', $snippet );
 				$snippet = preg_replace( "/ {2,}/", ' ', $snippet );
-				$snippet = $lang->truncate( $snippet, 30 );
+				$snippet = $lang->truncate( $snippet, 30, '' );
 				$snippet = str_replace( ' ', '_', trim( $snippet ) );
 				$key = $this->prefix . $hash . '-' . $snippet;
 			}

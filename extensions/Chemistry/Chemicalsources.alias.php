@@ -37,14 +37,34 @@ $aliases['bs'] = array(
 	'ChemicalSources' => array( 'HemijskiIzvori' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'ChemicalSources' => array( 'Chemiske žrědła' ),
+);
+
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'ChemicalSources' => array( 'ChemicalSources' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'ChemicalSources' => array( 'Chemiske žórła' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'ChemicalSources' => array( 'Vegyszer források' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'ChemicalSources' => array( 'Fontes chimic' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'ChemicalSources' => array( '化学関連の検索' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -75,5 +95,25 @@ $aliases['nl'] = array(
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'ChemicalSources' => array( 'Kjemiske kilder' ),
+);
+
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'ChemicalSources' => array( 'کيميايي سرچينې' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'ChemicalSources' => array( 'रसायनस्रोत' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'ChemicalSources' => array( 'BurimeKimike' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'ChemicalSources' => array( 'Mga pinagmulang makakimika' ),
 );
 

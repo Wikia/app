@@ -3,10 +3,12 @@
  * Print query results in interactive timelines.
  * @author Markus Krötzsch
  * @file
+ * @ingroup SemanticResultFormats
  */
 
 /**
  * Result printer for timeline data.
+ * @ingroup SemanticResultFormats
  */
 class SRFTimeline extends SMWResultPrinter {
 
@@ -26,13 +28,13 @@ class SRFTimeline extends SMWResultPrinter {
 			$this->m_tlend = smwfNormalTitleDBKey($params['timelineend']);
 		}
 		if (array_key_exists('timelinesize', $params)) {
-			$this->m_tlsize = htmlspecialchars(str_replace(';', ' ', strtolower(trim($params['timelinesize'])))); 
+			$this->m_tlsize = htmlspecialchars(str_replace(';', ' ', strtolower(trim($params['timelinesize']))));
 			// str_replace makes sure this is only one value, not mutliple CSS fields (prevent CSS attacks)
 			/// FIXME: this is either unsafe or redundant, since Timeline is Wiki-compatible. If the JavaScript makes user inputs to CSS then it is bad even if we block this injection path.
 		} else {
 			$this->m_tlsize = '300px';
 		}
-		if (array_key_exists('timelinebands', $params)) { 
+		if (array_key_exists('timelinebands', $params)) {
 		//check for band parameter, should look like "DAY,MONTH,YEAR"
 			$this->m_tlbands = preg_split('/[,][\s]*/u',trim($params['timelinebands']));
 		} else {
@@ -111,7 +113,7 @@ class SRFTimeline extends SMWResultPrinter {
 								$header = $pr->getText($outputmode,$this->mLinker) . ' ';
 							}
 							// is this a start date?
-							if ( ($pr->getMode() == SMWPrintRequest::PRINT_PROP) && 
+							if ( ($pr->getMode() == SMWPrintRequest::PRINT_PROP) &&
 							     ($pr->getData()->getXSDValue() == $this->m_tlstart) ) {
 								//FIXME: Timeline scripts should support XSD format explicitly. They
 								//currently seem to implement iso8601 which deviates from XSD in cases.
@@ -121,7 +123,7 @@ class SRFTimeline extends SMWResultPrinter {
 								$hastime = true;
 							}
 							// is this the end date?
-							if ( ($pr->getMode() == SMWPrintRequest::PRINT_PROP) && 
+							if ( ($pr->getMode() == SMWPrintRequest::PRINT_PROP) &&
 							     ($pr->getData()->getXSDValue() == $this->m_tlend) ) {
 								//NOTE: We can assume $object to be an SMWDataValue in this case.
 								$curmeta .= '<span class="smwtlend">' . $object->getXMLSchemaDate(false) . '</span>';

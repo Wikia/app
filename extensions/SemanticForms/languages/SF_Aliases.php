@@ -87,8 +87,8 @@ $aliases['fa'] = array(
 
 /** French (Français) */
 $aliases['fr'] = array(
-	'CreateCategory' => array( 'CréerCatégorie', 'Créer catégorie' ),
-	'CreateTemplate' => array( 'CréerModèle', 'Créer modèle' ),
+	'CreateCategory' => array( 'Créer catégorie', 'CréerCatégorie' ),
+	'CreateTemplate' => array( 'Créer modèle', 'CréerModèle' ),
 	'Templates' => array( 'Modèles' ),
 );
 
@@ -130,6 +130,34 @@ $aliases['hu'] = array(
 	'Forms' => array( 'Űrlapok' ),
 	'Templates' => array( 'Sablonok' ),
 	'UploadWindow' => array( 'Feltöltő ablak' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'AddData' => array( 'Adder datos' ),
+	'AddPage' => array( 'Adder pagina' ),
+	'CreateCategory' => array( 'Crear categoria' ),
+	'CreateForm' => array( 'Crear formulario' ),
+	'CreateProperty' => array( 'Crear proprietate' ),
+	'CreateTemplate' => array( 'Crear patrono' ),
+	'EditData' => array( 'Modificar datos' ),
+	'Forms' => array( 'Formularios' ),
+	'Templates' => array( 'Patronos' ),
+	'UploadWindow' => array( 'Cargar fenestra' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'AddData' => array( 'データ追加' ),
+	'AddPage' => array( 'ページ追加' ),
+	'CreateCategory' => array( 'カテゴリ作成' ),
+	'CreateForm' => array( 'フォーム作成' ),
+	'CreateProperty' => array( 'プロパティ作成' ),
+	'CreateTemplate' => array( 'テンプレート作成' ),
+	'EditData' => array( 'データ編集' ),
+	'Forms' => array( 'フォーム' ),
+	'Templates' => array( 'テンプレート' ),
+	'UploadWindow' => array( 'アップロードウィンドウ' ),
 );
 
 /** Georgian (ქართული) */
@@ -235,6 +263,14 @@ $aliases['oc'] = array(
 	'Templates' => array( 'Modèls' ),
 );
 
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'CreateCategory' => array( 'وېشنيزه جوړول' ),
+	'CreateProperty' => array( 'د جوړولو ځانتيا' ),
+	'CreateTemplate' => array( 'کينډۍ جوړول' ),
+	'Templates' => array( 'کينډۍ' ),
+);
+
 /** Brazilian Portuguese (Português do Brasil) */
 $aliases['pt-br'] = array(
 	'Forms' => array( 'Formulários' ),
@@ -244,6 +280,12 @@ $aliases['pt-br'] = array(
 /** Romanian (Română) */
 $aliases['ro'] = array(
 	'Templates' => array( 'Formate' ),
+);
+
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'Forms' => array( 'Format' ),
+	'Templates' => array( 'Stampat' ),
 );
 
 /** Swahili (Kiswahili) */
@@ -257,5 +299,29 @@ $aliases['sw'] = array(
 	'Forms' => array( 'Fomu' ),
 	'Templates' => array( 'Vigezo' ),
 	'UploadWindow' => array( 'DirishalaKupakizia' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'AddData' => array( 'Idagdag ang dato' ),
+	'AddPage' => array( 'Idagdag ang pahina' ),
+	'CreateCategory' => array( 'Likhain ang kaurian' ),
+	'CreateForm' => array( 'Likhain ang pormularyo' ),
+	'CreateProperty' => array( 'Likhain ang pag-aari' ),
+	'CreateTemplate' => array( 'Likhain ang suleras' ),
+	'EditData' => array( 'Baguhin ang dato' ),
+	'Forms' => array( 'Mga pormularyo' ),
+	'Templates' => array( 'Mga suleras' ),
+	'UploadWindow' => array( 'Bintana ng pagkarga' ),
+);
+
+/** Turkish (Türkçe) */
+$aliases['tr'] = array(
+	'Templates' => array( 'Şablonlar' ),
+);
+
+/** Vèneto (Vèneto) */
+$aliases['vec'] = array(
+	'Templates' => array( 'Modèi' ),
 );
 

@@ -42,7 +42,7 @@ class WantedTemplatesPage extends QueryPage {
 			    FROM $templatelinks LEFT JOIN
 			         $page ON tl_title = page_title AND tl_namespace = page_namespace
 			   WHERE page_title IS NULL AND tl_namespace = ". NS_TEMPLATE ."
-			GROUP BY tl_title
+			GROUP BY tl_namespace, tl_title
 			";
 	}
 
@@ -73,8 +73,6 @@ class WantedTemplatesPage extends QueryPage {
 			$skin->makeLinkObj( $nt, htmlspecialchars( $text ) ) :
 			$skin->makeBrokenLinkObj( $nt, htmlspecialchars( $text ) );
 
-		$nlinks = wfMsgExt( 'nmembers', array( 'parsemag', 'escape'),
-			$wgLang->formatNum( $result->value ) );
 		return wfSpecialList(
 			$plink,
 			$this->makeWlhLink( $nt, $skin, $result )

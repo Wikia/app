@@ -20,7 +20,7 @@ if(!file_exists($dir . substr($wgVersion, 0, 4) . '/EditUser_body.php')) {
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'EditUser',
-	'version'        => '1.5.1',
+	'version'        => '1.5.2',
 	'author'         => 'Ryan Schmidt',
 	'description'    => 'Allows privileged users to edit other users\' preferences',
 	'descriptionmsg' => 'edituser-desc',
@@ -45,12 +45,18 @@ $wgEditUserDebugLog = $dir . 'debug.log';
 
 $wgHooks['SavePreferences'][] = 'efEditUserDebug';
 
-function efEditUserDebug($eu, $user, &$msg, $old) {
+function efEditUserDebug( $eu, $user, &$msg, $old = array() ) {
 	global $wgEditUserDebug, $wgEditUserDebugLog;
-	if(!$wgEditUserDebug || !$eu instanceOf EditUser)
+	if( !$wgEditUserDebug || !$eu instanceOf EditUser )
 		return true;
-	wfErrorLog("\n===== BEGIN EDITUSER REQUEST =====\nTime: "
-		.wfTime()."\nCurrent user state: ".var_export($old, true)
-		."\nNew user state: ".var_export($user->mOptions, true), $wgEditUserDebugLog);
+	// $old was added in 1.13, so let's have this work for earlier versions :)
+	if( $old === array() ) {
+		wfErrorLog( "\n===== BEGIN EDITUSER REQUEST =====\nTime: "
+			. wfTime() . "\nNew user state: ".var_export( $user->mOptions, true ), $wgEditUserDebugLog );
+	} else {
+		wfErrorLog( "\n===== BEGIN EDITUSER REQUEST =====\nTime: "
+			. wfTime() . "\nCurrent user state: " . var_export( $old, true )
+			. "\nNew user state: ".var_export( $user->mOptions, true ), $wgEditUserDebugLog );
+	}
 	return true;
 }

@@ -263,7 +263,7 @@ class SpecialContributionStatistics extends SpecialPage {
 				Xml::element( 'td', array( 'align' => 'right' ),
 					$wgLang->formatNum( $data[0] ) ) .
 				Xml::element( 'td', array( 'align' => 'right' ), 
-					wfMsg( 'contribstats-percentage', $wgLang->formatNum( round( $data[0] * $factor, 2 ) ) ) ) .
+					wfMsg( 'percent', $wgLang->formatNum( round( $data[0] * $factor, 2 ) ) ) ) .
 				Xml::element( 'td', array( 'align' => 'right' ),
 					isset( $range[1] ) ? $wgLang->formatNum( round( $data[1], 2 ) ) : '-' )
 			);

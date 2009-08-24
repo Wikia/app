@@ -42,6 +42,12 @@ $aliases['de'] = array(
 	'Disabledusers' => array( 'Deaktivierte Benutzer' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'PasswordReset' => array( 'Gronidło slědk stajiś' ),
+	'Disabledusers' => array( 'Znjemóžnjone wužywarje' ),
+);
+
 /** Swiss German (Alemannisch) */
 $aliases['gsw'] = array(
 	'PasswordReset' => array( 'Passwort zrucksetze' ),
@@ -59,9 +65,22 @@ $aliases['hr'] = array(
 	'Disabledusers' => array( 'Onesposobljeni_suradnici' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'PasswordReset' => array( 'Hesło wróćo stajić' ),
+	'Disabledusers' => array( 'Znjemóžneni wužiwarjo' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'PasswordReset' => array( 'Redefinir contrasigno' ),
+	'Disabledusers' => array( 'Usatores disactivate' ),
+);
+
 /** Japanese (日本語) */
 $aliases['ja'] = array(
-	'PasswordReset' => array( 'パスワードのリセット', 'パスワードリセット' ),
+	'PasswordReset' => array( 'パスワードの再設定', 'パスワード再設定', 'パスワードのリセット', 'パスワードリセット' ),
+	'Disabledusers' => array( '無効化済利用者' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -104,6 +123,12 @@ $aliases['no'] = array(
 	'Disabledusers' => array( 'Inaktive kontoer' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'PasswordReset' => array( 'सङ्केतशब्दपुन:प्रयु्क्ता' ),
+	'Disabledusers' => array( 'असमर्थयोजक' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'PasswordReset' => array( 'SetiupassNywila' ),
@@ -113,5 +138,11 @@ $aliases['sw'] = array(
 /** Thai (ไทย) */
 $aliases['th'] = array(
 	'PasswordReset' => array( 'เปลี่ยนรหัสผ่าน' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'PasswordReset' => array( 'Muling pagtatakda ng hudyat' ),
+	'Disabledusers' => array( 'Hindi pinaganang mga tagagamit', 'Hindi pinagaganang mga tagagamit' ),
 );
 

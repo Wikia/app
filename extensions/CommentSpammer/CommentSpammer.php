@@ -16,8 +16,8 @@ if ( ! defined( 'MEDIAWIKI' ) ) {
 $wgExtensionFunctions[] = 'efCommentSpammer';
 $wgExtensionCredits['other'][] = array(
 	'name' => 'CommentSpammer',
-	'svn-date' => '$LastChangedDate: 2008-05-06 11:59:58 +0000 (Tue, 06 May 2008) $',
-	'svn-revision' => '$LastChangedRevision: 34306 $',
+	'svn-date' => '$LastChangedDate: 2009-01-25 12:24:02 +0000 (Sun, 25 Jan 2009) $',
+	'svn-revision' => '$LastChangedRevision: 46195 $',
 	'author' => 'Nick Jenkins',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:CommentSpammer',
 	'description' => 'Rejects edits from suspected comment spammers on a DNS blacklist.',
@@ -142,7 +142,8 @@ class HoneyPotCommentSpammer {
 		if( count( $params ) >= 4 ) {
 			list( $ip_addr, $last_spam, $threat_level, $offence_code) = $params;
 			$comment = wfMsgExt( 'commentspammer-log-msg'     , array( 'parseinline' ), $ip_addr, $page )
-					 . wfMsgExt( 'commentspammer-log-msg-info', array( 'parseinline' ), $last_spam, $threat_level, $offence_code, $ip_addr );
+				. wfMsg( 'word_separator' )
+				. wfMsgExt( 'commentspammer-log-msg-info', array( 'parseinline' ), $last_spam, $threat_level, $offence_code, $ip_addr );
 		} elseif( count( $params ) == 1 ) {
 			$ip_addr = $params[0];
 			$comment = wfMsgExt( 'commentspammer-log-msg',      array( 'parseinline' ), $ip_addr, $page );

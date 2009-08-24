@@ -11,6 +11,7 @@ class SpamBlacklist {
 	var $warningTime = 600;
 	var $expiryTime = 900;
 	var $warningChance = 100;
+    var $ignoreEditSummary = false;
 
 	function SpamBlacklist( $settings = array() ) {
 		foreach ( $settings as $name => $value ) {
@@ -227,7 +228,7 @@ class SpamBlacklist {
 			$addedLinks = array_diff( $newLinks, $oldLinks );
 
 			// We add the edit summary if one exists
-			if ( !empty( $editsummary ) ) $addedLinks[] = $editsummary;
+			if ( !$this->ignoreEditSummary && !empty( $editsummary ) ) $addedLinks[] = $editsummary;
 
 			wfDebugLog( 'SpamBlacklist', "Old URLs: " . implode( ', ', $oldLinks ) );
 			wfDebugLog( 'SpamBlacklist', "New URLs: " . implode( ', ', $newLinks ) );
@@ -365,7 +366,7 @@ class SpamBlacklist {
 				"</tt>\n";
 			$hookError =
 				"<div class='errorbox'>" .
-				wfMsgExt( 'spam-invalid-lines', array( 'parsemag' ), count( $badLines ) ) .
+				wfMsgExt( 'spam-invalid-lines', array( 'parsemag' ), count( $badLines ) ) . "<br />" .
 				$badList .
 				"</div>\n" .
 				"<br clear='all' />\n";

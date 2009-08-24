@@ -445,7 +445,7 @@ function DynamicPageList( $input ) {
 		$title = Title::makeTitle( $row->page_namespace, $row->page_title);
 		$output .= $sStartItem;
 		if (true == $bAddFirstCategoryDate)
-			$output .= $wgLang->date($row->cl_timestamp) . ': ';
+			$output .= $wgLang->date($row->cl_timestamp) . wfMsg( 'colon-separator' );
 
 		$query = array();
 		if (true == $bShowCurId)

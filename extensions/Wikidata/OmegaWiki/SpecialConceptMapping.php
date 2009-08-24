@@ -21,8 +21,8 @@ function wfSpecialConceptMapping() {
 	# Add messages
 	#require_once "$IP/includes/SpecialPage.php";
 
-        global $wgMessageCache;
-        $wgMessageCache->addMessages(array('conceptmapping'=>'Wikidata: Concept mapping'),'en');
+        #global $wgMessageCache;
+        #$wgMessageCache->addMessages(array('conceptmapping'=>'Wikidata: Concept mapping'),'en');
                 
 	require_once("Wikidata.php");
 	require_once("WikiDataAPI.php");
@@ -36,7 +36,7 @@ function wfSpecialConceptMapping() {
 
 		function execute( $par ) {
 			global $wgOut, $wgRequest, $wgTitle, $wgUser, $wdTermDBDataSet;
-			$wgOut->setPageTitle("ConceptMapping");
+			$wgOut->setPageTitle(wfMsg('ow_conceptmapping_title'));
 
 			if(!$wgUser->isAllowed('editwikidata-'.$wdTermDBDataSet)) {
 				$wgOut->addHTML(wfMsgSc("Permission_denied"));

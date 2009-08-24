@@ -51,11 +51,13 @@ $messages['ar'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Purodha
  */
 $messages['qqq'] = array(
 	'spamdifftool-desc' => 'Shown in [[Special:Version]] as a short description of this extension. Do not translate links.',
+	'spamdifftool_option_none' => '{{Identical|Nothing}}',
 	'spamdifftool_submit_buttom' => '{{Identical|Submit}}',
 );
 
@@ -128,6 +130,34 @@ $messages['arz'] = array(
 	'spamdifftool_submit_buttom' => 'تنفيذ',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'spamdifftool' => 'Кіраваньне чорным сьпісам спаму',
+	'spamdifftool-desc' => 'Дазваляе лёгка дадаваць новыя запісы ў чорны сьпіс спаму з параўнаньня вэрсіяў старонак',
+	'spamdifftool_cantedit' => 'Прабачце, Вы ня маеце правоў на рэдагаваньне чорнага сьпісу спаму.',
+	'spamdifftool_notext' => "Няма тэксту для даданьня ў чорны сьпіс спаму.
+Націсьніце <a href='$1'>тут</a>, каб працягваць.",
+	'spamdifftool_confirm' => "Пацьвердзіце, што Вы жадаеце дадаць гэтыя запісы ў чорны сьпіс спаму.
+(Націсьніце <a href='$1' target='new'>тут</a>, каб паведаміць пра праблему.)",
+	'spamdifftool_summary' => 'Дадаць у чорны сьпіс спаму.',
+	'spamdifftool_urls_detected' => 'Наступныя URL-адрасы былі выяўлены ў рэдагаваньні(ньнях), якія зь іх трэба дадаць у чорны сьпіс спаму?
+Гэтыя настройкі разьмешчаныя ад больш строгіх абмежаваньняў да менш строгіх, блякаваньне ўсяго дамэна заблякуе ўсе спасылкі на гэты дамэн.
+
+Пераканайцеся, што Вы не блякуеце дамэны, які ўтрымліваюць старонкі ўдзельнікаў, такія як blogpost.com, geocities.com і г.д.',
+	'spamdifftool_no_urls_detected' => "URL-адрасы ня знойдзеныя.
+Націсьніце <a href='$1'>тут</a>, каб вярнуцца.",
+	'spamdifftool_spam_link_text' => 'дадаць у спам',
+	'spamdifftool_option_domain' => 'усё з гэтага дамэну',
+	'spamdifftool_option_subdomain' => 'усё з гэтага паддамэну',
+	'spamdifftool_option_directory' => 'гэтага паддамэну і дырэкторыі',
+	'spamdifftool_option_none' => 'нічога',
+	'spamdifftool_block' => 'Блякаваньне:',
+	'spamdifftool_submit_buttom' => 'Адправіць',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  * @author Spiritia
@@ -164,7 +194,23 @@ $messages['bn'] = array(
  */
 $messages['bs'] = array(
 	'spamdifftool' => 'Upravljaj s nepoželjnim spiskom spama',
+	'spamdifftool-desc' => 'Omogućuje osnovni način dodavanja novih stavki na zabranjeni spisak spama sa diff stranica',
 	'spamdifftool_cantedit' => 'Žao nam je - nemate dopuštenja za uređivanje nedopuštenog spiska spama.',
+	'spamdifftool_notext' => "Nema teksta za dodavanje na zabranjeni spisak spama.
+Kliknite <a href='$1'>ovdje</a> za nastavak.",
+	'spamdifftool_confirm' => "Potvrdite da stvarno želite dodati ove stavke na spisak nepoželjnog spama.
+(Kliknite <a href='$1' target='new'>ovdje</a> za prijavu problema.)",
+	'spamdifftool_summary' => 'Dodavanje na zabranjeni spisak spama',
+	'spamdifftool_urls_detected' => 'Slijedeći URLovi su otkriveni u izmjeni(izmjenama), koji od njih bi željeli dodati na spisak nepoželjnog spama?
+Te opcije su poredane od više ograničavajućih ka manje ograničavajućim, blokiranje cijele domene će blokirati sve linkove te sve drugo što dolazi s te domene.
+
+Budite pažljivi da ne blokirate cijele domene koje pružaju korisničke račune, poput blogpost.com, geocities.com i sl.',
+	'spamdifftool_no_urls_detected' => "Nisu pronađeni urlovi.
+Kliknite <a href='$1'>ovdje</a> za povratak.",
+	'spamdifftool_spam_link_text' => 'dodaj u spam',
+	'spamdifftool_option_domain' => 'sve iz ove domene',
+	'spamdifftool_option_subdomain' => 'sve iz ove subdomene',
+	'spamdifftool_option_directory' => 'ovu subdomenu i direktorijum',
 	'spamdifftool_option_none' => 'ništa',
 	'spamdifftool_block' => 'Blokada:',
 	'spamdifftool_submit_buttom' => 'Pošalji',
@@ -203,6 +249,7 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Als-Holder
  * @author Consta
  * @author Michawiki
  * @author Umherirrender
@@ -210,7 +257,7 @@ $messages['cy'] = array(
 $messages['de'] = array(
 	'spamdifftool' => 'Spam-Blacklist bearbeiten',
 	'spamdifftool-desc' => 'Ermöglicht das Hinzufügen neuer Einträge zur Spamblacklist aus Versionsunterschieden',
-	'spamdifftool_cantedit' => 'Du hast keine Berechitung zur Bearbeitung der Spam-Blacklist.',
+	'spamdifftool_cantedit' => 'Du hast keine Berechtigung zur Bearbeitung der Spam-Blacklist.',
 	'spamdifftool_notext' => "Es gibt keinen Text, welcher der Spam-Blacklist hinzugefügt werden könnte. Klicke <a href='$1'>hier</a>, um fortzufahren.",
 	'spamdifftool_confirm' => "Bestätige, dass du diese Einträge der Spam-Blacklist hinzufügen möchtest.
 (Klicke <a href='$1' target='new'>hier</a>, um ein Problem zu melden.)",
@@ -227,6 +274,13 @@ Stelle sicher, dass du nicht komplette Domains blockierst, die separate Benutzer
 	'spamdifftool_option_none' => 'nichts',
 	'spamdifftool_block' => 'Sperre:',
 	'spamdifftool_submit_buttom' => 'Speichern',
+);
+
+/** German (formal address) (Deutsch (Sie-Form))
+ * @author Umherirrender
+ */
+$messages['de-formal'] = array(
+	'spamdifftool_cantedit' => 'Sie haben keine Berechtigung zur Bearbeitung der Spam-Blacklist.',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -287,10 +341,30 @@ Klaku <a href='$1'>ĉi tie</a> por reveni.",
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
+ * @author Drini
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'spamdifftool' => 'Administrar lista negra de spam',
+	'spamdifftool-desc' => 'Provee una manera básica de agregar entradas a la lista negra de spam desde diferentes páginas',
+	'spamdifftool_cantedit' => 'Disculpe - usted no tiene permiso para editar la lista negra de spam.',
+	'spamdifftool_notext' => "No hay texto para agregar en la lista negra de spam.
+Click <a href='$1'>aquí</a> para continuar.",
+	'spamdifftool_confirm' => "Confirme que desea añadir estas entradas a la lista negra de Spam.
+(Haga click <a href='$1' target='new'>aquí</a> para reportar un problema).",
+	'spamdifftool_summary' => 'Agregando a la lista negra de spam',
+	'spamdifftool_urls_detected' => 'Las siguientes URLS fueron detectadas en la edición. ¿Cuales desea que se añadan a la lista negra de spam?
+Estas opciones se ordenan de la más restrictiva a la menos, bloqueando el dominion entero bloqueará todos los enlaces que provengan de él.
+
+Asegúrese se no bloquear dominios enteros que hospeden cuentas de usuario (como blogspot, geocities, etc.).',
+	'spamdifftool_no_urls_detected' => "Ningún urls fue borrado.
+Click <a href='$1'>aquí</a> para regresar.",
+	'spamdifftool_spam_link_text' => 'agregar a spam',
+	'spamdifftool_option_domain' => 'Todo de este dominio',
+	'spamdifftool_option_subdomain' => 'Todo de este subdominio',
+	'spamdifftool_option_directory' => 'Este subdominio y directorio',
 	'spamdifftool_option_none' => 'nada',
 	'spamdifftool_block' => 'Bloqueo:',
 	'spamdifftool_submit_buttom' => 'Enviar',
@@ -302,6 +376,14 @@ $messages['es'] = array(
 $messages['eu'] = array(
 	'spamdifftool_spam_link_text' => 'spamera gehitu',
 	'spamdifftool_option_none' => 'ezer',
+);
+
+/** Persian (فارسی)
+ * @author BlueDevil
+ * @author Huji
+ */
+$messages['fa'] = array(
+	'spamdifftool_cantedit' => 'متاسفیم؛ شما اجازه ویرایش فهرست سیاه هرزنگاری را ندارید.',
 );
 
 /** French (Français)
@@ -337,13 +419,13 @@ Assurez-vous de ne pas bloquer des domaines entiers qui hébergent certains comp
  * @author Toliño
  */
 $messages['gl'] = array(
-	'spamdifftool' => 'Administrar a Listaxe Negra de Spam',
-	'spamdifftool-desc' => 'Proporciona un camiño básico para engadir novas entradas á listaxe negra de spam (spam blacklist) das diferenzas das páxinas',
-	'spamdifftool_cantedit' => 'Sentímolo - vostede non ten permisos para editar na Listaxe Negra de Spam.',
-	'spamdifftool_notext' => "Non hai texto para engadir a Listaxe negra de Spam. Prema <a href='$1'>aquí</a> para continuar.",
-	'spamdifftool_confirm' => "Confirme que quere engadir estas entradas á listaxe negra de <i>spam</i>.
+	'spamdifftool' => 'Administrar a Lista Negra de Spam',
+	'spamdifftool-desc' => 'Proporciona un camiño básico para engadir novas entradas á lista negra de spam (spam blacklist) das diferenzas das páxinas',
+	'spamdifftool_cantedit' => 'Sentímolo - vostede non ten permisos para editar na Lista Negra de Spam.',
+	'spamdifftool_notext' => "Non hai texto para engadir a Lista negra de Spam. Prema <a href='$1'>aquí</a> para continuar.",
+	'spamdifftool_confirm' => "Confirme que quere engadir estas entradas á lista negra de <i>spam</i>.
 (Faga clic <a href='$1' target='new'>aquí</a> para informar de calquera problema.)",
-	'spamdifftool_summary' => 'Engadindo a Listaxe Negra de Spam',
+	'spamdifftool_summary' => 'Engadindo a Lista Negra de Spam',
 	'spamdifftool_urls_detected' => 'Os seguintes enderezos URL foron detectados na(s) edición(s); cales quere engadir á lista negra de spam?
 Estas opcións van das máis restritivas ás menos, bloqueando o dominio enteiro bloquearanse todas as ligazóns que veñan dese dominio.
 
@@ -363,6 +445,31 @@ Asegúrese de non bloquear dominios enteiros que bloqueen contas de usuario; com
  */
 $messages['grc'] = array(
 	'spamdifftool_submit_buttom' => 'Ὑποβάλλειν',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'spamdifftool' => 'Spam-Blacklist bearbeite',
+	'spamdifftool-desc' => 'Macht s megli neiji Yyträg zue dr Spamblacklist us Versionsunterschiid zuezfiege',
+	'spamdifftool_cantedit' => 'Excusez! Du derfsch d Spam-Blacklist nit bearbeite.',
+	'spamdifftool_notext' => "S git kei Täxt, wu mer zue dr Spam-Blacklist chennt zuefiege. Druck <a href='$1'>do</a> zum wyter mache.",
+	'spamdifftool_confirm' => "Bstätig, ass Du die Yyträg zue dr Spam-Blacklist wetsch zuefiege.
+(Druck <a href='$1' target='new'>do</a> go ne Probläm mälde.)",
+	'spamdifftool_summary' => 'Zue dr Spam-Blacklist zuefiege',
+	'spamdifftool_urls_detected' => 'Die URL sin in dr Bearbeitig gfunde wore. Weli dervu wit zue dr Spam-Blacklist zuefiege?
+D Reihefolg goht vu arg yygschränkt bis weniger yygschränkt. S Yytrage vun ere ganze Domain blockiert alli Gleicher, wu vu däre Domain chemme.
+
+Stell sicher, ass Du nit kompletti Domain blockiersch, wu separati Benutzerinhalt z Verfiegig stelle, wie z. B. blogpost.com, geocities.com usw.',
+	'spamdifftool_no_urls_detected' => "S sin kei URL gfunde wore. Druck <a href='$1'>do</a> zum zrugg z goh.",
+	'spamdifftool_spam_link_text' => 'zue Spam zuefiege',
+	'spamdifftool_option_domain' => 'alli vu däre Domain',
+	'spamdifftool_option_subdomain' => 'alli vu däre Subdomain',
+	'spamdifftool_option_directory' => 'die Subdomain un s Verzeichnis',
+	'spamdifftool_option_none' => 'nyt',
+	'spamdifftool_block' => 'Sperri:',
+	'spamdifftool_submit_buttom' => 'Spychere',
 );
 
 /** Hebrew (עברית)
@@ -519,9 +626,27 @@ Fai click <a href='$1'>qui</a> per tornare.",
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author Hosiryuhosi
  */
 $messages['ja'] = array(
+	'spamdifftool' => 'スパム用ブラックリストの管理',
+	'spamdifftool-desc' => 'スパム用ブラックリストに差分ページから新規項目を追加するための基本手段を提供する',
+	'spamdifftool_cantedit' => 'あなたにはスパム用ブラックリストを編集する権限がありません。',
+	'spamdifftool_notext' => "スパム用ブラックリストに追加する文字列はありません。<a href='$1'>ここ</a>をクリックして続行します。",
+	'spamdifftool_confirm' => "これらの項目をスパム用ブラックリストに追加したいか確認してください。(問題を報告するには<a href='$1' target='new'>ここ</a>をクリックします)",
+	'spamdifftool_summary' => 'スパム用ブラックリストに追加中',
+	'spamdifftool_urls_detected' => '以下のURLが編集から検出されました。スパム用ブラックリストに追加したいのはどれですか？
+
+各オプションは制限の強いものから弱いものの順に並んでいます。ドメイン全体のブロックはそのドメインに属するあらゆるリンクをブロックします。
+
+blogpost.com や geocities.com といった、利用者アカウントを提供するものはドメイン全体をブロックしないように必ずしてください。',
+	'spamdifftool_no_urls_detected' => "URLはひとつも検出されませんでした。<a href='$1'>ここ</a>をクリックして戻ります。",
+	'spamdifftool_spam_link_text' => 'スパムに追加',
+	'spamdifftool_option_domain' => 'このドメインのすべて',
+	'spamdifftool_option_subdomain' => 'このサブドメインのすべて',
+	'spamdifftool_option_directory' => 'このサブドメインとディレクトリ',
+	'spamdifftool_option_none' => 'なし',
 	'spamdifftool_block' => 'ブロック:',
 	'spamdifftool_submit_buttom' => '送信',
 );
@@ -764,6 +889,13 @@ Asseguratz-vos de blocar pas de domenis entièrs que detenon d'unes comptadors d
 	'spamdifftool_submit_buttom' => 'Sometre',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'spamdifftool_submit_buttom' => 'Рарвит',
+);
+
 /** Polish (Polski)
  * @author Airwolf
  * @author Maikking
@@ -772,13 +904,23 @@ Asseguratz-vos de blocar pas de domenis entièrs que detenon d'unes comptadors d
  */
 $messages['pl'] = array(
 	'spamdifftool' => 'Zarządzaj czarną listą dla spamu',
+	'spamdifftool-desc' => 'Umożliwia na stronie porównania wersji dodawanie nowych wpisów do czarnej listy spamu',
 	'spamdifftool_cantedit' => 'Nie masz uprawnień do edytowania tej strony.',
+	'spamdifftool_notext' => "Brak tekstu do dodania do czarnej listy spamu.
+Kliknij <a href='$1'>tutaj,</a> aby kontynuować.",
+	'spamdifftool_confirm' => "Potwierdź, że chcesz dodać wpisy do czarnej listy spam.
+(Kliknij <a href='$1' target='new'>tutaj,</a> aby zgłosić problem.)",
 	'spamdifftool_summary' => 'Dodawanie do czarnej listy spamu',
+	'spamdifftool_urls_detected' => 'Poniższe adresy URL zostały wykryte w edycji (edycjach). Określ które z nich chcesz dodać do czarnej listy filtru antyspamowego.
+Opcje posortowane są w kolejności od bardziej do mniej restrykcyjnych. Zablokowanie całej domeny spowoduje blokadę wszystkich linków prowadzących gdziekolwiek do tej domeny.
+
+Pamiętaj, aby nie blokować całych domen obsługujących wiele stron użytkowników jak home.pl, prv.pl itp.',
 	'spamdifftool_no_urls_detected' => "Nie wykryto żadnych adresów URL.
 Kliknij <a href='$1'>tutaj</a>, żeby wrócić do poprzedniej strony.",
 	'spamdifftool_spam_link_text' => 'dodaj do spamu',
 	'spamdifftool_option_domain' => 'wszystkie z tej domeny',
 	'spamdifftool_option_subdomain' => 'wszystkie z tej domeny',
+	'spamdifftool_option_directory' => 'ta poddomena i katalog',
 	'spamdifftool_option_none' => 'nic',
 	'spamdifftool_block' => 'Blokuj:',
 	'spamdifftool_submit_buttom' => 'Wyślij',
@@ -817,6 +959,33 @@ Carregue <a href='$1'>aqui</a> para voltar.",
 	'spamdifftool_option_none' => 'nada',
 	'spamdifftool_block' => 'Bloquear:',
 	'spamdifftool_submit_buttom' => 'Submeter',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'spamdifftool' => 'Gerenciar a lista negra de spam',
+	'spamdifftool-desc' => 'Fornece uma forma básica de adicionar novas entradas à lista negra de spam a partir de páginas de diferenças',
+	'spamdifftool_cantedit' => 'As nossas desculpas - você não tem permissão para editar a lista negra de spam.',
+	'spamdifftool_notext' => "Não há qualquer texto para adicionar à lista negra de spam.
+Clique <a href='$1'>aqui</a> para continuar.",
+	'spamdifftool_confirm' => "Confirme que pretende adicionar estas entradas à lista negra de spam.
+(Clique <a href='$1' target='new'>aqui</a> para reportar um problema.)",
+	'spamdifftool_summary' => 'Adicionando a lista negra de spam',
+	'spamdifftool_urls_detected' => 'As seguintes URLs foram detectadas na(s) edição(ões). Quais pretende que sejam adicionadas à lista negra de spam?
+Estas opções estão ordenadas da mais restritiva para a menos restritiva. O bloqueio de um domínio inteiro irá bloquear todas a ligações provenientes daquele domínio.
+
+Certifique-se de que não bloqueia domínios inteiros que sejam servidores de contas de utilizadores, tais como blogspot.com, geocities.com, etc.',
+	'spamdifftool_no_urls_detected' => "Nenhuma URL foi detectada.
+Clique <a href='$1'>aqui</a> para voltar.",
+	'spamdifftool_spam_link_text' => 'adicionar como spam',
+	'spamdifftool_option_domain' => 'todos deste domínio',
+	'spamdifftool_option_subdomain' => 'todos deste subdomínio',
+	'spamdifftool_option_directory' => 'este subdomínio e diretório',
+	'spamdifftool_option_none' => 'nada',
+	'spamdifftool_block' => 'Bloquear:',
+	'spamdifftool_submit_buttom' => 'Enviar',
 );
 
 /** Tarandíne (Tarandíne)
@@ -922,6 +1091,7 @@ $messages['sr-ec'] = array(
  */
 $messages['stq'] = array(
 	'spamdifftool' => 'Spam-Blacklist beoarbaidje',
+	'spamdifftool-desc' => 'Rakt n Wai näie Iendraage bietoutouföigjen tou ju Spamblacklist uut Versionsunnerscheede',
 	'spamdifftool_cantedit' => 'Du hääst neen Begjuchtigenge tou ju Beoarbaidenge fon ju Spam-Blacklist.',
 	'spamdifftool_notext' => "Dät rakt naan Text, die der an ju Spam-Blacklist bietouföiged wäide kuude. Klik <a href='$1'>hier</a> toun Fääregungen.",
 	'spamdifftool_confirm' => "Bestäätigje, dät du disse Iendraage an ju Spam-Blacklist bietouföigje moatest. (Klik <a href='$1' target='new'>hier</a>, uum n Problem tou mäldjen.)",
@@ -1020,6 +1190,34 @@ Pindutin <a href='$1'>dito</a> para makabalik.",
 	'spamdifftool_submit_buttom' => 'Ipasa',
 );
 
+/** Turkish (Türkçe)
+ * @author Joseph
+ * @author Karduelis
+ */
+$messages['tr'] = array(
+	'spamdifftool' => 'Spam karalistesini yönet',
+	'spamdifftool-desc' => 'Spam karalistesine fark sayfalarından yeni girdiler eklemek için basit bir yol sağlar',
+	'spamdifftool_cantedit' => 'Üzgünüz - spam karalistesini değiştirmek için izniniz yok.',
+	'spamdifftool_notext' => "Spam karalistesine eklenecek metin yok.
+Devam etmek için <a href='$1'>buraya</a> tıklayın.",
+	'spamdifftool_confirm' => "Bu girdileri spam karalistesine eklemek istediğinizi onaylayın.
+(Bir sorun bildirmek için <a href='$1' target='new'>buraya</a> tıklayın.)",
+	'spamdifftool_summary' => 'Spam kara listesine ekleniyor',
+	'spamdifftool_urls_detected' => 'Değişiklikte, aşağıdaki URLler algılandı, hangilerini spam karalistesine eklemek istersiniz?
+Bu seçenekler fazla kısıtlayıcıdan az kısıtlayıcıya sıralanır, bütün domaini engellemek bu domainden gelen tüm bağlantıları engeller.
+
+Kullanıcı hesapları barındıran domainleri -blogpost.com, geocities.com gibi- engellemediğinizden emin olun.',
+	'spamdifftool_no_urls_detected' => "Hiçbir url algılanmadı.
+Geri dönmek için <a href='$1'>buraya</a> tıklayın.",
+	'spamdifftool_spam_link_text' => "spam'e ekle",
+	'spamdifftool_option_domain' => 'bu domainden hepsini',
+	'spamdifftool_option_subdomain' => 'bu alt domainden hepsini',
+	'spamdifftool_option_directory' => 'bu alt domain ve dizin',
+	'spamdifftool_option_none' => 'hiçbir şey',
+	'spamdifftool_block' => 'Engelle:',
+	'spamdifftool_submit_buttom' => 'Gönder',
+);
+
 /** Ukrainian (Українська)
  * @author Aleksandrit
  */
@@ -1059,6 +1257,10 @@ Struca <a href='$1'>qua</a> par continuar.",
 	'spamdifftool_confirm' => "Conferma che te voli zontar sti valori a la lista nera del spam.
 (Struca <a href='$1' target='new'>qua</a> par segnalar un problema.)",
 	'spamdifftool_summary' => 'Zonto a la lista nera del spam',
+	'spamdifftool_urls_detected' => "In tele modifiche xe stà catà i seguenti URL, quale vuto zontar a la lista nera del spam?
+Ste opzioni le xe ordinà da la pi restritiva a la manco restritiva: blocar l'intero dominio blocarà tuti i colegamenti direti a calcossa che vien da quel dominio.
+
+Stà tento a no blocar quei domini che ospita altri account utente come blogpost.com, geocities.com, ecc.",
 	'spamdifftool_no_urls_detected' => "No xe stà rilevà nissun URL.
 Struca <a href='$1'>qua</a> par tornar indrìo.",
 	'spamdifftool_spam_link_text' => 'zonta al spam',
@@ -1095,9 +1297,14 @@ Xin đừng cấm cả tên miền của website chứa tên miền phụ của 
 
 /** Volapük (Volapük)
  * @author Malafaya
+ * @author Smeira
  */
 $messages['vo'] = array(
+	'spamdifftool_no_urls_detected' => "Els URL nonik petuvons.
+Välolös <a href='$1'>is</a> ad geikön.",
 	'spamdifftool_option_none' => 'nos',
+	'spamdifftool_block' => 'Blokön:',
+	'spamdifftool_submit_buttom' => 'Sedön',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

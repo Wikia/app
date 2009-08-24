@@ -203,7 +203,7 @@ class SmoothGalleryParser {
 		$imageArray = Array();
 	
 		//Get the image object from the database
-		$img_obj = Image::newFromTitle( $title );
+		$img_obj = wfFindFile( $title );
 	
 		if ( !$img_obj->exists() ) {
 			//The user asked for an image that doesn't exist, let's

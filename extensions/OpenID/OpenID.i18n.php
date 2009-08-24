@@ -32,7 +32,7 @@ $messages['en'] = array(
 	'openidlogin' => 'Login with OpenID',
 	'openidfinish' => 'Finish OpenID login',
 	'openidserver' => 'OpenID server',
-	'openidxrds' => 'Yadis file',						
+	'openidxrds' => 'Yadis file',
 	'openidconvert' => 'OpenID converter',
 	'openiderror' => 'Verification error',
 	'openiderrortext' => 'An error occured during verification of the OpenID URL.',
@@ -66,9 +66,9 @@ you can choose one from the options below.',
 	'openidchoosefull' => 'Your full name ($1)',
 	'openidchooseurl' => 'A name picked from your OpenID ($1)',
 	'openidchooseauto' => 'An auto-generated name ($1)',
-	'openidchoosemanual' => 'A name of your choice: ',
-	'openidchooseexisting' => 'An existing account on this wiki: ',
-	'openidchoosepassword' => 'password: ',
+	'openidchoosemanual' => 'A name of your choice:',
+	'openidchooseexisting' => 'An existing account on this wiki:',
+	'openidchoosepassword' => 'password:',
 	'openidconvertinstructions' => 'This form lets you change your user account to use an OpenID URL.',
 	'openidconvertsuccess' => 'Successfully converted to OpenID',
 	'openidconvertsuccesstext' => 'You have successfully converted your OpenID to $1.',
@@ -77,7 +77,6 @@ you can choose one from the options below.',
 	'openidalreadyloggedin' => "'''You are already logged in, $1!'''
 
 If you want to use OpenID to log in in the future, you can [[Special:OpenIDConvert|convert your account to use OpenID]].",
-	'tog-hideopenid' => 'Hide your <a href="http://openid.net/">OpenID</a> on your user page, if you log in with OpenID.',
 	'openidnousername' => 'No username specified.',
 	'openidbadusername' => 'Bad username specified.',
 	'openidautosubmit' => 'This page includes a form that should be automatically submitted if you have JavaScript enabled.
@@ -91,18 +90,19 @@ OpenID lets you log into many different Web sites without using a different pass
 If you already have an account on {{SITENAME}}, you can [[Special:UserLogin|log in]] with your username and password as usual.
 To use OpenID in the future, you can [[Special:OpenIDConvert|convert your account to OpenID]] after you have logged in normally.
 
-There are many [http://wiki.openid.net/Public_OpenID_providers Public OpenID providers], and you may already have an OpenID-enabled account on another service.
-
-; Other wikis : If you have an account on an OpenID-enabled wiki, like [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] or [http://kei.ki/ Keiki], you can log in to {{SITENAME}} by entering the \'\'\'full URL\'\'\' of your user page on that other wiki in the box above. For example, \'\'<nowiki>http://kei.ki/en/User:Evan</nowiki>\'\'.
-; [http://openid.yahoo.com/ Yahoo!] : If you have an account with Yahoo!, you can log in to this site by entering your Yahoo!-provided OpenID in the box above. Yahoo! OpenID URLs have the form \'\'<nowiki>https://me.yahoo.com/yourusername</nowiki>\'\'.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : If you have an account with [http://www.aol.com/ AOL], like an [http://www.aim.com/ AIM] account, you can log in to {{SITENAME}} by entering your AOL-provided OpenID in the box above. AOL OpenID URLs have the form \'\'<nowiki>http://openid.aol.com/yourusername</nowiki>\'\'. Your username should be all lowercase, no spaces.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : If you have a blog on any of these services, enter your blog URL in the box above. For example, \'\'<nowiki>http://yourusername.blogspot.com/</nowiki>\'\', \'\'<nowiki>http://yourusername.wordpress.com/</nowiki>\'\', \'\'<nowiki>http://yourusername.livejournal.com/</nowiki>\'\', or \'\'<nowiki>http://yourusername.vox.com/</nowiki>\'\'.',
+There are many [http://openid.net/get/ OpenID providers], and you may already have an OpenID-enabled account on another service.',
+	'openidupdateuserinfo' => 'Update my personal information',
+	'openid-prefs' => 'OpenID',
+	'openid-prefstext' => '[http://openid.net/ OpenID] preferences',
+	'openid-pref-hide' => 'Hide your OpenID URL on your user page, if you log in with OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Update my information from OpenID persona every time I login'
 );
 
 /** Message documentation (Message documentation)
  * @author Fryed-peach
  * @author Jon Harald Søby
  * @author Purodha
+ * @author Raymond
  * @author Siebrand
  */
 $messages['qqq'] = array(
@@ -113,6 +113,11 @@ $messages['qqq'] = array(
 	'openidlanguage' => '{{Identical|Language}}',
 	'openidchoosepassword' => '{{Identical|Password}}',
 	'openidalreadyloggedin' => '$1 is a user name.',
+	'openid-prefs' => '{{optional}}
+OpenID preferences tab title',
+	'openid-prefstext' => 'OpenID preferences tab text above the list of preferences',
+	'openid-pref-hide' => 'OpenID preference label (Hide your OpenID URL on your user page, if you log in with OpenID)',
+	'openid-pref-update-userinfo-on-login' => 'OpenID preference label for updating fron OpenID persona upon login',
 );
 
 /** Faeag Rotuma (Faeag Rotuma)
@@ -127,6 +132,15 @@ $messages['rtm'] = array(
  */
 $messages['niu'] = array(
 	'openidchoosepassword' => 'kupu fufu:',
+);
+
+/** Veps (Vepsan kel')
+ * @author Игорь Бродский
+ */
+$messages['vep'] = array(
+	'openidoptional' => 'Opcionaline',
+	'openidemail' => 'E-počtan adres',
+	'openidlanguage' => "Kel'",
 );
 
 /** Afrikaans (Afrikaans)
@@ -195,7 +209,7 @@ $messages['ar'] = array(
 	'openidchoosemanual' => 'اسم من اختيارك:',
 	'openidchooseexisting' => 'حساب موجود في هذه الويكي:',
 	'openidchoosepassword' => 'كلمة السر:',
-	'openidconvertinstructions' => 'هذه الإستمارة تسمح لك بتغيير حساب مستخدمك ليستعمل مسار هوية مفتوحة.',
+	'openidconvertinstructions' => 'هذه الاستمارة تسمح لك بتغيير حساب مستخدمك ليستعمل مسار هوية مفتوحة.',
 	'openidconvertsuccess' => 'تم التحول بنجاح إلى الهوية المفتوحة',
 	'openidconvertsuccesstext' => 'أنت حولت بنجاح هويتك المفتوحة إلى $1.',
 	'openidconvertyourstext' => 'هذه بالفعل هويتك المفتوحة.',
@@ -203,26 +217,25 @@ $messages['ar'] = array(
 	'openidalreadyloggedin' => "'''أنت مسجل الدخول بالفعل، $1!'''
 
 لو كنت تريد استخدام الهوية المفتوحة لتسجيل الدخول في المستقبل، يمكنك [[Special:OpenIDConvert|تحويل حسابك لاستخدام الهوية المفتوحة]].",
-	'tog-hideopenid' => 'أخف هويتك <a href="http://openid.net/">هويتك المفتوحة</a> على صفحتك الشخصية، لو سجلت الدخول بالهوية المفتوحة.',
 	'openidnousername' => 'لا اسم مستخدم تم تحديده.',
 	'openidbadusername' => 'اسم المستخدم المحدد سيء.',
-	'openidautosubmit' => 'هذه الصفحة تحتوي على إستمارة ينبغي أن يتم إرسالها تلقائيا لو أنك لديك الجافاسكريبت مفعلة.
+	'openidautosubmit' => 'هذه الصفحة تحتوي على استمارة ينبغي أن يتم إرسالها تلقائيا لو أنك لديك الجافاسكريبت مفعلة.
 لو لا، جرب زر \\"Continue\\".',
 	'openidclientonlytext' => 'أنت لا يمكنك استخدام الحسابات من هذا الويكي كهوية مفتوحة على موقع آخر.',
 	'openidloginlabel' => 'مسار الهوية المفتوحة',
-	'openidlogininstructions' => "{{SITENAME}} تدعم معيار [http://openid.net/ الهوية المفتوحة] للدخول الفردي بين مواقع الويب.
+	'openidlogininstructions' => '{{SITENAME}} تدعم معيار [http://openid.net/ الهوية المفتوحة] للدخول الفردي بين مواقع الويب.
 الهوية المفتوحة تسمح لك بتسجيل الدخول إلى مواقع ويب عديدة مختلفة بدون استخدام كلمة سر مختلفة لكل موقع.
 (انظر [http://en.wikipedia.org/wiki/OpenID مقالة الهوية المفتوحة في يويكيبيديا] لمزيد من المعلومات.)
 
 لو أنك لديك بالفعل حساب في {{SITENAME}}، يمكنك [[Special:UserLogin|تسجيل الدخول]] باسم مستخدمك وكلمة السر الخاصة بك كالمعتاد.
 لاستخدام الهوية المفتوحة في المستقبل، يمكنك [[Special:OpenIDConvert|تحويل حسابك إلى الهوية المفتوحة]] بعد تسجيل دخولك بشكل عادي.
 
-يوجد العديد من [http://wiki.openid.net/Public_OpenID_providers موفري الهوية المفتوحة العلنيين]، وربما يكون لديك حسابك بهوية مفتوحة على خدمة أخرى.
-
-; الويكيات الأخرى : لو أنك لديك حساب على ويكي مفعل الهوية المفتوحة، مثل [http://wikitravel.org/ ويكي ترافيل]، [http://www.wikihow.com/ ويكي هاو]، [http://vinismo.com/ فينيزمو]، [http://aboutus.org/ أبوت أس] أو [http://kei.ki/ كيكي]، يمكنك تسجيل الدخول إلى {{SITENAME}} بواسطة إدخال '''المسار الكامل''' لصفحة مستخدمك على هذا الويكي الآخر في الصندوق بالأعلى. على سبيل المثال، ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ ياهو!] : إذا لديك حساب مع ياهو!، يمكنك تسجيل الدخول إلى هذا الموقع بواسطة إدخال هويتك المفتوحة الموفرة بواسطة ياهو! في الصندوق بالأعلى. مسارات هوية ياهو! المفتوحة تأخذ الصيغة ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids إيه أو إل] : لو لديك حساب مع [http://www.aol.com/ إيه أو إل]، مثل حساب [http://www.aim.com/ إيه أي إم]، يمكنك تسجيل الدخول إلى {{SITENAME}} بواسطة إدخال هويتك المفتوحة الموفرة بواسطة AOL في الصندوق بالأعلى. مسارات هوية AOL المفتوحة تأخذ الصيغة ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. اسم مستخدمك ينبغي أن يكون كله حروفا صغيرة، لا مسافات.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html بلوجر], [http://faq.wordpress.com/2007/03/06/what-is-openid/ وورد بريس دوت كوم]، [http://www.livejournal.com/openid/about.bml ليف جورنال]، [http://bradfitz.vox.com/library/post/openid-for-vox.html فوكس] : لو لديك مدونة على أي من هذه الخدمات، أدخل مسار مدونتك في الصندوق بالأعلى. على سبيل المثال، ''<nowiki>http://yourusername.blogspot.com/</nowiki>''، ''<nowiki>http://yourusername.wordpress.com/</nowiki>''، ''<nowiki>http://yourusername.livejournal.com/</nowiki>''، أو ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+يوجد العديد من [http://wiki.openid.net/Public_OpenID_providers موفري الهوية المفتوحة العلنيين]، وربما يكون لديك حسابك بهوية مفتوحة على خدمة أخرى.',
+	'openidupdateuserinfo' => 'تحديث معلوماتي الشخصية',
+	'openid-prefs' => 'هوية مفتوحة',
+	'openid-prefstext' => 'تفضيلات [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'أخف هويتك <a href="http://openid.net/">هويتك المفتوحة</a> على صفحتك الشخصية، لو سجلت الدخول بالهوية المفتوحة.',
+	'openid-pref-update-userinfo-on-login' => 'حدث معلوماتي من شخصية الهوية المفتوحة كل مرة أسجل الدخول',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -279,7 +292,6 @@ $messages['arz'] = array(
 	'openidalreadyloggedin' => "'''أنت مسجل الدخول بالفعل، $1!'''
 
 لو كنت تريد استخدام الهوية المفتوحة لتسجيل الدخول فى المستقبل، يمكنك [[Special:OpenIDConvert|تحويل حسابك لاستخدام الهوية المفتوحة]].",
-	'tog-hideopenid' => 'أخف هويتك <a href="http://openid.net/">هويتك المفتوحة</a> على صفحتك الشخصية، لو سجلت الدخول بالهوية المفتوحة.',
 	'openidnousername' => 'مافيش اسم يوزر تم تحديده.',
 	'openidbadusername' => 'اسم المستخدم المحدد سيء.',
 	'openidautosubmit' => 'هذه الصفحة تحتوى على إستمارة ينبغى أن يتم إرسالها تلقائيا لو أنك لديك الجافاسكريبت مفعلة.
@@ -299,6 +311,7 @@ $messages['arz'] = array(
 ; [http://openid.yahoo.com/ ياهو!] : إذا لديك حساب مع ياهو!، يمكنك تسجيل الدخول إلى هذا الموقع بواسطة إدخال هويتك المفتوحة الموفرة بواسطة ياهو! فى الصندوق بالأعلى. مسارات هوية ياهو! المفتوحة تأخذ الصيغة ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
 ; [http://dev.aol.com/aol-and-63-million-openids إيه أو إل] : لو لديك حساب مع [http://www.aol.com/ إيه أو إل]، مثل حساب [http://www.aim.com/ إيه أى إم]، يمكنك تسجيل الدخول إلى {{SITENAME}} بواسطة إدخال هويتك المفتوحة الموفرة بواسطة AOL فى الصندوق بالأعلى. مسارات هوية AOL المفتوحة تأخذ الصيغة ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. اسم مستخدمك ينبغى أن يكون كله حروفا صغيرة، لا مسافات.
 ; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html بلوجر], [http://faq.wordpress.com/2007/03/06/what-is-openid/ وورد بريس دوت كوم]، [http://www.livejournal.com/openid/about.bml ليف جورنال]، [http://bradfitz.vox.com/library/post/openid-for-vox.html فوكس] : لو لديك مدونة على أى من هذه الخدمات، أدخل مسار مدونتك فى الصندوق بالأعلى. على سبيل المثال، ''<nowiki>http://yourusername.blogspot.com/</nowiki>''، ''<nowiki>http://yourusername.wordpress.com/</nowiki>''، ''<nowiki>http://yourusername.livejournal.com/</nowiki>''، أو ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+	'openid-pref-hide' => 'أخف هويتك <a href="http://openid.net/">هويتك المفتوحة</a> على صفحتك الشخصية، لو سجلت الدخول بالهوية المفتوحة.',
 );
 
 /** Asturian (Asturianu)
@@ -306,6 +319,79 @@ $messages['arz'] = array(
  */
 $messages['ast'] = array(
 	'openidlanguage' => 'Llingua',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'openid-desc' => 'Уваход ў {{GRAMMAR:вінавальны|{{SITENAME}}}} з дапамогай [http://openid.net/ OpenID], а так сама ў іншыя сайты, якія падтрымліваюць OpenID з вікі-рахунка',
+	'openidlogin' => 'Уваход у сыстэму з дапамогай OpenID',
+	'openidfinish' => 'Скончыць уваход у сыстэму з дапамогай OpenID',
+	'openidserver' => 'Сэрвэр OpenID',
+	'openidxrds' => 'Файл Yadis',
+	'openidconvert' => 'Канвэртар OpenID',
+	'openiderror' => 'Памылка праверкі',
+	'openiderrortext' => 'Пад час праверкі адрасу OpenID узьнікла памылка.',
+	'openidconfigerror' => 'Памылка ў канфігурацыі OpenID',
+	'openidconfigerrortext' => 'Канфігурацыя сховішча OpenID у {{GRAMMAR:месны|{{SITENAME}}}} — няслушная.
+Калі ласка, зьвярніцеся да [[Special:ListUsers/sysop|адміністратараў]].',
+	'openidpermission' => 'Памылка правоў доступу OpenID',
+	'openidpermissiontext' => 'Пазначаны Вамі OpenID не дазваляе ўвайсьці на гэты сэрвэр.',
+	'openidcancel' => 'Праверка адменена',
+	'openidcanceltext' => 'Праверка адрасу OpenID была скасавана.',
+	'openidfailure' => 'Праверка не атрымалася',
+	'openidfailuretext' => 'Праверка адрасу OpenID не атрымалася. Паведамленьне пра памылку: «$1»',
+	'openidsuccess' => 'Праверка прайшла пасьпяхова',
+	'openidsuccesstext' => 'Праверка адрасу OpenID прайшла пасьпяхова.',
+	'openidusernameprefix' => 'КарыстальнікOpenID',
+	'openidserverlogininstructions' => 'Увядзіце Ваш пароль ніжэй, каб увайсьці на $3 як {{GENDER:$2|удзельнік|удзельніца}} $2 (старонка {{GENDER:$2|ўдзельніка|удзельніцы}} $1).',
+	'openidtrustinstructions' => 'Пазначце, калі Вы жадаеце даць доступ да зьвестак для $1.',
+	'openidallowtrust' => 'Дазволіць $1 давераць гэтаму рахунку.',
+	'openidnopolicy' => 'Сайт ня мае правілаў адносна прыватнасьці.',
+	'openidpolicy' => 'Глядзіце дадатковую інфармацыю ў <a target="_new" href="$1">правілах адносна прыватнасьці</a>.',
+	'openidoptional' => 'Неабавязковае',
+	'openidrequired' => 'Абавязковае',
+	'openidnickname' => 'Мянушка',
+	'openidfullname' => 'Поўнае імя',
+	'openidemail' => 'Адрас электроннай пошты',
+	'openidlanguage' => 'Мова',
+	'openidnotavailable' => 'Пазначаная Вамі мянушка ($1) ужо выкарыстоўваецца.',
+	'openidnotprovided' => 'Ваш сэрвэр OpenID не даслаў мянушку (магчыма, таму што ня можа, альбо Вы загадалі гэтага не рабіць).',
+	'openidchooseinstructions' => 'Кожны ўдзельнік павінен мець мянушку;
+Вы можаце выбраць адну з пададзеных ніжэй.',
+	'openidchoosefull' => 'Ваша поўнае імя ($1)',
+	'openidchooseurl' => 'Імя атрыманае ад Вашага сэрвэра OpenID ($1)',
+	'openidchooseauto' => 'Аўтаматычна створанае імя ($1)',
+	'openidchoosemanual' => 'Імя на Ваш выбар:',
+	'openidchooseexisting' => 'Існуючы рахунак у {{GRAMMAR:месны|{{SITENAME}}}}:',
+	'openidchoosepassword' => 'пароль:',
+	'openidconvertinstructions' => 'Гэта форма дазваляе зьмяніць Ваш рахунак на выкарыстаньне адрасу OpenID.',
+	'openidconvertsuccess' => 'Пасьпяховае пераўтварэньне ў OpenID',
+	'openidconvertsuccesstext' => 'Вы пасьпяхова пераўтварылі Ваш OpenID у $1.',
+	'openidconvertyourstext' => 'Гэта ўжо Ваш OpenID.',
+	'openidconvertothertext' => 'Гэта ня Ваш OpenID.',
+	'openidalreadyloggedin' => "'''Вы ўжо ўвайшлі, $1!'''
+
+Калі Вы жадаеце выкарыстоўваць OpenID для ўваходаў у будучыні, Вы можаце [[Special:OpenIDConvert|пераўтварыць Ваш рахунак на выкарыстаньне OpenID]].",
+	'openidnousername' => 'Не пазначана імя ўдзельніка.',
+	'openidbadusername' => 'Пазначана няслушнае імя ўдзельніка.',
+	'openidautosubmit' => 'Гэта старонка ўтрымлівае форму, якая павінна быць аўтаматычна адпраўлена, калі ў Вас уключаны JavaScript.
+Калі гэтага не адбылася, паспрабуйце націснуць кнопку «Працягнуць».',
+	'openidclientonlytext' => 'Вы ня можаце выкарыстоўваць рахункі {{GRAMMAR:родны|{{SITENAME}}}} як OpenID на іншых сайтах.',
+	'openidloginlabel' => 'Адрас OpenID',
+	'openidlogininstructions' => "{{SITENAME}} падтрымлівае стандарт [http://openid.net/ OpenID], які дазваляе выкарыстоўваць адзіны уліковы запіс для ўваходу ў розныя сайты без выкарыстаньня розных пароляў для кожнага зь іх.
+(Глядзіце падрабязнасьці на [http://en.wikipedia.org/wiki/OpenID Wikipedia's OpenID article].)
+
+Калі Вы ўжо маеце рахунак у {{GRAMMAR:месны|{{SITENAME}}}}, Вы можаце [[Special:UserLogin|ўвайсьці]] з Вашым імем і паролем як звычайна.
+Каб выкарыстоўваць OpenID у будучыні, Вы можаце [[Special:OpenIDConvert|пераўтварыць Ваш рахунак у OpenID]] пасьля таго, як увайшлі звычайным чынам.
+
+Існуе шмат [http://openid.net/get/ OpenID сэрвісаў], у Вы, магчыма, ужо маеце OpenID рахунак у іншым сэрвісе.",
+	'openidupdateuserinfo' => 'Абнавіць маю асабістую інфармацыю',
+	'openid-prefstext' => 'Устаноўкі [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Хаваць Ваш адрас OpenID на Вашай старонцы ўдзельніка, калі Вы ўвайшлі з дапамогай OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Абнаўляць маю інфармацыю з OpenID кожны раз калі я уваходжу ў сыстэму',
 );
 
 /** Bulgarian (Български)
@@ -351,7 +437,6 @@ $messages['bg'] = array(
 	'openidalreadyloggedin' => "'''Вече сте влезли в системата, $1!'''
 
 Ако желаете да използвате OpenID за бъдещи влизания, можете да [[Special:OpenIDConvert|преобразувате сметката си да използва OpenID]].",
-	'tog-hideopenid' => 'Скриване на <a href="http://openid.net/">OpenID</a> от потребителската страница ако влезете чрез OpenID.',
 	'openidnousername' => 'Не е посочено потребителско име.',
 	'openidbadusername' => 'Беше посочено невалидно име.',
 	'openidautosubmit' => 'Тази страница включва формуляр, който би трябвало да се изпрати автоматично ако Джаваскриптът е разрешен.
@@ -371,12 +456,14 @@ OpenID позволява влизането в много различни са
 ; [http://openid.yahoo.com/ Yahoo!]: Ако имате сметка в Yahoo!, можете да влезете в този сайт като в кутията по-горе въведете вашето Yahoo! OpenID. Yahoo! OpenID адресите са от вида ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
 ; [http://dev.aol.com/aol-and-63-million-openids AOL]: Ако притежавате сметка в [http://www.aol.com/ AOL], напр. в [http://www.aim.com/ AIM], можете да влезете в {{SITENAME}} като въведете в кутията по-горе вашето AOL OpenID. AOL OpenID адресите са от вида ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. Потребителското име се изписва само с малки букви и без интервали.
 ; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Ако имате блог в някоя от тези услуги, въведете адреса на блога си в кутията по-горе, напр. ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'' или ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+	'openid-pref-hide' => 'Скриване на <a href="http://openid.net/">OpenID</a> от потребителската страница ако влезете чрез OpenID.',
 );
 
 /** Bosnian (Bosanski)
  * @author CERminator
  */
 $messages['bs'] = array(
+	'openid-desc' => 'Prijava na wiki sa [http://openid.net/ OpenID] i prijava na druge stranice koje podržavaju OpenID sa wiki korisničkim računom',
 	'openidlogin' => 'Prijava sa OpenID',
 	'openidfinish' => 'Završi OpenID prijavu',
 	'openidserver' => 'OpenID server',
@@ -385,14 +472,22 @@ $messages['bs'] = array(
 	'openiderror' => 'Greška pri provjeri',
 	'openiderrortext' => 'Desila se greška pri provjeri OpenID URL adrese.',
 	'openidconfigerror' => 'Greška OpenID postavki',
+	'openidconfigerrortext' => 'OpenID konfiguracija spremanja za ovaj wiki je nevaljana. 
+Molimo konsultujte se sa [[Special:Listusers/sysop|administratorom]].',
 	'openidpermission' => 'Greška kod OpenID dopuštenja',
+	'openidpermissiontext' => 'OpenID koji ste naveli nije dopušteno da se prijavi na ovaj server.',
 	'openidcancel' => 'Provjera poništena',
+	'openidcanceltext' => 'Provjera OpenID URL-a je otkazana.',
 	'openidfailure' => 'Potvrda nije uspjela',
+	'openidfailuretext' => 'Provjera URL-a za OpenID nije uspjela. Poruka greške: "$1"',
 	'openidsuccess' => 'Provjera uspješna',
+	'openidsuccesstext' => 'Provjera URL-a za OpenID je uspjela.',
+	'openidusernameprefix' => 'OpenIDKorisnik',
 	'openidserverlogininstructions' => 'Unesite ispod Vašu šifru da biste se prijavili na $3 kao korisnik $2 (korisnička stranica $1).',
 	'openidtrustinstructions' => 'Provjerite da li želite dijeliti podatke sa $1.',
 	'openidallowtrust' => 'Omogući $1 da vjeruje ovom korisničkom računu.',
 	'openidnopolicy' => 'Sajt nema napisana pravila privatnosti.',
+	'openidpolicy' => 'Provjerite <a target="_new" href="$1">politiku privatnosti</a> za više informacija.',
 	'openidoptional' => 'opcionalno',
 	'openidrequired' => 'obavezno',
 	'openidnickname' => 'Nadimak',
@@ -400,6 +495,7 @@ $messages['bs'] = array(
 	'openidemail' => 'E-mail adresa',
 	'openidlanguage' => 'Jezik',
 	'openidnotavailable' => 'Vaš odabrani nadimak ($1) je već upotrijebio drugi korisnik.',
+	'openidnotprovided' => 'Vaš OpenID server nije poslao nadimak (bilo da ne može ili da ste ga Vi spriječili).',
 	'openidchooseinstructions' => 'Svi korisnici trebaju imati nadimak;
 možete odabrati jedan sa opcijama ispod.',
 	'openidchoosefull' => 'Vaše puno ime ($1)',
@@ -409,17 +505,30 @@ možete odabrati jedan sa opcijama ispod.',
 	'openidchooseexisting' => 'Postojeći račun na ovoj wiki:',
 	'openidchoosepassword' => 'šifra:',
 	'openidconvertinstructions' => 'Ovaj obrazac Vam omogućuje da promijeniti Vaš korisnički račun za upotrebu URL OpenID.',
+	'openidconvertsuccess' => 'Uspješno prevedeno u OpenID',
 	'openidconvertsuccesstext' => 'Uspješno ste pretvorili Vaš OpenID u $1.',
 	'openidconvertyourstext' => 'To je već Vaš OpenID.',
 	'openidconvertothertext' => 'To je OpenID koji pripada nekom drugom.',
 	'openidalreadyloggedin' => "'''Vi ste već prijavljeni, $1!'''
 
 Ako želite da koristite OpenID za buduće prijave, možete [[Special:OpenIDConvert|promijeniti Vaš račun za upotrebu OpenID]].",
-	'tog-hideopenid' => 'Sakrij Vaš <a href="http://openid.net/">OpenID</a> na Vašoj korisničkoj stranici, ako ste prijavljeni sa OpenID.',
 	'openidnousername' => 'Nije navedeno korisničko ime.',
 	'openidbadusername' => 'Navedeno loše korisničko ime.',
+	'openidautosubmit' => 'Ova stranica uključuje obrazac koji bi se trebao automatski poslati ako je kod Vas omogućena JavaScript. Ako nije, pokušajte nastaviti dalje putem dugmeta \\"Continue\\".',
 	'openidclientonlytext' => 'Ne možete koristiti račune sa ove wiki kao OpenID na drugom sajtu.',
 	'openidloginlabel' => 'OpenID URL adresa',
+	'openidlogininstructions' => '{{SITENAME}} podržava [http://openid.net/ OpenID] standard za jedinstvenu prijavu između web sajtova.
+OpenID omogućuje da se prijavite na mnoge različite web stranice bez korištenja različitih šifri za svaku od njih.
+(Pogledajte [http://en.wikipedia.org/wiki/OpenID članak na Wikipediji o OpenID-u] za više informacija.)
+
+Ako već imate račun na {{SITENAME}}, možete se [[Special:UserLogin|prijaviti]] sa vašim korisničkim imenom i šifrom kao i uvijek.
+Da bi koristili OpenID u buduće, možete [[Special:OpenIDConvert|pretvoriti vaš račun u OpenID]] nakon što se normalno prijavite.
+
+Postoji mnogo [http://wiki.openid.net/Public_OpenID_providers javnih provajdera za OpenID], i možda već imate neki račun na drugom servisu koji podržava OpenID.',
+	'openidupdateuserinfo' => 'Ažuriraj moje lične informacije',
+	'openid-prefstext' => '[http://openid.net/ OpenID] postavke',
+	'openid-pref-hide' => 'Sakrij Vaš <a href="http://openid.net/">OpenID</a> na Vašoj korisničkoj stranici, ako ste prijavljeni sa OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Ažuriraj moje informacije sa OpenID identiteta svaki put kad se prijavim',
 );
 
 /** Czech (Česky)
@@ -474,7 +583,6 @@ Prosím, poraďte se se [[Special:ListUsers/sysop|správcem]].',
 	'openidalreadyloggedin' => "'''Už jste přihlášený, $1!'''
 
 Pokud chcete pro přihlašování v budoucnu používat OpenID, můžete [[Special:OpenIDConvert|převést váš účet na OpenID]].",
-	'tog-hideopenid' => 'Nezobrazovat váš <a href="http://openid.net/">OpenID</a> na vaší uživatelské stránce pokud se přihlašujete pomocí OpenID.',
 	'openidnousername' => 'Nebylo zadáno uživatelské jméno.',
 	'openidbadusername' => 'Bylo zadáno chybné uživatelské jméno.',
 	'openidautosubmit' => 'Tato stránka obsahuje formulář, který by měl být automaticky odeslán pokud máte zapnutý JavaScript.
@@ -492,6 +600,7 @@ Existuje množství [http://wiki.openid.net/Public_OpenID_providers veřejných 
 ; [http://openid.yahoo.com/ Yahoo!]: Pokud máte učet Yahoo!, můžete se na tuto wiki přihlásit zadáním vašeho OpenID, které poskytuje Yahoo!, do pole výše. Yahoo! OpenID URL bývají ve tvaru ''<nowiki>https://me.yahoo.com/uzivatelskejmeno</nowiki>''.
 ; [http://dev.aol.com/aol-and-63-million-openids AOL]: Pokud máte účet [http://www.aol.com/ AOL], jako například účet [http://www.aim.com/ AIM], můžete se přihlásit na {{GRAMMAR:4sg|{{SITENAME}}}} zadáním vaeho OpenID, které poskytuje AOL, do pole výše. AOL OpenID URL bývají ve tvaru ''<nowiki>http://openid.aol.com/uzivatelskejmeno</nowiki>''. Vaše uživatelské jméno by mělo mít jen malá písmena a žádné mezery.
 ; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox]: Pokud máte blog na některé z této služeb, zadejte do pole výše URL svého blogu. Například ''<nowiki>http://uzivatelskejmeno.blogspot.com/</nowiki>'', ''<nowiki>http://uzivatelskejmeno.wordpress.com/</nowiki>'', ''<nowiki>http://uzivatelskejmeno.livejournal.com/</nowiki>'' nebo ''<nowiki>http://uzivatelskejmeno.vox.com/</nowiki>''.",
+	'openid-pref-hide' => 'Nezobrazovat váš <a href="http://openid.net/">OpenID</a> na vaší uživatelské stránce pokud se přihlašujete pomocí OpenID.',
 );
 
 /** Church Slavic (Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
@@ -512,7 +621,9 @@ $messages['da'] = array(
 
 /** German (Deutsch)
  * @author ChrisiPK
+ * @author Church of emacs
  * @author Leithian
+ * @author Umherirrender
  */
 $messages['de'] = array(
 	'openid-desc' => 'Anmeldung an dieses Wiki mit einer [http://openid.net/ OpenID] und anmelden an anderen Websites, die OpenID unterstützen, mit einem Wiki-Benutzerkonto.',
@@ -547,7 +658,7 @@ Bitte benachrichtige einen [[Special:ListUsers/sysop|Administrator]].',
 	'openidemail' => 'E-Mail-Adresse:',
 	'openidlanguage' => 'Sprache',
 	'openidnotavailable' => 'Dein bevorzugter Benutzername ($1) wird bereits von einem anderen Benutzer verwendet.',
-	'openidnotprovided' => 'Dein OpenID-Server unterstützt keine Nicknamen (entweder, weil er es nicht kann, oder weil du es ihm nicht erlaubst hast).',
+	'openidnotprovided' => 'Dein OpenID-Server unterstützt keine Nicknamen (entweder, weil er es nicht kann, oder weil du es ihm nicht erlaubt hast).',
 	'openidchooseinstructions' => 'Alle Benutzer benötigen einen Benutzernamen;
 du kannst einen aus der untenstehenden Liste auswählen.',
 	'openidchoosefull' => 'Dein vollständiger Name ($1)',
@@ -564,25 +675,23 @@ du kannst einen aus der untenstehenden Liste auswählen.',
 	'openidalreadyloggedin' => "'''Du bist bereits angemeldet, $1!'''
 
 Wenn du OpenID für künftige Anmeldevorgänge nutzen möchtest, kannst du [[Special:OpenIDConvert|dein Benutzerkonto nach OpenID konvertieren]].",
-	'tog-hideopenid' => 'Verstecke deine <a href="http://openid.net/">OpenID</a> auf deiner Benutzerseite, wenn du dich mit OpenID anmeldest.',
 	'openidnousername' => 'Kein Benutzername angegeben.',
 	'openidbadusername' => 'Falscher Benutzername angegeben.',
 	'openidautosubmit' => 'Diese Seite enthält ein Formular, das automatisch übertragen wird, wenn JavaSkript aktiviert ist. Falls nicht, klicke bitte auf „Weiter“.',
 	'openidclientonlytext' => 'Du kannst keine Benutzerkonten aus diesem Wiki als OpenID für andere Seiten verwenden.',
 	'openidloginlabel' => 'OpenID-URL',
-	'openidlogininstructions' => "{{SITENAME}} unterstützt den [http://openid.net/ OpenID]-Standard für ein Login für mehrere Websites.
+	'openidlogininstructions' => '{{SITENAME}} unterstützt den [http://openid.net/ OpenID]-Standard für eine einheitliche Anmeldung für mehrere Websites.
 OpenID meldet dich bei vielen unterschiedlichen Webseiten an, ohne dass du für jede ein anderes Passwort verwenden musst.
 (Mehr Informationen bietet der [http://de.wikipedia.org/wiki/OpenID Wikipedia-Artikel zu OpenID].)
 
 Falls du bereits ein Benutzerkonto bei {{SITENAME}} hast, kannst du dich ganz normal mit Benutzername und Passwort [[Special:UserLogin|anmelden]].
 Wenn du in Zukunft OpenID verwenden möchtest, kannst du [[Special:OpenIDConvert|deinen Account zu OpenID konvertieren]], nachdem du dich normal eingeloggt hast.
 
-Es gibt viele [http://wiki.openid.net/Public_OpenID_providers öffentliche OpenID-Provider] und möglicherweise hast du bereits ein Benutzerkonto mit aktiviertem OpenID bei einem anderen Anbieter.
-
-; Andere Sites: Wenn du bereits ein Benutzerkonto auf einem Wiki mit aktiviertem OpenID hast, wie beispielsweise [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] oder [http://kei.ki/ Keiki], kannst du dich bei {{SITENAME}} anmelden, indem du die '''komplette URL''' deiner Benutzerseite auf dem anderen Wiki in das obige Textfeld eingibst. Beispielsweise ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!]: Wenn du ein Yahoo!-Konto hast, kannst du dich mit der von Yahoo! angegebenen OpenID im obigen Textfeld anmelden. Yahoo!-OpenIDs haben die Form ''<nowiki>https://me.yahoo.com/deinbenutzername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL]: Wenn du ein [http://www.aol.com/ AOL]-Konto hast, beispielsweise ein [http://www.aim.com/ AIM]-Benutzerkonto, kannst du dich bei {{SITENAME}} anmelden, indem du die von AOL angegebene OpenID im obigen Textfeld eingibst. AOL-OpenIDs haben die Form ''<nowiki>http://openid.aol.com/deinbenutzername</nowiki>''. Dein Benutzername sollte nur aus kleinen Buchstaben bestehen und keine Leerzeichen enthalten.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox]: Wenn du auf diesen Seiten ein Blog hast, gib die URL deines Blogs in das obige Textfeld ein. Beispielsweise ''<nowiki>http://deinbenutzername.blogspot.com/</nowiki>'', ''<nowiki>http://deinbenutzername.wordpress.com/</nowiki>'', ''<nowiki>http://deinbenutzername.livejournal.com/</nowiki>'', oder ''<nowiki>http://deinbenutzername.vox.com/</nowiki>''.",
+Es gibt viele [http://openid.net/get/ OpenID-Provider] und möglicherweise hast du bereits ein Benutzerkonto mit aktiviertem OpenID bei einem anderen Anbieter.',
+	'openidupdateuserinfo' => 'Persönliche Daten aktualisieren',
+	'openid-prefstext' => '[http://openid.net/ OpenID]-Einstellungen',
+	'openid-pref-hide' => 'Verstecke deine <a href="http://openid.net/">OpenID</a> auf deiner Benutzerseite, wenn du dich mit OpenID anmeldest.',
+	'openid-pref-update-userinfo-on-login' => 'Meine Daten anhand des OpenID-Kontos bei jeder Anmeldung aktualisieren',
 );
 
 /** Lower Sorbian (Dolnoserbski)
@@ -623,7 +732,7 @@ Pšosym staj se z [[Special:ListUsers/sysop|administratorom]] do zwiska.',
 	'openidnotavailable' => 'Twójo preferěrowane pśimě ($1) se južo wužywa wót drugego wužywarja.',
 	'openidnotprovided' => 'Twój server OpenID njejo dodał pśimě (pak, dokulaž njamóžo, pak, dokulaž njejsy jo jomu k wěsći dał).',
 	'openidchooseinstructions' => 'Wše wužywarje trjebaju pśimě;
-móžoš jadne ze slědujucych opcijow wubraś.',
+móžoš jadno ze slědujucych opcijow wubraś.',
 	'openidchoosefull' => 'Twójo dopołne mě ($1)',
 	'openidchooseurl' => 'Mě z twójogo OpenID ($1)',
 	'openidchooseauto' => 'Awtomatiski napórane mě ($1)',
@@ -638,25 +747,23 @@ móžoš jadne ze slědujucych opcijow wubraś.',
 	'openidalreadyloggedin' => "'''Sy južo pśizjawjony, $1!'''
 
 Jolic pśichodnje coš OpenID wužywaś, aby se pśizjawił, móžoš [[Special:OpenIDConvert|swójo konto za wužiwanje OpenID konwertěrowaś]].",
-	'tog-hideopenid' => 'Schowaj swój <a href="http://openid.net/">OpenID</a> na swójom wužywarskem boku, jolic se pśizjawjaś z OpenID.',
 	'openidnousername' => 'Žedne wužywarske mě pódane.',
 	'openidbadusername' => 'Wopacne wužywarske mě pódane.',
 	'openidautosubmit' => 'Toś ten bok wopśimujo formular, kótaryž se awtmatiski wótpósćeła, jolic JavaScript jo zmóžnjony. Jolic nic, klikni na tłocašk "Dalej".',
 	'openidclientonlytext' => 'Njamóžoš konta z toś togo wikija ako OpneID na drugem sedle wužywaś.',
 	'openidloginlabel' => 'URL OpenID',
-	'openidlogininstructions' => "{{SITENAME}} pódpěra standard [http://openid.net/ OpenID] za jadnotliwe pśizjawjenje mjazy websedłami.
-OpenID śi zmóžnja se do wjele rozdźělnych websedłow pśizawiś, mimo až musyš za kužde websedło druge gornidło wužywaś.
-(Glědaj [http://de.wikipedia.org/wiki/OpenID nastawk wó OpenID we Wikipediji] za dalšne informacije.)
+	'openidlogininstructions' => '{{SITENAME}} pódpěra standard [http://openid.net/ OpenID] za jadnotliwe pśizjawjenja mjazy websedłami.
+OpenID śi zmóžnja se pla rozdźělnych websedłow pśizjawiś, bźez togo až musyš rozdźělne gronidła wužywaś.
+(Glědaj [http://en.wikipedia.org/wiki/OpenID nastawk OpenID we Wikipediji] za dalšne informacije.)
 
 Jolic maš južo konto na {{GRAMMAR:lokatiw|{{SITENAME}}}}, móžoš se ze swójim wužywarskim mjenim a gronidłom ako pśecej [[Special:UserLogin|pśizjawiś]].
-Aby pśichodnje wužywał OpenID, móžoš [[Special:OpenIDConvert|swójo konto do OpenID konwertěrowaś]], za tym až sy se normalnje pśizjawił.
+Aby wužywał OpenID w pśichoźe, móžoš [[Special:OpenIDConvert|swójo konto do OpenID konwertěrowaś]], za tym až sy se normalnje pśizjawił.
 
-Jo wjele [http://wiki.openid.net/Public_OpenID_providers zjawnych póbitowarjow OpenID] a snaź maš južo konto z OpenID pla drugeje słužby.
-
-; Druge wikije: Jolic maš konto na wikiju z OpenID, kaž [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] ab [http://kei.ki/ Keiki], móžoš se pla {{GRAMMAR:genitiw|{{SITENAME}}}} pśizjawiś, z tym až zapódaš '''dopołny URL''' swójogo wužywarskego boka na tom drugem wikiju górjejce w kašćiku. Na pśikład, ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!]: Jolic maš konto pla Yahoo!, móžoš se pla toś togo sedła pśizjawiś, z tym až zapódaš OpenID, kótaryž sy dostał wót Yahoo górjejce w kašćiku. URL OpenID wót Yahoo! maju formu ''<nowiki>https://me.yahoo.com/twójowužywarske mě</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL]: Jolic maš konto pla [http://www.aol.com/ AOL], kaž na pśikład konto [http://www.aim.com/ AIM], móžoš se pla {{GRAMMAR:lokatiw|{{SITENAME}}}} pśizjawiś, z tym až zapódaš OpenId, kótaryž sy dostał wót AOL, górjejce w kašćiki. URL OpenID wót AOL maju formu ''<nowiki>http://openid.aol.com/twójowužywarskemě</nowiki>''. Twójo wužywarske mě by měło jano małe pismiki wopśimjeś, ale žedne prozne znamjenja.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox]: Jolic maš blog na jadnej z toś tych słužbow, zapódaj swój blogowy URL górjejce w kašćiku. Na pśikład, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'' abo ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+Jo wjele [http://openid.net/get/ póbitowarjow OpenID] a snaź maš južo konto z OpenID pla drugeje słužby.',
+	'openidupdateuserinfo' => 'Móje wósobinske informacije aktualizěrowaś',
+	'openid-prefstext' => 'Nastajenja [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Schowaj swój <a href="http://openid.net/">OpenID</a> na swójom wužywarskem boku, jolic se pśizjawjaś z OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Kuždy raz, gaž se pízjawjam, móje informacije z identity OpenID aktualizěrowaś',
 );
 
 /** Greek (Ελληνικά)
@@ -721,25 +828,88 @@ vi povas selekti el unu la jenaj opcioj.',
 	'openidalreadyloggedin' => "'''Vi jam ensalutis, $1!'''
 
 Se vi volas utiligi OpenID por ensaluti estontece, vi povas [[Special:OpenIDConvert|konverti vian konton por uzi OpenID]].",
-	'tog-hideopenid' => 'Kaŝi viajn identigon <a href="http://openid.net/">OpenID</a> en via uzula paĝo, se vi ensalutas kun OpenID.',
 	'openidnousername' => 'Neniu salutnomo estis donita.',
 	'openidbadusername' => 'Fuŝa salutnomo donita.',
 	'openidautosubmit' => 'Ĉi tiu paĝo inkluzivas kamparo kiu estos aŭtomate enigita se vi havas JavaScript-on ŝaltan.
 Se ne, klaku la butonon \\"Daŭri\\".',
 	'openidclientonlytext' => 'Vi ne povas uzi kontojn de ĉi tiu vikio kiel OpenID-ojn en alia retejo.',
 	'openidloginlabel' => 'URL-o OpenID',
+	'openid-pref-hide' => 'Kaŝi viajn identigon <a href="http://openid.net/">OpenID</a> en via uzula paĝo, se vi ensalutas kun OpenID.',
 );
 
 /** Spanish (Español)
+ * @author Crazymadlover
+ * @author Drini
  * @author Imre
  * @author Sanbec
  */
 $messages['es'] = array(
+	'openid-desc' => 'Ingresa a la wiki con un [http://openid.net OpenID] e ingresa a los otros sitios que aceptan OpenID con una cuenta de usuario wiki.',
+	'openidlogin' => 'Conectarse con OpenID',
+	'openidfinish' => 'Termina el ingreso OpenID',
+	'openidserver' => 'servidor OpenID',
+	'openidxrds' => 'Archivo Yadis',
+	'openidconvert' => 'Convertidor OpenID',
+	'openiderror' => 'Error de verificación',
+	'openiderrortext' => 'Un error ocurrió durante la verificación del URL OpenID.',
+	'openidconfigerror' => 'Error de configuración OpenID',
+	'openidconfigerrortext' => 'La configuración de almacenamiento OpenID de esta wiki es inválido.
+Por favor consulte a un [[Special:ListUsers/sysop|administrador]].',
+	'openidpermission' => 'Error de permiso OpenID',
+	'openidpermissiontext' => 'El OpenID que indicaste no tiene permiso de ingresar a este servidor.',
+	'openidcancel' => 'Verificación cancelada',
+	'openidcanceltext' => 'Verificación del URL OpenID fue cancelada.',
+	'openidfailure' => 'Verificación fracasada',
+	'openidfailuretext' => 'Verificación del OpenID fracasó. Mensaje de error: "$1".',
+	'openidsuccess' => 'Verificación fue un éxito',
+	'openidsuccesstext' => 'Verificación del URL OpenID fue un éxito.',
+	'openidusernameprefix' => 'OpenIDUser',
+	'openidserverlogininstructions' => 'Ingresa tu password debajo para ingresar a $3 como el usuario $2 (página de usuario $1)',
+	'openidtrustinstructions' => 'Verifique si usted desea compartir información con $1.',
+	'openidallowtrust' => 'Permitir a $1 confiar en esta cuenta de usuario.',
+	'openidnopolicy' => 'El sitio no ha especificado una política de privacidad.',
+	'openidpolicy' => 'Verifique la <a target="_new" href="$1">política de privacidad</a> para mayor información.',
 	'openidoptional' => 'Opcional',
 	'openidrequired' => 'Necesario',
+	'openidnickname' => 'Sobrenombre',
+	'openidfullname' => 'Nombre completo',
 	'openidemail' => 'Dirección de correo electrónico',
 	'openidlanguage' => 'Idioma',
+	'openidnotavailable' => 'Tu sobrenombre preferido ($1) se encuentra ocupado por otro usuario.',
+	'openidnotprovided' => 'Tu servidor de OpenID no proporcionó un sobrenombre (porque no puede o porque indicaste que no lo hiciera).',
+	'openidchooseinstructions' => 'Todos los usuarios necesitan un sobrenombre;
+puedes escoger uno de las opciones debajo.',
+	'openidchoosefull' => 'Su nombre completo ($1)',
+	'openidchooseurl' => 'Un nombre escogido a partir de tu OpenID ($1)',
+	'openidchooseauto' => 'Un nombre autogenerado ($1)',
+	'openidchoosemanual' => 'Un nombre de su preferencia:',
+	'openidchooseexisting' => 'Una cuenta existente en este wiki:',
 	'openidchoosepassword' => 'contraseña:',
+	'openidconvertinstructions' => 'Este formulario permite cambiar tu cuenta de usuario para que use una URL de OpenID.',
+	'openidconvertsuccess' => 'Convertido exitosamente a OpenID',
+	'openidconvertsuccesstext' => 'Usted ha convertido exitosamente su OpenID a $1.',
+	'openidconvertyourstext' => 'Esto ya es su OpenID.',
+	'openidconvertothertext' => 'Esto es el OpenID de alguien más.',
+	'openidalreadyloggedin' => "'''¡Ya has ingresado al sistema, $1!'''
+
+Si quieres usar OpenID para ingresar en el futuro, puedes [[Special:OpenIDConvert|convertir tu cuenta a OpenID]].",
+	'openidnousername' => 'Ningún nombre de usuario especificado.',
+	'openidbadusername' => 'Nombre de usuario mal especificado.',
+	'openidautosubmit' => 'Esta página incluye un formulario que será automáticamnte enviado si dispones de JavaScript.
+De lo contrario, usa el botón \\"Continuar\\".',
+	'openidclientonlytext' => 'No puede usar cuentas de este wiki como OpenID en otro sitio.',
+	'openidloginlabel' => 'URL OpenID',
+	'openidlogininstructions' => '{{SITENAME}} acepta el estándar [http://openid.net/ OpenID] para ingreso único entre múltiples sitios web.
+OpenID te permite ingresar en varios sitios web sin necesidad de usar un password diferente para cada uno.
+(Ver [http://es.wikipedia.org/wiki/OpenID el artículo en Wikipedia] para más información)
+
+Si ya dispones de una cuenta en {{SITENAME}} puedes [[Special:UserLogin|ingresar]] con tu usuario y password usuales. Para usar OpenID en el futuro, puedes [[Special:OpenIDConvert|convertir tu cuenta a OpenID]] después de haber ingresado.
+
+Hay muchos [[http://openid.net/get proveedores de OpenID]] y quizás ya dispongas de una cuenta OpenID en otro servicio.',
+	'openidupdateuserinfo' => 'Actualizar mi información personal',
+	'openid-prefstext' => 'Preferencias de [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Ocultar su <a href="http://openid.net/">OpenID</a> en su página de usuario, si usted ingresa con OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Actualizar mi información desde mi perfil OpenID cada vez que ingreso.',
 );
 
 /** Estonian (Eesti)
@@ -833,16 +1003,17 @@ Voit valita omasi alla olevista vaihtoehdoista.',
 	'openidalreadyloggedin' => "'''Olet jo kirjautuneena sisään, $1!'''
 
 Jos haluat käyttää OpenID:tä kirjautumiseen jatkossa, voit [[Special:OpenIDConvert|muuntaa tunnuksesi käyttämään OpenID:tä]].",
-	'tog-hideopenid' => 'Piilota <a href="http://openid.net/">OpenID:si</a> käyttäjäsivultani, jos kirjaudun sisään OpenID-tunnuksilla.',
 	'openidnousername' => 'Käyttäjätunnus puuttuu.',
 	'openidbadusername' => 'Käyttäjätunnus on virheellinen.',
 	'openidautosubmit' => 'Tämä sivu sisältää lomakkeen, joka lähettää itse itsensä, jos JavaScript käytössä.
 Muussa tapauksessa valitse <code>Jatka</code>.',
 	'openidclientonlytext' => 'Et voi käyttää tämän wikin käyttäjätunnuksia OpenID-tunnuksina muilla sivustoilla.',
 	'openidloginlabel' => 'OpenID-URL',
+	'openid-pref-hide' => 'Piilota <a href="http://openid.net/">OpenID:si</a> käyttäjäsivultani, jos kirjaudun sisään OpenID-tunnuksilla.',
 );
 
 /** French (Français)
+ * @author Crochet.david
  * @author Grondin
  * @author IAlex
  * @author McDutchie
@@ -894,27 +1065,26 @@ Veuillez vous mettre en rapport avec un [[Special:ListUsers/sysop|administrateur
 	'openidconvertsuccesstext' => 'Vous avez converti avec succès votre OpenID vers $1.',
 	'openidconvertyourstext' => 'C’est déjà votre OpenID.',
 	'openidconvertothertext' => "Ceci est l'OpenID de quelqu'un d'autre.",
-	'openidalreadyloggedin' => "'''Vous êtes déjà connecté, $1 !'''
+	'openidalreadyloggedin' => "'''Vous êtes déjà connecté{{GENDER:||e|(e)}}, $1 !'''
 
 Vous vous désirez utiliser votre OpenID pour vous connecter ultérieurement, vous pouvez [[Special:OpenIDConvert|convertir votre compte pour utiliser OpenID]].",
-	'tog-hideopenid' => 'Cache votre <a href="http://openid.net/">OpenID</a> sur votre page utilisateur, si vous vous connectez avec OpenID.',
 	'openidnousername' => 'Aucun nom d’utilisateur n’a été indiqué.',
 	'openidbadusername' => 'Un mauvais nom d’utilisatteur a été indiqué.',
 	'openidautosubmit' => 'Cette page comprend un formulaire qui pourrait être envoyé automatiquement si vous avez activé JavaScript.
 Si tel n’était pas le cas, essayez le bouton « Continuer ».',
 	'openidclientonlytext' => 'Vous ne pouvez utiliser des comptes depuis ce wiki en tant qu’OpenID sur d’autres sites.',
 	'openidloginlabel' => 'Adresse OpenID',
-	'openidlogininstructions' => "{{SITENAME}} supporte le format [http://openid.net/ OpenID] pour une seule signature entre des sites Internet.
+	'openidlogininstructions' => "{{SITENAME}} supporte le standard [http://openid.net/ OpenID] pour une seule signature entre des sites Internet.
 OpenID vous permet de vous connecter sur plusieurs sites différents sans à avoir à utiliser un mot de passe différent pour chacun d’entre eux.
+(Voyez [http://fr.wikipedia.org/wiki/OpenID l'article de Wikipédia] pour plus d'informations.)
 
 Si vous avez déjà un compte sur {{SITENAME}}, vous pouvez vous [[Special:UserLogin|connecter]] avec votre nom d'utilisateur et son mot de pas comme d’habitude. Pour utiliser OpenID, à l’avenir, vous pouvez [[Special:OpenIDConvert|convertir votre compte en OpenID]] après que vous vous soyez connecté normallement.
 
-Il existe plusieurs [http://wiki.openid.net/Public_OpenID_providers fournisseur d'OpenID publiques], et vous pouvez déjà obtenir un compte OpenID activé sur un autre service.
-
-; Autres wiki : si vous avez avec un wiki avec OpenID activé, tel que [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] ou encore [http://kei.ki/ Keiki], vous pouvez vous connecter sur {{SITENAME}} en entrant '''l’adresse internet complète'' de votre page de cet autre wiki dans la boîte ci-dessus. Par exemple : ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : Si vous avez un compte avec Yahoo! , vous pouvez vous connecter sur ce site en entrant votre OpenID Yahoo! fournie dans la boîte ci-dessous. Les adresses OpenID doivent avoir la syntaxe ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : si vous avec un compte avec [http://www.aol.com/ AOL], tel qu'un compte [http://www.aim.com/ AIM], vous pouvez vous connecter sur {{SITENAME}} en entrant votre OpenID fournie par AOL dans la boîte ci-dessous. Les adresses OpenID doivent avoir le format ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. Votre nom d’utilisateur doit être entièrement en lettres minuscules avec aucun espace.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Si vous avec un blog ou un autre de ces services, entrez l’adresse de votre blog dans la boîte ci-dessous. Par exemple, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', ou encore ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+Il existe plusieurs [http://openid.net/get/ fournisseur d'OpenID], et vous pouvez déjà obtenir un compte OpenID activé sur un autre service.",
+	'openidupdateuserinfo' => 'Mettre à jour mes données personnelles',
+	'openid-prefstext' => 'Préférences de [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Cache votre <a href="http://openid.net/">OpenID</a> sur votre page utilisateur, si vous vous connectez avec OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Mettre à jour mes données personnelles depuis OpenID à chaque fois que je me connecte',
 );
 
 /** Irish (Gaeilge)
@@ -976,26 +1146,24 @@ Por favor, consúlteo cun [[Special:ListUsers/sysop|administrador]] do sitio.',
 	'openidalreadyloggedin' => "'''Está dentro do sistema, $1!'''
 
 Se quere usar OpenID para acceder ao sistema no futuro, pode [[Special:OpenIDConvert|converter a súa conta para usar OpenID]].",
-	'tog-hideopenid' => 'Agoche o seu <a href="http://openid.net/">OpenID</a> na súa páxina de usuario, se accede ao sistema con OpenID.',
 	'openidnousername' => 'Non foi especificado ningún nome de usuario.',
 	'openidbadusername' => 'O nome de usuario especificado é incorrecto.',
 	'openidautosubmit' => 'Esta páxina inclúe un formulario que debería ser enviado automaticamente se ten o JavaScript permitido.
 Se non é así, probe a premer no botón \\"Continuar\\".',
 	'openidclientonlytext' => 'Non pode usar contas deste wiki como OpenIDs noutro sitio.',
 	'openidloginlabel' => 'Dirección URL do OpenID',
-	'openidlogininstructions' => "{{SITENAME}} soporta o [http://openid.net/ OpenID] estándar para unha soa sinatura entre os sitios web.
+	'openidlogininstructions' => '{{SITENAME}} soporta o  [http://openid.net/ OpenID] estándar para unha soa sinatura entre os sitios web.
 OpenID permítelle rexistrarse en diferentes sitios web sen usar un contrasinal diferente para cada un.
-(Consulte o [http://en.wikipedia.org/wiki/OpenID artigo sobre o OpenID na Wikipedia en inglés] para máis información.)
+(Consulte o [http://en.wikipedia.org/wiki/OpenID artigo sobre o OpenID na Wikipedia en inglés] para obter máis información.)
 
 Se xa ten unha conta en {{SITENAME}}, pode [[Special:UserLogin|acceder ao sistema]] co seu nome de usuario e contrasinal como o fai habitualmente.
 Para usar o OpenID no futuro, pode [[Special:OpenIDConvert|converter a súa conta en OpenID]] tras ter accedido ao sistema como fai normalmente.
 
-Hai moitos [http://wiki.openid.net/Public_OpenID_providers proveedores públicos de OpenID] e xa pode ter unha conta co OpenID permitido noutro servizo.
-
-; Outros wikis : Se ten unha conta nun wiki co OpenID permitido, como [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] ou [http://kei.ki/ Keiki], pode acceder ao sistema de {{SITENAME}}  tecleando o '''URL completo''' da súa páxina de usuario nesoutro wiki na caixa de enriba. Por exemplo, ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : Se ten unha conta no Yahoo!, pode acceder ao sistema deste sitio tecleando o seu OpenID de Yahoo! proporcionado na caixa de enriba. Os URLs do Yahoo! para os OpenID son da seguinte maneira: ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : Se ten unha conta con [http://www.aol.com/ AOL], como unha conta [http://www.aim.com/ AIM], pode acceder ao sistema de {{SITENAME}} tecleando o seu OpenID proporcionado polo AOL na caixa de enriba. Os URLs do AOL para os OpenID son da seguinte maneira: ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. O seu nome de usuario debe estar en letras minúsculas e escrito sen espazos.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provicoder.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Se ten un blogue nalgún destes servizos, teclee o URL do seu blogue na caixa de enriba. Por exemplo, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', ou ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+Hai moitos [http://openid.net/get/ proveedores públicos de OpenID] e xa pode ter unha conta co OpenID activado noutro servizo.',
+	'openidupdateuserinfo' => 'Actualizar a miña información persoal',
+	'openid-prefstext' => 'Preferencias do [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Agoche o enderezo URL do seu OpenID na súa páxina de usuario, se accede ao sistema con OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Actualizar a miña información persoal do OpenID cada vez que acceda ao sistema',
 );
 
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
@@ -1008,6 +1176,78 @@ $messages['grc'] = array(
 	'openidemail' => 'Ἡλεκτρονικὴ διεύθυνσις',
 	'openidlanguage' => 'Γλῶττα',
 	'openidchoosepassword' => 'σύνθημα:',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'openid-desc' => 'Mit eme Wiki-Benutzerkonto in däm Wiki mit ere [http://openid.net/ OpenID] aamälde un bi andere Netzsyte aamälde, wu OpenID unterstitze',
+	'openidlogin' => 'Aamälde mit OpenID',
+	'openidfinish' => 'OpenID-Aamäldig abschliesse',
+	'openidserver' => 'OpenID-Server',
+	'openidxrds' => 'Yadis-Datei',
+	'openidconvert' => 'OpenID-Konverter',
+	'openiderror' => 'Iberpriefigsfähler',
+	'openiderrortext' => 'S het e Fähle gee derwyylscht d OpenID-URL iberprieft woren isch.',
+	'openidconfigerror' => 'OpenID-Konfigurationsfähler',
+	'openidconfigerrortext' => 'D OpenID-Spycherkonfiguarion fir des Wiki isch fählerhaft.
+Bitte gib eme [[Special:ListUsers/sysop|Ammann]] e Nochricht.',
+	'openidpermission' => 'OpenID-Berächtigungsfähler',
+	'openidpermissiontext' => 'D OpenID, wu Du aagee hesch, berächtigt nit zue dr Aamäldig bi däm Server.',
+	'openidcancel' => 'Iberpriefig abbroche',
+	'openidcanceltext' => 'D Iberpriefig vu dr OpenID-URL isch abbroche wore.',
+	'openidfailure' => 'Iberpriefigsfähler',
+	'openidfailuretext' => 'D Iberpriefig vu dr OpenID-URL isch fählgschlaa. Fählermäldig: „$1“',
+	'openidsuccess' => 'Erfolgryych iberprieft',
+	'openidsuccesstext' => 'D Iberpriefig vu dr OpenID-URL isch erfolgryych gsi.',
+	'openidusernameprefix' => 'OpenID-Benutzer',
+	'openidserverlogininstructions' => 'Gib Dyy Passwort unten yy go Di as Benutzer $2 an $3 aazmälde (Benutzersyte $1).',
+	'openidtrustinstructions' => 'Prief, eb Du Date mit $1 wit teile.',
+	'openidallowtrust' => 'Erlaub $1, däm Benutzerkonto z vertröue.',
+	'openidnopolicy' => 'D Syte het kei Dateschutzrichtlinie aagee.',
+	'openidpolicy' => 'Prief d <a target="_new" href="$1">Dateschutzrichtlinie</a> fir wyteri Informatione.',
+	'openidoptional' => 'Optional',
+	'openidrequired' => 'Pflicht',
+	'openidnickname' => 'Benutzername',
+	'openidfullname' => 'Vollständiger Name',
+	'openidemail' => 'E-Mail-Adräss:',
+	'openidlanguage' => 'Sproch',
+	'openidnotavailable' => 'Dyy bevorzugte Benutzername ($1) wird scho vun eme andere Benutzer verwändet.',
+	'openidnotprovided' => 'Dyy OpenID-Server unterstitzt kei Nicknäme (wel er s nit cha oder wel Du s ihm nit erlaubt hesch).',
+	'openidchooseinstructions' => 'Alli Benutzer bruuche ne Benutzername;
+Du chasch us däre Lischt ein uussueche.',
+	'openidchoosefull' => 'Dyy vollständige Name ($1)',
+	'openidchooseurl' => 'E Name us Dyynere OpenID ($1)',
+	'openidchooseauto' => 'E automatisch aagleite Name ($1)',
+	'openidchoosemanual' => 'E vu Dir gwehlte Name:',
+	'openidchooseexisting' => 'E Benutzerkonto, wu s in däm Wiki git:',
+	'openidchoosepassword' => 'Passwort:',
+	'openidconvertinstructions' => 'Mit däm Formular chasch Dyy Benutzerkonto frejgee fir d Benutzig vun ere OpenID-URL.',
+	'openidconvertsuccess' => 'Erfolgryych no OpenID konvertiert',
+	'openidconvertsuccesstext' => 'Du hesch d Konvertierig vu Dyynere OpenID no $1 erfolgryych durgfiert.',
+	'openidconvertyourstext' => 'Des isch scho Dyyni OpenID.',
+	'openidconvertothertext' => 'Des isch d OpenID vu eber anderem.',
+	'openidalreadyloggedin' => "'''Du bisch scho aagmäldet, $1!'''
+
+Wänn Du OpenID fir s Aamälde in Zuechumft wit nutze, no chasch [[Special:OpenIDConvert|Dyy Benutzerkonto no OpenID konvertiere]].",
+	'openidnousername' => 'Kei Benutzername aagee.',
+	'openidbadusername' => 'Falsche Benutzername aagee.',
+	'openidautosubmit' => 'Uf däre Syte het s e Formular, wu automatisch ibertrait wird, wänn JavaSkript aktiviert isch. Wänn nit, no druck bitte uf „Wyter“.',
+	'openidclientonlytext' => 'Du chasch kei Benutzerkonte us däm Wiki as OpenID fir anderi Syte verwände.',
+	'openidloginlabel' => 'OpenID-URL',
+	'openidlogininstructions' => '{{SITENAME}} unterstitzt dr [http://openid.net/ OpenID]-Standard zum sich fir mehreri Websites aazmälde.
+OpenID mäldet Di bi vyyle unterschidlige Netzsyte aa, ohni ass Du fir jedi e ander Passwort muesch verwände.
+(Meh Informatione bietet dr [http://de.wikipedia.org/wiki/OpenID dytsch Wikipedia-Artikel zue dr OpenID].)
+
+Wänn Du imfall scho ne Benutzerkonto bi {{SITENAME}} hesch, no chasch Di ganz normal mit em Benutzername un em Passwort [[Special:UserLogin|aamälde]].
+Wänn Du in Zuechumft OpenID mechtsch verwände, chasch [[Special:OpenIDConvert|Dyy Account zue OpenID konvertiere]], wänn Di normal aagmäldet hesch.
+
+S git vyyl [http://wiki.openid.net/Public_OpenID_providers effentligi OpenID-Provider] un villicht hesch scho ne  Benutzerkonto mit aktiviertem OpenID bin eme andere Aabieter.',
+	'openidupdateuserinfo' => 'Myni persenlige Date aktualisiere',
+	'openid-prefstext' => '[http://openid.net/ OpenID] Yystellige',
+	'openid-pref-hide' => 'Versteck Dyyni <a href="http://openid.net/">OpenID</a> uf Dyynere Benutzersyte, wänn Di mit OpenID aamäldsch.',
+	'openid-pref-update-userinfo-on-login' => 'Myyni Date mit em OpenID-Konto bi jedere Aamäldig aktualisiere',
 );
 
 /** Manx (Gaelg)
@@ -1081,26 +1321,24 @@ $messages['he'] = array(
 	'openidalreadyloggedin' => "'''הינכם כבר מחוברים לחשבון, $1!'''
 
 אם ברצונכם להשתמש ב־OpenID כדי להתחבר בעתיד, תוכלו [[Special:OpenIDConvert|להמיר את חשבונכם לשימוש ב־OpenID]].",
-	'tog-hideopenid' => 'הסתרת ה־<a href="http://openid.net/">OpenID</a> מדף המשתמש, במקרה של כניסה לחשבון עם OpenID.',
 	'openidnousername' => 'לא צוין שם משתמש.',
 	'openidbadusername' => 'שם המשתמש שצוין אינו תקין.',
 	'openidautosubmit' => 'דף זה מכיל טופס שאמור להשלח אוטומטית אם יש לכם JavaScript פעיל.
 אם זה לא פועל, נסו את הכפתור \\"המשך\\".',
 	'openidclientonlytext' => 'אינכם יכולים להשתמש בחשבונות משתמש מוויקי זה כזהויות OpenID באתר אחר.',
 	'openidloginlabel' => 'כתובת OpenID',
-	'openidlogininstructions' => "ב{{grammar:תחילית|{{SITENAME}}}} מותקנת תמיכה בתקן ה־[http://openid.net/ OpenID] לחשבון משתמש מאוחד בין אתרי אינטרנט.
+	'openidlogininstructions' => 'ב{{grammar:תחילית|{{SITENAME}}}} מותקנת תמיכה בתקן ה־[http://openid.net/ OpenID] לחשבון משתמש מאוחד בין אתרי אינטרנט.
 OpenID מאפשר לכם להיכנס לחשבון במגוון אתרים מבלי להשתמש בסיסמה שונה עבור כל אחד מהם.
 (עיינו ב[http://he.wikipedia.org/wiki/OpenID ערך על OpenID בוויקיפדיה העברית] למידע נוסף.)
 
 אם כבר יש ברשותכם חשבון במערכת {{SITENAME}}, תוכלו [[Special:UserLogin|להיכנס לחשבון]] עם שם המשתמש והסיסמה שלכם כרגיל.
 על מנת להשתמש ב־OpenID בעתיד, תוכלו [[Special:OpenIDConvert|להמיר את חשבונכם ל־OpenID]] לאחר שנכנסתם לחשבון באופן הרגיל.
 
-ישנם [http://wiki.openid.net/Public_OpenID_providers ספקי OpenID ציבוריים] רבים, ויתכן שכבר יש לכם חשבון התומך ב־OpenID בשירות אחר.
-
-; אתרי ויקי אחרים : אם יש לכם חשבון באתר ויקי התומך ב־OpenID, כגון [http://wikitravel.org/he ויקיטיול], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] או [http://kei.ki/ Keiki], תוכלו להיכנס לחשבון ב{{grammar:תחילית|{{SITENAME}}}} על ידי כתיבת '''הכתובת המלאה''' של דף המשתמש שלכם באתר הוויקי האחר בתיבה שלהלן. לדוגמה, ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : אם יש ברשותכם חשבון Yahoo!, תוכלו להיכנס לחשבון ב{{grammar:תחילית|{{SITENAME}}}} על ידי כתיבת ה־OpenID שסופק על ידי Yahoo! בתיבה שלהלן. כתובות OpenID של Yahoo! הינן בתבנית ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : אם יש ברשותכם חשבון אצל [http://www.aol.com/ AOL], כגון חשבון [http://www.aim.com/ AIM], תוכלו להיכנס לחשבון ב{{grammar:תחילית|{{SITENAME}}}} על ידי כתיבת ה־OpenID שסופק לכם על ידי AOL בתיבה שלהלן. כתובת OpenID של AOL הינן בתבנית ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. על שם המשתמש שלכם להיות כולו באותיות קטנות באנגלית, ללא רווחים.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : אם אתם מנהלים בלוג באחד מהשירותים הללו, תוכלו להיכנס לחשבון ב{{grammar:תחילית|{{SITENAME}}}} על ידי כתיבת כתובת הבלוג שלכם בתיבה שלהלן. לדוגמה, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', או ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+ישנם [http://wiki.openid.net/Public_OpenID_providers ספקי OpenID ציבוריים] רבים, ויתכן שכבר יש לכם חשבון התומך ב־OpenID בשירות אחר.',
+	'openidupdateuserinfo' => 'עדכון המידע האישי שלי',
+	'openid-prefstext' => 'העדפות [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'הסתרת ה־<a href="http://openid.net/">OpenID</a> מדף המשתמש, במקרה של כניסה לחשבון עם OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'עדכון המידע שלי מכרטיס ה־OpenID עם כל כניסה לחשבון',
 );
 
 /** Hindi (हिन्दी)
@@ -1144,11 +1382,11 @@ $messages['hi'] = array(
 	'openidconvertsuccesstext' => 'आपने आपका ओपनID $1 में बदल दिया हैं।',
 	'openidconvertyourstext' => 'यह आपका ही ओपनID हैं।',
 	'openidconvertothertext' => 'यह किसी औरका ओपनID हैं।',
-	'tog-hideopenid' => 'अगर आपने ओपनID का इस्तेमाल करके लॉग इन किया हैं, तो आपके सदस्यपन्नेपर आपका <a href="http://openid.net/">ओपनID</a> छुपायें।',
 	'openidnousername' => 'सदस्यनाम दिया नहीं हैं।',
 	'openidbadusername' => 'गलत सदस्यनाम दिया हैं।',
 	'openidclientonlytext' => 'इस विकिपर खोले गये खाते आप अन्य साइटपर ओपनID के तौर पर इस्तेमाल नहीं कर सकतें हैं।',
 	'openidloginlabel' => 'ओपनID URL',
+	'openid-pref-hide' => 'अगर आपने ओपनID का इस्तेमाल करके लॉग इन किया हैं, तो आपके सदस्यपन्नेपर आपका <a href="http://openid.net/">ओपनID</a> छुपायें।',
 );
 
 /** Hiligaynon (Ilonggo)
@@ -1216,13 +1454,21 @@ $messages['hsb'] = array(
 	'openidalreadyloggedin' => "'''Sy hižo přizjewjeny, $1!'''
 
 Jeli chceš OpenID wužiwać, hdyž přichodnje přizjewiš, móžeš [[Special:OpenIDConvert|swoje konto za wužiwanje OpenID konwertować]].",
-	'tog-hideopenid' => 'Twój <a href="http://openid.net/">OpenID</a> na twojej wužiwarskej stronje schować, jeli so z OpenID přizjewješ.',
 	'openidnousername' => 'Žane wužiwarske mjeno podate.',
 	'openidbadusername' => 'Wopačne wužiwarske mjeno podate.',
 	'openidautosubmit' => 'Tuta strona wobsahuje formular, kotryž měł so awtomatisce wotpósłać, jeli sy JavaScript zmóžnił. Jeli nic, spytaj tłóčatko "Dale".',
 	'openidclientonlytext' => 'Njemóžeš konta z tutoho wikija jako OpenID na druhim sydle wužiwać.',
 	'openidloginlabel' => 'URL OpenID',
-	'openidlogininstructions' => 'Zapodaj swój identifikator OpenID, zo by so přizjewił:',
+	'openidlogininstructions' => '{{SITENAME}} podpěruje standard [http://openid.net/ OpenID] za jednotliwe přizjewjenje mjez websydłami. OpenID ći zmóžnja so pola wjele rozdźělnych websydłow prizjewić, bjeztoho zo dyrbiš rozdźělne hesła wužiwać. (Hlej [http://en.wikipedia.org/wiki/OpenID nastawk OpenID wikipedije] za dalše informacije.)
+
+Jeli maš hižo konto na {{GRAMMAR:lokatiw|{{SITENAME}}}}, móžeš so ze swojim wužiwarskim mjenjom a hesłom kaž přeco [[Special:UserLogin|přizjewić]].
+Zo by OpenID w přichodźe wužiwał, móžeš [[Special:OpenIDConvert|swóje konto do OpenID konwertować]], po tym zo sy so normalnje přizjewił.
+
+Je wjele [http://openid.net/get/ poskićowarjow OpenID], snano maš hižo konto z OpenID pola druheje słužby.',
+	'openidupdateuserinfo' => 'Moje wosobinske informacije aktualizować',
+	'openid-prefstext' => 'Nastajenja [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Twój <a href="http://openid.net/">OpenID</a> na twojej wužiwarskej stronje schować, jeli so z OpenID přizjewješ.',
+	'openid-pref-update-userinfo-on-login' => 'Kóždy raz, hdyž so přizjawjam, moje informacije z identity OpenID aktualizować',
 );
 
 /** Hungarian (Magyar)
@@ -1278,7 +1524,6 @@ Lépj kapcsolatba egy [[Special:ListUsers/sysop|adminisztrátorral]].',
 	'openidalreadyloggedin' => "'''Már be vagy jelentkezve, $1!'''
 
 Ha ezentúl az OpenID-del akarsz bejelentkezni, [[Special:OpenIDConvert|konvertálhatod a felhasználói fiókodat OpenID-re]].",
-	'tog-hideopenid' => 'Az <a href="http://openid.net/">OpenID</a>-d elrejtése a felhasználói lapodon, amikor OpenID-vel jelentkezel be.',
 	'openidnousername' => 'Nem adtál meg felhasználónevet.',
 	'openidbadusername' => 'Rossz felhasználónevet adtál meg.',
 	'openidautosubmit' => 'Az ezen az oldalon lévő űrlap automatikusan elküldi az adatokat, ha a JavaScript engedélyezve van. Ha nem, használd a \\"Tovább\\" gombot.',
@@ -1295,6 +1540,7 @@ Számos [http://wiki.openid.net/Public_OpenID_providers nyilvános OpenID szolg�
 ; [http://openid.yahoo.com/ Yahoo!] :  ha van Yahoo! azonosítód, bejelentkezhetsz a Yahoo! OpenID-d megadásával. A Yahoo! OpenID-k ''<nowiki>https://me.yahoo.com/felhasználónév</nowiki>'' alakúak.
 ; [http://dev.aol.com/aol-and-63-million-openids AOL] : Ha van valamilyen [http://www.aol.com/ AOL] azonosítód, például egy [http://www.aim.com/ AIM] felhasználónév, bejelentkezhetsz az AOL OpenID-del. Az AOL OpenID-k ''<nowiki>http://openid.aol.com/felhasználónév</nowiki>'' alakúak (a felhasználónév csupa kisbetűvel, szóköz nélkül).
 ; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : ezek a blogszolgáltatók mind biztosítanak OpenID-t, a következő formákban: ''<nowiki>http://felhasználónév.blogspot.com/</nowiki>'', ''<nowiki>http://felhasználónév.wordpress.com/</nowiki>'', ''<nowiki>http://felhasználónév.livejournal.com/</nowiki>'', or ''<nowiki>http://felhasználónév.vox.com/</nowiki>''.",
+	'openid-pref-hide' => 'Az <a href="http://openid.net/">OpenID</a>-d elrejtése a felhasználói lapodon, amikor OpenID-vel jelentkezel be.',
 );
 
 /** Interlingua (Interlingua)
@@ -1351,26 +1597,24 @@ tu pote seliger un del optiones in basso.',
 	'openidalreadyloggedin' => "'''Tu es ja identificate, $1!'''
 
 Si tu vole usar OpenID pro aperir un session in le futuro, tu pote [[Special:OpenIDConvert|converter tu conto pro usar OpenID]].",
-	'tog-hideopenid' => 'Celar tu <a href="http://openid.net/">OpenID</a> in tu pagina de usator, si tu aperi un session con OpenID.',
 	'openidnousername' => 'Nulle nomine de usator specificate.',
 	'openidbadusername' => 'Mal nomine de usator specificate.',
 	'openidautosubmit' => 'Iste pagina include un formulario que debe esser submittite automaticamente si tu ha JavaScript activate.
 Si non, prova le button \\"Continuar\\".',
 	'openidclientonlytext' => 'Tu non pote usar contos ab iste wiki como contos OpenID in un altere sito.',
 	'openidloginlabel' => 'Adresse URL de OpenID',
-	'openidlogininstructions' => "{{SITENAME}} supporta le standard [http://openid.net/ OpenID] pro contos unificate inter sitos web.
+	'openidlogininstructions' => '{{SITENAME}} supporta le standard [http://openid.net/ OpenID] pro contos unificate inter sitos web.
 OpenID te permitte aperir un session in multe diverse sitos web sin usar un differente contrasigno pro cata un.
 (Vide [http://ia.wikipedia.org/wiki/OpenID le articulo super OpenID in Wikipedia] pro plus informationes.)
 
 Si tu possede ja un conto in {{SITENAME}}, tu pote [[Special:UserLogin|aperir un session]] con tu nomine de usator e contrasigno como normal.
 Pro usar OpenID in le futuro, tu pote [[Special:OpenIDConvert|converter tu conto a OpenID]] post que tu ha aperite un session normal.
 
-Il ha multe [http://wiki.openid.net/Public_OpenID_providers providitores de OpenID public], e tu pote ja disponer de un conto con capacitate OpenID in un altere servicio.
-
-; Altere wikis : Si tu possede un conto in un wiki con capacitate OpenID, como [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] o [http://kei.ki/ Keiki], tu pote aperir un session a {{SITENAME}} per entrar le '''adresse URL complete''' de tu pagina de usator in ille altere wiki in le quadro supra. Per exemplo, ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : Si tu possede un conto a Yahoo!, tu pote aperir un session a iste sito per entrar tu OpenID fornite per Yahoo! in le quadro supra. Le adresses URL OpenID de Yahoo! ha le forma ''<nowiki>https://me.yahoo.com/tunominedeusator</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : Si tu possede un conto a [http://www.aol.com/ AOL], como un conto de [http://www.aim.com/ AIM], tu pote aperir un session a {{SITENAME}} per entrar tu OpenID fornite per AOL in le quadro supra. Le adresses URL OpenID de AOL ha le forma ''<nowiki>http://openid.aol.com/tunominedeusator</nowiki>''. Tu nomine de usator debe esser toto in minusculas, sin spatios.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Si tu possede un blog in alcun de iste servicios, entra le adresse URL de tu blog in le quadro supra. Per exemplo, ''<nowiki>http://tunominedeusator.blogspot.com/</nowiki>'', ''<nowiki>http://tunominedeusator.wordpress.com/</nowiki>'', ''<nowiki>http://tunominedeusator.livejournal.com/</nowiki>'', o ''<nowiki>http://tunominedeusator.vox.com/</nowiki>''.",
+Il ha multe [http://openid.net/get/ providitores de OpenID], e tu pote ja disponer de un conto con capacitate OpenID in un altere servicio.',
+	'openidupdateuserinfo' => 'Actualisar mi informationes personal',
+	'openid-prefstext' => 'Prreferentias de [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Celar tu <a href="http://openid.net/">OpenID</a> in tu pagina de usator, si tu aperi un session con OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Actualisar mi informationes ab mi personage OpenID cata vice que io aperi un session',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -1427,7 +1671,6 @@ Anda dapat memilih dari salah satu opsi berikut.',
 	'openidalreadyloggedin' => "'''Anda telah masuk log, $1!'''
 
 Jika Anda ingin menggunakan OpenID untuk masuk log di masa yang akan datang, Anda dapat [[Special:OpenIDConvert|mengkonversi akun Anda menjadi OpenID]].",
-	'tog-hideopenid' => 'Sembunyikan <a href="http://openid.net/">OpenID</a> Anda di halaman pengguna Anda, jika Anda masuk log dengan OpenID.',
 	'openidnousername' => 'Tidak ada nama pengguna diberikan.',
 	'openidbadusername' => 'Nama pengguna salah.',
 	'openidautosubmit' => 'Dalam halaman ini terdapat formulir yang akan dikirimkan secara otomatis jika Anda mengaktifkan JavaScript.
@@ -1447,6 +1690,7 @@ Ada banyak [http://wiki.openid.net/Public_OpenID_providers penyedia OpenID Publi
 ; [http://openid.yahoo.com/ Yahoo!] : Jika Anda memiliki akun di Yahoo!, Anda dapat masuk log di situs ini dengan menggunakan OpenID Yahoo! Anda di kotak di atas. URL OpenID Yahoo! memiliki format ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
 ; [http://dev.aol.com/aol-and-63-million-openids AOL] : Jika Anda memiliki akun di [http://www.aol.com/ AOL], seperti akun [http://www.aim.com/ AIM], Anda dapat masuk log di {{SITENAME}} dengan menggunakan OpenID AOL Anda di kotak di atas. URL OpenID AOL memiliki format ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. Nama pengguna Anda haruslah dalam huruf kecil semua dan tanpa spasi.
 ; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Jika Anda memiliki blog di situs-situs layanan ini, masukkan URL blog Anda di kotak di atas. Sebagai contoh, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', atau ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+	'openid-pref-hide' => 'Sembunyikan <a href="http://openid.net/">OpenID</a> Anda di halaman pengguna Anda, jika Anda masuk log dengan OpenID.',
 );
 
 /** Icelandic (Íslenska)
@@ -1457,6 +1701,7 @@ $messages['is'] = array(
 );
 
 /** Italian (Italiano)
+ * @author BrokenArrow
  * @author Darth Kule
  * @author McDutchie
  * @author Nemo bis
@@ -1475,7 +1720,7 @@ $messages['it'] = array(
 	'openidconfigerrortext' => 'La configurazione della memorizzazione di OpenID per questa wiki non è valida.
 Per favore consulta un [[Special:ListUsers/sysop|amministratore]].',
 	'openidpermission' => 'Errore nei permessi OpenID',
-	'openidpermissiontext' => "Non è stato permesso di effettuare il login a questo server all'OpenID che hai fornito.",
+	'openidpermissiontext' => "L'accesso a questo server non è consentito all'OpenID indicato.",
 	'openidcancel' => 'Verifica annullata',
 	'openidcanceltext' => "La verifica dell'URL OpenID è stata annullata.",
 	'openidfailure' => 'Verifica fallita',
@@ -1483,10 +1728,10 @@ Per favore consulta un [[Special:ListUsers/sysop|amministratore]].',
 	'openidsuccess' => 'Verifica effettuata',
 	'openidsuccesstext' => "La verifica dell'URL OpenID è stata effettuata con successo.",
 	'openidusernameprefix' => 'Utente OpenID',
-	'openidserverlogininstructions' => 'Inserisci di seguito la tua password per effettuare il login a $3 come utente $2 (pagina utente  $1).',
+	'openidserverlogininstructions' => 'Inserisci di seguito la tua password per effettuare il login a $3 come utente $2 (pagina utente $1).',
 	'openidtrustinstructions' => 'Controlla se desideri condividere i dati con $1.',
 	'openidallowtrust' => 'Permetti a $1 di fidarsi di questo account utente.',
-	'openidnopolicy' => 'Il sito nono ha specificato una politica relativa alla privacy.',
+	'openidnopolicy' => 'Il sito non ha specificato una politica relativa alla privacy.',
 	'openidpolicy' => 'Controlla la <a target="_new" href="$1">politica relativa alla privacy</a> per maggiori informazioni.',
 	'openidoptional' => 'Opzionale',
 	'openidrequired' => 'Richiesto',
@@ -1512,25 +1757,22 @@ puoi sceglierne uno dalle opzioni seguenti.',
 	'openidalreadyloggedin' => "'''Hai già effettuato il login, $1!'''
 
 Se desideri usare OpenID per effettuare il login in futuro, puoi [[Special:OpenIDConvert|convertire il tuo account per utilizzare OpenID]].",
-	'tog-hideopenid' => 'Nascondi il tuo <a href="http://openid.net/">OpenID</a> sulla tua pagina utente, se effettui il login con OpenID.',
 	'openidnousername' => 'Nessun nome utente specificato.',
 	'openidbadusername' => 'Nome utente specificato errato.',
 	'openidautosubmit' => 'Questa pagina include un modulo che dovrebbe essere inviato automaticamente se hai JavaScript attivato. Se non lo è, prova a premere il pulsante \\"Continue\\".',
 	'openidclientonlytext' => 'Non puoi usare gli account di questa wiki come OpenID su un altro sito.',
 	'openidloginlabel' => 'URL OpenID',
-	'openidlogininstructions' => "{{SITENAME}} supporta lo standard [http://openid.net/ OpenID] per il login unico sui siti web.
-OpenID ti permette di registrarti in molti siti web senza utilizzare una password diversa per ciascuno.
-(Leggi la [http://en.wikipedia.org/wiki/OpenID voce di Wikipedia sull'OpenID] per maggiori informazioni.)
+	'openidlogininstructions' => '{{SITENAME}} supporta lo standard [http://openid.net/ OpenID] per il login unico sui siti web.
+OpenID consente di effettuare la registrazione su molti siti web senza dover utilizzare una password diversa per ciascuno.
+(Leggi la [http://it.wikipedia.org/wiki/OpenID voce di Wikipedia su OpenID] per maggiori informazioni.)
 
-Se possiedi già un account su {{SITENAME}}, puoi effettuare il [[Special:UserLogin|login]] con il tuo nome utente e la tua password come al solito.
-Per utilizzare OpenID in futuro, puoi [[Special:OpenIDConvert|convertire il tuo account a OpenID]] dopo che hai effettuato normalmente il login.
+Chi possiede già un account su {{SITENAME}} può effettuare il [[Special:UserLogin|login]] con il proprio nome utente e la propria password come al solito. Per utilizzare OpenID in futuro, si può [[Special:OpenIDConvert|convertire il proprio account a OpenID]] dopo aver effettuato normalmente il login.
 
-Esistono molti [http://wiki.openid.net/Public_OpenID_providers Provider OpenID pubblici], e potresti avere già un account abilitato all'OpenID su un altro servizio.
-
-; Altre wiki : Se possiedi un account su una wiki abilitata all'OpenID, come [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] o [http://kei.ki/ Keiki], puoi effettuare il login a {{SITENAME}} inserendo l<nowiki>'</nowiki>'''URL completo''' della tua pagina utente in quell'altra wiki nel box soprastante. Per esempio, ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : Se possiedi un account con Yahoo!, puoi effettuare il login a questo sito inserendo il tuo OpenID Yahoo! nel box soprastante. Gli URL OpenID Yahoo! hanno la forma ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : Se possiedi un account con [http://www.aol.com/ AOL], come un account [http://www.aim.com/ AIM], puoi effettuare il login a {{SITENAME}} inserendo il tuo OpenID AOL nel box soprastante. Gli URL OpenID AOL hanno la forma ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. Il tuo nome utente dovrebbe essere tutto in carattere minuscolo, senza spazi.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Se possiedi un blog su uno di questi siti, inserisci l'URL del blog nel box soprastante. Per esempio, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', or ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+Esistono molti [http://openid.net/get/ Provider OpenID]; è possibile che tu abbia già un account abilitato a OpenID su un altro servizio.',
+	'openidupdateuserinfo' => 'Aggiorna le mie informazioni personali',
+	'openid-prefstext' => 'Preferenze [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Nascondi il tuo <a href="http://openid.net/">OpenID</a> sulla tua pagina utente, se effettui il login con OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Aggiorna le mie informazioni dalla persona OpenID a ogni accesso',
 );
 
 /** Japanese (日本語)
@@ -1567,7 +1809,7 @@ $messages['ja'] = array(
 	'openidrequired' => '必須',
 	'openidnickname' => 'ニックネーム',
 	'openidfullname' => 'フルネーム',
-	'openidemail' => 'Eメールアドレス',
+	'openidemail' => '電子メールアドレス',
 	'openidlanguage' => '言語',
 	'openidnotavailable' => 'あなたが選んだニックネーム ($1) は既に他の利用者が使っています。',
 	'openidnotprovided' => 'あなたの OpenID サーバーはニックネームを提供していません（提供できない場合と、提供しないようあなたが指示している場合とがあります）。',
@@ -1586,22 +1828,20 @@ $messages['ja'] = array(
 	'openidalreadyloggedin' => "'''$1 さん、あなたは既にログインしています!'''
 
 将来は OpenID を使ってログインしたい場合は、[[Special:OpenIDConvert|あなたのアカウントを OpenID を使うように変換する]]ことができます。",
-	'tog-hideopenid' => 'OpenID でログインしている場合に、あなたの <a href="http://openid.net/">OpenID</a> をあなたの利用者ページで表示しない。',
 	'openidnousername' => '利用者名が指定されていません。',
 	'openidbadusername' => '利用者名の指定が不正です。',
 	'openidautosubmit' => 'このページにあるフォームはあなたが JavaScript を有効にしていれば自動的に送信されるはずです。そうならない場合は、「続ける」ボタンを試してください。',
 	'openidclientonlytext' => 'あなたはこのウィキのアカウントを他のサイトで OpenID として使うことができません。',
 	'openidloginlabel' => 'OpenID URL',
-	'openidlogininstructions' => "{{SITENAME}} はウェブサイト間でのシングルサインオンのための [http://openid.net/ OpenID] 規格に対応しています。OpenID によって、個別のパスワードを使うことなく、たくさんの様々なウェブサイトにログインできるようになります（より詳しい情報は[http://ja.wikipedia.org/wiki/OpenID ウィキペディアの OpenID についての記事]を参照してください）。
+	'openidlogininstructions' => '{{SITENAME}} はウェブサイト間でのシングルサインオンのための [http://openid.net/ OpenID] 規格に対応しています。OpenID によって、個別のパスワードを使うことなく、たくさんの様々なウェブサイトにログインできるようになります（より詳しい情報は[http://ja.wikipedia.org/wiki/OpenID ウィキペディアの OpenID についての記事]を参照してください）。
 
 あなたが既に {{SITENAME}} でアカウントをもっている場合は、いつもどおりに利用者名とパスワードで[[Special:UserLogin|ログイン]]できます。将来、OpenID を使うためには、通常のログインをした後で[[Special:OpenIDConvert|あなたのアカウントを OpenID に変換する]]ことができます。
 
-多くの[http://wiki.openid.net/Public_OpenID_providers 公開 OpenID プロバイダー]が存在し、あなたは既に別のサービスで OpenID が有効となったアカウントを保持しているかもしれません。
-
-; 他のウィキ : あなたが、[http://wikitravel.org/ Wikitravel]、[http://www.wikihow.com/ wikiHow]、[http://vinismo.com/ Vinismo]、[http://aboutus.org/ AboutUs] あるいは [http://kei.ki/ Keiki] といった、OpenID が有効となったウィキでアカウントをもっている場合は、そのウィキでの利用者ページのフルURL (例: ''<nowiki>http://kei.ki/en/User:Evan</nowiki>'') を上のボックスに入力することで {{SITENAME}} にログインできます。
-; [http://openid.yahoo.com/ Yahoo!] : あなたが Yahoo! でアカウントをもっている場合は、Yahoo! が提供する OpenID を上のボックスに入力することでこのサイトにログインできます。Yahoo! の OpenID URL は ''<nowiki>https://me.yahoo.com/yourusername</nowiki>'' という形式をしています。
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : あなたが、例えば [http://www.aim.com/ AIM] アカウントなど、[http://www.aol.com/ AOL] でアカウントをもっている場合は、AOL が提供する OpenID を上のボックスに入力することで {{SITENAME}} にログインできます。AOL の OpenID URL は ''<nowiki>http://openid.aol.com/yourusername</nowiki>'' という形式をしています。利用者名はすべて小文字で、スペースを含んではなりません。
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger]・[http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com]・[http://www.livejournal.com/openid/about.bml LiveJournal]・[http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : あなたがこれらのサービスのどれかでブログをもっている場合は、あなたのブログの URL を上のボックスに入力してください。例えば、''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'' あるいは ''<nowiki>http://yourusername.vox.com/</nowiki>'' といったものです。",
+多くの [http://openid.net/get/ OpenID プロバイダー]が存在し、あなたは既に別のサービスで OpenID が有効となったアカウントを保持しているかもしれません。',
+	'openidupdateuserinfo' => '自分の個人情報を更新',
+	'openid-prefstext' => '[http://openid.net/ OpenID] の設定',
+	'openid-pref-hide' => 'OpenID でログインしている場合に、あなたの <a href="http://openid.net/">OpenID</a> をあなたの利用者ページで表示しない。',
+	'openid-pref-update-userinfo-on-login' => 'ログインするたびに、自分の情報を OpenID のペルソナから更新する',
 );
 
 /** Javanese (Basa Jawa)
@@ -1661,9 +1901,9 @@ $messages['km'] = array(
 	'openidconvertothertext' => 'វាជាOpenIDរបស់អ្នកដទៃ។',
 	'openidalreadyloggedin' => "'''អ្នកបានឡុកអ៊ីនរួចហើយ $1!'''
 ប្រសិនបើអ្នកចង់់ប្រើ OpenID ដើម្បីឡុកអ៊ីននាពេលអនាគត អ្នកអាច[[Special:OpenIDConvert|បម្លែងគណនីរបស់អ្នកដើម្បីប្រើ OpenID]]។",
-	'tog-hideopenid' => 'លាក់<a href="http://openid.net/">OpenID</a>របស់អ្នកនៅលើទំព័រអ្នកប្រើប្រាស់របស់អ្នក ប្រសិនបើអ្នកឡុកអ៊ីនដោយប្រើOpenID។',
 	'openidnousername' => 'មិនមានឈ្មោះអ្នកប្រើប្រាស់បានបញ្ជាក់ទេ។',
 	'openidbadusername' => 'ឈ្មោះមិនត្រឹមត្រូវត្រូវបានបញ្ជាក់',
+	'openid-pref-hide' => 'លាក់<a href="http://openid.net/">OpenID</a>របស់អ្នកនៅលើទំព័រអ្នកប្រើប្រាស់របស់អ្នក ប្រសិនបើអ្នកឡុកអ៊ីនដោយប្រើOpenID។',
 );
 
 /** Korean (한국어)
@@ -1673,9 +1913,13 @@ $messages['km'] = array(
 $messages['ko'] = array(
 	'openidlogin' => 'OpenID로 로그인',
 	'openidserver' => 'OpenID 서버',
+	'openidconvert' => 'OpenID 변환기',
+	'openidconfigerror' => 'OpenID 설정 오류',
+	'openidpermission' => 'OpenID 권한 오류',
 	'openidemail' => '이메일 주소',
 	'openidlanguage' => '언어',
 	'openidchoosepassword' => '비밀번호:',
+	'openidloginlabel' => 'OpenID URL',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -1734,7 +1978,6 @@ Do kannß Der der Dinge unge druß üßsöke.',
 
 Wann De OpenID zom Enlogge bruche wells, spääder, dann kanns De
 [[Special:OpenIDConvert|Ding Aanmeldung op OpenID ömstelle]] jonn.",
-	'tog-hideopenid' => 'Versteich Ding <a lang="en" href="http://openid.net/">OpenID</a> op Dinge Metmaacher-Sigg, wann de met <span lang="en">OpenID</span> enloggs.',
 	'openidnousername' => 'Keine Metmaacher-Name aanjejovve.',
 	'openidbadusername' => 'Ene kapodde Metmaacher-Name aanjejovve.',
 	'openidautosubmit' => 'Di Sigg enthääld_e Fomulaa för Ennjave, wat automattesch afjeschek weed, wann de Javaskrip enjeschalldt häs.
@@ -1749,18 +1992,23 @@ Wann de alld aanjemeldt bes op de {{SITENAME}}, dann kanns De met Dingem Metmaac
 Öm spääder och <span lang="en">OpenID</span> ze bruche, kann noh_m nomaale Enlogge Ding Aanmeldungsdate [[Special:OpenIDConvert|op <span lang="en">OpenID</span> ömstelle]].
 
 Et jitt en jruuße Zahl [http://wiki.openid.net/Public_OpenID_providers <span lang="en">OpenID Provider</span> för de Öffentleschkeit], un et künnt joot sin, dat De alld ene <span lang="en">OpenID</span>-fä\'ijje Zojang häß, op däm eine udder andere Server.
-
+<!--
 ; Annder Wikis : Wann De op enem Wiki aanjemelldt bes, wat <span lang="en">OpenID</span> ongerschtöz, zem Beispöll [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] udder [http://kei.ki/ Keiki], kanns de hee op de {{SITENAME}} enlogge, indämm dat De de komplätte URL fun Dinge Metmaacher-Sigg op däm aandere Wiki hee bovve endrähß. Zem Beispöll esu jät wi: \'\'<nowiki>http://kei.ki/en/User:Evan</nowiki>\'\'.
 ; [http://openid.yahoo.com/ Yahoo!] : Wann De bei <span lang="en">Yahoo!</span> aanjemelldt bes, kanns de hee op de {{SITENAME}} enlogge, indämm dat De de Ding <span lang="en">OpenID URL</span> bovve aanjiß, di De fun <span lang="en">Yahoo!</span> bekumme häß. Di <span lang="en">OpenID URLs</span> sinn uß wi zem Beispöll: \'\'<nowiki>https://me.yahoo.com/DingeMetmaacherName</nowiki>\'\'.
 ; [http://dev.aol.com/aol-and-63-million-openids AOL] : Wann de ene zohjang op [http://www.aol.com/ AOL] häß, esu jet wie ennen Zojang zom [http://www.aim.com/ AIM], do kanns de Desch hee op de {{SITENAME}} enlogge, indämm dat De de Ding <span lang="en">OpenID</span> bovve enjiß. De <span lang="en">OpenID URLs</span> fun AOL sen opjebout wi \'\'<nowiki>http://openid.aol.com/dingemetmaachername</nowiki>\'\'. Dinge Metmaacher-Name sullt uß luuter Kleinbochstave bestonn, kein Zwescheräum.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Wann de e <span lang="en">Blog</span> op einem fun dä Söövere häß, dann draach der Url fu Dingem <span lang="en">Blog</span> bovve en. Zem Beispöll: \'\'<nowiki>http://dingeblogname.blogspot.com/</nowiki>\'\', \'\'<nowiki>http://dingeblogname.wordpress.com/</nowiki>\'\', \'\'<nowiki>http://dingeblogname.livejournal.com/</nowiki>\'\', udder \'\'<nowiki>http://dingeblogname.vox.com/</nowiki>\'\'.',
+; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Wann de e <span lang="en">Blog</span> op einem fun dä Söövere häß, dann draach der Url fu Dingem <span lang="en">Blog</span> bovve en. Zem Beispöll: \'\'<nowiki>http://dingeblogname.blogspot.com/</nowiki>\'\', \'\'<nowiki>http://dingeblogname.wordpress.com/</nowiki>\'\', \'\'<nowiki>http://dingeblogname.livejournal.com/</nowiki>\'\', udder \'\'<nowiki>http://dingeblogname.vox.com/</nowiki>\'\'.
+<!-- -->',
+	'openidupdateuserinfo' => 'Donn ming päsöönlijje Enstellunge op der neuste Stand bränge',
+	'openid-prefstext' => '[http://openid.net/ OpenID] Enstellunge',
+	'openid-pref-hide' => 'Versteich Ding <a lang="en" href="http://openid.net/">OpenID</a> op Dinge Metmaacher-Sigg, wann de met <span lang="en">OpenID</span> enloggs.',
+	'openid-pref-update-userinfo-on-login' => 'Donn ming Enfomazjuhne vun OpenID jedesmol op der neuste Stand bränge, wann_esch hee enlogge donn',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
-	'openid-desc' => "Sech an d'Wiki matt enger http://openid.net/ OpenID] aloggen, a sech op aneren Internetsiten, déi OpenID ënerstetzen, matt engem Wiki-Benotzerkont aloggen.",
+	'openid-desc' => "Sech an d'Wiki matt enger [http://openid.net/ OpenID] aloggen, a sech op aneren Internetsiten, déi OpenID ënerstetzen, matt engem Wiki-Benotzerkont aloggen.",
 	'openidlogin' => 'Umellen mat OpenID',
 	'openidfinish' => "D'Aloggen mat OpenID ofschléissen",
 	'openidserver' => 'OpenID-Server',
@@ -1769,6 +2017,8 @@ $messages['lb'] = array(
 	'openiderror' => 'Feeler bäi der Iwwerpréifung',
 	'openiderrortext' => 'Beim Iwwerpréifen vun der OpenID URL ass e Feeler geschitt.',
 	'openidconfigerror' => 'OpenId-Konfiguratiounsfeeler',
+	'openidconfigerrortext' => "D'OpenID-Späicherastellung fir dës Wiki ass falsch.
+Kontaktéiert w.e.g. een [[Special:ListUsers/sysop|Administrateur]].",
 	'openidpermission' => 'OpenID-Autorisatiounsfeeler',
 	'openidpermissiontext' => "D'OpeniD déi Dir uginn hutt ass net erlaabt fir sech op dëse Server anzeloggen.",
 	'openidcancel' => 'Iwwerpréifung ofgebrach',
@@ -1805,14 +2055,32 @@ $messages['lb'] = array(
 	'openidconvertothertext' => 'Dëst ass engem anere seng OpenID.',
 	'openidalreadyloggedin' => "'''Dir sidd schonn ageloggt, $1!'''
 
-Wann Dir OpenID benotze wëllt fir Iech an Zukunft anzeloggen, da kënnt Dir [Special:OpenIDConvert|Äre Benotzerkont an en OpenID-Benotzerkont ëmwandelen]].",
-	'tog-hideopenid' => 'Verstoppt Är <a href="http://openid.net/">OpenID</a> op ärer Benotzersäit, wann dir Iech mat OpenID aloggt.',
+Wann Dir OpenID benotze wëllt fir Iech an Zukunft anzeloggen, da kënnt Dir [[Special:OpenIDConvert|Äre Benotzerkont an en OpenID-Benotzerkont ëmwandelen]].",
 	'openidnousername' => 'Kee Benotzernumm uginn.',
 	'openidbadusername' => 'Falsche Benotzernumm uginn.',
 	'openidautosubmit' => 'Op dëser Säit gëtt et e Formulaire deen automatesch soll verschéckt ginn wann Dir JavaScript ageschalt hutt.
 Wann net, da verich et mam Knäppche "Weider"',
 	'openidclientonlytext' => 'Dir kënnt keng Benotzerkonten aus dëser Wiki als OpendIDen op anere Site benotzen.',
 	'openidloginlabel' => 'URL vun der OpenID',
+	'openidlogininstructions' => '{{SITENAME}} ënnerstetzt den [http://openid.net/ OpenID]-Standard fir eng eenheetlech Umeldung fir méi Websiten.
+OpenID mellt Iech bäi ville verschiddene Websäiten un, ouni datt Dir fir jidfer Siten een anert Passwuert gebrauche musst.
+(Méi Informatiounen fannt Dir am [http://de.wikipedia.org/wiki/OpenID Wikipedia-Artikel iwwer OpenID].)
+
+Wann Dir schonn e Benotzerkont op {{SITENAME}} hutt, kënnt Dir Iech ganz normal mat ärem Benotzernumm a Passwuert [[Special:UserLogin|aloggen]].
+Fir an Zukunft OpenID ze benotzen, kënnt Dir [[Special:OpenIDConvert|äre Benotzerkont op OpenID ëmwandelen]], nodeem Dir Iech normal ageloggt huet.
+
+Et gëtt vill [http://openid.net/get/ OpenID-Provider] a méiglecherweis hutt Dir schonn e Benotzerkont mat aktivéierter OpenID bäi engem aneren Ubidder.',
+	'openidupdateuserinfo' => 'Meng perséinlech Informatiounen aktualiséieren',
+	'openid-prefstext' => '[http://openid.net/ OpenID]-Astellungen',
+	'openid-pref-hide' => 'Verstoppt Är <a href="http://openid.net/">OpenID</a> op ärer Benotzersäit, wann dir Iech mat OpenID aloggt.',
+	'openid-pref-update-userinfo-on-login' => 'Meng Informatiounen vu mengem OpenID-Kont all Kéier aktualiséiere wann ech mech aloggen',
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'openidchoosepassword' => 'wachwaord:',
 );
 
 /** Lithuanian (Lietuvių)
@@ -1923,7 +2191,6 @@ $messages['mr'] = array(
 	'openidalreadyloggedin' => "'''$1, तुम्ही अगोदरच प्रवेश केलेला आहे!'''
 
 जर तुम्ही भविष्यात ओपनID वापरून प्रवेश करू इच्छित असाल, तर तुम्ही [[Special:OpenIDConvert|तुमचे खाते ओपनID साठी बदलू शकता]].",
-	'tog-hideopenid' => 'जर तुम्ही ओपनID वापरून प्रवेश केला, तर तुमच्या सदस्यपानावरील तुमचा <a href="http://openid.net/">ओपनID</a> लपवा.',
 	'openidnousername' => 'सदस्यनाव दिले नाही.',
 	'openidbadusername' => 'चुकीचे सदस्यनाव दिले आहे.',
 	'openidautosubmit' => 'या पानावरील अर्ज जर तुम्ही जावास्क्रीप्ट वापरत असाल तर आपोआप पाठविला जाईल. जर तसे झाले नाही, तर \\"पुढे\\" कळीवर टिचकी मारा.',
@@ -1942,10 +2209,12 @@ $messages['mr'] = array(
 ; [http://openid.yahoo.com/ याहू!] : जर तुमच्याकडे याहू! चे खाते असेल, तर तुम्ही वरील पृष्ठपेटीमध्ये याहू! ने दिलेल्या ओपनID चा वापर करून प्रवेश करू शकता. याहू! ओपनID URL ची रुपरेषा ''<nowiki>https://me.yahoo.com/तुमचेसदस्यनाव</nowiki>'' अशी आहे.
 ; [http://dev.aol.com/aol-and-63-million-openids एओएल] : जर तुमच्याकडे [http://www.aol.com/ एओएल]चे खाते असेल, जसे की [http://www.aim.com/ एम] खाते, तुम्ही {{SITENAME}} वर वरील पृष्ठपेटीमध्ये एओएल ने दिलेल्या ओपनID चा वापर करून प्रवेश करू शकता. एओएल ओपनID URL ची रुपरेषा ''<nowiki>http://openid.aol.com/तुमचेसदस्यनाव</nowiki>'' अशी आहे. तुमच्या सदस्यनावात अंतर (space) चालणार नाही.
 ; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html ब्लॉगर], [http://faq.wordpress.com/2007/03/06/what-is-openid/ वर्डप्रेस.कॉम], [http://www.livejournal.com/openid/about.bml लाईव्ह जर्नल], [http://bradfitz.vox.com/library/post/openid-for-vox.html वॉक्स] : जर यापैकी कुठेही तुमचा ब्लॉग असेल, तर वरील पृष्ठपेटीमध्ये तुमच्या ब्लॉगची URL भरा. उदाहरणार्थ, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', किंवा ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+	'openid-pref-hide' => 'जर तुम्ही ओपनID वापरून प्रवेश केला, तर तुमच्या सदस्यपानावरील तुमचा <a href="http://openid.net/">ओपनID</a> लपवा.',
 );
 
 /** Malay (Bahasa Melayu)
  * @author Aviator
+ * @author Diagramma Della Verita
  */
 $messages['ms'] = array(
 	'openidlogin' => 'Log masuk dengan OpenID',
@@ -1970,6 +2239,15 @@ Sila hubungi [[Special:ListUsers/sysop|pentadbir]].',
 	'openidchooseurl' => 'Nama yang dipilih daripada OpenID anda ($1)',
 	'openidchooseauto' => 'Nama janaan automatik ($1)',
 	'openidchoosemanual' => 'Nama pilihan anda:',
+	'openidchoosepassword' => 'kata laluan:',
+	'openidconvertinstructions' => 'Gunakan borang ini untuk menukar akaun anda untuk menggunakan OpenID URL.',
+	'openidconvertsuccess' => 'Berjaya ditukar ke OpenID',
+	'openidconvertsuccesstext' => 'Anda telah berjaya menukar OpenID ke $1.',
+	'openidconvertyourstext' => 'OpenID anda seperti yang tertera.',
+	'openidconvertothertext' => 'OpenID tersebut merupakan milik orang lain.',
+	'openidalreadyloggedin' => "'''Anda telah log masuk, $1!'''
+
+Sekiranya anda inign menggunakan OpenID untuk log masuk pada masa hadapan, sila [[Special:OpenIDConvert|tukar akaun anda untuk menggunakan OpenID]].",
 	'openidnousername' => 'Nama pengguna tidak dinyatakan.',
 	'openidbadusername' => 'Nama pengguna yang dinyatakan tidak sah.',
 	'openidloginlabel' => 'URL OpenID',
@@ -2051,28 +2329,27 @@ Raadpleeg een  [[Special:ListUsers/sysop|beheerder]].",
 	'openidalreadyloggedin' => "'''U bent al aangemeld, $1!'''
 
 Als u in de toekomst uw OpenID wilt gebruiken om aan te melden, [[Special:OpenIDConvert|zet uw gebruiker dan om naar OpenID]].",
-	'tog-hideopenid' => 'Bij aanmelden met <a href="http://openid.net/">OpenID</a>, uw OpenID op uw gebruikerspagina verbergen.',
 	'openidnousername' => 'Er is geen gebruikersnaam opgegeven.',
 	'openidbadusername' => 'De opgegeven gebruikersnaam is niet toegestaan.',
 	'openidautosubmit' => 'Deze pagina bevat een formulier dat automatisch wordt verzonden als JavaScript is ingeschaked.
 Als dat niet werkt, klik dan op de knop "Doorgaan".',
 	'openidclientonlytext' => 'U kunt gebruikers van deze wiki niet als OpenID gebruiken op een andere site.',
 	'openidloginlabel' => 'OpenID URL',
-	'openidlogininstructions' => "{{SITENAME}} ondersteunt de standaard [http://openid.net/ OpenID] voor maar een keer hoeven aanmelden voor meerdere websites.
+	'openidlogininstructions' => '{{SITENAME}} ondersteunt de standaard [http://openid.net/ OpenID] voor maar een keer hoeven aanmelden voor meerdere websites.
 Met OpenID kunt u aanmelden bij veel verschillende websites zonder voor iedere site opnieuw een wachtwoord te moeten opgeven.
 Zie het [http://nl.wikipedia.org/wiki/OpenID Wikipedia-artikel over OpenID] voor meer informatie.
 
 Als u al een gebruiker hebt op {{SITENAME}}, dan kunt u aanmelden met uw gebruikersnaam en wachtwoord zoals u normaal doet. Om in de toekomst OpenID te gebruiken, kunt u uw [[Special:OpenIDConvert|gebruiker naar OpenID omzetten]] nadat u hebt aangemeld.
 
-Er zijn veel [http://wiki.openid.net/Public_OpenID_providers publieke OpenID-providers], en wellicht hebt u al een gebruiker voor OpenID bij een andere dienst.
-
-; Andere wiki's : Als u een gebruiker hebt op een andere wiki die OpenID understeunt, zoals [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] of [http://kei.ki/ Keiki], dan kunt u bij {{SITENAME}} aanmelden door de '''volledige URL''' van uw gebruikerspagina in die andere wiki in het veld hierboven in te geven. Voorbeeld: ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : Als u een gebruiker hebt bij Yahoo!, dan kunt u bij deze site aanmelden door uw OpenID van Yahoo! in het veld hierboven in te voeren. Een URL van een OpenID van Yahoo! heeft de volgende opmaak: ''<nowiki>https://me.yahoo.com/gebruikersnaam</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : Als u een gebruiker hebt bij [http://www.aol.com/ AOL], zoals een [http://www.aim.com/ AIM]-gebruiker, dan kunt u bij {{SITENAME}} aanmelden door uw OpenID van AOL in het veld hierboven in te voeren. Een URL van een OpenID van AOL heeft de volgende opmaak: ''<nowiki>http://openid.aol.com/gebruikersnaam</nowiki>''. Uw gebruikersnaam moet in kleine letters ingevoerd worden, zonder spaties.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Als u een blog hebt bij een van de voorgaande diensten, dan kunt u bij deze site aanmelden door als uw OpenID de URL van uw blog in te geven in het veld hierboven. Bijvoorbeeld: ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'' of ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+Er zijn veel [http://wiki.openid.net/Public_OpenID_providers publieke OpenID-providers], en wellicht hebt u al een gebruiker voor OpenID bij een andere dienst.',
+	'openidupdateuserinfo' => 'Mijn persoonlijke gegevens bijwerken',
+	'openid-prefstext' => 'Voorkeuren [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Bij aanmelden met <a href="http://openid.net/">OpenID</a>, uw OpenID op uw gebruikerspagina verbergen.',
+	'openid-pref-update-userinfo-on-login' => 'Mijn informatie van mijn OpenID-persona elke keer als ik aanmeld bijwerken',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Gunnernett
  * @author Harald Khan
  * @author Jon Harald Søby
  */
@@ -2125,22 +2402,20 @@ Kontakt ein [[Special:ListUsers/sysop|administrator]].',
 	'openidalreadyloggedin' => "'''Du er allereie innlogga, $1.'''
 
 Om du ynskjer å nytta OpenID i framtida, kan du [[Special:OpenIDConvert|konvertera kontoen din til å nytta OpenID]].",
-	'tog-hideopenid' => 'Gøym <a href="http://openid.net/">OpenID</a> på brukarsida di om du loggar inn med ein.',
 	'openidnousername' => 'Du oppgav ingen brukarnamn.',
 	'openidbadusername' => 'Du oppgav eit ugyldig brukarnamn.',
 	'openidautosubmit' => 'Denne sida inneheld eit skjema som blir levert automatisk om du har JavaSvript slege på. Dersom ikkje, trykk på «Hald fram».',
 	'openidclientonlytext' => 'Du kan ikkje nytta kontoar frå denne wikien som OpenID på ei onnor sida.',
 	'openidloginlabel' => 'OpenID-adressa',
-	'openidlogininstructions' => "{{SITENAME}} støttar [http://openid.net/ OpenID]-standarden for einskapleg innlogging på forskjellige nettstader. OpenID lèt deg logga inn på mange forskjellige nettsider utan at du må nytta forskjellige passord overalt. (Sjå [http://no.wikipedia.org/wiki/OpenID Wikipedia-artikkelen om OpenID] for meir informasjon.)
+	'openidlogininstructions' => '{{SITENAME}} støttar [http://openid.net/ OpenID]-standarden for einskapleg innlogging på forskjellige nettstader. OpenID lèt deg logga inn på mange forskjellige nettsider utan at du må nytta forskjellige passord på kvar. (Sjå [http://nn.wikipedia.org/wiki/OpenID Wikipedia-artikkelen om OpenID] for meir informasjon.)
 
-Om du allereie har ein konto på {{SITENAME}}, kan du logga på som vanleg med brukarnamnet og passordet ditt. For å nytta OpenID i framtida, kan du [[Special:OpenIDConvert|konvertera kontoen din til OpenID]] etter at du har logga inn på vanleg vis.
+Om du allereie har ein konto på {{SITENAME}}, kan du [[Special:UserLogin|logga på]] som vanleg med brukarnamnet og passordet ditt. For å nytta OpenID i framtida, kan du [[Special:OpenIDConvert|konvertera kontoen din til OpenID]] etter at du har logga inn på vanleg vis.
 
-Det er mange [http://wiki.openid.net/Public_OpenID_providers leverandørar av OpenID], og du kan allereie ha ein OpenID-aktivert konto ein annan stad.
-
-;Andre wikiar: Om du har ein konto på ein OpenID-aktivert wiki, som [http://wikitravel.org/ Wikitravel], [http://wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] eller [http://kei.ki/ Keiki], kan du logga inn på {{SITENAME}} ved å skriva inn den '''fullstendige adressa''' til brukarsida di på wikien i boksen ovanfor. Til dømes ''<nowiki>http://kei.kei/en/User:Døme</nowiki>''.
-;[http://openid.yahoo.com/ Yahoo!]: Om du har ein konto hjå Yahoo! kan du logga inn på denne sida ved å skriva inn OpenID-en din frå Yahoo i boksen ovanfor. Yahoo! sine OpenID-adresser har forma ''<nowiki>https://me.yahoo.com/brukarnamnetditt</nowiki>''.
-;[http://dev.aol.com/aol-and-63-million-openids AOL]: Om du har ein konto hjå [http://aol.com/ AOL], til dømes ein [http://aim.com/ AIM]-konto, kan du logga inn på {{SITENAME}} ved å skriva inn OpenID-en din frå AOL i boksen ovanfor. AOL sine OpenID-adresser har forma ''<nowiki>http://openid.aol.com/brukarnamnetditt</nowiki>''. Brukarnamnet må vera skrive med små bokstavar og utan mellomrom.
-;[http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox]: Om du har ein konto på ei av desse tenestene, skriv inn adressa til bloggen din i boksen ovanfor. Til dømes ''<nowiki>http://brukarnamnetditt.blogspot.com/</nowiki>'', ''<nowiki>http://brukarnamnetditt.wordpress.com/</nowiki>'', ''<nowiki>http://brukarnamnetditt.livejournal.com/</nowiki>'', or ''<nowiki>http://brukarnamnetditt.vox.com/</nowiki>''.",
+Det er mange [http://wiki.openid.net/Public_OpenID_providers leverandørar av OpenID], og du kan allereie ha ein OpenID-aktivert konto ein annan stad.',
+	'openidupdateuserinfo' => 'Oppdatér min personlege informasjon',
+	'openid-prefstext' => '[http://openid.net/ OpenID] instillingar',
+	'openid-pref-hide' => 'Gøym <a href="http://openid.net/">OpenID</a> på brukarsida di om du loggar inn med ein.',
+	'openid-pref-update-userinfo-on-login' => 'Oppdatér informasjonen min frå OpenID-persona kvar gong eg loggar inn',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
@@ -2195,7 +2470,6 @@ Vennligst kontakt en [[Special:ListUsers/sysop|administrator]].',
 	'openidalreadyloggedin' => "'''$1, du er allerede logget inn.'''
 
 Om du ønsker å bruke OpenID i framtiden, kan du [[Special:OpenIDConvert|konvertere kontoen din til å bruke OpenID]].",
-	'tog-hideopenid' => 'Skjul <a href="http://openid.net/">OpenID</a> på brukersiden din om du logger inn med en.',
 	'openidnousername' => 'Intet brukernavn oppgitt.',
 	'openidbadusername' => 'Ugyldig brukernavn oppgitt.',
 	'openidautosubmit' => 'Denne siden inneholder et skjema som vil leveres automatisk om du har JavaScript slått på. Om ikke, trykk på «Fortsett».',
@@ -2211,6 +2485,7 @@ Det er mange [http://wiki.openid.net/Public_OpenID_providers leverandører av Op
 ;[http://openid.yahoo.com/ Yahoo!] :Om du har en konto hos Yahoo! kan du logge inn på denne siden ved å skrive inn OpenID-en din fra Yahoo i boksen ovenfor. Yahoo!s OpenID-adresser har formen ''<nowiki>https://me.yahoo.com/dittbrukernavn</nowiki>''.
 ;[http://dev.aol.com/aol-and-63-million-openids AOL] :Om du har en konto hos [http://aol.com/ AOL], for eksempel en [http://aim.com/ AIM]-konto, kan du logge inn på {{SITENAME}} ved å skrive inn OpenID-en din fra AOL i boksen ovenfor. AOLs OpenID-adresser har formen ''<nowiki>http://openid.aol.com/dittbrukernavn</nowiki>''. Brukernavnet må være i små bokstaver og uten mellomrom.
 ;[http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] :Om du har en konto på en av disse tjenestene, skriv inn adressen til bloggen din i boksen ovenfor. For eksempel ''<nowiki>http://dittbrukernavn.blogspot.com/</nowiki>'', ''<nowiki>http://dittbrukernavn.wordpress.com/</nowiki>'', ''<nowiki>http://dittbrukernavn.livejournal.com/</nowiki>'', or ''<nowiki>http://dittbrukernavn.vox.com/</nowiki>''.",
+	'openid-pref-hide' => 'Skjul <a href="http://openid.net/">OpenID</a> på brukersiden din om du logger inn med en.',
 );
 
 /** Occitan (Occitan)
@@ -2265,7 +2540,6 @@ Metetz-vos en rapòrt amb l’[[Special:ListUsers/sysop|administrator]].",
 	'openidalreadyloggedin' => "'''Ja sètz connectat, $1 !'''
 
 Se desiratz utilizar vòstra OpenID per vos connectar ulteriorament, podètz [[Special:OpenIDConvert|convertir vòstre compte per utilizar OpenID]].",
-	'tog-hideopenid' => 'Amaga vòstra <a href="http://openid.net/">OpenID</a> sus vòstra pagina d\'utilizaire, se vos connectaz amb OpenID.',
 	'openidnousername' => 'Cap de nom d’utilizaire es pas estat indicat.',
 	'openidbadusername' => 'Un nom d’utilizaire marrit es estat indicat.',
 	'openidautosubmit' => 'Aquesta pagina compren un formulari que poiriá èsser mandat automaticament se avètz activat JavaScript.
@@ -2278,12 +2552,11 @@ OpenID vos permet de vos connectar sus maites sits diferents sens aver d'utiliza
 
 S'avètz ja un compte sus {{SITENAME}}, vos podètz [[Special:UserLogin|connectar]] amb vòstre nom d'utilizaire e son senhal coma de costuma. Per utilizar OpenID, a l’avenidor, podètz [[Special:OpenIDConvert|convertir vòstre compte en OpenID]] aprèp vos èsser connectat normalament.
 
-Existís maites [http://wiki.openid.net/Public_OpenID_providers provesidors d'OpenID publicas], e podètz ja obténer un compte OpenID activat sus un autre servici.
-
-; Autres wiki : s'avètz un wiki amb OpenID activat, tal coma [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] o encara [http://kei.ki/ Keiki], vos podètz connectar sus {{SITENAME}} en picant '''l’adreça internet complèta'' de vòstra pagina d'aqueste autre wiki dins la bóstia çaisús. Per exemple : ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : Se avètz un compte amb Yahoo! , vos podètz connectar sus aqueste sit en picant vòstra OpenID Yahoo! provesida dins la bóstia çaijós. Las adreças OpenID devon aver la sintaxi ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : se avètz un compte amb [http://www.aol.com/ AOL], coma un compte [http://www.aim.com/ AIM], vos podètz connectar sus {{SITENAME}} en picant vòstra OpenID provesida per AOL dins la bóstia çaijós. Las adreças OpenID devon aver lo format ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. Vòstre nom d’utilizaire deu èsser entièrament en letras minusculas amb cap d'espaci.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Se avètz un blog o un autre d'aquestes servicis, picatz l’adreça de vòstre blog dins la bóstia çaijós. Per exemple, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', o encara ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+Existís maites [http://wiki.openid.net/Public_OpenID_providers provesidors d'OpenID publicas], e podètz ja obténer un compte OpenID activat sus un autre servici.",
+	'openidupdateuserinfo' => 'Metre a jorn mas donadas personalas',
+	'openid-prefstext' => 'Preferéncias de [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Amaga vòstra <a href="http://openid.net/">OpenID</a> sus vòstra pagina d\'utilizaire, se vos connectaz amb OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Metre a jorn mas donadas personalas dempuèi OpenID a cada còp que me connecti',
 );
 
 /** Ossetic (Иронау)
@@ -2307,22 +2580,73 @@ $messages['pdt'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'openid-desc' => 'Logowanie się do wiki z użyciem [http://openid.net/ OpenID], oraz logowanie się do innych witryn używających OpenID z użyciem konta użytkownika z wiki',
+	'openidlogin' => 'Zaloguj używając OpenID',
+	'openidfinish' => 'Zakończ zalogowanie z użyciem OpenID',
+	'openidserver' => 'Serwer OpenID',
+	'openidxrds' => 'Plik Yadis',
+	'openidconvert' => 'Obsługa OpenID',
+	'openiderror' => 'Błąd weryfikacji',
+	'openiderrortext' => 'Wystąpił błąd podczas weryfikacji adresu URL OpenID.',
+	'openidconfigerror' => 'Błąd konfiguracji OpenID',
+	'openidconfigerrortext' => 'Konfiguracja przechowywania w OpenID dla tej wiki jest nieprawidłowa.
+Skonsultuj to z [[Special:ListUsers/sysop|administratorem]].',
+	'openidpermission' => 'Błąd uprawnień OpenID',
+	'openidpermissiontext' => 'OpenID, które podałeś nie ma uprawnień do logowania na ten serwer.',
+	'openidcancel' => 'Weryfikacja anulowana',
+	'openidcanceltext' => 'Weryfikacja adresu URL OpenID została przerwana.',
+	'openidfailure' => 'Weryfikacja nie powiodła się',
+	'openidfailuretext' => 'Weryfikacja adresu URL OpenID nie powiodła się. Komunikat o błędzie – „$1”',
+	'openidsuccess' => 'Weryfikacja udana',
+	'openidsuccesstext' => 'Zweryfikowano adres URL OpenID.',
+	'openidusernameprefix' => 'UżytkownikOpenID',
+	'openidserverlogininstructions' => 'Wpisz swoje hasło, aby zalogować się do $3 jako użytkownik $2 (strona użytkownika $1).',
+	'openidtrustinstructions' => 'Sprawdź, czy chcesz wymieniać informacje z $1.',
+	'openidallowtrust' => 'Zezwól $1 na użycie tego konta użytkownika.',
+	'openidnopolicy' => 'Witryna nie ma określonej polityki prywatności.',
+	'openidpolicy' => 'Zapoznaj się z <a target="_new" href="$1">polityką prywatności</a> aby uzyskać więcej informacji.',
 	'openidoptional' => 'Opcjonalnie',
 	'openidrequired' => 'Wymagane',
 	'openidnickname' => 'Nazwa użytkownika',
 	'openidfullname' => 'Imię i nazwisko',
-	'openidemail' => 'Adres e-mail',
+	'openidemail' => 'Adres e‐mail',
 	'openidlanguage' => 'Język',
 	'openidnotavailable' => 'Wybrana nazwa użytkownika „$1” jest już zajęta.',
-	'openidchooseinstructions' => 'Wszyscy użytkownicy muszą posiadać nazwę.
+	'openidnotprovided' => 'Twój serwer OpenID nie dostarczył pseudonimu (dlatego że nie mógł albo mu zabroniłeś).',
+	'openidchooseinstructions' => 'Wszyscy użytkownicy muszą mieć pseudonim.
 Możesz wybrać spośród propozycji podanych poniżej.',
 	'openidchoosefull' => 'Twoje imię i nazwisko ($1)',
+	'openidchooseurl' => 'Nazwa wybrana spośród OpenID ($1)',
 	'openidchooseauto' => 'Automatycznie utworzono nazwę użytkownika ($1)',
 	'openidchoosemanual' => 'Nazwa użytkownika wybrana przez Ciebie',
 	'openidchooseexisting' => 'Istniejące konto na tej wiki',
 	'openidchoosepassword' => 'hasło',
+	'openidconvertinstructions' => 'Formularz umożliwia przystosowanie konta użytkownika do korzystania z adresu URL OpenID.',
+	'openidconvertsuccess' => 'Przełączone na korzystanie z OpenID',
+	'openidconvertsuccesstext' => 'Zmieniłeś swoje OpenID na $1.',
+	'openidconvertyourstext' => 'Już masz swój OpenID.',
+	'openidconvertothertext' => 'To jest OpenID należące do kogoś innego.',
+	'openidalreadyloggedin' => "'''Jesteś już zalogowany jako $1!'''
+
+Jeśli chcesz w przyszłości używać OpenID do logowania się, możesz [[Special:OpenIDConvert|przełączyć konto na korzystanie z OpenID]].",
 	'openidnousername' => 'Nie wybrano żadnej nazwy użytkownika.',
 	'openidbadusername' => 'Wybrano nieprawidłową nazwę użytkownika.',
+	'openidautosubmit' => 'Strona zawiera formularz, który powinien zostać automatycznie przesłany jeśli masz włączoną obsługę JavaScript.
+Jeśli nie spróbuj wcisnąć klawisz „Kontynuuj”.',
+	'openidclientonlytext' => 'Nie można korzystać z kont tej wiki jako OpenID w innych witrynach.',
+	'openidloginlabel' => 'Adres URL OpenID',
+	'openidlogininstructions' => '{{SITENAME}} korzysta ze standardu [http://openid.net/ OpenID] dla zapewnienia jednolitego uwierzytelnienia pomiędzy różnymi witrynami w sieci Web.
+OpenID pozwala na zalogowanie się do wielu różnych witryn sieci Web bez użycia osobnego hasła dla każdej witryny. 
+(Zobacz [http://pl.wikipedia.org/wiki/OpenID artykuł o OpenID w Wikipedii] jeśli chcesz uzyskać więcej informacji.)
+
+Jeśli masz już konto w {{GRAMMAR:MS.lp|{{SITENAME}}}}, możesz [[Specjalna:Userlogin|zalogować się]] jak zwykle używając nazwy użytkownika i hasła. 
+Jeśli chcesz w przyszłości używać OpenID do logowania się, możesz [[Special:OpenIDConvert|przełączyć konto na korzystanie z OpenID]] po normalnym zalogowaniu się.
+
+Jest wielu [http://openid.net/get/ operatorów usługi OpenID] i możesz mieć już konto przełączone na korzystanie z OpenID innego usługodawcy.',
+	'openidupdateuserinfo' => 'Uaktualnij moje dane',
+	'openid-prefstext' => 'Preferencje [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Ukryj mój adres URL OpenID na stronie użytkownika, jeśli zaloguję się za pomocą OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Aktualizuj informacje o mnie z OpenID za każdym razem w czasie logowania',
 );
 
 /** Pashto (پښتو)
@@ -2396,13 +2720,97 @@ pode escolher uma das opções abaixo.',
 	'openidalreadyloggedin' => "'''Você já se encontra autenticado, $1!'''
 
 Se de futuro pretender usar OpenID para se autenticar, pode [[Special:OpenIDConvert|converter a sua conta para usar OpenID]].",
-	'tog-hideopenid' => 'Esconder o seu <a href="http://openid.net/">OpenID</a> na sua página de utilizador, se se autenticar com OpenID.',
 	'openidnousername' => 'Nenhum nome de utilizador especificado.',
 	'openidbadusername' => 'Nome de utilizador especificado inválido.',
 	'openidautosubmit' => 'Esta página inclui um formulário que deverá ser automaticamente submetido se tiver JavaScript activado.
 Caso contrário, utilize o botão \\"Continuar\\".',
 	'openidclientonlytext' => 'Você pode usar contas deste wiki como OpenIDs noutro sítio.',
 	'openidloginlabel' => 'URL do OpenID',
+	'openidlogininstructions' => '{{SITENAME}} suporta o padrão [http://openid.net/ OpenID] para autenticação única entre sítios Web.
+O OpenID permite-lhe autenticar-se em diversos sítios Web sem usar uma palavra-chave diferente em cada um.
+(Veja [http://pt.wikipedia.org/wiki/OpenID o artigo OpenID na Wikipédia] para mais informação.)
+
+Se já possui uma conta em {{SITENAME}}, pode [[Special:UserLogin|autenticar-se]] com o seu nome de utilizador e palavra-chave como habitualmente.
+Para utilizar o OpenID no futuro, pode [[Special:OpenIDConvert|converter a sua conta em OpenID]] após autenticar-se normalmente.
+
+Existems vários [http://wiki.openid.net/Public_OpenID_providers fornecederes de OpenID], e você poderá já ter uma conta ativada para OpenID noutro serviço.',
+	'openidupdateuserinfo' => 'Atualizar a minha informação pessoal',
+	'openid-prefstext' => 'Preferências do [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Esconder o seu <a href="http://openid.net/">OpenID</a> na sua página de utilizador, se se autenticar com OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Atualizar a minha informação a partir da minha "persona" OpenID cada vez que me autentico',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'openid-desc' => 'Autentique-se no wiki com um [http://openid.net/ OpenID], e autentique-se em outros sítios que usem OpenID com uma conta de utilizador wiki',
+	'openidlogin' => 'Autenticação com OpenID',
+	'openidfinish' => 'Terminar autenticação OpenID',
+	'openidserver' => 'Servidor OpenID',
+	'openidxrds' => 'Arquivo Yadis',
+	'openidconvert' => 'Conversor de OpenID',
+	'openiderror' => 'Erro de verificação',
+	'openiderrortext' => 'Ocorreu um erro durante a verificação da URL OpenID.',
+	'openidconfigerror' => 'Erro de Configuração do OpenID',
+	'openidconfigerrortext' => 'A configuração de armazenamento OpenID para este wiki é inválida.
+Por favor, consulte um [[Special:ListUsers/sysop|administrator]].',
+	'openidpermission' => 'Erro de permissões OpenID',
+	'openidpermissiontext' => 'O OpenID fornecido não está autorizado a autenticar-se neste servidor.',
+	'openidcancel' => 'Verificação cancelada',
+	'openidcanceltext' => 'A verificação da URL OpenID foi cancelada.',
+	'openidfailure' => 'Verificação falhou',
+	'openidfailuretext' => 'A verificação da URL OpenID falhou. Mensagem de erro: "$1"',
+	'openidsuccess' => 'Verificação com sucesso',
+	'openidsuccesstext' => 'A verificação da URL OpenID foi bem sucedida.',
+	'openidusernameprefix' => 'UtilizadorOpenID',
+	'openidserverlogininstructions' => 'Introduza a sua palavra-chave abaixo para se autenticar em $3 como utilizador $2 (página de utilizador $1).',
+	'openidtrustinstructions' => 'Verifique se pretende compartilhar dados com $1.',
+	'openidallowtrust' => 'Permitir que $1 confie nesta conta de utilizador.',
+	'openidnopolicy' => 'O sítio não especificou uma política de privacidade.',
+	'openidpolicy' => 'Consulte a <a target="_new" href="$1">política de privacidade</a> para mais informações.',
+	'openidoptional' => 'Opcional',
+	'openidrequired' => 'Requerido',
+	'openidnickname' => 'Apelido',
+	'openidfullname' => 'Nome completo',
+	'openidemail' => 'Endereço de e-mail',
+	'openidlanguage' => 'Língua',
+	'openidnotavailable' => 'O seu apelido preferido ($1) já está em uso por outro utilizador.',
+	'openidnotprovided' => 'O seu servidor OpenID não forneceu um apelido(ou porque não pôde, ou porque você lhe disse para não o fazer).',
+	'openidchooseinstructions' => 'Todos os utilizadores precisam de um apelido;
+pode escolher uma das opções abaixo.',
+	'openidchoosefull' => 'O seu nome completo ($1)',
+	'openidchooseurl' => 'Um nome escolhido a partir do seu OpenID ($1)',
+	'openidchooseauto' => 'Um nome gerado automaticamente ($1)',
+	'openidchoosemanual' => 'Um nome à sua escolha:',
+	'openidchooseexisting' => 'Uma conta existente neste wiki:',
+	'openidchoosepassword' => 'palavra-chave:',
+	'openidconvertinstructions' => 'Este formulário lhe permite alterar a sua conta de utilizador para usar uma URL OpenID.',
+	'openidconvertsuccess' => 'Convertido para OpenID com sucesso',
+	'openidconvertsuccesstext' => 'Você converteu com sucesso o seu OpenID para $1.',
+	'openidconvertyourstext' => 'Esse já é o seu OpenID.',
+	'openidconvertothertext' => 'Esse é o OpenID de outra pessoa.',
+	'openidalreadyloggedin' => "'''Você já se encontra autenticado, $1!'''
+
+Se no futuro pretender usar OpenID para se autenticar, pode [[Special:OpenIDConvert|converter a sua conta para usar OpenID]].",
+	'openidnousername' => 'Nenhum nome de utilizador especificado.',
+	'openidbadusername' => 'Nome de utilizador especificado inválido.',
+	'openidautosubmit' => 'Esta página inclui um formulário que deverá ser automaticamente submetido se tiver JavaScript ativado.
+Caso contrário, utilize o botão \\"Continuar\\".',
+	'openidclientonlytext' => 'Você pode usar contas deste wiki como OpenIDs em outro sítio.',
+	'openidloginlabel' => 'URL do OpenID',
+	'openidlogininstructions' => '{{SITENAME}} suporta o padrão [http://openid.net/ OpenID] para autenticação única entre sítios Web.
+O OpenID lhe permite autenticar-se em diversos sítios Web sem usar uma palavra-chave diferente em cada um.
+(Veja [http://pt.wikipedia.org/wiki/OpenID o artigo OpenID na Wikipédia] para mais informação.)
+
+Se já possui uma conta em {{SITENAME}}, pode [[Special:UserLogin|autenticar-se]] com o seu nome de utilizador e palavra-chave como habitualmente.
+Para utilizar o OpenID no futuro, pode [[Special:OpenIDConvert|converter a sua conta em OpenID]] após autenticar-se normalmente.
+
+Existem vários [http://wiki.openid.net/Public_OpenID_providers fornecederes de OpenID], e você poderá já ter uma conta ativada para OpenID em outro serviço.',
+	'openidupdateuserinfo' => 'Atualizar a minha informação pessoal',
+	'openid-prefstext' => 'Preferências do [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Esconder o seu <a href="http://openid.net/">OpenID</a> na sua página de utilizador, caso se autentique com OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Atualizar a minha informação a partir da minha "persona" OpenID cada vez que me autentico',
 );
 
 /** Romanian (Română)
@@ -2418,6 +2826,17 @@ $messages['ro'] = array(
 	'openidchoosemanual' => 'Un nume la alegere:',
 	'openidchooseexisting' => 'Un cont existent pe acest wiki:',
 	'openidchoosepassword' => 'parolă:',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'openidxrds' => 'File Yadis',
+	'openidoptional' => 'Opzionele',
+	'openidrequired' => 'Richieste',
+	'openidemail' => 'Indirizze e-mail',
+	'openidlanguage' => 'Lènghe',
 );
 
 /** Russian (Русский)
@@ -2475,26 +2894,24 @@ $messages['ru'] = array(
 	'openidalreadyloggedin' => "'''Вы уже вошли, $1!'''
 
 Если вы желаете использовать в будущем вход через OpenID, вы можете [[Special:OpenIDConvert|преобразовать вашу учётную запись для использования в OpenID]].",
-	'tog-hideopenid' => 'Скрывать ваш <a href="http://openid.net/">OpenID</a> на вашей странице участника, если вы вошли с помощью OpenID.',
 	'openidnousername' => 'Не указано имя участника.',
 	'openidbadusername' => 'Указано неверное имя участника.',
 	'openidautosubmit' => 'Эта страница содержит форму, которая должна быть автоматически отправлена, если у вас включён JavaScript.
 Если этого не произошло, попробуйте нажать на кнопку «Продолжить».',
 	'openidclientonlytext' => 'Вы не можете использовать учётные записи с этой вики, как OpenID на другом сайте.',
 	'openidloginlabel' => 'Адрес OpenID',
-	'openidlogininstructions' => "{{SITENAME}} поддерживает стандарт [http://openid.net/ OpenID], позволяющий использовать одну учётную запись для входа на различные веб-сайты.
+	'openidlogininstructions' => '{{SITENAME}} поддерживает стандарт [http://openid.net/ OpenID], позволяющий использовать одну учётную запись для входа на различные веб-сайты.
 OpenID позволяет вам заходить на различные веб-сайты без указания разных паролей для них
 (подробнее см. [http://ru.wikipedia.org/wiki/OpenID статью об OpenID в Википедии]).
 
 Если вы уже имеете учётную запись на {{SITENAME}}, вы можете [[Special:UserLogin|войти]] как обычно, используя  ваши имя пользователя и пароль.
 Чтобы использовать в дальнейшем OpenID, вы можете [[Special:OpenIDConvert|преобразовать вашу учётную запись в  OpenID]], после того, как вы вошли обычным образом.
 
-Существует множество [http://wiki.openid.net/Public_OpenID_providers общедоступных провайдеров OpenID], возможно, вы уже имеете учётную запись OpenID на другом сайте.
-
-; Другие вики : Если вы имеете учётную запись с OpenID на другой вики, например, [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] или [http://kei.ki/ Keiki], вы можете войти на {{SITENAME}}, введя ниже '''полный адрес''' вашей страницы участника на другой вики. Например, ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : Если вы зарегистрированы на Yahoo!, вы можете войти, введя ниже ваш OpenID с Yahoo!. Адреса OpenID Yahoo! имеют вид ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : Если вы зарегистрированы на [http://www.aol.com/ AOL], например, имеете учётную запись в [http://www.aim.com/ AIM], вы можете зайти на {{SITENAME}}, введя ниже ваш OpenID с AOL. Адреса AOL OpenID имеют вид ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. Ваше имя должно быть в нижнем регистре, без пробелов.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Если вы ведёте блог с помощью одной из этих служб, введите ниже адрес вашего блога. Например, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', или ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+Существует множество [http://wiki.openid.net/Public_OpenID_providers общедоступных провайдеров OpenID], возможно, вы уже имеете учётную запись OpenID на другом сайте.',
+	'openidupdateuserinfo' => 'Обновить мою личную информацию',
+	'openid-prefstext' => 'Параметры [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Скрывать ваш <a href="http://openid.net/">OpenID</a> на вашей странице участника, если вы вошли с помощью OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Обновлять информацию обо мне через OpenID каждый раз, когда я представляюсь системе',
 );
 
 /** Sicilian (Sicilianu)
@@ -2550,7 +2967,6 @@ ni poi pigghiari unu di chisti ccà di sècutu.",
 	'openidalreadyloggedin' => "'''Facisti ggià lu login, $1!'''
 
 Si disìi usari OpenID pi fari lu login ntô futuru, poi [[Special:OpenIDConvert|canciari lu tò account pi utilizzari OpenID]].",
-	'tog-hideopenid' => 'Ammuccia lu tò <a href="http://openid.net/">OpenID</a> supr\'a tò pàggina utenti, si fai lu login cu OpenID.',
 	'openidnousername' => 'Nuddu nomu utenti spicificatu.',
 	'openidbadusername' => 'Nomu utenti spicificatu sbagghiatu.',
 	'openidautosubmit' => 'Sta pàggina havi nu mòdulu c\'avissi èssiri mannatu autumàticamenti si JavaScript ci l\'hai attivatu. Si, mmeci, nun è accuddì, prova a mùnciri lu buttuni \\"Continue\\".',
@@ -2569,6 +2985,7 @@ Ci sunnu assai [http://wiki.openid.net/Public_OpenID_providers Provider OpenID p
 ; [http://openid.yahoo.com/ Yahoo!] : Si pussedi n'account cu Yahoo!, poi fari lu login a stu situ nzirennu lu tò OpenID Yahoo! ntô box currispunnenti. Li URL OpenID Yahoo! pussèdunu la furma ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
 ; [http://dev.aol.com/aol-and-63-million-openids AOL] : Si pussedi n'account cu [http://www.aol.com/ AOL], comu a n'account [http://www.aim.com/ AIM], poi fari lu login a {{SITENAME}} nzirennu lu tò OpenID AOL ntô box curripunnenti. Li URL OpenID AOL pussèdunu la furma ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. Lu tò nomu utenti avissi a èssiri tuttu paru 'n caràttiri nichi, senza spàzii.
 ; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Si pussedi nu blog supr'a unu di sti siti, nzirisci l'URL dû blog ntô box currispunnenti. P'asèmpiu, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', o ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+	'openid-pref-hide' => 'Ammuccia lu tò <a href="http://openid.net/">OpenID</a> supr\'a tò pàggina utenti, si fai lu login cu OpenID.',
 );
 
 /** Sinhala (සිංහල)
@@ -2630,24 +3047,22 @@ Prosím, poraďte sa so [[Special:ListUsers/sysop|správcom]] tejto webovej loka
 	'openidalreadyloggedin' => "'''Už ste prihlásený, $1!'''
 
 Ak chcete na prihlasovanie v budúcnosti využívať OpenID, môžete [[Special:OpenIDConvert|previesť váš účet na OpenID]].",
-	'tog-hideopenid' => 'Nezobrazovať váš <a href="http://openid.net/">OpenID</a> na vašej používateľskej stránke ak sa prihlasujete pomocou OpenID.',
 	'openidnousername' => 'Nebolo zadané používateľské meno.',
 	'openidbadusername' => 'Bolo zadané chybné používateľské meno.',
 	'openidautosubmit' => 'Táto stránka obsahuje formulár, ktorý by mal byť automaticky odoslaný ak máte zapnutý JavaScript.
 Ak nie, skúste tlačidlo „Pokračovať“.',
 	'openidclientonlytext' => 'Nemôžete používať účty z tejto wiki ako OpenID na iných weboch.',
 	'openidloginlabel' => 'OpenID URL',
-	'openidlogininstructions' => "{{SITENAME}} podporuje štandard [http://openid.net/ OpenID] na zjednotené prihlasovanie na webstránky.
+	'openidlogininstructions' => '{{SITENAME}} podporuje štandard [http://openid.net/ OpenID] na zjednotené prihlasovanie na webstránky.
 OpenID vám umožňuje prihlasovať sa na množstvo rozličných webstránok bez nutnosti používať pre každú odlišné heslo. (Pozri [http://sk.wikipedia.org/wiki/OpenID Článok o OpenID na Wikipédii])
 
 Ak už máte účet na {{GRAMMAR:lokál|{{SITENAME}}}}, môžete sa [[Special:UserLogin|prihlásiť]] pomocou používateľského mena a hesla ako zvyčajne. Ak chcete v budúcnosti používať OpenID, môžete po normálnom prihlásení [[Special:OpenIDConvert|previesť svoj účet na OpenID]].
 
-Existuje množstvo [http://wiki.openid.net/Public_OpenID_providers Verejných poskytovateľov OpenID] a možno už máte účet s podporou OpenID u iného poskytovateľa.
-
-; Iné wiki: Ak máte účet na wiki stránke s podporou OpenID ako napr. [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] alebo [http://kei.ki/ Keiki], môžete sa prihlásiť na {{GRAMMAR:akuzatív|{{SITENAME}}}} zadaním '''plného URL''' svojej používateľskej stránky na danej wiki do poľa vyššie. Napríklad ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!]: Ak máte účet Yahoo!, môžete sa na túto stránku prihlásiť zadaním vášho OpenID, ktoré poskytuje Yahoo!, do poľa vyššie. Yahoo! OpenID URL bývajú v tvare  ''<nowiki>https://me.yahoo.com/pouzivatelskemeno</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL]: Ak máte účet [http://www.aol.com/ AOL] ako napríklad účet [http://www.aim.com/ AIM], môžete sa prihlásiť na {{GRAMMAR:akuzatív|{{SITENAME}}}} zadaním vášho OpenID, ktoré poskytuje AOL, do poľa vyššie. AOL OpenID URL bývajú v tvare ''<nowiki>http://openid.aol.com/pouzivatelskemeno</nowiki>''. Vaše používateľské meno by malo mať len malé písmená a žiadne medzery.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox]: Ak máte blog na niektorej z týchto služieb, zadajte do poľa vyššie URL svojho blogu. Napríklad ''<nowiki>http://pouzivatelskemeno.blogspot.com/</nowiki>'', ''<nowiki>http://pouzivatelskemeno.wordpress.com/</nowiki>'', ''<nowiki>http://pouzivatelskemeno.livejournal.com/</nowiki>'' alebo ''<nowiki>http://pouzivatelskemeno.vox.com/</nowiki>''.",
+Existuje množstvo [http://wiki.openid.net/Public_OpenID_providers Verejných poskytovateľov OpenID] a možno už máte účet s podporou OpenID u iného poskytovateľa.',
+	'openidupdateuserinfo' => 'Aktualizovať moje používateľské informácie',
+	'openid-prefstext' => 'Nastavenia [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Nezobrazovať váš <a href="http://openid.net/">OpenID</a> na vašej používateľskej stránke ak sa prihlasujete pomocou OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Aktualizovať moje informácie z OpenID identity pri každom prihlásení',
 );
 
 /** Serbian Cyrillic ekavian (ћирилица)
@@ -2656,6 +3071,83 @@ Existuje množstvo [http://wiki.openid.net/Public_OpenID_providers Verejných po
 $messages['sr-ec'] = array(
 	'openidemail' => 'Е-пошта',
 	'openidlanguage' => 'Језик',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'openid-desc' => 'Anmeldenge an dit Wiki mäd ne [http://openid.net/ OpenID] un anmäldje an uur Websites, do der OpenID unnerstutsje, mäd een Wiki-Benutserkonto.',
+	'openidlogin' => 'Anmäldje mäd OpenID',
+	'openidfinish' => 'OpenID-Anmäldenge ousluute',
+	'openidserver' => 'OpenID-Server',
+	'openidxrds' => 'Yadis-Doatäi',
+	'openidconvert' => 'OpenID-Konverter',
+	'openiderror' => 'Wröige-Failer',
+	'openiderrortext' => 'Aan Failer is unner ju Wröige fon ju OpenID-URL aptreeden.',
+	'openidconfigerror' => 'OpenID-Konfigurationsfailer',
+	'openidconfigerrortext' => 'Ju OpenID-Spiekerkonfiguration foar dit Wiki ist failerhaft.
+Täl n [[Special:ListUsers/sysop|Administrator]] Bescheed.',
+	'openidpermission' => 'OpenID-Begjuchtigengsfailer',
+	'openidpermissiontext' => 'Ju anroate OpenID begjuchtiget nit tou Anmäldenge an dissen Server.',
+	'openidcancel' => 'Wröige oubreeken',
+	'openidcanceltext' => 'Ju Wröige fon ju OpenID-URL wuud oubreeken.',
+	'openidfailure' => 'Wröige-Failer',
+	'openidfailuretext' => 'Ju Wröige fon ju OpenID-URL is failsloain. Failermäldenge: "$1"',
+	'openidsuccess' => 'Wröige mäd Ärfoulch be-eended',
+	'openidsuccesstext' => 'Ju Wröige fon ju Open-ID hied Ärfoulch.',
+	'openidusernameprefix' => 'OpenID-Benutser',
+	'openidserverlogininstructions' => 'Reek dien Paaswoud unner ien, uum die as Benutser $2 an $3 antoumäldjen (Benutsersiede $1).',
+	'openidtrustinstructions' => 'Wröich, of du Doaten mäd $1 deele moatest.',
+	'openidallowtrust' => 'Ferlööwje $1, dissen Benutserkonto tou tjouen.',
+	'openidnopolicy' => 'Ju Siede häd neen Doatenschuts-Gjuchtlienje anroat.',
+	'openidpolicy' => 'Wröich ju <a target="_new" href="$1">Doatenschuts-Gjuchtlienje</a> foar moor Informatione.',
+	'openidoptional' => 'Optionoal',
+	'openidrequired' => 'Plicht',
+	'openidnickname' => 'Benutsernoome',
+	'openidfullname' => 'Fulboodigen Noome',
+	'openidemail' => 'E-Mail-Adresse:',
+	'openidlanguage' => 'Sproake',
+	'openidnotavailable' => 'Die Noome ($1), dän du dät ljooste hääst, wäd al fon n uur Benutser ferwoand.',
+	'openidnotprovided' => 'Dien OpenID-Server unnerstutset neen Spitsnoomen (äntweeder, wil hie et nit kon, of deeruum dät du et him nit ferlööwed hääst).',
+	'openidchooseinstructions' => 'Aal Benutsere benöödigje n Benutsernoome;
+du koast aan uut ju unnerstoundene Lieste uutwääle.',
+	'openidchoosefull' => 'Din fulboodigen Noome ($1)',
+	'openidchooseurl' => 'N Noome uut dien OpenID ($1)',
+	'openidchooseauto' => 'N automatisk moakeden Noome ($1)',
+	'openidchoosemanual' => 'N Noome fon dien Woal:',
+	'openidchooseexisting' => 'N existierend Benutserkonto in dit Wiki:',
+	'openidchoosepassword' => 'Paaswoud:',
+	'openidconvertinstructions' => 'Mäd dit Formular koast du dien Benutserkonto tou Benutsenge fon n OpenID-URL fräireeke.',
+	'openidconvertsuccess' => 'Mäd Ärfoulch ätter OpenID konvertierd',
+	'openidconvertsuccesstext' => 'Du hääst ju Konvertierenge fon dien OpenID ätter $1 mäd Ärfoulch truchfierd.',
+	'openidconvertyourstext' => 'Dit is al dien OpenID.',
+	'openidconvertothertext' => 'Dit is ju OpenID fon uurswäl.',
+	'openidalreadyloggedin' => "'''Du bäst al anmälded, $1!'''
+
+Wan du OpenID foar kuumende Anmäldefoargonge nutsje moatest, koast du [[Special:OpenIDConvert|dien Benutserkonto ätter OpenID konvertierje]].",
+	'openidnousername' => 'Naan Benutsernoome anroat.',
+	'openidbadusername' => 'Falsken Benutsernoome anroat.',
+	'openidautosubmit' => 'Disse Siede änthaalt n Formular, dät automatisk uurdrain wäd, wan JavaSkript aktivierd is. Fals nit, klik ap „Fääre“.',
+	'openidclientonlytext' => 'Du koast neen Benutserkonten uut dissen Wiki as OpenID foar uur Sieden ferweende.',
+	'openidloginlabel' => 'OpenID-URL',
+	'openidlogininstructions' => "{{SITENAME}} unnerstutset dän [http://openid.net/ OpenID]-Standoard foar ne Anmäldenge foar moorere Websites.
+OpenID mäldet die bie fuul unnerscheedelke Websieden an, sunner dät du foar älke Siede n uur Paaswoud ferweende moast.
+(Moor Informatione bjut die [http://de.wikipedia.org/wiki/OpenID Wikipedia-Artikkel tou OpenID].)
+
+Fals du al n Benutserkonto bie {{SITENAME}} hääst, koast du die gans normoal mäd Benutsernoome un Paaswoud [[Special:UserLogin|anmäldje]].
+Wan du in n Toukumst OpenID ferweende moatest, koast du [[Special:OpenIDConvert|dien Account tou OpenID konvertierje]], ätter dät du die normoal ienlogged hääst.
+
+Dät rakt fuul [http://wiki.openid.net/Public_OpenID_providers eepentelke OpenID-Providere] un muugelkerwiese hääst du al n Benutserkonto mäd aktivierden OpenID bie n uur Anbjooder.
+
+; Uur Sites: Wan du al n Benutserkonto ap n Wiki mäd aktivierde OpenID hääst, as biespilswiese [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] of [http://kei.ki/ Keiki], koast du die bie {{SITENAME}} anmäldje, wan du ju '''komplette URL''' fon dien Benutsersiede ap dän uur Wiki in dät Textfäild hierbuppe ienrakst. Biespilswiese ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
+; [http://openid.yahoo.com/ Yahoo!]: Wan du n Yahoo!-Konto hääst, koast du die mäd ju fon Yahoo! anroate OpenID in dät Textfäild hierbuppe anmäldje. Yahoo!-OpenIDs hääbe ju Foarm ''<nowiki>https://me.yahoo.com/dienbenutsernoome</nowiki>''.
+; [http://dev.aol.com/aol-and-63-million-openids AOL]: Wan du n [http://www.aol.com/ AOL]-Konto hääst, biespilswiese n [http://www.aim.com/ AIM]-Benutserkonto, koast du die bie {{SITENAME}} anmäldje, wan du ju fon AOL anroate OpenID in dät Textfäild hierbuppe ienrakst. AOL-OpenIDs hääbe ju Foarm ''<nowiki>http://openid.aol.com/dienbenutsernoome</nowiki>''. Dien Benutsernoome schuul bloot uut litje Bouksteeuwen bestounde un neen Loosteekene änthoolde.
+; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox]: Wan du ap disse Sieden n Blog hääst, reek ju URL fon dien Blog in dät Textfäild hierbuppe ien. Biespilswiese ''<nowiki>http://deinbenutzername.blogspot.com/</nowiki>'', ''<nowiki>http://deinbenutzername.wordpress.com/</nowiki>'', ''<nowiki>http://deinbenutzername.livejournal.com/</nowiki>'', of ''<nowiki>http://deinbenutzername.vox.com/</nowiki>''.",
+	'openidupdateuserinfo' => 'Persöönelke Doaten aktualisierje',
+	'openid-prefstext' => '[http://openid.net/ OpenID] Ienstaalengen',
+	'openid-pref-hide' => 'Fersteet dien <a href="http://openid.net/">OpenID</a> ap dien Benutsersiede, wan du die mäd OpenID anmäldest.',
+	'openid-pref-update-userinfo-on-login' => 'Mien Doaten anhound fon dät OpenID-Konto bie älke Login aktualisierje',
 );
 
 /** Sundanese (Basa Sunda)
@@ -2668,6 +3160,7 @@ $messages['su'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author Boivie
  * @author Jon Harald Søby
  * @author Lokal Profil
  * @author M.M.S.
@@ -2722,22 +3215,23 @@ du kan välja ett från alternativen nedan.',
 	'openidalreadyloggedin' => "'''Du är redan inloggad, $1!'''
 
 Om du vill använda OpenID att logga in i framtiden, kan du [[Special:OpenIDConvert|konvertera dina konton till att använda OpenID]].",
-	'tog-hideopenid' => 'Dölj <a href="http://openid.net/">OpenID</a> på din användarsida, om du loggar in med OpenID.',
 	'openidnousername' => 'Inget användarnamn angivet.',
 	'openidbadusername' => 'Ogiltigt användarnamn angivet.',
 	'openidautosubmit' => 'Denna sida innehåller ett formulär som kommer levereras automatiskt om du har slagit på JavaScript. Om inte, tryck på "Fortsätt".',
 	'openidclientonlytext' => 'Du kan inte använda konton från denna wikin som OpenID på en annan sida.',
 	'openidloginlabel' => 'OpenID-adress',
-	'openidlogininstructions' => "{{SITENAME}} stödjer [http://openid.net/ OpenID]-standarden för enhetlig inlogging på många webbsidor. OpenID låter dig logga in på många webbsidor utan att använda massor med lösenord överallt. (Se [http://en.wikipedia.org/wiki/OpenID Wikipedia-artikeln om OpenID] för mer information.)
+	'openidlogininstructions' => '{{SITENAME}} stödjer [http://openid.net/ OpenID]-standarden för enhetlig inlogging på många webbsidor.
+OpenID låter dig logga in på många webbsidor utan att använda olika lösenord för varje. 
+(Se [http://en.wikipedia.org/wiki/OpenID Wikipedia-artikeln om OpenID] för mer information.)
 
-Om du redan har ett konto på {{SITENAME}}, kan du logga in som vanligt med ditt användarnamn och lösenord. För att använda OpenID i framtiden kan du [[Special:OpenIDConvert|konvertera dina konton till OpenID]] efter att du har loggat in på normalt sätt.
+Om du redan har ett konto på {{SITENAME}}, kan du [[Special:UserLogin|logga in]] som vanligt med ditt användarnamn och lösenord.
+För att använda OpenID i framtiden kan du [[Special:OpenIDConvert|konvertera ditt konton till OpenID]] efter att du har loggat in på normalt sätt.
 
-Det finns många [http://wiki.openid.net/Public_OpenID_providers leverantörer av OpenID], och du kan redan ha ett OpenID-aktiverat konto på en annan plats.
-
-;Andra wikier :Om du har ett konto på en OpenID-aktiverad wiki, som [http://wikitravel.org/ Wikitravel], [http://wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] eller [http://kei.ki/ Keiki], kan du logga in på {{SITENAME}} genom att skriva in den '''fullständiga adressen''' till din användarsida på den wikin i boxen ovanför. För exempel ''<nowiki>http://kei.kei/en/User:Exempel</nowiki>''.
-;[http://openid.yahoo.com/ Yahoo!] :Om du har ett konto hos Yahoo! kan du logga in på denna sida genom att skriva in din OpenID från Yahoo i boxen övanför. Yahoo!s OpenID-adresser har formen ''<nowiki>https://me.yahoo.com/dittanvändarnamn</nowiki>''.
-;[http://dev.aol.com/aol-and-63-million-openids AOL] :Om du har ett konto hos [http://aol.com/ AOL], för exempel ett [http://aim.com/ AIM]-konto, kan du logga in på {{SITENAME}} genom att skriva in din OpenID från AOL i boxen ovanför. AOLs OpenID-adresser har formen ''<nowiki>http://openid.aol.com/dittanvändarnamn</nowiki>''. Användarnamner måste vara små bokstäver och utan mellanrum.
-;[http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] :Om du har ett konto på en av dessa tjänster, skriv in adressen till din bloggen i boxen ovanför. För exempel ''<nowiki>http://dittanvändarnamn.blogspot.com/</nowiki>'', ''<nowiki>http://dittanvändarnamn.wordpress.com/</nowiki>'', ''<nowiki>http://dittanvändarnamn.livejournal.com/</nowiki>'', or ''<nowiki>http://dittanvändarnamn.vox.com/</nowiki>''.",
+Det finns många [http://openid.net/get/ leverantörer av OpenID], och du kan redan ha ett OpenID-aktiverat konto på en annan plats.',
+	'openidupdateuserinfo' => 'Uppdatera min personliga information',
+	'openid-prefstext' => '[http://openid.net/ OpenID] inställningar',
+	'openid-pref-hide' => 'Dölj <a href="http://openid.net/">OpenID</a> på din användarsida, om du loggar in med OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Uppdatera min informationen från OpenID-persona varje gång jag loggar in',
 );
 
 /** Telugu (తెలుగు)
@@ -2846,26 +3340,97 @@ makakapili ka mula sa mga pagpipiliang nasa ibaba.',
 	'openidalreadyloggedin' => "'''Nakalagda ka na, $1!'''
 
 Kung nais mong gumamit ng OpenID upang makalagda sa hinaharap, maaari mong [[Special:OpenIDConvert|palitan ang kuwenta mo para magamit ang OpenID]].",
-	'tog-hideopenid' => 'Itago ang <a href="http://openid.net/">OpenID</a> mo sa ibabaw ng iyong pahina ng tagagamit, kapag lumagda ka sa pamamagitan ng OpenID.',
 	'openidnousername' => 'Walang tinukoy na pangalan ng tagagamit.',
 	'openidbadusername' => 'Masama ang tinukoy na pangalan ng tagagamit.',
 	'openidautosubmit' => 'Kabilang/kasama sa pahinang ito ang isang pormularyo na dapat na kusang maipasa/maipadala kapag hindi pinaandar (pinagana) ang JavaScript.
 Kung hindi, subukin ang pindutang \\"Magpatuloy\\".',
 	'openidclientonlytext' => 'Hindi mo magagamit ang mga kuwenta mula sa wiking ito bilang mga OpenID sa iba pang sityo/sayt.',
 	'openidloginlabel' => 'URL ng OpenID',
-	'openidlogininstructions' => "Tinatangkilik (sinusuportahan) ng {{SITENAME}} ang pamantayang [http://openid.net/ OpenID] para sa mga isahang paglagda sa pagitan ng mga sayt ng Web.
+	'openidlogininstructions' => "Tinatangkilik ng {{SITENAME}} ang pamantayang [http://openid.net/ OpenID] para sa mga isahang paglagda sa pagitan ng mga sayt ng Web.
 Hinahayaan ka ng OpenID na makalagda sa maraming iba't ibang mga sityo ng Web na hindi gumagamit ng isang iba pang hudyat para sa bawat isa.
 (Tingnan ang [http://en.wikipedia.org/wiki/OpenID lathalaing OpenID ng Wikipedia] para sa mas marami pang kabatiran.)
 
-Kung mayroon ka anng kuwenta sa {{SITENAME}}, maaari kang [[Special:UserLogin|lumagda]] sa pamamagitan ng iyong pangalan ng tagagamit at hudyat sa karaniwang paraan.
-Upang makagamit ng OpenID sa hinaharap, maaari mong [[Special:OpenIDConvert|palitan ang iyong akawnt upang maging OpenID]] pagkatapos mong lumagda sa normal na paraan.
+Kung mayroon ka nang kuwenta sa {{SITENAME}}, maaari kang [[Special:UserLogin|lumagdang papasok]] sa pamamagitan ng iyong pangalan ng tagagamit at hudyat sa karaniwang paraan.
+Upang makagamit ng OpenID sa hinaharap, maaari mong [[Special:OpenIDConvert|palitan ang iyong akawnt upang maging OpenID]] pagkatapos mong lumagda sa karaniwang paraan.
 
-Maraming mga [http://wiki.openid.net/Public_OpenID_providers Pangmadlang tagapagbigay ng OpenID], at maaaring mayroon ka nang isang kuwentang pinagana ng OpenID na nasa ibang palingkuran (serbisyo).
+Maraming mga [http://wiki.openid.net/Public_OpenID_providers tagapagbigay ng OpenID], at maaaring mayroon ka nang isang kuwentang pinagana ng OpenID na nasa iba pang palingkuran.",
+	'openidupdateuserinfo' => 'Isapanahon ang aking pansariling kabatiran',
+	'openid-prefstext' => 'Mga kagustuhang pang-[http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Itago ang <a href="http://openid.net/">OpenID</a> mo sa ibabaw ng iyong pahina ng tagagamit, kapag lumagda ka sa pamamagitan ng OpenID.',
+	'openid-pref-update-userinfo-on-login' => 'Isapahaon ang aking kabatiran mula sa katauhang pang-OpenID sa bawat pagkakataong lalagda akong papasok',
+);
 
-; Ibang mga wiki : Kung mayroon ka nang isang kuwenta sa isang wiking pinaga ng OpenID, katulad ng [http://wikitravel.org/ Wikitravel] (\"Wikilakbay\"), [http://www.wikihow.com/ wikiHow] (\"wikPaano\"), [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] (\"Tungkol sa Amin\") o [http://kei.ki/ Keiki], maaari kang lumagda sa {{SITENAME}} sa pamamagitan ng pagpapasok/paglalagay ng '''buong URL''' ng pahina ng tagagamit mo sa loob ng kahong nasa itaas doon sa ibang wiking iyon. Halimbawa na ang ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : Kung mayroon kang kuwenta sa Yahoo!, maaari kang lumagda sa sayt na ito sa pamamagitan ng paglalagay ng iyong Open-ID na ibinigay ng Yahoo! sa loob ng kahong nasa itaas. Ang mga URL ng OpenID ng Yahoo! ay mayroong pormularyong ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : Kung mayroon kang kuwenta sa [http://www.aol.com/ AOL], katulad ng akawnt na [http://www.aim.com/ AIM], maaari kang lumagda sa {{SITENAME}} sa pamamagitan ng OpenID na ibinigay ng AOL sa loob ng kahong nasa itaas. Ang mga URL ng OpenID ng AOL ay maryoong pormularyong ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. Ang kalahatan/kabuoan ng  iyong pangalan ng tagagamit ay dapat na nasa/may maliliit na mga panitik, at walang mga puwang/patlang.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Kung mayroon kang isang ''blog'' sa alin man sa mga palingkurang (serbisyong) ito, ipasok/ilagay ang URL ng ''blog'' mo sa kahong nasa itaas. Bilang halimbawa, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', o ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'openid-desc' => 'Vikiye bir [http://openid.net/ OpenID] ile giriş yapın, ve diğer OpenID kullanan web sitelerine bir viki kullanıcı hesabıyla giriş yapın.',
+	'openidlogin' => 'OpenID ile giriş yapın',
+	'openidfinish' => 'OpenID girişini tamamlayın',
+	'openidserver' => 'OpenID sunucusu',
+	'openidxrds' => 'Yadis dosyası',
+	'openidconvert' => 'OpenID çeviricisi',
+	'openiderror' => 'Doğrulama hatası',
+	'openiderrortext' => 'OpenID adresi doğrulanırken bir hata oluştu.',
+	'openidconfigerror' => 'OpenID yapılandırma hatası',
+	'openidconfigerrortext' => 'Bu viki için OpenID depolama yapılandırması geçersiz.
+Lütfen bir [[Special:ListUsers/sysop|yöneticiye]] danışın.',
+	'openidpermission' => 'OpenID izinleri hatası',
+	'openidpermissiontext' => "Sağladığınız OpenID'nin bu sunucuya oturum açmasına izin verilmiyor.",
+	'openidcancel' => 'Doğrulama iptal edildi',
+	'openidcanceltext' => 'OpenID URL doğrulaması iptal edildi.',
+	'openidfailure' => 'Doğrulama başarısız',
+	'openidfailuretext' => 'OpenID URL doğrulaması başarısız oldu. Hata iletisi: "$1"',
+	'openidsuccess' => 'Doğrulama başarılı',
+	'openidsuccesstext' => 'OpenID URL doğrulaması başarılı.',
+	'openidusernameprefix' => 'OpenIDKullanıcısı',
+	'openidserverlogininstructions' => '$3 sitesine $2 kullanıcısı (kullanıcı sayfası $1) olarak oturum açmak için parolanızı aşağıya girin.',
+	'openidtrustinstructions' => '$1 ile veri paylaşmak istediğinizi kontrol edin.',
+	'openidallowtrust' => "Bu kullanıcı hesabına güvenmek için $1'e izin ver.",
+	'openidnopolicy' => 'Site bir gizlilik ilkesi belirtmemiş.',
+	'openidpolicy' => 'Daha fazla bilgi için <a target="_new" href="$1">gizlilik ilkesine</a> bakın.',
+	'openidoptional' => 'İsteğe Bağlı',
+	'openidrequired' => 'Gerekli',
+	'openidnickname' => 'Kullanıcı adı',
+	'openidfullname' => 'Tam ad',
+	'openidemail' => 'E-posta adresi',
+	'openidlanguage' => 'Dil',
+	'openidnotavailable' => 'Tercih ettiğiniz kullanıcı adı ($1) zaten başka bir kullanıcı tarafından kullanımda.',
+	'openidnotprovided' => 'OpenID sunucunuz bir kullanıcı adı sağlamadı (ya bunu yapamadığı için, ya da yapmamasını söylediğiniz için).',
+	'openidchooseinstructions' => 'Tüm kullanıcılar için bir kullanıcı adı gereklidir;
+aşağıdaki seçeneklerden birini seçebilirsiniz.',
+	'openidchoosefull' => 'Tam adınız ($1)',
+	'openidchooseurl' => "OpenID'nizden bir isim alındı ($1)",
+	'openidchooseauto' => 'Otomatik oluşturulan bir isim ($1)',
+	'openidchoosemanual' => 'Tercihinizden bir isim:',
+	'openidchooseexisting' => 'Bu vikide mevcut bir hesap:',
+	'openidchoosepassword' => 'parola:',
+	'openidconvertinstructions' => 'Bu form bir OpenID URLsi kullanmak için kullanıcı hesabınızı değiştirmenizi sağlar.',
+	'openidconvertsuccess' => 'OpenIDye başarıyla dönüştürüldü',
+	'openidconvertsuccesstext' => "OpenIDnizi başarıyla $1'e dönüştürdünüz.",
+	'openidconvertyourstext' => 'Bu zaten sizin OpenIDniz.',
+	'openidconvertothertext' => 'Bu bir başkasının OpenIDsi.',
+	'openidalreadyloggedin' => "'''Zaten oturum açtınız, $1!'''
+
+Eğer gelecekte de oturum açmak için OpenID kullanmak isterseniz, [[Special:OpenIDConvert|hesabınızı OpenID kullanmak için dönüştürebilirsiniz]].",
+	'openidnousername' => 'Herhangi bir kullanıcı adı belirtilmedi.',
+	'openidbadusername' => 'Kötü bir kullanıcı adı belirtildi.',
+	'openidautosubmit' => 'Bu sayfa, JavaScript etkin ise otomatik olarak gönderilmesi gereken bir form içeriyor.
+Eğer değilse, \\"Devam\\" düğmesini deneyin.',
+	'openidclientonlytext' => 'Bu vikideki hesapları başka sitelerde OpenID olarak kullanamazsınız.',
+	'openidloginlabel' => 'OpenID URLsi',
+	'openidlogininstructions' => "{{SITENAME}}, web sitelerinde tekli giriş için [http://openid.net/ OpenID] standartını desteklemektedir.
+OpenID, herbirine farklı şifre kullanmadan birçok web sitesine giriş yapmanıza izin verir.
+(Daha fazla bilgi için [http://en.wikipedia.org/wiki/OpenID Vikipedideki OpenID maddesine bakın].)
+
+Eğer {{SITENAME}} sitesinde mevcut bir hesabınız varsa, her zamanki gibi kullanıcı adınız ve şifrenizle [[Special:UserLogin|giriş yapabilirsiniz]].
+İleride OpenID kullanmak için, normal giriş yaptıktan sonra [[Special:OpenIDConvert|hesabınızı OpenID'ye çevirebilirsiniz]].
+
+Birçok [http://openid.net/get/ OpenID sağlayıcısı] vardır, ve bir başka serviste halihazırda bir OpenID-etkin hesabınız olabilir.",
+	'openidupdateuserinfo' => 'Kişisel bilgimi güncelle',
+	'openid-prefstext' => '[http://openid.net/ OpenID] tercihleri',
+	'openid-pref-hide' => 'Eğer OpenID ile giriş yaparsanız, kullanıcı sayfanızda OpenID URLnizi gizle.',
+	'openid-pref-update-userinfo-on-login' => 'Her oturum açışımda OpenID karakterinden bilgilerimi güncelle',
 );
 
 /** Ukrainian (Українська)
@@ -2881,7 +3446,7 @@ $messages['uk'] = array(
 	'openiderror' => 'Помилка перевірки повноважень',
 	'openiderrortext' => 'Під час перевірки адреси OpenID сталася помилка.',
 	'openidconfigerror' => 'Помилка налаштування OpenID',
-	'openidconfigerrortext' => 'Налаштування сховища OpenID для цієї вікі помилкова. 
+	'openidconfigerrortext' => 'Налаштування сховища OpenID для цієї вікі помилкова.
 Будь-ласка, зверніться до [[Special:ListUsers/sysop|адміністратору сайту]].',
 	'openidpermission' => 'Помилка прав доступу OpenID',
 	'openidpermissiontext' => 'Вказаний OpenID не дозволяє увійти на цей сервер.',
@@ -2905,7 +3470,7 @@ $messages['uk'] = array(
 	'openidlanguage' => 'Мова',
 	'openidnotavailable' => 'Зазначений вами псевдонім ($1) вже використовується іншим учасником.',
 	'openidnotprovided' => 'Ваш сервер OpenID не надав псевдонім (чи тому, що він не може, чи тому, що ви вказали не робити цього).',
-	'openidchooseinstructions' => 'Кожен користувач повинен мати псевдонім; 
+	'openidchooseinstructions' => 'Кожен користувач повинен мати псевдонім;
 ви можете вибрати один з представлених нижче.',
 	'openidchoosefull' => "Ваше повне ім'я ($1)",
 	'openidchooseurl' => 'Ім`я, отримане з вашого OpenID ($1)',
@@ -2921,13 +3486,13 @@ $messages['uk'] = array(
 	'openidalreadyloggedin' => "'''Ви вже ввійшли, $1!'''
 
 Якщо ви бажаєте використовувати в майбутньому вхід через OpenID, ви можете [[Special:OpenIDConvert|перетворити ваш акаунт для використання в OpenID]].",
-	'tog-hideopenid' => 'Приховувати ваш <a href="http://openid.net/">OpenID</a> на вашій сторінці користувача, якщо ви ввійшли з допомогою OpenID.',
 	'openidnousername' => "Не вказано ім'я користувача.",
 	'openidbadusername' => "Зазначено невірне ім'я користувача.",
-	'openidautosubmit' => 'Ця сторінка містить форму, яка повинна бути автоматично відправлена, якщо у вас включений JavaScript. 
+	'openidautosubmit' => 'Ця сторінка містить форму, яка повинна бути автоматично відправлена, якщо у вас включений JavaScript.
 Якщо цього не сталося, спробуйте натиснути на кнопку «Продовжити».',
 	'openidclientonlytext' => 'Ви не можете використовувати акаунти з цієї вікі, як OpenID на іншому сайті.',
 	'openidloginlabel' => 'Адреса OpenID',
+	'openid-pref-hide' => 'Приховувати ваш <a href="http://openid.net/">OpenID</a> на вашій сторінці користувача, якщо ви ввійшли з допомогою OpenID.',
 );
 
 /** Vèneto (Vèneto)
@@ -2983,12 +3548,23 @@ te pol tórghene uno da le opzioni seguenti.',
 	'openidalreadyloggedin' => "'''Te sì xà entrà, $1!'''
 
 Se ti vol doparar OpenID par entrar in futuro, te pol [[Special:OpenIDConvert|convertir la to utensa par doparar OpenID]].",
-	'tog-hideopenid' => 'Scondi el to <a href="http://openid.net/">OpenID</a> su la to pàxena utente, se te fè el login con OpenID.',
 	'openidnousername' => 'Nissun nome utente indicà.',
 	'openidbadusername' => "El nome utente indicà no'l xe mia valido.",
 	'openidautosubmit' => 'Sta pàxena la include un modulo che\'l dovarìa èssar invià automaticamente se ti gà JavaScript ativà. Se no, próa a strucar el boton \\"Continua\\".',
 	'openidclientonlytext' => 'No te podi doparar le utense de sta wiki come OpenID su de un altro sito.',
 	'openidloginlabel' => 'URL OpenID',
+	'openidlogininstructions' => "{{SITENAME}} el suporta el standard [http://openid.net/ OpenID] par el login unico sui siti web.
+OpenID el te permete de registrarte in molti siti web sensa doparar na password difarente par ognuno.
+(Lèzi la [http://en.wikipedia.org/wiki/OpenID voce de Wikipedia su l'OpenID] par savérghene piassè.)
+
+Se te ghè zà un account su {{SITENAME}}, te podi far el [[Special:UserLogin|login]] col to nome utente e la to password come al solito.
+Par doparar OpenID in futuro, te podi [[Special:OpenIDConvert|convertir el to account a OpenID]] dopo che te ghè fato normalmente el login.
+
+Ghe xe molti [http://openid.net/get/ Provider OpenID], e te podaressi verghe zà un account abilità a l'OpenID su un altro servissio.",
+	'openidupdateuserinfo' => 'Ajorna le me informassion personài',
+	'openid-prefstext' => '[http://openid.net/ OpenID] preferense',
+	'openid-pref-hide' => 'Scondi el to <a href="http://openid.net/">OpenID</a> su la to pàxena utente, se te fè el login con OpenID.',
+	'openid-pref-update-userinfo-on-login' => "Ajorna le me informassion da l'utensa de OpenID ogni olta che me conéto",
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -3044,26 +3620,24 @@ Xin hãy liên lạc với [[Special:ListUsers/sysop|quản lý viên]].',
 	'openidalreadyloggedin' => "'''Bạn đã đăng nhập rồi, $1!'''
 
 Nếu bạn muốn sử dụng ID Mở để đăng nhập vào lần sau, bạn có thể [[Special:OpenIDConvert|chuyển đổi tài khoản của bạn để dùng ID Mở]].",
-	'tog-hideopenid' => 'Ẩn <a href="http://openid.net/">ID Mở</a> của bạn khỏi trang thành viên, nếu bạn đăng nhập bằng ID Mở.',
 	'openidnousername' => 'Chưa chỉ định tên người dùng.',
 	'openidbadusername' => 'Tên người dùng không hợp lệ.',
 	'openidautosubmit' => 'Trang này có một mẫu sẽ tự động đăng lên nếu bạn kích hoạt JavaScript.
 Nếu không, hãy thử nút \\"Tiếp tục\\".',
 	'openidclientonlytext' => 'Bạn không thể sử dụng tài khoản tại wiki này như ID Mở tại trang khác.',
 	'openidloginlabel' => 'Địa chỉ OpenID',
-	'openidlogininstructions' => "{{SITENAME}} hỗ trợ chuẩn [http://openid.net/ OpenID] (ID Mở) để đăng nhập một lần giữa các trang web.
-ID Mở cho phép bạn đăng nhập vào nhiều trang web khác nhau mà không phải sử dụng mật khẩu khác nhau tại mỗi trang.
-(Xem [http://en.wikipedia.org/wiki/OpenID bài viết về ID Mở của Wikipedia] để biết thêm chi tiết.)
+	'openidlogininstructions' => '{{SITENAME}} hỗ trợ chuẩn [http://openid.net/ OpenID] để đăng nhập một lần giữa các trang web.
+OpenID cho phép bạn đăng nhập vào nhiều trang web khác nhau mà không phải sử dụng mật khẩu khác nhau tại mỗi trang.
+(Xem [http://en.wikipedia.org/wiki/OpenID bài viết về OpenID của Wikipedia] để biết thêm chi tiết.)
 
 Nếu bạn đã có một tài khoản tại {{SITENAME}}, bạn có thể [[Special:UserLogin|đăng nhập]] bằng tên người dùng và mật khẩu của bạn như thông thường.
-Để dùng ID Mở vào lần sau, bạn có thể [[Special:OpenIDConvert|chuyển đổi tài khoản của bạn sang ID Mở]] sau khi đã đăng nhập bình thường.
+Để dùng OpenID vào lần sau, bạn có thể [[Special:OpenIDConvert|chuyển đổi tài khoản của bạn sang ID Mở]] sau khi đã đăng nhập bình thường.
 
-Có nhiều [http://wiki.openid.net/Public_OpenID_providers nhà cung cấp ID Mở Công cộng], và có thể bạn đã có một tài khoản kích hoạt ID Mở tại dịch vụ khác.
-
-; Các wiki khác : Nếu bạn có tài khoản tại một wiki có sử dụng ID Mở, như [http://wikitravel.org/ Wikitravel], [http://www.wikihow.com/ wikiHow], [http://vinismo.com/ Vinismo], [http://aboutus.org/ AboutUs] hay [http://kei.ki/ Keiki], bạn có thể đặp nhập vào {{SITENAME}} bằng cách gõ vào '''URL đầy đủ''' của trang người dùng của bạn tại wiki đó trong hộp ở phía trên. Ví dụ, ''<nowiki>http://kei.ki/en/User:Evan</nowiki>''.
-; [http://openid.yahoo.com/ Yahoo!] : Nếu bạn có tài khoản Yahoo!, bạn có thể đăng nhập vào trang này bằng cách gõ vào ID Mở do Yahoo! cung cấp vào hộp phía trên. Địa chỉ URL của Yahoo! OpenID có dạng ''<nowiki>https://me.yahoo.com/yourusername</nowiki>''.
-; [http://dev.aol.com/aol-and-63-million-openids AOL] : Nếu bạn có tài khoản [http://www.aol.com/ AOL], như một tài khoản [http://www.aim.com/ AIM], bạn có thể đăng nhập vào {{SITENAME}} bằng cách gõ ID Mở do AOL cung cấp cho bạn vào hộp phía trên. Địa chỉ URL của Open ID AOL có dạng ''<nowiki>http://openid.aol.com/yourusername</nowiki>''. Tên người dùng của bạn nên tất cả là chữ thường, không có khoảng cách.
-; [http://bloggerindraft.blogspot.com/2008/01/new-feature-blogger-as-openid-provider.html Blogger], [http://faq.wordpress.com/2007/03/06/what-is-openid/ Wordpress.com], [http://www.livejournal.com/openid/about.bml LiveJournal], [http://bradfitz.vox.com/library/post/openid-for-vox.html Vox] : Nếu bạn có blog tại bất kỳ một dịch nào bên trên, gõ vào địa chỉ URL blog của bạn vào hộp phía trên. Ví dụ, ''<nowiki>http://yourusername.blogspot.com/</nowiki>'', ''<nowiki>http://yourusername.wordpress.com/</nowiki>'', ''<nowiki>http://yourusername.livejournal.com/</nowiki>'', hay ''<nowiki>http://yourusername.vox.com/</nowiki>''.",
+Có nhiều [http://wiki.openid.net/Public_OpenID_providers nhà cung cấp OpenID Công cộng], và có thể bạn đã có một tài khoản kích hoạt OpenID tại dịch vụ khác.',
+	'openidupdateuserinfo' => 'Cập nhật thông tin cá nhân của tôi',
+	'openid-prefstext' => 'Tùy chỉnh [http://openid.net/ OpenID]',
+	'openid-pref-hide' => 'Ẩn <a href="http://openid.net/">ID Mở</a> của bạn khỏi trang thành viên, nếu bạn đăng nhập bằng ID Mở.',
+	'openid-pref-update-userinfo-on-login' => 'Cập nhật thông tin của tôi từ OpenID persona mỗi khi tôi đăng nhập',
 );
 
 /** Volapük (Volapük)
@@ -3141,12 +3715,12 @@ $messages['zh-hans'] = array(
 	'openidalreadyloggedin' => "'''您已经成功登陆了，$1！'''
 
 如果您想以后使用OpenID登陆，您可以[[Special:OpenIDConvert|转换您的帐户使用OpenID]]。",
-	'tog-hideopenid' => '如果使用OpenID登陆，您可以在您的用户页隐藏您的<a href="http://openid.net/">OpenID</a>。',
 	'openidnousername' => '没有指定用户名。',
 	'openidbadusername' => '指定的用户名是错误的。',
 	'openidautosubmit' => '本页包含的表单在启用JavaScript的情况下可以自动提交。
 如果没有自动提交，请按 \\"继续\\" 按钮。',
 	'openidloginlabel' => 'OpenID地址',
+	'openid-pref-hide' => '如果使用OpenID登陆，您可以在您的用户页隐藏您的<a href="http://openid.net/">OpenID</a>。',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)

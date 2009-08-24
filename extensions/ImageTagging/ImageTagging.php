@@ -94,7 +94,7 @@ function addTag($action, $article) {
 	$tagName = preg_replace( "/[\"'<>]/", "", $tagName );
 	$imgName = preg_replace( "/[\"'<>]/", "", $imgName );
 
-	$img = Image::newFromName($imgName);
+	$img = wfFindFile($imgName);
 	if ($img) {
 		$imgTitle = $img->getTitle();
 
@@ -150,7 +150,7 @@ function removeTag($action, $article) {
 	$tagName = preg_replace( "/[\"'<>]/", "", $tagName );
 	$imgName = preg_replace( "/[\"'<>]/", "", $imgName );
 
-	$img = Image::newFromName($imgName);
+	$img = wfFindFile($imgName);
 	if ($img) {
 		$imgTitle = $img->getTitle();
 
@@ -276,12 +276,12 @@ function wfTagSearchHitXML( $result, $terms ) {
 			continue;
 		}
 		$contextlines--;
-		$pre = $wgContLang->truncate( $m[1], -$contextchars, '...' );
+		$pre = $wgContLang->truncate( $m[1], -$contextchars );
 
 		if ( count( $m ) < 3 ) {
 			$post = '';
 		} else {
-			$post = $wgContLang->truncate( $m[3], $contextchars, '...' );
+			$post = $wgContLang->truncate( $m[3], $contextchars );
 		}
 
 		$found = $m[2];
@@ -318,7 +318,7 @@ function wfPurgeTitle($title) {
 }
 
 function wfGetImageTags($img, $imgName) {
-	global $wgDBname, $wgUser, $wgOut;
+	global $wgDBname, $wgUser, $wgOut, $wgLang;
 
 	wfProfileIn( __METHOD__ );
 
@@ -353,7 +353,7 @@ function wfGetImageTags($img, $imgName) {
 
 		$removeLink = '<a href="#" onclick="removeTag(' . $o->unique_id . ', this, \'' . addslashes( $o->article_tag ) . '\'); return false;">' . wfMsgHtml('imagetagging-removetag') . '</a>';
 
-		$html .= $span . $articleLink . ' (' . $imagesLink . ' | ' . $removeLink . ')</span>';
+		$html .= $span . $articleLink . ' (' . $wgLang->pipeList( array( $imagesLink, $removeLink ) ) . ')</span>';
 	}
 	$db->freeResult($res);
 

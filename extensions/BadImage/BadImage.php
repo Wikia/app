@@ -27,7 +27,7 @@ $wgExtensionMessagesFiles['BadImages'] = $dir . 'BadImage.i18n.php';
 $wgExtensionAliasesFiles['BadImages'] = $dir . 'BadImage.alias.php';
 
 $wgSpecialPages['Badimages'] = 'BadImageManipulator';
-$wgExtensionFunctions[] = 'efBadImageSetup';
+$wgSpecialPageGroups['Badimages'] = 'media';
 
 $wgAvailableRights[] = 'badimages';
 $wgGroupPermissions['sysop']['badimages'] = true;
@@ -35,16 +35,12 @@ $wgGroupPermissions['sysop']['badimages'] = true;
 /** Set this to false to disable caching results with shared memory caching */
 $wgBadImageCache = true;
 
-function efBadImageSetup() {
-	wfLoadExtensionMessages( 'BadImages' );
-	global $wgHooks, $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
-	$wgHooks['BadImage'][] = 'efBadImage';
-	$wgLogTypes[] = 'badimage';
-	$wgLogNames['badimage'] = 'badimages-log-name';
-	$wgLogHeaders['badimage'] = 'badimages-log-header';
-	$wgLogActions['badimage/add']  = 'badimages-log-add';
-	$wgLogActions['badimage/remove'] = 'badimages-log-remove';
-}
+$wgHooks['BadImage'][] = 'efBadImage';
+$wgLogTypes[] = 'badimage';
+$wgLogNames['badimage'] = 'badimages-log-name';
+$wgLogHeaders['badimage'] = 'badimages-log-header';
+$wgLogActions['badimage/add']  = 'badimages-log-add';
+$wgLogActions['badimage/remove'] = 'badimages-log-remove';
 
 function efBadImage( $image, &$bad ) {
 	if( BadImageList::check( $image ) ) {

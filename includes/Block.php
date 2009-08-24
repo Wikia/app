@@ -105,6 +105,7 @@ class Block {
 			&& $this->mHideName == $block->mHideName
 			&& $this->mBlockEmail == $block->mBlockEmail
 			&& $this->mAllowUsertalk == $block->mAllowUsertalk
+			&& $this->mReason == $block->mReason
 		);
 	}
 
@@ -570,7 +571,7 @@ class Block {
 		
 		## Allow hooks to cancel the autoblock.
 		if (!wfRunHooks( 'AbortAutoblock', array( $autoblockIP, &$this ) )) {
-			wfDebug( "Autoblock aborted by hook." );
+			wfDebug( "Autoblock aborted by hook.\n" );
 			return false;
 		}
 

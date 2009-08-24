@@ -605,6 +605,8 @@ END;
 	}
 
 	function printDateInput($input_name, $cur_value = null) {
+		global $wgAmericanDates;
+
 		$month_names = array(
 			wfMsgForContent('january'),
 			wfMsgForContent('february'),
@@ -771,6 +773,14 @@ END;
 		$this->show_single_cat = $wgRequest->getCheck('_single');
 		if (! $this->show_single_cat) {
 			$header .= $this->printCategoriesList($categories);
+		}
+		// if there are no subcategories or filters for this
+		// category, escape now that we've (possibly) printed the
+		// categories list
+		if ((count($this->next_level_subcategories) == 0) &&
+		    (count($this->applied_filters) == 0) &&
+		    (count($this->remaining_filters) == 0)) {
+			return $header;
 		}
 		$header .= '				<div class="drilldown-header">' . "\n";
 		if (count ($this->applied_filters) > 0 || $this->subcategory) {
@@ -1107,7 +1117,7 @@ END;
 		if (count($titles_for_category) > 0) {
 			$category_title = str_replace('_', ' ', $titles_for_category[0]);
 		} else {
-			$category_title = wfMsg('browsedata') . ": " . str_replace('_', ' ', $category);
+			$category_title = wfMsg( 'browsedata' ) . html_entity_decode( wfMsg( 'colon-separator' ) ) . str_replace( '_', ' ', $category );
 		}
 	}
 	// if no category was specified, go with the first

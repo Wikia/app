@@ -137,13 +137,13 @@ class TodoForm {
 			return $item->setTitle( $request->getText( 'wpTitle' ) );
 			break;
 		default:
-			return new WikiError( "Unrecognized type" );
+			return new WikiError( wfMsgHtml( 'todo-unrecognize-type' ) );
 		}
 	}
 
 	function show() {
 		global $wgOut, $IP, $wgUser, $wgScriptPath;
-		$wgOut->setPageTitle( wfmsgHtml('todo-list-for') ." ". $this->target->getName() );
+		$wgOut->setPageTitle( wfMsgHtml('todo-list-for', $this->target->getName() ) );
 
 
 		$wgOut->addWikiText( "== ".wfMsg('todo-new-item')." ==\n" );

@@ -240,15 +240,22 @@ class MovePageForm {
 		}
 
 		if( ($this->oldTitle->hasSubpages() || $this->oldTitle->getTalkPage()->hasSubpages())
-		&& $this->oldTitle->userCan( 'move-subpages' ) ) {
+			&& $this->oldTitle->userCan( 'move-subpages' ) )
+		{
+			global $wgMaximumMovedPages, $wgLang;
+
 			$wgOut->addHTML( "
 				<tr>
 					<td></td>
 					<td class=\"mw-input\">" .
-				Xml::checkLabel( wfMsg(
-						$this->oldTitle->hasSubpages()
-						? 'move-subpages'
-						: 'move-talk-subpages'
+				Xml::checkLabel( wfMsgExt(
+						( $this->oldTitle->hasSubpages()
+							? 'move-subpages'
+							: 'move-talk-subpages' ),
+						array( 'parsemag' ),
+						$wgLang->formatNum( $wgMaximumMovedPages ),
+						# $2 to allow use of PLURAL in message.
+						$wgMaximumMovedPages
 					),
 					'wpMovesubpages', 'wpMovesubpages',
 					# Don't check the box if we only have talk subpages to
@@ -284,6 +291,7 @@ class MovePageForm {
 		);
 
 		$this->showLogFragment( $this->oldTitle, $wgOut );
+		$this->showSubpages( $this->oldTitle, $wgOut );
 
 	}
 
@@ -385,6 +393,8 @@ class MovePageForm {
 		# would mean that you couldn't move them back in one operation, which
 		# is bad.  FIXME: A specific error message should be given in this
 		# case.
+		
+		// FIXME: Use Title::moveSubpages() here
 		$dbr = wfGetDB( DB_MASTER );
 		if( $this->moveSubpages && (
 			MWNamespace::hasSubpages( $nt->getNamespace() ) || (
@@ -499,4 +509,32 @@ class MovePageForm {
 		LogEventsList::showLogExtract( $out, 'move', $title->getPrefixedText() );
 	}
 
+	function showSubpages( $title, $out ) {
+		global $wgUser, $wgLang;
+
+		if( !MWNamespace::hasSubpages( $title->getNamespace() ) )
+			return;
+
+		$subpages = $title->getSubpages();
+		$count = $subpages instanceof TitleArray ? $subpages->count() : 0;
+
+		$out->wrapWikiMsg( '== $1 ==', array( 'movesubpage', $count ) );
+
+		# No subpages.
+		if ( $count == 0 ) {
+			$out->addWikiMsg( 'movenosubpage' );
+			return;
+		}
+
+		$out->addWikiMsg( 'movesubpagetext', $wgLang->formatNum( $count ) );
+		$skin = $wgUser->getSkin();
+		$out->addHTML( "<ul>\n" );
+
+		foreach( $subpages as $subpage ) {
+			$link = $skin->link( $subpage );
+			$out->addHTML( "<li>$link</li>\n" );
+		}
+		$out->addHTML( "</ul>\n" );
+	}
 }
+

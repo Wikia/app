@@ -15,8 +15,11 @@ $wgExtensionCredits['specialpage'][] = array(
     'author'         => 'Tim Laqua',
     'description'    => "Merges references from one user to another user in the Wiki database - will also delete old users following merge.  Requires 'usermerge' privileges.",
     'descriptionmsg' => 'usermerge-desc',
-    'version'        => '1.6'
+    'version'        => '1.6.1'
 );
+
+$wgAvailableRights[] = 'usermerge';
+# $wgGroupPermissions['bureaucrat']['usermerge'] = true;
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['UserMerge'] = $dir . 'UserMerge_body.php';
@@ -29,8 +32,8 @@ $wgSpecialPageGroups['UserMerge'] = 'users';
 $wgUserMergeProtectedGroups = array( "sysop" );
 
 # Add a new log type
-$wgLogTypes[]                 		= 'usermerge';
-$wgLogNames['usermerge']            = 'usermerge-logpage';
-$wgLogHeaders['usermerge']          = 'usermerge-logpagetext';
-$wgLogActions['usermerge/mergeuser'] 	= 'usermerge-success-log';
-$wgLogActions['usermerge/deleteuser']	= 'usermerge-userdeleted-log';
+$wgLogTypes[]                         = 'usermerge';
+$wgLogNames['usermerge']              = 'usermerge-logpage';
+$wgLogHeaders['usermerge']            = 'usermerge-logpagetext';
+$wgLogActions['usermerge/mergeuser']  = 'usermerge-success-log';
+$wgLogActions['usermerge/deleteuser'] = 'usermerge-userdeleted-log';

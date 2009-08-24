@@ -19,7 +19,7 @@ class SFAddPage extends SpecialPage {
 		wfLoadExtensionMessages('SemanticForms');
 	}
 
-	function execute($query = '') {
+	function execute($query) {
 		$this->setHeaders();
 		doSpecialAddPage($query);
 	}
@@ -127,7 +127,7 @@ function doSpecialAddPage($query = '') {
 	$form_name = str_replace($forbidden_chars, "", $form_name);
 
 	// get title of form
-	$form_title = Title::newFromText($form_name, SF_NS_FORM);
+	$form_title = Title::makeTitleSafe(SF_NS_FORM, $form_name);
 
 	// handle submission
 	$form_submitted = $wgRequest->getCheck('page_name');

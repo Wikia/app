@@ -42,6 +42,25 @@ class DeleteQueueItem {
 
 		return $item;
 	}
+	
+	static function newFromId( $id ) {
+		$item = new DeleteQueueItem();
+		$dbr = wfGetDB( DB_SLAVE );
+		
+		$row = $dbr->selectRow( 'delete_queue',
+								'*',
+								array( 'dq_case' => $id ),
+								__METHOD__
+							);
+							
+		if (!$row) {
+			return null;
+		}
+		
+		$item->loadFromRow( $row );
+		
+		return $item;
+	}
 
 	/**
 	 * Load the deletion queue item for a given deletion discussion page.
@@ -51,9 +70,20 @@ class DeleteQueueItem {
 		$item = new DeleteQueueItem();
 
 		$dbr = wfGetDB( DB_SLAVE );
-		$row = $dbr->selectRow( 'delete_queue', '*', array( 'dq_discussionpage' => $page->mTitle->getArticleID() ), __METHOD__ );
+		$row = $dbr->selectRow( 'delete_queue',
+						'*',
+						array(
+							'dq_discussionpage' => $page->mTitle->getArticleID()
+						),
+						__METHOD__
+					);
+		
+		if ( !$row ) {
+			return null;
+		}
 
-		wfDebugLog( 'deletequeue', "Got delete_queue row for discussion page ".$page->mTitle->getArticleID() );
+		wfDebugLog( 'deletequeue',
+			"Got delete_queue row for discussion page " . $page->mTitle->getArticleID() );
 
 		$item->loadFromRow( $row );
 
@@ -67,9 +97,17 @@ class DeleteQueueItem {
 	protected function getRow( $useMaster ) {
 		$dbr = wfGetDB( $useMaster ? DB_MASTER : DB_SLAVE );
 
-		$row = $this->mRow = $dbr->selectRow( 'delete_queue', '*', array( 'dq_page' => $this->mArticleID, 'dq_active' => 1 ), __METHOD__ );
+		$row = $this->mRow = $dbr->selectRow(
+							'delete_queue',
+							'*',
+							array(
+								'dq_page' => $this->mArticleID,
+								'dq_active' => 1
+							),
+							__METHOD__ );
 
-		wfDebugLog( 'deletequeue', "Got delete_queue row for article {$this->mArticleID}" );
+		wfDebugLog( 'deletequeue',
+				"Got delete_queue row for article {$this->mArticleID}" );
 
 		return $row;
 	}
@@ -105,7 +143,8 @@ class DeleteQueueItem {
 		$this->mLoadedFromMaster = $store || $useMaster;
 
 		if ( $store ) {
-			wfDebugLog( 'deletequeue', "Storing DeleteQueue item for article {$this->mArticleID} to cache." );
+			wfDebugLog( 'deletequeue',
+				"Storing DeleteQueue item for article {$this->mArticleID} to cache." );
 			// Store to cache
 			global $wgMemc;
 
@@ -120,7 +159,11 @@ class DeleteQueueItem {
 	 * Get the key used to store the data in memcached
 	 */
 	protected function cacheKey() {
-		return wfMemcKey( 'DeleteQueueItem', 'Article', $this->mArticleID, self::CACHE_VERSION );
+		return wfMemcKey( 'DeleteQueueItem',
+							'Article',
+							$this->mArticleID,
+							self::CACHE_VERSION
+						);
 	}
 
 	/**
@@ -135,7 +178,8 @@ class DeleteQueueItem {
 
 		$this->postLoad();
 
-		wfDebugLog( 'deletequeue', "Loded DeleteQueue item for article {$this->mArticleID} from cache." );
+		wfDebugLog( 'deletequeue',
+			"Loded DeleteQueue item for article {$this->mArticleID} from cache." );
 	}
 
 	/**
@@ -149,12 +193,19 @@ class DeleteQueueItem {
 		if (!$row) {
 			$this->mQueue = '';
 			$this->mMainLoaded = true;
-			wfDebugLog( 'deletequeue', "Loaded empty DeleteQueue item for article {$this->mArticleID} from DB." );
+			wfDebugLog( 'deletequeue',
+				"Loaded empty DeleteQueue item for article {$this->mArticleID} from DB." );
 			return;
 		}
 
 		// Stuff that can be loaded straight in.
-		$loadVars = array( 'dq_queue' => 'mQueue', 'dq_case' => 'mCaseID', 'dq_reason' => 'mReason', 'dq_discussionpage' => 'mDiscussionPageID', 'dq_page' => 'mArticleID' );
+		$loadVars = array(
+							'dq_queue' => 'mQueue',
+							'dq_case' => 'mCaseID',
+							'dq_reason' => 'mReason',
+							'dq_discussionpage' => 'mDiscussionPageID',
+							'dq_page' => 'mArticleID'
+						);
 
 		foreach( $loadVars as $col => $var ) {
 			$this->$var = $row->$col;
@@ -165,14 +216,24 @@ class DeleteQueueItem {
 
 		$this->postLoad();
 
-		wfDebugLog( 'deletequeue', "Loded DeleteQueue item for article {$this->mArticleID} from DB." );
+		wfDebugLog( 'deletequeue',
+			"Loded DeleteQueue item for article {$this->mArticleID} from DB." );
 
 		$this->mMainLoaded = true;
 	}
 
 	/** Reset all variables */
 	protected function reset() {
-		$vars = array( 'mCaseID', 'mReason', 'mTimestamp', 'mExpiry', 'mDiscussionPage', 'mRow', 'mEndorsements', 'mObjections' );
+		$vars = array(
+			'mCaseID',
+			'mReason',
+			'mTimestamp',
+			'mExpiry',
+			'mDiscussionPage',
+			'mRow',
+			'mEndorsements',
+			'mObjections'
+			);
 
 		foreach( $vars as $var ) {
 			$this->$var = null;
@@ -195,7 +256,10 @@ class DeleteQueueItem {
 
 		$users = array();
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 'delete_queue_role', '*', array( 'dqr_case' => $case_id ), __METHOD__ );
+		$res = $dbr->select( 'delete_queue_role',
+							'*',
+							array( 'dqr_case' => $case_id ),
+							__METHOD__ );
 
 		while ($row = $dbr->fetchObject( $res )) {
 			$users[] = array($row->dqr_user_text, $row->dqr_type);
@@ -221,12 +285,20 @@ class DeleteQueueItem {
 		$this->mVotes = array();
 
 		$dbr = wfGetDB( DB_SLAVE );
-		$res = $dbr->select( 'delete_queue_vote', '*', array( 'dqv_case' => $case_id ), __METHOD__, array( 'ORDER BY' => 'dqv_timestamp DESC' ) );
+		$res = $dbr->select( 'delete_queue_vote',
+							'*',
+							array( 'dqv_case' => $case_id ),
+							__METHOD__,
+							array( 'ORDER BY' => 'dqv_timestamp DESC' )
+						);
 
 		while ($row = $dbr->fetchObject( $res )) {
 			$this_vote = array();
 			// Load simple stuff
-			$row_mappings = array( 'dqv_user_text' => 'user', 'dqv_comment' => 'comment', 'dqv_current' => 'current' );
+			$row_mappings = array( 'dqv_user_text' => 'user',
+									'dqv_comment' => 'comment',
+									'dqv_current' => 'current'
+								);
 
 			foreach( $row_mappings as $col => $field ) {
 				$this_vote[$field] = $row->$col;
@@ -313,7 +385,18 @@ class DeleteQueueItem {
 		}
 
 		$dbw = wfGetDB( DB_MASTER );
-		$dbw->replace( 'delete_queue_role', array( array('dqr_case', 'dqr_user', 'dqr_type') ), array( 'dqr_case' => $this->getCaseID(), 'dqr_user' => $user->getId(), 'dqr_user_text' => $user->getName(), 'dqr_type' => $role ), __METHOD__ );
+		$dbw->replace( 'delete_queue_role',
+				array(
+					array('dqr_case', 'dqr_user', 'dqr_type')
+				),
+				array(
+					'dqr_case' => $this->getCaseID(),
+					'dqr_user' => $user->getId(),
+					'dqr_user_text' => $user->getName(),
+					'dqr_type' => $role
+				),
+				__METHOD__
+			);
 		
 		$this->purge();
 	}
@@ -338,12 +421,24 @@ class DeleteQueueItem {
 		$dbw->begin();
 
 		// Mark old votes as non-current
-		$dbw->update( 'delete_queue_vote', array( 'dqv_current' => 0 ), array( 'dqv_case' => $this->getCaseID(), 'dqv_user' => $user->getId() ), __METHOD__ );
+		$dbw->update(
+			'delete_queue_vote',
+			array( 'dqv_current' => 0 ),
+			array(
+					'dqv_case' => $this->getCaseID(),
+					'dqv_user' => $user->getId()
+			),
+			__METHOD__
+		);
 
 		// Add new vote
 		$dbw->insert( 'delete_queue_vote',
-			array( 'dqv_case' => $this->getCaseID(), 'dqv_user' => $user->getId(), 'dqv_user_text' => $user->getName(), 'dqv_comment' => $comments,
-				'dqv_endorse' => ($action == 'endorse'), 'dqv_timestamp' => $dbw->timestamp( wfTimestampNow() )
+			array( 'dqv_case' => $this->getCaseID(),
+					'dqv_user' => $user->getId(),
+					'dqv_user_text' => $user->getName(),
+					'dqv_comment' => $comments,
+					'dqv_endorse' => ($action == 'endorse'),
+					'dqv_timestamp' => $dbw->timestamp( wfTimestampNow() )
 			), __METHOD__ );
 
 		// Add user as voter
@@ -361,9 +456,6 @@ class DeleteQueueItem {
 	 * @param string $timestamp Timestamp in database format. Optional.
 	 */
 	public function setQueue( $queue, $reason, $timestamp = null ) {
-	
-		if (!$this->getCaseID())
-			return; // Case doesn't exist anymore.
 	
 		$dbw = wfGetDB( DB_MASTER );
 
@@ -391,7 +483,12 @@ class DeleteQueueItem {
 
 			// Create the page.
 			$discusspage = new Article( $title );
-			$discusspage->doEdit( wfMsgForContent('deletequeue-discusscreate-text', $base, $reason) . ' ~~~~', wfMsgForContent('deletequeue-discusscreate-summary', $base), EDIT_NEW | EDIT_SUPPRESS_RC );
+			$discusspage->doEdit(
+				wfMsgForContent('deletequeue-discusscreate-text', $base, $reason)
+					. ' ~~~~',
+				wfMsgForContent('deletequeue-discusscreate-summary', $base),
+				EDIT_NEW | EDIT_SUPPRESS_RC
+			);
 
 			$row['dq_discussionpage'] = $discusspage->getId();
 		}
@@ -430,7 +527,11 @@ class DeleteQueueItem {
 		if (!$this->getCaseID())
 			return; // Case doesn't exist anymore.
 
-		$dbw->update( 'delete_queue', array( 'dq_active' => 0 ), array( 'dq_case' => $this->getCaseID() ), __METHOD__ );
+		$dbw->update( 'delete_queue',
+				array( 'dq_active' => 0 ),
+				array( 'dq_case' => $this->getCaseID() ),
+				_METHOD__
+			);
 
 		$this->purge();
 	}
@@ -490,20 +591,40 @@ class DeleteQueueItem {
 		return wfMsg( "deletequeue-role-$role" );
 	}
 
-	function getQueue() 		{ return $this->lazyAccessor( 'mQueue' ); }
-	function getCaseID() 		{ return $this->lazyAccessor( 'mCaseID' ); }
-	function getReason() 		{ return $this->lazyAccessor( 'mReason' ); }
-	function getTimestamp() 	{ return $this->lazyAccessor( 'mTimestamp' ); }
-	function getExpiry() 		{ return $this->lazyAccessor( 'mExpiry' ); }
-	function getDiscussionPage() 	{ return $this->lazyAccessor( 'mDiscussionPage' ); }
-	function getArticle() 		{ return $this->lazyAccessor( 'mArticle' ); }
-	function getArticleID() 	{ return $this->lazyAccessor( 'mArticleID' ); }
-	function isQueued()		{ return $this->getQueue() != 'null'; }
-	function getVotes()		{ return $this->lazyAccessor( 'mVotes', 'loadVotes' ); }
-	function getEndorsements()	{ return $this->lazyAccessor( 'mVotesEndorse', 'loadVotes' ); }
-	function getObjections()	{ return $this->lazyAccessor( 'mVotesObject', 'loadVotes' ); }
-	function getObjectionCount()	{ return count($this->getObjections()); }
-	function getEndorsementCOunt()	{ return count($this->getEndorsements()); }
+	function getQueue() 
+		{ return $this->lazyAccessor( 'mQueue' ); }
+	function getCaseID()
+		{ return $this->lazyAccessor( 'mCaseID' ); }
+	function getReason()
+		{ return $this->lazyAccessor( 'mReason' ); }
+	function getTimestamp()
+		{ return $this->lazyAccessor( 'mTimestamp' ); }
+	function getExpiry()
+		{ return $this->lazyAccessor( 'mExpiry' ); }
+	function getDiscussionPage()
+		{ return $this->lazyAccessor( 'mDiscussionPage' ); }
+	function getArticle()
+		{ return $this->lazyAccessor( 'mArticle' ); }
+	function getArticleID()
+		{ return $this->lazyAccessor( 'mArticleID' ); }
+	function isQueued()
+		{ return $this->getQueue() != 'null'; }
+	function getVotes()
+		{ return $this->lazyAccessor( 'mVotes', 'loadVotes' ); }
+	function getEndorsements()
+		{ return $this->lazyAccessor( 'mVotesEndorse', 'loadVotes' ); }
+	function getObjections()
+		{ return $this->lazyAccessor( 'mVotesObject', 'loadVotes' ); }
+	function getObjectionCount()
+		{ return count($this->getObjections()); }
+	function getEndorsementCount()
+		{ return count($this->getEndorsements()); }
+		
+	function formatVoteCount() {
+		return wfMsg( 'deletequeue-list-votecount',
+			$this->getActiveEndorseCount(),
+			$this->getActiveObjectCount() );
+	}
 
 	static function filterActiveVotes($votes) {
 		$return = array();
@@ -517,8 +638,12 @@ class DeleteQueueItem {
 		return $return;
 	}
 
-	function getActiveObjections() { return self::filterActiveVotes( $this->getObjections() ); }
-	function getActiveEndorsements() { return self::filterActiveVotes( $this->getEndorsements() ); }
-	function getActiveEndorseCount() { return count($this->getActiveEndorsements()); }
-	function getActiveObjectCount() { return count($this->getActiveObjections()); }
+	function getActiveObjections()
+		{ return self::filterActiveVotes( $this->getObjections() ); }
+	function getActiveEndorsements()
+		{ return self::filterActiveVotes( $this->getEndorsements() ); }
+	function getActiveEndorseCount()
+		{ return count($this->getActiveEndorsements()); }
+	function getActiveObjectCount()
+		{ return count($this->getActiveObjections()); }
 }

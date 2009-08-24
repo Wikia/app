@@ -1,6 +1,6 @@
 <?php
 /**
- * Handles the creation and running of a user-created form.
+ * Helper functions to display the various inputs of a user-generated form
  *
  * @author Yaron Koren
  * @author Jeffrey Stuckman
@@ -10,34 +10,31 @@
 
 class SFFormInputs {
 
-  function createAutocompleteValuesArray($field_name, $autocomplete_field_type) {
+  /**
+   * Create a comma-delimited string of values that match the specified
+   * source name and type, for use by Javascript autocompletion.
+   */
+  static function createAutocompleteValuesArray($source_name, $source_type) {
     $names_array = array();
-    // the query depends on whether this field is a relation (property of type
-    // Page), attribute (property of any other type), category or namespace
-    if ($autocomplete_field_type == 'relation' || $autocomplete_field_type == 'attribute' || $autocomplete_field_type == 'property') {
-      $smw_version = SMW_VERSION;
-      if (version_compare(SMW_VERSION, '1.2', '>=' ) ||
-          substr($smw_version, 0, 3) == '1.2') { // temporary hack
-        $names_array = SFUtils::getAllValuesForProperty_1_2($field_name);
-      } else {
-        $is_relation = ($autocomplete_field_type == 'relation');
-        $names_array = SFUtils::getAllValuesForProperty_orig($is_relation, $field_name);
-      }
-    } elseif ($autocomplete_field_type == 'category') {
-      $names_array = SFUtils::getAllPagesForCategory($field_name, 10);
-    } elseif ($autocomplete_field_type == 'concept') {
-      $names_array = SFUtils::getAllPagesForConcept($field_name);
-    } else { // i.e., $autocomplete_field_type == 'namespace'
+    // the query depends on whether this is a property, category, concept
+    // or namespace
+    if ($source_type == 'property' || $source_type == 'attribute' || $source_type == 'relation') {
+      $names_array = SFUtils::getAllValuesForProperty($source_name);
+    } elseif ($source_type == 'category') {
+      $names_array = SFUtils::getAllPagesForCategory($source_name, 10);
+    } elseif ($source_type == 'concept') {
+      $names_array = SFUtils::getAllPagesForConcept($source_name);
+    } else { // i.e., $source_type == 'namespace'
       // switch back to blank for main namespace
-      if ($field_name == "main")
-        $field_name = "";
-      $names_array = SFUtils::getAllPagesForNamespace($field_name);
+      if ($source_name == "main")
+        $source_name = "";
+      $names_array = SFUtils::getAllPagesForNamespace($source_name);
     }
     // escape quotes, to avoid Javascript errors
     return array_map('addslashes', $names_array);
   }
 
-  function uploadLinkHTML($input_id, $delimiter = null) {
+  static function uploadLinkHTML($input_id, $delimiter = null) {
     $upload_window_page = SpecialPage::getPage('UploadWindow');
     $query_string = "sfInputID=$input_id";
     if ($delimiter != null)
@@ -48,24 +45,10 @@ class SFFormInputs {
     return $text;
   }
 
-  function textEntryHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
+  static function textEntryHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
     // if it's an autocomplete, call the with-autocomplete function instead
-    // we test to make sure that autocompletion hasn't been disabled, and
-    // that either the property is a relation (i.e. it's of type Page) or
-    // autocompletion has been specified in the form
-    $autocompletion_disabled = (array_key_exists('autocomplete on', $other_args) && $other_args['autocomplete on'] == "") ||
-      (array_key_exists('no autocomplete', $other_args) && $other_args['no autocomplete'] == true);
-    if (! $autocompletion_disabled) {
-      if ((array_key_exists('is_relation', $other_args) && $other_args['is_relation'] == true) ||
-          array_key_exists('autocomplete', $other_args) ||
-          array_key_exists('autocomplete on property', $other_args) ||
-          array_key_exists('autocomplete on category', $other_args) ||
-          array_key_exists('autocomplete on concept', $other_args) ||
-          array_key_exists('autocomplete on', $other_args) ||
-          array_key_exists('autocomplete on namespace', $other_args) ||
-          array_key_exists('remote autocompletion', $other_args)) {
-        return SFFormInputs::textInputWithAutocompleteHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args);
-      }
+    if (array_key_exists('autocompletion source', $other_args)) {
+        return self::textInputWithAutocompleteHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args);
     }
 
     // if there are possible values specified, call the dropdown function
@@ -139,7 +122,7 @@ END;
     return array($text, null);
   }
 
-  function dropdownHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
+  static function dropdownHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
     global $sfgTabIndex, $sfgFieldNum;
 
     $className = ($is_mandatory) ? "mandatoryField" : "createboxInput";
@@ -170,11 +153,11 @@ END;
     return array($text, null);
   }
 
-  /*
-   * getValuesArray() - helper function to get an array of values out of
-   * what may be either an array or a delimited string
+  /**
+   * Helper function to get an array of values out of what may be either
+   * an array or a delimited string
    */
-  function getValuesArray($value, $delimiter) {
+  static function getValuesArray($value, $delimiter) {
     if (is_array($value)) {
       return $value;
     } else {
@@ -183,7 +166,7 @@ END;
     }
   }
 
-  function listboxHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
+  static function listboxHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
     global $sfgTabIndex, $sfgFieldNum;
 
     $className = ($is_mandatory) ? "mandatoryField" : "createboxInput";
@@ -204,7 +187,7 @@ END;
     } else {
        $delimiter = ",";
     }
-    $cur_values = SFFormInputs::getValuesArray($cur_value, $delimiter);
+    $cur_values = self::getValuesArray($cur_value, $delimiter);
 
     $text =<<<END
 	<select id="$input_id" tabindex="$sfgTabIndex" name="$input_name" class="$className" multiple $size_text $disabled_text>
@@ -226,7 +209,7 @@ END;
     return array($text, null);
   }
 
-  function checkboxesHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
+  static function checkboxesHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
     global $sfgTabIndex, $sfgFieldNum;
 
     $className = ($is_mandatory) ? "mandatoryField" : "createboxInput";
@@ -242,7 +225,7 @@ END;
     } else {
       $delimiter = ",";
     }
-    $cur_values = SFFormInputs::getValuesArray($cur_value, $delimiter);
+    $cur_values = self::getValuesArray($cur_value, $delimiter);
 
     if (($possible_values = $other_args['possible_values']) == null)
       $possible_values = array(); 
@@ -273,51 +256,26 @@ END;
     return array($text, null);
   }
 
-  function textInputWithAutocompleteHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
+  static function textInputWithAutocompleteHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
     // if 'no autocomplete' was specified, print a regular text entry instead
     if (array_key_exists('no autocomplete', $other_args) &&
-        $other_args['no autocomplete'] == true)
+        $other_args['no autocomplete'] == true) {
+      unset($other_args['autocompletion source']);
       return SFFormInputs::textEntryHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args);
+    }
     // if a set of values was specified, print a dropdown instead
     if (array_key_exists('possible_values', $other_args) && $other_args['possible_values'] != null)
       return SFFormInputs::dropdownHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args);
 
     global $sfgTabIndex, $sfgFieldNum;
 
-    $className = ($is_mandatory) ? "autocompleteInput mandatoryField" : "autocompleteInput";
+    $className = ($is_mandatory) ? "autocompleteInput mandatoryField" : "autocompleteInput createboxInput";
     if (array_key_exists('class', $other_args))
       $className .= " " . $other_args['class'];
     $disabled_text = ($is_disabled) ? "disabled" : "";
-    if (array_key_exists('autocomplete on property', $other_args)) {
-      $autocomplete_field_type = 'property';
-      $semantic_field_name = $other_args['autocomplete on property'];
-    } elseif (array_key_exists('autocomplete on', $other_args)) { // for backwards-compatibility
-      $autocomplete_field_type = 'category';
-      $semantic_field_name = $other_args['autocomplete on'];
-    } elseif (array_key_exists('autocomplete on category', $other_args)) {
-      $autocomplete_field_type = 'category';
-      $semantic_field_name = $other_args['autocomplete on category'];
-    } elseif (array_key_exists('autocomplete on concept', $other_args)) {
-      $autocomplete_field_type = 'concept';
-      $semantic_field_name = $other_args['autocomplete on concept'];
-    } elseif (array_key_exists('autocomplete on namespace', $other_args)) {
-      $autocomplete_field_type = 'namespace';
-      $semantic_field_name = $other_args['autocomplete on namespace'];
-      // special handling for "main" (blank) namespace
-      if ($semantic_field_name == "")
-        $semantic_field_name = "main";
-    } elseif (array_key_exists('is_relation', $other_args) ||
-              (array_key_exists('field_type', $other_args) && $other_args['field_type'] == 'page')) {
-      $autocomplete_field_type = 'relation';
-      $semantic_field_name = $other_args['semantic_field_name'];
-    } else {
-      $autocomplete_field_type = 'attribute';
-      if (array_key_exists('semantic_field_name', $other_args))
-        $semantic_field_name = $other_args['semantic_field_name'];
-      else
-        // there's some discrepancy between the form and template calls and
-        // the property for this field
-        $semantic_field_name = "";
+    if (array_key_exists('autocomplete field type', $other_args)) {
+      $autocomplete_field_type = $other_args['autocomplete field type'];
+      $autocompletion_source = $other_args['autocompletion source'];
     }
     $input_id = "input_" . $sfgFieldNum;
     $info_id = "info_" . $sfgFieldNum;
@@ -374,7 +332,7 @@ END;
 <script type="text/javascript">/* <![CDATA[ */
 
 END;
-    $options_str_key = str_replace("'", "\'", $semantic_field_name);
+    $options_str_key = str_replace("'", "\'", $autocompletion_source);
     if ($is_list) {
       $options_str_key .= ",list";
       if ($delimiter != ",") {
@@ -385,21 +343,23 @@ END;
     if (array_key_exists('remote autocompletion', $other_args) &&
         $other_args['remote autocompletion'] == true) {
       $javascript_text .= "autocompletedatatypes['$options_str_key'] = '$autocomplete_field_type';\n";
-    } elseif ($semantic_field_name != '') {
-      $autocomplete_values = SFFormInputs::createAutocompleteValuesArray(str_replace(' ', '_', $semantic_field_name), $autocomplete_field_type);
+    } elseif ($autocompletion_source != '') {
+      $autocomplete_values = self::createAutocompleteValuesArray($autocompletion_source, $autocomplete_field_type);
       $autocomplete_string = "[['" . implode("'], ['", $autocomplete_values) . "']]";
       // replace any newlines in the string, just to avoid breaking the Javascript
       $autocomplete_string = str_replace("\n", ' ', $autocomplete_string);
       $javascript_text .= "autocompletestrings['$options_str_key'] = $autocomplete_string;\n";
     }
     if ($cur_value) {
+      // replace newlines with the literal '\n' to not break the Javascript
+      $cur_value = str_replace("\n", '\n', $cur_value);
       $text .= "document.getElementById('$input_id').value = \"$cur_value\"\n";
     }
     $text .= "/* ]]> */</script>\n";
     return array($text, $javascript_text);
   }
 
-  function textAreaHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
+  static function textAreaHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
     // set size values
     if (! array_key_exists('rows', $other_args))
       $other_args['rows'] = 5;
@@ -407,19 +367,9 @@ END;
       $other_args['cols'] = 80;
 
     // if it's an autocomplete, call the with-autocomplete function instead
-    $autocompletion_disabled = array_key_exists('autocomplete on', $other_args) && $other_args['autocomplete on'] == "";
-    if (! $autocompletion_disabled) {
-      if ((array_key_exists('is_relation', $other_args) && $other_args['is_relation'] == true) ||
-          array_key_exists('autocomplete', $other_args) ||
-          array_key_exists('autocomplete on', $other_args) ||
-          array_key_exists('autocomplete on property', $other_args) ||
-          array_key_exists('autocomplete on category', $other_args) ||
-          array_key_exists('autocomplete on concept', $other_args) ||
-          array_key_exists('autocomplete on namespace', $other_args) ||
-          array_key_exists('remote autocompletion', $other_args)) {
+    if (array_key_exists('autocompletion source', $other_args)) {
         $other_args['input_type'] = "textarea";
         return SFFormInputs::textInputWithAutocompleteHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args);
-      }
     }
 
     global $sfgTabIndex, $sfgFieldNum;
@@ -452,7 +402,7 @@ END;
     return array($text, null);
   }
 
-  function monthDropdownHTML($cur_month, $input_name, $is_disabled) {
+  static function monthDropdownHTML($cur_month, $input_name, $is_disabled) {
     global $sfgTabIndex, $sfgFieldNum, $wgAmericanDates;
 
     $disabled_text = ($is_disabled) ? "disabled" : "";
@@ -469,7 +419,7 @@ END;
     return $text;
   }
 
-  function dateEntryHTML($date, $input_name, $is_mandatory, $is_disabled, $other_args) {
+  static function dateEntryHTML($date, $input_name, $is_mandatory, $is_disabled, $other_args) {
     global $sfgTabIndex, $sfgFieldNum, $sfgJSValidationCalls, $wgAmericanDates;
 
     $input_id = "input_$sfgFieldNum";
@@ -514,7 +464,7 @@ END;
     return array($text, null);
   }
 
-  function dateTimeEntryHTML($datetime, $input_name, $is_mandatory, $is_disabled, $other_args) {
+  static function dateTimeEntryHTML($datetime, $input_name, $is_mandatory, $is_disabled, $other_args) {
     global $sfgTabIndex, $sfg24HourTime;
 
     $include_timezone = $other_args['include_timezone'];
@@ -581,23 +531,27 @@ END;
     return array($text, $javascript_text);
   }
 
-  function radioButtonHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
-    global $sfgTabIndex;
+  static function radioButtonHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
+    global $sfgTabIndex, $sfgFieldNum;
 
     $disabled_text = ($is_disabled) ? "disabled" : "";
     $check_set = false;
-    if (! $is_mandatory) {
-      $text = '	<input type="radio" tabindex="' . $sfgTabIndex . '" name="' . $input_name . '" value=""';
-      if (! $cur_value) {
-        $text .= ' checked="checked"';
-        $check_set = true;
-      }
-      $text .= " $disabled_text/> " . wfMsg('sf_editdata_none') . "\n";
-    }
+    $text = "";
     // if it's mandatory, add a span around all the radiobuttons, since
     // some browsers don't support formatting of radiobuttons
     if ($is_mandatory)
-      $text = '	<span class="mandatoryFieldsSpan">' . "\n";
+      $text .= '	<span class="mandatoryFieldsSpan">' . "\n";
+
+    // start with an initial "None" value
+    $input_id = "input_$sfgFieldNum";
+    $info_id = "info_$sfgFieldNum";
+    $text .= '	<input type="radio" id="' . $input_id . '" tabindex="' . $sfgTabIndex . '" name="' . $input_name . '" value=""';
+    if (! $cur_value) {
+      $text .= ' checked="checked"';
+      $check_set = true;
+    }
+    $text .= " $disabled_text/> " . wfMsg('sf_editdata_none') . "\n";
+
     if (($possible_values = $other_args['possible_values']) == null)
       $possible_values = array(); 
     foreach ($possible_values as $i => $possible_value) {
@@ -611,10 +565,14 @@ END;
     // close span
     if ($is_mandatory)
       $text .= "	</span>";
+    $text .=<<<END
+	<span id="$info_id" class="errorMessage"></span>
+
+END;
     return array($text, null);
   }
 
-  function checkboxHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
+  static function checkboxHTML($cur_value, $input_name, $is_mandatory, $is_disabled, $other_args) {
     global $sfgTabIndex, $sfgFieldNum;
 
     $className = ($is_mandatory) ? "mandatoryField" : "createboxInput";

@@ -7,7 +7,7 @@ global $wgUser;
 
 function getDatasets(){
 	$datasets = array();
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$result = $dbr->query( "select set_prefix from wikidata_sets" );
 	while ($record = $dbr->fetchObject($result)) {
 		array_push( $datasets, $record->set_prefix );
@@ -32,7 +32,7 @@ function setDefaultDC( $dc ){
 }
 
 function getUserId( $userName ){
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$result = $dbr->query( "select user_id from user where user_name = '$userName'" );
 	if ( $row = $dbr->fetchObject( $result ) ){
 		return $row->user_id;
@@ -51,7 +51,7 @@ if ( $userId == -1 ){
 setUser( $userId );
 $datasets = getDatasets();
 
-$dbr = &wfGetDB(DB_SLAVE);
+$dbr = wfGetDB(DB_SLAVE);
 foreach( $datasets as $dataset ){
 	foreach( $datasets as $otherdataset ){
 		if ( $dataset != $otherdataset ){

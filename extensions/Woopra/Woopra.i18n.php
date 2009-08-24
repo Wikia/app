@@ -110,9 +110,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author McDutchie
+ * @author PieRRoMaN
  */
 $messages['fr'] = array(
-	'woopra-desc' => 'Autorise pour le [http://www.woopra.com/ logicial pour suivi en direct Woopra] de travailler pour votre installation MediaWiki',
+	'woopra-desc' => "Permet au [http://www.woopra.com/ logiciel de suivi en direct Woopra] de s'occuper de votre installation MediaWiki",
 );
 
 /** Galician (Galego)
@@ -120,6 +121,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'woopra-desc' => 'Permite ao [http://www.woopra.com/ software de adestramento en vivo Woopra] traballar coa súa instalación MediaWiki',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'woopra-desc' => 'Macht fir d [http://www.woopra.com/ „Woopra Live Tracking Software“] d Zämmearbet mit MediaWiki megli',
 );
 
 /** Hebrew (עברית)
@@ -200,6 +208,13 @@ $messages['mr'] = array(
 	'woopra-desc' => 'तुमच्या मीडियाविकि प्रणालीवर [http://www.woopra.com/ वूप्रा लाईव्ह ट्रॅकिंग प्रणाली] वापरण्याची अनुमती देते',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Izzudin
+ */
+$messages['ms'] = array(
+	'woopra-desc' => 'Benarkan [http://www.woopra.com/ Woopra Live Tracking Software] untuk menjalankan kerja pemasukan MediaWiki',
+);
+
 /** Nedersaksisch (Nedersaksisch)
  * @author Servien
  */
@@ -257,6 +272,13 @@ $messages['pt'] = array(
 	'woopra-desc' => 'Permite que o [http://www.woopra.com/ Woopra Live Tracking Software] funcione com a sua instalação MediaWiki',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'woopra-desc' => 'Permite que o [http://www.woopra.com/ Woopra Live Tracking Software] funcione com a sua instalação MediaWiki',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -276,6 +298,20 @@ $messages['ru'] = array(
  */
 $messages['sk'] = array(
 	'woopra-desc' => 'Umožňuje fungovanie [http://www.woopra.com/ Woopra Live Tracking Software] v rámci vašej MediaWiki',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'woopra-desc' => 'Lejon që [http://www.woopra.com/ Softueri Për Ndjekje Woopra] të punojë për MediaWiki instalimin tuaj',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'woopra-desc' => 'Moaket dän [http://www.woopra.com/ „Woopra Live Tracking Software“] ju Touhoopeoarbaid muugelk mäd MediaWiki',
 );
 
 /** Sundanese (Basa Sunda)
@@ -299,6 +335,13 @@ $messages['szl'] = array(
 	'woopra-desc' => 'Dozwalo wspůłpracować s MediaWiki uoprogramowańu śledzůncymu [http://www.woopra.com/ „Woopra”]',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'woopra-desc' => '[http://www.woopra.com/ వూప్రా లైవ్ ట్రాకింగ్ పరికరం] మీ మీడియావికీ స్థాపనకై పనిచేసేలా అనుమతిస్తుంది.',
+);
+
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
@@ -311,5 +354,19 @@ $messages['tl'] = array(
  */
 $messages['uk'] = array(
 	'woopra-desc' => 'Дозволяє [http://www.woopra.com/ Woopra Live Tracking Software] працювати з вашою MediaWiki-інсталяцією',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'woopra-desc' => 'Cho phép [http://www.woopra.com/ Woopra Live Tracking Software] làm việc với bộ cài đặt MediaWiki của bạn',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wmr89502270
+ */
+$messages['zh-hans'] = array(
+	'woopra-desc' => '允许[http://www.woopra.com/ Woopra 在线跟踪软件]为阁下的MediaWiki安装程序工作',
 );
 

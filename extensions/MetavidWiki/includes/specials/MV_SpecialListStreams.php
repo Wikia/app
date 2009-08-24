@@ -84,7 +84,7 @@ class MV_SpecialQueryStreams extends QueryPage {
 		# make sure the first letter is upper case (makeTitle() should do that)		
 		$result->title = strtoupper( $result->title[0] ) . substr( $result->title, 1 );
 		$img_url = $mvImageArchive . $result->title . '?size=icon&time=0:00:00';
-		$img_url = MV_StreamImage::getStreamImageURL( $result->stream_id, '0:00:00', 'icon', true );
+		$img_url = MV_StreamImage::getStreamImageURL( $result->stream_id, '0:00:10', 'icon', true );
 		$img_html = '<img src="' . htmlspecialchars( $img_url ) . '" width="80" height="60">';
 		
 				

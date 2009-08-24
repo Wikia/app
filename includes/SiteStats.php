@@ -225,7 +225,7 @@ class SiteStatsUpdate {
 
 		if ( $updates ) {
 			$site_stats = $dbw->tableName( 'site_stats' );
-			$sql = $dbw->limitResultForUpdate("UPDATE $site_stats SET $updates", 1);
+			$sql = "UPDATE $site_stats SET $updates";
 
 			# Need a separate transaction because this a global lock
 			$dbw->begin();
@@ -243,7 +243,7 @@ class SiteStatsUpdate {
 			__METHOD__ );
 		$dbw->update( 'site_stats', 
 			array( 'ss_active_users' => intval($activeUsers) ),
-			array( 'ss_row_id' => 1 ), __METHOD__, array( 'LIMIT' => 1 )
+			array( 'ss_row_id' => 1 ), __METHOD__
 		);
 	}
 }

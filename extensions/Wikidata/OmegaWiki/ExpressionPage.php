@@ -136,10 +136,10 @@ HTML;
 	
 	public function getTitle() {
 		global
-			$wgTitle, $wgExpressionPageTitlePrefix;
+			$wgTitle, $wgUseExpressionPageTitlePrefix;
 	
-		if ($wgExpressionPageTitlePrefix != "")
-			$prefix = $wgExpressionPageTitlePrefix . ": ";
+		if ($wgUseExpressionPageTitlePrefix)
+			$prefix = wfMsg('ow_Multiple_meanings') . ' ';
 		else
 			$prefix	= "";
 					

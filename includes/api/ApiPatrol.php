@@ -42,7 +42,6 @@ class ApiPatrol extends ApiBase {
 	 */
 	public function execute() {
 		global $wgUser, $wgUseRCPatrol, $wgUseNPPatrol;
-		$this->getMain()->requestWriteMode();
 		$params = $this->extractRequestParams();
 		
 		if(!isset($params['token']))
@@ -60,9 +59,13 @@ class ApiPatrol extends ApiBase {
 		if($retval)
 			$this->dieUsageMsg(reset($retval));
 		
-		$result = array('rcid' => $rc->getAttribute('rc_id'));
+		$result = array('rcid' => intval($rc->getAttribute('rc_id')));
 		ApiQueryBase::addTitleInfo($result, $rc->getTitle());
 		$this->getResult()->addValue(null, $this->getModuleName(), $result);
+	}
+
+	public function isWriteMode() {
+		return true;
 	}
 
 	public function getAllowedParams() {
@@ -94,6 +97,6 @@ class ApiPatrol extends ApiBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiPatrol.php 48123 2009-03-07 13:02:30Z catrope $';
+		return __CLASS__ . ': $Id: ApiPatrol.php 48122 2009-03-07 12:58:41Z catrope $';
 	}
 }

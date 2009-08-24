@@ -107,7 +107,7 @@ function openDatabase($server, $databaseName, $userName, $password) {
 }
 
 function loadIsoLanguages(){
-	$dbr = &wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE);
 	$sql = "select language_id, iso639_2 from language";
 
 	$languages = array();

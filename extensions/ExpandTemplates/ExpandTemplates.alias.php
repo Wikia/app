@@ -45,9 +45,19 @@ $aliases['de'] = array(
 	'ExpandTemplates' => array( 'Vorlagen expandieren' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'ExpandTemplates' => array( 'Pśedłogi ekspanděrowaś' ),
+);
+
 /** Greek (Ελληνικά) */
 $aliases['el'] = array(
 	'ExpandTemplates' => array( 'ΕπέκτασηΠροτύπων' ),
+);
+
+/** Spanish (Español) */
+$aliases['es'] = array(
+	'ExpandTemplates' => array( 'Sustituir_plantillas', 'Sustituidor_de_plantillas', 'Expandir_plantillas' ),
 );
 
 /** Finnish (Suomi) */
@@ -77,6 +87,11 @@ $aliases['hr'] = array(
 	'ExpandTemplates' => array( 'Proširi_predložak' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'ExpandTemplates' => array( 'Předłohi ekspandować' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'ExpandTemplates' => array( 'ExpandTenmpla' ),
@@ -85,6 +100,11 @@ $aliases['ht'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'ExpandTemplates' => array( 'Sablonok kibontása' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'ExpandTemplates' => array( 'Expander patronos' ),
 );
 
 /** Indonesian (Bahasa Indonesia) */
@@ -154,9 +174,19 @@ $aliases['no'] = array(
 	'ExpandTemplates' => array( 'Utvid maler' ),
 );
 
+/** Polish (Polski) */
+$aliases['pl'] = array(
+	'ExpandTemplates' => array( 'Rozwijanie szablonów' ),
+);
+
 /** Pashto (پښتو) */
 $aliases['ps'] = array(
 	'ExpandTemplates' => array( 'کينډۍ غځول' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'ExpandTemplates' => array( 'बिंबधरविस्तारकरोसि' ),
 );
 
 /** Swedish (Svenska) */
@@ -167,5 +197,10 @@ $aliases['sv'] = array(
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'ExpandTemplates' => array( 'PanuaVigezo' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'ExpandTemplates' => array( 'Palawakin ang mga suleras' ),
 );
 

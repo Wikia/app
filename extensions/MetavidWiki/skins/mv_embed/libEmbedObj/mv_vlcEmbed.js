@@ -48,7 +48,7 @@ var vlcEmbed = {
     /*
     * some java script to start vlc playback after the embed:
     */
-    postEmbedJS: function(){
+    postEmbedJS: function(){   
         //load a pointer to the vlc into the object (this.vlc)
     	this.getVLC();
     	if( this.vlc.log ){
@@ -57,8 +57,8 @@ var vlcEmbed = {
 	    	this.vlc.style.height=this.height;       
 	    	this.vlc.playlist.items.clear();
 	    	//@@todo if client supports seeking no need to send seek_offset to URI
-	    	js_log('vlc play::' + this.media_element.selected_source.getURI( this.seek_time_sec ));   
-	    	var itemId = this.vlc.playlist.add( this.media_element.selected_source.getURI(this.seek_time_sec) );
+	    	js_log('vlc play::' + this.media_element.selected_source.getURI( this.seek_time_sec ));	    	  
+	    	var itemId = this.vlc.playlist.add( this.media_element.selected_source.getURI( this.seek_time_sec ) );
 	    	if( itemId != -1 ){
 	    		//play
 	    		this.vlc.playlist.playItem(itemId);
@@ -154,12 +154,8 @@ var vlcEmbed = {
 		        this.onPlaying();
 		    }
     	}
-    	//do monitor update: 
-	    if( ! this.monitorTimerId ){
-	    	if(document.getElementById(this.id)){
-	        	this.monitorTimerId = setInterval('document.getElementById(\''+this.id+'\').monitor()', 250);
-	    	}
-	    }
+    	//update the status and check timmer via universal parent monitor
+        this.parent_monitor();
     },
 /* events */
     onOpen: function(){
@@ -201,10 +197,10 @@ var vlcEmbed = {
 			}
 		}
     	//for now trust the duration from url over vlc input.length
-		if(!this.media_element.selected_source.end_ntp && this.vlc.input.length>0)
+		if( ! this.media_element.selected_source.end_ntp && this.vlc.input.length>0)
 		{
 			js_log('setting duration to ' + this.vlc.input.length /1000);
-			this.media_element.selected_source.setDuration(this.vlc.input.length /1000);
+			this.media_element.selected_source.setDuration( this.vlc.input.length /1000);
 		}
 
     	this.duration = (this.getDuration())?this.getDuration():this.vlc.input.length /1000;
@@ -214,39 +210,16 @@ var vlcEmbed = {
        	//update the currentTime attribute 
        	 if( this.media_element.selected_source.timeFormat =='anx' ){
         	this.currentTime = this.vlc.input.time/1000;
-        	//js_log('set buffer: ' + flash_state.bufferEnd + ' at time: ' + flash_state.time +' of total dur: ' + this.getDuration()); 
+        	//js_log('set buffer: ' + flash_state.bufferEnd + ' at time: ' + flash_state.time +' of total dur: ' + this.getDuration());
+        	
+        	//if we are way out of range... add offset (hack)
+        	if(  ( this.currentTime + 10 ) < ntp2seconds( this.start_ntp) ){
+        		this.currentTime = (this.vlc.input.time/1000) + this.media_element.selected_source.start_offset;
+        	}
         }else{
         	this.currentTime = (this.vlc.input.time/1000) + this.media_element.selected_source.start_offset;       
-        }       	       	
-        if( this.duration > 0 || this.vlc.input.time > 0){                             				     					
-			this.start_offset=this.media_element.selected_source.start_offset;		
-			
-			//if we have media duration proceed
-			if(this.duration){
-			//as long as the user is not interacting with the playhead update:
-				if(! this.userSlide){
-					//slider pos is not accurate with flash: 
-					if(this.vlc.input.position!=0 && this.media_element.selected_source.mime_type!='video/x-flv'){
-						/*js_log(' set slider via input.position: ' + 
-							this.media_element.selected_source.mime_type + ' pos:'+ this.vlc.input.position);
-						*/
-						this.setSliderValue(this.vlc.input.position);
-					}else{
-						//set via time:
-						/*js_log('t:' +(this.vlc.input.time/1000) +' - so:'+this.start_offset+
-							' set slider:' + ((this.vlc.input.time/1000)-this.start_offset) + ' / ' + this.duration +
-							' ='+  ((this.vlc.input.time/1000)-this.start_offset)/this.duration );
-						*/
-						this.setSliderValue( ((this.vlc.input.time/1000) -this.start_offset) / this.duration);
-					}
-					//js_log('set status: '+ seconds2ntp(this.currentTime) + ' e:'+seconds2ntp(this.duration+this.start_offset));    
-					this.setStatus(seconds2ntp(this.currentTime) + '/' + seconds2ntp(this.duration+this.start_offset) );					
-			   }
-			}
-        }else{        	        	
-        	//@@todo hide playhead remove the slider (its a live stream)     
-            this.setStatus('live');
-        }
+        }       	      
+        //updates hanlded by parent monitor and currentTime
    },
    onPause: function(){   		
    		this.parent_pause(); //update the inteface if paused via native control
@@ -284,6 +257,7 @@ var vlcEmbed = {
     		}
     		if(this.vlc.playlist)
 				this.vlc.playlist.play();
+				
 			this.monitor();
 			this.paused=false;
     	}    	

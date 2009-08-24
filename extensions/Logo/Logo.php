@@ -20,7 +20,7 @@ if( defined( 'MEDIAWIKI' ) ) {
 			if( is_object( $title ) ) {
 				if( $title->getNamespace() != NS_IMAGE )
 					$title = Title::makeTitle( NS_IMAGE, $title->getText() );
-				$logo = Image::newFromTitle( $title );
+				$logo = wfFindFile( $title );
 				if( $logo->exists() )
 					$wgLogo = $logo->createThumb( 135 );
 			}

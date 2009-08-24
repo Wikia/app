@@ -121,12 +121,15 @@ class MediaWiki {
 			if( count( $wgContLang->getVariants() ) > 1 && !is_null( $ret ) && $ret->getArticleID() == 0 )
 				$wgContLang->findVariantLink( $title, $ret );
 		}
-		if( ( $oldid = $wgRequest->getInt( 'oldid' ) )
-			&& ( is_null( $ret ) || $ret->getNamespace() != NS_SPECIAL ) ) {
-			// Allow oldid to override a changed or missing title.
-			$rev = Revision::newFromId( $oldid );
-			if( $rev ) {
-				$ret = $rev->getTitle();
+		# For non-special titles, check for implicit titles
+		if( is_null( $ret ) || $ret->getNamespace() != NS_SPECIAL ) {
+			// We can have urls with just ?diff=,?oldid= or even just ?diff=
+			$oldid = $wgRequest->getInt( 'oldid' );
+			$oldid = $oldid ? $oldid : $wgRequest->getInt( 'diff' );
+			// Allow oldid to override a changed or missing title
+			if( $oldid ) {
+				$rev = Revision::newFromId( $oldid );
+				$ret = $rev ? $rev->getTitle() : $ret;
 			}
 		}
 		return $ret;
@@ -459,8 +462,10 @@ class MediaWiki {
 				$article->view();
 				break;
 			case 'raw': // includes JS/CSS
+				wfProfileIn( __METHOD__.'-raw' );
 				$raw = new RawPage( $article );
 				$raw->view();
+				wfProfileOut( __METHOD__.'-raw' );
 				break;
 			case 'watch':
 			case 'unwatch':

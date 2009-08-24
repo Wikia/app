@@ -98,7 +98,7 @@ class ImageMap {
 					$imageObj = wfFindFile( $imageTitle );
 				} else {
 					// Old MW
-					$imageObj = Image::newFromTitle( $imageTitle );
+					$imageObj = wfFindFile( $imageTitle );
 				}
 				if ( !$imageObj || !$imageObj->exists() ) {
 					return self::error( 'imagemap_invalid_image' );

@@ -37,8 +37,8 @@ $wgMiniPreviewMaxTotal = 15; # Maximum number of categories and galleries shown
  */
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'MiniPreview',
-	'svn-date' => '$LastChangedDate: 2008-12-25 13:59:01 +0000 (Thu, 25 Dec 2008) $',
-	'svn-revision' => '$LastChangedRevision: 45025 $',
+	'svn-date' => '$LastChangedDate: 2009-03-19 12:34:14 +0000 (Thu, 19 Mar 2009) $',
+	'svn-revision' => '$LastChangedRevision: 48578 $',
 	'author' => 'Magnus Manske',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:MiniPreview',
 	'description' => 'MiniPreview displays, next to an image, small previews of other images in the same categories or displayed on the same pages',
@@ -388,7 +388,7 @@ function wfMiniPreviewGetPreviewForGallery ( $id , $title , $imagePage ) {
 function wfMiniPreviewGetImageData ( $image_titles , &$image_data ) {
 	$image_data = array(); # Paranoia
 	foreach ( $image_titles AS $i ) {
-		$image_data[$i] = Image::newFromName( $i );
+		$image_data[$i] = wfFindFile( $i );
 		$image_data[$i]->load();
 	}
 }

@@ -16,18 +16,20 @@ class NewUserMessage {
 	/*
 	 * Add the template message if the users talk page doesn't already exist
 	 */
-	static function createNewUserMessage($user) {
-		$name = $user->getName();
+	static function createNewUserMessage( $user ) {
 		$talk = $user->getTalkPage();
 
-		if (!$talk->exists()) {
+		if ( !$talk->exists() ) {
 			global $wgUser, $wgNewUserMinorEdit, $wgNewUserSuppressRC;
+
+			$name = $user->getName();
+			$realName = $user->getRealName();
 
 			wfLoadExtensionMessages( 'NewUserMessage' );
 
 			$article = new Article($talk);
 
-			// Create a user object for the editing user and add it to the database 
+			// Create a user object for the editing user and add it to the database
 			// if it's not there already
 			$editor = User::newFromName( wfMsgForContent( 'newusermessage-editor' ) );
 			if ( !$editor->isLoggedIn() ) {
@@ -51,7 +53,7 @@ class NewUserMessage {
 			$dbw->begin();
 			$good = true;
 
-			$text = "{{{$templateTitleText}|$name}}";
+			$text = "{{{$templateTitleText}|$name|$realName}}";
 			$signatures = wfMsgForContent( 'newusermessage-signatures' );
 			if ( !wfEmptyMsg( 'newusermessage-signatures', $signatures ) ) {
 				$pattern = '/^\* ?(.*?)$/m';

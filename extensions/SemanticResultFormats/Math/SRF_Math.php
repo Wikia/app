@@ -30,12 +30,28 @@ class SRFMath extends SMWResultPrinter {
 
 		while ( $row = $res->getNext() ) {
 			$last_col = array_pop($row);
-			$number_value = array_pop($last_col->getContent());
-			// if the property isn't of type Number, just ignore
-			// this row
-			if ( $number_value instanceof SMWNumberValue ) {
+			foreach ( $last_col->getContent() as $value ) {
+				// handle each value only if it's of type Number or NAry
+				if ( $value instanceof SMWNumberValue ) {
+					$num = $value->getNumericValue();
+				} elseif ( $value instanceof SMWNAryValue ) {
+					$inner_values = $value->getDVs();
+					// find the first inner value that's of
+					// type Number, and use that; if none
+					// are found, ignore this row
+					$num = null;
+					foreach ( $inner_values as $inner_value ) {
+						if ( $inner_value instanceof SMWNumberValue ) {
+							$num = $inner_value->getNumericValue();
+							break;
+						}
+					}
+					if ( is_null( $num ) )
+						continue;
+				} else {
+					continue;
+				}
 				$count++;
-				$num = $number_value->getNumericValue();
 				if ($this->mFormat == 'sum' || $this->mFormat == 'average') {
 					$sum += $num;
 				} elseif ($this->mFormat == 'min') {
@@ -62,7 +78,7 @@ class SRFMath extends SMWResultPrinter {
 			$result = '';
 		}
 
-		return array($result, 'noparse' => 'true', 'isHTML' => 'true');
+		return $result;
 	}
 
 }

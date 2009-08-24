@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 class SpecialRepoAdmin extends SpecialPage {
 	function __construct() {
@@ -12,13 +12,13 @@ class SpecialRepoAdmin extends SpecialPage {
 		wfLoadExtensionMessages( 'CodeReview' );
 		$this->setHeaders();
 
-		if( !$this->userCanExecute( $wgUser ) ){
+		if ( !$this->userCanExecute( $wgUser ) ) {
 			$this->displayRestrictionError();
 			return;
 		}
 
 		$repo = $wgRequest->getVal( 'repo', $subpage );
-		if( $repo == '' ) {
+		if ( $repo == '' ) {
 			$view = new RepoAdminListView( $this );
 		} else {
 			$view = new RepoAdminRepoView( $this, $repo );
@@ -48,11 +48,11 @@ class RepoAdminListView {
 		global $wgOut;
 		$wgOut->addHTML( $this->getForm() );
 		$repos = CodeRepository::getRepoList();
-		if( !count( $repos ) ){
+		if ( !count( $repos ) ) {
 			return;
 		}
 		$text = '';
-		foreach( $repos as $repo ){
+		foreach ( $repos as $repo ) {
 			$name = $repo->getName();
 			$text .= "* [[Special:RepoAdmin/$name|$name]]\n";
 		}
@@ -75,10 +75,10 @@ class RepoAdminRepoView {
 		$repoPath = $wgRequest->getVal( 'wpRepoPath', $repoExists ? $this->mRepo->mPath : '' );
 		$bugPath = $wgRequest->getVal( 'wpBugPath', $repoExists ? $this->mRepo->mBugzilla : '' );
 		$viewPath = $wgRequest->getVal( 'wpViewPath', $repoExists ? $this->mRepo->mViewVc : '' );
-		if( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ), $this->mRepoName ) ){
+		if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ), $this->mRepoName ) ) {
 			// @todo log
 			$dbw = wfGetDB( DB_MASTER );
-			if( $repoExists ){
+			if ( $repoExists ) {
 				$dbw->update(
 					'code_repo',
 					array(

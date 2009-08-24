@@ -92,6 +92,13 @@ $messages['dsb'] = array(
 	'titlekey-desc' => 'Proces w slězynje za naraźenje pytanja za titlami',
 );
 
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'titlekey-desc' => 'Backend για την πρόταση αναζήτησης προθέματος τίτλου',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -130,9 +137,10 @@ $messages['fi'] = array(
 /** French (Français)
  * @author Grondin
  * @author McDutchie
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'titlekey-desc' => 'Méchanisme pour faire des suggestions de recherche par préfixe de titre',
+	'titlekey-desc' => 'Mécanisme de suggestion de recherche par préfixe de titre',
 );
 
 /** Galician (Galego)
@@ -140,6 +148,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'titlekey-desc' => 'Procura de suxestión por prefixos de títulos',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'titlekey-desc' => 'Hintergrundprozäss fir d Titelsuechi',
 );
 
 /** Hebrew (עברית)
@@ -200,10 +215,11 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Fryed-peach
  * @author JtFuruhata
  */
 $messages['ja'] = array(
-	'titlekey-desc' => 'タイトルの前方一致検索を容易にする内部機構',
+	'titlekey-desc' => 'ページ名の前方一致インクリメンタル検索を実現する内部機構',
 );
 
 /** Javanese (Basa Jawa)
@@ -211,6 +227,13 @@ $messages['ja'] = array(
  */
 $messages['jv'] = array(
 	'titlekey-desc' => 'Backend prosès panggolèkan irah-irahan préfiks',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'titlekey-desc' => '문서 제목의 접두어로 검색어를 제안',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -287,7 +310,7 @@ $messages['oc'] = array(
  * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'titlekey-desc' => 'Wsparcie dla podpowiedzi początku tytułu przy wyszukiwaniu',
+	'titlekey-desc' => 'Obsługa podpowiedzi w wyszukiwarce na podstawie wpisanego początku tytułu',
 );
 
 /** Portuguese (Português)
@@ -295,6 +318,20 @@ $messages['pl'] = array(
  */
 $messages['pt'] = array(
 	'titlekey-desc' => 'Motor de sugestão de pesquisa por prefixo de título',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'titlekey-desc' => 'Motor de sugestão de pesquisa por prefixo de título',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'titlekey-desc' => "'A ricerche d'u prefisse d'u titele se consiglie da rete",
 );
 
 /** Russian (Русский)
@@ -325,6 +362,13 @@ $messages['sr-ec'] = array(
 	'titlekey-desc' => 'Позадинска машина за претрагу префикса наслова.',
 );
 
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'titlekey-desc' => 'Bäätergruundprozess foar ju Tittelsäike',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -337,6 +381,13 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'titlekey-desc' => 'Mungkahing katapusang panghulihan pagkaraan ng paghahanap ng unlaping pampamagat',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'titlekey-desc' => 'Başlık öneki araması öneri sunucu uygulaması',
 );
 
 /** Ukrainian (Українська)

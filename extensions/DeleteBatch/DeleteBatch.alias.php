@@ -2,7 +2,8 @@
 /**
  * Aliases for Special:DeleteBatch
  *
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 $aliases = array();
@@ -33,6 +34,16 @@ $aliases['bs'] = array(
 	'DeleteBatch' => array( 'BrisanjeBatch' ),
 );
 
+/** German (Deutsch) */
+$aliases['de'] = array(
+	'DeleteBatch' => array( 'Stapel löschen' ),
+);
+
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'DeleteBatch' => array( 'Skład lašowaś' ),
+);
+
 /** French (Français) */
 $aliases['fr'] = array(
 	'DeleteBatch' => array( 'Supression en série', 'SuppressionEnSérie', 'SuppressionEnSerie' ),
@@ -55,6 +66,11 @@ $aliases['hr'] = array(
 	'DeleteBatch' => array( 'Skupno_brisanje' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'DeleteBatch' => array( 'Stapl wušmórnyć' ),
+);
+
 /** Haitian (Kreyòl ayisyen) */
 $aliases['ht'] = array(
 	'DeleteBatch' => array( 'SiprimeLo' ),
@@ -63,6 +79,16 @@ $aliases['ht'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'DeleteBatch' => array( 'Tömeges törlés' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'DeleteBatch' => array( 'Deler in massa' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'DeleteBatch' => array( '一括削除' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -102,8 +128,18 @@ $aliases['pt-br'] = array(
 	'DeleteBatch' => array( 'Apagar em massa' ),
 );
 
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'DeleteBatch' => array( 'गणपरित्याग' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'DeleteBatch' => array( 'FutaFungu' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'DeleteBatch' => array( 'Burahin ang bungkos' ),
 );
 

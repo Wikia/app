@@ -112,31 +112,38 @@ class ApiQueryCategoryMembers extends ApiQueryGeneratorBase {
 				break;
 			}
 
-			$lastSortKey = $row->cl_sortkey;	// detect duplicate sortkeys
-
 			if (is_null($resultPageSet)) {
 				$vals = array();
 				if ($fld_ids)
 					$vals['pageid'] = intval($row->page_id);
 				if ($fld_title) {
 					$title = Title :: makeTitle($row->page_namespace, $row->page_title);
-					$vals['ns'] = intval($title->getNamespace());
-					$vals['title'] = $title->getPrefixedText();
+					ApiQueryBase::addTitleInfo($vals, $title);
 				}
 				if ($fld_sortkey)
 					$vals['sortkey'] = $row->cl_sortkey;
 				if ($fld_timestamp)
 					$vals['timestamp'] = wfTimestamp(TS_ISO_8601, $row->cl_timestamp);
-				$data[] = $vals;
+				$fit = $this->getResult()->addValue(array('query', $this->getModuleName()),
+						null, $vals);
+				if(!$fit)
+				{
+					if ($params['sort'] == 'timestamp')
+						$this->setContinueEnumParameter('start', wfTimestamp(TS_ISO_8601, $row->cl_timestamp));
+					else
+						$this->setContinueEnumParameter('continue', $this->getContinueStr($row, $lastSortKey));
+					break;
+				}
 			} else {
 				$resultPageSet->processDbRow($row);
 			}
+			$lastSortKey = $row->cl_sortkey;	// detect duplicate sortkeys
 		}
 		$db->freeResult($res);
 
 		if (is_null($resultPageSet)) {
-			$this->getResult()->setIndexedTagName($data, 'cm');
-			$this->getResult()->addValue('query', $this->getModuleName(), $data);
+			$this->getResult()->setIndexedTagName_internal(
+					 array('query', $this->getModuleName()), 'cm');
 		}
 	}
 
@@ -255,6 +262,6 @@ class ApiQueryCategoryMembers extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategoryMembers.php 42197 2008-10-18 10:09:19Z ialex $';
+		return __CLASS__ . ': $Id: ApiQueryCategoryMembers.php 47865 2009-02-27 16:03:01Z catrope $';
 	}
 }

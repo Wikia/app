@@ -6,13 +6,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class UnreviewedPages extends SpecialPage
 {
-    function __construct() {
+    public function __construct() {
         SpecialPage::SpecialPage( 'UnreviewedPages', 'unreviewedpages' );
 		wfLoadExtensionMessages( 'UnreviewedPages' );
 		wfLoadExtensionMessages( 'FlaggedRevs' );
     }
 
-    function execute( $par ) {
+    public function execute( $par ) {
         global $wgRequest, $wgUser, $wgOut;
 		$this->setHeaders();
 		if( !$wgUser->isAllowed( 'unreviewedpages' ) ) {
@@ -23,12 +23,13 @@ class UnreviewedPages extends SpecialPage
 		$this->showList( $wgRequest );
 	}
 
-	function showList( $wgRequest ) {
+	protected function showList( $wgRequest ) {
 		global $wgOut, $wgScript, $wgTitle, $wgFlaggedRevsNamespaces;
 		# If no NS given, then just use the first of $wgFlaggedRevsNamespaces
 		$defaultNS = empty($wgFlaggedRevsNamespaces) ? 0 : $wgFlaggedRevsNamespaces[0];
 		$namespace = $wgRequest->getIntOrNull( 'namespace', $defaultNS );
 		$category = trim( $wgRequest->getVal( 'category' ) );
+		$level = $wgRequest->getInt( 'level' );
 		$hideRedirs = $wgRequest->getBool( 'hideredirs', true );
 		
 		// show/hide links
@@ -43,12 +44,18 @@ class UnreviewedPages extends SpecialPage
 		$wgOut->addHTML( "<form action=\"$action\" method=\"get\">\n" .
 			'<fieldset><legend>' . wfMsg('unreviewed-legend') . '</legend>' .
 			Xml::hidden( 'title', $wgTitle->getPrefixedDBKey() ) . '<p>' );
+		# Add dropdowns as needed
 		if( count($wgFlaggedRevsNamespaces) > 1 ) {
 			$wgOut->addHTML( FlaggedRevsXML::getNamespaceMenu( $namespace ) . '&nbsp;' );
 		}
+		if( FlaggedRevs::qualityVersions() ) {
+			$wgOut->addHTML( FlaggedRevsXML::getLevelMenu( $level, false, 1 ) . '&nbsp;' );
+		}
 		$wgOut->addHTML( 
+			"<span style='white-space: nowrap;'>" .
 			Xml::label( wfMsg("unreviewed-category"), 'category' ) . '&nbsp;' .
-			Xml::input( 'category', 30, $category, array('id' => 'category') ) . '<br/>' .
+			Xml::input( 'category', 30, $category, array('id' => 'category') ) . 
+			'</span><br/>' .
 			$showhideredirs . '&nbsp;&nbsp;' . 
 			Xml::submitButton( wfMsg( 'allpagessubmit' ) ) . "</p>\n" .
 			"</fieldset></form>"
@@ -66,7 +73,7 @@ class UnreviewedPages extends SpecialPage
 				$wgOut->addHTML( wfMsg( 'perfcached' ) );
 			}
 		}
-		$pager = new UnreviewedPagesPager( $this, $live, $namespace, !$hideRedirs, $category );
+		$pager = new UnreviewedPagesPager( $this, $live, $namespace, !$hideRedirs, $category, $level );
 		if( $pager->getNumRows() ) {
 			$wgOut->addHTML( wfMsgExt('unreviewed-list', array('parse') ) );
 			$wgOut->addHTML( $pager->getNavigationBar() );
@@ -77,13 +84,14 @@ class UnreviewedPages extends SpecialPage
 		}
 	}
 	
-	function formatRow( $result ) {
-		global $wgLang, $wgUser;
-		$title = Title::makeTitle( $result->page_namespace, $result->page_title );
-		$link = $this->skin->makeKnownLinkObj( $title, null, 'redirect=no' );
+	public function formatRow( $row ) {
+		global $wgLang, $wgUser, $wgMemc;
+
+		$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+		$link = $this->skin->makeKnownLinkObj( $title, null, 'redirect=no&reviewform=1' );
 		$hist = $this->skin->makeKnownLinkObj( $title, wfMsgHtml('hist'), 'action=history' );
-		$css = $stxt = $review = '';
-		if( !is_null($size = $result->page_len) ) {
+		$css = $stxt = $review = $underReview = '';
+		if( !is_null($size = $row->page_len) ) {
 			$stxt = ($size == 0)
 				? wfMsgHtml('historyempty')
 				: wfMsgExt('historysize', array('parsemag'), $wgLang->formatNum( $size ) );
@@ -99,7 +107,15 @@ class UnreviewedPages extends SpecialPage
 		} else {
 			$watching = "";
 		}
-		return( "<li{$css}>{$link} {$stxt} ({$hist}) {$review}{$watching}</li>" );
+		$pageId = isset($row->page_id) ? $row->page_id : $row->qc_value;
+		$key = wfMemcKey( 'unreviewedPages', 'underReview', $pageId );
+		$val = $wgMemc->get( $key );
+		# Show if a user is looking at this page
+		if( ($val = $wgMemc->get($key)) ) {
+			$underReview = " <b class='fr-under-review'>".wfMsgHtml('unreviewed-viewing').'</b>';
+		}
+
+		return( "<li{$css}>{$link} {$stxt} ({$hist}) {$review}{$watching}{$underReview}</li>" );
 	}
 	
 	/**
@@ -109,21 +125,28 @@ class UnreviewedPages extends SpecialPage
 	public static function usersWatching( $title ) {
 		global $wgMiserMode;
 		$dbr = wfGetDB( DB_SLAVE );
+		$count = -1;
 		if( $wgMiserMode ) {
 			# Get a rough idea of size
 			$count = $dbr->estimateRowCount( 'watchlist', '*',
 				array( 'wl_namespace' => $title->getNamespace(), 'wl_title' => $title->getDBKey() ),
 				__METHOD__ );
-			# If it is small, just COUNT() it, otherwise, stick with estimate...
-			if( $count <= 10 ) {
-				$count = $dbr->selectField( 'watchlist', 'COUNT(*)',
-					array( 'wl_namespace' => $title->getNamespace(), 'wl_title' => $title->getDBKey() ),
-					__METHOD__ );
-			}
-		} else {
-			$count = $dbr->selectField( 'watchlist', 'COUNT(*)',
-				array( 'wl_namespace' => $title->getNamespace(), 'wl_title' => $title->getDBKey() ),
-				__METHOD__ );
+		}
+		# If it is small, just COUNT() it, otherwise, stick with estimate...
+		if( $count == -1 || $count <= 100 ) {
+			global $wgCookieExpiration;
+			# Get number of active editors watchling this
+			$cutoff = $dbr->timestamp( wfTimestamp( TS_UNIX ) - 2*$wgCookieExpiration );
+			$res = $dbr->select( array('watchlist','user'), '1',
+				array( 'wl_namespace' => $title->getNamespace(), 
+					'wl_title' => $title->getDBKey(),
+					'wl_user = user_id',
+					// logged in or out
+					'user_touched > '.$dbr->addQuotes( $cutoff ) ),
+				__METHOD__,
+				array( 'USE INDEX' => array('watchlist' => 'namespace_title') )
+			);
+			$count = $dbr->numRows($res);
 		}
 		return $count;
 	}
@@ -143,8 +166,8 @@ class UnreviewedPages extends SpecialPage
 			array('page_namespace' => $wgFlaggedRevsNamespaces), 
 			__METHOD__ );
 		$ratio = $pages/($pages - $reviewedpages);
-		# If dist. is normalized, # of rows scanned = $ratio * LIMIT (or until list runs out)
-		return ($ratio <= 1000);
+		# If dist. is equal, # of rows scanned = $ratio * LIMIT (or until list runs out)
+		return ($ratio <= 500);
 	}
 }
 
@@ -155,7 +178,7 @@ class UnreviewedPagesPager extends AlphabeticPager {
 	public $mForm, $mConds;
 	private $live, $namespace, $category, $showredirs;
 
-	function __construct( $form, $live, $namespace, $redirs=false, $category=NULL ) {
+	function __construct( $form, $live, $namespace, $redirs=false, $category=NULL, $level=0 ) {
 		$this->mForm = $form;
 		$this->live = (bool)$live;
 		# Must be a content page...
@@ -168,6 +191,7 @@ class UnreviewedPagesPager extends AlphabeticPager {
 		}
 		$this->namespace = $namespace;
 		$this->category = $category ? str_replace(' ','_',$category) : NULL;
+		$this->level = intval($level);
 		$this->showredirs = (bool)$redirs;
 		parent::__construct();
 		// Don't get to expensive
@@ -184,8 +208,13 @@ class UnreviewedPagesPager extends AlphabeticPager {
 			return $this->getQueryCacheInfo();
 		}
 		$conds = $this->mConds;
-		$fields = array('page_namespace','page_title','page_len');
-		$conds[] = 'fp_page_id IS NULL';
+		$fields = array('page_namespace','page_title','page_len','page_id');
+		# Filter by level
+		if( $this->level == 1 ) {
+			$conds[] = "fp_page_id IS NULL OR fp_quality = 0";
+		} else {
+			$conds[] = 'fp_page_id IS NULL';
+		}
 		# Reviewable pages only
 		$conds['page_namespace'] = $this->namespace;
 		# No redirects
@@ -202,7 +231,6 @@ class UnreviewedPagesPager extends AlphabeticPager {
 			$useIndex = array( 'categorylinks' => 'cl_sortkey' );
 		} else {
 			$tables = array( 'page', 'flaggedpages' );
-			$fields[] = 'page_id';
 			$this->mIndexField = 'page_title';
 			$useIndex = array( 'page' => 'name_title' );
 		}
@@ -218,10 +246,17 @@ class UnreviewedPagesPager extends AlphabeticPager {
 	function getQueryCacheInfo() {
 		$conds = $this->mConds;
 		$fields = array('page_namespace','page_title','page_len','qc_value');
-		$conds['qc_type'] = 'fr_unreviewedpages';
+		# Re-join on flaggedpages to double-check since things
+		# could have changed since the cache date. Also, use
+		# the proper cache for this level.
+		if( $this->level == 1 ) {
+			$conds['qc_type'] = 'fr_unreviewedpages_q';
+			$conds[] = "fp_page_id IS NULL OR fp_quality < {$this->level}";
+		} else {
+			$conds['qc_type'] = 'fr_unreviewedpages';
+			$conds[] = 'fp_page_id IS NULL';
+		}
 		$conds[] = 'qc_value = page_id';
-		# Re-join on flaggedpages to double-check
-		$conds[] = 'fp_page_id IS NULL';
 		# Reviewable pages only
 		$conds['qc_namespace'] = $this->namespace;
 		# No redirects

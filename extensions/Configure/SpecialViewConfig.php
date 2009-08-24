@@ -138,7 +138,7 @@ class SpecialViewConfig extends ConfigurationPage {
 			'allowedExtensionsAll' => $wgUser->isAllowed( 'extensions-interwiki' ),
 			'self' => $self,
 			'skin' => $wgUser->getSkin(),
-			'editMsg' => wfMsg( 'edit' ) . ': ',
+			'editMsg' => wfMsg( 'edit' ) . wfMsg( 'colon-separator' ),
 		);
 
 		if ( $formatConf['allowedConfig'] )
@@ -202,7 +202,7 @@ class SpecialViewConfig extends ConfigurationPage {
 			foreach ( $wikis as $wiki ) {
 				$viewWikis[] = $skin->makeKnownLinkObj( $self, htmlspecialchars( $wiki ), "version={$ts}&wiki={$wiki}" );
 			}
-			$view .= ' (' . implode( ', ', $viewWikis ) . ')';
+			$view .= ' (' . $wgLang->commaList( $viewWikis ) . ')';
 		}
 
 		if( $view )
@@ -222,7 +222,7 @@ class SpecialViewConfig extends ConfigurationPage {
 				foreach ( $wikis as $wiki ) {
 					$viewWikis[] = $skin->makeKnownLinkObj( $configTitle, htmlspecialchars( $wiki ), "version={$ts}&wiki={$wiki}" );
 				}
-				$editCore .= ' (' . implode( ', ', $viewWikis ) . ')';
+				$editCore .= ' (' . $wgLang->commaList( $viewWikis ) . ')';
 			}
 			$actions[] = $editCore;
 		}
@@ -240,7 +240,7 @@ class SpecialViewConfig extends ConfigurationPage {
 				foreach ( $wikis as $wiki ) {
 					$viewWikis[] = $skin->makeKnownLinkObj( $extTitle, htmlspecialchars( $wiki ), "version={$ts}&wiki={$wiki}" );
 				}
-				$editExt .= ' (' . implode( ', ', $viewWikis ) . ')';
+				$editExt .= ' (' . $wgLang->commaList( $viewWikis ) . ')';
 			}
 			$actions[] = $editExt;
 		}
@@ -262,7 +262,7 @@ class SpecialViewConfig extends ConfigurationPage {
 
 		$comment = $arr['reason'] ? $skin->commentBlock( $arr['reason'] ) : '';
 
-		$action = implode( ', ', $actions );
+		$action = $wgLang->commaList( $actions );
 		return Xml::tags( 'li', null, wfMsgExt( 'configure-viewconfig-line', array( 'parseinline', 'replaceafter' ), array( $buttons, $time, $userLink, $action, $comment ) ) )."\n";
 	}
 

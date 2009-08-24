@@ -32,6 +32,16 @@ $aliases['bs'] = array(
 	'ReplaceText' => array( 'ZamjenaTeksta' ),
 );
 
+/** German (Deutsch) */
+$aliases['de'] = array(
+	'ReplaceText' => array( 'Text ersetzen' ),
+);
+
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'ReplaceText' => array( 'Tekst wuměniś' ),
+);
+
 /** Divehi (ދިވެހިބަސް) */
 $aliases['dv'] = array(
 	'ReplaceText' => array( 'ލިޔުން ބަދަލުކުރައްވާ' ),
@@ -40,6 +50,11 @@ $aliases['dv'] = array(
 /** French (Français) */
 $aliases['fr'] = array(
 	'ReplaceText' => array( 'Remplacer texte', 'RemplacerTexte' ),
+);
+
+/** Galician (Galego) */
+$aliases['gl'] = array(
+	'ReplaceText' => array( 'Substituír o texto' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -65,6 +80,16 @@ $aliases['hsb'] = array(
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'ReplaceText' => array( 'Szöveg csere' ),
+);
+
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'ReplaceText' => array( 'Reimplaciar texto' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'ReplaceText' => array( '文字列の置換' ),
 );
 
 /** Khmer (ភាសាខ្មែរ) */
@@ -112,8 +137,18 @@ $aliases['oc'] = array(
 	'ReplaceText' => array( 'Remplaçar tèxt', 'RemplaçarTèxt' ),
 );
 
+/** Albanian (Shqip) */
+$aliases['sq'] = array(
+	'ReplaceText' => array( 'ZëvendësoTekstin' ),
+);
+
 /** Swahili (Kiswahili) */
 $aliases['sw'] = array(
 	'ReplaceText' => array( 'PandikiziaMatini' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'ReplaceText' => array( 'Palitan ang teksto' ),
 );
 

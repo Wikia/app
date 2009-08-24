@@ -313,6 +313,10 @@ wgAjaxReview.unlockForm = function() {
 		return false;
 	}
 	submit.disabled = "";
+	var inputs = form.getElementsByTagName("input");
+	for( var i=0; i < inputs.length; i++) {
+		inputs[i].disabled = "";
+	}
 	if( notes ) {
 		notes.disabled = "";
 	}
@@ -342,7 +346,9 @@ wgAjaxReview.processResult = function(request) {
 	if( submit ) {
 		submit.value = wgAjaxReview.sentMsg;
 	}
-	wgAjaxReview.unlockForm();
+	if( response.indexOf('<suc#>') == 0 ) {
+		wgAjaxReview.unlockForm();
+	}
 	document.title = wgAjaxReview.actioncomplete;
 };
 

@@ -5,6 +5,8 @@ define( 'NS_USER_WIKI', 200 );
 
 // Default setup for displaying sections
 $wgUserPageChoice = true;
+
+
 $wgUserProfileDisplay['friends'] = false;
 $wgUserProfileDisplay['foes'] = false;
 $wgUserProfileDisplay['gifts'] = true;
@@ -38,11 +40,17 @@ $wgLogActions['avatar/avatar'] = 'avatarlogentry';
 
 $wgHooks['ArticleFromTitle'][] = 'wfUserProfileFromTitle';
 
-// ArticleFromTitle
-// Calls UserProfilePage instead of standard article
+/**
+ * called by ArticleFromTitle hook
+ * Calls UserProfilePage instead of standard article
+ *
+ * @param &$title Title object
+ * @param &$article Article object
+ * @return true
+ */
 function wfUserProfileFromTitle( &$title, &$article ){
-	global $wgUser, $wgRequest, $IP, $wgOut, $wgTitle, $wgSupressPageTitle, $wgSupressSubTitle, $wgMemc,
-	$wgUserPageChoice, $wgParser, $wgUserProfileDirectory, $wgUserProfileScripts, $wgStyleVersion;
+	global $IP, $wgUser, $wgRequest, $wgOut, $wgTitle, $wgMemc, $wgStyleVersion, $wgHooks,
+		$wgUserPageChoice, $wgUserProfileScripts;
 
 	if ( strpos( $title->getText(), "/" ) === false && ( NS_USER == $title->getNamespace() || NS_USER_PROFILE == $title->getNamespace() ) ) {
 
@@ -59,18 +67,30 @@ function wfUserProfileFromTitle( &$title, &$article ){
 
 		if( !$show_user_page ){
 			// Prevents editing of userpage
-			if( $wgRequest->getVal('action') == 'edit' ){
+			if( $wgRequest->getVal( 'action' ) == 'edit' ){
 				$wgOut->redirect( $title->getFullURL() );
 			}
 		} else {
-			$wgOut->enableClientCache(false);
-			$wgParser->disableCache();
+			$wgOut->enableClientCache( false );
+			$wgHooks['ParserLimitReport'][] = 'wfUserProfileMarkUncacheable';
 		}
 
-		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"{$wgUserProfileScripts}/UserProfile.css?{$wgStyleVersion}\"/>\n");
+		$wgOut->addScript( "<link rel='stylesheet' type='text/css' href=\"{$wgUserProfileScripts}/UserProfile.css?{$wgStyleVersion}\"/>\n" );
 
 		$article = new UserProfilePage( $title );
 	}
+	return true;
+}
+
+/**
+ * Mark page as uncacheable
+ *
+ * @param $parser Parser object
+ * @param &$limitReport String: unused
+ * @return true
+ */
+function wfUserProfileMarkUncacheable( $parser, &$limitReport ) {
+	$parser->disableCache();
 	return true;
 }
 

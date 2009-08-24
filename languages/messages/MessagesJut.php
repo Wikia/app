@@ -522,7 +522,7 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 'imagelinks'                => 'Billethenvesnenger',
 'linkstoimage'              => 'De følgende sider henveser til dette billet:',
 'nolinkstoimage'            => 'Der er engen sider der henveser til dette billet.',
-'sharedupload'              => 'Denne gøret er en fælles læĝenge og ken bruges åf andre projekter.',
+'sharedupload'              => 'Denne gøret er en fælles læĝenge og ken bruges åf andre projekter.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'noimage'                   => 'Der er engen gøret ve dette nav, du ken $1',
 'noimage-linktext'          => 'læĝge den åp',
 'uploadnewversion-linktext' => 'Læĝ en ny hersenenge åf denne gøret åp',
@@ -608,7 +608,8 @@ hersenenge, (førge) = førskel til den førge hersenenge, l = lile til mendre �
 'categories' => 'Klynger',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'Slettede brugerbidråg',
+'deletedcontributions'       => 'Slettede brugerbidråg',
+'deletedcontributions-title' => 'Slettede brugerbidråg',
 
 # Special:LinkSearch
 'linksearch'       => 'Søĝ i weblinks',
@@ -846,6 +847,7 @@ Kun endholtet åf æ liste (lenjer startende ve *) bliver brugt. Den første hen
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # External editor support

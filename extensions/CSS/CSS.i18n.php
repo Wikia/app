@@ -94,9 +94,10 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author IAlex
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'css-desc' => "Une fonction du parseur qui permet d'ajouter des feuilles de style dans certaines pages",
+	'css-desc' => 'Une fonction du parseur qui permet d’inclure des feuilles de style dans certaines pages',
 );
 
 /** Galician (Galego)
@@ -106,6 +107,13 @@ $messages['gl'] = array(
 	'css-desc' => 'Unha función analítica que permite que sexan incluídas en páxinas específicas follas de estilo CSS',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'css-desc' => 'E Parser-Funktion, wu s megli macht, CSS-Stylesheet in bstimmti Syten yyzbinde',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  */
@@ -113,11 +121,32 @@ $messages['he'] = array(
 	'css-desc' => 'הוראת תנאי המאפשרת הכללת גליונות עיצוב מסוג CSS בדפים מסוימים',
 );
 
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'css-desc' => 'Funkcija parsera koja omogućuje uključivanje CSS-a na određenim stranicama',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
 	'css-desc' => 'Parserowa funkcija, kotraž dowola CSS stilowe předłohi do specifiskich stronow zapřijeć',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'css-desc' => 'Un function del analysator syntactic que permitte includer folios de stilos CSS in paginas specific',
+);
+
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'css-desc' => 'Una funzione del parser che consente di includere i fogli di stile CSS in pagine specifiche',
 );
 
 /** Japanese (日本語)
@@ -197,6 +226,13 @@ $messages['pt'] = array(
 	'css-desc' => 'Uma função do analisador (parser) que permite que folhas de estilo CSS sejam incluídas em páginas específicas',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'css-desc' => 'Uma função de análise (parser) que permite que folhas de estilo CSS sejam incluídas em páginas específicas',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -223,6 +259,13 @@ $messages['sk'] = array(
  */
 $messages['sv'] = array(
 	'css-desc' => 'En parserfunktion som möjliggör inkluderande av CSS-stilmallar på specifika sidor',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'css-desc' => 'కొన్ని ప్రత్యేకమైన పేజీలలో CSS శైలులని చేర్చడానికి అనుమతించే పార్సర్ సౌలభ్యం',
 );
 
 /** Tagalog (Tagalog)

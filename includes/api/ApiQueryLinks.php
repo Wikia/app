@@ -119,9 +119,6 @@ class ApiQueryLinks extends ApiQueryGeneratorBase {
 		$res = $this->select(__METHOD__);
 
 		if (is_null($resultPageSet)) {
-
-			$data = array();
-			$lastId = 0;	// database has no ID 0
 			$count = 0;
 			while ($row = $db->fetchObject($res)) {
 				if(++$count > $params['limit']) {
@@ -132,23 +129,17 @@ class ApiQueryLinks extends ApiQueryGeneratorBase {
 						$this->keyToTitle($row->pl_title));
 					break;
 				}
-				if ($lastId != $row->pl_from) {
-					if($lastId != 0) {
-						$this->addPageSubItems($lastId, $data);
-						$data = array();
-					}
-					$lastId = $row->pl_from;
-				}
-
 				$vals = array();
 				ApiQueryBase :: addTitleInfo($vals, Title :: makeTitle($row->pl_namespace, $row->pl_title));
-				$data[] = $vals;
+				$fit = $this->addPageSubItem($row->pl_from, $vals);
+				if(!$fit)
+				{
+					$this->setContinueEnumParameter('continue',
+						"{$row->pl_from}|{$row->pl_namespace}|" .
+						$this->keyToTitle($row->pl_title));
+					break;
+				}
 			}
-
-			if($lastId != 0) {
-				$this->addPageSubItems($lastId, $data);
-			}
-
 		} else {
 
 			$titles = array();
@@ -213,6 +204,6 @@ class ApiQueryLinks extends ApiQueryGeneratorBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryLinks.php 43271 2008-11-06 22:38:42Z siebrand $';
+		return __CLASS__ . ': $Id: ApiQueryLinks.php 46845 2009-02-05 14:30:59Z catrope $';
 	}
 }

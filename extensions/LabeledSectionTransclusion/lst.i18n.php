@@ -97,6 +97,13 @@ $messages['dsb'] = array(
 	'lst-desc' => 'Pśidawa funkciji <tt>#lst</tt> a <tt>#lstx</tt> a toflicku <tt>&lt;section&gt;</tt>, zmóžnja zapśěgnjenje  markěrowanych tekstowych wótrězkow',
 );
 
+/** Greek (Ελληνικά)
+ * @author Dead3y3
+ */
+$messages['el'] = array(
+	'lst-desc' => 'Προσθέτει τις συναρτήσεις <tt>#lst</tt> και <tt>#lstx</tt> και την ετικέτα <tt>&lt;section&gt;</tt>, ενεργοποιεί την δυνατότητα αντικατάστασης επιλεγμένων τμημάτων κειμένου',
+);
+
 /** Esperanto (Esperanto)
  * @author Yekrats
  */
@@ -109,6 +116,13 @@ $messages['eo'] = array(
  */
 $messages['es'] = array(
 	'lst-desc' => 'Añade las funciones <tt>#lst</tt> y <tt>#lstx</tt> y la etiqueta <tt>&lt;section&gt;</tt>, que permite transcluir secciones de texto marcadas',
+);
+
+/** Basque (Euskara)
+ * @author An13sa
+ */
+$messages['eu'] = array(
+	'lst-desc' => '<tt>#lst</tt> eta <tt>#lstx</tt> funtzioak eta <tt>&lt;atal&gt;</tt> etiketak gehitzen ditu, eta aukeratutako testuaren atalak ordezkatzen ditu',
 );
 
 /** Persian (فارسی)
@@ -144,6 +158,13 @@ $messages['frp'] = array(
  */
 $messages['gl'] = array(
 	'lst-desc' => 'Engade as funcións <tt>#lst</tt> e <tt>#lstx</tt> funcións, e a etiqueta <tt>&lt;section&gt;</tt>, permite que as seccións maradas dun texto sexan transcluídas',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'lst-desc' => 'Fiegt d <tt>#lst</tt> un <tt>#lstx</tt> Funktione un s <tt>&lt;section&gt;</tt>-Tag yy go eso markierti Abschnitt yybinde z chenne',
 );
 
 /** Hebrew (עברית)
@@ -265,6 +286,13 @@ $messages['ms'] = array(
 	'lst-desc' => 'Menambah fungsi <tt>#lst</tt> dan <tt>#lstx</tt> serta tag <tt>&lt;section&gt;</tt>, justeru membolehkan penyertaan bahagian-bahagian teks yang telah ditanda',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'lst-desc' => 'Föögt de <tt>#lst</tt>- un <tt>#lstx</tt>-Funktionen un dat <tt>&lt;section&gt;</tt>-Tag to, dat markeerte Afsneed vun Text inbunnen warrn köönt',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -305,6 +333,13 @@ $messages['pl'] = array(
  */
 $messages['pt'] = array(
 	'lst-desc' => 'Adiciona as funções <tt>#lst</tt> e <tt>#lstx</tt>, e a marca &lt;section&gt;, activa secções marcadas de texto para serem transcluídas',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'lst-desc' => 'Adiciona as funções <tt>#lst</tt> e <tt>#lstx</tt>, e a marca &lt;section&gt;, ativa seções marcadas de texto para serem transcluídas',
 );
 
 /** Tarandíne (Tarandíne)
@@ -368,6 +403,13 @@ $messages['tg-cyrl'] = array(
  */
 $messages['tl'] = array(
 	'lst-desc' => 'Nagdaragdag ng mga tungkuling <tt>#lst</tt> at <tt>#lstx</tt> at tatak na <tt>&lt;seksyon&gt;</tt>, nagbibigay ng kakayahang mailipat-sama (transklusyon) ang tinandaang mga seksyon ng teksto',
+);
+
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'lst-desc' => '<tt>#lst</tt> ve <tt>#lstx</tt> fonksiyonlarını ve <tt>&lt;section&gt;</tt> etiketini ekler, çapraz eklenecek metnin işaretli bölümlerini etkinleştirir',
 );
 
 /** Ukrainian (Українська)

@@ -25,7 +25,7 @@ $messages['qqq'] = array(
  * @author OsamaK
  */
 $messages['ar'] = array(
-	'javascript-desc' => 'يضيف uniwiki.js لكل صفحة تحتوي شيفرة جافاسكربت مشاركة بين امتدادات يونيويكي.',
+	'javascript-desc' => 'يضيف uniwiki.js لكل صفحة تحتوي كود جافاسكربت مشاركة بين امتدادات يونيويكي.',
 );
 
 /** Egyptian Spoken Arabic (مصرى)
@@ -33,6 +33,27 @@ $messages['ar'] = array(
  */
 $messages['arz'] = array(
 	'javascript-desc' => 'بيضيف uniwiki.js لكل صفحة فيها شفرة جافاسكربت مشاركة بين امتدادات يونيويكى',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'javascript-desc' => 'Дадае uniwiki.js, агульны для пашырэньняў Uniwiki, на кожную старонку, якая ўтрымлівае код JavaScript',
+);
+
+/** Bulgarian (Български)
+ * @author DCLXVI
+ */
+$messages['bg'] = array(
+	'javascript-desc' => 'Добавя uniwiki.js към всяка страница, съдържаща Джаваскрипт код, използван от разширенията Uniwiki',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'javascript-desc' => 'Dodaje uniwiki.js na svaku stranicu koja sadrži JavaScript kod koji se dijeli između Uniwiki proširenja',
 );
 
 /** Czech (Česky)
@@ -81,9 +102,10 @@ $messages['fi'] = array(
 /** French (Français)
  * @author IAlex
  * @author Sherbrooke
+ * @author Verdy p
  */
 $messages['fr'] = array(
-	'javascript-desc' => 'Ajouter uniwiki.js à chaque page contenant du code JavaScript partagé entre les extensions Uniwiki',
+	'javascript-desc' => 'Ajoute uniwiki.js à chaque page contenant du code JavaScript partagé entre les extensions Uniwiki',
 );
 
 /** Galician (Galego)
@@ -91,6 +113,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'javascript-desc' => 'Engade uniwiki.js a cada páxina que conteña código JavaScript entre extensións Uniwiki',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'javascript-desc' => 'Fiegt uniwiki.js in jedi Syte yy, wu s e JavaScript-Code din het, wu teilt wird vu verschidene Uniwiki-Erwyterige',
 );
 
 /** Hebrew (עברית)
@@ -191,6 +220,20 @@ $messages['pl'] = array(
 	'javascript-desc' => 'Dodaje uniwiki.js do każdej strony zawierającej kod JavaScript dzielony pomiędzy rozszerzenia Uniwiki',
 );
 
+/** Portuguese (Português)
+ * @author Malafaya
+ */
+$messages['pt'] = array(
+	'javascript-desc' => 'Adiciona uniwiki.js a cada página que contém código JavaScript partilhado entre extensões Uniwiki',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'javascript-desc' => 'Adiciona uniwiki.js a cada página que contém código JavaScript compartilhado entre extensões Uniwiki',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -212,6 +255,27 @@ $messages['sk'] = array(
 	'javascript-desc' => 'Pridáva uniwiki.js na každú stránku obsahujúci JavaScriptový kód spoločný pre rozšírenia Uniwiki',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'javascript-desc' => 'Vendosë uniwiki.js në çdo faqe që përmban kodin JavaScript të ndarë mes prapashtesave në Uniwiki',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'javascript-desc' => 'Föiget uniwiki.js in älke Siede ien ju n JavaScript-Code änthaalt, die der fon ferscheedene Uniwiki-Erwiederengen deeld wäd.',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'javascript-desc' => 'Nambahkeun uniwiki.js kana unggal kaca anu ngandung sandi JavaScript nu dipaké ku éksténsi Uniwiki',
+);
+
 /** Swedish (Svenska)
  * @author Najami
  */
@@ -224,5 +288,12 @@ $messages['sv'] = array(
  */
 $messages['tl'] = array(
 	'javascript-desc' => 'Nagdaragdag ng uniwiki.js sa bawat pahinang naglalaman ng kodigong JavaScript na pinagsasaluhan sa pagitan ng mga karugtong na pang-Uniwiki',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Vinhtantran
+ */
+$messages['vi'] = array(
+	'javascript-desc' => 'Thêm uniwiki.js vào mỗi trang có chứa mã JavaScript để chia sẻ chúng với các bộ mở rộng Uniwiki',
 );
 

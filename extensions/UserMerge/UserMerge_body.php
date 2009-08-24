@@ -32,7 +32,7 @@ class UserMerge extends SpecialPage {
 		// init variables
 		$olduser_text = '';
 		$newuser_text = '';
-		$deleteUserCheck = '';
+		$deleteUserCheck = false;
 		$validNewUser = false;
 
 		if ( strlen( $wgRequest->getText( 'olduser' ).$wgRequest->getText( 'newuser' ) ) > 0 || $wgRequest->getText( 'deleteuser' ) ) {
@@ -44,7 +44,7 @@ class UserMerge extends SpecialPage {
 			$newuser_text = is_object( $newuser ) ? $newuser->getText() : '';
 
 			if ( $wgRequest->getText( 'deleteuser' ) ) {
-				$deleteUserCheck = 'checked="checked" ';
+				$deleteUserCheck = true;
 			}
 
 			if ( strlen( $olduser_text ) > 0 ) {
@@ -55,10 +55,10 @@ class UserMerge extends SpecialPage {
 
 				if ( !is_object( $objOldUser ) ) {
 					$validOldUser = false;
-					$wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-badolduser') . "</span><br />\n" );
+					$wgOut->wrapWikiMsg( "<div class='error'>\n$1</div>", 'usermerge-badolduser' );
 				} elseif ( $olduserID == $wgUser->getID() ) {
 					$validOldUser = false;
-					$wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-noselfdelete') . "</span><br />\n" );
+					$wgOut->wrapWikiMsg( "<div class='error'>\n$1</div>", 'usermerge-noselfdelete' );
 				} else {
 					global $wgUserMergeProtectedGroups;
 
@@ -71,7 +71,7 @@ class UserMerge extends SpecialPage {
 
 					if ( $boolProtected ) {
 						$validOldUser = false;
-						$wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-protectedgroup') . "</span><br />\n" );
+						$wgOut->wrapWikiMsg( "<div class='error'>\n$1</div>", 'usermerge-protectedgroup' );
 					} else {
 						$validOldUser = true;
 
@@ -88,7 +88,7 @@ class UserMerge extends SpecialPage {
 								} else {
 									//invalid newuser entered
 									$validNewUser = false;
-									$wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-badnewuser') . "</span><br />\n" );
+									$wgOut->wrapWikiMsg( "<div class='error'>$1</div>", 'usermerge-badnewuser' );
 								}
 							} else {
 								//newuser looks good
@@ -98,7 +98,7 @@ class UserMerge extends SpecialPage {
 							//empty newuser string
 							$validNewUser = false;
 							$newuser_text = "Anonymous";
-							$wgOut->addHTML( "<span style=\"color: red;\">" . wfMsg('usermerge-nonewuser', $newuser_text) . "</span><br />\n" );
+							$wgOut->wrapWikiMsg( "<div class='error'>$1</div>", array( 'usermerge-nonewuser', $newuser_text ) );
 						}
 					}
 				}
@@ -110,31 +110,45 @@ class UserMerge extends SpecialPage {
 			//NO POST data found
 		}
 
-		$action = $wgTitle->escapeLocalUrl();
-		$token = $wgUser->editToken();
-
-		$wgOut->addHTML( "
-<form id='usermergeform' method='post' action=\"$action\">
-<table>
-        <tr>
-                <td align='right'>" . wfMsg( 'usermerge-olduser' ) . "</td>
-                <td align='left'><input tabindex='1' type='text' size='20' name='olduser' id='olduser' value=\"$olduser_text\" onFocus=\"document.getElementById('olduser').select;\" /></td>
-        </tr>
-        <tr>
-                <td align='right'>" . wfMsg( 'usermerge-newuser' ) . "</td>
-                <td align='left'><input tabindex='2' type='text' size='20' name='newuser' id='newuser' value=\"$newuser_text\" onFocus=\"document.getElementById('newuser').select;\" /></td>
-        </tr>
-        <tr>
-                <td align='right'>" . wfMsg( 'usermerge-deleteolduser' ) . "</td>
-                <td align='left'><input tabindex='3' type='checkbox' name='deleteuser' id='deleteuser' $deleteUserCheck/></td>
-        </tr>
-        <tr>
-                <td>&nbsp;</td>
-                <td align='right'><input type='submit' name='submit' value=\"" . wfMsg( 'usermerge-submit' ) . "\" /></td>
-        </tr>
-</table>
-<input type='hidden' name='token' value='$token' />
-</form>");
+ 		$wgOut->addHTML(
+			Xml::openElement( 'form', array( 'method' => 'post', 'action' => $wgTitle->getLocalUrl(), 'id' => 'usermergeform' ) ) .
+			Xml::fieldset( wfMsg( 'usermerge-fieldset' ) ) .
+			Xml::openElement( 'table', array( 'id' => 'mw-usermerge-table' ) ) .
+			"<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( 'usermerge-olduser' ), 'olduser' ) .
+				"</td>
+				<td class='mw-input'>" .
+					Xml::input( 'olduser', 20, $olduser_text, array( 'type' => 'text', 'tabindex' => '1', 'onFocus' => "document.getElementById('olduser').select;" ) ) . ' ' .
+				"</td>
+			</tr>
+			<tr>
+				<td class='mw-label'>" .
+					Xml::label( wfMsg( 'usermerge-newuser' ), 'newuser' ) .
+				"</td>
+				<td class='mw-input'>" .
+					Xml::input( 'newuser', 20, $newuser_text, array( 'type' => 'text', 'tabindex' => '2', 'onFocus' => "document.getElementById('newuser').select;" ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td>&nbsp;" .
+				"</td>
+				<td class='mw-input'>" .
+					Xml::checkLabel( wfMsg( 'usermerge-deleteolduser' ), 'deleteuser', 'deleteuser', $deleteUserCheck, array( 'tabindex' => '3' ) ) .
+				"</td>
+			</tr>
+			<tr>
+				<td>&nbsp;
+				</td>
+				<td class='mw-submit'>" .
+					Xml::submitButton( wfMsg( 'usermerge-submit' ), array( 'tabindex' => '4' ) ) .
+				"</td>
+			</tr>" .
+			Xml::closeElement( 'table' ) .
+			Xml::closeElement( 'fieldset' ) .
+			Xml::hidden( 'token', $wgUser->editToken() ) .
+			Xml::closeElement( 'form' ) . "\n"
+		);
 
 		if ( $validNewUser && $validOldUser ) {
 			//go time, baby

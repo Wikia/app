@@ -32,11 +32,32 @@ $messages['arz'] = array(
 	'tab0-desc' => 'يضيف اللسان "0"، موصولا إلى صفحة التعديل لأول قسم من الصفحة',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'tab0-desc' => 'Дадае закладку «0», якая спасылаецца на рэдагаваньне першай сэкцыі старонкі',
+);
+
 /** Bulgarian (Български)
  * @author DCLXVI
  */
 $messages['bg'] = array(
 	'tab0-desc' => 'Добавя етикет „0“, който позволява редактирането на първия раздел на страницата',
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'tab0-desc' => 'Dodaje jezičak "0", koji spaja stranicu za uređivanje i vodi na prvu sekciju stranice',
+);
+
+/** Catalan (Català)
+ * @author SMP
+ */
+$messages['ca'] = array(
+	'tab0-desc' => "Afegeix una pestanya '0' que enllaça a la pàgina d'edició de la primera secció de la pàgina",
 );
 
 /** Czech (Česky)
@@ -96,6 +117,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'tab0-desc' => 'Engade a lapela "0", ligando á páxina de edición da primeira sección da páxina',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'tab0-desc' => 'Fiegt e „0“-Tab zue, wu mer dr erscht Abschnitt vun ere Syte demit cha bearbeite',
 );
 
 /** Hebrew (עברית) */
@@ -180,6 +208,13 @@ $messages['lb'] = array(
 	'tab0-desc' => "Setzt den ''Onglet'' ''0'' derbäi, den et erlaabt déi éischt Sectioun vun enger Säit z'änneren",
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'tab0-desc' => 'Föögt en „0“-Tab to, dat een den eersten Afsnidd vun en Sied ännern kann',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author Tvdm
@@ -223,6 +258,27 @@ $messages['pt'] = array(
 	'tab0-desc' => 'Adiciona uma pestana "0", que liga à página de edição da primeira secção da página',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'tab0-desc' => 'Adiciona uma aba "0", que liga à página de edição da primeira seção da página',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'tab0-desc' => "Aggiunge 'u tab \"0\", pe collegà a 'a pàgene de le cangiaminde 'a prima sezione d'a pàgene",
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'tab0-desc' => 'Добавляет вкладку «0», ссылающуюся на страницу редактирования первого раздела страницы',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
@@ -242,6 +298,20 @@ $messages['su'] = array(
  */
 $messages['sv'] = array(
 	'tab0-desc' => 'Lägger till fliken "0", för att redigera det första avsnittet av en sida',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'tab0-desc' => 'పేజీ లోని మొదటి భాగాన్ని మార్చడానికి లింకుతో "0" ట్యాబుని చేరుస్తుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'tab0-desc' => 'Nagdaragdag ng panglaylay na "0", na kumakawing sa pahina ng pagbabago ng unang seksyon ng pahina',
 );
 
 /** Vèneto (Vèneto)

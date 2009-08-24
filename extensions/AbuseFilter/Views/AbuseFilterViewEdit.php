@@ -22,7 +22,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 		$didEdit = $this->canEdit() 
 			&& $wgUser->matchEditToken( $editToken, array( 'abusefilter', $filter ) );
 
-		if ( $didEdit ) {
+		if ($didEdit) {
 			// Check syntax
 			$syntaxerr = AbuseFilter::checkSyntax( $wgRequest->getVal( 'wpFilterRules' ) );
 			if ($syntaxerr !== true ) {
@@ -148,8 +148,6 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 				$flags[] = 'enabled';
 			if ($newRow['af_deleted'])
 				$flags[] = 'deleted';
-			if ($newRow['af_global'])
-				$flags[] = 'global';
 
 			$afh_row['afh_flags'] = implode( ",", $flags );
 
@@ -159,8 +157,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 			// Do the update
 			$dbw->insert( 'abuse_filter_history', $afh_row, __METHOD__ );
 			$history_id = $dbw->insertId();
-			if ($filter != 'new')
-				$dbw->delete( 'abuse_filter_action', array( 'afa_filter' => $filter ), __METHOD__ );
+			$dbw->delete( 'abuse_filter_action', array( 'afa_filter' => $filter ), __METHOD__ );
 			$dbw->insert( 'abuse_filter_action', $actionsRows, __METHOD__ );
 
 			$dbw->commit();
@@ -228,14 +225,6 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 		if ($error) {
 			$wgOut->addHTML( "<span class=\"error\">$error</span>" );
 		}
-		
-		// Read-only attribute
-		$readOnlyAttrib = array();
-		
-		if (!$this->canEdit()) {
-			$readOnlyAttrib['readonly'] = 'readonly';
-			$readOnlyAttrib['disabled'] = 'disabled';
-		}
 
 		$fields = array();
 
@@ -245,8 +234,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 			Xml::input( 
 				'wpFilterDescription', 
 				45, 
-				isset( $row->af_public_comments ) ? $row->af_public_comments : '',
-				$readOnlyAttrib
+				isset( $row->af_public_comments ) ? $row->af_public_comments : '' 
 			);
 
 		// Hit count display
@@ -282,24 +270,16 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 			}
 		}
 
-		$fields['abusefilter-edit-rules'] =
-			AbuseFilter::buildEditBox($row->af_pattern, 'wpFilterRules', true,
-										$this->canEdit() );
+		$fields['abusefilter-edit-rules'] = AbuseFilter::buildEditBox($row->af_pattern);
 		$fields['abusefilter-edit-notes'] = 
 			Xml::textarea( 
 				'wpFilterNotes', 
-				( isset( $row->af_comments ) ? $row->af_comments."\n" : "\n" ),
-				40, 5,
-				$readOnlyAttrib
+				( isset( $row->af_comments ) ? $row->af_comments."\n" : "\n" ) 
 			);
 		
 		// Build checkboxen
 		$checkboxes = array( 'hidden', 'enabled', 'deleted' );
 		$flags = '';
-		
-		global $wgAbuseFilterIsCentral;
-		if ($wgAbuseFilterIsCentral)
-			$checkboxes[] = 'global';
 
 		if (isset($row->af_throttled) && $row->af_throttled) {
 			global $wgAbuseFilterEmergencyDisableThreshold;
@@ -320,8 +300,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 				wfMsg( $message ), 
 				$postVar, 
 				$postVar, 
-				isset( $row->$dbField ) ? $row->$dbField : false,
-				$readOnlyAttrib
+				isset( $row->$dbField ) ? $row->$dbField : false 
 			);
 			$checkbox = Xml::tags( 'p', null, $checkbox );
 			$flags .= $checkbox;
@@ -348,34 +327,23 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 				) 
 			);
 			// Last modification details
-			$userLink = 
+			$user = 
 				$sk->userLink( $row->af_user, $row->af_user_text ) . 
 				$sk->userToolLinks( $row->af_user, $row->af_user_text );
-			$user = $row->af_user_text;
 			$fields['abusefilter-edit-lastmod'] = 
 				wfMsgExt( 
 					'abusefilter-edit-lastmod-text', 
 					array( 'parseinline', 'replaceafter' ), 
-					array( $wgLang->timeanddate( $row->af_timestamp, true ),
-						$userLink, 
-						$wgLang->date( $row->af_timestamp, true ),
-						$wgLang->time( $row->af_timestamp, true ),
-						$user ) 
+					array( $wgLang->timeanddate( $row->af_timestamp, true ), $user ) 
 				);
 			$history_display = wfMsgExt( 'abusefilter-edit-viewhistory', array( 'parseinline' ) );
 			$fields['abusefilter-edit-history'] = 
 				$sk->makeKnownLinkObj( $this->getTitle( 'history/'.$filter ), $history_display );
 		}
-		
-		// Add export
-		$exportText = json_encode( array( 'row' => $row, 'actions' => $actions ) );
-		$tools .= Xml::tags( 'a', array( 'href' => 'javascript:afShowExport();' ),
-								wfMsgExt( 'abusefilter-edit-export', 'parseinline' ) );
-		$tools .= Xml::element( 'textarea',
-					array( 'readonly' => 'readonly', 'id' => 'mw-abusefilter-export' ),
-					$exportText );
 
-		$fields['abusefilter-edit-tools'] = $tools;
+		if ($tools) {
+			$fields['abusefilter-edit-tools'] = $tools;
+		}
 
 		$form = Xml::buildForm( $fields );
 		$form = Xml::fieldset( wfMsg( 'abusefilter-edit-main' ), $form );
@@ -396,7 +364,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 		$form = Xml::tags( 'form', 
 			array( 
 				'action' => $this->getTitle( $filter )->getFullURL(), 
-				'method' => 'post' 
+				'method' => 'POST' 
 			), 
 			$form );
 
@@ -429,13 +397,6 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 			return;
 		}
 		
-		$readOnlyAttrib = array();
-		
-		if (!$this->canEdit()) {
-			$readOnlyAttrib['readonly'] = 'readonly';
-			$readOnlyAttrib['disabled'] = 'disabled';
-		}
-		
 		switch( $action ) {
 			case 'throttle':
 				$throttleSettings = Xml::checkLabel( 
@@ -443,7 +404,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 					'wpFilterActionThrottle', 
 					"mw-abusefilter-action-checkbox-$action", 
 					$set, 
-					array(  'class' => 'mw-abusefilter-action-checkbox' ) + $readOnlyAttrib );
+					array(  'class' => 'mw-abusefilter-action-checkbox' ) );
 				$throttleFields = array();
 
 				if ($set) {
@@ -461,19 +422,15 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 				}
 
 				$throttleFields['abusefilter-edit-throttle-count'] = 
-					Xml::input( 'wpFilterThrottleCount', 20, $throttleCount, $readOnlyAttrib );
+					Xml::input( 'wpFilterThrottleCount', 20, $throttleCount );
 				$throttleFields['abusefilter-edit-throttle-period'] = 
 					wfMsgExt( 
 						'abusefilter-edit-throttle-seconds', 
 						array( 'parseinline', 'replaceafter' ), 
-						array(
-							Xml::input( 'wpFilterThrottlePeriod', 20, $throttlePeriod,
-								$readOnlyAttrib
-						) ) 
+						array( Xml::input( 'wpFilterThrottlePeriod', 20, $throttlePeriod ) ) 
 					);
 				$throttleFields['abusefilter-edit-throttle-groups'] = 
-					Xml::textarea( 'wpFilterThrottleGroups', $throttleGroups."\n",
-									40, 5, $readOnlyAttrib );
+					Xml::textarea( 'wpFilterThrottleGroups', $throttleGroups."\n" );
 				$throttleSettings .= 
 					Xml::tags( 
 						'div', 
@@ -496,7 +453,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 					'wpFilterActionWarn', 
 					"mw-abusefilter-action-checkbox-$action", 
 					$set, 
-					array( 'class' => 'mw-abusefilter-action-checkbox' ) + $readOnlyAttrib );
+					array( 'class' => 'mw-abusefilter-action-checkbox' ) );
 				$output .= Xml::tags( 'p', null, $checkbox );
 				$warnMsg = empty($set) ? 'abusefilter-warning' : $parameters[0];
 
@@ -507,7 +464,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 						'wpFilterWarnMessageOther', 
 						45, 
 						$warnMsg ? $warnMsg : 'abusefilter-warning-', 
-						array( 'id' => 'mw-abusefilter-warn-message-other' ) + $readOnlyAttrib
+						array( 'id' => 'mw-abusefilter-warn-message-other' ) 
 					);
 
 				$previewButton = Xml::element( 
@@ -516,7 +473,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 						'type' => 'button', 
 						'id' => 'mw-abusefilter-warn-preview-button', 
 						'value' => wfMsg( 'abusefilter-edit-warn-preview' ) 
-					) + $readOnlyAttrib
+					) 
 				);
 				$editButton = Xml::element( 
 					'input', 
@@ -524,7 +481,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 						'type' => 'button', 
 						'id' => 'mw-abusefilter-warn-edit-button', 
 						'value' => wfMsg( 'abusefilter-edit-warn-edit' ) 
-					) + $readOnlyAttrib
+					) 
 				);
 				$previewHolder = Xml::element( 
 					'div', 
@@ -552,12 +509,12 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 					'wpFilterActionTag', 
 					"mw-abusefilter-action-checkbox-$action", 
 					$set, 
-					array( 'class' => 'mw-abusefilter-action-checkbox' ) + $readOnlyAttrib 
+					array( 'class' => 'mw-abusefilter-action-checkbox' ) 
 				);
 				$output .= Xml::tags( 'p', null, $checkbox );
 
 				$tagFields['abusefilter-edit-tag-tag'] = 
-					Xml::textarea( 'wpFilterTags', implode( "\n", $tags ), 40, 5, $readOnlyAttrib );
+					Xml::textarea( 'wpFilterTags', implode( "\n", $tags ) );
 				$output .= 
 					Xml::tags( 'div', 
 						array( 'id' => 'mw-abusefilter-tag-parameters' ), 
@@ -574,7 +531,7 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 					$form_field, 
 					"mw-abusefilter-action-checkbox-$action", 
 					$status, 
-					array( 'class' => 'mw-abusefilter-action-checkbox' ) + $readOnlyAttrib
+					array( 'class' => 'mw-abusefilter-action-checkbox' ) 
 				);
 				$thisAction = Xml::tags( 'p', null, $thisAction );
 				return $thisAction;
@@ -625,7 +582,6 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 			$obj->af_pattern = '';
 			$obj->af_enabled = 1;
 			$obj->af_hidden = 0;
-			$obj->af_global = 0;
 			return array( $obj, array() );
 		}
 
@@ -672,77 +628,53 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 
 		$row->mOriginalRow = clone $row;
 		$row->mOriginalActions = $origActions;
-		
-		// Check for importing
-		$import = $wgRequest->getVal( 'wpImportText' );
-		if ($import) {
-			$data = json_decode($import);
-			
-			$importRow = $data->row;
-			$actions = wfObjectToArray( $data->actions );
-			
-			$copy = array(
-						'af_public_comments',
-						'af_pattern',
-						'af_comments',
-						'af_deleted',
-						'af_enabled',
-						'af_hidden',
-					);
-			
-			foreach( $copy as $name ) {
-				$row->$name = $importRow->$name;
-			}
-		} else {
-			$textLoads = array( 
-				'af_public_comments' => 'wpFilterDescription', 
-				'af_pattern' => 'wpFilterRules', 
-				'af_comments' => 'wpFilterNotes' );
-	
-			foreach( $textLoads as $col => $field ) {
-				$row->$col = trim($wgRequest->getVal( $field ));
-			}
-	
-			$row->af_deleted = $wgRequest->getBool( 'wpFilterDeleted' );
-			$row->af_enabled = $wgRequest->getBool( 'wpFilterEnabled' ) && !$row->af_deleted;
-			$row->af_hidden = $wgRequest->getBool( 'wpFilterHidden' );
-			global $wgAbuseFilterIsCentral;
-			$row->af_global = $wgRequest->getBool( 'wpFilterGlobal' ) && $wgAbuseFilterIsCentral;
-	
-			// Actions
-			global $wgAbuseFilterAvailableActions;
-			$actions = array();
-			foreach( $wgAbuseFilterAvailableActions as $action ) {
-				// Check if it's set
-				$enabled = $wgRequest->getBool( 'wpFilterAction'.ucfirst($action) );
-	
-				if ($enabled) {
-					$parameters = array();
-	
-					if ($action == 'throttle') {
-						// We need to load the parameters
-						$throttleCount = $wgRequest->getIntOrNull( 'wpFilterThrottleCount' );
-						$throttlePeriod = $wgRequest->getIntOrNull( 'wpFilterThrottlePeriod' );
-						$throttleGroups = explode( "\n", 
-							trim( $wgRequest->getText( 'wpFilterThrottleGroups' ) ) );
-	
-						$parameters[0] = $this->mFilter; // For now, anyway
-						$parameters[1] = "$throttleCount,$throttlePeriod";
-						$parameters = array_merge( $parameters, $throttleGroups );
-					} elseif ($action == 'warn') {
-						$specMsg = $wgRequest->getVal( 'wpFilterWarnMessage' );
-	
-						if ($specMsg == 'other')
-							$specMsg = $wgRequest->getVal( 'wpFilterWarnMessageOther' );
-						
-						$parameters[0] = $specMsg;
-					} elseif ($action == 'tag') {
-						$parameters = explode("\n", $wgRequest->getText( 'wpFilterTags' ) );
-					}
-	
-					$thisAction = array( 'action' => $action, 'parameters' => $parameters );
-					$actions[$action] = $thisAction;
+
+		$textLoads = array( 
+			'af_public_comments' => 'wpFilterDescription', 
+			'af_pattern' => 'wpFilterRules', 
+			'af_comments' => 'wpFilterNotes' );
+
+		foreach( $textLoads as $col => $field ) {
+			$row->$col = trim($wgRequest->getVal( $field ));
+		}
+
+		$row->af_deleted = $wgRequest->getBool( 'wpFilterDeleted' );
+		$row->af_enabled = $wgRequest->getBool( 'wpFilterEnabled' ) && !$row->af_deleted;
+		$row->af_hidden = $wgRequest->getBool( 'wpFilterHidden' );
+
+		// Actions
+		global $wgAbuseFilterAvailableActions;
+		$actions = array();
+		foreach( $wgAbuseFilterAvailableActions as $action ) {
+			// Check if it's set
+			$enabled = $wgRequest->getBool( 'wpFilterAction'.ucfirst($action) );
+
+			if ($enabled) {
+				$parameters = array();
+
+				if ($action == 'throttle') {
+					// We need to load the parameters
+					$throttleCount = $wgRequest->getIntOrNull( 'wpFilterThrottleCount' );
+					$throttlePeriod = $wgRequest->getIntOrNull( 'wpFilterThrottlePeriod' );
+					$throttleGroups = explode( "\n", 
+						trim( $wgRequest->getText( 'wpFilterThrottleGroups' ) ) );
+
+					$parameters[0] = $this->mFilter; // For now, anyway
+					$parameters[1] = "$throttleCount,$throttlePeriod";
+					$parameters = array_merge( $parameters, $throttleGroups );
+				} elseif ($action == 'warn') {
+					$specMsg = $wgRequest->getVal( 'wpFilterWarnMessage' );
+
+					if ($specMsg == 'other')
+						$specMsg = $wgRequest->getVal( 'wpFilterWarnMessageOther' );
+					
+					$parameters[0] = $specMsg;
+				} elseif ($action == 'tag') {
+					$parameters = explode("\n", $wgRequest->getText( 'wpFilterTags' ) );
 				}
+
+				$thisAction = array( 'action' => $action, 'parameters' => $parameters );
+				$actions[$action] = $thisAction;
 			}
 		}
 

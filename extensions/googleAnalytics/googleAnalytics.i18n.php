@@ -42,6 +42,13 @@ $messages['bg'] = array(
 	'googleanalytics-desc' => 'Вмъква скрипт на Google Analytics (ga.js) в страниците на МедияУики',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'googleanalytics-desc' => 'Ubacuje skriptu Google Analytics (ga.js) u stranicu MediaWiki za praćenje',
+);
+
 /** German (Deutsch)
  * @author Raimond Spekking
  */
@@ -99,6 +106,13 @@ $messages['gl'] = array(
 	'googleanalytics-desc' => 'Insire a escritura do Google Analytics (ga.js) nas páxinas MediaWiki para facer un seguimento',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'googleanalytics-desc' => 'Macht s Yybinde vum Google-Analytics-Skript (ga.js) uf Syte megli',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  * @author YaronSh
@@ -112,6 +126,13 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'googleanalytics-desc' => 'मिडियाविकि पन्नोंमें नजर रखने के लिये गूगल ऍनॅलिटिक्स स्क्रीप्ट (ga.js) बढाता हैं',
+);
+
+/** Croatian (Hrvatski)
+ * @author Suradnik13
+ */
+$messages['hr'] = array(
+	'googleanalytics-desc' => 'Umetni skriptu Google Analytics (ga.js) za praćenje na stranice MediaWikija',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -140,6 +161,13 @@ $messages['ia'] = array(
  */
 $messages['id'] = array(
 	'googleanalytics-desc' => 'Menambahkan skrip Google Analytics (ga.js) ke halaman-halaman MediaWiki untuk tujuan penjejakan',
+);
+
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'googleanalytics-desc' => 'Inserisce lo script di Google Analytics (ga.js) nelle pagine MediaWiki per il monitoraggio',
 );
 
 /** Japanese (日本語)
@@ -207,6 +235,13 @@ $messages['oc'] = array(
 	'googleanalytics-desc' => 'Apond un escript Google Analitic (ga.js) dins las paginas MediaWiki per las recèrcas.',
 );
 
+/** Ossetic (Иронау)
+ * @author Amikeco
+ */
+$messages['os'] = array(
+	'googleanalytics-desc' => 'Google Analytics статистикæ барæн скрипт (ga.js) MediaWiki-йы фæрстæм бафтауы',
+);
+
 /** Polish (Polski)
  * @author Leinad
  */
@@ -218,6 +253,13 @@ $messages['pl'] = array(
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'googleanalytics-desc' => 'Insere o script Google Analytics (ga.js) nas páginas MediaWiki para rastreio',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'googleanalytics-desc' => 'Insere o script Google Analytics (ga.js) nas páginas MediaWiki para rastreio',
 );
 
@@ -242,11 +284,25 @@ $messages['sk'] = array(
 	'googleanalytics-desc' => 'Vkladá sledovací skript Google Analytics (ga.js) do stránok MediaWiki',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'googleanalytics-desc' => 'Vendosë skriptën e  Google Analytics (ga.js) në faqet për përcjellje të MediaWiki',
+);
+
 /** Seeltersk (Seeltersk)
  * @author Pyt
  */
 $messages['stq'] = array(
 	'googleanalytics-desc' => 'Moaket dät Ienföigjen muugelk fon dät Google-Analytics-Skript (ga.js) ap MediaWiki-Sieden',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'googleanalytics-desc' => 'Ngasupkeun skrip Google Analytics (ga.js) kana kaca-kaca MediaWiki pikeun ngalacak',
 );
 
 /** Swedish (Svenska)
@@ -255,6 +311,20 @@ $messages['stq'] = array(
  */
 $messages['sv'] = array(
 	'googleanalytics-desc' => 'Lägger in ett skript från Google Analytics (ga.js) på MediaWiki-sidor för att spåra användare',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'googleanalytics-desc' => 'గూగుల్ అనలిటిక్స్ స్క్రిప్టు (ga.js)ని మీడియావికీ పేజీలకి చేరుస్తుంది',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'googleanalytics-desc' => 'Nagdaragdag ng panitik (ga.js) ng Google Analytics sa loob ng mga pahina ng MediaWiki para sa pagtunton ng bakas',
 );
 
 /** Turkish (Türkçe)
@@ -276,5 +346,12 @@ $messages['vec'] = array(
  */
 $messages['vi'] = array(
 	'googleanalytics-desc' => 'Chèn mã Google Analytics (ga.js) vào các trang MediaWiki để dò tìm',
+);
+
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author Wmr89502270
+ */
+$messages['zh-hans'] = array(
+	'googleanalytics-desc' => '为跟踪用户而插入Google分析脚本（ga.js）到MedaiWiki页面',
 );
 

@@ -9,52 +9,24 @@
 class Babel {
 
 	/**
-	 * Define the three posisble genders as constants.
-	 */
-	const GENDER_FEMALE = 1;
-	const GENDER_MALE   = 2;
-	const GENDER_NEUTER = 0;
-
-	/**
 	 * Various values from the message cache.
 	 */
 	private $_prefixes, $_suffixes, $_cellspacing, $_directionality, $_url,
 		$_title, $_footer;
 
 	/**
-	 * Whether or not male, female or neuter messages should be prefered.
-	 */
-	private $_gender = self::GENDER_NEUTER;
-
-	/**
 	 * Array: Language codes.
 	 */
-	private $_codes;
-
-	/**
-	 * Array: Preferred usageorder of ISO language code standards.
-	 */
-	private $_order = array(
-		'ISO_639_1',
-		'ISO_639_3',
-	);
+	private $mCodes;
 
 	/**
 	 * Load the language codes from an array of standards to files into the
 	 * language codes array.
 	 *
-	 * @param $file Array: Files to load language codes from.
+	 * @param $file String: Files to load language codes from.
 	 */
-	public function __construct( $files ) {
-
-		// Loop through all standards.
-		foreach( $this->_order as $standard ) {
-
-			// Load file for the current standard.
-			$this->_loadCodes( $standard, $files[ $standard ] );
-
-		}
-
+	public function __construct( $file = null ) {
+		$this->mCodes = new BabelLanguageCodes( $file );
 	}
 
 	/**
@@ -79,12 +51,6 @@ class Babel {
 		// Load various often used messages into the message member variables.
 		$this->_getMessages();
 
-		// Parse the options and provide an array.
-		$options = $this->_parseOptions( $parameters );
-
-		// Process gender stuff.
-		$this->_setGender( $options );
-
 		// Do a link batch on all the parameters so that their information is
 		// cached for use later on.
 		$this->_doTemplateLinkBatch( $parameters );
@@ -101,7 +67,7 @@ class Babel {
 
 				$contents .= $parser->replaceVariables( "{{{$this->_addFixes( $name,'template' )}}}" );
 
-			} elseif( $chunks = $this->_parseParameter( $name ) ) {
+			} elseif( $chunks = $this->mParseParameter( $name ) ) {
 
 				$contents .= $this->_generateBox(        $chunks[ 'code' ], $chunks[ 'level' ] );
 				$contents .= $this->_generateCategories( $chunks[ 'code' ], $chunks[ 'level' ] );
@@ -170,10 +136,11 @@ HEREDOC;
 
 		// Miscellaneous messages.
 		$this->_url            = wfMsgForContent( 'babel-url'             );
-		$this->_top            = wfMsgForContent( 'babel'                 );
 		$this->_footer         = wfMsgForContent( 'babel-footer'          );
 		$this->_directionality = wfMsgForContent( 'babel-directionality'  );
 		$this->_cellspacing    = wfMsgForContent( 'babel-box-cellspacing' );
+		global $wgTitle;
+		$this->_top            = wfMsgExt( 'babel', array( 'parsemag', 'content' ), $wgTitle->getDBkey() );
 
 	}
 
@@ -230,68 +197,6 @@ HEREDOC;
 	}
 
 	/**
-	 * Run through the array of parameters and generate an array of options
-	 * (all parameters starting with a '#') and unset them from the parameters
-	 * array.
-	 * 
-	 * @param $parameters Array: Parameters passed to the parser function.
-	 * @return Array: All options with the options as keys.
-	 */
-	private function _parseOptions( array &$parameters ) {
-
-		// Open empty options array.
-		$options = array();
-
-		// Get list of all options.
-		foreach( $parameters as $index => $value ) {
-
-			// Classed as option if the parameter begins with a # and has at
-			// least one other character.
-			if( strpos( $value, '#' ) === 0 && strlen( $value ) > 1 ) {
-
-				// Add to options array as a key, this is so that each option
-				// only gets registered once.
-				$options[ substr( $value, 1 ) ] = true;
-
-				// Unset it from the parameters array so it does not get
-				// processed as a box.
-				unset( $parameters[ $index ] );
-
-			}
-
-		}
-
-		// Return the array of options.
-		return $options;
-
-	}
-
-	/**
-	 * Identify what gender has been specified within the function.
-	 * 
-	 * @param $options Array: Options.
-	 */
-	private function _setGender( array $options ) {
-
-		// Identify whether #female or #male have been specified as options and
-		// set gender as appropriate.
-		if( array_key_exists( 'female', $options ) ) {
-
-			$this->_gender = self::GENDER_FEMALE;
-
-		} elseif( array_key_exists( 'male', $options ) ) {
-
-			$this->_gender = self::GENDER_MALE;
-	
-		} else {
-
-			$this->_gender = self::GENDER_NEUTER;
-
-		}
-
-	}
-
-	/**
 	 * Identify whether or not the template exists or not.
 	 *
 	 * @param $title String: Name of the template to check.
@@ -330,81 +235,30 @@ HEREDOC;
 	 * @param $parameter String: Parameter.
 	 * @return Array: { 'code' => xx, 'level' => xx }
 	 */
-	private function _parseParameter( $parameter ) {
-
-		// Break up the parameter on - (which separates it's two parts).
-		$chunks = explode( '-', $parameter );
-
-		// Initialise the return array.
+	private function mParseParameter( $parameter ) {
 		$return = array();
 
-		// Actually parse the parameter.
-		if( count( $chunks ) == 1 ) {
-
-			// The parameter is in the form 'xx'.
-
-			// Check whether the language code is valid.
-			if( $this->_checkCode( $chunks[ 0 ] ) ) {
-
-				// Set the code for returning.
-				$return[ 'code' ] = $this->_getCode( $chunks[ 0 ] );
-
-				// This form defaults to level 'N'.
-				$return[ 'level' ] = 'N';
-
-				// Everything needed has been gathered, return.
-				return $return;
-
-			} else {
-
-				// Invalid language code, return false.
-				return false;
-
-			}
-
-		} elseif( count( $chunks ) == 2 ) {
-
-			// The parameter is in the form 'xx-x'.
-
-			// Check whether the language code is valid.
-			if( $this->_checkCode( $chunks[ 0 ] ) ) {
-
-				// Set the code for returning.
-				$return[ 'code' ] = $this->_getCode( $chunks[ 0 ] );
-
-			} else {
-
-				// Invalid language code, return false.
-				return false;
-
-			}
-
-			// Check whether the level is valid.
-			if( strtoupper( $chunks[ 1 ] ) == 'N' ) {
-
-				$return[ 'level' ] = 'N';
-
-			} elseif( $chunks[ 1 ] >= 0 && $chunks[ 1 ] <= 5 ) {
-
-				$return[ 'level' ] = $chunks[ 1 ];
-
-			} else {
-
-				// Invalid language code.
-				return false;
-
-			}
-
-			// Parameters decided, return parameters.
+		// Try treating the paramter as a language code (for native).
+		if( $this->mCodes->getCode( $parameter ) !== false && $this->mCodes->getCode( $parameter ) !== null ) {
+			$return[ 'code'  ] = $this->mCodes->getCode( $parameter );
+			$return[ 'level' ] = 'N';
 			return $return;
-
-		} else {
-
-			// Invalid parameters.
-			return false;
-
 		}
+		// Try splitting the paramter in to language and level, split on last hyphen.
+		$lastSplit = strrpos( $parameter, '-' );
+		if( $lastSplit === false ) return false;
+		$code  = substr( $parameter, 0, $lastSplit );
+		$level = substr( $parameter, $lastSplit + 1 );
 
+		// Validate code.
+		$return[ 'code' ] = $this->mCodes->getCode( $code );
+		if( $return[ 'code' ] === null ) return false;
+		// Validate level.
+		$intLevel = (int) $level;
+		if( ( $intLevel < 0 || $intLevel > 5 ) && $level !== 'N' ) return false;
+		$return[ 'level' ] = $level;
+
+		return $return;
 	}
 
 	/**
@@ -416,11 +270,11 @@ HEREDOC;
 	private function _generateBox( $code, $level ) {
 
 		// Get code in favoured standard.
-		$code = $this->_getCode( $code );
+		$code = $this->mCodes->getCode( $code );
 
 		// Generate the text displayed on the left hand side of the
 		// box.
-		$header = "[[{$this->_addFixes( $code,'portal' )}|$code]]-$level";
+		$header = "[[{$this->_addFixes( $code,'portal' )}|$code]]<span class=\"mw-babel-box-level-$level\">-$level</span>";
 
 		// Get MediaWiki supported language codes\names.
 		$nativeNames = Language::getLanguageNames();
@@ -433,18 +287,7 @@ HEREDOC;
 		}
 
 		// Get the language names.
-		if( class_exists( 'LanguageNames' ) ) {
-			$names = LanguageNames::getNames( $code );
-		} else {
-			$names = $nativeNames;
-		}
-
-		// Ensure the language code has a corresponding name.
-		if( array_key_exists( $code, $names ) ) {
-			$name = $names[ $code ];
-		} else {
-			$name = $this->_nameCode( $code, 'en' );
-		}
+		$name = $this->mCodes->getName( $code );
 
 		// Generate the text displayed on the right hand side of the
 		// box.
@@ -477,104 +320,43 @@ HEREDOC;
 	 */
 	private function _getText( $name, $language, $level ) {
 
-		// If gender not neuter then try getting the gender specific message.
-		if( $this->_gender === self::GENDER_FEMALE ) {
+		global $wgTitle, $wgBabelUseLevelZeroCategory;
 
-			// Try the language of the box in female.
-			$text = wfMsgExt( "babel-$level-n-female",
-				array( 'language' => $language ),
-				":Category:{$this->_addFixes( "$language-$level",'category' )}",
-				":Category:{$this->_addFixes( $language,'category' )}"
-			);
-		
-			// Get the fallback message for comparison in female.
-			$fallback = wfMsgExt( "babel-$level-n-female",
-				array( 'language' => Language::getFallbackfor( $language ) ),
-				":Category:{$this->_addFixes( "$language-$level",'category' )}",
-				":Category:{$this->_addFixes( $language,'category' )}"
-			);
-		
-			// Translation not found, use the generic translation of the
-			// highest level fallback possible in female.
-			if( $text == $fallback ) {
-		
-				$text = wfMsgExt( "babel-$level-female",
-					array( 'language' => $language ),
-					":Category:{$this->_addFixes( "$language-$level",'category')}",
-					":Category:{$this->_addFixes( $language,'category' )}",
-					$name
-				);
-		
-			}
+		$categoryLevel = ":Category:{$this->_addFixes( "$language-$level",'category' )}";
+		$categorySuper = ":Category:{$this->_addFixes( $language,'category' )}";
 
-			// Not empty, return.
-			if( $text != '' ) {
-		
-				return $text;
-		
-			}
-
-		} elseif( $this->_gender === self::GENDER_MALE ) {
-
-			// Try the language of the box in male.
-			$text = wfMsgExt( "babel-$level-n-male",
-				array( 'language' => $language ),
-				":Category:{$this->_addFixes( "$language-$level",'category' )}",
-				":Category:{$this->_addFixes( $language,'category' )}"
-			);
-		
-			// Get the fallback message for comparison in male.
-			$fallback = wfMsgExt( "babel-$level-n-male",
-				array( 'language' => Language::getFallbackfor( $language ) ),
-				":Category:{$this->_addFixes( "$language-$level",'category' )}",
-				":Category:{$this->_addFixes( $language,'category' )}"
-			);
-		
-			// Translation not found, use the generic translation of the
-			// highest level fallback possible in male.
-			if( $text == $fallback ) {
-		
-				$text = wfMsgExt( "babel-$level-male",
-					array( 'language' => $language ),
-					":Category:{$this->_addFixes( "$language-$level",'category')}",
-					":Category:{$this->_addFixes( $language,'category' )}",
-					$name
-				);
-		
-			}
-
-			// Not empty, return.
-			if( $text != '' ) {
-		
-				return $text;
-		
-			}
-
+		if( !$wgBabelUseLevelZeroCategory && $level === '0' ) {
+			$categoryLevel = $wgTitle->getFullText();
 		}
 
-		// Try the language of the box.
+		// Try the language of the box in female.
 		$text = wfMsgExt( "babel-$level-n",
-			array( 'language' => $language ),
-			":Category:{$this->_addFixes( "$language-$level",'category' )}",
-			":Category:{$this->_addFixes( $language,'category' )}"
+			array( 'language' => $language, 'parsemag' ),
+			$categoryLevel,
+			$categorySuper,
+			'',
+			$wgTitle->getDBkey()
 		);
 
-		// Get the fallback message for comparison.
+		// Get the fallback message for comparison in female.
 		$fallback = wfMsgExt( "babel-$level-n",
-			array( 'language' => Language::getFallbackfor( $language ) ),
-			":Category:{$this->_addFixes( "$language-$level",'category' )}",
-			":Category:{$this->_addFixes( $language,'category' )}"
+			array( 'language' => Language::getFallbackfor( $language ), 'parsemag' ),
+			$categoryLevel,
+			$categorySuper,
+			'',
+			$wgTitle->getDBkey()
 		);
 
 		// Translation not found, use the generic translation of the
-		// highest level fallback possible.
+		// highest level fallback possible in female.
 		if( $text == $fallback ) {
 
 			$text = wfMsgExt( "babel-$level",
-				array( 'language' => $language ),
-				":Category:{$this->_addFixes( "$language-$level",'category')}",
-				":Category:{$this->_addFixes( $language,'category' )}",
-				$name
+				array( 'language' => $language, 'parsemag' ),
+				$categoryLevel,
+				$categorySuper,
+				$name,
+				$wgTitle->getDBkey()
 			);
 
 		}
@@ -607,153 +389,28 @@ HEREDOC;
 		$r = '';
 
 		// Add to main language category if the level is not zero.
-		if( $wgBabelUseMainCategories && ( $level === 'N' || ( $wgBabelUseLevelZeroCategory && $level === 0 ) || $level > 0 ) ) {
+		if( $wgBabelUseMainCategories && ( $level === 'N' || ( $wgBabelUseLevelZeroCategory && $level === '0' ) || $level > 0 ) ) {
 
 			// Add category wikitext to box tower.
 			$r .= "[[Category:{$this->_addFixes( $code,'category' )}|$level{$wgUser->getName()}]]";
 
-			BabelAutoCreate::create( $this->_addFixes( "$code",'category' ), $this->_nameCode( $code ) );
+			BabelAutoCreate::create( $this->_addFixes( "$code",'category' ), $this->mCodes->getName( $code ) );
 
 		}
 
 		// Add to level categories, only adding it to the level 0
 		// one if it is set to be used.
-		if( !$wgBabelUseSimpleCategories && ( $level === 'N' || ( $wgBabelUseLevelZeroCategory && $level === 0 ) || $level > 0 ) ) {
+		if( !$wgBabelUseSimpleCategories && ( $level === 'N' || ( $wgBabelUseLevelZeroCategory && $level === '0' ) || $level > 0 ) ) {
 
 			// Add category wikitext to box tower.
 			$r .= "[[Category:{$this->_addFixes( "$code-$level",'category' )}|{$wgUser->getName()}]]";
 
-			BabelAutoCreate::create( $this->_addFixes( "$code-$level",'category' ), $level, $this->_nameCode( $code ) );
+			BabelAutoCreate::create( $this->_addFixes( "$code-$level",'category' ), $level, $this->mCodes->getName( $code ) );
 
 		}
 
 		// Return categories.
 		return $r;
-
-	}
-
-	/**
-	 * Load the language codes from a given file into the language codes array.
-	 *
-	 * @param $standard Integer: Standard for the codes being loaded.
-	 * @param $file String: File to load language codes from.
-	 */
-	private function _loadCodes( $standard, $file ) {
-
-		// Include the codes file.
-		include( $file );
-
-		// Push the array of codes into the class method.
-		$this->_codes[ $standard ] = $codes;
-
-	}
-
-	/**
-	 * Check if the specified code is a valid language code.
-	 *
-	 * @param $code String: Code to check.
-	 * @return Boolean: Whether or not the code is valid.
-	 */
-	private function _checkCode( $code ) {
-
-		// Check if the specified code has a key in the codes array for each of the
-		// standards and return result.
-		foreach( $this->_order as $index ) {
-
-			if( array_key_exists( strtolower( $code ), $this->_codes[ $index ] ) ) {
-				return true;
-			}
-
-		}
-
-		/* Try the native MediaWiki names (or CLDR).
-		 */
-		if( class_exists( 'LanguageNames' ) ) {
-			$names = LanguageNames::getNames( $code );
-		} else {
-			$names = Language::getLanguageNames();
-		}
-
-		if( array_key_exists( strtolower( $code ), $names ) ) {
-			return true;
-		}
-
-		/* Not found, return false.
-		 */
-		return false;
-
-	}
-
-	/**
-	 * Get the language code to use for a specific language, in the highest
-	 * ordered standard possible.
-	 *
-	 * @param $code String: Code to get language code for.
-	 * @return String: Correct code.
-	 */
-	private function _getCode( $code ) {
-
-		// Loop through all the standards trying to find the language code
-		// specified.
-		foreach( $this->_order as $standard1 ) {
-
-			if( array_key_exists( strtolower( $code ), $this->_codes[ $standard1 ] ) ) {
-
-				// Loop through all the standards again to find the highest
-				// level alternate code.
-				foreach( $this->_order as $standard2 ) {
-
-					if( $standard1 == $standard2 ) {
-
-							return $code;
-
-					} elseif( array_key_exists( $standard2, $this->_codes[ $standard1 ][ $code ] ) ) {
-
-							return $this->_codes[ $standard1 ][ $code ][ $standard2 ];
-
-					}
-
-				}
-
-			}
-
-		}
-
-		// Nothing found, return input.
-		return $code;
-
-	}
-
-	/**
-	 * Get the name of a language in a specific language (currently only eng
-	 * supported until a index of ISO 639-1 is built with language names).
-	 *
-	 * @param $code String: Code to get name for.
-	 * @param $lang String: Language to get name of code in.
-	 * @return String: Name of language in specified language.
-	 */
-	private function _nameCode( $code, $lang = 'eng' ) {
-
-		$code = $this->_getCode( $code );
-
-		if( array_key_exists( $code, $this->_codes[ 'ISO_639_3' ] ) && array_key_exists( "name_$lang", $this->_codes[ 'ISO_639_3' ][ $code ] ) ) {
-			return $this->_codes[ 'ISO_639_3' ][ $code ][ "name_$lang" ];
-		}
-
-		/* Try the native MediaWiki names (or CLDR).
-		 */
-		if( class_exists( 'LanguageNames' ) ) {
-			$names = LanguageNames::getNames( $code );
-		} else {
-			$names = Language::getLanguageNames();
-		}
-
-		if( array_key_exists( strtolower( $code ), $names ) ) {
-			return $names[ strtolower( $code ) ];
-		}
-
-		// Nothing found, return input.
-		return $code;
 
 	}
 

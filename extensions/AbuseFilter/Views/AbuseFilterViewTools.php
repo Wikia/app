@@ -5,7 +5,7 @@ if (!defined( 'MEDIAWIKI' ))
 
 class AbuseFilterViewTools extends AbuseFilterView {
 	function show( ) {
-		global $wgRequest,$wgOut,$wgUser;
+		global $wgRequest,$wgOut;
 
 		// Header
 		$wgOut->setSubTitle( wfMsg( 'abusefilter-tools-subtitle' ) );
@@ -14,20 +14,16 @@ class AbuseFilterViewTools extends AbuseFilterView {
 		// Expression evaluator
 		$eval = '';
 		$eval .= AbuseFilter::buildEditBox( '', 'wpTestExpr' );
-		
-		// Only let users with permission actually test it
-		if ($wgUser->isAllowed( 'abusefilter-modify' ) ) {
-			$eval .= Xml::tags( 'p', null, 
-				Xml::element( 'input', 
-				array( 
-					'type' => 'button', 
-					'id' => 'mw-abusefilter-submitexpr', 
-					'onclick' => 'doExprSubmit();', 
-					'value' => wfMsg( 'abusefilter-tools-submitexpr' ) ) 
-				) 
-			);
-			$eval .= Xml::element( 'p', array( 'id' => 'mw-abusefilter-expr-result' ), ' ' );
-		}
+		$eval .= Xml::tags( 'p', null, 
+			Xml::element( 'input', 
+			array( 
+				'type' => 'button', 
+				'id' => 'mw-abusefilter-submitexpr', 
+				'onclick' => 'doExprSubmit();', 
+				'value' => wfMsg( 'abusefilter-tools-submitexpr' ) ) 
+			) 
+		);
+		$eval .= Xml::element( 'p', array( 'id' => 'mw-abusefilter-expr-result' ), ' ' );
 		$eval = Xml::fieldset( wfMsg( 'abusefilter-tools-expr' ), $eval );
 		$wgOut->addHTML( $eval );
 

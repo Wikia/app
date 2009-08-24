@@ -127,6 +127,13 @@ $messages['gl'] = array(
 	'breadcrumbs-desc' => 'Amosa aos usuarios a traxectoria a través do wiki.',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'breadcrumbs-desc' => 'Zeigt dr Weg vum Benutzer dur s Wiki.',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  */
@@ -139,6 +146,13 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'breadcrumbs-desc' => 'विकिमें सदस्यका पाथ दर्शाता हैं।',
+);
+
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'breadcrumbs-desc' => 'Pokazuje put suradnika kroz wiki.',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -167,6 +181,13 @@ $messages['ia'] = array(
  */
 $messages['is'] = array(
 	'breadcrumbs-desc' => 'Sýnir flakk notenda á wiki-síðunni',
+);
+
+/** Italian (Italiano)
+ * @author Pietrodn
+ */
+$messages['it'] = array(
+	'breadcrumbs-desc' => 'Mostra gli utenti il percorso attraverso la wiki.',
 );
 
 /** Japanese (日本語)
@@ -202,6 +223,13 @@ $messages['ksh'] = array(
  */
 $messages['lb'] = array(
 	'breadcrumbs-desc' => "Weist de Benotzer hire Wee duerch d'Wiki.",
+);
+
+/** Limburgish (Limburgs)
+ * @author Ooswesthoesbes
+ */
+$messages['li'] = array(
+	'breadcrumbs-desc' => 'Tuuntj gebroekerspaad dore wiki.',
 );
 
 /** Marathi (मराठी)
@@ -281,6 +309,13 @@ $messages['pt'] = array(
 	'breadcrumbs-desc' => 'Mostra o caminho dos utilizadores através do wiki.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'breadcrumbs-desc' => 'Mostra o caminho dos utilizadores através do wiki.',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -300,6 +335,13 @@ $messages['ru'] = array(
  */
 $messages['sk'] = array(
 	'breadcrumbs-desc' => 'Zobrazí cestu používateľa vo wiki.',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'breadcrumbs-desc' => 'Tregon rrugën e përdoruesit nëpër wiki.',
 );
 
 /** Seeltersk (Seeltersk)
@@ -342,6 +384,13 @@ $messages['tet'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'breadcrumbs-desc' => 'Роҳи корбар тариқи викиро нишон медиҳад.',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'breadcrumbs-desc' => 'Nagpapakita ng daanan ng mga tagagamit sa pamamagitan ng wiki.',
 );
 
 /** Ukrainian (Українська)

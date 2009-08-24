@@ -74,8 +74,13 @@ class ApiQueryAllmessages extends ApiQueryBase {
 
 		//Get all requested messages
 		$messages = array();
+		$skip = !is_null($params['from']);
 		foreach( $messages_target as $message ) {
-			$messages[$message] = wfMsg( $message );
+			// Skip all messages up to $params['from']
+			if($skip && $message === $params['from'])
+				$skip = false;
+			if(!$skip)
+				$messages[$message] = wfMsg( $message );
 		}
 
 		//Print the result
@@ -89,10 +94,14 @@ class ApiQueryAllmessages extends ApiQueryBase {
 			} else {
 				$result->setContent( $message, $value );
 			}
-			$messages_out[] = $message;
+			$fit = $result->addValue(array('query', $this->getModuleName()), null, $message);
+			if(!$fit)
+			{
+				$this->setContinueEnumParameter('from', $name);
+				break;
+			}
 		}
-		$result->setIndexedTagName( $messages_out, 'message' );
-		$result->addValue( 'query', $this->getModuleName(), $messages_out );
+		$result->setIndexedTagName_internal(array('query', $this->getModuleName()), 'message');
 	}
 
 	public function getAllowedParams() {
@@ -102,6 +111,7 @@ class ApiQueryAllmessages extends ApiQueryBase {
 			),
 			'filter' => array(),
 			'lang' => null,
+			'from' => null,
 		);
 	}
 
@@ -110,6 +120,7 @@ class ApiQueryAllmessages extends ApiQueryBase {
 			'messages' => 'Which messages to output. "*" means all messages',
 			'filter' => 'Return only messages that contain this string',
 			'lang' => 'Return messages in this language',
+			'from' => 'Return messages starting at this message',
 		);
 	}
 
@@ -125,6 +136,6 @@ class ApiQueryAllmessages extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryAllmessages.php 37504 2008-07-10 14:28:09Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryAllmessages.php 47048 2009-02-09 19:24:28Z catrope $';
 	}
 }

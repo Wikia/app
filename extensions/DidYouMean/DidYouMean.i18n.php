@@ -46,6 +46,13 @@ $messages['bg'] = array(
 	'didyoumean-desc' => 'Добавя препратки към страници със „подобни” заглавия',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'didyoumean-desc' => 'Dodaje linkove prema stranicama sa "sličnim" naslovima',
+);
+
 /** Catalan (Català)
  * @author SMP
  */
@@ -58,6 +65,13 @@ $messages['ca'] = array(
  */
 $messages['cs'] = array(
 	'didyoumean-desc' => 'Přidává odkazy na stránky s „podobnými“ názvy',
+);
+
+/** Danish (Dansk)
+ * @author Byrial
+ */
+$messages['da'] = array(
+	'didyoumean-desc' => 'Tilføjer henvisninger til sider med "lignende" titler',
 );
 
 /** German (Deutsch)
@@ -103,6 +117,13 @@ $messages['eu'] = array(
 	'didyoumean-desc' => '"antzeko" izenburua duten orrialdetara loturak gehitzen ditu',
 );
 
+/** Persian (فارسی)
+ * @author Momeni
+ */
+$messages['fa'] = array(
+	'didyoumean-desc' => 'به صفحه‌های با عنوان مشابه، پیوند می‌افزاید.',
+);
+
 /** Finnish (Suomi)
  * @author Jaakonam
  * @author Nike
@@ -125,6 +146,13 @@ $messages['gl'] = array(
 	'didyoumean-desc' => 'Engade ligazóns cara a páxinas con títulos "similares"',
 );
 
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'didyoumean-desc' => 'Fiegt in Syte Gleicher yy mit ähnlige Titel',
+);
+
 /** Hebrew (עברית)
  * @author Rotemliss
  */
@@ -137,6 +165,13 @@ $messages['he'] = array(
  */
 $messages['hi'] = array(
 	'didyoumean-desc' => '"समान" शीर्षक होने वाले पन्नोंमें कड़ीयाँ देता हैं',
+);
+
+/** Croatian (Hrvatski)
+ * @author SpeedyGonsales
+ */
+$messages['hr'] = array(
+	'didyoumean-desc' => 'Dodaj poveznice na stranice sa "sličnim" naslovima',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -217,11 +252,18 @@ $messages['nah'] = array(
 	'didyoumean-desc' => 'Tiquincēntilīz tzonhuiliztli zāzanilhuīc īca "achi neneuhqui" in ītōca',
 );
 
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'didyoumean-desc' => 'Föögt Lenken to Sieden mit ähnliche Titels to',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'didyoumean-desc' => 'Links toevoegen naar pagina\'s met "gelijksoortige" namen',
+	'didyoumean-desc' => 'Verwijzingen toevoegen naar pagina\'s met "gelijksoortige" namen',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -246,16 +288,24 @@ $messages['oc'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sp5uhe
  * @author Wpedzich
  */
 $messages['pl'] = array(
-	'didyoumean-desc' => 'Dodaje linki do stron o "podobnych" tytułach',
+	'didyoumean-desc' => 'Dodaje linki do stron o „podobnych” tytułach',
 );
 
 /** Portuguese (Português)
  * @author Malafaya
  */
 $messages['pt'] = array(
+	'didyoumean-desc' => 'Adiciona ligações a páginas com títulos "semelhantes"',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
 	'didyoumean-desc' => 'Adiciona ligações a páginas com títulos "semelhantes"',
 );
 
@@ -287,6 +337,20 @@ $messages['sk'] = array(
 	'didyoumean-desc' => 'Pridať odkazy na stránky s „podobnými“ názvami',
 );
 
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'didyoumean-desc' => 'Vendosë lidhje në faqet me tituj "të ngjashëm"',
+);
+
+/** Sundanese (Basa Sunda)
+ * @author Kandar
+ */
+$messages['su'] = array(
+	'didyoumean-desc' => 'Nambahkeun tumbu ka kaca-kaca nu judulna "sawanda"',
+);
+
 /** Swedish (Svenska)
  * @author M.M.S.
  */
@@ -313,6 +377,13 @@ $messages['tet'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'didyoumean-desc' => 'Ба саҳифаҳои бо унвонҳои "монандӣ" пайвандҳо илова кунед',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'didyoumean-desc' => 'Nagdaragdag ng mga kawing sa mga pahinang may "kahawig" na mga pamagat',
 );
 
 /** Turkish (Türkçe)
@@ -348,6 +419,13 @@ $messages['vi'] = array(
  */
 $messages['vo'] = array(
 	'didyoumean-desc' => 'Läükon yümis ad pads labü tiäds "sümik"',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'didyoumean-desc' => 'לייגט צו לינקען צו בלעטער מיט "ענלעכע" קעפלעך',
 );
 
 /** Simplified Chinese (‪中文(简体)‬)

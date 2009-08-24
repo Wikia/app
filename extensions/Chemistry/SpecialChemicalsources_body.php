@@ -219,7 +219,7 @@ class SpecialChemicalsources extends SpecialPage {
 	#Creates a table row
 	function GetParam_Row($p, $q, $action, $go) {
 		global $wgOut;
-		$wgOut->addHTML ( wfMsg( $p ) . ": ");
+		$wgOut->addHTML ( wfMsg( $p ) . wfMsg( 'colon-separator' ) );
 		$wgOut->addHTML("</td><td>
 			<form action=\"$action\" method='post'>
 				<input name=\"$q\" id=\"$q\" />

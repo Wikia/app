@@ -275,7 +275,6 @@ $messages = array(
 'versionrequiredtext' => 'यह पन्ना इस्तेमाल करने के लिये मीडियाविकीका $1 अवतरण ज़रूरी हैं । देखें [[Special:Version|अवतरण सूची]] ।',
 
 'ok'                      => 'ओके',
-'pagetitle'               => '$1 - विकिपीडिया',
 'retrievedfrom'           => '"$1" से लिया गया',
 'youhavenewmessages'      => 'आपके लिए $1 है। ($2)',
 'newmessageslink'         => 'नया संदेश',
@@ -726,13 +725,11 @@ Don't forget to personalize your {{SITENAME}} preferences.",
 'rev-deleted-comment'         => '(टिप्पणी हटाई)',
 'rev-deleted-user'            => '(सदस्यनाम हटाया)',
 'rev-deleted-event'           => '(कार्यकी नोंद हटाई)',
-'rev-deleted-text-permission' => '<div class="mw-warning plainlinks">
-इस लेख का अवतरण सामान्य डाटाबेससे हटाया गया हैं।
-इसकी अधिक जानकारी [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} हटाने की सूची] में पाईं जा सकती हैं।</div>',
-'rev-deleted-text-view'       => '<div class="mw-warning plainlinks">
-इस लेख का अवतरण सामान्य डाटाबेससे हटाया गया हैं।
+'rev-deleted-text-permission' => 'इस लेख का अवतरण सामान्य डाटाबेससे हटाया गया हैं।
+इसकी अधिक जानकारी [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} हटाने की सूची] में पाईं जा सकती हैं।',
+'rev-deleted-text-view'       => 'इस लेख का अवतरण सामान्य डाटाबेससे हटाया गया हैं।
 {{SITENAME}} पर प्रबंधक होनेके नाते आप इसे देख सकतें हैं।
-इसकी अधिक जानकारी [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} हटाने की सूची] में पाईं जा सकती हैं।</div>',
+इसकी अधिक जानकारी [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} हटाने की सूची] में पाईं जा सकती हैं।',
 'rev-delundel'                => 'दिखायें/छुपायें',
 'revisiondelete'              => 'अवतरण हटायें/पुनर्स्थापित करें',
 'revdelete-nooldid-title'     => 'लक्ष्य अवतरण गलत',
@@ -1196,35 +1193,30 @@ PICT # misc.
 'listfiles_description' => 'ज़ानकारी',
 
 # File description page
-'filehist'                       => 'फ़ाईलका इतिहास',
-'filehist-help'                  => 'फ़ाईलका पुराना अवतरण देखनेके लिये दिनांक/समय पर क्लीक करें।',
-'filehist-deleteall'             => 'सभी हटायें',
-'filehist-deleteone'             => 'हटायें',
-'filehist-revert'                => 'पूर्ववत करें',
-'filehist-current'               => 'सद्य',
-'filehist-datetime'              => 'दिनांक/समय',
-'filehist-user'                  => 'सदस्य',
-'filehist-dimensions'            => 'डायमेन्शन्स',
-'filehist-filesize'              => 'फ़ाईलका आकार (बाईट्स)',
-'filehist-comment'               => 'प्रतिक्रीया',
-'imagelinks'                     => 'कड़ियाँ',
-'linkstoimage'                   => 'निम्नलिखित पन्ने इस चित्र से जुडते हैं :',
-'nolinkstoimage'                 => 'इस चित्र से कोई पन्ने नहीं जुडते',
-'morelinkstoimage'               => 'इस फ़ाईलकी [[Special:WhatLinksHere/$1|और कडी़याँ]] देखें।',
-'redirectstofile'                => 'नीचे दी हुई फ़ाइलें इस फ़ाईलको अनुप्रेषितें हैं:',
-'duplicatesoffile'               => 'निम्नलिखित फ़ाइलें इस फ़ाइलकी कापीयाँ हैं:',
-'sharedupload'                   => 'यह फ़ाईल दुसरेभी प्रोजेक्ट्समें इस्तेमाल की हुई होनेकी आशंका है ।',
-'shareduploadwiki'               => 'अधिक ज़ानकारी के लिये $1 देखें।',
-'shareduploadwiki-desc'          => 'ज़ानकारी जो $1 पर शेअर्ड रिपोजिटरीमें हैं नीचे दी हुई हैं।',
-'shareduploadwiki-linktext'      => 'फ़ाईल ज़ानकारी पन्ना',
-'shareduploadduplicate'          => 'यह फ़ाईल शेअर्ड रिपॉझिटरी में उपलब्ध $1 की कापी हैं',
-'shareduploadduplicate-linktext' => 'अन्य फ़ाईल',
-'shareduploadconflict'           => 'इस फ़ाईल का नाम शेअर्ड रिपॉझिटरी में उपलब्ध $1 से मिलता हैं।',
-'shareduploadconflict-linktext'  => 'अन्य फ़ाईल',
-'noimage'                        => 'इस नामसे कोई भी फ़ाईल नहीं है, आप $1 कर सकते हैं ।',
-'noimage-linktext'               => 'चढाईयें',
-'uploadnewversion-linktext'      => 'इस फ़ाईलका नया अवतरण अपलोड करें',
-'imagepage-searchdupe'           => 'डुप्लिकेट फ़ाईलें खोजें',
+'filehist'                  => 'फ़ाईलका इतिहास',
+'filehist-help'             => 'फ़ाईलका पुराना अवतरण देखनेके लिये दिनांक/समय पर क्लीक करें।',
+'filehist-deleteall'        => 'सभी हटायें',
+'filehist-deleteone'        => 'हटायें',
+'filehist-revert'           => 'पूर्ववत करें',
+'filehist-current'          => 'सद्य',
+'filehist-datetime'         => 'दिनांक/समय',
+'filehist-user'             => 'सदस्य',
+'filehist-dimensions'       => 'डायमेन्शन्स',
+'filehist-filesize'         => 'फ़ाईलका आकार (बाईट्स)',
+'filehist-comment'          => 'प्रतिक्रीया',
+'imagelinks'                => 'कड़ियाँ',
+'linkstoimage'              => 'निम्नलिखित पन्ने इस चित्र से जुडते हैं :',
+'nolinkstoimage'            => 'इस चित्र से कोई पन्ने नहीं जुडते',
+'morelinkstoimage'          => 'इस फ़ाईलकी [[Special:WhatLinksHere/$1|और कडी़याँ]] देखें।',
+'redirectstofile'           => 'नीचे दी हुई फ़ाइलें इस फ़ाईलको अनुप्रेषितें हैं:',
+'duplicatesoffile'          => 'निम्नलिखित फ़ाइलें इस फ़ाइलकी कापीयाँ हैं:',
+'sharedupload'              => 'यह फ़ाईल दुसरेभी प्रोजेक्ट्समें इस्तेमाल की हुई होनेकी आशंका है ।', # $1 is the repo name, $2 is shareduploadwiki(-desc)
+'shareduploadwiki'          => 'अधिक ज़ानकारी के लिये $1 देखें।',
+'shareduploadwiki-desc'     => 'ज़ानकारी जो $1 पर शेअर्ड रिपोजिटरीमें हैं नीचे दी हुई हैं।',
+'shareduploadwiki-linktext' => 'फ़ाईल ज़ानकारी पन्ना',
+'noimage'                   => 'इस नामसे कोई भी फ़ाईल नहीं है, आप $1 कर सकते हैं ।',
+'noimage-linktext'          => 'चढाईयें',
+'uploadnewversion-linktext' => 'इस फ़ाईलका नया अवतरण अपलोड करें',
 
 # File reversion
 'filerevert'                => '$1 पूर्ववत करें',
@@ -1401,7 +1393,8 @@ PICT # misc.
 'special-categories-sort-abc'   => 'वर्णानुक्रम के अनुसार दर्शायें',
 
 # Special:DeletedContributions
-'deletedcontributions' => 'हटाये गये सदस्य योगदान',
+'deletedcontributions'       => 'हटाये गये सदस्य योगदान',
+'deletedcontributions-title' => 'हटाये गये सदस्य योगदान',
 
 # Special:LinkSearch
 'linksearch'       => 'वेब कड़ीयाँ खोजें',
@@ -1685,7 +1678,7 @@ $1',
 'contributions' => 'सदस्य योगदान',
 'mycontris'     => 'मेरा योगदान',
 'contribsub2'   => '$1 के लिये ($2)',
-'nocontribs'    => 'इन कसौटियों से मिलनेवाले बदलाव मिले नहीं।',
+'nocontribs'    => 'इन कसौटियों से मिलनेवाले बदलाव मिले नहीं।', # Optional parameter: $1 is the user name
 'uctop'         => '(उपर)',
 'month'         => 'इस महिनेसे (और पुरानें):',
 'year'          => 'इस सालसे (और पुराने):',
@@ -2140,6 +2133,7 @@ $1',
 * datetimeoriginal
 * exposuretime
 * fnumber
+* isospeedratings
 * focallength', # Do not translate list items
 
 # EXIF tags
@@ -2412,8 +2406,8 @@ $1',
 आपके एड्रेस पर एक कन्फर्मेशन कोड भेजने के लिये नीचे दिये बटन पर क्लिक करें।
 उस मेल में एक कोड से लदी एक कड़ी होगी;
 आपके इ-मेल के प्रमाणिकरण के लिये इसे अपने ब्राउज़रमें खोलें।',
-'confirmemail_pending'     => '<div class="error">आपको पहलेसे ही एक कन्फर्मेशन कोड भेजा गया हैं;
-अगर आपने हालमें खाता खोला हैं, तो नये कोड की माँग करने से पहले कुछ पल उसका इंतज़ार करें।</div>',
+'confirmemail_pending'     => 'आपको पहलेसे ही एक कन्फर्मेशन कोड भेजा गया हैं;
+अगर आपने हालमें खाता खोला हैं, तो नये कोड की माँग करने से पहले कुछ पल उसका इंतज़ार करें।',
 'confirmemail_send'        => 'एक कन्फर्मेशन कोड भेजें',
 'confirmemail_sent'        => 'कन्फर्मेशन इ-मेल भेज दिया।',
 'confirmemail_oncreate'    => 'आपके इ-मेल पते पर एक कन्फर्मेशन कोड भेजा गया हैं।
@@ -2453,8 +2447,9 @@ $5
 'scarytranscludetoolong'  => '[URL बहुत लंबी; माफ किजीये]',
 
 # Trackbacks
-'trackbackbox'      => '<div id="mw_trackbacks">इस पन्ने के लिये ट्रैकबैक:<br />$1</div>',
-'trackbackremove'   => ' ([$1 हटायें])',
+'trackbackbox'      => 'इस पन्ने के लिये ट्रैकबैक:<br />
+$1',
+'trackbackremove'   => '([$1 हटायें])',
 'trackbacklink'     => 'ट्रैकबैक',
 'trackbackdeleteok' => 'ट्रैकबैक को हटाया गया।',
 

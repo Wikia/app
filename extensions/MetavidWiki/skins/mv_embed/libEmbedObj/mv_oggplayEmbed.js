@@ -2,6 +2,7 @@
  * oggPlay embed 
  * plugin: http://www.annodex.net/software/plugin/index.html
  * javascript refrence: http://wiki.xiph.org/index.php/OggPlayJavascriptAPI
+ @@TODO should be depreciated... no one is maintaining oggPlay
  */
 var oggplayEmbed = {
 	instanceOf:'oggplayEmbed',

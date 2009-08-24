@@ -29,7 +29,7 @@ if (!defined('MEDIAWIKI')) {
 }
 
 /**
- * This query adds <categories> subelement to all pages with the list of images embedded into those pages.
+ * This query adds the <categories> subelement to all pages with the list of categories the page is in
  *
  * @ingroup API
  */
@@ -39,7 +39,8 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 		parent :: __construct($query, $moduleName, 'ci');
 	}
 
-	public function execute() {			
+	public function execute() {
+		$params = $this->extractRequestParams();
 		$alltitles = $this->getPageSet()->getAllTitlesByNamespace();
 		if ( empty( $alltitles[NS_CATEGORY] ) ) {
 			return;
@@ -65,25 +66,47 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 				'pp_propname' => 'hiddencat')),
 		));
 		$this->addFields(array('cat_title', 'cat_pages', 'cat_subcats', 'cat_files', 'pp_propname AS cat_hidden'));
-		$this->addWhere(array('cat_title' => $cattitles));			
+		$this->addWhere(array('cat_title' => $cattitles));
+		if(!is_null($params['continue']))
+		{
+			$title = $this->getDB()->addQuotes($params['continue']);
+			$this->addWhere("cat_title >= $title");
+		} 
+		$this->addOption('ORDER BY', 'cat_title');
 
 		$db = $this->getDB();
 		$res = $this->select(__METHOD__);
 
-		$data = array();
 		$catids = array_flip($cattitles);
 		while($row = $db->fetchObject($res))
 		{
 			$vals = array();
-			$vals['size'] = $row->cat_pages;
+			$vals['size'] = intval($row->cat_pages);
 			$vals['pages'] = $row->cat_pages - $row->cat_subcats - $row->cat_files;
-			$vals['files'] = $row->cat_files;
-			$vals['subcats'] = $row->cat_subcats;
+			$vals['files'] = intval($row->cat_files);
+			$vals['subcats'] = intval($row->cat_subcats);
 			if($row->cat_hidden)
 				$vals['hidden'] = '';
-			$this->addPageSubItems($catids[$row->cat_title], $vals);
+			$fit = $this->addPageSubItems($catids[$row->cat_title], $vals);
+			if(!$fit)
+			{
+				$this->setContinueEnumParameter('continue', $row->cat_title);
+				break;
+			}
 		}
 		$db->freeResult($res);
+	}
+
+	public function getAllowedParams() {
+		return array (
+			'continue' => null,
+		);
+	}
+
+	public function getParamDescription() {
+		return array (
+			'continue' => 'When more results are available, use this to continue',
+		);
 	}
 
 	public function getDescription() {
@@ -95,6 +118,6 @@ class ApiQueryCategoryInfo extends ApiQueryBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryCategoryInfo.php 44590 2008-12-14 20:24:23Z catrope $';
+		return __CLASS__ . ': $Id: ApiQueryCategoryInfo.php 47865 2009-02-27 16:03:01Z catrope $';
 	}
 }

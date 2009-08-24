@@ -193,21 +193,22 @@ $messages['bcc'] = array(
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
+ * @author Red Winged Duck
  */
 $messages['be-tarask'] = array(
-	'pfunc_desc' => 'Палепшаны парсэр з лягічнымі функцыямі',
+	'pfunc_desc' => 'Палепшаны парсэр зь лягічнымі функцыямі',
 	'pfunc_time_error' => 'Памылка: няслушны час',
 	'pfunc_time_too_long' => 'Памылка: зашмат выклікаў функцыі #time',
-	'pfunc_rel2abs_invalid_depth' => 'Памылка: Няслушныя глыбіня шляху: «$1» (спроба доступу да вузла, які знаходзіцца вышэй карэннага)',
-	'pfunc_expr_stack_exhausted' => 'Памылка выразу: Стэк перапоўнены',
-	'pfunc_expr_unexpected_number' => 'Памылка выразу: Нечаканая лічба',
-	'pfunc_expr_preg_match_failure' => 'Памылка выразу: Нечаканая памылка preg_match',
-	'pfunc_expr_unrecognised_word' => 'Памылка выразу: Нераспазнанае слова «$1»',
-	'pfunc_expr_unexpected_operator' => 'Памылка выразу: Нечаканы апэратар $1',
-	'pfunc_expr_missing_operand' => 'Памылка выразу: Няма апэранду $1',
-	'pfunc_expr_unexpected_closing_bracket' => 'Памылка выразу: Нечаканая закрываючая дужка',
-	'pfunc_expr_unrecognised_punctuation' => 'Памылка выразу: Нераспазнаны сымбаль пунктуацыі «$1»',
-	'pfunc_expr_unclosed_bracket' => 'Памылка выразу: Незакрытая дужка',
+	'pfunc_rel2abs_invalid_depth' => 'Памылка: няслушная глыбіня шляху: «$1» (спроба доступу да вузла, які знаходзіцца вышэй карэннага)',
+	'pfunc_expr_stack_exhausted' => 'Памылка выразу: стэк перапоўнены',
+	'pfunc_expr_unexpected_number' => 'Памылка выразу: нечаканая лічба',
+	'pfunc_expr_preg_match_failure' => 'Памылка выразу: нечаканая памылка preg_match',
+	'pfunc_expr_unrecognised_word' => 'Памылка выразу: нераспазнанае слова «$1»',
+	'pfunc_expr_unexpected_operator' => 'Памылка выразу: нечаканы апэратар $1',
+	'pfunc_expr_missing_operand' => 'Памылка выразу: няма апэранду $1',
+	'pfunc_expr_unexpected_closing_bracket' => 'Памылка выразу: нечаканая закрываючая дужка',
+	'pfunc_expr_unrecognised_punctuation' => 'Памылка выразу: нераспазнаны сымбаль пунктуацыі «$1»',
+	'pfunc_expr_unclosed_bracket' => 'Памылка выразу: незакрытая дужка',
 	'pfunc_expr_division_by_zero' => 'Дзяленьне на нуль',
 	'pfunc_expr_invalid_argument' => 'Памылковы аргумэнт для $1: < -1 ці > 1',
 	'pfunc_expr_invalid_argument_ln' => 'Памылковы аргумэнт для ln: <= 0',
@@ -366,22 +367,26 @@ $messages['cs'] = array(
 );
 
 /** Danish (Dansk)
+ * @author Byrial
  * @author Morten LJ
  */
 $messages['da'] = array(
-	'pfunc_desc' => 'Udvidet parser med logiske funktioner',
+	'pfunc_desc' => 'Udvider parser med logiske funktioner',
 	'pfunc_time_error' => 'Fejl: Ugyldig tid',
-	'pfunc_time_too_long' => 'Felj: for mange #time kald',
-	'pfunc_expr_stack_exhausted' => 'Udtryksfejl: Stack tømt',
-	'pfunc_expr_unexpected_number' => 'Fejl: Uventet nummer',
-	'pfunc_expr_preg_match_failure' => 'Udtryksfejl: Uventet preg_match fejl',
+	'pfunc_time_too_long' => 'Felj: for mange kald af #time',
+	'pfunc_rel2abs_invalid_depth' => 'Fejl: Ugyldig dybde i sti: "$1" (prøvede at tilgå en knude over rodknuden)',
+	'pfunc_expr_stack_exhausted' => 'Udtryksfejl: Stak tømt',
+	'pfunc_expr_unexpected_number' => 'Fejl: Uventet tal',
+	'pfunc_expr_preg_match_failure' => 'Udtryksfejl: Uventet fejl i preg_match',
 	'pfunc_expr_unrecognised_word' => 'Udtryksfejl: Uventet ord "$1"',
-	'pfunc_expr_unexpected_operator' => 'Udtryksfejl: Uventet $1 operator',
+	'pfunc_expr_unexpected_operator' => 'Udtryksfejl: Uventet "$1"-operator',
 	'pfunc_expr_missing_operand' => 'Udtryksfejl: Manglende operand til $1',
-	'pfunc_expr_unexpected_closing_bracket' => 'Udtryksfejl: Uventet "]"-tegn',
+	'pfunc_expr_unexpected_closing_bracket' => 'Udtryksfejl: Uventet lukkende parentes',
 	'pfunc_expr_unrecognised_punctuation' => 'Udtryksfejl: Uventet tegnsætning-tegn: "$1"',
 	'pfunc_expr_unclosed_bracket' => 'Udtryksfejl: Uafsluttet kantet parantes',
 	'pfunc_expr_division_by_zero' => 'Division med nul',
+	'pfunc_expr_invalid_argument' => 'Ugyldigt argument for $1: < -1 eller > 1',
+	'pfunc_expr_invalid_argument_ln' => 'Ugyldigt argument for ln: <= 0',
 	'pfunc_expr_unknown_error' => 'Udtryksfejl: Ukendt fejl ($1)',
 	'pfunc_expr_not_a_number' => 'I $1: Resultatet er ikke et tal',
 );
@@ -410,6 +415,13 @@ $messages['de'] = array(
 	'pfunc_expr_not_a_number' => 'Expression-Fehler: In $1: Ergebnis ist keine Zahl',
 );
 
+/** Swiss High German (Schweizer Hochdeutsch)
+ * @author MichaelFrey
+ */
+$messages['de-ch'] = array(
+	'pfunc_expr_unexpected_closing_bracket' => 'Expression-Fehler: Unerwartete schliessende eckige Klammer',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -436,11 +448,28 @@ $messages['dsb'] = array(
 
 /** Greek (Ελληνικά)
  * @author Consta
+ * @author Dead3y3
  * @author Απεργός
  */
 $messages['el'] = array(
+	'pfunc_desc' => 'Βελτιώνει το συντακτικό αναλυτή με λογικές συναρτήσεις',
 	'pfunc_time_error' => 'Σφάλμα: άκυρος χρόνος',
 	'pfunc_time_too_long' => 'Σφάλμα: πάρα πολλές κλήσεις της #time',
+	'pfunc_rel2abs_invalid_depth' => 'Σφάλμα: Άκυρο βάθος στη διαδρομή: «$1» (έγινε προσπάθεια για πρόσβαση σε έναν κόμβο πάνω από τον ριζικό κόμβο)',
+	'pfunc_expr_stack_exhausted' => 'Σφάλμα έκφρασης: Η στοίβα εξαντλήθηκε',
+	'pfunc_expr_unexpected_number' => 'Σφάλμα έκφρασης: Μη αναμενόμενος αριθμός',
+	'pfunc_expr_preg_match_failure' => 'Σφάλμα έκφρασης: Μη αναμενόμενη αποτυχία preg_match',
+	'pfunc_expr_unrecognised_word' => 'Σφάλμα έκφρασης: Μη αναγνωρίσιμη λέξη "$1"',
+	'pfunc_expr_unexpected_operator' => 'Σφάλμα έκφρασης: Μη αναμενόμενος τελεστής $1',
+	'pfunc_expr_missing_operand' => 'Σφάλμα έκφρασης: Λείπει ο τελεστέος για την έκφραση $1',
+	'pfunc_expr_unexpected_closing_bracket' => 'Σφάλμα έκφρασης: Μη αναμενόμενη αγκύλη κλεισίματος',
+	'pfunc_expr_unrecognised_punctuation' => 'Σφάλμα έκφρασης: Μη αναγνρίσμος χαρακτήρας στίξης "$1"',
+	'pfunc_expr_unclosed_bracket' => 'Σφάλμα έκφρασης: Αγκύλη χωρίς κλείσιμο',
+	'pfunc_expr_division_by_zero' => 'Διαίρεση με το μηδέν',
+	'pfunc_expr_invalid_argument' => 'Άκυρη παράμετρος για το $1: < -1 ή > 1',
+	'pfunc_expr_invalid_argument_ln' => 'Άκυρη παράμετρος για το ln: <= 0',
+	'pfunc_expr_unknown_error' => 'Σφάλμα έκφρασης: Άγνωστο σφάλμα ($1)',
+	'pfunc_expr_not_a_number' => 'Στο $1: το αποτέλεσμα δεν είναι αριθμός',
 );
 
 /** Esperanto (Esperanto)
@@ -555,26 +584,27 @@ $messages['fi'] = array(
  * @author IAlex
  * @author Sherbrooke
  * @author Urhixidur
+ * @author Verdy p
  */
 $messages['fr'] = array(
 	'pfunc_desc' => 'Améliore le parseur avec des fonctions logiques',
 	'pfunc_time_error' => 'Erreur : durée invalide',
-	'pfunc_time_too_long' => 'Erreur : <code>#time</code> appelé trop de fois',
-	'pfunc_rel2abs_invalid_depth' => 'Erreur: niveau de répertoire invalide dans le chemin : « $1 » (a essayé d’accéder à un niveau au-dessus du répertoire racine)',
-	'pfunc_expr_stack_exhausted' => 'Expression erronée : pile épuisée',
-	'pfunc_expr_unexpected_number' => 'Expression erronée : nombre inattendu',
-	'pfunc_expr_preg_match_failure' => 'Expression erronée : échec inattendu pour <code>preg_match</code>',
-	'pfunc_expr_unrecognised_word' => "Erreur d'expression : le mot « $1 » n'est pas reconnu",
-	'pfunc_expr_unexpected_operator' => "Erreur d'expression : l'opérateur '''$1''' n'est pas reconnu",
-	'pfunc_expr_missing_operand' => "Erreur d’expression : l’opérande '''$1''' n’est pas reconnue",
+	'pfunc_time_too_long' => 'Erreur : appels trop nombreux à <code>#time</code>',
+	'pfunc_rel2abs_invalid_depth' => 'Erreur: profondeur invalide dans le chemin « $1 » (a essayé d’accéder à un niveau au-dessus du nœud racine)',
+	'pfunc_expr_stack_exhausted' => 'Erreur d’expression : pile épuisée',
+	'pfunc_expr_unexpected_number' => 'Erreur d’expression : nombre inattendu',
+	'pfunc_expr_preg_match_failure' => 'Erreur d’expression : échec inattendu de <code>preg_match</code>',
+	'pfunc_expr_unrecognised_word' => 'Erreur d’expression : mot « $1 » non reconnu',
+	'pfunc_expr_unexpected_operator' => "Erreur d’expression : opérateur '''$1''' inattendu",
+	'pfunc_expr_missing_operand' => "Erreur d’expression : opérande manquant pour '''$1'''",
 	'pfunc_expr_unexpected_closing_bracket' => 'Erreur d’expression : parenthèse fermante inattendue',
-	'pfunc_expr_unrecognised_punctuation' => "Erreur d'expression : caractère de ponctuation « $1 » non reconnu",
+	'pfunc_expr_unrecognised_punctuation' => 'Erreur d’expression : caractère de ponctuation « $1 » non reconnu',
 	'pfunc_expr_unclosed_bracket' => 'Erreur d’expression : parenthèse non fermée',
 	'pfunc_expr_division_by_zero' => 'Division par zéro',
-	'pfunc_expr_invalid_argument' => 'Valeur incorrecte pour $1 : < -1 ou > 1',
-	'pfunc_expr_invalid_argument_ln' => 'Valeur incorrecte pour ln : ≤ 0',
-	'pfunc_expr_unknown_error' => "Erreur d'expression : erreur inconnue ($1)",
-	'pfunc_expr_not_a_number' => "Dans $1 : le résultat n'est pas un nombre",
+	'pfunc_expr_invalid_argument' => "Argument incorrect pour '''$1''' : &lt; -1 ou &gt; 1",
+	'pfunc_expr_invalid_argument_ln' => "Argument incorrect pour '''ln''' : ≤ 0",
+	'pfunc_expr_unknown_error' => 'Erreur d’expression : erreur inconnue ($1)',
+	'pfunc_expr_not_a_number' => 'Dans $1 : le résultat n’est pas un nombre',
 );
 
 /** Franco-Provençal (Arpetan)
@@ -623,6 +653,30 @@ $messages['gl'] = array(
 	'pfunc_expr_invalid_argument_ln' => 'Argumento inválido para ln: <= 0',
 	'pfunc_expr_unknown_error' => 'Erro de expresión: erro descoñecido ($1)',
 	'pfunc_expr_not_a_number' => 'En $1: o resultado non é un número',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'pfunc_desc' => 'Erwyteret dr Parser um logischi Funktione',
+	'pfunc_time_error' => 'Fähler: uugiltigi Zytaagab',
+	'pfunc_time_too_long' => 'Fähler: z vyyl #time-Ufruef',
+	'pfunc_rel2abs_invalid_depth' => 'Fähler: uugültigi Tiefi im Pfad: „$1“ (Versuech, uf e Chnotepunkt oberhalb vum Hauptchnotepunkt zuezgryfe)',
+	'pfunc_expr_stack_exhausted' => 'Expression-Fähler: Stackiberlauf',
+	'pfunc_expr_unexpected_number' => 'Expression-Fähler: Nit erwarteti Zahl',
+	'pfunc_expr_preg_match_failure' => 'Expression-Fähler: Nit erwarteti „preg_match“-Fählfunktion',
+	'pfunc_expr_unrecognised_word' => 'Expression-Fähler: Nit erkannt Wort „$1“',
+	'pfunc_expr_unexpected_operator' => 'Expression-Fähler: Nit erwartete Operator: <tt>$1</tt>',
+	'pfunc_expr_missing_operand' => 'Expression-Fähler: Operand fir <tt>$1</tt> fählt',
+	'pfunc_expr_unexpected_closing_bracket' => 'Expression-Fähler: Nit erwarteti schließendi eckigi Chlammere',
+	'pfunc_expr_unrecognised_punctuation' => 'Expression-Fähler: Nit erkannt Satzzeiche „$1“',
+	'pfunc_expr_unclosed_bracket' => 'Expression-Fähler: Nit gschlosseni eckige Chlammere',
+	'pfunc_expr_division_by_zero' => 'Expression-Fähler: Division dur Null',
+	'pfunc_expr_invalid_argument' => 'Nit giltig Argument fir $1: < -1 oder > 1',
+	'pfunc_expr_invalid_argument_ln' => 'Nit giltig Argument fir ln: <= 0',
+	'pfunc_expr_unknown_error' => 'Expression-Fähler: Nit bekannte Fehler ($1)',
+	'pfunc_expr_not_a_number' => 'Expression-Fähler: In $1: Ergebnis isch kei Zahl',
 );
 
 /** Hebrew (עברית) */
@@ -800,6 +854,7 @@ $messages['id'] = array(
  * @author Malafaya
  */
 $messages['io'] = array(
+	'pfunc_time_error' => 'Eroro: ne-valida tempo',
 	'pfunc_expr_division_by_zero' => 'Divido per zero',
 );
 
@@ -947,15 +1002,18 @@ $messages['km'] = array(
 );
 
 /** Korean (한국어)
+ * @author Kwj2772
  * @author ToePeu
  */
 $messages['ko'] = array(
 	'pfunc_time_error' => '오류: 시간이 잘못되었습니다.',
 	'pfunc_time_too_long' => '오류: #time을 너무 많이 썼습니다.',
 	'pfunc_expr_missing_operand' => '표현 오류: $1의 피연산자가 없습니다.',
+	'pfunc_expr_unexpected_closing_bracket' => '표현 오류: 예상치 못한 괄호 닫기',
 	'pfunc_expr_unclosed_bracket' => '표현 오류: 괄호를 닫지 않았습니다.',
 	'pfunc_expr_division_by_zero' => '0으로 나눔',
 	'pfunc_expr_unknown_error' => '표현 오류: 알려지지 않은 오류 ($1)',
+	'pfunc_expr_not_a_number' => '$1: 결과가 숫자가 아닙니다.',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -988,6 +1046,7 @@ $messages['ksh'] = array(
 $messages['lb'] = array(
 	'pfunc_desc' => 'Erweidert Parser mat logesche Fonctiounen',
 	'pfunc_time_error' => 'Feeler: ongëlteg Zäit',
+	'pfunc_time_too_long' => 'Feeler: ze dacks #time opgeruff',
 	'pfunc_expr_unexpected_number' => 'Expressiouns-Feeler: Onerwarten Zuel',
 	'pfunc_expr_unrecognised_word' => 'Expressiouns-Feeler: Onerkantent Wuert "$1"',
 	'pfunc_expr_unexpected_closing_bracket' => 'Expressiouns-Feeler: Onerwarte Klammer déi zougemaach gëtt',
@@ -1192,6 +1251,7 @@ $messages['nl'] = array(
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Eirik
  * @author Frokor
+ * @author Harald Khan
  */
 $messages['nn'] = array(
 	'pfunc_desc' => 'Legg til logiske funksjonar i parseren.',
@@ -1268,22 +1328,22 @@ $messages['oc'] = array(
  */
 $messages['pl'] = array(
 	'pfunc_desc' => 'Rozszerza analizator składni o funkcje logiczne',
-	'pfunc_time_error' => 'Błąd: niepoprawny czas',
-	'pfunc_time_too_long' => 'Błąd: zbyt wiele wywołań funkcji #time',
-	'pfunc_rel2abs_invalid_depth' => 'Błąd: Nieprawidłowa głębokość w ścieżce: „$1” (próba dostępu do węzła powyżej korzenia)',
-	'pfunc_expr_stack_exhausted' => 'Błąd w wyrażeniu: Stos wyczerpany',
-	'pfunc_expr_unexpected_number' => 'Błąd w wyrażeniu: Nieoczekiwana liczba',
-	'pfunc_expr_preg_match_failure' => 'Błąd w wyrażeniu: Nieoczekiwany błąd preg_match',
-	'pfunc_expr_unrecognised_word' => 'Błąd w wyrażeniu: Nierozpoznane słowo „$1”',
-	'pfunc_expr_unexpected_operator' => 'Błąd w wyrażeniu: Nieoczekiwany operator $1',
-	'pfunc_expr_missing_operand' => 'Błąd w wyrażeniu: Brak argumentu funkcji $1',
-	'pfunc_expr_unexpected_closing_bracket' => 'Błąd w wyrażeniu: Nieoczekiwany nawias zamykający',
-	'pfunc_expr_unrecognised_punctuation' => 'Błąd w wyrażeniu: Nierozpoznany znak interpunkcyjny „$1”',
-	'pfunc_expr_unclosed_bracket' => 'Błąd w wyrażeniu: Niedomknięty nawias',
+	'pfunc_time_error' => 'Błąd – niepoprawny czas',
+	'pfunc_time_too_long' => 'Błąd – zbyt wiele wywołań funkcji #time',
+	'pfunc_rel2abs_invalid_depth' => 'Błąd – nieprawidłowa głębokość w ścieżce: „$1” (próba dostępu do węzła powyżej korzenia)',
+	'pfunc_expr_stack_exhausted' => 'Błąd w wyrażeniu – stos wyczerpany',
+	'pfunc_expr_unexpected_number' => 'Błąd w wyrażeniu – nieoczekiwana liczba',
+	'pfunc_expr_preg_match_failure' => 'Błąd w wyrażeniu – nieoczekiwany błąd preg_match',
+	'pfunc_expr_unrecognised_word' => 'Błąd w wyrażeniu – nierozpoznane słowo „$1”',
+	'pfunc_expr_unexpected_operator' => 'Błąd w wyrażeniu – nieoczekiwany operator $1',
+	'pfunc_expr_missing_operand' => 'Błąd w wyrażeniu – brak argumentu funkcji $1',
+	'pfunc_expr_unexpected_closing_bracket' => 'Błąd w wyrażeniu – nieoczekiwany nawias zamykający',
+	'pfunc_expr_unrecognised_punctuation' => 'Błąd w wyrażeniu – nierozpoznany znak interpunkcyjny „$1”',
+	'pfunc_expr_unclosed_bracket' => 'Błąd w wyrażeniu – niedomknięty nawias',
 	'pfunc_expr_division_by_zero' => 'Dzielenie przez zero',
 	'pfunc_expr_invalid_argument' => 'Nieprawidłowy argument funkcji $1 – mniejszy od -1 lub większy od 1',
 	'pfunc_expr_invalid_argument_ln' => 'Nieprawidłowy argument funkcji ln – mniejszy lub równy 0',
-	'pfunc_expr_unknown_error' => 'Błąd w wyrażeniu: Nieznany błąd ($1)',
+	'pfunc_expr_unknown_error' => 'Błąd w wyrażeniu – nieznany błąd ($1)',
 	'pfunc_expr_not_a_number' => 'W $1: wynik nie jest liczbą',
 );
 
@@ -1327,6 +1387,30 @@ $messages['pt'] = array(
 	'pfunc_expr_not_a_number' => 'Em $1: resultado não é um número',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'pfunc_desc' => 'Melhora o analisador (parser) com funções lógicas',
+	'pfunc_time_error' => 'Erro: tempo inválido',
+	'pfunc_time_too_long' => 'Erro: muitas chamadas a #time',
+	'pfunc_rel2abs_invalid_depth' => 'Erro: Profundidade inválida no caminho: "$1" (foi tentado o acesso a um nó acima do nó raiz)',
+	'pfunc_expr_stack_exhausted' => 'Erro de expressão: Pilha esgotada',
+	'pfunc_expr_unexpected_number' => 'Erro de expressão: Número inesperado',
+	'pfunc_expr_preg_match_failure' => 'Erro de expressão: Falha em preg_match inesperada',
+	'pfunc_expr_unrecognised_word' => 'Erro de expressão: Palavra "$1" não reconhecida',
+	'pfunc_expr_unexpected_operator' => 'Erro de expressão: Operador $1 inesperado',
+	'pfunc_expr_missing_operand' => 'Erro de expressão: Falta operando para $1',
+	'pfunc_expr_unexpected_closing_bracket' => 'Erro de expressão: Parêntese de fechamento inesperado',
+	'pfunc_expr_unrecognised_punctuation' => 'Erro de expressão: Caractere de pontuação "$1" não reconhecido',
+	'pfunc_expr_unclosed_bracket' => 'Erro de expressão: Parêntese não fechado',
+	'pfunc_expr_division_by_zero' => 'Divisão por zero',
+	'pfunc_expr_invalid_argument' => 'Argumento inválido para $1: < -1 or > 1',
+	'pfunc_expr_invalid_argument_ln' => 'Argumento inválido para ln: <= 0',
+	'pfunc_expr_unknown_error' => 'Erro de expressão: Erro desconhecido ($1)',
+	'pfunc_expr_not_a_number' => 'Em $1: resultado não é um número',
+);
+
 /** Romanian (Română)
  * @author KlaudiuMihaila
  */
@@ -1347,6 +1431,14 @@ $messages['ro'] = array(
 	'pfunc_expr_invalid_argument_ln' => 'Argument incorect pentru ln: <= 0',
 	'pfunc_expr_unknown_error' => 'Eroare de expresie: eroare necunoscută ($1)',
 	'pfunc_expr_not_a_number' => 'În $1: rezultatul nu este un număr',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'pfunc_time_error' => 'Errore: Orarie invalide',
+	'pfunc_expr_division_by_zero' => 'Divisione pe zero',
 );
 
 /** Russian (Русский)
@@ -1495,6 +1587,7 @@ $messages['sr-ec'] = array(
  * @author Pyt
  */
 $messages['stq'] = array(
+	'pfunc_desc' => 'Ärwiedert dän Parser uum logiske Funktione',
 	'pfunc_time_error' => 'Failer: uungultige Tiedangoawe',
 	'pfunc_time_too_long' => 'Failer: tou fuul #time-Aproupe',
 	'pfunc_rel2abs_invalid_depth' => 'Failer: uungultige Djüpte in Paad: „$1“ (Fersäik, ap n Knättepunkt buppe dän Haudknättepunkt toutougriepen)',
@@ -1508,6 +1601,8 @@ $messages['stq'] = array(
 	'pfunc_expr_unrecognised_punctuation' => 'Expression-Failer: Nit wierkoand Satsteeken „$1“',
 	'pfunc_expr_unclosed_bracket' => 'Expression-Failer: Nit sleetene kaantige Klammer',
 	'pfunc_expr_division_by_zero' => 'Expression-Failer: Division truch Null',
+	'pfunc_expr_invalid_argument' => 'Uungultich Argument foar $1: < -1 of > 1',
+	'pfunc_expr_invalid_argument_ln' => 'Uungultich Argument foar ln: <= 0',
 	'pfunc_expr_unknown_error' => 'Expression-Failer: Uunbekoanden Failer ($1)',
 	'pfunc_expr_not_a_number' => 'Expression-Failer: In $1: Resultoat is neen Taal',
 );
@@ -1637,6 +1732,30 @@ $messages['tl'] = array(
 	'pfunc_expr_not_a_number' => 'Sa $1: ang kinalabasan ay hindi isang bilang',
 );
 
+/** Turkish (Türkçe)
+ * @author Joseph
+ */
+$messages['tr'] = array(
+	'pfunc_desc' => 'Derleyiciyi mantıksal fonksiyonlarla geliştir',
+	'pfunc_time_error' => 'Hata: geçersiz zaman',
+	'pfunc_time_too_long' => 'Hata: çok fazla #time çağrısı',
+	'pfunc_rel2abs_invalid_depth' => 'Hata: Yolda geçersiz derinlik: "$1" (kök düğümünün üstünde bir düğüme erişmeye çalıştı)',
+	'pfunc_expr_stack_exhausted' => 'İfade hatası: Stack bitti',
+	'pfunc_expr_unexpected_number' => 'İfade hatası: Beklenmeyen sayı',
+	'pfunc_expr_preg_match_failure' => 'İfade hatası: Beklenmedik preg_match arızası',
+	'pfunc_expr_unrecognised_word' => 'İfade hatası: Tanınmayan "$1" kelimesi',
+	'pfunc_expr_unexpected_operator' => 'İfade hatası: Beklenmedik $1 operatörü',
+	'pfunc_expr_missing_operand' => 'İfade hatası: $1 için eksik terim',
+	'pfunc_expr_unexpected_closing_bracket' => 'İfade hatası: Beklenmedik kapa parantez',
+	'pfunc_expr_unrecognised_punctuation' => 'İfade hatası: Tanınmayan noktalama karakteri "$1"',
+	'pfunc_expr_unclosed_bracket' => 'İfade hatası: Kapanmamış parantez',
+	'pfunc_expr_division_by_zero' => 'Sıfır ile bölme',
+	'pfunc_expr_invalid_argument' => '$1 için geçersiz değişken: < -1 ya da > 1',
+	'pfunc_expr_invalid_argument_ln' => 'ln için geçersiz değişken: <= 0',
+	'pfunc_expr_unknown_error' => 'İfade hatası: Bilinmeyen hata ($1)',
+	'pfunc_expr_not_a_number' => "$1'de: sonuç bir sayı değil",
+);
+
 /** Ukrainian (Українська)
  * @author Ahonc
  */
@@ -1716,6 +1835,7 @@ $messages['vi'] = array(
 $messages['vo'] = array(
 	'pfunc_time_error' => 'Pök: tim no lonöföl',
 	'pfunc_expr_division_by_zero' => 'Müedam dub ser',
+	'pfunc_expr_unknown_error' => 'Notidotapöl: pöl nesevädik ($1)',
 	'pfunc_expr_not_a_number' => 'In $1: sek no binon num',
 );
 
@@ -1744,50 +1864,51 @@ $messages['yue'] = array(
 );
 
 /** Simplified Chinese (‪中文(简体)‬)
+ * @author Philip
  * @author Shinjiman
  */
 $messages['zh-hans'] = array(
-	'pfunc_desc' => '用逻辑功能去加强处理器',
-	'pfunc_time_error' => '错误: 不正确的时间',
-	'pfunc_time_too_long' => '错误: 过多 #time 的呼叫',
-	'pfunc_rel2abs_invalid_depth' => '错误: 不正确的路径深度: "$1" (已经尝试在顶点访问该点)',
-	'pfunc_expr_stack_exhausted' => '表达错误: 堆叠耗尽',
-	'pfunc_expr_unexpected_number' => '表达错误: 未预料的数字',
-	'pfunc_expr_preg_match_failure' => '表达错误: 未预料的 preg_match失败',
-	'pfunc_expr_unrecognised_word' => '表达错误: 未预料的字 "$1"',
-	'pfunc_expr_unexpected_operator' => '表达错误: 未预料的 $1 运算符',
-	'pfunc_expr_missing_operand' => '表达错误: 缺少 $1 的运算符',
-	'pfunc_expr_unexpected_closing_bracket' => '表达错误: 未预料的关括号',
-	'pfunc_expr_unrecognised_punctuation' => '表达错误: 未能认得到的标点 "$1"',
-	'pfunc_expr_unclosed_bracket' => '表达错误: 未关闭的括号',
-	'pfunc_expr_division_by_zero' => '除以零',
-	'pfunc_expr_invalid_argument' => '$1的无效参数: < -1 or > 1',
-	'pfunc_expr_invalid_argument_ln' => 'ln的无效参数: <= 0',
-	'pfunc_expr_unknown_error' => '表达错误: 未知?错 ($1)',
-	'pfunc_expr_not_a_number' => '于 $1: 结果不是数字',
+	'pfunc_desc' => '用逻辑功能去加强分析程序',
+	'pfunc_time_error' => '错误：无效时间',
+	'pfunc_time_too_long' => '错误：#time调用次数过多',
+	'pfunc_rel2abs_invalid_depth' => '错误：无效路径深度：“$1”（尝试访问根节点以上节点）',
+	'pfunc_expr_stack_exhausted' => '表达式错误：堆栈耗尽',
+	'pfunc_expr_unexpected_number' => '表达式错误：未预料的数字',
+	'pfunc_expr_preg_match_failure' => '表达式错误：未预料的preg_match失败',
+	'pfunc_expr_unrecognised_word' => '表达式错误：无法识别的词语“$1”',
+	'pfunc_expr_unexpected_operator' => '表达式错误：未预料的$1操作符',
+	'pfunc_expr_missing_operand' => '表达式错误：缺少$1的操作数',
+	'pfunc_expr_unexpected_closing_bracket' => '表达式错误：未预料的反括号',
+	'pfunc_expr_unrecognised_punctuation' => '表达式错误：无法识别的标点“$1”',
+	'pfunc_expr_unclosed_bracket' => '表达式错误：未封闭的括号',
+	'pfunc_expr_division_by_zero' => '零除',
+	'pfunc_expr_invalid_argument' => '$1的无效参数：< -1 或 > 1',
+	'pfunc_expr_invalid_argument_ln' => 'ln的无效参数：<= 0',
+	'pfunc_expr_unknown_error' => '表达式错误：未知错误（$1）',
+	'pfunc_expr_not_a_number' => '在$1中：结果不是数字',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Shinjiman
  */
 $messages['zh-hant'] = array(
-	'pfunc_desc' => '用邏輯功能去加強處理器',
-	'pfunc_time_error' => '錯誤: 不正確的時間',
-	'pfunc_time_too_long' => '錯誤: 過多 #time 的呼叫',
-	'pfunc_rel2abs_invalid_depth' => '錯誤: 不正確的路徑深度: "$1" (已經嘗試在頂點存取該點)',
-	'pfunc_expr_stack_exhausted' => '表達錯誤: 堆疊耗盡',
-	'pfunc_expr_unexpected_number' => '表達錯誤: 未預料的數字',
-	'pfunc_expr_preg_match_failure' => '表達錯誤: 未預料的 preg_match失敗',
-	'pfunc_expr_unrecognised_word' => '表達錯誤: 未預料的字 "$1"',
-	'pfunc_expr_unexpected_operator' => '表達錯誤: 未預料的 $1 運算符',
-	'pfunc_expr_missing_operand' => '表達錯誤: 缺少 $1 的運算符',
-	'pfunc_expr_unexpected_closing_bracket' => '表達錯誤: 未預料的關括號',
-	'pfunc_expr_unrecognised_punctuation' => '表達錯誤: 未能認得到的標點 "$1"',
-	'pfunc_expr_unclosed_bracket' => '表達錯誤: 未關閉的括號',
-	'pfunc_expr_division_by_zero' => '除以零',
-	'pfunc_expr_invalid_argument' => '$1的無效參數: < -1 or > 1',
-	'pfunc_expr_invalid_argument_ln' => 'ln的無效參數: <= 0',
-	'pfunc_expr_unknown_error' => '表達錯誤: 未知嘅錯 ($1)',
-	'pfunc_expr_not_a_number' => '於 $1: 結果不是數字',
+	'pfunc_desc' => '用邏輯功能去加強分析程式',
+	'pfunc_time_error' => '錯誤：無效時間',
+	'pfunc_time_too_long' => '錯誤：過多的#time呼叫',
+	'pfunc_rel2abs_invalid_depth' => '錯誤：無效路徑深度：「$1」（嘗試訪問頂點以上節點）',
+	'pfunc_expr_stack_exhausted' => '表達式錯誤：堆疊耗盡',
+	'pfunc_expr_unexpected_number' => '表達式錯誤：未預料的數字',
+	'pfunc_expr_preg_match_failure' => '表達式錯誤：未預料的preg_match失敗',
+	'pfunc_expr_unrecognised_word' => '表達式錯誤：無法識別的詞語「$1」',
+	'pfunc_expr_unexpected_operator' => '表達式錯誤：未預料的$1運算子',
+	'pfunc_expr_missing_operand' => '表達式錯誤：缺少$1的運算元',
+	'pfunc_expr_unexpected_closing_bracket' => '表達式錯誤：未預料的反括號',
+	'pfunc_expr_unrecognised_punctuation' => '表達式錯誤：無法識別的標點「$1」',
+	'pfunc_expr_unclosed_bracket' => '表達式錯誤：未封閉的括號',
+	'pfunc_expr_division_by_zero' => '零除',
+	'pfunc_expr_invalid_argument' => '$1的無效參量：< -1 或 > 1',
+	'pfunc_expr_invalid_argument_ln' => 'ln的無效參量：<= 0',
+	'pfunc_expr_unknown_error' => '表達式錯誤：未知錯誤（$1）',
+	'pfunc_expr_not_a_number' => '在$1中：結果不是數字',
 );
 

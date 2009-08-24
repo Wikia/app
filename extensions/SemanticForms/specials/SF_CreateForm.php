@@ -18,7 +18,7 @@ class SFCreateForm extends SpecialPage {
 		wfLoadExtensionMessages('SemanticForms');
 	}
 
-	function execute() {
+	function execute($query) {
 		$this->setHeaders();
 		doSpecialCreateForm();
 	}
@@ -127,7 +127,7 @@ function doSpecialCreateForm() {
 		} else {
 			# redirect to wiki interface
 			$wgOut->setArticleBodyOnly(true);
-			$title = Title::newFromText($form->form_name, SF_NS_FORM);
+			$title = Title::makeTitleSafe(SF_NS_FORM, $form->form_name);
 			$full_text = str_replace('"', '&quot;', $form->createMarkup());
 			$text = SFUtils::printRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false, null, null);
 			$wgOut->addHTML($text);

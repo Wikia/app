@@ -96,10 +96,12 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 	* @param array groups an array of user groups
 	*/
 	function formatGroups ( $groups ) {
+		global $wgContentLang;
+
 		if( empty( $groups ) ) { 
 			$groups = wfMsg( 'emergencydesysop-nogroups' );
 		} else {
-			$groups = implode( ', ', $groups );
+			$groups = $wgContentLang->commaList( $groups );
 		}
 		return $groups;
 	}
@@ -175,12 +177,14 @@ class SpecialEmergencyDeSysop extends SpecialPage {
 
 			//Log it
 			$log = new LogPage( "rights" );
+			// FIXME: Contains non-localisable text
 			$log->addEntry( 
 				"rights", 
-				$targetUser->getUserPage( ), 
-				'Emergency Desysop: ' . $wgRequest->getText( 'reason' ), 
+				$targetUser->getUserPage( ),
+				'Emergency Desysop: ' . $wgRequest->getText( 'reason' ),
 				array( $this->formatGroups( $targetUserGroupsOld ), $this->formatGroups( $targetUserGroupsNew ) ) );
 
+			// FIXME: Contains non-localisable text
 			$log->addEntry( 
 				"rights", 
 				$wgUser->getUserPage( ), 

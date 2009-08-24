@@ -6,14 +6,13 @@
  * freely. This software is provided 'as-is', without any express or implied
  * warranty.
  */
-/* $Id: ABC.i18n.php 45409 2009-01-05 09:02:00Z siebrand $ */
+/* $Id: ABC.i18n.php 48137 2009-03-07 17:45:21Z siebrand $ */
 
 $messages = array();
 
 $messages['en'] = array(
 	'abcdesc' => 'Adds <tt>&lt;abc&gt;</tt> tag to format ABC music',
 	'abcdownload' => 'Download:',
-	'abcsep' => '|',
 	'abcabc' => 'ABC',
 	'abcpdf' => 'PDF',
 	'abcps' => 'PostScript',
@@ -22,10 +21,19 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Jon Harald Søby
+ * @author Meno25
  * @author Purodha
+ * @author Raymond
  */
 $messages['qqq'] = array(
 	'abcdesc' => 'Short description of the ABC extension, shown in [[Special:Version]]. Do not translate or change links.',
+	'abcdownload' => '{{Identical|Download}}',
+	'abcabc' => '{{optional}}',
+	'abcpdf' => '{{optional}}',
+	'abcps' => '{{optional}}',
+	'abcmidi' => '{{optional}}',
+	'abcvorbis' => '{{optional}}',
 );
 
 /** Arabic (العربية)
@@ -48,7 +56,6 @@ $messages['ar'] = array(
 $messages['arz'] = array(
 	'abcdesc' => 'يضيف وسم <tt>&lt;abc&gt;</tt> لصياغة موسيقى ABC',
 	'abcdownload' => 'تنزيل:',
-	'abcsep' => '|',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
@@ -98,6 +105,15 @@ $messages['dsb'] = array(
 	'abcdownload' => 'Ześěgnuś:',
 );
 
+/** Greek (Ελληνικά)
+ * @author Konsnos
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'abcdesc' => 'Προσθέτει το tag <tt>&lt;abc&gt;</tt> για να μορφοποιεί μουσική ABC',
+	'abcdownload' => 'Λήψη:',
+);
+
 /** Esperanto (Esperanto)
  * @author Melancholie
  * @author Yekrats
@@ -117,8 +133,10 @@ $messages['es'] = array(
 
 /** Estonian (Eesti)
  * @author Avjoska
+ * @author KalmerE.
  */
 $messages['et'] = array(
+	'abcdesc' => 'Lisab <tt>&lt;abc&gt;</tt> laiendi ABC muusika vormindamiseks.',
 	'abcdownload' => 'Laadi alla:',
 );
 
@@ -186,12 +204,6 @@ $messages['gsw'] = array(
 $messages['he'] = array(
 	'abcdesc' => 'הוספת תגית <tt>&lt;abc&gt;</tt> למוסיקה בפורמט ABC',
 	'abcdownload' => 'הורדה:',
-	'abcsep' => '|',
-	'abcabc' => 'ABC',
-	'abcpdf' => 'PDF',
-	'abcps' => 'PostScript',
-	'abcmidi' => 'MIDI',
-	'abcvorbis' => 'Ogg Vorbis',
 );
 
 /** Croatian (Hrvatski)
@@ -210,6 +222,22 @@ $messages['hsb'] = array(
 	'abcdownload' => 'Sćahnyć',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'abcdesc' => 'Adde le etiquetta <tt>&lt;abc&gt;</tt> pro formatar musica in notation ABC',
+	'abcdownload' => 'Discargar:',
+);
+
+/** Italian (Italiano)
+ * @author Melos
+ */
+$messages['it'] = array(
+	'abcdesc' => 'Aggiunge il tag <tt>&lt;abc&gt;</tt> per la musica in formato ABC',
+	'abcdownload' => 'Download:',
+);
+
 /** Japanese (日本語)
  * @author Aotake
  * @author Fryed-peach
@@ -219,11 +247,26 @@ $messages['ja'] = array(
 	'abcdownload' => 'ダウンロード:',
 );
 
+/** Georgian (ქართული)
+ * @author Sopho
+ */
+$messages['ka'] = array(
+	'abcdownload' => 'ჩამოტვირთვა:',
+);
+
 /** Khmer (ភាសាខ្មែរ)
  * @author Lovekhmer
  */
 $messages['km'] = array(
 	'abcdownload' => 'ទាញយក៖',
+);
+
+/** Korean (한국어)
+ * @author Kwj2772
+ */
+$messages['ko'] = array(
+	'abcdesc' => 'ABC 음악을 포맷하기 위해 <tt>&lt;abc&gt;</tt> 태그를 추가',
+	'abcdownload' => '다운로드:',
 );
 
 /** Ripoarisch (Ripoarisch)
@@ -232,12 +275,13 @@ $messages['km'] = array(
 $messages['ksh'] = array(
 	'abcdesc' => 'Deit dä <tt>&lt;abc&gt;</tt>-Befähl en et Wiki domet mer Mussik em ABC Fommaat opschrieve kann.',
 	'abcdownload' => 'Eronger lahde:',
-	'abcsep' => '|',
-	'abcabc' => 'ABC',
-	'abcpdf' => 'PDF',
-	'abcps' => 'PostScript',
-	'abcmidi' => 'MIDI',
-	'abcvorbis' => 'Ogg Vorbis',
+);
+
+/** Cornish (Kernewek)
+ * @author Kw-Moon
+ */
+$messages['kw'] = array(
+	'abcdownload' => 'Iskarga:',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -271,12 +315,28 @@ $messages['mn'] = array(
 	'abcdownload' => 'Өөртөө хуулах:',
 );
 
+/** Erzya (Эрзянь)
+ * @author Botuzhaleny-sodamo
+ */
+$messages['myv'] = array(
+	'abcdesc' => 'Полады <tt>&lt;abc&gt;</tt> тег ABC музыканть форматировамонь туртов',
+	'abcdownload' => 'Таргамс:',
+);
+
 /** Nahuatl (Nāhuatl)
  * @author Fluence
  */
 $messages['nah'] = array(
 	'abcdesc' => 'Ticcēntilīz <tt>&lt;abc&gt;</tt> ic tictequitiltīz ABC cuīcayōtlahtōl',
 	'abcdownload' => 'Tictemōz:',
+);
+
+/** Low German (Plattdüütsch)
+ * @author Slomox
+ */
+$messages['nds'] = array(
+	'abcdesc' => 'Föögt dat Tag <tt>&lt;abc&gt;</tt> för dat Wiesen vun ABC-Musik to',
+	'abcdownload' => 'Dalladen:',
 );
 
 /** Dutch (Nederlands)
@@ -295,22 +355,28 @@ $messages['nn'] = array(
 	'abcdownload' => 'Last ned:',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['no'] = array(
+	'abcdesc' => 'Lager taggen <tt>&lt;abc&gt;</tt> for å formatere ABC-musikk',
+	'abcdownload' => 'Last ned:',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
 $messages['oc'] = array(
 	'abcdesc' => 'Apond una balisa <tt>&lt;abc&gt;</tt> per formatar la musica ABC',
 	'abcdownload' => 'Telecargar :',
-	'abcsep' => '|',
-	'abcabc' => 'ABC',
-	'abcpdf' => 'PDF',
 );
 
 /** Polish (Polski)
  * @author Leinad
+ * @author Sp5uhe
  */
 $messages['pl'] = array(
-	'abcdesc' => 'Dodaje znacznik <tt>&lt;abc&gt;</tt> do muzyki w formacie ABC',
+	'abcdesc' => 'Dodaje znacznik <tt>&lt;abc&gt;</tt> dla muzyki w formacie ABC',
 	'abcdownload' => 'Pobierz:',
 );
 
@@ -318,6 +384,7 @@ $messages['pl'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
+	'abcdesc' => 'ABC موسيقي بڼې ته د <tt>&lt;abc&gt;</tt> لنډنوم ورګډوي',
 	'abcdownload' => 'ښکته کول:',
 );
 
@@ -328,6 +395,22 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'abcdesc' => 'Adiciona a tag <tt>&lt;abc&gt;</tt> para formatar música em notação ABC',
 	'abcdownload' => 'Descarregar:',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'abcdesc' => 'Adiciona a marca <tt>&lt;abc&gt;</tt> para formatar música em notação ABC',
+	'abcdownload' => 'Descarregar:',
+);
+
+/** Rhaeto-Romance (Rumantsch)
+ * @author Gion
+ */
+$messages['rm'] = array(
+	'abcdesc' => 'Agiunta il tag <tt>&lt;abc&gt;</tt> per formatar musica ABC',
+	'abcdownload' => 'Download:',
 );
 
 /** Romanian (Română)
@@ -355,12 +438,35 @@ $messages['ru'] = array(
 	'abcdownload' => 'Загрузить:',
 );
 
+/** Yakut (Саха тыла)
+ * @author HalanTul
+ */
+$messages['sah'] = array(
+	'abcdownload' => 'Хачайдааһын:',
+);
+
 /** Slovak (Slovenčina)
  * @author Helix84
  */
 $messages['sk'] = array(
 	'abcdesc' => 'Pridáva značku <tt>&lt;abc&gt;</tt> na formátovanie ABC hudby',
 	'abcdownload' => 'Stiahnuť:',
+);
+
+/** Albanian (Shqip)
+ * @author Puntori
+ */
+$messages['sq'] = array(
+	'abcdesc' => 'Vendosë kodin <tt>&lt;abc&gt;</tt> të formatojë muzikë ABC',
+	'abcdownload' => 'Shkarko:',
+);
+
+/** Seeltersk (Seeltersk)
+ * @author Pyt
+ */
+$messages['stq'] = array(
+	'abcdesc' => 'Föiget dät <tt>&lt;abc&gt;</tt>-Tag tou ju Notation fon Musik in ABC bietou',
+	'abcdownload' => 'Deelleede:',
 );
 
 /** Sundanese (Basa Sunda)
@@ -382,8 +488,10 @@ $messages['sv'] = array(
 
 /** Telugu (తెలుగు)
  * @author C.Chandra Kanth Rao
+ * @author Veeven
  */
 $messages['te'] = array(
+	'abcdesc' => 'ABC సంగీతాన్ని చూపించడానికై <tt>&lt;abc&gt;</tt> అనే ట్యాగుని చేరుస్తుంది',
 	'abcdownload' => 'డౌన్‌లోడ్',
 );
 
@@ -401,11 +509,6 @@ $messages['th'] = array(
 $messages['tl'] = array(
 	'abcdesc' => 'Nagdaragdag ng tatak na <tt>&lt;abc&gt;</tt> para maipormat ang tugtuging ABC',
 	'abcdownload' => 'Ikargang-pakuha:',
-	'abcabc' => 'ABC',
-	'abcpdf' => 'PDF',
-	'abcps' => 'PostScript',
-	'abcmidi' => 'MIDI',
-	'abcvorbis' => 'Ogg Vorbis',
 );
 
 /** Turkish (Türkçe)
@@ -414,6 +517,14 @@ $messages['tl'] = array(
 $messages['tr'] = array(
 	'abcdesc' => 'ABC müziğini biçimlendirmek için <tt>&lt;abc&gt;</tt> etiketini ekler',
 	'abcdownload' => 'İndir:',
+);
+
+/** Ukrainian (Українська)
+ * @author AS
+ */
+$messages['uk'] = array(
+	'abcdesc' => 'Додає тег <tt>&lt;abc&gt;</tt> для форматування музики ABC',
+	'abcdownload' => 'Завантажити:',
 );
 
 /** Vèneto (Vèneto)
@@ -438,6 +549,22 @@ $messages['vi'] = array(
 $messages['vo'] = array(
 	'abcdesc' => 'Läükon mali: <tt>&lt;abc&gt;</tt> musige fomätü ABC',
 	'abcdownload' => 'Donükön:',
+);
+
+/** Võro (Võro)
+ * @author Võrok
+ */
+$messages['vro'] = array(
+	'abcdesc' => 'Pand mano <tt>&lt;abc&gt;</tt>-elemendi ABC-muusiga kujondamisõs',
+	'abcdownload' => 'Laadiq alla',
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'abcdesc' => 'לייגט צו <tt>&lt;abc&gt;</tt> טאַג צו פארמאַטירן ABC מוזיק',
+	'abcdownload' => 'אַראָפלאָדן',
 );
 
 /** Yoruba (Yorùbá)

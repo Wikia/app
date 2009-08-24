@@ -42,9 +42,19 @@ $aliases['de'] = array(
 	'Badimages' => array( 'Unerwünschte Bilder' ),
 );
 
+/** Lower Sorbian (Dolnoserbski) */
+$aliases['dsb'] = array(
+	'Badimages' => array( 'Špatne wobraze' ),
+);
+
 /** Finnish (Suomi) */
 $aliases['fi'] = array(
 	'Badimages' => array( 'Arveluttavat kuvat' ),
+);
+
+/** French (Français) */
+$aliases['fr'] = array(
+	'Badimages' => array( 'Mauvaises images', 'MauvaisesImages' ),
 );
 
 /** Swiss German (Alemannisch) */
@@ -57,14 +67,29 @@ $aliases['he'] = array(
 	'Badimages' => array( 'תמונות_אסורות' ),
 );
 
+/** Upper Sorbian (Hornjoserbsce) */
+$aliases['hsb'] = array(
+	'Badimages' => array( 'Špatne wobrazy' ),
+);
+
 /** Hungarian (Magyar) */
 $aliases['hu'] = array(
 	'Badimages' => array( 'Tiltott képek', 'Rossz képek' ),
 );
 
+/** Interlingua (Interlingua) */
+$aliases['ia'] = array(
+	'Badimages' => array( 'Mal imagines' ),
+);
+
 /** Indonesian (Bahasa Indonesia) */
 $aliases['id'] = array(
 	'Badimages' => array( 'Berkas dilarang' ),
+);
+
+/** Japanese (日本語) */
+$aliases['ja'] = array(
+	'Badimages' => array( '不良画像', '好ましくない画像' ),
 );
 
 /** Luxembourgish (Lëtzebuergesch) */
@@ -92,6 +117,11 @@ $aliases['nl'] = array(
 	'Badimages' => array( 'ZwarteLijstAfbeeldingen' ),
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬) */
+$aliases['nn'] = array(
+	'Badimages' => array( 'Dårlege bilete' ),
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $aliases['no'] = array(
 	'Badimages' => array( 'Dårlige bilder' ),
@@ -105,5 +135,20 @@ $aliases['oc'] = array(
 /** Polish (Polski) */
 $aliases['pl'] = array(
 	'Badimages' => array( 'Nieprawidłowe grafiki' ),
+);
+
+/** Pashto (پښتو) */
+$aliases['ps'] = array(
+	'Badimages' => array( 'بد انځورونه' ),
+);
+
+/** Sanskrit (संस्कृत) */
+$aliases['sa'] = array(
+	'Badimages' => array( 'कुचित्र:' ),
+);
+
+/** Tagalog (Tagalog) */
+$aliases['tl'] = array(
+	'Badimages' => array( 'Masamang mga larawan', 'Masasamang mga larawan' ),
 );
 

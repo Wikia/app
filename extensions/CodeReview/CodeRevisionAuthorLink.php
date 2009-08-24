@@ -12,7 +12,7 @@ class CodeRevisionAuthorLink extends CodeRevisionAuthorView {
 	function getTitle() {
 		$repo = $this->mRepo->getName();
 		$auth = $this->mAuthor;
-		return SpecialPage::getTitleFor( 'Code', "$repo/author/$auth/link");
+		return SpecialPage::getTitleFor( 'Code', "$repo/author/$auth/link" );
 	}
 
 	function execute() {
@@ -27,10 +27,10 @@ class CodeRevisionAuthorLink extends CodeRevisionAuthorView {
 			$this->doForm();
 		}
 	}
-	
+
 	function doForm() {
 		global $wgOut;
-		$form = Xml::openElement( 'form', array( 'method' => 'post', 
+		$form = Xml::openElement( 'form', array( 'method' => 'post',
 			'action' => $this->getTitle()->getLocalUrl(),
 			'name' => 'uluser', 'id' => 'mw-codeauthor-form1' ) );
 		$form .= Xml::openElement( 'fieldset' );
@@ -45,10 +45,10 @@ class CodeRevisionAuthorLink extends CodeRevisionAuthorView {
 				Xml::closeElement( 'fieldset' );
 		} else {
 			$form .= Xml::element( 'legend', array(), wfMsg( 'code-author-dolink' ) );
-		} 
+		}
 
-		$form .= Xml::inputLabel( wfMsg( 'code-author-name' ), 'linktouser', 'username', 30, '') . ' ' .
-				Xml::submitButton( wfMsg( 'ok' ), array( 'name' => 'newname') ) .
+		$form .= Xml::inputLabel( wfMsg( 'code-author-name' ), 'linktouser', 'username', 30, '' ) . ' ' .
+				Xml::submitButton( wfMsg( 'ok' ), array( 'name' => 'newname' ) ) .
 				Xml::closeElement( 'fieldset' ) .
 				$additional .
 				Xml::closeElement( 'form' ) . "\n";
@@ -59,17 +59,17 @@ class CodeRevisionAuthorLink extends CodeRevisionAuthorView {
 	function doSubmit() {
 		global $wgOut, $wgRequest;
 		// Link an author to a wiki user
-		if ( strlen($this->mTarget) && $wgRequest->getCheck( 'newname' ) ) {
+		if ( strlen( $this->mTarget ) && $wgRequest->getCheck( 'newname' ) ) {
 			$user = User::newFromName( $this->mTarget, false );
-			if( !$user || !$user->getId() ) {
+			if ( !$user || !$user->getId() ) {
 				$wgOut->addWikiMsg( 'nosuchusershort', $this->mTarget );
 				return;
 			}
 			$this->mRepo->linkUser( $this->mAuthor, $user );
-			$userlink = $this->mSkin->userLink( $user->getId(), $user->getName() );	
+			$userlink = $this->mSkin->userLink( $user->getId(), $user->getName() );
 			$wgOut->addHTML(
-				'<div class="successbox">' . 
-				wfMsgHtml( 'code-author-success', $this->authorLink( $this->mAuthor ), $userlink) .
+				'<div class="successbox">' .
+				wfMsgHtml( 'code-author-success', $this->authorLink( $this->mAuthor ), $userlink ) .
 				'</div>'
 			);
 		// Unlink an author to a wiki users
@@ -80,7 +80,7 @@ class CodeRevisionAuthorLink extends CodeRevisionAuthorView {
 			}
 			$this->mRepo->unlinkUser( $this->mAuthor );
 			$wgOut->addHTML(
-				'<div class="successbox">' . 
+				'<div class="successbox">' .
 				wfMsgHtml( 'code-author-unlinksuccess', $this->authorLink( $this->mAuthor ) ) .
 				'</div>'
 			);

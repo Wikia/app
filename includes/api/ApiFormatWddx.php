@@ -42,7 +42,13 @@ class ApiFormatWddx extends ApiFormatBase {
 	}
 
 	public function execute() {
-		if (function_exists('wddx_serialize_value') && !$this->getIsHtml()) {
+		// Some versions of PHP have a broken wddx_serialize_value, see
+		// PHP bug 45314. Test encoding an affected character (U+00A0)
+		// to avoid this.
+		$expected = "<wddxPacket version='1.0'><header/><data><string>\xc2\xa0</string></data></wddxPacket>";
+		if (function_exists('wddx_serialize_value')
+				&& !$this->getIsHtml()
+				&& wddx_serialize_value("\xc2\xa0") == $expected) {
 			$this->printText(wddx_serialize_value($this->getResultData()));
 		} else {
 			// Don't do newlines and indentation if we weren't asked
@@ -60,8 +66,8 @@ class ApiFormatWddx extends ApiFormatBase {
 	}
 
 	/**
-	* Recursivelly go through the object and output its data in WDDX format.
-	*/
+	 * Recursively go through the object and output its data in WDDX format.
+	 */
 	function slowWddxPrinter($elemValue, $indent = 0) {
 		$indstr = ($this->getIsHtml() ? "" : str_repeat(' ', $indent));
 		$indstr2 = ($this->getIsHtml() ? "" : str_repeat(' ', $indent + 2));
@@ -109,6 +115,6 @@ class ApiFormatWddx extends ApiFormatBase {
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiFormatWddx.php 44588 2008-12-14 19:14:21Z demon $';
+		return __CLASS__ . ': $Id: ApiFormatWddx.php 48716 2009-03-23 20:06:16Z catrope $';
 	}
 }

@@ -1,0 +1,13 @@
+prefabs directory
+=================
+- additional SMW prefabs.  To use, copy the files in this directory into the PLOTICUS prefabs directory. 
+
+* pietopn.pl (In Development)
+- similar to pie but with an additional parameter
+  topn (specifies the number of top pie slices after which, remaining slices are aggregated into one slice)
+
+* scats.pl
+- modified version of scats.pl.  To install, just replace the existing scats.pl.  
+For scatter plots, when corr=yes, the Pearson coefficient is displayed.
+In the stock version, the variables are displayed right-justified which works without problems using
+raster formats (png, gif, jpeg).  However, vector formats (eps,ps,swf,svg) often crop the variables out unless -pagesize is explicitly specified.  In this version, the variables are always displayed left-justified so they will never be cropped out.

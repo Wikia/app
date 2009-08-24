@@ -20,8 +20,11 @@ class TranslateEditAddons {
 		if ( $group === null ) return true;
 
 		$defs = $group->getDefinitions();
+		$skip = array_merge( $group->getIgnored(), $group->getOptional() );
+
 		$next = $prev = $def = null;
 		foreach ( array_keys( $defs ) as $tkey ) {
+			if ( in_array( $tkey, $skip ) ) continue;
 			// Keys can have mixed case, but they have to be unique in a case
 			// insensitive manner. It is therefore safe and a must to use case
 			// insensitive comparison method
@@ -78,8 +81,34 @@ EOEO;
 		return true;
 	}
 
+	static function intro( $object ) {
+		$object->suppressIntro = true;
+		return true;
+	}
+
+
 	static function addTools( $object ) {
 		$object->editFormTextTop .= self::editBoxes( $object );
+		global $wgMessageCache, $wgLang;
+		$wgMessageCache->addMessage( 'savearticle', "Save as {$wgLang->getCode()}", $wgLang->getCode() );
+		return true;
+	}
+
+	static function buttonHack( $editpage, &$buttons, $tabindex ) {
+		global $wgLang;
+		list( , $code ) = self::figureMessage( $editpage->mTitle );
+		if ( $code !== 'qqq' ) return true;
+		$name = TranslateUtils::getLanguageName( $code, false, $wgLang->getCode() );
+		$temp = array(
+			'id'        => 'wpSave',
+			'name'      => 'wpSave',
+			'type'      => 'submit',
+			'tabindex'  => ++$tabindex,
+			'value'     => wfMsg( 'translate-save', $name ),
+			'accesskey' => wfMsg( 'accesskey-save' ),
+			'title'     => wfMsg( 'tooltip-save' ).' ['.wfMsg( 'accesskey-save' ).']',
+		);
+		$buttons['save'] = Xml::element('input', $temp, '');
 		return true;
 	}
 
@@ -264,7 +293,7 @@ EOEO;
 
 		// Some syntactic checks
 		$translation = ( $editField !== null ) ? $editField : $xx;
-		if ( $translation !== null ) {
+		if ( $translation !== null && $code !== $wgTranslateDocumentationLanguageCode) {
 			$message = new TMessage( $key, $en );
 			// Take the contents from edit field as a translation
 			$message->database = $translation;

@@ -54,12 +54,10 @@ class File_Ogg_Speex extends File_Ogg_Media
             / $this->_header['rate'];
             
          //make sure the offset is worth taking into account oggz_chop related hack
-	    if( $startSec > 1){
+	    if( $startSec > 1)
             $this->_streamLength = $endSec - $startSec;
-            $this->_startOffset = $startSec;
-	    }else{
+        else
             $this->_streamLength = $endSec;
-	    }
       }
 
     /**

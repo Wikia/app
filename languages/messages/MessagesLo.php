@@ -95,6 +95,8 @@ $messages = array(
 # User preference toggles
 'tog-underline'               => 'ຂີດເສັ້ນກ້ອງລິງກ໌:',
 'tog-hideminor'               => 'ເຊື່ອງການດັດແກ້ເລັກນ້ອຍ ໃນ ການປ່ຽນແປງຫຼ້າສຸດ',
+'tog-hidepatrolled'           => 'ເຊື່ອງ ການລາດຕະເວນດັດແກ້ ໃນ ການດັດແກ້ຫຼ້າສຸດ',
+'tog-newpageshidepatrolled'   => 'ເຊື່ອງ ການລາດຕະເວນດັດແກ້ ໃນ ລາຍການໜ້າໃໝ່',
 'tog-extendwatchlist'         => 'ຂະຫຍາຍ ລາຍການຕິດຕາມ ເພື່ອ ສະແດງທຸກໆການປ່ຽນແປງ',
 'tog-usenewrc'                => 'ສະແດງ ການປ່ຽນແປງຫຼ້າສຸດ ເປັນສີເຂັ້ມ (JavaScript)',
 'tog-numberheadings'          => 'ໜາຍເລກຫົວຂໍ້ແບບອັດຕະໂນມັດ',
@@ -126,6 +128,7 @@ $messages = array(
 'tog-watchlisthideminor'      => 'ເຊື່ອງ ການດັດແກ້ເລັກນ້ອຍ ໃນ ລາຍການຕິດຕາມຂອງຂ້ອຍ',
 'tog-watchlisthideliu'        => 'ເຊື່ອງການດັດແກ້ ໂດຍ ຜູ້ໃຊ້ໄດ້ເຊັນເຂົາ ໃນ ລາຍການຕິດຕາມ',
 'tog-watchlisthideanons'      => 'ເຊື່ອງ ການດັດແກ້ໂດຍຜູ້ໃຊ້ ບໍ່ສະແດງຊື່ ຈາກ ລາຍການຕິດຕາມ',
+'tog-watchlisthidepatrolled'  => 'ເຊື່ອງ ການລາດຕະເວນດັດແກ້ ໃນ ລາຍການຕິດຕາມ',
 'tog-ccmeonemails'            => 'ສົ່ງສຳເນົາ ອີເມລ ທີ່ ຂ້ອຍສົ່ງຫາຜູ້ອື່ນ ໃຫ້ ຂ້ອຍ',
 'tog-diffonly'                => 'ບໍ່ສະແດງເນື້ອໃນຂອງບົດຄວາມ ຢູ່ທາງລຸ່ມ ສ່ວນຕ່າງ',
 'tog-showhiddencats'          => 'ສະແດງໝວດເຊື່ອງ',
@@ -279,7 +282,6 @@ $messages = array(
 
 'versionrequired' => 'ຕ້ອງການເວີຣ໌ຊັ່ນ $1 ຂອງມີເດຍວິກິ',
 
-'pagetitle'               => '$1 - ວິກິພີເດຍ',
 'retrievedfrom'           => 'ຖອນມາຈາກ "$1"',
 'youhavenewmessages'      => 'ທ່ານ ມີ $1 ($2).',
 'newmessageslink'         => 'ຂໍ້ຄວາມໃໝ່',
@@ -573,7 +575,7 @@ $messages = array(
 'imagelinks'          => 'ລິ້ງຄ໌',
 'linkstoimage'        => 'ລິ້ງຄ໌ຕໍ່ໄປນີ້ເຊື່ອມຕໍ່ຫາໄຟລ໌:',
 'nolinkstoimage'      => 'ບໍ່ມີໜ້າໃດ ລິ້ງຄ໌ ຫາ ໄຟລ໌ນີ້.',
-'sharedupload'        => 'ໄຟລ໌ນີ້ແມ່ນການອັບໂຫຼດຣ່ວມ ແລະ ອາດຖືກໃຊ້ໂດຍໂຄງການອື່ນໆ.',
+'sharedupload'        => 'ໄຟລ໌ນີ້ແມ່ນການອັບໂຫຼດຣ່ວມ ແລະ ອາດຖືກໃຊ້ໂດຍໂຄງການອື່ນໆ.', # $1 is the repo name, $2 is shareduploadwiki(-desc)
 'noimage'             => 'ຍັງບໍ່ມີ ໄຟລ໌ຊື່ນີ້ ເທື່ອ, ທ່ານ ສາມາດ  $1.',
 'noimage-linktext'    => 'ອັບໂຫຼດມັນ',
 
@@ -764,7 +766,7 @@ $messages = array(
 'contributions' => 'ການປະກອບສ່ວນ',
 'mycontris'     => 'ປະກອບສ່ວນ',
 'contribsub2'   => 'ສຳຫຼັບ $1 ($2)',
-'nocontribs'    => 'ຍັງບໍ່ມີການປ່ຽນແປງ ໃນນີ້.',
+'nocontribs'    => 'ຍັງບໍ່ມີການປ່ຽນແປງ ໃນນີ້.', # Optional parameter: $1 is the user name
 'uctop'         => '(ເທິງສຸດ)',
 'month'         => 'ແຕ່ເດືອນ (ແລະກ່ອນໜ້ານັ້ນ):',
 'year'          => 'ແຕ່ປີ (ແລະກ່ອນໜ້ານັ້ນ):',
@@ -920,11 +922,9 @@ $messages = array(
 
 # E-mail address confirmation
 'confirmemail'            => 'ຢືນຢັນ ທີ່ຢູ່ ອີເມລ',
-'confirmemail_pending'    => '<div class="error">
-ລະຫັດຢືນຢັນ ໄດ້ຖືກສົ່ງໄປ ທີ່ຢູ່ ອີເມລ ຂອງ ທ່ານ; ຖ້າ ທ່ານ ຫາກໍ່ສ້າງບັນຊີ
+'confirmemail_pending'    => 'ລະຫັດຢືນຢັນ ໄດ້ຖືກສົ່ງໄປ ທີ່ຢູ່ ອີເມລ ຂອງ ທ່ານ; ຖ້າ ທ່ານ ຫາກໍ່ສ້າງບັນຊີ
 , ທ່ານ ຄວນຈະລໍຖ້າໜ້ອຍໜຶ່ງ ກ່ອນຈະ ພະຍາຍາມ
-ຂໍລະຫັດຢືນຢັນໃໝ່.
-</div>',
+ຂໍລະຫັດຢືນຢັນໃໝ່.',
 'confirmemail_send'       => 'ສົ່ງ ລະຫັດ ຢືນຢັນ',
 'confirmemail_sent'       => 'ອີເມລຢືນຢັນ ໄດ້ຖືກສົ່ງໄປແລ້ວ.',
 'confirmemail_oncreate'   => 'ລະຫັດ ຢືນຢັນ ໄດ້ຖືກສົງໄປ ຫາ ທີ່ຢູ່ ອີເມລ ຂອງ ທ່ານແລ້ວ.

@@ -18,38 +18,38 @@ class SFCreateCategory extends SpecialPage {
 		wfLoadExtensionMessages('SemanticForms');
 	}
 
-	function execute() {
+	function execute($query) {
 		$this->setHeaders();
 		doSpecialCreateCategory();
 	}
-}
 
-function createCategoryText($default_form, $category_name, $parent_category) {
-	wfLoadExtensionMessages('SemanticForms');
+	static function createCategoryText($default_form, $category_name, $parent_category) {
+		wfLoadExtensionMessages('SemanticForms');
 
-	if ($default_form == '') {
-		$text = wfMsgForContent('sf_category_desc', $category_name);
-	} else {
-		global $sfgContLang;
-		$specprops = $sfgContLang->getPropertyLabels();
-		// a simpler call is possible in SMW 1.4 and higher
-		if (class_exists('SMWPropertyValue')) {
-			$form_tag = "[[" . $specprops[SF_SP_HAS_DEFAULT_FORM] . "::$default_form]]";
+		if ($default_form == '') {
+			$text = wfMsgForContent('sf_category_desc', $category_name);
 		} else {
-			$namespace_labels = $sfgContLang->getNamespaces();
-			$form_label = $namespace_labels[SF_NS_FORM];
-			$form_tag = "[[" . $specprops[SF_SP_HAS_DEFAULT_FORM] .
-				"::$form_label:$default_form|$default_form]]";
+			global $sfgContLang;
+			$specprops = $sfgContLang->getPropertyLabels();
+			// a simpler call is possible in SMW 1.4 and higher
+			if (class_exists('SMWPropertyValue')) {
+				$form_tag = "[[" . $specprops[SF_SP_HAS_DEFAULT_FORM] . "::$default_form]]";
+			} else {
+				$namespace_labels = $sfgContLang->getNamespaces();
+				$form_label = $namespace_labels[SF_NS_FORM];
+				$form_tag = "[[" . $specprops[SF_SP_HAS_DEFAULT_FORM] .
+					"::$form_label:$default_form|$default_form]]";
+			}
+			$text = wfMsgForContent('sf_category_hasdefaultform', $form_tag);
 		}
-		$text = wfMsgForContent('sf_category_hasdefaultform', $form_tag);
+		if ($parent_category != '') {
+			global $wgContLang;
+			$namespace_labels = $wgContLang->getNamespaces();
+			$category_namespace = $namespace_labels[NS_CATEGORY];
+			$text .= "\n\n[[$category_namespace:$parent_category]]";
+		}
+		return $text;
 	}
-	if ($parent_category != '') {
-		global $wgContLang;
-		$namespace_labels = $wgContLang->getNamespaces();
-		$category_namespace = $namespace_labels[NS_CATEGORY];
-		$text .= "\n\n[[$category_namespace:$parent_category]]";
-	}
-	return $text;
 }
 
 function doSpecialCreateCategory() {
@@ -75,8 +75,8 @@ function doSpecialCreateCategory() {
 			# redirect to wiki interface
 			$wgOut->setArticleBodyOnly(true);
 			$namespace = NS_CATEGORY;
-			$title = Title::newFromText($category_name, $namespace);
-			$full_text = createCategoryText($default_form, $category_name, $parent_category);
+			$title = Title::makeTitleSafe($namespace, $category_name);
+			$full_text = SFCreateCategory::createCategoryText($default_form, $category_name, $parent_category);
 			// HTML-encode
 			$full_text = str_replace('"', '&quot;', $full_text);
 			$text = SFUtils::printRedirectForm($title, $full_text, "", $save_page, $preview_page, false, false, false, null, null);

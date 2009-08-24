@@ -107,6 +107,15 @@ $messages['eo'] = array(
 	'right-forcepreviewexempt' => 'Povas konservi neuzinte Antaŭvidon',
 );
 
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'forcepreview' => 'Grabar página (use prevista primero)',
+	'forcepreview-desc' => 'Forzar prevista para usuarios no privilegiados',
+	'right-forcepreviewexempt' => 'Puede grabar sin usar Mostrar prevista',
+);
+
 /** Finnish (Suomi)
  * @author Crt
  * @author Nike
@@ -119,10 +128,11 @@ $messages['fi'] = array(
 
 /** French (Français)
  * @author Grondin
+ * @author PieRRoMaN
  * @author Verdy p
  */
 $messages['fr'] = array(
-	'forcepreview' => 'Sauvegarde la page (lance en premier la prévisualisation)',
+	'forcepreview' => 'Sauvegarder la page (prévisualiser au préalable)',
 	'forcepreview-desc' => "Force la prévisualisation pour les utilisateurs ne disposant d'aucun privilège",
 	'right-forcepreviewexempt' => 'Peut publier sans utiliser la prévisualisation',
 );
@@ -144,6 +154,15 @@ $messages['grc'] = array(
 	'forcepreview' => 'Γράφειν δέλτον (προθεώρησις προηγουμένως)',
 	'forcepreview-desc' => 'Ἀναγκαστικὴ προθεώρησις διὰ τοὺς μὴ προνομιούχους χρωμένους',
 	'right-forcepreviewexempt' => 'Γράψειν δέλτον ἐνδεχομένως ἄνευ χρήσεως τοῦ Δεικνύναι τῆς προθεώρήσεως',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'forcepreview' => 'Syte spychere (zerscht Vorschau aazeige)',
+	'forcepreview-desc' => 'Vorschau fir nit privilegierti Benutzer erzwinge',
+	'right-forcepreviewexempt' => 'Spychere ohni Erzwingig vu dr Vorschau',
 );
 
 /** Hawaiian (Hawai`i)
@@ -249,6 +268,7 @@ $messages['km'] = array(
  */
 $messages['ko'] = array(
 	'forcepreview' => '문서 저장 (미리 보기 후)',
+	'forcepreview-desc' => '권한이 없는 사용자에게 미리 보기를 강제',
 	'right-forcepreviewexempt' => '미리 보기 없이 편집 가능',
 );
 
@@ -360,6 +380,15 @@ $messages['pt'] = array(
 	'right-forcepreviewexempt' => 'Pode salvar páginas sem mostrar a previsão antes',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Eduardo.mps
+ */
+$messages['pt-br'] = array(
+	'forcepreview' => 'Gravar página (use a previsão primeiro)',
+	'forcepreview-desc' => 'Força previsão para utilizadores sem privilégios',
+	'right-forcepreviewexempt' => 'Pode salvar páginas sem mostrar a previsão antes',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -400,6 +429,24 @@ $messages['te'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'forcepreview' => 'Захираи саҳифа (пешнамоишро аввал истифода баред)',
+);
+
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'forcepreview' => 'Sagipin ang pahina (gamitin muna ang paunang-tingin)',
+	'forcepreview-desc' => 'Ipilit ang paunang-tingin para sa walang pribilehiyong mga tagagamit',
+	'right-forcepreviewexempt' => 'Maaaring sagipin na hindi ginagamit ang Ipakita ang paunang-tingin',
+);
+
+/** Vèneto (Vèneto)
+ * @author Candalua
+ */
+$messages['vec'] = array(
+	'forcepreview' => "Salva la pàxena (dòpara prima l'anteprima)",
+	'forcepreview-desc' => "Forza l'uso de l'anteprima par i utenti che no i gà privilegi suficenti",
+	'right-forcepreviewexempt' => 'El pol salvar sensa doparar el Mostra anteprima',
 );
 
 /** Vietnamese (Tiếng Việt)
