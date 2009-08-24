@@ -1,5 +1,5 @@
 == Changes since 200908.4 ==
-* 
+* rt#20343: LinkSuggest results are misaligned (Macbre)
 
 == Changes since 200908.3 ==
 * rt#19924: Sidebar menu does not collapse when cursor moves over MediaWiki edit area (Macbre)

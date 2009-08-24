@@ -383,6 +383,13 @@ YAHOO.lang.extend(YAHOO.example.AutoCompleteTextArea, YAHOO.widget.AutoComplete,
 		return [left, top];
 	},
 
+	// RT #20343
+	_onTextboxScroll: function(e, oSelf) {
+		var position = oSelf.getCaretPosition(oSelf._elTextbox);
+		oSelf._elContainer.style.left = position[0] + 'px'
+		oSelf._elContainer.style.top = position[1] + 'px'
+	},
+
 	track: function(str) {
 		//YAHOO.Wikia.Tracker.trackByStr(null, 'linkSuggest/' + str + (wgCanonicalSpecialPageName == 'Createpage' ? '/createPage' : '/editpage'));
 	}
@@ -404,6 +411,10 @@ function LS_PrepareTextarea (textarea, oDS) {
 
 			YAHOO.util.Event.removeListener(this._elTextbox, "keypress");
 			YAHOO.util.Event.addListener(this._elTextbox, "keypress", this._onTextboxKeyPress, this);
+
+			// RT #20343
+			YAHOO.util.Event.removeListener(this._elTextbox, "scroll");
+			YAHOO.util.Event.addListener(this._elTextbox, "scroll", this._onTextboxScroll, this);
 
 			if ( YAHOO.Tools.getBrowserAgent().mac ) {
 				YAHOO.util.Event.addListener(this._elTextbox, "keypress", this._onTextboxKeyPress2, this); // #2761

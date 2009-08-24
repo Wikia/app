@@ -21,7 +21,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
     'name' => 'LinkSuggest',
     'author' => 'Inez Korczyński, Bartek Łapiński, Ciencia al Poder',
-    'version' => '1.51',
+    'version' => '1.52',
 );
 
 $wgExtensionMessagesFiles['LinkSuggest'] = dirname(__FILE__).'/'.'LinkSuggest.i18n.php';
