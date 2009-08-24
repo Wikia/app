@@ -17,7 +17,8 @@ class DumpsOnDemand {
 	 * @static
 	 */
 	static public function customSpecialStatistics( &$specialpage, &$text ) {
-		global $wgOut, $wgDBname, $wgContLang, $wgRequest, $wgTitle, $wgUser;
+		global $wgOut, $wgDBname, $wgContLang, $wgRequest, $wgTitle, $wgUser,
+			$wgCityId;
 
 		wfLoadExtensionMessages( "DumpsOnDemand" );
 
@@ -40,6 +41,17 @@ class DumpsOnDemand {
 		$json = @file_get_contents( self::getUrl( $wgDBname, "index.json" ), 0, $context );
 		if( $json ) {
 			$index = (array )Wikia::json_decode( $json );
+		}
+
+		/**
+		 * get last dump request timestamp
+		 */
+		$wiki = WikiFactory::getWikiByID( $wgCityId );
+		if( wfTimestampNow() - $wiki->city_lastdump_timestamp  > 7*24*60*6 ) {
+			$tmpl->set( "available", true );
+		}
+		else {
+			$tmpl->set( "available", false );
 		}
 
 		$tmpl->set( "title", $wgTitle );
@@ -109,6 +121,17 @@ class DumpsOnDemand {
 			new MailAddress( "dump-request@wikia-inc.com" ),
 			"Database dump request for {$wgDBname}",
 			$body
+		);
+
+		/**
+		 * @todo universal WikiFactory metod for that
+		 */
+		$dbw = WikiFactory::db( DB_MASTER );
+		$dbw->update(
+			"city_list",
+			array( "city_lastdump_timestamp" => wfTimestampNow() ),
+			array( "city_id" => $wgCityId ),
+			__METHOD__
 		);
 	}
 }
