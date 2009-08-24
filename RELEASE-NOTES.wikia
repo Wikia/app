@@ -1,4 +1,5 @@
 == Changes since 200908.3 ==
+* rt#19924: Sidebar menu does not collapse when cursor moves over MediaWiki edit area (Macbre)
 * rt#21122: StaticChute does strange things to SemanticForms's YUI code (Macbre)
 * rt#21671: MultiLookup: prevent trailing whitespace problems (Uberfuzzy)
 * upgraded to MW 1.15.1 (Emil)
