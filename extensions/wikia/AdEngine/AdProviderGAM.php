@@ -11,12 +11,11 @@
 class AdProviderGAM implements iAdProvider {
 
 	protected static $instance = false;
-	private $provider_id = 4;
 
 	//private $adManagerId = "ca-pub-3862144315477646"; gorillamania@gmail.com account
 	public $adManagerId = "ca-pub-4086838842346968"; // Wikia account
 
-	public $batchHtmlCalled = false, $setupHtmlCalled = false;
+	public $batchHtmlCalled = false;
 
 	public static function getInstance() {
 		if(self::$instance == false) {
@@ -64,10 +63,11 @@ class AdProviderGAM implements iAdProvider {
 	}
 
         public function getSetupHtml(){
-		if ($this->setupHtmlCalled){
+		static $called = false;
+		if ($called){
 			return false;
 		}
-		$this->setupHtmlCalled = true;
+		$called = true;
 
 		$out = "<!-- ## BEGIN " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		// Download the necessary required javascript
@@ -76,8 +76,12 @@ class AdProviderGAM implements iAdProvider {
 			// Set up a try/catch to see if the user has AdBcock enabled presumably because the above call failed to download
 			'<script type="text/javascript">
 			wgAdBlockEnabled=false;
-			GS_googleAddAdSenseService("' . $this->adManagerId . '");
-			GS_googleEnableAllServices();
+			try {
+			  GS_googleAddAdSenseService("' . $this->adManagerId . '");
+			  GS_googleEnableAllServices();
+			} catch (e){
+			  wgAdBlockEnabled=true;
+			}
 			</script>' . "\n";
 		$out .= "<!-- ## END " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		return $out;
@@ -95,9 +99,8 @@ class AdProviderGAM implements iAdProvider {
 		$out = "<!-- ## BEGIN " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		
 		// Make a call for each slot.
-		$this->slotsToCall = AdEngine::getInstance()->getSlotNamesForProvider($this->provider_id);
-
-		$out .= '<script type="text/javascript">' . "\n";
+		$out .= '<script type="text/javascript">' . "\n" .
+			'try {' . "\n";
 		foreach ( $this->slotsToCall as $slotname ){
 			$out .= 'GA_googleAddSlot("' . $this->adManagerId . '","' . $slotname . '");' . "\n";
 			// Set up key values
@@ -117,6 +120,10 @@ class AdProviderGAM implements iAdProvider {
 
 		// ###### Ad Sense attributes
 		$out .= $this->getAdSenseAttr() . "\n" .
+			// Google Ad Call failed, probably because of AdBlock
+			// Hide these errors from Athena error reporting.
+			// Consider putting something else here for tracking?
+			'} catch (e) { }' . "\n" . 
 			'</script>' . "\n";
 		
 		// Make the call for all the ads
@@ -190,9 +197,6 @@ class AdProviderGAM implements iAdProvider {
 	public function getAd($slotname, $slot){
 		$out = "";
 		// First time the ad is called, call all the batch code, if it hasn't already been called.
-		if (! $this->setupHtmlCalled){
-			$out .= $this->getSetupHtml();
-		} 
 		if (! $this->batchHtmlCalled){
 			$out .= $this->getBatchCallHtml();
 		} 
