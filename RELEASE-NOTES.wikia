@@ -1,4 +1,5 @@
 == Changes since 200908.3 ==
+* rt#21671: MultiLookup: prevent trailing whitespace problems (Uberfuzzy)
 * upgraded to MW 1.15.1 (Emil)
 * rt#21297: Answers: Changed wikianswers visible headings for better SEO. (Nef)
 * rt#21459: Easy link for regexblock added. (Uberfuzzy)

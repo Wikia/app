@@ -46,7 +46,7 @@ class MultipleLookupPage extends SpecialPage {
 		$wgOut->setPageTitle( wfMsg('multilookupstitle') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-		$this->mUsername = $wgRequest->getVal ('target');
+		$this->mUsername = trim($wgRequest->getVal ('target'));
 
 		/**
 		 * show form
