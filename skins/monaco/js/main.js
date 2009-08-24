@@ -250,6 +250,13 @@ function monacoNavigationHoverActions() {
 	}).mouseover(function() {
 		clearTimeout(menutimer);
 	});
+
+	// RT #19924
+	$('#wpTextbox1').mouseover(function() {
+		menutimer = setTimeout(function() {
+			$("#navigation").find(".sub-menu").hide();
+		}, 500);
+	});
 }
 
 // footer star voting
