@@ -15,7 +15,7 @@ $useByte = 0;
 /* get max value */
 foreach ($data as $date => $out) {
 	//percent
-	if ( in_array($column, array('M', 'N')) ) {
+	if ( in_array($column, array('I')) ) {
 		$_tmp = $out * 100;
 	} else {
 		$_tmp = $out;
@@ -34,11 +34,11 @@ foreach ($data as $date => $out) {
 	$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
 	$new_date = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
 	#---
-	if (in_array($column, array('M', 'N'))) {
+	if (in_array($column, array('I'))) {
 		$value = sprintf("%0d", $out * 100);
 		$out = $out * 100;
 		$suffix = "%";
-	} elseif (in_array($column, array('P'))) {
+	} elseif (in_array($column, array('K'))) {
 		$value = sprintf("%0.0f", intval($out));
 		if (intval($iMax) > $GB) {
 			$value = $wgLang->formatNum(sprintf("%0.1f", intval($out)/$GB));
@@ -101,24 +101,24 @@ $td_width = $chartSettings['barwidth'] . $chartSettings['barunit'];
 
 $tableStyle = "ws_charts"; 
 
-$active = ($column >= 'A' && $column < 'H') ? "wikians"  : "";
-$active = ($column >= 'H' && $column < 'O') ? "articles" : $active;
-$active = ($column >= 'O' && $column < 'R') ? "database" : $active;
-$active = ($column >= 'R' && $column < 'W') ? "links" 	 : $active;
-$active = ($column >= 'W') ? "images" : $active;
+$active = ($column >= 'A' && $column < 'G') ? "wikians"  : "";
+$active = ($column >= 'G' && $column < 'J') ? "articles" : $active;
+$active = ($column >= 'J' && $column < 'M') ? "database" : $active;
+$active = ($column >= 'M' && $column < 'O') ? "links" 	 : $active;
+$active = ($column >= 'O') ? "images" : $active;
 
-$barColor = ($column >= 'A' && $column < 'H') ? "orange" : "";
-$barColor = ($column >= 'H' && $column < 'O') ? "blue" : $barColor;
-$barColor = ($column >= 'O' && $column < 'R') ? "red" : $barColor;
-$barColor = ($column >= 'R' && $column < 'W') ? "green" : $barColor;
-$barColor = ($column >= 'W') ? "yellow" : $barColor;
+$barColor = ($column >= 'A' && $column < 'G') ? "orange" : "";
+$barColor = ($column >= 'G' && $column < 'J') ? "blue" : $barColor;
+$barColor = ($column >= 'J' && $column < 'M') ? "red" : $barColor;
+$barColor = ($column >= 'M' && $column < 'O') ? "green" : $barColor;
+$barColor = ($column >= 'O') ? "yellow" : $barColor;
 
 $title = "<div class=\"wk-stats-legend\"><a name=\"".strtolower($active)."\">";
-$title .= "<a href=\"#wikians\" style=\"" . (($column >= 'A' && $column < 'H') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_wikians")."</a> - ";
-$title .= "<a href=\"#articles\" style=\"" . (($column >= 'H' && $column < 'O') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_articles")."</a> - ";
-$title .= "<a href=\"#database\" style=\"" . (($column >= 'O' && $column < 'R') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_database")."</a> - ";
-$title .= "<a href=\"#links\" style=\"" . (($column >= 'R' && $column < 'W') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_links")."</a> - ";
-$title .= "<a href=\"#images\" style=\"" . (($column >= 'W') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_images")."</a>";
+$title .= "<a href=\"#wikians\" style=\"" . (($column >= 'A' && $column < 'G') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_wikians")."</a> - ";
+$title .= "<a href=\"#articles\" style=\"" . (($column >= 'G' && $column < 'J') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_articles")."</a> - ";
+$title .= "<a href=\"#database\" style=\"" . (($column >= 'J' && $column < 'M') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_database")."</a> - ";
+$title .= "<a href=\"#links\" style=\"" . (($column >= 'M' && $column < 'O') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_links")."</a> - ";
+$title .= "<a href=\"#images\" style=\"" . (($column >= 'O') ? "font-weight:bold" : "color: #6495ED") . "\">".wfMsg("wikiastats_images")."</a>";
 $title .= "</div>";
 $columnsBar = "";
 if (empty($sum)) $sum = 1;
@@ -126,7 +126,7 @@ $i = 0;
 $max_div_height = 0;
 foreach ($data as $date => $out) {
 	
-	if ( in_array($column, array('M', 'N')) ) //percent
+	if ( in_array($column, array('I')) ) //percent
 		$_tmp = $out * 100;
 	else
 		$_tmp = $out;		

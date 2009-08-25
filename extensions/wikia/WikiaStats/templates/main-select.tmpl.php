@@ -46,6 +46,7 @@ YAHOO.namespace("Wikia.Statistics");
                     var is_checked = 0; var checked_list = "";
                     for (i = 0; i < checklist.length; i++) { if (checklist[i].checked) { checked_list += checklist[i].value + ";"; is_checked++; } }
                     if (is_checked > <?= ($MAX_NBR + 1)?>) { alert(YAHOO.tools.printf("<?=addslashes(wfMsg('wikiastats_xls_generate_info'))?>", (<?=$MAX_NBR + 1?>))); return false; }
+
                     if (document.getElementById('showXLS').value == 1) {
                     	if (!document.getElementById('showStatsNewWindowBox').checked) { StatsPageLoaderShow(0); }
                     	ShowCompareStats(compare_stats, checked_list, (document.getElementById('showStatsNewWindowBox').checked));
@@ -205,16 +206,16 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 						<div class="wk-stats-main-panel" id="wk-stats-main-panel">
 							<ul>
 								<li id="wk-xls-pagetitle"><a href="javascript:void(0);" onClick="XLSStats('1', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_pagetitle")?></a></li>
-								<li><a href="javascript:void(0);" onClick="XLSStats('9', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_pageviews")?></a></li>
+								<!--<li><a href="javascript:void(0);" onClick="XLSStats('9', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_pageviews")?></a></li>-->
 							</ul>	
 						</div>
 						<div class="wk-stats-main-panel" id="wk-stats-panel">
 							<ul>
-							<li><a href="javascript:void(0);" onClick="XLSStats('2', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_distrib_article")?></a></li>
+							<!--<li><a href="javascript:void(0);" onClick="XLSStats('2', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_distrib_article")?></a></li>-->
 							<li><a href="javascript:void(0);" onClick="XLSStats('3', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_active_absent_wikians")?></a></li>
 							<li><a href="javascript:void(0);" onClick="XLSStats('4', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_anon_wikians")?></a></li>
-							<li><a href="javascript:void(0);" onClick="XLSStats('5', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_article_one_link")?></a></li>
-							<li><a href="javascript:void(0);" onClick="XLSStats('6', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_namespace_records")?></a></li>
+							<!--<li><a href="javascript:void(0);" onClick="XLSStats('5', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_article_one_link")?></a></li>-->
+							<!---<li><a href="javascript:void(0);" onClick="XLSStats('6', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_namespace_records")?></a></li>-->
 							<li><a href="javascript:void(0);" onClick="XLSStats('7', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_page_edits")?></a></li>
 							<li><a href="javascript:void(0);" onClick="XLSStats('8', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_other_nspaces_edits")?></a></li>
 							</ul>
@@ -237,16 +238,16 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 		<table style="width:auto;line-height:11pt;display:none;" cellpadding="0" cellspacing="0" id="ws_main_wikia_compare_td" valign="top">
 		<tr><td>
 <? 
-$k = 7; 
+$k = 9; 
 $linkText = array(
 	"1" => wfMsg('wikiastats_comparision'),
 	"3" => wfMsg('wikiastats_distrib_wikians'), 
-	"10" => wfMsg('wikiastats_articles_text'), 
-	"17" => wfMsg('wikiastats_database'), 
-	"20" => wfMsg('wikiastats_links'), 
-	"25" => wfMsg('wikiastats_images')
+	"9" => wfMsg('wikiastats_articles_text'), 
+	"12" => wfMsg('wikiastats_database'), 
+	"15" => wfMsg('wikiastats_links'), 
+	"17" => wfMsg('wikiastats_images')
 );
-for ($i=1; $i<=26; $i++) { 
+for ($i=1; $i<=17; $i++) { 
 	$l = $k + $i; 
 	if ( in_array($i, array_keys($linkText)) ) { if ($i != 1) {
 ?>

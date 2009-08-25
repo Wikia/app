@@ -18,22 +18,22 @@ function visible_wikians(rows, col, v) {
 	for (y = 1; y <= 2; y++) { cels[y].style.display = v; }
 
 	cels = rows[2].getElementsByTagName('td');
-	for (y = 0; y <= 3; y++) { cels[y].style.display = v; }
+	for (y = 0; y <= 1; y++) { cels[y].style.display = v; }
 
 	cels = rows[3].getElementsByTagName('td');
-	for (y = 0; y <= 5; y++) { cels[y].style.display = v; }
+	for (y = 0; y <= 4; y++) { cels[y].style.display = v; }
 
 	cels = rows[rows.length-1].getElementsByTagName('td');
 	cels[col].style.display = v;
 
 	cels = rows[rows.length-2].getElementsByTagName('td');
-	for (y = 0; y <= 1; y++) { cels[y].style.display = v; }
+	for (y = 0; y < 1; y++) { cels[y].style.display = v; }
 
 	cels = rows[rows.length-3].getElementsByTagName('td');
-	for (y = 0; y <= 2; y++) { cels[y].style.display = v; }
+	for (y = 0; y < 2; y++) { cels[y].style.display = v; }
 
 	cels = rows[rows.length-4].getElementsByTagName('td');
-	for (y = 1; y <= 7; y++) { cels[y].style.display = v; }
+	for (y = 1; y < 6; y++) { cels[y].style.display = v; }
 }
 
 function visible_articles(rows, col, v) {
@@ -41,20 +41,20 @@ function visible_articles(rows, col, v) {
 	cels[2].style.display = v;
 
 	cels = rows[1].getElementsByTagName('td');
-	for (y = 3; y <= 6; y++) { cels[y].style.display = v; }
+	for (y = 3; y <= 5; y++) { cels[y].style.display = v; }
 	
 	cels = rows[3].getElementsByTagName('td');
-	for (y = 6; y <= 11; y++) { cels[y].style.display = v; }
+	for (y = 5; y < 6; y++) { cels[y].style.display = v; }
 	
 	// footers
 	cels = rows[rows.length-1].getElementsByTagName('td');
 	cels[2].style.display = v;
 
 	cels = rows[rows.length-3].getElementsByTagName('td');
-	for (y = 3; y <= 5; y++) { cels[y].style.display = v; }
+	for (y = 2; y < 3; y++) { cels[y].style.display = v; }
 
 	cels = rows[rows.length-4].getElementsByTagName('td');
-	for (y = 8; y <= 14; y++) { cels[y].style.display = v; }
+	for (y = 7; y < 10; y++) { cels[y].style.display = v; }
 }
 
 function visible_database(rows, col, v) {
@@ -63,14 +63,14 @@ function visible_database(rows, col, v) {
 	cels[3].style.display = v;
 	
 	cels = rows[1].getElementsByTagName('td');
-	for (y = 7; y <= 9; y++) { cels[y].style.display = v; }
+	for (y = 6; y <= 8; y++) { cels[y].style.display = v; }
 	
 	// footers
 	cels = rows[rows.length-1].getElementsByTagName('td');
 	cels[3].style.display = v;
 
 	cels = rows[rows.length-4].getElementsByTagName('td');
-	for (y = 15; y <= 17; y++) { cels[y].style.display = v; }
+	for (y = 10; y <= 12; y++) { cels[y].style.display = v; }
 }
 
 function visible_links(rows, col, v) {
@@ -79,14 +79,14 @@ function visible_links(rows, col, v) {
 	cels[4].style.display = v;
 	
 	cels = rows[1].getElementsByTagName('td');
-	for (y = 10; y <= 14; y++) { cels[y].style.display = v; }
+	for (y = 9; y <= 10; y++) { cels[y].style.display = v; }
 	
 	// footers
 	cels = rows[rows.length-1].getElementsByTagName('td');
 	cels[4].style.display = v;
 
 	cels = rows[rows.length-4].getElementsByTagName('td');
-	for (y = 18; y <= 22; y++) { cels[y].style.display = v; }
+	for (y = 13; y <= 14; y++) { cels[y].style.display = v; }
 	//
 }
 
@@ -96,14 +96,14 @@ function visible_image(rows, col, v) {
 	cels[5].style.display = v;
 	
 	cels = rows[1].getElementsByTagName('td');
-	for (y = 15; y <= 16; y++) { cels[y].style.display = v; }
+	cels[11].style.display = v; 
 
 	// footers
 	cels = rows[rows.length-1].getElementsByTagName('td');
 	cels[5].style.display = v;
 
 	cels = rows[rows.length-4].getElementsByTagName('td');
-	for (y = 23; y <= 24; y++) { cels[y].style.display = v; }
+	for (y = 15; y < 16; y++) { cels[y].style.display = v; }
 	//
 }
 
@@ -126,13 +126,13 @@ function visible_column(col, col_to, show, text, div_hide) {
 
 	if (col == 1) { //wikians headers and footer
 		visible_wikians(rows, col, v);
-	} else if (col == 8) { //article headers and footer
+	} else if (col == 7) { //article headers and footer
 		visible_articles(rows, col, v);
-	} else if (col == 15) { //database headers and footer
+	} else if (col == 10) { //database headers and footer
 		visible_database(rows, col, v);
-	} else if (col == 18) { //links headers and footer
+	} else if (col == 13) { //links headers and footer
 		visible_links(rows, col, v);
-	} else if (col == 23) { //daily headers and footer
+	} else if (col == 15) { //images headers and footer
 		visible_image(rows, col, v);
 	}
 
@@ -235,25 +235,25 @@ YAHOO.util.Event.onDOMReady(function () {
 				if ( (document.getElementById( "wk-stats-city-id" )) && (document.getElementById( "wk-stats-city-id" ).value > 0) ) {
 					var _otherStats = document.getElementById('ws-other-stats-panel');
 					if (_otherStats.style.display == 'block') {
-						document.getElementById( "ws-edits-article" ).style.display = "block";
+						//document.getElementById( "ws-edits-article" ).style.display = "block";
 						document.getElementById( "ws-active-wikians" ).style.display = "block";
 						document.getElementById( "wk-select-month-wikians-div" ).style.display = "block";
 						document.getElementById( "ws-anon-wikians" ).style.display = "block";
-						document.getElementById( "ws-pageviews-count" ).style.display = "block";
-						document.getElementById( "ws-article-size" ).style.display = "block";
-						document.getElementById( "ws-namespace-count" ).style.display = "block";
+						//document.getElementById( "ws-pageviews-count" ).style.display = "block";
+						//document.getElementById( "ws-article-size" ).style.display = "block";
+						//document.getElementById( "ws-namespace-count" ).style.display = "block";
 						document.getElementById( "ws-page-edits-count" ).style.display = "block";
 						document.getElementById( "ws-othernpaces-edits-count" ).style.display = "block";
 						document.getElementById( "ws-other-stats-panel" ).style.display = "block";
 					}
 				} else {
-					document.getElementById( "ws-edits-article" ).style.display = "none";
+					//document.getElementById( "ws-edits-article" ).style.display = "none";
 					document.getElementById( "ws-active-wikians" ).style.display = "none";
 					document.getElementById( "wk-select-month-wikians-div" ).style.display = "none";
 					document.getElementById( "ws-anon-wikians" ).style.display = "none";
-					document.getElementById( "ws-pageviews-count" ).style.display = "none";
-					document.getElementById( "ws-article-size" ).style.display = "none";
-					document.getElementById( "ws-namespace-count" ).style.display = "none";
+					//document.getElementById( "ws-pageviews-count" ).style.display = "none";
+					//document.getElementById( "ws-article-size" ).style.display = "none";
+					//document.getElementById( "ws-namespace-count" ).style.display = "none";
 					document.getElementById( "ws-page-edits-count" ).style.display = "none";
 					document.getElementById( "ws-othernpaces-edits-count" ).style.display = "none";
 					document.getElementById( "ws-other-stats-panel" ).style.display = "none";
@@ -269,12 +269,12 @@ YAHOO.util.Event.onDOMReady(function () {
 	YAHOO.Wikia.Statistics.ShowStats = function(e) 
 	{
 		var city = document.getElementById( "ws-domain" );
-		document.getElementById( "ws-edits-article-table" ).innerHTML = "";
+		//document.getElementById( "ws-edits-article-table" ).innerHTML = "";
 		document.getElementById( "ws-wikians-active-absent-table" ).innerHTML = "";
 		document.getElementById( "ws-anon-wikians-table" ).innerHTML = "";
 		document.getElementById( "ws-pageviews-table" ).innerHTML = "";
 		document.getElementById( "ws-articles-size-table" ).innerHTML = "";
-		document.getElementById( "ws-namespace-count-table" ).innerHTML = "";
+		//document.getElementById( "ws-namespace-count-table" ).innerHTML = "";
 		document.getElementById( "ws-page-edits-count-table" ).innerHTML = "";
 		document.getElementById( "ws-othernpaces-edits-count-table" ).innerHTML = "";
 		var params 	= "&rsargs[0]=" + city.value;
@@ -681,13 +681,13 @@ YAHOO.util.Event.onDOMReady(function () {
 	YE.addListener("ws-show-stats", "click", YAHOO.Wikia.Statistics.ShowStats);
 	YE.addListener("ws-show-charts", "click", YAHOO.Wikia.Statistics.ShowStats);
 	YE.addListener("ws-export-xls", "click", YAHOO.Wikia.Statistics.GenerateXLSStats);
-	YE.addListener("ws-edits-article-show", "click", YAHOO.Wikia.Statistics.DistribArticleEditsStats);
+	//YE.addListener("ws-edits-article-show", "click", YAHOO.Wikia.Statistics.DistribArticleEditsStats);
 	YE.addListener("ws-wikians-rank-show", "click", YAHOO.Wikia.Statistics.WikiansRankStats);
 	YE.addListener("ws-wikians-active-btn", "click", YAHOO.Wikia.Statistics.WikiansRankStats);
 	YE.addListener("ws-anon-users-show", "click", YAHOO.Wikia.Statistics.AnonUsersStats);
-	YE.addListener("ws-pageviews-show", "click", YAHOO.Wikia.Statistics.PageViewsStats);
-	YE.addListener("ws-article-size-show", "click", YAHOO.Wikia.Statistics.ArticlesSizeStats);
-	YE.addListener("ws-namespace-count-show", "click", YAHOO.Wikia.Statistics.NamespaceStats); 
+	//YE.addListener("ws-pageviews-show", "click", YAHOO.Wikia.Statistics.PageViewsStats);
+	//YE.addListener("ws-article-size-show", "click", YAHOO.Wikia.Statistics.ArticlesSizeStats);
+	//YE.addListener("ws-namespace-count-show", "click", YAHOO.Wikia.Statistics.NamespaceStats); 
 	YE.addListener("ws-page-edits-count-show", "click", YAHOO.Wikia.Statistics.PageEditsStats);
 	YE.addListener("ws-page-edits-details-show", "click", YAHOO.Wikia.Statistics.PageEditsStats);
 	YE.addListener("ws-othernspaces-edits-count-show", "click", YAHOO.Wikia.Statistics.OtherNpacesEditsStats);
@@ -802,7 +802,7 @@ if (!empty($main_tbl)) {
 <fieldset id="ws-other-stats-panel" style="display:<?=$block_div?>;">
 <legend class="legend-subtitle"><?=wfMsg('wikiastats_other_statistics_legend')?></legend>
 <!-- DISTRIBUTION OF ARTICLE EDITS OVER WIKIANS -->
-<div id="ws-edits-article">
+<div id="ws-edits-article" style="display:none;">
 	<div id="ws-edits-article-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-edits-article-show"><?= wfMsg('wikiastats_distrib_article'); ?></a>
@@ -860,7 +860,7 @@ for ($i = 1; $i <= 6; $i++)
 </div>
 <!-- END OF ANONYMOUS USERS -->
 <!-- PAGE VIEWS -->
-<div id="ws-pageviews-count">
+<div id="ws-pageviews-count" style="display:none;">
 	<div id="ws-pageviews-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-pageviews-show"><?= wfMsg('wikiastats_pageviews'); ?></a>
@@ -875,7 +875,7 @@ for ($i = 1; $i <= 6; $i++)
 </div>
 <!-- END OF PAGE VIEWS -->
 <!-- ARTICLE SIZE -->
-<div id="ws-article-size">
+<div id="ws-article-size" style="display:none;">
 	<div id="ws-articles-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<?= wfMsg('wikiastats_article_size'); ?>
@@ -905,7 +905,7 @@ for ($i = 1; $i <= 6; $i++)
 </div>
 <!-- END OF ARTICLE SIZE -->
 <!-- NAMESPACE COUNTS -->
-<div id="ws-namespace-count">
+<div id="ws-namespace-count" style="display:none;">
 	<div id="ws-namespace-count-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-namespace-count-show"><?= wfMsg('wikiastats_namespace_records'); ?></a>
@@ -947,13 +947,13 @@ for ($i = 1; $i <= 6; $i++)
 	{
 ?>
 <script type="text/javascript">
-document.getElementById( "ws-edits-article" ).style.display = "block";
+//document.getElementById( "ws-edits-article" ).style.display = "block";
 document.getElementById( "ws-active-wikians" ).style.display = "block";
 document.getElementById( "wk-select-month-wikians-div" ).style.display = "none";
 document.getElementById( "ws-anon-wikians" ).style.display = "block";
-document.getElementById( "ws-pageviews-count" ).style.display = "block";
-document.getElementById( "ws-article-size" ).style.display = "block";
-document.getElementById( "ws-namespace-count" ).style.display = "block";
+//document.getElementById( "ws-pageviews-count" ).style.display = "block";
+//document.getElementById( "ws-article-size" ).style.display = "block";
+//document.getElementById( "ws-namespace-count" ).style.display = "block";
 document.getElementById( "ws-page-edits-count" ).style.display = "block";
 document.getElementById( "ws-othernpaces-edits-count" ).style.display = "block";
 </script>

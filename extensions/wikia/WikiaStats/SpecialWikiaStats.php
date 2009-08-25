@@ -21,7 +21,7 @@ define ("STATS_COLUMN_PREFIX", "m_");
 define ("MIN_STATS_YEAR", '2008');
 define ("MIN_STATS_MONTH", '01');
 define ("RANGE_STATS_MIN", 'A');
-define ("RANGE_STATS_MAX", 'X');
+define ("RANGE_STATS_MAX", 'O');
 define ("STATS_EMPTY_LINE_TAG", "_empty_%s");
 define ("DEFAULT_WIKIA_XLS_FILENAME", "wikia_xls_%d");
 define ("MAX_CHART_HEIGHT", '180');

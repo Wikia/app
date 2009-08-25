@@ -24,19 +24,19 @@ foreach ($columns as $column) {
 ?>
 <span class="wk-column-group"><?= wfMsg("wikiastats_wikians") ?><a name="wikians"></a>&nbsp;<b><a href="#mainstats" class="big">&uarr;</a></b></span><br />
 <?
-	} elseif ($i == 7) {
+	} elseif ($i == 6) {
 ?>
 <span class="wk-column-group"><?= wfMsg("wikiastats_articles") ?><a name="articles"></a>&nbsp;<b><a href="#mainstats" class="big">&uarr;</a></b></span><br />
 <?
-	} elseif ($i == 14) {
+	} elseif ($i == 9) {
 ?>
 <span class="wk-column-group"><?= wfMsg("wikiastats_database") ?><a name="database"></a>&nbsp;<b><a href="#mainstats" class="big">&uarr;</a></b></span><br />
 <?
-	} elseif ($i == 17) {
+	} elseif ($i == 12) {
 ?>
 <span class="wk-column-group"><?= wfMsg("wikiastats_links") ?><a name="links"></a>&nbsp;<b><a href="#mainstats" class="big">&uarr;</a></b></span><br />
 <?
-	} elseif ($i == 22) {
+	} elseif ($i == 14) {
 ?>
 <span class="wk-column-group"><?= wfMsg("wikiastats_images") ?><a name="images"></a>&nbsp;<b><a href="#mainstats" class="big">&uarr;</a></b></span><br />
 <?

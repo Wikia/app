@@ -47,13 +47,11 @@ function showXLSCompareDialog(statistics, showHtml) {
 		document.getElementById('showXLS').value = 0;
 		document.getElementById('showStatsNewWindow').style.display = "none";
 	}
-	//----
-	//if ((statistics == 8) && (showHtml == false)) {StatsPageLoaderShow(0); wk_stats_city_id = 0; XLSGenerate(statistics, '', '', ''); }
-	if ((statistics == 9) && (showHtml == false)) {StatsPageLoaderShow(0); wk_stats_city_id = 0; XLSGenerate(statistics, '', '', ''); }
-	//else if ((statistics == 8) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics-7, "", false); }
-	else if ((statistics == 9) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics-7, "", true); }
+
+	if ((statistics == 11) && (showHtml == false)) {StatsPageLoaderShow(0); wk_stats_city_id = 0; XLSGenerate(statistics, '', '', ''); }
+	else if ((statistics == 11) && (showHtml == true)) { StatsPageLoaderShow(1); ShowCompareStats(statistics-7, "", true); }
 	else {
-		if ((statistics == 8) && (showHtml == true)) { 
+		if ((statistics == 10) && (showHtml == true)) { 
 			compare_stats = statistics - 7; 
 		}
 

@@ -113,19 +113,19 @@ foreach ($trend_stats as $column => $dateValues)
 	);
 
 	$active = "";
-	if (($i >= 0) && ($i < 7)) {
+	if (($i >= 0) && ($i < 6)) {
 		$active = $linkText["wikians"];
 		$linkText["wikians"] = "";
-	} elseif ( ($i >= 7) && ($i < 14) ) {
+	} elseif ( ($i >= 6) && ($i < 9) ) {
 		$active = $linkText["articles"];
 		$linkText["articles"] = "";
-	} elseif ( ($i >= 14) && ($i < 17) ) {
+	} elseif ( ($i >= 9) && ($i < 12) ) {
 		$active = $linkText["database"];
 		$linkText["database"] = "";
-	} elseif ( ($i >= 17) && ($i < 22) ) {
+	} elseif ( ($i >= 12) && ($i < 14) ) {
 		$active = $linkText["links"];
 		$linkText["links"] = "";
-	} elseif ( ($i >= 22) && ($i < 24) ) {
+	} elseif ( ($i >= 14) && ($i < 15) ) {
 		$active = $linkText["images"];
 		$linkText["images"] = "";
 	}
@@ -198,15 +198,12 @@ foreach ($dateValues as $date => $cities)
 	}
 	else
 	{
-		if (!in_array($date, array('trend', 'mean', 'growth')))
-		{
+		if (!in_array($date, array('trend', 'mean', 'growth'))) {
 			$dateArr = explode("-", $date);
 			#---
 			$stamp = mktime(23,59,59,$dateArr[1],1,$dateArr[0]);
 			$outDate = $wgLang->sprintfDate("M Y", wfTimestamp(TS_MW, $stamp));
-		}
-		else
-		{
+		} else {
 			if ($date == 'trend')
 			{
 				$trend = 1;
@@ -231,18 +228,9 @@ foreach ($dateValues as $date => $cities)
         $value = (array_key_exists($city_id, $cities)) ? $cities[$city_id] : 0;
 		if (empty($growth))
 		{
-			if ($column == 'G')
-				$out = sprintf("%0d", $value);
-			elseif ($column == 'K')
-				$out = $wgLang->formatNum(sprintf("%0.1f", $value)); 
-			elseif ($column == 'L')
-				$out = sprintf("%0.0f", $value);
-			elseif (($column == 'M') || ($column == 'N'))
-			{
+			if ($column == 'I') {
 				$out = sprintf("%0d%%", $value * 100);
-			}
-			elseif ($column == 'P')
-			{
+			} elseif ($column == 'K') {
 				if (intval($value) > $GB)
 					$out = wfMsg('size-gigabytes', $wgLang->formatNum(sprintf("%0.1f", $value/$GB)));
 				elseif (intval($value) > $MB)
@@ -251,9 +239,7 @@ foreach ($dateValues as $date => $cities)
 					$out = wfMsg('size-kilobytes', $wgLang->formatNum(sprintf("%0.1f", $value/$KB)));
 				else
 					$out = sprintf("%0d", intval($value));
-			}
-			else
-			{
+			} else {
 				if (intval($value) > $G)
 					$out = sprintf("%s G", $wgLang->formatNum(sprintf("%0.1f", $value/$G)));
 				elseif (intval($value) > $M)
@@ -261,31 +247,20 @@ foreach ($dateValues as $date => $cities)
 				else
 					$out = sprintf("%0d", $value);
 			}
-		}
-		else
-		{
+		} else {
 			$out = sprintf("%0d", $value);
-			if ($out < 0)
-			{
+			if ($out < 0) {
 				$out = "<font color=\"#800000\">".sprintf("%0.0f%%", $out)."</font>";
-			}
-			elseif (($out > 0) && ($out < 25))
-			{
+			} elseif (($out > 0) && ($out < 25)) {
 				$out = "<font color=\"#555555\">".sprintf("+%0.0f%%", $out)."</font>";
-			}
-			elseif (($out > 25) && ($out < 75))
-			{
+			} elseif (($out > 25) && ($out < 75)) {
 				$out = "<font color=\"#008000\">".sprintf("+%0.0f%%", $out)."</font>";
-			}
-			elseif (($out > 75) && ($out < 100))
-			{
+			} elseif (($out > 75) && ($out < 100)) {
 				$out = "<font color=\"#008000\"><u>".sprintf("+%0.0f%%", $out)."</u></font>";
-			}
-			elseif ($out >= 100)
-			{
+			} elseif ($out >= 100) {
 				$out = "";
 			}
-		}	
+		}
 ?>		
 <td class="eb-trend" style="<?=$backColor?> width:40px;white-space:nowrap;">&nbsp;<?= (($trend == 1) ? "&#177 ".$out : $out) ?><?= ((($growth == 1) && ($out !== "") && (strpos($out,"%") === false)) ? "%" : "") ?></td>
 <?		
