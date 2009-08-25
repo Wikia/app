@@ -47,7 +47,8 @@ if (!array_key_exists("Blogs", $wgExtensionMessagesFiles)) {
 #--- permissions
 $wgAvailableRights[] = 'removeavatar';
 $wgGroupPermissions['staff']['removeavatar'] = true;
-$wgGroupPermissions['sysop']['removeavatar'] = true;
+#$wgGroupPermissions['sysop']['removeavatar'] = true;
+$wgGroupPermissions['helper']['removeavatar'] = true;
 extAddSpecialPage( '', 'RemoveAvatar', 'BlogAvatarRemovePage' );
 $wgSpecialPageGroups['RemoveAvatar'] = 'users';
 
