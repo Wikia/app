@@ -291,6 +291,8 @@ class StaticChute {
 	}
 
 	public function getChuteHtmlForPackage($package, $type = null){
+		wfProfileIn(__METHOD__);
+
 		global $wgStylePath, $wgStyleVersion;
 
 		if ($type === null){
@@ -360,6 +362,8 @@ class StaticChute {
 		if ($type == 'css' && !$this->allinone) {
 			$html = "<style type=\"text/css\"{$media}>{$html}\n\t\t</style>";
 		}
+
+		wfProfileOut(__METHOD__);
 
 		return $html;
 	}
@@ -582,7 +586,7 @@ class StaticChute {
 			// Since we have a timestamp that will change with the url, set an Expires header
 			// far into the future. This will make it so that the browsers won't even check this
 			// url to see if the files have changed, saving an http request.
-			header('Expires: ' . gmdate($dateFormat, strtotime("+13 years"))); 
+			header('Expires: ' . gmdate($dateFormat, strtotime("+13 years")));
 			header('X-Pass-Cache-Control: max-age=' . (13 * 365 * 24 * 60 * 60));
 		} else if ($this->httpCache && !empty($_GET['checksum'])){
 			// Alternate form of versioning the url
