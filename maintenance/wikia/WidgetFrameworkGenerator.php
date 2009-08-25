@@ -39,7 +39,7 @@ $wgWidgetsOrderedList = array(
 	'WidgetAnswers'
 );
 
-global $wgWidgets;
+global $wgWidgets, $wgMessageCache;
 foreach($wgWidgetsOrderedList as $key => $val) {
 	$filePath = '../../extensions/wikia/WidgetFramework/Widgets/' . $val . '/' . $val . '.php';
 	if(file_exists($filePath)) {
@@ -53,8 +53,8 @@ foreach($wgWidgets as $key => $val) {
 	$titles = array();
 	$descriptions = array();
 	foreach($widgetsLanguages as $lang) {
-		$titles[$lang] = wfMsgReal( $val['title'], '', true, $lang, true );
-		$descriptions[$lang] = wfMsgReal( $val['desc'], '', true, $lang, true );
+		$titles[$lang] = $wgMessageCache->get( $val['title'], true, $lang, true );
+		$descriptions[$lang] = $wgMessageCache->get( $val['desc'], true, $lang, true );
 	}
 	$widgetsConfig[$key]['title'] = $titles;
 	$widgetsConfig[$key]['desc'] = $descriptions;
