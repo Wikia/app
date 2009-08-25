@@ -9,15 +9,15 @@ class SolrSearch extends SearchEngine {
 	 * @access public
 	 */
 	function searchText( $term ) {
-		$words = "";
-		foreach(explode(' ', $term) as $word) {
-			$words .= ( !empty($words) ? " AND " : "" ) . $word;
-		}
-		$queryString = "title:$words^10 OR html:$words";
+		//$words = "";
+		//foreach(explode(' ', $term) as $word) {
+		//	$words .= ( !empty($words) ? " AND " : "" ) . $word;
+		//}
+		//$queryString = "title:$words^10 OR html:$words";
 		//echo $queryString;
-		return SolrSearchSet::newFromQuery( $queryString, $this->namespaces, $this->limit, $this->offset );
+		//return SolrSearchSet::newFromQuery( $queryString, $this->namespaces, $this->limit, $this->offset );
 		//return SolrSearchSet::newFromQuery( "title:$term^10 OR html:$term", $this->namespaces, $this->limit, $this->offset );
-		//return SolrSearchSet::newFromQuery( $term, $this->namespaces, $this->limit, $this->offset );
+		return SolrSearchSet::newFromQuery( $term, $this->namespaces, $this->limit, $this->offset );
 	}
 
 	//function searchTitle( $term ) {
@@ -48,15 +48,17 @@ class SolrSearchSet extends SearchResultSet {
 		$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
 		if($solr->ping()) {
 			$params = array(
-				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created', // fields we want to fetch back
+				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views', // fields we want to fetch back
+				'bf' => 'title^10',
 				'hl' => 'true',
 				'hl.fl' => 'html,title', // highlight field
 				'hl.snippets' => '2', // number of snippets per field
 				'hl.fragsize' => '150', // snippet size in characters
 				'hl.simple.pre' => '<span class="searchmatch">',
 				'hl.simple.post' => '</span>',
+				'indent' => 1,
 				//'sort' => 'score desc, backlinks desc, views desc, revcount desc, created asc'
-				'sort' => 'backlinks desc, views desc, revcount desc, created asc'
+				//'sort' => 'backlinks desc, views desc, revcount desc, created asc'
 			);
 
 			if(count($namespaces)) {
@@ -68,11 +70,14 @@ class SolrSearchSet extends SearchResultSet {
 			}
 			//$params['fq'] = "(" . $params['fq'] . ") AND wid:" . $wgCityId;
 			$params['fq'] = "(" . $params['fq'] . ") AND wid:831";
-			//echo $params['fq'];
+			//echo "fq=" . $params['fq'] . "<br />";
 			try {
+				$query .= ' _val_:"scale(views,1,20)"';
+				//echo "query:" . $query . "<br />";
 				$response = $solr->search($query, $offset, $limit, $params);
 			}
 			catch (Exception $exception) {
+				//print_r($exception);
 				wfProfileOut( $fname );
 				return null;
 			}
@@ -129,10 +134,9 @@ class SolrSearchSet extends SearchResultSet {
 	 */
 	private function deDupe(Array $results) {
 		$deDupedResults = array();
-		//echo "<pre>";
-		//print_r($results);
-		//exit;
 		foreach($results as $result) {
+			$result->canonical = str_replace('_', ' ', $result->canonical);
+			$result->title = str_replace('_', ' ', $result->title);
 			if(isset($result->canonical) && !empty($result->canonical)) {
 				if(!in_array($result->canonical, $this->mCanonicals)) {
 					//echo "Got canonical for: " . $result->title . ", canonical is: " . $result->canonical . "<br />";
