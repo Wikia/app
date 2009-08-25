@@ -582,11 +582,12 @@ class SWMSendToGroupTask extends BatchTask {
 		$this->addLog('Step 2 of 3: get list of users that belong to a specified group (on specified wikis) [number of wikis = ' . count($wikisDB) . ']');
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+		$groupName = $dbr->escapeLike($params['groupName']);
 
 		$dbResult = $dbr->select(
 			array('city_local_users'),
 			array('lu_user_id', 'lu_wikia_id'),
-			array('lu_wikia_id IN (' . implode(',', array_keys($wikisDB)) . ')', "lu_allgroups LIKE '%" . $dbr->escapeLike($params['groupName']) . ";%'"),
+			array('lu_wikia_id IN (' . implode(',', array_keys($wikisDB)) . ')', "(lu_singlegroup = '$groupName' OR lu_allgroups LIKE '%$groupName;%')"),
 			__METHOD__,
 			array('GROUP BY' => 'lu_user_id')
 		);
