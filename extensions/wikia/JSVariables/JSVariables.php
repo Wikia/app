@@ -56,10 +56,15 @@ function wfMakeGlobalVariablesScript($vars) {
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
 	$vars['wgMWrevId'] = $wgMemc->get(wfMemcKey('wgMWrevId'));
 
-
-	// Ads In Content is handled with javascript, use this to turn it on. 
-	global $wgEnableAdsInContent; 
+	// Ads In Content is handled with javascript, use this to turn it on.
+	global $wgEnableAdsInContent;
 	$vars['wgEnableAdsInContent'] = $wgEnableAdsInContent;
+
+	// RT #21084: get URL to YUI StaticChute package
+	$StaticChute = new StaticChute('js');
+	$StaticChute->useLocalChuteUrl();
+
+	$vars['wgYUIPackageURL'] = $StaticChute->getChuteUrlForPackage('yui');
 
 	return true;
 }

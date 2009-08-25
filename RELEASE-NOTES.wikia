@@ -1,4 +1,5 @@
 == Changes since 200908.4 ==
+* rt#21084: IoadYUI uses wgStyleVersion as cachebuster for staticchute reference (Macbre)
 * rt#20343: LinkSuggest results are misaligned (Macbre)
 
 == Changes since 200908.3 ==
