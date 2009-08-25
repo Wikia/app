@@ -916,6 +916,7 @@ class SpecialSearchOld {
 		}
 		*/
 
+		$extra = '';
 		$this->showResults( $term, $extra );
 	}
 
