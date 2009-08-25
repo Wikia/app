@@ -1337,10 +1337,15 @@ function WysiwygParseWikitext($wikitext) {
 		$parser = new Parser();
 	}
 
+	// macbre: this is used to disable XML caching in preprocessToObj()
+	global $wgWysiwygTemplatesParserEnabled;
+	$wgWysiwygTemplatesParserEnabled = true;
+
 	$options = new ParserOptions();
 
 	$html = $parser->parse($wikitext, $wgTitle, $options)->getText();
 
+	$wgWysiwygTemplatesParserEnabled = false;
 	$wgWysiwygParserEnabled = false;
 
 	return new AjaxResponse($html);
