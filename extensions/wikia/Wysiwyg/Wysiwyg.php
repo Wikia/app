@@ -520,6 +520,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 	// extract refid's of templates from template markers
 	preg_match_all('/\x7f-wtb-(\d+)-\x7f/', $html, $matches);
 
+	// parse templates for preview clouds
 	if(count($matches[1]) > 0) {
 		$templateCallsToParse = array();
 		foreach($matches[1] as $val) {
@@ -529,6 +530,10 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 			}
 			$templateCallsToParse[] = $originalCall;
 		}
+
+		// macbre: this is used to disable XML caching in preprocessToObj()
+		global $wgWysiwygTemplatesParserEnabled;
+		$wgWysiwygTemplatesParserEnabled = true;
 
 		$templateParser = new Parser();
 
@@ -541,6 +546,8 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 		$templateCallsParsed = explode("\x7f-sep-\x7f", $templateParser->parse(implode("\x7f-sep-\x7f", $templateCallsToParse), $title, $options, false)->getText());
 
 		$templateCallsParsed =  array_combine($matches[1], $templateCallsParsed);
+
+		$wgWysiwygTemplatesParserEnabled = false;
 
 		wfDebug("Wysiwyg HTML: {$html}\n");
 

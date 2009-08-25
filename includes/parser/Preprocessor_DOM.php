@@ -66,12 +66,21 @@ class Preprocessor_DOM implements Preprocessor {
 	function preprocessToObj( $text, $flags = 0 ) {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc, $wgPreprocessorCacheThreshold;
-		
+
 		$xml = false;
 		$cacheable = strlen( $text ) > $wgPreprocessorCacheThreshold;
+
+		/* Wikia change begin - @author: Macbre */
+		/* Wysiwyg: disable XML caching when running Wysiwyg or parsing templates preview */
+		global $wgWysiwygParserEnabled, $wgWysiwygTemplatesParserEnabled;
+		if(!empty($wgWysiwygParserEnabled) || !empty($wgWysiwygTemplatesParserEnabled)) {
+			$cacheable = false;
+		}
+		/* Wikia change end */
+
 		if ( $cacheable ) {
 			wfProfileIn( __METHOD__.'-cacheable' );
-		global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgCategorySelectEnabled;
+			global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgCategorySelectEnabled;
 
 			$cacheKey = wfMemcKey( 'preprocess-xml', md5($text), $flags );
 			$cacheValue = $wgMemc->get( $cacheKey );
@@ -118,7 +127,7 @@ class Preprocessor_DOM implements Preprocessor {
 		wfProfileOut( __METHOD__ );
 		return $obj;
 	}
-	
+
 	function preprocessToXml( $text, $flags = 0 ) {
 		global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgCategorySelectEnabled;
 		wfProfileIn( __METHOD__ );
@@ -389,8 +398,8 @@ class Preprocessor_DOM implements Preprocessor {
 				} else {
 					$attrEnd = $tagEndPos;
 					// Find closing tag
-					if ( preg_match( "/<\/" . preg_quote( $name, '/' ) . "\s*>/i", 
-							$text, $matches, PREG_OFFSET_CAPTURE, $tagEndPos + 1 ) ) 
+					if ( preg_match( "/<\/" . preg_quote( $name, '/' ) . "\s*>/i",
+							$text, $matches, PREG_OFFSET_CAPTURE, $tagEndPos + 1 ) )
 					{
 						$inner = substr( $text, $tagEndPos + 1, $matches[0][1] - $tagEndPos - 1 );
 						$i = $matches[0][1] + strlen( $matches[0][0] );
@@ -687,7 +696,7 @@ class Preprocessor_DOM implements Preprocessor {
 		$xml = $stack->rootAccum;
 
 		wfProfileOut( __METHOD__ );
-		
+
 		return $xml;
 	}
 }
