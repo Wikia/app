@@ -53,7 +53,7 @@ jQuery.fn.getModal = function(url, id, options) {
 $.loadYUI = function(callback) {
 	if (typeof YAHOO == 'undefined') {
 		$().log('YUI: loading on-demand');
-		$.getScript(wgServer + '/extensions/wikia/StaticChute/?type=js&packages=yui&cb=' + wgStyleVersion, callback);
+		$.getScript(wgYUIPackageURL, callback);
 	}
 	else {
 		$().log('YUI: already loaded');
