@@ -95,12 +95,12 @@ YAHOO.namespace("wkstatsxlsmenu.container");
 
                 xlmmenutext += "<div class=\"wk-stats-panel\" id=\"wk-stats-panel\">";
                 xlmmenutext += "<ul>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('2', '', '', '');\"><?=wfMsg("wikiastats_distrib_article")?></a></li>";
+                //xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('2', '', '', '');\"><?=wfMsg("wikiastats_distrib_article")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('3', '', '', '');\"><?=wfMsg("wikiastats_active_absent_wikians")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('4', '', '', '');\"><?=wfMsg("wikiastats_anon_wikians")?></a></li>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('9', '', '', '');\"><?=wfMsg("wikiastats_pageviews")?></a></li>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('5', '', '', '');\"><?=wfMsg("wikiastats_article_one_link")?></a></li>";
-                xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('6', '', '', '');\"><?=wfMsg("wikiastats_namespace_records")?></a></li>";
+                //xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('9', '', '', '');\"><?=wfMsg("wikiastats_pageviews")?></a></li>";
+                //xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('5', '', '', '');\"><?=wfMsg("wikiastats_article_one_link")?></a></li>";
+                //xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('6', '', '', '');\"><?=wfMsg("wikiastats_namespace_records")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('7', '', '', '');\"><?=wfMsg("wikiastats_page_edits")?></a></li>";
                 xlmmenutext += "<li><a href=\"javascript:void(0);\" onClick=\"XLSGenerate('8', '', '', '');\"><?=wfMsg("wikiastats_other_nspaces_edits")?></a></li>";
                 xlmmenutext += "</ul>";
@@ -241,19 +241,14 @@ YE.addListener("ws-check-cities", "click", XLSClearCitiesList);
     <td align="left" valign="top">
         <table class="ws-trend-table-wob" id="ws-trend-table">
 <?
-$k = 7;
-for ($i=1; $i<=23; $i++)
-{
+$k = 7; for ($i=1; $i<=17; $i++) {
 	$l = $k + $i;
 ?>	
         <tr><td class="wktd"><?= wfMsg("wikiastats_comparisons_table_$i") ?></td><td class="wktd"><a href="javascript:void(0);" onClick="showXLSCompareDialog('<?=$l?>');"><?= wfMsg('wikiastats_xls_files_stats') ?></a>&nbsp;-&nbsp;<a href="/index.php?title=Special:WikiaStats&action=compare&table=<?=$i?>"><?= wfMsg('wikiastats_tables') ?></a></td></tr>
-<?
-	if ($i == 2)
-	{
+<?	if ($i == 2) {
 ?>
         <tr><td class="eb-trend-trend" colspan="2">&nbsp;</tr>
-<?
-	}
+<?	}
 }
 ?>	
         </table>

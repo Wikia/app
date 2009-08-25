@@ -369,6 +369,8 @@ function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date
     global $wgRequest, $wgUser, $wgMessageCache, $wgWikiaStatsMessages;
     global $wgCityId, $wgDBname;
 
+	error_log ("axWStatisticsXLS($city_id, $param, $others, $date_from, $date_to)");
+
 	if ( $wgUser->isBlocked() ) {
 		return;
 	}
@@ -465,7 +467,7 @@ function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date
 			break;
 		}
 		default : { // comparisions 
-			if ( ($param > 11) && ($param < 35) ) {
+			if ( ($param > 11) && ($param < 27) ) {
 				$obj_stats = new WikiaGenericStats($wgUser->getID());
 				$cities = array(0 => 0); //initial and default value
 				if (!empty($others)) {
@@ -477,7 +479,7 @@ function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date
 					}
 				}
 				#---
-				$param = $param - 7;
+				$param = $param - 9;
 				$obj_stats->getWikiCompareColumnsStatsXLS($param, $cities);
 			}
 			break;
