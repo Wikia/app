@@ -1,4 +1,5 @@
 == Changes since 200908.4 ==
+* rt#21788: Fixed WikiaApi extension properties not showing up via api.php. (Nef)
 * rt#21084: IoadYUI uses wgStyleVersion as cachebuster for staticchute reference (Macbre)
 * rt#20343: LinkSuggest results are misaligned (Macbre)
 * rt#21702: Sending to "Users belonging to the group" doesn't work on Special:SiteWideMessages (Marooned)

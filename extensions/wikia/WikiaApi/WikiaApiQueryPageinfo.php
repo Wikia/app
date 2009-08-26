@@ -58,7 +58,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 			
 			foreach ($aTitles as $page_id => $oTitle) {
 				if ( isset($res ['query']['pages'][$page_id]) ) {
-					$res['query']['pages'][$page_id]['views'] = ( isset( $pageviews[$page_id] ) )  ? intval( $pageviews[$page_id] ) : 0;
+					$result->addValue(array("query", "pages", $page_id), "views", ( isset( $pageviews[$page_id] ) )  ? intval( $pageviews[$page_id] ) : 0 );
 				}
 			}
 		}
@@ -88,7 +88,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 					$db->freeResult($oRes);
 
 					if ( isset($res ['query']['pages'][$page_id]) ) {
-						$res['query']['pages'][$page_id]['created'] = $created; 
+						$result->addValue(array("query", "pages", $page_id), "created", $created);
 					}
 				}
 			}
@@ -102,7 +102,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 			foreach ($this->getPageSet()->getGoodTitles() as $page_id => $oTitle) {
 				if ( isset($res['query']['pages'][$page_id]) ) {
 					$revcount = Revision :: countByPageId($db, $page_id);
-					$res['query']['pages'][$page_id]['revcount'] = intval($revcount);
+					$result->addValue(array("query", "pages", $page_id), "revcount", intval($revcount));
 				}
 			}
 		}
@@ -118,7 +118,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 					$oArticle = new Article($oTitle);
 					$oRedirTitle = $oArticle->getRedirectTarget();
 					if ( $oRedirTitle instanceof Title ) {
-						$res['query']['pages'][$page_id]['redirectto'] = $oRedirTitle->getDBkey();
+						$result->addValue(array("query", "pages", $page_id), "redirectto", $oRedirTitle->getDBkey());
 					}
 				} 
 			}
