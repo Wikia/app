@@ -181,11 +181,6 @@ class MonoBookTemplate extends QuickTemplate {
 	</div>
 		</div>
 		<div id="column-one">
-<?php
-if(isset($GLOBALS['wgSpecialPages']['Book'])) {
-	CollectionHooks::printPortlet();
-}
-?>
 	<div id="p-cactions" class="portlet">
 		<h5><?php $this->msg('views') ?></h5>
 		<div class="pBody">
