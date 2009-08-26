@@ -1,6 +1,8 @@
 == Changes since 200908.4 ==
 * rt#21084: IoadYUI uses wgStyleVersion as cachebuster for staticchute reference (Macbre)
 * rt#20343: LinkSuggest results are misaligned (Macbre)
+* rt#21702: Sending to "Users belonging to the group" doesn't work on Special:SiteWideMessages (Marooned)
+* rt#21120: googlemaps button not loading correctly if category select detects categories on the page (Marooned)
 
 == Changes since 200908.3 ==
 * rt#19924: Sidebar menu does not collapse when cursor moves over MediaWiki edit area (Macbre)
