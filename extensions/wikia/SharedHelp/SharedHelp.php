@@ -27,7 +27,15 @@ $wgHooks['WantedPages::getSQL'][] = 'SharedHelpWantedPagesSql';
 define( 'NOSHAREDHELP_MARKER', '<!--NOSHAREDHELP-->' );
 
 class SharedHttp extends Http {
-	static function request( $method, $url, $timeout = 'default', $curlOptions = false ) {
+	static function get( $url, $timeout = 'default' ) {
+		return self::request( "GET", $url, $timeout );
+	}
+
+	static function post( $url, $timeout = 'default' ) {
+		return self::request( "POST", $url, $timeout );
+	}
+
+	static function request( $method, $url, $timeout = 'default' ) {
 		global $wgHTTPTimeout, $wgHTTPProxy, $wgVersion, $wgTitle, $wgDevelEnvironment;
 
 		wfDebug( __METHOD__ . ": $method $url\n" );
