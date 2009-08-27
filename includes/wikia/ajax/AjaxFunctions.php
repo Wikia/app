@@ -43,10 +43,14 @@ function GetUserMenu($userName = '') {
 			);
 	}
 
-	$links['mycontris'] = array(
-		'text' => wfMsg('mycontris'),
-		'href' => Title::newFromText('Contributions/'.$userName, NS_SPECIAL)->getLocalURL()
-		);
+	$userContribs = Title::newFromText('Contributions/'.$userName, NS_SPECIAL);
+
+	if (!empty($userContribs)) {
+		$links['mycontris'] = array(
+			'text' => wfMsg('mycontris'),
+			'href' => $userContribs->getLocalURL()
+			);
+	}
 
 	$links['widgets'] = array(
 		'text' => wfMsg('manage_widgets'),
@@ -55,7 +59,7 @@ function GetUserMenu($userName = '') {
 
 	$links['preferences'] = array(
 		'text' => wfMsg('preferences'),
-		'href' => Title::newFromText('Preferences', NS_SPECIAL)->getLocalURL()
+		'href' => Skin::makeSpecialUrl('Preferences')
 		);
 
 	foreach($links as $id => &$link) {
