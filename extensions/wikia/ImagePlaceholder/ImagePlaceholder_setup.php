@@ -186,6 +186,16 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	} else {
 		( $thumb || $frame ) ? $align = 'right' : $align = ''; 
 	}
+	// set margin accordingly to alignment, identical to normal Image: -- RT#21368
+	// FIXME: this REALLY should be done in a class
+	$margin = '';
+	if( isset( $align ) ) {
+		if ( $align == 'right' ) {
+			$margin = 'margin: 0.5em 0 1.2em 1.4em;';
+		} else {
+			$margin = 'margin: 0.5em 1.4em 1.2em 0;';
+		}
+	}	
 
 	if ( isset( $fp['caption'] ) ) {
 	        $caption = $fp['caption'];
@@ -213,7 +223,8 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
         }
 	
 	( $thumb || $frame ) ? $caption_line = '<div class="thumbcaption" style="width:' . ($width - 10) . 'px"><hr/>' . $caption . '</div>' : $caption_line = '';
-        $out = '<div id="WikiaImagePlaceholder' . $wgWikiaImagePlaceholderId . '" class="gallerybox" style="clear:both; vertical-align: bottom;"' . $wysiwygAttr . '><div class="thumb t' . $align . ' videobox" style="padding: 0; position: relative; width: ' . $width . 'px; height: ' . $height . 'px;"><div style="margin-left: auto; margin-right: auto; width: ' . $width . 'px; height: ' . $height . 'px;" >';
+	// FIXME: argh! inline styles! Move to classes someday... --TOR
+        $out = '<div id="WikiaImagePlaceholder' . $wgWikiaImagePlaceholderId . '" class="gallerybox" style="clear:both; vertical-align: bottom;"' . $wysiwygAttr . '><div class="thumb t' . $align . ' videobox" style="padding: 0; position: relative; width: ' . $width . 'px; height: ' . $height . 'px; ' . $margin  .'"><div style="margin-left: auto; margin-right: auto; width: ' . $width . 'px; height: ' . $height . 'px;" >';
 	$out .= '<a href="#" class="bigButton" style="left: ' . $lmarg . 'px; position: absolute; top: ' . $tmarg . 'px;" id="WikiaImagePlaceholderInner' . $wgWikiaImagePlaceholderId  . '"'. $onclick . '><big>' . wfMsg( 'imgplc-create' ) . '</big><small>&nbsp;</small></a>' . $caption_line . '</div></div></div>';
         $wgWikiaImagePlaceholderId++;
         return $out;
