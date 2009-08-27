@@ -1829,7 +1829,7 @@ class WikiFactory {
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		self::log( self::LOG_STATUS, sprintf("Binary flags %s added to city_flags", dec2bin( $city_flags ) ), $city_id );
+		self::log( self::LOG_STATUS, sprintf("Binary flags %s added to city_flags", decbin( $city_flags ) ), $city_id );
 
 		wfProfileOut( __METHOD__ );
 
