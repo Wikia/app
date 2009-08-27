@@ -1,4 +1,5 @@
 == Changes since 200908.4 ==
+* rt#21775: error on wiki closing (eloy)
 * rt#16049: FCK, unsupported placeholder type comment found in page text (Macbre)
 * rt#21432: Answers: Fixed php notices on screen. (Nef)
 * rt#21788: Fixed WikiaApi extension properties not showing up via api.php. (Nef)
