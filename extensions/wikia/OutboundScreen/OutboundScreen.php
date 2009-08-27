@@ -63,7 +63,7 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 			$special = Title::newFromText( 'Special:Outbound' );
 			if($special instanceof Title) {
 				// RT #19167
-				$link = Xml::element('a', array(
+				$link = Xml::tags('a', array(
 					'class' => 'external',
 					'rel' => 'nofollow',
 					'title' => $url,
