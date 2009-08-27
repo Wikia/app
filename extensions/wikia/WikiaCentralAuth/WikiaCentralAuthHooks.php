@@ -108,6 +108,7 @@ class WikiaCentralAuthHooks {
 			$sId = intval( $_COOKIE["{$wgCookiePrefix}UserID"] );
 			if( isset( $_SESSION['wsUserID'] ) && $sId != $_SESSION['wsUserID'] ) {
 				wfDebug( __METHOD__ . ": Session user ID ({$_SESSION['wsUserID']}) and cookie user ID ($sId) don't match!" );
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 			$_SESSION['wsUserID'] = $sId;
@@ -115,9 +116,11 @@ class WikiaCentralAuthHooks {
 			if ( $_SESSION['wsUserID'] != 0 ) {
 				$sId = $_SESSION['wsUserID'];
 			} else {
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		} else {
+			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
