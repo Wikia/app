@@ -15,7 +15,7 @@
 		Id: <strong><?php echo $variable->cv_id ?></strong>
 	</li>
 	<li>
-		Name: <strong><?php echo $variable->cv_name ?></strong>
+		Name: <strong><?php echo $variable->cv_name ?></strong> <sup><small><a href="http://www.mediawiki.org/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at mediawiki.org'>manual</a></small></sup>
 	</li>
 	<li>
 		Type: <strong><?php echo $variable->cv_variable_type ?></strong>
