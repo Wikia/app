@@ -1772,11 +1772,11 @@ if ($custom_article_footer !== '') {
 		}
 ?>
 							</ul>
-							<?= $namespaceType == 'content' ? $actions : '' ?>
+							<?= $namespaceType == 'content' || $namespaceType == 'blog' ? $actions : '' ?>
 						</td>
 						<td class="col2">
 <?php
-		if ($namespaceType != 'content') {
+		if ($namespaceType != 'content' && $namespaceType != 'blog') {
 ?>
 							<?= $actions ?>
 <?php
@@ -2200,15 +2200,7 @@ wfProfileOut( __METHOD__ . '-widgets');
 $this->printCustomFooter();
 ?>
 
-<!-- Begin Analytics -->
-<?php
-// Note, these were placed above the Ad calls intentionally because ad code screws with analytics
-echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
-global $wgCityId;
-echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
-?>
+
 <!-- End Analytics -->
 
 <?php
