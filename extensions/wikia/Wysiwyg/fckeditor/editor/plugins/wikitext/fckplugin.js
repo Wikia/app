@@ -2055,11 +2055,11 @@ FCK.CheckPasteCompare = function() {
 				fakeNode.innerHTML = nodeHTML;
 				var data = FCK.GetMetaDataFromNode(fakeNode.firstChild);
 
-				// generate new refid
-  				var newRefId = FCK.GetFreeRefId();
+				// generate new refid (high enough to minimize chance of colision)
+  				var newRefId = FCK.GetFreeRefId() + 1000;
 
 				// debug log
-				FCK.log('Working on pasted node with refid #' + refid + ' (' + data.type  + ') -> refid #' + newRefId);
+				FCK.log('Working on pasted node with refid #' + refid + ' (' + (data.type ? data.type : 'block element')  + ') -> refid #' + newRefId);
 				FCK.log(data);
 
 				// copy meta-data
