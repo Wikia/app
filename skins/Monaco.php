@@ -2067,7 +2067,7 @@ if(count($wikiafooterlinks) > 0) {
 	}
 
 	if (count($dynamicLinksArray) > 0) {
-?>	
+?>
 		<tbody id="link_box_dynamic">
 			<tr>
 <?php
@@ -2075,7 +2075,7 @@ if(count($wikiafooterlinks) > 0) {
 				//print_r($link);
 				$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
 				echo '<td><div class="link_box_dynamic_div"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="' . $wgStylePath  . '/monobook/blank.gif" id="' . $link['id'] . '-img" class="sprite" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></div></td>';
-			}			
+			}
 ?>
 			</tr>
 		</tbody>
@@ -2200,7 +2200,15 @@ wfProfileOut( __METHOD__ . '-widgets');
 $this->printCustomFooter();
 ?>
 
-
+<!-- Begin Analytics -->
+<?php
+// Note, these were placed above the Ad calls intentionally because ad code screws with analytics
+echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
+global $wgCityId;
+echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
+?>
 <!-- End Analytics -->
 
 <?php
