@@ -878,27 +878,6 @@ function wfReportTime() {
 	}
 	if( $wgShowHostnames) header( sprintf( "X-Served-By-Backend: %s", wfHostname() ) );
 
-	// WIKIA: send a message to the MQ
-	global $wgReportTimeViaStomp;
-	if( $wgReportTimeViaStomp ) {
-		wfProfileIn( __METHOD__ . '-stomp' );
-		global $wgStompServer, $wgStompUser, $wgStompPassword;
-		$stomp = new Stomp( $wgStompServer );
-		$stomp->connect( $wgStompUser, $wgStompPassword );
-		$stomp->sync = false;
-		$key = 'wikia.apache.service_time.'.wfHostname();
-		$stomp->send( $key,
-			Wikia::json_encode( array(
-				'key' => $key,
-				'real' => $elapsed,
-				'cpu' => $elapsedcpu,
-				'url' => 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],
-			) ),
-			array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
-		);
-		wfProfileOut( __METHOD__ . '-stomp' );
-	}
-
 	wfProfileOut( __METHOD__ );
 	return $wgShowHostnames
 		? sprintf( "<!-- Served by %s in %01.3f secs. cpu: %01.3f -->", wfHostname(), $elapsed, $elapsedcpu )
