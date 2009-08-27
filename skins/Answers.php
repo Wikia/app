@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', true);
+
 /**
  * Answers for answer.wikia.com
  *
