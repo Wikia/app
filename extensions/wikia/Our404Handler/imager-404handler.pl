@@ -234,14 +234,14 @@ while( $request->Accept() >= 0 ) {
 							#
 							$transformed = 1;
 							print "HTTP/1.1 200 OK\r\n";
-							print "X-Thumb-Path: $thumbnail\r\n";
+							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
-							my $fh = new IO::File $thumbnail, O_RDONLY;
-							if( defined $fh ) {
-								binmode $fh;
-								print <$fh>;
-								undef $fh;
-							}
+							#my $fh = new IO::File $thumbnail, O_RDONLY;
+							#if( defined $fh ) {
+							#	binmode $fh;
+							#	print <$fh>;
+							#	undef $fh;
+							#}
 							syslog( LOG_INFO, "File $thumbnail created" ) if $syslog;
 						}
 						else {
