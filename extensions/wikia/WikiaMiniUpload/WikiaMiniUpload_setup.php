@@ -83,5 +83,7 @@ function WMU() {
 	if(!empty($domain)) {
 		$html .= '<script type="text/javascript">document.domain = "' . $domain  . '"</script>';
 	}
-	return new AjaxResponse($html);
+	$ar = new AjaxResponse($html);
+	$ar->setContentType('text/html; charset=utf-8');
+	return $ar;
 }
