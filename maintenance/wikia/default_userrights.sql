@@ -20,7 +20,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*Jeremie*/123457,'staff'),
 (/*Jimbo Wales*/13,'staff'),
 (/*JoePlay*/171752,'staff'),
-(/*KarimB*/1192613,'staff'),
 (/*Kirkburn*/126761,'staff'),
 (/*KyleH*/265264,'staff'),
 (/*Lleowen*/261184,'staff'),
