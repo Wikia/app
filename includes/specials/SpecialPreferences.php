@@ -39,8 +39,8 @@ class PreferencesForm {
 	function __construct( &$request ) {
 		global $wgContLang, $wgUser, $wgAllowRealName;
 
-		/* Wikia change begin - @author: unknown */
-		global $wgInPageEnabled, $wgWysiwygEnabled;
+		/* Wikia change begin - @author: unknown, Marooned */
+		global $wgInPageEnabled, $wgWysiwygEnabled, $wgForceSkin;
 		/* Wikia change end */
 
 		$this->mQuickbar = $request->getVal( 'wpQuickbar' );
@@ -55,7 +55,8 @@ class PreferencesForm {
 		$this->mSkin = isset($_temp[0]) ? $_temp[0] : null;
 		$this->mTheme = isset($_temp[1]) ? $_temp[1] : null;
 		/* Related to GameSpot integration (and another where Skin tab is not visible) */
-		if(empty($this->mSkin)) {
+		/* Checking wgForceSkin fixes RT#20005 - Marooned */
+		if(empty($this->mSkin) || !empty($wgForceSkin)) {
 			$this->mSkin = $wgUser->getOption('skin');
 			$this->mTheme = $wgUser->getOption('theme');
 		}

@@ -9,6 +9,7 @@
 * rt#21702: Sending to "Users belonging to the group" doesn't work on Special:SiteWideMessages (Marooned)
 * rt#21120: googlemaps button not loading correctly if category select detects categories on the page (Marooned)
 * rt#21803: Blogs: Footer should be the content footer, which includes sharing and ratings (Marooned)
+* rt#20005: saving preferences at answers forces account skin choice to answers, and breaks useskin (Marooned)
 * rt#21368: ImagePlaceholder: margins now match normal Image behaviour (TOR)
 
 == Changes since 200908.3 ==
