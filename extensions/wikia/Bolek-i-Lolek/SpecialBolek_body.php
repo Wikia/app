@@ -8,6 +8,15 @@ class BolekPage extends UnlistedSpecialPage {
 	public function execute() {
 		global $wgRequest, $wgUser, $wgOut, $wgCookiePrefix;
 
+		if ($wgUser->isBlocked()) {
+			$wgOut->blockedPage();
+			return;
+		}
+		if (wfReadOnly()) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+
 		$action  = $wgRequest->getVal("action",  "view");
 
 		// totally different wrokflow, almost separate application
