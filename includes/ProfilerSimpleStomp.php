@@ -36,7 +36,7 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 
 	function getFunctionReport() {
 		global $wgStompServer, $wgStompUser, $wgStompPassword;
-		global $wgTitle;
+		global $wgTitle, $wgUseAjax, $wgRequest, $wgOut;
 
 		$key = 'wikia.apache.service_time.'.wfHostname();
 		$body = array(
@@ -50,20 +50,21 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 				$body['profiles'][$k] = $v;
 			}
 		}
-		if( $wgTitle != null && is_object( $wgTitle ) && $wgTitle instanceof Title ) {
-			global $wgUseAjax, $wgRequest, $wgOut;
-			$action = $wgRequest->getVal( 'action', 'view' );
-			if( $wgUseAjax && $action == 'ajax' )			$body['type'] = 'ajax';
-			elseif( $action == 'raw' )				$body['type'] = 'raw';
-			elseif( $action == 'render' )				$body['type'] = 'render';
-			elseif( defined( 'MW_API' ) )				$body['type'] = 'api';
-			elseif( $wgTitle->getNamespace() == NS_SPECIAL )	$body['type'] = 'special';
-			elseif( $wgTitle->getNamespace() == NS_MEDIAWIKI )	$body['type'] = 'message';
-			elseif( $wgTitle->isRedirect() 
-				|| $wgOut->getRedirect() != '' )		$body['type'] = 'redirect';
-			else							$body['type'] = 'article';
-		} else {
-			$body['type'] = '';
+		$action = $wgRequest->getVal( 'action', 'view' );
+		if( $wgUseAjax && $action == 'ajax' )			$body['type'] = 'ajax';
+		elseif( $action == 'raw' )				$body['type'] = 'raw';
+		elseif( $action == 'render' )				$body['type'] = 'render';
+		elseif( defined( 'MW_API' ) )				$body['type'] = 'api';
+		elseif( $wgOut->getRedirect() != '' )			$body['type'] = 'redirect';
+		else {
+			if( $wgTitle != null && is_object( $wgTitle ) && $wgTitle instanceof Title ) {
+				if( $wgTitle->getNamespace() == NS_SPECIAL )		$body['type'] = 'special';
+				elseif( $wgTitle->getNamespace() == NS_MEDIAWIKI )	$body['type'] = 'message';
+				elseif( $wgTitle->isRedirect() )			$body['type'] = 'redirect';
+				else							$body['type'] = 'article';
+			} else {
+				$body['type'] = '';
+			}
 		}
 		try {
 			$stomp = new Stomp( $wgStompServer );
