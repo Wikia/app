@@ -171,7 +171,7 @@ function WikiaSkinPreferences($pref) {
 		$previewlink = '<a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.'monobook').'">'.$previewtext.'</a>';
 		$wgOut->addHTML('<div '.($themeCount++%2!=1 ? 'class="prefSection"' : '').'>');
 		$wgOut->addHTML('<h5>'.wfMsg('wikipedia_skin').'</h5>');
-		$wgOut->addHTML('<table style="background: transparent none"><tr><td><input type="radio" value="monobook" id="wpSkinmonobook" name="wpSkin"'.($pref->mSkin == 'monobook' ? ' checked' : '').'/><label for="wpSkinmonobook">'.$validSkinNames['monobook'].'</label> '.$previewlink.('monobook' == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr></table>');
+		$wgOut->addHTML('<table style="background: transparent none"><tr><td><input type="radio" value="monobook" id="wpSkinmonobook" name="wpSkin"'.($pref->mSkin == 'monobook' ? ' checked="checked"' : '').'/><label for="wpSkinmonobook">'.$validSkinNames['monobook'].'</label> '.$previewlink.('monobook' == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr></table>');
 		$wgOut->addHTML('</div>');
 
 		unset($validSkinNames['monobook']);
@@ -193,7 +193,7 @@ function WikiaSkinPreferences($pref) {
 
 		foreach($oldSkinNames as $skinKey => $skinVal) {
 			$previewlink = '<a target="_blank" href="'.htmlspecialchars($previewLinkTemplate.$skinKey).'">'.$previewtext.'</a>';
-			$wgOut->addHTML('<tr><td><input type="radio" value="'.$skinKey.'" id="wpSkin'.$skinKey.'" name="wpSkin"'.($pref->mSkin == $skinKey ? ' checked' : '').'/><label for="wpSkin'.$skinKey.'">'.$skinVal.'</label> '.$previewlink.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr>');
+			$wgOut->addHTML('<tr><td><input type="radio" value="'.$skinKey.'" id="wpSkin'.$skinKey.'" name="wpSkin"'.($pref->mSkin == $skinKey ? ' checked="checked"' : '').'/><label for="wpSkin'.$skinKey.'">'.$skinVal.'</label> '.$previewlink.($skinKey == $defaultSkinKey ? ' (' . wfMsg( 'default' ) . ')' : '').'</td></tr>');
 		}
 
 		$wgOut->addHTML('</table>');
