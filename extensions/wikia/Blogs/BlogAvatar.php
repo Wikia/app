@@ -367,7 +367,7 @@ class BlogAvatar {
 				$mUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
 				$sLogComment = "Remove {$sUserText}'s avatars by {$wgUser->getName()}";
-				$oLogPage->addEntry( 'avatarremove', $mUserBlogPage, $sLogComment);
+				$oLogPage->addEntry( 'avatar_rem', $mUserBlogPage, $sLogComment);
 				/* */
 				$result = true;
 			}
@@ -518,7 +518,7 @@ class BlogAvatar {
 				$mUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
 				$sLogComment = wfMsg('blog-avatar-changed-log', $sUserText);
-				$oLogPage->addEntry( 'avatarchange', $mUserBlogPage, $sLogComment);
+				$oLogPage->addEntry( 'avatar_chn', $mUserBlogPage, $sLogComment);
 				unlink($sTmpFile);
 				$errorNo = UPLOAD_ERR_OK;
 			}

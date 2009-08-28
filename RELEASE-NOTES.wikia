@@ -1,4 +1,5 @@
 == Changes since 200908.4 ==
+* rt#20828: Blogs: fix for log action 10 char limit (uberfuzzy)
 * rt#16999: re-fix gaming diff css (uberfuzzy)
 * rt#21775: error on wiki closing (eloy)
 * rt#16049: FCK, unsupported placeholder type comment found in page text (Macbre)
