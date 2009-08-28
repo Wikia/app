@@ -59,7 +59,6 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 		else {
 			if( $wgTitle != null && is_object( $wgTitle ) && $wgTitle instanceof Title ) {
 				if( $wgTitle->getNamespace() == NS_SPECIAL )		$body['type'] = 'special';
-				elseif( $wgTitle->getNamespace() == NS_MEDIAWIKI )	$body['type'] = 'message';
 				elseif( $wgTitle->isRedirect() )			$body['type'] = 'redirect';
 				else							$body['type'] = 'article';
 			} else {
