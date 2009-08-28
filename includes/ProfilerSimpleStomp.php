@@ -51,15 +51,16 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 			}
 		}
 		if( $wgTitle != null && is_object( $wgTitle ) && $wgTitle instanceof Title ) {
-			global $wgUseAjax, $wgRequest;
+			global $wgUseAjax, $wgRequest, $wgOut;
 			$action = $wgRequest->getVal( 'action', 'view' );
 			if( $wgUseAjax && $action == 'ajax' )			$body['type'] = 'ajax';
 			elseif( $action == 'raw' )				$body['type'] = 'raw';
 			elseif( $action == 'render' )				$body['type'] = 'render';
-			elseif( $wgTitle->getText() == 'API' )			$body['type'] = 'api';
+			elseif( defined( 'MW_API' ) )				$body['type'] = 'api';
 			elseif( $wgTitle->getNamespace() == NS_SPECIAL )	$body['type'] = 'special';
 			elseif( $wgTitle->getNamespace() == NS_MEDIAWIKI )	$body['type'] = 'message';
-			elseif( $wgTitle->isRedirect() )			$body['type'] = 'redirect';
+			elseif( $wgTitle->isRedirect() 
+				|| $wgOut->getRedirect() != '' )		$body['type'] = 'redirect';
 			else							$body['type'] = 'article';
 		} else {
 			$body['type'] = '';
