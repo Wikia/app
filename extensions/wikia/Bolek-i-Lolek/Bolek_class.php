@@ -12,6 +12,8 @@ class Bolek {
 	}
 
 	static function addPage($bolek_id, $page_id) {
+		// refuse to add !isContentPage and !NS_PROJECT pages
+
 		$dbw = self::_getDB(DB_MASTER);
 		try {
 			$dbw->insert(
