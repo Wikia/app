@@ -7,6 +7,7 @@
 use strict;
 use URI;
 use FCGI;
+use FCGI::ProcManager;
 use Sys::Syslog qw(:standard :macros);
 use Imager;
 use Image::LibRSVG;
@@ -44,16 +45,30 @@ sub real404 {
 #
 # initialization
 #
-my $request     = FCGI::Request();
-my $basepath    = "/images";
-my $flm         = new File::LibMagic;
-my $maxwidth    = 3000;
 
 #
 # how many requests we should handle
 #
 my $maxrequests  = 1000;
 my $cntrequest   = 0;
+
+#
+# number of processes
+#
+my $clients     = $ENV{ "CLIENTS" } || 10;
+
+#
+# fastcgi request
+#
+my %env;
+my $socket      = FCGI::OpenSocket( "127.0.0.1:39393", 100 )
+	or die "failed to open FastCGI socket; $!";
+my $request     = FCGI::Request( \*STDIN, \*STDOUT, \*STDOUT, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
+my $manager     = FCGI::ProcManager->new({ n_processes => $clients });
+my $basepath    = "/images";
+my $flm         = new File::LibMagic;
+my $maxwidth    = 3000;
+
 
 
 #
@@ -64,9 +79,9 @@ my $mimetype    = "text/plain";
 my $imgtype     = undef;
 umask( 022 );
 
-openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
+$manager->pm_manage();
 while( $request->Accept() >= 0 ) {
-	my $env = $request->GetEnvironment();
+	$manager->pm_pre_dispatch();
 	my $redirect_to = "";
 	my $request_uri = "";
 	my $referer = "";
@@ -82,8 +97,9 @@ while( $request->Accept() >= 0 ) {
 	#
 	# get last part of uri, remove first slash if exists
 	#
-	$request_uri = $env->{"REQUEST_URI"} if $env->{"REQUEST_URI"};
-	$referer = $env->{"HTTP_REFERER"} if $env->{"HTTP_REFERER"};
+	$request_uri = $env{"REQUEST_URI"} if $env{"REQUEST_URI"};
+	$referer     = $env{"HTTP_REFERER"} if $env{"HTTP_REFERER"};
+
 	my $uri = URI->new( $request_uri );
 	my $path  = $uri->path;
 	$path =~ s/^\///;
@@ -122,7 +138,7 @@ while( $request->Accept() >= 0 ) {
 		#
 		my $origname = pop @{ [ split( "/" , $original ) ] };
 		if( index( $last, $original ) != -1 ) {
-			syslog( LOG_INFO, "$origname not found in $last" ) if $syslog;
+			print STDERR "$origname not found in $last" if $syslog;
 		}
 		else {
 			#
@@ -148,7 +164,7 @@ while( $request->Accept() >= 0 ) {
 			if( -f $original ) {
 				$mimetype = $flm->checktype_filename( $original );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
-				syslog( LOG_INFO, qq{$thumbnail $mimetype $imgtype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
+				print STDERR qq{$thumbnail $mimetype $imgtype REQUEST_URI=$request_uri HTTP_REFERER=$referer} if $syslog;
 
 				#
 				# create folder for thumbnail if doesn't exists
@@ -157,10 +173,10 @@ while( $request->Accept() >= 0 ) {
 				unless( -d $thumbdir ) {
 					eval { mkpath( $thumbdir ) };
 					if( $@ ) {
-						syslog( LOG_INFO, "Creating of $thumbdir folder failed" ) if $syslog;
+						print STDERR "Creating of $thumbdir folder failed" if $syslog;
 					}
 					else {
-						syslog( LOG_INFO, "Folder $thumbdir created" ) if $syslog;
+						print STDERR LOG_INFO, "Folder $thumbdir created" if $syslog;
 					}
 				}
 
@@ -192,18 +208,10 @@ while( $request->Accept() >= 0 ) {
 						print "HTTP/1.1 200 OK\r\n";
 						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
-=pod X-Sendfile
-						my $fh = new IO::File $thumbnail, O_RDONLY;
-						if( defined $fh ) {
-							binmode $fh;
-							print <$fh>;
-							undef $fh;
-						}
-=cut
-						syslog( LOG_INFO, "File $thumbnail created" ) if $syslog;
+						print STDERR "File $thumbnail created" if $syslog;
 					}
 					else {
-						syslog( LOG_INFO, "SVG conversion from $original to $thumbnail failed" ) if $syslog;
+						print STDERR "SVG conversion from $original to $thumbnail failed";
 					}
 					undef $rsvg;
 					undef $xmlp;
@@ -238,25 +246,17 @@ while( $request->Accept() >= 0 ) {
 							print "HTTP/1.1 200 OK\r\n";
 							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
-=pod X-Sendfile
-							my $fh = new IO::File $thumbnail, O_RDONLY;
-							if( defined $fh ) {
-								binmode $fh;
-								print <$fh>;
-								undef $fh;
-							}
-=cut
-							syslog( LOG_INFO, "File $thumbnail created" ) if $syslog;
+							print STDERR "File $thumbnail created" if $syslog;
 						}
 						else {
-							syslog( LOG_INFO, "ImageMagick thumbnailer from $original to $thumbnail failed" ) if $syslog;
+							print STDERR "ImageMagick thumbnailer from $original to $thumbnail failed" if $syslog;
 						}
 						undef $image;
 					}
 				}
 			}
 			else {
-				syslog( LOG_INFO, "$thumbnail original file $original does not exists" ) if $syslog > 1;
+				print STDERR "$thumbnail original file $original does not exists" if $syslog ;
 			}
 		}
 	}
@@ -264,18 +264,7 @@ while( $request->Accept() >= 0 ) {
 		real404( $request_uri )
 	}
 
-	$request->Finish();
 	$transformed = 0;
 	$cntrequest++;
-
-	syslog( LOG_INFO, "pid=$$ request=$cntrequest" ) if $syslog;
-
-	#
-	# prevent memory leaks
-	#
-	if( $cntrequest >= $maxrequests ) {
-		$request->LastCall();
-		last;
-	}
+	$manager->pm_post_dispatch();
 }
-closelog if $syslog;
