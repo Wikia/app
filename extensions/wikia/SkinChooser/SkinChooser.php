@@ -394,6 +394,11 @@ function WikiaGetSkin ($user) {
 		$wgUseMonaco2 = true;
 		$userSkin = 'monaco';
 	}
+	//fix for RT#20005 - Marooned
+	global $wgEnableAnswers;
+	if ($userSkin == 'answers' && empty($wgEnableAnswers)) {
+		$userSkin = 'monaco';
+	}
 
 	$user->mSkin = &Skin::newFromKey($userSkin);
 
