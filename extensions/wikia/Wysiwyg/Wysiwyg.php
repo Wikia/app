@@ -1352,7 +1352,9 @@ function WysiwygParseWikitext($wikitext) {
 	global $IP, $wgRequest, $wgTitle, $wgWysiwygParserEnabled;
 
 	// enable wysiwyg parser when requested
-	if ($wgRequest->getVal('wysiwyg')) {
+	$useWysiwygParser = $wgRequest->getVal('wysiwyg', false);
+
+	if ($useWysiwygParser) {
 		require_once("$IP/extensions/wikia/Wysiwyg/WysiwygParser.php");
 		$wgWysiwygParserEnabled = true;
 		$parser = new WysiwygParser();
@@ -1371,6 +1373,12 @@ function WysiwygParseWikitext($wikitext) {
 
 	$wgWysiwygTemplatesParserEnabled = false;
 	$wgWysiwygParserEnabled = false;
+
+	// RT #20046: replace placeholders
+	if ($useWysiwygParser) {
+		global $wgWysiwygMarkers;
+		$html = strtr($html, $wgWysiwygMarkers);
+	}
 
 	return new AjaxResponse($html);
 }
