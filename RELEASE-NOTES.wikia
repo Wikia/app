@@ -1,4 +1,5 @@
 == Changes since 200909.1 ==
+* rt#21780: FCK: Template popup previews aren't bounded correctly (Macbre)
 * rt#21854: FCK: &useeditor=wysiwyg should allow an edit to use the new editor (Macbre)
 * rt#21951: SMW: WF variable added. (Nef)
 * rt#20324: no fallback to non-wysiwyg if JS disabled (Macbre)
