@@ -93,13 +93,14 @@ class GlobalWatchlistBot {
 		$aPages = array();
 
 		$dbr = wfGetDB( DB_SLAVE, 'stats', $sWikiDb );
+		$lag = $this->isLagged($dbr);
 
 		if ( $dbr->tableExists('watchlist') ) {
 			
-			$lag = $this->isLagged($dbr);
 			while ( $lag > self::MAX_LAG ) {
 				sleep($lag);
 				$this->printDebug("Database is lagged: sleep($lag)");
+				$lag = $this->isLagged($dbr);
 			}
 			
 			$oResource = $dbr->select(
