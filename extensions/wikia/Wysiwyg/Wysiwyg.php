@@ -286,6 +286,27 @@ function Wysiwyg_Initial($form) {
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgWysiwygPath/fckeditor/fckeditor.js?$wgStyleVersion\"></script>\n" );
 	$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"$wgWysiwygPath/wysiwyg.js?$wgStyleVersion\"></script>\n" );
 
+	// RT #20324
+	$fallbackMessage = wfMsgExt('wysiwyg-no-js-fallback', 'parse');
+	$wgOut->addHTML(
+<<<HTML
+	<noscript>
+		<style type="text/css">
+			#editform {
+				display: none;
+			}
+
+			.wysiwygFallback,
+			#page_bar {
+				display: block !important;
+			}
+		</style>
+		<div class="wysiwygFallback usermessage">$fallbackMessage</div>
+	</noscript>
+HTML
+	);
+
+	// hooks
 	$wgHooks['EditPage::showEditForm:initial2'][] = 'Wysiwyg_Initial2';
 	$wgHooks['EditForm:BeforeDisplayingTextbox'][] = 'Wysiwyg_BeforeDisplayingTextbox';
 	$wgHooks['EditPageBeforeEditButtons'][] = 'Wysiwyg_BlockSaveButton';

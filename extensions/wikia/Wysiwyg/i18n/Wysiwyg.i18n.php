@@ -2,6 +2,7 @@
 $messages = array();
 $messages['en'] = array(
 	'wysiwyg' => 'FCKeditor integration for MediaWiki',
+	'wysiwyg-no-js-fallback' => 'The rich text editor does not work with JavaScript switched off. Please either enable it in your browser options, or visit your [[Special:Preferences]] to switch to the old MediaWiki editor',
 	'wysiwyg-edgecase-info' => 'Rich text editing has been disabled for this page because article contains:',
 	'wysiwyg-edgecase-comment' => 'HTML comments',
 	'wysiwyg-edgecase-triplecurls' => 'template parameters',
