@@ -23,18 +23,28 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 		);
 
 	function profileIn($functionname) {
-		if( !$this->mFiltered || in_array( $functionname, $this->mProfiledMethods ) ) {
+		global $wgReportTimeViaStomp;
+		if( !empty( $wgReportTimeViaStomp ) && 
+			( !$this->mFiltered || in_array( $functionname, $this->mProfiledMethods ) ) ) {
 			parent::profileIn($functionname);
 		}
 	}
 
 	function profileOut($functionname) {
-		if( $functionname=='close' || !$this->mFiltered || in_array( $functionname, $this->mProfiledMethods ) ) {
+		global $wgReportTimeViaStomp;
+		if( !empty( $wgReportTimeViaStomp ) && 
+			( $functionname=='close' || !$this->mFiltered || in_array( $functionname, $this->mProfiledMethods ) ) ) {
 			parent::profileOut($functionname);
 		}
 	}
 
 	function getFunctionReport() {
+		global $wgReportTimeViaStomp;
+
+		if( empty( $wgReportTimeViaStomp ) ) {
+			return;
+		}
+
 		global $wgStompServer, $wgStompUser, $wgStompPassword;
 		global $wgTitle, $wgUseAjax, $wgRequest, $wgOut;
 
@@ -75,7 +85,7 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 					array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 				    );
 		}
-		catch( Stomp_Exception $e ) {
+		catch( Exception $e ) {
 			Wikia::log( __METHOD__, 'exception', $e->getMessage() );
 		}
 	}
