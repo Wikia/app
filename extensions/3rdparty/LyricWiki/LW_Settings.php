@@ -1,6 +1,6 @@
 <?php
 
-$LW = "$IP/extensions/LyricWiki/";
+$LW = "$IP/extensions/3rdparty/LyricWiki";
 
 	# Parser Extensions
 	require_once "$LW/Parser_LWMagicWords.php";
@@ -32,6 +32,4 @@ $LW = "$IP/extensions/LyricWiki/";
 	require_once "$LW/lw_impliedRedirects.php";
 
 
-$wgShowExceptionDetails = true;
-
-?>
+# $wgShowExceptionDetails = true;
