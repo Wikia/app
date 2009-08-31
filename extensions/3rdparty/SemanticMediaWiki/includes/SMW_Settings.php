@@ -153,6 +153,7 @@ $smwgPropertyPagingLimit = 25; // use smaller value since property lists need mo
 $smwgQEnabled = true;   // (De)activates all query related features and interfaces
 $smwgQMaxLimit = 10000; // Max number of results ever retrieved, even when using special query pages.
 
+if (!isset($smwgQSubcategoryDepth))
 $smwgQSubcategoryDepth = 10;  // Restrict level of sub-category inclusion (steps within category hierarchy)
 $smwgQSubpropertyDepth = 10;  // Restrict level of sub-property inclusion (steps within property hierarchy)
                               // (Use 0 to disable hierarchy-inferencing in queries)
