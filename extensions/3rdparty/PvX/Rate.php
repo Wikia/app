@@ -57,12 +57,12 @@ function wfRate() {
 			////////////////////////////////////////////////////////////////////
 			if ( !$wgUser->isAllowed( 'ratebuild' ) ) {
 				$wgOut->permissionRequired( 'ratebuild' );
-				return;
+				return false;
 			}
 
 			if ( $wgUser->isBlocked() ) {
 				$wgOut->blockedPage();
-				return;
+				return false;
 			}
 
 
