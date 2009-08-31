@@ -272,7 +272,9 @@ function WMU_loadMainFromView() {
 			if( user_blocked ) {
 				document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
 			} else {
-				document.body.appendChild(element);
+				if( !$G( 'WMU_div' ) ) {
+					document.body.appendChild(element);
+				}
 
 				WMU_panel = new YAHOO.widget.Panel('WMU_div', {
 					modal: true,
@@ -408,8 +410,9 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		element.style.width = '722px';
 		element.style.height = '587px';
 		element.innerHTML = html;
-
-		document.body.appendChild(element);
+		if( !$G( 'WMU_div' ) ) {
+			document.body.appendChild(element);
+		}
 
 		WMU_panel = new YAHOO.widget.Panel('WMU_div', {
 			modal: true,
