@@ -11,7 +11,7 @@
 
 function smwfExecuteSemanticStatistics() {
 	global $wgOut, $wgLang;
-	$dbr = wfGetDB( DB_SLAVE, 'dpl' );
+	$dbr = wfGetDB( DB_SLAVE, 'smw' );
 
 	// Do not give these statistics here. They are quite unrelated.
 	// 		$views = SiteStats::views();
