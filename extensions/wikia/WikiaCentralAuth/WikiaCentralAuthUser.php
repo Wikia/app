@@ -464,6 +464,11 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * eeeyuck
 	 */
 	function addUser( $password, $email, $realname, $options = null ) {
+		#---
+        if ( wfReadOnly() ) {
+            return false;
+        }
+		#---
 		$dbw = self::getCentralDB();
 		#---
 		list( $salt, $password ) = $this->saltedPassword( $password, $this->mGlobalId );
@@ -763,6 +768,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 */
 	function setPassword( $password ) {
 		wfProfileIn( __METHOD__ );
+        if ( wfReadOnly() ) {
+            return true;
+        }
 		if ( is_null($password) ) {
 			return true;
 		}
@@ -969,6 +977,11 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 
 	function addToGlobalGroups( $groups ) {
 		global $wgWikiaCentralUseGlobalGroups;
+
+        if ( wfReadOnly() ) {
+            return;
+        }
+		
 		if ( !$wgWikiaCentralUseGlobalGroups ) {
 			wfDebug( __METHOD__ . ": Don't use central user groups \n" );
 			return;
