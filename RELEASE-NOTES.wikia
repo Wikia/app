@@ -1,4 +1,6 @@
 == Changes since 200909.1 ==
+* rt#22005: ?useskin=quartz-slate results in PHP fatal error (Marooned)
+* rt#20005: saving preferences at answers forces account skin choice to answers, and breaks useskin (Marooned)
 * rt#21780: FCK: Template popup previews aren't bounded correctly (Macbre)
 * rt#21854: FCK: &useeditor=wysiwyg should allow an edit to use the new editor (Macbre)
 * rt#21951: SMW: WF variable added. (Nef)
