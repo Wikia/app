@@ -238,6 +238,7 @@ div.wk_blogs_post .wk_blogs_comments ul.links {
 list-style:none;
 height:20px;
 margin:.3em 0 .5em;
+position:relative;
 }
 
 div.wk_blogs_post .wk_blogs_comments ul.links li {
