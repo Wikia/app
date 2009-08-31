@@ -9,7 +9,7 @@ require_once("includes/SpecialPage.php");
 
 class GoogleMapsKML extends SpecialPage {
         function GoogleMapsKML() {
-            parent::SpecialPage('Google Maps KML', '', false /* listed */);
+            parent::SpecialPage('GoogleMapsKML', '', false /* listed */);
         }
 	function execute( $params ) {
 		global $wgRequest, $wgOut, $wgTitle, $wgUser;
