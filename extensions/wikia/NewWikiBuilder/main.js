@@ -106,7 +106,7 @@ NWB.finalize = function (redir){
 	/* Issue a purge request */
         Mediawiki.updateStatus(NWB.msg("nwb-finalizing"));
 	Mediawiki.waiting();
-        var mainPageEnd = Mediawiki.followRedirect("Main Page", false); // Should be cached.
+        var mainPageEnd = Mediawiki.followRedirect(wgMainpage, false); // Should be cached.
         var result = Mediawiki.apiCall({
 		"action" : "purge",
 		"titles" : mainPageEnd});

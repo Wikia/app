@@ -6,6 +6,7 @@
 * rt#21854: FCK: &useeditor=wysiwyg should allow an edit to use the new editor (Macbre)
 * rt#21951: SMW: WF variable added. (Nef)
 * rt#20324: no fallback to non-wysiwyg if JS disabled (Macbre)
+* rt#21442: NWB now uses localized Main Page name (TOR)
 
 == Changes since 200908.4 ==
 * rt#20828: Blogs: fix for log action 10 char limit (uberfuzzy)
