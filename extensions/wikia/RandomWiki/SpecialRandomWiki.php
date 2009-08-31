@@ -32,4 +32,4 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['RandomWiki'] = $dir. 'SpecialRandomWiki_body.php';
 $wgSpecialPages['RandomWiki'] = 'RandomWiki';
 // Special page group for MW 1.13+
-$wgSpecialPageGroups['RandomWiki'] = 'wikia';
+$wgSpecialPageGroups['RandomWiki'] = 'redirects';
