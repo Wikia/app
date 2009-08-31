@@ -103,7 +103,10 @@ class Skin extends Linker {
 		if ( strpos($key, '-') !== false ) {
 			list($skin, $theme) = explode('-', $key);
 			if ( isset($wgSkinTheme[$skin]) && in_array($theme, $wgSkinTheme[$skin]) ) {
-				return $key;
+				global $wgUserThemeFromURL;
+				//variable used in setupUserCss() - fix for RT#22005 - Marooned
+				$wgUserThemeFromURL = $theme;
+				return $skin;
 			}
 		}
 
@@ -624,9 +627,13 @@ END;
 			}
 
 			// Wikia
+			global $wgUserThemeFromURL;
+			if( !empty($wgUserThemeFromURL) ) {
+				//handle ?useskin=skin-theme style (theme works only for Monaco), set in normalizeKey() - fix for RT#22005 - Marooned
+				$this->themename = $wgUserThemeFromURL;
+			}
 			if( empty($this->themename) || $this->themename == 'custom' ) {
-				$skinName = ($this->getSkinName() == 'awesome') ? 'monaco' : $this->getSkinName(); // macbre: temp fix
-				$out->addStyle( self::makeNSUrl( $skinName . '.css', $query, NS_MEDIAWIKI ) );
+				$out->addStyle( self::makeNSUrl( $this->getSkinName() . '.css', $query, NS_MEDIAWIKI ) );
 			}
 		}
 
