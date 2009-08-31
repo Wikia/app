@@ -3771,7 +3771,7 @@ $wgPreprocessorCacheThreshold = 1000;
  * Allow filtering by change tag in recentchanges, history, etc
  * Has no effect if no tags are defined in valid_tag.
  */
-$wgUseTagFilter = true;
+$wgUseTagFilter = false; // rt#22038
 
 /**
  * Allow redirection to another page when a user logs in.
