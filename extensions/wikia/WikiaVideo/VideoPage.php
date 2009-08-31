@@ -719,7 +719,7 @@ EOD;
 			case self::V_METACAFE:
 				$file = @file_get_contents( "http://www.metacafe.com/api/item/" . $this->mId, FALSE );
 				if ($file) {
-					$doc = new DOMDocument;
+					$doc = new DOMDocument( '1.0', 'UTF-8' );
 					@$doc->loadHTML( $file );
 					if( $item = $doc->getElementsByTagName('item')->item( 0 ) ) {
 						$this->mVideoName = trim( $item->getElementsByTagName('title')->item(0)->textContent );
@@ -728,10 +728,10 @@ EOD;
 				}
 				break;
 			case self::V_YOUTUBE:
-				$file = @file_get_contents( "http://gdata.youtube.com/feeds/api/videos/" . $this->mId, FALSE );
+				$file = @file_get_contents( "http://gdata.youtube.com/feeds/api/videos/" . $this->mId, FILE_TEXT );
 				if ($file) {
-					$doc = new DOMDocument;
-					@$doc->loadHTML( $file );
+					$doc = new DOMDocument( '1.0', 'UTF-8' );
+					@$doc->loadXML( $file );
 					$this->mVideoName = trim( $doc->getElementsByTagName('title')->item(0)->textContent );
 					$exists = true;
 				}
@@ -753,8 +753,8 @@ EOD;
 			case self::V_5MIN:
 				$file = @file_get_contents( "http://api.5min.com/video/" . $this->mId . '/info.xml', FALSE );
 				if ($file) {
-					$doc = new DOMDocument;
-					@$doc->loadHTML( $file );
+					$doc = new DOMDocument( '1.0', 'UTF-8' );
+					@$doc->loadXML( $file );
 					if( $item = $doc->getElementsByTagName('item')->item( 0 ) ) {
 						$this->mVideoName = trim( $item->getElementsByTagName('title')->item(0)->textContent );
 						$exists = true;
