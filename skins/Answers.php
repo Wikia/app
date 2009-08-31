@@ -712,6 +712,7 @@ yieldbuild_loc = "right_nav_top";
 		<div class="widget">
 			<h2><?= wfMsg("recent_unanswered_questions") ?></h2>
 			<ul id="recent_unanswered_questions">
+				<?= HomePageList::recent_unanswered_questions() ?>
 			</ul>
 			<?
 			if ($is_question) {
