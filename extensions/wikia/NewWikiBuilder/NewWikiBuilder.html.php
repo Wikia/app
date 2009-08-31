@@ -61,7 +61,7 @@ NWB.messages = {"<?php echo $this->lang . '": ' . json_encode($NWBmessages[$this
 	<script>
 	// Setup
 	$(function() {
-		Mediawiki.pullArticleContent(Mediawiki.followRedirect("Main Page"), NWB.pullWikiDescriptionCallback, {"rvsection": 1});
+		Mediawiki.pullArticleContent(Mediawiki.followRedirect(wgMainpage), NWB.pullWikiDescriptionCallback, {"rvsection": 1});
 	});
 	</script>
 </div>
