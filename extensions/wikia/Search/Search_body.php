@@ -9,14 +9,13 @@ class SolrSearch extends SearchEngine {
 	 * @access public
 	 */
 	function searchText( $term ) {
-		//$words = "";
-		//foreach(explode(' ', $term) as $word) {
-		//	$words .= ( !empty($words) ? " AND " : "" ) . $word;
-		//}
-		//$queryString = "title:$words^10 OR html:$words";
-		//echo $queryString;
-		//return SolrSearchSet::newFromQuery( $queryString, $this->namespaces, $this->limit, $this->offset );
-		//return SolrSearchSet::newFromQuery( "title:$term^10 OR html:$term", $this->namespaces, $this->limit, $this->offset );
+		/*
+		$words = "";
+		foreach(explode(' ', $term) as $word) {
+			$words .= ( !empty($words) ? " AND " : "" ) . $word;
+		}
+		*/
+		//return SolrSearchSet::newFromQuery( $words, $this->namespaces, $this->limit, $this->offset );
 		return SolrSearchSet::newFromQuery( $term, $this->namespaces, $this->limit, $this->offset );
 	}
 
@@ -49,7 +48,14 @@ class SolrSearchSet extends SearchResultSet {
 		if($solr->ping()) {
 			$params = array(
 				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views', // fields we want to fetch back
-				'bf' => 'title^10',
+				'qf' => 'title^5 html', // boost the title matches first
+				'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
+				'bq' => '(*:* -html:($q))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
+				'qt' => 'dismax',
+				'pf' => '', // override defaults
+				'mm' => '',
+				'ps' => '',
+				'tie' => 1, // make it combine all scores instead of picking best match
 				'hl' => 'true',
 				'hl.fl' => 'html,title', // highlight field
 				'hl.snippets' => '2', // number of snippets per field
@@ -57,7 +63,6 @@ class SolrSearchSet extends SearchResultSet {
 				'hl.simple.pre' => '<span class="searchmatch">',
 				'hl.simple.post' => '</span>',
 				'indent' => 1,
-				//'sort' => 'score desc, backlinks desc, views desc, revcount desc, created asc'
 				//'sort' => 'backlinks desc, views desc, revcount desc, created asc'
 			);
 
@@ -72,12 +77,11 @@ class SolrSearchSet extends SearchResultSet {
 			$params['fq'] = "(" . $params['fq'] . ") AND wid:831";
 			//echo "fq=" . $params['fq'] . "<br />";
 			try {
-				$query .= ' _val_:"scale(views,1,20)"';
 				//echo "query:" . $query . "<br />";
 				$response = $solr->search($query, $offset, $limit, $params);
 			}
 			catch (Exception $exception) {
-				//print_r($exception);
+				//echo '<pre>'; print_r($exception); echo '</pre>';
 				wfProfileOut( $fname );
 				return null;
 			}
@@ -139,12 +143,10 @@ class SolrSearchSet extends SearchResultSet {
 			$result->title = str_replace('_', ' ', $result->title);
 			if(isset($result->canonical) && !empty($result->canonical)) {
 				if(!in_array($result->canonical, $this->mCanonicals)) {
-					//echo "Got canonical for: " . $result->title . ", canonical is: " . $result->canonical . "<br />";
 					$this->mCanonicals[] = $result->canonical;
 					$deDupedResults[] = $result;
 				}
 				else {
-					//echo "(!) Already have: " . $result->canonical . " - " . $result->title . " - deduped<br />";
 					continue;
 				}
 			}
@@ -237,10 +239,6 @@ class SolrResult extends SearchResult {
 	 * @param Apache_Solr_Document $document
 	 */
 	public function __construct( Apache_Solr_Document $document ) {
-		//echo "<pre>";
-		//print_r($document);
-		//var_dump(isset($document->canonical));
-		//echo "</pre>";
 		$this->mTitle = new SolrResultTitle($document->ns, urldecode( ( ( isset($document->canonical) && !empty($document->canonical) ) ? $document->canonical : $document->title) ), $document->url);
 		$this->mWordCount = $document->words;
 		$this->mSize = $document->bytes;
