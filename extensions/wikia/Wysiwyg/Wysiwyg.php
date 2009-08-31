@@ -3,7 +3,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Wikia Rich Text Editor (Wysiwyg)',
 	'description' => 'FCKeditor integration for MediaWiki',
 	'url' => 'http://www.wikia.com/wiki/c:help:Help:New_editor',
-	'version' => 0.16,
+	'version' => 0.17,
 	'author' => array('Inez Korczyński', 'Maciej Brencz', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
 );
 
@@ -197,8 +197,11 @@ function Wysiwyg_Initial($form) {
 
 	wfProfileIn(__METHOD__);
 
+	// RT #21854
+	$forceWysiwyg = $wgRequest->getVal('useeditor', 'mediawiki') == 'wysiwyg';
+
 	// check user preferences option
-	if($wgUser->getOption('enablerichtext') != true) {
+	if( ($wgUser->getOption('enablerichtext') != true) && !$forceWysiwyg) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
@@ -225,8 +228,8 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
+	// RT #17269: editor mode
 	if($wgRequest->getVal('useeditor', 'wysiwyg') == 'mediawiki') {
-		// editor mode (RT #17269)
 		// fallback to old MW editor
 		wfProfileOut(__METHOD__);
 		return true;
