@@ -1,4 +1,5 @@
 == Changes since 200909.1 ==
+* rt#21951: SMW: WF variable added. (Nef) 
 * rt#20324: no fallback to non-wysiwyg if JS disabled (Macbre)
 
 == Changes since 200908.4 ==
