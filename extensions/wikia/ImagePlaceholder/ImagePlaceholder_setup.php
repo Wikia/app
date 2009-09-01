@@ -133,6 +133,9 @@ function ImagePlaceholder_makeDullImage( $title, $options, $holders = false ) {
 
 // generate the placeholder box based on given parameters 
 function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) {
+
+	wfProfileIn(__METHOD__);
+
         global $wgExtensionMessagesFiles, $wgWikiaImagePlaceholderId, $wgContLang;
 	// Shortcuts
 	$fp =& $frameParams;
@@ -260,12 +263,11 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	$out .= Xml::closeElement('div') . Xml::closeElement('div') . Xml::closeElement('td');
 
-
-/*
-        $out = '<div id="WikiaImagePlaceholder' . $wgWikiaImagePlaceholderId . '" class="gallerybox" style="clear:both; vertical-align: bottom;"' . $wysiwygAttr . '><div class="thumb t' . $align . ' videobox" style="padding: 0; position: relative; width: ' . $width . 'px; height: ' . $height . 'px; ' . $margin  .'"><div style="margin-left: auto; margin-right: auto; width: ' . $width . 'px; height: ' . $height . 'px;" >';
-	$out .= '<a href="#" class="bigButton" style="left: ' . $lmarg . 'px; position: absolute; top: ' . $tmarg . 'px;" id="WikiaImagePlaceholderInner' . $wgWikiaImagePlaceholderId  . '"'. $onclick . '><big>' . wfMsg( 'imgplc-create' ) . '</big><small>&nbsp;</small></a>' . $caption_line . '</div></div></div>';
-*/
+	// increase counter
         $wgWikiaImagePlaceholderId++;
+
+	wfProfileOut(__METHOD__);
+
         return $out;
 }
 
