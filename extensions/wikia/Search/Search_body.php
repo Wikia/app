@@ -53,7 +53,7 @@ class SolrSearchSet extends SearchResultSet {
 				'bq' => '(*:* -html:($q))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
 				'qt' => 'dismax',
 				'pf' => '', // override defaults
-				'mm' => '',
+				'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
 				'ps' => '',
 				'tie' => 1, // make it combine all scores instead of picking best match
 				'hl' => 'true',
@@ -73,11 +73,16 @@ class SolrSearchSet extends SearchResultSet {
 				}
 				$params['fq'] = $nsQuery; // filter results for selected ns
 			}
-			//$params['fq'] = "(" . $params['fq'] . ") AND wid:" . $wgCityId;
-			$params['fq'] = "(" . $params['fq'] . ") AND wid:831";
+			if( $wgCityId == 4832) {
+				// techteamtest tmp hack: search muppet.wikia.com
+				$params['fq'] = "(" . $params['fq'] . ") AND wid:831";
+			}
+			else {
+				$params['fq'] = "(" . $params['fq'] . ") AND wid:" . $wgCityId;
+			}
 			//echo "fq=" . $params['fq'] . "<br />";
+
 			try {
-				//echo "query:" . $query . "<br />";
 				$response = $solr->search($query, $offset, $limit, $params);
 			}
 			catch (Exception $exception) {
