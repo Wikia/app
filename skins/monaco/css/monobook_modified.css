@@ -472,6 +472,10 @@ div.videobox {
 /*BARTEK*/
 
 /* Macbre: RT #21087 - begin */
+.videobox {
+	position: relative;
+}
+
 .videobox a.bigButton {
 	float: none;
 	display: inline;
@@ -492,6 +496,10 @@ div.videobox {
 	padding: 3px;
 	position: static;
 	width: 5px;
+}
+
+.videobox .thumbcaption {
+	left: 0;
 }
 /* Macbre: RT #21087 - end */
 

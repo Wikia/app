@@ -284,10 +284,6 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 			}
 		}
 
-		//
-		// TODO: use XML::element to generate HTML in better way
-		//
-
 		// macbre: Wysiwyg support for video placeholder
 		if (!empty($wgWysiwygParserEnabled)) {
 			// register new metadata entry
@@ -337,21 +333,12 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		}
 
 		// caption (no wrapper?)
-		$html .= htmlspecialchars($caption);
+		$html .= Xml::element('span', array('class' => 'thumbcaption'), $caption);
 
 		// close divs
 		$html .= Xml::closeElement('div') .Xml::closeElement('div');
 
-/*
-		$out = '<div id="WikiaVideoPlaceholder' . $wgWikiaVideoPlaceholderId . '" class="gallerybox" style="clear:both;"' . $wysiwygAttr . '><div class="thumb t' . $align . ' videobox" style="padding: 0; position: relative; width: ' . $width . 'px; height: ' . $height . 'px;"><div style="margin-left: auto; margin-right: auto; width: ' . $width . 'px; height: ' . $height . 'px;" >';
-
-		if( !$plc_template ) {
-			$out .= '<a href="#" class="bigButton" style="left: ' . $lmarg . 'px; position: absolute; top: ' . $tmarg . 'px;" id="WikiaVideoPlaceholderInner' . $wgWikiaVideoPlaceholderId  . '"'. $onclick . '><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>'. $caption .'</div></div></div>';
-		}
-		else {
-			$out .= '</div></div></div>';
-		}
-*/
+		// increase counter
 		$wgWikiaVideoPlaceholderId++;
 
 		wfProfileOut('WikiaVideo_makeVideo');
