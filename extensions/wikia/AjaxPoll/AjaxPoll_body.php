@@ -221,7 +221,10 @@ class AjaxPollClass {
 
 		// macbre: add CSS to the first ajax poll on the page
 		$before = '<!-- AjaxPoll #'. self::$mCount .' -->';
-		//if (self::$mCount == 0) {
+
+		// RT #20789
+		global $wgWysiwygTemplatesParserEnabled;
+		if (empty($wgWysiwygTemplatesParserEnabled)) {
 			global $wgExtensionsPath, $wgStyleVersion;
 
 			// load CSS/JS only when needed
@@ -236,7 +239,7 @@ wgAfterContentAndJS.push(function() {
 });
 /*]]>*/</script>
 JS;
-		//}
+		}
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
