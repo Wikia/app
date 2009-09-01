@@ -34,7 +34,7 @@ var WMU_height_par = null;
 var WMU_widthChanges = 1;
 var WMU_inGalleryPosition = false;
 var wmu_back = '';
-var wmu_imagebutton = '';
+//var wmu_imagebutton = ''; // macbre: why this JS var is overwritten (RT #22075)
 var wmu_close = '';
 var wmu_warn1 = '';
 var wmu_warn2 = '';
@@ -81,7 +81,7 @@ function WMU_loadDetails() {
 
 			if(FCK.wysiwygData[WMU_refid].caption) {
 				$G('ImageUploadCaption').value = FCK.wysiwygData[WMU_refid].caption;
-			}			
+			}
 		}
 	}
 
@@ -242,9 +242,9 @@ function WMU_loadMainFromView() {
 	var callback = function(data) {
 			// first, check if this is a special case for anonymous disabled...
 			if( data.wmu_init_login ) {
-				var fe = $.Event( 'FakeEvent' );	
+				var fe = $.Event( 'FakeEvent' );
 				openLogin( fe );
-				return;	
+				return;
 			}
 
 			var element = document.createElement('div');
@@ -288,16 +288,16 @@ function WMU_loadMainFromView() {
 				});
 				WMU_panel.render();
 				WMU_panel.show();
-				
+
 				WMU_indicator(1, false);
-	
+
 				WMU_indicator(1, false);
 				if($G('ImageQuery') && WMU_panel.element.style.visibility == 'visible') $G('ImageQuery').focus();
 				var cookieMsg = document.cookie.indexOf("wmumainmesg=");
 				if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 					$G('ImageUploadTextCont').style.display = 'none';
 					$G('ImageUploadMessageLink').innerHTML = '[' + wmu_show_message  + ']';
-				}			
+				}
 
 				// macbre: RT #19150
 				if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
@@ -362,7 +362,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			}
 		}
 
-	} else if( YAHOO.lang.isObject(e) ) { // for Opera and Chrome		
+	} else if( YAHOO.lang.isObject(e) ) { // for Opera and Chrome
 		var el = YAHOO.util.Event.getTarget(e);
 		if (el.id == 'wmuLink') {
 			WMU_track('open/fromLinkAboveToolbar'); //tracking
@@ -717,8 +717,8 @@ function WMU_displayDetails(responseText) {
 //                $G( 'ImageSizeRow' ).style.display = 'none';
         }
 
-	if( 0 < WMU_size ) {	
-		$G( 'ImageUploadWidthCheckbox' ).click();		
+	if( 0 < WMU_size ) {
+		$G( 'ImageUploadWidthCheckbox' ).click();
 		$G( 'ImageUploadManualWidth' ).value = WMU_size;
 		WMU_manualWidthInput( $G( 'ImageUploadManualWidth' ) );
 	} else {
@@ -741,7 +741,7 @@ function WMU_displayDetails(responseText) {
 			$G('ImageUploadLicenseText').style.display = 'none';
 			$G('ImageUploadLicenseLink').innerHTML = '[' + wmu_show_license_message  + ']';
 		}
-	}	
+	}
 	$G( 'ImageColumnRow' ).style.display = 'none';
 //	if( -1 != WMU_gallery ) {
 		// todo gallery stuff here
@@ -798,10 +798,10 @@ function WMU_insertImage(e, type) {
 
 	if($G('ImageUploadThumb')) {
 		if( $G('ImageUploadThumbOption').checked ) {
-			params.push( 'size=thumb' );	
-			params.push( 'width=' + $G( 'ImageUploadManualWidth' ).value + 'px' );			
+			params.push( 'size=thumb' );
+			params.push( 'width=' + $G( 'ImageUploadManualWidth' ).value + 'px' );
 		} else {
-			params.push( 'size=full' );	
+			params.push( 'size=full' );
 		}
 		params.push('layout=' + ($G('ImageUploadLayoutLeft').checked ? 'left' : 'right'));
 		params.push('caption=' + $G('ImageUploadCaption').value);
@@ -822,7 +822,7 @@ function WMU_insertImage(e, type) {
 		if( 0 == WMU_link ) {
 			if( $G('ImageUploadLink') ) {
 				if( '' != $G('ImageUploadLink').value ) {
-					params.push( 'link=' + encodeURIComponent( $G('ImageUploadLink').value ) );			
+					params.push( 'link=' + encodeURIComponent( $G('ImageUploadLink').value ) );
 				}
 			}
 		} else  {
@@ -940,12 +940,12 @@ function MWU_imageSizeChanged(size) {
 			image.width = WMU_orgThumbSize[0];
 			image.height = WMU_orgThumbSize[1];
 			$G('ImageUploadManualWidth').value = WMU_orgThumbSize[0];
-			if( 0 == WMU_link ) {			
+			if( 0 == WMU_link ) {
 				$G('ImageLinkRow').style.display = '';
 			}
 		} else {
 			if( 0 == WMU_link ) {
-				$G('ImageLinkRow').style.display = '';			
+				$G('ImageLinkRow').style.display = '';
 			}
 		}
 	}
