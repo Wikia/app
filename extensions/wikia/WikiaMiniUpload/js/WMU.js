@@ -34,7 +34,12 @@ var WMU_height_par = null;
 var WMU_widthChanges = 1;
 var WMU_inGalleryPosition = false;
 var wmu_back = '';
-//var wmu_imagebutton = ''; // macbre: why this JS var is overwritten (RT #22075)
+
+// macbre: RT #22075
+if (typeof wmu_imagebutton == 'undefined') {
+	var wmu_imagebutton = '';
+}
+
 var wmu_close = '';
 var wmu_warn1 = '';
 var wmu_warn2 = '';
