@@ -11,11 +11,14 @@
 class AdProviderGAM implements iAdProvider {
 
 	protected static $instance = false;
+	private $provider_id = 4;
+
+	public $iframeRendering = true; // Toggle iframes/non iframes
 
 	//private $adManagerId = "ca-pub-3862144315477646"; gorillamania@gmail.com account
 	public $adManagerId = "ca-pub-4086838842346968"; // Wikia account
 
-	public $batchHtmlCalled = false;
+	public $batchHtmlCalled = false, $setupHtmlCalled = false;
 
 	public static function getInstance() {
 		if(self::$instance == false) {
@@ -63,26 +66,25 @@ class AdProviderGAM implements iAdProvider {
 	}
 
         public function getSetupHtml(){
-		static $called = false;
-		if ($called){
+		if ($this->setupHtmlCalled){
 			return false;
 		}
-		$called = true;
+		$this->setupHtmlCalled = true;
 
 		$out = "<!-- ## BEGIN " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		// Download the necessary required javascript
 		
 		$out .= '<script type="text/javascript" src="http://partner.googleadservices.com/gampad/google_service.js"></script>' . "\n" .
-			// Set up a try/catch to see if the user has AdBcock enabled presumably because the above call failed to download
+			// Set up a try/catch to see if the user has AdBlock enabled presumably because the above call failed to download
 			'<script type="text/javascript">
 			wgAdBlockEnabled=false;
-			try {
-			  GS_googleAddAdSenseService("' . $this->adManagerId . '");
-			  GS_googleEnableAllServices();
-			} catch (e){
-			  wgAdBlockEnabled=true;
-			}
-			</script>' . "\n";
+			GS_googleAddAdSenseService("' . $this->adManagerId . '");
+			GS_googleEnableAllServices();' . "\n" .
+			'</script>';
+		if ($this->iframeRendering){ 
+			// I had to ask to have this enabled
+			$out.= '<script>GA_googleUseIframeRendering();' . "</script>";
+		}
 		$out .= "<!-- ## END " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		return $out;
         }
@@ -99,12 +101,15 @@ class AdProviderGAM implements iAdProvider {
 		$out = "<!-- ## BEGIN " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		
 		// Make a call for each slot.
-		$out .= '<script type="text/javascript">' . "\n" .
-			'try {' . "\n";
-		foreach ( $this->slotsToCall as $slotname ){
-			$out .= 'GA_googleAddSlot("' . $this->adManagerId . '","' . $slotname . '");' . "\n";
-			// Set up key values
-			$out .= $this->getProviderValues($slotname);
+		$this->slotsToCall = AdEngine::getInstance()->getSlotNamesForProvider($this->provider_id);
+
+		$out .= '<script type="text/javascript">' . "\n";
+		if (! $this->iframeRendering){ 
+			foreach ( $this->slotsToCall as $slotname ){
+				$out .= 'GA_googleAddSlot("' . $this->adManagerId . '","' . $slotname . '");' . "\n";
+				// Set up key values
+				$out .= $this->getProviderValues($slotname);
+			}
 		}
 
 		// ###### Our custom key values
@@ -120,14 +125,12 @@ class AdProviderGAM implements iAdProvider {
 
 		// ###### Ad Sense attributes
 		$out .= $this->getAdSenseAttr() . "\n" .
-			// Google Ad Call failed, probably because of AdBlock
-			// Hide these errors from Athena error reporting.
-			// Consider putting something else here for tracking?
-			'} catch (e) { }' . "\n" . 
 			'</script>' . "\n";
 		
 		// Make the call for all the ads
-		$out .= '<script type="text/javascript">try{GA_googleFetchAds()}catch(e){}</script>' . "\n";
+		if (! $this->iframeRendering){ 
+			$out .= '<script type="text/javascript">GA_googleFetchAds();</script>' . "\n";
+		}
 		
 
 		$out .= "<!-- ## END " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
@@ -197,11 +200,22 @@ class AdProviderGAM implements iAdProvider {
 	public function getAd($slotname, $slot){
 		$out = "";
 		// First time the ad is called, call all the batch code, if it hasn't already been called.
+		if (! $this->setupHtmlCalled){
+			$out .= $this->getSetupHtml();
+		} 
 		if (! $this->batchHtmlCalled){
 			$out .= $this->getBatchCallHtml();
 		} 
 
-		return $out . '<script type="text/javascript">GA_googleFillSlot("' . $slotname . '")</script>';
+		$dim = AdEngine::getHeightWidthFromSize($slot['size']);
+
+		if ($this->iframeRendering){
+			// I had to ask them to get this turned on
+			$args = array($this->adManagerId, $slotname, $dim['width'], $dim['height']);
+			return $out . '<script>GA_googleFillSlotWithSize("' . implode('","', $args) . '");</script>';
+		} else {
+			return $out . '<script type="text/javascript">GA_googleFillSlot("' . $slotname . '")</script>';
+		}
 	}
 
 

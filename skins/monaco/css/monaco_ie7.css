@@ -32,10 +32,6 @@ body.rtl #articleFooter .actions li div a {
 }
 
 /* spotlights fix */
-#spotlight_footer {
-	height: 1px;
-	margin-bottom: 100px;
-}
 
 body {
 	position: relative;

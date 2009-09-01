@@ -1575,33 +1575,38 @@ if(isset($this->data['articlelinks']['right']) && $showright ) {
 			<!-- ARTICLE -->
 <?php
 echo AdEngine::getInstance()->getSetupHtml();
-global $wgOut, $wgEnableAdsInContent, $wgAdsForceLeaderboards;
+global $wgOut, $wgEnableAdsInContent, $wgAdsForceLeaderboards, $wgEnableIframeAds;
+if (!empty($wgEnableIframeAds)){
+	$AdEngineFunc = "getPlaceHolderIframe";
+} else {
+	$AdEngineFunc = "getPlaceHolderDiv";
+}
 $topAdCode = '';
 $topAdCodeDisplayed = false;
 if ($wgOut->isArticle()){
 	if (ArticleAdLogic::isMainPage()){
-		$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_LEADERBOARD');
+		$topAdCode .= AdEngine::getInstance()->$AdEngineFunc('HOME_TOP_LEADERBOARD');
 		if ($wgEnableFAST_HOME2) {
-			$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('HOME_TOP_RIGHT_BOXAD');
+			$topAdCode .= AdEngine::getInstance()->$AdEngineFunc('HOME_TOP_RIGHT_BOXAD');
 		}
 	} else if ( ArticleAdLogic::isContentPage()){
 
 		if (!empty($wgAdsForceLeaderboards)){
-			$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+			$topAdCode = AdEngine::getInstance()->$AdEngineFunc('TOP_LEADERBOARD');
 			/* Uncomment for tandems
 			if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-				$topAdCode .= AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD', false);
+				$topAdCode .= AdEngine::getInstance()->$AdEngineFunc('TOP_RIGHT_BOXAD', false);
 			}
 			*/
 		} else {
 			// Let the collision detection decide
 			if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
-				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+				$topAdCode = AdEngine::getInstance()->$AdEngineFunc('TOP_LEADERBOARD');
 			} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_RIGHT_BOXAD');
+				$topAdCode = AdEngine::getInstance()->$AdEngineFunc('TOP_RIGHT_BOXAD');
 			} else {
 				// Long article, but a collision
-				$topAdCode = AdEngine::getInstance()->getPlaceHolderDiv('TOP_LEADERBOARD');
+				$topAdCode = AdEngine::getInstance()->$AdEngineFunc('TOP_LEADERBOARD');
 			}
 		}
 	}
@@ -1655,9 +1660,9 @@ if ($wgOut->isArticle()){
 					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
 						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
 						'<td style="text-align: center">' .
-						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_LEFT_BOXAD", false) .
+						AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_LEFT_BOXAD", true) .
 						'</td><td style="text-align: center">' .
-						AdEngine::getInstance()->getPlaceHolderDiv("PREFOOTER_RIGHT_BOXAD", false) .
+						AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_RIGHT_BOXAD", true) .
 						"</td></tr>\n</table>";
 					}
 
@@ -1912,13 +1917,13 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 		<table>
 		<tr>
 			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderDiv('FOOTER_SPOTLIGHT_LEFT'); ?>
+				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT'); ?>
 			</td>
 			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderDiv('FOOTER_SPOTLIGHT_MIDDLE'); ?>
+				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_MIDDLE'); ?>
 			</td>
 			<td>
-				<?php echo AdEngine::getInstance()->getPlaceHolderDiv('FOOTER_SPOTLIGHT_RIGHT'); ?>
+				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_RIGHT'); ?>
 			</td>
 		</tr>
 		</table>
@@ -2160,13 +2165,13 @@ if(count($wikiafooterlinks) > 0) {
 			<?php
 				// Logic for skyscrapers defined here: http://staff.wikia-inc.com/wiki/DART_Implementation/Skyscrapers
 				global $wgOut;
-				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_1', false);
+				echo AdEngine::getInstance()->getAd('LEFT_NAVBOX_1', false);
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_1', false) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('HOME_LEFT_SKYSCRAPER_1', true) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
 							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_1', false) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('LEFT_SKYSCRAPER_1', true) .'</div>';
 					}
 				}
 			?>
@@ -2177,14 +2182,14 @@ if(count($wikiafooterlinks) > 0) {
 			<?= WidgetFramework::getInstance()->Draw(1) ?>
 
 			<?php
-				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SLIMBOX_1', false);
-				echo AdEngine::getInstance()->getPlaceHolderDiv('LEFT_NAVBOX_2', false);
+				echo AdEngine::getInstance()->getAd('LEFT_SLIMBOX_1', false);
+				echo AdEngine::getInstance()->getAd('LEFT_NAVBOX_2', false);
 				if ($wgOut->isArticle()){
 					if (ArticleAdLogic::isMainPage()) { //main page
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('HOME_LEFT_SKYSCRAPER_2', false) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('HOME_LEFT_SKYSCRAPER_2', true) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
 							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SKYSCRAPER_2', false) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('LEFT_SKYSCRAPER_2', true) .'</div>';
 					}
 				}
 			?>
@@ -2218,7 +2223,11 @@ if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 	echo AdEngine::getInstance()->getAd('INVISIBLE_1');
 }
 
-echo AdEngine::getInstance()->getDelayedLoadingCode();
+if (empty($wgEnableIframeAds)){
+	echo AdEngine::getInstance()->getDelayedLoadingCode();
+} else {
+	echo AdEngine::getInstance()->getDelayedIframeLoadingCode();
+}
 
 if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 	echo AdEngine::getInstance()->getAd('INVISIBLE_2');
@@ -2226,7 +2235,7 @@ if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 
 
 echo '</div>';
-// Diabled comscore #21030
+// Disabled comscore #21030
 // echo AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 // Quant serve moved *after* the ads because it depends on Athena/Provider values.
 echo AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
