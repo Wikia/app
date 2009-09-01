@@ -32,7 +32,7 @@ function WidgetAdvertiser($id, $params) {
 	}
 
 	if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
-		$ret = AdEngine::getInstance()->getPlaceHolderDiv('LEFT_SPOTLIGHT_1');
+		$ret = AdEngine::getInstance()->getAd('LEFT_SPOTLIGHT_1');
 	} else {
 		$ret = str_replace('&','&amp;',WidgetAdvertiserWrapAd('tr', $id)) . str_replace('&','&amp;',WidgetAdvertiserWrapAd('l', $id));
 	}

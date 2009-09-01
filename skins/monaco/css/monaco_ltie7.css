@@ -78,12 +78,6 @@ body.ltr #articleFooter ul.actions li div {
 	margin: 0 0 0 20px;
 }
 
-/* spotlights fix */
-#spotlight_footer {
-	height: 1px;
-	margin-bottom: 100px;
-}
-
 /* user menu fix */
 #monaco_shrinkwrap_main,
 #wikia_page {
@@ -120,11 +114,6 @@ body.ltr #articleFooter ul.actions li div {
 /* ads */
 #FOOTER_SPOTLIGHT_LEFT, #FOOTER_SPOTLIGHT_MIDDLE, #FOOTER_SPOTLIGHT_RIGHT {
 	visibility: hidden;
-}
-
-#spotlight_footer {
-	height: 1px;
-	margin-bottom: 100px;
 }
 
 /* #3740 */

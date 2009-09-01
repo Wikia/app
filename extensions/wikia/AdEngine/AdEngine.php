@@ -327,6 +327,30 @@ class AdEngine {
                 }
         }
 
+	public function getPlaceHolderIframe($slotname, $reserveSpace=true){
+		$AdProvider = $this->getAdProvider($slotname);
+		// If it's a Null Ad, just return an empty comment, and don't store in place holder array.
+		if ($AdProvider instanceof AdProviderNull){
+			return "<!-- Null Ad from " . __METHOD__ . "-->" . $AdProvider->getAd($slotname, array()); 
+		}
+
+		$this->placeholders[$slotname]=$this->slots[$slotname]['load_priority'];
+
+		if ($reserveSpace) {
+			$dim = self::getHeightWidthFromSize($this->slots[$slotname]['size']);
+			$h = $dim['height'];
+			$w = $dim['width'];
+		} else {
+			$h = 0;
+			$w = 0;
+		}
+
+		return '<div id="' . htmlspecialchars($slotname) . '">' . 
+			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' . 
+			'id="' . htmlspecialchars($slotname) . '_iframe" ' .
+                	'noresize="true" scrolling="no" frameborder="0" marginheight="0" ' . 
+			'marginwidth="0" style="border:none" target="_blank"></iframe></div>';
+	}
 
 	/* For delayed ad loading, we have a place holder div that gets placed in the content,
 	   to be loaded at the bottom of the page with an absolute position.
@@ -405,6 +429,43 @@ class AdEngine {
 				'AdEngine.displaySlotIfAd("'. $slotname .'");' .
 				'</script>' . "\n";
 		}
+		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
+		return $out;
+	}
+
+
+	public function getDelayedIframeLoadingCode(){
+		global $wgExtensionsPath;
+
+		if (empty($this->placeholders)){
+			// No delayed ads on this page
+			return '<!-- No iframe placeholders called for ' . __METHOD__ . " -->\n";
+		}
+
+		// Sort by load_priority
+		asort($this->placeholders);
+		$this->placeholders = array_reverse($this->placeholders);
+
+		$out = "<!-- #### BEGIN " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
+
+		global $wgCityId;
+		$out .=  $this->providerValuesAsJavascript($wgCityId);
+
+		// Get the setup code for ad providers used on this page. This is for Ad Providers that support multi-call.
+		foreach ($this->placeholders as $slotname => $load_priority){
+	                $AdProvider = $this->getAdProvider($slotname);
+
+			// Get setup HTML for each provider. May be empty.
+			$out .= $AdProvider->getSetupHtml();
+		}
+
+                $out .= "<script>\n";
+                foreach ($this->placeholders as $slotname => $load_priority){
+			$sl = addslashes($slotname);
+                        $out .= "Athena.callIframeAdDirect(\"$sl\");\n";
+		}
+                $out .= "</script>\n";
+
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 		return $out;
 	}
@@ -488,6 +549,17 @@ class AdEngine {
 
 		$wgMemc->set($cacheKey, $out, self::cacheTimeout);
 
+		return $out;
+	}
+
+
+	public function getSlotNamesForProvider($provider_id){
+		$out = array();
+		foreach($this->slots as $slotname => $data ){
+			if ($data['enabled'] == 'Yes' && $data['provider_id'] == $provider_id){
+				$out [] = $slotname;
+			}
+		}
 		return $out;
 	}
 
