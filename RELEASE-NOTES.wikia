@@ -1,4 +1,5 @@
 == Changes since 200909.1 ==
+* rt#20323: shortform links to subpages get expanded by FCK (Macbre)
 * rt#20789: FCK: Polls leak through the template rollover preview (Macbre)
 * rt#22075: FCK: Message from "Add Images" button missing (Macbre)
 * rt#20903: FCK: Editor strips all &nbsp; characters, converts them to spaces (Macbre)
