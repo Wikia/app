@@ -585,6 +585,7 @@ yieldbuild_loc = "left_content_bottom";
 		<div id="related_questions" class="reset widget">
 			<h2><?= wfMsg("related_answered_questions") ?></h2>
 			<ul id="related_answered_questions">
+				<?= HomePageList::related_answered_questions() ?>
 			</ul>
 			<div id="google_ad_5" class="google_ad"></div>
 		</div>

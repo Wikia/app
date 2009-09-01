@@ -229,13 +229,13 @@ jQuery("#related_answered_questions").ready(function() {
 				var text = page.title + "?";
 				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\">" + text + "</a></li>";
 			}
-			jQuery("#related_answered_questions").prepend( html );
+			jQuery("#related_answered_questions").html( html );
 		}
 	});
 
 	} else {
 			html = wgNoRelatedAnsweredQuestions;
-			jQuery("#related_answered_questions").prepend( html );
+			jQuery("#related_answered_questions").html( html );
 	}
 });
 
