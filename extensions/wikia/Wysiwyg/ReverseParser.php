@@ -140,6 +140,10 @@ class ReverseParser {
 				// to allow using U and STRIKE in Visual mode
 				'\x7flt' => '<',
 				'\x7fgt' => '>',
+
+				// RT #22027
+				'\x7f-ent-amp;' => '&',
+
 				// HTML entities (RT #18269)
 				'\x7f-ent-' => '&',
 			));

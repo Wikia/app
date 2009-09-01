@@ -1,4 +1,5 @@
 == Changes since 200909.1 ==
+* rt#22027: FCK: & is being converted to &amp; (Macbre)
 * rt#21468: GoogleMaps: special page name typo (uberfuzzy)
 * rt#22002: Answers, SEO: Main page questions changes. (Nef)
 * rt#22005: ?useskin=quartz-slate results in PHP fatal error (Marooned)
