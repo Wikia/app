@@ -325,7 +325,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
         if(typeof gallery != "undefined") {
                 // if in preview mode, go away
                 if ($G ( 'editform' ) && !YAHOO.lang.isNumber(e) ) {
-                        alert( vet_no_preview );
+                        alert( wmu_no_preview );
                         return false;
                 }
                 WMU_gallery = gallery;

@@ -44,6 +44,7 @@ function WMUSetupVars($vars) {
 	$vars['wmu_back'] = wfMsg('wmu-back');
 	$vars['wmu_imagebutton'] = wfMsg('wmu-imagebutton') ;
 	$vars['wmu_close'] = wfMsg('wmu-close');
+	$vars['wmu_no_preview'] = wfMsg('wmu-no-preview');
 	$vars['wmu_warn1'] = wfMsg('wmu-warn1');
 	$vars['wmu_warn2'] = wfMsg('wmu-warn2');
 	$vars['wmu_warn3'] = wfMsg('wmu-warn3');

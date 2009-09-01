@@ -67,4 +67,5 @@ $messages['en'] = array(
 	'wmu-gallery-success' => 'You\'ve added an image to a new gallery. Click below to add more images or to insert the gallery',
 	'wmu-gallery-btn1' => 'Add Another Image',
 	'wmu-gallery-btn2' => 'Insert Gallery into Article',
+	'wmu-no-preview' => 'You cannot add image from article in preview mode',
 );
