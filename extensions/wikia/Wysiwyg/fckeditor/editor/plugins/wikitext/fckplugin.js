@@ -55,9 +55,15 @@ FCKAddImageCommand.prototype = {
 		return FCK_TRISTATE_OFF;
 	}
 } ;
+
+// register FCK command for adding images
 FCKCommands.RegisterCommand('AddImage', new FCKAddImageCommand());
+
+// toolbar item icon
 var oTildesItem = new FCKToolbarButton( 'AddImage', window.parent.wmu_imagebutton ) ;
 oTildesItem.IconPath = FCKConfig.PluginsPath + 'wikitext/addImage.png' ;
+
+// toolbar item icon
 FCKToolbarItems.RegisterItem( 'AddImage', oTildesItem );
 
 // set editor instance using city ID ans current timestamp
