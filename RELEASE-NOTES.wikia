@@ -1,4 +1,5 @@
 == Changes since 200909.1 ==
+* rt#22075: FCK: Message from "Add Images" button missing (Macbre)
 * rt#20903: FCK: Editor strips all &nbsp; characters, converts them to spaces (Macbre)
 * rt#22027: FCK: & is being converted to &amp; (Macbre)
 * rt#21468: GoogleMaps: special page name typo (uberfuzzy)
