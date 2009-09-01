@@ -290,16 +290,59 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 
 		// macbre: Wysiwyg support for video placeholder
 		if (!empty($wgWysiwygParserEnabled)) {
+			// register new metadata entry
 			$refid = Wysiwyg_SetRefId('video_add', array('width' => $width, 'height' => $height, 'isAlign' => $isalign, 'isThumb' => $isthumb, 'original' => $wikitext), false, true);
 
-			$wysiwygAttr = " refid={$refid}";
-			$onclick = '';
 		}
 		else {
-			$wysiwygAttr = '';
-			$onclick= ' onclick="$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { VET_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } )"';
+			$onclick= '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { VET_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } )';
 		}
 
+		// render HTML (RT #21087)
+		$html = '';
+
+		// wrapping div
+		$wrapperAttribs = array(
+			'id' => "WikiaVideoPlaceholder{$wgWikiaVideoPlaceholderId}",
+			'class' => 'gallerybox',
+			'style' => 'clear:both',
+		);
+
+		if (!empty($refid)) {
+			$wrapperAttribs['refid'] = $refid;
+		}
+
+		$html .= Xml::openElement('div', $wrapperAttribs);
+		
+		// videobox with proper size
+		$html .= Xml::openElement('div', array(
+			'class' => "thumb videobox t{$align}",
+			'style' => "height: {$height}px; width: {$width}px",
+		));
+
+		// "Add video" green button
+		if (empty($plc_template)) {
+			$html .= Xml::openElement('a', array(
+				'id' => "WikiaVideoPlaceholderInner{$wgWikiaVideoPlaceholderId}",
+				'class' => 'bigButton',
+				'style' => "margin-top: {$tmarg}px",
+				'href' => '#',
+				'onclick' => !empty($onclick) ? $onclick : '',
+			));
+
+			$html .= Xml::element('big', array(),  wfMsg('wikiavideo-create'));
+			$html .= Xml::openElement('small', array()) . '&nbsp;' . Xml::closeElement('small');
+
+			$html .= Xml::closeElement('a');
+		}
+
+		// caption (no wrapper?)
+		$html .= htmlspecialchars($caption);
+
+		// close divs
+		$html .= Xml::closeElement('div') .Xml::closeElement('div');
+
+/*
 		$out = '<div id="WikiaVideoPlaceholder' . $wgWikiaVideoPlaceholderId . '" class="gallerybox" style="clear:both;"' . $wysiwygAttr . '><div class="thumb t' . $align . ' videobox" style="padding: 0; position: relative; width: ' . $width . 'px; height: ' . $height . 'px;"><div style="margin-left: auto; margin-right: auto; width: ' . $width . 'px; height: ' . $height . 'px;" >';
 
 		if( !$plc_template ) {
@@ -308,11 +351,11 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		else {
 			$out .= '</div></div></div>';
 		}
-
+*/
 		$wgWikiaVideoPlaceholderId++;
 
 		wfProfileOut('WikiaVideo_makeVideo');
-		return $out;
+		return $html;
 	}
 
 	if(!$title->exists()) {

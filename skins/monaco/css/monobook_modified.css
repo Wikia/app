@@ -35,9 +35,9 @@ table {
 	/*CHRISTIAN
 	color: black;
 		we don't want the bottom borders of <h2>s to be visible through
-		floated tables	
+		floated tables
 	background-color: white;*/
-	
+
 }
 a {
 	text-decoration: none;
@@ -399,7 +399,7 @@ div.thumbinner {
 
 /*CHRISTIAN*/
 div.thumbinner a {
-	color: #002bb8;	
+	color: #002bb8;
 }
 /*CHRISTIAN*/
 
@@ -437,7 +437,7 @@ div.tleft {
 	clear: left;
 	margin-right: .5em;
 	/*border-width: .5em 1.4em .8em 0;CHRISTIAN*/
-	
+
 	/*CHRISTIAN*/
 	margin: .5em 1.4em 1.2em 0;
 	/*CHRISTIAN*/
@@ -467,10 +467,34 @@ div.videobox {
 }
 
 .gallerybox .thumbcaption hr {
-	color: #cccccc;	
+	color: #cccccc;
+}
+/*BARTEK*/
+
+/* Macbre: RT #21087 - begin */
+.videobox a.bigButton {
+	float: none;
+	display: block;
+	margin: 0 auto;
+	padding: 0 0 0 3px;
+	position: static;
 }
 
-/*BARTEK*/
+.videobox a.bigButton * {
+	float: none;
+}
+
+.videobox a.bigButton big {
+	padding: 3px 3px 3px 9px;
+}
+
+.videobox a.bigButton small {
+	background-position: -295px 0;
+	padding: 3px;
+	position: static;
+	width: 5px;
+}
+/* Macbre: RT #21087 - end */
 
 img.thumbborder {
 	border: 1px solid #dddddd;
@@ -708,7 +732,7 @@ special external link styling */
 	margin-right: 2em;
 }
 .prefsection legend {
-	font-weight: bold;   
+	font-weight: bold;
 }
 .prefsection table, .prefsection legend {
 	background-color: #F9F9F9;
@@ -892,8 +916,8 @@ table.gallery td {
 
 /*CHRISTIAN*/
 table.gallery td a {
-	color: #002bb8;	
-}	
+	color: #002bb8;
+}
 /*CHRISTIAN*/
 
 /* Keep this temporarily so that cached pages will display right */
@@ -1185,7 +1209,7 @@ tr.sv-space td { display: none; }
 */
 .TablePager_nav a { text-decoration: none; }
 .TablePager { border-collapse: collapse; }
-.TablePager, .TablePager td, .TablePager th { 
+.TablePager, .TablePager td, .TablePager th {
 	border: 1px solid #aaaaaa;
 	padding: 0 0.15em 0 0.15em;
 }
