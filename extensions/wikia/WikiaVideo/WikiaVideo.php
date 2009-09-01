@@ -323,7 +323,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 			'style' => 'clear:both',
 		);
 
-		if (!empty($refid)) {
+		if (isset($refid)) {
 			$wrapperAttribs['refid'] = $refid;
 		}
 
@@ -351,7 +351,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 			$html .= Xml::closeElement('a');
 		}
 
-		// caption (no wrapper?)
+		// caption
 		$html .= Xml::element('span', array('class' => 'thumbcaption'), $caption);
 
 		// close divs
