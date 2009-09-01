@@ -938,7 +938,7 @@ class PPFrame_DOM implements PPFrame {
 	}
 
 	function expand( $root, $flags = 0 ) {
-		global $wgWysiwygParserEnabled;
+		global $wgWysiwygParserEnabled, $wgWysiwygPreProcesssorInsideTemplate;
 		static $expansionDepth = 0;
 		if ( is_string( $root ) ) {
 			return $root;
@@ -1013,6 +1013,9 @@ class PPFrame_DOM implements PPFrame {
 				if ( $contextNode->nodeType == XML_TEXT_NODE ) {
 					$out .= $contextNode->nodeValue;
 				} elseif ( $contextNode->nodeName == 'template' ) {
+					# macbre: RT #19218
+					$wgWysiwygPreProcesssorInsideTemplate = true;
+
 					# Double-brace expansion
 					$xpath = new DOMXPath( $contextNode->ownerDocument );
 					$titles = $xpath->query( 'title', $contextNode );
@@ -1043,6 +1046,10 @@ class PPFrame_DOM implements PPFrame {
 							}
 						}
 					}
+
+					# macbre: RT #19218
+					$wgWysiwygPreProcesssorInsideTemplate = false;
+
 				} elseif ( $contextNode->nodeName == 'tplarg' ) {
 					# Triple-brace expansion
 					$xpath = new DOMXPath( $contextNode->ownerDocument );
@@ -1083,8 +1090,11 @@ class PPFrame_DOM implements PPFrame {
 								$refId = Wysiwyg_SetRefId('comment', array('text' => $text), false, true);
 								$out .= "\x7f-comment-{$refId}-\x7f{$add}";
 							} else {
-								global $wgWysiwygCommentEdgeCase;
-								$wgWysiwygCommentEdgeCase = true;
+								# macbre: RT #19218
+								if (empty($wgWysiwygPreProcesssorInsideTemplate)) {
+									global $wgWysiwygCommentEdgeCase;
+									$wgWysiwygCommentEdgeCase = true;
+								}
 								$out .= '';
 							}
 						} else {
