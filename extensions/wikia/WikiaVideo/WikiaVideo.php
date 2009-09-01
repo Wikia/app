@@ -64,7 +64,7 @@ function WikiaVideoSpecialUndeleteSwitchArchive( $archive, $title ) {
 }
 
 function WikiaVideoWhatlinkshereBeforeQuery( $hideimages, $pageconds, $targetconds, $imageconds ) {
-	if( NS_VIDEO == $pageconds['pl_namespace'] ) {
+if( NS_VIDEO == $pageconds['pl_namespace'] ) {
 		$hideimages = false;
 		$imageconds['il_to'] = ':' . $imageconds['il_to'];
 	}
@@ -88,9 +88,12 @@ function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
 	if (!empty($wgWysiwygParserEnabled)) {
 		return true;
 	}
+	// fix for RT #22010
+	$pattern1 = "/<videogallery[^>]+>/";
+	$text = preg_replace( $pattern1, '<videogallery>', $text );
 
-	$pattern = "/<videogallery/";
-	$text = preg_replace_callback($pattern, 'WikiaVideoPreRenderVideoGallery', $text);
+	$pattern2 = "/<videogallery/";
+	$text = preg_replace_callback( $pattern2, 'WikiaVideoPreRenderVideoGallery', $text );
 	return true;
 }
 
