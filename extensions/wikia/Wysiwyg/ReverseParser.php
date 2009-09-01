@@ -1033,6 +1033,14 @@ class ReverseParser {
 					$data['description'] = $content;
 				}
 
+				// RT #20323: handle short links to subpages
+				if ( ($data['description'] != '') && ($data['description']{0} == '/') ) {
+					if (substr($data['href'], -strlen($data['description'])) == $data['description']) {
+						$data['href'] = $data['description'];
+						$data['description'] = '';
+					}
+				}
+
 				// RT #17841
 				if ($data['description'] == $data['href']) {
 					$data['description'] = '';
