@@ -172,7 +172,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 		global $wgUser, $wgWikiaVETLoaded;
 
 		// for first gallery, load VET js
-		$out .= '<table class="gallery" cellspacing="0" cellpadding="0"><tr>';
+		$out .= '<table class="gallery wikiaPlaceholder" cellspacing="0" cellpadding="0"><tr>';
 
 		for($i = 0; $i < count($videos); $i++) {
 			$video = new VideoPage($videos[$i][0]);
@@ -197,16 +197,35 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 			if (count($videos) < 4) { // fill up
 				global $wgUser;
 				for($i = count($videos); $i < 4; $i++) {
-					if( get_class( $wgUser->getSkin() ) == 'SkinMonaco' ) {
-						global $wgStylePath;
-						$function = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { VET_show( $.getEvent(), ' . $args['id'] . ', ' . $i . ' ); importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } )';
+					$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { VET_show( $.getEvent(), ' . $args['id'] . ', ' . $i . ' ); importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } )';
 
-						$inside = '<a href="#" class="bigButton" style="margin-left: 105px; margin-top: 110px;" id="WikiaVideoGalleryPlaceholder' . $args['id'] . 'x' .  $i . '" onclick="' . $function . '"><big>' . wfMsg( 'wikiavideo-create' ) . '</big><small>&nbsp;</small></a>';
-					} else {
-						$inside = wfMsg( 'wikiavideo-not-supported' );
-					}
+					// render placeholder cell
+					$out .= Xml::openElement('td');
+					$out .= Xml::openElement('div', array(
+						'class' => 'gallerybox',
+						'style' => 'width: 335px', // TODO: move to static CSS file
+					));
+					$out .= Xml::openElement('div', array(
+						'class' => 'thumb',
+						'style' => 'height: 250px; padding: 13px 0; width: 330px', // TODO: move to static CSS file
+					));
 
-					$out .= '<td><div class="gallerybox" style="width: 335px;"><div class="thumb" style="padding: 13px 0; width: 330px;"><div style="margin-left: auto; margin-right: auto; width: 300px; height: 250px;">' . $inside . '</div></div><div class="gallerytext"></div></div></td>';
+					// "Add video" green button
+					$out .= Xml::openElement('a', array(
+						'id' => "WikiaVideoGalleryPlaceholder{$args['id']}x{$i}",
+						'class' => 'bigButton',
+						'style' => "top: 110px",
+						'href' => '#',
+						'onclick' => !empty($onclick) ? $onclick : '',
+					));
+
+					$out .= Xml::element('big', array(),  wfMsg('wikiavideo-create'));
+					$out .= Xml::openElement('small', array()) . '&nbsp;' . Xml::closeElement('small');
+					$out .= Xml::closeElement('a');
+
+					$out .= Xml::closeElement('div') . Xml::closeElement('div') . Xml::closeElement('td');
+
+					// close row of gallery
 					if($i%2 == 1) {
 						$out .= '</tr><tr>';
 					}
@@ -300,7 +319,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		// wrapping div
 		$wrapperAttribs = array(
 			'id' => "WikiaVideoPlaceholder{$wgWikiaVideoPlaceholderId}",
-			'class' => 'gallerybox',
+			'class' => 'gallerybox wikiaPlaceholder',
 			'style' => 'clear:both',
 		);
 
@@ -309,7 +328,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		}
 
 		$html .= Xml::openElement('div', $wrapperAttribs);
-		
+
 		// videobox with proper size
 		$html .= Xml::openElement('div', array(
 			'class' => "thumb videobox t{$align}",
