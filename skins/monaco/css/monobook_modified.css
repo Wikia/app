@@ -474,10 +474,9 @@ div.videobox {
 /* Macbre: RT #21087 - begin */
 .videobox a.bigButton {
 	float: none;
-	display: block;
+	display: inline;
 	margin: 0 auto;
-	padding: 0 0 0 3px;
-	position: static;
+	padding: 0 0 0 4px;
 }
 
 .videobox a.bigButton * {

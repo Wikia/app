@@ -325,7 +325,7 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 			$html .= Xml::openElement('a', array(
 				'id' => "WikiaVideoPlaceholderInner{$wgWikiaVideoPlaceholderId}",
 				'class' => 'bigButton',
-				'style' => "margin-top: {$tmarg}px",
+				'style' => "top: {$tmarg}px",
 				'href' => '#',
 				'onclick' => !empty($onclick) ? $onclick : '',
 			));
