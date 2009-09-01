@@ -51,7 +51,8 @@ define('HTMLETS_BYPASS_HACK', 'bypass');
 
 $wgHTMLetsHack = HTMLETS_BYPASS_HACK; #hack to use to work around bug #8997. see constant declarations.
 
-$wgHTMLetsDirectory = NULL;
+# This is set by WikiFactory earlier
+#$wgHTMLetsDirectory = NULL;
 
 $wgExtensionFunctions[] = "wfHTMLetsExtension";
 
