@@ -118,7 +118,7 @@ function renderLyricTag($input, $argv, $parser)
 		$artistLink = str_replace(" ", "+", $artist);
 		$songLink = str_replace(" ", "+", $songTitle);
 	}
-	$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=LWIKros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' target='_blank'>";
+	$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' target='_blank'>";
 	$ringtoneLink = "";
 	$ringtoneLink = "<div class='rtMatcher'>";
 	$ringtoneLink.= "$href<img src='/phone_left.gif' alt='phone' width='16' height='17'/></a> ";
