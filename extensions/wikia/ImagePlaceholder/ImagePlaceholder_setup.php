@@ -215,17 +215,56 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
         // macbre: Wysiwyg support for video placeholder
         if (!empty($wgWysiwygParserEnabled)) {
 		$refid = Wysiwyg_SetRefId('image_add', array( 'width' => $iswidth, 'height' => $height, 'isAlign' => $isalign, 'isThumb' => $isthumb, 'original' => $wikitext, 'caption' => $caption, 'link' => $link ), false, true);
-                $wysiwygAttr = " refid={$refid}";
-                $onclick = '';		
         } else {
-                $wysiwygAttr = '';
-		$onclick = ' onclick="WET.byStr(\'articleAction/imageplaceholder\');$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )"';
+		$onclick = 'WET.byStr(\'articleAction/imageplaceholder\');$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )';
         }
 	
-	( $thumb || $frame ) ? $caption_line = '<div class="thumbcaption" style="width:' . ($width - 10) . 'px"><hr/>' . $caption . '</div>' : $caption_line = '';
 	// FIXME: argh! inline styles! Move to classes someday... --TOR
+
+	// render HTML (RT #21087)
+	$out = '';
+
+	$wrapperAttribs = array(
+		'id' => "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}",
+		'class' => 'gallerybox wikiaPlaceholder',
+		'style' => 'clear:both; vertical-align: bottom', // TODO: move to static CSS file
+	);
+
+	if (isset($refid)) {
+		$wrapperAttribs['refid'] = $refid;
+	}
+
+	$out .= Xml::openElement('div', $wrapperAttribs);
+	$out .= Xml::openElement('div', array(
+		'class' => "thumb t{$align} videobox", // TODO: maybe change class name (videobox)
+		'style' => "height: {$height}px; width: {$width}px",
+	));
+
+	// "Add video" green button
+	$out .= Xml::openElement('a', array(
+		'id' => "WikiaImagePlaceholderInner{$wgWikiaImagePlaceholderId}",
+		'class' => 'bigButton',
+		'style' => "top: {$tmarg}px",
+		'href' => '#',
+		'onclick' => !empty($onclick) ? $onclick : '',
+	));
+
+	$out .= Xml::element('big', array(),  wfMsg('imgplc-create'));
+	$out .= Xml::openElement('small', array()) . '&nbsp;' . Xml::closeElement('small');
+	$out .= Xml::closeElement('a');
+
+	// caption
+	if ($thumb || $frame) {
+		$out .= Xml::element('span', array('class' => 'thumbcaption'), $caption);
+	}
+
+	$out .= Xml::closeElement('div') . Xml::closeElement('div') . Xml::closeElement('td');
+
+
+/*
         $out = '<div id="WikiaImagePlaceholder' . $wgWikiaImagePlaceholderId . '" class="gallerybox" style="clear:both; vertical-align: bottom;"' . $wysiwygAttr . '><div class="thumb t' . $align . ' videobox" style="padding: 0; position: relative; width: ' . $width . 'px; height: ' . $height . 'px; ' . $margin  .'"><div style="margin-left: auto; margin-right: auto; width: ' . $width . 'px; height: ' . $height . 'px;" >';
 	$out .= '<a href="#" class="bigButton" style="left: ' . $lmarg . 'px; position: absolute; top: ' . $tmarg . 'px;" id="WikiaImagePlaceholderInner' . $wgWikiaImagePlaceholderId  . '"'. $onclick . '><big>' . wfMsg( 'imgplc-create' ) . '</big><small>&nbsp;</small></a>' . $caption_line . '</div></div></div>';
+*/
         $wgWikiaImagePlaceholderId++;
         return $out;
 }
