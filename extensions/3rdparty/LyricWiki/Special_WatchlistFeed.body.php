@@ -127,7 +127,7 @@ class WatchlistFeed extends SpecialPage
 	}
 
 	function displayDisabledFeed( $feed ) {
-		GLOBAL $wgUser;
+		GLOBAL $wgUser, $wgTitle;
 		$feed->outHeader();
 		$item = new FeedItem(
 			wfMsgForContent("watchlistfeed-error-disabled-title",$wgUser->getName()),
