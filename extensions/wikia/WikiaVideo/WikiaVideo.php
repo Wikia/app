@@ -355,7 +355,9 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		}
 
 		// caption
-		$html .= Xml::element('span', array('class' => 'thumbcaption'), $caption);
+		if ($caption != '') {
+			$html .= Xml::element('span', array('class' => 'thumbcaption'), $caption);
+		}
 
 		// close divs
 		$html .= Xml::closeElement('div') .Xml::closeElement('div');
