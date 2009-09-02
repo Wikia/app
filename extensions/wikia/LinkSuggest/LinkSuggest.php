@@ -87,8 +87,8 @@ function getLinkSuggest() {
 
 	// trim passed query and replace spaces by underscores
 	// - this is how MediaWiki store article titles in database
-	$query = str_replace(' ', '_', trim($wgRequest->getText('query')));
-	$query = urldecode( $query );
+	$query = urldecode( trim( $wgRequest->getText('query') ) );
+	$query = str_replace(' ', '_', $query);
 
 	// explode passed query by ':' to get namespace and article title
 	$queryParts = explode(':', $query, 2);
