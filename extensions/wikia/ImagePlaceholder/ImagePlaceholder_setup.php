@@ -257,7 +257,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$out .= Xml::closeElement('a');
 
 	// caption
-	if ($thumb || $frame) {
+	if ( ($caption != '') && ($thumb || $frame) ) {
 		$out .= Xml::element('span', array('class' => 'thumbcaption'), $caption);
 	}
 
