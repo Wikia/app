@@ -95,7 +95,7 @@ class SpecialProblemReports extends SpecialPage
 		global $wgRequest, $wgUser, $wgOut, $wgServerName;
 	    
 		// check user permission to send emails (RT #13150)
-		if ( !(WikiaApiQueryProblemReports::userCanDoActions() && WikiaApiQueryProblemReports::userCanDoCrossWikiActions()) ) {
+		if ( !WikiaApiQueryProblemReports::userCanDoActions() ) {
 			$wgOut->showPermissionsErrorPage( array('permissionserrors') );
 			return;
 		}
