@@ -131,3 +131,23 @@ body.ltr #articleFooter ul.actions li div {
 #preftoc {
 	position: relative;
 }
+
+/* RT #21087 */
+.wikiaPlaceholder a.bigButton {
+	float: left;
+	left: 20%;
+}
+
+.wikiaPlaceholder a.bigButton * {
+	float: left;
+}
+
+.wikiaPlaceholder a.bigButton big {
+	margin-right: 14px;
+	padding-top: 0;
+}
+
+.wikiaPlaceholder a.bigButton small {
+	position: absolute;
+	width: 300px;
+}
