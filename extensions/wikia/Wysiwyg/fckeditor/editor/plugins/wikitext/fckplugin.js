@@ -607,11 +607,11 @@ FCK.SetupElementsWithRefId = function() {
 			case 'video_add':
 				FCK.ProtectVideoAdd(node);
 				break;
-			
+
 			case 'image_add':
 				FCK.ProtectImagePlcAdd(node);
 				break;
-		
+
 			// add tooltip to links
 			case 'internal link':
 				node.title = data.href;
@@ -902,7 +902,8 @@ FCK.ImagePlcAddOnClick = function(e) {
 
                 // tracker
                 FCK.Track('/image/add');
-					 window.parent.WET.byStr('editpage/imageplaceholder');
+
+		window.parent.WET.byStr('editpage/imageplaceholder');
                 window.parent.WMU_show( parseInt(refid), -2, -1, data.isAlign, data.isThumb, data.width, data.caption, data.link );
         }
 };
@@ -1123,8 +1124,14 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 	if (metaData.align && metaData.align == 'center') {
 		className += ' imageOverlayCenter';
 	}
-	else if (metaData.thumb) {
-		className += ' imageOverlayRight';
+	else {
+		// RT #20606
+		if ( (metaData.align == 'left' || !metaData.thumb) && (div.offsetWidth < 150) ) {
+			className += ' imageOverlayLeft';
+		}
+		else if (metaData.thumb) {
+			className += ' imageOverlayRight';
+		}
 	}
 
 	// position menu based on alignment of an image
@@ -1385,7 +1392,7 @@ FCK.ProtectImageAdd = function(wikitext, extraData, placeholderRefId) {
 		argument: {
 			'FCK': FCK,
 			'refid': refid,
-			'placeholderRefId': placeholderRefId	
+			'placeholderRefId': placeholderRefId
 		}
 	}
 
