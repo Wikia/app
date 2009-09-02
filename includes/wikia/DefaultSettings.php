@@ -288,6 +288,12 @@ $wgWikiaStaffLanguages = array();
 $wgExternalSharedDB = false;
 
 /**
+ * @name wgDumpsDisabledWikis
+ * list of wiki ids not to do dumps for
+ */
+$wgDumpsDisabledWikis = array();
+
+/**
  * external databases
  */
 $wgExternalDatawareDB = 'dataware';

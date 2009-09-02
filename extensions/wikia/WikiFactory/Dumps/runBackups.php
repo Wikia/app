@@ -26,7 +26,7 @@ require_once('commandLine.inc');
 function runBackups( $from, $to, $full, $options ) {
 
 	global $IP, $wgWikiaLocalSettingsPath, $wgWikiaAdminSettingsPath,
-		$wgMaxShellTime, $wgMaxShellFileSize;
+		$wgMaxShellTime, $wgMaxShellFileSize, $wgDumpsDisabledWikis;
 
 	$range = array();
 
@@ -79,6 +79,11 @@ function runBackups( $from, $to, $full, $options ) {
 		 */
 		$range[] = "city_public = 1";
 	}
+
+	/**
+	 * exclude wikis with dumps disabled
+	 */
+	$range[] = 'city_id NOT IN (' . explode( ',', $wgDumpsDisabledWikis ) . ')';
 
 	/**
 	 * switch off limits for dumps
