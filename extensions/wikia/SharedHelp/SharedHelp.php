@@ -352,36 +352,58 @@ function SharedHelpArticleExists($title) {
 
 // basically modify the Wantedpages query to exclude pages that appear on the help wiki, as per #5866
 function SharedHelpWantedPagesSql( $page, $sql ) {
-	global $wgWantedPagesThreshold, $wgHelpWikiId, $wgDBname;
+	global $wgWantedPagesThreshold ;
+	global $wgHelpWikiId, $wgMemc;
+	wfProfileIn( __METHOD__ );
+
 	$count = $wgWantedPagesThreshold - 1;
+	$type = 'Wantedpages';
 
-	$dbr = wfGetDB( DB_SLAVE );
+	$helpPages = "";
 	$helpdb = WikiFactory::IDtoDB( $wgHelpWikiId  );
+	
+	if ($helpdb) {
+		$helpPagesKey = "helppages:{$helpdb}";
+		$helpArticles = $wgMemc->get($helpPagesKey);
+		
+		if ( empty($helpArticles) ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $helpdb );
+			$oRes = $dbr->select(
+				'page',
+				'page_title, page_namespace',
+				array(
+					'page_namespace' => NS_HELP,
+					'page_is_redirect' => 0,
+				),
+				__METHOD__
+			);
 
-	$pagelinks = "`$wgDBname`." . $dbr->tableName( 'pagelinks' );
-	$page_table = $dbr->tableName( 'page' );
-	$page      = "`$wgDBname`." . $page_table;
-	$helppage  = "`$helpdb`." . $page_table;
+			$helpArticles = array(); while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$helpArticles[] = $oRow->page_title;
+			}
+			$helpPages = $dbr->makeList($helpArticles);
+			$wgMemc->set($helpPagesKey, $helpPages, 12*60*60);
+		} else {
+			$helpPages = $helpArticles;
+		}
+	}
 
-	$sql =   "SELECT 'Wantedpages' AS type,
-		$pagelinks.pl_namespace AS namespace,
-		$pagelinks.pl_title AS title,
-		COUNT(*) AS value
-			FROM $pagelinks
-			LEFT JOIN $page AS pg1
-			ON pl_namespace = pg1.page_namespace AND pl_title = pg1.page_title
-			LEFT JOIN $page AS pg2
-			ON pl_from = pg2.page_id
-			LEFT JOIN $helppage AS pg3
-			ON pl_namespace = pg3.page_namespace AND pl_title = pg3.page_title
-			WHERE pg1.page_namespace IS NULL
-			AND pl_namespace NOT IN ( 2, 3 )
-			AND pg2.page_namespace != 8
-			AND (pg3.page_namespace != 12 OR pg3.page_id IS NULL)
-			$page->excludetitles
-			GROUP BY pl_namespace, pl_title
-			HAVING COUNT(*) > $count";
+	$notInHelpPages = ""; if ( !empty($helpPages) ) {
+		$notInHelpPages = " OR pl_title NOT IN (" . $helpPages . ") ";
+	}
 
+	$sql = "SELECT '{$type}' AS type, pl_namespace AS namespace, pl_title AS title, COUNT(*) AS value 
+	FROM pagelinks
+	LEFT JOIN page AS pg1 ON pl_namespace = pg1.page_namespace AND pl_title = pg1.page_title 
+	LEFT JOIN page AS pg2 ON pl_from = pg2.page_id 
+	WHERE pg1.page_namespace IS NULL 
+	AND pl_namespace NOT IN ( 2, 3 ) 
+	AND pg2.page_namespace != 8 
+	AND ( pl_namespace != 12 {$notInHelpPages} ) 
+	{$page->excludetitles} 
+	GROUP BY pl_namespace, pl_title HAVING COUNT(*) > $count";
+
+	wfProfileOut( __METHOD__ );
 	return true;
 }
 
