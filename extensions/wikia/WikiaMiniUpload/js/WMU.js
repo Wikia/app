@@ -34,53 +34,22 @@ var WMU_height_par = null;
 var WMU_widthChanges = 1;
 var WMU_inGalleryPosition = false;
 
-if (typeof wmu_back == 'undefined') {
+if( 'view' == wgAction ) {
 	var wmu_back = '';
-}
-// macbre: RT #22075
-if (typeof wmu_imagebutton == 'undefined') {
 	var wmu_imagebutton = '';
-}
-if (typeof wmu_close == 'undefined') {
 	var wmu_close = '';
-}
-if (typeof wmu_warn1 == 'undefined') {
 	var wmu_warn1 = '';
-}
-if (typeof wmu_warn2 == 'undefined') {
 	var wmu_warn2 = '';
-}
-if (typeof wmu_warn3 == 'undefined') {
 	var wmu_warn3 = '';
-}
-if (typeof wmu_bad_extension == 'undefined') {
 	var wmu_bad_extension = '';
-}
-if (typeof wmu_show_message == 'undefined') {
 	var wmu_show_message = '';
-}
-if (typeof wmu_hide_message == 'undefined') {
 	var wmu_hide_message = '';
-}
-if (typeof wmu_title == 'undefined') {
 	var wmu_title = '';
-}
-if (typeof wmu_max_thumb == 'undefined') {
 	var wmu_max_thumb = '';
-}
-if (typeof wmu_file_extensions == 'undefined') {
 	var file_extensions = '';
-}
-if (typeof wmu_file_blacklist == 'undefined') {
 	var file_blacklist = '';
-}
-if (typeof wmu_check_file_extensions == 'undefined') {
 	var check_file_extensions = '';
-}
-if (typeof wmu_strict_file_extensions == 'undefined') {
 	var strict_file_extensions = '';
-}
-if (typeof wmu_user_blocked == 'undefined') {
 	var user_blocked = false;
 }
 
