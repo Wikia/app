@@ -494,7 +494,7 @@ function VET_loadMainFromView() {
 				visible: false,
 				zIndex: 900
 			});
-			VET_panel.render();
+			VET_panel.render(document.body);
 			VET_panel.show();
 
 			VET_indicator(1, false);
