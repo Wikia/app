@@ -95,7 +95,7 @@ function wfWhiteListParse($text) {
 						} else {
 							if (count($m) > 0) {
 								$text = preg_replace(sprintf(REGEX_PARSE_WHITELIST,"rel","nofollow"), "", $text);
-								$text = preg_replace(sprintf(CLASS_PARSE_WHITELIST,"external","(text|free|autonumber)"), "", $text);
+								$text = preg_replace(sprintf(CLASS_PARSE_WHITELIST,"external","(text|free|autonumber)"), "class=\"$1\"", $text);
 							}
 						}
 					}
