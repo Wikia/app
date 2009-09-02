@@ -227,7 +227,7 @@ jQuery("#related_answered_questions").ready(function() {
 				var page = j.query.categoriesonanswers[recent_q];
 				var url  = page.title.replace(/ /g,"_");
 				var text = page.title + "?";
-				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\">" + text + "</a></li>";
+				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('answered')\">" + text + "</a></li>";
 			}
 			jQuery("#related_answered_questions").html( html );
 		}
