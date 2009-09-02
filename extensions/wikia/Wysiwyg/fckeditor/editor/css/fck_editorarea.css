@@ -110,6 +110,10 @@ span._moz_dirty
 	right: auto;
 }
 
+.imageOverlayCenter {
+	right: 50%;
+}
+
 .imageOverlayRight {
 	top: 5px;
 	right: 5px;
