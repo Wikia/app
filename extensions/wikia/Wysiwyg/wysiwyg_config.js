@@ -8,7 +8,7 @@ FCKConfig.ToolbarCanCollapse = false;
 FCKConfig.StyleVersion = window.parent.wgStyleVersion;
 FCKConfig.i18nRequest = window.parent.wgServer + window.parent.wgScript + '?action=ajax&rs=WysiwygGetFCKi18n&revID=' + window.parent.wgMWrevId;
 FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'css/fck_editorarea.css';
-FCKConfig.EditorAreaStyles = window.parent.stylepath + '/monobook/main.css';
+FCKConfig.EditorAreaStyles = [window.parent.stylepath + '/monobook/main.css', window.parent.stylepath + '/monaco/css/monobook_modified.css'];
 
 FCKConfig.BodyId = 'bodyContent';
 FCKConfig.BodyClass = 'fckeditor';
