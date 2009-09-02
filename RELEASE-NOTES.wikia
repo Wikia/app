@@ -1,4 +1,5 @@
 == Changes since 200909.1 ==
+* rt#22057: CategorySelect: Popup missing "close" button (Macbre)
 * rt#21306: Answers, SEO: Answered questions footer changes. (Nef)
 * rt#19218: FCK: Templates that include comments force edits in only source mode (Macbre)
 * rt#20323: shortform links to subpages get expanded by FCK (Macbre)
