@@ -9,6 +9,11 @@ class CreatePage extends SpecialEditPage {
 	public function __construct() {
 		// initialise messages
 		wfLoadExtensionMessages( 'CreatePage' );
+		// confirm edit captcha [RT#21902] - Marooned
+		global $wgHooks, $wgWikiaEnableConfirmEditExt;
+		if( $wgWikiaEnableConfirmEditExt ) {
+			$wgHooks['ConfirmEdit::onConfirmEdit'][] = array($this, 'wfCreatePageOnConfirmEdit');
+		}
 
 		parent::__construct( 'CreatePage'  /*class*/, '' /*restriction*/, true);
 	}
@@ -94,6 +99,13 @@ class CreatePage extends SpecialEditPage {
 		parent::parseFormData();
 	}
 
+	//invoked from hook 'EditPage::showEditForm:beforeToolbar' when Captcha fires up [RT#21902] - Marooned
+	public function renderFormHeaderWrapper($editPage, $wgOut) {
+		$this->renderFormHeader($wgOut);
+		return true;
+	}
+
+	//print extra field for 'title'
 	public function renderFormHeader($wgOut) {
 		global $wgScriptPath;
 
@@ -112,7 +124,6 @@ class CreatePage extends SpecialEditPage {
 			$wgOut->addHTML ('</div>') ;
 		}
 		$wgOut->addHTML( $oTmpl->execute("createFormHeader") );
-
 	}
 
 	protected function save() {
@@ -146,9 +157,39 @@ class CreatePage extends SpecialEditPage {
 					$sMsg = wfMsg('createpage_spam');
 				}
 				$this->mFormErrors[] = $sMsg . " ($status)";
-				$this->renderForm();
+
+				global $wgCreatePageCaptchaTriggered;
+				//do not display form - there is already one invoked from Captcha [RT#21902] - Marooned
+				if (empty($wgCreatePageCaptchaTriggered)) {
+					$this->renderForm();
+				}
 				break;
 		}
 	}
 
+	// handle ConfirmEdit captcha, only for CreatePage, which will be treated a bit differently (edits in special page)
+	// this function is based on Bartek's solution for CreateAPage done in t:r6990 [RT#21902] - Marooned
+	public function wfCreatePageOnConfirmEdit( &$captcha, &$editPage, $newtext, $section, $merged, &$result ) {
+		global $wgTitle, $wgCreatePageCoverRedLinks, $wgOut, $wgRequest;
+		$canonspname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
+		if ($canonspname != 'CreatePage') {
+			return true;
+		}
+
+		if( $captcha->shouldCheck( $editPage, $newtext, $section, $merged ) ) {
+			if( $captcha->passCaptcha() ) {
+				$result = true;
+				return false;
+			} else {
+				global $wgHooks, $wgCreatePageCaptchaTriggered;
+				$wgCreatePageCaptchaTriggered = true;
+				$wgHooks['EditPage::showEditForm:beforeToolbar'][] = array($this, 'renderFormHeaderWrapper');
+
+				$result = false;
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
 }

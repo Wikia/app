@@ -166,7 +166,7 @@ class EditPage {
 					$undorev->getPage() == $this->mArticle->getID() &&
 					!$undorev->isDeleted( Revision::DELETED_TEXT ) &&
 					!$oldrev->isDeleted( Revision::DELETED_TEXT ) ) {
-					
+
 					$undotext = $this->mArticle->getUndoText( $undorev, $oldrev );
 					if ( $undotext === false ) {
 						# Warn the user that something went wrong
@@ -412,7 +412,7 @@ class EditPage {
 				}
 			}
 		}
-		
+
 		// If they used redlink=1 and the page exists, redirect to the main article
 		if ( $wgRequest->getBool( 'redlink' ) && $this->mTitle->exists() ) {
 			$wgOut->redirect( $this->mTitle->getFullURL() );
@@ -657,7 +657,7 @@ class EditPage {
 			elseif ( $this->section != 'new' && $request->getVal( 'summary' ) ) {
 				$this->summary = $request->getText( 'summary' );
 			}
-			
+
 			if ( $request->getVal( 'minor' ) ) {
 				$this->minoredit = true;
 			}
@@ -886,7 +886,7 @@ class EditPage {
 				wfProfileOut( $fname );
 				return self::AS_HOOK_ERROR;
 			}
-			
+
 			# Handle the user preference to force summaries here. Check if it's not a redirect.
 			if ( !$this->allowBlankSummary && !Title::newFromRedirect( $this->textbox1 ) ) {
 				if ( md5( $this->summary ) == $this->autoSumm ) {
@@ -929,7 +929,7 @@ class EditPage {
 			}
 		}
 		$userid = $wgUser->getId();
-		
+
 		# Suppress edit conflict with self, except for section edits where merging is required.
 		if ( $this->isConflict && $this->section == '' && $this->userWasLastToEdit($userid,$this->edittime) ) {
 			wfDebug( "EditPage::editForm Suppressing edit conflict, same user.\n" );
@@ -977,7 +977,7 @@ class EditPage {
 
 		# Handle the user preference to force summaries here, but not for null edits
 		if ( $this->section != 'new' && !$this->allowBlankSummary && $wgUser->getOption( 'forceeditsummary')
-			&& 0 != strcmp($oldtext,$text) 
+			&& 0 != strcmp($oldtext,$text)
 			&& !Title::newFromRedirect( $text ) ) # check if it's not a redirect
 		{
 			if ( md5( $this->summary ) == $this->autoSumm ) {
@@ -1041,7 +1041,7 @@ class EditPage {
 
 		# update the article here
 		if ( $this->mArticle->updateArticle( $text, $this->summary, $this->minoredit,
-			$this->watchthis, $bot, $sectionanchor ) ) 
+			$this->watchthis, $bot, $sectionanchor ) )
 		{
 			wfProfileOut( $fname );
 			return self::AS_SUCCESS_UPDATE;
@@ -1086,7 +1086,7 @@ class EditPage {
 		$regexes = (array)$wgSpamRegex;
 		return self::matchSpamRegexInternal( $text, $regexes );
 	}
-	
+
 	/**
 	 * Check given input text against $wgSpamRegex, and return the text of the first match.
 	 * @return mixed -- matching string or false
@@ -1096,7 +1096,7 @@ class EditPage {
 		$regexes = (array)$wgSummarySpamRegex;
 		return self::matchSpamRegexInternal( $text, $regexes );
 	}
-	
+
 	protected static function matchSpamRegexInternal( $text, $regexes ) {
 		foreach( $regexes as $regex ) {
 			$matches = array();
@@ -1510,18 +1510,27 @@ class EditPage {
 		$safemodehtml = $this->checkUnicodeCompliantBrowser()
 			? '' : Xml::hidden( 'safemode', '1' );
 
-		// maybe... just maybe... somebody would want the toolbar not in the default place?
-		// by Bartek for Wikia
+		/* Wikia change begin - @author: Bartek */
+		/* maybe... just maybe... somebody would want the toolbar not in the default place?  */
 		wfRunHooks ('EditPage::showEditForm:toolbar', array (&$this, &$wgOut, &$toolbar)) ;
+		/* Wikia change end */
 
 		$wgOut->addHTML( <<<END
 <form id="editform" name="editform" method="post" action="$action" enctype="multipart/form-data">
 END
 );
-		//used mainly by captcha - moved above the toolbar - Marooned [at] wikia.com
+
+		/* Wikia change begin - @author: Marooned */
+		/* used by captcha, CreatePage and maybe other extensions - moved above the toolbar  */
 		if ( is_callable( $formCallback ) ) {
 			call_user_func_array( $formCallback, array( &$wgOut ) );
 		}
+		/* Wikia change end */
+
+		/* Wikia change begin - @author: Marooned */
+		/* add possibility to add visible fields inside <form> but before toolbar - used in CreatePage  */
+		wfRunHooks( 'EditPage::showEditForm:beforeToolbar', array( &$this, &$wgOut ) );
+		/* Wikia change end */
 
 		$wgOut->addHTML($toolbar);
 
