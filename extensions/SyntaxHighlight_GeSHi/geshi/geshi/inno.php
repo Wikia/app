@@ -4,7 +4,7 @@
  * ----------
  * Author: Thomas Klingler (hotline@theratech.de) based on delphi.php from J�rja Norbert (jnorbi@vipmail.hu)
  * Copyright: (c) 2004 J�rja Norbert, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2005/07/29
  *
  * Inno Script language inkl. Delphi (Object Pascal) language file for GeSHi.
@@ -45,12 +45,16 @@ $language_data = array (
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
-        1 => array('Setup','Types','Components','Tasks','Dirs','Files','Icons','INI','InstallDelete','Languages','Messages',
-                    'CustomMessage','LangOptions','Registry','RUN','UninstallDelete','UninstallRun'
-                    ,'app','win','sys','syswow64','src','sd','pf','pf32','pf64','cf','cf32','cf64','tmp','fonts','dao',
-                    'group','localappdata','sendto','userappdata','commonappdata','userdesktop','commondesktop','userdocs',
-                    'commondocs','userfavorites','commonfavorites','userprograms','commonprograms','userstartmenu',
-                    'commonstartmenu','userstartup','commonstartup','usertemplates','commontemplates'
+        1 => array(
+            'Setup','Types','Components','Tasks','Dirs','Files','Icons','INI',
+            'InstallDelete','Languages','Messages','CustomMessage',
+            'LangOptions','Registry','RUN','UninstallDelete','UninstallRun',
+            'app','win','sys','syswow64','src','sd','pf','pf32','pf64','cf',
+            'cf32','cf64','tmp','fonts','dao','group','localappdata','sendto',
+            'userappdata','commonappdata','userdesktop','commondesktop',
+            'userdocs','commondocs','userfavorites','commonfavorites',
+            'userprograms','commonprograms','userstartmenu','commonstartmenu',
+            'userstartup','commonstartup','usertemplates','commontemplates'
             ),
         2 => array(
             'nil', 'false', 'true', 'var', 'type', 'const','And', 'Array', 'As', 'Begin', 'Case', 'Class', 'Constructor', 'Destructor', 'Div', 'Do', 'DownTo', 'Else',
@@ -106,7 +110,7 @@ $language_data = array (
             'AppendDefaultGroupName','AppId','AppModifyPath','AppMutex','AppName','AppPublisher',
             'AppPublisherURL','AppReadmeFile','AppSupportURL','AppUpdatesURL','AppVerName','AppVersion',
             'Attribs','BackColor','BackColor2','BackColorDirection','BackSolid','BeforeInstall',
-            'ChangesAssociations','ChangesEnvironment','Check','CodeFile','Comment','Components','Compression','CopyMode',
+            'ChangesAssociations','ChangesEnvironment','Check','CodeFile','Comment','Compression','CopyMode',
             'CreateAppDir','CreateUninstallRegKey','DefaultDirName','DefaultGroupName',
             'DefaultUserInfoName','DefaultUserInfoOrg','DefaultUserInfoSerial',
             'Description','DestDir','DestName','DirExistsWarning',
@@ -116,14 +120,14 @@ $language_data = array (
             'DiskSpanning','DontMergeDuplicateFiles','EnableDirDoesntExistWarning','Encryption',
             'Excludes','ExtraDiskSpaceRequired','Filename','Flags','FlatComponentsList','FontInstall',
             'GroupDescription','HotKey','IconFilename','IconIndex','InfoAfterFile','InfoBeforeFile',
-            'InternalCompressLevel','Key','LanguageDetectionMethod','Languages',
+            'InternalCompressLevel','Key','LanguageDetectionMethod',
             'LicenseFile','MergeDuplicateFiles','MessagesFile','MinVersion','Name',
             'OnlyBelowVersion','OutputBaseFilename','OutputManifestFile','OutputDir',
             'Parameters','Password','Permissions','PrivilegesRequired','ReserveBytes',
             'RestartIfNeededByRun','Root','RunOnceId','Section','SetupIconFile',
             'ShowComponentSizes','ShowLanguageDialog','ShowTasksTreeLines','SlicesPerDisk',
-            'SolidCompression','Source','SourceDir','StatusMsg','Subkey','Tasks',
-            'TimeStampRounding','TimeStampsInUTC','TouchDate','TouchTime','Type','Types',
+            'SolidCompression','Source','SourceDir','StatusMsg','Subkey',
+            'TimeStampRounding','TimeStampsInUTC','TouchDate','TouchTime','Type',
             'UninstallDisplayIcon','UninstallDisplayName','UninstallFilesDir','UninstallIconFile',
             'UninstallLogMode','UninstallRestartComputer','UninstallStyle','Uninstallable',
             'UpdateUninstallLogAppName','UsePreviousAppDir','UsePreviousGroup',
@@ -181,7 +185,7 @@ $language_data = array (
         'REGEXPS' => array(
             ),
         'SYMBOLS' => array(
-            0 => 'color:  #000000; font-weight: bold;',
+            0 => 'color: #000000; font-weight: bold;',
             ),
         'SCRIPT' => array(
             )

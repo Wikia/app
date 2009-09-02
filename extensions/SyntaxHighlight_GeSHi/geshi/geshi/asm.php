@@ -4,7 +4,7 @@
  * -------
  * Author: Tux (tux@inmail.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/07/27
  *
  * x86 Assembler language file for GeSHi.
@@ -93,7 +93,7 @@ $language_data = array (
         3 => array(
             'ah','al','ax','bh','bl','bp','bx','ch','cl','cr0','cr2','cr3','cs','cx','dh','di','dl',
             'dr0','dr1','dr2','dr3','dr6','dr7','ds','dx','eax','ebp','ebx','ecx','edi','edx',
-            'es','esi','esp','fs','gs','si','sp','ss','st','tr3','tr4','tr5','tr6','tr7', 'ah', 'bh', 'ch', 'dh'
+            'es','esi','esp','fs','gs','si','sp','ss','st','tr3','tr4','tr5','tr6','tr7'
             ),
         /*Directive*/
         4 => array(
@@ -105,17 +105,17 @@ $language_data = array (
             'listif','listmacro','listmacroall',' model','no87','nocref','nolist',
             'nolistif','nolistmacro','radix','repeat','sall','seq','sfcond','stack',
             'startup','tfcond','type','until','untilcxz','while','xall','xcref',
-            'xlist','alias','align','assume','catstr','comm','comment','db','dd','df','dosseg','dq',
-            'dt','dup','dw','echo','else','elseif','elseif1','elseif2','elseifb','elseifdef','elseifdif',
+            'xlist','alias','align','assume','catstr','comm','comment','db','dd','df','dq',
+            'dt','dup','dw','echo','elseif1','elseif2','elseifb','elseifdef','elseifdif',
             'elseifdifi','elseife','elseifidn','elseifidni','elseifnb','elseifndef','end',
-            'endif','endm','endp','ends','eq',' equ','even','exitm','extern','externdef','extrn','for',
-            'forc','ge','goto','group','high','highword','if','if1','if2','ifb','ifdef','ifdif',
+            'endm','endp','ends','eq',' equ','even','exitm','extern','externdef','extrn','for',
+            'forc','ge','goto','group','high','highword','if1','if2','ifb','ifdef','ifdif',
             'ifdifi','ife',' ifidn','ifidni','ifnb','ifndef','include','includelib','instr','invoke',
             'irp','irpc','label','le','length','lengthof','local','low','lowword','lroffset',
             'macro','mask','mod','msfloat','name','ne','offset','opattr','option','org','%out',
-            'page','popcontext','proc','proto','ptr','public','purge','pushcontext','record',
-            'repeat','rept','seg','segment','short','size','sizeof','sizestr','struc','struct',
-            'substr','subtitle','subttl','textequ','this','title','type','typedef','union','while','width',
+            'page','popcontext','private','proc','proto','ptr','public','purge','pushcontext','record',
+            'rept','seg','segment','short','size','sizeof','sizestr','struc','struct',
+            'substr','subtitle','subttl','textequ','this','title','typedef','union','width',
             '.model', '.stack', '.code', '.data'
             ),
         /*Operands*/
@@ -125,11 +125,11 @@ $language_data = array (
             'real4',' real8','real10','sbyte','sdword','sign?','stdcall','sword','syscall','tbyte',
             'vararg','word','zero?','flat','near32','far32',
             'abs','all','assumes','at','casemap','common','compact',
-            'cpu','dotname','emulator','epilogue','error','export','expr16','expr32','farstack','flat',
+            'cpu','dotname','emulator','epilogue','error','export','expr16','expr32','farstack',
             'forceframe','huge','language','large','listing','ljmp','loadds','m510','medium','memory',
             'nearstack','nodotname','noemulator','nokeyword','noljmp','nom510','none','nonunique',
             'nooldmacros','nooldstructs','noreadonly','noscoped','nosignextend','nothing',
-            'notpublic','oldmacros','oldstructs','os_dos','para','private','prologue','radix',
+            'notpublic','oldmacros','oldstructs','os_dos','para','prologue',
             'readonly','req','scoped','setif2','smallstack','tiny','use16','use32','uses'
             )
         ),
@@ -176,24 +176,37 @@ $language_data = array (
             0 => 'color: #339933;'
             ),
         'REGEXPS' => array(
-            0 => 'color: #0000ff;',
-            1 => 'color: #0000ff;'
+//            0 => 'color: #0000ff;',
+//            1 => 'color: #0000ff;'
             ),
         'SCRIPT' => array(
             )
         ),
     'URLS' => array(
         1 => '',
-        2 => ''
+        2 => '',
+        3 => '',
+        4 => '',
+        5 => ''
         ),
+    'NUMBERS' =>
+        GESHI_NUMBER_BIN_PREFIX_PERCENT |
+        GESHI_NUMBER_BIN_SUFFIX |
+        GESHI_NUMBER_HEX_PREFIX |
+        GESHI_NUMBER_HEX_SUFFIX |
+        GESHI_NUMBER_OCT_SUFFIX |
+        GESHI_NUMBER_INT_BASIC |
+        GESHI_NUMBER_FLT_NONSCI |
+        GESHI_NUMBER_FLT_NONSCI_F |
+        GESHI_NUMBER_FLT_SCI_ZERO,
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
         ),
     'REGEXPS' => array(
         //Hex numbers
-        0 => /*  */ "(?<=([\\s\\(\\)\\[\\],;.:+\\-\\/*]))(?:[0-9][0-9a-fA-F]{0,31}[hH]|0x[0-9a-fA-F]{1,32})(?=([\\s\\(\\)\\[\\],;.:+\\-\\/*]))",
+//        0 => /*  */ "(?<=([\\s\\(\\)\\[\\],;.:+\\-\\/*]))(?:[0-9][0-9a-fA-F]{0,31}[hH]|0x[0-9a-fA-F]{1,32})(?=([\\s\\(\\)\\[\\],;.:+\\-\\/*]))",
         //Binary numbers
-        1 => "(?<=([\\s\\(\\)\\[\\],;.:+\\-\\/*]))[01]{1,64}[bB](?=([\\s\\(\\)\\[\\],;.:+\\-\\/*]))"
+//        1 => "(?<=([\\s\\(\\)\\[\\],;.:+\\-\\/*]))[01]{1,64}[bB](?=([\\s\\(\\)\\[\\],;.:+\\-\\/*]))"
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
@@ -203,8 +216,8 @@ $language_data = array (
     'TAB_WIDTH' => 8,
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
-            'DISALLOWED_BEFORE' => "a-zA-Z0-9\$_\|\#>|^",
-            'DISALLOWED_AFTER' => "a-zA-Z0-9_<\|%"
+            'DISALLOWED_BEFORE' => "(?<![a-zA-Z0-9\$_\|\#>|^])",
+            'DISALLOWED_AFTER' => "(?![a-zA-Z0-9_<\|%])"
         )
     )
 );

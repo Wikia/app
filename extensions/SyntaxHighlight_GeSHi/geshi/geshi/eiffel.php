@@ -4,7 +4,7 @@
  * ----------
  * Author: Zoran Simic (zsimic@axarosenberg.com)
  * Copyright: (c) 2005 Zoran Simic
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2005/06/30
  *
  * Eiffel language file for GeSHi.
@@ -37,7 +37,7 @@
  *
  ************************************************************************************/
 
- $language_data = array (
+$language_data = array (
     'LANG_NAME' => 'Eiffel',
     'COMMENT_SINGLE' => array(1 => '--'),
     'COMMENT_MULTI' => array(),
@@ -376,7 +376,8 @@
         1 => '',
         2 => '',
         3 => '',
-        4 => 'http://www.google.com/search?q=site%3Ahttp%3A%2F%2Fdocs.eiffel.com%2Feiffelstudio%2Flibraries+{FNAMEL}&btnI=I%27m+Feeling+Lucky'
+        4 => 'http://www.google.com/search?q=site%3Ahttp%3A%2F%2Fdocs.eiffel.com%2Feiffelstudio%2Flibraries+{FNAMEL}&amp;btnI=I%27m+Feeling+Lucky',
+        5 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

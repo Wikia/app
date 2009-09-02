@@ -4,7 +4,7 @@
  * ----------
  * Author: Tux (tux@inamil.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/07/26
  *
  * Pascal language file for GeSHi.
@@ -52,7 +52,9 @@ $language_data = array (
     'COMMENT_SINGLE' => array(1 => '//'),
     'COMMENT_MULTI' => array('{' => '}','(*' => '*)'),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-    'QUOTEMARKS' => array("'", '"'),
+    'QUOTEMARKS' => array('"'),
+    'HARDQUOTE' => array("'", "'"),
+    'HARDESCAPE' => array("''"),
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
@@ -82,6 +84,7 @@ $language_data = array (
             ),
         ),
     'SYMBOLS' => array(
+        ',', ':', '=', '+', '-', '*', '/'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -99,23 +102,24 @@ $language_data = array (
             ),
         'COMMENTS' => array(
             1 => 'color: #666666; font-style: italic;',
-            2 => 'color: #339933;',
             'MULTI' => 'color: #666666; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
-            0 => 'color: #000099; font-weight: bold;'
+            0 => 'color: #000099; font-weight: bold;',
+            'HARD' => 'color: #000099; font-weight: bold;'
             ),
         'BRACKETS' => array(
             0 => 'color: #009900;'
             ),
         'STRINGS' => array(
-            0 => 'color: #ff0000;'
+            0 => 'color: #ff0000;',
+            'HARD' => 'color: #ff0000;'
             ),
         'NUMBERS' => array(
             0 => 'color: #cc66cc;'
             ),
         'METHODS' => array(
-            1 => 'color: #202020;'
+            1 => 'color: #0066ee;'
             ),
         'SYMBOLS' => array(
             0 => 'color: #339933;'

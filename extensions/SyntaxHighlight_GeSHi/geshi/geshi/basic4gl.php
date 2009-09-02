@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Matthew Webb (bmatthew1@blueyonder.co.uk)
  * Copyright: (c) 2004 Matthew Webb (http://matthew-4gl.wikispaces.com)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2007/09/15
  *
  * Basic4GL language file for GeSHi.
@@ -250,8 +250,8 @@ $language_data = array (
             'glIndexubv','glIndexub','glIndexsv','glIndexs','glIndexMask','glIndexiv','glIndexi','glIndexfv','glIndexf','glIndexdv',
             'glIndexd','glHint','glGetTexParameteriv','glGetTexParameterfv','glGetTexLevelParameteriv','glGetTexLevelParameterfv',
             'glGetTexGeniv','glGetTexGenfv','glGetTexGendv','glGetTexEnviv','glGetTexEnvfv','glgetstring','glgetpolygonstipple','glGetPixelMapuiv',
-            'glGetMaterialiv','glGetMaterialfv','glGetLightiv','glGetLightfv','glGetIntegerv','glGetIntegerv','glGetFloatv','glGetFloatv',
-            'glGetError','glGetDoublev','glGetDoublev','glGetClipPlane','glGetBooleanv','glGetBooleanv','glgentextures','glgentexture',
+            'glGetMaterialiv','glGetMaterialfv','glGetLightiv','glGetLightfv','glGetIntegerv','glGetFloatv',
+            'glGetError','glGetDoublev','glGetClipPlane','glGetBooleanv','glgentextures','glgentexture',
             'glgenlists','glFrustum','glFrontFace','glFogiv','glFogi','glFogfv','glFogf','glFlush','glFinish','glFeedbackBuffer',
             'glEvalPoint2','glEvalPoint1','glEvalMesh2','glEvalMesh1','glEvalCoord2fv','glEvalCoord2f','glEvalCoord2dv','glEvalCoord2d',
             'glEvalCoord1fv','glEvalCoord1f','glEvalCoord1dv','glEvalCoord1d','glEndList','glEnd','glEnableClientState','glEnable',
@@ -319,6 +319,11 @@ $language_data = array (
             ),
         'REGEXPS' => array(
             )
+        ),
+    'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

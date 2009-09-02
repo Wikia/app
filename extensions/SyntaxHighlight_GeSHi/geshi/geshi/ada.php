@@ -4,7 +4,7 @@
  * -------
  * Author: Tux (tux@inmail.cz)
  * Copyright: (c) 2004 Tux (http://tux.a4.cz/), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/07/29
  *
  * Ada language file for GeSHi.
@@ -53,12 +53,12 @@ $language_data = array (
     'KEYWORDS' => array(
         1 => array(
             'begin', 'declare', 'do', 'else', 'elsif', 'exception', 'for', 'if',
-            'is', 'loop', 'while', 'then', 'is', 'end', 'select', 'case', 'while',  'until',
+            'is', 'loop', 'while', 'then', 'end', 'select', 'case', 'until',
             'goto', 'return'
             ),
         2 => array(
             'abs', 'and', 'mod', 'not', 'or', 'rem', 'xor'
-              ),
+            ),
         3 => array(
             'abort', 'abstract', 'accept', 'access', 'aliased', 'all', 'array', 'at', 'body',
             'constant', 'delay', 'delta', 'digits', 'entry', 'exit',

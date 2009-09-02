@@ -4,7 +4,7 @@
  * ----------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/06/20
  *
  * QBasic/QuickBASIC language file for GeSHi.
@@ -63,31 +63,31 @@ $language_data = array (
     'KEYWORDS' => array(
         1 => array(
             'DO', 'LOOP', 'WHILE', 'WEND', 'THEN', 'ELSE', 'ELSEIF', 'IF',
-            'FOR', 'TO', 'NEXT', 'STEP', 'GOTO', 'GOSUB', 'RETURN', 'RESUME', 'SELECT',
-            'CASE', 'UNTIL'
+            'FOR', 'TO', 'NEXT', 'STEP', 'GOTO', 'GOSUB', 'CALL', 'CALLS',
+            'SUB', 'FUNCTION', 'RETURN', 'RESUME', 'SELECT', 'CASE', 'UNTIL'
             ),
         3 => array(
             'ABS', 'ABSOLUTE', 'ACCESS', 'ALIAS', 'AND', 'ANY', 'APPEND', 'AS', 'ASC', 'ATN',
-            'BASE', 'BEEP', 'BINARY', 'BLOAD', 'BSAVE', 'BYVAL', 'CALL', 'CALLS', 'CASE',
-            'CDBL', 'CDECL', 'CHAIN', 'CHDIR', 'CHDIR', 'CHR$', 'CINT', 'CIRCLE', 'CLEAR',
+            'BASE', 'BEEP', 'BINARY', 'BLOAD', 'BSAVE', 'BYVAL',
+            'CDBL', 'CDECL', 'CHAIN', 'CHDIR', 'CHR$', 'CINT', 'CIRCLE', 'CLEAR',
             'CLNG', 'CLOSE', 'CLS', 'COM', 'COMMAND$', 'COMMON', 'CONST', 'COS', 'CSNG',
             'CSRLIN', 'CVD', 'CVDMBF', 'CVI', 'CVL', 'CVS', 'CVSMDF', 'DATA', 'DATE$',
             'DECLARE', 'DEF', 'FN', 'SEG', 'DEFDBL', 'DEFINT', 'DEFLNG', 'DEFSNG', 'DEFSTR',
             'DIM', 'DOUBLE', 'DRAW', 'END', 'ENVIRON', 'ENVIRON$', 'EOF', 'EQV', 'ERASE',
             'ERDEV', 'ERDEV$', 'ERL', 'ERR', 'ERROR', 'EXIT', 'EXP', 'FIELD', 'FILEATTR',
-            'FILES', 'FIX', 'FRE', 'FREEFILE', 'FUNCTION', 'GET', 'HEX$', 'IMP', 'INKEY$',
+            'FILES', 'FIX', 'FRE', 'FREEFILE', 'GET', 'HEX$', 'IMP', 'INKEY$',
             'INP', 'INPUT', 'INPUT$', 'INSTR', 'INT', 'INTEGER', 'IOCTL', 'IOCTL$', 'IS',
             'KEY', 'KILL', 'LBOUND', 'LCASE$', 'LEFT$', 'LEN', 'LET', 'LINE', 'LIST', 'LOC',
-            'LOCAL', 'LOCATE', 'LOCK', 'LOF', 'LOG', 'UNLOCK', 'LONG', 'LPOS', 'LPRINT',
+            'LOCAL', 'LOCATE', 'LOCK', 'LOF', 'LOG', 'LONG', 'LPOS', 'LPRINT',
             'LSET', 'LTRIM$', 'MID$', 'MKD$', 'MKDIR', 'MKDMBF$', 'MKI$', 'MKL$',
             'MKS$', 'MKSMBF$', 'MOD', 'NAME', 'NOT', 'OCT$', 'OFF', 'ON', 'PEN', 'PLAY',
-            'STRIG', 'TIMER', 'UEVENT', 'OPEN', 'OPTION', 'BASE', 'OR', 'OUT', 'OUTPUT',
+            'OPEN', 'OPTION', 'OR', 'OUT', 'OUTPUT',
             'PAINT', 'PALETTE', 'PCOPY', 'PEEK', 'PMAP', 'POINT', 'POKE', 'POS', 'PRESET',
-            'PRINT', 'USING', 'PSET', 'PUT', 'RANDOM', 'RANDOMIZE', 'READ', 'REDIM', 'RESET',
+            'PRINT', 'PSET', 'PUT', 'RANDOM', 'RANDOMIZE', 'READ', 'REDIM', 'RESET',
             'RESTORE', 'RIGHT$', 'RMDIR', 'RND', 'RSET', 'RTRIM$', 'RUN', 'SADD', 'SCREEN',
             'SEEK', 'SETMEM', 'SGN', 'SHARED', 'SHELL', 'SIGNAL', 'SIN', 'SINGLE', 'SLEEP',
             'SOUND', 'SPACE$', 'SPC', 'SQR', 'STATIC', 'STICK', 'STOP', 'STR$', 'STRIG',
-            'STRING', 'STRING$', 'SUB', 'SWAP', 'SYSTEM', 'TAB', 'TAN', 'TIME$', 'TIMER',
+            'STRING', 'STRING$', 'SWAP', 'SYSTEM', 'TAB', 'TAN', 'TIME$', 'TIMER',
             'TROFF', 'TRON', 'TYPE', 'UBOUND', 'UCASE$', 'UEVENT', 'UNLOCK', 'USING', 'VAL',
             'VARPTR', 'VARPTR$', 'VARSEG', 'VIEW', 'WAIT', 'WIDTH', 'WINDOW', 'WRITE', 'XOR'
             )

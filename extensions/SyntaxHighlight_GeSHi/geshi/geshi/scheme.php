@@ -4,7 +4,7 @@
  * ----------
  * Author: Jon Raphaelson (jonraphaelson@gmail.com)
  * Copyright: (c) 2005 Jon Raphaelson, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/08/30
  *
  * Scheme language file for GeSHi.
@@ -40,79 +40,78 @@
 $language_data = array (
     'LANG_NAME' => 'Scheme',
     'COMMENT_SINGLE' => array(1 => ';'),
-    'COMMENT_MULTI' => array(';|' => '|;'),
+    'COMMENT_MULTI' => array('#|' => '|#'),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array('"'),
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
-          'abs', 'acos', 'and', 'angle', 'append', 'appply', 'approximate',
-          'asin', 'assoc', 'assq', 'assv', 'atan',
+            'abs', 'acos', 'and', 'angle', 'append', 'appply', 'approximate',
+            'asin', 'assoc', 'assq', 'assv', 'atan',
 
-          'begin', 'boolean?', 'bound-identifier=?',
+            'begin', 'boolean?', 'bound-identifier=?',
 
-          'caar', 'caddr', 'cadr', 'call-with-current-continuation',
-          'call-with-input-file', 'call-with-output-file', 'call/cc', 'car',
-          'case', 'catch', 'cdddar', 'cddddr', 'cdr', 'ceiling', 'char->integer',
-          'char-alphabetic?', 'char-ci<=?', 'char-ci<?', 'char-ci?', 'char-ci>=?',
-          'char-ci>?', 'char-ci=?', 'char-downcase', 'char-lower-case?',
-          'char-numeric', 'char-ready', 'char-ready?', 'char-upcase',
-          'char-upper-case?', 'char-whitespace?', 'char<=?', 'char<?', 'char=?',
-          'char>=?', 'char>?', 'char?', 'close-input-port', 'close-output-port',
-          'complex?', 'cond', 'cons', 'construct-identifier', 'cos',
-          'current-input-port', 'current-output-port',
+            'caar', 'caddr', 'cadr', 'call-with-current-continuation',
+            'call-with-input-file', 'call-with-output-file', 'call/cc', 'car',
+            'case', 'catch', 'cdddar', 'cddddr', 'cdr', 'ceiling', 'char->integer',
+            'char-alphabetic?', 'char-ci<=?', 'char-ci<?', 'char-ci?', 'char-ci>=?',
+            'char-ci>?', 'char-ci=?', 'char-downcase', 'char-lower-case?',
+            'char-numeric', 'char-ready', 'char-ready?', 'char-upcase',
+            'char-upper-case?', 'char-whitespace?', 'char<=?', 'char<?', 'char=?',
+            'char>=?', 'char>?', 'char?', 'close-input-port', 'close-output-port',
+            'complex?', 'cond', 'cons', 'construct-identifier', 'cos',
+            'current-input-port', 'current-output-port',
 
-          'd', 'define', 'define-syntax', 'delay', 'denominator', 'display', 'do',
+            'd', 'define', 'define-syntax', 'delay', 'denominator', 'display', 'do',
 
-          'e', 'eof-object?', 'eq?', 'equal?', 'eqv?', 'even?', 'exact->inexact',
-          'exact?', 'exp', 'expt', 'else',
+            'e', 'eof-object?', 'eq?', 'equal?', 'eqv?', 'even?', 'exact->inexact',
+            'exact?', 'exp', 'expt', 'else',
 
-          'f', 'floor', 'for-each', 'force', 'free-identifer=?',
+            'f', 'floor', 'for-each', 'force', 'free-identifer=?',
 
-          'gcd', 'gen-counter', 'gen-loser', 'generate-identifier',
+            'gcd', 'gen-counter', 'gen-loser', 'generate-identifier',
 
-          'identifier->symbol', 'identifier', 'if', 'imag-part', 'inexact->exact',
-          'inexact?', 'input-port?', 'integer->char', 'integer?', 'integrate-system',
+            'identifier->symbol', 'identifier', 'if', 'imag-part', 'inexact->exact',
+            'inexact?', 'input-port?', 'integer->char', 'integer?', 'integrate-system',
 
-          'l', 'lambda', 'last-pair', 'lcm', 'length', 'let', 'let*', 'letrec',
-          'list', 'list->string', 'list->vector', 'list-ref', 'list-tail', 'list?',
-          'load', 'log',
+            'l', 'lambda', 'last-pair', 'lcm', 'length', 'let', 'let*', 'letrec',
+            'list', 'list->string', 'list->vector', 'list-ref', 'list-tail', 'list?',
+            'load', 'log',
 
-          'magnitude', 'make-polar', 'make-promise', 'make-rectangular',
-          'make-string', 'make-vector', 'map', 'map-streams', 'max', 'member',
-          'memq', 'memv', 'min', 'modulo',
+            'magnitude', 'make-polar', 'make-promise', 'make-rectangular',
+            'make-string', 'make-vector', 'map', 'map-streams', 'max', 'member',
+            'memq', 'memv', 'min', 'modulo',
 
-          'negative', 'newline', 'nil', 'not', 'null?', 'number->string', 'number?',
-          'numerator',
+            'negative', 'newline', 'nil', 'not', 'null?', 'number->string', 'number?',
+            'numerator',
 
-          'odd?', 'open-input-file', 'open-output-file', 'or', 'output-port',
+            'odd?', 'open-input-file', 'open-output-file', 'or', 'output-port',
 
-          'pair?', 'peek-char', 'positive?', 'procedure?',
+            'pair?', 'peek-char', 'positive?', 'procedure?',
 
-          'quasiquote', 'quote', 'quotient',
+            'quasiquote', 'quote', 'quotient',
 
-          'rational', 'rationalize', 'read', 'read-char', 'real-part', 'real?',
-          'remainder', 'return', 'reverse',
+            'rational', 'rationalize', 'read', 'read-char', 'real-part', 'real?',
+            'remainder', 'return', 'reverse',
 
-          's', 'sequence', 'set!', 'set-char!', 'set-cdr!', 'sin', 'sqrt', 'string',
-          'string->list', 'string->number', 'string->symbol', 'string-append',
-          'string-ci<=?', 'string-ci<?', 'string-ci=?', 'string-ci>=?',
-          'string-ci>?', 'string-copy', 'string-fill!', 'string-length',
-          'string-ref', 'string-set!', 'string<=?', 'string<?', 'string=?',
-          'string>=?', 'string>?', 'string?', 'substring', 'symbol->string',
-          'symbol?', 'syntax', 'syntax-rules',
+            's', 'sequence', 'set!', 'set-char!', 'set-cdr!', 'sin', 'sqrt', 'string',
+            'string->list', 'string->number', 'string->symbol', 'string-append',
+            'string-ci<=?', 'string-ci<?', 'string-ci=?', 'string-ci>=?',
+            'string-ci>?', 'string-copy', 'string-fill!', 'string-length',
+            'string-ref', 'string-set!', 'string<=?', 'string<?', 'string=?',
+            'string>=?', 'string>?', 'string?', 'substring', 'symbol->string',
+            'symbol?', 'syntax', 'syntax-rules',
 
-          't', 'tan', 'template', 'transcript-off', 'transcript-on', 'truncate',
+            't', 'tan', 'template', 'transcript-off', 'transcript-on', 'truncate',
 
-          'unquote', 'unquote-splicing', 'unwrap-syntax',
+            'unquote', 'unquote-splicing', 'unwrap-syntax',
 
-          'vector', 'vector->list', 'vector-fill!', 'vector-length', 'vector-ref',
-          'vector-set!', 'vector?',
+            'vector', 'vector->list', 'vector-fill!', 'vector-length', 'vector-ref',
+            'vector-set!', 'vector?',
 
-          'with-input-from-file', 'with-output-to-file', 'write', 'write-char',
+            'with-input-from-file', 'with-output-to-file', 'write', 'write-char',
 
-          'zero?'
-
+            'zero?'
             )
         ),
     'SYMBOLS' => array(
@@ -154,6 +153,7 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

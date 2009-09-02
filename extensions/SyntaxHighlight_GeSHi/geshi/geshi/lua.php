@@ -4,7 +4,7 @@
  * -------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/07/10
  *
  * LUA language file for GeSHi.
@@ -65,7 +65,7 @@ $language_data = array (
             'remove','rename','flush','seek','tmpfile','tmpname','read','write',
             'clock','date','difftime','execute','exit','getenv','setlocale','time',
             '_G','getfenv','getmetatable','ipairs','loadlib','next','pairs','pcall',
-            'rawegal','rawget','rawset','require','setfenv','setmetatable','xpcall',
+            'rawegal','setfenv','setmetatable','xpcall',
             'string.byte','string.char','string.dump','string.find','string.len',
             'string.lower','string.rep','string.sub','string.upper','string.format','string.gfind','string.gsub',
             'table.concat','table.foreach','table.foreachi','table.getn','table.sort','table.insert','table.remove','table.setn',
@@ -109,7 +109,7 @@ $language_data = array (
             0 => 'color: #cc66cc;'
             ),
         'METHODS' => array(
-      0 => 'color: #b1b100;'
+            0 => 'color: #b1b100;'
             ),
         'SYMBOLS' => array(
             0 => 'color: #66cc66;'
@@ -118,6 +118,9 @@ $language_data = array (
             ),
         'SCRIPT' => array(
             )
+        ),
+    'URLS' => array(
+        1 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

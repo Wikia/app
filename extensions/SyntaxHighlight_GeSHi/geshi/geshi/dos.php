@@ -4,7 +4,7 @@
  * -------
  * Author: Alessandro Staltari (staltari@geocities.com)
  * Copyright: (c) 2005 Alessandro Staltari (http://www.geocities.com/SiliconValley/Vista/8155/)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2005/07/05
  *
  * DOS language file for GeSHi.
@@ -64,7 +64,7 @@ $language_data = array (
     'COMMENT_SINGLE' => array(),
     'COMMENT_MULTI' => array(),
     //DOS comment lines
-    'COMMENT_REGEXP' => array(1 => "/^\s*@?REM/mi"),
+    'COMMENT_REGEXP' => array(1 => "/^\s*@?REM.*$/mi"),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array(),
     'ESCAPE_CHAR' => '',
@@ -84,10 +84,11 @@ $language_data = array (
         /* Internal commands */
         3 => array(
             'cd', 'md', 'rd', 'chdir', 'mkdir', 'rmdir', 'dir',
-            'del', 'copy',
+            'del', 'copy', 'move', 'ren', 'rename',
             'echo',
             'setlocal', 'endlocal', 'set',
-            'pause'
+            'pause',
+            'pushd', 'popd', 'title', 'verify'
             ),
         /* Special files */
         4 => array(
@@ -100,10 +101,10 @@ $language_data = array (
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-            1 => false,
-            2 => false,
-            3 => false,
-            4 => false
+        1 => false,
+        2 => false,
+        3 => false,
+        4 => false
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
@@ -113,8 +114,7 @@ $language_data = array (
             4 => 'color: #0000ff; font-weight: bold;'
             ),
         'COMMENTS' => array(
-            1 => 'color: #808080; font-style: italic;',
-            2 => 'color: #808080; font-style: italic;'
+            1 => 'color: #808080; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #ff0000; font-weight: bold;'
@@ -146,11 +146,11 @@ $language_data = array (
     'OBJECT_SPLITTERS' => array(
         ),
     'URLS' => array(
-         1 => 'http://www.ss64.com/nt/{FNAMEL}.html',
-         2 => 'http://www.ss64.com/nt/{FNAMEL}.html',
-         3 => 'http://www.ss64.com/nt/{FNAMEL}.html',
-         4 => 'http://www.ss64.com/nt/{FNAMEL}.html'
-         ),
+        1 => 'http://www.ss64.com/nt/{FNAMEL}.html',
+        2 => 'http://www.ss64.com/nt/{FNAMEL}.html',
+        3 => 'http://www.ss64.com/nt/{FNAMEL}.html',
+        4 => 'http://www.ss64.com/nt/{FNAMEL}.html'
+        ),
     'REGEXPS' => array(
         /* Label */
         0 => array(
@@ -173,7 +173,7 @@ $language_data = array (
         /* Arguments or variable evaluation */
         2 => array(
 /*            GESHI_SEARCH => '(%)([\d*]|[^%\s]*(?=%))((?<!%\d)%|)',*/
-            GESHI_SEARCH => '(%)([\d*]|[^%]*(?=%))((?<!%\d)%|)',
+            GESHI_SEARCH => '(%(?:%(?=[a-z0-9]))?)([\d*]|(?:~[adfnpstxz]*(?:$\w+:)?)?[a-z0-9](?!\w)|[^%\n]*(?=%))((?<!%\d)%|)',
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 'si',
             GESHI_BEFORE => '\\1',
@@ -185,7 +185,14 @@ $language_data = array (
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         ),
-    'TAB_WIDTH' => 4
+    'TAB_WIDTH' => 4,
+    'PARSER_CONTROL' => array(
+        'KEYWORDS' => array(
+            4 => array(
+                'DISALLOWED_BEFORE' => '(?<!\w)'
+                )
+            )
+        )
 );
 
 ?>

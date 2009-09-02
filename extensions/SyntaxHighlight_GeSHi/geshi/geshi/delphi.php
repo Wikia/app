@@ -4,7 +4,7 @@
  * ----------
  * Author: J�rja Norbert (jnorbi@vipmail.hu), Benny Baumann (BenBE@omorphia.de)
  * Copyright: (c) 2004 J�rja Norbert, Benny Baumann (BenBE@omorphia.de), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/07/26
  *
  * Delphi (Object Pascal) language file for GeSHi.
@@ -50,7 +50,7 @@ $language_data = array (
     'COMMENT_SINGLE' => array(1 => '//'),
     'COMMENT_MULTI' => array('(*' => '*)', '{' => '}'),
     //Compiler directives
-    'COMMENT_REGEXP' => array(2 => '/{\\$.*?}|\\(\\*\\$.*?\\*\\)/U'),
+    'COMMENT_REGEXP' => array(2 => '/\\{\\$.*?}|\\(\\*\\$.*?\\*\\)/U'),
     'CASE_KEYWORDS' => 0,
     'QUOTEMARKS' => array("'"),
     'ESCAPE_CHAR' => '',
@@ -67,7 +67,7 @@ $language_data = array (
             'Protected', 'Public', 'Published', 'Raise', 'Record', 'Register',
             'Repeat', 'Requires', 'Resourcestring', 'Set', 'Shl', 'Shr', 'Then',
             'ThreadVar', 'To', 'Try', 'Type', 'Unit', 'Until', 'Uses', 'Var',
-            'Virtual', 'While', 'With', 'Xor', 'assembler', 'cdecl', 'far',
+            'Virtual', 'While', 'With', 'Xor', 'assembler', 'far',
             'near', 'pascal', 'register', 'cdecl', 'safecall', 'stdcall', 'varargs'
             ),
         2 => array(
@@ -276,7 +276,7 @@ $language_data = array (
         //Hex numbers
         0 => '\$[0-9a-fA-F]+',
         //Characters
-        1 => '\#\$?[0-9]{1,3}'
+        1 => '\#(?:\$[0-9a-fA-F]{1,2}|\d{1,3})'
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
