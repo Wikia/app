@@ -66,13 +66,22 @@ $dbw = wfGetDB( DB_MASTER );
 
 	print $page->getPrefixedText();
 	$dbw->begin();
-	if( $page->getNamespace() == NS_IMAGE ) {
-		$art = new ImagePage( $page );
-	} else {
-		$art = new Article( $page );
+	$nspace = $page->getNamespace();
+	$success = 0; $removed = 0;
+	if ( in_array( $nspace, array(NS_IMAGE, NS_FILE) ) ) {
+		$file = wfLocalFile( $page );
+		if ( $file ) {
+			$oldimage = null; // Must be passed by reference
+			$success = FileDeleteForm::doDelete( $page, $file, $oldimage, $reason, false );
+			$removed = 1;
+		} 
 	}
-	$success = $art->doDeleteArticle( $reason );
+	if ( $removed == 0 ) {
+		$art = new Article( $page );
+		$success = $art->doDeleteArticle( $reason );
+	}
 	$dbw->immediateCommit();
+
 	if ( $success ) {
 		print "\n";
 	} else {

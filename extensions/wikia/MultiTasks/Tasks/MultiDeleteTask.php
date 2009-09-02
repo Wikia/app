@@ -99,7 +99,7 @@ class MultiDeleteTask extends BatchTask {
 				if ($retval) {
 					$this->addLog('Article deleting error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				} else {
-					$this->addLog('<a href="' . $city_url . $city_path . '?title=' . $actual_title  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
+					$this->addLog('<a href="' . $city_url . $city_path . '?title=' . $actual_title  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a> removed');
 				}
 			}
 		}
