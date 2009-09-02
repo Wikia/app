@@ -112,6 +112,7 @@ span._moz_dirty
 
 .imageOverlayCenter {
 	right: 50%;
+	top: 4px;
 }
 
 .imageOverlayRight {
