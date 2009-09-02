@@ -16,7 +16,7 @@ $wgExtensionCredits['other'][] = array(
 global $wgWikiaImagesFoundInTemplates;
 
 // minimal and default widths for placeholder box
-define('IMG_PLC_MIN_WIDTH', 100);
+define('IMG_PLC_MIN_WIDTH', 150);
 define('IMG_PLC_DEF_WIDTH', 150);
 
 $dir = dirname(__FILE__).'/';
