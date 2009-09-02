@@ -33,7 +33,7 @@ function ImagePlaceholderFetchTemplateAndTitle( $text, $finalTitle ) {
         global $wgContLang, $wgWikiaImagesFoundInTemplates;
         $img_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsg( 'imgplc-placeholder' );
 	// todo NS_IMAGE!
-	
+
         if ($text !== false) {
                 $count = 0;
                 $text = str_replace( $img_tag, 'File:Template_Placeholder', $text, $count );
@@ -63,11 +63,11 @@ function ImagePlaceholderTranslateNsImage() {
 // this function is to bypass the default MW parameter handling, because it assumes we have an actual file on the way
 // it passes $params array by reference to be used later
 function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( $parser, $title, $parts, $params, $time, $descQuery, $options ) {
-	// we have to ready the parameters and then fire up makeLink, heh	
+	// we have to ready the parameters and then fire up makeLink, heh
 	// other way parameters are mangled
 
 	if( !ImagePlaceholderIsPlaceholder( $title->getText() ) ){
-		return true;		
+		return true;
 	}
 	global $wgContLang;
 	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );
@@ -84,32 +84,32 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( $parser, $title, $
 	$horizAlign = array( 'left', 'right', 'center', 'none' );
 	$caption = '';
 	$params['handler']['options'] = $options;
-		
+
 	foreach( $parts as $part ) {
 		if( 'thumb' == $part ) {
 			$params['frame']['thumbnail'] = '';
 		} elseif ( 'frame' == $part ) {
-			$params['frame']['frame'] = '';			
+			$params['frame']['frame'] = '';
 		} elseif( in_array( $part, $horizAlign ) ) {
 			$params['frame']['align'] = $part;
 			$params['horizAlign'][$part] = '';
 		} elseif( 0 === strpos( $part, 'link=' ) ) {
 			$params['frame']['link'] = substr( $part, 5 );
 		} elseif( preg_match( '/^([0-9]*)x([0-9]*)\s*(?:px)?\s*$/', $part, $m ) ) { // width we have
-			$params['handler']['width'] = intval( $m[1] ) ;											
-		} elseif ( preg_match( '/^[0-9]*\s*(?:px)?\s*$/', $part ) ) {			
+			$params['handler']['width'] = intval( $m[1] ) ;
+		} elseif ( preg_match( '/^[0-9]*\s*(?:px)?\s*$/', $part ) ) {
 			$params['handler']['width'] = intval( $part );
 		} else if( ( $plc_tag != $part ) && ( $img_tag != $part ) ) {
 			$params['frame']['caption'] = $part;
-		}		
+		}
 	}
 
-	return false;	
+	return false;
 }
 
 function ImagePlaceholderParserBeforeStrip($parser, $text, $strip_state) {
 	global $wgWikiaImagePlaceholderId;
-	
+
 	$wgWikiaImagePlaceholderId = 0;
 	return true;
 }
@@ -131,7 +131,7 @@ function ImagePlaceholder_makeDullImage( $title, $options, $holders = false ) {
 	return '';
 }
 
-// generate the placeholder box based on given parameters 
+// generate the placeholder box based on given parameters
 function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) {
 
 	wfProfileIn(__METHOD__);
@@ -147,7 +147,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		$refid = Wysiwyg_GetRefId($options, true); // strip refid
 	}
 	$plc_tag = '';
-	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );	
+	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );
 	( isset( $hp['options'] ) && ( '' != $hp['options'] ) ) ? $wikitext = '[[' . $plc_tag . '|' . $hp['options'] . ']]' : $wikitext = '[[' . $plc_tag . ']]';
 
 	$prefix = $postfix = '';
@@ -168,7 +168,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		if( $width < IMG_PLC_MIN_WIDTH ) {
 			$width = IMG_PLC_MIN_WIDTH;
 		}
-		$iswidth = $width; 
+		$iswidth = $width;
 	} else {
 		$width = IMG_PLC_DEF_WIDTH;
 	}
@@ -187,7 +187,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 			('left' == $fp['align']) ? $isalign = 1 : $isalign = 2;
 		}
 	} else {
-		( $thumb || $frame ) ? $align = 'right' : $align = ''; 
+		( $thumb || $frame ) ? $align = 'right' : $align = '';
 	}
 	// set margin accordingly to alignment, identical to normal Image: -- RT#21368
 	// FIXME: this REALLY should be done in a class
@@ -198,7 +198,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		} else {
 			$margin = 'margin: 0.5em 1.4em 1.2em 0;';
 		}
-	}	
+	}
 
 	if ( isset( $fp['caption'] ) ) {
 	        $caption = $fp['caption'];
@@ -214,15 +214,23 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	// this is for positioning the "Add Image" button
 	$lmarg = ceil( ( $width - 90 ) / 2 );
 	$tmarg = ceil( ( $height - 30 ) / 2 );
-	
+
         // macbre: Wysiwyg support for video placeholder
         if (!empty($wgWysiwygParserEnabled)) {
 		$refid = Wysiwyg_SetRefId('image_add', array( 'width' => $iswidth, 'height' => $height, 'isAlign' => $isalign, 'isThumb' => $isthumb, 'original' => $wikitext, 'caption' => $caption, 'link' => $link ), false, true);
         } else {
 		$onclick = 'WET.byStr(\'articleAction/imageplaceholder\');$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )';
         }
-	
+
 	// FIXME: argh! inline styles! Move to classes someday... --TOR
+	$margin = '';
+	if( isset( $align ) ) {
+		if ( $align == 'right' ) {
+			$margin = 'margin: 0.5em 0 1.2em 1.4em;';
+		} else {
+			$margin = 'margin: 0.5em 1.4em 1.2em 0;';
+		}
+	}
 
 	// render HTML (RT #21087)
 	$out = '';
@@ -240,7 +248,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$out .= Xml::openElement('div', $wrapperAttribs);
 	$out .= Xml::openElement('div', array(
 		'class' => "thumb t{$align} videobox", // TODO: maybe change class name (videobox)
-		'style' => "height: {$height}px; width: {$width}px",
+		'style' => "height: {$height}px; width: {$width}px; {$margin}",
 	));
 
 	// "Add video" green button
