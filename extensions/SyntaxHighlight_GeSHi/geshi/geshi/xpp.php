@@ -4,7 +4,7 @@
  * -------
  * Author: Simon Butcher (simon@butcher.name)
  * Copyright: (c) 2007 Simon Butcher (http://simon.butcher.name/)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2007/02/27
  *
  * Axapta/Dynamics Ax X++ language file for GeSHi.
@@ -227,7 +227,6 @@ $language_data = array (
             'intvname',
             'intvmax',
             'int64str',
-            'int64str',
             'indexstr',
             'indexnum',
             'indexname2id',
@@ -415,6 +414,10 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => '',
+        4 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

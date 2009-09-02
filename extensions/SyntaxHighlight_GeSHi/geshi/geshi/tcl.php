@@ -4,7 +4,7 @@
  * ---------------------------------
  * Author: Reid van Melle (rvanmelle@gmail.com)
  * Copyright: (c) 2004 Reid van Melle (sorry@nowhere)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2006/05/05
  *
  * TCL/iTCL language file for GeSHi.
@@ -60,24 +60,23 @@ $language_data = array (
     'QUOTEMARKS' => array('"', "'"),
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
-
         /*
-        ** Set 1: reserved words
-        ** http://python.org/doc/current/ref/keywords.html
-        */
+         * Set 1: reserved words
+         * http://python.org/doc/current/ref/keywords.html
+         */
         1 => array(
             'proc', 'global', 'upvar', 'if', 'then', 'else', 'elseif', 'for', 'foreach',
             'break', 'continue', 'while', 'set', 'eval', 'case', 'in', 'switch',
-            'default', 'exit', 'error', 'proc', 'return', 'uplevel', 'loop',
+            'default', 'exit', 'error', 'return', 'uplevel', 'loop',
             'for_array_keys', 'for_recursive_glob', 'for_file', 'unwind_protect',
             'expr', 'catch', 'namespace', 'rename', 'variable',
             // itcl
             'method', 'itcl_class', 'public', 'protected'),
 
         /*
-        ** Set 2: builtins
-        ** http://asps.activatestate.com/ASPN/docs/ActiveTcl/8.4/tcl/tcl_2_contents.htm
-        */
+         * Set 2: builtins
+         * http://asps.activatestate.com/ASPN/docs/ActiveTcl/8.4/tcl/tcl_2_contents.htm
+         */
         2 => array(
             // string handling
             'append', 'binary', 'format', 're_syntax', 'regexp', 'regsub',
@@ -85,8 +84,6 @@ $language_data = array (
             // list handling
             'concat', 'join', 'lappend', 'lindex', 'list', 'llength', 'lrange',
             'lreplace', 'lsearch', 'lset', 'lsort', 'split',
-            // math
-            'expr',
             // procedures and output
             'incr', 'close', 'eof', 'fblocked', 'fconfigure', 'fcopy', 'file',
             'fileevent', 'flush', 'gets', 'open', 'puts', 'read', 'seek',
@@ -98,7 +95,7 @@ $language_data = array (
             // library routines
             'enconding', 'http', 'msgcat',
             // system related
-            'cd', 'clock', 'exec', 'exit', 'glob', 'pid', 'pwd', 'time',
+            'cd', 'clock', 'exec', 'glob', 'pid', 'pwd', 'time',
             // platform specified
             'dde', 'registry', 'resource',
             // special variables
@@ -109,36 +106,35 @@ $language_data = array (
             ),
 
         /*
-        ** Set 3: standard library
-        */
+         * Set 3: standard library
+         */
         3 => array(
-            'comment', 'dde', 'filename', 'http', 'library', 'memory',
-            'packagens', 'registry', 'resource', 'tcltest', 'tclvars',
+            'comment', 'filename', 'library', 'packagens', 'tcltest', 'tclvars',
             ),
 
         /*
-        ** Set 4: special methods
-        */
+         * Set 4: special methods
+         */
 //        4 => array(
 //            )
 
         ),
     'SYMBOLS' => array(
-            '(', ')', '[', ']', '{', '}', '$', '*', '&', '%', '!', ';', '<', '>', '?'
+        '(', ')', '[', ']', '{', '}', '$', '*', '&', '%', '!', ';', '<', '>', '?'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
         1 => true,
         2 => true,
         3 => true,
-        4 => true
+//        4 => true
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #ff7700;font-weight:bold;',    // Reserved
             2 => 'color: #008000;',                        // Built-ins + self
             3 => 'color: #dc143c;',                        // Standard lib
-            4 => 'color: #0000cd;'                        // Special methods
+//            4 => 'color: #0000cd;'                        // Special methods
             ),
         'COMMENTS' => array(
             1 => 'color: #808080; font-style: italic;',
@@ -170,6 +166,10 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => '',
+//        4 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
@@ -186,7 +186,7 @@ $language_data = array (
         ),
     'PARSER_CONTROL' => array(
         'COMMENTS' => array(
-           'DISALLOWED_BEFORE' => '\\'
+            'DISALLOWED_BEFORE' => '\\'
         )
     )
 );

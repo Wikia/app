@@ -4,7 +4,7 @@
  * ----------
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/06/04
  *
  * C# language file for GeSHi.
@@ -41,7 +41,7 @@
  *
  ************************************************************************************/
 
- $language_data = array (
+$language_data = array (
     'LANG_NAME' => 'C#',
     'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
     'COMMENT_MULTI' => array('/*' => '*/'),
@@ -52,7 +52,8 @@
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'HARDQUOTE' => array('@"', '"'),
-    'HARDESCAPE' => array('""'),
+    'HARDESCAPE' => array('"'),
+    'HARDCHAR' => '"',
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
@@ -60,9 +61,10 @@
             'default', 'do', 'else', 'event', 'explicit', 'extern', 'false',
             'finally', 'fixed', 'for', 'foreach', 'goto', 'if', 'implicit',
             'in', 'internal', 'lock', 'namespace', 'null', 'operator', 'out',
-            'override', 'params', 'private', 'protected', 'public', 'readonly',
-            'ref', 'return', 'sealed', 'stackalloc', 'static', 'switch', 'this',
-            'throw', 'true', 'try', 'unsafe', 'using', 'virtual', 'void', 'while'
+            'override', 'params', 'partial', 'private', 'protected', 'public',
+            'readonly', 'ref', 'return', 'sealed', 'stackalloc', 'static',
+            'switch', 'this', 'throw', 'true', 'try', 'unsafe', 'using',
+            'virtual', 'void', 'while'
             ),
         2 => array(
             '#elif', '#endif', '#endregion', '#else', '#error', '#define', '#if',
@@ -192,13 +194,15 @@
             'MULTI' => 'color: #008080; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
-            0 => 'color: #008080; font-weight: bold;'
+            0 => 'color: #008080; font-weight: bold;',
+            'HARD' => 'color: #008080; font-weight: bold;'
             ),
         'BRACKETS' => array(
             0 => 'color: #000000;'
             ),
         'STRINGS' => array(
-            0 => 'color: #666666;'
+            0 => 'color: #666666;',
+            'HARD' => 'color: #666666;'
             ),
         'NUMBERS' => array(
             0 => 'color: #FF0000;'
@@ -219,7 +223,8 @@
         1 => '',
         2 => '',
         3 => 'http://www.google.com/search?q={FNAMEL}+msdn.microsoft.com',
-        4 => ''
+        4 => '',
+        5 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
@@ -236,8 +241,8 @@
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
         'KEYWORDS' => array(
-            'DISALLOWED_BEFORE' => "a-zA-Z0-9\$_\|\#>|^",
-            'DISALLOWED_AFTER' => "a-zA-Z0-9_<\|%\\-"
+            'DISALLOWED_BEFORE' => "(?<![a-zA-Z0-9\$_\|\#>|^])",
+            'DISALLOWED_AFTER' => "(?![a-zA-Z0-9_<\|%\\-])"
         )
     )
 );

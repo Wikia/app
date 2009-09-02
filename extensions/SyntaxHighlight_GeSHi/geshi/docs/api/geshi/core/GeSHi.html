@@ -8,7 +8,7 @@
 			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
 		</head>
 		<body>
-			<div class="page-body">			
+			<div class="page-body">			
 <h2 class="class-name"><img src="../../media/images/Class_logo.png"
 														alt=" Class"
 														title=" Class"
@@ -31,7 +31,7 @@
 				<li><span class="field">copyright:</span> (C) 2004 - 2007 Nigel McNie, (C) 2007 - 2008 Benny Baumann</li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_geshi.php.html">/geshi.php</a> (line <span class="field">158</span>)
+			Located in <a class="field" href="_geshi.php.html">/geshi.php</a> (line <span class="field"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a253">253</a></span>)
 		</p>
 		
 				
@@ -52,11 +52,11 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																<div class="method-definition">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								<div class="method-definition">
 					<img src="../../media/images/Constructor.png" alt=" "/>
 											<span class="method-result">GeSHi</span>
 										<a href="#GeSHi" title="details" class="method-name">GeSHi</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$source</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$language</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$path</span> = <span class="var-default">''</span>])
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$source</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$language</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$path</span> = <span class="var-default">''</span>])
 									</div>
 																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
@@ -121,6 +121,12 @@
 																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
 											<span class="method-result">void</span>
+										<a href="#enable_multiline_span" title="details" class="method-name">enable_multiline_span</a>
+											(<span class="var-type">boolean</span>&nbsp;<span class="var-name">$flag</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
 										<a href="#enable_strict_mode" title="details" class="method-name">enable_strict_mode</a>
 											([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$mode</span> = <span class="var-default">true</span>])
 									</div>
@@ -141,6 +147,12 @@
 											<span class="method-result">void</span>
 										<a href="#get_language_name_from_extension" title="details" class="method-name">get_language_name_from_extension</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$extension</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$lookup</span> = <span class="var-default">array()</span>])
+									</div>
+																<div class="method-definition">
+					<img src="../../media/images/Method.png" alt=" "/>
+											<span class="method-result">bool</span>
+										<a href="#get_multiline_span" title="details" class="method-name">get_multiline_span</a>
+										()
 									</div>
 																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
@@ -175,6 +187,12 @@
 																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
 											<span class="method-result">void</span>
+										<a href="#optimize_keyword_group" title="details" class="method-name">optimize_keyword_group</a>
+											(<span class="var-type">int</span>&nbsp;<span class="var-name">$key</span>)
+									</div>
+																<div class="method-definition">
+					<img src="../../media/images/Method.png" alt=" "/>
+											<span class="method-result">void</span>
 										<a href="#parse_code" title="details" class="method-name">parse_code</a>
 										()
 									</div>
@@ -182,7 +200,7 @@
 					<img src="../../media/images/Method.png" alt=" "/>
 											<span class="method-result">void</span>
 										<a href="#remove_keyword" title="details" class="method-name">remove_keyword</a>
-											(<span class="var-type">int</span>&nbsp;<span class="var-name">$key</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$word</span>)
+											(<span class="var-type">int</span>&nbsp;<span class="var-name">$key</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$word</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$recompile</span> = <span class="var-default">true</span>])
 									</div>
 																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
@@ -308,7 +326,7 @@
 					<img src="../../media/images/Method.png" alt=" "/>
 											<span class="method-result">void</span>
 										<a href="#set_language" title="details" class="method-name">set_language</a>
-											(<span class="var-type">string</span>&nbsp;<span class="var-name">$language</span>)
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$language</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$force_reset</span> = <span class="var-default">false</span>])
 									</div>
 																<div class="method-definition">
 					<img src="../../media/images/Method.png" alt=" "/>
@@ -468,7 +486,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Constructor.png" />
-		<span class="method-title">Constructor GeSHi</span> (line <span class="line-number">438</span>)
+		<span class="method-title">Constructor GeSHi</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a591">591</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -482,7 +500,7 @@
 		<span class="method-name">
 			GeSHi
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$source</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$language</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$path</span> = <span class="var-default">''</span>])
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$source</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$language</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$path</span> = <span class="var-default">''</span>])
 			</div>
 	
 			<ul class="parameters">
@@ -495,7 +513,7 @@
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$path</span><span class="var-description">: The path to the language file directory. <strong>This
-               is deprecated!</strong> I've backported the auto path                detection from the 1.1.X dev branch, so now it                should be automatically set correctly. If you have                renamed the language directory however, you will                still need to set the path using this parameter or                <a href="../../geshi/core/GeSHi.html#methodset_language_path">GeSHi::set_language_path()</a></span>			</li>
+               is deprecated!</strong> I've backported the auto path                detection from the 1.1.X dev branch, so now it                should be automatically set correctly. If you have                renamed the language directory however, you will                still need to set the path using this parameter or                GeSHi->set_language_path()</span>			</li>
 				</ul>
 		
 			
@@ -505,7 +523,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">add_keyword</span> (line <span class="line-number">1190</span>)
+		<span class="method-title">add_keyword</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1441">1441</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -538,7 +556,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">add_keyword_group</span> (line <span class="line-number">1215</span>)
+		<span class="method-title">add_keyword_group</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1487">1487</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -577,7 +595,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">disable_highlighting</span> (line <span class="line-number">1062</span>)
+		<span class="method-title">disable_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1288">1288</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -604,7 +622,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">enable_classes</span> (line <span class="line-number">606</span>)
+		<span class="method-title">enable_classes</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a805">805</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -634,7 +652,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">enable_highlighting</span> (line <span class="line-number">1076</span>)
+		<span class="method-title">enable_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1302">1302</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -666,7 +684,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">enable_ids</span> (line <span class="line-number">1355</span>)
+		<span class="method-title">enable_ids</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1652">1652</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -696,7 +714,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">enable_important_blocks</span> (line <span class="line-number">1345</span>)
+		<span class="method-title">enable_important_blocks</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1642">1642</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -728,7 +746,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">enable_inner_code_block</span> (line <span class="line-number">1283</span>)
+		<span class="method-title">enable_inner_code_block</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1581">1581</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -758,7 +776,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">enable_keyword_links</span> (line <span class="line-number">1449</span>)
+		<span class="method-title">enable_keyword_links</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1756">1756</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -788,7 +806,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">enable_line_numbers</span> (line <span class="line-number">678</span>)
+		<span class="method-title">enable_line_numbers</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a878">878</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -817,12 +835,43 @@
 		
 			
 	</div>
-<a name="methodenable_strict_mode" id="enable_strict_mode"><!-- --></a>
+<a name="methodenable_multiline_span" id="enable_multiline_span"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">enable_strict_mode</span> (line <span class="line-number">1049</span>)
+		<span class="method-title">enable_multiline_span</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a896">896</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets wether spans and other HTML markup generated by GeSHi can  span over multiple lines or not. Defaults to true to reduce overhead.</p>
+<p class="description"><p>Set it to false if you want to manipulate the output or manually display  the code in an ordered list.</p></p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 1.0.7.22</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			enable_multiline_span
+		</span>
+					(<span class="var-type">boolean</span>&nbsp;<span class="var-name">$flag</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$flag</span><span class="var-description">: Wether multiline spans are allowed or not</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodenable_strict_mode" id="enable_strict_mode"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../../media/images/Method.png" />
+		<span class="method-title">enable_strict_mode</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1275">1275</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -848,11 +897,11 @@
 			
 	</div>
 <a name="methoderror" id="error"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">error</span> (line <span class="line-number">451</span>)
+		<span class="method-title">error</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a608">608</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -874,11 +923,11 @@
 			
 	</div>
 <a name="methodget_language_name" id="get_language_name"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">get_language_name</span> (line <span class="line-number">473</span>)
+		<span class="method-title">get_language_name</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a632">632</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -900,11 +949,11 @@
 			
 	</div>
 <a name="methodget_language_name_from_extension" id="get_language_name_from_extension"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">get_language_name_from_extension</span> (line <span class="line-number">1103</span>)
+		<span class="method-title">get_language_name_from_extension</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1329">1329</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -934,12 +983,37 @@
 		
 			
 	</div>
+<a name="methodget_multiline_span" id="get_multiline_span"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<img src="../../media/images/Method.png" />
+		<span class="method-title">get_multiline_span</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a906">906</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Get current setting for multiline spans, see GeSHi-&gt;enable_multiline_span().</p>
+	<ul class="tags">
+				<li><span class="field">see:</span> <a href="../../geshi/core/GeSHi.html#methodenable_multiline_span">GeSHi::enable_multiline_span()</a></li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">bool</span>
+		<span class="method-name">
+			get_multiline_span
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
 <a name="methodget_real_tab_width" id="get_real_tab_width"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">get_real_tab_width</span> (line <span class="line-number">1033</span>)
+		<span class="method-title">get_real_tab_width</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1258">1258</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -965,7 +1039,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">get_stylesheet</span> (line <span class="line-number">2886</span>)
+		<span class="method-title">get_stylesheet</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a4177">4177</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -996,7 +1070,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">get_time</span> (line <span class="line-number">2429</span>)
+		<span class="method-title">get_time</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a3524">3524</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1022,7 +1096,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">highlight_lines_extra</span> (line <span class="line-number">1370</span>)
+		<span class="method-title">highlight_lines_extra</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1670">1670</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1047,7 +1121,7 @@
 				<span class="var-name">$lines</span><span class="var-description">: An array of line numbers to highlight, or just a line               number on its own.</span>			</li>
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$style</span><span class="var-description">: A string specifying the style to use for this line</span>			</li>
+				<span class="var-name">$style</span><span class="var-description">: A string specifying the style to use for this line.               If null is specified, the default style is used.               If false is specified, the line will be removed from               special highlighting</span>			</li>
 				</ul>
 		
 			
@@ -1057,7 +1131,7 @@
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">load_from_file</span> (line <span class="line-number">1173</span>)
+		<span class="method-title">load_from_file</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1425">1425</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1090,12 +1164,42 @@
 		
 			
 	</div>
-<a name="methodparse_code" id="parse_code"><!-- --></a>
+<a name="methodoptimize_keyword_group" id="optimize_keyword_group"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">parse_code</span> (line <span class="line-number">1463</span>)
+		<span class="method-title">optimize_keyword_group</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1529">1529</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">compile optimized regexp list for keyword group</p>
+	<ul class="tags">
+				<li><span class="field">since:</span> 1.0.8</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			optimize_keyword_group
+		</span>
+					(<span class="var-type">int</span>&nbsp;<span class="var-name">$key</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">int</span>
+				<span class="var-name">$key</span><span class="var-description">: The key of the keyword group to compile &amp; optimize</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodparse_code" id="parse_code"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<img src="../../media/images/Method.png" />
+		<span class="method-title">parse_code</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1992">1992</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1117,11 +1221,11 @@
 			
 	</div>
 <a name="methodremove_keyword" id="remove_keyword"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">remove_keyword</span> (line <span class="line-number">1201</span>)
+		<span class="method-title">remove_keyword</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1466">1466</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1135,7 +1239,7 @@
 		<span class="method-name">
 			remove_keyword
 		</span>
-					(<span class="var-type">int</span>&nbsp;<span class="var-name">$key</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$word</span>)
+					(<span class="var-type">int</span>&nbsp;<span class="var-name">$key</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$word</span>, [<span class="var-type">bool</span>&nbsp;<span class="var-name">$recompile</span> = <span class="var-default">true</span>])
 			</div>
 	
 			<ul class="parameters">
@@ -1145,16 +1249,19 @@
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$word</span><span class="var-description">: The word to remove from the keyword group</span>			</li>
+					<li>
+				<span class="var-type">bool</span>
+				<span class="var-name">$recompile</span><span class="var-description">: Wether to automatically recompile the optimized regexp list or not.                Note: if you set this to false and @see GeSHi-&gt;parse_code() was already called once,                for the current language, you have to manually call @see GeSHi-&gt;optimize_keyword_group()                or the removed keyword will stay in cache and still be highlighted! On the other hand                it might be too expensive to recompile the regexp list for every removal if you want to                remove a lot of keywords.</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodremove_keyword_group" id="remove_keyword_group"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">remove_keyword_group</span> (line <span class="line-number">1229</span>)
+		<span class="method-title">remove_keyword_group</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1512">1512</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1180,11 +1287,11 @@
 			
 	</div>
 <a name="methodset_brackets_highlighting" id="set_brackets_highlighting"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_brackets_highlighting</span> (line <span class="line-number">811</span>)
+		<span class="method-title">set_brackets_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1036">1036</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1212,11 +1319,11 @@
 			
 	</div>
 <a name="methodset_brackets_style" id="set_brackets_style"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_brackets_style</span> (line <span class="line-number">792</span>)
+		<span class="method-title">set_brackets_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1018">1018</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1247,11 +1354,11 @@
 			
 	</div>
 <a name="methodset_case_keywords" id="set_case_keywords"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_case_keywords</span> (line <span class="line-number">992</span>)
+		<span class="method-title">set_case_keywords</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1216">1216</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1278,11 +1385,11 @@
 			
 	</div>
 <a name="methodset_case_sensitivity" id="set_case_sensitivity"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_case_sensitivity</span> (line <span class="line-number">978</span>)
+		<span class="method-title">set_case_sensitivity</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1202">1202</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1311,11 +1418,11 @@
 			
 	</div>
 <a name="methodset_code_style" id="set_code_style"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_code_style</span> (line <span class="line-number">625</span>)
+		<span class="method-title">set_code_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a824">824</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1345,11 +1452,11 @@
 			
 	</div>
 <a name="methodset_comments_highlighting" id="set_comments_highlighting"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_comments_highlighting</span> (line <span class="line-number">745</span>)
+		<span class="method-title">set_comments_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a972">972</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1378,11 +1485,11 @@
 			
 	</div>
 <a name="methodset_comments_style" id="set_comments_style"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_comments_style</span> (line <span class="line-number">729</span>)
+		<span class="method-title">set_comments_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a957">957</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1414,11 +1521,11 @@
 			
 	</div>
 <a name="methodset_encoding" id="set_encoding"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_encoding</span> (line <span class="line-number">1437</span>)
+		<span class="method-title">set_encoding</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1744">1744</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1445,11 +1552,11 @@
 			
 	</div>
 <a name="methodset_escape_characters_highlighting" id="set_escape_characters_highlighting"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_escape_characters_highlighting</span> (line <span class="line-number">774</span>)
+		<span class="method-title">set_escape_characters_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1000">1000</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1475,11 +1582,11 @@
 			
 	</div>
 <a name="methodset_escape_characters_style" id="set_escape_characters_style"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_escape_characters_style</span> (line <span class="line-number">759</span>)
+		<span class="method-title">set_escape_characters_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a986">986</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1508,11 +1615,11 @@
 			
 	</div>
 <a name="methodset_footer_content" id="set_footer_content"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_footer_content</span> (line <span class="line-number">1252</span>)
+		<span class="method-title">set_footer_content</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1550">1550</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1538,11 +1645,11 @@
 			
 	</div>
 <a name="methodset_footer_content_style" id="set_footer_content_style"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_footer_content_style</span> (line <span class="line-number">1272</span>)
+		<span class="method-title">set_footer_content_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1570">1570</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1568,11 +1675,11 @@
 			
 	</div>
 <a name="methodset_header_content" id="set_header_content"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_header_content</span> (line <span class="line-number">1242</span>)
+		<span class="method-title">set_header_content</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1540">1540</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1598,11 +1705,11 @@
 			
 	</div>
 <a name="methodset_header_content_style" id="set_header_content_style"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_header_content_style</span> (line <span class="line-number">1262</span>)
+		<span class="method-title">set_header_content_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1560">1560</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1628,11 +1735,11 @@
 			
 	</div>
 <a name="methodset_header_type" id="set_header_type"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_header_type</span> (line <span class="line-number">546</span>)
+		<span class="method-title">set_header_type</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a746">746</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1659,11 +1766,11 @@
 			
 	</div>
 <a name="methodset_highlight_lines_extra_style" id="set_highlight_lines_extra_style"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_highlight_lines_extra_style</span> (line <span class="line-number">1392</span>)
+		<span class="method-title">set_highlight_lines_extra_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1699">1699</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1689,11 +1796,11 @@
 			
 	</div>
 <a name="methodset_important_styles" id="set_important_styles"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_important_styles</span> (line <span class="line-number">1333</span>)
+		<span class="method-title">set_important_styles</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1630">1630</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1719,11 +1826,11 @@
 			
 	</div>
 <a name="methodset_keyword_group_highlighting" id="set_keyword_group_highlighting"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_keyword_group_highlighting</span> (line <span class="line-number">714</span>)
+		<span class="method-title">set_keyword_group_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a942">942</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1752,11 +1859,11 @@
 			
 	</div>
 <a name="methodset_keyword_group_style" id="set_keyword_group_style"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_keyword_group_style</span> (line <span class="line-number">698</span>)
+		<span class="method-title">set_keyword_group_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a921">921</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1788,17 +1895,18 @@
 			
 	</div>
 <a name="methodset_language" id="set_language"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_language</span> (line <span class="line-number">497</span>)
+		<span class="method-title">set_language</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a659">659</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Sets the language for this object</p>
 	<ul class="tags">
 				<li><span class="field">since:</span> 1.0.0</li>
+				<li><span class="field">note:</span> since 1.0.8 this function won't reset language-settings by default anymore!        if you need this set $force_reset = true</li>
 			</ul>
 	
 	<div class="method-signature">
@@ -1806,23 +1914,26 @@
 		<span class="method-name">
 			set_language
 		</span>
-					(<span class="var-type">string</span>&nbsp;<span class="var-name">$language</span>)
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$language</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$force_reset</span> = <span class="var-default">false</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$language</span><span class="var-description">: The name of the language to use</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$force_reset</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodset_language_path" id="set_language_path"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_language_path</span> (line <span class="line-number">525</span>)
+		<span class="method-title">set_language_path</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a703">703</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1849,11 +1960,11 @@
 			
 	</div>
 <a name="methodset_line_ending" id="set_line_ending"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_line_ending</span> (line <span class="line-number">1402</span>)
+		<span class="method-title">set_line_ending</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1709">1709</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1879,11 +1990,11 @@
 			
 	</div>
 <a name="methodset_line_style" id="set_line_style"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_line_style</span> (line <span class="line-number">646</span>)
+		<span class="method-title">set_line_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a844">844</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1915,11 +2026,11 @@
 			
 	</div>
 <a name="methodset_link_styles" id="set_link_styles"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_link_styles</span> (line <span class="line-number">1308</span>)
+		<span class="method-title">set_link_styles</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1606">1606</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1948,11 +2059,11 @@
 			
 	</div>
 <a name="methodset_link_target" id="set_link_target"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_link_target</span> (line <span class="line-number">1318</span>)
+		<span class="method-title">set_link_target</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1616">1616</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -1978,11 +2089,11 @@
 			
 	</div>
 <a name="methodset_methods_highlighting" id="set_methods_highlighting"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_methods_highlighting</span> (line <span class="line-number">937</span>)
+		<span class="method-title">set_methods_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1162">1162</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2008,11 +2119,11 @@
 			
 	</div>
 <a name="methodset_methods_style" id="set_methods_style"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_methods_style</span> (line <span class="line-number">922</span>)
+		<span class="method-title">set_methods_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1148">1148</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2045,11 +2156,11 @@
 			
 	</div>
 <a name="methodset_numbers_highlighting" id="set_numbers_highlighting"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_numbers_highlighting</span> (line <span class="line-number">905</span>)
+		<span class="method-title">set_numbers_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1131">1131</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2075,11 +2186,11 @@
 			
 	</div>
 <a name="methodset_numbers_style" id="set_numbers_style"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_numbers_style</span> (line <span class="line-number">890</span>)
+		<span class="method-title">set_numbers_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1117">1117</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2108,11 +2219,11 @@
 			
 	</div>
 <a name="methodset_overall_class" id="set_overall_class"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_overall_class</span> (line <span class="line-number">584</span>)
+		<span class="method-title">set_overall_class</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a783">783</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2138,11 +2249,11 @@
 			
 	</div>
 <a name="methodset_overall_id" id="set_overall_id"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_overall_id</span> (line <span class="line-number">595</span>)
+		<span class="method-title">set_overall_id</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a794">794</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2168,11 +2279,11 @@
 			
 	</div>
 <a name="methodset_overall_style" id="set_overall_style"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_overall_style</span> (line <span class="line-number">567</span>)
+		<span class="method-title">set_overall_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a767">767</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2201,11 +2312,11 @@
 			
 	</div>
 <a name="methodset_regexps_highlighting" id="set_regexps_highlighting"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_regexps_highlighting</span> (line <span class="line-number">967</span>)
+		<span class="method-title">set_regexps_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1191">1191</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2234,11 +2345,11 @@
 			
 	</div>
 <a name="methodset_regexps_style" id="set_regexps_style"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_regexps_style</span> (line <span class="line-number">951</span>)
+		<span class="method-title">set_regexps_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1176">1176</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2270,11 +2381,11 @@
 			
 	</div>
 <a name="methodset_source" id="set_source"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_source</span> (line <span class="line-number">486</span>)
+		<span class="method-title">set_source</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a645">645</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2300,11 +2411,11 @@
 			
 	</div>
 <a name="methodset_strings_highlighting" id="set_strings_highlighting"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_strings_highlighting</span> (line <span class="line-number">876</span>)
+		<span class="method-title">set_strings_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1103">1103</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2330,11 +2441,11 @@
 			
 	</div>
 <a name="methodset_strings_style" id="set_strings_style"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_strings_style</span> (line <span class="line-number">861</span>)
+		<span class="method-title">set_strings_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1089">1089</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2363,11 +2474,11 @@
 			
 	</div>
 <a name="methodset_symbols_highlighting" id="set_symbols_highlighting"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_symbols_highlighting</span> (line <span class="line-number">845</span>)
+		<span class="method-title">set_symbols_highlighting</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1071">1071</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2393,11 +2504,11 @@
 			
 	</div>
 <a name="methodset_symbols_style" id="set_symbols_style"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_symbols_style</span> (line <span class="line-number">826</span>)
+		<span class="method-title">set_symbols_style</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1051">1051</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2429,11 +2540,11 @@
 			
 	</div>
 <a name="methodset_tab_width" id="set_tab_width"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_tab_width</span> (line <span class="line-number">1007</span>)
+		<span class="method-title">set_tab_width</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1231">1231</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2460,11 +2571,11 @@
 			
 	</div>
 <a name="methodset_url_for_keyword_group" id="set_url_for_keyword_group"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_url_for_keyword_group</span> (line <span class="line-number">1296</span>)
+		<span class="method-title">set_url_for_keyword_group</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1594">1594</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2493,11 +2604,11 @@
 			
 	</div>
 <a name="methodset_use_language_tab_width" id="set_use_language_tab_width"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">set_use_language_tab_width</span> (line <span class="line-number">1022</span>)
+		<span class="method-title">set_use_language_tab_width</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1247">1247</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2523,11 +2634,11 @@
 			
 	</div>
 <a name="methodstart_line_numbers_at" id="start_line_numbers_at"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<img src="../../media/images/Method.png" />
-		<span class="method-title">start_line_numbers_at</span> (line <span class="line-number">1421</span>)
+		<span class="method-title">start_line_numbers_at</span> (line <span class="line-number"><a href="../../__filesource/fsource_geshi_core_geshi.php.html#a1728">1728</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -2559,7 +2670,7 @@
 
 	
 	<p class="notes" id="credit">
-		Documentation generated on Sun, 23 Mar 2008 13:36:21 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.1</a>
+		Documentation generated on Thu, 25 Dec 2008 14:34:52 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
 	</p>
 	</div></body>
-</html>
+</html>

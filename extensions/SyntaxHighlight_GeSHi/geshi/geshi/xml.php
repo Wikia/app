@@ -4,7 +4,7 @@
  * -------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/09/01
  *
  * XML language file for GeSHi. Based on the idea/file by Christian Weiske
@@ -47,16 +47,7 @@
 $language_data = array (
     'LANG_NAME' => 'XML',
     'COMMENT_SINGLE' => array(),
-//    'COMMENT_MULTI' => array('<!--' => '-->'),
-    'COMMENT_REGEXP' => array(
-        //XML comments
-        1 => '/<!--(?!-->).+?-->/s',
-        //CDATA escaping
-        2 => '/<!\[CDATA\[(?:(?!\]\]>).)+\]\]>/sU',
-        //Non-XML-data
-        3 => '/(?<=\>|;|^)[^<&]+?(?=\<|&|$)/sU',
-        4 => '/(&(?!;).*?;)/'
-        ),
+    'COMMENT_MULTI' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '',
@@ -71,11 +62,6 @@ $language_data = array (
         'KEYWORDS' => array(
             ),
         'COMMENTS' => array(
-//            'MULTI' => 'color: #808080; font-style: italic;'
-            1 => 'color: #808080; font-style: italic;',
-            2 => 'color: #404040; font-style: italic;',
-            3 => 'color: #000000;',
-            4 => 'color: #400000; font-weight: bold;'
             ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
@@ -95,10 +81,11 @@ $language_data = array (
             0 => 'color: #66cc66;'
             ),
         'SCRIPT' => array(
-//            0 => 'color: #00bbdd;',
-//            1 => 'color: #ddbb00;',
-//            2 => 'color: #339933;',
-//            3 => 'color: #009900;'
+            -1 => 'color: #808080; font-style: italic;', // comments
+            0 => 'color: #00bbdd;',
+            1 => 'color: #ddbb00;',
+            2 => 'color: #339933;',
+            3 => 'color: #009900;'
             ),
         'REGEXPS' => array(
             0 => 'color: #000066;',
@@ -113,14 +100,14 @@ $language_data = array (
         ),
     'REGEXPS' => array(
         0 => array(//attribute names
-            GESHI_SEARCH => '([a-z_\-:]+)(=)',
+            GESHI_SEARCH => '([a-z_:][\w\-\.:]*)(=)',
             GESHI_REPLACE => '\\1',
             GESHI_MODIFIERS => 'i',
             GESHI_BEFORE => '',
             GESHI_AFTER => '\\2'
             ),
         1 => array(//Initial header line
-            GESHI_SEARCH => '(&lt;[\/?|(\?xml)]?[a-z0-9_\-:]*(\??&gt;)?)',
+            GESHI_SEARCH => '(&lt;[\/?|(\?xml)]?[a-z_:][\w\-\.:]*(\??&gt;)?)',
             GESHI_REPLACE => '\\1',
             GESHI_MODIFIERS => 'i',
             GESHI_BEFORE => '',
@@ -134,9 +121,11 @@ $language_data = array (
             GESHI_AFTER => ''
             ),
         ),
-    'STRICT_MODE_APPLIES' => GESHI_NEVER,
+    'STRICT_MODE_APPLIES' => GESHI_ALWAYS,
     'SCRIPT_DELIMITERS' => array(
-/*
+        -1 => array(
+            '<!--' => '-->'
+            ),
         0 => array(
             '<!DOCTYPE' => '>'
             ),
@@ -149,13 +138,13 @@ $language_data = array (
         3 => array(
             '<' => '>'
             )
-*/
     ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
-//        0 => false,
-//        1 => false,
-//        2 => false,
-//        3 => true
+        -1 => false,
+        0 => false,
+        1 => false,
+        2 => false,
+        3 => true
         ),
     'TAB_WIDTH' => 2,
     'PARSER_CONTROL' => array(

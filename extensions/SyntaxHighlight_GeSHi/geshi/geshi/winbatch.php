@@ -4,7 +4,7 @@
  * ------------
  * Author: Craig Storey (storey.craig@gmail.com)
  * Copyright: (c) 2004 Craig Storey (craig.xcottawa.ca)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2006/05/19
  *
  * WinBatch language file for GeSHi.
@@ -355,7 +355,7 @@ $language_data = array (
         5 => ''
         ),
     'OOLANG' => false,
-    'OBJECT_SPLITTER' => '',
+    'OBJECT_SPLITTERS' => array(),
     'REGEXPS' => array(//Variable names
         0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
         ),

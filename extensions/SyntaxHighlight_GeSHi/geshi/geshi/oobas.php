@@ -4,7 +4,7 @@
  * ---------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/08/30
  *
  * OpenOffice.org Basic language file for GeSHi.
@@ -61,11 +61,11 @@ $language_data = array (
             'filelen','getattr','kill','mkdir','name','rmdir','setattr',
             'dateserial','datevalue','day','month','weekday','year','cdatetoiso',
             'cdatefromiso','hour','minute','second','timeserial','timevalue',
-            'date','now','time','timer','erl','err','error','on','error','goto','resume',
+            'date','now','time','timer','erl','err','error','on','goto','resume',
             'and','eqv','imp','not','or','xor','mod','atn','cos','sin','tan','log',
             'exp','rnd','randomize','sqr','fix','int','abs','sgn','hex','oct',
             'it','then','else','select','case','iif','do','loop','for','next','to',
-            'while','wend','gosub','return','goto','on','goto','call','choose','declare',
+            'while','wend','gosub','return','call','choose','declare',
             'end','exit','freelibrary','function','rem','stop','sub','switch','with',
             'cbool','cdate','cdbl','cint','clng','const','csng','cstr','defbool',
             'defdate','defdbl','defint','deflng','asc','chr','str','val','cbyte',
@@ -117,6 +117,7 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

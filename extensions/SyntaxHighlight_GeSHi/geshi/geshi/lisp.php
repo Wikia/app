@@ -4,7 +4,7 @@
  * --------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/08/30
  *
  * Generic Lisp language file for GeSHi.
@@ -50,34 +50,39 @@ $language_data = array (
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
-          'not','defun','princ',
-          'eval','apply','funcall','quote','identity','function',
-          'complement','backquote','lambda','set','setq','setf',
-          'defun','defmacro','gensym','make','symbol','intern',
-          'symbol','name','symbol','value','symbol','plist','get',
-          'getf','putprop','remprop','hash','make','array','aref',
-          'car','cdr','caar','cadr','cdar','cddr','caaar','caadr','cadar',
-          'caddr','cdaar','cdadr','cddar','cdddr','caaaar','caaadr',
-          'caadar','caaddr','cadaar','cadadr','caddar','cadddr',
-          'cdaaar','cdaadr','cdadar','cdaddr','cddaar','cddadr',
-          'cdddar','cddddr','cons','list','append','reverse','last','nth',
-          'nthcdr','member','assoc','subst','sublis','nsubst',
-          'nsublis','remove','length','list','length',
-          'mapc','mapcar','mapl','maplist','mapcan','mapcon','rplaca',
-          'rplacd','nconc','delete','atom','symbolp','numberp',
-          'boundp','null','listp','consp','minusp','zerop','plusp',
-          'evenp','oddp','eq','eql','equal','cond','case','and','or',
-          'let','l','if','prog','prog1','prog2','progn','go','return',
-          'do','dolist','dotimes','catch','throw','error','cerror','break',
-          'continue','errset','baktrace','evalhook','truncate','float',
-          'rem','min','max','abs','sin','cos','tan','expt','exp','sqrt',
-          'random','logand','logior','logxor','lognot','bignums','logeqv',
-          'lognand','lognor','logorc2','logtest','logbitp','logcount',
-          'integer','length','nil'
+            'not','defun','princ','when',
+            'eval','apply','funcall','quote','identity','function',
+            'complement','backquote','lambda','set','setq','setf',
+            'defmacro','gensym','make','symbol','intern',
+            'name','value','plist','get',
+            'getf','putprop','remprop','hash','array','aref',
+            'car','cdr','caar','cadr','cdar','cddr','caaar','caadr','cadar',
+            'caddr','cdaar','cdadr','cddar','cdddr','caaaar','caaadr',
+            'caadar','caaddr','cadaar','cadadr','caddar','cadddr',
+            'cdaaar','cdaadr','cdadar','cdaddr','cddaar','cddadr',
+            'cdddar','cddddr','cons','list','append','reverse','last','nth',
+            'nthcdr','member','assoc','subst','sublis','nsubst',
+            'nsublis','remove','length',
+            'mapc','mapcar','mapl','maplist','mapcan','mapcon','rplaca',
+            'rplacd','nconc','delete','atom','symbolp','numberp',
+            'boundp','null','listp','consp','minusp','zerop','plusp',
+            'evenp','oddp','eq','eql','equal','cond','case','and','or',
+            'let','l','if','prog','prog1','prog2','progn','go','return',
+            'do','dolist','dotimes','catch','throw','error','cerror','break',
+            'continue','errset','baktrace','evalhook','truncate','float',
+            'rem','min','max','abs','sin','cos','tan','expt','exp','sqrt',
+            'random','logand','logior','logxor','lognot','bignums','logeqv',
+            'lognand','lognor','logorc2','logtest','logbitp','logcount',
+            'integer','nil','parse-integer'
             )
         ),
     'SYMBOLS' => array(
-        '(', ')', '{', '}', '[', ']', '!', '%', '^', '&', '/','+','-','*','=','<','>',';','|'
+        '(', ')', '{', '}', '[', ']',
+        '!', '%', '^', '&',
+        ' + ',' - ',' * ',' / ',
+        '=','<','>',
+        '.',':',',',';',
+        '|'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -116,10 +121,11 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(
-            '::', ':'
+        '::', ':'
         ),
     'REGEXPS' => array(
         ),
@@ -127,6 +133,11 @@ $language_data = array (
     'SCRIPT_DELIMITERS' => array(
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
+        ),
+    'PARSER_CONTROL' => array(
+        'OOLANG' => array(
+            'MATCH_AFTER' => '[a-zA-Z][a-zA-Z0-9_\-]*'
+            )
         )
 );
 

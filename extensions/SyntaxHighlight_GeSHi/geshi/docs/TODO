@@ -1,4 +1,3 @@
-
        TODO - List of things to do as of 2005/01/29
 
 Suggestions for things to add are welcome, if you have a feature request you
@@ -11,19 +10,24 @@ Or to the feature request tracker:
 http://sourceforge.net/tracker/?group_id=114997&atid=670234
 
 
-  TODO for version 1.0.8
+  TODO for version 1.0.8.x
 
-- Rewrite parse_code method and parse_non_string_part method to use build
-  rather than replace method of highlighting. This should speed things up
-  while making highlighting much "safer"
 - Rework the load_from_file method and the one for getting a file extension,
   as documented in the source.
 - use analogous vars to $next_comment_regexp_pos for more GeSHi structures,
   should reduce number of functions called and hence improve performance
 - make a set of default colours which can be used in the language files.
   this way we can give languages a uniform look and maybe even add "themes"
+- Get better coverage in our coderepo
+- README / INSTALL / ... file for phpdoc integration => take geshi-doc.*?
+- rework HARDQUOTE + styles, currently this is a bit of a mess imo (milian)
+- Allow per-keywordgroup AutoCaps/NoCaps
+- Complete API to support latest features
+    set_number_style ($key missing)
+    set_string_style ($key missing)
+    set_case_keywords (support for per_keywordgroup AutoCaps)
 
-  
+
   TODO for version 1.2.0
 
 - Rewrite engine to use remove/replace method (will hopefully almost
@@ -64,4 +68,4 @@ http://sourceforge.net/tracker/?group_id=114997&atid=670234
   and that script would redirect to the correct location.
   [BETTER FIX IN 1.2]
 
-              $Id: TODO 1402 2008-07-10 16:38:02Z benbe $
+              $Id: TODO 1727 2008-08-08 13:36:52Z benbe $

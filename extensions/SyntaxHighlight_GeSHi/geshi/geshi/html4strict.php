@@ -4,7 +4,7 @@
  * ---------------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/07/10
  *
  * HTML 4.01 strict language file for GeSHi.
@@ -52,115 +52,54 @@
 $language_data = array (
     'LANG_NAME' => 'HTML',
     'COMMENT_SINGLE' => array(),
-    'COMMENT_MULTI' => array('<!--' => '-->'),
+    'COMMENT_MULTI' => array(),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'ESCAPE_CHAR' => '',
     'KEYWORDS' => array(
-        1 => array(
-            ),
         2 => array(
-            '&lt;a&gt;', '&lt;abbr&gt;', '&lt;acronym&gt;', '&lt;address&gt;', '&lt;applet&gt;',
-            '&lt;a', '&lt;abbr', '&lt;acronym', '&lt;address', '&lt;applet',
-            '&lt;/a&gt;', '&lt;/abbr&gt;', '&lt;/acronym&gt;', '&lt;/address&gt;', '&lt;/applet&gt;',
-            '&lt;/a', '&lt;/abbr', '&lt;/acronym', '&lt;/address', '&lt;/applet',
+            'a', 'abbr', 'acronym', 'address', 'applet',
 
-            '&lt;base&gt;', '&lt;basefont&gt;', '&lt;bdo&gt;', '&lt;big&gt;', '&lt;blockquote&gt;', '&lt;body&gt;', '&lt;br&gt;', '&lt;button&gt;', '&lt;b&gt;',
-            '&lt;base', '&lt;basefont', '&lt;bdo', '&lt;big', '&lt;blockquote', '&lt;body', '&lt;br', '&lt;button', '&lt;b',
-            '&lt;/base&gt;', '&lt;/basefont&gt;', '&lt;/bdo&gt;', '&lt;/big&gt;', '&lt;/blockquote&gt;', '&lt;/body&gt;', '&lt;/br&gt;', '&lt;/button&gt;', '&lt;/b&gt;',
-            '&lt;/base', '&lt;/basefont', '&lt;/bdo', '&lt;/big', '&lt;/blockquote', '&lt;/body', '&lt;/br', '&lt;/button', '&lt;/b',
+            'base', 'basefont', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'b',
 
-            '&lt;caption&gt;', '&lt;center&gt;', '&lt;cite&gt;', '&lt;code&gt;', '&lt;colgroup&gt;', '&lt;col&gt;',
-            '&lt;caption', '&lt;center', '&lt;cite', '&lt;code', '&lt;colgroup', '&lt;col',
-            '&lt;/caption&gt;', '&lt;/center&gt;', '&lt;/cite&gt;', '&lt;/code&gt;', '&lt;/colgroup&gt;', '&lt;/col&gt;',
-            '&lt;/caption', '&lt;/center', '&lt;/cite', '&lt;/code', '&lt;/colgroup', '&lt;/col',
+            'caption', 'center', 'cite', 'code', 'colgroup', 'col',
 
-            '&lt;dd&gt;', '&lt;del&gt;', '&lt;dfn&gt;', '&lt;dir&gt;', '&lt;div&gt;', '&lt;dl&gt;', '&lt;dt&gt;',
-            '&lt;dd', '&lt;del', '&lt;dfn', '&lt;dir', '&lt;div', '&lt;dl', '&lt;dt',
-            '&lt;/dd&gt;', '&lt;/del&gt;', '&lt;/dfn&gt;', '&lt;/dir&gt;', '&lt;/div&gt;', '&lt;/dl&gt;', '&lt;/dt&gt;',
-            '&lt;/dd', '&lt;/del', '&lt;/dfn', '&lt;/dir', '&lt;/div', '&lt;/dl', '&lt;/dt',
+            'dd', 'del', 'dfn', 'dir', 'div', 'dl', 'dt',
 
-            '&lt;em&gt;',
-            '&lt;em',
-            '&lt;/em&gt;',
-            '&lt;/em',
+            'em',
 
-            '&lt;fieldset&gt;', '&lt;font&gt;', '&lt;form&gt;', '&lt;frame&gt;', '&lt;frameset&gt;',
-            '&lt;fieldset', '&lt;font', '&lt;form', '&lt;frame', '&lt;frameset',
-            '&lt;/fieldset&gt;', '&lt;/font&gt;', '&lt;/form&gt;', '&lt;/frame&gt;', '&lt;/frameset&gt;',
-            '&lt;/fieldset', '&lt;/font', '&lt;/form', '&lt;/frame', '&lt;/frameset',
+            'fieldset', 'font', 'form', 'frame', 'frameset',
 
-            '&lt;h1&gt;', '&lt;h2&gt;', '&lt;h3&gt;', '&lt;h4&gt;', '&lt;h5&gt;', '&lt;h6&gt;', '&lt;head&gt;', '&lt;hr&gt;', '&lt;html&gt;',
-            '&lt;h1', '&lt;h2', '&lt;h3', '&lt;h4', '&lt;h5', '&lt;h6', '&lt;head', '&lt;hr', '&lt;html',
-            '&lt;/h1&gt;', '&lt;/h2&gt;', '&lt;/h3&gt;', '&lt;/h4&gt;', '&lt;/h5&gt;', '&lt;/h6&gt;', '&lt;/head&gt;', '&lt;/hr&gt;', '&lt;/html&gt;',
-            '&lt;/h1', '&lt;/h2', '&lt;/h3', '&lt;/h4', '&lt;/h5', '&lt;/h6', '&lt;/head', '&lt;/hr', '&lt;/html',
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'hr', 'html',
 
-            '&lt;iframe&gt;', '&lt;ilayer&gt;', '&lt;img&gt;', '&lt;input&gt;', '&lt;ins&gt;', '&lt;isindex&gt;', '&lt;i&gt;',
-            '&lt;iframe', '&lt;ilayer', '&lt;img', '&lt;input', '&lt;ins', '&lt;isindex', '&lt;i',
-            '&lt;/iframe&gt;', '&lt;/ilayer&gt;', '&lt;/img&gt;', '&lt;/input&gt;', '&lt;/ins&gt;', '&lt;/isindex&gt;', '&lt;/i&gt;',
-            '&lt;/iframe', '&lt;/ilayer', '&lt;/img', '&lt;/input', '&lt;/ins', '&lt;/isindex', '&lt;/i',
+            'iframe', 'ilayer', 'img', 'input', 'ins', 'isindex', 'i',
 
-            '&lt;kbd&gt;',
-            '&lt;kbd',
-            '&t;/kbd&gt;',
-            '&lt;/kbd',
+            'kbd',
 
-            '&lt;label&gt;', '&lt;legend&gt;', '&lt;link&gt;', '&lt;li&gt;',
-            '&lt;label', '&lt;legend', '&lt;link', '&lt;li',
-            '&lt;/label&gt;', '&lt;/legend&gt;', '&lt;/link&gt;', '&lt;/li&gt;',
-            '&lt;/label', '&lt;/legend', '&lt;/link', '&lt;/li',
+            'label', 'legend', 'link', 'li',
 
-            '&lt;map&gt;', '&lt;meta&gt;',
-            '&lt;map', '&lt;meta',
-            '&lt;/map&gt;', '&lt;/meta&gt;',
-            '&lt;/map', '&lt;/meta',
+            'map', 'meta',
 
-            '&lt;noframes&gt;', '&lt;noscript&gt;',
-            '&lt;noframes', '&lt;noscript',
-            '&lt;/noframes&gt;', '&lt;/noscript&gt;',
-            '&lt;/noframes', '&lt;/noscript',
+            'noframes', 'noscript',
 
-            '&lt;object&gt;', '&lt;ol&gt;', '&lt;optgroup&gt;', '&lt;option&gt;',
-            '&lt;object', '&lt;ol', '&lt;optgroup', '&lt;option',
-            '&lt;/object&gt;', '&lt;/ol&gt;', '&lt;/optgroup&gt;', '&lt;/option&gt;',
-            '&lt;/object', '&lt;/ol', '&lt;/optgroup', '&lt;/option',
+            'object', 'ol', 'optgroup', 'option',
 
-            '&lt;param&gt;', '&lt;pre&gt;', '&lt;p&gt;',
-            '&lt;param', '&lt;pre', '&lt;p',
-            '&lt;/param&gt;', '&lt;/pre&gt;', '&lt;/p&gt;',
-            '&lt;/param', '&lt;/pre', '&lt;/p',
+            'param', 'pre', 'p',
 
-            '&lt;q&gt;',
-            '&lt;q',
-            '&lt;/q&gt;',
-            '&lt;/q',
+            'q',
 
-            '&lt;samp&gt;', '&lt;script&gt;', '&lt;select&gt;', '&lt;small&gt;', '&lt;span&gt;', '&lt;strike&gt;', '&lt;strong&gt;', '&lt;style&gt;', '&lt;sub&gt;', '&lt;sup&gt;', '&lt;s&gt;',
-            '&lt;samp', '&lt;script', '&lt;select', '&lt;small', '&lt;span', '&lt;strike', '&lt;strong', '&lt;style', '&lt;sub', '&lt;sup', '&lt;s',
-            '&lt;/samp&gt;', '&lt;/script&gt;', '&lt;/select&gt;', '&lt;/small&gt;', '&lt;/span&gt;', '&lt;/strike&gt;', '&lt;/strong&gt;', '&lt;/style&gt;', '&lt;/sub&gt;', '&lt;/sup&gt;', '&lt;/s&gt;',
-            '&lt;/samp', '&lt;/script', '&lt;/select', '&lt;/small', '&lt;/span', '&lt;/strike', '&lt;/strong', '&lt;/style', '&lt;/sub', '&lt;/sup', '&lt;/s',
+            'samp', 'script', 'select', 'small', 'span', 'strike', 'strong', 'style', 'sub', 'sup', 's',
 
-            '&lt;table&gt;', '&lt;tbody&gt;', '&lt;td&gt;', '&lt;textarea&gt;', '&lt;text&gt;', '&lt;tfoot&gt;', '&lt;thead&gt;', '&lt;th&gt;', '&lt;title&gt;', '&lt;tr&gt;', '&lt;tt&gt;',
-            '&lt;table', '&lt;tbody', '&lt;td', '&lt;textarea', '&lt;text', '&lt;tfoot', '&lt;tfoot', '&lt;thead', '&lt;th', '&lt;title', '&lt;tr', '&lt;tt',
-            '&lt;/table&gt;', '&lt;/tbody&gt;', '&lt;/td&gt;', '&lt;/textarea&gt;', '&lt;/text&gt;', '&lt;/tfoot&gt;', '&lt;/thead', '&lt;/tfoot', '&lt;/th&gt;', '&lt;/title&gt;', '&lt;/tr&gt;', '&lt;/tt&gt;',
-            '&lt;/table', '&lt;/tbody', '&lt;/td', '&lt;/textarea', '&lt;/text', '&lt;/tfoot', '&lt;/tfoot', '&lt;/thead', '&lt;/th', '&lt;/title', '&lt;/tr', '&lt;/tt',
+            'table', 'tbody', 'td', 'textarea', 'text', 'tfoot', 'thead', 'th', 'title', 'tr', 'tt',
 
-            '&lt;ul&gt;', '&lt;u&gt;',
-            '&lt;ul', '&lt;u',
-            '&lt;/ul&gt;', '&lt;/u&gt;',
-            '&lt;/ul', '&lt;/u',
+            'ul', 'u',
 
-            '&lt;var&gt;',
-            '&lt;var',
-            '&lt;/var&gt;',
-            '&lt;/var',
-
-            '&gt;', '&lt;'
+            'var',
             ),
         3 => array(
             'abbr', 'accept-charset', 'accept', 'accesskey', 'action', 'align', 'alink', 'alt', 'archive', 'axis',
             'background', 'bgcolor', 'border',
-            'cellpadding', 'cellspacing', 'char', 'char', 'charoff', 'charset', 'checked', 'cite', 'class', 'classid', 'clear', 'code', 'codebase', 'codetype', 'color', 'cols', 'colspan', 'compact', 'content', 'coords',
+            'cellpadding', 'cellspacing', 'char', 'charoff', 'charset', 'checked', 'cite', 'class', 'classid', 'clear', 'code', 'codebase', 'codetype', 'color', 'cols', 'colspan', 'compact', 'content', 'coords',
             'data', 'datetime', 'declare', 'defer', 'dir', 'disabled',
             'enctype',
             'face', 'for', 'frame', 'frameborder',
@@ -184,18 +123,15 @@ $language_data = array (
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-        1 => false,
         2 => false,
         3 => false,
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
-            1 => 'color: #b1b100;',
             2 => 'color: #000000; font-weight: bold;',
             3 => 'color: #000066;'
             ),
         'COMMENTS' => array(
-            'MULTI' => 'color: #808080; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
@@ -215,6 +151,7 @@ $language_data = array (
             0 => 'color: #66cc66;'
             ),
         'SCRIPT' => array(
+            -1 => 'color: #808080; font-style: italic;', // comments
             0 => 'color: #00bbdd;',
             1 => 'color: #ddbb00;',
             2 => 'color: #009900;'
@@ -223,7 +160,6 @@ $language_data = array (
             )
         ),
     'URLS' => array(
-        1 => '',
         2 => 'http://december.com/html/4/element/{FNAMEL}.html',
         3 => ''
         ),
@@ -234,6 +170,9 @@ $language_data = array (
         ),
     'STRICT_MODE_APPLIES' => GESHI_ALWAYS,
     'SCRIPT_DELIMITERS' => array(
+        -1 => array(
+            '<!--' => '-->'
+            ),
         0 => array(
             '<!DOCTYPE' => '>'
             ),
@@ -245,11 +184,20 @@ $language_data = array (
             )
     ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
+        -1 => false,
         0 => false,
         1 => false,
         2 => true
         ),
-    'TAB_WIDTH' => 4
+    'TAB_WIDTH' => 4,
+    'PARSER_CONTROL' => array(
+        'KEYWORDS' => array(
+            2 => array(
+                'DISALLOWED_BEFORE' => '(?<=&lt;|&lt;\/)',
+                'DISALLOWED_AFTER' => '(?=\s|\/|&gt;)',
+            )
+        )
+    )
 );
 
 ?>

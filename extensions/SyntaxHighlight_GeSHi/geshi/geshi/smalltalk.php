@@ -4,7 +4,7 @@
  * --------
  * Author: Bananeweizen (Bananeweizen@gmx.de)
  * Copyright: (c) 2005 Bananeweizen (www.bananeweizen.de)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2005/03/27
  *
  * Smalltalk language file for GeSHi.
@@ -94,13 +94,14 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
         ),
     'REGEXPS' => array(
         0 => array(
-            GESHI_SEARCH => '([^a-zA-Z0-9_#])([A-Z]+[a-zA-Z0-9_]*)', //class names
+            GESHI_SEARCH => '([^a-zA-Z0-9_#<])([A-Z]+[a-zA-Z0-9_]*)(?!>)', //class names
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '\\1',
@@ -121,7 +122,7 @@ $language_data = array (
             GESHI_AFTER => ''
             ),
         3 => array(
-            GESHI_SEARCH => '\|([a-zA-Z0-9_\s]+)\|', //temporary variables
+            GESHI_SEARCH => '<PIPE>([a-zA-Z0-9_\s]+)<PIPE>', //temporary variables
             GESHI_REPLACE => '\\1',
             GESHI_MODIFIERS => '',
             GESHI_BEFORE => '|',
@@ -135,7 +136,7 @@ $language_data = array (
             GESHI_AFTER => ''
             ),
         5 => array(
-            GESHI_SEARCH => '([:(,=[.*/+-]\s*)([a-zA-Z0-9_]+)', //message parameters, message receivers
+            GESHI_SEARCH => '([:(,=[.*\/+-]\s*)([a-zA-Z0-9_]+)', //message parameters, message receivers
             GESHI_REPLACE => '\\2',
             GESHI_MODIFIERS => 's',
             GESHI_BEFORE => '\\1',

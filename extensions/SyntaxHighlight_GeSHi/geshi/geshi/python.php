@@ -4,13 +4,15 @@
  * ----------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/08/30
  *
  * Python language file for GeSHi.
  *
  * CHANGES
  * -------
+ * 2008/12/18
+ *  -  Added missing functions and keywords. Also added two new Python 3.0 types. SF#2441839
  * 2005/05/26
  *  -  Modifications by Tim (tim@skreak.com): added more keyword categories, tweaked colors
  * 2004/11/27 (1.0.1)
@@ -58,7 +60,7 @@ $language_data = array (
         1 => array(
             'and', 'del', 'for', 'is', 'raise', 'assert', 'elif', 'from', 'lambda', 'return', 'break',
             'else', 'global', 'not', 'try', 'class', 'except', 'if', 'or', 'while', 'continue', 'exec',
-            'import', 'pass', 'yield', 'def', 'finally', 'in', 'print'
+            'import', 'pass', 'yield', 'def', 'finally', 'in', 'print', 'with', 'as'
             ),
 
         /*
@@ -71,7 +73,7 @@ $language_data = array (
             'file', 'filter', 'float', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash', 'help',
             'hex', 'id', 'input', 'int', 'isinstance', 'issubclass', 'iter', 'len', 'list', 'locals',
             'long', 'map', 'max', 'min', 'object', 'oct', 'open', 'ord', 'pow', 'property', 'range',
-            'raw_input', 'reduce', 'reload', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice',
+            'raw_input', 'reduce', 'reload', 'reversed', 'round', 'set', 'setattr', 'slice',
             'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'unichr', 'unicode',
             'vars', 'xrange', 'zip',
             // Built-in constants: http://python.org/doc/current/lib/node35.html
@@ -87,7 +89,9 @@ $language_data = array (
             'UserWarning', 'DeprecationWarning', 'PendingDeprecationWarning', 'SyntaxWarning',
             'RuntimeWarning', 'FutureWarning',
             // self: this is a common python convention (but not a reserved word)
-            'self'
+            'self',
+            // other
+            'any', 'all'
             ),
 
         /*
@@ -99,7 +103,7 @@ $language_data = array (
             'array', 'asynchat', 'asyncore', 'atexit', 'audioop', 'base64', 'BaseHTTPServer',
             'Bastion', 'binascii', 'binhex', 'bisect', 'bsddb', 'bz2', 'calendar', 'cd', 'cgi',
             'CGIHTTPServer', 'cgitb', 'chunk', 'cmath', 'cmd', 'code', 'codecs', 'codeop',
-            'collections', 'colorsys', 'commands', 'compileall', 'compiler', 'compiler',
+            'collections', 'colorsys', 'commands', 'compileall', 'compiler',
             'ConfigParser', 'Cookie', 'cookielib', 'copy', 'copy_reg', 'cPickle', 'crypt',
             'cStringIO', 'csv', 'curses', 'datetime', 'dbhash', 'dbm', 'decimal', 'DEVICE',
             'difflib', 'dircache', 'dis', 'distutils', 'dl', 'doctest', 'DocXMLRPCServer', 'dumbdbm',
@@ -124,7 +128,9 @@ $language_data = array (
             'tokenize', 'traceback', 'tty', 'turtle', 'types', 'unicodedata', 'unittest', 'urllib2',
             'urllib', 'urlparse', 'user', 'UserDict', 'UserList', 'UserString', 'uu', 'warnings',
             'wave', 'weakref', 'webbrowser', 'whichdb', 'whrandom', 'winsound', 'xdrlib', 'xml',
-            'xmllib', 'xmlrpclib', 'zipfile', 'zipimport', 'zlib'
+            'xmllib', 'xmlrpclib', 'zipfile', 'zipimport', 'zlib',
+            // Python 3.0
+            'bytes', 'bytearray'
             ),
 
         /*
@@ -161,10 +167,9 @@ $language_data = array (
             '__long__','__lshift__',
             '__mod__','__mul__','__neg__','__oct__','__or__','__pos__','__pow__',
             '__radd__','__rdiv__','__rdivmod__','__rmod__','__rpow__','__rlshift__','__rrshift__',
-            '__rshift__','__rsub__','__rmul__','__repr__','__rand__','__rxor__','__ror__',
+            '__rshift__','__rsub__','__rmul__','__rand__','__rxor__','__ror__',
             '__sub__','__xor__'
             )
-
         ),
     'SYMBOLS' => array(
             '(', ')', '[', ']', '{', '}', '*', '&', '%', '!', ';', '<', '>', '?', '`'
@@ -211,6 +216,10 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => '',
+        4 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

@@ -4,7 +4,7 @@
  * ------------------------
  * Author: Richard Civil (info@richardcivil.net)
  * Copyright: (c) 2008 Richard Civil (info@richardcivil.net), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2008/04/12
  *
  * LotusScript language file for GeSHi.
@@ -136,7 +136,8 @@ $language_data = array (
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-        1 => false
+        1 => false,
+        2 => false
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
@@ -168,6 +169,10 @@ $language_data = array (
             ),
         'REGEXPS' => array(
             )
+        ),
+    'URLS' => array(
+        1 => '',
+        2 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

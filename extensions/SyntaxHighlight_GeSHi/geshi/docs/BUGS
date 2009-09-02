@@ -1,10 +1,7 @@
 
                       BUGS - list of known bugs in GeSHi
-                               Version 1.0.7.22
+                                Version 1.0.8
 
-- Putting a > inside an HTML comment will close the comment abruptly. There's nothing that
-  can be done about this (at least in the 1.0.X series of GeSHi), but version 1.2 will fix
-  this bug. Likewise for putting ?> inside a PHP string when in strict mode.
 - Number highlighting is quite poor [possibly better now]
 - I'm not happy with URLS - there still could be extra bugs, and it's rather unflexible
   (see TODO for a possible fix)

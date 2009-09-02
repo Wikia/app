@@ -4,10 +4,10 @@
  * -----------
  * Author: G�nter Dannoritzer <dannoritzer@web.de>
  * Copyright: (C) 2008 Guenter Dannoritzer
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2008/05/28
  *
- * Verilog language file for GeSHi
+ * Verilog language file for GeSHi.
  *
  * CHANGES
  * -------
@@ -53,7 +53,7 @@ $language_data = array (
             'casex', 'casez', 'cmos', 'deassign', 'default', 'defparam',
             'disable', 'edge', 'else', 'end', 'endcase', 'endfunction',
             'endmodule', 'endprimitive', 'endspecify', 'endtable', 'endtask',
-            'event', 'for', 'for', 'force', 'forever', 'function', 'highz0',
+            'event', 'for', 'force', 'forever', 'function', 'highz0',
             'highz1', 'if', 'ifnone', 'initial', 'inout', 'input', 'integer',
             'join', 'large', 'macromodule', 'medium', 'module', 'nand',
             'negedge', 'nmos', 'nor', 'not', 'notif0', 'notif1', 'or',
@@ -72,7 +72,7 @@ $language_data = array (
             '$dumpall', '$dumpfile', '$dumpflush', '$dumplimit', '$dumpoff',
             '$dumpon', '$dumpvars',
             '$fclose', '$fdisplay', '$fopen',
-            '$finish', '$fmonitor', '$fopen', '$fstrobe', '$fwrite',
+            '$finish', '$fmonitor', '$fstrobe', '$fwrite',
             '$fgetc', '$ungetc', '$fgets', '$fscanf', '$fread', '$ftell',
             '$fseek', '$frewind', '$ferror', '$fflush', '$feof',
             '$random',
@@ -100,8 +100,7 @@ $language_data = array (
         GESHI_COMMENTS => false,
         1 => false,
         2 => false,
-        3 => false,
-        4 => false,
+        3 => false
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
@@ -111,7 +110,6 @@ $language_data = array (
             ),
         'COMMENTS' => array(
             1 => 'color: #00008B; font-style: italic;',
-            2 => 'color: #00008B;',
             'MULTI' => 'color: #00008B; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
@@ -147,8 +145,7 @@ $language_data = array (
     'URLS' => array(
         1 => '',
         2 => '',
-        3 => '',
-        4 => ''
+        3 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

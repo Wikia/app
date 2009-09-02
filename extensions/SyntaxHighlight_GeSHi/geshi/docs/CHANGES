@@ -12,6 +12,145 @@ modified by me for consistency/bug fixing.
 Please send any bug reports to BenBE@omorphia.de, or use the bug report tracker
 at sourceforge (http://sourceforge.net/tracker/?group_id=114997&atid=670231)
 
+Version 1.0.8.4
+  -  Added language files
+     * BibTeX (Quinn Taylor)
+     * CMake (Daniel Nelson)
+     * Erlang (Benny Baumann, Dan Forest-Barbier, Uwe Dauernheim)
+     * FO (abas-ERP) (Tan-Vinh Nguyen)
+     * Property Files (Edy Hinzen)
+     * Whois (RPSL format) entries (Benny Baumann)
+  -  Changed INT_BASIC number format to allow numbers followed . at EOL (BenBE)
+  -  Higher prority for keywords over regexps (BenBE)
+  -  Added missing set_script_style API function (BenBE)
+  -  Fixed missing check for comment_regexp preference in HardQuotes (BenBE)
+  -  Fixed a problem with Strict Block Detection if the Strict Block Regexp
+     requires matching groups for itself (BenBE)
+  -  Improvements to language files (BenBE)
+     * Added PCRE regexp support for Action script (SF#2655644, BenBE)
+     * Removed some superfluous keywords from ABAP (BenBE)
+     * Removed duplicate keywords for Progress (BenBE)
+     * Removed duplicate keywords for T-SQL (BenBE)
+     * Linking for PowerShell special variables revised (BenBE)
+     * Fixed linking in ColdFusion (BenBE)
+     * Fixed linking in LaTeX (BenBE)
+     * Fixed linking in mIRC Scripting language (BenBE)
+     * Fixed escape char regexp for C-style languages (BenBE)
+     * Fixed @""-string handling for C# (SF#2789371, BenBE)
+     * Fixed Strict Block Detection for PHP blocks (BenBE)
+     * Changed allowed chars around Powershell operators (SF#2688863, BenBE)
+     * Minor reordering inside of PHP language file (BenBE)
+     * Added missing keywords for ActionScript3 language file (SF#2795005, BenBE)
+     * Added .xrc file extension for XML highlighting (BenBE)
+Version 1.0.8.3
+  -  Added language files
+     * DCS (Stelio Passaris)
+     * Locomotive Basic (Nacho Cabanes)
+     * LSL2 (Linden Scripting Language) (William Fry)
+     * Modula-3 (Martin Bishop)
+     * Oberon-2 (Mike Mol)
+     * Rebol (Lecanu Guillaume)
+  -  Fixed a problem where HardEscapes weren't working when no escape char was given (BenBE)
+  -  Added a PARSER_CONTROL setting to treat whitespace inside of keywords in
+     the language file as "any whitespace" in the source (i.e. "CREATE TABLE"
+     in SQL will match "CREATE\s+TABLE" instead of literally matching) (BenBE)
+  -  Added a possibility to allow setting the style for escape characters (BenBE)
+  -  Improvements to language files (BenBE)
+     * Added some missing Perl keywords and obscure default variables (BenBE)
+     * Allow for escaped colons to appear in CSS names (BenBE, simon)
+     * Added multiline continuation suppoert of preprocessor defines for
+       C, C for Mac, C++ and CC++ with Qt support (BenBE)
+     * keywords for C-based languages are case-sensitive (BenBE)
+     * Broken AutoIt highlighting (BenBE)
+     * Problem with escaped backslash in PHP and D (BenBE)
+     * Added some more functions for PHP (BenBE)
+     * Some changes for AppleScript (Stefan Klieme)
+     * Forbid highlighting keywords followed by / in bash (BenBE)
+     * Updated the LaTeX file to link some keywords (BenBE)
+     * Additional text rendered when matching special variables for PowerShell (BenBE)
+     * Added some more keywords for ABAP (BenBE, Sandra Rossi, Jacob Laursen)
+Version 1.0.8.2
+  -  Added language files
+     * Brainfuck \ Brainfork (Benny Baumann)
+     * HQ9+ (Benny Baumann)
+     * INTERCAL (Benny Baumann)
+     * LOLcode (Benny Baumann)
+     * LScript (Beau McGuigan)
+     * Pixel Bender (Richard Olsson)
+     * ProvideX (Jeff Wilder)
+     * VIM Script (Swaroop C H)
+     * Visual Prolog (Thomas Linder Puls)
+     * Whitespace (Benny Baumann)
+  -  Changed priority for COMMENT_REGEXP compared to String highlighting (BenBE)
+  -  Fixed correct escaping of spaces inside of URLs (BenBE)
+  -  Updated the list of common file extensions (BenBE)
+  -  Updated the language file check script in contrib/ (BenBE)
+  -  Fixed a problem with link targets resulting in unclickable links (SF#2379120, BenBE)
+  -  Fixed an undefined variable issue in langcheck.php (BenBE)
+  -  Improvements to language files (BenBE)
+     * eMail Header highlighting now uses the correct delimiters for keywords (BenBE)
+     * eMail (RFC822\mbox) highlighting now highlights IPs, MIME types and
+       subfield assignments correctly (BenBE)
+     * Minor style changes in COBOL to improve loading performance (BenBE)
+     * Added some missing keywords for D (BenBE)
+     * Removed duplicate keywords from Progres, SAS and TSQL (BenBE)
+     * Fixed Heredoc Syntax for Bash (SF#2185319, BenBE)
+     * Moved symbol-lookalike sequences from keyword groups to separate symbol group
+       for languages asp, klonec, klonecpp, php, php-brief (BenBE)
+     * Fixed a lot of duplicate keyword warnings (BenBE)
+     * Added missing keywords to the Python language file,
+       introducing support for Python 3.0. (SF#2441839, milian)
+     * Updated documentation links for TypoScript (SF#2014276, BenBE)
+     * Fixed a problem with tag and attribute names in XML highlighting (SF#2276119, BenBE)
+     * Improved MySQL language file (BenBE, JavaWoman)
+     * Some commentss accidentially mistaken for DocComments (SF#2454897, BenBE)
+     * Added improved Escape Char handling for c, c_mac, cpp and cpp_qt (SF#2458743, BenBE)
+Version 1.0.8.1
+  -  Added language files
+     * AviSynth (Ryan Jones)
+     * eMail \ mbox (Benny Baumann)
+     * GNU Make (Neil Bird)
+     * Oracle 11i support (Simon Redhead)
+     * Prolog (Benny Baumann)
+     * SciLab (Christophe David)
+     * TeraTerm macro language (Boris Maisuradze)
+  -  Added support for Escape Regular Expressions (BenBE)
+     * Implemented C-style Escapes in PHP (BenBE)
+     * Introduced support for \xAB and \007 style Char Escapes in PHP (BenBE)
+     * Implemented Variable Highlighting in PHP (BenBE)
+     * Implemented Variable Highlighting in Bash (milian)
+  -  Fixed a problem with PCRE patterns for Keyword matching sometimes producing
+     very large strings, that could not be handled by some versions of PCRE lib,
+     causing broken highlighting an Regexp Compile errors (BenBE, milian)
+  -  Fixed broken highlighting of bash commands like `dbus-send --dest=org.....`,
+     i.e. the dest was highlighted as variable declaration (milian)
+  -  Fixed broken highlighting of some symbols in their escaped form (BenBE)
+     (<SEMI> and <PIPE> were accidentially filtered even though they are valid)
+  -  Fixed a "memory leak" in the *_regexp_caches (milian)
+  -  Fixed broken Escape chars if classes were disabled
+  -  start_line_numbers_at() was ignored when GESHI_HEADER_PRE_TABLE was set (revulo)
+  -  Fixed a problem allowing Remote Code Inclusion under certain circumstances (BenBE)
+  -  Changes to default CSS in order to make the GESHI_HEADER_PRE_TABLE align properly,
+     even on Windows / Mac systems with strange fonts (milian, revulo, ^RT)
+  -  Minor style changes to the following languages:
+     * cpp-qt (milian)
+     * MySQL (BenBE)
+     * PHP (BenBE)
+  -  Improvements to language files (BenBE, milian)
+     * Added MinSpareThread\MaxSpareThreads to Apache highlighter (BenBE)
+     * Added new Keyword group for APT sources.list highlighter (BenBE)
+     * Fixed highlighting in LaTeX for \begin{} and \end{}, i.e. the stuff inside
+       the curly braces. (milian, thanks for the report go to Matthias Pospiech)
+     * Improved String support for D (BenBE)
+     * MySQL was seriously broken (BenBE)
+     * Reworked Keyword groups for MySQL to allow for more configuration (BenBE)
+     * Improved Mirc script language file (milian)
+     * Improved C++ Qt language file (milian)
+     * Minor bug with Transpose Operator in Matlab (BenBE, Daniele de Rigo)
+     * Highlighting of Batch Files for Windows (BenBE)
+     * Updated AutoIt to include latest changes for AutoIt v3.2.12.1 (BenBE, Thierry)
+     * Fixed duplicate keyword warnings for Perl, Tcl and Typoscript (BenBE)
+     * Fixed Doc-URL getting reparsed by highlighted keywords of other groups (BenBE, Jordi Boggiano)
 Version 1.0.8
   -  Added language files
      * APT sources.list (milian)
@@ -21,15 +160,15 @@ Version 1.0.8
      * Gnuplot (milian)
      * KLoneC (Mickael Auger)
      * KLoneC++ (Mickael Auger)
+     * PIC16xxx assembler (Phil Mattison)
+     * POV-Ray (Carl Fürstenberg)
      * PowerShell (Frode Aarebrot)
+     * Progress (Marco Aurelio de Pasqual)
+     * TypoScript (Jan-Philipp Halle)
      * Xorg configuration (milian)
-  -  setup caches for parsing on demand, makes stylesheet generators fast again (milian)
-  -  reduce strict errors & notices for language files (milian)
-  -  Fixed symbol highlighting with C++ sometimes missing keywords after ; and comments (BenBE)
-  -  Improved comment handling with TCL (Lars Hellström, BenBE)
-  -  Removed explicit escaping of / in Regular Expressions (BenBE)
-  -  Ignoring empty keyword groups when highlighting (milian)
-  -  Broken handling with XML comments (BenBE, SF#1849233)
+  -  Make GeSHi's constructor arguments optional, so something like `$foo = new GeSHi;` is possible. (milian)
+  -  Added an optimizer for lists to regular expressions. Using these cached lists results in a speedup of approx. 50%.
+     The slightly increased memory consumption (~150KB for PHP language file) is more than worth it! (milian)
   -  Some more memory & speed optimizations all over GeSHi (milian)
      * Reduced memory overhead when highlighting keywords (BenBE)
      * Keyword Linking now uses considerably less strtolower calls (milian)
@@ -37,33 +176,84 @@ Version 1.0.8
      * Use more native functions like substr_replace and strcasecmp to speed things up (milian)
      * Use considerably less strlen() calls on various points by caching the results (milian)
      * Properly set comments to be case insensitive where appropriate to increase performance (milian)
-  -  Added an optimizer for lists in regular expressions. Using these cached lists results in a speedup of approx. 50%.
-     The slightly increased memory consumption (~150KB for PHP language file) is more than worth it! (milian)
-  -  Added support for external style information files to override language defaults without modifying language files (BenBE)
-  -  Added PARSER_CONTROL for OOLANG method highlighting (SF#1923060, BenBE)
-  -  Fixed HTML comments spawning multiple lines producing invalid XHTML output (SF#1738173, BenBE)
-  -  Improved overall string support:
-     * Added support for multichar string delimiters (SF#1932083, BenBE)
-     * Multichar Quotemarks sometimes had inconsistent behaviour (BenBE)
-     * Support for multiple styles of strings depending on the starter (BenBE)
-     * Properly handle escapes in strings, i.e. '\\' was not working properly before (milian)
-  -  Added support for parameters beginning with dash in BASH language (BenBE)
-  -  Fixed problems of unfinished strings and comments producing invalid XHTML (SF#1996353, BenBE)
-  -  Fixed some problems with old PHP versions (SF#1975625, milian, BenBE)
-  -  Use spaces instead of tabs for indendation in language files to have a consistent
-     coding standard accross geshi files (milian)
-  -  Make language_permissions configurable in language files via ['PARSER_CONTROL']['ENABLE_FLAGS']
-     this makes is_a calls unneeded and thus prevents PHP notices in PHP 5.x (milian)
-  -  Support Apache's configuration sections, see http://httpd.apache.org/docs/2.2/sections.html (milian)
-  -  Minor issue with PHP Heredoc and Nowdoc syntax sometimes not getting highlighted (BenBE)
-  -  Fixed economy mode for GeSHi::get_stylesheet() - now it just makes so much more sense! (milian)
-  -  Fixed Economy Mode when COMMENT_REGEXP are used (BenBE)
-  -  Some typos and mistakes in the documentation (BenBE)
-  -  Added new GESHI_HEADER_PRE_VALID type which uses the following markup:
+     * Improve the performance of the strict mode tokenizer, making highlighting of languages like
+       HTML, ColdFusion or XML faster (milian)
+     * Setup caches for parsing on demand to make stylesheet generators fast (milian)
+  -  Various improvements to Strict Block Handling (BenBE, milian)
+     * Added support for RegExp-based Strict Blocks (BenBE)
+     * Fixed highlighting incorrectly stopping at ?> in PHP (SF#1330968, BenBE)
+     * Languages with STRICT_MODE_APPLIES = GESHI_MAYBE default to strict mode now. When no highlightable
+       code is found in this mode, we fallback to the same setting as if GESHI_NEVER was set. That way it
+       should not be needed to call enable_strictmode() manually. (milian)
+  -  Added new GESHI_HEADER_PRE_VALID type which uses the following markup: (milian)
      * With line numbers:     <div>header<ol><li><pre>...</pre></li>...</ol></div>
      * Without line numbers:  <pre>header...CODE...</pre>
      => valid HTML and no need for &nbsp; indentation
-
+  -  Added new GESHI_HEADER_PRE_TABLE type which can be used to prevent linenumber-selection in Firefox
+     on copy'n'paste. (milian)
+  -  set_language will not reset any language settings by default anymore.
+     * Added $force_reset param for to force full reload of a language. (milian)
+     * Make sure strict_mode is set properly when doing repeated set_language calls (milian)
+  -  Fixed some problems with old PHP versions (SF#1975625, milian, BenBE)
+  -  Fixed broken use with Suhosin Patch when /e modifier was disabled (SF#2021800, BenBE)
+  -  Added support for external style information files to override language defaults without modifying language files (BenBE)
+  -  The overall_class is now up to the user, and the language-code is _always_ added as a class (milian)
+  -  Fixed Economy Mode for GeSHi::get_stylesheet() - now it just makes so much more sense! (milian)
+  -  Fixed Economy Mode when COMMENT_REGEXP are used (BenBE)
+  -  Changed the default encoding to use UTF-8, due to SF#2037598, BenBE)
+  -  Improved overall string support:
+     * Added support for multichar string delimiters (SF#1932083, BenBE)
+     * Fixed problems of unfinished strings and comments producing invalid XHTML (SF#1996353, BenBE)
+     * Multichar Quotemarks sometimes had inconsistent behaviour (BenBE)
+     * Support for multiple styles of strings depending on the starter (BenBE)
+     * Properly handle escapes in strings, i.e. '\\' was not working properly before (milian)
+     * Fixed escape char support when an escape char is followed by multi-byte chars (SF#2037598, BenBE)
+  -  Improved flexibility in language files (BenBE, milian)
+     * Added PARSER_CONTROL for OOLANG method highlighting (SF#1923060, BenBE)
+     * Added possibility to define strict blocks using an Regexp (BenBE)
+     * Removed explicit escaping of / in Regular Expressions (BenBE)
+     * Ignoring empty keyword groups when highlighting (milian)
+     * Make language_permissions configurable in language files via ['PARSER_CONTROL']['ENABLE_FLAGS']
+       this makes is_a calls unneeded and thus prevents PHP notices in PHP 5.x (milian)
+     * Extended support for number formats now covering the most common formats (SF#1923058, BenBE)
+     * Lifted a limitation that keywords had to have at least 2 subsequent letters (BenBE)
+     * Changed behaviour of PARSER_CONTROL now allowing to provide the full Lookahead and Lookbehind
+       expressions used as delimiters inside keywords instead of a simple char group (BenBE)
+     * Fixed improper handling of newlines in REGEXPS so this does not produce invalid html anylonger (milian)
+  -  Some typos and mistakes in the documentation (BenBE)
+  -  Added a script to contrib/ to verify language files are correct (BenBE)
+  -  Fixed loads of compliancy warnings detected with that automated compliance testing script (BenBE)
+  -  Many other improvements to various language files (BenBE, milian)
+     * Reduce strict errors & notices for language files (milian)
+     * Fixed symbol highlighting with C++ sometimes missing keywords after ; and comments (BenBE)
+     * Improved comment handling with TCL (Lars Hellström, BenBE)
+     * Fixed broken handling with XML comments (BenBE, SF#1849233)
+     * Fixed HTML comments spawning multiple lines producing invalid XHTML output (SF#1738173, BenBE)
+     * Added support for parameters beginning with dash in BASH language (BenBE)
+     * Support Apache's configuration sections, see http://httpd.apache.org/docs/2.2/sections.html (milian)
+     * Minor issue with PHP Heredoc and Nowdoc syntax sometimes not getting highlighted (BenBE)
+     * Updated Objective-C language file (SF#2013961, Quinn Taylor, BenBE)
+     * Added some keywords for VHDL (beshig, BenBE)
+     * Fixed severly broken ColdFusion language file (milian)
+     * Fixed some incorrectly highlighted things with the CSS language file (milian, BenBE)
+     * Improved Smarty language file (milian)
+     * Improved CSS language file (milian)
+     * Improved Pascal language file (milian)
+     * Improved LaTeX language file (Андрей Парамонов, BenBE)
+     * Fixed a regular expression in mIRC language file that caused a warning message to be issued (BenBE)
+     * Removed <, > and / from HTML names, now only containing the real tag names (BenBE)
+     * Use spaces instead of tabs for indendation in language files to have a consistent
+       coding standard accross geshi files (milian)
+     * Added some comment styles, keywords and added index highlighting (Chusslove Illich, Часлав Илић)
+  -  Removed some private methods which were only called at exactly one place (milian)
+     * format_header_content
+     * format_footer_content
+     * get_attributes
+  -  Second part of default style changes. Affected in this release:
+     * C++
+     * C++ (QT)
+     * CSS
+     * VHDL
 Version 1.0.7.22
   -  Added language files
      * glSlang (BenBE)
@@ -520,4 +710,3 @@ Version 1.0.1
      * Pascal (Tux)
 Version 1.0.0
   -  Initial Release
-

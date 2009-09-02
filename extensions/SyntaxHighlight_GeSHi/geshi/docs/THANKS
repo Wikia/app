@@ -55,11 +55,14 @@ PEOPE WHO MADE LANGUAGE FILES
 - ASM                    Tux
 - ASP                    Amit Gupta
 - AutoIT                 mastrboy
+- AviSynth               Ryan Jones
 - Bash                   Andreas Gohr
 - Basic4GL               Matthew Webb
+- BibTeX                 Quinn Taylor
 - BlitzBasic             P�draig O`Connel
 - BNF                    Rowan Rodrik van der Molen
 - Boo                    Marcus Griep
+- Brainfuck \ Brainfork  Benny Baumann
 - C++                    Dennis Bayer, M. Uli Kusterer
 - C++/QT                 Iulian M
 - C#                     Alan Juden
@@ -68,23 +71,31 @@ PEOPE WHO MADE LANGUAGE FILES
 - CadLisp                Roberto Rossi
 - CDFG                   John Horigan
 - CIL                    Marcus Griep
+- CMake                  Daniel Nelson
 - COBOL                  Benny Baumann
 - ColdFusion             Diego
 - D                      Thomas Kuehne
+- DCS                    Stelio Passaris
 - Delphi                 Járja Norbert, Benny Baumann
 - Div                    Gabriel Lorenzo
 - DOS                    Alessandro Staltari
 - Eiffel                 Zoran Simic
+- eMail \ mbox           Benny Baumann
+- Erlang                 Benny Baumann, Dan Forest-Barbier, Uwe Dauernheim
 - FreeBasic              Roberto Rossi
+- FO (abas-ERP)          Tan-Vinh Nguyen
 - Fortran                Cedric Arrabie
 - glSlang                Benny Baumann
 - Gettext                Milian Wolff
+- GNU make               Neil Bird
 - Gnuplot                Milian Wolff
 - GML                    José Jorge Enríquez Rodríguez
 - Groovy                 Ivan F. Villanueva B.
 - Haskell                Dagit
+- HQ9+                   Benny Baumann
 - Ini                    Deguix
 - Inno                   Thomas Klinger
+- INTERCAL               Benny Baumann
 - Java 5                 Clemens Bruckmann
 - Javascript             Ben Keen
 - KiXtart                Riley McArdle
@@ -92,41 +103,63 @@ PEOPE WHO MADE LANGUAGE FILES
 - KLone C++              Mickael Auger
 - LaTeX                  Matthais Pospiech
 - Lisp                   Roberto Rossi
+- Locomotive Basic       Nacho Cabanes
+- LOLcode                Benny Baumann
+- LScript                Beau McGuigan
+- LSL2                   William Fry
 - Lua                    Roberto Rossi
 - m86k                   Benny Baumann
 - mIRC                   Alberto de Areba Sánchez
+- Modula-3               Martin Bishop
 - MPASM                  Bakalex
 - MXML                   David Spurr
-- MySQL                  Carl Fürstenberg
+- MySQL                  Carl Fürstenberg, Marjolein Katsma
 - NSIS                   Tux, Deguix
+- Oberon-2               Mike Mol
 - Objective C            M. Uli Kusterer
 - Ocaml                  Flaie
 - Ocaml-brief            Flaie
 - OpenOffice.org BASIC   Roberto Rossi
 - Oracle 8               Guy Wicks
+- Oracle 11i             Simon Redhead
 - Pascal                 Tux
 - Perl                   Andreas Gohr, Ben Keen
+- PIC16xxx assembler     Phil Mattison
+- Pixel Bender           Richard Olsson
 - PL/SQL                 Victor Engmark
+- POV-Ray                Carl Fürstenberg
 - PowerShell             Frode Aarebrot
+- Progress               Marco Aurelio de Pasqual
+- Prolog                 Benny Baumann
+- Property Files         Edy Hinzen
+- ProvideX               Jeff Wilder
 - Python                 Roberto Rossi
 - Rails                  Moises Deniz
+- Rebol                  Lecanu Guillaume
 - Reg                    SmokingRope
 - Robots                 Christian Lescuyer
 - Ruby                   Amit Gupta, Moises Deniz
 - SAS                    Galen Johnson
 - SDLBasic               Roberto Rossi
 - Scheme                 Jon Raphaelson
+- SciLab                 Christophe David
 - Smalltalk              Bananeweizen
 - Smarty                 Alan Juden
 - T-SQL                  Duncan Lock
+- TeraTerm               Boris Maisuradze
 - Text                   SmokingRope
 - TCL                    Reid van Melle
 - thinBasic              Eros Olmi
+- TypoScript             Jan-Philipp Halle
 - Uno IDL                Cedric Bosdonnat
 - VB                     Roberto Rossi
 - VB.NET                 Alan Juden
 - Verilog                Günter Dannoritzer
-- VisualFoxPro           Roberto Armellin
+- VIM Script             Swaroop C H
+- Visual FoxPro          Roberto Armellin
+- Visual Prolog          Thomas Linder Puls
+- Whitespace             Benny Baumann
+- Whois \ RPSL format    Benny Baumann
 - Winbatch               Craig Storey
 - X++                    Simon Butcher
 - Xorg config            Milian Wolff

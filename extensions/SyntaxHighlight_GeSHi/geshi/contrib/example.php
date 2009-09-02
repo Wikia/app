@@ -6,7 +6,7 @@
  * and the language files in subdirectory "../geshi/")
  *
  * @author  Nigel McNie
- * @version $Id: example.php 1402 2008-07-10 16:38:02Z benbe $
+ * @version $Id: example.php 1512 2008-07-21 21:05:40Z benbe $
  */
 header('Content-Type: text/html; charset=utf-8');
 
@@ -169,7 +169,7 @@ if (isset($_POST['submit'])) {
     echo '<hr />';
 }
 ?>
-<form action="example.php" method="post">
+<form action="<?php echo basename($_SERVER['PHP_SELF']); ?>" method="post">
 <h3>Source to highlight</h3>
 <p>
 <textarea rows="10" cols="60" name="source" id="source"><?php echo $fill_source ? htmlspecialchars($_POST['source']) : '' ?></textarea>

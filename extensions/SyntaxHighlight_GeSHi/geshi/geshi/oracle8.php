@@ -4,10 +4,10 @@
  * -----------
  * Author: Guy Wicks (Guy.Wicks@rbs.co.uk)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/06/04
  *
- * Oracle 8 language file for GeSHi
+ * Oracle 8 language file for GeSHi.
  *
  * CHANGES
  * -------
@@ -46,20 +46,21 @@ $language_data = array (
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
 //Put your package names here - e.g. select distinct ''''|| lower(name) || ''',' from user_source;
-        6 => array(
-            ),
+//        6 => array(
+//            ),
 
 //Put your table names here - e.g. select distinct ''''|| lower(table_name) || ''',' from user_tables;
-        5 => array(
-            ),
+//        5 => array(
+//            ),
 
 //Put your view names here - e.g. select distinct ''''|| lower(view_name) || ''',' from user_views;
-        4 => array(
-            ),
+//        4 => array(
+//            ),
 
 //Put your table field names here - e.g. select distinct ''''|| lower(column_name) || ''',' from user_tab_columns;
-        3 => array(
-            ),
+//        3 => array(
+//            ),
+
 //Put ORACLE reserved keywords here (8.1.7).  I like mine uppercase.
         1 => array(
             'ABS',
@@ -436,15 +437,19 @@ $language_data = array (
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
-        1 => false
+        1 => false,
+//        3 => false,
+//        4 => false,
+//        5 => false,
+//        6 => false
         ),
     'STYLES' => array(
         'KEYWORDS' => array(
             1 => 'color: #993333; font-weight: bold; text-transform: uppercase;'
+//Add the styles for groups 3-6 here when used
             ),
         'COMMENTS' => array(
-            1 => 'color: #808080; font-style: italic;',
-            2 => 'color: #808080; font-style: italic;'
+            1 => 'color: #808080; font-style: italic;'
             ),
         'ESCAPE_CHAR' => array(
             0 => 'color: #000099; font-weight: bold;'
@@ -470,6 +475,11 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => '',
+//        3 => '',
+//        4 => '',
+//        5 => '',
+//        6 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

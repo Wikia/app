@@ -4,7 +4,7 @@
  * -------
  * Author: Cedric Bosdonnat (cedricbosdo@openoffice.org)
  * Copyright: (c) 2006 Cedric Bosdonnat
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2006/08/20
  *
  * Unoidl language file for GeSHi.
@@ -48,17 +48,17 @@ $language_data = array (
         2 => array(
             'bound', 'maybeambiguous', 'maybedefault', 'maybevoid', 'oneway', 'optional',
             'readonly', 'in', 'out', 'inout', 'attribute', 'transient', 'removable'
-              ),
+            ),
         3 => array(
             'True', 'False', 'TRUE', 'FALSE'
             ),
         4 => array(
-            'string', 'long', 'byte', 'hyper', 'boolean', 'any', 'char', 'double', 'long',
-            'void', 'sequence', 'unsigned', '...'
+            'string', 'long', 'byte', 'hyper', 'boolean', 'any', 'char', 'double',
+            'void', 'sequence', 'unsigned'
             ),
         ),
     'SYMBOLS' => array(
-        '(', ')', '{', '}', '[', ']', '=', '+', '-', '*', '/', '!', '%', '^', '&', ':', ';'
+        '(', ')', '{', '}', '[', ']', '=', '+', '-', '*', '/', '!', '%', '^', '&', ':', ';', '...'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -102,6 +102,10 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => '',
+        4 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(

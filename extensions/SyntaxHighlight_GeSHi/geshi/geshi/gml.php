@@ -4,7 +4,7 @@
  * --------
  * Author: Jos� Jorge Enr�quez (jenriquez@users.sourceforge.net)
  * Copyright: (c) 2005 Jos� Jorge Enr�quez Rodr�guez (http://www.zonamakers.com)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2005/06/21
  *
  * GML language file for GeSHi.
@@ -72,7 +72,7 @@ $language_data = array (
         // language keywords
         1 => array(
             'break', 'continue', 'do', 'until', 'if', 'else',
-            'exit', 'for', 'for', 'repeat', 'return', 'switch',
+            'exit', 'for', 'repeat', 'return', 'switch',
             'case', 'default', 'var', 'while', 'with', 'div', 'mod',
             // GML Language overview
             'self', 'other', 'all', 'noone', 'global',
@@ -83,7 +83,7 @@ $language_data = array (
             'x','y','xprevious','yprevious','xstart','ystart','hspeed','vspeed','direction','speed',
             'friction','gravity','gravity_direction',
             'path_index','path_position','path_positionprevious','path_speed','path_orientation',
-            'path_scale','path_endaction',
+            'path_endaction',
             'object_index','id','mask_index','solid','persistent','instance_count','instance_id',
             'room_speed','fps','current_time','current_year','current_month','current_day','current_weekday',
             'current_hour','current_minute','current_second','alarm','timeline_index','timeline_position',
@@ -97,14 +97,14 @@ $language_data = array (
             'keyboard_lastkey','keyboard_key','keyboard_lastchar','keyboard_string',
             'mouse_x','mouse_y','mouse_button','mouse_lastbutton',
             // Game Graphics
-            'visible','sprite_index','sprite_width','sprite_height','sprite_xoffset','sprite_yoffset',
-            'image_number','image_index','image_speed','depth','image_xscale','image_yscale','image_angle',
+            'sprite_index','sprite_width','sprite_height','sprite_xoffset','sprite_yoffset',
+            'image_number','image_index','image_speed','image_xscale','image_yscale','image_angle',
             'image_alpha','image_blend','bbox_left','bbox_right','bbox_top','bbox_bottom',
             'background_color','background_showcolor','background_visible','background_foreground',
             'background_index','background_x','background_y','background_width','background_height',
             'background_htiled','background_vtiled','background_xscale','background_yscale',
             'background_hspeed','background_vspeed','background_blend','background_alpha',
-            'background','left, top, width, height','x,y','depth','visible','xscale, yscale','blend','alpha',
+            'background','left, top, width, height','depth','visible','xscale','yscale','blend','alpha',
             'view_enabled','view_current','view_visible','view_yview','view_wview','view_hview','view_xport',
             'view_yport','view_wport','view_hport','view_angle','view_hborder','view_vborder','view_hspeed',
             'view_vspeed','view_object',
@@ -114,7 +114,7 @@ $language_data = array (
             'secure_mode',
             // Creating particles
             'xmin', 'xmax', 'ymin', 'ymax','shape','distribution','particle type','number',
-            'x', 'y', 'force','dist','kind','additive', 'friction', 'parttype1', 'parttype2'
+            'force','dist','kind','additive', 'parttype1', 'parttype2'
             ),
         // functions
         3 => array(
@@ -170,7 +170,7 @@ $language_data = array (
             'keyboard_get_numlock','keyboard_set_numlock','keyboard_key_press','keyboard_key_release',
             'keyboard_clear','io_clear','io_handle','keyboard_wait',
             'mouse_check_button','mouse_check_button_pressed','mouse_check_button_released','mouse_clear',
-            'io_clear','io_handle','mouse_wait',
+            'mouse_wait',
             'joystick_exists','joystick_name','joystick_axes','joystick_buttons','joystick_has_pov',
             'joystick_direction','joystick_check_button','joystick_xpos','joystick_ypos','joystick_zpos',
             'joystick_rpos','joystick_upos','joystick_vpos','joystick_pov',
@@ -195,7 +195,7 @@ $language_data = array (
             'draw_vertex','draw_vertex_color','draw_primitive_end','sprite_get_texture',
             'background_get_texture','texture_preload','texture_set_priority',
             'texture_get_width','texture_get_height','draw_primitive_begin_texture','draw_vertex_texture',
-            'draw_vertex_texture_color','draw_primitive_end','texture_set_interpolation',
+            'draw_vertex_texture_color','texture_set_interpolation',
             'texture_set_blending','texture_set_repeat','draw_set_blend_mode','draw_set_blend_mode_ext',
             'surface_create','surface_free','surface_exists','surface_get_width','surface_get_height',
             'surface_get_texture','surface_set_target','surface_reset_target','surface_getpixel',
@@ -359,7 +359,7 @@ $language_data = array (
             'mplay_message_value','mplay_message_player','mplay_message_name','mplay_message_count',
             'mplay_message_clear',
             // Using DLL's
-            'external_define','external_call','external_free','execute_string','execute_file','window_handle',
+            'external_define','external_call','external_free','window_handle',
             // 3D Graphics
             'd3d_start','d3d_end','d3d_set_hidden','d3d_set_perspective',
             'd3d_set_depth',
@@ -435,8 +435,13 @@ $language_data = array (
             ),
         ),
     'SYMBOLS' => array(
-        '(', ')', '{', '}', '[', ']', '&&', '||', '^^', '<', '<=', '==', '!=', '>', '>=',
-        '|', '&', '^', '<<', '>>', '+', '-', '*', '/', '!', '-', '~'
+        '(', ')', '{', '}', '[', ']',
+        '&&', '||', '^^', '&', '|', '^',
+        '<', '<=', '==', '!=', '>', '>=', '=',
+        '<<', '>>',
+        '+=', '-=', '*=', '/=',
+        '+', '-', '*', '/',
+        '!', '~', ',', ';'
         ),
     'CASE_SENSITIVE' => array(
         GESHI_COMMENTS => false,
@@ -480,6 +485,10 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => '',
+        2 => '',
+        3 => '',
+        4 => ''
         ),
     'OOLANG' => true,
     'OBJECT_SPLITTERS' => array(

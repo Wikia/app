@@ -4,7 +4,7 @@
  * --------
  * Author: Andreas Gohr (andi@splitbrain.org)
  * Copyright: (c) 2004 Andreas Gohr, Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/08/20
  *
  * BASH language file for GeSHi.
@@ -63,11 +63,27 @@ $language_data = array (
         //Variables
         1 => "/\\$\\{[^\\n\\}]*?\\}/i",
         //BASH-style Heredoc
-        2 => '/<<-?\s*?([\'"]?)([a-zA-Z0-9]+)\1;[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU'
+        2 => '/<<-?\s*?(\'?)([a-zA-Z0-9]+)\1\\n.*\\n\\2(?![a-zA-Z0-9])/siU',
+        //Escaped String Starters
+        3 => "/\\\\['\"]/siU"
         ),
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
-    'QUOTEMARKS' => array("'", '"'),
-    'ESCAPE_CHAR' => '\\',
+    'QUOTEMARKS' => array('"'),
+    'HARDQUOTE' => array("'", "'"),
+    'HARDESCAPE' => array("\'"),
+    'ESCAPE_CHAR' => '',
+    'ESCAPE_REGEXP' => array(
+        //Simple Single Char Escapes
+        1 => "#\\\\[nfrtv\\$\\\"\n]#i",
+        // $var
+        2 => "#\\$[a-z_][a-z0-9_]*#i",
+        // ${...}
+        3 => "/\\$\\{[^\\n\\}]*?\\}/i",
+        // $(...)
+        4 => "/\\$\\([^\\n\\)]*?\\)/i",
+        // `...`
+        5 => "/`[^`]*`/"
+        ),
     'KEYWORDS' => array(
         1 => array(
             'case', 'do', 'done', 'elif', 'else', 'esac', 'fi', 'for', 'function',
@@ -79,14 +95,14 @@ $language_data = array (
             'ar', 'arch', 'arecord', 'as', 'as86', 'ash', 'autoconf',
             'autoheader', 'automake', 'awk',
 
-            'basename', 'bash', 'bc', 'bison', 'bunzip2', 'bzip2', 'bzcat',
-            'bzcmp', 'bzdiff', 'bzegrep', 'bzegrep', 'bzfgrep', 'bzgrep',
+            'basename', 'bash', 'bc', 'bison', 'bunzip2', 'bzcat',
+            'bzcmp', 'bzdiff', 'bzegrep', 'bzfgrep', 'bzgrep',
             'bzip2', 'bzip2recover', 'bzless', 'bzmore',
 
             'c++', 'cal', 'cat', 'chattr', 'cc', 'cdda2wav', 'cdparanoia',
             'cdrdao', 'cd-read', 'cdrecord', 'chfn', 'chgrp', 'chmod',
             'chown', 'chroot', 'chsh', 'chvt', 'clear', 'cmp', 'comm', 'co',
-            'col', 'cp', 'cpio', 'cpp', 'csh', 'cut',
+            'col', 'cp', 'cpio', 'cpp', 'csh', 'cut', 'cvs', 'cvs-pserver',
 
             'dash', 'date', 'dd', 'dc', 'dcop', 'deallocvt', 'df', 'dialog',
             'diff', 'diff3', 'dir', 'dircolors', 'directomatic', 'dirname',
@@ -129,15 +145,17 @@ $language_data = array (
             'ps2ascii', 'ps2epsi', 'ps2frag', 'ps2pdf', 'ps2ps', 'psbook',
             'psmerge', 'psnup', 'psresize', 'psselect', 'pstops',
 
-            'rbash', 'rcs', 'read', 'readlink', 'red', 'resizecons', 'rev', 'rm',
-            'rmdir', 'rsh', 'run-parts',
+            'rbash', 'rcs', 'rcs2log', 'read', 'readlink', 'red', 'resizecons',
+            'rev', 'rm', 'rmdir', 'rsh', 'run-parts',
 
             'sash', 'scp', 'screen', 'sed', 'seq', 'sendmail', 'setfont',
             'setkeycodes', 'setleds', 'setmetamode', 'setserial', 'setterm',
             'sh', 'showkey', 'shred', 'size', 'size86', 'skill', 'sleep',
             'slogin', 'snice', 'sort', 'sox', 'split', 'ssed', 'ssh', 'ssh-add',
             'ssh-agent', 'ssh-keygen', 'ssh-keyscan', 'stat', 'strace',
-            'strings', 'strip', 'stty', 'su', 'sudo', 'suidperl', 'sum', 'sync',
+            'strings', 'strip', 'stty', 'su', 'sudo', 'suidperl', 'sum', 'svn',
+            'svnadmin', 'svndumpfilter', 'svnlook', 'svnmerge', 'svnmucc',
+            'svnserve', 'svnshell', 'svnsync', 'svnversion', 'svnwrap', 'sync',
 
             'tac', 'tail', 'tar', 'tee', 'tempfile', 'touch', 'tr', 'tree',
             'true',
@@ -155,14 +173,15 @@ $language_data = array (
 
             'yacc', 'yes', 'ypdomainname',
 
-            'zcat', 'zcmp', 'zdiff', 'zegrep', 'zfgrep', 'zforce', 'zgrep',
-            'zip', 'zless', 'zmore', 'znew', 'zsh', ' zsoelim'
+            'zcat', 'zcmp', 'zdiff', 'zdump', 'zegrep', 'zfgrep', 'zforce',
+            'zgrep', 'zip', 'zipgrep', 'zipinfo', 'zless', 'zmore', 'znew',
+            'zsh', 'zsoelim'
             ),
         3 => array(
             'alias', 'bg', 'bind', 'break', 'builtin', 'cd', 'command',
             'compgen', 'complete', 'continue', 'declare', 'dirs', 'disown',
             'echo', 'enable', 'eval', 'exec', 'exit', 'export', 'fc',
-            'fg', 'getopts', 'hash', 'help', 'history', 'jobs', 'kill', 'let',
+            'fg', 'getopts', 'hash', 'help', 'history', 'jobs', 'let',
             'local', 'logout', 'popd', 'printf', 'pushd', 'pwd', 'readonly',
             'return', 'shift', 'shopt', 'source', 'suspend', 'test', 'times',
             'trap', 'type', 'typeset', 'ulimit', 'umask', 'unalias', 'unset',
@@ -187,16 +206,23 @@ $language_data = array (
         'COMMENTS' => array(
             0 => 'color: #666666; font-style: italic;',
             1 => 'color: #800000;',
-            2 => 'color: #cc0000; font-style: italic;'
+            2 => 'color: #cc0000; font-style: italic;',
+            3 => 'color: #000000; font-weight: bold;'
             ),
         'ESCAPE_CHAR' => array(
-            0 => 'color: #000099; font-weight: bold;'
+            1 => 'color: #000099; font-weight: bold;',
+            2 => 'color: #007800;',
+            3 => 'color: #007800;',
+            4 => 'color: #007800;',
+            5 => 'color: #780078;',
+            'HARD' => 'color: #000099; font-weight: bold;'
             ),
         'BRACKETS' => array(
             0 => 'color: #7a0874; font-weight: bold;'
             ),
         'STRINGS' => array(
-            0 => 'color: #ff0000;'
+            0 => 'color: #ff0000;',
+            'HARD' => 'color: #ff0000;'
             ),
         'NUMBERS' => array(
             0 => 'color: #000000;'
@@ -220,7 +246,7 @@ $language_data = array (
         1 => '',
         2 => '',
         3 => ''
-    ),
+        ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
         ),
@@ -230,11 +256,11 @@ $language_data = array (
         //Variables without braces
         1 => "\\$[a-zA-Z_][a-zA-Z0-9_]*",
         //Variable assignment
-        2 => "([a-zA-Z_][a-zA-Z0-9_]*)=",
+        2 => "(?<![\.a-zA-Z_\-])([a-zA-Z_][a-zA-Z0-9_]*?)(?==)",
         //Shorthand shell variables
         4 => "\\$[*#\$\\-\\?!]",
         //Parameters of commands
-        5 => "(?<=\s)-[0-9a-zA-Z\-]+(?=[\s=]|$)"
+        5 => "(?<=\s)--?[0-9a-zA-Z\-]+(?=[\s=]|$)"
         ),
     'STRICT_MODE_APPLIES' => GESHI_NEVER,
     'SCRIPT_DELIMITERS' => array(
@@ -244,11 +270,11 @@ $language_data = array (
     'TAB_WIDTH' => 4,
     'PARSER_CONTROL' => array(
         'COMMENTS' => array(
-           'DISALLOWED_BEFORE' => '$'
+            'DISALLOWED_BEFORE' => '$'
         ),
         'KEYWORDS' => array(
-            'DISALLOWED_BEFORE' => "\.\-a-zA-Z0-9_\$\#",
-            'DISALLOWED_AFTER' =>  "\.\-a-zA-Z0-9_%"
+            'DISALLOWED_BEFORE' => "(?<![\.\-a-zA-Z0-9_\$\#])",
+            'DISALLOWED_AFTER' =>  "(?![\.\-a-zA-Z0-9_%\\/])"
         )
     )
 );

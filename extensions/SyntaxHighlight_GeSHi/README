@@ -6,6 +6,10 @@ for updated informations:
 
 == Installation ==
 
+If you downloaded this from MediaWiki.org, there should already be
+a 'geshi' directory in this folder. If there is, you can skip the next
+paragraph.
+
 Download the latest stable build from
 http://sourceforge.net/project/showfiles.php?group_id=114997, and unzip it into
 your extensions/SyntaxHighlight_GeSHi/ directory. (Note: the zip file creates a 

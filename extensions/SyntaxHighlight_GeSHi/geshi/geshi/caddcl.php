@@ -4,10 +4,10 @@
  * ----------
  * Author: Roberto Rossi (rsoftware@altervista.org)
  * Copyright: (c) 2004 Roberto Rossi (http://rsoftware.altervista.org), Nigel McNie (http://qbnz.com/highlighter)
- * Release Version: 1.0.7.22
+ * Release Version: 1.0.8.4
  * Date Started: 2004/08/30
  *
- * CAD DCL (Dialog Control Language) file for GeSHi.
+ * CAD DCL (Dialog Control Language) language file for GeSHi.
  *
  * DCL for AutoCAD 12 or later and IntelliCAD all versions.
  *
@@ -109,6 +109,7 @@ $language_data = array (
             )
         ),
     'URLS' => array(
+        1 => ''
         ),
     'OOLANG' => false,
     'OBJECT_SPLITTERS' => array(
