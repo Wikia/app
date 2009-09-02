@@ -83,7 +83,7 @@ function runBackups( $from, $to, $full, $options ) {
 	/**
 	 * exclude wikis with dumps disabled
 	 */
-	$range[] = 'city_id NOT IN (' . explode( ',', $wgDumpsDisabledWikis ) . ')';
+	$range[] = 'city_id NOT IN (' . implode( ',', $wgDumpsDisabledWikis ) . ')';
 
 	/**
 	 * switch off limits for dumps
