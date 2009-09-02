@@ -219,7 +219,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 						'class' => 'bigButton',
 						'style' => "top: 110px",
 						'href' => '#',
-						'onclick' => !empty($onclick) ? $onclick : '',
+						'onclick' => $onclick,
 					));
 
 					$out .= Xml::element('big', array(),  wfMsg('wikiavideo-create'));
