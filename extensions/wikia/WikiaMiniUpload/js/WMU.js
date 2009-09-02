@@ -289,7 +289,7 @@ function WMU_loadMainFromView() {
 					visible: false,
 					zIndex: 900
 				});
-				WMU_panel.render();
+				WMU_panel.render(document.body);
 				WMU_panel.show();
 
 				WMU_indicator(1, false);
