@@ -41,3 +41,15 @@
 #navigation li a {
 	display: inline;
 }
+
+/* macbre: RT #20166 */
+a.big_button big, a.big_button small {
+        background-image: none;
+        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/home/images/big_button.png?1', sizingMethod='crop');
+}
+
+#create-a-wiki big {
+	height: 56px;
+	margin-top: -28px;
+	padding-top: 28px;
+}
