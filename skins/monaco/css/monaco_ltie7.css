@@ -135,7 +135,9 @@ body.ltr #articleFooter ul.actions li div {
 /* RT #21087 */
 .wikiaPlaceholder a.bigButton {
 	float: left;
-	left: 20%;
+	left: expression(
+		parseInt((this.parentNode.offsetWidth - this.offsetWidth) / 2) + 'px'
+	);
 }
 
 .wikiaPlaceholder a.bigButton * {
