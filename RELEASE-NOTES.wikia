@@ -1,4 +1,5 @@
 == Changes since 200909.1 ==
+* rt#20606: FCK: Image rollover menus can go off the left side of the edit window (Macbre)
 * rt#19842: FCK: Image toolbox placement incorrect on centered images (Macbre)
 * rt#19919: FCK: URL issue with external links to "whitelisted" URLs (Macbre/Moli)
 * rt#20166: Create a Wiki button on Main page at central looks bad (Macbre)
