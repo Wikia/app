@@ -1116,8 +1116,19 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 
 	var overlay = docObj.createElement('SPAN');
 
+	// RT #19842
+	var metaData = FCK.GetMetaData(refid);
+	var className = 'imageOverlay';
+
+	if (metaData.align && metaData.align == 'center') {
+		className += ' imageOverlayCenter';
+	}
+	else if (metaData.thumb) {
+		className += ' imageOverlayRight';
+	}
+
 	// position menu based on alignment of an image
-	overlay.className = 'imageOverlay' + (FCK.YD.hasClass(div, 'thumb') ?  ' imageOverlayRight' : '');
+	overlay.className = className;
 	overlay.style.visibility = 'hidden';
 
 	div.style.position = 'relative';
@@ -1146,6 +1157,11 @@ FCK.ImageProtectSetupOverlayMenu = function(refid, div) {
 	FCKTools.AddEventListener(div, 'mouseout', function(e) {
 		overlay.style.visibility = 'hidden';
 	});
+
+	// RT #19842
+	if (metaData.align && metaData.align == 'center') {
+		overlay.style.marginRight = -parseInt(overlay.offsetWidth/2) + 'px';
+	}
 }
 
 
