@@ -266,6 +266,7 @@ body.widgetsAddingBlocked .add {
 #link_box_table td {
 	padding: 5px;
 	vertical-align: top;
+	overflow: hidden;
 }
 #link_box_table a {
 	background: transparent;
