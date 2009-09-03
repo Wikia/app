@@ -256,8 +256,12 @@ wfProfileIn( $fname.'-globals' );
 
 $wgContLang = new StubContLang;
 
+if (defined('DONT_INTERPOLATE_TITLE')) {
+// rt#22195
+} else {
 // Now that variant lists may be available...
 $wgRequest->interpolateTitle();
+}
 
 $wgUser = new StubUser;
 $wgLang = new StubUserLang;
