@@ -1,4 +1,5 @@
 == Changes since 200909.1 ==
+* rt#20468: FCK: When an image is the only content of a page, you cannot add text (Macbre)
 * rt#20007: Extension:SyntaxHighlight_GeSHi upgraded. (Nef)
 * rt#20483: stray link for CreatePage (Macbre)
 * rt#20606: FCK: Image rollover menus can go off the left side of the edit window (Macbre)
