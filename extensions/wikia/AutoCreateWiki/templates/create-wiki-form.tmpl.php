@@ -209,6 +209,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 			<li class="data1">
 				<?=wfMsg('autocreatewiki-info-terms-agree')?>
 				<br /><input type="checkbox" id="wiki-remember" name="wiki-remember" style="width:auto" <?= (isset($params['wiki-remember'])) ? "checked='checked'" : "" ?> /><?=wfMsg('autocreatewiki-remember')?>
+				<br /><input type="checkbox" id="wiki-marketing" name="wiki-marketing" style="width:auto" <?= (isset($params['wiki-marketing-unchecked'])) ? "" : "checked='checked'" ?> /><?=wfMsg('tog-marketingallowed')?>
 			</li>
 			<li class="data2"></li>
 		</ul>
