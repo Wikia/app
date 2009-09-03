@@ -531,6 +531,27 @@ FCK.Events.AttachEvent( 'OnAfterSetHTML', function() {
 
 		// setup elements with refid (templates, images, ...)
 		FCK.SetupElementsWithRefId();
+
+		// RT #20468
+		if (FCK.EditorDocument.body.childNodes.length <= 3) {
+			// so we have a HTML element, comment and \n
+			var firstChild = FCK.EditorDocument.body.childNodes[0];
+
+			// the only content is an image or table
+			if (firstChild.nodeName.IEquals(['a', 'div', 'table'])) {
+				FCK.log('content with only an image or table detected');
+
+				// create empty paragraph with dirty BR
+				var para = FCK.EditorDocument.createElement('P');
+				FCK.EditorDocument.body.appendChild(para);
+
+				var dirty = FCK.EditorDocument.createElement('BR');
+				dirty.setAttribute('type', '_moz');
+				dirty.className = '_moz_dirty';
+
+				para.appendChild(dirty);
+			}
+		}
 	}
 	// setup source mode
 	else {
