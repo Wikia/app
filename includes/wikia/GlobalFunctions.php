@@ -650,7 +650,7 @@ function isMsgEmpty($key) {
 function wfGetFixedLanguageNames() {
 	$languages = Language::getLanguageNames();
 
-	$filter_languages = explode(',', wfMsg('requestwiki-filter-language'));
+	$filter_languages = explode(',', wfMsgForContent('requestwiki-filter-language'));
 	foreach ($filter_languages as $key) {
 		unset($languages[$key]);
 	}
