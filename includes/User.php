@@ -1062,6 +1062,9 @@ class User {
 	static function getToggles() {
 		global $wgContLang, $wgUseRCPatrol;
 		$extraToggles = array();
+		/* Wikia change begin - @author: ADi */
+		$extraToggles[] = 'marketingallowed';
+		/* Wikia change end */
 		wfRunHooks( 'UserToggles', array( &$extraToggles ) );
 		if( $wgUseRCPatrol ) {
 			$extraToggles[] = 'hidepatrolled';
@@ -1380,7 +1383,7 @@ class User {
 		$this->getBlockedStatus();
 		return ($this->mBlock ? $this->mBlock->mId : false);
 	}
-	
+
 	/**
 	 * Check if user is blocked on all wikis.
 	 * Do not use for actual edit permission checks!
@@ -2021,10 +2024,10 @@ class User {
 		}
 		$this->mOptions[$oname] = $val;
 	}
-	
+
 	/**
 	 * Reset all options to the site defaults
-	 */	
+	 */
 	function restoreOptions() {
 		$this->mOptions = User::getDefaultOptions();
 	}
