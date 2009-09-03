@@ -1033,7 +1033,7 @@ EOS;
 			// macbre: check for empty User:foo/skin.js
 			$userJStitle = Title::newFromText($this->userpage.'/monaco.js');
 			if ($userJStitle->exists()) {
-				$rev = Revision::newFromTitle($userJStitle, 0);
+				$rev = Revision::newFromTitle($userJStitle, $userJStitle->getLatestRevID());
 				if (!empty($rev) && $rev->getText() != '') {
 					$js[] = array('url' => $tpl->data['userjs'], 'mime' => 'text/javascript');
 				}
