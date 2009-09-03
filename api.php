@@ -34,6 +34,8 @@
  * in the URL.
  */
 
+define('DONT_INTERPOLATE_TITLE', true);
+
 // Initialise common code
 require (dirname(__FILE__) . '/includes/WebStart.php');
 
