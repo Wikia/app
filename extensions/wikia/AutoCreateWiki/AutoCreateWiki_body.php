@@ -707,7 +707,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 */
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array( "domain" => $this->mWikiData[ "url" ] ) );
-		
+
 		// New Wiki Builder isn't supported by all languages yet
 		$NewWikiBuilderLanguages = array('en');
 		if (in_array($this->mWikiData[ "language" ], $NewWikiBuilderLanguages)){
@@ -960,6 +960,9 @@ class AutoCreateWikiPage extends SpecialPage {
 					$params[$key] = htmlspecialchars($value);
 				}
 			}
+			if(!isset($params['wiki-marketing'])) {
+				$params['wiki-marketing-unchecked'] = true;
+			}
 		}
 		return $params;
 	}
@@ -1206,6 +1209,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$wgAuth->initUser( $oUser, $autocreate );
 
 		$oUser->setOption( 'rememberpassword', isset($this->mRemember) ? 1 : 0 );
+		$oUser->setOption( 'marketingallowed', isset($this->mMarketing) ? 1 : 0 );
 		$oUser->setOption('skinoverwrite', 1);
 
 		$oUser->saveSettings();

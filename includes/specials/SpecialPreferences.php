@@ -503,7 +503,7 @@ class PreferencesForm {
 
 		wfRunHooks( 'ResetPreferences', array( $this, $wgUser ) );
 	}
-	
+
 	/**
 	 * @access private
 	 */
@@ -918,7 +918,8 @@ class PreferencesForm {
 					$enotifminoredits.
 					/* Wikia change begin - @author: unknown */
 					$moreEmail.
-					$this->getToggle('htmlemails')
+					$this->getToggle('htmlemails').
+					$this->getToggle('marketingallowed')
 					/* Wikia change end */
 				)
 			);
@@ -987,7 +988,7 @@ class PreferencesForm {
 					}
 					if( $skinkey == $wgDefaultSkin )
 						$sn .= ' (' . wfMsg( 'default' ) . ')';
-					$wgOut->addHTML( "<input type='radio' name='wpSkin' id=\"wpSkin$skinkey\" value=\"$skinkey\"$checked /> 
+					$wgOut->addHTML( "<input type='radio' name='wpSkin' id=\"wpSkin$skinkey\" value=\"$skinkey\"$checked />
 						<label for=\"wpSkin$skinkey\">{$sn}</label> $previewlink{$extraLinks}<br />\n" );
 				}
 			}
@@ -1262,7 +1263,7 @@ class PreferencesForm {
 			'watchlisthideanons', 'watchlisthideliu' );
 		if( $wgUseRCPatrol ) $watchlistToggles[] = 'watchlisthidepatrolled';
 
-		$wgOut->addHTML( 
+		$wgOut->addHTML(
 			Xml::fieldset( wfMsg( 'prefs-watchlist' ) ) .
 			Xml::inputLabel( wfMsg( 'prefs-watchlist-days' ), 'wpWatchlistDays', 'wpWatchlistDays', 3, $this->mWatchlistDays ) . ' ' .
 			wfMsgHTML( 'prefs-watchlist-days-max' ) .
@@ -1386,7 +1387,7 @@ class PreferencesForm {
 		/* Wikia change begin - @author: unknown */
 		$wgOut->addHTML( "
 	<table id='prefsubmit' cellpadding='0' width='100%' style='background:none;'><tr>
-		<td><input type='submit' id='wpSaveprefs' name='wpSaveprefs' class='btnSavePrefs' value=\"" . wfMsgHtml( 'saveprefs' ) . 
+		<td><input type='submit' id='wpSaveprefs' name='wpSaveprefs' class='btnSavePrefs' value=\"" . wfMsgHtml( 'saveprefs' ) .
 			'"'.$skin->tooltipAndAccesskey('save')." />
 		<input type='submit' id='wpReset' name='wpReset' value=\"" . wfMsgHtml( 'resetprefs' ) . "\" /></td>
 		<td align='$rtl'><input type='submit' id='wpRestore' name='wpRestore' value=\"" . wfMsgHtml( 'restoreprefs' ) . "\" /></td>

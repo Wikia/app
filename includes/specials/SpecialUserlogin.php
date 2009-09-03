@@ -44,7 +44,7 @@ class LoginForm {
 
 	var $mName, $mPassword, $mRetype, $mReturnTo, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
-	var $mLoginattempt, $mRemember, $mEmail, $mDomain, $mLanguage, $mSkipCookieCheck;
+	var $mLoginattempt, $mRemember, $mMarketingOptIn, $mEmail, $mDomain, $mLanguage, $mSkipCookieCheck;
 	var $wpBirthYear, $wpBirthMonth, $wpBirthDay;
 
 	/**
@@ -71,6 +71,7 @@ class LoginForm {
 		$this->mLoginattempt = $request->getCheck( 'wpLoginattempt' );
 		$this->mAction = $request->getVal( 'action' );
 		$this->mRemember = $request->getCheck( 'wpRemember' );
+		$this->mMarketingOptIn = $request->getCheck( 'wpMarketingOptIn' );
 		$this->mLanguage = $request->getText( 'uselang' );
 		$this->mSkipCookieCheck = $request->getCheck( 'wpSkipCookieCheck' );
 
@@ -400,10 +401,11 @@ class LoginForm {
 		$u->setEmail( $this->mEmail );
 		$u->setRealName( $this->mRealName );
 		$u->setToken();
-		
+
 		$wgAuth->initUser( $u, $autocreate );
-		
+
 		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
+		$u->setOption( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
 		$u->setOption('skinoverwrite', 1);
 		$u->saveSettings();
 
@@ -643,12 +645,12 @@ class LoginForm {
 	 */
 	function mailPassword() {
 		global $wgUser, $wgOut, $wgAuth;
-		
+
 		if ( wfReadOnly() ) {
 			$wgOut->readOnlyPage();
 			return false;
 		}
-		
+
 		if( !$wgAuth->allowPasswordChange() ) {
 			$this->mainLoginForm( wfMsg( 'resetpass_forbidden' ) );
 			return;
@@ -881,6 +883,9 @@ class LoginForm {
 			$q = 'action=submitlogin&type=signup';
 			$linkq = 'type=login';
 			$linkmsg = 'gotaccount';
+
+			// ADi: marketing opt-in/out checkbox added
+			$template->addInputItem( 'wpMarketingOptIn', 1, 'checkbox', 'tog-marketingallowed');
 		} else {
 			$template = new UserloginTemplate();
 			$q = 'action=submitlogin&type=login';
