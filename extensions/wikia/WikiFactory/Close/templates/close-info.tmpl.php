@@ -7,7 +7,11 @@
 <div style="text-align:center">
 	<div><img src="<?=$wgExtensionsPath?>/wikia/WikiFactory/Close/images/Installation_animation.jpg?<?=$wgStyleVersion?>" width="700" height="142" /></div>
 	<div id="close-title"><?= wfMsg('closed-wiki-info') ?></div>
-	<div id="close-info"><?= ($dbDumpExist == true) ? wfMsgExt('closed-wiki-dump-exists', "parse", $dbDumpUrl) : wfMsg('closed-wiki-dump-noexists') ?></div>
+	<div id="close-info">
+<?= ($dbDumpExist === true) ? wfMsgExt('closed-wiki-dump-exists', "parse", $dbDumpUrl) 
+	: ( ($dbDumpExist === false) ? wfMsg('closed-wiki-dump-noexists') :  "" ) 
+?>
+	</div>
 </div>
 <br /><br /><br />
 <table width="90%" align="center" id="closed-urls">

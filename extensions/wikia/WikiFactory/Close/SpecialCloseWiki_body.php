@@ -360,11 +360,9 @@ class CloseWikiPage extends SpecialPage {
 		);
 
 		$res = (($ftest = @fopen($dbDumpUrl, ‘r’)) === false) ? false : @fclose($ftest);
-		if ( $res ) {
-			if ( ($this->closedWiki->city_flags > 0) && !($this->closedWiki->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP) ) {
-				$res = false;
-			} 
-		}
+		if ( ($this->closedWiki->city_flags > 0) && !($this->closedWiki->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP) ) {
+			$res = -1;
+		} 
 		
 		$this->mTmpl->reset();
 		$this->mTmpl->set_vars( array(
