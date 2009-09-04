@@ -18,7 +18,7 @@
 			<a href="#" class="blog-comm-hide" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('blog-comment-hide')?></a>
 		<?php endif; ?>
 		<?php if( $canEdit ): ?>
-			<a name="<?php echo $comment[ "title" ]->getArticleId() ?>" href="#<?php echo $comment[ "title" ]->getArticleId() ?>" class="blog-comm-edit" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('blog-comment-edit')?></a>
+			<a name="<?php echo $comment[ "title" ]->getArticleId() ?>" href="#<?php echo $comment[ "title" ]->getArticleId() ?>" class="blog-comm-edit" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('editlink')?></a>
 		<?php endif; ?>
 		</div>
 		<div class="blog-comm-text" id="comm-text-<?php echo $comment[ "title" ]->getArticleId() ?>">
