@@ -11,6 +11,8 @@
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "BlogComment::axPost";
 $wgAjaxExportList[] = "BlogComment::axToggle";
+$wgAjaxExportList[] = "BlogComment::axEdit";
+$wgAjaxExportList[] = "BlogComment::axSave";
 
 $wgHooks[ "ArticleDeleteComplete" ][] = "BlogCommentList::articleDeleteComplete";
 $wgHooks[ "ArticleRevisionUndeleted" ][] = "BlogCommentList::undeleteComments";
@@ -246,10 +248,11 @@ class BlogComment {
 
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$template->set_vars(
-				array(
-					"comment" => $comments,
+				array (
+					"comment" 	=> $comments,
 					"canToggle" => $this->canToggle(),
 					"canDelete" => $canDelete,
+					"canEdit"	=> $this->canEdit()
 				)
 			);
 			$text = $template->execute( "comment" );
@@ -303,6 +306,27 @@ class BlogComment {
 	}
 
 	/**
+	 * check if current user can edit comment
+	 *
+	 * @access private
+	 */
+	private function canEdit() {
+		global $wgUser, $wgCityId, $wgDevelEnvironment;
+
+		$devel    = 1; #$wgCityId == 4832 || $wgDevelEnvironment;
+
+		$isAuthor = $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon();
+		$isOwner  = $this->mOwner->getId() == $wgUser->getId();
+
+		$canEdit   = $wgUser->isAllowed( "edit" );
+
+		$groups = $wgUser->getGroups();
+		$isAdmin = in_array( 'staff', $groups ) || in_array( 'sysop', $groups );
+
+		return $devel && ( $isAuthor || $isAdmin ) && $canEdit;
+	}
+
+	/**
 	 * toggle -- toggle hidden/show flag
 	 *
 	 * @access public
@@ -329,6 +353,108 @@ class BlogComment {
 		wfProfileOut( __METHOD__ );
 
 		return (bool )$this->mProps["hiddencomm"];
+	}
+	
+	/**
+	 * editPage -- show edit form
+	 *
+	 * @access public
+	 *
+	 * @return String 
+	 */
+	public function editPage() {
+		global $wgUser, $wgMemc, $wgTitle;
+		wfProfileIn( __METHOD__ );
+
+		$text = "";
+		$this->load();
+		if ( $this->canEdit() ) {
+			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+			$template->set_vars(
+				array(
+					"comment" 		=> $this->mLastRevision->getText(),
+					"isReadOnly" 	=> wfReadOnly(),
+					"canEdit"		=> $this->canEdit(),
+					"title"     	=> $this->mTitle,
+				)
+			);
+			$text = $template->execute( "comment-edit" );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $text;
+	}
+	
+	/**
+	 * editPage -- show edit form
+	 *
+	 * @access public
+	 *
+	 * @return String 
+	 */
+	public function doSaveComment( $Request, $User, $Title ) {
+		global $wgMemc, $wgTitle;
+		wfProfileIn( __METHOD__ );
+
+		$res = array();
+		$this->load();
+		if ( $this->canEdit() ) {
+
+			if ( wfReadOnly() ) {
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+
+			$text = $Request->getText("wpBlogComment", false);
+			$commentId = $Request->getText("id", false);
+			if( !$text || !strlen( $text ) ) {
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+
+			if( !$commentId ) {
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+
+			$commentTitle = ( $this->mTitle ) ? $this->mTitle : Title::newFromId($commentId);
+			
+			/**
+			 * because we save different tile via Ajax request
+			 */
+			$wgTitle = $commentTitle;
+
+			/**
+			 * add article using EditPage class (for hooks)
+			 */
+			$result   = null;
+			$article  = new Article( $commentTitle, intval($this->mLastRevId) );
+			$editPage = new EditPage( $article );
+			$editPage->edittime = $article->getTimestamp();
+			$editPage->textbox1 = $text;
+			$editPage->summary  = wfMsg('blog-comments-save');
+			$retval = $editPage->internalAttemptSave( $result );
+			Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
+
+			/**
+			 * clear comments cache for this article
+			 */
+			$update = SquidUpdate::newSimplePurge( $Title );
+			$update->doUpdate();
+
+			$key = $Title->getPrefixedDBkey();
+			$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
+			$wgMemc->delete( wfMemcKey( "blog", "comm", $Title->getArticleID() ) );
+			
+			$res = array( $retval, $article );
+		} else {
+			$res = false;
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $res;
 	}
 
 	/**
@@ -380,6 +506,89 @@ class BlogComment {
 				"error"  => $error,
 				"hidden" => $status,
 				"text"	 => $text
+			)
+		);
+	}
+
+	/**
+	 * axSave -- static hook/entry for ajax request save comment
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return String -- json-ized array
+	 */
+	static public function axSave() {
+		global $wgRequest, $wgUser, $wgDevelEnvironment, $wgDBname;
+
+		$articleId = $wgRequest->getVal( "article", false );
+		$commentId = $wgRequest->getVal( "id", false );
+
+		$Title = Title::newFromID( $articleId );
+		if( ! $Title ) {
+			Wikia::log( __METHOD__, "error", "Cannot create title" );
+			return Wikia::json_encode( array( "error" => 1 ) );
+		}
+
+		$res = array();
+		$Comment = BlogComment::newFromId( $commentId );
+		if( $Comment ) {
+			$response = $Comment->doSaveComment( $wgRequest, $wgUser, $Title );
+		}
+		else {
+			return Wikia::json_encode( array( "error" => 1 ) );
+		}
+
+		if ( $response !== false ) {
+			$status = $response[0]; $article = $response[1];
+			$res = self::doAfterPost($status, $article, $commentId);
+		}
+		
+		return Wikia::json_encode( $res );
+	}
+
+	/**
+	 * axEdit -- static hook/entry for ajax request post -- edit comment
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return String -- html -> textarea
+	 */
+	static public function axEdit() {
+		global $wgRequest, $wgUser, $wgTitle;
+
+		$commentId = $wgRequest->getVal( "id", false );
+		$articleId = $wgRequest->getVal( "article", false );
+		$error     = 0;
+
+		/**
+		 * check owner of blog
+		 */
+		$Title = Title::newFromID( $articleId );
+		if( ! $Title ) {
+			$error = 1;
+		}
+
+		/**
+		 * edit comment
+		 */
+		$Comment = BlogComment::newFromId( $commentId );
+		if( $Comment ) {
+			$status  = true;
+			$text    = $Comment->editPage();
+		}
+		else {
+			$text = "";
+			$status = false;
+		}
+
+		return Wikia::json_encode(
+			array(
+				"id"	=> $commentId,
+				"error"	=> $error,
+				"show"	=> $status,
+				"text"	=> $text
 			)
 		);
 	}
@@ -482,7 +691,7 @@ class BlogComment {
 		return array( $retval, $article );
 	}
 
-	static public function doAfterPost($status, $article) {
+	static public function doAfterPost($status, $article, $commentId = 0) {
 		global $wgUser, $wgDBname;
 		global $wgDevelEnvironment;
 
@@ -504,12 +713,15 @@ class BlogComment {
 				$wgDevelEnvironment = false;
 		}
 
-		return array(
-			"msg"    => $message,
-			"error"  => $error,
-			"text"   => $text,
-			"status" => $status
+		$res = array(
+			"msg"    	=> $message,
+			"error"  	=> $error,
+			"text"   	=> $text,
+			"status" 	=> $status,
+			"commentId" => $commentId
 		);
+		
+		return $res;
 	}
 }
 
