@@ -616,7 +616,7 @@ class WikiaMiniUpload {
 		                $tmpl->set_vars(array(
                                         'tag' => $tag,
                                         'message' => $message,
-                                        'code' => $embed_code,
+                                        'code' => isset($embed_code) ? $embed_code : '',
                                      ));
                 return $tmpl->execute('summary');
 	}
