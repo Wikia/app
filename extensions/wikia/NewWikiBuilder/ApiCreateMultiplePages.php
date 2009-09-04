@@ -47,6 +47,11 @@ class ApiCreateMultiplePages extends ApiBase {
 			return false;
 		}
 
+		// Hook for external spam checks, etc.
+		if ( ! wfRunHooks( 'ApiCreateMultiplePagesBeforeCreation', array( &$this, $titleObj, $category, $text ) ) ) {
+			return false;
+		}
+
 		// Does the page already exist?
 		if ($titleObj->exists()){
 			return false;

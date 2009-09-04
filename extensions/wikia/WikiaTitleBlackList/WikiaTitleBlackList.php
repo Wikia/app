@@ -18,6 +18,7 @@ $wgHooks['SpecialMovepageBeforeMove'][] = 'wfSpamBlackTitleBeforeMove';
 $wgHooks['EditFilter'][] = 'wfSpamBlackTitleListCallback';
 $wgHooks['UploadForm:BeforeProcessing'][] = 'wfSpamBlackTitleSpecialUpload';
 $wgHooks['WikiaMiniUpload:BeforeProcessing'][] = 'wfSpamBlackTitleWikiaMiniUpload';
+$wgHooks['ApiCreateMultiplePagesBeforeCreation'][] = 'wfSpamBlackTitleNewWikiBuilder';
 
 // other functions
 function wfBlackTitleListParseSetup() {
@@ -120,6 +121,20 @@ function wfSpamBlackTitleWikiaMiniUpload($fileName) {
 	if ($title instanceof Title) {
 		$retVal = wfBlackListTitleParse($title);
 	}
+	wfProfileOut( __METHOD__ );
+	return $retVal;
+}
+
+//used in NewWikiBuilder
+function wfSpamBlackTitleNewWikiBuilder( $api, $titleObj, $category, $text ) {
+	global $useSpamRegexNoHttp;
+	wfProfileIn( __METHOD__ );
+	$useSpamRegexNoHttp = true;
+	$retVal = true;
+
+	// titleObj is already verified as object earlier in NWB
+	$retVal = wfBlackListTitleParse($titleObj);
+
 	wfProfileOut( __METHOD__ );
 	return $retVal;
 }
