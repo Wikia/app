@@ -619,6 +619,19 @@ FCK.SetupElementsWithRefId = function() {
 
 			case 'image':
 				FCK.ProtectImage(node);
+
+				// RT #19996
+				if (node.nodeName.IEquals('div') && node.previousSibling && node.previousSibling.nodeType == 3) {
+					// we have text before an image which isn't wrapped inside <p>
+					var prev = node.previousSibling;
+					if (prev.textContent.length > 1) {
+						// create <p>
+						var para = FCK.EditorDocument.createElement('p');
+						para.textContent = prev.textContent;
+
+						prev.parentNode.replaceChild(para, prev);
+					}
+				}
 				break;
 
 			case 'video':
@@ -758,6 +771,9 @@ FCK.wysiwygShowFirstEditMessage = function(title, message) {
 FCK.FixWikitextPlaceholder = function(placeholder) {
 	// disable context menu
 	placeholder.setAttribute('_fckContextMenuDisabled', true);
+
+	// RT #20103
+	placeholder.setAttribute('draggable', true);
 
 	// placeholder is last child of p, div, li, dt or dd node - add dirty span
 	if (placeholder.parentNode.nodeName.IEquals(['p', 'div', 'li', 'dt', 'dd']) &&
