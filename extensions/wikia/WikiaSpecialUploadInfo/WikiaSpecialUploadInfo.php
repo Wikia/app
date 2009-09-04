@@ -17,11 +17,12 @@ $wgHooks['UploadComplete'][]  = 'wfSpecialUploadPutInformation';
 function wfSpecialUploadPutInformation( $uploadForm ) {
 	global $wgRequest, $wgCityId, $wgExternalDatawareDB;
 
-	$title = $uploadForm->mLocalFile->getTitle();
-	if( !($title instanceof Title) ) {
+	if( !($uploadForm->mLocalFile instanceof LocalFile) ) {
 		return true;
 	}
-	if( !($uploadForm->mLocalFile instanceof LocalFile) ) {
+
+	$title = $uploadForm->mLocalFile->getTitle();
+	if( !($title instanceof Title) ) {
 		return true;
 	}
 
