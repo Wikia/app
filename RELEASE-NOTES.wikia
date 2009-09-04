@@ -1,4 +1,5 @@
 == Changes since 200909.1 ==
+* rt#21613: Fixed fatal error in WikiaSpecialUploadInfo/Special:UploadWindow. (Nef)
 * rt#22195: Fixed parse api on wowwiki.com. (Nef)
 * rt#20468: FCK: When an image is the only content of a page, you cannot add text (Macbre)
 * rt#20007: Extension:SyntaxHighlight_GeSHi upgraded. (Nef)
