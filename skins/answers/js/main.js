@@ -269,7 +269,7 @@ if( wgIsMainpage == true ){
 					var text = page.title + "?";
 					html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('mainpage/homepage_new_questions')\">" + text + "</a></li>";
 				}
-				jQuery("#homepage_new_questions").prepend( html );
+				jQuery("#homepage_new_questions").html( html );
 			}
 		});
 	});
@@ -285,7 +285,7 @@ if( wgIsMainpage == true ){
 					var text = page.title + "?";
 					html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('mainpage/homepage_recently_answered_questions')\">" + text + "</a></li>";
 				}
-				jQuery("#homepage_recently_answered_questions").prepend( html );
+				jQuery("#homepage_recently_answered_questions").html( html );
 			}
 		});
 	});
