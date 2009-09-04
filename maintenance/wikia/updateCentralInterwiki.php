@@ -56,10 +56,10 @@ if ( isset( $options['o'] ) ) {
 		} else {
 			$res = $dbr->select('city_list', 'city_dbname');
 		}
-		$dbw =& wfGetDB( DB_MASTER );
 		while ( $row = $dbr->fetchRow( $res ) ) {
 			wfWaitForSlaves( 100 );
-			if ($dbw->selectDB($row['city_dbname'])) {
+			$dbw = wgGetDB( DB_MASTER, array(), $row['city_dbname'] );
+			if ( $dbw != false ) {
 				if ( $verbose )
 					print "Updating database: ". $row['city_dbname']. "... ";
 				$dbw->doQuery($sql);
@@ -80,5 +80,3 @@ if ( isset( $options['o'] ) ) {
 	# Output to stdout
 	print $sql;
 }
-
-?>
