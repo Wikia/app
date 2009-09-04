@@ -26,7 +26,6 @@ insert into user_groups(ug_user, ug_group) values
 (/*Macbre*/119245,'staff'),
 (/*Marooned*/250810,'staff'),
 (/*Moli.wikia*/115748,'staff'),
-(/*Pean*/66574,'staff'),
 (/*Ppiotr*/60069,'staff'),
 (/*Przemek wikia*/157013,'staff'),
 (/*Ri3mann*/247550,'staff'),
