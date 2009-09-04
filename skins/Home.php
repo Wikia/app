@@ -509,16 +509,14 @@ class HomeTemplate extends QuickTemplate {
 	</div>
 	<div id="homepage_right">
 		<div style="position: absolute; top: 15px; left: 50%;"><a href="http://www.wikia.com/wiki/Special:CreateWiki" class="big_button orange" style="margin-left: -50%;" id="create-a-wiki"><big>Create a Wiki</big><small></small></a></div>
-		<div class="box yellow" style="background-image: url(<?php $this->text('stylepath') ?>/home/images/new_to_wikis_accent.gif); background-position: 240px 100%; background-repeat: no-repeat; padding-right: 70px;">
-			<h1>New to Wikis?</h1>
-			"Wiki" comes from the Hawaiian word for fast. Wikia's wikis are websites where editing is simple and quick.<br />
-			<a href="http://help.wikia.com/wiki/Help:Video_demos">Take a video tour</a> to learn more.
-		</div>
-		<div class="box blue" style="padding: 0">
-			<?= HomeDataProvider::getContentForBox('promoted-feature') ?>
+		<div class="box yellow" style="padding: 0">
+                        <?= HomeDataProvider::getContentForBox('promoted-feature-1') ?>
 		</div>
 		<div class="box blue" style="padding: 0">
 			<?= HomeDataProvider::getContentForBox('promoted-feature-2') ?>
+		</div>
+		<div class="box blue" style="padding: 0">
+			<?= HomeDataProvider::getContentForBox('promoted-feature-3') ?>
 		</div>
 	</div>
 </div>
@@ -797,11 +795,36 @@ class HomeDataProvider {
 				}
 				//end: hubs footer
 
-				//begin: promoted feature
+                                //begin: promoted feature
+                                //line no. 1: header
+                                //line no. 2: image | alt
+                                //line no. 3: HTML text
+                                $msgKey = 'promoted-feature-1';
+                                if (!wfEmptyMsg($prefix . $msgKey, $msg = wfMsg($prefix . $msgKey))) {
+                                        $msg = explode("\n", $msg);
+                                        $header = ltrim($msg[0], '* ');
+                                        $image = parseItem($msg[1]);
+                                        if ($title = Title::newFromText($image['org'])) {
+                                                $image['src'] = Image::newFromTitle($title)->getUrl();
+                                        }
+                                        $text = ltrim($msg[2], '* ');
+                                        self::$data[$msgKey] = '';
+                                        if ( $header ) {
+                                                self::$data[$msgKey] = '<h1>' . htmlspecialchars( $header ) . '</h1>';
+                                        }
+                                        if ( $image && !empty($image['src']) ) {
+                                                self::$data[$msgKey] .= "<img id=\"promoted_feature_img\" src=\"{$image['src']}\" alt=\"{$image['text']}\" style=\"float: right; margin-left: 10px;\" />";
+                                        }
+                                
+                                        self::$data[$msgKey] .= $text;
+                                }
+                                //end: promoted feature
+
+				//begin: promoted feature 2
 				//line no. 1: header
 				//line no. 2: image | alt
 				//line no. 3: HTML text
-				$msgKey = 'promoted-feature';
+				$msgKey = 'promoted-feature-2';
 				if (!wfEmptyMsg($prefix . $msgKey, $msg = wfMsg($prefix . $msgKey))) {
 					$msg = explode("\n", $msg);
 					$header = ltrim($msg[0], '* ');
@@ -822,11 +845,11 @@ class HomeDataProvider {
 				}
 				//end: promoted feature
 
-				//begin: promoted feature 2
+				//begin: promoted feature 3
                                 //line no. 1: header
                                 //line no. 2: image | alt
                                 //line no. 3: HTML text
-                                $msgKey = 'promoted-feature-2';
+                                $msgKey = 'promoted-feature-3';
                                 if (!wfEmptyMsg($prefix . $msgKey, $msg = wfMsg($prefix . $msgKey))) {
                                         $msg = explode("\n", $msg);
                                         $header = ltrim($msg[0], '* ');
