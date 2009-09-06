@@ -14,7 +14,7 @@
 
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension named WikiFactory.\n";
+    echo "This is MediaWiki extension named MostVisitedPages.\n";
     exit( 1 ) ;
 }
 
