@@ -35,11 +35,8 @@ $wgExtensionCredits['specialpage'][] = array(
   'name'        => 'Protect Site',
   'version'     => '0.2',
   'description' => 'allows a site administrator to temporarily block various site modifications',
-  'author'      => '[mailto:e.wolfie@gmail.com Eric Johnston] ' .
-                   '<nowiki>[</nowiki>' .
-                   '[http://uncyclopedia.org/wiki/User:Dawg Uncyclopedia:Dawg]' .
-                   '<nowiki>]</nowiki>'.
-                   '<br>C. \'Uberfuzzy\' Stafford',
+  'author'      => '[http://uncyclopedia.wikia.com/wiki/User:Dawg Eric Johnston (Dawg)]' .
+                   '<br/>C. \'Uberfuzzy\' Stafford',
 );
 
 $wgExtensionMessagesFiles['SpecialProtectSite'] = $dir . '/SpecialProtectSite.i18n.php';
