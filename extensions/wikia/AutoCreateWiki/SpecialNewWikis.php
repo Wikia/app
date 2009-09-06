@@ -14,7 +14,7 @@
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
-    echo "This is MediaWiki extension named WikiFactory.\n";
+    echo "This is MediaWiki extension named NewWikis.\n";
     exit( 1 ) ;
 }
 
