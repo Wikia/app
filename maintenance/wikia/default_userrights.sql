@@ -43,7 +43,6 @@ insert into user_groups(ug_user, ug_group) values
 
 delete from user_groups where ug_group="helper";
 insert into user_groups(ug_user, ug_group) values
-(/*BlueDevil*/304359,'helper'),
 (/*Bola*/126681,'helper'),
 (/*Cizagna*/35784,'helper'),
 (/*JParanoid*/10970,'helper'),
