@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.12',
+        'version' => '0.16',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -31,7 +31,22 @@ $wgHooks['MonacoAfterArticleLinks'][] = 'wfShareFeatureMonacoAfterArticleLinks';
 
 // display the links for the feature in the page controls bar
 function wfShareFeatureMonacoAfterArticleLinks() {
-	$function = '';
+	$function = "
+	$().getModal(
+                        wgScript + '?action=ajax&rs=wfProblemReportsAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
+                        '#shareFeatureRound',
+                        {
+                                width: 580,
+                                callback: function() {
+                                        $('#pr_browser').html(browserInfo);
+                                        $('#pr_cancel').click(function() {
+                                                $('.modalWrapper').closeModal();
+                                        });
+                                }
+                        });
+
+
+	";
 	echo "<li id=\"control_share_feature\"><a href=\"#\" onclick=\"" . $function . "\">" . wfMsg('sf-link') . "</a></li>";
 	return true;
 }
@@ -50,10 +65,10 @@ function wfShareFeatureAjaxGetDialog() {
 	global $wgTitle, $wgCityId;
 		
 	$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
-	$tpl->set_vars(array
+	$tpl->set_vars( array(
 		'title' => $wgTitle,
 		'wiki' 	=> $wgCityId,
-	);
+	));
 	
 	$text = $tpl->execute('dialog');
 	$response = new AjaxResponse( $text );
