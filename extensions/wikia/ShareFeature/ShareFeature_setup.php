@@ -21,8 +21,8 @@ $wgHooks['MonacoAfterArticleLinks'][] = 'SFMonacoAfterArticleLinks';
 
 // display the links for the feature in the page controls bar
 function SFMonacoAfterArticleLinks() {
-	echo "<li id=\"control_share_feature\" class=\"\"><div>&nbsp;</div><a rel=\"nofollow\" id=\"ca-share-feature\" href=\"#\" >" . wfMsg('sf-link') . "</a></li>";
-
+	echo "<li id=\"control_share_feature\"><a href=\"#\">" . wfMsg('sf-link') . "</a></li>";
+	return true;
 }
 
 function ShareFeature_init() {
