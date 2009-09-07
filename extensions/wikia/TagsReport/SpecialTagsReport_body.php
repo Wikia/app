@@ -60,12 +60,16 @@ class TagsReportPage extends SpecialPage {
 		$action = $this->mTitle->escapeLocalURL("");
 		$tagList = $this->getTagsList();
 
+		$timestamp = $this->getGenDate();
+		$wgOut->setSubtitle(wfMsg('tagsreportgenerated', $timestamp));
+
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"		=> $error,
             "action"	=> $action,
             "tagList"	=> $tagList,
             "mTag"  	=> $this->mTag,
+            "timestamp"	=> $timestamp
         ));
         $wgOut->addHTML( $oTmpl->execute("main-form") );
         wfProfileOut( __METHOD__ );
@@ -151,6 +155,15 @@ class TagsReportPage extends SpecialPage {
 		}
 
 		return $tagsArticles;
+	}
+
+	private function getGenDate() {
+		global $wgLang, $wgExternalStatsDB;
+		$tagsArticles = array();
+		$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+		$time = $dbs->selectField( "city_used_tags", "ct_timestamp", null, __METHOD__ );
+
+		return $wgLang->timeanddate( wfTimestamp( TS_MW, $time ), true );
 	}
 
 }
