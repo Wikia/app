@@ -17,8 +17,7 @@ class Lolek {
 			$iteration = 3; // prevent infinite loop
 			do {
 
-			$debug = "Debug: rendered " . date("r", time());
-			$cmd   = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --footer-left \"{$debug}\" --cover \"{$url}?action=cover&bolek_id={$bolek_id}\" \"{$url}?action=print&bolek_id={$bolek_id}&add={$add}\" {$wgUploadDirectory}/lolek/{$fname}";
+			$cmd   = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --margin-bottom 15mm --margin-top 15mm --cover \"{$url}?action=cover&bolek_id={$bolek_id}\" \"{$url}?action=print&bolek_id={$bolek_id}&add={$add}\" {$wgUploadDirectory}/lolek/{$fname}";
 
 			$wgMaxShellTime     = 0;
 			$wgMaxShellFileSize  = 0;
