@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.16',
+        'version' => '0.20',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -38,7 +38,6 @@ function wfShareFeatureMonacoAfterArticleLinks() {
                         {
                                 width: 580,
                                 callback: function() {
-                                        $('#pr_browser').html(browserInfo);
                                         $('#pr_cancel').click(function() {
                                                 $('.modalWrapper').closeModal();
                                         });
