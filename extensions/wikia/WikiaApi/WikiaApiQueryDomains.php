@@ -46,7 +46,6 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		 * query builder
 		 */
 		$this->addTables(array('city_list'));
-		$this->addFields(array('city_id', 'city_url', 'city_lang'));
 
 		if ($activeonly) $this->addWhereFld('city_public', 1);
 		if ($wikia) $this->addWhereFld('city_id', $wikia);
@@ -66,25 +65,40 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			$this->addWhereFld("city_lang", $lang);
 		}
 
-		$this->addOption( "ORDER BY ", "city_id" );
-
-		#--- result builder
-		$data = array();
-		$res = $this->select(__METHOD__);
-		while ($row = $db->fetchObject($res)) {
-			$domain = $row->city_url;
-			$domain =  preg_replace('/^http:\/\//', '', $domain);
-			$domain =  preg_replace('/\/$/',        '', $domain);
-			if ($domain) {
-				$data[$row->city_id] = array(
-					"id"		=> $row->city_id,
-					"domain"	=> $domain,
-					"lang"   => $row->city_lang,
-				);
-				ApiResult :: setContent( $data[$row->city_id], $domain, $data[$row->city_lang] );
+		if ( isset( $countonly ) ) {
+			/**
+			 * query builder
+			 */
+			$this->addFields(array('count(*) as cnt'));
+			$data = array();
+			$res = $this->select(__METHOD__);
+			if ($row = $db->fetchObject($res)) {
+				$data['count'] = $row->cnt;
+				ApiResult :: setContent( $data, $row->cnt );
 			}
+			$db->freeResult($res);
+		} else {
+			$this->addFields(array('city_id', 'city_url', 'city_lang'));
+			$this->addOption( "ORDER BY ", "city_id" );
+
+			#--- result builder
+			$data = array();
+			$res = $this->select(__METHOD__);
+			while ($row = $db->fetchObject($res)) {
+				$domain = $row->city_url;
+				$domain =  preg_replace('/^http:\/\//', '', $domain);
+				$domain =  preg_replace('/\/$/',        '', $domain);
+				if ($domain) {
+					$data[$row->city_id] = array(
+						"id"		=> $row->city_id,
+						"domain"	=> $domain,
+						"lang"   => $row->city_lang,
+					);
+					ApiResult :: setContent( $data[$row->city_id], $domain );
+				}
+			}
+			$db->freeResult($res);
 		}
-		$db->freeResult($res);
 
 		$this->getResult()->setIndexedTagName($data, 'variable');
 		$this->getResult()->addValue('query', $this->getModuleName(), $data);
@@ -116,6 +130,10 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 1,
 			),
+			"countonly" => array(
+				ApiBase :: PARAM_TYPE => "integer",
+				ApiBase :: PARAM_MIN => 1,
+			),
 			"lang" => null,
 		);
 	}
@@ -127,6 +145,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"from" => "Begin of range - identifier in Wiki Factory",
 			"to" => "end of range - identifier in Wiki Factory",
 			"lang" => "Wiki language",
+			"countonly" => "return only number of Wikis"
 		);
 	}
 
@@ -137,6 +156,8 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"api.php?action=query&list=wkdomains&wkwikia=177",
 			"api.php?action=query&list=wkdomains&wkfrom=100&wkto=150",
 			"api.php?action=query&list=wkdomains&wkfrom=10000&wkto=15000&wklang=de",
+			"api.php?action=query&list=wkdomains&wkcountonly=1",
+			"api.php?action=query&list=wkdomains&wkactive=1&wkcountonly=1",
 		);
 	}
 };
