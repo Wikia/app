@@ -695,12 +695,15 @@ class BlogComment {
 		global $wgUser, $wgDBname;
 		global $wgDevelEnvironment;
 
-		$error = false;
+		$error = false; $id = 0;
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = BlogComment::newFromArticle( $article );
 				$text = $comment->render();
+				if ( !is_null($comment->mTitle) ) {
+					$id = $comment->mTitle->getArticleID();
+				}
 				$message = false;
 				break;
 			default:
@@ -718,7 +721,8 @@ class BlogComment {
 			"error"  	=> $error,
 			"text"   	=> $text,
 			"status" 	=> $status,
-			"commentId" => $commentId
+			"commentId" => $commentId,
+			"id"		=> $id
 		);
 		
 		return $res;

@@ -44,7 +44,7 @@ YAHOO.Wikia.Blogs.callback.toggle = function( data ) {
 		YAHOO.Wikia.Blogs.actions = YAHOO.util.Dom.get( data[ "id" ] );
 		YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.actions, "click", YAHOO.Wikia.Blogs.toggle );
 		document.body.style.cursor = "default";
-
+		YAHOO.util.Event.addListener( YAHOO.util.Dom.getElementsByClassName( "blog-comm-edit", "a" ), "click", YAHOO.Wikia.Blogs.edit );
 		if (typeof TieDivLibrary != "undefined" ) {
 			TieDivLibrary.calculate();
 		}
@@ -60,6 +60,7 @@ YAHOO.Wikia.Blogs.callback.add = function( data ) {
 		}
 		var li = document.createElement( "li" );
 		li.innerHTML = data["text"];
+		li.setAttribute("id", "comm-" + data['id']);
 		var order = YAHOO.util.Dom.get("blog-comm-order");
 		if( order ) {
 			if( order.value == "asc") {
@@ -92,6 +93,7 @@ YAHOO.Wikia.Blogs.callback.add = function( data ) {
 		top.value = "";
 		top.style.cursor = "auto";
 	}
+	YAHOO.Wikia.Blogs.render();
 	if (typeof TieDivLibrary != "undefined" ) {
 		TieDivLibrary.calculate();
 	}
@@ -103,12 +105,12 @@ YAHOO.Wikia.Blogs.callback.replace = function( data ) {
 		var li = YAHOO.util.Dom.get( "comm-" + commentId );
 		li.innerHTML = data["text"];
 		YAHOO.util.Dom.get("blog-comm-bottom-info").innerHTML = "&nbsp;";
-		YAHOO.util.Event.addListener( YAHOO.util.Dom.getElementsByClassName( "blog-comm-edit", "a" ), "click", YAHOO.Wikia.Blogs.edit );
 	}
 	else {
 		YAHOO.util.Dom.get("blog-comm-text").innerHTML = data[ "msg" ];
 	}
 	document.body.style.cursor = "default";
+	YAHOO.Wikia.Blogs.render();
 	if (typeof TieDivLibrary != "undefined" ) {
 		TieDivLibrary.calculate();
 	}
@@ -145,7 +147,6 @@ YAHOO.Wikia.Blogs.editCallback = {
     },
     timeout: 5000000
 };
-
 
 /**
  * so far simply submit of form
@@ -209,8 +210,12 @@ YAHOO.util.Event.addListener( "blog-comm-submit-top", "click", YAHOO.Wikia.Blogs
 YAHOO.util.Event.addListener( "blog-comm-submit-bottom", "click", YAHOO.Wikia.Blogs.submit, "blog-comm-form-bottom" );
 YAHOO.util.Event.addListener( "blog-comm-form-select", "change", YAHOO.Wikia.Blogs.submit, "blog-comm-form-select" );
 
-YAHOO.Wikia.Blogs.actions = YAHOO.util.Dom.getElementsByClassName( "blog-comm-hide", "a" );
-YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.actions, "click", YAHOO.Wikia.Blogs.toggle );
+YAHOO.Wikia.Blogs.render = function() {
+	YAHOO.Wikia.Blogs.actions = YAHOO.util.Dom.getElementsByClassName( "blog-comm-hide", "a" );
+	YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.actions, "click", YAHOO.Wikia.Blogs.toggle );
 
-YAHOO.Wikia.Blogs.edits = YAHOO.util.Dom.getElementsByClassName( "blog-comm-edit", "a" );
-YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.edits, "click", YAHOO.Wikia.Blogs.edit );
+	YAHOO.Wikia.Blogs.edits = YAHOO.util.Dom.getElementsByClassName( "blog-comm-edit", "a" );
+	YAHOO.util.Event.addListener( YAHOO.Wikia.Blogs.edits, "click", YAHOO.Wikia.Blogs.edit );
+}
+
+YAHOO.util.Event.addListener(window, "load", YAHOO.Wikia.Blogs.render);
