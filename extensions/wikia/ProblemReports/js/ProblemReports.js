@@ -14,7 +14,7 @@ ProblemReportsDialog.prototype = {
 		// get problem reports form
 		$().getModal(
 			wgScript + '?action=ajax&rs=wfProblemReportsAjaxGetDialog&title=' + encodeURIComponent(wgPageName),
-			'#reportProblemForm', 
+			'#reportProblemForm',
 			{
 				width: 580,
 				callback: function() {
@@ -50,9 +50,9 @@ ProblemReportsDialog.prototype = {
 
 	// check data returned by PHP logic after dialog submition
 	panelSubmitCheck: function(data) {
-	
+
 		$().log('ProblemReports: panelSubmitCheck()').log(data);
-	
+
 		// reset reports dialog CSS
 		$('#pr_submit, #pr_cancel').attr('disabled', false);
 
@@ -74,7 +74,7 @@ ProblemReportsDialog.prototype = {
 			}
 
 			$('#pr_submit, #pr_cancel').attr('disabled', false);
-		
+
 			wikiaProblemReportsDialog.track('invalid'); // track "invalid" problem reports
 		}
 		else {
@@ -92,7 +92,7 @@ ProblemReportsDialog.prototype = {
 	checkTextareaLength: function(elem) {
 		len = elem.textLength;
 
-		if ( (len > 512) && (false == this.blocked) ) {			
+		if ( (len > 512) && (false == this.blocked) ) {
 			this.blocked = true;
 			// disable the submit button & show the alert to tell the user what went wrong...
 			$('#pr_summary'). addClass('errorField');
@@ -116,7 +116,7 @@ ProblemReportsDialog.prototype = {
 		if (typeof themename != 'undefined') {
 			info += '-' + themename;
 		}
-		
+
 		return info;
 	},
 
