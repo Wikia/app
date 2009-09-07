@@ -10,7 +10,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.10',
+        'version' => '0.12',
 );
 
 $dir = dirname(__FILE__).'/';
