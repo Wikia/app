@@ -177,6 +177,7 @@ EOT
 					'<span id="lu-tools">[[User talk:' . $name . '|' . wfMsg( 'talkpagelinktext' ) . ']]',
 					'[[Special:Contributions/' . $name . '|' . wfMsg( 'contribslink' ) . ']]</span>)'
 				) ) );
+			$wgOut->addWikiText( '*' . wfMsgForContent( 'lookupuser-toollinks', $name, urlencode($name) ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-id', $user->getId() ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-email', $email, $name ) );
 			$wgOut->addWikiText( '*' . wfMsg( 'lookupuser-realname', $user->getRealName() ) );
