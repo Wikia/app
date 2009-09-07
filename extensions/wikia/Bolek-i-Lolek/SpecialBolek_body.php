@@ -136,7 +136,24 @@ class BolekPage extends UnlistedSpecialPage {
 			$('body').replaceWith(content);
 			$('table#toc, span.editsection').remove();
 			$('div.bolek-remove').text('Debug: blacklisted template removed.');
-			/* $('div.tleft, div.tright').css({'float': 'none', 'clear': 'none'}); */
+			$('div.tleft, div.tright').each(function (e) {
+				/* $(this).css({'float': 'none', 'clear': 'none'}); */
+				var img = $(this).find('img.thumbimage');
+				var width = img.width();
+				var height = img.height();
+				var next = $(this).next('p, div.quote, ul');
+				if (next.length) {
+					next.prepend('<img src=\"http://images.wikia.com/common/trunk/skins/monobook/blank.gif\" width=\"' + width + '\" height=\"' + height + '\" style=\"float: left; margin-right: 10px\" />');
+					next.css({'margin-top': -(height + 2) + 'px'});
+					/* next.css({'background': 'yellow'}); */
+					/* img.css({'background': 'green'}); */
+					$(this).prev('p, div.quote, ul').append('<br clear=\"left\" />');
+					/* $(this).prev('p, div.quote, ul').css({'background': 'blue'}); */
+					$(this).replaceWith(img);
+				} else {
+					$(this).replaceWith('<p>Debug: image removed.</p>');
+				}
+			});
 			/*]]>*/</script>\n");
 
 		return;
