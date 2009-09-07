@@ -29,6 +29,7 @@
 * rt#20324: no fallback to non-wysiwyg if JS disabled (Macbre)
 * rt#21442: NWB now uses localized Main Page name (TOR)
 * rt#21918: PvX Rate now shows an error page correctly to non-logged in users (TOR)
+* rt#21810: added useful links to Special:LookupUser (TOR & Fuzzy)
 
 == Changes since 200908.4 ==
 * rt#20828: Blogs: fix for log action 10 char limit (uberfuzzy)

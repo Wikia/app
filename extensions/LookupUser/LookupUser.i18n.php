@@ -29,6 +29,7 @@ $messages['en'] = array(
 	'lookupuser-useroptions' => 'User options:',
 	'lookupuser-foundmoreusers'    => 'Found more than one\'s user',
 	'right-lookupuser' => 'Look up user preferences',
+	'lookupuser-toollinks' => '',
 );
 
 /** Message documentation (Message documentation)
