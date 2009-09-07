@@ -13,3 +13,18 @@ $wgExtensionCredits['other'][] = array(
         'version' => '0.10',
 );
 
+$wgHooks['MonacoAfterArticleLinks'][] = 'SFMonacoAfterArticleLinks';
+
+// display the links for the feature in the page controls bar
+function SFMonacoAfterArticleLinks() {
+
+
+
+
+	// todo version for anons
+
+	// todo version for logged in
+
+}
+
+
