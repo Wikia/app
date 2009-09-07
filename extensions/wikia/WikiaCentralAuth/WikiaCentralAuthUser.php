@@ -946,6 +946,10 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			__METHOD__
 		);
 
+		if( isset( $_GET['action'] ) && $_GET['action'] == 'ajax' ) {
+                        $dbw->commit();
+                }
+
 		$this->invalidateCache();
 	}
 
