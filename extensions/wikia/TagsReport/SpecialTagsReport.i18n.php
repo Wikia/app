@@ -12,5 +12,6 @@ $messages = array(
 	'tagsreportpages' => '<strong>$1</strong> pages',
 	'tagsreportpage' => '<strong>$1</strong> page',
 	'tagsreportpagesfound' => 'Found <strong>$1</strong> pages, which contain special tag (dpl, youtube, etc.)',
+	'tagsreportgenerated' => 'Generated on $1',
 	),
 );
