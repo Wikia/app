@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.20',
+        'version' => '0.25',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -67,6 +67,16 @@ function wfShareFeatureAjaxGetDialog() {
 	$tpl->set_vars( array(
 		'title' => $wgTitle,
 		'wiki' 	=> $wgCityId,
+		'sites'	=> array(
+				'Reddit' => '',
+				'Facebook' => '',
+				'Twitter' => '',
+				'Digg' => '',
+				'Stumbleupon' => '',
+				'Technorati' => '',
+				'Slashdot' => '',
+				'MySpace' => '',				
+				)
 	));
 	
 	$text = $tpl->execute('dialog');
