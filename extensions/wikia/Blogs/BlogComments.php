@@ -311,7 +311,11 @@ class BlogComment {
 	 * @access private
 	 */
 	private function canEdit() {
-		global $wgUser, $wgCityId, $wgDevelEnvironment;
+		global $wgUser, $wgCityId, $wgDevelEnvironment, $wgEnableBlogCommentEdit;
+		
+		if ( empty($wgEnableBlogCommentEdit) ) {
+			return false;
+		}
 
 		$devel    = 1; #$wgCityId == 4832 || $wgDevelEnvironment;
 
