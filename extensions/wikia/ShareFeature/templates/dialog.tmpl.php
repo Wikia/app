@@ -1,10 +1,7 @@
-<!--[if lt IE 9]><style type="text/css">#sharefeatureRound {width: 350px !important}</style><![endif]-->
-<div id="shareFeatureRound" class="wikiaDialog roundedDiv" style="display:none; background:none; border:none" >
-        <b class="xtop"><b class="xb1"></b><b class="xb2"></b><b class="xb3"></b><b class="xb4"></b></b>
+<div id="shareFeatureRound" title="<? wfMsg( 'sf-link' ) ?>" >
         <div class="r_boxContent">
-                <div class="boxHeader color1"><?= wfMsg('sf-link') ?></div>
-
+		<div>
+		</div>
         </div>
-        <b class="xbottom"><b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b></b>
 </div>
 
