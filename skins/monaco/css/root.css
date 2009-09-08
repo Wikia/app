@@ -87,6 +87,8 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 #HOME_TOP_RIGHT_BOXAD {
 	float: right;
 	margin-bottom: 10px;
+	position: relative;
+	z-index: 1;
 }
 #HOME_LEFT_SKYSCRAPER_1 {
 	margin: 0 auto 10px auto;
