@@ -1,5 +1,5 @@
 == Changes since 200909.2 ==
-*
+* rt#22486: FCK: Create WF variable to control namespace settings per wiki (Macbre)
 
 == Changes since 200909.1 ==
 * rt#21298: Answers, SEO: Main page questions changes. (Nef)

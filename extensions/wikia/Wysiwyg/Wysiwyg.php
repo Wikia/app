@@ -3,7 +3,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Wikia Rich Text Editor (Wysiwyg)',
 	'description' => 'FCKeditor integration for MediaWiki',
 	'url' => 'http://www.wikia.com/wiki/c:help:Help:New_editor',
-	'version' => 0.17,
+	'version' => 0.18,
 	'author' => array('Inez Korczyński', 'Maciej Brencz', 'Maciej Błaszkowski (Marooned)', 'Łukasz \'TOR\' Garczewski')
 );
 
@@ -206,12 +206,23 @@ function Wysiwyg_Initial($form) {
 		return true;
 	}
 
-	// do not initialize for articles in namespaces different then main, image or user
-	$validNamespaces = array_merge( $wgContentNamespaces, array( NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO ) );
-	if( defined( 'NS_BLOG_ARTICLE' ) ) {
-		$validNamespaces[] = NS_BLOG_ARTICLE;
+	// RT #22486: editable namespaces per wiki
+	global $wgWysiwygEnabledNamespaces;
+
+	if ( !empty($wgWysiwygEnabledNamespaces) && is_array($wgWysiwygEnabledNamespaces) ) {
+		// per-wiki list of namespaces
+		$editableNamespaces = $wgWysiwygEnabledNamespaces;
 	}
-	if(!in_array($form->mTitle->mNamespace, $validNamespaces)) {
+	else {
+		// default list of editable namespace
+		$editableNamespaces = array_merge( $wgContentNamespaces, array( NS_IMAGE, NS_USER, NS_CATEGORY, NS_VIDEO ) );
+		if( defined( 'NS_BLOG_ARTICLE' ) ) {
+			$editableNamespaces[] = NS_BLOG_ARTICLE;
+		}
+	}
+
+	// check namespaces
+	if(!in_array($form->mTitle->mNamespace, $editableNamespaces)) {
 		wfProfileOut(__METHOD__);
 		return true;
 	}
