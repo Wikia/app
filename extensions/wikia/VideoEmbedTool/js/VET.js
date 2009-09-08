@@ -143,7 +143,7 @@ function VET_doEditVideo() {
 if(mwCustomEditButtons) {
 	if ( !$G( 'siteSub' )) {
 		mwCustomEditButtons[mwCustomEditButtons.length] = {
-			"imageFile": stylepath + '/../extensions/wikia/VideoEmbedTool/images/button_vet2.png',
+			"imageFile": stylepath + '/../extensions/wikia/VideoEmbedTool/images/button_vet.png',
 			"speedTip": vet_imagebutton,
 			"tagOpen": "",
 			"tagClose": "",
