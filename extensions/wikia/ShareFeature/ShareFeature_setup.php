@@ -68,14 +68,14 @@ function wfShareFeatureAjaxGetDialog() {
 		'title' => $wgTitle,
 		'wiki' 	=> $wgCityId,
 		'sites'	=> array(
-				'Reddit' => '',
-				'Facebook' => '',
-				'Twitter' => '',
-				'Digg' => '',
-				'Stumbleupon' => '',
-				'Technorati' => '',
-				'Slashdot' => '',
-				'MySpace' => '',				
+				'Reddit',
+				'Facebook',
+				'Twitter',
+				'Digg',
+				'Stumbleupon',
+				'Technorati',
+				'Slashdot',
+				'MySpace',				
 				)
 	));
 	
