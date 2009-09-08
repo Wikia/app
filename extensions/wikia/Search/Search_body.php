@@ -238,13 +238,23 @@ class SolrResult extends SearchResult {
 	private $mCreated = null;
 	private $mIndexed = null;
 	private $mHighlightTitle = null;
+	private $mRedirectTitle = null;
+
 	/**
 	 * Construct a result object from single Apache_Solr_Document object
 	 *
 	 * @param Apache_Solr_Document $document
 	 */
 	public function __construct( Apache_Solr_Document $document ) {
-		$this->mTitle = new SolrResultTitle($document->ns, urldecode( ( ( isset($document->canonical) && !empty($document->canonical) ) ? $document->canonical : $document->title) ), $document->url);
+		if(isset($document->canonical) && !empty($document->canonical)) {
+			$this->mTitle = new SolrResultTitle($document->ns, urldecode( $document->canonical ), $document->url);
+			$this->mRedirectTitle = new SolrResultTitle($document->ns, urldecode( $document->title ), $document->url);
+			$this->setHighlightTitle( urldecode( $document->canonical ) );
+		}
+		else {
+			$this->mTitle = new SolrResultTitle($document->ns, urldecode( $document->title ), $document->url);
+		}
+
 		$this->mWordCount = $document->words;
 		$this->mSize = $document->bytes;
 		$this->mCreated = isset($document->created) ? $document->created : 0;
@@ -261,7 +271,9 @@ class SolrResult extends SearchResult {
 	}
 
 	public function setHighlightTitle($title) {
-		$this->mHighlightTitle = urldecode($title);
+		if($this->mHighlightTitle == null) {
+			$this->mHighlightTitle = urldecode($title);
+		}
 	}
 
 	public function getTextSnippet($terms = null) {
@@ -272,6 +284,10 @@ class SolrResult extends SearchResult {
 			}
 		}
 		return $this->mHighlightText;
+	}
+
+	public function getRedirectTitle() {
+		return $this->mRedirectTitle;
 	}
 
 	public function getTitleSnippet($terms = null) {
