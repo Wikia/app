@@ -33,7 +33,7 @@ $wgHooks['MonacoAfterArticleLinks'][] = 'wfShareFeatureMonacoAfterArticleLinks';
 function wfShareFeatureMonacoAfterArticleLinks() {
 	$function = "
 	$().getModal(
-                        wgScript + '?action=ajax&rs=wfProblemReportsAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
+                        wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
                         '#shareFeatureRound',
                         {
                                 width: 580,
