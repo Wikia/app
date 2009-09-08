@@ -35,7 +35,7 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 	if(($wgOutboundScreenConfig['anonsOnly'] == false) || (($wgOutboundScreenConfig['anonsOnly'] == true) && !$loggedIn)) {
 		if(!is_array($whiteList)) {
 			$whiteList = array();
-			$whiteListContent = wfMsgForContent('outbound-screen-whitelist');
+			$whiteListContent = wfMsgExt('outbound-screen-whitelist', array( 'language' => 'en' ));
 			if(!empty($whiteListContent)) {
 				$lines = explode("\n", $whiteListContent);
 				foreach($lines as $line) {
