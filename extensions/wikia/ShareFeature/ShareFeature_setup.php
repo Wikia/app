@@ -27,10 +27,10 @@ $dir = dirname(__FILE__).'/';
 
 $wgExtensionFunctions[] = 'wfShareFeatureInit';
 $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i18n.php';
-$wgHooks['MonacoAfterArticleLinks'][] = 'wfShareFeatureMonacoAfterArticleLinks';
+$wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
 
 // display the links for the feature in the page controls bar
-function wfShareFeatureMonacoAfterArticleLinks() {
+function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 	$function = "
 	$().getModal(
                         wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
@@ -46,7 +46,15 @@ function wfShareFeatureMonacoAfterArticleLinks() {
 
 
 	";
-	echo "<li id=\"control_share_feature\"><div></div><a href=\"#\" onclick=\"" . $function . "\">" . wfMsg('sf-link') . "</a></li>";
+
+	        $content_actions['share-feature'] = array(
+                'class' => '',
+                'text' => wfMsg('sf-link'),
+                'href' => '#' ,
+        );
+
+
+//	echo "<li id=\"control_share_feature\"><div></div><a href=\"#\" onclick=\"" . $function . "\">" . wfMsg('sf-link') . "</a></li>";
 	return true;
 }
 
