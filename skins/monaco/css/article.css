@@ -44,7 +44,7 @@
 	height: 16px;
 	margin: 8px 2px 0 0;
 	position: absolute;
-	width: 360px;
+	width: 576px;
 }
 #page_controls a {
 	background: transparent;
@@ -104,8 +104,8 @@
 	left: -320px;
 }
 #control_share_feature div {
-	clip: rect(0px 376px 16px 360px);
-	left: -360px;	
+	clip: rect(0px 576px 16px 560px);
+	left: -560px;	
 }
 
 #page_tabs {
