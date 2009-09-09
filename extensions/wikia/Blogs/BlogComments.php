@@ -33,6 +33,7 @@ class BlogComment {
 		$mUser,	         ### comment creator
 		$mOwner;         ### owner of blog
 
+
 	public function __construct( $Title ) {
 		/**
 		 * initialization
@@ -89,6 +90,7 @@ class BlogComment {
 			 * maybe from Master?
 			 */
 			$Title = Title::newFromID( $id, GAID_FOR_UPDATE );
+
 			if( ! $Title ) {
 				return false;
 			}
@@ -127,7 +129,7 @@ class BlogComment {
 			}
 			if( $this->mLastRevId != $this->mFirstRevId ) {
 				if( $this->mLastRevId && $this->mFirstRevId ) {
-					$this->mLastRevision = Revision::newFromId( $this->mLastRevId );
+					$this->mLastRevision = Revision::newFromTitle( $this->mTitle );
 					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
 					Wikia::log( __METHOD__, "ne", "{$this->mLastRevId} ne {$this->mFirstRevId}" );
 				}
