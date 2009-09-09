@@ -10,7 +10,7 @@
 // Make sure soap_stats.sql has been installed to the mysql server first!
 ////
 
-include_once 'motive.php';
+//include_once 'motive.php';
 
 ////
 // Logs a SOAP webservice hit and records whether the result was found
