@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.25',
+        'version' => '0.29',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -46,7 +46,7 @@ function wfShareFeatureMonacoAfterArticleLinks() {
 
 
 	";
-	echo "<li id=\"control_share_feature\"><a href=\"#\" onclick=\"" . $function . "\">" . wfMsg('sf-link') . "</a></li>";
+	echo "<li id=\"control_share_feature\"><div></div><a href=\"#\" onclick=\"" . $function . "\">" . wfMsg('sf-link') . "</a></li>";
 	return true;
 }
 
