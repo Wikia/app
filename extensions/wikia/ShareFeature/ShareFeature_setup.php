@@ -31,7 +31,7 @@ $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentAct
 
 // display the links for the feature in the page controls bar
 function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
-	global $wgOut;
+	global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 	$content_actions['share_feature'] = array(
 			'class' => '',
 			'text' => wfMsg('sf-link'),
