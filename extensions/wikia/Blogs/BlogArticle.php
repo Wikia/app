@@ -430,9 +430,13 @@ class BlogArticle extends Article {
 	 */
 	static public function skinTemplateTabs( $skin, &$tabs ) {
 		global $wgTitle, $wgUser;
-		global $wgEnableSemanticMediaWikiExt;
+		global $wgEnableSemanticMediaWikiExt, $wgEnableBlogCommentEdit;
 
-		if( ! in_array( $wgTitle->getNamespace(), array( NS_BLOG_ARTICLE, NS_BLOG_LISTING ) ) ) {
+		if( ! in_array( $wgTitle->getNamespace(), array( NS_BLOG_ARTICLE, NS_BLOG_LISTING, NS_BLOG_ARTICLE_TALK ) ) ) {
+			return true;
+		}
+		
+		if ( ( $wgTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ) && ( empty($wgEnableBlogCommentEdit) ) ) {
 			return true;
 		}
 
@@ -450,6 +454,15 @@ class BlogArticle extends Article {
 					$tabs += $row;
 				}
 				break;
+			case NS_BLOG_ARTICLE_TALK: {
+				$allowedTabs = array('viewsource', 'edit', 'delete', 'history');
+				foreach ( $tabs as $key => $tab ) {
+					if ( !in_array($key, $allowedTabs) ) {
+						unset($tabs[$key]);
+					}
+				}
+				break;
+			}				
 		}
 
 

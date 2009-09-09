@@ -30,15 +30,24 @@ class BlogLockdown {
 		/**
 		 * here we only handle Blog articles, everyone can read it
 		 */
-		if( $namespace != NS_BLOG_ARTICLE && $namespace != NS_BLOG_ARTICLE_TALK ) {
+		if ( $namespace != NS_BLOG_ARTICLE && $namespace != NS_BLOG_ARTICLE_TALK ) {
 			$result = null;
 			return true;
 		}
 
-		$owner = BlogArticle::getOwner( $title );
 		$username = $user->getName();
-		$isOwner = (bool)( $username == $owner );
-		$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE );
+		if ( $namespace == NS_BLOG_ARTICLE_TALK ) {
+			$result = true;
+			$oComment = BlogComment::newFromTitle( $title );
+			$oComment->fetch();
+			$canEdit = $oComment->canEdit();
+			$isOwner = (bool) ( $canEdit && !in_array($action, array('move', 'watch', 'protect') ) );
+			$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE_TALK && $isOwner );
+		} else {
+			$owner = BlogArticle::getOwner( $title );
+			$isOwner = (bool)( $username == $owner );
+			$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE );
+		}
 
 		/**
 		 * returned values

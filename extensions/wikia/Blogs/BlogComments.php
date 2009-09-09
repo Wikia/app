@@ -206,6 +206,15 @@ class BlogComment {
 	}
 
 	/**
+	 * fetch -- 
+	 *
+	 * @access public
+	 */
+	public function fetch() {
+		$this->load();
+	}
+
+	/**
 	 * render -- generate HTML for displaying comment
 	 *
 	 * @return String -- generated HTML text
@@ -310,7 +319,7 @@ class BlogComment {
 	 *
 	 * @access private
 	 */
-	private function canEdit() {
+	public function canEdit() {
 		global $wgUser, $wgCityId, $wgDevelEnvironment, $wgEnableBlogCommentEdit;
 		
 		if ( empty($wgEnableBlogCommentEdit) ) {
