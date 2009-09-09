@@ -709,7 +709,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$oTmpl->set_vars( array( "domain" => $this->mWikiData[ "url" ] ) );
 
 		// New Wiki Builder isn't supported by all languages yet
-		$NewWikiBuilderLanguages = array('en', 'de');
+		$NewWikiBuilderLanguages = array('en');
 		if (in_array($this->mWikiData[ "language" ], $NewWikiBuilderLanguages)){
 			$sFinishText = $oTmpl->execute("finish");
 		} else {
