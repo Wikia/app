@@ -31,30 +31,17 @@ $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentAct
 
 // display the links for the feature in the page controls bar
 function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
-	$function = "
-	$().getModal(
-                        wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
-                        '#shareFeatureRound',
-                        {
-                                width: 300,
-                                callback: function() {
-                                        $('#pr_cancel').click(function() {
-                                                $('.modalWrapper').closeModal();
-                                        });
-                                }
-                        });
+	global $wgOut;
+	$content_actions['share_feature'] = array(
+			'class' => '',
+			'text' => wfMsg('sf-link'),
+			'href' => '#' ,
+			);
 
-
-	";
-
-	        $content_actions['share-feature'] = array(
-                'class' => '',
-                'text' => wfMsg('sf-link'),
-                'href' => '#' ,
-        );
-
-
-//	echo "<li id=\"control_share_feature\"><div></div><a href=\"#\" onclick=\"" . $function . "\">" . wfMsg('sf-link') . "</a></li>";
+	$wgOut->addScript(
+		'<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ShareFeature/js/ShareFeature.js?'.$wgStyleVersion.'" ></script>'.
+                        "\n"
+	);
 	return true;
 }
 
