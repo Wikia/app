@@ -2331,7 +2331,7 @@ class soap_server extends nusoap_base {
 			}
 		} elseif($data == '' && $this->wsdl){
 			// print web interface
-			print $this->webDescription();
+//			print $this->webDescription();
 		} else {
 			// handle the request
 			$this->parse_request($data);

@@ -187,6 +187,7 @@ if(!function_exists("lw_connect_readOnly")){
 // this file with LYRICWIKI_SOAP_FUNCS_ONLY and then call the
 // functions directly.
 $funcsOnly = (defined('LYRICWIKI_SOAP_FUNCS_ONLY') && LYRICWIKI_SOAP_FUNCS_ONLY);
+$funcsOnly = false;
 if(!$funcsOnly){
 	// Really basic logging for the requests.
 	// $LOG_FILE = fopen("./lw_API_log.txt", "a");
@@ -537,7 +538,7 @@ function searchArtists($searchString){
 		print (!$debug?"":"After trimming '%'s off: \"$artist\".\n");
 	
 		$db = lw_connect_readOnly();
-		$queryString = "SELECT page_title FROM wiki_page WHERE page_namespace=0 AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
+		$queryString = "SELECT page_title FROM page WHERE page_namespace=0 AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
 		if($result = mysql_query($queryString, $db)){
 			if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 				for($cnt=0; $cnt<$numRows; $cnt++){
@@ -659,14 +660,14 @@ function getSong($artist, $song="", $doHyphens=true){
 	$artist = preg_replace("/(\s)+/", "\\1", $artist); // removes multiple spaces in a row
 	$song = preg_replace("/(\s)+/", "\\1", $song);
 	$defaultLyrics = "Not found";
-	$defaultUrl = "http://lyricwiki.org";
-	$urlRoot = "http://lyricwiki.org/"; // may differ from default URL, should contain a slash after it.
+	$defaultUrl = "http://lyrics.wikia.com";
+	$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it.
 	$instrumental = "Instrumental";
 	$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => $defaultUrl);
 
 	GLOBAL $SHUT_DOWN_API;
 	if($SHUT_DOWN_API){
-		$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => 'http://lyricwiki.org');
+		$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => 'http://lyrics.wikia.com');
 		$retVal['lyrics'] = "API is temporarily disabled.  Please try back shortly."; //"Creating a database backup (this will take a few minutes).";
 	} else {
 		// WARNING: This may cause some unexpected results if these artists ever become actual pages.
@@ -1679,7 +1680,7 @@ function lw_pageExists($pageTitle){
 		$retVal = $EXIST_CACHE[$pageTitle];
 	} else {
 		$queryTitle = str_replace("'", "\'", $pageTitle);
-		$retVal = (0 < lw_simpleQuery("SELECT COUNT(*) FROM wiki_page WHERE page_title='$queryTitle' AND page_namespace='0'")); // the page_namespace='0' speeds it up significantly
+		$retVal = (0 < lw_simpleQuery("SELECT COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='0'")); // the page_namespace='0' speeds it up significantly
 		$EXIST_CACHE[$pageTitle] = $retVal;
 	}
 	return $retVal;

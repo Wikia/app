@@ -25,7 +25,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	public function execute() {
 		global $IP;
 
-		include( "$IP/extensions/3rdparty/LyricWiki/server.php" );
+		require( "$IP/extensions/3rdparty/LyricWiki/server.php" );
 
 		$func = $song = $artist = $fmt = null;
 
@@ -40,6 +40,9 @@ class WikiaApiLyricwiki extends ApiBase {
 				$this->getSong( $artist, $song, $fmt );
 				break;
 		}
+
+		// TODO: hand over handling to MW API instead of doing this...
+		exit (1);
 	}
 
 	function getArtist( $artist, $fmt ) {
@@ -68,13 +71,14 @@ class WikiaApiLyricwiki extends ApiBase {
 	                        }
 
 				break;
-			case 'xml':
-	                        htmlHead("$artist");
+			case 'html':
+	                        $this->htmlHead("$artist");
 
 	                        $result = getArtist($artist);
 	                        $artist = getVal($result, 'artist');
 	                        $albums = $result['albums'];
-	                        print "<h3><a href='$root".linkEncode($artist)."'>$artist</a></h3>\n";
+	                        print "<h3><a href='$root".$this->linkEncode($artist)."'>$artist</a></h3>\n";
+				print "<a href='" .$result['url'] . "'/>" . $result['song'] . "</a>";
 	                        if(count($albums) > 0){
 	                                print "<ul class='albums'>\n";
 	                                foreach($albums as $currAlbum){
@@ -82,7 +86,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	                                        $year = getVal($currAlbum, 'year');
 	                                        $amznLink = getVal($currAlbum, 'amazonLink');
 	                                        $songs = getVal($currAlbum, 'songs');
-	                                        print "<li><a href='$root".linkEncode("$artist:$albumName".($year==""?"":"_($year)"))."'>$albumName".($year==""?"":"_($year)")."</a>";
+	                                        print "<li><a href='$root".$this->linkEncode("$artist:$albumName".($year==""?"":"_($year)"))."'>$albumName".($year==""?"":"_($year)")."</a>";
         	                                if($amznLink != ""){
                 	                                print " - (at <a href='$amznLink' title=\"$albumName at amazon\">amazon</a>)";
                         	                }
@@ -90,9 +94,9 @@ class WikiaApiLyricwiki extends ApiBase {
 	                                                print "<ul class='songs'>\n";
 	       	                                        foreach($songs as $currSong){
         	                                                if(strpos($currSong, ":") !== false){
-                	                                                print "<li><a href='$root".linkEncode($currSong)."'>$currSong</li>\n";
+                	                                                print "<li><a href='$root".$this->linkEncode($currSong)."'>$currSong</li>\n";
                         	                                } else {
-                                	                                print "<li><a href='$root".linkEncode("$artist:$currSong")."'>$currSong</li>\n";
+                                	                                print "<li><a href='$root".$this->linkEncode("$artist:$currSong")."'>$currSong</li>\n";
                                         	                }
 	                                                }
         	                                        print "</ul>\n";
@@ -125,7 +129,7 @@ class WikiaApiLyricwiki extends ApiBase {
 	                        //print "<getArtistResponse>\n";
 	                        $result = getArtist($artist);
 	                        $result = array("getArtistResponse" => $result);
-	                        dumpXML($result);
+	                        $this->dumpXML($result);
 	                        //print "</getArtistResponse>\n";
 				break;
 		}
@@ -140,7 +144,7 @@ class WikiaApiLyricwiki extends ApiBase {
 		$artist = str_replace("_", " ", $artist);
 		$songName = str_replace("_", " ", $songName);
 		$songName .= (!empty($debug)?"_debug":"");
-
+#die( 'foobar' );
 
 		$client = strtolower(getVal($_GET, 'client'));
 
@@ -152,6 +156,7 @@ class WikiaApiLyricwiki extends ApiBase {
 			print "<item>\n";
 
 			$result = getSong($artist, $songName);
+			die( var_dump( $result) );
 
 			if($client == "cantophone"){
 				$link = getVal($result, 'url');
@@ -161,7 +166,7 @@ class WikiaApiLyricwiki extends ApiBase {
 				print "\t<link>".htmlspecialchars($link, ENT_QUOTES, "UTF-8")."</link>\n";
 				print "\t<artist>".htmlspecialchars(getVal($result, 'artist'), ENT_QUOTES, "UTF-8")."</artist>\n";
 				print "\t<song>".htmlspecialchars(getVal($result, 'song'), ENT_QUOTES, "UTF-8")."</song>\n";
-				print "\t<lyrics>".htmlspecialchars(getVal($result, 'lyrics'), ENT_QUOTES, "UTF-8")."</lyrics>\n";
+//				print "\t<lyrics>".htmlspecialchars(getVal($result, 'lyrics'), ENT_QUOTES, "UTF-8")."</lyrics>\n";
 			} else {
 				foreach($result as $keyName=>$val){
 					if($keyName == "url"){
@@ -176,23 +181,24 @@ class WikiaApiLyricwiki extends ApiBase {
 
 		} else if($fmt == "text"){
 			$result = getSong($artist, $songName);
-			print utf8_decode($result['lyrics']);
+			print $result['url'];
+//			print utf8_decode($result['lyrics']);
 		} else if($fmt == "js"){
 			$result = getSong($artist, $songName);
-			writeJS($result);
+			$this->writeJS($result['url']);
 		} else if($fmt == "json"){
 			$result = getSong($artist, $songName);
-			writeJSON($result);
+			$this->writeJSON($result['url']);
 		} else if ($fmt == "html"){
 			// Link to the song & artist pages as a heading.
 			$result = getSong($artist, $songName);
 
-			htmlHead($result['artist']." ".$result['song']." lyrics");
-			print "<h3><a href='$root".linkEncode($result['artist'].":".$result['song'])."'>".utf8_decode($result['song'])."</a> by <a href='$root".linkEncode($result['artist'])."'>".utf8_decode($result['artist'])."</a></h3>\n";
+			$this->htmlHead($result['artist']." ".$result['song']." lyrics");
+			print "<h3><a href='$root".$this->linkEncode($result['artist'].":".$result['song'])."'>".utf8_decode($result['song'])."</a> by <a href='$root".$this->linkEncode($result['artist'])."'>".utf8_decode($result['artist'])."</a></h3>\n";
 
-			print "<pre>\n";
-			print utf8_decode($result['lyrics']);
-			print "</pre>";
+//			print "<pre>\n";
+//			print utf8_decode($result['lyrics']);
+//			print "</pre>";
 
 			// Make it extensible by displaying any extra data in a UL.
 			unset($result['artist']);
@@ -218,7 +224,9 @@ class WikiaApiLyricwiki extends ApiBase {
 			print "<LyricsResult>\n";
 			$result = getSong($artist, $songName);
 			foreach($result as $keyName=>$val){
-				print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
+				if ($keyName != 'lyrics' ) {
+					print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
+				}
 			}
 			print "</LyricsResult>\n";
 
@@ -261,7 +269,109 @@ class WikiaApiLyricwiki extends ApiBase {
 
 	public function getExamples() {
 		return array (
-			"api.php?artist=Joe%20Bonamassa&song=So%20Many%20Roads&fmt=xml&func=getSong"
+			"api.php?action=lyrics&artist=Joe%20Bonamassa&song=So%20Many%20Roads&fmt=xml&func=getSong"
 		);
 	}
-};
+
+	function htmlHead($title){
+        ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php print utf8_decode("$title"); ?></title>
+</head>
+<body><?php
+	}
+
+	////
+	// Turns a song-name, link into the format that we'd prefer for linking.
+	////
+	function linkEncode($pageName){
+        	$pageName = str_replace(" ", "_", $pageName);
+	        $pageName = urlencode($pageName);
+	        $pageName = str_replace("%3A", ":", $pageName);
+	        return $pageName;
+	}
+
+// The second parameter is the optional indentation at the start of this item (used for recursion).
+////
+	function dumpXML($dataArray, $tabs=""){
+        if(is_array($dataArray)){
+                $cnt = 0;
+                foreach($dataArray as $tag => $val){
+                        if(is_array($val) && ($cnt === $tag)){
+                                if(isset($val['album']) && isset($_GET['fixXML'])){ // TODO: HACK: This is actaully lame... what we SHOULD be doing is making a way to name each of these results (so other things can do the same thing that albumResult is doing here).
+                                        print "$tabs<albumResult>\n";
+                                        $tabs = "\t$tabs";
+                                }
+                                $this->dumpXML($val, $tabs);
+                                if(isset($val['album']) && isset($_GET['fixXML'])){
+                                        $tabs = substr($tabs, -1);
+                                        print "$tabs</albumResult>\n";
+                                }
+                        } else {
+                                if($cnt === $tag){
+                                        $tag = "item";
+                                }
+                                print "$tabs<$tag>";
+                                if(is_array($val)){
+                                        print "\n"; // keeps bottom-level items one-liners
+                                }
+                                $this->dumpXML($val, "\t$tabs");
+                                if(is_array($val)){
+                                        print "$tabs";
+                                }
+                                print "</$tag>\n";
+                        }
+                        $cnt++;
+                }
+        } else {
+                print htmlspecialchars($dataArray, ENT_QUOTES, "UTF-8");
+        }
+	} // end dumpXML()
+
+//////////////////////////////////////////////////////////////////////////////
+// Thanks to Stefan Fussenegger (Fuzy) for the code which the below code is based on (he released his code to public-domain).
+//////////////////////////////////////////////////////////////////////////////
+////
+// escape strings for ' quoted JS strings
+////
+function escapeJavaScript($val) {
+        // escape literal backslashes
+        $val = str_replace('\\', '\\\\', $val);
+        // escape '
+        $val = str_replace("'", "\\'", $val);
+        // replace new lines with \n
+        $val = str_replace("\n", "\\n", $val);
+        return $val;
+}
+
+////
+// create object with JS code
+////
+function writeJS(&$results) {
+        header('Content-type: text/javascript; charset=UTF-8');
+        echo "function lyricwikiSong(){\n";
+        echo "this.artist='".$this->escapeJavaScript(utf8_decode($results['artist']))."';\n";
+        echo "this.song='".$this->escapeJavaScript(utf8_decode($results['song']))."';\n";
+        echo "this.lyrics='".$this->escapeJavaScript(utf8_decode($results['lyrics']))."';\n";
+        echo "this.url='".$this->escapeJavaScript($results['url'])."';\n";
+        echo "}\n";
+        echo "var song = new lyricwikiSong();\n";
+}
+
+////
+// create object using JSON format
+////
+function writeJSON(&$results) {
+        header('Content-type: text/javascript; charset=UTF-8');
+        echo "song = {\n";
+        echo "'artist':'".$this->escapeJavaScript(utf8_decode($results['artist']))."',\n";
+        echo "'song':'".$this->escapeJavaScript(utf8_decode($results['song']))."',\n";
+        echo "'lyrics':'".$this->escapeJavaScript(utf8_decode($results['lyrics']))."',\n";
+        echo "'url':'".$this->escapeJavaScript($results['url'])."'\n";
+        echo "}\n";
+}
+
+
+}
