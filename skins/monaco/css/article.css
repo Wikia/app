@@ -104,8 +104,8 @@
 	left: -320px;
 }
 #control_share_feature div {
-	clip: rect(0px 576px 16px 560px);
-	left: -560px;	
+	clip: rect(0px 384px 16px 368px);
+	left: -368px;	
 }
 
 #page_tabs {
