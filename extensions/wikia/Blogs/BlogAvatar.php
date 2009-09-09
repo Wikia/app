@@ -24,7 +24,10 @@ $wgHooks['AdditionalUserProfilePreferences'][] = "BlogAvatar::additionalUserProf
 $wgHooks['SavePreferences'][] = "BlogAvatar::savePreferences";
 $wgHooks['MonacoBeforePageBar'][] = "BlogAvatar::userMasthead";
 
-$wgLogNames["useravatar"] = "useravatar-log";
+$wgLogNames[AVATAR_LOG_NAME] = "useravatar-log";
+
+$wgLogActions[AVATAR_LOG_NAME . '/avatar_chn'] = 'blog-avatar-changed-log';
+$wgLogActions[AVATAR_LOG_NAME . '/avatar_rem'] = 'blog-avatar-removed-log';
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "RemoveAvatar",
@@ -366,8 +369,7 @@ class BlogAvatar {
 				$this->mUser->saveSettings();
 				$mUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$sLogComment = "Remove {$sUserText}'s avatars by {$wgUser->getName()}";
-				$oLogPage->addEntry( 'avatar_rem', $mUserBlogPage, $sLogComment);
+				$oLogPage->addEntry( 'avatar_rem', $mUserBlogPage, '', array($sUserText));
 				/* */
 				$result = true;
 			}
@@ -517,8 +519,7 @@ class BlogAvatar {
 				$sUserText =  $this->mUser->getName();
 				$mUserBlogPage = Title::newFromText( $sUserText, NS_BLOG_ARTICLE );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$sLogComment = wfMsg('blog-avatar-changed-log', $sUserText);
-				$oLogPage->addEntry( 'avatar_chn', $mUserBlogPage, $sLogComment);
+				$oLogPage->addEntry( 'avatar_chn', $mUserBlogPage, '');
 				unlink($sTmpFile);
 				$errorNo = UPLOAD_ERR_OK;
 			}

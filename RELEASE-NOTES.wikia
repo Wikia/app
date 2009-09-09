@@ -1,4 +1,5 @@
 == Changes since 200909.2 ==
+* rt#22510: Blogs: Corrected i18n issue with avatar logs. (Uberfuzzy)
 * rt#22486: FCK: Create WF variable to control namespace settings per wiki (Macbre)
 * rt#22503: VET: video button, green to blue (uberfuzzy)
 
