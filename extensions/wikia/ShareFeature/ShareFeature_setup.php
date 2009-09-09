@@ -36,7 +36,7 @@ function wfShareFeatureMonacoAfterArticleLinks() {
                         wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
                         '#shareFeatureRound',
                         {
-                                width: 580,
+                                width: 300,
                                 callback: function() {
                                         $('#pr_cancel').click(function() {
                                                 $('.modalWrapper').closeModal();
