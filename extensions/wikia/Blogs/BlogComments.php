@@ -17,6 +17,8 @@ $wgAjaxExportList[] = "BlogComment::axSave";
 $wgHooks[ "ArticleDeleteComplete" ][] = "BlogCommentList::articleDeleteComplete";
 $wgHooks[ "ArticleRevisionUndeleted" ][] = "BlogCommentList::undeleteComments";
 $wgHooks[ "UndeleteComplete" ][] = "BlogCommentList::undeleteComplete";
+$wgHooks[ "ChangesListMakeSecureName" ][] = "BlogCommentList::makeChangesListKey";
+$wgHooks[ "ChangesListInsertArticleLink" ][] = "BlogCommentList::rcInsertArticleLink";
 
 /**
  * BlogComment is article, this class is used for manipulation on it
@@ -1194,6 +1196,86 @@ class BlogCommentList {
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	/**
+	 * Hook
+	 *
+	 * @param ChangeList $oChangeList -- instance of ChangeList class
+	 * @param String $currentName    -- current value of RC key
+	 * @param RCCacheEntry $oRCCacheEntry  -- instance of RCCacheEntry class
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static public function makeChangesListKey( &$oChangeList, &$currentName, &$oRCCacheEntry ) {
+		global $wgUser;
+		wfProfileIn( __METHOD__ );
+		
+		$oTitle = $oRCCacheEntry->getTitle();
+		$namespace = $oTitle->getNamespace();
+		
+		#error_log ("oRCCacheEntry = " . print_r($oRCCacheEntry, true) . " \n");
+		
+		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
+			$user = $page_title = $comment = "";
+			$newTitle = null; 
+			if ( $namespace == NS_BLOG_ARTICLE ) {
+				$nspace = $namespace;
+				list( $user, $page_title ) = explode( "/", $oTitle->getDBkey(), 2 );
+			} elseif ( $namespace == NS_BLOG_ARTICLE_TALK ) {
+				$nspace = NS_BLOG_ARTICLE;
+				list( $user, $page_title, $comment ) = explode( "/", $oTitle->getDBkey(), 3 );
+			}
+
+			if ( !empty($user) && (!empty($page_title)) ) {
+				$currentName = "$user/$page_title";
+			}
+			#error_log ("$currentName, $link \n");
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	/**
+	 * Hook
+	 *
+	 * @param ChangeList $oChangeList -- instance of ChangeList class
+	 * @param String $currentName    -- current value of RC key
+	 * @param RCCacheEntry $oRCCacheEntry  -- instance of RCCacheEntry class
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static public function rcInsertArticleLink( &$oChangeList, &$articlelink, &$s, &$oRCCacheEntry, $unpatrolled, $watched ) {
+		$oTitle = $oRCCacheEntry->getTitle();
+		$namespace = $oTitle->getNamespace();
+		
+		error_log (" oTitle  = " . print_r($oTitle, true) );
+		
+		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
+			if ( $namespace == NS_BLOG_ARTICLE ) {
+				$nspace = $namespace;
+				list( $user, $page_title ) = explode( "/", $oTitle->getDBkey(), 2 );
+			} elseif ( $namespace == NS_BLOG_ARTICLE_TALK ) {
+				$nspace = NS_BLOG_ARTICLE;
+				list( $user, $page_title, $comment ) = explode( "/", $oTitle->getDBkey(), 3 );
+			}
+
+			if ( !empty($user) && (!empty($page_title)) ) {
+				$newTitle = Title::makeTitle( $nspace, "$user/$page_title" );
+				$articlelink = $oChangeList->skin->makeKnownLinkObj( $newTitle );
+			}
+			
+			error_log ( "articlelink  = $articlelink \n");
+		}
+
 		return true;
 	}
 }

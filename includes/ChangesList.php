@@ -604,6 +604,7 @@ class EnhancedChangesList extends ChangesList {
 			if( $rc_type == RC_LOG ){
 				$secureName = SpecialPage::getTitleFor( 'Log', $rc_log_type )->getPrefixedDBkey();
 			}
+			wfRunHooks( 'ChangesListMakeSecureName', array(&$this, &$secureName, &$rc) );
 			if( !isset( $this->rc_cache[$secureName] ) ) {
 				$this->rc_cache[$secureName] = array();
 			}
