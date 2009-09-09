@@ -61,7 +61,8 @@ GLOBAL $wgUser;
 GLOBAL $server; // so that the functions can get the headers to log in.
 
 GLOBAL $amazonRoot;
-$amazonRoot = "http://www.amazon.com/exec/obidos/redirect?link_code=ur2&tag=motiveforcell-20&camp=1789&creative=9325&path=external-search%3Fsearch-type=ss%26index=music%26keyword=";
+$affiliateTag = 'wikia-20';
+$amazonRoot = "http://www.amazon.com/exec/obidos/redirect?link_code=ur2&tag=$affiliateTag&camp=1789&creative=9325&path=external-search%3Fsearch-type=ss%26index=music%26keyword=";
 
 if(!function_exists("getVal")){
 	////
