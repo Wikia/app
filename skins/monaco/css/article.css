@@ -103,6 +103,10 @@
 	clip: rect(0px 336px 16px 320px);
 	left: -320px;
 }
+#control_share_feature div {
+	clip: rect(0px 376px 16px 360px);
+	left: -360px;	
+}
 
 #page_tabs {
 	float: right;
