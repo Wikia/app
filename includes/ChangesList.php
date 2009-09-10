@@ -773,6 +773,8 @@ class EnhancedChangesList extends ChangesList {
 
 		$r .= "</td></tr></table>\n";
 
+		wfRunHooks( 'ChangesListHeaderBlockGroup', array(&$this, &$r, &$block) );
+
 		# Sub-entries
 		$r .= '<div id="mw-rc-subentries-'.$jsid.'" class="mw-changeslist-hidden">';
 		$r .= '<table cellpadding="0" cellspacing="0"  border="0" style="background: none">';
