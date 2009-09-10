@@ -30,7 +30,7 @@ class AdProviderAthena implements iAdProvider {
 		if (!empty($_GET['athena_dev_hosts']) || !empty($wgAthenaDevHosts)){
 			$base = "http://athena.dev.wikia-inc.com/";
 			$version = mt_rand();
-			$out .= "<script>var athena_dev_hosts = 1;</script>";
+			$out = "<script>var athena_dev_hosts = 1;</script>";
 		} else {
 			$base = "/__varnish_athena/";
 			$version = "1";
