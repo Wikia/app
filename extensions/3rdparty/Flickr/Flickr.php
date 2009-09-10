@@ -27,7 +27,10 @@ function wfFlickr() {
  
 # The callback function for converting the input text to HTML output
 function renderFlickr($input) {
-	$FlickrAPIKey = "INSERT YOUR API KEY HERE";
+	global $wgFlickrAPIKey;
+
+	$FlickrAPIKey = $wgFlickrAPIKey;
+
 	# Start off by splitting $input
 	$inp = explode("|", $input, 5);
  
