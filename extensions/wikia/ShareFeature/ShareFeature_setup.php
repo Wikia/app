@@ -25,16 +25,34 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__).'/';
 
+$wgShareFeatureSites = array(
+		'Reddit',
+		'Facebook',
+		'Twitter',
+		'Digg',
+		'Stumbleupon',
+		'Technorati',
+		'Slashdot',
+		'MySpace',				
+		);
+
 $wgExtensionFunctions[] = 'wfShareFeatureInit';
 $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i18n.php';
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
 
 function wfShareFeatureSortSites( &$sites ) {
+	global $wgUser;
 	// there will be a different procedure for anons,
 	// and a different one for logged-in users	
+	if( $wgUser->isLoggedIn() ) {
 
+
+
+	} else {
+
+
+	}
 		
-
 	return $sites;
 }
 
@@ -61,22 +79,13 @@ function wfShareFeatureInit() {
 }
 
 function wfShareFeatureAjaxGetDialog() {	
-	global $wgTitle, $wgCityId;
+	global $wgTitle, $wgCityId, $wgShareFeatureSites;
 		
 	$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 	$tpl->set_vars( array(
 		'title' => $wgTitle,
 		'wiki' 	=> $wgCityId,
-		'sites'	=> array(
-				'Reddit',
-				'Facebook',
-				'Twitter',
-				'Digg',
-				'Stumbleupon',
-				'Technorati',
-				'Slashdot',
-				'MySpace',				
-				)
+		'sites'	=> wfShareFeatureSortSites( $wgShareFeatureSites ),
 	));
 	
 	$text = $tpl->execute('dialog');
