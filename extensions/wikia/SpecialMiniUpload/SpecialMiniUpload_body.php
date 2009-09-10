@@ -2,7 +2,7 @@
 if(!defined('MEDIAWIKI')) {
 	die();
 }
-class MiniUpload extends SpecialPage {
+class MiniUpload extends UnlistedSpecialPage {
 
 	function loadMessages() {
 		static $messagesLoaded = false;
@@ -19,8 +19,8 @@ class MiniUpload extends SpecialPage {
 	        return true;
 	}
 
-	function MiniUpload() {
-		UnlistedSpecialPage::UnlistedSpecialPage("MiniUpload");
+	function __construct() {
+		parent::__construct("MiniUpload");
 		self::loadMessages();
 	}
 
