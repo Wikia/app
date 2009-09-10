@@ -42,6 +42,9 @@ class WikiaSkinMonoBook extends SkinTemplate {
 		$out->addStyle('common/yui_2.5.2/container/assets/container.css');
 		$out->addStyle('common/yui_2.5.2/logger/assets/logger.css');
 		$out->addStyle('common/yui_2.5.2/tabview/assets/tabview.css');
+
+		// add file with fixes for IE8
+		$out->addStyle('wikia/css/IE80Fixes.css', 'screen', 'IE 8');
 	}
 
 	public function addWikiaVars(&$obj, &$tpl) {
@@ -69,7 +72,7 @@ class WikiaSkinMonoBook extends SkinTemplate {
 				'<div id="wikia_header" style="display:none"></div>' . // Hack because ads have code that references this. Awful.
 				'<div id="column-google-right">'.AdEngine::getInstance()->getAd('RIGHT_SKYSCRAPER_1').'</div></div>'."\n".
 				'<table id="spotlight_container"><tr>' .
-				'<td><div>'.AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT').'</div></td>' . 
+				'<td><div>'.AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT').'</div></td>' .
 				'<td><div>'.AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_MIDDLE').'</div></td>' .
 				'<td><div>'.AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_RIGHT').'</div></td>'.
 				"</tr></table>\n"
