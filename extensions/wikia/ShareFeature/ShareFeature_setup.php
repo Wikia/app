@@ -28,7 +28,6 @@ $dir = dirname(__FILE__).'/';
 $wgExtensionFunctions[] = 'wfShareFeatureInit';
 $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i18n.php';
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
-$wgHooks['BeforePageDisplay'][] = 'wfShareFeatureBeforePageDisplay';
 
 // display the links for the feature in the page controls bar
 function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
@@ -37,13 +36,6 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 			'text' => wfMsg('sf-link'),
 			'href' => '#' ,
 			);
-	return true;
-}
-
-function wfShareFeatureBeforePageDisplay( &$out ) {
-	global $wgExtensionsPath, $wgStyleVersion;
-	$out->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ShareFeature/js/ShareFeature.js?'.$wgStyleVersion.'" ></script>');
-	
 	return true;
 }
 
