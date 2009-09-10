@@ -78,7 +78,7 @@ function WidgetCommunity($id, $params) {
 		'users' => $online,
 		'avatarLink' => $avatar));
 
-	$output = $tmpl->execute('WidgetCommunity');
+	$output = $tmpl->render('WidgetCommunity');
 
 	wfProfileOut(__METHOD__);
 	return $output;
