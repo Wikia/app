@@ -1340,10 +1340,7 @@ class MonacoTemplate extends QuickTemplate {
 		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= htmlspecialchars($css['url']) ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
 
 <?php
-	}
-?>
-		<object><noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript></object>
-<?php
+	}	
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
@@ -1887,7 +1884,8 @@ if ($custom_article_footer !== '') {
 		</div>
 		<!-- /PAGE -->
 <?php		wfProfileOut( __METHOD__ . '-page'); ?>
-
+		
+		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript>
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
 		$this->html('mergedJS');
