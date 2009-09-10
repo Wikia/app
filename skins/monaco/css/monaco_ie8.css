@@ -3,3 +3,10 @@ a.bigButton small {
 	width: 10px;
 	background-position: top right !important;
 }
+
+/* rt #12748 */
+#wpTextbox1 {
+	width: 500px;
+	min-width: 100%;
+	max-width: 100%;
+}
