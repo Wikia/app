@@ -18,6 +18,8 @@ require_once('UserMailer.php');
  */
 function wfSpecialContactSetup() {
 
+	if(class_exists('ContactForm') != true) {
+
 	/**
 	 *
 	 * @package MediaWiki
@@ -231,6 +233,8 @@ function wfSpecialContactSetup() {
 				'contactintro' => 'Please read the <a href=http://www.wikia.com/wiki/Report_a_problem>Report a problem</a> page for information on reporting problems and using this contact form.<p />You can contact the Wikia community at the <a href=http://www.wikia.com/wiki/Community_portal>Community portal</a> and report software bugs at <a href=http://bugs.wikia.com>bugs.wikia.com</a>. <p>If you prefer your message to <a href=http://www.wikia.com/wiki/Wikia>Wikia</a> to be private, please use the contact form below. <i>All fields are optional</i>.',
 			) );
 		}
+
+	}
 
 	}
 
