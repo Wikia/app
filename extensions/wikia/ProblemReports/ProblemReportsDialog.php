@@ -18,7 +18,7 @@ function wfProblemReportsAddLink(&$content_actions) {
 	global $wgUser, $wgTitle, $wgOut, $wgRequest, $wgProblemReportsEnableAnonReports;
 
 	// are we on page with editable content? (check taken from Monaco.php)
-	$onContentPage = $wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle();
+	$onContentPage = $wgTitle->exists() && $wgTitle->isContentPage();
 
 	if (!$onContentPage) {
 		wfDebug("ProblemReports: not a content page - leaving...\n");
