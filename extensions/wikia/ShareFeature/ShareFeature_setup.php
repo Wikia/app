@@ -28,20 +28,22 @@ $dir = dirname(__FILE__).'/';
 $wgExtensionFunctions[] = 'wfShareFeatureInit';
 $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i18n.php';
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
+$wgHooks['BeforePageDisplay'][] = 'wfShareFeatureBeforePageDisplay';
 
 // display the links for the feature in the page controls bar
 function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion;
 	$content_actions['share_feature'] = array(
 			'class' => '',
 			'text' => wfMsg('sf-link'),
 			'href' => '#' ,
 			);
+	return true;
+}
 
-	$wgOut->addScript(
-		'<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ShareFeature/js/ShareFeature.js?'.$wgStyleVersion.'" ></script>'.
-                        "\n"
-	);
+function wfShareFeatureBeforePageDisplay() {
+	global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+	$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ShareFeature/js/ShareFeature.js?'.$wgStyleVersion.'" ></script>');
+	
 	return true;
 }
 
