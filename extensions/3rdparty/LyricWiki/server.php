@@ -10,6 +10,7 @@
 // TODO: When a user adds a song, make sure it is automatically merged into the artist page (User:Janitor makes this not too big of a deal since he finds orphans and adds them to the artist's Other Songs section).
 ////
 
+$LW_USE_PERSISTENT_CONNECTIONS = true;
 $ENABLE_LOGGING_SLOW_SOAP = false;
 $MIN_SECONDS_TO_LOG = 15; // if the script takes longer than this many seconds to run, the request will be logged.
 $startTime = microtime(true);
@@ -80,7 +81,6 @@ if(!function_exists("lw_connect")){ // Function is in several scripts.  This pre
 	// Persistent connections don't work well for the API (a ton of clients connecting once every couple of minutes causes way to many connections to hang around - pconns stay for 15 seconds by default).
 	// So here, we manually figure out which server to use and connect to it in a non-persistent (volitile? disposable?) way.
 	GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
-	$LW_USE_PERSISTENT_CONNECTIONS = false;
 
 	////
 	// Connects to the wiki database using the configured settings.
