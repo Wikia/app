@@ -18,7 +18,7 @@ $wgHooks[ "ArticleDeleteComplete" ][] = "BlogCommentList::articleDeleteComplete"
 $wgHooks[ "ArticleRevisionUndeleted" ][] = "BlogCommentList::undeleteComments";
 $wgHooks[ "UndeleteComplete" ][] = "BlogCommentList::undeleteComplete";
 $wgHooks[ "ChangesListMakeSecureName" ][] = "BlogCommentList::makeChangesListKey";
-$wgHooks[ "ChangesListInsertArticleLink" ][] = "BlogCommentList::rcInsertArticleLink";
+$wgHooks[ "ChangesListHeaderBlockGroup" ][] = "BlogCommentList::setHeaderBlockGroup";
 
 /**
  * BlogComment is article, this class is used for manipulation on it
@@ -1218,23 +1218,14 @@ class BlogCommentList {
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 		
-		#error_log ("oRCCacheEntry = " . print_r($oRCCacheEntry, true) . " \n");
-		
-		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
+		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE_TALK ) ) ) {
 			$user = $page_title = $comment = "";
 			$newTitle = null; 
-			if ( $namespace == NS_BLOG_ARTICLE ) {
-				$nspace = $namespace;
-				list( $user, $page_title ) = explode( "/", $oTitle->getDBkey(), 2 );
-			} elseif ( $namespace == NS_BLOG_ARTICLE_TALK ) {
-				$nspace = NS_BLOG_ARTICLE;
-				list( $user, $page_title, $comment ) = explode( "/", $oTitle->getDBkey(), 3 );
-			}
+			list( $user, $page_title, $comment ) = explode( "/", $oTitle->getDBkey(), 3 );
 
 			if ( !empty($user) && (!empty($page_title)) ) {
-				$currentName = "$user/$page_title";
+				$currentName = "Comments";
 			}
-			#error_log ("$currentName, $link \n");
 		}
 		
 		wfProfileOut( __METHOD__ );
@@ -1245,35 +1236,65 @@ class BlogCommentList {
 	 * Hook
 	 *
 	 * @param ChangeList $oChangeList -- instance of ChangeList class
-	 * @param String $currentName    -- current value of RC key
-	 * @param RCCacheEntry $oRCCacheEntry  -- instance of RCCacheEntry class
+	 * @param String $header    -- current value of RC key
+	 * @param Array of RCCacheEntry $oRCCacheEntryArray  -- array of instance of RCCacheEntry classes
 	 *
 	 * @static
 	 * @access public
 	 *
 	 * @return true -- because it's hook
 	 */
-	static public function rcInsertArticleLink( &$oChangeList, &$articlelink, &$s, &$oRCCacheEntry, $unpatrolled, $watched ) {
-		$oTitle = $oRCCacheEntry->getTitle();
-		$namespace = $oTitle->getNamespace();
+	static public function setHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
+		global $wgLang, $wgContLang;
 		
-		error_log (" oTitle  = " . print_r($oTitle, true) );
+		$oRCCacheEntry = null;
+		if ( !empty($oRCCacheEntryArray) ) {
+			$oRCCacheEntry = $oRCCacheEntryArray[0];
+		}
 		
-		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK ) ) ) {
-			if ( $namespace == NS_BLOG_ARTICLE ) {
-				$nspace = $namespace;
-				list( $user, $page_title ) = explode( "/", $oTitle->getDBkey(), 2 );
-			} elseif ( $namespace == NS_BLOG_ARTICLE_TALK ) {
-				$nspace = NS_BLOG_ARTICLE;
+		if ( !is_null($oRCCacheEntry) ) {
+			$oTitle = $oRCCacheEntry->getTitle();
+			$namespace = $oTitle->getNamespace();
+
+			if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE_TALK ) ) ) {
 				list( $user, $page_title, $comment ) = explode( "/", $oTitle->getDBkey(), 3 );
+
+				if ( !empty($user) && (!empty($page_title)) ) {
+					$cnt = count($oRCCacheEntryArray);
+					
+					$userlinks = array();
+					foreach ( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
+			 			$u = $oRCCacheEntry->userlink;
+						if( !isset( $userlinks[$u] ) ) {
+							$userlinks[$u] = 0;
+						}
+						$userlinks[$u]++;
+					}
+					
+					$users = array();
+					foreach( $userlinks as $userlink => $count) {
+						$text = $userlink;
+						$text .= $wgContLang->getDirMark();
+						if( $count > 1 ) {
+							$text .= ' (' . $wgLang->formatNum( $count ) . '×)';
+						}
+						array_push( $users, $text );
+					}
+					
+					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $wgLang->formatNum( $cnt ) );
+					$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+					$template->set_vars(
+						array (
+							"hdrtitle" 		=> wfMsg('blog-rc-comments'),
+							"inx"			=> $oChangeList->rcCacheIndex,
+							"cntChanges"	=> $cntChanges,
+							"users"			=> $users,
+						)
+					);
+					$header = $template->execute( "rcheaderblock" );
+				}
 			}
 
-			if ( !empty($user) && (!empty($page_title)) ) {
-				$newTitle = Title::makeTitle( $nspace, "$user/$page_title" );
-				$articlelink = $oChangeList->skin->makeKnownLinkObj( $newTitle );
-			}
-			
-			error_log ( "articlelink  = $articlelink \n");
 		}
 
 		return true;
