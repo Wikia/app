@@ -1,19 +1,10 @@
 <?php
 /**
+ * Configuration settings introduced by Wikia.
  *
- *                 NEVER EDIT THIS FILE
- *
- *
- * To customize your installation, edit "LocalSettings.php". If you make
- * changes here, they will be lost on next upgrade of MediaWiki!
- *
- * Note that since all these string interpolations are expanded
- * before LocalSettings is included, if you localize something
- * like $wgScriptPath, you must also localize everything that
- * depends on it.
- *
- * Documentation is in the source and on:
- * http://www.mediawiki.org/wiki/Manual:Configuration_settings
+ * Any new variables should be declared here.
+ * If you want to change their value rather edit LocalSettings.php 
+ * than this file.
  *
  */
 
