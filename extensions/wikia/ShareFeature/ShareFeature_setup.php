@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.29',
+        'version' => '0.30',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -40,9 +40,9 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 	return true;
 }
 
-function wfShareFeatureBeforePageDisplay() {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-	$wgOut->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ShareFeature/js/ShareFeature.js?'.$wgStyleVersion.'" ></script>');
+function wfShareFeatureBeforePageDisplay( &$out ) {
+	global $wgExtensionsPath, $wgStyleVersion;
+	$out->addScript('<script type="text/javascript" src="'.$wgExtensionsPath.'/wikia/ShareFeature/js/ShareFeature.js?'.$wgStyleVersion.'" ></script>');
 	
 	return true;
 }
