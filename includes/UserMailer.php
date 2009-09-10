@@ -107,7 +107,7 @@ class UserMailer {
 	 * @return mixed True on success, a WikiError object on failure.
 	 */
 	static function send( $to, $from, $subject, $body, $replyto=null, $contentType=null, $category='unknown' ) {
-		global $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEnotifImpersonal;
+		global $wgSMTP, $wgOutputEncoding, $wgErrorString, $wgEnotifImpersonal, $wgSchwartzMailer;
 		global $wgEnotifMaxRecips;
 
 		if ( is_array( $to ) ) {
@@ -139,7 +139,7 @@ class UserMailer {
 		}
 		/* Wikia change end */
 
-		if (is_array( $wgSMTP )) {
+		if (is_array( $wgSMTP ) || is_array($wgSchwartzMailer )) {
 			require_once( 'Mail.php' );
 
 			$msgid = str_replace(" ", "_", microtime());
@@ -175,7 +175,11 @@ class UserMailer {
 			$headers['X-Mailer'] = 'MediaWiki mailer';
 
 			// Create the mail object using the Mail::factory method
-			$mail_object =& Mail::factory('smtp', $wgSMTP);
+                        if( is_array( $wgSchwartzMailer ) ) {
+			        $mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
+                        } else {
+			        $mail_object =& Mail::factory('smtp', $wgSMTP);
+                        }
 			if( PEAR::isError( $mail_object ) ) {
 				wfDebug( "PEAR::Mail factory failed: " . $mail_object->getMessage() . "\n" );
 				return new WikiError( $mail_object->getMessage() );
