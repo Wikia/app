@@ -535,10 +535,10 @@ class Database {
 			#$profName = 'query: ' . $fname . ' ' . substr( Database::generalizeSQL( $sql ), 0, 255 );
 
 			if ( $isMaster ) {
-				$queryProf = 'query-m: ' . substr( Database::generalizeSQL( $sql ), 0, 255 );
+				$queryProf = 'query-m-' . $this->getServer() . ': ' . substr( Database::generalizeSQL( $sql ), 0, 255 );
 				$totalProf = 'Database::query-master';
 			} else {
-				$queryProf = 'query: ' . substr( Database::generalizeSQL( $sql ), 0, 255 );
+				$queryProf = 'query-' . $this->getServer() . ': ' . substr( Database::generalizeSQL( $sql ), 0, 255 );
 				$totalProf = 'Database::query';
 			}
 			wfProfileIn( $totalProf );
