@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.30',
+        'version' => '0.33',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -29,13 +29,25 @@ $wgExtensionFunctions[] = 'wfShareFeatureInit';
 $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i18n.php';
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
 
+function wfShareFeatureSortSites( &$sites ) {
+	// there will be a different procedure for anons,
+	// and a different one for logged-in users	
+
+		
+
+	return $sites;
+}
+
 // display the links for the feature in the page controls bar
 function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
-	$content_actions['share_feature'] = array(
-			'class' => '',
-			'text' => wfMsg('sf-link'),
-			'href' => '#' ,
-			);
+	global $wgTitle;
+	if( $wgTitle->isContentPage() ) {
+		$content_actions['share_feature'] = array(
+				'class' => '',
+				'text' => wfMsg('sf-link'),
+				'href' => '#' ,
+				);
+	}
 	return true;
 }
 
@@ -47,7 +59,6 @@ function wfShareFeatureInit() {
 
 	$wgAjaxExportList[] = 'wfShareFeatureAjaxGetDialog';
 }
-
 
 function wfShareFeatureAjaxGetDialog() {	
 	global $wgTitle, $wgCityId;
