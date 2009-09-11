@@ -1907,6 +1907,17 @@ if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders
 ?>
 <?php		wfProfileIn( __METHOD__ . '-monacofooter'); ?>
 		<div id="monaco_footer" class="reset">
+<!-- Begin Analytics -->
+<?php
+// Note, these were placed above the Ad calls intentionally because ad code screws with analytics
+echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
+global $wgCityId;
+echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
+?>
+<!-- End Analytics -->
+
 
 <?php
 if ( $wgRequest->getVal('action') != 'edit' ) {
@@ -2202,17 +2213,6 @@ wfProfileOut( __METHOD__ . '-widgets');
 // curse like cobranding
 $this->printCustomFooter();
 ?>
-
-<!-- Begin Analytics -->
-<?php
-// Note, these were placed above the Ad calls intentionally because ad code screws with analytics
-echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
-echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
-global $wgCityId;
-echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
-echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
-?>
-<!-- End Analytics -->
 
 <?php
 /* Put two "invisible" ad slots here. These are for loading ads that just load javascript,
