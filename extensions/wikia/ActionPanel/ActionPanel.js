@@ -212,7 +212,7 @@ function ActionPanelMouseover(e) {
 							for( page in movePage.query.pages ){
 								token = movePage.query.pages[page].movetoken ;
 							}
-							url = wgServer + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=move&from=" + this_title + "&to=" + document.getElementById("quickmove").value.replace(/\?+$/, '');
+							url = wgServer + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=move&from=" + this_title + "&to=" + encodeURIComponent(document.getElementById("quickmove").value.replace(/\?+$/, ''));
 							jQuery.post( url, "", function( response ){
 								eval("j=" + response);
 								removeSpinner("do_action")
