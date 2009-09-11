@@ -1,4 +1,5 @@
 == Changes since 200909.2 ==
+* rt#22603: Add wgTrustedMediaFormatsLocal to WF. (Nef)
 * rt#22610: Blogs: Fixed printing of an empty UL element. (Uberfuzzy)
 * rt#20850: Answers: Fixed page move for pages with a + sign. (Uberfuzzy)
 * rt#12748: IE8 standards mode causes issue with the edit window (Macbre)

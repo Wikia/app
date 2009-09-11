@@ -634,6 +634,10 @@ class WikiFactoryLoader {
 					case "wgFileExtensionsLocal":
 						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgFileExtensions"], true );
 						break;
+
+					case "wgTrustedMediaFormatsLocal":
+						$this->LocalToGlobalArray( $tValue, $GLOBALS["wgTrustedMediaFormats"] );
+						break;
 				}
 
 				try {
