@@ -25,6 +25,7 @@ if ($wgTitle == 'Special:Watchlist') {
 <? } ?>
 	<div id="user_masthead_head" class="clearfix">
 		<h2><?=$data['userspace']?></h2>
+		<?php if (!empty($data["nav_links_head"])): ?>
 		<ul class="nav_links_head">
 			<?
 			global $wgStylePath;
@@ -34,6 +35,7 @@ if ($wgTitle == 'Special:Watchlist') {
 			}
 			?>
 		</ul>
+		<?php endif; ?>
 	</div>
 	<ul class="nav_links">
 		<?
