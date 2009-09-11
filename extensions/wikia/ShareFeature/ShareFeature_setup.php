@@ -42,11 +42,13 @@ $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
 
 
-function wfShareFeatureMakeUrl( $site ) {
+function wfShareFeatureMakeUrl( $site, $target, $title ) {
 	global $wgShareFeatureSites;
-	
-	
 
+	$url = str_replace( '$1', $target, $wgShareFeatureSites[$site] );
+	$url = str_replace( '$2', $title, $url );
+	
+	return $url;
 }
 
 function wfShareFeatureSortSites( &$sites ) {
