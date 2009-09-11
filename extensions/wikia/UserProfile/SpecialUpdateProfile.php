@@ -9,7 +9,7 @@ function wfSpecialUpdateProfile()
 
 	$real_name = $email = $old_email = $email_authenticated = null;
 
-	class UpdateProfile extends SpecialPage
+	class UpdateProfile extends UnlistedSpecialPage
 	{
 		var $db_name;
 		var $location_city;
@@ -22,7 +22,7 @@ function wfSpecialUpdateProfile()
 		function UpdateProfile(){
 			global $wgMessageCache;
 			global $wgSharedUserProfile, $wgSharedDB, $wgDBname;
-			UnlistedSpecialPage::UnlistedSpecialPage("UpdateProfile");
+			parent::UnlistedSpecialPage("UpdateProfile");
 
 			$this->db_name = ($wgSharedUserProfile)?$wgSharedDB:$wgDBname;
 

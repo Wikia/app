@@ -7,13 +7,13 @@ function wfUserRelationshipAction(){
 	global $wgUser,$IP;
 	include_once("$IP/includes/SpecialPage.php");
 
-	class UserRelationshipAction extends SpecialPage 
+	class UserRelationshipAction extends UnlistedSpecialPage 
 	{
 
 	  function UserRelationshipAction()
 	  {
 		global $wgMessageCache;
-		UnlistedSpecialPage::UnlistedSpecialPage("UserRelationshipAction");
+		parent::UnlistedSpecialPage("UserRelationshipAction");
 		
 		require_once ( dirname( __FILE__ ) . '/UserRelationship.i18n.php' );
 		foreach( efSpecialUserReplationship() as $lang => $messages ) 
