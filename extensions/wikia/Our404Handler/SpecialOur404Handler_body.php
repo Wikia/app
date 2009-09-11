@@ -128,7 +128,7 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 			}
 			$uri = substr( parse_url( $uri, PHP_URL_PATH ), 1 );
 		}
-		$title = $wgContLang->ucfirst( $uri );
+		$title = $wgContLang->ucfirst( urldecode( $uri ) );
 		$namespace = NS_MAIN;
 
 		/**
