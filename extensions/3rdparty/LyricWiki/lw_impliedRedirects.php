@@ -93,6 +93,12 @@ function wfImpliedRedirects_articleFromTitle(&$title, &$article){
 			                Article::loadPageData( $data );
 			                $this->mIsRedirect = true;
 			            }
+
+				    // since we're certain the target exists, we might as well say so
+				    // this fools Our404Handler into following the redirect
+				    function exists() {
+					return true;
+				    }
 			        }
 			    }
 				$target = Title::newFromDBkey($titleStr);
@@ -104,5 +110,3 @@ function wfImpliedRedirects_articleFromTitle(&$title, &$article){
 	}
 	return true;
 } // end wfImpliedRedirects_articleFromTitle()
-
-?>
