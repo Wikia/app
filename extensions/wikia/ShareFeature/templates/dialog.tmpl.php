@@ -5,7 +5,7 @@
 			<?php
 				foreach( $sites as $name => $url) {
 			?>
-				<li><a><?= $name ?></a></li>
+				<li><a href="<?= $url ?>"><?= $name ?></a></li>
 			<?php
 				}
 			?>
