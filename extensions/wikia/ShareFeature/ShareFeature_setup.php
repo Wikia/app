@@ -26,19 +26,28 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__).'/';
 
 $wgShareFeatureSites = array(
-		'Reddit',
-		'Facebook',
-		'Twitter',
-		'Digg',
-		'Stumbleupon',
-		'Technorati',
-		'Slashdot',
-		'MySpace',				
+		'Reddit' => 'http://www.reddit.com/submit?url=http://$1&title=$2',
+		'Facebook' => 'http://www.facebook.com/sharer.php?u=http://$1?t=$2',
+		'Twitter' => 'http://twitter.com/home?status=$1', // message and url goes into the parameter
+		'Digg' => 'http://digg.com/submit?url=$1&title=$2',
+		'Stumbleupon' => 'http://www.stumbleupon.com/submit?url=http://$1&title=$2',
+		'Technorati' => 'http://www.technorati.com/faves/?add=http://$1',
+		'Slashdot' => 'http://slashdot.org/bookmark.pl?url=http://$1&title=$2',
+		'MySpace' => 'http://www.myspace.com/Modules/PostTo/Pages/?l=3&u=http://$1&t=$2',				
 		);
+
 
 $wgExtensionFunctions[] = 'wfShareFeatureInit';
 $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i18n.php';
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
+
+
+function wfShareFeatureMakeUrl( $site ) {
+	global $wgShareFeatureSites;
+	
+	
+
+}
 
 function wfShareFeatureSortSites( &$sites ) {
 	global $wgUser;
