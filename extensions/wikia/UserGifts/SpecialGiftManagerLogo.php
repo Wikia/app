@@ -8,7 +8,7 @@ function wfSpecialGiftManagerLogo()
   include_once("includes/SpecialPage.php");
 
 
-class GiftManagerLogo extends SpecialPage 
+class GiftManagerLogo extends UnlistedSpecialPage 
 {
 	var $mUploadFile, $mUploadDescription, $mIgnoreWarning;
 	var $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;
@@ -24,7 +24,7 @@ class GiftManagerLogo extends SpecialPage
   {
   	global $wgMessageCache;
   	
-  	UnlistedSpecialPage::UnlistedSpecialPage("GiftManagerLogo", "", false);
+  	parent::UnlistedSpecialPage("GiftManagerLogo", "", false);
   	
   	require_once ( dirname( __FILE__ ) . '/UserGifts.i18n.php' );
   	foreach( efSpecialUserGits() as $lang => $messages ) 
