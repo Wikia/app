@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.35',
+        'version' => '0.36',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -63,6 +63,11 @@ function wfShareFeatureSortSites( &$sites ) {
 
 
 	}
+
+	foreach( $sites as $name => $site ) {
+
+
+	}
 		
 	return $sites;
 }
@@ -90,12 +95,15 @@ function wfShareFeatureInit() {
 }
 
 function wfShareFeatureAjaxGetDialog() {	
-	global $wgTitle, $wgCityId, $wgShareFeatureSites;
-		
+	global $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer;
+
+	$title = htmlspecialchars( $wgTitle->getText() );	
+	$wiki = $wgServer . str_replace( '$1', $title, $wgArticlePath );
+	
 	$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 	$tpl->set_vars( array(
-		'title' => $wgTitle,
-		'wiki' 	=> $wgCityId,
+		'title' => $title,
+		'wiki' 	=> $wiki,
 		'sites'	=> wfShareFeatureSortSites( $wgShareFeatureSites ),
 	));
 	
