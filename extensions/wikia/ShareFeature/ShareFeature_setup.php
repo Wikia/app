@@ -26,14 +26,14 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__).'/';
 
 $wgShareFeatureSites = array(
-		'Reddit' => 'http://www.reddit.com/submit?url=http://$1&title=$2',
-		'Facebook' => 'http://www.facebook.com/sharer.php?u=http://$1?t=$2',
+		'Reddit' => 'http://www.reddit.com/submit?url=$1&title=$2',
+		'Facebook' => 'http://www.facebook.com/sharer.php?u=$1?t=$2',
 		'Twitter' => 'http://twitter.com/home?status=$1', // message and url goes into the parameter
 		'Digg' => 'http://digg.com/submit?url=$1&title=$2',
-		'Stumbleupon' => 'http://www.stumbleupon.com/submit?url=http://$1&title=$2',
-		'Technorati' => 'http://www.technorati.com/faves/?add=http://$1',
-		'Slashdot' => 'http://slashdot.org/bookmark.pl?url=http://$1&title=$2',
-		'MySpace' => 'http://www.myspace.com/Modules/PostTo/Pages/?l=3&u=http://$1&t=$2',				
+		'Stumbleupon' => 'http://www.stumbleupon.com/submit?url=$1&title=$2',
+		'Technorati' => 'http://www.technorati.com/faves/?add=$1',
+		'Slashdot' => 'http://slashdot.org/bookmark.pl?url=$1&title=$2',
+		'MySpace' => 'http://www.myspace.com/Modules/PostTo/Pages/?l=3&u=$1&t=$2',				
 		);
 
 
@@ -44,14 +44,13 @@ $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentAct
 
 function wfShareFeatureMakeUrl( $site, $target, $title ) {
 	global $wgShareFeatureSites;
-
-	$url = str_replace( '$1', $target, $wgShareFeatureSites[$site] );
+	$url = str_replace( '$1', $target, $site );
 	$url = str_replace( '$2', $title, $url );
 	
 	return $url;
 }
 
-function wfShareFeatureSortSites( &$sites ) {
+function wfShareFeatureSortSites( &$sites, $target, $title ) {
 	global $wgUser;
 	// there will be a different procedure for anons,
 	// and a different one for logged-in users	
@@ -63,12 +62,12 @@ function wfShareFeatureSortSites( &$sites ) {
 
 
 	}
-
+	
+	// make proper urls, pumping them with data
 	foreach( $sites as $name => $site ) {
-
-
+		$sites[$name] = wfShareFeatureMakeUrl( $site, $target, $title );	
 	}
-		
+
 	return $sites;
 }
 
@@ -95,16 +94,16 @@ function wfShareFeatureInit() {
 }
 
 function wfShareFeatureAjaxGetDialog() {	
-	global $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer;
+	global $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer, $wgArticlePath;
 
 	$title = htmlspecialchars( $wgTitle->getText() );	
 	$wiki = $wgServer . str_replace( '$1', $title, $wgArticlePath );
-	
+
 	$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 	$tpl->set_vars( array(
 		'title' => $title,
 		'wiki' 	=> $wiki,
-		'sites'	=> wfShareFeatureSortSites( $wgShareFeatureSites ),
+		'sites'	=> wfShareFeatureSortSites( $wgShareFeatureSites, $wiki, $title ),
 	));
 	
 	$text = $tpl->execute('dialog');
