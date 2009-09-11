@@ -1,7 +1,7 @@
 <!-- s:<?php echo __FILE__ ?> -->
 <?php if(empty($preview)): ?>
 	<div id="blogInfo">
-	<label><?php echo wfMsg( "create-blog-form-info" ) ?></label><br />
+	<label><?php echo wfMsgExt( "create-blog-form-info", array ( 'parseinline' ) ) ?></label><br />
 	</div>
 	<br />
 <?php endif; ?>
