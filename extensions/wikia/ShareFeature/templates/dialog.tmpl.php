@@ -3,9 +3,9 @@
 		<div>
 			<ul>
 			<?php
-				foreach( $sites as $name => $url) {
+				foreach( $sites as $site) {
 			?>
-				<li><a href="<?= $url ?>"><?= $name ?></a></li>
+				<li><a href="<?= $site[1] ?>"><?= $site[0] ?></a></li>
 			<?php
 				}
 			?>
