@@ -58,7 +58,7 @@ function wfSoapFailures(){
 		// Pull in the NuSOAP code
 		require_once('nusoap.php');
 		// Create the client instance
-		$client = new soapclient('http://lyricwiki.org/server.php?wsdl', true);
+		$client = new soapclient('http://lyrics.wikia.com/lyrics/Special:ServerWrapper?wsdl', true);
 		$err = $client->getError();
 		if ($err) {
 			echo '<h2>Constructor error</h2><pre>' . $err . '</pre>';
