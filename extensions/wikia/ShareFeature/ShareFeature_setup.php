@@ -26,15 +26,39 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__).'/';
 
 $wgShareFeatureSites = array(
-		'Reddit' => 'http://www.reddit.com/submit?url=$1&title=$2',
-		'Facebook' => 'http://www.facebook.com/sharer.php?u=$1?t=$2',
-		'Twitter' => 'http://twitter.com/home?status=$1', // message and url goes into the parameter
-		'Digg' => 'http://digg.com/submit?url=$1&title=$2',
-		'Stumbleupon' => 'http://www.stumbleupon.com/submit?url=$1&title=$2',
-		'Technorati' => 'http://www.technorati.com/faves/?add=$1',
-		'Slashdot' => 'http://slashdot.org/bookmark.pl?url=$1&title=$2',
-		'MySpace' => 'http://www.myspace.com/Modules/PostTo/Pages/?l=3&u=$1&t=$2',				
-		);
+		array( 
+			'name' => 'Reddit',
+			'url' => 'http://www.reddit.com/submit?url=$1&title=$2'
+		),
+		array( 
+			'name' => 'Facebook',
+			'url' => 'http://www.facebook.com/sharer.php?u=$1?t=$2'
+		),
+		array( 
+			'name' => 'Twitter',
+			'url' => 'http://twitter.com/home?status=$1'
+		), // message and url goes into the parameter
+		array( 
+			'name' => 'Digg',
+			'url' => 'http://digg.com/submit?url=$1&title=$2'
+		),
+		array(
+			'name' => 'Stumbleupon',
+			'url' => 'http://www.stumbleupon.com/submit?url=$1&title=$2'
+		),
+		array(
+			'name' => 'Technorati',
+			'url' => 'http://www.technorati.com/faves/?add=$1'
+		),
+		array( 
+			'name' => 'Slashdot',
+			'url' => 'http://slashdot.org/bookmark.pl?url=$1&title=$2'
+		),
+		array(
+			'name' => 'MySpace',
+			'url' => 'http://www.myspace.com/Modules/PostTo/Pages/?l=3&u=$1&t=$2'
+		),
+);
 
 
 $wgExtensionFunctions[] = 'wfShareFeatureInit';
@@ -50,28 +74,31 @@ function wfShareFeatureMakeUrl( $site, $target, $title ) {
 	return $url;
 }
 
-function wfShareFeatureSortSites( &$sites, $target, $title ) {
-	global $wgUser;
-	$dbr = wfGetDB(DB_SLAVE);
+function wfShareFeatureSortSites( $sites, $target, $title ) {
+	global $wgUser, $wgShareFeatureSites;
+	$stored_sites = array();
 
+	$dbr = wfGetDB(DB_SLAVE);
+	
 	$res = $dbr->select(
 			'wikicities.share_feature',
 			'sf_provider_id, sf_clickcount',
 			array( 'sf_user_id' => $wgUser->getId() ),
-			__METHOD__
+			__METHOD__,
+			'ORDER BY sf_clickcount DESC'
 			);		
 
-	$categories = '';
-        while($row = $dbr->fetchObject($res)) {
-                $categories .= str_replace('_', ' ', $row->cat_title) . "\n";
+	$sites = array();
+        while($row = $dbr->fetchObject($res)) {		
+		$site = $wgShareFeatureSites[$row->sf_provider_id];
+		$sites[] = array( $site['name'], wfShareFeatureMakeUrl( $site['url'], $target, $title ) );
         }
-
 	
-	// make proper urls, pumping them with data
+/*
 	foreach( $sites as $name => $site ) {
 		$sites[$name] = wfShareFeatureMakeUrl( $site, $target, $title );	
 	}
-
+*/
 	return $sites;
 }
 
@@ -95,6 +122,13 @@ function wfShareFeatureInit() {
         wfLoadExtensionMessages('ShareFeature');
 
 	$wgAjaxExportList[] = 'wfShareFeatureAjaxGetDialog';
+	$wgAjaxExportList[] = 'wfShareFeatureAjaxUpdateStats';
+}
+
+function wfShareFeatureAjaxUpdateStats() {
+	global $wgUser;
+
+
 }
 
 function wfShareFeatureAjaxGetDialog() {	
