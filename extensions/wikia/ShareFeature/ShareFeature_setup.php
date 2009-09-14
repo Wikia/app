@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.36',
+        'version' => '0.40',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -52,16 +52,20 @@ function wfShareFeatureMakeUrl( $site, $target, $title ) {
 
 function wfShareFeatureSortSites( &$sites, $target, $title ) {
 	global $wgUser;
-	// there will be a different procedure for anons,
-	// and a different one for logged-in users	
-	if( $wgUser->isLoggedIn() ) {
+	$dbr = wfGetDB(DB_SLAVE);
 
+	$res = $dbr->select(
+			'wikicities.share_feature',
+			'sf_provider_id, sf_clickcount',
+			array( 'sf_user_id' => $wgUser->getId() ),
+			__METHOD__
+			);		
 
+	$categories = '';
+        while($row = $dbr->fetchObject($res)) {
+                $categories .= str_replace('_', ' ', $row->cat_title) . "\n";
+        }
 
-	} else {
-
-
-	}
 	
 	// make proper urls, pumping them with data
 	foreach( $sites as $name => $site ) {
@@ -108,6 +112,7 @@ function wfShareFeatureAjaxGetDialog() {
 	
 	$text = $tpl->execute('dialog');
 	$response = new AjaxResponse( $text );
+	$response->setCacheDuration( 60 * 2 );
 	$response->setContentType('text/plain; charset=utf-8');
 
 	return $response;
