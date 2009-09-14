@@ -30,7 +30,7 @@ class ExtVariables {
     }
  
     function varf( &$parser, $expr = '', $defaultVal = '' ) {        
-        if ( $this->mVariables[$expr] != '' ) {
+        if ( isset( $this->mVaraibles[$expr] ) && $this->mVariables[$expr] != '' ) {
             return $this->mVariables[$expr];
         } else {
             return $defaultVal;
