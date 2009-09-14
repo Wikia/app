@@ -104,6 +104,12 @@ class BlogLockdown {
 				}
 				break;
 
+			case "autopatrol":
+			case "patrol"
+				$result = true;
+				$return = true;
+				break;
+
 			default:
 				/**
 				 * for other actions we demand that user has to be logged in
