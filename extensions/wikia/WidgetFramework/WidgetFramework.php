@@ -79,7 +79,7 @@ class WidgetFramework {
 					$this->config[1][] = array('type' => 'WidgetAnswers', 'id' => 142);
 					$this->config[1][] = $last;
 				}
-				
+
 			} else if($this->skinname == "quartz") {
 				$this->config = array(
 					1 => array(
@@ -118,7 +118,9 @@ class WidgetFramework {
 			}
 		}
 
-		array_walk_recursive($this->config[1], 'tempFunc');
+		if( is_array( $this->config[1] ) ) {
+			array_walk_recursive( $this->config[1], 'tempFunc' );
+		}
 
 		if(!$isWidgetCommunity) {
 			$this->config[1][] = array('type' => 'WidgetCommunity', 'id' => 101);
