@@ -106,6 +106,7 @@ body.mainpage .HOME_TOP_RIGHT_BOXAD, body.mainpage .FAST_HOME2 {
 #TOP_LEADERBOARD {
 	margin-bottom: 10px;
 	margin-right: auto;
+	margin-left: auto;
 }
 #TOP_RIGHT_BOXAD {
 	float: right;
