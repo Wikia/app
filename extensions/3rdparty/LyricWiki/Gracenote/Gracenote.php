@@ -7,6 +7,20 @@
 // are intended to be used in more than one extension.
 ////
 
+
+//		TODO: MOVE THESE TO LocalSettings.php (can change the numeric values as needed).
+define('NS_GRACENOTE', 220);
+define('NS_GRACENOTE_TALK', 221);
+$wgExtraNamespaces[NS_GRACENOTE] = "Gracenote";
+$wgExtraNamespaces[NS_GRACENOTE_TALK] = "Gracenote_talk";
+$wgGroupPermissions['*']['editgracenote'] = false;
+$wgGroupPermissions['staff']['editgracenote'] = true;
+//		TODO: MOVE THESE TO LocalSettings.php (can change the numeric values as needed).
+
+
+
+
+
 // Definitions for which type of page to track with GoogleAnalytics.
 define('GRACENOTE_VIEW_GRACENOTE_LYRICS', 'ViewGracenote');
 define('GRACENOTE_VIEW_OTHER_LYRICS', 'ViewOther');
@@ -103,6 +117,19 @@ GOOGLE_JS
 	return $retVal;
 } // end gracenote_getAnalyticsHtml()
 
+////
+// Disable view source when trying to "edit" a page in the Gracenote namespace.
+////
+function gracenote_disableEdit(&$out, &$sk){
+	GLOBAL $wgUser,$wgTitle;
+	$retVal = true;
+	if( ($wgTitle->getNamespace() == NS_GRACENOTE)  && (isset($_GET['action']) && $_GET['action']=="edit") && (!$wgUser->isAllowed( 'editgracenote' )) ) {
+		$out->mBodytext = "Sorry, but the source can not be viewed on Gracenote pages due to licensing requirements.";
+		$retVal = false;
+	}
+	return $retVal;
+} // end gracenote_disableEdit()
+
 
 ////
 // Called at BeforePageDisplay hook, this will let us stuff some javascript into the <head> element to accomplish the
@@ -113,7 +140,7 @@ function gracenote_installCopyProtection(&$out, &$sk){
 	$out->addScript("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js\"></script>");
 	
 	// Disable text-selection in the lyricsbox divs (this only needs to be done once between both the lyrics and gracenotelyrics extensions.
-	$DISABLE_TEXT_SELECTION = "
+	$DISABLE_TEXT_SELECTION_FUNCTIONS = "
 		function preventHighlighting(element){
 			if (typeof element.onselectstart!=\"undefined\"){ // IE
 				element.onselectstart=function(){return false};
@@ -124,6 +151,8 @@ function gracenote_installCopyProtection(&$out, &$sk){
 			}
 			element.style.cursor = \"default\";
 		}
+	";
+	$DISABLE_TEXT_SELECTION_CODE = "
 		$('.lyricbox').each(function (i){
 			preventHighlighting(this);
 		});
@@ -139,7 +168,7 @@ function gracenote_installCopyProtection(&$out, &$sk){
 	";
 	
 	// Repeatedly clear clipboard (to attempt to stop Print-Screen, this doesn't work in modern browsers).
-	$DISABLE_CLIPBOARD = "
+	$DISABLE_CLIPBOARD_FUNCTIONS = "
 		function no_cp(){
 			if($.browser.msie && $.browser.version==\"6.0\"){
 				window.clipboardData.setData('text', '');
@@ -147,6 +176,8 @@ function gracenote_installCopyProtection(&$out, &$sk){
 			}
 		}
 		function do_err(){return true}
+	";
+	$DISABLE_CLIPBOARD_CODE ="
 		if($.browser.msie && $.browser.version==\"6.0\"){onerror=do_err;}
 		no_cp();
 	";
@@ -154,9 +185,19 @@ function gracenote_installCopyProtection(&$out, &$sk){
 	// Add the various chunks of javascript that need to be run after the page is loaded.
 	$out->addScript("<script type=\"text/javascript\">
 		$(document).ready(function() {
-			$DISABLE_TEXT_SELECTION
-			$DISABLE_SELECT_ALL
-			$DISABLE_CLIPBOARD
+			$DISABLE_CLIPBOARD_FUNCTIONS
+			$DISABLE_TEXT_SELECTION_FUNCTIONS
+		
+			var titleElement = document.getElementsByTagName('title')[0];
+			if(titleElement){
+				jsGoogleLabel = titleElement.innerHTML;
+				var gnPrefix  = \"Gracenote:\";
+				if(jsGoogleLabel.substring(0, gnPrefix.length) == gnPrefix){
+					$DISABLE_CLIPBOARD_CODE
+					$DISABLE_SELECT_ALL
+					$DISABLE_TEXT_SELECTION_CODE
+				}
+			}
 		});
 	</script>");
 
