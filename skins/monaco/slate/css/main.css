@@ -6,6 +6,20 @@
 .color2 {
 	background-color: #626466;
 }
+
+
+.dark_text_1 {
+	color: #626466;
+}
+.dark_text_2 {
+	color: #505254;
+}
+.accent	{
+	background-color: #FEEECC;
+	color: #000;
+}
+
+
 #background_strip {
 	background-color: #505254;
 	border-color: #fec423;

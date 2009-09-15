@@ -6,6 +6,19 @@
 	background-color: #F2F2F2;
 }
 
+
+.dark_text_1 {
+	color: #228b22;
+}
+.dark_text_2 {
+	color: #000;
+}
+.accent	{
+	background-color: #d3e8d3;
+	color: #000;
+}
+
+
 /*** WIDGETS ***/
 #search_field {
 	border-color: #135013;

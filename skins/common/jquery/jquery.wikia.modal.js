@@ -13,7 +13,14 @@ $.fn.extend({
 		window.wgMakeModalCSSLoaded = true;
 	}
 
-   	this.addClass('modalInside').wrap('<div class="modalWrapper"></div>');
+	if (options.id) {
+		var id = ' id="' + options.id + '"';
+	}
+	else {
+		var id = '';
+	}
+
+   	this.addClass('modalInside').wrap('<div class="modalWrapper"'+id+'></div>');
 
    	var wrapper = this.closest(".modalWrapper");
 

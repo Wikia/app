@@ -6,6 +6,26 @@
 .color2 {
 	background-color: #09101d;
 }
+
+
+.dark_text_1 {
+	color: #0E192D;
+}
+.dark_text_2 {
+	color: #FFF;
+}
+.accent	{
+	background-color: #71D1EF; 
+	color: #000;
+}
+
+#user_masthead ul.nav_links li a {
+	background: transparent;
+	color: #000;
+}
+
+
+
 #background_strip {
 	background: #09101d url(http://images.wikia.com/common/skins/quartz/gaming/images/background.jpg);
 	border-color: #71d1ef;
