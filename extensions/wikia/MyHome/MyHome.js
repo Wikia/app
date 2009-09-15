@@ -59,6 +59,8 @@ MyHome.loadFullSizeImage = function(ev) {
 	var title = $(this).attr('title');
 	var timestamp = $(this).attr('ref');
 
+	timestamp = parseInt(timestamp) ? timestamp : 0;
+
 	// catch doubleclicks on video thumbnails
 	if (MyHome.imagePreviewLock) {
 		MyHome.log('lock detected: full-size image is loading');
@@ -68,7 +70,7 @@ MyHome.loadFullSizeImage = function(ev) {
 	MyHome.imagePreviewLock = true;
 
 	MyHome.ajax('getImagePreview', {
-		'title': 'File:' + title,
+		'title': title,
 		'timestamp': timestamp,
 		'maxwidth': $.getViewportWidth(),
 		'maxheight': $.getViewportHeight()
@@ -119,8 +121,15 @@ MyHome.fetchMore = function(node) {
 			// setup onclicks on thumbnails
 			MyHome.setupThumbnails(feedContent);
 
-			// store new timestamp
-			MyHome.fetchSince[feedType] = data.last_timestamp;
+			// show more?
+			if (data.fetchSince) {
+				// store new timestamp to fetch from
+				MyHome.fetchSince[feedType] = data.fetchSince;
+			}
+			else {
+				// remove "more" link
+				$('#myhome-' + feedType + '-feed-more').parent().remove();
+			}
 		}
 
 		// remove loading indicator
@@ -128,6 +137,7 @@ MyHome.fetchMore = function(node) {
 	});
 }
 
+// setup onclick events for image/video thumbnails
 MyHome.setupThumbnails = function(node) {
 	$(node).find('.myhome-image-thumbnail').click(MyHome.loadFullSizeImage);
 	$(node).find('.myhome-video-thumbnail').click(MyHome.loadVideoPlayer);
@@ -135,6 +145,21 @@ MyHome.setupThumbnails = function(node) {
 	MyHome.log('thumbnails setup');
 }
 
+// set default feed
+MyHome.setDefaultView = function() {
+	var node = $(this);
+	var defaultView = node.attr('name');
+
+	MyHome.ajax('setDefaultView', {'defaultView': defaultView}, function (data) {
+		if (data.msg) {
+			// show message and slooowly fade out
+			$(node).parent().html(data.msg).fadeOut(2000);
+		}
+	});
+}
+
+// init onclicks
 jQuery(function() {
 	MyHome.setupThumbnails($('.myhome-feed'));
+	$('#myhome-feed-switch-default-checkbox').removeAttr('disabled').click(MyHome.setDefaultView);
 });
