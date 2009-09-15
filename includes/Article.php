@@ -2764,6 +2764,11 @@ class Article {
 			$summary = wfMsgForContent( 'revertpage' );
 		}
 
+		/* Wikia change begin - @author: Macbre */
+		/* MyHome: store ID of the rollbacked revision */
+		Wikia::setVar('RollbackedRevId', $target->getNext()->getId());
+		/* Wikia change end */
+
 		# Allow the custom summary to use the same args as the default message
 		$args = array(
 			$target->getUserText(), $from, $s->rev_id,
@@ -3529,6 +3534,7 @@ class Article {
 		$ot = Title::newFromRedirect( $oldtext );
 		$rt = Title::newFromRedirect( $newtext );
 		if( is_object( $rt ) && ( !is_object( $ot ) || !$rt->equals( $ot ) || $ot->getFragment() != $rt->getFragment() ) ) {
+			Wikia::setVar('AutoSummaryType', 'autoredircomment');
 			return wfMsgForContent( 'autoredircomment', $rt->getFullText() );
 		}
 
@@ -3539,11 +3545,13 @@ class Article {
 			$truncatedtext = $wgContLang->truncate(
 				str_replace("\n", ' ', $newtext),
 				max( 0, 200 - strlen( wfMsgForContent( 'autosumm-new' ) ) ) );
+			Wikia::setVar('AutoSummaryType', 'autosumm-new');
 			return wfMsgForContent( 'autosumm-new', $truncatedtext );
 		}
 
 		# Blanking autosummaries
 		if( $oldtext != '' && $newtext == '' ) {
+			Wikia::setVar('AutoSummaryType', 'autosumm-blank');
 			return wfMsgForContent( 'autosumm-blank' );
 		} elseif( strlen( $oldtext ) > 10 * strlen( $newtext ) && strlen( $newtext ) < 500) {
 			# Removing more than 90% of the article
@@ -3551,6 +3559,7 @@ class Article {
 			$truncatedtext = $wgContLang->truncate(
 				$newtext,
 				max( 0, 200 - strlen( wfMsgForContent( 'autosumm-replace' ) ) ) );
+			Wikia::setVar('AutoSummaryType', 'autosumm-replace');
 			return wfMsgForContent( 'autosumm-replace', $truncatedtext );
 		}
 

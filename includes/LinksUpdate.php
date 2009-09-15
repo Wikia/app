@@ -99,7 +99,9 @@ class LinksUpdate {
 		$existing = $this->getExistingImages();
 
 		$imageDeletes = $this->getImageDeletions( $existing );
-		$this->incrTableUpdate( 'imagelinks', 'il', $imageDeletes, $this->getImageInsertions( $existing ) );
+		$imageInserts = $this->getImageInsertions( $existing );
+		Wikia::setVar('imageInserts', $imageInserts);
+		$this->incrTableUpdate( 'imagelinks', 'il', $imageDeletes, $imageInserts );
 
 		# Invalidate all image description pages which had links added or removed
 		$imageUpdates = $imageDeletes + array_diff_key( $this->mImages, $existing );
@@ -132,6 +134,8 @@ class LinksUpdate {
 		$categoryUpdates = $categoryInserts + $categoryDeletes;
 		$this->invalidateCategories( $categoryUpdates );
 		$this->updateCategoryCounts( $categoryInserts, $categoryDeletes );
+
+		Wikia::setVar('categoryInserts', $categoryInserts);
 
 		# Page properties
 		$existing = $this->getExistingProperties();
