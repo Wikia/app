@@ -75,7 +75,7 @@ function wfShareFeatureMakeUrl( $site, $target, $title ) {
 }
 
 function wfShareFeatureSortSites( $sites, $target, $title ) {
-	global $wgUser, $wgShareFeatureSites;
+	global $wgUser, $wgShareFeatureSites, $wgExternalSharedDB;
 	$stored_sites = array();
 
 	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB );
