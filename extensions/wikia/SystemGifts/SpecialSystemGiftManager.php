@@ -1,6 +1,6 @@
 <?php
 
-class SystemGiftManager extends SpecialPage {
+class SystemGiftManager extends UnlistedSpecialPage {
 
 	function SystemGiftManager(){
 		parent::__construct("SystemGiftManager");

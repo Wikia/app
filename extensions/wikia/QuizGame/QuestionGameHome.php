@@ -76,7 +76,7 @@ function wfSpecialQuizGameHome(){
 		$wgLogHeaders['quiz']          = 'quizquestionslogpagetext';
 		$wgLogActions['quiz/quiz'] = 'quizquestionslogentry';
 	}	
-	class QuizGameHome extends SpecialPage {
+	class QuizGameHome extends UnlistedSpecialPage {
 	
 		private $SALT;
 		private $INCLUDEPATH;

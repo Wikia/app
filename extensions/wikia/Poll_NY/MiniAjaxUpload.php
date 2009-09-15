@@ -4,7 +4,7 @@ $wgExtensionFunctions[] = 'wfSpecialPollAjaxUpload';
 
 function wfSpecialPollAjaxUpload(){
 	
-	class PollAjaxUpload extends SpecialPage {
+	class PollAjaxUpload extends UnlistedSpecialPage {
 		
 		function PollAjaxUpload(){
 			parent::__construct("PollAjaxUpload");

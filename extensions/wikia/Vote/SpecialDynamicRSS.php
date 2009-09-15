@@ -5,7 +5,7 @@ function wfSpecialDynamicRSS(){
   global $wgUser,$IP;
   include_once("$IP/includes/SpecialPage.php");
 
-	class DynamicRSS  extends SpecialPage {
+	class DynamicRSS  extends UnlistedSpecialPage {
 	
 	  function DynamicRSS(){
 	    parent::__construct("RSS");

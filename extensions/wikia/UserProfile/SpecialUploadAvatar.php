@@ -7,7 +7,7 @@ function wfSpecialAvatarUpload(){
   include_once("includes/SpecialPage.php");
 
 
-class UploadAvatar extends SpecialPage {
+class UploadAvatar extends UnlistedSpecialPage {
 
 	var $mUploadFile, $mUploadDescription, $mIgnoreWarning;
 	var $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;

@@ -1,5 +1,5 @@
 <?php
-class LiveDelegationHandler extends SpecialPage {
+class LiveDelegationHandler extends UnlistedSpecialPage {
 	
 	function LiveDelegationHandler(){
 		parent::__construct("LiveDelegationHandler");

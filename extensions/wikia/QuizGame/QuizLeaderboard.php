@@ -9,7 +9,7 @@ function wfSpecialQuizLeaderboard(){
   include_once("includes/SpecialPage.php");
 
 
-class QuizLeaderboard extends SpecialPage {
+class QuizLeaderboard extends UnlistedSpecialPage {
 
 	
 	function QuizLeaderboard(){

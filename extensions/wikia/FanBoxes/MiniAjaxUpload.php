@@ -5,7 +5,7 @@ $wgAutoloadClasses['FanBoxAjaxUploadForm'] = dirname( __FILE__ ) . '/MiniAjaxUpl
 
 function wfSpecialFanBoxAjaxUpload(){
 	
-	class FanBoxAjaxUpload extends SpecialPage {
+	class FanBoxAjaxUpload extends UnlistedSpecialPage {
 		
 		function FanBoxAjaxUpload(){
 			parent::__construct("FanBoxAjaxUpload");

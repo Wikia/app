@@ -7,7 +7,7 @@ function wfSpecialAaron(){
   include_once("includes/SpecialPage.php");
 
 
-class UserImageList extends SpecialPage {
+class UserImageList extends UnlistedSpecialPage {
 
 	
 	function UserImageList(){

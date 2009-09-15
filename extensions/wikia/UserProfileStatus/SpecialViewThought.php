@@ -7,7 +7,7 @@ function wfSpecialViewThought(){
   include_once("includes/SpecialPage.php");
 
 
-class ViewThought extends SpecialPage {
+class ViewThought extends UnlistedSpecialPage {
 
 	
 	function ViewThought(){

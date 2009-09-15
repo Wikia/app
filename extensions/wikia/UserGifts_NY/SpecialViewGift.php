@@ -1,5 +1,5 @@
 <?php
-class ViewGift extends SpecialPage {
+class ViewGift extends UnlistedSpecialPage {
 
 	function ViewGift(){
 		parent::__construct("ViewGift");

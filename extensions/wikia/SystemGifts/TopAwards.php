@@ -1,5 +1,5 @@
 <?php
-class TopAwards extends SpecialPage {
+class TopAwards extends UnlistedSpecialPage {
 
 	
 	function TopAwards(){

@@ -7,7 +7,7 @@ function wfSpecialRandomPoll(){
   include_once("includes/SpecialPage.php");
 
 
-class RandomPoll extends SpecialPage {
+class RandomPoll extends UnlistedSpecialPage {
 
 	
 	function RandomPoll(){

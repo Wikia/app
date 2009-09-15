@@ -1,5 +1,5 @@
 <?php
-class UploadAvatar extends SpecialPage {
+class UploadAvatar extends UnlistedSpecialPage {
 
 	var $mUploadFile, $mUploadDescription, $mIgnoreWarning;
 	var $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;

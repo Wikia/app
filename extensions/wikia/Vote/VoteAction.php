@@ -8,7 +8,7 @@ function wfSpecialVoteAction(){
   include_once("includes/SpecialPage.php");
 
 
-class VoteAction extends SpecialPage {
+class VoteAction extends UnlistedSpecialPage {
 
   function VoteAction(){
     parent::__construct("VoteAction");

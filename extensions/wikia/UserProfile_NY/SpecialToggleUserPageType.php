@@ -1,5 +1,5 @@
 <?php
-class ToggleUserPage extends SpecialPage {
+class ToggleUserPage extends UnlistedSpecialPage {
 
 	
 	function ToggleUserPage(){

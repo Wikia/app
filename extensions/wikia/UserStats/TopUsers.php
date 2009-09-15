@@ -7,7 +7,7 @@ function wfSpecialTopUsers(){
 	global $wgUser,$IP;
 	include_once("includes/SpecialPage.php");
 
-	class TopUsersPoints extends SpecialPage {
+	class TopUsersPoints extends UnlistedSpecialPage {
 	
 		function TopUsersPoints(){
 			parent::__construct("TopUsers");

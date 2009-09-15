@@ -5,7 +5,7 @@ $wgExtensionFunctions[] = 'wfSpecialQuizRecalcStats';
 function wfSpecialQuizRecalcStats(){
 
 	
-	class QuizRecalcStats extends SpecialPage {
+	class QuizRecalcStats extends UnlistedSpecialPage {
 		
  
 		/* Construct the MediaWiki special page */

@@ -7,7 +7,7 @@ function wfViewPoll(){
   include_once("includes/SpecialPage.php");
 
 
-class ViewPoll extends SpecialPage {
+class ViewPoll extends UnlistedSpecialPage {
 
 	
 	function ViewPoll(){

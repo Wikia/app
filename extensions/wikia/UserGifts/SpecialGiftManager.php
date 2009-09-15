@@ -13,7 +13,7 @@ function wfSpecialGiftManager()
 	#---
 	include_once("$IP/includes/SpecialPage.php");
 
-	class GiftManager extends SpecialPage
+	class GiftManager extends UnlistedSpecialPage
 	{
 		function GiftManager()
 		{

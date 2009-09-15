@@ -1,5 +1,5 @@
 <?php
-class LinkRedirect extends SpecialPage {
+class LinkRedirect extends UnlistedSpecialPage {
 
 	
 	function LinkRedirect(){

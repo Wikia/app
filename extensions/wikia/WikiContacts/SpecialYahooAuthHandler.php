@@ -1,5 +1,5 @@
 <?php
-class YahooAuthHandler extends SpecialPage {
+class YahooAuthHandler extends UnlistedSpecialPage {
 	
 	function YahooAuthHandler(){
 		parent::__construct("YahooAuthHandler");

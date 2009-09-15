@@ -8,7 +8,7 @@ function wfSpecialArticlesHome(){
   include_once("includes/SpecialPage.php");
 
 
-class ArticlesHome extends SpecialPage {
+class ArticlesHome extends UnlistedSpecialPage {
 
 	
 	function ArticlesHome(){

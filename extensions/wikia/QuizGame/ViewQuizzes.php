@@ -6,7 +6,7 @@ function wfSpecialViewQuizzes(){
 
 	global $wgUser,$IP;
 	
-	class ViewQuizzes extends SpecialPage {
+	class ViewQuizzes extends UnlistedSpecialPage {
 		
 		/* Construct the MediaWiki special page */
 		function ViewQuizzes(){

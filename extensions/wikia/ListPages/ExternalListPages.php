@@ -7,7 +7,7 @@ function wfSpecialExternalListPages(){
   include_once("includes/SpecialPage.php");
 
 
-class ExternalListPages extends SpecialPage {
+class ExternalListPages extends UnlistedSpecialPage {
 
   function ExternalListPages(){
     parent::__construct("ExternalListPages");

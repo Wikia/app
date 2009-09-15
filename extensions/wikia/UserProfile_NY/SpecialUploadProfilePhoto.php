@@ -1,5 +1,5 @@
 <?php
-class UploadProfilePhoto extends SpecialPage {
+class UploadProfilePhoto extends UnlistedSpecialPage {
 
 	
 	function UploadProfilePhoto(){

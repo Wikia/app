@@ -1,5 +1,5 @@
 <?php
-class RemoveMasterGift extends SpecialPage {
+class RemoveMasterGift extends UnlistedSpecialPage {
 
 	function RemoveMasterGift(){
 		parent::__construct("RemoveMasterGift");
