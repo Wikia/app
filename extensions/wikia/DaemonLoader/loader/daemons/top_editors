@@ -168,7 +168,7 @@ foreach my $user_id (sort keys %USERS) {
 
 =get all Wikis
 =cut
-my @where_db = ("1 = 1");
+my @where_db = ("city_public = 1");
 my $databases = $db->get_wikis(\@where_db);
 my $hubs = $db->getWikiCats();
 
@@ -223,6 +223,8 @@ foreach my $user_id (sort keys %USERS) {
 	foreach (@wikis) {
 		my $city_id = $_;
 		my $dbname = $databases->{$city_id};
+		
+		next unless $dbname;
 		
 		$homeCity = $dbname unless ($homeCity);
 
