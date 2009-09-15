@@ -91,8 +91,8 @@
 # This section has no configuration, and can be ignored.
 #
 
-require_once 'extras.php';
-require_once 'Gracenote.php';
+include_once '../extras.php';
+include_once 'Gracenote.php';
 
 ################################################################################
 # Extension Credits Definition
