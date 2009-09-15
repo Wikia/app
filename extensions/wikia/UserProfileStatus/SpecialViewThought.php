@@ -11,7 +11,7 @@ class ViewThought extends SpecialPage {
 
 	
 	function ViewThought(){
-		UnlistedSpecialPage::UnlistedSpecialPage("ViewThought");
+		parent::__construct("ViewThought");
 	}
 	
 	function execute(){

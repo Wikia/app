@@ -3,7 +3,7 @@ class ToggleUserPage extends SpecialPage {
 
 	
 	function ToggleUserPage(){
-		UnlistedSpecialPage::UnlistedSpecialPage("ToggleUserPage");
+		parent::__construct("ToggleUserPage");
 	}
 	
 	function execute(){

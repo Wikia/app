@@ -11,7 +11,7 @@ function wfSpecialGenerateTopUsersReport(){
 class GenerateTopUsersReport extends UnlistedSpecialPage {
 
   function GenerateTopUsersReport(){
-    UnlistedSpecialPage::UnlistedSpecialPage("GenerateTopUsersReport");
+    parent::__construct("GenerateTopUsersReport");
   }
 
   function execute($period){

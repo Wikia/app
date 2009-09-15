@@ -8,7 +8,7 @@ function wfSpecialCreatePageChk(){
 	class CreatePageChk  extends SpecialPage {
 	
 	  function CreatePageChk(){
-	    UnlistedSpecialPage::UnlistedSpecialPage("CreatePageChk");
+	    parent::__construct("CreatePageChk");
 	  }
 	  
 	  function execute(){

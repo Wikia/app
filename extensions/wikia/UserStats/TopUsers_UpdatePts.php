@@ -11,7 +11,7 @@ function wfSpecialTopUsersUpdate(){
 class TopUsersUpdate extends UnlistedSpecialPage {
 
   function TopUsersUpdate(){
-    UnlistedSpecialPage::UnlistedSpecialPage("TopUsersUpdate");
+    parent::__construct("TopUsersUpdate");
   }
 
   function updateMainEditsCount(){
@@ -101,7 +101,7 @@ function wfSpecialTopUsersUpdate(){
 class TopUsersUpdate extends UnlistedSpecialPage {
 
   function TopUsersUpdate(){
-    UnlistedSpecialPage::UnlistedSpecialPage("TopUsersUpdate");
+    parent::__construct("TopUsersUpdate");
   }
 
   

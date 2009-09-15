@@ -13,7 +13,7 @@ function wfSpecialUpdateProfileSports(){
 		var $favorite_counter = 1;
 		
 		function UpdateProfileSports(){
-			UnlistedSpecialPage::UnlistedSpecialPage("UpdateFavoriteTeams");
+			parent::__construct("UpdateFavoriteTeams");
 		}
 		
 		function getSports(){

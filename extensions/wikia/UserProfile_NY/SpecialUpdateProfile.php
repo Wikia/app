@@ -2,7 +2,7 @@
 class UpdateProfile extends SpecialPage {
 
 	function UpdateProfile(){
-		UnlistedSpecialPage::UnlistedSpecialPage("UpdateProfile");
+		parent::__construct("UpdateProfile");
 	}
 	
 	

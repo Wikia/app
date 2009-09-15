@@ -3,7 +3,7 @@ class TopAwards extends SpecialPage {
 
 	
 	function TopAwards(){
-		UnlistedSpecialPage::UnlistedSpecialPage("TopAwards");
+		parent::__construct("TopAwards");
 	}
 
 	

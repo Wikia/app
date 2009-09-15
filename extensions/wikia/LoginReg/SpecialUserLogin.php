@@ -9,7 +9,7 @@ function wfSpecialLogin(){
 	class Login extends UnlistedSpecialPage {
 	
 		function Login(){
-			UnlistedSpecialPage::UnlistedSpecialPage("Login");
+			parent::__construct("Login");
 		}
 	
 		function execute(){

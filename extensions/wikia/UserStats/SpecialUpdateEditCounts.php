@@ -11,7 +11,7 @@ function wfSpecialUpdateEditsCount(){
   class UpdateEditCounts extends UnlistedSpecialPage {
 	
 	  function UpdateEditCounts(){
-		  UnlistedSpecialPage::UnlistedSpecialPage("UpdateEditCounts");
+		  parent::__construct("UpdateEditCounts");
 	  }
 	
 	  function updateMainEditsCount(){

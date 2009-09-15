@@ -25,7 +25,7 @@ function wfSpecialInviteEmail(){
 class InviteEmail extends UnlistedSpecialPage {
 
 	function InviteEmail(){
-		UnlistedSpecialPage::UnlistedSpecialPage("InviteEmail");
+		parent::__construct("InviteEmail");
 	}
 	
 	function execute(){

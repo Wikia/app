@@ -84,7 +84,7 @@ function wfSpecialQuizGameHome(){
 		/* Construct the MediaWiki special page */
 		function QuizGameHome() {
 			global $wgExtensionsPath;
-			UnlistedSpecialPage::UnlistedSpecialPage("QuizGameHome");
+			parent::__construct("QuizGameHome");
 			$this->INCLUDEPATH = "{$wgExtensionsPath}/wikia/QuizGame/";
 		}
 		

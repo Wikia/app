@@ -11,7 +11,7 @@ function wfSpecialTopFansByStat(){
 	class TopFansByStat extends UnlistedSpecialPage {
 	
 		function TopFansByStat(){
-			UnlistedSpecialPage::UnlistedSpecialPage("TopFansByStatistic");
+			parent::__construct("TopFansByStatistic");
 		}
 		
 		function execute(){

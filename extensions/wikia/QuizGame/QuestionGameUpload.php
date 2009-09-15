@@ -10,7 +10,7 @@ function wfQuestionGameUpload(){
 	class QuestionGameUpload extends SpecialPage {
 		
 		function QuestionGameUpload(){
-			UnlistedSpecialPage::UnlistedSpecialPage("QuestionGameUpload");
+			parent::__construct("QuestionGameUpload");
 		}
 		
 		function execute(){

@@ -11,7 +11,7 @@ function wfSpecialVoteAction(){
 class VoteAction extends SpecialPage {
 
   function VoteAction(){
-    UnlistedSpecialPage::UnlistedSpecialPage("VoteAction");
+    parent::__construct("VoteAction");
   }
 
   function execute(){

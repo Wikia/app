@@ -13,7 +13,7 @@ class GiftManagerLogo extends SpecialPage {
 	var $gift_id;
 	
   function GiftManagerLogo(){
-    UnlistedSpecialPage::UnlistedSpecialPage("GiftManagerLogo");
+    parent::__construct("GiftManagerLogo");
   }
 
   function execute(){

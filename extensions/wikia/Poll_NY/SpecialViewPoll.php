@@ -11,7 +11,7 @@ class ViewPoll extends SpecialPage {
 
 	
 	function ViewPoll(){
-		UnlistedSpecialPage::UnlistedSpecialPage("ViewPoll");
+		parent::__construct("ViewPoll");
 	}
 
 	

@@ -15,7 +15,7 @@ function wfSpecialInviteContacts(){
 		function __construct() {
 			global $wgMessageCache;
 
-			UnlistedSpecialPage::UnlistedSpecialPage("InviteContacts");
+			parent::__construct("InviteContacts");
 
 			require_once ( dirname( __FILE__ ) . '/Invite.i18n.php' );
 			foreach( efSpecialInviteContacts() as $lang => $messages ) {

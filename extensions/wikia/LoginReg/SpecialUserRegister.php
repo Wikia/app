@@ -9,7 +9,7 @@ function wfSpecialUserRegister(){
 	class UserRegister extends UnlistedSpecialPage {
 	
 		function UserRegister(){
-			UnlistedSpecialPage::UnlistedSpecialPage("UserRegister");
+			parent::__construct("UserRegister");
 		}
 	
 		function execute(){

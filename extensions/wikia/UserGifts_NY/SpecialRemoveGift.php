@@ -2,7 +2,7 @@
 class RemoveGift extends SpecialPage {
 	
 	function RemoveGift(){
-		UnlistedSpecialPage::UnlistedSpecialPage("RemoveGift");
+		parent::__construct("RemoveGift");
 	}
 	
 	function execute(){

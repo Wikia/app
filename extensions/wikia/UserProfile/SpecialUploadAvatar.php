@@ -17,7 +17,7 @@ class UploadAvatar extends SpecialPage {
 	var $fileExtensions;
 	
   function UploadAvatar(){
-    UnlistedSpecialPage::UnlistedSpecialPage("UploadAvatar");
+    parent::__construct("UploadAvatar");
   }
 
   function execute(){

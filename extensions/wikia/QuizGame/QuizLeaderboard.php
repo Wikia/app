@@ -13,7 +13,7 @@ class QuizLeaderboard extends SpecialPage {
 
 	
 	function QuizLeaderboard(){
-		UnlistedSpecialPage::UnlistedSpecialPage("QuizLeaderboard");
+		parent::__construct("QuizLeaderboard");
 	}
 	
 	function execute($input){

@@ -2,7 +2,7 @@
 class LiveDelegationHandler extends SpecialPage {
 	
 	function LiveDelegationHandler(){
-		UnlistedSpecialPage::UnlistedSpecialPage("LiveDelegationHandler");
+		parent::__construct("LiveDelegationHandler");
 	}
 	
 	function execute(){

@@ -7,7 +7,7 @@ function wfSpecialPollAjaxUpload(){
 	class PollAjaxUpload extends SpecialPage {
 		
 		function PollAjaxUpload(){
-			UnlistedSpecialPage::UnlistedSpecialPage("PollAjaxUpload");
+			parent::__construct("PollAjaxUpload");
 		}
 		
 		function execute(){

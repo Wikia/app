@@ -20,7 +20,7 @@ function wfSpecialGiftManager()
 			global $wgMessageCache;
 			global $wgGiftImageUploadPath, $wgGiftImagePath, $wgUploadDirectory, $wgUploadPath;
 
-			UnlistedSpecialPage::UnlistedSpecialPage("GiftManager");
+			parent::__construct("GiftManager");
 
 			require_once ( dirname( __FILE__ ) . '/UserGifts.i18n.php' );
 			foreach( efSpecialUserGits() as $lang => $messages )

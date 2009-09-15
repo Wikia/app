@@ -2,7 +2,7 @@
 class LinkApprove extends UnlistedSpecialPage {
 
 	function LinkApprove(){
-		UnlistedSpecialPage::UnlistedSpecialPage("LinkApprove");
+		parent::__construct("LinkApprove");
 	}
 
 	function canAccess(){

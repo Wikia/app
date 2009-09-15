@@ -2,7 +2,7 @@
 class GiftManager extends SpecialPage {
 
 	function GiftManager(){
-		UnlistedSpecialPage::UnlistedSpecialPage("GiftManager");
+		parent::__construct("GiftManager");
 	}
 	
 	function execute(){

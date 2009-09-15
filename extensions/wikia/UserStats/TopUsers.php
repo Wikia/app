@@ -10,7 +10,7 @@ function wfSpecialTopUsers(){
 	class TopUsersPoints extends SpecialPage {
 	
 		function TopUsersPoints(){
-			UnlistedSpecialPage::UnlistedSpecialPage("TopUsers");
+			parent::__construct("TopUsers");
 		}
 	
 		function execute(){

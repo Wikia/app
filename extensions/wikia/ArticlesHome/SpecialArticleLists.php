@@ -11,7 +11,7 @@ class ArticleLists extends SpecialPage {
 
 	
 	function ArticleLists(){
-		UnlistedSpecialPage::UnlistedSpecialPage("ArticleLists");
+		parent::__construct("ArticleLists");
 	}
 	
 	 

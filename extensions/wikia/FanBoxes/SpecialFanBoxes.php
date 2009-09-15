@@ -15,7 +15,7 @@ class FanBoxes extends SpecialPage {
 
 	
 	function FanBoxes(){
-		UnlistedSpecialPage::UnlistedSpecialPage("UserBoxes");		
+		parent::__construct("UserBoxes");		
 	}
 	
 	

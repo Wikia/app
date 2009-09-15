@@ -10,7 +10,7 @@ function wfSpecialQuizRecalcStats(){
  
 		/* Construct the MediaWiki special page */
 		function QuizRecalcStats(){
-			UnlistedSpecialPage::UnlistedSpecialPage("QuizRecalcStats");
+			parent::__construct("QuizRecalcStats");
 		}
 		
 		function execute(){

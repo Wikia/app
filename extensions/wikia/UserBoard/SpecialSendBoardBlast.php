@@ -16,7 +16,7 @@ class BoardBlast extends SpecialPage {
 
 	
 	function BoardBlast(){
-		UnlistedSpecialPage::UnlistedSpecialPage("SendBoardBlast");
+		parent::__construct("SendBoardBlast");
 	}
 	
 	function execute( ){

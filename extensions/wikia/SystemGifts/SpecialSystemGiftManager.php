@@ -3,7 +3,7 @@
 class SystemGiftManager extends SpecialPage {
 
 	function SystemGiftManager(){
-		UnlistedSpecialPage::UnlistedSpecialPage("SystemGiftManager");
+		parent::__construct("SystemGiftManager");
 	}
 	
 	function execute(){

@@ -11,7 +11,7 @@ class RandomPoll extends SpecialPage {
 
 	
 	function RandomPoll(){
-		UnlistedSpecialPage::UnlistedSpecialPage("RandomPoll");
+		parent::__construct("RandomPoll");
 	}
 	
 	function execute(){

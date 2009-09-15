@@ -11,7 +11,7 @@ function wfSpecialUpdatePoll(){
 	class UpdatePoll extends SpecialPage {
 	
 		function UpdatePoll(){
-			UnlistedSpecialPage::UnlistedSpecialPage("UpdatePoll");
+			parent::__construct("UpdatePoll");
 		}
 		
 		function execute(){

@@ -50,7 +50,7 @@ function wfSpecialInviteContactsCSV(){
 		function InviteContactsCSV(){
 			global $wgMessageCache;
 
-			UnlistedSpecialPage::UnlistedSpecialPage("InviteContactsCSV");
+			parent::__construct("InviteContactsCSV");
 
 			require_once ( dirname( __FILE__ ) . '/Invite.i18n.php' );
 			#---
