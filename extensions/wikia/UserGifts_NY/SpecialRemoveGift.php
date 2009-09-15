@@ -1,5 +1,5 @@
 <?php
-class RemoveGift extends SpecialPage {
+class RemoveGift extends UnlistedSpecialPage {
 	
 	function RemoveGift(){
 		parent::__construct("RemoveGift");

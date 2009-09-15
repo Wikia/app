@@ -8,7 +8,7 @@ function wfSpecialUserStatus(){
   include_once("includes/SpecialPage.php");
 
 
-class ViewUserStatus extends SpecialPage {
+class ViewUserStatus extends UnlistedSpecialPage {
 
 	
 	function ViewUserStatus(){

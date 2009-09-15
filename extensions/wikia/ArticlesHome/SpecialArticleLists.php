@@ -7,7 +7,7 @@ function wfSpecialArticleLists(){
   include_once("includes/SpecialPage.php");
 
 
-class ArticleLists extends SpecialPage {
+class ArticleLists extends UnlistedSpecialPage {
 
 	
 	function ArticleLists(){

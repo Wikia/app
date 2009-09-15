@@ -7,7 +7,7 @@ function wfAdminPoll(){
   include_once("includes/SpecialPage.php");
 
 
-class AdminPoll extends SpecialPage {
+class AdminPoll extends UnlistedSpecialPage {
 
 	
 	function AdminPoll(){

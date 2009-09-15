@@ -5,7 +5,7 @@ function wfSpecialCreatePageChk(){
   global $wgUser,$IP;
   include_once("includes/SpecialPage.php");
 
-	class CreatePageChk  extends SpecialPage {
+	class CreatePageChk  extends UnlistedSpecialPage {
 	
 	  function CreatePageChk(){
 	    parent::__construct("CreatePageChk");

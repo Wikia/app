@@ -1,5 +1,5 @@
 <?php
-class GiftManager extends SpecialPage {
+class GiftManager extends UnlistedSpecialPage {
 
 	function GiftManager(){
 		parent::__construct("GiftManager");

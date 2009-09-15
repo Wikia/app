@@ -4,7 +4,7 @@ $wgExtensionFunctions[] = 'wfMiniAjaxUpload';
 
 function wfMiniAjaxUpload(){
 	
-	class MiniAjaxUpload extends SpecialPage {
+	class MiniAjaxUpload extends UnlistedSpecialPage {
 		
 		function MiniAjaxUpload(){
 			parent::__construct("MiniAjaxUpload");

@@ -1,5 +1,5 @@
 <?php
-class UpdateProfile extends SpecialPage {
+class UpdateProfile extends UnlistedSpecialPage {
 
 	function UpdateProfile(){
 		parent::__construct("UpdateProfile");

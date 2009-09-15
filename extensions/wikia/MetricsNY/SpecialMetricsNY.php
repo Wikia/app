@@ -7,7 +7,7 @@ function wfSpecialMetricsNY(){
   include_once("includes/SpecialPage.php");
 
 
-class MetricsNY extends SpecialPage {
+class MetricsNY extends UnlistedSpecialPage {
 
 	
 	function MetricsNY(){

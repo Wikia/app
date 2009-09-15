@@ -1,5 +1,5 @@
 <?php
-class SystemGiftManagerLogo extends SpecialPage {
+class SystemGiftManagerLogo extends UnlistedSpecialPage {
 
 	var $mUploadFile, $mUploadDescription, $mIgnoreWarning;
 	var $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;

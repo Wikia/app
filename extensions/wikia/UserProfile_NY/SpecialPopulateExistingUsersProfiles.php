@@ -19,7 +19,7 @@ function wfSpecialPopulateUserProfiles(){
   include_once("includes/SpecialPage.php");
 
 
-class PopulateUserProfiles extends SpecialPage {
+class PopulateUserProfiles extends UnlistedSpecialPage {
 
 	
 	function PopulateUserProfiles(){

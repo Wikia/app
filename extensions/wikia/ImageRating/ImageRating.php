@@ -13,7 +13,7 @@ function wfImageRating(){
   include_once("includes/SpecialPage.php");
 
 
-class ImageRating extends SpecialPage {
+class ImageRating extends UnlistedSpecialPage {
 
 	
 	function ImageRating(){

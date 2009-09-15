@@ -8,7 +8,7 @@ function wfSpecialSiteScoutPage(){
 
   include_once("includes/SpecialPage.php");
 
-	class SiteScoutPage  extends SpecialPage {
+	class SiteScoutPage  extends UnlistedSpecialPage {
 	
 	  function __construct(){
 	    parent::__construct("SiteScout");

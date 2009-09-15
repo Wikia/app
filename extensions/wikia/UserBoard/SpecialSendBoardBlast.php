@@ -12,7 +12,7 @@
 ;
 
 
-class BoardBlast extends SpecialPage {
+class BoardBlast extends UnlistedSpecialPage {
 
 	
 	function BoardBlast(){

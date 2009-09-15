@@ -34,7 +34,7 @@ function wfSpecialPictureGameHome(){
 
 	include_once("AjaxUploadForm.php");	// The modified upload form class
 
-	class PictureGameHome extends SpecialPage {
+	class PictureGameHome extends UnlistedSpecialPage {
 		// ABSOLUTE PATH
 		private $INCLUDEPATH = "/extensions/wikia/PictureGame/picturegame/";
 		private $SALT;

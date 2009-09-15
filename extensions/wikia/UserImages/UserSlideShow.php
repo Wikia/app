@@ -7,7 +7,7 @@ function wfSpecialUserSlideShow(){
   include_once("includes/SpecialPage.php");
 
 
-class UserSlideShow extends SpecialPage {
+class UserSlideShow extends UnlistedSpecialPage {
 
 	
 	function UserSlideShow(){

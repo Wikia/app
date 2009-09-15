@@ -15,7 +15,7 @@
 
 
 
-	class AddRelationship extends SpecialPage {
+	class AddRelationship extends UnlistedSpecialPage {
 	
 		function AddRelationship(){
 			parent::__construct("AddRelationship");

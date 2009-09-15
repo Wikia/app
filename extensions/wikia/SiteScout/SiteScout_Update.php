@@ -5,7 +5,7 @@ function wfSpecialSiteScoutUpdate(){
   global $wgUser,$IP;
   include_once("includes/SpecialPage.php");
 
-	class SiteScoutUpdate  extends SpecialPage {
+	class SiteScoutUpdate  extends UnlistedSpecialPage {
 	
 	  function SiteScoutUpdate(){
 	    parent::__construct("SiteScoutUpdate");

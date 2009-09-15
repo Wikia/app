@@ -11,7 +11,7 @@ function wfFanBoxes(){
   include_once("includes/SpecialPage.php");
 
 
-class FanBoxes extends SpecialPage {
+class FanBoxes extends UnlistedSpecialPage {
 
 	
 	function FanBoxes(){

@@ -1,6 +1,6 @@
 <?php
 
-class SiteMetrics extends SpecialPage {
+class SiteMetrics extends UnlistedSpecialPage {
 
 	function SiteMetrics(){
 		parent::__construct("SiteMetrics");

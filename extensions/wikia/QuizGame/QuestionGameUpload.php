@@ -7,7 +7,7 @@ $wgAutoloadClasses['QuestionGameUploadForm'] = dirname( __FILE__ ) . '/QuestionG
 
 function wfQuestionGameUpload(){
 	
-	class QuestionGameUpload extends SpecialPage {
+	class QuestionGameUpload extends UnlistedSpecialPage {
 		
 		function QuestionGameUpload(){
 			parent::__construct("QuestionGameUpload");

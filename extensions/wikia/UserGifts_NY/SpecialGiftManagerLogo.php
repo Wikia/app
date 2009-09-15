@@ -2,7 +2,7 @@
 
 
 
-class GiftManagerLogo extends SpecialPage {
+class GiftManagerLogo extends UnlistedSpecialPage {
 
 	var $mUploadFile, $mUploadDescription, $mIgnoreWarning;
 	var $mUploadSaveName, $mUploadTempName, $mUploadSize, $mUploadOldVersion;

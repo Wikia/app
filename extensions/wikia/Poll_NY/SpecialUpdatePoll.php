@@ -8,7 +8,7 @@ function wfSpecialUpdatePoll(){
 	include_once("includes/SpecialPage.php");
 
 
-	class UpdatePoll extends SpecialPage {
+	class UpdatePoll extends UnlistedSpecialPage {
 	
 		function UpdatePoll(){
 			parent::__construct("UpdatePoll");

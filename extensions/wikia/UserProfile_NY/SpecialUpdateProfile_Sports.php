@@ -8,7 +8,7 @@ function wfSpecialUpdateProfileSports(){
 	include_once("includes/SpecialPage.php");
 
 
-	class UpdateProfileSports extends SpecialPage {
+	class UpdateProfileSports extends UnlistedSpecialPage {
 	
 		var $favorite_counter = 1;
 		
