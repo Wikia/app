@@ -105,7 +105,7 @@ class BlogLockdown {
 				break;
 
 			case "autopatrol":
-			case "patrol"
+			case "patrol":
 				$result = true;
 				$return = true;
 				break;
