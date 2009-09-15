@@ -127,11 +127,15 @@ if (scalar @$dates) {
 my $other_wikis = "5, 11, 425, 520, 2719, 5409";
 
 $oConf->log("Processing: select users from local users table");
+
 my $select = "lu_user_id as user_id, lu_user_name as user_name, sum(lu_rev_cnt) as cnt";
-my $from = "`dataware`.`city_local_users`";
+my $from = "`dataware`.`city_local_users`, dbstats.city_user_edits";
 my @where = ( 
-	"lu_singlegroup != 'Bot'",
-	"lu_wikia_id not in (".$other_wikis.")"
+	"lu_singlegroup != 'bot'",
+	"lu_wikia_id not in (".$other_wikis.")", 
+	"ue_user_id = lu_user_id",
+	"ue_edit_namespace = 0",
+	"lu_user_name != 'CreateWiki script'"
 );
 my @options = (
 	"group by 1, 2",
