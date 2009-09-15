@@ -219,7 +219,7 @@ foreach my $user_id (sort keys %USERS) {
 	
 =get list of wikis, where user edited something
 =cut
-	my @wikis = $USERS_WIKIS{$user_id};
+	my @wikis = @{$USERS_WIKIS{$user_id}};
 
 =processing for every Wiki
 =cut
