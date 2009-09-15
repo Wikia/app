@@ -9,6 +9,20 @@
 .color3 {
 	background-color: #000;
 }
+
+
+.dark_text_1 {
+	color: #5D1B01;
+}
+.dark_text_2 {
+	color: #3B0902;
+}
+.accent	{
+	background-color: #F9EAC1;
+	color: #000;
+}
+
+
 #background_strip {
 	background-color: #5d1b01;
 	border-color: #fec423;

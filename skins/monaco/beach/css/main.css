@@ -6,6 +6,28 @@
 .color2 {
 	background-color: #42779e;
 }
+
+
+.dark_text_1 {
+	color: #42779E;
+}
+.dark_text_2 {
+	color: #3E2A18;
+}
+.accent	{
+	background-color: #ECD995;
+	color: #000;
+}
+
+#user_masthead ul.nav_links li {
+	background-color: #3E2A18;
+}
+#user_masthead ul.nav_links li a {
+	background: transparent;
+	color: #FFF;
+}
+
+
 #background_strip {
 	background-color: #b0d9f3;
 	border-color: #3e2a18;

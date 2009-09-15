@@ -11,6 +11,19 @@ body {
 	background-color: #F5F5F5;
 }
 
+
+.dark_text_1 {
+	color: #36C;
+}
+.dark_text_2 {
+	color: #1f7a1f;
+}
+.accent	{
+	background-color: #d6e0f5;
+	color: #000;
+}
+
+
 .shadow {
 	background-image: url(http://images.wikia.com/common/skins/monaco/images/shadow.png);
 	background-position: bottom left;
