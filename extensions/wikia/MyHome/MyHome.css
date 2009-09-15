@@ -1,76 +1,133 @@
 #myhome-wrapper {
+	height: 1%;
+	overflow: hidden;
 	position: relative;
+}
+
+#myhome-feed-switch {
+	font-size: 9pt;
+	position: absolute;
+	top: 12px;
+	right: 300px;
+}
+
+#myhome-feed-switch .selected {
+	font-weight: bold;
+}
+#myhome-feed-switch-default {
+	float: right;
+	font-size: 8pt;
+	padding: 0 3px;
+}
+
+#myhome-feed-switch-default-checkbox {
+	vertical-align: middle;
 }
 
 .myhome-feed {
 	margin-right: 300px;
 }
 
+#myhome-wrapper .myhome-feed h2 {
+	margin: 0;
+}
+
+h3.myhome-empty-message {
+	line-height: 1.5em;
+	padding: 20px 0;
+}
+
 .myhome-feed dl {
-	padding: 0 0 30px 0;
+	margin-left: 20px;
+	margin-top: 30px;
 	position: relative;
 }
 
 .myhome-feed dt {
+	clear: left;
 	position: relative;
 }
 
 .myhome-feed dd {
-	line-height: 1.3em;
-	padding: 8px 0 0 45px;
+	line-height: 1.2em;
+	margin: 5px 0 30px;
+	overflow: hidden;
 }
 
 .myhome-feed em {
-	font-style: italic;
+	font-style: normal;
+	font-weight: bold;
 }
 
 .myhome-feed img.sprite {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?myhome) repeat scroll 0 0;
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?myhome2) repeat scroll 0 0;
 	height: 16px;
 	position: absolute;
 	top: 1px;
-	width: 528px;
+	width: 560px;
 }
 
 .myhome-feed-sun-icon .sprite {
 	clip: rect(0px 528px 16px 512px);
-	left: -512px;
+	left: -532px;
 }
 
 .myhome-feed-pencil-icon .sprite {
 	clip: rect(0px 16px 16px 0px);
-	left: 0px;
+	left: -20px;
 }
 
 .myhome-feed-talk-icon .sprite {
 	clip: rect(0px 498px 16px 482px);
-	left: -482px;
+	left: -502px;
 }
 
 .myhome-feed-photo-icon .sprite {
 	clip: rect(0px 432px 16px 416px);
-	left: -416px;
+	left: -436px;
 }
 
 .myhome-feed-film-icon .sprite {
 	clip: rect(0px 512px 16px 498px);
-	left: -498px;
+	left: -518px;
 }
 
 .myhome-feed-comment-icon .sprite {
 	clip: rect(0px 482px 16px 466px);
-	left: -466px;
+	left: -486px;
+}
+
+.myhome-feed-move-icon .sprite {
+	clip: rect(0px 544px 16px 528px);
+	left: -548px;
+}
+
+.myhome-feed-delete-icon .sprite {
+	clip: rect(0px 560px 16px 544px);
+	left: -564px;
 }
 
 .myhome-feed dt .title {
-	font-size: 1.2em;
-	margin-left: 18px;
+	font-size: 14pt;
+	font-weight: normal;
+	position: relative;
 }
 
 .myhome-feed cite {
 	display: block;
-	font-size: 0.9em;
-	margin-left: 18px;
+	font-size: 9pt;
+	line-height: 1.2em;
+}
+.myhome-feed-details-row td {
+	line-height: 1.3em;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	vertical-align: top;
+}
+td.myhome-feed-details-label {
+	/*min-width: 140px;*/
+	padding-right: 10px;
+	white-space: nowrap;
 }
 
 .myhome-diff {
@@ -78,7 +135,14 @@
 }
 
 .myhome-feed-more {
-	text-align: right;
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 20px;
+	text-align: center;
+}
+.myhome-feed-more a {
+	display: block;
+	padding: 5px 0;
 }
 
 .myhome-feed-more a {
@@ -86,33 +150,80 @@
 }
 
 .myhome-feed-loading .myhome-feed-more {
-	background: transparent url(http://images.wikia.com/common/skins/common/progress-wheel.gif) no-repeat 100% 50%;
+	background: transparent url(http://images.wikia.com/common/skins/common/progress-wheel.gif) no-repeat 50% 50%;
 }
 
 .myhome-feed-loading .myhome-feed-more a {
 	visibility: hidden;
 }
 
+/* Images / videos */
 #myhome-image-preview,
 #myhome-video-player {
 	padding: 2px 0 0 !important;
 }
 
+#myhome-image-preview-popup {
+	min-height: 150px;
+	min-width: 150px;
+}
+
+.myhome-feed-inserted-media li {
+	border: solid 1px #ccc;
+	float: left;
+	margin: 4px 4px 4px 0;
+	position: relative;
+}
+
+.myhome-feed-inserted-media li a {
+	cursor: pointer;
+	display: block;
+	height: 160px;
+	width: 160px;
+}
+
+.myhome-video-play {
+	background: transparent url(images/play.png) no-repeat 50% 50%;
+	left: 0;
+	height: 160px;
+	position: absolute;
+	top: 0;
+	width: 160px;
+}
+
+.myhome-image-thumbnail img,
+.myhome-video-thumbnail img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Sidebar */
 #myhome-sidebar {
 	border-left: solid 1px #aaa;
+	float: right;
 	padding-left: 10px;
-	position: absolute;
-	right: 0;
-	top: 0;
 	width: 280px;
 }
 
 #myhome-sidebar .myhome-feed {
 	margin-right: 0;
+	margin-bottom: 20px;
+}
+#myhome-wrapper #myhome-sidebar h2 {
+	margin-bottom: 0.6em;
+}
+#myhome-sidebar .myhome-feed dl {
+	margin-top: 10px;
 }
 
+/* User contributions */
 #myhome-user-contributions-feed-content dl {
 	padding: 0 0 5px;
+}
+
+#myhome-user-contributions-feed-content dt {
+	margin-bottom: 5px;
 }
 
 #myhome-user-contributions-feed-content a.title {
@@ -122,10 +233,85 @@
 #myhome-user-contributions-feed-content cite {
 	display: inline;
 	margin: 0;
+	white-space: nowrap;
+}
+
+#myhome-user-contributions-feed-content p {
+	line-height: 1.5em;
+}
+
+/* Hot Spots */
+#myhome-hot-spots-feed-content li {
+	clear: left;
+	height: 1%;
+}
+#myhome-hot-spots-feed-content li div {
+	clear: left;
+	color: #FFF;
+	float: left;
+	height: 26px;
+	margin-bottom: 10px;
+	text-align: right;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+#myhome-hot-spots-feed-content big {
+	display: block;
+	float: left;
+	font-size: 16pt;
+	font-weight: normal;
+	line-height: 30px;
+	width: 35px;
+}
+
+#myhome-hot-spots-feed-content small {
+	font-size: 9pt;
+	font-weight: normal;
+	line-height: 28px;
+	margin-left: 10px;
+	margin-right: 15px;
+}
+
+#myhome-hot-spots-feed-content span {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 10px;
+	padding-top: 6px;
+}
+.hot-spot-severity-1 {
+	background-color: #C03;
+}
+.hot-spot-severity-2 {
+	background-color: #F90;
+}
+.hot-spot-severity-3 {
+	background-color: #FC0;
+}
+.hot-spot-severity-4 {
+	background-color: #390;
+}
+.hot-spot-severity-5 {
+	background-color: #069;
+}
+#myhome-hot-spots-feed-content .myhome-hot-spots-fire {
+	margin-right: 10px;
+}
+.fire .myhome-hot-spots-fire {
+	background: url(http://images.wikia.com/common/releases_MyHome/extensions/wikia/MyHome/images/fire.png) repeat-x;
+	padding-top: 30px;
+}
+.fire span {
+	padding-top: 36px !important;
+}
+
+/* Community Corner */
+#myhome-community-corner {
+	clear: right;
 }
 
 /* IE6 fixes */
 * html .myhome-feed .sprite {
 	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?myhome', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?myhome2', sizingMethod='crop');
 }

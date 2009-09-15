@@ -10,35 +10,21 @@ class MyHomeAjax {
 		global $wgRequest;
 		$type  = $wgRequest->getVal('type', false);
 		$since = $wgRequest->getVal('since', wfTimestamp(TS_MW, time()));
-		$limit = $wgRequest->getInt('limit', 10);
+		$limit = $wgRequest->getInt('limit', 30);
 
-		// check feed type
-		if ( !in_array($type, array('activity', 'watchlist')) ) {
-			return false;
-		}
 
-		// prepare class names
-		$type = ucfirst($type);
+		$feedProxy = new ActivityFeedAPIProxy();
+		$feedRenderer = new ActivityFeedRenderer();
 
-		$dataRendererClassName = "{$type}FeedRenderer";
-		$dataProviderClassName = "{$type}FeedProvider";
+		$feedProvider = new DataFeedProvider($feedProxy);
+		$feedData = $feedProvider->get($limit, $since);
+		$feedHTML = $feedRenderer->render($feedData, false);
 
-		$dataRenderer = new $dataRendererClassName();
-		$dataProvider = new $dataProviderClassName();
-		$data = $dataProvider->get($limit, $since);
-
-		// get timestamp of last entry
-		$last_entry = end($data);
-
-		// substract one second so we fetch next item
-		$last_timestamp = strtotime($last_entry['timestamp']);
-		$last_timestamp = wfTimestamp(TS_ISO_8601, $last_timestamp - 1);
 
 		// get feed
 		return array(
-			'type' => $type,
-			'last_timestamp' => $last_timestamp,
-			'html' => $dataRenderer->render($data, false /* don't wrap - return just raw rows */),
+			'fetchSince' => isset($feedData['query-continue']) ? $feedData['query-continue'] : false,
+			'html' => $feedHTML,
 		);
 	}
 
@@ -73,17 +59,20 @@ class MyHomeAjax {
 	public static function getImagePreview() {
 		global $wgTitle;
 
-		//$image =  wfFindFile($wgTitle);
-
 		// limit dimensions of returned image
 		global $wgRequest;
 		$maxWidth = $wgRequest->getInt('maxwidth', 500) - 20;
 		$maxHeight = $wgRequest->getInt('maxheight', 300) - 75;
 
 		// get the correct revision of file
-		$timestamp = $wgRequest->getInt('timestamp', time());
+		$timestamp = $wgRequest->getInt('timestamp', 0);
 
-		$image = FeedProvider::getFile($wgTitle, $timestamp);
+		if ($timestamp == 0) {
+			$image = wfFindFile($wgTitle);
+		}
+		else {
+			$image = FeedProvider::getFile($wgTitle, $timestamp);
+		}
 
 		// get original dimensions of an image
 		$width = $image->getWidth();
@@ -103,5 +92,23 @@ class MyHomeAjax {
 			'height' => $thumb->getHeight(),
 			'html' => $thumb->toHtml(),
 		);
+	}
+
+	/*
+	 * Save default view in user preferences
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+         */
+	public static function setDefaultView() {
+		global $wgRequest;
+		$defaultView = $wgRequest->getVal('defaultView');
+
+		// this method will perfrom extra check
+		if (MyHome::setDefaultView($defaultView)) {
+			return array('msg' => wfMsg('myhome-default-view-success'));
+		}
+		else {
+			return array();
+		}
 	}
 }

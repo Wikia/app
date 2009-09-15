@@ -1,4 +1,5 @@
 <?php
+
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'My Home',
 	'description' => 'A private home of Wikia for logged-in users',
@@ -8,32 +9,38 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 // special page
-$wgAutoloadClasses['SpecialMyHome'] = $dir . 'SpecialMyHome.php';
+$wgAutoloadClasses['SpecialMyHome'] = $dir.'SpecialMyHome.php';
 $wgSpecialPages['MyHome'] = 'SpecialMyHome';
 
-//
 // register extension classes
-//
-$wgAutoloadClasses['MyHome'] = $dir . 'MyHome.class.php';
-$wgAutoloadClasses['MyHomeAjax'] = $dir . 'MyHomeAjax.class.php';
+$wgAutoloadClasses['MyHome'] = $dir.'MyHome.class.php';
+$wgAutoloadClasses['MyHomeAjax'] = $dir.'MyHomeAjax.class.php';
 
-// feed providers
-$wgAutoloadClasses['FeedProvider'] = $dir . '/feeds/FeedProvider.php';
-$wgAutoloadClasses['ActivityFeedProvider'] = $dir . '/feeds/ActivityFeedProvider.php';
-$wgAutoloadClasses['WatchlistFeedProvider'] = $dir . '/feeds/WatchlistFeedProvider.php';
-$wgAutoloadClasses['UserContributionsProvider'] = $dir . 'UserContributionsProvider.php';
+/// data providers
+$wgAutoloadClasses['iAPIProxy'] = $dir . 'data/iAPIProxy.php';
+$wgAutoloadClasses['DataFeedProvider'] = $dir . 'data/DataFeedProvider.php';
+$wgAutoloadClasses['ActivityFeedAPIProxy'] = $dir . 'data/ActivityFeedAPIProxy.php';
+$wgAutoloadClasses['WatchlistFeedAPIProxy'] = $dir . 'data/WatchlistFeedAPIProxy.php';
 
-// feed renderers
-$wgAutoloadClasses['FeedRenderer'] = $dir . 'FeedRenderer.php';
-$wgAutoloadClasses['ActivityFeedRenderer'] = $dir . 'ActivityFeedRenderer.php';
-$wgAutoloadClasses['UserContributionsRenderer'] = $dir . 'UserContributionsRenderer.php';
-$wgAutoloadClasses['WatchlistFeedRenderer'] = $dir . 'WatchlistRenderer.php';
+$wgAutoloadClasses['HotSpotsProvider'] = $dir.'data/HotSpotsProvider.php';
+$wgAutoloadClasses['UserContributionsProvider'] = $dir.'data/UserContributionsProvider.php';
+
+// renderers
+$wgAutoloadClasses['FeedRenderer'] = $dir.'renderers/FeedRenderer.php';
+$wgAutoloadClasses['ActivityFeedRenderer'] = $dir.'renderers/ActivityFeedRenderer.php';
+$wgAutoloadClasses['WatchlistFeedRenderer'] = $dir.'renderers/WatchlistRenderer.php';
+
+$wgAutoloadClasses['HotSpotsRenderer'] = $dir.'renderers/HotSpotsRenderer.php';
+$wgAutoloadClasses['UserContributionsRenderer'] = $dir.'renderers/UserContributionsRenderer.php';
 
 // hooks
 $wgHooks['RecentChange_beforeSave'][] = 'MyHome::storeInRecentChanges';
-//$wgHooks['CustomUserData'][] = 'MyHome::addToUserMenu';
+$wgHooks['CustomUserData'][] = 'MyHome::addToUserMenu';
 $wgHooks['EditFilter'][] = 'MyHome::getSectionName';
-//$wgHooks['InitialQueriesMainPage'][] = 'MyHome::getInitialMainPage';
+$wgHooks['InitialQueriesMainPage'][] = 'MyHome::getInitialMainPage';
+$wgHooks['LinksUpdateComplete'][] = 'MyHome::getInserts';
+$wgHooks['UserToggles'][] = 'MyHome::userToggles';
+$wgHooks['AddNewAccount2'][] = 'MyHome::addNewAccount';
 
 // i18n
 $wgExtensionMessagesFiles['MyHome'] = $dir . 'MyHome.i18n.php';

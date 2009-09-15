@@ -1,23 +1,22 @@
 <?php
-	foreach($data as $row) {
-
-		// fix for old entries in recentchanges table
-		if (!isset($row['type'])) {
-			continue;
-		}
-
-		echo '<!-- ' . print_r($row, true) . '-->';
+if (count($data)) {
 ?>
-	<dl class="myhome-feed-<?= UserContributionsRenderer::getIconType($row) ?>-icon reset">
-		<dt>
-			<a href="<?= htmlspecialchars($row['url']) ?>" class="sprite">
-				<img src="<?= $assets['blank'] ?>" class="sprite" />
-			</a>
-			<a href="<?= htmlspecialchars($row['url']) ?>" class="title"><?= htmlspecialchars($row['title'])  ?></a>
+	<dl>
+<?php
+	foreach($data as $row) {
+?>
+		<dt class="myhome-feed-<?= UserContributionsRenderer::getIconType($row) ?>-icon reset">
+			<img src="<?= $assets['blank'] ?>" class="sprite" />
+			<a href="<?= htmlspecialchars($row['url']) ?>" class="title" rel="nofollow"><?= htmlspecialchars($row['title'])  ?></a>
 			<cite><?= FeedRenderer::formatTimestamp($row['timestamp']); ?></cite>
-			<?= $row['diff'] != '' ? FeedRenderer::getDiffPageLink($row['diff']) : '' ?>
+			<?= FeedRenderer::getDiffLink($row) ?>
+
 		</dt>
-	</dl>
 <?php
 	}
 ?>
+	</dl>
+<?php
+} else {
+	echo wfMsgExt('myhome-user-contributions-empty', array('parse'));
+}

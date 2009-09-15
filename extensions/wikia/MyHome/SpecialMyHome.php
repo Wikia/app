@@ -1,91 +1,104 @@
 <?php
 
-class SpecialMyHome extends UnlistedSpecialPage {
+class SpecialMyHome extends SpecialPage {
+
 	function __construct() {
-		parent::__construct( 'MyHome');
+		parent::__construct('MyHome', '' /* no restriction */, true /* listed */);
 		wfLoadExtensionMessages('MyHome');
+		wfLoadExtensionMessages('Masthead');
 	}
 
-	function execute( $par ) {
+	function execute($par) {
 		global $wgOut, $wgUser;
-
-		if( !$wgUser->isAllowed( 'wikifactory' ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
 
 		$this->setHeaders();
 
-		// load CSS/JS
-		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/MyHome.css?{$wgStyleVersion}");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/MyHome.js?{$wgStyleVersion}\"></script>\n");
-
-		// message for anons
-		if ($wgUser->isAnon()) {
+		// not available for anons
+		if($wgUser->isAnon()) {
 			$wgOut->addWikiText(wfMsg('myhome-log-in'));
 			return;
 		}
 
-		// force user to use Monaco skin
-		$skinName = get_class($wgUser->getSkin());
-		if ($skinName != 'SkinMonaco') {
+		// not available for skins different then monaco
+		if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
 			$wgOut->addWikiText(wfMsg('myhome-switch-to-monaco'));
 			return;
 		}
 
-		// debug
-		global $wgRequest;
-		$limit = $wgRequest->getInt('limit', 30);
+		// load dependencies (CSS and JS)
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/MyHome/MyHome.css?{$wgStyleVersion}");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MyHome/MyHome.js?{$wgStyleVersion}\"></script>\n");
 
-		// choose feed to show
-		if ($par == 'watchlist') {
+		######
+		### Prepare HTML for feed (watchlist/activity) section
+		######
+
+		// choose default view
+		if ($par == '') {
+			$par = MyHome::getDefaultView();
+		}
+
+		if($par == 'watchlist') {
 			// watchlist
-			$provider = new WatchlistFeedProvider();
-			$feedData = $provider->get($limit);
-			$renderer = new WatchlistFeedRenderer();
-		}
-		else {
+			$feedSelected = 'watchlist';
+			$feedProxy = new WatchlistFeedAPIProxy();
+			$feedRenderer = new WatchlistFeedRenderer();
+		} else {
 			// activity
-			$provider = new ActivityFeedProvider();
-			$feedData = $provider->get($limit);
-			$feedData = $feedData['results'];
-			$renderer = new ActivityFeedRenderer();
+			$feedSelected = 'activity';
+			$feedProxy = new ActivityFeedAPIProxy();
+			$feedRenderer = new ActivityFeedRenderer();
 		}
 
-		// render chosen feed
-		$feedHtml = $renderer->render($feedData);
+		$feedProvider = new DataFeedProvider($feedProxy);
+		// render choosen feed
+		$feedHTML = $feedRenderer->render($feedProvider->get(30));
 
-		// user contributions
+		######
+		### Prepare HTML for user contributions section
+		######
+
 		$contribsProvider = new UserContributionsProvider();
-		$contribsData = $contribsProvider->get($limit);
-
+		$contribsData = $contribsProvider->get(5);
 		$contribsRenderer = new UserContributionsRenderer();
 		$contribsHtml = $contribsRenderer->render($contribsData);
 
-		// show it
-		$wgOut->addHTML('<div id="myhome-wrapper">');
+		######
+		### Prepare HTML for hot spots
+		######
 
-		// links to feeds
-		$linkToMyHome = Skin::makeSpecialUrl('MyHome');
+		$hotSpotsProvider = new HotSpotsProvider();
+		$hotSpotsData = $hotSpotsProvider->get();
+		$hotSpotsRenderer = new HotSpotsRenderer();
+		$hotSpotsHtml = $hotSpotsRenderer->render($hotSpotsData);
 
-		$wgOut->addHTML('<div style="position: absolute; top: 12px; right: 300px">');
-		$wgOut->addHTML( Xml::element('a', array('href' => $linkToMyHome . '/activity'), wfMsg('myhome-activity-feed')) );
-		$wgOut->addHTML(' | ');
-		$wgOut->addHTML( Xml::element('a', array('href' => $linkToMyHome . '/watchlist'), wfMsg('myhome-watchlist-feed')) );
-		$wgOut->addHTML('</div>');
+		######
+		### Prepare HTML for community corner
+		######
 
-		// feed
-		$wgOut->addHTML($feedHtml);
+		$ug = $wgUser->getGroups();
+		$isAdmin = in_array('staff', $ug) || in_array('sysop', $ug);
 
-		// sidebar
-		$wgOut->addHTML('<div id="myhome-sidebar">');
-		$wgOut->addHTML( $contribsHtml );
-		//$wgOut->addHTML( Xml::element('pre', array(), print_r($contribsData, true)) );
-		$wgOut->addHTML('</div>');
+		$communityCornerTemplate = new EasyTemplate(dirname(__FILE__).'/templates');
+		$communityCornerTemplate->set_vars(array('isAdmin' => $isAdmin));
+		$communityCornerHTML = $communityCornerTemplate->execute('communityCorner');
 
-		//$wgOut->addHTML('<pre>' . htmlspecialchars(print_r($feedData, true)) . '</pre>');
+		######
+		### Show HTML
+		######
 
-		$wgOut->addHTML('</div>');
+		$template = new EasyTemplate(dirname(__FILE__).'/templates');
+		$template->set_vars(array(
+			'feedSelected' => $feedSelected,
+			'myhomeUrl' => Skin::makeSpecialUrl('MyHome'),
+
+			'feedHTML' => $feedHTML,
+			'contribsHTML' => $contribsHtml,
+			'hotSpotsHTML' => $hotSpotsHtml,
+			'communityCornerHTML' => $communityCornerHTML,
+		));
+
+		$wgOut->addHTML($template->execute('myhome'));
 	}
 }
