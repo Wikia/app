@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.40',
+        'version' => '0.42',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -78,27 +78,29 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 	global $wgUser, $wgShareFeatureSites;
 	$stored_sites = array();
 
-	$dbr = wfGetDB(DB_SLAVE);
+	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB );
 	
 	$res = $dbr->select(
-			'wikicities.share_feature',
-			'sf_provider_id, sf_clickcount',
+			'share_feature',
+			'sf_provider_id',
 			array( 'sf_user_id' => $wgUser->getId() ),
 			__METHOD__,
-			'ORDER BY sf_clickcount DESC'
+			array( 'ORDER BY' => 'sf_clickcount DESC' )
 			);		
 
 	$sites = array();
+	$found = array();
         while($row = $dbr->fetchObject($res)) {		
 		$site = $wgShareFeatureSites[$row->sf_provider_id];
 		$sites[] = array( $site['name'], wfShareFeatureMakeUrl( $site['url'], $target, $title ) );
+		$found[] = $site['name'];
         }
 	
-/*
-	foreach( $sites as $name => $site ) {
+	foreach( $wgShareFeatureSites as $sf_site ) {
+		
 		$sites[$name] = wfShareFeatureMakeUrl( $site, $target, $title );	
 	}
-*/
+
 	return $sites;
 }
 
