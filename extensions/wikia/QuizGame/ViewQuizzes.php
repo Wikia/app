@@ -10,7 +10,7 @@ function wfSpecialViewQuizzes(){
 		
 		/* Construct the MediaWiki special page */
 		function ViewQuizzes(){
-			UnlistedSpecialPage::UnlistedSpecialPage("ViewQuizzes");
+			parent::__construct("ViewQuizzes");
 		}
 		
 		// main execute function

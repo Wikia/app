@@ -3,7 +3,7 @@ class LinkRedirect extends SpecialPage {
 
 	
 	function LinkRedirect(){
-		UnlistedSpecialPage::UnlistedSpecialPage("LinkRedirect");
+		parent::__construct("LinkRedirect");
 	}
 	
 	function execute(){

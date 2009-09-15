@@ -10,7 +10,7 @@ function wfSpecialCommentAction(){
 	class CommentListGet extends UnlistedSpecialPage {
 	
 		function CommentListGet(){
-			UnlistedSpecialPage::UnlistedSpecialPage("CommentListGet");
+			parent::__construct("CommentListGet");
 		}
 		
 		function execute(){

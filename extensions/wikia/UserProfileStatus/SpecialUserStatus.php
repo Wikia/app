@@ -12,7 +12,7 @@ class ViewUserStatus extends SpecialPage {
 
 	
 	function ViewUserStatus(){
-		UnlistedSpecialPage::UnlistedSpecialPage("UserStatus");
+		parent::__construct("UserStatus");
 	}
 	
 	function execute(){

@@ -2,7 +2,7 @@
 class ViewSystemGift extends SpecialPage {
 
 	function ViewSystemGift(){
-		UnlistedSpecialPage::UnlistedSpecialPage("ViewSystemGift");
+		parent::__construct("ViewSystemGift");
 	}
 	
 	function execute(){

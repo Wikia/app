@@ -10,7 +10,7 @@ function wfSpecialEmailNewArticle(){
 	class EmailNewArticle extends UnlistedSpecialPage {
 	
 		function EmailNewArticle(){
-			UnlistedSpecialPage::UnlistedSpecialPage("EmailNewArticle");
+			parent::__construct("EmailNewArticle");
 		}
 	
 		function execute(){

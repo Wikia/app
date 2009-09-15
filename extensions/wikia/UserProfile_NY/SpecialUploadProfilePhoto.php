@@ -3,7 +3,7 @@ class UploadProfilePhoto extends SpecialPage {
 
 	
 	function UploadProfilePhoto(){
-		UnlistedSpecialPage::UnlistedSpecialPage("UploadProfilePhoto");
+		parent::__construct("UploadProfilePhoto");
 	}
 	
     

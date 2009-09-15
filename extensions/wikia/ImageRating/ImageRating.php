@@ -17,7 +17,7 @@ class ImageRating extends SpecialPage {
 
 	
 	function ImageRating(){
-		UnlistedSpecialPage::UnlistedSpecialPage("ImageRating");
+		parent::__construct("ImageRating");
 	}
 
 	

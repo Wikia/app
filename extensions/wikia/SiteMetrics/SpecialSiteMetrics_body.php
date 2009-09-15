@@ -3,7 +3,7 @@
 class SiteMetrics extends SpecialPage {
 
 	function SiteMetrics(){
-		UnlistedSpecialPage::UnlistedSpecialPage("SiteMetrics");
+		parent::__construct("SiteMetrics");
 	}
 	
 	function formatDate($date){

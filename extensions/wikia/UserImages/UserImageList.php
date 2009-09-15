@@ -11,7 +11,7 @@ class UserImageList extends SpecialPage {
 
 	
 	function UserImageList(){
-		UnlistedSpecialPage::UnlistedSpecialPage("UserImageList");
+		parent::__construct("UserImageList");
 	}
 
 	

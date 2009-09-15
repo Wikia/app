@@ -7,7 +7,7 @@ function wfMiniAjaxUpload(){
 	class MiniAjaxUpload extends SpecialPage {
 		
 		function MiniAjaxUpload(){
-			UnlistedSpecialPage::UnlistedSpecialPage("MiniAjaxUpload");
+			parent::__construct("MiniAjaxUpload");
 		}
 		
 		function execute(){

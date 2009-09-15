@@ -11,7 +11,7 @@ function wfSpecialCreatePoll(){
 	class CreatePoll extends SpecialPage {
 	
 		function CreatePoll(){
-			UnlistedSpecialPage::UnlistedSpecialPage("CreatePoll");
+			parent::__construct("CreatePoll");
 		}
 		
 		function execute(){

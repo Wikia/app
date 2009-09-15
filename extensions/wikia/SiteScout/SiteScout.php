@@ -10,8 +10,8 @@ function wfSpecialSiteScoutPage(){
 
 	class SiteScoutPage  extends SpecialPage {
 	
-	  function SiteScoutPage(){
-	    UnlistedSpecialPage::UnlistedSpecialPage("SiteScout");
+	  function __construct(){
+	    parent::__construct("SiteScout");
 	  }
 	  
 	    function execute(){

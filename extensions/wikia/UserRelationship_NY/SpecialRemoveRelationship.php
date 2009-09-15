@@ -18,7 +18,7 @@
 	class RemoveRelationship extends SpecialPage {
 	
 		function RemoveRelationship(){
-			UnlistedSpecialPage::UnlistedSpecialPage("RemoveRelationship");
+			parent::__construct("RemoveRelationship");
 		}
 		
 		function execute(){

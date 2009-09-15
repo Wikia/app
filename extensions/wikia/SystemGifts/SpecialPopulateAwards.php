@@ -10,7 +10,7 @@ function wfSpecialPopulateAwards(){
 	class PopulateAwards extends UnlistedSpecialPage {
 	
 		function PopulateAwards(){
-			UnlistedSpecialPage::UnlistedSpecialPage("PopulateAwards");
+			parent::__construct("PopulateAwards");
 		}
 	
 		function execute( $gift_category){

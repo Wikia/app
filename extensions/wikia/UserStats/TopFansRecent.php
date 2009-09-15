@@ -11,7 +11,7 @@ function wfSpecialTopFansRecent(){
 	class TopFansRecent extends UnlistedSpecialPage {
 	
 		function TopFansRecent(){
-			UnlistedSpecialPage::UnlistedSpecialPage("TopUsersRecent");
+			parent::__construct("TopUsersRecent");
 		}
 	
 		function execute(){

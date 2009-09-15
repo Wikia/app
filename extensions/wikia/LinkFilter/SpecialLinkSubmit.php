@@ -2,7 +2,7 @@
 class LinkSubmit extends UnlistedSpecialPage {
 
 	function LinkSubmit(){
-		UnlistedSpecialPage::UnlistedSpecialPage("LinkSubmit");
+		parent::__construct("LinkSubmit");
 	}
 
 	function execute(){

@@ -8,7 +8,7 @@ function wfSpecialFanBoxAjaxUpload(){
 	class FanBoxAjaxUpload extends SpecialPage {
 		
 		function FanBoxAjaxUpload(){
-			UnlistedSpecialPage::UnlistedSpecialPage("FanBoxAjaxUpload");
+			parent::__construct("FanBoxAjaxUpload");
 		}
 		
 

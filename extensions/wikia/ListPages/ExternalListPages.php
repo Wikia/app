@@ -10,7 +10,7 @@ function wfSpecialExternalListPages(){
 class ExternalListPages extends SpecialPage {
 
   function ExternalListPages(){
-    UnlistedSpecialPage::UnlistedSpecialPage("ExternalListPages");
+    parent::__construct("ExternalListPages");
   }
 
   function execute(){

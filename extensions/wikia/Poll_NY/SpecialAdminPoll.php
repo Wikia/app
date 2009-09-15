@@ -11,7 +11,7 @@ class AdminPoll extends SpecialPage {
 
 	
 	function AdminPoll(){
-		UnlistedSpecialPage::UnlistedSpecialPage("AdminPoll");
+		parent::__construct("AdminPoll");
 	}
 
 	

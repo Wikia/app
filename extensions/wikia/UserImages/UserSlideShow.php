@@ -11,7 +11,7 @@ class UserSlideShow extends SpecialPage {
 
 	
 	function UserSlideShow(){
-		UnlistedSpecialPage::UnlistedSpecialPage("UserSlideShow");
+		parent::__construct("UserSlideShow");
 	}
 
 	

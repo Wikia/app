@@ -2,7 +2,7 @@
 class YahooAuthHandler extends SpecialPage {
 	
 	function YahooAuthHandler(){
-		UnlistedSpecialPage::UnlistedSpecialPage("YahooAuthHandler");
+		parent::__construct("YahooAuthHandler");
 	}
 
 

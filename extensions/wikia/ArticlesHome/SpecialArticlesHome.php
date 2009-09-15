@@ -12,7 +12,7 @@ class ArticlesHome extends SpecialPage {
 
 	
 	function ArticlesHome(){
-		UnlistedSpecialPage::UnlistedSpecialPage("ArticlesHome");
+		parent::__construct("ArticlesHome");
 	}
 	
 	 

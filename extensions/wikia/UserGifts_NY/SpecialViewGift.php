@@ -2,7 +2,7 @@
 class ViewGift extends SpecialPage {
 
 	function ViewGift(){
-		UnlistedSpecialPage::UnlistedSpecialPage("ViewGift");
+		parent::__construct("ViewGift");
 	}
 	
 	function execute(){

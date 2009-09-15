@@ -2,7 +2,7 @@
 class RemoveMasterGift extends SpecialPage {
 
 	function RemoveMasterGift(){
-		UnlistedSpecialPage::UnlistedSpecialPage("RemoveMasterGift");
+		parent::__construct("RemoveMasterGift");
 	}
 	
 	function deleteImage( $id, $size ){

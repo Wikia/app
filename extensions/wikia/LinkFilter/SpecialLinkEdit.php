@@ -2,7 +2,7 @@
 class LinkEdit extends UnlistedSpecialPage {
 
 	function LinkEdit(){
-		UnlistedSpecialPage::UnlistedSpecialPage("LinkEdit");
+		parent::__construct("LinkEdit");
 	}
 	
 	function execute(){

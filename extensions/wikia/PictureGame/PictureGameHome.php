@@ -41,7 +41,7 @@ function wfSpecialPictureGameHome(){
 
 		/* Construct the MediaWiki special page */
 		function PictureGameHome(){
-			UnlistedSpecialPage::UnlistedSpecialPage("PictureGameHome");
+			parent::__construct("PictureGameHome");
 		}
 
 

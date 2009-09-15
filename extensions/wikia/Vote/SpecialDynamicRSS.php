@@ -8,7 +8,7 @@ function wfSpecialDynamicRSS(){
 	class DynamicRSS  extends SpecialPage {
 	
 	  function DynamicRSS(){
-	    UnlistedSpecialPage::UnlistedSpecialPage("RSS");
+	    parent::__construct("RSS");
 	  }
 	  
 	  function execute(){

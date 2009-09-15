@@ -3,7 +3,7 @@
 class LinksHome extends UnlistedSpecialPage {
 
 	function LinksHome(){
-		UnlistedSpecialPage::UnlistedSpecialPage("LinksHome");
+		parent::__construct("LinksHome");
 	}
 
 	function getInTheNews(){

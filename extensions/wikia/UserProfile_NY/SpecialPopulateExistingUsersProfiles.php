@@ -23,7 +23,7 @@ class PopulateUserProfiles extends SpecialPage {
 
 	
 	function PopulateUserProfiles(){
-		UnlistedSpecialPage::UnlistedSpecialPage("PopulateUserProfiles");
+		parent::__construct("PopulateUserProfiles");
 	}
 	
 	function execute(){

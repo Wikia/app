@@ -13,7 +13,7 @@ class IFrameUpload extends UnlistedSpecialPage {
 	 
 	
   function IFrameUpload(){
-    UnlistedSpecialPage::UnlistedSpecialPage("IFrameUpload");
+    parent::__construct("IFrameUpload");
   }
 
   function execute(){

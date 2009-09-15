@@ -11,7 +11,7 @@ class MetricsNY extends SpecialPage {
 
 	
 	function MetricsNY(){
-		UnlistedSpecialPage::UnlistedSpecialPage("MetricsNY");
+		parent::__construct("MetricsNY");
 	}
 	
 	function formatDate($date){
