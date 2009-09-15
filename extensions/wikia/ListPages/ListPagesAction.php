@@ -7,9 +7,9 @@ function wfSpecialListPagesAction(){
 
 	class ListPagesAction  extends SpecialPage {
 	
-	  function ListPagesAction(){
-	    UnlistedSpecialPage::UnlistedSpecialPage("ListPagesAction");
-	  }
+	function __construct(){
+		parent::__construct("ListPagesAction");
+	}
 	  
 	    function execute(){
 			global $wgSiteView, $wgOut, $wgVoteDirectory;
