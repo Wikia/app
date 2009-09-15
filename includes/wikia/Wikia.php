@@ -16,6 +16,20 @@
 
 class Wikia {
 
+	private static $vars = array();
+
+	public static function setVar($key, $value) {
+		Wikia::$vars[$key] = $value;
+	}
+
+	public static function getVar($key) {
+		return isset(Wikia::$vars[$key]) ? Wikia::$vars[$key] : null;
+	}
+
+	public static function isVarSet($key) {
+		return isset(Wikia::$vars[$key]);
+	}
+
 	/**
 	 * @author inez@wikia.com
 	 */
