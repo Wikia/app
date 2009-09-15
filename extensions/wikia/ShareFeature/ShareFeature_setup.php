@@ -90,15 +90,17 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 
 	$sites = array();
 	$found = array();
+	// get all the sites we have data for
         while($row = $dbr->fetchObject($res)) {		
 		$site = $wgShareFeatureSites[$row->sf_provider_id];
 		$sites[] = array( $site['name'], wfShareFeatureMakeUrl( $site['url'], $target, $title ) );
 		$found[] = $site['name'];
         }
-	
-	foreach( $wgShareFeatureSites as $sf_site ) {
-		
-		$sites[$name] = wfShareFeatureMakeUrl( $site, $target, $title );	
+	// and other ones, that weren't clicked for this user
+	foreach( $wgShareFeatureSites as $sf_site ) {		
+		if( !in_array( $sf_site['name'], $found ) ) {
+			$sites[] = array( $sf_site['name'], wfShareFeatureMakeUrl( $sf_site['url'], $target, $title )  );
+		}
 	}
 
 	return $sites;
