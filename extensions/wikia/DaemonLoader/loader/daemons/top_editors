@@ -230,6 +230,7 @@ foreach my $user_id (sort keys %USERS) {
 		
 		next unless $dbname;
 		
+		$db_ext->ping();
 		$homeCity = $dbname unless ($homeCity);
 
 		$db_ext->handler->ping();
@@ -247,17 +248,18 @@ foreach my $user_id (sort keys %USERS) {
 	
 			#
 			# count in month 
+
 			$select = "count(*) as cnt";
-			$from = "`".$dbname."`.`revision`";
+			$from = "dataware.blobs";
 			@where = (
 				"rev_user = '".$user_id."'",
-				"rev_page in (select page_id from `".$dbname."`.`page` where page_namespace in (".$contentNS.") and page_is_redirect = 0)",
+				"rev_wikia_id = '".$city_id."'",
+				"rev_page_id in (select page_id from dataware.pages where page_namespace in (".$contentNS.") and page_status = 0 and page_wikia_id = '".$city_id."' )",
 				"date_format(rev_timestamp, '%Y%m') = '".$date."'"
 			);
-			my @options = ();
 		
 			$cnt = 0;
-			($oRowCnt) = $db->select($select, $from, \@where, \@options);
+			($oRowCnt) = $db_ext->select($select, $from, \@where, \@options);
 			$cnt = $oRowCnt->{cnt};
 			$cnt = 0 unless $cnt;
 			$USERS{$user_id}{$date} = $USERS{$user_id}{$date} + $cnt;
