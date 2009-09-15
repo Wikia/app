@@ -8,7 +8,7 @@
 	global $wgUser, $wgShowIPinHeader, $wgTitle;
 
 	if($wgUser->isLoggedIn()) {
-		if ( !empty( $GLOBALS["wgWikiaEnableSocialTools"] ) || class_exists("BlogAvatar") ) {
+		if ( !empty( $GLOBALS["wgWikiaEnableSocialTools"] ) || class_exists("Masthead") ) {
 			echo $avatarLink;
 		}
 

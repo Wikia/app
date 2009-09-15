@@ -29,8 +29,8 @@ function WidgetCommunity($id, $params) {
 	$total = $wgLang->formatNum($total);
 
 	$avatar = $wgStylePath.'/monaco/images/community_avatar.gif';
-	if( class_exists("BlogAvatar") ) {
-		$avatar = BlogAvatar::newFromUser( $wgUser )->display( 29, 29, false, false, "community_avatar" );
+	if( class_exists("Masthead") ) {
+		$avatar = Masthead::newFromUser( $wgUser )->display( 29, 29, false, false, "community_avatar" );
 	}
 	elseif(class_exists("WikiaAvatar")) {
 		$userAvatar = new WikiaAvatar($wgUser->getId());

@@ -179,6 +179,7 @@ class StaticChute {
 			'monaco/css/star_rating.css',
 			'monaco/css/ny.css',
 			'../extensions/wikia/Blogs/css/Blogs.css',
+			'../extensions/wikia/Masthead/css/Masthead.css',
 		);
 		$this->config['monaco_css'] = array_merge($this->config['monaco_css'], $widgetsAssets['css']);
 

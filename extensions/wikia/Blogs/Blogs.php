@@ -121,9 +121,6 @@ $wgHooks['AlternateEdit'][] = 'SpecialBlogPage::alternateEditHook';
 /**
  * load other parts
  */
-if (empty($wgWikiaEnableUserMasthead)) {
-	$wgWikiaEnableUserMasthead = true;
-}
 include( dirname( __FILE__ ) . "/SpecialBlogPage.php");
 include( dirname( __FILE__ ) . "/BlogTemplate.php");
 include( dirname( __FILE__ ) . "/BlogArticle.php");

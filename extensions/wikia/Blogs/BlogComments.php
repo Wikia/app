@@ -254,7 +254,7 @@ class BlogComment {
 				"title"     => $this->mTitle,
 				"author"    => $this->mUser,
 				"anchor"    => $anchor,
-				"avatar"    => BlogAvatar::newFromUser( $this->mUser )->display( 50, 50 ),
+				"avatar"    => Masthead::newFromUser( $this->mUser )->display( 50, 50 ),
 				"hidden"    => $hidden,
 				"timestamp" => $wgContLang->timeanddate( $this->mFirstRevision->getTimestamp() )
 			);
@@ -990,7 +990,7 @@ class BlogCommentList {
 		 * $pages is array of comment articles
 		 */
 		$owner     = $this->mTitle->getBaseText();
-		$avatar    = BlogAvatar::newFromUser( $wgUser );
+		$avatar    = Masthead::newFromUser( $wgUser );
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
 		$isOwner   = ( $owner == $wgUser->getName() );
 		$canEdit   = $wgUser->isAllowed( "edit" );
