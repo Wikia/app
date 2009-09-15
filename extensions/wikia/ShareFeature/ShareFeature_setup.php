@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.45',
+        'version' => '0.50',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -128,12 +128,25 @@ function wfShareFeatureInit() {
 	$wgAjaxExportList[] = 'wfShareFeatureAjaxUpdateStats';
 }
 
-function wfShareFeatureAjaxUpdateStats() {
-	global $wgUser;
+// update stats for 
+function wfShareFeatureAjaxUpdateStats( $id, $provider ) {
+	global $wgUser, $wgExternalSharedDB, $wgOut;
 
-	
+	$id = $wgUser->getId();	
+	$provider = $wgOut->getVal( '' );		
+
+	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
+
+	// MW insert wrapper doesn't handle that syntax
+	$query = 'INSERT INTO `share_feature`
+		  ( sf_user_id, sf_provider_id, sf_clickcount ) VALUES( ' . $id  . ', ' . $provider . ', 1 )
+		  ON DUPLICATE KEY UPDATE sf_clickcount = sf_clickcount + 1;
+		 ';
+
+	return $res = $dbw->query( $query );	
 }
 
+// return dialog for the extension
 function wfShareFeatureAjaxGetDialog() {	
 	global $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer, $wgArticlePath;
 
