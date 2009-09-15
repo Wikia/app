@@ -570,6 +570,8 @@ class WikiaMiniUpload {
 				$message = wfMsg( 'wmu-success' );
 			}
 
+			Wikia::setVar('EditFromViewMode', true);
+
 			$summary = wfMsg( 'wmu-added-from-plc' ) ;
 			$success = $article_obj->doEdit( $text, $summary);
 			if ( $success ) {

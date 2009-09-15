@@ -368,6 +368,9 @@ class VideoEmbedTool {
 		$caption = $wgRequest->getVal('caption');
 
 		if ('' != $gallery) {
+
+			Wikia::setVar('EditFromViewMode', true);
+
 			if ( -2 == $gallery ) {
 				// this went in from the single placeholder...
 				$size = $wgRequest->getVal('size');
