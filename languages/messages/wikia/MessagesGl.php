@@ -31,4 +31,5 @@ $messages = array_merge( $messages, array(
 'use_old_formatting' => 'Cambiar a deseño Monobook',
 'use_new_formatting' => 'Probar un deseño novo',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Comezar unha nova sección',
 ) );

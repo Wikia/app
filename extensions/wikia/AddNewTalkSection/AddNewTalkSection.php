@@ -29,7 +29,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgExtensionFunctions[] = 'AddNewTalkSectionInit';
-$wgExtensionMessagesFiles['AddNewTalkSection'] = dirname(__FILE__) . '/AddNewTalkSection.i18n.php';
 //in AddNewTalkSectionInit() it's too late...
 $wgHooks['LanguageGetMagic'][] = 'AddNewTalkSectionGetMagic';
 
@@ -90,7 +89,6 @@ function AddNewTalkSectionAddFooter(&$skin, &$tpl, &$custom_article_footer) {
 
 	if (in_array($action, array('view', 'purge'))) {
 		global $wgStylePath;
-		wfLoadExtensionMessages('AddNewTalkSection');
 		$text = wfMsg('addnewtalksection-link');
 		$url = $wgTitle->getLocalURL('action=edit&section=new');
 

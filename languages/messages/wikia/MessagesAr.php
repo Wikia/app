@@ -23,4 +23,5 @@ $messages = array_merge( $messages, array(
 'newly_changed' => "متغيّر حديثا",
 'highest_ratings' => "التقديرات الأعل",
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'ابدأ قسما جديدا',
 ) );

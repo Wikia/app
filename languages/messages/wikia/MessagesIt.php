@@ -6,4 +6,5 @@ $messages = array_merge( $messages, array(
 'login_as_another' => "Esegui il login come un'altro user",
 'not_you' => "Non sei tu?",
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Inizia una nuova sezione',
 ) );

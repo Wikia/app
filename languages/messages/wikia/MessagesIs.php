@@ -35,4 +35,5 @@ $messages = array_merge( $messages, array(
 'review_reason_4' => 'Prufa ástæðu 4',
 'review_reason_5' => 'Prufa ástæðu 5',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Bæta athugasemd við þessa umræðu.',
 ) );

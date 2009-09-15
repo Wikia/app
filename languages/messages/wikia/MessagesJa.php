@@ -142,4 +142,5 @@ $messages = array_merge( $messages , array(
 'tog-searchsuggest' => '補間つき検索機能を使う',
 'see_more' => '更に詳しくは',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => '新しいセクションを開始する',
 ));

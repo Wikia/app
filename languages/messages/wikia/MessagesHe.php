@@ -31,4 +31,5 @@ $messages = array_merge( $messages, array(
 'use_old_formatting' => 'החלפ/י לעור מונובוק',
 'use_new_formatting' => 'נסה/י את העיצוב החדש',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'הוספת פסקה חדשה',
 ) );

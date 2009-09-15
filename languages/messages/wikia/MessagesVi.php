@@ -8,4 +8,5 @@ $messages = array_merge( $messages, array(
 'helpfaq' => "Trợ giúp & Vấn đáp",
 'choose_reason' => "Chọn lý do",
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Bắt đầu một đề mục mới',
 ) );
