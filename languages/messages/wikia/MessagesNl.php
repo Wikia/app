@@ -28,4 +28,5 @@ $messages = array_merge( $messages, array(
 'use_new_formatting' => 'Gebruik het nieuwe uiterlijk',
 'preferences' => 'Voorkeuren',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Nieuw kopje toevoegen',
 ) );

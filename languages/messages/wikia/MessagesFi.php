@@ -37,4 +37,5 @@ $messages = array_merge( $messages, array(
 'review_reason_5' => 'Arvostelun syy 5',
 'preferences' => 'Asetukset',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Lisää uusi osio',
 ) );

@@ -144,4 +144,5 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'footer_8' => 'Podziel się tym artykułem',
 'footer_9' => 'Oceń ten artykuł',
 #'footer_10' => 'Share with $1',
+'addnewtalksection-link' => 'Dodaj nowy wątek.',
 ) );

@@ -36,4 +36,5 @@ $messages = array_merge( $messages, array(
 'review_reason_4' => '4. sebebi gözden geçir',
 'review_reason_5' => '5. sebebi gözden geçir',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Yeni bir bölüm başlat.',
 ) );

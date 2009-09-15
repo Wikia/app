@@ -36,4 +36,5 @@ $messages = array_merge( $messages, array(
 'review_reason_4' => 'Revidakod 4',
 'review_reason_5' => 'Revidakod 5',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Primön dilädi nulik',
 ) );

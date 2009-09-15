@@ -36,4 +36,5 @@ $messages = array_merge( $messages, array(
 'review_reason_4' => 'Cuarta razón para esta revisión',
 'review_reason_5' => 'Quinta razón para esta revisión',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Inicie una nueva sección',
 ) );

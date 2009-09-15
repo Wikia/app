@@ -861,4 +861,5 @@ Text should be placed on this page if you wish to explain usage, style and polic
 # Special:Lockdb and Special:Unlockdb
 'lockdb-wikifactory-error' => 'An error occurred. Failed to save or clear cache. The database might not be locked. Please try again or contact the TechTeam.',
 'unlockdb-wikifactory-error' => 'An error occurred. Failed to save or clear cache. The database might not be unlocked. Please try again or contact the TechTeam.',
+'addnewtalksection-link' => 'Add new section',
 ));

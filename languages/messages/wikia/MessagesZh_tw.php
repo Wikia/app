@@ -31,4 +31,5 @@ $messages = array_merge( $messages, array(
 'use_old_formatting' => '換回舊面板',
 'use_new_formatting' => '嘗試新面板',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => '於本討論頁增加新的討論主題',
 ) );

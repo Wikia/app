@@ -61,4 +61,5 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 'watchlist_s' => 'Beobachtungsliste',
 'preferences' => 'Einstellungen',
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+'addnewtalksection-link' => 'Neuen Abschnitt beginnen',
 ) );
