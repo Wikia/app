@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.42',
+        'version' => '0.45',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -64,7 +64,6 @@ $wgShareFeatureSites = array(
 $wgExtensionFunctions[] = 'wfShareFeatureInit';
 $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i18n.php';
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
-
 
 function wfShareFeatureMakeUrl( $site, $target, $title ) {
 	global $wgShareFeatureSites;
@@ -132,7 +131,7 @@ function wfShareFeatureInit() {
 function wfShareFeatureAjaxUpdateStats() {
 	global $wgUser;
 
-
+	
 }
 
 function wfShareFeatureAjaxGetDialog() {	
