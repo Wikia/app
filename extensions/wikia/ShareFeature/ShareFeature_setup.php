@@ -20,46 +20,53 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.50',
+        'version' => '0.53',
 );
 
 $dir = dirname(__FILE__).'/';
 
 $wgShareFeatureSites = array(
 		array( 
-			'name' => 'Reddit',
-			'url' => 'http://www.reddit.com/submit?url=$1&title=$2'
+			'name' 	=>	'Reddit',
+			'id' 	=>	0,
+			'url' 	=>	'http://www.reddit.com/submit?url=$1&title=$2'
 		),
 		array( 
-			'name' => 'Facebook',
-			'url' => 'http://www.facebook.com/sharer.php?u=$1?t=$2'
+			'name'	=>	'Facebook',
+			'id'	=>	1,
+			'url' 	=>	'http://www.facebook.com/sharer.php?u=$1?t=$2'
 		),
 		array( 
-			'name' => 'Twitter',
-			'url' => 'http://twitter.com/home?status=$1'
+			'name'	=>	'Twitter',
+			'id'	=>	2,
+			'url'	=>	'http://twitter.com/home?status=$1'
 		), // message and url goes into the parameter
 		array( 
-			'name' => 'Digg',
-			'url' => 'http://digg.com/submit?url=$1&title=$2'
+			'name'	=>	'Digg',
+			'id'	=>	3,
+			'url'	=>	'http://digg.com/submit?url=$1&title=$2'
 		),
 		array(
-			'name' => 'Stumbleupon',
-			'url' => 'http://www.stumbleupon.com/submit?url=$1&title=$2'
+			'name'	=>	'Stumbleupon',
+			'id'	=>	4,
+			'url'	=>	'http://www.stumbleupon.com/submit?url=$1&title=$2'
 		),
 		array(
-			'name' => 'Technorati',
-			'url' => 'http://www.technorati.com/faves/?add=$1'
+			'name'	=>	'Technorati',
+			'id'	=>	5,
+			'url'	=>	'http://www.technorati.com/faves/?add=$1'
 		),
 		array( 
-			'name' => 'Slashdot',
-			'url' => 'http://slashdot.org/bookmark.pl?url=$1&title=$2'
+			'name'	=>	'Slashdot',
+			'id'	=>	6,
+			'url'	=>	'http://slashdot.org/bookmark.pl?url=$1&title=$2'
 		),
 		array(
-			'name' => 'MySpace',
-			'url' => 'http://www.myspace.com/Modules/PostTo/Pages/?l=3&u=$1&t=$2'
+			'name'	=>	'MySpace',
+			'id'	=>	7,
+			'url'	=>	'http://www.myspace.com/Modules/PostTo/Pages/?l=3&u=$1&t=$2'
 		),
 );
-
 
 $wgExtensionFunctions[] = 'wfShareFeatureInit';
 $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i18n.php';
@@ -91,13 +98,21 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 	// get all the sites we have data for
         while($row = $dbr->fetchObject($res)) {		
 		$site = $wgShareFeatureSites[$row->sf_provider_id];
-		$sites[] = array( $site['name'], wfShareFeatureMakeUrl( $site['url'], $target, $title ) );
+		$sites[] = array(
+			'name' 	=>	$site['name'],
+			'id'	=>	$site['id'], 
+			'url' 	=>	wfShareFeatureMakeUrl( $site['url'], $target, $title )
+		);
 		$found[] = $site['name'];
         }
 	// and other ones, that weren't clicked for this user
 	foreach( $wgShareFeatureSites as $sf_site ) {		
 		if( !in_array( $sf_site['name'], $found ) ) {
-			$sites[] = array( $sf_site['name'], wfShareFeatureMakeUrl( $sf_site['url'], $target, $title )  );
+			$sites[] = array(
+				'name'	=>	$sf_site['name'],
+				'id'	=>	$sf_site['id'],
+				'url'	=>	wfShareFeatureMakeUrl( $sf_site['url'], $target, $title )
+			);
 		}
 	}
 
@@ -128,7 +143,7 @@ function wfShareFeatureInit() {
 }
 
 // update stats for 
-function wfShareFeatureAjaxUpdateStats( $id, $provider ) {
+function wfShareFeatureAjaxUpdateStats( $provider ) {
 	global $wgUser, $wgExternalSharedDB, $wgOut;
 
 	$id = $wgUser->getId();	
