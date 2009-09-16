@@ -153,3 +153,12 @@ body.ltr #articleFooter ul.actions li div {
 	position: absolute;
 	width: 300px;
 }
+
+/* masthead - avatar menu */
+#user_masthead {
+	z-index: 50;
+}
+
+#page_bar {
+	z-index: 20;
+}
