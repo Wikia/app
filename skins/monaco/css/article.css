@@ -39,7 +39,7 @@
 	position: relative;
 }
 #page_controls div {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?5749459);
 	clip: rect(0px 0px 0px 0px);
 	height: 16px;
 	margin: 8px 2px 0 0;
@@ -106,6 +106,14 @@
 #control_share_feature div {
 	clip: rect(0px 576px 16px 560px);
 	left: -560px;	
+}
+
+#shareFeatureRound {
+	padding: 10px !important;
+}
+
+#shareFeatureRound li {
+	padding: 2px !important;
 }
 
 #page_tabs {
@@ -192,7 +200,7 @@
 	margin-left: 20px;
 }
 #articleFooter img.sprite {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?945459);
 	height: 16px;
 	margin-right: 16px;
 	position: absolute;
@@ -304,7 +312,7 @@
 	width: 16px;
 }
 #share dd a {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?945849);
 	display: block;
 	height: 16px;
 	position: absolute;
