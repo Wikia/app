@@ -64,7 +64,10 @@ class CloseWikiTarAndCopyImages {
 		$sth = $dbr->select(
 			array( "city_list" ),
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
-			array( "city_public" => array( 0, -1 ) ),
+			array(
+				  "city_public" => array( 0, -1 ),
+				  "city_flags <> 0"
+			),
 			__METHOD__,
 			$condition
 		);
@@ -89,7 +92,7 @@ class CloseWikiTarAndCopyImages {
 			if( $row->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)  {
 				$hide = true;
 			}
-			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
+			if( $row->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP ) {
 				Wikia::log( __CLASS__, "info", "Dumping database on remote host" );
 				list ( $remote  ) = explode( ":", $this->mTarget, 2 );
 				$cmd  = array(
@@ -114,7 +117,7 @@ class CloseWikiTarAndCopyImages {
 				/**
 				 * reset flag
 				 */
-				$newFlags = $newFlags &~ WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;
+				$newFlags = $newFlags | WikiFactory::FLAG_CREATE_DB_DUMP;
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
@@ -161,7 +164,7 @@ class CloseWikiTarAndCopyImages {
 									/**
 									 * reset flag
 									 */
-									$newFlags = $newFlags &~ WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;
+									$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;
 								}
 							}
 							else {
@@ -175,7 +178,7 @@ class CloseWikiTarAndCopyImages {
 						else {
 							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 							unlink( $source );
-							$newFlags = $newFlags &~ WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
+							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
 						}
 					}
 					else {
@@ -234,14 +237,14 @@ class CloseWikiTarAndCopyImages {
 					 * there is nothing to set because row in city_list doesn't
 					 * exists
 					 */
-					$newFlags = 0;
+					$newFlags = false;
 				}
 			}
 			/**
 			 * reset flags, if database was dropped and data were removed from
 			 * WikiFactory tables it will return false anyway
 			 */
-			if( !empty( $newFlags ) ) {
+			if(  $newFlags ) {
 				WikiFactory::resetFlags( $row->city_id, $newFlags );
 			}
 
