@@ -115,7 +115,6 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 			);
 		}
 	}
-
 	return $sites;
 }
 
@@ -158,7 +157,13 @@ function wfShareFeatureAjaxUpdateStats( $provider ) {
 		  ON DUPLICATE KEY UPDATE sf_clickcount = sf_clickcount + 1;
 		 ';
 
-	return $res = $dbw->query( $query );	
+	$res = $dbw->query( $query );	
+	
+	// todo number of rows affected
+
+	$response = new AjaxResponse( "ok" );
+	$response->setContentType('text/plain; charset=utf-8');
+	return $response;
 }
 
 // return dialog for the extension
