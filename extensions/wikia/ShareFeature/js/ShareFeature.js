@@ -1,5 +1,5 @@
 
-var ShareFeature = {}
+var ShareFeature = {};
 
 ShareFeature.ajax = function( provider ) {
 	$.getJSON( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
