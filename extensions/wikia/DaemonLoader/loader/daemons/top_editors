@@ -306,10 +306,10 @@ $sheet->activate();
 my ($col, $row) = (0, 2); 
 $sheet->write($row, $col, "Editor", $formatHdr); 
 $sheet->write($row, $col+1, "Editor Id", $formatHdr); 
-$sheet->write($row, $col+3, "Total edits (NS_MAIN)", $formatHdr); 
-$sheet->write($row, $col+4, "Home wiki", $formatHdr); 
-$sheet->write($row, $col+5, "Hub", $formatHdr); 
-my $i = 6;
+$sheet->write($row, $col+2, "Total edits (NS_MAIN)", $formatHdr); 
+$sheet->write($row, $col+3, "Home wiki", $formatHdr); 
+$sheet->write($row, $col+4, "Hub", $formatHdr); 
+my $i = 5;
 foreach (@dates) {
 	$sheet->write($row, $col+$i, $_, $formatHdr); 
 	$i++;
