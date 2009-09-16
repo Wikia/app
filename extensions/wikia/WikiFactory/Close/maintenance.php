@@ -8,6 +8,9 @@
  */
 
 ini_set( "include_path", dirname(__FILE__)."/../../../../maintenance/" );
+
+$optionsWithArgs = array( "limit" );
+
 require_once( "commandLine.inc" );
 require_once( "Archive/Tar.php" );
 
