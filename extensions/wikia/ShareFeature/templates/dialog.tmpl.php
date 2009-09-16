@@ -5,7 +5,7 @@
 			<?php
 				foreach( $sites as $site) {
 			?>
-				<li><a href="<?= $site[1] ?>"><?= $site[0] ?></a></li>
+				<li><a href="<?= $site['url'] ?>" onclick="ShareFeature.ajax( <?= $site['id'] ?>  )"><?= $site['name'] ?></a></li>
 			<?php
 				}
 			?>
