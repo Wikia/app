@@ -46,19 +46,31 @@ class CloseWikiTarAndCopyImages {
 	public function execute() {
 		global $wgUploadDirectory, $wgDBname;
 
+		$first     = isset( $this->mOptions[ "first" ] ) ? true : false;
+		$condition = array( "ORDER BY" => "city_id" );
+		/**
+		 * if $first is set skip limit checking
+		 */
+		if( !$first ) {
+			if( isset( $this->mOptions[ "limit" ] ) && is_numeric( $this->mOptions[ "limit" ] ) )  {
+				$condition[ "LIMIT" ] = $this->mOptions[ "limit" ];
+			}
+		}
+
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$sth = $dbr->select(
 			array( "city_list" ),
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
 			array( "city_public" => array( 0, -1 ) ),
-			__METHOD__
+			__METHOD__,
+			$condition
 		);
+
 		while( $row = $dbr->fetchObject( $sth ) ) {
 
 			/**
 			 * reasonable defaults for wikis and some presets
 			 */
-			$first    = isset( $this->mOptions[ "first" ] ) ? true : false;
 			$hide     = false;
 			$xdumpok  = true;
 			$newFlags = 0;
