@@ -46,3 +46,12 @@ body {
 ol li {
 	display: list-item;
 }
+
+/* masthead - avatar menu */
+#user_masthead {
+	z-index: 50;
+}
+
+#page_bar {
+	z-index: 20;
+}
