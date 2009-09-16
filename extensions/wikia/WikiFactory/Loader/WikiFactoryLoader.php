@@ -469,6 +469,7 @@ class WikiFactoryLoader {
 		 * @author Przemek Piotrowski (Nef)
 		 */
 		if( 0 === strpos($this->mServerName, 'yellowikis.') ) {
+			header( "X-Redirected-By-WF: Geo" );
 			global $wgLocationOfGeoIPDatabase;
 			if( !empty($wgLocationOfGeoIPDatabase) && file_exists($wgLocationOfGeoIPDatabase) ) {
 				/**
@@ -492,7 +493,9 @@ class WikiFactoryLoader {
 						$geoip = Net_GeoIP::getInstance($wgLocationOfGeoIPDatabase);
 						if( 'GB' == $geoip->lookupCountryCode($ips[0]) ) {
 							header( "X-Redirected-By-WF: Geo" );
-							header('Location: http://www.owikis.co.uk', true, 301);
+							/**
+							 * just exit, no redirect at all
+							 */
 							wfProfileOut( __METHOD__ );
 							exit( 0 );
 						}
