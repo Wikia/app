@@ -175,7 +175,7 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
   // NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
   // If a user has ringtone-ads turned off, their CSS will make the ad invisible.
   if($wgFirstLyricTag){
-	GLOBAL $wgTitle;
+	GLOBAL $wgTitle, $wgUploadPath;
 	$artist = $wgTitle->getDBkey();
 	$colonIndex = strpos("$artist", ":");
 	$songTitle = $wgTitle->getText();
@@ -191,9 +191,9 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' target='_blank'>";
 	$ringtoneLink = "";
 	$ringtoneLink = "<div class='rtMatcher'>";
-	$ringtoneLink.= "$href<img src='/phone_left.gif' alt='phone' width='16' height='17'/></a> ";
+	$ringtoneLink.= "$href<img src='$wgUploadPath/phone_left.gif' alt='phone' width='16' height='17'/></a> ";
 	$ringtoneLink.= $href."Send \"$songTitle\" Ringtone to your Cell</a>";
-	$ringtoneLink.= " $href<img src='/phone_right.gif' alt='phone' width='16' height='17'/></a>";
+	$ringtoneLink.= " $href<img src='$wgUploadPath/phone_right.gif' alt='phone' width='16' height='17'/></a>";
 	$ringtoneLink.= "</div>";
 	$wgFirstLyricTag = false;
   }
