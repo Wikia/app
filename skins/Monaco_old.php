@@ -1366,20 +1366,6 @@ class MonacoTemplate extends QuickTemplate {
 ?>
 	</head>
 <?php		wfProfileOut( __METHOD__ . '-head'); ?>
-<?php
-
-// Sometimes we need an ad delivered at the very top of the page (like for a skin)
-// This sucks to have a blocking call at the top of the page, but they promised
-// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
-global $wgEnableAdInvisibleTop, $wgEnableAdInvisibleHomeTop, $wgOut;
-if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
-	echo '<script src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
-	echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
-} else if (!empty($wgEnableAdInvisibleTop) && $wgOut->isArticle() && ArticleAdLogic::isContentPage()){
-	echo '<script src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
-	echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
-}
-?>
 <?php		wfProfileIn( __METHOD__ . '-body'); ?>
 
 <?php
@@ -1401,6 +1387,20 @@ if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
 
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
+<?php
+
+// Sometimes we need an ad delivered at the very top of the page (like for a skin)
+// This sucks to have a blocking call at the top of the page, but they promised
+// to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
+global $wgEnableAdInvisibleTop, $wgEnableAdInvisibleHomeTop, $wgOut;
+if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
+	echo '<script src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
+	echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
+} else if (!empty($wgEnableAdInvisibleTop) && $wgOut->isArticle() && ArticleAdLogic::isContentPage()){
+	echo '<script src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
+	echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
+}
+?>
 			<div id="widget_cockpit" class="color1">
 				<div id="carousel-prev" class="widget_cockpit_controls">&laquo;</div>
 				<div id="carousel-next" class="widget_cockpit_controls"><div id="cockpit1_close"></div>&raquo;</div>
