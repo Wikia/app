@@ -84,7 +84,7 @@ class CloseWikiTarAndCopyImages {
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
 			$cluster  = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
 
-			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_public={$row->city_public}");
+			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}");
 
 			/**
 			 * request for dump on remote server (now hardcoded for Iowa)
