@@ -25,6 +25,10 @@ $wgHooks['AdditionalUserProfilePreferences'][] = 'Masthead::additionalUserProfil
 $wgHooks['SavePreferences'][] = 'Masthead::savePreferences';
 $wgHooks['SkinGetPageClasses'][] = 'Masthead::SkinGetPageClasses';
 
+$wgLogNames[AVATAR_LOG_NAME] = "useravatar-log";
+
+$wgLogActions[AVATAR_LOG_NAME . '/avatar_chn'] = 'blog-avatar-changed-log';
+$wgLogActions[AVATAR_LOG_NAME . '/avatar_rem'] = 'blog-avatar-removed-log';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Masthead',
@@ -363,8 +367,7 @@ class Masthead {
 				$this->mUser->saveSettings();
 				$mUserPage = Title::newFromText( $sUserText, NS_USER );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$sLogComment = "Remove {$sUserText}'s avatars by {$wgUser->getName()}";
-				$oLogPage->addEntry( AVATAR_LOG_NAME, $mUserPage, $sLogComment);
+				$oLogPage->addEntry( 'avatar_rem', $mUserBlogPage, '', array($sUserText));
 				/* */
 				$result = true;
 			}
@@ -514,8 +517,7 @@ class Masthead {
 				$sUserText =  $this->mUser->getName();
 				$mUserPage = Title::newFromText( $sUserText, NS_USER );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$sLogComment = wfMsgForContent('blog-avatar-changed-log', $sUserText);
-				$oLogPage->addEntry( AVATAR_LOG_NAME, $mUserPage, $sLogComment);
+				$oLogPage->addEntry( 'avatar_chn', $mUserBlogPage, '');
 				unlink($sTmpFile);
 				$errorNo = UPLOAD_ERR_OK;
 			}
