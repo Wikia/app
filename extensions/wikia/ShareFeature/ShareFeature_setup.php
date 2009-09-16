@@ -66,7 +66,7 @@ $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
 
 function wfShareFeatureMakeUrl( $site, $target, $title ) {
-	global $wgShareFeatureSites;
+	// todo remember about a special case for Twitter...
 	$url = str_replace( '$1', $target, $site );
 	$url = str_replace( '$2', $title, $url );
 	
@@ -75,7 +75,6 @@ function wfShareFeatureMakeUrl( $site, $target, $title ) {
 
 function wfShareFeatureSortSites( $sites, $target, $title ) {
 	global $wgUser, $wgShareFeatureSites, $wgExternalSharedDB;
-	$stored_sites = array();
 
 	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB );
 	
@@ -133,11 +132,12 @@ function wfShareFeatureAjaxUpdateStats( $id, $provider ) {
 	global $wgUser, $wgExternalSharedDB, $wgOut;
 
 	$id = $wgUser->getId();	
-	$provider = $wgOut->getVal( '' );		
+	$provider = $wgOut->getVal( 'provider' );		
 
 	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
 
 	// MW insert wrapper doesn't handle that syntax
+	// it is used in about 2 extensions in all MW code...
 	$query = 'INSERT INTO `share_feature`
 		  ( sf_user_id, sf_provider_id, sf_clickcount ) VALUES( ' . $id  . ', ' . $provider . ', 1 )
 		  ON DUPLICATE KEY UPDATE sf_clickcount = sf_clickcount + 1;
