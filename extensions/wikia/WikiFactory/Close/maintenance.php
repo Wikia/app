@@ -108,10 +108,13 @@ class CloseWikiTarAndCopyImages {
 					$remote,
 					implode( " ", $cmd )
 				);
+				Wikia::log( __CLASS__, "info", $dump );
 				$output = wfShellExec( $dump, $retval );
 				$xdumpok = empty( $retval ) ? true : false;
-				$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;
-				Wikia::log( __CLASS__, "info", $dump );
+				/**
+				 * reset flag
+				 */
+				$newFlags = $newFlags &~ WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
@@ -155,7 +158,10 @@ class CloseWikiTarAndCopyImages {
 								if( $retval == 0 ) {
 									Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 									unlink( $source );
-									$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
+									/**
+									 * reset flag
+									 */
+									$newFlags = $newFlags &~ WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;
 								}
 							}
 							else {
@@ -169,7 +175,7 @@ class CloseWikiTarAndCopyImages {
 						else {
 							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 							unlink( $source );
-							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
+							$newFlags = $newFlags &~ WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
 						}
 					}
 					else {
