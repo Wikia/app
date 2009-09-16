@@ -91,7 +91,7 @@
 # This section has no configuration, and can be ignored.
 #
 
-include_once '../extras.php';
+include_once $IP . "/extensions/3rdparty/LyricWiki/extras.php";
 include_once 'Gracenote.php';
 
 ################################################################################
@@ -174,7 +174,7 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
   $ringtoneLink = "";
   // NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
   // If a user has ringtone-ads turned off, their CSS will make the ad invisible.
-  if($wgFirstLyricTag){ 
+  if($wgFirstLyricTag){
 	GLOBAL $wgTitle;
 	$artist = $wgTitle->getDBkey();
 	$colonIndex = strpos("$artist", ":");
@@ -184,7 +184,7 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	if($colonIndex !== false){
 		$artist = substr($artist, 0, $colonIndex);
 		$songTitle = substr($songTitle, $colonIndex+1);
-		
+
 		$artistLink = str_replace(" ", "+", $artist);
 		$songLink = str_replace(" ", "+", $songTitle);
 	}
