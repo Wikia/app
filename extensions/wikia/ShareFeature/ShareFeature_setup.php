@@ -20,7 +20,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.53',
+        'version' => '0.55',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -144,10 +144,10 @@ function wfShareFeatureInit() {
 
 // update stats for 
 function wfShareFeatureAjaxUpdateStats( $provider ) {
-	global $wgUser, $wgExternalSharedDB, $wgOut;
+	global $wgUser, $wgExternalSharedDB, $wgRequest;
 
 	$id = $wgUser->getId();	
-	$provider = $wgOut->getVal( 'provider' );		
+	$provider = $wgRequest->getVal( 'provider' );		
 
 	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
 
