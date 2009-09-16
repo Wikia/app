@@ -41,9 +41,6 @@
 #navigation_widget, #navigation_widget .widget {
 	background-color: #FFF;
 }
-.navigation-hover {
-	background-color: #F5F5F5;
-}
 #search_button {
 	background-image: url(http://images.wikia.com/common/skins/monaco/beach/images/search.png);
 }
