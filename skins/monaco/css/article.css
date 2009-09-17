@@ -108,6 +108,11 @@
 	left: -576px;	
 }
 
+#control_share_feature .enabled {
+	clip: rect(0px 576px 16px 560px);
+	left: -560px;		
+}
+
 #shareFeatureRound {
 	padding: 10px !important;
 }
