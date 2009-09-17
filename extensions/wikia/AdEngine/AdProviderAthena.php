@@ -89,4 +89,9 @@ class AdProviderAthena implements iAdProvider {
 		return $out;
         }
 
+	public function getIframeFillHtml($slotname) {
+		$sl = addslashes($slotname);
+		return "<script>Athena.callIframeAdDirect(\"$sl\");</script>\n";
+	}
+
 }
