@@ -116,6 +116,10 @@
 	padding: 2px !important;
 }
 
+#shareFeatureRound a {
+	margin-left: 4px;	
+}
+
 #page_tabs {
 	float: right;
 	font-family: arial, sans-serif;
