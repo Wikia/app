@@ -8,7 +8,7 @@ div.modalWrapper {
 	position: absolute;
 	visibility: visible;
 	z-index: 1001;
-}				
+}
 h1.modalTitle {
 	font-weight: bold;
 	padding: 5px;

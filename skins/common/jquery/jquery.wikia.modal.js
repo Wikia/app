@@ -6,13 +6,6 @@ $.fn.extend({
 		$.extend(settings, options);
 	}
 
-	// try to load CSS for modal dialogs
-	if (!window.wgMakeModalCSSLoaded) {
-		importStylesheetURI(stylepath + '/common/jquery/jquery.wikia.modal.css?' + wgStyleVersion);
-		$().log('makeModal: CSS loaded');
-		window.wgMakeModalCSSLoaded = true;
-	}
-
 	if (options.id) {
 		var id = ' id="' + options.id + '"';
 	}
@@ -24,7 +17,7 @@ $.fn.extend({
 
    	var wrapper = this.closest(".modalWrapper");
 
-	// let's have it dynamically generated, so every newly created modal will be on the top 
+	// let's have it dynamically generated, so every newly created modal will be on the top
 	var zIndex = ($('.blackout').length+1) * 1000;
 
 	function getModalTop() {
@@ -32,7 +25,7 @@ $.fn.extend({
 		if (modalTop < $(window).scrollTop() + 20) {
 			return $(window).scrollTop() + 20;
 		} else {
-			return modalTop;	
+			return modalTop;
 		}
 	}
 
@@ -114,7 +107,7 @@ $.fn.extend({
 
 	var wrapper = this.closest(".modalWrapper");
 
-	// let's have it dynamically generated, so every newly created modal will be on the top 
+	// let's have it dynamically generated, so every newly created modal will be on the top
 	var zIndex = ($('.blackout').length+1) * 1000;
 
    	$(".blackout.blackoutHidden:last")
