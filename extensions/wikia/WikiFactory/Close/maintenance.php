@@ -14,7 +14,7 @@ $optionsWithArgs = array( "limit" );
 require_once( "commandLine.inc" );
 require_once( "Archive/Tar.php" );
 
-class CloseWikiTarAndCopyImages {
+class CloseWikiMaintenance {
 
 	private $mTarget, $mOptions;
 
@@ -339,5 +339,5 @@ class CloseWikiTarAndCopyImages {
  * --first -- run only once for first wiki in queue
  */
 $wgAutoloadClasses[ "DumpsOnDemand" ] = "$IP/extensions/wikia/WikiFactory/Dumps/DumpsOnDemand.php";
-$maintenance = new CloseWikiTarAndCopyImages( $options );
+$maintenance = new CloseWikiMaintenance( $options );
 $maintenance->execute();
