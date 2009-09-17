@@ -6,7 +6,7 @@
 				global $wgExtensionsPath;
 				foreach( $sites as $site) {
 			?>
-				<li><img src="<?= $wgExtensionsPath ?>/wikia/ShareFeature/images/<?= strtolower( $site['name'] ) ?>.png" alt="<?= $site['name'] ?>"/><a href="<?= $site['url'] ?>" target="_blank" onclick="ShareFeature.ajax( <?= $site['id'] ?>  )"><?= $site['name'] ?></a></li>
+				<li><a href="<?= $site['url'] ?>" target="_blank" onclick="ShareFeature.ajax( <?= $site['id'] ?>  )"><img src="<?= $wgExtensionsPath ?>/wikia/ShareFeature/images/<?= strtolower( $site['name'] ) ?>.png" alt="<?= $site['name'] ?>"/><?= $site['name'] ?></a></li>
 			<?php
 				}
 			?>
