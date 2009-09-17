@@ -39,7 +39,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 <?php if (!empty($aCategories) && is_array($aCategories)) :  ?>
 <?php
 	foreach ($aCategories as $iCat => $sCatName) :
-	if ($sCatName == 'Wikia') continue;
+	if (in_array($sCatName, array('Wikia', 'Wikianswers'))) continue;
 	$selected = "";
 	if ( isset($params['wiki-category']) && ($params['wiki-category'] == $iCat) ) {
 		$selected = " selected='selected'";
