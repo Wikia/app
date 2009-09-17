@@ -113,11 +113,11 @@
 }
 
 #shareFeatureRound li {
-	padding: 2px !important;
+	line-height: 1.9em;
 }
 
 #shareFeatureRound a {
-	margin-left: 4px;	
+	padding: 0 8px;	
 }
 
 #page_tabs {
