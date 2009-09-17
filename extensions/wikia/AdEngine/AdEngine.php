@@ -50,28 +50,6 @@ class AdEngine {
 		'blind'
 	);
 
-	// We treat international differently. Tier one langages see one set of ads, tier 2 see another.
-	// pl, german, spanish, chinese
-	private $tier1Languages = array( 'pl', 'de', 'es', 'zh');
-	private $internationalSlotsTier1 = array(
-		'HOME_LEFT_SKYSCRAPER_2',
-		'HOME_TOP_LEADERBOARD',
-		'TOP_LEADERBOARD',
-		'TOP_RIGHT_BOXAD',
-		'LEFT_SKYSCRAPER_1',
-		'LEFT_SKYSCRAPER_2',
-		'LEFT_SKYSCRAPER_3',
-		'RIGHT_SKYSCRAPER_1'
-	);
-
-	private $internationalSlotsTier2 = array(
-		'HOME_LEFT_SKYSCRAPER_2',
-		'LEFT_SKYSCRAPER_1',
-		'LEFT_SKYSCRAPER_2',
-		'LEFT_SKYSCRAPER_3',
-		'RIGHT_SKYSCRAPER_1'
-	);
-
 	protected function __construct($slots = null) {
 		if (!empty($slots)){
 			$this->slots=$slots;
@@ -266,28 +244,12 @@ class AdEngine {
 		// All of the errors and toggles are handled, now switch based on language
 		} else {
 
-			if ($wgLanguageCode == 'en' ){
-
-			 	return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
-			} else if (in_array($wgLanguageCode, $this->tier1Languages)){
-
-				if (!in_array($slotname, $this->internationalSlotsTier1)){
-					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
-				} else {
-					return AdProviderAthena::getInstance();
-				}
-
+			if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
+				// Google's TOS prevents serving ads for some languages
+				return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
 			} else {
-				if (!in_array( $slotname, $this->internationalSlotsTier2)){
-					return new AdProviderNull("Ads name not served for this language in this slot ($wgLanguageCode) ", false);
-				} else if (! in_array($wgLanguageCode, AdProviderGoogle::getSupportedLanguages())){
-					// Google's TOS prevents serving ads for some languages
-					return new AdProviderNull("Unsupported language for Google Adsense ($wgLanguageCode)", false);
-				} else {
-					return AdProviderAthena::getInstance();
-				}
+			 	return $this->getProviderFromId($this->slots[$slotname]['provider_id']);
 			}
-
 		}
 
 		// Should never happen, but be sure that an AdProvider object is always returned.
@@ -459,12 +421,14 @@ class AdEngine {
 			$out .= $AdProvider->getSetupHtml();
 		}
 
-                $out .= "<script>\n";
+		// Call the code to set the iframe urls for the iframes
                 foreach ($this->placeholders as $slotname => $load_priority){
-			$sl = addslashes($slotname);
-                        $out .= "Athena.callIframeAdDirect(\"$sl\");\n";
+	                $AdProvider = $this->getAdProvider($slotname);
+			// Currently only supported by GAM and Athena
+			if (method_exists($AdProvider, "getIframeFillHtml")){
+                        	$out .= $AdProvider->getIframeFillHtml($slotname);
+			} 
 		}
-                $out .= "</script>\n";
 
 		$out .= "<!-- #### END " . __CLASS__ . '::' . __METHOD__ . " ####-->\n";
 		return $out;
