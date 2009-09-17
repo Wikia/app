@@ -2,7 +2,7 @@
 var ShareFeature = {};
 
 ShareFeature.ajax = function( provider ) {
-	$.getJSON( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
+	$.post( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
 		 'provider' : provider,
 		}, function() {
 		});
