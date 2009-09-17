@@ -35,5 +35,7 @@ function GetAjaxLogin() {
 	$response->addText( $tmpl->execute('AwesomeAjaxLogin') );
 	$response->setCacheDuration( 3600 * 24 * 365 * 10); // 10 years
 
+	header("X-Pass-Cache-Control: s-maxage=315360000, max-age=315360000");
+
 	return $response;
 }
