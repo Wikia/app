@@ -65,15 +65,14 @@ class CloseWikiMaintenance {
 			array( "city_list" ),
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
 			array(
-				  "city_public" => array( 0, -1 ),
-				  "city_flags <> 0 && city_flags <> 32"
+				"city_public" => array( 0, -1 ),
+				"city_flags <> 0 && city_flags <> 32"
 			),
 			__METHOD__,
 			$condition
 		);
 
 		while( $row = $dbr->fetchObject( $sth ) ) {
-
 			/**
 			 * reasonable defaults for wikis and some presets
 			 */
