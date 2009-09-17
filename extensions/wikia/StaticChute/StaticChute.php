@@ -175,6 +175,7 @@ class StaticChute {
 			'monaco/css/header.css',
 			'monaco/css/article.css',
 			'monaco/css/widgets.css',
+			'monaco/css/modal.css',
 			'monaco/css/footer.css',
 			'monaco/css/star_rating.css',
 			'monaco/css/ny.css',
