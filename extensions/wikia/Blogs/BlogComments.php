@@ -1212,8 +1212,12 @@ class BlogCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function makeChangesListKey( &$oChangeList, &$currentName, &$oRCCacheEntry ) {
-		global $wgUser;
+		global $wgUser, $wgEnabledGroupedBlogComments;
 		wfProfileIn( __METHOD__ );
+		
+		if ( empty($wgEnabledGroupedBlogComments) ) {
+			return true;
+		}
 		
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
@@ -1245,7 +1249,11 @@ class BlogCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function setHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
-		global $wgLang, $wgContLang;
+		global $wgLang, $wgContLang, $wgEnabledGroupedBlogComments;
+
+		if ( empty($wgEnabledGroupedBlogComments) ) {
+			return true;
+		}
 		
 		$oRCCacheEntry = null;
 		if ( !empty($oRCCacheEntryArray) ) {
