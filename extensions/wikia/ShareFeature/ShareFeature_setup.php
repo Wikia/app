@@ -4,6 +4,7 @@
  * Share Feature extension
  *
  * Extension allows users/anons to share a link to the page with popular sites
+ * This extension uses its own form to present sites
  *
  * @package MediaWiki
  * @subpackage Extensions
@@ -20,7 +21,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ShareFeature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.55',
+        'version' => '0.90',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -141,7 +142,8 @@ function wfShareFeatureInit() {
 	$wgAjaxExportList[] = 'wfShareFeatureAjaxUpdateStats';
 }
 
-// update stats for 
+// update stats for all kinds of users (logged in and anon)
+// anon is represented as a user with id 0, as in MW 
 function wfShareFeatureAjaxUpdateStats( $provider ) {
 	global $wgUser, $wgExternalSharedDB, $wgRequest;
 
