@@ -66,7 +66,7 @@ class CloseWikiMaintenance {
 			array( "city_id", "city_flags", "city_dbname", "city_url", "city_public" ),
 			array(
 				  "city_public" => array( 0, -1 ),
-				  "city_flags <> 0"
+				  "city_flags <> 0 && city_flags <> 32"
 			),
 			__METHOD__,
 			$condition
@@ -117,7 +117,7 @@ class CloseWikiMaintenance {
 				/**
 				 * reset flag
 				 */
-				$newFlags = $newFlags | WikiFactory::FLAG_CREATE_DB_DUMP;
+				$newFlags = $newFlags | WikiFactory::FLAG_CREATE_DB_DUMP | FLAG_HIDE_DB_IMAGES;
 			}
 			if( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if( $dbname && $folder ) {
@@ -164,7 +164,7 @@ class CloseWikiMaintenance {
 									/**
 									 * reset flag
 									 */
-									$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;
+									$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | FLAG_HIDE_DB_IMAGES;
 								}
 							}
 							else {
@@ -178,7 +178,7 @@ class CloseWikiMaintenance {
 						else {
 							Wikia::log( __CLASS__, "info", "{$source} copied to {$target}" );
 							unlink( $source );
-							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE;;
+							$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | FLAG_HIDE_DB_IMAGES;
 						}
 					}
 					else {
@@ -336,7 +336,8 @@ class CloseWikiMaintenance {
 /**
  * used options:
  *
- * --first -- run only once for first wiki in queue
+ * --first			-- run only once for first wiki in queue
+ * --limit=<limit>	-- run for <limit> wikis
  */
 $wgAutoloadClasses[ "DumpsOnDemand" ] = "$IP/extensions/wikia/WikiFactory/Dumps/DumpsOnDemand.php";
 $maintenance = new CloseWikiMaintenance( $options );
