@@ -84,6 +84,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 <?php
 	ksort($aLanguages);
 	foreach ($aLanguages as $sLang => $sLangName) :
+		$selected = "";
 		if ( empty($isSelected) && ( ( isset($params['wiki-language'] ) && ( $sLang == $params['wiki-language'] ) ) || ( !isset($params['wiki-language']) && ( $sLang == $mLanguage ) ) ) ) :
 			$isSelected = true;
 			$selected = ' selected="selected"';

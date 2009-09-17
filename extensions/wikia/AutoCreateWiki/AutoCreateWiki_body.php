@@ -450,7 +450,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * create image folder
 		 */
 		wfMkdirParents( "{$this->mWikiData[ "images_dir"]}" );
-		$this->log( "Create {$this->mWikiData[ "images"]} folder" );
+		$this->log( "Create {$this->mWikiData[ "images_dir"]} folder" );
 		$this->setInfoLog('OK', wfMsg('autocreatewiki-step1'));
 		/**
 		 * copy defaul logo & favicon
