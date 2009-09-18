@@ -10,6 +10,7 @@ ShareFeature.ajax = function( provider ) {
 };
 
 $(function() {
+		$G('control_share_feature').className = 'enabled';
 		// open dialog on clicking
 		$('#ca-share_feature').click(function() {
 			if( false == ShareFeatureEnabled ) {
