@@ -1,5 +1,6 @@
 
 var ShareFeature = {};
+var ShareFeatureEnabled = false;
 
 ShareFeature.ajax = function( provider ) {
 	$.post( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
@@ -11,13 +12,18 @@ ShareFeature.ajax = function( provider ) {
 $(function() {
 		// open dialog on clicking
 		$('#ca-share_feature').click(function() {
-			$().getModal(
-				wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
-				'#shareFeatureRound',
-				{
-					width: 300,
-					callback: function() {}
-				}
-			);
+			if( false == ShareFeatureEnabled ) {
+				ShareFeatureEnabled = true;
+				$().getModal(
+					wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
+					'#shareFeatureRound',
+					{
+						width: 300,
+						callback: function() {
+							ShareFeatureEnabled = false;
+						}
+					}
+				);
+			}
 		});
 });
