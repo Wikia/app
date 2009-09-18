@@ -1103,6 +1103,21 @@ class BlogTemplateClass {
 		return $sPager;
 	}
 
+	public static function getSubpageText(Title $Title) {
+		if ( !$Title instanceof Title ) {
+			return "";
+		}
+		$parts = explode( '/', $Title->getText() );
+		$res = ""; $cnt = count( $parts );
+		if ( $cnt == 2 ) {
+			$res = $parts[ $cnt - 1 ];
+		} else {
+			array_shift($parts);
+			$res = implode( '/', $parts );
+		}
+		return $res;
+	}
+
 	public static function axShowCurrentPage ($articleId, $namespace, $offset) {
 		global $wgParser;
 		wfProfileIn( __METHOD__ );
@@ -1155,5 +1170,4 @@ class BlogTemplateClass {
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-
 }

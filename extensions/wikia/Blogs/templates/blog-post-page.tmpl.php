@@ -14,7 +14,7 @@ foreach ($aRows as $pageId => $aRow) {
 		$isCommenting = $aRow['props']['commenting'];
 	}
 ?>
-<li class="list"><div class="wk_blogs_link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getSubpageText()?></a></div>
+<li class="list"><div class="wk_blogs_link"> <a href="<?=$oTitle->getLocalUrl()?>"><?=BlogTemplateClass::getSubpageText($oTitle)?></a></div>
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {

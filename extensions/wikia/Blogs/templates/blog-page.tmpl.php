@@ -19,7 +19,7 @@ foreach ($aRows as $pageId => $aRow) {
 	}
 ?>
 <li style="line-height:normal;margin:0;padding:0;">
-<div class="wk_blogs_link"><a href="<?=$oTitle->getLocalUrl()?>"><?=$oTitle->getSubpageText()?></a></div>
+<div class="wk_blogs_link"><a href="<?=$oTitle->getLocalUrl()?>"><?=BlogTemplateClass::getSubpageText($oTitle)?></a></div>
 <?
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
