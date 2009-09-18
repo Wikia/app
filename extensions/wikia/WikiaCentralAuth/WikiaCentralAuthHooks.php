@@ -124,6 +124,7 @@ class WikiaCentralAuthHooks {
 			return true;
 		}
 
+		$sName = "";
 		if ( isset( $_SESSION['wsUserName'] ) ) {
 			$sName = $_SESSION['wsUserName'];
 		} else if ( isset( $_COOKIE["{$wgCookiePrefix}UserName"] ) ) {
@@ -131,6 +132,12 @@ class WikiaCentralAuthHooks {
 			$_SESSION['wsUserName'] = $sName;
 		} 
 
+		if ( empty( $sName ) ) {
+			wfDebug( __METHOD__ .": username doesn't exists \n" );
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+		
 		$oCUser = new WikiaCentralAuthUser( $sName );
 		$localId = User::idFromName( $sName );
 		
@@ -139,7 +146,7 @@ class WikiaCentralAuthHooks {
 			wfProfileOut( __METHOD__ );
 			return true;
 		} else {
-			if ( !$localId ) {
+			if ( !empty($sName) && !$localId ) {
 				// User does not exist locally, attempt to create it
 				if ( !self::attemptAddUser( $oUser, $sName ) ) {
 					// Can't create user, give up now
