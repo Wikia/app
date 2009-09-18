@@ -6,7 +6,7 @@ ShareFeature.ajax = function( provider ) {
 		 'provider' : provider,
 		}, function() {
 		});
-}
+};
 
 $(function() {
 		// open dialog on clicking
