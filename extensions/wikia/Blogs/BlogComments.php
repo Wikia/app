@@ -17,6 +17,8 @@ $wgAjaxExportList[] = "BlogComment::axSave";
 $wgHooks[ "ArticleDeleteComplete" ][] = "BlogCommentList::articleDeleteComplete";
 $wgHooks[ "ArticleRevisionUndeleted" ][] = "BlogCommentList::undeleteComments";
 $wgHooks[ "UndeleteComplete" ][] = "BlogCommentList::undeleteComplete";
+$wgHooks[ "RecentChange_save" ][] = "BlogCommentList::watchlistNotify";
+# recentchanges
 $wgHooks[ "ChangesListMakeSecureName" ][] = "BlogCommentList::makeChangesListKey";
 $wgHooks[ "ChangesListHeaderBlockGroup" ][] = "BlogCommentList::setHeaderBlockGroup";
 
@@ -331,16 +333,18 @@ class BlogComment {
 		}
 
 		$devel    = 1; #$wgCityId == 4832 || $wgDevelEnvironment;
+		$res = false;
+		if ( $this->mUser ) {
+			$isAuthor = ($this->mUser->getId() == $wgUser->getId()) && (!$wgUser->isAnon());
+			$canEdit   = $wgUser->isAllowed( "edit" );
 
-		$isAuthor = $this->mUser->getId() == $wgUser->getId() && ! $wgUser->isAnon();
-		$isOwner  = $this->mOwner->getId() == $wgUser->getId();
+			$groups = $wgUser->getGroups();
+			$isAdmin = in_array( 'staff', $groups ) || in_array( 'sysop', $groups );
+			
+			$res = $devel && ( $isAuthor || $isAdmin ) && $canEdit;
+		} 
 
-		$canEdit   = $wgUser->isAllowed( "edit" );
-
-		$groups = $wgUser->getGroups();
-		$isAdmin = in_array( 'staff', $groups ) || in_array( 'sysop', $groups );
-
-		return $devel && ( $isAuthor || $isAdmin ) && $canEdit;
+		return $res;
 	}
 
 	/**
@@ -1196,6 +1200,22 @@ class BlogCommentList {
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	/**
+	 * Hook
+	 *
+	 * @param Title $oTitle -- instance of Title class
+	 * @param User    $User    -- current user
+	 * @param string  $reason  -- undeleting reason
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static public function watchlistNotify ( RecentChange &$oRC ) {
 		return true;
 	}
 	
