@@ -3,9 +3,9 @@ var ShareFeature = {};
 
 ShareFeature.ajax = function( provider ) {
 	$.post( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
-		 'provider' : provider,
-		}, function() {
-		});
+		 'provider' : provider
+		}, function() {}
+	);
 };
 
 $(function() {
