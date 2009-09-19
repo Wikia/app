@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS bolek_meta (
 	bm_bolek_id char(32) NOT NULL,
 	bm_cover text,
 	bm_timestamp int NOT NULL,
+	bm_user_id int unsigneder_id int unsigned NOT NULL
+	bm_user_name varchar(255)
 	PRIMARY KEY bm_id (bm_id),
 	UNIQUE INDEX bm_bolek (bm_bolek_id)
 );
