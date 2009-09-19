@@ -12,12 +12,12 @@ class Lolek {
 
 		$fname = "{$bolek_id}-{$timestamp}.pdf";
 
-		if (!file_exists("{$wgUploadDirectory}/lolek/{$fname}")) {
+#		if (!file_exists("{$wgUploadDirectory}/lolek/{$fname}")) {
 			$add       = 0;
 			$iteration = 3; // prevent infinite loop
 			do {
 
-			$cmd   = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --margin-bottom 15mm --margin-top 15mm --cover \"{$url}?action=cover&bolek_id={$bolek_id}\" \"{$url}?action=print&bolek_id={$bolek_id}&add={$add}\" {$wgUploadDirectory}/lolek/{$fname}";
+			$cmd   = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --header-line --header-center \"a Wikia magazine\" --footer-line --footer-center \"- [page] -\" --margin-bottom 20mm --margin-left 20mm --margin-right 20mm --margin-top 20mm --cover \"{$url}?action=cover&bolek_id={$bolek_id}\" \"{$url}?action=print&bolek_id={$bolek_id}&add={$add}\" {$wgUploadDirectory}/lolek/{$fname}";
 
 			$wgMaxShellTime     = 0;
 			$wgMaxShellFileSize  = 0;
@@ -35,7 +35,7 @@ class Lolek {
 			} while (--$iteration && $add);
 		
 			if ($add) return "Pdf generation error, can't reach mod 4 pages. (+{$add} page(s) needed.)";
-		}
+#		}
 
 		$result = "{$wgUploadPath}/lolek/{$fname}";
 

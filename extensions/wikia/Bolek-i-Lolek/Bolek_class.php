@@ -190,4 +190,49 @@ class Bolek {
 	static function getTimestamp($bolek_id) {
 		return max(Bolek::getCollectionTimestamp($bolek_id), Bolek::getCoverTimestamp($bolek_id));
 	}
+
+	static function addUser($bolek_id, $user_id, $user_name) {
+		$dbw = self::_getDB(DB_MASTER);
+		try {
+			$dbw->insert(
+				"bolek_meta",
+				array(
+					"bm_bolek_id"   => $bolek_id,
+					"bm_timestamp"  =>  time(),
+					"bm_user_id"    => $user_id,
+					"bm_user_name"  => $user_name,
+				),
+				__METHOD__
+			);
+			$result = "User info added.";
+		} catch (DBQueryError $e) {
+			if (1062 == $e->errno) { // ER_DUP_ENTRY
+				$result = "User info already there.";
+			} else {
+				$result = "Error with user {$user_id} {$user_name}: {$e->error}";
+				throw $e;
+			}
+		}
+
+		return $result;
+	}
+
+	static function getUser($bolek_id) {
+		$dbr = self::_getDB(DB_SLAVE);
+		$res = $dbr->select(
+			array("bolek_meta"),
+			array("bm_user_id", "bm_user_name"),
+			array("bm_bolek_id" => $bolek_id),
+			__METHOD__
+		);
+		while ($row = $dbr->fetchObject($res)) {
+			$result = array($row->bm_user_id, $row->bm_user_name);
+		}
+		$dbr->freeResult($res);
+
+		if (empty($result) || empty($result[0])) $result = array(0, "a Wikia user");
+
+		return $result;
+	}
+
 }

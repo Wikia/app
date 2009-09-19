@@ -61,6 +61,9 @@ class BolekPage extends UnlistedSpecialPage {
 			case "add":
 				$result = Bolek::addPage($bolek_id, $wgRequest->getVal("page_id",  null));
 
+				global $wgUser;
+				Bolek::addUser($bolek_id, $wgUser->getId(), $wgUser->getName());
+
 				break;
 			case "clear":
 				$result = Bolek::clearCollection($bolek_id);
@@ -99,24 +102,36 @@ class BolekPage extends UnlistedSpecialPage {
 		foreach ($collection as $page_id) {
 			$article = Article::newFromID($page_id);
 			$title   = $article->getTitle()->getPrefixedText();
+			$url     = $article->getTitle()->getFullURL();
 
 			$wgOut->addHTML("<h1 style=\"page-break-before: always\">{$title}</h1>");
 
 			$article->doPurge(); // FIXME do it only for page_touched older than date of efBolekTemplate deployment
 			$article->view();
 
-			$bibliography[] = $title;
+			$bibliography[$title] = $url;
 		}
 
 		if (sizeOf($bibliography)) {
 			$wgOut->addHTML("<h1 style=\"page-break-before: always\">Bibliography</h1>");
 			
 			$wgOut->addHTML("<ul>");
-			foreach ($bibliography as $title) {
-				$wgOut->addHTML("<li>{$title}</li>");
+			foreach ($bibliography as $title => $url) {
+				$wgOut->addHTML("<li>{$title}<br/><small>{$url}</small></li>");
 			}
 			$wgOut->addHTML("</ul>");
 		}
+
+		$currentDate =  wfTimestamp(TS_RFC2822);
+
+		global $wgSitename;
+		$currentWiki = htmlspecialchars($wgSitename);
+
+		$username    = "";
+		list($user_id, $user_name) = Bolek::getUser($bolek_id);
+		if ($user_id) $username = " by " . htmlspecialchars($user_name);
+
+		$wgOut->addHTML("<p>All articles were compiled {$username} on {$currentDate} from {$currentWiki} - a list of authors is available at the URLs listed above.</p>");
 
 		global $wgRequest;
 		$add = $wgRequest->getVal("add", 0);
@@ -154,6 +169,8 @@ class BolekPage extends UnlistedSpecialPage {
 					$(this).replaceWith('<p>Debug: image removed.</p>');
 				}
 			});
+			$('#bolek').css({'font-family': 'Utopia'});
+			$('a').css({'color': 'black'});
 			/*]]>*/</script>\n");
 
 		return;
