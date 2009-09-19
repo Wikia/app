@@ -82,6 +82,8 @@ class WidgetsSpecialPage extends SpecialPage
 		
 		$wgOut->addHTML('<div id="widgetsSpecialPageList">'."\n");
 		
+		$widgets = $this->_sort($widgets);
+
 		// print out list of widgets with thumbs icons
 		foreach($widgets as $w => $widget) {
 		
@@ -115,4 +117,23 @@ class WidgetsSpecialPage extends SpecialPage
 						  '<a href="http://www.famfamfam.com/lab/icons/silk/">Silk Icons</a> licensed under <a href="http://creativecommons.org/licenses/by/2.5/">Creative Commons Attribution 2.5 License</a> '.
 						  'and Tango &amp; Gnome <a href="http://art.gnome.org/themes/icon/">icon themes</a> from <a href="http://www.gnome.org/">Gnome</a></p>');
 		}
+
+	// quick hack for rt#22995, contains c&p lines from execute() FIXME
+	private function _sort($widgets) {
+		global $wgWidgets;
+
+		$widgets_sorted = array();
+		foreach ($widgets as $w => $widget) {
+			$data = $wgWidgets[$widget];
+			$name = wfMsg($data['title']);
+
+			$widgets_sorted[$name] = $widget;
+		}
+
+		ksort($widgets_sorted);
+		$widgets_sorted = array_values($widgets_sorted);
+
+		return $widgets_sorted;
+	}
+
 	}
