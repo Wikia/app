@@ -3,6 +3,7 @@
 	margin: 8px 5px;
 	width: 400px;
 	float: left
+	min-height: 6em;
 }
 
 #widgetsSpecialPageList dt
