@@ -25,7 +25,7 @@ class Outbound extends UnlistedSpecialPage {
 
 		$loggedIn = $wgUser->isLoggedIn();
 		if(($wgOutboundScreenConfig['anonsOnly'] == true) && $loggedIn) {
-			$wgOut->redirect( $url );
+			$wgOut->redirect( htmlspecialchars_decode( $url ) );
 			return true;
 		}
 
