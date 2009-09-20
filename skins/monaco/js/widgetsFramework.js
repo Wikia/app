@@ -218,93 +218,121 @@ var WidgetFramework = {
 
 			var carousel = $('#widget_cockpit_list').hide();
 
-			for(var i in widgetsConfig) {
-				widgetConfig = widgetsConfig[i];
-				var allow = false;
-				if(widgetConfig.groups.length > 0) {
-					for(var j in widgetConfig.groups) {
-						if(wgUserGroups.indexOf(widgetConfig.groups[j]) >= 0) {
-							allow = true;
+				widgetsConfig = WidgetFramework._sort(widgetsConfig);
+
+				for(var i in widgetsConfig) {
+					widgetConfig = widgetsConfig[i];
+					var allow = false;
+					if(widgetConfig.groups.length > 0) {
+						for(var j in widgetConfig.groups) {
+							if(wgUserGroups.indexOf(widgetConfig.groups[j]) >= 0) {
+								allow = true;
+							}
 						}
-					}
-				} else if (widgetConfig.languages.length > 0) {
-					for(var k in widgetConfig.languages) {
-						if(wgContentLanguage.indexOf(widgetConfig.languages[k]) >= 0) {
-							allow = true;
+					} else if (widgetConfig.languages.length > 0) {
+						for(var k in widgetConfig.languages) {
+							if(wgContentLanguage.indexOf(widgetConfig.languages[k]) >= 0) {
+								allow = true;
+							}
 						}
-					}
-				} else {
-					allow = true;
-				}
-
-				if(allow) {
-					WidgetFramework.carouselLength++;
-
-					var thumb_el = document.createElement('li');
-
-					if(skin == 'quartz') {
-						thumb_el.id = 'mycarousel-item-' + WidgetFramework.carouselLength;
 					} else {
-						thumb_el.id = 'widget_cockpit-item-' + WidgetFramework.carouselLength;
-					}
-					thumb_el.name = i + '_thumb';
-
-					if( typeof widgetConfig.title[wgUserLanguage] == 'string' ) {
-						title = widgetConfig.title[wgUserLanguage];
-					}
-					else {
-						title = widgetConfig.title.en;
+						allow = true;
 					}
 
-					if( typeof widgetConfig.desc[wgUserLanguage] == 'string' ) {
-						desc = widgetConfig.desc[wgUserLanguage];
-					}
-					else {
-						desc = widgetConfig.desc.en;
-					}
+					if(allow) {
+						WidgetFramework.carouselLength++;
 
-					thumb_el.className = 'widget_thumb draggable clearfix ' + i +'Thumb';
-					if(skin == 'monaco' || skin == 'awesome') {
-						thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<div class="add" rel="' + i + '"></div></h1><br />' + desc;
-					} else if(skin == 'quartz') {
-						thumb_el.innerHTML = title;
-						thumb_el.title = desc;
+						var thumb_el = document.createElement('li');
+
+						if(skin == 'quartz') {
+							thumb_el.id = 'mycarousel-item-' + WidgetFramework.carouselLength;
+						} else {
+							thumb_el.id = 'widget_cockpit-item-' + WidgetFramework.carouselLength;
+						}
+						thumb_el.name = i + '_thumb';
+
+						if( typeof widgetConfig.title[wgUserLanguage] == 'string' ) {
+							title = widgetConfig.title[wgUserLanguage];
+						}
+						else {
+							title = widgetConfig.title.en;
+						}
+
+						if( typeof widgetConfig.desc[wgUserLanguage] == 'string' ) {
+							desc = widgetConfig.desc[wgUserLanguage];
+						}
+						else {
+							desc = widgetConfig.desc.en;
+						}
+
+						thumb_el.className = 'widget_thumb draggable clearfix ' + i +'Thumb';
+						if(skin == 'monaco' || skin == 'awesome') {
+							thumb_el.innerHTML = '<div class="icon"></div><h1>' + title + '<div class="add" rel="' + i + '"></div></h1><br />' + desc;
+						} else if(skin == 'quartz') {
+							thumb_el.innerHTML = title;
+							thumb_el.title = desc;
+						}
+						carousel.append(thumb_el);
 					}
-					carousel.append(thumb_el);
 				}
+
+				// handle adding widgets from cockpit
+				carousel.find('.add').click(WidgetFramework.add);
+
+				// set correct width of carousel
+				carousel.css("width", (WidgetFramework.carouselLength * ($.browser.msie ? 211 : 210)) + 'px').show();
+
+				// close cockpit
+				$('#cockpit_close').click(WidgetFramework.hide_cockpit);
+
+				// cockpit is fully loaded
+				WidgetFramework.carouselLoaded = true;
 			}
 
-			// handle adding widgets from cockpit
-			carousel.find('.add').click(WidgetFramework.add);
+			// show cockpit
+			$('#cockpit').show();
 
-			// set correct width of carousel
-			carousel.css("width", (WidgetFramework.carouselLength * ($.browser.msie ? 211 : 210)) + 'px').show();
+			$('#positioned_elements').css('visibility', 'visible');
 
-			// close cockpit
-			$('#cockpit_close').click(WidgetFramework.hide_cockpit);
+			WidgetFramework.carouselVisible = true;
 
-			// cockpit is fully loaded
-			WidgetFramework.carouselLoaded = true;
+			// reposition ads
+			if (typeof TieDivLibrary != 'undefined') {
+				TieDivLibrary.calculate();
+			}
+		},
+
+		_sort: function (widgets) {
+			var widgets_sorted = new Array();
+
+			var widgets_flat = new Array();
+			for (var i in widgets) {
+				var widget = widgets[i];
+				widget._i = i;
+				widgets_flat.push(widget);
+			}
+
+			widgets_flat.sort(function (a, b) {
+				return (WidgetFramework._getTitle(a) > WidgetFramework._getTitle(b)) ? 1 : -1;
+			});
+
+			for (var j in widgets_flat) {
+				var widget = widgets_flat[j];
+				var i = widget._i;
+				widgets_sorted[i] = widget;
+			}
+
+			return widgets_sorted;
+		},
+		_getTitle: function (widget) {
+			return (typeof widget.title[wgUserLanguage] == 'string') ? widget.title[wgUserLanguage] : widget.title.en;
+		},
+
+		hide_cockpit: function(e) {
+			WidgetFramework.carouselVisible = false;
+
+			$('#cockpit').hide();
 		}
-
-		// show cockpit
-		$('#cockpit').show();
-
-		$('#positioned_elements').css('visibility', 'visible');
-
-		WidgetFramework.carouselVisible = true;
-
-		// reposition ads
-		if (typeof TieDivLibrary != 'undefined') {
-			TieDivLibrary.calculate();
-		}
-	},
-
-	hide_cockpit: function(e) {
-		WidgetFramework.carouselVisible = false;
-
-		$('#cockpit').hide();
-	}
 };
 
 // init widgets
