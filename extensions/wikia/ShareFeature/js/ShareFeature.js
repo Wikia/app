@@ -9,6 +9,10 @@ ShareFeature.ajax = function( provider ) {
 	);
 };
 
+ShareFeature.track = function( str ) {
+	WET.byStr('ShareFeature/' + str);
+};
+
 $(function() {
 		$G('control_share_feature').className = 'enabled';
 		// open dialog on clicking
