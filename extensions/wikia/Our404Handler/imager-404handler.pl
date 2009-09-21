@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 
+package main;
 #
 # Imager version
 #
@@ -7,7 +8,7 @@
 use strict;
 use URI;
 use FCGI;
-use FCGI::ProcManager;
+use FCGI::ProcManager::MaxRequests;
 use Sys::Syslog qw(:standard :macros);
 use Imager;
 use Image::LibRSVG;
@@ -46,16 +47,12 @@ sub real404 {
 # initialization
 #
 
-#
-# how many requests we should handle
-#
-my $maxrequests  = 1000;
-my $cntrequest   = 0;
 
 #
-# number of processes
+# number of processes and how many requests we should handle
 #
-my $clients     = $ENV{ "CLIENTS" } || 10;
+my $maxrequests = $ENV{ "REQUESTS" } || 1000;
+my $clients     = $ENV{ "CHILDREN" } || 10;
 
 #
 # fastcgi request
@@ -64,7 +61,7 @@ my %env;
 my $socket      = FCGI::OpenSocket( "127.0.0.1:39393", 100 )
 	or die "failed to open FastCGI socket; $!";
 my $request     = FCGI::Request( \*STDIN, \*STDOUT, \*STDOUT, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
-my $manager     = FCGI::ProcManager->new({ n_processes => $clients });
+my $manager     = FCGI::ProcManager::MaxRequests->new({ n_processes => $clients, max_requests => $maxrequests });
 my $basepath    = "/images";
 my $flm         = new File::LibMagic;
 my $maxwidth    = 3000;
@@ -265,6 +262,5 @@ while( $request->Accept() >= 0 ) {
 	}
 
 	$transformed = 0;
-	$cntrequest++;
 	$manager->pm_post_dispatch();
 }
