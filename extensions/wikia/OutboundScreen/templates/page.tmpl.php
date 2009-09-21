@@ -17,7 +17,6 @@
 			}
 
 			#exitLink {
-				color: white;
 				text-decoration: none;
 				font-size: 12px;
 				font-family: Verdana, Arial, sans-serif;
