@@ -1,4 +1,4 @@
-<div id="shareFeatureRound" title="<?= wfMsg( 'sf-link' ) ?>" >
+<div id="shareFeatureRound" title="<?= wfMsg( 'sf-link-popup' ) ?>" >
         <div>
 		<div>
 			<ul>
