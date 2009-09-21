@@ -1,5 +1,5 @@
 == Changes since 200909.4 ==
-* 
+* rt#22657: Outbound: remove hardcoded white link color from old method (uberfuzzy)
 
 == Changes since 200909.3 ==
 * rt#22995, rt#23000: Widgets reordering. (Nef)
