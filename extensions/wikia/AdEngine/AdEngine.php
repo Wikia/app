@@ -307,6 +307,18 @@ class AdEngine {
 			$w = 0;
 		}
 
+		// Emergency HACK. Not even time for a wiki factory variable. Hair on fire.
+		global $wgCityId;
+		$cityids = array (
+			"3490", // bioshock
+			"3125" // call of duty
+		);
+			
+		if ($slotname == "HOME_TOP_RIGHT_BOXAD" && in_array($wgCityId, $cityids)){
+			$h = 600;	
+		}
+		// \ HACK
+
 		return '<div id="' . htmlspecialchars($slotname) . '">' . 
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' . 
 			'id="' . htmlspecialchars($slotname) . '_iframe" ' .
