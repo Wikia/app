@@ -21,7 +21,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'Share Feature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.90',
+        'version' => '0.92',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -40,8 +40,8 @@ $wgShareFeatureSites = array(
 		array( 
 			'name'	=>	'Twitter',
 			'id'	=>	2,
-			'url'	=>	'http://twitter.com/home?status=$1'
-		), // message and url goes into the parameter
+			'url'	=>	'http://twitter.com/home?status=$1' . htmlspecialchars(' ') . '$2'
+		), // message and url goes into the one parameter here for Twitter...
 		array( 
 			'name'	=>	'Digg',
 			'id'	=>	3,
