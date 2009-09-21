@@ -19,7 +19,7 @@ if(!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['other'][] = array(
-        'name' => 'ShareFeature',
+        'name' => 'Share Feature',
         'author' => 'Bartek Łapiński',
         'version' => '0.90',
 );
