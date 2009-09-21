@@ -128,14 +128,15 @@ my $other_wikis = "5, 11, 425, 520, 2719, 5409";
 
 $oConf->log("Processing: select users from local users table");
 
-my $select = "lu_user_id as user_id, lu_user_name as user_name, sum(lu_rev_cnt) as cnt";
+my $select = "lu_user_id as user_id, lu_user_name as user_name, ue_edit_count as cnt";
 my $from = "`dataware`.`city_local_users`, dbstats.city_user_edits";
 my @where = ( 
 	"lu_singlegroup != 'bot'",
 	"lu_wikia_id not in (".$other_wikis.")", 
 	"ue_user_id = lu_user_id",
 	"ue_edit_namespace = 0",
-	"lu_user_name != 'CreateWiki script'"
+	"lu_user_name != 'CreateWiki script'",
+	"lu_user_name not like '%Bot%'"
 );
 my @options = (
 	"group by 1, 2",
@@ -241,7 +242,7 @@ foreach my $user_id (sort keys %USERS) {
 		
 		foreach (@dates) {
 			my $date = $_;
-			$oConf->log("Get revision for date " . $date);
+			#$oConf->log("Get revision for date " . $date);
 			$USERS{$user_id}{$date} = 0 unless $USERS{$user_id}{$date};
 
 			$db->handler->ping();
