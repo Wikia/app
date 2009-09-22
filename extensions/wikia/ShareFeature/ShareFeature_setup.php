@@ -97,6 +97,8 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 	$sites = array();
 	$found = array();
 	$title = str_replace( " ", "_", $title );
+	$target = str_replace( " ", "_", $target );
+
 	// get all the sites we have data for
         while($row = $dbr->fetchObject($res)) {		
 		$site = $wgShareFeatureSites[$row->sf_provider_id];
