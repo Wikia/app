@@ -3,6 +3,7 @@ var ShareFeature = {};
 var ShareFeatureEnabled = false;
 
 ShareFeature.ajax = function( provider ) {
+	this.track( 'provider/' + provider );
 	$.post( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
 		 'provider' : provider
 		}, function() {}
@@ -26,6 +27,7 @@ $(function() {
 						width: 300,
 						callback: function() {
 							ShareFeatureEnabled = false;
+							ShareFeature.track( 'open' );
 						}
 					}
 				);
