@@ -40,6 +40,11 @@ class Outbound extends UnlistedSpecialPage {
 			$skin->skinname = substr($skinName, 4);
 		}
 
+		//load this for all skins, even non-monaco.
+		//exit page depends on having a .color1 and .color2 defined.
+		//needs to be before call to setupUserCss so that other css can override
+		$wgOut->addStyle('monaco/css/root.css');
+
 		// add MW CSS
 		$skin->setupUserCss($wgOut);
 
@@ -47,13 +52,16 @@ class Outbound extends UnlistedSpecialPage {
 		if ($skinName == 'SkinMonaco' && !empty($skin->themename)) {
 			switch($skin->themename) {
 				case 'custom':
+					//custom skin is included via setupUserCss
+					//which is ontop of root base, included above that
 					break;
 
 				case 'sapphire':
-					$wgOut->addStyle('monaco/css/root.css');
+					//is just root on its own, included above
 					break;
 
 				default:
+					//themes layer ontop of root
 					$wgOut->addStyle('monaco/' . $skin->themename . '/css/main.css');
 					break;
 			}
