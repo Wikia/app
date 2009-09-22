@@ -179,12 +179,13 @@ class objRend {
 
 		wfDebug( __METHOD__ . ": wikitex attempt as \"".sprintf($strBash, $strHash, $arr['class'], $strURI, $outDirSuffix, $strDir)."\n" );
 
-      // If the script is unavailable, roll our own error.
-      if (!is_executable(substr($strBash, 0, strpos($strBash, ' ')))) {
-	return $arrErr['bash'];
-      } else {
-	return trim(shell_exec(sprintf($strBash, $strHash, $arr['class'], $strURI, $outDirSuffix, $strDir)));
-      }
+		// If the script is unavailable, roll our own error.
+		if (!is_executable(substr($strBash, 0, strpos($strBash, ' ')))) {
+			return $arrErr['bash'];
+		}
+		else {
+			return trim(shell_exec(sprintf($strBash, $strHash, $arr['class'], $strURI, $outDirSuffix, $strDir)));
+		}
     }
 }
 
