@@ -17,7 +17,7 @@ $wgAjaxExportList[] = "BlogComment::axSave";
 $wgHooks[ "ArticleDeleteComplete" ][] = "BlogCommentList::articleDeleteComplete";
 $wgHooks[ "ArticleRevisionUndeleted" ][] = "BlogCommentList::undeleteComments";
 $wgHooks[ "UndeleteComplete" ][] = "BlogCommentList::undeleteComplete";
-$wgHooks[ "RecentChange_save" ][] = "BlogCommentList::watchlistNotify";
+$wgHooks[ "RecentChange_save" ][] = "BlogComment::watchlistNotify";
 # recentchanges
 $wgHooks[ "ChangesListMakeSecureName" ][] = "BlogCommentList::makeChangesListKey";
 $wgHooks[ "ChangesListHeaderBlockGroup" ][] = "BlogCommentList::setHeaderBlockGroup";
@@ -302,6 +302,20 @@ class BlogComment {
 			$this->mProps = BlogArticle::getProps( $this->mTitle->getArticleID() );
 		}
 		return $this->mProps;
+	}
+
+	/**
+	 * get Title object of blog page
+	 *
+	 * @access private
+	 */
+	public function getBlogTitle() {
+		if ( !isset($this->mTitle) ) {
+			return null;
+		}
+		list( $user, $page_title, $comment ) = explode( "/", $this->mTitle->getDBkey(), 3 );
+		$blogTitle = $user . "/" . $page_title;
+		return Title::makeTitle(NS_BLOG_ARTICLE, $blogTitle);
 	}
 
 	/**
@@ -691,7 +705,7 @@ class BlogComment {
 		$editPage = new EditPage( $article );
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = $text;
-		$editpage->summary  = wfMsg('blog-comments-new');
+		$editPage->summary  = wfMsg('blog-comments-new');
 		$retval = $editPage->internalAttemptSave( $result );
 		Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
 
@@ -725,6 +739,9 @@ class BlogComment {
 				if ( !is_null($comment->mTitle) ) {
 					$id = $comment->mTitle->getArticleID();
 				}
+				if ( empty( $commentId ) && !empty($comment->mTitle) ) {
+					$ok = self::addBlogPageToWatchlist($comment, $commentId) ; 
+				}
 				$message = false;
 				break;
 			default:
@@ -748,6 +765,89 @@ class BlogComment {
 		
 		return $res;
 	}
+
+	static public function addBlogPageToWatchlist($Comment, $commentId) {
+		global $wgUser, $wgEnableBlogWatchlist;
+		
+		$watchthis = false;
+		if ( empty($wgEnableBlogWatchlist) ) {
+			return $watchthis;
+		}
+		
+		if ( !$wgUser->isAnon() ) {
+			if ( $wgUser->getOption( 'watchdefault' ) ) {
+				$watchthis = true;
+			} elseif ( $wgUser->getOption( 'watchcreations' ) && empty($commentId) /* new comment */ ) {
+				$watchthis = true;
+			}
+		}
+
+		$oBlogPage = $Comment->getBlogTitle();
+		if ( !is_null($oBlogPage) ) {
+			$dbw = wfGetDB(DB_MASTER);
+			$dbw->begin();
+			if ( !$Comment->mTitle->userIsWatching() ) {
+				# comment
+				$dbw->insert( 'watchlist',
+					array(
+					'wl_user' => $wgUser->getId(),
+					'wl_namespace' => NS_BLOG_ARTICLE_TALK,
+					'wl_title' => $Comment->mTitle->getDBkey(),
+					'wl_notificationtimestamp' => NULL
+					), __METHOD__, 'IGNORE' );
+			}
+
+			if ( !$oBlogPage->userIsWatching() ) {
+				# and blog page
+				$dbw->insert( 'watchlist',
+					array(
+					'wl_user' => $wgUser->getId(),
+					'wl_namespace' => NS_BLOG_ARTICLE,
+					'wl_title' => $oBlogPage->getDBkey(),
+					'wl_notificationtimestamp' => NULL
+					), __METHOD__, 'IGNORE' );
+				$dbw->commit();
+			}
+		}
+
+		return $watchthis;
+	}
+	
+	/**
+	 * Hook
+	 *
+	 * @param RecentChange $oRC -- instance of RecentChange class
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static public function watchlistNotify ( RecentChange &$oRC ) {
+		global $wgEnableBlogWatchlist;
+		wfProfileIn( __METHOD__ );
+		
+		if ( !empty($wgEnableBlogWatchlist) && ( $oRC instanceof RecentChange ) ) {
+			$namespace = $oRC->getAttribute('rc_namespace');
+			if ( $namespace == NS_BLOG_ARTICLE_TALK ) {
+				$blog_id = $oRC->getAttribute('rc_cur_id');
+				$Comment = BlogComment::newFromId( $blog_id );
+				$oBlogPage = $Comment->getBlogTitle();
+				#---
+				$mAttribs = $oRC->mAttribs;
+				#---
+				$mAttribs['rc_title'] = $oBlogPage->getText();
+				$mAttribs['rc_namespace'] = $oBlogPage->getNamespace();
+				$mAttribs['rc_log_action'] = 'blogs_comment';
+				#---
+				$oRC->setAttribs($mAttribs);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
 }
 
 /**
@@ -1200,22 +1300,6 @@ class BlogCommentList {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
-	 * Hook
-	 *
-	 * @param Title $oTitle -- instance of Title class
-	 * @param User    $User    -- current user
-	 * @param string  $reason  -- undeleting reason
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return true -- because it's hook
-	 */
-	static public function watchlistNotify ( RecentChange &$oRC ) {
 		return true;
 	}
 	
