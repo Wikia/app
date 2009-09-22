@@ -3,13 +3,16 @@ var ShareFeature = {};
 var ShareFeatureEnabled = false;
 
 ShareFeature.ajax = function( provider ) {
+
 	this.track( 'provider/' + provider );
+
 	$.post( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
 		 'provider' : provider
 		}, function() {
-			$('#shareFeatureWrapper').closeModal();
+			 $('.modalWrapper').closeModal();
 		}
 	);
+
 };
 
 ShareFeature.track = function( str ) {
@@ -26,7 +29,6 @@ $(function() {
 					wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
 					'#shareFeatureInside',
 					{
-						id: 'shareFeatureWrapper',
 						width: 300,
 						callback: function() {
 							ShareFeatureEnabled = false;
