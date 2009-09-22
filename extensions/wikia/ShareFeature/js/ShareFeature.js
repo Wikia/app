@@ -6,7 +6,9 @@ ShareFeature.ajax = function( provider ) {
 	this.track( 'provider/' + provider );
 	$.post( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
 		 'provider' : provider
-		}, function() {}
+		}, function() {
+			$('#shareFeatureWrapper').closeModal();
+		}
 	);
 };
 
