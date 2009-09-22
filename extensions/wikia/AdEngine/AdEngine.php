@@ -307,17 +307,11 @@ class AdEngine {
 			$w = 0;
 		}
 
-		// Emergency HACK. Not even time for a wiki factory variable. Hair on fire.
-		global $wgCityId;
-		$cityids = array (
-			"3490", // bioshock
-			"3125" // call of duty
-		);
-			
-		if ($slotname == "HOME_TOP_RIGHT_BOXAD" && in_array($wgCityId, $cityids)){
+		// Make the 300x250 on the home page a 300x600
+		global $wgEnableHome300x600;
+		if ($slotname == "HOME_TOP_RIGHT_BOXAD" && $wgEnableHome300x600){
 			$h = 600;	
 		}
-		// \ HACK
 
 		return '<div id="' . htmlspecialchars($slotname) . '">' . 
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' . 
