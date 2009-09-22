@@ -28,6 +28,9 @@ $(function() {
 						callback: function() {
 							ShareFeatureEnabled = false;
 							ShareFeature.track( 'open' );
+						},
+						onClose: function() {
+							ShareFeature.track('close');
 						}
 					}
 				);
