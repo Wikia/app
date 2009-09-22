@@ -21,6 +21,8 @@ $wgHooks[ "RecentChange_save" ][] = "BlogComment::watchlistNotify";
 # recentchanges
 $wgHooks[ "ChangesListMakeSecureName" ][] = "BlogCommentList::makeChangesListKey";
 $wgHooks[ "ChangesListHeaderBlockGroup" ][] = "BlogCommentList::setHeaderBlockGroup";
+# special::watchlist
+$wgHooks[ "SpecialWatchlistQuery" ][] = "BlogComment::WatchlistQuery";
 
 /**
  * BlogComment is article, this class is used for manipulation on it
@@ -848,6 +850,63 @@ class BlogComment {
 		return true;
 	}
 	
+	/**
+	 * Hook
+	 *
+	 * @param RecentChange $oRC -- instance of RecentChange class
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static public function WatchlistQuery ( &$conds,&$tables,&$join_conds,&$fields ) {
+		global $wgEnableBlogWatchlist;
+		wfProfileIn( __METHOD__ );
+		
+		if ( !empty($wgEnableBlogWatchlist) ) {
+			$new_fields = array(
+				'rc_id', 
+				'rc_timestamp', 
+				'rc_cur_time', 
+				'rc_user', 
+				'rc_user_text', 
+				'if(rc_namespace='.NS_BLOG_ARTICLE_TALK.', SUBSTRING_INDEX(rc_title, \'/\', 2), rc_title) as rc_title',
+				'if(rc_namespace='.NS_BLOG_ARTICLE_TALK.', '.NS_BLOG_ARTICLE.', rc_namespace) as rc_namespace', 
+				'rc_comment', 
+				'rc_minor', 
+				'rc_bot', 
+				'rc_new', 
+				'rc_cur_id', 
+				'rc_this_oldid', 
+				'rc_last_oldid', 
+				'rc_type', 
+				'rc_moved_to_ns', 
+				'rc_moved_to_title', 
+				'rc_patrolled', 
+				'rc_ip', 
+				'rc_old_len', 
+				'rc_new_len', 
+				'rc_deleted', 
+				'rc_logid', 
+				'rc_log_type', 
+				'rc_log_action', 
+				'rc_params'
+			);
+			
+			if ( !empty($fields) ) {
+				foreach ( $fields as $id => $field ) {
+					if ( strpos($field, 'recentchanges') === false ) {
+						$new_fields[] = $field;
+					}
+				}
+				$fields = $new_fields;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
 
 /**
