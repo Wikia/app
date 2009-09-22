@@ -22,8 +22,9 @@ $(function() {
 				ShareFeatureEnabled = true;
 				$().getModal(
 					wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
-					'#shareFeatureRound',
+					'#shareFeatureInside',
 					{
+						id: 'shareFeatureWrapper',
 						width: 300,
 						callback: function() {
 							ShareFeatureEnabled = false;
