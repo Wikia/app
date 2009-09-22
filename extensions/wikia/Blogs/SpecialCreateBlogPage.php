@@ -41,7 +41,6 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogPage' );
 
-//echo $wgUser->getOption('')
 		// force CategorySelect initialisation if available
 		if(function_exists('CategorySelectInitializeHooks') && ($wgUser->getOption('disablecategoryselect', false) == false)) {
 			$this->mCategorySelectEnabled = true;
@@ -102,6 +101,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$editPage = new EditBlogPage( $this->mPostArticle );
 		$editPage->initialiseForm();
 		$editPage->textbox1 = $sPostBody;
+		$editPage->watchthis = $this->mFormData['isWatched'];
 		$editPage->summary = isset($this->mFormData['postEditSummary']) ? $this->mFormData['postEditSummary'] : wfMsgForContent('create-blog-updated');
 
 		$result = false;
@@ -145,6 +145,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		$this->mFormData['isVotingEnabled'] = $wgRequest->getCheck('blogPostIsVotingEnabled');
 		$this->mFormData['isCommentingEnabled'] = $wgRequest->getCheck('blogPostIsCommentingEnabled');
 		$this->mFormData['isExistingArticleEditAllowed'] = $wgRequest->getVal('articleEditAllowed');
+		$this->mFormData['isWatched'] = $wgRequest->getCheck( 'wpWatchthis' );
 
 		if(empty($this->mFormData['postId'])) {
 			if(empty($this->mFormData['postTitle'])) {
