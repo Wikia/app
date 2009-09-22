@@ -27,20 +27,17 @@ function voidRegister()
   $objRend = new objRend($arrRend);
 }
 
-class objRend
-{
-  // register object with parser
-  function __construct($arr)
-    {
-      global $wgParser;
+class objRend {
 
-      settype($strVal,	'string');
-      settype($strKey,	'string');
-
-      foreach ($arr as $strKey => $strVal) {
-	$wgParser->setHook($strKey, $strVal);
-      }
-    }
+	// register object with parser
+	function __construct($arr) {
+		global $wgParser;
+		settype($strVal,	'string');
+		settype($strKey,	'string');
+		foreach ($arr as $strKey => $strVal) {
+			$wgParser->setHook($strKey, $strVal);
+		}
+	}
 
 
   // parses strings of the form x=y y="z" z="a b c" [...], and returns an accordant array[x]=y, etc.
@@ -50,7 +47,7 @@ class objRend
       settype($arrAttr,	'array');
       settype($strKey,	'string');
       settype($strVal,	'string');
-			
+
       preg_match_all('/(\S*)\=(?(?=\")\"([^"]*)\"|(.*))\s*(?=\S*\=|$)/Us', $str, $arr, PREG_PATTERN_ORDER);
       foreach ($arr[1] as $strKey => $strVal) {
 	// In x="y", "y" is returned as the second node; x=y, y the third.  Otherwise blank.
@@ -64,7 +61,7 @@ class objRend
     {
       global
 	$arrErr, $strErr;
-			
+
       settype($strBlack,	'string');
       settype($arrBlack,	'array');
 
@@ -73,7 +70,7 @@ class objRend
 
       // specific security recommendations
       $arrBlack['music'] = array('#');
-    
+
       $arrBlack['plot'] = array('cd', 'call', 'exit', 'load', 'pause', 'print', 'pwd', 'quit', 'replot', 'reread', 'reset', 'save', 'shell', 'system', 'test', 'update', '!', 'path', 'historysize', 'mouse', 'out', 'term', 'file', '"', '\'');
 
       $arrBlack['chess'] = array('savegame', 'loadgame', 'storegame', 'restoregame');
@@ -82,7 +79,7 @@ class objRend
       if (!empty($arrBlack[$strClass])) {
 	$arrBlack['rend'] = array_merge($arrBlack[$strClass], $arrBlack['rend']);
       }
-    
+
       foreach($arrBlack['rend'] as $strBlack) {
 	if (stristr($str, $strBlack) !== false) {
 	  $strClass = 'error';
@@ -100,88 +97,87 @@ class objRend
     {
       settype($strKey,	'string');
       settype($strVal,	'string');
-			
+
       foreach($arr as $strKey => $strVal) {
 	$str = strtr($str, array(sprintf($strToken, $strKey) => $strVal));
       }
 
       return $str;
     }
-		
-  // receive raw text in, serialize to hash-encoded temp file, funnel to bash
-  // and receive tag anew.
-  function strRend($strTex, $arr)
-    {
-      global $arrErr, $strErr, $strRendPath, $wgScriptPath; // global err, path def's
 
-      settype($obj,	'object'); // file resource
-      settype($arrBash,	'array'); // standard out parameters
-      settype($arrTag,	'array');
-      settype($str,	'string');
-      settype($strHash,	'string'); // outfile hash
-      settype($strTag,	'string');
-      settype($strKey,	'string');
-      settype($strVal,	'string');
-      settype($strTemplate,'string'); // template glob
-      settype($strErrClass,'array');
-      settype($strDir,	'string'); // temp directory
-      settype($strURI,	'string'); // relative URI
-      settype($strBash,	'string'); // shell command
-      settype($strRend,	'string'); // replacement
-			
-      $strTemplate= "$strRendPath/wikitex.%s.inc*";
-      $strErrClass= 'error';
-      $strDir   = '/images/wikitex/images/';
-      $strURI   = 'http://images.wikia.com/wikitex/images/';
-      $strBash	= "$strRendPath/wikitex.sh %s %s %s %s %s";	// usage: wikitex FILE MODULE OUTPATH DIRSUFFIX DIRTMP
-      $strRend	= '%%%s%%';
+	// receive raw text in, serialize to hash-encoded temp file, funnel to bash
+	// and receive tag anew.
+	function strRend($strTex, $arr) {
+		global $arrErr, $strErr, $strRendPath, $wgScriptPath; // global err, path def's
 
-      // check class template against glob: "wikitex.<class>.inc*"
-      if(!($str = file_get_contents(current(glob(sprintf($strTemplate, $arr['class'])))))) {
-	// invoke generic error template
-	$str = file_get_contents($strErr);
+		settype($obj,	    'object'); // file resource
+		settype($arrBash,	'array'); // standard out parameters
+		settype($arrTag,	'array');
+		settype($str,	    'string');
+		settype($strHash,	'string'); // outfile hash
+		settype($strTag,	'string');
+		settype($strKey,	'string');
+		settype($strVal,	'string');
+		settype($strTemplate,'string'); // template glob
+		settype($strErrClass,'array');
+		settype($strDir,	'string'); // temp directory
+		settype($strURI,	'string'); // relative URI
+		settype($strBash,	'string'); // shell command
+		settype($strRend,	'string'); // replacement
 
-	// generate error message
-	$arr['value'] = sprintf($arrErr['class'], $arr['class']);
+		$strTemplate= "$strRendPath/wikitex.%s.inc*";
+		$strErrClass= 'error';
+		$strDir   = '/images/wikitex/images/';
+		$strURI   = 'http://images.wikia.com/wikitex/images/';
+		$strBash  = "$strRendPath/wikitex.sh %s %s %s %s %s";	// usage: wikitex FILE MODULE OUTPATH DIRSUFFIX DIRTMP
+		$strRend  = '%%%s%%';
 
-	// set generic error class
-	$arr['class'] = $strErrClass;
-      }
-			
-      // post-processing: black-list control, actualizing the file template
-      $arr['value'] = $this->strPost($strTex, $arr['class'], $str);
+		// check class template against glob: "wikitex.<class>.inc*"
+		if(!($str = file_get_contents(current(glob(sprintf($strTemplate, $arr['class'])))))) {
+			// invoke generic error template
+			$str = file_get_contents($strErr);
 
-      // check for defaults defined in wikitex.inc.php, and realize them
-      if (!empty($arrDef[$arr['class']])) {
-	$this->vDefault($arr, $arrDef[$arrAttrib['class']]);
-      }
+			// generate error message
+			$arr['value'] = sprintf($arrErr['class'], $arr['class']);
 
-      // token substitution; where each value of $arr substituted in $str,
-      // %value%, %style%, etc.
-      $strTex = $this->strSub($str, $arr, $strRend);
+			// set generic error class
+			$arr['class'] = $strErrClass;
+		}
 
-      // derive the outfile hash
-      $strHash = md5($strTex);
+		// post-processing: black-list control, actualizing the file template
+		$arr['value'] = $this->strPost($strTex, $arr['class'], $str);
 
-      // FIXME: graceless exception on inaccessibility
-      wfDebug( __METHOD__ . ": wikitex attempt on $strDir $strHash with $strTex\n" );
+		// check for defaults defined in wikitex.inc.php, and realize them
+		if (!empty($arrDef[$arr['class']])) {
+			$this->vDefault($arr, $arrDef[$arrAttrib['class']]);
+		}
 
-      $outDirSuffix = substr($strHash, 0, 1) . "/" . substr($strHash, 0, 2) . "/" . substr($strHash, 0, 3) . "/";
-      $outDir = $strDir . $outDirSuffix;
+		// token substitution; where each value of $arr substituted in $str,
+		// %value%, %style%, etc.
+		$strTex = $this->strSub($str, $arr, $strRend);
 
-      $strHash = substr($strHash,3);
+		// derive the outfile hash
+		$strHash = md5($strTex);
 
-      if( !file_exists($outDir)) {
- 	exec("mkdir -p $outDir");
-      }
+		// FIXME: graceless exception on inaccessibility
+		wfDebug( __METHOD__ . ": wikitex attempt on $strDir $strHash with $strTex\n" );
 
-      if($obj = fopen($outDir . $strHash, 'w')) {
-	fwrite($obj, $strTex);
-	fclose($obj);
-	wfDebug( __METHOD__ . ": wikitex file written\n" );
-      }
+		$outDirSuffix = substr($strHash, 0, 1) . "/" . substr($strHash, 0, 2) . "/" . substr($strHash, 0, 3) . "/";
+		$outDir = $strDir . $outDirSuffix;
 
-	wfDebug( __METHOD__ . ": wikitex attempt as \"".sprintf($strBash, $strHash, $arr['class'], $strURI, $outDirSuffix, $strDir)."\n" );
+		$strHash = substr($strHash,3);
+
+		if( !file_exists($outDir)) {
+			exec("mkdir -p $outDir");
+		}
+
+		if($obj = fopen($outDir . $strHash, 'w')) {
+			fwrite($obj, $strTex);
+			fclose($obj);
+			wfDebug( __METHOD__ . ": wikitex file written\n" );
+		}
+
+		wfDebug( __METHOD__ . ": wikitex attempt as \"".sprintf($strBash, $strHash, $arr['class'], $strURI, $outDirSuffix, $strDir)."\n" );
 
       // If the script is unavailable, roll our own error.
       if (!is_executable(substr($strBash, 0, strpos($strBash, ' ')))) {
