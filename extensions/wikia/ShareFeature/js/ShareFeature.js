@@ -15,6 +15,23 @@ ShareFeature.ajax = function( provider ) {
 
 };
 
+ShareFeature.mouseDown = function( provider ) {
+	var event = $.getEvent();
+	switch( event.button ) {
+		case 0:
+			this.ajax( provider );
+			break;
+		case 1:
+			this.track( 'middleClick' );
+			break;
+		case 2:
+			this.track( 'rightClick' );			
+			break;
+		default:
+			break;				
+	}
+}
+
 ShareFeature.track = function( str ) {
 	WET.byStr('ShareFeature/' + str);
 };
