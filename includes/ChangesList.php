@@ -790,6 +790,10 @@ class EnhancedChangesList extends ChangesList {
 			$r .= '<tr><td valign="top">';
 			$r .= '<tt>'.$this->spacerIndent() . $this->spacerIndent();
 			$r .= $this->recentChangesFlags( $rc_new, $rc_minor, $rcObj->unpatrolled, '&nbsp;', $rc_bot );
+			# added by Moli 
+			if ( is_array($rcObj->mOtherFlags) && !empty($rcObj->mOtherFlags) ) {
+				$r .= '&nbsp;' . implode( '&nbsp;', $rcObj->mOtherFlags );
+			}
 			$r .= '&nbsp;</tt></td><td valign="top">';
 
 			$o = '';

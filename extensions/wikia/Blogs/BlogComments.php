@@ -1435,6 +1435,13 @@ class BlogCommentList {
 					
 					$userlinks = array();
 					foreach ( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
+			 			# make proper text
+			 			if ( !isset($oRCCacheEntry->mOtherFlags) ) {
+			 				$oRCCacheEntry->mOtherFlags = array();
+						}
+			 			$oRCCacheEntry->mOtherFlags[] = $oRCCacheEntry->timestamp;
+			 			$oRCCacheEntry->timestamp = $oRCCacheEntry->getTitle()->getText();
+
 			 			$u = $oRCCacheEntry->userlink;
 						if( !isset( $userlinks[$u] ) ) {
 							$userlinks[$u] = 0;
@@ -1470,4 +1477,5 @@ class BlogCommentList {
 
 		return true;
 	}
+	
 }
