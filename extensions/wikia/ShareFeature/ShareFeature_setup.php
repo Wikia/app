@@ -80,6 +80,8 @@ function wfShareFeatureMakeUrl( $site, $target, $title ) {
 	return $url;
 }
 
+
+// return the correct queue of sites depending on number of clicks
 function wfShareFeatureSortSites( $sites, $target, $title ) {
 	global $wgUser, $wgShareFeatureSites, $wgExternalSharedDB;
 
