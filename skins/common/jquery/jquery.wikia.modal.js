@@ -43,7 +43,14 @@ $.fn.extend({
 	// add event handlers
 	var persistent = (typeof options.persistent == 'boolean') ? options.persistent : false;
 
+	// macbre: function called when modal is closed
+	var onClose = (typeof options.onClose == 'function') ? options.onClose : false;
+
 	$("h1.modalTitle div").bind("click", function() {
+		if (onClose) {
+			onClose();
+		}
+
 		if (persistent) {
 			wrapper.hideModal();
 		}
@@ -55,6 +62,10 @@ $.fn.extend({
    	$(window)
    		.bind("keypress.modal", function(event) {
    			if (event.keyCode == 27) {
+				if (onClose) {
+					onClose();
+				}
+
 				if (persistent) {
 					wrapper.hideModal();
 				}
@@ -74,6 +85,10 @@ $.fn.extend({
 		.css({zIndex: zIndex})
    		.fadeTo("fast", 0.65)
    		.bind("click", function() {
+			if (onClose) {
+				onClose();
+			}
+
 			if (persistent) {
 				wrapper.hideModal();
 			}
