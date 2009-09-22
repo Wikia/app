@@ -21,7 +21,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'Share Feature',
         'author' => 'Bartek Łapiński',
-        'version' => '0.92',
+        'version' => '1.00',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -96,6 +96,7 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 
 	$sites = array();
 	$found = array();
+	$title = str_replace( " ", "_", $title );
 	// get all the sites we have data for
         while($row = $dbr->fetchObject($res)) {		
 		$site = $wgShareFeatureSites[$row->sf_provider_id];
