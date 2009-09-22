@@ -113,15 +113,15 @@
 	left: -560px;		
 }
 
-#shareFeatureRound {
+#shareFeatureInside {
 	padding: 10px !important;
 }
 
-#shareFeatureRound li {
+#shareFeatureInside li {
 	line-height: 1.9em;
 }
 
-#shareFeatureRound img {
+#shareFeatureInside img {
 	padding: 0 6px;
 }
 
