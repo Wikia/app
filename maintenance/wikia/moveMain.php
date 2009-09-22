@@ -10,6 +10,11 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
 /**
+ * disable info about this move
+ */
+$wgRC2UDPEnabled = false;
+
+/**
 if ( count( $args ) == 0 || isset( $options['help'] ) ) {
 	print <<<EOT
 Move article to new name and set MediaWiki:Mainpage article.
