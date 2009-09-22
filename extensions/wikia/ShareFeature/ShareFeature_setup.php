@@ -74,7 +74,6 @@ $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
 
 function wfShareFeatureMakeUrl( $site, $target, $title ) {
-	// todo remember about a special case for Twitter...
 	$url = str_replace( '$1', $target, $site );
 	$url = str_replace( '$2', $title, $url );
 	
