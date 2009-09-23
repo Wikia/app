@@ -50,8 +50,24 @@ function getPdf() {
 	}, function(data, textStatus) {
 		if (data.match(/\.pdf$/)) {
 			$("#getpdf_result").html("...pdf is ready, please <a href=\"" + data + "\">download it</a>.");
+			showPage($("#page1"), 7);
+			showPage($("#page2"), 8);
 		} else {
 			$("#getpdf_result").text("..." + data);
+		}
+	});
+}
+
+function showPage(o, i) {
+	$.get(wgServer, {
+		action:    "ajax",
+		rs:        "Lolek::getPage",
+		bolek_id:  "<?=$bolek_id?>",
+		timestamp:  <?=$timestamp?>,
+		page_id:    i
+	}, function(data, textStatus) {
+		if (data.match(/\.jpg$/)) {
+			o.attr({src: data});
 		}
 	});
 }
@@ -62,6 +78,9 @@ function getPdf() {
 <a href="#" onclick="getPdf();return false;">Get pdf</a>
 <span id="getpdf_result"></span>
 </p>
+
+<img id="page1" src="http://images.wikia.com/common/releases_trunk/skins/monobook/blank.gif" width="150" height="200" style="border: black 1px solid" />
+<img id="page2" src="http://images.wikia.com/common/releases_trunk/skins/monobook/blank.gif" width="150" height="200" style="border: black 1px solid" />
 
 <hr />
 
