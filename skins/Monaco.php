@@ -1583,7 +1583,7 @@ if(isset($this->data['articlelinks']['right']) && $showright ) {
 			<!-- ARTICLE -->
 <?php
 echo AdEngine::getInstance()->getSetupHtml();
-global $wgOut, $wgEnableAdsInContent, $wgAdsForceLeaderboards, $wgEnableIframeAds;
+global $wgOut, $wgEnableAdsInContent, $wgAdsForceLeaderboards, $wgEnableIframeAds, $wgEnableTandemAds;
 if (!empty($wgEnableIframeAds)){
 	$AdEngineFunc = "getPlaceHolderIframe";
 } else {
@@ -1601,11 +1601,9 @@ if ($wgOut->isArticle()){
 
 		if (!empty($wgAdsForceLeaderboards)){
 			$topAdCode = AdEngine::getInstance()->$AdEngineFunc('TOP_LEADERBOARD');
-			/* Uncomment for tandems
-			if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+			if (!empty($wgEnableTandemAds) && ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
 				$topAdCode .= AdEngine::getInstance()->$AdEngineFunc('TOP_RIGHT_BOXAD', false);
 			}
-			*/
 		} else {
 			// Let the collision detection decide
 			if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){

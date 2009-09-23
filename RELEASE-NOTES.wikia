@@ -1,4 +1,5 @@
 == Changes since 200909.4 ==
+* rt#23178: Ads: Tandem ads WF code. (Nef)
 * rt#22658: Outbound: cover other edgecases of missing colors (uberfuzzy)
 * rt#22523: CreateWiki script doing initial moves from localhost (eloy)
 * rt#22657: Outbound: remove hardcoded white link color from old method (uberfuzzy)
