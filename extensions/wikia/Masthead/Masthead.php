@@ -49,7 +49,8 @@ $wgExtensionMessagesFiles['Masthead'] = dirname(__FILE__) . '/Masthead.i18n.php'
 #--- permissions
 $wgAvailableRights[] = 'removeavatar';
 $wgGroupPermissions['staff']['removeavatar'] = true;
-$wgGroupPermissions['sysop']['removeavatar'] = true;
+#$wgGroupPermissions['sysop']['removeavatar'] = true;
+$wgGroupPermissions['helper']['removeavatar'] = true;
 extAddSpecialPage( '', 'RemoveAvatar', 'BlogAvatarRemovePage' );
 $wgSpecialPageGroups['RemoveAvatar'] = 'users';
 
