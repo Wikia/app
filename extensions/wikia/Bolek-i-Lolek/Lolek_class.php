@@ -41,7 +41,35 @@ class Lolek {
 
 		return $result;
 	}
+
+	static function getPage() {
+		global $wgRequest, $wgUploadDirectory, $wgUploadPath;
+
+		$bolek_id  = $wgRequest->getVal("bolek_id");
+		$timestamp = $wgRequest->getVal("timestamp");
+		$page_id   = $wgRequest->getVal("page_id");
+
+		if (empty($bolek_id) || empty($timestamp) || empty($page_id)) return "not enough data.";
+
+		$fname = "{$bolek_id}-{$timestamp}.pdf";
+		if (!file_exists("{$wgUploadDirectory}/lolek/{$fname}")) return "no pdf. Please create it first.";
+
+#		if (!file_exists("{$wgUploadDirectory}/lolek/{$fname}-{$page_id}.jpg")) {
+			$cmd   = "/usr/bin/gs -sDEVICE=jpeg -dNOPAUSE -dBATCH -dSAFER -dFirstPage={$page_id} -dLastPage={$page_id} -sOutputFile={$wgUploadDirectory}/lolek/{$fname}-{$page_id}.jpg {$wgUploadDirectory}/lolek/{$fname}";
+
+			$wgMaxShellTime     = 0;
+			$wgMaxShellFileSize  = 0;
+			wfShellExec($cmd, $result);
+
+				if ($result) return "page rendering error. (Info from gs.)";
+#		}
+
+		$result = "{$wgUploadPath}/lolek/{$fname}-{$page_id}.jpg";
+
+		return $result;
+	}
 }
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "Lolek::getPdf";
+$wgAjaxExportList[] = "Lolek::getPage";
