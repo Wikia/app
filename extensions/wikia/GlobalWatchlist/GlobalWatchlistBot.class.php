@@ -76,6 +76,7 @@ class GlobalWatchlistBot {
 					'email' => $oResultRow->user_email 
 				);
 			}
+			$dbr->freeResult( $oResource );
 			$this->printDebug("$iWatchlisters global watchilster(s) found. (time: " . $this->calculateDuration( time() - $this->mStartTime ). ")");
 		} 
 		else {
@@ -116,7 +117,6 @@ class GlobalWatchlistBot {
 				__METHOD__
 			);
 			
-			
 			if ( $oResource ) {
 				while ( $oResultRow = $dbr->fetchObject($oResource) ) {
 					$aPages[ $oResultRow->wl_user ][] = $oResultRow;
@@ -124,8 +124,6 @@ class GlobalWatchlistBot {
 				$dbr->freeResult( $oResource );
 			}
 		}
-		
-		$dbr->close();
 
 		return $aPages;
 	}
@@ -140,7 +138,7 @@ class GlobalWatchlistBot {
 		$this->getGlobalWatchlisters();
 		$this->printDebug("Gathering watchlist data ...");
 
-		$dbr = wfGetDB(DB_SLAVE, "stats", $wgExternalSharedDB);
+		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$dbext = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 
 		$where = array(
@@ -228,6 +226,7 @@ class GlobalWatchlistBot {
 			$oResource = $dbs->query("SELECT * FROM global_watchlist WHERE gwa_user_id='" . $iUserId . "' ORDER BY gwa_city_id");
 			$iCurrentCityId = 0;
 			while($oResultRow = $dbs->fetchObject($oResource)) {
+				$sWikiDbName = "";
 				if($iCurrentCityId != $oResultRow->gwa_city_id) {
 					$sWikiDbName = WikiFactory::getVarValueByName('wgDBName', $oResultRow->gwa_city_id);
 					$iCurrentCityId = $oResultRow->gwa_city_id;
@@ -240,6 +239,7 @@ class GlobalWatchlistBot {
 					$this->printDebug("ERROR: wiki db name not found for city_id=" . $oResultRow->gwa_city_id);
 				}
 			}
+			$dbs->freeResult( $oResource );
 
 			$dbs->query("DELETE FROM global_watchlist WHERE gwa_user_id='" . $iUserId . "'");
 
@@ -255,16 +255,44 @@ class GlobalWatchlistBot {
 	private function composeMail ($oUser, $aDigestsData, $isDigestLimited) {
 		global $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 
-		$sDigests = ""; $iPagesCount = 1;
+		$sDigestsBlogs = ""; $sDigests = ""; $iPagesCount = 1;
 		foreach ( $aDigestsData as $aDigest ) {
 			$sDigests .= $aDigest['wikiName'] . ( $aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "" ) . ":\n";
 
-			foreach( $aDigest['pages'] as $aPageData ) {
-				$sDigests .= $aPageData['title']->getFullURL(($aPageData['revisionId'] ? "diff=0&oldid=" . $aPageData['revisionId'] : "")) . "\n";
-				$iPagesCount++;
+			if ( !empty($aDigest['pages']) ) {
+				foreach( $aDigest['pages'] as $aPageData ) {
+					$sDigests .= $aPageData['title']->getFullURL(($aPageData['revisionId'] ? "diff=0&oldid=" . $aPageData['revisionId'] : "")) . "\n";
+					$iPagesCount++;
+				}
+			}
+			
+			# blog comments
+			if ( !empty($aDigest['blogs']) ) {
+				foreach( $aDigest['blogs'] as $blogTitle => $blogComments ) {
+					$countComments = count($blogComments['comments']);
+					$message = wfMsgReplaceArgs(
+						$this->getLocalizedMsg(
+							( $countComments == 1 ) ? 'globalwatchlist-blog-page-title-comment' : 'globalwatchlist-blog-page-title-comments', 
+							$oUser->getOption('language') 
+						),
+						array ( 
+							0 => $blogComments['blogpage']->getFullURL(),
+							1 => $countComments
+						)
+					);
+					$sDigestsBlogs .= $message . "\n";
+					/*if ( $countComments > 0 ) {
+						foreach ( $blogComments['comments'] as $comment ) {
+							$sDigestsBlogs .= " * " . $comment['title']->getFullURL(($comment['revisionId'] ? "diff=0&oldid=" . $comment['revisionId'] : "")) . "\n";
+						}
+					}*/
+					
+					$iPagesCount++;
+				}
 			}
 
 			$sDigests .= "\n";
+			$sDigestsBlogs .= "\n";
 		}
 
 		if ( $isDigestLimited ) {
@@ -273,7 +301,8 @@ class GlobalWatchlistBot {
 
 		$aEmailArgs = array(
 			0 => ucfirst($oUser->getName()),
-			1 => $sDigests
+			1 => $sDigests,
+			2 => $sDigestsBlogs
 		);
 
 		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUser->getOption('language') );
@@ -385,11 +414,30 @@ class GlobalWatchlistBot {
 						}
 					} // if
 					
-					$aWikiDigest['pages'][] = array(
-						'title' => GlobalTitle::newFromText($oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId),
-						'revisionId' => $oResultRow->gwa_rev_id
-					);
+					# blogs
+					if ( $oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK ) {
+						list( $user, $page_title, $comment ) = explode( "/", $oResultRow->gwa_title, 3 );
+						$blogTitle = $user . "/" . $page_title;
+						
+						if ( empty($aWikiDigest[ 'blogs' ][ $blogTitle ]) ) {
+							$aWikiDigest[ 'blogs' ][ $blogTitle ] = array (
+								'comments' => array(),
+								'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId )
+							);
+						}
+						
+						$aWikiDigest[ 'blogs' ][ $blogTitle ]['comments'][] = array(
+							'title' => GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId ),
+							'revisionId' => $oResultRow->gwa_rev_id
+						);
+					} else {
+						$aWikiDigest[ 'pages' ][] = array(
+							'title' => GlobalTitle::newFromText($oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId),
+							'revisionId' => $oResultRow->gwa_rev_id
+						);
+					}
 				} // while
+				$dbr->freeResult( $oResource );
 
 				if ( count($aWikiDigest['pages']) ) {
 					$aDigestData[ $iWikiId ] = $aWikiDigest;
