@@ -97,7 +97,7 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 
 	$sites = array();
 	$found = array();
-	$title = str_replace( " ", "_", $title );
+	$title = rawurlencode( $title );
 	$target = str_replace( " ", "_", $target );
 
 	// get all the sites we have data for
