@@ -55,7 +55,8 @@ class DataFeedProvider {
 		$queryContinue = $start;
 		$proxyLimit = $limit;
 
-		while(count($this->results) < $limit + 1) {
+		$hard_limit = 5;
+		while((count($this->results) < $limit + 1) && $hard_limit--) {
 			$callLimit = max(2, round(($proxyLimit - count($this->results)) * 1.2));
 			$res = $this->proxy->get($callLimit, $queryContinue);
 
