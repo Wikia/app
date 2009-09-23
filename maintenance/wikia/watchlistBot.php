@@ -28,6 +28,10 @@ if(class_exists('GlobalWatchlistBot')) {
 	else {
 		$oWatchlistBot->run();
 	}
+	//	
+	$oUser = User::newFromId(115748); //Moli.wikia
+	$oUser->load();
+	$oUser->sendMail( 'Global watchlist is finished', 'Global watchlist is finished', 'Wikia <community@wikia.com>', null, 'GlobalWatchlist' );
 }
 else {
 	print "GlobalWatchlist extension is not installed.\n";
