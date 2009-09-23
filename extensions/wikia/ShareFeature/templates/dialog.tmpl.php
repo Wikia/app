@@ -6,7 +6,7 @@
 				global $wgExtensionsPath;
 				foreach( $sites as $site) {
 			?>
-				<li><a href="<?= $site['url'] ?>" target="_blank" onmousedown="ShareFeature.mouseDown( <?= $site['name'] ?> )"><img src="<?= $wgExtensionsPath ?>/wikia/ShareFeature/images/<?= strtolower( $site['name'] ) ?>.png" alt="<?= $site['name'] ?>"/></a><a href="<?= $site['url'] ?>" target="_blank" onmousedown="ShareFeature.mouseDown( <?= $site['id'] ?>  )"><?= $site['name'] ?></a></li>
+				<li><a href="<?= $site['url'] ?>" target="_blank" onmousedown="ShareFeature.mouseDown( <?= strtolower( $site['name'] ?> ) )"><img src="<?= $wgExtensionsPath ?>/wikia/ShareFeature/images/<?= strtolower( $site['name'] ) ?>.png" alt="<?= $site['name'] ?>"/></a><a href="<?= $site['url'] ?>" target="_blank" onmousedown="ShareFeature.mouseDown( <?= $site['id'] ?>  )"><?= $site['name'] ?></a></li>
 			<?php
 				}
 			?>
