@@ -21,7 +21,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'Share Feature',
         'author' => 'Bartek Łapiński',
-        'version' => '1.02',
+        'version' => '1.03',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -73,13 +73,14 @@ $wgExtensionFunctions[] = 'wfShareFeatureInit';
 $wgExtensionMessagesFiles['ShareFeature'] = dirname(__FILE__) . '/ShareFeature.i18n.php';
 $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentActions';
 
+
+// substitute the parameters in url and title for different sites
 function wfShareFeatureMakeUrl( $site, $target, $title ) {
 	$url = str_replace( '$1', $target, $site );
 	$url = str_replace( '$2', $title, $url );
 	
 	return $url;
 }
-
 
 // return the correct queue of sites depending on number of clicks
 function wfShareFeatureSortSites( $sites, $target, $title ) {
