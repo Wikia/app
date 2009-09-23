@@ -1,4 +1,5 @@
 == Changes since 200909.4 ==
+* rt#23228: Ads: New break-iframe def file. (Nef)
 * rt#23178: Ads: Tandem ads WF code. (Nef)
 * rt#22658: Outbound: cover other edgecases of missing colors (uberfuzzy)
 * rt#22523: CreateWiki script doing initial moves from localhost (eloy)
