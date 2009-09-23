@@ -23,6 +23,8 @@ $wgHooks[ "ChangesListMakeSecureName" ][] = "BlogCommentList::makeChangesListKey
 $wgHooks[ "ChangesListHeaderBlockGroup" ][] = "BlogCommentList::setHeaderBlockGroup";
 # special::watchlist
 $wgHooks[ "SpecialWatchlistQuery" ][] = "BlogComment::WatchlistQuery";
+$wgHooks[ "ComposeCommonSubjectMail" ][] = "BlogComment::ComposeCommonMail";
+$wgHooks[ "ComposeCommonBodyMail" ][] = "BlogComment::ComposeCommonMail";
 
 /**
  * BlogComment is article, this class is used for manipulation on it
@@ -796,7 +798,8 @@ class BlogComment {
 					'wl_namespace' => NS_BLOG_ARTICLE_TALK,
 					'wl_title' => $Comment->mTitle->getDBkey(),
 					'wl_notificationtimestamp' => NULL
-					), __METHOD__, 'IGNORE' );
+					), __METHOD__, 'IGNORE' 
+				);
 			}
 
 			if ( !$oBlogPage->userIsWatching() ) {
@@ -808,8 +811,8 @@ class BlogComment {
 					'wl_title' => $oBlogPage->getDBkey(),
 					'wl_notificationtimestamp' => NULL
 					), __METHOD__, 'IGNORE' );
-				$dbw->commit();
 			}
+			$dbw->commit();
 		}
 
 		return $watchthis;
@@ -905,6 +908,29 @@ class BlogComment {
 		}
 
 		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	/**
+	 * Hook
+	 *
+	 * @param Title $Title -- instance of EmailNotification class
+	 * @param Array $keys -- array of all special variables like $PAGETITLE etc
+	 * @param String $message (subject or body)
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static public function ComposeCommonMail( $Title, &$keys, &$message ) {
+		if ( $Title->getNamespace() == NS_BLOG_ARTICLE ) {
+			if ( !is_array($keys) ) {
+				$keys = array();
+			}
+			$keys['$DBPAGETITLE'] = $Title->getDBKey();
+			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'blog-added' );
+		}
 		return true;
 	}
 }

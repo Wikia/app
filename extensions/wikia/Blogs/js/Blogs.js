@@ -1,7 +1,8 @@
 YAHOO.namespace("Wikia.Blogs");
-
+var clicked = false;
 YAHOO.Wikia.Blogs.callback = {
     success: function( oResponse ) {
+		clicked = false;
 		if (typeof YAHOO.lang.JSON != "undefined" ) {
 			var data = YAHOO.lang.JSON.parse( oResponse.responseText )
 		}
@@ -154,6 +155,11 @@ YAHOO.Wikia.Blogs.editCallback = {
 YAHOO.Wikia.Blogs.submit = function( event, id ) {
 
 	var oForm = YAHOO.util.Dom.get( id );
+
+	if ( clicked == true ) {
+		return false;
+	}
+	clicked	= true;
 
 	if( id == "blog-comm-form-select" ) {
 		oForm.submit();
