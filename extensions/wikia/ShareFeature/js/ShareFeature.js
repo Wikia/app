@@ -3,7 +3,6 @@ var ShareFeature = {};
 var ShareFeatureEnabled = false;
 
 ShareFeature.ajax = function( provider ) {
-
 	this.track( 'provider/' + provider );
 
 	$.post( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
@@ -12,7 +11,6 @@ ShareFeature.ajax = function( provider ) {
 			 $('.modalWrapper').closeModal();
 		}
 	);
-
 };
 
 ShareFeature.mouseDown = function( provider ) {
