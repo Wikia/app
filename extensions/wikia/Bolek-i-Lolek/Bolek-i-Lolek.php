@@ -43,3 +43,4 @@ function efBolekTemplate($text, $finalTitle) {
 	return true;
 }
 
+include "$dir/Tola_class.php";
