@@ -46,9 +46,9 @@ function wt_img() {
     STR="$STR"$(printf "<img src=\"%s\" alt=\"${MOD}\" />" "${1}")
 }
 
-# Output link.
+# Output link. (1.png added by eloy)
 function wt_anch() {
-    STR=$(printf '<a href="%s">%s</a>' "${OUT}${HASH}" "${STR}")
+    STR=$(printf '<a href="%s">%s</a>' "${OUT}${HASH}1.png" "${STR}")
 }
 
 function wt_dvipng() {    
