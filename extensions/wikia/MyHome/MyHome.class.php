@@ -216,10 +216,13 @@ class MyHome {
 
 		// update if necessary
 		if ($doUpdate) {
-			$rc_id = Wikia::getVar('rc')->getAttribute('rc_id');
+			$rc = Wikia::getVar('rc');
+			if ( is_object( $rc ) ) {
+				$rc_id = $rc->getAttribute('rc_id');
 
-			$dbw = wfGetDB( DB_MASTER );
-			$dbw->update('recentchanges', array('rc_params' => MyHome::packData($rc_data)), array('rc_id' => $rc_id));
+				$dbw = wfGetDB( DB_MASTER );
+				$dbw->update('recentchanges', array('rc_params' => MyHome::packData($rc_data)), array('rc_id' => $rc_id));
+			}
 		}
 		return true;
 	}
