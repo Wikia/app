@@ -17,7 +17,10 @@ class BolekPage extends UnlistedSpecialPage {
 			return;
 		}
 
-		$action  = $wgRequest->getVal("action",  "view");
+		$action  = $wgRequest->getVal("action",  null);
+		if (empty($action)) {
+			$action  = $wgRequest->getVal("ud",  null);
+		}
 
 		// totally different wrokflow, almost separate application
 		if (in_array($action, array("print", "cover"))) {
@@ -77,6 +80,10 @@ class BolekPage extends UnlistedSpecialPage {
 				$result = Bolek::customizeCover($bolek_id, $wgRequest->getArray("cover",  null));
 
 				break;
+			case "approval":
+				$token = $wgRequest->getVal("token", null);
+				echo "<html><body><div id=\"token\">{$token}</div></body></html>";
+				exit;
 		}
 
 		$tmpl = new EasyTemplate(dirname(__FILE__));

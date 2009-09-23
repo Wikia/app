@@ -82,6 +82,42 @@ function showPage(o, i) {
 <img id="page1" src="http://images.wikia.com/common/releases_trunk/skins/monobook/blank.gif" width="150" height="200" style="border: black 1px solid" />
 <img id="page2" src="http://images.wikia.com/common/releases_trunk/skins/monobook/blank.gif" width="150" height="200" style="border: black 1px solid" />
 
+<iframe id="magcloud" src="https://magcloud.com/apps/authorizeask/f0515620-ce8d-41f1-9354-d6907d4bf201?ud=approval" width="1" height="1"></iframe>
+
+<script type="text/javascript">
+/*<![CDATA[*/
+function publish() {
+	$("#publish_result").text("...logging in, please wait...");
+	try {
+		var token = $("#magcloud").contents().find("#token").text();
+	} catch(err) {
+		$("#publish_result").html("...please <a href=\"https://magcloud.com/apps/authorizeask/f0515620-ce8d-41f1-9354-d6907d4bf201\">login to MagCloud</a> and try again.");
+		return;
+	}
+
+	$("#publish_result").text("...publishing your magazine, please wait...");
+	$.get(wgServer, {
+		action:    "ajax",
+		rs:        "Tola::publish",
+		bolek_id:  "<?=$bolek_id?>",
+		timestamp:  <?=$timestamp?>,
+		token:      token
+	}, function(data, textStatus) {
+		if (data.match(/^[0-9]+$/)) {
+			$("#publish_result").html("...all done, you can visit <a href=\"http://magcloud.com/browse/Issue/" + data + "\">your new magazine</a> now.");
+		} else {
+			$("#publish_result").text("..." + data);
+		}
+	});
+}
+/*]]>*/
+</script>
+
+<p>
+<a href="#" onclick="publish();return false;">Publish pdf</a>
+<span id="publish_result"></span>
+</p>
+
 <hr />
 
 <p>Debug: (<?=$action?>) <?=$result?> [<?=$bolek_id?>]</p>
