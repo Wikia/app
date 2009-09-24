@@ -50,6 +50,7 @@ class AdProviderDART implements iAdProvider {
 		// Manipulate DART sizes for values it expects
 		switch ($slot['size']){
 		  case '300x250': $slot['size'] = '300x250,300x600'; break;
+		  case '600x250': $slot['size'] = '600x250,300x250'; break;
            	  case '728x90': $slot['size'] = '728x90,468x60'; break;
                   case '160x600': $slot['size'] = '160x600,120x600'; break;
                   case '0x0': $slot['size'] = '1x1'; break;
