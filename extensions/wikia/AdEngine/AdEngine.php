@@ -302,9 +302,6 @@ class AdEngine {
 			$dim = self::getHeightWidthFromSize($this->slots[$slotname]['size']);
 			$h = $dim['height'];
 			$w = $dim['width'];
-		} else {
-			$h = 0;
-			$w = 0;
 		}
 
 		// Make the 300x250 on the home page a 300x600
