@@ -359,7 +359,8 @@ function axWFactoryDomainQuery() {
 			array( "city_id", "city_domain" ),
 			array(
 				"city_domain not like 'www.%'",
-				"city_domain not like '%.wikicities.com'"
+				"city_domain not like '%.wikicities.com'",
+				"city_domain like '%{$query}%'"
 			),
 			__METHOD__
 		);
