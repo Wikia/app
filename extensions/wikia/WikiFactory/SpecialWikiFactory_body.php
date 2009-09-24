@@ -183,7 +183,7 @@ class WikiFactoryPage extends SpecialPage {
 		));
 
 		if( !empty( $this->mDomain ) ) {
-			$pager = new CityListPager( $this->mDomain, $this->mTitle );
+			$pager = new CityListPager( $this->mDomain );
 			$oTmpl->set( "pager", $pager->render() );
 		}
 		$wgOut->addHTML( $oTmpl->render( "selector" ) );
@@ -574,14 +574,14 @@ class CityListPager {
 	 *
 	 * @access public
 	 */
-	public function __construct( $part, $title ) {
-		global $wgRequest, $wgTitle;
+	public function __construct( $part ) {
+		global $wgRequest;
 
 		$this->mPart     = $part;
 		$this->mRequest  = $wgRequest;
 		$this->mLimit    = 25;
 		$this->mOffset   = $this->mRequest->getVal( "offset", false );
-		$this->mTitle    = $title || $wgTitle;
+		$this->mTitle    = Title::makeTitle( NS_SPECIAL, 'WikiFactory' );;
 		$this->mTemplate = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	}
 
@@ -593,8 +593,8 @@ class CityListPager {
 	public function render() {
 
 		global $wgOut;
-		$this->mTemplate->set( "part", $this->mPart );
-		$this->mTemplate->set( "data", $this->getData() );
+		$this->mTemplate->set( "part",  $this->mPart );
+		$this->mTemplate->set( "data",  $this->getData() );
 		$this->mTemplate->set( "limit", $this->mLimit );
 		$this->mTemplate->set( "title", $this->mTitle );
 
