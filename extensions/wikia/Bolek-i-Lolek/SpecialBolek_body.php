@@ -84,6 +84,14 @@ class BolekPage extends UnlistedSpecialPage {
 				$token = $wgRequest->getVal("token", null);
 				echo "<html><body><div id=\"token\">{$token}</div></body></html>";
 				exit;
+
+				break;
+			case "qt3":
+				$token   = $wgRequest->getVal("token",   null);
+				$success = $wgRequest->getVal("success", 0);
+				$wgOut->redirect("http://techteam-qa3.wikia.com/wiki/Special:WikiaCollection/Publish?token={$token}&success={$success}");
+
+				break;
 		}
 
 		$tmpl = new EasyTemplate(dirname(__FILE__));
