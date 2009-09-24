@@ -55,13 +55,13 @@ function axWFactoryGetVariable() {
 function axWFactoryDomainCRUD($type="add") {
     global $wgRequest, $wgUser, $wgExternalSharedDB;
     $sDomain = $wgRequest->getVal("domain");
-    $iCityId = $wgRequest->getVal("cityid");
+    $city_id = $wgRequest->getVal("cityid");
 
     if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
         $wgOut->readOnlyPage(); #--- later change to something reasonable
         return;
     }
-    if (empty($iCityId)) {
+    if (empty($city_id)) {
         $wgOut->readOnlyPage(); #--- later change to something reasonable
         return;
     }
@@ -79,7 +79,7 @@ function axWFactoryDomainCRUD($type="add") {
 				$sInfo .= "Error: Domain <em>{$sDomain}</em> is invalid (or empty) so it's not added.";
 			}
 			else {
-				$added = WikiFactory::addDomain( $iCityId, $sDomain );
+				$added = WikiFactory::addDomain( $city_id, $sDomain );
 				if ( $added ) {
 					$sInfo .= "Success: Domain <em>{$sDomain}</em> added.";
 				}
@@ -114,7 +114,7 @@ function axWFactoryDomainCRUD($type="add") {
                     "city_domains",
                     array("city_domain" => strtolower($sNewDomain)),
                     array(
-                        "city_id" => $iCityId,
+                        "city_id" => $city_id,
                         "city_domain" => strtolower($sDomain)
                     )
                 );
@@ -123,7 +123,7 @@ function axWFactoryDomainCRUD($type="add") {
             }
             break;
         case "remove":
-		$removed = WikiFactory::removeDomain( $iCityId, $sDomain );
+		$removed = WikiFactory::removeDomain( $city_id, $sDomain );
 		if ( $removed ) {
 			$sInfo .= "Success: Domain <em>{$sDomain}</em> removed.";
 		} else {
@@ -135,7 +135,7 @@ function axWFactoryDomainCRUD($type="add") {
             if (in_array($iNewStatus, array(0,1,2))) {
                 #--- updatec city_list table
                 $dbw->update("city_list", array("city_public" => $iNewStatus),
-                    array("city_id" => $iCityId));
+                    array("city_id" => $city_id));
 				$dbw->commit();
                 switch ($iNewStatus) {
                     case 0:
@@ -158,7 +158,7 @@ function axWFactoryDomainCRUD($type="add") {
             $sInfo .= "<em>Action cancelled</em>";
             break;
         case "setmain":
-				$setmain = WikiFactory::setmainDomain( $iCityId, $sDomain );
+				$setmain = WikiFactory::setmainDomain( $city_id, $sDomain );
 				if ( $setmain ) {
 					$sInfo .= "Success: Domain <em>{$sDomain}</em> set as main.";
 				} else {
@@ -167,7 +167,7 @@ function axWFactoryDomainCRUD($type="add") {
             break;
     }
     #--- get actuall domain list
-	 $aDomains = WikiFactory::getDomains( $iCityId, true );
+	 $aDomains = WikiFactory::getDomains( $city_id, true );
 
     #--- send response, return domain array
     $aResponse["domains"] = $aDomains;
@@ -185,7 +185,7 @@ function axWFactoryClearCache()
 
     wfLoadExtensionMessages("WikiFactory");
 
-    $iCityId = $wgRequest->getVal("cityid");
+    $city_id = $wgRequest->getVal("cityid");
     $iError = 0;
     $sError = "";
 
@@ -194,14 +194,14 @@ function axWFactoryClearCache()
         $iError++;
         $sError = "no permission for removing";
     }
-    if (empty($iCityId)) {
+    if (empty($city_id)) {
         #--- no permission, do nothing
         $iError++;
         $sError = "city id missing";
     }
 
     if (empty($iError)) {
-        WikiFactory::clearCache( $iCityId );
+        WikiFactory::clearCache( $city_id );
         WikiFactory::clearInterwikiCache();
 
         #--- send response
@@ -346,8 +346,8 @@ function axWFactoryDomainQuery() {
 		"data"        => array()
 	);
 
-	$exact = array( "suggestion" => array(), "data" => array() );
-	$match = array( "suggestion" => array(), "data" => array() );
+	$exact = array( "suggestions" => array(), "data" => array() );
+	$match = array( "suggestions" => array(), "data" => array() );
 
 	if( $query ) {
 		/**
@@ -355,7 +355,7 @@ function axWFactoryDomainQuery() {
 		 */
 		$query = strtolower( $query );
 		$dbr = WikiFactory::db( DB_SLAVE );
-		$dbr->select(
+		$sth = $dbr->select(
 			array( "city_domains" ),
 			array( "city_id", "city_domain" ),
 			array(
@@ -365,16 +365,9 @@ function axWFactoryDomainQuery() {
 			),
 			__METHOD__
 		);
-		while( $domain = $dbr->fetchObject( $dbr ) ) {
-			/**
-			 * skip all www. domains
-			 */
+
+		while( $domain = $dbr->fetchObject( $sth ) ) {
 			$domain->city_domain = strtolower( $domain->city_domain );
-			$skip = preg_match( '/^www\./', $domain->city_domain )
-				|| preg_match( '/wikicities\.com$/', $domain->city_domain );
-			if( $skip ) {
-				continue;
-			}
 		    if( preg_match( "/^$query/", $domain->city_domain ) ) {
 				$exact[ "suggestions" ][] = $domain->city_domain;
 				$exact[ "data" ][] = $domain->city_id;
