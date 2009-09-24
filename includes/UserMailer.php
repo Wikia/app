@@ -174,6 +174,11 @@ class UserMailer {
 			$headers['Message-ID'] = "<$msgid@" . $wgSMTP['IDHost'] . '>'; // FIXME
 			$headers['X-Mailer'] = 'MediaWiki mailer';
 
+			/* Wikia change begin - @author: Marooned */
+			/* Add category to header to allow easier data gathering */
+			$headers['X-Msg-Category'] = $category;
+			/* Wikia change end */
+
 			// Create the mail object using the Mail::factory method
                         if( is_array( $wgSchwartzMailer ) ) {
 			        $mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
@@ -215,6 +220,11 @@ class UserMailer {
 			if ($replyto) {
 				$headers .= "{$endl}Reply-To: " . $replyto->toString();
 			}
+
+			/* Wikia change begin - @author: Marooned */
+			/* Add category to header to allow easier data gathering */
+				$headers .= "{$endl}X-Msg-Category: $category";
+			/* Wikia change end */
 
 			$wgErrorString = '';
 			$html_errors = ini_get( 'html_errors' );
