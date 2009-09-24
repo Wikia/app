@@ -12,7 +12,8 @@ This is a list of pages on your Wikia watchlist that have been edited since you 
 
 $2
 
-This is a list of blog pages on your Wikia watchlist that have been commented since you last visited them.
+
+This is a list of blog pages on your Wikia watchlist that have been edited or commented since you last visited them.
 
 $3
 
@@ -25,4 +26,6 @@ Wikia
 ",
 	"globalwatchlist-blog-page-title-comment" => "$1 ($2 comment)",
 	"globalwatchlist-blog-page-title-comments" => "$1 ($2 comments)",
+	"globalwatchlist-no-page-found" => "No page found.",
+	"globalwatchlist-no-blog-page-found" => "No blog page found.",
 );
