@@ -75,6 +75,7 @@ INSERT INTO `ad_slot` VALUES (83,'RIGHT_SPOTLIGHT_1','uncyclopedia','125x125',0,
 INSERT INTO `ad_slot` VALUES (84,'RIGHT_SPOTLIGHT_2','uncyclopedia','125x125',0,4,'Yes');
 INSERT INTO `ad_slot` VALUES (85,'INVISIBLE_TOP','monaco','0x0',30,1,'Yes');
 INSERT INTO `ad_slot` VALUES (86,'HOME_INVISIBLE_TOP','monaco','0x0',30,1,'Yes');
+INSERT INTO `ad_slot` VALUES (87,'PREFOOTER_BIG','monaco','600x250',30,6,'Yes');
 
 -- Allow wikis to override slots
 DROP TABLE IF EXISTS ad_slot_override;
