@@ -273,10 +273,10 @@ class GlobalWatchlistBot {
 					#$countComments = ($blogComments['comments'] >= $blogComments['own_comments']) ? intval($blogComments['comments'] - $blogComments['own_comments']) : $blogComments['comments'];
 					$countComments = $blogComments['comments'];
 					$message = wfMsgReplaceArgs(
-						$this->getLocalizedMsg(
+						($countComments != 0) ? $this->getLocalizedMsg(
 							( $countComments == 1 ) ? 'globalwatchlist-blog-page-title-comment' : 'globalwatchlist-blog-page-title-comments', 
 							$oUser->getOption('language') 
-						),
+						) : "",
 						array ( 
 							0 => $blogComments['blogpage']->getFullURL(),
 							1 => $countComments
