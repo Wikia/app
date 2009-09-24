@@ -231,6 +231,7 @@ body.widgetsAddingBlocked .add {
 	height: 1%;
 	padding: 3px 5px;
 	text-decoration: none;
+	overflow: hidden;
 }
 
 #navigation .Monaco-sidebar_edit {
