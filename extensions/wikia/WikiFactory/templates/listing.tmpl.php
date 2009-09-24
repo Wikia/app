@@ -6,8 +6,8 @@ div.wf-list { text-align: left; margin-bottom: 1em;}
 </style>
 <form action="" method="get">
 <?php
-foreach( range( 1, $limit) as $cnt ):
-	$row = array_shift( $data )
+$cnt = 0;
+foreach( $data as $row ):
 ?>
 <div class="wf-list">
 	<h4><a href="<?php echo $title->getFullUrl() . "/{$row->wiki->city_id}" ?>">
@@ -23,6 +23,7 @@ foreach( range( 1, $limit) as $cnt ):
 	 - <a href="<?php echo $row->wiki->city_url ?>">link</a>
 </div>
 <?php
+	 if( $cnt > $limit) break;
 endforeach
 ?>
 </form>
