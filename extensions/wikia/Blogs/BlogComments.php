@@ -797,7 +797,7 @@ class BlogComment {
 					'wl_user' => $wgUser->getId(),
 					'wl_namespace' => NS_BLOG_ARTICLE_TALK,
 					'wl_title' => $Comment->mTitle->getDBkey(),
-					'wl_notificationtimestamp' => NULL
+					'wl_notificationtimestamp' => wfTimestampNow()
 					), __METHOD__, 'IGNORE' 
 				);
 			}
