@@ -125,7 +125,8 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 			// check data from cache ...
 			$cached = $this->getDataFromCache($lcache_key);
 			if (!is_array($cached)) {
-				$res = $dbs->query("select {$select} from {$table} where {$where_derived} {$order} ");
+				$q = "select {$select} from {$table} where {$where_derived} {$order} ";
+				$res = $dbs->query($q);
 				$loop = 0;
 				while ($row = $dbs->fetchObject($res)) {
 					$aTmp[$row->ref_count] = array (
@@ -185,20 +186,45 @@ class WikiaApiQueryReferers extends WikiaApiQuery {
 	}
 
 	private function getWhereInternalDomains( $table ) {
+		global $wgExternalSharedDB;
+		
 		$where = "";
-		$city_domains = WikiFactory::getDomains();
+		$city_domains = array();
+		
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$oRes = $dbr->select(
+			array( "city_domains" ),
+			array( "distinct(substring_index(city_domain, '.', -2)) as city_domain" ),
+			array(
+				"city_domain not like 'www.%'",
+				"city_domain not like '%.wikicities.com'"
+			),
+			__METHOD__
+		);
+
+		while( $oRow = $dbr->fetchObject( $oRes ) ) {
+			$city_domains[] = strtolower( $oRow->city_domain );
+		}
+		$dbr->freeResult( $oRes );
+		
 		if (!empty($city_domains) && is_array($city_domains)) {
 			$domain_cond = array();
 			foreach ( $city_domains as $domain ) {
-				$domain = WikiFactory::getDomainHash($domain);
 				$_ = explode(".", $domain);
+				if ( strlen($_[0]) < 4 ) { 
+					continue;
+				}
 				$domain_where = "";
 				switch ($table) {
 					case "city_wikireferer_domain_views":
-						if (count($_) > 1 && !empty($_[count($_)-2])) $domain_where = $_[count($_)-2]; #i.e. wikia, wikicites etc ..
+						if ( count($_) > 1 ) {
+							$domain_where = $_[0];
+						}
 						break;
 					case "city_wikireferer_views" 		:
-						if (count($_) > 1 && !empty($_[count($_)-2])) $domain_where = $_[count($_)-2].".".$_[count($_)-1];
+						if ( count($_) > 1 ) {
+							$domain_where = $domain;
+						}
 						break;
 				}
 				if (!empty($domain_where))
