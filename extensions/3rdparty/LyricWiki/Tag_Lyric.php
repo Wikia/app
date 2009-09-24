@@ -129,8 +129,10 @@ function renderLyricTag($input, $argv, $parser)
   }
 
 	#parse embedded wikitext
-	$retVal = ($isInstrumental?"":$ringtoneLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
-	$retVal.= "<div class='lyricbox' >".$parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText()."</div>";
+	$retVal = "<div class='lyricbox'>";
+	$retVal.= ($isInstrumental?"":$ringtoneLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
+	$retVal.= $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
 	$retVal.= $ringtoneLink;
+	$retVal.= "</div>";
 	return $retVal;
 }

@@ -10,6 +10,7 @@
 * rt#22523: CreateWiki script doing initial moves from localhost (eloy)
 * rt#22657: Outbound: remove hardcoded white link color from old method (uberfuzzy)
 * rt#23128: Monaco: hide long category names in the sidebar (TOR)
+* rt#23418: LyricWiki: moved ringtonelinks to inside of lyric box (TOR)
 
 == Changes since 200909.3 ==
 * rt#22995, rt#23000: Widgets reordering. (Nef)
