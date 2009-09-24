@@ -302,17 +302,22 @@ class AdEngine {
 			$dim = self::getHeightWidthFromSize($this->slots[$slotname]['size']);
 			$h = $dim['height'];
 			$w = $dim['width'];
+		} else {
+			$h = 0;
+			$w = 0;
 		}
 
 		// Make the 300x250 on the home page a 300x600
 		global $wgEnableHome300x600;
 		if ($slotname == "HOME_TOP_RIGHT_BOXAD" && $wgEnableHome300x600){
+			$h = 300;	
 			$h = 600;	
 		}
 
 		// Make the 300x250 on the article pages a 300x600
 		global $wgEnableArticle300x600;
 		if ($slotname == "TOP_RIGHT_BOXAD" && $wgEnableArticle300x600){
+			$w = 300;
 			$h = 600;
 		}
 
