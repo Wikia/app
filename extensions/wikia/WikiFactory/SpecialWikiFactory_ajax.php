@@ -167,7 +167,7 @@ function axWFactoryDomainCRUD($type="add") {
             break;
     }
     #--- get actuall domain list
-	 $aDomains = WikiFactory::getDomains( $iCityId, false, true );
+	 $aDomains = WikiFactory::getDomains( $iCityId, true );
 
     #--- send response, return domain array
     $aResponse["domains"] = $aDomains;
@@ -353,6 +353,7 @@ function axWFactoryDomainQuery() {
 		/**
 		 * maybe not very effective but used only by staff anyway
 		 */
+		$query = strtolower( $query );
 		$dbr = WikiFactory::db( DB_SLAVE );
 		$dbr->select(
 			array( "city_domains" ),
@@ -368,6 +369,7 @@ function axWFactoryDomainQuery() {
 			/**
 			 * skip all www. domains
 			 */
+			$domain->city_domain = strtolower( $domain->city_domain );
 			$skip = preg_match( '/^www\./', $domain->city_domain )
 				|| preg_match( '/wikicities\.com$/', $domain->city_domain );
 			if( $skip ) {
