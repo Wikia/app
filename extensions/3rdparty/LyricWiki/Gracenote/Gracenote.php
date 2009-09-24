@@ -136,9 +136,6 @@ function gracenote_disableEdit(&$out, &$sk){
 // copy-protection requirements of the Gracenote integration.
 ////
 function gracenote_installCopyProtection(&$out, &$sk){
-	// Add jQuery from Google's servers (free bandwidth & increases likelihood that it will already be in a user's cache).
-	$out->addScript("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js\"></script>");
-	
 	// Disable text-selection in the lyricsbox divs (this only needs to be done once between both the lyrics and gracenotelyrics extensions.
 	$DISABLE_TEXT_SELECTION_FUNCTIONS = "
 		function preventHighlighting(element){
