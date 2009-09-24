@@ -142,16 +142,15 @@ class WikiFactory {
 	 * @access public
 	 * @static
 	 *
-	 * @param integer	$city_id	default null	wiki identified in city_list
+	 * @param integer	$city_id	                wiki identified in city_list
 	 * @param boolean	$extended	default false	result is whole row not scalar
 	 * @param boolean	$extended	default false	result is whole row not scalar
 	 *
 	 * @return mixed: array of domains
 	 *
-	 * if city_id is null it will return such array:
-	 *
+	 * if city_id is null it will return empty array
 	 */
-	static public function getDomains( $city_id = null, $extended = false, $master = false ) {
+	static public function getDomains( $city_id, $extended = false, $master = false ) {
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -163,40 +162,40 @@ class WikiFactory {
  		wfProfileIn( __METHOD__ );
 
 		$domains = array();
-		$condition = is_null( $city_id ) ? null : array( "city_id" => $city_id );
+		if( !empty( $city_id ) ) {
+			/**
+			 * skip cache if we want master
+			 */
+			$key = sprintf( "wikifactory:domains:%d:%d", $city_id, $extended );
+			if( ! $master ) {
+				$domains = $wgMemc->get( $key );
 
-		/**
-		 * skip cache if we want master
-		 */
-		$key = sprintf( "wikifactory:domains:%d:%d", $city_id, $extended );
-		if( ! $master ) {
-			$domains = $wgMemc->get( $key );
-
-			if( is_array( $domains ) ) {
-				wfProfileOut( __METHOD__ );
-				return $domains;
+				if( is_array( $domains ) ) {
+					wfProfileOut( __METHOD__ );
+					return $domains;
+				}
 			}
+
+			$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
+			$oRes = $dbr->select(
+				array( "city_domains" ),
+				array( "*" ),
+				array( "city_id" => $city_id ),
+				__METHOD__
+			);
+
+			while( $oRow = $dbr->fetchObject( $oRes ) ) {
+				if( $extended === false ) {
+					$domains[] = strtolower( $oRow->city_domain );
+				}
+				else {
+					$domains[] = $oRow;
+				}
+			}
+			$dbr->freeResult( $oRes );
+
+			$wgMemc->set( $key, $domains, 3600 );
 		}
-
-		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
-		$oRes = $dbr->select(
-			array( "city_domains" ),
-			array( "*" ),
-			$condition,
-			__METHOD__
-		);
-
-		while( $oRow = $dbr->fetchObject( $oRes ) ) {
-			if( $extended === false ) {
-				$domains[] = strtolower( $oRow->city_domain );
-			}
-			else {
-				$domains[] = $oRow;
-			}
-		}
-		$dbr->freeResult( $oRes );
-
-		$wgMemc->set( $key, $domains, 3600 );
 
 		wfProfileOut( __METHOD__ );
 		return $domains;
