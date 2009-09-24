@@ -313,6 +313,12 @@ class AdEngine {
 			$h = 600;	
 		}
 
+		// Make the 300x250 on the article pages a 300x600
+		global $wgEnableArticle300x600;
+		if ($slotname == "TOP_RIGHT_BOXAD" && $wgEnableArticle300x600){
+			$h = 600;
+		}
+
 		return '<div id="' . htmlspecialchars($slotname) . '">' . 
 			'<iframe width="' . intval($w) . '" height="' . intval($h) . '" ' . 
 			'id="' . htmlspecialchars($slotname) . '_iframe" ' .
