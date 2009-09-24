@@ -223,7 +223,7 @@ class UserMailer {
 
 			/* Wikia change begin - @author: Marooned */
 			/* Add category to header to allow easier data gathering */
-				$headers .= "{$endl}X-Msg-Category: $category";
+			$headers .= "{$endl}X-Msg-Category: $category";
 			/* Wikia change end */
 
 			$wgErrorString = '';
