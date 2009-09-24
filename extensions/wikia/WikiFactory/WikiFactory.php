@@ -143,14 +143,13 @@ class WikiFactory {
 	 * @static
 	 *
 	 * @param integer	$city_id	                wiki identified in city_list
-	 * @param boolean	$extended	default false	result is whole row not scalar
-	 * @param boolean	$extended	default false	result is whole row not scalar
+	 * @param boolean	$master   default false	    use master db connection
 	 *
 	 * @return mixed: array of domains
 	 *
 	 * if city_id is null it will return empty array
 	 */
-	static public function getDomains( $city_id, $extended = false, $master = false ) {
+	static public function getDomains( $city_id, $master = false ) {
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -166,7 +165,7 @@ class WikiFactory {
 			/**
 			 * skip cache if we want master
 			 */
-			$key = sprintf( "wikifactory:domains:%d:%d", $city_id, $extended );
+			$key = sprintf( "wikifactory:domains:%d", $city_id );
 			if( ! $master ) {
 				$domains = $wgMemc->get( $key );
 
@@ -185,12 +184,7 @@ class WikiFactory {
 			);
 
 			while( $oRow = $dbr->fetchObject( $oRes ) ) {
-				if( $extended === false ) {
-					$domains[] = strtolower( $oRow->city_domain );
-				}
-				else {
-					$domains[] = $oRow;
-				}
+				$domains[] = strtolower( $oRow->city_domain );
 			}
 			$dbr->freeResult( $oRes );
 
@@ -1048,7 +1042,7 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		$domains = self::getDomains( $city_id, false, true );
+		$domains = self::getDomains( $city_id, true );
 		if( is_array( $domains ) ) {
 			foreach( $domains as $domain ) {
 				$wgMemc->delete( self::getDomainKey( $domain ) );
@@ -1553,7 +1547,7 @@ class WikiFactory {
 		wfProfileIn( __METHOD__ );
 		$res = true;
 
-		$domains = self::getDomains( $city_id, false, true );
+		$domains = self::getDomains( $city_id, true );
 
 		$dbw = self::db( DB_MASTER );
 		$dbw->begin();
