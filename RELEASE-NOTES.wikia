@@ -1,5 +1,6 @@
 == Changes since 200909.4 ==
-* rt:23364: Monaco: action=submit given css class (uberfuzzy)
+* rt#23397: Masthead: move masthead required messages from blogs (uberfuzzy)
+* rt#23364: Monaco: action=submit given css class (uberfuzzy)
 * rt#23356: Varaibles. (Nef)
 * rt#23344: MyHome: Memory leak fixed. (Nef)
 * rt#23228: Ads: New break-iframe def file. (Nef)

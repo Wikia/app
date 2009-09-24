@@ -26,6 +26,9 @@ $messages['en'] = array(
 	'removeavatar' => "Remove user's avatar",
 	'masthead-edits-since' => 'edits since',
 	'masthead-anonymous-user' => 'Anonymous contributor',
+	"useravatar-log" => "User avatar log",
+    "removeavatar" => "Remove user's avatar",
+	'blog-avatar-alt' => "Logs of useravatar additions or removals",
 );
 
 $messages['fi'] = array(
@@ -47,4 +50,5 @@ $messages['fi'] = array(
 	'blog-avatar-changed-log' => 'Avatarin on lisännyt tai vahtanut $1',
 	'blog-avatar-save-info' => 'Mikäli haluat tallentaa asetukset <a href="#prefcontrol">meme alas</a> ja paina "Tallenna asetukset"-nappia',
 	'removeavatar' => 'Poista käyttäjän avatar',
+	'blog-avatar-alt' => "Avatar",
 );
