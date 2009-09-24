@@ -1664,12 +1664,19 @@ if ($wgOut->isArticle()){
 					$wgOut->isArticle() &&
 					ArticleAdLogic::isContentPage() &&
 					ArticleAdLogic::isLongArticle($this->data['bodytext'])) {
-						echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
-						'<td style="text-align: center">' .
-						AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_LEFT_BOXAD", true) .
-						'</td><td style="text-align: center">' .
-						AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_RIGHT_BOXAD", true) .
-						"</td></tr>\n</table>";
+
+
+						global $wgEnableAdsFooter600x250;
+						if (!empty($wgEnableAdsFooter600x250)){
+							echo AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_BIG", true);
+						} else {
+							echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
+							'<td style="text-align: center">' .
+							AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_LEFT_BOXAD", true) .
+							'</td><td style="text-align: center">' .
+							AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_RIGHT_BOXAD", true) .
+							"</td></tr>\n</table>";
+						}
 					}
 
 					// Display categories
