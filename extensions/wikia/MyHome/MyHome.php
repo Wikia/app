@@ -11,6 +11,7 @@ $dir = dirname(__FILE__) . '/';
 // special page
 $wgAutoloadClasses['SpecialMyHome'] = $dir.'SpecialMyHome.php';
 $wgSpecialPages['MyHome'] = 'SpecialMyHome';
+$wgSpecialPageGroups['MyHome'] = 'users';
 
 // register extension classes
 $wgAutoloadClasses['MyHome'] = $dir.'MyHome.class.php';
