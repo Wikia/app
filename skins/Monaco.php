@@ -1383,7 +1383,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	}
 
 	$action = $wgRequest->getVal('action');
-	if (in_array($action, array('edit', 'history', 'diff', 'delete', 'protect', 'unprotect'))) {
+	if (in_array($action, array('edit', 'history', 'diff', 'delete', 'protect', 'unprotect', 'submit'))) {
 		$body_css_action = 'action_' . $action;
 	} else if (empty($action) || in_array($action, array('view', 'purge'))) {
 		$body_css_action = 'action_view';
