@@ -176,7 +176,6 @@ class WikiFactoryPage extends SpecialPage {
 	private function doWikiSelector() {
 		global $wgOut;
 
-
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"title"  => $this->mTitle,
@@ -576,13 +575,13 @@ class CityListPager {
 	 * @access public
 	 */
 	public function __construct( $part, $title ) {
-		global $wgRequest;
+		global $wgRequest, $wgTitle;
 
 		$this->mPart     = $part;
 		$this->mRequest  = $wgRequest;
 		$this->mLimit    = 25;
 		$this->mOffset   = $this->mRequest->getVal( "offset", false );
-		$this->mTitle    = $title;
+		$this->mTitle    = $title || $wgTitle;
 		$this->mTemplate = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 	}
 
