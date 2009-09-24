@@ -350,8 +350,20 @@ function axWFactoryDomainQuery() {
 	$match = array( "suggestion" => array(), "data" => array() );
 
 	if( $query ) {
-		$domains = WikiFactory::getDomains( null, true );
-		foreach( $domains as $domain ) {
+		/**
+		 * maybe not very effective but used only by staff anyway
+		 */
+		$dbr = WikiFactory::db( DB_SLAVE );
+		$dbr->select(
+			array( "city_domains" ),
+			array( "city_id", "city_domain" ),
+			array(
+				"city_domain not like 'www.%'",
+				"city_domain not like '%.wikicities.com'"
+			),
+			__METHOD__
+		);
+		while( $domain = $dbr->fetchObject( $dbr ) ) {
 			/**
 			 * skip all www. domains
 			 */
