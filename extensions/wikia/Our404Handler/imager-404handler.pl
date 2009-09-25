@@ -9,7 +9,6 @@ use strict;
 use URI;
 use FCGI;
 use FCGI::ProcManager::MaxRequests;
-use Sys::Syslog qw(:standard :macros);
 use Imager;
 use Image::LibRSVG;
 use File::LibMagic;
@@ -22,7 +21,7 @@ use XML::Simple;
 # debug
 #
 use Data::Dumper;
-my $syslog      = 1;
+my $debug      = 1;
 
 sub real404 {
 	my $request_uri  = shift;
@@ -135,7 +134,7 @@ while( $request->Accept() >= 0 ) {
 		#
 		my $origname = pop @{ [ split( "/" , $original ) ] };
 		if( index( $last, $original ) != -1 ) {
-			print STDERR "$origname not found in $last" if $syslog;
+			print STDERR "$origname not found in $last\n" if $debug;
 		}
 		else {
 			#
@@ -161,7 +160,7 @@ while( $request->Accept() >= 0 ) {
 			if( -f $original ) {
 				$mimetype = $flm->checktype_filename( $original );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
-				print STDERR qq{$thumbnail $mimetype $imgtype REQUEST_URI=$request_uri HTTP_REFERER=$referer} if $syslog;
+				print STDERR "$thumbnail $mimetype $imgtype REQUEST_URI=$request_uri HTTP_REFERER=$referer\n" if $debug;
 
 				#
 				# create folder for thumbnail if doesn't exists
@@ -170,10 +169,10 @@ while( $request->Accept() >= 0 ) {
 				unless( -d $thumbdir ) {
 					eval { mkpath( $thumbdir ) };
 					if( $@ ) {
-						print STDERR "Creating of $thumbdir folder failed" if $syslog;
+						print STDERR "Creating of $thumbdir folder failed\n" if $debug;
 					}
 					else {
-						print STDERR LOG_INFO, "Folder $thumbdir created" if $syslog;
+						print STDERR "Folder $thumbdir created\n" if $debug;
 					}
 				}
 
@@ -205,10 +204,10 @@ while( $request->Accept() >= 0 ) {
 						print "HTTP/1.1 200 OK\r\n";
 						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
-						print STDERR "File $thumbnail created" if $syslog;
+						print STDERR "File $thumbnail created\n" if $debug;
 					}
 					else {
-						print STDERR "SVG conversion from $original to $thumbnail failed";
+						print STDERR "SVG conversion from $original to $thumbnail failed\n";
 					}
 					undef $rsvg;
 					undef $xmlp;
@@ -243,17 +242,17 @@ while( $request->Accept() >= 0 ) {
 							print "HTTP/1.1 200 OK\r\n";
 							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
-							print STDERR "File $thumbnail created" if $syslog;
+							print STDERR "File $thumbnail created\n" if $debug;
 						}
 						else {
-							print STDERR "ImageMagick thumbnailer from $original to $thumbnail failed" if $syslog;
+							print STDERR "ImageMagick thumbnailer from $original to $thumbnail failed\n" if $debug;
 						}
 						undef $image;
 					}
 				}
 			}
 			else {
-				print STDERR "$thumbnail original file $original does not exists" if $syslog ;
+				print STDERR "$thumbnail original file $original does not exists\n" if $debug > 1;
 			}
 		}
 	}
