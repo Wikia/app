@@ -504,8 +504,8 @@ yieldbuild_loc = "left_content_top";
 			<ul>
 			<li><?= wfMsg("answer_this", $wgTitle->getEditURL())?></li>
 			<li><?= wfMsg("research_this_on_wikipedia", $wgTitle->getEditURL())?></li>
-			<li><?= wfMsg("ask_friends_on_twitter", $twitter_url)?></li>
-			<li><?= wfMsg("receive_email", $watchlist_url)?></li>
+			<li><?= wfMsg("ask_friends_on_twitter", $twitter_url, "onclick=\"WET.byStr( 'articleFooter/Twitter' );\" ")?></li>
+			<li><?= wfMsg("receive_email", $watchlist_url, "onclick=\"WET.byStr( 'articleFooter/emailme' );\"", "onclick=\"WET.byStr( 'articleFooter/reword' );\""))?></li>
 			<li><?= wfMsg("reword_this", $move_url )?></li>
 			</ul>
 			</div>
@@ -955,15 +955,15 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 		if ($wgUser->isLoggedIn()) {
         	?>
 			<ul id="user_data">
-                                <li id="header_username"><a href="<?php echo htmlspecialchars($this->data['personal_urls']['userpage']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-userpage') ?>><?php echo htmlspecialchars($wgUser->getName()) ?></a></li>
-											  <li><a href="<?php echo htmlspecialchars($this->data['personal_urls']['mytalk']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-mytalk') ?>><?php echo htmlspecialchars($this->data['personal_urls']['mytalk']['text']) ?></a></li>
-											  <li><a href="<?php echo htmlspecialchars($this->data['personal_urls']['watchlist']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-watchlist') ?>><?php echo htmlspecialchars(wfMsg('prefs-watchlist')) ?></a></li>
+                                <li id="header_username"><a href="<?php echo htmlspecialchars($this->data['personal_urls']['userpage']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-userpage') ?> onclick="WET.byStr( 'userMenu/userPage' );" ><?php echo htmlspecialchars($wgUser->getName()) ?></a></li>
+											  <li><a href="<?php echo htmlspecialchars($this->data['personal_urls']['mytalk']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-mytalk') ?> onclick="WET.byStr( 'userMenu/My-talk' );" ><?php echo htmlspecialchars($this->data['personal_urls']['mytalk']['text']) ?></a></li>
+											  <li><a href="<?php echo htmlspecialchars($this->data['personal_urls']['watchlist']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-watchlist') ?> onclick="WET.byStr( 'userMenu/Watchlist' );" ><?php echo htmlspecialchars(wfMsg('prefs-watchlist')) ?></a></li>
                                 <li><dl id="header_button_user" class="header_menu_button">
 					<dt><?php echo trim(wfMsg('moredotdotdot'), ' .') ?></dt>
                                         <dd>&nbsp;</dd>
                                     </dl>
                                 </li>
-                                <li><a rel="nofollow" href="<?php echo htmlspecialchars($this->data['personal_urls']['logout']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-logout') ?>><?php echo htmlspecialchars($this->data['personal_urls']['logout']['text']) ?></a></li>
+                                <li><a rel="nofollow" href="<?php echo htmlspecialchars($this->data['personal_urls']['logout']['href']) ?>" <?php echo $skin->tooltipAndAccesskey('pt-logout') ?>onclick="WET.byStr( 'userMenu/Log-out' );" ><?php echo htmlspecialchars($this->data['personal_urls']['logout']['text']) ?></a></li>
 			</ul>
 		<?php
  		} else { // not logged in
