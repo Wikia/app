@@ -6,6 +6,8 @@
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 
 function wfMakeGlobalVariablesScript($vars) {
+	wfProfileIn(__METHOD__);
+
 	global $wgMemc, $wgCurse, $wgCityId, $wgEnableAjaxLogin, $wgUser, $wgDBname, $wgPrivateTracker, $wgWikiaAdvertiserCategory, $wgExtensionsPath, $wgTitle, $wgArticle, $wgStyleVersion, $wgSitename;
 
 	$cats = wfGetBreadCrumb();
@@ -65,6 +67,13 @@ function wfMakeGlobalVariablesScript($vars) {
 	$StaticChute->useLocalChuteUrl();
 
 	$vars['wgYUIPackageURL'] = $StaticChute->getChuteUrlForPackage('yui');
+
+	// macbre: get revision ID of current article
+	if ( $wgTitle->isContentPage() ) {
+		$vars['wgRevisionId'] = !empty($wgArticle->mRevision) ? $wgArticle->mRevision->getId() : intval($wgArticle->mLatest);
+	}
+
+	wfProfileOut(__METHOD__);
 
 	return true;
 }

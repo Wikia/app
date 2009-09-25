@@ -17,6 +17,11 @@ $.fn.extend({
 
    	var wrapper = this.closest(".modalWrapper");
 
+	// macbre: addcustom CSS class to popup wrapper
+	if (options.className) {
+		wrapper.addClass(options.className);
+	}
+
 	// let's have it dynamically generated, so every newly created modal will be on the top
 	var zIndex = ($('.blackout').length+1) * 1000;
 
@@ -39,6 +44,9 @@ $.fn.extend({
    		})
    		.fadeIn("fast")
 		.log('makeModal: #' + this.attr('id'));
+
+	// get rid of tooltip - remove title attr
+	this.removeAttr('title');
 
 	// add event handlers
 	var persistent = (typeof options.persistent == 'boolean') ? options.persistent : false;

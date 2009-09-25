@@ -36,7 +36,8 @@ $wgWidgetsOrderedList = array(
 	'WidgetShoutBox',
 	'WidgetWikiPage',
 	'WidgetNewPages',
-	'WidgetAnswers'
+	'WidgetAnswers',
+	'WidgetMagCloud',
 );
 
 global $wgWidgets, $wgMessageCache;
