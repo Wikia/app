@@ -427,6 +427,7 @@ class GlobalWatchlistBot {
 									"wl_namespace" => NS_BLOG_ARTICLE_TALK,
 									"wl_title LIKE '" . $dbr->escapeLike($oResultRow->gwa_title) . "%'",
 									"wl_notificationtimestamp is not null",
+									"wl_notificationtimestamp >= '".$oResultRow->gwa_timestamp."'",
 									"wl_user > 0",
 								),
 								__METHOD__
