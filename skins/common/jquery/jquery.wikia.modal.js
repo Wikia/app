@@ -7,13 +7,13 @@ $.fn.extend({
 	}
 
 	if (options.id) {
-		var id = ' id="' + options.id + '"';
+		var id = options.id;
 	}
 	else {
-		var id = '';
+		var id = $(this).attr('id') + 'Wrapper';
 	}
 
-   	this.addClass('modalInside').wrap('<div class="modalWrapper"'+id+'></div>');
+   	this.addClass('modalInside').wrap('<div class="modalWrapper" id="'+id+'"></div>');
 
    	var wrapper = this.closest(".modalWrapper");
 
