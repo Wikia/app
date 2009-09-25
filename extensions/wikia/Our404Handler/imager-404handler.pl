@@ -17,12 +17,6 @@ use File::Basename;
 use File::Path;
 use XML::Simple;
 
-#
-# debug
-#
-use Data::Dumper;
-my $debug      = 1;
-
 sub real404 {
 	my $request_uri  = shift;
 	print "Status: 404\r\n";
@@ -45,14 +39,12 @@ sub real404 {
 #
 # initialization
 #
-
-
-#
-# number of processes and how many requests we should handle
+# configurable via environmet variables
 #
 my $maxrequests = $ENV{ "REQUESTS" } || 1000;
 my $clients     = $ENV{ "CHILDREN" } || 10;
 my $listen      = $ENV{ "SOCKET" }   || "127.0.0.1:39393";
+my $debug       = $ENV{ "DEBUG" }    || 1;
 
 #
 # fastcgi request
