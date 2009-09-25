@@ -52,13 +52,13 @@ sub real404 {
 #
 my $maxrequests = $ENV{ "REQUESTS" } || 1000;
 my $clients     = $ENV{ "CHILDREN" } || 10;
+my $listen      = $ENV{ "SOCKET" }   || "127.0.0.1:39393";
 
 #
 # fastcgi request
 #
 my %env;
-my $socket      = FCGI::OpenSocket( "127.0.0.1:39393", 100 )
-	or die "failed to open FastCGI socket; $!";
+my $socket      = FCGI::OpenSocket( $listen, 100 ) or die "failed to open FastCGI socket; $!";
 my $request     = FCGI::Request( \*STDIN, \*STDOUT, \*STDOUT, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
 my $manager     = FCGI::ProcManager::MaxRequests->new({ n_processes => $clients, max_requests => $maxrequests });
 my $basepath    = "/images";
