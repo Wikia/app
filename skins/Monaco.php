@@ -1340,7 +1340,7 @@ class MonacoTemplate extends QuickTemplate {
 		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= htmlspecialchars($css['url']) ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
 
 <?php
-	}	
+	}
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
@@ -1393,6 +1393,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 ?>
 	<body<?php if($this->data['body_onload'    ]) { ?> onload="<?php     $this->text('body_onload')     ?>"<?php } ?>
  class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 wikiaSkinMonaco<?=$isMainpage?> <?= $body_css_action ?>" id="body">
+	<img src="http://www.google-analytics.com/__utm.gif?utmwv=1.3&utmdtTest=test.wikia.com&&utmp=/tewst&utmac=UA-288915-14" alt="" />
 <?php
 
 // Sometimes we need an ad delivered at the very top of the page (like for a skin)
@@ -1479,7 +1480,7 @@ if( $custom_user_data ) {
 	?>
 				<li id="header_username"><a href="<?= htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-userpage') ?>><?= htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></li>
 <?php
-		if (isset($this->data['userlinks']['myhome'])) { 
+		if (isset($this->data['userlinks']['myhome'])) {
 ?>
 				<li><a href="<?= htmlspecialchars($this->data['userlinks']['myhome']['href']) ?>" rel="nofollow"<?= $skin->tooltipAndAccesskey('pt-myhome') ?>><?= htmlspecialchars($this->data['userlinks']['myhome']['text']) ?></a></li>
 <?php
@@ -1904,7 +1905,7 @@ if ($custom_article_footer !== '') {
 		</div>
 		<!-- /PAGE -->
 <?php		wfProfileOut( __METHOD__ . '-page'); ?>
-		
+
 		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript>
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
