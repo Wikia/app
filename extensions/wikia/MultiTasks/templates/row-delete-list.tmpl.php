@@ -5,7 +5,7 @@
 	<div>Article: <b><?=$sTitle?></b> </div>
 	<div>Deleted by user: <a href="<?=$wgUser->getUserPage()->getLocalUrl()?>"><?=$mTaskParams['admin']?></a></div>
 	<div>Reason: <b><?=$mTaskParams['reason']?></b> </div>
-	<div>Number of Wikis to delete: <b><?=$countWikis?></b></div>
+	<div>Number of wikis to delete at: <b><?=$countWikis?></b></div>
 	<div>Language of Wikis: <b><?= ( $lang ) ? $lang : " - " ?></b></div>
 <? if ( $error ) { ?> 
 	<div style="color:#BF0000"><strong><?=wfMsg ('multidelete_task_error' )?></strong></div>
