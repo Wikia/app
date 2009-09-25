@@ -65,7 +65,6 @@ my $maxwidth    = 3000;
 my $transformed = 0;
 my $mimetype    = "text/plain";
 my $imgtype     = undef;
-umask( 022 );
 
 $manager->pm_manage();
 while( $request->Accept() >= 0 ) {
@@ -159,7 +158,7 @@ while( $request->Accept() >= 0 ) {
 				#
 				my $thumbdir = dirname( $thumbnail );
 				unless( -d $thumbdir ) {
-					eval { mkpath( $thumbdir ) };
+					eval { mkpath( $thumbdir, { mode => 0775 } ) };
 					if( $@ ) {
 						print STDERR "Creating of $thumbdir folder failed\n" if $debug;
 					}
