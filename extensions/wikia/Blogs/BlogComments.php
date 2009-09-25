@@ -924,12 +924,14 @@ class BlogComment {
 	 * @return true -- because it's hook
 	 */
 	static public function ComposeCommonMail( $Title, &$keys, &$message ) {
+		error_log (print_r($keys, true));
 		if ( $Title->getNamespace() == NS_BLOG_ARTICLE ) {
 			if ( !is_array($keys) ) {
 				$keys = array();
 			}
 			$keys['$DBPAGETITLE'] = $Title->getDBKey();
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'blog-added' );
+			list ( $keys['$AUTHOR'], $keys['$BLOGTITLE'] ) = explode( "/", $keys['$DBPAGETITLE'], 2 );
 		}
 		return true;
 	}
