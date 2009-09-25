@@ -19,7 +19,16 @@ class BolekPage extends UnlistedSpecialPage {
 
 		$action  = $wgRequest->getVal("action",  null);
 		if (empty($action)) {
+			$ud = $wgRequest->getVal("ud",  null);
+			if (!in_array($ud, array("approval", "qt3")) && preg_match("/^[0-9a-z.-]+$/", $ud)) {
+				$token   = $wgRequest->getVal("token",   null);
+				$success = $wgRequest->getVal("success", 0);
+				$wgOut->redirect("http://{$ud}/wiki/Special:WikiaCollection/Publish?token={$token}&success={$success}");
+
+				return;
+			} else {
 			$action  = $wgRequest->getVal("ud",  null);
+			}
 		}
 
 		// totally different wrokflow, almost separate application
