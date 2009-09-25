@@ -59,6 +59,19 @@ var AjaxLogin = {
 				YAHOO.wikia.AjaxLogin.blockLoginForm(true);
 				break;
 			case 'Success':
+				// macbre: call custom function (if provided by any extension)
+				if (typeof window.wgAjaxLoginOnSuccess == 'function') {
+					// let's update wgUserName
+					window.wgUserName = response.ajaxlogin.lgusername;
+
+					// close AjaxLogin form
+					$('#AjaxLoginBoxWrapper').closeModal();
+
+					$().log('AjaxLogin: calling custom function');
+					window.wgAjaxLoginOnSuccess();
+					return;
+				}
+
 				// we're on edit page
 				if($('#wpPreview').length && $('#wpLogin').length) {
 					if ($('#wikiDiff').children().length) {

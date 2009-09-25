@@ -14,6 +14,10 @@ a.bigButton big, a.bigButton small {
 	background-image: none;
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/big_button.png?1', sizingMethod='crop');
 }
+a.greyButton big, a.greyButton small {
+	background-image: none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/releases_MagCloud/skins/monaco/images/grey_button.png?1', sizingMethod='crop');
+}
 #page_controls div {
 	background: none;
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');

@@ -1,0 +1,468 @@
+<?php
+
+class MagCloud {
+
+	/*
+	 * Read current toolbar state and inject it into HTML of the page
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	static public function injectToolbar(&$tpl, &$html) {
+		wfProfileIn(__METHOD__);
+
+		// detect current state
+		$toolbarIsVisible = MagCloudCollection::getInstance()->getToolbarVisibleState();
+
+		if ($toolbarIsVisible) {
+			wfLoadExtensionMessages('MagCloud');
+			$html .= self::renderToolbar();
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return true;
+	}
+
+	/*
+	 * Add global JS variables for MagCloud
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	static public function makeGlobalVariablesScript($vars) {
+		wfProfileIn(__METHOD__);
+
+		$magCloud = MagCloudCollection::getInstance();
+
+		// is toolbar visible?
+		if ($magCloud->getToolbarVisibleState()) {
+			$vars['wgMagCloudToolbarVisible'] = true;
+			$vars['wgMagCloudArticlesCount'] = count($magCloud->getArticles() );
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return true;
+	}
+
+	/*
+	 * Check whether current page is Special:WikiaCollection
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	static public function isOnSpecialPageCollection() {
+		wfProfileIn(__METHOD__);
+
+		global $wgTitle;
+		$ret = ($wgTitle->getNamespace() == NS_SPECIAL) && ($wgTitle->getDBkey() == 'WikiaCollection');
+
+		wfProfileOut(__METHOD__);
+
+		return $ret;
+	}
+
+	/*
+	 * Add CSS/JS for MagCloud toolbar and special page
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	static public function beforePageDisplay(&$out, &$sk) {
+
+		wfProfileIn(__METHOD__);
+
+		global $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+
+		// detect current state of toolbar
+		$isToolbarVisible = MagCloudCollection::getInstance()->getToolbarVisibleState();
+
+		// load CSS/JS for toolbar (always load this for special page)
+		if ( $isToolbarVisible || self::isOnSpecialPageCollection() ) {
+			$out->addExtensionStyle("{$wgExtensionsPath}/wikia/MagCloud/css/MagCloud.css?{$wgStyleVersion}");
+			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MagCloud/js/MagCloud.js?{$wgStyleVersion}\"></script>\n");
+		}
+
+		// load CSS/JS for special page
+		if (self::isOnSpecialPageCollection()) {
+			$out->addExtensionStyle("{$wgExtensionsPath}/wikia/MagCloud/css/SpecialMagCloud.css?{$wgStyleVersion}");
+			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MagCloud/js/SpecialMagCloud.js?{$wgStyleVersion}\"></script>\n");
+
+			// load jQuery UI plugin for anons
+			global $wgUser;
+			if ($wgUser->isAnon()) {
+				$out->addScriptFile('jquery/jquery-ui-1.7.1.custom.js');
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return true;
+	}
+
+	/*
+	 * Return HTML of MagCloud toolbar for given page
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	static public function renderToolbar() {
+
+		wfProfileIn(__METHOD__);
+
+		global $wgTitle, $wgRequest;
+
+		$collection = MagCloudCollection::getInstance();
+
+		// init template
+		$template = new EasyTemplate(dirname(__FILE__) . '/templates');
+
+		if (self::isOnSpecialPageCollection()) {
+			$titleParts = explode('/', $wgRequest->getVal('title'));
+			$stepName = isset($titleParts[1]) ? strtolower($titleParts[1]) : null;
+
+			// Special:Collection: show process steps
+			$steps = array(
+				'Review list',
+				'Design Cover',
+				'Preview',
+				'Publish',
+			);
+
+			switch($stepName) {
+				default:
+				case 'review_list':
+					$currentStep = 1;
+					break;
+				case 'design_cover':
+					$currentStep = 2;
+					break;
+				case 'preview':
+					$currentStep = 3;
+					break;
+				case 'publish':
+					$currentStep = 4;
+					break;
+			}
+
+			$template->set_vars(array(
+				'currentStep' => $currentStep,
+				'steps' => $steps,
+			));
+		}
+		elseif ($wgTitle->isContentPage()) {
+			// on content pages: show add "foo" to your magazine
+
+			// check whether current article is in collection
+			$isInCollection = $collection->findArticle($wgTitle->getPrefixedText()) != -1;
+
+			$template->set_vars(array(
+				'count' => $collection->countArticles(),
+				'isInCollection' => $isInCollection,
+				'title' => self::getAbbreviatedTitle($wgTitle),
+				'magazineUrl' => Skin::makeSpecialUrl('WikiaCollection'),
+			));
+		}
+		else {
+			// on non-content pages: show some message
+			$template->set_vars(array(
+				'count' => $collection->countArticles(),
+				'message' => 'This type of page can\'t be added. Try heading to a content page!',
+				'magazineUrl' => Skin::makeSpecialUrl('WikiaCollection'),
+			));
+		}
+
+		// render toolbar
+		$html = $template->render('toolbar');
+
+		wfProfileOut(__METHOD__);
+
+		return $html;
+	}
+
+	/*
+ 	 * Returns abbreviated version of title provided
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	static public function getAbbreviatedTitle($title) {
+		if ($title instanceof Title) {
+			$pageName = $title->getPrefixedText();
+		}
+		else {
+			$pageName = $title;
+		}
+
+		if (mb_strlen($pageName) > 25) {
+			// Shahid says: the article name displayed should be abbreviated using <first x characters> ... <last x characters>
+			$pageName = mb_substr($pageName, 0, 12) . '...' . mb_substr($pageName, -12);
+		}
+
+		return $pageName;
+	}
+
+	/*
+	 * Try to start session for anon to bypass Varnish
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	static public function startAnonSession() {
+		global $wgUser, $wgSessionStarted;
+
+		if ($wgUser->isAnon()) {
+			if (empty($wgSessionStarted)) {
+				wfDebug("MagCloud: starting session for anon...\n");
+
+				// start session
+				wfSetupSession();
+				$wgSessionStarted = true;
+			}
+			else {
+				wfDebug("MagCloud: anon has session\n");
+			}
+		}
+	}
+
+	static public function renderPreviewPage($hash, $timestamp, $pageNo) {
+		global $wgCityId, $wgRequest, $wgMagCloudUploadDirectory, $wgMagCloudUploadPath;
+		wfProfileIn(__METHOD__);
+
+		if(empty($hash) || empty($timestamp) || empty($pageNo)) {
+			wfProfileOut(__METHOD__);
+			return array( 'msg' => 'Not enough data', 'error' => true );
+		}
+
+		// generate PDF name
+		$pdfFileName = "{$wgCityId}-{$hash}-{$timestamp}.pdf";
+		$pdfPath = "{$wgMagCloudUploadDirectory}/pdf/{$pdfFileName}";
+		if(!file_exists($pdfPath)) {
+			wfProfileOut(__METHOD__);
+			return array( 'msg' => 'PDF file not found', 'error' => true );
+		}
+
+		// genrate local path to image file
+		$imageFileName = sha1("{$wgCityId}-{$hash}-{$timestamp}-{$pageNo}") . '.png';
+		$imagePath = "{$wgMagCloudUploadDirectory}/preview/{$imageFileName}";
+
+		if(!file_exists($imagePath)) {
+			$cmd = "/usr/local/bin/gs -sDEVICE=png16m -dNOPAUSE -dBATCH -dSAFER -dFirstPage={$pageNo} -dLastPage={$pageNo} -sOutputFile={$imagePath} -r35 {$pdfPath}";
+
+			$result = null;
+			wfShellExec($cmd, $result);
+
+			if($result) {
+				wfProfileOut(__METHOD__);
+				return array( 'msg' => 'Page rendering error. (Info from gs)', 'result' => $result, 'cmd' => $cmd, 'error' => true );
+			}
+		}
+
+		// generate URL to pdf
+		$imageUrl = "{$wgMagCloudUploadPath}/preview/{$imageFileName}";
+
+		wfDebug("renderPdf: image ready (URL: {$imageUrl})\n");
+
+		wfProfileOut(__METHOD__);
+		return array(
+			'msg' => 'Rendering done',
+			'img' => $imageUrl,
+			'page' => $pageNo
+		);
+	}
+
+	static public function renderPdf($hash, $timestamp) {
+		wfProfileIn(__METHOD__);
+
+		if(empty($timestamp) ||empty($hash)) {
+			wfProfileOut(__METHOD__);
+			return array( 'msg' => 'Not enough data.' );
+		}
+
+		// URL of Special:WikiaCollection
+		$url =  Title::newFromText('WikiaCollection', NS_SPECIAL)->getFullUrl();
+
+		// generate PDF name
+		global $wgCityId;
+		$fname = "{$wgCityId}-{$hash}-{$timestamp}.pdf";
+
+		// genrate local path to PDF file
+		global $wgMagCloudUploadDirectory;
+		$pdf = "{$wgMagCloudUploadDirectory}/pdf/{$fname}";
+
+		wfDebug("renderPdf: rendering {$fname} -> {$pdf}\n");
+
+		if(!file_exists($pdf)) {
+			$add = 0;
+			$iteration = 3; // prevent infinite loop
+			do {
+				$cmd = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --header-line --header-center \"a Wikia magazine\" --footer-line --footer-center \"- [page] -\" --margin-bottom 20mm --margin-left 20mm --margin-right 20mm --margin-top 20mm --cover \"{$url}?action=getCover&hash={$hash}\" \"{$url}?action=getBody&add={$add}&hash={$hash}\" {$pdf}";
+				//$cmd = "/users/ADi/wkhtmltopdf --page-size Letter --footer-left \"{$debug}\" --cover \"{$url}?action=getCover&hash={$hash}\" \"{$url}?action=getBody&add={$add}&hash={$hash}\" {$wgUploadDirectory}/lolek/{$fname}";
+				//echo $cmd;
+
+				$result = null;
+				wfShellExec($cmd, $result);
+
+				if($result) {
+					wfDebug("renderPdf: rendering error (#{$result})\n");
+					return array( 'msg' => "Pdf rendering error. (Info from wkhtmltopdf.)", 'result' => $result );
+				}
+
+				$cmd = "/usr/bin/pdfinfo {$pdf}";
+				$output = wfShellExec($cmd, $result);
+
+				if($result || !preg_match("/Pages: *([0-9]+)\n/", $output, $matches)) {
+					wfDebug("renderPdf: broken / no pdf\n");
+
+					wfProfileOut(__METHOD__);
+					return array( 'msg' => "Broken or no pdf. (Info from pdfinfo.)", 'cmd' => $cmd, 'cmdOutput' => $output );
+				}
+
+				$pages = intval( trim($matches[1]) );
+
+				$reminder = $matches[1] % 4;
+				$add = $reminder ? 4 - $reminder : 0;
+			} while(--$iteration && $add);
+
+			if($add) {
+				wfProfileOut(__METHOD__);
+				return array( 'msg' => "Pdf generation error, can't reach mod 4 pages. (+{$add} page(s) needed.)" );
+			}
+		}
+		else {
+			// get number of pages
+			$cmd = "/usr/bin/pdfinfo {$pdf}";
+			$output = wfShellExec($cmd, $result);
+
+			preg_match("/Pages: *([0-9]+)\n/", $output, $matches);
+
+			$pages = intval( trim($matches[1]) );
+		}
+
+		// generate URL to pdf
+		global $wgMagCloudUploadPath;
+		$pdfUrl = "{$wgMagCloudUploadPath}/pdf/{$fname}";
+
+		wfDebug("renderPdf: PDF ready (URL: {$pdfUrl})\n");
+
+		// generate msg
+		$msg = wfMsg('magcloud-preview-done');
+
+		// debug
+		global $wgDevelEnvironment;
+		if (!empty($wgDevelEnvironment)) {
+			$msg .= " <small>{$pages} pages | <a href=\"{$pdfUrl}\">download it</a></small>";
+		}
+		else {
+			// hide PDF url
+			$pdfUrl = false;
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return array(
+			'msg' => $msg,
+			'pdf' => $pdfUrl,
+			'pages' => $pages,
+		);
+	}
+
+	static public function publish($hash, $timestamp, $token) {
+
+		if (empty($hash) || empty($timestamp) || empty($token)) {
+			return array("msg" => "Not enough data.");
+		}
+
+		# c&p'ed from MagCloud::renderPdf(), factor it out FIXME
+		// generate PDF name
+		global $wgCityId;
+		$fname = "{$wgCityId}-{$hash}-{$timestamp}.pdf";
+
+		global $wgMagCloudUploadDirectory;
+		$pdf = "{$wgMagCloudUploadDirectory}/pdf/{$fname}";
+
+		if (!file_exists($pdf)) {
+			return array("msg" => "No pdf. Please create it first.");
+		}
+
+		// get magazine title / subtitle
+		$collection = MagCloudCollection::getInstance();
+		$collection->restore($hash);
+
+		$coverData = $collection->getCoverData();
+
+		$magazineTitle = $coverData['title'];
+		$magazineSubtitle = $coverData['subtitle'];
+
+		$tags = array();
+
+		global $wgCityId;
+		$cat = WikiFactory::getCategory($wgCityId);
+		if (is_array($cat)) list($cat_id, $cat_name) = $cat;
+		if (!empty($cat_name)) $tags[] = $cat_name;
+
+		global $wgSitename;
+		$tags[] = $wgSitename;
+
+#echo "<pre>";
+#$d = fopen("/tmp/curl.log", "w");
+
+
+		$res = MagCloudApi::LoginAs($token);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'login', 'code' => $res->code);
+		}
+
+		$authTicket = $res->authTicket;
+
+
+		$res = MagCloudApi::Publication($authTicket);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'publication', 'code' => $res->code);
+		}
+
+		$publicationId = $res->id;
+
+		$res = MagCloudApi::Issue($authTicket, $publicationId, $magazineTitle, $magazineSubtitle, join(",", $tags));
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'issue', 'code' => $res->code);
+		}
+
+		$issueId = $res->id;
+
+
+		$res = MagCloudApi::IssueUpload($authTicket, $issueId, $pdf);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'issueUpload', 'code' => $res->code);
+		}
+
+
+		$res = MagCloudApi::IssuePublish($authTicket, $issueId);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'issuePublish', 'code' => $res->code);
+		}
+
+#fclose($d);
+#echo "</pre>";
+#exit;
+
+#echo $issueId;
+		return array('msg' => wfMsg('magcloud-publish-done'), 'issue' => intval($issueId));
+	}
+
+	/*
+	 * Get color themes used by cover preview and PDF rendering code
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	static public function getColorThemes() {
+		// list of themes and their colors in following order:
+		// bg of bar with Wikia logo, cover bg, title box bg
+		return array(
+			'beach' => array('3e2a18', 'b0d9f3', '42779e'),
+			'stark' => array('4a0503', 'd8c1ab', 'c9c9c9'),
+			'buzzbee' => array('b11e1e', 'fad392', 'b0c0cf'),
+			'bad_drugs' => array('db141d', 'd4d4d2', '000000'),
+		);
+	}
+
+}

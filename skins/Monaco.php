@@ -1421,7 +1421,11 @@ if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
 <?
 	}
 
-wfRunHooks('GetHTMLAfterBody', array ($this));
+	// this hook allows adding extra HTML just after <body> opening tag
+	// append your content to $html variable instead of echoing
+	$html = '';
+	wfRunHooks('GetHTMLAfterBody', array ($this, &$html));
+	echo $html;
 ?>
 	<!-- HEADER -->
 <?php
