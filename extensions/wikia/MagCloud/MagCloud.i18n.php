@@ -43,7 +43,7 @@ If you're stuck for inspiration, check out the examples below!",
 
 	'magcloud-button-design-a-cover' => 'Design a Cover',
 
-	'magcloud-design-default-title' => '$1 Top Articles',
+	'magcloud-design-default-title' => 'My $1 magazine',
 	'magcloud-design-default-subtitle' => 'Subtitle',
 
 	'magcloud-design-review-list' => 'Back to Review List',
