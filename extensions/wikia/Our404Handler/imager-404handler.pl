@@ -192,6 +192,7 @@ while( $request->Accept() >= 0 ) {
 
 					if( -f $thumbnail ) {
 						$mimetype = $flm->checktype_filename( $thumbnail );
+						chmod 0664, $thumbnail;
 						$transformed = 1;
 						print "HTTP/1.1 200 OK\r\n";
 						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
@@ -206,7 +207,7 @@ while( $request->Accept() >= 0 ) {
 				}
 				else {
 					#
-					# for other else use Image::Magick
+					# for other else use Imager
 					#
 					#my $image = new Imager;
 					my @in = Imager->read_multi( file => $original );
@@ -230,6 +231,7 @@ while( $request->Accept() >= 0 ) {
 							#
 							# serve file if is ready to serve
 							#
+							chmod 0664, $thumbnail;
 							$transformed = 1;
 							print "HTTP/1.1 200 OK\r\n";
 							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
@@ -237,7 +239,7 @@ while( $request->Accept() >= 0 ) {
 							print STDERR "File $thumbnail created\n" if $debug;
 						}
 						else {
-							print STDERR "ImageMagick thumbnailer from $original to $thumbnail failed\n" if $debug;
+							print STDERR "Imager thumbnailer from $original to $thumbnail failed\n" if $debug;
 						}
 						undef $image;
 					}
