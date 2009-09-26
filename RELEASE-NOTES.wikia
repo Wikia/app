@@ -1,4 +1,5 @@
 == Changes since 200909.4 ==
+* rt#23550: Analytics: Test tracking image fix & hide. (Nef)
 * rt#23401: MyHome: Special page grouping (uberfuzzy)
 * rt#23397: Masthead: move masthead required messages from blogs (uberfuzzy)
 * rt#23364: Monaco: action=submit given css class (uberfuzzy)
