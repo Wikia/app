@@ -324,7 +324,7 @@ yieldbuild_loc = "question_bubble";
 			<h3 id="siteSub"><?php $this->msg('tagline') ?></h3>
 			<div id="contentSub"><?php $this->html('subtitle') ?></div>
 			<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
-			<?php if($this->data['newtalk'] ) { ?><div class="usermessage"><?php $this->html('newtalk')  ?></div><?php } ?>
+			<?php if($this->data['newtalk'] ) { ?><div class="usermessage noprint"><?php $this->html('newtalk')  ?></div><?php } ?>
 			<?php if($this->data['showjumplinks']) { ?><div id="jump-to-nav"><?php $this->msg('jumpto') ?> <a href="#column-one"><?php $this->msg('jumptonavigation') ?></a>, <a href="#search_input"><?php $this->msg('jumptosearch') ?></a></div><?php } ?>
 			<?
 			// Adsense for search
