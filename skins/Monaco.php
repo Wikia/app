@@ -1642,7 +1642,7 @@ if ($wgOut->isArticle()){
 					<h3 id="siteSub"><?php $this->msg('tagline') ?></h3>
 					<div id="contentSub"><?php $this->html('subtitle') ?></div>
 					<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
-					<?php if($this->data['newtalk'] ) { ?><div class="usermessage"><?php $this->html('newtalk')  ?></div><?php } ?>
+					<?php if($this->data['newtalk'] ) { ?><div class="usermessage noprint"><?php $this->html('newtalk')  ?></div><?php } ?>
 					<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
 					<?php
 					// Print out call to top leaderboard or box ad, if it's a main page, or not in the bucket test
