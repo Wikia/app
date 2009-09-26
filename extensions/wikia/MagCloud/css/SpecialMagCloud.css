@@ -224,6 +224,10 @@
 	vertical-align: top;
 }
 
+#MagCloudCoverEditorImage label {
+	display: block;
+}
+
 #MagCloudCoverEditorImage input {
 	clear: left;
 	float: left;
