@@ -505,8 +505,8 @@ yieldbuild_loc = "left_content_top";
 			<li><?= wfMsg("answer_this", $wgTitle->getEditURL())?></li>
 			<li><?= wfMsg("research_this_on_wikipedia", $wgTitle->getEditURL())?></li>
 			<li><?= wfMsg("ask_friends_on_twitter", $twitter_url, "onclick=\"WET.byStr( 'articleFooter/Twitter' );\" ")?></li>
-			<li><?= wfMsg("receive_email", $watchlist_url, "onclick=\"WET.byStr( 'articleFooter/emailme' );\"", "onclick=\"WET.byStr( 'articleFooter/reword' );\""))?></li>
-			<li><?= wfMsg("reword_this", $move_url )?></li>
+			<li><?= wfMsg("receive_email", $watchlist_url, "onclick=\"WET.byStr( 'articleFooter/emailme' );\""))?></li>
+			<li><?= wfMsg("reword_this", $move_url, "onclick=\"WET.byStr( 'articleFooter/reword' );\"")?></li>
 			</ul>
 			</div>
 		<?php
