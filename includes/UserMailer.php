@@ -524,7 +524,7 @@ class EmailNotification {
 
 		$keys['$ACTION']             = $this->action;
 
-		wfRunHooks('ComposeCommonSubjectMail', array( $this->title, &$keys, &$subject ));
+		wfRunHooks('ComposeCommonSubjectMail', array( $this->title, &$keys, &$subject, $this->editor ));
 		$subject = strtr( $subject, $keys );
 
 		# Reveal the page editor's address as REPLY-TO address only if
@@ -562,7 +562,7 @@ class EmailNotification {
 		}
 		$userPage = $editor->getUserPage();
 		$keys['$PAGEEDITOR_WIKI'] = $userPage->getFullUrl();
-		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body ));
+		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $editor ));
 		$body = strtr( $body, $keys );
 		$body = wordwrap( $body, 72 );
 
