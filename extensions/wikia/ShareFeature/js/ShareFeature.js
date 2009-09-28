@@ -35,25 +35,27 @@ ShareFeature.track = function( str ) {
 };
 
 $(function() {
-		$G('control_share_feature').className = 'enabled';
-		// open dialog on clicking
-		$('#ca-share_feature').click(function() {
-			if( false == ShareFeatureEnabled ) {
-				ShareFeatureEnabled = true;
-				$().getModal(
-					wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
-					'#shareFeatureInside',
-					{
-						width: 300,
-						callback: function() {
-							ShareFeatureEnabled = false;
-							ShareFeature.track( 'open' );
-						},
-						onClose: function() {
-							ShareFeature.track('close');
+		if( $G('control_share_feature') && $('#ca-share_feature') ) {
+			$G('control_share_feature').className = 'enabled';
+			// open dialog on clicking
+			$('#ca-share_feature').click(function() {
+				if( false == ShareFeatureEnabled ) {
+					ShareFeatureEnabled = true;
+					$().getModal(
+						wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
+						'#shareFeatureInside',
+						{
+							width: 300,
+							callback: function() {
+								ShareFeatureEnabled = false;
+								ShareFeature.track( 'open' );
+							},
+							onClose: function() {
+								ShareFeature.track('close');
+							}
 						}
-					}
-				);
-			}
-		});
+					);
+				}
+			});
+		}
 });
