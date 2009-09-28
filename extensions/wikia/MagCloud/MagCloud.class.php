@@ -459,10 +459,9 @@ class MagCloud {
 		// bg of bar with Wikia logo, cover bg, title box bg
 		return array(
 			'beach' => array('3e2a18', 'b0d9f3', '42779e'),
-			'stark' => array('4a0503', 'd8c1ab', 'c9c9c9'),
-			'buzzbee' => array('b11e1e', 'fad392', 'b0c0cf'),
-			'bad_drugs' => array('db141d', 'd4d4d2', '000000'),
+			'stark' => array('555', 'fff', 'b41212'),
+			'buzzbee' => array('fff', 'f3f3f3', '000'),
+			'royal' => array('3a5a49', 'f3eeba', 'a7139a'),
 		);
 	}
-
 }
