@@ -127,6 +127,11 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 // display the links for the feature in the page controls bar
 function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 	global $wgTitle;
+
+	// todo do not display for not existing pages, 
+	// for stuff like action=purge (for anons, where is confirmation)
+	// and action=history (?), action=edit would be good
+
 	if( $wgTitle->isContentPage() ) {
 		$content_actions['share_feature'] = array(
 				'class' => '',
