@@ -90,6 +90,7 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/AdEngine.js',
 			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 			'common/contributed.js',
+			'../extensions/wikia/ShareFeature/js/ShareFeature.js'
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
