@@ -219,6 +219,9 @@ class MagCloud {
 		}
 	}
 
+	/*
+	 * Render PNG file with preview of given page of given PDF file
+	 */
 	static public function renderPreviewPage($hash, $timestamp, $pageNo) {
 		global $wgCityId, $wgRequest, $wgMagCloudUploadDirectory, $wgMagCloudUploadPath;
 		wfProfileIn(__METHOD__);
@@ -265,6 +268,9 @@ class MagCloud {
 		);
 	}
 
+	/*
+	 * Render PDF file from given collection
+	 */
 	static public function renderPdf($hash, $timestamp) {
 		wfProfileIn(__METHOD__);
 
@@ -361,6 +367,9 @@ class MagCloud {
 		);
 	}
 
+	/*
+	 * Upload PDF to MagCloud
+	 */
 	static public function publish($hash, $timestamp, $token) {
 
 		if (empty($hash) || empty($timestamp) || empty($token)) {
@@ -465,6 +474,9 @@ class MagCloud {
 		);
 	}
 
+	/*
+	 * Set Last-Modified header to time when collection was last modified
+	 */
 	static public function setLastModified( &$modifiedTimes ) {
 		$collection = MagCloudCollection::getInstance();
 		if($collection->getToolbarVisibleState()) {
