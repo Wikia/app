@@ -3,7 +3,8 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'MagCloud Collection',
 	'description' => 'An intuitive way for users to collect articles together into a PDF which can then be delivered to MagCloud for printing',
-	'author' => array('Maciej Brencz', 'Adrian Wieczorek', 'Przemek Piotrowski (Nef)')
+	'author' => array('Maciej Brencz', 'Adrian Wieczorek', 'Przemek Piotrowski (Nef)'),
+	'version' => '1.0',
 );
 
 $dir = dirname(__FILE__) . '/';
