@@ -41,9 +41,11 @@ foreach($themes as $theme => $colors) {
 ?>
 			<td><input type="radio" name="MagCloudCoverEditorTheme" id="<?= $id ?>" rel="<?= $theme ?>"<?= ($selectedTheme == $theme ? ' checked="checked"' : '') ?> /><label for="<?= $id ?>"><?= $display ?></label></td>
 			<td class="MagCloudCoverEditorThemeColors">
-				<span style="background-color: #<?= $colors[0] ?>">&nbsp;</span>
-				<span style="background-color: #<?= $colors[1] ?>">&nbsp;</span>
-				<span style="background-color: #<?= $colors[2] ?>">&nbsp;</span>
+				<label for="<?= $id ?>">
+					<span style="background-color: #<?= $colors[0] ?>">&nbsp;</span>
+					<span style="background-color: #<?= $colors[1] ?>">&nbsp;</span>
+					<span style="background-color: #<?= $colors[2] ?>">&nbsp;</span>
+				</label>
 			</td>
 <?php
 

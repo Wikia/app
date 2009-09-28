@@ -48,11 +48,11 @@ If you're stuck for inspiration, check out the examples below!",
 
 	'magcloud-design-review-list' => 'Back to Review List',
 	'magcloud-design-preview' => 'Preview',
-	'magcloud-design-license-policy' => 'Please ensure that ***your any images*** you use conform with our licensing policy at http://www.wikia.com/wiki/Wikia:Licensing',
+	'magcloud-design-license-policy' => 'Please ensure that any images you use conform with our licensing policy at http://www.wikia.com/wiki/Wikia:Licensing',
 
 	'magcloud-preview-done' => 'Your magazine has been generated.',
 	'magcloud-preview-back-to-cover' => 'Back to Design Cover',
-	'magcloud-preview-save-magazine' => 'Save your magazine',
+	'magcloud-preview-save-magazine' => 'Save your Magazine',
 	'magcloud-preview-publish' => 'Publish your Magazine',
 	'magcloud-preview-generating-pdf' => 'Creating your magazine...',
 
