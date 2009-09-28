@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'magcloud-special-collection-review-list-tips' => "<big>Tips for creating a Great Magazine</big>
 
 # Try choosing articles that follow a theme, like comic villans or unique swords.
-# Your final magazine needs to be more than 20 and less than 100 pages in length. So, try not to add too few or too many articles.
+# Your final magazine needs to be less than 100 pages in length. So, try not to add *too* many articles.
 
 If you're stuck for inspiration, check out the examples below!",
 	'magcloud-order-your-articles' => 'Order your articles',
