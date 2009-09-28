@@ -1411,7 +1411,11 @@ if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
 			<div id="ghost"></div>
 
 <?php
-wfRunHooks('GetHTMLAfterBody', array ($this));
+	// this hook allows adding extra HTML just after <body> opening tag
+	// append your content to $html variable instead of echoing
+	$html = '';
+	wfRunHooks('GetHTMLAfterBody', array ($this, &$html));
+	echo $html;
 ?>
 
 		<div style="font-size: 1px; position: absolute;">
