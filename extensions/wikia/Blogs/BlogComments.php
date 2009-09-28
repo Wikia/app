@@ -216,7 +216,7 @@ class BlogComment {
 	}
 
 	/**
-	 * fetch -- 
+	 * fetch --
 	 *
 	 * @access public
 	 */
@@ -345,7 +345,7 @@ class BlogComment {
 	 */
 	public function canEdit() {
 		global $wgUser, $wgCityId, $wgDevelEnvironment, $wgEnableBlogCommentEdit;
-		
+
 		if ( empty($wgEnableBlogCommentEdit) ) {
 			return false;
 		}
@@ -358,9 +358,9 @@ class BlogComment {
 
 			$groups = $wgUser->getGroups();
 			$isAdmin = in_array( 'staff', $groups ) || in_array( 'sysop', $groups );
-			
+
 			$res = $devel && ( $isAuthor || $isAdmin ) && $canEdit;
-		} 
+		}
 
 		return $res;
 	}
@@ -393,13 +393,13 @@ class BlogComment {
 
 		return (bool )$this->mProps["hiddencomm"];
 	}
-	
+
 	/**
 	 * editPage -- show edit form
 	 *
 	 * @access public
 	 *
-	 * @return String 
+	 * @return String
 	 */
 	public function editPage() {
 		global $wgUser, $wgMemc, $wgTitle;
@@ -424,13 +424,13 @@ class BlogComment {
 
 		return $text;
 	}
-	
+
 	/**
 	 * editPage -- show edit form
 	 *
 	 * @access public
 	 *
-	 * @return String 
+	 * @return String
 	 */
 	public function doSaveComment( $Request, $User, $Title ) {
 		global $wgMemc, $wgTitle;
@@ -458,7 +458,7 @@ class BlogComment {
 			}
 
 			$commentTitle = ( $this->mTitle ) ? $this->mTitle : Title::newFromId($commentId);
-			
+
 			/**
 			 * because we save different tile via Ajax request
 			 */
@@ -480,13 +480,12 @@ class BlogComment {
 			 * clear comments cache for this article
 			 */
 			$Title->invalidateCache();
-			$update = SquidUpdate::newSimplePurge( $Title );
-			$update->doUpdate();
+			$Title->purgeSquid();
 
 			$key = $Title->getPrefixedDBkey();
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
 			$wgMemc->delete( wfMemcKey( "blog", "comm", $Title->getArticleID() ) );
-			
+
 			$res = array( $retval, $article );
 		} else {
 			$res = false;
@@ -583,7 +582,7 @@ class BlogComment {
 			$status = $response[0]; $article = $response[1];
 			$res = self::doAfterPost($status, $article, $commentId);
 		}
-		
+
 		return Wikia::json_encode( $res );
 	}
 
@@ -745,7 +744,7 @@ class BlogComment {
 					$id = $comment->mTitle->getArticleID();
 				}
 				if ( empty( $commentId ) && !empty($comment->mTitle) ) {
-					$ok = self::addBlogPageToWatchlist($comment, $commentId) ; 
+					$ok = self::addBlogPageToWatchlist($comment, $commentId) ;
 				}
 				$message = false;
 				break;
@@ -767,18 +766,18 @@ class BlogComment {
 			"commentId" => $commentId,
 			"id"		=> $id
 		);
-		
+
 		return $res;
 	}
 
 	static public function addBlogPageToWatchlist($Comment, $commentId) {
 		global $wgUser, $wgEnableBlogWatchlist;
-		
+
 		$watchthis = false;
 		if ( empty($wgEnableBlogWatchlist) ) {
 			return $watchthis;
 		}
-		
+
 		if ( !$wgUser->isAnon() ) {
 			if ( $wgUser->getOption( 'watchdefault' ) ) {
 				$watchthis = true;
@@ -799,7 +798,7 @@ class BlogComment {
 					'wl_namespace' => NS_BLOG_ARTICLE_TALK,
 					'wl_title' => $Comment->mTitle->getDBkey(),
 					'wl_notificationtimestamp' => wfTimestampNow()
-					), __METHOD__, 'IGNORE' 
+					), __METHOD__, 'IGNORE'
 				);
 			}
 
@@ -818,7 +817,7 @@ class BlogComment {
 
 		return $watchthis;
 	}
-	
+
 	/**
 	 * Hook
 	 *
@@ -832,7 +831,7 @@ class BlogComment {
 	static public function watchlistNotify ( RecentChange &$oRC ) {
 		global $wgEnableBlogWatchlist;
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( !empty($wgEnableBlogWatchlist) && ( $oRC instanceof RecentChange ) ) {
 			$namespace = $oRC->getAttribute('rc_namespace');
 			if ( $namespace == NS_BLOG_ARTICLE_TALK ) {
@@ -853,7 +852,7 @@ class BlogComment {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * Hook
 	 *
@@ -867,37 +866,37 @@ class BlogComment {
 	static public function WatchlistQuery ( &$conds,&$tables,&$join_conds,&$fields ) {
 		global $wgEnableBlogWatchlist;
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( !empty($wgEnableBlogWatchlist) ) {
 			$new_fields = array(
-				'rc_id', 
-				'rc_timestamp', 
-				'rc_cur_time', 
-				'rc_user', 
-				'rc_user_text', 
+				'rc_id',
+				'rc_timestamp',
+				'rc_cur_time',
+				'rc_user',
+				'rc_user_text',
 				'if(rc_namespace='.NS_BLOG_ARTICLE_TALK.', SUBSTRING_INDEX(rc_title, \'/\', 2), rc_title) as rc_title',
-				'if(rc_namespace='.NS_BLOG_ARTICLE_TALK.', '.NS_BLOG_ARTICLE.', rc_namespace) as rc_namespace', 
-				'rc_comment', 
-				'rc_minor', 
-				'rc_bot', 
-				'rc_new', 
-				'rc_cur_id', 
-				'rc_this_oldid', 
-				'rc_last_oldid', 
-				'rc_type', 
-				'rc_moved_to_ns', 
-				'rc_moved_to_title', 
-				'rc_patrolled', 
-				'rc_ip', 
-				'rc_old_len', 
-				'rc_new_len', 
-				'rc_deleted', 
-				'rc_logid', 
-				'rc_log_type', 
-				'rc_log_action', 
+				'if(rc_namespace='.NS_BLOG_ARTICLE_TALK.', '.NS_BLOG_ARTICLE.', rc_namespace) as rc_namespace',
+				'rc_comment',
+				'rc_minor',
+				'rc_bot',
+				'rc_new',
+				'rc_cur_id',
+				'rc_this_oldid',
+				'rc_last_oldid',
+				'rc_type',
+				'rc_moved_to_ns',
+				'rc_moved_to_title',
+				'rc_patrolled',
+				'rc_ip',
+				'rc_old_len',
+				'rc_new_len',
+				'rc_deleted',
+				'rc_logid',
+				'rc_log_type',
+				'rc_log_action',
 				'rc_params'
 			);
-			
+
 			if ( !empty($fields) ) {
 				foreach ( $fields as $id => $field ) {
 					if ( strpos($field, 'recentchanges') === false ) {
@@ -911,7 +910,7 @@ class BlogComment {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * Hook
 	 *
@@ -926,7 +925,7 @@ class BlogComment {
 	 */
 	static public function ComposeCommonMail( $Title, &$keys, &$message, $editor ) {
 		global $wgEnotifUseRealName;
-		
+
 		$name = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
 
 		if ( $Title->getNamespace() == NS_BLOG_ARTICLE ) {
@@ -938,7 +937,7 @@ class BlogComment {
 				$message = str_replace('$PAGEEDITOR', $utext, $message);
 				$keys['$PAGEEDITOR'] = $utext;
 			}
-			
+
 			$keys['$DBPAGETITLE'] = $Title->getText();
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'blog-added' );
 			list ( $keys['$AUTHOR'], $keys['$BLOGTITLE'] ) = explode( "/", $keys['$DBPAGETITLE'], 2 );
@@ -1399,7 +1398,7 @@ class BlogCommentList {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * Hook
 	 *
@@ -1415,28 +1414,28 @@ class BlogCommentList {
 	static public function makeChangesListKey( &$oChangeList, &$currentName, &$oRCCacheEntry ) {
 		global $wgUser, $wgEnabledGroupedBlogComments;
 		wfProfileIn( __METHOD__ );
-		
+
 		if ( empty($wgEnabledGroupedBlogComments) ) {
 			return true;
 		}
-		
+
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
-		
+
 		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE_TALK ) ) ) {
 			$user = $page_title = $comment = "";
-			$newTitle = null; 
+			$newTitle = null;
 			list( $user, $page_title, $comment ) = explode( "/", $oTitle->getDBkey(), 3 );
 
 			if ( !empty($user) && (!empty($page_title)) ) {
 				$currentName = "Comments";
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * Hook
 	 *
@@ -1455,12 +1454,12 @@ class BlogCommentList {
 		if ( empty($wgEnabledGroupedBlogComments) ) {
 			return true;
 		}
-		
+
 		$oRCCacheEntry = null;
 		if ( !empty($oRCCacheEntryArray) ) {
 			$oRCCacheEntry = $oRCCacheEntryArray[0];
 		}
-		
+
 		if ( !is_null($oRCCacheEntry) ) {
 			$oTitle = $oRCCacheEntry->getTitle();
 			$namespace = $oTitle->getNamespace();
@@ -1470,7 +1469,7 @@ class BlogCommentList {
 
 				if ( !empty($user) && (!empty($page_title)) ) {
 					$cnt = count($oRCCacheEntryArray);
-					
+
 					$userlinks = array();
 					foreach ( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
 			 			# make proper text
@@ -1486,7 +1485,7 @@ class BlogCommentList {
 						}
 						$userlinks[$u]++;
 					}
-					
+
 					$users = array();
 					foreach( $userlinks as $userlink => $count) {
 						$text = $userlink;
@@ -1496,7 +1495,7 @@ class BlogCommentList {
 						}
 						array_push( $users, $text );
 					}
-					
+
 					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $wgLang->formatNum( $cnt ) );
 					$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 					$template->set_vars(
@@ -1515,5 +1514,5 @@ class BlogCommentList {
 
 		return true;
 	}
-	
+
 }
