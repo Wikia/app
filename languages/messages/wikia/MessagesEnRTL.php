@@ -1,6 +1,5 @@
 <?php
 
-$messages = array_merge( $messages, array(
+$messages = array(
 'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
-) );
-
+);

@@ -41,6 +41,8 @@ class DataFeedProvider {
 
 	private static $users = array();
 
+	private static $images = array();
+
 	public function __construct($proxy) {
 		$this->proxy = $proxy;
 
@@ -105,7 +107,8 @@ class DataFeedProvider {
 					if($ut->isKnown()) {
 						$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalUrl(), 'rel' => 'nofollow'), $res['user']);
 					} else {
-						$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalUrl(), 'rel' => 'nofollow', 'class' => 'new'), $res['user']);
+						//$users[$res['user']] = Xml::element('a', array('href' => $ut->getLocalUrl(), 'rel' => 'nofollow', 'class' => 'new'), $res['user']);
+						$users[$res['user']] = Xml::element('a', array('href' => Skin::makeSpecialUrl('Contributions').'/'.$res['user'], 'rel' => 'nofollow'), $res['user']);
 					}
 				}
 			}
@@ -127,7 +130,24 @@ class DataFeedProvider {
 							if($video) $item['new_videos'][] = $video;
 						} else { // image
 							$image = self::getImageThumb($imageName);
-							if($image) $item['new_images'][] = $image;
+
+							if($image) {
+
+								if(!isset(self::$images[$imageName])) {
+									$dbr = wfGetDB( DB_SLAVE );
+									$cnt = $dbr->selectField(
+										'imagelinks',
+										'count(*) as cnt',
+										array('il_to' => $imageName),
+										__METHOD__
+									);
+									self::$images[$imageName] = $cnt;
+								}
+
+								if(self::$images[$imageName] < 50) {
+									$item['new_images'][] = $image;
+								}
+							}
 						}
 					}
 
@@ -157,11 +177,11 @@ class DataFeedProvider {
 		} else {
 			$title = Title::newFromText($res['title']);
 			if($title && $title->exists()) {
-				/*if($title->isRedirect()) {
+				if($title->isRedirect()) {
 					if($this->proxyType == self::WL) {
 						$item = $this->filterRedirect($res, $title);
 					}
-				} else {*/
+				} else {
 					$res['rc_params'] = MyHome::unpackData($res['rc_params']);
 					if(isset($res['rc_params']['rollback'])) {
 						$this->invisibleRevisions[] = $res['rc_params']['revId'];
@@ -172,7 +192,7 @@ class DataFeedProvider {
 							$this->filterEdit($res, $title);
 						}
 					}
-				/*}*/
+				}
 			}
 		}
 	}
@@ -193,9 +213,11 @@ class DataFeedProvider {
 		$item = array('type' => 'edit');
 
 		if(in_array($res['ns'], $wgContentNamespaces)
+		|| $res['ns'] == 110
 		|| $res['ns'] == NS_PROJECT
 		|| $res['ns'] == NS_CATEGORY
 		|| in_array(($res['ns']-1), $wgContentNamespaces)
+		|| ($res['ns']-1) == 110
 		|| ($res['ns']-1) == NS_PROJECT
 		|| ($res['ns']-1) == NS_CATEGORY
 		|| $res['ns'] == NS_USER
@@ -219,7 +241,7 @@ class DataFeedProvider {
 				$item['comment'] = $res['comment'];
 			}
 
-			if($res['ns'] == NS_BLOG_ARTICLE) {
+			if($res['ns'] === NS_BLOG_ARTICLE) {
 				$item['title'] = end(explode('/', $res['title'], 2));
 			}
 		}
@@ -236,9 +258,11 @@ class DataFeedProvider {
 		$item = array('type' => 'new');
 
 		if(in_array($res['ns'], $wgContentNamespaces)
+		|| $res['ns'] == 110
 		|| $res['ns'] == NS_PROJECT
 		|| $res['ns'] == NS_CATEGORY
 		|| in_array(($res['ns']-1), $wgContentNamespaces)
+		|| ($res['ns']-1) == 110
 		|| ($res['ns']-1) == NS_PROJECT
 		|| ($res['ns']-1) == NS_CATEGORY) {
 

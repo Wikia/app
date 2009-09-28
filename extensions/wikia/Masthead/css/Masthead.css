@@ -35,11 +35,17 @@ body.masthead-special #page_bar {
 	font-weight:bold;
 	line-height: 40px;
 }
+
+.rtl #user_masthead h2 {
+	text-align: left;
+}
+
 #user_masthead h2 small {
 	font-size: 9pt;
 	font-weight: normal;
 	margin-left: .3em;
 }
+
 #user_masthead ul.nav_links {
 	bottom: 0;
 	left: 70px;
@@ -184,10 +190,15 @@ div.blog-comment .avatar {
 	position: absolute;
 	top: 55px;
 	color: black;
+	left: 0;
 }
 
 #wk-avatar-menu ul {
 	padding-right: 40px;
+}
+
+.rtl #wk-avatar-menu ul {
+	padding: 0 0 0 40px;
 }
 
 #wk-avatar-menu li {

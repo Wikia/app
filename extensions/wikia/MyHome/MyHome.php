@@ -68,3 +68,32 @@ function MyHomeAjax() {
 		return $response;
 	}
 }
+
+#####
+
+$wgExtensionFunctions[] = 'ActivityFeedTag_setup';
+
+function ActivityFeedTag_setup() {
+	global $wgParser;
+	wfLoadExtensionMessages('MyHome');
+	wfLoadExtensionMessages('Masthead');
+	$wgParser->setHook('activityfeed', 'ActivityFeedTag_render');
+    return true;
+}
+
+function ActivityFeedTag_render(&$parser) {
+	global $wgOut, $wgStyleVersion, $wgExtensionsPath;
+
+	$feedProxy = new ActivityFeedAPIProxy();
+	$feedRenderer = new ActivityFeedRenderer();
+
+	$feedProvider = new DataFeedProvider($feedProxy);
+	$feedData = $feedProvider->get(10);
+	if(!isset($feedData['results']) || count($feedData['results']) == 0) {
+		return '';
+	}
+	$feedHTML = $feedRenderer->render($feedData, false);
+	$feedHTML = str_replace("\n", '', $feedHTML);
+
+	return "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.css?{$wgStyleVersion});</style>".'<div class="myhome-feed myhome-activity-feed clearfix">'.$feedHTML.'</div>';
+}

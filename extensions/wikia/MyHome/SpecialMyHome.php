@@ -77,8 +77,7 @@ class SpecialMyHome extends SpecialPage {
 		### Prepare HTML for community corner
 		######
 
-		$ug = $wgUser->getGroups();
-		$isAdmin = in_array('staff', $ug) || in_array('sysop', $ug);
+		$isAdmin = $wgUser->isAllowed('editinterface');
 
 		$communityCornerTemplate = new EasyTemplate(dirname(__FILE__).'/templates');
 		$communityCornerTemplate->set_vars(array('isAdmin' => $isAdmin));

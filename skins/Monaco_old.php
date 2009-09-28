@@ -1475,6 +1475,13 @@ if( $custom_user_data ) {
 	if ($wgUser->isLoggedIn()) {
 	?>
 				<li id="header_username"><a href="<?= htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>" <?= $skin->tooltipAndAccesskey('pt-userpage') ?>><?= htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></li>
+<?php
+		if (isset($this->data['userlinks']['myhome'])) {
+?>
+				<li><a href="<?= htmlspecialchars($this->data['userlinks']['myhome']['href']) ?>" rel="nofollow"<?= $skin->tooltipAndAccesskey('pt-myhome') ?>><?= htmlspecialchars($this->data['userlinks']['myhome']['text']) ?></a></li>
+<?php
+		}
+ ?>
 				<li><a href="<?= htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>" <?= $skin->tooltipAndAccesskey('pt-mytalk') ?>><?= htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></li>
 				<li><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"  <?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></li>
 				<li>
@@ -1612,9 +1619,12 @@ if(isset($this->data['articlelinks']['left'])) {
 				</ul>
 				<ul id="page_tabs">
 <?php
-global $userMasthead;
 $showright = true;
 if( defined( "NS_BLOG_ARTICLE" ) && $namespace == NS_BLOG_ARTICLE ) {
+	$showright = false;
+}
+global $wgMastheadVisible;
+if (!empty($wgMastheadVisible)) {
 	$showright = false;
 }
 if(isset($this->data['articlelinks']['right']) && $showright ) {

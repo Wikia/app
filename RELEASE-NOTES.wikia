@@ -19,6 +19,8 @@
 * rt#20865: Blog comments now honor autopatrol rights (TOR)
 * rt#22798: added missing js file to Answers skin (TOR)
 * rt#22804: Fixed LinkSuggest highlight in Monaco themese (TOR)
+* rt#23274: MyHome CommunityCorner only show edit message to hardcoded sysop and staff groups (Marooned)
+* rt#23328: Mathead shows user name with underscore (Marooned)
 
 == Changes since 200909.2 ==
 * rt#22603: Add wgTrustedMediaFormatsLocal to WF. (Nef)

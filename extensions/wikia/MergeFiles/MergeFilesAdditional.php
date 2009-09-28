@@ -187,6 +187,7 @@ $MF['monaco_css']['source'] = array(
 	'monaco_old/css/star_rating.css',
 	'monaco_old/css/ny.css',
 	'../extensions/wikia/Blogs/css/Blogs.css',
+	'../extensions/wikia/Masthead/css/Masthead.css',
 );
 $MF['monaco_css']['source'] = array_merge($MF['monaco_css']['source'], $widgetsAssets['css']);
 
