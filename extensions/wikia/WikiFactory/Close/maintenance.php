@@ -83,6 +83,19 @@ class CloseWikiMaintenance {
 			$folder   = WikiFactory::getVarValueByName( "wgUploadDirectory", $row->city_id );
 			$cluster  = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
 
+			/**
+			 * safety check, if city_dbname is not unique die with message
+			 */
+			$check = $dbr->selectRow(
+				array( "city_list" ),
+				array( "count(*) as count" ),
+				array( "city_dbname" => $dbname ),
+				__METHOD__,
+				array( "GROUP BY" => "city_dbname" )
+			);
+			if( $check->count > 1 ) {
+				wfDie( "{$dbname} is not unique. Check city_list and rerun script" );
+			}
 			Wikia::log( __CLASS__, "info", "city_id={$row->city_id} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public}");
 
 			/**
