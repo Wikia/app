@@ -479,6 +479,7 @@ class BlogComment {
 			/**
 			 * clear comments cache for this article
 			 */
+			$Title->invalidateCache();
 			$update = SquidUpdate::newSimplePurge( $Title );
 			$update->doUpdate();
 
@@ -923,13 +924,22 @@ class BlogComment {
 	 *
 	 * @return true -- because it's hook
 	 */
-	static public function ComposeCommonMail( $Title, &$keys, &$message ) {
-		error_log (print_r($keys, true));
+	static public function ComposeCommonMail( $Title, &$keys, &$message, $editor ) {
+		global $wgEnotifUseRealName;
+		
+		$name = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
+
 		if ( $Title->getNamespace() == NS_BLOG_ARTICLE ) {
 			if ( !is_array($keys) ) {
 				$keys = array();
 			}
-			$keys['$DBPAGETITLE'] = $Title->getDBKey();
+			if( $editor->isIP( $name ) ) {
+				$utext = trim(wfMsgForContent('enotif_anon_editor', ""));
+				$message = str_replace('$PAGEEDITOR', $utext, $message);
+				$keys['$PAGEEDITOR'] = $utext;
+			}
+			
+			$keys['$DBPAGETITLE'] = $Title->getText();
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'blog-added' );
 			list ( $keys['$AUTHOR'], $keys['$BLOGTITLE'] ) = explode( "/", $keys['$DBPAGETITLE'], 2 );
 		}
