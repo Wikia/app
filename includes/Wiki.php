@@ -111,7 +111,7 @@ class MediaWiki {
 
 			/* Wikia change begin - @author: Macbre */
 			/* Wysiwyg: Add hook to allow modification of page user is redirected to when title is not specified in URL */
-			if(!$wgRequest->getInt( 'diff' )) {
+			if(!$wgRequest->getInt( 'diff' ) && !$wgRequest->getInt( 'oldid' )) {
 				wfRunHooks( 'InitialQueriesMainPage', array( &$ret ) );
 			}
 			/* Wikia change end */
@@ -305,11 +305,11 @@ class MediaWiki {
 		{
 			# Give extensions a change to ignore/handle redirects as needed
 			$ignoreRedirect = $target = false;
-			
+
 			$dbr = wfGetDB( DB_SLAVE );
 			$article->loadPageData( $article->pageDataFromTitle( $dbr, $title ) );
 
-			wfRunHooks( 'InitializeArticleMaybeRedirect', 
+			wfRunHooks( 'InitializeArticleMaybeRedirect',
 				array(&$title,&$request,&$ignoreRedirect,&$target,&$article) );
 
 			// Follow redirects only for... redirects
