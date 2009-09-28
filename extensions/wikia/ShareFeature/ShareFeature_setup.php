@@ -21,7 +21,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'Share Feature',
         'author' => 'Bartek Łapiński',
-        'version' => '1.03',
+        'version' => '1.06',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -128,11 +128,8 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 	global $wgTitle;
 
-	// todo do not display for not existing pages, 
-	// for stuff like action=purge (for anons, where is confirmation)
-	// and action=history (?), action=edit would be good
-
-	if( $wgTitle->isContentPage() ) {
+	// do not display for not existing pages, 
+	if( $wgTitle->isContentPage() && $wgTitle->exists() ) {
 		$content_actions['share_feature'] = array(
 				'class' => '',
 				'text' => wfMsg('sf-link'),
