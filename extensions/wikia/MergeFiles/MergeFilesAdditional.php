@@ -186,6 +186,7 @@ $MF['monaco_css']['source'] = array(
 	'monaco_old/css/footer.css',
 	'monaco_old/css/star_rating.css',
 	'monaco_old/css/ny.css',
+	'monaco_old/css/modal.css',
 	'../extensions/wikia/Blogs/css/Blogs.css',
 	'../extensions/wikia/Masthead/css/Masthead.css',
 );
