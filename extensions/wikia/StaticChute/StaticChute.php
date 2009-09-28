@@ -54,6 +54,7 @@ class StaticChute {
 			'../extensions/wikia/Userengagement/Userengagement.js',
 			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 			'common/contributed.js',
+			'../extensions/wikia/ShareFeature/js/ShareFeature.js'
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
