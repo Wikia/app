@@ -466,8 +466,10 @@ class MagCloud {
 	}
 
 	static public function setLastModified( &$modifiedTimes ) {
-		$modifiedTimes['page'] = wfTimestamp( TS_MW, MagCloudCollection::getInstance()->getTimestamp() );;
-		//wfDebug( 'setLastModified: ' . print_r($modifiedTimes, true) );
+		$collection = MagCloudCollection::getInstance();
+		if($collection->getToolbarVisibleState()) {
+			$modifiedTimes['page'] = wfTimestamp( TS_MW, $collection->getTimestamp() );;
+		}
 		return true;
 	}
 }
