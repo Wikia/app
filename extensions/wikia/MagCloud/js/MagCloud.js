@@ -225,16 +225,8 @@ MagCloud.addArticle = function() {
 
 		// increase counter in global JS variable
 		window.wgMagCloudArticlesCount = data.count;
-
-		// purge current page, so we will get fresh toolbar on page reload
-		MagCloud.purge();
 	});
 
 	// remove "Add" button
 	$('#MagCloudToolbarAdd').remove();
-}
-
-// purge current page
-MagCloud.purge = function() {
-	$.post(wgArticlePath.replace(/\$1/, wgPageName), {action: 'purge'});
 }
