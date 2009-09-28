@@ -1,7 +1,9 @@
 <div id="MagCloudSavedMagazines" title="<?= wfMsg('magcloud-load-magazine-title') ?>" class="MagCloudDialog">
 
 	<div id="MagCloudSavedMagazinesList">
-<?php foreach($magazines as $id => $magazine): ?>
+<?php if (empty($magazines)) { ?>
+		<p id="MagCloudSavedMagazinesListEmpty"><?= wfMsg('magcloud-load-magazine-empty') ?></p>
+<?php } else foreach($magazines as $id => $magazine): ?>
 		<input type="radio" name="MagCloudMagazine" id="MagCloudMagazine-<?= $id ?>" rel="<?= $magazine['hash'] ?>" />
 		<h3><label for="MagCloudMagazine-<?= $id ?>"><?= htmlspecialchars($magazine['title']) ?></label></h3>
 		<p><?= htmlspecialchars($magazine['subtitle']) ?></p>

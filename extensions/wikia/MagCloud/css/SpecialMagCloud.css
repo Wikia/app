@@ -310,8 +310,7 @@
 	background: #fff url('../images/publish-loading.gif') no-repeat 15px 50%;
 	font-size: 0.9em;
 	line-height: 1.5em;
-	padding: 30px !important;
-	padding-left: 60px !important;
+	padding: 30px 60px !important;
 }
 
 #positioned_elements .MagCloudWhite {

@@ -411,7 +411,7 @@ SpecialMagCloud.publish = function(hash, timestamp, token, node) {
 		node.css('background', 'none');
 
 		if (typeof data.issue == 'number') {
-			node.html(data.msg);
+			node.html(data.msg).css('textAlign', 'center');
 			window.location.href = "http://magcloud.com/browse/Issue/" + data.issue;
 		} else {
 			node.html(data.msg);
