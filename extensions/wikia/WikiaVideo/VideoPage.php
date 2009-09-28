@@ -1200,7 +1200,7 @@ EOD;
                 return $embed;
         }
 
-	public function getThumbnailCode($width) {
+	public function getThumbnailCode($width, $addCover = true) {
 		global $wgExtensionsPath;
 
 		$thumb = $wgExtensionsPath . '/wikia/VideoEmbedTool/images/vid_thumb.jpg';
@@ -1246,7 +1246,12 @@ EOD;
 			$image = '';
 		}
 
- 		return "$image<div style=\"width: {$width}px; height: {$height}px; background: transparent url({$wgExtensionsPath}/wikia/Wysiwyg/fckeditor/editor/plugins/video/video.png) no-repeat 50% 50%; position: absolute; top: 0; left: 0\"><br /></div>";
+		if (!empty($addCover)) {
+	 		return "$image<div style=\"width: {$width}px; height: {$height}px; background: transparent url({$wgExtensionsPath}/wikia/Wysiwyg/fckeditor/editor/plugins/video/video.png) no-repeat 50% 50%; position: absolute; top: 0; left: 0\"><br /></div>";
+		}
+		else {
+			return $image;
+		}
 	}
 
 	function openShowVideo() {
