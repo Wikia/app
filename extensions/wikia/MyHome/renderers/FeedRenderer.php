@@ -396,6 +396,11 @@ class FeedRenderer {
 	public static function getDetails($row) {
 		wfProfileIn(__METHOD__);
 
+		if(strtotime($row['timestamp']) < 1253701200) {
+			wfProfileOut(__METHOD__);
+			return '';
+		}
+
 		$html = '';
 
 		//

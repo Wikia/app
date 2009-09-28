@@ -24,6 +24,7 @@ $wgLogHeaders[AVATAR_LOG_NAME] = 'blog-avatar-alt';
 $wgHooks['AdditionalUserProfilePreferences'][] = 'Masthead::additionalUserProfilePreferences';
 $wgHooks['SavePreferences'][] = 'Masthead::savePreferences';
 $wgHooks['SkinGetPageClasses'][] = 'Masthead::SkinGetPageClasses';
+$wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
 
 $wgLogNames[AVATAR_LOG_NAME] = "useravatar-log";
 
@@ -159,9 +160,11 @@ class Masthead {
 		$this->mDefaultAvatars = array();
 		$images = getMessageAsArray( 'blog-avatar-defaults' );
 
-		foreach( $images as $image ) {
-			$hash = FileRepo::getHashPathForLevel( $image, 2 );
-			$this->mDefaultAvatars[] = $this->mDefaultPath . $hash . $image;
+		if(is_array($images)) {
+			foreach( $images as $image ) {
+				$hash = FileRepo::getHashPathForLevel( $image, 2 );
+				$this->mDefaultAvatars[] = $this->mDefaultPath . $hash . $image;
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -368,7 +371,7 @@ class Masthead {
 				$this->mUser->saveSettings();
 				$mUserPage = Title::newFromText( $sUserText, NS_USER );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$oLogPage->addEntry( 'avatar_rem', $mUserBlogPage, '', array($sUserText));
+				$oLogPage->addEntry( 'avatar_rem', $mUserPage, '', array($sUserText));
 				/* */
 				$result = true;
 			}
@@ -518,7 +521,7 @@ class Masthead {
 				$sUserText =  $this->mUser->getName();
 				$mUserPage = Title::newFromText( $sUserText, NS_USER );
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
-				$oLogPage->addEntry( 'avatar_chn', $mUserBlogPage, '');
+				$oLogPage->addEntry( 'avatar_chn', $mUserPage, '');
 				unlink($sTmpFile);
 				$errorNo = UPLOAD_ERR_OK;
 			}
@@ -748,6 +751,7 @@ class Masthead {
 				if (empty($userspace)) {
 					$userspace = $wgUser->getName();
 				}
+				$userspace = str_replace('_', ' ', $userspace);
 				$Avatar = Masthead::newFromUserName( $userspace );
 			}
 
@@ -756,7 +760,7 @@ class Masthead {
 				$isUserOnOwnPage = $wgUser->getName() == $userspace;
 				$out['userspace'] = $userspace;
 
-				if ($wgUser->isLoggedIn() && $isUserOnOwnPage) {
+				if ($wgUser->isLoggedIn() && $isUserOnOwnPage && class_exists('MyHome')) {
 					$out['nav_links'][] = array('text' => wfMsg('myhome'), 'href' => Title::newFromText('MyHome', NS_SPECIAL )->getLocalUrl(), 'dbkey' => 'MyHome', 'tracker' => 'myhome');
 				}
 				$oTitle = Title::newFromText( $userspace, NS_USER );
@@ -846,23 +850,36 @@ class Masthead {
 					$destionationUser = User::newFromName($userspace);
 					$destionationUserId = $destionationUser ? $destionationUser->getId() : 0;
 					if($destionationUserId != 0) {
-						$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
-						$dbResult = $dbr->select(
-							array('blobs', 'pages'),
-							array('min(rev_timestamp) AS date, count(*) AS edits'),
-							array('page_id = rev_page_id',
-								'rev_wikia_id' => $wgCityId,
-								'page_wikia_id' => $wgCityId,
-								'rev_user' => $destionationUserId),
-							__METHOD__
-						);
 
-						if ($row = $dbr->FetchObject($dbResult)) {
-							$firstDate = $wgLang->date(wfTimestamp(TS_MW, $row->date));
-							$editCount = $row->edits;
-						}
-						if ($dbResult !== false) {
-							$dbr->FreeResult($dbResult);
+						global $wgMemc;
+						$mastheadDataEditDateKey = wfMemcKey('mmastheadData-editDate-' . $destionationUserId);
+						$mastheadDataEditCountKey = wfMemcKey('mmastheadData-editCount-' . $destionationUserId);
+						$mastheadDataEditDate = $wgMemc->get($mastheadDataEditDateKey);
+						$mastheadDataEditCount = $wgMemc->get($mastheadDataEditCountKey);
+
+						if(empty($mastheadDataEditCount) || empty($mastheadDataEditDate)) {
+							$dbr = wfGetDB(DB_SLAVE);
+
+							$dbResult = $dbr->select(
+								array('revision', 'page'),
+								array('min(rev_timestamp) AS date, count(*) AS edits'),
+								array('page_id = rev_page',
+									'rev_user' => $destionationUserId),
+								__METHOD__
+							);
+
+							if ($row = $dbr->FetchObject($dbResult)) {
+								$firstDate = $wgLang->date(wfTimestamp(TS_MW, $row->date));
+								$editCount = $row->edits;
+							}
+							if ($dbResult !== false) {
+								$dbr->FreeResult($dbResult);
+							}
+							$wgMemc->set($mastheadDataEditDateKey, $firstDate, 60 * 10);
+							$wgMemc->set($mastheadDataEditCountKey, $editCount, 60 * 10);
+						} else {
+							$firstDate = $mastheadDataEditDate;
+							$editCount = $mastheadDataEditCount;
 						}
 					}
 				}
@@ -892,6 +909,18 @@ class Masthead {
 				//hide sitenotice
 				$wgSupressSiteNotice = true;
 			}
+		}
+		return true;
+	}
+
+	static public function userMastheadInvalidateCache(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+		if (!$user->isAnon()) {
+			if(count($status->errors) == 0) {
+				global $wgMemc;
+				$mastheadDataEditCountKey = wfMemcKey('mmastheadData-editCount-' . $user->getID());
+				$wgMemc->incr($mastheadDataEditCountKey);
+			}
+
 		}
 		return true;
 	}

@@ -292,7 +292,9 @@ float:right;
 margin:0;
 }
 
-
+.rtl #blog-comm-form-select select {
+float:left;
+}
 
 div.blog-comm-input {
 background:#d2d2b6;

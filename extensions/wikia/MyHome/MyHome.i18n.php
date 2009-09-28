@@ -4,11 +4,14 @@ $messages = array();
 
 $messages['en'] = array(
 	'myhome' => 'My Home',
-	'myhome-activity-more' => 'more',
+	'myhome-activity-more' => 'see more recent activity',
 	'myhome-activity-feed' => 'Activity feed',
+	'Myhome-activity-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-watchlist-feed' => 'Watchlist',
+	'Myhome-watchlist-feed-empty' => 'You can add pages to your watchlist by clicking the "Watch" link in the bar at the top of the page. You can use your watchlist to keep track of the latest changes to pages that you care about.',
 	'myhome-user-contributions-feed' => 'Contributions',
 	'myhome-hot-spots-feed' => 'Hot Spots',
+	'Myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-hot-spots-newest' => 'New pages on the wiki',
 	'myhome-hot-spots-brandnew' => 'This is a brand-new wiki. Click on [[Special:CreatePage|New page]] to start writing!',
 	'tog-myhomedisableredirect' => 'Disable my redirect to My Home',
@@ -21,7 +24,7 @@ $messages['en'] = array(
 	'myhome-feed-deleted-by' => 'deleted by $1',
 	'myhome-feed-moved-by' => 'moved by $1',
 
-	'myhome-feed-diff-alt' => 'Diff alt text TBD',
+	'myhome-feed-diff-alt' => 'show me the change on this page',
 
 	'myhome-feed-new-page-details' => 'New page',
 	'myhome-feed-summary-details' => 'Summary',
@@ -34,7 +37,7 @@ $messages['en'] = array(
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Added video|Added videos}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Added category|Added categories}}',
 
-	'myhome-user-contributions-empty' => '<i>Clever and encouraging message.</i>',
+	'myhome-user-contributions-empty' => 'You can get involved on this wiki by clicking "edit this page" on any article page, and adding what you know. Everybody can make changes, add information or correct a mistake. The wiki is built by the community, and once you click the edit button, you\'re part of the community. Try it out!',
 
 	'myhome-hot-spots-number-of-editors' => 'editors',
 
@@ -43,14 +46,28 @@ $messages['en'] = array(
 	'myhome-hours-ago' => '$1 {{PLURAL:$1|hour|hours}} ago',
 	'myhome-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 
-	'myhome-log-in' => 'You must log-in to see this page',
-	'myhome-switch-to-monaco' => 'You must switch to the Monaco skin to access this page',
+	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''[[Special:Userlogin|Please log in to see this page!]]'''</big></center>",
+	'myhome-switch-to-monaco' => "The My Home feature is only available if you're using the Monaco skin. If you'd like to see My Home, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
 
 	'myhome-namespace-blog' => 'Blog',
 
 	'myhome-community-corner-header' => 'Community Corner',
 	'myhome-community-corner-edit' => 'edit message',
-	'community-corner' => '',
+	'community-corner' => "'''Welcome to My Home!''' 
+
+This page helps you stay up to date with what's happening on the wiki. 
+
+If you're the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site. For example, you could:
+
+* Organize a project to build up an area of the wiki
+
+* Show off some new pages that everyone should see
+
+* Get people involved in a discussion that's happening on the site
+
+* Give a shout-out to a contributor who's added something special to the wiki
+
+* Or just post some words of encouragement!",
 	'myhome-hot-spots-definition' => 'Pages with the most editors in the last $1 days.',
 
 	'myhome-default-view-checkbox' => 'Make $1 my default view',
