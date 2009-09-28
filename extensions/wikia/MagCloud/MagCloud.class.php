@@ -464,4 +464,10 @@ class MagCloud {
 			'royal' => array('3a5a49', 'f3eeba', 'a7139a'),
 		);
 	}
+
+	static public function setLastModified( &$modifiedTimes ) {
+		$modifiedTimes['page'] = wfTimestamp( TS_MW, MagCloudCollection::getInstance()->getTimestamp() );;
+		//wfDebug( 'setLastModified: ' . print_r($modifiedTimes, true) );
+		return true;
+	}
 }

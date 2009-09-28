@@ -25,7 +25,7 @@ $wgExtensionMessagesFiles['MagCloud'] = $dir.'MagCloud.i18n.php';
 $wgHooks['BeforePageDisplay'][] = 'MagCloud::beforePageDisplay';
 $wgHooks['GetHTMLAfterBody'][] = 'MagCloud::injectToolbar';
 $wgHooks['MakeGlobalVariablesScript'][] = 'MagCloud::makeGlobalVariablesScript';
-
+$wgHooks['OutputPageCheckLastModified'][] = 'MagCloud::setLastModified';
 // MagCloud upload paths
 if (empty($wgMagCloudUploadDirectory)) {
 	$wgMagCloudUploadDirectory = "/images/m/magcloud";
