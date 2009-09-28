@@ -142,6 +142,10 @@
 	overflow: auto;
 	padding-top: 10px;
 }
+#MagCloudSavedMagazinesListEmpty {
+	line-height: 1.5em;
+	margin: 80px 35px;
+}
 
 #MagCloudSavedMagazinesList input {
 	float: left;

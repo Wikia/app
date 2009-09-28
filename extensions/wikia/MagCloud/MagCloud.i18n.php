@@ -14,6 +14,7 @@ $messages['en'] = array(
 
 	'magcloud-load-magazine-title' => 'Load a Magazine',
 	'magcloud-load-magazine-load' => 'Load this magazine',
+	'magcloud-load-magazine-empty' => 'You haven\'t saved any magazines yet. Try creating one and save it to see them in this list!',
 
 	'magcloud-add-article-success' => "'''$1''' has been added to your magazine",
 	'magcloud-add-article-already' => "'''$1''' already added",
