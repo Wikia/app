@@ -416,6 +416,7 @@ div.inline_form_inside {
 	margin-right: 310px;
 	padding: 30px 30px 15px 15px;
 	position: relative;
+	clear: both;
 }
 #wikia_footer a {
 	color: #CCC;

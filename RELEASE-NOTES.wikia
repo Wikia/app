@@ -1,5 +1,5 @@
 == Changes since 200909.5 ==
-* 
+* rt#23713: Div overlapping on Answer skin (TOR)
 
 == Changes since 200909.4 ==
 * rt#23550: Analytics: Test tracking image fix & hide. (Nef)
