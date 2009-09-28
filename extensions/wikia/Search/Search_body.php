@@ -129,7 +129,12 @@ class SolrSearchSet extends SearchResultSet {
 	private function __construct( $query, $results, $snippets, $resultCount, $totalHits = null, $suggestion = null) {
 		$this->mQuery             = $query;
 		$this->mTotalHits         = $totalHits;
-		$this->mResults           = $this->deDupe($results);
+		if(is_array($results)) {
+			$this->mResults          = $this->deDupe($results);
+		}
+		else {
+			$this->mResults          = array();
+		}
 		$this->mSnippets          = $snippets;
 		$this->mResultCount       = $resultCount;
 		$this->mPos               = 0;
