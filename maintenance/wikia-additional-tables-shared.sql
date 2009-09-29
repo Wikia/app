@@ -557,3 +557,22 @@ CREATE TABLE IF NOT EXISTS `city_variables` (
 LOCK TABLES `city_cats` WRITE;
 INSERT INTO `city_cats` VALUES (1,'Humor','http://www.wikia.com/wiki/Humor'),(2,'Gaming','http://gaming.wikia.com/'),(3,'Entertainment','http://entertainment.wikia.com/'),(4,'Wikia','http://www.wikia.com/wiki/Category:Hubs'),(5,'Toys','http://www.wikia.com/wiki/Toys'),(7,'Travel','http://www.wikia.com/wiki/Travel'),(8,'Education','http://www.wikia.com/wiki/Education'),(9,'Lifestyle','http://www.wikia.com/wiki/Lifestyle'),(10,'Finance','http://www.wikia.com/wiki/Finance'),(11,'Politics','http://www.wikia.com/wiki/Politics'),(12,'Technology','http://www.wikia.com/wiki/Technology'),(13,'Science','http://www.wikia.com/wiki/Science'),(14,'Philosophy','http://www.wikia.com/wiki/Philosophy'),(15,'Sports','http://www.wikia.com/wiki/Sports'),(16,'Music','http://www.wikia.com/wiki/Music'),(17,'Creative','http://www.wikia.com/wiki/Creative'),(18,'Auto','http://www.wikia.com/wiki/Auto'),(19,'Green','http://www.wikia.com/wiki/Green');
 UNLOCK TABLES;
+
+-- ShareFeature extension --
+
+CREATE TABLE /*$wgDBprefix*/ `share_feature` (
+  `sf_user_id` int(5) unsigned NOT NULL,
+  `sf_provider_id` int(2) unsigned NOT NULL,
+  `sf_clickcount` int(11) default '0',
+  PRIMARY KEY (sf_user_id, sf_provider_id)
+);
+
+INSERT INTO `share_feature` VALUES (0, 0, 1000);
+INSERT INTO `share_feature` VALUES (0, 1, 900);
+INSERT INTO `share_feature` VALUES (0, 2, 800);
+INSERT INTO `share_feature` VALUES (0, 3, 700);
+INSERT INTO `share_feature` VALUES (0, 4, 600);
+INSERT INTO `share_feature` VALUES (0, 5, 500);
+INSERT INTO `share_feature` VALUES (0, 6, 400);
+INSERT INTO `share_feature` VALUES (0, 7, 300);
+
