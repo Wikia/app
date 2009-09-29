@@ -16,11 +16,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 function axACWRequestCheckWikiName() {
-	global $wgRequest, $wgDBname, $wgContLang, $wgOut;
+	global $wgRequest, $wgDBname, $wgContLang, $wgLang, $wgOut;
 	wfLoadExtensionMessages( "AutoCreateWiki" );
 	
 	$sName = $wgRequest->getVal('name');
-	$sResponse = AutoCreateWiki::checkWikiNameIsCorrect($sName);
+	$sLang = $wgRequest->getVal('lang');
+	$sResponse = AutoCreateWiki::checkWikiNameIsCorrect($sName, $sLang);
 
 	$isError = ( !empty($sResponse) ) ? true : false;
 	$aResponse = array( 'div-body' => $sResponse, 'div-name' => 'wiki-name-error', 'div-error' => $isError );
