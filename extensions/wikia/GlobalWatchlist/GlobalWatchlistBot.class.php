@@ -456,8 +456,12 @@ class GlobalWatchlistBot {
 					}
 				} // while
 				$dbr->freeResult( $oResource );
-
-				if ( count($aWikiDigest['pages'] + $aWikiDigest[ 'blogs' ]) ) {
+	
+				$cnt = count($aWikiDigest['pages']);
+				if ( isset($aWikiDigest['blogs']) ) {
+					$cnt += count($aWikiDigest['blogs']);
+				}
+				if ( !empty($cnt) ) {
 					$aDigestData[ $iWikiId ] = $aWikiDigest;
 				}
 				
