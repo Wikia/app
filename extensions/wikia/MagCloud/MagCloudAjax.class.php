@@ -166,15 +166,12 @@ class MagCloudAjax {
 	static public function saveCover() {
 		global $wgRequest;
 
-		$imageCover = $wgRequest->getVal('imageCover', false);
-
 		$params = array(
 			'layout' => $wgRequest->getInt('coverLayout'),
 			'theme' =>  $wgRequest->getVal('coverTheme'),
 			'title' =>  $wgRequest->getVal('magazineTitle'),
 			'subtitle' =>  $wgRequest->getVal('magazineSubtitle'),
 			'image' => $wgRequest->getVal('image'),
-			'imageCover' => !empty($imageCover),
 		);
 
 		$collection = MagCloudCollection::getInstance()->saveCoverData($params);

@@ -132,6 +132,9 @@ SpecialMagCloud.applyColorTheme = function(theme) {
 	});
 
 	$('#MagCloudCoverPreviewBar').css('backgroundColor', '#'+colors[0]);
+
+	// TODO: save changed setting
+	//MagCloud.ajax('setCoverTheme', {theme: theme});
 }
 
 // setup layout editor
@@ -157,6 +160,9 @@ SpecialMagCloud.applyLayout = function(layout) {
 
 	// set CSS class
 	$('#MagCloudCoverPreviewWrapper').attr('class', 'MagCloudCoverPreviewLayout' + layout);
+
+	// TODO: save changed setting
+	//MagCloud.ajax('setCoverLayout', {layout: layout});
 }
 
 // "connect" title/subtitle fields with cover preview
@@ -183,8 +189,7 @@ SpecialMagCloud.saveCoverDesign = function(ev) {
 		coverTheme: $('#MagCloudCoverEditorTheme').find('input[checked]').attr('rel'),
 		coverLayout: $('#MagCloudCoverEditorLayout').find('input[checked]').attr('rel').substring(6),
 
-		image: ($('#MagCloudCoverEditorImageSmall').attr('checked') ? $('#MagCloudCoverEditorImageName').attr('value') : ''),
-		imageCover: ($('#MagCloudCoverEditorImageCover').attr('checked') == true ? 1 : 0)
+		image: ($('#MagCloudCoverEditorImageSmall').attr('checked') ? $('#MagCloudCoverEditorImageName').attr('value') : '')
 	};
 
 	var href = $(this).attr('href');

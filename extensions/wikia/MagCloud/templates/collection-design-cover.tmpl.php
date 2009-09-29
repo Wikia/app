@@ -80,17 +80,13 @@ foreach($themes as $theme => $colors) {
 
 
 	<h3>Add an image</h3>
-
-	<!-- No image -->
 	<table id="MagCloudCoverEditorImage">
 	<tr>
 		<td><input type="radio" name="MagCloudCoverEditorImage" id="MagCloudCoverEditorImageNone"<?= ($image == '' ? ' checked="checked"' : '') ?> /></td>
 		<td><label for="MagCloudCoverEditorImageNone">No image<label></td>
 	</tr>
-
-	<!-- Small image -->
 	<tr>
-		<td><input type="radio" name="MagCloudCoverEditorImage" id="MagCloudCoverEditorImageSmall"<?= ($image != '' && !$imageCover ? ' checked="checked"' : '') ?> /></td>
+		<td><input type="radio" name="MagCloudCoverEditorImage" id="MagCloudCoverEditorImageSmall"<?= ($image != '' ? ' checked="checked"' : '') ?> /></td>
 		<td>
 			<label for="MagCloudCoverEditorImageSmall">Small image <small>(Use a high resolution image, preferably 1200x1200 or greater)</small></label>
 
@@ -99,17 +95,6 @@ foreach($themes as $theme => $colors) {
 				<big><?= wfMsg('wmu-upload') ?></big>
 				<small> </small>
 			</a>
-		</td>
-	</tr>
-
-	<!-- Cover image -->
-	<tr>
-		<td><input type="checkbox" name="MagCloudCoverEditorImage" id="MagCloudCoverEditorImageCover"<?= ($image != '' && $imageCover ? ' checked="checked"' : '') ?> /></td>
-		<td>
-			<label for="MagCloudCoverEditorImageCover">Replace cover with an image <small>(Advanced users only!)</small>
-			<br/>
-			<small>Your image should be 700x950px and will be printed edge to edge on the cover.<br/>Please upload a TIFF or high quality JPG / PNG for best results.)</small>
-			</label>
 		</td>
 	</tr>
 
@@ -136,62 +121,14 @@ foreach($themes as $theme => $colors) {
 
 	$('#SpecialMagCloudButtons a').click(SpecialMagCloud.saveCoverDesign);
 
-	// enable/disabled color themes / layout editor
-	function enableCoverEditor(enable) {
-		// use selected layout
-		if (enable) {
-			var layout = $('#MagCloudCoverEditorLayout').find('input[checked]').attr('rel')
-			SpecialMagCloud.applyLayout(layout);
-		}
-
-		$('#MagCloudCoverEditorTheme, #MagCloudCoverEditorLayout').find('input').attr('disabled', enable ? false : true);
-	}
-
-	// image settings
+	// image upload
 	$('#MagCloudCoverEditorImageNone').click(function() {
-		// hide an image
 		$('#MagCloudCoverPreviewImage').hide();
-
-		// uncheck cover
-		$('#MagCloudCoverEditorImageCover').attr('checked', false);
-
-		enableCoverEditor(true);
 	});
 
 	$('#MagCloudCoverEditorImageSmall').click(function() {
 		$('#MagCloudCoverPreviewImage').show();
 	});
-
-	$('#MagCloudCoverEditorImageCover').click(function() {
-		// get checkbox value
-		var checked = $(this).attr('checked');
-
-		if (checked) {
-			// select image option
-			$('#MagCloudCoverEditorImageSmall').click();
-
-			// disabled theme / layout editor
-			enableCoverEditor(false);
-
-			// apply special layout
-			SpecialMagCloud.applyLayout('Layout4');
-		}
-		else {
-			// enable theme / layout editor
-			enableCoverEditor(true);
-		}
-	});
-
-<?php if (!empty($imageCover)) :?>
-	// select image option
-	$('#MagCloudCoverEditorImageSmall').click();
-
-	// disabled theme / layout editor
-	enableCoverEditor(false);
-
-	// apply special layout
-	SpecialMagCloud.applyLayout('Layout4');
-<?php endif; ?>
 
 	// render an image to be used on cover preview
 	SpecialMagCloud.renderImageForCover($('#MagCloudCoverEditorImageName').attr('value'), 100);

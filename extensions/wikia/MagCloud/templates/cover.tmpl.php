@@ -1,6 +1,6 @@
 <body>
 	<link rel="stylesheet" href="<?= $css ?>" />
-	<div id="MagCloudCoverWrapper" class="MagCloudCoverLayout<?= (!empty($cover['imageCover']) ? 4 : $cover['layout']) ?>" style="background-color: #<?= $colors[1] ?>">
+	<div id="MagCloudCoverWrapper" class="MagCloudCoverLayout<?= $cover['layout'] ?>" style="background-color: #<?= $colors[1] ?>">
 		<div id="MagCloudCoverTitle" style="background-color: #<?= $colors[2] ?>; color: #<?= $colors[1] ?>">
 			<big><?= htmlspecialchars($cover['title']) ?></big>
 			<small><?= htmlspecialchars($cover['subtitle']) ?></small>
