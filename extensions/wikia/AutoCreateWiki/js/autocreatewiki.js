@@ -115,10 +115,11 @@ YAHOO.ACWikiRequest.checkDomain = function(e) {
 YAHOO.ACWikiRequest.checkWikiName = function(e) {
 	var err = YD.get("wiki-name-error-status");
 	var name = YD.get("wiki-name").value;
+    var lang = YD.get("wiki-language").value;
 	setProgressImg(err);
     // to lowercase
 
-    YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckWikiName&name=" + encodeURIComponent(name), YAHOO.ACWikiRequest.NameCallback);
+    YC.asyncRequest( "GET", wgAjaxPath + "?action=ajax&rs=axACWRequestCheckWikiName&name=" + encodeURIComponent(name) + "&lang=" + encodeURIComponent(lang), YAHOO.ACWikiRequest.NameCallback);
 }
 
 YAHOO.ACWikiRequest.wikiLanguageChange = function(e) {

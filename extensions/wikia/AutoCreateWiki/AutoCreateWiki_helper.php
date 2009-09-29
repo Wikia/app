@@ -184,7 +184,7 @@ class AutoCreateWiki {
 	/*
 	 * check form fields
 	 */
-	public static function checkWikiNameIsCorrect($sValue) {
+	public static function checkWikiNameIsCorrect($sValue, $sLang = '') {
 		global $wgUser, $wgLegalTitleChars;
 
 		wfProfileIn(__METHOD__);
@@ -194,6 +194,8 @@ class AutoCreateWiki {
 		} elseif (preg_match('/[^' . $wgLegalTitleChars . ']/i', $sValue)) {
 			$sResponse = wfMsg('autocreatewiki-invalid-wikiname');
 		} elseif ( !in_array('staff', $wgUser->getGroups()) && (self::checkBadWords($sValue, "name", true) === false) ) {
+			$sResponse = wfMsg('autocreatewiki-violate-policy');
+		} elseif ( self::isNameInNamespaces($sValue, $sLang) ) {
 			$sResponse = wfMsg('autocreatewiki-violate-policy');
 		}
 		wfProfileOut(__METHOD__);
@@ -461,4 +463,38 @@ class AutoCreateWiki {
 		wfProfileOut(__METHOD__);
 		return $allowed;
 	}
+	
+	/**
+	 * check name of Wiki is one of NS name
+	 */
+	public static function isNameInNamespaces($sText, $lang = "") {
+		global $wgContLang, $wgLang;
+		$res = false;
+
+		$cNamespaces = $wgContLang->getNamespaces();
+		$lNamespaces = $wgLang->getNamespaces();
+		if ( !empty($cNamespaces) ) {
+			if ( preg_match('/^((' . implode(")|(", array_values($cNamespaces)) . '))(\s*)\:/i', $sText) ) {
+				$res = true;
+			}
+		} 
+		
+		if ( !empty($lNamespaces) && ($res == false) ) {
+			if ( preg_match('/^((' . implode(")|(", array_values($lNamespaces)) . '))(\s*)\:/i', $sText) ) {
+				$res = true;
+			}
+		} 
+
+		if ( !empty($lang) && !in_array($lang, array($wgContLang->getCode(), $wgLang->getCode())) && ($res == false) ) {
+			$wikiLang = Language::factory($lang);
+			$lNamespaces = $wikiLang->getNamespaces();
+			if ( preg_match('/^((' . implode(")|(", array_values($lNamespaces)) . '))(\s*)\:/i', $sText) ) {
+				$res = true;
+			}
+		}
+		
+		return $res;
+	}
+
+
 }
