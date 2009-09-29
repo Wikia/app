@@ -209,6 +209,15 @@
 	top: 180px;
 }
 
+.MagCloudCoverPreviewLayout4 #MagCloudCoverPreview {
+	background-color: #fff !important;
+}
+
+.MagCloudCoverPreviewLayout4 #MagCloudCoverPreviewTitle,
+.MagCloudCoverPreviewLayout4 #MagCloudCoverPreviewBar {
+	display: none;
+}
+
 .MagCloudCoverPreviewLayout4 #MagCloudCoverPreviewImage {
 	left: 0;
 	margin: 0 !important;
