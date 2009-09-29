@@ -264,6 +264,31 @@ class MagCloudAjax {
 	}
 
 	/*
+	 * Render given image and return HTML and height info
+	 *
+	 * @author Maciej Brencz <macbre@wikia-inc.com>
+	 */
+	static public function renderImage() {
+		global $wgRequest;
+
+		$imageName = $wgRequest->getVal('image');
+		$width = $wgRequest->getInt('width');
+
+		$image = wfFindFile( Title::newFromText($imageName, NS_FILE) );
+
+		if (empty($image)) {
+			return false;
+		}
+
+		$thumb = $image->getThumbnail($width);
+
+		return array(
+			'img' => $thumb->toHtml(),
+			'height' => $thumb->getHeight(),
+		);
+	}
+
+	/*
 	 * Publish given collection PDF in MagCloud
 	 *
 	 * @author Maciej Brencz <macbre@wikia-inc.com>

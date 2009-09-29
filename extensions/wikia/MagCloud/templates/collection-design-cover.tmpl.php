@@ -136,7 +136,7 @@ foreach($themes as $theme => $colors) {
 	});
 
 	// render an image to be used on cover preview
-	SpecialMagCloud.renderImageForCover($('#MagCloudCoverEditorImageName').attr('value'), 300);
+	SpecialMagCloud.renderImageForCover($('#MagCloudCoverEditorImageName').attr('value'), 100);
 
 	// use WMU for image upload
 	$('#MagCloudCoverEditorImageUpload').click(WMU_show);
@@ -161,7 +161,7 @@ foreach($themes as $theme => $colors) {
 		MagCloud.log('using image: ' + wikitext);
 
 		// render an image to be used on cover preview
-		SpecialMagCloud.renderImageForCover(wikitext, 300);
+		SpecialMagCloud.renderImageForCover(wikitext, 100);
 
 		// update the info
 		$('#MagCloudCoverEditorImageInfo').html( (<?= Xml::encodeJsVar(wfMsg('magcloud-design-image-selected')) ?>).replace(/\$1/, wikitext) );

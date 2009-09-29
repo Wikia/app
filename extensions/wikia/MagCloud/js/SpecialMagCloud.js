@@ -235,23 +235,9 @@ SpecialMagCloud.renderImageForCover = function(imageName, width) {
 		return;
 	}
 
-	var wikitext = '[[' + imageName + '|' + width + 'px]]';
-
-	$.getJSON(wgScriptPath + '/api.php', {
-		action: 'parse',
-		format: 'json',
-		text: wikitext
-	}, function(data) {
-		var html = data.parse.text['*'];
-
-		// get <img> tag
-		html = html.substring( html.indexOf('<img ') );
-		html = html.substring( 0, html.indexOf('/>') + 2 );
-
-		MagCloud.log('HTML of cover image: ' + html);
-
+	MagCloud.ajax('renderImage', {image: imageName,	width: width}, function(data) {
 		// update image used on cover
-		$('#MagCloudCoverPreviewImage').html(html).css('marginTop', parseInt($('#MagCloudCoverPreviewImage').innerHeight() / 2) * -1);
+		$('#MagCloudCoverPreviewImage').html(data.img).css('marginTop', parseInt(data.height/2) * -1 + 'px');
 	});
 }
 
