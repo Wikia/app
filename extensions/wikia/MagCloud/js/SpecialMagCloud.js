@@ -224,7 +224,7 @@ SpecialMagCloud.doSaveCollection = function() {
 	$('#MagCloudSaveMagazine').css('visibility', 'hidden');
 	MagCloud.ajax('saveCollection', {}, function(data) {
 		var node = $('#MagCloudSaveMagazine')
-		node.before('<span id="MagCloudSaveMagazine" style="left: ' + node.css('left')  + '; position: absolute">' + data.shortMsg + '</span>');
+		node.before('<span id="MagCloudSaveMagazine" style="margin-left: ' + node.css('marginLeft')  + '; position: absolute">' + data.shortMsg + '</span>');
 		node.remove();
 	});
 }
