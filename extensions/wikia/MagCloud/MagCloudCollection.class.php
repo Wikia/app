@@ -50,7 +50,9 @@ class MagCloudCollection {
 	 * @param mixed $value value
 	 */
 	private function storeSessionData($key, $value) {
+		Wikia::log(__CLASS__, 'info', "storeSession($key), VALUE: " . print_r($value, true));
 		if(!$this->hasSession()) {
+			Wikia::log(__CLASS__, 'info', "INIT session");
 			$this->initSession();
 		}
 		$_SESSION[$this->sessionKey][$key] = $value;
@@ -62,9 +64,12 @@ class MagCloudCollection {
 	 * @param stirng $key data key
 	 */
 	private function readSessionData($key) {
+		Wikia::log(__CLASS__, 'info', "readSession($key)");
 		if(!$this->hasSession()) {
+			Wikia::log(__CLASS__, 'info', "INIT session");
 			$this->initSession();
 		}
+		Wikia::log(__CLASS__, 'info', "readSession($key), VALUE: " . print_r($_SESSION[$this->sessionKey][$key], true));
 		return isset($_SESSION[$this->sessionKey][$key]) ? $_SESSION[$this->sessionKey][$key] : null;
 	}
 
