@@ -25,7 +25,6 @@ $messages['en'] = array(
 	"blog-avatar-save-info" => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press "Save" button',
 	'removeavatar' => "Remove user's avatar",
 	'masthead-edits-since' => 'edits since',
-	'masthead-anonymous-user' => 'Anonymous contributor',
 	"useravatar-log" => "User avatar log",
     "removeavatar" => "Remove user's avatar",
 	'blog-avatar-alt' => "Logs of useravatar additions or removals",

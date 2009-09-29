@@ -5,7 +5,6 @@ class SpecialMyHome extends SpecialPage {
 	function __construct() {
 		parent::__construct('MyHome', '' /* no restriction */, true /* listed */);
 		wfLoadExtensionMessages('MyHome');
-		wfLoadExtensionMessages('Masthead');
 	}
 
 	function execute($par) {
