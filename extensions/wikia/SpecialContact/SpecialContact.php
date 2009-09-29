@@ -203,7 +203,7 @@ function wfSpecialContactSetup() {
 					<tr>
 						<td align='right'>$cwn:</td>
 						<td align='left'>
-							<textarea tabindex='5' name=\"wpContactProblemDesc\" rows=\"6\" cols=\"60\">$encProblemDesc</textarea>
+							<textarea tabindex='5' name=\"wpContactProblemDesc\" rows=\"11\" cols=\"80\">$encProblemDesc</textarea>
 						</td>
 					</tr>
 					<tr>
