@@ -76,7 +76,6 @@ $wgExtensionFunctions[] = 'ActivityFeedTag_setup';
 function ActivityFeedTag_setup() {
 	global $wgParser;
 	wfLoadExtensionMessages('MyHome');
-	wfLoadExtensionMessages('Masthead');
 	$wgParser->setHook('activityfeed', 'ActivityFeedTag_render');
     return true;
 }
