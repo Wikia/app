@@ -49,7 +49,8 @@ If you're stuck for inspiration, check out the examples below!",
 
 	'magcloud-design-review-list' => 'Back to Review List',
 	'magcloud-design-preview' => 'Preview',
-	'magcloud-design-license-policy' => 'Please ensure that any images you use conform with our licensing policy at http://www.wikia.com/wiki/Wikia:Licensing',
+	'magcloud-design-license-policy' => 'Only upload an image that you have rights to print and that adheres to this wiki\'s policies.',
+	'magcloud-design-image-selected' => '$1 selected',
 
 	'magcloud-preview-done' => 'Your magazine has been generated.',
 	'magcloud-preview-back-to-cover' => 'Back to Design Cover',
