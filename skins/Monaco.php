@@ -1823,6 +1823,10 @@ if ($custom_article_footer !== '') {
 			}
 ?>
 							</ul>
+<?php
+			global $wgEnableShareFeatureExt;
+			if(empty($wgEnableShareFeatureExt)) {		
+?>
 							<div class="clearfix">
 								<strong><?= wfMsg('footer_8') ?>:</strong>
 <?php
@@ -1848,6 +1852,9 @@ if ($custom_article_footer !== '') {
 								</dl>
 								</div>
 							</div>
+<?php
+			}
+?>
 							<div class="clearfix">
 								<strong><?= wfMsgHtml('rate_it') ?></strong>
 <?php
