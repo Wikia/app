@@ -382,6 +382,7 @@ class GlobalWatchlistBot {
 						"LIMIT" => $wgGlobalWatchlistMaxDigestedArticlesPerWiki + 1,
 					)
 				);
+				$this->printDebug("Sending digest emails to user: " . $iUserId);
 
 				$bTooManyPages = false;
 				if ( $dbr->numRows($oResource) > $wgGlobalWatchlistMaxDigestedArticlesPerWiki ) {
@@ -441,6 +442,7 @@ class GlobalWatchlistBot {
 								'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
 								'own_comments' => 0
 							);
+							$db_wiki->close();
 						}
 						
 						if ( $oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK ) {
