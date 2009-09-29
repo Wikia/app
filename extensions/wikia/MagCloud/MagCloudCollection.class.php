@@ -7,7 +7,6 @@ class MagCloudCollection {
 
 	private function __construct() {
 		global $wgCityId;
-		MagCloud::startAnonSession(); // just in case..
 
 		$this->sessionKey = 'wsMagCloudCollection' . $wgCityId;
 	}
