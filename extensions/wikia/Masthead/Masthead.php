@@ -861,10 +861,9 @@ class Masthead {
 							$dbr = wfGetDB(DB_SLAVE);
 
 							$dbResult = $dbr->select(
-								array('revision', 'page'),
+								'revision',
 								array('min(rev_timestamp) AS date, count(*) AS edits'),
-								array('page_id = rev_page',
-									'rev_user' => $destionationUserId),
+								array('rev_user_text' => $destionationUser->getName()),
 								__METHOD__
 							);
 
@@ -875,8 +874,8 @@ class Masthead {
 							if ($dbResult !== false) {
 								$dbr->FreeResult($dbResult);
 							}
-							$wgMemc->set($mastheadDataEditDateKey, $firstDate, 60 * 10);
-							$wgMemc->set($mastheadDataEditCountKey, $editCount, 60 * 10);
+							$wgMemc->set($mastheadDataEditDateKey, $firstDate, 60 * 60);
+							$wgMemc->set($mastheadDataEditCountKey, $editCount, 60 * 60);
 						} else {
 							$firstDate = $mastheadDataEditDate;
 							$editCount = $mastheadDataEditCount;
