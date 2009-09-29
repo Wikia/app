@@ -115,7 +115,7 @@
 }
 
 #page-controls .disabled a:hover {
-	text-decoration: none !important;
+	text-decoration: none;
 }
 
 #shareFeatureInside {
