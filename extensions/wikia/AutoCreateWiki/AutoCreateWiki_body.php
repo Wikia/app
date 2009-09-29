@@ -514,18 +514,19 @@ class AutoCreateWikiPage extends SpecialPage {
 			/**
 			 * first check whether database starter exists
 			 */
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB ); # central
 			$sql = sprintf( "SHOW DATABASES LIKE '%s';", $starterDB );
 			/**
 			 * @fixme we should not assume that dbw in this place is to first
 			 * cluster
 			 */
-			$Res = $dbw->query( $sql, __METHOD__ );
+			$Res = $dbr->query( $sql, __METHOD__ );
 			$numRows = $Res->numRows();
 			if ( !empty( $numRows ) ) {
 				$cmd = sprintf(
 					"%s -h%s -u%s -p%s %s categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text | %s -h%s -u%s -p%s %s",
 					$this->mMYSQLdump,
-					$dbw->getLBInfo( 'host' ),
+					$dbr->getLBInfo( 'host' ),
 					$wgDBuser,
 					$wgDBpassword,
 					$starterDB,
