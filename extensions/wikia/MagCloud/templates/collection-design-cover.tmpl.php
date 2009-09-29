@@ -61,24 +61,6 @@ foreach($themes as $theme => $colors) {
 	</table>
 
 
-	<h3>Select a cover layout</h3>
-	<table id="MagCloudCoverEditorLayout">
-		<tr>
-<?php for($layout=1; $layout <=3; $layout++): ?>
-			<td><label for="MagCloudCoverEditorLayout<?= $layout ?>">
-				<img src="<?=  str_replace('$1', $layout, $layoutPreviewImage) ?>" width="130" height="160" alt="Layout #<?= $layout ?>" >
-			</label></td>
-<?php endfor; ?>
-		</tr>
-		<tr>
-<?php for($layout=1; $layout <=3; $layout++): ?>
-			<td><input type="radio" id="MagCloudCoverEditorLayout<?= $layout ?>" name="MagCloudCoverEditorLayout" rel="layout<?= $layout ?>"<?= ($selectedLayout == $layout ? ' checked="checked"' : '') ?> /></td>
-<?php endfor; ?>
-
-		</tr>
-	</table>
-
-
 	<h3>Add an image</h3>
 	<table id="MagCloudCoverEditorImage">
 	<tr>
@@ -88,20 +70,45 @@ foreach($themes as $theme => $colors) {
 	<tr>
 		<td><input type="radio" name="MagCloudCoverEditorImage" id="MagCloudCoverEditorImageSmall"<?= ($image != '' ? ' checked="checked"' : '') ?> /></td>
 		<td>
-			<label for="MagCloudCoverEditorImageSmall">Small image <small>(Use a high resolution image, preferably 1200x1200 or greater)</small></label>
+			<label for="MagCloudCoverEditorImageSmall">Insert an image</label>
 
-			<input type="text" readonly="readonly" id="MagCloudCoverEditorImageName" value="<?= htmlspecialchars($image) ?>" />
 			<a id="MagCloudCoverEditorImageUpload" class="bigButton">
 				<big><?= wfMsg('wmu-upload') ?></big>
 				<small> </small>
 			</a>
+
+			<span id="MagCloudCoverEditorImageInfo"><?= ($image != '' ? wfMsg('magcloud-design-image-selected', $image) : '') ?></span>
+
+			<input type="hidden" id="MagCloudCoverEditorImageName" value="<?= htmlspecialchars($image) ?>" />
+
+			<br  />
+
+			<span id="MagCloudLicense" class="clearfix"><?= wfMsgExt('magcloud-design-license-policy', array('parseinline')) ?></span>
 		</td>
 	</tr>
 
 	</table>
+
+
+	<h3>Select a cover layout</h3>
+	<table id="MagCloudCoverEditorLayout">
+		<tr>
+<?php for($layout=1; $layout<=4; $layout++): ?>
+			<td><label for="MagCloudCoverEditorLayout<?= $layout ?>">
+				<img src="<?=  str_replace('$1', $layout, $layoutPreviewImage) ?>" width="130" height="160" alt="Layout #<?= $layout ?>" >
+			</label></td>
+<?php endfor; ?>
+		</tr>
+		<tr>
+<?php for($layout=1; $layout<=4; $layout++): ?>
+			<td><input type="radio" id="MagCloudCoverEditorLayout<?= $layout ?>" name="MagCloudCoverEditorLayout" rel="layout<?= $layout ?>"<?= ($selectedLayout == $layout ? ' checked="checked"' : '') ?> /></td>
+<?php endfor; ?>
+
+		</tr>
+	</table>
 </div>
 
-<div id="SpecialMagCloudButtons" style="clear: left; width: 60%">
+<div id="SpecialMagCloudButtons" class="clearfix" style="margin-top: 30px; width: 680px">
 	<a class="bigButton greyButton" href="<?= htmlspecialchars($title->getLocalUrl()) ?>" style="left: 0">
 		<big>&laquo; <?= wfMsg('magcloud-design-review-list'); ?></big>
 		<small> </small>
@@ -111,8 +118,6 @@ foreach($themes as $theme => $colors) {
 		<small> </small>
 	</a>
 </div>
-
-<h6 id="MagCloudLicense"><?= wfMsgExt('magcloud-design-license-policy', array('parseinline')) ?></h6>
 
 <script type="text/javascript">/*<![CDATA[*/
 	SpecialMagCloud.setupColorTheme($('#MagCloudCoverEditorTheme'), <?= Wikia::json_encode($themes) ?>);
@@ -131,7 +136,7 @@ foreach($themes as $theme => $colors) {
 	});
 
 	// render an image to be used on cover preview
-	SpecialMagCloud.renderImageForCover($('#MagCloudCoverEditorImageName').attr('value'), 100);
+	SpecialMagCloud.renderImageForCover($('#MagCloudCoverEditorImageName').attr('value'), 300);
 
 	// use WMU for image upload
 	$('#MagCloudCoverEditorImageUpload').click(WMU_show);
@@ -156,7 +161,10 @@ foreach($themes as $theme => $colors) {
 		MagCloud.log('using image: ' + wikitext);
 
 		// render an image to be used on cover preview
-		SpecialMagCloud.renderImageForCover(wikitext, 100);
+		SpecialMagCloud.renderImageForCover(wikitext, 300);
+
+		// update the info
+		$('#MagCloudCoverEditorImageInfo').html( (<?= Xml::encodeJsVar(wfMsg('magcloud-design-image-selected')) ?>).replace(/\$1/, wikitext) );
 	}
 /*]]>*/</script>
 
