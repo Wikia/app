@@ -3,7 +3,7 @@
  * Configuration settings introduced by Wikia.
  *
  * Any new variables should be declared here.
- * If you want to change their value rather edit LocalSettings.php 
+ * If you want to change their value rather edit LocalSettings.php
  * than this file.
  *
  */
@@ -17,7 +17,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 /**
  * Use revision number
  */
-$wgStyleVersion         = '13189';
+$wgStyleVersion         = '13190';
 $wgMergeStyleVersionJS  = '11321';
 $wgMergeStyleVersionCSS = '11321';
 

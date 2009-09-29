@@ -198,13 +198,19 @@ MagCloud.doHideToolbar = function() {
 	});
 }
 
-// save collection
+// save collection (when user tries to close the toolbar)
 MagCloud.saveCollection = function() {
 	$('#MagCloudDiscardMagazineButtons').html('');
 
 	MagCloud.ajax('saveCollection', {}, function(data) {
-		// TODO: show success msg, close toolbar, ...
-		$('#MagCloudDiscardMagazineButtons').html(data.msg);
+		// show success msg and show "Ok" button which will close the toolbar and end the MagCloud "session"
+		$('#MagCloudDiscardMagazine').find('p').html(data.msg);
+		$('#MagCloudDiscardMagazineButtons').html('<a class="bigButton"><big>' + data.ok + '</big><small> </small></a>');
+
+		$('#MagCloudDiscardMagazineButtons').find('a').click(function() {
+			$('#MagCloudDiscardMagazineWrapper').closeModal();
+			MagCloud.doHideToolbar();
+		});
 	});
 }
 
