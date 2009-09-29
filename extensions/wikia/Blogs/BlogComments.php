@@ -481,6 +481,11 @@ class BlogComment {
 			 */
 			$Title->invalidateCache();
 			$Title->purgeSquid();
+			$listing = BlogArticle::getOwnerTitle( $Title );
+			if( $listing ) {
+				$listing->invalidateCache();
+				$listing->purgeSquid();
+			}
 
 			$key = $Title->getPrefixedDBkey();
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
@@ -536,8 +541,12 @@ class BlogComment {
 		 * clear article/listing cache for this article
 		 */
 		$Title->invalidateCache();
-		$update = SquidUpdate::newSimplePurge( $Title );
-		$update->doUpdate();
+		$Title->purgeSquid();
+		$listing = BlogArticle::getOwnerTitle( $Title );
+		if( $listing ) {
+			$listing->invalidateCache();
+			$listing->purgeSquid();
+		}
 
 		return Wikia::json_encode(
 			array(
@@ -713,13 +722,16 @@ class BlogComment {
 		$retval = $editPage->internalAttemptSave( $result );
 		Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
 
-		// $article->doEdit( $text, wfMsg('blog-comments-new') );
-
 		/**
 		 * clear comments cache for this article
 		 */
-		$update = SquidUpdate::newSimplePurge( $Title );
-		$update->doUpdate();
+		$Title->invalidateCache();
+		$Title->purgeSquid();
+		$listing = BlogArticle::getOwnerTitle( $Title );
+		if( $listing ) {
+			$listing->invalidateCache();
+			$listing->purgeSquid();
+		}
 
 		$key = $Title->getPrefixedDBkey();
 		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
@@ -1278,8 +1290,12 @@ class BlogCommentList {
 		$wgMemc->delete( wfMemcKey( "blog", "comm", $this->mTitle->getArticleID() ) );
 
 		$this->mTitle->invalidateCache();
-		$update = SquidUpdate::newSimplePurge( $this->mTitle );
-		$update->doUpdate();
+		$this->mTitle->purgeSquid();
+		$listing = BlogArticle::getOwnerTitle( $this->mTitle );
+		if( $listing ) {
+			$listing->invalidateCache();
+			$listing->purgeSquid();
+		}
 	}
 
 	/**

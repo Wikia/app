@@ -370,7 +370,7 @@ class BlogArticle extends Article {
 
 	/*
 	 * static method to get number of pages in caetgory
-	 */ 
+	 */
 	static public function getCountMessage( &$catView, $rescnt, $dbcnt, $type ) {
 		global $wgLang;
 		# See CategoryPage->getCountMessage() function
@@ -435,7 +435,7 @@ class BlogArticle extends Article {
 		if( ! in_array( $wgTitle->getNamespace(), array( NS_BLOG_ARTICLE, NS_BLOG_LISTING, NS_BLOG_ARTICLE_TALK ) ) ) {
 			return true;
 		}
-		
+
 		if ( ( $wgTitle->getNamespace() == NS_BLOG_ARTICLE_TALK ) && ( empty($wgEnableBlogCommentEdit) ) ) {
 			return true;
 		}
@@ -462,7 +462,7 @@ class BlogArticle extends Article {
 					}
 				}
 				break;
-			}				
+			}
 		}
 
 
@@ -576,6 +576,28 @@ class BlogArticle extends Article {
 	}
 
 	/**
+	 * guess Owner of blog from title and return Title instead of string
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return String -- guessed name
+	 */
+	static public function getOwnerTitle( $title ) {
+		wfProfileIn( __METHOD__ );
+		if( $title instanceof Title ) {
+			$text = $title->getBaseText();
+		}
+		if( strpos( $text, "/" ) !== false ) {
+			list( $owner, $rest) = explode( "/", $text, 2 );
+		}
+		wfProfileOut( __METHOD__ );
+
+		return Title::newFromText( $owner, NS_BLOG_ARTICLE );
+	}
+
+
+	/**
 	 * wfMaintenance -- wiki factory maintenance
 	 *
 	 * @static
@@ -673,13 +695,13 @@ class BlogArticle extends Article {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Get User_blog article from USer_blog_comment
-	 * 
+	 *
 	 * @access public
 	 * @static
-	 */ 
+	 */
 	static public function commentToUserBlog( $oTitle ) {
 		$oUBlogTitle = null;
 		if ($oTitle instanceof Title) {
@@ -691,5 +713,5 @@ class BlogArticle extends Article {
 		}
 		return $oUBlogTitle;
 	}
-	 
+
 }
