@@ -83,7 +83,7 @@ foreach($themes as $theme => $colors) {
 
 			<br  />
 
-			<span id="MagCloudLicense" class="clearfix"><?= wfMsgExt('magcloud-design-license-policy', array('parseinline')) ?></span>
+			<p id="MagCloudLicense"><?= wfMsgExt('magcloud-design-license-policy', array('parseinline')) ?></p>
 		</td>
 	</tr>
 
