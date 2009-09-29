@@ -169,13 +169,20 @@ class WikiaCollection extends SpecialPage {
 
 		// render cover image
 		if ($cover['image'] != '') {
-			$thumb = wfFindFile( Title::newFromText($cover['image']) )->getThumbnail(400);
+			$thumb = wfFindFile( Title::newFromText($cover['image']) );
 
-			$image = array(
-				'html' => $thumb->toHtml(),
-				'height' => $thumb->getHeight(),
-				'width' => $thumb->getWidth(),
-			);
+			if (empty($thumb)) {
+				$image = array();
+			}
+			else {
+				$thumb = $thumb->getThumbnail(400, 450);
+
+				$image = array(
+					'html' => $thumb->toHtml(),
+					'height' => $thumb->getHeight(),
+					'width' => $thumb->getWidth(),
+				);
+			}
 		}
 		else {
 			$image = array();
