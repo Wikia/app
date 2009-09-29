@@ -137,9 +137,14 @@ class WikiaCollection extends SpecialPage {
 		global $wgRequest;
 		$token   = $wgRequest->getVal("token",   null);
 		$success = $wgRequest->getVal("success", 0);
+
+		// simulate errors
+		$breakMe = $wgRequest->getVal('breakme');
+
 		$this->mTemplate->set_vars(array(
 			'token' => $token,
-			'success' => $success
+			'success' => $success,
+			'breakMe' => !empty($breakMe),
 		));
 
 		return $this->mTemplate->execute('collection-publish');

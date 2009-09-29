@@ -25,6 +25,9 @@
 </div>
 
 <script type="text/javascript">/*<![CDATA[*/
+<?php if ($breakMe): ?>
+	var wgMagCloudPublishBreakMe = true;
+<?php endif; ?>
 <?php if (!empty($success)): ?>
 	// upload PDF to MagCloud
 	$(function() {

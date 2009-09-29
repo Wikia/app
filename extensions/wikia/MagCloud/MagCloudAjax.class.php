@@ -301,7 +301,18 @@ class MagCloudAjax {
 		$timestamp = $wgRequest->getInt('timestamp');
 		$token = $wgRequest->getVal('token');
 
-		$result = MagCloud::publish($hash, $timestamp, $token);
+		// simulate errors
+		$breakMe = $wgRequest->getInt('breakme');
+
+		if (empty($breakMe)) {
+			$result = MagCloud::publish($hash, $timestamp, $token);
+		}
+		else {
+			$result = array(
+				'code' => 666,
+				'msg' => 'Simulated error',
+			);
+		}
 
 		// show nice error message
 		if (isset($result['code'])) {
