@@ -131,7 +131,7 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 	// do not display for not existing pages, 
 	if( $wgTitle->isContentPage() && $wgTitle->exists() ) {
 		$content_actions['share_feature'] = array(
-				'class' => '',
+				'class' => 'disabled',
 				'text' => wfMsg('sf-link'),
 				'href' => '#' ,
 				);
