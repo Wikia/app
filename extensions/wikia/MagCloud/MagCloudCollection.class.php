@@ -25,23 +25,27 @@ class MagCloudCollection {
 	}
 
 	public function initSession() {
-		global $wgSitename;
-
 		wfLoadExtensionMessages('MagCloud');
 
 		$_SESSION[$this->sessionKey] = array(
 			'toolbar' => false,
 			'articles' => array(),
-			'coverData' => array(
-				'layout' => 1,
-				'theme' => 'beach',
-				'title' => wfMsg('magcloud-design-default-title', $wgSitename),
-				'subtitle' => wfMsg('magcloud-design-default-subtitle'),
-				'image' => ''
-			),
+			'coverData' => $this->getDefaultCoverData(),
 			'timestamp' => wfTimestampNow(),
 			'hash' => md5(microtime(true))
 		);
+	}
+
+	private function getDefaultCoverData() {
+		global $wgSitename;
+		$coverData = array(
+			'layout' => 1,
+			'theme' => 'beach',
+			'title' => wfMsg('magcloud-design-default-title', $wgSitename),
+			'subtitle' => wfMsg('magcloud-design-default-subtitle'),
+			'image' => ''
+		);
+		return $coverData;
 	}
 
 	/**
@@ -183,6 +187,13 @@ class MagCloudCollection {
 
 	public function saveCoverData(Array $data) {
 		$this->storeSessionData('coverData', $data);
+	}
+
+	/**
+	 * remove cover data from colelction
+	 */
+	public function removeCoverData() {
+		$this->storeSessionData('coverData', $this->getDefaultCoverData());
 	}
 
 	/**

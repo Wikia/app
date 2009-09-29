@@ -83,8 +83,8 @@ class MagCloudAjax {
 		// hide toolbar
 		$magCloud->setToolbarVisibleState(false);
 
-		// TODO: clear collection
 		$magCloud->removeArticles();
+		$magCloud->removeCoverData();
 
 		// ack
 		return array('ok' => true);
