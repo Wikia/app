@@ -394,7 +394,7 @@ SpecialMagCloud.nextPagePreview = function() {
 
 SpecialMagCloud.publish = function(hash, timestamp, token, node) {
 	// send AJAX request to publish PDF
-	MagCloud.ajax("publish", {hash: hash, timestamp: timestamp, token: token}, function(data) {
+	MagCloud.ajax("publish", {hash: hash, timestamp: timestamp, token: token, breakme: (window.wgMagCloudPublishBreakMe ? 1 : 0)}, function(data) {
 		MagCloud.log(data);
 		MagCloud.track("/published");
 
