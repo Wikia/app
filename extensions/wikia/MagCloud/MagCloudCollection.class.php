@@ -64,7 +64,7 @@ class MagCloudCollection {
 	 * @param stirng $key data key
 	 */
 	private function readSessionData($key) {
-		Wikia::log(__CLASS__, 'info', "readSession($key)");
+		Wikia::log(__CLASS__, 'info', "readSession($key) START");
 		if(!$this->hasSession()) {
 			Wikia::log(__CLASS__, 'info', "INIT session");
 			$this->initSession();
@@ -229,11 +229,12 @@ class MagCloudCollection {
 	 * save collection into db
 	 */
 	public function save() {
-		global $wgExternalDatawareDB, $wgUser;
+		global $wgExternalDatawareDB, $wgUser, $wgCityId;
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
 		$row = array(
 			'mco_hash' => $this->getHash(),
 			'mco_user_id' => $wgUser->getId(),
+			'mco_wiki_id' => $wgCityId,
 			'mco_updated' => date('Y-m-d H:i:s'),
 			'mco_articles' => serialize($this->getArticles()),
 			'mco_cover' => serialize($this->getCoverData())
@@ -262,16 +263,16 @@ class MagCloudCollection {
 	}
 
 	/**
-	 * get list of collection for given user
+	 * get list of collection for given user (per wiki)
 	 * @param int $userId user id
 	 */
 	public function getMagazinesByUserId($userId) {
-		global $wgExternalDatawareDB;
+		global $wgExternalDatawareDB, $wgCityId;
 		$magazines = array();
 
 		if(!empty($userId)) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
-			$res = $dbs->select( 'magcloud_collection', array( 'mco_hash', 'mco_cover'), array( 'mco_user_id' => $userId ), __METHOD__ );
+			$res = $dbs->select( 'magcloud_collection', array( 'mco_hash', 'mco_cover'), array( 'mco_user_id' => $userId, 'mco_wiki_id' => $wgCityId ), __METHOD__ );
 
 			while($row = $dbs->fetchObject($res)) {
 				$coverData = unserialize($row->mco_cover);
