@@ -23,6 +23,7 @@ $wgExtensionMessagesFiles["Multidelete"] = dirname(__FILE__) . '/MultiTasks.i18n
 
 $wgAvailableRights[] = 'multidelete';
 $wgGroupPermissions['staff']['multidelete'] = true;
+$wgGroupPermissions['helper']['multiwikiedit'] = true;
 
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiDelete_body.php', 'Multidelete', 'Multidelete' );
 
