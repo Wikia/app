@@ -204,17 +204,6 @@
 	top: 180px;
 }
 
-.MagCloudCoverPreviewLayout4 #MagCloudCoverPreviewImage {
-	left: 0;
-	margin-top: 0 !important;
-	top: 0;
-}
-
-.MagCloudCoverPreviewLayout4 img {
-	height: 320px;
-	width: 260px;
-}
-
 #MagCloudCoverEditorImage {
 	margin-bottom: 20px;
 }

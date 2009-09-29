@@ -67,23 +67,6 @@ body {
 	z-index: 10;
 }
 
-.MagCloudCoverLayout4 #MagCloudCoverImage {
-	left: 0;
-	margin: 0 !important;
-	position: absolute;
-	top: 0;
-}
-
-.MagCloudCoverLayout4 #MagCloudCoverTitle,
-.MagCloudCoverLayout4 #MagCloudCoverBar {
-	display: none;
-}
-
-.MagCloudCoverLayout4 #MagCloudCoverImage img {
-	height: 950px;
-	width: 700px;
-}
-
 .MagCloudCoverLayout3 #MagCloudCoverBar {
 	background-position: 50% 98%;
 	width: 110px;

@@ -97,7 +97,6 @@ class WikiaCollection extends SpecialPage {
 		// setup template vars
 		$this->mTemplate->set_vars(array(
 			'image' => $coverData['image'],
-			'imageCover' => !empty($coverData['imageCover']),
 			'layoutPreviewImage' => $layoutPreviewImage,
 			'magazineTitle' => $coverData['title'],
 			'magazineSubtitle' => $coverData['subtitle'],
