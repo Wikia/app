@@ -111,6 +111,7 @@
 #page_controls .disabled * {	
 	filter:alpha(opacity=40);
 	opacity: .4;
+	cursor: wait;
 }
 
 #page-controls .disabled a:hover {
