@@ -109,7 +109,7 @@
 }
 
 #page_controls .disabled div {	
-	
+	opacity: .4;	
 }
 
 #page-controls .disabled a:hover {
