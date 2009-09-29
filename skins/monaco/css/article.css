@@ -108,8 +108,9 @@
 	left: -560px;	
 }
 
-#page_controls .disabled div {	
-	opacity: .4;	
+#page_controls .disabled * {	
+	filter:alpha(opacity=40);
+	opacity: .4;
 }
 
 #page-controls .disabled a:hover {
