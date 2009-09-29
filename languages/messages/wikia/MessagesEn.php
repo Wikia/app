@@ -586,6 +586,10 @@ hu',
 'widget-desc-wikipage' => 'Display any article inside a widget. Great for making your own widget',
 'widget-shoutbox-disabled' => 'The Shoutbox widget is disabled on this wiki.',
 
+# MagCloud widget
+'magcloud-widget-title' => 'Make a magazine!',
+'magcloud-widget-desc' => 'Start making your magazine',
+
 #Wikia Widgets tooltips
 'wt_help_startup'  => '|Not familiar with widgets?||Open user menu and click "Manage widgets"...',
 'wt_help_cockpit'  => '|Widgets cockpit||Drag widget thumbs and drop them on sidebar to add wiget...',
