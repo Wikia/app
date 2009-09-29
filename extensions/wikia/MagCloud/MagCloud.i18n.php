@@ -3,9 +3,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'magcloud-widget-title' => 'Make a magazine!',
-	'magcloud-widget-desc' => 'Start making your magazine',
-
 	'magcloud-intro-get-started' => 'Get started',
 	'magcloud-intro-create-magazine' => 'Create a magazine from articles on this Wiki',
 	'magcloud-intro-check-out' => 'Check out what\'s already been created by our community:',
