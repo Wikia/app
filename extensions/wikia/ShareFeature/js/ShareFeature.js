@@ -36,7 +36,7 @@ ShareFeature.track = function( str ) {
 
 $(function() {
 		if( $( '#control_share_feature' ).exists() && $( '#ca-share_feature' ).exists() ) {
-			$('#control_share_feature').addClass( 'enabled' );
+			$('#control_share_feature').removeClass( 'disabled' );
 			// open dialog on clicking
 			$('#ca-share_feature').click(function() {
 				if( false == ShareFeatureEnabled ) {
