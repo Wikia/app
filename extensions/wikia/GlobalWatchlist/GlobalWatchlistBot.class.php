@@ -363,7 +363,7 @@ class GlobalWatchlistBot {
 
 		$iEmailsSent = 0;
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
 		if ( !empty($this->mUsers) ) {
 			$this->printDebug("Sending digest emails to " . count($this->mUsers) . " users ");
