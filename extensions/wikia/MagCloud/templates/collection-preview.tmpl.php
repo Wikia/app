@@ -26,12 +26,10 @@
 		<small> </small>
 	</a>
 
-	<span style="left: 50%; position: absolute">
-		<a id="MagCloudSaveMagazine" class="bigButton greyButton" style="left: -5px; margin-left: -50%; position: relative">
-			<big><?= wfMsg('magcloud-preview-save-magazine') ?></big>
-			<small> </small>
-		</a>
-	</span>
+	<a id="MagCloudSaveMagazine" class="bigButton greyButton" style="margin-left: 190px">
+		<big><?= wfMsg('magcloud-preview-save-magazine') ?></big>
+		<small> </small>
+	</a>
 	<a class="bigButton" href="https://magcloud.com/apps/authorizeask/<?= $publicApiKey ?>?ud=<?= $server ?>" style="display: none; padding-right: 10px; right: 0">
 		<big><?= wfMsg('magcloud-preview-publish') ?> &raquo;</big>
 		<small> </small>

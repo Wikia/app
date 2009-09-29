@@ -112,7 +112,7 @@
 
 .MagCloudCoverEditorThemeColors span {
 	border: solid 1px #fff;
-	display: inline-table;
+	display: inline-block;
 	margin: 0 -3px;
 	width: 20px;
 }
@@ -265,6 +265,7 @@
 }
 
 #MagCloudLicense {
+	clear: left;
 	font-size: 0.9em;
 	margin-top: 20px;
 }
