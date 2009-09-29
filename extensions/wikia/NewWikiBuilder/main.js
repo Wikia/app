@@ -153,7 +153,7 @@ NWB.handleDescriptionForm = function (event){
              // Save the article
              Mediawiki.updateStatus(NWB.msg("nwb-saving-description"));
 	     Mediawiki.waiting();
-	     var mainPageEnd = Mediawiki.followRedirect("Main Page", false); // Should be cached.
+	     var mainPageEnd = Mediawiki.followRedirect(wgMainpage, false); // Should be cached.
 	     Mediawiki.waiting();
              Mediawiki.editArticle({
                   "title": mainPageEnd,
