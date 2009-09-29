@@ -6,7 +6,7 @@ if(!defined('MEDIAWIKI')) {
 	die(1);
 }
 
-global $wgWidgets;
+global $wgWidgets, $wgAvailableMagCloudLang;
 
 $wgWidgets['WidgetMagCloud'] = array(
 	'callback' => 'WidgetMagCloud',
@@ -15,7 +15,7 @@ $wgWidgets['WidgetMagCloud'] = array(
 	'closeable' => true,
 	'editable' => false,
 	'listable' => true,
-	'languages' => array('en'),
+	'languages' => $wgAvailableMagCloudLang,
 	'contentlang' => true,
 );
 
