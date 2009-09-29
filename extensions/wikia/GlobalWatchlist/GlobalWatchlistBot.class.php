@@ -124,6 +124,8 @@ class GlobalWatchlistBot {
 				$dbr->freeResult( $oResource );
 			}
 		}
+		
+		$dbr->close();
 
 		return $aPages;
 	}
@@ -335,6 +337,7 @@ class GlobalWatchlistBot {
 		$this->fetchWatchlists();
 		$this->sendDigests();
 
+		$dbw->close();
 		$this->printDebug("Script finished. (total time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")");
 	}
 
