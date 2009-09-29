@@ -196,7 +196,7 @@ class MagCloudAjax {
 
 			return array(
 				'success' => true,
-				'msg' => '<p>Your collection has been saved as <strong>' . $collection->getTitle() . '</stromg></p>',
+				'msg' => 'Your collection has been saved as ' . $collection->getTitle(),
 				'shortMsg' => 'Saved!',
 				'ok' => wfMsg('ok'),
 			);
