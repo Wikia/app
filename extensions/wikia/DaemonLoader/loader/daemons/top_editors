@@ -197,13 +197,13 @@ foreach my $user_name (sort keys %USERS) {
 	#--- set start time
 	my $start_sec = time();
 	$loop++;
-	$oConf->log($USERS{$user_name} . " processed (".$loop.")");
+	$oConf->log($user_name . " processed (".$loop.")");
 	
 =get home Wiki for user
 =cut
 	$select = "lu_wikia_id, max(lu_rev_cnt)"; 
 	$from = "`dataware`.`city_local_users`";
-	@where = ("lu_user_name = ". $db_ext->handler->quote($USERS{$user_name}) );	
+	@where = ("lu_user_name = ". $db_ext->handler->quote($user_name) );	
 	@options = ("group by 1", "order by 2 desc", "limit 1");
 	my ($oRow) = $db_ext->select($select, $from, \@where, \@options);
 	my $homeCity = $oRow->{lu_wikia_id};
