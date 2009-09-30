@@ -194,7 +194,7 @@ function wfShareFeatureAjaxGetDialog() {
 
 	$text = $tpl->execute('dialog');
 	$response = new AjaxResponse( $text );
-	$response->setCacheDuration( 60 * 2 );
+	//$response->setCacheDuration( 60 * 2 );
 	$response->setContentType('text/plain; charset=utf-8');
 
 	return $response;
