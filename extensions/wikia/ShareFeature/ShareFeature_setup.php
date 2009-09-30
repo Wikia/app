@@ -130,7 +130,9 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 
 	// do not display for not existing pages,
 	// do not display for other skins
-	if( $wgTitle->isContentPage() && $wgTitle->exists() && ( get_class($wgUser->getSkin()) == 'SkinMonaco' ) ) {
+	if( ( $wgTitle->isContentPage() || ( !empty( $wgEnableBlogArticles ) && $wgTitle->getNamespace() == NS_BLOG_ARTICLE ) )
+		&& $wgTitle->exists() 
+		&& ( get_class($wgUser->getSkin()) == 'SkinMonaco' ) ) {
 		$content_actions['share_feature'] = array(
 				'class' => 'disabled',
 				'text' => wfMsg('sf-link'),
