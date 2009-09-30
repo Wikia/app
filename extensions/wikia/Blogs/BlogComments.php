@@ -718,7 +718,7 @@ class BlogComment {
 		$editPage = new EditPage( $article );
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = $text;
-		$editPage->summary  = wfMsg('blog-comments-new');
+		//$editPage->summary  = wfMsg('blog-comments-new');
 		$retval = $editPage->internalAttemptSave( $result );
 		Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
 
