@@ -3,7 +3,11 @@
 my $wikia_lib;
 BEGIN {
 	$wikia_lib = "/home/moli/wikia/wikia-utils/lib/"; 
-	$wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib" if !(-e $wikia_lib);
+	$YML = "/home/moli/wikia/wikia-conf/DB.localhost.yml";
+	if (! -e $wikia_lib) {
+		$wikia_lib = "/home/wikicities/conf/mediawiki/wikia-utils/lib" ;
+		$YML = undef;
+	}
 }
 
 =needed modules
@@ -21,6 +25,7 @@ use lib $wikia_lib;
 use Wikia::Config;
 use Wikia::Utils;
 use Wikia::DB;
+use Wikia::LB;
 
 =default values
 =cut
@@ -78,11 +83,15 @@ if ($help) {
 
 =config -> set logfile 
 =cut
+my $lb = Wikia::LB->new( {yml => $YML } );
+
+=config -> set logfile 
+=cut
 my $oConf = new Wikia::Config( {logfile => "/tmp/top_editors.log"} );
 
 =db archive connection
 =cut
-my $db_ext = new Wikia::DB( {"host" => DB_EXT_SLAVE} );
+my $db_ext = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, undef, Wikia::LB::DATAWARESHARED )} );
 
 =wikia utils 
 =cut
@@ -90,7 +99,7 @@ my $oUtils = new Wikia::Utils();
 
 =db slave connection
 =cut
-my $db = new Wikia::DB( {"host" => DB_SLAVE} );
+my $db = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, 'stats', Wikia::LB::EXTERNALSHARED )} );
 
 $limit = $DEF_LIMIT unless $limit;
 $months = $DEF_MONTHS unless $months;
@@ -128,10 +137,11 @@ my $other_wikis = "5, 11, 425, 520, 2719, 5409";
 
 $oConf->log("Processing: select users from local users table");
 
-my $select = "lu_user_id as user_id, lu_user_name as user_name, ue_edit_count as cnt";
+my $select = "lu_user_name as user_name, ue_edit_count as cnt";
 my $from = "`dataware`.`city_local_users`, dbstats.city_user_edits";
 my @where = ( 
 	"lu_singlegroup != 'bot'",
+	"lu_allgroups not like '%bot%'",
 	"lu_wikia_id not in (".$other_wikis.")", 
 	"ue_user_id = lu_user_id",
 	"ue_edit_namespace = 0",
@@ -139,7 +149,7 @@ my @where = (
 	"lu_user_name not like '%Bot%'"
 );
 my @options = (
-	"group by 1, 2",
+	"group by 1",
 	"ORDER BY cnt desc",
 	"LIMIT ". $limit
 ); 
@@ -149,23 +159,23 @@ my %TOP_EDITORS = ();
 $sth = $db_ext->select_many($select, $from, \@where, \@options);
 if ($sth) {
 	while(my $values = $sth->fetchrow_hashref()) {
-		%{$USERS{$values->{user_id}}} = ('all' => $values->{cnt}, 'name' => $values->{user_name}, 'ns_main' => 0);
-		$TOP_EDITORS{$values->{user_id}} = $values->{cnt};
+		%{$USERS{$values->{user_name}}} = ('all' => $values->{cnt}, 'ns_main' => 0);
+		$TOP_EDITORS{$values->{user_name}} = $values->{cnt};
 	}
 	$sth->finish();
 }
 
 my %USERS_WIKIS = ();
-foreach my $user_id (sort keys %USERS) {
+foreach my $user_name (sort keys %USERS) {
 	$select = "lu_wikia_id as city_id, count(*) as cnt";
 	$from = "`dataware`.`city_local_users`";
-	@where = ( "lu_user_id = " . $db_ext->handler->quote($user_id) , "lu_wikia_id not in (".$other_wikis.")" );
+	@where = ( "lu_user_name = " . $db_ext->handler->quote($user_name) , "lu_wikia_id not in (".$other_wikis.")" );
 	@options = ( "GROUP BY lu_wikia_id", "ORDER BY cnt desc, lu_wikia_id" );
 	$sth = $db_ext->select_many($select, $from, \@where, \@options);
 	if ($sth) {
 		while(my $values = $sth->fetchrow_hashref()) {
-			$USERS_WIKIS{$user_id} = () unless $USERS_WIKIS{$user_id};
-			push @{$USERS_WIKIS{$user_id}}, $values->{city_id};
+			$USERS_WIKIS{$user_name} = () unless $USERS_WIKIS{$user_name};
+			push @{$USERS_WIKIS{$user_name}}, $values->{city_id};
 		}
 		$sth->finish();
 	}
@@ -182,45 +192,35 @@ foreach my $city_id (keys %$databases) {
 	$databaseNames{$databases->{$city_id}} = $city_id;
 }
 
-foreach my $user_id (sort keys %USERS) {
+my $loop = 0;
+foreach my $user_name (sort keys %USERS) {
 	#--- set start time
 	my $start_sec = time();
-	$oConf->log($USERS{$user_id}{name} . " processed (user_id: ".$user_id.")");
+	$loop++;
+	$oConf->log($USERS{$user_name} . " processed (".$loop.")");
 	
 =get home Wiki for user
 =cut
-
-	$select = "ca_wikis_activity";
-	$from = "`dbstats`.`city_user_activity`";
-	@where = ("ca_user_text = ". $db_ext->handler->quote($USERS{$user_id}{name}) );	
-	@options = ();
+	$select = "lu_wikia_id, max(lu_rev_cnt)"; 
+	$from = "`dataware`.`city_local_users`";
+	@where = ("lu_user_name = ". $db_ext->handler->quote($USERS{$user_name}) );	
+	@options = ("group by 1", "order by 2 desc", "limit 1");
 	my ($oRow) = $db_ext->select($select, $from, \@where, \@options);
-	
-	my @activity = split(/\,/, $oRow->{ca_wikis_activity});
-	my $homeCity = ''; my $v = 0;
-	if ( scalar @activity ) {
-		foreach (@activity) {
-			my @t = split('<CNT>', $_);
-			if ( $v < $t[1] ) {
-				$homeCity = $t[0];
-				$v = $t[1];
-			}
-		}
-	}
+	my $homeCity = $oRow->{lu_wikia_id};
 
 =get number of edits in main namespace
-=cut
 	$select = "sum(ue_edit_count) as cnt";
 	$from = "`dbstats`.`city_user_edits`";
-	@where = ("ue_edit_namespace = 0", "ue_user_id = ".$user_id);	
+	@where = ("ue_edit_namespace = 0", "ue_user_text = ".$user_name);	
 	@options = ();
 	($oRow) = $db_ext->select($select, $from, \@where, \@options);
-	$USERS{$user_id}{ns_main} = $oRow->{cnt};
-	$USERS{$user_id}{ns_main} = 0 unless ($USERS{$user_id}{ns_main});
+	$USERS{$user_name}{ns_main} = $oRow->{cnt};
+=cut
+	$USERS{$user_name}{ns_main} = 0 unless ($USERS{$user_name}{ns_main});
 	
 =get list of wikis, where user edited something
 =cut
-	my @wikis = @{$USERS_WIKIS{$user_id}};
+	my @wikis = @{$USERS_WIKIS{$user_name}};
 
 =processing for every Wiki
 =cut
@@ -239,42 +239,52 @@ foreach my $user_id (sort keys %USERS) {
 
 		my $contentNS = $db->getContentNS($city_id);
 		$contentNS = 0 unless $contentNS;
+
+		#
+		# count all in content namespace
+		my $db_local = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, undef, $databases->{$city_id} )} );
+		$select = "count(*) as cnt";
+		$from = "revision";
+		@where = (
+			"rev_user_text = '".$user_name."'",
+			"rev_page in (select page_id from page where page_is_redirect = 0 and page_namespace in (".$contentNS."))"
+		);
+		my ($oRowCnt) = $db_local->select($select, $from, \@where, \@options);
+		$USERS{$user_name}{ns_main} += $oRowCnt->{cnt};
 		
 		foreach (@dates) {
 			my $date = $_;
 			#$oConf->log("Get revision for date " . $date);
-			$USERS{$user_id}{$date} = 0 unless $USERS{$user_id}{$date};
+			$USERS{$user_name}{$date} = 0 unless $USERS{$user_name}{$date};
 
 			$db->handler->ping();
-	
 			#
-			# count in month 
-
+			# count all in content namespace and for date
 			$select = "count(*) as cnt";
-			$from = "dataware.blobs";
+			$from = "revision";
 			@where = (
-				"rev_user = '".$user_id."'",
-				"rev_wikia_id = '".$city_id."'",
-				"rev_page_id in (select page_id from dataware.pages where page_namespace in (".$contentNS.") and page_status = 0 and page_wikia_id = '".$city_id."' )",
+				"rev_user_text = '".$user_name."'",
+				"rev_page in (select page_id from page where page_is_redirect = 0 and page_namespace in (".$contentNS."))",
 				"date_format(rev_timestamp, '%Y%m') = '".$date."'"
 			);
-		
 			$cnt = 0;
-			($oRowCnt) = $db_ext->select($select, $from, \@where, \@options);
+			($oRowCnt) = $db_local->select($select, $from, \@where, \@options);
 			$cnt = $oRowCnt->{cnt};
 			$cnt = 0 unless $cnt;
-			$USERS{$user_id}{$date} = $USERS{$user_id}{$date} + $cnt;
+			$USERS{$user_name}{$date} = $USERS{$user_name}{$date} + $cnt;
 		}
+		
+		$db_local->disconnect() if ($db_local);
 	}
 =end of main loop
 =cut
-	$USERS{$user_id}{home} = $homeCity;
-	$USERS{$user_id}{hub} = $hubs->{$databaseNames{$homeCity}};
+	$USERS{$user_name}{home} = $homeCity;
+	$USERS{$user_name}{hub} = $hubs->{$databaseNames{$homeCity}};
 
 	my $end_sec = time();
 	my @ts = gmtime($end_sec - $start_sec);
 
-	$oConf->log($user_id . " processed ".sprintf ("%d hours %d minutes %d seconds",@ts[2,1,0]) . "\n\n");
+	$oConf->log($user_name . " processed ".sprintf ("%d hours %d minutes %d seconds",@ts[2,1,0]) . "\n\n");
 }
 
 =checking results
@@ -306,25 +316,23 @@ my $sheet = $workbook->add_worksheet('Top editors');
 $sheet->activate();
 my ($col, $row) = (0, 2); 
 $sheet->write($row, $col, "Editor", $formatHdr); 
-$sheet->write($row, $col+1, "Editor Id", $formatHdr); 
-$sheet->write($row, $col+2, "Total edits (NS_MAIN)", $formatHdr); 
-$sheet->write($row, $col+3, "Home wiki", $formatHdr); 
-$sheet->write($row, $col+4, "Hub", $formatHdr); 
-my $i = 5;
+$sheet->write($row, $col+1, "Total edits (content NS)", $formatHdr); 
+$sheet->write($row, $col+2, "Home wiki", $formatHdr); 
+$sheet->write($row, $col+3, "Hub", $formatHdr); 
+my $i = 4;
 foreach (@dates) {
 	$sheet->write($row, $col+$i, $_, $formatHdr); 
 	$i++;
 }
 
-foreach my $user_id (sort { $TOP_EDITORS{$b} <=> $TOP_EDITORS{$a} } keys %TOP_EDITORS) {
+foreach my $user_name (sort { $TOP_EDITORS{$b} <=> $TOP_EDITORS{$a} } keys %TOP_EDITORS) {
 	$i = 0; $row++;
-	$sheet->write($row, $col+$i, $USERS{$user_id}{name}, $formatBody); $i++;
-	$sheet->write($row, $col+$i, $user_id, $formatBody); $i++;
-	$sheet->write($row, $col+$i, $USERS{$user_id}{ns_main}, $formatBody); $i++;
-	$sheet->write($row, $col+$i, $USERS{$user_id}{home}, $formatBody); $i++;
-	$sheet->write($row, $col+$i, $USERS{$user_id}{hub}, $formatBody); $i++;
+	$sheet->write($row, $col+$i, $user_name, $formatBody); $i++;
+	$sheet->write($row, $col+$i, $USERS{$user_name}{ns_main}, $formatBody); $i++;
+	$sheet->write($row, $col+$i, $USERS{$user_name}{home}, $formatBody); $i++;
+	$sheet->write($row, $col+$i, $USERS{$user_name}{hub}, $formatBody); $i++;
 	foreach (@dates) {
-		$sheet->write($row, $col+$i, $USERS{$user_id}{$_}, $formatBody);$i++;
+		$sheet->write($row, $col+$i, $USERS{$user_name}{$_}, $formatBody);$i++;
 	}
 }
 =close XLS file
