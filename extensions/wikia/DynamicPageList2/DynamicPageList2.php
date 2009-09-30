@@ -2712,7 +2712,7 @@ class ExtDynamicPageList2
 			}
 			catch (Exception $e) {
 				$result = '';
-				if (!$logger->getSuppressErrors) {
+				if (!$logger->getSuppressErrors()) {
 					$result = "The DPL extension (version ".self::VERSION.") produced a SQL statement which lead to a Database error.<br>\n"
 							."The reason may be an internal error of DPL or an error which you made,<br>\n"
 							."especially when using DPL options like titleregexp.<br>\n"
