@@ -72,7 +72,9 @@ function openLogin(event) {
 		return;
 	}
 
-	event.preventDefault();
+	if (typeof event.preventDefault == 'function') {
+		event.preventDefault();
+	}
 
 	if ($('#AjaxLoginBox').length > 0) {
 		// show ajax login dialog if already in DOM
