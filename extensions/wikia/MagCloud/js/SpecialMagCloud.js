@@ -134,9 +134,6 @@ SpecialMagCloud.applyColorTheme = function(theme) {
 	});
 
 	$('#MagCloudCoverPreviewBar').css('backgroundColor', '#'+colors[0]);
-
-	// TODO: save changed setting
-	//MagCloud.ajax('setCoverTheme', {theme: theme});
 }
 
 // setup layout editor
@@ -162,9 +159,6 @@ SpecialMagCloud.applyLayout = function(layout) {
 
 	// set CSS class
 	$('#MagCloudCoverPreviewWrapper').attr('class', 'MagCloudCoverPreviewLayout' + layout);
-
-	// TODO: save changed setting
-	//MagCloud.ajax('setCoverLayout', {layout: layout});
 }
 
 // "connect" title/subtitle fields with cover preview
