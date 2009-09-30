@@ -146,26 +146,38 @@ class MagCloud {
 				'steps' => $steps,
 			));
 		}
-		elseif ($wgTitle->isContentPage()) {
-			// on content pages: show add "foo" to your magazine
-
-			// check whether current article is in collection
-			$isInCollection = $collection->findArticle($wgTitle->getPrefixedText()) != -1;
-
-			$template->set_vars(array(
-				'count' => $collection->countArticles(),
-				'isInCollection' => $isInCollection,
-				'title' => self::getAbbreviatedTitle($wgTitle),
-				'magazineUrl' => Skin::makeSpecialUrl('WikiaCollection'),
-			));
-		}
 		else {
-			// on non-content pages: show some message
-			$template->set_vars(array(
-				'count' => $collection->countArticles(),
-				'message' => 'This type of page can\'t be added. Try heading to a content page!',
-				'magazineUrl' => Skin::makeSpecialUrl('WikiaCollection'),
-			));
+			// check if we're on existing content page
+			$isContentPage = $wgTitle->isContentPage() && $wgTitle->exists();
+
+			// check action (only render allow article to be added from view and purge)
+			$action = $wgRequest->getVal('action', 'view');
+
+			if (!in_array($action, array('view', 'purge'))) {
+				$isContentPage = false;
+			}
+
+			if ($isContentPage) {
+				// on content pages: show add "foo" to your magazine
+
+				// check whether current article is in collection
+				$isInCollection = $collection->findArticle($wgTitle->getPrefixedText()) != -1;
+
+				$template->set_vars(array(
+					'count' => $collection->countArticles(),
+					'isInCollection' => $isInCollection,
+					'title' => self::getAbbreviatedTitle($wgTitle),
+					'magazineUrl' => Skin::makeSpecialUrl('WikiaCollection'),
+				));
+			}
+			else {
+				// on non-content pages: show some message
+				$template->set_vars(array(
+					'count' => $collection->countArticles(),
+					'message' => 'This type of page can\'t be added. Try heading to a content page!',
+					'magazineUrl' => Skin::makeSpecialUrl('WikiaCollection'),
+				));
+			}
 		}
 
 		// render toolbar
