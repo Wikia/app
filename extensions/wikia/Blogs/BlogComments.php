@@ -274,7 +274,7 @@ class BlogComment {
 					"canEdit"	=> $this->canEdit()
 				)
 			);
-			$text = $template->execute( "comment" );
+			$text = $template->render( "comment" );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -735,7 +735,9 @@ class BlogComment {
 
 		$key = $Title->getPrefixedDBkey();
 		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
-		$wgMemc->delete( wfMemcKey( "blog", "comm", $Title->getArticleID() ) );
+
+		$clist = BlogCommentList::newFromTitle( $Article->getTitle() );
+		$clist->getCommentPages( true );
 
 		wfProfileOut( __METHOD__ );
 
@@ -1042,19 +1044,28 @@ class BlogCommentList {
 
 	/**
 	 * getCommentPages -- take pages connected to comments list
+	 *
+	 * @access public
+	 *
+	 * @param string $master use master connection, skip cache
+	 *
+	 * @return array
 	 */
-	private function getCommentPages() {
+	public function getCommentPages( $master = true ) {
 		global $wgRequest, $wgMemc;
 
 		wfProfileIn( __METHOD__ );
 
-		$order  = $wgRequest->getText("order", false );
+		$order  = $wgRequest->getText( "order",  false );
 		$action = $wgRequest->getText( "action", false );
 
-		$this->handleBlogCommentOrderCookie($order); // it's &$order...
-
+		$this->handleBlogCommentOrderCookie( $order ); // it's &$order...
 		$this->mOrder = ( $order == "desc" ) ? "desc" : "asc";
-		if( $action != "purge" ) {
+
+		/**
+		 * skip cache if purging or using master connection
+		 */
+		if( $action != "purge" && ! $master ) {
 			$this->mComments = $wgMemc->get( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ) );
 		}
 
@@ -1064,7 +1075,7 @@ class BlogCommentList {
 			 */
 			$pages = array();
 
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = ( $master ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
 				array( "page" ),
 				array( "page_id" ),
