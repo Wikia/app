@@ -58,5 +58,5 @@ If you're stuck for inspiration, check out the examples below!",
 	'magcloud-publish-status-title' => 'Publishing your magazine',
 	'magcloud-publish-status' => 'Now uploading your magazine to MagCloud...',
 	'magcloud-publish-error' => 'We encountered an error while trying to send your magazine to MagCloud - we logged it to try and figure out what happened. Best try again later - hopefully we\'ll have figured out the problem. Please accept our apologies!',
-	'magcloud-publish-done' => 'All done!',
+	'magcloud-publish-done' => 'All done! Redirecting you to MagCloud...',
 );
