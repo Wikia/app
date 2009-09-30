@@ -20,13 +20,14 @@ ShareFeature.mouseDown = function( provider ) {
 			this.ajax( provider );
 			break;
 		case 1:
+			this.ajax( provider );
 			this.track( 'middleClick' );
 			break;
 		case 2:
-			this.track( 'rightClick' );			
+			this.track( 'rightClick' );
 			break;
 		default:
-			break;				
+			break;
 	}
 }
 
