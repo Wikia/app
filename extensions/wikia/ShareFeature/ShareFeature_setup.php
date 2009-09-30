@@ -180,7 +180,7 @@ function wfShareFeatureAjaxGetDialog() {
 	global $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer, $wgArticlePath;
 
 	$title = htmlspecialchars( $wgTitle->getText() );	
-	$wiki = $wgServer . str_replace( '$1', $title, $wgArticlePath );
+	$wiki = $wgTitle->getFullUrl();
 
 	$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 	$tpl->set_vars( array(
