@@ -249,6 +249,7 @@ foreach my $user_name (sort keys %USERS) {
 			"rev_user_text = '".$user_name."'",
 			"rev_page in (select page_id from page where page_is_redirect = 0 and page_namespace in (".$contentNS."))"
 		);
+		@options = ();
 		my ($oRowCnt) = $db_local->select($select, $from, \@where, \@options);
 		$USERS{$user_name}{ns_main} += $oRowCnt->{cnt};
 		
@@ -267,6 +268,7 @@ foreach my $user_name (sort keys %USERS) {
 				"rev_page in (select page_id from page where page_is_redirect = 0 and page_namespace in (".$contentNS."))",
 				"date_format(rev_timestamp, '%Y%m') = '".$date."'"
 			);
+			@options = ();
 			$cnt = 0;
 			($oRowCnt) = $db_local->select($select, $from, \@where, \@options);
 			$cnt = $oRowCnt->{cnt};
