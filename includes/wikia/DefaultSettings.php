@@ -293,3 +293,14 @@ $wgExternalStatsDB = 'dbstats';
 $wgExternalWikiaStatsDB = 'wikiastats';
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
+
+/**
+ * @name wgEnableBlogCommentEdit, wgEnabledGroupedBlogComments, wgEnableBlogWatchlist
+ * enable: 
+ * 	* blog comments edit
+ * 	* grouped blog comments in RC
+ * 	* added blogs to watchlist 
+ */
+$wgEnableBlogCommentEdit = true;
+$wgEnabledGroupedBlogComments = true;
+$wgEnableBlogWatchlist = true;
