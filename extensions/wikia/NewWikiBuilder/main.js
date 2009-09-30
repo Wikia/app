@@ -148,8 +148,10 @@ NWB.reflow = function() {
 
 NWB.handleDescriptionForm = function (event){
     try {
-	
-	     var text = NWB.originalHeading + "\n" + $("#desc_textarea").val();
+
+	     var rawtext = $("#desc_textarea").val();
+	     // Strip leading spaces and add original heading
+	     var text = NWB.originalHeading + "\n" + rawtext.replace(new RegExp("^[ ]+", "g"), "");
              // Save the article
              Mediawiki.updateStatus(NWB.msg("nwb-saving-description"));
 	     Mediawiki.waiting();
