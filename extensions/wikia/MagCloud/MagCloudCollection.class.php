@@ -92,6 +92,13 @@ class MagCloudCollection {
 	public function getToolbarVisibleState() {
 		$state = $this->readSessionData('toolbar');
 
+		if(empty($state)) {
+			// dirty hack: forcing toolbar to be visible if there are articles present
+			$state = $this->countArticles();
+			if($state > 0) {
+				Wikia::log(__CLASS__, 'info', "ERROR: toolbar hidden with articles != 0. Forcing it back!" );
+			}
+		}
 		return !empty($state);
 	}
 
