@@ -48,12 +48,12 @@ function wt_img() {
 
 # Output link. (1.png added by eloy)
 function wt_anch() {
-    STR=$(printf '<a href="%s">%s</a>' "${OUT}${HASH}1.png" "${STR}")
+    STR=$(printf '<a href="%s">%s</a>' "${OUT}${HASH}${EXT}" "${STR}")
 }
 
-function wt_dvipng() {    
+function wt_dvipng() {
     wt_exec "/usr/bin/dvipng -gamma 1.5 -T tight ${HASH}"
-}    
+}
 
 # Generic execution, which allows for error trapping
 function wt_exec() {
