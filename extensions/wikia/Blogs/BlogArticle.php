@@ -585,6 +585,9 @@ class BlogArticle extends Article {
 	 */
 	static public function getOwnerTitle( $title ) {
 		wfProfileIn( __METHOD__ );
+
+		$owner = false;
+
 		if( $title instanceof Title ) {
 			$text = $title->getBaseText();
 		}
@@ -593,7 +596,7 @@ class BlogArticle extends Article {
 		}
 		wfProfileOut( __METHOD__ );
 
-		return Title::newFromText( $owner, NS_BLOG_ARTICLE );
+		return ( $owner ) ? Title::newFromText( $owner, NS_BLOG_ARTICLE ) : false;
 	}
 
 
