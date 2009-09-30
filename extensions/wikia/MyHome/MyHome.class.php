@@ -180,8 +180,13 @@ class MyHome {
 	}
 
 	public static function addNewAccount($user) {
-		global $wgOut;
-		$wgOut->redirect(Skin::makeSpecialUrl('MyHome'));
+		global $wgOut, $wgUser;
+
+		// do not redirect for skins different then monaco
+		if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+			$wgOut->redirect(Skin::makeSpecialUrl('MyHome'));
+		}
+
 		return true;
 	}
 
