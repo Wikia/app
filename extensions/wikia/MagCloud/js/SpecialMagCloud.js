@@ -53,7 +53,6 @@ SpecialMagCloud.setupArticlesList = function(list) {
 		forcePlaceholderSize: true,
 		handle: '.MagCloudArticlesListGrab',
 		items: '> li',
-		opacity: 0.5,
 		placeholder: 'MagCloudArticlesListPlaceholder',
 		revert: 200, // smooth animation
 
@@ -65,6 +64,9 @@ SpecialMagCloud.setupArticlesList = function(list) {
 
 			// get old index
 			var oldIndex =item.attr('rel');
+
+			// remove CSS from grabbed item
+			item.css({left: '', top: ''});
 
 			// get new index
 			var newIndex = 0;
