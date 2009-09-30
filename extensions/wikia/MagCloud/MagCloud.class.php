@@ -428,7 +428,7 @@ class MagCloud {
 
 		$publicationId = $res->id;
 
-		$res = MagCloudApi::Issue($authTicket, $publicationId, $magazineTitle, $magazineSubtitle, join(",", $tags));
+		$res = MagCloudApi::Issue($authTicket, $publicationId, $magazineTitle, $magazineSubtitle);
 #print_r($res); echo "\n";
 		if (!empty($res->code)) {
 			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'issue', 'code' => $res->code);
