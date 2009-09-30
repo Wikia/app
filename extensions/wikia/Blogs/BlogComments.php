@@ -736,7 +736,7 @@ class BlogComment {
 		$key = $Title->getPrefixedDBkey();
 		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
 
-		$clist = BlogCommentList::newFromTitle( $Article->getTitle() );
+		$clist = BlogCommentList::newFromTitle( $Title );
 		$clist->getCommentPages( true );
 
 		wfProfileOut( __METHOD__ );
