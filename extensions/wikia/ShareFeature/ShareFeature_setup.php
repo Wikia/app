@@ -11,7 +11,7 @@
  *
  * @author Bartek Łapiński <bartek@wikia-inc.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- * 
+ *
  */
 
 if(!defined('MEDIAWIKI')) {
@@ -27,22 +27,22 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__).'/';
 
 $wgShareFeatureSites = array(
-		array( 
+		array(
 			'name' 	=>	'Reddit',
 			'id' 	=>	0,
 			'url' 	=>	'http://www.reddit.com/submit?url=$1&title=$2'
 		),
-		array( 
+		array(
 			'name'	=>	'Facebook',
 			'id'	=>	1,
 			'url' 	=>	'http://www.facebook.com/sharer.php?u=$1?t=$2'
 		),
-		array( 
+		array(
 			'name'	=>	'Twitter',
 			'id'	=>	2,
 			'url'	=>	'http://twitter.com/home?status=$1' . htmlspecialchars(' ') . '$2'
 		), // message and url goes into the one parameter here for Twitter...
-		array( 
+		array(
 			'name'	=>	'Digg',
 			'id'	=>	3,
 			'url'	=>	'http://digg.com/submit?url=$1&title=$2'
@@ -57,7 +57,7 @@ $wgShareFeatureSites = array(
 			'id'	=>	5,
 			'url'	=>	'http://www.technorati.com/faves/?add=$1'
 		),
-		array( 
+		array(
 			'name'	=>	'Slashdot',
 			'id'	=>	6,
 			'url'	=>	'http://slashdot.org/bookmark.pl?url=$1&title=$2'
@@ -78,7 +78,7 @@ $wgHooks['SkinTemplateContentActions'][] = 'wfShareFeatureSkinTemplateContentAct
 function wfShareFeatureMakeUrl( $site, $target, $title ) {
 	$url = str_replace( '$1', $target, $site );
 	$url = str_replace( '$2', $title, $url );
-	
+
 	return $url;
 }
 
@@ -87,14 +87,14 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 	global $wgUser, $wgShareFeatureSites, $wgExternalSharedDB;
 
 	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB );
-	
+
 	$res = $dbr->select(
 			'share_feature',
 			'sf_provider_id',
 			array( 'sf_user_id' => $wgUser->getId() ),
 			__METHOD__,
 			array( 'ORDER BY' => 'sf_clickcount DESC' )
-			);		
+			);
 
 	$sites = array();
 	$found = array();
@@ -102,17 +102,17 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 	$target = str_replace( " ", "_", $target );
 
 	// get all the sites we have data for
-        while($row = $dbr->fetchObject($res)) {		
+        while($row = $dbr->fetchObject($res)) {
 		$site = $wgShareFeatureSites[$row->sf_provider_id];
 		$sites[] = array(
 			'name' 	=>	$site['name'],
-			'id'	=>	$site['id'], 
+			'id'	=>	$site['id'],
 			'url' 	=>	wfShareFeatureMakeUrl( $site['url'], $target, $title )
 		);
 		$found[] = $site['name'];
         }
 	// and other ones, that weren't clicked for this user
-	foreach( $wgShareFeatureSites as $sf_site ) {		
+	foreach( $wgShareFeatureSites as $sf_site ) {
 		if( !in_array( $sf_site['name'], $found ) ) {
 			$sites[] = array(
 				'name'	=>	$sf_site['name'],
@@ -126,10 +126,11 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 
 // display the links for the feature in the page controls bar
 function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
-	global $wgTitle;
+	global $wgTitle, $wgUser;
 
-	// do not display for not existing pages, 
-	if( $wgTitle->isContentPage() && $wgTitle->exists() ) {
+	// do not display for not existing pages,
+	// do not display for other skins
+	if( $wgTitle->isContentPage() && $wgTitle->exists() && ( get_class($wgUser->getSkin()) == 'SkinMonaco' ) ) {
 		$content_actions['share_feature'] = array(
 				'class' => 'disabled',
 				'text' => wfMsg('sf-link'),
@@ -150,12 +151,12 @@ function wfShareFeatureInit() {
 }
 
 // update stats for all kinds of users (logged in and anon)
-// anon is represented as a user with id 0, as in MW 
+// anon is represented as a user with id 0, as in MW
 function wfShareFeatureAjaxUpdateStats( $provider ) {
 	global $wgUser, $wgExternalSharedDB, $wgRequest;
 
-	$id = $wgUser->getId();	
-	$provider = $wgRequest->getVal( 'provider' );		
+	$id = $wgUser->getId();
+	$provider = $wgRequest->getVal( 'provider' );
 
 	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
 
@@ -166,8 +167,10 @@ function wfShareFeatureAjaxUpdateStats( $provider ) {
 		  ON DUPLICATE KEY UPDATE sf_clickcount = sf_clickcount + 1;
 		 ';
 
-	$res = $dbw->query( $query );	
-	
+	$res = $dbw->query( $query );
+
+	$dbw->commit();
+
 	// todo number of rows affected
 
 	$response = new AjaxResponse( "ok" );
@@ -176,10 +179,10 @@ function wfShareFeatureAjaxUpdateStats( $provider ) {
 }
 
 // return dialog for the extension
-function wfShareFeatureAjaxGetDialog() {	
+function wfShareFeatureAjaxGetDialog() {
 	global $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer, $wgArticlePath;
 
-	$title = htmlspecialchars( $wgTitle->getText() );	
+	$title = htmlspecialchars( $wgTitle->getText() );
 	$wiki = $wgTitle->getFullUrl();
 
 	$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
@@ -188,7 +191,7 @@ function wfShareFeatureAjaxGetDialog() {
 		'wiki' 	=> $wiki,
 		'sites'	=> wfShareFeatureSortSites( $wgShareFeatureSites, $wiki, $title ),
 	));
-	
+
 	$text = $tpl->execute('dialog');
 	$response = new AjaxResponse( $text );
 	$response->setCacheDuration( 60 * 2 );
