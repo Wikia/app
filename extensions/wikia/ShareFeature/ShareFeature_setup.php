@@ -126,7 +126,7 @@ function wfShareFeatureSortSites( $sites, $target, $title ) {
 
 // display the links for the feature in the page controls bar
 function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
-	global $wgTitle, $wgUser;
+	global $wgTitle, $wgUser, $wgEnableBlogArticles;
 
 	// do not display for not existing pages,
 	// do not display for other skins
