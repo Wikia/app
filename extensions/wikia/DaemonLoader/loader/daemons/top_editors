@@ -338,17 +338,19 @@ foreach my $user_name (sort { $TOP_EDITORS{$b} <=> $TOP_EDITORS{$a} } keys %TOP_
 =close XLS file
 =cut
 $workbook->close();
-
+$db_ext->disconnect() if ($db_ext);
 =finish
 =cut
 system("gzip -c $XLS_FILE > $XLS_FILE.gz") if ( -e $XLS_FILE );
 %update = ("-dj_result_file" => "concat_ws(',', dj_result_file, '".$XLS_FILE.".gz')");
 $oConf->log("update task info in database (subdomains)");
+$db_ext = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_MASTER, undef, Wikia::LB::DATAWARESHARED )} );
 $q_up = $db_ext->update_daemon_task( \%update, $TASKID );
 if ( $q_up ) {
 	$oConf->log("send emails with report");
 	$oUtils->send_file( $email_title, $task->{dj_result_emails}, $XLS_FILE . ".gz" );
 }
 $oConf->log("process done");
+$db_ext->disconnect() if ($db_ext);
 
 1;
