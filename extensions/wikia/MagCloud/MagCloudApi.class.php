@@ -3,6 +3,12 @@
 class MagCloudApi {
 	const URL = "http://api.magcloud.com";
 
+	const PUB_NAME        = "Wikia";
+	const PUB_SUBTITLE    = "Wikia publication";
+	const PUB_LOGO        = "";
+	const PUB_CATEGORY    = "Wikia";
+	const PUB_DESCRIPTION = "Wikia publication";
+
 	static private function generateSecurityHash($method, $call, $data, $authTicket) {
 		global $wgMagCloudSecret;
 
@@ -133,13 +139,13 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 <publication>
 <id>0</id>
 <username />
-<name>Wikia " . mt_rand() . "</name>
-<subtitle>Wikia publication subtitle</subtitle>
-<logoImageUrl></logoImageUrl>
-<category>Wikia</category>
+<name>" . self::PUB_NAME . "</name>
+<subtitle>" . self::PUB_SUBTITLE . "</subtitle>
+<logoImageUrl>" . self::PUB_LOGO . "</logoImageUrl>
+<category>" . self::PUB_CATEGORY . "</category>
 <visibleToPublic>True</visibleToPublic>
 <subscribableToPublic>True</subscribableToPublic>
-<description>Wikia publication description</description>
+<description>" . self::PUB_DESCRIPTION . "</description>
 </publication>";
 #echo htmlspecialchars($body);
 
@@ -148,12 +154,11 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 		return $res;
 	}
 
-	static public function Issue($authTicket, $publicationId, $issueName, $issueDescription, $issueTags) {
+	static public function Issue($authTicket, $publicationId, $issueName, $issueDescription) {
 
 		// escpae XML string
 		$issueName = htmlspecialchars($issueName);
 		$issueDescription = htmlspecialchars($issueDescription);
-		$issueTags        = htmlspecialchars($issueTags);
 
 $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 <issue>
@@ -161,7 +166,6 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 <username />
 <issueNumber>1</issueNumber>
 <description>{$issueDescription}</description>
-<tags>{$issueTags}</tags>
 <name>{$issueName}</name>
 <issueDate>" . date("c") . "</issueDate>
 <publicationId>{$publicationId}</publicationId>
