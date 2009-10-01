@@ -78,7 +78,7 @@ class WikiaCollection extends SpecialPage {
 
 		// covers in tips box
 		global $wgExtensionsPath;
-		$this->mTemplate->set('coverExamplesSrc', "{$wgExtensionsPath}/wikia/MagCloud/images/MagCloudTipsCovers.jpg");
+		$this->mTemplate->set('coverExamplesSrc', "{$wgExtensionsPath}/wikia/MagCloud/images/MagCloudTipsCovers.gif");
 
 		return $this->mTemplate->execute('collection-review-list');
 	}
