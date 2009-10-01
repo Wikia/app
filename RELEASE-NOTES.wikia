@@ -1,4 +1,5 @@
 == Changes since 200909.5 ==
+* rt#20893: monaco/js/main.js, menuArray is null error (Macbre)
 * rt#23538: NWB now strips leading spaces on homepage descriptions (TOR)
 * rt#23269: FCK save and preview buttons disabled (Macbre)
 * rt#23713: Div overlapping on Answer skin (TOR)
