@@ -51,6 +51,7 @@ class WikiaApiReportEmail extends ApiBase {
 	 *
 	 * @access public
 	 *
+	 * @return api result,
 	 */
 	public function execute() {
 
@@ -83,12 +84,28 @@ class WikiaApiReportEmail extends ApiBase {
 			if( is_null( $params[ "success" ] ) ) {
 				$this->dieUsageMsg( array( "missingparam", "success" ) );
 			}
-			if( is_null( $params[ "reason" ] ) ) {
-				$this->dieUsageMsg( array( "missingparam", "reason" ) );
+			if( is_null( $params[ "timestamp" ] ) ) {
+				$this->dieUsageMsg( array( "missingparam", "timestamp" ) );
 			}
 
+			$date   = date( "Y-m-d H:i:s", $params[ "timestamp" ] );
+			$reason = is_null( $params[ "reason" ] ) ? "" : $params[ "reason" ];
+
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-			//$dbw->insert();
+			$sth = $dbw->insert(
+				"emails",
+				array(
+					"send_date"      => $date,
+					"send_from"      => $params[ "from" ],
+					"send_to"        => $params[ "to" ],
+					"user_id"        => $params[ "user_id" ],
+					"city_id"        => $params[ "city_id" ],
+					"success"        => $params[ "success" ],
+					"type_id"        => $params[ "type_id" ],
+					"failure_reason" => $reason,
+				)
+			);
+			$reason = ( $sth ) ? array( "status" => 0 ) : array( "status" => 1 );
 		}
 		else {
 			$this->dieUsageMsg( array( "sessionfailure" ) );
@@ -116,14 +133,15 @@ class WikiaApiReportEmail extends ApiBase {
 	 */
 	public function getAllowedParams() {
 		return array(
-			"from"     => array(),
-			"to"       => array(),
-			"token"    => array(),
-			"success"  => array( APIBASE::PARAM_TYPE => "integer" ),
-			"city_id"  => array( APIBASE::PARAM_TYPE => "integer" ),
-			"user_id"  => array( APIBASE::PARAM_TYPE => "integer" ),
-			"type_id"  => array( APIBASE::PARAM_TYPE => "integer" ),
-			"reason"   => array( )
+			"from"      => array(),
+			"to"        => array(),
+			"token"     => array(),
+			"success"   => array( APIBASE::PARAM_TYPE => "integer" ),
+			"city_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
+			"user_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
+			"type_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
+			"reason"    => array( ),
+			"timestamp" => array( ),
 		);
 	}
 
@@ -134,14 +152,15 @@ class WikiaApiReportEmail extends ApiBase {
 	 */
 	public function getParamDescription() {
 		return array(
-			"from"     => "From: email address",
-			"to"       => "To: email address",
-			"user_id"  => "user_id from user table",
-			"city_id"  => "city_id from city_list table",
-			"type_id"  => "Type of email e.g. watchlist",
-			"success"  => "Operation succeded or not",
-			"token"    => "Secret token",
-			"reason"   => "Tells reason whe operation was not succeded"
+			"from"      => "From: email address",
+			"to"        => "To: email address",
+			"user_id"   => "user_id from user table",
+			"city_id"   => "city_id from city_list table",
+			"type_id"   => "Type of email e.g. watchlist",
+			"success"   => "Operation succeded or not",
+			"token"     => "Secret token",
+			"reason"    => "Tells reason whe operation was not succeded",
+			"timestamp" => "Send date and time as unix time"
 		);
 	}
 
