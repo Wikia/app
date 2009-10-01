@@ -259,10 +259,15 @@ class BlogArticle extends Article {
 			$redirect = $wgRequest->getText( "redirect", false );
 			if( $redirect != "no" ) {
 				$text = $wgTitle->getText();
-				list( $user, $title, $anchor ) = explode( "/", $text, 3 );
+				list( $user, $title, $anchor ) = BlogComment::explode( $text );
+				error_log ("\n\n\nuser: " . $user);
+				error_log ("\n\n\ntitle: " . $title);
+				error_log ("\n\n\nanchor: " . $anchor. "\n");
 				$redirect = Title::newFromText( "{$user}/{$title}", NS_BLOG_ARTICLE );
 				if( $title ) {
 					$url = $redirect->getFullUrl();
+					error_log ("\n\n\ntitle: " . $Title->getText());
+					error_log ("url: " . $url."\n\n\n");
 					$wgOut->redirect( "{$url}#{$anchor}" );
 				}
 			}
@@ -708,7 +713,7 @@ class BlogArticle extends Article {
 	static public function commentToUserBlog( $oTitle ) {
 		$oUBlogTitle = null;
 		if ($oTitle instanceof Title) {
-			list( $author, $title, $comment_title )  = explode('/', $oTitle->getPrefixedText(), 3);
+			list( $author, $title, $comment_title )  = BlogComment::explode( $oTitle->getPrefixedText() );
 			if ( !empty($author) ) {
 				list ( $ns, $user ) = explode ( ':', $author );
 				$oUBlogTitle = Title::newFromText( "{$user}/{$title}#{$comment_title}", NS_BLOG_ARTICLE);
