@@ -251,13 +251,17 @@ class SolrResult extends SearchResult {
 	 * @param Apache_Solr_Document $document
 	 */
 	public function __construct( Apache_Solr_Document $document ) {
+		$url = utf8_decode( htmlspecialchars_decode( $document->url ) );
+		$title = htmlspecialchars_decode( $document->title );
+
 		if(isset($document->canonical) && !empty($document->canonical)) {
-			$this->mTitle = new SolrResultTitle($document->ns, urldecode( $document->canonical ), $document->url);
-			$this->mRedirectTitle = new SolrResultTitle($document->ns, urldecode( $document->title ), $document->url);
-			$this->setHighlightTitle( urldecode( $document->canonical ) );
+			$canonical = htmlspecialchars_decode($document->canonical);
+			$this->mTitle = new SolrResultTitle($document->ns, $canonical, $url);
+			$this->mRedirectTitle = new SolrResultTitle($document->ns, $title, $url);
+			$this->setHighlightTitle( $canonical );
 		}
 		else {
-			$this->mTitle = new SolrResultTitle($document->ns, urldecode( $document->title ), $document->url);
+			$this->mTitle = new SolrResultTitle($document->ns, $title, $url);
 		}
 
 		$this->mWordCount = $document->words;
@@ -277,7 +281,7 @@ class SolrResult extends SearchResult {
 
 	public function setHighlightTitle($title) {
 		if($this->mHighlightTitle == null) {
-			$this->mHighlightTitle = urldecode($title);
+			$this->mHighlightTitle = htmlspecialchars_decode($title);
 		}
 	}
 
