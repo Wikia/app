@@ -1,4 +1,5 @@
 == Changes since 200909.5 ==
+* rt#22290: answers: wikipedia re-search bar: quotes are not escaped (Macbre)
 * rt#23935: Share feature icon sometimes displays wrong icon (Macbre)
 * rt#20893: monaco/js/main.js, menuArray is null error (Macbre)
 * rt#23538: NWB now strips leading spaces on homepage descriptions (TOR)
