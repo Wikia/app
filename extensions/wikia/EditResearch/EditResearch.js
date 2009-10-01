@@ -16,6 +16,7 @@ jQuery("#research_box").ready(function() {
 	});
 	jQuery("#search_input").keydown(function(e) {
 		if (e.keyCode == 13) {
+			WET.byStr( 'editpage/wikipedia/enter' );			
 			research();
 			return false;
 		}
@@ -50,7 +51,6 @@ function research(){
 	if( !search ) {
 		return;
 	}
-	WET.byStr( 'editpage/wikipedia/click' );
 	jQuery("#research_box").css("overflow", "");
 	jQuery("#research-inner").css("background-color", "#FFF").css("background-image", "none");
 	url = wikipedia_server + "/w/api.php?action=query&list=search&srsearch=" + encodeURIComponent(search) + "&sroffset=" + (research_page * research_page_limit) + "&format=json&callback=?";
