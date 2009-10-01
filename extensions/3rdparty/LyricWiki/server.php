@@ -88,28 +88,7 @@ if(!function_exists("lw_connect")){ // Function is in several scripts.  This pre
 	// needed without additional overhead.
 	////
 	function lw_connect(){
-		GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
-		if($LW_USE_PERSISTENT_CONNECTIONS){
-			return wfGetDB(DB_MASTER)->getProperty('mConn');
-		} else {
-			// In case this connection does writes, we must connect to the master (default connection).
-			GLOBAL $wgDBserver;GLOBAL $wgDBuser;GLOBAL $wgDBpassword;GLOBAL $wgDBname;
-			GLOBAL $lw_host;$lw_host = $wgDBserver;
-			GLOBAL $lw_user;$lw_user = $wgDBuser;
-			GLOBAL $lw_pass;$lw_pass = $wgDBpassword;
-			GLOBAL $lw_name;$lw_name = $wgDBname;
-
-			GLOBAL $lw_db;
-			if(isset($lw_db)){
-				$db = $lw_db;
-			} else {
-				GLOBAL $lw_host,$lw_user,$lw_pass,$lw_name;
-				$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-				mysql_select_db($lw_name, $db);
-				$lw_db = $db;
-			}
-			return $db;
-		}
+		return wfGetDB( DB_MASTER )->getProperty('mConn');
 	} // end lw_connect()
 }
 
@@ -119,68 +98,7 @@ if(!function_exists("lw_connect_readOnly")){
 	// be to the slave (read-only replica) which will be faster for read but doesn't allow writes.
 	////
 	function lw_connect_readOnly(){
-		GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
-		if($LW_USE_PERSISTENT_CONNECTIONS){
-			return wfGetDB(DB_SLAVE)->getProperty('mConn');
-		} else {
-			GLOBAL $lw_db;
-			GLOBAL $lw_db_readOnly;
-			if(isset($lw_db_readOnly)){
-				$db = $lw_db_readOnly;
-			} else if(isset($lw_db)){
-				$db = $lw_db; // If a connection to the master is already open, might as well use that.
-			} else {
-				// If the wgDBservers (array of slaves) is available, use that, otherwise use the default connection.
-				GLOBAL $wgDBservers;
-				GLOBAL $lw_host;GLOBAL $lw_user;GLOBAL $lw_pass;GLOBAL $lw_name;
-				GLOBAL $wgDBserver;GLOBAL $wgDBuser;GLOBAL $wgDBpassword;GLOBAL $wgDBname;
-				if(!isset($wgDBservers) || (!is_array($wgDBservers))){
-					$lw_host = $wgDBserver;
-					$lw_user = $wgDBuser;
-					$lw_pass = $wgDBpassword;
-					$lw_name = $wgDBname;
-				} else {
-					// Use the load-settings to randomly determine which server to use (load settings are just probability weights for each db).
-					$totalWeight = 0.0; // we have to normalize the weights to 1.0
-					foreach($wgDBservers as $currServer){
-						if(isset($currServer['load'])){
-							$totalWeight += $currServer['load'];
-						}
-					}
-					$serverWeights = array();
-					for($cnt=0; $cnt < count($wgDBservers); $cnt++){
-						$currWeight = getVal($wgDBservers[$cnt], 'load', 0.0);
-						$serverWeights[] = ($currWeight / $totalWeight);
-					}
-					$precision = 10000; // this is really 10 ^ precision (so precision of 4 decimal points is represented by 10,000).
-					$randomServer = (rand(0, $precision) / $precision);
-					$indexOfServer = "";
-					for($cnt=0; (($indexOfServer==="") && ($cnt < count($serverWeights))); $cnt++){
-						$currWeight = $serverWeights[$cnt];
-						if($currWeight > $randomServer){ // don't use >= .. can't test equality with floating point numbers in PHP.
-							$indexOfServer = $cnt;
-						}
-						$randomServer -= $currWeight;
-					}
-					if($indexOfServer === ""){
-						$indexOfServer = 0; // fallback.
-					}
-
-					// Fallbacks for each value are the defaults (these will hopefully either all be used or not used at all).
-					$currServer = $wgDBservers[$indexOfServer];
-					$lw_host = getVal($currServer, 'host', $wgDBserver);
-					$lw_user = getVal($currServer, 'user', $wgDBuser);
-					$lw_pass = getVal($currServer, 'password', $wgDBpassword);
-					$lw_name = getVal($currServer, 'dbname', $wgDBname);
-				}
-
-				// Create the actual connection
-				$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-				mysql_select_db($lw_name, $db);
-				$lw_db_readOnly = $db;
-			}
-			return $db;
-		}
+		return wfGetDB( DB_SLAVE )->getProperty('mConn');
 	} // end lw_connect_readOnly()
 }
 
@@ -198,7 +116,7 @@ if(!$funcsOnly){
 	require_once('nusoap.php');
 	$server = new soap_server();
 	$server->soap_defencoding = 'UTF-8';
-	
+
 	// Initialize WSDL support
 	$ns = "urn:LyricWiki";
 	$action = $ns;
@@ -296,7 +214,7 @@ if(!$funcsOnly){
 			'songs' => array('name' => 'songs', 'type' => 'tns:ArrayOfstring')
 		)
 	);
-	
+
 	//////////////////////////////////////////////////////////////////////////////
 	///////// SEARCHING METHODS - BEGIN /////////
 	$server->register('checkSongExists',
@@ -318,7 +236,7 @@ if(!$funcsOnly){
 		'encoded',
 		'Search for an artist by name and return up to 10 close matches'
 	);
-	
+
 	$server->register('searchAlbums',
 		array('artist' => 'xsd:string', 'album' => 'xsd:string', 'year' => 'xsd:int'),
 		array('return' => 'tns:AlbumResultArray'),
@@ -328,7 +246,7 @@ if(!$funcsOnly){
 		'encoded',
 		'Search for an album on LyricWiki and return up to 10 close matches (year optional)'
 	);
-	
+
 	$server->register('searchSongs',
 		array('artist' => 'xsd:string', 'song' => 'xsd:string'),
 		array('return' => 'tns:SongResult'),
@@ -340,7 +258,7 @@ if(!$funcsOnly){
 	);
 	///////// SEARCHING METHODS - END /////////
 	//////////////////////////////////////////////////////////////////////////////
-	
+
 	//////////////////////////////////////////////////////////////////////////////
 	///////// FETCHING METHODS - BEGIN /////////
 	$server->register('getSOTD',
@@ -352,7 +270,7 @@ if(!$funcsOnly){
 		'encoded',
 		'Get the lyrics for a the current Song of the Day on LyricWiki'
 	);
-	
+
 	$server->register('getSong',
 		array('artist' => 'xsd:string', 'song' => 'xsd:string'),
 		array('return' => 'tns:LyricsResult'),
@@ -370,8 +288,8 @@ if(!$funcsOnly){
 		'rpc',
 		'encoded',
 		'Get the lyrics for a LyricWiki song with the exact artist and song match'
-	);	
-	
+	);
+
 	$server->register('getArtist',
 		array('artist' => 'xsd:string'),
 		array('artist' => 'xsd:string', 'albums' => 'tns:AlbumDataArray'),
@@ -381,7 +299,7 @@ if(!$funcsOnly){
 		'encoded',
 		'Gets the entire discography for an artist'
 	);
-	
+
 	$server->register('getAlbum',
 		array('artist' => 'xsd:string', 'album' => 'xsd:string', 'year' => 'xsd:int'),
 		array('artist' => 'xsd:string', 'album' => 'xsd:string', 'year' => 'xsd:int', 'amazonLink' => 'xsd:string', 'songs' => 'tns:ArrayOfstring'),
@@ -391,7 +309,7 @@ if(!$funcsOnly){
 		'encoded',
 		'Gets the track listing and amazon link for an album'
 	);
-	
+
 	$server->register('getHometown',
 		array('artist' => 'xsd:string'),
 		array('country' => 'xsd:string', 'state' => 'xsd:string', 'hometown' => 'xsd:string'),
@@ -403,7 +321,7 @@ if(!$funcsOnly){
 	);
 	///////// FETCHING METHODS - END /////////
 	//////////////////////////////////////////////////////////////////////////////
-	
+
 	//////////////////////////////////////////////////////////////////////////////
 	///////// UPDATING METHODS - BEGIN /////////
 	$server->register('postArtist',
@@ -415,7 +333,7 @@ if(!$funcsOnly){
 		'encoded',
 		'Posts data of an artist and their discography.  Will create any missing album pages based on the data passed in.'
 	);
-	
+
 	$server->register('postAlbum',
 		array('overwriteIfExists' => 'xsd:boolean', 'artist' => 'xsd:string', 'album' => 'xsd:string',
 				'year' => 'xsd:int', 'asin' => 'xsd:string', 'songs' => 'tns:ArrayOfstring'),
@@ -427,7 +345,7 @@ if(!$funcsOnly){
 		'encoded',
 		'Posts data for a single album including its track-list and optionally the amazon ASIN'
 	);
-	
+
 	$doc = 'Posts data for a single song.  If correcting exiting lyrics, ';
 	$doc.= 'make sure overwriteIfExists is set to true.  In the onAlbums array, ';
 	$doc.= 'if artist is left blank, it will default to the artist of the song.';
@@ -461,7 +379,7 @@ if(!$funcsOnly){
 	// Use the request to (try to) invoke the service
 	$HTTP_RAW_POST_DATA = isset($HTTP_RAW_POST_DATA) ? $HTTP_RAW_POST_DATA : '';
 	$server->service($HTTP_RAW_POST_DATA);
-	
+
 	// If the script took a long time to run, log it here.
 	if($ENABLE_LOGGING_SLOW_SOAP){
 		$scriptTime = (microtime(true) - $startTime);
@@ -514,7 +432,7 @@ function searchArtists($searchString){
 	$MAX_RESULTS = 10;
 	$artist = rawurldecode($searchString);
 	$retVal = array();
-	
+
 	// Trick to show debug output.  Just add the debugSuffix to the end of the searchString, and debug output will be displayed.
 	$debug = false;$debugSuffix = "_debug";
 	if((strlen($artist) >= strlen($debugSuffix)) && (substr($artist, (0-strlen($debugSuffix))) == $debugSuffix)){
@@ -537,7 +455,7 @@ function searchArtists($searchString){
 			$artist = substr($artist, 0, (strlen($artist)-1) );
 		}
 		print (!$debug?"":"After trimming '%'s off: \"$artist\".\n");
-	
+
 		$db = lw_connect_readOnly();
 		$queryString = "SELECT page_title FROM page WHERE page_namespace=0 AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
 		if($result = mysql_query($queryString, $db)){
@@ -694,7 +612,7 @@ function getSong($artist, $song="", $doHyphens=true){
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
 		} else if(($song == "unknown") || (((strtolower($artist) == "unknown") || (strtolower($artist) == "artist")) && (strtolower($song) == "unknown")) || (0<preg_match("/^Track [0-9]+$/i", $song)) || (strtolower($song) == "favicon.png")){
 			// If the song is "unkown" (all lowercase) this is usually just a default failure.  If they are looking for a song named "Unknown", and they use the caps, it will get through (unless the band name also happens to be "Unknown")
-	
+
 			// NOTE: For now we leave the 'defaultLyrics' message for players that handle this explicitly as not being a match.
 		} else if(in_array($artist, $nonArtists)){
 			// These are "artists" which are very commonly accuring non-artists.  IE: Baby Einstein is a collection of classical music, Apple Inc. is just apple's (video?) podcasts
@@ -747,7 +665,7 @@ function getSong($artist, $song="", $doHyphens=true){
 			if($index !== false){
 				$artist = substr($artist, 0, $index);
 			}
-			
+
 			// Strip the "featuring" from song names - SWC 20070912
 			$index = strpos(strtolower($song), " ft.");
 			$index = ($index===false?strpos(strtolower($song), " feat."):$index);
@@ -805,7 +723,7 @@ function getSong($artist, $song="", $doHyphens=true){
 						//$content = $matches[0];
 						$content = str_replace("\n ", "\n", $content);
 					}
-					
+
 					// In case the page uses the instrumental template but uses it inside of lyrics tags.
 					if(0<preg_match("/\{\{instrumental\}\}/si", $content, $matches)){
 						$content = $instrumental;
@@ -857,7 +775,7 @@ function getSong($artist, $song="", $doHyphens=true){
 					// Can re-enable this later if we actually start paying attention to this again.
 					//lw_soapStats_logHit($resultFound);
 				}
-				
+
 				// Make encoding work with UTF8 - NOTE: We do not apply this again to a result that the doHyphens/lastHyphen trick grabbed because that has already been encoded..
 				$retVal['artist'] = utf8_encode($retVal['artist']);
 				$retVal['song'] = utf8_encode($retVal['song']);
@@ -885,7 +803,7 @@ function getArtist($artist){
 	// For now the regex makes it only read the first disc and ignore beyond that (since it assumes the track listing is over).
 	$albums = array();
 	GLOBAL $amazonRoot;
-	
+
 	$debug = false;
 	$debugSuffix = "_debug";
 	if((strlen($artist) >= strlen($debugSuffix)) && (substr($artist, (0-strlen($debugSuffix))) == $debugSuffix)){
@@ -920,7 +838,7 @@ function getArtist($artist){
 
 	$correctArtist = str_replace("_", " ", $correctArtist);
 	$retVal = array('artist' => $correctArtist, 'albums' => $albums);
-	
+
 	// Make encoding work with UTF8.
 	$isUTF = utf8_compliant("$correctArtist");
 	if($isUTF === false){
@@ -986,7 +904,7 @@ function lw_getHeadingFromLine(&$line) {
 		return array(
 			'level' => strlen($matches[1])-1,
 			'heading' => &$matches[2]
-		);	
+		);
 	} else {
 		return NULL;
 	}
@@ -1005,7 +923,7 @@ function lw_getLinkFromLine(&$line) {
 			'artist' => &$matches[1],
 			'song' => &$matches[2]
 			//'linkLabel' => (!empty($matches[4]) ? $matches[4] : $matches[2])
-		);	
+		);
 	} else {
 		return NULL;
 	}
@@ -1041,7 +959,7 @@ function lw_pushAlbum(&$heading, &$albums) {
 	global $amazonRoot;
 
 	if (count($heading['songs'])) {
-		$albumName =& $heading['albumName']; 
+		$albumName =& $heading['albumName'];
 
 		$yearMatches = array();
 		if(0<preg_match("/ \(([0-9\?]{4})\)$/si", $albumName, $yearMatches)){
@@ -1200,15 +1118,15 @@ function postArtist($overwriteIfExists, $artist, $albums){ // TODO: IMPLEMENT
 	$retVal = array('artist' => $artist, 'dataUsed' => false,
 					'message' => 'Not implemented yet.  This would give info on whether some of the data, none, or all of it was used');
 	lw_tryLogin();
-	
+
 	$artistName = lw_getTitle($artist);
 	$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($artistName)));
 	$pageExists = $pageTitle->exists(); // call here and store the result to check after page is created to determine if it was an overwrite
 	if($pageExists){
-	
+
 		// TODO: REMOVE
 		if(false){
-	
+
 		$currData = getArtist($artist);
 		$currAlbums = $currData['albums'];
 		$content = lw_getPage($artistName);
@@ -1244,7 +1162,7 @@ function postArtist($overwriteIfExists, $artist, $albums){ // TODO: IMPLEMENT
 						$additionalTracks = array();
 						$tracks = $activeAlbum['songs'];
 						$tracksFound = $comparisonAlbum['songs'];
-						
+
 						foreach($tracks as $currTrack){
 							$found = false;
 							for($trackNum=0; (($trackNum<count($tracksFound)) && (!$found)); $trackNum++){
@@ -1293,7 +1211,7 @@ function postArtist($overwriteIfExists, $artist, $albums){ // TODO: IMPLEMENT
 						}
 						$lastAlbumName = $lastAlbum['album'];
 						$lastAlbumYear = $lastAlbum['year'];
-						
+
 						$wikiCode = trim($wikiCode)."\n"; // only needs one new line-break, not the traditional two
 						$lastAlbumName = str_replace(" ", "_", $lastAlbumName);
 						$lastAlbumName = str_replace("_", "[_ ]", $lastAlbumName);
@@ -1331,7 +1249,7 @@ function postArtist($overwriteIfExists, $artist, $albums){ // TODO: IMPLEMENT
 		exit;
 	}*/
 
-		
+
 		// Send the updated code here.
 		$content = "[[Category:Review_Me]]\n".$content; // TODO: REMOVE AFTER UBERBOT SUBMISSIONS
 		$summary = "Page ".(($pageExists)?"edited":"created")." using [[LyricWiki:SOAP|LyricWiki's SOAP Webservice]]";
@@ -1960,14 +1878,14 @@ function lw_createPage($pageTitle, $content, $summary="Page created using [[Lyri
 	# checking, etc.
 	if ( 'initial' == $editor->formtype || $editor->firsttime ) {
 		$editor->initialiseForm();
-		if( !$editor->mTitle->getArticleId() ) 
+		if( !$editor->mTitle->getArticleId() )
 			wfRunHooks( 'EditFormPreloadText', array( &$editor->textbox1, &$editor->mTitle ) );
 	}
 
 	$editor->showEditForm();
 	wfProfileOut( "$fname-business-end" );
 	wfProfileOut( $fname );
-	
+
 	$retVal = ($retVal==""?"Page created successfully.":$retVal);
 	return $retVal;
 }
@@ -2029,9 +1947,9 @@ function lw_initAdvanced(&$title='', &$action=''){
 	if ($wgTitle == NULL) {
 		unset( $wgTitle );
 	}
-	
+
 	wfProfileOut( 'main-misc-setup' );
-	
+
 	# Setting global variables in mediaWiki
 	$mediaWiki->setVal( 'Server', $wgServer );
 	$mediaWiki->setVal( 'DisableInternalSearch', $wgDisableInternalSearch );
