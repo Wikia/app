@@ -556,6 +556,11 @@ function getMenu() {
 			unset($menuArray['magicWords']);
 		}
 
+		// fallback (RT #20893)
+		if ($menuArray === null) {
+			$menuArray = array('mainMenu' => array());
+		}
+
 		$content .= 'var menuArray = '.Wikia::json_encode($menuArray).';$("#navigation_widget").mouseover(menuInit);$(function() { menuInit(); });';
 		$duration = 60 * 60 * 24 * 7; // one week
 	}
