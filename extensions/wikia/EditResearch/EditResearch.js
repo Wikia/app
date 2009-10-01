@@ -50,7 +50,7 @@ function research(){
 	if( !search ) {
 		return;
 	}
-
+	WET.byStr( 'editpage/wikipedia/click' );
 	jQuery("#research_box").css("overflow", "");
 	jQuery("#research-inner").css("background-color", "#FFF").css("background-image", "none");
 	url = wikipedia_server + "/w/api.php?action=query&list=search&srsearch=" + encodeURIComponent(search) + "&sroffset=" + (research_page * research_page_limit) + "&format=json&callback=?";
