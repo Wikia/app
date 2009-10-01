@@ -153,7 +153,7 @@ class MagCloud {
 			// check action (only render allow article to be added from view and purge)
 			$action = $wgRequest->getVal('action', 'view');
 
-			if (!in_array($action, array('view', 'purge'))) {
+			if (!in_array($action, array('view', 'purge', 'ajax'))) {
 				$isContentPage = false;
 			}
 
