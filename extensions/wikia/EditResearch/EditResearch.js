@@ -58,7 +58,7 @@ function research(){
 			search_html = ""
 			for(x=0; x<=data.query.search.length-1;x++){
 				title = data.query.search[x].title;
-				search_html += "<div class='research-search-result'><a href='#' onclick='research_wikipedia_article(this)'>" + title + "</a></div>"
+				search_html += "<div class='research-search-result'><a href='#research-search' onclick='research_wikipedia_article(this)'>" + title + "</a></div>"
 			}
 			if( search_html ){
 				search_html += "<div id='research-search-nav'>" + ((research_page>0)?"<a href=javascript:research_paginate(-1)>" + wgPrevMsg + "</a>":"") + " <a href=javascript:research_paginate(1)>" + wgNextMsg + "</a></div>"
