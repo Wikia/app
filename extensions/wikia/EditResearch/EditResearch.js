@@ -73,6 +73,11 @@ function research(){
 }
 
 function research_paginate(dir){
+	if( dir > 0 ) {
+		WET.byStr( 'editpage/wikipedia/next' );
+	} else if ( dir < 0 ) {
+		WET.byStr( 'editpage/wikipedia/previous' );
+	}
 	research_page = research_page + dir;
 	research();
 }
