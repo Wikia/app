@@ -109,6 +109,7 @@ class MyHome {
 		// don't touch anon users
 		global $wgUser;
 		if ($wgUser->isAnon()) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
