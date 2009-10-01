@@ -800,8 +800,13 @@ class EnhancedChangesList extends ChangesList {
 			if( $rc_this_oldid != 0 ) {
 				$o = 'oldid='.$rc_this_oldid;
 			}
+			
+			# added by Moli 
+			if ( isset ($rcObj->ownTitle) ) {
+				$rcIdEq = ($rcObj->unpatrolled && $rc_type == RC_NEW) ? '&rcid='.$rcObj->mAttribs['rc_id'] : '';
+				$link = $this->skin->makeKnownLinkObj( $rcObj->getTitle(), $rcObj->ownTitle, $curIdEq.'&'.$o.$rcIdEq );
 			# Log timestamp
-			if( $rc_type == RC_LOG ) {
+			} else if( $rc_type == RC_LOG ) {
 				$link = '<tt>'.$rcObj->timestamp.'</tt> ';
 			# Revision link
 			} else if( !ChangesList::userCan($rcObj,Revision::DELETED_TEXT) ) {

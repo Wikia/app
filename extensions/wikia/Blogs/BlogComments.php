@@ -1506,7 +1506,7 @@ class BlogCommentList {
 			 				$oRCCacheEntry->mOtherFlags = array();
 						}
 			 			$oRCCacheEntry->mOtherFlags[] = $oRCCacheEntry->timestamp;
-			 			$oRCCacheEntry->timestamp = $oRCCacheEntry->getTitle()->getText();
+			 			$oRCCacheEntry->ownTitle = $oRCCacheEntry->getTitle()->getText();
 
 			 			$u = $oRCCacheEntry->userlink;
 						if( !isset( $userlinks[$u] ) ) {
