@@ -759,6 +759,7 @@ class Masthead {
 				$isDestinationUserAnon = User::isIP($userspace);
 				$isUserOnOwnPage = $wgUser->getName() == $userspace;
 				$out['userspace'] = $userspace;
+				$out['nav_links'] = array();
 
 				if ($wgUser->isLoggedIn() && $isUserOnOwnPage && class_exists('MyHome')) {
 					$out['nav_links'][] = array('text' => wfMsg('myhome'), 'href' => Title::newFromText('MyHome', NS_SPECIAL )->getLocalUrl(), 'dbkey' => 'MyHome', 'tracker' => 'myhome');
