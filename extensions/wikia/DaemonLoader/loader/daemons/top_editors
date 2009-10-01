@@ -198,7 +198,7 @@ foreach my $user_id (sort keys %USERS) {
 	#--- set start time
 	my $start_sec = time();
 	$loop++;
-	$oConf->log($user_id . " processed (".$loop.")");
+	$oConf->log($USERS{$user_id}{name} . " (".$user_id.") processed (".$loop.")");
 	
 =get home Wiki for user
 =cut
