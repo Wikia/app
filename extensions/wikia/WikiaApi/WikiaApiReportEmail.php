@@ -8,30 +8,30 @@
   * $Id$
  */
 
-$wgAPIModules['theschwartz'] = 'WikiaApiReportEmail';
-
 /**
 
 use these tables on dataware database:
 
-CREATE TABLE emails (
-	send_date TIMESTAMP NOT NULL,
-	send_from tinytext NOT NULL,
-	send_to tinytext NOT NULL,
-	user_id int(5) unsigned NOT NULL,
-	city_id int(9) unsigned  NOT NULL,
-	success tinyint unsigned not null,
-	failure_reason tinytext default '',
-	type_id tinyint unsigned references email_types( id ),
-	key emails_send_to( send_to(255) ),
-	key emails_send_date( send_date ),
-	key emails_user_id( user_id )
-);
+CREATE TABLE `emails` (
+  `send_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `send_from` tinytext NOT NULL,
+  `send_to` tinytext NOT NULL,
+  `user_id` int(5) unsigned NOT NULL,
+  `city_id` int(9) unsigned NOT NULL,
+  `success` tinyint(3) unsigned NOT NULL,
+  `failure_reason` tinytext,
+  `type_id` tinyint(3) unsigned DEFAULT NULL,
+  KEY `emails_send_to` (`send_to`(255)),
+  KEY `emails_send_date` (`send_date`),
+  KEY `emails_user_id` (`user_id`)
+) ENGINE=InnoDB;
 
-CREATE TABLE email_types (
-	id tinyint unsigned not null primary key,
-	type varchar(64) not null
-)
+CREATE TABLE `email_types` (
+  `id` tinyint(3) unsigned NOT NULL,
+  `type` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
 **/
 
 class WikiaApiReportEmail extends ApiBase {
@@ -87,6 +87,7 @@ class WikiaApiReportEmail extends ApiBase {
 
 			$date   = date( "Y-m-d H:i:s", $params[ "timestamp" ] );
 			$reason = is_null( $params[ "reason" ] ) ? "" : $params[ "reason" ];
+			$type   = ( $params[ "type_id" ] > 1 ) ? 0 : $params[ "type_id" ];
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			$sth = $dbw->insert(
@@ -98,16 +99,17 @@ class WikiaApiReportEmail extends ApiBase {
 					"user_id"        => $params[ "user_id" ],
 					"city_id"        => $params[ "city_id" ],
 					"success"        => $params[ "success" ],
-					"type_id"        => $params[ "type_id" ],
+					"type_id"        => $type,
 					"failure_reason" => $reason,
 				)
 			);
-			$reason = ( $sth ) ? array( "status" => 0 ) : array( "status" => 1 );
+			$result = ( $sth ) ? array( "status" => 1 ) : array( "status" => 0 );
 		}
 		else {
 			$this->dieUsageMsg( array( "sessionfailure" ) );
 		}
-		$this->getResult()->addValue(null, $this->getModuleName(), $result);
+		$this->getResult()->setIndexedTagName($result, 'page');
+		$this->getResult()->addValue(null, $this->getModuleName(), $result );
 	}
 
 	public function getVersion() {
@@ -133,7 +135,7 @@ class WikiaApiReportEmail extends ApiBase {
 			"from"      => array(),
 			"to"        => array(),
 			"token"     => array(),
-			"success"   => array( APIBASE::PARAM_TYPE => "integer" ),
+			"success"   => array( APIBASE::PARAM_TYPE => array( 0, 1 ) ),
 			"city_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
 			"user_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
 			"type_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
