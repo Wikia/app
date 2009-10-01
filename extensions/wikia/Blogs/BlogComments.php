@@ -245,7 +245,7 @@ class BlogComment {
 			$this->getProps();
 
 			$text     = $wgOut->parse( $this->mLastRevision->getText() );
-			$anchor   = explode( "/", $this->mTitle->getDBkey(), 3 );
+			$anchor   = self::explode( $this->mTitle->getDBkey() );
 			$sig      = ( $this->mUser->isAnon() )
 				? Xml::span( wfMsg("blog-comments-anonymous"), false, array( "title" => $this->mFirstRevision->getUserText() ) )
 				: Xml::element( 'a', array ( "href" => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
@@ -317,9 +317,31 @@ class BlogComment {
 		if ( !isset($this->mTitle) ) {
 			return null;
 		}
-		list( $user, $page_title, $comment ) = explode( "/", $this->mTitle->getDBkey(), 3 );
-		$blogTitle = $user . "/" . $page_title;
-		return Title::makeTitle(NS_BLOG_ARTICLE, $blogTitle);
+
+		$Title = null;		
+		list ( $user, $page_title, $comment ) = self::explode($this->mTitle->getDBkey());
+		if ( !empty($user) && !empty($page_title) ) {
+			$blogTitle = $user . "/" . $page_title;
+			$Title = Title::makeTitle(NS_BLOG_ARTICLE, $blogTitle);
+		} 
+		return $Title;
+	}
+
+	public function explode($title) {
+		$elements = explode( "/", $title );
+		$res = array( '', '', '' );
+		if ( !empty($elements) && is_array($elements) ) {
+			reset($elements);
+			$user = $elements[key($elements)];
+			$comment = end($elements);
+			$page_title = implode("/", array_splice($elements, 1, -1) );
+			$res = array (
+				0 => $user,
+				1 => $page_title,
+				2 => $comment
+			);
+		}
+		return $res;
 	}
 
 	/**
@@ -1454,7 +1476,7 @@ class BlogCommentList {
 		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE_TALK ) ) ) {
 			$user = $page_title = $comment = "";
 			$newTitle = null;
-			list( $user, $page_title, $comment ) = explode( "/", $oTitle->getDBkey(), 3 );
+			list( $user, $page_title, $comment ) = BlogComment::explode( $oTitle->getDBkey() );
 
 			if ( !empty($user) && (!empty($page_title)) ) {
 				$currentName = "Comments";
@@ -1494,7 +1516,7 @@ class BlogCommentList {
 			$namespace = $oTitle->getNamespace();
 
 			if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE_TALK ) ) ) {
-				list( $user, $page_title, $comment ) = explode( "/", $oTitle->getDBkey(), 3 );
+				list( $user, $page_title, $comment ) = BlogComment::explode( $oTitle->getDBkey() );
 
 				if ( !empty($user) && (!empty($page_title)) ) {
 					$cnt = count($oRCCacheEntryArray);
