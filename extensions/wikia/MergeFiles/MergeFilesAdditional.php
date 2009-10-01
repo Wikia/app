@@ -135,6 +135,7 @@ $MF['monaco_loggedin_js']['source'] = array(
 	'../extensions/wikia/AdEngine/AdEngine.js',
 	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 	'common/contributed.js',
+	'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 );
 $MF['monaco_loggedin_js']['source'] = array_merge($MF['monaco_loggedin_js']['source'], $widgetsAssets['js']);
 
@@ -170,6 +171,7 @@ $MF['monaco_non_loggedin_js']['source'] = array(
 	'../extensions/wikia/Userengagement/Userengagement.js',
 	'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 	'common/contributed.js',
+	'../extensions/wikia/ShareFeature/js/ShareFeature.js',
 );
 $MF['monaco_non_loggedin_js']['source'] = array_merge($MF['monaco_non_loggedin_js']['source'], $widgetsAssets['js']);
 
