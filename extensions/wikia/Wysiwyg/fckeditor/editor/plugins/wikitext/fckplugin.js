@@ -624,7 +624,7 @@ FCK.SetupElementsWithRefId = function() {
 				if (node.nodeName.IEquals('div') && node.previousSibling && node.previousSibling.nodeType == 3) {
 					// we have text before an image which isn't wrapped inside <p>
 					var prev = node.previousSibling;
-					if (prev.textContent.length > 1) {
+					if (prev && (typeof prev.textContent != 'undefined') && prev.textContent.length) {
 						// create <p>
 						var para = FCK.EditorDocument.createElement('p');
 						para.textContent = prev.textContent;
