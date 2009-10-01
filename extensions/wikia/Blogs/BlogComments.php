@@ -848,18 +848,20 @@ class BlogComment {
 
 		if ( !empty($wgEnableBlogWatchlist) && ( $oRC instanceof RecentChange ) ) {
 			$namespace = $oRC->getAttribute('rc_namespace');
-			if ( $namespace == NS_BLOG_ARTICLE_TALK ) {
-				$blog_id = $oRC->getAttribute('rc_cur_id');
+			$blog_id = $oRC->getAttribute('rc_cur_id');
+			if ( ( $namespace == NS_BLOG_ARTICLE_TALK ) && !empty( $blog_id ) ) {
 				$Comment = BlogComment::newFromId( $blog_id );
-				$oBlogPage = $Comment->getBlogTitle();
-				#---
-				$mAttribs = $oRC->mAttribs;
-				#---
-				$mAttribs['rc_title'] = $oBlogPage->getText();
-				$mAttribs['rc_namespace'] = $oBlogPage->getNamespace();
-				$mAttribs['rc_log_action'] = 'blogs_comment';
-				#---
-				$oRC->setAttribs($mAttribs);
+				if ( !is_null($Comment) ) {
+					$oBlogPage = $Comment->getBlogTitle();
+					#---
+					$mAttribs = $oRC->mAttribs;
+					#---
+					$mAttribs['rc_title'] = $oBlogPage->getText();
+					$mAttribs['rc_namespace'] = $oBlogPage->getNamespace();
+					$mAttribs['rc_log_action'] = 'blogs_comment';
+					#---
+					$oRC->setAttribs($mAttribs);
+				}
 			}
 		}
 
