@@ -78,6 +78,7 @@ $wgAutoloadClasses["WikiaApiAjaxLogin"] = "extensions/wikia/WikiaApi/WikiaApiAja
 $wgAutoloadClasses["ApiImageThumb"] = $GLOBALS["IP"]."/extensions/wikia/Our404Handler/ApiImageThumb.php";
 $wgAutoloadClasses["WikiaApiQuerySiteInfo"] = "extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
 $wgAutoloadClasses["WikiaApiQueryPageinfo"] = "extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
+$wgAutoloadClasses["WikiaApiReportEmail"] = $GLOBALS["IP"]."/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
 
 /**
  * registered API methods
@@ -121,13 +122,13 @@ $wgApiMainListFormats["wktemplate"] = "WikiaApiFormatTemplate";
 global $wgAPIModules;
 $wgAPIModules["insert"] = "WikiaApiQueryWrite";
 $wgAPIModules["update"] = "WikiaApiQueryWrite";
-//$wgAPIModules["delete"] = "WikiaApiQueryWrite";
 $wgAPIModules["delete"] = "ApiDelete";
 $wgAPIModules["wdelete"] = "WikiaApiQueryWrite";
 $wgAPIModules["featuredcontent"] = "ApiFeaturedContent";
 $wgAPIModules["partnerwikiconfig"] = "ApiPartnerWikiConfig";
 $wgAPIModules["ajaxlogin"] = "WikiaApiAjaxLogin";
 $wgAPIModules["imagethumb"] = "ApiImageThumb";
+$wgAPIModules['theschwartz'] = 'WikiaApiReportEmail';
 
 /*
  * Widget FrameWork declarations
