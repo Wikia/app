@@ -57,6 +57,8 @@ class AnswersTemplate extends MonacoTemplate {
 	 */
 	function execute() {
 		global $wgRequest, $wgUser, $wgStyleVersion, $wgStylePath, $wgTitle, $wgEnableFacebookConnect;
+		global $wgGoogleAdClient;
+
 		$this->skin = $skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
 		$answer_page = Answer::newFromTitle( $wgTitle );
@@ -347,7 +349,7 @@ yieldbuild_loc = "question_bubble";
 			if( !( $wgRequest->getVal("diff") ) && $wgUser->isAnon() ){
 				$ads = '<div id="ads-unaswered-bottom">
 				<script type="text/javascript">
-					google_ad_client    = "pub-4086838842346968";
+					google_ad_client    = "' . $wgGoogleAdClient . '";
 					google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
 					google_ad_width     = "300";
 					google_ad_height    = "250";
@@ -365,7 +367,7 @@ yieldbuild_loc = "question_bubble";
 		} else if ( $is_question && $answer_page->isArticleAnswered() ) {
 			if ( $wgUser->isAnon() ) {
 				$ads = '<script type="text/javascript">
-					google_ad_client    = "pub-4086838842346968";
+					google_ad_client    = "' . $wgGoogleAdClient . '";
 					google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
 					google_ad_width     = "468";
 					google_ad_height    = "60";
@@ -791,7 +793,7 @@ yieldbuild_loc = "right_nav_bottom";
 -->
 <?php endif; ?>
 <script>
-google_ad_client = 'pub-4086838842346968'; // substitute your client_id (pub-#)
+google_ad_client = '<?=$wgGoogleAdClient?>'; // substitute your client_id (pub-#)
 google_ad_channel = (( wgIsAnswered )?'7000000004':'7000000003');
 google_ad_output = 'js';
 google_max_num_ads = '10';
