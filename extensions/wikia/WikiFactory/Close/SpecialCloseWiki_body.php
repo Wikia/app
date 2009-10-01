@@ -28,7 +28,8 @@ class CloseWikiPage extends SpecialPage {
 		$mErrors    	= array(),
 		$mRedirects 	= array(),
 		$mRedirect		= "",
-		$mFlags 		= array();
+		$mFlags 		= array(),
+		$mUrlDump		= "http://wiki-stats.wikia.com";
 
 	/**
 	 * constructor
@@ -353,7 +354,8 @@ class CloseWikiPage extends SpecialPage {
 
 		$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"{$wgStylePath}/common/form.css?{$wgStyleVersion}\" />" );
 
-		$dbDumpUrl = sprintf("http://wikistats.wikia.com/dbdumps/%s/%s/%s/",
+		$dbDumpUrl = sprintf("%s/%s/%s/%s/",
+			$this->mUrlDump,
 			substr( $this->closedWiki->city_dbname, 0, 1),
 			substr( $this->closedWiki->city_dbname, 0, 2),
 			$this->closedWiki->city_dbname
