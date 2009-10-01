@@ -429,8 +429,30 @@ class MagCloud {
 			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'login', 'code' => $res->code);
 		}
 
+		$username   = $res->user->username;
 		$authTicket = $res->authTicket;
 
+		$res = MagCloudApi::getPublications($authTicket, $username);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'getPublications', 'code' => $res->code);
+		}
+
+		$publicationId = 0;
+
+		// FIXME test if no publication!
+		if (!empty($res->publication)) {
+			foreach ($res->publication as $r) {
+				if (MagCloudApi::PUB_NAME == "{$r->name}") {
+#print_r(array("r->name" => $r->name, "r->id" => $r->id)); echo "\n";
+					$publicationId = $r->id;
+					break;
+				}
+			}
+		}
+#print_r(array("publicationId" => $publicationId)); echo "\n";
+
+		if (empty($publicationId)) {
 
 		$res = MagCloudApi::Publication($authTicket);
 #print_r($res); echo "\n";
@@ -439,6 +461,29 @@ class MagCloud {
 		}
 
 		$publicationId = $res->id;
+
+		}
+
+		// FIXME skip this step for new publication
+		$res = MagCloudApi::getIssues($authTicket, $publicationId);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'getIssues', 'code' => $res->code);
+		}
+
+		$title_i = 0;
+		// FIXME test if no issue!
+		if (!empty($res->issue)) {
+			foreach ($res->issue as $r) {
+				if (preg_match("/^{$magazineTitle}(?: \(([0-9]+)\))?$/", "{$r->name}", $match)) {
+#print_r(array("r->name" => $r->name, "match" => $match)); echo "\n";
+					if (empty($match[1])) $match[1] = 1;
+					if ($title_i < $match[1]) $title_i = $match[1];
+				}
+			}
+		}
+
+		if (!empty($title_i)) $magazineTitle .= " (" . ++$title_i . ")";
 
 		$res = MagCloudApi::Issue($authTicket, $publicationId, $magazineTitle, $magazineSubtitle);
 #print_r($res); echo "\n";

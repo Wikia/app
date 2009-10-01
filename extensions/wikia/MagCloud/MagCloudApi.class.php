@@ -126,6 +126,38 @@ class MagCloudApi {
 		return $res;
 	}
 
+	static private function get($call, $data, $authTicket) {
+		wfDebug(__METHOD__ . " {$call}\n");
+
+		$securityHash = self::generateSecurityHash("GET", $call, $data, $authTicket);
+
+		$httpHeader = array();
+		if (!empty($securityHash)) {
+			$httpHeader[] = "X-MCSecurity: {$securityHash}";
+		}
+
+		if (!empty($authTicket)) {
+			$httpHeader[] = "X-MCAuthorization: {$authTicket}";
+		}
+
+		$c = curl_init(self::URL . $call);
+		curl_setopt($c, CURLOPT_HEADER, false);
+		curl_setopt($c, CURLOPT_HTTPHEADER, $httpHeader);
+
+		ob_start();
+		curl_exec( $c );
+		$text = ob_get_contents();
+		ob_end_clean();
+
+#echo htmlspecialchars($text); echo "\n";
+
+		curl_close($c);
+
+		$res = new SimpleXMLElement($text);
+
+		return $res;
+	}
+
 	static public function LoginAs($token) {
 		global $wgMagCloudPrivateApiKey;
 
@@ -192,6 +224,20 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 
 	static public function IssuePublish($authTicket, $issueId) {
 		$res = self::post("/1.0/Issue/{$issueId}/Publish", array(), $authTicket);
+
+		return $res;
+	}
+
+	static public function getPublications($authTicket, $username) {
+		// FIXME check and paginate if > 1000
+		$res = self::get("/1.0/User/{$username}/Publications?offset=0&pagesize=1000", array(), $authTicket);
+
+		return $res;
+	}
+
+	static public function getIssues($authTicket, $publicationId) {
+		// FIXME check and paginate if > 1000
+		$res = self::get("/1.0/Publication/{$publicationId}/Issues?offset=0&pagesize=1000", array(), $authTicket);
 
 		return $res;
 	}
