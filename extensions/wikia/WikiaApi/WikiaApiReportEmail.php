@@ -78,9 +78,6 @@ class WikiaApiReportEmail extends ApiBase {
 			if( is_null( $params[ "city_id" ] ) ) {
 				$this->dieUsageMsg( array( "missingparam", "city_id" ) );
 			}
-			if( is_null( $params[ "type_id" ] ) ) {
-				$this->dieUsageMsg( array( "missingparam", "type_id" ) );
-			}
 			if( is_null( $params[ "success" ] ) ) {
 				$this->dieUsageMsg( array( "missingparam", "success" ) );
 			}
