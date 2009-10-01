@@ -78,7 +78,7 @@ class SolrSearchSet extends SearchResultSet {
 				$params['fq'] = "(" . $params['fq'] . ") AND wid:831";
 			}
 			else {
-				$params['fq'] = "(" . $params['fq'] . ") AND wid:1657";// . $wgCityId;
+				$params['fq'] = "(" . $params['fq'] . ") AND wid:" . $wgCityId;
 			}
 			//echo "fq=" . $params['fq'] . "<br />";
 
