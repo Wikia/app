@@ -232,7 +232,7 @@ foreach my $user_name (sort keys %USERS) {
 		next unless $dbname;
 		
 		$db_ext->ping();
-		$homeCity = $dbname unless ($homeCity);
+		$homeCity = $city_id unless ($homeCity);
 
 		$db_ext->handler->ping();
 		$oConf->log("processing Wiki: ".$dbname);
@@ -280,8 +280,8 @@ foreach my $user_name (sort keys %USERS) {
 	}
 =end of main loop
 =cut
-	$USERS{$user_name}{home} = $homeCity;
-	$USERS{$user_name}{hub} = $hubs->{$databaseNames{$homeCity}};
+	$USERS{$user_name}{home} = $databases->{$homeCity};
+	$USERS{$user_name}{hub} = $hubs->{$homeCity};
 
 	my $end_sec = time();
 	my @ts = gmtime($end_sec - $start_sec);
