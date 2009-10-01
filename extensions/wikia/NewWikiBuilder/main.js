@@ -151,7 +151,7 @@ NWB.handleDescriptionForm = function (event){
 
 	     var rawtext = $("#desc_textarea").val();
 	     // Strip leading spaces and add original heading
-	     var text = NWB.originalHeading + "\n" + rawtext.replace(new RegExp("^[ ]+", "g"), "");
+	     var text = NWB.originalHeading + "\n" + rawtext.replace(new RegExp("^[ \t]+", "gm"), "");
              // Save the article
              Mediawiki.updateStatus(NWB.msg("nwb-saving-description"));
 	     Mediawiki.waiting();
