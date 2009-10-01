@@ -78,7 +78,7 @@ class SolrSearchSet extends SearchResultSet {
 				$params['fq'] = "(" . $params['fq'] . ") AND wid:831";
 			}
 			else {
-				$params['fq'] = "(" . $params['fq'] . ") AND wid:" . $wgCityId;
+				$params['fq'] = "(" . $params['fq'] . ") AND wid:1657";// . $wgCityId;
 			}
 			//echo "fq=" . $params['fq'] . "<br />";
 
@@ -317,6 +317,11 @@ class SolrResult extends SearchResult {
 
 	public function getTimestamp() {
 		return $this->mCreated;
+	}
+
+	public static function showHit($link, $redirect, $section, $extract, $data) {
+		$data = '';
+		return true;
 	}
 
 }

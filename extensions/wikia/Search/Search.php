@@ -23,6 +23,10 @@ require_once( $dir . 'SolrPhpClient/Apache/Solr/Service.php' );
 
 //$wgExtensionMessagesFiles['WikiaSearch'] = $dir . 'Search.i18n.php';
 
+// hooks
+$wgHooks['SearchShowHit'][] = 'SolrResult::showHit';
+
+// classes
 $wgAutoloadClasses['SolrSearch'] = $dir . 'Search_body.php';
 $wgAutoloadClasses['SolrResult'] = $dir . 'Search_body.php';
 $wgAutoloadClasses['SolrSearchSet'] = $dir . 'Search_body.php';
