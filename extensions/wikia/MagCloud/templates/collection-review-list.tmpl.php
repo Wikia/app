@@ -1,9 +1,9 @@
 <!-- s:<?= __FILE__ ?> -->
 <p id="MagCloudArticlesIntro"><?= wfMsgExt( 'magcloud-special-collection-review-list-info', array('parsemag'), $collection->countArticles() ) ?></p>
 
-<div id="MagCloudArticlesTips">
+<div id="MagCloudArticlesTips" class="accent">
 <?= wfMsgExt('magcloud-special-collection-review-list-tips', array('parse')) ?>
-<img src="<?= htmlspecialchars($coverExamplesSrc) ?>" alt="Cover examples" width="273" height="102" />
+<img src="<?= htmlspecialchars($coverExamplesSrc) ?>" alt="Cover examples" width="273" height="100" />
 </div>
 
 <div id="MagCloudArticlesListWrapper">
