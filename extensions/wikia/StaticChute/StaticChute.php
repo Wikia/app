@@ -18,6 +18,9 @@ class StaticChute {
 	// macbre: RT #18765
 	private $theme = false;
 
+	// RT #23935 - one value to purge'em all
+	const imagesCacheBuster = 'sf';
+
 	public function __construct($fileType){
 		// macbre: we will return HTTP 400 when file type is invalid (RT #18825)
 		if (! in_array($fileType, $this->supportedFileTypes)){
@@ -292,7 +295,7 @@ class StaticChute {
 		foreach($files as $file){
 			$data .= file_get_contents($file);
 		}
-		return md5($data);
+		return md5($data . self::imagesCacheBuster);
 	}
 
 	public function getChuteHtmlForPackage($package, $type = null){
@@ -473,8 +476,7 @@ class StaticChute {
 		require_once dirname(__FILE__) . '/Minify_CSS_Compressor.php';
 
 		// macbre: RT #11257 - add ? to images included in CSS
-		$cb = '?1';
-		$css = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1' . $cb . '\\2', $css);
+		$css = preg_replace("#\.(png|gif)([\"'\)]+)#s", '.\\1?' . self::imagesCacheBuster . '\\2', $css);
 
     		return Minify_CSS_Compressor::process($css);
 	}
