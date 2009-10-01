@@ -100,7 +100,7 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 <publication>
 <id>0</id>
 <username />
-<name>My publication " . mt_rand() . "</name>
+<name>Wikia</name>
 <subtitle>Subtitle</subtitle>
 <logoImageUrl>http://www.example.org/a.jpg</logoImageUrl>
 <category>Some category</category>
@@ -114,15 +114,15 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 		return $res;
 	}
 
-	static private function Issue($authTicket, $publicationId) {
+	static private function Issue($authTicket, $publicationId, $name, $description, $tags) {
 $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 <issue>
 <id>0</id>
 <username />
 <issueNumber>1</issueNumber>
-<description>My beautiful issue</description>
-<tags>foo, bar, baz</tags>
-<name>Buga</name>
+<description>{$description}</description>
+<tags>tag</tags>
+<name>{$name}</name>
 <issueDate>2009-08-06 00:00:00Z</issueDate>
 <publicationId>{$publicationId}</publicationId>
 <visibleToPublic>True</visibleToPublic>
@@ -133,6 +133,7 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 <imageUrlQueryParam />
 <isPublished>False</isPublished>
 </issue>";
+#echo htmlspecialchars($body); echo "\n";
 
 		$res = self::put("/1.0/Issue", $body, $authTicket);
 
@@ -147,6 +148,45 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 
 	static private function IssuePublish($authTicket, $issueId) {
 		$res = self::post("/1.0/Issue/{$issueId}/Publish", array(), $authTicket);
+
+		return $res;
+	}
+
+	static private function get($call, $data, $authTicket) {
+		$securityHash = self::generateSecurityHash("GET", $call, $data, $authTicket);
+
+		$httpHeader = array();
+		if (!empty($securityHash)) $httpHeader[] = "X-MCSecurity: {$securityHash}";
+		if (!empty($authTicket))   $httpHeader[] = "X-MCAuthorization: {$authTicket}";
+
+		$c = curl_init(self::URL . $call);
+		curl_setopt($c, CURLOPT_HEADER, false);
+		curl_setopt($c, CURLOPT_HTTPHEADER, $httpHeader);
+
+		ob_start();
+		curl_exec( $c );
+		$text = ob_get_contents();
+		ob_end_clean();
+
+#echo htmlspecialchars($text); echo "\n";
+
+		curl_close($c);
+
+		$res = new SimpleXMLElement($text);
+
+		return $res;
+	}
+
+	static private function getPublications($authTicket, $username) {
+		// FIXME check and paginate if > 1000
+		$res = self::get("/1.0/User/{$username}/Publications?offset=0&pagesize=1000", array(), $authTicket);
+
+		return $res;
+	}
+
+	static private function getIssues($authTicket, $publicationId) {
+		// FIXME check and paginate if > 1000
+		$res = self::get("/1.0/Publication/{$publicationId}/Issues?offset=0&pagesize=1000", array(), $authTicket);
 
 		return $res;
 	}
@@ -170,15 +210,58 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 #print_r($res); echo "\n";
 if (!empty($res->code)) return "error {$res->code}: {$res->message}.";
 
+$username   = $res->user->username;
 $authTicket = $res->authTicket;
 
+		$res = self::getPublications($authTicket, $username);
+#print_r($res); echo "\n";
+if (!empty($res->code)) return "error {$res->code}: {$res->message}.";
+
+$publicationId = 0;
+// FIXME test if no publication!
+if (!empty($res->publication)) {
+	foreach ($res->publication as $r) {
+		if ("Wikia" == "{$r->name}") {
+#print_r(array("r->name" => $r->name, "r->id" => $r->id)); echo "\n";
+			$publicationId = $r->id;
+			break;
+		}
+	}
+}
+#print_r(array("publicationId" => $publicationId)); echo "\n";
+
+if (empty($publicationId)) {
 		$res = self::Publication($authTicket);
 #print_r($res); echo "\n";
 if (!empty($res->code)) return "error {$res->code}: {$res->message}.";
 
 $publicationId = $res->id;
+}
 
-		$res = self::Issue($authTicket, $publicationId);
+$magazineTitle = "magazine title";
+$magazineSubtitle = "magazine subtitle";
+$tags = array("a", "b", "wikia:hub=Entertainment", "wikia:wiki=Futurama Wiki", "c", "d");
+
+// FIXME skip this step for new publication
+		$res = self::getIssues($authTicket, $publicationId);
+#print_r($res); echo "\n";
+if (!empty($res->code)) return "error {$res->code}: {$res->message}.";
+
+$title_i = 0;
+// FIXME test if no issue!
+if (!empty($res->issue)) {
+	foreach ($res->issue as $r) {
+		if (preg_match("/^{$magazineTitle}(?: \(([0-9]+)\))?$/", "{$r->name}", $match)) {
+#print_r(array("r->name" => $r->name, "match" => $match)); echo "\n";
+			if (empty($match[1])) $match[1] = 1;
+			if ($title_i < $match[1]) $title_i = $match[1];
+		}
+	}
+}
+
+if (!empty($title_i)) $magazineTitle .= " (" . ++$title_i . ")";
+
+		$res = self::Issue($authTicket, $publicationId, $magazineTitle, $magazineSubtitle, join(",", $tags));
 #print_r($res); echo "\n";
 if (!empty($res->code)) return "error {$res->code}: {$res->message}.";
 
