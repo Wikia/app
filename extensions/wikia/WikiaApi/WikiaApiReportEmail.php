@@ -32,6 +32,34 @@ CREATE TABLE `email_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
+INSERT INTO email_types VALUES( 0, 'unknown' );
+INSERT INTO email_types VALUES( 1, 'AutoCreateWiki' );
+INSERT INTO email_types VALUES( 2, 'BoardNotificationEmail' );
+INSERT INTO email_types VALUES( 3, 'ConfirmAccount' );
+INSERT INTO email_types VALUES( 4, 'ConfirmationMail' );
+INSERT INTO email_types VALUES( 5, 'EmailUser' );
+INSERT INTO email_types VALUES( 6, 'GenericEditPage' );
+INSERT INTO email_types VALUES( 7, 'GiftNotificationEmail' );
+INSERT INTO email_types VALUES( 8, 'GlobalWatchlist' );
+INSERT INTO email_types VALUES( 9, 'InviteContacts' );
+INSERT INTO email_types VALUES( 10, 'LinkEx' );
+INSERT INTO email_types VALUES( 11, 'NewUserNotification' );
+INSERT INTO email_types VALUES( 12, 'NssMySQLAuth' );
+INSERT INTO email_types VALUES( 13, 'Poke' );
+INSERT INTO email_types VALUES( 14, 'ProblemReport' );
+INSERT INTO email_types VALUES( 15, 'ReConfirmationMail' );
+INSERT INTO email_types VALUES( 16, 'RelationshipAcceptEmail' );
+INSERT INTO email_types VALUES( 17, 'RelationshipRemoveEmail' );
+INSERT INTO email_types VALUES( 18, 'RelationshipRequestEmail' );
+INSERT INTO email_types VALUES( 19, 'SendToAFriend' );
+INSERT INTO email_types VALUES( 20, 'SpecialContact' );
+INSERT INTO email_types VALUES( 21, 'TemporaryPassword' );
+INSERT INTO email_types VALUES( 22, 'TodoTask' );
+INSERT INTO email_types VALUES( 23, 'UserMailer' );
+INSERT INTO email_types VALUES( 24, 'UserRightsNotification' );
+INSERT INTO email_types VALUES( 25, 'UserSystemMessages' );
+INSERT INTO email_types VALUES( 26, 'Watchlist' );
+
 **/
 
 class WikiaApiReportEmail extends ApiBase {
