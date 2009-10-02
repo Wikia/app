@@ -30,6 +30,10 @@ class Wikia {
 		return isset(Wikia::$vars[$key]);
 	}
 
+	public static function unsetVar($key) {
+		unset(Wikia::$vars[$key]);
+	}
+
 	/**
 	 * @author inez@wikia.com
 	 */
