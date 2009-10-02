@@ -119,8 +119,10 @@ class BlogLockdown {
 					$return = false;
 				}
 				else {
-					if( $username != $owner ) $result = array();
-					$return = ( $username == $owner );
+					if ( isset($owner) && ($username != $owner) ) {
+						$result = array();
+					}
+					$return = ( isset($owner) && ($username == $owner) );
 				}
 		}
 		Wikia::log( __METHOD__, $action, "result: {$result}; return: {$return}");
