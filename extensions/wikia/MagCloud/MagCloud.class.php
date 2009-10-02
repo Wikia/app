@@ -545,7 +545,7 @@ class MagCloud {
 			'beach' => array('3e2a18', 'b0d9f3', '42779e'),
 			'stark' => array('555', 'fff', 'b41212'),
 			'buzzbee' => array('fff', 'f3f3f3', '000'),
-			'royal' => array('3a5a49', 'f3eeba', 'a7139a'),
+			'austin' => array('758c51', 'fff', '555931'),
 		);
 	}
 

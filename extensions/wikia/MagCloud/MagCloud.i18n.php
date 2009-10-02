@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'magcloud-intro-get-started' => 'Get started',
+	'magcloud-intro-get-started' => 'Collect articles',
 	'magcloud-intro-create-magazine' => 'Create a magazine from articles on this Wiki',
 	'magcloud-intro-check-out' => 'Check out what\'s already been created by our community:',
 	'magcloud-intro-hint' => 'Just use the toolbar above to select the articles you\'d like to compile into your magazine, and then click "Go to your magazine" when done!',
