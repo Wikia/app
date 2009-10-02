@@ -149,6 +149,11 @@ class ReverseParser {
 			));
 		}
 
+		// RT #22487
+		if ($out == "\n") {
+			$out = '';
+		}
+
 		wfProfileOut(__METHOD__);
 		return $out;
 	}
