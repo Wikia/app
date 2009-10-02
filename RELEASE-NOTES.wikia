@@ -1,4 +1,5 @@
 == Changes since 200909.5 ==
+* rt#23795: Images disappear when saving or moving to source mode (Macbre)
 * rt#23730: Community widget: Link Clean-up (Macbre)
 * rt#22966, rt#23278: Google ads id as a variable. (Nef)
 * rt#22290: answers: wikipedia re-search bar: quotes are not escaped (Macbre)
