@@ -12,7 +12,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgHooks[ "ArticleFromTitle" ][] = "BlogArticle::ArticleFromTitle";
-$wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogArticle::getOtherSection";
+$wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogArticle::getOtherSecetion";
 $wgHooks[ "CategoryViewer::addPage" ][] = "BlogArticle::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogArticle::skinTemplateTabs";
 $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogArticle::editPageCheckboxes";
@@ -260,14 +260,9 @@ class BlogArticle extends Article {
 			if( $redirect != "no" ) {
 				$text = $wgTitle->getText();
 				list( $user, $title, $anchor ) = BlogComment::explode( $text );
-				error_log ("\n\n\nuser: " . $user);
-				error_log ("\n\n\ntitle: " . $title);
-				error_log ("\n\n\nanchor: " . $anchor. "\n");
 				$redirect = Title::newFromText( "{$user}/{$title}", NS_BLOG_ARTICLE );
 				if( $title ) {
 					$url = $redirect->getFullUrl();
-					error_log ("\n\n\ntitle: " . $Title->getText());
-					error_log ("url: " . $url."\n\n\n");
 					$wgOut->redirect( "{$url}#{$anchor}" );
 				}
 			}
