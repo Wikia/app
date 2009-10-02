@@ -1,4 +1,5 @@
 == Changes since 200909.5 ==
+* rt#23730: Community widget: Link Clean-up (Macbre)
 * rt#22966, rt#23278: Google ads id as a variable. (Nef)
 * rt#22290: answers: wikipedia re-search bar: quotes are not escaped (Macbre)
 * rt#23935: Share feature icon sometimes displays wrong icon (Macbre)
