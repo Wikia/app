@@ -64,6 +64,7 @@ INSERT INTO email_types VALUES( 26, 'Watchlist' );
 
 class WikiaApiReportEmail extends ApiBase {
 
+
 	/**
 	 * constructor
 	 */
@@ -97,8 +98,8 @@ class WikiaApiReportEmail extends ApiBase {
 			if( is_null( $params[ "to" ] ) ) {
 				$this->dieUsageMsg( array( "missingparam", "to" ) );
 			}
-			if( is_null( $params[ "type_id" ] ) ) {
-				$this->dieUsageMsg( array( "missingparam", "type_id" ) );
+			if( is_null( $params[ "type" ] ) ) {
+				$this->dieUsageMsg( array( "missingparam", "type" ) );
 			}
 			if( is_null( $params[ "user_id" ] ) ) {
 				$this->dieUsageMsg( array( "missingparam", "user_id" ) );
@@ -113,9 +114,13 @@ class WikiaApiReportEmail extends ApiBase {
 				$this->dieUsageMsg( array( "missingparam", "timestamp" ) );
 			}
 
+			wfProfileIn( __METHOD__ );
+			$types  = $this->getEmailTypes();
 			$date   = date( "Y-m-d H:i:s", $params[ "timestamp" ] );
 			$reason = is_null( $params[ "reason" ] ) ? "" : $params[ "reason" ];
-			$type   = ( $params[ "type_id" ] > 1 ) ? 0 : $params[ "type_id" ];
+			$type   = isset( $types[ $params[ "type" ] ] )
+				? $types[ $params[ "type" ] ]
+				: 0;
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			$sth = $dbw->insert(
@@ -132,12 +137,50 @@ class WikiaApiReportEmail extends ApiBase {
 				)
 			);
 			$result = ( $sth ) ? array( "status" => 1 ) : array( "status" => 0 );
+			wfProfileOut( __METHOD__ );
 		}
 		else {
 			$this->dieUsageMsg( array( "sessionfailure" ) );
 		}
 		$this->getResult()->setIndexedTagName($result, 'page');
 		$this->getResult()->addValue(null, $this->getModuleName(), $result );
+	}
+
+	/**
+	 * get email types from database or cache
+	 *
+	 * @access private
+	 *
+	 * @return array
+	 */
+	private function getEmailTypes() {
+		global $wgMemc, $wgExternalDatawareDB;
+
+		wfProfileIn( __METHOD__ );
+		/**
+		 * first from cache
+		 */
+		$emailTypes = $wgMemc->get( wfSharedMemcKey( "apireportemail", "types" ) );
+		if( !is_array( $emailTypes ) || !count( $emailTypes ) ) {
+			/**
+			 * if not then from database
+			 */
+			$emailTypes = array();
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+			$sth = $dbr->select(
+				array( "email_types" ),
+				array( "*" ),
+				null,
+				__METHOD__
+			);
+			while( $row = $dbr->fetchObject( $sth ) ) {
+				$emailTypes[ $row->type ] = $row->id;
+			}
+			$wgMemc->set( wfSharedMemcKey( "apireportemail", "types" ), $emailTypes, 3600 );
+		}
+		wfProfileOut( __METHOD__ );
+
+		return $emailTypes;
 	}
 
 	public function getVersion() {
@@ -159,14 +202,15 @@ class WikiaApiReportEmail extends ApiBase {
 	 * @access public
 	 */
 	public function getAllowedParams() {
+		$types  = $this->getEmailTypes();
 		return array(
-			"from"      => array(),
-			"to"        => array(),
-			"token"     => array(),
+			"to"        => array( ),
+			"from"      => array( ),
+			"type"      => array( APIBASE::PARAM_TYPE => array_keys( $types ) ),
+			"token"     => array( ),
 			"success"   => array( APIBASE::PARAM_TYPE => array( 0, 1 ) ),
 			"city_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
 			"user_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
-			"type_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
 			"reason"    => array( ),
 			"timestamp" => array( ),
 		);
@@ -179,11 +223,11 @@ class WikiaApiReportEmail extends ApiBase {
 	 */
 	public function getParamDescription() {
 		return array(
-			"from"      => "From: email address",
 			"to"        => "To: email address",
+			"from"      => "From: email address",
+			"type"      => "Type of email",
 			"user_id"   => "user_id from user table",
 			"city_id"   => "city_id from city_list table",
-			"type_id"   => "Type of email e.g. watchlist",
 			"success"   => "Operation succeded or not",
 			"token"     => "Secret token",
 			"reason"    => "Tells reason whe operation was not succeded",
