@@ -394,7 +394,7 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 	
 	$blogNamespaces = "";
 	if ( defined('NS_BLOG_ARTICLE') ) {
-		$blogNamespaces = implode(",", array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK));
+		$blogNamespaces = "," . implode(",", array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK));
 	}
 
 	$sql = "SELECT '{$type}' AS type, pl_namespace AS namespace, pl_title AS title, COUNT(*) AS value 
@@ -402,7 +402,7 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 	LEFT JOIN page AS pg1 ON pl_namespace = pg1.page_namespace AND pl_title = pg1.page_title 
 	LEFT JOIN page AS pg2 ON pl_from = pg2.page_id 
 	WHERE pg1.page_namespace IS NULL 
-	AND pl_namespace NOT IN ( 2, 3 {$blog_namespaces}) 
+	AND pl_namespace NOT IN ( 2, 3 {$blogNamespaces}) 
 	AND pg2.page_namespace != 8 
 	AND ( pl_namespace != 12 {$notInHelpPages} ) 
 	{$page->excludetitles} 
