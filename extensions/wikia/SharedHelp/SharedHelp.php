@@ -391,13 +391,18 @@ function SharedHelpWantedPagesSql( $page, $sql ) {
 	$notInHelpPages = ""; if ( !empty($helpPages) ) {
 		$notInHelpPages = " OR pl_title NOT IN (" . $helpPages . ") ";
 	}
+	
+	$blogNamespaces = "";
+	if ( defined('NS_BLOG_ARTICLE') ) {
+		$blogNamespaces = implode(",", array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK));
+	}
 
 	$sql = "SELECT '{$type}' AS type, pl_namespace AS namespace, pl_title AS title, COUNT(*) AS value 
 	FROM pagelinks
 	LEFT JOIN page AS pg1 ON pl_namespace = pg1.page_namespace AND pl_title = pg1.page_title 
 	LEFT JOIN page AS pg2 ON pl_from = pg2.page_id 
 	WHERE pg1.page_namespace IS NULL 
-	AND pl_namespace NOT IN ( 2, 3 ) 
+	AND pl_namespace NOT IN ( 2, 3 {$blog_namespaces}) 
 	AND pg2.page_namespace != 8 
 	AND ( pl_namespace != 12 {$notInHelpPages} ) 
 	{$page->excludetitles} 
