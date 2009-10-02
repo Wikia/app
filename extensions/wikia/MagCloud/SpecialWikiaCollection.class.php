@@ -264,7 +264,7 @@ class WikiaCollection extends SpecialPage {
 		}
 
 		$wgOut->addHTML("<div style=\"page-break-before: always\">");
-		$wgOut->addHTML("<img src=\"http://images.wikia.com/common/skins/monaco/images/wikia_logo.png?1\" width=\"397\" height=\"100\"/>");
+		$wgOut->addHTML("<img src=\"http://images.wikia.com/central/images/1/1e/Official_wikia_logo.png\" width=\"400\" height=\"101\" style=\"margin: 250px 0 0 125px\" />");
 		$wgOut->addHTML("</div>");
 
 		$wgOut->addHTML("</div>\n");
