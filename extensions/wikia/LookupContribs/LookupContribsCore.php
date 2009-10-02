@@ -11,7 +11,7 @@ global $wgHooks;
 if (!LOOKUPCONTRIBS_NO_CACHE) {
 	$wgHooks['ArticleSaveComplete'][] = 'wfLookupContribsUnsetKey';
 }
-
+$wgHooks['ContributionsToolLinks'][] = 'wfLoadLookupContribsLink';
 /*
  * basically just delete the MemCache keys
  *
@@ -28,4 +28,15 @@ function wfLookupContribsUnsetKey ($article, $user) {
 	return true ;
 }
 
-?>
+function wfLoadLookupContribsLink( $id, $nt, &$links ) {
+	global $wgUser;
+	if( $id != 0 && $wgUser->isAllowed( 'lookupcontribs' ) ) {
+		wfLoadExtensionMessages( 'SpecialLookupContribs' );
+		$attribs = array(
+			'href' => 'http://www.wikia.com/wiki/Special:LookupContribs?target=' . urlencode( $nt->getText() ),
+			'title' => wfMsg('right-lookupcontribs')
+		);
+		$links[] = Xml::openElement( 'a', $attribs ) . wfMsg( 'lookupcontribs' ) . Xml::closeElement( 'a' );
+	}
+	return true;
+}
