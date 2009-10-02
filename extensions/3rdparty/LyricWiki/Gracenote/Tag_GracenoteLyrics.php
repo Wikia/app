@@ -91,7 +91,9 @@
 # This section has no configuration, and can be ignored.
 #
 
-include_once $IP . "/extensions/3rdparty/LyricWiki/extras.php";
+# uncomment for local testing
+#include( 'extras.php' );
+include_once "$IP/extensions/3rdparty/LyricWiki/extras.php";
 include_once 'Gracenote.php';
 
 ################################################################################
@@ -174,8 +176,8 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
   $ringtoneLink = "";
   // NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
   // If a user has ringtone-ads turned off, their CSS will make the ad invisible.
-  if($wgFirstLyricTag){
-	GLOBAL $wgTitle, $wgUploadPath;
+  if($wgFirstLyricTag){ 
+	GLOBAL $wgTitle;
 	$artist = $wgTitle->getDBkey();
 	$colonIndex = strpos("$artist", ":");
 	$songTitle = $wgTitle->getText();
@@ -184,16 +186,16 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	if($colonIndex !== false){
 		$artist = substr($artist, 0, $colonIndex);
 		$songTitle = substr($songTitle, $colonIndex+1);
-
+		
 		$artistLink = str_replace(" ", "+", $artist);
 		$songLink = str_replace(" ", "+", $songTitle);
 	}
 	$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' target='_blank'>";
 	$ringtoneLink = "";
 	$ringtoneLink = "<div class='rtMatcher'>";
-	$ringtoneLink.= "$href<img src='$wgUploadPath/phone_left.gif' alt='phone' width='16' height='17'/></a> ";
+	$ringtoneLink.= "$href<img src='/phone_left.gif' alt='phone' width='16' height='17'/></a> ";
 	$ringtoneLink.= $href."Send \"$songTitle\" Ringtone to your Cell</a>";
-	$ringtoneLink.= " $href<img src='$wgUploadPath/phone_right.gif' alt='phone' width='16' height='17'/></a>";
+	$ringtoneLink.= " $href<img src='/phone_right.gif' alt='phone' width='16' height='17'/></a>";
 	$ringtoneLink.= "</div>";
 	$wgFirstLyricTag = false;
   }
@@ -203,8 +205,8 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 
 	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
 
+	$retVal.= "<noscript>You must enable javascript to view this page.</noscript>\n";
 	$retVal.= "<div class='lyricbox' >".gracenote_obfuscateText($transform)."</div>";
-	$retVal.= "<div class='print-disabled-notice'><br/><br/>Unfortunately, the licenses with music publishers require that we disable printing of lyrics.  We're sorry for the inconvenience.<br/><br/></div>";
 	$retVal.= gracenote_getPrintDisabledNotice();
 	$retVal.= "\n$ringtoneLink";
 

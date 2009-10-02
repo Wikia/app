@@ -8,15 +8,12 @@
 ////
 
 
-//		TODO: MOVE THESE TO LocalSettings.php (can change the numeric values as needed).
 define('NS_GRACENOTE', 220);
 define('NS_GRACENOTE_TALK', 221);
 $wgExtraNamespaces[NS_GRACENOTE] = "Gracenote";
 $wgExtraNamespaces[NS_GRACENOTE_TALK] = "Gracenote_talk";
 $wgGroupPermissions['*']['editgracenote'] = false;
 $wgGroupPermissions['staff']['editgracenote'] = true;
-//		TODO: MOVE THESE TO LocalSettings.php (can change the numeric values as needed).
-
 
 
 
@@ -25,7 +22,7 @@ $wgGroupPermissions['staff']['editgracenote'] = true;
 define('GRACENOTE_VIEW_GRACENOTE_LYRICS', 'ViewGracenote');
 define('GRACENOTE_VIEW_OTHER_LYRICS', 'ViewOther');
 
-define('GOOGLE_ANALYTICS_ID', "UA-288915-1"); // Wikia's GA id.
+define('GOOGLE_ANALYTICS_ID', "UA-10496195-1"); // lyrics.wikia.com ID
 
 ////
 // Returns HTML which outputs the required branding for Gracenote.
@@ -35,7 +32,7 @@ define('GOOGLE_ANALYTICS_ID', "UA-288915-1"); // Wikia's GA id.
 function gracenote_getBrandingHtml(){
 	return "<div id='gracenote-branding'>".
 			"<img src='http://images1.wikia.nocookie.net/lyricwiki/images/6/66/Logo-gracenote.gif' border='0'/><br/>".
-			"Lyrics Provided by Gracenote</div>\n";
+			"Lyrics Provided by Gracenote (<a href='http://lyrics.wikia.com/Gracenote:EULA' rel='nofollow'>Lyrics Terms of Use</a>)</div>\n";
 } // end gracenote_getBrandingHtml()
 
 ////
@@ -136,6 +133,9 @@ function gracenote_disableEdit(&$out, &$sk){
 // copy-protection requirements of the Gracenote integration.
 ////
 function gracenote_installCopyProtection(&$out, &$sk){
+#	Uncomment this for local testing -- Wikia already loads jquery
+#	$out->addScript("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js\"></script>");
+	
 	// Disable text-selection in the lyricsbox divs (this only needs to be done once between both the lyrics and gracenotelyrics extensions.
 	$DISABLE_TEXT_SELECTION_FUNCTIONS = "
 		function preventHighlighting(element){
@@ -174,27 +174,60 @@ function gracenote_installCopyProtection(&$out, &$sk){
 		}
 		function do_err(){return true}
 	";
-	$DISABLE_CLIPBOARD_CODE ="
+	$DISABLE_CLIPBOARD_CODE = "
 		if($.browser.msie && $.browser.version==\"6.0\"){onerror=do_err;}
 		no_cp();
 	";
 
+	$DISABLE_RIGHT_CLICK_CODE = "$('body').bind('contextmenu', function(e) {return false;});";
+
+	// Disables text-selection in the text-area on the 'edit' page (which will only show up in normal namespaces anyway).
+	// We only want to do this for lyrics pages, so we first determine the page-type.
+	$DISABLE_TEXT_SELECTION_IN_EDIT_BOX_CODE = "
+		var ns = wgNamespaceNumber;
+		if(wgNamespaceNumber == 0){
+			var ALBUM_NS = -1;
+			var ARTIST_NS = -2;
+			var MAIN_PAGE_NS = -3;
+			if(wgPageName.match(/^.*?\([0-9]{4}\)$/)){
+				ns = ALBUM_NS;
+			} else if(wgPageName == \"Main_Page\"){
+				ns = MAIN_PAGE_NS;
+			} else if(wgPageName.indexOf(':') == -1){
+				ns = ARTIST_NS;
+			} else {
+				$('#wpTextbox1').select(function(event){
+					event.preventDefault();
+					//alert($('#gnCopySelectNotice').size());
+					if($('#gnCopySelectNotice').size() == 0){
+						var noticeDiv = \"<div id='gnCopySelectNotice'>We're sorry, but as part of licensing restrictions text-selection of this box has been disabled on lyrics pages.</div>\";
+						$('#wpTextbox1').before(noticeDiv);
+					}
+					$('#gnCopySelectNotice').show()//.fadeOut(5000);
+
+					// Remove and re-add the text to unselect.
+					var backup = $('#wpTextbox1').get(0).value;
+					$('#wpTextbox1').get(0).value = '';
+					$('#wpTextbox1').get(0).value = backup;
+				});
+			}
+		}
+	";
+
+	// TODO: If acceptable, make the DISABLE_RIGHT_CLICK_CODE and DISABLE_SELECT_ALL only apply to Gracenote pages and lyrics pages (what is the Gracenote namespace number?).
+	
 	// Add the various chunks of javascript that need to be run after the page is loaded.
 	$out->addScript("<script type=\"text/javascript\">
 		$(document).ready(function() {
 			$DISABLE_CLIPBOARD_FUNCTIONS
 			$DISABLE_TEXT_SELECTION_FUNCTIONS
-		
-			var titleElement = document.getElementsByTagName('title')[0];
-			if(titleElement){
-				jsGoogleLabel = titleElement.innerHTML;
-				var gnPrefix  = \"Gracenote:\";
-				if(jsGoogleLabel.substring(0, gnPrefix.length) == gnPrefix){
-					$DISABLE_CLIPBOARD_CODE
-					$DISABLE_SELECT_ALL
-					$DISABLE_TEXT_SELECTION_CODE
-				}
-			}
+
+			$DISABLE_CLIPBOARD_CODE
+			$DISABLE_TEXT_SELECTION_CODE
+			$DISABLE_SELECT_ALL
+			$DISABLE_RIGHT_CLICK_CODE
+			
+			$('#lyricbox').show();
 		});
 	</script>");
 
