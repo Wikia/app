@@ -141,12 +141,9 @@ td.myhome-feed-details-label {
 	text-align: center;
 }
 .myhome-feed-more a {
+	cursor: pointer;
 	display: block;
 	padding: 5px 0;
-}
-
-.myhome-feed-more a {
-	cursor: pointer;
 }
 
 .myhome-feed-loading .myhome-feed-more {
