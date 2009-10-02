@@ -40,7 +40,7 @@ var AjaxLogin = {
 		// Let's block login form (disable buttons and input boxes)
 		AjaxLogin.blockLoginForm(true);
 
-		$.getJSON(window.wgScriptPath + '/api.php?' + params.join('&'), AjaxLogin.handleSuccess);
+		$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), AjaxLogin.handleSuccess);
 	},
 	handleSuccess: function(response) {
 		var responseResult = response.ajaxlogin.result;
