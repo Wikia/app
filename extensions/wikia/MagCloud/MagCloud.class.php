@@ -307,8 +307,9 @@ class MagCloud {
 		if(!file_exists($pdf)) {
 			$add = 0;
 			$iteration = 3; // prevent infinite loop
+			global $wgSitename;
 			do {
-				$cmd = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --header-line --header-center \"a Wikia magazine\" --footer-line --footer-center \"- [page] -\" --margin-bottom 20mm --margin-left 20mm --margin-right 20mm --margin-top 20mm --cover \"{$url}?action=getCover&hash={$hash}\" \"{$url}?action=getBody&add={$add}&hash={$hash}\" {$pdf}";
+				$cmd = "/opt/wikia/bin/wkhtmltopdf --page-size Letter --header-line --header-center \"{$wgSitename}, from Wikia\" --footer-line --footer-center \"- [page] -\" --margin-bottom 20mm --margin-left 20mm --margin-right 20mm --margin-top 20mm --cover \"{$url}?action=getCover&hash={$hash}\" \"{$url}?action=getBody&add={$add}&hash={$hash}\" {$pdf}";
 				//$cmd = "/users/ADi/wkhtmltopdf --page-size Letter --footer-left \"{$debug}\" --cover \"{$url}?action=getCover&hash={$hash}\" \"{$url}?action=getBody&add={$add}&hash={$hash}\" {$wgUploadDirectory}/lolek/{$fname}";
 				//echo $cmd;
 
