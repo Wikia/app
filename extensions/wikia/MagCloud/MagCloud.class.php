@@ -506,7 +506,7 @@ class MagCloud {
 		do {
 			sleep(3);
 
-			$res = self::UploadStatus($authTicket, $uploadJobId);
+			$res = MagCloudApi::UploadStatus($authTicket, $uploadJobId);
 #print_r($res); echo "\n";
 			if (!empty($res->code)) {
 				return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'UploadStatus', 'code' => $res->code);
