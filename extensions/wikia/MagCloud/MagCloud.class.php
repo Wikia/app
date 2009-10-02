@@ -500,6 +500,24 @@ class MagCloud {
 			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'issueUpload', 'code' => $res->code);
 		}
 
+		$uploadJobId = $res->uploadJobId;
+
+		$iteration = 20; // prevent infinite loop
+		do {
+			sleep(3);
+
+			$res = self::UploadStatus($authTicket, $uploadJobId);
+#print_r($res); echo "\n";
+			if (!empty($res->code)) {
+				return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'UploadStatus', 'code' => $res->code);
+			}
+
+			$processingFinished = ("{$res->processingFinished}" == "True") ? true : false;
+		} while (--$iteration && !$processingFinished);
+
+		if (!$processingFinished) {
+			return array("msg" => "Remote backend processing not finished in allotted time.");
+		}
 
 		$res = MagCloudApi::IssuePublish($authTicket, $issueId);
 #print_r($res); echo "\n";

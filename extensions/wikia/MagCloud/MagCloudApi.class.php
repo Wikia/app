@@ -241,4 +241,10 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 
 		return $res;
 	}
+
+	static public function UploadStatus($authTicket, $uploadJobId) {
+		$res = self::get("/1.0/UploadStatus/{$uploadJobId}", array(), $authTicket);
+
+		return $res;
+	}
 }
