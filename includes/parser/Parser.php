@@ -648,14 +648,14 @@ class Parser
 		$this->mStripState->general->setPair( $rnd, $text );
 		return $rnd;
 	}
-	
+
 	/**
 	 * Interface with html tidy
 	 * @deprecated Use MWTidy::tidy()
 	 */
 	public static function tidy( $text ) {
 		wfDeprecated( __METHOD__ );
-		return MWTidy::tidy( $text );	
+		return MWTidy::tidy( $text );
 	}
 
 	/**
@@ -1498,6 +1498,15 @@ class Parser
 				if( strpos( $entry, '#' ) === 0 || $entry === '' )
 					continue;
 				if( preg_match( '/' . str_replace( '/', '\\/', $entry ) . '/i', $url ) ) {
+					/* Wikia change begin - @author: Marooned */
+					/* Wysiwyg: mark element and add metadata to wysiwyg array */
+					global $wgWysiwygParserEnabled;
+					if (!empty($wgWysiwygParserEnabled)) {
+						// RT #18490, RT #23795
+						Wysiwyg_SetRefId('image: whitelisted', array('text' => &$url));
+					}
+					/* Wikia change end */
+
 					# Image matches a whitelist entry
 					$text = $sk->makeExternalImage( $url );
 					break;
@@ -5301,7 +5310,7 @@ class Parser
 			$links['interwiki'][] = $this->mLinkHolders->interwiki[$key];
 			$pos = $start_pos + strlen( "<!--IWLINK $key-->" );
 		}
-		
+
 		$data['linkholder'] = $links;
 
 		return $data;
@@ -5310,7 +5319,7 @@ class Parser
 	function unserialiseHalfParsedText( $data, $intPrefix = null /* Unique identifying prefix */ ) {
 		if (!$intPrefix)
 			$intPrefix = $this->getRandomString();
-		
+
 		// First, extract the strip state.
 		$stripState = $data['stripstate'];
 		$this->mStripState->general->merge( $stripState->general );
