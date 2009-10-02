@@ -272,7 +272,8 @@ class BlogComment {
 					"canToggle" => $this->canToggle(),
 					"canDelete" => $canDelete,
 					"canEdit"	=> $this->canEdit(),
-					"showHistory" => 0
+					"sk"		=> $wgUser->getSkin(),
+					"showHistory" => 1
 				)
 			);
 			$text = $template->render( "comment" );
