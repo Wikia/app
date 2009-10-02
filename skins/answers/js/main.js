@@ -57,9 +57,10 @@ jQuery("#answers_ask_field").ready(function() {
 });
 
 jQuery("#header_menu_user").ready(function() {
-	jQuery("#header_button_user").bind("click", function() {
+	jQuery("#header_button_user").bind("click", function() {		
 		jQuery("#header_menu_user").slideDown("fast");
 		alignCenter('header_menu_user', 'header_button_user');
+		WET.byStr( 'userMenu/more' );
 		return false;
 	});
 });
