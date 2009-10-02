@@ -281,7 +281,7 @@ class SolrResult extends SearchResult {
 
 	public function setHighlightTitle($title) {
 		if($this->mHighlightTitle == null) {
-			$this->mHighlightTitle = htmlspecialchars_decode($title);
+			$this->mHighlightTitle = str_replace('_', ' ', htmlspecialchars_decode($title));
 		}
 	}
 
