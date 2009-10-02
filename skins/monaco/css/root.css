@@ -3,8 +3,11 @@ body {
 	font-size: 10pt;
 	margin: 0;
 }
-.color1, .color1 a, .yui-panel .hd {
+.color1, .yui-panel .hd {
 	background-color: #36C;
+	color: white;
+}
+.color1 a {
 	color: white;
 }
 .color2 {
