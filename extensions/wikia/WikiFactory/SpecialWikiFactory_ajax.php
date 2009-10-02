@@ -28,7 +28,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  * @return HTML code with variable data
  */
 function axWFactoryGetVariable() {
-	global $wgRequest, $wgUser;
+	global $wgRequest, $wgUser, $wgOut;
 
 	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
 		$wgOut->readOnlyPage(); #--- later change to something reasonable
@@ -53,7 +53,7 @@ function axWFactoryGetVariable() {
 }
 
 function axWFactoryDomainCRUD($type="add") {
-    global $wgRequest, $wgUser, $wgExternalSharedDB;
+    global $wgRequest, $wgUser, $wgExternalSharedDB, $wgOut;
     $sDomain = $wgRequest->getVal("domain");
     $city_id = $wgRequest->getVal("cityid");
 
