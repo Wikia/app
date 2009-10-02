@@ -1243,7 +1243,7 @@ class WikiFactory {
 	 *
 	 * @return string: HTML form
 	 */
-	static public function setPublicStatus( $city_public, $city_id ) {
+	static public function setPublicStatus( $city_public, $city_id, $reason = "" ) {
 
 		if( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
@@ -1254,10 +1254,15 @@ class WikiFactory {
 
 		wfRunHooks( 'WikiFactoryPublicStatusChange', array( &$city_public, &$city_id ) );
 
+		$update = array( "city_public" => $city_public );
+		if ( !empty($reason) ) {
+			$update["city_additional"] = $reason;
+		}
+
 		$dbw = self::db( DB_MASTER );
 		$dbw->update(
 			"city_list",
-			array( "city_public" => $city_public ),
+			$update,
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);

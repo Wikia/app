@@ -111,4 +111,5 @@ $messages["en"] = array(
 	"closed-redirect-url" => "Redirect the URL",
 	"closed-confirm-btn" => "Confirm close",
 	"closed-redirect-alert" => "Please put new URL of redirect!",
+	"closed-reason" => "Reason:",
 );
