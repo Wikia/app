@@ -68,8 +68,7 @@ class MyHomeTest extends PHPUnit_Framework_TestCase {
 	function testEditFromViewMode() {
 		Wikia::setVar('EditFromViewMode', true);
 
-		$edit = array(
-		);
+		$edit = array();
 
 		$out = array(
 			'viewMode' => 1,
