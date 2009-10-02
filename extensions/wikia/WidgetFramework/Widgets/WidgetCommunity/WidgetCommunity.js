@@ -4,7 +4,7 @@ function WidgetCommunity_init(id, widget) {
 	if (wgUserName) {
 		$('#widget_' + id + '-my-menu').children('a').each( function(n) {
 			$(this).click( function(e) {
-				url = (['MyPage', 'MyTalk', 'Widgets'])[n];
+				url = (['MyHome'])[n];
 				WET.byStr('widget/WidgetCommunity/' + url);
 			});
 		});
