@@ -271,7 +271,8 @@ class BlogComment {
 					"comment" 	=> $comments,
 					"canToggle" => $this->canToggle(),
 					"canDelete" => $canDelete,
-					"canEdit"	=> $this->canEdit()
+					"canEdit"	=> $this->canEdit(),
+					"showHistory" => 0
 				)
 			);
 			$text = $template->render( "comment" );

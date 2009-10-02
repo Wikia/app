@@ -19,7 +19,7 @@
 		<?php endif; ?>
 		<?php if( $canEdit ): ?>
 			<a name="<?php echo $comment[ "title" ]->getArticleId() ?>" href="#<?php echo $comment[ "title" ]->getArticleId() ?>" class="blog-comm-edit" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('editlink')?></a>
-			<?php if ( !$comment[ "title" ]->isNewPage() ) : ?>
+			<?php if ( !empty($showHistory) && !$comment[ "title" ]->isNewPage() ) : ?>
 				<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=history" ) ?>"><?=wfMsg('blog-comment-history')?></a>
 			<?php endif; ?>
 		<?php endif; ?>
