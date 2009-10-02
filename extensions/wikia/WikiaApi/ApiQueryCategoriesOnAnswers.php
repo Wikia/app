@@ -44,9 +44,11 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 		$data = array();
 		while ($row = $db->fetchObject($res)) {
 			$title = Title::newFromText($row->cl_sortkey);
-			$vals['ns'] = intval($title->getNamespace());
-			$vals['title'] = $title->getPrefixedText();
-			$data[] = $vals;
+			if ($title->isContentPage()) {
+				$vals['ns'] = intval($title->getNamespace());
+				$vals['title'] = $title->getPrefixedText();
+				$data[] = $vals;
+			}
 		}
 		$db->freeResult($res);
 
