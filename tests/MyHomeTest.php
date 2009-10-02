@@ -9,7 +9,7 @@ class MyHomeTest extends PHPUnit_Framework_TestCase {
 	function doEdit($edit) {
 		// create "fake" EditPage
 		$editor = (object) array(
-			'textbox1' => $edit['text'],
+			'textbox1' => isset($edit['text']) ? $edit['text'] : '',
 		);
 
 		// try to get section name
@@ -53,7 +53,6 @@ class MyHomeTest extends PHPUnit_Framework_TestCase {
 		$wgParser->mOutput->setText('<p>new content</p>');
 
 		$edit = array(
-			'text' => '123',
 			'is_new' => true,
 		);
 
@@ -64,6 +63,24 @@ class MyHomeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(
 			$out,
 			$this->doEdit($edit) );
+	}
+
+	function testEditFromViewMode() {
+		Wikia::setVar('EditFromViewMode', true);
+
+		$edit = array(
+		);
+
+		$out = array(
+			'viewMode' => 1,
+		);
+
+		$this->assertEquals(
+			$out,
+			$this->doEdit($edit) );
+
+		// cleanup
+		Wikia::unsetVar('EditFromViewMode');
 	}
 
 	function testSectionEditWithComment() {
@@ -99,20 +116,40 @@ class MyHomeTest extends PHPUnit_Framework_TestCase {
 			$this->doEdit($edit) );
 	}
 
-	function testEditFromViewMode() {
-		Wikia::setVar('EditFromViewMode', true);
+	function testRollback() {
+		$rollbackRevId = rand();
+		Wikia::setVar('RollbackedRevId', $rollbackRevId);
 
-		$edit = array(
-			'text' => '123',
-		);
+		$edit = array();
 
 		$out = array(
-			'viewMode' => 1,
+			'rollback' => true,
+			'revId' => $rollbackRevId,
 		);
 
 		$this->assertEquals(
 			$out,
 			$this->doEdit($edit) );
+
+		// cleanup
+		Wikia::unsetVar('RollbackedRevId');
+	}
+
+	function testAutosummaryType() {
+		Wikia::setVar('AutoSummaryType', 'autosumm-replace');
+
+		$edit = array();
+
+		$out = array(
+			'autosummaryType' => 'autosumm-replace',
+		);
+
+		$this->assertEquals(
+			$out,
+			$this->doEdit($edit) );
+
+		// cleanup
+		Wikia::unsetVar('AutoSummaryType');
 	}
 
 	function testPackData() {
