@@ -49,6 +49,10 @@ jQuery.fn.getModal = function(url, id, options) {
 	});
 }
 
+jQuery.postJSON = function(u, d, callback) {
+	return jQuery.post(u, d, callback, "json");
+}
+
 // load YUI if not yet loaded
 $.loadYUI = function(callback) {
 	if (typeof YAHOO == 'undefined') {
