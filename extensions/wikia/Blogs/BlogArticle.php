@@ -12,7 +12,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgHooks[ "ArticleFromTitle" ][] = "BlogArticle::ArticleFromTitle";
-$wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogArticle::getOtherSecetion";
+$wgHooks[ "CategoryViewer::getOtherSection" ][] = "BlogArticle::getOtherSection";
 $wgHooks[ "CategoryViewer::addPage" ][] = "BlogArticle::addCategoryPage";
 $wgHooks[ "SkinTemplateTabs" ][] = "BlogArticle::skinTemplateTabs";
 $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogArticle::editPageCheckboxes";
