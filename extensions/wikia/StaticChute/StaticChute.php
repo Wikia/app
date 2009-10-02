@@ -37,7 +37,8 @@ class StaticChute {
 		$widgetsAssets = $this->getWidgetsAssets();
 
 		$this->config = array();
-		// As we convert other skins, bring their config here from MergeFiles
+
+		// JS served for anon on article view
 		$this->config['monaco_anon_article_js'] = array(
 			'common/jquery/jquery-1.3.2.js',
 			'common/jquery/jquery.json-1.3.js',
@@ -61,6 +62,7 @@ class StaticChute {
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
+		// JS served for logged-in
 		$this->config['monaco_loggedin_js'] = array(
 			'common/yui_2.5.2/utilities/utilities.js',
 			'common/yui_2.5.2/cookie/cookie-beta.js',
@@ -97,6 +99,7 @@ class StaticChute {
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
+		// JS served for anon for everything that's not an article view
 		$this->config['monaco_anon_everything_else_js'] = array(
 			'common/yui_2.5.2/utilities/utilities.js',
 			'common/yui_2.5.2/cookie/cookie-beta.js',
@@ -146,6 +149,7 @@ class StaticChute {
 			'common/yui_extra/carousel-min.js',
 		);
 
+		// JS for monobook (both anons/logged-in)
 		$this->config['monobook_js'] = array(
 			'common/yui_2.5.2/utilities/utilities.js',
 			'common/yui_2.5.2/cookie/cookie-beta.js',
