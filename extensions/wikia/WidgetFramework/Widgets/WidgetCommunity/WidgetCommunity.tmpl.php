@@ -5,7 +5,7 @@
 <br />
 
 <?php
-	global $wgUser, $wgShowIPinHeader, $wgTitle;
+	global $wgUser, $wgShowIPinHeader, $wgTitle, $wgEnableMyHomeExt;
 
 	if($wgUser->isLoggedIn()) {
 		if ( !empty( $GLOBALS["wgWikiaEnableSocialTools"] ) || class_exists("Masthead") ) {
@@ -13,13 +13,11 @@
 		}
 
 		echo wfMsg('monaco-welcome-back', '<a rel="nofollow" href="'.htmlspecialchars($userpageurl).'" id="'.$widgetId.'-my-name">'.$username.'</a>');
-		echo '<span style="font-size: 11px" id="'.$widgetId.'-my-menu">';
-		echo '<a rel="nofollow" href="'.htmlspecialchars($userpageurl).'">'.wfMsg('mypage').'</a>';
-		echo ' | ';
-		echo '<a rel="nofollow" href="'.htmlspecialchars($talkpageurl).'">'.wfMsg('mytalk').'</a>';
-		echo ' | ';
-		echo '<a rel="nofollow" href="#" id="cockpit2">'.wfMsg('monaco-widgets').'</a>';
-		echo '</span>';
+		if (!empty($wgEnableMyHomeExt)) {
+			echo '<span style="font-size: 11px" id="'.$widgetId.'-my-menu">';
+			echo '<a rel="nofollow" href="'.Skin::makeSpecialUrl('MyHome').'">'.wfMsg('myhome').'</a>';
+			echo '</span>';
+		}
 	} else {
 		echo '<a rel="nofollow" id="community_register" href="'. htmlspecialchars(Skin::makeSpecialUrl( 'Userlogin', 'type=signup')) .'" class="bigButton" style="margin-bottom: 5px;"><big>'. wfMsg('create_an_account') .'</big><small>&nbsp;</small></a>';
 		echo '<br style="clear: left;"/>';
