@@ -191,6 +191,12 @@ $body = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>
 		return $res;
 	}
 
+	static private function UploadStatus($authTicket, $uploadJobId) {
+		$res = self::get("/1.0/UploadStatus/{$uploadJobId}", array(), $authTicket);
+
+		return $res;
+	}
+
 	static function publish() {
 		global $wgRequest, $wgUploadDirectory, $wgUploadPath;
 
@@ -270,6 +276,20 @@ $issueId = $res->id;
 		$res = self::IssueUpload($authTicket, $issueId, "{$wgUploadDirectory}/lolek/{$fname}");
 #print_r($res); echo "\n";
 if (!empty($res->code)) return "error {$res->code}: {$res->message}.";
+
+		$uploadJobId = $res->uploadJobId;
+
+		$iteration = 20; // prevent infinite loop
+		do {
+			sleep(3);
+
+			$res = self::UploadStatus($authTicket, $uploadJobId);
+#print_r($res); echo "\n";
+if (!empty($res->code)) return "error {$res->code}: {$res->message}.";
+
+			$processingFinished = ("{$res->processingFinished}" == "True") ? true : false;
+		} while (--$iteration && !$processingFinished);
+		if (!$processingFinished) return "remote backend processing not finished in allotted time.";
 
 		$res = self::IssuePublish($authTicket, $issueId);
 #print_r($res); echo "\n";
