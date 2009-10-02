@@ -12,15 +12,28 @@ class SpecialMyHome extends SpecialPage {
 
 		$this->setHeaders();
 
-		// not available for anons
-		if($wgUser->isAnon()) {
-			$wgOut->addWikiText(wfMsg('myhome-log-in'));
-			return;
-		}
-
 		// not available for skins different then monaco
 		if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
 			$wgOut->addWikiText(wfMsg('myhome-switch-to-monaco'));
+			return;
+		}
+
+		// not available for anons
+		if($wgUser->isAnon()) {
+			$wgOut->addHTML('<div id="myhome-log-in">');
+			$wgOut->addWikiText(wfMsg('myhome-log-in'));
+			$wgOut->addHTML('</div>');
+
+			// RT #23970
+			$wgOut->addInlineScript(<<<JS
+$(function() {
+	$('#myhome-log-in').find('a').click(function(ev) {
+		ev.preventDefault();
+		openLogin(ev);
+	});
+});
+JS
+);
 			return;
 		}
 
