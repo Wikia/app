@@ -137,6 +137,9 @@ class MyHome {
 
 		global $wgParser;
 
+		// make sure to properly init this variable
+		self::$editedSectionName = false;
+
 		// check for section edit
 		if (is_numeric($section)) {
 			$hasmatch = preg_match( "/^ *([=]{1,6})(.*?)(\\1) *\\n/i", $editor->textbox1, $matches );
