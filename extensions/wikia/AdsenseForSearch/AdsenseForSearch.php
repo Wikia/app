@@ -9,6 +9,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 
 function renderAdsenseForSearch($format='w2n8', $channel='2226605464') {
 global $wgAFSKeywords;
+global $wgGoogleAdClient;
 echo <<<EOS
 	<div id="afs_narrow" class="google_afs"></div>
 	<div id="afs_wide" class="google_afs"></div>
@@ -140,8 +141,8 @@ EOS;
 	}
       	echo "google_afs_ad = '". $format ."'; // specify the number of ads you are requesting\n";
       	echo "google_afs_channel = '". $channel ."'; // enter your custom channel ID\n";
+      	echo "google_afs_client = '" . $wgGoogleAdClient . "'; // substitute your client ID\n";
 echo <<<EOS
-      google_afs_client = 'pub-4086838842346968'; // substitute your client ID
       google_afs_hl = 'en'; // enter your interface language if not English
       // google_afs_ie = 'UTF-8'; // select input encoding scheme
       // google_afs_oe = 'UTF-8'; // select output encoding scheme
