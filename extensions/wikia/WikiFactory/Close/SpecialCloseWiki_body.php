@@ -134,6 +134,7 @@ class CloseWikiPage extends SpecialPage {
 
 		wfProfileIn( __METHOD__ );
 		$this->mStep = $wgRequest->getVal( "step", 1 );
+		$this->mReason = $wgRequest->getVal( "close_reason" );
 
 		/**
 		 * get numeric values for checkboxes
@@ -183,6 +184,7 @@ class CloseWikiPage extends SpecialPage {
 		$this->mTmpl->set( "errors",    $this->mErrors );
 		$this->mTmpl->set( "redirect", 	$this->mRedirect );
 		$this->mTmpl->set( "flags", 	$this->mFlags );
+		$this->mTmpl->set( "reason", 	$this->mReason );
 
 		$wgOut->addHTML( $this->mTmpl->render( "confirm" ) );
 	}
@@ -295,7 +297,10 @@ class CloseWikiPage extends SpecialPage {
 					}
 					WikiFactory::setFlags($wiki->city_id, $city_flags);
 				}
-				$res = WikiFactory::setPublicStatus($status, $wiki->city_id);
+				if ( empty($this->mReason) ) {
+					$this->mReason = "-";
+				}
+				$res = WikiFactory::setPublicStatus($status, $wiki->city_id, $this->mReason);
 				if ($res === $status) {
 					$output .= Xml::tags( 'li', array( 'style' => 'padding:4px;' ), $message );
 					WikiFactory::clearCache($wiki->city_id);

@@ -45,6 +45,12 @@ function checkFlag(id) {
 			</li>
 		</ul>
 		<ul style="list-style:none;padding:1px 10px;">
+			<li>
+				<?=wfMsg('closed-reason')?>
+				<textarea name="close_reason"></textarea>
+			</li>
+		</ul>
+		<ul style="list-style:none;padding:1px 10px;">
 			<li style="text-align:left;padding-left:200px;">
 				<input type="submit" name="close_saveBtn" value="<?=wfMsg('closed-confirm-btn')?>" onclick="return close_allowToSave();"> 
 			</li>

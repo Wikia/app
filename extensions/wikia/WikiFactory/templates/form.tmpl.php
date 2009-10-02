@@ -385,6 +385,11 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 				            <? elseif(($statuses[$wiki->city_public] == 'disabled') && ($wikiRequest != null)): ?>
 				             (<i>no wiki request were found with name: <?=$wikiRequest;?></i>)
 				            <? endif; ?>
+<? if ($statuses[$wiki->city_public] == 'disabled') : ?>
+            <div>
+            	(<?=wfMsg('closed-reason')?> <?=$wiki->city_additional?>)
+            </div>
+<? endif ?>
             </li>
             <li>
 				<a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a>
