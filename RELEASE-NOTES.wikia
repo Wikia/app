@@ -1,4 +1,5 @@
 == Changes since 200909.5 ==
+* rt#23970: My Home: Make "Please log in to see this page" link go to Ajax login (Macbre)
 * rt#23744: CSS fixes for masthead and exit pages. (Uberfuzzy)
 * rt#22487: FCK adds empty line on top of new page in wikitext mode (Macbre)
 * rt#23795: Images disappear when saving or moving to source mode (Macbre)
