@@ -21,6 +21,7 @@ $wgWidgets['WidgetMagCloud'] = array(
 
 function WidgetMagCloud($id, $params) {
 	global $wgLanguageCode, $wgEnableMagCloudExt;
+	global $wgSitename;
 
 	wfProfileIn(__METHOD__);
 
@@ -36,7 +37,7 @@ function WidgetMagCloud($id, $params) {
 	// return placeholder for now
 	$output = <<<HTML
 	<div class="WidgetMagCloudSample WidgetMagCloudClickable">&nbsp;</div>
-	<p><a href="#" class="WidgetMagCloudClickable">Click here to<br />create your own!</a></p>
+	<p><a href="#" class="WidgetMagCloudClickable">Create a magazine from articles on {$wgSitename}!</a></p>
 	<div class="WidgetMagCloudPoweredBy">Powered by</div>
 HTML;
 
