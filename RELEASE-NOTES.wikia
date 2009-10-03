@@ -1,4 +1,5 @@
 == Changes since 200909.5 ==
+* rt#24044: GoogleMaps: test for toolbar to prevent JS error (ubefuzzy)
 * rt#23760: Answers: Show related stuff only if it isContent. (Nef)
 * rt#24017: Add sitename to answers upperleft logo on answers skin. (Uberfuzzy)
 * rt#23952: ajax login sends GET open passwords (Macbre)
