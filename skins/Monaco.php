@@ -1823,6 +1823,33 @@ if ($custom_article_footer !== '') {
 			}
 ?>
 							</ul>
+<?php global $wgEnableShareFeatureExt; if(empty($wgEnableShareFeatureExt)) { ?>
+							<div class="clearfix">
+								<strong><?= wfMsg('footer_8') ?>:</strong>
+<?php
+			$url = htmlspecialchars($wgTitle->getFullURL());
+			$title = htmlspecialchars($wgTitle->getText());
+?>
+								<div id="share">
+								<dl id="shareDelicious" class="share">
+									<dt>del.icio.us</dt>
+									<dd><a rel="nofollow" href="http://del.icio.us/post?v=4&amp;noui&amp;jump=close&amp;url=<?=$url?>&amp;title=<?=$title?>" id="shareDelicious_a"></a></dd>
+								</dl>
+								<dl id="shareStumble" class="share">
+									<dt>StumbleUpon</dt>
+									<dd><a rel="nofollow" href="http://www.stumbleupon.com/submit?url=<?=$url?>&amp;title=<?=$title?>" id="shareStumble_a"></a></dd>
+								</dl>
+								<dl id="shareDigg" class="share">
+									<dt>Digg</dt>
+									<dd><a rel="nofollow" href="http://digg.com/submit?phase=2&amp;url=<?=$url?>&amp;title=<?=$title?>" id="shareDigg_a"></a></dd>
+								</dl>
+								<dl id="shareFacebook" class="share">
+									<dt>Facebook</dt>
+									<dd><a rel="nofollow" href="http://www.facebook.com/share.php?u=<?=$url?>" id="shareFacebook_a"></a></dd>
+								</dl>
+								</div>
+							</div>
+<?php } ?>
 							<div class="clearfix">
 								<strong><?= wfMsgHtml('rate_it') ?></strong>
 <?php
