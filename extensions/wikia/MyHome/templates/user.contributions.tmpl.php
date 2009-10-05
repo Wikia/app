@@ -6,7 +6,7 @@ if (count($data)) {
 	foreach($data as $row) {
 ?>
 		<dt class="myhome-feed-<?= UserContributionsRenderer::getIconType($row) ?>-icon reset">
-			<img src="<?= $assets['blank'] ?>" class="sprite" />
+			<img src="<?= $assets['blank'] ?>" class="sprite"<?= UserContributionsRenderer::getIconAltText($row) ?>/>
 			<a href="<?= htmlspecialchars($row['url']) ?>" class="title" rel="nofollow"><?= htmlspecialchars($row['title'])  ?></a>
 			<cite><?= FeedRenderer::formatTimestamp($row['timestamp']); ?></cite>
 			<?= FeedRenderer::getDiffLink($row) ?>

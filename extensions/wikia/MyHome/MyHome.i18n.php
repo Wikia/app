@@ -16,6 +16,15 @@ $messages['en'] = array(
 	'myhome-hot-spots-brandnew' => 'This is a brand-new wiki. Click on [[Special:CreatePage|New page]] to start writing!',
 	'tog-myhomedisableredirect' => 'Disable my redirect to My Home',
 
+	'myhome-feed-newpage' => 'new page',
+	'myhome-feed-edit' => 'edit',
+	'myhome-feed-move' => 'page moved',
+	'myhome-feed-talkpage' => 'discussion page',
+	'myhome-feed-blogcomment' => 'blog comment',
+	'myhome-feed-delete' => 'deleted',
+	'myhome-feed-image' => 'image added',
+	'myhome-feed-video' => 'video added',
+
 	'myhome-feed-created-by' => 'created by $1',
 	'myhome-feed-added-by' => 'added by $1',
 	'myhome-feed-edited-by' => 'edited by $1',
@@ -53,9 +62,9 @@ $messages['en'] = array(
 
 	'myhome-community-corner-header' => 'Community Corner',
 	'myhome-community-corner-edit' => 'edit message',
-	'community-corner' => "'''Welcome to My Home!''' 
+	'community-corner' => "'''Welcome to My Home!'''
 
-This page helps you stay up to date with what's happening on the wiki. 
+This page helps you stay up to date with what's happening on the wiki.
 
 If you're the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site. For example, you could:
 

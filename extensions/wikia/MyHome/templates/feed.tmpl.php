@@ -16,13 +16,13 @@
 <?php
 			if (isset($row['url'])) {
 ?>
-			<img src="<?= $assets['blank'] ?>" class="sprite" />
+			<img src="<?= $assets['blank'] ?>" class="sprite"<?= FeedRenderer::getIconAltText($row) ?>/>
 			<a href="<?= htmlspecialchars($row['url']) ?>" class="title" rel="nofollow"><?= htmlspecialchars($row['title'])  ?></a>
 <?php
 			}
 			else {
 ?>
-			<img src="<?= $assets['blank'] ?>" class="sprite" /><span class="title"><?= htmlspecialchars($row['title'])  ?></span>
+			<img src="<?= $assets['blank'] ?>" class="sprite"<?= FeedRenderer::getIconAltText($row) ?>/><span class="title"><?= htmlspecialchars($row['title'])  ?></span>
 <?php
 			}
 ?>

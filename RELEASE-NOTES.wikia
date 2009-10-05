@@ -1,4 +1,5 @@
 == Changes since 200909.5 ==
+* rt#23974: My Home: Alt text for the icons in Activity feed / Watchlist / Contributions (Macbre)
 * rt#24044: GoogleMaps: test for toolbar to prevent JS error (ubefuzzy)
 * rt#23760: Answers: Show related stuff only if it isContent. (Nef)
 * rt#24017: Add sitename to answers upperleft logo on answers skin. (Uberfuzzy)
