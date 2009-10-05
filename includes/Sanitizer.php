@@ -738,6 +738,12 @@ class Sanitizer {
 				$attribs[] = "_wysiwyg_style=\"$encValue\"";
 			}
 		}
+
+		// Wysiwyg: store original list of <table> attributes (RT #23998)
+		if ( !empty($wgWysiwygParserEnabled) && ($element == 'table') ) {
+			$attribs[] = '_wysiwyg_attribs="'. self::encodeAttribute(Xml::expandAttributes($stripped)) . '"';
+		}
+
 		return count( $attribs ) ? ' ' . implode( ' ', $attribs ) : '';
 	}
 
