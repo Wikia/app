@@ -892,6 +892,7 @@ class SiteWideMessagesPager extends TablePager {
 			$this->mFieldNames['msg_removed']        = wfMsg('swm-list-table-removed');
 			$this->mFieldNames['msg_text']           = wfMsg('swm-list-table-content');
 			$this->mFieldNames['msg_date']           = wfMsg('swm-list-table-date');
+			$this->mFieldNames['msg_lang']		 = wfMsg('swm-list-table-lang');
 			$this->mFieldNames['msg_wiki_tools']     = wfMsg('swm-list-table-tools');
 		}
 		return $this->mFieldNames;
@@ -899,7 +900,7 @@ class SiteWideMessagesPager extends TablePager {
 
 	#--- isFieldSortable-----------------------------------------------------
 	function isFieldSortable( $field ) {
-		static $sortable = array( 'msg_id', 'msg_sender', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_recipient_name', 'msg_text' );
+		static $sortable = array( 'msg_id', 'msg_sender', 'msg_removed', 'msg_date', 'msg_expire', 'msg_wiki_name', 'msg_group_name', 'msg_recipient_name', 'msg_text', 'msg_lang' );
 		return in_array( $field, $sortable );
 	}
 
@@ -979,7 +980,7 @@ class SiteWideMessagesPager extends TablePager {
 	function getQueryInfo() {
 		return array(
 			'tables' => MSG_TEXT_DB . ' LEFT JOIN user ON msg_sender_id = user_id',
-			'fields' => array('msg_id', 'user_name AS msg_sender', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_recipient_name', 'msg_group_name', 'msg_wiki_name')
+			'fields' => array('msg_id', 'user_name AS msg_sender', 'msg_text', 'msg_removed', 'msg_expire', 'msg_date', 'msg_recipient_name', 'msg_group_name', 'msg_wiki_name', 'msg_lang')
 		);
 	}
 

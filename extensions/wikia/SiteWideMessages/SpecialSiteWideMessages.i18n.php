@@ -78,6 +78,7 @@ $messages = array(
 		'swm-list-table-removed'	=> 'Removed',
 		'swm-list-table-content'	=> 'Content',
 		'swm-list-table-tools'		=> 'Tools',
+		'swm-list-table-lang'		=> 'Languages',
 		'swm-yes'					=> 'Yes',
 		'swm-no'					=> 'No',
 		'swm-error-no-such-wiki'	=> 'There is no such wiki!',
