@@ -1,5 +1,7 @@
 #!/usr/bin/perl -w
 
+package main;
+
 #
 # Image::Magick version
 #
@@ -7,7 +9,7 @@
 use strict;
 use URI;
 use FCGI;
-use Sys::Syslog qw(:standard :macros);
+use FCGI::ProcManager::MaxRequests;
 use Image::Magick;
 use Image::LibRSVG;
 use File::LibMagic;
@@ -15,11 +17,7 @@ use IO::File;
 use File::Basename;
 use File::Path;
 use XML::Simple;
-
-#
-# debug
-#
-use Data::Dumper;
+use POSIX 'WNOHANG';
 
 sub real404 {
 	my $request_uri  = shift;
@@ -41,46 +39,78 @@ sub real404 {
 }
 
 #
+# do not make zombies
+#
+$SIG{CHLD} = \&reaper;
+sub reaper {
+	while( ( my $kid = waitpid( -1, WNOHANG ) ) > 0 ) {
+		print STDERR "Killing hanging child $kid\n";
+	}
+}
+
+#
 # initialization
 #
-my $request     = FCGI::Request();
+# configurable via environmet variables
+#
+my $maxrequests = $ENV{ "REQUESTS" } || 1000;
+my $clients     = $ENV{ "CHILDREN" } || 10;
+my $listen      = $ENV{ "SOCKET" }   || "127.0.0.1:39393";
+my $debug       = $ENV{ "DEBUG" }    || 1;
+my $test        = $ENV{ "TEST" }     || 0;
+
+#
+# fastcgi request
+#
+my %env;
+my( $socket, $request, $manager );
+
+unless( $test ) {
+	$socket     = FCGI::OpenSocket( $listen, 100 ) or die "failed to open FastCGI socket; $!";
+	$request    = FCGI::Request( \*STDIN, \*STDOUT, \*STDOUT, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
+	$manager    = FCGI::ProcManager::MaxRequests->new({ n_processes => $clients, max_requests => $maxrequests });
+}
+else {
+	use FCGI;
+	$request    = FCGI::Request();
+}
 my $basepath    = "/images";
 my $flm         = new File::LibMagic;
 my $maxwidth    = 3000;
-my $syslog      = 1;
+my $ffmpeg      = "/usr/bin/ffmpeg";
 
-#
-# how many requests we should handle
-#
-my $maxrequests  = 1000;
-my $cntrequest   = 0;
 
 
 #
 # if thumbnail was really generated
 #
 my $transformed = 0;
-my $mimetype = "text/plain";
-umask( 022 );
+my $mimetype    = "text/plain";
+my $imgtype     = undef;
 
-openlog "404handler", "ndelay", LOG_LOCAL0 if $syslog;
+$manager->pm_manage() unless $test;
 while( $request->Accept() >= 0 ) {
-	my $env = $request->GetEnvironment();
+	$manager->pm_pre_dispatch() unless $test;
 	my $redirect_to = "";
 	my $request_uri = "";
 	my $referer = "";
 
 =pod examples
-	$request_uri = "/s/silenthill/de/images/thumb/8/85/Heather_%28Konzept4%29.jpg/420px-Heather_%28Konzept4%29.jpg"; # test url
-	$request_uri = "/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG";  # test url
+	$request_uri = "/c/central/images/thumb/b/bf/Wiki_wide.png/155px-Wiki_wide.png";
+	$request_uri = "/s/silenthill/de/images/thumb/8/85/Heather_%28Konzept4%29.jpg/420px-Heather_%28Konzept4%29.jpg";
+	$request_uri = "/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG";
 	$request_uri = "/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png";
+	$request_uri = "/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif";
+	$request_uri = "/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg";
 =cut
+	$request_uri = "/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg";
 
 	#
 	# get last part of uri, remove first slash if exists
 	#
-	$request_uri = $env->{"REQUEST_URI"} if $env->{"REQUEST_URI"};
-	$referer = $env->{"HTTP_REFERER"} if $env->{"HTTP_REFERER"};
+	$request_uri = $env{"REQUEST_URI"} if $env{"REQUEST_URI"};
+	$referer     = $env{"HTTP_REFERER"} if $env{"HTTP_REFERER"};
+
 	my $uri = URI->new( $request_uri );
 	my $path  = $uri->path;
 	$path =~ s/^\///;
@@ -92,8 +122,8 @@ while( $request->Accept() >= 0 ) {
 	if( $path !~ m!^\w/! ) {
 		$path = substr( $path, 0, 1 ) . '/' . $path;
 	}
-	my $thumbnail = $basepath . '/' . $path;
 
+	my $thumbnail = $basepath . '/' . $path;
 	my @parts = split( "/", $path );
 	my $last = pop @parts;
 
@@ -101,7 +131,7 @@ while( $request->Accept() >= 0 ) {
 	#
 	# if last part of $request_uri is \d+px-\. it is probably thumbnail
 	#
-	my ( $width ) = $last =~ /^(\d+)px\-.+\w$/;
+	my( $width ) = $last =~ /^(\d+)px\-.+\w$/;
 	if( $width ) {
 		$width = $maxwidth if ( $width > $maxwidth );
 		#
@@ -119,7 +149,7 @@ while( $request->Accept() >= 0 ) {
 		#
 		my $origname = pop @{ [ split( "/" , $original ) ] };
 		if( index( $last, $original ) != -1 ) {
-			syslog( LOG_INFO, "$origname not found in $last" ) if $syslog;
+			print STDERR "$origname not found in $last\n" if $debug;
 		}
 		else {
 			#
@@ -144,19 +174,20 @@ while( $request->Accept() >= 0 ) {
 			#
 			if( -f $original ) {
 				$mimetype = $flm->checktype_filename( $original );
-				syslog( LOG_INFO, qq{$thumbnail $mimetype REQUEST_URI=$request_uri HTTP_REFERER=$referer} ) if $syslog;
+				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
+				print STDERR "$thumbnail $mimetype $imgtype REQUEST_URI=$request_uri HTTP_REFERER=$referer\n" if $debug;
 
 				#
 				# create folder for thumbnail if doesn't exists
 				#
 				my $thumbdir = dirname( $thumbnail );
 				unless( -d $thumbdir ) {
-					eval { mkpath( $thumbdir ) };
+					eval { mkpath( $thumbdir, { mode => 0775 } ) };
 					if( $@ ) {
-						syslog( LOG_INFO, "Creating of $thumbdir folder failed" ) if $syslog;
+						print STDERR "Creating of $thumbdir folder failed\n" if $debug;
 					}
 					else {
-						syslog( LOG_INFO, "Folder $thumbdir created" ) if $syslog;
+						print STDERR "Folder $thumbdir created\n" if $debug;
 					}
 				}
 
@@ -184,30 +215,26 @@ while( $request->Accept() >= 0 ) {
 
 					if( -f $thumbnail ) {
 						$mimetype = $flm->checktype_filename( $thumbnail );
+						chmod 0664, $thumbnail;
 						$transformed = 1;
 						print "HTTP/1.1 200 OK\r\n";
-						print "X-Thumb-Path: $thumbnail\r\n";
+						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
-						my $fh = new IO::File $thumbnail, O_RDONLY;
-						if( defined $fh ) {
-							binmode $fh;
-							print <$fh>;
-							undef $fh;
-						}
-						syslog( LOG_INFO, "File $thumbnail created" ) if $syslog;
+						print STDERR "File $thumbnail created\n" if $debug;
 					}
 					else {
-						syslog( LOG_INFO, "SVG conversion from $original to $thumbnail failed" ) if $syslog;
+						print STDERR "SVG conversion from $original to $thumbnail failed\n";
 					}
 					undef $rsvg;
 					undef $xmlp;
 				}
 				else {
 					#
-					# for other else use Image::Magick
+					# for other else use Imager
 					#
 					my $image = new Image::Magick;
 					$image->Read( $original );
+
 					my $origw  = $image->Get( 'width' );
 					my $origh  = $image->Get( 'height' );
 					if( $origw && $origh ) {
@@ -217,51 +244,48 @@ while( $request->Accept() >= 0 ) {
 							$image->Coalesce();
 						}
 						$image->Write( "filename" => $thumbnail );
-
 						if( -f $thumbnail ) {
 							#
 							# serve file if is ready to serve
 							#
+							chmod 0664, $thumbnail;
 							$transformed = 1;
 							print "HTTP/1.1 200 OK\r\n";
-							print "X-Thumb-Path: $thumbnail\r\n";
+							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
-							my $fh = new IO::File $thumbnail, O_RDONLY;
-							if( defined $fh ) {
-								binmode $fh;
-								print <$fh>;
-								undef $fh;
-							}
-							syslog( LOG_INFO, "File $thumbnail created" ) if $syslog;
+							print STDERR "File $thumbnail created\n" if $debug;
 						}
 						else {
-							syslog( LOG_INFO, "ImageMagick thumbnailer from $original to $thumbnail failed" ) if $syslog;
+							print STDERR "Thumbnailer from $original to $thumbnail failed\n" if $debug;
+							#
+							# @todo serve original file
+							#
 						}
 						undef $image;
 					}
 				}
 			}
 			else {
-				syslog( LOG_INFO, "$thumbnail original file $original does not exists" ) if $syslog > 1;
+				print STDERR "$thumbnail original file $original does not exists\n" if $debug > 1;
 			}
 		}
+	}
+	else {
+		#
+		# but ogghandler thumbnails can have seek=\d+ or mid
+		#
+
+		print $last;
+		# first seek
+		( $width ) = $last =~ /^seek=(\d+)\-.+\w$/;
+		# then mid
+		( $width ) = $last =~ /^(mid)\-.+\w$/;
+		print $width . $/;
 	}
 	if( ! $transformed ) {
 		real404( $request_uri )
 	}
 
-	$request->Finish();
 	$transformed = 0;
-	$cntrequest++;
-
-	syslog( LOG_INFO, "PID=$$ REQUEST=$cntrequest" ) if $syslog > 1;
-
-	#
-	# prevent memory leaks
-	#
-	if( $cntrequest >= $maxrequests ) {
-		$request->LastCall();
-		last;
-	}
+	$manager->pm_post_dispatch() unless $test;
 }
-closelog if $syslog;
