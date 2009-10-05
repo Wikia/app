@@ -79,7 +79,7 @@ function openLogin(event) {
 	if ($('#AjaxLoginBox').length > 0) {
 		// show ajax login dialog if already in DOM
 		$('#AjaxLoginBox').showModal();
-		$('#wpName1').focus();
+		$('#wpName1Ajax').focus();
 	}
 	else {
 		$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
@@ -89,7 +89,7 @@ function openLogin(event) {
 
 					// then show as modal
 					$('#AjaxLoginBox').makeModal({width: 300, persistent: true});
-					setTimeout("$('#wpName1').focus()", 100);
+					setTimeout("$('#wpName1Ajax').focus()", 100);
 				});
 			}
 		});

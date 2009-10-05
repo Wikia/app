@@ -17,8 +17,8 @@
         <div class="awc-subtitle"><?=wfMsg('autocreatewiki-success-has-been-created')?></div>
 
         <div style="position: absolute; left: 50%; margin-top: 20px;">
-                <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="margin-le
-ft: -50%;"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
+                <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="wikia_button" style="margin-le
+ft: -50%;"><span><?=wfMsg('autocreatewiki-success-get-started')?></span></a>
         </div>
 </div>
 

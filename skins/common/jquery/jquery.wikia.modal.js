@@ -121,9 +121,12 @@ $.fn.extend({
   hideModal: function() {
 	$(".blackout:last").fadeOut("fast").addClass('blackoutHidden');
 	this.animate({
-  		top: this.offset()["top"] + 100,
-  		opacity: 0
-  	}, "fast");
+  			top: this.offset()["top"] + 100,
+  			opacity: 0
+  		}, "fast", function() {
+			$(this).css("display", "none");
+		}
+	);
   },
   // show previously hidden modal
   showModal: function() {
@@ -144,10 +147,21 @@ $.fn.extend({
 
 	wrapper
 		.css({
-			top: wrapper.offset()["top"] - 100,
+			top: getModalTop(),
 			zIndex:  zIndex+1,
-			opacity: 1
+			opacity: 1,
+			display: "block"
 		})
 		.log('showModal: #' + this.attr('id'));
+
+	//Defined twice in different scopes. This is bad. Figure out how to define just once.
+	function getModalTop() {
+		var modalTop = (($(window).height() - wrapper.outerHeight()) / 2) + $(window).scrollTop();
+		if (modalTop < $(window).scrollTop() + 20) {
+			return $(window).scrollTop() + 20;
+		} else {
+			return modalTop;
+		}
+	}
   }
 });

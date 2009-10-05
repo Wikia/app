@@ -254,14 +254,13 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	// "Add video" green button
 	$out .= Xml::openElement('a', array(
 		'id' => "WikiaImagePlaceholderInner{$wgWikiaImagePlaceholderId}",
-		'class' => 'bigButton',
+		'class' => 'wikia_button',
 		'style' => "top: {$tmarg}px",
 		'href' => '#',
 		'onclick' => !empty($onclick) ? $onclick : '',
 	));
 
-	$out .= Xml::element('big', array(),  wfMsg('imgplc-create'));
-	$out .= Xml::openElement('small', array()) . '&nbsp;' . Xml::closeElement('small');
+	$out .= Xml::element('span', array(),  wfMsg('imgplc-create'));
 	$out .= Xml::closeElement('a');
 
 	// caption

@@ -9,8 +9,8 @@
 <br />
 <div style="font-style: normal;" class="clearfix" id="nwb_link">
 
-        <div style="position: absolute; left: 50%;">
-                <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="bigButton" style="left: -50%;" onclick="WET.byStr('nwb/getstarted')"><big><?=wfMsg('autocreatewiki-success-get-started')?></big><small></small></a>
+        <div style="text-align: center;">
+                <a href="<?=$domain?>wiki/Special:NewWikiBuilder" class="wikia_button" onclick="WET.byStr('nwb/getstarted')"><span><?=wfMsg('autocreatewiki-success-get-started')?></span></a>
         </div>
 </div>
 
