@@ -177,9 +177,7 @@ jQuery.tracker = function() {
 	// Recent changes tracking
 	if(wgCanonicalSpecialPageName == 'Recentchanges') {
 		$.tracker.byStr('RecentChanges/view');
-
 		$('#bodyContent').click(function (e) {
-//e.preventDefault();
 			var target = getTarget(e);
 			if($.nodeName(target, 'a')) {
 				if($.nodeName(target.parentNode, 'fieldset')) {
@@ -230,6 +228,14 @@ jQuery.tracker = function() {
 						} else if($(target.parentNode).hasClass('mw-rollback-link')) {
 							$.tracker.byStr('RecentChanges/click/rollback');
 						}
+					} else if(target.href.indexOf('action=history') > 0) {
+							$.tracker.byStr('RecentChanges/click/history');
+					} else if(target.href.indexOf('diff=') > 0) {
+							$.tracker.byStr('RecentChanges/click/diff');
+					} else if(target.href.indexOf('/delete') > 0) {
+							$.tracker.byStr('RecentChanges/click/deletionlog');
+					} else {
+							$.tracker.byStr('RecentChanges/click/item');
 					}
 				}
 			} else if($.nodeName(target, 'input')) {
