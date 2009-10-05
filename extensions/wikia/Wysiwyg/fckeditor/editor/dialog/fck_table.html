@@ -164,6 +164,9 @@ function Ok()
 
 	SetAttribute( table, '_wysiwyg_new'	, 'true' );
 
+	// RT #23998
+	SetAttribute( table, '_wysiwyg_attribs'	, '' );
+
 	var eCaption = oEditor.FCKDomTools.GetFirstChild( table, 'CAPTION' ) ;
 
 	if ( document.getElementById('txtCaption').value != '')
