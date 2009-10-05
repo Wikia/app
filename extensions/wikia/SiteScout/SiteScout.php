@@ -36,7 +36,7 @@ function wfSpecialSiteScoutPage(){
 			$output = '';
 			
 			foreach ( $options as $key ) {
-				$val = $wgMemc->get( wfMemcKey( $wgDBname, $key, $wgUser->getId() ) );
+				$val = $wgMemc->get( wfMemcKey( $key, $wgUser->getId() ) );
 				$options[$key] = ( isset($val) ) ? $val : null;
 			}
 			
@@ -51,7 +51,7 @@ function wfSpecialSiteScoutPage(){
 				$show_edits = $scout_edits;
 			} else {
 				if ( isset($show_edits) ) {
-					$wgMemc->set( wfMemcKey( $wgDBname, "scout_edits", $wgUser->getId() ), $show_edits );
+					$wgMemc->set( wfMemcKey( "scout_edits", $wgUser->getId() ), $show_edits );
 				} else {
 					$show_edits = 1;
 				}
@@ -61,7 +61,7 @@ function wfSpecialSiteScoutPage(){
 				$show_votes = $scout_votes;
 			} else {
 				if ( isset($show_votes) ) {
-					$wgMemc->set( wfMemcKey( $wgDBname, "scout_votes", $wgUser->getId() ), $show_votes );
+					$wgMemc->set( wfMemcKey( "scout_votes", $wgUser->getId() ), $show_votes );
 				} else {
 					$show_votes = 1;
 				}
@@ -71,7 +71,7 @@ function wfSpecialSiteScoutPage(){
 				$show_comments = $scout_comments;
 			} else {
 				if ( isset($show_comments) ) {
-					$wgMemc->set( wfMemcKey( $wgDBname, "scout_comments", $wgUser->getId() ), $show_comments );
+					$wgMemc->set( wfMemcKey( "scout_comments", $wgUser->getId() ), $show_comments );
 				} else {
 					$show_comments = 1;
 				}
@@ -81,7 +81,7 @@ function wfSpecialSiteScoutPage(){
 				$show_network_updates = $scout_network_updates;
 			} else {
 				if ( isset($show_network_updates) ) {
-					$wgMemc->set( wfMemcKey( $wgDBname, "scout_network_updates", $wgUser->getId() ), $show_network_updates );
+					$wgMemc->set( wfMemcKey( "scout_network_updates", $wgUser->getId() ), $show_network_updates );
 				} else {
 					$show_network_updates = 1;
 				}
