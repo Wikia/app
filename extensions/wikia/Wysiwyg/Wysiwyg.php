@@ -734,7 +734,9 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 
 	// remove tilde wysiwyg markers (RT #20000)
 	global $wgWysiwygTildeMarkers;
-	$originalCall = strtr($originalCall, $wgWysiwygTildeMarkers);
+	if (!empty($wgWysiwygTildeMarkers)) {
+		$originalCall = strtr($originalCall, $wgWysiwygTildeMarkers);
+	}
 
 	$data = array();
 	$data['type'] = 'template';
