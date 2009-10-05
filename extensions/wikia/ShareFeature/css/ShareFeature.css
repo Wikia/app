@@ -16,7 +16,7 @@
 }
 
 #sf_providers div {
-        background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
+        background-image: url(http://images.wikia.com/common/extensions/wikia/ShareFeature/images/share_sprite.png);
         clip: rect(0px, 0px, 0px, 0px);
         height: 16px;
         margin: 8px 2px 0 0;
