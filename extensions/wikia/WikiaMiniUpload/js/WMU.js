@@ -51,6 +51,7 @@ if( 'view' == wgAction ) {
 	var check_file_extensions = '';
 	var strict_file_extensions = '';
 	var user_blocked = false;
+	var user_disallowed = false;
 }
 
 function WMU_loadDetails() {
@@ -272,9 +273,17 @@ function WMU_loadMainFromView() {
 			check_file_extensions = data.check_file_extensions;
 			strict_file_extensions = data.strict_file_extensions;
 			user_blocked = data.user_blocked;
+			user_disallowed = data.user_disallowed;
 			if( user_blocked ) {
 				document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
 			} else {
+				// is user is disallowed from editing, do nothing and show them a message 
+				if( user_disallowed ) {
+					// todo find the right message
+					alert( '' );
+					return;
+				}
+
 				if( !$G( 'WMU_div' ) ) {
 					document.body.appendChild(element);
 				}
