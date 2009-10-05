@@ -22,8 +22,12 @@ function wfNewEditPageInit() {
 
 	// add red preview notice
 	$wgHooks['EditPage::showEditForm:initial'][] = 'wfNewEditPageAddPreviewBar';
+
 	// add brown old revision notice
 	$wgHooks['EditPage::showEditForm:oldRevisionNotice'][] = 'wfNewEditPageAddOldRevisionBar';
+
+	// undo success (RT #22732)
+	$wgHooks['EditPage::getContent::end'][] = 'wfNewEditPageUndoSuccess';
 	return true;
 }
 
@@ -139,5 +143,22 @@ function wfNewEditPageAddPreviewTitle($wgOut, $text) {
 		$text = substr($text, $pos+5);
 	}
 
+	return true;
+}
+
+// move edit page title after undo success message box (RT #22732)
+function wfNewEditPageUndoSuccess($editPage, $text) {
+	if ( strpos($editPage->editFormPageTop, '<div class="mw-undo-success">') !== false ) {
+		global $wgOut, $wgTitle, $wgCustomTitle;
+
+		// hide page title in preview mode
+		$wgOut->addHTML('<style type="text/css">.firstHeading {display: none}</style>');
+
+		// add title
+		$editPage->editFormPageTop .= Xml::element('h1',
+			array('class' => 'firstHeading', 'style' => 'display: block'),
+			(isset($wgCustomTitle) ? $wgCustomTitle->getPrefixedText() : $wgTitle->getPrefixedText())
+		);
+	}
 	return true;
 }
