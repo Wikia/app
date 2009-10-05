@@ -3,8 +3,6 @@ var ShareFeature = {};
 var ShareFeatureEnabled = false;
 
 ShareFeature.ajax = function( provider ) {
-	this.track( 'provider/' + provider );
-
 	$.post( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
 		 'provider' : provider
 		}, function() {
@@ -18,13 +16,14 @@ ShareFeature.mouseDown = function( provider ) {
 	switch( event.button ) {
 		case 0:
 			this.ajax( provider );
+			this.track( 'leftClick/' + provider );
 			break;
 		case 1:
 			this.ajax( provider );
-			this.track( 'middleClick' );
+			this.track( 'middleClick/' + provider  );
 			break;
 		case 2:
-			this.track( 'rightClick' );
+			this.track( 'rightClick/' + provider );
 			break;
 		default:
 			break;
