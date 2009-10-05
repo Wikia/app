@@ -320,12 +320,12 @@ class BlogComment {
 			return null;
 		}
 
-		$Title = null;		
+		$Title = null;
 		list ( $user, $page_title, $comment ) = self::explode($this->mTitle->getDBkey());
 		if ( !empty($user) && !empty($page_title) ) {
 			$blogTitle = $user . "/" . $page_title;
 			$Title = Title::makeTitle(NS_BLOG_ARTICLE, $blogTitle);
-		} 
+		}
 		return $Title;
 	}
 
@@ -496,7 +496,6 @@ class BlogComment {
 			$editPage = new EditPage( $article );
 			$editPage->edittime = $article->getTimestamp();
 			$editPage->textbox1 = $text;
-			$editPage->summary  = wfMsg('blog-comments-save');
 			$retval = $editPage->internalAttemptSave( $result );
 			Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
 
@@ -516,6 +515,13 @@ class BlogComment {
 			$wgMemc->delete( wfMemcKey( "blog", "comm", $Title->getArticleID() ) );
 
 			$res = array( $retval, $article );
+
+			/**
+			 * update cache from master
+			 */
+			$clist = BlogCommentList::newFromTitle( $Title );
+			$clist->getCommentPages( true );
+
 		} else {
 			$res = false;
 		}
@@ -742,7 +748,6 @@ class BlogComment {
 		$editPage = new EditPage( $article );
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = $text;
-		//$editPage->summary  = wfMsg('blog-comments-new');
 		$retval = $editPage->internalAttemptSave( $result );
 		Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
 
