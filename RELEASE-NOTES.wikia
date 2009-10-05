@@ -1,5 +1,5 @@
 == Changes since 200910.1 ==
-* 
+* rt#20000: FCK: Problems with signatures when used in templates (Macbre)
 
 == Changes since 200909.5 ==
 * rt#23974: My Home: Alt text for the icons in Activity feed / Watchlist / Contributions (Macbre)
