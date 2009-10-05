@@ -34,6 +34,9 @@ class WikiaMiniUpload {
 	        $script_a['strict_file_extensions'] = htmlspecialchars( $wgStrictFileExtensions );
 
 		( $wgUser->isBlocked() ) ? $script_a['user_blocked'] = true : $script_a['user_blocked'] = false;
+
+		// if the page is protected
+		( $wgUser->isLoggedIn() && !$wgUser->isAllowed( 'edit' ) ) ? $script_a['user_disallowed'] = true : $script_a['user_disallowed'] = false;
 		
 		// for disabled anonymous editing
 		( !$wgUser->isLoggedIn() && !$wgUser->isAllowed( 'edit' ) ) ? $script_a['wmu_init_login'] = true : $script_a['wmu_init_login'] = false;
