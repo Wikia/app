@@ -3,6 +3,7 @@ CREATE TABLE `user_login_history` (
   `city_id` int(9) unsigned default '0',
   `ulh_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `ulh_from` tinyint(4) default '0',
+  `ulh_rememberme` tinyint(4) default NULL,
   KEY `idx_user_login_history_timestamp` (`ulh_timestamp`),
   KEY `idx_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
