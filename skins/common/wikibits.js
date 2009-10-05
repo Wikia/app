@@ -141,19 +141,22 @@ function showTocToggle(toctitleId, tocId, togglelinkId) {
 		/* Wikia change begin - @author: Marooned */
 		//changes close related to TOCimprovements extension
 		//change link text when anon and fix cache issue
-		if (typeof TOCimprovementsEnabled != 'undefined' && !wgUserName) {
+		if (typeof window.TOCimprovementsEnabled != 'undefined' && !wgUserName) {
 			var toc = document.getElementById(tocId ? tocId : 'toc');
 			var rootItems = getElementsByClassName(toc, 'li', 'toclevel-1');
+			var len = rootItems.length;
 			//no cookie found
 			if (cookiePos == -1) {
-				var toggleLink = document.getElementById(togglelinkId ? togglelinkId : 'togglelink');
 				//browser bug: setting display:none via CSS will not be seen as element.style.display
-				for (i=0,len=rootItems.length; i<len; i++ ) {
+				for (var i=0; i < len; i++ ) {
 					rootItems[i].style.display = 'none';
 				}
+
+				var toggleLink = document.getElementById(togglelinkId ? togglelinkId : 'togglelink');
 				changeText(toggleLink, tocShowText);
-			} else if (document.cookie.charAt(cookiePos + 8) == '0') {
-				for (i=0,len=rootItems.length; i<len; i++ ) {
+			}
+			else if (document.cookie.charAt(cookiePos + 8) == '0') {
+				for (var i=0; i < len; i++ ) {
 					rootItems[i].style.display = 'block';
 				}
 			}
@@ -175,16 +178,17 @@ function toggleToc(tocId, togglelinkId) {
 	var toc = document.getElementById(tocId ? tocId : 'toc');
 	var rootItems = getElementsByClassName(toc, 'li', 'toclevel-1');
 	var toggleLink = document.getElementById(togglelinkId ? togglelinkId : 'togglelink');
+	var len = rootItems.length;
 
 	if (toc && toggleLink && rootItems[0].style.display == 'none') {
 		changeText(toggleLink, tocHideText);
-		for (i=0,len=rootItems.length; i<len; i++ ) {
+		for (var i=0; i < len; i++ ) {
 			rootItems[i].style.display = 'block';
 		}
 		document.cookie = "hidetoc=0";
 	} else {
 		changeText(toggleLink, tocShowText);
-		for (i=0,len=rootItems.length; i<len; i++ ) {
+		for (var i=0; i < len; i++ ) {
 			rootItems[i].style.display = 'none';
 		}
 		document.cookie = "hidetoc=1";
