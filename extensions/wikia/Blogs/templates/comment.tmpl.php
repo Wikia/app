@@ -20,7 +20,7 @@
 		<?php if( $canEdit ): ?>
 			<a name="<?php echo $comment[ "title" ]->getArticleId() ?>" href="#<?php echo $comment[ "title" ]->getArticleId() ?>" class="blog-comm-edit" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('editlink')?></a>
 			<?php if ( !empty($showHistory) && !$comment[ "title" ]->isNewPage() ) : ?>
-				<?= $sk->makeKnownLinkObj( $comment[ "title" ], wfMsgHtml( 'diff' ), 'diff=prev&oldid='. $comment[ "title" ]->getLatestRevID() ) ?>
+				<?= $sk->makeKnownLinkObj( $comment[ "title" ], wfMsgHtml( 'blog-comment-history' ), 'diff=prev&oldid='. $comment[ "title" ]->getLatestRevID() ) ?>
 			<?php endif; ?>
 		<?php endif; ?>
 		</div>
