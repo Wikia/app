@@ -1483,6 +1483,11 @@ class SpecialSearchOld {
 		$searchHiddens = Xml::hidden( 'title', $searchTitle->getPrefixedText() ) . "\n";
 		$searchHiddens .= Xml::hidden( 'fulltext', 'Advanced search' ) . "\n";
 
+		// Wikia change /Begin (ADi)
+		$extraRefinements = "<p>" . $redirect . " " . $redirectLabel . "</p>\n";
+		wfRunHooks( 'SpecialSearchBoxExtraRefinements', array( &$extraRefinements ) );
+		// Wikia change /End
+
 		$out = Xml::openElement( 'form', array(	'id' => 'powersearch', 'method' => 'get', 'action' => $wgScript ) ) .
 			Xml::fieldset( wfMsg( 'powersearch-legend' ),
 				"<p>" .
@@ -1490,9 +1495,7 @@ class SpecialSearchOld {
 				"</p>\n" .
 				$tables .
 				"<hr style=\"clear: both\" />\n" .
-				"<p>" .
-				$redirect . " " . $redirectLabel .
-				"</p>\n" .
+				$extraRefinements .
 				wfMsgExt( 'powersearch-field', array( 'parseinline' ) ) .
 				"&nbsp;" .
 				$searchField .

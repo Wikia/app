@@ -1,6 +1,11 @@
 <?php
 
 class SolrSearch extends SearchEngine {
+
+	public function __construct() {
+		wfLoadExtensionMessages( 'WikiaSearch' );
+	}
+
 	/**
 	 * Perform a full text search query and return a result set.
 	 *
@@ -8,21 +13,35 @@ class SolrSearch extends SearchEngine {
 	 * @return SolrSearchSet
 	 * @access public
 	 */
-	function searchText( $term ) {
-		/*
-		$words = "";
-		foreach(explode(' ', $term) as $word) {
-			$words .= ( !empty($words) ? " AND " : "" ) . $word;
+	public function searchText( $term ) {
+		global $wgRequest;
+
+		if(!$wgRequest->getCheck('titlesOnly')) {
+			return SolrSearchSet::newFromQuery( $term, 'title^7 html', $this->namespaces, $this->limit, $this->offset );
 		}
-		*/
-		//return SolrSearchSet::newFromQuery( $words, $this->namespaces, $this->limit, $this->offset );
-		return SolrSearchSet::newFromQuery( $term, $this->namespaces, $this->limit, $this->offset );
+		else {
+			return null;
+		}
 	}
 
-	//function searchTitle( $term ) {
-	//	return SolrSearchSet::newFromQuery( "title:$term", $this->namespaces, $this->limit, $this->offset );
-	//}
+	function searchTitle( $term ) {
+		global $wgRequest;
 
+		if($wgRequest->getCheck('titlesOnly')) {
+			return SolrSearchSet::newFromQuery( $term, 'title', $this->namespaces, $this->limit, $this->offset );
+		}
+		else {
+			return null;
+		}
+	}
+
+	public static function renderExtraRefinements( $refinements ) {
+		global $wgRequest;
+		$titles = Xml::check( 'titlesOnly', $wgRequest->getCheck('titlesOnly'), array( 'value' => '1', 'id' => 'titlesOnly' ) );
+		$titlesLabel = Xml::label( wfMsg( 'wikiasearch-titles-only' ), 'titlesOnly' );
+		$refinements = "<p>" . $titles . " " . $titlesLabel . "</p>\n";
+		return true;
+	}
 }
 
 class SolrSearchSet extends SearchResultSet {
@@ -38,7 +57,7 @@ class SolrSearchSet extends SearchResultSet {
 	 * @return array
 	 * @access public
 	 */
-	public static function newFromQuery( $query, $namespaces = array(), $limit = 20, $offset = 0 ) {
+	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0 ) {
 		global $wgSolrHost, $wgSolrPort, $wgMemc, $wgCityId;
 
 		$fname = 'SolrSearchSet::newFromQuery';
@@ -48,7 +67,7 @@ class SolrSearchSet extends SearchResultSet {
 		if($solr->ping()) {
 			$params = array(
 				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views', // fields we want to fetch back
-				'qf' => 'title^7 html', // boost the title matches first
+				'qf' => $queryFields,
 				'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
 				'bq' => '(*:* -html:($q))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
 				'qt' => 'dismax',
