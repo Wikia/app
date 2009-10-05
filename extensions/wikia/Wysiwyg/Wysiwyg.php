@@ -620,7 +620,7 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 			}
 			else {
 				// HTML cleanup
-				$parsed = Parser::tidy($parsed);
+				$parsed = MWTidy::tidy($parsed);
 
 				// remove HTML comments (RT #17554)
 				$parsed = Sanitizer::removeHTMLcomments($parsed);
