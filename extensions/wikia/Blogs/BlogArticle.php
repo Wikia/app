@@ -258,7 +258,8 @@ class BlogArticle extends Article {
 			global $wgRequest, $wgTitle, $wgOut;
 			$redirect = $wgRequest->getText( "redirect", false );
 			$diff = $wgRequest->getText( "diff", '' );
-			if ( ($redirect != 'no' ) && empty($diff) ) {
+			$action = $wgRequest->getText( "action", '' );
+			if ( ($redirect != 'no' ) && empty($diff) && ($action != 'history') ) {
 				$text = $wgTitle->getText();
 				list( $user, $title, $anchor ) = BlogComment::explode( $text );
 				$redirect = Title::newFromText( "{$user}/{$title}", NS_BLOG_ARTICLE );
