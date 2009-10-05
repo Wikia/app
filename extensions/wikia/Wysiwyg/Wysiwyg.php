@@ -732,6 +732,10 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
 
 	$refId = count($wgWysiwygMetaData);
 
+	// remove tilde wysiwyg markers (RT #20000)
+	global $wgWysiwygTildeMarkers;
+	$originalCall = strtr($originalCall, $wgWysiwygTildeMarkers);
+
 	$data = array();
 	$data['type'] = 'template';
 	$data['originalCall'] = $originalCall;
@@ -775,7 +779,7 @@ function Wysiwyg_WrapTemplate($originalCall, $output, $lineStart) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) {
-	global $wgWysiwygMetaData, $wgWysiwygMarkers;
+	global $wgWysiwygMetaData, $wgWysiwygMarkers, $wgWysiwygTildeMarkers;
 
 	if(!empty($params['original'])) {
 		$params['original'] = preg_replace('/\x7e-start-\d+-stop/', '', $params['original']);
@@ -1031,6 +1035,12 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 		}
 		$marker = "\x7f-wysiwyg-{$refId}-\x7f";
 		$wgWysiwygMarkers[$marker] = $result;
+
+		// store wikitext of tilde placeholder (RT #20000)
+		if ($type == 'tilde') {
+			$wgWysiwygTildeMarkers[$marker] = $params['text'];
+		}
+
 		$result = $marker;
 	}
 
