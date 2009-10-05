@@ -61,7 +61,7 @@ a.greyButton big {
 
 /*** USER DATA ***/
 #userData {
-	padding-bottom: 7px;
+	height: 32px;
 	position: absolute;
 	right: 5px;
 	top: 0;
@@ -69,7 +69,7 @@ a.greyButton big {
 #userData li {
 	float: left;
 	font-size: 9pt;
-	line-height: 30px;
+	line-height: 32px;
 	margin-right: 8px;
 }
 #userData a, #wikiaBranding a {
@@ -84,7 +84,7 @@ a.greyButton big {
 	text-decoration: underline;
 }
 #userData .headerMenuButton {
-	margin: 0;
+	margin-top: 9px;
 }
 #userName {
 	font-weight: bold;
@@ -207,9 +207,11 @@ a.greyButton big {
 	text-decoration: underline;
 }
 #request_wiki.loggedin {
-	position: absolute;
-	top: 10px;
+	font-size: 9pt;
 	left: 221px;
+	line-height: 32px;
+	position: absolute;
+	top: 0;
 	white-space: nowrap;
 }
 
