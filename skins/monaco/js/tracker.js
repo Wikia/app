@@ -174,6 +174,70 @@ jQuery.tracker = function() {
 		$.tracker.byStr('editpage/view');
 	}
 
+	// Recent changes tracking
+	if(wgCanonicalSpecialPageName == 'Recentchanges') {
+		$.tracker.byStr('RecentChanges/view');
+
+		$('#bodyContent').click(function (e) {
+//e.preventDefault();
+			var target = getTarget(e);
+			if($.nodeName(target, 'a')) {
+				if($.nodeName(target.parentNode, 'fieldset')) {
+					switch(target.innerHTML) {
+						case "50":
+						case "100":
+						case "250":
+						case "500":
+							$.tracker.byStr('RecentChanges/show/'+target.innerHTML+'changes');
+							break;
+						case "1":
+						case "3":
+						case "7":
+						case "14":
+						case "30":
+							$.tracker.byStr('RecentChanges/show/'+target.innerHTML+'days');
+							break;
+						default:
+							var option = target.href.substr(target.href.indexOf(wgPageName)+wgPageName.length+1);
+							option = option.substr(0, option.indexOf('=') + 2);
+							option = option.split('=');
+							if(option.length == 2) {
+								$.tracker.byStr('RecentChanges/show/'+(option[1] == 1 ? 'hide' : 'show')+option[0].substr(4));
+							}
+							break;
+					}
+				} else {
+					if($(target).hasClass('mw-userlink')) {
+						$.tracker.byStr('RecentChanges/click/username');
+					} else if($.nodeName(target.parentNode, 'span')) {
+						if($(target.parentNode).hasClass('mw-usertoollinks')) {
+							var As = $(target.parentNode).find('a');
+							if(As.length == 3) {
+								if(As[0] == target) {
+									$.tracker.byStr('RecentChanges/click/usertalk');
+								} else if(As[1] == target) {
+									$.tracker.byStr('RecentChanges/click/usercontribs');
+								} else if(As[2] == target) {
+									$.tracker.byStr('RecentChanges/click/userblock');
+								}
+							} else if(As.length == 2) {
+								if(As[0] == target) {
+									$.tracker.byStr('RecentChanges/click/usertalk');
+								} else if(As[1] == target) {
+									$.tracker.byStr('RecentChanges/click/userblock');
+								}
+							}
+						} else if($(target.parentNode).hasClass('mw-rollback-link')) {
+							$.tracker.byStr('RecentChanges/click/rollback');
+						}
+					}
+				}
+			} else if($.nodeName(target, 'input')) {
+				$.tracker.byStr('RecentChanges/show/namespacego');
+			}
+		});
+	}
+
 	// Links on edit page
 	$('#wpMinoredit, #wpWatchthis, #wpSave, #wpPreview, #wpDiff, #wpCancel, #wpEdithelp').click(function (e) {
 		$.tracker.byStr('editpage/' + $(this).attr('id').substring(2).toLowerCase());
