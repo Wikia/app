@@ -97,16 +97,16 @@ class ReverseParser {
 				"#<\/{$formatTags}>(<\/a><a[^>]+>)<\\1>#i"	=> '$2',
 
 				 // formatting HTML tags in Wysiwyg mode (RT #19017)
-				"#&lt;(/?(?:u|strike|s|b|i|del))&gt;#i"		=> '\x7flt$1\x7fgt',
+				"#&lt;(/?(?:u|strike|s|b|i|del))&gt;#i"		=> "\x7flt$1\x7fgt",
 
 				// HTML entities (&ndash;) RT #18269
-				"#&(\w+);#i"					=> '\x7f-ent-$1;',
+				"#&(\w+);#i"					=> "\x7f-ent-\$1;",
 
 				// RT #19206 vs. RT #20903
-				"/&#160;/i"					=> '\x7f-ent-nbsp;',
+				"/&#160;/i"					=> "\x7f-ent-nbsp;",
 
 				// HTML entities (&#91;)
-				"/&#(\d+);/i"					=> '\x7f-ent-#$1;',
+				"/&#(\d+);/i"					=> "\x7f-ent-#\$1;",
 			);
 
 			$htmlFixed = preg_replace(array_keys($replacements), array_values($replacements), $html, -1, $count);
@@ -138,14 +138,14 @@ class ReverseParser {
 			// wikitext cleanup
 			$out = strtr($out, array(
 				// to allow using U and STRIKE in Visual mode
-				'\x7flt' => '<',
-				'\x7fgt' => '>',
+				"\x7flt" => '<',
+				"\x7fgt" => '>',
 
 				// RT #22027
-				'\x7f-ent-amp;' => '&',
+				"\x7f-ent-amp;" => '&',
 
 				// HTML entities (RT #18269)
-				'\x7f-ent-' => '&',
+				"\x7f-ent-" => '&',
 			));
 		}
 
@@ -1392,16 +1392,24 @@ class ReverseParser {
 			$node->setAttribute('style', $node->getAttribute('_wysiwyg_style'));
 		}
 
-		$attStr = '';
-		foreach ($node->attributes as $attrName => $attrNode) {
-			// ignore attributes used internally by Wysiwyg,
-			// "washtml" and with "_wysiwyg_" prefix
-			if ( ($attrName == 'washtml') || (substr($attrName, 0, 9) == '_wysiwyg_') ) {
-				continue;
-			}
-			$attStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
+		// try to get attributes from previously stored attribute (RT #23998)
+		$attrStr = $node->getAttribute('_wysiwyg_attribs');
+
+		if ( $attrStr != '' ) {
+			$attrStr = strtr($attrStr, array("\x7f-ent-" => '&'));
+			$attrStr = htmlspecialchars_decode($attrStr);
 		}
-		return $attStr;
+		else {
+			foreach ($node->attributes as $attrName => $attrNode) {
+				// ignore attributes used internally by Wysiwyg,
+				// "washtml" and with "_wysiwyg_" prefix
+				if ( ($attrName == 'washtml') || (substr($attrName, 0, 9) == '_wysiwyg_') ) {
+					continue;
+				}
+				$attrStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
+			}
+		}
+		return $attrStr;
 	}
 
 	/**
