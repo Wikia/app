@@ -53,6 +53,28 @@
 	clear: both;
 }
 
+.mw-explainconflict {
+	background-color: #c00;
+	color: #fff;
+	font-size: 1.1em;
+	margin: 2px 1px -2px 1px;
+	padding: 8px;
+	text-align: center;
+}
+
+.mw-explainconflict p {
+	margin: 0;
+}
+
+.mw-undo-success {
+	background-color: #A6710E;
+	color: #fff;
+	font-size: 1.1em;
+	margin: 2px 1px -2px 1px;
+	padding: 8px;
+	text-align: center;
+}
+
 #wikiPreview {
 	padding: 0 10px;
 }
