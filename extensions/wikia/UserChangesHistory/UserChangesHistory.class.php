@@ -28,12 +28,12 @@ class UserChangesHistory {
 	 * @static
 	 *
 	 * @param Integer $from -- which hook call this
-	 * @param User    $User -- User class instance
+	 * @param User    $user -- User class instance
 	 * @param String  $type -- UserLoadFromSessionInfo set this to 'cookie' or 'session'
 	 *
 	 * @return true		process other hooks
 	 */
-	static public function LoginHistoryHook( $from, $User, $type = false ) {
+	static public function LoginHistoryHook( $from, $user, $type = false ) {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
 		global $wgExternalDatawareDB;
 
@@ -43,7 +43,7 @@ class UserChangesHistory {
 		 * if user id is empty it means that user object is not loaded
 		 * store information only for registered users
 		 */
-		$id = $User->getId();
+		$id = $user->getId();
 		if ( $id ) {
 
 			if( $from == self::LOGIN_AUTO && $type == "session" ) {
@@ -57,7 +57,8 @@ class UserChangesHistory {
 					array(
 						"user_id"   => $id,
 						"city_id"   => $wgCityId,
-						"ulh_from"  => $from
+						"ulh_from"  => $from,
+						"ulh_rememberme" => $user->getOption('rememberpassword')
 					),
 					__METHOD__
 				);
@@ -86,13 +87,13 @@ class UserChangesHistory {
 	 *
 	 * @return true		process other hooks
 	 */
-	static public function SavePreferencesHook( $preferences, $User, $msg ) {
+	static public function SavePreferencesHook( $preferences, $user, $msg ) {
 
 		global $wgExternalDatawareDB;
 
 		wfProfileIn( __METHOD__ );
 
-		$id = $User->getId();
+		$id = $user->getId();
 		if( $id ) {
 			/**
 			 * caanot use "insert from select" because we got two different db
@@ -109,14 +110,14 @@ class UserChangesHistory {
 				"user_history",
 				array(
 					"user_id"          => $id,
-					"user_name"        => $User->mName,
-					"user_real_name"   => $User->mRealName,
-					"user_password"    => $User->mPassword,
-					"user_newpassword" => $User->mNewpassword,
-					"user_email"       => $User->mEmail,
-					"user_options"     => $User->encodeOptions(),
-					"user_touched"     => $User->mTouched,
-					"user_token"       => $User->mToken,
+					"user_name"        => $user->mName,
+					"user_real_name"   => $user->mRealName,
+					"user_password"    => $user->mPassword,
+					"user_newpassword" => $user->mNewpassword,
+					"user_email"       => $user->mEmail,
+					"user_options"     => $user->encodeOptions(),
+					"user_touched"     => $user->mTouched,
+					"user_token"       => $user->mToken,
 				),
 				__METHOD__
 			);
