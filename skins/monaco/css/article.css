@@ -118,19 +118,6 @@
 	text-decoration: none;
 }
 
-#shareFeatureInside {
-	padding: 10px !important;
-}
-
-#shareFeatureInside li {
-/*	line-height: 1.9em; */
-	padding: 4px 4px 4px 0px;
-}
-
-#shareFeatureInside img {
-	padding: 0 6px;
-}
-
 #page_tabs {
 	float: right;
 	font-family: arial, sans-serif;
