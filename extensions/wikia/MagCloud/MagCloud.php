@@ -35,9 +35,6 @@ if (empty($wgMagCloudUploadPath)) {
 	$wgMagCloudUploadPath = "http://images.wikia.com/m/magcloud";
 }
 
-// MagCloud API key
-$wgMagCloudPublicApiKey  = 'f0515620-ce8d-41f1-9354-d6907d4bf201';
-
 // Ajax dispatcher
 $wgAjaxExportList[] = 'MagCloudAjax';
 function MagCloudAjax() {
