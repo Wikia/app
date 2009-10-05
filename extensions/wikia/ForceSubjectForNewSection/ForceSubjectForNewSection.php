@@ -54,7 +54,7 @@ function ForceSubjectForNewSectionAddJS(&$editPage) {
 		$wgOut->addInlineScript(<<<END
 /* ForceSubjectForNewSection */
 function checkSubject(ev) {
-	var summary = document.getElementById('wpSummary');
+	var summary = \$G('wpSummaryEnhanced') || \$G('wpSummary');
 	if (!summary) {
 		return true;
 	}
