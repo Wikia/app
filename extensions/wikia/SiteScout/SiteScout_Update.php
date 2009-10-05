@@ -12,17 +12,17 @@ function wfSpecialSiteScoutUpdate(){
 	  }
 	  
 	  function execute(){
-			global $wgSiteView, $wgOut,$wgMimeType, $wgOutputEncoding;
+			global $wgSiteView, $wgOut,$wgMimeType, $wgOutputEncoding, $wgRequest;
 			$wgMimeType = "text/xml";
 			$wgOutputEncoding = "UTF-8";
 			require_once( 'SiteScoutClass.php' );
 			
 			$Scout = new SiteScoutXML;
-			$Scout->setShowEdits($_GET["edits"]);
-			$Scout->setShowVotes($_GET["votes"]);
-			$Scout->setShowComments($_GET["comments"]);
-			$Scout->setShowNetworkUpdates($_GET["networkupdates"]);
-			$Scout->setTimestamp($_GET["timestamp"]);
+			$Scout->setShowEdits( $wgRequest->getVal('edits', 0) );
+			$Scout->setShowVotes( $wgRequest->getVal('votes', 0) );
+			$Scout->setShowComments( $wgRequest->getVal('comments', 0) );
+			$Scout->setShowNetworkUpdates( $wgRequest->getVal('networkupdates', 0) );
+			$Scout->setTimestamp( $wgRequest->getVal('timestamp', 0) );
 			$output =  $Scout->displayItems();
 			echo $output;
 		
