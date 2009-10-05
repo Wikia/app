@@ -15,7 +15,8 @@ function wfSpecialSiteScoutPage(){
 	  }
 	  
 	    function execute(){
-			global $wgSiteView, $wgOut, $wgParser, $wgStyleVersion, $wgRequest, $wgUploadPath;
+			global $wgSiteView, $wgOut, $wgParser, $wgStyleVersion, $wgRequest, $wgUploadPath, $wgMemc;
+			global $wgUser, $wgDBname;
 
 			require_once ('extensions/wikia/SiteScout/SiteScoutClass.php');
 		 
@@ -31,35 +32,61 @@ function wfSpecialSiteScoutPage(){
 			</script>
 			");
 				
+			$options = array('scout_edits', 'scout_votes', 'scout_comments', 'scout_network_updates');
 			$output = '';
+			
+			foreach ( $options as $key ) {
+				$val = $wgMemc->get( wfMemcKey( $wgDBname, $key, $wgUser->getId() ) );
+				$options[$key] = ( isset($val) ) ? $val : null;
+			}
+			
+			extract($options);
 		
-			if ( isset( $_COOKIE['scout_edits'] ) ) {
-				$show_edits = $_COOKIE['scout_edits'];
-			}else{
-				$show_edits = $wgRequest->getVal('edits');
-				if(!isset($show_edits))$show_edits=1;
+			$show_edits = $wgRequest->getVal('edits', null);
+			$show_votes = $wgRequest->getVal('votes', null);
+			$show_comments = $wgRequest->getVal('comments', null);
+			$show_network_updates = $wgRequest->getVal('networkupdates', null);
+			
+			if ( isset( $scout_edits ) && !isset($show_edits) ) {
+				$show_edits = $scout_edits;
+			} else {
+				if ( isset($show_edits) ) {
+					$wgMemc->set( wfMemcKey( $wgDBname, "scout_edits", $wgUser->getId() ), $show_edits );
+				} else {
+					$show_edits = 1;
+				}
 			}
 	
-			if ( isset( $_COOKIE['scout_votes'] ) ) {
-				$show_votes = $_COOKIE['scout_votes'];
-			}else{
-				$show_votes = $wgRequest->getVal('votes');
-				if(!isset($show_votes))$show_votes=1;
+			if ( isset( $scout_votes ) ) {
+				$show_votes = $scout_votes;
+			} else {
+				if ( isset($show_votes) ) {
+					$wgMemc->set( wfMemcKey( $wgDBname, "scout_votes", $wgUser->getId() ), $show_votes );
+				} else {
+					$show_votes = 1;
+				}
 			}
 			
-			if ( isset( $_COOKIE['scout_comments'] ) ) {
-				$show_comments = $_COOKIE['scout_comments'];
-			}else{
-				$show_comments = $wgRequest->getVal('comments');
-				if(!isset($show_comments))$show_comments=1;
+			if ( isset( $scout_comments ) ) {
+				$show_comments = $scout_comments;
+			} else {
+				if ( isset($show_comments) ) {
+					$wgMemc->set( wfMemcKey( $wgDBname, "scout_comments", $wgUser->getId() ), $show_comments );
+				} else {
+					$show_comments = 1;
+				}
 			}
 			
-			if ( isset( $_COOKIE['scout_network_updates'] ) ) {
-				$show_network_updates = $_COOKIE['scout_network_updates'];
-			}else{
-				$show_network_updates = $wgRequest->getVal('networkupdates');
-				if(!isset($show_network_updates))$show_network_updates=1;
+			if ( isset( $scout_network_updates ) ) {
+				$show_network_updates = $scout_network_updates;
+			} else {
+				if ( isset($show_network_updates) ) {
+					$wgMemc->set( wfMemcKey( $wgDBname, "scout_network_updates", $wgUser->getId() ), $show_network_updates );
+				} else {
+					$show_network_updates = 1;
+				}
 			}
+			
 			$Scout = new SiteScoutHTML;
 			$Scout->setShowVotes($show_votes);
 			$Scout->setShowEdits($show_edits);

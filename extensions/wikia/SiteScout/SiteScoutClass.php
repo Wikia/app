@@ -78,10 +78,6 @@ class SiteScout{
 				if(!\$(\"f_votes\").checked){scout_votes=0}else{scout_votes=1};
 				if(!\$(\"f_comments\").checked){scout_comments=0}else{scout_comments=1};
 				if(\$(\"f_networkupdates\") && !\$(\"f_networkupdates\").checked){networkupdates=0}else{networkupdates=1};
-				document.cookie='scout_edits='+scout_edits
-				document.cookie='scout_votes='+scout_votes
-				document.cookie='scout_comments='+scout_comments
-				document.cookie='scout_networkupdates='+networkupdates
 				window.location=\"/index.php?title=Special:SiteScout&edits=\" + scout_edits+\"&votes=\" + scout_votes+\"&comments=\" + scout_comments+\"&networkupdates=\" + networkupdates
 			}
 			</script>";
