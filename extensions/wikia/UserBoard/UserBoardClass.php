@@ -197,6 +197,7 @@ class UserBoard {
 				
 				$sql = "DELETE FROM user_board WHERE ub_id={$ub_id}";
 				$res = $dbr->query($sql);
+				$dbr->commit();
 			
 				$stats = new UserStatsTrack($s->ub_user_id, $s->ub_user_name);
 				if($s->ub_type==0){
