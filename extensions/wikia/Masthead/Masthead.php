@@ -52,8 +52,8 @@ $wgAvailableRights[] = 'removeavatar';
 $wgGroupPermissions['staff']['removeavatar'] = true;
 #$wgGroupPermissions['sysop']['removeavatar'] = true;
 $wgGroupPermissions['helper']['removeavatar'] = true;
-extAddSpecialPage( '', 'RemoveAvatar', 'BlogAvatarRemovePage' );
-$wgSpecialPageGroups['RemoveAvatar'] = 'users';
+extAddSpecialPage( '', 'RemoveUserAvatar', 'UserAvatarRemovePage' );
+$wgSpecialPageGroups['RemoveUserAvatar'] = 'users';
 
 class Masthead {
 
@@ -838,7 +838,7 @@ class Masthead {
 					if ($isUserOnOwnPage && $wgUser->isAllowed( 'removeavatar' ) && !$Avatar->isDefault()) {
 						$avatarActions[] = array(
 							'tracker' => 'removeavatar',
-							'href' => Title::newFromText('RemoveAvatar', NS_SPECIAL)->getLocalUrl('action=search_user&av_user=' . $Avatar->getUserName()),
+							'href' => Title::newFromText('RemoveUserAvatar', NS_SPECIAL)->getLocalUrl('action=search_user&av_user=' . $Avatar->getUserName()),
 							'text' => wfMsg('blog-avatar-delete')
 						);
 					}
@@ -926,7 +926,7 @@ class Masthead {
 	}
 }
 
-class BlogAvatarRemovePage extends SpecialPage {
+class UserAvatarRemovePage extends SpecialPage {
 	var $mAvatar;
 	var $mTitle;
 	var $mPosted;
@@ -940,8 +940,8 @@ class BlogAvatarRemovePage extends SpecialPage {
 		$this->mPosted = false;
 		$this->mCommitRemoved = false;
 		$this->mSysMsg = false;
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'RemoveAvatar' );
-		parent::__construct( 'RemoveAvatar', 'removeavatar');
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'RemoveUserAvatar' );
+		parent::__construct( 'RemoveUserAvatar', 'removeavatar');
 	}
 
 	public function execute() {
