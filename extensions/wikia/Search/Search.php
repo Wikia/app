@@ -21,10 +21,12 @@ $dir = dirname(__FILE__) . '/';
 
 require_once( $dir . 'SolrPhpClient/Apache/Solr/Service.php' );
 
-//$wgExtensionMessagesFiles['WikiaSearch'] = $dir . 'Search.i18n.php';
+// messages
+$wgExtensionMessagesFiles['WikiaSearch'] = $dir . 'Search.i18n.php';
 
 // hooks
 $wgHooks['SearchShowHit'][] = 'SolrResult::showHit';
+$wgHooks['SpecialSearchBoxExtraRefinements'][] = 'SolrSearch::renderExtraRefinements';
 
 // classes
 $wgAutoloadClasses['SolrSearch'] = $dir . 'Search_body.php';
