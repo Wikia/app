@@ -1,4 +1,5 @@
 == Changes since 200910.1 ==
+* rt#23962: Memory alpha redirects (eloy)
 * rt#20000: FCK: Problems with signatures when used in templates (Macbre)
 
 == Changes since 200909.5 ==
