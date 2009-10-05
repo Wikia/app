@@ -132,8 +132,15 @@ while( $request->Accept() >= 0 ) {
 	# if last part of $request_uri is \d+px-\. it is probably thumbnail
 	#
 	my( $width ) = $last =~ /^(\d+)px\-.+\w$/;
+
+	#
+	# but ogghandler thumbnails can have seek=\d+ or mid
+	#
+	( $width ) = $last =~ /^seek=(\d+)\-.+\w$/ unless $width;
+	( $width ) = $last =~ /^(mid)\-.+\w$/ unless $width;
+
 	if( $width ) {
-		$width = $maxwidth if ( $width > $maxwidth );
+		$width = $maxwidth if $width =~ /^\d+$/ && $width > $maxwidth;
 		#
 		# guess rest of image, last three parts would be image name and two
 		# subdirectories
@@ -228,6 +235,31 @@ while( $request->Accept() >= 0 ) {
 					undef $rsvg;
 					undef $xmlp;
 				}
+				elsif( $mimetype =~ m!application/ogg! ) {
+					#
+					# check what frame we should get...
+					#
+					my $seek = ( $width eq "mid" ) ? 1 : $width;
+
+					#
+					# ... but take first second anyway
+					#
+					my @cmd = ();
+					# -ss 1 -f mjpeg -vframes 1
+					push @cmd, $ffmpeg;
+					push @cmd, qw(-ss 1);
+					push @cmd, "-an";
+					push @cmd, qw(-vframes 1);
+					push @cmd, "-y";
+					push @cmd, "-i", $original;
+					push @cmd, qw(-f mjpeg);
+					push @cmd, $thumbnail;
+
+					use Data::Dumper;
+					print Dumper( \@cmd );
+					system( @cmd ) == 0 and $transformed = 1;
+					exit if $test;
+				}
 				else {
 					#
 					# for other else use Imager
@@ -270,18 +302,7 @@ while( $request->Accept() >= 0 ) {
 			}
 		}
 	}
-	else {
-		#
-		# but ogghandler thumbnails can have seek=\d+ or mid
-		#
 
-		print $last;
-		# first seek
-		( $width ) = $last =~ /^seek=(\d+)\-.+\w$/;
-		# then mid
-		( $width ) = $last =~ /^(mid)\-.+\w$/;
-		print $width . $/;
-	}
 	if( ! $transformed ) {
 		real404( $request_uri )
 	}
