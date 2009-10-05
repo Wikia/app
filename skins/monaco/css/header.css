@@ -49,44 +49,6 @@
 	top: 0;
 	width: 300px;
 }
-#wikia_header a.bigButton {
-	margin-top: -5px;
-}
-
-a.bigButton {
-	display: block;
-	float: left;
-	height: 21px;
-	overflow: hidden;
-	padding-right: 10px;
-	position: relative;
-	text-decoration: none;
-}
-a.bigButton:hover {
-	text-decoration: none;
-}
-a.bigButton * {
-	cursor: pointer;
-	float: left;
-	font-family: "Lucida Grande", arial, sans-serif;
-	font-size: 9pt;
-	font-weight: bold;
-	height: 21px;
-	line-height: 21px;
-}
-a.bigButton big, a.bigButton small {
-	background: url(http://images.wikia.com/common/skins/monaco/images/big_button.png?1) no-repeat;
-}
-a.bigButton big {
-	color: #EEE;
-	padding-left: 10px;
-}
-a.bigButton small {
-	clip: rect(0px 300px 21px 290px);
-	position: absolute;
-	right: 0;
-	width: 300px;
-}
 
 /* macbre: greyed out buttons */
 a.greyButton big, a.greyButton small {
@@ -101,12 +63,13 @@ a.greyButton big {
 #userData {
 	padding-bottom: 7px;
 	position: absolute;
-	top: 10px;
 	right: 5px;
+	top: 0;
 }
 #userData li {
 	float: left;
 	font-size: 9pt;
+	line-height: 30px;
 	margin-right: 8px;
 }
 #userData a, #wikiaBranding a {

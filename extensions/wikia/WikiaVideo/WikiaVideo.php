@@ -216,14 +216,13 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 					// "Add video" green button
 					$out .= Xml::openElement('a', array(
 						'id' => "WikiaVideoGalleryPlaceholder{$args['id']}x{$i}",
-						'class' => 'bigButton',
+						'class' => 'wikia_button',
 						'style' => "top: 110px",
 						'href' => '#',
 						'onclick' => $onclick,
 					));
 
-					$out .= Xml::element('big', array(),  wfMsg('wikiavideo-create'));
-					$out .= Xml::openElement('small', array()) . '&nbsp;' . Xml::closeElement('small');
+					$out .= Xml::element('span', array(),  wfMsg('wikiavideo-create'));
 					$out .= Xml::closeElement('a');
 
 					$out .= Xml::closeElement('div') . Xml::closeElement('div') . Xml::closeElement('td');
@@ -342,14 +341,13 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		if (empty($plc_template)) {
 			$html .= Xml::openElement('a', array(
 				'id' => "WikiaVideoPlaceholderInner{$wgWikiaVideoPlaceholderId}",
-				'class' => 'bigButton',
+				'class' => 'wikia_button',
 				'style' => "top: {$tmarg}px",
 				'href' => '#',
 				'onclick' => !empty($onclick) ? $onclick : '',
 			));
 
-			$html .= Xml::element('big', array(),  wfMsg('wikiavideo-create'));
-			$html .= Xml::openElement('small', array()) . '&nbsp;' . Xml::closeElement('small');
+			$html .= Xml::element('span', array(),  wfMsg('wikiavideo-create'));
 
 			$html .= Xml::closeElement('a');
 		}

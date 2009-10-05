@@ -33,7 +33,7 @@ if( count( $comments ) > 10 && isset( $props[ "commenting" ] ) && $props[ "comme
 		<!-- submit -->
 		<? if (!$isReadOnly) { ?>
 		<script type="text/javascript">
-		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-top\" class=\"bigButton\"><big><? echo wfMsg("blog-comment-post") ?></big><small></small></a>");
+		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-top\" class=\"wikia_button\"><span><? echo wfMsg("blog-comment-post") ?></span></a>");
 		</script>
 		<noscript>
 		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-top" value="<? echo wfMsg("blog-comment-post") ?>" />
@@ -84,7 +84,7 @@ endif;
 		<!-- submit -->
 		<? if (!$isReadOnly) { ?>
 		<script type="text/javascript">
-		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-bottom\" class=\"bigButton\"><big><? echo wfMsg("blog-comment-post") ?></big><small></small></a>");
+		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-bottom\" class=\"wikia_button\"><span><? echo wfMsg("blog-comment-post") ?></span></a>");
 		</script>
 		<noscript>
 		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-bottom" value="<? echo wfMsg("blog-comment-post") ?>" />

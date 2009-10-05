@@ -1502,16 +1502,10 @@ if( $custom_user_data ) {
 					<a rel="nofollow" href="http://www.wikia.com/wiki/Special:CreateWiki" id="request_wiki"><?=wfMsg('createwikipagetitle')?></a>
 				</li>
 				<li id="userLogin">
-					<a rel="nofollow" class="bigButton ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>">
-						<big><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></big>
-						<small>&nbsp;</small>
-					</a>
+					<a rel="nofollow" class="wikia_button ajaxLogin" id="login" href="<?= htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><span><?= htmlspecialchars($this->data['userlinks']['login']['text']) ?></span></a>
 				</li>
 				<li>
-					<a rel="nofollow" class="bigButton" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>">
-						<big><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></big>
-						<small>&nbsp;</small>
-					</a>
+					<a rel="nofollow" class="wikia_button" id="register" href="<?= htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><span><?= htmlspecialchars($this->data['userlinks']['register']['text']) ?></span></a>
 				</li>
 <?php
 	}
