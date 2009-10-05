@@ -273,6 +273,7 @@ class WikiaCollection extends SpecialPage {
 			var content = $('#bolek');
 			$('body').replaceWith(content);
 			$('table#toc, span.editsection').remove();
+			$('div.bolek-remove').replaceWith('');
 			$('div.tleft, div.tright').each(function (e) {
 				var img = $(this).find('img.thumbimage');
 				var width = img.width();
@@ -283,6 +284,8 @@ class WikiaCollection extends SpecialPage {
 					next.css({'margin-top': -(height + 2) + 'px'});
 					$(this).prev('p, div.quote, ul').append('<br clear=\"left\" />');
 					$(this).replaceWith(img);
+				} else {
+					$(this).replaceWith('');
 				}
 			});
 			$('#bolek').css({'font-family': 'Utopia'});
