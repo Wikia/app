@@ -243,7 +243,7 @@ foreach my $user_id (sort keys %USERS) {
 
 		#
 		# count all in content namespace
-		my $db_local = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, 'sayid', $databases->{$city_id} )} );
+		my $db_local = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, 'stats', $databases->{$city_id} )} );
 		$select = "count(*) as cnt";
 		$from = "revision";
 		@where = (
