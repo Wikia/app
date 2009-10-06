@@ -21,7 +21,7 @@ class VideoPage extends Article {
 	const V_CLIPFISH = 14;
 	const V_MYVIDEO = 15;
 	const V_SOUTHPARKSTUDIOS = 16;
-	const V_BLIP 17;
+	const V_BLIP = 17;
 	const V_DAILYMOTION = 18;
 	const V_VIDDLER	 = 19;
 	const V_GAMETRAILERS = 20;
