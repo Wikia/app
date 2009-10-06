@@ -139,7 +139,10 @@ foreach($themes as $theme => $colors) {
 	SpecialMagCloud.renderImageForCover($('#MagCloudCoverEditorImageName').attr('value'), 100);
 
 	// use WMU for image upload
-	$('#MagCloudCoverEditorImageUpload').click(WMU_show);
+	$('#MagCloudCoverEditorImageUpload').click(function() {
+		$('#WMU_div_c').css('display', 'block');
+		WMU_show();
+	});
 
 	// catch wikitext added by WMU
 	function insertTags(wikitext) {
@@ -165,6 +168,10 @@ foreach($themes as $theme => $colors) {
 
 		// update the info
 		$('#MagCloudCoverEditorImageInfo').html( (<?= Xml::encodeJsVar(wfMsg('magcloud-design-image-selected')) ?>).replace(/\$1/, wikitext) );
+
+		// hide WMU (RT #23848)
+		$('#WMU_div_c').css('display', 'none');
+		$('#ImageUploadSummary').find('input').click();
 	}
 /*]]>*/</script>
 
