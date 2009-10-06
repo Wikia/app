@@ -244,6 +244,7 @@ foreach my $user_id (sort keys %USERS) {
 		#
 		# count all in content namespace
 		my $db_local = new Wikia::DB( {"dbh" => $lb->getConnection( Wikia::LB::DB_SLAVE, 'stats', $databases->{$city_id} )} );
+		$db_local->check_lag();
 		$select = "count(*) as cnt";
 		$from = "revision";
 		@where = (
@@ -278,6 +279,7 @@ foreach my $user_id (sort keys %USERS) {
 		}
 		
 		$db_local->disconnect() if ($db_local);
+		delete($db_local);
 	}
 =end of main loop
 =cut
