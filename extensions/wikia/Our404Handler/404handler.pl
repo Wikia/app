@@ -248,7 +248,6 @@ while( $request->Accept() >= 0 ) {
 					# -ss 1 -f mjpeg -vframes 1
 					#push @cmd, $ffmpeg;
 					push @cmd, qw(-ss 1);
-					push @cmd, qw(-loglevel quiet);
 					push @cmd, "-an";
 					push @cmd, qw(-vframes 1);
 					push @cmd, "-y";
