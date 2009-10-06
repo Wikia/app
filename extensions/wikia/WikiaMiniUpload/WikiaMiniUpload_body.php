@@ -6,6 +6,8 @@
 
 class WikiaMiniUpload {
 
+	private $tempFileId = 0;
+
 	// this is the function that wraps up the WMU loaded from view, because otherwise
 	// there would be a problem loading the messages
 	// messages themselves are sent in json
@@ -143,7 +145,7 @@ class WikiaMiniUpload {
 			),
 			__METHOD__
 		);	
-
+		$this->tempFileId = $dbw->insertId();
 	}
 
 	// remove the data about this file from the db, so it won't clutter it
@@ -286,6 +288,7 @@ class WikiaMiniUpload {
 			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
+			$this->tempFileStoreInfo( $tempname );
 			$props = array();
 			$props['file'] = $file;
 			$props['name'] = stripslashes($wgRequest->getFileName('wpUploadFile'));
