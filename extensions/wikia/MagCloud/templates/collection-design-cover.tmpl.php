@@ -149,7 +149,14 @@ foreach($themes as $theme => $colors) {
 		wikitext = wikitext.substring(2);
 
 		// get image name (part of wikitext before |)
-		wikitext = wikitext.substring(0, wikitext.indexOf('|'));
+		if (wikitext.indexOf('|') > -1) {
+			// [[Image:foo.png|thumb]]
+			wikitext = wikitext.substring(0, wikitext.indexOf('|'));
+		}
+		else {
+			// [[Image:foo.png]]
+			wikitext = wikitext.substring(0, wikitext.length - 2);
+		}
 
 		// set image name
 		$('#MagCloudCoverEditorImageName').attr('value', wikitext);
