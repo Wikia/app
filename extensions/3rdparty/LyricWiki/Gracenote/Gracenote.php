@@ -135,6 +135,12 @@ function gracenote_disableEdit(&$out, &$sk){
 function gracenote_installCopyProtection(&$out, &$sk){
 #	Uncomment this for local testing -- Wikia already loads jquery
 #	$out->addScript("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js\"></script>");
+
+	# only on Gracenote pages!
+	global $wgTitle;
+	if ( $wgTitle->getNamespace() !== NS_GRACENOTE ) {
+		return false;
+	}
 	
 	// Disable text-selection in the lyricsbox divs (this only needs to be done once between both the lyrics and gracenotelyrics extensions.
 	$DISABLE_TEXT_SELECTION_FUNCTIONS = "
