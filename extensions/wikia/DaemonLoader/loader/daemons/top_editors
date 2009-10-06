@@ -279,7 +279,7 @@ foreach my $user_id (sort keys %USERS) {
 		}
 		
 		$db_local->disconnect() if ($db_local);
-		delete($db_local);
+		undef $db_local ;
 	}
 =end of main loop
 =cut
