@@ -781,6 +781,7 @@ function WMU_insertImage(e, type) {
 	var params = Array();
 	params.push('type='+type);
 	params.push('mwname='+$G('ImageUploadMWname').value);
+	params.push('tempid='+$G('ImageUploadTempid').value);
 
 	if(type == 'overwrite') {
 		params.push('name='+ encodeURIComponent( $G('ImageUploadExistingName').value ) );
@@ -1002,7 +1003,7 @@ function WMU_switchScreen(to) {
 		$G('ImageUploadBack').style.display = 'none';
 	}
 	if((WMU_prevScreen == 'Details' || WMU_prevScreen == 'Conflict') && WMU_curScreen == 'Main' && $G('ImageUploadName')) {
-		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $G('ImageUploadMWname').value);
+		YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=WMU&method=clean&mwname=' + $G('ImageUploadMWname').value + '&tempid=' + $G( 'ImageUploadTempid' ));
 	}
 }
 

@@ -396,6 +396,7 @@ class WikiaMiniUpload {
 		$type = $wgRequest->getVal('type');
 		$name = $wgRequest->getVal('name');
 		$mwname = $wgRequest->getVal('mwname');
+		$tempid = $wgRequest->getVal('tempid');
 
 		( '' != $wgRequest->getVal( 'gallery' ) ) ? $gallery = $wgRequest->getVal( 'gallery' ) : $gallery = '' ;
 		( '' != $wgRequest->getVal( 'article' ) ) ? $title_main = urldecode( $wgRequest->getVal( 'article' ) ) : $title_main = '' ;
@@ -464,7 +465,7 @@ class WikiaMiniUpload {
 
 						$file_name->upload($file_mwname->getPath(), '', $caption);
 						$file_mwname->delete('');
-						$this->tempFileClearInfo();
+						$this->tempFileClearInfo( $tempid );
 						$newFile = false;
 					} else if($type == 'existing') {
 						header('X-screen-type: existing');
@@ -539,7 +540,7 @@ class WikiaMiniUpload {
 
 					$file->upload($temp_file->getPath(), '', $caption);
 					$temp_file->delete('');
-					$this->tempFileClearInfo();
+					$this->tempFileClearInfo( $tempid );
 				}
 
 				if( $wgUser->getOption( 'watchdefault' ) || ( $newFile && $wgUser->getOption( 'watchcreations' ) ) ) {
@@ -672,7 +673,7 @@ class WikiaMiniUpload {
 		global $wgRequest;
 		$file = new FakeLocalFile(Title::newFromText($wgRequest->getVal('mwname'), 6), RepoGroup::singleton()->getLocalRepo());
 		$file->delete('');
-		$this->tempFileClearInfo();
+		$this->tempFileClearInfo( $wgRequest->getVal('tempid') );
 	}
 }
 
