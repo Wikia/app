@@ -587,8 +587,8 @@ hu',
 'widget-shoutbox-disabled' => 'The Shoutbox widget is disabled on this wiki.',
 
 # MagCloud widget
-'magcloud-widget-title' => 'MagCloud Magazine Creator',
-'magcloud-widget-desc' => 'Create, publish and order a magazine created with content from this wiki',
+'magcloud-widget-title' => 'Magazine Creator',
+'magcloud-widget-desc' => 'Create a magazine from content on this wiki',
 
 #Wikia Widgets tooltips
 'wt_help_startup'  => '|Not familiar with widgets?||Open user menu and click "Manage widgets"...',
