@@ -253,6 +253,7 @@
 }
 
 #MagCloudCoverEditorImageUpload {
+	float: left;
 	margin-top: 5px;
 }
 
@@ -306,6 +307,10 @@
 #SpecialMagCloudPreviews .SpecialMagCloudPreviewPage img {
 	cursor: pointer;
 	width: 280px;
+}
+
+#SpecialMagCloudButtons a.forward {
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/wikia_button_sprite.png) no-repeat right -62px; 
 }
 
 /* publish */

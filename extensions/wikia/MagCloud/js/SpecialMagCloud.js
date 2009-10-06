@@ -220,7 +220,7 @@ SpecialMagCloud.doSaveCollection = function() {
 	$('#MagCloudSaveMagazine').css('visibility', 'hidden');
 	MagCloud.ajax('saveCollection', {}, function(data) {
 		var node = $('#MagCloudSaveMagazine')
-		node.before('<span id="MagCloudSaveMagazine" style="margin-left: ' + node.css('marginLeft')  + '; position: absolute">' + data.shortMsg + '</span>');
+		node.before('<span id="MagCloudSaveMagazine">' + data.shortMsg + '</span>');
 		node.remove();
 	});
 }
@@ -280,7 +280,7 @@ SpecialMagCloud.renderPdf = function(hash, timestamp, node) {
 		$('#SpecialMagCloudPreviewNext').click(SpecialMagCloud.nextPagePreview);
 
 		// show "Publish your magazine" button
-		$('#SpecialMagCloudButtons a').eq(2).show();
+		$('#SpecialMagCloudButtons a').eq(1).css('visibility', 'visible');
 
 		// debug
 		MagCloud.log(SpecialMagCloud);

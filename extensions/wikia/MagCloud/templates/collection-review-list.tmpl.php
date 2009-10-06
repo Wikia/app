@@ -25,16 +25,14 @@
 <?php
 	if (!$isAnon):
 ?>
-	<a id="MagCloudOpenLoadMagazineDialog" class="bigButton greyButton" style="left: 0">
-		<big><?= wfMsg('magcloud-load-magazine-title'); ?></big>
-		<small> </small>
+	<a id="MagCloudOpenLoadMagazineDialog" class="wikia_button secondary" style="float: left">
+		<span><?= wfMsg('magcloud-load-magazine-title'); ?></span>
 	</a>
 <?php
 	endif;
 ?>
-	<a id="MagCloudGoToMagazine" class="bigButton" href="<?= htmlspecialchars($title->getLocalUrl() . '/Design_Cover') ?>" style="right: 0">
-		<big><?= wfMsg('magcloud-button-design-a-cover'); ?> &raquo;</big>
-		<small> </small>
+	<a id="MagCloudGoToMagazine" class="wikia_button forward" href="<?= htmlspecialchars($title->getLocalUrl() . '/Design_Cover') ?>" style="float: right">
+		<span><?= wfMsg('magcloud-button-design-a-cover'); ?></span>
 	</a>
 </div>
 
