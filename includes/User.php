@@ -2955,13 +2955,28 @@ class User {
 		$invalidateURL = $this->invalidationTokenUrl( $token );
 		$this->saveSettings();
 
-		return $this->sendMail( wfMsg( 'confirmemail_subject' ),
-			wfMsg( 'confirmemail_body',
-				wfGetIP(),
-				$this->getName(),
-				$url,
-				$wgLang->timeanddate( $expiration, false ),
-				$invalidateURL ), null, null, 'ConfirmationMail' );
+		/* Wikia change begin - @author: Marooned */
+		/* HTML e-mails functionality */
+		global $wgEnableRichEmails;
+		if (empty($wgEnableRichEmails)) {
+			return $this->sendMail( wfMsg( 'confirmemail_subject' ),
+				wfMsg( 'confirmemail_body',
+					wfGetIP(),
+					$this->getName(),
+					$url,
+					$wgLang->timeanddate( $expiration, false ),
+					$invalidateURL ), null, null, 'ConfirmationMail' );
+		} else {
+			$IP = wfGetIP();
+			$name = $this->getName();
+			$expDate = $wgLang->timeanddate( $expiration, false );
+			$wantHTML = $this->isAnon() || $this->getOption('htmlemails');
+
+			list($body, $bodyHTML) = wfMsgHTMLwithLanguage('confirmemail_body', $this->getOption('language'), array(), array($IP, $name, $url, $expDate, $invalidateURL), $wantHTML);
+
+			return $this->sendMail( wfMsg( 'confirmemail_subject' ), $body, null, null, 'ConfirmationMail', $bodyHTML );
+		}
+		/* Wikia change end */
 	}
 
 	/* c&p quick hack for re-confirmation */
@@ -2973,16 +2988,29 @@ class User {
 		$invalidateURL = $this->invalidationTokenUrl( $token );
 		$this->saveSettings();
 
-		return $this->sendMail( wfMsg( 'reconfirmemail_subject' ),
-			wfMsg( 'reconfirmemail_body',
-				wfGetIP(),
-				$this->getName(),
-				$url,
-				$wgLang->timeanddate( $expiration, false ),
-				$invalidateURL ), null, null, 'ReConfirmationMail'  );
+		/* Wikia change begin - @author: Marooned */
+		/* HTML e-mails functionality */
+		global $wgEnableRichEmails;
+		if (empty($wgEnableRichEmails)) {
+			return $this->sendMail( wfMsg( 'reconfirmemail_subject' ),
+				wfMsg( 'reconfirmemail_body',
+					wfGetIP(),
+					$this->getName(),
+					$url,
+					$wgLang->timeanddate( $expiration, false ),
+					$invalidateURL ), null, null, 'ReConfirmationMail'  );
+		} else {
+			$IP = wfGetIP();
+			$name = $this->getName();
+			$expDate = $wgLang->timeanddate( $expiration, false );
+			$wantHTML = $this->isAnon() || $this->getOption('htmlemails');
+
+			list($body, $bodyHTML) = wfMsgHTMLwithLanguage('reconfirmemail_body', $this->getOption('language'), array(), array($IP, $name, $url, $expDate, $invalidateURL), $wantHTML);
+
+			return $this->sendMail( wfMsg( 'reconfirmemail_subject' ), $body, null, null, 'ReConfirmationMail', $bodyHTML );
+		}
+		/* Wikia change end */
 	}
-
-
 
 	/**
 	 * Send an e-mail to this user's account. Does not check for
@@ -2992,9 +3020,11 @@ class User {
 	 * @param $body \string Message body
 	 * @param $from \string Optional From address; if unspecified, default $wgPasswordSender will be used
 	 * @param $replyto \string Reply-To address
+	 * @param $category \string type of e-mail used for statistics (added by Marooned @ Wikia)
+	 * @param $bodyHTML \string rich version of $body (added by Marooned @ Wikia)
 	 * @return \types{\bool,\type{WikiError}} True on success, a WikiError object on failure
 	 */
-	function sendMail( $subject, $body, $from = null, $replyto = null, $category='unknown' ) {
+	function sendMail( $subject, $body, $from = null, $replyto = null, $category = 'unknown', $bodyHTML = null ) {
 		if( is_null( $from ) ) {
 			global $wgPasswordSender;
 			$from = $wgPasswordSender;
@@ -3002,7 +3032,16 @@ class User {
 
 		$to = new MailAddress( $this );
 		$sender = new MailAddress( $from );
-		return UserMailer::send( $to, $sender, $subject, $body, $replyto, null, $category );
+		/* Wikia change begin - @author: Marooned */
+		/* HTML e-mails functionality */
+		global $wgEnableRichEmails;
+		$richMail = !empty($wgEnableRichEmails) && ($this->isAnon() || $this->getOption('htmlemails')) && !empty($bodyHTML);
+		if ($richMail) {
+			return UserMailer::sendHTML( $to, $sender, $subject, $body, $bodyHTML, $replyto, $category );
+		} else {
+			return UserMailer::send( $to, $sender, $subject, $body, $replyto, null, $category );
+		}
+		/* Wikia change end */
 	}
 
 	/**

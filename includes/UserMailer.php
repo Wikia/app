@@ -180,11 +180,11 @@ class UserMailer {
 			/* Wikia change end */
 
 			// Create the mail object using the Mail::factory method
-                        if( is_array( $wgSchwartzMailer ) ) {
-			        $mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
-                        } else {
-			        $mail_object =& Mail::factory('smtp', $wgSMTP);
-                        }
+			if( is_array( $wgSchwartzMailer ) ) {
+				$mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
+			} else {
+				$mail_object =& Mail::factory('smtp', $wgSMTP);
+			}
 			if( PEAR::isError( $mail_object ) ) {
 				wfDebug( "PEAR::Mail factory failed: " . $mail_object->getMessage() . "\n" );
 				return new WikiError( $mail_object->getMessage() );
@@ -258,6 +258,108 @@ class UserMailer {
 				return true;
 			}
 		}
+	}
+
+	/**
+	 * This function will perform a direct (authenticated) login to
+	 * a SMTP Server to use for mail relaying if 'wgSMTP' specifies an
+	 * array of parameters. If wgSchwartzMailer is defined it will supersede wgSMTP.
+	 * It sends e-mails in rich format using HTML syntax.
+	 *
+	 * @param $to MailAddress: recipient's email
+	 * @param $from MailAddress: sender's email
+	 * @param $subject String: email's subject.
+	 * @param $body String: email's text (plain).
+	 * @param $bodyHTML String: email's text (rich).
+	 * @param $replyto MailAddress: optional reply-to email (default: null).
+	 * @param $category String: optional category for statistic [added by Wikia]
+	 * @return mixed True on success, a WikiError object on failure.
+	 */
+	static function sendHTML( $to, $from, $subject, $body, $bodyHTML, $replyto=null, $category='unknown' ) {
+		global $wgSMTP, $wgSchwartzMailer;
+
+		//unlike mail(), this function takes only one recipient at the time
+		if (is_array($to)) {
+			return new WikiError('Parameter $to can not be an array.');
+		}
+
+		if (!is_array($wgSMTP) && !is_array($wgSchwartzMailer)) {
+			return new WikiError('Sending via PHP mail() is not supported.');
+		}
+
+		/* Send a message to the MQ */
+		global $wgReportMailViaStomp;
+		if(!empty($wgReportMailViaStomp)) {
+			wfProfileIn(__METHOD__ . '-stomp');
+			global $wgStompServer, $wgStompUser, $wgStompPassword, $wgCityId;
+			$stomp = new Stomp($wgStompServer);
+			$stomp->connect($wgStompUser, $wgStompPassword);
+			$stomp->sync = false;
+			$key = 'wikia.email.' . $category;
+			$count = count(explode("\n", $to));
+			$stomp->send($key,
+				Wikia::json_encode(array(
+					'category' => $category,
+					'wikiID' => $wgCityId,
+					'count' => $count
+				)),
+				array('exchange' => 'amq.topic', 'bytes_message' => 1)
+			);
+			wfProfileOut(__METHOD__ . '-stomp');
+		}
+
+		require_once( 'Mail.php' );
+		require_once( 'Mail/mime.php' );
+
+		$msgid = str_replace(" ", "_", microtime());
+		if (function_exists('posix_getpid'))
+			$msgid .= '.' . posix_getpid();
+
+		$headers = array(
+			'From' => $from->toString(),
+			'To' => $to->address,
+			'Subject' => wfQuotedPrintable( $subject ),
+			'Date' => date( 'r' ),
+			'Message-ID' => "<$msgid@" . $wgSMTP['IDHost'] . '>', // FIXME
+			'X-Mailer' => 'MediaWiki mailer'
+		);
+		if ( $replyto ) {
+			$headers['Reply-To'] = $replyto->toString();
+		}
+
+		/* Add category to header to allow easier data gathering */
+		$headers['X-Msg-Category'] = $category;
+
+		$mime = new Mail_mime();
+
+		$mime->setTXTBody($body);
+		$mime->setHTMLBody($bodyHTML);
+		//$file = './image.png';
+		//$mime->addAttachment($file, 'image/png');
+
+		//do not ever try to call these lines in reverse order
+		$body = $mime->get(array('text_encoding' => '8bit', 'html_charset' => 'UTF-8', 'text_charset' => 'UTF-8'));
+		$headers = $mime->headers($headers);
+
+		// Create the mail object using the Mail::factory method
+		if( is_array( $wgSchwartzMailer ) ) {
+			$mail_object =& Mail::factory('theschwartzhttp', $wgSchwartzMailer);
+		} else {
+			$mail_object =& Mail::factory('smtp', $wgSMTP);
+		}
+
+		if( PEAR::isError( $mail_object ) ) {
+			wfDebug( "PEAR::Mail factory failed: " . $mail_object->getMessage() . "\n" );
+			return new WikiError( $mail_object->getMessage() );
+		}
+
+		wfDebug( "Sending mail via PEAR::Mail to {$to->address}\n" );
+		$e = self::sendWithPear($mail_object, array($to->address), $headers, $body);
+		if( WikiError::isError( $e ) ) {
+			return $e;
+		}
+
+		return true;
 	}
 
 	/**

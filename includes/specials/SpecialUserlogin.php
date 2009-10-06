@@ -727,9 +727,19 @@ class LoginForm {
 		$u->setNewpassword( $np, $throttle );
 		$u->saveSettings();
 
-		$m = wfMsgExt( $emailText, array( 'parsemag' ), $ip, $u->getName(), $np,
-				$wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 ) );
-		$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, null, 'TemporaryPassword' );
+		/* Wikia change begin - @author: Marooned */
+		/* HTML e-mails functionality */
+		global $wgEnableRichEmails;
+		if (empty($wgEnableRichEmails)) {
+			$m = wfMsgExt( $emailText, array( 'parsemag' ), $ip, $u->getName(), $np,
+					$wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 ) );
+			$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, null, 'TemporaryPassword' );
+		} else {
+			$wantHTML = $u->isAnon() || $u->getOption('htmlemails');
+			list($m, $mHTML) = wfMsgHTMLwithLanguage($emailText, $u->getOption('language'), array( 'parsemag' ), array($ip, $u->getName(), $np, $wgServer . $wgScript, round( $wgNewPasswordExpiry / 86400 )), $wantHTML);
+			$result = $u->sendMail( wfMsg( $emailTitle ), $m, null, null, 'TemporaryPassword', $mHTML );
+		}
+		/* Wikia change end */
 
 		return $result;
 	}
