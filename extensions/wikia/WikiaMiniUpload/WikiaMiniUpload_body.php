@@ -127,14 +127,12 @@ class WikiaMiniUpload {
 	}
 
 	function tempFileName( $user ) {
-		global $wgCityId;
-		return 'Temp_file_'. $wgCityId . $user->getID().'_'.time();
-
+		return 'Temp_file_'. $user->getID(). '_' . time();
 	}
 
 	// store info in the db to enable the script to pick it up later during the day (via an automated cleaning routine) 
 	function tempFileStoreInfo( $filename ) {
-		global $wgExternalSharedDB;	
+		global $wgExternalSharedDB, $wgCityId;	
 
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );		
 		$dbw->insert(
@@ -142,6 +140,7 @@ class WikiaMiniUpload {
 			array(
 				'gc_filename'	=>	$filename,
 				'gc_timestamp'	=>	$dbw->timestamp()	
+				'gc_wiki_id'	=>	$wgCityId;
 			),
 			__METHOD__
 		);	
@@ -149,14 +148,14 @@ class WikiaMiniUpload {
 	}
 
 	// remove the data about this file from the db, so it won't clutter it
-	function tempFileClearInfo( $id ) {
+	function tempFileClearInfo( ) {
 		global $wgExternalSharedDB;
 		
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->insert(
 			'garbage_collector',
 			array(
-				'gc_id'	=>	$id
+				'gc_id'	=>	$this->tempFileId
 			),
 			__METHOD__
 		);			
@@ -465,6 +464,7 @@ class WikiaMiniUpload {
 
 						$file_name->upload($file_mwname->getPath(), '', $caption);
 						$file_mwname->delete('');
+						$this->tempFileClearInfo();
 						$newFile = false;
 					} else if($type == 'existing') {
 						header('X-screen-type: existing');
@@ -539,6 +539,7 @@ class WikiaMiniUpload {
 
 					$file->upload($temp_file->getPath(), '', $caption);
 					$temp_file->delete('');
+					$this->tempFileClearInfo();
 				}
 
 				if( $wgUser->getOption( 'watchdefault' ) || ( $newFile && $wgUser->getOption( 'watchcreations' ) ) ) {
@@ -671,6 +672,7 @@ class WikiaMiniUpload {
 		global $wgRequest;
 		$file = new FakeLocalFile(Title::newFromText($wgRequest->getVal('mwname'), 6), RepoGroup::singleton()->getLocalRepo());
 		$file->delete('');
+		$this->tempFileClearInfo();
 	}
 }
 
