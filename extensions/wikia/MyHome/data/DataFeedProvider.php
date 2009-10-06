@@ -144,7 +144,7 @@ class DataFeedProvider {
 									self::$images[$imageName] = $cnt;
 								}
 
-								if(self::$images[$imageName] < 50) {
+								if(self::$images[$imageName] < 20) {
 									$item['new_images'][] = $image;
 								}
 							}
