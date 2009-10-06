@@ -24,7 +24,7 @@ class VideoPage extends Article {
 	const V_BLIP = 17;
 	const V_DAILYMOTION = 18;
 	const V_VIDDLER	 = 19;
-	const V_GAMETRAILERS = 20;
+	//const V_GAMETRAILERS = 20;
 
 	var	$mName,
 		$mVideoName,
@@ -687,7 +687,7 @@ EOD;
 				break;
 			case self::V_GAMETRAILERS:
 				$ratio = (480 / 401);
-				break;	
+				break;
 			default:
 				$ratio = 1;
 				break;
@@ -818,7 +818,7 @@ EOD;
 				break;
 			case self::V_GAMETRAILERS: // todo verify if exists
 				$exists = true;
-				break;			
+				break;
 			default:
 				break;
 		}
