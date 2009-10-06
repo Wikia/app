@@ -20,14 +20,14 @@ $messages['en'] = array(
 	'blog-avatar-error-nofile' => 'Please pick up file from disc.',
 	'blog-avatar-error-size' => 'Uploaded file is too big, allowed size is up to $1 KB.',
 	'blog-avatar-error-cantwrite' => 'Something happen and cannot write the file to disc.',
-	"blog-avatar-changed-log" => "Added or changed avatar",
-	"blog-avatar-removed-log" => "Removed $1's avatars",
-	"blog-avatar-save-info" => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press "Save" button',
+	'blog-avatar-changed-log' => "Added or changed avatar",
+	'blog-avatar-removed-log' => "Removed $1's avatars",
+	'blog-avatar-save-info' => 'If you want to save changes <a href="#prefcontrol">go to bottom</a> and press "Save" button',
 	'removeavatar' => "Remove user's avatar",
 	'masthead-edits-since' => 'edits since',
-	"useravatar-log" => "User avatar log",
-    "removeavatar" => "Remove user's avatar",
+	'useravatar-log' => "User avatar log",
 	'blog-avatar-alt' => "Logs of useravatar additions or removals",
+	'removeuseravatar' => "Remove user's avatar",
 );
 
 $messages['fi'] = array(
