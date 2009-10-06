@@ -6,8 +6,6 @@
 
 class WikiaMiniUpload {
 
-	private $tempFileId = 0;
-
 	// this is the function that wraps up the WMU loaded from view, because otherwise
 	// there would be a problem loading the messages
 	// messages themselves are sent in json
@@ -144,18 +142,18 @@ class WikiaMiniUpload {
 			),
 			__METHOD__
 		);	
-		$this->tempFileId = $dbw->insertId();
+		return $dbw->insertId();		
 	}
 
 	// remove the data about this file from the db, so it won't clutter it
-	function tempFileClearInfo( ) {
+	function tempFileClearInfo( $id ) {
 		global $wgExternalSharedDB;
 		
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
-		$dbw->insert(
+		$dbw->delete(
 			'garbage_collector',
 			array(
-				'gc_id'	=>	$this->tempFileId,
+				'gc_id'	=>	$id,
 			),
 			__METHOD__
 		);			
@@ -183,12 +181,13 @@ class WikiaMiniUpload {
 			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($form->mTempPath, '', '');
-			$this->tempFileStoreInfo( $tempname );
+			$tempid = $this->tempFileStoreInfo( $tempname );
 			$props = array();
 			$props['file'] = $file;
 			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']).'.jpg');
 			$props['mwname'] = $tempname;
 			$props['extraId'] = $itemId;
+			$props['tempid'] = $tempid;
 		}
 		return $this->detailsPage($props);
 	}
@@ -287,11 +286,12 @@ class WikiaMiniUpload {
 			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
-			$this->tempFileStoreInfo( $tempname );
+			$tempid = $this->tempFileStoreInfo( $tempname );			
 			$props = array();
 			$props['file'] = $file;
 			$props['name'] = stripslashes($wgRequest->getFileName('wpUploadFile'));
 			$props['mwname'] = $tempname;
+			$props['tempid'] = $tempid;
 			$props['upload'] = true;
 			return $this->detailsPage($props);
 		} else {
