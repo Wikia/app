@@ -34,10 +34,10 @@ class WikiaMiniUpload {
 	        $script_a['strict_file_extensions'] = htmlspecialchars( $wgStrictFileExtensions );
 
 		( $wgUser->isBlocked() ) ? $script_a['user_blocked'] = true : $script_a['user_blocked'] = false;
-
+	
 		// if the page is protected
 		( $wgUser->isLoggedIn() && !$wgUser->isAllowed( 'edit' ) ) ? $script_a['user_disallowed'] = true : $script_a['user_disallowed'] = false;
-		
+	
 		// for disabled anonymous editing
 		( !$wgUser->isLoggedIn() && !$wgUser->isAllowed( 'edit' ) ) ? $script_a['wmu_init_login'] = true : $script_a['wmu_init_login'] = false;
 
@@ -124,6 +124,22 @@ class WikiaMiniUpload {
 		}
 	}
 
+	function tempFileName( $user ) {
+		global $wgCityId;
+		return 'Temp_file_'. $wgCityId . $user->getID().'_'.time();
+
+	}
+
+	function tempFileStoreInfo( $filename ) {
+		// todo unskeletonize
+
+	}
+
+	function tempFileClearInfo( $filename ) {
+		// todo unskeletonize
+
+	}
+
 	// this function loads the image details page
 	function chooseImage() {
 		global $wgRequest, $wgUser, $IP;
@@ -142,9 +158,11 @@ class WikiaMiniUpload {
 			$url = "http://farm{$flickrResult['farm']}.static.flickr.com/{$flickrResult['server']}/{$flickrResult['id']}_{$flickrResult['secret']}.jpg";
 			$data = array('wpUpload' => 1, 'wpSourceType' => 'web', 'wpUploadFileURL' => $url);
 			$form = new UploadForm(new FauxRequest($data, true));
-			$tempname = 'Temp_file_'.$wgUser->getID().'_'.rand(0, 1000);
+			global $wgCityId;
+			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($form->mTempPath, '', '');
+			$this->tempFileStoreInfo( $tempname );
 			$props = array();
 			$props['file'] = $file;
 			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']).'.jpg');
@@ -245,7 +263,7 @@ class WikiaMiniUpload {
 
 		$check_result = $this->checkImage() ;
 		if (UploadForm::SUCCESS == $check_result) {
-			$tempname = 'Temp_file_'.$wgUser->getID().'_'.rand(0, 1000);
+			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
 			$props = array();
