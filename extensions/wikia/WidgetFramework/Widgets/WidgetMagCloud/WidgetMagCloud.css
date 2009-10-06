@@ -1,5 +1,5 @@
 .WidgetMagCloud .WidgetMagCloudSample {
-	background: #fff url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/WidgetFramework/Widgets/WidgetMagCloud/images/MagCloudPreview.png') no-repeat 50% 50%;
+	background: #fff url(http://images.wikia.com/common/extensions/wikia/WidgetFramework/Widgets/WidgetMagCloud/images/MagCloudPreview.png) no-repeat 50% 50%;
 	border: solid 1px #eee;
 	height: 120px;
 	margin: 5px 0;
@@ -15,7 +15,7 @@
 }
 
 .WidgetMagCloud .WidgetMagCloudPoweredBy {
-	background: #c73024 url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/WidgetFramework/Widgets/WidgetMagCloud/images/MagCloudPoweredBy.png') no-repeat 96% 50%;
+	background: #c73024 url(http://images.wikia.com/common/extensions/wikia/WidgetFramework/Widgets/WidgetMagCloud/images/MagCloudPoweredBy.png) no-repeat 96% 50%;
 	color: #fff;
 	font-size: 0.9em;
 	margin: 5px -7px -7px -7px;
