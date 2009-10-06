@@ -25,14 +25,14 @@ global $wgStyleVersion, $wgExtensionsPath, $wgTitle, $wgUser;
 <?php if ($anonymousUser) { ?>
 		<small id="user_masthead_anon"><?= $anonymousUser ?></small>
 <?php } else { ?>
-		<small><?= $data['edit_counter'] ?> <?= $data['edit_since'] ?> <?= $data['edit_date'] ?></small>
+		<small id="user_masthead_since"><?= $data['edit_counter'] ?> <?= $data['edit_since'] ?> <?= $data['edit_date'] ?></small>
 <?php } ?>
 		</h2>
 	</div>
 <?php if (!$anonymousUser) { ?>
 	<div id="user_masthead_scorecard" class="dark_text_1"><?= $data['edit_counter'] ?></div>
 <?php } ?>
-	<ul class="nav_links">
+	<ul id="user_masthead_tabs" class="nav_links">
 		<?php
 		foreach ($data['nav_links'] as $navLink) {
 					echo "<li class=\"color1". ( ( $current  == $navLink[ "dbkey" ]) ? ' selected' : "" ) . '"><a href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')" rel="nofollow">'. $navLink['text'] .'</a></li>';
