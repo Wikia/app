@@ -246,8 +246,9 @@ while( $request->Accept() >= 0 ) {
 					#
 					my @cmd = ();
 					# -ss 1 -f mjpeg -vframes 1
-					push @cmd, $ffmpeg;
+					#push @cmd, $ffmpeg;
 					push @cmd, qw(-ss 1);
+					push @cmd, qw(-loglevel quiet);
 					push @cmd, "-an";
 					push @cmd, qw(-vframes 1);
 					push @cmd, "-y";
@@ -255,9 +256,30 @@ while( $request->Accept() >= 0 ) {
 					push @cmd, qw(-f mjpeg);
 					push @cmd, $thumbnail;
 
-					use Data::Dumper;
-					print Dumper( \@cmd );
-					system( @cmd ) == 0 and $transformed = 1;
+					open( CMD, "-|", $ffmpeg, @cmd );
+					close( CMD);
+
+					#system( @cmd ) == 0 and $transformed = 1;
+					unless( -f $thumbnail ) {
+						#
+						# get first stream
+						#
+						unshift @cmd, qw(-map 0:1);
+						open( CMD, "-|", $ffmpeg, @cmd );
+						close( CMD );
+					}
+					if( -f $thumbnail ) {
+						$transformed = 1;
+						chmod 0664, $thumbnail;
+						$mimetype = $flm->checktype_filename( $thumbnail );
+						print "HTTP/1.1 200 OK\r\n";
+						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
+						print "Content-type: $mimetype\r\n\r\n";
+						print STDERR "File $thumbnail created\n" if $debug;
+					}
+					else {
+						print STDERR "Thumbnailer from $original to $thumbnail failed\n" if $debug;
+					}
 					exit if $test;
 				}
 				else {
