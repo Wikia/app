@@ -560,7 +560,7 @@ UNLOCK TABLES;
 
 -- ShareFeature extension --
 
-CREATE TABLE /*$wgDBprefix*/ `share_feature` (
+CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/ `share_feature` (
   `sf_user_id` int(5) unsigned NOT NULL,
   `sf_provider_id` int(2) unsigned NOT NULL,
   `sf_clickcount` int(11) default '0',
@@ -575,4 +575,14 @@ INSERT INTO `share_feature` VALUES (0, 4, 600);
 INSERT INTO `share_feature` VALUES (0, 5, 500);
 INSERT INTO `share_feature` VALUES (0, 6, 400);
 INSERT INTO `share_feature` VALUES (0, 7, 300);
+
+-- garbage collector for WikiaMiniUpload temporary files --
+
+CREATE TABLE IF NOT EXISTS `garbage_collector` (
+  `gc_id` int(11) NOT NULL auto_increment,
+  `gc_filename` varchar(285) character set latin1 collate latin1_bin NOT NULL default '',
+  `gc_timestamp` varchar(14) character set latin1 collate latin1_bin NOT NULL default '',
+  PRIMARY KEY  (`gc_id`),
+  KEY `gc_timestamp` (`gc_timestamp`)
+);
 
