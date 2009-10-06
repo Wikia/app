@@ -571,20 +571,21 @@ class SiteWideMessages extends SpecialPage {
 
 		//step 1 of 3: get all active messages sent to *all*
 		$dbResult = $DB->Query (
-			  'SELECT msg_id AS id'
+			  'SELECT msg_id AS id, msg_lang as lang'
 			. ' FROM ' . MSG_TEXT_DB
 			. ' WHERE msg_removed = ' . MSG_REMOVED_NO
 			. ' AND msg_mode = ' . MSG_MODE_ALL
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. " AND msg_date > '{$user->mRegistration}'"	//fix for ticket #2624
-			. self::getLanguageConstraintsForUser( $user )
 			. ';'
 			, __METHOD__
 		);
 
 		$tmpMsg = array();
 		while ($oMsg = $DB->FetchObject($dbResult)) {
-			$tmpMsg[$oMsg->id] = array('wiki_id' => null);
+			if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
+				$tmpMsg[$oMsg->id] = array('wiki_id' => null);
+			}
 		}
 		if ($dbResult !== false) {
 			$DB->FreeResult($dbResult);
@@ -603,15 +604,16 @@ class SiteWideMessages extends SpecialPage {
 			);
 
 			while ($oMsg = $DB->FetchObject($dbResult)) {
-				unset($tmpMsg[$oMsg->id]);
+        	                        $tmpMsg[$oMsg->id] = array('wiki_id' => null);
 			}
+
 			if ($dbResult !== false) {
 				$DB->FreeResult($dbResult);
 			}
 		}
 		//step 3 of 3: add unseen messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
-			  'SELECT msg_wiki_id, msg_id AS id'
+			  'SELECT msg_wiki_id, msg_id AS id, msg_lang as lang'
 			. ' FROM ' . MSG_TEXT_DB
 			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
@@ -619,14 +621,16 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND msg_status = ' . MSG_STATUS_UNSEEN
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
-			. self::getLanguageConstraintsForUser( $user )
 			. ';'
 			, __METHOD__
 		);
 
 		while ($oMsg = $DB->FetchObject($dbResult)) {
-			$tmpMsg[$oMsg->id] = array('wiki_id' => $oMsg->msg_wiki_id);
+			if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
+				$tmpMsg[$oMsg->id] = array('wiki_id' => $oMsg->msg_wiki_id);
+			}
 		}
+
 		if ($dbResult !== false) {
 			$DB->FreeResult($dbResult);
 		}
@@ -653,21 +657,23 @@ class SiteWideMessages extends SpecialPage {
 
 		//step 1 of 3: get all active messages sent to *all*
 		$dbResult = $DB->Query (
-			  'SELECT msg_id AS id, msg_text AS text, msg_expire AS expire'
+			  'SELECT msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang'
 			. ' FROM ' . MSG_TEXT_DB
 			. ' WHERE msg_removed = ' . MSG_REMOVED_NO
 			. ' AND msg_mode = ' . MSG_MODE_ALL
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. " AND msg_date > '{$user->mRegistration}'"	//fix for ticket #2624
-			. self::getLanguageConstraintsForUser( $user )
 			. ';'
 			, __METHOD__
 		);
 
 		$tmpMsg = array();
 		while ($oMsg = $DB->FetchObject($dbResult)) {
-			$tmpMsg[$oMsg->id] = array('wiki_id' => null, 'text' => $oMsg->text, 'expire' => $oMsg->expire);
+			if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
+				$tmpMsg[$oMsg->id] = array('wiki_id' => null, 'text' => $oMsg->text, 'expire' => $oMsg->expire);
+			}
 		}
+
 		if ($dbResult !== false) {
 			$DB->FreeResult($dbResult);
 		}
@@ -693,7 +699,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 		//step 3 of 3: add not dismissed messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
-			  'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire'
+			  'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang'
 			. ' FROM ' . MSG_TEXT_DB
 			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
@@ -702,13 +708,14 @@ class SiteWideMessages extends SpecialPage {
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
 			. ' AND msg_removed = ' . MSG_REMOVED_NO
 			. " AND (msg_wiki_id IS NULL OR msg_wiki_id = $localCityId )"
-			. self::getLanguageConstraintsForUser( $user )
 			. ';'
 			, __METHOD__
 		);
 
 		while ($oMsg = $DB->FetchObject($dbResult)) {
-			$tmpMsg[$oMsg->id] = array('wiki_id' => $oMsg->msg_wiki_id, 'text' => $oMsg->text, 'expire' => $oMsg->expire);
+			if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
+				$tmpMsg[$oMsg->id] = array('wiki_id' => $oMsg->msg_wiki_id, 'text' => $oMsg->text, 'expire' => $oMsg->expire);
+			}
 		}
 		if ($dbResult !== false) {
 			$DB->FreeResult($dbResult);
@@ -775,26 +782,18 @@ class SiteWideMessages extends SpecialPage {
 	 * @author Lucas Garczewski <tor@wikia-inc.com>
 	 *
 	 * @param $user current User object
+	 * @param $langs string Comma separated list of languages
 	 *
 	 * @return string for WHERE clause
 	 */
-	static function getLanguageConstraintsForUser( $user ) {
-		global $wgWikiaStaffLanguages;
+	static function getLanguageConstraintsForUser( $user, $langs ) {
+		global $wgSWMSupportedLanguages;
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$langs = explode( ',', $langs );
+		$userLang = $user->getOption( 'language' );
 
-		$langCond = ' AND ( msg_lang IN ( ';
+		return ( in_array( $userLang, $langs ) || ( in_array( 'all', $langs) && !in_array( $userLang, $wgSWMSupportedLanguages ) ) );
 
-		//check if user is using one of our supported languages
-		if ( in_array( $user->getOption('language'), $wgWikiaStaffLanguages ) ) {
-			$langCond .= $dbr->addQuotes($user->getOption('language', 'en'));
-		} else {
-			$langCond .= "'en'"; // if not, default to English
-		}
-
-		$langCond .= ", 'all' ) OR msg_lang IS NULL )"; // also include global messages
-
-		return $langCond;
 	}
 
 	static function dismissMessage($messageID) {
@@ -892,7 +891,7 @@ class SiteWideMessagesPager extends TablePager {
 			$this->mFieldNames['msg_removed']        = wfMsg('swm-list-table-removed');
 			$this->mFieldNames['msg_text']           = wfMsg('swm-list-table-content');
 			$this->mFieldNames['msg_date']           = wfMsg('swm-list-table-date');
-			$this->mFieldNames['msg_lang']		 = wfMsg('swm-list-table-lang');
+			$tihs->mFieldNames['msg_lang']		 = wfMsg('swm-list-table-lang');
 			$this->mFieldNames['msg_wiki_tools']     = wfMsg('swm-list-table-tools');
 		}
 		return $this->mFieldNames;
