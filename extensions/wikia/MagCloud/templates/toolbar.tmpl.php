@@ -6,11 +6,11 @@
 		foreach($steps as $stepId => $stepName) {
 			$className = 'MagCloudToolbarStep' . ($stepId + 1 == $currentStep ? ' MagCloudToolbarActiveStep' : '');
 ?>
-			<span class="<?= $className ?>"><?= wfMsg('magcloud-toolbar-step', $stepId + 1, htmlspecialchars($stepName)) ?></span>
+			<span class="MagCloudItem <?= $className ?>"><?= wfMsg('magcloud-toolbar-step', $stepId + 1, htmlspecialchars($stepName)) ?></span>
 <?php
 			if ($stepId < count($steps) - 1) {
 ?>
-			<span class="MagCloudToolbarArrow">&nbsp;</span>
+			<span class="MagCloudToolbarArrow MagCloudItem">&nbsp;</span>
 <?php
 			}
 		}
@@ -20,16 +20,15 @@
 			if ($isInCollection) {
 				// this article is in your collection
 ?>
-	<span id="MagCloudToolbarArticle"><?= wfMsgExt('magcloud-toolbar-article-in-collection', array('parseinline'), htmlspecialchars($title)) ?></span>
+	<span id="MagCloudToolbarArticle" class="MagCloudItem"><?= wfMsgExt('magcloud-toolbar-article-in-collection', array('parseinline'), htmlspecialchars($title)) ?></span>
 <?php
 			}
 			else {
 				// show "add article" button
 ?>
-	<span id="MagCloudToolbarArticle"><?= wfMsgExt('magcloud-toolbar-article-add', array('parseinline'), htmlspecialchars($title)) ?></span>
-	<a id="MagCloudToolbarAdd" class="bigButton" onclick="MagCloud.addArticle()">
-		<big><?= wfMsg('magcloud-toolbar-add') ?></big>
-		<small></small>
+	<span id="MagCloudToolbarArticle" class="MagCloudItem"><?= wfMsgExt('magcloud-toolbar-article-add', array('parseinline'), htmlspecialchars($title)) ?></span>
+	<a id="MagCloudToolbarAdd" class="wikia_button" onclick="MagCloud.addArticle()">
+		<span><?= wfMsg('magcloud-toolbar-add') ?></span>
 	</a>
 <?php
 			}
@@ -37,17 +36,16 @@
 		elseif (isset($message)) {
 			// show message on non-content pages
 ?>
-	<span id="MagCloudToolbarMessage"><?= htmlspecialchars($message) ?></span>
+	<span id="MagCloudToolbarMessage" class="MagCloudItem"><?= htmlspecialchars($message) ?></span>
 <?php
 		}
 ?>
 	<div id="MagCloudToolbarArticlesCount">
-		<span>
+		<span class="MagCloudItem">
 			<?= wfMsgExt('magcloud-toolbar-articles-count', array('parsemag'), $count) ?>
 		</span>
-		<a id="MagCloudToolbarGoToMagazine" class="bigButton" href="<?=$magazineUrl;?>" onclick="MagCloud.track('/goToMagazine')">
-			<big><?= wfMsg('magcloud-toolbar-go-to-magazine') ?></big>
-			<small> </small>
+		<a id="MagCloudToolbarGoToMagazine" class="wikia_button" href="<?=$magazineUrl;?>" onclick="MagCloud.track('/goToMagazine')">
+			<span><?= wfMsg('magcloud-toolbar-go-to-magazine') ?></span>
 		</a>
 	</div>
 <?php
