@@ -130,14 +130,34 @@ class WikiaMiniUpload {
 
 	}
 
+	// store info in the db to enable the script to pick it up later during the day (via an automated cleaning routine) 
 	function tempFileStoreInfo( $filename ) {
-		// todo unskeletonize
+		global $wgExternalSharedDB;	
+
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );		
+		$dbw->insert(
+			'garbage_collector',
+			array(
+				'gc_filename'	=>	$filename,
+				'gc_timestamp'	=>	$dbw->timestamp()	
+			),
+			__METHOD__
+		);	
 
 	}
 
-	function tempFileClearInfo( $filename ) {
-		// todo unskeletonize
-
+	// remove the data about this file from the db, so it won't clutter it
+	function tempFileClearInfo( $id ) {
+		global $wgExternalSharedDB;
+		
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
+		$dbw->insert(
+			'garbage_collector',
+			array(
+				'gc_id'	=>	$id
+			),
+			__METHOD__
+		);			
 	}
 
 	// this function loads the image details page
