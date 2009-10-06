@@ -17,7 +17,7 @@
 	width: 208px;
 }
 
-#MagCloudToolbar span {
+#MagCloudToolbar span.MagCloudItem {
 	float: left;
 	font-size: 1.1em;
 	line-height: 34px;
@@ -26,11 +26,11 @@
 
 /* add an article */
 #MagCloudToolbarAdd {
-	padding: 7px 10px 0 0;
+	margin-top: 7px;
 }
 
 /* steps */
-#MagCloudToolbar .MagCloudToolbarArrow {
+#MagCloudToolbar span.MagCloudToolbarArrow {
 	background: transparent url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/MagCloud/images/MagCloudToolbarArrow.png') no-repeat 0 50%;
 	height: 36px;
 	margin: -1px 10px;
@@ -45,6 +45,7 @@
 /* articles count / go to your magazine */
 #MagCloudToolbarArticlesCount {
 	background: #d00d0e url('http://images.wikia.com/common/releases_MagCloud/extensions/wikia/MagCloud/images/MagCloudToolbarArticlesCountBg.png') no-repeat 0 50%;
+	font-size: 1em;
 	height: 34px;
 	padding-left: 15px;
 	position: absolute;
@@ -52,7 +53,7 @@
 	top: 1px;
 }
 
-#MagCloudToolbarArticlesCount span {
+#MagCloudToolbarArticlesCount span.MagCloudItem {
 	color: #fff;
 	float: left;
 	font-size: 0.9em;
@@ -71,6 +72,10 @@
 
 #MagCloudToolbarArticlesCount .bigButton {
 	margin: 7px 5px 0 8px;
+}
+
+#MagCloudToolbarGoToMagazine {
+	margin: 7px 0 0 7px;
 }
 
 #MagCloudToolbarClose {

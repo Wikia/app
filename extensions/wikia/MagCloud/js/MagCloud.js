@@ -227,7 +227,7 @@ MagCloud.addArticle = function() {
 		$('#MagCloudToolbarArticle').html(data.msg);
 
 		// ...and articles count
-		$('#MagCloudToolbarArticlesCount').find('span').html(data.articlesMsg);
+		$('#MagCloudToolbarArticlesCount').find('span.MagCloudItem').html(data.articlesMsg);
 
 		// increase counter in global JS variable
 		window.wgMagCloudArticlesCount = data.count;
