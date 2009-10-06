@@ -39,13 +39,13 @@ function wfRegexBlockCheck ($current_user) {
 	if (empty($userGroups)) {
 		$userGroups = array();
 	}
-	
+
 	if( in_array('staff', $userGroups) ) {
 		// Staff users should not be blocked in any case
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
- 
+
 	$ip_to_check = wfGetIP();
 
 	/* First check cache */
@@ -116,11 +116,11 @@ function wfRegexBlockIsBlockedCheck($user, $ip) {
     wfProfileIn( __METHOD__ );
     $result = false;
 
-    $key = wfForeignMemcKey( 
-    	(isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities", 
-    	"", 
-    	REGEXBLOCK_USER_KEY, 
-    	str_replace( ' ', '_', $user->getName() ) 
+    $key = wfForeignMemcKey(
+    	(isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities",
+    	"",
+    	REGEXBLOCK_USER_KEY,
+    	str_replace( ' ', '_', $user->getName() )
     );
     $cached = $wgMemc->get ($key);
 
@@ -133,11 +133,11 @@ function wfRegexBlockIsBlockedCheck($user, $ip) {
     }
 
     if ( ($result === false) && ($ip != $user->getName()) ) {
-        $key = wfForeignMemcKey( 
-        	(isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities", 
-        	"", 
-        	REGEXBLOCK_USER_KEY, 
-        	str_replace( ' ', '_', $ip ) 
+        $key = wfForeignMemcKey(
+        	(isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities",
+        	"",
+        	REGEXBLOCK_USER_KEY,
+        	str_replace( ' ', '_', $ip )
         );
         $cached = $wgMemc->get ($key);
         if (is_object($cached)) {
@@ -227,13 +227,13 @@ function wfGetRegexBlockedData($user, $blockers, $master = 0) {
 	}
 
 	$cached = false;
-	$memkey = wfForeignMemcKey( 
-		(isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities", 
-		"", 
-		REGEXBLOCK_BLOCKERS_KEY, 
-		"All-In-One" 
+	$memkey = wfForeignMemcKey(
+		(isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities",
+		"",
+		REGEXBLOCK_BLOCKERS_KEY,
+		"All-In-One"
 	);
-	
+
 	if ( empty($master) ) {
 		$cached = $wgMemc->get ($memkey);
 	}
@@ -340,11 +340,11 @@ function wfRegexBlockExpireCheck ($user, $array_match = null, $ips = 0, $iregex 
 	*/
 	$blocked = "";
 	foreach ($array_match as $single) {
-		$key = wfForeignMemcKey( 
-			(isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities", 
-			"", 
-			REGEXBLOCK_USER_KEY, 
-			str_replace( ' ', '_', $single ) 
+		$key = wfForeignMemcKey(
+			(isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities",
+			"",
+			REGEXBLOCK_USER_KEY,
+			str_replace( ' ', '_', $single )
 		);
 		$blocked = null;
 		$cached = $wgMemc->get ($key) ;
@@ -630,10 +630,9 @@ function wfRegexBlockUnsetKeys ($username) {
 	global $wgExternalSharedDB, $wgUser, $wgMemc;
 	wfProfileIn( __METHOD__ );
 
-	$readMaster = 1;
 	$key = wfForeignMemcKey( (isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities", "", REGEXBLOCK_SPECIAL_KEY, REGEXBLOCK_SPECIAL_NUM_RECORD );
 	$memcData = $wgMemc->get($key);
-	if ( !is_null($memcData) && ($wgMemc->delete( $key ) === false) ) { 
+	if ( !is_null($memcData) && ($wgMemc->delete( $key ) === false) ) {
 		wfProfileOut( __METHOD__ );
 		return false;
 	}
@@ -666,8 +665,8 @@ function wfRegexBlockUnsetKeys ($username) {
 			$wgMemc->delete( "{$wgSharedDB}:user_touched:{$userId}" );
 		}
 	}
-	
-	#--- 
+
+	$readMaster = 1;
 	$blockers_array = wfRegexBlockGetBlockers($readMaster);
 	wfGetRegexBlockedData ($wgUser, $blockers_array, $readMaster);
 
