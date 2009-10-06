@@ -18,7 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     exit( 1 ) ;
 }
 
-class RegexBlockForm extends SpecialPage 
+class RegexBlockForm extends SpecialPage
 {
     var $mRegexUnblockedAddress;
     var $numResults = 0;
@@ -28,11 +28,11 @@ class RegexBlockForm extends SpecialPage
     var $mLimit;
     var $mOffset;
     var $mError, $mMsg;
-    
+
     /* constructor */
     function __construct () {
         global $wgRegexBlockMessages, $wgMessageCache;
-        
+
         /* read messages from language's file */
         foreach( $wgRegexBlockMessages as $key => $value ) {
             $wgMessageCache->addMessages( $wgRegexBlockMessages[$key], $key );
@@ -43,13 +43,13 @@ class RegexBlockForm extends SpecialPage
         $this->mFilter = $this->mRegexFilter = "";
         $this->mError = $this->mMsg = "";
 
-        parent::__construct( "RegexBlock", "regexblock" ); 
+        parent::__construct( "RegexBlock", "regexblock" );
     }
-    
+
 	public function execute( $subpage ) {
         global $wgUser, $wgOut, $wgRequest;
         wfLoadExtensionMessages("RegexBlock");
-        
+
         if ( $wgUser->isBlocked() ) {
             $wgOut->blockedPage();
             return;
@@ -75,7 +75,7 @@ class RegexBlockForm extends SpecialPage
         $this->mAction = $wgRequest->getVal( 'action' );
         $this->mFilter = $wgRequest->getVal( 'filter' );
         $this->mRegexFilter = $wgRequest->getVal( 'rfilter' );
-        
+
         list( $this->mLimit, $this->mOffset ) = $wgRequest->getLimitOffset() ;
 
         $this->mRegexBlockedAddress = $this->mRegexBlockedExact = $this->mRegexBlockedCreation = $this->mRegexBlockedExpire = $this->mRegexBlockedReason = "";
@@ -93,27 +93,27 @@ class RegexBlockForm extends SpecialPage
                 $wgOut->setSubTitle( wfMsg('regexblock_success_block') );
                 $this->mMsg = wfMsgWikiHtml( 'regexblock_msg_blocked', array(htmlspecialchars($wgRequest->getVal('ip'))) );
 		        break;
-	        case 'success_unblock': 
+	        case 'success_unblock':
                 $wgOut->setSubTitle( wfMsg('regexblock_success_unblock') );
                 $this->mMsg = wfMsgWikiHtml( 'regexblock_msg_unblocked', array(htmlspecialchars($wgRequest->getVal('ip'))) );
 		        break;
-	        case 'failure_unblock': 
+	        case 'failure_unblock':
 	            $this->mError = wfMsgWikiHtml( 'regexblock_error_unblocked', array(htmlspecialchars($wgRequest->getVal('ip'))) );
 		        break;
 		    case 'stats' :
 		        $blckid = $wgRequest->getVal( 'blckid' );
                 $this->showStatsList($blckid);
-		        break;    
-            case 'submit':    	    
+		        break;
+            case 'submit':
    	            if ( $wgRequest->wasPosted() && $wgUser->matchEditToken( $wgRequest->getVal ('wpEditToken') ) ) {
    	                $this->mAction = $this->doSubmit();
                 }
 		        break;
-            case 'delete': 
+            case 'delete':
 		        $this->deleteFromRegexBlockList();
 		        break;
         }
-        
+
         if (!in_array($this->mAction, array('submit', 'stats'))) {
             $this->showForm();
             unset($this->mError);
@@ -121,18 +121,18 @@ class RegexBlockForm extends SpecialPage
             $this->showRegexList();
         }
     }
-    
+
     private function showForm() {
         global $wgOut, $wgUser, $wgRequest ;
         wfProfileIn( __METHOD__ );
-    
+
         $token = htmlspecialchars( $wgUser->editToken() );
         $titleObj = Title::makeTitle( NS_SPECIAL, 'RegexBlock' );
         $action = $titleObj->escapeLocalURL( "action=submit" )."&".$this->makeListUrlParams();
-    
-        $expiries = RegexBlockData::getExpireValues();    				
+
+        $expiries = RegexBlockData::getExpireValues();
     	$regexBlockAddress = (empty($this->mRegexBlockedAddress) && ($wgRequest->getVal('ip') != null) && ($wgRequest->getVal('action') == null)) ? $wgRequest->getVal('ip') : $this->mRegexBlockedAddress;
-    				
+
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "err"                   => $this->mError,
@@ -152,7 +152,7 @@ class RegexBlockForm extends SpecialPage
 
         wfProfileOut( __METHOD__ );
     }
-    
+
     private function showRegexList() {
         global $wgOut, $wgRequest, $wgMemc, $wgLang, $wgUser;
         global $wgContLang;
@@ -162,7 +162,7 @@ class RegexBlockForm extends SpecialPage
         $titleObj = Title::makeTitle( NS_SPECIAL, 'RegexBlock' );
         $action = $titleObj->escapeLocalURL("") ."?".$this->makeListUrlParams();
         $action_unblock = $titleObj->escapeLocalURL("action=delete") ."&".$this->makeListUrlParams();
-        
+
         $regexData = new RegexBlockData();
         $this->numResults = $regexData->fetchNbrResults();
         $filter = 'filter=' . urlencode($this->mFilter) . '&rfilter=' . urlencode($this->mRegexFilter);
@@ -174,7 +174,7 @@ class RegexBlockForm extends SpecialPage
         if (!empty($blockers)) {
             $blocker_list = $regexData->getBlockersData($this->mFilter, $this->mRegexFilter, $this->mLimit, $this->mOffset);
         }
-        
+
         /* make link to statistics */
         $mSkin = $wgUser->getSkin();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
@@ -205,10 +205,10 @@ class RegexBlockForm extends SpecialPage
         }
         $pieces[] = 'filter=' . urlencode( $wgRequest->getVal('filter') );
         $pieces[] = 'rfilter=' . urlencode( $wgRequest->getVal('rfilter') );
-        
+
         return implode( '&', $pieces ) ;
     }
-    
+
     /* on submit */
     private function doSubmit() {
         global $wgOut, $wgUser, $wgMemc ;
@@ -228,7 +228,7 @@ class RegexBlockForm extends SpecialPage
             wfProfileOut( __METHOD__ );
             return false;
         }
-        
+
         /* check expiry */
         if ( strlen ($this->mRegexBlockedExpire) == 0 ) {
             $this->mError = wfMsg('regexblock_invalid_period');
@@ -245,38 +245,33 @@ class RegexBlockForm extends SpecialPage
             }
             $expiry = wfTimestamp( TS_MW, $expiry );
         } else {
-            $expiry = $this->mRegexBlockedExpire ;    
+            $expiry = $this->mRegexBlockedExpire ;
         }
 
-		# check first if I can remove all data from memcache - if yes - add new regex to the list
-		if ( wfRegexBlockUnsetKeys($this->mRegexBlockedAddress) ) {
-        	$result = RegexBlockData::blockUser($this->mRegexBlockedAddress, $expiry, $this->mRegexBlockedExact, $this->mRegexBlockedCreation, $this->mRegexBlockedReason);
-			/* clear memcache */
-			$uname = $wgUser->getName();
-			/* clear memcache once again */
-			wfRegexBlockUnsetKeys($this->mRegexBlockedAddress);
-		} else {
-            $this->mError = wfMsg('regexblock_give_username_ip');
-            wfProfileOut( __METHOD__ );
-            return false;
-		}
+		# add new regex to the list
+		RegexBlockData::blockUser($this->mRegexBlockedAddress, $expiry, $this->mRegexBlockedExact, $this->mRegexBlockedCreation, $this->mRegexBlockedReason);
+		/* clear memcache */
+		wfRegexBlockUnsetKeys($this->mRegexBlockedAddress);
+		/* clear memcache once again */
+		sleep(6);
+		wfRegexBlockUnsetKeys($this->mRegexBlockedAddress);
 
         wfProfileOut( __METHOD__ );
-        
+
         /* redirect */
         $titleObj = Title::makeTitle( NS_SPECIAL, 'RegexBlock' ) ;
         $wgOut->redirect( $titleObj->getFullURL( 'action=success_block&ip=' .urlencode( $this->mRegexBlockedAddress )."&".$this->makeListUrlParams() ) ) ;
 
         return true;
     }
-    
+
     /* remove name or address from list - without confirmation */
     private function deleteFromRegexBlockList() {
         global $wgOut, $wgRequest, $wgMemc, $wgUser ;
         global $wgExternalSharedDB;
 
         wfProfileIn( __METHOD__ );
-        
+
         $result = false;
         $ip = $wgRequest->getVal('ip');
         $blckid = intval($wgRequest->getVal('blckid'));
@@ -305,11 +300,11 @@ class RegexBlockForm extends SpecialPage
             /* delete */
             $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
             $dbw->delete(
-            	REGEXBLOCK_TABLE, 
+            	REGEXBLOCK_TABLE,
             	array("blckby_name = {$dbw->addQuotes($ip)}"),
             	__METHOD__
             );
-                
+
             if ( $dbw->affectedRows() ) {
                 /* success, remember to delete cache key  */
                 wfRegexBlockUnsetKeys( $ip );
@@ -323,10 +318,10 @@ class RegexBlockForm extends SpecialPage
         } else {
             $wgOut->redirect( $titleObj->getFullURL( 'action=failure_unblock&ip='.urlencode($ip).'&'.$this->makeListUrlParams() ) );
         }
-        
+
         return;
     }
-    
+
     /* statistic */
     private function showStatsList($blckid) {
         global $wgOut, $wgLang, $wgUser;
@@ -336,7 +331,7 @@ class RegexBlockForm extends SpecialPage
 
         $titleObj = Title::makeTitle( NS_SPECIAL, 'RegexBlock' );
         $action = $titleObj->escapeLocalURL("") ."?".$this->makeListUrlParams(true);
-        
+
         $regexData = new RegexBlockData();
         $this->numStatResults = $regexData->fetchNbrStatResults($blckid);
         $filter = 'action=stats&filter=' . urlencode($this->mFilter) . '&blckid=' . urlencode($blckid);
@@ -348,7 +343,7 @@ class RegexBlockForm extends SpecialPage
         if ( !empty($blockInfo) && (is_object($blockInfo)) ) {
             $stats_list = $regexData->getStatsData($blckid, $this->mLimit, $this->mOffset);
         }
-        
+
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
             "pager"         => $pager,
