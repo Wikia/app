@@ -139,8 +139,8 @@ class WikiaMiniUpload {
 			'garbage_collector',
 			array(
 				'gc_filename'	=>	$filename,
-				'gc_timestamp'	=>	$dbw->timestamp()	
-				'gc_wiki_id'	=>	$wgCityId;
+				'gc_timestamp'	=>	$dbw->timestamp(),	
+				'gc_wiki_id'	=>	$wgCityId,
 			),
 			__METHOD__
 		);	
@@ -155,7 +155,7 @@ class WikiaMiniUpload {
 		$dbw->insert(
 			'garbage_collector',
 			array(
-				'gc_id'	=>	$this->tempFileId
+				'gc_id'	=>	$this->tempFileId,
 			),
 			__METHOD__
 		);			
