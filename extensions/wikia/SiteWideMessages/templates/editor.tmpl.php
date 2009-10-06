@@ -161,15 +161,14 @@
 				<select name="mLang" id="mLang">
 				<option>all</option>
 				<?php
-					global $wgWikiaStaffLanguages;
+					global $wgSWMSupportedLanguages;
 					$selectedLang = false;
-					foreach ($wgWikiaStaffLanguages as $lang) {
-						if ( !$selectedLang && $lang == $formData['lang'] ) {
-							echo "<option selected>$lang</option>";
+					foreach ($wgSWMSupprotedLanguages as $lang) {
+						if ( !empty( $formData[$lang] ) ) {
 							$selectedLang = true;
-						} else {
-							echo "<option>$lang</option>\n";
 						}
+						echo "<input type='checkbox' id='swm-lang-$lang' />";
+						echo "<label for='swm-lang-$lang'>$lang</label>";
 					}
 				?>
 				</select>
