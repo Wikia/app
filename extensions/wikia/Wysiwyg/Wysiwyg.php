@@ -406,6 +406,8 @@ function Wysiwyg_BeforeDisplayingTextbox($a, $b) {
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function Wysiwyg_CheckEdgeCases($text) {
+	wfDebug("Wysiwyg: checking edge cases\n");
+
 	$out = '';
 	$edgeCasesFound = array();
 	$edgeCases = array(
@@ -462,7 +464,28 @@ function Wysiwyg_CheckNoWysiwyg($editPage, $t) {
 
 	// get WHOLE article content, even if doing section edit (RT #17005)
 	$text = $editPage->mArticle->getContent();
-	$wgWysiwygNoWysiwygFound = Wysiwyg_NoWysiwygFound($text);
+
+	if (Wysiwyg_NoWysiwygFound($text)) {
+		$wgWysiwygNoWysiwygFound = true;
+	}
+
+	return true;
+}
+
+/*
+ * Check for __NOWYSIWYG__ magic word inside transcluded templates (RT #24167)
+ *
+ * @author Maciej Brencz <macbre at wikia-inc.com>
+ */
+$wgHooks['Parser::FetchTemplateAndTitle'][] = 'Wysiwyg_FetchTemplate';
+function Wysiwyg_FetchTemplate($text, $finalTitle) {
+	global $wgWysiwygNoWysiwygFound;
+
+	wfDebug("Wysiwyg: checking for __NOWYSIWYG__ inside {$finalTitle}\n");
+
+	if (Wysiwyg_NoWysiwygFound($text)) {
+		$wgWysiwygNoWysiwygFound = true;
+	}
 
 	return true;
 }
@@ -680,6 +703,13 @@ function Wysiwyg_WikiTextToHtml($wikitext, $pageName = false, $encode = false) {
 	$html = preg_replace('/^<input type="button" refid=/m', '<p>\0', $html);
 
 	wfDebug("Wysiwyg_WikiTextToHtml html: {$html}\n");
+
+	// check edge cases once more
+	// for instance __NOWYSIWYG__ might have been transcluded (RT #24167)
+	$edgeCasesText = Wysiwyg_CheckEdgeCases($wikitext);
+	if($edgeCasesText != '') {
+		return array('type' => 'edgecase', 'edgecaseText' => $edgeCasesText);
+	}
 
 	return array('type' => 'html', 'html' => $html, 'data' => $encode ? Wikia::json_encode($wgWysiwygMetaData, true) : $wgWysiwygMetaData);
 }
