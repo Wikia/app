@@ -292,6 +292,11 @@ jQuery.tracker = function() {
 		});
 	}
 
+	// Create Page
+	if(wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'CreatePage') {
+		$.tracker.byStr('createPage');
+	}
+
 	initTracker();
 };
 
