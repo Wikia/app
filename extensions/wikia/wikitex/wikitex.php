@@ -184,6 +184,7 @@ class objRend {
 			return $arrErr['bash'];
 		}
 		else {
+			Wikia::log( __METHOD__, "info", "{$strBash}, {$strHash}, {$arr['class']}, {$strURI}, {$outDirSuffix}, {$strDir}" );
 			return trim(shell_exec(sprintf($strBash, $strHash, $arr['class'], $strURI, $outDirSuffix, $strDir)));
 		}
     }
