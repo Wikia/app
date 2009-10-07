@@ -677,16 +677,16 @@ EOD;
 				break;
 			// todo check those
 			case self::V_BLIP:
-				$ratio = (480 / 401);
+				$ratio = (480 / 350);
 				break;
 			case self::V_DAILYMOTION:
-				$ratio = (480 / 401);
+				$ratio = (420 / 339);
 				break;
 			case self::V_VIDDLER:
-				$ratio = (480 / 401);
+				$ratio = (437 / 288);
 				break;
 			case self::V_GAMETRAILERS:
-				$ratio = (480 / 401);
+				$ratio = (480 / 392);
 				break;
 			default:
 				$ratio = 1;
@@ -724,16 +724,16 @@ EOD;
 				break;
 			// todo check real dimensions for those four
 			case self::V_BLIP:
-				$ratio = "480 x 401";
+				$ratio = "480 x 350";
 				break;
 			case self::V_DAILYMOTION:
-				$ratio = "480 x 401";
+				$ratio = "420 x 339";
 				break;
 			case self::VIDDLER:
-				$ratio = "480 x 401";
+				$ratio = "437 x 288";
 				break;
 			case self::V_GAMETRAILERS:
-				$ratio = "480 x 401";
+				$ratio = "480 x 392";
 				break;
 			default:
 				$ratio = "300 x 300";
