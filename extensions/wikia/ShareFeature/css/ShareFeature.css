@@ -7,7 +7,6 @@
 }
 
 #shareFeatureInside li {
-/*        line-height: 1.9em; */
 	padding: 4px 4px 4px 0px;
 }
 
@@ -61,4 +60,3 @@
         clip: rect(0px 64px 16px 48px );
         left: -48px;
 }
-
