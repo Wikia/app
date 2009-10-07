@@ -365,13 +365,14 @@ class Wikia {
 	 * @param String $method  -- use __METHOD__
 	 * @param String $sub     -- if more in one method default false
 	 * @param String $message -- additional message default false
+	 * @param Boolean $always -- skip checking of $wgErrorLog and write log (or not)
 	 *
 	 */
-	static public function log( $method, $sub = false, $message = false ) {
+	static public function log( $method, $sub = false, $message = false, $always = false ) {
 	  global $wgDevelEnvironment, $wgErrorLog, $wgDBname, $wgCityId, $wgCommandLineMode;
 
 		$method = $sub ? $method . "-" . $sub : $method;
-		if( $wgDevelEnvironment || $wgErrorLog ) {
+		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
 			error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
 		}
 		/**
