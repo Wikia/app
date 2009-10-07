@@ -24,6 +24,11 @@ class WikiaCollection extends SpecialPage {
 			return;
 		}
 
+		if(!$wgUser->isAllowed('magcloud')) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiaCollection' );
 		$wgOut->setPageTitle( wfMsg('magcloud-special-collection-title') );
 
