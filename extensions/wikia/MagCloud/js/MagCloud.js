@@ -130,7 +130,15 @@ MagCloud.showToolbar = function() {
 }
 
 // hide toolbar
+MagCloud.hideToolbarLock = false;
+
 MagCloud.hideToolbar = function() {
+	// prevent multiple dialogs showing up after fast-clicking on close button
+	if (MagCloud.hideToolbarLock) {
+		MagCloud.log('hiding toolbar in progress');
+		return;
+	}
+
 	MagCloud.log('hiding toolbar');
 	MagCloud.track('/closeToolbar');
 
@@ -139,10 +147,14 @@ MagCloud.hideToolbar = function() {
 		MagCloud.doHideToolbar();
 	}
 	else {
-		// show popup
+		// prevent multiple dialogs showing up after fast-clicking on close button
+		MagCloud.hideToolbarLock = true;
+
 		// fetch and show popup
 		$().getModal(wgScript + '?action=ajax&rs=MagCloudAjax&method=renderDiscardMagazine', false, {
 			callback: function() {
+				MagCloud.hideToolbarLock = false;
+
 				// click on "Cancel" will close popup
 				$('#MagCloudDiscardMagazineCancel').click(function() {
 					MagCloud.track('/discardMagazine/cancel');
