@@ -345,6 +345,8 @@ a.big_button small {
 
 a.big_button.orange big {
 	background-position: 0 -28px;
+	text-align: center;
+	width: 190px;
 }
 a.big_button.orange small {
 	clip: rect(28px 300px 56px 290px);
