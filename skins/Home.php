@@ -389,72 +389,6 @@ class HomeTemplate extends QuickTemplate {
 
 <body class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?>">
 
-<?php
-		if ( $wgTitle->getText() != 'Userlogin' ) {
-			global  $wgEnableEmail, $wgAuth;
-
-			$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
-
-			$link = '<a id="registerFromAjaxLogin" href="' . htmlspecialchars ( $titleObj->getLocalUrl( 'type=signup' ) ) . '">';
-			$link .= wfMsgHtml( 'nologinlink' );
-			$link .= '</a>';
-?>
-	<div id="userloginRound" class="wikiaDialog roundedDiv" style="display:none; background:none; border:none" >
-		<b class="xtop"><b class="xb1"></b><b class="xb2"></b><b class="xb3"></b><b class="xb4"></b></b>
-		<div class="r_boxContent boxContent">
-			<form action="index.php" method="post" name="userlogin" id="userlogin" style="margin:5px">
-				<table class="loginText">
-					<tr>
-						<td id="AjaxLoginReason" colspan="2" style="padding: 0px 5px 5px 0px"></td>
-					</tr>
-					<tr>
-						<td align="right">
-							<label for="wpName1"><?php $this->msg("yourname") ?>:</label>
-						</td>
-						<td align="left">
-							<input type="text" class="loginText" name="wpName" id="wpName1" tabindex="1" size="20" style="width:100%"/>
-						</td>
-					</tr>
-					<tr>
-						<td align="right">
-							<label for="wpPassword1"><?php $this->msg("yourpassword") ?>:</label>
-						</td>
-						<td align="left">
-							<input type="password" class="loginPassword" name="wpPassword" id="wpPassword1" tabindex="2" size="20" style="width:100%"/>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td align="left">
-							<input type="checkbox" name="wpRemember" tabindex="4" value="1" id="wpRemember" <?php if( $wgUser->getOption( 'rememberpassword' ) ) { ?>checked="checked"<?php } ?> />
-							<label for="wpRemember"><?php $this->msg('remembermypassword') ?></label>
-						</td>
-					</tr>
-					<tr>
-						<td align="center">
-							<img src="http://images.wikia.com/common/indicator_square.gif" alt="Wait" id="ajaxLoginWait" style="visibility: hidden" />
-						</td>
-						<td align="left" style="white-space:nowrap">
-							<input style="margin:0;padding:0 .25em;width:auto;overflow:visible;" type="submit" name="wpLoginattempt" id="wpLoginattempt" tabindex="5" value="<?php $this->msg("login") ?>" />
-<?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
-							<input style="margin:0;padding:0 .25em;width:auto;overflow:visible;" type="submit" name="wpMailmypassword" id="wpMailmypassword" tabindex="6" value="<?php $this->msg('mailmypassword') ?>" />
-<?php } ?>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><?=$link?></td>
-					</tr>
-				</table>
-			</form>
-		</div>
-		<b class="xbottom"><b class="xb4"></b><b class="xb3"></b><b class="xb2"></b><b class="xb1"></b></b>
-	</div>
-<?php
-		}
-?>
-
-
 <div id="header">
 	<div class="shrinkwrap">
 		<div id="logo">
@@ -509,6 +443,19 @@ class HomeTemplate extends QuickTemplate {
 	</div>
 	<div id="homepage_right">
 		<div style="position: absolute; top: 15px; left: 50%;"><a href="http://www.wikia.com/wiki/Special:CreateWiki" class="big_button orange" style="margin-left: -50%;" id="create-a-wiki"><big>Create a Wiki</big><small></small></a></div>
+<?php
+global $wgUser; 
+if ( $wgUser->isAnon() ) {
+?>
+	<div class="box">
+		<div style="width: 230px; margin: 0 auto; text-align: center">
+<a href="http://www.wikia.com/wiki/Special:UserLogin" id="login">Log in</a> or 
+<a href="http://www.wikia.com/wiki/Special:UserLogin?type=signup" id="register" class="ajaxLogin">Create an account</a>
+		</div>
+ 	</div>
+<?php
+}
+?>
 		<div class="box yellow" style="padding: 0">
                         <?= HomeDataProvider::getContentForBox('promoted-feature-1') ?>
 		</div>
