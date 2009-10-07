@@ -499,8 +499,12 @@ class FeedRenderer {
 
 			// list of comma separated categories
 			foreach($row['new_categories'] as $cat) {
-				$link = Title::newFromText($cat, NS_CATEGORY)->getLocalUrl();
-				$categories[] = Xml::element('a', array('href' => $link), str_replace('_', ' ', $cat));
+				$category = Title::newFromText($cat, NS_CATEGORY);
+
+				if (!empty($category)) {
+					$link = $category->getLocalUrl();
+					$categories[] = Xml::element('a', array('href' => $link), str_replace('_', ' ', $cat));
+				}
 			}
 
 			$html .= self::formatDetailsRow('inserted-category', implode(', ', $categories), false, count($categories));
