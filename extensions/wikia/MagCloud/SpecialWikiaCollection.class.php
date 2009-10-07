@@ -24,11 +24,6 @@ class WikiaCollection extends SpecialPage {
 			return;
 		}
 
-		if(!$wgUser->isAllowed('magcloud')) {
-			$this->displayRestrictionError();
-			return;
-		}
-
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'WikiaCollection' );
 		$wgOut->setPageTitle( wfMsg('magcloud-special-collection-title') );
 
@@ -49,6 +44,12 @@ class WikiaCollection extends SpecialPage {
 			$sHtml = $this->renderBody();
 		}
 		else {
+			// check user rights (for test period only!)
+			if(!$wgUser->isAllowed('magcloud')) {
+				$this->displayRestrictionError();
+				return;
+			}
+
 			// check articles count
 			$oCollection = MagCloudCollection::getInstance();
 
