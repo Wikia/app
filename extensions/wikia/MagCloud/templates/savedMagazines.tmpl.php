@@ -12,14 +12,12 @@
 	</div>
 
 	<div id="MagCloudSavedMagazinesButtons" class="MagCloudPopupButtons">
-		<a class="bigButton" id="MagCloudLoadMagazine">
-			<big><?= wfMsg('magcloud-load-magazine-load') ?></big>
-			<small> </small>
+		<a class="wikia_button" id="MagCloudLoadMagazine">
+			<span><?= wfMsg('magcloud-load-magazine-load') ?></span>
 		</a>
 
-		<a class="bigButton greyButton" id="MagCloudCancel">
-			<big><?= wfMsg('cancel') ?></big>
-			<small> </small>
+		<a class="wikia_button secondary" id="MagCloudCancel">
+			<span><?= wfMsg('cancel') ?></span>
 		</a>
 	</div>
 </div>

@@ -10,22 +10,19 @@
 
 	<p><?= wfMsg('magcloud-intro-hint') ?></p>
 
-	<div id="MagCloudIntroPopupButtons" class="MagCloudPopupButtons<?= $isAnon ? ' MagCloudPopupButtonsAnon' : '' ?>">
-		<a class="bigButton" id="MagCloudIntroPopupOk">
-			<big><?= wfMsg('magcloud-intro-get-started') ?></big>
-			<small> </small>
+	<div id="MagCloudIntroPopupButtons" class="MagCloudPopupButtons">
+		<a class="wikia_button" id="MagCloudIntroPopupOk">
+			<span><?= wfMsg('magcloud-intro-get-started') ?></span>
 		</a>
 <?php if (!$isAnon): ?>
-		<a class="bigButton greyButton" id="MagCloudIntroPopupLoad">
-			<big><?= wfMsg('magcloud-intro-view-my-magazines') ?></big>
-			<small> </small>
+		<a class="wikia_button secondary" id="MagCloudIntroPopupLoad">
+			<span><?= wfMsg('magcloud-intro-view-my-magazines') ?></span>
 		</a>
 <?php
 	endif;
 ?>
-		<a class="bigButton greyButton" id="MagCloudIntroPopupCancel">
-			<big><?= wfMsg('cancel') ?></big>
-			<small> </small>
+		<a class="wikia_button secondary" id="MagCloudIntroPopupCancel">
+			<span><?= wfMsg('cancel') ?></span>
 		</a>
 	</div>
 </div>
