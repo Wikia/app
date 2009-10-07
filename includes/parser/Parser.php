@@ -3637,7 +3637,7 @@ class Parser
 						/**
 						 * @todo rt#23302
 						 */
-						Wikia::log( __METHOD__, false, "Invalid tag extension name {$name}", true );
+						Wikia::log( __METHOD__, false, "Invalid tag extension name {$name} " . $_SERVER[ 'REQUEST_URI' ], true );
 						$output = '<span class="error">Invalid tag extension name: ' .
 							htmlspecialchars( $name ) . '</span>';
 					}
