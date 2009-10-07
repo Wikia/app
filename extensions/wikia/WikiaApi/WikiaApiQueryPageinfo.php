@@ -109,6 +109,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 	}
 	
 	private function getRedirectName(&$result) {
+		global $wgContLang;
 		$res = &$result->getData();
 		$db = $this->getDB();
 		if ( isset($res['query']) && isset($res['query']['pages']) ) {
@@ -118,7 +119,8 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 					$oArticle = new Article($oTitle);
 					$oRedirTitle = $oArticle->getRedirectTarget();
 					if ( $oRedirTitle instanceof Title ) {
-						$result->addValue(array("query", "pages", $page_id), "redirectto", $oRedirTitle->getDBkey());
+						$redir = $wgContLang->getNsText( $oRedirTitle->getNamespace() ) . ":" . $oRedirTitle->getDBkey();
+						$result->addValue(array("query", "pages", $page_id), "redirectto", $redir );
 					}
 				} 
 			}
