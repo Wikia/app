@@ -1,4 +1,5 @@
 == Changes since 200910.1 ==
+* rt#23421: Ads: Convert halo (old monaco) tandem code to WF switch. (Nef)
 * rt#24224: Widget caroussel is suddenly English for me inside de.wikia (Macbre)
 * rt#23848: Rendering issues when WMU is closed using IE7 (Macbre)
 * rt#24167: FCK: NOWYSIWYG word doesn't work through templates (Macbre)

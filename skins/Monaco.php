@@ -1582,7 +1582,7 @@ if(isset($this->data['articlelinks']['right']) && $showright ) {
 			<!-- ARTICLE -->
 <?php
 echo AdEngine::getInstance()->getSetupHtml();
-global $wgOut, $wgEnableAdsInContent, $wgAdsForceLeaderboards, $wgEnableIframeAds, $wgEnableTandemAds;
+global $wgOut, $wgAdsForceLeaderboards, $wgEnableIframeAds, $wgEnableTandemAds;
 if (!empty($wgEnableIframeAds)){
 	$AdEngineFunc = "getPlaceHolderIframe";
 } else {
