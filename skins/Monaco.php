@@ -1816,7 +1816,6 @@ if ($custom_article_footer !== '') {
 <?php
 			}
 ?>
-							</ul>
 
 <?php global $wgEnableShareFeatureExt;
 
@@ -1826,7 +1825,7 @@ if ($custom_article_footer !== '') {
 								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_sharefeature_img" class="sprite" alt="<?= wfMsg('sf-link') ?>" /> <div><a style="cursor:pointer" id="fe_sharefeature_link"><?= wfMsg('sf-link'); ?></a></div></li>
 
 <?php } ?>
-
+							</ul>
 
 <?php if(empty($wgEnableShareFeatureExt)) { ?>
 							<div class="clearfix">
