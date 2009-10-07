@@ -316,10 +316,35 @@ class MagCloudAjax {
 
 		// show nice error message
 		if (isset($result['code'])) {
+			MagCloudAjax::log($hash, $timestamp, $token, $result["code"], $result["msg"], serialize($result));
 			$result['internalMsg'] = $result['msg'];
 			$result['msg'] = wfMsg('magcloud-publish-error');
 		}
 
 		return $result;
+	}
+
+	// this is probably wrong place for this function FIXME
+	// move to MagCloud class and invoke from MagCloud::publish?
+	static public function log($hash, $timestamp, $token, $code, $msg, $raw_result) {
+		global $wgExternalDatawareDB;
+
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
+
+		$dbw->insert(
+			"magcloud_collection_log",
+			array(
+				"mcl_publish_hash"       => $hash,
+				"mcl_publish_timestamp"  => $timestamp,
+				"mcl_publish_token"      => $token,
+				"mcl_publish_code"       => $code,
+				"mcl_publish_msg"        => $msg,
+				"mcl_publish_raw_result" => $raw_result,
+				"mcl_timestamp"          =>  time(),
+			),
+			__METHOD__
+		);
+
+		$dbw->commit();
 	}
 }
