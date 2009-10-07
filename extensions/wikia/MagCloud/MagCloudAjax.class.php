@@ -13,6 +13,9 @@ class MagCloudAjax {
 		// start session for anon user
 		MagCloud::startAnonSession();
 
+		// fix toolbar bug
+		MagCloudCollection::getInstance()->setToolbarVisibleState(true);
+
 		// TODO: fetch preview image and URL
 		global $wgExtensionsPath;
 		$preview = array(
