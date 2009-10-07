@@ -268,6 +268,13 @@
 	clip: rect(0px 288px 16px 272px);
 	left: -272px;
 }
+
+#fe_sharefeature_icon,
+#fe_sharefeature_img {
+        clip: rect(0px 576px 16px 560px);
+        left: -560px;
+}
+
 #fe_history {
 	float: left;
 }
@@ -318,7 +325,7 @@
 	display: block;
 	height: 16px;
 	position: absolute;
-	width: 352px;
+	width: 576px;
 }
 #shareDelicious dd a {
 	clip: rect(0px 176px 16px 160px);
