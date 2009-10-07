@@ -1817,7 +1817,18 @@ if ($custom_article_footer !== '') {
 			}
 ?>
 							</ul>
-<?php global $wgEnableShareFeatureExt; if(empty($wgEnableShareFeatureExt)) { ?>
+
+<?php global $wgEnableShareFeatureExt;
+
+	if( !empty( $wgEnableShareFeatureExt ) ) {
+?>
+				
+								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_sharefeature_img" class="sprite" alt="<?= wfMsg('sf-link') ?>" /> <div><a style="cursor:pointer" id="fe_sharefeature_link"><?= wfMsg('sf-link'); ?></a></div></li>
+
+<?php } ?>
+
+
+<?php if(empty($wgEnableShareFeatureExt)) { ?>
 							<div class="clearfix">
 								<strong><?= wfMsg('footer_8') ?>:</strong>
 <?php
