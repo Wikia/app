@@ -7,8 +7,6 @@
  */
 
 $wgSearchType = 'SolrSearch';
-$wgSolrHost = '10.8.2.16';
-$wgSolrPort = '8983';
 
 $wgExtensionCredits['other'][] = array(
 	'name'        => 'Wikia Search',
