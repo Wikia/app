@@ -21,12 +21,18 @@ $wgWidgets['WidgetMagCloud'] = array(
 
 function WidgetMagCloud($id, $params) {
 	global $wgLanguageCode, $wgEnableMagCloudExt;
-	global $wgSitename;
+	global $wgSitename, $wgUser;
 
 	wfProfileIn(__METHOD__);
 
 	// check whether MagCloud extension is enabled here
 	if ( empty($wgEnableMagCloudExt) ) {
+		wfProfileOut(__METHOD__);
+		return '';
+	}
+
+	// check user rights (for test period only!)
+	if(!$wgUser->isAllowed('magcloud')) {
 		wfProfileOut(__METHOD__);
 		return '';
 	}

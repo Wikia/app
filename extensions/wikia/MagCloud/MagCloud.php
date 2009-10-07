@@ -9,6 +9,10 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
+// permissions
+$wgAvailableRights[] = 'magcloud';
+$wgGroupPermissions['mctester']['magcloud'] = true;
+
 // register extension classes
 $wgAutoloadClasses['MagCloud'] = $dir.'MagCloud.class.php';
 $wgAutoloadClasses['MagCloudAjax'] = $dir.'MagCloudAjax.class.php';
