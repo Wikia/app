@@ -119,8 +119,7 @@ class WikiaApiQueryPageinfo extends ApiQueryInfo {
 					$oArticle = new Article($oTitle);
 					$oRedirTitle = $oArticle->getRedirectTarget();
 					if ( $oRedirTitle instanceof Title ) {
-						$redir = $wgContLang->getNsText( $oRedirTitle->getNamespace() ) . ":" . $oRedirTitle->getDBkey();
-						$result->addValue(array("query", "pages", $page_id), "redirectto", $redir );
+						$result->addValue(array("query", "pages", $page_id), "redirectto", Title::makeName($oRedirTitle->getNamespace(), $oRedirTitle->getDBkey()) );
 					}
 				} 
 			}
