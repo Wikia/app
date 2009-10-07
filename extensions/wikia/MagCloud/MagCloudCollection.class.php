@@ -9,6 +9,8 @@ class MagCloudCollection {
 		global $wgCityId;
 
 		$this->sessionKey = 'wsMagCloudCollection' . $wgCityId;
+
+		$this->logSession(__METHOD__);
 	}
 
 	private function __clone() { }
@@ -61,6 +63,8 @@ class MagCloudCollection {
 		}
 		$_SESSION[$this->sessionKey][$key] = $value;
 		$_SESSION[$this->sessionKey]['timestamp'] = time();
+
+		$this->logSession(__METHOD__);
 	}
 
 	/**
@@ -299,5 +303,12 @@ class MagCloudCollection {
 		}
 
 		return $magazines;
+	}
+
+	private  function logSession($method) {
+		if (!empty($_SESSION[$this->sessionKey])) {
+			$sessionData = json_encode($_SESSION[$this->sessionKey]);
+			wfDebug("{$method}: '{$this->sessionKey}' => {$sessionData}\n");
+		}
 	}
 }
