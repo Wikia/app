@@ -494,9 +494,15 @@ class MagCloud {
 
 		$issueId = $res->id;
 
+		$iteration = 3;
+		do {
+			sleep(3);
 
 		$res = MagCloudApi::IssueUpload($authTicket, $issueId, $pdf);
 #print_r($res); echo "\n";
+
+		} while (--$iteration && empty($res->code));
+
 		if (!empty($res->code)) {
 			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'issueUpload', 'code' => $res->code);
 		}
