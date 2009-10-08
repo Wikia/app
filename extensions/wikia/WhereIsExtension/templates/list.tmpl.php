@@ -35,8 +35,12 @@ select {
 		</div>
 		<?= wfMsg('whereisextension-isset') ?>
 		<select name="val">
-			<option value="true"<?= $gVal == 'true' ? ' selected="selected"' : '' ?>>true</option>
-			<option value="false"<?= $gVal == 'false' ? ' selected="selected"' : '' ?>>false</option>
+			<?php
+			foreach($formData['vals'] as $valId => $valName) {
+				$selected = $gVal == $valId ? ' selected="selected"' : '';
+				echo "\t\t<option value=\"$valId\"$selected>{$valName[0]}</option>\n";
+			}
+			?>
 		</select>
 		<input type="submit" value="<?= wfMsg('whereisextension-submit') ?>"/>
 	</form>

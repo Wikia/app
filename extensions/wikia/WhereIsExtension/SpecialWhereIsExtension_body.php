@@ -29,6 +29,8 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 class WhereIsExtension extends SpecialPage {
+	private $values;
+
 	function  __construct() {
 		parent::__construct('WhereIsExtension' /*class*/, 'WhereIsExtension' /*restriction*/);
 	}
@@ -46,7 +48,16 @@ class WhereIsExtension extends SpecialPage {
 			return;
 		}
 
+		$this->values = array (
+			//[0] displayed name
+			//[1] serialized value
+			0 => array('true', true),
+			1 => array('false', false),
+			2 => array('not empty', '')
+		);
+
 		$formData['vars'] = $this->getListOfVars($gVar == '');
+		$formData['vals'] = $this->values;
 		$formData['selectedVal'] = $gVal;
 		$formData['selectedGroup'] = $gVar == '' ? 27 : '';	//default group: extensions (or all groups when looking for variable, rt#16953)
 		$formData['groups'] = WikiFactory::getGroups();
@@ -93,13 +104,19 @@ class WhereIsExtension extends SpecialPage {
 	private function getListOfWikisWithVar($varId, $val) {
 		global $wgExternalSharedDB;
 
+		$aWikis = array();
+		if (!isset($this->values[$val][1])) {
+			return $aWikis;
+		}
+		$selectedVal = serialize($this->values[$val][1]);
+
 		$aTables = array(
 			'city_variables',
 			'city_list',
 		);
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
-		$aWhere[] = "cv_value = '" . serialize($val == 'true' ? true : false) . "'";
+		$aWhere[] = "cv_value = '$selectedVal'";
 		$aWhere[] = "cv_variable_id = '$varId'";
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
@@ -111,7 +128,6 @@ class WhereIsExtension extends SpecialPage {
 			array('ORDER BY' => 'city_sitename')
 		);
 
-		$aWikis = array();
 		while ($oRow = $dbr->fetchObject($oRes)) {
 			$aWikis[$oRow->city_title] = $oRow->city_url;
 		}

@@ -13,6 +13,8 @@
 * rt#22732: Edit page: Edit window message improvements (Macbre)
 * rt#23962: Memory alpha redirects (eloy)
 * rt#20000: FCK: Problems with signatures when used in templates (Macbre)
+* rt#22030: WIE: more flexible way of defining possible values, solves RT#22030 (Marooned)
+* rt#16474: Force section titles for &section=new links (using popup) (Marooned)
 
 == Changes since 200909.5 ==
 * rt#23974: My Home: Alt text for the icons in Activity feed / Watchlist / Contributions (Macbre)
