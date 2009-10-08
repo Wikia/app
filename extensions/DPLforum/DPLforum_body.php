@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  DPLforum v3.2 -- DynamicPageList-based forum extension
 
  Author: Ross McClure
@@ -24,7 +24,8 @@
  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  http://www.gnu.org/copyleft/gpl.html
 
- * @addtogroup Extensions
+ * @file
+ * @ingroup Extensions
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -66,27 +67,32 @@ class DPLForum {
 			foreach ( $matches[1] as $cat ) {
 				$title = Title::newFromText( $parser->replaceVariables( trim( $cat ) ) );
 				if ( !is_null( $title ) )
-				$cats[] = $title;
+					$cats[] = $title;
 			}
 		}
 		return $cats;
 	}
 
-	function get( $name, $value = NULL, $parser = NULL ) {
+	function get( $name, $value = null, $parser = null ) {
 		if ( preg_match( "/^\s*$name\s*=\s*(.*)/mi", $this->sInput, $matches ) ) {
 			$arg = trim( $matches[1] );
-			if ( is_int( $value ) ) return intval( $arg );
-			else if ( is_null( $parser ) ) return htmlspecialchars( $arg );
-			else return $parser->replaceVariables( $arg );
+			if ( is_int( $value ) )
+				return intval( $arg );
+			elseif ( is_null( $parser ) )
+				return htmlspecialchars( $arg );
+			else
+				return $parser->replaceVariables( $arg );
 		}
 		return $value;
 	}
 
 	function link( &$parser, $count, $page = '', $text = '' ) {
 		$count = intval( $count );
-		if ( $count < 1 ) return '';
+		if ( $count < 1 )
+			return '';
 
-		if ( $this->requireCache ) $offset = 0;
+		if ( $this->requireCache )
+			$offset = 0;
 		else {
 			global $wgRequest;
 			$parser->disableCache();
@@ -94,15 +100,20 @@ class DPLForum {
 		}
 
 		$i = intval( $page );
-		if ( ( $i != 0 ) && ctype_digit( $page[0] ) ) $i -= 1;
-		else $i += intval( $offset / $count );
-		if ( $this->link_test( $i, $page ) ) return '';
+		if ( ( $i != 0 ) && ctype_digit( $page[0] ) )
+			$i -= 1;
+		else
+			$i += intval( $offset / $count );
+		if ( $this->link_test( $i, $page ) )
+			return '';
 
-		if ( $text === '' ) $text = ( $i + 1 );
+		if ( $text === '' )
+			$text = ( $i + 1 );
 		$page = ( $count * $i );
-		if ( $page == $offset ) return $text;
+		if ( $page == $offset )
+			return $text;
 
-		return '['. $parser->replaceVariables('{{fullurl:{{FULLPAGENAME}}|offset='.$page.'}} ') . $text.']';
+		return '[' . $parser->replaceVariables( '{{fullurl:{{FULLPAGENAME}}|offset=' . $page . '}} ' ) . $text . ']';
 	}
 
 	function link_test( $page, $cond ) {
@@ -110,16 +121,20 @@ class DPLForum {
 			$m[1] = strtr( $m[1], array( ( '&l' . 't;' ) => '<', ( '&g' . 't;' ) => '>' ) );
 			$m[2] = intval( $m[2] ) - 1;
 			switch( $m[1] ) {
-				case '<': return ( $page >= $m[2] );
-				case '>': return ( $page <= $m[2] );
-				case '<=': return ( $page > $m[2] );
-				case '>=': return ( $page < $m[2] );
+				case '<':
+					return ( $page >= $m[2] );
+				case '>':
+					return ( $page <= $m[2] );
+				case '<=':
+					return ( $page > $m[2] );
+				case '>=':
+					return ( $page < $m[2] );
 			}
 		}
 		return ( $page < 0 );
 	}
 
-	function msg( $type, $error = NULL ) {
+	function msg( $type, $error = null ) {
 		if ( $error && ( $this->get( 'suppresserrors' ) == 'true' ) )
 			return '';
 
@@ -140,18 +155,20 @@ class DPLForum {
 
 		switch( $this->get( 'historylink' ) ) {
 			case 'embed':
-			case 'true': $this->bEmbedHistory = true;
+			case 'true':
+				$this->bEmbedHistory = true;
 			case 'append':
-			case 'show': $this->bLinkHistory = true;
+			case 'show':
+				$this->bLinkHistory = true;
 		}
 		$sOrder = 'rev_timestamp';
 		switch( $this->get( 'ordermethod' ) ) {
 			case 'categoryadd':
 			case 'created':
-			$sOrder = 'first_time';
+				$sOrder = 'first_time';
 			break;
 			case 'pageid':
-			$sOrder = 'page_id';
+				$sOrder = 'page_id';
 		}
 
 		$arg = $this->get( 'compact' );
@@ -162,12 +179,15 @@ class DPLForum {
 		$arg = $this->get( 'namespace', '', $parser );
 		$iNamespace = $wgContLang->getNsIndex( $arg );
 		if ( !$iNamespace ) {
-			if ( ( $arg ) || ( $arg === '0' ) ) $iNamespace = intval( $arg );
-			else $iNamespace = - 1;
+			if ( ( $arg ) || ( $arg === '0' ) )
+				$iNamespace = intval( $arg );
+			else
+				$iNamespace = - 1;
 		}
 		if ( $iNamespace < 0 )
 			$this->bShowNamespace = ( $this->get( 'shownamespace' ) != 'false' );
-		else $this->bShowNamespace = ( $this->get( 'shownamespace' ) == 'true' );
+		else
+			$this->bShowNamespace = ( $this->get( 'shownamespace' ) == 'true' );
 
 		$this->bTableMode = false;
 		$sStartItem = $sEndItem = '';
@@ -175,22 +195,22 @@ class DPLForum {
 		$arg = $this->get( 'mode' );
 		switch( $arg ) {
 			case 'none':
-			$sEndItem = '<br />';
+				$sEndItem = '<br />';
 			break;
 			case 'count':
-			$bCountMode = true;
+				$bCountMode = true;
 			break;
 			case 'list':
 			case 'ordered':
 			case 'unordered':
-			$sStartItem = '<li>';
-			$sEndItem = '</li>';
+				$sStartItem = '<li>';
+				$sEndItem = '</li>';
 			break;
 			case 'table':
 			default:
-			$this->bTableMode = true;
-			$sStartItem = '<tr>';
-			$sEndItem = '</tr>';
+				$this->bTableMode = true;
+				$sStartItem = '<tr>';
+				$sEndItem = '</tr>';
 		}
 		$aCategories = $this->cat( $parser, 'category' );
 		$aExcludeCategories = $this->cat( $parser, 'notcategory' );
@@ -200,14 +220,15 @@ class DPLForum {
 		$output = '';
 
 		if ( $sPrefix === '' && ( ( $cats < 1 && $iNamespace < 0 ) ||
-		( $total < $this->minCategories ) ) ) return $this->msg( 'dplforum-toofew', 1 );
+		( $total < $this->minCategories ) ) )
+			return $this->msg( 'dplforum-toofew', 1 );
 		if ( ( $total > $this->maxCategories ) && ( !$this->unlimitedCategories ) )
-		return $this->msg( 'dplforum-toomany', 1 );
+			return $this->msg( 'dplforum-toomany', 1 );
 
 		$count = 1;
 		$start = $this->get( 'start', 0 );
 		$title = Title::newFromText( $parser->replaceVariables(
-		trim( $this->get( 'title' ) ) ) );
+			trim( $this->get( 'title' ) ) ) );
 		if ( !( $bCountMode || $this->requireCache || $this->get( 'cache' ) == 'true' ) ) {
 			$parser->disableCache();
 
@@ -216,22 +237,22 @@ class DPLForum {
 				$start += intval( $wgRequest->getVal( 'offset' ) );
 			}
 		}
-		if ( $start < 0 ) $start = 0;
+		if ( $start < 0 )
+			$start = 0;
 
 		if ( is_null( $title ) ) {
 			$count = $this->get( 'count', 0 );
 			if ( $count > 0 ) {
 				if ( $count > $this->maxResultCount )
-				$count = $this->maxResultCount;
-			}
-			else if ( $this->unlimitedResults )
-			$count = 0x7FFFFFFF; // maximum integer value
+					$count = $this->maxResultCount;
+			} elseif ( $this->unlimitedResults )
+				$count = 0x7FFFFFFF; // maximum integer value
 			else
-			$count = $this->maxResultCount;
+				$count = $this->maxResultCount;
 		}
 
 		// build the SQL query
-		$dbr =& wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE );
 		$sPageTable = $dbr->tableName( 'page' );
 		$sRevTable = $dbr->tableName( 'revision' );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
@@ -242,8 +263,7 @@ class DPLForum {
 
 		if ( $bCountMode ) {
 			$sSqlSelectFrom = "SELECT COUNT(*) AS num_rows FROM $sPageTable";
-		}
-		else if ( ( $this->bAddAuthor || $this->bAddCreationDate ||
+		} elseif ( ( $this->bAddAuthor || $this->bAddCreationDate ||
 		( $sOrder == 'first_time' ) ) && ( ( !$this->restrictNamespace ) ||
 		( $iNamespace >= 0 && !in_array( $iNamespace, $this->restrictNamespace ) ) ) ) {
 			$sSqlSelectFrom .= ", o.rev_user_text AS first_user, o.rev_timestamp AS"
@@ -251,13 +271,14 @@ class DPLForum {
 			. " ON o.rev_id =( SELECT MIN(q.rev_id) FROM $sRevTable"
 			. " AS q WHERE q.rev_page = page_id )";
 		} else {
-			if ( $sOrder == 'first_time' ) $sOrder = 'page_id';
+			if ( $sOrder == 'first_time' )
+				$sOrder = 'page_id';
 			$sSqlSelectFrom .= $arg;
 		}
 
 		$sSqlWhere = ' WHERE 1=1';
 		if ( $iNamespace >= 0 )
-		$sSqlWhere = ' WHERE page_namespace=' . $iNamespace;
+			$sSqlWhere = ' WHERE page_namespace=' . $iNamespace;
 
 		if ( $sPrefix !== '' ) {
 			// Escape SQL special characters
@@ -268,12 +289,12 @@ class DPLForum {
 
 		switch( $this->get( 'redirects' ) ) {
 			case 'only':
-			$sSqlWhere .= ' AND page_is_redirect = 1';
+				$sSqlWhere .= ' AND page_is_redirect = 1';
 			case 'include':
 			break;
 			case 'exclude':
 			default:
-			$sSqlWhere .= ' AND page_is_redirect = 0';
+				$sSqlWhere .= ' AND page_is_redirect = 0';
 			break;
 		}
 
@@ -281,13 +302,13 @@ class DPLForum {
 		for ( $i = 0; $i < $cats; $i++ ) {
 			$sSqlSelectFrom .= " INNER JOIN $categorylinks AS" .
 			" c{$n} ON page_id = c{$n}.cl_from AND c{$n}.cl_to=" .
-			$dbr->addQuotes( $aCategories[$i]->getDBKey() );
+			$dbr->addQuotes( $aCategories[$i]->getDBkey() );
 			$n++;
 		}
 		for ( $i = 0; $i < $nocats; $i++ ) {
 			$sSqlSelectFrom .= " LEFT OUTER JOIN $categorylinks AS" .
 			" c{$n} ON page_id = c{$n}.cl_from AND c{$n}.cl_to=" .
-			$dbr->addQuotes( $aExcludeCategories[$i]->getDBKey() );
+			$dbr->addQuotes( $aExcludeCategories[$i]->getDBkey() );
 			$sSqlWhere .= " AND c{$n}.cl_to IS NULL";
 			$n++;
 		}
@@ -307,10 +328,10 @@ class DPLForum {
 		// $output .= 'QUERY: [' . $sSqlSelectFrom . $sSqlWhere . "]<br />";
 
 		// process the query
-		$res = $dbr->query( $sSqlSelectFrom . $sSqlWhere );
+		$res = $dbr->query( $sSqlSelectFrom . $sSqlWhere, __METHOD__ );
 
 		$this->vMarkNew = $dbr->timestamp( time() -
-		intval( $this->get( 'newdays', 7 ) * 86400 ) );
+			intval( $this->get( 'newdays', 7 ) * 86400 ) );
 
 		if ( $bCountMode ) {
 			if ( $row = $dbr->fetchObject( $res ) ) {
@@ -318,8 +339,7 @@ class DPLForum {
 			} else {
 				$output .= '0';
 			}
-		}
-		else if ( is_null( $title ) ) {
+		} elseif ( is_null( $title ) ) {
 			while ( $row = $dbr->fetchObject( $res ) ) {
 				if( isset( $row->first_time ) ) {
 					$first_time = $row->first_time;
@@ -336,16 +356,16 @@ class DPLForum {
 				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
 				$output .= $sStartItem;
 				$output .= $this->buildOutput( $title, $title, $row->rev_timestamp,
-				$row->rev_user_text, $first_user, $first_time );
+					$row->rev_user_text, $first_user, $first_time );
 				$output .= $sEndItem . "\n";
 			}
 		} else {
 			$output .= $sStartItem;
 			if ( $row = $dbr->fetchObject( $res ) ) {
 				$output .= $this->buildOutput( Title::makeTitle( $row->page_namespace,
-				$row->page_title ), $title, $row->rev_timestamp, $row->rev_user_text );
+					$row->page_title ), $title, $row->rev_timestamp, $row->rev_user_text );
 			} else {
-				$output .= $this->buildOutput( NULL, $title, $this->msg( 'dplforum-never' ) );
+				$output .= $this->buildOutput( null, $title, $this->msg( 'dplforum-never' ) );
 			}
 			$output .= $sEndItem . "\n";
 		}
@@ -356,7 +376,7 @@ class DPLForum {
 	function buildOutput( $page, $title, $time, $user = '', $author = '', $made = '' ) {
 		global $wgLang, $wgUser;
 
-		$sk =& $wgUser->getSkin();
+		$sk = $wgUser->getSkin();
 		$tm =& $this->bTableMode;
 		$output = '';
 
@@ -376,7 +396,7 @@ class DPLForum {
 
 			if ( $tm ) {
 				$output .= "<td class='forum_created'>$made</td>";
-			} else if ( $made ) {
+			} elseif ( $made ) {
 				$output = "{$made}: ";
 			}
 		}
@@ -420,7 +440,7 @@ class DPLForum {
 			if ( $tm ) {
 				if ( $this->bCompactAuthor ) {
 					if ( $author ) {
-						$byAuthor = wfMsg( 'word-separator') . wfMsgHTML( 'dplforum-by', $author );
+						$byAuthor = wfMsg( 'word-separator' ) . wfMsgHtml( 'dplforum-by', $author );
 						$output .= " <span class='forum_author'>$byAuthor</span>";
 					} else {
 						$output .= " <span class='forum_author'>&nb" . "sp;</span>";
@@ -428,8 +448,8 @@ class DPLForum {
 				} else {
 					$output .= "</td><td class='forum_author'>$author";
 				}
-			} else if ( $author ) {
-				$byAuthor = wfMsg( 'word-separator') . wfMsgHTML( 'dplforum-by', $author );
+			} elseif ( $author ) {
+				$byAuthor = wfMsg( 'word-separator' ) . wfMsgHtml( 'dplforum-by', $author );
 				$output .= $byAuthor;
 			}
 		}
@@ -465,7 +485,7 @@ class DPLForum {
 			if ( $tm ) {
 				if ( $this->bCompactEdit ) {
 					if ( $user ) {
-						$byUser = wfMsgHTML( 'dplforum-by', $user );
+						$byUser = wfMsgHtml( 'dplforum-by', $user );
 						$output .= " <span class='forum_editor'>$byUser</span>";
 					} else {
 						$output .= " <span class='forum_editor'>&nb" . "sp;</span>";
@@ -473,16 +493,15 @@ class DPLForum {
 				} else {
 					$output .= "</td><td class='forum_editor'>$user";
 				}
-			}
-			else if ( $user ) {
-				$byUser = wfMsgHTML( 'dplforum-by', $user );
+			} elseif ( $user ) {
+				$byUser = wfMsgHtml( 'dplforum-by', $user );
 				$text .= $byUser;
 			}
 		}
 
 		if ( $tm ) {
-			$output .= "</td>";
-		} else if ( $text ) {
+			$output .= '</td>';
+		} elseif ( $text ) {
 			$output .= wfMsg( 'word-separator' ) . $this->msg( 'dplforum-edited' ) . " $text";
 		}
 
