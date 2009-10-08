@@ -21,7 +21,7 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'Share Feature',
         'author' => 'Bartek Łapiński',
-        'version' => '1.06',
+        'version' => '1.10',
 );
 
 $dir = dirname(__FILE__).'/';
@@ -129,7 +129,7 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 	global $wgTitle, $wgUser, $wgEnableBlogArticles;
 
 	// do not display for not existing pages,
-	// do not display for other skins
+	// do not display for other skins than Monaco
 	if( ( $wgTitle->isContentPage() || ( !empty( $wgEnableBlogArticles ) && $wgTitle->getNamespace() == NS_BLOG_ARTICLE ) )
 		&& $wgTitle->exists() 
 		&& ( get_class($wgUser->getSkin()) == 'SkinMonaco' ) ) {
@@ -191,6 +191,7 @@ function wfShareFeatureAjaxGetDialog() {
 	$tpl->set_vars( array(
 		'title' => $title,
 		'wiki' 	=> $wiki,
+		'footer' => $footer,
 		'sites'	=> wfShareFeatureSortSites( $wgShareFeatureSites, $wiki, $title ),
 	));
 
