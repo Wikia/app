@@ -1033,6 +1033,7 @@ EOD;
 			case self::V_GAMEVIDEOS:
 			case self::V_VIMEO:
 			case self::V_SOUTHPARKSTUDIOS:
+			case self::V_BLIPTV:
 				$metadata = $this->mProvider . ',' . $this->mId . ',';
 				break;
 			default:
