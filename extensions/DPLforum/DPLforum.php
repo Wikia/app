@@ -1,7 +1,7 @@
 <?php
-/*
+/**
 
- DPLforum v3.2 -- DynamicPageList-based forum extension
+ DPLforum v3.3.1 -- DynamicPageList-based forum extension
 
  Author: Ross McClure
  http://www.mediawiki.org/wiki/User:Algorithm
@@ -38,12 +38,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionFunctions[] = 'wfDPLforum';
 $wgHooks['LanguageGetMagic'][] = 'wfDPLmagic';
 $wgExtensionCredits['parserhook'][] = array(
-	'name'           => 'DPLforum',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:DPLforum',
-	'description'    => 'DPL-based forum extension',
+	'path' => __FILE__,
+	'name' => 'DPLforum',
+	'author' => 'Ross McClure',
+	'version' => '3.3.1',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:DPLforum',
+	'description' => 'DPL-based forum extension',
 	'descriptionmsg' => 'dplforum-desc',
-	'author'         => 'Ross McClure',
-	'version'        => '3.3'
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -58,9 +59,10 @@ function wfDPLforum() {
 	$wgParser->setFunctionHook( 'forumlink', array( new DPLForum(), 'link' ) );
 }
 
-function wfDPLmagic( &$magicWords, $langCode = "en" ) {
+function wfDPLmagic( &$magicWords, $langCode = 'en' ) {
 	switch( $langCode ) {
-		default: $magicWords['forumlink'] = array ( 0, 'forumlink' );
+		default:
+			$magicWords['forumlink'] = array( 0, 'forumlink' );
 	}
 	return true;
 }
