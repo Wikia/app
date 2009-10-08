@@ -74,6 +74,10 @@ class MyHomeAjax {
 			$image = FeedProvider::getFile($wgTitle, $timestamp);
 		}
 
+		if (empty($image)) {
+			return array();
+		}
+
 		// get original dimensions of an image
 		$width = $image->getWidth();
 		$height = $image->getHeight();
