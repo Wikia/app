@@ -6,14 +6,25 @@
  * @author Lucas Garczewski <tor@wikia-inc.com>
  */
 
+$wgExtensionMessagesFiles['StaffPowers'] = dirname(__FILE__) . '/StaffPowers.i18n.php';
+
 // Power: unblockableness
 $wgHooks['BlockIp'][] = 'efPowersMakeUnblockable';
-$wgGroupPermissions['staff'][] = 'unblockable';
+$wgAvailableRights[] = 'unblockable';
+$wgGroupPermissions['staff']['unblockable'] = true;
 
 function efPowersMakeUnblockable( $block, $user ) {
-        if ( $user->isAllowed( 'unblockable' ) ) {
-                return false;
-        }
+        if ( !$user->isAllowed( 'unblockable' ) ) {
+		return true;
+	}
 
-        return true;
+	global $wgMessageCache;
+
+	wfLoadExtensionMessages( 'StaffPowers' );
+
+	// hack to get IpBlock to display the message we want -- hardcoded in core code
+	$replacement = wfMsgExt( 'staffpowers-ipblock-aborted', array('parseinline') );
+	$wgMessageCache->addMessages( array( 'hookaborted' => $replacement ) );
+
+	return false;
 }
