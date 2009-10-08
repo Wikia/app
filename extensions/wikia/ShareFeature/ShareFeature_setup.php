@@ -182,8 +182,9 @@ function wfShareFeatureAjaxUpdateStats( $provider ) {
 
 // return dialog for the extension
 function wfShareFeatureAjaxGetDialog() {
-	global $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer, $wgArticlePath;
+	global $wgTitle, $wgCityId, $wgShareFeatureSites, $wgServer, $wgArticlePath, $wgRequest;
 
+	$footer = $wgRequest->getVal( 'footer' );
 	$title = htmlspecialchars( $wgTitle->getText() );
 	$wiki = $wgTitle->getFullUrl();
 
