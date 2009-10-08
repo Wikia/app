@@ -65,7 +65,7 @@ JS
 
 		$feedProvider = new DataFeedProvider($feedProxy);
 		// render choosen feed
-		$feedHTML = $feedRenderer->render($feedProvider->get(30));
+		$feedHTML = $feedRenderer->render($feedProvider->get(60));
 
 		######
 		### Prepare HTML for user contributions section

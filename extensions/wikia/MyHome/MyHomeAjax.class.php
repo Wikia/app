@@ -10,7 +10,7 @@ class MyHomeAjax {
 		global $wgRequest;
 		$type  = $wgRequest->getVal('type', false);
 		$since = $wgRequest->getVal('since', wfTimestamp(TS_MW, time()));
-		$limit = $wgRequest->getInt('limit', 30);
+		$limit = $wgRequest->getInt('limit', 60);
 
 
 		$feedProxy = new ActivityFeedAPIProxy();
