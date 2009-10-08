@@ -46,6 +46,8 @@ if( 'view' == wgAction ) {
 	var wmu_hide_message = '';
 	var wmu_title = '';
 	var wmu_max_thumb = '';
+	var wmu_no_protect = '';
+	var wmu_no_rights = '';
 	var file_extensions = '';
 	var file_blacklist = '';
 	var check_file_extensions = '';
@@ -268,6 +270,8 @@ function WMU_loadMainFromView() {
 			wmu_hide_message = unescape( data.wmu_hide_message );
 			wmu_title = unescape( data.wmu_title );
 			wmu_max_thumb = unescape( data.wmu_max_thumb );
+			wmu_no_protect = unescape( data.wmu_no_protect );
+			wmu_no_rights = unescape( data.wmu_no_rights );
 			file_extensions = data.file_extensions;
 			file_blacklist = data.file_blacklist;
 			check_file_extensions = data.check_file_extensions;
@@ -280,13 +284,11 @@ function WMU_loadMainFromView() {
 			} else {
 				// is user is disallowed from editing, do nothing and show them a message 
 				if( user_protected ) {
-					// todo find the right message
-					alert( 'Protected' );
+					alert( wmu_no_protect );
 					return;
 				}				
 				if( user_disallowed ) {
-					// todo find the right message
-					alert( '' );
+					alert( wmu_no_rights );
 					return;
 				}
 
@@ -324,7 +326,7 @@ function WMU_loadMainFromView() {
 		}
 	}
 
-	$.getJSON( wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMainFromView', callback);
+	$.getJSON( wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMainFromView&article=' + wgTitle + '&ns=' + wgNamespaceNumber, callback);
 
         WMU_curSourceId = 0;
 }
