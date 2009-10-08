@@ -650,7 +650,7 @@ EOD;
                         $parsed = split( "/", $url );
                         if( is_array( $parsed ) ) {
                                 $mdata = array_pop( $parsed );
-                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+                                if ( '' != $mdata ) {
                                         $this->mId = $mdata;
                                 } else {
                                         $this->mId = array_pop( $parsed );
@@ -662,7 +662,7 @@ EOD;
                 }
 
                 $text = strpos( $fixed_url, "WWW.DAILYMOTION" );
-                if( false !== $text ) { // Blip TV
+                if( false !== $text ) { // Dailymotion
                         $provider = self::V_DAILYMOTION;
                         $parsed = split( "/", $url );
                         if( is_array( $parsed ) ) {
