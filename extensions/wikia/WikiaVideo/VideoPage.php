@@ -644,6 +644,76 @@ EOD;
                         }
                 }
 
+                $text = strpos( $fixed_url, "BLIP.TV" );
+                if( false !== $text ) { // Blip TV
+                        $provider = self::V_BLIPTV;
+                        $parsed = split( "/", $url );
+                        if( is_array( $parsed ) ) {
+                                $mdata = array_pop( $parsed );
+                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+                                        $this->mId = $mdata;
+                                } else {
+                                        $this->mId = array_pop( $parsed );
+                                }
+                                $this->mProvider = $provider;
+                                $this->mData = array();
+                                return true;
+                        }
+                }
+
+                $text = strpos( $fixed_url, "WWW.DAILYMOTION" );
+                if( false !== $text ) { // Blip TV
+                        $provider = self::V_DAILYMOTION;
+                        $parsed = split( "/", $url );
+                        if( is_array( $parsed ) ) {
+                                $mdata = array_pop( $parsed );
+                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+                                        $this->mId = $mdata;
+                                } else {
+                                        $this->mId = array_pop( $parsed );
+                                }
+                                $this->mProvider = $provider;
+                                $this->mData = array();
+                                return true;
+                        }
+                }
+
+                $text = strpos( $fixed_url, "VIDDLER.COM" );
+                if( false !== $text ) { // Blip TV
+                        $provider = self::V_VIDDLER;
+                        $parsed = split( "/", $url );
+                        if( is_array( $parsed ) ) {
+                                $mdata = array_pop( $parsed );
+                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+                                        $this->mId = $mdata;
+                                } else {
+                                        $this->mId = array_pop( $parsed );
+                                }
+                                $this->mProvider = $provider;
+                                $this->mData = array();
+                                return true;
+                        }
+                }
+
+                $text = strpos( $fixed_url, "BLIP.TV" );
+                if( false !== $text ) { // Blip TV
+                        $provider = self::V_BLIPTV;
+                        $parsed = split( "/", $url );
+                        if( is_array( $parsed ) ) {
+                                $mdata = array_pop( $parsed );
+                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+                                        $this->mId = $mdata;
+                                } else {
+                                        $this->mId = array_pop( $parsed );
+                                }
+                                $this->mProvider = $provider;
+                                $this->mData = array();
+                                return true;
+                        }
+                }
+
+
+
 		return false;
 	}
 
