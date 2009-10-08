@@ -975,7 +975,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		# So we don't need to pass it here in $query. However, the URL for the
 		# zoom icon still needs it, so we make a unique query for it. See bug 14771
 		$url = $title->getLocalURL( $query );
-		if( $page ) { 
+		if( $page ) {
 			$url = wfAppendQuery( $url, 'page=' . urlencode( $page ) );
 		}
 
@@ -1125,14 +1125,14 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 	 * @param boolean $escape Do we escape the link text?
 	 * @param String $linktype Type of external link. Gets added to the classes
 	 * @param array $attribs Array of extra attributes to <a>
-	 * 
-	 * @TODO! @FIXME! This is a really crappy implementation. $linktype and 
+	 *
+	 * @TODO! @FIXME! This is a really crappy implementation. $linktype and
 	 * 'external' are mashed into the class attrib for the link (which is made
-	 * into a string). Then, if we've got additional params in $attribs, we 
+	 * into a string). Then, if we've got additional params in $attribs, we
 	 * add to it. People using this might want to change the classes (or other
-	 * default link attributes), but passing $attribsText is just messy. Would 
-	 * make a lot more sense to make put the classes into $attribs, let the 
-	 * hook play with them, *then* expand it all at once. 
+	 * default link attributes), but passing $attribsText is just messy. Would
+	 * make a lot more sense to make put the classes into $attribs, let the
+	 * hook play with them, *then* expand it all at once.
 	 */
 	function makeExternalLink( $url, $text, $escape = true, $linktype = '', $attribs = array() ) {
 		$attribsText = $this->getExternalLinkAttributes( $url, $text, 'external ' . $linktype );
@@ -1793,6 +1793,12 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 			}
 			$outText .= '</ul>';
 		}
+
+		/* Wikia change begin - @author: Macnre */
+		/* #22760: Shorten edit page 'transcluded pages' list using JS */
+		wfRunHooks('LinkerFormatTemplates', array(&$this, &$templates, &$outText));
+		/* Wikia change end */
+
 		wfProfileOut( __METHOD__  );
 		return $outText;
 	}
@@ -1935,7 +1941,7 @@ if ($wgWikiaEnableSharedHelpExt && (NS_HELP == $title->getNamespace()) && Shared
 		wfProfileOut( __METHOD__ );
 		return false;
 	}
-	
+
 	/**
 	 * Creates a (show/hide) link for deleting revisions/log entries
 	 *
