@@ -35,7 +35,10 @@ class WikiaMiniUpload {
 
 		( $wgUser->isBlocked() ) ? $script_a['user_blocked'] = true : $script_a['user_blocked'] = false;
 	
+		global $wgTitle;
 		// if the page is protected
+		( $wgTitle->isProtected( 'edit' ) ) ? $script_a['user_protected'] = true : $script_a['user_protected'] = false;		
+
 		( $wgUser->isLoggedIn() && !$wgUser->isAllowed( 'edit' ) ) ? $script_a['user_disallowed'] = true : $script_a['user_disallowed'] = false;
 	
 		// for disabled anonymous editing

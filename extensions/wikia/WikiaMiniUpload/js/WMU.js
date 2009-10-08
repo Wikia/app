@@ -52,6 +52,7 @@ if( 'view' == wgAction ) {
 	var strict_file_extensions = '';
 	var user_blocked = false;
 	var user_disallowed = false;
+	var user_protected = false;
 }
 
 function WMU_loadDetails() {
@@ -250,7 +251,6 @@ function WMU_loadMainFromView() {
 				openLogin( fe );
 				return;
 			}
-
 			var element = document.createElement('div');
 			element.id = 'WMU_div';
 			element.style.width = '812px';
@@ -274,10 +274,16 @@ function WMU_loadMainFromView() {
 			strict_file_extensions = data.strict_file_extensions;
 			user_blocked = data.user_blocked;
 			user_disallowed = data.user_disallowed;
+			user_protected = data.user_protected;
 			if( user_blocked ) {
 				document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
 			} else {
 				// is user is disallowed from editing, do nothing and show them a message 
+				if( user_protected ) {
+					// todo find the right message
+					alert( 'Protected' );
+					return;
+				}				
 				if( user_disallowed ) {
 					// todo find the right message
 					alert( '' );
