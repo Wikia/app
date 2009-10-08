@@ -21,7 +21,6 @@ class VideoPage extends Article {
 	const V_CLIPFISH = 14;
 	const V_MYVIDEO = 15;
 	const V_SOUTHPARKSTUDIOS = 16;
-	const V_BLIP = 17;
 	const V_DAILYMOTION = 18;
 	const V_VIDDLER	 = 19;
 	//const V_GAMETRAILERS = 20;
@@ -676,7 +675,7 @@ EOD;
                                 $ratio = ( 480 / 400 );
 				break;
 			// todo check those
-			case self::V_BLIP:
+			case self::V_BLIPTV:
 				$ratio = (480 / 350);
 				break;
 			case self::V_DAILYMOTION:
@@ -722,8 +721,7 @@ EOD;
                         case self::V_SOUTHPARKSTUDIOS:
                                 $ratio = "480 x 400";
 				break;
-			// todo check real dimensions for those four
-			case self::V_BLIP:
+			case self::V_BLIPTV:
 				$ratio = "480 x 350";
 				break;
 			case self::V_DAILYMOTION:
@@ -807,7 +805,7 @@ EOD;
 			case self::V_SOUTHPARKSTUDIOS: // todo verify if exists
 				$exists = true;
 				break;
-			case self::V_BLIP: // todo verify if exists
+			case self::V_BLIPTV: // todo verify if exists
 				$exists = true;
 				break;
 			case self::V_DAILYMOTION: // todo verify if exists
@@ -855,7 +853,7 @@ EOD;
 				return 'http://www.vimeo.com';
 			case self::V_SOUTHPARKSTUDIOS:
 				return 'http://www.southparkstudios.com';
-			case self::V_BLIP:
+			case self::V_BLIPTV:
 				return 'http://blip.tv';
 			case self::V_DAILYMOTION:
 				return 'http://www.dailymotion.com';
@@ -1243,6 +1241,19 @@ EOD;
                                 $code = 'custom';
                                 $embed = '<embed src="http://media.mtvnservices.com/mgid:cms:item:southparkstudios.com:' . $this->mId . '" width="' . $width . '" height="' . $height . '" type="application/x-shockwave-flash" wmode="window" flashVars="autoPlay=false&dist=http://www.southparkstudios.com&orig=" allowFullScreen="true" allowScriptAccess="always" allownetworking="all" bgcolor="#000000"></embed>';
                                 break;
+			case self::V_BLIPTV:
+
+				break;
+			case self::V_DAILYMOTION:
+
+				break;
+			case self::V_VIDDLER:
+
+				break;
+			case self::V_GAMETRAILERS:
+
+				break;
+
         	                default: break;
 		}
 		if( 'custom' != $code ) {
@@ -1354,6 +1365,8 @@ $wgWikiaVideoProviders = array(
 		VideoPage::V_CLIPFISH => 'clipfish',
 		VideoPage::V_MYVIDEO => 'myvideo',
 		VideoPage::V_SOUTHPARKSTUDIOS => 'southparkstudios',
+		VideoPage::V_DAILYMOTION => 'dailymotion',
+		VideoPage::V_VIDDLER => 'viddler',
 		);
 
 class VideoHistoryList {
