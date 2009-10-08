@@ -546,7 +546,7 @@ class FeedRenderer {
 			// wrapper for thumbnail
 			$attribs = array(
 				'class' => ($type == 'videos') ? 'myhome-video-thumbnail' :  'myhome-image-thumbnail',
-				'title' => ($type == 'videos' ? 'Video:' : 'File:') . $item['name'],
+				'title' => ($type == 'videos' ? 'Video:' : 'File:') . $item['name'], /* TODO: check that name doesn't have NS prefix */
 				'rel' => 'nofollow',
 			);
 
