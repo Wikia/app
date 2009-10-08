@@ -695,9 +695,9 @@ EOD;
                         }
                 }
 
-                $text = strpos( $fixed_url, "BLIP.TV" );
-                if( false !== $text ) { // Blip TV
-                        $provider = self::V_BLIPTV;
+                $text = strpos( $fixed_url, "GAMETRAILERS" );
+                if( false !== $text ) { // Gametrailers
+                        $provider = self::V_GAMETRAILERS;
                         $parsed = split( "/", $url );
                         if( is_array( $parsed ) ) {
                                 $mdata = array_pop( $parsed );
@@ -744,7 +744,6 @@ EOD;
                         case self::V_SOUTHPARKSTUDIOS:
                                 $ratio = ( 480 / 400 );
 				break;
-			// todo check those
 			case self::V_BLIPTV:
 				$ratio = (480 / 350);
 				break;
@@ -982,6 +981,8 @@ EOD;
 			case self::V_SOUTHPARKSTUDIOS:
 				$url = 'http://www.southparkstudios.com/clips/' . $id;
 				break;
+			case self::V_BLIPTV:
+				$url = 'http://blip.tv/file/' . $id;
 			default:
 				$url = '';
 				break;
