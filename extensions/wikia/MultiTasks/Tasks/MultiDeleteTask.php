@@ -12,6 +12,7 @@
 
 class MultiDeleteTask extends BatchTask {
 	var $mType, $mVisible, $mArguments, $mMode, $mAdmin;
+	var $records, $title, $namespace;
 	var $mUser, $mUsername;
 
 	/* constructor */
@@ -20,6 +21,7 @@ class MultiDeleteTask extends BatchTask {
 		$this->mVisible = false; //we don't show form for this, it already exists
 		$this->mParams = $params;
 		$this->mTTL = 60 * 60 * 24; // 5 hours
+		$this->records = 1000;
 		parent::__construct ();
 	}
 
@@ -50,15 +52,15 @@ class MultiDeleteTask extends BatchTask {
 			$username = '';
 		}
 		$this->addLog('Starting task.');
-		$this->addLog('Page to delete by ' . $this->mUser . ' as ' . $username . '): ' . $article );
+		$this->addLog('Page to delete by ' . $this->mUser . ' (as ' . $username . '): ' . $article );
 
 		$page = Title::newFromText($article);
 		if ( !is_object($page) ) {
 			$this->log("Page " . $article . " is invalid - task was terminated ");
 			return true;
 		}
-		$namespace = $page->getNamespace();
-		$title = str_replace( ' ', '_', $page->getText() );
+		$this->namespace = $page->getNamespace();
+		$this->title = str_replace( ' ', '_', $page->getText() );
 		$resultTitle = $page->getFullText();
 
 		$range = escapeshellarg($data["range"]);
@@ -75,8 +77,8 @@ class MultiDeleteTask extends BatchTask {
 
 		$wikiList = $this->fetchWikis($pre_wikis, $lang, $cat, $selwikia);
 
+		$this->log("Found " . count($wikiList) . " Wikis to proceed");
 		if ( !empty($wikiList) ) {
-			$this->log("Found " . count($wikiList) . " Wikis to proceed");
 			foreach ( $wikiList as $id => $oWiki ) {
 				$retval = "";
 				$city_path = $oWiki->city_script;
@@ -87,8 +89,8 @@ class MultiDeleteTask extends BatchTask {
 				# command
 				$sCommand  = "SERVER_ID=$oWiki->city_id php $IP/maintenance/wikia/deleteOn.php ";
 				$sCommand .= "-u " . $username . " ";
-				$sCommand .= "-t " . escapeshellarg($title) . " ";
-				$sCommand .= "-n " . $namespace . " ";
+				$sCommand .= "-t " . escapeshellarg($this->title) . " ";
+				$sCommand .= "-n " . $this->namespace . " ";
 				if ( $reason ) {
 					$sCommand .= "-r " . $reason . " ";
 				}
@@ -99,10 +101,13 @@ class MultiDeleteTask extends BatchTask {
 				if ($retval) {
 					$this->addLog('Article deleting error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				} else {
-					$this->addLog('<a href="' . $city_url . $city_path . '?title=' . $actual_title  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a> removed');
+					$this->addLog('Removed: <a href="' . $city_url . $city_path . '?title=' . $actual_title  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
 				}
 			}
 		}
+		
+		$this->log("Done");
+		
 		return true;
 	}
 
@@ -191,7 +196,7 @@ class MultiDeleteTask extends BatchTask {
 	 * @return integer (count of wikis)
 	 */
 	private function fetchWikis($wikis = array(), $lang = '', $cat = 0, $wikiaId = 0) {
-		global $wgExternalSharedDB ;
+		global $wgExternalSharedDB, $wgExternalDatawareDB ;
 		$dbr = wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
 
 		$where = array("city_public" => 1);
@@ -226,14 +231,49 @@ class MultiDeleteTask extends BatchTask {
 			);
 		}
 
-		$wiki_array = array();
+		$wikiArr = $wikis = array();
+		$x = $y = 0;
 		while ($oRow = $dbr->fetchObject($oRes)) {
 			$oRow->city_server = WikiFactory::getVarValueByName( "wgServer", $oRow->city_id );
 			$oRow->city_script = WikiFactory::getVarValueByName( "wgScript", $oRow->city_id );
-			array_push($wiki_array, $oRow) ;
+			$wikiArr[$oRow->city_id] = $oRow;
+			
+			if ( $x > 0 && ( $x % $this->records ) == 0 ) $y++;
+			$wikis[$y][] = $oRow->city_id;
+			$x++;
 		}
 		$dbr->freeResult ($oRes) ;
+		
+		$wiki_array = array();
+		if ( !empty($wikis) ) {
+			$dbext = wfGetDB (DB_SLAVE, array(), $wgExternalDatawareDB);
+			
+			foreach ($wikis as $id => $wikis) {
+				if ( !empty($wikis) ) {
+					$where = array(
+						"page_wikia_id IN (" . $dbext->makeList($wikis) . ")",
+						"page_title" => $this->title,
+						"page_namespace" => $this->namespace,
+						"page_status" => 0
+					);
+					
+					$oRes = $dbext->select(
+						array( "pages" ),
+						array( "page_id, page_wikia_id" ),
+						$where,
+						__METHOD__
+					);
 
+					while ($oRow = $dbext->fetchObject($oRes)) {
+						if ( $wikiArr[$oRow->page_wikia_id] ) { 
+							$wiki_array[] = $wikiArr[$oRow->page_wikia_id];
+						}
+					}
+					$dbext->freeResult ($oRes) ;
+				}
+			}
+		}
+		
 		return $wiki_array;
 	}
 	
