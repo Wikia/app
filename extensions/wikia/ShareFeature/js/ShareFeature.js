@@ -11,39 +11,39 @@ ShareFeature.ajax = function( provider ) {
 	);
 };
 
-ShareFeature.openDialog = function() {
+ShareFeature.openDialog = function( footer ) {
 	if( false == ShareFeatureEnabled ) {
 		ShareFeatureEnabled = true;
 		$().getModal(
-			wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId,
+			wgScript + '?action=ajax&rs=wfShareFeatureAjaxGetDialog&title=' + encodeURIComponent(wgPageName) + '&wiki=' + wgCityId + '&footer=' + encodeURIComponent(footer),
 				'#shareFeatureInside',
 			{
 					width: 300,
 					callback: function() {
 						ShareFeatureEnabled = false;
-						ShareFeature.track( 'open' );
+						ShareFeature.track( footer + 'open' );
 					},
 				onClose: function() {
-					ShareFeature.track('close');
+					ShareFeature.track( footer + 'close');
 				}
 			}
 		);
 	}
 }
 
-ShareFeature.mouseDown = function( provider ) {
+ShareFeature.mouseDown = function( provider, footer ) {
 	var event = $.getEvent();
 	switch( event.button ) {
 		case 0:
 			this.ajax( provider );
-			this.track( 'leftClick/' + provider );
+			this.track( footer + 'leftClick/' + provider );
 			break;
 		case 1:
 			this.ajax( provider );
-			this.track( 'middleClick/' + provider  );
+			this.track( footer + 'middleClick/' + provider  );
 			break;
 		case 2:
-			this.track( 'rightClick/' + provider );
+			this.track( footer + 'rightClick/' + provider );
 			break;
 		default:
 			break;
@@ -58,7 +58,11 @@ $(function() {
 		if( $( '#control_share_feature' ).exists() && $( '#ca-share_feature' ).exists() ) {
 			$('#control_share_feature').removeClass( 'disabled' );
 			// open dialog on clicking
-			$('#ca-share_feature').click( ShareFeature.openDialog );
-			$('#fe_sharefeature_link').click( ShareFeature.openDialog );
+			$('#ca-share_feature').click( function() {
+				ShareFeature.openDialog( '' );
+			});
+			$('#fe_sharefeature_link').click( function() {
+				ShareFeature.openDialog( 'articleFooter/' );
+			});
 		}
 });
