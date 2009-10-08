@@ -27,6 +27,8 @@ class WikiaMiniUpload {
                 $script_a['wmu_hide_message'] = htmlspecialchars( wfMsg('wmu-hide-message') );
                 $script_a['wmu_title'] = htmlspecialchars( wfMsg('wmu-title') );
                 $script_a['wmu_max_thumb'] = htmlspecialchars( wfMsg('wmu-max-thumb') );
+		$script_a['wmu_no_protect'] = htmlspecialchars( wfMsg('wmu-no-protect') );
+		$script_a['wmu_no_rights'] = htmlspecialchars( wfMsg('wmu-no-rights') );
 
 	        $script_a['file_extensions'] = $wgFileExtensions;
 	        $script_a['file_blacklist'] = $wgFileBlacklist;
@@ -35,9 +37,9 @@ class WikiaMiniUpload {
 
 		( $wgUser->isBlocked() ) ? $script_a['user_blocked'] = true : $script_a['user_blocked'] = false;
 	
-		global $wgTitle;
+		$title = Title::newFromText($wgRequest->getVal( 'article' ), $wgRequest->getVal( 'ns' ) );
 		// if the page is protected
-		( $wgTitle->isProtected( 'edit' ) ) ? $script_a['user_protected'] = true : $script_a['user_protected'] = false;		
+		( $wgTitle->isProtected() ) ? $script_a['user_protected'] = true : $script_a['user_protected'] = false;		
 
 		( $wgUser->isLoggedIn() && !$wgUser->isAllowed( 'edit' ) ) ? $script_a['user_disallowed'] = true : $script_a['user_disallowed'] = false;
 	
@@ -56,7 +58,7 @@ class WikiaMiniUpload {
                 $out .= '<div id="ImageUploadConflict" style="display: none;"></div>';
                 $out .= '<div id="ImageUploadSummary" style="display: none;"></div>';
                 $out .= '</div>';
-                $out .= '</div>';
+                $out .= '</div>' . $wgTitle->getText();
 
 		$script_a['html'] = $out;
 

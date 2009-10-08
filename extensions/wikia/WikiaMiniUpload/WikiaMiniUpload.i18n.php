@@ -68,4 +68,6 @@ $messages['en'] = array(
 	'wmu-gallery-btn1' => 'Add Another Image',
 	'wmu-gallery-btn2' => 'Insert Gallery into Article',
 	'wmu-no-preview' => 'You cannot add image from article in preview mode',
+	'wmu-no-protect' => 'This page is protected, you cannot add image to it',
+	'wmu-no-rights' => 'You are not allowed to add images to this page',
 );
