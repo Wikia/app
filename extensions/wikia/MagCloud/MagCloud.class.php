@@ -520,11 +520,16 @@ class MagCloud {
 			}
 
 			$processingFinished = ("{$res->processingFinished}" == "True") ? true : false;
-		} while (--$iteration && !$processingFinished);
+			$rasterizationFinished = ("{$res->rasterizationFinished}" == "True") ? true : false;
+		} while (--$iteration && !($processingFinished && $rasterizationFinished));
 
 		if (!$processingFinished) {
 			return array("msg" => "Remote backend processing not finished in allotted time.");
 		}
+# Don't treat it as fatal
+#		if (!$rasterizationFinished) {
+#			return array("msg" => "Remote backend rasterization not finished in allotted time.");
+#		}
 
 		$res = MagCloudApi::IssuePublish($authTicket, $issueId);
 #print_r($res); echo "\n";
