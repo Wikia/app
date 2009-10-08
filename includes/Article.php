@@ -228,7 +228,7 @@ class Article {
 			return $this->mContent;
 		}
 	}
-	
+
 	/**
 	 * Get the text of the current revision. No side-effects...
 	 *
@@ -260,12 +260,12 @@ class Article {
 		global $wgParser;
 		return $wgParser->getSection( $text, $section );
 	}
-	
+
 	/**
 	 * Get the text that needs to be saved in order to undo all revisions
 	 * between $undo and $undoafter. Revisions must belong to the same page,
 	 * must exist and must not be deleted
-	 * @param $undo Revision 
+	 * @param $undo Revision
 	 * @param $undoafter Revision Must be an earlier revision than $undo
 	 * @return mixed string on success, false on failure
 	 */
@@ -743,7 +743,7 @@ class Article {
 		if( $wgOut->isPrintable() ) {
 			$wgOut->parserOptions()->setIsPrintable( true );
 		}
-		
+
 		wfProfileIn( __METHOD__ );
 
 		# Get variables from query string
@@ -826,7 +826,7 @@ class Article {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		
+
 		if( $ns == NS_USER || $ns == NS_USER_TALK ) {
 			# User/User_talk subpages are not modified. (bug 11443)
 			if( !$this->mTitle->isSubpage() ) {
@@ -859,10 +859,6 @@ class Article {
 					$wgOut->addInlineScript( "redirectToFragment(\"$fragment\");" );
 				}
 
-				// Add a <link rel="canonical"> tag
-				$wgOut->addLink( array( 'rel' => 'canonical',
-					'href' => $this->mTitle->getLocalURL() )
-				);
 				$wasRedirected = true;
 			}
 		} elseif( !empty( $rdfrom ) ) {
@@ -876,6 +872,12 @@ class Article {
 				$wasRedirected = true;
 			}
 		}
+
+		// Add a <link rel="canonical"> tag
+		// Wikia: moved here because of #23932
+		$wgOut->addLink( array( 'rel' => 'canonical',
+			'href' => $this->mTitle->getLocalURL() )
+		);
 
 		$outputDone = false;
 		wfRunHooks( 'ArticleViewHeader', array( &$this, &$outputDone, &$pcache ) );
@@ -1113,7 +1115,7 @@ class Article {
 		if( !empty( $wgRedirectIconUrl ) ) {
 			$imageUrl = $wgRedirectIconUrl;
 		}
-		
+
 		if( $appendSubtitle ) {
 			$wgOut->appendSubtitle( wfMsgHtml( 'redirectpagesub' ) );
 		}
@@ -1986,12 +1988,12 @@ class Article {
 			wfDebug( "updateRestrictions failed: $id <= 0\n" );
 			return false;
 		}
-		
+
 		if ( wfReadOnly() ) {
 			wfDebug( "updateRestrictions failed: read-only\n" );
 			return false;
 		}
-		
+
 		if ( !$this->mTitle->userCan( 'protect' ) ) {
 			wfDebug( "updateRestrictions failed: insufficient permissions\n" );
 			return false;
@@ -2066,7 +2068,7 @@ class Article {
 				foreach( $limit as $action => $restrictions  ) {
 					if ( !isset($expiry[$action]) )
 						$expiry[$action] = 'infinite';
-					
+
 					$encodedExpiry[$action] = Block::encodeExpiry($expiry[$action], $dbw );
 					if( $restrictions != '' ) {
 						$protect_description .= "[$action=$restrictions] (";
@@ -3099,7 +3101,7 @@ class Article {
 			? 'revision-info-current'
 			: 'revision-info';
 
-		$r = "\n\t\t\t\t<div id=\"mw-{$infomsg}\">" . wfMsgExt( $infomsg, array( 'parseinline', 'replaceafter' ), 
+		$r = "\n\t\t\t\t<div id=\"mw-{$infomsg}\">" . wfMsgExt( $infomsg, array( 'parseinline', 'replaceafter' ),
 			$td, $userlinks, $revision->getID() ) . "</div>\n" .
 
 		     "\n\t\t\t\t<div id=\"mw-revision-nav\">" . $cdel . wfMsgExt( 'revision-nav', array( 'escapenoentities', 'parsemag', 'replaceafter' ),
