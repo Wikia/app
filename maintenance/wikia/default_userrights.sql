@@ -2,7 +2,6 @@ delete from user_groups where ug_group="staff";
 insert into user_groups(ug_user, ug_group) values
 (/*Adamarket*/1499323,'staff'),
 (/*Adi3ek*/259228,'staff'),
-(/*Andrewy*/402666,'staff'),
 (/*Angela*/2,'staff'),
 (/*Angies*/67261,'staff'),
 (/*Avatar*/349903, 'staff'),
