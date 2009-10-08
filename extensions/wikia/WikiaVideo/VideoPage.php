@@ -21,9 +21,6 @@ class VideoPage extends Article {
 	const V_CLIPFISH = 14;
 	const V_MYVIDEO = 15;
 	const V_SOUTHPARKSTUDIOS = 16;
-	const V_DAILYMOTION = 18;
-	const V_VIDDLER	 = 19;
-	//const V_GAMETRAILERS = 20;
 
 	var	$mName,
 		$mVideoName,
@@ -644,76 +641,6 @@ EOD;
                         }
                 }
 
-                $text = strpos( $fixed_url, "BLIP.TV" );
-                if( false !== $text ) { // Blip TV
-                        $provider = self::V_BLIPTV;
-                        $parsed = split( "/", $url );
-                        if( is_array( $parsed ) ) {
-                                $mdata = array_pop( $parsed );
-                                if ( '' != $mdata ) {
-                                        $this->mId = $mdata;
-                                } else {
-                                        $this->mId = array_pop( $parsed );
-                                }
-                                $this->mProvider = $provider;
-                                $this->mData = array();
-                                return true;
-                        }
-                }
-
-                $text = strpos( $fixed_url, "WWW.DAILYMOTION" );
-                if( false !== $text ) { // Dailymotion
-                        $provider = self::V_DAILYMOTION;
-                        $parsed = split( "/", $url );
-                        if( is_array( $parsed ) ) {
-                                $mdata = array_pop( $parsed );
-                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-                                        $this->mId = $mdata;
-                                } else {
-                                        $this->mId = array_pop( $parsed );
-                                }
-                                $this->mProvider = $provider;
-                                $this->mData = array();
-                                return true;
-                        }
-                }
-
-                $text = strpos( $fixed_url, "VIDDLER.COM" );
-                if( false !== $text ) { // Blip TV
-                        $provider = self::V_VIDDLER;
-                        $parsed = split( "/", $url );
-                        if( is_array( $parsed ) ) {
-                                $mdata = array_pop( $parsed );
-                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-                                        $this->mId = $mdata;
-                                } else {
-                                        $this->mId = array_pop( $parsed );
-                                }
-                                $this->mProvider = $provider;
-                                $this->mData = array();
-                                return true;
-                        }
-                }
-
-                $text = strpos( $fixed_url, "GAMETRAILERS" );
-                if( false !== $text ) { // Gametrailers
-                        $provider = self::V_GAMETRAILERS;
-                        $parsed = split( "/", $url );
-                        if( is_array( $parsed ) ) {
-                                $mdata = array_pop( $parsed );
-                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
-                                        $this->mId = $mdata;
-                                } else {
-                                        $this->mId = array_pop( $parsed );
-                                }
-                                $this->mProvider = $provider;
-                                $this->mData = array();
-                                return true;
-                        }
-                }
-
-
-
 		return false;
 	}
 
@@ -743,19 +670,6 @@ EOD;
 				break;
                         case self::V_SOUTHPARKSTUDIOS:
                                 $ratio = ( 480 / 400 );
-				break;
-			case self::V_BLIPTV:
-				$ratio = (480 / 350);
-				break;
-			case self::V_DAILYMOTION:
-				$ratio = (420 / 339);
-				break;
-			case self::V_VIDDLER:
-				$ratio = (437 / 288);
-				break;
-			case self::V_GAMETRAILERS:
-				$ratio = (480 / 392);
-				break;
 			default:
 				$ratio = 1;
 				break;
@@ -789,18 +703,6 @@ EOD;
 				break;
                         case self::V_SOUTHPARKSTUDIOS:
                                 $ratio = "480 x 400";
-				break;
-			case self::V_BLIPTV:
-				$ratio = "480 x 350";
-				break;
-			case self::V_DAILYMOTION:
-				$ratio = "420 x 339";
-				break;
-			case self::VIDDLER:
-				$ratio = "437 x 288";
-				break;
-			case self::V_GAMETRAILERS:
-				$ratio = "480 x 392";
 				break;
 			default:
 				$ratio = "300 x 300";
@@ -874,18 +776,6 @@ EOD;
 			case self::V_SOUTHPARKSTUDIOS: // todo verify if exists
 				$exists = true;
 				break;
-			case self::V_BLIPTV: // todo verify if exists
-				$exists = true;
-				break;
-			case self::V_DAILYMOTION: // todo verify if exists
-				$exists = true;
-				break;
-			case self::V_VIDDLER: // todo verify if exists
-				$exists = true;
-				break;
-			case self::V_GAMETRAILERS: // todo verify if exists
-				$exists = true;
-				break;
 			default:
 				break;
 		}
@@ -922,14 +812,6 @@ EOD;
 				return 'http://www.vimeo.com';
 			case self::V_SOUTHPARKSTUDIOS:
 				return 'http://www.southparkstudios.com';
-			case self::V_BLIPTV:
-				return 'http://blip.tv';
-			case self::V_DAILYMOTION:
-				return 'http://www.dailymotion.com';
-			case self::V_VIDDLER:
-				return 'http://www.viddler.com';
-			case self::V_GAMETRAILERS:
-				return 'http://www.gametrailers.com';
 			default:
 				return '';
 		}
@@ -981,8 +863,6 @@ EOD;
 			case self::V_SOUTHPARKSTUDIOS:
 				$url = 'http://www.southparkstudios.com/clips/' . $id;
 				break;
-			case self::V_BLIPTV:
-				$url = 'http://blip.tv/file/' . $id;
 			default:
 				$url = '';
 				break;
@@ -1033,7 +913,6 @@ EOD;
 			case self::V_GAMEVIDEOS:
 			case self::V_VIMEO:
 			case self::V_SOUTHPARKSTUDIOS:
-			case self::V_BLIPTV:
 				$metadata = $this->mProvider . ',' . $this->mId . ',';
 				break;
 			default:
@@ -1313,19 +1192,6 @@ EOD;
                                 $code = 'custom';
                                 $embed = '<embed src="http://media.mtvnservices.com/mgid:cms:item:southparkstudios.com:' . $this->mId . '" width="' . $width . '" height="' . $height . '" type="application/x-shockwave-flash" wmode="window" flashVars="autoPlay=false&dist=http://www.southparkstudios.com&orig=" allowFullScreen="true" allowScriptAccess="always" allownetworking="all" bgcolor="#000000"></embed>';
                                 break;
-			case self::V_BLIPTV:
-
-				break;
-			case self::V_DAILYMOTION:
-
-				break;
-			case self::V_VIDDLER:
-
-				break;
-			case self::V_GAMETRAILERS:
-
-				break;
-
         	                default: break;
 		}
 		if( 'custom' != $code ) {
@@ -1437,8 +1303,6 @@ $wgWikiaVideoProviders = array(
 		VideoPage::V_CLIPFISH => 'clipfish',
 		VideoPage::V_MYVIDEO => 'myvideo',
 		VideoPage::V_SOUTHPARKSTUDIOS => 'southparkstudios',
-		VideoPage::V_DAILYMOTION => 'dailymotion',
-		VideoPage::V_VIDDLER => 'viddler',
 		);
 
 class VideoHistoryList {
