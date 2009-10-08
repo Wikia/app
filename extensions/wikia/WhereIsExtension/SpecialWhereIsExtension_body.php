@@ -51,9 +51,10 @@ class WhereIsExtension extends SpecialPage {
 		$this->values = array (
 			//[0] displayed name
 			//[1] serialized value
-			0 => array('true', true),
-			1 => array('false', false),
-			2 => array('not empty', '')
+			//[2] condition
+			0 => array('true', true, '='),
+			1 => array('false', false, '='),
+			2 => array('not empty', '', '!=')
 		);
 
 		$formData['vars'] = $this->getListOfVars($gVar == '');
@@ -109,6 +110,7 @@ class WhereIsExtension extends SpecialPage {
 			return $aWikis;
 		}
 		$selectedVal = serialize($this->values[$val][1]);
+		$selectedCond = $this->values[$val][2];
 
 		$aTables = array(
 			'city_variables',
@@ -116,7 +118,7 @@ class WhereIsExtension extends SpecialPage {
 		);
 		$varId = mysql_real_escape_string($varId);
 		$aWhere = array('city_id = cv_city_id');
-		$aWhere[] = "cv_value = '$selectedVal'";
+		$aWhere[] = "cv_value $selectedCond '$selectedVal'";
 		$aWhere[] = "cv_variable_id = '$varId'";
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
