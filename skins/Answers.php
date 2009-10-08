@@ -996,7 +996,7 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 			<div id="magicAnswerLeft"><div id="magicAnswerRight"><div id="magicAnswerCurtainLeft"></div><div id="magicAnswerCurtainRight"></div><div id="magicAnswerHat"></div>
 			<img id="magicAnswerLogo" src="/skins/answers/images/magic_answer.png" />
 			<form action="<?php echo $wgTitle->getLocalUrl() ?>" method="get" id="magicAnswerForm"><!-- Must be GET or the edit form does preview -->
-			<?php/* Note there is a hook called displayMagicAnswer in Answers.php on the Edit form that looks for "magic Answer" in theurl */?>
+			<?php /* Note there is a hook called displayMagicAnswer in Answers.php on the Edit form that looks for "magic Answer" in theurl */ ?>
 			<input type="hidden" name="action" value="edit"/>
 			<input type="hidden" id="magicAnswerField" name="magicAnswer" value=""/><!-- Filled in with js -->
 			<h6><?=wfMsg("magic_answer_headline") ?></h6>
