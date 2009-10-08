@@ -12,6 +12,7 @@ class WikiaMiniUpload {
         function loadMainFromView( $error = false ) {
                 wfLoadExtensionMessages( 'WikiaMiniUpload' );
 		global $wgFileExtensions, $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgUser;
+		global $wgRequest;
 
 		$script_a = array();
 
@@ -39,7 +40,7 @@ class WikiaMiniUpload {
 	
 		$title = Title::newFromText($wgRequest->getVal( 'article' ), $wgRequest->getVal( 'ns' ) );
 		// if the page is protected
-		( $wgTitle->isProtected() ) ? $script_a['user_protected'] = true : $script_a['user_protected'] = false;		
+		( $title->isProtected() ) ? $script_a['user_protected'] = true : $script_a['user_protected'] = false;		
 
 		( $wgUser->isLoggedIn() && !$wgUser->isAllowed( 'edit' ) ) ? $script_a['user_disallowed'] = true : $script_a['user_disallowed'] = false;
 	
@@ -58,7 +59,7 @@ class WikiaMiniUpload {
                 $out .= '<div id="ImageUploadConflict" style="display: none;"></div>';
                 $out .= '<div id="ImageUploadSummary" style="display: none;"></div>';
                 $out .= '</div>';
-                $out .= '</div>' . $wgTitle->getText();
+                $out .= '</div>';
 
 		$script_a['html'] = $out;
 
