@@ -11,27 +11,24 @@
  * https://wikia-code.com/wikia/trunk/extensions/wikia/HardRedirectsWithJSText/
  */
 
-$wgHooks['SkinTemplateOutputPageBeforeExec'][] = "canonicalHref";
-
 $wgExtensionCredits['specialpage'][] = array(
         'name' => 'Canonical Href',
-        'author' => 'Nick Sullivan nick at wikia-inc.com',
+        'author' => array('Nick Sullivan nick at wikia-inc.com', 'Maciej Brencz'),
         'description' => 'This extension prints a link type="canonical" tag with a canonical representation of the url, which is used by Google, MSN, and Yahoo! to funnel PageRank'
 );
 
-
-function canonicalHref(&$skin, &$template){
+$wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
+function wfCanonicalHref(&$out, &$sk) {
         global $wgTitle;
-	if (!is_object($wgTitle) || !method_exists($wgTitle, "getFullURL")){
-		// Avoid a fatal error if for any reason $wgTitle isn't an object
+
+	if ( !($wgTitle instanceof Title) ) {
 		return true;
 	}
-        $link = Xml::element("link", array(
-                        'rel' => 'canonical',
-                        'href' => $wgTitle->getFullURL()
-                )
-        );
-        $template->set('headlinks', $template->data['headlinks'] . "\t\t" . $link . "\n");
+
+	$out->addLink(array(
+		'rel' => 'canonical',
+		'href' => $wgTitle->getFullURL(),
+	));
+
         return true;
 }
-
