@@ -82,6 +82,7 @@ class SolrSearchSet extends SearchResultSet {
 				'hl.simple.pre' => '<span class="searchmatch">',
 				'hl.simple.post' => '</span>',
 				'indent' => 1,
+				'fq' => ''
 				//'sort' => 'backlinks desc, views desc, revcount desc, created asc'
 			);
 
@@ -94,10 +95,10 @@ class SolrSearchSet extends SearchResultSet {
 			}
 			if( $wgCityId == 4832) {
 				// techteamtest tmp hack: search muppet.wikia.com
-				$params['fq'] = "(" . $params['fq'] . ") AND wid:831";
+				$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:831";
 			}
 			else {
-				$params['fq'] = "(" . $params['fq'] . ") AND wid:" . $wgCityId;
+				$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:11557";// . $wgCityId;
 			}
 			//echo "fq=" . $params['fq'] . "<br />";
 
