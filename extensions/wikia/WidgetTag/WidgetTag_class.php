@@ -3,6 +3,7 @@
 class WidgetTagRenderer extends WidgetFramework {
 
 	private $count = 1000;
+	private $markers = array();
 
 	public static function getInstance() {
 		if( !(self::$instance instanceof WidgetTagRenderer) ) {
@@ -71,7 +72,15 @@ class WidgetTagRenderer extends WidgetFramework {
 		// wrap widget HTML
 		$output = "<div class=\"widgetTag reset\"{$style}>{$output}</div>";
 
-		// finally!
-		return $output;
+		// use markers to avoid RT #20855 when widget' HTML is multiline
+		global $wgParser;
+		$marker = $wgParser->uniqPrefix() . "-WIDGET-{$this->count}-\x7f";
+		$this->markers[$marker] = $output;
+
+		return $marker;
+	}
+
+	function replaceMarkers($text) {
+		return strtr($text, $this->markers);
 	}
 }

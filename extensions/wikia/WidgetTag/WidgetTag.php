@@ -30,12 +30,19 @@ $wgAutoloadClasses['WidgetTagRenderer'] = dirname(__FILE__) . '/WidgetTag_class.
 
 // setup parser hook
 function efWidgetTagSetup() {
-	global $wgParser;
+	global $wgParser, $wgHooks;
 	$wgParser->setHook( 'widget', 'efWidgetTagRender' );
+	$wgHooks['ParserAfterTidy'][] = 'efWidgetTagReplaceMarkers';
 	return true;
 }
 
 function efWidgetTagRender( $input, $args, $parser ) {
 	$widgetTagRenderer = & WidgetTagRenderer::getInstance();
 	return $widgetTagRenderer->renderTag( $input, $args, $parser );
+}
+
+function efWidgetTagReplaceMarkers(&$parser, &$text) {
+	$widgetTagRenderer = & WidgetTagRenderer::getInstance();
+	$text = $widgetTagRenderer->replaceMarkers($text);
+	return true;
 }
