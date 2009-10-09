@@ -273,11 +273,26 @@ class WikiaCollection extends SpecialPage {
 		$wgOut->addHTML("<img src=\"http://images.wikia.com/central/images/1/1e/Official_wikia_logo.png\" width=\"400\" height=\"101\" style=\"margin: 250px 0 0 125px\" />");
 		$wgOut->addHTML("</div>");
 
+		// macbre: add CSS
+		$wgOut->addHTML(<<<CSS
+			<style type="text/css">
+				body {
+					background: #fff;
+					color: #000;
+					font-family: Utopia;
+				}
+				a, a.new {
+					color: #000 !important;
+				}
+			</style>
+CSS
+);
+
 		$wgOut->addHTML("</div>\n");
 
 		$wgOut->addHTML("<script type=\"text/javascript\">/*<![CDATA[*/
 			var content = $('#bolek');
-			$('body').replaceWith(content);
+			$('body').html( content.html() ).attr('class', '');
 			$('table#toc, span.editsection').remove();
 			$('div.bolek-remove').replaceWith('');
 			$('div.tleft, div.tright').each(function (e) {
@@ -294,9 +309,7 @@ class WikiaCollection extends SpecialPage {
 					$(this).replaceWith('');
 				}
 			});
-			$('#bolek').css({'font-family': 'Utopia'});
-			$('a').css({'color': 'black'});
-			/*]]>*/</script>\n");
+			/*]]>*/</script>");
 
 		return '';
 	}
