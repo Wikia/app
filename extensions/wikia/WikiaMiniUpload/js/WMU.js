@@ -48,6 +48,7 @@ if( 'view' == wgAction ) {
 	var wmu_max_thumb = '';
 	var wmu_no_protect = '';
 	var wmu_no_rights = '';
+	var badfilename = '';
 	var file_extensions = '';
 	var file_blacklist = '';
 	var check_file_extensions = '';
@@ -272,6 +273,7 @@ function WMU_loadMainFromView() {
 			wmu_max_thumb = unescape( data.wmu_max_thumb );
 			wmu_no_protect = unescape( data.wmu_no_protect );
 			wmu_no_rights = unescape( data.wmu_no_rights );
+			badfilename = unescape( data.badfilename );
 			file_extensions = data.file_extensions;
 			file_blacklist = data.file_blacklist;
 			check_file_extensions = data.check_file_extensions;
@@ -810,8 +812,8 @@ function WMU_insertImage(e, type) {
 			if( $G( 'ImageUploadName' ).value.indexOf( '/' ) > 0 )  {
 					var parts = $G( 'ImageUploadName' ).value.split( '/' );
 				        var lastname = parts.pop();
-					$G( 'ImageUploadName' ).value = lastname;	
-					alert( '' );	
+					$G( 'ImageUploadName' ).value = lastname;
+					alert( badfilename.replace( '$1', lastname ) );	
 				return;
 			}
 
