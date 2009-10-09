@@ -19,6 +19,7 @@ $wgHooks['EditFilter'][] = 'wfSpamBlackTitleListCallback';
 $wgHooks['UploadForm:BeforeProcessing'][] = 'wfSpamBlackTitleSpecialUpload';
 $wgHooks['WikiaMiniUpload:BeforeProcessing'][] = 'wfSpamBlackTitleWikiaMiniUpload';
 $wgHooks['ApiCreateMultiplePagesBeforeCreation'][] = 'wfSpamBlackTitleNewWikiBuilder';
+$wgHooks['CreateDefaultQuestionPageFilter'][] = 'wfSpamBlacklistTitleGenericTitleCheck';
 
 // other functions
 function wfBlackTitleListParseSetup() {
@@ -133,6 +134,20 @@ function wfSpamBlackTitleNewWikiBuilder( $api, $titleObj, $category, $text ) {
 	$retVal = true;
 
 	// titleObj is already verified as object earlier in NWB
+	$retVal = wfBlackListTitleParse($titleObj);
+
+	wfProfileOut( __METHOD__ );
+	return $retVal;
+}
+
+//used in Answer's CreateDefaultQuestionPage
+function wfSpamBlacklistTitleGenericTitleCheck( $titleObj ) {
+	global $useSpamRegexNoHttp;
+	wfProfileIn( __METHOD__ );
+	$useSpamRegexNoHttp = true;
+	$retVal = true;
+
+	// titleObj is already verified as object earlier in CDQP
 	$retVal = wfBlackListTitleParse($titleObj);
 
 	wfProfileOut( __METHOD__ );
