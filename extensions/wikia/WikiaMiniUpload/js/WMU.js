@@ -613,7 +613,7 @@ function WMU_upload(e) {
 	}
 }
 
-function WMU_splitExtensions( filename ) {
+function WMsplitExtensions( filename ) {
 	var bits = filename.split( '.' );
 	var basename = bits.shift();
 	return new Array( basename, bits );
@@ -805,6 +805,16 @@ function WMU_insertImage(e, type) {
 				alert( wmu_warn3 );
 				return;
 			}
+			// for RT #24050 - Bartek
+			
+			if( $G( 'ImageUploadName' ).value.indexOf( '/' ) > 0 )  {
+					var parts = $G( 'ImageUploadName' ).value.split( '/' );
+				        var lastname = parts.pop();
+					$G( 'ImageUploadName' ).value = lastname;	
+					alert( '' );	
+				return;
+			}
+
 			params.push('name='+ encodeURIComponent( $G('ImageUploadName').value ) + '.' + $G('ImageUploadExtension').value);
 		}
 	}
