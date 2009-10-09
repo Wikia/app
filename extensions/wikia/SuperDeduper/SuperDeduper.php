@@ -5,8 +5,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-$wgAutoloadClasses['SuperDeduper'] = '/usr/wikia/source/answers/SuperDeduper.php';
-$wgAutoloadClasses['AwesomeDeduper'] = '/usr/wikia/source/answers/AwesomeDeduper.php';
+$wgAutoloadClasses['SuperDeduper'] = $IP . '/../answers/SuperDeduper.php';
+$wgAutoloadClasses['EvenMoreSuperDeduper'] = $IP . '/../answers/EvenMoreSuperDeduper.php';
 $wgAutoloadClasses['ApiSuperDeduper'] = dirname(__FILE__) . '/ApiSuperDeduper.php';
 
 $wgAPIModules['superdeduper'] = 'ApiSuperDeduper';

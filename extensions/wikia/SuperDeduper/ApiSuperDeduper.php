@@ -16,10 +16,10 @@ class ApiSuperDeduper extends ApiBase {
 		$db = $params['db'];
 		$query = $params['query'];
 		$limit = $params['limit'];
-		
+
 		$this->getMain()->setCacheMaxAge( 3600 );
 
-		$sd = new AwesomeDeduper( $lang, $db );
+		$sd = new EvenMoreSuperDeduper( $lang, $db );
 		$results = $sd->getRankedmatches( $query, $limit );
 		$out = array();
 		foreach( $results as $title => $rank ) {
