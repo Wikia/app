@@ -140,12 +140,14 @@ class CreatePage extends SpecialEditPage {
 		$editPage->initialiseForm();
 		$editPage->textbox1 = $sPostBody;
 		$editPage->summary = isset($this->mFormData['postEditSummary']) ? $this->mFormData['postEditSummary'] : '';
+		$editPage->recreate = true;
 
 		$result = false;
 		$status = $editPage->internalAttemptSave( $result );
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
+			case EditPage::AS_ARTICLE_WAS_DELETED:
 				$wgOut->redirect($this->mPostArticle->getTitle()->getFullUrl());
 				break;
 			default:
