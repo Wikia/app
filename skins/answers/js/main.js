@@ -24,6 +24,7 @@ jQuery("#answers_ask_field").ready(function() {
 	var myAutoComp = new YAHOO.widget.AutoComplete("answers_ask_field","answers_suggest", oDS); 
 	myAutoComp.maxResultsDisplayed = 10;  
 	myAutoComp.minQueryLength = 5; 
+	myAutoComp.queryDelay = 1; 
 
 	// Add a question mark to the end of the result
 	myAutoComp.formatResult = function(oResultData, sQuery, sResultMatch) {
