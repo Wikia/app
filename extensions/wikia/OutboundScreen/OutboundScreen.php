@@ -15,7 +15,7 @@ $wgSpecialPages['Outbound'] = 'Outbound';
 $wgExtensionMessagesFiles['Outbound'] = dirname(__FILE__) . '/OutboundScreen.i18n.php';
 
 $wgOutboundScreenConfig = array(
-	'redirectDelay' => 10,
+	'redirectDelay' => !empty($wgOutboundScreenRedirectDelay) ? intval($wgOutboundScreenRedirectDelay) : 10,
 	'anonsOnly' => true,
 	'adLayoutMode' => !empty($wgOutboundScreenAdLayout) ? $wgOutboundScreenAdLayout : 'classic'
 );
