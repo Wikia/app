@@ -328,7 +328,7 @@ function WMU_loadMainFromView() {
 		}
 	}
 
-	$.getJSON( wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMainFromView&article=' + wgTitle + '&ns=' + wgNamespaceNumber, callback);
+	$.getJSON( wgScriptPath + '/index.php?action=ajax&rs=WMU&method=loadMainFromView&article=' + encodeURIComponent( wgTitle ) + '&ns=' + wgNamespaceNumber, callback);
 
         WMU_curSourceId = 0;
 }
