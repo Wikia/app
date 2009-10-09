@@ -30,7 +30,8 @@ class WikiaMiniUpload {
                 $script_a['wmu_max_thumb'] = htmlspecialchars( wfMsg('wmu-max-thumb') );
 		$script_a['wmu_no_protect'] = htmlspecialchars( wfMsg('wmu-no-protect') );
 		$script_a['wmu_no_rights'] = htmlspecialchars( wfMsg('wmu-no-rights') );
-
+		$script_a['badfilename'] = htmlspecialchars( wfMsg('badfilename') );
+		
 	        $script_a['file_extensions'] = $wgFileExtensions;
 	        $script_a['file_blacklist'] = $wgFileBlacklist;
         	$script_a['check_file_extensions'] = htmlspecialchars( $wgCheckFileExtensions );
