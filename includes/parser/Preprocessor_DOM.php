@@ -71,9 +71,9 @@ class Preprocessor_DOM implements Preprocessor {
 		$cacheable = strlen( $text ) > $wgPreprocessorCacheThreshold;
 
 		/* Wikia change begin - @author: Macbre */
-		/* Wysiwyg: disable XML caching when running Wysiwyg or parsing templates preview */
-		global $wgWysiwygParserEnabled, $wgWysiwygTemplatesParserEnabled;
-		if(!empty($wgWysiwygParserEnabled) || !empty($wgWysiwygTemplatesParserEnabled)) {
+		/* Wysiwyg: disable XML caching when running Wysiwyg or parsing templates preview or for CategorySelect (RT#22059, RT#22526) */
+		global $wgWysiwygParserEnabled, $wgWysiwygTemplatesParserEnabled, $wgCategorySelectEnabled;
+		if(!empty($wgWysiwygParserEnabled) || !empty($wgWysiwygTemplatesParserEnabled) || !empty($wgCategorySelectEnabled)) {
 			$cacheable = false;
 		}
 		/* Wikia change end */
