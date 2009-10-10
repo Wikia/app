@@ -20,6 +20,6 @@ $messages['en'] = array(
 	'createpage_empty_article_body_error' => 'Article text required',
 	'createpage_invalid_title_error' => 'Invalid title',
 	'createpage_article_already_exists' => 'Article with that name already exists, please select different name',
-	'createpage_spam' => 'Looks like spam',
+	'createpage_spam' => 'Sorry, your edit could not be saved',
 	'createpage_cant_edit' => 'Could not perform edit'
 );
