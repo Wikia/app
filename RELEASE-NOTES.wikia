@@ -1,4 +1,5 @@
 == Changes since 200910.1 ==
+* rt#24487: Answers: Special case for related questions. (Nef)
 * rt#24315: Fix red links in MagCloud PDF (Macbre)
 * rt#23932: Add canonical tag to non-standard URLs (Macbre)
 * rt#23784: action=purge causes 'question' styling to disappear (Macbre)
