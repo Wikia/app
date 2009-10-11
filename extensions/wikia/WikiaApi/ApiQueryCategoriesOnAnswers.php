@@ -15,12 +15,33 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 		$this->answered_category   = wfMsgForContent('answered_category');
 	}
 
+	// rt#24487: We need this code altered for a specific case. When the category = "foo",
+	// we would like this list to show only questions from a predefined list of categories.
+	function rt_24487_special_case(&$categoryTitle) {
+		global $wgRT24487SpecialCase;
+
+		if (!empty($wgRT24487SpecialCase) && is_array($wgRT24487SpecialCase)) {
+			$category = $categoryTitle->getDBkey();
+			foreach ($wgRT24487SpecialCase as $from => $to) {
+				$from = Title::newFromText($from, NS_CATEGORY)->getDBkey();
+				if ($category == $from) {
+					if (is_array($to)) $to = $to[array_rand($to)];
+					$categoryTitle = Title::newFromText($to, NS_CATEGORY);
+				}
+			}
+		}
+	}
+
 	public function execute() {
 		$params = $this->extractRequestParams();
 
 		if ( !isset($params['title']) || is_null($params['title']) )
 			$this->dieUsage("The coatitle parameter is required", 'notitle');
 		$categoryTitle = Title::newFromText($params['title'], NS_CATEGORY);
+
+		// rt#24487: We need this code altered for a specific case. When the category = "foo",
+		// we would like this list to show only questions from a predefined list of categories.
+		$this->rt_24487_special_case(&$categoryTitle);
 
 		if ( is_null( $categoryTitle ) || $categoryTitle->getNamespace() != NS_CATEGORY )
 			$this->dieUsage("The category name you entered is not valid", 'invalidcategory');
