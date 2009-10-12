@@ -413,41 +413,9 @@ class GlobalWatchlistBot {
 						}
 					} // if
 					
-					# blogs
 					if ( in_array($oResultRow->gwa_namespace, array(NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE)) ) {
-						$blogTitle = $oResultRow->gwa_title;
-						if ( $oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK ) {
-							list( $user, $page_title, $comment ) = explode( "/", $oResultRow->gwa_title, 3 );
-							$blogTitle = $user . "/" . $page_title;
-						}
-						
-						if ( empty($aWikiDigest[ 'blogs' ][ $blogTitle ]) ) {
-							$wikiDB = WikiFactory::IDtoDB($oResultRow->gwa_city_id);
-							$db_wiki = wfGetDB( DB_SLAVE, 'stats', $wikiDB);
-							$oRow = $db_wiki->selectRow(
-								array( "watchlist" ),
-								array( "count(*) as cnt" ),
-								array( 
-									"wl_namespace" => NS_BLOG_ARTICLE_TALK,
-									"wl_title LIKE '" . $dbr->escapeLike($oResultRow->gwa_title) . "%'",
-									"wl_notificationtimestamp is not null",
-									"wl_notificationtimestamp >= '".$oResultRow->gwa_timestamp."'",
-									"wl_user > 0",
-								),
-								__METHOD__
-							);
-							
-							$aWikiDigest[ 'blogs' ][ $blogTitle ] = array (
-								'comments' => intval($oRow->cnt),
-								'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
-								'own_comments' => 0
-							);
-							$db_wiki->close();
-						}
-						
-						if ( $oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK ) {
-							$aWikiDigest[ 'blogs' ][ $blogTitle ]['own_comments']++;
-						}
+						# blogs
+						$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
 					} else {
 						$aWikiDigest[ 'pages' ][] = array(
 							'title' => GlobalTitle::newFromText($oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId),
@@ -473,6 +441,49 @@ class GlobalWatchlistBot {
 		}
 
 		$this->printDebug("Sending digest emails ... Done! ($iEmailsSent total)");
+	}
+
+	/**
+	 * blogs
+	 */
+	private function makeBlogsList( &$aWikiDigest, $iWikiId, $oResultRow ) {
+		$blogTitle = $oResultRow->gwa_title;
+		if ( $oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK ) {
+			list( $user, $page_title, $comment ) = BlogComments::explode( $oResultRow->gwa_title );
+			$blogTitle = $user . "/" . $page_title;
+		}
+		
+		if ( empty($aWikiDigest[ 'blogs' ][ $blogTitle ]) ) {
+			$wikiDB = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
+			if ( $wikiDB ) {
+				$db_wiki = wfGetDB( DB_SLAVE, 'stats', $wikiDB );
+				$oRow = $db_wiki->selectRow(
+					array( "watchlist" ),
+					array( "count(*) as cnt" ),
+					array( 
+						"wl_namespace = '".NS_BLOG_ARTICLE_TALK."'",
+						"wl_title LIKE '" . $db_wiki->escapeLike($oResultRow->gwa_title) . "%'",
+						"wl_notificationtimestamp is not null",
+						"wl_notificationtimestamp >= '".$oResultRow->gwa_timestamp."'",
+						"wl_user > 0",
+					),
+					__METHOD__
+				);
+				$aWikiDigest[ 'blogs' ][ $blogTitle ] = array (
+					'comments' => intval($oRow->cnt),
+					'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
+					'own_comments' => 0
+				);
+				$db_wiki->close();
+			}
+		}
+		
+		if ( 
+			($oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK) &&  
+			isset( $aWikiDigest[ 'blogs' ][ $blogTitle ] )
+		) {
+			$aWikiDigest[ 'blogs' ][ $blogTitle ]['own_comments']++;
+		}
 	}
 
 	/**
