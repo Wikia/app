@@ -324,6 +324,11 @@ class DataFeedProvider {
 			}
 			if($newTitle && $newTitle->exists()) {
 				$oldTitle = Title::newFromText($res['title']);
+
+				if (empty($oldTitle)) {
+					return;
+				}
+
 				return $this->add(array('type' => 'move',
 										'to_title' => $newTitle->getPrefixedText(),
 										'to_url' => $newTitle->getLocalUrl(),
