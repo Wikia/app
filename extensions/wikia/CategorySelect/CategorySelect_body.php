@@ -69,6 +69,7 @@ class CategorySelect {
 
 	static private function parseNode(&$root, $outerTag = '') {
 		self::$nodeLevel++;
+		$tagsWhiteList = array('nowiki', 'pre', 'gallery', 'ref', 'mainpage-rightcolumn-start', 'mainpage-leftcolumn-start', 'mainpage-endcolumn');
 		$out = array();
 		if ($root->hasChildNodes()) {
 			$nodes = &$root->childNodes;
@@ -81,7 +82,7 @@ class CategorySelect {
 								break;
 							case 'ext':
 								$tmpOuterTag = $node->getElementsByTagName('name')->item(0)->textContent;
-								if (in_array($tmpOuterTag, array('nowiki', 'pre', 'gallery', 'ref'))) {
+								if (in_array($tmpOuterTag, $tagsWhiteList)) {
 									continue;
 								}
 								$inner = $node->getElementsByTagName('inner')->item(0);
