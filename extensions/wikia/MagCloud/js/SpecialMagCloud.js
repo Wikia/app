@@ -253,8 +253,8 @@ SpecialMagCloud.renderPdf = function(hash, timestamp, node) {
 
 		// remove status popup
 		if ($('#SpecialMagCloudStatusPopup').hasClass('SpecialMagCloudPreviewStatusPopup')) {
-			$('#SpecialMagCloudStatusMask').remove();
-			$('#SpecialMagCloudStatusPopup').remove();
+			$('#SpecialMagCloudStatusMask').hide();
+			$('#SpecialMagCloudStatusPopup').hide();
 		}
 
 		// current page / total pages
@@ -284,6 +284,19 @@ SpecialMagCloud.renderPdf = function(hash, timestamp, node) {
 
 		// debug
 		MagCloud.log(SpecialMagCloud);
+
+		if (data.pages > 100) {
+			// reopen status popup
+			if ($('#SpecialMagCloudStatusPopup').hasClass('SpecialMagCloudPreviewStatusPopup')) {
+				$('#SpecialMagCloudPublishStatus').css('background', 'none');
+				$('#SpecialMagCloudPublishStatus').text('Your magazine is longer than 100 pages. Please go back and review your collection.');
+				$('#SpecialMagCloudStatusMask').show();
+				$('#SpecialMagCloudStatusPopup').show();
+			}
+
+			// hide "Publish your magazine" button
+			$('#SpecialMagCloudButtons a').eq(1).css('visibility', 'hidden');
+		}
 	});
 }
 
