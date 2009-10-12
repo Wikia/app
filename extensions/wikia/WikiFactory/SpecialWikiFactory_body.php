@@ -612,7 +612,7 @@ class CityListPager {
 		$sth = $dbr->select(
 			array( "city_domains" ),
 			array( "distinct city_id" ),
-			array( "city_domain like '%{$this->mPart}%'"),
+			array( "city_domain like " . $dbr->addQuotes( "%" . $dbr->escapeLike($this->mPart) . "%" ) ),
 			__METHOD__,
 			array(
 				"ORDER BY" => "city_id",
