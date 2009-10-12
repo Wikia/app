@@ -41,12 +41,7 @@ sub real404 {
 #
 # do not make zombies
 #
-$SIG{CHLD} = \&reaper;
-sub reaper {
-	while( ( my $kid = waitpid( -1, WNOHANG ) ) > 0 ) {
-		print STDERR "Killing hanging child $kid\n";
-	}
-}
+$SIG{CHLD} = 'IGNORE';
 
 #
 # initialization
