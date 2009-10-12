@@ -34,8 +34,8 @@ function runBackups( $from, $to, $full, $options ) {
 	 * hardcoded for while
 	 */
 	$servers = array(
-		"DEFAULT" => "10.6.10.36",
-		"c2" => "10.6.10.19"
+		"DEFAULT" => "10.6.32.32",
+		"c2" => "10.6.30.25"
 	);
 
 	/**
