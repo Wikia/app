@@ -366,7 +366,7 @@ class CloseWikiPage extends SpecialPage {
 			$this->closedWiki->city_dbname
 		);
 
-		$res = (($ftest = @fopen($dbDumpUrl, ‘r’)) === false) ? false : @fclose($ftest);
+		$res = ( strlen($content = wfGetHTTP($dbDumpUrl)) == 0 ) ? false : true;
 		if ( ($this->closedWiki->city_flags > 0) && !($this->closedWiki->city_flags & WikiFactory::FLAG_CREATE_DB_DUMP) ) {
 			$res = -1;
 		} 
