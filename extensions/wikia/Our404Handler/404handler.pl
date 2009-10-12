@@ -9,7 +9,8 @@ package main;
 use strict;
 use URI;
 use FCGI;
-use FCGI::ProcManager::MaxRequests;
+#use FCGI::ProcManager::MaxRequests;
+use FCGI::ProcManager;
 use Image::Magick;
 use Image::LibRSVG;
 use File::LibMagic;
@@ -63,10 +64,9 @@ my( $socket, $request, $manager );
 unless( $test ) {
 	$socket     = FCGI::OpenSocket( $listen, 100 ) or die "failed to open FastCGI socket; $!";
 	$request    = FCGI::Request( \*STDIN, \*STDOUT, \*STDOUT, \%env, $socket, ( &FCGI::FAIL_ACCEPT_ON_INTR ) );
-	$manager    = FCGI::ProcManager::MaxRequests->new({ n_processes => $clients, max_requests => $maxrequests });
+	$manager    = FCGI::ProcManager->new({ n_processes => $clients });
 }
 else {
-	use FCGI;
 	$request    = FCGI::Request();
 }
 my $basepath    = "/images";
@@ -97,8 +97,8 @@ while( $request->Accept() >= 0 ) {
 	$request_uri = "/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png";
 	$request_uri = "/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif";
 	$request_uri = "/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg";
-=cut
 	$request_uri = "/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg";
+=cut
 
 	#
 	# get last part of uri, remove first slash if exists
