@@ -1,5 +1,6 @@
 == Changes since 200910.2 ==
 * rt#24747: Proper escaping in WF code. (Nef) 
+* rt#24489: Mainpage broken and problem can only be identified via category code view (Marooned)
 
 == Changes since 200910.1 ==
 * rt#24690: fatal call to getPrefixedText in MyHome/DataFeedProvider (Macbre)
