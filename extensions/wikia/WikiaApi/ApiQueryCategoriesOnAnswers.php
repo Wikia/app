@@ -51,7 +51,7 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 		if ( is_null( $answeredTitle ) || $answeredTitle->getNamespace() != NS_CATEGORY )
 			$this->dieUsage("The name of un/answered category is not valid", 'invalidcategory');
 
-		$this->addFields(array('c1.cl_sortkey', 'c1.cl_timestamp'));
+		$this->addFields(array('c1.cl_from', 'c1.cl_timestamp'));
 		$this->addTables(array('categorylinks AS c1', 'categorylinks AS c2'));
 		$this->addWhere('c1.cl_from = c2.cl_from');
 		$this->addWhereFld('c1.cl_to', $categoryTitle->getDBkey());
@@ -64,8 +64,8 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 		$res = $this->select(__METHOD__);
 		$data = array();
 		while ($row = $db->fetchObject($res)) {
-			$title = Title::newFromText($row->cl_sortkey);
-			if ($title->isContentPage()) {
+			$title = Title::newFromID($row->cl_from);
+			if ($title instanceof Title && $title->isContentPage()) {
 				$vals['ns'] = intval($title->getNamespace());
 				$vals['title'] = $title->getPrefixedText();
 				$data[] = $vals;
