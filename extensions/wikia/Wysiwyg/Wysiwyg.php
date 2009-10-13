@@ -334,6 +334,15 @@ function Wysiwyg_Initial2($form) {
 	$wgWysiwygData = '';
 
 	if(!($wgRequest->getVal('useeditor', 'wysiwyg') == 'wysiwygsource' || ($wgRequest->getVal('action') == 'submit' && $wgRequest->getVal('wysiwygTemporarySaveType') == '1'))) {
+
+		// count number of <div> / <span> tags occurences in wikitext
+		if (strpos($form->textbox1, '<div') !== false) {
+			error_log("Macbre-wysiwyg: div found ({$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']})");
+		}
+		else if (strpos($form->textbox1, '<span') !== false) {
+			error_log("Macbre-wysiwyg: span found ({$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']})");
+		}
+
 		$ret = Wysiwyg_WikiTextToHtml($form->textbox1, false, true);
 		if($ret['type'] == 'html') {
 			$form->textbox1 = $ret['html'];
