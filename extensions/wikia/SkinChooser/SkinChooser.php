@@ -384,6 +384,11 @@ function WikiaGetSkin ($user) {
 	$userSkin = $wgRequest->getVal('useskin', $userSkin);
 	$userTheme = $wgRequest->getVal('usetheme', $userTheme);
 
+	if(empty($userTheme) && strpos($userSkin, 'quartz-') === 0) {
+		$userSkin = 'quartz';
+		$userTheme = '';
+	}
+
 	if($userSkin == 'monacoold') {
 		global $wgUseMonaco2;
 		$wgUseMonaco2 = null;
