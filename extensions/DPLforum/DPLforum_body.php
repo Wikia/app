@@ -87,6 +87,7 @@ class DPLForum {
 	}
 
 	function link( &$parser, $count, $page = '', $text = '' ) {
+		wfLoadExtensionMessages( 'DPLforum' );
 		$count = intval( $count );
 		if ( $count < 1 )
 			return '';
@@ -143,6 +144,8 @@ class DPLForum {
 
 	function parse( &$input, &$parser ) {
 		global $wgContLang;
+
+		wfLoadExtensionMessages( 'DPLforum' );
 
 		$this->sInput =& $input;
 		$sPrefix = $this->get( 'prefix', '', $parser );

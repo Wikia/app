@@ -35,7 +35,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-$wgExtensionFunctions[] = 'wfDPLforum';
+$wgHooks['ParserFirstCallInit'][] = 'wfDPLforum';
 $wgHooks['LanguageGetMagic'][] = 'wfDPLmagic';
 $wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
@@ -51,12 +51,9 @@ $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['DPLforum'] = $dir . 'DPLforum.i18n.php';
 $wgAutoloadClasses['DPLForum'] = $dir . 'DPLforum_body.php';
 
-function wfDPLforum() {
-	global $wgParser;
-
-	wfLoadExtensionMessages( 'DPLforum' );
-	$wgParser->setHook( 'forum', 'parseForum' );
-	$wgParser->setFunctionHook( 'forumlink', array( new DPLForum(), 'link' ) );
+function wfDPLforum( &$parser ) {
+	$parser->setHook( 'forum', 'parseForum' );
+	$parser->setFunctionHook( 'forumlink', array( new DPLForum(), 'link' ) );
 }
 
 function wfDPLmagic( &$magicWords, $langCode = 'en' ) {
