@@ -65,7 +65,7 @@ class SpecialIowa extends UnlistedSpecialPage {
 			}
 			else {
 				$wgOut->addHTML( Wikia::successmsg( "cookie removed" ) );
-				$wgRequest->response()->setcookie( $this->mCookieName, "sjc", 0 );
+				$wgRequest->response()->setcookie( $this->mCookieName, "sjc", 1 );
 			}
 		}
 		wfProfileOut( __METHOD__ );
