@@ -47,6 +47,17 @@ class SolrSearch extends SearchEngine {
 class SolrSearchSet extends SearchResultSet {
 
 	private $mCanonicals = array();
+
+	/**
+	 * any query string transformation before sending to backend should be placed here
+	 */
+	private static function sanitizeQuery($query) {
+		// non-indexed number-string phrases issue workaround (RT #24790)
+		$query = preg_replace('/(\d+)([a-zA-Z]+)/i', '$1 $2', $query);
+
+		return $query;
+	}
+
 	/**
 	 * Contact the solr search server and return a wrapper
 	 * object with the set of results. Results may be cached.
@@ -98,12 +109,12 @@ class SolrSearchSet extends SearchResultSet {
 				$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:831";
 			}
 			else {
-				$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:11557";// . $wgCityId;
+				$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . $wgCityId;
 			}
 			//echo "fq=" . $params['fq'] . "<br />";
 
 			try {
-				$response = $solr->search($query, $offset, $limit, $params);
+				$response = $solr->search(self::sanitizeQuery($query), $offset, $limit, $params);
 			}
 			catch (Exception $exception) {
 				//echo '<pre>'; print_r($exception); echo '</pre>';
