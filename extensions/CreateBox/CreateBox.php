@@ -24,94 +24,96 @@
  http://www.gnu.org/copyleft/gpl.html
 
  To install, add following to LocalSettings.php
-   require_once("extensions/create.php");
+   require_once("extensions/CreateBox/CreateBox.php");
 */
 
-//Avoid unstubbing $wgParser too early on modern (1.12+) MW versions, as per r35980
-if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'wfCreateBox';
-} else {
-	$wgExtensionFunctions[] = 'wfCreateBox';
+if ( !defined( 'MEDIAWIKI' ) ) {
+	die( "This is not a valid entry point.\n" );
 }
+
+$wgHooks['ParserFirstCallInit'][] = 'wfCreateBox';
 
 $wgHooks['UnknownAction'][] = 'actionCreate';
 $wgExtensionCredits['parserhook'][] = array(
-	'name'           => 'CreateBox',
-	'url'            => 'http://www.mediawiki.org/wiki/Extension:CreateBox',
-	'description'    => 'Specialized inputbox for page creation',
-	'author'         => 'Ross McClure',
-	'version'        => '1.6',
+	'path' => __FILE__,
+	'name' => 'CreateBox',
+	'author' => 'Ross McClure',
+	'version' => '1.6',
+	'url' => 'http://www.mediawiki.org/wiki/Extension:CreateBox',
+	'description' => 'Specialized inputbox for page creation',
 	'descriptionmsg' => 'createbox-desc',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['CreateBox'] = $dir . 'CreateBox.i18n.php';
 
-function wfCreateBox() {
-    global $wgParser;
-    $wgParser->setHook( 'createbox', 'acMakeBox' );
+function wfCreateBox( &$parser ) {
+	$parser->setHook( 'createbox', 'acMakeBox' );
 	return true;
 }
 
-function actionCreate($action, $article) {
-	wfLoadExtensionMessages('CreateBox');
-    if($action != 'create') return true;
+function actionCreate( $action, $article ) {
+	wfLoadExtensionMessages( 'CreateBox' );
+	if( $action != 'create' )
+		return true;
 
-    global $wgRequest;
-    $prefix = $wgRequest->getVal('prefix');
-    $text = $wgRequest->getVal('title');
-    if($prefix && strpos($text, $prefix)!==0) {
-        $title = Title::newFromText( $prefix . $text );
-        if(is_null($title)) {
-            global $wgTitle;
-            $wgTitle = Title::makeTitle( NS_SPECIAL, 'Badtitle' );
-            throw new ErrorPageError( 'badtitle', 'badtitletext' );
-        }
-        else if($title->getArticleID() == 0) acRedirect($title, 'edit');
-        else acRedirect($title, 'create');
-    }
-    else if($wgRequest->getVal('section')=='new' || $article->getID() == 0) {
-        acRedirect($article->getTitle(), 'edit');
-    } else {
-        global $wgOut;
-        $text = $article->getTitle()->getPrefixedText();
-        $wgOut->setPageTitle($text);
-        $wgOut->setHTMLTitle(wfMsg('pagetitle', $text.' - '.wfMsg('createbox-create')));
-        $wgOut->addWikiText(wfMsg('createbox-exists'));
-    }
-    return false;
+	global $wgRequest;
+	$prefix = $wgRequest->getVal( 'prefix' );
+	$text = $wgRequest->getVal( 'title' );
+	if( $prefix && strpos( $text, $prefix ) !== 0 ) {
+		$title = Title::newFromText( $prefix . $text );
+		if( is_null( $title ) ) {
+			global $wgTitle;
+			$wgTitle = Title::makeTitle( NS_SPECIAL, 'Badtitle' );
+			throw new ErrorPageError( 'badtitle', 'badtitletext' );
+		} elseif( $title->getArticleID() == 0 )
+			acRedirect( $title, 'edit' );
+		else
+			acRedirect( $title, 'create' );
+	} elseif( $wgRequest->getVal( 'section' ) == 'new' || $article->getID() == 0 ) {
+		acRedirect( $article->getTitle(), 'edit' );
+	} else {
+		global $wgOut;
+		$text = $article->getTitle()->getPrefixedText();
+		$wgOut->setPageTitle( $text );
+		$wgOut->setHTMLTitle( wfMsg( 'pagetitle', $text . ' - ' . wfMsg( 'createbox-create' ) ) );
+		$wgOut->addWikiMsg( 'createbox-exists' );
+	}
+	return false;
 }
 
-function acGetOption(&$input,$name,$value=NULL) {
-    if(preg_match("/^\s*$name\s*=\s*(.*)/mi",$input,$matches)) {
-        if(is_int($value)) return intval($matches[1]);
-        else return htmlspecialchars($matches[1]);
-    }
-    return $value;
+function acGetOption( &$input, $name, $value = null ) {
+	if( preg_match( "/^\s*$name\s*=\s*(.*)/mi", $input, $matches ) ) {
+		if( is_int( $value ) )
+			return intval( $matches[1] );
+		else
+			return htmlspecialchars( $matches[1] );
+	}
+	return $value;
 }
 
-function acMakeBox($input, $argv, &$parser) {
-	wfLoadExtensionMessages('CreateBox');
-    global $wgRequest, $wgScript;
-    if($wgRequest->getVal('action')=='create') {
-        $prefix = $wgRequest->getVal('prefix');
-        $preload = $wgRequest->getVal('preload');
-        $editintro = $wgRequest->getVal('editintro');
-        $text = $parser->getTitle()->getPrefixedText();
-        if($prefix && strpos($text, $prefix)===0)
-            $text = substr($text, strlen($prefix));
-    } else {
-        $prefix = acGetOption($input,'prefix');
-        $preload = acGetOption($input,'preload');
-        $editintro = acGetOption($input,'editintro');
-        $text = acGetOption($input,'default');
-    }
-    $submit = htmlspecialchars($wgScript);
-    $width = acGetOption($input, 'width', 0);
-    $align = acGetOption($input, 'align', 'center');
-    $br = ((acGetOption($input, 'break', 'no')=='no') ? '' : '<br />');
-    $label = acGetOption($input, 'buttonlabel', wfMsgHtml('createbox-create'));
-    $output=<<<ENDFORM
+function acMakeBox( $input, $argv, &$parser ) {
+	wfLoadExtensionMessages( 'CreateBox' );
+	global $wgRequest, $wgScript;
+	if( $wgRequest->getVal( 'action' ) == 'create' ) {
+		$prefix = $wgRequest->getVal( 'prefix' );
+		$preload = $wgRequest->getVal( 'preload' );
+		$editintro = $wgRequest->getVal( 'editintro' );
+		$text = $parser->getTitle()->getPrefixedText();
+		if( $prefix && strpos( $text, $prefix ) === 0 )
+			$text = substr( $text, strlen( $prefix ) );
+	} else {
+		$prefix = acGetOption( $input, 'prefix' );
+		$preload = acGetOption( $input, 'preload' );
+		$editintro = acGetOption( $input, 'editintro' );
+		$text = acGetOption( $input, 'default' );
+	}
+	$submit = htmlspecialchars( $wgScript );
+	$width = acGetOption( $input, 'width', 0 );
+	$align = acGetOption( $input, 'align', 'center' );
+	$br = ( ( acGetOption( $input, 'break', 'no' ) == 'no' ) ? '' : '<br />' );
+	$label = acGetOption( $input, 'buttonlabel', wfMsgHtml( 'createbox-create' ) );
+	$output = <<<ENDFORM
 <div class="createbox" align="{$align}">
 <form name="createbox" action="{$submit}" method="get" class="createboxForm">
 <input type='hidden' name="action" value="create">
@@ -122,15 +124,15 @@ function acMakeBox($input, $argv, &$parser) {
 <input type='submit' name="create" class="createboxButton" value="{$label}"/>
 </form></div>
 ENDFORM;
-    return $parser->replaceVariables($output);
+	return $parser->replaceVariables( $output );
 }
 
-function acRedirect($title, $action) {
-    global $wgRequest, $wgOut;
-    $query = "action={$action}&prefix=" . $wgRequest->getVal('prefix') .
-        "&preload=" . $wgRequest->getVal('preload') .
-        "&editintro=" . $wgRequest->getVal('editintro') .
-        "&section=" . $wgRequest->getVal('section');
-    $wgOut->setSquidMaxage( 1200 );
-    $wgOut->redirect($title->getFullURL( $query ), '301');
+function acRedirect( $title, $action ) {
+	global $wgRequest, $wgOut;
+	$query = "action={$action}&prefix=" . $wgRequest->getVal( 'prefix' ) .
+		'&preload=' . $wgRequest->getVal( 'preload' ) .
+		'&editintro=' . $wgRequest->getVal( 'editintro' ) .
+		'&section=' . $wgRequest->getVal( 'section' );
+	$wgOut->setSquidMaxage( 1200 );
+	$wgOut->redirect( $title->getFullURL( $query ), '301' );
 }
