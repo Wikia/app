@@ -376,8 +376,9 @@ class CloseWikiPage extends SpecialPage {
 			"wgExtensionsPath" => $wgExtensionsPath,
 			"wgStyleVersion" => $wgStyleVersion,
 			"dbDumpUrl" => $dbDumpUrl,
-			"dbDumpExist" => $res
-		));
+			"dbDumpExist" => $res,
+			"isDisabled" => (($this->closedWiki->city_flags == 0) && ($this->closedWiki->city_public == 0))
+		) );
 
 		$wgOut->setPageTitle( wfMsg('closed-wiki') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
