@@ -103,10 +103,7 @@ class Skin extends Linker {
 		if ( strpos($key, '-') !== false ) {
 			list($skin, $theme) = explode('-', $key);
 			if ( isset($wgSkinTheme[$skin]) && in_array($theme, $wgSkinTheme[$skin]) ) {
-				global $wgUserThemeFromURL;
-				//variable used in setupUserCss() - fix for RT#22005 - Marooned
-				$wgUserThemeFromURL = $theme;
-				return $skin;
+				return $key;
 			}
 		}
 
@@ -627,11 +624,6 @@ END;
 			}
 
 			// Wikia
-			global $wgUserThemeFromURL;
-			if( !empty($wgUserThemeFromURL) ) {
-				//handle ?useskin=skin-theme style (theme works only for Monaco), set in normalizeKey() - fix for RT#22005 - Marooned
-				$this->themename = $wgUserThemeFromURL;
-			}
 			if( empty($this->themename) || $this->themename == 'custom' ) {
 				$out->addStyle( self::makeNSUrl( $this->getSkinName() . '.css', $query, NS_MEDIAWIKI ) );
 			}
@@ -1226,14 +1218,14 @@ END;
 		  . '<input type="text" id="searchInput'.$this->searchboxes.'" name="search" size="19" value="'
 		  . htmlspecialchars(substr($search,0,256)) . "\" />\n"
 		  . '<input type="submit" name="go" value="' . wfMsg ('searcharticle') . '" />';
-		
+
 		if ($wgUseTwoButtonsSearchForm)
 			$s .= '&nbsp;<input type="submit" name="fulltext" value="' . wfMsg ('searchbutton') . "\" />\n";
 		else
 			$s .= ' <a href="' . $this->escapeSearchLink() . '" rel="search">' . wfMsg ('powersearch-legend') . "</a>\n";
-		
+
 		$s .= '</form>';
-		
+
 		// Ensure unique id's for search boxes made after the first
 		$this->searchboxes = $this->searchboxes == '' ? 2 : $this->searchboxes + 1;
 
@@ -1346,7 +1338,7 @@ END;
 					$element[] = $this->emailUserLink();
 				}
 			}
-			
+
 			$s = implode( $element, $sep );
 
 			if ( $wgTitle->getArticleId() ) {
