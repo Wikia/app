@@ -12,14 +12,13 @@ define( 'NS_USER_WIKI', 200 );
 
 if ('de' == $wgLanguageCode) {
 	// make en ns point (alias) to "main ns" - at this point themselves
-	foreach (array(200, 201, 202, 203) as $ns) {
+	foreach (array(200, 201, 202) as $ns) {
 		$wgNamespaceAliases[$wgExtraNamespaces[$ns]] = $ns;
 	}
 	// translate "main ns" into de
 	$wgExtraNamespaces[200] = 'BenutzerWiki';
 	$wgExtraNamespaces[201] = 'BenutzerWiki Diskussion';
-	$wgExtraNamespaces[202] = 'Benutzerprofil ';
-	$wgExtraNamespaces[203] = 'BenutzerWiki Diskussion ';
+	$wgExtraNamespaces[202] = 'Benutzerprofil';
 	// the end: de name is the "main ns", en is just an alias (redirect)
 }
 
