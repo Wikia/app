@@ -2,6 +2,7 @@
 /**
  * Internationalisation file for the CreateBox extension.
  *
+ * @file
  * @ingroup Extensions
  * @author Ross McClure
  */
@@ -12,14 +13,13 @@ $messages = array();
  * @author Ross McClure
  */
 $messages['en'] = array(
-	'createbox-desc'   => 'Specialised inputbox for page creation',
+	'createbox-desc' => 'Specialised inputbox for page creation',
 	'createbox-create' => 'Create',
-	'createbox-exists' => "Sorry, \"'''{{FULLPAGENAME}}'''\" already " .
-			"exists.\n\nYou cannot create this page, but you can " .
-			"[{{fullurl:{{FULLPAGENAME}}|action=edit}} edit it], " .
-			"[{{fullurl:{{FULLPAGENAME}}}} read it], or choose to " .
-			"create a different page using the box below.\n\n" .
-			"<createbox>break=no</createbox>",
+	'createbox-exists' => "Sorry, \"'''{{FULLPAGENAME}}'''\" already exists.
+
+You cannot create this page, but you can [{{fullurl:{{FULLPAGENAME}}|action=edit}} edit it], [{{fullurl:{{FULLPAGENAME}}}} read it], or choose to create a different page using the box below.
+
+<createbox>break=no</createbox>",
 );
 
 /** Message documentation (Message documentation)
@@ -41,10 +41,11 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Meno25
+ * @author OsamaK
  */
 $messages['ar'] = array(
 	'createbox-desc' => 'صندوق إدخال متخصص لإنشاء الصفحات',
-	'createbox-create' => 'إنشاء',
+	'createbox-create' => 'أنشئ',
 	'createbox-exists' => "عذرا، \"'''{{FULLPAGENAME}}'''\" موجودة بالفعل.
 
 أنت لا يمكنك إنشاء هذه الصفحة، لكن يمكنك [{{fullurl:{{FULLPAGENAME}}|action=edit}} تعديلها], [{{fullurl:{{FULLPAGENAME}}}} قراءتها]، أو اختيار إنشاء صفحة أخرى باستخدام الصندوق بالأسفل.
@@ -67,9 +68,17 @@ $messages['arz'] = array(
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
+ * @author Jim-by
+ * @author Zedlik
  */
 $messages['be-tarask'] = array(
+	'createbox-desc' => 'Спэцыялізаванае поле ўводу для стварэньня старонак',
 	'createbox-create' => 'Стварыць',
+	'createbox-exists' => "Прабачце, «'''{{FULLPAGENAME}}'''» ужо існуе.
+
+Вы ня можаце стварыць гэту старонку, але Вы можаце [{{fullurl:{{FULLPAGENAME}}|action=edit}} рэдагаваць яе], [{{fullurl:{{FULLPAGENAME}}}} чытаць яе] альбо стварыць іншую старонку з дапамогай поля ніжэй.
+
+<createbox>break=no</createbox>",
 );
 
 /** Bulgarian (Български)
@@ -77,6 +86,19 @@ $messages['be-tarask'] = array(
  */
 $messages['bg'] = array(
 	'createbox-create' => 'Създаване',
+);
+
+/** Breton (Brezhoneg)
+ * @author Fulup
+ */
+$messages['br'] = array(
+	'createbox-desc' => "Boest skridaozañ gouestlet d'ar c'hrouiñ pajennoù",
+	'createbox-create' => 'Krouiñ',
+	'createbox-exists' => "Ho tigarez, bez' ez eus eus \"'''{{FULLPAGENAME}}'''\" c'hoazh.
+
+N'haller ket krouiñ ar bajenn-mañ, met gallout a reer [{{fullurl:{{FULLPAGENAME}}|action=edit}} degas kemmoù enni], [{{fullurl:{{FULLPAGENAME}}}} lenn anezhi], pe dibab krouiñ ur bajenn all en ur implijout ar voest a-is.
+
+<createbox>break=no</createbox>",
 );
 
 /** Bosnian (Bosanski)
@@ -102,6 +124,19 @@ $messages['ca'] = array(
 /** Corsican (Corsu) */
 $messages['co'] = array(
 	'createbox-create' => 'Creà',
+);
+
+/** Welsh (Cymraeg)
+ * @author Lloffiwr
+ */
+$messages['cy'] = array(
+	'createbox-desc' => "Blwch mewnbynnu arbennig ar gyfer dechrau tudalen o'r newydd",
+	'createbox-create' => 'Dechrau',
+	'createbox-exists' => "Mae'n ddrwg gennym, mae'r dudalen \"'''{{FULLPAGENAME}}'''\" ar gael yn barod.
+
+Ni ellwch ddechrau'r dudalen o'r newydd, ond gallwch [{{fullurl:{{FULLPAGENAME}}|action=edit}} ei golygu], neu [{{fullurl:{{FULLPAGENAME}}}} ei darllen], neu dechrau tudalen arall gan ddefnyddio'r blwch isod.
+
+<createbox>break=no</createbox>",
 );
 
 /** German (Deutsch)
@@ -134,8 +169,10 @@ Njamóžoš tós ten bok napóraś, ale móžoš jen [{{fullurl:{{FULLPAGENAME}}
 
 /** Greek (Ελληνικά)
  * @author Konsnos
+ * @author ZaDiak
  */
 $messages['el'] = array(
+	'createbox-desc' => 'Ειδικευμένο inputbox για δημιουργία σελίδων',
 	'createbox-create' => 'Δημιουργία',
 );
 
@@ -151,6 +188,7 @@ $messages['eo'] = array(
  * @author Imre
  */
 $messages['es'] = array(
+	'createbox-desc' => 'Tabla de ingreso especializada para creación de página',
 	'createbox-create' => 'Crear',
 	'createbox-exists' => "Disculpe, \"'''{{FULLPAGENAME}}'''\" ya existe.
 
@@ -212,7 +250,7 @@ Non pode crear esta páxina, pero pode [{{fullurl:{{FULLPAGENAME}}|action=edit}}
  * @author Omnipaedista
  */
 $messages['grc'] = array(
-	'createbox-create' => 'Ποεῖν',
+	'createbox-create' => 'Ποιεῖν',
 );
 
 /** Swiss German (Alemannisch)
@@ -224,6 +262,19 @@ $messages['gsw'] = array(
 	'createbox-exists' => "Excusez, „'''{{FULLPAGENAME}}'''“ git s scho.
 
 Du chasch die Syte nit aalege, aber Du chasch si [{{fullurl:{{FULLPAGENAME}}|action=edit}} bearbeite], [{{fullurl:{{FULLPAGENAME}}}} läse] oder e anderi Syte aalege mit em Yygabfäld, wu do unte stoht.
+
+<createbox>break=no</createbox>",
+);
+
+/** Gujarati (ગુજરાતી)
+ * @author Ashok modhvadia
+ */
+$messages['gu'] = array(
+	'createbox-desc' => 'પાનું બનાવવા માટેનું વિશેષ આગતચોકઠું',
+	'createbox-create' => 'બનાવો',
+	'createbox-exists' => "માફ કરો,\"'''{{FULLPAGENAME}}'''\" પહેલેથી અસ્તિત્વમાં છે.
+
+તમે આ પાનું બનાવી શકતા નથી, પરંતુ તમે [{{fullurl:{{FULLPAGENAME}}|action=edit}} સંપાદિત] કરી શકો છો,[{{fullurl:{{FULLPAGENAME}}}} વાંચી શકો છો], અથવા નિચેનાં ચોકઠાનો ઉપયોગ કરી અલગ પાનું બનાવી શકો છો.
 
 <createbox>break=no</createbox>",
 );
@@ -287,6 +338,19 @@ Tu non pote crear iste pagina, sed tu pote [{{fullurl:{{FULLPAGENAME}}|action=ed
 <createbox>break=no</createbox>",
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'createbox-desc' => '"Inputbox" khusus untuk pembuatan halaman',
+	'createbox-create' => 'Buat',
+	'createbox-exists' => "Maaf, \"'''{{FULLPAGENAME}}'''\" sudah ada.
+
+Anda tidak dapat membuat halaman ini, namun Anda dapat [{{fullurl:{{FULLPAGENAME}}|action=edit}} menyuntingnya], [{{fullurl:{{FULLPAGENAME}}}} membacanya], atau membuat halaman lainnya dengan menggunakan kotak di bawah ini.
+
+<createbox>break=no</createbox>",
+);
+
 /** Italian (Italiano)
  * @author Pietrodn
  */
@@ -328,6 +392,20 @@ $messages['km'] = array(
 <createbox>break=no</createbox>",
 );
 
+/** Korean (한국어)
+ * @author Klutzy
+ * @author Yknok29
+ */
+$messages['ko'] = array(
+	'createbox-desc' => '새 문서 생성을 편리하게 만들어 주는 입력 상자',
+	'createbox-create' => '생성',
+	'createbox-exists' => "‘'''{{FULLPAGENAME}}'''’ 문서가 이미 존재합니다.
+
+따라서 문서를 새로 만들 수는 없지만, [{{fullurl:{{FULLPAGENAME}}|action=edit}} 이 문서를 편집하거나] [{{fullurl:{{FULLPAGENAME}}}} 읽을 수] 있습니다. 또는, 아래 상자를 이용해 다른 문서를 만들어 주세요.
+
+<createbox>break=no</createbox>",
+);
+
 /** Krio (Krio)
  * @author Jose77
  */
@@ -359,6 +437,19 @@ $messages['lb'] = array(
 	'createbox-exists' => "Pardon, \"'''{{FULLPAGENAME}}'''\" gëtt et schonn.
 
 Dir kënnt dës Sàit net uleeën, awer Dir kënnt [{{fullurl:{{FULLPAGENAME}}|action=edit}} s'änneren], [{{fullurl:{{FULLPAGENAME}}}} liest] oder wielt fir eng aner Säit unzeleeë mat Hellëf vun der Kescht ënnendrënner.",
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'createbox-desc' => 'Специјализирана вносна кутија за создавање страници',
+	'createbox-create' => 'Создај',
+	'createbox-exists' => "Жалиме, но „'''{{FULLPAGENAME}}'''“ веќе постои.
+
+Не можете да ја создадете оваа страница, но можете да ја [{{fullurl:{{FULLPAGENAME}}|action=edit}} уредите], [{{fullurl:{{FULLPAGENAME}}}} прочитате], или да изберете да создадете друга страница со помош на кутијата подолу.
+
+<createbox>break=no</createbox>",
 );
 
 /** Marathi (मराठी)
@@ -454,6 +545,19 @@ Nie możesz utworzyć tej strony, lecz możesz ją [{{fullurl:{{FULLPAGENAME}}|a
 <createbox>break=no</createbox>",
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'createbox-desc' => 'Inputbox specialisà për creassion ëd pàgine',
+	'createbox-create' => 'Crea',
+	'createbox-exists' => "Am dëspias, \"'''{{FULLPAGENAME}}'''\" a esist già.
+
+It peule pa creé sta pàgina-sì, ma it peule [{{fullurl:{{FULLPAGENAME}}|action=edit}} modifichela], [{{fullurl:{{FULLPAGENAME}}}} lesla], o serne ëd creé na pàgina diferenta an dovrand ël box sota.
+
+<createbox>break=no</createbox>",
+);
+
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
@@ -501,7 +605,13 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'createbox-desc' => 'scatele de input specializzate pe le ccreaziune de le pàggene',
 	'createbox-create' => 'Ccreje',
+	'createbox-exists' => "Me dispiace, \"'''{{FULLPAGENAME}}'''\" già esiste.
+
+Tu non ge puè ccrejà sta pàgene, ma tu 'a puè [{{fullurl:{{FULLPAGENAME}}|action=edit}} cangià], [{{fullurl:{{FULLPAGENAME}}}} leggerle], o scacchie de ccrejà 'a pàgene cu 'nu nome differende ausanne 'a scatele ca ste aqquà sotte.
+
+<createbox>break=no</createbox>",
 );
 
 /** Russian (Русский)
@@ -560,9 +670,11 @@ $messages['sw'] = array(
 );
 
 /** Telugu (తెలుగు)
+ * @author Kiranmayee
  * @author Veeven
  */
 $messages['te'] = array(
+	'createbox-desc' => 'వ్యాసమును సృష్టించుటకు ఒక ప్రత్యేక ఇన్పుట్ బాక్స్',
 	'createbox-create' => 'సృష్టించు',
 	'createbox-exists' => "క్షమించండి, \"'''{{FULLPAGENAME}}'''\" ఇప్పటికే ఉంది.
 
@@ -576,6 +688,19 @@ $messages['te'] = array(
  */
 $messages['tg-cyrl'] = array(
 	'createbox-create' => 'Эҷод',
+);
+
+/** Thai (ไทย)
+ * @author Ans
+ */
+$messages['th'] = array(
+	'createbox-desc' => 'inputbox ที่ออกแบบมาเฉพาะสำหรับการสร้างหน้าใหม่',
+	'createbox-create' => 'สร้างหน้า',
+	'createbox-exists' => "ขออภัย, มีเนื้อหาชื่อ \"'''{{FULLPAGENAME}}'''\" อยู่ก่อนแล้ว.
+
+คุณไม่สามารถสร้างหน้านี้ได้, แต่คุณสามารถ[{{fullurl:{{FULLPAGENAME}}|action=edit}} แก้ไข]หรือ[{{fullurl:{{FULLPAGENAME}}}} เปิดอ่าน]หน้านี้, หรือเลือกที่จะสร้างเนื้อหาในชื่ออื่น โดยใช้กล่องด้านล่างนี้.
+
+<createbox>break=no</createbox>",
 );
 
 /** Tagalog (Tagalog)
