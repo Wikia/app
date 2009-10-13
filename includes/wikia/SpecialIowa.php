@@ -49,7 +49,7 @@ class SpecialIowa extends UnlistedSpecialPage {
 		$wgOut->addHTML( Xml::openElement( "form", array( "action" => $this->mTitle->getFullURL(), "method" => "post" ) ) );
 		$select = new XMLSelect( "iowacookie", "iowacookie" );
 		$select->addOption( "set cookie to Iowa", 1 );
-		$select->addOption( "remove cookie at all", 1 );
+		$select->addOption( "remove cookie at all", 0 );
 		$wgOut->addHTML( $select->getHTML() );
 		$wgOut->addHTML( Xml::submitButton( "submit" ) );
 		$wgOut->addHTML( Xml::closeElement( "form" ) );
@@ -58,9 +58,14 @@ class SpecialIowa extends UnlistedSpecialPage {
 		 * if posted change cookie value
 		 */
 		if( $wgRequest->wasPosted() ) {
-			print_pre( $wgRequest->getVal( "iowacookie" ) );
+			$val = $wgRequest->getVal( "iowacookie", 0 );
+			if( $val == 1 ) {
+				//$wgRequest->response()->setcookie();
+			}
+			else {
+				//$wgRequest->response()->setcookie();
+			}
 		}
-		//$wgRequest->response()->setcookie();
 		wfProfileOut( __METHOD__ );
 	}
 }
