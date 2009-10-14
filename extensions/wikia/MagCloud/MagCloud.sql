@@ -4,7 +4,8 @@ CREATE TABLE magcloud_collection (
  mco_wiki_id INT(11) DEFAULT 0,
  mco_updated DATETIME,
  mco_articles TEXT DEFAULT NULL,
- mco_cover TEXT DEFAULT NULL
+ mco_cover TEXT DEFAULT NULL,
+ mco_publish TEXT DEFAULT NULL
 );
 
 CREATE TABLE magcloud_collection_log (
