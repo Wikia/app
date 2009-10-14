@@ -62,9 +62,16 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		}
 		else {
 			$oPostTitle = Title::newFromText( $this->mFormData['listingTitle'], NS_BLOG_LISTING );
-
+			
 			if(!($oPostTitle instanceof Title)) {
 				$this->mFormErrors[] = wfMsg('create-blog-invalid-title-error');
+			} 
+			elseif ( $oPostTitle->isProtected( 'edit' ) && !$oPostTitle->userCan( 'edit' ) ) {
+				if ( $oPostTitle->isSemiProtected() ) {
+					$this->mFormErrors[] = wfMsgExt('semiprotectedpagewarning', array('parse'));
+				} else {
+					$this->mFormErrors[] = wfMsgExt('protectedpagewarning', array('parse'));
+				}
 			}
 			else {
 				$this->mPostArticle = new Article($oPostTitle, 0);
@@ -80,7 +87,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 
 		if(!count($this->mFormErrors) && $wgRequest->getVal('wpPreview')) {
 			if($this->mFormData['listingType'] == 'plain') {
-					$this->mRenderedPreview = BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
+				$this->mRenderedPreview = BlogTemplateClass::parseTag($this->mTagBody, array(), $wgParser);
 			}
 			else {
 				$this->mRenderedPreview = '<pre>' . htmlspecialchars($this->mTagBody) . '</pre>';
