@@ -17,12 +17,12 @@ class SpecialIowa extends UnlistedSpecialPage {
 
 	public function __construct() {
 		parent::__construct( 'Iowa', 'wikifactory' );
-		$this->mCookieName = "wikiaColocation";
+		$this->mCookieName = "-wikia-colocation";
 		$this->mCookie = false;
 	}
 
 	public function execute( $subpage ) {
-		global $wgOut, $wgUser, $wgRequest, $wgMessageCache;
+		global $wgOut, $wgUser, $wgRequest, $wgMessageCache, $wgCookiePrefix;
 
 		$wgMessageCache->addMessages( array( "iowa" => "Iowa" ), "en" );
 
@@ -41,7 +41,10 @@ class SpecialIowa extends UnlistedSpecialPage {
 		if ( isset( $_COOKIE[ $this->mCookieName ] ) ) {
 			$this->mCookie = $_COOKIE[ $this->mCookieName ];
 		}
-		$wgOut->addHTML( "Current value of cookie: <em>" . ( $this->mCookie ? $this->mCookie : "not set" ) . "</em>" );
+		$wgOut->addHTML(
+			"Current value of cookie {$wgCookiePrefix}{$this->mCookieName}: <em>" .
+			( $this->mCookie ? $this->mCookie : "not set" ) . "</em>"
+		);
 
 		/**
 		 * show input chooser
