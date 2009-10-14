@@ -5,8 +5,8 @@
  */
 
 
-$wgSpecialPages[ "Iowa" ] = "SpecialIowa";
-$wgAutoloadClasses[ "Iowa" ] = dirname(__FILE__) . '/SpecialIowa.php';
+# $wgSpecialPages[ "Iowa" ] = "SpecialIowa";
+# $wgAutoloadClasses[ "Iowa" ] = dirname(__FILE__) . '/SpecialIowa.php';
 
 class SpecialIowa extends UnlistedSpecialPage {
 
@@ -38,8 +38,8 @@ class SpecialIowa extends UnlistedSpecialPage {
 		/**
 		 * show current value of cookie
 		 */
-		if ( isset( $_COOKIE[ $this->mCookieName ] ) ) {
-			$this->mCookie = $_COOKIE[ $this->mCookieName ];
+		if ( isset( $_COOKIE[ $wgCookiePrefix . $this->mCookieName ] ) ) {
+			$this->mCookie = $_COOKIE[ $wgCookiePrefix . $this->mCookieName ];
 		}
 		$wgOut->addHTML(
 			"Current value of cookie {$wgCookiePrefix}{$this->mCookieName}: <em>" .
