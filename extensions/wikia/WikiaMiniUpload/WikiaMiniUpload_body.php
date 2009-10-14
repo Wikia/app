@@ -139,7 +139,7 @@ class WikiaMiniUpload {
 	function tempFileStoreInfo( $filename ) {
 		global $wgExternalSharedDB, $wgCityId;	
 
-		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );		
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->insert(
 			'garbage_collector',
 			array(
@@ -188,7 +188,7 @@ class WikiaMiniUpload {
 			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($form->mTempPath, '', '');
-			$tempid = $this->tempFileStoreInfo( $tempname );
+#			$tempid = $this->tempFileStoreInfo( $tempname );
 			$props = array();
 			$props['file'] = $file;
 			$props['name'] = preg_replace("/[^".Title::legalChars()."]|:/", '-', trim($flickrResult['title']).'.jpg');
@@ -293,7 +293,7 @@ class WikiaMiniUpload {
 			$tempname = $this->tempFileName( $wgUser );
 			$file = new FakeLocalFile(Title::newFromText($tempname, 6), RepoGroup::singleton()->getLocalRepo());
 			$file->upload($wgRequest->getFileTempName('wpUploadFile'), '', '');
-			$tempid = $this->tempFileStoreInfo( $tempname );			
+#			$tempid = $this->tempFileStoreInfo( $tempname );			
 			$props = array();
 			$props['file'] = $file;
 			$props['name'] = stripslashes($wgRequest->getFileName('wpUploadFile'));
@@ -472,7 +472,7 @@ class WikiaMiniUpload {
 
 						$file_name->upload($file_mwname->getPath(), '', $caption);
 						$file_mwname->delete('');
-						$this->tempFileClearInfo( $tempid );
+#						$this->tempFileClearInfo( $tempid );
 						$newFile = false;
 					} else if($type == 'existing') {
 						header('X-screen-type: existing');
@@ -547,7 +547,7 @@ class WikiaMiniUpload {
 
 					$file->upload($temp_file->getPath(), '', $caption);
 					$temp_file->delete('');
-					$this->tempFileClearInfo( $tempid );
+#					$this->tempFileClearInfo( $tempid );
 				}
 
 				if( $wgUser->getOption( 'watchdefault' ) || ( $newFile && $wgUser->getOption( 'watchcreations' ) ) ) {
@@ -680,7 +680,7 @@ class WikiaMiniUpload {
 		global $wgRequest;
 		$file = new FakeLocalFile(Title::newFromText($wgRequest->getVal('mwname'), 6), RepoGroup::singleton()->getLocalRepo());
 		$file->delete('');
-		$this->tempFileClearInfo( $wgRequest->getVal('tempid') );
+#		$this->tempFileClearInfo( $wgRequest->getVal('tempid') );
 	}
 }
 
