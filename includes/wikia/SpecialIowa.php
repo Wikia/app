@@ -40,13 +40,14 @@ class SpecialIowa extends UnlistedSpecialPage {
 		if( $wgRequest->wasPosted() ) {
 			$val = $wgRequest->getVal( "iowacookie", 0 );
 			if( $val == 1 ) {
-				$wgOut->addHTML( Wikia::successmsg( "cookie set" ) );
+				$wgOut->addHTML( Wikia::successbox( "cookie set" ) );
 				$wgRequest->response()->setcookie( $this->mCookieName, "iowa" );
 			}
 			else {
-				$wgOut->addHTML( Wikia::successmsg( "cookie removed" ) );
+				$wgOut->addHTML( Wikia::successbox( "cookie removed" ) );
 				$wgRequest->response()->setcookie( $this->mCookieName, "sjc", 1 );
 			}
+
 		}
 
 		/**
