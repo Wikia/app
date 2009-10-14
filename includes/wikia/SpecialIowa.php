@@ -5,8 +5,7 @@
  */
 
 
-# $wgSpecialPages[ "Iowa" ] = "SpecialIowa";
-# $wgAutoloadClasses[ "Iowa" ] = dirname(__FILE__) . '/SpecialIowa.php';
+$wgSpecialPages[ "Iowa" ] = "SpecialIowa";
 
 class SpecialIowa extends UnlistedSpecialPage {
 
