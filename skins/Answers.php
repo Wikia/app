@@ -131,7 +131,7 @@ class AnswersTemplate extends MonacoTemplate {
  <?php if($answer_page->isQuestion(false,false) && $action=="submit") { ?>editquestion<?php } ?>">
 
 <!--GetHTMLAfterBody-->
-<?
+<?php
 $html = "";
 wfRunHooks('GetHTMLAfterBody', array (&$this, &$html ));
 echo $html;
