@@ -272,24 +272,29 @@ class SquidUpdate {
 		$fname = __METHOD__;
 		wfProfileIn( $fname );
 
-		$stomp = new Stomp( $wgStompServer );
-		$stomp->connect( $wgStompUser, $wgStompPassword );
-		$stomp->sync = false;
-		foreach ( $urlArr as $url ) {
-			if( !is_string( $url ) ) {
-				throw new MWException( 'Bad purge URL' );
-			}
-			$url = SquidUpdate::expand( $url );
+		try {
+			$stomp = new Stomp( $wgStompServer );
+			$stomp->connect( $wgStompUser, $wgStompPassword );
+			$stomp->sync = false;
+			foreach ( $urlArr as $url ) {
+				if( !is_string( $url ) ) {
+					throw new MWException( 'Bad purge URL' );
+				}
+				$url = SquidUpdate::expand( $url );
 
-			wfDebug( "Purging URL $url via Stomp\n" );
-			$key = 'wikia.purges';
-			$stomp->send( $key,
-				Wikia::json_encode( array(
-					'key' => $key,
-					'url' => $url,
-				) ),
-				array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
-			);
+				wfDebug( "Purging URL $url via Stomp\n" );
+				$key = 'wikia.purges';
+				$stomp->send( $key,
+					Wikia::json_encode( array(
+						'key' => $key,
+						'url' => $url,
+					) ),
+					array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
+				);
+			}
+		}
+		catch( Stomp_Exception $e ) {
+			Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
 		}
 		wfProfileOut( $fname );
 	}

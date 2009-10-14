@@ -85,8 +85,8 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 					array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 				    );
 		}
-		catch( Exception $e ) {
-			Wikia::log( __METHOD__, 'exception', $e->getMessage() );
+		catch( Stomp_Exception $e ) {
+			Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
 		}
 	}
 
