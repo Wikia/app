@@ -45,10 +45,10 @@ class WikiaCollection extends SpecialPage {
 		}
 		else {
 			// check user rights (for test period only!)
-			if(!$wgUser->isAllowed('magcloud')) {
-				$this->displayRestrictionError();
-				return;
-			}
+			//if(!$wgUser->isAllowed('magcloud')) {
+			//	$this->displayRestrictionError();
+			//	return;
+			//}
 
 			// check articles count
 			$oCollection = MagCloudCollection::getInstance();
