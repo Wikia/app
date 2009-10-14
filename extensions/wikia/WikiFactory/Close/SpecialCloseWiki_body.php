@@ -35,7 +35,7 @@ class CloseWikiPage extends SpecialPage {
 	 * constructor
 	 */
 	public function  __construct() {
-		parent::__construct( "CloseWiki", "wikifactory", true );
+		parent::__construct( "CloseWiki", "wikifactory", false );
 	}
 
 	/**
