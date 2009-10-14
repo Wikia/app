@@ -132,7 +132,9 @@ class AnswersTemplate extends MonacoTemplate {
 
 <!--GetHTMLAfterBody-->
 <?
-wfRunHooks('GetHTMLAfterBody', array (&$this));
+$html = "";
+wfRunHooks('GetHTMLAfterBody', array (&$this, &$html ));
+echo $html;
 ?>
 <!--GetHTMLAfterBody-->
 
@@ -1037,6 +1039,3 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 		<?php
 	}
 } // end of class
-
-
-

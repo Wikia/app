@@ -456,7 +456,11 @@ else {
 	</head>
 
 <body<?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?> class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> wikiaSkinQuartz">
-<?php wfRunHooks('GetHTMLAfterBody', array ($this)); ?>
+<?php
+$html = "";
+wfRunHooks('GetHTMLAfterBody', array( $this, &$html ) );
+echo $html;
+?>
 	<div id="header" class="clearfix abmode<?= $this->abmode ?> abmode<?= $this->abmode ?>-<?= !$this->data['loggedin'] ? 'anon' : 'loggedin' ?>">
 	<?= $this->getLeftTopBar() ?>
 	<ul id="wikia">
