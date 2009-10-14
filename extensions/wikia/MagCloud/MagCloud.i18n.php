@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiacollection' => 'Make a magazine!',
 	'magcloud-intro-get-started' => 'Collect articles',
 	'magcloud-intro-create-magazine' => 'Create a magazine from articles on this Wiki',
 	'magcloud-intro-check-out' => 'Check out what\'s already been created by our community:',
