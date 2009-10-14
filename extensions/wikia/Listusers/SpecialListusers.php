@@ -27,3 +27,6 @@ $wgSpecialPageGroups['Listusers'] = 'users';
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "Listusers::axShowUsers";
+
+$wgHooks['SpecialPage_initList'][] = 'Listusers::Activeusers';
+

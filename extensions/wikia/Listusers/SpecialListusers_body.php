@@ -232,13 +232,18 @@ class Listusers extends SpecialPage {
 
 				while ( $oRow = $dbs->fetchObject( $res ) ) {
 					$oUser = User::newFromName($oRow->lu_user_name);
+					# check by ID id, if user not found
+					if ( !($oUser instanceof User) ) {
+						$oUser = User::newFromId($oRow->lu_user_id);
+					}
+					# hmmm ... if user not found
 					if ( !($oUser instanceof User) ) continue;
+
 					$__groups = explode(";", $oRow->lu_allgroups);
 					$sGroups = "<i>".wfMsg('listusers-nonegroup')."</i>";
 					if ( !empty($__groups) && is_array($__groups) ) {
 						$sGroups = implode(", ", $__groups);
 					}
-
 
 					$aLinks = array (
 						0 => "",
@@ -331,7 +336,7 @@ class Listusers extends SpecialPage {
 				$result['data'] = (isset($aUsers['data'])) ? $aUsers['data'] : "";
 			}
 		} 
-
+		
 		wfProfileOut( __METHOD__ );
 
 		if (!function_exists('json_encode')) {
@@ -340,5 +345,10 @@ class Listusers extends SpecialPage {
 		} else {
 			return json_encode($result);
 		}
+	}
+	
+	public static function Activeusers( &$list ) {
+		$list['Activeusers'] = array( 'SpecialRedirectToSpecial', 'Activeusers', 'Listusers' );
+		return true;
 	}
 }
