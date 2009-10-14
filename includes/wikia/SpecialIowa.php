@@ -35,6 +35,21 @@ class SpecialIowa extends UnlistedSpecialPage {
 		$this->mTitle = SpecialPage::getTitleFor( "Iowa" );
 
 		/**
+		 * if posted change cookie value
+		 */
+		if( $wgRequest->wasPosted() ) {
+			$val = $wgRequest->getVal( "iowacookie", 0 );
+			if( $val == 1 ) {
+				$wgOut->addHTML( Wikia::successmsg( "cookie set" ) );
+				$wgRequest->response()->setcookie( $this->mCookieName, "iowa" );
+			}
+			else {
+				$wgOut->addHTML( Wikia::successmsg( "cookie removed" ) );
+				$wgRequest->response()->setcookie( $this->mCookieName, "sjc", 1 );
+			}
+		}
+
+		/**
 		 * show current value of cookie
 		 */
 		if ( isset( $_COOKIE[ $wgCookiePrefix . $this->mCookieName ] ) ) {
@@ -56,20 +71,6 @@ class SpecialIowa extends UnlistedSpecialPage {
 		$wgOut->addHTML( Xml::submitButton( "submit" ) );
 		$wgOut->addHTML( Xml::closeElement( "form" ) );
 
-		/**
-		 * if posted change cookie value
-		 */
-		if( $wgRequest->wasPosted() ) {
-			$val = $wgRequest->getVal( "iowacookie", 0 );
-			if( $val == 1 ) {
-				$wgOut->addHTML( Wikia::successmsg( "cookie set" ) );
-				$wgRequest->response()->setcookie( $this->mCookieName, "iowa" );
-			}
-			else {
-				$wgOut->addHTML( Wikia::successmsg( "cookie removed" ) );
-				$wgRequest->response()->setcookie( $this->mCookieName, "sjc", 1 );
-			}
-		}
 		wfProfileOut( __METHOD__ );
 	}
 }
