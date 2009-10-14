@@ -327,6 +327,18 @@ class MagCloudAjax {
 		return $result;
 	}
 
+	static public function publish2() {
+		global $wgRequest;
+
+		$hash = $wgRequest->getVal('hash');
+		$timestamp = $wgRequest->getInt('timestamp');
+		$token = $wgRequest->getVal('token');
+
+		$result = MagCloud::publish2($hash, $timestamp, $token);
+
+		return $result;
+	}
+
 	// this is probably wrong place for this function FIXME
 	// move to MagCloud class and invoke from MagCloud::publish?
 	static public function log($hash, $timestamp, $token, $code, $msg, $raw_result) {

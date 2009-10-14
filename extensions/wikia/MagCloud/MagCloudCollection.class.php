@@ -34,7 +34,8 @@ class MagCloudCollection {
 			'articles' => array(),
 			'coverData' => $this->getDefaultCoverData(),
 			'timestamp' => wfTimestampNow(),
-			'hash' => md5(microtime(true))
+			'hash' => md5(microtime(true)),
+			'publishData' => array(),
 		);
 	}
 
@@ -259,11 +260,13 @@ class MagCloudCollection {
 			'mco_wiki_id' => $wgCityId,
 			'mco_updated' => date('Y-m-d H:i:s'),
 			'mco_articles' => serialize($this->getArticles()),
-			'mco_cover' => serialize($this->getCoverData())
+			'mco_cover' => serialize($this->getCoverData()),
+			'mco_publish' => serialize($this->getRawPublishData()),
 		);
 
 		$dbw->delete( 'magcloud_collection', array( "mco_user_id='0'", "mco_updated<=DATE_SUB(NOW(), INTERVAL 1 DAY)" ));
 		$dbw->replace( 'magcloud_collection', array( 'mco_hash' ), $row, __METHOD__ );
+		$dbw->commit();
 	}
 
 	/**
@@ -274,12 +277,13 @@ class MagCloudCollection {
 
 		if(!empty($hash)) {
 			$dbw = wfGetDB(DB_MASTER, array(), $wgExternalDatawareDB);
-			$row = $dbw->selectRow( 'magcloud_collection', array( 'mco_articles', 'mco_cover' ), array( 'mco_hash' => $hash), __METHOD__ );
+			$row = $dbw->selectRow( 'magcloud_collection', array( 'mco_articles', 'mco_cover', 'mco_publish' ), array( 'mco_hash' => $hash), __METHOD__ );
 
 			if(is_object($row)) {
 				$this->storeSessionData('articles', unserialize($row->mco_articles));
 				$this->storeSessionData('coverData', unserialize($row->mco_cover));
 				$this->storeSessionData('hash', $hash);
+				$this->storeSessionData('publishData', unserialize($row->mco_publish));
 			}
 		}
 	}
@@ -310,5 +314,30 @@ class MagCloudCollection {
 			$sessionData = json_encode($_SESSION[$this->sessionKey]);
 			wfDebug("{$method}: '{$this->sessionKey}' => {$sessionData}\n");
 		}
+	}
+
+	public function setPublishData($key, $value) {
+		$data = $this->readSessionData("publishData");
+		if (empty($data) || !is_array($data)) $data = array();
+
+		$data[$key] = $value;
+
+		$this->storeSessionData("publishData", $data);
+		$this->save();
+	}
+
+	public function getPublishData($key) {
+		$value = null;
+
+		$data = $this->readSessionData("publishData");
+		if (empty($data) || !is_array($data)) $data = array();
+
+		if (array_key_exists($key, $data)) $value = $data[$key];
+
+		return $value;
+	}
+
+	public function getRawPublishData() {
+		return $this->readSessionData("publishData");
 	}
 }

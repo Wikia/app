@@ -401,7 +401,33 @@ SpecialMagCloud.nextPagePreview = function() {
 	});
 }
 
+SpecialMagCloud.publish2_data = null;
+SpecialMagCloud.publish2_node = null;
+SpecialMagCloud.publish2 = function(data) {
+	var node = SpecialMagCloud.publish2_node;
+	if (data.msg) {
+		node.html(data.msg);
+	}
+
+	if (data.continue) {
+		SpecialMagCloud.publish2_data["state"] = data.state;
+		MagCloud.ajax("publish2", SpecialMagCloud.publish2_data, SpecialMagCloud.publish2);
+	} else {
+		// hide throbber
+		node.css("background", "none");
+
+		if (data.issue) {
+			window.location.href = "http://magcloud.com/browse/Issue/" + data.issue;
+		}
+	}
+}
+
 SpecialMagCloud.publish = function(hash, timestamp, token, node) {
+	SpecialMagCloud.publish2_data = {hash: hash, timestamp: timestamp, token: token};
+	SpecialMagCloud.publish2_node =  node;
+	SpecialMagCloud.publish2({state: "initialize", continue: true});
+	return;
+
 	// send AJAX request to publish PDF
 	MagCloud.ajax("publish", {hash: hash, timestamp: timestamp, token: token, breakme: (window.wgMagCloudPublishBreakMe ? 1 : 0)}, function(data) {
 		MagCloud.log(data);

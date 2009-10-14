@@ -83,7 +83,7 @@ class MagCloud {
 		// load CSS/JS for special page
 		if (self::isOnSpecialPageCollection()) {
 			$out->addExtensionStyle("{$wgExtensionsPath}/wikia/MagCloud/css/SpecialMagCloud.css?{$wgStyleVersion}");
-			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/MagCloud/js/SpecialMagCloud.js?{$wgStyleVersion}\"></script>\n");
+			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"/extensions/wikia/MagCloud/js/SpecialMagCloud.js?{$wgStyleVersion}." . mt_rand() . "\"></script>\n");
 
 			// load jQuery UI plugin for anons
 			global $wgUser;
@@ -401,14 +401,7 @@ class MagCloud {
 			return array("msg" => "No pdf. Please create it first.");
 		}
 
-		// get magazine title / subtitle
-		$collection = MagCloudCollection::getInstance();
-		$collection->restore($hash);
-
-		$coverData = $collection->getCoverData();
-
-		$magazineTitle = $coverData['title'];
-		$magazineSubtitle = $coverData['subtitle'];
+		// rt#24491 add page > 100 check FIXME
 
 		$tags = array();
 
@@ -543,6 +536,265 @@ class MagCloud {
 
 #echo $issueId;
 		return array('msg' => wfMsg('magcloud-publish-done'), 'issue' => intval($issueId));
+	}
+
+	static public function publish2($hash, $timestamp, $token) {
+		global $wgRequest;
+
+		$c = MagCloudCollection::getInstance();
+		$c->restore($hash);
+
+		$state = $wgRequest->getVal("state", null);
+		switch ($state) {
+			default:
+				$msg = "Error: Unknown state.";
+				$next_state = null;
+				$continue = false;
+
+				break;
+			case "initialize":
+
+		if (empty($hash) || empty($timestamp) || empty($token)) {
+			return array("msg" => "Not enough data.");
+		}
+
+		# c&p'ed from MagCloud::renderPdf(), factor it out FIXME
+		// generate PDF name
+		global $wgCityId;
+		$fname = "{$wgCityId}-{$hash}-{$timestamp}.pdf";
+
+		global $wgMagCloudUploadDirectory;
+		$pdf = "{$wgMagCloudUploadDirectory}/pdf/{$fname}";
+
+		if (!file_exists($pdf)) {
+			return array("msg" => "No pdf. Please create it first.");
+		}
+
+				$c->setPublishData("pdf", $pdf);
+
+		// rt#24491 add page > 100 check FIXME
+
+		$tags = array();
+
+		global $wgCityId;
+		$cat = WikiFactory::getCategory($wgCityId);
+		if (is_array($cat)) list($cat_id, $cat_name) = $cat;
+		if (!empty($cat_name)) $tags[] = $cat_name;
+
+		global $wgSitename;
+		$tags[] = $wgSitename;
+
+				$msg = "Data initialized...";
+				$next_state = "login";
+				$continue = true;
+
+				break;
+			case "login":
+
+#echo "<pre>";
+#$d = fopen("/tmp/curl.log", "w");
+
+		$res = MagCloudApi::LoginAs($token);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'login', 'code' => $res->code);
+		}
+
+		$username   = $res->user->username;
+		$authTicket = $res->authTicket;
+
+				$c->setPublishData("username",   "{$username}");
+				$c->setPublishData("authTicket", "{$authTicket}");
+
+				$msg = "User logged in...";
+				$next_state = "publication";
+				$continue = true;
+
+				break;
+			case "publication":
+
+				$username   = $c->getPublishData("username");
+				$authTicket = $c->getPublishData("authTicket");
+
+		$res = MagCloudApi::getPublications($authTicket, $username);
+#print_r($res); echo "\n";
+
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'getPublications', 'code' => $res->code);
+		}
+
+		$publicationId = 0;
+
+		// FIXME test if no publication!
+		if (!empty($res->publication)) {
+			foreach ($res->publication as $r) {
+				if (MagCloudApi::PUB_NAME == "{$r->name}") {
+#print_r(array("r->name" => $r->name, "r->id" => $r->id)); echo "\n";
+					$publicationId = $r->id;
+					break;
+				}
+			}
+		}
+#print_r(array("publicationId" => $publicationId)); echo "\n";
+
+		if (empty($publicationId)) {
+
+		$res = MagCloudApi::Publication($authTicket);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'publication', 'code' => $res->code);
+		}
+
+		$publicationId = $res->id;
+
+		}
+
+				$c->setPublishData("publicationId", "{$publicationId}");
+
+				$msg = "Publication stage completed...";
+				$next_state = "issue";
+				$continue = true;
+
+				break;
+			case "issue":
+
+				$authTicket    = $c->getPublishData("authTicket");
+				$publicationId = $c->getPublishData("publicationId");
+
+		// FIXME skip this step for new publication
+		$res = MagCloudApi::getIssues($authTicket, $publicationId);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'getIssues', 'code' => $res->code);
+		}
+
+/*
+		// get magazine title / subtitle
+		$collection = MagCloudCollection::getInstance();
+		$collection->restore($hash);
+
+		$coverData = $collection->getCoverData();
+*/
+		$coverData = $c->getCoverData();
+
+		$magazineTitle = $coverData['title'];
+		$magazineSubtitle = $coverData['subtitle'];
+
+		$title_i = 0;
+		// FIXME test if no issue!
+		if (!empty($res->issue)) {
+			foreach ($res->issue as $r) {
+				if (preg_match("/^{$magazineTitle}(?: \(([0-9]+)\))?$/", "{$r->name}", $match)) {
+#print_r(array("r->name" => $r->name, "match" => $match)); echo "\n";
+					if (empty($match[1])) $match[1] = 1;
+					if ($title_i < $match[1]) $title_i = $match[1];
+				}
+			}
+		}
+
+		if (!empty($title_i)) $magazineTitle .= " (" . ++$title_i . ")";
+
+		$res = MagCloudApi::Issue($authTicket, $publicationId, $magazineTitle, $magazineSubtitle);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'issue', 'code' => $res->code);
+		}
+
+		$issueId = $res->id;
+
+				$c->setPublishData("issueId", "{$issueId}");
+
+				$msg = "Issue stage completed...";
+				$next_state = "upload";
+				$continue = true;
+
+				break;
+			case "upload":
+
+				$authTicket = $c->getPublishData("authTicket");
+				$issueId    = $c->getPublishData("issueId");
+				$pdf        = $c->getPublishData("pdf");
+
+		$iteration = 3;
+		do {
+			sleep(3);
+
+		$res = MagCloudApi::IssueUpload($authTicket, $issueId, $pdf);
+#print_r($res); echo "\n";
+
+		} while (--$iteration && empty($res->code));
+
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'issueUpload', 'code' => $res->code);
+		}
+
+		$uploadJobId = $res->uploadJobId;
+
+				$c->setPublishData("uploadJobId", "{$uploadJobId}");
+
+				$msg = "Upload completed...";
+				$next_state = "processing";
+				$continue = true;
+
+				break;
+			case "processing":
+
+				$authTicket  = $c->getPublishData("authTicket");
+				$uploadJobId = $c->getPublishData("uploadJobId");
+
+		$iteration = 20; // prevent infinite loop
+		do {
+			sleep(3);
+
+			$res = MagCloudApi::UploadStatus($authTicket, $uploadJobId);
+#print_r($res); echo "\n";
+			if (!empty($res->code)) {
+				return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'UploadStatus', 'code' => $res->code);
+			}
+
+			$processingFinished = ("{$res->processingFinished}" == "True") ? true : false;
+			$rasterizationFinished = ("{$res->rasterizationFinished}" == "True") ? true : false;
+		} while (--$iteration && !($processingFinished && $rasterizationFinished));
+
+		if (!$processingFinished) {
+			return array("msg" => "Remote backend processing not finished in allotted time.");
+		}
+# Don't treat it as fatal
+#		if (!$rasterizationFinished) {
+#			return array("msg" => "Remote backend rasterization not finished in allotted time.");
+#		}
+
+				$msg = "Processing completed...";
+				$next_state = "publish";
+				$continue = true;
+
+				break;
+			case "publish":
+
+				$authTicket = $c->getPublishData("authTicket");
+				$issueId    = $c->getPublishData("issueId");
+
+		$res = MagCloudApi::IssuePublish($authTicket, $issueId);
+#print_r($res); echo "\n";
+		if (!empty($res->code)) {
+			return array("msg" => "Error {$res->code}: {$res->message}.", 'step' => 'issuePublish', 'code' => $res->code);
+		}
+
+#fclose($d);
+#echo "</pre>";
+#exit;
+
+#echo $issueId;
+		return array('msg' => wfMsg('magcloud-publish-done'), 'issue' => intval($issueId));
+
+				$msg = "All done. Check your issue at http://magcloud.com/browse/Issue/{$issueId}";
+				$next_state = null;
+				$continue = false;
+
+				break;
+		}
+
+		return array("msg" => $msg, "state" => $next_state, "continue" => $continue);
 	}
 
 	/*
