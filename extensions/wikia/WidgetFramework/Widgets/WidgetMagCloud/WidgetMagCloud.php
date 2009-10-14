@@ -32,10 +32,10 @@ function WidgetMagCloud($id, $params) {
 	}
 
 	// check user rights (for test period only!)
-	if(!$wgUser->isAllowed('magcloud')) {
-		wfProfileOut(__METHOD__);
-		return '';
-	}
+	//if(!$wgUser->isAllowed('magcloud')) {
+	//	wfProfileOut(__METHOD__);
+	//	return '';
+	//}
 
 	// load i18n (messages for title and description of the widget)
 	wfLoadExtensionMessages('MagCloud');
