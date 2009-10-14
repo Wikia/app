@@ -122,19 +122,24 @@ class UserMailer {
 		if(!empty($wgReportMailViaStomp)) {
 			wfProfileIn(__METHOD__ . '-stomp');
 			global $wgStompServer, $wgStompUser, $wgStompPassword, $wgCityId;
-			$stomp = new Stomp($wgStompServer);
-			$stomp->connect($wgStompUser, $wgStompPassword);
-			$stomp->sync = false;
-			$key = 'wikia.email.' . $category;
-			$count = is_array($to) ? count($to) : count(explode("\n", $to));
-			$stomp->send($key,
-				Wikia::json_encode(array(
-					'category' => $category,
-					'wikiID' => $wgCityId,
-					'count' => $count
-				)),
-				array('exchange' => 'amq.topic', 'bytes_message' => 1)
-			);
+			try {
+				$stomp = new Stomp($wgStompServer);
+				$stomp->connect($wgStompUser, $wgStompPassword);
+				$stomp->sync = false;
+				$key = 'wikia.email.' . $category;
+				$count = is_array($to) ? count($to) : count(explode("\n", $to));
+				$stomp->send($key,
+					Wikia::json_encode(array(
+						'category' => $category,
+						'wikiID' => $wgCityId,
+						'count' => $count
+					)),
+					array('exchange' => 'amq.topic', 'bytes_message' => 1)
+				);
+			}
+			catch( Stomp_Exception $e ) {
+				Wikia::log( __METHOD__, 'stomp_exception', $e->getMessage() );
+			}
 			wfProfileOut(__METHOD__ . '-stomp');
 		}
 		/* Wikia change end */
