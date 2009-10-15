@@ -27,6 +27,7 @@ $wgSpecialPages['WikiaCollection'] = 'WikiaCollection';
 $wgExtensionMessagesFiles['MagCloud'] = $dir.'MagCloud.i18n.php';
 
 // hooks
+$wgHooks['MakeGlobalVariablesScript'][] = 'MagCloud::addVar';
 $wgHooks['BeforePageDisplay'][] = 'MagCloud::beforePageDisplay';
 $wgHooks['GetHTMLAfterBody'][] = 'MagCloud::injectToolbar';
 $wgHooks['MakeGlobalVariablesScript'][] = 'MagCloud::makeGlobalVariablesScript';
