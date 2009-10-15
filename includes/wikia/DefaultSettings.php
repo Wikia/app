@@ -35,6 +35,7 @@ $wgCityId = null;
  */
 require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
+require_once ( $IP."/includes/wikia/Wikia.php" );
 
 global $wgDBname;
 if($wgDBname != 'uncyclo') {
@@ -51,7 +52,7 @@ global $wgAutoloadClasses;
  */
 $wgAutoloadClasses["EasyTemplate"]  =  $GLOBALS["IP"]."/includes/wikia/EasyTemplate.php";
 $wgAutoloadClasses["GlobalTitle"]  =  $GLOBALS["IP"]."/includes/wikia/GlobalTitle.php";
-$wgAutoloadClasses["Wikia"] = "includes/wikia/Wikia.php";
+#$wgAutoloadClasses["Wikia"] = "includes/wikia/Wikia.php";
 $wgAutoloadClasses["WikiFactory"] = $GLOBALS["IP"]."/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses["WikiMover"] = $GLOBALS["IP"]."/extensions/wikia/WikiFactory/Mover/WikiMover.php";
 $wgAutoloadClasses["WikiFactoryHub"] = $GLOBALS["IP"]."/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";;

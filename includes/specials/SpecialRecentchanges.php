@@ -690,6 +690,7 @@ class SpecialRecentChanges extends SpecialPage {
 			$links[] = wfMsgHtml( 'rcshowhidepatr', $patrLink );
 		$links[] = wfMsgHtml( 'rcshowhidemine', $myselfLink );
 		$links[] = wfMsgHtml( 'rcshowhideenhanced', $enhancedLink );
+		wfRunHooks( 'SpecialRecentChangesLinks', array( $this, &$links, &$defaults, &$nondefaults ) );
 		$hl = $wgLang->pipeList( $links );
 
 		// show from this onward link

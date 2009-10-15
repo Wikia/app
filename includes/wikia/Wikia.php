@@ -8,6 +8,11 @@
  * @version: $Id: Classes.php 6127 2007-10-11 11:10:32Z eloy $
  */
 
+/*
+ * hooks
+ */
+$wgHooks['SpecialRecentChangesLinks'][] = "Wikia::addRecentChangesLinks";
+$wgHooks['SpecialRecentChangesQuery'][] = "Wikia::makeRecentChangesQuery";
 
 /**
  * This class have only static methods so they can be used anywhere
@@ -583,4 +588,55 @@ class Wikia {
 		}
 		return $str;
 	}
+	
+	/**
+	 * parse additional option links in RC
+	 *
+	 * @author      Piotr Molski <moli@wikia-inc.com>
+	 * @version     1.0.0
+	 * @param       RC		 RC - RC object	
+	 * @param       Array    links
+	 * @param       Array    options - default options
+	 * @param       Array    nondefaults - request options
+	 */
+	static public function addRecentChangesLinks( $RC, &$links, &$defaults, &$nondefaults ) {
+		global $wgRequest;
+		
+		$showhide = array( wfMsg( 'show' ), wfMsg( 'hide' ) );
+		if ( !is_array($links) ) {
+			$links = array();
+		}
+		if ( !isset($defaults['hidelogs']) ) {
+			$defaults['hidelogs'] = "";
+		}
+		$nondefaults['hidelogs'] = $wgRequest->getVal( 'hidelogs', 0 );
+
+		$options = $nondefaults + $defaults;
+	
+		$hidelogslink = $RC->makeOptionsLink( $showhide[1-$options['hidelogs']],
+			array( 'hidelogs' => 1-$options['hidelogs'] ), $nondefaults);
+		$links[] = wfMsgHtml( 'rcshowhidelogs', $hidelogslink );
+
+		return true;
+	}
+	
+	/**
+	 * make query with additional options
+	 *
+	 * @author      Piotr Molski <moli@wikia-inc.com>
+	 * @version     1.0.0
+	 * @param       Array    $conds - where conditions in SQL query
+	 * @param       Array    $tables - tables used in SQL query
+	 * @param       Array    $join_conds - joins in SQL query
+	 * @param       FormOptions    $opts - selected options
+	 */
+	static public function makeRecentChangesQuery ( &$conds, &$tables, &$join_conds, $opts ) {
+		global $wgRequest;
+		
+		if ( $wgRequest->getVal( 'hidelogs', 0 ) > 0 ) {
+			$conds[] = 'rc_logid = 0';
+		} 
+		return true;
+	}
+	
 }
