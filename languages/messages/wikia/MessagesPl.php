@@ -145,4 +145,7 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 'footer_9' => 'Oceń ten artykuł',
 #'footer_10' => 'Share with $1',
 'addnewtalksection-link' => 'Dodaj nowy wątek.',
+
+# Wikia.php
+'rcshowhidelogs' => '$1 logi',
 ) );
