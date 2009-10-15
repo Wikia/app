@@ -133,7 +133,7 @@ die;
 
 function getDynamicRobots($bot=''){
 	global $wgOut, $wgCat, $wgLanguageNames, $wgContLang;
-	
+
 if($bot == 'goog'){
 	$r = "\n";
 	$r .= "User-agent: Googlebot\n";
@@ -169,65 +169,70 @@ if($bot == 'goog'){
 	$r .= "Disallow: /*action=delete*\n";
 	$r .= "Disallow: /*action=watch*\n";
 
-}		
+}
 
 	$lang = new Language();
-		
+
 	//process english first
 
 	$code = $wgContLang->getCode();
-	
+
 	if( trim( $code ) != ''){
 		if($code!='en'){
-			$r .= getLangSpecificNamespace( $lang, $code, $bot );				
+			$r .= getLangSpecificNamespace( $lang, $code, $bot );
 		}else{
-			$r .= getLangSpecificNamespace( $lang, "en", $bot );	
+			$r .= getLangSpecificNamespace( $lang, "en", $bot );
 		}
 	}else{
-		$r .= getLangSpecificNamespace( $lang, "en", $bot );	
+		$r .= getLangSpecificNamespace( $lang, "en", $bot );
 	}
-	
+
   return $r;
 }
 
 function getSitemapUrl(){
-	$r = '';	
+	$r = '';
 	$hostel = explode('.',$_SERVER['SERVER_NAME']);
 	//delete tdlportion
 	unset($hostel[count($hostel)-1]);
 	unset($hostel[count($hostel)-1]);
 	$r .= "# sitemap\n";
-	$r .= 'Sitemap: http://' . $_SERVER['SERVER_NAME'] . '/' . "sitemap-index-" . implode('',$hostel) . ".xml"; 
+	$r .= 'Sitemap: http://' . $_SERVER['SERVER_NAME'] . '/' . "sitemap-index-" . implode('',$hostel) . ".xml";
 
 	return $r;
 }
 
 function getLangSpecificNamespace( &$lang, $code, $bot='' ){
    global $wgSpecialPages;
-  
-   $r = '';	
-   
+
+   $r = '';
+
    $rs = $lang->getLocalisationArray( $code );
    $ns = $rs['namespaceNames'];
-  
+
   if($bot == 'goog'){
    $r .= "# " . $code . "\n" ;
    $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+   $r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
    $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
    $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
    $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
    $r .= "# " . $code . "\n" ;
    $r .= 'Noindex: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+   $r .= 'Noindex: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
    $r .= 'Noindex: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
    $r .= 'Noindex: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+   $r .= 'Noindex: /' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
    $r .= 'Noindex: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
  }else{
    $r .= "# " . $code . "\n" ;
    $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
+   $r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
    $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
    $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
-   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";	
- }	
+   $r .= 'Disallow: /' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+   $r .= 'Disallow: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+ }
   return $r;
 }
 
@@ -236,7 +241,7 @@ function oldrobots(){
 /**
  * rewrite /robots.txt to proper file
  * eloy@wikia.com
- */ 
+ */
 $sBasePath = "/images/wikia_robots/";
 $sFallback = "/images/wikia_robots/www.wikia.com.robots.txt";
 
@@ -258,7 +263,7 @@ if (!empty($_SERVER['SERVER_NAME'])) {
 	if (!empty($aExceptions[$sDomain])) {
 		$sDomain = $aExceptions[$sDomain];
 	}
-	$sRobots = $sBasePath.$sDomain.".robots.txt";	
+	$sRobots = $sBasePath.$sDomain.".robots.txt";
 }
 
 header("Content-type: text/plain");
