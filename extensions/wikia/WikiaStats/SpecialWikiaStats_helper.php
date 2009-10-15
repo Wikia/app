@@ -1155,6 +1155,33 @@ class WikiaGenericStats {
 		return $stats_date;
 	}
 
+	static public function getMinDateStatisticGenerate()
+	{
+		global $wgExternalStatsDB, $wgMemc;
+
+		$memkey = 'wikiastatsminstatsdate';
+		$stats_date = "";
+		#---
+		if (self::USE_MEMC) $stats_date = $wgMemc->get($memkey);
+		if (empty($stats_date)) {
+			$dbs =& wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
+			#---
+			if ( !is_null($dbs) ) {
+				$sql = "SELECT min(unix_timestamp(cw_timestamp)) as date FROM `city_stats_full` WHERE cw_timestamp >= date_format(now(), '%Y-%m-%d') ";
+				$res = $dbs->query($sql);
+				$row = $dbs->fetchObject( $res );
+				$stats_date = $row->date;
+				$dbs->freeResult( $res );
+			}
+			if (empty($stats_date)) {
+				$stats_date = false;
+			}
+			if (self::USE_MEMC) $wgMemc->set($memkey, $stats_date, 60*60);
+		}
+
+		return $stats_date;
+	}
+
 
 	public function getColumnStats($column, $all = 0, $keys = '')
 	{
@@ -1358,6 +1385,8 @@ class WikiaGenericStats {
 			#---
 			$cityInfo = WikiFactory::getWikiByID( $city_id );
 			$stats_date = self::getDateStatisticGenerate($city_id);
+		} else {
+			$stats_date = self::getMinDateStatisticGenerate();
 		}
 
 		$cats = array();

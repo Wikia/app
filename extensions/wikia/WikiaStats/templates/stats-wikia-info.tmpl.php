@@ -50,6 +50,6 @@ $cityUrl = (is_object($cityInfo) && $cityId > 0) ? "<a target=\"new\" href=\"".$
 </table>
 </div>
 <div class="clear" style="font-size:7.5pt;height:5px;float:right;">
-        <?=wfMsg("wikiastats_date_of_generate", $wgLang->timeanddate( wfTimestamp( TS_MW, $today_day ), true ));?>
+        <?=wfMsg("wikiastats_date_of_generate", (!empty($today_day)) ? $wgLang->timeanddate( wfTimestamp( TS_MW, $today_day ), true ) : " - " );?>
 </div>
 </fieldset>
