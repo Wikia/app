@@ -2,6 +2,11 @@
 
 class MagCloud {
 
+	static public function addVar($vars) {
+		$vars['wgEnableMagCloudExt'] = true;
+		return true;
+	}
+
 	/*
 	 * Read current toolbar state and inject it into HTML of the page
 	 *
