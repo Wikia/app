@@ -80,7 +80,7 @@ class SolrSearchSet extends SearchResultSet {
 				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views', // fields we want to fetch back
 				'qf' => $queryFields,
 				'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
-				'bq' => '(*:* -html:($q))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
+				'bq' => '(*:* -html:(' . $query . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
 				'qt' => 'dismax',
 				'pf' => '', // override defaults
 				'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
