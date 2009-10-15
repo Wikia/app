@@ -60,4 +60,13 @@ If you're stuck for inspiration, check out the examples below!",
 	'magcloud-publish-status' => 'Now uploading your magazine to MagCloud...',
 	'magcloud-publish-error' => 'We encountered an error while trying to send your magazine to MagCloud - we logged it to try and figure out what happened. Best try again later - hopefully we\'ll have figured out the problem. Please accept our apologies!',
 	'magcloud-publish-done' => 'All done! Redirecting you to MagCloud...',
+
+	'magcloud-publish-status' => "Great! We're going to pipe your magazine over.",
+	'magcloud-publish-ajax-initialize' => "We're logging into MagCloud...",
+	'magcloud-publish-ajax-login' => "...now setting up the publication...",
+	'magcloud-publish-ajax-publication' => "...setting up the issue...",
+	'magcloud-publish-ajax-issue' => " ...just finishing up the upload...",
+	'magcloud-publish-ajax-upload' => "...and tidying up, like our parents told us to...",
+	'magcloud-publish-ajax-processing' => "...now where is the big red PUBLISH button...",
+	'magcloud-publish-done' => "...and we're done! Redirecting to MagCloud...",
 );

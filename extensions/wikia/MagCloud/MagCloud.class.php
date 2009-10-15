@@ -589,7 +589,7 @@ class MagCloud {
 		global $wgSitename;
 		$tags[] = $wgSitename;
 
-				$msg = "Data initialized...";
+				$msg = wfMsg("magcloud-publish-ajax-{$state}");
 				$next_state = "login";
 				$continue = true;
 
@@ -611,7 +611,7 @@ class MagCloud {
 				$c->setPublishData("username",   "{$username}");
 				$c->setPublishData("authTicket", "{$authTicket}");
 
-				$msg = "User logged in...";
+				$msg = wfMsg("magcloud-publish-ajax-{$state}");
 				$next_state = "publication";
 				$continue = true;
 
@@ -656,7 +656,7 @@ class MagCloud {
 
 				$c->setPublishData("publicationId", "{$publicationId}");
 
-				$msg = "Publication stage completed...";
+				$msg = wfMsg("magcloud-publish-ajax-{$state}");
 				$next_state = "issue";
 				$continue = true;
 
@@ -709,7 +709,7 @@ class MagCloud {
 
 				$c->setPublishData("issueId", "{$issueId}");
 
-				$msg = "Issue stage completed...";
+				$msg = wfMsg("magcloud-publish-ajax-{$state}");
 				$next_state = "upload";
 				$continue = true;
 
@@ -737,7 +737,7 @@ class MagCloud {
 
 				$c->setPublishData("uploadJobId", "{$uploadJobId}");
 
-				$msg = "Upload completed...";
+				$msg = wfMsg("magcloud-publish-ajax-{$state}");
 				$next_state = "processing";
 				$continue = true;
 
@@ -769,7 +769,7 @@ class MagCloud {
 #			return array("msg" => "Remote backend rasterization not finished in allotted time.");
 #		}
 
-				$msg = "Processing completed...";
+				$msg = wfMsg("magcloud-publish-ajax-{$state}");
 				$next_state = "publish";
 				$continue = true;
 
