@@ -582,6 +582,7 @@ CREATE TABLE IF NOT EXISTS `garbage_collector` (
   `gc_id` int(11) NOT NULL auto_increment,
   `gc_filename` varchar(285) character set latin1 collate latin1_bin NOT NULL default '',
   `gc_timestamp` varchar(14) character set latin1 collate latin1_bin NOT NULL default '',
+  `gc_wiki_id` int(9) NOT NULL,
   PRIMARY KEY  (`gc_id`),
   KEY `gc_timestamp` (`gc_timestamp`)
 );
