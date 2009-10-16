@@ -95,7 +95,7 @@ function ActionPanelMouseover(e) {
 				function actionWait(){
 					jQuery( ".actionPanelError" ).remove();
 					var spinner = document.createElement( "img" );
-					spinner.src = stylepath + "/common/images/spinner.gif";
+					spinner.src = stylepath + "/common/images/ajax.gif";
 					spinner.id = "action-panel-spinner";
 					jQuery( ".questionhovermenu" ).append(spinner);
 				}
