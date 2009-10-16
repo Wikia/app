@@ -35,6 +35,8 @@ MagCloud.openIntroPopup = function() {
 
 			// click on "Load a saved magazine" will show popup with list of magazines
 			$('#MagCloudIntroPopupLoad').click(function() {
+				MagCloud.track('/intro-load');
+
 				MagCloud.openLoadMagazinePopup();
 			});
 
@@ -44,6 +46,10 @@ MagCloud.openIntroPopup = function() {
 				MagCloud.hideToolbar();
 
 				$('#MagCloudIntroPopupWrapper').closeModal();
+			});
+
+			$('#MagCloudIntroPopupPreviews').click(function() {
+				MagCloud.track('/intro-previews');
 			});
 
 			// show popup
@@ -67,20 +73,26 @@ MagCloud.openLoadMagazinePopup = function() {
 	// fetch and show popup
 	$().getModal(wgScript + '?action=ajax&rs=MagCloudAjax&method=renderSavedMagazines', false, {
 		callback: function() {
+			$('#MagCloudSavedMagazinesList input, #MagCloudSavedMagazinesList h3').click(function() {
+				MagCloud.track('/loadMagazine-list');
+			});
+
 			// click on "Ok" will load chosen magazine
 			$('#MagCloudLoadMagazine').click(function() {
+				MagCloud.track('/loadMagazine-ok');
+
 				// which magazine has been chosen?
 				var magazineHash = $('#MagCloudSavedMagazinesList').find('input[checked]').attr('rel');
 
 				if (magazineHash) {
-					MagCloud.track('/loadMagazine-ok');
-
 					// close both popups and keep toolbar shown
 					$('#MagCloudSavedMagazinesWrapper').closeModal();
 					$('#MagCloudIntroPopupWrapper').closeModal();
 
 					// remove popup overlay mask
 					$('#positioned_elements .blackout').remove();
+
+					MagCloud.track('/loadMagazine-ok-redirecting');
 
 					// load magazine
 					MagCloud.log('loading chosen magazine (' + magazineHash  + ')');
@@ -220,6 +232,8 @@ MagCloud.saveCollection = function() {
 		$('#MagCloudDiscardMagazineButtons').html('<a class="wikia_button"><span>' + data.ok + '</span></a>');
 
 		$('#MagCloudDiscardMagazineButtons').find('a').click(function() {
+			MagCloud.track('/discardMagazine/save-ok');
+
 			$('#MagCloudDiscardMagazineWrapper').closeModal();
 			MagCloud.doHideToolbar();
 		});

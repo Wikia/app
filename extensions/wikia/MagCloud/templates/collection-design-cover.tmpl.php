@@ -39,9 +39,9 @@ foreach($themes as $theme => $colors) {
 	$id = 'MagCloudCoverEditorTheme' . ucfirst(str_replace('_', '', $theme));
 	$display = ucwords(str_replace('_', ' ', $theme));
 ?>
-			<td><input type="radio" name="MagCloudCoverEditorTheme" id="<?= $id ?>" rel="<?= $theme ?>"<?= ($selectedTheme == $theme ? ' checked="checked"' : '') ?> /><label for="<?= $id ?>"><?= $display ?></label></td>
+			<td><input type="radio" name="MagCloudCoverEditorTheme" id="<?= $id ?>" rel="<?= $theme ?>"<?= ($selectedTheme == $theme ? ' checked="checked"' : '') ?> class="MagCloudCoverEditorThemeImg" /><label for="<?= $id ?>" class="MagCloudCoverEditorThemeLabel1"><?= $display ?></label></td>
 			<td class="MagCloudCoverEditorThemeColors">
-				<label for="<?= $id ?>">
+				<label for="<?= $id ?>" class="MagCloudCoverEditorThemeLabel2">
 					<span style="background-color: #<?= $colors[0] ?>">&nbsp;</span>
 					<span style="background-color: #<?= $colors[1] ?>">&nbsp;</span>
 					<span style="background-color: #<?= $colors[2] ?>">&nbsp;</span>
@@ -94,13 +94,13 @@ foreach($themes as $theme => $colors) {
 		<tr>
 <?php for($layout=1; $layout<=4; $layout++): ?>
 			<td><label for="MagCloudCoverEditorLayout<?= $layout ?>">
-				<img src="<?=  str_replace('$1', $layout, $layoutPreviewImage) ?>" width="130" height="160" alt="Layout #<?= $layout ?>" >
+				<img src="<?=  str_replace('$1', $layout, $layoutPreviewImage) ?>" width="130" height="160" alt="Layout #<?= $layout ?>" class="MagCloudCoverEditorLayoutImg" />
 			</label></td>
 <?php endfor; ?>
 		</tr>
 		<tr>
 <?php for($layout=1; $layout<=4; $layout++): ?>
-			<td><input type="radio" id="MagCloudCoverEditorLayout<?= $layout ?>" name="MagCloudCoverEditorLayout" rel="layout<?= $layout ?>"<?= ($selectedLayout == $layout ? ' checked="checked"' : '') ?> /></td>
+			<td><input type="radio" id="MagCloudCoverEditorLayout<?= $layout ?>" name="MagCloudCoverEditorLayout" rel="layout<?= $layout ?>"<?= ($selectedLayout == $layout ? ' checked="checked"' : '') ?> class="MagCloudCoverEditorLayoutInput" /></td>
 <?php endfor; ?>
 
 		</tr>
@@ -108,10 +108,10 @@ foreach($themes as $theme => $colors) {
 </div>
 
 <div id="SpecialMagCloudButtons" class="clearfix" style="margin-top: 30px; width: 680px">
-	<a class="wikia_button secondary_back" href="<?= htmlspecialchars($title->getLocalUrl()) ?>" style="float: left">
+	<a id="MagCloudBackToReview" class="wikia_button secondary_back" href="<?= htmlspecialchars($title->getLocalUrl()) ?>" style="float: left">
 		<span><?= wfMsg('magcloud-design-review-list'); ?></span>
 	</a>
-	<a class="wikia_button forward" href="<?= htmlspecialchars($title->getLocalUrl() . '/Preview') ?>" style="float: right">
+	<a id="MagCloudForwardToPreview" class="wikia_button forward" href="<?= htmlspecialchars($title->getLocalUrl() . '/Preview') ?>" style="float: right">
 		<span><?= wfMsg('magcloud-design-preview'); ?></span>
 	</a>
 </div>
@@ -121,14 +121,28 @@ foreach($themes as $theme => $colors) {
 	SpecialMagCloud.setupLayout($('#MagCloudCoverEditorLayout'));
 	SpecialMagCloud.connectTitleWithPreview();
 
-	$('#SpecialMagCloudButtons a').click(SpecialMagCloud.saveCoverDesign);
+	$('#MagCloudBackToReview').click(function() {
+		MagCloud.track('/design/backtoreview');
+
+		SpecialMagCloud.saveCoverDesign();
+	});
+	$('#MagCloudForwardToPreview').click(function() {
+		MagCloud.track('/design/forwardtopreview');
+
+		SpecialMagCloud.saveCoverDesign();
+	});
+
 
 	// image upload
 	$('#MagCloudCoverEditorImageNone').click(function() {
+		MagCloud.track('/design/image-no');
+
 		$('#MagCloudCoverPreviewImage').hide();
 	});
 
 	$('#MagCloudCoverEditorImageSmall').click(function() {
+		MagCloud.track('/design/image-yes');
+
 		$('#MagCloudCoverPreviewImage').show();
 	});
 
@@ -137,6 +151,8 @@ foreach($themes as $theme => $colors) {
 
 	// use WMU for image upload
 	$('#MagCloudCoverEditorImageUpload').click(function() {
+		MagCloud.track('/design/image-upload');
+
 		$('#WMU_div_c').css('display', 'block');
 		WMU_show();
 	});
@@ -177,6 +193,13 @@ foreach($themes as $theme => $colors) {
 		$('#WMU_div_c').css('display', 'none');
 		$('#ImageUploadSummary').find('input').click();
 	}
+
+	$('.MagCloudCoverEditorThemeImg, .MagCloudCoverEditorThemeLabel1, .MagCloudCoverEditorThemeLabel2').click(function() {
+		MagCloud.track('/design/colortheme');
+	});
+	$('.MagCloudCoverEditorLayoutImg, .MagCloudCoverEditorLayoutInput').click(function() {
+		MagCloud.track('/design/coverlayout');
+	});
 /*]]>*/</script>
 
 <!-- e:<?= __FILE__ ?> -->
