@@ -30,7 +30,7 @@ YE.onDOMReady(function () {
 		var logSteps = YD.get('awc-log');
 		var styleColor = (resType == 'OK' || resType == 'END') ? "green" : "red";
 		//var styleMsg = (resType == 'OK' || resType == 'END') ? '<?=wfMsg('autocreatewiki-done')?>' : '<?=wfMsg('autocreatewiki-error')?>';
-		var styleMsg = (resType == 'OK' || resType == 'END') ? '<img style="vertical-align:middle;" src="<?=$wgExtensionsPath?>/wikia/AutoCreateWiki/images/wait.gif?<?=$wgStyleVersion?>" width="12" height="12" />' : '<?=wfMsg('autocreatewiki-error')?>';
+		var styleMsg = (resType == 'OK' || resType == 'END') ? '<img style="vertical-align:middle;" src="<?=$wgStylePath?>/common/images/ajax.gif?<?=$wgStyleVersion?>" width="16" height="16" />' : '<?=wfMsg('autocreatewiki-error')?>';
 		var msgType = (resType != 'END') ? '&nbsp;&nbsp;<strong style="color:' + styleColor + '">' + styleMsg + '</strong>' : "";
 		var msg = ((resType == 'OK') ? waitMsg + "<br />" : "") + "<span style=\"vertical-align:middle;\">" + text + ((resType != '') ? msgType : "") + "</span>";
 		logSteps.innerHTML = msg;

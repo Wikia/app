@@ -157,7 +157,7 @@ function wkLCshowDetails(dbname, limit, offset)
 	var params = "";
 	if (div_details && username && dbname) {
 		params 	= "&rsargs[0]=" + dbname + "&rsargs[1]=" + username.value + "&rsargs[2]=" + limit + "&rsargs[3]=" + offset;
-		div_details.innerHTML="<img src=\"/extensions/wikia/SpecialMultipleLookup/images/ajax-loader.gif\" />";
+		div_details.innerHTML="<img src=\"/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = "/index.php?action=ajax&rs=axWMultiLookupUserActivityDetails" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, MultiLookupShowDetailsCallback);

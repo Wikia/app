@@ -59,7 +59,7 @@ if( ( $wgUser->isLoggedIn() ) && ( $wgUser->isAllowed( 'upload' ) && $wgEnableUp
 ?>
 			<input onkeydown="WMU_trySendQuery(event);" type="text" id="ImageQuery" />
 			<input onclick="WMU_trySendQuery(event);" type="button" value="<?= wfMsg('wmu-find-btn') ?>" />
-			<img src="<?= $wgStylePath; ?>/monaco/images/widget_loading.gif" id="ImageUploadProgress2" style="visibility: hidden;"/>
+			<img src="<?= $wgStylePath; ?>/common/images/ajax.gif" id="ImageUploadProgress2" style="visibility: hidden;"/>
 		</td>
 	</tr>
 </table>

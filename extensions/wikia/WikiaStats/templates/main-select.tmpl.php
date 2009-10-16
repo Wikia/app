@@ -116,7 +116,7 @@ function sortWikiaList(method) {
 }
 
 function sortWikiaPanelList(method) {
-	YAHOO.util.Dom.get("ws-div-scroll").innerHTML = "<div style=\"height:auto\"><center><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></center></div>";
+	YAHOO.util.Dom.get("ws-div-scroll").innerHTML = "<div style=\"height:auto\"><center><img src=\"/skins/common/images/ajax.gif\" border=\"0\"></center></div>";
 	var sort_div = document.getElementById( "ws-sort-panel" );
 	var text = "<?=addslashes(wfMsg('wikiastats_sort_list_alphabet'))?>";
 	var sort = (method == 1) ? 0 : 1;

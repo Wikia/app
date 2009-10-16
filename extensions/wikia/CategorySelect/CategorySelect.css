@@ -143,13 +143,13 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 }
 
 .csLoading {
-	background-image: url('http://images.wikia.com/common/skins/monaco/images/widget_loading.gif');
+	background-image: url('http://images.wikia.com/common/skins/common/images/ajax.gif');
 	background-repeat: no-repeat;
 	background-position: 99% 50%;
 }
 
 .csSaving {
-	background-image: url('http://images.wikia.com/common/skins/monaco/images/widget_loading.gif');
+	background-image: url('http://images.wikia.com/common/skins/common/images/ajax.gif');
 	background-repeat: no-repeat;
 	background-position: 99% 50%;
 }

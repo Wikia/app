@@ -135,7 +135,7 @@ body.widgetsAddingBlocked .add {
 .widget_loading
 {
     height: 30px;
-    background-image: url('http://images.wikia.com/common/skins/monaco/images/widget_loading.gif');
+    background-image: url('http://images.wikia.com/common/skins/common/images/ajax.gif');
     background-position: 50% 50%;
     background-repeat: no-repeat;
 }

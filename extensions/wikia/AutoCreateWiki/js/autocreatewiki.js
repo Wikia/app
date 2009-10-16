@@ -24,7 +24,7 @@ function allowAction(e) {
 }
 
 function setProgressImg(field) {
-	field.innerHTML = '<img src="' + stylepath + '/common/progress-wheel.gif" width="16" height="16" alt="Wait..." border="0" />';
+	field.innerHTML = '<img src="' + stylepath + '/common/images/ajax.gif" width="16" height="16" alt="Wait..." border="0" />';
 }
 
 function isTextCorrect(field) {

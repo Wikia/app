@@ -295,7 +295,7 @@
 }
 
 #SpecialMagCloudPreviews .SpecialMagCloudPreviewPage {
-	background: #b0b0b0 url('../images/preview-loading.gif') no-repeat 50% 50%;
+	background: #b0b0b0 url('http://images.wikia.com/common/skins/common/images/ajax.gif') no-repeat 50% 50%;
 	border: solid 1px #b0b0b0;
 	float: left;
 	height: 362px;
@@ -332,7 +332,7 @@
 }
 
 #SpecialMagCloudPublishStatus {
-	background: #fff url('../images/publish-loading.gif') no-repeat 15px 50%;
+	background: #fff url('http://images.wikia.com/common/skins/common/images/ajax.gif') no-repeat 15px 50%;
 	font-size: 0.9em;
 	line-height: 1.5em;
 	padding: 30px 60px !important;

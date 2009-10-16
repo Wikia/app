@@ -22,7 +22,7 @@ function XLSCancel() { YAHOO.util.Dom.get("ws-xls-div").innerHTML = ""; }
 function XLSShowMenu(city) { YAHOO.util.Dom.get("wk-stats-panel").style.display = (city == 0) ? "none" : "block"; YAHOO.util.Dom.get("ws-main-xls-stats").style.display = "block"; }
 function WikiaStatsGetInfo(panel, city) {
 	WikiaInfoCallback = { success: function( oResponse ) { YAHOO.util.Dom.get(panel).innerHTML = oResponse.responseText; }, failure: function( oResponse ) { YAHOO.util.Dom.get(panel).innerHTML = ""; } };
-	YAHOO.util.Dom.get(panel).innerHTML = "<div class=\"wk-progress-stats-panel\"><center><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></center></div>";
+	YAHOO.util.Dom.get(panel).innerHTML = "<div class=\"wk-progress-stats-panel\"><center><img src=\"/skins/common/images/ajax.gif\" border=\"0\"></center></div>";
 	var baseurl = wgScript + "?action=ajax&rs=axWStatisticsWikiaInfo&rsargs[0]=" + city;
 	YAHOO.util.Connect.asyncRequest( "GET", baseurl, WikiaInfoCallback);	
 };
@@ -31,7 +31,7 @@ function pageLoaderInit(text, btn_text) {
 	if (!YAHOO.pageloader.container.wait) {
 		YAHOO.pageloader.container.wait = new YAHOO.widget.Dialog("wait", {width:"350px",fixedcenter:true,close:true,draggable:false,zindex:99999,modal:false,visible:false,buttons : [ { text: btn_text, handler:function(){this.cancel(); if (window.stop || window.document.execCommand) { if (window.stop) window.stop(); else if (window.document && window.document.execCommand) window.document.execCommand('Stop');} }, isDefault:true }]});
 		YAHOO.pageloader.container.wait.setHeader(text);
-		YAHOO.pageloader.container.wait.setBody("<center><img src=\"/extensions/wikia/WikiaStats/images/progressbar.gif\"/></center>");
+		YAHOO.pageloader.container.wait.setBody("<center><img src=\"/skins/common/images/ajax.gif\"/></center>");
 		YAHOO.pageloader.container.wait.render(document.body);
 	}
 };
@@ -84,7 +84,7 @@ function showXLSCompareDialog(statistics, showHtml) {
 		YAHOO.util.Dom.get("compareStatsDialog_c").style.display = "block";
 		var city_list = document.getElementById( "ws-div-scroll" );
 		if (city_list.innerHTML == "") {
-			city_list.innerHTML = "<table width=\"100%\" height=\"100%\" align=\"center\"><tr><td width=\"100%\" align=\"center\"><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></td></tr></table>";
+			city_list.innerHTML = "<table width=\"100%\" height=\"100%\" align=\"center\"><tr><td width=\"100%\" align=\"center\"><img src=\"/skins/common/images/ajax.gif\" border=\"0\"></td></tr></table>";
 			YAHOO.util.Connect.asyncRequest( "GET", wgScript + "?action=ajax&rs=axWStatisticsWikiaList", CitiesListCallback);
 		}
 	}
@@ -159,7 +159,7 @@ function showWSSearchResult(value) {
 	};
 
 	if (search_div) {
-		search_div.innerHTML = "<div class=\"wk-progress-stats-panel\" style=\"height:164px\"><center><img src=\"/extensions/wikia/WikiaStats/images/ajax_indicators.gif\" border=\"0\"></center></div>";
+		search_div.innerHTML = "<div class=\"wk-progress-stats-panel\" style=\"height:164px\"><center><img src=\"/skins/common/images/ajax.gif\" border=\"0\"></center></div>";
 		hideSortUrl("ws-sort-link", "hidden");
 		YAHOO.util.Connect.asyncRequest( "GET", wgScript + "?action=ajax&rs=axWStatisticsSearchWikis" + param, SearchWSCallback);
 	}
@@ -255,7 +255,7 @@ function showWSSearchCompareResult(element, value) {
 		YAHOO.util.Dom.get("ws-search-input-panel-btn").innerHTML = "";
 	}
 	
-	YAHOO.util.Dom.get("ws-search-input-panel-btn").innerHTML = "<img src=\"/extensions/wikia/WikiaStats/images/ajax-loader-small.gif\" /></div>";
+	YAHOO.util.Dom.get("ws-search-input-panel-btn").innerHTML = "<img src=\"/skins/common/images/ajax.gif\" /></div>";
 	if (value != "") {
 		hideSortUrl("ws-sort-panel", "hidden");
 		setTimeout(searchText,100);
