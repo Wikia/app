@@ -1,4 +1,5 @@
 == Changes since 200910.2 ==
+* rt#24997: MagCloud, Analytics: MC clicktracking. (Nef)
 * rt#24917: WMU: missing gc_wiki_id column (Emil)
 * rt#24842: MagCloud: New button styling backported to old monaco. (Nef)
 * rt#24281: Ads: Unused var removed. (Nef)

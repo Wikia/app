@@ -38,6 +38,22 @@
 
 <script type="text/javascript">/*<![CDATA[*/
 	SpecialMagCloud.setupArticlesList($('#MagCloudArticlesList'));
-	$('#MagCloudOpenLoadMagazineDialog').click(MagCloud.openLoadMagazinePopup);
+	$('#MagCloudOpenLoadMagazineDialog').click(function() {
+		MagCloud.track('/review/loadmagazine');
+
+		MagCloud.openLoadMagazinePopup();
+	});
+	$('#MagCloudGoToMagazine').click(function() {
+		MagCloud.track('/review/designcover');
+	});
+	$('.MagCloudArticlesListGrab').click(function() {
+		MagCloud.track('/review/list-grab');
+	});
+	$('.MagCloudArticlesListLink').click(function() {
+		MagCloud.track('/review/list-link');
+	});
+	$('.MagCloudArticlesListRemove').click(function() {
+		MagCloud.track('/review/list-remove');
+	});
 /*]]>*/</script>
 <!-- e:<?= __FILE__ ?> -->

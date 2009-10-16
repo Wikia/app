@@ -21,11 +21,11 @@
 </div>
 
 <div id="SpecialMagCloudButtons" style="margin-left: auto; margin-right: auto; text-align: center; width: 550px">
-	<a class="wikia_button secondary_back" href="<?= htmlspecialchars($title->getLocalUrl() . '/Design_Cover') ?>" style="float: left">
+	<a id="MagCloudBackToDesign" class="wikia_button secondary_back" href="<?= htmlspecialchars($title->getLocalUrl() . '/Design_Cover') ?>" style="float: left">
 		<span><?= wfMsg('magcloud-preview-back-to-cover') ?></span>
 	</a>
 
-	<a class="wikia_button forward" href="https://magcloud.com/apps/authorizeask/<?= $publicApiKey ?>?ud=<?= $server ?>" style="float: right; visibility: hidden">
+	<a id="MagCloudForwardToPublish" class="wikia_button forward" href="https://magcloud.com/apps/authorizeask/<?= $publicApiKey ?>?ud=<?= $server ?>" style="float: right; visibility: hidden">
 		<span><?= wfMsg('magcloud-preview-publish') ?> &raquo;</span>
 	</a>
 
@@ -34,7 +34,24 @@
 	</a>
 </div>
 <script type="text/javascript">/*<![CDATA[*/
-	$('#MagCloudSaveMagazine').click(SpecialMagCloud.saveCollection);
+	$('#SpecialMagCloudPreviewPrev').click(function() {
+		MagCloud.track('/preview/arrow-prev');
+	});
+	$('#SpecialMagCloudPreviewNext').click(function() {
+		MagCloud.track('/preview/arrow-next');
+	});
+
+	$('#MagCloudBackToDesign').click(function() {
+		MagCloud.track('/preview/backtodesign');
+	});
+	$('#MagCloudForwardToPublish').click(function() {
+		MagCloud.track('/preview/forwardtopublish');
+	});
+	$('#MagCloudSaveMagazine').click(function() {
+		MagCloud.track('/preview/savemagazine');
+		
+		SpecialMagCloud.saveCollection();
+	});
 
 	// generate PDF and get preview of 1st and 2nd page
 	SpecialMagCloud.renderPdf('<?= $collectionHash ?>', <?= $collectionTimestamp ?>, $('#SpecialMagCloudPdfProcess'));
