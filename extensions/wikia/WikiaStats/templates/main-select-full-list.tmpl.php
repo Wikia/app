@@ -107,7 +107,7 @@ YAHOO.namespace("wkstatsxlsmenu.container");
                 xlmmenutext += "</div>";
 
                 xlmmenutext += "<div class=\"wk-progress-stats-panel\" id=\"wk-progress-stats-panel\">";
-                xlmmenutext += "<center><img src=\"/extensions/wikia/WikiaStats/images/progressbar.gif\" border=\"0\"></center>";
+                xlmmenutext += "<center><img src=\"/skins/common/images/ajax.gif\" border=\"0\"></center>";
                 xlmmenutext += "</div>";
 
                 xlmmenutext += "<div style=\"float:right;\">";
@@ -209,7 +209,7 @@ YE.addListener("ws-check-cities", "click", XLSClearCitiesList);
 	</div>
 	<div class="clear"></div>
 	<div class="wk-progress-compare-panel" id="wk-progress-compare-panel">
-		<center><img src="/extensions/wikia/WikiaStats/images/progressbar.gif" border="0"></center>
+		<center><img src="/skins/common/images/ajax.gif" border="0"></center>
 	</div>
 
 	</form>

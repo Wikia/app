@@ -7,7 +7,7 @@ __pagerCallback = {
 	failure: function( oResponse ) { wkBlogLoader.innerHTML = ""; } 
 };
 if (wkBlogLoader) {
-	wkBlogLoader.innerHTML = "<img src=\"http://images.wikia.com/common/skins/monaco/images/widget_loading.gif\">";
+	wkBlogLoader.innerHTML = "<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\">";
 	offset = parseInt(__offset) + parseInt(offset);
 	var params = "&rsargs[0]=" + wgArticleId + "&rsargs[1]=" + wgNamespaceNumber + "&rsargs[2]=" + offset;
 	var baseurl = wgScript + "?action=ajax&rs=BlogTemplateClass::axShowCurrentPage" + params;

@@ -266,7 +266,7 @@ function wkLUshowDetails(limit, offset, ord, desc)
 		params += "&rsargs[5]=" + ord;
 		params += "&rsargs[6]=" + desc;
 		//---
-		div_details.innerHTML="<img src=\"<?=$wgExtensionsPath?>/wikia/Listusers/images/ajax-loader-s.gif\" />";
+		div_details.innerHTML="<img src=\"<?=$wgStylePath?>/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=Listusers::axShowUsers" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, LocalUsersShowDetailsCallback);

@@ -16,7 +16,7 @@
 ?>
 	<tr id="VideoEmbedAdd">
 		<td>
-			<img src="<?= $wgStylePath; ?>/monaco/images/widget_loading.gif" id="VideoEmbedProgress2" style="visibility: hidden;"/>
+			<img src="<?= $wgStylePath; ?>/common/images/ajax.gif" id="VideoEmbedProgress2" style="visibility: hidden;"/>
 			<?php
 			if( !$wgUser->isAllowed( 'upload' ) ) {
 				if( !$wgUser->isLoggedIn() ) {

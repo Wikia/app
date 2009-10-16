@@ -78,7 +78,7 @@
 </div>
 <script>
 YAHOO.util.Event.onDOMReady(function() {
-	var loadImg = "<img src=\"/skins/monaco/images/widget_loading.gif\" />";
+	var loadImg = "<img src=\"/skins/common/images/ajax.gif\" />";
 	var divLoader = YAHOO.util.Dom.get("dt-loader");
 
 	__ShowDetailsCallback = {

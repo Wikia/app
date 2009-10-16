@@ -153,7 +153,7 @@ function wkDTshowDetails(limit, offset, ord, desc)
 	params += "&rsargs[2]=" + ord;
 	params += "&rsargs[3]=" + desc;
 	//---
-	jobsLoader.innerHTML = "<img src=\"/skins/monaco/images/widget_loading.gif\" />";
+	jobsLoader.innerHTML = "<img src=\"/skins/common/images/ajax.gif\" />";
 	//---
 	var baseurl = wgScript + "?action=ajax&rs=DaemonLoader::axJobsList" + params;
 	YAHOO.util.Connect.asyncRequest( "GET", baseurl, DTShowDetailsListCallback);
@@ -183,7 +183,7 @@ function removeJobTask(id) {
 		if (confirm('<?=wfMsg('daemonloader_removejobconfirm')?>')) {
 			var params = "&rsargs[0]=" + id;
 			//---
-			jobsLoader.innerHTML = "<img src=\"/skins/monaco/images/widget_loading.gif\" />";
+			jobsLoader.innerHTML = "<img src=\"/skins/common/images/ajax.gif\" />";
 			//---
 			var baseurl = wgScript + "?action=ajax&rs=DaemonLoader::axRemoveJobsList" + params;
 			YAHOO.util.Connect.asyncRequest( "GET", baseurl, DTRemoveJobCallback);
@@ -227,7 +227,7 @@ function changeJobTask(id) {
 	if (tabView) {
 		var params = "&rsargs[0]=" + id;
 		//---
-		jobsLoader.innerHTML = "<img src=\"/skins/monaco/images/widget_loading.gif\" />";
+		jobsLoader.innerHTML = "<img src=\"/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=DaemonLoader::axGetJobInfo" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, DTChangeJobCallback );

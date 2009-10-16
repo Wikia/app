@@ -100,7 +100,7 @@ endif;
 </div>
 </form>
 <script>
-var loadImg = "<img src=\"/skins/monaco/images/widget_loading.gif\" />";
+var loadImg = "<img src=\"/skins/common/images/ajax.gif\" />";
 var divCreatorLoader = YAHOO.util.Dom.get("dt-creator-loader");
 var divDaemonInfo = YAHOO.util.Dom.get("dt-daemon-info");
 var loadDiv = null;

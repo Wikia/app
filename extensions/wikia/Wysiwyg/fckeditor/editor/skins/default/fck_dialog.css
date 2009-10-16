@@ -257,7 +257,7 @@ body, .BackColor
 
 .throbber
 {
-	background-image: url('images/progress_dialog.gif');
+	background-image: url('http://images.wikia.com/common/skins/common/images/ajax.gif');
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	cursor: wait;

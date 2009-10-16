@@ -126,14 +126,14 @@
 	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png', sizingMethod='crop');
 }
 .VideoEmbedProgress {
-	background: url(../../../../skins/monaco/images/widget_loading.gif) no-repeat;
-	height: 11px;
-	width: 70px;
+	background: url(../../../../skins/common/images/ajax.gif) no-repeat;
+	height: 16px;
+	width: 16px;
 }
 #VideoEmbedProgress1 {
 	position: absolute;
-	left: 371px;
-	top: 9px;
+	left: 398px;
+	top: 5px;
 	display: none;
 }
 
