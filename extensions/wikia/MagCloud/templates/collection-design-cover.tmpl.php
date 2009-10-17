@@ -73,7 +73,7 @@ foreach($themes as $theme => $colors) {
 			<label for="MagCloudCoverEditorImageSmall">Insert an image</label>
 
 			<a id="MagCloudCoverEditorImageUpload" class="wikia_button">
-				<span><?= wfMsg('wmu-upload') ?></span>
+				<span><?= wfMsg('wmu-upload-btn') ?></span>
 			</a>
 
 			<span id="MagCloudCoverEditorImageInfo"><?= ($image != '' ? wfMsg('magcloud-design-image-selected', $image) : '') ?></span>
