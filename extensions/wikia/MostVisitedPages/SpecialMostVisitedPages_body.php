@@ -68,9 +68,22 @@ class MostvisitedpagesPage extends QueryPage {
 	public function getResult() { return $this->data; }
 
 	function getSQL() {
+		global $wgContentNamespaces, $wgEnableBlogArticles;
 		$dbr = wfGetDB( DB_SLAVE );
 		list( $page, $page_visited ) = $dbr->tableNamesN( 'page', 'page_visited' );
 		$namespaces = array( NS_MAIN, NS_USER, NS_TALK, NS_USER_TALK, NS_IMAGE, NS_IMAGE_TALK );
+		if ( !empty($wgContentNamespaces) && is_array($wgContentNamespaces) ) {
+			foreach ($wgContentNamespaces as $nspace) {
+				if ( !in_array($nspace, $namespaces) ) {
+					$namespaces[] = $nspace;
+				}
+			}
+		}
+		if ( !empty($wgEnableBlogArticles) ) {
+			if ( !in_array(NS_BLOG_ARTICLE, $namespaces) ) {
+				$namespaces[] = NS_BLOG_ARTICLE;
+			}			
+		}
 		$where = " page_id = article_id and page_namespace in ('".implode("','", $namespaces)."') ";
 		if (!empty($this->mArticle)) {
 			$where .= " and lower(page_title) like '%".htmlspecialchars(strtolower($this->mArticle))."%' ";
