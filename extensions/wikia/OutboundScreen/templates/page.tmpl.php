@@ -33,7 +33,7 @@
 	<body class="color2"<?php if($redirectDelay > 0): ?> onLoad="setTimeout(doRedirect, <?=($redirectDelay * 1000);?>)"<?php endif?>>
 		<?= $athenaInitStuff; ?>
 		<div>
-			<div id="pageTop" class="color1"><a href="<?= $url ?>" id="exitLink" rel="nofollow"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a></div>
+			<div id="pageTop" class="color1"><a href="<?= $url ?>" id="exitLink" rel="nofollow"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a>&nbsp;<?=wfMsgForContent('outbound-screen-login-text', array( $userloginTitle->getFullUrl('type=signup'), $userloginTitle->getFullUrl() ) );?></div>
 			<?=$adLayout;?>
 		</div>
 	</body>
