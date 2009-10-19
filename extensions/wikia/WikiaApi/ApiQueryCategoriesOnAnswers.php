@@ -27,6 +27,10 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 				if ($category == $from) {
 					if (is_array($to)) $to = $to[array_rand($to)];
 					$categoryTitle = Title::newFromText($to, NS_CATEGORY);
+
+		if ( is_null( $categoryTitle ) || $categoryTitle->getNamespace() != NS_CATEGORY )
+			$this->dieUsage("The category name you entered is not valid", 'invalidcategory');
+
 				}
 			}
 		}
@@ -39,12 +43,12 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 			$this->dieUsage("The coatitle parameter is required", 'notitle');
 		$categoryTitle = Title::newFromText($params['title'], NS_CATEGORY);
 
+		if ( is_null( $categoryTitle ) || $categoryTitle->getNamespace() != NS_CATEGORY )
+			$this->dieUsage("The category name you entered is not valid", 'invalidcategory');
+
 		// rt#24487: We need this code altered for a specific case. When the category = "foo",
 		// we would like this list to show only questions from a predefined list of categories.
 		$this->rt_24487_special_case(&$categoryTitle);
-
-		if ( is_null( $categoryTitle ) || $categoryTitle->getNamespace() != NS_CATEGORY )
-			$this->dieUsage("The category name you entered is not valid", 'invalidcategory');
 
 		$answeredTitle = Title::newFromText( ( 'no' == $params['answered'] ? $this->unanswered_category : $this->answered_category ), NS_CATEGORY );
 
