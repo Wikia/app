@@ -1,7 +1,8 @@
 == Changes since 200910.3 ==
-* 
+*
 
 == Changes since 200910.2 ==
+* rt#25020: MagCloud: Bugs preventing normal operation of the collection tool in IE7 and IE8 (Macbre)
 * rt#24933: Answers: Fixed fatal call to getDBkey in ApiQueryCategoriesOnAnswers. (Nef)
 * rt#25015: MagCloud, i18n: Upload msg fix. (Nef)
 * rt#24997: MagCloud, Analytics: MC clicktracking. (Nef)
@@ -12,7 +13,7 @@
 * rt#24867: MagCloud: Fixed setLastModified cache flag. (Nef)
 * rt#24871: don't show Stomp_Exception error (Emil)
 * rt#24796: Answers: Fixed api call returning category sort key instead of title. (Nef)
-* rt#24747: Proper escaping in WF code. (Nef) 
+* rt#24747: Proper escaping in WF code. (Nef)
 * rt#24489: Mainpage broken and problem can only be identified via category code view (Marooned)
 
 == Changes since 200910.1 ==
