@@ -115,6 +115,7 @@ class Outbound extends UnlistedSpecialPage {
 					'athenaInitStuff' => $athenaInitStuff,
 					'redirectDelay' => ( $noAutoRedirect ? 0 : $this->redirectDelay ),
 					'imagesPath' => $wgExtensionsPath . '/wikia/OutboundScreen/images',
+					'userloginTitle' => Title::newFromText( 'Special:Userlogin' ),
 					'adLayout' => $oTmpl->execute($adTemplate)
 				)
 		);
