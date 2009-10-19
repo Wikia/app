@@ -31,10 +31,13 @@ class DataFeedProvider {
 	}
 
 	public static function getVideoThumb($videoName) {
-		$videoObj = new VideoPage(Title::newFromText($videoName, NS_VIDEO));
-		$videoObj->load();
-		if($videoObj->getVideoId()) {
-			return array('name' => $videoName, 'html' => $videoObj->getThumbnailCode(self::VIDEO_THUMB_WIDTH, false), 'width' => self::VIDEO_THUMB_WIDTH, 'height' => round(self::VIDEO_THUMB_WIDTH / $videoObj->getRatio()));
+		$title = Title::newFromText($videoName, NS_VIDEO);
+		if($title) {
+			$videoObj = new VideoPage($title);
+			$videoObj->load();
+			if($videoObj->getVideoId()) {
+				return array('name' => $videoName, 'html' => $videoObj->getThumbnailCode(self::VIDEO_THUMB_WIDTH, false), 'width' => self::VIDEO_THUMB_WIDTH, 'height' => round(self::VIDEO_THUMB_WIDTH / $videoObj->getRatio()));
+			}
 		}
 		return null;
 	}
