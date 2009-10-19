@@ -28,6 +28,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Przemek wikia*/157013,'staff'),
 (/*Ri3mann*/247550,'staff'),
 (/*Sannse*/8,'staff'),
+(/*Sarah Manley*/1613840,'staff'),
 (/*Scarecroe*/10637, 'staff'),
 (/*Sean Colombo*/1491391, 'staff'),
 (/*Shahid*/152910,'staff'),
