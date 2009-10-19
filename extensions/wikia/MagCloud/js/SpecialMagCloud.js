@@ -409,7 +409,7 @@ SpecialMagCloud.publish2 = function(data) {
 		node.html(data.msg);
 	}
 
-	if (data.continue) {
+	if (data['continue']) {
 		SpecialMagCloud.publish2_data["state"] = data.state;
 		MagCloud.ajax("publish2", SpecialMagCloud.publish2_data, SpecialMagCloud.publish2);
 	} else {
@@ -425,7 +425,7 @@ SpecialMagCloud.publish2 = function(data) {
 SpecialMagCloud.publish = function(hash, timestamp, token, node) {
 	SpecialMagCloud.publish2_data = {hash: hash, timestamp: timestamp, token: token};
 	SpecialMagCloud.publish2_node =  node;
-	SpecialMagCloud.publish2({state: "initialize", continue: true});
+	SpecialMagCloud.publish2({state: "initialize", 'continue': true});
 	return;
 
 	// send AJAX request to publish PDF
