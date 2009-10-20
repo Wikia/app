@@ -436,7 +436,8 @@ class FeedRenderer {
 				break;
 		}
 
-		$ret = Xml::expandAttributes( array('alt' => wfMsg("myhome-feed-{$msg}")) );
+		$alt = wfMsg("myhome-feed-{$msg}");
+		$ret = Xml::expandAttributes( array('alt' => $alt, 'title' => $alt) );
 
 		wfProfileOut(__METHOD__);
 
