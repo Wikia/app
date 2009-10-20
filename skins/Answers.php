@@ -508,7 +508,7 @@ yieldbuild_loc = "left_content_top";
 			<ul>
 			<li><?= wfMsg("answer_this", $wgTitle->getEditURL())?></li>
 			<li><?= wfMsg("research_this_on_wikipedia", $wgTitle->getEditURL())?></li>
-			<li><?= wfMsg("ask_friends_on_twitter", $twitter_url, "onclick=\"WET.byStr( 'articleFooter/Twitter' );\" ")?></li>
+			<li><?= wfMsg("ask_friends_on_twitter", $twitter_url, "onclick=\"WET.byStr( 'articleFooter/twitter' );\" ")?></li>
 			<li><?= wfMsg("receive_email", $watchlist_url, "onclick=\"WET.byStr( 'articleFooter/emailme' );\"")?></li>
 			<li><?= wfMsg("reword_this", $move_url, "onclick=\"WET.byStr( 'articleFooter/reword' );\"")?></li>
 			</ul>
@@ -543,7 +543,7 @@ yieldbuild_loc = "left_content_top";
 
 
 		<div id="twitter-post">
-			<a rel="nofollow" href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><?= wfMsg("twitter_ask")?></a>
+			<a rel="nofollow" href="<?=$twitter_url?>" onclick="WET.byStr('articleFooter/twitter-answered'); window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><?= wfMsg("twitter_ask")?></a>
 		</div>
 		</div><?/* social_networks */?>
 		<?
