@@ -54,6 +54,11 @@ MagCloud.openIntroPopup = function() {
 
 			// show popup
 			$('#MagCloudIntroPopup').makeModal({width: 450,	className: 'MagCloudDialog'});
+
+			// RT #24845
+			if (window.WidgetMagCloudLoading) {
+				window.WidgetMagCloudLoading = false;
+			}
 		}
 	});
 
