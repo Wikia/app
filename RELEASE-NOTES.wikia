@@ -1,4 +1,5 @@
 == Changes since 200910.3 ==
+* rt#24845: MagCloud: Two toolbars viewable when widget is clicked twice (Macbre)
 * rt#25237: MagCloud: Bugs in IE7 and IE8 cont'd. (Nef)
 
 == Changes since 200910.2 ==
