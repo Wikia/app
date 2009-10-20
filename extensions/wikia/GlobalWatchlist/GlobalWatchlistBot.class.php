@@ -278,7 +278,7 @@ class GlobalWatchlistBot {
 						($countComments != 0) ? $this->getLocalizedMsg(
 							( $countComments == 1 ) ? 'globalwatchlist-blog-page-title-comment' : 'globalwatchlist-blog-page-title-comments', 
 							$oUser->getOption('language') 
-						) : "",
+						) : "$1",
 						array ( 
 							0 => $blogComments['blogpage']->getFullURL(),
 							1 => $countComments
@@ -393,7 +393,6 @@ class GlobalWatchlistBot {
 				$iWikiId = 0;
 				$aDigestData = array();
 				$aWikiDigest = array( 'pages' => array() );
-				$aWikiBlogs = array();
 				while ( $oResultRow = $dbr->fetchObject($oResource) ) {
 					#---
 					if ( $iWikiId != $oResultRow->gwa_city_id ) {
@@ -418,7 +417,7 @@ class GlobalWatchlistBot {
 					if ( in_array($oResultRow->gwa_namespace, array(NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE)) ) {
 						# blogs
 						$aWikiBlogs[$iWikiId][] = $oResultRow;
-						#$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
+						$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
 					} else {
 						$aWikiDigest[ 'pages' ][] = array(
 							'title' => GlobalTitle::newFromText($oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId),
@@ -427,16 +426,6 @@ class GlobalWatchlistBot {
 					}
 				} // while
 				$dbr->freeResult( $oResource );
-	
-				if ( !empty($aWikiBlogs) ) {
-					foreach ($aWikiBlogs as $iWikiId => $aRows) {
-						if ( !empty($aRows) ) {
-							foreach ( $aRows as $oRow ) {
-								$this->makeBlogsList( $aWikiDigest, $iWikiId, $oRow );
-							}
-						}
-					}
-				}
 	
 				$cnt = count($aWikiDigest['pages']);
 				if ( isset($aWikiDigest['blogs']) ) {
@@ -470,6 +459,7 @@ class GlobalWatchlistBot {
 			$wikiDB = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
 			if ( $wikiDB ) {
 				$db_wiki = wfGetDB( DB_SLAVE, 'stats', $wikiDB );
+				$db_wiki->ping();
 				$oRow = $db_wiki->selectRow(
 					array( "watchlist" ),
 					array( "count(*) as cnt" ),
