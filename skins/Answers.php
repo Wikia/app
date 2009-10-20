@@ -1015,12 +1015,14 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 		</div>
 		<script type="text/javascript">
 		jQuery("#magicAnswerNo").bind("click", function(e) {
+			WET.byStr("articleAction/magic-no");
 			$("#magicAnswer").animate({opacity: "0"}, function() {
 				$(this).slideUp()
 			});
 			return false;
 		});
 		jQuery("#magicAnswerYes").bind("click", function(e) {
+			WET.byStr("articleAction/magic-yes");
 			jQuery("#magicAnswerForm").submit();
 			return false;
 		});
