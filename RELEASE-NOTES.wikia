@@ -1,5 +1,5 @@
 == Changes since 200910.3 ==
-*
+* rt#25237: MagCloud: Bugs in IE7 and IE8 cont'd. (Nef)
 
 == Changes since 200910.2 ==
 * rt#25020: MagCloud: Bugs preventing normal operation of the collection tool in IE7 and IE8 (Macbre)
