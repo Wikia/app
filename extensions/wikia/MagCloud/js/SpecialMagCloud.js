@@ -174,6 +174,8 @@ SpecialMagCloud.connectTitleWithPreview = function() {
 
 // save settings of magazine cover
 SpecialMagCloud.saveCoverDesign = function(ev) {
+	ev.preventDefault();
+
 	MagCloud.log('saving cover design');
 
 	var settings = {
