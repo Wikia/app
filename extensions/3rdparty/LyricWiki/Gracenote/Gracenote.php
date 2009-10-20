@@ -135,12 +135,6 @@ function gracenote_disableEdit(&$out, &$sk){
 function gracenote_installCopyProtection(&$out, &$sk){
 #	Uncomment this for local testing -- Wikia already loads jquery
 #	$out->addScript("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js\"></script>");
-
-	# only on Gracenote pages!
-	global $wgTitle;
-	if ( $wgTitle->getNamespace() !== NS_GRACENOTE ) {
-		return false;
-	}
 	
 	// Disable text-selection in the lyricsbox divs (this only needs to be done once between both the lyrics and gracenotelyrics extensions.
 	$DISABLE_TEXT_SELECTION_FUNCTIONS = "
@@ -190,34 +184,20 @@ function gracenote_installCopyProtection(&$out, &$sk){
 	// Disables text-selection in the text-area on the 'edit' page (which will only show up in normal namespaces anyway).
 	// We only want to do this for lyrics pages, so we first determine the page-type.
 	$DISABLE_TEXT_SELECTION_IN_EDIT_BOX_CODE = "
-		var ns = wgNamespaceNumber;
-		if(wgNamespaceNumber == 0){
-			var ALBUM_NS = -1;
-			var ARTIST_NS = -2;
-			var MAIN_PAGE_NS = -3;
-			if(wgPageName.match(/^.*?\([0-9]{4}\)$/)){
-				ns = ALBUM_NS;
-			} else if(wgPageName == \"Main_Page\"){
-				ns = MAIN_PAGE_NS;
-			} else if(wgPageName.indexOf(':') == -1){
-				ns = ARTIST_NS;
-			} else {
-				$('#wpTextbox1').select(function(event){
-					event.preventDefault();
-					//alert($('#gnCopySelectNotice').size());
-					if($('#gnCopySelectNotice').size() == 0){
-						var noticeDiv = \"<div id='gnCopySelectNotice'>We're sorry, but as part of licensing restrictions text-selection of this box has been disabled on lyrics pages.</div>\";
-						$('#wpTextbox1').before(noticeDiv);
-					}
-					$('#gnCopySelectNotice').show()//.fadeOut(5000);
-
-					// Remove and re-add the text to unselect.
-					var backup = $('#wpTextbox1').get(0).value;
-					$('#wpTextbox1').get(0).value = '';
-					$('#wpTextbox1').get(0).value = backup;
-				});
+		$('#wpTextbox1').select(function(event){
+			event.preventDefault();
+			//alert($('#gnCopySelectNotice').size());
+			if($('#gnCopySelectNotice').size() == 0){
+				var noticeDiv = \"<div id='gnCopySelectNotice'>We're sorry, but as part of licensing restrictions text-selection of this box has been disabled on lyrics pages.</div>\";
+				$('#wpTextbox1').before(noticeDiv);
 			}
-		}
+			$('#gnCopySelectNotice').show()//.fadeOut(5000);
+
+			// Remove and re-add the text to unselect.
+			var backup = $('#wpTextbox1').get(0).value;
+			$('#wpTextbox1').get(0).value = '';
+			$('#wpTextbox1').get(0).value = backup;
+		});
 	";
 
 	// TODO: If acceptable, make the DISABLE_RIGHT_CLICK_CODE and DISABLE_SELECT_ALL only apply to Gracenote pages and lyrics pages (what is the Gracenote namespace number?).
@@ -231,9 +211,34 @@ function gracenote_installCopyProtection(&$out, &$sk){
 			$DISABLE_CLIPBOARD_CODE
 			$DISABLE_TEXT_SELECTION_CODE
 			$DISABLE_SELECT_ALL
-			$DISABLE_RIGHT_CLICK_CODE
-			
-			$('#lyricbox').show();
+
+			var ns = wgNamespaceNumber;
+			if(wgNamespaceNumber == 220){
+				// Code that should only be on Gracenote pages.
+				
+				
+			} else if(wgNamespaceNumber == 0){
+				var ALBUM_NS = -1;
+				var ARTIST_NS = -2;
+				var MAIN_PAGE_NS = -3;
+				if(wgPageName.match(/^.*?\([0-9]{4}\)$/)){
+					ns = ALBUM_NS;
+				} else if(wgPageName == \"Main_Page\"){
+					ns = MAIN_PAGE_NS;
+				} else if(wgPageName.indexOf(':') == -1){
+					ns = ARTIST_NS;
+				} else {
+					// Code that should only be on (non-Gracenote) Lyrics pages.
+					
+					
+				}
+			}
+
+			if($('.lyricbox').size() > 0){
+				$DISABLE_RIGHT_CLICK_CODE
+			}
+
+			//$('.lyricbox').show();
 		});
 	</script>");
 
@@ -246,5 +251,16 @@ function gracenote_installCopyProtection(&$out, &$sk){
 function gracenote_getPrintDisabledNotice(){
 	return "<div class='print-disabled-notice'><br/><br/>Unfortunately, the licenses with music publishers require that we disable printing of lyrics.  We're sorry for the inconvenience.<br/><br/></div>";
 }
+
+////
+// Returns the HTML for a noscript  tag which will hide the lyrics if javascript is disabled and give a message to the end-user explaining what happened.
+////
+function gracenote_getNoscriptTag(){
+	return "<noscript><div class='gracenote-header'>You must enable javascript to view this page.  This is a requirement of our licensing agreement with music Gracenote.</div>
+	<style type='text/css'>
+		.lyricbox{display:none !important;}
+	</style>
+	</noscript>\n";
+} // end gracenote_getNoscriptTag()
 
 ?>

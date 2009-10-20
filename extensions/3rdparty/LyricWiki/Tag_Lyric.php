@@ -104,7 +104,7 @@ function renderLyricTag($input, $argv, $parser)
   $ringtoneLink = "";
   // NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
   // If a user has ringtone-ads turned off, their CSS will make the ad invisible.
-  if($wgFirstLyricTag){ 
+  if($wgFirstLyricTag){
 	GLOBAL $wgTitle, $wgUploadPath;
 	$artist = $wgTitle->getDBkey();
 	$colonIndex = strpos("$artist", ":");
@@ -114,7 +114,7 @@ function renderLyricTag($input, $argv, $parser)
 	if($colonIndex !== false){
 		$artist = substr($artist, 0, $colonIndex);
 		$songTitle = substr($songTitle, $colonIndex+1);
-		
+
 		$artistLink = str_replace(" ", "+", $artist);
 		$songLink = str_replace(" ", "+", $songTitle);
 	}
@@ -129,10 +129,15 @@ function renderLyricTag($input, $argv, $parser)
   }
 
 	#parse embedded wikitext
-	$retVal = "<div class='lyricbox'>";
+	$retVal = "";
+	$retVal.= gracenote_getNoscriptTag 	();
+	$retVal.= "<div class='lyricbox'>";
 	$retVal.= ($isInstrumental?"":$ringtoneLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
-	$retVal.= $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
+	$retVal.= gracenote_obfuscateText($parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText());
 	$retVal.= $ringtoneLink;
 	$retVal.= "</div>";
+	$retVal .= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_OTHER_LYRICS);
 	return $retVal;
 }
+
+?>
