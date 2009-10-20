@@ -19,6 +19,10 @@ global $wgWikiaImagesFoundInTemplates;
 define('IMG_PLC_MIN_WIDTH', 150);
 define('IMG_PLC_DEF_WIDTH', 150);
 
+// This should not be fully internationalized, as the text will remain in wikitext
+// and changing the message would break the markup if we only use wfMsg.
+define('IMG_PLC_PLACHOLDER', 'Placeholder');
+
 $dir = dirname(__FILE__).'/';
 
 $wgExtensionFunctions[] = 'ImagePlaceholder_init';
@@ -280,6 +284,10 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 // check if this is or not a placeholder
 function ImagePlaceholderIsPlaceholder( $text ) {
-        return ($text ==  wfMsgForContent( 'imgplc-placeholder' ) ) ;
-}
+	if ( $text == wfMsgForContent( 'imgplc-placeholder' )
+	  || $text == IMG_PLC_PLACEHOLDER ) {
+		return true;
+	}
 
+	return false;
+}
