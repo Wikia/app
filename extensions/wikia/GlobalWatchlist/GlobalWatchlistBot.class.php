@@ -258,7 +258,7 @@ class GlobalWatchlistBot {
 		global $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 
 		$sDigestsBlogs = ""; $sDigests = ""; 
-		$iPagesCount = 0;
+		$iPagesCount = 0; $iBlogsCount = 0;
 		foreach ( $aDigestsData as $aDigest ) {
 			$sDigests .= $aDigest['wikiName'] . ( $aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "" ) . ":\n";
 
@@ -285,6 +285,7 @@ class GlobalWatchlistBot {
 						)
 					);
 					$sDigestsBlogs .= $message . "\n";
+					$iBlogsCount++;
 				}
 				$sDigestsBlogs .= "\n";
 			}
@@ -299,7 +300,7 @@ class GlobalWatchlistBot {
 		$aEmailArgs = array(
 			0 => ucfirst($oUser->getName()),
 			1 => ( $iPagesCount > 0 ) ? $sDigests : $this->getLocalizedMsg('globalwatchlist-no-page-found', $oUser->getOption('language')),
-			2 => ( !empty($sDigestsBlogs) ) ? $sDigestsBlogs : $this->getLocalizedMsg('globalwatchlist-no-blog-page-found', $oUser->getOption('language')),
+			2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogs : $this->getLocalizedMsg('globalwatchlist-no-blog-page-found', $oUser->getOption('language')),
 		);
 
 		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUser->getOption('language') );
@@ -392,6 +393,7 @@ class GlobalWatchlistBot {
 				$iWikiId = 0;
 				$aDigestData = array();
 				$aWikiDigest = array( 'pages' => array() );
+				$aWikiBlogs = array();
 				while ( $oResultRow = $dbr->fetchObject($oResource) ) {
 					#---
 					if ( $iWikiId != $oResultRow->gwa_city_id ) {
@@ -415,7 +417,8 @@ class GlobalWatchlistBot {
 					
 					if ( in_array($oResultRow->gwa_namespace, array(NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE)) ) {
 						# blogs
-						$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
+						$aWikiBlogs[$iWikiId][] = $oResultRow;
+						#$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
 					} else {
 						$aWikiDigest[ 'pages' ][] = array(
 							'title' => GlobalTitle::newFromText($oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId),
@@ -424,6 +427,16 @@ class GlobalWatchlistBot {
 					}
 				} // while
 				$dbr->freeResult( $oResource );
+	
+				if ( !empty($aWikiBlogs) ) {
+					foreach ($aWikiBlogs as $iWikiId => $aRows) {
+						if ( !empty($aRows) ) {
+							foreach ( $aRows as $oRow ) {
+								$this->makeBlogsList( $aWikiDigest, $iWikiId, $oRow );
+							}
+						}
+					}
+				}
 	
 				$cnt = count($aWikiDigest['pages']);
 				if ( isset($aWikiDigest['blogs']) ) {
