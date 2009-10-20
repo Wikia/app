@@ -211,4 +211,9 @@ var initTracker = function() {
 		}
 	}
 
+	// Special:Userlogin (Macbre)
+	if ( wgCanonicalSpecialPageName && wgCanonicalSpecialPageName == 'Userlogin' ) {
+		Event.addListener($('userloginlink').getElementsByTagName('a')[0], 'click', YAHOO.Wikia.Tracker.trackByStr, 'loginActions/goToSignup');
+	}
+
 };
