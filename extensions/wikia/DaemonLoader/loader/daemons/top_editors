@@ -137,8 +137,29 @@ my $other_wikis = "5, 11, 425, 520, 2719, 5409";
 
 $oConf->log("Processing: select users from local users table");
 
+=old query
 my $select = "lu_user_id as user_id, ue_edit_count as cnt";
 my $from = "`dataware`.`city_local_users`, dbstats.city_user_edits";
+my @where = ( 
+	"lu_singlegroup != 'bot'",
+	"lu_allgroups not like '%bot%'",
+	"lu_wikia_id not in (".$other_wikis.")", 
+	"ue_user_id = lu_user_id",
+	"ue_edit_namespace = 0",
+	"lu_user_name != 'CreateWiki script'",
+	"lu_user_name not like '%Bot%'"
+);
+my @options = (
+	"group by 1",
+	"ORDER BY cnt desc",
+	"LIMIT ". $limit
+); 
+=cut
+
+=new query
+=cut
+my $select = "ue_user_id as user_id, ue_edit_count - (select if(isnull(sum(lu_rev_cnt)),0,sum(lu_rev_cnt)) as cnt from `dataware`.`city_local_users` where lu_user_id = ue_user_id and ((lu_singlegroup = 'bot') or (lu_allgroups like '%bot%') or (lu_user_name like '%Bot%') ) ) as cnt";
+my $from = "dbstats.city_user_edits, `dataware`.`city_local_users`";
 my @where = ( 
 	"lu_singlegroup != 'bot'",
 	"lu_allgroups not like '%bot%'",
