@@ -121,17 +121,15 @@ foreach($themes as $theme => $colors) {
 	SpecialMagCloud.setupLayout($('#MagCloudCoverEditorLayout'));
 	SpecialMagCloud.connectTitleWithPreview();
 
+	// don't attempt to merge tracking + save into one... hell ensues (-;
 	$('#MagCloudBackToReview').click(function() {
 		MagCloud.track('/design/backtoreview');
-
-		SpecialMagCloud.saveCoverDesign();
 	});
 	$('#MagCloudForwardToPreview').click(function() {
 		MagCloud.track('/design/forwardtopreview');
-
-		SpecialMagCloud.saveCoverDesign();
 	});
 
+	$('#SpecialMagCloudButtons a').click(SpecialMagCloud.saveCoverDesign);
 
 	// image upload
 	$('#MagCloudCoverEditorImageNone').click(function() {
