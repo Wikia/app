@@ -4,8 +4,15 @@
  * WikiaApiLyricwiki
  *
  * @author Lucas Garczewski <tor@wikia-inc.com>
+ * @author Sean Colombo <sean@wikia-inc.com>
  *
   * $Id: WikiaApiQueryDomains.php 12417 2008-05-07 09:33:11Z eloy $
+  
+  Problems:
+   - Doesn't default to getSong (just goes to MediaWiki API).
+   - Parsing of artist discographies is broken
+  
+  
  */
 
 $wgAPIModules['lyrics'] = 'WikiaApiLyricwiki';
@@ -30,14 +37,17 @@ class WikiaApiLyricwiki extends ApiBase {
 		$func = $song = $artist = $fmt = null;
 
 		extract( $this->extractRequestParams() );
+		
+		// TODO: Detect the API even if func is not defined (since that wasn't a documented requirement).  - SWC
+		$func = (($func == "")?"getSong":$func);
 
 		switch ( $func ) {
 			case 'getArtist':
-				$this->getArtist( $artist, $fmt );
+				$this->rest_getArtist( $artist, $fmt );
 				break;
 			case 'getSong':
 			default:
-				$this->getSong( $artist, $song, $fmt );
+				$this->rest_getSong( $artist, $song, $fmt );
 				break;
 		}
 
@@ -45,97 +55,99 @@ class WikiaApiLyricwiki extends ApiBase {
 		exit (1);
 	}
 
-	function getArtist( $artist, $fmt ) {
-
-		if (empty( $fmt ) )
-			$fmt = 'text';
-		
-
+	function rest_getArtist( $artist, $fmt ) {
+		if(empty( $fmt )){
+			$fmt = 'html';
+		}
+	
 		switch ( $fmt ) {
 			case 'text':
-	                        $result = getArtist($artist);
+				$result = getArtist($artist);
 
-	                        // This is just a raw line-delimited list of tracks.
-        	                $artist = getVal($result, 'artist');
-	                        $albums = $result['albums'];
-	                        foreach($albums as $currAlbum){
-	                                $tracks = $currAlbum['songs'];
-	                                sort($tracks);
-        	                        foreach($tracks as $currTrack){
-	                                        if(strpos($currTrack, ":") !== false){
-        	                                        print "$currTrack\n"; // a track listing that already has the artist in it
-                	                        } else {
-                        	                        print "$artist:$currTrack\n";
-                                	        }
+				// This is just a raw line-delimited list of tracks.
+				$artist = getVal($result, 'artist');
+				$albums = $result['albums'];
+				foreach($albums as $currAlbum){
+					$albumName = getVal($currAlbum, 'album');
+					$year = getVal($currAlbum, 'year');
+					$amznLink = getVal($currAlbum, 'amazonLink');
+					$songs = getVal($currAlbum, 'songs');
+					sort($songs);
+					foreach($songs as $currSong){
+						if(strpos($currSong, ":") !== false){
+							print "$currSong\n"; // a track listing that already has the artist in it
+						} else {
+							print "$artist:$currSong\n";
+						}
 					}
-	                        }
-
-				break;
-			case 'html':
-	                        $this->htmlHead("$artist");
-
-	                        $result = getArtist($artist);
-	                        $artist = getVal($result, 'artist');
-	                        $albums = $result['albums'];
-	                        print "<h3><a href='$root".$this->linkEncode($artist)."'>$artist</a></h3>\n";
-				print "<a href='" .$result['url'] . "'/>" . $result['song'] . "</a>";
-	                        if(count($albums) > 0){
-	                                print "<ul class='albums'>\n";
-	                                foreach($albums as $currAlbum){
-	                                        $albumName = getVal($currAlbum, 'album');
-	                                        $year = getVal($currAlbum, 'year');
-	                                        $amznLink = getVal($currAlbum, 'amazonLink');
-	                                        $songs = getVal($currAlbum, 'songs');
-	                                        print "<li><a href='$root".$this->linkEncode("$artist:$albumName".($year==""?"":"_($year)"))."'>$albumName".($year==""?"":"_($year)")."</a>";
-        	                                if($amznLink != ""){
-                	                                print " - (at <a href='$amznLink' title=\"$albumName at amazon\">amazon</a>)";
-                        	                }
-	                                        if(count($songs) > 0){
-	                                                print "<ul class='songs'>\n";
-	       	                                        foreach($songs as $currSong){
-        	                                                if(strpos($currSong, ":") !== false){
-                	                                                print "<li><a href='$root".$this->linkEncode($currSong)."'>$currSong</li>\n";
-                        	                                } else {
-                                	                                print "<li><a href='$root".$this->linkEncode("$artist:$currSong")."'>$currSong</li>\n";
-                                        	                }
-	                                                }
-        	                                        print "</ul>\n";
-                	                        }
-					}
-	                                print "</ul>\n";
 				}
-
-	                        // Make it extensible by displaying any extra data in a UL.
-	                        unset($result['artist']);
-	                        unset($result['albums']);
-	                        if(count($result) > 0){
-	                                print "<hr/>Additional Info:\n";
-	                                print "<ul>\n";
-	                                foreach($result as $keyName=>$val){
-	                                        if(0 < preg_match("/^http:\/\//", $val)){
-	                                                $val = "<a href='".str_replace(" ", "_", $val)."' title='$keyName'>$val</a>\n";
-	                                                print "<li><strong>$keyName: </strong>$val</li>\n";
-	                                        } else {
-	                                                print "<li><strong>$keyName: </strong>$val</li>\n";
-	                                        }
-	                                }
-        	                        print "</ul>\n";
-                	        }
-                        	print "</body>\n</html>\n";
 				break;
 			case "xml" :
-	                        header('Content-Type: application/xml', true);
-	                        print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-	                        //print "<getArtistResponse>\n";
-	                        $result = getArtist($artist);
-	                        $result = array("getArtistResponse" => $result);
-	                        $this->dumpXML($result);
-	                        //print "</getArtistResponse>\n";
+				header('Content-Type: application/xml', true);
+				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+				//print "<getArtistResponse>\n";
+				$result = getArtist($artist);
+				$result = array("getArtistResponse" => $result);
+				$this->dumpXML($result);
+				//print "</getArtistResponse>\n";
+				break;
+			case 'html':
+			default:
+				$this->htmlHead("$artist");
+
+				$result = getArtist($artist);
+				$artist = getVal($result, 'artist');
+				$albums = $result['albums'];
+				print "<h3><a href='$root".$this->linkEncode($artist)."'>$artist</a></h3>\n";
+				print "<a href='" .$result['url'] . "'/>" . $result['song'] . "</a>";
+				if(count($albums) > 0){
+					print "<ul class='albums'>\n";
+					foreach($albums as $currAlbum){
+						$albumName = getVal($currAlbum, 'album');
+						$year = getVal($currAlbum, 'year');
+						$amznLink = getVal($currAlbum, 'amazonLink');
+						$songs = getVal($currAlbum, 'songs');
+						print "<li><a href='$root".$this->linkEncode("$artist:$albumName".($year==""?"":"_($year)"))."'>$albumName".($year==""?"":"_($year)")."</a>";
+						if($amznLink != ""){
+								print " - (at <a href='$amznLink' title=\"$albumName at amazon\">amazon</a>)";
+						}
+						if(count($songs) > 0){
+							print "<ul class='songs'>\n";
+							foreach($songs as $currSong){
+								if(strpos($currSong, ":") !== false){
+									print "<li><a href='$root".$this->linkEncode($currSong)."'>$currSong</li>\n";
+								} else {
+									print "<li><a href='$root".$this->linkEncode("$artist:$currSong")."'>$currSong</li>\n";
+								}
+							}
+							print "</ul>\n";
+						}
+					}
+					print "</ul>\n";
+				}
+
+				// Make it extensible by displaying any extra data in a UL.
+				unset($result['artist']);
+				unset($result['albums']);
+				if(count($result) > 0){
+					print "<hr/>Additional Info:\n";
+					print "<ul>\n";
+					foreach($result as $keyName=>$val){
+						if(0 < preg_match("/^http:\/\//", $val)){
+							$val = "<a href='".str_replace(" ", "_", $val)."' title='$keyName'>$val</a>\n";
+							print "<li><strong>$keyName: </strong>$val</li>\n";
+						} else {
+							print "<li><strong>$keyName: </strong>$val</li>\n";
+						}
+					}
+					print "</ul>\n";
+				}
+				print "</body>\n</html>\n";
 				break;
 		}
 	}
 
-	function getSong( $artist, $song, $fmt ) {
+	function rest_getSong( $artist, $song, $fmt ) {
 		// Phase 'title' out (deprecated).  this is not the same as the soap.  I was coding too fast whilst in an IRC discussion and someone said artist/title just for the sake of argument and I didn't check against the SOAP :[ *embarassing*
 		$songName = getVal($_GET, 'song', getVal($_GET, 'title'));
 		$artist = getVal($_GET, 'artist');
@@ -179,57 +191,65 @@ class WikiaApiLyricwiki extends ApiBase {
 			}
 			print "</item>\n";
 
-		} else if($fmt == "text"){
-			$result = getSong($artist, $songName);
-			print $result['url'];
+		} else {
+			switch($fmt){
+			case "text":
+				$result = getSong($artist, $songName);
+				print $result['url'];
+				break;
 //			print utf8_decode($result['lyrics']);
-		} else if($fmt == "js"){
-			$result = getSong($artist, $songName);
-			$this->writeJS($result['url']);
-		} else if($fmt == "json"){
-			$result = getSong($artist, $songName);
-			$this->writeJSON($result['url']);
-		} else if ($fmt == "html"){
-			// Link to the song & artist pages as a heading.
-			$result = getSong($artist, $songName);
+			case "js":
+				$result = getSong($artist, $songName);
+				$this->writeJS($result['url']);
+				break;
+			case "json":
+				$result = getSong($artist, $songName);
+				$this->writeJSON($result['url']);
+				break;
+			case "xml":
+				header('Content-Type: application/xml', true);
+				print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+				print "<LyricsResult>\n";
+				$result = getSong($artist, $songName);
+				foreach($result as $keyName=>$val){
+					if ($keyName != 'lyrics' ) {
+						print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
+					}
+				}
+				print "</LyricsResult>\n";
+				break;
+			case "html":
+			default:
+				// Link to the song & artist pages as a heading.
+				$result = getSong($artist, $songName);
 
-			$this->htmlHead($result['artist']." ".$result['song']." lyrics");
-			print "<h3><a href='$root".$this->linkEncode($result['artist'].":".$result['song'])."'>".utf8_decode($result['song'])."</a> by <a href='$root".$this->linkEncode($result['artist'])."'>".utf8_decode($result['artist'])."</a></h3>\n";
+				$this->htmlHead($result['artist']." ".$result['song']." lyrics");
+				print "<h3><a href='$root".$this->linkEncode($result['artist'].":".$result['song'])."'>".utf8_decode($result['song'])."</a> by <a href='$root".$this->linkEncode($result['artist'])."'>".utf8_decode($result['artist'])."</a></h3>\n";
 
 //			print "<pre>\n";
 //			print utf8_decode($result['lyrics']);
 //			print "</pre>";
 
-			// Make it extensible by displaying any extra data in a UL.
-			unset($result['artist']);
-			unset($result['song']);
-			unset($result['lyrics']);
-			if(count($result) > 0){
-				print "<hr/>Additional Info:\n";
-				print "<ul>\n";
-				foreach($result as $keyName=>$val){
-					if(0 < preg_match("/^http:\/\//", $val)){
-						$val = "<a href='$val' title='$keyName'>".utf8_decode($val)."</a>\n";
-						print "<li><strong>$keyName: </strong>$val</li>\n";
-					} else {
-						print "<li><strong>$keyName: </strong>".utf8_decode($val)."</li>\n";
+				// Make it extensible by displaying any extra data in a UL.
+				unset($result['artist']);
+				unset($result['song']);
+				unset($result['lyrics']);
+				if(count($result) > 0){
+					print "<hr/>Additional Info:\n";
+					print "<ul>\n";
+					foreach($result as $keyName=>$val){
+						if(0 < preg_match("/^http:\/\//", $val)){
+							$val = "<a href='$val' title='$keyName'>".utf8_decode($val)."</a>\n";
+							print "<li><strong>$keyName: </strong>$val</li>\n";
+						} else {
+							print "<li><strong>$keyName: </strong>".utf8_decode($val)."</li>\n";
+						}
 					}
+					print "</ul>\n";
 				}
-				print "</ul>\n";
+				print "</body>\n</html>\n";
+				break;
 			}
-			print "</body>\n</html>\n";
-		} else if($fmt == "xml"){
-			header('Content-Type: application/xml', true);
-			print "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-			print "<LyricsResult>\n";
-			$result = getSong($artist, $songName);
-			foreach($result as $keyName=>$val){
-				if ($keyName != 'lyrics' ) {
-					print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
-				}
-			}
-			print "</LyricsResult>\n";
-
 		}
 	}
 
@@ -293,40 +313,41 @@ class WikiaApiLyricwiki extends ApiBase {
 	        return $pageName;
 	}
 
-// The second parameter is the optional indentation at the start of this item (used for recursion).
-////
+	////
+	// The second parameter is the optional indentation at the start of this item (used for recursion).
+	////
 	function dumpXML($dataArray, $tabs=""){
         if(is_array($dataArray)){
-                $cnt = 0;
-                foreach($dataArray as $tag => $val){
-                        if(is_array($val) && ($cnt === $tag)){
-                                if(isset($val['album']) && isset($_GET['fixXML'])){ // TODO: HACK: This is actaully lame... what we SHOULD be doing is making a way to name each of these results (so other things can do the same thing that albumResult is doing here).
-                                        print "$tabs<albumResult>\n";
-                                        $tabs = "\t$tabs";
-                                }
-                                $this->dumpXML($val, $tabs);
-                                if(isset($val['album']) && isset($_GET['fixXML'])){
-                                        $tabs = substr($tabs, -1);
-                                        print "$tabs</albumResult>\n";
-                                }
-                        } else {
-                                if($cnt === $tag){
-                                        $tag = "item";
-                                }
-                                print "$tabs<$tag>";
-                                if(is_array($val)){
-                                        print "\n"; // keeps bottom-level items one-liners
-                                }
-                                $this->dumpXML($val, "\t$tabs");
-                                if(is_array($val)){
-                                        print "$tabs";
-                                }
-                                print "</$tag>\n";
-                        }
-                        $cnt++;
-                }
+			$cnt = 0;
+			foreach($dataArray as $tag => $val){
+				if(is_array($val) && ($cnt === $tag)){
+					if(isset($val['album']) && isset($_GET['fixXML'])){ // TODO: HACK: This is actaully lame... what we SHOULD be doing is making a way to name each of these results (so other things can do the same thing that albumResult is doing here).
+						print "$tabs<albumResult>\n";
+						$tabs = "\t$tabs";
+					}
+					$this->dumpXML($val, $tabs);
+					if(isset($val['album']) && isset($_GET['fixXML'])){
+						$tabs = substr($tabs, -1);
+						print "$tabs</albumResult>\n";
+					}
+				} else {
+					if($cnt === $tag){
+						$tag = "item";
+					}
+					print "$tabs<$tag>";
+					if(is_array($val)){
+						print "\n"; // keeps bottom-level items one-liners
+					}
+					$this->dumpXML($val, "\t$tabs");
+					if(is_array($val)){
+						print "$tabs";
+					}
+					print "</$tag>\n";
+				}
+				$cnt++;
+			}
         } else {
-                print htmlspecialchars($dataArray, ENT_QUOTES, "UTF-8");
+			print htmlspecialchars($dataArray, ENT_QUOTES, "UTF-8");
         }
 	} // end dumpXML()
 
