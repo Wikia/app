@@ -8,7 +8,7 @@
 
   global $wgMessageCache, $wgOut;
   $wgMessageCache->addMessage( "whatismyip", "What is my IP" );
-  $wgMessageCache->addMessage( "whatismyip_out", "Your IP:" );
+  $wgMessageCache->addMessage( "whatismyip_out", "Your IP: $1" );
   class WhatIsMyIP extends SpecialPage 
   {
    function  __construct() {
@@ -23,10 +23,8 @@
     {
     global $wgMessageCache, $wgOut;
     $wgOut->SetPageTitle(wfMsg('whatismyip'));
-    // $wgOut->addWikiText( wfMsg('whatismyip_username'). " $user" );    
     $ip = wfGetIP();
-    $wgOut->addWikiText( wfMsg('whatismyip_out'). " $ip" );
+    $wgOut->addWikiMsg( 'whatismyip_out', $ip );
 
     }
   }
-?>

@@ -208,8 +208,6 @@ function wfSpecialNewVideos( $par, $specialPage ) {
 		if ($shownav)
 			$wgOut->addHTML( $prevnext );
 	} else {
-		$wgOut->addWikiText( wfMsg( 'novideos' ) );
+		$wgOut->addWikiMsg( 'novideos' );
 	}
 }
-
-?>

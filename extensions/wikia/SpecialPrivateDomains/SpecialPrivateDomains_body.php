@@ -85,7 +85,7 @@ class PrivateDomains extends SpecialPage {
 			$privatedomains_emailadmin = PrivateDomains::getParam("privatedomains_emailadmin");
 
 			if ($privatedomains_emailadmin != '') {
-				$wgOut->addWikiText(wfMsg('privatedomains_ifemailcontact', $privatedomains_emailadmin));
+				$wgOut->addWikiMsg( 'privatedomains_ifemailcontact', $privatedomains_emailadmin );
 			}
 
 			return false;

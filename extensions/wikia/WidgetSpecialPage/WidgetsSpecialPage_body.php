@@ -68,7 +68,7 @@ class WidgetsSpecialPage extends SpecialPage
 			$wgOut->addHTML( '<div id="widgets-info" class="plainlinks">' . wfMsgExt('widgets-specialpage-info', 'parse') . '</div>' );
 		}
 
-		$wgOut->addWikiText(wfMsg('widgets-specialpage-try-dashboard'));
+		$wgOut->addWikiMsg('widgets-specialpage-try-dashboard');
 
 		// get list of widgets and load'em all
 		$widgets = $this->getWidgetsList();

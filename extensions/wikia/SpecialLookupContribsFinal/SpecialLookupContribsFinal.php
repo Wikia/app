@@ -306,7 +306,7 @@ if(in_array( 'createwiki', $wgUser->getRights() )){
 	function throttleHit( $limit ) {
 		global $wgOut;
 
-		$wgOut->addWikiText( wfMsg( 'acct_creation_throttle_hit', $limit ) );
+		$wgOut->addWikiMsg( 'acct_creation_throttle_hit', $limit );
 	}
 }
 
@@ -314,4 +314,3 @@ SpecialPage::addPage( new CreateWikiForm );
 global $wgMessageCache;
 $wgMessageCache->addMessage( 'createwiki', 'Create a wiki' );
 }
-?>

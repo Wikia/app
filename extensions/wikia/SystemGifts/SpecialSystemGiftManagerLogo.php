@@ -88,7 +88,7 @@ class SystemGiftManagerLogo extends UnlistedSpecialPage {
 		$this->avatarUploadDirectory = $wgUploadDirectory . "/awards"; 
 		/** Show an error message if file upload is disabled */ 
 		if( ! $wgEnableUploads ) {
-			$wgOut->addWikiText( wfMsg( 'uploaddisabled' ) );
+			$wgOut->addWikiMsg( 'uploaddisabled' );
 			return;
 		}
 
@@ -104,7 +104,7 @@ class SystemGiftManagerLogo extends UnlistedSpecialPage {
 		
 		/** Check if the image directory is writeable, this is a common mistake */
 		if ( !is_writeable( $wgUploadDirectory ) ) {
-			$wgOut->addWikiText( wfMsg( 'upload_directory_read_only', $wgUploadDirectory ) );
+			$wgOut->addWikiMsg( 'upload_directory_read_only', $wgUploadDirectory );
 			return;
 		}
 
@@ -489,7 +489,7 @@ function createThumbnail($imageSrc, $ext,$imgDest,$thumbWidth){
 			$wgOut->addHTML( "<h2>{$sub}</h2>\n" .
 			  "<h4 class='error'>{$msg}</h4>\n" );
 		}
-		//$wgOut->addWikiText( wfMsg( 'uploadtext' ) );
+		//$wgOut->addWikiMsg( 'uploadtext' );
 		$sk = $wgUser->getSkin();
 
 

@@ -383,9 +383,9 @@ class SpamRegexBatch {
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
-		$wgOut->addWikiText( wfMsg( 'spamprotectiontext' ) );
+		$wgOut->addWikiMsg( 'spamprotectiontext' );
 		if ( $match )
-			$wgOut->addWikiText( wfMsg( 'spamprotectionmatch', "<nowiki>{$match}</nowiki>" ) );
+			$wgOut->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$match}</nowiki>" );
 
 		$wgOut->returnToMain( false, $title );
 	}

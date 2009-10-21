@@ -14,15 +14,13 @@ class SpecialMyHome extends SpecialPage {
 
 		// not available for skins different then monaco
 		if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
-			$wgOut->addWikiText(wfMsg('myhome-switch-to-monaco'));
+			$wgOut->addWikiMsg( 'myhome-switch-to-monaco' );
 			return;
 		}
 
 		// not available for anons
 		if($wgUser->isAnon()) {
-			$wgOut->addHTML('<div id="myhome-log-in">');
-			$wgOut->addWikiText(wfMsg('myhome-log-in'));
-			$wgOut->addHTML('</div>');
+			$wgOut->wrapWikiMsg( '<div id="myhome-log-in">$1</div>', 'myhome-log-in' );
 
 			// RT #23970
 			$wgOut->addInlineScript(<<<JS
