@@ -130,6 +130,8 @@ function wfVideoEmbed($input, $argv, &$parser){
 	if ( in_array( strtoupper($align), $valid_align) ){
 		$align_tag = " class=\"float{$align}\" ";
 	}
+	global $IP;
+	require_once( "$IP/extensions/wikia/Video/VideoClass.php" );
 	$video =  Video::newFromName($video_name );
 	if( $video->exists() ){
 		$video->setWidth($width);
