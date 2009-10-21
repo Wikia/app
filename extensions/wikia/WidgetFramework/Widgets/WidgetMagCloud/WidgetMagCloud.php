@@ -37,12 +37,6 @@ function WidgetMagCloud($id, $params) {
 	//	return '';
 	//}
 
-	// turning off widget temorarilly for anons (RT #25225)
-	if($wgUser->isAnon()) {
-		wfProfileOut(__METHOD__);
-		return '';
-	}
-
 	// load i18n (messages for title and description of the widget)
 	wfLoadExtensionMessages('MagCloud');
 
