@@ -41,6 +41,7 @@ jQuery("#answers_ask_field").ready(function() {
 	var submitAutoComplete_callback = {
 		success: function(o) {
 			if(o.responseText !== undefined) {
+				WET.byStr('ask/goToSuggest');
 				window.location.href=o.responseText;
 			}
 		}
@@ -54,7 +55,10 @@ jQuery("#answers_ask_field").ready(function() {
 	}
 	myAutoComp.itemSelectEvent.subscribe(submitAutoComplete);
 
-	YAHOO.util.Event.addListener('answers_ask_field', 'keypress', function(e) {if(e.keyCode==13) {askQuestion();}});
+	YAHOO.util.Event.addListener('answers_ask_field', 'keypress', function(e) {if(e.keyCode==13) {
+		WET.byStr('ask/enter');
+		askQuestion();
+	}});
 });
 
 jQuery("#header_menu_user").ready(function() {
@@ -109,6 +113,7 @@ function anonWatch(){
 
 jQuery(document).ready(function() {
 	jQuery("#ask_form").submit(askQuestion);
+	jQuery("#ask_button").click(function() {WET.byStr("ask/click");});
 	jQuery("#ask_button").click(askQuestion);
 	jQuery(".header_menu").hover(stopProp, closeMenus);
 	jQuery(document).click(closeMenus);
