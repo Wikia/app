@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MW unit tests" default="run" basedir=".">
+
+  <target name="run">
+    <exec executable="php" failonerror="true">
+      <env key="SERVER_ID" value="${city_id}" />
+      <arg line="run-test.php --conf ${ls_path} --log-xml phpunit_all.xml ." />
+    </exec>
+  </target>
+
+</project>
