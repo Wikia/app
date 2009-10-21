@@ -95,7 +95,7 @@ class DeleteBatchForm {
                         $wgOut->addHTML( "<p class='error'>{$err}</p>\n" );
                 }
 	
-		$wgOut->addWikiText (wfMsg('deletebatch_help')) ;
+		$wgOut->addWikiMsg( 'deletebatch_help' );
 
 		/* don't bother writing up former parameters if not error */
 		if ( ('submit' == $wgRequest->getVal( 'action' )) && ('' != $err) ) {
@@ -248,7 +248,7 @@ class DeleteBatchForm {
 		global $wgOut, $wgUser ;
 		$page = Title::newFromText ($line);		
         	if (is_null($page)) { /* invalid title? */
-		       	$wgOut->addWikiText (wfMsg('deletebatch_omitting_invalid', $line)) ; 
+		       	$wgOut->addWikiMsg( 'deletebatch_omitting_invalid', $line );
 			if (!$multi) {
 				if (!is_null($user)) {
 					$wgUser = $user ;
@@ -257,7 +257,7 @@ class DeleteBatchForm {
 			return false;
 		}		
         	if (!$page->exists()) { /* no such page? */
-                        $wgOut->addWikiText (wfMsg ('deletebatch_omitting_nonexistant', $line)) ;
+                        $wgOut->addWikiMsg( 'deletebatch_omitting_nonexistant', $line );
 			if (!$multi) {
 				if (!is_null($user)) {
 					$wgUser = $user ;

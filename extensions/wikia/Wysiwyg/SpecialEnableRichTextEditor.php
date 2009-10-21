@@ -34,6 +34,6 @@ class EnableRichTextEditor extends SpecialPage {
 		$dbw->commit();
 
 		// show message
-		$wgOut->addWikiText( wfMsg('wysiwyg-enablerichtexteditormessage') );
+		$wgOut->addWikiMsg( 'wysiwyg-enablerichtexteditormessage' );
 	}
 }

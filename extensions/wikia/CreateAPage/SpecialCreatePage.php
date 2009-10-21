@@ -234,12 +234,12 @@ class CreatePageCreateplateForm {
 		// show stuff like on normal edit page, but just for red links
 		if ($this->mRedLinked) {
 			if( $wgUser->isLoggedIn() ) {
-				$wgOut->addWikiText ( wfMsg( 'newarticletext' ) );
+				$wgOut->addWikiMsg( 'newarticletext' );
 			} else {
-				$wgOut->addWikiText ( wfMsg( 'newarticletextanon' ) );
+				$wgOut->addWikiMsg( 'newarticletextanon' );
 			}
 			if( $wgUser->isAnon() && !$wgRequest->getCheck ('wpPreview') ) {
-	                       $wgOut->addWikiText( wfMsg( 'anoneditwarning' ) );
+	                       $wgOut->addWikiMsg( 'anoneditwarning' );
 			}
 		}	
 		global $wgStylePath, $wgStyleVersion, $wgExtensionsPath ;

@@ -88,7 +88,7 @@ function wfInviteAfterReg( $user=null ) {
 	}
 
 	if ( $wgNotificationEnableInvite ) {
-		$wgOut->addWikiText( wfMsg('stf_after_reg') );
+		$wgOut->addWikiMsg( 'stf_after_reg' );
 //		$wgOut->addWikiText( wfMsg('stf_after_reg') . wfMsg('sendtoafriend_reg2') . wfMsg('sendtoafriend_reg3') . $_SERVER['SERVER_NAME'] . wfMsg('sendtoafriend_reg4') . wfMsg('sendtoafriend_reg5') );
 	}
 	return true;

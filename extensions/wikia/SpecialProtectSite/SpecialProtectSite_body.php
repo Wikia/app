@@ -85,7 +85,7 @@ class ProtectsiteForm extends HTMLForm
     if ((($until =strtotime('+' . $request['timeout'], $curr_time)) === false) ||
        ($until < $curr_time))
     {
-      $wgOut->addWikiText(wfMsg($this->mName . '-timeout-error'));
+      $wgOut->addWikiMsg( $this->mName . '-timeout-error' );
       $this->setProtectsiteForm();
     }
     else
@@ -187,7 +187,7 @@ class ProtectsiteForm extends HTMLForm
     global $wgOut, $wgLang;
 
     /* Construct page data and add to output. */
-    $wgOut->addWikiText(wfMsg('protectsite-text-unprotect'));
+    $wgOut->addWikiMsg( 'protectsite-text-unprotect' );
     $wgOut->addHTML(
       '<form name="unProtectsite" action="' . $this->action . '" method="post">' . "\n" .
         $this->fieldset('title',
@@ -233,7 +233,7 @@ class ProtectsiteForm extends HTMLForm
     $upload[(isset($request['upload']) ? $request['upload'] : 0)] = true;
 
     /* Construct page data and add to output. */
-    $wgOut->addWikiText(wfMsg('protectsite-text-protect'));
+    $wgOut->addWikiMsg( 'protectsite-text-protect' );
     $wgOut->addHTML(
       '<form name="Protectsite" action="' . $this->action . '" method="post">' . "\n" .
         $this->fieldset('title',

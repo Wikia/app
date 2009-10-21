@@ -34,7 +34,7 @@ class FlickrImport{
 				"sort" => $this->flickr_sort  ));
 	
 		if ($photos == null || !is_array($photos) || sizeof($photos) == 0 || !isset($photos['photo']) ) {
-			$wgOut->addHTML(wfMsg("importfreeimages_nophotosfound",$q));
+			$wgOut->addWikiMsg( "importfreeimages_nophotosfound", $q );
 			return;
 		}
 	 
@@ -225,7 +225,7 @@ class FlickrImport{
 		
 		/** Check if the image directory is writeable, this is a common mistake */
 		if( !is_writeable( $wgUploadDirectory ) ) {
-			$wgOut->addWikiText( wfMsg( 'upload_directory_read_only', $wgUploadDirectory ) );
+			$wgOut->addWikiMsg( 'upload_directory_read_only', $wgUploadDirectory );
 			return;
 		}
 		

@@ -42,7 +42,7 @@ class VideoPage extends Article{
 			$title = SpecialPage::getTitleFor( 'AddVideo' );
 			$link = $sk->makeKnownLinkObj($title, wfMsgHtml('novideo-linktext'),
 				'wpDestName=' . urlencode( $this->video->getName() ) );
-			$wgOut->addHTML( wfMsgWikiHtml( 'novideo', $link ) );
+			$wgOut->addWikiMsg( 'novideo', $link );
 		}
 		
 		

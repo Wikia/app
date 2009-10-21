@@ -568,7 +568,7 @@ END
 			$title = Title::makeTitle( NS_SPECIAL, 'Upload' );
 			$link = $sk->makeKnownLinkObj($title, wfMsgHtml('noimage-linktext'),
 				'wpDestFile=' . urlencode( $this->img->getName() ) );
-			$wgOut->addHTML( wfMsgWikiHtml( 'noimage', $link ) );
+			$wgOut->addWikiMsg( 'noimage', $link );
 		}
 
 		wfProfileOut( __METHOD__ );

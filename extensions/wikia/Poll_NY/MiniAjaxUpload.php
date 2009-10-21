@@ -145,7 +145,7 @@ class PollAjaxUploadForm extends UploadForm{
 		
 		// don't want the upload text stuff
 		/* $wgOut->addHTML( '<div id="uploadtext">' );
-		$wgOut->addWikiText( wfMsgNoTrans( 'uploadtext', $this->mDestFile ) );
+		$wgOut->addWikiMsg( 'uploadtext', $this->mDestFile );
 		$wgOut->addHTML( '</div>' ); */
 		
 		$destfilename = wfMsgHtml( 'destfilename' );

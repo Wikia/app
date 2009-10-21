@@ -244,7 +244,7 @@ function WikiaSkinPreferences($pref) {
 		}
 		$wgOut->addHTML("<option value='ds'".(empty($wgAdminSkin) ? ' selected' : '').">".wfMsg('adminskin_ds')."</option>");
 		$wgOut->addHTML('</select>');
-		$wgOut->addWikiText(wfMsg('skinchooser-customcss'));
+		$wgOut->addWikiMsg( 'skinchooser-customcss' );
 	} else {
 		$wgOut->addHTML('<br/>');
 		if(!empty($wgAdminSkin)) {
