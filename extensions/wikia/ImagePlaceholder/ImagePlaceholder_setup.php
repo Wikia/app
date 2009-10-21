@@ -21,7 +21,7 @@ define('IMG_PLC_DEF_WIDTH', 150);
 
 // This should not be fully internationalized, as the text will remain in wikitext
 // and changing the message would break the markup if we only use wfMsg.
-define('IMG_PLC_PLACHOLDER', 'Placeholder');
+define('IMG_PLC_PLACEHOLDER', 'Placeholder');
 
 $dir = dirname(__FILE__).'/';
 
