@@ -80,7 +80,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		/**
 		 * language starters
 		 */
-		$this->mLanguageStarters = array("en", "ja", "de", "fr", "nl", "es", "aa", "pl");
+		$this->mLanguageStarters = array("en", "ja", "de", "fr", "nl", "es", "pl");
 
 		/**
 		 * set paths for external tools
@@ -510,6 +510,9 @@ class AutoCreateWikiPage extends SpecialPage {
 		if ( in_array( $this->mWikiData[ "language" ], $this->mLanguageStarters ) ) {
 			$prefix = ( $this->mWikiData[ "language" ] === "en") ? "" : $this->mWikiData[ "language" ];
 			$starterDB = $prefix. "starter";
+		} else {
+			$starterDB = AWC_GENERIC_STARTER;
+		}
 
 			/**
 			 * first check whether database starter exists
@@ -571,8 +574,7 @@ class AutoCreateWikiPage extends SpecialPage {
 			else {
 				$this->log( "No starter database for this language, {$starterDB}" );
 			}
-		}
-
+		
 		/**
 		 * making the wiki founder a sysop/bureaucrat
 		 */

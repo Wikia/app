@@ -1,4 +1,5 @@
 == Changes since 200910.3 ==
+* rt#24875: generic.starter enabled (TOR)
 * rt#25288: Redirect beta.wikia.com to wikia.com
 * rt#24841: ImagePlaceholder: always accept Image:Placeholder syntax (TOR)
 * rt#24706: User:Wikia will not show up in TopUsers (TOR)
