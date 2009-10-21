@@ -62,6 +62,14 @@ class UserChangesHistory {
 					),
 					__METHOD__
 				);
+				
+				$status = $dbw->replace(
+					"user_login_history_summary",
+					array( 'user_id' ),
+					array( 'ulh_timestamp' => wfTimestampOrNull(), 'user_id' => $id ),
+					__METHOD__
+				);
+				
 				if ( $dbw->getFlag( DBO_TRX ) ) {
 					$dbw->commit();
 				}
