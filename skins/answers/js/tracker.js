@@ -178,11 +178,15 @@ var initTracker = function() {
 
 	// Search
 	Event.addListener('searchform', 'submit', function(e) {
-		Tracker.trackByStr(e, 'search/submit/enter/' +  escape(Dom.get('search_field').value.replace(/ /g, '_')));
+		Tracker.trackByStr(e, 'search/submit/enter/' +  escape(Dom.get('search_input').value.replace(/ /g, '_')));
 	});
 
 	Event.addListener('search_button', 'click', function(e) {
-		Tracker.trackByStr(e, 'search/submit/click/' +  escape(Dom.get('search_field').value.replace(/ /g, '_')));
+		Tracker.trackByStr(e, 'search/submit/click/' +  escape(Dom.get('search_input').value.replace(/ /g, '_')));
+	});
+
+	Event.addListener('search_go_button', 'click', function(e) {
+		Tracker.trackByStr(e, 'search/submit/go/' +  escape(Dom.get('search_input').value.replace(/ /g, '_')));
 	});
 
 	// Spotlights
