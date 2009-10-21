@@ -10,6 +10,7 @@
 // TODO: When a user adds a song, make sure it is automatically merged into the artist page (User:Janitor makes this not too big of a deal since he finds orphans and adds them to the artist's Other Songs section).
 ////
 
+GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
 $LW_USE_PERSISTENT_CONNECTIONS = true;
 $ENABLE_LOGGING_SLOW_SOAP = false;
 $MIN_SECONDS_TO_LOG = 15; // if the script takes longer than this many seconds to run, the request will be logged.
@@ -81,6 +82,7 @@ if(!function_exists("lw_connect")){ // Function is in several scripts.  This pre
 	// Persistent connections don't work well for the API (a ton of clients connecting once every couple of minutes causes way to many connections to hang around - pconns stay for 15 seconds by default).
 	// So here, we manually figure out which server to use and connect to it in a non-persistent (volitile? disposable?) way.
 	GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
+//	$LW_USE_PERSISTENT_CONNECTIONS = false;
 
 	////
 	// Connects to the wiki database using the configured settings.
@@ -88,7 +90,28 @@ if(!function_exists("lw_connect")){ // Function is in several scripts.  This pre
 	// needed without additional overhead.
 	////
 	function lw_connect(){
-		return wfGetDB( DB_MASTER )->getProperty('mConn');
+		GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
+		if($LW_USE_PERSISTENT_CONNECTIONS){
+			return wfGetDB(DB_MASTER)->getProperty('mConn');
+		} else {
+			// In case this connection does writes, we must connect to the master (default connection).
+			GLOBAL $wgDBserver;GLOBAL $wgDBuser;GLOBAL $wgDBpassword;GLOBAL $wgDBname;
+			GLOBAL $lw_host;$lw_host = $wgDBserver;
+			GLOBAL $lw_user;$lw_user = $wgDBuser;
+			GLOBAL $lw_pass;$lw_pass = $wgDBpassword;
+			GLOBAL $lw_name;$lw_name = $wgDBname;
+
+			GLOBAL $lw_db;
+			if(isset($lw_db)){
+				$db = $lw_db;
+			} else {
+				GLOBAL $lw_host,$lw_user,$lw_pass,$lw_name;
+				$db = mysql_connect($lw_host, $lw_user, $lw_pass);
+				mysql_select_db($lw_name, $db);
+				$lw_db = $db;
+			}
+			return $db;
+		}
 	} // end lw_connect()
 }
 
@@ -98,7 +121,68 @@ if(!function_exists("lw_connect_readOnly")){
 	// be to the slave (read-only replica) which will be faster for read but doesn't allow writes.
 	////
 	function lw_connect_readOnly(){
-		return wfGetDB( DB_SLAVE )->getProperty('mConn');
+		GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
+		if($LW_USE_PERSISTENT_CONNECTIONS){
+			return wfGetDB(DB_SLAVE)->getProperty('mConn');
+		} else {
+			GLOBAL $lw_db;
+			GLOBAL $lw_db_readOnly;
+			if(isset($lw_db_readOnly)){
+				$db = $lw_db_readOnly;
+			} else if(isset($lw_db)){
+				$db = $lw_db; // If a connection to the master is already open, might as well use that.
+			} else {
+				// If the wgDBservers (array of slaves) is available, use that, otherwise use the default connection.
+				GLOBAL $wgDBservers;
+				GLOBAL $lw_host;GLOBAL $lw_user;GLOBAL $lw_pass;GLOBAL $lw_name;
+				GLOBAL $wgDBserver;GLOBAL $wgDBuser;GLOBAL $wgDBpassword;GLOBAL $wgDBname;
+				if(!isset($wgDBservers) || (!is_array($wgDBservers))){
+					$lw_host = $wgDBserver;
+					$lw_user = $wgDBuser;
+					$lw_pass = $wgDBpassword;
+					$lw_name = $wgDBname;
+				} else {
+					// Use the load-settings to randomly determine which server to use (load settings are just probability weights for each db).
+					$totalWeight = 0.0; // we have to normalize the weights to 1.0
+					foreach($wgDBservers as $currServer){
+						if(isset($currServer['load'])){
+							$totalWeight += $currServer['load'];
+						}
+					}
+					$serverWeights = array();
+					for($cnt=0; $cnt < count($wgDBservers); $cnt++){
+						$currWeight = getVal($wgDBservers[$cnt], 'load', 0.0);
+						$serverWeights[] = ($currWeight / $totalWeight);
+					}
+					$precision = 10000; // this is really 10 ^ precision (so precision of 4 decimal points is represented by 10,000).
+					$randomServer = (rand(0, $precision) / $precision);
+					$indexOfServer = "";
+					for($cnt=0; (($indexOfServer==="") && ($cnt < count($serverWeights))); $cnt++){
+						$currWeight = $serverWeights[$cnt];
+						if($currWeight > $randomServer){ // don't use >= .. can't test equality with floating point numbers in PHP.
+							$indexOfServer = $cnt;
+						}
+						$randomServer -= $currWeight;
+					}
+					if($indexOfServer === ""){
+						$indexOfServer = 0; // fallback.
+					}
+
+					// Fallbacks for each value are the defaults (these will hopefully either all be used or not used at all).
+					$currServer = $wgDBservers[$indexOfServer];
+					$lw_host = getVal($currServer, 'host', $wgDBserver);
+					$lw_user = getVal($currServer, 'user', $wgDBuser);
+					$lw_pass = getVal($currServer, 'password', $wgDBpassword);
+					$lw_name = getVal($currServer, 'dbname', $wgDBname);
+				}
+
+				// Create the actual connection
+				$db = mysql_connect($lw_host, $lw_user, $lw_pass);
+				mysql_select_db($lw_name, $db);
+				$lw_db_readOnly = $db;
+			}
+			return $db;
+		}
 	} // end lw_connect_readOnly()
 }
 
@@ -106,7 +190,6 @@ if(!function_exists("lw_connect_readOnly")){
 // this file with LYRICWIKI_SOAP_FUNCS_ONLY and then call the
 // functions directly.
 $funcsOnly = (defined('LYRICWIKI_SOAP_FUNCS_ONLY') && LYRICWIKI_SOAP_FUNCS_ONLY);
-$funcsOnly = false;
 if(!$funcsOnly){
 	// Really basic logging for the requests.
 	// $LOG_FILE = fopen("./lw_API_log.txt", "a");
@@ -582,6 +665,10 @@ function getSong($artist, $song="", $doHyphens=true){
 	$defaultUrl = "http://lyrics.wikia.com";
 	$urlRoot = "http://lyrics.wikia.com/"; // may differ from default URL, should contain a slash after it.
 	$instrumental = "Instrumental";
+	$DENIED_NOTICE = "Unfortunately, due to licensing restrictions from some of the major music publishers we can no longer return lyrics through the LyricWiki API (where this application gets some or all of its lyrics).\n";
+	$DENIED_NOTICE.= "\nThe lyrics for this song can be found at the following URL:\n";
+	$DENIED_NOTICE_SUFFIX = "\n\n\n(Please note: this is not the fault of the developer who created this application, but is a restriction imposed by the music publishers themselves.)";
+	$TRUNCATION_NOTICE = "Our licenses prevent us from returning the full lyrics to this song via the API.  For full lyrics, please visit: $urlLink";
 	$retVal = array('artist' => $artist, 'song' => $song, 'lyrics' => $defaultLyrics, 'url' => $defaultUrl);
 
 	GLOBAL $SHUT_DOWN_API;
@@ -635,7 +722,10 @@ function getSong($artist, $song="", $doHyphens=true){
 			print (!$debug?"":"Before substitutions: \"$artist:$song\"\n");
 			$transArray = array(
 				"<" => "Less Than", // < is not a valid character in wiki titles.
+				">" => "Greater Than", // < is not a valid character in wiki titles.
 				"#" => "Number ", // note the trailing space
+				"{" => "(",
+				"}" => ")"
 			);
 			$song = strtr($song, $transArray);
 			$artist = strtr($artist, $transArray);
@@ -776,6 +866,23 @@ function getSong($artist, $song="", $doHyphens=true){
 					//lw_soapStats_logHit($resultFound);
 				}
 
+				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
+				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
+				if(($retVal['lyrics'] != $defaultLyrics) && ($retVal['lyrics'] != $instrumental) && ($retVal['lyrics'] != "")){
+					$urlLink = "\n\n<a href='".$retVal['url']."'>".$retVal['artist'].":".$retVal['song']."</a>";
+					$lyrics = $retVal['lyrics'];
+
+					if(strlen($lyrics) < 50){
+						$lyrics = "";
+					} else {
+						$lyrics = substr($lyrics, 0, min(0, int(strlen($lyrics) / 7))) . "...";
+					}
+					$lyrics .= "\n\n$TRUNCATION_NOTICE";
+
+					// TODO: when there is time to test it, replace the following line with: $retVal['lyrics'] = $lyrics;
+					$retVal['lyrics'] = $DENIED_NOTICE . $retVal['url'] . $urlLink . $DENIED_NOTICE_SUFFIX;
+				}
+
 				// Make encoding work with UTF8 - NOTE: We do not apply this again to a result that the doHyphens/lastHyphen trick grabbed because that has already been encoded..
 				$retVal['artist'] = utf8_encode($retVal['artist']);
 				$retVal['song'] = utf8_encode($retVal['song']);
@@ -803,7 +910,7 @@ function getArtist($artist){
 	// For now the regex makes it only read the first disc and ignore beyond that (since it assumes the track listing is over).
 	$albums = array();
 	GLOBAL $amazonRoot;
-
+	
 	$debug = false;
 	$debugSuffix = "_debug";
 	if((strlen($artist) >= strlen($debugSuffix)) && (substr($artist, (0-strlen($debugSuffix))) == $debugSuffix)){
@@ -824,7 +931,7 @@ function getArtist($artist){
 	GLOBAL $SHUT_DOWN_API;
 	$correctArtist = $artist; // this will be overwritten (by reference) in lw_getPage().
 	if((!$SHUT_DOWN_API) && lw_pageExists($title)){
-		$content = lw_getPage($title, array(), $correctArtist);
+		$content = lw_getPage($title, array(), $correctArtist, $debug);
 		$albums = parseDiscographies($content, $correctArtist);
 		if($debug){
 			$albums[] = array(
@@ -1617,81 +1724,22 @@ function lw_pageExists($pageTitle){
 function lw_getPage($pageTitle, $pages=array(), &$finalName='', $debug=false){
 	$retVal = "";
 	$finalName = $pageTitle;
-#	$pre = "wiki_";
-	$pre = '';
-	$page = $pre."page";
-	$rev = $pre."revision";
-	$text = $pre."text";
-	$ns = 0; // Main namespace
 
-	// Adapt automatically to detect template pages (they are in a different namespace).
-	if(strpos($pageTitle, "Template:") === 0){
-		$pageTitle = substr($pageTitle, 9);
-		$ns = 10;
-	}
-	print (!$debug?"":"Looking for page title \"$pageTitle\".\n");
-	$pageTitle = addslashes($pageTitle); // This goes here, not in getTitle because the slashed-out characters aren't part of the title, they are only part of a query.
-	$queryString = "SELECT $text.old_text AS content FROM $page,$rev,$text WHERE $page.page_namespace=$ns AND $page.page_title='$pageTitle' ";
-	$queryString.= "AND $page.page_latest=$rev.rev_id AND $rev.rev_text_id=$text.old_id LIMIT 1";
-
-	print (!$debug?"":"Query:\"$queryString\".\n");
-	$db = lw_connect_readOnly();
-	if($result = mysql_query($queryString,$db)){
-		if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-			print (!$debug?"":"Page found.\n");
-			$cnt = 0;
-			$retVal = mysql_result($result, $cnt, "content");
-		} else {
-			print (!$debug?"":"Page not found.\n");
-			// DEBUG ONLY
-			//$retVal = "Page: \"$pageTitle\" not found.";
-			//$retVal = "Not found with query:\n$queryString";
+	// Get the text of the end-point article and record what the final article name is.
+	$title = Title::newFromText($pageTitle);
+	if($title->exists()){
+		$article = Article::newFromID($title->getArticleID());
+		if($article->isRedirect()){
+			$reTitle = $article->followRedirect(); // follows redirects recursively
+			$article = Article::newFromId($reTitle->getArticleID());
 		}
-	} else {
-		// DEBUG ONLY
-		//$retVal = "Query error with query:\n$queryString\nmysql_error():\n".mysql_error();
+		$retVal = $article->getRawText();
+		
+		// Existing code depended on underscores rather than spaces.  This could be cleaned up later.
+		$finalName = str_replace(' ', '_', $article->getTitle()->getText());
 	}
+
 	print (!$debug?"":"page code\n$retVal\n");
-
-	// Handle redirects (and prevent infinite recursion).
-	$matches = array();
-	if(0<preg_match("/^#REDIRECT:?\s*\[\[(.*):(.*?)([|].*?)?\]\]/i", $retVal, $matches)){
-		$pages[] = $pageTitle;
-
-		// TODO: THIS CHANGE DIDN'T SEEM TO FIX ANYTHING...  REPLACE IT WITH "$reTitle = utf8_decode(lw_getTitle($matches[1].":".$matches[2]);" if a fix doesn't come up.
-		// If the redirect differs only in case, then don't use our case-folding formatter... just follow it.
-		// This lets us the redirect work even when the destination does not conform to our http://lyricwiki.org/LW:PN conventions.
-		$reTitle = $matches[1].":".$matches[2];
-		if(($reTitle == $pageTitle) || (strtolower($reTitle) != strtolower($pageTitle))){
-			$reTitle = lw_getTitle($reTitle);
-		}
-		$reTitle = utf8_decode($reTitle);
-
-		print (!$debug?"":"Redirect found.  Redirects to \"$reTitle\".\n");
-		if(!in_array(addslashes($reTitle), $pages)){
-			print (!$debug?"":"Following redirect...\n");
-			$finalName = $reTitle;
-			$retVal = lw_getPage($reTitle, $pages, $finalName, $debug);
-		}
-	} else if(0<preg_match("/^#REDIRECT:?\s*\[\[(.*)([|].*?)?\]\]/i", $retVal, $matches)){
-		$pages[] = $pageTitle;
-
-		// TODO: THIS CHANGE DIDN'T SEEM TO FIX ANYTHING...  REPLACE IT WITH "$reTitle = utf8_decode(lw_getTitle($matches[1]);" if a fix doesn't come up.
-		// If the redirect differs only in case, then don't use our case-folding formatter... just follow it.
-		// This lets us the redirect work even when the destination does not conform to our http://lyricwiki.org/LW:PN conventions.
-		$reTitle = $matches[1];
-		if(($reTitle == $pageTitle) || (strtolower($reTitle) != strtolower($pageTitle))){
-			$reTitle = lw_getTitle($reTitle);
-		}
-
-		$reTitle = utf8_decode($reTitle);
-		print (!$debug?"":"Redirect found.  Redirects to \"$reTitle\".\n");
-		if(!in_array(addslashes($reTitle), $pages)){
-			print (!$debug?"":"Following redirect...\n");
-			$finalName = $reTitle;
-			$retVal = lw_getPage($reTitle, $pages, $finalName, $debug);
-		}
-	}
 
 	return $retVal;
 } // end lw_getPage()
