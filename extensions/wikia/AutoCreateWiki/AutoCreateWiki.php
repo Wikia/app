@@ -42,6 +42,11 @@ $wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
 $wgAutoloadClasses[ "AutoCreateWikiLocalJob" ] = $dir. "AutoCreateWikiLocalJob.php";
 
 /**
+ * generic.starter DB name
+ */
+define( 'AWC_GENERIC_STARTER', 'aastarter' );
+
+/**
  * AutoCreateWiki class
  */
 require_once( $dir . "AutoCreateWiki_helper.php" );
