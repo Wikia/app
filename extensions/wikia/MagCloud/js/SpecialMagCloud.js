@@ -410,6 +410,7 @@ SpecialMagCloud.publish2 = function(data) {
 	}
 
 	if (data['continue']) {
+		MagCloud.track("/publish-ajax/" + data.state);
 		SpecialMagCloud.publish2_data["state"] = data.state;
 		MagCloud.ajax("publish2", SpecialMagCloud.publish2_data, SpecialMagCloud.publish2);
 	} else {
@@ -417,7 +418,10 @@ SpecialMagCloud.publish2 = function(data) {
 		node.css("background", "none");
 
 		if (data.issue) {
+			MagCloud.track("/publish-ajax/redirect-to-mc/" + data.issue);
 			window.location.href = "http://magcloud.com/browse/Issue/" + data.issue;
+		} else {
+			MagCloud.track("/publish-ajax/redirect-to-mc/error-no-issue");
 		}
 	}
 }
