@@ -37,8 +37,6 @@ $wgExtensionFunctions[] = 'SiteWideMessagesInit';
 $wgExtensionMessagesFiles['SpecialSiteWideMessages'] = dirname(__FILE__) . '/SpecialSiteWideMessages.i18n.php';
 $wgAjaxExportList[] = 'SiteWideMessagesAjaxDismiss';
 
-if ( empty( $wgSMWSupportedLanguages ) ) $wgSMWSupportedLanguages = array( 'en' );
-
 //Register special page
 if (!function_exists('extAddSpecialPage')) {
 	require("$IP/extensions/ExtensionFunctions.php");
