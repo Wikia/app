@@ -41,7 +41,7 @@ foreach( $headers as $header => $value ) {
 }
 Http::post("http://theschwartz/theschwartz/inject", 'default', array (
 	CURLOPT_POSTFIELDS => array (
-		"theschwartz_run_after" => gmtime() + 120,
+		"theschwartz_run_after" => time() + 120,
 		"rcpt" => $recipient,
 		"env_from" => $from,
 		"msg" => "$textHeaders" . "\n\n" . "$body"
