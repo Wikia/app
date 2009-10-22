@@ -33,3 +33,17 @@ Http::post("http://theschwartz/theschwartz/inject", 'default', array (
 /**
  * delayed email
  */
+
+$headers[ "Subject" ] = "Test delayed email";
+$textHeaders = "";
+foreach( $headers as $header => $value ) {
+	$textHeaders .= "{$header}: $value\n";
+}
+Http::post("http://theschwartz/theschwartz/inject", 'default', array (
+	CURLOPT_POSTFIELDS => array (
+		"theschwartz_run_after" => gmtime() + 120,
+		"rcpt" => $recipient,
+		"env_from" => $from,
+		"msg" => "$textHeaders" . "\n\n" . "$body"
+	)
+) );
