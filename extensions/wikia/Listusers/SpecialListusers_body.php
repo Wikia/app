@@ -127,23 +127,31 @@ class Listusers extends SpecialPage {
 		global $wgCityId;
 		wfProfileIn( __METHOD__ );
 		$aResult = array();
-		$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
-		if (!is_null($dbs)) {
-			$aQuery = array();
-			if (!empty($aGroups) && is_array($aGroups)) {
-				$aQuery[] = "select '' as groupName, count(*) as cnt from city_local_users where lu_wikia_id = {$wgCityId} and lu_numgroups = 0 and lu_closed = 0 ";
-				foreach ($aGroups as $groupName => $userGroupName) {
-					$aQuery[] = "select '{$groupName}' as groupName, count(*) as cnt from city_local_users where lu_wikia_id = {$wgCityId} and lu_allgroups like '%{$groupName}%' and lu_closed = 0 group by groupName";
+
+		$memkey = wfForeignMemcKey( $wgCityId, null, "Listusers", "groupList" );
+		$cached = $wgMemc->get($memkey);
+		if ( empty($cached) ) {
+			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalDatawareDB);
+			if (!is_null($dbs)) {
+				$aQuery = array();
+				if (!empty($aGroups) && is_array($aGroups)) {
+					$aQuery[] = "select '' as groupName, count(*) as cnt from city_local_users where lu_wikia_id = {$wgCityId} and lu_numgroups = 0 and lu_closed = 0 ";
+					foreach ($aGroups as $groupName => $userGroupName) {
+						$aQuery[] = "select '{$groupName}' as groupName, count(*) as cnt from city_local_users where lu_wikia_id = {$wgCityId} and lu_allgroups like '%{$groupName}%' and lu_closed = 0 group by groupName";
+					}
 				}
-			}
-			if (!empty($aQuery)) {
-				$query = implode(' union ', $aQuery);
-				$res = $dbs->query ($query, __METHOD__ );
-				while ($row = $dbs->fetchObject($res)) {
-					$aResult[(empty($row->groupName)) ? "all" : $row->groupName] = $row->cnt;
+				if (!empty($aQuery)) {
+					$query = implode(' union ', $aQuery);
+					$res = $dbs->query($query, __METHOD__ );
+					while ($row = $dbs->fetchObject($res)) {
+						$aResult[(empty($row->groupName)) ? "all" : $row->groupName] = $row->cnt;
+					}
+					$dbs->freeResult($res);
 				}
-				$dbs->freeResult($res);
+				$wgMemc->set( $memkey, $aResult, 60*60 );
 			}
+		} else {
+			$aResult = $cached;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -219,7 +227,7 @@ class Listusers extends SpecialPage {
 				$aTables = array('city_local_users');
 				$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "'' as ts" );
 				if (!$wgUser->isAnon()) {
-					$aTables = array ( 'city_local_users left join user_login_history on (lu_user_id = user_id)' );
+					$aTables = array ( 'city_local_users left join user_login_history_summary on (lu_user_id = user_id)' );
 					$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "ifnull(max(ulh_timestamp), '') as ts" );
 				}
 				$res = $dbs->select(
