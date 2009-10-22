@@ -114,3 +114,11 @@ $messages["en"] = array(
 	"closed-redirect-alert" => "Please put new URL of redirect!",
 	"closed-reason" => "Reason:",
 );
+
+
+$messages['fi'] = array(
+	'wf_city_url' => 'Osoite',
+	'wf_city_title' => 'Otsikko',
+	'wf_city_created' => 'Luotu',
+	'wf_city_lang' => 'Kieli',
+);

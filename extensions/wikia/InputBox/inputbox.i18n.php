@@ -275,3 +275,33 @@ $messages['zh-yue'] = array(
 	'searchfulltext' => '搵全文',
 	'createarticle' => '建立文章',
 );
+
+
+$messages['fa'] = array(
+	'createarticle' => 'ایجاد مقاله',
+);
+
+
+$messages['zh'] = array(
+	'createarticle' => '创建新条目',
+);
+
+
+$messages['zh-cn'] = array(
+	'createarticle' => '创建新条目',
+);
+
+
+$messages['zh-hk'] = array(
+	'createarticle' => '創建新條目',
+);
+
+
+$messages['zh-sg'] = array(
+	'createarticle' => '创建新条目',
+);
+
+
+$messages['zh-tw'] = array(
+	'createarticle' => '創建新條目',
+);

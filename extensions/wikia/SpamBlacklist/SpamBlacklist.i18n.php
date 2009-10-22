@@ -262,3 +262,30 @@ $messages['zh-hk'] = $messages['zh-hant'];
 $messages['zh-sg'] = $messages['zh-hans'];
 $messages['zh-tw'] = $messages['zh-hant'];
 $messages['zh-yue'] = $messages['yue'];
+
+
+$messages['es'] = array(
+	'spam-blacklist' => ' # URLs externos comparados con esta lista serán bloqueado cuando sean añadidos a una pagina.
+ # Esta lista solo afecta este wiki; referirse también al la lista negra global. [[w:c:MediaWiki:Spam_Blacklist]]
+ # Para la documentación ver http://www.mediawiki.org/wiki/Extension:SpamBlacklist (ingles)
+ #<!-- dejar esta linea como esta --> <pre>
+#
+# La sintaxis es la siguiente:
+#   * Cualquier cosa después del carácter "#" es considerado como comentario.
+#   * Cualquier linea no-blanca es un fragmento regex que solo comparara hosts dentro del URLs
+
+ #</pre> <!-- dejar esta linea como esta -->',
+);
+
+
+$messages['fa'] = array(
+	'spam-blacklist' => '  # از درج پیوندهای بیرونی که با این فهرست مطابقت کنند جلوگیری می‌شود.
+ # این فهرست فقط روی همین ویکی اثر دارد؛ به فهرست سیاه سراسری نیز مراجعه کنید.
+ # برای مستندات به http://www.mediawiki.org/wiki/Extension:SpamBlacklist مراجعه کنید
+ #<!-- این سطر را همان‌گونه که هست رها کنید --> <pre>
+# دستورات به این شکل هستند:
+#  * همه چیز از «#» تا پایان سطر به عنوان توضیح در نظر گرفته می‌شود
+#  * هر سطر از متن به عنوان یک دستور regex در نظر گرفته می‌شود که فقط  با نام میزبان در نشانی اینترنتی مطابقت داده می‌شود
+
+ #</pre> <!-- این سطر را همان‌گونه که هست رها کنید -->',
+);

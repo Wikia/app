@@ -15,3 +15,15 @@ $messages = array(
 	'tagsreportgenerated' => 'Generated on $1',
 	),
 );
+
+
+$messages['es'] = array(
+	'tagsreportselecttag' => 'Seleccionar etiqueta:',
+	'tagsreportgo' => 'Mostrar',
+	'tagsreportnotspecify' => 'No has seleccionado ninguna etiqueta especial aún',
+	'tagsreportnoresults' => 'No se han encontrado resultados',
+	'tagsreportmainnspace' => 'Principal',
+	'tagsreportpages' => '<strong>$1</strong> páginas',
+	'tagsreportpage' => '<strong>$1</strong> página',
+	'tagsreportpagesfound' => '<strong>$1</strong> páginas encontradas, que contengan alguna etiqueta especial (dpl, youtube, etc.)',
+);
