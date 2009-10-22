@@ -1,5 +1,5 @@
 == Changes since 200910.3 ==
-* rt#25419: RegexBlock: correct infinity keyword (TOR)
+* rt#25419: RegexBlock: correct infinity keyword (uberfuzzy)
 * rt#25036: MagCloud, Analytics: Ajax publish tracking. (Nef)
 * rt#19023: Answers, Analytics: Clicktracking. (Nef)
 * rt#25352: MagCloud, NYC: Fatal call to class video fixed. (Nef, HT Tor)
