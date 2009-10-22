@@ -11,7 +11,8 @@ $from      = "community@wikia-inc.com";
 $recipient = "eloy@wikia-inc.com";
 $body      = "Test email";
 $headers   = array(
-	"Subject" => "Test email"
+	"Subject"        => wfQuotedPrintable( "Test email " . wfTimestampNow() ),
+	"X-Msg-Category" => "Test"
 );
 
 /**
@@ -25,7 +26,9 @@ Http::post("http://theschwartz/theschwartz/inject", 'default', array (
 	CURLOPT_POSTFIELDS => array (
 		"rcpt" => $recipient,
 		"env_from" => $from,
-		"msg" => "$textHeaders" . "\n\n" . "$body")));
+		"msg" => "$textHeaders" . "\n\n" . "$body"
+	)
+) );
 
 /**
  * delayed email
