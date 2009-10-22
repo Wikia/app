@@ -322,7 +322,6 @@
 	position: relative;
 	font-size: 8pt;
 	font-weight: bold;
-	float: left;
 	margin-right: 2px;
 	overflow: hidden !important; /* Opera fix */
 }
