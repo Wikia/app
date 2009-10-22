@@ -875,7 +875,7 @@ function getSong($artist, $song="", $doHyphens=true){
 					if(strlen($lyrics) < 50){
 						$lyrics = "";
 					} else {
-						$lyrics = substr($lyrics, 0, min(0, int(strlen($lyrics) / 7))) . "...";
+						$lyrics = substr($lyrics, 0, min(0, round(strlen($lyrics) / 7))) . "...";
 					}
 					$lyrics .= "\n\n$TRUNCATION_NOTICE";
 
