@@ -19,3 +19,49 @@ $messages['pl'] = array(
 	'editsimilar-link-disable' => 'zmień ustawienia' ,
 	'tog-edit-similar'=> 'Włącz sugestie edycji podobnych artykułów' ,
 ) ;
+
+
+$messages['de'] = array(
+	'editsimilar-thanks' => 'Vielen Dank für deine Bearbeitung. Wirf auch einen Blick auf diese verwandten Artikel: $1.',
+	'editsimilar-thanks-singleresult' => 'Vielen Dank für deine Bearbeitung. Wirf auch einen Blick auf diesen verwandten Artikel: $1.',
+	'editsimilar-thanks-notsimilar' => 'Vielen Dank für deine Bearbeitung. Diese Artikel könnten auch noch etwas Hilfe gebrauchen: $1.',
+	'editsimilar-thanks-notsimilar-singleresult' => 'Vielen Dank für deine Bearbeitung. Dieser Artikel könnte auch noch etwas Hilfe gebrauchen: $1.',
+	'editsimilar-thankyou' => 'Vielen Dank für deine Bearbeitung, $1!',
+	'editsimilar-link-disable' => 'Einstellungen',
+	'tog-edit-similar' => 'Hinweis auf ähnliche Artikel aktivieren',
+);
+
+
+$messages['es'] = array(
+	'editsimilar-thanks' => 'Gracias por tu edición. ¿Puedes mejorar cualquiera de estos artículos relacionados? $1.',
+	'editsimilar-thanks-singleresult' => 'Gracias por tu edición. ¿Puedes mejorar este artículo relacionado? $1.',
+	'editsimilar-thanks-notsimilar' => 'Gracias por tu edición. ¿Puedes mejorar cualquiera de estos artículos? $1.',
+	'editsimilar-thanks-notsimilar-singleresult' => 'Gracias por tu edición. ¿Puedes mejorar este artículo? $1.',
+	'editsimilar-thankyou' => '¡Gracias por tu edición, $1!',
+	'editsimilar-link-disable' => 'determina preferencias',
+	'tog-edit-similar' => 'Permitir sugerencias de artículos similares',
+);
+
+
+$messages['fr'] = array(
+	'editsimilar-thanks' => 'Merci pour votre modification! Voir aussi cette articles: $1.',
+	'editsimilar-thanks-singleresult' => 'Merci pour votre modification ! Voyez aussi cette page connexe : $1.',
+	'editsimilar-thanks-notsimilar-singleresult' => 'Merci pour votre modification ! Cet article aussi peut avoir besoin d\'aide: $1.',
+	'tog-edit-similar' => 'Permettre les suggestions d\'articles similaires',
+);
+
+
+$messages['ja'] = array(
+	'editsimilar-thanks' => '編集ありがとうございます。$1 などの関連する記事の編集も是非どうぞ。',
+	'editsimilar-thanks-singleresult' => '編集ありがとうございます。$1 などの関連する記事の編集も是非どうぞ。',
+	'editsimilar-thanks-notsimilar' => 'ご参加ありがとうございます! $1 などといった記事も是非とも編集してみてください!',
+	'editsimilar-thanks-notsimilar-singleresult' => 'ご参加ありがとうございます! $1 などといった記事も是非とも編集してみてください!',
+	'editsimilar-thankyou' => '$1さん、編集ありがとうございます!',
+	'editsimilar-link-disable' => 'この機能の設定を行なう',
+	'tog-edit-similar' => '関連記事の提案を有効にする',
+);
+
+
+$messages['ru'] = array(
+	'tog-edit-similar' => 'Включить предложения похожих статей',
+);

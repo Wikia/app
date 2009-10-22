@@ -63,3 +63,13 @@ $messages['en'] = array(
 	'multidelete-swedish-wikis' => 'all swedish wikis',
 	'multidelete-german-wikis' => 'all german wikis',
 );
+
+
+$messages['de'] = array(
+	'multidelete' => 'Lösche mehrere Seiten',
+);
+
+
+$messages['fr'] = array(
+	'multidelete-all-wikis' => 'Tous les wikis',
+);

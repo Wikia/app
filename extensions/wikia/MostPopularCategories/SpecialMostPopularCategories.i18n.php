@@ -9,3 +9,18 @@
 $messages['en'] = array(
 	'mostpopularcategories' => 'Most popular categories',
 );
+
+
+$messages['de'] = array(
+	'mostpopularcategories' => 'Beliebteste Kategorien',
+);
+
+
+$messages['es'] = array(
+	'mostpopularcategories' => 'Categorías más populares',
+);
+
+
+$messages['fa'] = array(
+	'mostpopularcategories' => 'رده‌های محبوب',
+);

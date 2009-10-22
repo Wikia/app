@@ -12,3 +12,13 @@ $messages["en"] = array(
 );
 
 ?>
+
+
+$messages['de'] = array(
+	'mostpopulararticles' => 'Häufig geänderte Artikel',
+);
+
+
+$messages['es'] = array(
+	'mostpopulararticles' => 'Páginas más populares',
+);

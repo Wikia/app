@@ -232,3 +232,28 @@ $messages['vi'] = array(
 	'whosonline-desc' => 'Hiển thị [[Special:WhosOnline|danh sách]] các thành viên đã đăng nhập lẫn vô danh hiện đang trực tuyến',
 );
 
+
+
+$messages['zh-cn'] = array(
+	'whosonline' => '谁在线上？',
+);
+
+
+$messages['zh-hans'] = array(
+	'whosonline' => '谁在线上？',
+);
+
+
+$messages['zh-hant'] = array(
+	'whosonline' => '誰在線上？',
+);
+
+
+$messages['zh-hk'] = array(
+	'whosonline' => '誰在線上？',
+);
+
+
+$messages['zh-tw'] = array(
+	'whosonline' => '誰在線上？',
+);

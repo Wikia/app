@@ -1549,3 +1549,10 @@ $messages['pl'] = array(
 	'wysiwygToolbarSignature' => 'Dodaj swój podpis',
 	'wysiwygToolbarWidescreen' => 'Włącz/wyłącz tryb pełnoekranowy',
 );
+
+$messages['ja'] = array(
+	'wysiwygbold' => '太字',
+	'wysiwygitalic' => '斜体',
+	'wysiwygtoolbarh2' => '節見出し',
+	'wysiwygtoolbarh3' => '小見出し',
+);

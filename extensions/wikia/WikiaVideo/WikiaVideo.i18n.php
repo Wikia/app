@@ -32,3 +32,44 @@ $messages['pl'] = array(
 	'wikiavideo-deleted-old' => "Usunięto video '''[$1 $1]''' w wersji z $4, $3.",
 	'wikiavideo-intro-old' => "Usuwasz wersję '''[$1 $5]''' z [$4 $3, $2].",
 );
+
+
+$messages['de'] = array(
+	'wikiavideo-reverted' => 'Das Video $1 wurde erfolgreich zurückgesetzt. Zurück zu $2.',
+	'wikiavideo-added' => 'Video $1 hinzugefügt',
+	'wikiavideo-back' => 'zurück',
+	'wikiavideo-create' => 'Video hinzufügen',
+	'wikiavideo-replace' => 'Ersetze Video',
+	'wikiavideo-category' => 'Videos',
+);
+
+
+$messages['es'] = array(
+	'wikiavideo-reverted' => 'El vídeo $1 fue revertido satisfactoriamente. Vuelve a $2.',
+	'wikiavideo-added' => 'añadido vídeo $1',
+	'wikiavideo-back' => 'volver',
+	'wikiavideo-create' => 'Añadir Vídeo',
+	'wikiavideo-replace' => 'Reemplazar Vídeo',
+	'wikiavideo-category' => 'Vídeos',
+	'wikiavideo-gallery-template' => 'Esta galería de vídeos está sin plantillas, y no es editable desde este modo de vista. Por favor, edita la plantilla apropiada.',
+	'wikiavideo-not-supported' => 'Esta piel no soporta insertar vídeos desde este modo de vista en las galerías.',
+);
+
+
+$messages['ja'] = array(
+	'wikiavideo-added' => '動画"$1"を追加',
+	'wikiavideo-back' => '戻る',
+	'wikiavideo-category' => '動画',
+);
+
+
+$messages['fa'] = array(
+	'wikiavideo-back' => 'بازگشت',
+	'wikiavideo-replace' => 'جایگزین‌کردن ویدیوی دیگر',
+	'wikiavideo-category' => 'ویدیو‌ها',
+);
+
+
+$messages['nl'] = array(
+	'wikiavideo-category' => 'Video\'s',
+);

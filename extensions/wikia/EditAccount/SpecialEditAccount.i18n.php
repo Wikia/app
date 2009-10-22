@@ -88,3 +88,18 @@ $messages['fi'] = array(
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Tämä tunnus on suljettu.</div>',
 	'right-editaccount' => 'Muuttaa toisten käyttäjien käyttäjäkohtaisia asetuksia',
 );
+
+
+$messages['fa'] = array(
+	'editaccount-submit-close' => 'بستن حساب کاربری',
+);
+
+
+$messages['de'] = array(
+	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Dieses Benutzerkonto wurde deaktiviert.</div>',
+);
+
+
+$messages['es'] = array(
+	'right-editaccount' => 'Editar las preferencias de otros usuarios',
+);

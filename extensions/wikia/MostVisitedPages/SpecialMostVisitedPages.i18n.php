@@ -14,3 +14,17 @@ $messages["en"] = array(
 );
 
 ?>
+
+
+$messages['de'] = array(
+	'mostvisitedpages' => 'Häufig aufgerufene Seiten',
+	'mostvisitedpagessearchtext' => 'Artikelname:',
+	'mostvisitedpagessearchbtn' => 'Suchen',
+);
+
+
+$messages['es'] = array(
+	'mostvisitedpages' => 'Páginas más visitadas',
+	'mostvisitedpagessearchtext' => 'Nombre del artículo o de los artículos:',
+	'mostvisitedpagessearchbtn' => 'buscar',
+);

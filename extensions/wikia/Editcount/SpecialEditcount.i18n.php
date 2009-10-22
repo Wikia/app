@@ -194,3 +194,37 @@ $messages = array(
 	/* Cantonese default, fallback to zh-hans or zh-hant */
 	$messages['zh-yue'] = $messages['yue'];
 
+
+
+$messages['es'] = array(
+	'editcount' => 'Contador de ediciones',
+	'editcount_username' => 'Usuario:',
+	'editcount_submit' => 'Consultar',
+	'editcount_allwikis' => 'Todos los wikis',
+);
+
+
+$messages['fa'] = array(
+	'editcount' => 'شمارش ویرایش‌ها',
+	'editcount_username' => 'کاربر:',
+	'editcount_submit' => 'ارسال',
+	'editcount_total' => 'کل',
+	'editcount_allwikis' => 'تمام ویکی‌ها',
+);
+
+
+$messages['fi'] = array(
+	'editcount' => 'Muokkauslaskuri',
+	'editcount_username' => 'Käyttäjä:',
+	'editcount_submit' => 'Lähetä',
+	'editcount_total' => 'Yhteensä',
+);
+
+
+$messages['ja'] = array(
+	'editcount' => '編集回数のカウント',
+	'editcount_username' => '利用者名:',
+	'editcount_submit' => '実行',
+	'editcount_total' => '合計',
+	'editcount_allwikis' => '全てのウィキ',
+);

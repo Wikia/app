@@ -18,3 +18,10 @@ $messages['pl'] = array(
 	"taskmanager_title" => "Zarządzanie zadaniami uruchamianymi w tle",
 	"taskmanager_tasklist" => "Wróc do listy zadań",
 );
+
+
+$messages['de'] = array(
+	'taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
+	'taskmanager_title' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
+	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
+);

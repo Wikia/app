@@ -73,3 +73,59 @@ $messages['en'] = array(
 	'multidelete_german_wikis' => 'all german wikis',
 ) ;
 
+
+
+$messages['de'] = array(
+	'multiwikiedit' => 'Mehrere Seiten gleichzeitig editieren',
+	'multiwikiedit_button' => 'BEARBEITEN',
+	'multiwikiedit_help' => 'Bearbeite mehrere Seiten gleichzeitig. Du kannst entweder eine einzelne Bearbeitung vornehmen oder Seiten, die in einer Datei gelistet sind. Wähle einen Benutzer, der in den Bearbeitungslogs angezeigt wird. Die hochgeladene Seitenliste muss den Seitennamen und eine durch | abgetrennte optionale Begründung in jeder Zeile beinhalten.',
+	'multiwikiedit_caption' => 'Liste von Seiten',
+	'multiwikiedit_title' => 'MultiWikiEdit',
+	'multiwikiedit_as' => 'Führe Skript aus als',
+	'multiwikiedit_both_modes' => 'Bitte wähle eine bestimmte Seite oder eine vorgegebene Liste von Seiten.',
+	'multiwikiedit_or' => '<b>ODER</b>',
+	'multiwikiedit_task_added' => 'Der MultiWikiEdit-Auftrag wurde hinzugefügt.',
+	'multiwikiedit_task_error' => 'Beim Hinzufügen des MultiWikiEdit-Auftrags ist ein Fehler aufgetreten.',
+	'multiwikiedit_task_none_selected' => 'Du hast keine Artikel ausgewählt. Es wurde kein Auftrag hinzugefügt.',
+	'multiwikiedit_task_link' => 'Du kannst deinen Auftrag einsehen',
+	'multiwikiedit_on' => 'in',
+	'multiwikiedit_page' => 'Zu bearbeitende Seiten',
+	'multiwikiedit_page_text' => 'Zu speichernder Text',
+	'multiwikiedit_reason' => 'Bearbeitungsgrund',
+	'multiwikiedit_list_caption' => 'List der Wikis',
+	'multiwikiedit_minoredit_caption' => 'Kleine Änderung',
+	'multiwikiedit_botedit_caption' => 'Bot-Bearbeitung (versteckt)',
+	'multiwikiedit_autosummary_caption' => 'Automatische Zusammenfassung',
+	'multiwikiedit_norecentchanges_caption' => 'Bearbeitungen in den Letzten Änderungen verbergen',
+	'multiwikiedit_choose_articles' => 'wähle, welche der gefundenen Artikel bearbeitet werden sollen',
+	'multiwikiedit_processing' => 'Bearbeite Seiten',
+	'multiwikiedit_from_file' => 'Dateiliste',
+	'multiwikiedit_from_form' => 'Formulardaten',
+	'multiwikiedit_summary_text' => 'Zusammenfassungs-Feld',
+	'multiwikiedit_this_wiki' => 'diesem Wiki',
+	'multiwikiedit_inbox_caption' => 'durch Kommata getrennt',
+	'multiwikiedit_all_wikis' => 'allen Wikis',
+	'multiwikiedit_selected_wikis' => 'ausgewählten Wikis',
+	'multiwikiedit_success_subtitle' => 'auf $1',
+	'multiwikiedit_link_back' => 'Zurück zum MultiWikiEdit-Formular',
+	'multiwikiedit_omitting_nonexistant' => 'Lasse nicht existente Seite $1 aus.',
+	'multiwikiedit_omitting_invalid' => 'Lasse ungültige Seite $1 aus.',
+	'multiwikiedit_file_bad_format' => 'Die Datei sollte eine reine Textdatei sein',
+	'multiwikiedit_file_missing' => 'Datei kann nicht gelesen werden',
+	'multiwikiedit_select_script' => 'Seiten-Bearbeitungsskript',
+	'multiwikiedit_select_yourself' => 'eigener Benutzer',
+	'multiwikiedit_no_page' => 'Bitte gib mindestens eine zu bearbeitende Seite an ODER wähle eine Datei mit einer Liste von Seiten.',
+);
+
+
+$messages['fr'] = array(
+	'multiwikiedit_or' => '<b>OU</b>',
+	'multiwikiedit_autosummary_caption' => 'Masquer le résumé',
+	'multiwikiedit_summary_text' => 'Champ du résumé',
+	'multiwikiedit_all_wikis' => 'tous les wikis',
+);
+
+
+$messages['zh-tw'] = array(
+	'multiwikiedit_norecentchanges_caption' => '不要將此項修訂顯示於最近修改頁。',
+);
