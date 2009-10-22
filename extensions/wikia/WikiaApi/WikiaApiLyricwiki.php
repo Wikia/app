@@ -10,14 +10,18 @@
   
   Problems:
    - Doesn't default to getSong (just goes to MediaWiki API).
-   - Parsing of artist discographies is broken
-  
-  
+   - The headers aren't being set (which is important for caching).  Find out where this page is called from.
+   - getHometown wasn't ported over.
+   - a lot seems to be missing... should make one pass over the code next to the original code & see what's up.
+
+
  */
 
 $wgAPIModules['lyrics'] = 'WikiaApiLyricwiki';
 
 class WikiaApiLyricwiki extends ApiBase {
+
+	var $root = "http://lyrics.wikia.com/"; // for links
 
 	/**
 	 * constructor
@@ -40,6 +44,11 @@ class WikiaApiLyricwiki extends ApiBase {
 		
 		// TODO: Detect the API even if func is not defined (since that wasn't a documented requirement).  - SWC
 		$func = (($func == "")?"getSong":$func);
+
+		// Special case (suggested by CantoPod) to return all of an artist's songs when none is specified.
+		if(($funcName == "getSong") && (getVal($_GET, 'song') == "")){
+			$funcName = "getArtist";
+		}
 
 		switch ( $func ) {
 			case 'getArtist':
@@ -98,7 +107,7 @@ class WikiaApiLyricwiki extends ApiBase {
 				$result = getArtist($artist);
 				$artist = getVal($result, 'artist');
 				$albums = $result['albums'];
-				print "<h3><a href='$root".$this->linkEncode($artist)."'>$artist</a></h3>\n";
+				print "<h3><a href='$this->root".$this->linkEncode($artist)."'>$artist</a></h3>\n";
 				print "<a href='" .$result['url'] . "'/>" . $result['song'] . "</a>";
 				if(count($albums) > 0){
 					print "<ul class='albums'>\n";
@@ -107,7 +116,7 @@ class WikiaApiLyricwiki extends ApiBase {
 						$year = getVal($currAlbum, 'year');
 						$amznLink = getVal($currAlbum, 'amazonLink');
 						$songs = getVal($currAlbum, 'songs');
-						print "<li><a href='$root".$this->linkEncode("$artist:$albumName".($year==""?"":"_($year)"))."'>$albumName".($year==""?"":"_($year)")."</a>";
+						print "<li><a href='$this->root".$this->linkEncode("$artist:$albumName".($year==""?"":"_($year)"))."'>$albumName".($year==""?"":"_($year)")."</a>";
 						if($amznLink != ""){
 								print " - (at <a href='$amznLink' title=\"$albumName at amazon\">amazon</a>)";
 						}
@@ -115,9 +124,9 @@ class WikiaApiLyricwiki extends ApiBase {
 							print "<ul class='songs'>\n";
 							foreach($songs as $currSong){
 								if(strpos($currSong, ":") !== false){
-									print "<li><a href='$root".$this->linkEncode($currSong)."'>$currSong</li>\n";
+									print "<li><a href='$this->root".$this->linkEncode($currSong)."'>$currSong</li>\n";
 								} else {
-									print "<li><a href='$root".$this->linkEncode("$artist:$currSong")."'>$currSong</li>\n";
+									print "<li><a href='$this->root".$this->linkEncode("$artist:$currSong")."'>$currSong</li>\n";
 								}
 							}
 							print "</ul>\n";
@@ -195,16 +204,16 @@ class WikiaApiLyricwiki extends ApiBase {
 			switch($fmt){
 			case "text":
 				$result = getSong($artist, $songName);
-				print $result['url'];
+				print utf8_decode($result['lyrics']);
+				//print "\n\n".$result['url'];
 				break;
-//			print utf8_decode($result['lyrics']);
 			case "js":
 				$result = getSong($artist, $songName);
-				$this->writeJS($result['url']);
+				$this->writeJS($result);
 				break;
 			case "json":
 				$result = getSong($artist, $songName);
-				$this->writeJSON($result['url']);
+				$this->writeJSON($result);
 				break;
 			case "xml":
 				header('Content-Type: application/xml', true);
@@ -212,9 +221,7 @@ class WikiaApiLyricwiki extends ApiBase {
 				print "<LyricsResult>\n";
 				$result = getSong($artist, $songName);
 				foreach($result as $keyName=>$val){
-					if ($keyName != 'lyrics' ) {
-						print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
-					}
+					print "\t<$keyName>".utf8_decode(htmlspecialchars($val, ENT_QUOTES, "UTF-8"))."</$keyName>\n";
 				}
 				print "</LyricsResult>\n";
 				break;
@@ -224,11 +231,10 @@ class WikiaApiLyricwiki extends ApiBase {
 				$result = getSong($artist, $songName);
 
 				$this->htmlHead($result['artist']." ".$result['song']." lyrics");
-				print "<h3><a href='$root".$this->linkEncode($result['artist'].":".$result['song'])."'>".utf8_decode($result['song'])."</a> by <a href='$root".$this->linkEncode($result['artist'])."'>".utf8_decode($result['artist'])."</a></h3>\n";
-
-//			print "<pre>\n";
-//			print utf8_decode($result['lyrics']);
-//			print "</pre>";
+				print "<h3><a href='$this->root".$this->linkEncode($result['artist'].":".$result['song'])."'>".utf8_decode($result['song'])."</a> by <a href='$this->root".$this->linkEncode($result['artist'])."'>".utf8_decode($result['artist'])."</a></h3>\n";
+				print "<pre>\n";
+				print utf8_decode($result['lyrics']);
+				print "</pre>";
 
 				// Make it extensible by displaying any extra data in a UL.
 				unset($result['artist']);

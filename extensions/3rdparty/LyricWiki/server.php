@@ -875,12 +875,13 @@ function getSong($artist, $song="", $doHyphens=true){
 					if(strlen($lyrics) < 50){
 						$lyrics = "";
 					} else {
-						$lyrics = substr($lyrics, 0, min(0, round(strlen($lyrics) / 7))) . "...";
+						$lyrics = substr($lyrics, 0, max(0, round(strlen($lyrics) / 7))) . "[...]";
 					}
-					$lyrics .= "\n\n$TRUNCATION_NOTICE";
+					$lyrics .= "\n\n\n\n$TRUNCATION_NOTICE".$retVal['url']."$urlLink";
 
-					// TODO: when there is time to test it, replace the following line with: $retVal['lyrics'] = $lyrics;
-					$retVal['lyrics'] = $DENIED_NOTICE . $retVal['url'] . $urlLink . $DENIED_NOTICE_SUFFIX;
+					// We now return the truncated version instead of just a flat-out denial.
+					$retVal['lyrics'] = $lyrics;
+					//$retVal['lyrics'] = $DENIED_NOTICE . $retVal['url'] . $urlLink . $DENIED_NOTICE_SUFFIX;
 				}
 
 				// Make encoding work with UTF8 - NOTE: We do not apply this again to a result that the doHyphens/lastHyphen trick grabbed because that has already been encoded..
@@ -1726,17 +1727,15 @@ function lw_getPage($pageTitle, $pages=array(), &$finalName='', $debug=false){
 	$finalName = $pageTitle;
 
 	// Get the text of the end-point article and record what the final article name is.
-	$title = Title::newFromText($pageTitle);
+	$title = Title::newFromDBkey($pageTitle);
 	if($title->exists()){
 		$article = Article::newFromID($title->getArticleID());
 		if($article->isRedirect()){
 			$reTitle = $article->followRedirect(); // follows redirects recursively
 			$article = Article::newFromId($reTitle->getArticleID());
 		}
+		$finalName = $article->getTitle()->getDBkey();
 		$retVal = $article->getRawText();
-		
-		// Existing code depended on underscores rather than spaces.  This could be cleaned up later.
-		$finalName = str_replace(' ', '_', $article->getTitle()->getText());
 	}
 
 	print (!$debug?"":"page code\n$retVal\n");
