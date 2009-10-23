@@ -32,8 +32,9 @@ include_once( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
 
 class AutoCreateWikiLocalJob extends Job {
 
-	const DEFAULT_USER = 'Default';
-	const REMINDER_URL = "http://theschwartz/function/TheSchwartz::Worker::URL";
+	const DEFAULT_USER   = 'Default';
+	const REMINDER_URL   = "http://theschwartz/function/TheSchwartz::Worker::URL";
+	const REMINDER_DELAY =  172800; # 48h
 
 	private
 		$mFounder;
