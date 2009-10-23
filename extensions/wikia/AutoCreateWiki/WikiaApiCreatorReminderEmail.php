@@ -33,32 +33,36 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 		global $wgTheSchwartzSecretToken, $wgCityId;
 
 		$params = $this->extractRequestParams();
-		$result = array();
-		if( isset($params[ "token" ] ) && $params[ "token" ] === $wgTheSchwartzToken ) {
+		$status = 0;
+
+		if( isset($params[ "token" ] ) && $params[ "token" ] === $wgTheSchwartzSecretToken ) {
 			/**
 			 * get city_founding_user from city_list
 			 */
 			$wiki = WikiFactory::getWikiByID( $wgCityId );
 			$founder = User::newFromId( $wiki->city_founding_user );
+			Wikia::log( __METHOD__, "user", $founder->getName() );
 			/**
 			 * for test purpose send email to me, Eloy.wikia
 			 */
 			$founder = User::newFromId( 51098 );
 			if( $founder ) {
-				$founder->sendMail(
+				if( $founder->sendMail(
 					wfMsg( "createwiki-reminder-subject" ),
 					wfMsg( "createwiki-reminder-body" ),
 					null /*from*/,
 					null /*replyto*/,
 					"AutoCreateWikiReminder",
 					wfMsg( "createwiki-reminder-body-HTML" )
-				);
+				) ) {
+					$status = 1;
+				}
 			}
 		}
 		else {
 			$this->dieUsageMsg( array( "sessionfailure" ) );
 		}
-
+		$result = array( "status" => $status );
 		$this->getResult()->setIndexedTagName($result, 'status');
 		$this->getResult()->addValue(null, $this->getModuleName(), $result );
 
@@ -83,10 +87,9 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 	 * @access public
 	 */
 	public function getAllowedParams() {
-		$types  = $this->getEmailTypes();
 		return array(
-			"user_id"   => array( APIBASE::PARAM_TYPE => "integer" ),
-			"token"
+			"user_id" => array( APIBASE::PARAM_TYPE => "integer" ),
+			"token"   => array( )
 		);
 	}
 
