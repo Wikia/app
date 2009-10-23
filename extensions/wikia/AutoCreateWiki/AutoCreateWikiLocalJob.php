@@ -33,6 +33,7 @@ include_once( $GLOBALS['IP'] . "/extensions/CheckUser/install.inc" );
 class AutoCreateWikiLocalJob extends Job {
 
 	const DEFAULT_USER = 'Default';
+	const REMINDER_URL = "http://theschwartz/function/TheSchwartz::Worker::URL";
 
 	private
 		$mFounder;
@@ -431,5 +432,23 @@ class AutoCreateWikiLocalJob extends Job {
 		Wikia::log( __METHOD__, "info", "change rev_user and rev_user_text in revisions: {$rows} rows" );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * send http post to TheSchwartz which queue reminder call for 48hours.
+	 * TheSchwartz will call api.php?method=awcreminder
+	 */
+	private function queueReminderInTheSchwartz() {
+		global $wgServer, $wgTheSchwartzSecretToken;
+
+		$backurl = sprintf( "%s/api.php?action=awcreminder&user_id=%d&token=%s",
+			$wgServer, $this->mFounder->getId(), $wgTheSchwartzSecretToken );
+
+		Http::post( self::REMINDER_URL, 'default', array (
+			CURLOPT_POSTFIELDS => array (
+				"theschwartz_run_after" => time() + self::REMINDER_DELAY,
+				"url" => $backurl
+			)
+		));
 	}
 }

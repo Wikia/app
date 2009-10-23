@@ -36,16 +36,24 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 		$status = 0;
 
 		if( isset($params[ "token" ] ) && $params[ "token" ] === $wgTheSchwartzSecretToken ) {
+
+			/**
+			 * get creator from param
+			 */
+			$founder = User::newFromId( $params[ "user_id" ] );
+			$founder->load();
 			/**
 			 * get city_founding_user from city_list
 			 */
-			$wiki = WikiFactory::getWikiByID( $wgCityId );
-			$founder = User::newFromId( $wiki->city_founding_user );
-			Wikia::log( __METHOD__, "user", $founder->getName() );
+			if( !$founder ) {
+				$wiki = WikiFactory::getWikiByID( $wgCityId );
+				$founder = User::newFromId( $wiki->city_founding_user );
+			}
 			/**
 			 * for test purpose send email to me, Eloy.wikia
 			 */
 			$founder = User::newFromId( 51098 );
+			Wikia::log( __METHOD__, "user", $founder->getName() );
 			if( $founder ) {
 				if( $founder->sendMail(
 					wfMsg( "createwiki-reminder-subject" ),
