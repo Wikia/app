@@ -76,10 +76,11 @@ $wgAutoloadClasses["WikiaApiQueryReferers"] = "extensions/wikia/WikiaApi/WikiaAp
 $wgAutoloadClasses["ApiFeaturedContent"] = "extensions/wikia/FeaturedContent/ApiFeaturedContent.php";
 $wgAutoloadClasses["ApiPartnerWikiConfig"] = "extensions/wikia/FeaturedContent/ApiPartnerWikiConfig.php";
 $wgAutoloadClasses["WikiaApiAjaxLogin"] = "extensions/wikia/WikiaApi/WikiaApiAjaxLogin.php";
-$wgAutoloadClasses["ApiImageThumb"] = $GLOBALS["IP"]."/extensions/wikia/Our404Handler/ApiImageThumb.php";
 $wgAutoloadClasses["WikiaApiQuerySiteInfo"] = "extensions/wikia/WikiaApi/WikiaApiQuerySiteinfo.php";
 $wgAutoloadClasses["WikiaApiQueryPageinfo"] = "extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
-$wgAutoloadClasses["WikiaApiReportEmail"] = $GLOBALS["IP"]."/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
+$wgAutoloadClasses[ "ApiImageThumb"                ] = $GLOBALS["IP"]."/extensions/wikia/Our404Handler/ApiImageThumb.php";
+$wgAutoloadClasses[ "WikiaApiReportEmail"          ] = $GLOBALS["IP"]."/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
+$wgAutoloadClasses[ "WikiaApiCreatorReminderEmail" ] = $GLOBALS["IP"]."/extensions/wikia/AutoCreateWiki/WikiaApiCreatorReminderEmail.php";
 
 /**
  * registered API methods
@@ -121,15 +122,17 @@ $wgApiMainListFormats["wktemplate"] = "WikiaApiFormatTemplate";
  * reqistered API modules
  */
 global $wgAPIModules;
-$wgAPIModules["insert"] = "WikiaApiQueryWrite";
-$wgAPIModules["update"] = "WikiaApiQueryWrite";
-$wgAPIModules["delete"] = "ApiDelete";
-$wgAPIModules["wdelete"] = "WikiaApiQueryWrite";
-$wgAPIModules["featuredcontent"] = "ApiFeaturedContent";
-$wgAPIModules["partnerwikiconfig"] = "ApiPartnerWikiConfig";
-$wgAPIModules["ajaxlogin"] = "WikiaApiAjaxLogin";
-$wgAPIModules["imagethumb"] = "ApiImageThumb";
-$wgAPIModules['theschwartz'] = 'WikiaApiReportEmail';
+$wgAPIModules[ "insert"            ] = "WikiaApiQueryWrite";
+$wgAPIModules[ "update"            ] = "WikiaApiQueryWrite";
+$wgAPIModules[ "delete"            ] = "ApiDelete";
+$wgAPIModules[ "wdelete"           ] = "WikiaApiQueryWrite";
+$wgAPIModules[ "featuredcontent"   ] = "ApiFeaturedContent";
+$wgAPIModules[ "partnerwikiconfig" ] = "ApiPartnerWikiConfig";
+$wgAPIModules[ "ajaxlogin"         ] = "WikiaApiAjaxLogin";
+$wgAPIModules[ "imagethumb"        ] = "ApiImageThumb";
+$wgAPIModules[ "theschwartz"       ] = "WikiaApiReportEmail";
+$wgAPIModules[ "awcreminder"       ] = "WikiaApiCreatorReminderEmail";
+
 
 /*
  * Widget FrameWork declarations
@@ -298,10 +301,10 @@ $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php"
 
 /**
  * @name wgEnableBlogCommentEdit, wgEnabledGroupedBlogComments, wgEnableBlogWatchlist
- * enable: 
+ * enable:
  * 	* blog comments edit
  * 	* grouped blog comments in RC
- * 	* added blogs to watchlist 
+ * 	* added blogs to watchlist
  */
 $wgEnableBlogCommentEdit = true;
 $wgEnabledGroupedBlogComments = true;
