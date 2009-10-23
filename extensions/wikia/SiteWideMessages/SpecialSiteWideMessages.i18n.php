@@ -87,8 +87,6 @@ $messages = array(
 		'swm-error-empty-group'		=> 'Enter the name of the group.'
 	)
 );
-?>
-
 
 $messages['de'] = array(
 	'sitewidemessages' => 'Nachricht an Alle',
