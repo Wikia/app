@@ -23,7 +23,6 @@
 -- Table structure for table `_ext_changes_xml`
 --
 
-DROP TABLE IF EXISTS `_ext_changes_xml`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `_ext_changes_xml` (
@@ -39,7 +38,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `blobs`
 --
 
-DROP TABLE IF EXISTS `blobs`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `blobs` (
@@ -61,7 +59,7 @@ CREATE TABLE `blobs` (
   KEY `rev_user_text` (`rev_wikia_id`,`rev_user_text`,`rev_timestamp`),
   KEY `blobs_rev_timestamp` (`rev_timestamp`),
   KEY `rev_ip` (`rev_ip`)
-) ENGINE=InnoDB AUTO_INCREMENT=65556089 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=65556419 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 --
 -- WARNING: old server version. The following dump may be incomplete.
@@ -115,7 +113,6 @@ DELIMITER ;
 -- Table structure for table `city_local_users`
 --
 
-DROP TABLE IF EXISTS `city_local_users`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `city_local_users` (
@@ -145,7 +142,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `daemon_tasks`
 --
 
-DROP TABLE IF EXISTS `daemon_tasks`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `daemon_tasks` (
@@ -167,7 +163,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `daemon_tasks_jobs`
 --
 
-DROP TABLE IF EXISTS `daemon_tasks_jobs`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `daemon_tasks_jobs` (
@@ -194,7 +189,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `email_types`
 --
 
-DROP TABLE IF EXISTS `email_types`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `email_types` (
@@ -208,7 +202,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `emails`
 --
 
-DROP TABLE IF EXISTS `emails`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `emails` (
@@ -230,7 +223,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `global_watchlist`
 --
 
-DROP TABLE IF EXISTS `global_watchlist`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `global_watchlist` (
@@ -250,7 +242,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `magcloud_collection`
 --
 
-DROP TABLE IF EXISTS `magcloud_collection`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `magcloud_collection` (
@@ -269,7 +260,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `magcloud_collection_log`
 --
 
-DROP TABLE IF EXISTS `magcloud_collection_log`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `magcloud_collection_log` (
@@ -287,7 +277,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `notify_log`
 --
 
-DROP TABLE IF EXISTS `notify_log`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `notify_log` (
@@ -305,14 +294,13 @@ CREATE TABLE `notify_log` (
   KEY `nl_title` (`nl_title`,`nl_namespace`),
   KEY `nl_type` (`nl_type`,`nl_timestamp`),
   KEY `nl_city` (`nl_city`)
-) ENGINE=InnoDB AUTO_INCREMENT=3139508 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3139544 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `pages`
 --
 
-DROP TABLE IF EXISTS `pages`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `pages` (
@@ -336,7 +324,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `text_regex`
 --
 
-DROP TABLE IF EXISTS `text_regex`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `text_regex` (
@@ -357,7 +344,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `text_regex_stats`
 --
 
-DROP TABLE IF EXISTS `text_regex_stats`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `text_regex_stats` (
@@ -378,7 +364,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `upload_log`
 --
 
-DROP TABLE IF EXISTS `upload_log`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `upload_log` (
@@ -397,14 +382,13 @@ CREATE TABLE `upload_log` (
   KEY `up_title` (`up_title`),
   KEY `up_city_id` (`up_city_id`),
   KEY `up_flags_idx` (`up_flags`)
-) ENGINE=InnoDB AUTO_INCREMENT=1154148 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1154161 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `user_history`
 --
 
-DROP TABLE IF EXISTS `user_history`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `user_history` (
@@ -428,7 +412,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `user_login_history`
 --
 
-DROP TABLE IF EXISTS `user_login_history`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `user_login_history` (
@@ -446,7 +429,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `user_login_history_summary`
 --
 
-DROP TABLE IF EXISTS `user_login_history_summary`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `user_login_history_summary` (
@@ -460,7 +442,6 @@ SET character_set_client = @saved_cs_client;
 -- Table structure for table `user_summary`
 --
 
-DROP TABLE IF EXISTS `user_summary`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `user_summary` (
@@ -496,4 +477,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-10-23  9:04:45
+-- Dump completed on 2009-10-23  9:13:58
