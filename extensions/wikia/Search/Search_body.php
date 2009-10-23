@@ -1,9 +1,21 @@
 <?php
+interface SearchErrorReporting {
+	public function getError();
+}
 
-class SolrSearch extends SearchEngine {
+class SolrSearch extends SearchEngine implements SearchErrorReporting {
+
+	private $errorCode = null;
 
 	public function __construct() {
 		wfLoadExtensionMessages( 'WikiaSearch' );
+	}
+
+	public function getError() {
+		if($this->errorCode != null) {
+			// don't bother with error codes, just display standard error message for now
+			return wfMsg( 'wikiasearch-system-error-msg' );
+		}
 	}
 
 	/**
@@ -17,7 +29,14 @@ class SolrSearch extends SearchEngine {
 		global $wgRequest;
 
 		if(!$wgRequest->getCheck('titlesOnly')) {
-			return SolrSearchSet::newFromQuery( $term, 'title^7 html', $this->namespaces, $this->limit, $this->offset );
+			$searchSet = SolrSearchSet::newFromQuery( $term, 'title^7 html', $this->namespaces, $this->limit, $this->offset );
+			if($searchSet instanceof SolrSearchSet) {
+				return $searchSet;
+			}
+			else {
+				$this->errorCode = $searchSet;
+				return null;
+			}
 		}
 		else {
 			return null;
@@ -28,7 +47,14 @@ class SolrSearch extends SearchEngine {
 		global $wgRequest;
 
 		if($wgRequest->getCheck('titlesOnly')) {
-			return SolrSearchSet::newFromQuery( $term, 'title', $this->namespaces, $this->limit, $this->offset );
+			$searchSet = SolrSearchSet::newFromQuery( $term, 'title', $this->namespaces, $this->limit, $this->offset );
+			if($searchSet instanceof SolrSearchSet) {
+				return $searchSet;
+			}
+			else {
+				$this->errorCode = $searchSet;
+				return null;
+			}
 		}
 		else {
 			return null;
@@ -69,7 +95,7 @@ class SolrSearchSet extends SearchResultSet {
 	 * @access public
 	 */
 	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0 ) {
-		global $wgSolrHost, $wgSolrPort, $wgMemc, $wgCityId;
+		global $wgSolrHost, $wgSolrPort, $wgMemc, $wgCityId, $wgErrorLog;
 
 		$fname = 'SolrSearchSet::newFromQuery';
 		wfProfileIn( $fname );
@@ -104,7 +130,7 @@ class SolrSearchSet extends SearchResultSet {
 				}
 				$params['fq'] = $nsQuery; // filter results for selected ns
 			}
-			if( $wgCityId == 4832) {
+			if( $wgCityId == 4832 ) {
 				// techteamtest tmp hack: search muppet.wikia.com
 				$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:831";
 			}
@@ -118,14 +144,22 @@ class SolrSearchSet extends SearchResultSet {
 			}
 			catch (Exception $exception) {
 				//echo '<pre>'; print_r($exception); echo '</pre>';
+				$wgErrorLogTmp = $wgErrorLog;
+				$wgErrorLog = true;
+				Wikia::log( __METHOD__, "ERROR", $exception->getMessage() . " PARAMS: q=$query, fq=" . $params['fq'] );
+				$wgErrorLog = $wgErrorLogTmp;
+
 				wfProfileOut( $fname );
-				return null;
+				return 100;
 			}
 		}
 		else {
-			wfDebug("Couldn't connect to Solr backend at: $wgSolrHost:$wgSolrPort\n");
+			$wgErrorLogTmp = $wgErrorLog;
+			$wgErrorLog = true;
+			Wikia::log( __METHOD__, "ERROR", "Couldn't connect to Solr backend at: $wgSolrHost:$wgSolrPort" );
+			$wgErrorLog = $wgErrorLogTmp;
 			wfProfileOut( $fname );
-			return null;
+			return 101;
 		}
 		//echo "<pre>";
 		//print_r($response->response);
