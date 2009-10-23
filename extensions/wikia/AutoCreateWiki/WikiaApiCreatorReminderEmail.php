@@ -30,6 +30,27 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 	 */
 	public function execute() {
 
+		global $wgTheSchwartzSecretToken, $wgCityId;
+
+		$params = $this->extractRequestParams();
+		$result = array();
+		if( isset($params[ "token" ] ) && $params[ "token" ] === $wgTheSchwartzToken ) {
+			/**
+			 * get city_founding_user from city_list
+			 */
+			$wiki = WikiFactory::getWikiByID( $wgCityId );
+			$founder = User::newFromId( $wiki->city_founding_user );
+			if( $founder ) {
+				// 	$founder->sendMail( $subject, $body, $from = null, $replyto = null, $category = 'unknown', $bodyHTML = null );
+			}
+		}
+		else {
+			$this->dieUsageMsg( array( "sessionfailure" ) );
+		}
+
+		$this->getResult()->setIndexedTagName($result, 'status');
+		$this->getResult()->addValue(null, $this->getModuleName(), $result );
+
 	}
 
 	public function getVersion() {

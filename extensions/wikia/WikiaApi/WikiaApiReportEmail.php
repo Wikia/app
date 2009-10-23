@@ -84,9 +84,9 @@ class WikiaApiReportEmail extends ApiBase {
 	 */
 	public function execute() {
 
-		global $wgExternalDatawareDB, $wgTheSchwartzToken;
+		global $wgExternalDatawareDB, $wgTheSchwartzSecretToken;
 
-		$wgTheSchwartzToken = "test";
+		$wgTheSchwartzSecretToken = "test";
 
 		$params = $this->extractRequestParams();
 		$result = array();
