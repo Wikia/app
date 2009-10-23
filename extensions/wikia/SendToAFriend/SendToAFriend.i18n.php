@@ -104,7 +104,6 @@ $messages = array(
 		'stf_select_friends'       => 'Wybierz przyjaciół:',
 	)
 );
-?>
 
 $messages['de'] = array(
 	'invitespecialpage' => 'Lade Freunde zu Wikia ein',
