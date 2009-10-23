@@ -40,8 +40,19 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 			 */
 			$wiki = WikiFactory::getWikiByID( $wgCityId );
 			$founder = User::newFromId( $wiki->city_founding_user );
+			/**
+			 * for test purpose send email to me, Eloy.wikia
+			 */
+			$founder = User::newFromId( 51098 );
 			if( $founder ) {
-				// 	$founder->sendMail( $subject, $body, $from = null, $replyto = null, $category = 'unknown', $bodyHTML = null );
+				$founder->sendMail(
+					wfMsg( "createwiki-reminder-subject" ),
+					wfMsg( "createwiki-reminder-body" ),
+					null /*from*/,
+					null /*replyto*/,
+					"AutoCreateWikiReminder",
+					wfMsg( "createwiki-reminder-body-HTML" )
+				);
 			}
 		}
 		else {
@@ -103,5 +114,4 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 	public function isWriteMode() {
 		return false;
 	}
-
 }
