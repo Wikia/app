@@ -13,9 +13,6 @@ $messages["en"] = array(
 	'mostvisitedpagessearchbtn' => 'search'
 );
 
-?>
-
-
 $messages['de'] = array(
 	'mostvisitedpages' => 'Häufig aufgerufene Seiten',
 	'mostvisitedpagessearchtext' => 'Artikelname:',
