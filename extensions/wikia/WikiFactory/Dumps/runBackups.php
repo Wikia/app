@@ -83,7 +83,9 @@ function runBackups( $from, $to, $full, $options ) {
 	/**
 	 * exclude wikis with dumps disabled
 	 */
-	$range[] = 'city_id NOT IN (' . implode( ',', $wgDumpsDisabledWikis ) . ')';
+	if( !empty( $wgDumpsDisabledWikis ) && is_array( $wgDumpsDisabledWikis ) ) {
+		$range[] = 'city_id NOT IN (' . implode( ',', $wgDumpsDisabledWikis ) . ')';
+	}
 
 	/**
 	 * switch off limits for dumps
@@ -198,7 +200,7 @@ function getDirectory( $database, $hide = false ) {
 	$folder     = empty( $wgDevelEnvironment ) ?  "backup" : "tmp";
 	$subfolder = $hide ? "dumps-hidden" : "dumps";
 	$database   = strtolower( $database );
-	
+
 	$directory = sprintf(
 		"/%s/%s/%s/%s/%s",
 		$folder,

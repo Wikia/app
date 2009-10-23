@@ -256,7 +256,7 @@ while( $request->Accept() >= 0 ) {
 					push @cmd, $thumbnail;
 
 					open( CMD, "-|", $ffmpeg, @cmd );
-					close( CMD);
+					close( CMD );
 
 					#system( @cmd ) == 0 and $transformed = 1;
 					unless( -f $thumbnail ) {
