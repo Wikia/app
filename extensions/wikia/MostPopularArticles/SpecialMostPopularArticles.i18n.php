@@ -11,9 +11,6 @@ $messages["en"] = array(
 	'mostpopulararticles' => 'Most popular articles (from database)',
 );
 
-?>
-
-
 $messages['de'] = array(
 	'mostpopulararticles' => 'Häufig geänderte Artikel',
 );
