@@ -91,7 +91,7 @@ class WikiaApiReportEmail extends ApiBase {
 		$params = $this->extractRequestParams();
 		$result = array();
 
-		if( isset($params[ "token" ] ) && $params[ "token" ] === $wgTheSchwartzToken ) {
+		if( isset($params[ "token" ] ) && $params[ "token" ] === $wgTheSchwartzSecretToken ) {
 			if( is_null( $params[ "from" ] ) ) {
 				$this->dieUsageMsg( array( "missingparam", "from" ) );
 			}
