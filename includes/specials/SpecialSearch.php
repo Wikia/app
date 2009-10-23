@@ -950,6 +950,16 @@ class SpecialSearchOld {
 		$titleMatches = $search->searchTitle( $rewritten );
 		$textMatches = $search->searchText( $rewritten );
 
+		// Wikia change /Begin (ADi)
+		if(($search instanceof SearchErrorReporting) && $search->getError()) {
+			$wgOut->addWikiText( '==' . $search->getError() . '==' );
+			$wgOut->addHTML( $this->powerSearchBox( $term ) );
+			$wgOut->addHTML( $this->powerSearchFocus() );
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		// Wikia change /End (ADi)
+
 		// did you mean... suggestions
 		if($textMatches && $textMatches->hasSuggestion()){
 			$st = SpecialPage::getTitleFor( 'Search' );
