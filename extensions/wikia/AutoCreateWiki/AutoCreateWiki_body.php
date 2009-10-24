@@ -745,15 +745,16 @@ class AutoCreateWikiPage extends SpecialPage {
 			$this->mFounder = User::newFromName($this->awcStaff_username);
 		}
 
-		$fixedTitle = preg_replace("/(\s)+(w|W)iki$/", "", $wgContLang->ucfirst( $this->awcName ));
+		$fixedTitle = trim($this->awcName);
 		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle);
-		$fixedTitle = trim($fixedTitle);
+		$fixedTitle = preg_replace("/ (w|W)iki$/", "", $fixedTitle);
+		$fixedTitle = $wgContLang->ucfirst($fixedTitle);
 		$this->awcDomain = preg_replace("/(\-)+$/", "", $this->awcDomain);
 		$this->awcDomain = preg_replace("/^(\-)+/", "", $this->awcDomain);
 
 		$this->mWikiData[ "hub" ]		= $this->awcCategory;
         $this->mWikiData[ "name" ]      = strtolower( trim( $this->awcDomain ) );
-        $this->mWikiData[ "title" ]     = trim( $fixedTitle . " Wiki" );
+        $this->mWikiData[ "title" ]     = $fixedTitle . " Wiki";
         $this->mWikiData[ "language" ]  = $this->awcLanguage;
         $this->mWikiData[ "subdomain" ] = $this->mWikiData[ "name"];
         $this->mWikiData[ "redirect" ]  = $this->mWikiData[ "name"];
