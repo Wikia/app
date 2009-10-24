@@ -232,7 +232,7 @@ yieldbuild_loc = "leaderboard";
 
 		<div id="question">
 			<div class="top"><span></span></div>
-			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?> <a href="<?=$this->data['content_actions']['move']['href']?>" rel="nofollow"><?=wfMsg('rephrase')?></a></h1>
+			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?> <a href="<?=$this->data['content_actions']['move']['href']?>" rel="nofollow" onclick="WET.byStr('articleAction/rephrase');"><?=wfMsg('rephrase')?></a></h1>
 			<!--<div class="categories">
 			<?php
 			/*
@@ -311,7 +311,7 @@ yieldbuild_loc = "question_bubble";
 		if ( $is_question && $answer_page->isArticleAnswered() ) {
 
 			if( !( $wgRequest->getVal("diff") ) ){
-				echo '<div class="sectionedit">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
+				echo '<div class="editsection">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
 				echo '<h3 id="answer_title">'. wfMsg("answer_title") .'</h3>';
 
 			}
