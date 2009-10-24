@@ -746,6 +746,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		$fixedTitle = preg_replace("/(\s)+(w|W)iki$/", "", $wgContLang->ucfirst( $this->awcName ));
+		$fixedTitle = preg_replace("/\s+/", " ", $fixedTitle);
+		$fixedTitle = trim($fixedTitle);
 		$this->awcDomain = preg_replace("/(\-)+$/", "", $this->awcDomain);
 		$this->awcDomain = preg_replace("/^(\-)+/", "", $this->awcDomain);
 
