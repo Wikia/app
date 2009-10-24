@@ -20,7 +20,7 @@ class MagCloudAjax {
 		global $wgExtensionsPath;
 		$preview = array(
 			'src' => "{$wgExtensionsPath}/wikia/WidgetFramework/Widgets/WidgetMagCloud/images/MagCloudPreview.png",
-			'href' =>  'http://magcloud.com',
+			'href' =>  'http://magcloud.com/browse/Issue/40645',
 		);
 
 		// render HTML
