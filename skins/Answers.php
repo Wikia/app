@@ -232,7 +232,9 @@ yieldbuild_loc = "leaderboard";
 
 		<div id="question">
 			<div class="top"><span></span></div>
+			<?php global $wgSupressPageTitle; if(empty($wgSupressPageTitle)): ?>
 			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?> <a href="<?=$this->data['content_actions']['move']['href']?>" rel="nofollow" onclick="WET.byStr('articleAction/rephrase');"><?=wfMsg('rephrase')?></a></h1>
+			<?php endif; ?>
 			<!--<div class="categories">
 			<?php
 			/*
