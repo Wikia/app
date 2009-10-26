@@ -88,6 +88,7 @@ class AutoCreateWikiLocalJob extends Job {
 		$this->sendWelcomeMail();
 		$this->populateCheckUserTables();
 		$this->protectKeyPages();
+		$this->queueReminderMail();
 
 		wfProfileOut( __METHOD__ );
 
@@ -439,7 +440,7 @@ class AutoCreateWikiLocalJob extends Job {
 	 * send http post to TheSchwartz which queue reminder call for 48hours.
 	 * TheSchwartz will call api.php?method=awcreminder
 	 */
-	private function queueReminderInTheSchwartz() {
+	private function queueReminderMail() {
 		global $wgServer, $wgTheSchwartzSecretToken;
 
 		$backurl = sprintf( "%s/api.php?action=awcreminder&user_id=%d&token=%s",
