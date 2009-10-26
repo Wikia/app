@@ -10,8 +10,6 @@
  * $Id$
  */
 
-$wgExtensionMessagesFiles[ "AutoCreateWiki" ] = dirname(__FILE__) . "/AutoCreateWiki.i18n.php";
-
 class WikiaApiCreatorReminderEmail extends ApiBase {
 
 	/**
@@ -33,8 +31,6 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 	public function execute() {
 
 		global $wgTheSchwartzSecretToken, $wgCityId;
-
-		wfLoadExtensionMessages( "AutoCreateWiki" );
 
 		$params = $this->extractRequestParams();
 		$status = 0;
