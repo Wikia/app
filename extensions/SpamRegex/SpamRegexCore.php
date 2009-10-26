@@ -75,7 +75,7 @@ class SpamRegexHooks {
 		return true;
 	}
 
-	protected static function fetchRegexData( $mode ) {
+	protected static function fetchRegexData( $mode, $db_master = 0 ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
@@ -87,7 +87,7 @@ class SpamRegexHooks {
 		if ( !$cached ) {
 			/* fetch data from db, concatenate into one string, then fill cache */
 			$field = $mode == SPAMREGEX_SUMMARY ? 'spam_summary' : 'spam_textbox';
-			$dbr = wfSpamRegexGetDB( DB_SLAVE );
+			$dbr = wfSpamRegexGetDB( ( $db_master == 1 ) ? DB_MASTER : DB_SLAVE );
 			$res = $dbr->select( 'spam_regex', 'spam_text', array( $field => 1 ), __METHOD__ );
 			while ( $row = $res->fetchObject() ) {
 				$concat = $row->spam_text;
@@ -101,5 +101,10 @@ class SpamRegexHooks {
 		}
 		wfProfileOut( __METHOD__ );
 		return $phrases;
+	}
+	
+	public static function loadDataToMemc() {
+		self::fetchRegexData(SPAMREGEX_SUMMARY, 1 /* from db master */);
+		self::fetchRegexData(SPAMREGEX_TEXTBOX, 1 /* from db master */);
 	}
 }
