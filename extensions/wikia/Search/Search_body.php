@@ -416,10 +416,16 @@ class SolrResultTitle extends Title {
 		$this->mUrlform = wfUrlencode( $this->mDbkeyform );
 		$this->mTextform = str_replace( '_', ' ', $title );
 
-		$this->mUrl = $url;
+		$this->mUrl = $this->sanitizeUrl( $url );
 	}
 
 	public function getLinkUrl( $query = array(), $variant = false ) {
 		return $this->mUrl;
+	}
+
+	private function sanitizeUrl($url) {
+		// RT #25474
+		$url = str_replace( '?', '%3F', $url );
+		return $url;
 	}
 }
