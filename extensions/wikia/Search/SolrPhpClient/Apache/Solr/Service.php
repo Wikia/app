@@ -235,12 +235,14 @@ class Apache_Solr_Service
 
 	/**
 	 * Return a valid http URL given this server's host, port and path and a provided servlet name
+	 * (Wikia change: using proxy controlled via global variables @author ADi)
 	 *
 	 * @param string $servlet
 	 * @return string
 	 */
 	protected function _constructUrl($servlet, $params = array())
 	{
+		global $wgWikiaSearchUseProxy;
 		if (count($params))
 		{
 			//escape all parameters appropriately for inclusion in the query string
@@ -258,7 +260,13 @@ class Apache_Solr_Service
 			$queryString = '';
 		}
 
-		return 'http://' . $this->_host . ':' . $this->_port . $this->_path . $servlet . $queryString;
+		if(!empty($wgWikiaSearchUseProxy)) {
+			// remove port number if we're using proxy
+			return 'http://' . $this->_host . $this->_path . $servlet . $queryString;
+		}
+		else {
+			return 'http://' . $this->_host . ':' . $this->_port . $this->_path . $servlet . $queryString;
+		}
 	}
 
 	/**
