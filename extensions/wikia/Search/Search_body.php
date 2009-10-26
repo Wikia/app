@@ -109,67 +109,55 @@ class SolrSearchSet extends SearchResultSet {
 		wfProfileIn( $fname );
 
 		$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
-		if(true) {
-		// remove ping check to test proxy
-		//if($solr->ping()) {
-			$params = array(
-				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views', // fields we want to fetch back
-				'qf' => $queryFields,
-				'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
-				'bq' => '(*:* -html:(' . $query . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
-				'qt' => 'dismax',
-				'pf' => '', // override defaults
-				'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
-				'ps' => '',
-				'tie' => 1, // make it combine all scores instead of picking best match
-				'hl' => 'true',
-				'hl.fl' => 'html,title', // highlight field
-				'hl.snippets' => '2', // number of snippets per field
-				'hl.fragsize' => '150', // snippet size in characters
-				'hl.simple.pre' => '<span class="searchmatch">',
-				'hl.simple.post' => '</span>',
-				'indent' => 1,
-				'fq' => ''
-				//'sort' => 'backlinks desc, views desc, revcount desc, created asc'
-			);
+		$params = array(
+			'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views', // fields we want to fetch back
+			'qf' => $queryFields,
+			'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
+			'bq' => '(*:* -html:(' . $query . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
+			'qt' => 'dismax',
+			'pf' => '', // override defaults
+			'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
+			'ps' => '',
+			'tie' => 1, // make it combine all scores instead of picking best match
+			'hl' => 'true',
+			'hl.fl' => 'html,title', // highlight field
+			'hl.snippets' => '2', // number of snippets per field
+			'hl.fragsize' => '150', // snippet size in characters
+			'hl.simple.pre' => '<span class="searchmatch">',
+			'hl.simple.post' => '</span>',
+			'indent' => 1,
+			'fq' => ''
+			//'sort' => 'backlinks desc, views desc, revcount desc, created asc'
+		);
 
-			if(count($namespaces)) {
-				$nsQuery = '';
-				foreach($namespaces as $namespace) {
-					$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
-				}
-				$params['fq'] = $nsQuery; // filter results for selected ns
+		if(count($namespaces)) {
+			$nsQuery = '';
+			foreach($namespaces as $namespace) {
+				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
 			}
-			if( $wgCityId == 4832 ) {
-				// techteamtest tmp hack: search muppet.wikia.com
-				$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:831";
-			}
-			else {
-				$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . $wgCityId;
-			}
-			//echo "fq=" . $params['fq'] . "<br />";
-
-			try {
-				$response = $solr->search(self::sanitizeQuery($query), $offset, $limit, $params);
-			}
-			catch (Exception $exception) {
-				//echo '<pre>'; print_r($exception); echo '</pre>';
-				$wgErrorLogTmp = $wgErrorLog;
-				$wgErrorLog = true;
-				Wikia::log( __METHOD__, "ERROR", $exception->getMessage() . " PARAMS: q=$query, fq=" . $params['fq'] );
-				$wgErrorLog = $wgErrorLogTmp;
-
-				wfProfileOut( $fname );
-				return 100;
-			}
+			$params['fq'] = $nsQuery; // filter results for selected ns
+		}
+		if( $wgCityId == 4832 ) {
+			// techteamtest tmp hack: search muppet.wikia.com
+			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:831";
 		}
 		else {
+			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . $wgCityId;
+		}
+		//echo "fq=" . $params['fq'] . "<br />";
+
+		try {
+			$response = $solr->search(self::sanitizeQuery($query), $offset, $limit, $params);
+		}
+		catch (Exception $exception) {
+			//echo '<pre>'; print_r($exception); echo '</pre>';
 			$wgErrorLogTmp = $wgErrorLog;
 			$wgErrorLog = true;
-			Wikia::log( __METHOD__, "ERROR", "Couldn't connect to Solr backend at: $wgSolrHost:$wgSolrPort" );
+			Wikia::log( __METHOD__, "ERROR", $exception->getMessage() . " PARAMS: q=$query, fq=" . $params['fq'] );
 			$wgErrorLog = $wgErrorLogTmp;
+
 			wfProfileOut( $fname );
-			return 101;
+			return 100;
 		}
 		//echo "<pre>";
 		//print_r($response->response);
