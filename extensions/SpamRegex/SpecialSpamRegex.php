@@ -94,10 +94,8 @@ class spamRegexList {
 		global $wgMemc;
 
 		if ( $mode === false ) {
-			$modes = array(SPAMREGEX_SUMMARY, SPAMREGEX_TEXTBOX);
-			foreach ( $modes as $mode ) {
-				self::updateMemcKeys( $action, $text, $mode );
-			}
+			self::updateMemcKeys( $action, $text, SPAMREGEX_SUMMARY );
+			self::updateMemcKeys( $action, $text, SPAMREGEX_TEXTBOX );
 		}
 
 		$key_clause = $mode == SPAMREGEX_SUMMARY ?  'Summary' : 'Textbox';
@@ -113,7 +111,7 @@ class spamRegexList {
 					}
 					break;
 				case 'delete' : 
-					$phrases[] = array_diff($phrases, array($spam_text));
+					$phrases = array_diff($phrases, array($spam_text));
 					break;
 			}
 			$wgMemc->set( $key, $phrases, 0 );
