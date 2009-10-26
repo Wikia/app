@@ -276,6 +276,7 @@ class Apache_Solr_Service
 
 	/**
 	 * Central method for making a get operation against this Solr Server
+	 * (Wikia change: using proxy controlled via global variables @author ADi)
 	 *
 	 * @param string $url
 	 * @param float $timeout Read timeout in seconds
@@ -286,8 +287,22 @@ class Apache_Solr_Service
 	 */
 	protected function _sendRawGet($url, $timeout = FALSE)
 	{
-		//$http_response_header is set by file_get_contents
-		$response = new Apache_Solr_Response(@file_get_contents($url), $http_response_header, $this->_createDocuments, $this->_collapseSingleValueArrays);
+		global $wgWikiaSearchUseProxy, $wgSolrProxy;
+
+		$http_response_header = null;
+		if(!empty($wgWikiaSearchUseProxy) && !empty($wgSolrProxy)) {
+			// connect via proxy
+			$contextOpts = array(
+				'http' => array( 'proxy' => 'tcp:' . $wgSolrProxy, 'request_fulluri' => true )
+			);
+			$getContext = stream_context_create($contextOpts);
+			//$http_response_header is set by file_get_contents
+			$response = new Apache_Solr_Response(@file_get_contents($url, false, $getContext), $http_response_header, $this->_createDocuments, $this->_collapseSingleValueArrays);
+		}
+		else {
+			//$http_response_header is set by file_get_contents
+			$response = new Apache_Solr_Response(@file_get_contents($url), $http_response_header, $this->_createDocuments, $this->_collapseSingleValueArrays);
+		}
 
 		if ($response->getHttpStatus() != 200)
 		{

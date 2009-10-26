@@ -28,6 +28,10 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 	public function searchText( $term ) {
 		global $wgRequest;
 
+		if(empty($term)) {
+			return null;
+		}
+
 		if(!$wgRequest->getCheck('titlesOnly')) {
 			$searchSet = SolrSearchSet::newFromQuery( $term, 'title^7 html', $this->namespaces, $this->limit, $this->offset );
 			if($searchSet instanceof SolrSearchSet) {
@@ -45,6 +49,10 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 
 	function searchTitle( $term ) {
 		global $wgRequest;
+
+		if(empty($term)) {
+			return null;
+		}
 
 		if($wgRequest->getCheck('titlesOnly')) {
 			$searchSet = SolrSearchSet::newFromQuery( $term, 'title', $this->namespaces, $this->limit, $this->offset );
@@ -101,7 +109,9 @@ class SolrSearchSet extends SearchResultSet {
 		wfProfileIn( $fname );
 
 		$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
-		if($solr->ping()) {
+		if(true) {
+		// remove ping check to test proxy
+		//if($solr->ping()) {
 			$params = array(
 				'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views', // fields we want to fetch back
 				'qf' => $queryFields,
