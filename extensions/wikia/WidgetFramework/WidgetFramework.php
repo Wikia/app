@@ -80,10 +80,17 @@ class WidgetFramework {
 					$this->config[1][] = $last;
 				}
 
-				// Add MagCloud widget (as the first one) if extension is enabled
+				// Add MagCloud widget (immediately after WidgetCommunity) if extension is enabled
 				global $wgEnableMagCloudExt;
 				if (!empty($wgEnableMagCloudExt)) {
-					array_unshift($this->config[1], array('type' => 'WidgetMagCloud', 'id' => 143));
+					$config1 = array();
+					foreach ($this->config[1] as $widget) {
+						$config1[] = $widget;
+						if ("WidgetCommunity" == $widget["type"]) {
+							$config1[] = array('type' => 'WidgetMagCloud', 'id' => 143);
+						}
+					}
+					$this->config[1] = $config1;
 				}
 
 			} else if($this->skinname == "quartz") {
