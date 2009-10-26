@@ -792,7 +792,7 @@ class Masthead {
 						if ($user) {
 							$avatarActions[] = array(
 								'tracker' => 'newsection',
-								'href' => $user->getTalkPage()->getLocalURL('action=edit&section=new'),
+								'href' => $user->getTalkPage()->getLocalURL('action=edit&amp;section=new'),
 								'text' => wfMsg('addnewtalksection-link')	//TODO: this message should be moved outside ANTS extension if we want to use it here
 							);
 						}
@@ -838,7 +838,7 @@ class Masthead {
 					if ($isUserOnOwnPage && $wgUser->isAllowed( 'removeavatar' ) && !$Avatar->isDefault()) {
 						$avatarActions[] = array(
 							'tracker' => 'removeavatar',
-							'href' => Title::newFromText('RemoveUserAvatar', NS_SPECIAL)->getLocalUrl('action=search_user&av_user=' . $Avatar->getUserName()),
+							'href' => Title::newFromText('RemoveUserAvatar', NS_SPECIAL)->getLocalUrl('action=search_user&amp;av_user=' . $Avatar->getUserName()),
 							'text' => wfMsg('blog-avatar-delete')
 						);
 					}

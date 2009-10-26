@@ -1,5 +1,6 @@
 == Changes since 200910.3 ==
-* rt#25557: Answers: Take into account wgSupressPageTitle. (Nef, HT Uberfuzzy)
+* rt#25544: Escape unescaped. (Uberfuzzy)
+* rt#25557: Answers: Take into account wgSupressPageTitle. (Uberfuzzy)
 * rt#25508: Answers, Analytics: Zombie clicktracking. (Nef)
 * rt#25481: MagCloud: Popup dialog layout changes. (Nef)
 * rt#25503: AWC: Multiple spaces in wgSitename fixed. (Nef)
