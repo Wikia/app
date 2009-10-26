@@ -95,9 +95,6 @@ class spamRegexList {
 		$wgMemc->delete( wfSpamRegexCacheKey( 'spamRegexCore', 'spamRegex', 'Textbox' ) );
 		$wgMemc->delete( wfSpamRegexCacheKey( 'spamRegexCore', 'spamRegex', 'Summary' ) );
 		$wgMemc->delete( wfSpamRegexCacheKey( 'spamRegexCore', 'numResults' ) );
-		#-- read data to memcache after unset memc keys
-		sleep(2);
-		SpamRegexHooks::loadDataToMemc();
 	}
 
 	/**
