@@ -293,7 +293,7 @@ class Apache_Solr_Service
 		if(!empty($wgWikiaSearchUseProxy) && !empty($wgSolrProxy)) {
 			// connect via proxy
 			$contextOpts = array(
-				'http' => array( 'proxy' => 'tcp:' . $wgSolrProxy, 'request_fulluri' => true )
+				'http' => array( 'proxy' => 'tcp://' . $wgSolrProxy, 'request_fulluri' => true )
 			);
 			$getContext = stream_context_create($contextOpts);
 			//$http_response_header is set by file_get_contents
