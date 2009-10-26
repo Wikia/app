@@ -75,7 +75,7 @@ class SpamRegexHooks {
 		return true;
 	}
 
-	protected static function fetchRegexData( $mode ) {
+	protected static function fetchRegexData( $mode, $db_master = 0 ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
