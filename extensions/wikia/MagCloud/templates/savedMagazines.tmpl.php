@@ -12,9 +12,11 @@
 	</div>
 
 	<div id="MagCloudSavedMagazinesButtons" class="MagCloudPopupButtons">
+<?php if (!empty($magazines)): ?>
 		<a class="wikia_button" id="MagCloudLoadMagazine">
 			<span><?= wfMsg('magcloud-load-magazine-load') ?></span>
 		</a>
+<?php endif; ?>
 
 		<a class="wikia_button secondary" id="MagCloudCancel">
 			<span><?= wfMsg('cancel') ?></span>
