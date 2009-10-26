@@ -793,7 +793,7 @@ class Masthead {
 							$avatarActions[] = array(
 								'tracker' => 'newsection',
 								'href' => $user->getTalkPage()->getLocalURL('action=edit&amp;section=new'),
-								'text' => wfMsg('addnewtalksection-link')	//TODO: this message should be moved outside ANTS extension if we want to use it here
+								'text' => wfMsg('addnewtalksection-link')
 							);
 						}
 					}
