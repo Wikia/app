@@ -238,6 +238,30 @@ class RegexBlockData
         return $record;
     }
 
+	static public function getRegexBlockByName($name, $iregex = 0, $master = 0) {
+		global $wgExternalSharedDB;
+		
+		/* get from database */
+		$dbr = wfGetDB( (empty($master)) ? DB_SLAVE : DB_MASTER, array(), $wgExternalSharedDB );
+		$where = array( "blckby_name like '%". $dbr->escapeLike( $name )  ."%'" );
+		if ( !empty($iregex) ) {
+			$where = array( "blckby_name = " . $dbr->addQuotes( $name ) );
+		}
+		$oRes = $dbr->select(
+			REGEXBLOCK_TABLE,
+			array("blckby_id", "blckby_timestamp", "blckby_expire", "blckby_blocker", "blckby_create", "blckby_exact", "blckby_reason"),
+			$where,
+			__METHOD__
+		);
+		if ( $oRow = $dbr->fetchObject( $oRes ) ) {
+			/* if still valid or infinite, ok to block user */
+			$blocked = $oRow;
+		}
+		$dbr->freeResult ($oRes);
+		
+		return $blocked;
+	}
+
     static public function blockUser($address, $expiry, $exact, $creation, $reason) {
         global $wgUser, $wgExternalSharedDB;
 
