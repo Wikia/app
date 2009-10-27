@@ -881,8 +881,8 @@ Note that some pages may continue to be displayed as if you were still logged in
 Your account has been created.
 Do not forget to change your [[Special:Preferences|{{SITENAME}} preferences]].',
 'loginpagetitle'             => 'User login',
-'yourname'                   => 'Username:',
-'yourpassword'               => 'Password:',
+'yourname'                   => 'Username',
+'yourpassword'               => 'Password',
 'yourpasswordagain'          => 'Retype password:',
 'remembermypassword'         => 'Remember my login on this computer',
 'yourdomainname'             => 'Your domain:',
