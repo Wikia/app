@@ -14,7 +14,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 		<div style="padding: 3px">
 			<label for="wpRemember1" style="padding-left: 5px"><?= wfMsg('remembermypassword') ?></label>
 		</div>
-		<a id="wpLoginattempt" class="wikia_button" href="#" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit();" ><span><?= wfMsg("login") ?></span></a>
-	<br/>
 	</form>
+	<hr/>
+	<a id="wpLoginattempt" class="wikia_button" href="#" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit();" ><span><?= wfMsg("login") ?></span></a><br/>
 </div>
