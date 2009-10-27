@@ -443,7 +443,7 @@ class AutoCreateWikiLocalJob extends Job {
 	private function queueReminderMail() {
 		global $wgServer, $wgTheSchwartzSecretToken;
 
-		$backurl = sprintf( "%s/api.php?action=awcreminder&user_id=%d&token=%s",
+		$backurl = sprintf( "%s/api.php?action=awcreminder%26user_id=%d%26token=%s",
 			$wgServer, $this->mFounder->getId(), $wgTheSchwartzSecretToken );
 
 		Http::post( self::REMINDER_URL, 'default', array (
