@@ -11,7 +11,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 		<div style="padding: 3px">
 			<label for="wpRemember1" style="padding-left: 5px"><?= wfMsg('remembermypassword') ?></label>
 		</div>
-		<input style="margin:0;padding:0 .25em;width:auto;overflow:visible;" type="submit" name="wpLoginattempt" id="wpLoginattempt" tabindex="105" value="<?= wfMsg("login") ?>" onclick="AjaxLogin.action='login'" />
+		<a id="wpLoginattempt" class="wikia_button" href="#" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit();" ><span><?= wfMsg("login") ?></span></a>
 <?php if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
 		<br />
 <?php } ?>
