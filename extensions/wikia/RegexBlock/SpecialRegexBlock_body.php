@@ -251,10 +251,7 @@ class RegexBlockForm extends SpecialPage
 		# add new regex to the list
 		RegexBlockData::blockUser($this->mRegexBlockedAddress, $expiry, $this->mRegexBlockedExact, $this->mRegexBlockedCreation, $this->mRegexBlockedReason);
 		/* clear memcache */
-		wfRegexBlockUnsetKeys($this->mRegexBlockedAddress);
-		/* clear memcache once again */
-		sleep(6);
-		wfRegexBlockUnsetKeys($this->mRegexBlockedAddress);
+		wfRegexBlockUpdateMemcKeys($this->mRegexBlockedAddress);
 
         wfProfileOut( __METHOD__ );
 
@@ -299,17 +296,16 @@ class RegexBlockForm extends SpecialPage
         } else {
             /* delete */
             $dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
+            wfRegexBlockUnsetKeys( $ip );
+
             $dbw->delete(
             	REGEXBLOCK_TABLE,
             	array("blckby_name = {$dbw->addQuotes($ip)}"),
             	__METHOD__
             );
-
             if ( $dbw->affectedRows() ) {
-                /* success, remember to delete cache key  */
-                wfRegexBlockUnsetKeys( $ip );
                 $result = true;
-            }
+			}
         }
 
         wfProfileOut( __METHOD__ );
