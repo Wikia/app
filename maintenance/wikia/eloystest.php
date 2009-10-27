@@ -1,7 +1,8 @@
 <?php
 
 /**
- * tests for theschwartz api
+ * Różne testowe bzdurki wymagające MW
+ * Tests for different stuffs which demands MW stack
  */
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
