@@ -89,6 +89,9 @@ class SolrSearchSet extends SearchResultSet {
 		// non-indexed number-string phrases issue workaround (RT #24790)
 		$query = preg_replace('/(\d+)([a-zA-Z]+)/i', '$1 $2', $query);
 
+		// escape all lucene special characters: + - && || ! ( ) { } [ ] ^ " ~ * ? : \ (RT #25482)
+		$query = Apache_Solr_Service::escape($query);
+
 		return $query;
 	}
 
@@ -109,11 +112,14 @@ class SolrSearchSet extends SearchResultSet {
 		wfProfileIn( $fname );
 
 		$solr = new Apache_Solr_Service($wgSolrHost, $wgSolrPort, '/solr');
+
+		$sanitizedQuery = self::sanitizeQuery($query);
+
 		$params = array(
 			'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views', // fields we want to fetch back
 			'qf' => $queryFields,
 			'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
-			'bq' => '(*:* -html:(' . $query . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
+			'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
 			'qt' => 'dismax',
 			'pf' => '', // override defaults
 			'mm' => '100%', // "must match" - how many of query clauses (e.g. words) must match
@@ -147,13 +153,13 @@ class SolrSearchSet extends SearchResultSet {
 		//echo "fq=" . $params['fq'] . "<br />";
 
 		try {
-			$response = $solr->search(self::sanitizeQuery($query), $offset, $limit, $params);
+			$response = $solr->search($sanitizedQuery, $offset, $limit, $params);
 		}
 		catch (Exception $exception) {
 			//echo '<pre>'; print_r($exception); echo '</pre>';
 			$wgErrorLogTmp = $wgErrorLog;
 			$wgErrorLog = true;
-			Wikia::log( __METHOD__, "ERROR", $exception->getMessage() . " PARAMS: q=$query, fq=" . $params['fq'] );
+			Wikia::log( __METHOD__, "ERROR", $exception->getMessage() . " PARAMS: q=$sanitizedQuery, fq=" . $params['fq'] );
 			$wgErrorLog = $wgErrorLogTmp;
 
 			wfProfileOut( $fname );
