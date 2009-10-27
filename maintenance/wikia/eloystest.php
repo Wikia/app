@@ -36,7 +36,7 @@ function testDelayedEmails() {
 	 * delayed email
 	 */
 	global $wgTheSchwartzSecretToken;
-	$url = sprintf( "%s/api.php?action=awcreminder&user_id=%d&token=%s",
+	$url = sprintf( "http://techteam-qa6.wikia.com/api.php?action=awcreminder&user_id=%d&token=%s",
 		51098,
 		$wgTheSchwartzSecretToken
 	);
