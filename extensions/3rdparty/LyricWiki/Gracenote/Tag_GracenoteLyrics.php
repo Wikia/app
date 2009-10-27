@@ -202,14 +202,16 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 
 	#parse embedded wikitext
 	$retVal = "";
-	$retVal.= ($isInstrumental?"":$ringtoneLink)."\n"; // if this is an instrumental, just a ringtone link on the bottom is plenty.
 
 	$transform = $parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText();
 
 	$retVal.= gracenote_getNoscriptTag();
-	$retVal.= "<div class='lyricbox'>".gracenote_obfuscateText($transform)."</div>";
-	$retVal.= gracenote_getPrintDisabledNotice();
+	$retVal.= "<div class='lyricbox'>";
+	$retVal.= ($isInstrumental?"":$ringtoneLink)."\n"; // if this is an instrumental, just a ringtone link on the bottom is plenty.
+	$retVal.= gracenote_obfuscateText($transform);
 	$retVal.= "\n$ringtoneLink";
+	$retVal.= "</div>";
+	$retVal.= gracenote_getPrintDisabledNotice();
 
 	// Required Gracenote branding.
 	$retVal.= gracenote_getBrandingHtml();
