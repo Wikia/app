@@ -352,9 +352,6 @@ function Wysiwyg_Initial2($form) {
 
 	$wgOut->addInlineScript('var fallbackToSourceMode = '.($wgWysiwygData === '' ? 'true' : 'false').';');
 
-	// show first edit messages when needed
-	WysiwygFirstEditMessage();
-
 	return true;
 }
 
@@ -1298,72 +1295,6 @@ function WysiwygGetToolbarData() {
  */
 function WysiwygParserHookCallback($input, $args, $parser) {
 	return $input;
-}
-
-/**
- * Decide whether we should show first time edit popup
- */
-function WysiwygFirstEditMessageShow() {
-	global $wgUser, $wgCityId;
-
-	// for anon users we have JS logic
-	if ($wgUser->isAnon()) {
-		return true;
-	}
-
-	// for logged-in get preferences entry
-	$messageDismissed = $wgUser->getOption('wysiwyg-cities-edits', false);
-	return empty($messageDismissed);
-}
-
-/**
- * Store list of cities id where we shouldn't show first time edit popup anymore
- */
-$wgAjaxExportList[] = 'WysiwygFirstEditMessageSave';
-function WysiwygFirstEditMessageSave() {
-	global $wgUser, $wgCityId;
-
-	// ignore if user is anon
-	if ($wgUser->isAnon()) {
-		return;
-	}
-
-	// store new value in user settings
-	$wgUser->setOption('wysiwyg-cities-edits', '1');
-	$wgUser->saveSettings();
-
-	// commit
-	$dbw = wfGetDB( DB_MASTER );
-	$dbw->commit();
-
-	return new AjaxResponse('ok');
-}
-
-/**
- * Show first edit message
- *
- * @author Maciej Brencz <macbre at wikia-inc.com>
- * @todo add logic deciding when to show this message
- */
-function WysiwygFirstEditMessage() {
-	global $wgOut;
-
-	if ( WysiwygFirstEditMessageShow() ) {
-		// HTML for popup body
-		$body = wfMsgExt('wysiwyg-first-edit-message', 'parse') .
-			'<div style="margin: 8px 0"><input type="checkbox" id="wysiwyg-first-edit-dont-show-me" />'.
-			'<label for="wysiwyg-first-edit-dont-show-me">' . wfMsg('wysiwyg-first-edit-dont-show-me') . '</label></div>';
-
-		// dialog data
-		$dialog = array(
-			'title' => wfMsg('wysiwyg-first-edit-title'),
-			'body' => $body,
-		);
-
-		$wgOut->addInlineScript('var wysiwygFirstEditMessage = ' . Wikia::json_encode($dialog) . ';');
-	}
-
-	return;
 }
 
 /**
