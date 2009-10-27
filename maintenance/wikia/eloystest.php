@@ -36,7 +36,7 @@ function testDelayedEmails() {
 	 * delayed email
 	 */
 	global $wgTheSchwartzSecretToken;
-	$url = sprintf( "http://techteam-qa6.wikia.com/api.php?action=awcreminder%26user_id=%d%26token=%s",
+	$url = sprintf( "http://techteam-qa6.wikia.com/api.php?action=awcreminder%%26user_id=%d%%26token=%s",
 		51098,
 		$wgTheSchwartzSecretToken
 	);
@@ -57,7 +57,7 @@ function testStomp() {
 		$stomp->connect( $wgStompUser, $wgStompPassword );
 		$stomp->sync = false;
 		$stomp->send(
-			"/test/eloy/stomp",
+			"/queue/foo",
 			Wikia::json_encode( array( "value" => "test" ) ),
 			array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 		);
@@ -70,5 +70,5 @@ function testStomp() {
 #
 # main
 #
-testDelayedEmails();
+
 testStomp();
