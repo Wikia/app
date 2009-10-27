@@ -11,10 +11,10 @@
 ////
 
 # disable for non-lyrics wikis
-if ( $_SERVER['SERVER_NAME'] != 'lyrics.wikia.com' ) {
-        echo "This is not a valid entry point.\n";
-        exit( 1 );
-}
+#if ( $_SERVER['SERVER_NAME'] != 'lyrics.wikia.com' ) {
+#        echo "This is not a valid entry point.\n";
+#        exit( 1 );
+#}
 
 GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
 $LW_USE_PERSISTENT_CONNECTIONS = true;
@@ -53,15 +53,13 @@ if(!$SHUT_DOWN_API){
 		define( 'LYRICWIKI_SOAP', true ); // so that LocalSettings.php knows not to include extra files.
 	}
 
-	require_once $LW_PATH."includes/Defines.php";
-
 	if($LW_PATH != "./"){ // another (probably futile) attempt to allow entry points other than in the root directory.
 		$wgScriptPath = $LW_PATH;
 	}
 
-	require_once $LW_PATH."LocalSettings.php"; // for the database connection vars.
-	require_once $LW_PATH."StartProfiler.php";
-	require_once $LW_PATH."includes/Setup.php";
+	require_once $LW_PATH."includes/WebStart.php";
+	require_once $LW_PATH."includes/Wiki.php";
+	$mediaWiki = new MediaWiki();
 	require_once "soap_stats.php"; // for tracking success/failure
 }
 
