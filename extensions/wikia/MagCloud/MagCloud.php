@@ -22,6 +22,7 @@ $wgAutoloadClasses['MagCloudApi'] = $dir.'MagCloudApi.class.php';
 // special page
 $wgAutoloadClasses['WikiaCollection'] = $dir.'SpecialWikiaCollection.class.php';
 $wgSpecialPages['WikiaCollection'] = 'WikiaCollection';
+$wgSpecialPageGroups['WikiaCollection'] = 'wikia';
 
 // i18n
 $wgExtensionMessagesFiles['MagCloud'] = $dir.'MagCloud.i18n.php';
