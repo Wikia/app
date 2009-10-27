@@ -40,6 +40,7 @@ function testDelayedEmails() {
 		51098,
 		$wgTheSchwartzSecretToken
 	);
+	Wikia::log( __METHOD__, "url", $url );
 	Http::post("http://theschwartz/theschwartz/function/TheSchwartz::Worker::URL", 'default', array (
 		CURLOPT_POSTFIELDS => array (
 			"theschwartz_run_after" => time() + 300,
