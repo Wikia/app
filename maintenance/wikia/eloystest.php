@@ -57,7 +57,7 @@ function testStomp() {
 		$stomp->connect( $wgStompUser, $wgStompPassword );
 		$stomp->sync = false;
 		$stomp->send(
-			"/queue/foo",
+			"/test/eloy/stomp",
 			Wikia::json_encode( array( "value" => "test" ) ),
 			array( 'exchange' => 'amq.topic', 'bytes_message' => 1 )
 		);
@@ -70,5 +70,5 @@ function testStomp() {
 #
 # main
 #
-
+testDelayedEmails();
 testStomp();
