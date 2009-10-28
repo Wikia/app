@@ -13,7 +13,7 @@ $.fn.extend({
 		var id = $(this).attr('id') + 'Wrapper';
 	}
 
-   	this.addClass('modalInside').wrap('<div class="modalWrapper" id="'+id+'"></div>');
+   	this.wrap('<div class="modalWrapper" id="'+id+'"></div>');
 
    	var wrapper = this.closest(".modalWrapper");
 
