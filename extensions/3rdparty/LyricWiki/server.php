@@ -497,7 +497,7 @@ function checkSongExists($artist, $song="") {
 
 	$retVal = false;
 	$title = lw_getTitle($artist,$song);
-	$tempTitle = Title::newFromDBkey($title);
+	$tempTitle = Title::yeDBkey($title);
 	if(isset($tempTitle)){
 		$retVal = $tempTitle->exists();
 	}
@@ -911,7 +911,7 @@ function getArtist($artist){
 	// For now the regex makes it only read the first disc and ignore beyond that (since it assumes the track listing is over).
 	$albums = array();
 	GLOBAL $amazonRoot;
-	
+
 	$debug = false;
 	$debugSuffix = "_debug";
 	if((strlen($artist) >= strlen($debugSuffix)) && (substr($artist, (0-strlen($debugSuffix))) == $debugSuffix)){
@@ -1229,7 +1229,7 @@ function postArtist($overwriteIfExists, $artist, $albums){ // TODO: IMPLEMENT
 
 	$artistName = lw_getTitle($artist);
 	$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($artistName)));
-	$pageExists = $pageTitle->exists(); // call here and store the result to check after page is created to determine if it was an overwrite
+	$pageExists = $pageTitle && $pageTitle->exists(); // call here and store the result to check after page is created to determine if it was an overwrite
 	if($pageExists){
 
 		// TODO: REMOVE
@@ -1728,16 +1728,17 @@ function lw_getPage($pageTitle, $pages=array(), &$finalName='', $debug=false){
 
 	// Get the text of the end-point article and record what the final article name is.
 	$title = Title::newFromDBkey($pageTitle);
-	if($title->exists()){
-		$article = Article::newFromID($title->getArticleID());
-		if($article->isRedirect()){
-			$reTitle = $article->followRedirect(); // follows redirects recursively
-			$article = Article::newFromId($reTitle->getArticleID());
+	if( $title ) {
+		if($title->exists()){
+			$article = Article::newFromID($title->getArticleID());
+			if($article->isRedirect()){
+				$reTitle = $article->followRedirect(); // follows redirects recursively
+				$article = Article::newFromId($reTitle->getArticleID());
+			}
+			$finalName = $article->getTitle()->getDBkey();
+			$retVal = $article->getRawText();
 		}
-		$finalName = $article->getTitle()->getDBkey();
-		$retVal = $article->getRawText();
 	}
-
 	print (!$debug?"":"page code\n$retVal\n");
 
 	return $retVal;
@@ -2142,5 +2143,3 @@ function requestFinished($id){
 		mysql_query("DELETE FROM apiRequests WHERE id=$id", $db);
 	}
 } // end requestFinished()
-
-?>
