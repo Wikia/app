@@ -410,3 +410,10 @@ body.widgetsAddingBlocked .add {
 	margin-bottom: 10px !important;
 	padding: 2px !important;
 }
+
+/* BARTEK, for AjaxLogin */
+#wpName1Ajax, #wpPassword1Ajax {
+	float: left;
+	margin-right: 5px;
+
+}
