@@ -261,7 +261,7 @@ class WikiaCollection extends SpecialPage {
 		$wgOut->addHTML("<p>All articles were compiled {$username} on {$currentDate} from {$currentWiki} - a list of authors is available at the URLs listed above.</p>");
 
 		global $wgRightsText;
-		$wgOut->addHTML("<p>This content is available under a {$wgRightsText} license.</p>");
+		$wgOut->addHTML("<p>This content is available under a CC-BY-SA license, which can be found online at http://creativecommons.org/licenses/by-sa/3.0/.</p>");
 
 		$add = $wgRequest->getVal("add", 0);
 		for ($i = 1; $i <= $add; $i++) {
