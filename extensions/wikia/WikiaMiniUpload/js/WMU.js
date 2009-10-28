@@ -615,7 +615,7 @@ function WMU_upload(e) {
 	}
 }
 
-function WMsplitExtensions( filename ) {
+function WMU_splitExtensions( filename ) {
 	var bits = filename.split( '.' );
 	var basename = bits.shift();
 	return new Array( basename, bits );
