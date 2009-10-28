@@ -497,7 +497,7 @@ function checkSongExists($artist, $song="") {
 
 	$retVal = false;
 	$title = lw_getTitle($artist,$song);
-	$tempTitle = Title::yeDBkey($title);
+	$tempTitle = Title::newFromDBkey($title);
 	if(isset($tempTitle)){
 		$retVal = $tempTitle->exists();
 	}
