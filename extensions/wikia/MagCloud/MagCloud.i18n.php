@@ -5,9 +5,9 @@ $messages = array();
 $messages['en'] = array(
 	'wikiacollection' => 'Make a magazine!',
 	'magcloud-intro-get-started' => 'Collect articles',
-	'magcloud-intro-create-magazine' => 'Create a magazine from articles on this Wiki',
-	'magcloud-intro-check-out' => 'Check out what\'s already been created by our community:',
-	'magcloud-intro-hint' => 'Just use the toolbar above to select the articles you\'d like to compile into your magazine, and then click "Go to your magazine" when done!',
+	'magcloud-intro-create-magazine' => 'Create a magazine from articles on this Wiki!',
+	'magcloud-intro-check-out' => 'Click the magazine to check out an example from our community!',
+	'magcloud-intro-hint' => 'Just use the toolbar at the top of the page to select the articles you\'d like to compile into your magazine. Click "Go to your magazine" when you\'re done!',
 	'magcloud-intro-view-my-magazines' => 'View my Magazines',
 
 	'magcloud-load-magazine-title' => 'Load a Magazine',
@@ -35,7 +35,7 @@ $messages['en'] = array(
 	'magcloud-special-collection-review-list-tips' => "<big>Tips for creating a Great Magazine</big>
 
 # Try choosing articles that follow a theme, like comic villans or unique swords.
-# Your final magazine needs to be less than 100 pages in length, which is probably about 8 - 10 articles, depending on which articles you're adding. 
+# Your final magazine needs to be less than 100 pages in length, which is probably about 8 - 10 articles, depending on which articles you're adding.
 
 If you're stuck for inspiration, check out the examples below!",
 	'magcloud-order-your-articles' => 'Order your articles',

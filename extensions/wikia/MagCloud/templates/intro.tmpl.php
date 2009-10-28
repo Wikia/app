@@ -1,14 +1,17 @@
 <div id="MagCloudIntroPopup" title="MagCloud" class="MagCloudDialog">
 	<h3><?= wfMsg('magcloud-intro-create-magazine') ?></h3>
-	<h4><?= wfMsg('magcloud-intro-check-out') ?></h4>
 
 	<div id="MagCloudIntroPopupPreviews">
 		<a href="<?= htmlspecialchars($preview['href']) ?>" target="_blank">
 			<img src="<?= $preview['src'] ?>" />
 		</a>
+
+		<p><?= wfMsg('magcloud-intro-hint') ?></p>
 	</div>
 
-	<p><?= wfMsg('magcloud-intro-hint') ?></p>
+	<div id="MagCloudIntroArrow" class="clearfix">
+		<span><?= wfMsg('magcloud-intro-check-out') ?></span>
+	</div>
 
 	<div id="MagCloudIntroPopupButtons" class="MagCloudPopupButtons">
 		<a class="wikia_button" id="MagCloudIntroPopupOk">

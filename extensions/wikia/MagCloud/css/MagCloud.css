@@ -100,32 +100,46 @@
 
 /* intro popup */
 #MagCloudIntroPopup {
-	height: 240px;
+	height: 260px;
 }
 
 #MagCloudIntroPopup h3 {
+	font-size: 1.2em;
 	font-weight: bold;
-	text-align: center;
-}
-
-#MagCloudIntroPopup h4 {
-	font-size: 0.95em;
+	padding: 1em 0 0 0;
 	text-align: center;
 }
 
 #MagCloudIntroPopupPreviews {
 	padding: 12px 0;
+}
+
+#MagCloudIntroPopupPreviews p {
+	font-size: 0.9em;
+	line-height: 1.5em;
+	padding: 15px 20px;
 	text-align: center;
 }
 
 #MagCloudIntroPopupPreviews img {
+	float: right;
 	padding: 0 12px;
 }
 
-#MagCloudIntroPopup p {
-	font-size: 0.95em;
-	line-height: 1.2em;
-	text-align: center;
+/* box with arrow (RT #25481) */
+#MagCloudIntroArrow {
+	background: transparent url('../images/MagCloudIntroArrow.png') no-repeat 190px 50%;
+	margin: 0 15px;
+}
+
+#MagCloudIntroArrow span {
+	background: #d3e0ff;
+	border-right: solid 3px #1b4096;
+	display: block;
+	font-size: 0.9em;
+	margin-right: 180px;
+	padding: 4px 8px;
+	text-align: right;
 }
 
 /* saved magazines popup */
