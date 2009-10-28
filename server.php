@@ -915,7 +915,7 @@ function getArtist($artist){
 	// For now the regex makes it only read the first disc and ignore beyond that (since it assumes the track listing is over).
 	$albums = array();
 	GLOBAL $amazonRoot;
-	
+
 	$debug = false;
 	$debugSuffix = "_debug";
 	if((strlen($artist) >= strlen($debugSuffix)) && (substr($artist, (0-strlen($debugSuffix))) == $debugSuffix)){
@@ -1732,16 +1732,17 @@ function lw_getPage($pageTitle, $pages=array(), &$finalName='', $debug=false){
 
 	// Get the text of the end-point article and record what the final article name is.
 	$title = Title::newFromDBkey($pageTitle);
-	if($title->exists()){
-		$article = Article::newFromID($title->getArticleID());
-		if($article->isRedirect()){
-			$reTitle = $article->followRedirect(); // follows redirects recursively
-			$article = Article::newFromId($reTitle->getArticleID());
+	if( $title ) {
+		if( $title->exists() ) {
+			$article = Article::newFromID($title->getArticleID());
+			if($article->isRedirect()){
+				$reTitle = $article->followRedirect(); // follows redirects recursively
+				$article = Article::newFromId($reTitle->getArticleID());
+			}
+			$finalName = $article->getTitle()->getDBkey();
+			$retVal = $article->getRawText();
 		}
-		$finalName = $article->getTitle()->getDBkey();
-		$retVal = $article->getRawText();
 	}
-
 	print (!$debug?"":"page code\n$retVal\n");
 
 	return $retVal;
