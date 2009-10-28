@@ -446,6 +446,8 @@ class AutoCreateWikiLocalJob extends Job {
 		$backurl = sprintf( "%s/api.php?action=awcreminder%%26user_id=%d%%26token=%s",
 			$wgServer, $this->mFounder->getId(), $wgTheSchwartzSecretToken );
 
+		Wikia::log( __METHOD__, "info", "Queue reminder email $backurl" );
+
 		Http::post( self::REMINDER_URL, 'default', array (
 			CURLOPT_POSTFIELDS => array (
 				"theschwartz_run_after" => time() + self::REMINDER_DELAY,
