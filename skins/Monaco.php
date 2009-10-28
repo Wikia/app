@@ -1821,7 +1821,7 @@ if ($custom_article_footer !== '') {
 
 	if( !empty( $wgEnableShareFeatureExt ) ) {
 ?>
-				
+
 								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_sharefeature_img" class="sprite" alt="<?= wfMsg('sf-link') ?>" /> <div><a style="cursor:pointer" id="fe_sharefeature_link"><?= wfMsg('sf-link'); ?></a></div></li>
 
 <?php } ?>
@@ -2083,13 +2083,19 @@ if(count($wikiafooterlinks) > 0) {
 	if (count($dynamicLinksArray) > 0) {
 ?>
 		<tbody id="link_box_dynamic">
+			<tr>
+				<td colspan="2">
+					<ul>
 <?php
 			foreach ($dynamicLinksArray as $link) {
 				//print_r($link);
 				$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
-				echo '<tr><td><div class="link_box_dynamic_div"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="' . $wgStylePath  . '/monobook/blank.gif" id="' . $link['id'] . '-img" class="sprite" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></div></td></tr>';
+				echo '<li class="link_box_dynamic_div"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="' . $wgStylePath  . '/monobook/blank.gif" id="' . $link['id'] . '-img" class="sprite" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></li>';
 			}
 ?>
+					</ul>
+				</td>
+			</tr>
 		</tbody>
 <?php
 	}
