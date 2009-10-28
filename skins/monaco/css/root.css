@@ -23,9 +23,14 @@ body {
 }
 .accent	{
 	background-color: #d6e0f5;
+	border-color: #36C;
 	color: #000;
 }
-
+.neutral {
+	background-color: #EEE;
+	border-color: #AAA;
+	color: #000;
+}
 
 .shadow {
 	background-image: url(http://images.wikia.com/common/skins/monaco/images/shadow.png);
