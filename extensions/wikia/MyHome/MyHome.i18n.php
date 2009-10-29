@@ -6,12 +6,12 @@ $messages['en'] = array(
 	'myhome' => 'My Home',
 	'myhome-activity-more' => 'see more recent activity',
 	'myhome-activity-feed' => 'Activity feed',
-	'Myhome-activity-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-activity-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-watchlist-feed' => 'Watchlist',
-	'Myhome-watchlist-feed-empty' => 'You can add pages to your watchlist by clicking the "Watch" link in the bar at the top of the page. You can use your watchlist to keep track of the latest changes to pages that you care about.',
+	'myhome-watchlist-feed-empty' => 'You can add pages to your watchlist by clicking the "Watch" link in the bar at the top of the page. You can use your watchlist to keep track of the latest changes to pages that you care about.',
 	'myhome-user-contributions-feed' => 'Contributions',
 	'myhome-hot-spots-feed' => 'Hot Spots',
-	'Myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
+	'myhome-hot-spots-feed-empty' => "This wiki is waiting for you to get involved. Click on '''[[Special:CreatePage|New page]]''' to start writing!",
 	'myhome-hot-spots-newest' => 'New pages on the wiki',
 	'myhome-hot-spots-brandnew' => 'This is a brand-new wiki. Click on [[Special:CreatePage|New page]] to start writing!',
 	'tog-myhomedisableredirect' => 'Disable my redirect to My Home',
@@ -32,6 +32,7 @@ $messages['en'] = array(
 	'myhome-feed-comment-by' => 'comment by $1',
 	'myhome-feed-deleted-by' => 'deleted by $1',
 	'myhome-feed-moved-by' => 'moved by $1',
+	'myhome-feed-by' => 'by $1',
 
 	'myhome-feed-diff-alt' => 'show me the change on this page',
 
@@ -98,6 +99,7 @@ $messages['pl'] = array(
 	'myhome-feed-comment-by' => 'skomentowany przez $1',
 	'myhome-feed-deleted-by' => 'usunięty przez $1',
 	'myhome-feed-moved-by' => 'przeniesiony przez $1',
+	'myhome-feed-by' => 'przez $1',
 
 	'myhome-feed-new-page-details' => 'Nowy artykuł',
 	'myhome-feed-summary-details' => 'Opis zmian',

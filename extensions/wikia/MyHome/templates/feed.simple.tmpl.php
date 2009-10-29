@@ -1,13 +1,13 @@
 <?php
 	if (isset($emptyMessage)) {
 ?>
-	<h3 class="myhome-empty-message"><?= htmlspecialchars($emptyMessage) ?></h3>
+	<h3 class="myhome-empty-message shortlist"><?= htmlspecialchars($emptyMessage) ?></h3>
 <?php
 	}
 	else {
 ?>
 
-	<ul class="activityfeed reset" id="<?= $tagid ?>">
+	<ul class="activityfeed reset shortlist" id="<?= $tagid ?>">
 <?php
 		foreach($data as $row) {
 ?>
@@ -25,9 +25,7 @@
 <?php
 			}
 ?>
-			<cite><?= FeedRenderer::getActionLabel($row); ?><?= ActivityFeedRenderer::formatTimestamp($row['timestamp']); ?><?= FeedRenderer::getDiffLink($row); ?></cite>
-		<table><?= FeedRenderer::getDetails($row) ?></table>
-
+			<cite><?= ActivityFeedRenderer::formatTimestamp($row['timestamp']); ?><?= FeedRenderer::getDiffLink($row); ?></cite>
 		</li>
 <?php
 		}

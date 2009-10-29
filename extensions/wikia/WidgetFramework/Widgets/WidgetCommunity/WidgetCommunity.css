@@ -36,3 +36,97 @@
 * html .WidgetCommunity .community_toggle {
 	right: -7px;
 }
+
+
+/* ----- new version ----- */
+.WidgetCommunity dd {
+	padding: 0;
+}
+
+.WidgetCommunity .community_header {
+	background-color: #D6E0F5;
+	border-bottom: 1px solid #626262;
+	padding: 2px 4px;
+}
+
+.WidgetCommunity .article_count {
+	color: #3366CC;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.WidgetCommunity .activityfeed img.sprite {
+	top: 2px;
+}
+
+.WidgetCommunity .community_footer {
+	background-color: #EEEEEE;
+	border-top: 1px solid #AAAAAA;
+	padding: 4px;
+	text-align: right;
+}
+
+.WidgetCommunity .widgetfeed {
+	margin-left: 25px;
+	margin-top: 4px;
+}
+
+.WidgetCommunity .widgetfeed li {
+	margin-bottom: 4px;
+	position: relative;
+}
+
+.WidgetCommunity li strong {
+	display: block;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+/* TODO: move this to monaco css? and remove from MyHome.css */
+.activityfeed img.sprite {
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?myhome2) repeat scroll 0 0;
+	height: 16px;
+	margin-left: -20px;
+	position: absolute;
+	top: -1px;
+	width: 560px;
+}
+
+.activity-type-new .sprite {
+	clip: rect(0px 528px 16px 512px);
+	left: -512px;
+}
+
+.activity-type-edit .sprite {
+	clip: rect(0px 16px 16px 0px);
+}
+
+.activity-type-talk .sprite {
+	clip: rect(0px 498px 16px 482px);
+	left: -482px;
+}
+
+.activity-type-photo .sprite {
+	clip: rect(0px 432px 16px 416px);
+	left: -416px;
+}
+
+.activity-type-video .sprite {
+	clip: rect(0px 512px 16px 498px);
+	left: -498px;
+}
+
+.activity-type-comment .sprite {
+	clip: rect(0px 482px 16px 466px);
+	left: -466px;
+}
+
+.activity-type-move .sprite {
+	clip: rect(0px 544px 16px 528px);
+	left: -528px;
+}
+
+.activity-type-delete .sprite {
+	clip: rect(0px 560px 16px 544px);
+	left: -544px;
+}

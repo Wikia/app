@@ -3,7 +3,10 @@
 	overflow: hidden;
 	position: relative;
 }
-
+#myhome-wrapper h2 {
+	clear: left;
+	margin: 0 0 0.6em;
+}
 #myhome-feed-switch {
 	font-size: 9pt;
 	position: absolute;
@@ -24,12 +27,11 @@
 	vertical-align: middle;
 }
 
-.myhome-feed {
-	margin-right: 300px;
-}
-
-#myhome-wrapper .myhome-feed h2 {
+#myhome-main h2 {
 	margin: 0;
+}
+#myhome-main .activityfeed {
+	margin-top: 25px;
 }
 
 h3.myhome-empty-message {
@@ -37,101 +39,90 @@ h3.myhome-empty-message {
 	padding: 20px 0;
 }
 
-.myhome-feed dl {
+.activityfeed {
 	margin-left: 20px;
-	margin-top: 30px;
 	position: relative;
 }
 
-.myhome-feed dt {
-	clear: left;
+.activityfeed li {
+	margin-bottom: 25px;
 	position: relative;
 }
 
-.myhome-feed dd {
-	line-height: 1.2em;
-	margin: 5px 0 30px;
-	overflow: hidden;
-}
-
-.myhome-feed em {
+.activityfeed em {
 	font-style: normal;
 	font-weight: bold;
 }
 
-.myhome-feed img.sprite {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?myhome2) repeat scroll 0 0;
+.activityfeed img.sprite {
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091023) repeat scroll 0 0;
 	height: 16px;
+	margin-left: -20px;
 	position: absolute;
-	top: 1px;
+	top: -1px;
 	width: 560px;
 }
 
-.myhome-feed-sun-icon .sprite {
+.activity-type-new .sprite {
 	clip: rect(0px 528px 16px 512px);
-	left: -532px;
+	left: -512px;
 }
 
-.myhome-feed-pencil-icon .sprite {
+.activity-type-edit .sprite {
 	clip: rect(0px 16px 16px 0px);
-	left: -20px;
 }
 
-.myhome-feed-talk-icon .sprite {
+.activity-type-talk .sprite {
 	clip: rect(0px 498px 16px 482px);
-	left: -502px;
+	left: -482px;
 }
 
-.myhome-feed-photo-icon .sprite {
+.activity-type-photo .sprite {
 	clip: rect(0px 432px 16px 416px);
-	left: -436px;
+	left: -416px;
 }
 
-.myhome-feed-film-icon .sprite {
+.activity-type-video .sprite {
 	clip: rect(0px 512px 16px 498px);
-	left: -518px;
+	left: -498px;
 }
 
-.myhome-feed-comment-icon .sprite {
+.activity-type-comment .sprite {
 	clip: rect(0px 482px 16px 466px);
-	left: -486px;
+	left: -466px;
 }
 
-.myhome-feed-move-icon .sprite {
+.activity-type-move .sprite {
 	clip: rect(0px 544px 16px 528px);
-	left: -548px;
+	left: -528px;
 }
 
-.myhome-feed-delete-icon .sprite {
+.activity-type-delete .sprite {
 	clip: rect(0px 560px 16px 544px);
-	left: -564px;
+	left: -544px;
 }
 
-.myhome-feed dt .title {
+.activityfeed strong {
+	display: block;
 	font-size: 14pt;
 	font-weight: normal;
-	position: relative;
 }
 
-.myhome-feed cite {
-	display: block;
+.activityfeed cite {
 	font-size: 9pt;
-	line-height: 1.2em;
 }
-.myhome-feed-details-row td {
+.activityfeed table {
+	margin-top: 5px;
+}
+.activityfeed td {
 	line-height: 1.3em;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	vertical-align: top;
 }
-td.myhome-feed-details-label {
-	/*min-width: 140px;*/
+td.activityfeed-details-label {
 	padding-right: 10px;
 	white-space: nowrap;
-}
-
-.myhome-diff {
-	margin: 0 4px;
 }
 
 .myhome-feed-more {
@@ -147,7 +138,7 @@ td.myhome-feed-details-label {
 }
 
 .myhome-feed-loading .myhome-feed-more {
-	background: transparent url(http://images.wikia.com/common/skins/common/progress-wheel.gif) no-repeat 50% 50%;
+	background: transparent url(http://images.wikia.com/common/skins/common/progress-wheel.gif?20091023) no-repeat 50% 50%;
 }
 
 .myhome-feed-loading .myhome-feed-more a {
@@ -165,14 +156,14 @@ td.myhome-feed-details-label {
 	min-width: 150px;
 }
 
-.myhome-feed-inserted-media li {
+.activityfeed-inserted-media li {
 	border: solid 1px #ccc;
 	float: left;
 	margin: 4px 4px 4px 0;
 	position: relative;
 }
 
-.myhome-feed-inserted-media li a {
+.activityfeed-inserted-media li a {
 	cursor: pointer;
 	display: block;
 	height: 160px;
@@ -180,7 +171,7 @@ td.myhome-feed-details-label {
 }
 
 .myhome-video-play {
-	background: transparent url(images/play.png) no-repeat 50% 50%;
+	background: transparent url(images/play.png?20091023) no-repeat 50% 50%;
 	left: 0;
 	height: 160px;
 	position: absolute;
@@ -188,11 +179,14 @@ td.myhome-feed-details-label {
 	width: 160px;
 }
 
-.myhome-image-thumbnail img,
-.myhome-video-thumbnail img {
+.activityfeed-image-thumbnail img,
+.activityfeed-video-thumbnail img {
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 0 auto;
+}
+
+#myhome-main {
+	margin-right: 300px;
 }
 
 /* Sidebar */
@@ -203,46 +197,25 @@ td.myhome-feed-details-label {
 	width: 280px;
 }
 
-#myhome-sidebar .myhome-feed {
-	margin-right: 0;
-	margin-bottom: 20px;
-}
-#myhome-wrapper #myhome-sidebar h2 {
-	margin-bottom: 0.6em;
-}
-#myhome-sidebar .myhome-feed dl {
-	margin-top: 10px;
+#myhome-sidebar ul {
+	margin-bottom: 30px;
 }
 
 /* User contributions */
-#myhome-user-contributions-feed-content dl {
-	padding: 0 0 5px;
-}
-
-#myhome-user-contributions-feed-content dt {
+#myhome-user-contributions li {
 	margin-bottom: 5px;
 }
 
-#myhome-user-contributions-feed-content a.title {
-	font-size: 1em;
-}
-
-#myhome-user-contributions-feed-content cite {
-	display: inline;
-	margin: 0;
-	white-space: nowrap;
-}
-
-#myhome-user-contributions-feed-content p {
-	line-height: 1.5em;
-}
 
 /* Hot Spots */
-#myhome-hot-spots-feed-content li {
+#myhome-hot-spots {
+	margin: 0;
+}
+#myhome-hot-spots li {
 	clear: left;
 	height: 1%;
 }
-#myhome-hot-spots-feed-content li div {
+#myhome-hot-spots li div {
 	clear: left;
 	color: #FFF;
 	float: left;
@@ -253,7 +226,7 @@ td.myhome-feed-details-label {
 	-webkit-border-radius: 5px;
 }
 
-#myhome-hot-spots-feed-content big {
+#myhome-hot-spots big {
 	display: block;
 	float: left;
 	font-size: 16pt;
@@ -262,7 +235,7 @@ td.myhome-feed-details-label {
 	width: 35px;
 }
 
-#myhome-hot-spots-feed-content small {
+#myhome-hot-spots small {
 	font-size: 9pt;
 	font-weight: normal;
 	line-height: 28px;
@@ -270,7 +243,7 @@ td.myhome-feed-details-label {
 	margin-right: 15px;
 }
 
-#myhome-hot-spots-feed-content span {
+#myhome-hot-spots span {
 	display: block;
 	font-weight: bold;
 	margin-bottom: 10px;
@@ -291,11 +264,11 @@ td.myhome-feed-details-label {
 .hot-spot-severity-5 {
 	background-color: #069;
 }
-#myhome-hot-spots-feed-content .myhome-hot-spots-fire {
+#myhome-hot-spots .myhome-hot-spots-fire {
 	margin-right: 10px;
 }
 .fire .myhome-hot-spots-fire {
-	background: url(http://images.wikia.com/common/releases_MyHome/extensions/wikia/MyHome/images/fire.png) repeat-x;
+	background: url(http://images.wikia.com/common/releases_MyHome/extensions/wikia/MyHome/images/fire.png?20091023) repeat-x;
 	padding-top: 30px;
 }
 .fire span {
@@ -310,5 +283,5 @@ td.myhome-feed-details-label {
 /* IE6 fixes */
 * html .myhome-feed .sprite {
 	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?myhome2', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091023', sizingMethod='crop');
 }

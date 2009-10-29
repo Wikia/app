@@ -1,13 +1,13 @@
-<div class="myhome-feed myhome-<?= $type ?>-feed clearfix">
+<?/*<div class="activityfeed reset clearfix">*/?>
 <h2 class="dark_text_2"><?= wfMsg("myhome-{$type}-feed") ?></h2>
 <?php
 	echo $defaultSwitch;
 ?>
-<div id="myhome-<?= $type ?>-feed-content" class="reset">
+<?/*<div id="myhome-<?= $type ?>-feed-content" class="reset">*/?>
 <?php
 	echo $content;
 ?>
-</div>
+<?/*</div>*/?>
 <?php
 	if (!empty($showMore)) {
 ?>
@@ -15,4 +15,4 @@
 <?php
 	}
 ?>
-</div>
+<?/*</div>*/?>

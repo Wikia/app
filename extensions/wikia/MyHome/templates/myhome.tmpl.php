@@ -29,6 +29,8 @@
 	<!-- /right sidebar -->
 
 	<!-- feed -->
-	<?=$feedHTML?>
+	<div id="myhome-main">
+		<?=$feedHTML?>
+	</div>
 	<!-- /feed -->
 </div>

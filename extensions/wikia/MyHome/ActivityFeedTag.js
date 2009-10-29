@@ -2,8 +2,8 @@ var ActivityFeedTag = {};
 
 // setup onclick events for image/video thumbnails
 ActivityFeedTag.setupThumbnails = function(node) {
-	$(node).find('.myhome-image-thumbnail').click(ActivityFeedTag.loadFullSizeImage);
-	$(node).find('.myhome-video-thumbnail').click(ActivityFeedTag.loadVideoPlayer);
+	$(node).find('.activityfeed-image-thumbnail').click(ActivityFeedTag.loadFullSizeImage);
+	$(node).find('.activityfeed-video-thumbnail').click(ActivityFeedTag.loadVideoPlayer);
 }
 
 ActivityFeedTag.ajax = function(method, params, callback) {
@@ -84,7 +84,35 @@ ActivityFeedTag.loadFullSizeImage = function(ev) {
 	});
 }
 
+ActivityFeedTag.loadFreshData = function(id, params) {
+	params = params.replace(/&amp;/g, '&');
+	$.getJSON(wgScript + '?action=ajax&rs=ActivityFeedAjax', {params: params}, function(json){
+		var tmpDiv = document.createElement('div');
+		tmpDiv.innerHTML = json.data;
+		$('#' + id).html($(tmpDiv).find('ul').html());
+		ActivityFeedTag.setupThumbnails($('#' + id));
+	});
+}
+
+ActivityFeedTag.addTracking = function(id) {
+	$('#' + id).find('li').each(function(n) {
+		$(this).find('strong').find('a').click( function(e) {
+			WET.byStr('activityfeedtag/title');
+		});
+		$(this).find('cite').find('a').eq(0).click( function(e) {
+			WET.byStr('activityfeedtag/user');
+		});
+		$(this).find('cite').find('a').eq(1).click( function(e) {
+			WET.byStr('activityfeedtag/diff');
+		});
+	});
+}
+
+ActivityFeedTag.initActivityTag = function(id, params) {
+	ActivityFeedTag.loadFreshData(id, params);
+	ActivityFeedTag.addTracking(id);
+}
 
 wgAfterContentAndJS.push(function() {
-	ActivityFeedTag.setupThumbnails($('.myhome-feed'));
+	ActivityFeedTag.setupThumbnails($('.activityfeed'));
 });

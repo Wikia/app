@@ -99,7 +99,7 @@ MyHome.loadFullSizeImage = function(ev) {
 MyHome.fetchMore = function(node) {
 	var feedType = node.id.split('-')[1];
 
-	var feedContent = $('#myhome-' + feedType + '-feed-content');
+	var feedContent = $("#myhome-main").find(".activityfeed:last");
 	var fetchSince = MyHome.fetchSince[feedType];
 
 	MyHome.log('fetching ' + feedType + ' since ' + fetchSince);
@@ -116,7 +116,8 @@ MyHome.fetchMore = function(node) {
 
 		if (data.html) {
 			// add rows
-			feedContent.append(data.html);
+			//feedContent.append(data.html);
+			$(data.html).insertAfter(feedContent);
 
 			// setup onclicks on thumbnails
 			MyHome.setupThumbnails(feedContent);
@@ -139,8 +140,8 @@ MyHome.fetchMore = function(node) {
 
 // setup onclick events for image/video thumbnails
 MyHome.setupThumbnails = function(node) {
-	$(node).find('.myhome-image-thumbnail').click(MyHome.loadFullSizeImage);
-	$(node).find('.myhome-video-thumbnail').click(MyHome.loadVideoPlayer);
+	$(node).find('.activityfeed-image-thumbnail').click(MyHome.loadFullSizeImage);
+	$(node).find('.activityfeed-video-thumbnail').click(MyHome.loadVideoPlayer);
 
 	MyHome.log('thumbnails setup');
 }
@@ -199,7 +200,7 @@ MyHome.trackClick = function(e) {
 // init onclicks
 jQuery(function() {
 	MyHome.mode = $('#myhome-wrapper').children().eq(2).hasClass("myhome-activity-feed") ? 'activity' : 'watchlist';
-	MyHome.setupThumbnails($('.myhome-feed'));
+	MyHome.setupThumbnails($('.activityfeed'));
 	$('#myhome-feed-switch-default-checkbox').removeAttr('disabled').click(MyHome.setDefaultView);
 	$('#myhome-wrapper').click(MyHome.trackClick);
 	MyHome.track('/view/' + MyHome.mode);
