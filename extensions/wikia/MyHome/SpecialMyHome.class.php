@@ -3,6 +3,7 @@
 class SpecialMyHome extends SpecialPage {
 
 	function __construct() {
+		wfLoadExtensionMessages('MyHome');
 		parent::__construct('MyHome', '' /* no restriction */, true /* listed */);
 	}
 
@@ -10,8 +11,6 @@ class SpecialMyHome extends SpecialPage {
 		global $wgOut, $wgUser;
 
 		$this->setHeaders();
-
-		wfLoadExtensionMessages('MyHome');
 
 		// not available for skins different then monaco
 		if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
