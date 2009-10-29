@@ -143,9 +143,10 @@ class SolrSearchSet extends SearchResultSet {
 			}
 			$params['fq'] = $nsQuery; // filter results for selected ns
 		}
+		//if( true ) {
 		if( $wgCityId == 4832 ) {
-			// techteamtest tmp hack: search muppet.wikia.com
-			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:831";
+			// techteamtest tmp hack: scross-wikia search
+			//$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:831";
 		}
 		else {
 			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . $wgCityId;
