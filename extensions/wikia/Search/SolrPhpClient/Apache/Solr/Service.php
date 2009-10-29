@@ -299,13 +299,21 @@ class Apache_Solr_Service
 
 		$http_response_header = null;
 		if(!empty($wgWikiaSearchUseProxy) && !empty($wgSolrProxy)) {
-			// connect via proxy
-			$contextOpts = array(
-				'http' => array( 'proxy' => 'tcp://' . $wgSolrProxy, 'request_fulluri' => true )
-			);
-			$getContext = stream_context_create($contextOpts);
-			//$http_response_header is set by file_get_contents
-			$response = new Apache_Solr_Response(@file_get_contents($url, false, $getContext), $http_response_header, $this->_createDocuments, $this->_collapseSingleValueArrays);
+			// connect via proxy: settings contexts for file_get_contents() sucks badly, so we're using curl here
+			$curl = curl_init();
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_PROXY, $wgSolrProxy);
+			curl_setopt($curl, CURLOPT_HEADER, true);
+			curl_setopt($curl, CURLOPT_URL, $url);
+			if(!($curlResponse = curl_exec($curl))) {
+				throw new Exception("Curl ERROR: " . curl_error($curl));
+			}
+			curl_close($curl);
+			list($response_headers, $response_body) = explode("\r\n\r\n", $curlResponse, 2);
+			// make $http_response_header array, to be compatibile with previous code
+			$http_response_header = explode("\r\n", $response_headers);
+
+			$response = new Apache_Solr_Response($response_body, $http_response_header, $this->_createDocuments, $this->_collapseSingleValueArrays);
 		}
 		else {
 			//$http_response_header is set by file_get_contents
