@@ -125,7 +125,7 @@ $wgExtensionCredits["parserhook"][]=array(
 if(isset($wgScriptPath))
 {
 	#Instruct mediawiki to call gracenoteLyricsTag to initialise new extension
-	$wgExtensionFunctions[] = "gracenoteLyricsTag";
+	$wgHooks['ParserFirstCallInit'][] = "gracenoteLyricsTag";
 	$wgHooks['BeforePageDisplay'][] = "gracenoteLyricsTagCss";
 
 	// This only needs to be included once between the Lyrics tag and the GracenoteLyrics tag.
@@ -135,15 +135,12 @@ if(isset($wgScriptPath))
 }
 
 #Install extension
-function gracenoteLyricsTag()
+function gracenoteLyricsTag( &$parser)
 {
   #install hook on the element <lyric>
-  global $wgParser;
-  $wgParser->setHook("gracenotelyrics", "renderGracenoteLyricsTag");
+  $parser->setHook("gracenotelyrics", "renderGracenoteLyricsTag");
 
-  // Keep track of whether this is the first <gracenotelyrics> tag on the page - this is to prevent too many Ringtones ad links.
-  GLOBAL $wgFirstLyricTag;
-  $wgFirstLyricTag = true;
+  return true;
 }
 
 
@@ -171,12 +168,10 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 
   $isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
 
-  // If appropriate, build ringtones links.
-  GLOBAL $wgFirstLyricTag;
-  $ringtoneLink = "";
-  // NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
-  // If a user has ringtone-ads turned off, their CSS will make the ad invisible.
-  if($wgFirstLyricTag){ 
+	// If appropriate, build ringtones links.
+	$ringtoneLink = "";
+	// NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
+	// If a user has ringtone-ads turned off, their CSS will make the ad invisible.
 	GLOBAL $wgTitle, $wgUploadPath;
 	$artist = $wgTitle->getDBkey();
 	$colonIndex = strpos("$artist", ":");
@@ -197,8 +192,8 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	$ringtoneLink.= $href."Send \"$songTitle\" Ringtone to your Cell</a>";
 	$ringtoneLink.= " $href<img src='$wgUploadPath/phone_right.gif' alt='phone' width='16' height='17'/></a>";
 	$ringtoneLink.= "</div>";
-	$wgFirstLyricTag = false;
-  }
+	GLOBAL $wgFirstLyricTag;
+	$wgFirstLyricTag = false; // Even though the gracenote extension ignores these, this will prevent ringtones on other <lyrics> tags.
 
 	#parse embedded wikitext
 	$retVal = "";
