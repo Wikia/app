@@ -44,14 +44,13 @@
 }
 
 .WidgetCommunity .community_header {
-	background-color: #D6E0F5;
-	border-bottom: 1px solid #626262;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
 	padding: 2px 4px;
 }
 
 .WidgetCommunity .article_count {
-	color: #3366CC;
-	font-size: 20px;
+	font-size: 15pt;
 	font-weight: bold;
 }
 
@@ -59,10 +58,8 @@
 	top: 2px;
 }
 
-.WidgetCommunity .community_footer {
-	background-color: #EEEEEE;
-	border-top: 1px solid #AAAAAA;
-	padding: 4px;
+.WidgetCommunity .toolbar {
+	height: 1%;
 	text-align: right;
 }
 

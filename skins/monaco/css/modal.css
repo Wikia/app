@@ -43,3 +43,8 @@ h1.modalTitle div {
 #positioned_elements {
 	visibility: hidden;
 }
+
+/* Fields in AjaxLogin modal */
+#wpName1Ajax, #wpPassword1Ajax {
+	width: 150px;
+}

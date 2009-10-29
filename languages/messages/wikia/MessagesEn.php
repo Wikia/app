@@ -14,7 +14,7 @@ $messages = array_merge( $messages , array(
 'monaco-gaming' => 'Gaming',
 'monaco-custom' => 'Custom',
 'monaco-edit-this-menu' => 'Edit this menu',
-'monaco-articles-on' => '<span class="article_count">$1</span> articles on this wiki<br />',
+'monaco-articles-on' => '<span class="article_count dark_text_1">$1</span> articles on this wiki<br />',
 'monaco-welcome-back' => 'Welcome back, <b>$1</b><br />',
 'monaco-widgets' => 'Widgets',
 'monaco-latest' => 'Latest Activity',
