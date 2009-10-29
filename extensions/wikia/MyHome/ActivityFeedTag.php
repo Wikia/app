@@ -22,7 +22,7 @@ function ActivityFeedTag_render($content, $attributes, &$parser) {
 		return '';
 	}
 
-	$parameters = ActivityFeedHelper::parseParameters(explode("\n", $content));
+	$parameters = ActivityFeedHelper::parseParameters($attributes);
 
 	$tagid = str_replace('.', '_', uniqid('activitytag_', true));	//jQuery might have a problem with . in ID
 	$jsParams = "size={$parameters['maxElements']}";

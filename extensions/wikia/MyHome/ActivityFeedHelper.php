@@ -4,6 +4,7 @@ class ActivityFeedHelper {
 
 	/**
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 * TODO: because of late change in specs, this function has to handle parameters in different formats and thus it's little confused - would be good to clean up the code someday
 	 */
 	static function parseParameters($parametersIn) {
 		global $wgContLang;
@@ -15,23 +16,29 @@ class ActivityFeedHelper {
 		$parameters['flags'] = array();
 		$parameters['includeNamespaces'] = null;
 
-		foreach ($parametersIn as $parameter) {
-			@list($var, $val) = explode('=', $parameter);
+		foreach ($parametersIn as $parameter => $value) {
+			if (is_int($parameter)) {	//ajax
+				@list($var, $val) = explode('=', $value);
+			} else {	//parser tag
+				$var = $parameter;
+				$val = $value;
+			}
+
 			switch (trim($var)) {
 				case 'size':
 					if (!empty($val)) $parameters['maxElements'] = intval($val);
 					break;
 				case 'hideimages':
-					$parameters['flags'][] = 'hideimages';
+					if (!isset($val) || $val != 'false') $parameters['flags'][] = 'hideimages';
 					break;
 				case 'hidevideos':
-					$parameters['flags'][] = 'hidevideos';
+					if (!isset($val) || $val != 'false') $parameters['flags'][] = 'hidevideos';
 					break;
 				case 'hidecategories':
-					$parameters['flags'][] = 'hidecategories';
+					if (!isset($val) || $val != 'false') $parameters['flags'][] = 'hidecategories';
 					break;
 				case 'shortlist':
-					$parameters['flags'][] = 'shortlist';
+					if (!isset($val) || $val != 'false') $parameters['flags'][] = 'shortlist';
 					break;
 				case 'exclude':	//only from tag
 					if (!empty($val)) {
