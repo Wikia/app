@@ -17,6 +17,7 @@ if(count($data) == 5) {
 	if($data['results'][0]['count'] - $data['results'][1]['count'] > 2) {
 		$hotSpotFire = ' class="fire"';
 	}
+	echo '<ul id="myhome-hot-spots" class="reset">';
 	foreach($data['results'] as $row) {
 		if (isset($hotSpotLast['count']) && ($row['count'] == $hotSpotLast['count']) ) { //same count as before?
 			$thisSeverity = $hotSpotLast['severity']; //use the last severity level
@@ -41,4 +42,5 @@ if(count($data) == 5) {
 		$hotSpotFire = '';
 		$hotSpotSeverity++;
 	}
+	echo '</ul>';
 } else { echo wfMsgExt('myhome-hot-spots-brandnew', array('parseinline')); } ?>

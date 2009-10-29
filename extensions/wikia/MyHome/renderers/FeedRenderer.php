@@ -3,11 +3,11 @@
 class FeedRenderer {
 
 	// icon types definition - this value will be used as CSS class name
-	const FEED_SUN_ICON = 'sun';
-	const FEED_PENCIL_ICON = 'pencil';
+	const FEED_SUN_ICON = 'new';
+	const FEED_PENCIL_ICON = 'edit';
 	const FEED_TALK_ICON = 'talk';
 	const FEED_PHOTO_ICON = 'photo';
-	const FEED_FILM_ICON = 'film';
+	const FEED_FILM_ICON = 'video';
 	const FEED_COMMENT_ICON = 'comment';
 	const FEED_MOVE_ICON = 'move';
 	const FEED_DELETE_ICON = 'delete';
@@ -43,8 +43,24 @@ class FeedRenderer {
 		return $this->template->execute('feed.wrapper');
 	}
 
-	public function render($data, $wrap = true) {
+	public function render($data, $wrap = true, $parameters = array()) {
 		wfProfileIn(__METHOD__);
+
+		$template = 'feed';
+		if (isset($parameters['flags'])) {
+			$hideimages = in_array('hideimages', $parameters['flags']);
+			$hidevideos = in_array('hidevideos', $parameters['flags']);
+			$hidecategories = in_array('hidecategories', $parameters['flags']);
+			foreach ($data['results'] as &$item) {
+				if ($hideimages) unset($item['new_images']);
+				if ($hidevideos) unset($item['new_videos']);
+				if ($hidecategories) unset($item['new_categories']);
+			}
+			if (in_array('shortlist', $parameters['flags'])) $template = 'feed.simple';
+		}
+		if (isset($parameters['type']) && $parameters['type'] == 'widget') {
+			$template = 'feed.widget';
+		}
 
 		$this->template->set('data', $data['results']);
 
@@ -53,8 +69,11 @@ class FeedRenderer {
 			$this->template->set('emptyMessage', wfMsg("myhome-{$this->type}-feed-empty"));
 		}
 
+		$tagid = isset($parameters['tagid']) ? $parameters['tagid'] : 'myhome-activityfeed';
+		$this->template->set('tagid', $tagid);
+
 		// render feed
-		$content = $this->template->execute('feed');
+		$content = $this->template->execute($template);
 
 		// add header and wrap
 		if (!empty($wrap)) {
@@ -249,8 +268,8 @@ class FeedRenderer {
 			$msg = wfMsg("myhome-feed-{$type}-details");
 		}
 
-		$html = Xml::openElement('tr', array('class' => 'myhome-feed-details-row'));
-		$html .= Xml::openElement('td', array('class' => 'myhome-feed-details-label'));
+		$html = Xml::openElement('tr');
+		$html .= Xml::openElement('td', array('class' => 'activityfeed-details-label'));
 		$html .= Xml::element('em', array('class' => 'dark_text_2'), $msg);
 		$html .= ': ';
 		$html .= Xml::closeElement('td');
@@ -286,16 +305,16 @@ class FeedRenderer {
 			return '';
 		}
 
-		global $wgExtensionsPath;
+		global $wgExtensionsPath, $wgStyleVersion;
 
 		$html = Xml::openElement('a', array(
-			'class' => 'myhome-diff',
+			'class' => 'activityfeed-diff',
 			'href' => $row['diff'],
 			'title' => wfMsg('myhome-feed-diff-alt'),
 			'rel' => 'nofollow',
 		));
 		$html .= Xml::element('img', array(
-			'src' => $wgExtensionsPath . '/wikia/MyHome/images/diff.png',
+			'src' => $wgExtensionsPath . '/wikia/MyHome/images/diff.png?' . $wgStyleVersion,
 			'width' => 16,
 			'height' => 16,
 			'alt' => 'diff',
@@ -546,7 +565,7 @@ class FeedRenderer {
 
 			// wrapper for thumbnail
 			$attribs = array(
-				'class' => ($type == 'videos') ? 'myhome-video-thumbnail' :  'myhome-image-thumbnail',
+				'class' => ($type == 'videos') ? 'activityfeed-video-thumbnail' :  'activityfeed-image-thumbnail',
 				'title' => ($type == 'videos' ? 'Video:' : 'File:') . $item['name'], /* TODO: check that name doesn't have NS prefix */
 				'rel' => 'nofollow',
 			);
@@ -565,7 +584,7 @@ class FeedRenderer {
 		}
 
 		// render thumbs
-		$html = Xml::openElement('ul', array('class' => 'myhome-feed-inserted-media reset')) . implode('', $thumbs) . "\n\t\t\t\t" . Xml::closeElement('ul');
+		$html = Xml::openElement('ul', array('class' => 'activityfeed-inserted-media reset')) . implode('', $thumbs) . "\n\t\t\t\t" . Xml::closeElement('ul');
 
 		// indent
 		$html = "\n\t\t\t\t{$html}";

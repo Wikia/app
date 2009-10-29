@@ -46,7 +46,9 @@ class DataFeedProvider {
 
 	private static $images = array();
 
-	public function __construct($proxy) {
+	private $removeDuplicatesType;
+
+	public function __construct($proxy, $removeDuplicatesType = 0) {
 		$this->proxy = $proxy;
 
 		if($this->proxy instanceof ActivityFeedAPIProxy) {
@@ -54,6 +56,7 @@ class DataFeedProvider {
 		} else {
 			$this->proxyType = self::WL;
 		}
+		$this->removeDuplicatesType = $removeDuplicatesType;
 	}
 
 	public function get($limit, $start = null) {
@@ -62,7 +65,7 @@ class DataFeedProvider {
 
 		$hard_limit = 5;
 		while((count($this->results) < $limit + 1) && $hard_limit--) {
-			$callLimit = max(2, round(($proxyLimit - count($this->results)) * 1.2));
+			$callLimit = max(10, round(($proxyLimit - count($this->results)) * 1.2));
 			$res = $this->proxy->get($callLimit, $queryContinue);
 
 			if(isset($res['results'])) {
@@ -89,14 +92,18 @@ class DataFeedProvider {
 
 	private function add($item, $res) {
 
-		$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
+		if ($this->removeDuplicatesType == 0) {	//default
+			$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
 
-		if(is_array($res['rc_params']) && !empty($res['rc_params']['imageInserts'])) {
-			$key .= Wikia::json_encode($res['rc_params']['imageInserts']);
-		}
+			if(is_array($res['rc_params']) && !empty($res['rc_params']['imageInserts'])) {
+				$key .= Wikia::json_encode($res['rc_params']['imageInserts']);
+			}
 
-		if(is_array($res['rc_params']) && !empty($res['rc_params']['categoryInserts'])) {
-			$key .= Wikia::json_encode($res['rc_params']['categoryInserts']);
+			if(is_array($res['rc_params']) && !empty($res['rc_params']['categoryInserts'])) {
+				$key .= Wikia::json_encode($res['rc_params']['categoryInserts']);
+			}
+		} elseif ($this->removeDuplicatesType == 1) {	//used in `shortlist`, activity tag
+			$key = $res['title'];
 		}
 
 		if(!isset($this->results[$key])) {
