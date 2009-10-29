@@ -67,6 +67,14 @@ class ActivityFeedHelper {
 						}
 					}
 					break;
+				case 'style':	//only from tag
+					if (!empty($val)) {
+						$style = Sanitizer::checkCss($val);
+						if ($style) {
+							$parameters['style'] = $style;
+						}
+					}
+					break;
 				case 'ns':	//only from ajax
 					if (!empty($val)) {
 						$parameters['includeNamespaces'] = $val;
