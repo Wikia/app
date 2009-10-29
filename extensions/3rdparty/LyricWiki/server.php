@@ -875,7 +875,7 @@ function getSong($artist, $song="", $doHyphens=true){
 					} else {
 						$lyrics = substr($lyrics, 0, max(0, round(strlen($lyrics) / 7))) . "[...]";
 					}
-					$lyrics .= "\n\n\n\n$TRUNCATION_NOTICE".$retVal['url']."$urlLink";
+					//$lyrics .= "\n\n\n\n$TRUNCATION_NOTICE".$retVal['url']."$urlLink"; // we'll let apps decide how to handle this.
 
 					// We now return the truncated version instead of just a flat-out denial.
 					$retVal['lyrics'] = $lyrics;
