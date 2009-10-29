@@ -47,7 +47,8 @@ function wfImpliedRedirects_articleFromTitle(&$title, &$article){
 			// Borrow functions from the SOAP
 			define('LYRICWIKI_SOAP_FUNCS_ONLY', true); // so we can borrow functions from server.php w/o initializing a SOAP request.
 			$debug = false;
-			include_once 'server.php';
+			GLOBAL $IP;
+			include_once $IP.'/extensions/3rdparty/LyricWiki/server.php';
 
 			// If the artist has a redirect on their own page, that generally means that all songs belong to that finalized name...
 			// so try to grab the song using that version of the artist's name.
