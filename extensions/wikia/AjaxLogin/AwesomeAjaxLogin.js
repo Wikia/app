@@ -28,6 +28,9 @@ var AjaxLogin = {
 		}
 		AjaxLogin.form.log('AjaxLogin: selected action = '+ AjaxLogin.action);
 
+		// tracking
+		WET.byStr('loginActions/' + AjaxLogin.action);	
+
 		var params = [
 			'action=ajaxlogin',
 			'format=json',
