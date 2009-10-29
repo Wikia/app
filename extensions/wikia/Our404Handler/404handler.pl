@@ -19,7 +19,7 @@ use File::Basename;
 use File::Path;
 use XML::Simple;
 use Data::Types qw(:all);
-use POSIX qw(WNOHANG ceil floor);
+use Math::Round qw(round_even);
 
 sub real404 {
 	my $request_uri  = shift;
@@ -38,6 +38,16 @@ sub real404 {
 </body>
 </html>
 		};
+}
+
+sub scaleHeight {
+	my( $srcWidth, $srcHeight, $dstWidth ) = @_;
+	if( $srcWidth == 0  )  {
+		return 0;
+	}
+	else {
+		round_even( $srcWidth * $dstWidth /  $srcWidth );
+	}
 }
 
 #
@@ -208,11 +218,7 @@ while( $request->Accept() >= 0 ) {
 					my $origh = $xmlp->{ 'height' };
 					$origw = to_float( $origw ) unless is_float( $origw );
 					$origh = to_float( $origh ) unless is_float( $origh );
-
-					my $height = $width;
-					if( $origw && $origh ) {
-						$height = int( ( $width * $origh / $origw ) + 0.5 );
-					}
+					my $height = scaleHeight( $origw, $origh, $width );
 
 					#
 					# RSVG thumbnailer
@@ -291,7 +297,7 @@ while( $request->Accept() >= 0 ) {
 					my $origw  = $image->Get( 'width' );
 					my $origh  = $image->Get( 'height' );
 					if( $origw && $origh ) {
-						my $height = $width * $origh / $origw;
+						my $height = scaleHeight( $origw, $origh, $width );
 						$image->Resize( "geometry" => "${width}x${height}>", "blur" => 0.9 );
 						if( $mimetype =~ m!image/gif! ) {
 							$image->Coalesce();
