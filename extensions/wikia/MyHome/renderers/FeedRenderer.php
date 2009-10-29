@@ -63,6 +63,9 @@ class FeedRenderer {
 		}
 
 		$this->template->set('data', $data['results']);
+		if (!empty($parameters['style'])) {
+			$this->template->set('style', " style=\"{$parameters['style']}\"");
+		}
 
 		// handle message to be shown when given feed is empty
 		if (empty($data['results'])) {

@@ -7,7 +7,7 @@
 	else {
 ?>
 
-	<ul class="activityfeed reset shortlist" id="<?= $tagid ?>">
+	<ul class="activityfeed reset shortlist" id="<?= $tagid ?>"<?= $style ?>>
 <?php
 		foreach($data as $row) {
 ?>
