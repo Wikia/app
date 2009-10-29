@@ -2593,7 +2593,7 @@ class soap_server extends nusoap_base {
 			$m = $this->methodname;
 			$this->methodreturn = @$m();
 		}
-		$this->debug("leaving invoke_method: called method $this->methodname, received $this->methodreturn of type".gettype($this->methodreturn));
+		$this->debug("leaving invoke_method: called method $this->methodname, received of type".gettype($this->methodreturn));
 	}
 
 	/**
