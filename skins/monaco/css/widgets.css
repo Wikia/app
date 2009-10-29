@@ -279,10 +279,11 @@ body.widgetsAddingBlocked .add {
 	position: absolute;
 	width: 464px;
 }
-.link_box_dynamic_div:first-line {
+#link_box_dynamic .link_box_dynamic_item:first-line {
 	line-height: 16px;
 }
-.link_box_dynamic_div {
+#link_box_dynamic .link_box_dynamic_item {
+	padding: 3px 0;
 	position: relative;
 	margin-left: 20px !important;
 }
