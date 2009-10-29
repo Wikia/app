@@ -53,10 +53,7 @@ if(!$SHUT_DOWN_API){
 		$wgScriptPath = $LW_PATH;
 	}
 
-	require_once $LW_PATH."LocalSettings.php"; // for the database connection vars.
-	require_once $LW_PATH."StartProfiler.php";
-	require_once $LW_PATH."includes/Setup.php";
-	require_once "soap_stats.php"; // for tracking success/failure
+	require (dirname(__FILE__) . '/../../../includes/WebStart.php');
 }
 
 GLOBAL $wgUser;
@@ -863,6 +860,7 @@ function getSong($artist, $song="", $doHyphens=true){
 				if(!$SHUT_DOWN_API){
 					// SWC 20090501 - Shut this down to reduce database load.  I don't generally track the success rate right now, so it's pretty flat around 50%.
 					// Can re-enable this later if we actually start paying attention to this again.
+					//require_once "soap_stats.php"; // for tracking success/failure
 					//lw_soapStats_logHit($resultFound);
 				}
 
