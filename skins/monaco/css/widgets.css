@@ -418,3 +418,9 @@ body.widgetsAddingBlocked .add {
 	margin-right: 5px;
 
 }
+
+.toolbar {
+	border-top-style: solid;
+	border-top-width: 1px;
+	padding: 3px 5px !important;
+}
