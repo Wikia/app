@@ -11,8 +11,6 @@ $wgExtensionCredits['parserhook'][] = array(
 $wgHooks['ParserFirstCallInit'][] = 'ActivityFeedTag_setup';
 
 function ActivityFeedTag_setup(&$parser) {
-	global $wgParser;
-	wfLoadExtensionMessages('MyHome');
 	$parser->setHook('activityfeed', 'ActivityFeedTag_render');
     return true;
 }
@@ -32,6 +30,7 @@ function ActivityFeedTag_render($content, $attributes, &$parser) {
 	if (!empty($parameters['flags'])) $jsParams .= '&flags=' . implode('|', $parameters['flags']);
 	$parameters['tagid'] = $tagid;
 
+	wfLoadExtensionMessages('MyHome');
 	$feedHTML = ActivityFeedHelper::getList($parameters);
 
 	return $feedHTML . "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script>wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.css?{$wgStyleVersion});</style>";
