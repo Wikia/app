@@ -50,9 +50,12 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		if ($activeonly) $this->addWhereFld('city_public', 1);
 		if ($wikia) $this->addWhereFld('city_id', $wikia);
 
-		if ( !empty($from) && !empty($to) ) {
+		if ( !empty($from) ) {
 			if ($from && is_int($from)) $this->addWhere('city_id >= '.intval($from));
-			if ($to && is_int($to)) $this->addWhere('city_id <= '.intval($to));
+		}
+		
+		if ( !empty($to) ) {
+			if ($to && is_int($to)) $this->addWhere('city_id <= '.intval($to));			
 		}
 
 		if (!empty($lang)) {
@@ -125,10 +128,12 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"from" => array(
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 1,
+				ApiBase :: PARAM_DFLT => 1,
 			),
 			"to" => array(
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 1,
+				ApiBase :: PARAM_DFLT => 1000,
 			),
 			"countonly" => array(
 				ApiBase :: PARAM_TYPE => "integer",
