@@ -26,6 +26,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 		<div style="margin: 15px 0;">
 			<label for="wpRemember1" style="padding-left: 5px"><?= wfMsg('remembermypassword') ?></label>
 		</div>
+		<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
 	</form>
 	<div class="modalToolbar neutral">
 		<a id="wpLoginattempt" class="wikia_button" href="#" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit();" ><span><?= wfMsg("login") ?></span></a>
