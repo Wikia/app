@@ -131,6 +131,7 @@ if(isset($wgScriptPath))
 	// This only needs to be included once between the Lyrics tag and the GracenoteLyrics tag.
 	$wgHooks['BeforePageDisplay'][] = "gracenote_installCopyProtection";
 	$wgHooks['BeforePageDisplay'][] = "gracenote_disableEdit";
+	$wgHooks['OutputPageParserOutput'][] = 'gracenote_outputGoogleAnalytics';
 	//$wgHooks['getUserPermissionsErrorsExpensive'][] = "gracenote_disableEditByPermissions";
 }
 
@@ -211,8 +212,9 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	// Required Gracenote branding.
 	$retVal.= gracenote_getBrandingHtml();
 
-	// Google Analytics code which will let us track traffic by song.
-	$retVal .= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_GRACENOTE_LYRICS);
+	// Tell the Google Analytics code that this view was for Gracenote lyrics.
+	GLOBAL $wgGracenoteView;
+	$wgGracenoteView = GRACENOTE_VIEW_GRACENOTE_LYRICS;
 
 	return $retVal;
 }

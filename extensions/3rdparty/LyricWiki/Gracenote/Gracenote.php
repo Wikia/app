@@ -15,14 +15,14 @@ $wgExtraNamespaces[NS_GRACENOTE_TALK] = "Gracenote_talk";
 $wgGroupPermissions['*']['editgracenote'] = false;
 $wgGroupPermissions['staff']['editgracenote'] = true;
 
-
-
-
 // Definitions for which type of page to track with GoogleAnalytics.
 define('GRACENOTE_VIEW_GRACENOTE_LYRICS', 'ViewGracenote');
 define('GRACENOTE_VIEW_OTHER_LYRICS', 'ViewOther');
-
+define('GRACENOTE_VIEW_NOT_LYRICS', 'NotLyrics');
 define('GOOGLE_ANALYTICS_ID', "UA-10496195-1"); // lyrics.wikia.com ID
+
+GLOBAL $wgGracenoteView;
+$wgGracenoteView = GRACENOTE_VIEW_NOT_LYRICS;
 
 ////
 // Returns HTML which outputs the required branding for Gracenote.
@@ -83,6 +83,11 @@ function gracenote_obfuscateText($text){
 ////
 function gracenote_getAnalyticsHtml($google_action){
 	$google_category = "Lyrics";
+	
+	$trackEventCode = "";
+	if($google_action != GRACENOTE_VIEW_NOT_LYRICS){
+		$trackEventCode = "pageTracker._trackEvent('$google_category', '$google_action', jsGoogleLabel);";
+	}
 
 	$googleAnalyticsId = GOOGLE_ANALYTICS_ID;
 	$retVal = <<<GOOGLE_JS
@@ -103,9 +108,9 @@ function gracenote_getAnalyticsHtml($google_action){
 			if(jsGoogleLabel.substring(0, gnPrefix.length) == gnPrefix){
 				jsGoogleLabel = jsGoogleLabel.substring(gnPrefix.length);
 			}
-		} 
+		}
 	}
-	pageTracker._trackEvent('$google_category', '$google_action', jsGoogleLabel);
+	$trackEventCode
 	pageTracker._trackPageview();
 	} catch(err) {}</script>
 GOOGLE_JS
@@ -262,5 +267,16 @@ function gracenote_getNoscriptTag(){
 	</style>
 	</noscript>\n";
 } // end gracenote_getNoscriptTag()
+
+////
+// Adds Google Analytics tracking to the bottom of every page.
+//
+// If there was a Gracenote-licensed song, tracks that as well.
+////
+function gracenote_outputGoogleAnalytics(&$out, $parserOutput){
+	GLOBAL $wgGracenoteView;
+	$out->addHTML(gracenote_getAnalyticsHtml($wgGracenoteView));
+	return true;
+} // end gracenote_outputGoogleAnalytics()
 
 ?>

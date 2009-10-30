@@ -152,7 +152,7 @@ function renderXML( $input, $argv, &$parser )
 	{
 		echo $source."\n";
 	}
-	
+
 	// parse
 	$feed = new XmlDocument();
 	if( !$feed->parse($source) )
