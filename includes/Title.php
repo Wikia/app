@@ -1203,6 +1203,10 @@ class Title {
 				// Show user page-specific message only if the user can move other pages
 				$errors[] = array( 'cant-move-to-user-page' );
 			}
+		} elseif( $action == 'edit' ) {
+			if( !$user->isAllowed( 'edit' ) ) {
+				$errors[] = $user->isAnon() ? array( 'editnologintext' ) : array( 'editnotallowed' );
+			}
 		} elseif( !$user->isAllowed( $action ) ) {
 			$return = null;
 			$groups = array_map( array( 'User', 'makeGroupLinkWiki' ),
