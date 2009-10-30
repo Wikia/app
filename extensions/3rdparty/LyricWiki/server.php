@@ -87,28 +87,7 @@ if(!function_exists("lw_connect")){ // Function is in several scripts.  This pre
 	// needed without additional overhead.
 	////
 	function lw_connect(){
-		GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
-		if($LW_USE_PERSISTENT_CONNECTIONS){
-			return wfGetDB(DB_MASTER)->getProperty('mConn');
-		} else {
-			// In case this connection does writes, we must connect to the master (default connection).
-			GLOBAL $wgDBserver;GLOBAL $wgDBuser;GLOBAL $wgDBpassword;GLOBAL $wgDBname;
-			GLOBAL $lw_host;$lw_host = $wgDBserver;
-			GLOBAL $lw_user;$lw_user = $wgDBuser;
-			GLOBAL $lw_pass;$lw_pass = $wgDBpassword;
-			GLOBAL $lw_name;$lw_name = $wgDBname;
-
-			GLOBAL $lw_db;
-			if(isset($lw_db)){
-				$db = $lw_db;
-			} else {
-				GLOBAL $lw_host,$lw_user,$lw_pass,$lw_name;
-				$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-				mysql_select_db($lw_name, $db);
-				$lw_db = $db;
-			}
-			return $db;
-		}
+		return wfGetDB(DB_MASTER)->getProperty('mConn');
 	} // end lw_connect()
 }
 

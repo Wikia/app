@@ -8,6 +8,15 @@
 //
 // The structure of this special page was just copied from Teknomunk's
 // Batch Move special page.
+//
+//DROP TABLE IF EXISTS lw_soap_failures;
+//CREATE TABLE lw_soap_failures(
+//	request_artist VARCHAR(255) NOT NULL,
+//	request_song VARCHAR(255) NOT NULL,
+//	numRequests INT(11) DEFAULT 1,
+//	PRIMARY KEY (request_artist, request_song)
+//);
+//
 ////
 
 require_once 'lw_cache.php'; // Caches the results of this processor-intensive query.
@@ -110,42 +119,23 @@ function wfSoapFailures(){
 	} else {
 		$msg = "";
 
+		GLOBAL $wgMemc;
+		$cacheKey = "LW_SOAP_FAILURES";
+
 		// Allow the cache to be manually cleared.
 		if(isset($_GET['cache']) && $_GET['cache']=="clear"){
-			// lw_connect does not work from inside this request for some reason.
-			GLOBAL $wgDBserver,$wgDBuser,$wgDBpassword,$wgDBname;
-			GLOBAL $lw_host;$lw_host = $wgDBserver;
-			GLOBAL $lw_user;$lw_user = $wgDBuser;
-			GLOBAL $lw_pass;$lw_pass = $wgDBpassword;
-			GLOBAL $lw_name;$lw_name = $wgDBname;
-			$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-			mysql_select_db($lw_name, $db);
 			$msg.= "Forced clearing of the cache...\n";
-			if(mysql_query("UPDATE map SET value='2006-02-05 00:00:00' WHERE keyName='CACHE_TIME_SOAP_FAILURES'", $db)){
-				$msg.= "Cleared.";
-			} else {
-				$msg.= "Failed. ".mysql_error();
-			}
+			$wgMemc->delete($cacheKey); // purge the entry from memcached
 			unset($_GET['cache']);
 			$_SERVER['REQUEST_URI'] = str_replace("?cache=clear", "", $_SERVER['REQUEST_URI']);
 			$_SERVER['REQUEST_URI'] = str_replace("&cache=clear", "", $_SERVER['REQUEST_URI']);
 		}
 
-		$cacheKey = "SOAP_FAILURES";
-		$cache = new Cache();
-		$content = $cache->fetchExpire( $cacheKey, strtotime("-2 hour") );
+		$content = $wgMemc->get($cacheKey);
 		if(!$content){
 			ob_start();
-	
-			GLOBAL $lw_db;
-			if(isset($lw_db)){
-				$db = $lw_db;
-			} else {
-				GLOBAL $lw_host,$lw_user,$lw_pass,$lw_name;
-				$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-				mysql_select_db($lw_name, $db);
-				$lw_db = $db;
-			}
+
+			$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
 
 			print "<em>Once you have created a missing page, made a redirect for it, or otherwise fixed it so that it should ";
 			print "no longer be a failed request... click the \"fixed\" link next to the title and the SOAP webservice will test the song again. ";
@@ -187,11 +177,15 @@ function wfSoapFailures(){
 					}
 					print "</table>\n";
 					print "<br/>Total of <strong>$totFailures</strong> requests in the top 50.  This number will increase slightly over time, but we should fight to keep it as low as possible!";
+				} else {
+					print "<em>No results found.</em>\n";
 				}
+			} else {
+				print "<br/><br/><strong>Error: with query</strong><br/><em>$queryString</em><br/><strong>Error message: </strong>".mysql_error($db);
 			}
 
 			$content = ob_get_clean();
-			$cache->cacheValue($cacheKey, $content);
+			$wgMemc->set($cacheKey, $content, strtotime("+2 hour"));
 		}
 		$msg = ($msg==""?"":"<pre>$msg</pre>");
 		$wgOut->addHTML("<style>table{border-collapse:collapse;}tr.odd{background-color:#eef}</style>\n");
