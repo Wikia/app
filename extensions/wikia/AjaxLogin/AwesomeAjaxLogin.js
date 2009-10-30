@@ -14,10 +14,6 @@ var AjaxLogin = {
 		// remove hidden form
 		$('#userajaxloginform').remove();
 
-		// secure submit on enter
-		$('#wpName1Ajax').keypress(AjaxLogin.keyPress);	
-		$('#wpPassword1Ajax').keypress(AjaxLogin.keyPress);	
-
 		this.form.attr('id', 'userajaxloginform');
 
 		// add submit event handler for login form
@@ -120,14 +116,6 @@ var AjaxLogin = {
 	blockLoginForm: function(block) {
 		AjaxLogin.form.find('input').attr('disabled', (block ? true : false));
 	},
-
-	keyPress: function(ev) {
-		if(ev.keyCode== 13) {
-                        AjaxLogin.form.submit();
-			ev.preventDefault;
-                }
-	},
-	
 	ajaxRegisterConfirm: function(ev) {
 		AjaxLogin.form.log('AjaxLogin: ajaxRegisterConfirm()');
 
