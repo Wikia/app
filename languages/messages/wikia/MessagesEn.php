@@ -280,6 +280,8 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 
 
 # Wikia custom messages
+'editnologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to edit a page.',
+'editnotallowed' => 'You do not have permission to edit pages',
 
 # janitors & helpers
 'group-janitor' => 'Janitors',
