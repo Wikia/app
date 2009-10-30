@@ -183,7 +183,8 @@ class Listusers extends SpecialPage {
 			"username" => "lu_user_name $descOrder",
 			"groups" => "lu_allgroups $descOrder, lu_numgroups $descOrder",
 			"revcnt" => "lu_rev_cnt $descOrder",
-			"loggedin" => "ts $descOrder"
+			"loggedin" => "ts $descOrder",
+			"dtedit" => "max_rev $descOrder"
 		);
 		$orderby = (isset($orderOption[$order])) ? $orderOption[$order] : $orderOption["username"];
 
@@ -225,10 +226,23 @@ class Listusers extends SpecialPage {
 				}
 
 				$aTables = array('city_local_users');
-				$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "'' as ts" );
-				if (!$wgUser->isAnon()) {
-					$aTables = array ( 'city_local_users left join user_login_history_summary on (lu_user_id = user_id)' );
-					$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked", "ifnull(max(ulh_timestamp), '') as ts" );
+				$aWhat = array ( "lu_user_id", "lu_user_name", "lu_numgroups", "lu_allgroups", "lu_rev_cnt", "lu_blocked" );
+				if ( $wgUser->isAnon() ) {
+					$aWhat[] = "0 as ts";
+					$aWhat[] = "0 as max_rev";
+					$aWhat[] = "0 as ts_edit";
+				} else  {
+#					$aTables = array ( 
+#						'city_local_users left join user_login_history_summary on (lu_user_id = user_id)' 
+#					);
+					$aTables = array ( 
+						'city_local_users 
+						left join user_summary s1 on (lu_user_id = s1.user_id) and (s1.city_id = 0)
+						left join user_summary s2 on (lu_user_id = s2.user_id) and (s2.city_id = 177)'
+					);
+					$aWhat[] = "ifnull(unix_timestamp(s1.last_logged_in), 0) as ts";
+					$aWhat[] = "ifnull(s2.rev_last, 0) as max_rev";
+					$aWhat[] = "ifnull(unix_timestamp(s2.ts_edit_last), 0) as ts_edit";
 				}
 				$res = $dbs->select(
 					$aTables,
@@ -274,7 +288,7 @@ class Listusers extends SpecialPage {
 
 					$aUsers['data'][$oRow->lu_user_id] = array(
 						'user_id' 		=> $oRow->lu_user_id,
-						'user_name' 	=> $oRow->lu_user_name,
+						'user_name' 	=> $oUser->getName(),
 						'user_link'		=> $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),
 						'groups_nbr' 	=> $oRow->lu_numgroups,
 						'groups' 		=> $sGroups,
@@ -283,6 +297,23 @@ class Listusers extends SpecialPage {
 						'links'			=> "(" . implode(") &#183; (", $aLinks) . ")",
 						'last_login'	=> (!empty($oRow->ts)) ? $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true ) : "",
 					);
+					
+					# last revision and date of last edit
+					if ( $wgUser->isLoggedIn() ) {
+						$aUsers['data'][$oRow->lu_user_id]['last_edit_ts'] = 
+							(!empty($oRow->ts_edit)) ? $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts_edit ), true ) : "";
+							
+						if ( !empty($oRow->max_rev) ) { 
+							$oRevision = Revision::newFromId($oRow->max_rev);
+							if ( !is_null($oRevision) ) {
+								$oTitle = $oRevision->getTitle();
+								if ( !is_null($oTitle) ) {
+									$aUsers['data'][$oRow->lu_user_id]['last_edit_page'] = $oTitle->getLocalUrl();
+									$aUsers['data'][$oRow->lu_user_id]['last_edit_diff'] = $oTitle->getLocalUrl('diff=prev&oldid=' . $oRow->max_rev);
+								}
+							}
+						}
+					}
 				}
 				$dbs->freeResult( $res );
 
@@ -293,7 +324,7 @@ class Listusers extends SpecialPage {
 				$dbs->freeResult( $res );
 
 				# last logged in 
-				$aWhere = array();
+				/*$aWhere = array();
 				if ( !empty($aUsers['data']) && is_array($aUsers['data']) && ($wgUser->isLoggedIn()) ) {
 					# last edited 
 					$dbr = wfGetDB( DB_SLAVE );
@@ -315,7 +346,7 @@ class Listusers extends SpecialPage {
 						}
 					}
 					$dbr->freeResult( $res );
-				}
+				}*/
 
 				$wgMemc->set( $memkey, $aUsers, 60*60*3 );
 			}
