@@ -214,7 +214,9 @@ function wkLUshowDetails(limit, offset, ord, desc)
 				if (wgUserName) {
 					_th = (order == 'loggedin') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
 					oneRow += "<th><a id=\"TablePager_loggedin\" style=\"cursor:pointer;" + ((order == 'loggedin') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusers-loggedin')?></a></th>";
-					oneRow += "<th><?=wfMsg('listusers-edited')?></th></tr>";
+					_th = (order == 'dtedit') ? ((desc == -1) ? "&darr;" : "&uarr;") : "";
+					oneRow += "<th><a id=\"TablePager_dtedit\" style=\"cursor:pointer;" + ((order == 'dtedit') ? "color:#006400;" : "") + "\">" + _th + " <?=wfMsg('listusers-edited')?></a></th>";
+					oneRow += "</tr>";
 				}
 				_tmp += oneRow;
  				loop = limit * offset;
@@ -228,7 +230,14 @@ function wkLUshowDetails(limit, offset, ord, desc)
 						oneRow += "<td " + blocked + " >" +resData['data'][i]['rev_cnt']+ "</td>";
 						if (wgUserName) {
 							oneRow += "<td " + blocked + " >" + ((resData['data'][i]['last_login']) ? resData['data'][i]['last_login'] : "-") + "</td>";
-							oneRow += "<td " + blocked + " >" + ((resData['data'][i]['last_edited']) ? resData['data'][i]['last_edited'] : "-") + "</td>";
+							oneRow += "<td " + blocked + " >" ;
+							if (resData['data'][i]['last_edit_ts']) {
+								oneRow += "<a href='" + resData['data'][i]['last_edit_page'] + "'>" + resData['data'][i]['last_edit_ts'] + "</a>";
+								oneRow += " (<a href='" + resData['data'][i]['last_edit_diff'] + "'><?=wfMsg('diff')?></a>)";
+							} else {
+								oneRow += " - ";
+							}
+							oneRow += "</td>";	
 						}
 						oneRow += "</tr>";
 						_tmp += oneRow;
@@ -290,6 +299,7 @@ function _addEvents(f, desc) {
 	YAHOO.util.Event.addListener("TablePager_groups", "click", __ShowUsers, [(f == 'groups')?desc*-1:desc]);
 	YAHOO.util.Event.addListener("TablePager_revcnt", "click", __ShowUsers, [(f == 'revcnt')?desc*-1:desc]);
 	YAHOO.util.Event.addListener("TablePager_loggedin", "click", __ShowUsers, [(f == 'loggedin')?desc*-1:desc]);
+	YAHOO.util.Event.addListener("TablePager_dtedit", "click", __ShowUsers, [(f == 'dtedit')?desc*-1:desc]);
 }
 
 //http://images.wikia.com/common/releases_200901.3/skins/common/images/Arr_u.png
