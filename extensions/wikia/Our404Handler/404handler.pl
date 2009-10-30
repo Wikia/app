@@ -61,8 +61,8 @@ my @tests = qw(
 	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
 	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
 	/c/central/images/thumb/e/e9/CP_c17i4°.svg/250px-CP_c17i4°.svg.png
-	/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif
 	/c/central/images/thumb/b/bf/Wiki_wide.png/155px-Wiki_wide.png
+	/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif
 );
 
 #
@@ -296,7 +296,7 @@ while( $request->Accept() >= 0 ) {
 					#
 					# use only first frame in animated gifs
 					#
-					$image = $image->[ 0 ];
+					$image = $image->[ 0 ] if $image->[ 0 ]->Get('magick') eq 'GIF';
 					my $origw  = $image->Get( 'width' );
 					my $origh  = $image->Get( 'height' );
 					if( $origw && $origh ) {
