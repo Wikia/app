@@ -33,7 +33,7 @@ class WikiaReplicateImages {
 			"flag" => 2
 		),
 		"file4" => array(
-			"address" => "10.6.10.39",
+			"address" => "10.6.32.35",
 			"directory" => "/raid/images/by_id/",
 			"flag" => 4
 		)
