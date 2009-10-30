@@ -130,13 +130,17 @@ function renderLyricTag($input, $argv, $parser)
 
 	#parse embedded wikitext
 	$retVal = "";
-	$retVal.= gracenote_getNoscriptTag 	();
+	$retVal.= gracenote_getNoscriptTag();
 	$retVal.= "<div class='lyricbox'>";
 	$retVal.= ($isInstrumental?"":$ringtoneLink); // if this is an instrumental, just a ringtone link on the bottom is plenty.
 	$retVal.= gracenote_obfuscateText($parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText());
 	$retVal.= $ringtoneLink;
 	$retVal.= "</div>";
-	$retVal .= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_OTHER_LYRICS);
+	
+	// Tell the Google Analytics code that this view was for non-Gracenote lyrics.
+	GLOBAL $wgGracenoteView;
+	$wgGracenoteView = GRACENOTE_VIEW_OTHER_LYRICS;
+
 	return $retVal;
 }
 
