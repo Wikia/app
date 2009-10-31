@@ -9,7 +9,6 @@
   * $Id: WikiaApiQueryDomains.php 12417 2008-05-07 09:33:11Z eloy $
   
   Problems:
-   - Doesn't default to getSong (just goes to MediaWiki API).
    - The headers aren't being set (which is important for caching).  Find out where this page is called from.
    - getHometown wasn't ported over.
    - a lot seems to be missing... should make one pass over the code next to the original code & see what's up.
@@ -46,8 +45,8 @@ class WikiaApiLyricwiki extends ApiBase {
 		$func = (($func == "")?"getSong":$func);
 
 		// Special case (suggested by CantoPod) to return all of an artist's songs when none is specified.
-		if(($funcName == "getSong") && (getVal($_GET, 'song') == "")){
-			$funcName = "getArtist";
+		if(($func == "getSong") && (getVal($_GET, 'song') == "")){
+			$func = "getArtist";
 		}
 
 		switch ( $func ) {
