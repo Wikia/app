@@ -9,7 +9,6 @@
 // the same form (abbreviated, vs. longhand) that we do.
 ////
 
-require_once 'lw_cache.php'; // Caches the results of this processor-intensive query.
 if(!defined('MEDIAWIKI')) die();
 
 // Allows anyone to view the page.
