@@ -1,4 +1,5 @@
 == Changes since 200910.4 ==
+* rt#24750: Answers: Reshuffling of msg and workflow. (Nef)
 * a shortcut in permission checks for action=edit; new system messages: <editnologintext> and <editnotallowed> (Emil)
 * rt#25759: WMU: Typo js error fixed. (Nef)
 * rt#25286: Dynamic link box: Separate New page and Add image onto (Macbre)
