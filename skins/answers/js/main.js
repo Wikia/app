@@ -228,21 +228,22 @@ jQuery("#related_answered_questions").ready(function() {
 
 	url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categoriesonanswers&coatitle=" + category + "&coaanswered=yes&coalimit=5";
 	jQuery.getJSON( url, "", function( j ){
-		if( j.query.categoriesonanswers) {
+		var
 			html = "";
+		if( j.query.categoriesonanswers) {
 			for( var recent_q in j.query.categoriesonanswers ){
 				var page = j.query.categoriesonanswers[recent_q];
 				var url  = page.title.replace(/ /g,"_");
 				var text = page.title + "?";
 				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('answered')\">" + text + "</a></li>";
 			}
-			jQuery("#related_answered_questions").html( html );
 		}
+
+		if (html != "")
+			jQuery("#related_answered_questions").html( html );
+
 	});
 
-	} else {
-			html = wgNoRelatedAnsweredQuestions;
-			jQuery("#related_answered_questions").html( html );
 	}
 });
 
