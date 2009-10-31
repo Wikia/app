@@ -187,13 +187,13 @@ class SendToAFriend extends SpecialPage
 
 		if($this->isSpam($body) || (0 < preg_match("/http:/si", $request->getText("msg")))){
 			//logEvent("Potential spam from IP ".$_SERVER['REMOTE_ADDR'].": \"$msg\"");
-				$wgOut->addHTML("<div 	style='background-color:#ff8080'>".wfMsg("staf-spamnotice")."</div><br/>");
+			$wgOut->addHTML("<div 	style='background-color:#ff8080'>".wfMsg("staf-spamnotice")."</div><br/>");
 			$this->showForm( $request, $wgOut );
 		} else {
 			if( $this->sendEmail( $addr, $from, $subject, $body ) )
 			{
 				// log usage data
-				$cache = new Cache();
+				$cache = new DurableCache();
 				$key = $request->getText("jsForm") ? "SEND_LYRICS_JS" : "SEND_LYRICS_NON_JS";
 				$res = $cache->fetch($key);
 				$res = ( !$res or $res == "") ? 1 : intval($res) + 1;
