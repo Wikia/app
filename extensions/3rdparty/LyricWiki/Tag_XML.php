@@ -52,7 +52,7 @@ Version 0.1
 
 ***********************************************************************************/
 
-require_once 'cache.php'; // Cache class used to cache the results of the cURL request.
+require_once 'lw_cache.php'; // Cache class used to cache the results of the cURL request.
 require_once 'extras.php';
 
 $dir = dirname(__FILE__) . '/';

@@ -10,6 +10,7 @@
 // TODO: When a user adds a song, make sure it is automatically merged into the artist page (User:Janitor makes this not too big of a deal since he finds orphans and adds them to the artist's Other Songs section).
 ////
 
+include_once 'extras.php'; // for lw_simpleQuery to start
 GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
 $LW_USE_PERSISTENT_CONNECTIONS = true;
 $ENABLE_LOGGING_SLOW_SOAP = false;
@@ -97,68 +98,7 @@ if(!function_exists("lw_connect_readOnly")){
 	// be to the slave (read-only replica) which will be faster for read but doesn't allow writes.
 	////
 	function lw_connect_readOnly(){
-		GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
-		if($LW_USE_PERSISTENT_CONNECTIONS){
-			return wfGetDB(DB_SLAVE)->getProperty('mConn');
-		} else {
-			GLOBAL $lw_db;
-			GLOBAL $lw_db_readOnly;
-			if(isset($lw_db_readOnly)){
-				$db = $lw_db_readOnly;
-			} else if(isset($lw_db)){
-				$db = $lw_db; // If a connection to the master is already open, might as well use that.
-			} else {
-				// If the wgDBservers (array of slaves) is available, use that, otherwise use the default connection.
-				GLOBAL $wgDBservers;
-				GLOBAL $lw_host;GLOBAL $lw_user;GLOBAL $lw_pass;GLOBAL $lw_name;
-				GLOBAL $wgDBserver;GLOBAL $wgDBuser;GLOBAL $wgDBpassword;GLOBAL $wgDBname;
-				if(!isset($wgDBservers) || (!is_array($wgDBservers))){
-					$lw_host = $wgDBserver;
-					$lw_user = $wgDBuser;
-					$lw_pass = $wgDBpassword;
-					$lw_name = $wgDBname;
-				} else {
-					// Use the load-settings to randomly determine which server to use (load settings are just probability weights for each db).
-					$totalWeight = 0.0; // we have to normalize the weights to 1.0
-					foreach($wgDBservers as $currServer){
-						if(isset($currServer['load'])){
-							$totalWeight += $currServer['load'];
-						}
-					}
-					$serverWeights = array();
-					for($cnt=0; $cnt < count($wgDBservers); $cnt++){
-						$currWeight = getVal($wgDBservers[$cnt], 'load', 0.0);
-						$serverWeights[] = ($currWeight / $totalWeight);
-					}
-					$precision = 10000; // this is really 10 ^ precision (so precision of 4 decimal points is represented by 10,000).
-					$randomServer = (rand(0, $precision) / $precision);
-					$indexOfServer = "";
-					for($cnt=0; (($indexOfServer==="") && ($cnt < count($serverWeights))); $cnt++){
-						$currWeight = $serverWeights[$cnt];
-						if($currWeight > $randomServer){ // don't use >= .. can't test equality with floating point numbers in PHP.
-							$indexOfServer = $cnt;
-						}
-						$randomServer -= $currWeight;
-					}
-					if($indexOfServer === ""){
-						$indexOfServer = 0; // fallback.
-					}
-
-					// Fallbacks for each value are the defaults (these will hopefully either all be used or not used at all).
-					$currServer = $wgDBservers[$indexOfServer];
-					$lw_host = getVal($currServer, 'host', $wgDBserver);
-					$lw_user = getVal($currServer, 'user', $wgDBuser);
-					$lw_pass = getVal($currServer, 'password', $wgDBpassword);
-					$lw_name = getVal($currServer, 'dbname', $wgDBname);
-				}
-
-				// Create the actual connection
-				$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-				mysql_select_db($lw_name, $db);
-				$lw_db_readOnly = $db;
-			}
-			return $db;
-		}
+		return wfGetDB(DB_SLAVE)->getProperty('mConn');
 	} // end lw_connect_readOnly()
 }
 
@@ -1584,22 +1524,6 @@ function lw_tracksToWiki($artistName, $songs){
 	}
 	return $retVal;
 } // end lw_tracksToWiki()
-
-////
-// Sends a mySQL query and assumes that there will be one result.
-// Returns that result if available, empty string otherwise.
-////
-function lw_simpleQuery($queryString){
-	$retVal = "";
-	$db = lw_connect_readOnly();
-	if($result = mysql_query($queryString,$db)){
-		if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-			$row = mysql_fetch_row($result);
-			$retVal = $row[0];
-		}
-	}
-	return $retVal;
-}
 
 ////
 // Returns the standardly formatted artist name.

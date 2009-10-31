@@ -19,8 +19,6 @@
 //
 ////
 
-require_once 'lw_cache.php'; // Caches the results of this processor-intensive query.
-
 if(!defined('MEDIAWIKI')) die();
 
 // Allows anyone to view the page.
@@ -88,14 +86,7 @@ function wfSoapFailures(){
 			$artist = str_replace("'", "\\'", $artist);
 			$song = str_replace("'", "\\'", $song);
 
-			// lw_connect does not work from inside this request for some reason.
-			GLOBAL $wgDBserver,$wgDBuser,$wgDBpassword,$wgDBname;
-			GLOBAL $lw_host;$lw_host = $wgDBserver;
-			GLOBAL $lw_user;$lw_user = $wgDBuser;
-			GLOBAL $lw_pass;$lw_pass = $wgDBpassword;
-			GLOBAL $lw_name;$lw_name = $wgDBname;
-			$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-			mysql_select_db($lw_name, $db);
+			$db = &wfGetDB(DB_MASTER)->getProperty('mConn');
 			
 			print "Deleting record... ";
 			if(mysql_query("DELETE FROM lw_soap_failures WHERE request_artist='$artist' AND request_song='$song'", $db)){
@@ -104,11 +95,7 @@ function wfSoapFailures(){
 				print "Failed. ".mysql_error();
 			}
 			print "<br/>Clearing the cache... ";
-			if(mysql_query("UPDATE map SET value='2006-02-05 00:00:00' WHERE keyName='CACHE_TIME_SOAP_FAILURES'", $db)){
-				print "Cleared.";
-			} else {
-				print "Failed. ".mysql_error();
-			}
+			$wgMemc->delete($cacheKey); // purge the entry from memcached
 
 			print "<div style='background-color:#cfc'>The song was retrieved successfully and ";
 			print "was removed from the failed requests list.";
