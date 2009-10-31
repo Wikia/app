@@ -8,8 +8,9 @@
 * rt#25630: MagCloud: Link to license. (Nef)
 * rt#25633: MagCloud: Special page group. (Uberfuzzy)
 * rt#25484: MagCloud: Dialog box tweak. (Nef)
-* rt#25896: LyricWiki: Fixed Special:Soapfailures and updated its connection code (Sean)
+* rt#25896: LyricWiki: Fixed Special:Soapfailures and updated its connection & caching code (Sean)
 * rt#25620: LyricWiki: Updated Gracenote-specific Google Analytics tags to appear on all pages on LW (Sean).
+* rt#25918: LyricWiki: Fixed Special:ArtistRedirects and updated connection & caching code (Sean).
 
 == Changes since 200910.3 ==
 * rt#25203: Answers: Better handling of empty res. (Nef)
