@@ -52,7 +52,6 @@ Version 0.1
 
 ***********************************************************************************/
 
-require_once 'lw_cache.php'; // Cache class used to cache the results of the cURL request.
 require_once 'extras.php';
 
 $dir = dirname(__FILE__) . '/';
@@ -113,11 +112,11 @@ function renderXML( $input, $argv, &$parser )
 	
 	// retrieve the xml source from the cache before trying to fetch it
 	// limits possible stress on other people's servers, reduces chance of DOS attacks
-	$cache = new Cache();
+	GLOBAL $wgMemc;
 	$cachedSource = false;
 	if( debugSwitch("forceload") )
 	{
-		$cachedSource = $cache->fetchExpire( $escapedFeedURL, strtotime("-2 hour") );
+		$wgMemc->get($escapedFeedUrl);
 	}
 	if( !$cachedSource )
 	{
@@ -142,7 +141,7 @@ function renderXML( $input, $argv, &$parser )
 		}
 
 		// only cache newly fetched sources
-		$cache->cacheValue( $escapedFeedURL, $source );
+		$wgMemc->set($escapedFeedURL, $source, strtotime("+2 hour"));
 	}
 	else
 	{
@@ -208,30 +207,4 @@ function renderXML( $input, $argv, &$parser )
 	return sandboxParse( $result );
 }
 
-// Function is also in the SOAP, so this prevents any possible errors.
-if(!function_exists('lw_connect')){
-	GLOBAL $lw_db;
-	GLOBAL $lw_host;$lw_host = $wgDBserver;
-	GLOBAL $lw_user;$lw_user = $wgDBuser;
-	GLOBAL $lw_pass;$lw_pass = $wgDBpassword;
-	GLOBAL $lw_name;$lw_name = $wgDBname;
-
-	////
-	// Connects to the wiki database using the configured settings.
-	// Only connects once per page-load so it's safe to call as many times as
-	// needed without additional overhead.
-	////
-	function lw_connect(){
-		GLOBAL $lw_db;
-		if(isset($lw_db)){
-			$db = $lw_db;
-		} else {
-			GLOBAL $lw_host,$lw_user,$lw_pass,$lw_name;
-			$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-			mysql_select_db($lw_name, $db);
-			$lw_db = $db;
-		}
-		return $db;
-	} // end lw_connect()
-}
 ?>

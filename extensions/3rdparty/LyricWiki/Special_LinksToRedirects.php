@@ -13,8 +13,6 @@
 // The structure of this special page was just copied from our Soapfailures extension.
 ////
 
-require_once 'lw_cache.php'; // Caches the results of this processor-intensive query.
-
 if(!defined('MEDIAWIKI')) die();
 
 // Allows anyone to view the page.
@@ -42,7 +40,9 @@ function wfLinksToRedirects(){
 	global $wgOut;
 	global $wgRequest, $wgUser;
 	
-	$CACHE_KEY = "LINKS_TO_REDIRECTS";
+	GLOBAL $wgMemc;
+	$TABLE_PREFIX = "";
+	$CACHE_KEY = "LW_LINKS_TO_REDIRECTS";
 
 	$wgOut->setPageTitle("Links To Redirects");
 
@@ -51,7 +51,7 @@ function wfLinksToRedirects(){
 	if(isset($_GET['artist']) && isset($_GET['song'])){
 	
 // TODO: THIS IS WHERE WE SHOULD ALLOW A SINGLE LINK TO BE REMOVED FROM THE CACHE (IF WE DECIDE TO DO THAT).
-	
+// This code is largely unported from Special_Soapfailures
 	
 		$artist = $_GET['artist'];
 		$song = $_GET['song'];
@@ -82,14 +82,7 @@ function wfLinksToRedirects(){
 			$artist = str_replace("'", "\\'", $artist);
 			$song = str_replace("'", "\\'", $song);
 
-			// lw_connect does not work from inside this request for some reason.
-			GLOBAL $wgDBserver,$wgDBuser,$wgDBpassword,$wgDBname;
-			GLOBAL $lw_host;$lw_host = $wgDBserver;
-			GLOBAL $lw_user;$lw_user = $wgDBuser;
-			GLOBAL $lw_pass;$lw_pass = $wgDBpassword;
-			GLOBAL $lw_name;$lw_name = $wgDBname;
-			$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-			mysql_select_db($lw_name, $db);
+			$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
 
 			print "Deleting record... ";
 			if(mysql_query("DELETE FROM lw_soap_failures WHERE request_artist='$artist' AND request_song='$song'", $db)){
@@ -98,11 +91,7 @@ function wfLinksToRedirects(){
 				print "Failed. ".mysql_error();
 			}
 			print "<br/>Clearing the cache... ";
-			if(mysql_query("UPDATE map SET value='2006-02-05 00:00:00' WHERE keyName='CACHE_TIME_$CACHE_KEY'", $db)){
-				print "Cleared.";
-			} else {
-				print "Failed. ".mysql_error();
-			}
+			$wgMemc->delete($CACHE_KEY); // purge the entry from memcached
 
 			print "<div style='background-color:#cfc'>The song was retrieved successfully and ";
 			print "was removed from the failed requests list.";
@@ -116,54 +105,23 @@ function wfLinksToRedirects(){
 
 		// Allow the cache to be manually cleared.
 		if(isset($_GET['cache']) && $_GET['cache']=="clear"){
-			// lw_connect does not work from inside this request for some reason.
-			GLOBAL $wgDBserver,$wgDBuser,$wgDBpassword,$wgDBname;
-			GLOBAL $lw_host;$lw_host = $wgDBserver;
-			GLOBAL $lw_user;$lw_user = $wgDBuser;
-			GLOBAL $lw_pass;$lw_pass = $wgDBpassword;
-			GLOBAL $lw_name;$lw_name = $wgDBname;
-			$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-			mysql_select_db($lw_name, $db);
-			$msg.= "Forced clearing of the cache...\n";
-			if(mysql_query("UPDATE map SET value='2006-02-05 00:00:00' WHERE keyName='CACHE_TIME_$CACHE_KEY'", $db)){
-				$msg.= "Cleared.";
-			} else {
-				$msg.= "Failed. ".mysql_error();
-			}
+			$wgMemc->delete($CACHE_KEY); // purge the entry from memcached
 			unset($_GET['cache']);
 			$_SERVER['REQUEST_URI'] = str_replace("?cache=clear", "", $_SERVER['REQUEST_URI']);
 			$_SERVER['REQUEST_URI'] = str_replace("&cache=clear", "", $_SERVER['REQUEST_URI']);
 		}
 
-		$cache = new Cache();
-		$content = $cache->fetchExpire( $CACHE_KEY, strtotime("-2 hour") );
+		$content = $wgMemc->get($CACHE_KEY);
 		if(!$content){
 			ob_start();
 	
-			GLOBAL $lw_db;
-			if(isset($lw_db)){
-				$db = $lw_db;
-			} else {
-				GLOBAL $lw_host,$lw_user,$lw_pass,$lw_name;
-				$db = mysql_connect($lw_host, $lw_user, $lw_pass);
-				mysql_select_db($lw_name, $db);
-				$lw_db = $db;
-			}
+			$db = &wfGetDB(DB_SLAVE)->getProperty('mConn');
 			
-			// TODO: Write an intro to this page and link to relevant simlar pages (Lonelypages and HiddenLonelypages).
-
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-// TODO: YOU ARE HERE! :D
-
+			print "This page shows a list of pages which link to redirects (and which redirects they are linking to). ";
+			print "When possible, it is best to fix the source link to go directly to the page which the redirect would ";
+			print "eventually send the user to.  This helps keep those pages from being lonely, keeps their WhatLinksHere up to date, etc.<br/>\n";
+			print "See also: [[Special:Lonelypages]]";//, [[Special:HiddenLonelypages]]"; // is HiddenLonelyPages real? was it ever? it's not on lyrics.wikia at the moment.
+			print "<br/><br/>";
 			print "This page is cached every 2 hours - \n";
 			print "last cached: <strong>".date('m/d/Y \a\t g:ia')."</strong>\n";
 			
@@ -171,10 +129,10 @@ function wfLinksToRedirects(){
 			// This is an array of pairs instead of a mapping since both page-ids and targets can occur multiple times in the list.
 			$LIMIT = 1000;
 			$queryString = "SELECT pl.pl_from AS from_id, page_title AS links_to
-							FROM wiki_page
-							LEFT JOIN wiki_pagelinks AS pl ON page_namespace=pl_namespace AND page_title=pl.pl_title
-							LEFT JOIN wiki_templatelinks ON page_namespace=tl_namespace AND page_title=tl_title
-							RIGHT JOIN wiki_pagelinks AS links2 ON page_id=links2.pl_from
+							FROM $TABLE_PREFIX"."page
+							LEFT JOIN $TABLE_PREFIX"."pagelinks AS pl ON page_namespace=pl_namespace AND page_title=pl.pl_title
+							LEFT JOIN $TABLE_PREFIX"."templatelinks ON page_namespace=tl_namespace AND page_title=tl_title
+							RIGHT JOIN $TABLE_PREFIX"."pagelinks AS links2 ON page_id=links2.pl_from
 							WHERE page_namespace=0 AND page_is_redirect=1 AND (pl.pl_title IS NOT NULL or tl_title IS NOT NULL) LIMIT $LIMIT";
 			$ids = array();
 			$allListings = array();
@@ -213,7 +171,7 @@ function wfLinksToRedirects(){
 								);
 					$idToTitle = array();
 					$ids = array_unique($ids);
-					$queryString = "SELECT page_id, page_namespace, page_title FROM wiki_page WHERE page_id IN (".implode(",", $ids).")";
+					$queryString = "SELECT page_id, page_namespace, page_title FROM $TABLE_PREFIX"."page WHERE page_id IN (".implode(",", $ids).")";
 					if($result = mysql_query($queryString,$db)){
 						if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
 							for($cnt=0; $cnt<$numRows; $cnt++){
@@ -278,7 +236,7 @@ function wfLinksToRedirects(){
 			}
 
 			$content = ob_get_clean();
-			$cache->cacheValue($CACHE_KEY, $content);
+			$wgMemc->set($CACHE_KEY, $content, strtotime("+2 hour"));
 		}
 		$msg = ($msg==""?"":"<pre>$msg</pre>");
 		$wgOut->addHTML("<style>table{border-collapse:collapse;}tr.odd{background-color:#eef}</style>\n");
