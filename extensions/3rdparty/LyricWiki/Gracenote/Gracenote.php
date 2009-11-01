@@ -86,7 +86,24 @@ function gracenote_getAnalyticsHtml($google_action){
 	
 	$trackEventCode = "";
 	if($google_action != GRACENOTE_VIEW_NOT_LYRICS){
-		$trackEventCode = "pageTracker._trackEvent('$google_category', '$google_action', jsGoogleLabel);";
+		$trackEventCode = "$(document).ready(function(){
+		var gIdDiv = document.getElementById('gracenoteid');
+		var jsGoogleLabel = \"Unknown\";
+		if(gIdDiv){
+			jsGoogleLabel = gIdDiv.innerHTML;
+		} else {
+			var titleElement = document.getElementsByTagName('title')[0];
+			if(titleElement){
+				jsGoogleLabel = titleElement.innerHTML;
+				jsGoogleLabel = jsGoogleLabel.substring(0, jsGoogleLabel.indexOf(\" - LyricWiki\")); // Get just the page-name from the title.
+				var gnPrefix  = \"Gracenote:\"; // If the page name starts with \"Gracenote:\", get rid of that.
+				if(jsGoogleLabel.substring(0, gnPrefix.length) == gnPrefix){
+					jsGoogleLabel = jsGoogleLabel.substring(gnPrefix.length);
+				}
+			}
+		}
+		pageTracker._trackEvent('$google_category', '$google_action', jsGoogleLabel);
+	});\n";
 	}
 
 	$googleAnalyticsId = GOOGLE_ANALYTICS_ID;
@@ -95,23 +112,8 @@ function gracenote_getAnalyticsHtml($google_action){
 	<script type="text/javascript">
 	try{
 	var pageTracker = _gat._getTracker("$googleAnalyticsId");
-	var gIdDiv = document.getElementById('gracenoteid');
-	var jsGoogleLabel = "Unknown";
-	if(gIdDiv){
-		jsGoogleLabel = gIdDiv.innerHTML;
-	} else {
-		var titleElement = document.getElementsByTagName('title')[0];
-		if(titleElement){
-			jsGoogleLabel = titleElement.innerHTML;
-			jsGoogleLabel = jsGoogleLabel.substring(0, jsGoogleLabel.indexOf(" - Lyric Wiki")); // Get just the page-name from the title.
-			var gnPrefix  = "Gracenote:"; // If the page name starts with "Gracenote:", get rid of that.
-			if(jsGoogleLabel.substring(0, gnPrefix.length) == gnPrefix){
-				jsGoogleLabel = jsGoogleLabel.substring(gnPrefix.length);
-			}
-		}
-	}
-	$trackEventCode
 	pageTracker._trackPageview();
+	$trackEventCode
 	} catch(err) {}</script>
 GOOGLE_JS
 ;
