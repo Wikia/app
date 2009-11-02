@@ -42,12 +42,14 @@ sub real404 {
 
 sub scaleHeight {
 	my( $srcWidth, $srcHeight, $dstWidth ) = @_;
+	my $dstHeight;
 	if( $srcWidth == 0  )  {
-		return 0;
+		$dstHeight = 0;
 	}
 	else {
-		round_even( $srcWidth * $dstWidth /  $srcWidth );
+		$dstHeight = round_even( $srcHeight * $dstWidth /  $srcWidth );
 	}
+	return $dstHeight;
 }
 
 #
@@ -63,6 +65,7 @@ my @tests = qw(
 	/c/central/images/thumb/e/e9/CP_c17i4°.svg/250px-CP_c17i4°.svg.png
 	/c/central/images/thumb/b/bf/Wiki_wide.png/155px-Wiki_wide.png
 	/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif
+	/h/half-life/en/images/thumb/1/1d/Zombie_Assassin.jpg/100px-Zombie_Assassin.jpg
 );
 
 #
@@ -187,7 +190,7 @@ while( $request->Accept() >= 0 ) {
 			if( -f $original ) {
 				$mimetype = $flm->checktype_filename( $original );
 				( $imgtype ) = $mimetype =~ m![^/+]/(\w+)!;
-				print STDERR "$thumbnail $mimetype $imgtype REQUEST_URI=$request_uri HTTP_REFERER=$referer\n" if $debug;
+				print STDERR "$original $thumbnail $mimetype $imgtype $request_uri $referer\n" if $debug;
 
 				#
 				# create folder for thumbnail if doesn't exists
@@ -283,6 +286,12 @@ while( $request->Accept() >= 0 ) {
 					}
 					else {
 						print STDERR "Thumbnailer from $original to $thumbnail failed\n" if $debug;
+						#
+						# serve original file
+						#
+						print "HTTP/1.1 200 OK\r\n";
+						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
+						print "Content-type: $mimetype\r\n\r\n";
 					}
 					exit if $test;
 				}
@@ -301,6 +310,7 @@ while( $request->Accept() >= 0 ) {
 					my $origh  = $image->Get( 'height' );
 					if( $origw && $origh ) {
 						my $height = scaleHeight( $origw, $origh, $width );
+						print $height;
 						$image->Resize( "geometry" => "${width}x${height}>", "blur" => 0.9 );
 						$image->Write( "filename" => $thumbnail );
 						if( -f $thumbnail ) {
@@ -317,8 +327,11 @@ while( $request->Accept() >= 0 ) {
 						else {
 							print STDERR "Thumbnailer from $original to $thumbnail failed\n" if $debug;
 							#
-							# @todo serve original file
+							# serve original file
 							#
+							print "HTTP/1.1 200 OK\r\n";
+							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
+							print "Content-type: $mimetype\r\n\r\n";
 						}
 						undef $image;
 					}
