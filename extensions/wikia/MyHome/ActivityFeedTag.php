@@ -33,6 +33,8 @@ function ActivityFeedTag_render($content, $attributes, &$parser) {
 	wfLoadExtensionMessages('MyHome');
 	$feedHTML = ActivityFeedHelper::getList($parameters);
 
-	return $feedHTML . "<script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script>wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.css?{$wgStyleVersion});</style>";
+	$style = empty($parameters['style']) ? '' : ' style="' . $parameters['style'] . '"';
+
+	return "<div$style>$feedHTML</div><script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script>wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.css?{$wgStyleVersion});</style>";
 }
 
