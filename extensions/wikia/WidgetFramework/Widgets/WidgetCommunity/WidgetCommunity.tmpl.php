@@ -9,4 +9,5 @@
 </div>
 <script>
 var params_<?= $tagid ?> = '<?= $jsParams ?>';
+var timestamp_<?= $tagid ?> = '<?= $timestamp ?>';
 </script>

@@ -34,7 +34,8 @@ function ActivityFeedTag_render($content, $attributes, &$parser) {
 	$feedHTML = ActivityFeedHelper::getList($parameters);
 
 	$style = empty($parameters['style']) ? '' : ' style="' . $parameters['style'] . '"';
+	$timestamp = wfTimestampNow();
 
-	return "<div$style>$feedHTML</div><script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script>wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.css?{$wgStyleVersion});</style>";
+	return "<div$style>$feedHTML</div><script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script>wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams', '$timestamp');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.css?{$wgStyleVersion});</style>";
 }
 
