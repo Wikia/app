@@ -69,6 +69,7 @@ function WidgetCommunity($id, $params) {
 	$tmpl->set_vars(array(
 		'tagid' => $id,
 		'jsParams' => $jsParams,
+		'timestamp' => wfTimestampNow(),
 		'header' => wfMsg('monaco-articles-on', $total),
 		'feedHTML' => $feedHTML,
 		'footerButton' => $footerButton

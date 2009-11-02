@@ -156,7 +156,7 @@ function ActivityFeedAjax() {
 
 	wfLoadExtensionMessages('MyHome');
 	$feedHTML = ActivityFeedHelper::getList($parameters);
-	$data = array('data' => $feedHTML);
+	$data = array('data' => $feedHTML, 'timestamp' => wfTimestampNow());
 
 	$json = Wikia::json_encode($data);
 	$response = new AjaxResponse($json);

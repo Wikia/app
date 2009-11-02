@@ -84,15 +84,17 @@ ActivityFeedTag.loadFullSizeImage = function(ev) {
 	});
 }
 
-ActivityFeedTag.loadFreshData = function(id, params) {
+ActivityFeedTag.loadFreshData = function(id, params, timestamp) {
 	params = params.replace(/&amp;/g, '&');
 	var uselang = $.getUrlVar('uselang');
 	if (uselang) params += '&uselang=' + uselang;
 	$.getJSON(wgScript + '?action=ajax&rs=ActivityFeedAjax', {params: params}, function(json){
-		var tmpDiv = document.createElement('div');
-		tmpDiv.innerHTML = json.data;
-		$('#' + id).html($(tmpDiv).find('ul').html());
-		ActivityFeedTag.setupThumbnails($('#' + id));
+		if (json.timestamp > timestamp) {
+			var tmpDiv = document.createElement('div');
+			tmpDiv.innerHTML = json.data;
+			$('#' + id).html($(tmpDiv).find('ul').html());
+			ActivityFeedTag.setupThumbnails($('#' + id));
+		}
 	});
 }
 
@@ -110,8 +112,8 @@ ActivityFeedTag.addTracking = function(id) {
 	});
 }
 
-ActivityFeedTag.initActivityTag = function(id, params) {
-	ActivityFeedTag.loadFreshData(id, params);
+ActivityFeedTag.initActivityTag = function(id, params, timestamp) {
+	ActivityFeedTag.loadFreshData(id, params, timestamp);
 	ActivityFeedTag.addTracking(id);
 }
 

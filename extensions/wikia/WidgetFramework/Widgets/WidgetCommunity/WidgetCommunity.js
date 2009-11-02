@@ -11,11 +11,13 @@ function WidgetCommunity_init(id, widget) {
 		});
 	});
 
-	var loadFreshData = function(id, params) {
+	var loadFreshData = function(id, params, timestamp) {
 		$.getJSON(wgScript + '?action=ajax&rs=ActivityFeedAjax', {params: params}, function(json){
-			$('#widget_' + id + '-recently-edited').after(json.data).remove();
+			if (json.timestamp > timestamp) {
+				$('#widget_' + id + '-recently-edited').after(json.data).remove();
+			}
 		});
 	}
 
-	loadFreshData(id, window['params_widget_'+id]);
+	loadFreshData(id, window['params_widget_'+id], window['timestamp_widget_'+id]);
 }
