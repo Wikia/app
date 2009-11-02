@@ -775,7 +775,7 @@ class Masthead {
 				if ( defined('NS_BLOG_ARTICLE') && !$isDestinationUserAnon) {
 					$oTitle = Title::newFromText( $userspace, NS_BLOG_ARTICLE );
 					if ($oTitle instanceof Title) {
-						$out['nav_links'][] = array('text' => wfMsg('blog-page'), 'href' => $oTitle->getLocalUrl(), 'dbkey' => NS_BLOG_ARTICLE, 'tracker' => 'userblog');
+						$out['nav_links'][] = array('text' => wfMsg('create-blog-post-category'), 'href' => $oTitle->getLocalUrl(), 'dbkey' => NS_BLOG_ARTICLE, 'tracker' => 'userblog');
 					}
 				}
 
@@ -905,7 +905,7 @@ class Masthead {
 					$wgMastheadVisible = true;
 				}
 				//hide .firstHeading [except for blogs]
-				$wgSupressPageTitle = !((defined('NS_BLOG_ARTICLE') && $namespace == NS_BLOG_ARTICLE) || $wgTitle->isSubpage());
+				$wgSupressPageTitle = !($wgTitle->isSubpage());
 				//hide sitenotice
 				$wgSupressSiteNotice = true;
 			}
