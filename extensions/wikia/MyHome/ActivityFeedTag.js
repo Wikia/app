@@ -86,6 +86,8 @@ ActivityFeedTag.loadFullSizeImage = function(ev) {
 
 ActivityFeedTag.loadFreshData = function(id, params) {
 	params = params.replace(/&amp;/g, '&');
+	var uselang = $.getUrlVar('uselang');
+	if (uselang) params += '&uselang=' + uselang;
 	$.getJSON(wgScript + '?action=ajax&rs=ActivityFeedAjax', {params: params}, function(json){
 		var tmpDiv = document.createElement('div');
 		tmpDiv.innerHTML = json.data;

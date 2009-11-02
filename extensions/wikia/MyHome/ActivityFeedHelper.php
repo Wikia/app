@@ -75,6 +75,11 @@ class ActivityFeedHelper {
 						}
 					}
 					break;
+				case 'uselang':	//only from ajax
+					if (!empty($val)) {
+						$parameters['uselang'] = $val;
+					}
+					break;
 				case 'ns':	//only from ajax
 					if (!empty($val)) {
 						$parameters['includeNamespaces'] = $val;
@@ -143,6 +148,11 @@ function ActivityFeedAjax() {
 	$params = $wgRequest->getVal('params');
 
 	$parameters = ActivityFeedHelper::parseParameters(explode('&', $params));
+
+	if (!empty($parameters['uselang'])) {
+		global $wgLang;
+		$wgLang = Language::factory($parameters['uselang']);
+	}
 
 	wfLoadExtensionMessages('MyHome');
 	$feedHTML = ActivityFeedHelper::getList($parameters);
