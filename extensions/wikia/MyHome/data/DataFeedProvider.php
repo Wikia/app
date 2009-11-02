@@ -232,7 +232,7 @@ class DataFeedProvider {
 		|| ($res['ns']-1) == NS_CATEGORY
 		|| $res['ns'] == NS_USER
 		|| $res['ns'] == NS_USER_TALK
-		|| $res['ns'] == NS_BLOG_ARTICLE
+		|| (defined('NS_BLOG_ARTICLE') && $res['ns'] == NS_BLOG_ARTICLE)
 		|| ($res['ns'] == NS_TEMPLATE && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_MEDIAWIKI && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_IMAGE && $this->proxyType == self::WL)
@@ -251,7 +251,7 @@ class DataFeedProvider {
 				$item['comment'] = $res['comment'];
 			}
 
-			if($res['ns'] === NS_BLOG_ARTICLE) {
+			if(defined('NS_BLOG_ARTICLE') && $res['ns'] === NS_BLOG_ARTICLE) {
 				$item['title'] = end(explode('/', $res['title'], 2));
 			}
 		}
@@ -279,12 +279,12 @@ class DataFeedProvider {
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
 
-		} else if($res['ns'] == NS_BLOG_ARTICLE) {
+		} else if(defined('NS_BLOG_ARTICLE') && $res['ns'] == NS_BLOG_ARTICLE) {
 
 			$item['title'] = end(explode('/', $res['title'], 2));
 			$item['url'] = $title->getLocalUrl();
 
-		} else if($res['ns'] == NS_BLOG_ARTICLE_TALK) {
+		} else if(defined('NS_BLOG_ARTICLE_TALK') && $res['ns'] == NS_BLOG_ARTICLE_TALK) {
 
 			$item['title'] = implode('/', array_slice(explode('/', $res['title']), 1, -1));
 			$item['url'] = Title::newFromText($title->getBaseText(), NS_BLOG_ARTICLE)->getLocalUrl();
@@ -300,7 +300,7 @@ class DataFeedProvider {
 				$item['thumbnail'] = $video->getThumbnailCode(self::VIDEO_THUMB_WIDTH, false);
  			}
 
-		} else if($res['ns'] == NS_BLOG_LISTING) {
+		} else if(defined('NS_BLOG_LISTING') && $res['ns'] == NS_BLOG_LISTING) {
 
 			if($this->proxyType == self::WL) {
 

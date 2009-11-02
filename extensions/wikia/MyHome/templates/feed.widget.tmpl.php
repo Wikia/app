@@ -7,7 +7,7 @@
 	else {
 ?>
 
-	<ul class="activityfeed widgetfeed" id="<?= $tagid ?>-recently-edited"<?= $style ?>>
+	<ul class="activityfeed widgetfeed" id="<?= $tagid ?>-recently-edited">
 <?php
 		foreach($data as $row) {
 ?>
