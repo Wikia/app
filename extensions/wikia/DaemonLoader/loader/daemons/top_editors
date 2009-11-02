@@ -181,6 +181,7 @@ my @where = (
 	"city_id not in (".$other_wikis.")",
 	"edit_ns = 0",
 	"user_id > 0"
+);
 my @options = (
 	"group by 1",
 	"ORDER BY cnt desc",
