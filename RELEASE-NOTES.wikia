@@ -1,4 +1,5 @@
 == Changes since 200910.4 ==
+* rt#25842: Dynamic link box: Icons are missing (Macbre)
 * rt#24750: Answers: Reshuffling of msg and workflow. (Nef)
 * a shortcut in permission checks for action=edit; new system messages: <editnologintext> and <editnotallowed> (Emil)
 * rt#25759: WMU: Typo js error fixed. (Nef)
