@@ -43,10 +43,11 @@ class BlogLockdown {
 			$canEdit = $oComment->canEdit();
 			$isOwner = (bool) ( $canEdit && !in_array($action, array('move', 'watch', 'protect') ) );
 			$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE_TALK && $isOwner );
-		} else {
+		} 
+		else {
 			$owner = BlogArticle::getOwner( $title );
 			$isOwner = (bool)( $username == $owner );
-			$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE );
+			$isArticle = ($namespace == NS_BLOG_ARTICLE) ? false : true ;
 		}
 
 		/**
