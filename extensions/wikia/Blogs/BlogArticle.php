@@ -88,13 +88,7 @@ class BlogArticle extends Article {
 			/**
 			 * blog listing
 			 */
-			if( $this->exists() ) {
-				Article::view();
-			}
-			else {
-				$wgOut->setArticleFlag( true );
-				$wgOut->setPageTitle( $this->mTitle->getPrefixedText() );
-			}
+			$wgOut->setHTMLTitle( $wgOut->getWikiaPageTitle( $this->mTitle->getPrefixedText() ) );
 			$this->showBlogListing();
 		}
 	}
@@ -445,6 +439,8 @@ class BlogArticle extends Article {
 		$row = array();
 		switch( $wgTitle->getNamespace()  ) {
 			case NS_BLOG_ARTICLE:
+				$allowedTabs = array();
+				$tabs = array();
 				break;
 			case NS_BLOG_LISTING:
 				if (empty($wgEnableSemanticMediaWikiExt)) {
