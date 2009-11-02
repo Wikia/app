@@ -36,7 +36,7 @@ function efTheoryTabHook(&$skin , &$content_actions ) {
 
 	wfLoadExtensionMessages('Theorytab');
 
-  	$tTheory =  wfMsg('theorytab-subpage');
+  	$tTheory =  wfMsgForContent('theorytab-subpage');
   	$tTheoryTabName = wfMsg('theorytab-title');
   	$tParentTabName = wfMsg('theorytab-parent-title');
 
