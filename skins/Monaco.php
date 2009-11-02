@@ -1707,7 +1707,7 @@ if ($custom_article_footer !== '') {
 	echo $custom_article_footer;
 } else {
 	//default footer
-	if ($wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage() && $wgOut->isArticle()) {
+	if ($wgTitle->exists() && $wgTitle->isContentPage() && !$wgTitle->isTalkPage()) {
 		$namespaceType = 'content';
 	}
 	//talk footer
@@ -1724,7 +1724,7 @@ if ($custom_article_footer !== '') {
 	}
 
 	$action = $wgRequest->getVal('action', 'view');
-	if ($namespaceType != 'none' && in_array($action, array('view', 'purge'))) {
+	if ($namespaceType != 'none' && in_array($action, array('view', 'purge', 'edit', 'history', 'delete', 'protect'))) {
 		$nav_urls = $this->data['nav_urls'];
 
 		$actions = '';
