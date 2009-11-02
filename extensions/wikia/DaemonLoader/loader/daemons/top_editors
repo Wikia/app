@@ -156,8 +156,7 @@ my @options = (
 ); 
 =cut
 
-=new query
-=cut
+=old query again
 my $select = "ue_user_id as user_id, ue_edit_count - (select if(isnull(sum(lu_rev_cnt)),0,sum(lu_rev_cnt)) as cnt from `dataware`.`city_local_users` where lu_user_id = ue_user_id and ((lu_singlegroup = 'bot') or (lu_allgroups like '%bot%') or (lu_user_name like '%Bot%') ) ) as cnt";
 my $from = "dbstats.city_user_edits, `dataware`.`city_local_users`";
 my @where = ( 
@@ -169,6 +168,19 @@ my @where = (
 	"lu_user_name != 'CreateWiki script'",
 	"lu_user_name not like '%Bot%'"
 );
+my @options = (
+	"group by 1",
+	"ORDER BY cnt desc",
+	"LIMIT ". $limit
+); 
+=cut
+
+my $select = "user_id, sum(edit_count) - (select if(isnull(sum(lu_rev_cnt)),0,sum(lu_rev_cnt)) as cnt from `dataware`.`city_local_users` where lu_user_id = user_id and ( (lu_singlegroup = 'bot') or (lu_allgroups like '%bot%') or (lu_user_name like '%Bot%') or (lu_user_name = 'CreateWiki script') or (lu_user_name like '%Bot%') ) ) as cnt";
+my $from = "dataware.user_edits_summary";
+my @where = (
+	"city_id not in (".$other_wikis.")",
+	"edit_ns = 0",
+	"user_id > 0"
 my @options = (
 	"group by 1",
 	"ORDER BY cnt desc",
