@@ -80,15 +80,6 @@
 }
 
 /* TODO: move this to monaco css? and remove from MyHome.css */
-.activityfeed img.sprite {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?myhome2) repeat scroll 0 0;
-	height: 16px;
-	margin-left: -20px;
-	position: absolute;
-	top: -1px;
-	width: 560px;
-}
-
 .activity-type-new .sprite {
 	clip: rect(0px 528px 16px 512px);
 	left: -512px;
