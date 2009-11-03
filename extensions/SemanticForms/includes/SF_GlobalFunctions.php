@@ -168,6 +168,7 @@ function sffInitContentLanguage($langcode) {
 	if ( !class_exists($cont_lang_class)) {
 		include_once($sfgIP . '/languages/SF_LanguageEn.php');
 		$cont_lang_class = 'SF_LanguageEn';
+		include_once( $sfgIP . '/languages/'. $cont_lang_class . '.php' );
 	}
 
 	$sfgContLang = new $cont_lang_class();
