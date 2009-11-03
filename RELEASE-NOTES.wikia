@@ -2,6 +2,7 @@
 * rt#26036: Custom ext. for RuneScape wiki. (Nef)
 * rt#22733: Show footer on all article action pages, e.g. edit, history (Marooned)
 * rt#25882: Smart Ajax refresh (Marooned)
+* rt#25246: CategorySelect: dont stripout category text for viewsource mode (Marooned)
 
 == Changes since 200910.4 ==
 * rt#25842: Dynamic link box: Icons are missing (Macbre)
