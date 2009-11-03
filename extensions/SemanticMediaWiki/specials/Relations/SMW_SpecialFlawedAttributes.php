@@ -41,7 +41,7 @@ class FlawedAttributes extends QueryPage {
 	}
 
 	function getSQL() {
-		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$page = $dbr->tableName( 'page');
 		$pagelinks = $dbr->tableName( 'pagelinks');
 		$smw_attributes = $dbr->tableName( 'smw_attributes' );
