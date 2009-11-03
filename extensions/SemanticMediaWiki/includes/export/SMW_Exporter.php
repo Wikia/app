@@ -188,7 +188,10 @@ class SMWExporter {
 		} elseif ($resource instanceof SMWWikiPageValue) {
 			$dv = $resource;
 		} else {
-			return NULL;
+			$dv = NULL;
+		}
+		if ( is_null($dv) ) {
+			return $dv;
 		}
 		$idvs = smwfGetStore()->getPropertyValues($dv, SMWPropertyValue::makeProperty('_IMPO'));
 		if (count($idvs) > 0) {
