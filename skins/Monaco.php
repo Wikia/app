@@ -632,7 +632,11 @@ EOS;
 		$nodes = array();
 		if(is_array($lines)) {
 			foreach($lines as $line) {
-				$item = parseItem(trim($line, ' *'));
+				$trimmed = trim($line, ' *');
+				if (strlen($trimmed) == 0) { # ignore empty lines
+					continue;
+				}
+				$item = parseItem($trimmed);
 
 				$tracker = $item['org'];
 				$tracker = preg_replace('/-url$/', '', $tracker);
