@@ -46,7 +46,7 @@ class SMWAdmin extends SpecialPage {
 		$this->setHeaders();
 
 		/**** Get status of refresh job, if any ****/
-		$dbr = wfGetDB( DB_SLAVE, 'dpl' );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$row = $dbr->selectRow( 'job', '*', array( 'job_cmd' => 'SMWRefreshJob' ), __METHOD__ );
 		if ($row !== false) { // similar to Job::pop_type, but without deleting the job
 			$title = Title::makeTitleSafe( $row->job_namespace, $row->job_title);
