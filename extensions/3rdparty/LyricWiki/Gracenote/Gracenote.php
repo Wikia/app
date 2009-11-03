@@ -22,7 +22,9 @@ define('GRACENOTE_VIEW_NOT_LYRICS', 'NotLyrics');
 define('GOOGLE_ANALYTICS_ID', "UA-10496195-1"); // lyrics.wikia.com ID
 
 GLOBAL $wgGracenoteView;
-$wgGracenoteView = GRACENOTE_VIEW_NOT_LYRICS;
+if(!$wgGracenoteView){
+	$wgGracenoteView = GRACENOTE_VIEW_NOT_LYRICS;
+}
 
 ////
 // Returns HTML which outputs the required branding for Gracenote.
@@ -85,6 +87,7 @@ function gracenote_getAnalyticsHtml($google_action){
 	$google_category = "Lyrics";
 	
 	$trackEventCode = "";
+
 	if($google_action != GRACENOTE_VIEW_NOT_LYRICS){
 		$trackEventCode = "$(document).ready(function(){
 		var gIdDiv = document.getElementById('gracenoteid');
@@ -208,7 +211,7 @@ function gracenote_installCopyProtection(&$out, &$sk){
 	";
 
 	// TODO: If acceptable, make the DISABLE_RIGHT_CLICK_CODE and DISABLE_SELECT_ALL only apply to Gracenote pages and lyrics pages (what is the Gracenote namespace number?).
-	
+
 	// Add the various chunks of javascript that need to be run after the page is loaded.
 	$out->addScript("<script type=\"text/javascript\">
 		$(document).ready(function() {
@@ -277,7 +280,9 @@ function gracenote_getNoscriptTag(){
 ////
 function gracenote_outputGoogleAnalytics(&$out, $parserOutput){
 	GLOBAL $wgGracenoteView;
+
 	$out->addHTML(gracenote_getAnalyticsHtml($wgGracenoteView));
+
 	return true;
 } // end gracenote_outputGoogleAnalytics()
 
