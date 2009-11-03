@@ -189,7 +189,8 @@ class Listusers extends SpecialPage {
 		$orderby = (isset($orderOption[$order])) ? $orderOption[$order] : $orderOption["username"];
 
 		$aUsers = array('cnt' => 0, 'data' => array());
-		$subMemkey = md5($groups.$text.$contrib.$offset.$limit.$orderby);
+		$anon = $wgUser->isAnon();
+		$subMemkey = md5($groups.$text.$contrib.$offset.$limit.$orderby.$anon);
 		$memkey = wfForeignMemcKey( $wgCityId, null, "Listusers", $subMemkey );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
@@ -238,7 +239,7 @@ class Listusers extends SpecialPage {
 					$aTables = array ( 
 						'city_local_users 
 						left join user_summary s1 on (lu_user_id = s1.user_id) and (s1.city_id = 0)
-						left join user_summary s2 on (lu_user_id = s2.user_id) and (s2.city_id = 177)'
+						left join user_summary s2 on (lu_user_id = s2.user_id) and (s2.city_id = '.$wgCityId.')'
 					);
 					$aWhat[] = "ifnull(unix_timestamp(s1.last_logged_in), 0) as ts";
 					$aWhat[] = "ifnull(s2.rev_last, 0) as max_rev";
@@ -295,13 +296,13 @@ class Listusers extends SpecialPage {
 						'rev_cnt' 		=> $oRow->lu_rev_cnt,
 						'blcked'		=> $oRow->lu_blocked,
 						'links'			=> "(" . implode(") &#183; (", $aLinks) . ")",
-						'last_login'	=> (!empty($oRow->ts)) ? $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true ) : "",
+						'last_login'	=> (!empty($oRow->ts)) ? $wgLang->timeanddate( $oRow->ts, true ) : "",
 					);
 					
 					# last revision and date of last edit
 					if ( $wgUser->isLoggedIn() ) {
 						$aUsers['data'][$oRow->lu_user_id]['last_edit_ts'] = 
-							(!empty($oRow->ts_edit)) ? $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts_edit ), true ) : "";
+							(!empty($oRow->ts_edit)) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : "";
 							
 						if ( !empty($oRow->max_rev) ) { 
 							$oRevision = Revision::newFromId($oRow->max_rev);
