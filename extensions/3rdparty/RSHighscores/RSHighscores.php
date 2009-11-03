@@ -22,7 +22,7 @@
 if (!defined( 'MEDIAWIKI')) die();
 
 # Define a setup function
-$wgExtensionFunctions[] = 'wfHighscores';
+$wgHooks['ParserFirstCallInit'][] = 'wfHighscores';
 $wgExtensionCredits['parserhook'][] = array(
     'path' => __FILE__,
     'name' => 'RSHighscores',
@@ -40,9 +40,9 @@ $wgRSTimes = 0;
 $wgHooks['LanguageGetMagic'][] = 'wfHighscores_Magic';
 
 # Setup parser function 
-function wfHighscores() {
-    global $wgParser;
-    $wgParser->setFunctionHook('highscores', 'wfHighscores_Render');
+function wfHighscores(&$parser) {
+    $parser->setFunctionHook('highscores', 'wfHighscores_Render');
+	 return true;
 }
 
 # Parser function
