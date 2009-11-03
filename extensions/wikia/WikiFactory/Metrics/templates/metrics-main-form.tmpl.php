@@ -89,7 +89,7 @@ div#sidebar { display: none !important; }
 			</td></tr>
 			<tr><td valign="middle" class="awc-metrics-row">
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-user')?></span>
-				<span style="vertical-align:middle"><input name="awc-metrics-user" id="awc-metrics-user" size="15" value="<?=@$params['fouder']?>" /></span>
+				<span style="vertical-align:middle"><input name="awc-metrics-user" id="awc-metrics-user" size="15" value="<?=@$params['founder']?>" /></span>
 				<span style="vertical-align:middle"><?=wfMsg('awc-metrics-by-email')?></span>
 				<span style="vertical-align:middle"><input name="awc-metrics-email" id="awc-metrics-email" size="40" value="<?=@$params['email']?>" /></span>
 			</td></tr>
