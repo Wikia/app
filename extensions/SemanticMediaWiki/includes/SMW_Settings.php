@@ -22,7 +22,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 # web. Change it if required ($wgScriptPath is the path to the base directory
 # of your wiki). No final slash.
 ##
-$smwgScriptPath = $wgScriptPath . '/extensions/SemanticMediaWiki';
+$smwgScriptPath = $wgExtensionsPath . '/SemanticMediaWiki';
+
+if (!isset($smwgScriptVersion))
+$smwgScriptVersion = $wgStyleVersion;
+
 ##
 
 ###
