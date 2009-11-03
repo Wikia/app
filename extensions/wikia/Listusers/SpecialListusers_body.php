@@ -189,8 +189,9 @@ class Listusers extends SpecialPage {
 		$orderby = (isset($orderOption[$order])) ? $orderOption[$order] : $orderOption["username"];
 
 		$aUsers = array('cnt' => 0, 'data' => array());
+		$data = array('cnt' => 0, 'rows' => array());
 		$anon = $wgUser->isAnon();
-		$subMemkey = md5($groups.$text.$contrib.$offset.$limit.$orderby.$anon);
+		$subMemkey = md5('G'.$groups.'T'.$text.'C'.$contrib.'O'.$offset.'L'.$limit.'O'.$orderby.'A'.$anon);
 		$memkey = wfForeignMemcKey( $wgCityId, null, "Listusers", $subMemkey );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached)) { 
@@ -252,107 +253,88 @@ class Listusers extends SpecialPage {
 					__METHOD__,
 					array ( 'GROUP BY' => 'lu_user_id', 'ORDER BY' => $orderby, 'LIMIT' => $limit, 'OFFSET' => intval($offset) * $limit, 'SQL_CALC_FOUND_ROWS' )
 				);
-				$sk = $wgUser->getSkin();
 
 				while ( $oRow = $dbs->fetchObject( $res ) ) {
-					$oUser = User::newFromName($oRow->lu_user_name);
-					# check by ID id, if user not found
-					if ( !($oUser instanceof User) ) {
-						$oUser = User::newFromId($oRow->lu_user_id);
-					}
-					# hmmm ... if user not found
-					if ( !($oUser instanceof User) ) continue;
-
-					$__groups = explode(";", $oRow->lu_allgroups);
-					$sGroups = "<i>".wfMsg('listusers-nonegroup')."</i>";
-					if ( !empty($__groups) && is_array($__groups) ) {
-						$sGroups = implode(", ", $__groups);
-					}
-
-					$aLinks = array (
-						0 => "",
-						1 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), $wgLang->ucfirst(wfMsg('contribslink')), "target={$oUser->getName()}"),
-						2 => $sk->makeLinkObj(Title::newFromText('Editcount', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listusersedits')), "username={$oUser->getName()}")
-					);
-
-					$oUserTalkTitle = Title::newFromText($oUser->getName(), NS_USER_TALK);
-					if ( !is_null($oUserTalkTitle) && $oUserTalkTitle instanceof Title ) {
-						$aLinks[0] = $sk->makeLinkObj($oUserTalkTitle, $wgLang->ucfirst(wfMsg('talkpagelinktext')));
-					}
-
-					if ( $wgUser->isAllowed( 'block' ) && (!$wgUser->isBlocked()) ) {
-						$aLinks[] = $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink')));
-					}
-					if ( $wgUser->isAllowed( 'userrights' ) && (!$wgUser->isBlocked()) ) {
-						$aLinks[] = $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listgrouprights-rights')), "user={$oUser->getName()}");
-					};
-
-					$aUsers['data'][$oRow->lu_user_id] = array(
-						'user_id' 		=> $oRow->lu_user_id,
-						'user_name' 	=> $oUser->getName(),
-						'user_link'		=> $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),
-						'groups_nbr' 	=> $oRow->lu_numgroups,
-						'groups' 		=> $sGroups,
-						'rev_cnt' 		=> $oRow->lu_rev_cnt,
-						'blcked'		=> $oRow->lu_blocked,
-						'links'			=> "(" . implode(") &#183; (", $aLinks) . ")",
-						'last_login'	=> (!empty($oRow->ts)) ? $wgLang->timeanddate( $oRow->ts, true ) : "",
-					);
-					
-					# last revision and date of last edit
-					if ( $wgUser->isLoggedIn() ) {
-						$aUsers['data'][$oRow->lu_user_id]['last_edit_ts'] = 
-							(!empty($oRow->ts_edit)) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : "";
-							
-						if ( !empty($oRow->max_rev) ) { 
-							$oRevision = Revision::newFromId($oRow->max_rev);
-							if ( !is_null($oRevision) ) {
-								$oTitle = $oRevision->getTitle();
-								if ( !is_null($oTitle) ) {
-									$aUsers['data'][$oRow->lu_user_id]['last_edit_page'] = $oTitle->getLocalUrl();
-									$aUsers['data'][$oRow->lu_user_id]['last_edit_diff'] = $oTitle->getLocalUrl('diff=prev&oldid=' . $oRow->max_rev);
-								}
-							}
-						}
-					}
+					$data['rows'][] = $oRow;
 				}
 				$dbs->freeResult( $res );
 
 				# nbr all records 
 				$res = $dbs->query('SELECT FOUND_ROWS() as rowcount');
 				$oRow = $dbs->fetchObject ( $res );
-				$aUsers['cnt'] = $oRow->rowcount;
+				$data['cnt'] = $oRow->rowcount;
 				$dbs->freeResult( $res );
-
-				# last logged in 
-				/*$aWhere = array();
-				if ( !empty($aUsers['data']) && is_array($aUsers['data']) && ($wgUser->isLoggedIn()) ) {
-					# last edited 
-					$dbr = wfGetDB( DB_SLAVE );
-					$aWhere = array( 
-						"page_id = rev_page",
-						" rev_user in (". $dbr->makeList( array_keys($aUsers['data']) ).") ",
-					);
-					$res = $dbr->select(
-						array( "revision", "page" ),
-						array( "rev_user as user_id", "page_id", "page_title", "page_namespace", "max(rev_timestamp) as ts " ),
-						$aWhere,
-						__METHOD__,
-						array( 'GROUP BY' => 'user_id' )
-					);
-					while ( $oRow = $dbr->fetchObject( $res ) ) {
-						if (isset($aUsers['data'][$oRow->user_id])) {
-							$last_edited = $wgLang->timeanddate( wfTimestamp( TS_MW, $oRow->ts ), true );
-							$aUsers['data'][$oRow->user_id]['last_edited'] = $sk->makeLinkObj(Title::newFromText( $oRow->page_title, $oRow->page_namespace ), $last_edited);
-						}
-					}
-					$dbr->freeResult( $res );
-				}*/
-
-				$wgMemc->set( $memkey, $aUsers, 60*60*3 );
+				$wgMemc->set( $memkey, $data, 60*60*3 );
 			}
 		} else {
-			$aUsers = $cached;
+			$data = $cached;
+		}
+
+		$sk = $wgUser->getSkin();
+		if ( isset($data['cnt']) && ($data['cnt'] > 0) ) {
+			$aUsers['cnt'] = $data['cnt'];
+ 			foreach ($data['rows'] as $id => $oRow) {
+				$oUser = User::newFromName($oRow->lu_user_name);
+				# check by ID id, if user not found
+				if ( !($oUser instanceof User) ) {
+					$oUser = User::newFromId($oRow->lu_user_id);
+				}
+				# hmmm ... if user not found
+				if ( !($oUser instanceof User) ) continue;
+
+				$__groups = explode(";", $oRow->lu_allgroups);
+				$sGroups = "<i>".wfMsg('listusers-nonegroup')."</i>";
+				if ( !empty($__groups) && is_array($__groups) ) {
+					$sGroups = implode(", ", $__groups);
+				}
+
+				$aLinks = array (
+					0 => "",
+					1 => $sk->makeLinkObj(Title::newFromText('Contributions', NS_SPECIAL), $wgLang->ucfirst(wfMsg('contribslink')), "target={$oUser->getName()}"),
+					2 => $sk->makeLinkObj(Title::newFromText('Editcount', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listusersedits')), "username={$oUser->getName()}")
+				);
+
+				$oUserTalkTitle = Title::newFromText($oUser->getName(), NS_USER_TALK);
+				if ( !is_null($oUserTalkTitle) && $oUserTalkTitle instanceof Title ) {
+					$aLinks[0] = $sk->makeLinkObj($oUserTalkTitle, $wgLang->ucfirst(wfMsg('talkpagelinktext')));
+				}
+
+				if ( $wgUser->isAllowed( 'block' ) && (!$wgUser->isBlocked()) ) {
+					$aLinks[] = $sk->makeLinkObj(Title::newFromText("BlockIP/{$oUser->getName()}", NS_SPECIAL), $wgLang->ucfirst(wfMsg('blocklink')));
+				}
+				if ( $wgUser->isAllowed( 'userrights' ) && (!$wgUser->isBlocked()) ) {
+					$aLinks[] = $sk->makeLinkObj(Title::newFromText('UserRights', NS_SPECIAL), $wgLang->ucfirst(wfMsg('listgrouprights-rights')), "user={$oUser->getName()}");
+				};
+
+				$aUsers['data'][$oRow->lu_user_id] = array(
+					'user_id' 		=> $oRow->lu_user_id,
+					'user_name' 	=> $oUser->getName(),
+					'user_link'		=> $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),
+					'groups_nbr' 	=> $oRow->lu_numgroups,
+					'groups' 		=> $sGroups,
+					'rev_cnt' 		=> $oRow->lu_rev_cnt,
+					'blcked'		=> $oRow->lu_blocked,
+					'links'			=> "(" . implode(") &#183; (", $aLinks) . ")",
+					'last_login'	=> (!empty($oRow->ts)) ? $wgLang->timeanddate( $oRow->ts, true ) : "",
+				);
+				
+				# last revision and date of last edit
+				if ( $wgUser->isLoggedIn() ) {
+					$aUsers['data'][$oRow->lu_user_id]['last_edit_ts'] = 
+						(!empty($oRow->ts_edit)) ? $wgLang->timeanddate( $oRow->ts_edit, true ) : "";
+						
+					if ( !empty($oRow->max_rev) ) { 
+						$oRevision = Revision::newFromId($oRow->max_rev);
+						if ( !is_null($oRevision) ) {
+							$oTitle = $oRevision->getTitle();
+							if ( !is_null($oTitle) ) {
+								$aUsers['data'][$oRow->lu_user_id]['last_edit_page'] = $oTitle->getLocalUrl();
+								$aUsers['data'][$oRow->lu_user_id]['last_edit_diff'] = $oTitle->getLocalUrl('diff=prev&oldid=' . $oRow->max_rev);
+							}
+						}
+					}
+				}
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
