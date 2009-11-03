@@ -12,6 +12,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['SpecialMyHome'] = $dir.'SpecialMyHome.class.php';
 $wgSpecialPages['MyHome'] = 'SpecialMyHome';
 $wgSpecialPageGroups['MyHome'] = 'users';
+$wgExtensionAliasesFiles['MyHome'] = $dir . 'SpecialMyHome.alias.php';
 
 // hooks
 $wgHooks['CustomUserData'][] = 'MyHome::addToUserMenu';
