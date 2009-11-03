@@ -99,7 +99,7 @@ if (! isset($smwgIP))
 require_once($smwgIP . '/includes/SMW_GlobalFunctions.php');
 
 $store = smwfGetStore();
-$db =& wfGetDB( DB_SLAVE );
+$db = wfGetDB( DB_SLAVE, 'dpl' );
 
 if (!($store instanceof SMWSQLStore2)) {
 	outputMessage("Only SMWSQLStore2 supports this operation.\n Aborting.");
