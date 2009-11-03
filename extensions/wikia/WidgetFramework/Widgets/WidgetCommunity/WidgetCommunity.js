@@ -12,6 +12,8 @@ function WidgetCommunity_init(id, widget) {
 	});
 
 	var loadFreshData = function(id, params, timestamp) {
+		var uselang = $.getUrlVar('uselang');
+		if (uselang) params += '&uselang=' + uselang;
 		$.getJSON(wgScript + '?action=ajax&rs=ActivityFeedAjax', {params: params}, function(json){
 			if (json.timestamp > timestamp) {
 				$('#widget_' + id + '-recently-edited').after(json.data).remove();
