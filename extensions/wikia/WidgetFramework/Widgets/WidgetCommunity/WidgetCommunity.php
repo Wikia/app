@@ -19,6 +19,10 @@ $wgWidgets['WidgetCommunity'] = array(
 );
 
 function WidgetCommunity($id, $params) {
+	global $wgEnableCommunityWidget;
+	if(empty($wgEnableCommunityWidget)) {
+		return '';
+	}
 	if($params['skinname'] != 'monaco') {
 		return '';
 	}
