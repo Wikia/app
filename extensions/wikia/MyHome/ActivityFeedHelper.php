@@ -110,9 +110,6 @@ class ActivityFeedHelper {
 		if (in_array('shortlist', $parameters['flags'])) {
 			global $wgContentNamespaces;
 			$parameters['includeNamespaces'] = implode('|', $wgContentNamespaces);
-			$parameters['flags'][] = 'hideimages';
-			$parameters['flags'][] = 'hidevideos';
-			$parameters['flags'][] = 'hidecategories';
 		}
 
 		return $parameters;
@@ -127,7 +124,7 @@ class ActivityFeedHelper {
 		$feedProxy = new ActivityFeedAPIProxy($parameters['includeNamespaces']);
 		$feedRenderer = new ActivityFeedRenderer();
 
-		$feedProvider = new DataFeedProvider($feedProxy, $removeDuplicatesType);
+		$feedProvider = new DataFeedProvider($feedProxy, $removeDuplicatesType, $parameters);
 		$feedData = $feedProvider->get($parameters['maxElements']);
 		if(!isset($feedData['results']) || count($feedData['results']) == 0) {
 			return '';
