@@ -47,7 +47,7 @@ class BlogLockdown {
 		else {
 			$owner = BlogArticle::getOwner( $title );
 			$isOwner = (bool)( $username == $owner );
-			$isArticle = ($namespace == NS_BLOG_ARTICLE) ? false : true ;
+			$isArticle =(bool)($namespace == NS_BLOG_ARTICLE);
 		}
 
 		/**
