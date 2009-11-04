@@ -30,21 +30,6 @@ function getDebugBacktrace($NL = "<BR>")
  }
 
 
-// add this system call for MediaWiki Versions less than 1.11.1
-if ( version_compare( $wgVersion, "1.11.1", '<' ) )
-{
-	function wfLoadExtensionMessages( $extension )
-	{
-		global $wgMessageCache,$wgExtensionMessagesFiles;
-		
-		// Adapted from MediaWiki 1.11.1
-		require( $wgExtensionMessagesFiles[$extension] );
-		foreach( $messages as $lang => $msgs )
-		{
-			$wgMessageCache->addMessages( $msgs, $lang );
-		};
-	};
-};
 
 function sandboxParse($wikiText)
 {
