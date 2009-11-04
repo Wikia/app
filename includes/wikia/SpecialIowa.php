@@ -15,7 +15,7 @@ class SpecialIowa extends UnlistedSpecialPage {
 		$mCookieName;
 
 	public function __construct() {
-		parent::__construct( 'Iowa', 'wikifactory' );
+		parent::__construct( 'Iowa' );
 		$this->mCookieName = "-wikia-colocation";
 		$this->mCookie = false;
 	}
@@ -25,10 +25,6 @@ class SpecialIowa extends UnlistedSpecialPage {
 
 		$wgMessageCache->addMessages( array( "iowa" => "Iowa" ), "en" );
 
-		if( !$wgUser->isAllowed( 'wikifactory' ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
 		wfProfileIn( __METHOD__ );
 
 		$this->setHeaders();
