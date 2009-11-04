@@ -439,9 +439,11 @@ class BlogArticle extends Article {
 		$row = array();
 		switch( $wgTitle->getNamespace()  ) {
 			case NS_BLOG_ARTICLE:
-				$allowedTabs = array();
-				$tabs = array();
-				break;
+				if ( !$wgTitle->isSubpage() ) {
+					$allowedTabs = array();
+					$tabs = array();
+					break;
+				}
 			case NS_BLOG_LISTING:
 				if (empty($wgEnableSemanticMediaWikiExt)) {
 					$row["listing-refresh-tab"] = array(
