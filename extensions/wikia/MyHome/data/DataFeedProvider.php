@@ -415,7 +415,7 @@ class DataFeedProvider {
 			}
 
 		}
-	}
 	wfProfileOut(__METHOD__);
+	}
 
 }
