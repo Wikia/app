@@ -12,6 +12,7 @@ class WatchlistFeedAPIProxy implements iAPIProxy {
 	}
 
 	public function get($limit, $start = null) {
+		wfProfileIn(__METHOD__);
 		if(!empty($start)) {
 			$this->APIparams['wlstart'] = $start;
 		} else {
@@ -34,6 +35,7 @@ class WatchlistFeedAPIProxy implements iAPIProxy {
 			$out['query-continue'] = $res['query-continue']['watchlist']['wlstart'];
 		}
 
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 

@@ -198,6 +198,7 @@ class MyHome {
 	 * Store list of images, videos and categories added to an article
 	 */
 	public static function getInserts($linksUpdate) {
+		wfProfileIn(__METHOD__);
 
 		// get rc_data from current row from recentchanges
 		$rc_data = Wikia::getVar('rc_data');
@@ -233,6 +234,7 @@ class MyHome {
 				$dbw->update('recentchanges', array('rc_params' => MyHome::packData($rc_data)), array('rc_id' => $rc_id));
 			}
 		}
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -242,6 +244,7 @@ class MyHome {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
          */
 	public static function packData($data) {
+		wfProfileIn(__METHOD__);
 		if (self::useJSON) {
 			$packed = json_encode($data);
 		}
@@ -249,6 +252,7 @@ class MyHome {
 			$packed = serialize($data);
 		}
 
+		wfProfileOut(__METHOD__);
 		// store encoded data with our custom prefix
 		return self::customDataPrefix . $packed;
 	}

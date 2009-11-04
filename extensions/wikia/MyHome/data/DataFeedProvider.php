@@ -11,6 +11,7 @@ class DataFeedProvider {
 	const VIDEO_THUMB_WIDTH = 150;
 
 	public static function getImageThumb($imageName) {
+		wfProfileIn(__METHOD__);
 		$imageObj = wfFindFile(Title::newFromText($imageName, NS_FILE));
 		if($imageObj) {
 			$width = $imageObj->getWidth();
@@ -25,20 +26,26 @@ class DataFeedProvider {
 				$html = $imageObj->getUnscaledThumb()->toHtml();
 			}
 
+			wfProfileOut(__METHOD__);
 			return array('name' => $imageName, 'html' => $html, 'width' => $width, 'height' => $height);
 		}
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 
 	public static function getVideoThumb($videoName) {
+		wfProfileIn(__METHOD__);
 		$title = Title::newFromText($videoName, NS_VIDEO);
 		if($title) {
 			$videoObj = new VideoPage($title);
 			$videoObj->load();
 			if($videoObj->getVideoId()) {
-				return array('name' => $videoName, 'html' => $videoObj->getThumbnailCode(self::VIDEO_THUMB_WIDTH, false), 'width' => self::VIDEO_THUMB_WIDTH, 'height' => round(self::VIDEO_THUMB_WIDTH / $videoObj->getRatio()));
+				$ret = array('name' => $videoName, 'html' => $videoObj->getThumbnailCode(self::VIDEO_THUMB_WIDTH, false), 'width' => self::VIDEO_THUMB_WIDTH, 'height' => round(self::VIDEO_THUMB_WIDTH / $videoObj->getRatio()));
+				wfProfileOut(__METHOD__);
+				return $ret;
 			}
 		}
+		wfProfileOut(__METHOD__);
 		return null;
 	}
 
@@ -62,6 +69,7 @@ class DataFeedProvider {
 	}
 
 	public function get($limit, $start = null) {
+		wfProfileIn(__METHOD__);
 		$queryContinue = $start;
 		$proxyLimit = $limit;
 
@@ -89,11 +97,12 @@ class DataFeedProvider {
 		if(isset($keys[$limit])) $out['query-continue'] = $this->results[$keys[$limit]]['timestamp'];
 		$out['results'] = array_slice($this->results, 0, $limit);
 
+		wfProfileOut(__METHOD__);
 		return $out;
 	}
 
 	private function add($item, $res) {
-
+		wfProfileIn(__METHOD__);
 		if ($this->removeDuplicatesType == 0) {	//default
 			$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
 
@@ -150,7 +159,7 @@ class DataFeedProvider {
 							$image = self::getImageThumb($imageName);
 
 							if($image) {
-
+								wfProfileIn(__METHOD__ . "-imagelinks-count");
 								if(!isset(self::$images[$imageName])) {
 									$dbr = wfGetDB( DB_SLAVE );
 									$cnt = $dbr->selectField(
@@ -165,6 +174,7 @@ class DataFeedProvider {
 								if(self::$images[$imageName] < 20) {
 									$item['new_images'][] = $image;
 								}
+								wfProfileOut(__METHOD__ . "-imagelinks-count");
 							}
 						}
 					}
@@ -187,9 +197,11 @@ class DataFeedProvider {
 
 			$this->results[$key] = $item;
 		}
+		wfProfileOut(__METHOD__);
 	}
 
 	private function filterOne($res) {
+		wfProfileIn(__METHOD__);
 		if($res['type'] == 'log') {
 			$this->filterLog($res);
 		} else {
@@ -213,19 +225,24 @@ class DataFeedProvider {
 				}
 			}
 		}
+		wfProfileOut(__METHOD__);
 	}
 
 	private function filterRedirect($res, $title) {
+		wfProfileIn(__METHOD__);
 		$article = new Article($title);
-		return $this->add(array('type' => 'redirect',
+		$ret = $this->add(array('type' => 'redirect',
 								'title' => $res['title'],
 								'url' => $title->getLocalUrl(),
 								'redir_title' => $article->getRedirectTarget()->getPrefixedText(),
 								'redir_url' => $article->getRedirectTarget()->getLocalUrl()
 								), $res);
+		wfProfileOut(__METHOD__);
+		return $ret;
 	}
 
 	private function filterEdit($res, $title) {
+		wfProfileIn(__METHOD__);
 		global $wgContentNamespaces;
 
 		$item = array('type' => 'edit');
@@ -265,12 +282,16 @@ class DataFeedProvider {
 		}
 
 		if(count($item) > 1) {
-			return $this->add($item, $res);
+			$ret = $this->add($item, $res);
+			wfProfileOut(__METHOD__);
+			return $ret;
 		}
+		wfProfileOut(__METHOD__);
 
 	}
 
 	private function filterNew($res, $title) {
+		wfProfileIn(__METHOD__);
 		global $wgContentNamespaces;
 
 		$item = array('type' => 'new');
@@ -327,13 +348,16 @@ class DataFeedProvider {
 			if($res['comment'] != '') {
 				$item['comment'] = $res['comment'];
 			}
-			return $this->add($item, $res);
+			$ret = $this->add($item, $res);
+			wfProfileOut(__METHOD__);
+			return $ret;
 		}
+		wfProfileOut(__METHOD__);
 
 	}
 
 	private function filterLog($res) {
-
+		wfProfileIn(__METHOD__);
 		if($res['logtype'] == 'move') {
 			if(isset($res['move'])) {
 				$newTitle = Title::newFromText($res['move']['new_title'], $res['move']['new_ns']);
@@ -344,10 +368,11 @@ class DataFeedProvider {
 				$oldTitle = Title::newFromText($res['title']);
 
 				if (empty($oldTitle)) {
+					wfProfileOut(__METHOD__);
 					return;
 				}
 
-				return $this->add(array('type' => 'move',
+				$ret = $this->add(array('type' => 'move',
 										'to_title' => $newTitle->getPrefixedText(),
 										'to_url' => $newTitle->getLocalUrl(),
 										'title' => $oldTitle->getPrefixedText(),
@@ -355,6 +380,8 @@ class DataFeedProvider {
 										'comment' => $res['comment']
 										),
 										$res);
+				wfProfileOut(__METHOD__);
+				return $ret;
 			}
 
 		}
@@ -362,10 +389,11 @@ class DataFeedProvider {
 		if($this->proxyType == self::WL) {
 
 			if($res['logtype'] == 'delete') {
-
-				return $this->add(array('type' => 'delete',
+				$ret = $this->add(array('type' => 'delete',
 										'title' => $res['title']),
 										$res);
+				wfProfileOut(__METHOD__);
+				return $ret;
 
 			} else if($res['logtype'] == 'upload') {
 
@@ -373,12 +401,14 @@ class DataFeedProvider {
 				if($title && $title->exists()) {
 					$file = wfFindFile($title);
 					if($file) {
-						return $this->add(array('type' => 'upload',
+						$ret = $this->add(array('type' => 'upload',
 												'title' => $title->getPrefixedText(),
 												'url' => $title->getLocalUrl(),
 												'thumbnail' => $file->getThumbnail(self::UPLOAD_THUMB_WIDTH)->toHtml()
 												),
 												$res);
+						wfProfileOut(__METHOD__);
+						return $ret;
 					}
 				}
 
@@ -386,5 +416,6 @@ class DataFeedProvider {
 
 		}
 	}
+	wfProfileOut(__METHOD__);
 
 }

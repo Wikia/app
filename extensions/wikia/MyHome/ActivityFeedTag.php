@@ -12,7 +12,7 @@ $wgHooks['ParserFirstCallInit'][] = 'ActivityFeedTag_setup';
 
 function ActivityFeedTag_setup(&$parser) {
 	$parser->setHook('activityfeed', 'ActivityFeedTag_render');
-    return true;
+	return true;
 }
 
 function ActivityFeedTag_render($content, $attributes, &$parser) {
@@ -21,6 +21,7 @@ function ActivityFeedTag_render($content, $attributes, &$parser) {
 	if (!class_exists('ActivityFeedHelper')) {
 		return '';
 	}
+	wfProfileIn(__METHOD__);
 
 	$parameters = ActivityFeedHelper::parseParameters($attributes);
 
@@ -36,6 +37,7 @@ function ActivityFeedTag_render($content, $attributes, &$parser) {
 	$style = empty($parameters['style']) ? '' : ' style="' . $parameters['style'] . '"';
 	$timestamp = wfTimestampNow();
 
+	wfProfileOut(__METHOD__);
 	return "<div$style>$feedHTML</div><script type=\"text/javascript\" src=\"{$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.js?{$wgStyleVersion}\"></script><script>wgAfterContentAndJS.push(function() {ActivityFeedTag.initActivityTag('$tagid', '$jsParams', '$timestamp');});</script><style type=\"text/css\">@import url({$wgExtensionsPath}/wikia/MyHome/ActivityFeedTag.css?{$wgStyleVersion});</style>";
 }
 

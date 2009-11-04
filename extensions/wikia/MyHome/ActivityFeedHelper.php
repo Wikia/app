@@ -8,6 +8,7 @@ class ActivityFeedHelper {
 	 */
 	static function parseParameters($parametersIn) {
 		global $wgContLang;
+		wfProfileIn(__METHOD__);
 
 		$excludeNamespaces = array();
 		$parameters = array();
@@ -112,6 +113,7 @@ class ActivityFeedHelper {
 			$parameters['includeNamespaces'] = implode('|', $wgContentNamespaces);
 		}
 
+		wfProfileOut(__METHOD__);
 		return $parameters;
 	}
 
@@ -119,6 +121,7 @@ class ActivityFeedHelper {
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	static function getList($parameters) {
+		wfProfileIn(__METHOD__);
 		$removeDuplicatesType = in_array('shortlist', $parameters['flags']) ? 1 : 0; //remove duplicates using only title for shortlist
 
 		$feedProxy = new ActivityFeedAPIProxy($parameters['includeNamespaces']);
@@ -127,11 +130,13 @@ class ActivityFeedHelper {
 		$feedProvider = new DataFeedProvider($feedProxy, $removeDuplicatesType, $parameters);
 		$feedData = $feedProvider->get($parameters['maxElements']);
 		if(!isset($feedData['results']) || count($feedData['results']) == 0) {
+			wfProfileOut(__METHOD__);
 			return '';
 		}
 
 		$feedHTML = $feedRenderer->render($feedData, false, $parameters);
 		$feedHTML = str_replace("\n", '', $feedHTML);
+		wfProfileOut(__METHOD__);
 		return $feedHTML;
 	}
 }
@@ -142,6 +147,7 @@ $wgAjaxExportList[] = 'ActivityFeedAjax';
  */
 function ActivityFeedAjax() {
 	global $wgRequest;
+	wfProfileIn(__METHOD__);
 	$params = $wgRequest->getVal('params');
 
 	$parameters = ActivityFeedHelper::parseParameters(explode('&', $params));
@@ -159,5 +165,6 @@ function ActivityFeedAjax() {
 	$response = new AjaxResponse($json);
 	$response->setContentType('application/json; charset=utf-8');
 	$response->setCacheDuration(60);
+	wfProfileOut(__METHOD__);
 	return $response;
 }

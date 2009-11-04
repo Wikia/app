@@ -38,6 +38,7 @@ function MyHomeAjax() {
 	$method = $wgRequest->getVal('method', false);
 
 	if (method_exists('MyHomeAjax', $method)) {
+		wfProfileIn(__METHOD__);
 		wfLoadExtensionMessages('MyHome');
 
 		$data = MyHomeAjax::$method();
@@ -45,6 +46,7 @@ function MyHomeAjax() {
 
 		$response = new AjaxResponse($json);
 		$response->setContentType('application/json; charset=utf-8');
+		wfProfileOut(__METHOD__);
 		return $response;
 	}
 }

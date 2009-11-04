@@ -8,6 +8,7 @@ class SpecialMyHome extends SpecialPage {
 	}
 
 	function execute($par) {
+		wfProfileIn(__METHOD__);
 		global $wgOut, $wgUser;
 
 		$this->setHeaders();
@@ -32,6 +33,7 @@ $(function() {
 });
 JS
 );
+			wfProfileOut(__METHOD__);
 			return;
 		}
 
@@ -109,5 +111,6 @@ JS
 		));
 
 		$wgOut->addHTML($template->execute('myhome'));
+		wfProfileOut(__METHOD__);
 	}
 }
