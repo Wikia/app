@@ -5,6 +5,7 @@
 * rt#25246: CategorySelect: dont stripout category text for viewsource mode (Marooned)
 * rt#23929: ignore blank lines when parsing MediaWiki:Monaco-toolbox (Marooned, Uberfuzzy)
 * rt#26177: Community Widget filters data in a render instead of a data provider (Marooned)
+* rt#26118: ActivityFeed sidebar widget: Non content edits are showing in the sidebar feed (Marooned)
 * rt: Masthead: change detect of MyHome extension (Uberfuzzy)
 
 == Changes since 200910.4 ==
