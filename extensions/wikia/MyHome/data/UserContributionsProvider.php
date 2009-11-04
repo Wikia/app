@@ -1,6 +1,7 @@
 <?php
 class UserContributionsProvider {
 	public function get($limit = 10) {
+		wfProfileIn(__METHOD__);
 		global $wgUser, $wgExternalSharedDB;
 
 		$result = array();
@@ -59,6 +60,7 @@ class UserContributionsProvider {
 			}
 		}
 
+		wfProfileOut(__METHOD__);
 		return $result;
 	}
 }

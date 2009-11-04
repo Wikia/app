@@ -6,6 +6,7 @@ class MyHomeAjax {
 	 * Get raw HTML of given feed
 	 */
 	public static function getFeed() {
+		wfProfileIn(__METHOD__);
 		// get request params
 		global $wgRequest;
 		$type  = $wgRequest->getVal('type', false);
@@ -21,6 +22,7 @@ class MyHomeAjax {
 		$feedHTML = $feedRenderer->render($feedData, false);
 
 
+		wfProfileOut(__METHOD__);
 		// get feed
 		return array(
 			'fetchSince' => isset($feedData['query-continue']) ? $feedData['query-continue'] : false,
@@ -34,6 +36,7 @@ class MyHomeAjax {
 	 * Used for on-click video play
 	 */
 	public static function getVideoPlayer() {
+		wfProfileIn(__METHOD__);
 		global $wgTitle;
 
 		$video = new VideoPage($wgTitle);
@@ -44,6 +47,7 @@ class MyHomeAjax {
 		$width = intval($dimensions[0]);
 		$height = intval($dimensions[1]);
 
+		wfProfileOut(__METHOD__);
 		return array(
 			'width' => $width,
 			'height' => $height,
@@ -57,6 +61,7 @@ class MyHomeAjax {
 	 * Used for on-click image preview
 	 */
 	public static function getImagePreview() {
+		wfProfileIn(__METHOD__);
 		global $wgTitle;
 
 		// limit dimensions of returned image
@@ -75,6 +80,7 @@ class MyHomeAjax {
 		}
 
 		if (empty($image)) {
+			wfProfileOut(__METHOD__);
 			return array();
 		}
 
@@ -91,6 +97,7 @@ class MyHomeAjax {
 		// generate thumbnail
 		$thumb = $image->getThumbnail($width, $height);
 
+		wfProfileOut(__METHOD__);
 		return array(
 			'width' => $thumb->getWidth(),
 			'height' => $thumb->getHeight(),

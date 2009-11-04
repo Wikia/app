@@ -10,6 +10,7 @@ class HotSpotsProvider {
 	}
 
 	private function getHot($interval) {
+		wfProfileIn(__METHOD__);
 		global $wgContentNamespaces;
 
 		// prepare list of namespaces
@@ -26,6 +27,7 @@ class HotSpotsProvider {
 
 		$rc_id = $dbr->selectField('recentchanges', 'rc_id', array('rc_timestamp > date_sub(now(), interval '.$interval.' day)'), __METHOD__);
 		if(empty($rc_id)) {
+			wfProfileOut(__METHOD__);
 			return null;
 		}
 
@@ -82,11 +84,12 @@ class HotSpotsProvider {
 		$results = array_merge($results, $results3);
 		usort($results, "HotSpotsProvider::sort");
 		$results = array_slice($results, 0, 5);
+		wfProfileOut(__METHOD__);
 		return array('interval' => $interval, 'results' => $results);
 	}
 
 	public function get() {
-
+		wfProfileIn(__METHOD__);
 		$data = $this->getHot(3);
 		if(empty($data) || count($data['results']) < 5) {
 			$data = $this->getHot(7);
@@ -96,6 +99,7 @@ class HotSpotsProvider {
 		}
 
 		if(!empty($data) && count($data['results']) == 5) {
+			wfProfileOut(__METHOD__);
 			return $data;
 		}
 
@@ -122,9 +126,11 @@ class HotSpotsProvider {
 		}
 
 		if($data && count($data) == 5) {
+			wfProfileOut(__METHOD__);
 			return $data;
 		}
 
+		wfProfileOut(__METHOD__);
 	}
 
 }
