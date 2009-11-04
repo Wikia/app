@@ -5,6 +5,7 @@
 * rt#25246: CategorySelect: dont stripout category text for viewsource mode (Marooned)
 * rt#23929: ignore blank lines when parsing MediaWiki:Monaco-toolbox (Marooned, Uberfuzzy)
 * rt#26177: Community Widget filters data in a render instead of a data provider (Marooned)
+* rt: Masthead: change detect of MyHome extension (Uberfuzzy)
 
 == Changes since 200910.4 ==
 * rt#25842: Dynamic link box: Icons are missing (Macbre)

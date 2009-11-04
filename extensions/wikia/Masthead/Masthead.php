@@ -761,7 +761,8 @@ class Masthead {
 				$out['userspace'] = $userspace;
 				$out['nav_links'] = array();
 
-				if ($wgUser->isLoggedIn() && $isUserOnOwnPage && class_exists('MyHome')) {
+				global $wgEnableMyHomeExt;
+				if ( !empty($wgEnableMyHomeExt) && $wgUser->isLoggedIn() && $isUserOnOwnPage) {
 					$out['nav_links'][] = array('text' => wfMsg('myhome'), 'href' => Title::newFromText('MyHome', NS_SPECIAL )->getLocalUrl(), 'dbkey' => 'MyHome', 'tracker' => 'myhome');
 				}
 				$oTitle = Title::newFromText( $userspace, NS_USER );
