@@ -57,7 +57,7 @@ function wfHighscores_Render(&$parser, $player = '') {
     if($wgRSTimes<$wgRSLimit || $wgRSLimit==0) {
         $wgRSTimes++;
         if($player!='') {
-            $data = Http::get('http://hiscore.runescape.com/index_lite.ws?player='.urlencode($player),$info);
+            $data = Http::get('http://services.runescape.com/m=hiscore/index_lite.ws?player='.urlencode($player),$info);
             if($data===false) {
     			return(0);
             } elseif($info['response_code']==404) {
