@@ -327,13 +327,11 @@ class EditSimilar {
 }
 
 function wfEditSimilarSetup () {
-	global $wgHooks, $wgMessageCache, $wgUser ;
+	global $wgHooks;
 	$wgHooks ['ArticleSaveComplete'][] = 'wfEditSimilarCheck' ; 
 	$wgHooks ['OutputPageBeforeHTML'][] = 'wfEditSimilarViewMesg' ; 
-	if ( $wgUser->isLoggedIn ()) {
-		$wgHooks['UserToggles'][] = 'wfEditSimilarToggle' ;
-		$wgHooks ['getEditingPreferencesTab'][] = 'wfEditSimilarToggle' ;
-	}
+	$wgHooks['UserToggles'][] = 'wfEditSimilarToggle' ;
+	$wgHooks ['getEditingPreferencesTab'][] = 'wfEditSimilarToggle' ;
 }
 
 // check if we had the extension enabled at all and if this is in a content namespace
@@ -389,11 +387,14 @@ function wfEditSimilarViewMesg (&$out) {
 }
 
 function wfEditSimilarToggle($toggles, $default_array = false) {
-        wfLoadExtensionMessages('EditSimilar');
-        if(is_array($default_array)) {
-                $default_array[] = 'edit-similar';
-        } else {
-                $toggles[] = 'edit-similar';
-        }
+	global $wgUser;
+	if( $wgUser->isLoggedIn() ) {
+		wfLoadExtensionMessages('EditSimilar');
+		if(is_array($default_array)) {
+			$default_array[] = 'edit-similar';
+		} else {
+			$toggles[] = 'edit-similar';
+		}
+	}
         return true;
 }
