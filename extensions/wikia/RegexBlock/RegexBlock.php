@@ -31,13 +31,14 @@ define ('REGEXBLOCK_SPECIAL_NUM_RECORD', 'number_records');
 $wgHooks['GetBlockedStatus'][] = 'wfRegexBlockCheck';
 $wgHooks['ContributionsToolLinks'][] = 'wfLoadRegexBlockLink';
 
+$dir = dirname( __FILE__ ) . '/';
+
 /* messages */
-require_once (dirname(__FILE__) . '/RegexBlock.i18n.php'); 
+$wgExtensionMessagesFiles['RegexBlock'] = $dir . 'RegexBlock.i18n.php';
+
 /* core includes */
-require_once (dirname(__FILE__) . '/RegexBlockCore.php'); 
+require_once ($dir . '/RegexBlockCore.php'); 
 
 /* special pages */
-require_once (dirname(__FILE__) . '/SpecialRegexBlock.php');
+require_once ($dir . '/SpecialRegexBlock.php');
 #require_once (dirname(__FILE__) . '/SpecialRegexBlockStats.php');
-
-?>

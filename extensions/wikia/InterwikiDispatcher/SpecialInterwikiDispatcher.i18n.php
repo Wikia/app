@@ -8,16 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @package MediaWiki
  * @subpackage SpecialPage
- *
- * To activate this functionality, place this file in your extensions/
- * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/InterwikiDispatcher/SpecialInterwikiDispatcher.php");
  */
-
-if (!defined('MEDIAWIKI')) {
-	echo "This is MediaWiki extension named InterwikiDispatcher.\n";
-	exit(1) ;
-}
 
 $messages = array(
 	'en' => array(

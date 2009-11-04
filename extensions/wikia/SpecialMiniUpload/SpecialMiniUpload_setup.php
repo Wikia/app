@@ -9,6 +9,7 @@ $wgExtensionCredits['other'][] = array(
         'description' => 'Allow users to upload new files directly from editpage',
 );
 
-$wgAutoloadClasses['MiniUpload'] = dirname(__FILE__) . '/SpecialMiniUpload_body.php';
-$wgHooks['LoadAllMessages'][] = 'MiniUpload::loadMessages';
+$dir = dirname(__FILE__);
+$wgAutoloadClasses['MiniUpload'] = $dir . 'SpecialMiniUpload_body.php';
+$wgExtensionMessagesFiles['MiniUpload'] = $dir . 'SpecialMiniUpload.i18n.php';
 $wgSpecialPages['MiniUpload'] = 'MiniUpload';

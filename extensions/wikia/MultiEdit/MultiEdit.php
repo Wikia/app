@@ -26,6 +26,7 @@ includes/Linker.php:
 $wgHooks['EditForm::MultiEdit:Form'][] = 'wfMultiEditFormExt';
 $wgHooks['EditForm::MultiEdit:Section'][] = 'wfMultiEditSection';
 $wgHooks['EditPage::showEditForm:initial'][] = 'wfMultiEditShowLink';
+$wgExtensionMessagesFiles['MultiEdit'] = dirname(__FILE__). '/MutliEdit.i18n.php';
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Multi Edit',
 	'description' => 'allows multi-section article editing',
@@ -62,15 +63,7 @@ function wfMultiEditFormExt( $rows, $cols, $ew, $textbox1 )
 	$multiedit_tag = '<!---'.$wgMultiEditTag.'--->';
 
 	#--- Add messages
-	require_once ( dirname( __FILE__ ) . '/MultiEdit.i18n.php' );
-	foreach( $wgMultiEditMessages as $key => $value ) 
-	{
-		$wgMessageCache->addMessages( $wgMultiEditMessages[$key], $key );
-	}
-
-	foreach( $wgMultiEditMessages as $key => $value ) {
-	    $wgMessageCache->addMessages( $wgMultiEditMessages[$key], $key );
-	}
+	wfLoadExtensionMessages( 'MultiEdit' );
 
 	$editmode = $wgRequest->getText( 'editmode' );
 	#---

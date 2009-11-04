@@ -1,5 +1,5 @@
 <?php
-$allMessages = array(
+$messages = array(
         'en' => array(
                 'widgetdashboard' => 'Widget Dashboard',
                 'mu_size_your_image' => 'Size your Image',

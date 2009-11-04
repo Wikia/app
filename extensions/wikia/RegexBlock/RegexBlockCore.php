@@ -544,7 +544,6 @@ function wfGetRegexBlocked ($blocker, $blocker_block_data, $user, $user_ip) {
   @param $valid: blocked info
 */
 function wfRegexBlockSetUserData(&$user, $user_ip, $blocker, $valid) {
-    global $wgRegexBlockMessages, $wgMessageCache;
     global $wgContactLink;
 	wfProfileIn( __METHOD__ );
     $result = false;
@@ -555,9 +554,7 @@ function wfRegexBlockSetUserData(&$user, $user_ip, $blocker, $valid) {
     }
 
     /* read messages from language's file */
-    foreach( $wgRegexBlockMessages as $key => $value ) {
-        $wgMessageCache->addMessages( $wgRegexBlockMessages[$key], $key );
-    }
+    wfLoadExtensionMessages( 'RegexBlock' );
 
     if ( empty($wgContactLink) ) {
         $wgContactLink = '[[Special:Contact|contact Wikia]]';

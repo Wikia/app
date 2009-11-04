@@ -20,9 +20,6 @@ if(!defined( 'MEDIAWIKI' ) ) {
 	exit( -1 );
 }
 
-# Internationlization file
-require_once( 'HelperPanel.i18n.php' );
-
 $wgExtensionCredits['other'][] = array(
 	'name' => 'HelperPanel',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
@@ -30,6 +27,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgExtensionFunctions[] = 'HelperPanelInit';
+$wgExtensionMessagesFiles['HelperPanel'] = dirname(__FILE__) . '/HelperPanel.i18n.php';
 $wgHooks['HTMLBeforeWidgets'][] = 'HelperPanelShow';
 
 /**
@@ -64,10 +62,9 @@ function displayPanel() {
  * Function initiates the extension
  */
 function HelperPanelInit() {
-	global $wgMessageCache, $wgHelperPanelWikiMessages, $wgAjaxExportList;
-	#--- Add messages
-	foreach( $wgHelperPanelWikiMessages as $key => $value )
-		$wgMessageCache->addMessages( $wgHelperPanelWikiMessages[$key], $key );
+	global $wgAjaxExportList;
+
+	wfLoadExtensionMessages( 'HelperPanel' );
 
 	$wgAjaxExportList[] = 'setHelperPanelState';
 }

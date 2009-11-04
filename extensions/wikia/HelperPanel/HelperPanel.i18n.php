@@ -5,9 +5,9 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-$wgHelperPanelWikiMessages = array();
-$wgHelperPanelWikiMessages['en'] = array(
+$messages = array();
+
+$messages['en'] = array(
 	'helperPanel_help' => 'Help widget',
 	'helperPanel_widgets' => 'My widgets'
 );
-?>
