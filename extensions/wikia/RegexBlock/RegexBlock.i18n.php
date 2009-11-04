@@ -1,7 +1,7 @@
 <?php
 
-$wgRegexBlockMessages = array();
-$wgRegexBlockMessages["en"] = array(
+$messages = array();
+$messages["en"] = array(
     "regexblock" => "RegexBlock",
 	"regexblock_reason_ip" => "This IP address is prevented from editing due to vandalism or other disruption by you or by someone who shares your IP address. If you believe this is in error, please $1",
 	"regexblock_reason_name" => "This username is prevented from editing due to vandalism or other disruption. If you believe this is in error, please $1",

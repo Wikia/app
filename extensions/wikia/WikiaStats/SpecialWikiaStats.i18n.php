@@ -1,8 +1,8 @@
 <?php
 
-$wgWikiaStatsMessages = array();
+$messages = array();
 
-$wgWikiaStatsMessages["en"] = array(
+$messages["en"] = array(
 	"wikiastats" => "Wikia Statistics",
 	"wikiastats_wikia" => "Wikia",
 	"wikiastats_pagetitle" => "Wikia Statistics",
@@ -295,4 +295,3 @@ $wgWikiaStatsMessages["en"] = array(
 	"wikiastats_pageviews_daily" => "Daily stats (current month)",
 	"wikiastats_pageviews_month" => "Monthly stats",
 );
-?>

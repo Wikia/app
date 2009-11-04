@@ -1,10 +1,5 @@
 <?php
 
-if (!defined('MEDIAWIKI')) {
-        echo "This is MediaWiki extension named Theorytab.\n";
-        exit(1) ;
-}
-
 $messages = array(
 	'en' => array (
 		"theorytab-subpage" => "/Theories",
