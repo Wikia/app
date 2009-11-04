@@ -10,6 +10,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $dir = dirname(__FILE__);
-$wgAutoloadClasses['MiniUpload'] = $dir . 'SpecialMiniUpload_body.php';
-$wgExtensionMessagesFiles['MiniUpload'] = $dir . 'SpecialMiniUpload.i18n.php';
+$wgAutoloadClasses['MiniUpload'] = $dir . '/SpecialMiniUpload_body.php';
+$wgExtensionMessagesFiles['MiniUpload'] = $dir . '/SpecialMiniUpload.i18n.php';
 $wgSpecialPages['MiniUpload'] = 'MiniUpload';
