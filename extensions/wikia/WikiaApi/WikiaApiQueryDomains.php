@@ -15,6 +15,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 	 * constructor
 	 */
 	public function __construct($query, $moduleName) {
+		$this->defLimit = 1000;
 		parent :: __construct($query, $moduleName, "wk");
 	}
 
@@ -50,12 +51,16 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		if ($activeonly) $this->addWhereFld('city_public', 1);
 		if ($wikia) $this->addWhereFld('city_id', $wikia);
 
-		if ( !empty($from) ) {
-			if ($from && is_int($from)) $this->addWhere('city_id >= '.intval($from));
-		}
-		
-		if ( !empty($to) ) {
-			if ($to && is_int($to)) $this->addWhere('city_id <= '.intval($to));			
+		if (empty($wikia)) {
+			if ( !empty($to) ) {
+				if ($to && is_int($to)) {
+					$this->addWhere('city_id <= '.intval($to));	
+				}
+			}
+
+			if ( !empty($from) ) {
+				if ($from && is_int($from)) $this->addWhere('city_id >= '.intval($from));
+			}
 		}
 
 		if (!empty($lang)) {
@@ -133,7 +138,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			"to" => array(
 				ApiBase :: PARAM_TYPE => "integer",
 				ApiBase :: PARAM_MIN => 1,
-				ApiBase :: PARAM_DFLT => 1000,
+				ApiBase :: PARAM_DFLT => $this->defLimit,
 			),
 			"countonly" => array(
 				ApiBase :: PARAM_TYPE => "integer",
