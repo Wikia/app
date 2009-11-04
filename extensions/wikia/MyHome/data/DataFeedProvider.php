@@ -47,8 +47,9 @@ class DataFeedProvider {
 	private static $images = array();
 
 	private $removeDuplicatesType;
+	private $parameters = array();
 
-	public function __construct($proxy, $removeDuplicatesType = 0) {
+	public function __construct($proxy, $removeDuplicatesType = 0, $parameters = array()) {
 		$this->proxy = $proxy;
 
 		if($this->proxy instanceof ActivityFeedAPIProxy) {
@@ -57,6 +58,7 @@ class DataFeedProvider {
 			$this->proxyType = self::WL;
 		}
 		$this->removeDuplicatesType = $removeDuplicatesType;
+		$this->parameters = $parameters;
 	}
 
 	public function get($limit, $start = null) {
@@ -127,6 +129,12 @@ class DataFeedProvider {
 
 			if(is_array($res['rc_params'])) {
 
+				$useflags = !empty($this->parameters['flags']);
+				$shortlist = $useflags && in_array('shortlist', $this->parameters['flags']);
+				$hideimages = $useflags && ($shortlist || in_array('hideimages', $this->parameters['flags']));
+				$hidevideos = $useflags && ($shortlist || in_array('hidevideos', $this->parameters['flags']));
+				$hidecategories = $useflags && ($shortlist || in_array('hidecategories', $this->parameters['flags']));
+
 				if(isset($res['rc_params']['autosummaryType'])) {
 					$item['autosummaryType'] = $res['rc_params']['autosummaryType'];
 				}
@@ -135,10 +143,10 @@ class DataFeedProvider {
 					$item['new_images'] = $item['new_videos'] = array();
 
 					foreach($res['rc_params']['imageInserts'] as $imageName) {
-						if($imageName{0} == ':') { // video
+						if(!$hidevideos && $imageName{0} == ':') { // video
 							$video = self::getVideoThumb(substr($imageName, 1));
 							if($video) $item['new_videos'][] = $video;
-						} else { // image
+						} elseif (!$hideimages) { // image
 							$image = self::getImageThumb($imageName);
 
 							if($image) {

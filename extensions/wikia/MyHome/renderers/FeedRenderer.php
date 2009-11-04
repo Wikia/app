@@ -47,16 +47,8 @@ class FeedRenderer {
 		wfProfileIn(__METHOD__);
 
 		$template = 'feed';
-		if (isset($parameters['flags'])) {
-			$hideimages = in_array('hideimages', $parameters['flags']);
-			$hidevideos = in_array('hidevideos', $parameters['flags']);
-			$hidecategories = in_array('hidecategories', $parameters['flags']);
-			foreach ($data['results'] as &$item) {
-				if ($hideimages) unset($item['new_images']);
-				if ($hidevideos) unset($item['new_videos']);
-				if ($hidecategories) unset($item['new_categories']);
-			}
-			if (in_array('shortlist', $parameters['flags'])) $template = 'feed.simple';
+		if (isset($parameters['flags']) && in_array('shortlist', $parameters['flags'])) {
+			$template = 'feed.simple';
 		}
 		if (isset($parameters['type']) && $parameters['type'] == 'widget') {
 			$template = 'feed.widget';
