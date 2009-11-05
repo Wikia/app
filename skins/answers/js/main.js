@@ -228,6 +228,7 @@ jQuery("#related_answered_questions").ready(function() {
 
 	url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categoriesonanswers&coatitle=" + category + "&coaanswered=yes&coalimit=5";
 	jQuery.getJSON( url, "", function( j ){
+		if( j.query == null ) return;
 		var
 			html = "";
 		if( j.query.categoriesonanswers) {
