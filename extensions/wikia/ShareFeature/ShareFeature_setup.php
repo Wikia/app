@@ -157,26 +157,23 @@ function wfShareFeatureInit() {
 function wfShareFeatureAjaxUpdateStats( $provider ) {
 	global $wgUser, $wgExternalStatsDB, $wgRequest, $wgReadOnly;
 
-	if ( $wgReadOnly ) {
-		return ;
-	}
-
 	$id = $wgUser->getId();
 	$provider = $wgRequest->getVal( 'provider' );
 
-	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalStatsDB );
+	if ( !$wgReadOnly ) {
+		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalStatsDB );
 
-	// MW insert wrapper doesn't handle that syntax
-	// it is used in about 2 extensions in all MW code...
-	$query = 'INSERT INTO `share_feature`
-		  ( sf_user_id, sf_provider_id, sf_clickcount ) VALUES( ' . $id  . ', ' . $provider . ', 1 )
-		  ON DUPLICATE KEY UPDATE sf_clickcount = sf_clickcount + 1;
-		 ';
+		// MW insert wrapper doesn't handle that syntax
+		// it is used in about 2 extensions in all MW code...
+		$query = 'INSERT INTO `share_feature`
+			  ( sf_user_id, sf_provider_id, sf_clickcount ) VALUES( ' . $id  . ', ' . $provider . ', 1 )
+			  ON DUPLICATE KEY UPDATE sf_clickcount = sf_clickcount + 1;
+			 ';
 
-	$res = $dbw->query( $query, __METHOD__ );
+		$res = $dbw->query( $query, __METHOD__ );
 
-	$dbw->commit();
-
+		$dbw->commit();
+	}
 	// todo number of rows affected
 
 	$response = new AjaxResponse( "ok" );
