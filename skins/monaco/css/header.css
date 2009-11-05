@@ -130,6 +130,10 @@ a.greyButton big {
 	color: #36C;
 }
 
+#userData .wikia_button {
+	line-height: 21px;
+}
+
 /*** HEADER MENU ***/
 .headerMenu {
 	border-width: 0 1px 1px;
