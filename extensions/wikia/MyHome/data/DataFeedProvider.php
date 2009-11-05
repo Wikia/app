@@ -103,6 +103,8 @@ class DataFeedProvider {
 
 	private function add($item, $res) {
 		wfProfileIn(__METHOD__);
+		global $wgMemc;
+
 		if ($this->removeDuplicatesType == 0) {	//default
 			$key = $res['user'].'#'.$res['title'].'#'.$res['comment'];
 
@@ -156,25 +158,33 @@ class DataFeedProvider {
 							$video = self::getVideoThumb(substr($imageName, 1));
 							if($video) $item['new_videos'][] = $video;
 						} elseif (!$hideimages) { // image
-							$image = self::getImageThumb($imageName);
-
-							if($image) {
+							if(!isset(self::$images[$imageName])) {
 								wfProfileIn(__METHOD__ . "-imagelinks-count");
-								if(!isset(self::$images[$imageName])) {
+								$memcKey = wfMemcKey('ac_image_cnt', $imageName);
+								self::$images[$imageName] = $wgMemc->get($memcKey);
+
+								// Note that memcache returns null if record does not exists in cache
+								// versus 0 returned from database when image does not link to anything
+								if(self::$images[$imageName] === null) {
 									$dbr = wfGetDB( DB_SLAVE );
-									$cnt = $dbr->selectField(
+									self::$images[$imageName] = $dbr->selectField(
 										'imagelinks',
 										'count(*) as cnt',
 										array('il_to' => $imageName),
 										__METHOD__
 									);
-									self::$images[$imageName] = $cnt;
-								}
-
-								if(self::$images[$imageName] < 20) {
-									$item['new_images'][] = $image;
+									$wgMemc->set($memcKey, self::$images[$imageName], 60*60*12);
 								}
 								wfProfileOut(__METHOD__ . "-imagelinks-count");
+							}
+							if(self::$images[$imageName] < 20) {
+								$image = self::getImageThumb($imageName);
+								if($image) {
+									$item['new_images'][] = $image;
+								} else {
+									// this trick will avoid checking more then one time if image exists when it does not exists
+									self::$images[$imageName] = 20;
+								}
 							}
 						}
 					}
