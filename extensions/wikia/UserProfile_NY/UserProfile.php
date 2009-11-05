@@ -64,7 +64,7 @@ $wgAvailableRights[] = 'avatarremove';
 $wgGroupPermissions['staff']['avatarremove'] = true;
 $wgGroupPermissions['sysop']['avatarremove'] = true;
 
-# Add a new log type	 
+# Add a new log type
 global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
 $wgLogTypes[]                      = 'profile';
 $wgLogNames['profile']            = 'profilelogpage';
@@ -75,24 +75,24 @@ $wgLogTypes[]                      = 'avatar';
 $wgLogNames['avatar']            = 'avatarlogpage';
 $wgLogHeaders['avatar']          = 'avatarlogpagetext';
 $wgLogActions['avatar/avatar'] = 'avatarlogentry';
-	
+
 $wgHooks['ArticleFromTitle'][] = 'wfUserProfileFromTitle';
 
 //ArticleFromTitle
 //Calls UserProfilePage instead of standard article
 function wfUserProfileFromTitle( &$title, &$article ){
-	global $wgUser, $wgRequest, $IP, $wgOut, $wgTitle, $wgSupressPageTitle,$wgSupressSubTitle, $wgMemc, 
+	global $wgUser, $wgRequest, $IP, $wgOut, $wgTitle, $wgSupressPageTitle,$wgSupressSubTitle, $wgMemc,
 	$wgSocialUserPage, $wgUserPageChoice, $wgParser, $wgUserProfileDirectory, $wgUserProfileScripts;
 
 	if( !$wgSocialUserPage ){
 		return false;
 	}
-	
+
 	if( NS_USER_WIKI == $title->getNamespace() ){
 		global $wgShowAds;
 		$wgShowAds = false;
 	}
-	
+
 	$show_user_page = false;
 	if ( strpos( $title->getText(), "/" ) === false && ( NS_USER == $title->getNamespace() || NS_USER_PROFILE == $title->getNamespace() ) ) {
 		if( !$wgRequest->getVal("action") ){
@@ -103,16 +103,16 @@ function wfUserProfileFromTitle( &$title, &$article ){
 		require_once( "{$wgUserProfileDirectory}/UserProfilePage.php" );
 
 		if( $wgUserPageChoice ){
-			
+
 			$profile = new UserProfile( $title->getText() );
 			$profile_data = $profile->getProfile();
-			
+
 			//If they want regular page, ignore this hook
 			if( isset($profile_data) && $profile_data["user_id"] && $profile_data["user_page_type"] == 0 ){
 				$show_user_page = true;
 			}
 		}
-		
+
 		if( ! $show_user_page ){
 			//prevents editing of userpage
 			if( $wgRequest->getVal("action") == "edit" ){
@@ -127,15 +127,15 @@ function wfUserProfileFromTitle( &$title, &$article ){
 			$wgParser->disableCache();
 		}
 		global $wgHooks;
-		
+
 		//$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$wgOut->template, 'wfAddProfileCSS');
 		//$wgHooks["SkinTemplateOutputPageBeforeExec"][] = "wfAddProfileCSS";
 		$wgHooks["GetHTMLAfterBody"][] = "wfAddProfileCSS";
-			
-		$article = new UserProfilePage(&$title);
-		
+
+		$article = new UserProfilePage($title);
+
 	}
-	
+
 	return true;
 }
 

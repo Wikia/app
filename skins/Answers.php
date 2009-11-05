@@ -75,6 +75,7 @@ class AnswersTemplate extends MonacoTemplate {
 		<?php $this->html('headlinks') ?>
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/monobook_modified.css?<?=$wgStyleVersion?>" />
 	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/reset_modified.css?<?=$wgStyleVersion?>" />
+	        <link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/answers/css/modal.css?<?=$wgStyleVersion?>" />
 		<!-- Combo-handled YUI CSS files: -->
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/autocomplete/assets/skins/sam/autocomplete.css&2.7.0/build/container/assets/skins/sam/container.css">
 		<link rel="stylesheet" type="text/css" href="<?=$wgStylePath?>/common/yui_2.5.2/container/assets/container.css">
@@ -94,6 +95,16 @@ class AnswersTemplate extends MonacoTemplate {
 		<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/cookie/cookie-min.js"></script>
 		<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
 		<?php } ?>
+
+<?php
+		global $wgEnableShareFeatureExt, $wgExtensionsPath;
+		if (!empty($wgEnableShareFeatureExt)) {
+?>
+		<link rel="stylesheet" type="text/css" href="<?=$wgExtensionsPath?>/wikia/ShareFeature/css/ShareFeature.css?<?=$wgStyleVersion?>" />
+		<script type="text/javascript" src="<?=$wgExtensionsPath?>/wikia/ShareFeature/js/ShareFeature.js?<?=$wgStyleVersion?>"></script>
+<?php
+		}
+?>
 
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php $this->html('csslinks') ?>
@@ -314,7 +325,7 @@ yieldbuild_loc = "question_bubble";
 
 			if( !( $wgRequest->getVal("diff") ) ){
 				echo '<div class="editsection">[<a href="'. $this->data['content_actions']['edit']['href'] .'">'. wfMsg('editsection') .'</a>]</div>';
-				echo '<h3 id="answer_title">'. wfMsg("answer_title") .'</h3>';
+				echo '<h3 class="answer_title">'. wfMsg("answer_title") .'</h3>';
 
 			}
 
@@ -368,7 +379,10 @@ yieldbuild_loc = "question_bubble";
 				echo $ads;
 			}
 
-		} else if ( $is_question && $answer_page->isArticleAnswered() ) {
+		} else if ( $answer_page->isQuestion(true /* exists? */) && $answer_page->isArticleAnswered() ) {
+			// render attribution section
+			echo $this->renderAttributionBox($answer_page);
+
 			if ( $wgUser->isAnon() ) {
 				$ads = '<script type="text/javascript">
 					google_ad_client    = "' . $wgGoogleAdClient . '";
@@ -384,7 +398,16 @@ yieldbuild_loc = "question_bubble";
 				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 				echo $ads;
 			}
-		}?>
+		}
+
+		if ( $is_question ) { ?>
+		<div id="related_questions" class="reset">
+			<h2><?= wfMsg("related_questions") ?></h2>
+			<ul id="related_answered_questions">
+				<?= HomePageList::related_answered_questions() ?>
+			</ul>
+		</div>
+		<? } ?>
 
 <?php if ($YB): ?>
 <div id="ads-unanswered-bottom">
@@ -500,9 +523,9 @@ yieldbuild_loc = "left_content_top";
 
 		?>
 		<?php
-		if( !$answer_page->isArticleAnswered() ){
+			if( !$answer_page->isArticleAnswered() ){
 		?>
-			<h3 id="answer_title"><?= wfMsg("answer_title")?></h3>
+			<h3 class="answer_title"><?= wfMsg("answer_title")?></h3>
 			<div><?= wfMsg("question_not_answered")?></div>
 
 			<div id="unanswered-links">
@@ -516,62 +539,7 @@ yieldbuild_loc = "left_content_top";
 			</ul>
 			</div>
 		<?php
-		}else{
-		?>
-
-		<div id="social_networks">
-		<span id="ask_friends_label"><?= wfMsg("ask_friends")?></span>
-			<?
-
-			if( $wgEnableFacebookConnect == true ){
-			?>
-			<script>
-			var wgFacebookAskMsg = "<?= wfMsg("facebook_ask")?>";
-			var wgFacebookSignedInMsg = "<?= wfMsg("facebook_signed_in")?>";
-			var wgFacebookLogoutMsg = "<?= wfMsg("logout")?>";
-			</script>
-			<div id="facebook-connect-login" style="display:none">
-				<?/*<fb:login-button size="small" background="light" length="short" onlogin="facebook_login_handler()"></fb:login-button> <a href="javascript:FB.Connect.requireSession()">Facebook</a>*/?>
-				<fb:login-button size="medium" background="white" length="long" onlogin="facebook_login_handler()"></fb:login-button>
-			</div>
-			<div id="facebook-connect-ask" style="display:none">
-			</div>
-
-			<?php
-
 			}
-
-			?>
-
-
-		<div id="twitter-post">
-			<a rel="nofollow" href="<?=$twitter_url?>" onclick="WET.byStr('articleFooter/twitter-answered'); window.open('<?=$twitter_url?>', 'twitter'); return false;"><img src="/skins/answers/images/twitter_icon.png" /></a> <a href="<?=$twitter_url?>" onclick="window.open('<?=$twitter_url?>', 'twitter'); return false;"><?= wfMsg("twitter_ask")?></a>
-		</div>
-		</div><?/* social_networks */?>
-		<?
-		if( $wgEnableFacebookConnect == true ){
-		?>
-			<div><a href='javascript:void(0);' onclick='jQuery("#facebook-send-request").toggle();'><?=  wfMsg("facebook_send_request")?></a></div>
-			<div id="facebook-send-request" style="display:none;">
-			<fb:serverfbml>
-			<script type="text/fbml" >
-			<fb:fbml>
-			<fb:request-form invite="false"  type="Wikianswers" action="<?= $wgTitle->getFullURL() ?>" content="<?= wfMsg("facebook_send_request_content", htmlentities("<a href='" . $wgTitle->getFullURL() . "'>" . $wgTitle->getText() . "</a>") )?>  " style="height:300px">
-			<fb:multi-friend-input border_color="#8496ba"></fb:multi-friend-input>
-			<fb:request-form-submit />
-			</fb:request-form>
-			</fb:fbml>
-			</script>
-			</fb:serverfbml>
-			</div>
-			<script type="text/javascript">  FB.init(wgFacebookAnswersAppID, <?= $wgServer ?>"/extensions/wikia/FacebookConnect/xd_receiver.htm");  </script>
-			<!--<div id="facebook-connet"></div>-->
-			<?php
-				if( $_GET['state'] == "asked" && facebook_client()->get_loggedin_user() ){
-					echo "<script>facebook_publish_feed_story()</script>";
-				}
-		}
-		}
 		}
 		?>
 
@@ -589,17 +557,6 @@ yieldbuild_loc = "left_content_bottom";
 <script type="text/javascript" src="http://hook.yieldbuild.com/s_ad.js"></script>
 </div>
 <?php endif; ?>
-
-                <!-- NICK: Related answered questions -->
-		<? if ( $is_question ) { ?>
-		<div id="related_questions" class="reset widget">
-			<h2><?= wfMsg("related_answered_questions") ?></h2>
-			<ul id="related_answered_questions">
-				<?= HomePageList::related_answered_questions() ?>
-			</ul>
-			<div id="google_ad_5" class="google_ad"></div>
-		</div>
-		<? } ?>
 		</div><?/*answers_article*/?>
 	</div><?/*answers_page*/?>
 
@@ -827,7 +784,7 @@ global $wgExtensionsPath;
 echo AdEngine::getInstance()->getDelayedLoadingCode();
 
 ?>
-
+		<div id="positioned_elements" class="reset"></div>
 </body></html>
 <?php
 	wfRestoreWarnings();
@@ -1041,5 +998,83 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 		}
 		</script>
 		<?php
+	}
+
+	public function renderAttributionBox($answerPage) {
+		global $wgUploadPath, $wgAnswersEnableSocial;
+
+		$contributors = $answerPage->getContributors();
+		if(count($contributors) == 0) {
+			return '';
+		}
+
+		// heading
+		$ret = Xml::element('h3', array('class' => 'answer_title answered_title'), wfMsg("answered_by"));
+
+		// use <ul> as a list wrapper
+		$ret .= Xml::openElement('ul', array('id' => 'contributors', 'class' => 'reset clearfix'));
+
+		foreach($contributors as $contributor) {
+			$ret .= Xml::openElement('li');
+
+			// yes, it's ugly to use tables in such case, but this needs to be properly aligned (centre vertically)
+			$ret .= Xml::openElement('table', array('class' => 'userInfoWrapper')) . Xml::openElement('tr');
+
+			// get avatar
+			if (class_exists('Masthead')) {
+				$avatar = Masthead::newFromUserID($contributor['user_id']);
+				$avatarImg = $avatar->getImageTag(50, 50);
+			}
+
+			// render empty avatar, if one from Masthead is not avalaible
+			if (empty($avatarImg)) {
+				$avatarImgSrc = 'http://images.wikia.com/common/skins/monobook/blank.gif';
+
+				$avatarImg = Xml::element('img', array(
+					'src' => $avatarImgSrc,
+					'height' => 50,
+					'width' => 50
+				));
+			}
+
+			$ret .= Xml::openElement('td');
+			$ret .= $avatarImg;
+			$ret .= Xml::closeElement('td');
+
+			// render user info
+			$ret .= Xml::openElement('td', array('class' => 'userInfo'));
+
+			if ($contributor['user_name'] == 'helper') {
+				// anonymous users
+				$ret .= Xml::element('span', array('class' => 'userPageLink'), wfMsg('anonymous'));
+				$ret .= Xml::element('span', array('class' => 'anonEditPoints'), wfMsgExt('anonymous_edit_points', array('parsemag'), array($contributor['edits'])));
+			}
+			else {
+				// link to user page
+				$userPage = Title::newFromText($contributor['user_name'], NS_USER);
+				$userPageLink = !empty($userPage) ? $userPage->getLocalUrl() : '';
+
+				$ret .= Xml::element('a', array('href' => $userPageLink, 'class' => 'userPageLink'), $contributor['user_name']);
+
+				// user points
+				$ret .= Xml::element('table', array('class' => 'userEditPoints'));
+				$ret .= Xml::element('tr');
+				$ret .= Xml::element('td', array('id' => "contributors-user-points-{$contributor['user_id']}", 'class' => 'userPoints', 'timestamp' => wfTimestampNow()), $contributor['edits']);
+				$ret .= Xml::element('td', array(), wfMsgExt('edit_points', array('parsemag'), array($contributor['edits'])));
+				$ret .= Xml::closeElement('tr');
+				$ret .= Xml::closeElement('table');
+			}
+
+			// close wrapping table
+			$ret .= Xml::closeElement('td');
+			$ret .= Xml::closeElement('tr');
+			$ret .= Xml::closeElement('table');
+
+			$ret .= Xml::closeElement('li');
+		}
+
+		$ret .= Xml::closeElement('ul');
+
+		return $ret;
 	}
 } // end of class

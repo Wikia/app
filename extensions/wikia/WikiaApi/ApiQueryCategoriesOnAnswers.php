@@ -48,7 +48,7 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 
 		// rt#24487: We need this code altered for a specific case. When the category = "foo",
 		// we would like this list to show only questions from a predefined list of categories.
-		$this->rt_24487_special_case(&$categoryTitle);
+		$this->rt_24487_special_case($categoryTitle);
 
 		$answeredTitle = Title::newFromText( ( 'no' == $params['answered'] ? $this->unanswered_category : $this->answered_category ), NS_CATEGORY );
 
