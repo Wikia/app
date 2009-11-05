@@ -69,6 +69,7 @@
 }
 
 .WidgetCommunity .widgetfeed li {
+	height: 1%;
 	margin-bottom: 4px;
 	position: relative;
 }
