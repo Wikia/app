@@ -37,6 +37,8 @@ class UserChangesHistory {
 		global $wgCityId; #--- private wikia identifier, you can use wgDBname
 		global $wgExternalDatawareDB;
 
+		if( wfReadOnly() ) { return true; }
+
 		wfProfileIn( __METHOD__ );
 
 		/**
@@ -98,6 +100,8 @@ class UserChangesHistory {
 	static public function SavePreferencesHook( $preferences, $user, $msg ) {
 
 		global $wgExternalDatawareDB;
+
+		if( wfReadOnly() ) { return true; }
 
 		wfProfileIn( __METHOD__ );
 
