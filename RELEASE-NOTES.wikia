@@ -8,6 +8,7 @@
 * rt#26177: Community Widget filters data in a render instead of a data provider (Marooned)
 * rt#26118: ActivityFeed sidebar widget: Non content edits are showing in the sidebar feed (Marooned)
 * rt#26233: latest activity widget fails badly when required permission missing (Marooned)
+* rt#25741: fatal call to escapeLocalURL in WidgetCommunity (Marooned)
 * rt#26204: Masthead: change detect of MyHome extension (Uberfuzzy)
 
 == Changes since 200910.4 ==
