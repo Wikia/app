@@ -169,7 +169,7 @@ function wfShareFeatureAjaxUpdateStats( $provider ) {
 		  ON DUPLICATE KEY UPDATE sf_clickcount = sf_clickcount + 1;
 		 ';
 
-	$res = $dbw->query( $query );
+	$res = $dbw->query( $query, __METHOD__ );
 
 	$dbw->commit();
 
