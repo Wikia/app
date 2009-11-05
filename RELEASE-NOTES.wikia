@@ -1,4 +1,5 @@
 == Changes since 200911.1 ==
+* rt#26331: UserChangesHistory didn't respect wfReadOnly() (Emil)
 * rt#26194: OutboundScreen: Now only touces http links (TOR)
 * rt#26090: Patch special:export to honor limiting params. (Uberfuzzy)
 * rt#26036: Custom ext. for RuneScape wiki. (Nef)
