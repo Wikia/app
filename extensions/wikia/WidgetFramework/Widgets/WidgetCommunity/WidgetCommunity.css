@@ -76,7 +76,7 @@
 .WidgetCommunity li strong {
 	display: block;
 	font-weight: bold;
-	font-size: 1.2em;
+	font-size: 10pt;
 }
 
 /* TODO: move this to monaco css? and remove from MyHome.css */
