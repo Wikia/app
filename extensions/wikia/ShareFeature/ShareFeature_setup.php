@@ -84,9 +84,9 @@ function wfShareFeatureMakeUrl( $site, $target, $title ) {
 
 // return the correct queue of sites depending on number of clicks
 function wfShareFeatureSortSites( $sites, $target, $title ) {
-	global $wgUser, $wgShareFeatureSites, $wgExternalSharedDB;
+	global $wgUser, $wgShareFeatureSites, $wgExternalStatsDB;
 
-	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB );
+	$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB );
 
 	$res = $dbr->select(
 			'share_feature',
@@ -155,12 +155,12 @@ function wfShareFeatureInit() {
 // update stats for all kinds of users (logged in and anon)
 // anon is represented as a user with id 0, as in MW
 function wfShareFeatureAjaxUpdateStats( $provider ) {
-	global $wgUser, $wgExternalSharedDB, $wgRequest;
+	global $wgUser, $wgExternalStatsDB, $wgRequest;
 
 	$id = $wgUser->getId();
 	$provider = $wgRequest->getVal( 'provider' );
 
-	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
+	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalStatsDB );
 
 	// MW insert wrapper doesn't handle that syntax
 	// it is used in about 2 extensions in all MW code...
