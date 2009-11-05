@@ -45,6 +45,7 @@ h3.myhome-empty-message {
 }
 
 .activityfeed li {
+	height: 1%;
 	margin-bottom: 25px;
 	position: relative;
 }
