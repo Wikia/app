@@ -449,3 +449,17 @@ jQuery("#random_users_with_avatars").ready(function() {
 		}
 	});
 });
+
+jQuery("#contributors").ready(function() {
+	$('#contributors').find('.userPoints').each(function() {
+		var id = $(this).attr('id');
+		var timestamp = $(this).attr('timestamp');
+		if (match = /\d+$/.exec(id)) {
+			$.getJSON(wgScript + '?action=ajax&rs=wfAnswersGetEditPointsAjax', {userId: match[0]}, function(json) {
+				if (json.timestamp > timestamp) {
+					$('#' + id).html(json.points);
+				}
+			});
+		}
+	});
+});

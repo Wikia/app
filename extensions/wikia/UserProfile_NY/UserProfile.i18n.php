@@ -188,6 +188,7 @@ function efWikiaUserProfile() {
 		'avatarlogpage'           => 'Avatar upload log',
 		'avatarlogpagetext'       => 'This is a log of user avatar uploads',
 		'avatarlogentry'          => '', # For compatibility, don't translate this
+		'profile_edit_points' => '$1 {{PLURAL:$1|edit point|edit points}}',
 		),
 	); 
 }

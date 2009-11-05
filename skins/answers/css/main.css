@@ -9,7 +9,6 @@ body {
 	color: #FFF;
 }
 
-
 /*** HEADER ***/
 #answers_header {
 	background: #252525;
@@ -17,45 +16,45 @@ body {
 	position: relative;
 	z-index: 10;
 }
-#wikianswers_logo { 
-	left: 15px; 
-	position: absolute; 
+#wikianswers_logo {
+	left: 15px;
+	position: absolute;
 }
-#answers_ask { 
-	color: #FFF; 
-	font-family: "Arial Narrow", "Arial", sans-serif; 
-	font-size: 28pt; 
+#answers_ask {
+	color: #FFF;
+	font-family: "Arial Narrow", "Arial", sans-serif;
+	font-size: 28pt;
 }
-#answers_ask * { 
-	float: left; 
+#answers_ask * {
+	float: left;
 }
 #ask_wrapper {
 	position: absolute;
 	left: 15px;
 	bottom: 18px;
 }
-#answers_ask span { 
-	line-height: 34px; 
-	padding: 0 5px 0 3px; 
-} 
+#answers_ask span {
+	line-height: 34px;
+	padding: 0 5px 0 3px;
+}
 input.header_field {
-	background: #FFF url(http://images.wikia.com/common/skins/answers/images/ask_field_bg.png) top left repeat-x; 
-	border: 2px solid #093; 
-	font-size: 18pt; 
-	font-weight: bold; 
-	padding: 2px 5px; 
+	background: #FFF url(http://images.wikia.com/common/skins/answers/images/ask_field_bg.png) top left repeat-x;
+	border: 2px solid #093;
+	font-size: 18pt;
+	font-weight: bold;
+	padding: 2px 5px;
 	position: static !important;
 }
-#answers_ask_field { 
-	width: 350px; 
+#answers_ask_field {
+	width: 350px;
 }
 #answers_category_field {
 	margin-right: 5px;
 	width: 150px;
 }
-#answers_ask_field.alt, #answers_category_field.alt { 
-	color: #999; 
-	font-weight: normal; 
+#answers_ask_field.alt, #answers_category_field.alt {
+	color: #999;
+	font-weight: normal;
 }
 #answers_suggest {
 	left: 5px;
@@ -125,12 +124,12 @@ input.header_field {
 	position: relative;
 }
 #page_controls div {
-	background-image: url(http://images.wikia.com/common/skins/answers/images/sprite.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png); /** TODO: replace /monaco/ with /answers/ after release **/
 	clip: rect(0px 0px 0px 0px);
 	height: 16px;
 	margin: 8px 2px 0 0;
 	position: absolute;
-	width: 336px;
+	width: 576px;
 }
 #page_controls a {
 	background: transparent;
@@ -189,6 +188,10 @@ input.header_field {
 #control_purge div {
 	clip: rect(0px 336px 16px 320px);
 	left: -320px;
+}
+ #control_share_feature div {
+	clip: rect(0px 576px 16px 560px);
+	left: -560px;
 }
 
 #page_tabs {
@@ -315,11 +318,12 @@ input.header_field {
 	top: -1px;
 	width: 33px;
 }
-#answer_title {
-	color: #002BB8;
+.answer_title {
+	color: #009933;
 	font-family: "Arial Narrow", "Arial", sans-serif;
 	font-weight: bold;
-	font-size: 18pt;
+	font-size: 14pt;
+	overflow: visible;
 	padding: 0;
 }
 #bodyContent.question {
@@ -337,16 +341,14 @@ input.header_field {
 }
 
 #related_questions {
-	background: url(http://images.wikia.com/common/skins/answers/images/related_questions_bg.png) repeat-x;
-	font-size: 10pt;
 	margin-top: 15px;
 	overflow: hidden;
-	padding: 10px;
+	padding: 10px 0;
 }
 #related_questions h2 {
+	border-bottom: 1px solid #AAAAAA;
 	font-family: "Arial Narrow", "Arial", sans-serif;
 	font-size: 13pt;
-	font-weight: bold;
 	margin-bottom: 5px;
 }
 #related_questions li {
@@ -458,39 +460,39 @@ a.bigButton small {
 	width: 300px;
 }
 
-.huge_button { 
+.huge_button {
 	background: url(http://images.wikia.com/common/skins/answers/images/huge_button.png) 100% -37px;
-	display: block; 
-	float: left; 
+	display: block;
+	float: left;
 	font-family: "Arial Narrow", "Arial", sans-serif;
-	font-size: 14pt; 
+	font-size: 14pt;
 	font-weight: bold;
-	height: 41px; 
-	line-height: 37px; 
+	height: 41px;
+	line-height: 37px;
 	margin-right: 10px;
-	padding-right: 10px; 
+	padding-right: 10px;
 }
-.huge_button, .huge_button:active, .huge_button:visited, .huge_button:hover { 
+.huge_button, .huge_button:active, .huge_button:visited, .huge_button:hover {
 	color: #252525;
-	text-decoration: none; 
+	text-decoration: none;
 }
-.huge_button div { 
-	background: url(http://images.wikia.com/common/skins/answers/images/huge_button.png); 
-	float: left; 
-	height: 41px; 
-	width: 36px; 
+.huge_button div {
+	background: url(http://images.wikia.com/common/skins/answers/images/huge_button.png);
+	float: left;
+	height: 41px;
+	width: 36px;
 }
-.huge_button_green { 
-	background-position: top right; 
-	color: #FFF; 
+.huge_button_green {
+	background-position: top right;
+	color: #FFF;
 	font-size: 18pt;
 	font-weight: normal;
-	height: 37px; 
+	height: 37px;
 }
-.huge_button_green div { 
-	background-position: top left; 
-	height: 37px; 
-	width: 10px; 
+.huge_button_green div {
+	background-position: top left;
+	height: 37px;
+	width: 10px;
 }
 .huge_button.watchlist div {
 	background-position: 0 -37px;
@@ -842,7 +844,7 @@ body .header_menu_button * {
 }
 
 /*** Category Page Ads ***/
-div.category br { 
+div.category br {
 	clear: none  !important
 }
 #category-ads-left{
@@ -874,10 +876,88 @@ div.category br {
 	margin-left: 10px;
 	padding-left: 10px;
 	width: 220px;
-}  
+}
 #afs_wide .ad_text {
 	padding-right: .5em;
-}  
+}
 .google_afs a {
 	background-image: none !important;
-}  
+}
+
+/** User edit points **/
+.answered_title {
+	margin-top: 20px;
+}
+
+#contributors {
+	margin: 5px 0;
+}
+
+#contributors li {
+	display: inline;
+	float: left;
+	margin: 5px;
+}
+
+#contributors .userInfo {
+	padding: 0 35px 0 10px;
+}
+
+#contributors li img {
+	border: solid 1px #aaa;
+	display: block;
+	padding: 2px;
+}
+
+#contributors li .userPageLink {
+	display: block;
+	font-size: 1em;
+	font-weight: bold;
+}
+
+#contributors li .anonEditPoints {
+	display: block;
+	font-size: 0.9em;
+	margin-top: 2px;
+}
+
+#contributors li .userEditPoints {
+	margin-top: 4px;
+}
+
+#contributors li .userEditPoints td {
+	background: #ededed url('../images/user_edit_points_bg.png') no-repeat -175px 0;
+	border: solid 1px #aaa;
+	border-collapse: collapse;
+	color: #000;
+	line-height: 12px;
+	font-size: 0.7em;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding: 1px 3px 0;
+}
+
+#contributors li .userEditPoints td.userPoints {
+	background-position: 0 0;
+	border: solid 1px #584013;
+	background-color: #f6dd5d;
+	font-size: 13px;
+	padding-top: 0;
+}
+
+/** User profile edit points **/
+.profile-title-points {
+	font-size: 0.8em;
+	font-weight: normal;
+	letter-spacing: -1px;
+	padding-left: 10px;
+}
+
+/** Fixes for User namespace - REMOVE: this should be controled via $wgSupressTitle **/
+.ns-2 .firstHeading {
+	display: none;
+}
+
+.ns-2 #answers_article {
+	padding-top: 20px;
+}

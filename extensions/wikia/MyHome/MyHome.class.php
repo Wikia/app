@@ -88,7 +88,7 @@ class MyHome {
 			$rc->mAttribs['rc_params'] = self::packData($data);
 		}
 
-		Wikia::setVar('rc', &$rc);
+		Wikia::setVar('rc', $rc);
 		Wikia::setVar('rc_data', $data);
 
 		//var_dump($rc); die();

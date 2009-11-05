@@ -7,7 +7,7 @@ class UserProfilePage extends Article{
 
 	function __construct (&$title){
 		global $wgUser;
-		parent::__construct(&$title);
+		parent::__construct($title);
 
 		$this->user_name = $title->getText();
 		$this->user_id = User::idFromName($this->user_name);
@@ -1019,9 +1019,20 @@ class UserProfilePage extends Article{
 
 		$output .= "<div id=\"profile-right\">";
 
+			global $wgEnableAnswers;
+			if (!empty($wgEnableAnswers)) {
+				$points = AttributionCache::getInstance()->getUserEditPoints($user_id);
+
+				$editPoints = Xml::element('span', array('class' => 'profile-title-points'),
+					'(' . wfMsgExt('profile_edit_points', array('parsemag'), array($points)) . ')');
+			}
+			else {
+				$editPoints = '';
+			}
+
 			$output .= "<div id=\"profile-title-container\">
 				<div id=\"profile-title\">
-					{$user_name}
+					{$user_name}{$editPoints}
 				</div>";
 				global $wgUserLevels;
 				if( $wgUserLevels ){
