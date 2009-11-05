@@ -64,7 +64,7 @@ function WidgetCommunity($id, $params) {
 	);
 
 	wfLoadExtensionMessages('MyHome');
-	$feedHTML = ActivityFeedHelper::getListForWidget($parameters);
+	$feedHTML = ActivityFeedHelper::getList($parameters);
 
 	$jsParams = "size=$maxElements&ns=$includeNamespaces&flags=shortlist&type=widget";
 

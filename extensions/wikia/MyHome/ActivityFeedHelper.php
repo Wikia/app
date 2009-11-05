@@ -139,25 +139,6 @@ class ActivityFeedHelper {
 		wfProfileOut(__METHOD__);
 		return $feedHTML;
 	}
-
-	/**
-	 * wrapper for getList witch caching output
-	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
-	 */
-	static function getListForWidget($parameters) {
-		global $wgMemc, $wgCityId;
-		wfProfileIn(__METHOD__);
-		$key = "wikia:$wgCityId:activity_feed_widget";
-		$feedHTML = $wgMemc->get($key);
-		if (empty($feedHTML)) {
-			$feedHTML = ActivityFeedHelper::getList($parameters);
-			$wgMemc->set($key, $feedHTML, 300);
-			//TODO: add purging cache functionality before enabling it
-		}
-
-		wfProfileOut(__METHOD__);
-		return $feedHTML;
-	}
 }
 
 $wgAjaxExportList[] = 'ActivityFeedAjax';
@@ -177,7 +158,7 @@ function ActivityFeedAjax() {
 	}
 
 	wfLoadExtensionMessages('MyHome');
-	$feedHTML = ActivityFeedHelper::getListForWidget($parameters);
+	$feedHTML = ActivityFeedHelper::getList($parameters);
 	$data = array('data' => $feedHTML, 'timestamp' => wfTimestampNow());
 
 	$json = Wikia::json_encode($data);
