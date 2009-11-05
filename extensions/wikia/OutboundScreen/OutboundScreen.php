@@ -30,6 +30,10 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 		return true;
 	}
 
+	if ( strpos( $url, 'http://' ) !== 0 ) {
+		return true;
+	}
+
 	$loggedIn = $wgUser->isLoggedIn();
 
 	if(($wgOutboundScreenConfig['anonsOnly'] == false) || (($wgOutboundScreenConfig['anonsOnly'] == true) && !$loggedIn)) {
