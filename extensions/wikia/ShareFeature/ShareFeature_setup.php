@@ -155,7 +155,11 @@ function wfShareFeatureInit() {
 // update stats for all kinds of users (logged in and anon)
 // anon is represented as a user with id 0, as in MW
 function wfShareFeatureAjaxUpdateStats( $provider ) {
-	global $wgUser, $wgExternalStatsDB, $wgRequest;
+	global $wgUser, $wgExternalStatsDB, $wgRequest, $wgReadOnly;
+
+	if ( $wgReadOnly ) {
+		return ;
+	}
 
 	$id = $wgUser->getId();
 	$provider = $wgRequest->getVal( 'provider' );
