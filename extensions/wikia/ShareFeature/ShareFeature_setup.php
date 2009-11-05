@@ -154,13 +154,13 @@ function wfShareFeatureInit() {
 
 // update stats for all kinds of users (logged in and anon)
 // anon is represented as a user with id 0, as in MW
-function wfShareFeatureAjaxUpdateStats( $provider ) {
+function wfShareFeatureAjaxUpdateStats( ) {
 	global $wgUser, $wgExternalStatsDB, $wgRequest, $wgReadOnly;
 
 	$id = $wgUser->getId();
-	$provider = $wgRequest->getVal( 'provider' );
+	$provider = $wgRequest->getVal( 'provider', false );
 
-	if ( !$wgReadOnly ) {
+	if ( (!$wgReadOnly) && ($provider !== false) ) {
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalStatsDB );
 
 		// MW insert wrapper doesn't handle that syntax
