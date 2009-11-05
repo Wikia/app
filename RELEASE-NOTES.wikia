@@ -11,6 +11,7 @@
 * rt#26233: latest activity widget fails badly when required permission missing (Marooned)
 * rt#25741: fatal call to escapeLocalURL in WidgetCommunity (Marooned)
 * rt#26204: Masthead: change detect of MyHome extension (Uberfuzzy)
+* rt#26256: LyricWiki: Select All is now only disabled on pages with lyrics - even if they are edit pages. (Sean)
 
 == Changes since 200910.4 ==
 * rt#25842: Dynamic link box: Icons are missing (Macbre)

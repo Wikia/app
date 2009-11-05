@@ -173,7 +173,7 @@ function gracenote_installCopyProtection(&$out, &$sk){
 			return false;
 		});
 	";
-	
+
 	// Repeatedly clear clipboard (to attempt to stop Print-Screen, this doesn't work in modern browsers).
 	$DISABLE_CLIPBOARD_FUNCTIONS = "
 		function no_cp(){
@@ -220,7 +220,11 @@ function gracenote_installCopyProtection(&$out, &$sk){
 
 			$DISABLE_CLIPBOARD_CODE
 			$DISABLE_TEXT_SELECTION_CODE
-			$DISABLE_SELECT_ALL
+			
+			// Select all should be disabled on pages that have lyrics (even if they're 'edit' pages).
+			if((wgNamespaceNumber == 220) || (wgNamespaceNumber == 0)){
+				$DISABLE_SELECT_ALL
+			}
 
 			var ns = wgNamespaceNumber;
 			if(wgNamespaceNumber == 220){
