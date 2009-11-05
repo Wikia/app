@@ -13,3 +13,7 @@ a.bigButton small {
 	min-width: 100%;
 	max-width: 100%;
 }
+
+.activityfeed img.sprite {
+	top: 3px;
+}

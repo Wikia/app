@@ -1339,12 +1339,6 @@ class MonacoTemplate extends QuickTemplate {
 <?php
 	$this->html('mergedCSS');
 
-	foreach($this->data['references']['css'] as $css) {
-?>
-		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= htmlspecialchars($css['url']) ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
-
-<?php
-	}
 	foreach($this->data['references']['cssstyle'] as $cssstyle) {
 ?>
 		<style type="text/css"><?= $cssstyle['content'] ?></style>
@@ -1354,6 +1348,15 @@ class MonacoTemplate extends QuickTemplate {
         echo "\t\t";
 
 	$this->html('csslinks');
+        
+	echo "\n";
+
+	foreach($this->data['references']['css'] as $css) {
+?>
+		<?= isset($css['cond']) ? '<!--['.$css['cond'].']>' : '' ?><link rel="stylesheet" type="text/css" <?= isset($css['param']) ? $css['param'] : '' ?>href="<?= htmlspecialchars($css['url']) ?>" /><?= isset($css['cond']) ? '<![endif]-->' : '' ?>
+
+<?php
+	}
 
 	if($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL) {
 		$this->html('mergedJS');

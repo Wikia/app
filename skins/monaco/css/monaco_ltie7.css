@@ -166,3 +166,7 @@ body.ltr #articleFooter ul.actions li div {
 #page_bar {
 	z-index: 20;
 }
+
+.activityfeed img.sprite {
+	top: 3px;
+}

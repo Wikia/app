@@ -55,3 +55,7 @@ ol li {
 #page_bar {
 	z-index: 20;
 }
+
+.activityfeed img.sprite {
+	top: 3px;
+}
