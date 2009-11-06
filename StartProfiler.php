@@ -9,7 +9,7 @@ if( !empty( $_GET['forceprofile'] ) ) {
 } elseif( !empty( $_GET['forcetrace'] ) ) {
 	require_once( dirname(__FILE__).'/includes/ProfilerSimpleTrace.php' );
 	$wgProfiler = new ProfilerSimpleTrace;
-} elseif( !( $rand % 10 ) ) {
+} elseif( !empty( $wgReportTimeViaStomp )  && !( $rand % 10 ) ) {
 	// every 10th request gets reported via stomp
 	require_once( dirname(__FILE__).'/includes/ProfilerSimpleStomp.php' );
 	$wgProfiler = new ProfilerSimpleStomp;
