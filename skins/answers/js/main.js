@@ -183,8 +183,10 @@ function renderQuestions() {
 			}
 
 			// round to full minute, make caching easier; if smaxage is higher than 1 min consider changing this as well
-			timestamp1 = timestamp1.replace(/:[0-9]{2}Z$/, ":00Z");
-			timestamp  =  timestamp.replace(/:[0-9]{2}Z$/, ":00Z");
+			if(timestamp != null) {
+				timestamp1 = timestamp1.replace(/:[0-9]{2}Z$/, ":00Z");
+				timestamp  =  timestamp.replace(/:[0-9]{2}Z$/, ":00Z");
+			}
 		
 			//nav
 			html += "<li class='sidebar_nav'>"
