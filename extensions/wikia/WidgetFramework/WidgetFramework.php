@@ -65,6 +65,7 @@ class WidgetFramework {
 						array('type' => 'WidgetSidebar', 'id' => 202),
 						array('type' => 'WidgetWikiaToolbox', 'id' => 203),
 						array('type' => 'WidgetWikiaPartners', 'id' => 204),
+						array('type' => 'WidgetLeftNav', 'id' => 205),
 						array('type' => 'WidgetCommunity', 'id' => 101),
 						array('type' => 'WidgetAdvertiser', 'id' => 102),
 						array('type' => 'WidgetLanguages', 'id' => 103),
