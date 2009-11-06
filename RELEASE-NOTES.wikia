@@ -1,4 +1,5 @@
 == Changes since 200911.1 ==
+* rt#26231: Improve "more" link on the problem report widget. (Uberfuzzy)
 * rt#26331: UserChangesHistory didn't respect wfReadOnly() (Emil)
 * rt#26194: OutboundScreen: Now only touces http links (TOR)
 * rt#26090: Patch special:export to honor limiting params. (Uberfuzzy)
