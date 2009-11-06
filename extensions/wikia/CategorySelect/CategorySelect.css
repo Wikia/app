@@ -202,3 +202,8 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 	padding: 1px 0 0 3px;
 	white-space: nowrap;
 }
+
+/* rt#26278 */
+.catlinks-allhidden {
+	display: block !important;
+}
