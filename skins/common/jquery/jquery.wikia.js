@@ -21,6 +21,7 @@ jQuery.fn.exists = function() {
 	return this.length > 0;
 }
 
+// show modal dialog with content fetched via AJAX request
 jQuery.fn.getModal = function(url, id, options) {
 	// get modal plugin
 	$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
@@ -49,6 +50,32 @@ jQuery.fn.getModal = function(url, id, options) {
 	});
 }
 
+// show modal popup with static title and content provided
+jQuery.showModal = function(title, content, options) {
+	options = (typeof options != 'object') ? {} : options;
+
+	$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
+		$().log('showModal: plugin loaded');
+
+		var dialog = $(document.createElement('div')).html(content).attr('title', title);
+
+		$("#positioned_elements").append(dialog);
+
+		// fire callbackBefore if provided
+		if (typeof options.callbackBefore == 'function') {
+			options.callbackBefore();
+		}
+
+		dialog.makeModal(options);
+
+		// fire callback if provided
+		if (typeof options.callback == 'function') {
+			options.callback();
+		}
+	});
+}
+
+// send POST request and parse returned JSON
 jQuery.postJSON = function(u, d, callback) {
 	return jQuery.post(u, d, callback, "json");
 }
