@@ -70,9 +70,17 @@ function ActionPanelMouseover(e) {
 				edit_link = wgServer + wgScript + "?title=" + this_title + "&action=edit";
 				delete_link = wgServer + wgScript + "?title=" + this_title + "&action=delete";
 
-				menu_html = "<div class='questionhovertitle'>" + wgActionPanelTitleMsg + "</div>";
-				menu_html += "<div class='questionhovername'>" + decodeURIComponent( this_title.replace(/_/g," ") ) + "</div>";
-				menu_html += "<div class='questionhoverlinks'><a href='javascript:void(0);' class='hoveranswer questionhoverlinks-selected'>" + wgActionPanelEditMsg + "</a> <a href='javascript:void(0);' class='hovercategorize'>" + wgActionPanelCategorizeMsg + "</a> <a href='" + delete_link + "' class='hoverdelete'>" + wgActionPanelDeleteMsg + "</a> <a href='javascript:void(0);' class='hoverrename'>" + wgActionPanelRenameMsg + "</a> </div>"
+				menu_html = '<div class="questionhovertitle">' + wgActionPanelTitleMsg + '</div>';
+				menu_html += '<div class="questionhovername">' + decodeURIComponent( this_title.replace(/_/g,' ') ) + '</div>';
+				menu_html += '<div class="questionhoverlinks">';
+				menu_html += '<a href="javascript:void(0);" class="hoveranswer questionhoverlinks-selected">' + wgActionPanelEditMsg + '</a> ';
+				menu_html += '<a href="javascript:void(0);" class="hovercategorize">' + wgActionPanelCategorizeMsg + '</a> ';
+				// Don't show the delete link to users who are not in one of these groups.
+				if ( -1 !== wgUserGroups.indexOf('sysop') || -1 !== wgUserGroups.indexOf('staff') || -1 !== wgUserGroups.indexOf('helper') ) {
+					menu_html += '<a href="' + delete_link + '" class="hoverdelete">' + wgActionPanelDeleteMsg + '</a> ';
+				}
+				menu_html += '<a href="javascript:void(0);" class="hoverrename">' + wgActionPanelRenameMsg + '</a>';
+				menu_html += '</div>';
 				hover_menu.innerHTML = menu_html;
 
 				function selectHoverLink( modes, selected, link ){
