@@ -5,7 +5,7 @@ function wfSpecialListPagesAction(){
   global $wgUser,$IP;
   include_once("includes/SpecialPage.php");
 
-	class ListPagesAction  extends SpecialPage {
+	class ListPagesAction  extends UnlistedSpecialPage {
 	
 	function __construct(){
 		parent::__construct("ListPagesAction");
