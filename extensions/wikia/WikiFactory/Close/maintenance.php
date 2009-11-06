@@ -110,8 +110,8 @@ class CloseWikiMaintenance {
 				$cmd  = array(
 					"SERVER_ID=177",
 					"php",
-					"/usr/wikia/source/trunk/extensions/wikia/WikiFactory/Dumps/runBackups.php",
-					"--conf /usr/wikia/conf/current/qa.wiki.factory/LocalSettings.Iowa.php",
+					"/usr/wikia/source/wiki/extensions/wikia/WikiFactory/Dumps/runBackups.php",
+					"--conf /usr/wikia/conf/current/iowa.wiki.factory/LocalSettings.php",
 					"--both",
 					"--id={$row->city_id}"
 				);
