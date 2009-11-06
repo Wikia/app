@@ -306,7 +306,7 @@ class WikiFactoryLoader {
 					),
 					array(
 						"city_domains.city_id = city_list.city_id",
-						"lower( city_domains.city_domain )" => $this->mServerName
+						"city_domains.city_domain" => $this->mServerName
 					),
 					__METHOD__
 				);
