@@ -272,7 +272,7 @@ insert into widgets values ( 10, 'WidgetTopFive', '1', 0, null, null );
 insert into widgets_extra values ( null, 10, 'column', '1', 0 );
 insert into widgets_extra values ( null, 10, 'position', '2', 0 );
 
-/* site-wide messages */
+-- site-wide messages
 CREATE TABLE IF NOT EXISTS system_events (
   `ev_id` int(7) unsigned not null auto_increment,
   `ev_name` varchar(255) not null,
@@ -450,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `blockedby_stats` (
 ) ENGINE=InnoDB;
 
 -- SiteWideMessages [copied from extensions/wikia/SiteWideMessages/schema.sql]
-# Message textdata
+-- Message textdata
 CREATE TABLE IF NOT EXISTS `messages_text`
 (
 	`msg_id`              int (7)  unsigned   NOT NULL    auto_increment,
@@ -466,9 +466,9 @@ CREATE TABLE IF NOT EXISTS `messages_text`
 	`msg_hub_id`          int (9),
 	PRIMARY KEY (`msg_id`)
 );
-#msg_mode: 0 = all users, 1 = selected users
+-- msg_mode: 0 = all users, 1 = selected users
 
-# Messages metadata
+-- Messages metadata
 CREATE TABLE IF NOT EXISTS `messages_status`
 (
 	`msg_wiki_id`      int (9),
@@ -480,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `messages_status`
 	KEY `msg_id` (`msg_id`)
 );
 
-#msg_status: 0 = unseen, 1 = seen, 2 = dismissed
+-- msg_status: 0 = unseen, 1 = seen, 2 = dismissed
 
 -- WhosOnline - moved from per wiki to shared DB
 CREATE TABLE IF NOT EXISTS `online` (
@@ -552,7 +552,7 @@ CREATE TABLE IF NOT EXISTS `city_variables` (
   KEY `cv_city_id` (`cv_city_id`),
   CONSTRAINT `city_variables_ibfk_2` FOREIGN KEY (`cv_city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `city_variables_ibfk_1` FOREIGN KEY (`cv_variable_id`) REFERENCES `city_variables_pool` (`cv_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `city_cats` WRITE;
 INSERT INTO `city_cats` VALUES (1,'Humor','http://www.wikia.com/wiki/Humor'),(2,'Gaming','http://gaming.wikia.com/'),(3,'Entertainment','http://entertainment.wikia.com/'),(4,'Wikia','http://www.wikia.com/wiki/Category:Hubs'),(5,'Toys','http://www.wikia.com/wiki/Toys'),(7,'Travel','http://www.wikia.com/wiki/Travel'),(8,'Education','http://www.wikia.com/wiki/Education'),(9,'Lifestyle','http://www.wikia.com/wiki/Lifestyle'),(10,'Finance','http://www.wikia.com/wiki/Finance'),(11,'Politics','http://www.wikia.com/wiki/Politics'),(12,'Technology','http://www.wikia.com/wiki/Technology'),(13,'Science','http://www.wikia.com/wiki/Science'),(14,'Philosophy','http://www.wikia.com/wiki/Philosophy'),(15,'Sports','http://www.wikia.com/wiki/Sports'),(16,'Music','http://www.wikia.com/wiki/Music'),(17,'Creative','http://www.wikia.com/wiki/Creative'),(18,'Auto','http://www.wikia.com/wiki/Auto'),(19,'Green','http://www.wikia.com/wiki/Green');
@@ -560,7 +560,7 @@ UNLOCK TABLES;
 
 -- ShareFeature extension --
 
-CREATE TABLE IF NOT EXISTS /*$wgDBprefix*/ `share_feature` (
+CREATE TABLE IF NOT EXISTS `share_feature` (
   `sf_user_id` int(5) unsigned NOT NULL,
   `sf_provider_id` int(2) unsigned NOT NULL,
   `sf_clickcount` int(11) default '0',
