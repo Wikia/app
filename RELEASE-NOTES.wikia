@@ -1,4 +1,5 @@
 == Changes since 200911.1 ==
+* rt#26423: WikiFactoryLoader::execute doesn't use an index (eloy)
 * rt#26278: Dont hide catsel if there are hidden cats. (Nef, HT Uberfuzzy)
 * rt#26252: Unlist NYC special page. (Nef, HT Uberfuzzy)
 * rt#26231: Improve "more" link on the problem report widget. (Uberfuzzy)
