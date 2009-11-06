@@ -1025,21 +1025,7 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 			$ret .= Xml::openElement('table', array('class' => 'userInfoWrapper')) . Xml::openElement('tr');
 
 			// get avatar
-			if (class_exists('Masthead')) {
-				$avatar = Masthead::newFromUserID($contributor['user_id']);
-				$avatarImg = $avatar->getImageTag(50, 50);
-			}
-
-			// render empty avatar, if one from Masthead is not avalaible
-			if (empty($avatarImg)) {
-				$avatarImgSrc = 'http://images.wikia.com/common/skins/monobook/blank.gif';
-
-				$avatarImg = Xml::element('img', array(
-					'src' => $avatarImgSrc,
-					'height' => 50,
-					'width' => 50
-				));
-			}
+			$avatarImg = Answer::getUserAvatar($contributor['user_id']);
 
 			$ret .= Xml::openElement('td');
 			$ret .= $avatarImg;
