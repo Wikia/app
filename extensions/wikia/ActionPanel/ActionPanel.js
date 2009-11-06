@@ -72,7 +72,7 @@ function ActionPanelMouseover(e) {
 
 				menu_html = "<div class='questionhovertitle'>" + wgActionPanelTitleMsg + "</div>";
 				menu_html += "<div class='questionhovername'>" + decodeURIComponent( this_title.replace(/_/g," ") ) + "</div>";
-				menu_html += "<div class='questionhoverlinks'><a href='javascript:void(0);' class='hoveranswer questionhoverlinks-selected'>" + wgActionPanelEditMsg + "</a> <a href='javascript:void(0);' class='hovercategorize'>" + wgActionPanelCategorizeMsg + "</a> <a href='" + delete_link + "' xclass='hoverdelete'>" + wgActionPanelDeleteMsg + "</a> <a href='javascript:void(0);' class='hoverrename'>" + wgActionPanelRenameMsg + "</a> </div>"
+				menu_html += "<div class='questionhoverlinks'><a href='javascript:void(0);' class='hoveranswer questionhoverlinks-selected'>" + wgActionPanelEditMsg + "</a> <a href='javascript:void(0);' class='hovercategorize'>" + wgActionPanelCategorizeMsg + "</a> <a href='" + delete_link + "' class='hoverdelete'>" + wgActionPanelDeleteMsg + "</a> <a href='javascript:void(0);' class='hoverrename'>" + wgActionPanelRenameMsg + "</a> </div>"
 				hover_menu.innerHTML = menu_html;
 
 				function selectHoverLink( modes, selected, link ){
