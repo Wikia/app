@@ -47,7 +47,7 @@
 					<?= wfMsg('multidelete_page') ?>
 				</td>
 				<td>
-					<textarea tabindex="4" name="wpPage" id="wpPage" cols="50" rows="10"><?= htmlspecialchars($obj->mPage) ?></textarea>
+					<textarea tabindex="4" name="wpPage" id="wpPage" cols="80" rows="10"><?= htmlspecialchars($obj->mPage) ?></textarea>
 				</td>
 			</tr>
 			<tr>
