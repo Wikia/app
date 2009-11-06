@@ -929,12 +929,13 @@ div.category br {
 	background: #ededed url('../images/user_edit_points_bg.png') no-repeat -175px 0;
 	border: solid 1px #aaa;
 	border-collapse: collapse;
+	border-left: none;
 	color: #000;
-	line-height: 12px;
-	font-size: 0.7em;
+	line-height: 13px;
+	font-size: 9px;
 	font-weight: bold;
 	text-transform: uppercase;
-	padding: 1px 3px 0;
+	padding: 0 3px;
 }
 
 #contributors li .userEditPoints td.userPoints {
@@ -942,7 +943,6 @@ div.category br {
 	border: solid 1px #584013;
 	background-color: #f6dd5d;
 	font-size: 13px;
-	padding-top: 0;
 }
 
 /** User profile edit points **/
