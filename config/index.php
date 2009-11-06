@@ -1132,6 +1132,9 @@ if( $conf->posted && ( 0 == count( $errs ) ) ) {
 			if ($conf->DBtype == 'mysql') {
 				dbsource( "../maintenance/tables.sql", $wgDatabase );
 				dbsource( "../maintenance/interwiki.sql", $wgDatabase );
+				dbsource( "../maintenance/wikia-additional-tables-shared.sql", $wgDatabase );
+				dbsource( "../maintenance/wikia-additional-tables.sql", $wgDatabase );
+				dbsource( "../extensions/wikia/AdEngine/schema.sql", $wgDatabase );
 			} elseif (is_callable(array($wgDatabase, 'setup_database'))) {
 				$wgDatabase->setup_database();
 			}
@@ -1779,7 +1782,7 @@ if( defined( 'MW_INSTALL_PATH' ) ) {
 	\$IP = dirname( __FILE__ );
 }
 
-\$path = array( \$IP, \"\$IP/includes\", \"\$IP/languages\" );
+\$path = array( \$IP, \"\$IP/includes\", \"\$IP/languages\", \"\$IP/lib\" );
 set_include_path( implode( PATH_SEPARATOR, \$path ) . PATH_SEPARATOR . get_include_path() );
 
 require_once( \"\$IP/includes/DefaultSettings.php\" );
@@ -1858,7 +1861,7 @@ if ( \$wgCommandLineMode ) {
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook':
-\$wgDefaultSkin = 'monobook';
+\$wgDefaultSkin = 'monaco';
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
@@ -1871,6 +1874,8 @@ if ( \$wgCommandLineMode ) {
 # \$wgRightsCode = \"{$slconf['RightsCode']}\"; # Not yet used
 
 \$wgDiff3 = \"{$slconf['diff3']}\";
+
+\$wgAthenaDevHosts = true;
 
 # When you make changes to this configuration file, this will make
 # sure that cached pages are cleared.
