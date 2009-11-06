@@ -101,13 +101,42 @@ function WidgetProblemReports($id, $params) {
     // list reports
     $items = array();
     
-    $moreUrl = Title::newFromText('ProblemReports', NS_SPECIAL)->getLocalURL();
+	//url used for linking to PR ids
+    $baseUrl = Title::newFromText('ProblemReports', NS_SPECIAL)->getLocalURL();
+	
+	// build params for 'more' link based on this widget's settings
+	$urlParams = array();
+	
+	if($params['show'] == 2)
+	{
+		$urlParams[] = 'archived=1';
+	}
+	elseif($params['show'] == 1)
+	{
+		$urlParams[] = 'staff=1';
+	}
+	
+	if($apiParams['wkshowall'] == 1)
+	{
+		$urlParams[] = 'showall=1';
+	}
+	
+	if($apiParams['wktype'] != NULL)
+	{
+		$urlParams[] = 'problem=' . $apiParams['wktype'];
+	}
+	
+	// smush
+	$urlParams = implode('&', $urlParams);
+	
+	// apply and build
+    $moreUrl = Title::newFromText('ProblemReports', NS_SPECIAL)->getLocalURL($urlParams);
 
     foreach ( $reports as $problem ) {
     	$date = date('d m Y', strtotime($problem['date']));
 
 	$items[] = array(
-	    'href'  => $moreUrl.'/'.$problem['id'],
+	    'href'  => $baseUrl.'/'.$problem['id'],
 	    'title' => '#'.$problem['id'].' - '.wfMsg('pr_table_date_submitted'). ': ' . $date,
 	    'name' => shortenText($problem['title'], 25 ) . ' ['.$problemTypes[$problem['type']].
 		($apiParams['wkshowall'] == 1 ? ' | '.str_replace(array('http://', '.wikia.com', '.wikia-inc.com'), '', $problem['server']) : '').']'
