@@ -3,7 +3,8 @@
 <div style="padding:6px;">
 	<div>Multi-wiki delete mode: <b><?=$modeText?></b></div>
 	<div>Article: <b><?=$sTitle?></b> </div>
-	<div>Deleted by user: <a href="<?=$wgUser->getUserPage()->getLocalUrl()?>"><?=$mTaskParams['admin']?></a></div>
+	<div>Run as: <a href="<?=$wgUser->getUserPage()->getLocalUrl()?>"><?=$mTaskParams['admin']?></a></div>
+	<div>Delete as: <?=$mTaskParams['user']?></div>
 	<div>Reason: <b><?=$mTaskParams['reason']?></b> </div>
 	<div>Number of wikis to delete at: <b><?=$countWikis?></b></div>
 	<div>Language of Wikis: <b><?= ( $lang ) ? $lang : " - " ?></b></div>
