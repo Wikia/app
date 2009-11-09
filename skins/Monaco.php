@@ -556,6 +556,30 @@ EOS;
 
 		$tpl->set('mergedJS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage($package) . "\n");
 
+		// macbre: move media="print" CSS to bottom (RT #25638)
+		wfProfileIn(__METHOD__ . '::printCSS');
+
+		global $wgOut;
+		$printStyles = array();
+
+		// let's filter media="print" CSS out
+		foreach($wgOut->styles as $style => $options) {
+			if (isset($options['media']) && $options['media'] == 'print') {
+				unset($wgOut->styles[$style]);
+				$printStyles[$style] = $options;
+			}
+		}
+
+		// re-render CSS to be included in head
+		$tpl->set('csslinks', $wgOut->buildCssLinks());
+
+		// render CSS to be included at the bottom
+		$tmpOut = new OutputPage();
+		$tmpOut->styles = $printStyles;
+		$tpl->set('csslinksbottom', $tmpOut->buildCssLinks());
+
+		wfProfileOut(__METHOD__ . '::printCSS');
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -970,7 +994,7 @@ EOS;
 	/**
 	 * Create arrays containing refereces to JS and CSS files used in skin
 	 *
- * @return array
+	 * @return array
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
 	private function getReferencesLinks(&$tpl) {
@@ -1348,7 +1372,7 @@ class MonacoTemplate extends QuickTemplate {
         echo "\t\t";
 
 	$this->html('csslinks');
-        
+
 	echo "\n";
 
 	foreach($this->data['references']['css'] as $css) {
@@ -2257,6 +2281,12 @@ wfProfileOut( __METHOD__ . '-body');
 <?php
 	// RT #18411
 	$this->html('mergedCSSprint');
+?>
+
+<?php
+	// RT #25638
+	echo "\n\t\t";
+	$this->html('csslinksbottom');
 ?>
 
 	</body>
