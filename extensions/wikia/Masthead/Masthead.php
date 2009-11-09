@@ -849,39 +849,50 @@ class Masthead {
 				$firstDate = $editCount = 0;
 				if (!$isDestinationUserAnon) {
 					global $wgCityId, $wgExternalDatawareDB;
+
 					$destionationUser = User::newFromName($userspace);
 					$destionationUserId = $destionationUser ? $destionationUser->getId() : 0;
 					if($destionationUserId != 0) {
+						global $wgMemc, $wgEnableAnswers;
 
-						global $wgMemc;
-						$mastheadDataEditDateKey = wfMemcKey('mmastheadData-editDate-' . $destionationUserId);
-						$mastheadDataEditCountKey = wfMemcKey('mmastheadData-editCount-' . $destionationUserId);
-						$mastheadDataEditDate = $wgMemc->get($mastheadDataEditDateKey);
-						$mastheadDataEditCount = $wgMemc->get($mastheadDataEditCountKey);
+						if(!empty($wgEnableAnswers) && class_exists('AttributionCache')) {
+							// use AttributionCache to get edit points and first edit date
+							$attrCache = AttributionCache::getInstance();
 
-						if(empty($mastheadDataEditCount) || empty($mastheadDataEditDate)) {
-							$dbr = wfGetDB(DB_SLAVE);
-
-							$dbResult = $dbr->select(
-								'revision',
-								array('min(rev_timestamp) AS date, count(*) AS edits'),
-								array('rev_user_text' => $destionationUser->getName()),
-								__METHOD__
-							);
-
-							if ($row = $dbr->FetchObject($dbResult)) {
-								$firstDate = $wgLang->date(wfTimestamp(TS_MW, $row->date));
-								$editCount = $row->edits;
-							}
-							if ($dbResult !== false) {
-								$dbr->FreeResult($dbResult);
-							}
-							$wgMemc->set($mastheadDataEditDateKey, $firstDate, 60 * 60);
-							$wgMemc->set($mastheadDataEditCountKey, $editCount, 60 * 60);
-						} else {
-							$firstDate = $mastheadDataEditDate;
-							$editCount = $mastheadDataEditCount;
+							$editCount = $attrCache->getUserEditPoints($destionationUserId);
+							$firstDate = $wgLang->date(wfTimestamp(TS_MW, $attrCache->getUserFirstEditDateFromCache($destionationUserId)));
 						}
+						else {
+							$mastheadDataEditDateKey = wfMemcKey('mmastheadData-editDate-' . $destionationUserId);
+							$mastheadDataEditCountKey = wfMemcKey('mmastheadData-editCount-' . $destionationUserId);
+							$mastheadDataEditDate = $wgMemc->get($mastheadDataEditDateKey);
+							$mastheadDataEditCount = $wgMemc->get($mastheadDataEditCountKey);
+
+							if(empty($mastheadDataEditCount) || empty($mastheadDataEditDate)) {
+								$dbr = wfGetDB(DB_SLAVE);
+
+								$dbResult = $dbr->select(
+									'revision',
+									array('min(rev_timestamp) AS date, count(*) AS edits'),
+									array('rev_user_text' => $destionationUser->getName()),
+									__METHOD__
+								);
+
+								if ($row = $dbr->FetchObject($dbResult)) {
+									$firstDate = $wgLang->date(wfTimestamp(TS_MW, $row->date));
+									$editCount = $row->edits;
+								}
+								if ($dbResult !== false) {
+									$dbr->FreeResult($dbResult);
+								}
+								$wgMemc->set($mastheadDataEditDateKey, $firstDate, 60 * 60);
+								$wgMemc->set($mastheadDataEditCountKey, $editCount, 60 * 60);
+							} else {
+								$firstDate = $mastheadDataEditDate;
+								$editCount = $mastheadDataEditCount;
+							}
+						}
+
 					}
 				}
 
