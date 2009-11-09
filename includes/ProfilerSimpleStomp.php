@@ -22,6 +22,13 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 		'Output-skin',
 		);
 
+	function __construct() {
+		global $wgReportTimeViaStomp;
+		if( !empty( $wgReportTimeViaStomp ) ) {
+			parent::__construct();
+		}
+	}
+
 	function profileIn($functionname) {
 		global $wgReportTimeViaStomp;
 		if( !empty( $wgReportTimeViaStomp ) && 
