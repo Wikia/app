@@ -139,6 +139,24 @@ class ActivityFeedHelper {
 		wfProfileOut(__METHOD__);
 		return $feedHTML;
 	}
+
+	/**
+	 * wrapper for getList witch caching output
+	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+	 */
+	static function getListForWidget($parameters, $userLangEqContent) {
+		global $wgMemc;
+		wfProfileIn(__METHOD__);
+		$key = wfMemcKey('community_widget', $parameters['uselang']);
+		$feedHTML = $wgMemc->get($key);
+		if (empty($feedHTML)) {
+			$feedHTML = ActivityFeedHelper::getList($parameters);
+			$wgMemc->set($key, $feedHTML, $userLangEqContent ? 60*60*24 : 60*5);
+		}
+
+		wfProfileOut(__METHOD__);
+		return $feedHTML;
+	}
 }
 
 $wgAjaxExportList[] = 'ActivityFeedAjax';
@@ -146,14 +164,13 @@ $wgAjaxExportList[] = 'ActivityFeedAjax';
  * @author Maciej Błaszkowski <marooned at wikia-inc.com>
  */
 function ActivityFeedAjax() {
-	global $wgRequest;
+	global $wgRequest, $wgLang;
 	wfProfileIn(__METHOD__);
 	$params = $wgRequest->getVal('params');
 
 	$parameters = ActivityFeedHelper::parseParameters(explode('&', $params));
 
-	if (!empty($parameters['uselang'])) {
-		global $wgLang;
+	if (!empty($parameters['uselang']) && $wgLang->getCode() != $parameters['uselang']) {
 		$wgLang = Language::factory($parameters['uselang']);
 	}
 
@@ -167,4 +184,56 @@ function ActivityFeedAjax() {
 	$response->setCacheDuration(60);
 	wfProfileOut(__METHOD__);
 	return $response;
+}
+
+$wgAjaxExportList[] = 'CommunityWidgetAjax';
+/**
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function CommunityWidgetAjax() {
+	global $wgRequest, $wgLang, $wgLanguageCode, $wgContentNamespaces;
+	wfProfileIn(__METHOD__);
+
+	//this should be the same as in /extensions/wikia/WidgetFramework/Widgets/WidgetCommunity/WidgetCommunity.php
+	$parameters = array(
+		'type' => 'widget',
+		'maxElements' => 5,
+		'flags' => array('shortlist'),
+		'includeNamespaces' => implode('|', $wgContentNamespaces)
+	);
+
+	$uselang = $wgRequest->getVal('uselang');
+	$langCode = $wgLang->getCode();
+	if (!empty($uselang) && $langCode != $uselang) {
+		$wgLang = Language::factory($uselang);
+	} else {
+		$uselang = $langCode;
+	}
+	$parameters['uselang'] = $uselang;
+	$userLangEqContent = $uselang == $wgLanguageCode;
+
+	wfLoadExtensionMessages('MyHome');
+	$feedHTML = ActivityFeedHelper::getListForWidget($parameters, $userLangEqContent);
+	$data = array('data' => $feedHTML, 'timestamp' => wfTimestampNow());
+
+	$json = Wikia::json_encode($data);
+	$response = new AjaxResponse($json);
+	$response->setContentType('application/json; charset=utf-8');
+	$response->setCacheDuration($userLangEqContent ? 60*60*24 : 60*5);
+	wfProfileOut(__METHOD__);
+	return $response;
+}
+
+$wgHooks['ArticleSaveComplete'][] = 'CommunityWidgetPurgeVarnish';
+/**
+ * @author Maciej Błaszkowski <marooned at wikia-inc.com>
+ */
+function CommunityWidgetPurgeVarnish(&$article, &$user, $text, $summary, &$minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
+	global $wgScript, $wgContentNamespaces, $wgContLang, $wgMemc;
+	if (in_array($article->mTitle->getNamespace(), $wgContentNamespaces)) {
+		$lang = $wgContLang->getCode();
+		$key = wfMemcKey('community_widget', $lang);
+		$wgMemc->delete($key);
+		SquidUpdate::purge(array($wgScript . '?action=ajax&rs=CommunityWidgetAjax&uselang=$lang'));
+	}
 }
