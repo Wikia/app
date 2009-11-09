@@ -275,8 +275,8 @@ while( $request->Accept() >= 0 ) {
 						open( CMD, "-|", $ffmpeg, @cmd );
 						close( CMD );
 					}
+					$transformed = 1;
 					if( -f $thumbnail ) {
-						$transformed = 1;
 						chmod 0664, $thumbnail;
 						$mimetype = $flm->checktype_filename( $thumbnail );
 						print "HTTP/1.1 200 OK\r\n";
@@ -293,7 +293,6 @@ while( $request->Accept() >= 0 ) {
 						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
 					}
-					exit if $test;
 				}
 				else {
 					#
@@ -313,12 +312,12 @@ while( $request->Accept() >= 0 ) {
 						print $height;
 						$image->Resize( "geometry" => "${width}x${height}>", "blur" => 0.9 );
 						$image->Write( "filename" => $thumbnail );
+						$transformed = 1;
 						if( -f $thumbnail ) {
 							#
 							# serve file if is ready to serve
 							#
 							chmod 0664, $thumbnail;
-							$transformed = 1;
 							print "HTTP/1.1 200 OK\r\n";
 							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
