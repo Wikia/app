@@ -3475,25 +3475,19 @@ class Parser
 
 	function fetchScaryTemplateMaybeFromCache($url) {
 		global $wgTranscludeCacheExpiry,$wgMemc;
-		$cacheKey = wfMemcKey( "parser", "interwiki", $url );
-		$obj  = $wgMemc->get( $cacheKey );
+		$cacheKey = wfMemcKey( "transcache", $url );
+		$text = $wgMemc->get( $cacheKey );
 				
-		if (isset($obj)) {
-			$text = $obj['tc_contents'];
+		if( $text !== false ) {
 			return $text;
 		}
 
 		$text = Http::get($url);
-		if (!$text)
+		if( !$text ) {
 			return wfMsg('scarytranscludefailed', $url);
-
-		if (!wfReadOnly()) {
-			$obj = array(
-				'tc_url' => $url,
-				'tc_contents' => $text);
-			
-			$wgMemc->set( $cacheKey, $obj, $wgTranscludeCacheExpiry );
 		}
+
+		$wgMemc->set( $cacheKey, $text, $wgTranscludeCacheExpiry );
 		return $text;
 	}
 	/**
