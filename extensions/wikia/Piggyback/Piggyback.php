@@ -30,6 +30,9 @@ $wgExtensionAliasesFiles['Piggyback'] = $dir . 'Piggyback.alias.php';
 $wgSpecialPages['Piggyback'] = 'Piggyback'; # Let MediaWiki know about your new special page.
 $wgHooks['UserLogoutComplete'][] = 'PiggybackGoToParent';
 
+$wgLogRestrictions['piggyback'] = 'piggyback';
+$wgLogTypes[] = 'piggyback';
+
 /*
  * event for logout (back to parent user)
  */
