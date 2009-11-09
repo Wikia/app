@@ -270,11 +270,11 @@ function gracenote_getPrintDisabledNotice(){
 // Returns the HTML for a noscript  tag which will hide the lyrics if javascript is disabled and give a message to the end-user explaining what happened.
 ////
 function gracenote_getNoscriptTag(){
-	return "<noscript><div class='gracenote-header'>You must enable javascript to view this page.  This is a requirement of our licensing agreement with music Gracenote.</div>
-	<style type='text/css'>
-		.lyricbox{display:none !important;}
-	</style>
-	</noscript>\n";
+	return "<noscript><div class='gracenote-header'>You must enable javascript to view this page.  This is a requirement of our licensing agreement with music Gracenote.</div>".
+	"<style type='text/css'>".
+		".lyricbox{display:none !important;}".
+	"</style>".
+	"</noscript>\n";
 } // end gracenote_getNoscriptTag()
 
 ////
