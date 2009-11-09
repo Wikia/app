@@ -21,5 +21,7 @@ function WidgetCommunity_init(id, widget) {
 		});
 	}
 
-	loadFreshData(id, window['params_widget_'+id], window['timestamp_widget_'+id]);
+	if (wgUserName == null) {
+		loadFreshData(id, window['params_widget_'+id], window['timestamp_widget_'+id]);
+	}
 }
