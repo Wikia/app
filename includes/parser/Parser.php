@@ -3474,16 +3474,13 @@ class Parser
 	}
 
 	function fetchScaryTemplateMaybeFromCache($url) {
-		global $wgTranscludeCacheExpiry;
-		$dbr = wfGetDB(DB_SLAVE);
-		$obj = $dbr->selectRow('transcache', array('tc_time', 'tc_contents'),
-				array('tc_url' => $url));
-		if ($obj) {
-			$time = $obj->tc_time;
-			$text = $obj->tc_contents;
-			if ($time && time() < $time + $wgTranscludeCacheExpiry ) {
-				return $text;
-			}
+		global $wgTranscludeCacheExpiry,$wgMemc;
+		$cacheKey = wfMemcKey( "parser", "interwiki", $url );
+		$obj  = $wgMemc->get( $cacheKey );
+				
+		if (isset($obj)) {
+			$text = $obj['tc_contents'];
+			return $text;
 		}
 
 		$text = Http::get($url);
@@ -3491,17 +3488,14 @@ class Parser
 			return wfMsg('scarytranscludefailed', $url);
 
 		if (!wfReadOnly()) {
-			$dbw = wfGetDB(DB_MASTER);
-			$dbw->replace('transcache', array('tc_url'), array(
+			$obj = array(
 				'tc_url' => $url,
-				'tc_time' => time(),
-				'tc_contents' => $text));
+				'tc_contents' => $text);
+			
+			$wgMemc->set( $cacheKey, $obj, $wgTranscludeCacheExpiry );
 		}
-
 		return $text;
 	}
-
-
 	/**
 	 * Triple brace replacement -- used for template arguments
 	 * @private
