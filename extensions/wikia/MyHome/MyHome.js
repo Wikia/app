@@ -188,11 +188,11 @@ MyHome.trackClick = function(e) {
 				} else {
 					MyHome.track('/' + MyHome.mode + '/diff');
 				}
-			} else if($(target.parentNode).hasClass('myhome-image-thumbnail')) {
+			} else if($(target.parentNode).hasClass('activityfeed-image-thumbnail')) {
 				MyHome.track('/' + MyHome.mode + '/image');
 			}
 		}
-	} else if($.nodeName(target, 'span') && $.nodeName(target.parentNode, 'a') && $(target.parentNode).hasClass('myhome-video-thumbnail')) {
+	} else if($.nodeName(target, 'span') && $.nodeName(target.parentNode, 'a') && $(target.parentNode).hasClass('activityfeed-video-thumbnail')) {
 		MyHome.track('/' + MyHome.mode + '/video');
 	}
 }
