@@ -2,6 +2,7 @@
 $messages = array();
 $messages['en'] = array(
 	'new-edit-page-preview-notice' => 'Preview mode: no changes saved yet! Scroll down to continue editing.',
+	'templatesused-toggle' => 'Show/hide {{PLURAL:$1|$1 item|$1 items}}',
 );
 
 
@@ -17,6 +18,11 @@ $messages['es'] = array(
 
 $messages['ja'] = array(
 	'new-edit-page-preview-notice' => 'プレビュー中 : 編集内容はまだ保存されていません！ スクロールし編集を続けてください。',
+);
+
+
+$messages['pl'] = array(
+	'templatesused-toggle' => 'Pokaż/ukryj {{PLURAL:$1|1 element|$1 elementów}}',
 );
 
 
