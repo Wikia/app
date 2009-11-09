@@ -1,0 +1,9 @@
+div#userloginForm table
+{
+	width: 100%
+}
+
+td.mw-input 
+{
+	width:0;
+}
