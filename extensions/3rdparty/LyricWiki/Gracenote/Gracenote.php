@@ -214,6 +214,7 @@ function gracenote_installCopyProtection(&$out, &$sk){
 
 	// Add the various chunks of javascript that need to be run after the page is loaded.
 	$out->addScript("<script type=\"text/javascript\">
+	/* <![CDATA[ */
 		$(document).ready(function() {
 			$DISABLE_CLIPBOARD_FUNCTIONS
 			$DISABLE_TEXT_SELECTION_FUNCTIONS
@@ -254,6 +255,7 @@ function gracenote_installCopyProtection(&$out, &$sk){
 
 			//$('.lyricbox').show();
 		});
+	/* ]]> */
 	</script>");
 
 	return true;
