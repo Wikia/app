@@ -373,8 +373,19 @@ $(function() {
 				opacity: 0.5,
 				placeholder: 'widget_sort_placeholder',
 				revert: 200, // smooth animation
-
 				// events
+				start: function(event, ui) 
+				{
+					/*
+					 * @author Tomek0.
+					 * it remove script tag with google ads, because 
+					 * during insert of html script tag will be start one more 
+					 * time and will cause empty page effect 
+					 */
+					if ($(ui.item).hasClass( 'WidgetAdvertiser' )) {
+						$(ui.item).find( 'script' ).remove();
+					}
+				},
 				stop: function(ev, ui) {
 					// get new sidebar
 					var newSidebar = ui.item.closest('.sidebar');
