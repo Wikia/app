@@ -1,4 +1,5 @@
 == Changes since 200911.1 ==
+* rt#26618: Links not clickable in Latest Activity Widget - Opera (Macbre)
 * MultiDelete: clarify results view (Uberfuzzy)
 * rt#26423: WikiFactoryLoader::execute doesn't use an index (eloy)
 * rt#26278: Dont hide catsel if there are hidden cats. (Nef, HT Uberfuzzy)

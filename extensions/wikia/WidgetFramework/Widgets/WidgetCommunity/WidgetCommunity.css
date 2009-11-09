@@ -78,6 +78,7 @@
 	display: block;
 	font-weight: bold;
 	font-size: 10pt;
+	position: relative;
 }
 
 /* TODO: move this to monaco css? and remove from MyHome.css */
