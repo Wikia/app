@@ -14,3 +14,12 @@
 #wmuLinkDiv {
 	display: none;
 }
+
+/* RT #22760 */
+.templatesUsedToggle {
+	display: none;
+}
+
+.templatesUsed ul {
+	display: block !important;
+}
