@@ -8,6 +8,5 @@
 	<a id="community-widget-action-button" href="<?= $footerButton['href'] ?>" class="<?= $footerButton['class'] ?>" rel="nofollow"><span><?= $footerButton['text'] ?></span></a>
 </div>
 <script>
-var params_<?= $tagid ?> = '<?= $jsParams ?>';
 var timestamp_<?= $tagid ?> = '<?= $timestamp ?>';
 </script>

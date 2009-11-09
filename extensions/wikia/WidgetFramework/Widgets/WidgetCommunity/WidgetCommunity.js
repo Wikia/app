@@ -11,10 +11,11 @@ function WidgetCommunity_init(id, widget) {
 		});
 	});
 
-	var loadFreshData = function(id, params, timestamp) {
+	var loadFreshData = function(id, timestamp) {
+		var params = {};
 		var uselang = $.getUrlVar('uselang');
-		if (uselang) params += '&uselang=' + uselang;
-		$.getJSON(wgScript + '?action=ajax&rs=ActivityFeedAjax', {params: params}, function(json){
+		params['uselang'] = uselang ? uselang : wgUserLanguage;
+		$.getJSON(wgScript + '?action=ajax&rs=CommunityWidgetAjax', params, function(json){
 			if (json.timestamp > timestamp) {
 				$('#widget_' + id + '-recently-edited').after(json.data).remove();
 			}
@@ -22,6 +23,6 @@ function WidgetCommunity_init(id, widget) {
 	}
 
 	if (wgUserName == null) {
-		loadFreshData(id, window['params_widget_'+id], window['timestamp_widget_'+id]);
+		loadFreshData(id, window['timestamp_widget_'+id]);
 	}
 }
