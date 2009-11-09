@@ -52,7 +52,7 @@ function reportProblemAction(elem, id, statusID, msgWait, askMsg)
 		failure: function(o) { reportProblemActionCallback(YAHOO.Tools.JSONParse(o.responseText)); }
 	}
 
-	YAHOO.util.Connect.asyncRequest("POST", wgScriptPath + wgScript, callback, "action=ajax&rs=wfProblemReportsAjaxAPI&id=" + id +"&status=" + statusID);
+	YAHOO.util.Connect.asyncRequest("POST", wgScript, callback, "action=ajax&rs=wfProblemReportsAjaxAPI&id=" + id +"&status=" + statusID);
 }
 
 // toogle problem description row
@@ -105,7 +105,7 @@ function reportProblemMailerResponsesTemplatesSetup(list, textarea, footer)
 			}
 
 			// get template content via AJAX call
-			req = YAHOO.util.Connect.asyncRequest("POST", wgScriptPath + wgScript, callback, "action=raw&title=" + encodeURI(this.title));
+			req = YAHOO.util.Connect.asyncRequest("POST", wgScript, callback, "action=raw&title=" + encodeURI(this.title));
 
 			textarea.style.cursor = 'wait';
 			textarea.disabled = true;
@@ -125,6 +125,6 @@ function reportProblemChangeType(id, selectObj) {
 
 	selectObj.disabled = true;
 
-	YAHOO.util.Connect.asyncRequest("POST", wgScriptPath + wgScript, callback, "action=ajax&rs=wfProblemReportsAjaxAPI&id=" + id +"&type=" + typeId);
+	YAHOO.util.Connect.asyncRequest("POST", wgScript, callback, "action=ajax&rs=wfProblemReportsAjaxAPI&id=" + id +"&type=" + typeId);
 }
 
