@@ -3,8 +3,14 @@
 
 <div id="MagCloudArticlesTips" class="accent">
 <?= wfMsgExt('magcloud-special-collection-review-list-tips', array('parse')) ?>
-<img src="<?= htmlspecialchars($coverExamplesSrc) ?>" alt="Cover examples" width="273" height="100" />
+<img src="<?= htmlspecialchars($coverExamplesSrc) ?>" alt="Cover examples" width="273" height="100" usemap="#covermap" />
 </div>
+
+<map name="covermap">
+<area shape="rect" coords="  0,0, 78,100" href="http://magcloud.com/browse/Issue/44110" alt="Star Trek Weapons" target="_blank" />
+<area shape="rect" coords=" 98,0,176,100" href="http://magcloud.com/browse/Issue/40645" alt="Grover's Jobs"     target="_blank" />
+<area shape="rect" coords="196,0,273,100" href="http://magcloud.com/browse/Issue/44114" alt="Star Trek Planets" target="_blank" />
+</map>
 
 <div id="MagCloudArticlesListWrapper">
 	<h3><?= wfMsg( 'magcloud-order-your-articles'); ?></h3>
