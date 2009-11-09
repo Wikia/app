@@ -21,5 +21,11 @@ while( $row = $dbw->fetchObject( $sth ) ) {
 	if( is_null( $row->city_cluster ) ) $row->city_cluster = false;
 	if( $cluster !== $row->city_cluster ) {
 		Wikia::log( __FILE__, false, "Difference in {$row->city_id}: {$cluster} vs. {$row->city_cluster}" );
+		$dbw->update(
+			"city_list",
+			array( "city_cluster" => $cluster ),
+			array( "city_id" => $row->city_id ),
+			__METHOD__
+		);
 	}
 }
