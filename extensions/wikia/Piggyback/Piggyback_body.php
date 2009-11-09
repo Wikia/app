@@ -141,7 +141,7 @@ class PBLoginForm extends LoginForm
 	function render() {
 		global $wgOut,$wgScriptPath;
 		$this->exTemplate->set("header",$this->plugin);
-		$wgOut->addStyle("$wgScriptPath/extensions/Piggyback/Resources/Piggyback.css");
+		$wgOut->addStyle("$wgScriptPath/extensions/wikia/Piggyback/Resources/Piggyback.css");
 		$wgOut->addTemplate($this->exTemplate);
 	}
 
