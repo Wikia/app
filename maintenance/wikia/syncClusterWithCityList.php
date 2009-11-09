@@ -19,6 +19,6 @@ while( $row = $dbw->fetchObject( $sth ) ) {
 	 */
 	$cluster = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
 	if( $cluster !== $row->city_cluster ) {
-		echo "Difference in {$row->city_id}: {$cluster} vs. {$row->city_cluster}\n";
+		Wikia::log( __FILE__, false, "Difference in {$row->city_id}: {$cluster} vs. {$row->city_cluster}" );
 	}
 }
