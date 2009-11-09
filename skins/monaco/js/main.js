@@ -3,6 +3,9 @@ var $G = function(id) {
 	return document.getElementById(id);
 };
 
+// prevent JS errors when AJAX request for magic words is not sent
+var magicWords = {};
+
 //Attach DOM-Ready handlers
 $(function() {
 	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
@@ -184,23 +187,25 @@ function menuInit() {
 		//create a sub-menu
 		html += '<div class="sub-menu widget" style="display: none;">';
 		if (typeof item != 'object') {
-			$.each(magicWords[item], function() {
-				classname = '';
-				text = this.text;
-				if (this.className) {
-					classname = ' class="' + this.className + '"';
-					if (this.className == 'Monaco-sidebar_more') {
-						text = wgMenuMore;
-					} else if (this.className == 'Monaco-sidebar_edit') {
-						if (typeof wgMenuEdit != 'undefined') {
-							text = wgMenuEdit;
-						} else {
-							return true;
+			if (typeof magicWords[item] != 'undefined') {
+				$.each(magicWords[item], function() {
+					classname = '';
+					text = this.text;
+					if (this.className) {
+						classname = ' class="' + this.className + '"';
+						if (this.className == 'Monaco-sidebar_more') {
+							text = wgMenuMore;
+						} else if (this.className == 'Monaco-sidebar_edit') {
+							if (typeof wgMenuEdit != 'undefined') {
+								text = wgMenuEdit;
+							} else {
+								return true;
+							}
 						}
 					}
-				}
-				html += '<div class="menu-item"><a href="' + this.url + '" rel="nofollow"' + classname +'>' + text +'</a></div>';
-			});
+					html += '<div class="menu-item"><a href="' + this.url + '" rel="nofollow"' + classname +'>' + text +'</a></div>';
+				});
+			}
 		} else {
 			$.each(item, function(i, item) {
 				//does this item have children?
