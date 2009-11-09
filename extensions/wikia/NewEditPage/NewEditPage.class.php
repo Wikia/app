@@ -5,10 +5,32 @@ class NewEditPage {
 	// this flag indicates we're on not exisiting article page
 	private static $notExistingPage = false;
 
-	// add custom CSS to page of not existing articles
-	public static function articleView($title) {
+	// store skin name
+	private static $skinName = false;
 
-		global $wgNewEditPageNewArticle, $wgRequest;
+	/**
+	 * Helper method checking name of the current skin
+	 *
+	 * @author Maciej Brencz <macbre wikia-inc.com>
+	 */
+	private static function isMonacoSkin() {
+		if (empty(self::$skinName)) {
+			global $wgUser;
+			self::$skinName = get_class($wgUser->getSkin());
+		}
+
+		return self::$skinName == 'SkinMonaco';
+	}
+
+	/**
+	 * Add custom CSS to page of not existing articles
+	 *
+	 * @author Maciej Brencz <macbre wikia-inc.com>
+	 */
+	public static function articleView($title) {
+		global $wgRequest;
+
+		wfProfileIn(__METHOD__);
 
 		// limit to not existing articles and view mode
 		if (!$title->exists() && $wgRequest->getVal('action', 'view') == 'view') {
@@ -16,16 +38,24 @@ class NewEditPage {
 			self::addCSS();
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return $title;
 	}
 
-	// add CSS to view / edit pages
+	/**
+	 * Add CSS to view / edit pages
+	 *
+	 * @author Maciej Brencz <macbre wikia-inc.com>
+	 */
 	public static function addCSS() {
 		global $wgWysiwygEdit, $wgOut, $wgUser, $wgExtensionsPath, $wgStyleVersion;
 
+		wfProfileIn(__METHOD__);
+
 		// do not touch skins other than Monaco (RT #13061)
-		$skinName = get_class($wgUser->getSkin());
-		if ($skinName != 'SkinMonaco') {
+		if (!self::isMonacoSkin()) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -49,16 +79,24 @@ class NewEditPage {
 			'type' => 'text/css'
 		));
 
+		wfProfileOut(__METHOD__);
+
 		return true;
 	}
 
-	// add red preview notice in old editor
+	/**
+	 * Add red preview notice in old editor
+	 *
+	 * @author Maciej Brencz <macbre wikia-inc.com>
+	 */
 	public static function addPreviewBar($editPage) {
-		global $wgOut, $wgUser, $wgHooks, $wgRequest;
+		global $wgOut, $wgHooks, $wgRequest;
+
+		wfProfileIn(__METHOD__);
 
 		// do not touch skins other than Monaco (RT #13061)
-		$skinName = get_class($wgUser->getSkin());
-		if ($skinName != 'SkinMonaco') {
+		if (!self::isMonacoSkin()) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -75,20 +113,24 @@ class NewEditPage {
 			$wgOut->addHTML('<style type="text/css">.firstHeading {display: none}</style>');
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return true;
 	}
 
 	/**
-	 * add brown old revision notice in old editor
+	 * Add brown old revision notice in old editor
 	 *
 	 * @author Maciej Błaszkowski <marooned at wikia-inc.com>
 	 */
 	public static function addOldRevisionBar($editPage) {
-		global $wgOut, $wgUser, $wgHooks, $wgRequest;
+		global $wgOut, $wgHooks, $wgRequest;
+
+		wfProfileIn(__METHOD__);
 
 		// do not touch skins other than Monaco (RT #13061)
-		$skinName = get_class($wgUser->getSkin());
-		if ($skinName != 'SkinMonaco') {
+		if (!self::isMonacoSkin()) {
+			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -102,13 +144,23 @@ class NewEditPage {
 			// hide page title in preview mode
 			$wgOut->addHTML('<style type="text/css">.firstHeading {display: none}</style>');
 		}
-		//false to supress original warning
+
+		wfProfileOut(__METHOD__);
+
+		// false to supress original warning
 		return false;
 	}
 
-	// add page title before preview HTML
+	/**
+	 * Add page title before preview HTML
+	 *
+	 * @author Maciej Brencz <macbre wikia-inc.com>
+	 */
 	public static function addPreviewTitle($wgOut, $text) {
 		global $wgTitle, $wgCustomTitle;
+
+		wfProfileIn(__METHOD__);
+
 		$wgOut->addHTML('<h1 id="new_edit_page_preview_title">' . ( isset($wgCustomTitle) ? $wgCustomTitle->getPrefixedText() : $wgTitle->getPrefixedText() ) . '</h1>');
 
 		// find first closing </h2> and remove preview notice
@@ -117,11 +169,19 @@ class NewEditPage {
 			$text = substr($text, $pos+5);
 		}
 
+		wfProfileOut(__METHOD__);
+
 		return true;
 	}
 
-	// move edit page title after undo success message box (RT #22732)
+	/**
+	 * Move edit page title after undo success message box (RT #22732)
+	 *
+	 * @author Maciej Brencz <macbre wikia-inc.com>
+	 */
 	public static function undoSuccess($editPage, $text) {
+		wfProfileIn(__METHOD__);
+
 		if ( strpos($editPage->editFormPageTop, '<div class="mw-undo-success">') !== false ) {
 			global $wgOut, $wgTitle, $wgCustomTitle;
 
@@ -134,12 +194,21 @@ class NewEditPage {
 				(isset($wgCustomTitle) ? $wgCustomTitle->getPrefixedText() : $wgTitle->getPrefixedText())
 			);
 		}
+
+		wfProfileOut(__METHOD__);
+
 		return true;
 	}
 
-	// Shorten edit page 'transcluded pages' list using JS (RT #22760)
+	/**
+	 * Shorten edit page 'transcluded pages' list using JS (RT #22760)
+	 *
+	 * @author Maciej Brencz <macbre wikia-inc.com>
+	 */
 	public static function formatTemplates($sk, $templates, $text) {
 		global $wgUser, $wgOut, $wgEnableTranscludedPagesToggle;
+
+		wfProfileIn(__METHOD__);
 
 		// check the switch
 		if (empty($wgEnableTranscludedPagesToggle)) {
@@ -147,12 +216,12 @@ class NewEditPage {
 		}
 
 		// apply this change only in Monaco
-		if (get_class($wgUser->getSkin()) != 'SkinMonaco') {
+		if (!self::isMonacoSkin()) {
 			return true;
 		}
 
+		// i18n
 		wfLoadExtensionMessages('NewEditPage');
-
 		$msg = wfMsgExt('templatesused-toggle', array('parsemag'), count($templates));
 
 		$text = strtr($text, array(
@@ -169,6 +238,8 @@ class NewEditPage {
 		}
 JS
 		);
+
+		wfProfileOut(__METHOD__);
 
 		return true;
 	}
