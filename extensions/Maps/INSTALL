@@ -1,0 +1,15 @@
+[[Maps 0.3.4]]
+
+Once you have downloaded the code, place the 'Maps' directory within your MediaWiki 'extensions' directory.
+Then add the following code to your LocalSettings.php file after the line that installs Semantic MediaWiki:
+
+# Maps
+require_once( "$IP/extensions/Maps/Maps.php" );
+
+For using Google Maps or Yahoo! Maps, you must enter their API keys in the settings file. If you don't already
+have them, you can obtain them at the Google Maps API page and Yahoo Maps API page. Note that the Google Maps
+API key is required for both displaying maps AND for geocoding (and therefore also required when you use
+display_address with a Yahoo! Map). Also note that use of the Google Maps API is free only if your site is
+accessible to the public; otherwise it costs money - read the Google Maps terms of service for further details.
+
+More information can be found at http://www.mediawiki.org/wiki/Extension:Maps#Setup

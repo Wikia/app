@@ -1,0 +1,116 @@
+For a documentation of all features, see http://www.mediawiki.org/wiki/Extension:Semantic_Maps
+
+==Semantic Maps change log==
+This change log contains a list of completed to-do's (new features, bug fixes, refactoring) for every version of Semantic Maps.
+
+===Semantic Maps 0.4===
+(2009-11-03)
+
+====Bug fixes====
+
+* Fixed the repeated display of mapping services on the Special:Ask page, by [http://svn.wikimedia.org/viewvc/mediawiki?view=rev&revision=58187 adding an aliasing system to SMW].
+
+* Fixed problem that caused the SM result formats to not get displayed on Special:Ask.
+
+===Semantic Maps 0.3.4===
+(2009-09-12)
+
+Changes in 0.3.4 discussed on the authors blog:
+
+* [http://blog.bn2vs.com/2009/09/12/maps-and-semantic-maps-0-3-4-released/ Maps and Semantic Maps 0.3.4 released]
+
+====Bug fixes====
+
+* Fixed bug causing error for people who do not have Semantic Forms installed and enabled, presumably introduced in 0.3.
+
+* Fixed bug causing only the last coordinate property from a result to be shown on a map format, and so causing the predecessors to be ignored in case of multiple coordinate properties.
+
+====Refactoring====
+
+* Restructured the extension to work with the new feature hook system of Maps.
+
+===Semantic Maps 0.3.3===
+(2009-08-15)
+
+Changes in 0.3.3 discussed on the authors blog:
+
+* [http://blog.bn2vs.com/2009/08/25/maps-and-semantic-maps-0-3-3/ Maps and Semantic Maps 0.3.3]
+
+====Bug fixes====
+
+* Fixed error caused by the 'map' format on the Special:Ask page
+
+===Semantic Maps 0.3.2===
+(2009-08-18)
+
+====Bug fixes====
+
+* Fixed logic error that caused maps to have a wrong centre and zoom when a query only returned one result.
+
+* Fixed an issue with the centre parameter in queries. In some cases it would not be processed correctly and cause PHP notices.
+
+===Semantic Maps 0.3.1===
+(2009-08-18)
+
+====Bug fixes====
+
+* Fixed script design flaw that caused errors when using the 'map' format in a query.
+
+===Semantic Maps 0.3===
+(2009-08-14)
+
+Changes in 0.3 discussed on the authors blog:
+
+* [http://blog.bn2vs.com/2009/08/13/final-changes-for-maps-and-sm-0-3/ Final changes for Maps and SM 0.3]
+
+* [http://blog.bn2vs.com/2009/08/07/new-features-in-maps-and-sm-0-3/ New features in Maps and SM 0.3]
+
+* [http://blog.bn2vs.com/2009/08/05/structural-changes-for-maps-and-sm-0-3/ Structural changes for Maps and SM 0.3]
+
+====New functionality====
+
+* Yahoo! Maps and OpenLayers now handle the "icon=" parameter that can come from Semantic Compound Queries, as Google Maps already did.
+
+====Refactoring====
+
+* Restructured the Query Printer classes (JavaScript based logic).
+
+* Made form input classes weakly typed, so they fully work with the new aliasing system.
+
+* Integrated the new hook system of Maps.
+
+* Made the form input class inherit from MapsMapFeature.
+
+====Bug fixes====
+
+* Mapping formats get added only once, as opossed to multiple times in version 0.2.2.
+
+* Added "elementNamePrefix" to the map names and fields of form inputs to prevent JavaScript errors.
+
+* When a query returns no results, nothing will be displayed, instead of an empty map.
+
+* The Google Maps form input now zooms in correctly when a user looks up an address.
+
+===Semantic Maps 0.2===
+(2009-07-29)
+
+====New functionality====
+
+* Hook for [[Extension:Admin_Links|Admin Links]]
+
+* Multi geocoder integration with form inputs
+
+* Yahoo! Geocoder (for form inputs)
+
+====Refactoring====
+
+* Restructure the Form Input classes
+
+====Bug fixes====
+
+* Yahoo! Maps (result format) do not display their markers correctly when a custom centre is set.
+
+===Semantic Maps 0.1=== 
+(2009-07-21)
+
+* Initial release, featuring both result formats and form inputs for Google Maps (+ Google Earth), Yahoo! Maps and OpenLayers

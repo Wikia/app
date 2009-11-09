@@ -1,0 +1,16 @@
+[[Semantic Maps 0.3.4]]
+
+Make sure you have Semantic MediaWiki and Maps successfully installed before
+proceeding with the installation. Once you have downloaded the code, place
+the 'SemanticMaps' directory within your MediaWiki 'extensions' directory.
+Then add the following code to your LocalSettings.php file after the lines
+that install Maps:
+
+# Semantic Maps
+require_once( "$IP/extensions/SemanticMaps/SemanticMaps.php" );
+
+The inclusion of extensions should happen in this order: Semantic MediaWiki,
+Semantic Forms (if you use it), Semantic Maps. Maps should proceed Semantic
+Maps. See the installation instructions of Maps for info about the API keys.
+
+More information can be found at http://www.mediawiki.org/wiki/Extension:Semantic_Maps#Download_and_installation
