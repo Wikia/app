@@ -557,24 +557,27 @@ EOS;
 		$tpl->set('mergedJS', "\n\t\t" . $StaticChute->getChuteHtmlForPackage($package) . "\n");
 
 		// macbre: move media="print" CSS to bottom (RT #25638)
+		global $wgOut;
+
 		wfProfileIn(__METHOD__ . '::printCSS');
 
-		global $wgOut;
+		$tmpOut = new OutputPage();
 		$printStyles = array();
 
 		// let's filter media="print" CSS out
-		foreach($wgOut->styles as $style => $options) {
+		$tmpOut->styles = $wgOut->styles;
+
+		foreach($tmpOut->styles as $style => $options) {
 			if (isset($options['media']) && $options['media'] == 'print') {
-				unset($wgOut->styles[$style]);
+				unset($tmpOut->styles[$style]);
 				$printStyles[$style] = $options;
 			}
 		}
 
 		// re-render CSS to be included in head
-		$tpl->set('csslinks', $wgOut->buildCssLinks());
+		$tpl->set('csslinks', $tmpOut->buildCssLinks());
 
 		// render CSS to be included at the bottom
-		$tmpOut = new OutputPage();
 		$tmpOut->styles = $printStyles;
 		$tpl->set('csslinksbottom', $tmpOut->buildCssLinks());
 
