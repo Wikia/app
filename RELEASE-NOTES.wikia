@@ -18,6 +18,7 @@
 * rt#26118: ActivityFeed sidebar widget: Non content edits are showing in the sidebar feed (Marooned)
 * rt#26233: latest activity widget fails badly when required permission missing (Marooned)
 * rt#25741: fatal call to escapeLocalURL in WidgetCommunity (Marooned)
+* rt#26203: Latest Activity widget don't have to refresh itself by ajax (Marooned)
 * rt#26204: Masthead: change detect of MyHome extension (Uberfuzzy)
 * rt#26256: LyricWiki: Select All is now only disabled on pages with lyrics - even if they are edit pages. (Sean)
 
