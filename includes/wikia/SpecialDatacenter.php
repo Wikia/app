@@ -71,8 +71,8 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 		$wgOut->addHTML( Xml::openElement( "form", array( "action" => $this->mTitle->getFullURL(), "method" => "post" ) ) );
 		$select = new XMLSelect( "iowacookie", "iowacookie" );
 		$select->addOption( "Switch to San Jose", 2 );
-		$select->addOption( "Switch to to Iowa",     1 );
-		$select->addOption( "Remove preferences (back to default)",   0 );
+		$select->addOption( "Switch to Iowa",     1 );
+		$select->addOption( "Remove preferences", 0 );
 		$wgOut->addHTML( $select->getHTML() );
 		$wgOut->addHTML( Xml::submitButton( "submit" ) );
 		$wgOut->addHTML( Xml::closeElement( "form" ) );
