@@ -41,6 +41,19 @@ sub real404 {
 		};
 }
 
+#
+# go trough tests and show results
+#
+sub testResults {
+	my( $basepath, $tests ) = @_;
+	for my $test ( @$tests ) {
+		print $basepath.$test."\n";
+	}
+}
+
+#
+# scaleHeight function compatible with MediaWiki
+#
 sub scaleHeight {
 	my( $srcWidth, $srcHeight, $dstWidth ) = @_;
 	my $dstHeight;
@@ -67,7 +80,10 @@ my @tests = qw(
 	/c/central/images/thumb/b/bf/Wiki_wide.png/155px-Wiki_wide.png
 	/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif
 	/h/half-life/en/images/thumb/1/1d/Zombie_Assassin.jpg/100px-Zombie_Assassin.jpg
+	/h/half-life/en/images/thumb/a/a5/Gene_worm_model.jpg/260px-Gene_worm_model.jpg
+	/h/half-life/en/images/thumb/a/a5/Gene_worm_model.jpg/250px-Gene_worm_model.jpg
 );
+my @done = ();
 
 #
 # initialization
@@ -93,7 +109,6 @@ unless( $test ) {
 }
 else {
 	$request    = FCGI::Request();
-	$test_uri   = pop @tests;
 }
 
 my $basepath    = "/images";
@@ -109,10 +124,16 @@ my $mimetype    = "text/plain";
 my $imgtype     = undef;
 
 $manager->pm_manage() unless $test;
-while( $request->Accept() >= 0 ) {
+while( $request->Accept() >= 0 || $test ) {
 	$manager->pm_pre_dispatch() unless $test;
-	$request_uri = $test_uri || "";
-	$referer = "";
+
+	$request_uri = "";
+	$referer     = "";
+
+	if( $test ) {
+		$request_uri = pop @tests || last;
+		push @done, $request_uri;
+	}
 
 	#
 	# get last part of uri, remove first slash if exists
@@ -313,8 +334,7 @@ while( $request->Accept() >= 0 ) {
 					my $origh  = $image->Get( 'height' );
 					if( $origw && $origh ) {
 						my $height = scaleHeight( $origw, $origh, $width );
-						print $height;
-						$image->Resize( "geometry" => "${width}x${height}>", "blur" => 0.9 );
+						$image->Resize( "geometry" => "${width}x${height}!", "blur" => 0.9 );
 						$image->Write( "filename" => $thumbnail );
 						$transformed = 1;
 						if( -f $thumbnail ) {
@@ -355,3 +375,8 @@ while( $request->Accept() >= 0 ) {
 	$transformed = 0;
 	$manager->pm_post_dispatch() unless $test;
 }
+
+#
+# if test display results
+#
+testResults( $basepath, \@done ) if $test;
