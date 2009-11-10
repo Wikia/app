@@ -16,7 +16,7 @@
 			if (isset($row['url'])) {
 ?>
 			<img src="<?= $assets['blank'] ?>" class="sprite"<?= FeedRenderer::getIconAltText($row) ?>/>
-			<strong><a href="<?= htmlspecialchars($row['url']) ?>" rel="nofollow"><?= htmlspecialchars($row['title'])  ?></a></strong>
+			<strong><a href="<?= htmlspecialchars($row['url']) ?>"><?= htmlspecialchars($row['title'])  ?></a></strong>
 <?php
 			}
 			else {
