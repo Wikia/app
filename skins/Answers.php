@@ -1036,7 +1036,7 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 
 			if ($contributor['user_name'] == 'helper') {
 				// anonymous users
-				$ret .= Xml::element('span', array('class' => 'userPageLink'), wfMsg('anonymous'));
+				$ret .= Xml::element('span', array('class' => 'userPageLink'), wfMsg('unregistered'));
 				$ret .= Xml::element('span', array('class' => 'anonEditPoints'), wfMsgExt('anonymous_edit_points', array('parsemag'), array($contributor['edits'])));
 			}
 			else {
