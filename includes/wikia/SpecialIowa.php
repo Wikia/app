@@ -5,9 +5,9 @@
  */
 
 
-$wgSpecialPages[ "Iowa" ] = "SpecialIowa";
+$wgSpecialPages[ "Datacenter" ] = "SpecialDatacenter";
 
-class SpecialIowa extends UnlistedSpecialPage {
+class SpecialDatacenter extends UnlistedSpecialPage {
 
 	private
 		$mTitle,
@@ -15,7 +15,7 @@ class SpecialIowa extends UnlistedSpecialPage {
 		$mCookieName;
 
 	public function __construct() {
-		parent::__construct( 'Iowa' );
+		parent::__construct( 'Datacenter' );
 		$this->mCookieName = "-wikia-colocation";
 		$this->mCookie = false;
 	}
@@ -23,19 +23,24 @@ class SpecialIowa extends UnlistedSpecialPage {
 	public function execute( $subpage ) {
 		global $wgOut, $wgUser, $wgRequest, $wgMessageCache, $wgCookiePrefix;
 
-		$wgMessageCache->addMessages( array( "iowa" => "Iowa" ), "en" );
+		$wgMessageCache->addMessages( array( "datacenter" => "Datacenter" ), "en" );
 
 		wfProfileIn( __METHOD__ );
 
 		$this->setHeaders();
-		$this->mTitle = SpecialPage::getTitleFor( "Iowa" );
+		$this->mTitle = SpecialPage::getTitleFor( "Datacenter" );
 
 		/**
 		 * if posted change cookie value
 		 */
 		if( $wgRequest->wasPosted() ) {
 			$val = $wgRequest->getVal( "iowacookie", 0 );
-			if( $val == 1 ) {
+			if( $val == 2 ) {
+				$wgOut->addHTML( Wikia::successbox( "cookie set" ) );
+				$wgRequest->response()->setcookie( $this->mCookieName, "sjc" );
+				$this->mCookie = "sjc";
+			}
+			elseif( $val == 1 ) {
 				$wgOut->addHTML( Wikia::successbox( "cookie set" ) );
 				$wgRequest->response()->setcookie( $this->mCookieName, "iowa" );
 				$this->mCookie = "iowa";
@@ -65,8 +70,9 @@ class SpecialIowa extends UnlistedSpecialPage {
 		 */
 		$wgOut->addHTML( Xml::openElement( "form", array( "action" => $this->mTitle->getFullURL(), "method" => "post" ) ) );
 		$select = new XMLSelect( "iowacookie", "iowacookie" );
-		$select->addOption( "set cookie to Iowa", 1 );
-		$select->addOption( "remove cookie at all", 0 );
+		$select->addOption( "Switch to San Jose", 2 );
+		$select->addOption( "Switch to to Iowa",     1 );
+		$select->addOption( "Remove preferences (back to default)",   0 );
 		$wgOut->addHTML( $select->getHTML() );
 		$wgOut->addHTML( Xml::submitButton( "submit" ) );
 		$wgOut->addHTML( Xml::closeElement( "form" ) );
