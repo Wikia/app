@@ -64,16 +64,16 @@ class BlogArticle extends Article {
 			/**
 			 * blog article, show if exists
 			 */
-			if( $this->exists() ) {
-				$oldPrefixedText = $this->mTitle->mPrefixedText;
-				list( $author, $prefixedText )  = explode('/', $this->mTitle->getPrefixedText(), 2);
-				if( isset( $prefixedText ) && !empty( $prefixedText ) ) {
-					$this->mTitle->mPrefixedText = $prefixedText;
-				}
-				Article::view();
-				$this->mTitle->mPrefixedText = $oldPrefixedText;
-				$this->mProps = self::getProps( $this->mTitle->getArticleID() );
+			$oldPrefixedText = $this->mTitle->mPrefixedText;
+			list( $author, $prefixedText )  = explode('/', $this->mTitle->getPrefixedText(), 2);
+			if( isset( $prefixedText ) && !empty( $prefixedText ) ) {
+				$this->mTitle->mPrefixedText = $prefixedText;
+			}
+			$this->mTitle->mPrefixedText = $oldPrefixedText;
+			$this->mProps = self::getProps( $this->mTitle->getArticleID() );
+			Article::view();
 
+			if( $this->exists() ) {
 				/**
 				 * check if something was posted, maybe comment with ajax switched
 				 * off so it wend to $wgRequest
@@ -443,7 +443,7 @@ class BlogArticle extends Article {
 					$allowedTabs = array();
 					$tabs = array();
 					break;
-				}
+				} 
 			case NS_BLOG_LISTING:
 				if (empty($wgEnableSemanticMediaWikiExt)) {
 					$row["listing-refresh-tab"] = array(
