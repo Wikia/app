@@ -387,7 +387,6 @@ $(function() {
 					}
 				},
 				stop: function(ev, ui) {
-					// get new sidebar
 					var newSidebar = ui.item.closest('.sidebar');
 
 					// index - first widget in the sidebar has index = 1
@@ -399,8 +398,19 @@ $(function() {
 					});
 
 					// get sidebar ID
+					
 					var id = parseInt(newSidebar.attr('id').substring(8), 10);
 
+					/* 
+					 * @author Tomek0.
+					 * block drag WidgetCommunity to WidgetDashboard (id != 1 ) 
+					 * 
+					 * */ 
+					if( (id != 1 ) && ($(ui.item).hasClass( 'WidgetCommunity' )) ) {
+						$(ev.target).sortable("cancel");
+						return true;
+					}
+					
 					// send reindex request to WidgetFramework
 					$.get(wgScript, {
 						action: 'ajax',
