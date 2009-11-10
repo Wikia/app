@@ -47,6 +47,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Bola*/126681,'helper'),
 (/*Cizagna*/35784,'helper'),
 (/*DaNASCAT*/22224,'helper'),
+(/*Defchris*/1636,'helper'),
 (/*Game widow*/390665,'helper'),
 (/*JParanoid*/10970,'helper'),
 (/*Merrystar*/11001,'helper'),
@@ -54,6 +55,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Multimoog*/20290,'helper'),
 (/*Peteparker*/122657, 'helper'),
 (/*Richard1990*/25261,'helper'),
+(/*Schikado*/1214031,'helper'),
 (/*Tommy6*/239851,'helper'),
 (/*Wagnike2*/99965,'helper'),
 (/*Zeyi*/874612,'helper')
