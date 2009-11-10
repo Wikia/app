@@ -1,4 +1,5 @@
 == Changes since 200911.2 ==
+* rt#26211: ActivityFeed tag and sidebar widget: remove nofollow on article links (Marooned)
 * rt#26766: MyHome: title of lightbox popup shows "File:" (Macbre)
 * rt#26679: new SpecialHealthcheck extension (TOR)
 * rt#25638: move print.css to bottom in Monaco (Macbre)
