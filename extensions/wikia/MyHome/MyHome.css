@@ -107,6 +107,7 @@ h3.myhome-empty-message {
 	display: block;
 	font-size: 14pt;
 	font-weight: normal;
+	position: relative;
 }
 
 .activityfeed cite {
@@ -207,6 +208,9 @@ td.activityfeed-details-label {
 	margin-bottom: 5px;
 }
 
+.activityfeed li .title {
+	position: relative;
+}
 
 /* Hot Spots */
 #myhome-hot-spots {
