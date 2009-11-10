@@ -85,7 +85,6 @@ class MultipleLookupPage extends SpecialPage {
 		#---
 		$action = $this->mTitle->escapeLocalURL("");
 		$this->numResults = 0;
-		$wikiList = $this->mCore->getWikiList();
 		/* check user activity */
 		$userActivity = $this->mCore->checkUserActivity($this->mUsername);
 		$userActivityWikiaList = array();
@@ -105,18 +104,20 @@ class MultipleLookupPage extends SpecialPage {
 			/* sort array */
 			unset($userActivityWikiaList);
 			$userActivityWikiaList = array();
-			krsort($userActivityWikiaListByCnt);
 			if (!empty($userActivityWikiaListByCnt)) {
 				$loop=0;
+				krsort($userActivityWikiaListByCnt);
 				foreach ($userActivityWikiaListByCnt as $cnt => $wikis) {
 					if (is_array($wikis) && !empty($wikis)) {
 						foreach ($wikis as $i => $wikiName) {
-							$userActivityWikiaList[$loop] = $wikiName;
+							$wikiRow = WikiFactory::getWikiByDB($wikiName);
+							$userActivityWikiaList[$loop] = array( $wikiName, (!empty($wikiRow)) ? $wikiRow->city_url : "" );
 							$loop++;
 						}
 					}
 				}
 			}
+			
 			//sort(&$userActivityWikiaList);
 		}
 				
@@ -125,7 +126,6 @@ class MultipleLookupPage extends SpecialPage {
             "action"		=> $action,
             "username"  	=> $this->mUsername,
             "userActivity" 	=> $userActivityWikiaList,
-            "wikiList"		=> $wikiList
         ));
         $wgOut->addHTML( $oTmpl->execute("user-activity") );
         wfProfileOut( __METHOD__ );

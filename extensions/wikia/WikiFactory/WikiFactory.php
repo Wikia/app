@@ -1862,4 +1862,36 @@ class WikiFactory {
 
 		return empty( $row ) ? false : $row;
 	}
+	
+	/**
+	 * getWikiByDB
+	 *
+	 * @access public
+	 * @author moli@wikia
+	 * @static
+	 *
+	 * @param string $city_dbname	name of database
+	 * @param boolean $master	use master or slave connection
+	 *
+	 * @return id in city_list
+	 */
+	static public function getWikiByDB( $city_dbname, $master = false ) {
+
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		$dbr = ( $master ) ? self::db( DB_MASTER ) : self::db( DB_SLAVE );
+
+		$oRow = $dbr->selectRow(
+			array( "city_list" ),
+			array( "*" ),
+			array( "city_dbname" => $city_dbname ),
+			__METHOD__
+		);
+
+		return isset( $oRow->city_id ) ? $oRow : false;
+	}
+	
 };
