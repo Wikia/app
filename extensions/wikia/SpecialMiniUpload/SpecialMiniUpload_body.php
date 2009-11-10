@@ -4,24 +4,9 @@ if(!defined('MEDIAWIKI')) {
 }
 class MiniUpload extends UnlistedSpecialPage {
 
-	function loadMessages() {
-		static $messagesLoaded = false;
-		global $wgMessageCache;
-		if($messagesLoaded) {
-			return true;
-		}
-		$messagesLoaded = true;
-
-		require(dirname(__FILE__).'/SpecialMiniUpload.i18n.php');
-		foreach($allMessages as $lang => $langMessages) {
-			$wgMessageCache->addMessages($langMessages, $lang);
-		}
-	        return true;
-	}
-
 	function __construct() {
 		parent::__construct("MiniUpload");
-		self::loadMessages();
+		wfLoadExtensionMessages( 'MiniUpload' );
 	}
 
 	function execute() {
