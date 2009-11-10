@@ -5,11 +5,13 @@ class WidgetTagRenderer extends WidgetFramework {
 	private $count = 1000;
 	private $markers = array();
 
+	protected static $instanceTagRenderer = false;
+
 	public static function getInstance() {
-		if( !(self::$instance instanceof WidgetTagRenderer) ) {
-                        self::$instance = new WidgetTagRenderer();
+		if( !(self::$instanceTagRenderer instanceof WidgetTagRenderer) ) {
+                        self::$instanceTagRenderer = new WidgetTagRenderer();
                 }
-                return self::$instance;
+                return self::$instanceTagRenderer;
 	}
 
 
