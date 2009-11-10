@@ -61,7 +61,7 @@ class FeedRenderer {
 
 		// handle message to be shown when given feed is empty
 		if (empty($data['results'])) {
-			$this->template->set('emptyMessage', wfMsg("myhome-{$this->type}-feed-empty"));
+			$this->template->set('emptyMessage', wfMsgExt("myhome-{$this->type}-feed-empty", array( 'parse' )));
 		}
 
 		$tagid = isset($parameters['tagid']) ? $parameters['tagid'] : 'myhome-activityfeed';
