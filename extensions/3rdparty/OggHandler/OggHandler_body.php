@@ -21,7 +21,7 @@ class OggHandler extends MediaHandler {
 
 	function getParamMap() {
 		wfLoadExtensionMessages( 'OggHandler' );
-		return array( 
+		return array(
 			'img_width' => 'width',
 			'ogg_noplayer' => 'noplayer',
 			'ogg_noicon' => 'noicon',
@@ -47,7 +47,7 @@ class OggHandler extends MediaHandler {
 			}
 			$time += intval( $parts[$i] ) * pow( 60, count( $parts ) - $i - 1 );
 		}
-		
+
 		if ( $time < 0 ) {
 			wfDebug( __METHOD__.": specified negative time, using zero\n" );
 			$time = 0;
@@ -103,8 +103,8 @@ class OggHandler extends MediaHandler {
 		}
 		foreach ( $metadata['streams'] as $stream ) {
 			if ( in_array( $stream['type'], $this->videoTypes ) ) {
-				return array( 
-					$stream['header']['PICW'], 
+				return array(
+					$stream['header']['PICW'],
 					$stream['header']['PICH']
 				);
 			}
@@ -117,7 +117,7 @@ class OggHandler extends MediaHandler {
 
 		if ( !class_exists( 'File_Ogg' ) ) {
 			require( 'File/Ogg.php' );
-		}	
+		}
 
 		try {
 			$f = new File_Ogg( $path );
@@ -169,7 +169,7 @@ class OggHandler extends MediaHandler {
 	function getThumbType( $ext, $mime ) {
 		return array( 'jpg', 'image/jpeg' );
 	}
-	
+
 	function doTransform( $file, $dstPath, $dstUrl, $params, $flags = 0 ) {
 		global $wgFFmpegLocation;
 
@@ -231,30 +231,30 @@ class OggHandler extends MediaHandler {
 
 		wfDebug( "Creating video thumbnail at $dstPath\n" );
 
-		$cmd = wfEscapeShellArg( $wgFFmpegLocation ) . 
+		$cmd = wfEscapeShellArg( $wgFFmpegLocation ) .
 			' -ss ' . intval( $thumbTime ) . ' ' .
-			' -i ' . wfEscapeShellArg( $file->getPath() ) . 
+			' -i ' . wfEscapeShellArg( $file->getPath() ) .
 			# MJPEG, that's the same as JPEG except it's supported by the windows build of ffmpeg
 			# No audio, one frame
 			' -f mjpeg -an -vframes 1 ' .
 			wfEscapeShellArg( $dstPath ) . ' 2>&1';
-				
+
 		$retval = 0;
 		$returnText = wfShellExec( $cmd, $retval );
 
 		if ( $this->removeBadFile( $dstPath, $retval ) || $retval ) {
-			#re-attempt encode command on frame time 1 and with mapping (special case for chopped oggs)			
-			$cmd = wfEscapeShellArg( $wgFFmpegLocation ) . 
+			#re-attempt encode command on frame time 1 and with mapping (special case for chopped oggs)
+			$cmd = wfEscapeShellArg( $wgFFmpegLocation ) .
 			' -map 0:1 '.
 			' -ss 1 ' .
-			' -i ' . wfEscapeShellArg( $file->getPath() ) . 
+			' -i ' . wfEscapeShellArg( $file->getPath() ) .
 			' -f mjpeg -an -vframes 1 ' .
 			wfEscapeShellArg( $dstPath ) . ' 2>&1';
-				
+
 			$retval = 0;
 			$returnText = wfShellExec( $cmd, $retval );
-			//if still bad return error: 
-			if ( $this->removeBadFile( $dstPath, $retval ) || $retval ) {						
+			//if still bad return error:
+			if ( $this->removeBadFile( $dstPath, $retval ) || $retval ) {
 				// Filter nonsense
 				$lines = explode( "\n", str_replace( "\r\n", "\n", $returnText ) );
 				if ( substr( $lines[0], 0, 6 ) == 'FFmpeg' ) {
@@ -343,7 +343,7 @@ class OggHandler extends MediaHandler {
 		} else {
 			$msg = 'ogg-short-general';
 		}
-		return wfMsg( $msg, implode( '/', $streamTypes ), 
+		return wfMsg( $msg, implode( '/', $streamTypes ),
 			$wgLang->formatTimePeriod( $this->getLength( $file ) ) );
 	}
 
@@ -378,7 +378,7 @@ class OggHandler extends MediaHandler {
 		}
 		$bitrate = $length == 0 ? 0 : $size / $length * 8;
 		return wfMsg( $msg, implode( '/', $streamTypes ),
-			$wgLang->formatTimePeriod( $length ), 
+			$wgLang->formatTimePeriod( $length ),
 			$wgLang->formatBitrate( $bitrate ),
 			$wgLang->formatNum( $file->getWidth() ),
 			$wgLang->formatNum( $file->getHeight() )
@@ -389,8 +389,8 @@ class OggHandler extends MediaHandler {
 		global $wgLang;
 		wfLoadExtensionMessages( 'OggHandler' );
 		if ( $file->getWidth() ) {
-			return wfMsg( 'video-dims', $wgLang->formatTimePeriod( $this->getLength( $file ) ), 
-				$wgLang->formatNum( $file->getWidth() ), 
+			return wfMsg( 'video-dims', $wgLang->formatTimePeriod( $this->getLength( $file ) ),
+				$wgLang->formatNum( $file->getWidth() ),
 				$wgLang->formatNum( $file->getHeight() ) );
 		} else {
 			return $wgLang->formatTimePeriod( $this->getLength( $file ) );
@@ -413,7 +413,7 @@ class OggHandler extends MediaHandler {
 		wfLoadExtensionMessages( 'OggHandler' );
 
 		$msgNames = array( 'ogg-play', 'ogg-pause', 'ogg-stop', 'ogg-no-player',
-			'ogg-player-videoElement', 'ogg-player-oggPlugin', 'ogg-player-cortado', 'ogg-player-vlc-mozilla', 
+			'ogg-player-videoElement', 'ogg-player-oggPlugin', 'ogg-player-cortado', 'ogg-player-vlc-mozilla',
 			'ogg-player-vlc-activex', 'ogg-player-quicktime-mozilla', 'ogg-player-quicktime-activex',
 			'ogg-player-totem', 'ogg-player-kaffeine', 'ogg-player-kmplayer', 'ogg-player-mplayerplug-in',
 			'ogg-player-thumbnail', 'ogg-player-selected', 'ogg-use-player', 'ogg-more', 'ogg-download',
@@ -447,23 +447,23 @@ wgOggPlayer.extPathUrl = $encExtPathUrl;
 EOT
 );
 
-		//if collecting stats add relevant code: 
-		if( $wgPlayerStatsCollection ){			
+		//if collecting stats add relevant code:
+		if( $wgPlayerStatsCollection ){
 			//the player stats js file  MUST be on the same server as OggHandler
 			$playerStats_js = htmlspecialchars ( $wgScriptPath ). '/extensions/PlayerStatsGrabber/playerStats.js';
 
 			$jsUserHash = sha1( $wgUser->getName() . $wgProxyKey );
-			$enUserHash = Xml::encodeJsVar( $jsUserHash );			
+			$enUserHash = Xml::encodeJsVar( $jsUserHash );
 
 			$out->addHeadItem( 'playerStatsCollection',  <<<EOT
 <script type="text/javascript">
 wgOggPlayer.userHash = $enUserHash;
-</script>	
+</script>
 <script type="text/javascript" src="$playerStats_js"></script>
 EOT
 );
 		}
-		
+
 	}
 
 	function parserTransformHook( $parser, $file ) {
@@ -485,8 +485,8 @@ EOT
 class OggTransformOutput extends MediaTransformOutput {
 	static $serial = 0;
 
-	function __construct( $file, $videoUrl, $thumbUrl, $width, $height, $length, $isVideo, 
-		$path, $noIcon = false ) 
+	function __construct( $file, $videoUrl, $thumbUrl, $width, $height, $length, $isVideo,
+		$path, $noIcon = false )
 	{
 		$this->file = $file;
 		$this->videoUrl = $videoUrl;
@@ -500,6 +500,15 @@ class OggTransformOutput extends MediaTransformOutput {
 	}
 
 	function toHtml( $options = array() ) {
+
+		// Wikia - begin
+		// RT #25329
+		global $wgWysiwygParserEnabled;
+		if(!empty($wgWysiwygParserEnabled)) {
+			return "\x7f-WYSIWYG-IMAGE-\x7f";
+		}
+		// Wikia - end
+
 		wfLoadExtensionMessages( 'OggHandler' );
 		if ( count( func_get_args() ) == 2 ) {
 			throw new MWException( __METHOD__ .' called in the old style' );
@@ -522,7 +531,7 @@ class OggTransformOutput extends MediaTransformOutput {
 		$showDescIcon = false;
 		if ( $this->isVideo ) {
 			$msgStartPlayer = wfMsg( 'ogg-play-video' );
-			$imgAttribs = array( 
+			$imgAttribs = array(
 				'src' => $this->url,
 				'width' => $width,
 				'height' => $height,
@@ -533,7 +542,7 @@ class OggTransformOutput extends MediaTransformOutput {
 			if ( $height > 100 ) {
 				// Use a big file icon
 				global $wgStylePath;
-				$imgAttribs = array( 
+				$imgAttribs = array(
 					'src' => "$wgStylePath/common/images/icons/fileicon-ogg.png",
 					'width' => 125,
 					'height' => 125,
@@ -549,25 +558,25 @@ class OggTransformOutput extends MediaTransformOutput {
 			$playerHeight = 0;
 		}
 
-		// Set $thumb to the thumbnail img tag, or the thing that goes where 
+		// Set $thumb to the thumbnail img tag, or the thing that goes where
 		// the thumbnail usually goes
 		$descIcon = false;
 		if ( !empty( $options['desc-link'] ) ) {
 			$linkAttribs = $this->getDescLinkAttribs( $alt );
 			if ( $showDescIcon ) {
 				// Make image description icon link
-				$imgAttribs = array( 
+				$imgAttribs = array(
 					'src' => "$scriptPath/info.png",
 					'width' => 22,
 					'height' => 22,
 					'alt' => $alt,
 				);
 				$linkAttribs['title'] = wfMsg( 'ogg-desc-link' );
-				$descIcon = Xml::tags( 'a', $linkAttribs, 
+				$descIcon = Xml::tags( 'a', $linkAttribs,
 					Xml::element( 'img', $imgAttribs ) );
 				$thumb = '';
 			} elseif ( $imgAttribs ) {
-				$thumb = Xml::tags( 'a', $linkAttribs, 
+				$thumb = Xml::tags( 'a', $linkAttribs,
 					Xml::element( 'img', $imgAttribs ) );
 			} else {
 				$thumb = '';
@@ -594,20 +603,20 @@ class OggTransformOutput extends MediaTransformOutput {
 			'linkUrl' => $linkUrl,
 			'isVideo' => $this->isVideo ) );
 
-		$s = Xml::tags( 'div', 
-			array( 
-				'id' => $id, 
-				'style' => "width: {$width}px;" ), 
+		$s = Xml::tags( 'div',
+			array(
+				'id' => $id,
+				'style' => "width: {$width}px;" ),
 			( $thumb ? Xml::tags( 'div', array(), $thumb ) : '' ) .
-			Xml::tags( 'div', array(), 
-				Xml::tags( 'button', 
+			Xml::tags( 'div', array(),
+				Xml::tags( 'button',
 					array(
 						'onclick' => "if (typeof(wgOggPlayer) != 'undefined') wgOggPlayer.init(false, $playerParams);",
 						'style' => "width: {$width}px; text-align: center",
 						'title' => $msgStartPlayer,
-					), 
-					Xml::element( 'img', 
-						array( 
+					),
+					Xml::element( 'img',
+						array(
 							'src' => "$scriptPath/play.png",
 							'width' => 22,
 							'height' => 22,

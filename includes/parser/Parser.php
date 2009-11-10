@@ -3477,7 +3477,7 @@ class Parser
 		global $wgTranscludeCacheExpiry,$wgMemc;
 		$cacheKey = wfMemcKey( "transcache", $url );
 		$text = $wgMemc->get( $cacheKey );
-				
+
 		if( $text !== false ) {
 			return $text;
 		}
@@ -4846,6 +4846,14 @@ class Parser
 		# Give the handler a chance to modify the parser object
 		if ( $handler ) {
 			$handler->parserTransformHook( $this, $file );
+		}
+
+		// use placeholder for images handled by external MediaTransformOutputs (RT #25329)
+		if (!empty($wgWysiwygParserEnabled)) {
+			if ($ret === "\x7f-WYSIWYG-IMAGE-\x7f") {
+				$original = $wgWysiwygMetaData[$refId]['original'];
+				Wysiwyg_SetRefId('wikitext', array('text' => &$ret, 'original' => $original), false);
+			}
 		}
 
 		return $ret;
