@@ -15,7 +15,7 @@ class PiggybackTemplate extends QuickTemplate {
 ?>
 	<table>
 		<tr>
-			<td class="mw-label"><label for='wpName1'><?php $this->msg('otherusername') ?></label></td>
+			<td class="mw-label"><label for='wpName1'><?php $this->msg('piggyback-otherusername') ?></label></td>
 			<td class="mw-input">
 				<input type='text' class='loginText' name="wpOtherName" id="wpOtherName1"
 					tabindex="1"
@@ -23,6 +23,7 @@ class PiggybackTemplate extends QuickTemplate {
 			</td>
 		</tr>
 	</table>
+	<div id="piggyback_userloginprompt"><p><?php  $this->msgWiki('piggyback-loginprompt') ?></p></div>
 	
 <?php }
 	public function __toString() {
