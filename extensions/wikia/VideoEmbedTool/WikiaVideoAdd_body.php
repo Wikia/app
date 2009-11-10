@@ -78,6 +78,7 @@ class WikiaVideoAddForm extends SpecialPage {
 		( '' != $wgRequest->getVal( 'wpWikiaVideoAddUrl' ) ) ? $this->mUrl = $wgRequest->getVal( 'wpWikiaVideoAddUrl' ) : $this->mUrl = '';	
 
 		if ( ( '' != $this->mName ) && ( '' != $this->mUrl ) ) {
+			$this->mName = ucfirst($this->mName);
 			$title = Title::makeTitle( NS_VIDEO, $this->mName );
 			if ( $title instanceof Title ) {
 				$video = new VideoPage( $title );	
