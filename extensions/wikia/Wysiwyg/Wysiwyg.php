@@ -130,7 +130,10 @@ function Wysywig_Ajax($type, $input = false, $wysiwygData = false, $pageName = f
 		if($ret['type'] == 'html') {
 			$separator = Parser::getRandomString();
 			header('X-sep: ' . $separator);
-			return new AjaxResponse($ret['html']."--{$separator}--".$ret['data']);
+
+			$resp = new AjaxResponse($ret['html']."--{$separator}--".$ret['data']);
+			//$resp->setContentType('text/plain; charset=utf-8');
+			return $resp;
 		} else if($ret['type'] == 'edgecase') {
 			header('X-edgecases: 1');
 			return $ret['edgecaseText'];
@@ -936,6 +939,8 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 				}
 				// let's replace original wikitext image params (RT #19208)
 				$params['text'] = htmlspecialchars(substr($data['original'], 3 + strlen($params['link']), -2));
+
+				wfDebug(__METHOD__ . " - adding image {$data['original']}\n");
 			}
 			break;
 
@@ -1046,6 +1051,11 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 			$data['link'] = $params['link'];
 			break;
 
+		case 'wikitext':
+			$data['original'] = $params['original'];
+			$result = $params['original'];
+			$returnPlaceholder = true;
+			break;
 	}
 
 	if($addMarker) {
@@ -1081,6 +1091,8 @@ function Wysiwyg_SetRefId($type, $params, $addMarker = true, $returnId = false) 
 
 		$result = $marker;
 	}
+
+	wfDebug(__METHOD__ . " - adding '{$type}' with refid #{$refId}\n");
 
 	$wgWysiwygMetaData[$refId] = $data;
 	return $returnId ? $refId : $result;

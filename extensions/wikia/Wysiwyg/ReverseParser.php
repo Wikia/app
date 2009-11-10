@@ -943,6 +943,10 @@ class ReverseParser {
 				case 'video':
 					return $refData['original'];
 
+				// wikitext placeholder
+				case 'wikitext':
+					return $refData['original'];
+
 				// fallback
 				default:
 					error_log('ReverseParser: unsupported placeholder type');
