@@ -1,4 +1,5 @@
 == Changes since 200911.2 ==
+* rt#26752: TipsWidget ajax failure (Macbre)
 * rt#26680: rename wording in Special:Iowa (eloy)
 * rt#25329: FCK: Cannot cope with ogg files when wgEnableOggHandlerExt enabled (Macbre)
 * rt#26211: ActivityFeed tag and sidebar widget: remove nofollow on article links (Marooned)
