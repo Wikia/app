@@ -36,46 +36,26 @@ class MultipleLookupCore {
 		return false;
 	}
 
-	/* fetch all wikias from the database */
-	function getWikiList() {
-		global $wgMemc, $wgExternalSharedDB;
-		/*
-		 will memcache this - but where will be mechanism controlling that when we add/delete wikias from database?
-		 won't the data get outdated? surely it would
-		*/
-		$wikias_array = array();
-		$memkey = wfForeignMemcKey( $wgExternalSharedDB, null, "Multilookup", "wikis" );
-		$cached = $wgMemc->get($memkey);
-		if (!is_array ($cached) || MULTILOOKUP_NO_CACHE) {
-			$dbr =& wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-			$query = "SELECT city_dbname, city_url, city_title FROM city_list WHERE city_public != 0";
-			$res = $dbr->query ($query);
-			while ($row = $dbr->fetchObject($res)) {
-				$wikias_array[$row->city_dbname] = $row;
-			}
-			$dbr->freeResult ($res);
-			if (!MULTILOOKUP_NO_CACHE) $wgMemc->set( $memkey, $wikias_array );
-		} else {
-			$wikias_array = $cached;
-		}
-
-		return $wikias_array;
-	}
-
 	function checkUserActivity($username) {
 		global $wgMemc, $wgExternalSharedDB, $wgExternalStatsDB;
-		$userActivity = array();
+		$userActivity = "";
 		$memkey = wfForeignMemcKey( $wgExternalSharedDB, null, "MultiLookup", "UserActivity", $username );
 		$cached = $wgMemc->get($memkey);
 		if (!is_array ($cached) || MULTILOOKUP_NO_CACHE) {
 			$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
 			if (!is_null($dbs)) {
-				$query = "select ca_latest_activity from city_ip_activity where ca_ip_text = {$dbs->addQuotes($username)}";
-				$res = $dbs->query ($query);
-				if ($row = $dbs->fetchObject($res)) {
-					$userActivity = $row->ca_latest_activity;
+				
+				$oRow = $dbs->selectRow(
+					array( "city_ip_activity" ),
+					array( "ca_latest_activity" ),
+					array( "ca_ip_text" => $username ),
+					__METHOD__
+				);
+				
+				if ( isset($oRow->ca_latest_activity) ) {
+					$userActivity = $oRow->ca_latest_activity;
 				}
-				$dbs->freeResult($res);
+
 				if (!MULTILOOKUP_NO_CACHE) {
 					$wgMemc->set( $memkey, $userActivity, 60*3 );
 				}
@@ -120,8 +100,7 @@ class MultipleLookupCore {
 			);
 
 			$result_found_already = false ;
-			$city_id = WikiFactory::DBtoID($database);
-			$wikia = WikiFactory::getWikiByID($city_id);
+			$wikia = WikiFactory::getWikiByDB($database);
 			if ( !empty($res) && !empty($wikia) ) {
 				while ( $row = $dbr->fetchObject( $res ) ) {
 					$row->rc_database = $database;

@@ -176,13 +176,13 @@ function wkLCshowDetails(dbname, limit, offset)
 <td align="center" width="12%"><b>&nbsp;</b></td>
 <td align="center" width="13%"><b>&nbsp;</b></td>
 </tr>
-<? foreach ($userActivity as $id => $dbname) {
-	$dbname = trim($dbname);
-	if ( (!empty($dbname)) && (!empty($wikiList[$dbname])) ) {
-		$wikiname = $wikiList[$dbname];
+<? foreach ($userActivity as $id => $activity) {
+	list ($dbname, $wikiUrl) = $activity;
+	if ( $wikiUrl ) {
+		$dbname = trim($dbname);
 ?>
 <tr bgcolor="#FFFFDF">
-	<td><a href="<?=$wikiname->city_url?>" target="new"><?=$wikiname->city_url?></a></td>
+	<td><a href="<?=$wikiUrl?>" target="new"><?=$wikiUrl?></a></td>
 	<td nowrap><a href="javascript:void(0);" onClick="javascript:wkLCshowDetails('<?=$dbname?>');"><?=wfMsg('multilookupdetails')?></a>
 	<td id="wkLCUserActivityInd_<?=$dbname?>" align="center"></td>
 </tr>
