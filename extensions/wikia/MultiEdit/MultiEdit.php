@@ -444,12 +444,7 @@ function wfMultiEditShowLink($page)
 
 	$editmode = $wgRequest->getText( 'editmode' );
 
-	#--- Add messages
-	require_once ( dirname( __FILE__ ) . '/MultiEdit.i18n.php' );
-	foreach( $wgMultiEditMessages as $key => $value ) 
-	{
-		$wgMessageCache->addMessages( $wgMultiEditMessages[$key], $key );
-	}
+	wfLoadExtensionMessages( 'MultiEdit' );
 
 	#--- show link to multi-edit 
 	if ( $wgMultiEditEnable && $editmode == 'nomulti' )
