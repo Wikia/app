@@ -33,11 +33,6 @@ class RegexBlockForm extends SpecialPage
     function __construct () {
         global $wgRegexBlockMessages, $wgMessageCache;
 
-        /* read messages from language's file */
-        foreach( $wgRegexBlockMessages as $key => $value ) {
-            $wgMessageCache->addMessages( $wgRegexBlockMessages[$key], $key );
-        }
-
         $this->mPosted = false;
         $this->mAction = "";
         $this->mFilter = $this->mRegexFilter = "";
