@@ -14,7 +14,8 @@ ActivityFeedTag.ajax = function(method, params, callback) {
 ActivityFeedTag.loadVideoPlayer = function(ev) {
 	ev.preventDefault();
 
-	var title = $(this).attr('title');
+	var url = $(this).attr('ref');
+	var desc = $(this).attr('title');
 
 	// catch doubleclicks on video thumbnails
 	if (ActivityFeedTag.videoPlayerLock) {
@@ -23,13 +24,13 @@ ActivityFeedTag.loadVideoPlayer = function(ev) {
 
 	ActivityFeedTag.videoPlayerLock = true;
 
-	ActivityFeedTag.ajax('getVideoPlayer', {'title': title}, function(res) {
+	ActivityFeedTag.ajax('getVideoPlayer', {'title': url}, function(res) {
 		// replace thumbnail with video preview
 		if (res.html) {
 			// open modal
-			title = title.replace(/_/g, ' ');
+			desc = desc.replace(/_/g, ' ');
 			$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
-				var html = '<div id="myhome-video-player" title="' + title  +'">' + res.html + '</div>';
+				var html = '<div id="myhome-video-player" title="' + desc  +'">' + res.html + '</div>';
 				$("#positioned_elements").append(html);
 				$('#myhome-video-player').makeModal({
 					'id': 'myhome-video-player-popup',
@@ -47,7 +48,8 @@ ActivityFeedTag.loadVideoPlayer = function(ev) {
 ActivityFeedTag.loadFullSizeImage = function(ev) {
 	ev.preventDefault();
 
-	var title = $(this).attr('title');
+	var url = $(this).attr('ref');
+	var desc = $(this).attr('title');
 	var timestamp = $(this).attr('ref');
 
 	timestamp = parseInt(timestamp) ? timestamp : 0;
@@ -60,7 +62,7 @@ ActivityFeedTag.loadFullSizeImage = function(ev) {
 	ActivityFeedTag.imagePreviewLock = true;
 
 	ActivityFeedTag.ajax('getImagePreview', {
-		'title': title,
+		'title': url,
 		'timestamp': timestamp,
 		'maxwidth': $.getViewportWidth(),
 		'maxheight': $.getViewportHeight()
@@ -68,9 +70,9 @@ ActivityFeedTag.loadFullSizeImage = function(ev) {
 		// replace thumbnail with video preview
 		if (res.html) {
 			// open modal
-			title = title.replace(/_/g, ' ');
+			desc = desc.replace(/_/g, ' ');
 			$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
-				var html = '<div id="myhome-image-preview" title="' + title  +'">' + res.html + '</div>';
+				var html = '<div id="myhome-image-preview" title="' + desc  +'">' + res.html + '</div>';
 				$("#positioned_elements").append(html);
 				$('#myhome-image-preview').makeModal({
 					'id': 'myhome-image-preview-popup',
