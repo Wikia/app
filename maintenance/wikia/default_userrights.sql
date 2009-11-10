@@ -23,6 +23,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Lleowen*/261184,'staff'),
 (/*Macbre*/119245,'staff'),
 (/*Marooned*/250810,'staff'),
+(/*Meitar*/967856,'staff'),
 (/*Moli.wikia*/115748,'staff'),
 (/*Ppiotr*/60069,'staff'),
 (/*Przemek wikia*/157013,'staff'),
