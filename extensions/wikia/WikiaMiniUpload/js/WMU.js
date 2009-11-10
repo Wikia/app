@@ -376,7 +376,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 			// go to main page
 		} else {
 			WMU_track('open/fromWysiwyg/existing');
-			if(FCK.wysiwygData[WMU_refid].exists) {
+			if( (typeof(FCK) != 'undefined') && FCK.wysiwygData[WMU_refid].exists) {
 				// go to details page
 				WMU_wysiwygStart = 2;
 			} else {
