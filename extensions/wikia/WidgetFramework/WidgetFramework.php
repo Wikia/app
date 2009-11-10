@@ -599,7 +599,10 @@ function WidgetFrameworkAjax() {
 		$response['id'] = $wgRequest->getInt('id');
 	}
 
-	return new AjaxResponse(Wikia::json_encode($response));
+	// return JSON with proper headers
+	$resp = new AjaxResponse(Wikia::json_encode($response));
+	$resp->setContentType('application/json; charset=utf-8');
+	return $resp;
 }
 
 /**
