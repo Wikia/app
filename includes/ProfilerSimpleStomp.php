@@ -32,8 +32,9 @@ class ProfilerSimpleStomp extends ProfilerSimple {
 
 	function profileOut($functionname) {
 		global $wgReportTimeViaStomp;
-		if( !empty( $wgReportTimeViaStomp ) && 
-			( $functionname=='close' || !$this->mFiltered || in_array( $functionname, $this->mProfiledMethods ) ) ) {
+		if( $functionname=='close' || 
+			( !empty( $wgReportTimeViaStomp ) && 
+			( !$this->mFiltered || in_array( $functionname, $this->mProfiledMethods ) ) ) ) {
 			parent::profileOut($functionname);
 		}
 	}
