@@ -1,4 +1,5 @@
 == Changes since 200911.2 ==
+* rt#26679: new SpecialHealthcheck extension (TOR)
 * rt#25638: move print.css to bottom in Monaco (Macbre)
 * rt#26149: MagCloud: Examples, for example. (Nef)
 
