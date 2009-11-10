@@ -153,6 +153,11 @@ td.activityfeed-details-label {
 	padding: 2px 0 0 !important;
 }
 
+#myhome-image-preview img {
+	display: block;
+	margin: 0 auto;
+}
+
 #myhome-image-preview-popup {
 	min-height: 150px;
 	min-width: 150px;

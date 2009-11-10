@@ -558,11 +558,16 @@ class FeedRenderer {
 
 			$thumb = substr($item['html'], 0, -2) . "style=\"padding-top: {$topOffset}px\"/>";
 
+			// localised title for popup
+			global $wgLang;
+			$popupTitle = $wgLang->getNsText( ($type == 'videos') ? NS_VIDEO : NS_FILE ) . ':' . $item['name'];
+
 			// wrapper for thumbnail
 			$attribs = array(
 				'class' => ($type == 'videos') ? 'activityfeed-video-thumbnail' :  'activityfeed-image-thumbnail',
-				'title' => ($type == 'videos' ? 'Video:' : 'File:') . $item['name'], /* TODO: check that name doesn't have NS prefix */
 				'rel' => 'nofollow',
+				'ref' => ($type == 'videos' ? 'Video:' : 'File:') . $item['name'], /* TODO: check that name doesn't have NS prefix */
+				'title' => $popupTitle,
 			);
 
 			// add "play" overlay for videos
