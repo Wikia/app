@@ -1,4 +1,5 @@
 == Changes since 200911.2 ==
+* rt#25629: myhome empty messages are now parsed (TOR)
 * rt#26752: TipsWidget ajax failure (Macbre)
 * rt#26680: rename wording in Special:Iowa (eloy)
 * rt#25329: FCK: Cannot cope with ogg files when wgEnableOggHandlerExt enabled (Macbre)
