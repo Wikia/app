@@ -24,6 +24,7 @@ use Math::Round qw(round_even);
 sub real404 {
 	my $request_uri  = shift;
 	print "Status: 404\r\n";
+	print "Cache-control: max-age=30\r\n";
 	print "Connection: close\r\n";
 	print "Content-Type: text/html; charset=utf-8\r\n\r\n";
 	print qq{
@@ -234,6 +235,7 @@ while( $request->Accept() >= 0 ) {
 						$transformed = 1;
 						print "HTTP/1.1 200 OK\r\n";
 						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
+						print "Cache-control: max-age=30\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
 						print STDERR "File $thumbnail created\n" if $debug;
 					}
@@ -281,6 +283,7 @@ while( $request->Accept() >= 0 ) {
 						$mimetype = $flm->checktype_filename( $thumbnail );
 						print "HTTP/1.1 200 OK\r\n";
 						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
+						print "Cache-control: max-age=30\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
 						print STDERR "File $thumbnail created\n" if $debug;
 					}
@@ -290,7 +293,8 @@ while( $request->Accept() >= 0 ) {
 						# serve original file
 						#
 						print "HTTP/1.1 200 OK\r\n";
-						print "X-LIGHTTPD-send-file: $thumbnail\r\n";
+						print "X-LIGHTTPD-send-file: $original\r\n";
+						print "Cache-control: max-age=30\r\n";
 						print "Content-type: $mimetype\r\n\r\n";
 					}
 				}
@@ -320,6 +324,7 @@ while( $request->Accept() >= 0 ) {
 							chmod 0664, $thumbnail;
 							print "HTTP/1.1 200 OK\r\n";
 							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
+							print "Cache-control: max-age=30\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
 							print STDERR "File $thumbnail created\n" if $debug;
 						}
@@ -329,7 +334,8 @@ while( $request->Accept() >= 0 ) {
 							# serve original file
 							#
 							print "HTTP/1.1 200 OK\r\n";
-							print "X-LIGHTTPD-send-file: $thumbnail\r\n";
+							print "X-LIGHTTPD-send-file: $original\r\n";
+							print "Cache-control: max-age=30\r\n";
 							print "Content-type: $mimetype\r\n\r\n";
 						}
 						undef $image;
