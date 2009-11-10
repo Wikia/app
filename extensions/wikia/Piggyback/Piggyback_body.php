@@ -21,7 +21,7 @@ class Piggyback extends SpecialPage
 
 		if (PBLoginForm::isPiggyback()) {
 			$wgOut->setPageTitle( wfMsg( 'badaccess' ) );
-			$wgOut->addHtml(wfMsg('firstlogout'));
+			$wgOut->addHtml(wfMsg('piggyback-firstlogout'));
 			$wgOut->returnToMain();
 			return  ;
 		}
@@ -75,13 +75,12 @@ class PBLoginForm extends LoginForm
 		$u = User::newFromName( $this->mOtherName );
 
 		if (  $u->getId()  == 0 ) {
-			$this->mainLoginForm(wfMsg( 'nosuchusershort', htmlspecialchars( $this->mOtherName ) ));
+			$this->mainLoginForm(wfMsg( 'piggyback-nosuchuser', htmlspecialchars( $this->mOtherName ) ));
 			return ;
 		}
 
-
 		if (  $u->getId()  == $wgUser->getId() ) {
-			$this->mainLoginForm(wfMsg( 'itisyou'));
+			$this->mainLoginForm(wfMsg( 'piggyback-itisyou'));
 			return ;
 		}
 
@@ -111,8 +110,7 @@ class PBLoginForm extends LoginForm
 			 * in "parent user" lenguage
 			 *
 			 */
-			if( $this->hasSessionCookie() || $this->mSkipCookieCheck )
-			{
+			if( $this->hasSessionCookie() || $this->mSkipCookieCheck ) {
 				$code = $wgRequest->getVal( 'uselang',$oldUserlang );
 				$wgLang = Language::factory( $code );
 			} else
@@ -127,14 +125,17 @@ class PBLoginForm extends LoginForm
 
 	function validPiggyback() {
 		global $wgUser;
-
 		/* pre valid */
 		$cUserId = User :: idFromName($this->mName);
-		if (($cUserId != 0) && ($wgUser->getID() != $cUserId ))
-		{
-			$this->mainLoginForm(wfMsg( 'wronguser', htmlspecialchars( $this->mName ) ));
+		if (($this->mName != "") && $wgUser->getID() != $cUserId) {
+			$this->mainLoginForm(wfMsg( 'piggyback-wronguser', htmlspecialchars( $this->mName ) ));
 			return ;
 		}
+		
+		if( ($this->mName != "") && ($cUserId == 0)) {
+			$this->mainLoginForm(wfMsg( 'piggyback-nosuchuser' ));
+		}
+		
 		$this->processLogin();
 	}
 

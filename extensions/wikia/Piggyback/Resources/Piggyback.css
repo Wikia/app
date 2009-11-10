@@ -7,3 +7,13 @@ td.mw-input
 {
 	width:0;
 }
+
+#piggyback_userloginprompt
+{
+font-size:85%;
+}
+
+#userloginprompt
+{
+	display: none;
+}
