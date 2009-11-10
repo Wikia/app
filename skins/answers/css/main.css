@@ -124,7 +124,7 @@ input.header_field {
 	position: relative;
 }
 #page_controls div {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png); /** TODO: replace /monaco/ with /answers/ after release **/
+	background-image: url(http://images.wikia.com/common/skins/answers/images/sprite.png?2);
 	clip: rect(0px 0px 0px 0px);
 	height: 16px;
 	margin: 8px 2px 0 0;
