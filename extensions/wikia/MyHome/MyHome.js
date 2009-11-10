@@ -22,7 +22,8 @@ MyHome.log = function(msg) {
 MyHome.loadVideoPlayer = function(ev) {
 	ev.preventDefault();
 
-	var title = $(this).attr('title');
+	var url = $(this).attr('ref');
+	var desc = $(this).attr('title');
 
 	// catch doubleclicks on video thumbnails
 	if (MyHome.videoPlayerLock) {
@@ -32,13 +33,13 @@ MyHome.loadVideoPlayer = function(ev) {
 
 	MyHome.videoPlayerLock = true;
 
-	MyHome.ajax('getVideoPlayer', {'title': title}, function(res) {
+	MyHome.ajax('getVideoPlayer', {'title': url}, function(res) {
 		// replace thumbnail with video preview
 		if (res.html) {
 			// open modal
-			title = title.replace(/_/g, ' ');
+			desc = desc.replace(/_/g, ' ');
 			$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
-				var html = '<div id="myhome-video-player" title="' + title  +'">' + res.html + '</div>';
+				var html = '<div id="myhome-video-player" title="' + desc  +'">' + res.html + '</div>';
 				$("#positioned_elements").append(html);
 				$('#myhome-video-player').makeModal({
 					'id': 'myhome-video-player-popup',
@@ -56,7 +57,8 @@ MyHome.loadVideoPlayer = function(ev) {
 MyHome.loadFullSizeImage = function(ev) {
 	ev.preventDefault();
 
-	var title = $(this).attr('title');
+	var url = $(this).attr('ref');
+	var desc = $(this).attr('title');
 	var timestamp = $(this).attr('ref');
 
 	timestamp = parseInt(timestamp) ? timestamp : 0;
@@ -70,7 +72,7 @@ MyHome.loadFullSizeImage = function(ev) {
 	MyHome.imagePreviewLock = true;
 
 	MyHome.ajax('getImagePreview', {
-		'title': title,
+		'title': url,
 		'timestamp': timestamp,
 		'maxwidth': $.getViewportWidth(),
 		'maxheight': $.getViewportHeight()
@@ -78,9 +80,9 @@ MyHome.loadFullSizeImage = function(ev) {
 		// replace thumbnail with video preview
 		if (res.html) {
 			// open modal
-			title = title.replace(/_/g, ' ');
+			desc = desc.replace(/_/g, ' ');
 			$.getScript(stylepath + '/common/jquery/jquery.wikia.modal.js?' + wgStyleVersion, function() {
-				var html = '<div id="myhome-image-preview" title="' + title  +'">' + res.html + '</div>';
+				var html = '<div id="myhome-image-preview" title="' + desc  +'">' + res.html + '</div>';
 				$("#positioned_elements").append(html);
 				$('#myhome-image-preview').makeModal({
 					'id': 'myhome-image-preview-popup',
