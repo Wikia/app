@@ -112,12 +112,13 @@ function gracenote_getAnalyticsHtml($google_action){
 	$googleAnalyticsId = GOOGLE_ANALYTICS_ID;
 	$retVal = <<<GOOGLE_JS
 	<script src='http://www.google-analytics.com/ga.js' type='text/javascript'></script>
-	<script type="text/javascript">
+	<script type="text/javascript">/* <![CDATA[ */
 	try{
 	var pageTracker = _gat._getTracker("$googleAnalyticsId");
 	pageTracker._trackPageview();
 	$trackEventCode
-	} catch(err) {}</script>
+	} catch(err) {}
+	/* ]]> */</script>
 GOOGLE_JS
 ;
 
