@@ -12,13 +12,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     exit( 1 ) ;
 }
 
-#--- Add messages
-global $wgMessageCache, $wgWikiaStatsMessages;
-require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-foreach( $wgWikiaStatsMessages as $key => $value ) {
-	$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
-}
-
 class WikiaStatsClass extends SpecialPage
 {
     var $mPosted, $mStats, $mSkinName;
