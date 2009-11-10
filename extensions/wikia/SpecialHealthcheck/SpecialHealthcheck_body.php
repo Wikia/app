@@ -29,14 +29,14 @@ class HealthCheck extends UnlistedSpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgSpecialHealth, $wgOut, $wgCityId;
+		global $wgSpecialNotHealthy, $wgOut, $wgCityId;
 
 		// Set page title and other stuff
 		$this->setHeaders();
 		$wgOut->setPageTitle( 'Special:Healthcheck' );
 
 
-		if ( empty( $wgSpecialHealth ) ) {
+		if ( !empty( $wgSpecialNotHealthy ) ) {
 			# failure!
 			$wgOut->setStatusCode( 503 );
 			$wgOut->addHTML( 'Server status is: NOT OK' );
