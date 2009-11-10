@@ -26,7 +26,7 @@ includes/Linker.php:
 $wgHooks['EditForm::MultiEdit:Form'][] = 'wfMultiEditFormExt';
 $wgHooks['EditForm::MultiEdit:Section'][] = 'wfMultiEditSection';
 $wgHooks['EditPage::showEditForm:initial'][] = 'wfMultiEditShowLink';
-$wgExtensionMessagesFiles['MultiEdit'] = dirname(__FILE__). '/MutliEdit.i18n.php';
+$wgExtensionMessagesFiles['MultiEdit'] = dirname(__FILE__). '/MultiEdit.i18n.php';
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Multi Edit',
 	'description' => 'allows multi-section article editing',
