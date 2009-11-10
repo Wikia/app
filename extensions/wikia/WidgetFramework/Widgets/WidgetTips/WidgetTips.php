@@ -9,7 +9,7 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetTips'] = array(
 	'callback' => 'WidgetTips',
-	'title' => 'widget-title-tips', 
+	'title' => 'widget-title-tips',
 	'desc' => 'widget-desc-tips',
 	'params' => array(),
 	'closeable' => true,
@@ -49,7 +49,7 @@ function WidgetTips($id, $params) {
 		$tipId--;
 
 		if ($tipId < 0) {
-		$tipId = $tipsCount-1;
+			$tipId = $tipsCount-1;
 		}
 		break;
 
@@ -57,7 +57,7 @@ function WidgetTips($id, $params) {
 		$tipId++;
 
 		if ($tipId >= $tipsCount) {
-		$tipId = 0;
+			$tipId = 0;
 		}
 		break;
 
@@ -68,9 +68,15 @@ function WidgetTips($id, $params) {
 	$id = intval(substr($id, 7));
 
 	// prev/next tip selector
-	$selector = '<div class="WidgetTipsSelector">'.
-		'<a onclick="WidgetTipsChange('.$id.', '.$tipId.', \'prev\')">&laquo; '.wfMsg('allpagesprev').'</a> '.
-		'<a onclick="WidgetTipsChange('.$id.', '.$tipId.', \'next\')">'.wfMsg('allpagesnext').' &raquo;</a></div>';
+	if ( !isset($params['_widgetTag']) ) {
+		$selector = '<div class="WidgetTipsSelector">'.
+			'<a onclick="WidgetTipsChange('.$id.', '.$tipId.', \'prev\')">&laquo; '.wfMsg('allpagesprev').'</a> '.
+			'<a onclick="WidgetTipsChange('.$id.', '.$tipId.', \'next\')">'.wfMsg('allpagesnext').' &raquo;</a></div>';
+	}
+	else {
+		// fix RT #26752
+		$selector = '';
+	}
 
 	wfProfileOut(__METHOD__);
 
@@ -79,12 +85,12 @@ function WidgetTips($id, $params) {
 
 function WidgetTipsGetTips() {
 
-	$tips = wfMsg( 'tips' );
+	$tips = wfMsg('tips');
 
-	if ( wfEmptyMsg( 'tips', $tips ) ) {
-	return false;
+	if ( wfEmptyMsg('tips', $tips) ) {
+		return false;
 	}
 	else {
-	return $tips !='' ? explode("\n\n", trim($tips)) : false;
+		return $tips !='' ? explode("\n\n", trim($tips)) : false;
 	}
 }
