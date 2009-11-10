@@ -236,4 +236,5 @@ function CommunityWidgetPurgeVarnish(&$article, &$user, $text, $summary, &$minor
 		$wgMemc->delete($key);
 		SquidUpdate::purge(array($wgScript . '?action=ajax&rs=CommunityWidgetAjax&uselang=$lang'));
 	}
+	return true;
 }
