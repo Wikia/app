@@ -109,11 +109,11 @@ function WidgetProblemReports($id, $params) {
 	
 	if($params['show'] == 2)
 	{
-		$urlParams[] = 'archived=1';
+		$urlParams[] = 'staff=1';
 	}
 	elseif($params['show'] == 1)
 	{
-		$urlParams[] = 'staff=1';
+		$urlParams[] = 'archived=1';
 	}
 	
 	if($apiParams['wkshowall'] == 1)
