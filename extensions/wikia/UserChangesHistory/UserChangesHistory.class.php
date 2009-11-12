@@ -62,7 +62,8 @@ class UserChangesHistory {
 						"ulh_from"  => $from,
 						"ulh_rememberme" => $user->getOption('rememberpassword')
 					),
-					__METHOD__
+					__METHOD__,
+					array('IGNORE')
 				);
 				
 				$status = $dbw->replace(
