@@ -1,10 +1,9 @@
 <?php
 
-/* register as a parser function {{BLOGTPL_TAG}} and a tag <BLOGTPL_TAG> */
-$wgExtensionFunctions[] = array("BlogTemplateClass", "setup");
-$wgHooks['LanguageGetMagic'][] = "BlogTemplateClass::setMagicWord";
-global $wgAjaxExportList;
 $wgAjaxExportList[] = "BlogTemplateClass::axShowCurrentPage";
+$wgHooks['LanguageGetMagic'][] = "BlogTemplateClass::setMagicWord";
+/* register as a parser function {{BLOGTPL_TAG}} and a tag <BLOGTPL_TAG> */
+$wgHooks['ParserFirstCallInit'][] = "BlogTemplateClass::setParserHook";
 
 define ("BLOGS_TIMESTAMP", "20081101000000");
 define ("BLOGS_XML_REGEX", "/\<(.*?)\>(.*?)\<\/(.*?)\>/si");
@@ -251,22 +250,18 @@ class BlogTemplateClass {
 		"/<(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet)(.*)>(.*)<\/(inputbox|widget|googlemap|imagemap|poll|rss|math|googlespreadsheet)>/siU",
 	);
 
-	public static function setup() {
-		global $wgParser, $wgMessageCache;
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-		wfProfileIn( __METHOD__ );
-		// variant as a parser tag: <BLOGTPL_TAG>
-		$wgParser->setHook( BLOGTPL_TAG, array( __CLASS__, "parseTag" ) );
-		// set empty value
-		// language file
-		wfLoadExtensionMessages("Blogs");
-		wfProfileOut( __METHOD__ );
-	}
-
 	public static function setMagicWord( &$magicWords, $langCode ) {
 		wfProfileIn( __METHOD__ );
+		wfLoadExtensionMessages("Blogs");
 		/* add the magic word */
 		$magicWords[BLOGTPL_TAG] = array( 0, BLOGTPL_TAG );
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	public static function setParserHook( &$parser ) {
+		wfProfileIn( __METHOD__ );
+		$parser->setHook( BLOGTPL_TAG, array( __CLASS__, "parseTag" ) );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -274,6 +269,7 @@ class BlogTemplateClass {
 	public static function parseTag( $input, $params, &$parser ) {
 		global $wgTitle;
 		wfProfileIn( __METHOD__ );
+		wfLoadExtensionMessages("Blogs");
 		/* parse input parameters */
 		if (is_null(self::$oTitle)) {
 			self::$oTitle = ( is_null($wgTitle) ) ? $parser->getTitle() : $wgTitle;
@@ -285,13 +281,6 @@ class BlogTemplateClass {
 		$res = self::__parse($aParams, $params, $parser);
 		wfProfileOut( __METHOD__ );
 		return $res;
-	}
-
-	public static function parseTagFunction(&$parser) {
-		wfProfileIn( __METHOD__ );
-		// not implemented
-		wfProfileOut( __METHOD__ );
-		return "";
 	}
 
 	public static function parseTagWithTitle($input, $params, &$parser, $oTitle) {
