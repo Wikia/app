@@ -20,7 +20,7 @@ a.greyButton big, a.greyButton small {
 }
 #page_controls div {
 	background: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1', sizingMethod='crop');
 }
 #search_button {
 	background: none;
@@ -31,7 +31,7 @@ a.greyButton big, a.greyButton small {
 }
 .widget .close span, .widget .edit span, .widget .hide span, #widget_cockpit_close {
 	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/widget_sprite.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1', sizingMethod='crop');
 }
 .staffSig {
 	background-image: none !important;
@@ -58,7 +58,7 @@ a.greyButton big, a.greyButton small {
 /* dynamic links in monaco toolbox */
 #link_box_dynamic img.sprite {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1', sizingMethod='crop');
 }
 
 /* RTL fixes */

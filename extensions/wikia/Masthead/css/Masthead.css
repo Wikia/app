@@ -118,7 +118,7 @@ body.masthead-special #page_bar {
 }
 
 .nav_links_head img.sprite {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112);
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1);
 	height: 16px;
 	margin-right: 16px;
 	position: absolute;
@@ -128,7 +128,7 @@ body.masthead-special #page_bar {
 /* fix for IE6 */
 * html .nav_links_head img.sprite {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1', sizingMethod='crop');
 }
 
 #mt_emailuser_icon,
