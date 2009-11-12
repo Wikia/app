@@ -330,6 +330,10 @@ class BlogComment {
 	}
 
 	public function explode($title) {
+		$oTitle = Title::newFromText($title);
+		if ( !is_null($oTitle) ) {
+			$title = $oTitle->getPrefixedDBkey();
+		}
 		$elements = explode( "/", $title );
 		$res = array( '', '', '' );
 		if ( !empty($elements) && is_array($elements) ) {
