@@ -26,7 +26,7 @@ function WidgetAnswers($id, $params) {
 
 	# TODO: should be handled directly in WidgetFramework, probably Draw/DrawOne method
 	global $wgLanguageCode, $wgAvailableAnswersLang;
-	if (!in_array($wgLanguageCode, $wgAvailableAnswersLang))        {
+	if (empty( $wgAvailableAnswersLang ) || !in_array($wgLanguageCode, $wgAvailableAnswersLang)) {
 		return '';
 	}
 

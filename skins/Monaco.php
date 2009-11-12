@@ -185,7 +185,7 @@ class MonacoSidebar {
 					if($node['depth'] == 1) {
 						$nodes[0]['editthispage'] = true; // we have to know later if there is editthispage special word used in first level
 					}
-				} else if($node['original']{0} == '#') {
+				} else if(!empty( $node['original'] ) && $node['original']{0} == '#') {
 					if($this->handleMagicWord($node)) {
 						$nodes[0]['magicWords'][] = $node['magic'];
 						if($node['depth'] == 1) {
