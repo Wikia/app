@@ -402,16 +402,7 @@ yieldbuild_loc = "question_bubble";
 				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 				echo $ads;
 			}
-		}
-
-		if ( $is_question ) { ?>
-		<div id="related_questions" class="reset">
-			<h2><?= wfMsg("related_questions") ?></h2>
-			<ul id="related_answered_questions">
-				<?= HomePageList::related_answered_questions() ?>
-			</ul>
-		</div>
-		<? } ?>
+		}?>
 
 <?php if ($YB): ?>
 <div id="ads-unanswered-bottom">
@@ -561,6 +552,14 @@ yieldbuild_loc = "left_content_bottom";
 <script type="text/javascript" src="http://hook.yieldbuild.com/s_ad.js"></script>
 </div>
 <?php endif; ?>
+		<? if ( $is_question ) { ?>
+		<div id="related_questions" class="reset">
+			<h2><?= wfMsg("related_questions") ?></h2>
+			<ul id="related_answered_questions">
+				<?= HomePageList::related_answered_questions() ?>
+			</ul>
+		</div>
+		<? } ?>
 		</div><?/*answers_article*/?>
 	</div><?/*answers_page*/?>
 
