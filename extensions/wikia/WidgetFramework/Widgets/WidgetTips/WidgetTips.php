@@ -84,8 +84,8 @@ function WidgetTips($id, $params) {
 }
 
 function WidgetTipsGetTips() {
-
-	$tips = wfMsg('tips');
+	// use content language (thx to Uberfuzzy)
+	$tips = wfMsgForContent('tips');
 
 	if ( wfEmptyMsg('tips', $tips) ) {
 		return false;
