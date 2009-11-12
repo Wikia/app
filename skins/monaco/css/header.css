@@ -259,60 +259,6 @@ a.greyButton big {
 }
 
 /*** WIDGET COCKPIT ***/
-#ghost {
-	background-color: #cccccc;
-	border: 2px solid #000000;
-	height: 35px;
-	width: 35px;
-	display: none;
-	visibility: hidden;
-}
-#widget_cockpit {
-	left: 0px;
-	right: 0px;
-	top: 0px;
-	position: static;
-	visibility: visible;
-	width: auto !important;
-	display: none;
-}
-#widget_cockpit .carousel-clip-region {
-	margin: 0 20px;
-	overflow: hidden; /* Secret to the clipping */
-	position: relative;
-}
-#widget_cockpit .carousel-clip-region-auto {
-	width: auto !important;
-}
-#carousel-prev {
-	left: 0;
-}
-#carousel-next {
-	right: 0;
-}
-#cockpit1_close {
-	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png);
-	clip: rect(0px 28px 12px 18px);
-	cursor: pointer;
-	height: 12px;
-	left: -13px;
-	position: absolute;
-	top: 2px;
-	width: 28px;
-}
-div.widget_cockpit_controls {
-	background: #222;
-	color: #FFF;
-	cursor: pointer;
-	font-size: 30px;
-	font-weight: bold;
-	height: 70px;
-	line-height: 65px;
-	position: absolute;
-	text-align: center;
-	top: 0;
-	width: 20px;
-}
 #widget_cockpit_list {
 	margin: 5px 0;
 	position: relative;
