@@ -31,14 +31,6 @@ function runBackups( $from, $to, $full, $options ) {
 	$range = array();
 
 	/**
-	 * hardcoded for while
-	 */
-	$servers = array(
-		"DEFAULT" => "10.6.32.32",
-		"c2" => "10.6.30.25"
-	);
-
-	/**
 	 * shortcut for full & current together
 	 */
 	$both = isset( $options[ "both" ] ) ? true : false;
@@ -114,7 +106,6 @@ function runBackups( $from, $to, $full, $options ) {
 		 * get cluster for this wiki
 		 */
 		$cluster = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
-		$server = ( $cluster == "c2" ) ? $servers[ "c2" ] : $servers[ "DEFAULT" ];
 		/**
 		 * build command
 		 */
@@ -133,7 +124,6 @@ function runBackups( $from, $to, $full, $options ) {
 				"--full",
 				"--xml",
 				"--quiet",
-				"--server={$server}",
 				"--output=gzip:{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
@@ -153,7 +143,6 @@ function runBackups( $from, $to, $full, $options ) {
 				"--current",
 				"--xml",
 				"--quiet",
-				"--server={$server}",
 				"--output=gzip:{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
