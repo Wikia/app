@@ -2226,7 +2226,16 @@ if(count($wikiafooterlinks) > 0) {
 <?php		wfProfileIn( __METHOD__ . '-widgets'); ?>
 
 			<div id="sidebar_1" class="sidebar">
-			<?= WidgetFramework::getInstance()->Draw(1) ?>
+			<?php
+				// macbre: RT #25697 - hide widgets on edit pages
+				global $wgRequest;
+				if ( in_array($wgRequest->getVal('action'), array('edit', 'submit')) ) {
+					echo '<!-- Widgets are hidden on edit page -->';
+				}
+				else {
+					echo WidgetFramework::getInstance()->Draw(1);
+				}
+			?>
 
 			<?php
 				echo AdEngine::getInstance()->getAd('LEFT_SLIMBOX_1', false);
