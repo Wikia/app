@@ -886,6 +886,7 @@ div.category br {
 
 /** User edit points **/
 .answered_title {
+	clear: both;
 	margin-top: 20px;
 }
 

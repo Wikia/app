@@ -1,4 +1,5 @@
 == Changes since 200911.2 ==
+* rt#26884: Answers: Image clashes with "Answered by" area (Macbre)
 * rt#24763: HideNamespace ext. (Nef)
 * rt#25629: myhome empty messages are now parsed (TOR)
 * rt#26752: TipsWidget ajax failure (Macbre)
