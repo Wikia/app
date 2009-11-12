@@ -27,7 +27,7 @@ a.bigButton big, a.bigButton small {
 }
 .widget .close span, .widget .edit span, .widget .hide span, #widget_cockpit_close {
 	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/widget_sprite.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco_old/images/widget_sprite.png', sizingMethod='crop');
 }
 .staffSig {
 	background-image: none !important;
