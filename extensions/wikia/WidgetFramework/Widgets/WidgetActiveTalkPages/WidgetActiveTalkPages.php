@@ -46,7 +46,7 @@ function WidgetActiveTalkPages($id, $params) {
 		$date = $wgLang->sprintfDate('j M Y (H:i)', date('YmdHis', $timestamp));
 
 		$title = Title::newFromText( $edit['title'], $edit['ns'] );
-		if (!isset($list[$edit['title']])) {
+		if ( $title !== null && !isset($list[$edit['title']])) {
     		    $list[$edit['title']] = array
 		    (
 			'href'  => $title->getLocalURL('diff='.$edit['revid']), 
