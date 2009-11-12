@@ -220,7 +220,7 @@ a.bigButton small {
 	float: right;
 	margin: 15px 16px 0 284px;
 	position: relative;
-	text-align: center; 
+	text-align: center;
 	z-index: 2;
 }
 #accent_graphic1 {
@@ -293,7 +293,7 @@ a.bigButton small {
 	right: 0;
 }
 #cockpit1_close {
-	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco_old/images/widget_sprite.png);
 	clip: rect(0px 28px 12px 18px);
 	cursor: pointer;
 	height: 12px;
@@ -323,7 +323,7 @@ div.widget_cockpit_controls {
 }
 #widget_cockpit_list li {
 	float: left;
-	font-size: 8.5pt; 
+	font-size: 8.5pt;
 	height: 60px;
 	line-height: 11px;
 	margin: 0 5px;

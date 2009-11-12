@@ -42,7 +42,7 @@
 	position: relative;
 }
 .widget .widgetToolbox .toolboxItem span {
-	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco_old/images/widget_sprite.png);
 	cursor: pointer;
 	display: block;
 	height: 12px;
