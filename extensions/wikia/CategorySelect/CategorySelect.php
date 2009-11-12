@@ -449,7 +449,7 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 	$action = $wgRequest->getVal('action', 'view');
 	//for redirected page this hook is ran twice - check for button existence and don't add second one (fixes rt#12223)
 	if (($action == 'view' || $action == 'purge') && strpos($categoryLinks, '<div id="csAddCategorySwitch"') === false) {
-		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'' . $wgExtensionsPath . '/wikia/CategorySelect/sprite.png\') left center no-repeat;line-height: 16px;"><a href="#" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px" rel="nofollow">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
+		$categoryLinks .= ' <div id="csAddCategorySwitch" class="noprint" style="position:relative;float:left;border: 1px solid #BBB;-moz-border-radius:3px;-webkit-border-radius:3px;padding:0 4px 0 12px;background:#ddd url(\'http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.2\') no-repeat -655px 1px;line-height: 16px;"><a href="#" onfocus="this.blur();" style="color:#000;font-size:0.85em;text-decoration:none;background:#ddd;display:block;padding:0 3px" rel="nofollow">' . wfMsg('categoryselect-addcategory-button') . '</a></div>';
 		$wgOut->addInlineScript(<<<JS
 /* CategorySelect */
 wgAfterContentAndJS.push(function() {
