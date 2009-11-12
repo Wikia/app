@@ -17,7 +17,9 @@ var AjaxLogin = {
 		this.form.attr('id', 'userajaxloginform');
 
 		// add submit event handler for login form
-		this.form.submit(this.formSubmitHandler).log('AjaxLogin: init()');
+		this.form.bind('submit', this.formSubmitHandler);
+
+		$().log('AjaxLogin: init()');
 
 		// ask before going to register form from edit page
 		$('#wpAjaxRegister').click(this.ajaxRegisterConfirm);
@@ -30,7 +32,7 @@ var AjaxLogin = {
 		AjaxLogin.form.log('AjaxLogin: selected action = '+ AjaxLogin.action);
 
 		// tracking
-		WET.byStr('loginActions/' + AjaxLogin.action);	
+		WET.byStr('loginActions/' + AjaxLogin.action);
 
 		var params = [
 			'action=ajaxlogin',
@@ -49,19 +51,27 @@ var AjaxLogin = {
 	handleSuccess: function(response) {
 		var responseResult = response.ajaxlogin.result;
 		switch(responseResult) {
-			// TODO: what is this for?
 			case 'Reset':
-				if(Dom.get('wpPreview') && Dom.get('wpLogin')) {
+				// password reset
+
+				// we're on edit page
+				if($('#wpPreview').exists() && $('#wpLogin').exists()) {
 					if(typeof(ajaxLogin1)!="undefined" && !confirm(ajaxLogin1)) {
 						break;
 					}
 				}
-				Dom.get('userajaxloginform').action = wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login';
-				Event.removeListener('userajaxloginform', 'submit', YAHOO.wikia.AjaxLogin.formSubmitHandler);
-				YAHOO.wikia.AjaxLogin.blockLoginForm(false);
-				Dom.get('userajaxloginform').submit();
-				YAHOO.wikia.AjaxLogin.blockLoginForm(true);
+
+				// change the action of the AjaxLogin form
+				$('#userajaxloginform').attr('action', wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login');
+
+				// remove AJAX functionality from login form
+				AjaxLogin.form.unbind('submit', this.formSubmitHandler);
+
+				// unblock and submit the form
+				AjaxLogin.blockLoginForm(false);
+				$('#userajaxloginform').submit();
 				break;
+
 			case 'Success':
 				// macbre: call custom function (if provided by any extension)
 				if (typeof window.wgAjaxLoginOnSuccess == 'function') {
@@ -77,11 +87,11 @@ var AjaxLogin = {
 				}
 
 				// we're on edit page
-				if($('#wpPreview').length && $('#wpLogin').length) {
-					if ($('#wikiDiff').children().length) {
+				if($('#wpPreview').exists() && $('#wpLogin').exists()) {
+					if ($('#wikiDiff').children().exists()) {
 						$('#wpDiff').click();
 					} else {
-						if ($('#wikiPreview').children().length == 0) {
+						if (!$('#wikiPreview').children().exists()) {
 							$('#wpLogin').attr('value', 1);
 						}
 						$('#wpPreview').click();
@@ -94,13 +104,16 @@ var AjaxLogin = {
 					}
 				}
 				break;
+
 			case 'NotExists':
 				AjaxLogin.blockLoginForm(false);
 				$('#wpPassword1n').attr('value', '');
 				$('#wpName1').attr('value', '').focus();
+
 			case 'WrongPass':
 				AjaxLogin.blockLoginForm(false);
 				$('#wpPassword1').attr('value', '').focus();
+
 			default:
 				AjaxLogin.blockLoginForm(false);
 				AjaxLogin.displayReason(response.ajaxlogin.text);
@@ -119,7 +132,7 @@ var AjaxLogin = {
 	ajaxRegisterConfirm: function(ev) {
 		AjaxLogin.form.log('AjaxLogin: ajaxRegisterConfirm()');
 
-		if($('#wpPreview').length && $('#wpLogin').length) {
+		if($('#wpPreview').exists() && $('#wpLogin').exists()) {
 			if(typeof(ajaxLogin2)!="undefined" && !confirm(ajaxLogin2)) {
 				ev.preventDefault();
 			}
