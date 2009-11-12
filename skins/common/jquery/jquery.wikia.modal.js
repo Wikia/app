@@ -35,7 +35,7 @@ $.fn.extend({
 	}
 
    	wrapper
-   		.prepend('<h1 class="modalTitle color1"><div style="background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);"></div>' + this.attr('title') + '</h1>')
+   		.prepend('<h1 class="modalTitle color1"><div style="background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112);"></div>' + this.attr('title') + '</h1>')
    		.width(settings.width)
    		.css({
    			marginLeft: -wrapper.outerWidth() / 2,
