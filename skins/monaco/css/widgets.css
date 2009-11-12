@@ -12,7 +12,7 @@
 }
 
 #cockpit_close {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112);
 	background-position: -304px 0;
 	cursor: pointer;
 	height: 16px;
@@ -274,7 +274,7 @@ body.widgetsAddingBlocked .add {
 	background: transparent;
 }
 #link_box_dynamic img {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?adfasdf) no-repeat;
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112) no-repeat;
 	height: 16px;
 	position: absolute;
 	width: 464px;
