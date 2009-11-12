@@ -84,43 +84,43 @@
 
 /*** Control buttons ***/
 .CScontrol {
-	background-image: url(sprite.png);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.2);
 	cursor: pointer;
 	display: block;
 	height: 14px;
 	position: absolute;
 	top: 1px;
-	width: 48px;
+	width: 720px;
 	overflow: hidden;
 }
 
 .CScontrolAdd {
 	background-position: top left;
-	left: 2px;
-	width: 12px;
+	left: 0px;
+	width: 16px;
 }
 
 .CScontrolRemove {
-	clip: rect(0px 48px 14px 36px);
-	right: 4px;
+	clip: rect(0px 714px 14px 704px);
+	right: 0px;
 }
 
 /** fix for Opera **/
 html>/**/body .CSitemOuter > .CScontrolRemove {
 	clip: rect(auto, auto, auto, auto);
-	background-position: right center;
-	width: 12px;
+	background-position: -704px 0;
+	width: 16px;
 	z-index: 2;
 }
 
 .CScontrolSort {
-	clip: rect(0px 36px 14px 24px);
-	right: 4px;
+	clip: rect(0px 702px 14px 688px);
+	right: 0;
 }
 
 .CScontrolSorted {
-	clip: rect(0px 24px 14px 12px);
-	right: -8px;
+	clip: rect(0px 684px 14px 672px);
+	right: -16px;
 }
 
 .CSsuggestHover {
@@ -162,7 +162,7 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 
 * html .CScontrol {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/extensions/wikia/CategorySelect/sprite.png', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.2', sizingMethod='crop');
 }
 
 /* fix for YUI AutoComplete in CategorySelect */
