@@ -1,6 +1,6 @@
 <?php
 /**
- * HealthCheck
+ * Healthcheck
  *
  * A simple special page for server state checks,
  * requested by Artur
@@ -14,18 +14,18 @@
  */
 
 if( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is a MediaWiki extension named HealthCheck.\n";
+	echo "This is a MediaWiki extension named Healthcheck.\n";
 	exit( 1 );
 }
 
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['specialpage'][] = array(
-	'name' => 'HealthCheck',
+	'name' => 'Healthcheck',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
 	'description' => 'A simple page for server state checking.'
 );
 
 // Set up the new special page
 $dir = dirname(__FILE__) . '/';
-$wgAutoloadClasses['HealthCheck'] = $dir. 'SpecialHealthcheck_body.php';
-$wgSpecialPages['HealthCheck'] = 'HealthCheck';
+$wgAutoloadClasses['Healthcheck'] = $dir. 'SpecialHealthcheck_body.php';
+$wgSpecialPages['Healthcheck'] = 'Healthcheck';

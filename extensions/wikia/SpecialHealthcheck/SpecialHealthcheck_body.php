@@ -1,6 +1,6 @@
 <?php
 /**
- * HealthCheck
+ * Healthcheck
  *
  * @file
  * @ingroup Extensions
@@ -11,16 +11,16 @@
  */
 
 if( !defined( 'MEDIAWIKI' ) ) {
-	echo "This is a MediaWiki extension named HealthCheck.\n";
+	echo "This is a MediaWiki extension named Healthcheck.\n";
 	exit( 1 );
 }
 
-class HealthCheck extends UnlistedSpecialPage {
+class Healthcheck extends UnlistedSpecialPage {
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		parent::__construct( 'HealthCheck'/*class*/ );
+		parent::__construct( 'Healthcheck'/*class*/ );
 	}
 
 	/**
