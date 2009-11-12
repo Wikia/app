@@ -9,7 +9,6 @@ package main;
 use strict;
 use URI;
 use FCGI;
-#use FCGI::ProcManager::MaxRequests;
 use FCGI::ProcManager;
 use Image::Magick;
 use Image::LibRSVG;
