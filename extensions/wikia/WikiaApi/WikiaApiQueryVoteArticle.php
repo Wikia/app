@@ -660,13 +660,13 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$this->deleteCacheData($lcache_key);
 
 		$this->initCacheKey( $lcache_key, __CLASS__, ':getVoteArticle' );
-		$this->setCacheKey ($lcache_key, 'U', $user_id);
 		$this->setCacheKey ($lcache_key, 'P', $page);
+		$this->setCacheKey ($lcache_key, 'U', $user_id);
 		$this->deleteCacheData($lcache_key);
 
 		$this->initCacheKey( $lcache_key, __CLASS__, ':getVoteArticle' );
-		$this->setCacheKey ($lcache_key, 'UB', $browserId);
 		$this->setCacheKey ($lcache_key, 'P', $page);
+		$this->setCacheKey ($lcache_key, 'UB', $browserId);
 		$this->deleteCacheData($lcache_key);
 
 		$this->deleteCacheData($lcache_key);
