@@ -1,4 +1,5 @@
 == Changes since 200911.2 ==
+* rt#26811: Answers: related questions placement fixed. (Nef)
 * rt#25697: Remove widgets from Edit Page (Macbre)
 * rt#26359: /v/ exception (eloy)
 * rt#26789: AjaxLogin: throws JS error when trying to reset the password (Macbre)
