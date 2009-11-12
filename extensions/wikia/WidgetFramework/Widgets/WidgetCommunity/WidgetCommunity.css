@@ -1,45 +1,5 @@
-#community_avatar {
-	display: block;
-	float: left;
-	margin-right: 5px;
-	padding: 1px;
-}
-.WidgetCommunity .community_details {
-	clear: both;
-	font-size: 11px;
-	overflow: hidden;
-	padding: 3px;
-	position: relative;
-}
-.WidgetCommunity .community_details h3 {
-	font-size: 12px;
-	font-weight: bold;
-}
-.WidgetCommunity .community_toggle {
-	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png);
-	clip: rect(0px 7px 12px 0px);
-	cursor: pointer;
-	height: 12px;
-	position: absolute;
-	right: -17px;
-	top: 4px;
-	width: 28px;
-}
 .WidgetCommunity dd {
-    max-height: none;
-}
-* html .WidgetCommunity dd,
-* html .WidgetCommunity dt {
-	position: relative;
-}
-
-* html .WidgetCommunity .community_toggle {
-	right: -7px;
-}
-
-
-/* ----- new version ----- */
-.WidgetCommunity dd {
+	max-height: none;
 	padding: 0;
 }
 
