@@ -95,13 +95,6 @@ body.widgetsAddingBlocked .add {
 	left: -624px;
 	margin-top: -2px;
 }
-.widget .widgetToolbox .hide {
-	width: 7px;
-}
-.widget .widgetToolbox .hide span {
-	clip: rect(0px 7px 12px 0px);
-	margin-top: -2px;
-}
 .widget dd {
 	font-size: 9pt;
 	padding: 7px;
