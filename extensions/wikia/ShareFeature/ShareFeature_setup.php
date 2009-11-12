@@ -130,7 +130,8 @@ function wfShareFeatureSkinTemplateContentActions( &$content_actions ) {
 
 	// do not display for not existing pages,
 	// do not display for other skins than Monaco or Answers
-	if( ( $wgTitle->isContentPage() && ( !empty( $wgEnableBlogArticles ) && $wgTitle->getNamespace() != NS_BLOG_ARTICLE ) )
+	if( ( $wgTitle->isContentPage() || 
+		( !empty( $wgEnableBlogArticles ) && $wgTitle->getNamespace() == NS_BLOG_ARTICLE && $wgTitle->isSubpage() ) )
 		&& $wgTitle->exists()
 		&& ( ( get_class($wgUser->getSkin()) == 'SkinMonaco' ) || ( get_class($wgUser->getSkin()) == 'SkinAnswers' ) ) ) {
 		$content_actions['share_feature'] = array(
