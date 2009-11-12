@@ -1,4 +1,5 @@
 == Changes since 200911.2 ==
+* rt#26646: Analytics: Track what-do-you-love search queries from the Wikia main page. (Nef)
 * rt#26811: Answers: related questions placement fixed. (Nef)
 * rt#25697: Remove widgets from Edit Page (Macbre)
 * rt#26359: /v/ exception (eloy)
