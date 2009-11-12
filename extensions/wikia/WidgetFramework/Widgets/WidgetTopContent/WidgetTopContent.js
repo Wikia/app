@@ -19,6 +19,12 @@ function WidgetTopContentSwitchSection(selector) {
 
 function WidgetTopContent_init(id, widget) {
 	selector = $('#widget_' + id + '_select');
+
+	if (!selector.exists()) {
+		// this instance was rendered using WidgetTag - leave
+		return;
+	}
+
 	sectionId = selector.attr('selectedIndex');
 	sectionName = selector.attr('options')[sectionId].value;
 
