@@ -22,9 +22,9 @@ $wgWidgets['WidgetEditedRecently'] = array(
 );
 
 function WidgetEditedRecently($id, $params) {
-    	wfProfileIn( __METHOD__ );
-    	global $wgTitle, $wgRequest;
-
+	wfProfileIn( __METHOD__ );
+	global $wgTitle, $wgRequest;
+	
 	if ( (!is_object($wgTitle) || ($wgTitle->mArticleID == -1)) && ($wgRequest->getVal('actionType') == 'add') ) {
 		// ask for page refresh
 		return wfMsg('refreshpage') . '<br /><br /><button onclick="window.location.reload()">' . wfMsg('go') . '</button>';
@@ -51,24 +51,25 @@ function WidgetEditedRecently($id, $params) {
 	    $contribs = array_shift($res['query']['pages']);
 
 	    if ( !empty($contribs['revisions']) ) {
-		foreach ($contribs['revisions'] as $contrib) {
-		    $is_anon = isset($contrib['anon']);
-
-		    // don't show anon edits - requested by JohnQ
-		    if ($is_anon)
-			continue;
-
-		    $author = $contrib['user'];
-
-		    if ($is_anon) {
-			$link = Title::newFromText( 'Contributions/'.$author, NS_SPECIAL );
-		    }
-		    else {
-			$link = Title::newFromText( $author , NS_USER );
-		    }
-
-		    $items[$author] = array('href' => $link->getLocalURL(), 'name' => $author);
-		}
+			foreach ($contribs['revisions'] as $contrib) {
+				$is_anon = isset($contrib['anon']);
+				$author = $contrib['user'];
+				
+				if ($is_anon) {
+					// don't show anon edits - requested by JohnQ
+					continue;
+				} else {
+					$oUser = User::newFromName( $author );
+					if ( ( $oUser instanceof User ) && 
+						 ( !$oUser->isBlocked() ) 
+					) {
+						$userPage = $oUser->getUserPage();
+						if ( ($userPage instanceof Title) && ($userPage->exists()) ) {
+							$items[$author] = array('href' => $userPage->getLocalURL(), 'name' => $author);
+						}
+					}
+				}
+			}
 	    }
 	}
 
