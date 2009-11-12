@@ -105,10 +105,10 @@
 }
 #control_share_feature div {
 	clip: rect(0px 576px 16px 560px);
-	left: -560px;	
+	left: -560px;
 }
 
-#page_controls .disabled * {	
+#page_controls .disabled * {
 	filter:alpha(opacity=40);
 	opacity: .4;
 	cursor: wait;
@@ -271,7 +271,7 @@
 
 #fe_sharefeature_icon,
 #fe_sharefeature_img {
-        clip: rect(0px, 352px, 16px, 336px);
+        clip: rect(0px 352px 16px 336px);
         left: -336px
 }
 
