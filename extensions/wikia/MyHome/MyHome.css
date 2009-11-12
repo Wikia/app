@@ -56,7 +56,7 @@ h3.myhome-empty-message {
 }
 
 .activityfeed img.sprite {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1) repeat scroll 0 0;
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.2) repeat scroll 0 0;
 	height: 16px;
 	margin-left: -20px;
 	position: absolute;
@@ -293,5 +293,5 @@ td.activityfeed-details-label {
 /* IE6 fixes */
 * html .myhome-feed .sprite {
 	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.2', sizingMethod='crop');
 }
