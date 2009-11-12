@@ -5,7 +5,7 @@
     font-size: 0.9em !important;
 }
 
-* html .WidgetTopContent dd,
-* html .WidgetTopContent dt {
-	position: relative;
+* html .WidgetTopContent dt,
+* html .WidgetTopContent dd {
+	height: 1%;
 }
