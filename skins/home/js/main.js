@@ -90,7 +90,7 @@ var initTracker = function() {
 	});	
 
 	function trackFindWiki() {
-		Tracker.trackByStr(null, 'main_page/find_a_wiki');
+		Tracker.trackByStr(null, 'main_page/find_a_wiki/' + searchField.value);
 	}
 	Event.addListener('search_button', 'click', trackFindWiki);
 	Event.addListener('find_form', 'submit', trackFindWiki);
