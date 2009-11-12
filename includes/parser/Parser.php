@@ -3475,7 +3475,7 @@ class Parser
 
 	function fetchScaryTemplateMaybeFromCache($url) {
 		global $wgTranscludeCacheExpiry,$wgMemc;
-		$cacheKey = wfMemcKey( "transcache", $url );
+		$cacheKey = wfMemcKey( "transcache", md5($url) );
 		$text = $wgMemc->get( $cacheKey );
 
 		if( $text !== false ) {
