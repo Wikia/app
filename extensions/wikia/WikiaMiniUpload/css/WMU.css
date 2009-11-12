@@ -46,7 +46,7 @@
 	color: #FFF;
 }
 #ImageUploadBack div {
-	background: url(../../../../skins/monaco/images/sprite.png?20091112);
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112);
 	clip: rect(0px 304px 16px 288px);
 	height: 16px;
 	left: -288px;
@@ -68,7 +68,7 @@
 	color: #FFF;
 }
 #ImageUploadClose div {
-	background: url(../../../../skins/monaco/images/sprite.png?20091112);
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112);
 	clip: rect(0px 320px 16px 304px);
 	height: 16px;
 	left: -304px;
