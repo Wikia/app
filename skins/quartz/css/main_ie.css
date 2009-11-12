@@ -167,7 +167,7 @@ ul {
 /* christian: article footer png hack */
 #articleFooter img.sprite {
     background: none;
-    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/skins/monaco/images/sprite.png?20091112",sizingMethod="crop");
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/skins/monaco/images/sprite.png?20091112.1",sizingMethod="crop");
 }
 
 /* #2010 */

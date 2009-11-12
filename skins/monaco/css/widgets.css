@@ -12,7 +12,7 @@
 }
 
 #cockpit_close {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1);
 	background-position: -304px 0;
 	cursor: pointer;
 	height: 16px;
@@ -72,27 +72,27 @@ body.widgetsAddingBlocked .add {
 	position: relative;
 }
 .widget .widgetToolbox .toolboxItem span {
-	background: url(http://images.wikia.com/common/skins/monaco/images/widget_sprite.png);
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1);
 	cursor: pointer;
 	display: block;
 	height: 12px;
 	position: absolute;
-	width: 28px;
+	width: 656px;
 }
 .widget .widgetToolbox .close {
 	width: 10px;
 }
 .widget .widgetToolbox .close span {
-	clip: rect(0px 28px 12px 18px);
-	left: -18px;
+	clip: rect(0px 652px 12px 640px);
+	left: -640px;
 	margin-top: -2px;
 }
 .widget .widgetToolbox .edit {
 	width: 11px;
 }
 .widget .widgetToolbox .edit span {
-	clip: rect(0px 18px 12px 7px);
-	left: -7px;
+	clip: rect(0px 636px 12px 624px);
+	left: -624px;
 	margin-top: -2px;
 }
 .widget .widgetToolbox .hide {
@@ -274,7 +274,7 @@ body.widgetsAddingBlocked .add {
 	background: transparent;
 }
 #link_box_dynamic img {
-	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112) no-repeat;
+	background: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.1) no-repeat;
 	height: 16px;
 	position: absolute;
 	width: 464px;
