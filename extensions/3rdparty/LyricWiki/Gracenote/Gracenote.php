@@ -105,19 +105,17 @@ function gracenote_getAnalyticsHtml($google_action){
 				}
 			}
 		}
-		pageTracker._trackEvent('$google_category', '$google_action', jsGoogleLabel);
+		WET.byStr('SeansCorner/{$google_action}/' + jsGoogleLabel);
+	});\n";
+	} else {
+		$trackEventCode = "$(document).ready(function(){
+		WET.byStr('SeansCorner/{$google_action}');
 	});\n";
 	}
 
-	$googleAnalyticsId = GOOGLE_ANALYTICS_ID;
 	$retVal = <<<GOOGLE_JS
-	<script src='http://www.google-analytics.com/ga.js' type='text/javascript'></script>
 	<script type="text/javascript">/* <![CDATA[ */
-	try{
-	var pageTracker = _gat._getTracker("$googleAnalyticsId");
-	pageTracker._trackPageview();
 	$trackEventCode
-	} catch(err) {}
 	/* ]]> */</script>
 GOOGLE_JS
 ;
@@ -285,10 +283,10 @@ function gracenote_getNoscriptTag(){
 //
 // If there was a Gracenote-licensed song, tracks that as well.
 ////
-function gracenote_outputGoogleAnalytics(&$out, $parserOutput){
+function gracenote_outputGoogleAnalytics(&$skin, &$text){
 	GLOBAL $wgGracenoteView;
 
-	$out->addHTML(gracenote_getAnalyticsHtml($wgGracenoteView));
+	$text .= gracenote_getAnalyticsHtml($wgGracenoteView);
 
 	return true;
 } // end gracenote_outputGoogleAnalytics()
