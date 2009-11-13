@@ -508,73 +508,75 @@ class AutoCreateWikiPage extends SpecialPage {
 		 * import language starter
 		 */
 		if ( in_array( $this->mWikiData[ "language" ], $this->mLanguageStarters ) ) {
-			$prefix = ( $this->mWikiData[ "language" ] === "en") ? "" : $this->mWikiData[ "language" ];
+			$prefix    = ( $this->mWikiData[ "language" ] === "en") ? "" : $this->mWikiData[ "language" ];
 			$starterDB = $prefix. "starter";
 		} else {
+			$prefix    = "aa";
 			$starterDB = AWC_GENERIC_STARTER;
 		}
 
-			/**
-			 * first check whether database starter exists
-			 */
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB ); # central
-			$sql = sprintf( "SHOW DATABASES LIKE '%s';", $starterDB );
-			/**
-			 * @fixme we should not assume that dbw in this place is to first
-			 * cluster
-			 */
-			$Res = $dbr->query( $sql, __METHOD__ );
-			$numRows = $Res->numRows();
-			if ( !empty( $numRows ) ) {
-				$cmd = sprintf(
-					"%s -h%s -u%s -p%s %s categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text | %s -h%s -u%s -p%s %s",
-					$this->mMYSQLdump,
-					$dbr->getLBInfo( 'host' ),
-					$wgDBuser,
-					$wgDBpassword,
-					$starterDB,
-					$this->mMYSQLbin,
-					$dbw_local->getLBInfo( 'host' ),
-					$wgDBuser,
-					$wgDBpassword,
-					$this->mWikiData[ "dbname"]
-				);
-				$this->log($cmd);
-				wfShellExec( $cmd );
+		/**
+		 * first check whether database starter exists
+		 */
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB ); # central
+		$sql = sprintf( "SHOW DATABASES LIKE '%s';", $starterDB );
 
-				$error = $dbw_local->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
-				if ($error !== true) {
-					$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step7') );
-					$wgOut->addHTML(wfMsg('autocreatewiki-step7-error'));
-					return;
-				}
-				/**
-				 * @todo move copying images from local database changes section
-				 * use wikifactory variable to determine proper path to images
-			     */
-				$startupImages = sprintf( "%s/s/starter/%s/images", self::IMGROOT, $prefix );
+		/**
+		 * @fixme we should not assume that dbw in this place is to first
+		 * cluster
+		 */
+		$Res = $dbr->query( $sql, __METHOD__ );
+		$numRows = $Res->numRows();
+		if ( !empty( $numRows ) ) {
+			$cmd = sprintf(
+				"%s -h%s -u%s -p%s %s categorylinks externallinks image imagelinks langlinks page pagelinks revision templatelinks text | %s -h%s -u%s -p%s %s",
+				$this->mMYSQLdump,
+				$dbr->getLBInfo( 'host' ),
+				$wgDBuser,
+				$wgDBpassword,
+				$starterDB,
+				$this->mMYSQLbin,
+				$dbw_local->getLBInfo( 'host' ),
+				$wgDBuser,
+				$wgDBpassword,
+				$this->mWikiData[ "dbname"]
+			);
+			$this->log($cmd);
+			wfShellExec( $cmd );
 
-				if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
-					wfShellExec("/bin/cp -af {$startupImages}/* {$this->mWikiData[ "images_dir" ]}/");
-					$this->log("/bin/cp -af {$startupImages}/* {$this->mWikiData[ "images_dir" ]}/");
-				}
-				$cmd = sprintf(
-					"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
-					$this->mWikiId,
-					$this->mPHPbin,
-					$IP,
-					$wgWikiaLocalSettingsPath
-				);
-				$this->log($cmd);
-				wfShellExec( $cmd );
-
-				$this->log( "Copying starter database" );
-				$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
+			$error = $dbw_local->sourceFile( "{$IP}/maintenance/cleanupStarter.sql" );
+			if ($error !== true) {
+				$this->setInfoLog( 'ERROR', wfMsg('autocreatewiki-step7') );
+				$wgOut->addHTML(wfMsg('autocreatewiki-step7-error'));
+				return;
 			}
-			else {
-				$this->log( "No starter database for this language, {$starterDB}" );
+			/**
+			 * @todo move copying images from local database changes section
+			 * use wikifactory variable to determine proper path to images
+			 */
+			$startupImages = sprintf( "%s/s/starter/%s/images", self::IMGROOT, $prefix );
+
+			if (file_exists( $startupImages ) && is_dir( $startupImages ) ) {
+				wfShellExec("/bin/cp -af {$startupImages}/* {$this->mWikiData[ "images_dir" ]}/");
+				$this->log("/bin/cp -af {$startupImages}/* {$this->mWikiData[ "images_dir" ]}/");
 			}
-		
+			$cmd = sprintf(
+				"SERVER_ID=%d %s %s/maintenance/updateArticleCount.php --update --conf %s",
+				$this->mWikiId,
+				$this->mPHPbin,
+				$IP,
+				$wgWikiaLocalSettingsPath
+			);
+			$this->log($cmd);
+			wfShellExec( $cmd );
+
+			$this->log( "Copying starter database" );
+			$this->setInfoLog( 'OK', wfMsg('autocreatewiki-step7') );
+		}
+		else {
+			$this->log( "No starter database for this language, {$starterDB}" );
+		}
+
 		/**
 		 * making the wiki founder a sysop/bureaucrat
 		 */
