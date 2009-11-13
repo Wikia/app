@@ -84,7 +84,7 @@
 
 /*** Control buttons ***/
 .CScontrol {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.2);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113);
 	cursor: pointer;
 	display: block;
 	height: 14px;
@@ -162,7 +162,7 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 
 * html .CScontrol {
 	background-image: none;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091112.2', sizingMethod='crop');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113', sizingMethod='crop');
 }
 
 /* fix for YUI AutoComplete in CategorySelect */
