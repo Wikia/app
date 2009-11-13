@@ -769,13 +769,17 @@ div.prefsectiontip {
 	margin-top: 2em;
 }
 
-#userloginForm form,
-div#userlogin form#userlogin2 {
-	clear: both;
-	margin: 0 3em 1em 0;
+.page-Special_Userlogin #siteSub {
+	visibility: hidden !important;
 }
 
-div#userlogin form#userlogin2 label {
+.page-Special_UserLogin .firstHeading {
+	display: none !important;	
+}
+
+div#userlogin form#userlogin2 label,
+div #userlogin form#userlogin2 .pseudolabel,
+form#userajaxloginform2 label {
 	font-size: 115%;
 	font-weight: bold;
 }

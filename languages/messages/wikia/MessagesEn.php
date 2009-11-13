@@ -280,7 +280,7 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 
 
 # Wikia custom messages
-'editnologintext' => 'You must be a registered user and [[Special:UserLogin|logged in]] to edit a page.',
+'editnologintext' => 'You must be a registered user and  <span class="plainlinks">[{{fullurl:Special:Userlogin|returnto=$1}} logged in]</span> to edit a page.',
 'editnotallowed' => 'You do not have permission to edit pages',
 
 # janitors & helpers
@@ -305,10 +305,14 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 'ajaxLogin1' => 'To complete your log in, you must enter a new password.  This will take you away from this edit page and you may lose your current edit.',
 'ajaxLogin2' => 'Are you sure? You may lose your edits if you leave this page now.',
 
+'yourpasswordnew' => 'Password - ',
+
 # Registration page
 'prefs-help-realname' => 'Optional',
 'prefs-help-email' => 'We loathe spam even more than you do. We will NOT sell your email address.',
-'prefs-help-terms' => 'By clicking the button above, you agree to the [[w:Terms of Use| Wikia\'s Terms of Use]]',
+'prefs-help-mailmesg' => 'E-mail',
+'prefs-help-blurmesg' => 'Blurry word',
+'prefs-help-terms' => 'By creating an account, you agree to the [[w:Terms of Use| Wikia\'s Terms of Use]]',
 'prefs-help-birthday' => 'Why do I need to provide this?',
 'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
 'prefs-help-birthinfo' => 'Wikia requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
@@ -812,15 +816,24 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'unlocked' => 'unlocked',
 'var_set' => 'set the $2 to "$3"',
 'var_logtext' => 'Settings log',
-'yourbirthdate' => 'Birth date:',
+'yourbirthdate' => 'Birth Date - ',
+'create-account-new' => 'Create your Wiki Account',
+'log-in-new' => 'Already have an Account? Log In',
+'usercaptcha' => 'Blurry Word - ',
+'usercaptchatext' => 'Please enter the text in the image.',
+'registerintro-title' => 'When you create an account on Wikia, you become a part of the community!',
+'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 'userlogin-bad-birthday' => 'Choose correct birthdate.',
+'userlogin-bad-email' => 'You have not specified a valid email address.',
+'userlogin-bad-password' => 'You have not specified a valid password.',
+'userlogin-bad-repassword' => 'Your password entries do not match.',
 'userlogin-choose-year' => 'Year',
 'userlogin-choose-month' => 'Month',
 'userlogin-choose-day' => 'Day',
 'userlogin-unable-title' => 'Unable to create registration',
 'userlogin-unable-info' => 'We are sorry, we are unable to register you at this time.',
 'userlogin-captcha-label' => 'Enter the word that appears:',
-'userlogin-form-error' => 'Please fix errors above before proceeding.',
+'userlogin-form-error' => 'Please correct the following errors:',
 'unable-block-edit' => 'You are not allowed to edit this page. Try again later.',
 'var_logheader' => 'Below is a list of the most recent configuration changes for this wiki.',
 'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see article pages as logged-out users see them.<br/><br/>',

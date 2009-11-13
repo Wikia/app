@@ -450,7 +450,7 @@ if ( $wgUser->isAnon() ) {
 	<div class="box">
 		<div style="width: 230px; margin: 0 auto; text-align: center">
 <a href="http://www.wikia.com/wiki/Special:UserLogin" id="login">Log in</a> or 
-<a href="http://www.wikia.com/wiki/Special:UserLogin?type=signup" id="register" class="ajaxLogin">Create an account</a>
+<a href="http://www.wikia.com/wiki/Special:Signup" id="register" class="ajaxLogin">Create an account</a>
 		</div>
  	</div>
 <?php

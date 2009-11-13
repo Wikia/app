@@ -26,8 +26,6 @@ h1.modalTitle div {
 	padding: 5px !important;
 }
 .modalToolbar {
-	border-top-style: solid;
-	border-top-width: 1px;
 	padding: 3px 8px !important;
 }
 .blackout {

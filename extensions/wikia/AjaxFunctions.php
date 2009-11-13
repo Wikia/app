@@ -17,42 +17,53 @@ function getSuggestedArticleURL( $text )
  * Validates user names.
  *
  * @Author CorfiX (corfix@wikia.com)
+ * @Author Maciej Błaszkowski <marooned at wikia-inc.com>
  *
  * @Param String $uName
  *
  * @Return String
  */
-function cxValidateUserName ($uName) {
-	global $IP, $wgDBname, $wgExternalSharedDB;
+function cxValidateUserName () {
+	global $IP, $wgDBname, $wgExternalSharedDB, $wgRequest;
+	wfProfileIn(__METHOD__);
 
-	require_once ($IP . '/includes/User.php');
+//	require_once ($IP . '/includes/User.php');
 
+	$uName = $wgRequest->getVal('uName');
+	$result = 'OK';#wfMsg ('username-valid');
 
 	$nt = Title::newFromText( $uName );
 	if( is_null( $nt ) ) {
 		# Illegal name
-		return 'INVALID';
+		$result = 'INVALID';
+	} else {
+		$uName = $nt->getText();
+
+		$dbr = wfGetDB (DB_SLAVE);
+		$uName = $dbr->strencode($uName);
+		if ($uName == '') {
+			$result = 'INVALID';
+		} else {
+			$oRow = $dbr->selectRow( 'user', 'user_name', array('user_name' => $uName), __METHOD__);
+			if ($oRow !== false) {
+				$result = 'EXISTS';#wfMsg ('username-exists');
+			} else {
+				$dbExt = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
+				if ($dbExt->NumRows ($dbResults = $dbExt->Query ("SELECT User_Name FROM `user` WHERE User_Name = '$uName';"))) {
+					$result = 'EXISTS';#wfMsg ('username-exists');
+				}
+			}
+		}
 	}
 
-	$uName = $nt->getText();
+	$data = array('result' => $result);
 
-	$dbr = wfGetDB (DB_SLAVE);
-	$uName = $dbr->strencode($uName);
-	if ($uName == '') {
-		return 'INVALID';
-	}
-
-	$oRow = $dbr->selectRow( 'user', 'user_name', array('user_name' => $uName), __METHOD__);
-	if ($oRow !== false) {
-		return 'EXISTS';#wfMsg ('username-exists');
-	}
-
-	$dbExt = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
-	if ($dbExt->NumRows ($dbResults = $dbExt->Query ("SELECT User_Name FROM `user` WHERE User_Name = '$uName';"))) {
-		return 'EXISTS';#wfMsg ('username-exists');
-	}
-
-	return 'OK';#wfMsg ('username-valid');
+	$json = Wikia::json_encode($data);
+	$response = new AjaxResponse($json);
+	$response->setContentType('application/json; charset=utf-8');
+	$response->setCacheDuration(60);
+	wfProfileOut(__METHOD__);
+	return $response;
 }
 
 function wfSignForReview() {

@@ -153,8 +153,8 @@ class SimpleCaptcha {
 			}
 			$template->set( 'captcha',
 				"<div class='captcha'>" .
-				$wgOut->parse( $this->getMessage( 'createaccount' ) ) .
-				$this->getForm() .
+//				$wgOut->parse( $this->getMessage( 'createaccount' ) ) .	//removed, see LoginFriction project
+				$this->getForm('register') .
 				"</div>\n" );
 		}
 		return true;

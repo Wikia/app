@@ -29,9 +29,9 @@ class UserloginTemplate extends QuickTemplate {
 	<p id="userloginlink"><?php $this->html('link') ?></p>
 	<?php $this->html('header'); /* pre-table point for form plugins... */ ?>
 	<div id="userloginprompt"><?php  $this->msgWiki('loginprompt') ?></div>
-	<?php 
+	<?php
 	global $wgDisplayLanguageSelectorOnLogin;
-	if( !empty($wgDisplayLanguageSelectorOnLogin) && @$this->haveData( 'languages' ) ) { 
+	if( !empty($wgDisplayLanguageSelectorOnLogin) && @$this->haveData( 'languages' ) ) {
 		?><div id="languagelinks"><p><?php $this->html( 'languages' ); ?></p></div>
 	<?php } ?>
 	<table>
@@ -105,7 +105,7 @@ class UsercreateTemplate extends QuickTemplate {
 
 	function execute() {
 
-		global $wgOut, $wgStylePath, $wgStyleVersion, $wgValidateUserName;
+		global $wgOut, $wgStylePath, $wgStyleVersion;
 
 		$wgOut->addScript('<link rel="stylesheet" type="text/css" href="'. $wgStylePath . '/wikia/common/NewUserRegister.css?' . $wgStyleVersion . "\" />\n");
 
@@ -125,8 +125,25 @@ class UsercreateTemplate extends QuickTemplate {
 	</div>
 	<div class="visualClear"></div>
 <?php } ?>
+<br/>
+<table id="userloginSpecial" width="100%">
+<tr>
+<td width="55%" style="border-right: 1px solid #AAA;">
+<div class="loginHeader dark_text_1"><?php $this->msg('create-account-new') ?></div>
+<div id="userloginErrorBox">
+	<table>
+	<tr>
+	<td style="vertical-align:top;">
+	<span style="position: relative; top: -1px;"><img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span>
+	</td>
+	<td>
+	<div id="userloginInnerErrorBox">
+	</td>
+	</table>
+	</div>
+</div>
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
-<form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('action') ?>" onsubmit="return checkForm();">
+<form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('action') ?>" onsubmit="return UserRegistration.checkForm()">
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box" style="margin:0px">
 		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
@@ -136,77 +153,29 @@ class UsercreateTemplate extends QuickTemplate {
 	</div>
 	<div class="visualClear"></div>
 <?php } ?>
-	<p id="userloginlink"><?php $this->html('link') ?></p>
 	<?php $this->html('header'); /* pre-table point for form plugins... */ ?>
 	<?php /* LoginLanguageSelector used to be here, moved downward and modified as part of rt#16889 */ ?>
-	<script type="text/javascript">
-		var errorNick = false;	//nick checking can be disabled
-		var errorEmail = errorPass = errorRetype = errorDate = true;
-		var dateAccessed = 0;
-
-		function checkForm() {
-			dateAccessed = 2;	//check date on submit
-			checkDate();
-			checkEmail();
-			checkPass();
-			checkRetype();
-			if (errorNick) {
-				document.getElementById('wpName2error').style.display = 'inline';
-			}
-			if (errorDate) {
-				document.getElementById('wpBirtherror').style.display = 'inline';
-			}
-			if (errorNick || errorEmail || errorPass || errorRetype || errorDate) {
-				document.getElementById('wpFormerror').style.display = 'inline';
-			}
-			return !(errorNick || errorEmail || errorPass || errorRetype || errorDate);
-		}
-
-		function update_day_field() {
-			var year = document.getElementById('wpBirthYear').value;
-			var month = document.getElementById('wpBirthMonth').value;
-			var day = document.getElementById('wpBirthDay');
-			var day_length = day.length;
-			var max_days = (year == -1 || month == -1) ? 31 : new Date(year, month, 0).getDate();
-			var day_diff = max_days - (day_length - 1);
-			if (day_diff > 0) {
-				for(n=0; n<day_diff; n++) {
-					var newOption = document.createElement('option');
-					newOption.value = newOption.innerHTML = day_length + n;
-					day.appendChild(newOption);
-				}
-			} else if (day_diff < 0) {
-				for(n=0; n<-day_diff; n++) {
-					day.remove(day.length - 1);
-				}
-			}
-		}
-	</script>
 	<table width="100%">
 		<colgroup>
 			<col width="*" />
 		</colgroup>
 		<tr>
 			<td class="mw-input" id="wpNameTD">
-				<label for='wpName2'><?php $this->msg('yourname') ?></label><br/>
+				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
 				<input type='text' class='loginText' name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' />
-				<span id="wpName2error" class="inputError"><?= wfMsg('noname') ?></span>
 			</td>
 		</tr>
 		<tr>
 			<?php if( $this->data['useemail'] ) { ?>
 			<td class="mw-input" id="wpEmailTD">
-				<label for='wpEmail'><?php $this->msg('youremail') ?></label><br/>
+				<label for='wpEmail'><?php $this->msg('youremail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
 				<input type='text' class='loginText' name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
-				<div class="mw-input-help">
-					<?php $this->msgWiki('prefs-help-email'); ?>
-				</div>
 			</td>
 			<?php } ?>
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpPasswordTD">
-				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><br/>
+				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
 				<input type='password' class='loginPassword' name="wpPassword" id="wpPassword2" value="" size='20' />
 			</td>
 		</tr>
@@ -227,7 +196,7 @@ class UsercreateTemplate extends QuickTemplate {
 	<?php } ?>
 		<tr>
 			<td class="mw-input" id="wpRetypeTD">
-				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label><br/>
+				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
 				<input type='password' class='loginPassword' name="wpRetype" id="wpRetype" value="" size='20' />
 			</td>
 		</tr>
@@ -277,7 +246,7 @@ class UsercreateTemplate extends QuickTemplate {
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpBirthDateTD">
-				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><br/>
+				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
 				<select name="wpBirthYear" id="wpBirthYear">
 					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
 					<?php
@@ -309,14 +278,15 @@ class UsercreateTemplate extends QuickTemplate {
 					}
 					?>
 				</select>
-				<span id="wpBirtherror" class="inputError"><?= wfMsg('userlogin-bad-birthday') ?></span>
-				<div>
-					<a href="#" id="prefsHelpBirthday"><?php $this->msgWiki('prefs-help-birthday'); ?></a>
-				</div>
 			</td>
 		</tr>
-
 	<?php if($this->haveData('captcha')) { ?>
+		<tr>
+			<td>
+				<div id="blurryword"><span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span></div>
+			</td>
+
+		</tr>
 		<tr>
 			<td class="mw-input">
 				<?php $this->html('captcha'); ?>
@@ -327,7 +297,7 @@ class UsercreateTemplate extends QuickTemplate {
 		<tr>
 			<td class="mw-input">
 				<input type='checkbox' name="wpRemember" value="1" id="wpRemember" <?php if( $this->data['remember'] ) { ?>checked="checked"<?php } ?>/>
-				<label for="wpRemember"><?php $this->msg('remembermypassword') ?></label>
+				<label for="wpRemember" class="plain"><?php $this->msg('remembermypassword') ?></label>
 			</td>
 		</tr>
 	<?php }
@@ -342,7 +312,7 @@ class UsercreateTemplate extends QuickTemplate {
 					echo htmlspecialchars( $inputItem['name'] ); ?>"><?php
 					$this->msgWiki( $inputItem['msg'] ) ?></label><?php
 				}
-			?><br/>
+			?>
 				<input type="<?php echo htmlspecialchars( $inputItem['type'] ) ?>" name="<?php
 				echo htmlspecialchars( $inputItem['name'] ); ?>"
 					tabindex="<?php echo $tabIndex++; ?>"
@@ -359,7 +329,7 @@ class UsercreateTemplate extends QuickTemplate {
 					?> /> <?php
 					if ( $inputItem['type'] == 'checkbox' && !empty( $inputItem['msg'] ) ) {
 						?>
-				<label for="<?php echo htmlspecialchars( $inputItem['name'] ); ?>"><?php
+				<label for="<?php echo htmlspecialchars( $inputItem['name'] ); ?>" class="plain"><?php
 					$this->msg( $inputItem['msg'] ) ?></label><?php
 					}
 				?>
@@ -370,245 +340,423 @@ class UsercreateTemplate extends QuickTemplate {
 			}
 		}
 ?>
-		<tr>
-			<td class="mw-submit">
-				<input type='submit' name="wpCreateaccount" id="wpCreateaccount"
-					value="<?php $this->msg('createaccount') ?>" />
-				<?php if( $this->data['createemail'] ) { ?>
-				<input type='submit' name="wpCreateaccountMail" id="wpCreateaccountMail"
-					value="<?php $this->msg('createaccountmail') ?>" />
-				<?php } ?>
-				<span id="wpFormerror" class="inputError"><?= wfMsg('userlogin-form-error') ?></span>
-
-			</td>
-		</tr>
 		<?php if( $this->data['useemail'] ) { ?>
 		<tr>
-			<td class="mw-input" id="wpEmailTD">
-				<div>
+			<td class="mw-input" >
+				<div id="termsOfUse">
 					<?php $this->msgWiki('prefs-help-terms'); ?>
 				</div>
 			</td>
 		</tr>
 		<?php } ?>
+
+		<tr>
+			<td class="mw-submit">
+				<div class="modalToolbar">
+					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="UserRegistration.submitForm();" ><span><?= wfMsg("createaccount") ?></span></a>
+				<?php if( $this->data['createemail'] ) { ?>
+					<a id="wpCreateaccountX" class="wikia_button" href="#" onclick="$('#wpCreateaccountXSteer').value = false; $('#wpCreateaccountYSteer').value = true; UserRegistration.submitForm();" ><span><?= wfMsg("createaccountmail") ?></span></a>
+				</div>					
+					<input type="hidden" id="wpCreateaccountYSteer" name="wpCreateaccountMail" value="false" >							
+				<?php } else { ?>
+				</div>
+					<input type="hidden" id="wpCreateaccountXSteer" name="wpCreateaccount" value="true" >
+				<?php } ?>
+			</td>
+		</tr>
 	</table>
 	<script type="text/javascript">
-		YAHOO.namespace("Wikia.UserRegistration");
+		// Ajax Login functionality, added here
+		var AjaxLogin2 = {};
 
-		 (function() {
-		 var YC = YAHOO.util.Connect;
-		 var YD = YAHOO.util.Dom;
-		 var YWUR = YAHOO.Wikia.UserRegistration;
-		 var YE = YAHOO.util.Event;
-		 var YT = YAHOO.Tools;
+		AjaxLogin2.formSubmitHandler = function(ev) {
+			// Prevent the default action for event (submit of form)
+			WET.byStr('loginActions2/' + AjaxLogin2.action);
 
-		 YAHOO.Wikia.UserRegistration = {
-			init: function() {
-				YE.addListener('prefsHelpBirthday', 'click', YAHOO.Wikia.UserRegistration.showHintPanel);
-				// initial check, if not empty...
-				if ('' != YD.get( 'wpName2' ).value) {
-					YAHOO.util.Dom.addClass('wpNameTD', 'mw-progress');
-					var stored_sajax_rqtype = sajax_request_type;
-					sajax_request_type = "POST";
-					sajax_do_call('cxValidateUserName', Array (YD.get( 'wpName2' ).value), login_formhandler);
-					sajax_request_type = stored_sajax_rqtype;
-				}
-				if ('' != YD.get( 'wpEmail' ).value) {
-					checkEmail();
-				}
-			},
+			if(ev) {
+				ev.preventDefault();
+			}
+			AjaxLogin2.form.log('AjaxLogin2: selected action = '+ AjaxLogin2.action);
 
-			buildHintPanel: function() {
-				var signupWhy = YD.get( 'signupWhyProvide' );
-				var signupWhy_copy = document.createElement ('div') ;
-				signupWhy.id = 'signupWhyProvide_copy' ;
-				signupWhy_copy.innerHTML  = signupWhy.innerHTML ;
-				document.body.appendChild (signupWhy_copy) ;
-				YAHOO.Wikia.UserRegistration.hintPanel = new YAHOO.widget.Panel('signupWhyProvide_copy', {
-					width: "350px" ,
-					modal: true ,
-					constraintoviewport: true ,
-					draggable: false ,
-					fixedcenter: true ,
-					underlay: "none"
-				} );
-			YAHOO.Wikia.UserRegistration.hintPanel.setHeader(prefs_help_birthmesg);
-			YAHOO.Wikia.UserRegistration.hintPanel.setBody(prefs_help_birthinfo);
-			YAHOO.Wikia.UserRegistration.hintPanel.cfg.setProperty("zIndex", 1000) ;
-			YAHOO.Wikia.UserRegistration.hintPanel.render (document.body) ;
-			},
-			showHintPanel: function(e) {
-				// Prevent the default action for clicked element (probably A)
-				if(e) {
-					YAHOO.util.Event.preventDefault(e);
-				}
-				if (!YAHOO.Wikia.UserRegistration.hintPanel) {
-					YAHOO.Wikia.UserRegistration.buildHintPanel () ;
-				}
-				YAHOO.Wikia.UserRegistration.hintPanel.show () ;
+			// tracking
+			WET.byStr('loginActions2/' + AjaxLogin2.action);
+
+			var params = [
+				'action=ajaxlogin',
+				'format=json',
+				(AjaxLogin2.action == 'password' ? 'wpMailmypassword=1' : 'wpLoginattempt=1'),
+
+				// serialize form fields
+				AjaxLogin2.form.serialize()
+					];
+
+			// Let's block login form (disable buttons and input boxes)
+			AjaxLogin2.blockLoginForm(true);
+
+			$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), AjaxLogin2.handleSuccess);
+
+		}
+
+		AjaxLogin2.handleSuccess = function(response) {
+			var responseResult = response.ajaxlogin.result;
+			switch(responseResult) {
+				// TODO: what is this for?
+				case 'Reset':
+					if(Dom.get('wpPreview') && Dom.get('wpLogin')) {
+						if(typeof(ajaxLogin1)!="undefined" && !confirm(ajaxLogin1)) {
+							break;
+						}
+					}
+					Dom.get('userajaxloginform').action = wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login';
+					Event.removeListener('userajaxloginform', 'submit', AjaxLogin2.formSubmitHandler);
+					AjaxLogin2.blockLoginForm(false);
+					Dom.get('userajaxloginform').submit();
+					AjaxLogin2.blockLoginForm(true);
+					break;
+				case 'Success':
+					// macbre: call custom function (if provided by any extension)
+					if (typeof window.wgAjaxLoginOnSuccess == 'function') {
+						// let's update wgUserName
+						window.wgUserName = response.ajaxlogin.lgusername;
+
+						$().log('AjaxLogin2: calling custom function');
+						window.wgAjaxLoginOnSuccess();
+						return;
+					}
+						if(wgCanonicalSpecialPageName == "Userlogout") {
+							window.location.href = wgServer + wgScriptPath;
+						} else {
+							window.location.reload(true);
+						}
+					break;
+				case 'NotExists':
+					AjaxLogin2.blockLoginForm(false);
+					$('#wpPassword1n').attr('value', '');
+					$('#wpName1').attr('value', '').focus();
+				case 'WrongPass':
+					AjaxLogin2.blockLoginForm(false);
+					$('#wpPassword1').attr('value', '').focus();
+				default:
+					AjaxLogin2.blockLoginForm(false);
+					AjaxLogin2.displayReason(response.ajaxlogin.text);
+					break;
 			}
 		}
 
-		YE.onDOMReady(YAHOO.Wikia.UserRegistration.init, YAHOO.Wikia.UserRegistration, true);
-		})();
+		AjaxLogin2.handleFailure = function () {
+			AjaxLogin2.form.log('AjaxLogin2: handleFailure was called');
+		}
 
-		function checkEmail() {
+		AjaxLogin2.displayReason = function (reason) {
+			$('#userloginInnerErrorBox2').css('display', '').html(reason);
+			$('#userloginErrorBox2').show();			
+		}
+
+		AjaxLogin2.blockLoginForm = function (block) {
+			AjaxLogin2.form.find('input').attr('disabled', (block ? true : false));
+		}
+
+		AjaxLogin2.ajaxRegisterConfirm = function (ev) {
+			AjaxLogin2.form.log('AjaxLogin2: ajaxRegisterConfirm()');
+
+			if($('#wpPreview').length && $('#wpLogin').length) {
+				// todo ??? check
+				if(typeof(ajaxLogin2)!="undefined" && !confirm(ajaxLogin2)) {
+					ev.preventDefault();
+				}
+			}
+		}
+
+		var UserRegistration = {};
+
+		UserRegistration.errorNick = false;	//nick checking can be disabled
+		UserRegistration.errorEmail = UserRegistration.errorPass = UserRegistration.errorRetype = UserRegistration.errorDate = true;
+		UserRegistration.dateAccessed = 0;
+		UserRegistration.errorMessages = {
+			main: '<?= addslashes(wfMsg('userlogin-form-error')) ?>',
+			username: '<?= addslashes(wfMsg('noname')) ?>',
+			email: '<?= addslashes(wfMsg('userlogin-bad-email')) ?>',
+			password: '<?= addslashes(wfMsg('userlogin-bad-password')) ?>',
+			repassword: '<?= addslashes(wfMsg('userlogin-bad-repassword')) ?>',
+			birthday: '<?= addslashes(wfMsg('userlogin-bad-birthday')) ?>'
+		};
+
+		UserRegistration.fillErrors = function() {
+			var errors = [];
+			var errorsHTML = '';
+			if (UserRegistration.errorNick)
+				errors.push(UserRegistration.errorMessages['username']);
+			if (UserRegistration.errorEmail)
+				errors.push(UserRegistration.errorMessages['email']);
+			if (UserRegistration.errorPass)
+				errors.push(UserRegistration.errorMessages['password']);
+			if (UserRegistration.errorRetype)
+				errors.push(UserRegistration.errorMessages['repassword']);
+			if (UserRegistration.errorDate)
+				errors.push(UserRegistration.errorMessages['birthday']);
+
+			if (errors.length == 0) {
+				//hide
+				$('#userloginErrorBox').hide();
+			} else if (errors.length == 1) {
+				//one
+				errorsHTML = errors[0];
+				$('#userloginInnerErrorBox').html(errorsHTML);
+				$('#userloginErrorBox').show();
+			} else {
+				//more
+				errorsHTML = '<strong>' + UserRegistration.errorMessages['main'] + '</strong><ul>';
+				for (err in errors) errorsHTML += '<li>' + errors[err] + '</li>';
+				errorsHTML += '</ul>';
+				$('#userloginInnerErrorBox').html(errorsHTML);
+				$('#userloginErrorBox').show();
+			}
+		}
+
+		UserRegistration.checkForm = function() {
+			UserRegistration.dateAccessed = 2;	//check date on submit
+			UserRegistration.checkUsername();
+			UserRegistration.checkDate();
+			UserRegistration.checkEmail();
+			UserRegistration.checkPass();
+			UserRegistration.checkRetype();
+			UserRegistration.fillErrors();
+			return !(UserRegistration.errorNick || UserRegistration.errorEmail || UserRegistration.errorPass || UserRegistration.errorRetype || UserRegistration.errorDate);
+		}
+
+		UserRegistration.update_day_field = function() {
+			var year = document.getElementById('wpBirthYear').value;
+			var month = document.getElementById('wpBirthMonth').value;
+			var day = document.getElementById('wpBirthDay');
+			var day_length = day.length;
+			var max_days = (year == -1 || month == -1) ? 31 : new Date(year, month, 0).getDate();
+			var day_diff = max_days - (day_length - 1);
+			if (day_diff > 0) {
+				for(n=0; n<day_diff; n++) {
+					var newOption = document.createElement('option');
+					newOption.value = newOption.innerHTML = day_length + n;
+					day.appendChild(newOption);
+				}
+			} else if (day_diff < 0) {
+				for(n=0; n<-day_diff; n++) {
+					day.remove(day.length - 1);
+				}
+			}
+		}
+
+		UserRegistration.init = function() {
+			AjaxLogin2.form = $('#userajaxloginform2');
+			AjaxLogin2.form.submit(AjaxLogin2.formSubmitHandler).log('AjaxLogin2: init()');
+
+			// initial check, if not empty...
+			if ($('#wpEmail').attr('value') != '') {
+				UserRegistration.checkEmail();
+			}
+		}
+
+		UserRegistration.checkUsername = function() {
+			$.getJSON(wgScript + '?action=ajax&rs=cxValidateUserName', {uName: $('#wpName2').attr('value')}, function(json){
+				if (json.result == 'OK') {
+					UserRegistration.toggleError('wpNameTD', 'ok');
+					UserRegistration.errorNick = false;
+				} else {
+					UserRegistration.toggleError('wpNameTD', 'err');
+					UserRegistration.errorNick = true;
+				}
+			});
+		}
+		$(UserRegistration.init);
+
+		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal'});});
+		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal'});});
+		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal'});});
+
+		UserRegistration.toggleError = function(id, show) {
+			if (show == 'ok') {
+				$('#' + id).addClass('mw-input-ok').removeClass('mw-input-error mw-progress');
+			} else if (show == 'clear') {
+				$('#' + id).removeClass('mw-input-ok mw-input-error mw-progress');
+			} else if (show == 'progress') {
+				$('#' + id).addClass('mw-progress').removeClass('mw-input-ok mw-input-error');
+			} else {
+				$('#' + id).addClass('mw-input-error').removeClass('mw-input-ok mw-progress');
+			}
+		}
+
+		UserRegistration.checkEmail = function() {
 			var email_elem = document.getElementById('wpEmail') ;
 			if (email_elem) {
 				var email = email_elem.value;
 				if (email == '') {
-					YAHOO.util.Dom.removeClass('wpEmailTD', 'mw-input-error');
-					YAHOO.util.Dom.removeClass('wpEmailTD', 'mw-input-ok');
-					errorEmail = false;
+					UserRegistration.toggleError('wpEmailTD', 'clear');
+					UserRegistration.errorEmail = false;
 				} else if (email.match(/^[a-z0-9._%+-]+@(?:[a-z0-9\-]+\.)+[a-z]{2,4}$/mi)) {
-					YAHOO.util.Dom.removeClass('wpEmailTD', 'mw-input-error');
-					YAHOO.util.Dom.addClass('wpEmailTD', 'mw-input-ok');
-					errorEmail = false;
+					UserRegistration.toggleError('wpEmailTD', 'ok');
+					UserRegistration.errorEmail = false;
 				} else {
-					YAHOO.util.Dom.addClass('wpEmailTD', 'mw-input-error');
-					YAHOO.util.Dom.removeClass('wpEmailTD', 'mw-input-ok');
-					errorEmail = true;
+					UserRegistration.toggleError('wpEmailTD');
+					UserRegistration.errorEmail = true;
 				}
 			} else {
-				errorEmail = false ;
+				UserRegistration.errorEmail = false ;
 			}
 		}
-		function checkPass() {
-			var passLen = document.getElementById('wpPassword2').value.length;
-			if (passLen >= <?php global $wgMinimalPasswordLength; echo $wgMinimalPasswordLength; ?>) {
-				YAHOO.util.Dom.removeClass('wpPasswordTD', 'mw-input-error');
-				YAHOO.util.Dom.addClass('wpPasswordTD', 'mw-input-ok');
-				errorPass = false;
-			} else {
-				YAHOO.util.Dom.addClass('wpPasswordTD', 'mw-input-error');
-				YAHOO.util.Dom.removeClass('wpPasswordTD', 'mw-input-ok');
-				errorPass = true;
-			}
-		}
-		function checkUsernamePass() {
+		UserRegistration.checkPass = function() {
 			var pass = document.getElementById('wpPassword2').value;
 			var name = document.getElementById('wpName2').value;
-			if (pass != '') {
-				if (pass == name) {
-					YAHOO.util.Dom.addClass('wpPasswordTD', 'mw-input-error');
-					YAHOO.util.Dom.removeClass('wpPasswordTD', 'mw-input-ok');
-					errorPass = true;
+			if (pass == name) {
+				UserRegistration.toggleError('wpPasswordTD');
+				UserRegistration.errorPass = true;
+			} else {
+				var passLen = document.getElementById('wpPassword2').value.length;
+				if (passLen >= <?php global $wgMinimalPasswordLength; echo $wgMinimalPasswordLength; ?>) {
+					UserRegistration.toggleError('wpPasswordTD', 'ok');
+					UserRegistration.errorPass = false;
 				} else {
-					YAHOO.util.Dom.removeClass('wpPasswordTD', 'mw-input-error');
-					YAHOO.util.Dom.addClass('wpPasswordTD', 'mw-input-ok');
-					errorPass = false;
+					UserRegistration.toggleError('wpPasswordTD');
+					UserRegistration.errorPass = true;
 				}
 			}
 		}
-		function checkRetype() {
+		UserRegistration.checkRetype = function() {
 			var pass = document.getElementById('wpPassword2').value;
 			var pass2= document.getElementById('wpRetype').value;
 			if (pass == pass2) {
 				if ('' == pass2) {
-					YAHOO.util.Dom.addClass('wpRetypeTD', 'mw-input-error');
-					YAHOO.util.Dom.removeClass('wpRetypeTD', 'mw-input-ok');
-					errorRetype = true;
+					UserRegistration.toggleError('wpRetypeTD', 'clear');
+					UserRegistration.errorRetype = false;
 				} else {
-					YAHOO.util.Dom.removeClass('wpRetypeTD', 'mw-input-error');
-					YAHOO.util.Dom.addClass('wpRetypeTD', 'mw-input-ok');
-					errorRetype = false;
+					UserRegistration.toggleError('wpRetypeTD', 'ok');
+					UserRegistration.errorRetype = false;
 				}
 
 			} else {
-				YAHOO.util.Dom.addClass('wpRetypeTD', 'mw-input-error');
-				YAHOO.util.Dom.removeClass('wpRetypeTD', 'mw-input-ok');
-				errorRetype = true;
+				UserRegistration.toggleError('wpRetypeTD');
+				UserRegistration.errorRetype = true;
 			}
 		}
-		function checkDate() {
-			update_day_field();	//add/remove days according to the year & month
+		UserRegistration.checkDate = function() {
+			UserRegistration.update_day_field();	//add/remove days according to the year & month
 			var year = document.getElementById('wpBirthYear').value;
 			var month = document.getElementById('wpBirthMonth').value;
 			var day = document.getElementById('wpBirthDay').value;
-			document.getElementById('wpBirtherror').style.display = 'none';
-			if (dateAccessed == 1) {
-				YAHOO.util.Dom.removeClass('wpBirthDateTD', 'mw-input-error');
-				YAHOO.util.Dom.removeClass('wpBirthDateTD', 'mw-input-ok');
-			} else if (dateAccessed == 2 && year != -1 && month != -1 && day != -1) {
-				YAHOO.util.Dom.removeClass('wpBirthDateTD', 'mw-input-error');
-				YAHOO.util.Dom.addClass('wpBirthDateTD', 'mw-input-ok');
-				errorDate = false;
-			} else if(dateAccessed == 2) {
-				YAHOO.util.Dom.addClass('wpBirthDateTD', 'mw-input-error');
-				YAHOO.util.Dom.removeClass('wpBirthDateTD', 'mw-input-ok');
-				errorDate = true;
+			if (UserRegistration.dateAccessed == 1) {
+				UserRegistration.toggleError('wpBirthDateTD', 'clear');
+			} else if (UserRegistration.dateAccessed == 2 && year != -1 && month != -1 && day != -1) {
+				UserRegistration.toggleError('wpBirthDateTD', 'ok');
+				UserRegistration.errorDate = false;
+			} else if(UserRegistration.dateAccessed == 2) {
+				UserRegistration.toggleError('wpBirthDateTD', 'err');
+				UserRegistration.errorDate = true;
 			}
 		}
-		document.getElementById('wpBirthYear').onfocus = function(){dateAccessed = 1;};
-		document.getElementById('wpBirthMonth').onfocus = function(){dateAccessed = 1;};
-		document.getElementById('wpBirthDay').onfocus = function(){dateAccessed = 1;};
+		UserRegistration.submitForm = function() {
+			if (UserRegistration.checkForm()) {
+				$('#userlogin2').submit();
+			}
+		}
 
-		document.getElementById('wpName2').onfocus = function(){if (dateAccessed == 1) {dateAccessed = 2; checkDate();}};
+		$('#wpBirthYear').bind('focus', function(){UserRegistration.dateAccessed = 1;});
+		$('#wpBirthMonth').bind('focus', function(){UserRegistration.dateAccessed = 1;});
+		$('#wpBirthDay').bind('focus', function(){UserRegistration.dateAccessed = 1;});
+
+		$('#wpName2').bind('focus', function(){if (UserRegistration.dateAccessed == 1) {UserRegistration.dateAccessed = 2; UserRegistration.checkDate();}});
+		$('#wpName2').bind('blur', function(){
+			UserRegistration.toggleError('wpNameTD', 'progress');
+			UserRegistration.checkUsername();
+			UserRegistration.checkPass();
+		});
+
 		if (document.getElementById('wpEmail')) {
-			document.getElementById('wpEmail').onfocus = function(){if (dateAccessed == 1) {dateAccessed = 2; checkDate();}};
-			document.getElementById('wpEmail').onblur = checkEmail;
+			$('#wpEmail').bind('focus', function(){if (UserRegistration.dateAccessed == 1) {UserRegistration.dateAccessed = 2; UserRegistration.checkDate();}});
+			$('#wpEmail').bind('blur', UserRegistration.checkEmail);
 		}
-		document.getElementById('wpPassword2').onfocus = function(){if (dateAccessed == 1) {dateAccessed = 2; checkDate();}};
-		document.getElementById('wpRetype').onfocus = function(){if (dateAccessed == 1) {dateAccessed = 2; checkDate();}};
-		document.getElementById('wpRealName').onfocus = function(){if (dateAccessed == 1) {dateAccessed = 2; checkDate();}};
+		$('#wpPassword2').bind('focus', function(){if (UserRegistration.dateAccessed == 1) {UserRegistration.dateAccessed = 2; UserRegistration.checkDate();}});
+		$('#wpRetype').bind('focus', function(){if (UserRegistration.dateAccessed == 1) {UserRegistration.dateAccessed = 2; UserRegistration.checkDate();}});
+		$('#wpRealName').bind('focus', function(){if (UserRegistration.dateAccessed == 1) {UserRegistration.dateAccessed = 2; UserRegistration.checkDate();}});
 
-		document.getElementById('wpName2').onkeyup = function(){
-			YAHOO.util.Dom.removeClass('wpNameTD', 'mw-input-ok');
-			YAHOO.util.Dom.removeClass('wpNameTD', 'mw-input-error');
-			document.getElementById('wpName2error').style.display = 'none';
-		};
+		$('#wpName2').bind('keyup', function(){
+			UserRegistration.toggleError('wpNameTD', 'clear');
+		});
 
-		document.getElementById('wpBirthYear').onchange = checkDate;
-		document.getElementById('wpBirthMonth').onchange = checkDate;
-		document.getElementById('wpBirthDay').onchange = checkDate;
-		document.getElementById('wpPassword2').onblur = function(){checkPass(); checkRetype(); checkUsernamePass()};
-		document.getElementById('wpRetype').onblur = checkRetype;
+		$('#wpBirthYear').bind('change', UserRegistration.checkDate);
+		$('#wpBirthMonth').bind('change', UserRegistration.checkDate);
+		$('#wpBirthDay').bind('change', UserRegistration.checkDate);
+		$('#wpPassword2').bind('blur', function(){UserRegistration.checkPass(); UserRegistration.checkRetype();});
+		$('#wpRetype').bind('blur', UserRegistration.checkRetype);
 	</script>
-	<?php
-	#>> cx (23.01.2007 @ #476) + Marooned [2008-05-27]
-	if ($wgValidateUserName) {
-		?>
-		<script type="text/javascript" id="validate_login_code">
-		var cxServer = '<?php Global $wgServer; Echo $wgServer;?>';
-		var cxScript = '<?php Global $wgScriptPath; Echo $wgScriptPath;?>';
-		var liveValidationAjaxURI = cxServer + cxScript + '/?action=ajax&rs=cxValidateUserName&rsargs=';
-		var liveValidationPrevState = '';
-
-		function login_formhandler (x) {
-			x = x.responseText; //MW 1.9 handling response
-			YAHOO.util.Dom.removeClass('wpNameTD', 'mw-progress');
-			if (x == 'OK') {
-				YAHOO.util.Dom.removeClass('wpNameTD', 'mw-input-error');
-				YAHOO.util.Dom.addClass('wpNameTD', 'mw-input-ok');
-				errorNick = false;
-			} else {
-				YAHOO.util.Dom.addClass('wpNameTD', 'mw-input-error');
-				YAHOO.util.Dom.removeClass('wpNameTD', 'mw-input-ok');
-				errorNick = true;
-			}
-		}
-		function login_eventhandler (x) {
-			YAHOO.util.Dom.removeClass('wpNameTD', 'mw-input-ok');
-			YAHOO.util.Dom.removeClass('wpNameTD', 'mw-input-error');
-			YAHOO.util.Dom.addClass('wpNameTD', 'mw-progress');
-			checkUsernamePass();
-			var stored_sajax_rqtype = sajax_request_type;
-			sajax_request_type = "POST";
-			sajax_do_call('cxValidateUserName', Array (this.value), login_formhandler);
-			sajax_request_type = stored_sajax_rqtype;
-		}
-
-		document.getElementById('wpName2').onblur = login_eventhandler;
-		</script>
-
-			<?php
-		}
-	#<< cx
-	?>
-
+	<input type="submit" value="Register" style="position: absolute; left: -10000px; width: 0" />
 <?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
 </form>
 </div>
+</td>
+<td width="45%" class="rightSide">
+	<div class="loginHeader rightSideElem dark_text_1"><?php $this->msg('log-in-new') ?></div>
+	<form action="" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
+	<div id="userloginErrorBox2">
+	<table>
+	<tr>
+	<td style="vertical-align:top;">
+	<span style="position: relative; top: -1px;"><img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span>
+	</td>
+	<td>
+	<div id="userloginInnerErrorBox2">
+	</td>
+	</table>
+	</div>
+	<label for="wpName1Ajax" style="display: block; font-weight: bold;"><?= wfMsg("yourname") ?></label>
+	<table>
+	<tr>
+	<td id="ajaxlogin_username_cell2">
+		<input type="text" name="wpName" id="wpName2Ajax" tabindex="101" size="20" class="loginText" />
+	</td>
+	<td></td>
+	</tr>
+	</table>
+	<div style="display: block; margin-top: 8px">
+		<label for="wpPassword2Ajax" style="font-weight: bold;"><?= wfMsg("yourpasswordnew") ?></label>
+		<a id="wpMailmypassword" href="#" style="font-size: 9pt;" onclick="AjaxLogin2.action='password'; AjaxLogin2.form.submit();"><?= wfMsg('mailmypassword') ?></a>
+	</div>
+	<table>
+	<tr>
+	<td id="ajaxlogin_password_cell2">
+		<input type="password" name="wpPassword" id="wpPassword2Ajax" tabindex="102" size="20" class="loginPassword" />
+	</td>
+	<?php 	global $wgEnableEmail, $wgAuth;
+		if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
+	</td>
+	<?php } ?>
+	</tr>
+	</table>
+	<div style="margin: 10px 0;">
+	<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1"  />
+	<label for="wpRemember1" class="plain"><?= wfMsg('remembermypassword') ?></label>
+	</div>
+	<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
+	</form>
+        <div class="modalToolbar">
+                <a id="wpLoginattempt" class="wikia_button rightSideElem" href="#" onclick="AjaxLogin2.action='login'; AjaxLogin2.form.submit();" ><span><?= wfMsg("login") ?></span></a>
+        </div>
+	<div id="loginIntro" class="accent rightSideElem">
+		<div class="announcementHeader dark_text_2">
+			<?php $this->msg( 'registerintro-title' ) ?>
+		</div>
+		<div class="announcementText">
+			<table>
+			<tr><td>
+			<?php $this->msg( 'registerintro-text' ) ?>
+			</td>
+			<td>
+			<?php global $wgExtensionsPath; ?>
+			<img src="<?=$wgExtensionsPath?>/wikia/SpecialSignup/images/signup_login_accent_graphic.png" alt="<?php $this->msg( 'registerintro-title' ) ?>"/>
+			</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+</td>
+</tr>
+</table>
 <div id="signupWhyProvide"></div>
 <div id="signupend" style="clear: both;"><?php $this->msgWiki( 'signupend' ); ?></div>
 <?php

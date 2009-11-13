@@ -234,7 +234,7 @@ class UploadForm {
 	 * @access public
 	 */
 	function execute() {
-		global $wgUser, $wgOut;
+		global $wgUser, $wgOut, $wgTitle;
 		global $wgEnableUploads;
 
 		# Check php's file_uploads setting
@@ -252,7 +252,7 @@ class UploadForm {
 		# Check permissions
 		if( !$wgUser->isAllowed( 'upload' ) ) {
 			if( !$wgUser->isLoggedIn() ) {
-				$wgOut->showErrorPage( 'uploadnologin', 'uploadnologintext' );
+				$wgOut->showErrorPage( 'uploadnologin', 'uploadnologintext', array($wgTitle->getPrefixedDBkey()) );
 			} else {
 				$wgOut->permissionRequired( 'upload' );
 			}

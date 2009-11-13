@@ -9,7 +9,7 @@ class SpecialMyHome extends SpecialPage {
 
 	function execute($par) {
 		wfProfileIn(__METHOD__);
-		global $wgOut, $wgUser;
+		global $wgOut, $wgUser, $wgTitle;
 
 		$this->setHeaders();
 
@@ -21,13 +21,12 @@ class SpecialMyHome extends SpecialPage {
 
 		// not available for anons
 		if($wgUser->isAnon()) {
-			$wgOut->wrapWikiMsg( '<div id="myhome-log-in">$1</div>', 'myhome-log-in' );
+			$wgOut->wrapWikiMsg( '<div id="myhome-log-in">$1</div>', array('myhome-log-in', $wgTitle->getPrefixedDBkey()) );
 
 			// RT #23970
 			$wgOut->addInlineScript(<<<JS
 $(function() {
 	$('#myhome-log-in').find('a').click(function(ev) {
-		ev.preventDefault();
 		openLogin(ev);
 	});
 });
