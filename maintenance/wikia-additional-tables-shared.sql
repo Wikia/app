@@ -361,7 +361,7 @@ CREATE TABLE IF NOT EXISTS system_events_params (
   `ep_id` int(7) unsigned not null auto_increment,
   `ep_name` varchar(100) NOT NULL default '',
   `ep_value` varchar(100) NOT NULL default '',
-  `ep_desc` text default '',
+  `ep_desc` text,
   `ep_user_id` int(9) unsigned NOT NULL default '0',
   `ep_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `ep_active` tinyint(3) NOT NULL default 1,
