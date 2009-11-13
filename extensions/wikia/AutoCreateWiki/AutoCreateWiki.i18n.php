@@ -122,11 +122,11 @@ Wikia Community Team
 
 Now you've got a whole website to fill up with information, pictures and videos about your favorite topic. But right now, it's just blank pages staring at you... Scary, right? Here are some ways to get started.
 
-* '''Introduce your topic''' on the front page. This is your opportunity to explain to your readers what your topic is all about. Write as much as you want! Your description can link off to all the important pages on your site. 
+* '''Introduce your topic''' on the front page. This is your opportunity to explain to your readers what your topic is all about. Write as much as you want! Your description can link off to all the important pages on your site.
 
 * '''Start some new pages''' -- just a sentence or two is fine to get started. Don't let the blank page stare you down! A wiki is all about adding and changing things as you go along. You can also add pictures and videos, to fill out the page and make it more interesting.
 
-And then just keep going! People like visiting wikis when there's lots of stuff to read and look at, so keep adding stuff, and you'll attract readers and editors. There's a lot to do, but don't worry -- today's your first day, and you've got plenty of time. Every wiki starts the same way -- a little bit at a time, starting with the first few pages, until it grows into a huge, busy site. 
+And then just keep going! People like visiting wikis when there's lots of stuff to read and look at, so keep adding stuff, and you'll attract readers and editors. There's a lot to do, but don't worry -- today's your first day, and you've got plenty of time. Every wiki starts the same way -- a little bit at a time, starting with the first few pages, until it grows into a huge, busy site.
 
 If you've got questions, you can e-mail us through our [[Special:Contact|contact form]]. Have fun!
 
@@ -254,9 +254,9 @@ Jetzt hast du eine ganze Webseite, die du mit Informationen, Bildern und Videos 
 
 Und im Anschluss mach einfach weiter! Leute mögen große Wikis, wenn man viel entdecken kann. Also füg weiterhin Inhalte hinzu, und du wirst neue Leser und Benutzer anziehen. Es gibt viel zu tun, aber sei unbesorgt - heute ist dein erster Tag, und du hast genügend Zeit. Jedes Wiki fängt auf die selbe Weise an - es braucht nur ein bisschen Zeit, und nach den ersten paar Seiten, und einer Weile wird das Wiki zu einer großen, oftbesuchten Seite anwachsen.
 
-Falls du Hilfe benötigst (und glaub mir: die haben wir alle gebraucht) findest du unsere umfangreichen englischen Hilfe-Seiten unter [[w:c:Help|Help Wikia]]. Oder wirf einmal einen Blick in die stetig wachsende Zahl [[w:c:hilfe:Kategorie:Hilfe|deutschsprachiger Hilfeseiten]]. 
+Falls du Hilfe benötigst (und glaub mir: die haben wir alle gebraucht) findest du unsere umfangreichen englischen Hilfe-Seiten unter [[w:c:Help|Help Wikia]]. Oder wirf einmal einen Blick in die stetig wachsende Zahl [[w:c:hilfe:Kategorie:Hilfe|deutschsprachiger Hilfeseiten]].
 
-Wenn du weitere Hilfe brauchst, kannst du 
+Wenn du weitere Hilfe brauchst, kannst du
 *uns eine Mail über unser [[Special:Contact|Kontaktformular]] schreiben,
 *unseren [http://irc.wikia.com #wikia Live-Chat] besuchen,
 *oder bei allem rund um Logo, Skin und das Admin sein [[w:c:de.support|Wikia Support (deutschsprachig)]] besuchen.
@@ -369,7 +369,7 @@ Hola $1. ¡Estamos muy felices de tener a \'\'\'$4\'\'\' como parte de la comuni
    <createbox>
 width=30
 </createbox></div>
-3. \'\'\'Crea tus 10 primeros artículos\'\'\': usa esta caja ubicada a la derecha para crear diez páginas, comenzando cada una con unos pocos párrafos. Por ejemplo, si estás iniciando un wiki sobre un programa de TV, podrías crear un artículo para cada uno de los personajes principales. 
+3. \'\'\'Crea tus 10 primeros artículos\'\'\': usa esta caja ubicada a la derecha para crear diez páginas, comenzando cada una con unos pocos párrafos. Por ejemplo, si estás iniciando un wiki sobre un programa de TV, podrías crear un artículo para cada uno de los personajes principales.
 
 4. \'\'\'Edita la Portada\'\'\': incluye enlaces internos (<nowiki>[[de esta forma]]</nowiki>) a los diez artículos que recién creaste y realiza cualquier otra modificación que tu portada necesite.
 
@@ -430,7 +430,7 @@ $messages['fa'] = array(
 
 ویکیایی که شما درخواست کرده‌بودید در <$1> قابل دسترسی است. ما امیدواریم به زودی شاهد ویرایش شما در آن‌جا باشیم!
 
-ما یکسری اطلاعات و نکته‌هایی در صحفه بحثتان (<$5>) اضافه کرده‌ایم تا به شما برای شروع ویکیتان کمک کند. اگر سوالی دارید، به این ایمیل پاسخ دهید یا در صفحات راهنمای ویکیا در <http://help.wikia.com> جستجو کنید. 
+ما یکسری اطلاعات و نکته‌هایی در صحفه بحثتان (<$5>) اضافه کرده‌ایم تا به شما برای شروع ویکیتان کمک کند. اگر سوالی دارید، به این ایمیل پاسخ دهید یا در صفحات راهنمای ویکیا در <http://help.wikia.com> جستجو کنید.
 
 
 $3
@@ -441,7 +441,7 @@ $3
 سلام $1، ما از داشتن \'\'\'$4\'\'\' در بین دیگر ویکیاهای ویکیا بسیار خوشحالیم!
 
 شروع کردن ویکی جدید می‌تواند کار بزرگی باشد، ولی نگران نباشید، [[wikia:Community Team|تیم اجتماع ویکیا]] برای کمک اینجاست! ما راهنمایی‌هایی برای کمک به شروع ویکی جدید آماده کرده‌ایم. در کنار راهنمایی‌های ویکیا می‌توانید به ویکی‌های دیگر در [[w:c:fa:شرکت ویکیا|ویکیا]] برای گرفتن ایده جهت قالب بندی، رده بندی، و غیره سر بزنید. همه ما عضوی از خانواده بزرگ ویکیا هستیم که برای خوش گذرانی در اینجا با هم مشارکت می‌کنیم!
-* [[w:c:help:Help:Starting this wiki|راهنمای شروع ویکی]] ما ۵ نکته به شما می‌دهد تا همین الان ویکی خود را به بهترین وجه تنظیم نمایید. 
+* [[w:c:help:Help:Starting this wiki|راهنمای شروع ویکی]] ما ۵ نکته به شما می‌دهد تا همین الان ویکی خود را به بهترین وجه تنظیم نمایید.
 *ما همچنین [[w:c:help:Advice:Advice on starting a wiki| توصیه‌هایی برای شروع ویکی]] آماده  کرده‌ایم که اطلاعات عمیق‌تری برای ساخت ویکی جدید به شما می‌دهد.
 *اگر شما کاربر جدید ویکیا هستید، ما به شما توصیه می‌کنیم که به [[w:c:fa:پرسش‌های رایج|پرسش‌های رایج کاربران جدید]]  مراجعه کنید.
 اگر کمکی نیاز داشتید، می‌توانید به [[w:c:help|راهنمای ویکیا]] مراجعه کنید و یا از طریق [[Special:Contact|فرم تماس]] به ما پست الکترونیکی بزنید.
@@ -457,11 +457,11 @@ $messages['it'] = array(
 	'autocreatewiki' => 'Crea un nuova wiki',
 	'createwikipagetitle' => 'Crea un nuova wiki',
 	'autocreatewiki-protect-reason' => 'parte dell\'interfaccia ufficiale',
-	'autocreatewiki-welcomebody' => 'Ciao $2, 
+	'autocreatewiki-welcomebody' => 'Ciao $2,
 
-La wikia che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br> Abbiamo aggiunto alcune informazione e suggerimenti alla tua pagina di discussione (<$5>) per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o controllare sulle pagina di aiuto su <http://help.wikia.com>. 
+La wikia che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br> Abbiamo aggiunto alcune informazione e suggerimenti alla tua pagina di discussione (<$5>) per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o controllare sulle pagina di aiuto su <http://help.wikia.com>.
 
-Buona fortuna per il progetto, 
+Buona fortuna per il progetto,
 
 $3 Wikia Community Team <http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk' => '== Benvenuto! ==
@@ -664,16 +664,16 @@ $messages['fr'] = array(
 	'createwiki' => 'Créer un wiki',
 	'autocreatewiki-info-language' => 'Langue du wiki',
 	'autocreatewiki-welcomesubject' => '$1 a été créé!',
-	'autocreatewiki-welcomebody' => 'Bonjour $2, 
+	'autocreatewiki-welcomebody' => 'Bonjour $2,
 
-Le wiki que vous avez demandé est maintenant disponible <$1>.  Nous espérons que nous vous retrouverons dans les modifications de celui-ci ! 
+Le wiki que vous avez demandé est maintenant disponible <$1>.  Nous espérons que nous vous retrouverons dans les modifications de celui-ci !
 
 Nous avons ajouté quelques informations sur votre page de discussion (<$5>) pour vous aider à commencer. Si vous avez encore des questions, répondez à ce message ou regardez nos pages d\'aide ici : <http://aide.wikia.com>.
 
 Beaucoup de succès dans votre projet,
 
 $3
-Wikia Community Team 
+Wikia Community Team
 <http://www.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk' => 'Bonjour $1 -- nous sommes fiers d’héberger votre site \'\'\'$4\'\'\' chez Wikia!
 
@@ -685,9 +685,9 @@ Nous sommes ici une grande famille et le plus important est que vous vous divert
 
 S\'il vous faut de l\'aide, vous pouvez consulter un wiki spécialisé avec des sujets sur l\'aide - en français, ici [[w:c:aide|Wikia Aide]] ! Vous pouvez y poser des questions et participer à y élaborer des articles !
 
-Si vous comprenez l\'anglais, vous pouvez également regarder le wiki d\'aide en anglais qui est bien plus avancé : [[w:c:Help|Help Wikia]] 
+Si vous comprenez l\'anglais, vous pouvez également regarder le wiki d\'aide en anglais qui est bien plus avancé : [[w:c:Help|Help Wikia]]
 
-Ou bien, vous pouvez aussi nous écrire par cette page [[Special:Contact]]. 
+Ou bien, vous pouvez aussi nous écrire par cette page [[Special:Contact]].
 
 Maintenant, tout est (presque) dit - Vous pouvez commencer à contribuer au wiki ! :-)
 
@@ -698,7 +698,7 @@ Nous espérons que votre wiki va bien grandir et vous souhaitons beaucoup de suc
 
 
 $messages['pl'] = array(
-	'createwikipagetitle' => 'Utwórz nową Wikią',
+	'createwikipagetitle' => 'Utwórz nową Wikię',
 	'createwiki' => 'Utwórz nową Wikię',
 	'autocreatewiki-welcomebody' => 'Witaj, $2!
 
@@ -717,7 +717,7 @@ $messages['zh'] = array(
 	'createwiki' => '申請Wiki',
 	'autocreatewiki-info-language' => '的預設語文',
 	'autocreatewiki-welcomesubject' => '$1 已建立!',
-	'autocreatewiki-welcomebody' => '嗨 $2, 
+	'autocreatewiki-welcomebody' => '嗨 $2,
 
 歡迎加入Wikia社群。相信很快能看到你對此站的貢獻。
 
