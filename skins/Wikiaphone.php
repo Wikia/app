@@ -32,7 +32,12 @@ class SkinWikiaphone extends SkinTemplate {
 		$out->addStyle( 'wikiaphone/IE50Fixes.css', 'screen,handheld', 'lt IE 5.5000' );
 		$out->addStyle( 'wikiaphone/IE55Fixes.css', 'screen,handheld', 'IE 5.5000' );
 		$out->addStyle( 'wikiaphone/IE60Fixes.css', 'screen,handheld', 'IE 6' );
-		$out->addScript( '<script type="text/javascript" src="http://www.google-analytics.com/urchin.js"></script>' );
+
+		$out->addScript(AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW));
+		$out->addScript(AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory()));
+		global $wgCityId;
+		$out->addScript(AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId)));
+		$out->addScript(AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco')));
 		$out->addScriptFile( '../wikiaphone/main.js' );
 	}
 }
