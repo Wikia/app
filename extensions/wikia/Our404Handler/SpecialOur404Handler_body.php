@@ -128,6 +128,7 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 			}
 			$uri = substr( parse_url( $uri, PHP_URL_PATH ), 1 );
 		}
+		Wikia::log( __METHOD__, false,  $_SERVER[ 'HTTP_REFERER' ], true );
 		$title = $wgContLang->ucfirst( urldecode( $uri ) );
 		$namespace = NS_MAIN;
 
