@@ -134,7 +134,7 @@ class MultiWikiEditTask extends BatchTask {
 					$this->log ('Article editing error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				}
 				else {
-					$this->log ('<a href="' . $city_url . $city_path . '?title=' . $actual_title . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
+					$this->log ('<a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($actual_title) . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
 				}
 			}
 		}
@@ -194,9 +194,9 @@ class MultiWikiEditTask extends BatchTask {
 	public function getDescription() {
 		$desc = $this->getType();
 		if( !is_null( $this->mData ) ) {
-			$args = unserialize( $this->mData->task_arguments );
-			$mode = $args["mode"];
-			$admin = $args["admin"];
+			$args = @unserialize( $this->mData->task_arguments );
+			$mode = @$args["mode"];
+			$admin = @$args["admin"];
 			$oUser = User::newFromName ($admin);
 			if (is_object ($oUser)) {
 				$oUser->load();
@@ -208,12 +208,15 @@ class MultiWikiEditTask extends BatchTask {
 			}
 
 			$title = $namespace = '';
-			$page = Title::newFromText($args["page"]);
-			if ( !is_object($page) ) {
-				$title = $args["page"];
-			} else {
-				$namespace = $page->getNamespace();
-				$title = str_replace( ' ', '_', $page->getText() );
+
+			if ( isset($args["page"]) ) {			
+				$page = Title::newFromText($args["page"]);
+				if ( !is_object($page) ) {
+					$title = $args["page"];
+				} else {
+					$namespace = $page->getNamespace();
+					$title = str_replace( ' ', '_', $page->getText() );
+				}
 			}
 
 			$desc = sprintf (
