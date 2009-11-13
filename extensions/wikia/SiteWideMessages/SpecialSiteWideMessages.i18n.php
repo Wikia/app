@@ -86,7 +86,8 @@ $messages = array(
 		'swm-error-no-such-wiki'	=> 'There is no such wiki!',
 		'swm-error-no-such-user'	=> "Specified user doesn't exist.",
 		'swm-error-empty-message'	=> 'Enter the content of the message.',
-		'swm-error-empty-group'		=> 'Enter the name of the group.'
+		'swm-error-empty-group'		=> 'Enter the name of the group.',
+		'swm-lang-other'		=> 'all remaining languages'
 	)
 );
 

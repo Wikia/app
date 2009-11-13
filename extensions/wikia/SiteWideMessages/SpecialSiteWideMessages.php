@@ -37,7 +37,7 @@ $wgExtensionFunctions[] = 'SiteWideMessagesInit';
 $wgExtensionMessagesFiles['SpecialSiteWideMessages'] = dirname(__FILE__) . '/SpecialSiteWideMessages.i18n.php';
 $wgAjaxExportList[] = 'SiteWideMessagesAjaxDismiss';
 
-if ( empty( $wgSMWSupportedLanguages ) ) $wgSMWSupportedLanguages = array( 'en' );
+if ( empty( $wgSWMSupportedLanguages ) ) $wgSWMSupportedLanguages = array( 'en' );
 
 //Register special page
 if (!function_exists('extAddSpecialPage')) {
@@ -134,6 +134,7 @@ function SiteWideMessagesEmptyTalkPageWithMessages(&$out, &$text) {
 function SiteWideMessagesGetUserMessages(&$out, &$parseroutput) {
 	global $wgUser;
 	//don't add messages when editing, previewing changes etc. AND don't even try for unlogged or bots
+#die( 'got here -- hook' );
 	if (wfIsTalkPageForCurrentUserDisplayed() && !$wgUser->isAllowed('bot')) {
 		//$out->mBodytext = SiteWideMessagesGetUserMessagesContent() . $out->mBodytext;
 		$out->addHTML( SiteWideMessagesGetUserMessagesContent() ); // #2321
