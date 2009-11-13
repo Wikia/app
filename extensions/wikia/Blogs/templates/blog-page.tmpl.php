@@ -4,13 +4,13 @@
 <div class="wk_blogs_title_refresh"><?=$skin->makeLinkObj($wgTitle, "<img src=\"{$wgExtensionsPath}/wikia/Blogs/images/refresh.gif\" border=0 />", "action=purge")?></div>
 </div>
 <div class="wk_blogs_body">
-<? if (!empty($aRows)) { ?>	
+<? if (!empty($aRows)) { ?>
 <ul class="list" style="list-style-image:none;list-style-position:outside;list-style-type:none;margin:0.3em 0 0 0.5em">
-<?	
+<?
 foreach ($aRows as $pageId => $aRow) {
 	$oTitle = Title::newFromText($aRow['title'], $aRow['namespace']);
 	if ( !$oTitle instanceof Title ) continue;
-	$isVoting = $isCommenting = 0; 
+	$isVoting = $isCommenting = 0;
 	if (isset($aRow['props']) && array_key_exists('voting', $aRow['props'])) {
 		$isVoting = $aRow['props']['voting'];
 	}
@@ -24,21 +24,21 @@ foreach ($aRows as $pageId => $aRow) {
 /* s: TIMESTAMP */
 	if ( !empty($aOptions['timestamp']) ) {
 		$aUserLinks = BlogTemplateClass::getUserNameRecord($aRow['username'], true);
-		$sUserLinks = ""; 
+		$sUserLinks = "";
 		if ( !empty($aUserLinks) ) {
 			$sUserLinks = $aUserLinks['userpage']." (".$aUserLinks['talkpage']."|".$aUserLinks['contribs'].")";
 		}
-?>		
+?>
 <div class="wk_blogs_details"><span class="wk_blogs_date"><?=$wgLang->date($aRow['rev_timestamp'], true)?></span><span class="wk_blogs_author"><?=$sUserLinks?></span></div>
-<?		
+<?
 	}
 /* e: TIMESTAMP */
 /* s: SUMMARY */
 	if ( !empty($aOptions['summary']) ) {
 ?>
 <div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
-<div class="wk_blogs_comments"><?php if (!empty($isCommenting)) : ?><?php $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?><span style="margin:0 2px"><img src="<?=$wgExtensionsPath?>/wikia/Blogs/images/comment.gif" border="0" /></span><?=$skin->link($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), array('rel' => 'nofollow'))?> | <?php endif ?><?=$skin->link($oTitle, wfMsg('blog-continuereading'), array('rel' => 'nofollow'))?></div>
-<?		
+<div class="wk_blogs_comments"><?php if (!empty($isCommenting)) : ?><?php $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?><span class="blog-comment"><img src="<?=$wgStylePath?>/monobook/blank.gif" /><?=$skin->link($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), array('rel' => 'nofollow'))?></span> | <?php endif ?><?=$skin->link($oTitle, wfMsg('blog-continuereading'), array('rel' => 'nofollow'))?></div>
+<?
 	}
 /* e: SUMMARY */
 ?>
@@ -47,7 +47,7 @@ foreach ($aRows as $pageId => $aRow) {
 } /* foreach */
 ?>
 </ul>
-<?	
+<?
 } /* if (!empty($aRows)) */
 ?>
 </div>

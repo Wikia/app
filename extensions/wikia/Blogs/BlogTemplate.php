@@ -236,7 +236,7 @@ class BlogTemplateClass {
 	private static $oTitle 					= null;
 
 	private static $blogWIKITEXT = array(
-		"/\[\[Video\:(.*)\]\]\s/iU",	
+		"/\[\[Video\:(.*)\]\]\s/iU",
 		"/\[\[Image\:(.*)\]\]/siU",
 		"/\[\[(.*)\:((.+\.[a-z]{3,4})(\|)(.*))*\]\]/i", #images [[Image:Test.png|(.*)]]
 		"/\[\[(.*)\:((.+\.[a-z]{3,4}))\]\]/i", #images [[Image:Test.png]]
@@ -848,7 +848,7 @@ class BlogTemplateClass {
 
 	private static function __parse( $aInput, $aParams, &$parser ) {
 		global $wgLang, $wgUser, $wgCityId, $wgParser, $wgTitle;
-		global $wgExtensionsPath, $wgRequest;
+		global $wgExtensionsPath, $wgStylePath, $wgRequest;
 
 		wfProfileIn( __METHOD__ );
 		$result = "";
@@ -1019,6 +1019,7 @@ class BlogTemplateClass {
 							"wgParser"		=> $wgParser,
 							"skin"			=> $wgUser->getSkin(),
 							"wgExtensionsPath" 	=> $wgExtensionsPath,
+							"wgStylePath" 		=> $wgStylePath,
 							"sPager"		=> $sPager,
 							"wgTitle"		=> self::$oTitle,
 						) );
@@ -1076,9 +1077,9 @@ class BlogTemplateClass {
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 			$oTmpl->set_vars( array(
 				"iPageCount"		=> $iPageCount,
-				"iPage"				=> $iPage,
-				"iTotal"			=> $iTotal,
-				"wgTitle"			=> self::$oTitle,
+				"iPage"			=> $iPage,
+				"iTotal"		=> $iTotal,
+				"wgTitle"		=> self::$oTitle,
 				"pageOffsetName"	=> self::$pageOffsetName,
 				"wgExtensionsPath" 	=> $wgExtensionsPath,
 				"wgStyleVersion"	=> $wgStyleVersion,
