@@ -170,3 +170,8 @@ body.ltr #articleFooter ul.actions li div {
 .activityfeed img.sprite {
 	top: 3px;
 }
+
+/* RT #26026 */
+* .loggedout #userData {
+	margin-top: 5px;
+}
