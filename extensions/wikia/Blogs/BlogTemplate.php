@@ -727,8 +727,8 @@ class BlogTemplateClass {
 				}
 				$sBlogText = strip_tags($sBlogText, self::$skipStrinBeforeParse);
 				/* skip invalid Wiki-text  */
-				$sBlogText = preg_replace('/\{\{\/(.*?)\}\}/siU', '', $sBlogText);
-				$sBlogText = preg_replace('/\{\{(.*?)\}\}/siU', '', $sBlogText);
+				$sBlogText = preg_replace('/\{\{\/(.*?)\}\}/si', '', $sBlogText);
+				$sBlogText = preg_replace('/\{\{(.*?)\}\}/si', '', $sBlogText);
 				if (!empty(self::$blogWIKITEXT)) {
 					/* skip some wiki-text */
 					foreach (self::$blogWIKITEXT as $id => $tag) {
