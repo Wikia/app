@@ -41,7 +41,7 @@ class FancyCaptcha extends SimpleCaptcha {
 	/**
 	 * Insert the captcha prompt into the edit form.
 	 */
-	function getForm() {
+	function getForm($template = 'default') {
 		$info = $this->pickImage();
 		if( !$info ) {
 			die( "out of captcha images; this shouldn't happen" );
@@ -56,23 +56,14 @@ class FancyCaptcha extends SimpleCaptcha {
 
 		$title = Title::makeTitle( NS_SPECIAL, 'Captcha/image' );
 
-		return "<p>" .
-			Xml::element( 'img', array(
-				'src'    => $title->getLocalUrl( 'wpCaptchaId=' . urlencode( $index ) ),
-				'width'  => $info['width'],
-				'height' => $info['height'],
-				'alt'    => '' ) ) .
-			"</p>\n" .
-			Xml::element( 'input', array(
-				'type'  => 'hidden',
-				'name'  => 'wpCaptchaId',
-				'id'    => 'wpCaptchaId',
-				'value' => $index ) ) .
-			"<p>" .
-			Xml::element( 'input', array(
-				'name' => 'wpCaptchaWord',
-				'id'   => 'wpCaptchaWord' ) ) .
-			"</p>\n";
+		$captchaTemplate = new EasyTemplate(dirname(__FILE__).'/templates');
+		$captchaTemplate->set_vars(array(
+			'title' => $title,
+			'info' => $info,
+			'index' => $index
+		));
+		$resultHTML = $captchaTemplate->execute($template);
+		return $resultHTML;
 	}
 
 	/**

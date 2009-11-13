@@ -22,10 +22,10 @@ class CreateBlogPage extends SpecialBlogPage {
 	}
 
 	public function execute() {
-		global $wgOut, $wgUser, $wgRequest;
+		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 
 		if( !$wgUser->isLoggedIn() ) {
-			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required');
+			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array($wgTitle->getPrefixedDBkey()));
 			return;
 		}
 

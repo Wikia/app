@@ -20,6 +20,10 @@ function wfSpecialUserlogin( $par = '' ) {
 function wfSpecialUserloginSetupVars($vars) {
 	$vars['prefs_help_birthmesg'] = wfMsg('prefs-help-birthmesg');
 	$vars['prefs_help_birthinfo'] = wfMsg('prefs-help-birthinfo');
+	$vars['prefs_help_mailmesg'] = wfMsg('prefs-help-mailmesg');
+	$vars['prefs_help_email'] = wfMsg('prefs-help-email');
+	$vars['prefs_help_blurmesg'] = wfMsg('prefs-help-blurmesg');
+	$vars['prefs_help_blurinfo'] = wfMsgExt( 'captchahelp-text', array( 'parse' ) );
 
 	return true;
 }

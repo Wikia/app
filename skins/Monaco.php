@@ -1199,12 +1199,12 @@ EOS;
 
 			$data['login'] = array(
 				'text' => wfMsg('login'),
-				'href' => Skin::makeSpecialUrl( 'Userlogin', 'returnto=' . $wgTitle->getPrefixedURL() )
+				'href' => Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() )
 				);
 
 			$data['register'] = array(
 				'text' => wfMsg('nologinlink'),
-				'href' => Skin::makeSpecialUrl( 'Userlogin', 'type=signup' )
+				'href' => Skin::makeSpecialUrl( 'Signup', '' )
 				);
 
 		} else {

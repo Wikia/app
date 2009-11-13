@@ -1,7 +1,7 @@
 <?php
-global $wgAuth, $wgUser, $wgEnableEmail;
+global $wgAuth, $wgUser, $wgEnableEmail, $wgTitle;
 $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
-$link = $titleObj->getLocalUrl('type=signup');
+$link = $titleObj->getLocalUrl('type=signup&returnto=' . $wgTitle->getPrefixedDBkey());
 ?>
 <div id="AjaxLoginBox" title="<?= wfMsg('login') ?>">
 	<form action="" method="post" style="margin: 10px;" name="userajaxloginform">

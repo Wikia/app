@@ -1205,7 +1205,8 @@ class Title {
 			}
 		} elseif( $action == 'edit' ) {
 			if( !$user->isAllowed( 'edit' ) ) {
-				$errors[] = $user->isAnon() ? array( 'editnologintext' ) : array( 'editnotallowed' );
+				global $wgTitle;
+				$errors[] = $user->isAnon() ? array( 'editnologintext', $wgTitle->getPrefixedDBkey() ) : array( 'editnotallowed' );
 			}
 		} elseif( !$user->isAllowed( $action ) ) {
 			$return = null;
