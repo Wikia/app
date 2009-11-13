@@ -59,11 +59,11 @@ padding:.8em;
 border:1px solid lightgray;
 padding:15px;
 }
-	
+
 .wpCategoryTextarea {
 display:none;
 }
-	
+
 #wpCategoryInput,#wpCategoryButton {
 margin:4px 2px 0;
 }
@@ -247,6 +247,26 @@ clear:right;
 color:#DFDFDF;
 display:inline;
 padding:3px .2em 0;
+}
+
+.blog-comment {
+	margin-left: 20px;
+	position: relative;
+}
+
+.blog-comment img {
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113) no-repeat 0 0;
+	clip: rect(0 736px 16px 720px);
+	height: 16px;
+	left: -736px;
+	position: absolute;
+	top: 3px;
+	width: 736px;
+}
+
+.wk_blogs_panel .blog-comment img {
+	left: -738px;
+	top: 0;
 }
 
 div.wk_blogs_post .wk_blogs_pager {
