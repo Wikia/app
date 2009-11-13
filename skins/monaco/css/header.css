@@ -111,6 +111,10 @@ a.greyButton big {
 	line-height: 32px;
 	margin-right: 8px;
 }
+.loggedout #userData li {
+	float: none;
+	display: inline;
+}
 #userData a, #wikiaBranding a {
 	color: #000;
 }
