@@ -151,7 +151,7 @@ class ActivityFeedHelper {
 		$feedHTML = $wgMemc->get($key);
 		if (empty($feedHTML)) {
 			$feedHTML = ActivityFeedHelper::getList($parameters);
-			$wgMemc->set($key, $feedHTML, $userLangEqContent ? 60*60*24 : 60*5);
+			$wgMemc->set($key, $feedHTML, $userLangEqContent ? 60*5 : 60*5);
 		}
 
 		wfProfileOut(__METHOD__);
@@ -219,7 +219,7 @@ function CommunityWidgetAjax() {
 	$json = Wikia::json_encode($data);
 	$response = new AjaxResponse($json);
 	$response->setContentType('application/json; charset=utf-8');
-	$response->setCacheDuration($userLangEqContent ? 60*60*24 : 60*5);
+	$response->setCacheDuration($userLangEqContent ? 60*5 : 60*5);
 	wfProfileOut(__METHOD__);
 	return $response;
 }
