@@ -158,21 +158,27 @@
 			
 			<fieldset>
 				<legend><?= wfMsg('swm-label-language') ?></legend>
-				<select name="mLang" id="mLang">
-				<option>all</option>
 				<?php
-					global $wgWikiaStaffLanguages;
-					$selectedLang = false;
-					foreach ($wgWikiaStaffLanguages as $lang) {
-						if ( !$selectedLang && $lang == $formData['lang'] ) {
-							echo "<option selected>$lang</option>";
-							$selectedLang = true;
-						} else {
-							echo "<option>$lang</option>\n";
+					if ( !empty( $supportedLanguages ) ) {
+						foreach ($supporetdLanguages as $lang) {
+#							$selectedLang = false;
+#							if ( !empty( $formData[$lang] ) ) {
+#								$selectedLang = true;
+#							}
+
+							echo "<input type='checkbox' name='mLang[]' id='swm-lang-$lang' class='swm-lang-checkbox' value='$lang'";
+							if ( $selectedLang ) {
+								echo " checked='checked'";
+							}
+							echo " />";
+							echo "<label for='swm-lang-$lang'>$lang</label>";
 						}
+
 					}
 				?>
-				</select>
+				<br />
+				<input type="button" onclick="jQuery('input.swm-lang-checkbox').attr('checked', 'checked');" value="<?= wfMsg('swm-button-lang-checkall'); ?>" />
+				<input type="button" onclick="jQuery('input.swm-lang-checkbox').attr('checked', '');" value="<?= wfMsg('swm-button-lang-checknone'); ?>" />
 			</fieldset>
 			<?php } //do not show this info when editing ?>
 
