@@ -105,11 +105,11 @@ function gracenote_getAnalyticsHtml($google_action){
 				}
 			}
 		}
-		WET.byStr('SeansCorner/{$google_action}/' + jsGoogleLabel);
+		WET.byStr('GN/{$google_action}/' + jsGoogleLabel);
 	});\n";
 	} else {
 		$trackEventCode = "$(document).ready(function(){
-		WET.byStr('SeansCorner/{$google_action}');
+		WET.byStr('GN/{$google_action}');
 	});\n";
 	}
 
