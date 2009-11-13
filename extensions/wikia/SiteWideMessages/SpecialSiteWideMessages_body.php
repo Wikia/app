@@ -263,7 +263,7 @@ class SiteWideMessages extends SpecialPage {
 				break;
 			case 'WIKI':
 				$mHubId = null;
-				$mLang = MSG_LANG_ALL;
+				$mLang = array( MSG_LANG_ALL );
 		}
 
 		switch($mSendModeUsers) {
@@ -277,7 +277,7 @@ class SiteWideMessages extends SpecialPage {
 				break;
 			case 'USER':
 				$mGroupName = '';
-				$mLang = MSG_LANG_ALL;
+				$mLang = array( MSG_LANG_ALL );
 		}
 
 		$sendToAll = $mSendModeWikis == 'ALL' && $mSendModeUsers == 'ALL';
@@ -347,7 +347,7 @@ class SiteWideMessages extends SpecialPage {
 							. $DB->AddQuotes($mWikiId). ', '
 							. $DB->AddQuotes($mRecipientId) . ', '
 							. $DB->AddQuotes($result['msgId']) . ', '
-							. MSG_STATUS_UNSEEN
+							. MSG_STATUS_DISMISSED
 							. ');'
 							, __METHOD__
 						);
@@ -798,7 +798,7 @@ class SiteWideMessages extends SpecialPage {
 	static function getLanguageConstraintsForUser( $user, $langs ) {
 		global $wgSWMSupportedLanguages;
 
-		$langs = explode( ',', $langs );
+		$langs = implode( $langs, "," );
 		$userLang = $user->getOption( 'language' );
 
 		return ( $langs == MSG_LANG_ALL || in_array( $userLang, $langs ) || ( in_array( MSG_LANG_OTHER, $langs) && !in_array( $userLang, $wgSWMSupportedLanguages ) ) );

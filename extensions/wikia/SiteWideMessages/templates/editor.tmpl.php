@@ -160,20 +160,21 @@
 				<legend><?= wfMsg('swm-label-language') ?></legend>
 				<?php
 					if ( !empty( $supportedLanguages ) ) {
-						foreach ($supporetdLanguages as $lang) {
+						foreach ($supportedLanguages as $lang) {
 #							$selectedLang = false;
 #							if ( !empty( $formData[$lang] ) ) {
 #								$selectedLang = true;
 #							}
 
 							echo "<input type='checkbox' name='mLang[]' id='swm-lang-$lang' class='swm-lang-checkbox' value='$lang'";
-							if ( $selectedLang ) {
-								echo " checked='checked'";
-							}
+#							if ( $selectedLang ) {
+#								echo " checked='checked'";
+#							}
 							echo " />";
 							echo "<label for='swm-lang-$lang'>$lang</label>";
 						}
-
+						echo "<input type='checkbox' name='mLang[]' id='swm-lang-other' class='swm-lang-checkbox' value='other' />";
+						echo "<label for='swm-lang-other'>" . wfMsg( 'swm-lang-other' ) . "</label>";
 					}
 				?>
 				<br />
