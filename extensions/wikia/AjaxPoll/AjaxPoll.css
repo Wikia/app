@@ -2,6 +2,7 @@
  * css classes for AjaxPoll
  */
 div.ajax-poll {
+	clear:both;
 	border: 1px dashed grey;
 	padding: 1em;
 	margin-top: 1em;
