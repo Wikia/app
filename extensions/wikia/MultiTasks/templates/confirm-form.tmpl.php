@@ -85,7 +85,7 @@
 	<tr>
 		<td align="right" style="vertical-align:top"><?= wfMsg('multiwikiedit_page')?> :</td>
 		<td align="left" style="padding:2px 5px;">
-		<input type="hidden" name="wpPage" id="wpPage" value="<?=implode("|", $mTaskParams['page'])?>" />
+		<input type="hidden" name="wpPage" id="wpPage" value="<?= implode( "|", array_map("wfEscapeWikiText", $mTaskParams['page']) ) ?>" />
 <? if ( !empty($mTaskParams['page']) ) { foreach ($mTaskParams['page'] as $page) { ?>
 			<?=$page?><br />
 <?	} } ?>	

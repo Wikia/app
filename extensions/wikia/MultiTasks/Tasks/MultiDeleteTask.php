@@ -101,7 +101,7 @@ class MultiDeleteTask extends BatchTask {
 				if ($retval) {
 					$this->addLog('Article deleting error! (' . $city_url . '). Error code returned: ' .  $retval . ' Error was: ' . $actual_title);
 				} else {
-					$this->addLog('Removed: <a href="' . $city_url . $city_path . '?title=' . $actual_title  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
+					$this->addLog('Removed: <a href="' . $city_url . $city_path . '?title=' . wfEscapeWikiText($actual_title)  . '">' . $city_url . $city_path . '?title=' . $actual_title . '</a>');
 				}
 			}
 		}
@@ -164,9 +164,9 @@ class MultiDeleteTask extends BatchTask {
 	public function getDescription() {
 		$desc = $this->getType();
 		if( !is_null( $this->mData ) ) {
-			$args = unserialize( $this->mData->task_arguments );
-			$mode = $args['mode'];
-			$admin = $args['admin'];
+			$args = @unserialize( $this->mData->task_arguments );
+			$mode = @$args['mode'];
+			$admin = @$args['admin'];
 
 			$oUser = User::newFromName ($admin);
 			if (is_object ($oUser)) {
