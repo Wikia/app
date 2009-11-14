@@ -38,7 +38,7 @@ $out->setSubtitle( wfMsgHtml( 'formerror' ) ); ?>
 <td align="right">&nbsp;</td>
 <td align="left">
     <input type="checkbox" tabindex="4" name="wpRegexBlockedExact" id="wpRegexBlockedExact" value="1" <?= ($mRegexBlockedExact) ? "checked" : "" ?> />
-    <label for="wpRegexBlockedExact"><?= ucfirst(wfMsg('regexblock_exact_match')) ?></label>
+    <label for="wpRegexBlockedExact"><?= wfMsg('regexblock_exact_match_form') ?></label>
 </td>
 </tr>
 <tr>
