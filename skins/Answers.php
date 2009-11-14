@@ -1020,49 +1020,40 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 		foreach($contributors as $contributor) {
 			$ret .= Xml::openElement('li');
 
-			// yes, it's ugly to use tables in such case, but this needs to be properly aligned (centre vertically)
-			$ret .= Xml::openElement('table', array('class' => 'userInfoWrapper')) . Xml::openElement('tr');
-
 			// get avatar
 			$avatarImg = Answer::getUserAvatar($contributor['user_id']);
-
-			$ret .= Xml::openElement('td');
 			$ret .= $avatarImg;
-			$ret .= Xml::closeElement('td');
 
 			// render user info
-			$ret .= Xml::openElement('td', array('class' => 'userInfo'));
+			$ret .= Xml::openElement('div', array('class' => 'userInfo'));
 
 			if ($contributor['user_name'] == 'helper') {
 				// anonymous users
 				$ret .= Xml::element('span', array('class' => 'userPageLink'), wfMsg('unregistered'));
 				$ret .= Xml::element('span', array('class' => 'anonEditPoints'), wfMsgExt('anonymous_edit_points', array('parsemag'), array($contributor['edits'])));
-			}
-			else {
+			} else {
 				// link to user page
 				$userPage = Title::newFromText($contributor['user_name'], NS_USER);
 				$userPageLink = !empty($userPage) ? $userPage->getLocalUrl() : '';
 
 				$ret .= Xml::element('a', array('href' => $userPageLink, 'class' => 'userPageLink'), $contributor['user_name']);
 
-				// user points
-				$ret .= Xml::element('table', array('class' => 'userEditPoints'));
-				$ret .= Xml::element('tr');
-				$ret .= Xml::element('td', array('id' => "contributors-user-points-{$contributor['user_id']}", 'class' => 'userPoints', 'timestamp' => wfTimestampNow()), $contributor['edits']);
-				$ret .= Xml::element('td', array(), wfMsgExt('edit_points', array('parsemag'), array($contributor['edits'])));
-				$ret .= Xml::closeElement('tr');
-				$ret .= Xml::closeElement('table');
+//				// user points
+				$ret .= Xml::element('div', array('class' => 'userEditPoints'));
+				$ret .= Xml::element('span', array('id' => "contributors-user-points-{$contributor['user_id']}", 'class' => 'userPoints', 'timestamp' => wfTimestampNow()), $contributor['edits']);
+				$ret .= ' '; // space for graceful degradation
+				// TODO: Just output text, not an element. We don't need it.
+				// This would be better without any element at all.
+				$ret .= Xml::element('span', array(), wfMsgExt('edit_points', array('parsemag'), array($contributor['edits'])));
+				$ret .= Xml::closeElement('div'); // END .userEditPoints
 			}
 
-			// close wrapping table
-			$ret .= Xml::closeElement('td');
-			$ret .= Xml::closeElement('tr');
-			$ret .= Xml::closeElement('table');
+			$ret .= Xml::closeElement('div'); // END .userInfo
 
 			$ret .= Xml::closeElement('li');
 		}
 
-		$ret .= Xml::closeElement('ul');
+		$ret .= Xml::closeElement('ul'); // END #contributors
 
 		return $ret;
 	}
