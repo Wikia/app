@@ -895,18 +895,25 @@ div.category br {
 }
 
 #contributors li {
-	display: inline;
+	height: 56px;
 	float: left;
 	margin: 5px;
 }
 
 #contributors .userInfo {
-	padding: 0 35px 0 10px;
+	margin-top: 14px;
+	padding: 0 35px 0 0;
+}
+/* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
+*:lang(en) #contributors .userInfo {
+	float: right;
 }
 
 #contributors li img {
 	border: solid 1px #aaa;
 	display: block;
+	float: left;
+	margin-right: 10px;
 	padding: 2px;
 }
 
@@ -926,23 +933,29 @@ div.category br {
 	margin-top: 4px;
 }
 
-#contributors li .userEditPoints td {
-	background: #ededed url('../images/user_edit_points_bg.png') no-repeat -175px 0;
+#contributors li .userEditPoints {
+	background: #e0e0e0 url('../images/user_edit_points_bg.png') no-repeat -175px 0;
 	border: solid 1px #aaa;
-	border-collapse: collapse;
 	border-left: none;
-	color: #000;
-	line-height: 13px;
 	font-size: 9px;
 	font-weight: bold;
 	text-transform: uppercase;
-	padding: 0 3px;
+	padding-right: 3px;
+	line-height: 15px;
+	margin-left: 66px; /* For IE6 and 7, gets overriden. */
 }
 
-#contributors li .userEditPoints td.userPoints {
-	background-position: 0 0;
-	border: solid 1px #584013;
-	background-color: #f6dd5d;
+/* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
+*:lang(en) #contributors li .userEditPoints {
+	margin-left: 0;
+}
+
+#contributors li .userEditPoints .userPoints {
+	background: #f6dd5d url('../images/user_edit_points_bg.png') no-repeat;
+	border: 1px solid #584013;
+	float: left;
+	margin: -1px 3px 0 0;
+	padding: 0 3px;
 	font-size: 13px;
 }
 
