@@ -45,6 +45,8 @@ $.fn.extend({
    		.fadeIn("fast")
 		.log('makeModal: #' + this.attr('id'));
 
+	$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
+	
 	// get rid of tooltip - remove title attr
 	this.removeAttr('title');
 
@@ -116,6 +118,7 @@ $.fn.extend({
   	$(".blackout:last").fadeOut("fast", function() {
   		$(this).remove();
   	});
+	$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "visible");
   },
   // just hide the modal - don't remove DOM node
   hideModal: function() {
@@ -127,6 +130,7 @@ $.fn.extend({
 			$(this).css("display", "none");
 		}
 	);
+	$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "visible");
   },
   // show previously hidden modal
   showModal: function() {
@@ -135,7 +139,6 @@ $.fn.extend({
 
 	// let's have it dynamically generated, so every newly created modal will be on the top
 	var zIndex = ($('.blackout').length+1) * 1000;
-
    	$(".blackout.blackoutHidden:last")
    		.height($(document).height())
 		.css({
@@ -153,6 +156,7 @@ $.fn.extend({
 			display: "block"
 		})
 		.log('showModal: #' + this.attr('id'));
+	$("[id$='TOP_LEADERBOARD']").add("[id$='TOP_RIGHT_BOXAD']").css("visibility", "hidden");
 
 	//Defined twice in different scopes. This is bad. Figure out how to define just once.
 	function getModalTop() {
