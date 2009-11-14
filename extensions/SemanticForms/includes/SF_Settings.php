@@ -57,7 +57,7 @@ $sfgMaxAutocompleteValues = 1000;
 # visitors will see the "Edit" tab, for pages that are editable by form -
 # by default all will see it.
 ###
-$sfgRenameEditTabs = false;
+$sfgRenameEditTabs = isset($sfgRenameEditTabs) ? $sfgRenameEditTabs : false;
 $wgGroupPermissions['*']['viewedittab']   = true;
 $wgAvailableRights[] = 'viewedittab';
 
