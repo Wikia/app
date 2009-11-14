@@ -453,6 +453,7 @@ function CategorySelectGetCategoryLinksEnd(&$categoryLinks) {
 		$wgOut->addInlineScript(<<<JS
 /* CategorySelect */
 wgAfterContentAndJS.push(function() {
+	$(".catlinks-allhidden").css("display", "block");
 	$('#csAddCategorySwitch').children('a').click(function() {
 		WET.byStr('articleAction/addCategory');
 

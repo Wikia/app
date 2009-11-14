@@ -1,4 +1,5 @@
 == Changes since 200911.2 ==
+* rt#26278: CS: Unhide catsel for hidden cats in view mode. (Nef)
 * RegexBlock: tweaks to interface and presented data (uberfuzzy)
 * rt#27187: SMW: WF-ized variable. (Nef)
 * rt#27193: Answers: Widget data handling fixed. (Nef)
