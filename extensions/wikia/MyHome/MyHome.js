@@ -163,7 +163,6 @@ MyHome.setDefaultView = function() {
 
 MyHome.trackClick = function(e) {
 	var target = getTarget(e);
-
 	if(target.id == 'myhome-feed-switch-default-checkbox') {
 		MyHome.track('/toggle/default/' + MyHome.mode);
 	} else if($.nodeName(target, 'a')) {
@@ -171,20 +170,20 @@ MyHome.trackClick = function(e) {
 			MyHome.track('/communitycorner-edit');
 		} else if(target.parentNode.id == 'myhome-feed-switch') {
 			MyHome.track('/toggle/' + ((MyHome.mode == 'activity') ? 'watchlist' : 'activity'));
-		} else if($(target).hasClass('title') && target.parentNode.parentNode.parentNode.id == 'myhome-' + MyHome.mode + '-feed-content') {
+		} else if($(target).hasClass('title') && target.parentNode.parentNode.parentNode.parentNode.id == 'myhome-' + MyHome.mode + '-feed-content') {
 			MyHome.track('/' + MyHome.mode + '/item');
 		} else if($(target).hasClass('title') && target.parentNode.parentNode.parentNode.id == 'myhome-user-contributions-feed-content') {
 			MyHome.track('/contributions/item');
 		} else if($.nodeName(target.parentNode, 'CITE') && target.parentNode.parentNode.parentNode.parentNode.id == 'myhome-' + MyHome.mode + '-feed-content') {
 			MyHome.track('/' + MyHome.mode + '/user');
-		} else if($(target.parentNode.parentNode).hasClass('myhome-feed-details-row')) {
+		} else if($(target.parentNode.previousSibling).hasClass('activityfeed-details-label')) {
 			MyHome.track('/' + MyHome.mode + '/category');
-		} else if(target.parentNode.parentNode.parentNode.id == 'myhome-hot-spots-feed-content') {
+		} else if(target.parentNode.parentNode.parentNode.parentNode.id == 'myhome-hot-spots-feed-content') {
 			MyHome.track('/hotspots/item');
 		}
 	} else if($.nodeName(target, 'img')) {
 		if($.nodeName(target.parentNode, 'a')) {
-			if($(target.parentNode).hasClass('myhome-diff')) {
+			if($(target.parentNode).hasClass('activityfeed-diff')) {
 				if(target.parentNode.parentNode.parentNode.parentNode.id == 'myhome-user-contributions-feed-content') {
 					MyHome.track('/contributions/diff');
 				} else {
@@ -201,7 +200,7 @@ MyHome.trackClick = function(e) {
 
 // init onclicks
 jQuery(function() {
-	MyHome.mode = $('#myhome-wrapper').children().eq(2).hasClass("myhome-activity-feed") ? 'activity' : 'watchlist';
+	MyHome.mode = ($("#myhome-main").children().filter("[id$='-feed-content']").attr("id") == "myhome-activity-feed-content") ? "activity" : "watchlist";
 	MyHome.setupThumbnails($('.activityfeed'));
 	$('#myhome-feed-switch-default-checkbox').removeAttr('disabled').click(MyHome.setDefaultView);
 	$('#myhome-wrapper').click(MyHome.trackClick);

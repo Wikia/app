@@ -3,11 +3,11 @@
 <?php
 	echo $defaultSwitch;
 ?>
-<?/*<div id="myhome-<?= $type ?>-feed-content" class="reset">*/?>
+<div id="myhome-<?= $type ?>-feed-content">
 <?php
 	echo $content;
 ?>
-<?/*</div>*/?>
+</div>
 <?php
 	if (!empty($showMore)) {
 ?>
