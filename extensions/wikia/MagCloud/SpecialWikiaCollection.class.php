@@ -238,6 +238,8 @@ class WikiaCollection extends SpecialPage {
 			$oArticle->view();
 
 			$bibliography[$sTitle] = $sUrl;
+
+			$wgOut->addHTML("<br clear=\"all\">");
 		}
 
 		if(sizeOf($bibliography)) {
