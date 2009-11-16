@@ -414,20 +414,12 @@ class UsercreateTemplate extends QuickTemplate {
 					AjaxLogin2.blockLoginForm(true);
 					break;
 				case 'Success':
-					// macbre: call custom function (if provided by any extension)
-					if (typeof window.wgAjaxLoginOnSuccess == 'function') {
-						// let's update wgUserName
-						window.wgUserName = response.ajaxlogin.lgusername;
+				       	if( wgReturnTo != '' ) {
+						window.location = wgServer + wgScriptPath + '/index.php?title=' + wgReturnTo ;
 
-						$().log('AjaxLogin2: calling custom function');
-						window.wgAjaxLoginOnSuccess();
-						return;
+					} else {
+						window.location.href = wgServer + wgScriptPath;
 					}
-						if(wgCanonicalSpecialPageName == "Userlogout") {
-							window.location.href = wgServer + wgScriptPath;
-						} else {
-							window.location.reload(true);
-						}
 					break;
 				case 'NotExists':
 					AjaxLogin2.blockLoginForm(false);
