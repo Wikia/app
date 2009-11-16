@@ -17,7 +17,8 @@
 }
 
 .page-Special_Signup .firstHeading,
-.page-Special_Signup #contentSub {
+.page-Special_Signup #contentSub,
+.page-Special_Signup #siteSub {
         display: none !important;
 }
 
