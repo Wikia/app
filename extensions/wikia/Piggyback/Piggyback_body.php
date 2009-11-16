@@ -79,7 +79,7 @@ class PBLoginForm extends LoginForm
 			return ;
 		}
 
-		if (  $u->getId()  == $wgUser->getId() ) {
+		if ( $u->getId()  == $wgUser->getId() ) {
 			$this->mainLoginForm(wfMsg( 'piggyback-itisyou'));
 			return ;
 		}
@@ -91,7 +91,9 @@ class PBLoginForm extends LoginForm
 			} */
 
 		$wgRequest->setSessionData("PgParentUser",$wgUser->getID());
-
+		
+		wfRunHooks('PiggybackLogIn',array($wgUser,$u));
+		
 		$log = new LogPage( 'piggyback' );
 		$log->addEntry( 'piggyback', SpecialPage::getTitleFor( 'Piggyback') , "login ".$wgUser->getName()." to ".$u->getName(),  array() );
 

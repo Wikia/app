@@ -28,8 +28,8 @@ $wgAutoloadClasses['PiggybackTemplate'] = $dir . 'Piggyback_form.php'; # Tell Me
 $wgExtensionMessagesFiles['Piggyback'] = $dir . 'Piggyback.i18n.php';
 $wgExtensionAliasesFiles['Piggyback'] = $dir . 'Piggyback.alias.php';
 $wgSpecialPages['Piggyback'] = 'Piggyback'; # Let MediaWiki know about your new special page.
-$wgHooks['UserLogoutComplete'][] = 'PiggybackGoToParent';
 
+$wgSpecialPageGroups['Piggyback'] = 'changes';
 $wgLogRestrictions['piggyback'] = 'piggyback';
 $wgLogTypes[] = 'piggyback';
 
@@ -37,11 +37,13 @@ $wgLogTypes[] = 'piggyback';
  * event for logout (back to parent user)
  */
 
+$wgHooks['UserLogoutComplete'][] = 'PiggybackGoToParent';
 function PiggybackGoToParent($wgUser,$injected_html,$oldName) {
 	global $wgRequest;
 	if( PBLoginForm::isPiggyback() ) {
 		$loginForm = new PBLoginForm($wgRequest);
 		$loginForm->goToParent( $oldName );
+		wfRunHooks('PiggybackLogOut',array($wgUser,User::newFromName($oldName)));
 	}
 	return true;
 }
