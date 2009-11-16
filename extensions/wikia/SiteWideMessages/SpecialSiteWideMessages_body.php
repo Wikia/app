@@ -789,13 +789,14 @@ class SiteWideMessages extends SpecialPage {
 	 * @author Lucas Garczewski <tor@wikia-inc.com>
 	 *
 	 * @param $user current User object
-	 * @param $langs array of language strings
+	 * @param $langs string of comma separated lang codes
 	 *
 	 * @return string for WHERE clause
 	 */
 	static function getLanguageConstraintsForUser( $user, $langs ) {
 		global $wgSWMSupportedLanguages;
 
+		$langs = explode( ',', $langs );
 		$userLang = $user->getOption( 'language' );
 
 		return ( in_array( MSG_LANG_ALL, $langs ) || in_array( $userLang, $langs ) || ( in_array( MSG_LANG_OTHER, $langs) && !in_array( $userLang, $wgSWMSupportedLanguages ) ) );
