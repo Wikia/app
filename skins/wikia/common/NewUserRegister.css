@@ -163,7 +163,7 @@ div#userlogin .mw-input span {
 }
 
 div#userlogin .mw-input-ok img.sprite {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091110) no-repeat 0 0;
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113) no-repeat 0 0;
 	clip: rect(0px 608px 16px 592px);
 	height: 16px;
 	left: -592px;
@@ -176,7 +176,7 @@ div#userlogin .mw-input-error img.sprite,
 div#userloginErrorBox img.sprite,
 div#userloginErrorBox2 img.sprite,
 form#ajaxloginform2 img.sprite {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091110) no-repeat 0 0;
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113) no-repeat 0 0;
 	clip: rect(0px 624px 16px 608px);
 	height: 16px;
 	left: -608px;
