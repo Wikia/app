@@ -583,11 +583,19 @@ class BlogTemplateClass {
     	return $dbOption;
 	}
 
+	private static function __parseCategories($text) {
+		global $wgOut;
+		return $wgOut->parse($text, false);
+	}
+
 	private static function __getCategories ($aParamValues) {
     	wfProfileIn( __METHOD__ );
 		self::$aCategoryNames = $aParamValues;
 		$aPages = array();
+
     	if ( !empty($aParamValues) ) {
+			# RT #26917
+			$aParamValues = array_map("strip_tags", array_map(array("self","__parseCategories"), $aParamValues));
 			/* set max length of group concat query */
 			self::$dbr->query( 'SET group_concat_max_len = '.GROUP_CONCAT, __METHOD__ );
 			/* run query */
