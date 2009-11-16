@@ -48,7 +48,7 @@ function wfSpamRegexCacheKey( /*...*/ ) {
 	if( in_array( 'spam_regex', $wgSharedTables ) ) {
 		$args = array_merge( array( $wgSharedDB, $wgSharedPrefix ), $args );
 		return call_user_func_array( 'wfForeignMemcKey', $args );
-	} elseif( $wgExternalSharedDB ) {
+	} elseif( $wgExternalSharedDB && $wgSharedDB ) {
 		$args = array_merge( array( $wgExternalSharedDB ), $args );
 		return call_user_func_array( 'wfForeignMemcKey', $args );
 	} else {
@@ -61,7 +61,7 @@ function wfSpamRegexGetDB( $db ) {
 	global $wgSharedDB, $wgSharedTables, $wgSharedPrefix, $wgExternalSharedDB;
 	if( in_array( 'spam_regex', $wgSharedTables ) ) {
 		return wfGetDB( $db );
-	} elseif( $wgExternalSharedDB ) {
+	} elseif( $wgExternalSharedDB && $wgSharedDB ) {
 		return wfGetDB( $db, array(), $wgExternalSharedDB );
 	} else {
 		return wfGetDB( $db );
