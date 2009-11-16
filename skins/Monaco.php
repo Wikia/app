@@ -1196,15 +1196,15 @@ EOS;
 		$data = array();
 
 		if(!$wgUser->isLoggedIn()) {
-
+			$signUpHref = Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() );
 			$data['login'] = array(
 				'text' => wfMsg('login'),
-				'href' => Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() )
+				'href' => $signUpHref
 				);
 
 			$data['register'] = array(
 				'text' => wfMsg('nologinlink'),
-				'href' => Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() )
+				'href' => $signUpHref
 				);
 
 		} else {
