@@ -27,6 +27,8 @@ function efPowersMakeUnblockable( $block, $user ) {
 	// hack to get IpBlock to display the message we want -- hardcoded in core code
 	$replacement = wfMsgExt( 'staffpowers-ipblock-aborted', array('parseinline') );
 	$wgMessageCache->addMessages( array( 'hookaborted' => $replacement ) );
-
+	wfRunHooks('BlockIpStaffPowersCancel', array($block, $user));
 	return false;
 }
+
+
