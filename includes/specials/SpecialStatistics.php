@@ -24,7 +24,7 @@ class SpecialStatistics extends SpecialPage {
 
 	public function execute( $par ) {
 		global $wgOut, $wgRequest, $wgMessageCache;
-		global $wgDisableCounters, $wgMiserMode;
+		global $wgDisableCounters, $wgMiserMode, $wgTitle;
 		$wgMessageCache->loadAllMessages();
 
 		$this->setHeaders();
@@ -84,7 +84,7 @@ class SpecialStatistics extends SpecialPage {
 		wfRunHooks( "CustomSpecialStatistics", array( &$this, &$text ) );
 
 		# Customizable footer
-		$footer = wfMsgExt( 'statistics-footer', array('parseinline') );
+		$footer = wfMsgExt( 'statistics-footer', array('parseinline'), $wgTitle->getPrefixedDBkey() );
 		if( !wfEmptyMsg( 'statistics-footer', $footer ) && $footer != '' ) {
 			$text .= "\n" . $footer;
 		}
