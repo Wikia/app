@@ -8,7 +8,7 @@
  *
  */
 function wfSpecialSpecialpages() {
-	global $wgOut, $wgUser, $wgMessageCache, $wgSortSpecialPages;
+	global $wgOut, $wgUser, $wgMessageCache, $wgSortSpecialPages, $wgSpecialPagesRequiredLogin;
 
 	$wgMessageCache->loadAllMessages();
 
@@ -60,7 +60,14 @@ function wfSpecialSpecialpages() {
 		$wgOut->addHTML( "<td width='30%' valign='top'><ul>\n" );
 		foreach( $sortedPages as $desc => $specialpage ) {
 			list( $title, $restricted ) = $specialpage;
-			$link = $sk->makeKnownLinkObj( $title , htmlspecialchars( $desc ) );
+			/* Wikia change begin - @author: Marooned */
+			/* Redirect to login page instead of showing error, see Login friction project */
+			if ($wgUser->isAnon() && in_array(SpecialPage::resolveAlias($title->getDBkey()), $wgSpecialPagesRequiredLogin)) {
+				$link = $sk->makeKnownLinkObj( Title::makeTitle(NS_SPECIAL, 'SignUp') , htmlspecialchars( $desc ), 'returnto=' . $title->getPrefixedUrl() );
+			} else {
+				$link = $sk->makeKnownLinkObj( $title , htmlspecialchars( $desc ) );
+			}
+			/* Wikia change end */
 			if( $restricted ) {
 				$includesRestrictedPages = true;
 				$wgOut->addHTML( "<li class='mw-specialpages-page mw-specialpagerestricted'>{$link}</li>\n" );

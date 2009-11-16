@@ -2083,16 +2083,23 @@ if(count($wikiafooterlinks) > 0) {
 	echo '<table cellspacing="0" id="link_box_table">';
 	//BEGIN: create dynamic box
 	$dynamicLinksArray = array();
+	$userIsAnon = $wgUser->isAnon();
 	//Blog, User_Blog namespaces
 	if (defined('NS_BLOG_ARTICLE') && defined('NS_BLOG_LISTING') && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_LISTING))) {
+		$sp = Title::makeTitle(NS_SPECIAL, 'CreateBlogPage');
+		/* Redirect to login page instead of showing error, see Login friction project */
+		$url = $userIsAnon ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL('returnto=' . $sp->getPrefixedUrl()) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
-			'url' => Title::makeTitle(NS_SPECIAL, 'CreateBlogPage')->getLocalURL(),
+			'url' => $url,
 			'text' => wfMsg('dynamic-links-write-blog'),
 			'id' => 'dynamic-links-write-blog',
 			'tracker' => 'CreateBlogPage'
 		);
+		$sp = Title::makeTitle(NS_SPECIAL, 'CreateBlogListingPage');
+		/* Redirect to login page instead of showing error, see Login friction project */
+		$url = $userIsAnon ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL('returnto=' . $sp->getPrefixedUrl()) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
-			'url' => Title::makeTitle(NS_SPECIAL, 'CreateBlogListingPage')->getLocalURL(),
+			'url' => $url,
 			'text' => wfMsg('dynamic-links-blog-listing'),
 			'id' => 'dynamic-links-blog-listing',
 			'tracker' => 'CreateBlogListingPage'
@@ -2106,8 +2113,11 @@ if(count($wikiafooterlinks) > 0) {
 			'id' => 'dynamic-links-write-article',
 			'tracker' => 'CreatePage'
 		);
+		$sp = Title::makeTitle(NS_SPECIAL, 'Upload');
+		/* Redirect to login page instead of showing error, see Login friction project */
+		$url = $userIsAnon ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL('returnto=' . $sp->getPrefixedUrl()) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
-			'url' => Title::makeTitle(NS_SPECIAL, 'Upload')->getLocalURL(),
+			'url' => $url,
 			'text' => wfMsg('dynamic-links-add-image'),
 			'id' => 'dynamic-links-add-image',
 			'tracker' => 'Upload'
