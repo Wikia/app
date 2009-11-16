@@ -71,6 +71,15 @@ var AjaxLogin = {
 					break;
 
 					case 'Success':
+					
+					// Bartek: tracking
+					
+					if( AjaxLogin.action == 'password'  ) {
+						WET.byStr('signupActions/popup/emailpassword/success');
+					} else {
+						WET.byStr('signupActions/popup/login/success');
+					}					
+					
 					// macbre: call custom function (if provided by any extension)
 					if (typeof window.wgAjaxLoginOnSuccess == 'function') {
 						// let's update wgUserName
@@ -113,6 +122,14 @@ var AjaxLogin = {
 					$('#wpPassword1').attr('value', '').focus();
 
 					default:
+					// Bartek: tracking
+					
+					if( AjaxLogin.action == 'password'  ) {
+						WET.byStr('signupActions/popup/emailpassword/failure');
+					} else {
+						WET.byStr('signupActions/popup/login/failure');
+					}					
+					
 					AjaxLogin.blockLoginForm(false);
 					AjaxLogin.displayReason(response.ajaxlogin.text);
 					break;
