@@ -329,7 +329,7 @@ class SiteWideMessages extends SpecialPage {
 				. $DB->AddQuotes($mGroupName) . ', '
 				. $DB->AddQuotes($mWikiName) . ', '
 				. $DB->AddQuotes($mHubId) . ' , '
-				. $DB->AddQuotes($mLang)
+				. $DB->AddQuotes( implode( ',', $mLang ) )
 				. ');'
 				, __METHOD__
 			);
@@ -347,7 +347,7 @@ class SiteWideMessages extends SpecialPage {
 							. $DB->AddQuotes($mWikiId). ', '
 							. $DB->AddQuotes($mRecipientId) . ', '
 							. $DB->AddQuotes($result['msgId']) . ', '
-							. MSG_STATUS_DISMISSED
+							. MSG_STATUS_UNSEEN
 							. ');'
 							, __METHOD__
 						);
@@ -591,7 +591,6 @@ class SiteWideMessages extends SpecialPage {
 		$tmpMsg = array();
 		while ($oMsg = $DB->FetchObject($dbResult)) {
 			if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
-				echo "valid: " . $oMsg->id . "<br>";
 				$tmpMsg[$oMsg->id] = array('wiki_id' => null);
 			}
 		}
@@ -612,7 +611,6 @@ class SiteWideMessages extends SpecialPage {
 			);
 
 			while ($oMsg = $DB->FetchObject($dbResult)) {
-					echo "removed: " . $oMsg->id . "<br>";
         	                        $tmpMsg[$oMsg->id] = array('wiki_id' => null);
 			}
 
@@ -791,17 +789,16 @@ class SiteWideMessages extends SpecialPage {
 	 * @author Lucas Garczewski <tor@wikia-inc.com>
 	 *
 	 * @param $user current User object
-	 * @param $langs string Comma separated list of languages
+	 * @param $langs array of language strings
 	 *
 	 * @return string for WHERE clause
 	 */
 	static function getLanguageConstraintsForUser( $user, $langs ) {
 		global $wgSWMSupportedLanguages;
 
-		$langs = implode( $langs, "," );
 		$userLang = $user->getOption( 'language' );
 
-		return ( $langs == MSG_LANG_ALL || in_array( $userLang, $langs ) || ( in_array( MSG_LANG_OTHER, $langs) && !in_array( $userLang, $wgSWMSupportedLanguages ) ) );
+		return ( in_array( MSG_LANG_ALL, $langs ) || in_array( $userLang, $langs ) || ( in_array( MSG_LANG_OTHER, $langs) && !in_array( $userLang, $wgSWMSupportedLanguages ) ) );
 
 	}
 
@@ -900,7 +897,7 @@ class SiteWideMessagesPager extends TablePager {
 			$this->mFieldNames['msg_removed']        = wfMsg('swm-list-table-removed');
 			$this->mFieldNames['msg_text']           = wfMsg('swm-list-table-content');
 			$this->mFieldNames['msg_date']           = wfMsg('swm-list-table-date');
-			$tihs->mFieldNames['msg_lang']		 = wfMsg('swm-list-table-lang');
+			$this->mFieldNames['msg_lang']		 = wfMsg('swm-list-table-lang');
 			$this->mFieldNames['msg_wiki_tools']     = wfMsg('swm-list-table-tools');
 		}
 		return $this->mFieldNames;
