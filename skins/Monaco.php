@@ -1204,7 +1204,7 @@ EOS;
 
 			$data['register'] = array(
 				'text' => wfMsg('nologinlink'),
-				'href' => Skin::makeSpecialUrl( 'Signup', '' )
+				'href' => Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() )
 				);
 
 		} else {
