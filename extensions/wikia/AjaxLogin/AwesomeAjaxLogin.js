@@ -131,11 +131,12 @@ var AjaxLogin = {
 	},
 	ajaxRegisterConfirm: function(ev) {
 		AjaxLogin.form.log('AjaxLogin: ajaxRegisterConfirm()');
-
+        	
 		if($('#wpPreview').exists() && $('#wpLogin').exists()) {
 			if(typeof(ajaxLogin2)!="undefined" && !confirm(ajaxLogin2)) {
 				ev.preventDefault();
 			}
 		}
+		WET.byStr('signupActions/popup/switchtocreateaccount');
 	}
 };
