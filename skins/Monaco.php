@@ -2107,8 +2107,11 @@ if(count($wikiafooterlinks) > 0) {
 	}
 	//all other namespaces
 	else {
+		$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage');
+		/* Redirect to login page instead of showing error, see Login friction project */
+		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL('returnto=' . $sp->getPrefixedUrl()) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
-			'url' => Title::makeTitle(NS_SPECIAL, 'CreatePage')->getLocalURL(),
+			'url' => $url,
 			'text' => wfMsg('dynamic-links-write-article'),
 			'id' => 'dynamic-links-write-article',
 			'tracker' => 'CreatePage'
