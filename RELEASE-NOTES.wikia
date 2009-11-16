@@ -1,3 +1,6 @@
+== Changes since 200911.3 ==
+* 
+
 == Changes since 200911.2 ==
 * rt#24809: MagCloud: PDF rendering errors fixed. (Nef)
 * rt#26278: CS: Unhide catsel for hidden cats in view mode. (Nef)
