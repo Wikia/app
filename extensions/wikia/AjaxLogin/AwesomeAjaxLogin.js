@@ -46,79 +46,78 @@ var AjaxLogin = {
 		// Let's block login form (disable buttons and input boxes)
 		AjaxLogin.blockLoginForm(true);
 
-		$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), AjaxLogin.handleSuccess);
-	},
-	handleSuccess: function(response) {
-		var responseResult = response.ajaxlogin.result;
-		switch(responseResult) {
-			case 'Reset':
-				// password reset
+		$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), function(response) {
+					var responseResult = response.ajaxlogin.result;
+					switch(responseResult) {
+					case 'Reset':
+					// password reset
 
-				// we're on edit page
-				if($('#wpPreview').exists() && $('#wpLogin').exists()) {
+					// we're on edit page
+					if($('#wpPreview').exists() && $('#wpLogin').exists()) {
 					if(typeof(ajaxLogin1)!="undefined" && !confirm(ajaxLogin1)) {
-						break;
+					break;
 					}
-				}
+					}
 
-				// change the action of the AjaxLogin form
-				$('#userajaxloginform').attr('action', wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login');
+					// change the action of the AjaxLogin form
+					$('#userajaxloginform').attr('action', wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login');
 
-				// remove AJAX functionality from login form
-				AjaxLogin.form.unbind('submit', this.formSubmitHandler);
+					// remove AJAX functionality from login form
+					AjaxLogin.form.unbind('submit', this.formSubmitHandler);
 
-				// unblock and submit the form
-				AjaxLogin.blockLoginForm(false);
-				$('#userajaxloginform').submit();
-				break;
+					// unblock and submit the form
+					AjaxLogin.blockLoginForm(false);
+					$('#userajaxloginform').submit();
+					break;
 
-			case 'Success':
-				// macbre: call custom function (if provided by any extension)
-				if (typeof window.wgAjaxLoginOnSuccess == 'function') {
-					// let's update wgUserName
-					window.wgUserName = response.ajaxlogin.lgusername;
+					case 'Success':
+					// macbre: call custom function (if provided by any extension)
+					if (typeof window.wgAjaxLoginOnSuccess == 'function') {
+						// let's update wgUserName
+						window.wgUserName = response.ajaxlogin.lgusername;
 
-					// close AjaxLogin form
-					$('#AjaxLoginBoxWrapper').closeModal();
+						// close AjaxLogin form
+						$('#AjaxLoginBoxWrapper').closeModal();
 
-					$().log('AjaxLogin: calling custom function');
-					window.wgAjaxLoginOnSuccess();
-					return;
-				}
+						$().log('AjaxLogin: calling custom function');
+						window.wgAjaxLoginOnSuccess();
+						return;
+					}
 
-				// we're on edit page
-				if($('#wpPreview').exists() && $('#wpLogin').exists()) {
-					if ($('#wikiDiff').children().exists()) {
-						$('#wpDiff').click();
-					} else {
-						if (!$('#wikiPreview').children().exists()) {
-							$('#wpLogin').attr('value', 1);
+					// we're on edit page
+					if($('#wpPreview').exists() && $('#wpLogin').exists()) {
+						if ($('#wikiDiff').children().exists()) {
+							$('#wpDiff').click();
+						} else {
+							if (!$('#wikiPreview').children().exists()) {
+								$('#wpLogin').attr('value', 1);
+							}
+							$('#wpPreview').click();
 						}
-						$('#wpPreview').click();
-					}
-				} else {
-					if(wgCanonicalSpecialPageName == "Userlogout") {
-						window.location.href = wgServer + wgScriptPath;
 					} else {
-						window.location.reload(true);
+						if(wgCanonicalSpecialPageName == "Userlogout") {
+							window.location.href = wgServer + wgScriptPath;
+						} else {
+							window.location.reload(true);
+						}
 					}
+					break;
+
+					case 'NotExists':
+					AjaxLogin.blockLoginForm(false);
+					$('#wpPassword1n').attr('value', '');
+					$('#wpName1').attr('value', '').focus();
+
+					case 'WrongPass':
+					AjaxLogin.blockLoginForm(false);
+					$('#wpPassword1').attr('value', '').focus();
+
+					default:
+					AjaxLogin.blockLoginForm(false);
+					AjaxLogin.displayReason(response.ajaxlogin.text);
+					break;
 				}
-				break;
-
-			case 'NotExists':
-				AjaxLogin.blockLoginForm(false);
-				$('#wpPassword1n').attr('value', '');
-				$('#wpName1').attr('value', '').focus();
-
-			case 'WrongPass':
-				AjaxLogin.blockLoginForm(false);
-				$('#wpPassword1').attr('value', '').focus();
-
-			default:
-				AjaxLogin.blockLoginForm(false);
-				AjaxLogin.displayReason(response.ajaxlogin.text);
-				break;
-		}
+		});
 	},
 	handleFailure: function() {
 		AjaxLogin.form.log('AjaxLogin: handleFailure was called');
