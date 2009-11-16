@@ -393,11 +393,7 @@ class UsercreateTemplate extends QuickTemplate {
 			// Let's block login form (disable buttons and input boxes)
 			AjaxLogin2.blockLoginForm(true);
 
-			$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), AjaxLogin2.handleSuccess);
-
-		}
-
-		AjaxLogin2.handleSuccess = function(response) {
+			$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), function(response) {
 			var responseResult = response.ajaxlogin.result;
 			switch(responseResult) {
 				// TODO: what is this for?
@@ -414,6 +410,14 @@ class UsercreateTemplate extends QuickTemplate {
 					AjaxLogin2.blockLoginForm(true);
 					break;
 				case 'Success':
+                                        // Bartek: tracking
+
+                                        if( AjaxLogin.action == 'password'  ) {
+                                                WET.byStr('signupActions/signup/emailpassword/success');
+                                        } else {
+                                                WET.byStr('signupActions/signup/login/success');
+                                        }
+
 				       	if( wgReturnTo != '' ) {
 						window.location = wgServer + wgScriptPath + '/index.php?title=' + wgReturnTo ;
 					} else {
@@ -428,10 +432,19 @@ class UsercreateTemplate extends QuickTemplate {
 					AjaxLogin2.blockLoginForm(false);
 					$('#wpPassword1').attr('value', '').focus();
 				default:
+					// Bartek: tracking
+
+                                        if( AjaxLogin.action == 'password'  ) {
+                                                WET.byStr('signupActions/signup/emailpassword/failure');
+                                        } else {
+                                                WET.byStr('signupActions/signup/login/failure');
+                                        }
+
 					AjaxLogin2.blockLoginForm(false);
 					AjaxLogin2.displayReason(response.ajaxlogin.text);
 					break;
 			}
+		});
 		}
 
 		AjaxLogin2.handleFailure = function () {
