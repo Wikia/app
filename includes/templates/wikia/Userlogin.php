@@ -416,7 +416,6 @@ class UsercreateTemplate extends QuickTemplate {
 				case 'Success':
 				       	if( wgReturnTo != '' ) {
 						window.location = wgServer + wgScriptPath + '/index.php?title=' + wgReturnTo ;
-
 					} else {
 						window.location.href = wgServer + wgScriptPath;
 					}
@@ -559,9 +558,9 @@ class UsercreateTemplate extends QuickTemplate {
 		}
 		$(UserRegistration.init);
 
-		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal'});});
-		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal'});});
-		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal'});});
+		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal'}); WET.byStr('signupActions/signup/moreinfo/email/open'); });
+		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal'});  WET.byStr('signupActions/signup/moreinfo/birthdate/open'); });
+		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal'});  WET.byStr('signupActions/signup/moreinfo/captcha/open'); });
 
 		UserRegistration.toggleError = function(id, show) {
 			if (show == 'ok') {
