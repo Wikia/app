@@ -168,14 +168,14 @@ class UsercreateTemplate extends QuickTemplate {
 		<tr>
 			<?php if( $this->data['useemail'] ) { ?>
 			<td class="mw-input" id="wpEmailTD">
-				<label for='wpEmail'><?php $this->msg('youremail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
+				<label for='wpEmail'><?php $this->msg('youremailnew') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
 				<input type='text' class='loginText' name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
 			</td>
 			<?php } ?>
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpPasswordTD">
-				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
+				<label for='wpPassword2'><?php $this->msg('yourpasswordnew') ?></label><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
 				<input type='password' class='loginPassword' name="wpPassword" id="wpPassword2" value="" size='20' />
 			</td>
 		</tr>
