@@ -571,9 +571,9 @@ class UsercreateTemplate extends QuickTemplate {
 		}
 		$(UserRegistration.init);
 
-		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal', 'onClose' : function() {WET.byStr('signupActions/signup/moreinfo/email/close');} }); WET.byStr('signupActions/signup/moreinfo/email/open'); });
-		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal'});  WET.byStr('signupActions/signup/moreinfo/birthdate/open'); });
-		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal'});  WET.byStr('signupActions/signup/moreinfo/captcha/open'); });
+		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal', 'onClose': function() {WET.byStr('signupActions/signup/moreinfo/email/close');} }); WET.byStr('signupActions/signup/moreinfo/email/open'); });
+		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal', 'onClose': function() {WET.byStr('signupActions/signup/moreinfo/birthdate/close'); } });  WET.byStr('signupActions/signup/moreinfo/birthdate/open'); });
+		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal', 'onClose' : function() {WET.byStr('signupActions/signup/moreinfo/captcha/close'); } });  WET.byStr('signupActions/signup/moreinfo/captcha/open'); });
 
 		UserRegistration.toggleError = function(id, show) {
 			if (show == 'ok') {
