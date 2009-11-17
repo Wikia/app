@@ -870,6 +870,10 @@ class LoginForm {
 
 		$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 
+		if ( ('' != $msg) && ('error' == $msgtype) ) {
+			$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
+		}
+
 		if ( $this->mType == 'signup' ) {
 			// Block signup here if in readonly. Keeps user from
 			// going through the process (filling out data, etc)
