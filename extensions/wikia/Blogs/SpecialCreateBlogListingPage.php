@@ -20,7 +20,7 @@ class CreateBlogListingPage extends SpecialBlogPage {
 		global $wgOut, $wgUser, $wgRequest, $wgTitle;
 
 		if( !$wgUser->isLoggedIn() ) {
-			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array($wgTitle->getPrefixedDBkey()));
+			$wgOut->showErrorPage( 'create-blog-no-login', 'create-blog-login-required', array(wfGetReturntoParam()));
 			return;
 		}
 
