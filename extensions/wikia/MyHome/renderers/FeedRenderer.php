@@ -553,10 +553,11 @@ class FeedRenderer {
 		$thumbs = array();
 
 		foreach($row[$key] as $item) {
-			// offset from the top of thumbnail cell (160x160px)
-			$topOffset = round(160/2 -$item['height']/2);
+			// Empty span for styling IE. Ugly, but offers an image size independant
+			// solution for centering thumbnails within their container.
+			$thumb = '<!--[if lt IE 8]><span></span><![endif]-->';
 
-			$thumb = substr($item['html'], 0, -2) . "style=\"padding-top: {$topOffset}px\"/>";
+			$thumb .= substr($item['html'], 0, -2) . '/>';
 
 			// localised title for popup
 			global $wgLang;
