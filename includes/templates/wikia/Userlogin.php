@@ -128,7 +128,7 @@ class UsercreateTemplate extends QuickTemplate {
 <br/>
 <table id="userloginSpecial" width="100%">
 <tr>
-<td width="55%" style="border-right: 1px solid #AAA;">
+<td width="55%" style="border-right: 1px solid #AAA; vertical-align: top;">
 <div class="loginHeader dark_text_1"><?php $this->msg('create-account-new') ?></div>
 <div id="userloginErrorBox">
 	<table>
@@ -697,7 +697,7 @@ class UsercreateTemplate extends QuickTemplate {
 </form>
 </div>
 </td>
-<td width="45%" class="rightSide">
+<td width="45%" style="vertical-align: top;">
 	<div class="loginHeader rightSideElem dark_text_1"><?php $this->msg('log-in-new') ?></div>
 	<form action="" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
 	<div id="userloginErrorBox2">
