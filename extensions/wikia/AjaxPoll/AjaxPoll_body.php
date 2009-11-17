@@ -178,7 +178,7 @@ class AjaxPollClass {
 			$votes[ $nr ][ "pixels" ] = $this->percent2pixels( $percent );
 
 			$percent = $wgLang->formatNum(round($percent, 2));
-			$votes[ $nr ][ "title" ] = $percent . "%&nbsp;" . wfMsg("ajaxpoll-percentVotes");
+			$votes[ $nr ][ "title" ] = wfMsg("ajaxpoll-percentVotes", $percent);
 			$votes[ $nr ][ "key" ] = $nr;
 		}
 		wfProfileOut( __METHOD__ );

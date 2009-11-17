@@ -2,8 +2,8 @@
 
 $messages = array();
 $messages["en"] = array(
-	"ajaxpoll-percentVotes" => "of all votes",
-	"ajaxpoll-thankyou" => "Thank You for your vote!",
+	"ajaxpoll-percentVotes" => "$1%&nbsp;of all votes",
+	"ajaxpoll-thankyou" => "Thank you for your vote!",
 	"ajaxpoll-error" => "There was a problem with processing your vote, please try again.",
 	"ajaxpoll-summary" => "The poll was created on $1, and so far $2 people voted.",
 	"ajaxpoll-submit" => "Vote!",
