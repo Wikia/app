@@ -1196,7 +1196,11 @@ EOS;
 		$data = array();
 
 		if(!$wgUser->isLoggedIn()) {
-			$signUpHref = Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() );
+			$returnto = "returnto={$this->thisurl}";
+			if( $this->thisquery != '' )
+				$returnto .= "&returntoquery={$this->thisquery}";
+
+			$signUpHref = Skin::makeSpecialUrl( 'Signup', $returnto );
 			$data['login'] = array(
 				'text' => wfMsg('login'),
 				'href' => $signUpHref
@@ -2084,11 +2088,16 @@ if(count($wikiafooterlinks) > 0) {
 	//BEGIN: create dynamic box
 	$dynamicLinksArray = array();
 	$userIsAnon = $wgUser->isAnon();
+
+	$returnto = "returnto={$this->data['thisurl']}";
+	if( $this->data['thisquery'] != '' )
+		$returnto .= "&returntoquery={$this->data['thisquery']}";
+
 	//Blog, User_Blog namespaces
 	if (defined('NS_BLOG_ARTICLE') && defined('NS_BLOG_LISTING') && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_LISTING))) {
 		$sp = Title::makeTitle(NS_SPECIAL, 'CreateBlogPage');
 		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = $userIsAnon ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL('returnto=' . $sp->getPrefixedUrl()) : $sp->getLocalURL();
+		$url = $userIsAnon ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL($returnto) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
 			'text' => wfMsg('dynamic-links-write-blog'),
@@ -2097,7 +2106,7 @@ if(count($wikiafooterlinks) > 0) {
 		);
 		$sp = Title::makeTitle(NS_SPECIAL, 'CreateBlogListingPage');
 		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = $userIsAnon ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL('returnto=' . $sp->getPrefixedUrl()) : $sp->getLocalURL();
+		$url = $userIsAnon ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL($returnto) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
 			'text' => wfMsg('dynamic-links-blog-listing'),
@@ -2109,7 +2118,7 @@ if(count($wikiafooterlinks) > 0) {
 	else {
 		$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage');
 		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL('returnto=' . $sp->getPrefixedUrl()) : $sp->getLocalURL();
+		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL($returnto) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
 			'text' => wfMsg('dynamic-links-write-article'),
@@ -2118,7 +2127,7 @@ if(count($wikiafooterlinks) > 0) {
 		);
 		$sp = Title::makeTitle(NS_SPECIAL, 'Upload');
 		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = $userIsAnon ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL('returnto=' . $sp->getPrefixedUrl()) : $sp->getLocalURL();
+		$url = $userIsAnon ? Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL($returnto) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
 			'text' => wfMsg('dynamic-links-add-image'),
