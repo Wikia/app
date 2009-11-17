@@ -97,8 +97,7 @@ $messages['en'] = array(
 // task
 	"autocreatewiki-protect-reason" => 'Part of the official interface',
     "autocreatewiki-welcomesubject" => "$1 has been created!",
-    "autocreatewiki-welcomebody" => "
-Hello, $2,
+    "autocreatewiki-welcomebody" => "Hello, $2,
 
 The Wikia you requested is now available at <$1> We hope to see you editing there soon!
 
@@ -114,10 +113,8 @@ $3
 
 Wikia Community Team
 
-<http://www.wikia.com/wiki/User:$4>
-    ",
-    "autocreatewiki-welcometalk" => "
-== Welcome! ==
+<http://www.wikia.com/wiki/User:$4>",
+    "autocreatewiki-welcometalk" => "== Welcome! ==
 <div style=\"font-size:120%; line-height:1.2em;\">Hi $1 -- we're excited to have '''$4''' as part of the Wikia community!
 
 Now you've got a whole website to fill up with information, pictures and videos about your favorite topic. But right now, it's just blank pages staring at you... Scary, right? Here are some ways to get started.
@@ -130,8 +127,7 @@ And then just keep going! People like visiting wikis when there's lots of stuff 
 
 If you've got questions, you can e-mail us through our [[Special:Contact|contact form]]. Have fun!
 
--- [[User:$2|$3]] <staff /></div>
-    ",
+-- [[User:$2|$3]] <staff /></div>",
 // new wikis - special page
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display Wikis starting at:",
