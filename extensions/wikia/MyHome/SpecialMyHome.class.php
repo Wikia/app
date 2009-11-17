@@ -10,8 +10,12 @@ class SpecialMyHome extends SpecialPage {
 	function execute($par) {
 		wfProfileIn(__METHOD__);
 		global $wgOut, $wgUser, $wgTitle;
-
 		$this->setHeaders();
+		
+                if( isset( $_SESSION['Signup_AccountCreated'] ) ) {
+			$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/success\');</script>');
+        		$_SESSION['Signup_AccountCreated'] = '';
+        	}
 
 		// not available for skins different then monaco
 		if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
