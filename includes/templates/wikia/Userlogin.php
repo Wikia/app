@@ -658,6 +658,8 @@ class UsercreateTemplate extends QuickTemplate {
 		UserRegistration.submitForm = function() {
 			if (UserRegistration.checkForm()) {
 				$('#userlogin2').submit();
+			} else {
+				WET.byStr('signupActions/signup/createaccount/failure');
 			}
 		}
 
