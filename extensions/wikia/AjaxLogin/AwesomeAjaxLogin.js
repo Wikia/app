@@ -23,13 +23,15 @@ var AjaxLogin = {
 
 		// ask before going to register form from edit page
 		$('#wpAjaxRegister').click(this.ajaxRegisterConfirm);
+		// get proper returnto/returntoquery param
+		$('#wpAjaxRegister').attr('href', $('#register').attr('href'));
 	},
 	formSubmitHandler: function(ev) {
 		// Prevent the default action for event (submit of form)
 		if(ev) {
 			ev.preventDefault();
 		}
-		AjaxLogin.form.log('AjaxLogin: selected action = '+ AjaxLogin.action);
+		AjaxLogin.form.log('AjaxLogin: selected action = ' + AjaxLogin.action);
 
 		// tracking
 		WET.byStr('loginActions/' + AjaxLogin.action);

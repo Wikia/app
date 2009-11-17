@@ -783,3 +783,23 @@ function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $opti
 	$msgRich = $msgRichMainFallback > $msgRichAlterFallback || wfEmptyMsg($key . '-HTML', $msgRichMain) ? $msgRichAlter : $msgRichMain;
 	return array($msgPlain, $msgRich);
 }
+
+/*
+ * Build returnto parameter with new returntoquery from MW 1.16
+ *
+ * @author Marooned
+ * @return string
+ */
+function wfGetReturntoParam() {
+	global $wgTitle, $wgRequest;
+	$thisurl = $wgTitle->getPrefixedURL();
+	$query = $wgRequest->getValues();
+	unset($query['title']);
+	unset($query['returnto']);
+	unset($query['returntoquery']);
+	$thisquery = wfUrlencode(wfArrayToCGI($query));
+	$returnto = "returnto=$thisurl";
+	if($thisquery != '')
+		$returnto .= "&returntoquery=$thisquery";
+	return $returnto;
+}

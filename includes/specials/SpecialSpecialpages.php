@@ -51,16 +51,7 @@ function wfSpecialSpecialpages() {
 	$includesRestrictedPages = false;
 	/* Wikia change begin - @author: Marooned */
 	/* Add handler for returntoquery (get from MW 1.16 patch, bug #13), see: Login friction project */
-	global $wgTitle, $wgRequest;
-	$thisurl = $wgTitle->getPrefixedURL();
-	$query = $wgRequest->getValues();
-	unset( $query['title'] );
-	unset( $query['returnto'] );
-	unset( $query['returntoquery'] );
-	$thisquery = wfUrlencode( wfArrayToCGI( $query ) );
-	$returnto = "returnto={$thisurl}";
-	if( $thisquery != '' )
-		$returnto .= "&returntoquery={$thisquery}";
+	$returnto = wfGetReturntoParam();
 	/* Wikia change end */
 	/** Now output the HTML */
 	foreach ( $groups as $group => $sortedPages ) {

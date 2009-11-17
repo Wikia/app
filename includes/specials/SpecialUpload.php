@@ -252,7 +252,7 @@ class UploadForm {
 		# Check permissions
 		if( !$wgUser->isAllowed( 'upload' ) ) {
 			if( !$wgUser->isLoggedIn() ) {
-				$wgOut->showErrorPage( 'uploadnologin', 'uploadnologintext', array($wgTitle->getPrefixedDBkey()) );
+				$wgOut->showErrorPage( 'uploadnologin', 'uploadnologintext', array(wfGetReturntoParam()) );
 			} else {
 				$wgOut->permissionRequired( 'upload' );
 			}

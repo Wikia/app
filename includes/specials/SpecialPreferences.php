@@ -139,7 +139,7 @@ class PreferencesForm {
 		global $wgUser, $wgOut, $wgTitle;
 
 		if ( $wgUser->isAnon() ) {
-			$wgOut->showErrorPage( 'prefsnologin', 'prefsnologintext', array($wgTitle->getPrefixedDBkey()) );
+			$wgOut->showErrorPage( 'prefsnologin', 'prefsnologintext', array(wfGetReturntoParam()) );
 			return;
 		}
 		if ( wfReadOnly() ) {

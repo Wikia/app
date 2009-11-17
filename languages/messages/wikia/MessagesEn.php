@@ -257,7 +257,7 @@ ___________________________________________________________
     * This password reminder was requested from the following address: $1.
 ',
 'rcshowhideenhanced' => '$1 enhanced recent changes',
-'prefsnologintext'	=> 'You must be <span class="plainlinks">[{{fullurl:Special:Userlogin|returnto=$1}} logged in]</span> to set user preferences.',
+'prefsnologintext'	=> 'You must be <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} logged in]</span> to set user preferences.',
 'recentchangestext' => '<div style="border:solid 3px #e9e9e9; margin-bottom:0.3em;">
 <div style="padding-left:0.5em; padding-right:0.5em;">
 This special page lets you track the most recent changes to the wiki.
@@ -280,7 +280,7 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 
 
 # Wikia custom messages
-'editnologintext' => 'You must be a registered user and  <span class="plainlinks">[{{fullurl:Special:Userlogin|returnto=$1}} logged in]</span> to edit a page.',
+'editnologintext' => 'You must be a registered user and  <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} logged in]</span> to edit a page.',
 'editnotallowed' => 'You do not have permission to edit pages',
 
 # janitors & helpers
