@@ -48,8 +48,9 @@ class LoginForm {
 
 	var $mName, $mPassword, $mRetype, $mReturnTo, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
-	var $mLoginattempt, $mRemember, $mMarketingOptIn, $mEmail, $mDomain, $mLanguage, $mSkipCookieCheck;
-	var $wpBirthYear, $wpBirthMonth, $wpBirthDay;
+	var $mLoginattempt, $mRemember, $mEmail, $mDomain, $mLanguage;
+	var $mSkipCookieCheck, $mReturnToQuery;
+	var $mMarketingOptIn, $wpBirthYear, $wpBirthMonth, $wpBirthDay;
 
 	/**
 	 * Constructor
@@ -65,6 +66,7 @@ class LoginForm {
 		$this->mRetype = $request->getText( 'wpRetype' );
 		$this->mDomain = $request->getText( 'wpDomain' );
 		$this->mReturnTo = $request->getVal( 'returnto' );
+		$this->mReturnToQuery = $request->getVal( 'returntoquery' );
 		$this->mCookieCheck = $request->getVal( 'wpCookieCheck' );
 		$this->mPosted = $request->wasPosted();
 		$this->mCreateaccount = $request->getCheck( 'wpCreateaccount' );
@@ -85,6 +87,7 @@ class LoginForm {
 
 		if ( $wgRedirectOnLogin ) {
 			$this->mReturnTo = $wgRedirectOnLogin;
+			$this->mReturnToQuery = '';
 		}
 
 		if( $wgEnableEmail ) {
@@ -106,6 +109,7 @@ class LoginForm {
 		# When switching accounts, it sucks to get automatically logged out
 		if( $this->mReturnTo == $wgLang->specialPage( 'Userlogout' ) ) {
 			$this->mReturnTo = '';
+			$this->mReturnToQuery = '';
 		}
 	}
 
@@ -773,8 +777,7 @@ class LoginForm {
 			if ( !$titleObj instanceof Title ) {
 				$titleObj = Title::newMainPage();
 			}
-
-			$wgOut->redirect( $titleObj->getFullURL() );
+			$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery ) );
 		}
 	}
 
@@ -807,7 +810,7 @@ class LoginForm {
 		$wgOut->addHTML( $injected_html );
 
 		if ( !empty( $this->mReturnTo ) ) {
-			$wgOut->returnToMain( null, $this->mReturnTo );
+			$wgOut->returnToMain( null, $this->mReturnTo, $this->mReturnToQuery );
 		} else {
 			$wgOut->returnToMain( null );
 		}
@@ -909,6 +912,9 @@ class LoginForm {
 
 		if ( !empty( $this->mReturnTo ) ) {
 			$returnto = '&returnto=' . wfUrlencode( $this->mReturnTo );
+			if ( !empty( $this->mReturnToQuery ) )
+				$returnto .= '&returntoquery=' .
+					wfUrlencode( $this->mReturnToQuery );
 			$q .= $returnto;
 			$linkq .= $returnto;
 		}
