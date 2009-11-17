@@ -304,9 +304,12 @@ Your account has been created. Don't forget to change your {{SITENAME}} [[Specia
 # AjaxLogin
 'ajaxLogin1' => 'To complete your log in, you must enter a new password.  This will take you away from this edit page and you may lose your current edit.',
 'ajaxLogin2' => 'Are you sure? You may lose your edits if you leave this page now.',
-'yourpasswordnew' => 'Password - ',
-'moreinfo' => 'more info',
-'youremailnew' => 'E-mail - ',
+
+#new registration aka LoginFriction aka Signup
+
+'signup-password' => 'Password - ',
+'signup-moreinfo' => 'more info',
+'signup-mail' => 'E-mail - ',
 
 # Registration page
 'prefs-help-realname' => 'Optional',
