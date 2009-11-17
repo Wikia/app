@@ -188,6 +188,7 @@ class MyHome {
 
 		// do not redirect for skins different then monaco
 		if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+			$_SESSION['Signup_AccountCreated'] = 'created';			
 			$wgOut->redirect(Skin::makeSpecialUrl('MyHome'));
 		}
 
