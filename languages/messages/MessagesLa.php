@@ -918,7 +918,7 @@ Try prefixing your query with ''all:'' to search all content (including talk pag
 'mypreferences'             => 'Praeferentiae meae',
 'prefs-edits'               => 'Numerus recensionum:',
 'prefsnologin'              => 'Conventum non est apertum',
-'prefsnologintext'          => '<span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} Conventum aperire]</span> debes ad praeferentias tuas modificandum.',
+'prefsnologintext'          => '<span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} Conventum aperire]</span> debes ad praeferentias tuas modificandum.',
 'prefsreset'                => 'Praeferentiae tuae reperscriptae sunt.',
 'qbsettings'                => 'Figuratio claustri celeris',
 'qbsettings-none'           => 'Nullus',

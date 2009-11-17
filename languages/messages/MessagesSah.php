@@ -987,7 +987,7 @@ long, which is longer than the maximum of $2 kilobytes. It cannot be saved.'''
 'mypreferences'             => 'Туруорууларым',
 'prefs-edits'               => 'Көннөрүү ахсаана:',
 'prefsnologin'              => 'Ааккын эппэтиҥ',
-'prefsnologintext'          => 'Эн <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} ааккын эттэххинэ]</span> эрэ кыттаачы туруорууларын уларытар кыахтаныаҥ.',
+'prefsnologintext'          => 'Эн <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} ааккын эттэххинэ]</span> эрэ кыттаачы туруорууларын уларытар кыахтаныаҥ.',
 'prefsreset'                => 'Саҥа киирэргэ баар туруоруулар төнүннүлэр.',
 'qbsettings'                => 'Навигация панела',
 'qbsettings-none'           => 'Көрдөрүмэ',

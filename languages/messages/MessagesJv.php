@@ -907,7 +907,7 @@ Gunakna tombol radio kanggo nggabungaké révisi-révisi sing digawé sadurungé
 'mypreferences'             => 'Préferènsiku',
 'prefs-edits'               => 'Gunggungé suntingan:',
 'prefsnologin'              => 'Durung mlebu log',
-'prefsnologintext'          => 'Panjenengan kudu <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}}| mlebu log]</span> kanggo ngowahin préferènsi njenengan.',
+'prefsnologintext'          => 'Panjenengan kudu <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}}| mlebu log]</span> kanggo ngowahin préferènsi njenengan.',
 'prefsreset'                => 'Préferènsi wis dibalèkaké menyang konfigurasi baku.',
 'qbsettings'                => 'Pengaturan bar sidhatan',
 'qbsettings-none'           => 'Ora ana',

@@ -1118,7 +1118,7 @@ Assegureu-vos que aquest canvi mantindrà la continuïtat històrica de la pàgi
 'mypreferences'             => 'Preferències',
 'prefs-edits'               => "Nombre d'edicions:",
 'prefsnologin'              => 'No heu iniciat cap sessió',
-'prefsnologintext'          => 'Heu d\'estar <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} autenticats]</span> per a seleccionar les preferències d\'usuari.',
+'prefsnologintext'          => 'Heu d\'estar <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} autenticats]</span> per a seleccionar les preferències d\'usuari.',
 'prefsreset'                => "Les preferències han estat respostes des d'emmagatzematge.",
 'qbsettings'                => 'Quickbar',
 'qbsettings-none'           => 'Cap',

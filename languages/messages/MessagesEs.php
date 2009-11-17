@@ -1157,7 +1157,7 @@ Las búsquedas fallidas suelen producirse al buscar palabras comunes como «la»
 'mypreferences'             => 'Mis preferencias',
 'prefs-edits'               => 'Cantidad de ediciones:',
 'prefsnologin'              => 'No está identificado',
-'prefsnologintext'          => 'Debe estar <span class="plainlinks">[{{fullurl:Especial:UserLogin|returnto=$1}} autenticado]</span> para cambiar las preferencias de usuario.',
+'prefsnologintext'          => 'Debe estar <span class="plainlinks">[{{fullurl:Especial:UserLogin|$1}} autenticado]</span> para cambiar las preferencias de usuario.',
 'prefsreset'                => 'Las preferencias han sido restauradas a los valores por defecto.',
 'qbsettings'                => 'Preferencias de "Quickbar"',
 'qbsettings-none'           => 'Ninguna',

@@ -1169,7 +1169,7 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 'mypreferences'             => '사용자 환경 설정',
 'prefs-edits'               => '편집 횟수:',
 'prefsnologin'              => '로그인하지 않음',
-'prefsnologintext'          => '사용자 환경 설정을 바꾸려면 먼저 <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} 로그인]</span>해야 합니다.',
+'prefsnologintext'          => '사용자 환경 설정을 바꾸려면 먼저 <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} 로그인]</span>해야 합니다.',
 'prefsreset'                => '사용자 환경 설정을 기본값으로 되돌렸습니다.',
 'qbsettings'                => '빨리가기 맞춤',
 'qbsettings-none'           => '없음',

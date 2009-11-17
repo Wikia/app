@@ -1215,7 +1215,7 @@ Bevestig dat dit de bedoeling is, da-j de gevolgen dervan begriepen en da-j dit 
 'mypreferences'             => 'Mien veurkeuren',
 'prefs-edits'               => 'Antal bewarkingen:',
 'prefsnologin'              => 'Neet an-meld',
-'prefsnologintext'          => 'Je mutten <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} an-emeld]</span> ween um joew veurkeuren in te kunnen stellen.',
+'prefsnologintext'          => 'Je mutten <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} an-emeld]</span> ween um joew veurkeuren in te kunnen stellen.',
 'prefsreset'                => 'Standardveurkeuren hersteld.',
 'qbsettings'                => 'Paginalieste',
 'qbsettings-none'           => 'Gien',

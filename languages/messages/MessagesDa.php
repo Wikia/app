@@ -1091,7 +1091,7 @@ Du kan prøve at bruge \"all:\" som præfiks for at søge i alt indhold (inkl. d
 'mypreferences'             => 'Indstillinger',
 'prefs-edits'               => 'Antal redigeringer:',
 'prefsnologin'              => 'Ikke logget på',
-'prefsnologintext'          => 'Du skal være <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} logget på]</span> for at ændre brugerindstillinger.',
+'prefsnologintext'          => 'Du skal være <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} logget på]</span> for at ændre brugerindstillinger.',
 'prefsreset'                => 'Indstillingerne er blevet gendannet fra lageret.',
 'qbsettings'                => 'Hurtigmenu',
 'qbsettings-none'           => 'Ingen',

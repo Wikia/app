@@ -1239,7 +1239,7 @@ Pokud na začátek dotazu přidáte ''all:'', bude se hledat všude (včetně di
 'mypreferences'             => 'Nastavení',
 'prefs-edits'               => 'Počet editací:',
 'prefsnologin'              => 'Nejste přihlášen(a)!',
-'prefsnologintext'          => 'Pokud chcete měnit uživatelská nastavení, musíte se <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} přihlásit]</span>.',
+'prefsnologintext'          => 'Pokud chcete měnit uživatelská nastavení, musíte se <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} přihlásit]</span>.',
 'prefsreset'                => 'Nastavení vráceno.',
 'qbsettings'                => 'Nastavení lišty nástrojů',
 'qbsettings-none'           => 'Žádný',

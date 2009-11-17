@@ -1266,7 +1266,7 @@ Wenn du dich mit dem Thema auskennst, kannst du selbst [[:$1|die Seite verfassen
 'mypreferences'             => 'Einstellungen',
 'prefs-edits'               => 'Anzahl der Bearbeitungen:',
 'prefsnologin'              => 'Nicht angemeldet',
-'prefsnologintext'          => 'Du musst <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} angemeldet]</span> sein, um deine Einstellungen ändern zu können.',
+'prefsnologintext'          => 'Du musst <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} angemeldet]</span> sein, um deine Einstellungen ändern zu können.',
 'prefsreset'                => 'Die Eingaben wurden verworfen, es erfolgte keine Speicherung.',
 'qbsettings'                => 'Seitenleiste',
 'qbsettings-none'           => 'Keine',

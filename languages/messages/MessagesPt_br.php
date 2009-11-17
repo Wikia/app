@@ -1131,7 +1131,7 @@ Note que os índices do conteúdo da {{SITENAME}} destes sites podem estar desat
 'mypreferences'             => 'Minhas preferências',
 'prefs-edits'               => 'Número de edições:',
 'prefsnologin'              => 'Não autenticado',
-'prefsnologintext'          => 'É necessário estar <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} autenticado]</span> para definir as suas preferências.',
+'prefsnologintext'          => 'É necessário estar <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} autenticado]</span> para definir as suas preferências.',
 'prefsreset'                => 'As preferências foram restauradas tal como se encontravam no banco de dados.',
 'qbsettings'                => 'Configurações da Barra Rápida',
 'qbsettings-none'           => 'Nenhuma',

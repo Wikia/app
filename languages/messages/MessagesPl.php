@@ -1198,7 +1198,7 @@ Jednak informacje o treści {{GRAMMAR:D.lp|{{SITENAME}}}} mogą być w Google ni
 'mypreferences'             => 'Preferencje',
 'prefs-edits'               => 'Liczba edycji',
 'prefsnologin'              => 'Nie jesteś zalogowany',
-'prefsnologintext'          => 'Musisz się <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} zalogować]</span> przed zmianą swoich preferencji.',
+'prefsnologintext'          => 'Musisz się <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} zalogować]</span> przed zmianą swoich preferencji.',
 'prefsreset'                => 'Preferencje domyślne zostały odtworzone.',
 'qbsettings'                => 'Pasek szybkiego dostępu',
 'qbsettings-none'           => 'Brak',

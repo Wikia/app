@@ -773,7 +773,7 @@ Prosimo, potrdite, da ste s tem seznanjeni, da razumete posledice dejanja in da 
 'mypreferences'             => 'Nastavitve',
 'prefs-edits'               => 'Število urejanj:',
 'prefsnologin'              => 'Niste prijavljeni',
-'prefsnologintext'          => 'Za spreminjanje uporabniških nastavitev se <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} prijavite]</span>.',
+'prefsnologintext'          => 'Za spreminjanje uporabniških nastavitev se <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} prijavite]</span>.',
 'prefsreset'                => 'Nastavitve so ponastavljene.',
 'qbsettings'                => 'Nastavitve hitre vrstice',
 'qbsettings-none'           => 'Brez',

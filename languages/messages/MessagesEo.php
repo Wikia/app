@@ -1119,7 +1119,7 @@ indekso pro troŝarĝita servilo. Intertempe, vi povas serĉi per <i>guglo</i> a
 'mypreferences'             => 'Miaj preferoj',
 'prefs-edits'               => 'Nombro de redaktoj:',
 'prefsnologin'              => 'Ne jam salutis!',
-'prefsnologintext'          => 'Vi devas esti <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} ensalutita]</span> por fari viajn preferojn.',
+'prefsnologintext'          => 'Vi devas esti <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} ensalutita]</span> por fari viajn preferojn.',
 'prefsreset'                => 'Preferoj reprenitaj el la registro.',
 'qbsettings'                => 'Preferoj pri ilaro',
 'qbsettings-none'           => 'Neniu',

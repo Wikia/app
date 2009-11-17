@@ -806,7 +806,7 @@ Bain triail as ''all:'' a chur roimh d'iarratas chun an t-inneachar ar fad (leat
 'preferences'               => 'Sainroghanna',
 'mypreferences'             => 'Mo shainroghanna',
 'prefsnologin'              => 'Níl tú logáilte isteach',
-'prefsnologintext'          => 'Ní mór duit <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} logáil isteach]</span> chun do chuid sainroghanna phearsanta a shocrú.',
+'prefsnologintext'          => 'Ní mór duit <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} logáil isteach]</span> chun do chuid sainroghanna phearsanta a shocrú.',
 'prefsreset'                => "D'athraíodh do chuid sainroghanna ar ais chuig an leagan bunúsach ón stóras.",
 'qbsettings'                => 'Sainroghanna an bosca uirlisí',
 'qbsettings-none'           => 'Faic',

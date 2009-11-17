@@ -1111,7 +1111,7 @@ Subuking lagyan ng unlapi/paunang ''all:'' upang hanapin ang lahat ng mga nialal
 'mypreferences'             => 'Aking mga kagustuhan',
 'prefs-edits'               => 'Bilang ng mga pagbabago:',
 'prefsnologin'              => 'Hindi nakalagda/nakatala',
-'prefsnologintext'          => 'Kailangan mong <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} lumagda/tumala]</span> para makapagtakda ng mga kagustuhang ng tagagamit.',
+'prefsnologintext'          => 'Kailangan mong <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} lumagda/tumala]</span> para makapagtakda ng mga kagustuhang ng tagagamit.',
 'prefsreset'                => 'Muling itinakda ang mga kagustuhan mula sa taguan.',
 'qbsettings'                => 'Quickbar',
 'qbsettings-none'           => 'Wala',

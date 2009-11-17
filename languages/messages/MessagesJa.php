@@ -1184,7 +1184,7 @@ $1 または他の[[{{MediaWiki:Grouppage-sysop}}|管理者]]にこの件につ�
 'mypreferences'             => '個人設定',
 'prefs-edits'               => '編集回数:',
 'prefsnologin'              => 'ログインしていません',
-'prefsnologintext'          => '個人設定を変更するためには<span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} ログイン]</span>する必要があります。',
+'prefsnologintext'          => '個人設定を変更するためには<span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} ログイン]</span>する必要があります。',
 'prefsreset'                => '個人設定を保存されている状態に復帰しました。',
 'qbsettings'                => 'クイックバー',
 'qbsettings-none'           => 'なし',

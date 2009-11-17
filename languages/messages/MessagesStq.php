@@ -963,7 +963,7 @@ Wan du die mäd dät Thema uutkoanst, koast du sälwen ju [[:$1|Siede ferfoatje]
 'mypreferences'             => 'Ienstaalengen',
 'prefs-edits'               => 'Antaal Beoarbaidengen:',
 'prefsnologin'              => 'Nit anmälded',
-'prefsnologintext'          => 'Du moast <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} anmälded]</span> weese, uum dien Ienstaalengen annerje tou konnen.',
+'prefsnologintext'          => 'Du moast <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} anmälded]</span> weese, uum dien Ienstaalengen annerje tou konnen.',
 'prefsreset'                => 'Ienstaalengen wuuden ap Standoard touräächsät.',
 'qbsettings'                => 'Siedenlieste',
 'qbsettings-none'           => 'Naan',
