@@ -17,7 +17,7 @@ if ('de' == $wgLanguageCode) {
 	}
 	// translate "main ns" into de
 	$wgExtraNamespaces[200] = 'BenutzerWiki';
-	$wgExtraNamespaces[201] = 'BenutzerWiki Diskussion';
+	$wgExtraNamespaces[201] = 'BenutzerWiki_Diskussion';
 	$wgExtraNamespaces[202] = 'Benutzerprofil';
 	// the end: de name is the "main ns", en is just an alias (redirect)
 }
