@@ -72,3 +72,8 @@ insert into user_groups(ug_user, ug_group) values
 (/*Maintenance script*/375130,'bot'),
 (/*WikiaBot*/269919,'bot')
 ;
+
+delete from user_groups where ug_group="vstf";
+insert into user_groups(ug_user, ug_group) values
+(/*Eulalia459678*/223485,'vstf'),
+;
