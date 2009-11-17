@@ -82,6 +82,9 @@ If you're the founder or an admin on this wiki, you can change this message to t
 
 	'myhome-default-view-checkbox' => 'Make $1 my default view',
 	'myhome-default-view-success' => 'Okay, this is your default now',
+
+	'accesskey-pt-myhome' => 'g', # do not translate or duplicate this message to other languages
+	'tooltip-pt-myhome' => "Go to My Home",
 );
 
 $messages['pl'] = array(
