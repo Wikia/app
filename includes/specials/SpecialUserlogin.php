@@ -251,6 +251,7 @@ class LoginForm {
 			$wgOut->setPageTitle( wfMsg('userlogin-unable-title') );
 			$wgOut->setRobotpolicy( 'noindex,nofollow' );
 			$wgOut->setArticleRelated( false );
+			$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
 			$wgOut->addWikiText( wfMsg('userlogin-unable-info') );
 			if ( !empty( $this->mReturnTo ) ) {
 				$wgOut->returnToMain( true, $this->mReturnTo );
