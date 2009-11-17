@@ -74,7 +74,6 @@ class WikiaEditStats {
 		if( $oRow ) {
 			$res = $oRow->row_count;
 		} 
-		error_log ( $select . " => " . $res );
 		
 		wfProfileOut( __METHOD__ );
 		return $res;
