@@ -24,19 +24,19 @@ function testDelayedEmails() {
 	foreach( $headers as $header => $value ) {
 		$textHeaders .= "{$header}: $value\n";
 	}
-	Http::post("http://theschwartz/theschwartz/inject", 'default', array (
-		CURLOPT_POSTFIELDS => array (
-			"rcpt" => $recipient,
-			"env_from" => $from,
-			"msg" => "$textHeaders" . "\n\n" . "$body"
-		)
-	) );
+	#Http::post("http://theschwartz/theschwartz/inject", 'default', array (
+	#	CURLOPT_POSTFIELDS => array (
+	#		"rcpt" => $recipient,
+	#		"env_from" => $from,
+	#		"msg" => "$textHeaders" . "\n\n" . "$body"
+	#	)
+	#) );
 
 	/**
 	 * delayed email
 	 */
 	global $wgTheSchwartzSecretToken;
-	$url = sprintf( "http://techteam-qa6.wikia.com/api.php?action=awcreminder%%26user_id=%d%%26token=%s",
+	$url = sprintf( "http://lyric.wikia.com/api.php?action=awcreminder%%26user_id=%d%%26token=%s",
 		51098,
 		$wgTheSchwartzSecretToken
 	);
@@ -71,4 +71,4 @@ function testStomp() {
 # main
 #
 testDelayedEmails();
-testStomp();
+#testStomp();
