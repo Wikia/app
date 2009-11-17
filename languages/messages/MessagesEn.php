@@ -881,9 +881,9 @@ Note that some pages may continue to be displayed as if you were still logged in
 Your account has been created.
 Do not forget to change your [[Special:Preferences|{{SITENAME}} preferences]].',
 'loginpagetitle'             => 'User login',
-'yourname'                   => 'Username',
-'yourpassword'               => 'Password',
-'yourpasswordagain'          => 'Retype password',
+'yourname'                   => 'Username:',
+'yourpassword'               => 'Password:',
+'yourpasswordagain'          => 'Retype password:',
 'remembermypassword'         => 'Remember my login on this computer',
 'yourdomainname'             => 'Your domain:',
 'externaldberror'            => 'There was either an authentication database error or you are not allowed to update your external account.',
@@ -908,7 +908,7 @@ Please choose a different name.',
 'uid'                        => 'User ID:',
 'prefs-memberingroups'       => 'Member of {{PLURAL:$1|group|groups}}:',
 'yourrealname'               => 'Real name:',
-'yourlanguage'               => 'Language',
+'yourlanguage'               => 'Language:',
 'yourvariant'                => 'Variant:', # only translate this message to other languages if you have to change it
 'yournick'                   => 'Signature:',
 'badsig'                     => 'Invalid raw signature.
