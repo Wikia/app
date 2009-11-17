@@ -122,13 +122,17 @@ var AjaxLogin = {
 					$('#wpPassword1').attr('value', '').focus();
 
 					default:
-					// Bartek: tracking
-					
-					if( AjaxLogin.action == 'password'  ) {
-						WET.byStr('signupActions/popup/emailpassword/failure');
-					} else {
-						WET.byStr('signupActions/popup/login/failure');
-					}					
+
+                                        // Bartek: tracking
+                                        if( AjaxLogin.action == 'password'  ) {
+                                                if( responseResult == 'OK' ) {
+                                                        WET.byStr('signupActions/popup/emailpassword/success');
+                                                } else {
+                                                        WET.byStr('signupActions/popup/emailpassword/failure');
+                                                }
+                                        } else {
+                                                WET.byStr('signupActions/popup/login/failure');
+                                        }
 					
 					AjaxLogin.blockLoginForm(false);
 					AjaxLogin.displayReason(response.ajaxlogin.text);
