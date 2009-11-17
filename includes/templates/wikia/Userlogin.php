@@ -412,7 +412,7 @@ class UsercreateTemplate extends QuickTemplate {
 				case 'Success':
                                         // Bartek: tracking
 
-                                        if( AjaxLogin.action == 'password'  ) {
+                                        if( AjaxLogin2.action == 'password'  ) {
                                                 WET.byStr('signupActions/signup/emailpassword/success');
                                         } else {
                                                 WET.byStr('signupActions/signup/login/success');
@@ -434,7 +434,7 @@ class UsercreateTemplate extends QuickTemplate {
 				default:
 					// Bartek: tracking
 
-                                        if( AjaxLogin.action == 'password'  ) {
+                                        if( AjaxLogin2.action == 'password'  ) {
                                                 WET.byStr('signupActions/signup/emailpassword/failure');
                                         } else {
                                                 WET.byStr('signupActions/signup/login/failure');
@@ -571,7 +571,7 @@ class UsercreateTemplate extends QuickTemplate {
 		}
 		$(UserRegistration.init);
 
-		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal'}); WET.byStr('signupActions/signup/moreinfo/email/open'); });
+		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal', 'onClose' : function() {WET.byStr('signupActions/signup/moreinfo/email/close');} }); WET.byStr('signupActions/signup/moreinfo/email/open'); });
 		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal'});  WET.byStr('signupActions/signup/moreinfo/birthdate/open'); });
 		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal'});  WET.byStr('signupActions/signup/moreinfo/captcha/open'); });
 
