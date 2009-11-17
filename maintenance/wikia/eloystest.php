@@ -41,13 +41,14 @@ function testDelayedEmails() {
 		$wgTheSchwartzSecretToken
 	);
 	Wikia::log( __METHOD__, "url", $url );
-	Http::post("http://theschwartz/function/TheSchwartz::Worker::URL", 'default', array (
+	print_r( Http::post("http://theschwartz/function/TheSchwartz::Worker::URL", 'default', array (
 		CURLOPT_POSTFIELDS => array (
 			"theschwartz_run_after" => time() + 300,
 			"url" => $url
 		),
-		CURLOPT_PROXY => "127.0.0.1:6081"
-	) );
+		#CURLOPT_PROXY => "127.0.0.1:6081"
+		CURLOPT_PROXY => "10.8.2.114:80"
+	) ) );
 }
 
 function testStomp() {
