@@ -971,7 +971,7 @@ Asegúrate de qu'esti cambéu caltenga la continuidá del históricu de la páxi
 'mypreferences'             => 'Les mios preferencies',
 'prefs-edits'               => "Númberu d'ediciones:",
 'prefsnologin'              => 'Non identificáu',
-'prefsnologintext'          => 'Necesites tar <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} identificáu]</span> pa camudar les preferencies d\'usuariu.',
+'prefsnologintext'          => 'Necesites tar <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} identificáu]</span> pa camudar les preferencies d\'usuariu.',
 'prefsreset'                => 'Les preferencies fueron restablecíes a los valores por defeutu.',
 'qbsettings'                => 'Barra rápida',
 'qbsettings-none'           => 'Nenguna',

@@ -1172,7 +1172,7 @@ Note que os seus índices do contido de {{SITENAME}} poden estar desactualizados
 'mypreferences'             => 'As miñas preferencias',
 'prefs-edits'               => 'Número de edicións:',
 'prefsnologin'              => 'Non está dentro do sistema',
-'prefsnologintext'          => 'Debe <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} acceder ao sistema]</span> para modificar as preferencias de usuario.',
+'prefsnologintext'          => 'Debe <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} acceder ao sistema]</span> para modificar as preferencias de usuario.',
 'prefsreset'                => 'As preferencias foron postas cos valores orixinais.',
 'qbsettings'                => 'Opcións da barra rápida',
 'qbsettings-none'           => 'Ningunha',

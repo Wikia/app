@@ -1176,7 +1176,7 @@ Perlu diingat bahwa indeks Google untuk konten {{SITENAME}} mungkin belum mencak
 'mypreferences'             => 'Preferensi saya',
 'prefs-edits'               => 'Jumlah suntingan:',
 'prefsnologin'              => 'Belum masuk log',
-'prefsnologintext'          => 'Anda harus <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} masuk log]</span> untuk mengeset preferensi Anda.',
+'prefsnologintext'          => 'Anda harus <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} masuk log]</span> untuk mengeset preferensi Anda.',
 'prefsreset'                => 'Preferensi telah dikembalikan ke konfigurasi baku.',
 'qbsettings'                => 'Pengaturan bar pintas',
 'qbsettings-none'           => 'Tidak ada',

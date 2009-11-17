@@ -1251,7 +1251,7 @@ Essayez en utilisant le préfixe ''all:'' pour rechercher dans tout le contenu (
 'mypreferences'             => 'Préférences',
 'prefs-edits'               => 'Nombre de modifications :',
 'prefsnologin'              => 'Non connecté',
-'prefsnologintext'          => 'Vous devez être <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} connecté]</span> pour modifier vos préférences d’utilisateur.',
+'prefsnologintext'          => 'Vous devez être <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} connecté]</span> pour modifier vos préférences d’utilisateur.',
 'prefsreset'                => 'Les préférences ont été rétablies à partir de la version enregistrée.',
 'qbsettings'                => 'Barre d’outils',
 'qbsettings-none'           => 'Aucune',

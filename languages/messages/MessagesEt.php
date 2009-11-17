@@ -853,7 +853,7 @@ päringu ees prefiksit ''all:''. Konkreetsest nimeruumist otsimiseks kasuta pref
 'mypreferences'             => 'eelistused',
 'prefs-edits'               => 'Redigeerimiste arv:',
 'prefsnologin'              => 'Te ei ole sisse loginud',
-'prefsnologintext'          => 'Et oma eelistusi seada, peate olema <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} sisse logitud]</span>.',
+'prefsnologintext'          => 'Et oma eelistusi seada, peate olema <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} sisse logitud]</span>.',
 'prefsreset'                => 'Teie eelistused on arvutimälu järgi taastatud.',
 'qbsettings'                => 'Kiirriba sätted',
 'qbsettings-none'           => 'Ei_ole',

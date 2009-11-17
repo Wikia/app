@@ -947,7 +947,7 @@ $3 അതിനു കാണിച്ചിരിക്കുന്ന കാര
 'mypreferences'         => 'എന്റെ ക്രമീകരണങ്ങള്‍',
 'prefs-edits'           => 'ആകെ തിരുത്തലുകള്‍:',
 'prefsnologin'          => 'ലോഗിന്‍ ചെയ്തിട്ടില്ല',
-'prefsnologintext'      => 'ഉപയോക്തൃക്രമീകരണങ്ങള്‍ മാറ്റാന്‍ താങ്കള്‍ <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} ലോഗിന്‍ ചെയ്തിരിക്കണം]</span>.',
+'prefsnologintext'      => 'ഉപയോക്തൃക്രമീകരണങ്ങള്‍ മാറ്റാന്‍ താങ്കള്‍ <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} ലോഗിന്‍ ചെയ്തിരിക്കണം]</span>.',
 'qbsettings-none'       => 'ഒന്നുമില്ല',
 'qbsettings-fixedleft'  => 'സ്ഥിരമായ ഇടത്',
 'qbsettings-fixedright' => 'സ്ഥിരമായ വലത്',

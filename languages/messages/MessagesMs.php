@@ -1090,7 +1090,7 @@ Cuba berikan awalan ''all:'' untuk menggelintar semua kandungan (termasuk laman 
 'mypreferences'             => 'Keutamaan saya',
 'prefs-edits'               => 'Jumlah suntingan:',
 'prefsnologin'              => 'Belum log masuk',
-'prefsnologintext'          => 'Anda hendaklah <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} log masuk]</span> terlebih dahulu untuk menetapkan keutamaan.',
+'prefsnologintext'          => 'Anda hendaklah <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} log masuk]</span> terlebih dahulu untuk menetapkan keutamaan.',
 'prefsreset'                => 'Keutamaan anda telah diset semula dari storan.',
 'qbsettings'                => 'Bar pantas',
 'qbsettings-none'           => 'Tiada',

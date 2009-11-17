@@ -789,7 +789,7 @@ $1ን ወይም ማንም ሌላ [[{{MediaWiki:Grouppage-sysop}}|መጋቢ]] ስ
 'mypreferences'             => 'ምርጫዎች፤',
 'prefs-edits'               => 'የለውጦች ቁጥር:',
 'prefsnologin'              => 'ገና አልገቡም',
-'prefsnologintext'          => 'ምርጫዎችዎን ለማስተካከል አስቀድሞ <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} መግባት]</span>  ያስፈልግዎታል።',
+'prefsnologintext'          => 'ምርጫዎችዎን ለማስተካከል አስቀድሞ <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} መግባት]</span>  ያስፈልግዎታል።',
 'prefsreset'                => 'ምርጫዎች ከመቆጠቢያ ታድሰዋል።',
 'qbsettings-none'           => 'የለም',
 'qbsettings-fixedleft'      => 'በግራ የተለጠፈ',

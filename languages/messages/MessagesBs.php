@@ -1227,7 +1227,7 @@ Pokušajte u Vaš upit uključiti prefiks ''all:'' da bi ste pretražili sav sad
 'mypreferences'             => 'Moje postavke',
 'prefs-edits'               => 'Broj izmjena:',
 'prefsnologin'              => 'Niste prijavljeni',
-'prefsnologintext'          => 'Da biste mogli podešavati korisnička podešavanja, morate <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} biti prijavljeni]</span>.',
+'prefsnologintext'          => 'Da biste mogli podešavati korisnička podešavanja, morate <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} biti prijavljeni]</span>.',
 'prefsreset'                => 'Podešavanja su vraćena na prvotne vrijednosti.',
 'qbsettings'                => 'Podešavanja brze palete',
 'qbsettings-none'           => 'Nikakva',

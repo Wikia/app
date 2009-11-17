@@ -955,7 +955,7 @@ Otkat sil'mnägubale üks-se, miše {{SITENAME}}-saitan sädäimišt voib olda v
 'mypreferences'             => 'Minun järgendused',
 'prefs-edits'               => 'Redaktiruindoiden lugu:',
 'prefsnologin'              => 'Tö et olgoi kirjutanus sistemha.',
-'prefsnologintext'          => 'Teile pidab <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} kirjutadas sistemha]</span>, miše toižetada järgendusid.',
+'prefsnologintext'          => 'Teile pidab <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} kirjutadas sistemha]</span>, miše toižetada järgendusid.',
 'prefsreset'                => 'Augoižjärgendused oma endištadud.',
 'qbsettings'                => "Navigacijan panel'",
 'qbsettings-none'           => 'Ala ozuta',

@@ -826,7 +826,7 @@ Kan ''all:'' laganeyal ta varafa exulera (gon keyaksexo is teza ikz-), oke wetce
 'mypreferences'             => 'Jinaf lodamaceem',
 'prefs-edits'               => 'Ota va betaks :',
 'prefsnologin'              => 'Dogluyariskaf',
-'prefsnologintext'          => 'Ede va favesiklodamaceem djubetal, gotil <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} dogluyarakiraf]</span>.',
+'prefsnologintext'          => 'Ede va favesiklodamaceem djubetal, gotil <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} dogluyarakiraf]</span>.',
 'prefsreset'                => 'Les préférences ont été rétablies à partir de la version enregistrée.',
 'qbsettings'                => 'Tuweltara va xekobla',
 'qbsettings-none'           => 'Mek',

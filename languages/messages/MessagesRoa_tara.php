@@ -1002,7 +1002,7 @@ Però fa attenzione purcè l'indice lore sus a {{SITENAME}} ponne condenè pàgg
 'mypreferences'             => 'Me piece accussì',
 'prefs-edits'               => 'Numere de cangiaminde:',
 'prefsnologin'              => 'Non ge sinde colleghete',
-'prefsnologintext'          => 'Tu a essere <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} colleghete]</span> pe \'mbostà le preferenze de l\'utinde.',
+'prefsnologintext'          => 'Tu a essere <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} colleghete]</span> pe \'mbostà le preferenze de l\'utinde.',
 'prefsreset'                => "Le preferenze onne state azzerate da 'u stipamende.",
 'qbsettings'                => 'Barra veloce',
 'qbsettings-none'           => 'Ninde',

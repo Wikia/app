@@ -573,7 +573,7 @@ Prova a scioberai ''totu:'' pro chircare in totu su cuntènnidu (includius pàgi
 'mypreferences'            => 'Preferèntzias meas',
 'prefs-edits'              => 'Nùmeru de acontzos:',
 'prefsnologin'             => 'Non ses intrau',
-'prefsnologintext'         => 'Depis èssere <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} intrau]</span> pro scioberai is preferèntzias.',
+'prefsnologintext'         => 'Depis èssere <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} intrau]</span> pro scioberai is preferèntzias.',
 'prefsreset'               => 'Le tue Preferenze sono state ripescate dalla memoria di sistema del potente server di {{SITENAME}}.',
 'qbsettings'               => 'Settaggio della barra menu',
 'qbsettings-none'          => 'Nessuno',

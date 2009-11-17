@@ -254,7 +254,7 @@ Wenn Sie sich mit dem Thema auskennen, können Sie selbst die [[:$1|die Seite ve
 'searchdisabled'        => 'Die {{SITENAME}} Suche wurde deaktiviert. Sie können unterdessen mit Google suchen. Bitte bedenken Sie, dass der Suchindex für {{SITENAME}} veraltet sein kann.',
 
 # Preferences page
-'prefsnologintext' => 'Sie müssen <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} angemeldet]</span> sein, um Ihre Einstellungen ändern zu können.',
+'prefsnologintext' => 'Sie müssen <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} angemeldet]</span> sein, um Ihre Einstellungen ändern zu können.',
 'savedprefs'       => 'Ihre Einstellungen wurden gespeichert.',
 'timezonetext'     => 'Geben Sie die Anzahl der Stunden ein, die zwischen Ihrer Zeitzone und UTC liegen.',
 

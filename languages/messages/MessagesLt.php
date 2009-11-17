@@ -1127,7 +1127,7 @@ Prašome patvirtinti, kad jūs tikrai to norite, kad suprantate pasekmes, ir kad
 'mypreferences'             => 'Mano nustatymai',
 'prefs-edits'               => 'Keitimų skaičius:',
 'prefsnologin'              => 'Neprisijungęs',
-'prefsnologintext'          => 'Jums reikia būti <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} prisijungusiam]</span>, kad galėtumėte keisti savo nustatymus.',
+'prefsnologintext'          => 'Jums reikia būti <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} prisijungusiam]</span>, kad galėtumėte keisti savo nustatymus.',
 'prefsreset'                => 'Nustatymai buvo atstatyti iš saugyklos.',
 'qbsettings'                => 'Greitasis pasirinkimas',
 'qbsettings-none'           => 'Nerodyti',

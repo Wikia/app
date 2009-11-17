@@ -1138,7 +1138,7 @@ Innota però li l-werreja tal-kontenut ta' {{SITENAME}} f'dawn is-siti, jistgħu
 'mypreferences'             => 'Il-Preferenzi tiegħi',
 'prefs-edits'               => "Numru ta' modifiki:",
 'prefsnologin'              => 'Għadek ma dħaltx ġewwa',
-'prefsnologintext'          => 'Sabiex tkun tista\' tippersonalizza l-preferenzi huwa neċessarju li tidħol fil-<span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} kont]</span>.',
+'prefsnologintext'          => 'Sabiex tkun tista\' tippersonalizza l-preferenzi huwa neċessarju li tidħol fil-<span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} kont]</span>.',
 'prefsreset'                => 'Il-preferenzi ġew irrisettjati għall-valuri predefiniti.',
 'qbsettings'                => "''Quickbar''",
 'qbsettings-none'           => 'Xejn',

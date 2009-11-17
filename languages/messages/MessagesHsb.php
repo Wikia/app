@@ -1048,7 +1048,7 @@ Spytaj swoje naprašowanje z prefiksom ''all:'' wužiwać, zo by wšón wobsah (
 'mypreferences'             => 'moje nastajenja',
 'prefs-edits'               => 'Ličba změnow:',
 'prefsnologin'              => 'Njepřizjewjeny',
-'prefsnologintext'          => 'Dyrbiš <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} přizjewjeny]</span>  być, zo by móhł nastajenja postajić.',
+'prefsnologintext'          => 'Dyrbiš <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} přizjewjeny]</span>  być, zo by móhł nastajenja postajić.',
 'prefsreset'                => 'Nastajenja su so ze składa wróćo stajili. Twoje změnjenja njejsu so składowali.',
 'qbsettings'                => 'Pobóčna lajsta',
 'qbsettings-none'           => 'Žane',

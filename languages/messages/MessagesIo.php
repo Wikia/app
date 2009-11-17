@@ -623,7 +623,7 @@ Probez prefixizar vua demando kun ''all:'' por serchar omna kontenajo (inkluzant
 'mypreferences'             => 'Mea preferaji',
 'prefs-edits'               => 'Nombro di redaktaji:',
 'prefsnologin'              => 'Vu ne eniris',
-'prefsnologintext'          => 'Vu mustas <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} enirir] por establisar la preferaji.',
+'prefsnologintext'          => 'Vu mustas <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} enirir] por establisar la preferaji.',
 'prefsreset'                => 'La preferaji riestablisesis da la depozeyo.',
 'qbsettings'                => 'Preferaji pri "Quickbar"',
 'qbsettings-none'           => 'Nula',

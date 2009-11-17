@@ -752,7 +752,7 @@ Kėtė admėnėstratuorē šėtom pruojekte vėsdar galės pasėiktė pasliepta 
 'mypreferences'             => 'Mona nustatīmā',
 'prefs-edits'               => 'Keitėmu skaitlius:',
 'prefsnologin'              => 'Naprisėjongis',
-'prefsnologintext'          => 'Tamstā rēk būtė <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} prisėjongosam]</span>, kū galietomiet keistė sava nustatīmus.',
+'prefsnologintext'          => 'Tamstā rēk būtė <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} prisėjongosam]</span>, kū galietomiet keistė sava nustatīmus.',
 'prefsreset'                => 'Nustatīmā buva atstatītė ėš saugīklas.',
 'qbsettings'                => 'Greitasā pasėrėnkėms',
 'qbsettings-none'           => 'Neruodītė',

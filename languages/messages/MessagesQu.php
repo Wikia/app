@@ -1039,7 +1039,7 @@ Takyachikuy kay hukchayqa allin wiñay kawsay ñiqita ama waqllichunchu chaylla.
 'mypreferences'             => 'Allinkachinaykuna',
 'prefs-edits'               => 'Hukchasqakunap yupaynin:',
 'prefsnologin'              => 'Manam yaykurqankichu',
-'prefsnologintext'          => '<span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} Yaykunaykim]</span> tiyan allinkachinaykikunata hukchanaykipaq.',
+'prefsnologintext'          => '<span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} Yaykunaykim]</span> tiyan allinkachinaykikunata hukchanaykipaq.',
 'prefsreset'                => 'Allinkachinakunaqa qallariy kachkaykunaman kutisqañam.',
 'qbsettings'                => 'Utqaytawna ("Quickbar") allinkachinakuna',
 'qbsettings-none'           => 'Mana imapas',

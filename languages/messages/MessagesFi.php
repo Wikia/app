@@ -1186,7 +1186,7 @@ Kokeile lisätä haun alkuun ''all:'', niin haku kohdistuu kaikkeen sisältöön
 'mypreferences'             => 'Asetukset',
 'prefs-edits'               => 'Muokkauksia',
 'prefsnologin'              => 'Et ole kirjautunut sisään.',
-'prefsnologintext'          => 'Sinun täytyy <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} kirjautua sisään]</span>, jotta voisit muuttaa asetuksiasi.',
+'prefsnologintext'          => 'Sinun täytyy <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} kirjautua sisään]</span>, jotta voisit muuttaa asetuksiasi.',
 'prefsreset'                => 'Asetukset on palautettu tallennetuista asetuksistasi.',
 'qbsettings'                => 'Pikavalikko',
 'qbsettings-none'           => 'Ei mitään',

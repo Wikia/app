@@ -864,7 +864,7 @@ $1 பயனரையோ அல்லது வேறு [[{{MediaWiki:Grouppage
 'mypreferences'             => 'என் விருப்பத்தேர்வுகள்',
 'prefs-edits'               => 'தொகுப்புகளின் எண்ணிக்கை:',
 'prefsnologin'              => 'புகுபதிகை செய்யப்படவில்லை',
-'prefsnologintext'          => 'பயனர் விருப்பத்தேர்வுகளை அமைப்பதற்கு நீங்கள் <span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} புகுபதிகை ]</span> செய்திருக்க வேண்டும்.',
+'prefsnologintext'          => 'பயனர் விருப்பத்தேர்வுகளை அமைப்பதற்கு நீங்கள் <span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} புகுபதிகை ]</span> செய்திருக்க வேண்டும்.',
 'prefsreset'                => 'உங்கள் விருப்புகள் சேமிப்பிலிருந்து மீட்டமைக்கப்பட்டுள்ளன.',
 'qbsettings'                => 'விரைவுச் சட்ட அமைவுகள்',
 'qbsettings-none'           => 'எதுவுமில்லை',

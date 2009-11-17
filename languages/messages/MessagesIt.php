@@ -1092,7 +1092,7 @@ Conferma che è tua intenzione procedere a tale cancellazione, che hai piena con
 'mypreferences'             => 'preferenze',
 'prefs-edits'               => 'Modifiche effettuate:',
 'prefsnologin'              => 'Accesso non effettuato',
-'prefsnologintext'          => 'Per poter personalizzare le preferenze è necessario effettuare l\'<span class="plainlinks">[{{fullurl:Special:UserLogin|returnto=$1}} accesso]</span>.',
+'prefsnologintext'          => 'Per poter personalizzare le preferenze è necessario effettuare l\'<span class="plainlinks">[{{fullurl:Special:UserLogin|$1}} accesso]</span>.',
 'prefsreset'                => 'Le preferenze sono state ripristinate ai valori predefiniti.',
 'qbsettings'                => 'Quickbar',
 'qbsettings-none'           => 'Nessuno',
