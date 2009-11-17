@@ -175,6 +175,12 @@ class SkinTemplate extends Skin {
 		$this->iseditable = ($this->iscontent and !($action == 'edit' or $action == 'submit'));
 		$this->username = $wgUser->getName();
 
+		/* Wikia change begin - @author: Marooned */
+		/* Pass parameters to skin, see: Login friction project */
+		$tpl->set( 'thisurl', $this->thisurl );
+		$tpl->set( 'thisquery', $this->thisquery );
+		/* Wikia change end */
+
 		if ( $wgUser->isLoggedIn() || $this->showIPinHeader() ) {
 			$this->userpageUrlDetails = self::makeUrlDetails( $this->userpage );
 		} else {
@@ -519,11 +525,12 @@ class SkinTemplate extends Skin {
 
 		/* set up the default links for the personal toolbar */
 		$personal_urls = array();
-		$page = $wgRequest->getVal( 'returnto', $this->thisurl );
-		$query = $wgRequest->getVal( 'returntoquery', $this->thisquery );
-		$returnto = "returnto=$page";
+		/* Wikia change begin - @author: Marooned */
+		/* Simplified version of MW code - no need to check wgRequest again */
+		$returnto = "returnto={$this->thisurl}";
 		if( $this->thisquery != '' )
-			$returnto .= "&returntoquery=$query";
+			$returnto .= "&returntoquery={$this->thisquery}";
+		/* Wikia change end */
 		if( $this->loggedin ) {
 			$personal_urls['userpage'] = array(
 				'text' => $this->username,
