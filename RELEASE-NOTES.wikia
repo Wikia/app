@@ -1,4 +1,5 @@
 == Changes since 200911.3 ==
+* rt#27906: SocialProfile_NY: bad namespace define, no spaces (uberfuzzy)
 * Log in and log out links no longer return to page view when clicked from
   history view, edit page, or something similar. Backported from
   http://www.mediawiki.org/wiki/Special:Code/MediaWiki/54535 (Emil)
