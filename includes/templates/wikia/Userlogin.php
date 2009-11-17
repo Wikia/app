@@ -168,7 +168,7 @@ class UsercreateTemplate extends QuickTemplate {
 		<tr>
 			<?php if( $this->data['useemail'] ) { ?>
 			<td class="mw-input" id="wpEmailTD">
-				<label for='wpEmail'><?php $this->msg('youremailnew') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
+				<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
 				<input type='text' class='loginText' name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
 			</td>
 			<?php } ?>
@@ -246,7 +246,7 @@ class UsercreateTemplate extends QuickTemplate {
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpBirthDateTD">
-				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
+				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
 				<select name="wpBirthYear" id="wpBirthYear">
 					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
 					<?php
@@ -283,7 +283,7 @@ class UsercreateTemplate extends QuickTemplate {
 	<?php if($this->haveData('captcha')) { ?>
 		<tr>
 			<td>
-				<div id="blurryword"><span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span></div>
+				<div id="blurryword"><span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span></div>
 			</td>
 
 		</tr>
@@ -721,7 +721,7 @@ class UsercreateTemplate extends QuickTemplate {
 	</tr>
 	</table>
 	<div style="display: block; margin-top: 8px">
-		<label for="wpPassword2Ajax" style="font-weight: bold;"><?= wfMsg("yourpasswordnew") ?></label>
+		<label for="wpPassword2Ajax" style="font-weight: bold;"><?= wfMsg("signup-password") ?></label>
 		<a id="wpMailmypassword" href="#" style="font-size: 9pt;" onclick="AjaxLogin2.action='password'; AjaxLogin2.form.submit();"><?= wfMsg('mailmypassword') ?></a>
 	</div>
 	<table>
