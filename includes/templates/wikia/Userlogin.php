@@ -412,11 +412,7 @@ class UsercreateTemplate extends QuickTemplate {
 				case 'Success':
                                         // Bartek: tracking
 
-                                        if( AjaxLogin2.action == 'password'  ) {
-                                                WET.byStr('signupActions/signup/emailpassword/success');
-                                        } else {
-                                                WET.byStr('signupActions/signup/login/success');
-                                        }
+					WET.byStr('signupActions/signup/login/success');
 
 				       	if( wgReturnTo != '' ) {
 						window.location = wgServer + wgScriptPath + '/index.php?title=' + wgReturnTo ;
@@ -431,11 +427,16 @@ class UsercreateTemplate extends QuickTemplate {
 				case 'WrongPass':
 					AjaxLogin2.blockLoginForm(false);
 					$('#wpPassword1').attr('value', '').focus();
+                                        WET.byStr('signupActions/signup/login/failure');
 				default:
-					// Bartek: tracking
 
+					// Bartek: tracking
                                         if( AjaxLogin2.action == 'password'  ) {
-                                                WET.byStr('signupActions/signup/emailpassword/failure');
+						if( responseResult == 'OK' ) {
+	                                                WET.byStr('signupActions/signup/emailpassword/success');
+						} else {
+	                                                WET.byStr('signupActions/signup/emailpassword/failure');
+						}
                                         } else {
                                                 WET.byStr('signupActions/signup/login/failure');
                                         }
