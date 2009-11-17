@@ -75,5 +75,5 @@ insert into user_groups(ug_user, ug_group) values
 
 delete from user_groups where ug_group="vstf";
 insert into user_groups(ug_user, ug_group) values
-(/*Eulalia459678*/223485,'vstf'),
+(/*Eulalia459678*/223485,'vstf')
 ;
