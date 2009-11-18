@@ -92,7 +92,7 @@ function openLogin(event) {
 					AjaxLogin.init( $('#AjaxLoginBox form') );
 
 					// then show as modal
-					$('#AjaxLoginBox').makeModal({width: 320, persistent: true});
+					$('#AjaxLoginBox').makeModal({width: 320, persistent: true, onClose: function(){ WET.byStr('signupActions/popup/close'); } });
 					setTimeout("$('#wpName1Ajax').focus()", 100);
 					WET.byStr('signupActions/signup/open');
 				});
