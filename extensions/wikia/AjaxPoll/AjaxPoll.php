@@ -22,7 +22,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url' => 'http://help.wikia.com/wiki/Help:Polls'
 );
 
-$wgExtensionFunctions[] = "wfAjaxPollTag";
+$wgHooks['ParserFirstCallInit'][] = "wfAjaxPollTag";
 $wgExtensionMessagesFiles["AjaxPoll"] = dirname(__FILE__) . '/AjaxPoll.i18n.php';
 #--- helper file
 require_once( dirname(__FILE__) . '/AjaxPoll_body.php' );
@@ -40,9 +40,9 @@ require_once( dirname(__FILE__) . '/AjaxPoll_body.php' );
  * @author eloy
  * @global
  */
-function wfAjaxPollTag() {
-	global $wgParser; 
-	$wgParser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
+function wfAjaxPollTag( &$parser ) {
+	$parser->setHook( "poll", array( "AjaxPollClass", "renderFromTag" ) );
+	return true;
 }
 /**
  * axAjaxPollSubmit
