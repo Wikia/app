@@ -12,9 +12,9 @@ class SpecialMyHome extends SpecialPage {
 		global $wgOut, $wgUser, $wgTitle;
 		$this->setHeaders();
 		
-                if( isset( $_SESSION['Signup_AccountCreated'] ) ) {
+                if( isset( $_SESSION['Signup_AccountCreated'] ) || $_GET['accountcreated'] == 1 ) {
 			$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/success\');</script>');
-        		$_SESSION['Signup_AccountCreated'] = '';
+        		unset( $_SESSION['Signup_AccountCreated'] );
         	}
 
 		// not available for skins different then monaco
