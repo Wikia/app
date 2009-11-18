@@ -360,8 +360,8 @@ class HAWelcomeJob extends Job {
 				"staff" => true,
 				"helper" => true,
 				"sysop" => true,
-				"bureaucrat" => true
-				"vstf" => true
+				"bureaucrat" => true,
+				"vstf" => true,
 			);
 			$canWelcome = true;
 			foreach( $groups as $group ) {
