@@ -361,6 +361,7 @@ class HAWelcomeJob extends Job {
 				"helper" => true,
 				"sysop" => true,
 				"bureaucrat" => true
+				"vstf" => true
 			);
 			$canWelcome = true;
 			foreach( $groups as $group ) {
