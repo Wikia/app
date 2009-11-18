@@ -18,7 +18,7 @@ foreach($MF as $group) {
 	echo "Target: {$group['target']}\n";
 	$out = '';
 	foreach($group['source'] as $file) {
-		$temp = file_get_contents(dirname(__FILE__).'/../../skins/'.$wgStyleDirectory.'/'.$file) . "\n\n";
+		$temp = file_get_contents(dirname(__FILE__).'/../../skins/'.$file) . "\n\n";
 		if($file == "common/yui/2.4.0/container/assets/container.css") {
 			$temp = str_replace("url(close12", "url(../../common/yui_2.5.2/container/assets/close12", $temp);
 			$temp = str_replace("url(\"",  "url(\"../../common/yui_2.5.2/container/assets/", $temp);
