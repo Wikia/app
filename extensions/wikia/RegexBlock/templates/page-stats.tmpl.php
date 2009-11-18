@@ -7,7 +7,7 @@ $blockername_link = $skin->makeKnownLinkObj( $titleObj, $blockInfo->blckby_name,
 <ul>
 <li><?=wfMsg('regexblock_blocker_name')?>: <b><?=$blocker_link?></b></li>
 <li><?=wfMsg('regexblock_reason')?> <?=($blockInfo->blckby_reason) ?  ('<b>' . $blockInfo->blckby_reason . '</b>') : ('<i>' . wfMsg('regexblock_generic_reason') . '</i>' ); ?></li>
-<li><?=wgMsg('regexblock_block_date_from')?>: <b><?=$lang->timeanddate( wfTimestamp( TS_MW, $blockInfo->blckby_timestamp ), true )?></b></li>
+<li><?=wfMsg('regexblock_block_date_from')?>: <b><?=$lang->timeanddate( wfTimestamp( TS_MW, $blockInfo->blckby_timestamp ), true )?></b></li>
 <li><?=wfMsg('regexblock_block_date_to')?>: <?=($blockInfo->blckby_expire != 'infinite') ?  ('<b>' . $lang->timeanddate( wfTimestamp( TS_MW, $blockInfo->blckby_expire ), true ) . '</b>') : ('<i>infinite</i>'); ?></li>
 </ul>
 <br />
