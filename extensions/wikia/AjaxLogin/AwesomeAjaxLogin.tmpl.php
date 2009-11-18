@@ -13,7 +13,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 			<td><a id="wpAjaxRegister" href="<?= htmlspecialchars($link) ?>" style="font-size: 9pt;"><?= wfMsg('nologinlink') ?></a></td>
 		</tr>
 		</table>
-		<label for="wpPassword1" style="display: block; font-weight: bold; margin-top: 8px"><?= wfMsg("yourpasswordnew") ?></label>
+		<label for="wpPassword1" style="display: block; font-weight: bold; margin-top: 8px"><?= wfMsg("signup-password") ?></label>
 		<table>
 		<tr>
 			<td id="ajaxlogin_password_cell"></td>
