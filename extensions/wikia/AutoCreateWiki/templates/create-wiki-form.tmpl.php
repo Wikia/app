@@ -122,7 +122,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 		<ul>
 		<li class="infoline"><?=wfMsg('autocreatewiki-haveaccount-question')?></li>
 		<li class="data1">
-			<a id="AWClogin" class="wikia_button ajaxLogin" style="z-index: 10;" href="/index.php?title=Special:UserLogin&returnto=Special:CreateWiki" rel="nofollow"><span><?=wfMsg('login')?></span></a>
+			<a id="AWClogin" class="wikia_button ajaxLogin" style="z-index: 10;" href="/index.php?title=Special:Signup&returnto=Special:CreateWiki" rel="nofollow"><span><?=wfMsg('login')?></span></a>
 		</li>
 		<li class="legend"><?=wfMsg("autocreatewiki-required", "<img src='{$wgExtensionsPath}/wikia/AutoCreateWiki/images/required.png?{$wgStyleVersion}' />")?></li>
 		</ul>
