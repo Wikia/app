@@ -106,7 +106,7 @@ class SolrSearchSet extends SearchResultSet {
 	 * @access public
 	 */
 	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0 ) {
-		global $wgSolrHost, $wgSolrPort, $wgMemc, $wgCityId, $wgErrorLog;
+		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgEnableCrossWikiaSearch, $wgCrossWikiaSearchExcludedWikis;
 
 		$fname = 'SolrSearchSet::newFromQuery';
 		wfProfileIn( $fname );
@@ -143,10 +143,13 @@ class SolrSearchSet extends SearchResultSet {
 			}
 			$params['fq'] = $nsQuery; // filter results for selected ns
 		}
-		//if( true ) {
-		if( $wgCityId == 4832 ) {
-			// techteamtest tmp hack: scross-wikia search
-			//$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:831";
+
+		if( $wgEnableCrossWikiaSearch ) {
+			$widQuery = '';
+			foreach($wgCrossWikiaSearchExcludedWikis as $wikiId) {
+				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $wikiId;
+			}
+			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en";
 		}
 		else {
 			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . $wgCityId;

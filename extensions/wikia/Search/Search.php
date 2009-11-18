@@ -8,6 +8,14 @@
 
 $wgSearchType = 'SolrSearch';
 
+if( empty($wgEnableCrossWikiaSearch) ) {
+	$wgEnableCrossWikiaSearch = false;
+}
+
+if( empty($wgCrossWikiaSearchExcludedWikis) ) {
+	$wgCrossWikiaSearchExcludedWikis = array();
+}
+
 $wgExtensionCredits['other'][] = array(
 	'name'        => 'Wikia Search',
 	'version'     => '0.1',
