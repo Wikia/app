@@ -2177,7 +2177,7 @@ if(count($wikiafooterlinks) > 0) {
 		for ($i = 0, $max = max(array_keys($linksArray)); $i <= $max; $i++) {
 			$item = isset($linksArray[$i]) ? $linksArray[$i] : false;
 			//Redirect to login page instead of showing error, see Login friction project
-			if ($item !== false && $userIsAnon && in_array($item['specialCanonicalName'], $wgSpecialPagesRequiredLogin)) {
+			if ($item !== false && $userIsAnon && isset($item['specialCanonicalName']) && in_array($item['specialCanonicalName'], $wgSpecialPagesRequiredLogin)) {
 				$returnto = Title::newFromText($item['specialCanonicalName'], NS_SPECIAL)->getPrefixedDBkey();
 				$item['href'] = Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL(wfGetReturntoParam($returnto));
 			}
