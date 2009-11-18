@@ -371,7 +371,7 @@ function wfStringToArray( $string, $delimiter = ",", $parts = 0 )
  */
 function parseItem($line) {
 
-	$href = false;
+	$href = $specialCanonicalName = false;
 
 	$line_temp = explode('|', trim($line, '* '), 3);
 	$line_temp[0] = trim($line_temp[0], '[]');
@@ -406,6 +406,11 @@ function parseItem($line) {
 		} else {
 			$title = Title::newFromText( $link );
 			if($title) {
+				if ($title->getNamespace() == NS_SPECIAL) {
+					$dbkey = $title->getDBkey();
+					$specialCanonicalName = SpecialPage::resolveAlias($dbkey);
+					if (!$specialCanonicalName) $specialCanonicalName = $dbkey;
+				}
 				$title = $title->fixSpecialName();
 				$href = $title->getLocalURL();
 			} else {
@@ -414,7 +419,7 @@ function parseItem($line) {
 		}
 	}
 
-	return array('text' => $text, 'href' => $href, 'org' => $line_temp[0], 'desc' => $descText);
+	return array('text' => $text, 'href' => $href, 'org' => $line_temp[0], 'desc' => $descText, 'specialCanonicalName' => $specialCanonicalName);
 }
 
 /**
@@ -790,15 +795,19 @@ function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $opti
  * @author Marooned
  * @return string
  */
-function wfGetReturntoParam() {
+function wfGetReturntoParam($customReturnto = null) {
 	global $wgTitle, $wgRequest;
-	$thisurl = $wgTitle->getPrefixedURL();
 	$query = $wgRequest->getValues();
 	unset($query['title']);
 	unset($query['returnto']);
 	unset($query['returntoquery']);
 	$thisquery = wfUrlencode(wfArrayToCGI($query));
-	$returnto = "returnto=$thisurl";
+	if ($customReturnto) {
+		$returnto = "returnto=$customReturnto";
+	} else {
+		$thisurl = $wgTitle->getPrefixedURL();
+		$returnto = "returnto=$thisurl";
+	}
 	if($thisquery != '')
 		$returnto .= "&returntoquery=$thisquery";
 	return $returnto;

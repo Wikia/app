@@ -2173,8 +2173,14 @@ if(count($wikiafooterlinks) > 0) {
 	}
 
 	if(is_array($linksArray) && count($linksArray) > 0) {
+		global $wgSpecialPagesRequiredLogin;
 		for ($i = 0, $max = max(array_keys($linksArray)); $i <= $max; $i++) {
 			$item = isset($linksArray[$i]) ? $linksArray[$i] : false;
+			//Redirect to login page instead of showing error, see Login friction project
+			if ($item !== false && $userIsAnon && in_array($item['specialCanonicalName'], $wgSpecialPagesRequiredLogin)) {
+				$returnto = Title::newFromText($item['specialCanonicalName'], NS_SPECIAL)->getPrefixedDBkey();
+				$item['href'] = Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL(wfGetReturntoParam($returnto));
+			}
 			$i & 1 ? $linksArrayR[] = $item : $linksArrayL[] = $item;
 		}
 	}
