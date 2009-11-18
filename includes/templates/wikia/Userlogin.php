@@ -413,14 +413,14 @@ class UsercreateTemplate extends QuickTemplate {
                                         // Bartek: tracking
 
 					WET.byStr('signupActions/signup/login/success');
-					var returnto = decodeURIComponent( $.getUrlVar('returnto') );
-					var returntoquery = decodeURIComponent( $.getUrlVar('returntoquery') );
+					var returnto = $.getUrlVar('returnto');
+					var returntoquery = $.getUrlVar('returntoquery');
 
-				       	if( returnto != '' ) {
-						if( returntoquery != '' ) {
-							window.location = wgServer + wgScriptPath + '/index.php?title=' + returnto + '&' + returntoquery;
+				       	if( typeof(returnto) != 'undefined' ) {
+						if( typeof(returntoquery) != 'undefined' ) {
+							window.location = wgServer + wgScriptPath + '/index.php?title=' + returnto + '&' + decodeURIComponent( returntoquery );
 						} else {
-							window.location = wgServer + wgScriptPath + '/index.php?title=' + returnto;
+							window.location = wgServer + wgScriptPath + '/index.php?title=' + decodeURIComponent( returnto );
 						}
 					} else {
 						window.location.href = wgServer + wgScriptPath;
