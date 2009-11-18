@@ -7,16 +7,15 @@ if( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-$wgExtensionFunctions[] = 'wfMainPageTag';
+$wgHooks['ParserFirstCallInit'][] = 'wfMainPageTag';
 $wfMainPageTag_rcs_called = false;
 $wfMainPageTag_lcs_called = false;
 
-function wfMainPageTag() {
-	global $wgParser;
-
-	$wgParser->setHook( 'mainpage-rightcolumn-start', 'wfMainPageTag_rcs' );
-	$wgParser->setHook( 'mainpage-leftcolumn-start', 'wfMainPageTag_lcs' );
-	$wgParser->setHook( 'mainpage-endcolumn', 'wfMainPageTag_ec' );
+function wfMainPageTag( &$parser ) {
+	$parser->setHook( 'mainpage-rightcolumn-start', 'wfMainPageTag_rcs' );
+	$parser->setHook( 'mainpage-leftcolumn-start', 'wfMainPageTag_lcs' );
+	$parser->setHook( 'mainpage-endcolumn', 'wfMainPageTag_ec' );
+	return true;
 }
 
 function wfMainPageTag_rcs( $input, $args, $parser ) {
