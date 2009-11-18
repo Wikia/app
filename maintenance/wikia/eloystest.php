@@ -46,8 +46,7 @@ function testDelayedEmails() {
 			"theschwartz_run_after" => time() + 300,
 			"url" => $url
 		),
-		#CURLOPT_PROXY => "127.0.0.1:6081"
-		CURLOPT_PROXY => "10.8.2.114:80"
+		CURLOPT_PROXY => "127.0.0.1:6081"
 	) ) );
 }
 
