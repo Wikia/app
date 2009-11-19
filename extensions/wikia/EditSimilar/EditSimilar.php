@@ -354,7 +354,7 @@ function wfEditSimilarViewMesg (&$out) {
 			$message_text = '' ;
 			$article_title = $wgTitle->getText() ;
 			// here we'll populate the similar articles and links
-			$SInstance = new EditSimilar ($wgTitle->getArticleId(), 'category') ;
+			$SInstance = wfGetEditSimilar ($wgTitle->getArticleId(), 'category') ;
 			$similarities = $SInstance->getSimilarArticles () ;	
 			if (!empty($similarities)) {
 				if ($SInstance->mSimilarArticles) {
@@ -397,4 +397,21 @@ function wfEditSimilarToggle($toggles, $default_array = false) {
 		}
 	}
         return true;
+}
+
+/**
+ * factory function, answers gonna have its own ES class
+ *
+ * @see rt#24029
+ */
+function wfGetEditSimilar($article, $markertype) {
+	global $wgEnableEditSimilarAnswersExt;
+
+	if ($wgEnableEditSimilarAnswersExt) {
+		$es = new EditSimilarAnswers($article, $markertype);
+	} else {
+		$es = new EditSimilar($article, $markertype);
+	}
+
+	return $es;
 }
