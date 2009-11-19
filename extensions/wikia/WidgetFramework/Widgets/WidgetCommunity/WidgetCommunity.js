@@ -1,8 +1,15 @@
 function WidgetCommunity_init(id, widget) {
+	
 	$('#community-widget-action-button').click( function(e) {
-		WET.byStr('widget/WidgetCommunity/more');
+		if ($(e.target).hasClass('forward') || $(e.target.parentNode).hasClass('forward'))
+		{
+			WET.byStr('widget/WidgetCommunity/more');
+		} else
+		{
+			WET.byStr('widget/WidgetCommunity/createaccount');
+		}
 	});
-
+	
 	// Latest Activity links
 	$('#widget_' + id + '-recently-edited').find('a').each(function(n) {
 		$(this).click( function(e) {
