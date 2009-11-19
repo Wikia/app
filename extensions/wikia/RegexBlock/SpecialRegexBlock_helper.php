@@ -40,7 +40,7 @@ class RegexBlockData
 
         $this->mNbrResults = 0;
         /* we use memcached here */
-        $key = wfForeignMemcKey( (isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities", "", REGEXBLOCK_SPECIAL_KEY, REGEXBLOCK_SPECIAL_NUM_RECORD );
+        $key = self::getMemcKey("num_rec");
         $cached = $wgMemc->get ($key);
 
         if ( empty( $cached ) ) {
@@ -80,7 +80,7 @@ class RegexBlockData
             $blockers_array = wfRegexBlockGetBlockers();
         } else {
             global $wgMemc, $wgExternalSharedDB;
-            $key = wfForeignMemcKey( (isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities", "", REGEXBLOCK_BLOCKERS_KEY );
+            $key = self::getMemcKey("blockers");
             $cached = $wgMemc->get ($key);
 
             if (!is_array($cached)) {
@@ -249,7 +249,7 @@ class RegexBlockData
 		}
 		$oRes = $dbr->select(
 			REGEXBLOCK_TABLE,
-			array("blckby_id", "blckby_timestamp", "blckby_expire", "blckby_blocker", "blckby_create", "blckby_exact", "blckby_reason"),
+			array("blckby_id", "blckby_name", "blckby_timestamp", "blckby_expire", "blckby_blocker", "blckby_create", "blckby_exact", "blckby_reason"),
 			$where,
 			__METHOD__
 		);
@@ -310,4 +310,20 @@ class RegexBlockData
     static function isValidRegex($text) {
         return (sprintf("%s",@preg_match("/{$text}/",'regex')) === '');
     }    
+    
+    static public function getMemcKey($type, $username = "") {
+    	global $wgExternalSharedDB;
+    	
+    	$dbKey = (isset($wgExternalSharedDB)) ? $wgExternalSharedDB : "wikicities";
+    	
+    	$key = "";
+    	switch ( $type ) {
+    		case "num_rec": $key = wfForeignMemcKey( $dbKey, "", REGEXBLOCK_SPECIAL_KEY, REGEXBLOCK_SPECIAL_NUM_RECORD ); break;
+    		case "blockers": $key = wfForeignMemcKey( $dbKey, "", REGEXBLOCK_BLOCKERS_KEY ); break;
+    		case "block_user" : $key = wfForeignMemcKey( $dbKey, "", REGEXBLOCK_USER_KEY, str_replace( ' ', '_', $username ) ); break;
+			case "all_blockers" : $key = wfForeignMemcKey( $dbKey, "", REGEXBLOCK_BLOCKERS_KEY, "All-In-One" ); break;
+		}
+		
+		return $key;
+	}
 }
