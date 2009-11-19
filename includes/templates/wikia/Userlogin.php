@@ -381,7 +381,7 @@ class UsercreateTemplate extends QuickTemplate {
 			var newButton = document.createElement('input');
 
 			if(AjaxLogin2.action == 'password') {
-				newButtonName = 'wpMailmypassword';
+				newButton.name = 'wpMailmypassword';
 				newButton.value = '1';
 				newButton.type = 'hidden';
                                 controlbox.appendChild(newButton);
