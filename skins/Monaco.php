@@ -2090,7 +2090,7 @@ if(count($wikiafooterlinks) > 0) {
 	$userIsAnon = $wgUser->isAnon();
 	if ($userIsAnon) {
 		//prepare object for further usage
-		$signupTitle = Title::makeTitle(NS_SPECIAL, 'SignUp');
+		$signupTitle = Title::makeTitle(NS_SPECIAL, 'Signup');
 	}
 
 	//Blog, User_Blog namespaces
@@ -2179,7 +2179,7 @@ if(count($wikiafooterlinks) > 0) {
 			//Redirect to login page instead of showing error, see Login friction project
 			if ($item !== false && $userIsAnon && isset($item['specialCanonicalName']) && in_array($item['specialCanonicalName'], $wgSpecialPagesRequiredLogin)) {
 				$returnto = Title::newFromText($item['specialCanonicalName'], NS_SPECIAL)->getPrefixedDBkey();
-				$item['href'] = Title::makeTitle(NS_SPECIAL, 'SignUp')->getLocalURL(wfGetReturntoParam($returnto));
+				$item['href'] = Title::makeTitle(NS_SPECIAL, 'Signup')->getLocalURL(wfGetReturntoParam($returnto));
 			}
 			$i & 1 ? $linksArrayR[] = $item : $linksArrayL[] = $item;
 		}
