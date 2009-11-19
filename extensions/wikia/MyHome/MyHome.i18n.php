@@ -56,7 +56,7 @@ $messages['en'] = array(
 	'myhome-hours-ago' => '$1 {{PLURAL:$1|hour|hours}} ago',
 	'myhome-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 
-	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''<span class=\"plainlinks\">[{{fullurl:Special:UserLogin|$1}} Please log in to see this page!]</span>'''</big></center>",
+	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br><br><big>'''<span class=\"plainlinks\">[{{fullurl:Special:Signup|$1}} Please log in to see this page!]</span>'''</big></center>",
 	'myhome-switch-to-monaco' => "The My Home feature is only available if you're using the Monaco skin. If you'd like to see My Home, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
 
 	'myhome-namespace-blog' => 'Blog',

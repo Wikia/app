@@ -63,7 +63,7 @@ function wfSpecialSpecialpages() {
 			/* Wikia change begin - @author: Marooned */
 			/* Redirect to login page instead of showing error, see Login friction project */
 			if ($wgUser->isAnon() && in_array(SpecialPage::resolveAlias($title->getDBkey()), $wgSpecialPagesRequiredLogin)) {
-				$link = $sk->makeKnownLinkObj( Title::makeTitle(NS_SPECIAL, 'SignUp') , htmlspecialchars( $desc ), wfGetReturntoParam($title->getPrefixedDBkey()) );
+				$link = $sk->makeKnownLinkObj( Title::makeTitle(NS_SPECIAL, 'Signup') , htmlspecialchars( $desc ), wfGetReturntoParam($title->getPrefixedDBkey()) );
 			} else {
 				$link = $sk->makeKnownLinkObj( $title , htmlspecialchars( $desc ) );
 			}
