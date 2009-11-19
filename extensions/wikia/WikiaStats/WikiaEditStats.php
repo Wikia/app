@@ -16,7 +16,8 @@ $wgHooks['ArticleDeleteComplete'][] = "WikiaEditStats::deleteComplete";
 $wgHooks['UndeleteComplete'][] = "WikiaEditStats::undeleteComplete";
 
 class WikiaEditStats {
-	private $mPageId, $mPageNs, $mUserId;
+	private $mPageId, $mPageNs, $mUserId, $mDate;
+	const updateWithToday = false;
 		
 	public function __construct( $Title, $User, $articleId = 0 ) {
 		/**
@@ -37,19 +38,21 @@ class WikiaEditStats {
 		} else {
 			$this->mUserId = $User;
 		}
+		$this->mDate = date('Y-m-d');
 	}
 
 	public function setPageId($page_id) { $this->mPageId = $page_id; }
 	public function setUserId($user_id) { $this->mUserId = $user_id; }
+	public function setDate($date) { $this->mDate = $date; }
 	
 	/**
-	 * increase/decrease -- update stats
+	 * sql_increase -- update stats (it uses SQL functions)
 	 *
 	 * @access private
 	 *
 	 * @return boolean
 	 */
-	public function increase( $inc = 1 ) {
+	public function sql_increase( $inc = 1 ) {
 		wfProfileIn( __METHOD__ );
 		
 		$res = 0;
@@ -74,11 +77,134 @@ class WikiaEditStats {
 		if( $oRow ) {
 			$res = $oRow->row_count;
 		} 
+		#error_log ( $select . " => " . $res );
 		
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
+	
+	/**
+	 * increase -- update stats
+	 *
+	 * @access private
+	 *
+	 * @return boolean
+	 */
+	public function increase( $inc = 1 ) {
+		wfProfileIn( __METHOD__ );
+		
+		$return = 0;
+		
+		if ( !empty($this->mUserId) ) {
+			$dbr = wfGetDB( DB_SLAVE );
 
+			# number of edits 
+			$res = $dbr->select( 
+				array('categorylinks', 'category'), 
+				array( 'cat_id' ), 
+				array( 
+					'cl_to = cat_title',
+					'cl_from' => $this->mPageId 
+				), 
+				__METHOD__ 
+			);
+			
+			if ( $dbr->numRows($res) ) { 
+				$dbw = wfGetDB( DB_MASTER );
+				while( $oRow = $dbr->fetchObject($res) ) {
+					# number of edits
+					$conditions = array(
+						'ce_cat_id'		=> $oRow->cat_id,
+						'ce_page_id'	=> $this->mPageId,
+						'ce_page_ns'	=> $this->mPageNs,
+						'ce_user_id'	=> $this->mUserId,
+						'ce_date'		=> $this->mDate
+					);
+					error_log(print_r($conditions, true));
+
+					$Row = $dbr->selectRow ( 
+						'category_edits',
+						array('ce_count'),
+						$conditions,
+						__METHOD__
+					);
+					if ( $Row ) {
+						# update edits count
+						$count = $Row->ce_count + $inc;
+						$dbw->update( 
+							'category_edits',
+							array( /* SET */
+								'ce_count' 	=> $count,
+								'ce_ts'		=> wfTimestamp( TS_DB )
+							),
+							$conditions,
+							__METHOD__ );
+					} else {
+						# insert edits count
+						$conditions['ce_count'] = $inc;
+						$dbw->insert(
+							'category_edits',
+							$conditions,
+							__METHOD__ 
+						);
+					}
+					$return++;
+				}
+				$dbr->freeResult($res);
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $return;
+	}
+
+	/**
+	 * increaseRevision  -- update stats
+	 *
+	 * @access private
+	 *
+	 * @return boolean
+	 */
+	public function increaseRevision( $inc = 1 ) {
+		wfProfileIn( __METHOD__ );
+		
+		$return = 0;
+		# after undelete function we have to check number of restored revisions 
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 
+			'revision', 
+			array( 'rev_user', 'cast(rev_timestamp as date) as rev_date' ), 
+			array( 
+				'rev_page'		=> $this->mPageId,
+				'rev_deleted'	=> 0,
+				'rev_user > 0'
+			), 
+			__METHOD__ 
+		);
+		
+		if ( $dbr->numRows($res) ) { 
+			while( $oRow = $dbr->fetchObject($res) ) {
+				$this->setUserId($oRow->rev_user);
+				if ( self::updateWithToday == false ) {
+					$this->setDate($oRow->rev_date);
+				}
+				$update = $this->increase($inc);
+				if ( !empty($update) ) $return += $update;
+			}
+			$dbr->freeResult($res);
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $return;
+	}
+
+	/**
+	 * decrease -- update stats
+	 *
+	 * @access private
+	 *
+	 * @return boolean
+	 */
 	public function decrease() {
 		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
@@ -158,7 +284,7 @@ class WikiaEditStats {
 			$revCount = $Title->countRevisionsBetween( 1, $newId );
 			if ( $revCount ) {
 				$oEdits = new WikiaEditStats($Title, $User);
-				$oEdits->increase( $revCount );
+				$oEdits->increaseRevision( );
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -204,7 +330,7 @@ BEGIN
 				VALUES 
 					(__catid__, __pageid__, __page_ns__, __userid__, __date__, __inc__)
 				ON DUPLICATE KEY 
-					UPDATE ce_count = ce_count + __inc__;
+					UPDATE ce_count = ce_count + __inc__, ce_ts = values(ce_ts);
 			END IF;
 		UNTIL __done__ END REPEAT;
 	CLOSE CUR_CATEGORY;
