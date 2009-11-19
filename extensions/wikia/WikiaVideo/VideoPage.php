@@ -785,7 +785,7 @@ EOD;
 	// gets the standard ratio for a current provider (as text)
 	public function getTextRatio() {
 		$ratio = '';
-		switch( $this->mProvider ) {
+			switch( $this->mProvider ) {
 			case self::V_METACAFE:
 				$ratio = "400 x 350";
 				break;
@@ -804,11 +804,8 @@ EOD;
 			case self::V_VIMEO:
 				$ratio = "400 x 225";
 				break;
-			case self::V_MYVIDEO:
-				$ratio = "470 x 406";
-				break;
-                        case self::V_SOUTHPARKSTUDIOS:
-                                $ratio = "480 x 400";
+            case self::V_SOUTHPARKSTUDIOS:
+				$ratio = "480 x 400";
 				break;
 			case self::V_BLIPTV:
 				$ratio = "480 x 350";
@@ -816,11 +813,14 @@ EOD;
 			case self::V_DAILYMOTION:
 				$ratio = "420 x 339";
 				break;
-			case self::VIDDLER:
+			case self::V_VIDDLER:
 				$ratio = "437 x 288";
 				break;
 			case self::V_GAMETRAILERS:
 				$ratio = "480 x 392";
+				break;
+			case self::V_MYVIDEO:
+				$ratio = "470 x 406";
 				break;
 			default:
 				$ratio = "300 x 300";
@@ -828,7 +828,6 @@ EOD;
 		}
 		return $ratio;
 	}
-
 	// run a check from provided api or elsewhere
 	// to see if we can go to details page or not
 	public function checkIfVideoExists() {
