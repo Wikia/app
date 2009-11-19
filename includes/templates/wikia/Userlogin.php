@@ -706,7 +706,7 @@ class UsercreateTemplate extends QuickTemplate {
 </td>
 <td width="45%" style="vertical-align: top;">
 	<div class="loginHeader rightSideElem dark_text_1"><?php $this->msg('log-in-new') ?></div>
-	<form action="" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
+	<form action="<?php $this->text('action') ?>" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
 	<div id="userloginErrorBox2">
 	<table>
 	<tr>
@@ -718,7 +718,7 @@ class UsercreateTemplate extends QuickTemplate {
 	</td>
 	</table>
 	</div>
-	<label for="wpName1Ajax" style="display: block; font-weight: bold;"><?= wfMsg("yourname") ?></label>
+	<label for="wpName2Ajax" style="display: block; font-weight: bold;"><?= wfMsg("yourname") ?></label>
 	<table>
 	<tr>
 	<td id="ajaxlogin_username_cell2">
