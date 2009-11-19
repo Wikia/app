@@ -47,9 +47,14 @@
 <a href="http://www.myvideo.de" class="image" title="Myvideo" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/myvideo.jpg" height="17" width="60" border="0"></a>
 <a href="http://en.sevenload.com" class="image" title="Sevenload" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/sevenload.jpg" height="11" width="60" border="0"></a>
 <a href="http://www.vimeo.com" class="image" title="Vimeo" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/vimeo.png" height="36" width="60" border="0"></a>
-<a href="http://help.wikia.com/wiki/Help:Video_Embed_Tool" target="_blank"><?= wfMsg( 'vet-see-all' ) ?></a>
-</td>
-</tr>
+<a href="http://www.dailymotion.com/" class="image" title="dailymotion" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/dailymotion-logo-june08.png" width="60" border="0"></a>
+<a href="http://www.gametrailers.com/" class="image" title="GameTrailers" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/GameTrailers_logo.png" width="60" border="0"></a>
+<a href="http://blip.tv" class="image" title="blip.tv" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/blip-tv1.png" width="60" border="0"></a>
+<a href="http://www.viddler.com" class="image" title="Viddler" target="_blank"><img alt="" src="<?= $wgExtensionsPath; ?>/wikia/VideoEmbedTool/images/viddler_logo.png" width="60" border="0"></a>
+
+	<p>	<a href="http://help.wikia.com/wiki/Help:Video_Embed_Tool" target="_blank"><?= wfMsg( 'vet-see-all' ) ?></a></p>	
+<td>
+
 </table>
 <br/>
 <div id="VET_results_0">
