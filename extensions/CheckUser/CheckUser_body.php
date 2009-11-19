@@ -910,7 +910,7 @@ class CheckUser extends SpecialPage
 						# Flag our trusted proxies
 						list($client,$trusted) = efGetClientIPfromXFF($set[1],$set[0]);
 						$c = $trusted ? '#F0FFF0' : '#FFFFCC';
-						$s .= '&nbsp;&nbsp;&nbsp;<span style="background-color: '.$c.'"><strong>XFF</strong>: ';
+						$s .= '&nbsp;&nbsp;&nbsp;<span style="color: black; background-color: '.$c.'"><strong>XFF</strong>: ';
 						$s .= $this->sk->makeKnownLinkObj( $wgTitle,
 							htmlspecialchars( $set[1] ),
 							"user=" . urlencode( $client ) . "/xff" )."</span>";
@@ -994,7 +994,7 @@ class CheckUser extends SpecialPage
 			# Flag our trusted proxies
 			list($client,$trusted) = efGetClientIPfromXFF($row->cuc_xff,$row->cuc_ip);
 			$c = $trusted ? '#F0FFF0' : '#FFFFCC';
-			$line .= '&nbsp;&nbsp;&nbsp;<span class="mw-checkuser-xff" style="background-color: '.$c.'">'.
+			$line .= '&nbsp;&nbsp;&nbsp;<span class="mw-checkuser-xff" style="color: black; background-color: '.$c.'">'.
 				'<strong>XFF</strong>: ';
 			$line .= $this->sk->makeKnownLinkObj( $cuTitle,
 				htmlspecialchars( $row->cuc_xff ),
