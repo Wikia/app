@@ -36,7 +36,7 @@ function testDelayedEmails() {
 	 * delayed email
 	 */
 	global $wgTheSchwartzSecretToken;
-	$url = sprintf( "http://lyric.wikia.com/api.php?action=awcreminder%%26user_id=%d%%26token=%s",
+	$url = sprintf( "http://lyric.wikia.com/api.php?action=awcreminder&user_id=%d&token=%s",
 		51098,
 		$wgTheSchwartzSecretToken
 	);
