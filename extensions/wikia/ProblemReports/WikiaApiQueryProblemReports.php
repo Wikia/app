@@ -788,7 +788,7 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 
 		$groups = $wgUser->getGroups();
 
-		return in_array( 'staff', $groups ) || in_array( 'janitor', $groups ) || in_array( 'helper', $groups );
+		return in_array( 'staff', $groups ) || in_array( 'vstf', $groups ) || in_array( 'helper', $groups );
     }
 
     // use can remove problem reports
