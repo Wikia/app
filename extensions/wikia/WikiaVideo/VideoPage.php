@@ -21,7 +21,11 @@ class VideoPage extends Article {
 	const V_CLIPFISH = 14;
 	const V_MYVIDEO = 15;
 	const V_SOUTHPARKSTUDIOS = 16;
+	const V_DAILYMOTION = 18;
+	const V_VIDDLER	 = 19;
 
+	const K_VIDDLER = "hacouneo6n6o3nysn0em";
+	
 	var	$mName,
 		$mVideoName,
 		$mId,
@@ -34,6 +38,7 @@ class VideoPage extends Article {
 		parent::__construct($title);
 	}
 
+	// used when displaying the video page, wrapper for view
 	function render() {
 		global $wgOut;
 		$wgOut->setArticleBodyOnly(true);
@@ -100,6 +105,7 @@ class VideoPage extends Article {
 		}
 	}
 
+	// custom deletion confirmation form
 	public function confirmDelete( $reason ) {
 		global $wgOut, $wgUser, $wgRequest, $wgLang;
 
@@ -236,10 +242,10 @@ class VideoPage extends Article {
 		}
 	}
 
+	// when we have a non-existing article (deleted) and upload a new video, perform cleanup for earlier image and oldimage versions
+	// if necessary
 	function doCleanup () {
 		global $wgUser;
-		// when we have a non-existing article (deleted) and upload a new video, perform cleanup for earlier image and oldimage versions
-		// if necessary
 		$fname = get_class( $this ) . '::' . __FUNCTION__;
 
 		$dbr = wfGetDB( DB_SLAVE );
@@ -411,16 +417,19 @@ class VideoPage extends Article {
 
 	}
 
+	// table of contents
 	function showTOC($metadata) {
 		global $wgLang;
 		$r = '<ul id="filetoc"><li><a href="#file">'.$wgLang->getNsText(NS_VIDEO).'</a></li><li><a href="#filehistory">'.wfMsgHtml( 'filehist' ).'</a></li>'.($metadata ? '<li><a href="#metadata">'.wfMsgHtml('metadata').'</a></li>' : '').'</ul>';
 		return $r;
 	}
 
+	// wrapper
 	function getContent() {
 		return Article::getContent();
 	}
 
+	// generates the video window (for a video embedded on an article page)
 	public function generateWindow($align, $width, $caption, $thumb, $frame) {
 		global $wgStylePath;
 
@@ -451,6 +460,7 @@ EOD;
 		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
 	}
 
+	// generates the video window (in FCK editor)	
 	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb) {
 		global $wgStylePath, $wgWysiwygMetaData;
 
@@ -486,6 +496,8 @@ EOD;
 
 	}
 
+	// recognize which supported provider we have from a given real life url
+	// extract all the necessary data from this url
 	public function parseUrl($url, $load = true) { // TODO: Consider renaming to loadFromURL
 		$provider = '';
 		$id = '';
@@ -641,9 +653,89 @@ EOD;
                         }
                 }
 
+		   $text = strpos( $fixed_url, "BLIP.TV" );
+           if( false !== $text ) { // Blip TV
+
+           	$provider = self::V_BLIPTV;
+				$blip = '';
+				$parsed = split( "/", $url );
+                if( is_array( $parsed ) ) {
+                	$mdata = array_pop( $parsed );
+                	if ( '' != $mdata ) {
+                    	$blip = $mdata;
+                    } else {
+                    	$blip = array_pop( $parsed );
+                    }
+	                $this->mProvider = $provider;
+	                $this->mData = array();                
+					$last = explode( "?", $blip);
+					$this->mId = $last[0];
+					return true;
+           		}
+            }
+
+                $text = strpos( $fixed_url, "WWW.DAILYMOTION" );
+                if( false !== $text ) { // Dailymotion	
+			// dailymotion goes like 
+			// http://www.dailymotion.pl/video/xavqj5_NAME
+			// (example for Polish location)
+                        $provider = self::V_DAILYMOTION;
+                        $parsed = split( "/", $url );
+                        if( is_array( $parsed ) ) {
+                                $mdata = array_pop( $parsed );
+                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+					// todo check out for more parameters
+                                        $this->mId = $mdata;
+                                } else {
+                                        $this->mId = array_pop( $parsed );
+                                }
+                                $this->mProvider = $provider;
+                                $this->mData = array();
+                                return true;
+                        }
+                }
+
+                $text = strpos( $fixed_url, "VIDDLER.COM" );
+                if( false !== $text ) { // Blip TV
+                        $provider = self::V_VIDDLER;
+                        $parsed = split( "/explore/", strtolower($url));
+                        if( is_array( $parsed ) ) {
+                                $mdata = array_pop( $parsed );
+                                if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
+                                        $this->mId = $mdata;
+                                } else {
+                                	
+                                        $this->mId = array_pop( $parsed );
+                                }
+                                if ( substr( $this->mId, -1, 1) != "/" )
+                                {
+                                	$this->mId .= "/";	
+                                } 
+                                $this->mProvider = $provider;
+                                $this->mData = array();
+                                return true;
+                        }
+                }
+
+                $text = strpos( $fixed_url, "GAMETRAILERS" );
+                if( false !== $text ) { // Gametrailers
+                        $provider = self::V_GAMETRAILERS;
+                        $parsed = split( "/", $url );
+                        if( is_array( $parsed ) ) {
+								$this->mId = explode("?",array_pop( $parsed ));
+								$this->mId = $this->mId[0];
+                                $this->mProvider = $provider;
+                                $this->mData = array();
+                                return true;
+                        }
+                }
+
+
+
 		return false;
 	}
 
+	// gets the standard ratio for a current provider (as fraction)
 	public function getRatio() {
 		$ratio = 0;
 		switch( $this->mProvider ) {
@@ -668,8 +760,21 @@ EOD;
 			case self::V_MYVIDEO:
 				$ratio = (470 / 406);
 				break;
-                        case self::V_SOUTHPARKSTUDIOS:
-                                $ratio = ( 480 / 400 );
+            case self::V_SOUTHPARKSTUDIOS:
+                $ratio = ( 480 / 400 );
+				break;
+			case self::V_BLIPTV:
+				$ratio = (480 / 350);
+				break;
+			case self::V_DAILYMOTION:
+				$ratio = (420 / 339);
+				break;
+			case self::V_VIDDLER:
+				$ratio = (437 / 288);
+				break;
+			case self::V_GAMETRAILERS:
+				$ratio = (480 / 392);
+				break;
 			default:
 				$ratio = 1;
 				break;
@@ -677,6 +782,7 @@ EOD;
 		return $ratio;
 	}
 
+	// gets the standard ratio for a current provider (as text)
 	public function getTextRatio() {
 		$ratio = '';
 		switch( $this->mProvider ) {
@@ -703,6 +809,18 @@ EOD;
 				break;
                         case self::V_SOUTHPARKSTUDIOS:
                                 $ratio = "480 x 400";
+				break;
+			case self::V_BLIPTV:
+				$ratio = "480 x 350";
+				break;
+			case self::V_DAILYMOTION:
+				$ratio = "420 x 339";
+				break;
+			case self::VIDDLER:
+				$ratio = "437 x 288";
+				break;
+			case self::V_GAMETRAILERS:
+				$ratio = "480 x 392";
 				break;
 			default:
 				$ratio = "300 x 300";
@@ -776,6 +894,26 @@ EOD;
 			case self::V_SOUTHPARKSTUDIOS: // todo verify if exists
 				$exists = true;
 				break;
+			case self::V_BLIPTV: // todo verify if exists
+				$exists = $this->getBlipTVData() != false ;
+				break;
+			case self::V_DAILYMOTION: 
+				$file = @file_get_contents( 'http://www.dailymotion.com/video/' . $this->mId );
+				if (strpos($file,$this->mId) > -1)
+				{
+					return true;
+				}
+				return false;
+				break;
+			case self::V_VIDDLER: 
+				$exists = $this->getViddlerTrueID() != false ;
+				break;
+			case self::V_GAMETRAILERS: // todo verify if exists
+			/*	$url = $this->getUrl(self::V_GAMETRAILERS.",".$this->mId);
+				$file = @file_get_contents($url);
+				echo $file; */
+				return true;
+				break;
 			default:
 				break;
 		}
@@ -812,6 +950,14 @@ EOD;
 				return 'http://www.vimeo.com';
 			case self::V_SOUTHPARKSTUDIOS:
 				return 'http://www.southparkstudios.com';
+			case self::V_BLIPTV:
+				return 'http://blip.tv';
+			case self::V_DAILYMOTION:
+				return 'http://www.dailymotion.com';
+			case self::V_VIDDLER:
+				return 'http://www.viddler.com';
+			case self::V_GAMETRAILERS:
+				return 'http://www.gametrailers.com';
 			default:
 				return '';
 		}
@@ -863,6 +1009,18 @@ EOD;
 			case self::V_SOUTHPARKSTUDIOS:
 				$url = 'http://www.southparkstudios.com/clips/' . $id;
 				break;
+			case self::V_BLIPTV:
+				$url = 'http://blip.tv/file/' . $id;
+				break;
+			case self::V_DAILYMOTION:
+				$url = 'http://www.dailymotion.com/video/' . $id;
+				break;			
+			case self::V_VIDDLER:
+				$url = 'http://www.viddler.com/explore/' . $id;
+				break;
+			case self::V_GAMETRAILERS:
+				$url = 'http://www.gametrailers.com/video/play/' . $id;
+				break;
 			default:
 				$url = '';
 				break;
@@ -870,14 +1028,17 @@ EOD;
 		return $url;
 	}
 
+	// return the provider from instance
 	public function getProvider() {
 		return $this->mProvider;
 	}
 
+	// return the video id (provider's, not ours!) from instance
 	public function getVideoId() {
 		return $this->mId;
 	}
 
+	// return additional metadata (if any) from instance
 	public function getData() {
 		return $this->mData;
 	}
@@ -913,6 +1074,10 @@ EOD;
 			case self::V_GAMEVIDEOS:
 			case self::V_VIMEO:
 			case self::V_SOUTHPARKSTUDIOS:
+			case self::V_BLIPTV:
+			case self::V_DAILYMOTION:
+			case self::V_VIDDLER:
+			case self::V_GAMETRAILERS:
 				$metadata = $this->mProvider . ',' . $this->mId . ',';
 				break;
 			default:
@@ -978,8 +1143,6 @@ EOD;
                                         'img_name' => self::getNameFromTitle( $this->mTitle )
                                 ), __METHOD__
                         );
-			// todo same as image, but how should it really look?
-			// may also need modifying watchlist...
 			$log = new LogPage( 'upload' );
 			$log->addEntry( 'overwrite', $this->mTitle, 'updated video' );
 			$saved_text = $this->getContent();
@@ -1029,6 +1192,7 @@ EOD;
 	}
 
 
+	// load the data for an empty video object (constructed from article name)
 	public function load() {
 		$fname = get_class( $this ) . '::' . __FUNCTION__;
 		$dbr = wfGetDB( DB_SLAVE );
@@ -1098,6 +1262,7 @@ EOD;
 		$wgOut->addHTML( wfMsg( 'wikiavideo-reverted', '<b>' . $this->mTitle->getText() . '</b>', $link_back ) );
 	}
 
+	// main wrapper for displaying video history for video page
 	function videoHistory() {
 		global $wgOut;
 		$dbr = wfGetDB( DB_SLAVE );
@@ -1109,6 +1274,7 @@ EOD;
 		$wgOut->addHTML( $s );
 	}
 
+	// display pages linking to that video (on video page)
        function videoLinks() {
                 global $wgUser, $wgOut;
                 $limit = 100;
@@ -1151,6 +1317,89 @@ EOD;
                 if ( $count > $limit )
                         $wgOut->addWikiMsg( 'morelinkstoimage', $this->mTitle->getPrefixedDBkey() );
         }
+        
+    /* for get Viddler id by api and hold in cache */
+            
+	private function getViddlerTrueID()
+	{
+		global $wgMemc,$wgTranscludeCacheExpiry;
+		$cacheKey = wfMemcKey( "wvi", "viddlerid",$this->mId, $url );
+		$obj  = $wgMemc->get( $cacheKey );
+
+		if (isset($obj)) 
+		{
+			return 	$obj;
+		}				
+		$url =  "http://api.viddler.com/rest/v1/?method=viddler.videos.getDetailsByUrl&api_key=".
+					self::K_VIDDLER . "&url=http://www.viddler.com/explore/" . $this->mId;  
+		$file = @file_get_contents($url );
+		$doc = new DOMDocument( '1.0', 'UTF-8' );
+		@$doc->loadXML( $file );
+		$mTrueID = trim( $doc->getElementsByTagName('id')->item(0)->textContent );
+		if (empty($mTrueID))
+		{
+			return false;
+		} 
+		$wgMemc->set( $cacheKey, $mTrueID,60*60*24 );
+		return $mTrueID;
+	}
+	 /* for get BlipTV data (true id and avatar url) by api and hold in cache */
+	private function getBlipTVData()
+	{
+		global $wgMemc,$wgTranscludeCacheExpiry;
+		$cacheKey = wfMemcKey( "wvi", "bliptv",$this->mId, $url );
+		$obj  = $wgMemc->get( $cacheKey );
+
+		if (isset($obj)) 
+		{
+			return $obj;
+		}	
+
+		$url = "http://blip.tv/file/" . $this->mId . "?skin=rss&version=3";
+	
+		$file = @file_get_contents($url );
+	 	if (empty($file))
+	 	{
+	 		return false;	
+	 	}
+		$doc = new DOMDocument( '1.0', 'UTF-8' );
+		@$doc->loadXML( $file );
+
+		$mTrueID = trim( $doc->getElementsByTagNameNS('http://blip.tv/dtd/blip/1.0',"embedLookup")->item(0)->textContent );
+		$thumbnailUrl  = trim( $doc->getElementsByTagNameNS('http://search.yahoo.com/mrss/',"thumbnail")->item(0)->getAttribute("url"));
+		$mType = trim( $doc->getElementsByTagNameNS('http://blip.tv/dtd/blip/1.0',"embedUrl")->item(0)->getAttribute("type"));
+
+		if ( ($mType !== "application/x-shockwave-flash") || (empty($mTrueID)) || (empty($thumbnailUrl)) )
+		{
+			return false;
+		}
+		
+		$obj = array(	'mTrueID' => $mTrueID , 
+						'thumbnailUrl' => $thumbnailUrl);
+		$wgMemc->set( $cacheKey, $obj,60*60*24 );
+		return $obj;
+	}
+	public function getUrlToEmbed() {
+		
+		// todo switch through providers, make an API call and return proper stuff
+		// basically this is for Blip.tv and Viddler for now, since they are using
+		// some custom conversion between their ids and src values
+		$converted_id = '';
+		switch( $this->mProvider ) {
+			case self::V_BLIPTV:		
+			 	$result = $this->getBlipTVData();
+			 	return "http://blip.tv/play/".$result['mTrueID'];
+				break;
+			case self::V_VIDDLER:
+				return "http://www.viddler.com/player/" . $this->getViddlerTrueID() . "/";
+				break;
+			default:
+				// no other providers up to date will make use of this function anyway...
+				break;
+		}
+		// very temporary
+		return $converted_id;
+	}
 
 	// return embed code for the particular video per provider
         public function getEmbedCode( $width = 300, $autoplay = false ) {
@@ -1192,7 +1441,21 @@ EOD;
                                 $code = 'custom';
                                 $embed = '<embed src="http://media.mtvnservices.com/mgid:cms:item:southparkstudios.com:' . $this->mId . '" width="' . $width . '" height="' . $height . '" type="application/x-shockwave-flash" wmode="window" flashVars="autoPlay=false&dist=http://www.southparkstudios.com&orig=" allowFullScreen="true" allowScriptAccess="always" allownetworking="all" bgcolor="#000000"></embed>';
                                 break;
-        	                default: break;
+			case self::V_BLIPTV:
+				$url = $this->getUrlToEmbed();
+				break;
+			case self::V_DAILYMOTION:
+				$url = 'http://www.dailymotion.com/swf/' . $this->mId;
+				break;
+			case self::V_VIDDLER:
+				// this needs to take from their API, since they're doing some conversion on their side
+				// URL id -> embedding id
+				$url = $this->getUrlToEmbed();
+				break;
+			case self::V_GAMETRAILERS:				
+				$url = 'http://www.gametrailers.com/remote_wrap.php?umid=' . $this->mId;
+				break;
+			default: break;
 		}
 		if( 'custom' != $code ) {
 			$embed = "<embed src=\"{$url}\" width=\"{$width}\" height=\"{$height}\" wmode=\"transparent\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\"> </embed>";
@@ -1235,6 +1498,15 @@ EOD;
 			case self::V_MYVIDEO:
 			case self::V_GAMEVIDEOS:
 			case self::V_SOUTHPARKSTUDIOS: // no API
+			case self::V_DAILYMOTION: // todo check if there is way to get thumbnail
+				break;
+			case self::V_BLIPTV:
+				$thumb =  $this->getBlipTVData();
+				$thumb = $thumb['thumbnailUrl'] ;
+				break;
+			case self::V_VIDDLER:
+				$thumb =  "http://cdn-thumbs.viddler.com/thumbnail_2_".$this->getViddlerTrueID().".jpg";
+			break;
 			default:
 				break;
 		}
@@ -1303,6 +1575,8 @@ $wgWikiaVideoProviders = array(
 		VideoPage::V_CLIPFISH => 'clipfish',
 		VideoPage::V_MYVIDEO => 'myvideo',
 		VideoPage::V_SOUTHPARKSTUDIOS => 'southparkstudios',
+		VideoPage::V_DAILYMOTION => 'dailymotion',
+		VideoPage::V_VIDDLER => 'viddler',
 		);
 
 class VideoHistoryList {
