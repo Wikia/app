@@ -370,88 +370,27 @@ class UsercreateTemplate extends QuickTemplate {
 		var AjaxLogin2 = {};
 
 		AjaxLogin2.formSubmitHandler = function(ev) {
-			// Prevent the default action for event (submit of form)
 			WET.byStr('loginActions2/' + AjaxLogin2.action);
 
-			if(ev) {
-				ev.preventDefault();
-			}
 			AjaxLogin2.form.log('AjaxLogin2: selected action = '+ AjaxLogin2.action);
 
 			// tracking
 			WET.byStr('loginActions2/' + AjaxLogin2.action);
 
-			var params = [
-				'action=ajaxlogin',
-				'format=json',
-				(AjaxLogin2.action == 'password' ? 'wpMailmypassword=1' : 'wpLoginattempt=1'),
+			var controlbox = document.getElementById('ControlBox');
+			var newButton = document.createElement('input');
 
-				// serialize form fields
-				AjaxLogin2.form.serialize()
-					];
-
-			// Let's block login form (disable buttons and input boxes)
-			AjaxLogin2.blockLoginForm(true);
-
-			$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), function(response) {
-			var responseResult = response.ajaxlogin.result;
-			switch(responseResult) {
-				// TODO: what is this for?
-				case 'Reset':
-					if(Dom.get('wpPreview') && Dom.get('wpLogin')) {
-						if(typeof(ajaxLogin1)!="undefined" && !confirm(ajaxLogin1)) {
-							break;
-						}
-					}
-					Dom.get('userajaxloginform').action = wgServer + wgScriptPath + '/index.php?title=Special:Userlogin&action=submitlogin&type=login';
-					Event.removeListener('userajaxloginform', 'submit', AjaxLogin2.formSubmitHandler);
-					AjaxLogin2.blockLoginForm(false);
-					Dom.get('userajaxloginform').submit();
-					AjaxLogin2.blockLoginForm(true);
-					break;
-				case 'Success':
-                                        // Bartek: tracking
-
-					WET.byStr('signupActions/signup/login/success');
-					var returnto = $.getUrlVar('returnto');
-					var returntoquery = $.getUrlVar('returntoquery');
-
-				       	if( typeof(returnto) != 'undefined' ) {
-						if( typeof(returntoquery) != 'undefined' ) {
-							window.location = wgServer + wgScriptPath + '/index.php?title=' + returnto + '&' + decodeURIComponent( returntoquery );
-						} else {
-							window.location = wgServer + wgScriptPath + '/index.php?title=' + decodeURIComponent( returnto );
-						}
-					} else {
-						window.location.href = wgServer + wgScriptPath;
-					}
-					break;
-				case 'NotExists':
-					AjaxLogin2.blockLoginForm(false);
-					$('#wpPassword1n').attr('value', '');
-					$('#wpName1').attr('value', '').focus();
-				case 'WrongPass':
-					AjaxLogin2.blockLoginForm(false);
-					$('#wpPassword1').attr('value', '').focus();
-                                        WET.byStr('signupActions/signup/login/failure');
-				default:
-
-					// Bartek: tracking
-                                        if( AjaxLogin2.action == 'password'  ) {
-						if( responseResult == 'OK' ) {
-	                                                WET.byStr('signupActions/signup/emailpassword/success');
-						} else {
-	                                                WET.byStr('signupActions/signup/emailpassword/failure');
-						}
-                                        } else {
-                                                WET.byStr('signupActions/signup/login/failure');
-                                        }
-
-					AjaxLogin2.blockLoginForm(false);
-					AjaxLogin2.displayReason(response.ajaxlogin.text);
-					break;
+			if(AjaxLogin2.action == 'password') {
+				newButtonName = 'wpMailmypassword';
+				newButton.value = '1';
+				newButton.type = 'hidden';
+                                controlbox.appendChild(newButton);
+			} else {
+				newButton.name = 'wpLoginattempt';
+				newButton.value = '1';
+				newButton.type = 'hidden';
+                                controlbox.appendChild(newButton);
 			}
-		});
 		}
 
 		AjaxLogin2.handleFailure = function () {
@@ -744,6 +683,7 @@ class UsercreateTemplate extends QuickTemplate {
 	</table>
 	<div style="margin: 10px 0;">
 	<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1"  />
+	<div id="ControlBox" style="display:none"></div>
 	<label for="wpRemember1" class="plain"><?= wfMsg('remembermypassword') ?></label>
 	</div>
 	<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
