@@ -3478,7 +3478,7 @@ class Parser
 		$cacheKey = wfMemcKey( "transcache", md5($url) );
 		$text = $wgMemc->get( $cacheKey );
 
-		if( $text !== false ) {
+		if( !empty( $text ) ) {
 			return $text;
 		}
 
