@@ -903,6 +903,7 @@ class LoginForm {
 		if ( $this->mType == 'signup' ) {
 			$template = new UsercreateTemplate();
 			$q = 'action=submitlogin&type=signup';
+			$q2 = 'action=submitlogin&type=login';
 			$linkq = 'type=login';
 			$linkmsg = 'gotaccount';
 
@@ -947,6 +948,8 @@ class LoginForm {
 		$template->set( 'domain', $this->mDomain );
 
 		$template->set( 'action', $titleObj->getLocalUrl( $q ) );
+		$template->set( 'action2', $titleObj->getLocalUrl( $q2 ) );
+
 		$template->set( 'message', $msg );
 		$template->set( 'messagetype', $msgtype );
 		$template->set( 'createemail', $wgEnableEmail && $wgUser->isLoggedIn() );
