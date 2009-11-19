@@ -146,7 +146,7 @@ class spamRegexList {
 			$this->showPrevNext( $wgOut );
 			$wgOut->addHTML( "<form name=\"spamregexlist\" method=\"get\" action=\"{$action}\">" );
 
-			$res = $dbr->select( 'spam_regex', '*', array(), __METHOD__, array( 'LIMIT' => $limit, 'OFFSET' => $offset ) );
+			$res = $dbr->select( 'spam_regex', '*', array(), __METHOD__, array( 'LIMIT' => $limit, 'OFFSET' => $offset, 'ORDER BY' => 'spam_timestamp DESC' ) );
 			while ( $row = $res->fetchObject() ) {
 				$date = $wgLang->date( wfTimestamp( TS_MW, $row->spam_timestamp ), true );
 				$time = $wgLang->time( wfTimestamp( TS_MW, $row->spam_timestamp ), true );
