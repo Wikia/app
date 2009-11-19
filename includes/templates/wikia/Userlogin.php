@@ -24,7 +24,7 @@ class UserloginTemplate extends QuickTemplate {
 <?php } ?>
 
 <div id="userloginForm">
-<form name="userlogin" method="post" action="<?php $this->text('action') ?>">
+<form name="userlogin" method="post" action="<?php $this->text('actionlogin') ?>">
 	<h2><?php $this->msg('login') ?></h2>
 	<p id="userloginlink"><?php $this->html('link') ?></p>
 	<?php $this->html('header'); /* pre-table point for form plugins... */ ?>
@@ -143,7 +143,7 @@ class UsercreateTemplate extends QuickTemplate {
 	</div>
 </div>
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
-<form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('action') ?>" onsubmit="return UserRegistration.checkForm()">
+<form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>" onsubmit="return UserRegistration.checkForm()">
 <?php		if( $this->data['message'] && $this->data['ajax'] ) { ?>
 	<div class="<?php $this->text('messagetype') ?>box" style="margin:0px">
 		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
@@ -706,7 +706,7 @@ class UsercreateTemplate extends QuickTemplate {
 </td>
 <td width="45%" style="vertical-align: top;">
 	<div class="loginHeader rightSideElem dark_text_1"><?php $this->msg('log-in-new') ?></div>
-	<form action="<?php $this->text('action') ?>" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
+	<form action="<?php $this->text('actionlogin') ?>" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
 	<div id="userloginErrorBox2">
 	<table>
 	<tr>

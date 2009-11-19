@@ -947,8 +947,8 @@ class LoginForm {
 		$template->set( 'realname', $this->mRealName );
 		$template->set( 'domain', $this->mDomain );
 
-		$template->set( 'action', $titleObj->getLocalUrl( $q ) );
-		$template->set( 'action2', $titleObj->getLocalUrl( $q2 ) );
+		$template->set( 'actioncreate', $titleObj->getLocalUrl( $q ) );
+		$template->set( 'actionlogin', $titleObj->getLocalUrl( $q2 ) );
 
 		$template->set( 'message', $msg );
 		$template->set( 'messagetype', $msgtype );
