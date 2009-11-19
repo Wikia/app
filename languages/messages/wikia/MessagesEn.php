@@ -890,4 +890,26 @@ Text should be placed on this page if you wish to explain usage, style and polic
 
 # Wikia.php
 'rcshowhidelogs' => '$1 logs',
+
+	"autocreatewiki-reminder-subject" => "{{SITENAME}}",
+	"autocreatewiki-reminder-body" => "
+Dear $1:
+
+Congratulations on starting your new wiki, {{SITENAME}}! You can come back and add more to your wiki by visiting $2.
+
+This is a brand-new project, so please write to us if you have any questions!
+
+
+-- Wikia Community Team
+	",
+	"autocreatewiki-reminder-body-HTML" => "
+Dear $1:
+
+Congratulations on starting your new wiki, {{SITENAME}}! You can come back and add more to your wiki by visiting $2.
+
+This is a brand-new project, so please write to us if you have any questions!
+
+
+-- Wikia Community Team
+	"
 ));
