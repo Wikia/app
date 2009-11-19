@@ -2089,7 +2089,7 @@ if(count($wikiafooterlinks) > 0) {
 	$dynamicLinksArray = array();
 	$userIsAnon = $wgUser->isAnon();
 	if ($userIsAnon) {
-		//prepare obiect for further usage
+		//prepare object for further usage
 		$signupTitle = Title::makeTitle(NS_SPECIAL, 'SignUp');
 	}
 
