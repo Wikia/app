@@ -111,7 +111,7 @@ YAHOO.Wikia.Tracker = {
 			urchinTracker(fake);
 			YAHOO.log(fake, "info", "tracker");
 
-			if(wgPrivateTracker) {
+			if(typeof wgPrivateTracker!="undefined") {
 				fake = '/1_' + skinname + '/' + wgDB + '/' + username + '/' + fakeurl;
 				urchinTracker(fake);
 				YAHOO.log(fake, "info", "tracker");
