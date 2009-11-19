@@ -49,10 +49,6 @@ function wfSpecialSpecialpages() {
 	}
 
 	$includesRestrictedPages = false;
-	/* Wikia change begin - @author: Marooned */
-	/* Add handler for returntoquery (get from MW 1.16 patch, bug #13), see: Login friction project */
-	$returnto = wfGetReturntoParam();
-	/* Wikia change end */
 	/** Now output the HTML */
 	foreach ( $groups as $group => $sortedPages ) {
 		$middle = ceil( count($sortedPages)/2 );
@@ -67,7 +63,7 @@ function wfSpecialSpecialpages() {
 			/* Wikia change begin - @author: Marooned */
 			/* Redirect to login page instead of showing error, see Login friction project */
 			if ($wgUser->isAnon() && in_array(SpecialPage::resolveAlias($title->getDBkey()), $wgSpecialPagesRequiredLogin)) {
-				$link = $sk->makeKnownLinkObj( Title::makeTitle(NS_SPECIAL, 'SignUp') , htmlspecialchars( $desc ), $returnto );
+				$link = $sk->makeKnownLinkObj( Title::makeTitle(NS_SPECIAL, 'SignUp') , htmlspecialchars( $desc ), wfGetReturntoParam($title->getPrefixedDBkey()) );
 			} else {
 				$link = $sk->makeKnownLinkObj( $title , htmlspecialchars( $desc ) );
 			}
