@@ -3,7 +3,12 @@ var ShareFeature = {};
 var ShareFeatureEnabled = false;
 
 ShareFeature.ajax = function( provider ) {
-	$.get(wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats&provider='+parseInt(provider), 
+	$.post(wgScript,
+			{
+		   		'action':'ajax', 
+		   		'rs':'wfShareFeatureAjaxUpdateStats',
+		   		'provider': provider
+			},
 			function() {
 				 $('.modalWrapper').closeModal();
 			}
