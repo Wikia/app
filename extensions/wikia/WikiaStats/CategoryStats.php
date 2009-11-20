@@ -11,17 +11,17 @@
 /*
  * hooks
  */
-$wgHooks['ArticleSaveComplete'][] = "WikiaEditStats::saveComplete";
-$wgHooks['ArticleDeleteComplete'][] = "WikiaEditStats::deleteComplete";
-$wgHooks['UndeleteComplete'][] = "WikiaEditStats::undeleteComplete";
+$wgHooks['ArticleSaveComplete'][] = "CategoryTrigger::saveComplete";
+$wgHooks['ArticleDeleteComplete'][] = "CategoryTrigger::deleteComplete";
+$wgHooks['UndeleteComplete'][] = "CategoryTrigger::undeleteComplete";
 
-class WikiaEditStats {
+class CategoryTrigger {
 	private $mPageId, $mPageNs, $mUserId, $mDate;
 	const updateWithToday = false;
 		
 	public function __construct( $Title, $User, $articleId = 0 ) {
 		/**
-		 * initialization
+		 * initialization	
 		 */
 		$this->mPageNs = $Title->getNamespace();
 		if ( empty($articleId) ) {
@@ -215,7 +215,7 @@ class WikiaEditStats {
 			__METHOD__ 
 		);
 	}
-	
+
 	/**
 	 * saveComplete -- hook 
 	 *
@@ -231,7 +231,7 @@ class WikiaEditStats {
 		wfProfileIn( __METHOD__ );
 		if ( ( $Article instanceof Article ) && ( $User instanceof User ) ) {
 			$Title = $Article->mTitle;
-			$oEdits = new WikiaEditStats($Title, $User);
+			$oEdits = new CategoryTrigger($Title, $User);
 			$oEdits->increase();
 		}
 		wfProfileOut( __METHOD__ );
@@ -255,7 +255,7 @@ class WikiaEditStats {
 		wfProfileIn( __METHOD__ );
 		if ( ( $Article instanceof Article ) && ( $User instanceof User ) ) {
 			$Title = $Article->mTitle;
-			$oEdits = new WikiaEditStats($Title, $User, $articleId);
+			$oEdits = new CategoryTrigger($Title, $User, $articleId);
 			$oEdits->decrease();
 		}
 		wfProfileOut( __METHOD__ );
@@ -283,12 +283,117 @@ class WikiaEditStats {
 			}
 			$revCount = $Title->countRevisionsBetween( 1, $newId );
 			if ( $revCount ) {
-				$oEdits = new WikiaEditStats($Title, $User);
+				$oEdits = new CategoryTrigger($Title, $User);
 				$oEdits->increaseRevision( );
 			}
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+}
+
+class CategoryEdits {
+	private 
+		$mCatId,
+		$mCatName,
+		$mCatPageCount,
+		$mPercent;
+	
+	/**
+	 * initialization
+	 * 
+	 * @access public
+	 *
+	 * @param String or Integer $cat,
+	 */
+	private function __construct( Category $Cat ) {
+		$this->mCatId = $Cat->getID(); 
+		$this->mCatName = $Cat->getName();
+		$this->mCatPageCount = $Cat->getPageCount();
+		$this->mPercent = 0;
+	}
+	
+	/**
+	 * newFromId 
+	 * 
+	 * @access public
+	 *
+	 * @param Integer $catid 
+	 */
+
+	public function newFromId($catid) {
+		$cat = Category::newFromID($catid);
+		return new CategoryEdits($cat);
+	}
+
+	/**
+	 * newFromName
+	 * 
+	 * @access public
+	 *
+	 * @param Integer $catid 
+	 */
+
+	public function newFromName($catname) {
+		$Cat = Category::newFromName($catname);
+		return new CategoryEdits($Cat);
+	}
+
+	/**
+	 * getPercent 
+	 * 
+	 * @access public
+	 *
+	 * @param Integer $incat - percent of pages in other ($incat) category
+	 */
+	
+	public function getPercent($incat) {
+		global $wgMemc;
+		
+		if ( is_int($incat) ) {
+			# integer
+			$CatIn = Category::newFromID($incat);
+		} else {
+			# integer
+			$CatIn = Category::newFromName($incat);
+		}
+		
+		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$memkey = wfMemcKey( 'percent', $this->mCatId, $CatIn->getID() );
+			$data = $wgMemc->get( $memkey );
+			
+			if ( empty($data) ) {
+				$Row = $dbr->selectRow ( 
+					array( 'categorylinks AS c1', 'categorylinks AS c2' ),
+					array( 'count(c2.cl_to) as cnt' ),
+					array(
+						'c2.cl_to' => $this->mCatName
+					),
+					__METHOD__,
+					"",
+					array(
+						'categorylinks AS c2' => array(
+							'JOIN', 
+							implode ( ' AND ', 
+								array( 
+									'c1.cl_from = c2.cl_from',
+									'c1.cl_to = ' . $dbr->addQuotes($CatIn->getName())
+								)
+							)
+						)
+					)
+				);
+				if ( $Row ) {
+					$data = intval($Row->cnt);
+					$wgMemc->set( $memkey , $data, 60*60 );
+				}
+			}
+			# calculate percent
+			$this->mPercent = sprintf("%0.2f", ($data * 100)/$this->mCatPageCount);
+		}
+
+		return $this->mPercent;
 	}
 }
 
@@ -299,12 +404,10 @@ CREATE TABLE `category_edits` (
   `ce_page_ns` int(6) unsigned NOT NULL,
   `ce_user_id` int(10) unsigned NOT NULL,
   `ce_date` DATE NOT NULL,
-  `ce_ts` TIMESTAMP NOT NULL default CURRENT_TIMESTAMP,
   `ce_count` int(10) unsigned NOT NULL,
   PRIMARY KEY (`ce_cat_id`,`ce_page_id`,`ce_page_ns`,`ce_user_id`,`ce_date`),
   KEY `cat_date` (`ce_cat_id`, `ce_date`),
   KEY `cat_user_date` (`ce_cat_id`, `ce_date`, `ce_user_id`),
-  KEY `cat_ts` (`ce_cat_id`, `ce_ts`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
 DROP FUNCTION IF EXISTS category_edits_inc;
