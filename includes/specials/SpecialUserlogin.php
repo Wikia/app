@@ -870,7 +870,7 @@ class LoginForm {
 
 		$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 
-		if ( ('' != $msg) && ('error' == $msgtype) ) {
+		if ( ('' != $msg) && ('error' == $msgtype) && ('signup' == $this->mType) ) {
 			$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
 		}
 
