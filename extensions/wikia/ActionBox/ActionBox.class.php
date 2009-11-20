@@ -9,5 +9,5 @@ class ActionBox extends SpecialPage {
                 global $wgRequest, $wgHooks, $wgOut;
                 $this->setHeaders();
         }
-
+}
 
