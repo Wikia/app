@@ -3,12 +3,11 @@ var ShareFeature = {};
 var ShareFeatureEnabled = false;
 
 ShareFeature.ajax = function( provider ) {
-	$.post( wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats', {
-		 'provider' : provider
-		}, function() {
-			 $('.modalWrapper').closeModal();
-		}
-	);
+	$.get(wgScript + '?action=ajax&rs=wfShareFeatureAjaxUpdateStats&provider='+parseInt(provider), 
+			function() {
+				 $('.modalWrapper').closeModal();
+			}
+		);
 };
 
 ShareFeature.openDialog = function( footer ) {
