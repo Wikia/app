@@ -34,9 +34,15 @@ class ExtendedLoginForm extends LoginForm {
 
                 $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 
-                if ( ('' != $msg) && ('error' == $msgtype) && ('signup' == $this->mType) ) {
-                        $wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
-                }
+
+		// this is tracking
+                if( ('' != $msg) && ('error' == $msgtype) ) { // we have an error
+			if('login' != $this->mActionType) { //signup error
+                        	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
+			} else { // login error
+                        	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
+			}
+		}
 
                 if ( $this->mType == 'signup' ) {
                         // Block signup here if in readonly. Keeps user from
@@ -64,21 +70,14 @@ class ExtendedLoginForm extends LoginForm {
 
                 $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 
-                if ( $this->mType == 'signup' ) {
-                        $template = new UsercreateTemplate();
-                        $q = 'action=submitlogin&type=signup';
-                        $q2 = 'action=submitlogin&type=login';
-                        $linkq = 'type=login';
-                        $linkmsg = 'gotaccount';
+		$template = new UsercreateTemplate();
+		$q = 'action=submitlogin&type=signup';
+		$q2 = 'action=submitlogin&type=login';
+		$linkq = 'type=login';
+		$linkmsg = 'gotaccount';
 
-                        // ADi: marketing opt-in/out checkbox added
-                        $template->addInputItem( 'wpMarketingOptIn', 1, 'checkbox', 'tog-marketingallowed');
-                } else {
-                        $template = new UserloginTemplate();
-                        $q = 'action=submitlogin&type=login';
-                        $linkq = 'type=signup';
-                        $linkmsg = 'nologin';
-                }
+		// ADi: marketing opt-in/out checkbox added
+		$template->addInputItem( 'wpMarketingOptIn', 1, 'checkbox', 'tog-marketingallowed');
 
                 if ( !empty( $this->mReturnTo ) ) {
                         $returnto = '&returnto=' . wfUrlencode( $this->mReturnTo );
@@ -139,11 +138,7 @@ class ExtendedLoginForm extends LoginForm {
 
                 // Give authentication and captcha plugins a chance to modify the form
                 $wgAuth->modifyUITemplate( $template );
-                if ( $this->mType == 'signup' ) {
-                        wfRunHooks( 'UserCreateForm', array( &$template ) );
-                } else {
-                        wfRunHooks( 'UserLoginForm', array( &$template ) );
-                }
+		wfRunHooks( 'UserCreateForm', array( &$template ) );
 
                 $wgOut->setPageTitle( wfMsg( 'userlogin' ) );
                 $wgOut->setRobotPolicy( 'noindex,nofollow' );
