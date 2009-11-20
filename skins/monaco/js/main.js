@@ -59,11 +59,18 @@ function openUserMenu(event) {
 		$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#userData", attach_at: "bottom"});
 	}
 	else {
-		$.get(wgScript + '?action=ajax&rs=GetUserMenu&rsargs[]='+ wgUserName +'&uselang='+ wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function(html) {
-			$("#positioned_elements").append(html);
-			$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#userData", attach_at: "bottom"});
-			$('#cockpit1').click(WidgetFramework.show_cockpit);
-		});
+		$.get(wgScript + '?action=ajax&rs=GetUserMenu&rsargs[]='+ wgUserName +'&uselang='+ wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
+			function(html) {
+				$("#positioned_elements").append(html);
+				$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#userData", attach_at: "bottom"});
+				$('#cockpit1').click(WidgetFramework.show_cockpit);
+				$("#headerMenuUser").click(
+					function(e){
+						if (e.target.nodeName == "A" ){
+							$.tracker.byStr('userMenu/' + $(e.target).attr('id'));
+						};
+					});
+			});
 	}
 }
 

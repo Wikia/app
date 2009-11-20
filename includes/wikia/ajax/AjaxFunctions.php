@@ -39,6 +39,7 @@ function GetUserMenu($userName = '') {
 	if (!empty($userPage)) {
 		$links['userpage'] = array(
 			'text' => wfMsg('mypage'),
+			'id' => 'menuMyPage',
 			'href' => $userPage->getLocalURL()
 			);
 	}
@@ -48,17 +49,20 @@ function GetUserMenu($userName = '') {
 	if (!empty($userContribs)) {
 		$links['mycontris'] = array(
 			'text' => wfMsg('mycontris'),
+			'id' => 'menuMyContributions',
 			'href' => $userContribs->getLocalURL()
 			);
 	}
 
 	$links['widgets'] = array(
 		'text' => wfMsg('manage_widgets'),
+		'id' => 'menuManageWidgets',
 		'href' => '#'
 		);
 
 	$links['preferences'] = array(
 		'text' => wfMsg('preferences'),
+		'id' => 'menuPreferences',
 		'href' => Skin::makeSpecialUrl('Preferences')
 		);
 
