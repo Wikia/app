@@ -9,6 +9,10 @@
  *
  */
 
+//TODO:
+//* change $this->getTitle()->getNamespace() to some private variable
+//* change Namespace::getTalk($this->getTitle()->getNamespace()) to some private variable
+
 define( "BLOGCOMMENTORDERCOOKIE_NAME", "blogcommentorder" );
 define( "BLOGCOMMENTORDERCOOKIE_EXPIRE", 60 * 60 * 24 * 365 );
 
@@ -34,12 +38,13 @@ $wgHooks[ "ComposeCommonBodyMail" ][] = "ArticleComment::ComposeCommonMail";
 $wgHooks['SkinAfterContent'][] = 'ArticleCommentEnable';
 
 function ArticleCommentEnable(&$data) {
-	global $wgOut, $wgTitle;
+	global $wgOut, $wgTitle, $wgStyleVersion, $wgExtensionsPath, $wgJsMimeType;
 	wfProfileIn( __METHOD__ );
 
 	wfLoadExtensionMessages('ArticleComments');
 	$page = ArticleCommentList::newFromTitle( $wgTitle );
 	$data = $page->render( true );
+	$data .= "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n";
 
 	wfProfileOut( __METHOD__ );
 	return true;
@@ -178,7 +183,6 @@ class ArticleComment {
 
 			if( $this->mFirstRevision ) {
 				$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
-				$owner = BlogArticle::getOwner( $this->mTitle );
 			}
 			else {
 				$result = false;
@@ -298,9 +302,9 @@ class ArticleComment {
 		}
 
 		$Title = null;
-		list ( $user, $page_title, $comment ) = self::explode($this->mTitle->getDBkey());
-		if ( !empty($user) && !empty($page_title) ) {
-			$blogTitle = $user . "/" . $page_title;
+		list ( $user, $comment ) = self::explode($this->mTitle->getDBkey());
+		if ( !empty($user) ) {
+			$blogTitle = $user;
 			$Title = Title::makeTitle($this->getTitle()->getNamespace(), $blogTitle);
 		}
 		return $Title;
@@ -317,12 +321,7 @@ class ArticleComment {
 			reset($elements);
 			$user = $elements[key($elements)];
 			$comment = end($elements);
-			$page_title = implode("/", array_splice($elements, 1, -1) );
-			$res = array (
-				0 => $user,
-				1 => $page_title,
-				2 => $comment
-			);
+			$res = array ($user, $comment);
 		}
 		return $res;
 	}
@@ -440,11 +439,6 @@ class ArticleComment {
 			 */
 			$Title->invalidateCache();
 			$Title->purgeSquid();
-			$listing = BlogArticle::getOwnerTitle( $Title );
-			if( $listing ) {
-				$listing->invalidateCache();
-				$listing->purgeSquid();
-			}
 
 			$key = $Title->getPrefixedDBkey();
 			$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
@@ -614,7 +608,7 @@ class ArticleComment {
 		 */
 		$commentTitle = Title::newFromText(
 			sprintf( "%s/%s-%s", $Title->getText(), $User->getName(), wfTimestampNow() ),
-			NS_BLOG_ARTICLE_TALK );
+			Namespace::getTalk($Title->getNamespace()) );
 		/**
 		 * because we save different tile via Ajax request
 		 */
@@ -636,11 +630,6 @@ class ArticleComment {
 		 */
 		$Title->invalidateCache();
 		$Title->purgeSquid();
-		$listing = BlogArticle::getOwnerTitle( $Title );
-		if( $listing ) {
-			$listing->invalidateCache();
-			$listing->purgeSquid();
-		}
 
 		$key = $Title->getPrefixedDBkey();
 		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
@@ -695,7 +684,8 @@ class ArticleComment {
 	}
 
 	static public function addBlogPageToWatchlist($Comment, $commentId) {
-		global $wgUser, $wgEnableBlogWatchlist;
+		global $wgUser, $wgEnableBlogWatchlist, $wgTitle;
+		//TODO: check proper usage of wgTitle
 
 		$watchthis = false;
 		if ( empty($wgEnableBlogWatchlist) ) {
@@ -719,7 +709,7 @@ class ArticleComment {
 				$dbw->insert( 'watchlist',
 					array(
 					'wl_user' => $wgUser->getId(),
-					'wl_namespace' => NS_BLOG_ARTICLE_TALK,
+					'wl_namespace' => Namespace::getTalk($wgTitle->getNamespace()),
 					'wl_title' => $Comment->mTitle->getDBkey(),
 					'wl_notificationtimestamp' => wfTimestampNow()
 					), __METHOD__, 'IGNORE'
@@ -731,7 +721,7 @@ class ArticleComment {
 				$dbw->insert( 'watchlist',
 					array(
 					'wl_user' => $wgUser->getId(),
-					'wl_namespace' => $this->getTitle()->getNamespace(),
+					'wl_namespace' => $wgTitle->getNamespace(),
 					'wl_title' => $oBlogPage->getDBkey(),
 					'wl_notificationtimestamp' => NULL
 					), __METHOD__, 'IGNORE' );
@@ -753,13 +743,14 @@ class ArticleComment {
 	 * @return true -- because it's hook
 	 */
 	static public function watchlistNotify ( RecentChange &$oRC ) {
-		global $wgEnableBlogWatchlist;
+		global $wgEnableBlogWatchlist, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty($wgEnableBlogWatchlist) && ( $oRC instanceof RecentChange ) ) {
 			$namespace = $oRC->getAttribute('rc_namespace');
 			$blog_id = $oRC->getAttribute('rc_cur_id');
-			if ( ( $namespace == NS_BLOG_ARTICLE_TALK ) && !empty( $blog_id ) ) {
+			//TODO: is this usage of wgTitle is proper?
+			if ( ( $namespace == Namespace::getTalk($wgTitle->getNamespace()) ) && !empty( $blog_id ) ) {
 				$Comment = ArticleComment::newFromId( $blog_id );
 				if ( !is_null($Comment) ) {
 					$oBlogPage = $Comment->getBlogTitle();
@@ -800,8 +791,8 @@ class ArticleComment {
 				'rc_cur_time',
 				'rc_user',
 				'rc_user_text',
-				'if(rc_namespace='.NS_BLOG_ARTICLE_TALK.', SUBSTRING_INDEX(rc_title, \'/\', 2), rc_title) as rc_title',
-				'if(rc_namespace='.NS_BLOG_ARTICLE_TALK.', '.$this->getTitle()->getNamespace().', rc_namespace) as rc_namespace',
+				'if(rc_namespace='.Namespace::getTalk($this->getTitle()->getNamespace()).', SUBSTRING_INDEX(rc_title, \'/\', 2), rc_title) as rc_title',
+				'if(rc_namespace='.Namespace::getTalk($this->getTitle()->getNamespace()).', '.$this->getTitle()->getNamespace().', rc_namespace) as rc_namespace',
 				'rc_comment',
 				'rc_minor',
 				'rc_bot',
@@ -1042,7 +1033,7 @@ class ArticleCommentList {
 				array( "archive" ),
 				array( "ar_page_id", "ar_title" ),
 				array(
-					"ar_namespace" => NS_BLOG_ARTICLE_TALK,
+					"ar_namespace" => Namespace::getTalk($this->getTitle()->getNamespace()),
 					"ar_title LIKE '" . $dbr->escapeLike( $oTitle->getDBkey( ) ) . "/%'"
 				),
 				__METHOD__,
@@ -1051,7 +1042,7 @@ class ArticleCommentList {
 			while( $row = $dbr->fetchObject( $res ) ) {
 				$pages[ $row->ar_page_id ] = array(
 					'title' => $row->ar_title,
-					'nspace' => NS_BLOG_ARTICLE_TALK
+					'nspace' => Namespace::getTalk($this->getTitle()->getNamespace())
 				);
 			}
 			$dbr->freeResult( $res );
@@ -1088,7 +1079,7 @@ class ArticleCommentList {
 
 		if ($wgRequest->wasPosted()) {
 			// for non-JS version !!!
-			$sComment = $wgRequest->getVal( "wpBlogComment", false );
+			$sComment = $wgRequest->getVal( "wpArticleComment", false );
 			$iArticleId = $wgRequest->getVal( "wpArticleId", false );
 			$sSubmit = $wgRequest->getVal( "wpBlogSubmit", false );
 			if ( $sSubmit && $sComment && $iArticleId ) {
@@ -1108,10 +1099,8 @@ class ArticleCommentList {
 		/**
 		 * $pages is array of comment articles
 		 */
-		$owner     = $this->mTitle->getBaseText();
 		$avatar    = Masthead::newFromUser( $wgUser );
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
-		$isOwner   = ( $owner == $wgUser->getName() );
 		$canEdit   = $wgUser->isAllowed( "edit" );
 		$isBlocked = $wgUser->isBlocked();
 
@@ -1127,7 +1116,6 @@ class ArticleCommentList {
 			"avatar"    => $avatar,
 			"wgUser"    => $wgUser,
 			"isSysop"   => $isSysop,
-			"isOwner"   => $isOwner,
 			"canEdit"   => $canEdit,
 			"isBlocked" => $isBlocked,
 			"reason"	=> $isBlocked ? $this->blockedPage() : "",
@@ -1197,11 +1185,6 @@ class ArticleCommentList {
 
 		$this->mTitle->invalidateCache();
 		$this->mTitle->purgeSquid();
-		$listing = BlogArticle::getOwnerTitle( $this->mTitle );
-		if( $listing ) {
-			$listing->invalidateCache();
-			$listing->purgeSquid();
-		}
 	}
 
 	/**
@@ -1300,7 +1283,7 @@ class ArticleCommentList {
 	static public function undeleteComplete($oTitle, $oUser, $reason) {
 		wfProfileIn( __METHOD__ );
 		if ($oTitle instanceof Title) {
-			if ( in_array($oTitle->getNamespace(), array($this->getTitle()->getNamespace(), NS_BLOG_ARTICLE_TALK)) ) {
+			if ( in_array($oTitle->getNamespace(), array($this->getTitle()->getNamespace(), Namespace::getTalk($this->getTitle()->getNamespace()))) ) {
 				$pageId = $oTitle->getArticleId();
 			}
 		}
@@ -1332,7 +1315,7 @@ class ArticleCommentList {
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
-		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE_TALK ) ) ) {
+		if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($this->getTitle()->getNamespace()) ) ) ) {
 			$user = $page_title = $comment = "";
 			$newTitle = null;
 			list( $user, $page_title, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
@@ -1374,7 +1357,7 @@ class ArticleCommentList {
 			$oTitle = $oRCCacheEntry->getTitle();
 			$namespace = $oTitle->getNamespace();
 
-			if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE_TALK ) ) ) {
+			if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($this->getTitle()->getNamespace()) ) ) ) {
 				list( $user, $page_title, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
 				if ( !empty($user) && (!empty($page_title)) ) {

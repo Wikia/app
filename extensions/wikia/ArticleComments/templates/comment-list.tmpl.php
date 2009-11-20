@@ -29,7 +29,7 @@ if ( count( $comments ) > 10 ) {
 		</div>
 		<!-- textarea -->
 		<div class="blog-comm-input-text">
-		<textarea name="wpBlogComment" id="blog-comm-top"></textarea><br />
+		<textarea name="wpArticleComment" id="blog-comm-top"></textarea><br />
 		<!-- submit -->
 		<? if (!$isReadOnly) { ?>
 		<script type="text/javascript">
@@ -79,15 +79,15 @@ if ( count( $comments ) > 10 ) {
 		</div>
 		<!-- textarea -->
 		<div class="blog-comm-input-text">
-		<textarea name="wpBlogComment" id="blog-comm-bottom"></textarea><br />
+		<textarea name="wpArticleComment" id="blog-comm-bottom"></textarea><br />
 		<!-- submit -->
 		<? if (!$isReadOnly) { ?>
 		<script type="text/javascript">
 		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-bottom\" class=\"wikia_button\"><span><? echo wfMsg("blog-comment-post") ?></span></a>");
 		</script>
-		<noscript>
+		<!noscript>
 		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-bottom" value="<? echo wfMsg("blog-comment-post") ?>" />
-		</noscript>
+		<!/noscript>
 		<? } ?>
 		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
