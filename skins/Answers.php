@@ -510,9 +510,6 @@ yieldbuild_loc = "left_content_top";
 		*/
 		?>
 		<?php
-		$tiny_url = Http::get("http://tinyurl.com/api-create.php?url={$wgTitle->getFullURL()}");
-		$twitter_question = urlencode( substr( $wgTitle->getText(), 0, 99 ) );
-		$twitter_url = "http://twitter.com/home?status=" . $twitter_question . "? " . $tiny_url . " " . urlencode("#" . wfMsg("twitter_hashtag"));
 		$move_title = SpecialPage::getTitleFor( 'Movepage', $wgTitle );
 		$move_url = $move_title->getLocalUrl();
 
@@ -528,7 +525,6 @@ yieldbuild_loc = "left_content_top";
 			<ul>
 			<li><?= wfMsg("answer_this", $wgTitle->getEditURL())?></li>
 			<li><?= wfMsg("research_this_on_wikipedia", $wgTitle->getEditURL())?></li>
-			<li><?= wfMsg("ask_friends_on_twitter", $twitter_url, "onclick=\"WET.byStr( 'articleFooter/twitter' );\" ")?></li>
 			<li><?= wfMsg("receive_email", $watchlist_url, "onclick=\"WET.byStr( 'articleFooter/emailme' );\"")?></li>
 			<li><?= wfMsg("reword_this", $move_url, "onclick=\"WET.byStr( 'articleFooter/reword' );\"")?></li>
 			</ul>
