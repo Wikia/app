@@ -20,7 +20,6 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['ActionBox'] = $dir.'ActionBox.class.php';
 $wgSpecialPages['ActionBox'] = 'ActionBox';
 $wgSpecialPageGroups['ActionBox'] = 'users';
-$wgExtensionAliasesFiles['ActionBox'] = $dir . 'ActionBox.alias.php';
 $wgExtensionMessagesFiles['ActionBox'] = $dir . 'ActionBox.i18n.php';
 
 
