@@ -37,7 +37,7 @@ foreach ($aRows as $pageId => $aRow) {
 	if ( !empty($aOptions['summary']) ) {
 ?>
 <div class="wk_blogs_summary"><?= $aRow['text'] ?></div>
-<div class="wk_blogs_comments"><?php if (!empty($isCommenting)) : ?><?php $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?><span class="blog-comment"><img src="<?=$wgStylePath?>/monobook/blank.gif" /><?=$skin->link($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), array('rel' => 'nofollow'))?></span> | <?php endif ?><?=$skin->link($oTitle, wfMsg('blog-continuereading'), array('rel' => 'nofollow'))?></div>
+<div class="wk_blogs_comments"><?php if (!empty($isCommenting)) : ?><?php $commentTitle = clone $oTitle; $commentTitle->setFragment("#comments"); ?><span class="blog-comment"><img src="<?=$wgStylePath?>/monobook/blank.gif" class="blog-comment-icon" /><?=$skin->link($commentTitle, wfMsg('blog-nbrcomments', intval($aRow['comments'])), array('rel' => 'nofollow'))?></span> | <?php endif ?><?=$skin->link($oTitle, wfMsg('blog-continuereading'), array('rel' => 'nofollow'))?></div>
 <?
 	}
 /* e: SUMMARY */
