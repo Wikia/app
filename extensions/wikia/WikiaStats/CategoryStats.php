@@ -134,8 +134,7 @@ class CategoryTrigger {
 						$dbw->update( 
 							'category_edits',
 							array( /* SET */
-								'ce_count' 	=> $count,
-								'ce_ts'		=> wfTimestamp( TS_DB )
+								'ce_count' 	=> $count
 							),
 							$conditions,
 							__METHOD__ );
@@ -349,6 +348,7 @@ class CategoryEdits {
 	
 	public function getPercent($incat) {
 		global $wgMemc;
+		wfProfileIn( __METHOD__ );
 		
 		if ( is_int($incat) ) {
 			# integer
@@ -390,12 +390,15 @@ class CategoryEdits {
 				}
 			}
 			# calculate percent
-			$this->mPercent = sprintf("%0.2f", ($data * 100)/$this->mCatPageCount);
+			$this->mPercent = wfPercent( ($data * 100)/$this->mCatPageCount, 2 );
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $this->mPercent;
 	}
+
 }
+
 
 /*
 CREATE TABLE `category_edits` (
@@ -433,7 +436,7 @@ BEGIN
 				VALUES 
 					(__catid__, __pageid__, __page_ns__, __userid__, __date__, __inc__)
 				ON DUPLICATE KEY 
-					UPDATE ce_count = ce_count + __inc__, ce_ts = values(ce_ts);
+					UPDATE ce_count = ce_count + __inc__;
 			END IF;
 		UNTIL __done__ END REPEAT;
 	CLOSE CUR_CATEGORY;
