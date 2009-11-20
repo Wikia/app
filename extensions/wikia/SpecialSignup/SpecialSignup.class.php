@@ -40,7 +40,7 @@ class ExtendedLoginForm extends LoginForm {
 			if('login' != $this->mActionType) { //signup error
                         	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
 			} else { // login error
-                        	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
+                        	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/login/failure\');</script>');
 			}
 		}
 
@@ -108,6 +108,7 @@ class ExtendedLoginForm extends LoginForm {
                 $template->set( 'name', $this->mName );
                 $template->set( 'password', $this->mPassword );
                 $template->set( 'retype', $this->mRetype );
+                $template->set( 'actiontype', $this->mActionType );		
                 $template->set( 'email', $this->mEmail );
                 $template->set( 'realname', $this->mRealName );
                 $template->set( 'domain', $this->mDomain );
