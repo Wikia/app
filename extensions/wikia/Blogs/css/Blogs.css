@@ -254,7 +254,7 @@ padding:3px .2em 0;
 	position: relative;
 }
 
-.blog-comment img {
+.blog-comment .blog-comment-icon {
 	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113) no-repeat 0 0;
 	clip: rect(0 736px 16px 720px);
 	height: 16px;
@@ -264,7 +264,7 @@ padding:3px .2em 0;
 	width: 736px;
 }
 
-.wk_blogs_panel .blog-comment img {
+.wk_blogs_panel .blog-comment .blog-comment-icon {
 	left: -738px;
 	top: 0;
 }
