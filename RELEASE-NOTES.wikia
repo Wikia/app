@@ -1,4 +1,5 @@
 == Changes since 200911.3 ==
+* rt#28300: Analytics: Quantcast changes. (Nef)
 * rt#28111: blog comment avatars mucked because of css change (Macbre)
 * rt#28273: Answers: Remove twitter link from unanswered q. page. (Nef)
 * rt#28178: Sort Special:SpamRegex result newest to oldest. (Nef)
