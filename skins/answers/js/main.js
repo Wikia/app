@@ -236,6 +236,7 @@ jQuery("#related_answered_questions").ready(function() {
 		if( j.query.categoriesonanswers) {
 			for( var recent_q in j.query.categoriesonanswers ){
 				var page = j.query.categoriesonanswers[recent_q];
+				if (wgTitle == page.title) continue;
 				var url  = page.title.replace(/ /g,"_");
 				var text = page.title + "?";
 				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('answered')\">" + text + "</a></li>";
