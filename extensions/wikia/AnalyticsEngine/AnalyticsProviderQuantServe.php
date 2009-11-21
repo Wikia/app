@@ -17,10 +17,10 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider {
 			try {
 				_qoptions = { qacct: '{$this->account}' };
 				// Hard code some hosts per Gil
-				if (window.location.hostname == 'answers.wikia.com') { 
-					_qoptions.labels = 'lifestyles,mom';
-				} else if (window.location.hostname == 'recipes.wikia.com'){
-					_qoptions.labels = 'lifestyles,mom';
+				if ((Athena.getPageVar('hostname') == 'answers.wikia.com') ||
+					 (Athena.getPageVar('hub')      == 'Lifestyle') ||
+					 (Athena.getPageVar('hub')      == 'Education')){ 
+					_qoptions.labels = 'mom';
 				} else {
 					_qoptions.labels = Athena.getPageVar('hub');
 					for (var i = 0; i < ProviderValues.list.length; i++){
