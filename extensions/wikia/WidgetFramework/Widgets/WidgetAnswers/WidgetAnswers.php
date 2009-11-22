@@ -73,6 +73,24 @@ EOD;
 		'coatitle' =>  $wgSitename,
 		'coalimit' => '5',
 	);
+
+	global $wgWidgetAnswersForceCategory;
+	if (!empty($wgWidgetAnswersForceCategory))
+	$apiparams = array(
+		'smaxage'  =>  300,
+		'maxage'   =>  300,
+		'callback' => 'WidgetAnswers_load2',
+		'format'   => 'json',
+		'action'   => 'query',
+		'list'     => 'categorymembers',
+		'cmtitle' =>  $wgWidgetAnswersCategory,
+		'cmlimit' => '5',
+		'cmnamespace' => 0,
+		'cmprop'   => 'title|timestamp',
+		'cmsort'   => 'timestamp',
+		'cmdir'    => 'desc',
+	);
+
 #	if($wgUser->getOption('language') != 'en') { // waiting for international logic phase Future (v 2.0)
 #		$domain = $wgUser->getOption('language');
 #	} else {
