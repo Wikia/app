@@ -21,11 +21,6 @@ define('GRACENOTE_VIEW_OTHER_LYRICS', 'ViewOther');
 define('GRACENOTE_VIEW_NOT_LYRICS', 'NotLyrics');
 define('GOOGLE_ANALYTICS_ID', "UA-10496195-1"); // lyrics.wikia.com ID
 
-GLOBAL $wgGracenoteView;
-if(!$wgGracenoteView){
-	$wgGracenoteView = GRACENOTE_VIEW_NOT_LYRICS;
-}
-
 ////
 // Returns HTML which outputs the required branding for Gracenote.
 // This includes an icon that is 30 pixels tall or more and a specific
@@ -84,6 +79,11 @@ function gracenote_obfuscateText($text){
 // http://code.google.com/intl/en-US/apis/analytics/docs/tracking/eventTrackerGuide.html
 ////
 function gracenote_getAnalyticsHtml($google_action){
+	GLOBAL $wgGracenoteView;
+	if(!$wgGracenoteView){
+	  $wgGracenoteView = GRACENOTE_VIEW_NOT_LYRICS;
+	}
+
 	$google_category = "Lyrics";
 	
 	$trackEventCode = "";
