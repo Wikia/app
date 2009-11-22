@@ -1,4 +1,5 @@
 == Changes since 200911.3 ==
+* rt#28395: Answers: Hack Wikianswers widget to show general instead of specific questions. (Nef)
 * rt#24029: Answers: Make EditSimilar functional on Answers. (Nef)
 * rt#28247: Answers: Filter page itself from lists of related. (Nef)
 * rt#28300: Analytics: Quantcast changes. (Nef)

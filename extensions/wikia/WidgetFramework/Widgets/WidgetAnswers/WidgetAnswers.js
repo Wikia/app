@@ -12,6 +12,20 @@ function WidgetAnswers_load(data) {
 		}
 	}
 }
+function WidgetAnswers_load2(data) {
+	if (data.query == "undefined") return;
+	if(data.query.categorymembers) {
+		for(var recent_q in data.query.categorymembers ) {
+			var page = data.query.categorymembers[recent_q];
+			var url  = page.title.replace(/_/g," ");
+			var text = page.title.replace(/_/g," ") + "?";
+			if(text.length > 100) {
+				text = text.substring(0,100) + "...";
+			}
+			WidgetAnswers_html += "<li>X<a href=\"http://" + WidgetAnswers_domain + '/index.php?title=' + encodeURIComponent(url) + "\" target=\"_blank\">" + text + "</a></li>";
+		}
+	}
+}
 var widget_answers_placeholder = '';
 function WidgetAnswers_handler(e) {
 	if(e.type == 'focus') {
