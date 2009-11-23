@@ -5,6 +5,7 @@ $messages['en'] = array(
         'imgplc-create' => 'Add Image',
 	'imgplc-placeholder' => 'Placeholder',
 	'imgplc-image' => 'Image',
+	'imgplc-notinhistory' => "You can't add picture in history mode."
 );
 
 $messages['pl'] = array(
