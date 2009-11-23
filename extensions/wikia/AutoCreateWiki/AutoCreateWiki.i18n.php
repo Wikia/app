@@ -145,14 +145,14 @@ This is a brand-new project, so please write to us if you have any questions!
 -- Wikia Community Team
 	",
 	"autocreatewiki-reminder-body-HTML" => "
-Dear $1:
+<p>Dear $1:</p>
 
-Congratulations on starting your new wiki, {{SITENAME}}! You can come back and add more to your wiki by visiting $2.
+<p>Congratulations on starting your new wiki, {{SITENAME}}! You can come back and add more to your wiki by visiting
+<a href=\"$2\">$2</a>.</p>
 
-This is a brand-new project, so please write to us if you have any questions!
+<p>This is a brand-new project, so please write to us if you have any questions!</p>
 
-
--- Wikia Community Team
+<p>-- Wikia Community Team</p>
 	"
 );
 
