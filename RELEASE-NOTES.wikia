@@ -1,4 +1,5 @@
 == Changes since 200911.4 ==
+* rt#28674: MyHome: corrected empty message display (TOR)
 * rt#28512: no edit permission at wiki causes broken wiki (Marooned)
 * rt#24345: Automated e-mail for new wiki founders (eloy)
 
