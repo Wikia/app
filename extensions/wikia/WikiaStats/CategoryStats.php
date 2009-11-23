@@ -554,11 +554,12 @@ class CategoryEdits {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select ( 
 				array( 'category_user_edits' ),
-				array( 'ce_user_id as user_id, sum(ce_count) as cnt' ),
+				array( 'cue_user_id as user_id, sum(cue_count) as cnt' ),
 				array( 'cue_cat_id' => $this->mCatId ),
 				__METHOD__,
 				array( 
-					'GROUP BY' => 'ce_user_id',
+					'ORDER BY' => 'cnt DESC',
+					'GROUP BY' => 'cue_user_id',
 					'USE INDEX' => 'cat_user'
 				)
 			);
@@ -604,6 +605,7 @@ CREATE TABLE `category_user_edits` (
   `cue_count` int(10) unsigned NOT NULL,
   PRIMARY KEY (`cue_cat_id`,`cue_user_id`),
   KEY (`cue_user_id`, `cue_count`),
+  KEY `cat_user` (`cue_cat_id`,`cue_user_id`),
   KEY (`cue_cat_id`,`cue_count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
