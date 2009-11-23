@@ -19,6 +19,27 @@ class Signup extends SpecialPage {
 }
 
 class ExtendedLoginForm extends LoginForm {
+	var $mPasswordSending;
+	
+	// give data about password sending
+        function execute() {
+                if ( !is_null( $this->mCookieCheck ) ) {
+                        $this->onCookieRedirectCheck( $this->mCookieCheck );
+                        return;
+                } else if( $this->mPosted ) {
+                        if( $this->mCreateaccount ) {
+                                return $this->addNewAccount();
+                        } else if ( $this->mCreateaccountMail ) {
+                                return $this->addNewAccountMailPassword();
+                        } else if ( $this->mMailmypassword ) {
+				$this->mPasswordSending = true;
+                                return $this->mailPassword();
+                        } else if ( ( 'submitlogin' == $this->mAction ) || $this->mLoginattempt ) {
+                                return $this->processLogin();
+                        }
+                }
+                $this->mainLoginForm( '' );
+        }
 
 	// extended to allow to cater better for things here
 	// and - to serve a CLEANER template, without login
@@ -30,14 +51,21 @@ class ExtendedLoginForm extends LoginForm {
 
                 $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 
-
 		// this is tracking
                 if( ('' != $msg) && ('error' == $msgtype) ) { // we have an error
 			if('login' != $this->mType) { //signup error
                         	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
 			} else { // login error
-                        	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/login/failure\');</script>');
+				if( !$this->mPasswordSending ) {
+	                        	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/login/failure\');</script>');
+				} else {
+	                        	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/emailpassword/failure\');</script>');
+				}
 			}
+		} else {
+			if( $this->mPasswordSending ) {
+	                        $wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/emailpassword/success\');</script>');				
+			}			                	
 		}
 
                 if ( $this->mType == 'signup' ) {
