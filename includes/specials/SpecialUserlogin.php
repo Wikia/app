@@ -106,11 +106,18 @@ class LoginForm {
 		}
 		$wgAuth->setDomain( $this->mDomain );
 
-		# When switching accounts, it sucks to get automatically logged out
-		if( $this->mReturnTo == $wgLang->specialPage( 'Userlogout' ) ) {
-			$this->mReturnTo = '';
-			$this->mReturnToQuery = '';
+		$title = Title::newFromText($this->mReturnTo);
+		if (!empty($title))
+		{
+			$this->mResolvedReturnTo = strtolower(SpecialPage::resolveAlias($title->getDBKey()));
+			if(in_array($this->mResolvedReturnTo,array('userlogout','signup')))
+			{
+				$this->mReturnTo = '';
+				$this->mReturnToQuery = '';
+			}			
 		}
+		
+
 	}
 
 	function execute() {
