@@ -28,7 +28,6 @@
 
 #createpagepreview .actionBar ,
 #createpageform .actionBar {
-	background:#F9F9F9 none repeat scroll 0%;
 	border-bottom:1px solid #CCCCCC;
 	border-top:1px solid #CCCCCC;
 	clear:both;
@@ -306,11 +305,13 @@ legend {
 
 #createpageform div.templateFrame:hover {
 	background-color:#F1F1F1;
+	color: #000;
 	cursor:pointer;
 }
 
 #createpageform div.templateFrameSelected {
 	background-color: #e7e7e7;
+	color: #000;
 	border: solid 1px #2f6fab;
 }
 
