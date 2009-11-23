@@ -22,6 +22,12 @@ $wgWidgets['WidgetLeftNav'] = array(
 function WidgetLeftNav($id, $params) {
 	wfProfileIn(__METHOD__);
 
+	# control display with this variable
+	if ( empty( $wgEnableLeftNavWidget ) ) {
+		wfProfileOut( __METHOD__ );
+		return '';
+	}
+
 	$ret = array();
 
 	# do not wrap widget in box
