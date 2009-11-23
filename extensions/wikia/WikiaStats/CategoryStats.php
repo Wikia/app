@@ -558,12 +558,11 @@ class CategoryEdits {
 				array( 'cue_cat_id' => $this->mCatId ),
 				__METHOD__,
 				array( 
-					'ORDER BY' => 'cnt DESC',
 					'GROUP BY' => 'cue_user_id',
 					'USE INDEX' => 'cat_user'
 				)
 			);
-			if ( $dbr->numRows($res) ) { 
+			if ( $dbr->numRows($res) ) {
 				$users = $tmp = array();
 				while( $oRow = $dbr->fetchObject($res) ) {
 					$tmp[$oRow->user_id] = $oRow->cnt;
@@ -571,7 +570,7 @@ class CategoryEdits {
 				$dbr->freeResult($res);
 				if ( count($tmp) > 0 ) { 
 					arsort($tmp); 
-					$users = array_slice($tmp, $limit * $offset, $offset, true);
+					$users = array_slice($tmp, $limit * $offset, $limit, true);
 				}
 				$wgMemc->set( $memkey, $users, 60*30 );
 			}
