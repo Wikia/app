@@ -77,7 +77,6 @@ class CategoryTrigger {
 		if( $oRow ) {
 			$res = $oRow->row_count;
 		} 
-		#error_log ( $select . " => " . $res );
 		
 		wfProfileOut( __METHOD__ );
 		return $res;
@@ -120,33 +119,30 @@ class CategoryTrigger {
 						'ce_user_id'	=> $this->mUserId,
 						'ce_date'		=> $this->mDate
 					);
-					error_log(print_r($conditions, true));
 
-					$Row = $dbr->selectRow ( 
-						'category_edits',
-						array('ce_count'),
-						$conditions,
-						__METHOD__
-					);
+					$Row = $dbr->selectRow ( 'category_edits', array('ce_count'), $conditions, __METHOD__ );
 					if ( $Row ) {
 						# update edits count
 						$count = $Row->ce_count + $inc;
-						$dbw->update( 
-							'category_edits',
-							array( /* SET */
-								'ce_count' 	=> $count
-							),
-							$conditions,
-							__METHOD__ );
+						$dbw->update( 'category_edits', array( 'ce_count' => $count ), $conditions, __METHOD__ );
 					} else {
 						# insert edits count
 						$conditions['ce_count'] = $inc;
-						$dbw->insert(
-							'category_edits',
-							$conditions,
-							__METHOD__ 
-						);
+						$dbw->insert( 'category_edits', $conditions, __METHOD__ );
 					}
+
+					$user_conditions = array( 'cue_user_id' => $this->mUserId, 'cue_cat_id' => $oRow->cat_id );
+					$Row = $dbr->selectRow ( 'category_user_edits', array('cue_count'), $user_conditions, __METHOD__ );
+					if ( $Row ) {
+						# update edits count
+						$count = $Row->cue_count + $inc;
+						$dbw->update( 'category_user_edits', array( 'cue_count' => $count ), $user_conditions, __METHOD__ );
+					} else {
+						# insert edits count
+						$user_conditions['cue_count'] = $inc;
+						$dbw->insert( 'category_user_edits', $user_conditions, __METHOD__ );
+					}
+					
 					$return++;
 				}
 				$dbr->freeResult($res);
@@ -206,13 +202,48 @@ class CategoryTrigger {
 	 */
 	public function decrease() {
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER );
-		$dbw->delete( 'category_edits',
-			array( 
-				'ce_page_id' => $this->mPageId
-			), 
-			__METHOD__ 
+
+		$return = 0;
+		$user_pages = array();
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 
+			'category_edits', 
+			array( 'ce_user_id as user_id', 'ce_cat_id as cat_id', 'count(ce_user_id) as cnt' ), 
+			array( 'ce_page_id' => $this->mPageId ),
+			__METHOD__,
+			array( 'GROUP BY' => 'ce_user_id, ce_cat_id' )
 		);
+		
+		if ( $dbr->numRows($res) ) { 
+			while( $oRow = $dbr->fetchObject($res) ) {
+				$user_pages[$oRow->user_id][$oRow->cat_id] = intval($oRow->cnt);
+			}
+			$dbr->freeResult($res);
+		}
+		
+		$dbw = wfGetDB( DB_MASTER );
+		if ( count($user_pages) > 0 ) {
+			foreach($user_pages as $user_id => $cats) {
+				if ( !empty($cats) ) {
+					foreach($cats as $cat_id => $count) {
+						$dbw->update( 
+							'category_user_edits', 
+							array( "cue_count = cue_count - $count" ), 
+							array( 
+								'cue_user_id' => $user_id,
+								'cue_cat_id' => $cat_id
+							),
+							__METHOD__ 
+						);
+						$return += $count;
+					}
+				}
+			};
+		}
+		$dbw->delete( 'category_edits', array( 'ce_page_id' => $this->mPageId ), __METHOD__ );
+		
+		wfProfileOut( __METHOD__ );
+		return $return;
 	}
 
 	/**
@@ -359,11 +390,11 @@ class CategoryEdits {
 		}
 		
 		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
-			$dbr = wfGetDB( DB_SLAVE );
 			$memkey = wfMemcKey( 'percent', $this->mCatId, $CatIn->getID() );
 			$data = $wgMemc->get( $memkey );
 			
 			if ( empty($data) ) {
+				$dbr = wfGetDB( DB_SLAVE );
 				$Row = $dbr->selectRow ( 
 					array( 'categorylinks AS c1', 'categorylinks AS c2' ),
 					array( 'count(c2.cl_to) as cnt' ),
@@ -396,7 +427,158 @@ class CategoryEdits {
 		wfProfileOut( __METHOD__ );
 		return $this->mPercent;
 	}
+	
+	/**
+	 * getPages
+	 * 
+	 * @access public
+	 *
+	 * @param Integer $incat - percent of pages in $incat category
+	 */
+	public function getPages($incat) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+		
+		$pages = array();
+		if ( is_int($incat) ) {
+			# integer
+			$CatIn = Category::newFromID($incat);
+		} else {
+			# integer
+			$CatIn = Category::newFromName($incat);
+		}
+		
+		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
+			$memkey = wfMemcKey( 'pages', $this->mCatId, $CatIn->getID() );
+			$pages = $wgMemc->get( $memkey );
+			
+			if ( empty($pages) ) {
+				$dbr = wfGetDB( DB_SLAVE );
+				$res = $dbr->select ( 
+					array( 'categorylinks AS c1', 'categorylinks AS c2' ),
+					array( 'c2.cl_from as page_id' ),
+					array(
+						'c2.cl_to' => $this->mCatName
+					),
+					__METHOD__,
+					"",
+					array(
+						'categorylinks AS c2' => array(
+							'JOIN', 
+							implode ( ' AND ', 
+								array( 
+									'c1.cl_from = c2.cl_from',
+									'c1.cl_to = ' . $dbr->addQuotes($CatIn->getName())
+								)
+							)
+						)
+					)
+				);
+				if ( $dbr->numRows($res) ) { 
+					$pages = array();
+					while( $oRow = $dbr->fetchObject($res) ) {
+						$pages[] = $oRow->page_id;
+					}
+					$dbr->freeResult($res);
+					$wgMemc->set( $memkey, $pages, 60*5 );
+				}
+			}
+		}
 
+		wfProfileOut( __METHOD__ );
+		return $pages;
+	}
+	
+	/**
+	 * getContribs - list of contributors to category
+	 * 
+	 * @access public
+	 *
+	 * @param Integer $limit,
+	 * @param Integer $offset,
+	 * 
+	 */
+	public function getContribs($limit = 30, $offset = 0) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		$memkey = wfMemcKey( 'contribs', $this->mCatId, $limit, $offset );
+		$users = $wgMemc->get( $memkey );
+		
+		if ( empty($users) ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select ( 
+				array( 'category_user_edits' ),
+				array( 'cue_user_id as user_id, cue_count as cnt' ),
+				array( 'cue_cat_id' => $this->mCatId ),
+				__METHOD__,
+				array( 
+					'ORDER BY' => 'cue_count DESC',
+					'LIMIT' => $limit + 1,
+					'OFFSET' => $offset * $limit
+				)
+			);
+			if ( $dbr->numRows($res) ) { 
+				$users = array();
+				while( $oRow = $dbr->fetchObject($res) ) {
+					$users[$oRow->user_id] = $oRow->cnt;
+				}
+				$dbr->freeResult($res);
+				$wgMemc->set( $memkey, $users, 60*2 );
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $users;
+	}
+
+
+	/**
+	 * getContribs - list of contributors to category in the last X days
+	 * 
+	 * @access public
+	 *
+	 * @param Integer $days,
+	 * @param Integer $limit,
+	 * @param Integer $offset,
+	 * 
+	 */
+	public function getXDayContribs($days = 7, $limit = 30, $offset = 0) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		$memkey = wfMemcKey( 'xdayscontribs', $this->mCatId, $days, $limit, $offset );
+		$users = $wgMemc->get( $memkey );
+		
+		if ( empty($users) ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$res = $dbr->select ( 
+				array( 'category_user_edits' ),
+				array( 'ce_user_id as user_id, sum(ce_count) as cnt' ),
+				array( 'cue_cat_id' => $this->mCatId ),
+				__METHOD__,
+				array( 
+					'GROUP BY' => 'ce_user_id',
+					'USE INDEX' => 'cat_user'
+				)
+			);
+			if ( $dbr->numRows($res) ) { 
+				$users = $tmp = array();
+				while( $oRow = $dbr->fetchObject($res) ) {
+					$tmp[$oRow->user_id] = $oRow->cnt;
+				}
+				$dbr->freeResult($res);
+				if ( count($tmp) > 0 ) { 
+					arsort($tmp); 
+					$users = array_slice($tmp, $limit * $offset, $offset, true);
+				}
+				$wgMemc->set( $memkey, $users, 60*30 );
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $users;
+	}
 }
 
 
@@ -411,7 +593,19 @@ CREATE TABLE `category_edits` (
   PRIMARY KEY (`ce_cat_id`,`ce_page_id`,`ce_page_ns`,`ce_user_id`,`ce_date`),
   KEY `cat_date` (`ce_cat_id`, `ce_date`),
   KEY `cat_user_date` (`ce_cat_id`, `ce_date`, `ce_user_id`),
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+  KEY `cat_page_date` (`ce_cat_id`,`ce_page_id`,`ce_count`,`ce_date`),
+  KEY `cat_user` (`ce_cat_id`,`ce_user_id`),
+  KEY `user_pages` (`ce_page_id`,`ce_user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `category_user_edits` (
+  `cue_cat_id` int(10) unsigned NOT NULL,
+  `cue_user_id` int(10) unsigned NOT NULL,
+  `cue_count` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`cue_cat_id`,`cue_user_id`),
+  KEY (`cue_user_id`, `cue_count`),
+  KEY (`cue_cat_id`,`cue_count`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP FUNCTION IF EXISTS category_edits_inc;
 CREATE FUNCTION category_edits_inc( __pageid__ INTEGER, __page_ns__ SMALLINT, __userid__ INTEGER, __inc__ INTEGER ) RETURNS INTEGER
