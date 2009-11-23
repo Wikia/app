@@ -29,7 +29,7 @@ function wfGlobalWikiaCSS( &$out ) {
 	$out = "";
 
 	if (!$wgUser->isAnon())
-		$out .= '@import "http://www.wikia.com/index.php?title=User:'. str_replace(" ", "_", $wgUser->mName) .'/global.css&action=raw&ctype=text/css";';
+		$out .= '@import "http://www.wikia.com/index.php?title=User:'. str_replace(" ", "_", $wgUser->mName) .'/global.css&action=raw&ctype=text/css&smaxage=0";';
 
 	//$out .= '@import "http://www.wikia.com/index.php?title=MediaWiki:Global.css&action=raw&ctype=text/css&smaxage=18000";';
 
