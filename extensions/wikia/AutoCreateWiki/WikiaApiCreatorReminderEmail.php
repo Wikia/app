@@ -57,10 +57,7 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 				$wiki = WikiFactory::getWikiByID( $wgCityId );
 				$founder = User::newFromId( $wiki->city_founding_user );
 			}
-			/**
-			 * for test purpose send email to me, Eloy.wikia
-			 */
-			$founder = User::newFromId( 51098 );
+
 			Wikia::log( __METHOD__, "user", $founder->getName() );
 			if( $founder ) {
 				if( $founder->sendMail(
