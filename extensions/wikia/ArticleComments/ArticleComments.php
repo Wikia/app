@@ -15,6 +15,7 @@
 
 define( "BLOGCOMMENTORDERCOOKIE_NAME", "blogcommentorder" );
 define( "BLOGCOMMENTORDERCOOKIE_EXPIRE", 60 * 60 * 24 * 365 );
+define('ARTICLECOMMENT_PREFIX', '@comment-');
 
 $wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
 
@@ -332,13 +333,8 @@ class ArticleComment {
 	 * @access private
 	 */
 	public function canEdit() {
-		global $wgUser, $wgCityId, $wgDevelEnvironment, $wgEnableArticleCommentEdit;
+		global $wgUser;
 
-		if ( empty($wgEnableArticleCommentEdit) ) {
-			return false;
-		}
-
-		$devel    = 1; #$wgCityId == 4832 || $wgDevelEnvironment;
 		$res = false;
 		if ( $this->mUser ) {
 			$isAuthor = ($this->mUser->getId() == $wgUser->getId()) && (!$wgUser->isAnon());
@@ -347,7 +343,7 @@ class ArticleComment {
 			$groups = $wgUser->getGroups();
 			$isAdmin = in_array( 'staff', $groups ) || in_array( 'sysop', $groups );
 
-			$res = $devel && ( $isAuthor || $isAdmin ) && $canEdit;
+			$res = ( $isAuthor || $isAdmin ) && $canEdit;
 		}
 
 		return $res;
@@ -607,7 +603,7 @@ class ArticleComment {
 		 * data
 		 */
 		$commentTitle = Title::newFromText(
-			sprintf( "%s/%s-%s", $Title->getText(), $User->getName(), wfTimestampNow() ),
+			sprintf( "%s/%s%s-%s", $Title->getText(), ARTICLECOMMENT_PREFIX, $User->getName(), wfTimestampNow() ),
 			Namespace::getTalk($Title->getNamespace()) );
 		/**
 		 * because we save different tile via Ajax request
@@ -967,8 +963,8 @@ class ArticleCommentList {
 				array( "page" ),
 				array( "page_id" ),
 				array(
-					"page_namespace" => $this->getTitle()->getNamespace(),
-					"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/%'"
+					"page_namespace" => Namespace::getTalk($this->getTitle()->getNamespace()),
+					"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/" . ARTICLECOMMENT_PREFIX . "%'"
 				),
 				__METHOD__,
 				array( "ORDER BY" => "page_id {$this->mOrder}" )
