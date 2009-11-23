@@ -1,5 +1,6 @@
 == Changes since 200911.4 ==
 * rt#28512: no edit permission at wiki causes broken wiki (Marooned)
+* rt#24345: Automated e-mail for new wiki founders (eloy)
 
 == Changes since 200911.3 ==
 * rt#28395: Answers: Hack Wikianswers widget to show general instead of specific questions. (Nef)
