@@ -565,6 +565,17 @@ class SignupTemplate extends QuickTemplate {
 <td width="45%" style="vertical-align: top;">
 	<div class="loginHeader rightSideElem dark_text_1"><?php $this->msg('log-in-new') ?></div>
 	<form action="<?php $this->text('actionlogin') ?>" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
+	<div id="userloginMessageBox">
+		<?php if( ($this->data['messagetype'] != 'error') && ($this->data['actiontype'] == 'login') ) {
+			$wgOut->addHTML('<style type="text/css">
+				#userloginMessageBox {
+					display: block !important;
+				}				
+			</style>');
+			$this->html('message');
+		} ?>		
+	</div>
+
 	<div id="userloginErrorBox2">
 		<table>
 			<tr>

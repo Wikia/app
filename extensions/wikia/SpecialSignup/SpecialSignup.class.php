@@ -33,7 +33,7 @@ class ExtendedLoginForm extends LoginForm {
 
 		// this is tracking
                 if( ('' != $msg) && ('error' == $msgtype) ) { // we have an error
-			if('login' != $this->mActionType) { //signup error
+			if('login' != $this->mType) { //signup error
                         	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/createaccount/failure\');</script>');
 			} else { // login error
                         	$wgOut->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/login/failure\');</script>');
