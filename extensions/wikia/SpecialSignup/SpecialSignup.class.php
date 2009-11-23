@@ -13,20 +13,16 @@ class Signup extends SpecialPage {
 			wfSetupSession();
 		}
 		$wgHooks['MakeGlobalVariablesScript'][] = 'wfSpecialUserloginSetupVars';
-		$form = new ExtendedLoginForm( $wgRequest, 'signup' );
+		$form = new ExtendedLoginForm( $wgRequest );
 		$form->execute();
 	}	
 }
 
 class ExtendedLoginForm extends LoginForm {
-	var $mActionType;
-
-	function processLogin() {
-                $this->mActionType = 'login';
-		return parent::processLogin();		
-	}	
 
 	// extended to allow to cater better for things here
+	// and - to serve a CLEANER template, without login
+	// also to serve tracking
         function mainLoginForm( $msg, $msgtype = 'error' ) {
                 global $wgUser, $wgOut, $wgAllowRealName, $wgEnableEmail;
                 global $wgCookiePrefix, $wgLoginLanguageSelector;
@@ -70,7 +66,8 @@ class ExtendedLoginForm extends LoginForm {
 
                 $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 
-		$template = new UsercreateTemplate();
+		// use a different template, we'll have a few additional variables that won't make sense for normal form
+		$template = new SignupTemplate();
 		$q = 'action=submitlogin&type=signup';
 		$q2 = 'action=submitlogin&type=login';
 		$linkq = 'type=login';
@@ -108,7 +105,8 @@ class ExtendedLoginForm extends LoginForm {
                 $template->set( 'name', $this->mName );
                 $template->set( 'password', $this->mPassword );
                 $template->set( 'retype', $this->mRetype );
-                $template->set( 'actiontype', $this->mActionType );		
+                $template->set( 'actiontype', $this->mType );		
+
                 $template->set( 'email', $this->mEmail );
                 $template->set( 'realname', $this->mRealName );
                 $template->set( 'domain', $this->mDomain );
