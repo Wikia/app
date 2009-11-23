@@ -61,6 +61,7 @@ class LoginForm {
 		global $wgAuth, $wgRedirectOnLogin;
 
 		$this->mType = ( $par == 'signup' ) ? $par : $request->getText( 'type' ); # Check for [[Special:Userlogin/signup]]
+
 		$this->mName = $request->getText( 'wpName' );
 		$this->mPassword = $request->getText( 'wpPassword' );
 		$this->mRetype = $request->getText( 'wpRetype' );
@@ -142,7 +143,7 @@ class LoginForm {
 	 * @private
 	 */
 	function addNewAccountMailPassword() {
-		global $wgOut;
+		global$wgOut;
 
 		if ('' == $this->mEmail) {
 			$this->mainLoginForm( wfMsg( 'noemail', htmlspecialchars( $this->mName ) ) );
@@ -930,6 +931,8 @@ class LoginForm {
 					wfUrlencode( $this->mReturnToQuery );
 			$q .= $returnto;
 			$linkq .= $returnto;
+			$q2 .= $returnto;
+			$linkq2 .= $returnto;
 		}
 
 		# Pass any language selection on to the mode switch link
