@@ -131,6 +131,29 @@ If you've got questions, you can e-mail us through our [[Special:Contact|contact
 // new wikis - special page
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display Wikis starting at:",
+
+// retention emails
+	"autocreatewiki-reminder-subject" => "{{SITENAME}}",
+	"autocreatewiki-reminder-body" => "
+Dear $1:
+
+Congratulations on starting your new wiki, {{SITENAME}}! You can come back and add more to your wiki by visiting $2.
+
+This is a brand-new project, so please write to us if you have any questions!
+
+
+-- Wikia Community Team
+	",
+	"autocreatewiki-reminder-body-HTML" => "
+Dear $1:
+
+Congratulations on starting your new wiki, {{SITENAME}}! You can come back and add more to your wiki by visiting $2.
+
+This is a brand-new project, so please write to us if you have any questions!
+
+
+-- Wikia Community Team
+	"
 );
 
 
