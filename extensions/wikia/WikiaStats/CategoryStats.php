@@ -534,7 +534,7 @@ class CategoryEdits {
 
 
 	/**
-	 * getContribs - list of contributors to category in the last X days
+	 * getXDayContribs - list of contributors to category in the last X days
 	 * 
 	 * @access public
 	 *
