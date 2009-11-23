@@ -1,7 +1,7 @@
 <?php
 	if (isset($emptyMessage)) {
 ?>
-	<h3 class="myhome-empty-message"><?= htmlspecialchars($emptyMessage) ?></h3>
+	<h3 class="myhome-empty-message"><?= $emptyMessage ?></h3>
 <?php
 	}
 	else {
