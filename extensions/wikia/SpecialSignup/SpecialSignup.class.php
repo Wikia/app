@@ -64,7 +64,7 @@ class ExtendedLoginForm extends LoginForm {
                         }
                 }
 
-                $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
+                $titleObj = SpecialPage::getTitleFor( 'Signup' );
 
 		// use a different template, we'll have a few additional variables that won't make sense for normal form
 		$template = new SignupTemplate();

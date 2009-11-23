@@ -33,12 +33,6 @@ class SignupTemplate extends QuickTemplate {
 		}
 		if( $this->data['message'] && !$this->data['ajax'] ) {
 ?>
-	<div class="<?php $this->text('messagetype') ?>box">
-		<?php if ( $this->data['messagetype'] == 'error' ) { ?>
-			<h2><?php $this->msg('loginerror') ?></h2>
-		<?php } ?>
-		<?php $this->html('message') ?>
-	</div>
 	<div class="visualClear"></div>
 <?php } ?>
 <br/>
@@ -54,9 +48,18 @@ class SignupTemplate extends QuickTemplate {
 	</td>
 	<td>
 	<div id="userloginInnerErrorBox">
-	</td>
-	</table>
+		<?php if( ($this->data['messagetype'] == 'error') && ($this->data['actiontype'] == 'signup') ) {
+			$wgOut->addHTML('<style type="text/css">
+				#userloginErrorBox {
+					display: block !important;
+				}				
+			</style>');
+			$this->html('message');
+		} ?>
 	</div>
+	</td>
+	</tr>
+	</table>
 </div>
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
 <form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>" onsubmit="return UserRegistration.checkForm()">
@@ -563,15 +566,25 @@ class SignupTemplate extends QuickTemplate {
 	<div class="loginHeader rightSideElem dark_text_1"><?php $this->msg('log-in-new') ?></div>
 	<form action="<?php $this->text('actionlogin') ?>" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
 	<div id="userloginErrorBox2">
-	<table>
-	<tr>
-	<td style="vertical-align:top;">
-	<span style="position: relative; top: -1px;"><img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span>
-	</td>
-	<td>
-	<div id="userloginInnerErrorBox2">
-	</td>
-	</table>
+		<table>
+			<tr>
+				<td style="vertical-align:top;">
+					<span style="position: relative; top: -1px;"><img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span>
+				</td>
+				<td>
+					<div id="userloginInnerErrorBox2">
+		<?php if( ($this->data['messagetype'] == 'error') && ($this->data['actiontype'] == 'login') ) {
+			$wgOut->addHTML('<style type="text/css">
+				#userloginErrorBox2 {
+					display: block !important;
+				}				
+			</style>');
+			$this->html('message');
+		} ?>
+					</div>
+				</td>
+			</tr>
+		</table>
 	</div>
 	<label for="wpName2Ajax" style="display: block; font-weight: bold;"><?= wfMsg("yourname") ?></label>
 	<table>
