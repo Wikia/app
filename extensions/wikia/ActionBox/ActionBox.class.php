@@ -13,10 +13,10 @@ class ActionBox extends SpecialPage {
 
 		// get the Two Tools
 
-		$this->getNewpagesFeed( 5 );
 
 
 		// get the Three Feeds
+		$newpages_feed = $this->getNewpagesFeed( 5 );
 
         }
 
@@ -24,14 +24,15 @@ class ActionBox extends SpecialPage {
 	// fetch the feed for SpecialNewpages
 	function getNewpagesFeed( $limit ) {
 		wfProfileIn( __METHOD__ );
+		$newpages = array();
 
 		$oFauxRequest = new FauxRequest(
 				array(
 					'action'        => 'query',
 					'list'		=> 'recentchanges',
-					'prop'          => array('title'),					
-					'namespace'	=> 0,
-					'limit'		=> intval($limit),
+					'rcprop'	=> 'title',					
+					'rcnamespace'	=> 0,
+					'rclimit'	=> intval($limit),
 				     )
 				);
 
@@ -39,8 +40,14 @@ class ActionBox extends SpecialPage {
                 $oApi->execute();
                 $aResult =& $oApi->GetResultData();
 
-		// todo nicely format and return
+		if( count($aResult['query']['recentchanges']) > 0) {
+			foreach( $aResult['query']['recentchanges'] as $newfound ) {
+				$newpages[] = $newfound;
+			}
+		}
 
 		wfProfileOut( __METHOD__ ); 		
+		return $newpages;
+
 	}
 }
