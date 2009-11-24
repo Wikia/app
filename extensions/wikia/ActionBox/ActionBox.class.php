@@ -69,6 +69,7 @@ class ActionBox extends SpecialPage {
 					'list'		=> 'recentchanges',
 					'rcprop'	=> 'title',					
 					'rcnamespace'	=> 0,
+					'rctype'	=> 'new',
 					'rclimit'	=> intval($limit),
 				     )
 				);
