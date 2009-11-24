@@ -24,7 +24,7 @@ class ActionBox extends SpecialPage {
 		// get the Three Feeds
 		
 		$this->formatFeed( $this->getNewpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-newpages-hd') );
-
+		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedpages-hd') );
         }
 
 
@@ -57,7 +57,6 @@ class ActionBox extends SpecialPage {
                 $wgOut->addHTML( $html );
 	}
                                
-
 	// fetch the feed for SpecialNewpages
 	function getNewpagesFeed( $limit ) {
 		wfProfileIn( __METHOD__ );
@@ -86,6 +85,36 @@ class ActionBox extends SpecialPage {
 
 		wfProfileOut( __METHOD__ ); 		
 		return $newpages;
-
 	}
+
+	// fetch the feed for SpecialWantedpages
+	function getWantedpagesFeed( $limit ) {
+		wfProfileIn( __METHOD__ );
+		$wantedpages = array();
+
+		$oFauxRequest = new FauxRequest(
+				array(
+					'action'        => 'query',
+					'list'		=> 'wantedpages',
+					'wnlimit'	=> intval($limit),
+				     )
+				);
+
+		$oApi = new ApiMain($oFauxRequest);
+                $oApi->execute();
+                $aResult =& $oApi->GetResultData();
+
+		print_pre( $aResult );
+
+		if( count($aResult['query']['wantedpages']) > 0) {
+			foreach( $aResult['query']['wantedpages'] as $newfound ) {
+				$wantedpages[] = $newfound['title'] ;
+			}
+		}
+
+		wfProfileOut( __METHOD__ ); 		
+		return $wantedpages;
+	}
+
+
 }

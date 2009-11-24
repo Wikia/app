@@ -5,8 +5,6 @@ if (!defined('MEDIAWIKI')) {
         require_once ('ApiQueryBase.php');
 }
 
-
-
 class ApiQueryWantedpages extends ApiQueryGeneratorBase {
 
 	public function __construct($query, $moduleName) {
@@ -17,6 +15,10 @@ class ApiQueryWantedpages extends ApiQueryGeneratorBase {
 		$this->run();
 	}
 
+	public function executeGenerator($resultPageSet) {
+		$this->run($resultPageSet);
+	}
+	
 	protected function prepareQuery( $limit, &$resultPageSet ) {
 
 		$this->resetQueryParams();
@@ -67,7 +69,8 @@ class ApiQueryWantedpages extends ApiQueryGeneratorBase {
 		return 'api.php?action=query&list=wantedpages&wnlimit=5';
 	}
 
-
-
+	public function getVersion() {
+		return __CLASS__ . ': $Id: ApiQueryWantedpages.php overlordq$';
+	}
 }
 
