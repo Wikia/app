@@ -41,17 +41,13 @@ class WikiaGenericStats {
     {
     	global $wgMessageCache, $wgWikiaStatsMessages;
 
+		#--- Add messages
+		wfLoadExtensionMessages("WikiaStats");
     	$this->mUserID = $userid;
         $this->mUser = User::newFromId($userid);
         if (is_object( $this->mUser ) && !is_null( $this->mUser )) {
             $this->mUser->load();
         }
-
-		#--- Add messages
-		require_once ( dirname( __FILE__ ) . '/SpecialWikiaStats.i18n.php' );
-		foreach( $wgWikiaStatsMessages as $key => $value ) {
-			$wgMessageCache->addMessages( $wgWikiaStatsMessages[$key], $key );
-		}
     }
 
 	public function setLocalStats($value) {
