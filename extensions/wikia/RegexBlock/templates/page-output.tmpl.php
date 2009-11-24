@@ -13,9 +13,9 @@ if (is_array($blockers)) {
 ?>    
 </select>&nbsp;<?=wfMsg('regexblock_regex_filter')?><input type="text" name="rfilter" id="regex_filter" value="<?=$regex_filter?>" /><input type="submit" value="Go">
 </form>
-<br/><br/>
+<br/>
 <? if (!empty($blockers)) { ?>
-<ul>
+<ul id="regexblock_blocks">
 <? $loop = 0; $coma = "<b>&#183;</b>";
    foreach($blocker_list as $id => $row) { 
        $loop++;
@@ -24,7 +24,7 @@ if (is_array($blockers)) {
            $row['expiry'] = wfMsg('regexblock_permament_block');
        } else {
            if ( wfTimestampNow() > $row['expiry'] ) {
-               $color_expire = "<span style=\"color:#DC143C\">%s</span>";
+               $color_expire = "<span class=\"rb_expired\">%s</span>";
            }
            $row['expiry'] = sprintf($color_expire, $lang->timeanddate( wfTimestamp( TS_MW, $row['expiry'] ), true ));
        }
@@ -35,14 +35,14 @@ if (is_array($blockers)) {
        $stats_link = $skin->makeKnownLinkObj( $titleObj, wfMsg('regexblock_statistics'), 'action=stats&blckid=' . urlencode($row['blckid']) . '&' . $urls) ;
 
 ?>   
-<li style="border-bottom:1px dashed #778899; padding-bottom:2px;font-size:11px">
-   <b><font style="color:#3B7F07; font-size:12px"><?=$row['blckby_name']?></font> <?=$coma?> <?=$exact_match?> <?=$create_block?></b> <?=$coma?> 
+<li>
+   <b><span class="rb_target"><?=$row['blckby_name']?></span> <?=$coma?> <?=$exact_match?> <?=$create_block?></b> <?=$coma?> 
    (<?=wfMsg('regexblock_blocker_name')?>: <b><?=$row['blocker']?></b>, <?=$reason?>) <?=wfMsg('regexblock_on_time')?> <?=$row['time']?> <?=$coma?> 
    (<a href="<?=$action_unblock?>&blckid=<?=urlencode($row['blckid'])?>&blocker=<?=$row['ublock_blocker']?>"><?=wfMsg('regexblock_unblock')?></a>) <?=$coma?> <?=$row['expiry']?> <?=$coma?> (<?=$stats_link?>)
 </li>
 <? } ?>
 </ul>
-<br/><br/>
+<br/>
 <p><?=$pager?></p>
 <? } else { ?>
 <?= wfMsg('regexblock_empty_list'); ?>
