@@ -120,7 +120,10 @@ class DumpsOnDemand {
 			new MailAddress( "dumps@wikia-inc.com" ),
 			new MailAddress( "dump-request@wikia-inc.com" ),
 			"Database dump request for {$wgDBname}",
-			$body
+			$body,
+			null /*reply*/,
+			null /*ctype*/,
+			'DumpRequest'
 		);
 
 		/**
