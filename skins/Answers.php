@@ -1038,9 +1038,7 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 				$ret .= Xml::openElement('div', array('class' => 'userEditPoints'));
 				$ret .= Xml::element('span', array('id' => "contributors-user-points-{$contributor['user_id']}", 'class' => 'userPoints', 'timestamp' => wfTimestampNow()), $contributor['edits']);
 				$ret .= ' '; // space for graceful degradation
-				// TODO: Just output text, not an element. We don't need it.
-				// This would be better without any element at all.
-				$ret .= Xml::element('span', array(), wfMsgExt('edit_points', array('parsemag'), array($contributor['edits'])));
+				$ret .= wfMsgExt('edit_points', array('parsemag'), array($contributor['edits']));
 				$ret .= Xml::closeElement('div'); // END .userEditPoints
 			}
 
