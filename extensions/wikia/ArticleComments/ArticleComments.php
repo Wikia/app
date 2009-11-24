@@ -13,8 +13,8 @@
 //* change $this->getTitle()->getNamespace() to some private variable
 //* change Namespace::getTalk($this->getTitle()->getNamespace()) to some private variable
 
-define( "BLOGCOMMENTORDERCOOKIE_NAME", "blogcommentorder" );
-define( "BLOGCOMMENTORDERCOOKIE_EXPIRE", 60 * 60 * 24 * 365 );
+define('ARTICLECOMMENTORDERCOOKIE_NAME', 'blogcommentorder');
+define('ARTICLECOMMENTORDERCOOKIE_EXPIRE', 60 * 60 * 24 * 365);
 define('ARTICLECOMMENT_PREFIX', '@comment-');
 
 $wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
@@ -32,23 +32,68 @@ $wgHooks[ "RecentChange_save" ][] = "ArticleComment::watchlistNotify";
 $wgHooks[ "ChangesListMakeSecureName" ][] = "ArticleCommentList::makeChangesListKey";
 $wgHooks[ "ChangesListHeaderBlockGroup" ][] = "ArticleCommentList::setHeaderBlockGroup";
 # special::watchlist
-$wgHooks[ "SpecialWatchlistQuery" ][] = "ArticleComment::WatchlistQuery";
+//$wgHooks[ "SpecialWatchlistQuery" ][] = "ArticleComment::WatchlistQuery";
 $wgHooks[ "ComposeCommonSubjectMail" ][] = "ArticleComment::ComposeCommonMail";
 $wgHooks[ "ComposeCommonBodyMail" ][] = "ArticleComment::ComposeCommonMail";
-# test
-$wgHooks['SkinAfterContent'][] = 'ArticleCommentEnable';
+# init
+$wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
+$wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
 
-function ArticleCommentEnable(&$data) {
-	global $wgOut, $wgTitle, $wgStyleVersion, $wgExtensionsPath, $wgJsMimeType;
-	wfProfileIn( __METHOD__ );
+class ArticleCommentInit {
+	private static $enable = null;
 
-	wfLoadExtensionMessages('ArticleComments');
-	$page = ArticleCommentList::newFromTitle( $wgTitle );
-	$data = $page->render( true );
-	$data .= "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n";
+	static private function ArticleCommentCheck() {
+		global $wgOut, $wgTitle, $wgUser, $wgRequest, $wgContentNamespaces;
+		wfProfileIn( __METHOD__ );
 
-	wfProfileOut( __METHOD__ );
-	return true;
+		if (is_null(self::$enable)) {
+			self::$enable = true;
+			//enable comments only on content namespaces
+			if (!in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
+				self::$enable = false;
+			}
+
+			// Initialize only for allowed skins
+			$allowedSkins = array('SkinMonaco');
+			if(!in_array(get_class($wgUser->getSkin()), $allowedSkins)) {
+				self::$enable = false;
+			}
+
+			$action = $wgRequest->getVal('action', 'view');
+			if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
+				self::$enable = false;
+			}
+			if($action != 'view' && $action != 'purge') {
+				self::$enable = false;
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return self::$enable;
+	}
+
+	static public function ArticleCommentEnable(&$data) {
+		global $wgTitle;
+		wfProfileIn( __METHOD__ );
+
+		if (self::ArticleCommentCheck()) {
+			wfLoadExtensionMessages('ArticleComments');
+			$page = ArticleCommentList::newFromTitle( $wgTitle );
+			$data = $page->render( true );
+		}
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	static public function ArticleCommentAddJS(&$out, &$sk) {
+		global $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion;
+		wfProfileIn( __METHOD__ );
+
+		if (self::ArticleCommentCheck()) {
+			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
+		}
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
 
 /**
@@ -338,6 +383,7 @@ class ArticleComment {
 		$res = false;
 		if ( $this->mUser ) {
 			$isAuthor = ($this->mUser->getId() == $wgUser->getId()) && (!$wgUser->isAnon());
+			//TODO: create new permission and remove checking groups below
 			$canEdit   = $wgUser->isAllowed( "edit" );
 
 			$groups = $wgUser->getGroups();
@@ -915,12 +961,11 @@ class ArticleCommentList {
 	 * @return Array --sorted array
 	 */
 	private function sort() {
-		Wikia::log( __METHOD__, "order", $this->mOrder );
-		if( $this->mOrder == "desc" ) {
-			krsort( $this->mComments, SORT_NUMERIC );
-		}
-		else {
+		Wikia::log( __METHOD__, 'order', $this->mOrder );
+		if( $this->mOrder == 'asc' ) {
 			ksort( $this->mComments, SORT_NUMERIC );
+		} else {
+			krsort( $this->mComments, SORT_NUMERIC );
 		}
 		return $this->mComments;
 	}
@@ -939,11 +984,11 @@ class ArticleCommentList {
 
 		wfProfileIn( __METHOD__ );
 
-		$order  = $wgRequest->getText( "order",  false );
-		$action = $wgRequest->getText( "action", false );
+		$order  = $wgRequest->getText( 'order',  false );
+		$action = $wgRequest->getText( 'action', false );
 
 		$this->handleBlogCommentOrderCookie( $order ); // it's &$order...
-		$this->mOrder = ( $order == "desc" ) ? "desc" : "asc";
+		$this->mOrder = $order == 'asc' ? 'asc' : 'desc';
 
 		/**
 		 * skip cache if purging or using master connection
@@ -990,14 +1035,14 @@ class ArticleCommentList {
 	 */
 	private function handleBlogCommentOrderCookie(&$order) {
 		global $wgCookiePrefix;
-		$cookie = !empty($_COOKIE[$wgCookiePrefix . BLOGCOMMENTORDERCOOKIE_NAME]) ? $_COOKIE[$wgCookiePrefix . BLOGCOMMENTORDERCOOKIE_NAME] : false;
+		$cookie = !empty($_COOKIE[$wgCookiePrefix . ARTICLECOMMENTORDERCOOKIE_NAME]) ? $_COOKIE[$wgCookiePrefix . ARTICLECOMMENTORDERCOOKIE_NAME] : false;
 
 		if (empty($cookie)) {
 			if (empty($order)) {
 				// nothing to do, 100% default
 			} else {
 				// save order in cookie
-				WebResponse::setcookie(BLOGCOMMENTORDERCOOKIE_NAME, $order, time() + BLOGCOMMENTORDERCOOKIE_EXPIRE);
+				WebResponse::setcookie(ARTICLECOMMENTORDERCOOKIE_NAME, $order, time() + ARTICLECOMMENTORDERCOOKIE_EXPIRE);
 			}
 		} else {
 			if (empty($order)) {
@@ -1009,7 +1054,7 @@ class ArticleCommentList {
 					// nothing to do, both are in sync
 				} else {
 					// save order in cookie
-					WebResponse::setcookie(BLOGCOMMENTORDERCOOKIE_NAME, $order, time() + BLOGCOMMENTORDERCOOKIE_EXPIRE);
+					WebResponse::setcookie(ARTICLECOMMENTORDERCOOKIE_NAME, $order, time() + ARTICLECOMMENTORDERCOOKIE_EXPIRE);
 				}
 			}
 		}
@@ -1301,22 +1346,23 @@ class ArticleCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function makeChangesListKey( &$oChangeList, &$currentName, &$oRCCacheEntry ) {
-		global $wgUser, $wgEnabledGroupedBlogComments;
+		global $wgUser, $wgEnabledGroupedBlogComments, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 		if ( empty($wgEnabledGroupedBlogComments) ) {
-			return true;
+//			return true;
 		}
 
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
-		if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($this->getTitle()->getNamespace()) ) ) ) {
-			$user = $page_title = $comment = "";
+		//TODO: check proper usage of $wgTitle
+		if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($wgTitle->getNamespace()) ) ) ) {
+			$user = $comment = "";
 			$newTitle = null;
-			list( $user, $page_title, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
+			list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
-			if ( !empty($user) && (!empty($page_title)) ) {
+			if ( !empty($user) ) {
 				$currentName = "Comments";
 			}
 		}
@@ -1338,10 +1384,10 @@ class ArticleCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function setHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
-		global $wgLang, $wgContLang, $wgEnabledGroupedBlogComments;
+		global $wgLang, $wgContLang, $wgEnabledGroupedBlogComments, $wgTitle;
 
 		if ( empty($wgEnabledGroupedBlogComments) ) {
-			return true;
+//			return true;
 		}
 
 		$oRCCacheEntry = null;
@@ -1353,10 +1399,11 @@ class ArticleCommentList {
 			$oTitle = $oRCCacheEntry->getTitle();
 			$namespace = $oTitle->getNamespace();
 
-			if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($this->getTitle()->getNamespace()) ) ) ) {
-				list( $user, $page_title, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
+			//TODO: check proper usage of $wgTitle
+			if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($wgTitle->getNamespace()) ) ) ) {
+				list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
-				if ( !empty($user) && (!empty($page_title)) ) {
+				if ( !empty($user) ) {
 					$cnt = count($oRCCacheEntryArray);
 
 					$userlinks = array();

@@ -8,8 +8,8 @@ if ( count( $comments ) > 1 ) {
 ?>
 <form action="<?php echo $title->getFullURL() ?>" method="get" id="blog-comm-form-select">
 <select name="order" style="margin-top:-26px;" id="blog-comm-order">
-	<option value="asc" <?php if ($order=="asc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-asc") ?></option>
 	<option value="desc" <?php if ($order=="desc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-dsc") ?></option>
+	<option value="asc" <?php if ($order=="asc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-asc") ?></option>
 </select>
 </form>
 <?php
@@ -85,9 +85,9 @@ if ( count( $comments ) > 10 ) {
 		<script type="text/javascript">
 		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-bottom\" class=\"wikia_button\"><span><? echo wfMsg("blog-comment-post") ?></span></a>");
 		</script>
-		<!noscript>
+		<noscript>
 		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-bottom" value="<? echo wfMsg("blog-comment-post") ?>" />
-		<!/noscript>
+		</noscript>
 		<? } ?>
 		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
 		</div>
