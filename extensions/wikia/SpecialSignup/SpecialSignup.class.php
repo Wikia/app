@@ -16,6 +16,14 @@ class Signup extends SpecialPage {
 		$form = new ExtendedLoginForm( $wgRequest );
 		$form->execute();
 	}	
+
+	static function TrackingOnSuccess (&$out) {
+		if( isset( $_SESSION['Signup_AccountLoggedIn'] ) || !empty($_GET['loggedinok']) ) {
+			$out->addScript('<script type="text/javascript">WET.byStr(\'signupActions/signup/login/success\');</script>');
+			unset( $_SESSION['Signup_AccountLoggedIn'] );
+		}
+		return true;
+	}
 }
 
 class ExtendedLoginForm extends LoginForm {
@@ -39,6 +47,31 @@ class ExtendedLoginForm extends LoginForm {
                         }
                 }
                 $this->mainLoginForm( '' );
+        }
+
+        function successfulLogin() {
+                global $wgUser, $wgOut;
+
+                # Run any hooks; display injected HTML if any, else redirect
+                $injected_html = '';
+                wfRunHooks('UserLoginComplete', array(&$wgUser, &$injected_html));
+
+                if( $injected_html !== '' ) {
+                        $this->displaySuccessfulLogin( 'loginsuccess', $injected_html );
+                } else {
+                        $titleObj = Title::newFromText( $this->mReturnTo );
+                        if ( !$titleObj instanceof Title ) {
+                                $titleObj = Title::newMainPage();
+                        }
+			// if not session, then redirect + more
+			if( session_id() != '' ) {
+                                $_SESSION['Signup_AccountLoggedIn'] = 'created';
+                        	$wgOut->redirect( $titleObj->getFullURL( $this->mReturnToQuery ) );
+                        } else {
+                        	$wgOut->redirect( $titleObj->getFullURL( array( $this->mReturnToQuery, 'loggedinok=1' ) ) );
+                        }
+
+                }
         }
 
 	// extended to allow to cater better for things here
