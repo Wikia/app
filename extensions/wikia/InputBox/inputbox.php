@@ -177,7 +177,7 @@ ENDGO;
 						$name='Main';
 					}
 					if ($usernamespace == $name) {
-						$searchform2 .= "<input type=\"checkbox\" name=\"ns{$i}\" value=\"1\"{$checked}>{$usernamespace}";
+						$searchform2 .= "<input type=\"checkbox\" class=\"checkbox\" name=\"ns{$i}\" value=\"1\"{$checked}>{$usernamespace}";
 					}
 				}
 			}
