@@ -373,7 +373,14 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 			</li>
             <li>
 			    Wiki founder name is <strong><?php echo $user_name ?></strong> (id <?php echo $wiki->city_founding_user ?>)
-                and his/her email is <strong><?php echo empty( $wiki->city_founding_email) ? "empty" : $wiki->city_founding_email ?></strong>
+                   <? if($wiki->city_founding_user): ?>
+                   <sup><a href="/index.php?title=Special:WikiFactory/Metrics&founder=<?php echo urlencode($user_name); ?>">more by user</a></sup>
+                   <? endif; ?>
+                and his/her email is <strong><?php if( empty( $wiki->city_founding_email) ) :
+                   ?><i>empty</i><? else: ?>
+                   <? echo $wiki->city_founding_email; ?>
+                   <sup><a href="/index.php?title=Special:WikiFactory/Metrics&email=<?php echo urlencode($wiki->city_founding_email); ?>">more by email</a></sup>
+                   <? endif; ?></strong>
             </li>
 			<li>
 				Wiki was created on <strong><?php echo $wiki->city_created ?></strong>
