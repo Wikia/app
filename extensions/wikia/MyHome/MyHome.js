@@ -180,6 +180,8 @@ MyHome.trackClick = function(e) {
 			MyHome.track('/' + MyHome.mode + '/category');
 		} else if(target.parentNode.parentNode.parentNode.parentNode.id == 'myhome-hot-spots-feed-content') {
 			MyHome.track('/hotspots/item');
+		} else if(target.id == 'myhome-' + MyHome.mode + '-feed-more') {
+			MyHome.track('/' + MyHome.mode + '/seemore');
 		}
 	} else if($.nodeName(target, 'img')) {
 		if($.nodeName(target.parentNode, 'a')) {
