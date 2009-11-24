@@ -8,7 +8,7 @@
 <?php
 	if (!empty($showMore)) {
 ?>
-	<div class="myhome-feed-more"><a id="myhome-<?= $type ?>-feed-more" onclick="MyHome.fetchMore(this)"><?= wfMsg('myhome-activity-more') ?></a></div>
+	<div class="myhome-feed-more"><a id="myhome-<?= $type ?>-feed-more" onclick="MyHome.fetchMore(this)" rel="nofollow"><?= wfMsg('myhome-activity-more') ?></a></div>
 <?php		
 	}
 ?>
