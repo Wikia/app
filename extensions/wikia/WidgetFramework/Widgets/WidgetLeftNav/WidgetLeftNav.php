@@ -20,6 +20,8 @@ $wgWidgets['WidgetLeftNav'] = array(
 );
 
 function WidgetLeftNav($id, $params) {
+	global $wgEnableLeftNavWidget;
+
 	wfProfileIn(__METHOD__);
 
 	# control display with this variable
