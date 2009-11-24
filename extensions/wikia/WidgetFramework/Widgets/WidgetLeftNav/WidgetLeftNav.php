@@ -12,8 +12,8 @@ if(!defined('MEDIAWIKI')) {
 global $wgWidgets;
 $wgWidgets['WidgetLeftNav'] = array(
 	'callback' => 'WidgetLeftNav',
-#	'title' => 'widget-title-leftnav', # not needed as widget is not wrapped
-#	'desc' => 'widget-desc-leftnav', # not needed as widget is not listable
+	'title' => 'widget-title-leftnav', # not needed as widget is not wrapped
+	'desc' => 'widget-desc-leftnav', # not needed as widget is not listable
     	'closeable' => false,
 	'editable' => false,
 	'listable' => false,
