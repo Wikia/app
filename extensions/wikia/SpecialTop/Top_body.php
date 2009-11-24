@@ -20,15 +20,30 @@ class Top extends SpecialPage
 			global $wgRequest, $wgOut;
 
 			$this->setHeaders();
-			$wgOut->setPageTitle( wfMsg($par) );
+			$topFiveArray = DataProvider::GetTopFiveArray();
 
 			if ( empty ( $par ) ) {
+				//no sub gets generic title
+				$wgOut->setPageTitle( "Top" );
+
+				//use array keys of known modules to build menu to them
+				$wgOut->addHtml("<ul>");
+				foreach($topFiveArray[0] as $sub=>$junk) {
+					$wgOut->addHtml("<li><a href=\"".
+						SpecialPage::getTitleFor( 'Top', $sub )->getLocalUrl() .
+						"\">". wfMsg($sub) . "</a></li>");
+				}
+				$wgOut->addHtml("</ul>");
 				return false;
 			}
-			$topFiveArray = DataProvider::GetTopFiveArray();
+
 			if ( count ( $topFiveArray ) != 2 || ! isset($topFiveArray[0][$par]) ) {
+				$wgOut->setPageTitle( "Error" ); // par wasnt in known module list, so cant use for title
 				return false;
 			}
+
+			//we can trust par for use in title now
+			$wgOut->setPageTitle( wfMsg($par) );
 
 			$wgOut->addHtml("<ul>");
 			$results = DataProvider::$topFiveArray[0][$par](25);
