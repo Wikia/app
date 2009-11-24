@@ -1,0 +1,18 @@
+/* dashed blue line between rows */
+#regexblock_blocks li,
+#regexblock_triggers li {
+border-bottom:1px dashed #778899;
+padding-bottom:2px;
+font-size:11px;
+}
+
+/* target name in green */
+#regexblock_blocks .rb_target {
+color:#3B7F07;
+font-size:12px;
+}
+
+/* expired block time in red */
+#regexblock_blocks .rb_expired {
+color:#DC143C;
+}

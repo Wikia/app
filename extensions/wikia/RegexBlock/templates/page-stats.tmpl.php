@@ -15,11 +15,11 @@ $blockername_link = $skin->makeKnownLinkObj( $titleObj, $blockInfo->blckby_name,
 <? if (!empty($stats_list)) { ?>
 <p><?=$pager?></p>
 <br />
-<ul>
+<ul id="regexblock_triggers">
 <? foreach ($stats_list as $id => $row) { ?>
-<li style="border-bottom:1px dashed #778899; padding-bottom:2px;font-size:11px">
-    <?=wfMsg('regexblock_match_stats_record', array($row->stats_match, $row->stats_user, htmlspecialchars($row->stats_dbname), $lang->timeanddate( wfTimestamp( TS_MW, $row->stats_timestamp ), true ), $row->stats_ip) )?>
-</li>
+<li><?
+print wfMsg('regexblock_match_stats_record', array($row->stats_match, $row->stats_user, htmlspecialchars($row->stats_dbname), $lang->timeanddate( wfTimestamp( TS_MW, $row->stats_timestamp ), true ), $row->stats_ip) );
+?></li>
 <? } ?>
 </ul>
 <br />
