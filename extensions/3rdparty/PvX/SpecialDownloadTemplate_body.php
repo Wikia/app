@@ -34,7 +34,8 @@ class DownloadTemplate extends UnlistedSpecialPage {
          */
         public function execute( $par ) {
 		$name = $_GET["name"];
-		$build = $_GET["build"];
+		# hack -- gwbbcode passes unencoded build hash
+		$build = str_replace( " ", "+", $_GET["build"] );
 
 		//Begin writing headers
 		header("Pragma: public");
@@ -44,7 +45,7 @@ class DownloadTemplate extends UnlistedSpecialPage {
 
 		//Sending the content...
 		header('Content-Disposition: attachment; filename="' . $name . '.txt"');
-		if (strlen($build) < 100) echo $_GET["build"];
+		if (strlen($build) < 100) echo $build;
 		exit;
 	}
 }
