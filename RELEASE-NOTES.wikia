@@ -1,4 +1,5 @@
 == Changes since 200911.4 ==
+* rt#28423: Analytics, MyHome: Click-tracking on "see more recent activity" button. (Nef)
 * rt#28764: DOD email tracking (uberfuzzy)
 * rt#28601: SpecialTop: better interface if no sub (uberfuzzy)
 * rt#28674: MyHome: corrected empty message display (TOR)
