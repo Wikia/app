@@ -434,8 +434,11 @@ class CategoryEdits {
 	 * @access public
 	 *
 	 * @param Integer $incat - percent of pages in $incat category
+	 * @param Array $namespaces - IDs of NS (all namespace if empty)
+	 * @param Integer $limit 
+	 * @param Integer $offset
 	 */
-	public function getPages($incat) {
+	public function getPages($incat, $namespaces = array(), $limit = 30, $offset = 0) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		
@@ -449,19 +452,27 @@ class CategoryEdits {
 		}
 		
 		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
-			$memkey = wfMemcKey( 'pages', $this->mCatId, $CatIn->getID() );
+			$dbr = wfGetDB( DB_SLAVE );
+			$nsPaces = (!empty($namespaces)) ? $dbr->makeList( $namespaces ) : "";
+			$memkey = wfMemcKey( 'pages', $this->mCatId, $CatIn->getID(), md5($nsPaces), $limit, $offset );
 			$pages = $wgMemc->get( $memkey );
 			
 			if ( empty($pages) ) {
-				$dbr = wfGetDB( DB_SLAVE );
 				$res = $dbr->select ( 
-					array( 'categorylinks AS c1', 'categorylinks AS c2' ),
-					array( 'c2.cl_from as page_id' ),
+					array( 'page', 'categorylinks AS c1', 'categorylinks AS c2' ),
+					array( 'c2.cl_from as page_id, page_title, page_namespace, page_latest as rev_id, c2.cl_timestamp as rev_timestamp' ),
 					array(
+						'page_id = c2.cl_from',
+						'page_namespace in (' . $nsPaces . ')',
+						'page_is_redirect' => 0,
 						'c2.cl_to' => $this->mCatName
 					),
 					__METHOD__,
-					"",
+					array(
+						'ORDER BY' => 'c2.cl_timestamp DESC',
+						'LIMIT' => $limit + 1,
+						'OFFSET' => $offset * $limit
+					),
 					array(
 						'categorylinks AS c2' => array(
 							'JOIN', 
@@ -477,7 +488,13 @@ class CategoryEdits {
 				if ( $dbr->numRows($res) ) { 
 					$pages = array();
 					while( $oRow = $dbr->fetchObject($res) ) {
-						$pages[] = $oRow->page_id;
+						$pages[] = array(
+							'id'		=> $oRow->page_id,
+							'title'		=> $oRow->page_title,
+							'namespace'	=> $oRow->page_namespace,
+							'rev_id'	=> $oRow->rev_id,
+							'timetamp'	=> $oRow->rev_timestamp,
+						);
 					}
 					$dbr->freeResult($res);
 					$wgMemc->set( $memkey, $pages, 60*5 );
