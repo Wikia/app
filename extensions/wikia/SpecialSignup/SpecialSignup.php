@@ -24,3 +24,7 @@ $wgSpecialPageGroups['Signup'] = 'users';
 $wgExtensionAliasesFiles['Signup'] = $dir . 'SpecialSignup.alias.php';
 
 $wgExtensionMessagesFiles['Signup'] = $dir . 'Signup.i18n.php';
+
+// hooks
+$wgHooks ['OutputPageBeforeHTML'][] = 'Signup::TrackingOnSuccess';
+
