@@ -202,7 +202,7 @@ class AdEngine {
 	// For the provided $slotname, get an ad tag.
 	public function getAd($slotname) {
 		$AdProvider = $this->getAdProvider($slotname);
-		return $AdProvider->getAd($slotname, $this->slots[$slotname]);
+		return $AdProvider->getAd($slotname, empty($this->slots[$slotname]) ? array() : $this->slots[$slotname]);
 	}
 
 	// Logic for hiding/displaying ads should be here, not in the skin.
