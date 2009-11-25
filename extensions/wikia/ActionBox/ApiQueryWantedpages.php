@@ -5,46 +5,48 @@ if (!defined('MEDIAWIKI')) {
         require_once ('ApiQueryBase.php');
 }
 
-class ApiQueryWantedpages extends ApiQueryGeneratorBase {
+class ApiQueryWantedpages extends ApiQueryBase {
 
 	public function __construct($query, $moduleName) {
 		parent :: __construct($query, $moduleName, 'wn');
 	}
 
 	public function execute() {
-		$this->run();
-	}
-
-	public function executeGenerator($resultPageSet) {
-		$this->run($resultPageSet);
-	}
-	
-	protected function prepareQuery( $limit, &$resultPageSet ) {
-
-		$this->resetQueryParams();
-		$this->addTables( 'querycache' );
-		$this->addOption( 'LIMIT', $limit );		
-		$this->addWhereFld( 'qc_type', 'Wantedpages' );
-
-	}
-
-	protected function runQuery(&$resultPageSet) {
 		$db = $this->getDB();
+		$params = $this->extractRequestParams();
+
+		$this->addTables( 'querycache' );
+		$this->addFields( array( 'qc_title', 'qc_namespace' ) );
+		$this->addWhereFld( 'qc_type', 'Wantedpages' );
+		$this->addOption( 'LIMIT', $params['limit'] );		
+
 		$res = $this->select(__METHOD__);
 		$count = 0;
+		$result = $this->getResult();
+		while( $row = $db->fetchObject( $res ) ) {
+			if (++$count > $params['limit']) {
+				// We've reached the one extra which shows that
+				// there are additional pages to be had. Stop here...
+				$this->setContinueEnumParameter('continue', $row->qc_title );
+				break;
+			}
 
-	}
+			$title = Title::makeTitle($row->qc_namespace, $row->qc_title);
+			$vals['title'] = $row->qc_title;
+			$vals['namespace'] = $row->qc_namespace;
 
-	private function run( $resultPageSet = null ) {
-
-		$this->prepareQuery();	
-		$count = $this->runQuery($resultPageSet);
-
+			$fit = $this->getResult()->addValue(array('query', $this->getModuleName()), null, $vals);
+			if(!$fit) {
+				break;
+			}
+		}
+		$db->freeResult( $res );
+		$this->getResult()->setIndexedTagName_internal(array('query', $this->getModuleName()), 'page');
 	}
 
 	public function getParamDescription() {
 		return array(
-				'limit' => 'Limit how many random pages will be returned'
+				'limit' => 'Limit how many wanted pages will be returned'
 			    );
 	}
 
