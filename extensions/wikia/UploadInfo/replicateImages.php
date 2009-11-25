@@ -19,9 +19,9 @@ class WikiaReplicateImages {
 	private
 		$mRunAs,
 		$mTest,
-		$mOptions;
-
-	private $mServers;
+		$mOptions,
+		$mDatacenter,
+		$mServers;
 
 	/**
 	 * constructor
@@ -32,6 +32,7 @@ class WikiaReplicateImages {
 		$this->mOptions = $options;
 
 		if( $wgWikiaDatacenter == "iowa" ) {
+			$this->mDatacenter = "i";
 			$this->mServers = array(
 				"file3" => array(
 					"address" => "10.8.2.133",
@@ -44,12 +45,13 @@ class WikiaReplicateImages {
 					"flag" => 2
 				),
 				"file2" => array(
-					"address" => "10.6.32.35",
+					"address" => "10.8.2.190",
 					"directory" => "/raid/images/",
 					"flag" => 4
 			));
 		}
 		else {
+			$this->mDatacenter = "s";
 			$this->mServers = array(
 				"file3" => array(
 					"address" => "10.8.2.133",
@@ -110,7 +112,8 @@ class WikiaReplicateImages {
 			array( "*" ),
 			array(
 				"up_flags = 0 OR (up_flags & {$copied}) <> {$copied}",
-				"up_flags <> -1"
+				"up_flags <> -1",
+				"up_datacenter" => $this->mDatacenter
 			),
 			__METHOD__,
 			array(
