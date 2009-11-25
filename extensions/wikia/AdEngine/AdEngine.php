@@ -96,6 +96,12 @@ class AdEngine {
 	}
 
 	public function loadConfig() {
+		global $wgShowAds;
+		if( empty( $wgShowAds ) ) {
+			$this->slots = array();
+			return true;
+		}
+
 		global $wgMemc, $wgCityId, $wgUser, $wgRequest, $wgExternalSharedDB;
 
 		$skin_name = null;
