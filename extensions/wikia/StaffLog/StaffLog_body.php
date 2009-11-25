@@ -45,7 +45,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 	
 	function getQueryInfo() {
 		return array(
-			'tables' => array( 'wikiastaff_logging' ),
+			'tables' => array( 'wikiastaff_log' ),
 			'fields' => array(	'slog_user_name',
 								'slog_user_namedst',
 								'slog_user',

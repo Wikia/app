@@ -16,7 +16,7 @@ class StaffLogger {
 			'slog_site' => $wgSitename,
 			'slog_city' => $wgCityId
 		);
-		$dbw->insert( 'wikiastaff_logging', $data, __METHOD__ );
+		$dbw->insert( 'wikiastaff_log', $data, __METHOD__ );
 	}
 	
 	static public function setupStafflog() {
