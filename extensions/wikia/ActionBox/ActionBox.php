@@ -21,5 +21,5 @@ $wgSpecialPages['ActionBox'] = 'ActionBox';
 $wgSpecialPageGroups['ActionBox'] = 'users';
 $wgExtensionMessagesFiles['ActionBox'] = $dir . 'ActionBox.i18n.php';
 $wgAutoloadClasses['ApiQueryWantedpages'] = $dir . 'ApiQueryWantedpages.php';
-$wgAPIModules['wantedpages'] = 'ApiQueryWantedpages';
+$wgAPIListModules['wantedpages'] = 'ApiQueryWantedpages';
 
