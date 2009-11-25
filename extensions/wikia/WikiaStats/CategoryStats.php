@@ -327,7 +327,8 @@ class CategoryEdits {
 		$mCatId,
 		$mCatName,
 		$mCatPageCount,
-		$mPercent;
+		$mPercent,
+		$mCatSubcatCount;
 	
 	/**
 	 * initialization
@@ -340,6 +341,7 @@ class CategoryEdits {
 		$this->mCatId = $Cat->getID(); 
 		$this->mCatName = $Cat->getName();
 		$this->mCatPageCount = $Cat->getPageCount();
+		$this->mCatSubcatCount = $Cat->getSubcatCount();
 		$this->mPercent = 0;
 	}
 	
@@ -668,6 +670,77 @@ class CategoryEdits {
 		
 		wfProfileOut( __METHOD__ );
 		return $pages;
+	}
+
+	/**
+	 * getSubcategories - get all subcategories 
+	 * 
+	 * @access public
+	 * @param Array $categories
+	 */
+	public function getSubcategories( &$categories ) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		if ( $this->mCatSubcatCount > 0 ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$memkey = wfMemcKey( 'subcats', $this->mCatId );
+			$cats = $wgMemc->get( $memkey );
+			if ( empty($cats) ) {
+				$res = $dbr->select ( 
+					array( 'page as cat', 'categorylinks', 'category' ),
+					array( 'cat_id, cat_title, cat_subcats' ),
+					array( 
+						'cl_to' => $this->mCatName,
+						'cat.page_namespace' => NS_CATEGORY
+					),
+					__METHOD__,
+					"",
+					array(
+						'categorylinks' => array( 'JOIN', 'cl_from = cat.page_id' ),
+						'category' => array( 'LEFT JOIN', 
+							implode ( ' AND ', 
+								array(
+									'cat_title = page_title',
+									'page_namespace = ' . NS_CATEGORY
+								)
+							)
+						)
+					)
+				);
+				if ( $dbr->numRows($res) ) {
+					$cats = array();
+					while( $oRow = $dbr->fetchObject($res) ) {
+						if ( !empty( $oRow->cat_id ) && !empty($oRow->cat_title) ) { 
+							$cats[ $oRow->cat_id ] = array(
+								$oRow->cat_subcats,
+								$oRow->cat_title
+							);
+						}
+					}
+					$dbr->freeResult($res);
+					$wgMemc->set( $memkey, $cats, 60*10 );
+				}
+			} 
+			
+			if ( !empty($cats) ) {
+				foreach ( $cats as $cat_id => $values ) {
+					list( $subcats, $catTitle ) = $values;
+					if ( !isset($categories[$cat_id]) ) {
+						$categories[$cat_id] = $catTitle;
+						if ( $subcats > 0 ) {
+							$oCat = self::newFromId($cat_id);
+							if ( $oCat ) {
+								$oCat->getSubcategories($categories);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $cats;
 	}
 }
 
