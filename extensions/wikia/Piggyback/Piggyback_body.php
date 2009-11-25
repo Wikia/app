@@ -51,7 +51,7 @@ class PBLoginForm extends LoginForm
 		$this->titleObj = SpecialPage::getTitleFor( 'Piggyback');
 		$this->plugin = new PiggybackTemplate();
 		$this->exTemplate =  new UserloginTemplate();
-		$this->exTemplate->set( 'action', $this->titleObj->getLocalUrl( 'action=submitlogin' ) );
+		$this->exTemplate->set( 'actionlogin', $this->titleObj->getLocalUrl( 'action=submitlogin' ) );
 
 		$this->mOtherName = $request->getVal('wpOtherName');
 		parent::LoginForm(&$request);
