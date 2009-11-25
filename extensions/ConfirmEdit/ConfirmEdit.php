@@ -87,12 +87,15 @@ $wgCaptchaClass = 'SimpleCaptcha';
  * The captcha code should not use $wgCaptchaTriggers, but CaptchaTriggers()
  * which also takes into account per namespace triggering.
  */
-$wgCaptchaTriggers = array();
-$wgCaptchaTriggers['edit']          = false; // Would check on every edit
-$wgCaptchaTriggers['create']		= false; // Check on page creation.
-$wgCaptchaTriggers['addurl']        = true;  // Check on edits that add URLs
-$wgCaptchaTriggers['createaccount'] = true;  // Special:Userlogin&type=signup
-$wgCaptchaTriggers['badlogin']      = true;  // Special:Userlogin after failure
+
+if ( !isset( $wgCaptchaTriggers ) ) {
+	$wgCaptchaTriggers = array();
+	$wgCaptchaTriggers['edit']          = false; // Would check on every edit
+	$wgCaptchaTriggers['create']		= false; // Check on page creation.
+	$wgCaptchaTriggers['addurl']        = true;  // Check on edits that add URLs
+	$wgCaptchaTriggers['createaccount'] = true;  // Special:Userlogin&type=signup
+	$wgCaptchaTriggers['badlogin']      = true;  // Special:Userlogin after failure
+}
 
 /**
  * You may wish to apply special rules for captcha triggering on some namespaces.
@@ -102,7 +105,9 @@ $wgCaptchaTriggers['badlogin']      = true;  // Special:Userlogin after failure
  *
  * Shall not be used with 'createaccount' (it is not checked).
  */
-$wgCaptchaTriggersOnNamespace = array();
+if ( !isset( $wgCaptchaTriggersOnNamespace ) ) {
+	$wgCaptchaTriggersOnNamespace = array();
+}
 
 #Example:
 #$wgCaptchaTriggersOnNamespace[NS_TALK]['create'] = false; //Allow creation of talk pages without captchas.
