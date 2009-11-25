@@ -29,13 +29,14 @@
  * @param $par String: (default '')
  */
 function wfSpecialSearch( $par = '' ) {
-	global $wgRequest, $wgUser, $wgUseOldSearchUI;
+	global $wgRequest, $wgUser, $wgUseOldSearchUI, $wgUseWikiaSearchUI;
 	// Strip underscores from title parameter; most of the time we'll want
 	// text form here. But don't strip underscores from actual text params!
 	$titleParam = str_replace( '_', ' ', $par );
 	// Fetch the search term
 	$search = str_replace( "\n", " ", $wgRequest->getText( 'search', $titleParam ) );
 	$class = $wgUseOldSearchUI ? 'SpecialSearchOld' : 'SpecialSearch';
+	$class = $wgUseWikiaSearchUI ? 'SpecialWikiaSearch' : $class;
 	$searchPage = new $class( $wgRequest, $wgUser );
 	if( $wgRequest->getVal( 'fulltext' )
 		|| !is_null( $wgRequest->getVal( 'offset' ))
@@ -1306,7 +1307,7 @@ class SpecialSearchOld {
 
 					// Wikia change /Begin (ADi)
 					$resultData = "<div class='mw-search-result-data'>{$score}{$desc} - {$date}{$related}</div>";
-					wfRunHooks( 'SearchShowHit', array( &$link, &$redirect, &$section, &$extract, &$resultData ) );
+					wfRunHooks( 'SearchShowHit', array( $result, &$link, &$redirect, &$section, &$extract, &$resultData ) );
 					// Wikia change /End
 
 					wfProfileOut( __METHOD__ );
@@ -1334,7 +1335,7 @@ class SpecialSearchOld {
 
 		// Wikia change /Begin (ADi)
 		$resultData = "<div class='mw-search-result-data'>{$score}{$size} - {$date}{$related}</div>";
-		wfRunHooks( 'SearchShowHit', array( &$link, &$redirect, &$section, &$extract, &$resultData ) );
+		wfRunHooks( 'SearchShowHit', array( $result, &$link, &$redirect, &$section, &$extract, &$resultData ) );
 		// Wikia change /End
 
 		wfProfileOut( __METHOD__ );
