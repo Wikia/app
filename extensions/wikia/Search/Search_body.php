@@ -38,7 +38,14 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 		$titlesOnly = $this->crossWikiSearch ? false : $wgRequest->getCheck('titlesOnly');
 
 		if(!$titlesOnly) {
-			$searchSet = SolrSearchSet::newFromQuery( $term, 'title^7 html', $this->namespaces, $this->limit, $this->offset, $this->crossWikiSearch );
+			if($this->crossWikiSearch) {
+				$queryFields = 'host^10 title^7 html';
+			}
+			else {
+				$queryFields = 'title^7 html';
+			}
+
+			$searchSet = SolrSearchSet::newFromQuery( $term, $queryFields, $this->namespaces, $this->limit, $this->offset, $this->crossWikiSearch );
 			if($searchSet instanceof SolrSearchSet) {
 				return $searchSet;
 			}
@@ -224,19 +231,22 @@ class SolrSearchSet extends SearchResultSet {
 	private function deDupe(Array $results) {
 		$deDupedResults = array();
 		foreach($results as $result) {
+			if(!isset($this->mCanonicals[$result->wid])) {
+				$this->mCanonicals[$result->wid] = array();
+			}
 			$result->canonical = str_replace('_', ' ', $result->canonical);
 			$result->title = str_replace('_', ' ', $result->title);
 			if(isset($result->canonical) && !empty($result->canonical)) {
-				if(!in_array($result->canonical, $this->mCanonicals)) {
-					$this->mCanonicals[] = $result->canonical;
+				if(!in_array($result->canonical, $this->mCanonicals[$result->wid])) {
+					$this->mCanonicals[$result->wid][] = $result->canonical;
 					$deDupedResults[] = $result;
 				}
 				else {
 					continue;
 				}
 			}
-			else if(!in_array($result->title, $this->mCanonicals)) {
-				$this->mCanonicals[] = $result->title;
+			else if(!in_array($result->title, $this->mCanonicals[$result->wid])) {
+				$this->mCanonicals[$result->wid][] = $result->title;
 				$deDupedResults[] = $result;
 			}
 		}
