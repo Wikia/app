@@ -142,11 +142,21 @@ if ( $wgWidgetFrameWork) {
     require_once ( 'widgetFrameWork/lib/widgetConfig.php' );
 }
 
+$wgUseAjax                = true;
+$wgValidateUserName       = true;
+$wgAjaxAutoCompleteSearch = true;
+
+$wgAjaxExportList[] = "wfDragAndDropReorder";
+$wgAjaxExportList[] = "getSuggestedArticleURL";
+$wgAjaxExportList[] = "cxValidateUserName";
+$wgAjaxExportList[] = "searchSuggest";
+
 
 /**
  * Wikia custom extensions, enabled sitewide. Pre-required by some skins
  */
 include_once( "$IP/extensions/ExtensionFunctions.php" );
+include_once( "$IP/extensions/wikia/AjaxFunctions.php" );
 include_once( "$IP/extensions/wikia/DataProvider/DataProvider.php" );
 include_once( "$IP/extensions/wikia/WidgetFramework/WidgetFramework.php" );
 include_once( "$IP/extensions/wikia/SpecialWidgetDashboard/SpecialWidgetDashboard_setup.php" );
@@ -311,3 +321,5 @@ $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php"
 $wgEnableBlogCommentEdit = true;
 $wgEnabledGroupedBlogComments = true;
 $wgEnableBlogWatchlist = true;
+
+
