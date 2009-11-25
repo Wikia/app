@@ -11,6 +11,10 @@ $wgSearchType = 'SolrSearch';
 if( empty($wgEnableCrossWikiaSearch) ) {
 	$wgEnableCrossWikiaSearch = false;
 }
+else {
+	// cross-wikia search specific options
+	$wgAFSEnabled = false; // disable AFS
+}
 
 if( empty($wgCrossWikiaSearchExcludedWikis) ) {
 	$wgCrossWikiaSearchExcludedWikis = array();
@@ -38,3 +42,5 @@ $wgHooks['SpecialSearchBoxExtraRefinements'][] = 'SolrSearch::renderExtraRefinem
 $wgAutoloadClasses['SolrSearch'] = $dir . 'Search_body.php';
 $wgAutoloadClasses['SolrResult'] = $dir . 'Search_body.php';
 $wgAutoloadClasses['SolrSearchSet'] = $dir . 'Search_body.php';
+$wgAutoloadClasses['SpecialWikiaSearch'] = $dir . 'SpecialWikiaSearch.php';
+

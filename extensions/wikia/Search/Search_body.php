@@ -6,8 +6,11 @@ interface SearchErrorReporting {
 class SolrSearch extends SearchEngine implements SearchErrorReporting {
 
 	private $errorCode = null;
+	private $crossWikiSearch = false;
 
 	public function __construct() {
+		global $wgRequest, $wgEnableCrossWikiaSearch;
+		$this->crossWikiSearch = $wgRequest->getCheck('thisWikiOnly') ? false : $wgEnableCrossWikiaSearch;
 		wfLoadExtensionMessages( 'WikiaSearch' );
 	}
 
@@ -32,8 +35,10 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 			return null;
 		}
 
-		if(!$wgRequest->getCheck('titlesOnly')) {
-			$searchSet = SolrSearchSet::newFromQuery( $term, 'title^7 html', $this->namespaces, $this->limit, $this->offset );
+		$titlesOnly = $this->crossWikiSearch ? false : $wgRequest->getCheck('titlesOnly');
+
+		if(!$titlesOnly) {
+			$searchSet = SolrSearchSet::newFromQuery( $term, 'title^7 html', $this->namespaces, $this->limit, $this->offset, $this->crossWikiSearch );
 			if($searchSet instanceof SolrSearchSet) {
 				return $searchSet;
 			}
@@ -47,15 +52,17 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 		}
 	}
 
-	function searchTitle( $term ) {
+	public function searchTitle( $term ) {
 		global $wgRequest;
 
 		if(empty($term)) {
 			return null;
 		}
 
-		if($wgRequest->getCheck('titlesOnly')) {
-			$searchSet = SolrSearchSet::newFromQuery( $term, 'title', $this->namespaces, $this->limit, $this->offset );
+		$titlesOnly = $this->crossWikiSearch ? false : $wgRequest->getCheck('titlesOnly');
+
+		if($titlesOnly) {
+			$searchSet = SolrSearchSet::newFromQuery( $term, 'title', $this->namespaces, $this->limit, $this->offset, $this->crossWikiSearch );
 			if($searchSet instanceof SolrSearchSet) {
 				return $searchSet;
 			}
@@ -81,6 +88,7 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 class SolrSearchSet extends SearchResultSet {
 
 	private $mCanonicals = array();
+	private $crossWikiaSearch = false;
 
 	/**
 	 * any query string transformation before sending to backend should be placed here
@@ -105,8 +113,8 @@ class SolrSearchSet extends SearchResultSet {
 	 * @return array
 	 * @access public
 	 */
-	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0 ) {
-		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgEnableCrossWikiaSearch, $wgCrossWikiaSearchExcludedWikis;
+	public static function newFromQuery( $query, $queryFields, $namespaces = array(), $limit = 20, $offset = 0, $crossWikiaSearch = false ) {
+		global $wgSolrHost, $wgSolrPort, $wgCityId, $wgErrorLog, $wgCrossWikiaSearchExcludedWikis;
 
 		$fname = 'SolrSearchSet::newFromQuery';
 		wfProfileIn( $fname );
@@ -116,7 +124,7 @@ class SolrSearchSet extends SearchResultSet {
 		$sanitizedQuery = self::sanitizeQuery($query);
 
 		$params = array(
-			'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views', // fields we want to fetch back
+			'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid', // fields we want to fetch back
 			'qf' => $queryFields,
 			'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
 			'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
@@ -136,15 +144,7 @@ class SolrSearchSet extends SearchResultSet {
 			//'sort' => 'backlinks desc, views desc, revcount desc, created asc'
 		);
 
-		if(count($namespaces)) {
-			$nsQuery = '';
-			foreach($namespaces as $namespace) {
-				$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
-			}
-			$params['fq'] = $nsQuery; // filter results for selected ns
-		}
-
-		if( $wgEnableCrossWikiaSearch ) {
+		if( $crossWikiaSearch ) {
 			$widQuery = '';
 			foreach($wgCrossWikiaSearchExcludedWikis as $wikiId) {
 				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $wikiId;
@@ -152,6 +152,14 @@ class SolrSearchSet extends SearchResultSet {
 			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en";
 		}
 		else {
+			if(count($namespaces)) {
+				$nsQuery = '';
+				foreach($namespaces as $namespace) {
+					$nsQuery .= ( !empty($nsQuery) ? ' OR ' : '' ) . 'ns:' . $namespace;
+				}
+				$params['fq'] = $nsQuery; // filter results for selected ns
+			}
+
 			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . $wgCityId;
 		}
 		//echo "fq=" . $params['fq'] . "<br />";
@@ -174,16 +182,12 @@ class SolrSearchSet extends SearchResultSet {
 		//print_r($response->highlighting);
 		//exit;
 
-		/*
-		$suggestion = null;
-		*/
-
 		$resultDocs = $response->response->docs;
 		$resultSnippets = is_object($response->highlighting) ? get_object_vars($response->highlighting) : array();
 		$resultCount = count($resultDocs);
 		$totalHits = $response->response->numFound;
 
-		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultCount, $totalHits /*, $suggestion */ );
+		$resultSet = new SolrSearchSet( $query, $resultDocs, $resultSnippets, $resultCount, $totalHits, $crossWikiaSearch );
 
 		wfProfileOut( $fname );
 		return $resultSet;
@@ -199,7 +203,7 @@ class SolrSearchSet extends SearchResultSet {
 	 * @param string $suggestion
 	 * @access private
 	 */
-	private function __construct( $query, $results, $snippets, $resultCount, $totalHits = null, $suggestion = null) {
+	private function __construct( $query, $results, $snippets, $resultCount, $totalHits = null, $crossWikiaSearch = false) {
 		$this->mQuery             = $query;
 		$this->mTotalHits         = $totalHits;
 		if(is_array($results)) {
@@ -211,9 +215,7 @@ class SolrSearchSet extends SearchResultSet {
 		$this->mSnippets          = $snippets;
 		$this->mResultCount       = $resultCount;
 		$this->mPos               = 0;
-		//$this->mSuggestionQuery   = null;
-		//$this->mSuggestionSnippet = '';
-		//$this->parseSuggestion($suggestion);
+		$this->crossWikiaSearch   = $crossWikiaSearch;
 	}
 
 	/**
@@ -272,7 +274,7 @@ class SolrSearchSet extends SearchResultSet {
 	 */
 	function next() {
 		if(isset($this->mResults[$this->mPos])) {
-			$solrResult = new SolrResult($this->mResults[$this->mPos]);
+			$solrResult = new SolrResult($this->mResults[$this->mPos], $this->crossWikiaSearch);
 			$url = $this->mResults[$this->mPos]->url;
 			if(isset($this->mSnippets[$url]->html)) {
 				$solrResult->setSnippets($this->mSnippets[$url]->html);
@@ -288,27 +290,6 @@ class SolrSearchSet extends SearchResultSet {
 
 		return $solrResult;
 	}
-
-	/*
-	private function parseSuggestion($suggestion) {
-		if( is_null($suggestion) )
-			return;
-		// parse split points and highlight changes
-		list($dummy,$points,$sug) = explode(" ",$suggestion);
-		$sug = urldecode($sug);
-		$points = explode(",",substr($points,1,-1));
-		array_unshift($points,0);
-		$suggestText = "";
-		for($i=1;$i<count($points);$i+=2){
-			$suggestText .= htmlspecialchars(substr($sug,$points[$i-1],$points[$i]-$points[$i-1]));
-			$suggestText .= '<em>'.htmlspecialchars(substr($sug,$points[$i],$points[$i+1]-$points[$i]))."</em>";
-		}
-		$suggestText .= htmlspecialchars(substr($sug,end($points)));
-
-		$this->mSuggestionQuery = $this->replaceGenericPrefixes($sug);
-		$this->mSuggestionSnippet = $this->replaceGenericPrefixes($suggestText);
-	}
-	*/
 }
 
 class SolrResult extends SearchResult {
@@ -317,13 +298,20 @@ class SolrResult extends SearchResult {
 	private $mIndexed = null;
 	private $mHighlightTitle = null;
 	private $mRedirectTitle = null;
+	private $mWikiId = null;
+	private $mUrl = null;
+	private $crossWikiaResult = false;
 
 	/**
 	 * Construct a result object from single Apache_Solr_Document object
 	 *
 	 * @param Apache_Solr_Document $document
+	 * @param bool $crossWikiaResult
 	 */
-	public function __construct( Apache_Solr_Document $document ) {
+	public function __construct( Apache_Solr_Document $document, $crossWikiaResult = false ) {
+		$this->crossWikiaResult = $crossWikiaResult;
+		$this->mWikiId = $document->wid;
+
 		$url = utf8_decode( htmlspecialchars_decode( $document->url ) );
 		$title = htmlspecialchars_decode( $document->title );
 
@@ -342,6 +330,7 @@ class SolrResult extends SearchResult {
 		$this->mCreated = isset($document->created) ? $document->created : 0;
 		$this->mIndexed = isset($document->indexed) ? $document->indexed : 0;
 		$this->mHighlightText = null;
+		$this->mUrl = $url;
 	}
 
 	protected function initText() {
@@ -352,9 +341,14 @@ class SolrResult extends SearchResult {
 		$this->mSnippets = $snippets;
 	}
 
+	private function getWikiName() {
+		$sitename = WikiFactory::getVarValueByName( 'wgSitename', $this->mWikiId );
+		return ( $this->crossWikiaResult && $sitename ) ? ( ' - ' . $sitename ) : '';
+	}
+
 	public function setHighlightTitle($title) {
 		if($this->mHighlightTitle == null) {
-			$this->mHighlightTitle = str_replace('_', ' ', htmlspecialchars_decode($title));
+			$this->mHighlightTitle = str_replace('_', ' ', htmlspecialchars_decode($title)) . $this->getWikiName();
 		}
 	}
 
@@ -392,8 +386,21 @@ class SolrResult extends SearchResult {
 		return $this->mCreated;
 	}
 
-	public static function showHit($link, $redirect, $section, $extract, $data) {
-		$data = '';
+	public function isCrossWikiaResult() {
+		return $this->crossWikiaResult;
+	}
+
+	public function getUrl() {
+		return $thi->mUrl;
+	}
+
+	public static function showHit($result, $link, $redirect, $section, $extract, $data) {
+		if($result->isCrossWikiaResult()) {
+			$data = "<a href=\"" . $result->mUrl . "\" title=\"" . $result->mUrl . "\" style=\"text-decoration: none;\"><span class=\"dark_text_2\">" . $result->mUrl . "</span></a>";
+		}
+		else {
+			$data = '';
+		}
 		return true;
 	}
 

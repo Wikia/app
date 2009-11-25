@@ -322,4 +322,8 @@ $wgEnableBlogCommentEdit = true;
 $wgEnabledGroupedBlogComments = true;
 $wgEnableBlogWatchlist = true;
 
-
+/**
+ * @name wgUseWikiaSearchUI
+ * enables wikia Special:Search interface
+ */
+$wgUseWikiaSearchUI = false;
