@@ -104,7 +104,7 @@ function renderLyricTag($input, $argv, $parser)
   $ringtoneLink = "";
   // NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
   // If a user has ringtone-ads turned off, their CSS will make the ad invisible.
-  if($wgFirstLyricTag){
+  if( !empty( $wgLyricTagDisplayRingtone ) && $wgFirstLyricTag ){
 	GLOBAL $wgTitle, $wgUploadPath;
 	$artist = $wgTitle->getDBkey();
 	$colonIndex = strpos("$artist", ":");
