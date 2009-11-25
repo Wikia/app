@@ -104,8 +104,6 @@ class ActionBox extends SpecialPage {
                 $oApi->execute();
                 $aResult =& $oApi->GetResultData();
 
-		print_pre( $aResult );
-
 		if( count($aResult['query']['wantedpages']) > 0) {
 			foreach( $aResult['query']['wantedpages'] as $newfound ) {
 				$wantedpages[] = $newfound['title'] ;
