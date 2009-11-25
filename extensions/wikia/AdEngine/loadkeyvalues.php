@@ -30,7 +30,8 @@ $lineNum=0;
 $rowsInserted=0;
 while ($line=fgetcsv($fh)){
   $lineNum++;
-  if ($lineNum==1){
+  if ("(ignore)" == $line[0]) continue;
+  if ("URL" == $line[0]) {
     // Header. Use it to get the key names
     $keynames = array_values($line);
     continue;
