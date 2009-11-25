@@ -14,6 +14,7 @@ if( empty($wgEnableCrossWikiaSearch) ) {
 else {
 	// cross-wikia search specific options
 	$wgAFSEnabled = false; // disable AFS
+	$wgUseWikiaSearchUI = true;
 }
 
 if( empty($wgCrossWikiaSearchExcludedWikis) ) {
