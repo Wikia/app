@@ -1,15 +1,15 @@
 <!-- s:<?= __FILE__ ?> -->
 <a name="comments"></a>
 <h2 class="wikia_header">
-<?php echo wfMsg("blog-comments") ?>
+<?php echo wfMsg('article-comments-comments') ?>
 </h2>
 <?php
 if ( count( $comments ) > 1 ) {
 ?>
 <form action="<?php echo $title->getFullURL() ?>" method="get" id="blog-comm-form-select">
 <select name="order" style="margin-top:-26px;" id="blog-comm-order">
-	<option value="desc" <?php if ($order=="desc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-dsc") ?></option>
-	<option value="asc" <?php if ($order=="asc") echo 'selected="selected"' ?>><?php echo wfMsg("blog-comments-asc") ?></option>
+	<option value="desc" <?php if ($order=="desc") echo 'selected="selected"' ?>><?php echo wfMsg('article-comments-dsc') ?></option>
+	<option value="asc" <?php if ($order=="asc") echo 'selected="selected"' ?>><?php echo wfMsg('article-comments-asc') ?></option>
 </select>
 </form>
 <?php
@@ -33,28 +33,28 @@ if ( count( $comments ) > 10 ) {
 		<!-- submit -->
 		<? if (!$isReadOnly) { ?>
 		<script type="text/javascript">
-		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-top\" class=\"wikia_button\"><span><? echo wfMsg("blog-comment-post") ?></span></a>");
+		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-top\" class=\"wikia_button\"><span><? echo wfMsg('article-comments-post') ?></span></a>");
 		</script>
 		<noscript>
-		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-top" value="<? echo wfMsg("blog-comment-post") ?>" />
+		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-top" value="<? echo wfMsg('article-comments-post') ?>" />
 		</noscript>
 		<? } ?>
-		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
+		<div class="right" style="font-style: italic;"><?php echo wfMsg('article-comments-info') ?></div>
 		</div>
 	</form>
 	</div>
 <?php
 	} else {
-		echo wfMsg("blog-comments-login", SpecialPage::getTitleFor("UserLogin")->getLocalUrl() );
+		echo wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() );
 	}
 }
 
 	if ( ! count( $comments ) ) {
-		echo "<ul id=\"blog-comments-ul\"><li>";
-		echo "<div id=\"blog-comments-zero\">" . wfMsg( "blog-zero-comments" ) . "</div>";
-		echo "</li></ul>";
+		echo '<ul id="blog-comments-ul"><li>';
+		echo '<div id="blog-comments-zero">' . wfMsg('article-comments-zero-comments') . '</div>';
+		echo '</li></ul>';
 	} else {
-		echo "<ul id=\"blog-comments-ul\" >";
+		echo '<ul id="blog-comments-ul">';
 		$odd = true;
 		foreach( $comments as $comment ):
 			$class = $odd ? 'odd' : 'even'; $odd = !$odd;
@@ -62,7 +62,7 @@ if ( count( $comments ) > 10 ) {
 			echo $comment->render();
 			echo "\n</li>\n";
 		endforeach;
-		echo "</ul>";
+		echo '</ul>';
 	}
 
 	if ( $canEdit && !$isBlocked ) {
@@ -83,13 +83,13 @@ if ( count( $comments ) > 10 ) {
 		<!-- submit -->
 		<? if (!$isReadOnly) { ?>
 		<script type="text/javascript">
-		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-bottom\" class=\"wikia_button\"><span><? echo wfMsg("blog-comment-post") ?></span></a>");
+		document.write("<a href=\"<?php echo $title->getFullURL() ?>\" name=\"wpBlogSubmit\" id=\"blog-comm-submit-bottom\" class=\"wikia_button\"><span><? echo wfMsg('article-comments-post') ?></span></a>");
 		</script>
 		<noscript>
-		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-bottom" value="<? echo wfMsg("blog-comment-post") ?>" />
+		<input type="submit" name="wpBlogSubmit" id="blog-comm-submit-bottom" value="<? echo wfMsg('article-comments-post') ?>" />
 		</noscript>
 		<? } ?>
-		<div class="right" style="font-style: italic;"><?php echo wfMsg("blog-comments-info") ?></div>
+		<div class="right" style="font-style: italic;"><?php echo wfMsg('article-comments-info') ?></div>
 		</div>
 	</form>
 </div>
@@ -98,11 +98,11 @@ if ( count( $comments ) > 10 ) {
 		if ( $isBlocked ) {
 ?>			
 <div class="blog-comm-input reset clearfix">
-	<div id="blog-comm-bottom-info"><p><?=wfMsg("blog-comment-cannot-add")?></p><br/><p><?=$output->parse($reason)?></p></div>
+	<div id="blog-comm-bottom-info"><p><?=wfMsg('article-comments-comment-cannot-add')?></p><br/><p><?=$output->parse($reason)?></p></div>
 </div>	
 <?php	
 		} else {
-			echo wfMsg("blog-comments-login", SpecialPage::getTitleFor("UserLogin")->getLocalUrl() );
+			echo wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() );
 		}
 	}
 ?>
