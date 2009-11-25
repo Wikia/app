@@ -18,6 +18,7 @@ class ApiQueryWantedpages extends ApiQueryBase {
 		$this->addTables( 'querycache' );
 		$this->addFields( array( 'qc_title', 'qc_namespace' ) );
 		$this->addWhereFld( 'qc_type', 'Wantedpages' );
+		$this->addOption( 'ORDER BY', 'qc_value DESC' );
 		$this->addOption( 'LIMIT', $params['limit'] );		
 
 		$res = $this->select(__METHOD__);
