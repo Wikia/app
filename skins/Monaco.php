@@ -1520,12 +1520,12 @@ if( $custom_user_data ) {
 <?php
 		if (isset($this->data['userlinks']['myhome'])) {
 ?>
-				<li><a href="<?= htmlspecialchars($this->data['userlinks']['myhome']['href']) ?>" rel="nofollow"<?= $skin->tooltipAndAccesskey('pt-myhome') ?>><?= htmlspecialchars($this->data['userlinks']['myhome']['text']) ?></a></li>
+				<li id="header_myhome"><a href="<?= htmlspecialchars($this->data['userlinks']['myhome']['href']) ?>" rel="nofollow"<?= $skin->tooltipAndAccesskey('pt-myhome') ?>><?= htmlspecialchars($this->data['userlinks']['myhome']['text']) ?></a></li>
 <?php
 		}
 ?>
-				<li><a href="<?= htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-mytalk') ?>><?= htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></li>
-				<li><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></li>
+				<li id="header_mytalk"><a href="<?= htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-mytalk') ?>><?= htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></li>
+				<li id="header_watchlist"><a href="<?= htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?= $skin->tooltipAndAccesskey('pt-watchlist') ?>><?= htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></li>
 				<li>
 					<dl id="headerButtonUser" class="headerMenuButton">
 						<dt><?= trim(wfMsg('moredotdotdot'), ' .') ?></dt>
