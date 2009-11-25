@@ -28,6 +28,11 @@ body {
 #monaco_footer,
 .wikia_ad,
 .wikia_spotlight,
-.wikia_ad_placeholder {
+.wikia_ad_placeholder,
+#user_masthead_since,
+#user_masthead_tabs,
+#user_masthead_scorecard,
+.blog-comm-input,
+.blog-comm-order {
 	display: none !important;
 }
