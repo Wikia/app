@@ -20,7 +20,8 @@ $langs = array(
 	'es',
 	'fr',
 	'it',
-	'pl'
+	'nl',
+	'pl',
 );
 
 // messages to skip
@@ -90,10 +91,14 @@ $now = date('Y-m-d H:i:s');
 $count = count($messages);
 $msgCount = count($messages['en']);
 
+echo "Generating FCK messages for {$count} languages ({$msgCount} messages for each language)";
+
 // FCK.i18n.php
 $out = "<?php\n\n/* FCK messages -- auto-generated on {$now} - {$count} languages - {$msgCount} messages per language - do not modify it by hand! */\n\n\$messages = array();";
 
 foreach($messages as $lang => $data) {
+	echo "\n * {$lang}...";
+
 	$out .= "\n\$messages['{$lang}'] = array(\n";
 
 	foreach($data as $key => $msg) {
@@ -104,3 +109,5 @@ foreach($messages as $lang => $data) {
 }
 
 file_put_contents($path . '/FCK.i18n.php', $out);
+
+echo "\n\nDone!\n";
