@@ -596,6 +596,79 @@ class CategoryEdits {
 		wfProfileOut( __METHOD__ );
 		return $users;
 	}
+
+	/**
+	 * getMostEdited - list of most edited pages in category
+	 * 
+	 * @access public
+	 *
+	 * @param Integer $incat - percent of pages in $incat category
+	 * @param Array $namespaces - IDs of NS (all namespace if empty)
+	 * @param Integer $limit 
+	 * @param Integer $offset
+	 * 
+	 */
+	public function getMostEdited($incat, $namespaces = array(), $limit = 30, $offset = 0) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		$pages = array();
+		if ( is_int($incat) ) {
+			# integer
+			$CatIn = Category::newFromID($incat);
+		} else {
+			# integer
+			$CatIn = Category::newFromName($incat);
+		}
+		
+		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$catId = $CatIn->getID();
+			$nsPaces = (!empty($namespaces)) ? $dbr->makeList( $namespaces ) : "";
+			$memkey = wfMemcKey( 'pages', $this->mCatId, $catId, md5($nsPaces), $limit, $offset );
+			$pages = $wgMemc->get( $memkey );
+			
+			if ( empty($pages) ) {
+				$res = $dbr->select ( 
+					array( 'category_edits', 'page' ),
+					array( 'ce_page_id as id, page_title as title, ce_page_ns as namespace, sum(ce_count) as edits' ),
+					array( 
+						sprintf('ce_page_id in (select ce_page_id from category_edits where ce_cat_id = %d)', intval( $catId ) ),
+						'ce_cat_id' => $this->mCatId,
+						'page_is_redirect' => 0
+					),
+					__METHOD__,
+					array( 
+						'GROUP BY' => 'ce_page_id',
+					)
+				);
+				if ( $dbr->numRows($res) ) {
+					$pages = $tmp = array();
+					while( $oRow = $dbr->fetchObject($res) ) {
+						$tmp[$oRow->edits][$oRow->ce_page_id] = array(
+							'id' 		=> $oRow->id,
+							'title' 	=> $oRow->title,
+							'namespace' => $oRow->namespace,
+							'edits'		=> $oRow->edits
+						);
+					}
+					$dbr->freeResult($res);
+					if ( count($tmp) > 0 ) { 
+						$a = 0; krsort($tmp); 
+						foreach ( $tmp as $key => $p ) {
+							if ( ( $a >= $offset ) && ( $a - $offset < $limit ) ) {
+								list ( , $pages[] ) = each( $p );
+							}
+						}
+						$wgMemc->set( $memkey, $pages, 60*10 );
+					}
+				}
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $pages;
+	}
 }
 
 
