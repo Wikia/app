@@ -100,7 +100,7 @@ function renderLyricTag($input, $argv, $parser)
   $isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
 
   // If appropriate, build ringtones links.
-  GLOBAL $wgFirstLyricTag;
+  GLOBAL $wgFirstLyricTag, $wgLyricTagDisplayRingtone;
   $ringtoneLink = "";
   // NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
   // If a user has ringtone-ads turned off, their CSS will make the ad invisible.
