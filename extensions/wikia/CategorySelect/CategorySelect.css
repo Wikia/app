@@ -207,3 +207,6 @@ html>/**/body .CSitemOuter > .CScontrolRemove {
 .catlinks-allhidden {
 	display: block !important;
 }
+
+/* rt#20523 */
+#csInfoboxCategory, #csInfoboxSortKey { width: 98%; }
