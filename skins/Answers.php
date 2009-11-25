@@ -950,7 +950,12 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
         }
 
 	function displayMagicAnswer(){
-		global $wgTitle;
+		global $wgTitle, $wgEnableMagicAnswer;
+
+		if ( empty( $wgEnableMagicAnswer ) ) {
+			return false;
+		}
+
 		?>
 		<div id="magicAnswer" style="display:none"><!-- display is shown in web service callback function -->
 			<div id="magicAnswerLeft"><div id="magicAnswerRight"><div id="magicAnswerCurtainLeft"></div><div id="magicAnswerCurtainRight"></div><div id="magicAnswerHat"></div>
