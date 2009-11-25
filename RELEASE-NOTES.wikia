@@ -1,4 +1,5 @@
 == Changes since 200911.4 ==
+* rt#24303: Limited magic answers only to EN wiki (TOR)
 * rt#25243: Masthead+Blogs: hide some elements from printer (uberfuzzy)
 * rt#28845: Import Dutch default FCK messages (Macbre)
 * rt#28823: InputBox: checkbox css fix (uberfuzzy)
