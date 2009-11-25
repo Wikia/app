@@ -13,7 +13,7 @@
 //* change $this->getTitle()->getNamespace() to some private variable
 //* change Namespace::getTalk($this->getTitle()->getNamespace()) to some private variable
 
-define('ARTICLECOMMENTORDERCOOKIE_NAME', 'blogcommentorder');
+define('ARTICLECOMMENTORDERCOOKIE_NAME', 'articlecommentorder');
 define('ARTICLECOMMENTORDERCOOKIE_EXPIRE', 60 * 60 * 24 * 365);
 define('ARTICLECOMMENT_PREFIX', '@comment-');
 
@@ -32,7 +32,7 @@ $wgHooks[ "RecentChange_save" ][] = "ArticleComment::watchlistNotify";
 $wgHooks[ "ChangesListMakeSecureName" ][] = "ArticleCommentList::makeChangesListKey";
 $wgHooks[ "ChangesListHeaderBlockGroup" ][] = "ArticleCommentList::setHeaderBlockGroup";
 # special::watchlist
-//$wgHooks[ "SpecialWatchlistQuery" ][] = "ArticleComment::WatchlistQuery";
+$wgHooks[ "SpecialWatchlistQuery" ][] = "ArticleComment::WatchlistQuery";
 $wgHooks[ "ComposeCommonSubjectMail" ][] = "ArticleComment::ComposeCommonMail";
 $wgHooks[ "ComposeCommonBodyMail" ][] = "ArticleComment::ComposeCommonMail";
 # init
@@ -107,7 +107,9 @@ class ArticleComment {
 		$mFirstRevId,
 		$mLastRevision,  ### for displaying text
 		$mFirstRevision, ### for author & time
-		$mUser;	         ### comment creator
+		$mUser,	         ### comment creator
+		$mNamespace,
+		$mNamespaceTalk;
 
 
 	public function __construct( $Title ) {
@@ -115,6 +117,8 @@ class ArticleComment {
 		 * initialization
 		 */
 		$this->mTitle = $Title;
+		$this->mNamespace = $Title->getNamespace();
+		$this->mNamespaceTalk = Namespace::getTalk($this->mNamespace);
 	}
 
 	/**
@@ -260,9 +264,9 @@ class ArticleComment {
 		if( $this->mTitle ) {
 			$db = wfGetDB($db_conn);
 			$id = $db->selectField(
-				"revision",
-				"min(rev_id)",
-				array( "rev_page" => $this->mTitle->getArticleID() ),
+				'revision',
+				'min(rev_id)',
+				array( 'rev_page' => $this->mTitle->getArticleID() ),
 				__METHOD__
 			);
 		}
@@ -301,35 +305,35 @@ class ArticleComment {
 
 		$text = false;
 		if( $this->load() ) {
-			$canDelete = $wgUser->isAllowed( "delete" );
+			$canDelete = $wgUser->isAllowed( 'delete' );
 
 			$text     = $wgOut->parse( $this->mLastRevision->getText() );
 			$anchor   = self::explode( $this->mTitle->getDBkey() );
 			$sig      = ( $this->mUser->isAnon() )
-				? Xml::span( wfMsg("blog-comments-anonymous"), false, array( "title" => $this->mFirstRevision->getUserText() ) )
-				: Xml::element( 'a', array ( "href" => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
+				? Xml::span( wfMsg('article-comments-anonymous'), false, array( 'title' => $this->mFirstRevision->getUserText() ) )
+				: Xml::element( 'a', array ( 'href' => $this->mUser->getUserPage()->getFullUrl() ), $this->mUser->getName() );
 
 			$comments = array(
-				"sig"       => $sig,
-				"text"      => $text,
-				"title"     => $this->mTitle,
-				"author"    => $this->mUser,
-				"anchor"    => $anchor,
-				"avatar"    => Masthead::newFromUser( $this->mUser )->display( 50, 50 ),
-				"timestamp" => $wgContLang->timeanddate( $this->mFirstRevision->getTimestamp() )
+				'sig'       => $sig,
+				'text'      => $text,
+				'title'     => $this->mTitle,
+				'author'    => $this->mUser,
+				'anchor'    => $anchor,
+				'avatar'    => Masthead::newFromUser( $this->mUser )->display( 50, 50 ),
+				'timestamp' => $wgContLang->timeanddate( $this->mFirstRevision->getTimestamp() )
 			);
 
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$template->set_vars(
 				array (
-					"comment" 	=> $comments,
-					"canDelete" => $canDelete,
-					"canEdit"	=> $this->canEdit(),
-					"sk"		=> $wgUser->getSkin(),
-					"showHistory" => 1
+					'comment' 	=> $comments,
+					'canDelete' => $canDelete,
+					'canEdit'	=> $this->canEdit(),
+					'sk'		=> $wgUser->getSkin(),
+					'showHistory' => 1
 				)
 			);
-			$text = $template->render( "comment" );
+			$text = $template->render( 'comment' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -351,7 +355,7 @@ class ArticleComment {
 		list ( $user, $comment ) = self::explode($this->mTitle->getDBkey());
 		if ( !empty($user) ) {
 			$blogTitle = $user;
-			$Title = Title::makeTitle($this->getTitle()->getNamespace(), $blogTitle);
+			$Title = Title::makeTitle($this->mNamespace, $blogTitle);
 		}
 		return $Title;
 	}
@@ -361,7 +365,7 @@ class ArticleComment {
 		if ( !is_null($oTitle) ) {
 			$title = $oTitle->getPrefixedDBkey();
 		}
-		$elements = explode( "/", $title );
+		$elements = explode( '/', $title );
 		$res = array( '', '', '' );
 		if ( !empty($elements) && is_array($elements) ) {
 			reset($elements);
@@ -384,7 +388,7 @@ class ArticleComment {
 		if ( $this->mUser ) {
 			$isAuthor = ($this->mUser->getId() == $wgUser->getId()) && (!$wgUser->isAnon());
 			//TODO: create new permission and remove checking groups below
-			$canEdit   = $wgUser->isAllowed( "edit" );
+			$canEdit   = $wgUser->isAllowed( 'edit' );
 
 			$groups = $wgUser->getGroups();
 			$isAdmin = in_array( 'staff', $groups ) || in_array( 'sysop', $groups );
@@ -406,19 +410,20 @@ class ArticleComment {
 		global $wgUser, $wgMemc, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
-		$text = "";
+		$text = '';
 		$this->load();
 		if ( $this->canEdit() ) {
 			$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 			$template->set_vars(
 				array(
-					"comment" 		=> $this->mLastRevision->getText(),
-					"isReadOnly" 	=> wfReadOnly(),
-					"canEdit"		=> $this->canEdit(),
-					"title"     	=> $this->mTitle,
+					'comment' 		=> $this->mLastRevision->getText(),
+					'isReadOnly' 	=> wfReadOnly(),
+					'canEdit'		=> $this->canEdit(),
+					'title'     	=> $this->mTitle,
 				)
 			);
-			$text = $template->execute( "comment-edit" );
+			wfLoadExtensionMessages('ArticleComments');
+			$text = $template->execute( 'comment-edit' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -446,8 +451,8 @@ class ArticleComment {
 				return false;
 			}
 
-			$text = $Request->getText("wpArticleComment", false);
-			$commentId = $Request->getText("id", false);
+			$text = $Request->getText('wpArticleComment', false);
+			$commentId = $Request->getText('id', false);
 			if( !$text || !strlen( $text ) ) {
 				wfProfileOut( __METHOD__ );
 				return false;
@@ -474,7 +479,7 @@ class ArticleComment {
 			$editPage->edittime = $article->getTimestamp();
 			$editPage->textbox1 = $text;
 			$retval = $editPage->internalAttemptSave( $result );
-			Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
+			Wikia::log( __METHOD__, 'editpage', "Returned value {$retval}" );
 
 			/**
 			 * clear comments cache for this article
@@ -483,8 +488,8 @@ class ArticleComment {
 			$Title->purgeSquid();
 
 			$key = $Title->getPrefixedDBkey();
-			$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
-			$wgMemc->delete( wfMemcKey( "blog", "comm", $Title->getArticleID() ) );
+			$wgMemc->delete( wfMemcKey( 'blog', 'listing', $key, 0 ) );
+			$wgMemc->delete( wfMemcKey( 'blog', 'comm', $Title->getArticleID() ) );
 
 			$res = array( $retval, $article );
 
@@ -515,22 +520,21 @@ class ArticleComment {
 	static public function axSave() {
 		global $wgRequest, $wgUser, $wgDevelEnvironment, $wgDBname;
 
-		$articleId = $wgRequest->getVal( "article", false );
-		$commentId = $wgRequest->getVal( "id", false );
+		$articleId = $wgRequest->getVal( 'article', false );
+		$commentId = $wgRequest->getVal( 'id', false );
 
 		$Title = Title::newFromID( $articleId );
 		if( ! $Title ) {
-			Wikia::log( __METHOD__, "error", "Cannot create title" );
-			return Wikia::json_encode( array( "error" => 1 ) );
+			Wikia::log( __METHOD__, 'error', 'Cannot create title' );
+			return Wikia::json_encode( array( 'error' => 1 ) );
 		}
 
 		$res = array();
 		$Comment = ArticleComment::newFromId( $commentId );
 		if( $Comment ) {
 			$response = $Comment->doSaveComment( $wgRequest, $wgUser, $Title );
-		}
-		else {
-			return Wikia::json_encode( array( "error" => 1 ) );
+		} else {
+			return Wikia::json_encode( array( 'error' => 1 ) );
 		}
 
 		if ( $response !== false ) {
@@ -552,8 +556,8 @@ class ArticleComment {
 	static public function axEdit() {
 		global $wgRequest, $wgUser, $wgTitle;
 
-		$commentId = $wgRequest->getVal( "id", false );
-		$articleId = $wgRequest->getVal( "article", false );
+		$commentId = $wgRequest->getVal( 'id', false );
+		$articleId = $wgRequest->getVal( 'article', false );
 		$error     = 0;
 
 		/**
@@ -573,16 +577,16 @@ class ArticleComment {
 			$text    = $Comment->editPage();
 		}
 		else {
-			$text = "";
+			$text = '';
 			$status = false;
 		}
 
 		return Wikia::json_encode(
 			array(
-				"id"	=> $commentId,
-				"error"	=> $error,
-				"show"	=> $status,
-				"text"	=> $text
+				'id'	=> $commentId,
+				'error'	=> $error,
+				'show'	=> $status,
+				'text'	=> $text
 			)
 		);
 	}
@@ -598,12 +602,12 @@ class ArticleComment {
 	static public function axPost() {
 		global $wgRequest, $wgUser, $wgDevelEnvironment, $wgDBname;
 
-		$articleId = $wgRequest->getVal( "article", false );
+		$articleId = $wgRequest->getVal( 'article', false );
 
 		$Title = Title::newFromID( $articleId );
 		if( ! $Title ) {
-			Wikia::log( __METHOD__, "error", "Cannot create title" );
-			return Wikia::json_encode( array( "error" => 1 ) );
+			Wikia::log( __METHOD__, 'error', 'Cannot create title' );
+			return Wikia::json_encode( array( 'error' => 1 ) );
 		}
 
 		$response = self::doPost( $wgRequest, $wgUser, $Title );
@@ -633,7 +637,7 @@ class ArticleComment {
 		global $wgMemc, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
-		$text = $Request->getText("wpArticleComment", false);
+		$text = $Request->getText('wpArticleComment', false);
 		if( !$text || !strlen( $text ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;
@@ -645,11 +649,11 @@ class ArticleComment {
 		}
 
 		/**
-		 * title for comment is combination of article title and some "random"
+		 * title for comment is combination of article title and some 'random'
 		 * data
 		 */
 		$commentTitle = Title::newFromText(
-			sprintf( "%s/%s%s-%s", $Title->getText(), ARTICLECOMMENT_PREFIX, $User->getName(), wfTimestampNow() ),
+			sprintf( '%s/%s%s-%s', $Title->getText(), ARTICLECOMMENT_PREFIX, $User->getName(), wfTimestampNow() ),
 			Namespace::getTalk($Title->getNamespace()) );
 		/**
 		 * because we save different tile via Ajax request
@@ -665,7 +669,7 @@ class ArticleComment {
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = $text;
 		$retval = $editPage->internalAttemptSave( $result );
-		Wikia::log( __METHOD__, "editpage", "Returned value {$retval}" );
+		Wikia::log( __METHOD__, 'editpage', "Returned value {$retval}" );
 
 		/**
 		 * clear comments cache for this article
@@ -674,7 +678,7 @@ class ArticleComment {
 		$Title->purgeSquid();
 
 		$key = $Title->getPrefixedDBkey();
-		$wgMemc->delete( wfMemcKey( "blog", "listing", $key, 0 ) );
+		$wgMemc->delete( wfMemcKey( 'blog', 'listing', $key, 0 ) );
 
 //TODO: check this
 //		$clist = ArticleCommentList::newFromTitle( $Title );
@@ -706,20 +710,20 @@ class ArticleComment {
 			default:
 				$wgDevelEnvironment = true;
 				$userId = $wgUser->getId();
-				Wikia::log( __METHOD__, "error", "No article created. Status: {$status}; DB: {$wgDBname}; User: {$userId}" );
+				Wikia::log( __METHOD__, 'error', "No article created. Status: {$status}; DB: {$wgDBname}; User: {$userId}" );
 				$text  = false;
 				$error = true;
-				$message = wfMsg("blog-comment-error");
+				$message = wfMsg('article-comments-error');
 				$wgDevelEnvironment = false;
 		}
 
 		$res = array(
-			"msg"    	=> $message,
-			"error"  	=> $error,
-			"text"   	=> $text,
-			"status" 	=> $status,
-			"commentId" => $commentId,
-			"id"		=> $id
+			'msg'    	=> $message,
+			'error'  	=> $error,
+			'text'   	=> $text,
+			'status' 	=> $status,
+			'commentId' => $commentId,
+			'id'		=> $id
 		);
 
 		return $res;
@@ -823,7 +827,7 @@ class ArticleComment {
 	 * @return true -- because it's hook
 	 */
 	static public function WatchlistQuery ( &$conds,&$tables,&$join_conds,&$fields ) {
-		global $wgEnableBlogWatchlist;
+		global $wgEnableBlogWatchlist, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty($wgEnableBlogWatchlist) ) {
@@ -833,8 +837,10 @@ class ArticleComment {
 				'rc_cur_time',
 				'rc_user',
 				'rc_user_text',
-				'if(rc_namespace='.Namespace::getTalk($this->getTitle()->getNamespace()).', SUBSTRING_INDEX(rc_title, \'/\', 2), rc_title) as rc_title',
-				'if(rc_namespace='.Namespace::getTalk($this->getTitle()->getNamespace()).', '.$this->getTitle()->getNamespace().', rc_namespace) as rc_namespace',
+				//TODO: check if this SUBSTRING_INDEX() has proper arguments
+				//TODO: replace wgTitle to proper object
+				'if(rc_namespace='.Namespace::getTalk($wgTitle->getNamespace()).', SUBSTRING_INDEX(rc_title, \'/\', -1), rc_title) as rc_title',
+				'if(rc_namespace='.Namespace::getTalk($wgTitle->getNamespace()).', '.$wgTitle->getNamespace().', rc_namespace) as rc_namespace',
 				'rc_comment',
 				'rc_minor',
 				'rc_bot',
@@ -898,7 +904,7 @@ class ArticleComment {
 			}
 
 			$keys['$DBPAGETITLE'] = $Title->getText();
-			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'blog-added' );
+			$keys['$CHANGEDORCREATED'] = wfMsgForContent('article-comments-added');
 			list ( $keys['$AUTHOR'], $keys['$BLOGTITLE'] ) = explode( "/", $keys['$DBPAGETITLE'], 2 );
 		}
 		return true;
@@ -1295,10 +1301,10 @@ class ArticleCommentList {
 					$oCommentTitle = Title::makeTitleSafe( $page_value['nspace'], $page_value['title'] );
 					if ($oCommentTitle instanceof Title) {
 						$archive = new PageArchive( $oCommentTitle );
-						$ok = $archive->undelete( "", wfMsg("blogs-undeleted-comment", $new_page_id) );
+						$ok = $archive->undelete( '', wfMsg('article-comments-undeleted-comment', $new_page_id) );
 
 						if ( !is_array($ok) ) {
-							Wikia::log( __METHOD__, "error", "cannot restore comment {$page_value['title']} (id: {$page_id})" );
+							Wikia::log( __METHOD__, 'error', "cannot restore comment {$page_value['title']} (id: {$page_id})" );
 						}
 					}
 				}
@@ -1436,7 +1442,7 @@ class ArticleCommentList {
 					$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 					$template->set_vars(
 						array (
-							"hdrtitle" 		=> wfMsg('blog-rc-comments'),
+							"hdrtitle" 		=> wfMsg('article-comments-rc-comments'),
 							"inx"			=> $oChangeList->rcCacheIndex,
 							"cntChanges"	=> $cntChanges,
 							"users"			=> $users,
@@ -1445,10 +1451,7 @@ class ArticleCommentList {
 					$header = $template->execute( "rcheaderblock" );
 				}
 			}
-
 		}
-
 		return true;
 	}
-
 }
