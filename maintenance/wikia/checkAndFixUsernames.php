@@ -78,7 +78,7 @@ foreach( $tables as $table => $columns ) {
 			);
 
 			foreach( $columns as $index => $column ) {
-				$sql = " AND $column = ". $dbr->quote( $row[ $index ] );
+				$sql = " AND $column = ". $dbr->addQuotes( $row[ $index ] );
 			}
 			if( 1 ) {
 				echo $sql . "\n";
