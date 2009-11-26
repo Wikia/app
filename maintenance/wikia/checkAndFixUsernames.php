@@ -61,7 +61,7 @@ foreach( $tables as $table => $columns ) {
 		if( $userid != $row[ 1 ] && !empty( $row[ 1 ] ) ) {
 			Wikia::log( "log", false, "inconsistency in $table, for {$row[ 0 ]} local = {$row[ 1 ]}, global = {$userid}" );
 			echo "UPDATE $table SET {$columns[ 1 ]} = {$userid} WHERE {$columns[ 0 ]} = '{$row[ 0 ]}' AND {$columns[ 1 ]} <> {$userid} AND {$columns[ 1 ]} <> 0 ";
-			echo isset( $columns[ 2 ] ) ? "{$columns[ 2 ]} = '{$row[ 2 ]'\n" : "LIMIT 1\n";
+			echo isset( $columns[ 2 ] ) ? $columns[ 2 ] ." = '{$row[ 2 ]}'\n" : "LIMIT 1\n";
 		}
 		$central->ping();
 	}
