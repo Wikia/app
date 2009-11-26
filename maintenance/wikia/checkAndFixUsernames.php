@@ -17,7 +17,7 @@ $tables = array(
 /**
  * wikicites handler
  */
-$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+$central = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 
 
 /**
@@ -36,7 +36,7 @@ $dbw = $dbr = wfGetDB( DB_MASTER, array(), $db );
 $cachedUsers = array();
 foreach( $tables as $table => $columns ) {
 	Wikia::log( "log", "table", $table );
-	$sth = $dbr->select(
+	$sth = $dbw->select(
 		array( $table ),
 		$columns,
 		false,
@@ -47,7 +47,7 @@ foreach( $tables as $table => $columns ) {
 		 * for this username check user_id in external shared
 		 */
 		if( empty( $cachedUsers[ $row[ 0 ] ] ) ) {
-			$user = $dbr->selectRow(
+			$user = $central->selectRow(
 				array( "user" ),
 				array( "user_id", "user_name"),
 				array( "user_name" => $row[ 0 ] ),
@@ -61,6 +61,6 @@ foreach( $tables as $table => $columns ) {
 		if( $userid != $row[ 1 ] ) {
 			Wikia::log( "log", false, "inconsistency in $table, for {$row[ 0 ]} local = {$row[ 1 ]}, global = {$userid}" );
 		}
-
+		$central->ping();
 	}
 }
