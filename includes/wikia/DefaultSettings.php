@@ -329,3 +329,10 @@ $wgEnableGroupedArticleCommentsRC = true;
  * enables wikia Special:Search interface
  */
 $wgUseWikiaSearchUI = false;
+
+/*
+ * @name: $wgSpecialPagesRequiredLogin
+ * list of restricted special pages (dbkey) displayed on Special:SpecialPages which required login
+ * @see Login friction project
+ */
+$wgSpecialPagesRequiredLogin = array('Resetpass', 'MyHome', 'Preferences', 'Watchlist', 'Upload', 'CreateBlogPage', 'CreateBlogListingPage', 'MultipleUpload');
