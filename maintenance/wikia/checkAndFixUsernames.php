@@ -58,7 +58,7 @@ foreach( $tables as $table => $columns ) {
 			}
 		}
 		$userid = $cachedUsers[ $row[ 0 ] ];
-		if( $userid != $row[ 1 ] ) {
+		if( $userid != $row[ 1 ] && !empty( $row[ 1 ] ) ) {
 			Wikia::log( "log", false, "inconsistency in $table, for {$row[ 0 ]} local = {$row[ 1 ]}, global = {$userid}" );
 		}
 		$central->ping();
