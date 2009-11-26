@@ -83,7 +83,7 @@ EOD;
 		'format'   => 'json',
 		'action'   => 'query',
 		'list'     => 'categorymembers',
-		'cmtitle' =>  $wgWidgetAnswersCategory,
+		'cmtitle' =>  $wgWidgetAnswersForceCategory,
 		'cmlimit' => '5',
 		'cmnamespace' => 0,
 		'cmprop'   => 'title|timestamp',

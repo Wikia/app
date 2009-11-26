@@ -22,7 +22,7 @@ function WidgetAnswers_load2(data) {
 			if(text.length > 100) {
 				text = text.substring(0,100) + "...";
 			}
-			WidgetAnswers_html += "<li>X<a href=\"http://" + WidgetAnswers_domain + '/index.php?title=' + encodeURIComponent(url) + "\" target=\"_blank\">" + text + "</a></li>";
+			WidgetAnswers_html += "<li><a href=\"http://" + WidgetAnswers_domain + '/index.php?title=' + encodeURIComponent(url) + "\" target=\"_blank\">" + text + "</a></li>";
 		}
 	}
 }
