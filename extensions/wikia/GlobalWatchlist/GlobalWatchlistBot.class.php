@@ -505,14 +505,14 @@ class GlobalWatchlistBot {
 			$this->printDebug("Digest email sent to user: " . $oUser->getName());
 		}
 		else {
-			UserMailer::send(new MailAddress($this->mDebugMailTo), new MailAddress($sFrom), $sEmailSubject, $sEmailBody, 'GlobalWatchlist');
+			UserMailer::send(new MailAddress($this->mDebugMailTo), new MailAddress($sFrom), $sEmailSubject, $sEmailBody, null, null, 'GlobalWatchlist');
 			$this->printDebug("Digest email sent to: " . $this->mDebugMailTo . " (debug mode)");
 		}
 	}
 
 	private function printDebug($sMessage, $bForceDebugMode = false) {
 		if ( $this->mDebugMode || $bForceDebugMode ) {
-			print "[GlobalWatchlistBot] " . $sMessage . "\n";
+			print sprintf("[GlobalWatchlistBot] (%s): %s\n", $sMessage, date('Y-m-d H:i:s'));
 		}
 	}
 
