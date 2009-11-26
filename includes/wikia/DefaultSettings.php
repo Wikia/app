@@ -322,7 +322,7 @@ $wgEnableBlogCommentEdit = true;
 $wgEnabledGroupedBlogComments = true;
 $wgEnableBlogWatchlist = true;
 $wgEnableGroupedBlogCommentsWatchlist = false;
-$wgEnableGroupedArticleCommentsWatchlist = false;
+$wgEnableGroupedArticleCommentsRC = true;
 
 /**
  * @name wgUseWikiaSearchUI
