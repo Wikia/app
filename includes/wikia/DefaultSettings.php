@@ -321,6 +321,8 @@ $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php"
 $wgEnableBlogCommentEdit = true;
 $wgEnabledGroupedBlogComments = true;
 $wgEnableBlogWatchlist = true;
+$wgEnableGroupedBlogCommentsWatchlist = false;
+$wgEnableGroupedArticleCommentsWatchlist = false;
 
 /**
  * @name wgUseWikiaSearchUI
