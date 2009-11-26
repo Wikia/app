@@ -102,7 +102,7 @@ if(isset($wgSharedDB)){
 #Get the user list
 $dbr =& wfGetDB( DB_MASTER );
 
-$db_main =& wfGetDBExt( DB_MASTER );
+$db_main =& wfGetDB( DB_MASTER, array(), 'wikicities' );
 
 $user = $dbr->tableName( 'user' );
 $res = $dbr->query( "SELECT * FROM $user" );
