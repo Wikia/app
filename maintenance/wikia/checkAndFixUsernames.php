@@ -48,10 +48,10 @@ foreach( $tables as $table => $columns ) {
 		 */
 		print_r( $columns );
 		print_r( $row );
-		$text = array_shift( $columns );
-		$id   = array_shift( $columns );
-		$text_val = array_shift( $row );
-		$id_val   = array_shift( $row );
+		$text = $columns[ 0 ];
+		$id   = $columns[ 1 ];
+		$text_val = $row[ 0 ];
+		$id_val   = $row[ 1 ];
 
 		if( empty( $cachedUsers[ $text_val ] ) ) {
 			$user = $central->selectRow(
@@ -80,7 +80,7 @@ foreach( $tables as $table => $columns ) {
 				$id
 			);
 
-			foreach( $columns as $index => $column ) {
+			foreach( array_slice( $columns, 2) as $index => $column ) {
 				$sql = " AND $column = ". $dbw->addQuotes( $row[ $index ] );
 			}
 			if( 1 ) {
