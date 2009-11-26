@@ -57,7 +57,7 @@ foreach( $tables as $table => $columns ) {
 				$cachedUsers[ $user->user_name ] = $user->user_id;
 			}
 		}
-		$userid = $cachedUsers[ $row[ 0 ] ]
+		$userid = $cachedUsers[ $row[ 0 ] ];
 		if( $userid != $row[ 1 ] ) {
 			Wikia::log( "log", false, "inconsistency in $table, for {$row[ 0 ]} local = {$row[ 1 ]}, global = {$userid}" );
 		}
