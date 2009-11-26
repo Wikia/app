@@ -1,5 +1,7 @@
 <?php
 
+$optionsWithArgs = array( "db" );
+
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 
@@ -22,7 +24,8 @@ $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
  * local database handler
  * @todo do not harcode, use commandline option
  */
-$dbw = $dbr = wfGetDB( DB_MASTER, array(), "firefly" ); # "lyrics"
+$db = isset( $options[ "db" ] ) ? $options[ "db" ] : "lyricwiki";
+$dbw = $dbr = wfGetDB( DB_MASTER, array(), $db );
 
 /**
  * not very optimal but we cant use join between db clusters
@@ -32,7 +35,7 @@ $dbw = $dbr = wfGetDB( DB_MASTER, array(), "firefly" ); # "lyrics"
  */
 $cachedUsers = array();
 foreach( $tables as $table => $columns ) {
-
+	Wikia::log( "log", "table", $table );
 	$sth = $dbr->select(
 		array( $table ),
 		$columns,
@@ -53,7 +56,7 @@ foreach( $tables as $table => $columns ) {
 			if( !empty( $user ) ) {
 				$cachedUsers[ $user->user_name ] = $user->user_id;
 				if( $user->user_id != $row[ 1 ] ) {
-					Wikia::log( "log", false, "inconsistency in $table, for {$user->user_name} local = {$row[ 1 ]}, global = {$user->user_id}\n" );
+					Wikia::log( "log", false, "inconsistency in $table, for {$user->user_name} local = {$row[ 1 ]}, global = {$user->user_id}" );
 				}
 			}
 		}
