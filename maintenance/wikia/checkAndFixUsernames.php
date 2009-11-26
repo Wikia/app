@@ -60,7 +60,7 @@ foreach( $tables as $table => $columns ) {
 		$userid = $cachedUsers[ $row[ 0 ] ];
 		if( $userid != $row[ 1 ] && !empty( $row[ 1 ] ) ) {
 			Wikia::log( "log", false, "inconsistency in $table, for {$row[ 0 ]} local = {$row[ 1 ]}, global = {$userid}" );
-			echo "UPDATE $table SET {$columns[ 1 ]} = {$userid} WHERE {$columns[ 0 ]} = {$row[ 0 ]} AND {$columns[ 0 ]} <> {$userid}\n";
+			echo "UPDATE $table SET {$columns[ 1 ]} = {$userid} WHERE {$columns[ 0 ]} = {$row[ 0 ]} AND {$columns[ 1 ]} <> {$userid} AND {$columns[ 1 ]} <> 0\n";
 		}
 		$central->ping();
 	}
