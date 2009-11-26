@@ -1,5 +1,4 @@
 <!-- s:<?= __FILE__ ?> -->
-
 <noscript>
 <style type="text/css">
 /*<![CDATA[*/
@@ -41,7 +40,7 @@ YWC.PreviewMode = '<?= !$ispreview ? "No" : "Yes" ?>' ;
 YWC.RedLinkMode = '<?= !$isredlink ? "No" : "Yes" ?>' ;
 
 YWC.RedirectCallback = {
-    upload: function( oResponse ) {
+    success: function( oResponse ) {
         window.location = wgServer + wgScript + '?title=' + escape (document.getElementById ('Createtitle').value) + '&action=edit&editmode=nomulti&createpage=true'  ;
     } ,
     failure: function (oResponse) {
@@ -64,10 +63,10 @@ YWC.ClearInput = function (o) {
 };
 
 YWC.goToEdit = function (e) {
-	    var oForm = YD.get("createpageform") ;
-	    YE.preventDefault(e);
-	    YC.setForm (oForm, true) ;
-    	    YC.asyncRequest('POST', "/index.php?action=ajax&rs=axCreatepageAdvancedSwitch", YWC.RedirectCallback );
+	var oForm = YD.get("createpageform") ;
+	YE.preventDefault(e);
+	YC.setForm (oForm, false) ;
+	YC.asyncRequest('POST', "/index.php?action=ajax&rs=axCreatepageAdvancedSwitch", YWC.RedirectCallback );
 	YWC.warningPanel.hide();
 }
 
@@ -229,14 +228,14 @@ YWC.ToggleSection = function( e, o ) {
 YWC.Upload = function (e, o) {
     var oForm = YD.get("createpageform") ;
     YE.preventDefault(e);
-    YC.setForm( oForm, true);
+    YC.setForm( oForm, false);
 
     var ProgressBar = YD.get("createpage_upload_progress_section" + o.num) ;
     ProgressBar.style.display = 'block' ;
     ProgressBar.innerHTML = '<img src="/skins/common/progress-wheel.gif" width="16" height="16" alt="wait" border="0" />&nbsp;';
 
     var callback = {
-    	upload: YWC.UploadCallback ,
+    	success: YWC.UploadCallback ,
 	failure: YWC.FailureCallback ,
 	argument: [o.num] ,
 	timeout: 240000
@@ -644,13 +643,13 @@ YWCI.Upload = function (e, o) {
     var oForm = YD.get ("createpageform") ;
     YE.preventDefault(e);
 
-    YC.setForm (oForm, true) ;
+    YC.setForm (oForm, false) ;
     var ProgressBar = YD.get ("createpage_upload_progress" + o.num) ;
     ProgressBar.style.display = 'block' ;
     ProgressBar.innerHTML = '<img src="/skins/common/progress-wheel.gif" width="16" height="16" alt="wait" border="0" />&nbsp;';
 
     var callback = {
-    	upload: YWCI.UploadCallback ,
+    	success: YWCI.UploadCallback ,
 	failure: YWCI.FailureCallback ,
 	argument: [o.num] ,
 	timeout: 60000
