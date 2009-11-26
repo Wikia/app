@@ -69,7 +69,7 @@ function axMultiEditImageUpload () {
 
 	$par_name = $wgRequest->getText ('wp' . $infix . 'ParName' .$postfix) ;
 	$file_ext = split ("\.", $uploadform->mSrcName) ;
-	$file_ext = $file_ext [1] ;
+	$file_ext = $file_ext[1] ;
 	$uploadform->mParameterExt = $file_ext ;
 	if ('' == $infix) {
 		$uploadform->mDesiredDestName = $wgRequest->getText ('Createtitle') . ' ' . trim ($par_name) ;

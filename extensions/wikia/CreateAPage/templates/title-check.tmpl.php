@@ -19,7 +19,6 @@ WR.callbackTitle = {
 	success:
 		function(r) {
 			YD.get('cp-title-check').innerHTML = '';
-
 			var res = YT.JSONParse(r.responseText);
 			if ((false != res ['text']) && (true != res ['empty'])) {
 				var url  = res['url' ].replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -63,7 +62,6 @@ WR.watchTitle = function(e) {
 	YD.get('cp-title-check').innerHTML = '<img src="http://images.wikia.com/common/progress_bar.gif" width="70" height="11" alt="<?= wfMsg ('createpage_please_wait')  ?>" border="0" />';
 	NoCanDo = true ;
 	YC.asyncRequest('GET', ajaxpath + '?action=ajax&rs=axTitleExists&title=' + YD.get('Createtitle').value, WR.callbackTitle);
-	
 };
 
 YE.addListener('Createtitle', 'change', WR.watchTitle );
