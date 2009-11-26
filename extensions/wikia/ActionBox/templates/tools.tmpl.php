@@ -31,10 +31,7 @@
         </div>
 </div>
 <div class="nav">
-        <span class="nav_reverse">
-                <button class="secondary" onclick="WET.byStr('nwb/step2back');NWB.gotostep(1);"><span><?php echo wfMsg("nwb-back-to-step-1")?></span></button>
-        </span>
-        <a href="#step3" id="skip_step_2" onclick="WET.byStr('nwb/step2skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> <?php echo wfMsg("nwb-or")?><button onclick="WET.byStr('nwb/step2save');NWB.uploadLogo();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
+        <button onclick="WET.byStr('nwb/step2save');NWB.uploadLogo();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
 </div>
 </li>
 </ul>
@@ -79,10 +76,7 @@ for (var i = 0; i < themes.length; i++){
 </script>
 </div>
 <div class="nav">
-        <span class="nav_reverse">
-                <button class="secondary" onclick="WET.byStr('nwb/step3back');NWB.gotostep(2);"><span><?php echo wfMsg("nwb-back-to-step-2")?></span></button>
-        </span>
-        <a href="#step4" id="skip_step_3" onclick="WET.byStr('nwb/step3skip');"><?php echo wfMsg("nwb-skip-this-step")?></a> <?php echo wfMsg("nwb-or")?><button onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
+	<button onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
         <input onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);" type="button" id="hidden_theme_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
