@@ -9,10 +9,16 @@ class ActionBox extends SpecialPage {
         }
 
         function execute() {
-                global $wgRequest, $wgHooks, $wgOut;
+                global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 		wfLoadExtensionMessages( 'ActionBox' );
+		wfLoadExtensionMessages( 'NewWikiBuilder' );
 
                 $this->setHeaders();
+
+		// load dependencies (CSS and JS)
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/NewWikiBuilder/main.css?{$wgStyleVersion}");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/NewWikiBuilder/main.js?{$wgStyleVersion}\"></script>\n");
 
 		// get the Two Tools
                 $this->generateTools();
