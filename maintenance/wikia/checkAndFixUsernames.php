@@ -9,9 +9,9 @@ $tables = array(
 	"revision"      => array( "rev_user_text", "rev_user", "rev_id" ),
 	"image"         => array( "img_user_text", "img_user", "img_name" ),
 	"recentchanges" => array( "rc_user_text",  "rc_user",  "rc_id" ),
-	"filearchive"   => array( "fa_user_text",  "fa_user", "fa_id" ),
-	"archive"       => array( "ar_user_text",  "ar_user" ),
-	"oldimage"      => array( "oi_user_text",  "oi_user" )
+	"filearchive"   => array( "fa_user_text",  "fa_user",  "fa_id" ),
+	"archive"       => array( "ar_user_text",  "ar_user",  "ar_namespace", "ar_title", "ar_timestamp" ),
+	"oldimage"      => array( "oi_user_text",  "oi_user",  "oi_name", "oi_timestamp" )
 );
 
 /**
@@ -57,11 +57,29 @@ foreach( $tables as $table => $columns ) {
 				$cachedUsers[ $user->user_name ] = $user->user_id;
 			}
 		}
-		$userid = $cachedUsers[ $row[ 0 ] ];
-		if( $userid != $row[ 1 ] && !empty( $row[ 1 ] ) ) {
-			Wikia::log( "log", false, "inconsistency in $table, for {$row[ 0 ]} local = {$row[ 1 ]}, global = {$userid}" );
-			$sql  = "UPDATE $table SET {$columns[ 1 ]} = {$userid} WHERE {$columns[ 0 ]} = '{$row[ 0 ]}' AND {$columns[ 1 ]} <> {$userid} AND {$columns[ 1 ]} <> 0 ";
-			$sql .= isset( $columns[ 2 ] ) ? "AND {$columns[ 2 ]} = '{$row[ 2 ]}';" : "LIMIT 1;";
+		$text = array_shift( $columns );
+		$id   = array_shift( $columns );
+		$text_val = array_shift( $row );
+		$id_val   = array_shift( $row );
+
+		$userid = $cachedUsers[ $text_val ];
+		if( $userid != $id_val && !empty( $id_val ) ) {
+			Wikia::log( "log", false, "inconsistency in $table, for {$text_val} local = {$id_val}, global = {$userid}" );
+			$sql = sprintf(
+				"UPDATE %s SET %s = %d WHERE %s = %s AND %s <> %d AND %s <> 0 | ",
+				$table,
+				$text,
+				$userid,
+				$text,
+				$dbw->addQuotes( $text_val ),
+				$id,
+				$userid,
+				$id
+			);
+
+			foreach( $columns as $index => $column ) {
+				$sql = " AND $column = ". $dbr->quote( $row[ $index ] );
+			}
 			if( 1 ) {
 				echo $sql . "\n";
 			}
