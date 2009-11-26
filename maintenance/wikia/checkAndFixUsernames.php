@@ -6,12 +6,12 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 
 $tables = array(
-	"revision"      => array( "rev_user_text", "rev_user" ),
-	"image"         => array( "img_user_text", "img_user" ),
-	"recentchanges" => array( "rc_user_text", "rc_user" ),
-	"archive"       => array( "ar_user_text", "ar_user" ),
-	"filearchive"   => array( "fa_user_text", "fa_user" ),
-	"oldimage"      => array( "oi_user_text", "oi_user" )
+	"revision"      => array( "rev_user_text", "rev_user", "rev_id" ),
+	"image"         => array( "img_user_text", "img_user", "img_name" ),
+	"recentchanges" => array( "rc_user_text",  "rc_user",  "rc_id" ),
+	"archive"       => array( "ar_user_text",  "ar_user" ),
+	"filearchive"   => array( "fa_user_text",  "fa_user", "fa_id" ),
+	"oldimage"      => array( "oi_user_text",  "oi_user" )
 );
 
 /**
@@ -60,6 +60,7 @@ foreach( $tables as $table => $columns ) {
 		$userid = $cachedUsers[ $row[ 0 ] ];
 		if( $userid != $row[ 1 ] && !empty( $row[ 1 ] ) ) {
 			Wikia::log( "log", false, "inconsistency in $table, for {$row[ 0 ]} local = {$row[ 1 ]}, global = {$userid}" );
+			echo "UPDATE $table SET {$columns[ 1 ]} = {$userid} WHERE {$columns[ 0 ]} = {$row[ 0 ]} AND {$columns[ 0 ]} <> {$userid}\n"
 		}
 		$central->ping();
 	}
