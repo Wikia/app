@@ -199,6 +199,7 @@ class BlogTemplateClass {
 	private static $aCategoryNames = array( );
 
 	private static $dbr 		= null;
+	private static $catparser	= null;
 
 	private static $search 		= array (
 		//'/<table[^>]*>.*<\/table>/siU',
@@ -582,12 +583,25 @@ class BlogTemplateClass {
     	wfProfileOut( __METHOD__ );
     	return $dbOption;
 	}
+	
+	private static function __parseCategories($text) { 
+		global $wgUser, $wgTitle; 
+		if ( !isset(self::$catparser) && !is_object(self::$catparser) ) {
+			self::$catparser = new Parser();
+		}
+		$parserOutput = self::$catparser->parse($text, $wgTitle, ParserOptions::newFromUser($wgUser), false);
+		$text = $parserOutput->getText();
+		return $text; 
+	}
 
 	private static function __getCategories ($aParamValues) {
     	wfProfileIn( __METHOD__ );
 		self::$aCategoryNames = $aParamValues;
+		error_log ( __METHOD__ . ": " . print_r($aParamValues, true) );
 		$aPages = array();
     	if ( !empty($aParamValues) ) {
+    		#RT 26917
+    		$aParamValues = array_map("strip_tags", array_map(array("self","__parseCategories"), $aParamValues)); 
 			/* set max length of group concat query */
 			self::$dbr->query( 'SET group_concat_max_len = '.GROUP_CONCAT, __METHOD__ );
 			/* run query */
@@ -855,6 +869,7 @@ class BlogTemplateClass {
 
 		self::$aTables = self::$aWhere = self::$aOptions = array();
 		self::$dbr = null;
+		self::$catparser = null;
 		/* default settings for query */
 		self::__setDefault();
 		try {
@@ -887,7 +902,7 @@ class BlogTemplateClass {
 						if ( !empty($aParamValues) ) {
 							$aParamValues = array_slice($aParamValues, 0, self::$aBlogParams[$sParamName]['count']);
 							$aParamValues = str_replace (" ", "_", $aParamValues);
-							$aPages = self::__getCategories ($aParamValues);
+							$aPages = self::__getCategories($aParamValues);
 							if ( !empty($aPages) ) {
 								self::$aWhere[] = "page_id in (" . implode(",", $aPages) . ")";
 							} else {
