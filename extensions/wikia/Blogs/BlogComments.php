@@ -913,10 +913,10 @@ class BlogComment {
 	 * @return true -- because it's hook
 	 */
 	static public function WatchlistQuery ( &$conds,&$tables,&$join_conds,&$fields ) {
-		global $wgEnableBlogWatchlist;
+		global $wgEnableGroupedBlogCommentsWatchlist;
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty($wgEnableBlogWatchlist) ) {
+		if ( empty($wgEnableGroupedBlogCommentsWatchlist) ) {
 			$new_fields = array(
 				'rc_id',
 				'rc_timestamp',
@@ -1483,6 +1483,7 @@ class BlogCommentList {
 
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
+		error_log($oTitle->getDBkey() . "\n");
 
 		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE_TALK ) ) ) {
 			$user = $page_title = $comment = "";
