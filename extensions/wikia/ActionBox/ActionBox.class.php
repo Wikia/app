@@ -13,20 +13,14 @@ class ActionBox extends SpecialPage {
 		wfLoadExtensionMessages( 'ActionBox' );
 
                 $this->setHeaders();
-
-	
-
-
-
 		// get the Two Tools
 
 
-		// get the Three Feeds
-		
+		// get the Three Feeds		
 		$this->formatFeed( $this->getNewpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-newpages-hd') );
 		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedpages-hd') );
+		$this->formatFeed( $this->getWantedimagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedimages-hd') );
         }
-
 
 	// general feed formatting
 	function formatFeed( &$feed_data, $header ) {
@@ -114,5 +108,33 @@ class ActionBox extends SpecialPage {
 		return $wantedpages;
 	}
 
+	// fetch the feed for SpecialWantedpages
+	function getWantedimagesFeed( $limit ) {
+		wfProfileIn( __METHOD__ );
+		$wantedimages = array();
+
+		$oFauxRequest = new FauxRequest(
+				array(
+					'action'        => 'query',
+					'list'		=> 'wantedimages',
+					'wilimit'	=> intval($limit),
+				     )
+				);
+
+		$oApi = new ApiMain($oFauxRequest);
+                $oApi->execute();
+                $aResult =& $oApi->GetResultData();
+
+		if( !isset($aResult['warnings']) )  {
+			if( count($aResult['query']['wantedimages']) > 0) {
+				foreach( $aResult['query']['wantedimages'] as $newfound ) {
+					$wantedimages[] = $newfound['title'] ;
+				}
+			}
+		}
+
+		wfProfileOut( __METHOD__ ); 		
+		return $wantedimages;
+	}
 
 }
