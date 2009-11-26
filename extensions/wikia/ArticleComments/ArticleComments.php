@@ -32,7 +32,6 @@ $wgHooks[ "RecentChange_save" ][] = "ArticleComment::watchlistNotify";
 $wgHooks[ "ChangesListMakeSecureName" ][] = "ArticleCommentList::makeChangesListKey";
 $wgHooks[ "ChangesListHeaderBlockGroup" ][] = "ArticleCommentList::setHeaderBlockGroup";
 # special::watchlist
-$wgHooks[ "SpecialWatchlistQuery" ][] = "ArticleComment::WatchlistQuery";
 $wgHooks[ "ComposeCommonSubjectMail" ][] = "ArticleComment::ComposeCommonMail";
 $wgHooks[ "ComposeCommonBodyMail" ][] = "ArticleComment::ComposeCommonMail";
 # init
@@ -43,13 +42,17 @@ class ArticleCommentInit {
 	private static $enable = null;
 
 	static private function ArticleCommentCheck() {
-		global $wgOut, $wgTitle, $wgUser, $wgRequest, $wgContentNamespaces;
+		global $wgOut, $wgTitle, $wgUser, $wgRequest, $wgContentNamespaces, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
 
 		if (is_null(self::$enable)) {
 			self::$enable = true;
 			//enable comments only on content namespaces
 			if (!in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
+				self::$enable = false;
+			}
+			
+			if ( $wgEnableBlogArticles && in_array($wgTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ) {
 				self::$enable = false;
 			}
 
@@ -789,10 +792,10 @@ class ArticleComment {
 	 * @return true -- because it's hook
 	 */
 	static public function watchlistNotify ( RecentChange &$oRC ) {
-		global $wgEnableBlogWatchlist, $wgTitle;
+		global $wgEnableGroupedArticleCommentsRC, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty($wgEnableBlogWatchlist) && ( $oRC instanceof RecentChange ) ) {
+		if ( !empty($wgEnableGroupedArticleCommentsRC) && ( $oRC instanceof RecentChange ) ) {
 			$namespace = $oRC->getAttribute('rc_namespace');
 			$blog_id = $oRC->getAttribute('rc_cur_id');
 			//TODO: is this usage of wgTitle is proper?
@@ -809,66 +812,6 @@ class ArticleComment {
 					#---
 					$oRC->setAttribs($mAttribs);
 				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
-	 * Hook
-	 *
-	 * @param RecentChange $oRC -- instance of RecentChange class
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return true -- because it's hook
-	 */
-	static public function WatchlistQuery ( &$conds,&$tables,&$join_conds,&$fields ) {
-		global $wgEnableBlogWatchlist, $wgTitle;
-		wfProfileIn( __METHOD__ );
-
-		if ( !empty($wgEnableBlogWatchlist) ) {
-			$new_fields = array(
-				'rc_id',
-				'rc_timestamp',
-				'rc_cur_time',
-				'rc_user',
-				'rc_user_text',
-				//TODO: check if this SUBSTRING_INDEX() has proper arguments
-				//TODO: replace wgTitle to proper object
-				'if(rc_namespace='.Namespace::getTalk($wgTitle->getNamespace()).', SUBSTRING_INDEX(rc_title, \'/\', -1), rc_title) as rc_title',
-				'if(rc_namespace='.Namespace::getTalk($wgTitle->getNamespace()).', '.$wgTitle->getNamespace().', rc_namespace) as rc_namespace',
-				'rc_comment',
-				'rc_minor',
-				'rc_bot',
-				'rc_new',
-				'rc_cur_id',
-				'rc_this_oldid',
-				'rc_last_oldid',
-				'rc_type',
-				'rc_moved_to_ns',
-				'rc_moved_to_title',
-				'rc_patrolled',
-				'rc_ip',
-				'rc_old_len',
-				'rc_new_len',
-				'rc_deleted',
-				'rc_logid',
-				'rc_log_type',
-				'rc_log_action',
-				'rc_params'
-			);
-
-			if ( !empty($fields) ) {
-				foreach ( $fields as $id => $field ) {
-					if ( strpos($field, 'recentchanges') === false ) {
-						$new_fields[] = $field;
-					}
-				}
-				$fields = $new_fields;
 			}
 		}
 
@@ -1352,18 +1295,19 @@ class ArticleCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function makeChangesListKey( &$oChangeList, &$currentName, &$oRCCacheEntry ) {
-		global $wgUser, $wgEnabledGroupedArticleComments, $wgTitle;
+		global $wgUser, $wgEnableGroupedArticleCommentsRC, $wgTitle, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty($wgEnabledGroupedArticleComments) ) {
-			//return true;
+		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
+			return true;
 		}
 
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
+		$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ); 
 		//TODO: check proper usage of $wgTitle
-		if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) ) {
+		if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) && $allowed ) {
 			$user = $comment = "";
 			$newTitle = null;
 			list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
@@ -1390,10 +1334,10 @@ class ArticleCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function setHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
-		global $wgLang, $wgContLang, $wgEnabledGroupedArticleComments, $wgTitle;
+		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC, $wgTitle, $wgEnableBlogArticles;
 
-		if ( empty($wgEnabledGroupedArticleComments) ) {
-//			return true;
+		if ( empty($wgEnableGroupedArticleCommentsRC) ) {
+			return true;
 		}
 
 		$oRCCacheEntry = null;
@@ -1405,7 +1349,8 @@ class ArticleCommentList {
 			$oTitle = $oRCCacheEntry->getTitle();
 			$namespace = $oTitle->getNamespace();
 
-			if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) ) {
+			$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ); 
+			if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) && $allowed ) {
 				list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
 				if ( !empty($user) ) {
