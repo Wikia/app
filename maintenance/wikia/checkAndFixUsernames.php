@@ -46,8 +46,6 @@ foreach( $tables as $table => $columns ) {
 		/**
 		 * for this username check user_id in external shared
 		 */
-		print_r( $columns );
-		print_r( $row );
 		$text = $columns[ 0 ];
 		$id   = $columns[ 1 ];
 		$text_val = $row[ 0 ];
