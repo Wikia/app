@@ -1483,7 +1483,6 @@ class BlogCommentList {
 
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
-		error_log($oTitle->getDBkey() . "\n");
 
 		if ( !is_null($oTitle) && in_array( $namespace, array ( NS_BLOG_ARTICLE_TALK ) ) ) {
 			$user = $page_title = $comment = "";
