@@ -69,7 +69,7 @@ foreach( $tables as $table => $columns ) {
 		if( $userid != $id_val && !empty( $id_val ) ) {
 			Wikia::log( "log", false, "inconsistency in $table, for {$text_val} local = {$id_val}, global = {$userid}" );
 			$sql = sprintf(
-				"UPDATE %s SET %s = %d WHERE %s = %s AND %s <> %d AND %s <> 0 | ",
+				"UPDATE %s SET %s = %d WHERE %s = %s AND %s <> %d AND %s <> 0",
 				$table,
 				$text,
 				$userid,
@@ -81,7 +81,7 @@ foreach( $tables as $table => $columns ) {
 			);
 
 			foreach( array_slice( $columns, 2) as $index => $column ) {
-				$sql = " AND $column = ". $dbw->addQuotes( $row[ $index ] );
+				$sql .= " AND $column = ". $dbw->addQuotes( $row[ $index ] );
 			}
 			if( 1 ) {
 				echo $sql . "\n";
@@ -93,6 +93,5 @@ foreach( $tables as $table => $columns ) {
 			}
 		}
 		$central->ping();
-		exit(0);
 	}
 }
