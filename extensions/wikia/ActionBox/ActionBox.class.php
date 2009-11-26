@@ -13,14 +13,28 @@ class ActionBox extends SpecialPage {
 		wfLoadExtensionMessages( 'ActionBox' );
 
                 $this->setHeaders();
+
 		// get the Two Tools
-
-
+                $this->generateTools();
+		
 		// get the Three Feeds		
 		$this->formatFeed( $this->getNewpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-newpages-hd') );
 		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedpages-hd') );
 		$this->formatFeed( $this->getWantedimagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedimages-hd') );
         }
+
+	
+	function generateTools() {
+		global $wgOut;
+
+		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
+		$tpl->set_vars( array(
+				     ));
+
+		$text = $tpl->execute('tools');
+		$wgOut->addHTML( $text );
+	}
+
 
 	// general feed formatting
 	function formatFeed( &$feed_data, $header ) {
