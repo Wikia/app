@@ -1352,24 +1352,24 @@ class ArticleCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function makeChangesListKey( &$oChangeList, &$currentName, &$oRCCacheEntry ) {
-		global $wgUser, $wgEnabledGroupedBlogComments, $wgTitle;
+		global $wgUser, $wgEnabledGroupedArticleComments, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
-		if ( empty($wgEnabledGroupedBlogComments) ) {
-//			return true;
+		if ( empty($wgEnabledGroupedArticleComments) ) {
+			//return true;
 		}
 
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
 		//TODO: check proper usage of $wgTitle
-		if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($wgTitle->getNamespace()) ) ) ) {
+		if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) ) {
 			$user = $comment = "";
 			$newTitle = null;
 			list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
 			if ( !empty($user) ) {
-				$currentName = "Comments";
+				$currentName = "ArticleComments";
 			}
 		}
 
@@ -1390,9 +1390,9 @@ class ArticleCommentList {
 	 * @return true -- because it's hook
 	 */
 	static public function setHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
-		global $wgLang, $wgContLang, $wgEnabledGroupedBlogComments, $wgTitle;
+		global $wgLang, $wgContLang, $wgEnabledGroupedArticleComments, $wgTitle;
 
-		if ( empty($wgEnabledGroupedBlogComments) ) {
+		if ( empty($wgEnabledGroupedArticleComments) ) {
 //			return true;
 		}
 
@@ -1405,8 +1405,7 @@ class ArticleCommentList {
 			$oTitle = $oRCCacheEntry->getTitle();
 			$namespace = $oTitle->getNamespace();
 
-			//TODO: check proper usage of $wgTitle
-			if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($wgTitle->getNamespace()) ) ) ) {
+			if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) ) {
 				list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
 				if ( !empty($user) ) {
