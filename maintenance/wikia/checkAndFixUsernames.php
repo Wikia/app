@@ -46,21 +46,22 @@ foreach( $tables as $table => $columns ) {
 		/**
 		 * for this username check user_id in external shared
 		 */
-		if( empty( $cachedUsers[ $row[ 0 ] ] ) ) {
+		$text = array_shift( $columns );
+		$id   = array_shift( $columns );
+		$text_val = array_shift( $row );
+		$id_val   = array_shift( $row );
+
+		if( empty( $cachedUsers[ $text_val ] ) ) {
 			$user = $central->selectRow(
 				array( "user" ),
 				array( "user_id", "user_name"),
-				array( "user_name" => $row[ 0 ] ),
+				array( "user_name" => $text_val ),
 				__METHOD__
 			);
 			if( !empty( $user ) ) {
 				$cachedUsers[ $user->user_name ] = $user->user_id;
 			}
 		}
-		$text = array_shift( $columns );
-		$id   = array_shift( $columns );
-		$text_val = array_shift( $row );
-		$id_val   = array_shift( $row );
 
 		$userid = $cachedUsers[ $text_val ];
 		if( $userid != $id_val && !empty( $id_val ) ) {
