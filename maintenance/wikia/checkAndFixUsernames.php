@@ -46,6 +46,8 @@ foreach( $tables as $table => $columns ) {
 		/**
 		 * for this username check user_id in external shared
 		 */
+		print_r( $columns );
+		print_r( $row );
 		$text = array_shift( $columns );
 		$id   = array_shift( $columns );
 		$text_val = array_shift( $row );
@@ -91,5 +93,6 @@ foreach( $tables as $table => $columns ) {
 			}
 		}
 		$central->ping();
+		exit(0);
 	}
 }
