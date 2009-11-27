@@ -6,7 +6,7 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 
 $tables = array(
-#	"revision"      => array( "rev_user_text", "rev_user", "rev_id" ),
+	"revision"      => array( "rev_user_text", "rev_user", "rev_id" ),
 	"image"         => array( "img_user_text", "img_user", "img_name" ),
 	"recentchanges" => array( "rc_user_text",  "rc_user",  "rc_id" ),
 	"filearchive"   => array( "fa_user_text",  "fa_user",  "fa_id" ),
@@ -24,8 +24,9 @@ $central = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
  * local database handler
  * @todo do not harcode, use commandline option
  */
-$db = isset( $options[ "db" ] ) ? $options[ "db" ] : "lyricwiki";
-$dbw = wfGetDB( DB_MASTER, array(), $db );
+$db    = isset( $options[ "db" ] ) ? $options[ "db" ] : "lyricwiki";
+$write = isset( $options[ "write" ] ) ? true : false;
+$dbw   = wfGetDB( DB_MASTER, array(), $db );
 
 /**
  * not very optimal but we cant use join between db clusters
@@ -81,13 +82,13 @@ foreach( $tables as $table => $columns ) {
 			foreach( array_slice( $columns, 2, 4, true ) as $index => $column ) {
 				$sql .= " AND $column = ". $dbw->addQuotes( $row[ $index ] );
 			}
-			if( 1 ) {
-				echo $sql . "\n";
-			}
-			else {
+			if( $write ) {
 				$dbw->begin( );
 				$dbw->query( $sql, __METHOD__ );
 				$dbw->commit( );
+			}
+			else {
+				echo $sql . "\n";
 			}
 		}
 		$central->ping();
