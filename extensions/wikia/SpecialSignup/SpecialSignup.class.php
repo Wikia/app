@@ -145,7 +145,6 @@ class ExtendedLoginForm extends LoginForm {
                         $q .= $returnto;
                         $linkq .= $returnto;
                         $q2 .= $returnto;
-                        $linkq2 .= $returnto;
                 }
 
                 # Pass any language selection on to the mode switch link
