@@ -6,7 +6,7 @@ ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( "commandLine.inc" );
 
 $tables = array(
-	"revision"      => array( "rev_user_text", "rev_user", "rev_id" ),
+#	"revision"      => array( "rev_user_text", "rev_user", "rev_id" ),
 	"image"         => array( "img_user_text", "img_user", "img_name" ),
 	"recentchanges" => array( "rc_user_text",  "rc_user",  "rc_id" ),
 	"filearchive"   => array( "fa_user_text",  "fa_user",  "fa_id" ),
@@ -78,7 +78,7 @@ foreach( $tables as $table => $columns ) {
 				$id
 			);
 
-			foreach( array_slice( $columns, 2) as $index => $column ) {
+			foreach( array_slice( $columns, 2, 4, true ) as $index => $column ) {
 				$sql .= " AND $column = ". $dbw->addQuotes( $row[ $index ] );
 			}
 			if( 1 ) {
