@@ -142,15 +142,24 @@ class WikiFactoryPage extends SpecialPage {
 			}
 			else {
 				/**
-				 * if there's no dot in cityname we add .wikia.com
-				 * or if is only one dot (language.domain.wikia.com)
+				 * if $domain starts with db: it means that we want to search by
+				 * database name
 				 */
-				if( sizeof(explode(".", $domain )) <= 2 && strlen( $domain ) > 0) {
-					$this->mDomain = $domain;
-					$domain = $domain.".wikia.com";
+				if( preg_match( "/^db\:/", $domain ) ) {
+					list( $prefix, $name ) = explode( ":", $domain, 2 );
+					$cityid = WikiFactory::DBtoID( strtolower( $name ) );
 				}
-
-				$cityid = WikiFactory::DomainToId( $domain );
+				else {
+					/**
+					 * if there's no dot in cityname we add .wikia.com
+					 * or if is only one dot (language.domain.wikia.com)
+					 */
+					if( sizeof(explode(".", $domain )) <= 2 && strlen( $domain ) > 0) {
+						$this->mDomain = $domain;
+						$domain = $domain.".wikia.com";
+					}
+					$cityid = WikiFactory::DomainToId( $domain );
+				}
 			}
 		}
 		$this->mTab = $tab;
