@@ -5,11 +5,11 @@ if (!defined('MEDIAWIKI')) {
 }
 
 $wgExtensionCredits['specialpage'][] = array(
-        'name' => 'Action Box',
+        'name' => 'Wiki Stickies',
         'author' => 'Bartek Lapinski',
         'url' => 'http://www.mediawiki.org/wiki/Extension:MyExtension',
-        'description' => 'The brand new user Action Box!',
-        'descriptionmsg' => 'The extension that will allow users to take ACTION!',
+        'description' => 'The big, sticky Wiki Stickies to capture your eye!',
+        'descriptionmsg' => 'The extension that will capture your attention!',
         'version' => '0.1.5',
 );
 

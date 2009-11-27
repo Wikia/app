@@ -1,8 +1,3 @@
-$(function() {
-	NWB.showStep(3);
-	NWB.checkStep(firstStep);
-
-});
 
 var NWB = {
 	"language":		"en", // default
