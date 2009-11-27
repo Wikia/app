@@ -94,6 +94,7 @@ my $clients     = $ENV{ "CHILDREN" } || 10;
 my $listen      = $ENV{ "SOCKET" }   || "127.0.0.1:39393";
 my $debug       = $ENV{ "DEBUG" }    || 1;
 my $test        = $ENV{ "TEST" }     || 0;
+my $basepath    = $ENV{ "IMGPATH" }  || "/images";
 
 #
 # fastcgi request
@@ -110,7 +111,6 @@ else {
 	$request    = FCGI::Request();
 }
 
-my $basepath    = "/images";
 my $flm         = new File::LibMagic;
 my $maxwidth    = 3000;
 my $ffmpeg      = "/usr/bin/ffmpeg";
