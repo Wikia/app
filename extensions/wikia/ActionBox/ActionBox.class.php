@@ -11,14 +11,15 @@ class ActionBox extends SpecialPage {
         function execute() {
                 global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 		wfLoadExtensionMessages( 'ActionBox' );
+		// for tools: logo upload and skin chooser
 		wfLoadExtensionMessages( 'NewWikiBuilder' );
 
                 $this->setHeaders();
 
 		// load dependencies (CSS and JS)
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/NewWikiBuilder/main.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/ActionBox/NWB/main.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/NewWikiBuilder/main.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ActionBox/NWB/main.js?{$wgStyleVersion}\"></script>\n");
 
 		// get the Two Tools
                 $this->generateTools();
@@ -28,7 +29,6 @@ class ActionBox extends SpecialPage {
 		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedpages-hd') );
 		$this->formatFeed( $this->getWantedimagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedimages-hd') );
         }
-
 	
 	function generateTools() {
 		global $wgOut;
@@ -40,7 +40,6 @@ class ActionBox extends SpecialPage {
 		$text = $tpl->execute('tools');
 		$wgOut->addHTML( $text );
 	}
-
 
 	// general feed formatting
 	function formatFeed( &$feed_data, $header ) {
@@ -55,6 +54,7 @@ class ActionBox extends SpecialPage {
 
 		foreach( $feed_data as $title ) {
 			$body .= Xml::openElement( 'li' ).
+				// todo namespace too (especially for Wantedpages)
 				$sk->makeLink( $title ).			
 				Xml::closeElement( 'li' );
 		}
@@ -128,7 +128,7 @@ class ActionBox extends SpecialPage {
 		return $wantedpages;
 	}
 
-	// fetch the feed for SpecialWantedpages
+	// fetch the feed for pages without images
 	function getWantedimagesFeed( $limit ) {
 		wfProfileIn( __METHOD__ );
 		$wantedimages = array();
