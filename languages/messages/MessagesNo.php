@@ -168,6 +168,10 @@ $specialPageAliases = array(
 	'Tags'                      => array( 'Tagger' ),
 );
 
+$magicWords = array(
+	'redirect'	=> array( '0', '#REDIRECT', '#OMDIRIGERING' ),
+);
+
 $messages = array(
 # User preference toggles
 'tog-underline'               => 'Strek under lenker:',
