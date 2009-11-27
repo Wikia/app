@@ -20,14 +20,14 @@ class ActionBox extends SpecialPage {
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/ActionBox/NWB/main.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ActionBox/NWB/main.js?{$wgStyleVersion}\"></script>\n");
-
-		// get the Two Tools
-                $this->generateTools();
 		
 		// get the Three Feeds		
 		$this->formatFeed( $this->getNewpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-newpages-hd') );
 		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedpages-hd') );
 		$this->formatFeed( $this->getWantedimagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedimages-hd') );
+
+		// get the Two Tools
+                $this->generateTools();
         }
 	
 	function generateTools() {
