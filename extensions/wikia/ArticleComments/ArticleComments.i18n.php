@@ -26,7 +26,11 @@ $messages['en'] = array(
 //	"blogs-undeleted-comment" => "Undeleted comment for blog page $1",
 	'article-comments-undeleted-comment' => 'Undeleted comment for blog page $1',
 //	"article-comments-rc-comments" => "Blog comments",
-	'article-comments-rc-comments' => 'Blog comments',
+	'article-comments-rc-comments' => 'Article comments',
+//	"article-comments-comments-dsc" => "Newest first",
+	'article-comments-dsc' => 'Newest first',
+//	"article-comments-comments-asc" => "Newest last",
+	'article-comments-asc' => 'Newest last',
 
 );
 
@@ -103,8 +107,6 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"article-comments-comments-label" => "Commenting",
 	"article-comments-voting-label" => "Voting",
 	"article-comments-comments-login" => "<a href=\"$1\">Log in</a> to comment",
-	"article-comments-comments-dsc" => "Newest first",
-	"article-comments-comments-asc" => "Newest last",
 	"article-comments-comments-anonymous" => "Anonymous user",
 	"article-comments-comment-hide" => "hide",
 	"article-comments-comment-unhide" => "unhide",

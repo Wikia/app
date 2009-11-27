@@ -20,20 +20,20 @@ define('ARTICLECOMMENT_PREFIX', '@comment-');
 $wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
 
 global $wgAjaxExportList;
-$wgAjaxExportList[] = "ArticleComment::axPost";
-$wgAjaxExportList[] = "ArticleComment::axEdit";
-$wgAjaxExportList[] = "ArticleComment::axSave";
+$wgAjaxExportList[] = 'ArticleComment::axPost';
+$wgAjaxExportList[] = 'ArticleComment::axEdit';
+$wgAjaxExportList[] = 'ArticleComment::axSave';
 
-$wgHooks[ "ArticleDeleteComplete" ][] = "ArticleCommentList::articleDeleteComplete";
-$wgHooks[ "ArticleRevisionUndeleted" ][] = "ArticleCommentList::undeleteComments";
-$wgHooks[ "UndeleteComplete" ][] = "ArticleCommentList::undeleteComplete";
-$wgHooks[ "RecentChange_save" ][] = "ArticleComment::watchlistNotify";
+$wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
+$wgHooks['ArticleRevisionUndeleted'][] = 'ArticleCommentList::undeleteComments';
+$wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComplete';
+$wgHooks['RecentChange_save'][] = 'ArticleComment::watchlistNotify';
 # recentchanges
-$wgHooks[ "ChangesListMakeSecureName" ][] = "ArticleCommentList::makeChangesListKey";
-$wgHooks[ "ChangesListHeaderBlockGroup" ][] = "ArticleCommentList::setHeaderBlockGroup";
+$wgHooks['ChangesListMakeSecureName'][] = 'ArticleCommentList::makeChangesListKey';
+$wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockGroup';
 # special::watchlist
-$wgHooks[ "ComposeCommonSubjectMail" ][] = "ArticleComment::ComposeCommonMail";
-$wgHooks[ "ComposeCommonBodyMail" ][] = "ArticleComment::ComposeCommonMail";
+$wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
+$wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
 # init
 $wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
 $wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
@@ -51,7 +51,7 @@ class ArticleCommentInit {
 			if (!in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
 				self::$enable = false;
 			}
-			
+
 			if ( $wgEnableBlogArticles && in_array($wgTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ) {
 				self::$enable = false;
 			}
@@ -213,21 +213,21 @@ class ArticleComment {
 				if( $this->mLastRevId && $this->mFirstRevId ) {
 					$this->mLastRevision = Revision::newFromTitle( $this->mTitle );
 					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
-					Wikia::log( __METHOD__, "ne", "{$this->mLastRevId} ne {$this->mFirstRevId}" );
+					Wikia::log( __METHOD__, 'ne', "{$this->mLastRevId} ne {$this->mFirstRevId}" );
 				}
 				else {
 					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
 					$this->mLastRevision = $this->mFirstRevision;
 					$this->mLastRevId = $this->mFirstRevId;
-					Wikia::log( __METHOD__, "ne", "getting {$this->mFirstRevId} as lastRev" );
+					Wikia::log( __METHOD__, 'ne', "getting {$this->mFirstRevId} as lastRev" );
 				}
 			}
 			else {
-				Wikia::log( __METHOD__, "eq" );
+				Wikia::log( __METHOD__, 'eq' );
 				if( $this->mFirstRevId ) {
 					$this->mFirstRevision = Revision::newFromId( $this->mFirstRevId );
 					$this->mLastRevision = $this->mFirstRevision;
-					Wikia::log( __METHOD__, "eq", "{$this->mLastRevId} eq {$this->mFirstRevId}" );
+					Wikia::log( __METHOD__, 'eq', "{$this->mLastRevId} eq {$this->mFirstRevId}" );
 				}
 				else {
 					$result = false;
@@ -410,7 +410,7 @@ class ArticleComment {
 	 * @return String
 	 */
 	public function editPage() {
-		global $wgUser, $wgMemc, $wgTitle;
+		global $wgUser, $wgTitle;
 		wfProfileIn( __METHOD__ );
 
 		$text = '';
@@ -491,8 +491,8 @@ class ArticleComment {
 			$Title->purgeSquid();
 
 			$key = $Title->getPrefixedDBkey();
-			$wgMemc->delete( wfMemcKey( 'blog', 'listing', $key, 0 ) );
-			$wgMemc->delete( wfMemcKey( 'blog', 'comm', $Title->getArticleID() ) );
+			$wgMemc->delete( wfMemcKey( 'articlecomment', 'listing', $key, 0 ) );
+			$wgMemc->delete( wfMemcKey( 'articlecomment', 'comm', $Title->getArticleID() ) );
 
 			$res = array( $retval, $article );
 
@@ -681,7 +681,7 @@ class ArticleComment {
 		$Title->purgeSquid();
 
 		$key = $Title->getPrefixedDBkey();
-		$wgMemc->delete( wfMemcKey( 'blog', 'listing', $key, 0 ) );
+		$wgMemc->delete( wfMemcKey( 'articlecomment', 'listing', $key, 0 ) );
 
 //TODO: check this
 //		$clist = ArticleCommentList::newFromTitle( $Title );
@@ -848,7 +848,7 @@ class ArticleComment {
 
 			$keys['$DBPAGETITLE'] = $Title->getText();
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent('article-comments-added');
-			list ( $keys['$AUTHOR'], $keys['$BLOGTITLE'] ) = explode( "/", $keys['$DBPAGETITLE'], 2 );
+			list ( $keys['$AUTHOR'], $keys['$BLOGTITLE'] ) = explode( '/', $keys['$DBPAGETITLE'], 2 );
 		}
 		return true;
 	}
@@ -942,8 +942,8 @@ class ArticleCommentList {
 		/**
 		 * skip cache if purging or using master connection
 		 */
-		if( $action != "purge" && ! $master ) {
-			$this->mComments = $wgMemc->get( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ) );
+		if( $action != 'purge' && ! $master ) {
+			$this->mComments = $wgMemc->get( wfMemcKey( 'articlecomment', 'comm', $this->getTitle()->getArticleId() ) );
 		}
 
 		if( ! is_array( $this->mComments ) ) {
@@ -954,21 +954,21 @@ class ArticleCommentList {
 
 			$dbr = ( $master ) ? wfGetDB( DB_MASTER ) : wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
-				array( "page" ),
-				array( "page_id" ),
+				array( 'page' ),
+				array( 'page_id' ),
 				array(
-					"page_namespace" => Namespace::getTalk($this->getTitle()->getNamespace()),
+					'page_namespace' => Namespace::getTalk($this->getTitle()->getNamespace()),
 					"page_title LIKE '" . $dbr->escapeLike( $this->mText ) . "/" . ARTICLECOMMENT_PREFIX . "%'"
 				),
 				__METHOD__,
-				array( "ORDER BY" => "page_id {$this->mOrder}" )
+				array( 'ORDER BY' => "page_id {$this->mOrder}" )
 			);
 			while( $row = $dbr->fetchObject( $res ) ) {
 				$pages[ $row->page_id ] = ArticleComment::newFromId( $row->page_id );
 			}
 			$dbr->freeResult( $res );
 			$this->mComments = $pages;
-			$wgMemc->set( wfMemcKey( "blog", "comm", $this->getTitle()->getArticleId() ), $this->mComments, 3600 );
+			$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $this->getTitle()->getArticleId() ), $this->mComments, 3600 );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -1020,14 +1020,14 @@ class ArticleCommentList {
 		if ($oTitle instanceof Title) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select(
-				array( "archive" ),
-				array( "ar_page_id", "ar_title" ),
+				array( 'archive' ),
+				array( 'ar_page_id', 'ar_title' ),
 				array(
-					"ar_namespace" => Namespace::getTalk($this->getTitle()->getNamespace()),
+					'ar_namespace' => Namespace::getTalk($this->getTitle()->getNamespace()),
 					"ar_title LIKE '" . $dbr->escapeLike( $oTitle->getDBkey( ) ) . "/%'"
 				),
 				__METHOD__,
-				array( "ORDER BY" => "ar_page_id" )
+				array( 'ORDER BY' => 'ar_page_id' )
 			);
 			while( $row = $dbr->fetchObject( $res ) ) {
 				$pages[ $row->ar_page_id ] = array(
@@ -1069,9 +1069,9 @@ class ArticleCommentList {
 
 		if ($wgRequest->wasPosted()) {
 			// for non-JS version !!!
-			$sComment = $wgRequest->getVal( "wpArticleComment", false );
-			$iArticleId = $wgRequest->getVal( "wpArticleId", false );
-			$sSubmit = $wgRequest->getVal( "wpBlogSubmit", false );
+			$sComment = $wgRequest->getVal( 'wpArticleComment', false );
+			$iArticleId = $wgRequest->getVal( 'wpArticleId', false );
+			$sSubmit = $wgRequest->getVal( 'wpBlogSubmit', false );
 			if ( $sSubmit && $sComment && $iArticleId ) {
 				$oTitle = Title::newFromID( $iArticleId );
 				if ( $oTitle instanceof Title ) {
@@ -1091,31 +1091,31 @@ class ArticleCommentList {
 		 */
 		$avatar    = Masthead::newFromUser( $wgUser );
 		$isSysop   = ( in_array('sysop', $wgUser->getGroups()) || in_array('staff', $wgUser->getGroups() ) );
-		$canEdit   = $wgUser->isAllowed( "edit" );
+		$canEdit   = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
 
 		$comments  = $this->getCommentPages();
-		$canDelete = $wgUser->isAllowed( "delete" );
+		$canDelete = $wgUser->isAllowed( 'delete' );
 		$isReadOnly = wfReadOnly();
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
 		$template->set_vars( array(
-			"order"     => $this->mOrder,
-			"title"     => $wgTitle,
-			"avatar"    => $avatar,
-			"wgUser"    => $wgUser,
-			"isSysop"   => $isSysop,
-			"canEdit"   => $canEdit,
-			"isBlocked" => $isBlocked,
-			"reason"	=> $isBlocked ? $this->blockedPage() : "",
-			"output"	=> $wgOut,
-			"comments"  => $comments,
-			"canDelete" => $canDelete,
-			"isReadOnly" => $isReadOnly,
+			'order'     => $this->mOrder,
+			'title'     => $wgTitle,
+			'avatar'    => $avatar,
+			'wgUser'    => $wgUser,
+			'isSysop'   => $isSysop,
+			'canEdit'   => $canEdit,
+			'isBlocked' => $isBlocked,
+			'reason'	=> $isBlocked ? $this->blockedPage() : '',
+			'output'	=> $wgOut,
+			'comments'  => $comments,
+			'canDelete' => $canDelete,
+			'isReadOnly' => $isReadOnly,
 		) );
 
-		$text = $template->execute( "comment-list" );
+		$text = $template->execute( 'comment-list' );
 
 		return $text;
 	}
@@ -1162,7 +1162,7 @@ class ArticleCommentList {
 			$msg = 'blockedtext';
 		}
 
-		return wfMsgExt( $msg, array("parse"), $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
+		return wfMsgExt( $msg, array('parse'), $blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp );
 	}
 
 	/**
@@ -1171,7 +1171,7 @@ class ArticleCommentList {
 	public function purge() {
 		global $wgMemc;
 
-		$wgMemc->delete( wfMemcKey( "blog", "comm", $this->mTitle->getArticleID() ) );
+		$wgMemc->delete( wfMemcKey( 'articlecomment', 'comm', $this->mTitle->getArticleID() ) );
 
 		$this->mTitle->invalidateCache();
 		$this->mTitle->purgeSquid();
@@ -1305,15 +1305,14 @@ class ArticleCommentList {
 		$oTitle = $oRCCacheEntry->getTitle();
 		$namespace = $oTitle->getNamespace();
 
-		$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ); 
-		//TODO: check proper usage of $wgTitle
+		$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
 		if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) && $allowed ) {
-			$user = $comment = "";
+			$user = $comment = '';
 			$newTitle = null;
 			list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
 			if ( !empty($user) ) {
-				$currentName = "ArticleComments";
+				$currentName = 'ArticleComments';
 			}
 		}
 
@@ -1349,7 +1348,7 @@ class ArticleCommentList {
 			$oTitle = $oRCCacheEntry->getTitle();
 			$namespace = $oTitle->getNamespace();
 
-			$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) ); 
+			$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
 			if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) && $allowed ) {
 				list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
@@ -1382,17 +1381,18 @@ class ArticleCommentList {
 						array_push( $users, $text );
 					}
 
+					wfLoadExtensionMessages('ArticleComments');
 					$cntChanges = wfMsgExt( 'nchanges', array( 'parsemag', 'escape' ), $wgLang->formatNum( $cnt ) );
 					$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 					$template->set_vars(
 						array (
-							"hdrtitle" 		=> wfMsg('article-comments-rc-comments'),
-							"inx"			=> $oChangeList->rcCacheIndex,
-							"cntChanges"	=> $cntChanges,
-							"users"			=> $users,
+							'hdrtitle' 		=> wfMsg('article-comments-rc-comments'),
+							'inx'			=> $oChangeList->rcCacheIndex,
+							'cntChanges'	=> $cntChanges,
+							'users'			=> $users,
 						)
 					);
-					$header = $template->execute( "rcheaderblock" );
+					$header = $template->execute( 'rcheaderblock' );
 				}
 			}
 		}
