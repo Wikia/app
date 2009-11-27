@@ -16,9 +16,12 @@ class ApiQueryWantedimages extends ApiQueryBase {
 		$params = $this->extractRequestParams();
 
                 $this->addTables( 'page' );
+                $this->addTables( 'imagelinks' );
                 $this->addFields( array( 'page_title', 'page_namespace' ) );
-		$this->addJoinConds( 'imagelinks' => array( 'LEFT OUTER JOIN', 'il_from=page_id' )  );
-		$this->addWhereIf( 'il_from', 'is NULL' );
+		$this->addJoinConds( array(
+			'imagelinks' => array( 'LEFT OUTER JOIN', 'page_id = il_from'
+		)));
+		$this->addWhere( 'il_from is NULL' );
                 $this->addOption( 'LIMIT', $params['limit'] );
 
                 $res = $this->select(__METHOD__);
@@ -51,7 +54,6 @@ class ApiQueryWantedimages extends ApiQueryBase {
 				'limit' => 'Limit how many wanted pages will be returned'
 			    );
 	}
-
 
 	public function getDescription() {
 		return "Returns given number of Wanted (missing) images";
