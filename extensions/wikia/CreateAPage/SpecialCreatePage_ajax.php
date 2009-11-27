@@ -56,6 +56,8 @@ function axMultiEditImageUpload () {
 	wfLoadExtensionMessages ('CreateAPage') ;
 
 	global $wgRequest ;
+	$res = array();
+	
 	$postfix = $wgRequest->getVal ('num') ;
 	$wgRequest->getVal ('infix') != '' ? $infix = $wgRequest->getVal ('infix') : $infix = '' ;
 
@@ -69,7 +71,7 @@ function axMultiEditImageUpload () {
 
 	$par_name = $wgRequest->getText ('wp' . $infix . 'ParName' .$postfix) ;
 	$file_ext = split ("\.", $uploadform->mSrcName) ;
-	$file_ext = $file_ext[1] ;
+	$file_ext = @$file_ext[1] ;
 	$uploadform->mParameterExt = $file_ext ;
 	if ('' == $infix) {
 		$uploadform->mDesiredDestName = $wgRequest->getText ('Createtitle') . ' ' . trim ($par_name) ;
@@ -85,41 +87,42 @@ function axMultiEditImageUpload () {
 	$uploadform->mIgnoreWarning = 1 ;
 	$uploadform->mUploadDescription = wfMsg ('createpage_uploaded_from') ;
 	$uploadform->mWatchthis = 1  ;
+	
 	$uploadedfile = $uploadform->execute () ;
 	if ($uploadedfile ["error"] == 0) {
 		$imageobj = wfLocalFile ($uploadedfile ["timestamp"]) ;
 		$imageurl = $imageobj->createThumb (60) ;
-		return Wikia::json_encode (
-				array (
-					"error" => 0 ,
-					"msg" => $uploadedfile ["msg"] ,
-					"url" => $imageurl ,
-					"timestamp" => $uploadedfile ["timestamp"] ,
-					"num" => $postfix ,
-				)
-		) ;
+
+		$res = array (
+			"error" => 0,
+			"msg" => $uploadedfile["msg"] ,
+			"url" => $imageurl,
+			"timestamp" => $uploadedfile ["timestamp"],
+			"num" => $postfix 
+		);
 	} else {
 		if ($uploadedfile ["once"]) {
 			if (!$error_once) {
-				return Wikia::json_encode (
-					array (
-						"error" => 1 ,  
-						"msg" => $uploadedfile ["msg"] ,
-						"num" => $postfix ,
-					)
-				) ;
-			}	
-			$error_once = true ;
-		} else {
-			return Wikia::json_encode (
-				array (
-					"error" => 1 ,
+				$res = array (
+					"error" => 1 ,  
 					"msg" => $uploadedfile ["msg"] ,
 					"num" => $postfix ,
-				)
-			) ;
+				);
+			} 
+			$error_once = true ;
+		} else {
+			$res = array (
+				"error" => 1 ,
+				"msg" => $uploadedfile ["msg"] ,
+				"num" => $postfix ,
+			);
 		}
 	}
+	
+	$text = Wikia::json_encode($res);
+	$ar = new AjaxResponse( $text );
+	$ar->setContentType('text/html; charset=utf-8');
+	return $ar;	
 }
 
 function axCreatepageAdvancedSwitch () {
@@ -139,5 +142,3 @@ $wgAjaxExportList[] = 'axTitleExists' ;
 $wgAjaxExportList[] = 'axMultiEditParse' ;
 $wgAjaxExportList[] = 'axMultiEditImageUpload' ;
 $wgAjaxExportList[] = 'axCreatepageAdvancedSwitch' ;
-
-?>

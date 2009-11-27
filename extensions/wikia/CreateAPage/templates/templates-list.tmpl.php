@@ -228,7 +228,7 @@ YWC.ToggleSection = function( e, o ) {
 YWC.Upload = function (e, o) {
     var oForm = YD.get("createpageform") ;
     YE.preventDefault(e);
-    YC.setForm( oForm, false);
+    YC.setForm( oForm, true );
 
     var ProgressBar = YD.get("createpage_upload_progress_section" + o.num) ;
     ProgressBar.style.display = 'block' ;
@@ -236,9 +236,9 @@ YWC.Upload = function (e, o) {
 
     var callback = {
     	success: YWC.UploadCallback ,
-	failure: YWC.FailureCallback ,
-	argument: [o.num] ,
-	timeout: 240000
+		failure: YWC.FailureCallback ,
+		argument: [o.num] ,
+		timeout: 240000
    }
 
     var sent_request = YC.asyncRequest('POST', "/index.php?action=ajax&rs=axMultiEditImageUpload&infix=All&num=" + o.num, callback) ;
@@ -640,41 +640,43 @@ YWCI.Abort = function (e, o) {
 }
 
 YWCI.Upload = function (e, o) {
+	var n = o.num;
     var oForm = YD.get ("createpageform") ;
-    YE.preventDefault(e);
+    if ( oForm ) {
+		YE.preventDefault(e);
+		YC.setForm(oForm, true) ;
+		var ProgressBar = YD.get ("createpage_upload_progress" + o.num) ;
+		ProgressBar.style.display = 'block' ;
+		ProgressBar.innerHTML = '<img src="/skins/common/progress-wheel.gif" width="16" height="16" alt="wait" border="0" />&nbsp;';
 
-    YC.setForm (oForm, false) ;
-    var ProgressBar = YD.get ("createpage_upload_progress" + o.num) ;
-    ProgressBar.style.display = 'block' ;
-    ProgressBar.innerHTML = '<img src="/skins/common/progress-wheel.gif" width="16" height="16" alt="wait" border="0" />&nbsp;';
+		var callback = {
+			upload: YWCI.UploadCallback,
+			failure: YWCI.FailureCallback,
+			timeout: 60000,
+			argument: [n]
+		};
 
-    var callback = {
-    	success: YWCI.UploadCallback ,
-	failure: YWCI.FailureCallback ,
-	argument: [o.num] ,
-	timeout: 60000
-   }
+		var sent_request = YC.asyncRequest ('POST', "/index.php?action=ajax&rs=axMultiEditImageUpload&num=" + n, callback);
+		YD.get ("createpage_image_cancel" + o.num).style.display = '' ;
+		YD.get ("createpage_image_text" + o.num).style.display = 'none' ;
+		
+		YE.addListener ("createpage_image_cancel" + o.num, "click", YWCI.Abort, {"request": sent_request, "callback": callback} ) ;
+		
+		var neoInput = document.createElement ('input') ;
+		var thisInput = YD.get ('createpage_upload_file' + o.num) ;
+		var thisContainer = YD.get ('createpage_image_label' + o.num) ;
+		thisContainer.removeChild (thisInput) ;
+		
+		neoInput.setAttribute('type', 'file') ;
+		neoInput.setAttribute('id', 'createpage_upload_file' + o.num) ;
+		neoInput.setAttribute ('name', 'wpUploadFile' + o.num) ;
+		neoInput.setAttribute('tabindex', '-1') ;
 
-    var sent_request = YC.asyncRequest ('POST', "/index.php?action=ajax&rs=axMultiEditImageUpload&num=" + o.num, callback ) ;
-    YD.get ("createpage_image_cancel" + o.num).style.display = '' ;
-    YD.get ("createpage_image_text" + o.num).style.display = 'none' ;
-    
-    YE.addListener ("createpage_image_cancel" + o.num, "click", YWCI.Abort, {"request": sent_request, "callback": callback} ) ;
-   
-    var neoInput = document.createElement ('input') ;
-    var thisInput = YD.get ('createpage_upload_file' + o.num) ;
-    var thisContainer = YD.get ('createpage_image_label' + o.num) ;
-    thisContainer.removeChild (thisInput) ;
+		thisContainer.appendChild (neoInput) ;
+		YE.addListener( "createpage_upload_file" + o.num, "change", YWCI.Upload, {"num" : o.num } );
 
-    neoInput.setAttribute('type', 'file') ;
-    neoInput.setAttribute('id', 'createpage_upload_file' + o.num) ;
-    neoInput.setAttribute ('name', 'wpUploadFile' + o.num) ;
-    neoInput.setAttribute('tabindex', '-1') ;
-
-    thisContainer.appendChild (neoInput) ;
-    YE.addListener( "createpage_upload_file" + o.num, "change", YWCI.Upload, {"num" : o.num } );
-
-    YD.get ("createpage_upload_file" + o.num).style.display = 'none' ;
+		YD.get ("createpage_upload_file" + o.num).style.display = 'none' ;
+	}
 }
 
 YWCI.InputTest = function (el) {
