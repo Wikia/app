@@ -15,6 +15,35 @@ class ApiQueryWantedimages extends ApiQueryBase {
 		$db = $this->getDB();
 		$params = $this->extractRequestParams();
 
+                $this->addTables( 'page' );
+                $this->addFields( array( 'page_title', 'page_namespace' ) );
+		$this->addJoinConds( 'imagelinks' => array( 'LEFT OUTER JOIN', 'il_from=page_id' )  );
+		$this->addWhereIf( 'il_from', 'is NULL' );
+                $this->addOption( 'LIMIT', $params['limit'] );
+
+                $res = $this->select(__METHOD__);
+                $count = 0;
+                $result = $this->getResult();
+
+                while( $row = $db->fetchObject( $res ) ) {
+                        if (++$count > $params['limit']) {
+                                // We've reached the one extra which shows that
+                                // there are additional pages to be had. Stop here...
+                                $this->setContinueEnumParameter('continue', $row->qc_title );
+                                break;
+                        }
+
+                        $title = Title::makeTitle($row->page_namespace, $row->page_title);
+                        $vals['title'] = $row->page_title;
+                        $vals['namespace'] = $row->page_namespace;
+
+                        $fit = $this->getResult()->addValue(array('query', $this->getModuleName()), null, $vals);
+                        if(!$fit) {
+                                break;
+                        }
+                }
+                $db->freeResult( $res );
+                $this->getResult()->setIndexedTagName_internal(array('query', $this->getModuleName()), 'page');
 	}
 
 	public function getParamDescription() {
