@@ -1,21 +1,7 @@
 $(function() {
-	var url = document.location.toString();
-	var firstStep = $(".step:first").attr("id");
-	var urlAnchor = firstStep;
-	if (url.match("#")) {
-		urlAnchor = url.split('#')[1];
-	}
-	NWB.showStep(urlAnchor);
-
-	$(".step a").click(function() {
-		if (this.href.match("#")) {
-			NWB.showStep(this.href.split('#')[1]);
-		}
-	});
+	NWB.showStep(3);
 	NWB.checkStep(firstStep);
 
-	$("#step1_form").submit(NWB.handleDescriptionForm);
-	$("#step4_form").submit(NWB.handleFirstPages);
 });
 
 var NWB = {
@@ -35,8 +21,6 @@ NWB.apiFailed = function(reqObj, msg, error){
 };
 
 NWB.showStep = function(stepName) {
-	$(".step").hide();
-	$("[id="+stepName+"]").show();
 	$("#progress li").removeClass("selected");
 	$("[id=progress_"+stepName+"]").addClass("selected");
 	NWB.currentStep = stepName;
