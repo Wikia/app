@@ -10,7 +10,7 @@ $wgExtensionCredits['specialpage'][] = array(
         'url' => 'http://www.mediawiki.org/wiki/Extension:MyExtension',
         'description' => 'The brand new user Action Box!',
         'descriptionmsg' => 'The extension that will allow users to take ACTION!',
-        'version' => '0.1.0',
+        'version' => '0.1.5',
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -21,5 +21,7 @@ $wgSpecialPages['ActionBox'] = 'ActionBox';
 $wgSpecialPageGroups['ActionBox'] = 'users';
 $wgExtensionMessagesFiles['ActionBox'] = $dir . 'ActionBox.i18n.php';
 $wgAutoloadClasses['ApiQueryWantedpages'] = $dir . 'ApiQueryWantedpages.php';
+$wgAutoloadClasses['ApiQueryWantedimages'] = $dir . 'ApiQueryWantedimages.php';
 $wgAPIListModules['wantedpages'] = 'ApiQueryWantedpages';
+$wgAPIListModules['wantedimages'] = 'ApiQueryWantedimages';
 
