@@ -413,7 +413,7 @@ class GlobalWatchlistBot {
 							);
 						}
 					} // if
-					
+
 					if ( in_array($oResultRow->gwa_namespace, array(NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE)) ) {
 						# blogs
 						$aWikiBlogs[$iWikiId][] = $oResultRow;
@@ -450,8 +450,9 @@ class GlobalWatchlistBot {
 	 */
 	private function makeBlogsList( &$aWikiDigest, $iWikiId, $oResultRow ) {
 		$blogTitle = $oResultRow->gwa_title;
+
 		if ( $oResultRow->gwa_namespace == NS_BLOG_ARTICLE_TALK ) {
-			list( $user, $page_title, $comment ) = BlogComments::explode( $oResultRow->gwa_title );
+			list( $user, $page_title, $comment ) = BlogComment::explode( $oResultRow->gwa_title );
 			$blogTitle = $user . "/" . $page_title;
 		}
 		
