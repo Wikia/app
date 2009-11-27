@@ -812,3 +812,22 @@ function wfGetReturntoParam($customReturnto = null) {
 		$returnto .= "&returntoquery=$thisquery";
 	return $returnto;
 }
+
+/*
+ * Fixed urlencode url
+ * @author moli
+ * @return string
+ */
+function wfUrlencodeExt($s_url) {
+	if ( !empty($s_url) ) {
+		if ( strpos( $s_url, '/index.php' ) === false ) {
+			$Url = @parse_url($s_url);
+			$s_url = str_replace(
+				$Url['path'], #search
+				implode("/", array_map("rawurlencode", explode("/", @$Url['path']))), #replace
+				$s_url #what
+			);
+		}
+	}
+	return $s_url;
+}
