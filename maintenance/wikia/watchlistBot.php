@@ -10,8 +10,6 @@
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once('commandLine.inc');
 
-$wgAutoloadClasses["BlogComments"] = $IP."/extensions/wikia/Blogs/BlogComments.php";
-
 $bDebugMode = (isset($options['d']) || isset($options['debug'])) ? true : false;
 $aUserNames = (isset($options['users'])) ? explode(',', $options['users']) : array();
 $aUseDB = (isset($options['usedb'])) ? explode(',', $options['usedb']) : array();
