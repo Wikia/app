@@ -743,16 +743,26 @@ EOS;
 		global $wgDBname, $wgTitle, $wgExternalSharedDB;
 		$results = array();
 
-		$tmpParser = new Parser();
-		$tmpParser->setOutputType(OT_HTML);
-		$tmpParserOptions = new ParserOptions();
-
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$res = $dbr->select('magic_footer_links', 'page, links', array('dbname' => $wgDBname));
 		while($row = $dbr->fetchObject($res)) {
-			$results[$row->page] = $tmpParser->parse($row->links, $wgTitle, $tmpParserOptions, false)->getText();
+			$results[$row->page] = $row->links;
 		}
 		$dbr->freeResult($res);
+
+		wfRunHooks("getMagicFooterLinks", array(&$results));
+
+		if (!empty($results)) {
+			$tmpParser = new Parser();
+			$tmpParser->setOutputType(OT_HTML);
+			$tmpParserOptions = new ParserOptions();
+
+			$results2 = array();
+			foreach ($results as $page => $links) {
+				$results2[$page] = $tmpParser->parse($links, $wgTitle, $tmpParserOptions, false)->getText();
+			}
+			$results = $results2;
+		}
 
 		return $results;
 	}
@@ -2020,11 +2030,14 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
                 }
             }
         }
-        if(!empty($this->data['data']['magicfooterlinks']) && isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()])) {
+        if(!empty($this->data['data']['magicfooterlinks']) && (isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()])
+																					|| isset($this->data['data']['magicfooterlinks']['*']))) {
+			$magicfooterlinks = isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()]) ?
+										$this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()] : $this->data['data']['magicfooterlinks']['*'];
 ?>
                 <tr>
                     <th><?= wfMsg('magicfooterlinks') ?></th>
-                    <td><?= $this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()] ?></td>
+                    <td><?= $magicfooterlinks ?></td>
                 </tr>
 <?php
         }
