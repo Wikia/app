@@ -542,6 +542,7 @@ class ArticleComment {
 
 		if ( $response !== false ) {
 			$status = $response[0]; $article = $response[1];
+			wfLoadExtensionMessages('ArticleComments');
 			$res = self::doAfterPost($status, $article, $commentId);
 		}
 
