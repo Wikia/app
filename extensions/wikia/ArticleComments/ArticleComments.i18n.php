@@ -31,6 +31,8 @@ $messages['en'] = array(
 	'article-comments-dsc' => 'Newest first',
 //	"article-comments-comments-asc" => "Newest last",
 	'article-comments-asc' => 'Newest last',
+//	"article-comments-zero-comments" => "No comments yet!",
+	'article-comments-zero-comments' => 'No comments yet!',
 
 );
 
@@ -101,7 +103,6 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	'article-comments-empty-user-blog' => "This user has not written any blog posts yet!",
 	"article-comments-last-edited" => "<strong>Last edited:</strong> $1",
 	"article-comments-page" => "Blog",
-	"article-comments-zero-comments" => "No comments yet!",
 	"article-comments-comments-new" => "New comment in blog",
 	"article-comments-comments-save" => "Save comment in blog",
 	"article-comments-comments-label" => "Commenting",
