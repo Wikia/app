@@ -341,7 +341,7 @@ class Sanitizer {
 	 * @return string
 	 */
 	static function removeHTMLtags( $text, $processCallback = null, $args = array(), $extratags = array() ) {
-		global $wgUseTidy;
+		global $wgUseTidy, $wgRTEParserEnabled;
 
 		static $htmlpairs, $htmlsingle, $htmlsingleonly, $htmlnest, $tabletags,
 			$htmllist, $listtags, $htmlsingleallowed, $htmlelements, $staticInitialised;
@@ -484,6 +484,16 @@ class Sanitizer {
 					if ( ! $badtag ) {
 						$rest = str_replace( '>', '&gt;', $rest );
 						$close = ( $brace == '/>' && !$slash ) ? ' /' : '';
+
+						// RTE - begin
+						// TODO: document
+						if(!empty($wgRTEParserEnabled)) {
+							if(!$slash && strpos($newparams, '_rte_data') === false) {
+								$newparams = ' _rte_washtml="true"' . $newparams;
+							}
+						}
+						// RTE - end
+
 						global $wgWysiwygParserEnabled;
 						//Wysiwyg: add wasHtml attribute to HTML written by user in the article so the reverseParser knows which tags convert to wikitext and which don't
 						if(!empty($wgWysiwygParserEnabled)) {
@@ -518,6 +528,16 @@ class Sanitizer {
 					}
 					$newparams = Sanitizer::fixTagAttributes( $params, $t );
 					$rest = str_replace( '>', '&gt;', $rest );
+
+					// RTE - begin
+					// TODO: document
+					if(!empty($wgRTEParserEnabled)) {
+						if(!$slash) {
+							$newparams = ' _rte_washtml="true"' . $newparams;
+						}
+					}
+					// RTE - end
+
 					global $wgWysiwygParserEnabled;
 					//Wysiwyg: add wasHtml attribute to HTML written by user in the article so the reverseParser knows which tags convert to wikitext and which don't
 					if(!empty($wgWysiwygParserEnabled)) {
@@ -737,12 +757,26 @@ class Sanitizer {
 			if ( !empty($wgWysiwygParserEnabled) && ($encAttribute == 'style') ) {
 				$attribs[] = "_wysiwyg_style=\"$encValue\"";
 			}
+
+			// RTE - begin
+			global $wgRTEParserEnabled;
+			if(!empty($wgRTEParserEnabled) && $encAttribute == 'style') {
+				$attribs[] = "_rte_style=\"$encValue\"";
+			}
+			// RTE - end
 		}
 
 		// Wysiwyg: store original list of <table> attributes (RT #23998)
 		if ( !empty($wgWysiwygParserEnabled) && ($element == 'table') ) {
 			$attribs[] = '_wysiwyg_attribs="'. self::encodeAttribute(Xml::expandAttributes($stripped)) . '"';
 		}
+
+		// RTE - begin
+		global $wgRTEParserEnabled;
+		if(!empty($wgRTEParserEnabled)) {
+			$attribs[] = RTEReverseParser::encodeAttributesStr($text);
+		}
+		// RTE - end
 
 		return count( $attribs ) ? ' ' . implode( ' ', $attribs ) : '';
 	}

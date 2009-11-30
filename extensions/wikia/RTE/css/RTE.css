@@ -1,0 +1,379 @@
+/* hide MW textarea */
+#wpTextbox1 {
+	visibility: hidden;
+}
+
+/* loading indicator */
+.RTEloading #cke_contents_wpTextbox1 {
+	background: #ddd url(http://images.wikia.com/common/skins/common/images/ajax.gif) no-repeat 50% 50% !important;
+	overflow: hidden;
+	position: relative;
+}
+
+/* hide textarea */
+.RTEloading .cke_contents iframe,
+.RTEloading .cke_contents textarea {
+	position: absolute !important;
+	left: -10000px;
+}
+
+/* dimm toolbar out during mode switch */
+.RTEloading .cke_editor .cke_toolbox {
+	opacity: 0.5;
+}
+
+/* hide toolbar in source mode */
+body.rte_source .cke_toolbox .cke_toolbar {
+	visibility: hidden;
+}
+
+body.rte_source .cke_toolbox #cke_source_button {
+	visibility: visible;
+	position: absolute;
+	right: 10px;
+}
+
+/* MW toolbar */
+#editform #toolbar {
+	display: block !important;
+	left: 9px;
+	position: absolute;
+	top: 7px;
+	visibility: hidden;
+}
+
+body.rte_source #editform #toolbar {
+	visibility: visible;
+}
+
+.cke_skin_wikia .cke_toolbox {
+	position: relative;
+}
+
+/* disable GoogleMaps ext. toolbar button */
+#mw-editbutton-googlemaps {
+	display: none;
+}
+
+/* hide stuff */
+#mw-anon-edit-warning,
+#toolbar {
+	display: none;
+}
+
+/* MW suggest */
+.cke_dialog_body .os-suggest {
+	background-color: window;
+	border: 1px solid #aaa;
+	left: 0 !important;
+	top: 17px !important;
+	z-index: 20000;
+}
+
+.cke_dialog_body .os-suggest-results {
+	width: 500px !important;
+}
+
+.cke_dialog_body .os-suggest-result-hl,
+.cke_dialog_body .os-suggest-result-hl span {
+	background-color: highlight !important;
+	color: highlighttext !important;
+}
+
+/* jQuery "alerts" */
+.RTEAlert p {
+	font-size: 0.9em;
+	line-height: 1.4em;
+	padding: 5px;
+}
+
+/* template previews */
+#RTEStuff {
+	position: absolute;
+	z-index: 10000;
+}
+
+#RTEPlaceholderPreviews {
+	left: 11px;
+	position: absolute;
+}
+
+.RTEPlaceholderPreview {
+	background: transparent url('../images/templatePreviewBg.png') no-repeat -519px 0;
+	display: none;
+	font-size: 12px;
+	padding-top: 9px;
+	position: absolute;
+}
+
+.RTEPlaceholderPreviewLoading .RTEPlaceholderPreviewInner {
+	background: #fff url(http://images.wikia.com/common/skins/common/images/ajax.gif) no-repeat 50% 50%;
+	height: 30px;
+}
+
+.RTEPlaceholderPreviewInner {
+	background-color: #fff;
+	border: solid 1px #d5d5d5;
+	border-top: none;
+	color: #000;
+	padding: 2px;
+	width: 350px;
+}
+
+.RTEPlaceholderPreviewTitleBar {
+	font-weight: bold;
+	padding: 3px 5px;
+	position: relative;
+	white-space: nowrap;
+}
+
+.RTEPlaceholderPreviewTitleBar span {
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113) no-repeat -304px 0;
+	cursor: pointer;
+	height: 16px;
+	position: absolute;
+	right: 5px;
+	width: 16px;
+}
+
+/* info line */
+.RTEPlaceholderPreviewIntro {
+	border-bottom: solid 1px #aaa;
+	padding: 3px 0;
+}
+
+/* preview area */
+.RTEPlaceholderPreviewCode {
+	height: 75px;
+	max-height: 160px;
+	overflow: auto;
+	padding: 4px;
+}
+
+.RTEPlaceholderPreviewPreformatted {
+	font-family: monospace;
+	white-space: pre;
+}
+
+/* [edit] / [delete] */
+.RTEPlaceholderPreviewTools {
+	border-top: solid 1px #aaa;
+	padding: 3px;
+	text-align: right;
+}
+
+.RTEPlaceholderPreviewTools a {
+	cursor: pointer;
+	margin: 0 10px 0 0;
+	padding-left: 20px;
+	position: relative;
+}
+
+.RTEPlaceholderPreviewTools .sprite {
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113);
+	height: 16px;
+	left: 0;
+	position: absolute;
+	width: 16px;
+}
+
+.RTEPlaceholderPreviewToolsEdit .sprite {
+	background-position: 0 0;
+}
+
+.RTEPlaceholderPreviewToolsDelete .sprite {
+	background-position: -80px 0;
+}
+
+.RTEPlaceholderPreviewToolsButtonDisabled {
+	cursor: default !important;
+	color: #ccc;
+	opacity: 0.5;
+	text-decoration: none !important;
+}
+
+/* hide placeholder preview in source mode */
+.rte_source #RTEPlaceholderPreviews {
+	display: none;
+}
+
+/* wikia editor pop-ups */
+.wikiaEditorDialog h1,
+.wikiaEditorDialog span.templateEditorHeader {
+	font-size: 2.2em;
+}
+
+.wikiaEditorDialog h2 {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.wikiaEditorDialog hr {
+	background: #000;
+	height: 1px;
+	width: 100%;
+}
+
+/* dialog loading indicator */
+.wikiaEditorLoading .cke_dialog_body {
+	background: transparent url(http://images.wikia.com/common/skins/common/images/ajax.gif) no-repeat 50% 50%;
+}
+
+.wikiaEditorLoading .cke_dialog_body * {
+	visibility: hidden !important;
+}
+
+.wikiaEditorDialog .loading {
+	background: transparent url(http://images.wikia.com/common/skins/common/images/ajax.gif) no-repeat 50% 50% !important;
+}
+
+/* template editor - search and list of templates*/
+div.templateEditorDialog .cke_dialog_tabs {
+	display: none;
+}
+
+div.templateEditorDialog .cke_dialog_contents {
+	margin-top: 0;
+}
+
+div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
+	position: relative;
+	top: -15px;
+}
+
+#templateLinkToHelp {
+	color: #0080C0;
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#templateEditorHotTemplates,
+#templateEditorMagicWords {
+	height: 140px;
+	list-style: none;
+	margin: 5px 0;
+	overflow: auto;
+}
+
+#templateEditorHotTemplates li,
+#templateEditorMagicWords li {
+	padding: 4px 0;
+}
+
+#templateEditorHotTemplates li {
+	float: left;
+	width: 240px;
+}
+
+#templateEditorHotTemplates a,
+#templateEditorMagicWords a {
+	color: #0080C0;
+	cursor: pointer;
+	font-size: 13px;
+	text-decoration: none;
+}
+
+/* template editor - parameters editor */
+#templateEditorTemplateName {
+	display: inline;
+	margin-right: 30px;
+}
+
+#templateEditorIntro a {
+	color: #0080C0;
+	cursor: pointer;
+}
+
+#templateEditorIntro p {
+	font-size: 14px;
+	margin: 5px 0 10px 0;
+}
+
+#templateParameters {
+	height: 250px;
+	overflow: auto;
+}
+
+#templateParameters label {
+	display: block;
+	margin-top: 5px;
+}
+
+#templateParameters dd {
+	margin: 0;
+}
+
+.wikiaEditorDialog textarea {
+	border: solid 1px #000;
+	font-family: monospace;
+	width: 300px;
+}
+
+#templateParameters textarea {
+	height: 32px;
+}
+
+#templatePreview {
+	height: 250px;
+	overflow: auto;
+	width: 100%;
+}
+
+.templateEditorDialog .cke_dialog_choose_another_tpl .cke_dialog_ui_button {
+	width: 200px !important;
+}
+
+/* fix alignment of "Preview" button */
+.cke_dialog_contents div[name=step2] .cke_dialog_ui_hbox_child {
+	text-align: center;
+	vertical-align: middle;
+}
+
+/* template editor - advanced */
+#templateAdvEditorSource {
+	height: 285px;
+}
+
+#templateAdvPreview {
+	height: 285px;
+	overflow: auto;
+	width: 100%;
+}
+
+/* comment editor - show title */
+.commentEditorDialog textarea.cke_dialog_ui_input_textarea {
+	height: 130px;
+}
+
+/* dropdown lists */
+.cke_skin_wikia .cke_rcombopanel {
+	height: 120px !important;
+	width: 250px !important;
+}
+
+/* image / video toolbar items */
+#editform .cke_button_link .cke_icon {
+	background-position: 0 -1263px;
+}
+
+#editform .cke_button_unlink .cke_icon {
+	background-position: 0 -1280px;
+}
+
+#editform .RTEImageButton .cke_icon {
+	background-position: 0 -1247px;
+}
+
+#editform .RTEVideoButton .cke_icon {
+	background-position: 0 -1232px;
+}
+
+#editform .RTESignatureButton .cke_icon {
+	background-position: 0 -1216px;
+}
+
+#editform .RTEWidescreenButton .cke_icon {
+	background-position: 0 -1296px;
+}

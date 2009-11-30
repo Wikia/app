@@ -7,8 +7,15 @@ EditEnhancements = function() {
 	this.calculate = function() {
 		// rescale textbox
 		if (document.getElementById('wpTextbox1___Frame')) {
+			// FCK
 			var textbox = 'wpTextbox1___Frame';
-		} else {
+		}
+		else if (document.getElementById('cke_contents_wpTextbox1')) {
+			// CKeditor
+			var textbox = 'cke_contents_wpTextbox1';
+		}
+		else {
+			// MW editor
 			var textbox = 'wpTextbox1';
 		}
 

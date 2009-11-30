@@ -1,0 +1,75 @@
+body {
+	background: #fff;
+	font-size: 13px;
+	padding: 5px;
+}
+
+a {
+	text-decoration: none !important;
+}
+
+a.new {
+	color: #ba0000 !important;
+}
+
+#bodyContent a.external {
+	padding-left: 0 !important;
+}
+
+/**
+ * images
+ */
+img.alignCenter {
+	display: block;
+	margin: 0 auto;
+}
+
+img.alignRight {
+	display: block;
+	margin: 0 0 0 auto;
+}
+
+/* thumbs */
+img.thumb,
+img.frame {
+	background-color: #F9F9F9;
+	border: 1px solid #CCCCCC;
+	cursor: move !important;
+	padding: 3px;
+}
+
+img.thumb {
+	display: inline;
+	float: right;
+	margin: 0.5em 0 0.8em 1.4em;
+}
+
+img.thumb.alignLeft {
+	display: inline;
+	float: left;
+	margin: 0.5em 1.4em 0.8em 0;
+}
+
+/* border */
+img.border {
+	border: 1px solid #DDDDDD;
+}
+/* caption indicator */
+img.withCaption {
+	padding-bottom: 25px;
+}
+
+/**
+ *  placeholders
+ */
+img.placeholder {
+	background-image: url(../ckeditor/_source/skins/wikia/icons.png);
+	background-position: 0 -1328px;
+	height: 16px !important;
+	margin: 0 3px 3px 3px;
+	width: 16px !important;
+}
+
+img.placeholder-comment {
+	background-position: 0 -1312px;
+}
