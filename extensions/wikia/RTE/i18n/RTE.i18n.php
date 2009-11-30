@@ -1,7 +1,7 @@
 <?php
 $messages = array();
 $messages['en'] = array(
-	'rte' => 'CKeditor integration for MediaWiki',
+	'rte-desc' => 'CKeditor integration for MediaWiki',
 	'rte-no-js-fallback' => 'The rich text editor does not work with JavaScript switched off. Please either enable it in your browser options, or visit your [[Special:Preferences]] to switch to the old MediaWiki editor',
 	'rte-edgecase-info' => 'Rich text editing has been disabled for this page because article contains:',
 	'rte-edgecase-comment' => 'HTML comments',
@@ -18,7 +18,7 @@ $messages['en'] = array(
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
 );
 $messages['pl'] = array(
-	'rte' => 'CKeditor dla MediaWiki',
+	'rte-desc' => 'CKeditor dla MediaWiki',
 	'enablerichtexteditor' => 'Włącz edytor wizualny',
 	'rte-enablerichtexteditormessage' => 'Edytor wizualny został włączony!',
         'rte-edgecase-info' => 'Edycja w trybie wizualnym została wyłączona dla tej strony, ponieważ zawiera ona:',
@@ -40,7 +40,7 @@ $messages['pl'] = array(
 
 
 $messages['de'] = array(
-	'rte' => 'Integration des CKeditors in MediaWiki',
+	'rte-desc' => 'Integration des CKeditors in MediaWiki',
 	'rte-edgecase-info' => 'Der grafische Editor wurde für diese Seite deaktiviert. Der Artikel enthält:',
 	'rte-edgecase-comment' => 'HTML-Kommentare',
 	'rte-edgecase-triplecurls' => 'Vorlagenparameter',
@@ -66,7 +66,7 @@ $messages['de'] = array(
 
 
 $messages['es'] = array(
-	'rte' => 'Integración del editor CK en MediaWiki',
+	'rte-desc' => 'Integración del editor CK en MediaWiki',
 	'rte-no-js-fallback' => 'El Editor de Texto Enriquecido no trabaja con JavaScript desactivado. Por favor, actívalo en las opciones de tu navegador, o visitas tus [[Especial:Preferencias]] para activar el viejo editor MediaWiki',
 	'rte-edgecase-info' => 'El Editor de Texto Enriquecido ha sido desactivado en esta página porque el artículo contiene:',
 	'rte-edgecase-comment' => 'Comentarios HTML',

@@ -1,7 +1,8 @@
 <?php
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Rich Text Editor (Wysiwyg)',
-	'descriptionmsg' => 'rte',
+	'description' => 'CKeditor integration for MediaWiki',
+	'descriptionmsg' => 'rte-desc',
 	'url' => 'http://www.wikia.com/wiki/c:help:Help:New_editor',
 	'author' => array('Inez Korczyński', 'Maciej Brencz')
 );
