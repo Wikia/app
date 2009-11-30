@@ -613,7 +613,8 @@ hu',
 'wt_lastwikis_noresults' => 'There are no previously visited wikis to display. Visit our [[w:Category:Hubs|Hub list]] for other wikis to visit.',
 
 # Wikia WikiPage widget
-'widgetwikipage' => "This ''message'' is a '''simple''' test of WikiPage widget. You can '''edit content of widget''' by simply [[Mediawiki:$1|editing page]] in MediaWiki namespace.",
+'widgetwikipage' => "This ''message'' is a '''simple''' test of WikiPage widget. You can change this default message by simply [[Mediawiki:Widgetwikipage|editing a page]] in MediaWiki namespace.",
+'widgetwikipagemissing' => "''failed to load '''$1'''''",
 'widget-wikipage-title' => 'Title of widget',
 'widget-wikipage-source' => 'Source page',
 

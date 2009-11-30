@@ -17,9 +17,9 @@ $wgWidgets['WidgetWikiPage'] = array(
 			'default' => 'Wiki Page',
 			'msg'     => 'widget-wikipage-title',
 		),
-		'title' => array(
+		'source' => array(
 			'type'    => 'text',
-			'default' => 'widgetwikipage',
+			'default' => '',
 			'msg'     => 'widget-wikipage-source',
 		)
 	),
@@ -38,7 +38,9 @@ function WidgetWikiPage($id, $params) {
 		$wgTitle = new Title();
 	}
     
-	$params['title'] = trim($params['title']);
+	// clean up inputs
+	$params['source'] = trim($params['source']);
+	$params['name'] = trim($params['name']);
 
 	//
 	// parse message and clean it up
@@ -54,20 +56,30 @@ function WidgetWikiPage($id, $params) {
 	}
 	
 	$options = new ParserOptions();
-	$options->setMaxIncludeSize(750);
+	$options->setMaxIncludeSize(1500);
 
-	// get content of MediaWiki:<title>
-	$article = WidgetFrameworkGetArticle($params['title'], NS_MEDIAWIKI);
-
-	if ( $article == false || empty($params['title']) ) {
-		// "no article" fallback
-		$ret = $parser->parse( wfMsg('widgetwikipage', $params['title']), $wgTitle, $options )->getText();
+	if( empty($params['source']) ) {
+		// blank source pagename, use default message
+		$ret = $parser->parse( wfMsg('widgetwikipage', $params['source']), $wgTitle, $options )->getText();
 	}
 	else {
-		$ret = $parser->parse( $article, $wgTitle, $options )->getText();
+		// has a source value
+		
+		// get contents
+		$article = WidgetFrameworkGetArticle($params['source']);
+	
+		if ( $article == false ) {
+			// failed to get text, show error message, failed pagename is in $1
+			$ret = $parser->parse( wfMsg('widgetwikipagemissing', $params['source']) , $wgTitle, $options )->getText();
+			// TODO: change title if page missing?
+		}
+		else {
+			// got text, parse it!
+			$ret = $parser->parse( $article, $wgTitle, $options )->getText();
+		}
 	}
 
 	wfProfileOut(__METHOD__);
     
-	return array('body' => $ret, 'title' => trim($params['name']) );
+	return array('body' => $ret, 'title' => $params['name'] );
 }
