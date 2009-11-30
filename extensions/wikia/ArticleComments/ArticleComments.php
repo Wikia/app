@@ -37,6 +37,7 @@ $wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
 # init
 $wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
 $wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
+$wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
 
 class ArticleCommentInit {
 	private static $enable = null;
@@ -94,6 +95,17 @@ class ArticleCommentInit {
 		if (self::ArticleCommentCheck()) {
 			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
 		}
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
+	static public function ArticleCommentHideTab(&$skin, &$content_actions) {
+		wfProfileIn( __METHOD__ );
+
+		if (self::ArticleCommentCheck()) {
+			unset($content_actions['talk']);
+		}
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
