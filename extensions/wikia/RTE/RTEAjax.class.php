@@ -11,12 +11,16 @@ class RTEAjax {
 
 		RTE::log(__METHOD__, $wikitext);
 
-		$html = RTE::WikitextToHtml($wikitext);
-
-		return array(
-			'html' => $html,
-			'edgecases' => RTE::edgeCasesFound()
+		$ret = array(
+			'html' => RTE::WikitextToHtml($wikitext)
 		);
+
+		if (RTE::edgeCasesFound()) {
+			$ret['edgecases'] = true;
+			$ret['edgecaseInfo'] = wfMsg('rte-edgecase-info') . ' ' . wfMsg('rte-edgecase-' . RTE::getEdgeCaseType());
+		}
+
+		return $ret;
 	}
 
 	/**

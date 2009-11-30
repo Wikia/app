@@ -311,7 +311,7 @@ window.RTE = {
 					if (data.edgecases) {
 						RTE.log('edgecase found!');
 
-						RTE.tools.alert('&nbsp;', RTE.messages.edgecaseFound);
+						RTE.tools.alert('&nbsp;', data.edgecaseInfo);
 
 						// stay in source mode
 						RTE.loading(false);
