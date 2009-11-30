@@ -1,7 +1,18 @@
 CKEDITOR.plugins.add('rte-image',
 {
+	menus: false,
+
 	init: function(editor) {
 		var self = this;
+
+		editor.on('instanceReady', function() {
+			// take CK toolbar height into consideration
+			var previewTop = $('#cke_top_wpTextbox1').height();
+
+			// add node in which image menus will be stored
+			self.menus = $('<div id="RTEImageMenus" />').css('top', previewTop + 'px');
+			$('#RTEStuff').append(self.menus);
+		});
 
 		editor.on('wysiwygModeReady', function() {
 			// get all images
@@ -85,12 +96,90 @@ CKEDITOR.plugins.add('rte-image',
 		};
 	},
 
-	// show edit / delete menu
-	showMenu: function(image) {
+	// generate HTML for image menu
+	getMenu: function(image) {
+		var self = this;
+
+		if (!this.menus) {
+			// we're not ready yet
+			return;
+		}
+
+		// get node in which menu is / will be stored
+		var menu = image.data('menu');
+
+		// generate node where menu will be stored
+		if (typeof menu == 'undefined') {
+			// create menu node
+			menu= $('<div>').addClass('RTEImageMenu color1');
+			menu.html('<span class="RTEImageMenuEdit">edit</span> <span class="RTEImageMenuDelete">delete</span>');
+
+			// setup events
+			menu.bind('mouseover', function() {
+				// don't hide this menu
+				self.showMenu(image);
+			});
+
+			menu.bind('mouseout', function() {
+				// hide this menu
+				self.hideMenu(image);
+			});
+
+			// add it and store it in image data
+			this.menus.append(menu);
+			image.data('menu', menu);
+
+			// handle clicks on [edit] / [delete]
+			menu.find('.RTEImageMenuEdit').bind('click', function(ev) {
+				// hide preview
+				menu.hide();
+
+				// call editor for image
+				$(image).trigger('edit');
+			});
+
+			menu.find('.RTEImageMenuDelete').bind('click', function(ev) {
+				if (confirm('Are you sure?')) {
+					// remove image and its menu
+					menu.remove();
+					$(image).remove();
+				}
+			});
+		}
+
+		return menu;
 	},
 
-	// hide edit / delete menu
+	// show image menu
+	showMenu: function(image) {
+		var menu = this.getMenu(image);
+
+		// position image menu over an image
+		var position = RTE.tools.getPlaceholderPosition(image);
+
+		menu.css({
+			'left': position.left + 'px',
+			'top': parseInt(position.top + 2) + 'px'
+		});
+
+		menu.show();
+
+		// clear timeout used to hide preview with small delay
+		if (timeoutId = image.data('hideTimeout')) {
+			clearTimeout(timeoutId);
+		}
+	},
+
+	// hide image menu
 	hideMenu: function(image) {
+		var menu = this.getMenu(image);
+
+		// hide menu 100 ms after mouse is out (this prevents flickering)
+		image.data('hideTimeout', setTimeout(function() {
+			menu.hide();
+
+			menu.removeData('hideTimeout');
+		}, 100));
 	},
 
 	setupImage: function(image) {
@@ -116,13 +205,7 @@ CKEDITOR.plugins.add('rte-image',
 			ev.stopPropagation();
 		});
 
-		image.bind('click.image', function(ev) {
-			// remove resizing box
-			ev.preventDefault();
-
-			// don't show CK context menu
-			ev.stopPropagation();
-
+		image.bind('edit.image', function(ev) {
 			RTE.log('Image clicked');
 			RTE.log($(this).getData());
 
