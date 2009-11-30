@@ -1,5 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<div class="blog-comment">
+<div class="article-comments">
 	<a name="<?php echo isset( $comment["anchor"][2] ) ? $comment["anchor"][2] : "" ?>"></a>
 	<div class="comment_avatar">
 		<?php echo $comment["avatar"] ?>
@@ -12,13 +12,13 @@
 			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>"><?=wfMsg('article-comments-delete')?></a>
 		<?php } ?>
 		<?php if ( $canEdit ) { ?>
-			<a name="<?php echo $comment[ "title" ]->getArticleId() ?>" href="#<?php echo $comment[ "title" ]->getArticleId() ?>" class="blog-comm-edit" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('article-comments-edit')?></a>
+			<a name="<?php echo $comment[ "title" ]->getArticleId() ?>" href="#<?php echo $comment[ "title" ]->getArticleId() ?>" class="article-comm-edit" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('article-comments-edit')?></a>
 			<?php if ( !empty($showHistory) && !$comment[ "title" ]->isNewPage() ) { ?>
 				<?= $sk->makeKnownLinkObj( $comment[ "title" ], wfMsgHtml('article-comments-history'), 'action=history' ) ?>
 			<?php } ?>
 		<?php } ?>
 		</div>
-		<div class="blog-comm-text" id="comm-text-<?php echo $comment[ "title" ]->getArticleId() ?>">
+		<div class="article-comm-text" id="comm-text-<?php echo $comment[ "title" ]->getArticleId() ?>">
 		<?php
 			echo $comment["text"];
 		?>

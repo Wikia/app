@@ -94,6 +94,7 @@ class ArticleCommentInit {
 
 		if (self::ArticleCommentCheck()) {
 			$out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ArticleComments/js/ArticleComments.js?{$wgStyleVersion}\" ></script>\n");
+			$out->addExtensionStyle("$wgExtensionsPath/wikia/ArticleComments/css/ArticleComments.css?$wgStyleVersion");
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -357,11 +358,11 @@ class ArticleComment {
 	}
 
 	/**
-	 * get Title object of blog page
+	 * get Title object of article page
 	 *
 	 * @access private
 	 */
-	public function getBlogTitle() {
+	public function getArticleTitle() {
 		if ( !isset($this->mTitle) ) {
 			return null;
 		}
@@ -369,8 +370,8 @@ class ArticleComment {
 		$Title = null;
 		list ( $user, $comment ) = self::explode($this->mTitle->getDBkey());
 		if ( !empty($user) ) {
-			$blogTitle = $user;
-			$Title = Title::makeTitle($this->mNamespace, $blogTitle);
+			$articleTitle = $user;
+			$Title = Title::makeTitle($this->mNamespace, $articleTitle);
 		}
 		return $Title;
 	}
@@ -556,6 +557,8 @@ class ArticleComment {
 			$status = $response[0]; $article = $response[1];
 			wfLoadExtensionMessages('ArticleComments');
 			$res = self::doAfterPost($status, $article, $commentId);
+		} else {
+			return Wikia::json_encode( array( 'error' => 1 ) );
 		}
 
 		return Wikia::json_encode( $res );
@@ -577,7 +580,7 @@ class ArticleComment {
 		$error     = 0;
 
 		/**
-		 * check owner of blog
+		 * check owner of article
 		 */
 		$Title = Title::newFromID( $articleId );
 		if( ! $Title ) {
@@ -719,7 +722,7 @@ class ArticleComment {
 					$id = $comment->mTitle->getArticleID();
 				}
 				if ( empty( $commentId ) && !empty($comment->mTitle) ) {
-					$ok = self::addBlogPageToWatchlist($comment, $commentId) ;
+					$ok = self::addArticlePageToWatchlist($comment, $commentId) ;
 				}
 				$message = false;
 				break;
@@ -745,12 +748,12 @@ class ArticleComment {
 		return $res;
 	}
 
-	static public function addBlogPageToWatchlist($Comment, $commentId) {
-		global $wgUser, $wgEnableBlogWatchlist, $wgTitle;
+	static public function addArticlePageToWatchlist($Comment, $commentId) {
+		global $wgUser, $wgEnableArticleWatchlist, $wgTitle;
 		//TODO: check proper usage of wgTitle
 
 		$watchthis = false;
-		if ( empty($wgEnableBlogWatchlist) ) {
+		if ( empty($wgEnableArticleWatchlist) ) {
 			return $watchthis;
 		}
 
@@ -762,8 +765,8 @@ class ArticleComment {
 			}
 		}
 
-		$oBlogPage = $Comment->getBlogTitle();
-		if ( !is_null($oBlogPage) ) {
+		$oArticlePage = $Comment->getArticleTitle();
+		if ( !is_null($oArticlePage) ) {
 			$dbw = wfGetDB(DB_MASTER);
 			$dbw->begin();
 			if ( !$Comment->mTitle->userIsWatching() ) {
@@ -778,13 +781,13 @@ class ArticleComment {
 				);
 			}
 
-			if ( !$oBlogPage->userIsWatching() ) {
-				# and blog page
+			if ( !$oArticlePage->userIsWatching() ) {
+				# and article page
 				$dbw->insert( 'watchlist',
 					array(
 					'wl_user' => $wgUser->getId(),
 					'wl_namespace' => $wgTitle->getNamespace(),
-					'wl_title' => $oBlogPage->getDBkey(),
+					'wl_title' => $oArticlePage->getDBkey(),
 					'wl_notificationtimestamp' => NULL
 					), __METHOD__, 'IGNORE' );
 			}
@@ -810,18 +813,18 @@ class ArticleComment {
 
 		if ( !empty($wgEnableGroupedArticleCommentsRC) && ( $oRC instanceof RecentChange ) ) {
 			$namespace = $oRC->getAttribute('rc_namespace');
-			$blog_id = $oRC->getAttribute('rc_cur_id');
+			$article_id = $oRC->getAttribute('rc_cur_id');
 			//TODO: is this usage of wgTitle is proper?
-			if ( ( $namespace == Namespace::getTalk($wgTitle->getNamespace()) ) && !empty( $blog_id ) ) {
-				$Comment = ArticleComment::newFromId( $blog_id );
+			if ( ( $namespace == Namespace::getTalk($wgTitle->getNamespace()) ) && !empty( $article_id ) ) {
+				$Comment = ArticleComment::newFromId( $article_id );
 				if ( !is_null($Comment) ) {
-					$oBlogPage = $Comment->getBlogTitle();
+					$oArticlePage = $Comment->getArticleTitle();
 					#---
 					$mAttribs = $oRC->mAttribs;
 					#---
-					$mAttribs['rc_title'] = $oBlogPage->getText();
-					$mAttribs['rc_namespace'] = $oBlogPage->getNamespace();
-					$mAttribs['rc_log_action'] = 'blogs_comment';
+					$mAttribs['rc_title'] = $oArticlePage->getText();
+					$mAttribs['rc_namespace'] = $oArticlePage->getNamespace();
+					$mAttribs['rc_log_action'] = 'article_comment';
 					#---
 					$oRC->setAttribs($mAttribs);
 				}
@@ -861,7 +864,7 @@ class ArticleComment {
 
 			$keys['$DBPAGETITLE'] = $Title->getText();
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent('article-comments-added');
-			list ( $keys['$AUTHOR'], $keys['$BLOGTITLE'] ) = explode( '/', $keys['$DBPAGETITLE'], 2 );
+			list ( $keys['$AUTHOR'], $keys['$ARTICLETITLE'] ) = explode( '/', $keys['$DBPAGETITLE'], 2 );
 		}
 		return true;
 	}
@@ -885,8 +888,8 @@ class ArticleCommentList {
 	}
 
 	static public function newFromText( $text ) {
-		$blogPage = Title::newFromText( $text, $this->getTitle()->getNamespace() );
-		if( ! $blogPage ) {
+		$articlePage = Title::newFromText( $text, $this->getTitle()->getNamespace() );
+		if( ! $articlePage ) {
 			/**
 			 * doesn't exist, lame
 			 */
@@ -894,8 +897,8 @@ class ArticleCommentList {
 		}
 
 		$comments = new ArticleCommentList();
-		$comments->setText( $blogPage->getDBkey() );
-		$comments->setTitle( $blogPage );
+		$comments->setText( $articlePage->getDBkey() );
+		$comments->setTitle( $articlePage );
 		return $comments;
 	}
 
@@ -949,7 +952,7 @@ class ArticleCommentList {
 		$order  = $wgRequest->getText( 'order',  false );
 		$action = $wgRequest->getText( 'action', false );
 
-		$this->handleBlogCommentOrderCookie( $order ); // it's &$order...
+		$this->handleArticleCommentOrderCookie( $order ); // it's &$order...
 		$this->mOrder = $order == 'asc' ? 'asc' : 'desc';
 
 		/**
@@ -989,13 +992,13 @@ class ArticleCommentList {
 	}
 
 	/**
-	 * handleBlogCommentOrderCookie -- save in cookie blog comment order from url & get it next time
+	 * handleArticleCommentOrderCookie -- save in cookie article comment order from url & get it next time
 	 *
 	 * @param string $order -- asc/desc or false if not set via url
 	 *
 	 * @see RT#19080
 	 */
-	private function handleBlogCommentOrderCookie(&$order) {
+	private function handleArticleCommentOrderCookie(&$order) {
 		global $wgCookiePrefix;
 		$cookie = !empty($_COOKIE[$wgCookiePrefix . ARTICLECOMMENTORDERCOOKIE_NAME]) ? $_COOKIE[$wgCookiePrefix . ARTICLECOMMENTORDERCOOKIE_NAME] : false;
 
@@ -1084,7 +1087,7 @@ class ArticleCommentList {
 			// for non-JS version !!!
 			$sComment = $wgRequest->getVal( 'wpArticleComment', false );
 			$iArticleId = $wgRequest->getVal( 'wpArticleId', false );
-			$sSubmit = $wgRequest->getVal( 'wpBlogSubmit', false );
+			$sSubmit = $wgRequest->getVal( 'wpArticleSubmit', false );
 			if ( $sSubmit && $sComment && $iArticleId ) {
 				$oTitle = Title::newFromID( $iArticleId );
 				if ( $oTitle instanceof Title ) {
