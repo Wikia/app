@@ -5,12 +5,12 @@ ArticleComments.processing = false;
 ArticleComments.add = function(json) {
 	$().log('begin: add');
 	//check order and place for new comment
-	if ($('#blog-comm-order').attr('value') == 'asc') {
+	if ($('#article-comm-order').attr('value') == 'asc') {
 		//add at the end
-		$('<li>').html(json.text).attr('id', 'comm-' + json.id).appendTo('#blog-comments-ul');
+		$('<li>').html(json.text).attr('id', 'comm-' + json.id).appendTo('#article-comments-ul');
 	} else {
 		//add at the beginning
-		$('<li>').html(json.text).attr('id', 'comm-' + json.id).prependTo('#blog-comments-ul');
+		$('<li>').html(json.text).attr('id', 'comm-' + json.id).prependTo('#article-comments-ul');
 	}
 	$('#' + json.id).bind('click', ArticleComments.edit);
 	$().log('end: add');
@@ -20,11 +20,12 @@ ArticleComments.save = function(e) {
 	$().log('begin: save');
 	e.preventDefault();
 	if (ArticleComments.processing) return;
-	if ($('#blog-comm-form-' + e.data.id)) {
+	if ($('#article-comm-form-' + e.data.id)) {
 		e.preventDefault();
 		WET.byStr('articleAction/postComment');
-		var textfield = $('#blog-comm-textfield-' + e.data.id).attr('readonly', 'readonly');
-		$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axSave&article=' + wgArticleId + "&id=" + e.data.id, {wpArticleComment: $(textfield).val()}, function(json) {
+		var textfield = $('#article-comm-textfield-' + e.data.id).attr('readonly', 'readonly');
+		$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axSave&article=' + wgArticleId + "&id=" + e.data.id, {wpArticleComment: textfield.val()}, function(json) {
+			$().log(json);
 			if (!json.error) {
 				if (json.commentId && json.commentId != 0) {
 					//replace
@@ -35,10 +36,12 @@ ArticleComments.save = function(e) {
 					ArticleComments.add(json);
 				}
 				//clear error box
-				$('#blog-comm-bottom-info').html('');
+				$('#article-comm-bottom-info').html('');
 			} else {
 				//fill error box
-				$('#blog-comm-bottom-info').html(json.msg);
+				$('#article-comm-bottom-info').html(json.msg);
+				//reenable textarea
+				textfield.removeAttr('readonly');
 			}
 			if (typeof TieDivLibrary != 'undefined') {
 				TieDivLibrary.calculate();
@@ -57,7 +60,7 @@ ArticleComments.edit = function(e) {
 	$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axEdit&id=' + e.target.id + '&article=' + wgArticleId, function(json) {
 		if (!json.error) {
 			$('#comm-text-' + json.id).html(json.text);
-			$('#blog-comm-submit-' + json.id).bind('click', {id: json.id}, ArticleComments.save);
+			$('#article-comm-submit-' + json.id).bind('click', {id: json.id}, ArticleComments.save);
 			if (typeof TieDivLibrary != 'undefined') {
 				TieDivLibrary.calculate();
 			}
@@ -74,15 +77,16 @@ ArticleComments.postComment = function(e) {
 	if (ArticleComments.processing) return;
 	$(e.data.source).attr('readonly', 'readonly');
 	$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axPost&article=' + wgArticleId, {wpArticleComment: $(e.data.source).val()}, function(json) {
+		$().log(json);
 		if (!json.error) {
 			//remove zero comments div
-			$('#blog-comments-zero').remove();
+			$('#article-comments-zero').remove();
 			ArticleComments.add(json);
 			//clear error box
-			$('#blog-comm-bottom-info').html('');
+			$('#article-comm-bottom-info').html('');
 		} else {
 			//fill error box
-			$('#blog-comm-bottom-info').html(json.msg);
+			$('#article-comm-bottom-info').html(json.msg);
 		}
 		$(e.data.source).removeAttr('readonly');
 		$(e.data.source).val('');
@@ -96,10 +100,10 @@ ArticleComments.postComment = function(e) {
 }
 
 ArticleComments.init = function() {
-	$('#blog-comm-submit-top').bind('click', {source: '#blog-comm-top'}, ArticleComments.postComment);
-	$('#blog-comm-submit-bottom').bind('click', {source: '#blog-comm-bottom'}, ArticleComments.postComment);
-	$('#blog-comm-form-select').bind('change', function() {this.submit()});
-	$('.blog-comm-edit').bind('click', ArticleComments.edit);
+	$('#article-comm-submit-top').bind('click', {source: '#article-comm-top'}, ArticleComments.postComment);
+	$('#article-comm-submit-bottom').bind('click', {source: '#article-comm-bottom'}, ArticleComments.postComment);
+	$('#article-comm-form-select').bind('change', function() {this.submit()});
+	$('.article-comm-edit').bind('click', ArticleComments.edit);
 }
 //on DOM ready
 $(ArticleComments.init);
