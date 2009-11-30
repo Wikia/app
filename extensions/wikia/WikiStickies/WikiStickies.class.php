@@ -1,30 +1,30 @@
 <?php
 
-class ActionBox extends SpecialPage {
+class WikiStickies extends SpecialPage {
 
 	const FEED_LIMIT = 5;
 
         function __construct() {
-                parent::__construct('ActionBox');
+                parent::__construct('WikiStickies');
         }
 
         function execute() {
                 global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
-		wfLoadExtensionMessages( 'ActionBox' );
+		wfLoadExtensionMessages( 'WikiStickies' );
 		// for tools: logo upload and skin chooser
 		wfLoadExtensionMessages( 'NewWikiBuilder' );
 
                 $this->setHeaders();
 
 		// load dependencies (CSS and JS)
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/ActionBox/NWB/main.css?{$wgStyleVersion}");
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/ActionBox/NWB/main.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");
 		
 		// get the Three Feeds		
-		$this->formatFeed( $this->getNewpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-newpages-hd') );
-		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedpages-hd') );
-		$this->formatFeed( $this->getWantedimagesFeed( self::FEED_LIMIT ), wfMsg('actionbox-wantedimages-hd') );
+		$this->formatFeed( $this->getNewpagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-newpages-hd') );
+		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd') );
+		$this->formatFeed( $this->getWantedimagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd') ;
 
 		// get the Two Tools
                 $this->generateTools();
@@ -60,9 +60,9 @@ class ActionBox extends SpecialPage {
 		}
 		
 		$html = Xml::openElement( 'div' ).
-			Xml::openElement( 'span', array( 'class' => 'actionboxheader' ) ).
+			Xml::openElement( 'span', array( 'class' => 'wikistickiesheader' ) ).
                         $header.
-			Xml::openElement( 'ul', array( 'class' => 'actionboxul' ) ).
+			Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
 			$body.
 			Xml::closeElement( 'ul' ).			
 			Xml::closeElement( 'span' ).
