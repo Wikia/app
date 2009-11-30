@@ -83,7 +83,7 @@ CKEDITOR.plugins.add('rte-placeholder',
 				var isEditable = false;
 
 				// encode HTML inside wikisyntax
-				var code = data.wikitext.replace(/</g, '&lt;').replace(/>/g, '&gt');
+				var code = data.wikitext.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 				switch(info.type) {
 					case 'tpl':
