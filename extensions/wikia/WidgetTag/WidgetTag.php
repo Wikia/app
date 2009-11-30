@@ -13,7 +13,7 @@
 $wgExtensionCredits['parserhook'][] = array(
   'name'	=> 'WidgetTag',
   'url'		=> 'http://help.wikia.com/wiki/Help:WidgetTag',
-  'author'	=> '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]', 
+  'author'	=> '[http://pl.wikia.com/wiki/User:Macbre Maciej Brencz]',
   'description'	=> 'Adds &lt;widget&gt; tag for dynamic embedding of Wikia widgets',
   'version'	=> 0.1
 );
@@ -29,9 +29,9 @@ else {
 $wgAutoloadClasses['WidgetTagRenderer'] = dirname(__FILE__) . '/WidgetTag_class.php';
 
 // setup parser hook
-function efWidgetTagSetup() {
-	global $wgParser, $wgHooks;
-	$wgParser->setHook( 'widget', 'efWidgetTagRender' );
+function efWidgetTagSetup(&$parser) {
+	global $wgHooks;
+	$parser->setHook( 'widget', 'efWidgetTagRender' );
 	$wgHooks['ParserAfterTidy'][] = 'efWidgetTagReplaceMarkers';
 	return true;
 }
