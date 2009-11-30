@@ -1,5 +1,5 @@
 
-.wikistickiesfeed {
+.wikistickiesfeed, .wikiheadertools {
 	text-align: center;
 	margin-bottom: 15px;	
 }
@@ -34,9 +34,14 @@ ul, li {
 .step {
 	clear: both;
 	position: relative;
-	text-align: left;
 	z-index: 200;
 }
+
+.step .wrapper {
+	text-align: left;
+	margin-top: 10px;
+}
+
 .headline {
 	font-size: 18pt;
 	margin: 0;
