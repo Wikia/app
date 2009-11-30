@@ -16,10 +16,10 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 // special page
-$wgAutoloadClasses['ActionBox'] = $dir.'ActionBox.class.php';
-$wgSpecialPages['ActionBox'] = 'ActionBox';
-$wgSpecialPageGroups['ActionBox'] = 'users';
-$wgExtensionMessagesFiles['ActionBox'] = $dir . 'ActionBox.i18n.php';
+$wgAutoloadClasses['WikiStickies'] = $dir.'WikiStickies.class.php';
+$wgSpecialPages['WikiStickies'] = 'WikiStickies';
+$wgSpecialPageGroups['WikiStickies'] = 'users';
+$wgExtensionMessagesFiles['WikiStickies'] = $dir . 'WikiStickies.i18n.php';
 $wgAutoloadClasses['ApiQueryWantedpages'] = $dir . 'ApiQueryWantedpages.php';
 $wgAutoloadClasses['ApiQueryWantedimages'] = $dir . 'ApiQueryWantedimages.php';
 $wgAPIListModules['wantedpages'] = 'ApiQueryWantedpages';
