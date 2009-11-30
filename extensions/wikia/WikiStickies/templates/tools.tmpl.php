@@ -1,10 +1,11 @@
 
 <?php global $wgAdminSkin; ?>
 
+<div class="wikiheadertools">
 <ul>
 <!-- ############## Add a logo ############ -->
 <li id="step2" class="step">
-<h1 class="headline"><?php echo wfMsg("nwb-step2-headline")?></h1>
+<div class="wikistickiesheader"><?php echo wfMsg("nwb-step2-headline")?></div>
 <div class="wrapper clearfix">
         <?php echo wfMsg("nwb-step2-text")?>
         <!-- Hidden iframe to handle the file upload -->
@@ -34,12 +35,11 @@
         <button onclick="WET.byStr('nwb/step2save');NWB.uploadLogo();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
 </div>
 </li>
-</ul>
 
 <!-- ############## Pick Theme ############## -->
 
 <li id="step3" class="step">
-<h1 class="headline"><?php echo wfMsg("nwb-step3-headline")?></h1>
+<div class="wikistickiesheader"><?php echo wfMsg("nwb-step3-headline")?></div>
 <div class="wrapper clearfix">
         <?php echo wfMsg("nwb-step3-text")?>
         <div id="theme_template" style="display:none" class="theme_selekction">
@@ -80,5 +80,5 @@ for (var i = 0; i < themes.length; i++){
         <input onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);" type="button" id="hidden_theme_submit" style="display:none"><!-- For selenium tests -->
 </div>
 </li>
-
-
+</ul>
+</div>
