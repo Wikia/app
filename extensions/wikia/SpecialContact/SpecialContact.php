@@ -89,10 +89,6 @@ function wfSpecialContactSetup() {
 			$errors = '';
 			$error = userMailer( new MailAddress("community@wikia.com"), $from, wfMsg('contactmailsub') . ' - ' . $this->mProblem, $m, $from, 'SpecialContact' );
 			if (WikiError::isError($error)) {
-				$errors = $error->getMessage();
-			}
-			$error = userMailer( new MailAddress("beesley@gmail.com"), $from, wfMsg('contactmailsub') . ' - ' . $this->mProblem, $m, $from, 'SpecialContact' );
-			if (WikiError::isError($error)) {
 				$errors .= "\n" . $error->getMessage();
 			}
 
