@@ -24,7 +24,7 @@ class WikiStickies extends SpecialPage {
 		// get the Three Feeds		
 		$this->formatFeed( $this->getNewpagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-newpages-hd') );
 		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd') );
-		$this->formatFeed( $this->getWantedimagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd') ;
+		$this->formatFeed( $this->getWantedimagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd') ) ;
 
 		// get the Two Tools
                 $this->generateTools();
