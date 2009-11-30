@@ -66,6 +66,10 @@ function gracenote_obfuscateText($text){
 		}
 		$lyrics .= $LINE_BREAK;
 	}
+
+	# for fr.lyrics	
+	$lyrics = str_replace( "&#38;&#110;&#98;&#115;&#112;&#59;", "&nbsp;", $lyrics );
+
 	return substr($lyrics, 0, strlen($lyrics) - strlen($LINE_BREAK));
 } // end gracenote_obfuscateText()
 
