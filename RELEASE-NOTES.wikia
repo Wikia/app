@@ -1,4 +1,5 @@
 == Changes since 200911.4 ==
+* rt#31909: Fixed bad HTML in MyHome (TOR)
 * WidgetWikiPage: rewrite and improvements from user feedback (uberfuzzy)
 * rt#28937: MagicFooterLinks magic. (Nef)
 * rt#28999: added redirect alias to NO i18n file (TOR)
