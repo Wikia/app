@@ -50,8 +50,11 @@ function SaveEditingTipsState(open,screen) {
 	YAHOO.util.Connect.asyncRequest('GET', wgScriptPath + '/index.php?action=ajax&rs=SaveEditingTipsState&open='+open+'&screen='+screen);
 }
 
-YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
-	YAHOO.util.Event.preventDefault(e);
+function ToggleWideScreen(e) {
+	if (typeof e != 'undefined') {
+		YAHOO.util.Event.preventDefault(e);
+	}
+
 	if(YAHOO.util.Dom.hasClass(document.body, "editingTips") && YAHOO.util.Dom.hasClass(document.body, "editingWide")) {
 		iEnabled = false;
 	} else if(YAHOO.util.Dom.hasClass(document.body, "editingTips")) {
@@ -83,7 +86,9 @@ YAHOO.util.Event.addListener("toggleWideScreen", "click", function(e) {
 		SaveEditingTipsState(iEnabled, true);
 		WET.byStr('editingTips/toggle/widescreen/on');
 	}
-});
+}
+
+YAHOO.util.Event.addListener("toggleWideScreen", "click", ToggleWideScreen);
 
 // tracking
 YAHOO.util.Event.onDOMReady(function() {

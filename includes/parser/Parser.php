@@ -665,7 +665,7 @@ class Parser
 	 */
 	function doTableStuff ( $text ) {
 		wfProfileIn( __METHOD__ );
-		global $wgWysiwygParserEnabled;
+		global $wgWysiwygParserEnabled, $wgRTEParserEnabled;
 
 		$lines = StringUtils::explode( "\n", $text );
 		$out = '';
@@ -697,6 +697,16 @@ class Parser
 						$wgWysiwygTableTemplateEdgeCase = true;
 					}
 				}
+
+				// RTE - begin
+				// TODO: document
+				if(!empty($wgRTEParserEnabled)) {
+					if(strpos($attributes, "\x7f") !== false) {
+						RTE::$edgeCases[] = 'COMPLEX.04';
+					}
+				}
+				// RTE - end
+
 				$attributes = Sanitizer::fixTagAttributes ( $attributes , 'table' );
 
 				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "<table{$attributes}>";
@@ -739,6 +749,16 @@ class Parser
 						$wgWysiwygTableTemplateEdgeCase = true;
 					}
 				}
+
+				// RTE - begin
+				// TODO: document
+				if(!empty($wgRTEParserEnabled)) {
+					if(strpos($attributes, "\x7f") !== false) {
+						RTE::$edgeCases[] = 'COMPLEX.05';
+					}
+				}
+				// RTE - end
+
 				$attributes = Sanitizer::fixTagAttributes ( $attributes , 'tr' );
 				array_pop ( $tr_attributes );
 				array_push ( $tr_attributes , $attributes );
@@ -835,6 +855,19 @@ class Parser
 					array_push ( $td_history , true );
 				}
 			} else {
+
+				// RTE - begin
+				// TODO: document
+				if(!empty($wgRTEParserEnabled)) {
+					if(empty($td_history[0]) || $last_tag == 'caption') {
+						if(strpos($outLine, "\x7f-comment-") !== false) {
+							// TODO: I don't really know if this one happens, worth logging and checking
+							RTE::$edgeCases[] = 'COMPLEX.06';
+						}
+					}
+				}
+				// RTE - end
+
 				if(!empty($wgWysiwygParserEnabled )) {
 					if(empty($td_history[0]) || $last_tag == 'caption') {
 						if(strpos($outLine, "\x7f-comment-") !== false) {
@@ -1046,9 +1079,20 @@ class Parser
 		# Is this an external image?
 		$text = $this->maybeMakeExternalImage( $url );
 		if ( $text === false ) {
+
+			// RTE - begin
+			// TODO: document
+			global $wgRTEParserEnabled;
+			$description =  $wgContLang->markNoConversion($url);
+			if(!empty($wgRTEParserEnabled))  {
+				$description = RTEMarker::generate(RTEMarker::EXTERNAL_DATA, RTEData::put('data', array(
+					'type' => 'external-raw',
+					'text' => $description,
+					'link' => $url))).$description;
+			}
+
 			/* Wikia change begin - @author: Marooned */
 			/* Wysiwyg: Mark external raw links and add to wysiwyg metadate array */
-			$description = $wgContLang->markNoConversion($url);
 			global $wgWysiwygParserEnabled;
 			if (!empty($wgWysiwygParserEnabled)) {
 				Wysiwyg_SetRefId('external link: raw', array('text' => &$description, 'link' => $url));
@@ -1058,6 +1102,8 @@ class Parser
 			$text = $sk->makeExternalLink( $url, $description, true, 'free',
 				$this->getExternalLinkAttribs( $url ) );
 			/* Wikia change end */
+			// RTE - end
+
 			# Register it in the output object...
 			# Replace unnecessary URL escape codes with their equivalent characters
 			$pasteurized = self::replaceUnusualEscapes( $url );
@@ -1311,6 +1357,15 @@ class Parser
 			# Set linktype for CSS - if URL==text, link is essentially free
 			$linktype = ($text === $url) ? 'free' : 'text';
 
+			// RTE - begin
+			// TODO: document
+			global $wgRTEParserEnabled;
+			if(!empty($wgRTEParserEnabled)) {
+				$RTE_wikitextIdx = RTEMarker::getDataIdx(RTEMarker::EXTERNAL_WIKITEXT, $trail);
+				$wasblank = $text == '';
+			}
+			// RTE - end
+
 			/* Wikia change begin - @author: Inez, Marooned */
 			/* Wysiwyg: restore original external link added in Preprocessor_DOM.php */
 			global $wgWysiwygParserEnabled;
@@ -1362,6 +1417,20 @@ class Parser
 			# This means that users can paste URLs directly into the text
 			# Funny characters like &ouml; aren't valid in URLs anyway
 			# This was changed in August 2004
+
+			// RTE - begin
+			// TODO: document
+			if(!empty($wgRTEParserEnabled)) {
+				$text = RTEMarker::generate(RTEMarker::EXTERNAL_DATA, RTEData::put('data', array(
+					'type' => 'external',
+					'wikitextIdx' => $RTE_wikitextIdx,
+					'text' => $text,
+					'link' => $url,
+					'linktype' => $linktype,
+					'wasblank' => $wasblank))).$text;
+			}
+			// RTE - end
+
 			$s .= $sk->makeExternalLink( $url, $text, false, $linktype,
 				$this->getExternalLinkAttribs( $url ) ) . $dtrail . $trail;
 
@@ -1534,7 +1603,7 @@ class Parser
 	 * @private
 	 */
 	function replaceInternalLinks2( &$s ) {
-		global $wgContLang, $wgWysiwygParserEnabled, $wgEnableVideoToolExt, $wgEnableNYCSocialTools, $wgEnableVideoNY;
+		global $wgContLang, $wgWysiwygParserEnabled, $wgEnableVideoToolExt, $wgEnableNYCSocialTools, $wgEnableVideoNY, $wgRTEParserEnabled;
 
 		wfProfileIn( __METHOD__ );
 
@@ -1624,6 +1693,13 @@ class Parser
 				}
 			}
 			/* Wikia change end */
+
+			// RTE - begin
+			// TODO: document
+			if(!empty($wgRTEParserEnabled)) {
+				$RTE_wikitextIdx = RTEMarker::getDataIdx(RTEMarker::INTERNAL_WIKITEXT, $line);
+ 			}
+			// RTE - end
 
 			if ( $useLinkPrefixExtension ) {
 				wfProfileIn( __METHOD__.'-prefixhandling' );
@@ -1809,7 +1885,21 @@ class Parser
 							global $wgContLang;
 							$vid_tag = $wgContLang->getFormattedNsText( NS_VIDEO ) . ":Template_Placeholder";
 							( 0 === strpos( $text, $vid_tag ) ) ? $in_template = true : $in_template = false;
-							$s .= $prefix . $this->armorLinks(WikiaVideo_makeVideo($nt, $text, $sk, '', $in_template)).$trail;
+
+							// RTE - begin
+							// TODO: document
+							global $wgRTEParserEnabled;
+							if (!empty($wgRTEParserEnabled)) {
+								$dataIdx = RTEData::put('placeholder', array(
+									'type' => 'video-placeholder',
+									'wikitextIdx' => $RTE_wikitextIdx));
+								$videoOut = RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
+							} else {
+								$videoOut = WikiaVideo_makeVideo($nt, $text, $sk, '', $in_template);
+							}
+							// RTE - end
+
+							$s .= $prefix . $this->armorLinks($videoOut).$trail;
 							$this->mOutput->addImage(':'.$nt->getDBkey());
 						}
 						wfProfileOut(__METHOD__ . "-video");
@@ -1841,6 +1931,25 @@ class Parser
 							$holders->merge( $this->replaceInternalLinks2( $text ) );
 						}
 						# cloak any absolute URLs inside the image markup, so replaceExternalLinks() won't touch them
+
+						// RTE - begin
+						// TODO: document
+						global $wgRTEParserEnabled;
+						if (!empty($wgRTEParserEnabled)) {
+							$text = RTEMarker::generate(RTEMarker::IMAGE_DATA, $RTE_wikitextIdx).$text;
+						}
+						// RTE - end
+
+						// RTE - begin
+						// TODO: document
+						if (!empty($wgRTEParserEnabled) && ImagePlaceholderIsPlaceholder($nt->getText())) {
+							$dataIdx = RTEData::put('placeholder', array(
+								'type' => 'image-placeholder',
+								'wikitextIdx' => $RTE_wikitextIdx));
+							$s .= $prefix . RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx) . $trail;
+						} else
+						// RTE - end
+
 						# cater for new placeholder-in-template namespace -  Bartek
 						if( "Template Placeholder" != $nt->getText() ) {
 							$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text, $holders ) ) . $trail;
@@ -1860,42 +1969,51 @@ class Parser
 
 				if ( $ns == NS_CATEGORY ) {
 					wfProfileIn( __METHOD__."-category" );
-					$s = rtrim($s . "\n"); # bug 87
 
-					/* Wikia change begin - @author: Marooned */
-					/* Wysiwyg: mark element and add metadata to wysiwyg array */
-					if(!empty($wgWysiwygParserEnabled)) {
-						$extraTrial = '';
-						if($previousLine && preg_match('/(\s+)$/', $previousLine, $extraTrial)) {
-							$extraTrial = $extraTrial[1];
+					// RTE - begin
+					// TODO: document
+					if(!empty($wgRTEParserEnabled)) {
+						$dataIdx = RTEData::put('placeholder', array('type' => 'category', 'wikitextIdx' => $RTE_wikitextIdx));
+						$s .= $prefix . RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx) . $trail;
+					} else {
+						$s = rtrim($s . "\n"); # bug 87
+
+						/* Wikia change begin - @author: Marooned */
+						/* Wysiwyg: mark element and add metadata to wysiwyg array */
+						if(!empty($wgWysiwygParserEnabled)) {
+							$extraTrial = '';
+							if($previousLine && preg_match('/(\s+)$/', $previousLine, $extraTrial)) {
+								$extraTrial = $extraTrial[1];
+							}
+							$FCKtmp = Wysiwyg_SetRefId('category', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext, 'whiteSpacePrefix' => $extraTrial), false);
 						}
-						$FCKtmp = Wysiwyg_SetRefId('category', array('text' => &$text, 'link' => $link, 'wasblank' => $wasblank, 'noforce' => $noforce, 'original' => $originalWikitext, 'whiteSpacePrefix' => $extraTrial), false);
-					}
-					/* Wikia change end */
+						/* Wikia change end */
 
-					if ( $wasblank ) {
-						$sortkey = $this->getDefaultSort();
-					} else {
-						$sortkey = $text;
-					}
-					$sortkey = Sanitizer::decodeCharReferences( $sortkey );
-					$sortkey = str_replace( "\n", '', $sortkey );
-					$sortkey = $wgContLang->convertCategoryKey( $sortkey );
-					$this->mOutput->addCategory( $nt->getDBkey(), $sortkey );
+						if ( $wasblank ) {
+							$sortkey = $this->getDefaultSort();
+						} else {
+							$sortkey = $text;
+						}
+						$sortkey = Sanitizer::decodeCharReferences( $sortkey );
+						$sortkey = str_replace( "\n", '', $sortkey );
+						$sortkey = $wgContLang->convertCategoryKey( $sortkey );
+						$this->mOutput->addCategory( $nt->getDBkey(), $sortkey );
 
-					/**
-					 * Strip the whitespace Category links produce, see bug 87
-					 * @todo We might want to use trim($tmp, "\n") here.
-					 */
+						/**
+						 * Strip the whitespace Category links produce, see bug 87
+						 * @todo We might want to use trim($tmp, "\n") here.
+						 */
 
-					/* Wikia change begin - @author: Marooned */
-					/* Wysiwyg: don't strip new lines and replace category with placeholders */
-					if (!empty($wgWysiwygParserEnabled)) {
-						$s .= $prefix . $FCKtmp . $trail;
-					} else {
-						$s .= trim($prefix . $trail, "\n") == '' ? '': $prefix . $trail;
+						/* Wikia change begin - @author: Marooned */
+						/* Wysiwyg: don't strip new lines and replace category with placeholders */
+						if (!empty($wgWysiwygParserEnabled)) {
+							$s .= $prefix . $FCKtmp . $trail;
+						} else {
+							$s .= trim($prefix . $trail, "\n") == '' ? '': $prefix . $trail;
+						}
+						/* Wikia change end */
 					}
-					/* Wikia change end */
+					// RTE - end
 
 					wfProfileOut( __METHOD__."-category" );
 					continue;
@@ -1903,7 +2021,12 @@ class Parser
 			}
 
 			# Self-link checking
-			if( $nt->getFragment() === '' && $ns != NS_SPECIAL ) {
+
+			// RTE - begin
+			// TODO: document
+			if(empty($wgRTEParserEnabled) && $nt->getFragment() === '' && $ns != NS_SPECIAL ) {
+			// RTE - end
+
 				if( in_array( $nt->getPrefixedText(), $selflink, true ) ) {
 					/* Wikia change begin - @author: Marooned */
 					/* Wysiwyg: do not use 'continue' so we can handle self link as a regular link */
@@ -1953,6 +2076,21 @@ class Parser
 			}
 
 			wfProfileIn( __METHOD__."-always_known" );
+
+			// RTE - begin
+			// TODO: document
+			if(!empty($wgRTEParserEnabled)) {
+				$text = RTEMarker::generate(RTEMarker::INTERNAL_DATA, RTEData::put('data', array(
+					'type' => 'internal',
+					'wikitextIdx' => $RTE_wikitextIdx,
+					'text' => $text,
+					'link' => $link,
+					'trail' => $trail,
+					'wasblank' => $wasblank,
+					'noforce' => $noforce))).$text;
+			}
+			// RTE - end
+
 			# Some titles, such as valid special pages or files in foreign repos, should
 			# be shown as bluelinks even though they're not included in the page table
 			#
@@ -2237,6 +2375,11 @@ class Parser
 				continue;
 			}
 
+			// RTE - begin - @author: Macbre
+			// TODO: document
+			$this->doBlockLevelsLineStart($oLine, $output);
+			// RTE - end
+
 			$lastPrefixLength = strlen( $lastPrefix );
 			$preCloseMatch = preg_match('/<\\/pre/i', $oLine );
 			$preOpenMatch = preg_match('/<pre/i', $oLine );
@@ -2451,6 +2594,16 @@ class Parser
 										$output .= "<!--NEW_LINE_1-->";
 									}
 								}
+								// RTE - begin - @author: Macbre
+								// TODO: document
+								global $wgRTEParserEnabled;
+								if (!empty($wgRTEParserEnabled)) {
+									// count trailing spaces
+									$text = ltrim(strrev($output), "\n");
+									$spaces = strspn($text, ' ');
+									$output .= RTEReverseParser::buildComment('LINE_BREAK', array('spaces' => $spaces));
+								}
+								// RTE - end
 							}
 						}
 					}
@@ -2474,6 +2627,12 @@ class Parser
 			if ($paragraphStack === false) {
 				$output .= $t."\n";
 			}
+
+			// RTE - begin - @author: Macbre
+			// TODO: document
+			$this->doBlockLevelsLineEnd($oLine, $output);
+			// RTE - end
+
 		}
 		while ( $prefixLength ) {
 			$output .= $this->closeList( $prefix2[$prefixLength-1] );
@@ -2487,6 +2646,12 @@ class Parser
 		wfProfileOut( __METHOD__ );
 		return $output;
 	}
+
+	// RTE - begin - @author: Macbre
+	// Add methods placeholders for RTE
+	function doBlockLevelsLineStart(&$oLine, &$output) {}
+	function doBlockLevelsLineEnd(&$oLine, &$output) {}
+	// RTE - end
 
 	/**
 	 * Split up a string on ':', ignoring any occurences inside tags
@@ -3034,7 +3199,7 @@ class Parser
 	 * @private
 	 */
 	function braceSubstitution( $piece, $frame ) {
-		global $wgContLang, $wgNonincludableNamespaces;
+		global $wgContLang, $wgNonincludableNamespaces, $wgRDBEnabled, $wgRDBData;
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( __METHOD__.'-setup' );
 
@@ -3062,6 +3227,15 @@ class Parser
 		$args = (null == $piece['parts']) ? array() : $piece['parts'];
 		wfProfileOut( __METHOD__.'-setup' );
 
+		// RDB - begin
+		// TODO: document
+		if(!empty($wgRDBEnabled)) {
+			if(!empty($wgRDBData)) {
+				$wgRDBEnabled = false;
+			}
+		}
+		// RDB - end
+
 		# SUBST
 		wfProfileIn( __METHOD__.'-modifiers' );
 		if ( !$found ) {
@@ -3069,6 +3243,9 @@ class Parser
 
 			$mwSubst = MagicWord::get( 'subst' );
 			if ( $mwSubst->matchStartAndRemove( $part1 ) xor $this->ot['wiki'] ) {
+				// RDB - begin
+				if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'subst';
+				// RDB - end
 				# One of two possibilities is true:
 				# 1) Found SUBST but not in the PST phase
 				# 2) Didn't find SUBST and in the PST phase
@@ -3092,6 +3269,9 @@ class Parser
 		if ( !$found && $args->getLength() == 0 ) {
 			$id = $this->mVariables->matchStartToEnd( $part1 );
 			if ( $id !== false ) {
+				// RDB - begin
+				if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'variable';
+				// RDB - end
 				$text = $this->getVariableValue( $id );
 				if (MagicWord::getCacheTTL($id)>-1)
 					$this->mOutput->mContainsOldMagic = true;
@@ -3163,6 +3343,9 @@ class Parser
 						throw new MWException( "Tag hook for $function is not callable\n" );
 					}
 					$result = call_user_func_array( $callback, $allArgs );
+					// RDB - begin
+					if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'pfunc';
+					// RDB - end
 					$found = true;
 					$noparse = true;
 					$preprocessFlags = 0;
@@ -3209,6 +3392,9 @@ class Parser
 				$limit = $this->mOptions->getMaxTemplateDepth();
 				if ( $frame->depth >= $limit ) {
 					$found = true;
+					// RDB - begin
+					if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'error';
+					// RDB - end
 					$text = '<span class="error">' . wfMsgForContent( 'parser-template-recursion-depth-warning', $limit ) . '</span>';
 				}
 			}
@@ -3255,9 +3441,19 @@ class Parser
 				$found = true;
 			}
 
+			// RDB - begin
+			if(!empty($wgRDBEnabled)) {
+				$wgRDBData['type'] = 'tpl';
+				$wgRDBData['title'] = &$title;
+				$wgRDBData['args'] = &$args;
+			}
+			// RDB - end
 			# Do infinite loop check
 			# This has to be done after redirect resolution to avoid infinite loops via redirects
 			if ( !$frame->loopCheck( $title ) ) {
+				// RDB - begin
+				if(!empty($wgRDBEnabled)) $wgRDBData['type'] = 'error';
+				// RDB - end
 				$found = true;
 				$text = '<span class="error">' . wfMsgForContent( 'parser-template-loop-warning', $titleText ) . '</span>';
 				wfDebug( __METHOD__.": template loop broken at '$titleText'\n" );
@@ -3553,6 +3749,18 @@ class Parser
 		$name = $frame->expand( $params['name'] );
 		$attrText = !isset( $params['attr'] ) ? null : $frame->expand( $params['attr'] );
 		$content = !isset( $params['inner'] ) ? null : $frame->expand( $params['inner'] );
+
+		// RTE - begin
+		// TODO: document
+		global $wgRTEParserEnabled;
+		if(!empty($wgRTEParserEnabled)) {
+			$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::EXT_WIKITEXT, $content);
+			if($wikitextIdx !== null) {
+				$dataIdx = RTEData::put('placeholder', array('type' => 'ext', 'wikitextIdx' => $wikitextIdx));
+				return RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
+			}
+		}
+		// RTE - end
 
 		$marker = "{$this->mUniqPrefix}-$name-" . sprintf('%08X', $this->mMarkerIndex++) . self::MARKER_SUFFIX;
 

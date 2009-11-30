@@ -22,7 +22,7 @@ if(isset($props['name'])) {
 			<span id="ImageUploadLicenseSpan" >
 			<?php
 				$licenses = new Licenses();
-				$licensehtml = $licenses->getHtml();	
+				$licensehtml = $licenses->getHtml();
 			?>
 				<select name="ImageUploadLicense" id="ImageUploadLicense" onchange="WMU_licenseSelectorCheck()" />
 					<option><?= wfMsg( 'nolicense' ) ?></option>
@@ -30,9 +30,9 @@ if(isset($props['name'])) {
 				</select>
 			</span>
 			</td>
-		</tr>		
+		</tr>
 		<tr class="ImageUploadNoBorder ImageUploadNoSpace">
-			<th>&nbsp;</th>	
+			<th>&nbsp;</th>
 			<td>
 				<div id="ImageUploadLicenseControl"><a id="ImageUploadLicenseLink" href="#" onclick="WMU_toggleLicenseMesg(event);" >[<?= wfMsg( 'wmu-hide-license-msg' ) ?>]</a></div>
 			</td>
@@ -40,7 +40,7 @@ if(isset($props['name'])) {
 		<tr class="ImageUploadNoBorder">
 		<td colspan="2">
 		<div id="ImageUploadLicenseTextWrapper">
-			<div id="ImageUploadLicenseText">&nbsp;</div>			
+			<div id="ImageUploadLicenseText">&nbsp;</div>
 		</div>
 		</td>
 		</tr>
@@ -118,7 +118,7 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 				<?
 				for( $i=1; $i <= 6; $i++ ) {
 					( 4 == $i ) ? $selected = 'selected = "selected"' : $selected = '';
-					?>												
+					?>
 						<option value="$i" <?= $selected ?>><?= wfMsgExt('wmu-columns', array( 'parsemag' ), $i); ?></option>
 					<?
 				}
@@ -144,7 +144,7 @@ if($props['file']->media_type == 'BITMAP' || $props['file']->media_type == 'DRAW
 </table>
 <input id="ImageUploadExtraId" type="hidden" value="<?= isset($props['extraId']) ? urlencode($props['extraId']) : '' ?>" />
 <input id="ImageUploadMWname" type="hidden" value="<?= urlencode($props['mwname']) ?>" />
-<input id="ImageUploadTempid" type="hidden" value="<?= $props['tempid'] ?>" />
+<input id="ImageUploadTempid" type="hidden" value="<?= isset($props['tempid']) ? $props['tempid'] : '' ?>" />
 <input id="ImageRealWidth" type="hidden" value="<?= $props['file']->getWidth() ?>" />
 <input id="ImageRealHeight" type="hidden" value="<?= $props['file']->getHeight() ?>" />
 </div>

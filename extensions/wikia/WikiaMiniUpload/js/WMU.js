@@ -284,11 +284,11 @@ function WMU_loadMainFromView() {
 			if( user_blocked ) {
 				document.location = wgScriptPath + '/index.php?title=' + encodeURIComponent( wgTitle ) + '&action=edit';
 			} else {
-				// is user is disallowed from editing, do nothing and show them a message 
+				// is user is disallowed from editing, do nothing and show them a message
 				if( user_protected ) {
 					alert( wmu_no_protect );
 					return;
-				}				
+				}
 				if( user_disallowed ) {
 					alert( wmu_no_rights );
 					return;
@@ -369,6 +369,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
                 }
         }
 
+	// TODO: FCK support - to be removed after full switch to RTE
 	if(YAHOO.lang.isNumber(e)) {
 		WMU_refid = e;
 		if(WMU_refid == -1) {
@@ -385,15 +386,48 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		}
 
 	} else if( YAHOO.lang.isObject(e) ) { // for Opera and Chrome
-		var el = YAHOO.util.Event.getTarget(e);
-		if (el.id == 'wmuLink') {
-			WMU_track('open/fromLinkAboveToolbar'); //tracking
-		} else if (el.id == 'wmuHelpLink') {
-			WMU_track('open/fromEditTips'); //tracking
-		} else if (el.id == 'mw-editbutton-wmu') {
-			WMU_track('open/fromToolbar'); //tracking
-		} else {
-			WMU_track('open');
+		// macbre: CK support
+		if (typeof e.type != 'undefined' && e.type == 'rte') {
+			// get image from event data
+			window.WMU_RTEImage = e.data.placeholder;
+			if (window.WMU_RTEImage) {
+				// edit an image
+				var data = window.WMU_RTEImage.getData();
+
+				data.href = 'File:' + data.title;
+				data.thumb = data.params.thumbnail;
+
+				$.extend(data, data.params);
+				delete data.params;
+
+				// FIXME: let's pretend we're FCK for now
+				window.FCK = {wysiwygData: {0: {}}};
+				window.FCK.wysiwygData[0] = data;
+				WMU_refid = 0;
+
+				WMU_wysiwygStart = 2;
+
+				WMU_track('open/fromWysiwyg/existing');
+				RTE.log(data);
+			}
+			else {
+				// add new image
+				WMU_refid = -1;
+
+				WMU_track('open/fromWysiwyg/new');
+			}
+		}
+		else {
+			var el = YAHOO.util.Event.getTarget(e);
+			if (el.id == 'wmuLink') {
+				WMU_track('open/fromLinkAboveToolbar'); //tracking
+			} else if (el.id == 'wmuHelpLink') {
+				WMU_track('open/fromEditTips'); //tracking
+			} else if (el.id == 'mw-editbutton-wmu') {
+				WMU_track('open/fromToolbar'); //tracking
+			} else {
+				WMU_track('open');
+			}
 		}
 	}
 
@@ -808,12 +842,12 @@ function WMU_insertImage(e, type) {
 				return;
 			}
 			// for RT #24050 - Bartek
-			
+
 			if( $G( 'ImageUploadName' ).value.indexOf( '/' ) > 0 )  {
 					var parts = $G( 'ImageUploadName' ).value.split( '/' );
 				        var lastname = parts.pop();
 					$G( 'ImageUploadName' ).value = lastname;
-					alert( badfilename.replace( '$1', lastname ) );	
+					alert( badfilename.replace( '$1', lastname ) );
 				return;
 			}
 
@@ -909,7 +943,22 @@ function WMU_insertImage(e, type) {
 						}
 						options.caption = $G('ImageUploadCaption').value;
 
-						if(WMU_refid != -1) {
+						// macbre: CK support
+						if (typeof window.WMU_RTEImage != 'undefined') {
+							// modify options format
+							options.thumbnail = options.thumb;
+							delete options.thumb;
+
+							if (window.WMU_RTEImage) {
+								// update existing image
+								RTE.imageEditor.update(window.WMU_RTEImage, wikitag, options);
+							}
+							else {
+								// add new image
+								RTE.imageEditor.add(wikitag, options);
+							}
+						}
+						else  if(WMU_refid != -1) {
 							if( -2 == WMU_gallery) { // updating image placeholder
 //								console.dir( );
 								FCK.ProtectImageAdd(wikitag, options, WMU_refid);

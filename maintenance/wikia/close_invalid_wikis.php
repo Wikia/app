@@ -24,7 +24,7 @@ $db_wiki = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 $oRes = $db_wiki->select(
 	"city_list", 
 	array("city_url, group_concat(city_dbname) as db_list, count(*) as cnt"), 
-	array("city_public" => 1),
+	array("city_public in (0, 1)"),
 	__METHOD__,
 	array( "GROUP BY" => "city_url", "HAVING" => "count(*)>1" )
 );
@@ -52,9 +52,9 @@ if ( !empty($DB) ) {
 			$city_id = WikiFactory::DBtoID($dbname);
 			$sql = "update city_list set city_public = ". WikiFactory::HIDE_ACTION .", city_flags = {$city_flags} where city_id = {$city_id}";
 			if ( isset($options['dryrun'])) {
-				echo $sql . "\n";
+				echo $sql . ";\n";
 			} else {
-				$db_wiki->query($sql);
+			#	$db_wiki->query($sql);
 			}
 			$loop++;
 		}

@@ -176,6 +176,21 @@ class Preprocessor_DOM implements Preprocessor {
 			$xmlishElements[] = 'includeonly';
 		}
 
+		// RTE - begin
+		// TODO: document
+		global $wgRTEParserEnabled;
+		if(!empty($wgRTEParserEnabled)) {
+			$rules['['] = array(
+				'end' => ']',
+				'names' => array( 1=> 'external', 2 => null ),
+				'min' => 1,
+				'max' => 2
+			);
+			$RTE_flags = $flags;
+			$ignoredTags = $ignoredElements = array();
+		}
+		// RTE - end
+
 		//Wysiwyg: handle 'noinclude', 'includeonly', 'onlyinclude' as normal parser hooks
 		if (!empty($wgWysiwygParserEnabled) || !empty($wgWysiwygParserTildeEnabled)) {
 			$ignoredTags = $ignoredElements = array();
@@ -213,6 +228,11 @@ class Preprocessor_DOM implements Preprocessor {
 		$findOnlyinclude = $enableOnlyinclude; # True to ignore all input up to the next <onlyinclude>
 		$fakeLineStart = true;     # Do a line-start run without outputting an LF character
 		$openAt = $closeAt = array(); # Wysiwyg && CategorySelect
+
+		// RTE - begin
+		// TODO: document
+		$openAt = $closeAt = array();
+		// RTE - end
 
 		while ( true ) {
 			//$this->memCheck();
@@ -428,6 +448,15 @@ class Preprocessor_DOM implements Preprocessor {
 					// Note that the attr element contains the whitespace between name and attribute,
 					// this is necessary for precise reconstruction during pre-save transform.
 					'<attr>' . htmlspecialchars( $attr ) . '</attr>';
+
+				// RTE - begin
+				// TODO: document
+				if(!empty($wgRTEParserEnabled)) {
+					$accum .= '<inner>' . RTEMarker::generate(RTEMarker::EXT_WIKITEXT, RTEData::put('wikitext', substr( $text, $tagStartPos, $i - $tagStartPos ))) . '</inner>';
+					$inner = null;
+				}
+				// RTE - end
+
 				if ( $inner !== null ) {
 					$accum .= '<inner>' . htmlspecialchars( $inner ) . '</inner>';
 				}
@@ -548,6 +577,13 @@ class Preprocessor_DOM implements Preprocessor {
 				}
 
 				$i += $count;
+
+				// RTE - begin
+				// TODO: document
+				if(!empty($wgRTEParserEnabled) && $RTE_flags === 0 && $count == 2 && $curChar == "{") {
+					$openAt[] = $i;
+				}
+				// RTE - end
 			}
 
 			elseif ( $found == 'close' ) {
@@ -582,7 +618,9 @@ class Preprocessor_DOM implements Preprocessor {
 					continue;
 				}
 				$name = $rule['names'][$matchingCount];
-				if ( $name === null || $name == 'external') {
+				// RTE - begin
+				// TODO: document
+				if ( $name === null || $name == 'external' || (!empty($wgRTEParserEnabled) && $name == 'external')) {
 					// No element, just literal text
 					$element = $piece->breakSyntax( $matchingCount ) . str_repeat( $rule['end'], $matchingCount );
 
@@ -596,6 +634,17 @@ class Preprocessor_DOM implements Preprocessor {
 							$element .= "\x7e-start-".(count($wgWikitext)-1)."-stop";
 						}
 					}
+
+					if(!empty($wgRTEParserEnabled)) {
+						if($name === null) {
+							$dataIdx = RTEData::put('wikitext', $element);
+							$element = '[[' . RTEMarker::generate(RTEMarker::INTERNAL_WIKITEXT, $dataIdx) . substr($element, 2);
+						} else {
+							$dataIdx = RTEData::put('wikitext', $element);
+							$element .= RTEMarker::generate(RTEMarker::EXTERNAL_WIKITEXT, $dataIdx);
+						}
+					}
+				// RTE - end
 				} else {
 					# Create XML element
 					# Note: $parts is already XML, does not need to be encoded further
@@ -610,6 +659,19 @@ class Preprocessor_DOM implements Preprocessor {
 					} else {
 						$attr = '';
 					}
+
+					// RTE - begin
+					// TODO: document
+					if(!empty($wgRTEParserEnabled) && $RTE_flags === 0 && $count == 2 && $curChar == '}') {
+						$closeAt[] = $i;
+						if(count($closeAt) == count($openAt)) {
+							$openIdx = $openAt[0];
+							$closeIdx = $closeAt[count($closeAt)-1];
+							$openAt = $closeAt = array();
+							$attr .= ' _rte_wikitextidx="'.RTEData::put('wikitext', substr($text, $openIdx-2, $closeIdx-$openIdx+4)).'"';
+						}
+					}
+					// RTE - end
 
 					$element = "<$name$attr>";
 					$element .= "<title>$title</title>";
@@ -1021,31 +1083,45 @@ class PPFrame_DOM implements PPFrame {
 					$titles = $xpath->query( 'title', $contextNode );
 					$title = $titles->item( 0 );
 					$parts = $xpath->query( 'part', $contextNode );
-					if ( $flags & self::NO_TEMPLATES ) {
-						$newIterator = $this->virtualBracketedImplode( '{{', '|', '}}', $title, $parts );
+
+					// RTE - begin
+					// TODO: document
+					global $wgRTEParserEnabled;
+					if(!empty($wgRTEParserEnabled)) {
+						$dataIdx = RTEData::put('placeholder', array(
+							'type' => 'double-brackets',
+							'wikitextIdx' => $contextNode->getAttribute('_rte_wikitextidx'),
+							'lineStart' => $contextNode->getAttribute('lineStart'),
+							'title' => $title->textContent));
+						$out .= RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
 					} else {
-						$lineStart = $contextNode->getAttribute( 'lineStart' );
-						$params = array(
-							'title' => new PPNode_DOM( $title ),
-							'parts' => new PPNode_DOM( $parts ),
-							'lineStart' => $lineStart );
-						$ret = $this->parser->braceSubstitution( $params, $this );
-						if ( isset( $ret['object'] ) ) {
-							$newIterator = $ret['object'];
+						if ( $flags & self::NO_TEMPLATES ) {
+							$newIterator = $this->virtualBracketedImplode( '{{', '|', '}}', $title, $parts );
 						} else {
-							//Wysiwyg: mark template call and add metadata to wysiwyg array
-							if($wgWysiwygParserEnabled && ($originalCall = $xpath->query( 'originalCall', $contextNode )->item( 0 ))) {
-								$textContent = htmlspecialchars_decode($originalCall->textContent);
-								$out .= Wysiwyg_WrapTemplate($textContent, $ret['text'], $lineStart);
-								if(strpos($textContent, "\x7f-comment-") !== false || strpos($textContent, "<!--") !== false) {
-									global $wgWysiwygCommentEdgeCase;
-									$wgWysiwygCommentEdgeCase = true;
-								}
+							$lineStart = $contextNode->getAttribute( 'lineStart' );
+							$params = array(
+								'title' => new PPNode_DOM( $title ),
+								'parts' => new PPNode_DOM( $parts ),
+								'lineStart' => $lineStart );
+							$ret = $this->parser->braceSubstitution( $params, $this );
+							if ( isset( $ret['object'] ) ) {
+								$newIterator = $ret['object'];
 							} else {
-								$out .= $ret['text'];
+								//Wysiwyg: mark template call and add metadata to wysiwyg array
+								if($wgWysiwygParserEnabled && ($originalCall = $xpath->query( 'originalCall', $contextNode )->item( 0 ))) {
+									$textContent = htmlspecialchars_decode($originalCall->textContent);
+									$out .= Wysiwyg_WrapTemplate($textContent, $ret['text'], $lineStart);
+									if(strpos($textContent, "\x7f-comment-") !== false || strpos($textContent, "<!--") !== false) {
+										global $wgWysiwygCommentEdgeCase;
+										$wgWysiwygCommentEdgeCase = true;
+									}
+								} else {
+									$out .= $ret['text'];
+								}
 							}
 						}
 					}
+					// RTE - end
 
 					# macbre: RT #19218
 					$wgWysiwygPreProcesssorInsideTemplate = false;
@@ -1100,6 +1176,30 @@ class PPFrame_DOM implements PPFrame {
 						} else {
 							$out .= '';
 						}
+
+						// RTE - begin
+						global $wgRTEParserEnabled;
+						if(!empty($wgRTEParserEnabled)) {
+							if(strlen($out) === 0 || substr($out, -1) == "\n") {
+								if(substr($contextNode->textContent, -1) == "\n") {
+									$add = "\n";
+									$text = substr($contextNode->textContent, 0, -1);
+								} else {
+									$add = "";
+									$text = $contextNode->textContent;
+								}
+								$dataIdx = RTEData::put('placeholder', array(
+									'type' => 'comment',
+									'wikitext' => $text));
+								$out .= RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx) . $add;
+							} else {
+								RTE::$edgeCases[] = 'COMMENT';
+								$out .= '';
+							}
+						} else {
+							$out .= '';
+						}
+						// RTE - end
 
 					}
 					# Add a strip marker in PST mode so that pstPass2() can run some old-fashioned regexes on the result
