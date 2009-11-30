@@ -59,10 +59,10 @@ class WikiStickies extends SpecialPage {
 				Xml::closeElement( 'li' );
 		}
 		
-		$html = Xml::openElement( 'div' ).
-			Xml::openElement( 'span', array( 'class' => 'wikistickiesheader' ) ).
+		$html = Xml::openElement( 'div', array( 'class' => 'wikistickiesfeed' ) ).
+			Xml::openElement( 'div', array( 'class' => 'wikistickiesheader' ) ).
                         $header.
-			Xml::closeElement( 'span' ).
+			Xml::closeElement( 'div' ).
 			Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
 			$body.
 			Xml::closeElement( 'ul' ).			
