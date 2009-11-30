@@ -8,7 +8,7 @@ if (!defined('MEDIAWIKI')) {
 class ApiQueryWantedimages extends ApiQueryBase {
 
 	public function __construct($query, $moduleName) {
-		parent :: __construct($query, $moduleName, 'wn');
+		parent :: __construct($query, $moduleName, 'wi');
 	}
 
 	public function execute() {
