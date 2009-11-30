@@ -91,6 +91,9 @@ class RTE {
 		// check 'useeditor' URL param, user settings...
 		self::checkEditorConditions();
 
+		// i18n
+                wfLoadExtensionMessages('RTE');
+
 		// should CK editor be disabled?
 		if (self::$useWysiwyg === false) {
 			RTE::log('fallback to MW editor');
@@ -497,7 +500,6 @@ class RTE {
 		wfProfileIn(__METHOD__);
 
 		$ret = array(
-			'edgecaseFound' => 'Edgecase has been found in wikitext',
 			'ellipsis' => wfMsg('ellipsis'),
 			'template' => $wgLang->getNsText(NS_TEMPLATE), # localised template namespace name (RT #3808)
 		);

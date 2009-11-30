@@ -37,6 +37,10 @@ $wgHooks['ParserBeforeStrip'][] = 'RTEMagicWord::checkParserBeforeStrip';
 $wgHooks['EditPage::getContent::end'][] = 'RTEMagicWord::checkEditPageContent';
 //$wgHooks['Parser::FetchTemplateAndTitle'][] = 'RTEMagicWord::fetchTemplate'; # not called when doing RTE parsing
 
+// i18n
+$wgExtensionMessagesFiles['RTE'] = $dir.'/i18n/RTE.i18n.php';
+//$wgExtensionMessagesFiles['CK'] = $dir.'/i18n/CK.i18n.php';
+
 // enable MW suggest - this needs to be set here to make API calls working
 $wgEnableMWSuggest = true;
 
@@ -47,7 +51,7 @@ function RTEAjax() {
         $method = $wgRequest->getVal('method', false);
 
         if ($method && method_exists('RTEAjax', $method)) {
-                //wfLoadExtensionMessages('RTE');
+                wfLoadExtensionMessages('RTE');
 
                 $data = RTEAjax::$method();
                 $json = Wikia::json_encode($data);
