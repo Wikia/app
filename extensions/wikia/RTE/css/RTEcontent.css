@@ -41,13 +41,13 @@ img.frame {
 img.thumb {
 	display: inline;
 	float: right;
-	margin: 0.5em 0 0.8em 1.4em;
+	margin: 6px 0 10px 18px;
 }
 
 img.thumb.alignLeft {
 	display: inline;
 	float: left;
-	margin: 0.5em 1.4em 0.8em 0;
+	margin: 6px 18px 10px 0;
 }
 
 /* border */
