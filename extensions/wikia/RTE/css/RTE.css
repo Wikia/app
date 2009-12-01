@@ -98,11 +98,16 @@ body.rte_source #editform #toolbar {
 	padding: 5px;
 }
 
-/* div for templete previews / image menus */
+/* div for placeholder previews / image menus */
 #RTEStuff {
 	color: #000;
 	position: absolute;
 	z-index: 10000;
+}
+
+/* hide placeholder preview / image menu in source mode */
+.rte_source #RTEStuff div {
+	display: none;
 }
 
 /* image previews */
@@ -238,11 +243,6 @@ body.rte_source #editform #toolbar {
 	color: #ccc;
 	opacity: 0.5;
 	text-decoration: none !important;
-}
-
-/* hide placeholder preview in source mode */
-.rte_source #RTEPlaceholderPreviews {
-	display: none;
 }
 
 /* wikia editor pop-ups */
