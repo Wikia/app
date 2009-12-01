@@ -131,6 +131,11 @@ CKEDITOR.plugins.add('rte-placeholder',
 					title = title.substr(0, 40) + RTEMessages.ellipsis;
 				}
 
+				// for IE replace \n with <br />
+				if (preformattedCode && CKEDITOR.env.ie) {
+					code = code.replace(/\n/g, '<br />');
+				}
+
 				// placeholder intro
 				var intro = '<div class="RTEPlaceholderPreviewIntro">' + intro + '</div>';
 
