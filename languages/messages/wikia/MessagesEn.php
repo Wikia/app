@@ -822,7 +822,7 @@ Text should be placed on this page if you wish to explain usage, style and polic
 'var_set' => 'set the $2 to "$3"',
 'var_logtext' => 'Settings log',
 'yourbirthdate' => 'Birth Date - ',
-'create-account-new' => 'Create your Wiki Account',
+'create-account-new' => 'Create your Wikia Account',
 'log-in-new' => 'Already have an Account? Log In',
 'usercaptcha' => 'Blurry Word - ',
 'usercaptchatext' => 'Please enter the text in the image.',
