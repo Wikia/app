@@ -256,8 +256,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			if ( isPre )
 				lineBreak = doc.createText( CKEDITOR.env.ie ? '\r' : '\n' );
-			else
+			else {
 				lineBreak = doc.createElement( 'br' );
+
+				// Wikia -- start
+				lineBreak.setAttribute('_rte_shift_enter', true);
+				// Wikia -- end
+			}
 
 			range.deleteContents();
 			range.insertNode( lineBreak );

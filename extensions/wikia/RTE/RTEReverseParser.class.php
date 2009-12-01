@@ -503,6 +503,11 @@ class RTEReverseParser {
 	private function handleLineBreaks($node) {
 		$out = "\n";
 
+		// handle <br /> added by Shift+Enter
+		if ($node->hasAttribute('_rte_shift_enter')) {
+			$out = "<br />\n";
+		}
+
 		// don't break lists added in CK
 		if ( self::isChildOf($node, 'li') && self::nextSiblingIs($node, array('ul', 'ol')) ) {
 			$out = '';
