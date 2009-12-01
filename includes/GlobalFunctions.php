@@ -2674,9 +2674,11 @@ function wfHttpOnlySafe() {
  * Initialise php session
  */
 function wfSetupSession() {
-	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookieHttpOnly;
+	global $wgSessionsInMemcached, $wgCookiePath, $wgCookieDomain, $wgCookieSecure, $wgCookieHttpOnly, $wgSessionsInTokyoTyrant;
 	if( $wgSessionsInMemcached ) {
 		require_once( 'MemcachedSessions.php' );
+	} elseif ( $wgSessionsInTokyoTyrant ) {
+		require_once( 'wikia/TokyoTyrantSessions.php' );
 	} elseif( 'files' != ini_get( 'session.save_handler' ) ) {
 		# If it's left on 'user' or another setting from another
 		# application, it will end up failing. Try to recover.
