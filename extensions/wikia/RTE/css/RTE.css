@@ -175,6 +175,7 @@ body.rte_source #editform #toolbar {
 /* info line */
 .RTEPlaceholderPreviewIntro {
 	border-bottom: solid 1px #aaa;
+	font-style: italic;
 	padding: 3px 0;
 }
 
