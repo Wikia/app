@@ -414,7 +414,7 @@ class CreatePageCreateplateForm {
 				} else {
 					$sk = $wgUser->getSkin();
 					# Mimick the way AJAX version displays things and use the same two messages. 2 are needed for full i18n support.
-					return wfMsg ('createpage_article_exists', $sk->makeKnownLinkObj( $title, '', 'action=edit' );
+					return wfMsg ('createpage_article_exists', $sk->makeKnownLinkObj( $title, '', 'action=edit' ) );
 				}
 			}
 			if (!$ajax) return false ;		

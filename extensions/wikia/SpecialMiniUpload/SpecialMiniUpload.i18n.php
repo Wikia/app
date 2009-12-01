@@ -1,7 +1,7 @@
 <?php
 $messages = array();
 
-$messages['en'] => array(
+$messages['en'] = array(
                 'widgetdashboard' => 'Widget Dashboard',
                 'mu_size_your_image' => 'Size your Image',
 		'almosttheretext' => 'Use the slider to select a thumbnail size, enter a caption and click Insert',
