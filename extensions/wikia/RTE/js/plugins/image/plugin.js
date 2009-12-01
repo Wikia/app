@@ -222,6 +222,9 @@ CKEDITOR.plugins.add('rte-image',
 		// @see http://stackoverflow.com/questions/289433/firefox-designmode-disable-image-resizing-handles
 		image.attr('contentEditable', false);
 
+		// keep constant value of _rte_instance
+		image.attr('_rte_instance', RTE.instanceId);
+
 		// unbind previous events
 		image.unbind('.image');
 
