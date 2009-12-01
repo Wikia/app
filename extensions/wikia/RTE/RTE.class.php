@@ -202,11 +202,20 @@ class RTE {
 	/**
 	 * Check CK editor conditions (fallback to MW editor / switch to source mode)
 	 *
-	 * Handle useeditor URL param, user settings, edgecases...
+	 * Handle useeditor URL param, user settings, current skin, edgecases...
 	 */
 	private static function checkEditorConditions() {
+		global $wgRequest, $wgUser;
+
+		wfProfileIn(__METHOD__);
+
+		// check browser compatibility
+		if (!self::isCompatibleBrowser()) {
+			RTE::log('editor is disabled because of unsupported browser');
+			self::disableEditor();
+		}
+
 		// check useeditor URL param (wysiwyg / source / mediawiki)
-		global $wgRequest;
 		$useEditor = $wgRequest->getVal('useeditor', false);
 
 		if (!empty($useEditor)) {
@@ -237,13 +246,20 @@ class RTE {
 		}
 
 		// check user preferences option
-		global $wgUser;
 		$userOption = $wgUser->getOption('enablerichtext');
-
 		if( ($userOption === false) && ($useEditor != 'wysiwyg') ) {
 			RTE::log('editor is disabled because of user preferences');
 			self::disableEditor();
 		}
+
+		// check current skin - enable RTE only on Monaco
+		$skinName = get_class($wgUser->getSkin());
+		if($skinName != 'SkinMonaco') {
+			RTE::log("editor is disabled because skin {$skinName} is unsupported");
+			self::disableEditor();
+		}
+
+		wfProfileOut(__METHOD__);
 	}
 
 	/**
@@ -599,5 +615,64 @@ class RTE {
 
 		wfProfileOut(__METHOD__);
 		return true;
+	}
+
+	/**
+	 * Check whether current browser is compatible with RTE
+	 *
+	 * FCKeditor - The text editor for Internet - http://www.fckeditor.net
+	 * Copyright (C) 2003-2009 Frederico Caldeira Knabben
+	 */
+	private static function isCompatibleBrowser() {
+		wfProfileIn(__METHOD__);
+
+		if ( isset( $_SERVER ) ) {
+			$sAgent = $_SERVER['HTTP_USER_AGENT'] ;
+		}
+		else {
+			global $HTTP_SERVER_VARS ;
+			if ( isset( $HTTP_SERVER_VARS ) ) {
+				$sAgent = $HTTP_SERVER_VARS['HTTP_USER_AGENT'] ;
+			}
+			else {
+				global $HTTP_USER_AGENT ;
+				$sAgent = $HTTP_USER_AGENT ;
+			}
+		}
+
+		RTE::log(__METHOD__, $sAgent);
+
+		$ret = false;
+
+		if ( strpos($sAgent, 'Chrome') !== false )
+		{
+			$ret = false;
+		}
+		else if ( strpos($sAgent, 'MSIE') !== false && strpos($sAgent, 'mac') === false && strpos($sAgent, 'Opera') === false )
+		{
+			$iVersion = (float)substr($sAgent, strpos($sAgent, 'MSIE') + 5, 3) ;
+			$ret = ($iVersion >= 5.5) ;
+		}
+		else if ( strpos($sAgent, 'Gecko/') !== false )
+		{
+			$iVersion = (int)substr($sAgent, strpos($sAgent, 'Gecko/') + 6, 8) ;
+			$ret = ($iVersion >= 20030210) ;
+		}
+		else if ( strpos($sAgent, 'Opera/') !== false )
+		{
+			$fVersion = (float)substr($sAgent, strpos($sAgent, 'Opera/') + 6, 4) ;
+			$ret = ($fVersion >= 9.5) ;
+		}
+		else if ( preg_match( "|AppleWebKit/(\d+)|i", $sAgent, $matches ) )
+		{
+			$iVersion = $matches[1] ;
+			$ret = ( $matches[1] >= 522 ) ;
+		}
+
+		RTE::log(__METHOD__, $ret ? 'yes' : 'no');
+
+		wfProfileOut(__METHOD__);
+
+		return $ret;
 	}
 }
