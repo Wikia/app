@@ -135,11 +135,14 @@ class TokyoTyrantSession {
 		error_log (__METHOD__ . "($key)");
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
-			$values = array(
-				self::V_COLUMN => $value,
-				self::X_COLUMN => time() + self::SESS_EXPIRE
-			);
-			return $TT->put($key, $values);
+			if ( !empty($value) ) {
+				$values = array(
+					self::V_COLUMN => $value,
+					self::X_COLUMN => time() + self::SESS_EXPIRE
+				);
+				error_log ( __METHOD__ . " values = " . print_r($values, true) );
+				return $TT->put($key, $values);
+			}
 		}
 		return false;
 	}
