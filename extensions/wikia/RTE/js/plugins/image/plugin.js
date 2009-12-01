@@ -74,11 +74,6 @@ CKEDITOR.plugins.add('rte-image',
 			update: function(image, wikitext, params) {
 				RTE.log('updating an image'); RTE.log(arguments);
 
-				// update wikitext and metadata
-				var data = image.getData();
-				data.params = params;
-				data.wikitext = wikitext;
-
 				// render an image and replace old one
 				RTE.tools.parseRTE(wikitext, function(html) {
 					var newImage = $(html).children('img');
@@ -86,8 +81,6 @@ CKEDITOR.plugins.add('rte-image',
 					// replace old one with new one
 					newImage.insertAfter(image);
 					image.remove();
-
-					newImage.setData(data);
 
 					// setup added image
 					self.setupImage(newImage);
