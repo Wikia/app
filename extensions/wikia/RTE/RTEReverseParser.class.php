@@ -10,9 +10,6 @@ class RTEReverseParser {
 	private $listBullets;
 	private $listIndent;
 
-	// character used to properly encode JSON stored in _rte_data attribute
-	const JSONmarker = "\x7f-FF";
-
 	function __construct() {
 		$this->dom = new DOMdocument();
 
@@ -1206,7 +1203,7 @@ class RTEReverseParser {
 
 		if (!empty($value)) {
 			$value = htmlspecialchars_decode($value);
-			$value = str_replace(self::JSONmarker, '"', $value);
+			$value = rawurldecode($value);
 
 			RTE::log(__METHOD__, $value);
 
@@ -1225,11 +1222,10 @@ class RTEReverseParser {
 	 * Encode data to be stored in _rte_data attribute
 	 */
 	public static function encodeRTEData($data) {
-		$encoded = str_replace('"', self::JSONmarker, Wikia::json_encode($data));
+		$encoded = rawurlencode(Wikia::json_encode($data));
 
 		return $encoded;
 	}
-
 
 	/**
 	 * Build RTE special comment with extra data in it
