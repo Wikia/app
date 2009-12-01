@@ -126,6 +126,9 @@ window.RTE = {
 
 		RTE.instance.on('wysiwygModeReady', RTE.onWysiwygModeReady);
 
+		// event fired when Widescreen button in pressed
+		RTE.instance.on('widescreen', RTE.onWidescreen);
+
 		// CK is loading...
 		RTE.loading(true);
 	},
@@ -230,6 +233,16 @@ window.RTE = {
 
 		// setup drag&drop
 		RTE.setupDragNDrop();
+	},
+
+	// reposition of #RTEStuff div when Widescreen button is pressed
+	onWidescreen: function() {
+		var editorPosition = $('#editform').offset();
+
+		$('#RTEStuff').appendTo('body').css({
+			'left': parseInt(editorPosition.left) + 'px',
+			'top': parseInt(editorPosition.top) + 'px'
+		});
 	},
 
 	// setup drag&drop support

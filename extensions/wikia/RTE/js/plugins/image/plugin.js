@@ -1,6 +1,6 @@
 CKEDITOR.plugins.add('rte-image',
 {
-	menus: false,
+	overlays: false,
 
 	init: function(editor) {
 		var self = this;
@@ -10,8 +10,8 @@ CKEDITOR.plugins.add('rte-image',
 			var previewTop = $('#cke_top_wpTextbox1').height();
 
 			// add node in which image menus will be stored
-			self.menus = $('<div id="RTEImageMenus" />').css('top', previewTop + 'px');
-			$('#RTEStuff').append(self.menus);
+			self.overlays = $('<div id="RTEImageOverlays" />').css('top', previewTop + 'px');
+			$('#RTEStuff').append(self.overlays);
 		});
 
 		editor.on('wysiwygModeReady', function() {
@@ -97,72 +97,89 @@ CKEDITOR.plugins.add('rte-image',
 	},
 
 	// generate HTML for image menu
-	getMenu: function(image) {
+	getOverlay: function(image) {
 		var self = this;
 
-		if (!this.menus) {
+		if (!this.overlays) {
 			// we're not ready yet
 			return;
 		}
 
 		// get node in which menu is / will be stored
-		var menu = image.data('menu');
+		var overlay = image.data('overlay');
 
 		// generate node where menu will be stored
-		if (typeof menu == 'undefined') {
+		if (typeof overlay == 'undefined') {
+			var data = image.getData();
+
 			// create menu node
-			menu= $('<div>').addClass('RTEImageMenu color1');
-			menu.html('<span class="RTEImageMenuEdit">edit</span> <span class="RTEImageMenuDelete">delete</span>');
+			overlay = $('<div>').addClass('RTEImageOverlay');
+			overlay.html('<div class="RTEImageMenu color1">' +
+				'<span class="RTEImageOverlayEdit">edit</span> <span class="RTEImageOverlayDelete">delete</span>' +
+				'</div>');
+
+			// render image caption
+			if (data.params.caption != '') {
+				var caption = $('<div>').
+					addClass('RTEImageCaption').
+					css({
+						'top': parseInt(image.attr('height') + 7) + 'px',
+						'width': parseInt(image.attr('width')) + 'px'
+					}).
+					html(data.params.caption);
+
+				caption.appendTo(overlay);
+			}
 
 			// setup events
-			menu.bind('mouseover', function() {
+			overlay.bind('mouseover', function() {
 				// don't hide this menu
-				self.showMenu(image);
+				self.showOverlay(image);
 			});
 
-			menu.bind('mouseout', function() {
+			overlay.bind('mouseout', function() {
 				// hide this menu
-				self.hideMenu(image);
+				self.hideOverlay(image);
 			});
 
 			// add it and store it in image data
-			this.menus.append(menu);
-			image.data('menu', menu);
+			this.overlays.append(overlay);
+			image.data('overlay', overlay);
 
 			// handle clicks on [edit] / [delete]
-			menu.find('.RTEImageMenuEdit').bind('click', function(ev) {
+			overlay.find('.RTEImageOverlayEdit').bind('click', function(ev) {
 				// hide preview
-				menu.hide();
+				overlay.hide();
 
 				// call editor for image
 				$(image).trigger('edit');
 			});
 
-			menu.find('.RTEImageMenuDelete').bind('click', function(ev) {
+			overlay.find('.RTEImageOverlayDelete').bind('click', function(ev) {
 				if (confirm('Are you sure?')) {
 					// remove image and its menu
-					menu.remove();
+					overlay.remove();
 					$(image).remove();
 				}
 			});
 		}
 
-		return menu;
+		return overlay;
 	},
 
 	// show image menu
-	showMenu: function(image) {
-		var menu = this.getMenu(image);
+	showOverlay: function(image) {
+		var overlay = this.getOverlay(image);
 
 		// position image menu over an image
 		var position = RTE.tools.getPlaceholderPosition(image);
 
-		menu.css({
+		overlay.css({
 			'left': position.left + 'px',
 			'top': parseInt(position.top + 2) + 'px'
 		});
 
-		menu.show();
+		overlay.show();
 
 		// clear timeout used to hide preview with small delay
 		if (timeoutId = image.data('hideTimeout')) {
@@ -171,14 +188,12 @@ CKEDITOR.plugins.add('rte-image',
 	},
 
 	// hide image menu
-	hideMenu: function(image) {
-		var menu = this.getMenu(image);
+	hideOverlay: function(image) {
+		var overlay = this.getOverlay(image);
 
 		// hide menu 100 ms after mouse is out (this prevents flickering)
 		image.data('hideTimeout', setTimeout(function() {
-			menu.hide();
-
-			menu.removeData('hideTimeout');
+			overlay.hide().removeData('hideTimeout');
 		}, 100));
 	},
 
@@ -193,11 +208,11 @@ CKEDITOR.plugins.add('rte-image',
 
 		// setup events
 		image.bind('mouseover.image', function() {
-			self.showMenu($(this));
+			self.showOverlay($(this));
 		});
 
 		image.bind('mouseout.image', function() {
-			self.hideMenu($(this));
+			self.hideOverlay($(this));
 		});
 
 		image.bind('contextmenu.image', function(ev) {

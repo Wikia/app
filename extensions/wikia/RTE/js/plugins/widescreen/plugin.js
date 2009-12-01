@@ -13,6 +13,9 @@ CKEDITOR.plugins.add('rte-widescreen',
 
 				// toggle button state
 				this.toggleState();
+
+				// fire custom event
+				editor.fire('widescreen');
 			},
 			state: initialState
 		});
