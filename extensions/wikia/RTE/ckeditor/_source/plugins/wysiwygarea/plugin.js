@@ -460,7 +460,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							editor.on( 'key', function( event )
 							{
 								// Backspace.
-								var control = event.data.keyCode == 8
+								var control = event.data.keyCode == 8 && editor.getSelection()
 											  && editor.getSelection().getSelectedElement();
 								if ( control )
 								{
