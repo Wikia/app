@@ -120,11 +120,22 @@ CKEDITOR.plugins.add('rte-image',
 
 			// render image caption
 			if (data.params.caption != '') {
+				var position = {
+					'top': parseInt(image.attr('height') + 7),
+					'width': parseInt(image.attr('width'))
+				};
+
+				// IE
+				if (CKEDITOR.env.ie) {
+					position.width -= 6;
+					position.top -= 25;
+				}
+
 				var caption = $('<div>').
 					addClass('RTEImageCaption').
 					css({
-						'top': parseInt(image.attr('height') + 7) + 'px',
-						'width': parseInt(image.attr('width')) + 'px'
+						'top': position.top + 'px',
+						'width': position.width + 'px'
 					}).
 					html(data.params.caption);
 
@@ -174,12 +185,27 @@ CKEDITOR.plugins.add('rte-image',
 		// position image menu over an image
 		var position = RTE.tools.getPlaceholderPosition(image);
 
+		// fix for non-gecko browsers
+		if (!CKEDITOR.env.gecko) {
+			// take image margins into consideration
+			if (image.hasClass('thumb')) {
+				position.top += 6;
+
+				if (!image.hasClass('alignLeft')) {
+					position.left += 18;
+				}
+			}
+		}
+
 		overlay.css({
 			'left': position.left + 'px',
 			'top': parseInt(position.top + 2) + 'px'
 		});
 
-		overlay.show();
+		// don't show menu above RTE toolbar
+		if (position.top > 0) {
+			overlay.show();
+		}
 
 		// clear timeout used to hide preview with small delay
 		if (timeoutId = image.data('hideTimeout')) {
