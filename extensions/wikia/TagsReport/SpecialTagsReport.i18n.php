@@ -9,8 +9,7 @@ $messages = array(
 	'tagsreportnotspecify' => 'You haven\'t selected any special tag yet',
 	'tagsreportnoresults' => 'No results found',
 	'tagsreportmainnspace' => 'Main',
-	'tagsreportpages' => '<strong>$1</strong> pages',
-	'tagsreportpage' => '<strong>$1</strong> page',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|page|pages}})',
 	'tagsreportpagesfound' => 'Found <strong>$1</strong> pages, which contain special tag (dpl, youtube, etc.)',
 	'tagsreportgenerated' => 'Generated on $1',
 	),
@@ -23,7 +22,7 @@ $messages['es'] = array(
 	'tagsreportnotspecify' => 'No has seleccionado ninguna etiqueta especial aún',
 	'tagsreportnoresults' => 'No se han encontrado resultados',
 	'tagsreportmainnspace' => 'Principal',
-	'tagsreportpages' => '<strong>$1</strong> páginas',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
 	'tagsreportpage' => '<strong>$1</strong> página',
 	'tagsreportpagesfound' => '<strong>$1</strong> páginas encontradas, que contengan alguna etiqueta especial (dpl, youtube, etc.)',
 );

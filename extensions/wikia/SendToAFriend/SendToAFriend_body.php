@@ -203,7 +203,7 @@ class InviteSpecialPage extends SpecialPage {
 			}
 		}
 
-		$subject = $notifyName . wfMsg( 'stf_subject', $wgSitename );
+		$subject = wfMsg( 'stf_subject', $wgSitename, $notifyName );
 
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
 		$dbw->begin();
