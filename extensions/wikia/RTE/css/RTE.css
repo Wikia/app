@@ -94,23 +94,37 @@ body.rte_source #editform #toolbar {
 }
 
 /* image previews */
-#RTEImageMenus {
+#RTEImageOverlays {
 	left: 11px;
 	position: absolute;
 }
 
-.RTEImageMenu {
+.RTEImageOverlay {
 	display: none;
+	position: absolute;
+}
+
+.RTEImageMenu {
 	font-size: 11px;
 	opacity: 0.9;
 	padding: 4px;
-	position: absolute;
 	white-space: nowrap;
 }
 
 .RTEImageMenu span {
 	cursor: pointer;
 	padding: 0 3px;
+}
+
+.RTEImageCaption {
+	background: #f9f9f9;
+	border: solid 1px #ccc;
+	border-top: none;
+	font-size: 11px;
+	left: 0;
+	line-height: 16px;
+	padding: 3px;
+	position: absolute;
 }
 
 /* template previews */
