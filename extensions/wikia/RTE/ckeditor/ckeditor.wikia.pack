@@ -186,6 +186,7 @@ packages :
 					'../js/RTE.js',
 					'../js/plugins/comment/plugin.js',
 					'../js/plugins/comment/dialogs/comment.js',
+					'../js/plugins/dragdrop/plugin.js',
 					'../js/plugins/entities/plugin.js',
 					'../js/plugins/image/plugin.js',
 					'../js/plugins/justify/plugin.js',
