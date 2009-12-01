@@ -5,7 +5,7 @@
 
 $messages = array();
 $messages['en'] = array(
-	'createpage' => 'Create a new article',
+	'createpage-sp-title' => 'Create a new article',
 	'createpage_help' => '',
 	'createpage_caption' => 'title',
 	'createpage_button_caption' => 'Create!',
@@ -26,7 +26,7 @@ $messages['en'] = array(
 
 
 $messages['de'] = array(
-	'createpage' => 'Neue Seite anlegen',
+	'createpage-sp-title' => 'Neue Seite anlegen',
 	'createpage_caption' => 'Seitentitel',
 	'createpage_button_caption' => 'Seite speichern',
 	'createpage_title' => 'Neue Seite anlegen',
@@ -38,7 +38,7 @@ $messages['de'] = array(
 
 
 $messages['es'] = array(
-	'createpage' => 'Crea un nuevo artículo',
+	'createpage-sp-title' => 'Crea un nuevo artículo',
 	'createpage_caption' => 'título',
 	'createpage_button_caption' => '¡Crear!',
 	'createpage_title' => 'Crear un nuevo artículo',
@@ -51,7 +51,7 @@ $messages['es'] = array(
 
 
 $messages['fa'] = array(
-	'createpage' => 'ایجاد مقاله جدید',
+	'createpage-sp-title' => 'ایجاد مقاله جدید',
 	'createpage_caption' => 'عنوان',
 	'createpage_button_caption' => 'ایجاد کن!',
 	'createpage_title' => 'ایجاد مقالۀ جدید',
@@ -62,7 +62,7 @@ $messages['fa'] = array(
 
 
 $messages['fi'] = array(
-	'createpage' => 'Luo uusi artikkeli',
+	'createpage-sp-title' => 'Luo uusi artikkeli',
 	'createpage_caption' => 'otsikko',
 	'createpage_button_caption' => 'Luo artikkeli',
 	'createpage_title' => 'Luo uusi artikkeli',
@@ -75,7 +75,7 @@ $messages['fi'] = array(
 
 
 $messages['ja'] = array(
-	'createpage' => '新規記事を作成',
+	'createpage-sp-title' => '新規記事を作成',
 	'createpage_caption' => '項目名',
 	'createpage_button_caption' => '作成する',
 	'createpage_title' => '新規記事を作成',
@@ -88,7 +88,7 @@ $messages['ja'] = array(
 
 
 $messages['zh'] = array(
-	'createpage' => '新增文章',
+	'createpage-sp-title' => '新增文章',
 	'createpage_caption' => '分類：',
 	'createpage_button_caption' => '發布！',
 	'createpage_title' => '發表新文章',
@@ -101,7 +101,7 @@ $messages['zh'] = array(
 
 
 $messages['zh-cn'] = array(
-	'createpage' => '新增文章',
+	'createpage-sp-title' => '新增文章',
 	'createpage_caption' => '分类：',
 	'createpage_button_caption' => '发布！',
 	'createpage_title' => '发表新文章',
@@ -114,7 +114,7 @@ $messages['zh-cn'] = array(
 
 
 $messages['zh-hans'] = array(
-	'createpage' => '新增文章',
+	'createpage-sp-title' => '新增文章',
 	'createpage_caption' => '分类：',
 	'createpage_button_caption' => '发布！',
 	'createpage_title' => '发表新文章',
@@ -127,7 +127,7 @@ $messages['zh-hans'] = array(
 
 
 $messages['zh-hant'] = array(
-	'createpage' => '新增文章',
+	'createpage-sp-title' => '新增文章',
 	'createpage_caption' => '分類：',
 	'createpage_button_caption' => '發布！',
 	'createpage_title' => '發表新文章',
@@ -140,7 +140,7 @@ $messages['zh-hant'] = array(
 
 
 $messages['zh-hk'] = array(
-	'createpage' => '新增文章',
+	'createpage-sp-title' => '新增文章',
 	'createpage_caption' => '分類：',
 	'createpage_button_caption' => '發布！',
 	'createpage_title' => '發表新文章',
@@ -153,7 +153,7 @@ $messages['zh-hk'] = array(
 
 
 $messages['zh-tw'] = array(
-	'createpage' => '新增文章',
+	'createpage-sp-title' => '新增文章',
 	'createpage_caption' => '分類：',
 	'createpage_button_caption' => '發布！',
 	'createpage_title' => '發表新文章',

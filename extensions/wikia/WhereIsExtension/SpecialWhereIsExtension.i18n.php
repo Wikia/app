@@ -18,11 +18,6 @@
  *     require_once("$IP/extensions/wikia/WhereIsExtension/SpecialWhereIsExtension.php");
  */
 
-if (!defined('MEDIAWIKI')) {
-	echo "This is MediaWiki extension named WhereIsExtension.\n";
-	exit(1) ;
-}
-
 $messages = array(
 	'en' => array(
 		'whereisextension'			=> 'Where is extension',	//the name displayed on Special:SpecialPages
@@ -32,7 +27,5 @@ $messages = array(
 		'whereisextension-filter'	=> 'Filter',
 		'whereisextension-all-groups'	=> 'All groups',
 		'whereisextension-name-contains'	=> 'variable name contains',
-		'whereisextension-isset'	=> 'is set to',
 	)
 );
-?>

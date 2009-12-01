@@ -41,7 +41,7 @@ class CreatePage extends SpecialEditPage {
 
 		parent::execute();
 
-		$wgOut->setPageTitle( wfMsg("createpage") );
+		$wgOut->setPageTitle( wfMsg("createpage-sp-title") );
 
 		if($wgRequest->wasPosted()) {
 			$this->parseFormData();
