@@ -107,6 +107,7 @@ body.rte_source #editform #toolbar {
 
 .RTEImageMenu {
 	font-size: 11px;
+	height: 14px;
 	opacity: 0.9;
 	padding: 4px;
 	white-space: nowrap;
