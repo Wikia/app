@@ -128,6 +128,9 @@ class RTE {
 		// add fake form used by MW suggest
 		$wgOut->addHTML( Xml::openElement('form', array('id' => 'RTEFakeForm')) . Xml::closeElement('form') );
 
+		// adds fallback for non-JS users (RT #20324)
+		self::addNoScriptFallback();
+
 		// wysiwyg editor is on
 		global $wgWysiwygEdit;
 		$wgWysiwygEdit = true;
@@ -197,6 +200,32 @@ class RTE {
 		$vars['RTELocalPath'] = $wgServer .  $wgScriptPath . '/extensions/wikia/RTE';
 
 		return true;
+	}
+
+	/**
+	 * Adds fallback for non-JS users (RT #20324)
+	 */
+	private static function addNoScriptFallback() {
+		global $wgOut;
+
+		$fallbackMessage = trim(wfMsgExt('rte-no-js-fallback', 'parseinline'));
+		$wgOut->addHTML(
+<<<HTML
+		<noscript>
+			<style type="text/css">
+				#editform {
+					display: none;
+				}
+
+				.RTEFallback,
+				#page_bar {
+					display: block !important;
+				}
+			</style>
+			<div class="RTEFallback usermessage">$fallbackMessage</div>
+		</noscript>
+HTML
+		);
 	}
 
 	/**
