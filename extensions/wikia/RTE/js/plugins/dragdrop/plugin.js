@@ -1,26 +1,25 @@
 CKEDITOR.plugins.add('rte-dragdrop',
 {
 	onDrop: function(ev) {
-		setTimeout(function() {
-			RTE.log(ev);
+		RTE.log(ev);
 
-			// get dragged element
-			var draggedElement = RTE.getEditor().find('[_rte_dragged]');
+		// get dragged element
+		var draggedElement = RTE.getEditor().find('[_rte_dragged]');
 
-			RTE.log('drag&drop: dropped');
-			RTE.log(draggedElement);
+		RTE.log('drag&drop: dropped');
+		RTE.log(draggedElement);
 
-			// get coordinates from "dragdrop" event and send it with "dropped" event
-			// @see http://www.quirksmode.org/js/events_properties.html#position
-			var extra = {
-				pageX: (ev.pageX ? ev.pageX : ev.clientX),
-				pageY: (ev.pageY ? ev.pageY : ev.clientY)
-			};
-
-			// remove "marking" attribute and trigger event handler
-			RTE.log('drag&drop: triggering "dropped" event...');
-			draggedElement.removeAttr('_rte_dragged').trigger('dropped', extra);
-		}, 500);
+/*
+		// get coordinates from "dragdrop" event and send it with "dropped" event
+		// @see http://www.quirksmode.org/js/events_properties.html#position
+		var extra = {
+			pageX: (ev.pageX ? ev.pageX : ev.clientX),
+			pageY: (ev.pageY ? ev.pageY : ev.clientY)
+		};
+*/
+		// remove "marking" attribute and trigger event handler
+		RTE.log('drag&drop: triggering "dropped" event...');
+		draggedElement.removeAttr('_rte_dragged').trigger('dropped');
 	},
 
 	init: function(editor) {
@@ -32,7 +31,11 @@ CKEDITOR.plugins.add('rte-dragdrop',
 			// mark dragged element with _rte_dragged attribute
 			RTE.getEditor().
 				unbind('.dnd').
-				bind('dragdrop.dnd', self.onDrop).
+				bind('dragdrop.dnd', function(ev) { // for Gecko
+					setTimeout(function() {
+						self.onDrop(ev);
+					}, 100);
+				}).
 				bind('mousedown.dnd', function(ev) {
 					var target = $(ev.target);
 
@@ -45,6 +48,14 @@ CKEDITOR.plugins.add('rte-dragdrop',
 					// remove "marking" attribute
 					target.removeAttr('_rte_dragged');
 				});
+
+			// for IE
+			RTE.getEditor()[0].ondrop = function(ev) {
+				// force re-init of all placeholders
+				setTimeout(function() {
+					editor.fire('wysiwygModeReady');
+				}, 100);
+			};
 		});
 	}
 });
