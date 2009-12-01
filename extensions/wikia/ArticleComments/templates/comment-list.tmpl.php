@@ -16,7 +16,7 @@
 	?>
 	<div id="article-comments" class="clearfix">
 	<?php
-	if ( count( $comments ) > 10 || 1) {
+	if ( count( $comments ) > 10) {
 		if ( $canEdit ) {
 	?>
 		<div class="article-comm-input reset clearfix accent">
