@@ -41,17 +41,9 @@ class TokyoTyrantSession {
 		return Tyrant::getConnection();
 	}
 	
-	public static function newFromKey(&$key) {
-		global $wgSessionTTServers, $wgSharedDB, $wgDBname, $wgWikiaCentralAuthDatabase;
-		
-		if ( !empty( $wgWikiaCentralAuthDatabase ) ) {
-			$key = "{$wgWikiaCentralAuthDatabase}:session:{$key}";
-		} elseif ( !empty( $wgSharedDB ) ) {
-			$key = "{$wgSharedDB}:session:{$key}";
-		} else {
-			$key = "{$wgDBname}:session:{$key}";
-		}
-
+	public static function newFromKey($key) {
+		global $wgSessionTTServers;
+		error_log("key = $key \n");
 		$TTSess = new TokyoTyrantSession();
 		$TTSess->set_servers($wgSessionTTServers);
 		return $TTSess->connect($key);
@@ -60,6 +52,18 @@ class TokyoTyrantSession {
 	public function set_servers($servers = null) { 
 		$this->servers = $servers;
 		$this->active = count($servers);
+	}
+
+	public static function get_key($key) {
+		global $wgSharedDB, $wgDBname, $wgWikiaCentralAuthDatabase;
+		if ( !empty( $wgWikiaCentralAuthDatabase ) ) {
+			$key = "{$wgWikiaCentralAuthDatabase}:session:{$key}";
+		} elseif ( !empty( $wgSharedDB ) ) {
+			$key = "{$wgSharedDB}:session:{$key}";
+		} else {
+			$key = "{$wgDBname}:session:{$key}";
+		}
+		return $key;
 	}
 
 	# functions c&p from memcached-client.php
@@ -169,13 +173,13 @@ class TokyoTyrantSession {
 		return self::close(); 
 	}
 	public static function __read( $id ) { 
-		return self::get( $id ); 
+		return self::get( self::get_key($id) ); 
 	}
 	public static function __write( $id, $data ) { 
-		return self::put( $id, $data ); 
+		return self::put( self::get_key($id), $data ); 
 	}
 	public static function __destroy( $id ) { 
-		return self::out( $id ); 
+		return self::out( self::get_key($id) ); 
 	}
 	public static function __gc( $maxlifetime ) { 
 		return true; 
