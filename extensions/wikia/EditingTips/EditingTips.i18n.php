@@ -2,7 +2,7 @@
 $messages = array();
 $messages['en'] = array(
 	'tog-disableeditingtips' => 'Do not show editing tips',
-	'tog-widescreeneditingtips' => 'Use the Widescreen editing',	
+	'tog-widescreeneditingtips' => 'Use widescreen editing',	
 	'editingtips_enter_widescreen' => 'Enter Widescreen',
 	'editingtips_exit_widescreen' => 'Exit Widescreen',
 	'editingtips_hide' => 'Hide Editing Tips',

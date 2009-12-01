@@ -10,9 +10,8 @@
  * @subpackage SpecialPage
  */
 
-$messages = array(
-	'en' => array(
-		'interwikidispatcher'			=> 'InterwikiDispatcher',	//the name displayed on Special:SpecialPages
-	)
+$messages = array();
+
+$messages['en'] = array(
+	'interwikidispatcher'	=> 'InterwikiDispatcher',	//the name displayed on Special:SpecialPages
 );
-?>
