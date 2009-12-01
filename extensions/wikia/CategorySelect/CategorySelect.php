@@ -25,7 +25,8 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['other'][] = array(
 	'name' => 'CategorySelect',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description' => 'Provides an interface for managing categories in article without editing whole article.'
+	'description' => 'Provides an interface for managing categories in article without editing whole article.',
+	'description-msg' => 'categoryselect-desc',
 );
 
 $wgExtensionFunctions[] = 'CategorySelectInit';

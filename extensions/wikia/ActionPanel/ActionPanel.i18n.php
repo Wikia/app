@@ -8,7 +8,8 @@ $messages['en'] = array(
 		'action_panel_categories_summary' => 'Add Categories',
 		'action_panel_save_success' => 'Your article has been saved',
 		'action_panel_rename_success' => 'Your article has been renamed',
-		'action_panel_categorize_success' => 'Your categories have been added'
+		'action_panel_categorize_success' => 'Your categories have been added',
+		'actionpanel-desc' => 'a handy popup that lets you categorize, rename and edit articles',
 );
 
 

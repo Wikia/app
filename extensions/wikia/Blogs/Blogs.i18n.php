@@ -117,6 +117,7 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blogs-undeleted-comment" => "Undeleted comment for blog page $1",
 	"blogs-recent-url" => "Blog:Recent_posts",
 	"blogs-recent-url-text" => "Recent Blog Posts",
+	"blog-desc" => "Blog Articles",
 );
 
 $messages['fi'] = array(
