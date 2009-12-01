@@ -22,7 +22,7 @@ class ApiQueryWantedimages extends ApiQueryBase {
 			'imagelinks' => array( 'LEFT OUTER JOIN', 'page_id = il_from'
 		)));
 		$this->addWhere( 'il_from is NULL' );
-                $this->addOption( 'LIMIT', $params['limit'] );
+                $this->addOption( 'LIMIT', $params['limit'] + 1 );
 
                 $res = $this->select(__METHOD__);
                 $count = 0;
@@ -32,7 +32,7 @@ class ApiQueryWantedimages extends ApiQueryBase {
                         if (++$count > $params['limit']) {
                                 // We've reached the one extra which shows that
                                 // there are additional pages to be had. Stop here...
-                                $this->setContinueEnumParameter('continue', $row->qc_title );
+                                $this->setContinueEnumParameter('continue', $row->page_title );
                                 break;
                         }
 
