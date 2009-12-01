@@ -651,7 +651,7 @@ class RTE {
 		else if ( strpos($sAgent, 'MSIE') !== false && strpos($sAgent, 'mac') === false && strpos($sAgent, 'Opera') === false )
 		{
 			$iVersion = (float)substr($sAgent, strpos($sAgent, 'MSIE') + 5, 3) ;
-			$ret = ($iVersion >= 5.5) ;
+			$ret = ($iVersion >= 7.0) ;
 		}
 		else if ( strpos($sAgent, 'Gecko/') !== false )
 		{
