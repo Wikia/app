@@ -29,6 +29,6 @@ $link = $titleObj->getLocalUrl('type=signup');
 		<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
 	</form>
 	<div class="modalToolbar neutral">
-		<a id="wpLoginattempt" class="wikia_button" href="#" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit();" ><span><?= wfMsg("login") ?></span></a>
+		<a id="wpLoginattempt" class="wikia_button" href="#" onclick="AjaxLogin.action='login'; AjaxLogin.form.submit();" tabindex="105"><span><?= wfMsg("login") ?></span></a>
 	</div>
 </div>
