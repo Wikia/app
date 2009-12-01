@@ -18,6 +18,12 @@ class UploadInfo {
 
 	/**
 	 * static method used in hook
+	 *
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param UploadForm $uploadForm -- uploadForm object
 	 */
 	static public function uploadComplete( $uploadForm ) {
 		global $wgRequest, $wgCityId, $wgExternalDatawareDB, $wgWikiaDatacenter;
@@ -38,40 +44,22 @@ class UploadInfo {
 		$fullPath = $uploadForm->mLocalFile->getFullPath();
 
 		$aHistory = $uploadForm->mLocalFile->getHistory(1);
-		$oldFileName = false;
+		$oldPath = false;
 		if ( isset($aHistory) && isset($aHistory[0]) ) {
 			$oOldLocalFile = $aHistory[0];
 			if ( isset($oOldLocalFile) && ($oOldLocalFile instanceof OldLocalFile) ) {
-				$oldFileName = $oOldLocalFile->getArchiveName();
+				$oldPath = $oOldLocalFile->getArchiveName();
 			}
 		}
 
-		if ( !empty($oldFileName) ) {
-			$oldFileName = sprintf("%s/%s", $uploadForm->mLocalFile->getArchivePath(), $oldFileName);
+		if ( !empty( $oldPath ) ) {
+			$oldPath = sprintf("%s/%s", $uploadForm->mLocalFile->getArchivePath(), $oldPath );
 		}
 
 		/**
-		 * use first character from variable
+		 * write log to database
 		 */
-		$datacenter = $wgWikiaDatacenter[ 0 ];
-
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-		$dbw->insert(
-			"upload_log",
-			array(
-				/** up_id is autoincrement **/
-				"up_page_id"    => $title->getArticleId(),
-				"up_path"       => $fullPath,
-				"up_imgpath"    => $relPath,
-				"up_flags"      => 0,
-				"up_title"      => $mTitle,
-				"up_created"    => wfTimestampNow(),
-				"up_city_id"    => $wgCityId,
-				"up_old_path"   => $oldFileName,
-				"up_datacenter" => $datacenter
-			),
-			__METHOD__
-		);
+		self::log( $title, $fullPath, $relPath, $oldPath, "u" /*action*/ );
 
 		wfProfileOut( __METHOD__ );
 
@@ -79,4 +67,53 @@ class UploadInfo {
 	}
 
 
+	/**
+	 * generic function when is not used as hook
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param Title $title     -- where file was uploaded
+	 * @param string $fullPath -- full path to image with root directory
+	 * @param string $relPath  -- relative path to image without root directory
+	 * @param string $oldPath  -- path to old version if file has new version
+	 * @param string $action   -- action, default 'u' as upload,
+	 */
+	static public function log( $title, $fullPath, $relPath = "", $oldPath = "", $action = "u" ) {
+		global $wgWikiaDatacenter, $wgExternalDatawareDB, $wgCityId, $wgTitle;
+
+
+		wfProfileIn( __METHOD__ );
+
+		$datacenter = $wgWikiaDatacenter[ 0 ];
+
+		if( !$title ) {
+			$title   = $wgTitle;
+		}
+		$articleId = $title->getArticleId() || 0;
+
+
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$dbw->begin();
+		$dbw->insert(
+			"upload_log",
+			array(
+				/** up_id is autoincrement **/
+				"up_page_id"    => $articleId,
+				"up_path"       => $fullPath,
+				"up_imgpath"    => $relPath,
+				"up_flags"      => 0,
+				"up_title"      => $title->getText(),
+				"up_created"    => wfTimestampNow(),
+				"up_city_id"    => $wgCityId,
+				"up_old_path"   => $oldPath,
+				"up_datacenter" => $datacenter,
+				"up_action"     => $action
+			),
+			__METHOD__
+		);
+		$dbw->commit();
+
+		wfProfileOut( __METHOD__ );
+	}
 }
