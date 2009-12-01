@@ -6,6 +6,7 @@
 $wgExtensionCredits['other'][] = array(
     'name' => 'ActionPanel',
     'author' => 'David Pean',
+    'description-msg' => 'actionpanel-desc',
 );
 
 $wgAvailableRights[] = 'actionpanel';

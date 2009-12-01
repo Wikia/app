@@ -10,6 +10,7 @@ $messages = array();
 
 $messages['en'] = array(
 	"autocreatewiki" => "Create a new Wiki",
+	"autocreatewiki-desc" => "Create wiki in WikiFactory by user requests",
 	"createwikipagetitle" => "Create a new Wiki",
 	"createwiki"=> "Create a new Wiki",
 	"autocreatewiki-chooseone" => "Choose one",

@@ -197,7 +197,7 @@ class AjaxPollClass {
 	 * @return string: rendered HTML code
 	 */
 	public function render() {
-		global $wgRequest;
+		global $wgRequest, $wgContLang;
 
 		wfProfileIn( __METHOD__ );
 
@@ -251,7 +251,8 @@ JS;
 			"title"		=> $this->mTitle,
 			"status"	=> $this->mStatus,
 			"attribs"	=> $this->mAttribs,
-			"created"	=> wfTimestamp( TS_RFC2822, $this->mCreated ),
+			"created_time"	=> $wgContLang->time( $this->mCreated ),
+			"created_date"	=> $wgContLang->date( $this->mCreated ),
 		));
 
 		$before .= $oTmpl->execute( "poll" );

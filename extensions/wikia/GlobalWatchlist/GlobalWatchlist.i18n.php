@@ -24,8 +24,7 @@ Wikia
 * To change your preferences for watchlist notifications, please visit http://www.wikia.com/wiki/Special:Preferences
 * To mark all pages from this Weekly Digest as visited, see the option in the \"Watchlist\" tab of your Preferences page
 ",
-	"globalwatchlist-blog-page-title-comment" => "$1 ($2 comment)",
-	"globalwatchlist-blog-page-title-comments" => "$1 ($2 comments)",
+	"globalwatchlist-blog-page-title-comment" => "$1 ($2 {{PLURAL:$2|comment|comments}})",
 	"globalwatchlist-no-page-found" => "No page found.",
 	"globalwatchlist-no-blog-page-found" => "No blog page found.",
 );

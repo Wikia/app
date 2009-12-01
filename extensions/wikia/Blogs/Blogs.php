@@ -11,6 +11,7 @@
 $wgExtensionCredits['other'][] = array(
 	"name" => "BlogArticles",
 	"description" => "Blog Articles",
+	"description-msg" => "blogs-desc",
 	"url" => "http://help.wikia.com/wiki/Help:Blog_article",
 	"svn-date" => '$LastChangedDate$',
 	"svn-revision" => '$LastChangedRevision$',

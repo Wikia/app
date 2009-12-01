@@ -40,6 +40,7 @@ $messages = array(
 		'categoryselect-error-not-exist' => 'Article [id=$1] does not exist.',
 		'categoryselect-error-user-rights' => 'User rights error.',
 		'categoryselect-error-db-locked' => 'Database is locked.',
+		'categoryselect-desc' => 'Provides an interface for managing categories in article without editing whole article.',
 		'tog-disablecategoryselect' => 'Disable Category Tagging'
 	),
 	'fi' => array(
