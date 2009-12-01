@@ -17,11 +17,6 @@
  *     require_once("$IP/extensions/wikia/ForceSubjectForNewSection/ForceSubjectForNewSection.php");
  */
 
-if (!defined('MEDIAWIKI')) {
-	echo "This is MediaWiki extension named ForceSubjectForNewSection.\n";
-	exit(1) ;
-}
-
 $messages = array(
 	'en' => array(
 		'force-subject-for-new-section-message' => 'Please enter a headline for the section'

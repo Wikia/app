@@ -1,7 +1,8 @@
 <?php
 
-$messages = array(
-	'en' => array(
+$messages = array();
+
+$messages['en'] = array(
 		'listusers' => 'Local list users',
 		'listuserstitle'  => 'Local list users', 
 		'listusersfound' => 'Found <strong>$1</strong> users',
@@ -35,7 +36,6 @@ $messages = array(
 		'listusers-username' => 'User name',
 		'listusers-blocked' => 'Blocked',
 		'listusers-nonegroup' => 'none',
-	),
 );
 
 
