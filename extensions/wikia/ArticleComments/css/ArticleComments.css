@@ -1,69 +1,81 @@
 div#mw-data-after-content h2.wikia_header {
-background:#F9F9F9;
-border-bottom:1px solid #AAA;
-border-top:1px solid #AAA;
-clear:both;
-color:#36C;
-font-family:Arial, sans-serif;
-font-size:12pt;
-font-weight:700;
-text-transform:uppercase;
-margin:0!important;
-padding:3px 10px;
+	background: #F9F9F9;
+	border-bottom: 1px solid #AAA;
+	border-top: 1px solid #AAA;
+	clear: both;
+	color: #36C;
+	font-family: Arial, sans-serif;
+	font-size: 12pt;
+	font-weight: 700;
+	margin: 0 !important;
+	padding: 3px 10px;
+	text-transform: uppercase;
+}
+
+#article-comments-wrapper {
+	clear: both;
+	margin-top: 30px;
+}
+
+#article-comments-wrapper h2 {
+	margin-bottom: 0;
+	margin-top: 10px;
+	padding: 4px 10px;
+}
+
+#article-comm-order {
+	float: right;
+	margin-top: -24px;
+	margin-right: 10px;
 }
 
 #article-comments-ul {
-/* from reset.css */ margin:0;padding:0;
-/* from reset.css */ list-style:none; list-style-image: none;
+/* from reset.css */ margin: 0; padding: 0;
+/* from reset.css */ list-style: none; list-style-image: none;
 }
 
-#blog-comments-li {
-border-bottom:1px solid #DDD;
-padding:15px 10px;
+.article-comments-li {
+	margin-left: 10px;
 }
 
 div.article-comm-input-text textarea {
-height:100px;
-margin-bottom:5px;
-width:450px;
-padding:3px;
+	height: 100px;
+	margin-bottom: 5px;
+	padding: 3px;
+	width: 450px;
 }
 
 div.article-comm-input {
-background:#d2d2b6;
-padding:10px;
+	border-bottom: 1px solid #3366CC;
+	margin-bottom: 10px;
+	padding: 10px;
 }
 
 #article-comments .details {
-margin:4px 0 7px;
+	margin: 4px 0 7px;
 }
 
 #article-comments span.timestamp {
-font-style:italic;
+	font-style: italic;
 }
 
 div.article-comment strong {
-font-weight:700;
-font-size:10pt;
+	font-size: 10pt;
+	font-weight: 700;
 }
 
 #article-comments .comment strong {
-font-weight:700;
+	font-weight: 700;
 }
 
 #article-comments .comment_avatar, div.article-comm-input-avatar {
-float:left;
+	float: left;
 }
 
 #article-comments .comment, div.article-comm-input-text {
-margin-left:65px;
-}
-
-#article-comm-form-select select {
-float:right;
-margin:0;
+	margin-left: 65px;
 }
 
 .rtl #article-comm-form-select select {
-float:left;
+	float: left;
 }

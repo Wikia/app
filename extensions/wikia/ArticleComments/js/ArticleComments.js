@@ -4,13 +4,14 @@ ArticleComments.processing = false;
 
 ArticleComments.add = function(json) {
 	$().log('begin: add');
+	var node = $('<li>').html(json.text).attr('id', 'comm-' + json.id).addClass('article-comments-li');
 	//check order and place for new comment
 	if ($('#article-comm-order').attr('value') == 'asc') {
 		//add at the end
-		$('<li>').html(json.text).attr('id', 'comm-' + json.id).appendTo('#article-comments-ul');
+		node.appendTo('#article-comments-ul');
 	} else {
 		//add at the beginning
-		$('<li>').html(json.text).attr('id', 'comm-' + json.id).prependTo('#article-comments-ul');
+		node.prependTo('#article-comments-ul');
 	}
 	$('#' + json.id).bind('click', ArticleComments.edit);
 	$().log('end: add');
