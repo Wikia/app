@@ -34,8 +34,7 @@ class WikiStickies extends SpecialPage {
 		global $wgOut;
 
 		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
-		$tpl->set_vars( array(
-				     ));
+		$tpl->set_vars( array());
 
 		$text = $tpl->execute('tools');
 		$wgOut->addHTML( $text );
@@ -47,16 +46,25 @@ class WikiStickies extends SpecialPage {
 
 		$sk = $wgUser->getSkin () ;
 		$body = '';
+		$continue = false;
 
 		if( empty( $feed_data ) ) {
 			return false;
 		}
 
+		if( isset( $feed_data['continue'] ) ) {
+			$continue = true;						
+			array_pop( $feed_data );
+		}
+
 		foreach( $feed_data as $title ) {
+			
+			if( 1 != 'title' ) {
 			$body .= Xml::openElement( 'li' ).
 				// todo namespace too (especially for Wantedpages)
 				$sk->makeLink( $title ).			
 				Xml::closeElement( 'li' );
+			}
 		}
 		
 		$html = Xml::openElement( 'div', array( 'class' => 'wikistickiesfeed' ) ).
@@ -65,96 +73,77 @@ class WikiStickies extends SpecialPage {
 			Xml::closeElement( 'div' ).
 			Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
 			$body.
-			Xml::closeElement( 'ul' ).			
+			Xml::closeElement( 'ul' );
+			if( $continue  ) {
+				// todo show only if it's really more
+				$html .= Xml::openElement( 'div', array( 'class' => 'wikistickiesmore' ) );
+			}
+		$html .= Xml::closeElement( 'div' ).			
 			Xml::closeElement( 'div' );
 					       	
                 $wgOut->addHTML( $html );
 	}
-                               
-	// fetch the feed for SpecialNewpages
-	function getNewpagesFeed( $limit ) {
+
+	// feed packaging 
+	function getFeed( $feed, $data ) {
 		wfProfileIn( __METHOD__ );
-		$newpages = array();
-
-		$oFauxRequest = new FauxRequest(
-				array(
-					'action'        => 'query',
-					'list'		=> 'recentchanges',
-					'rcprop'	=> 'title',					
-					'rcnamespace'	=> 0,
-					'rctype'	=> 'new',
-					'rclimit'	=> intval($limit),
-				     )
-				);
-
+		$result = array();
+		$oFauxRequest = new FauxRequest( $data );
+		
 		$oApi = new ApiMain($oFauxRequest);
                 $oApi->execute();
-                $aResult =& $oApi->GetResultData();
+                $aResult =& $oApi->GetResult()->getData();
 
-		if( count($aResult['query']['recentchanges']) > 0) {
-			foreach( $aResult['query']['recentchanges'] as $newfound ) {
-				$newpages[] = $newfound['title'] ;
-			}
+		// get the pages
+		if( !isset($aResult['warnings']) )  {
+			if( count($aResult['query'][$feed]) > 0) {
+				foreach( $aResult['query'][$feed] as $newfound ) {
+					$result[] = $newfound['title'] ;
+				}
+			} 
+			// can we continue or not?
+			if( count($aResult['query-continue'][$feed]) > 0) {
+				$result['continue'] = true;
+			}			
 		}
 
 		wfProfileOut( __METHOD__ ); 		
-		return $newpages;
+		return $result;
+	}
+	                               
+	// fetch the feed for SpecialNewpages
+	function getNewpagesFeed( $limit ) {
+		$data =	array(
+				'action'        => 'query',
+				'list'		=> 'recentchanges',
+				'rcprop'	=> 'title',					
+				'rcnamespace'	=> 0,
+				'rctype'	=> 'new',
+				'rclimit'	=> intval($limit),
+			     );
+
+		return $this->getFeed( 'recentchanges', $data );
 	}
 
 	// fetch the feed for SpecialWantedpages
 	function getWantedpagesFeed( $limit ) {
-		wfProfileIn( __METHOD__ );
-		$wantedpages = array();
+		$data = array(
+				'action'        => 'query',
+				'list'		=> 'wantedpages',
+				'wnlimit'	=> intval($limit),
+			     );
 
-		$oFauxRequest = new FauxRequest(
-				array(
-					'action'        => 'query',
-					'list'		=> 'wantedpages',
-					'wnlimit'	=> intval($limit),
-				     )
-				);
-
-		$oApi = new ApiMain($oFauxRequest);
-                $oApi->execute();
-                $aResult =& $oApi->GetResultData();
-
-		if( count($aResult['query']['wantedpages']) > 0) {
-			foreach( $aResult['query']['wantedpages'] as $newfound ) {
-				$wantedpages[] = $newfound['title'] ;
-			}
-		}
-
-		wfProfileOut( __METHOD__ ); 		
-		return $wantedpages;
+        	return $this->getFeed( 'wantedpages', $data );
 	}
 
 	// fetch the feed for pages without images
 	function getWantedimagesFeed( $limit ) {
-		wfProfileIn( __METHOD__ );
-		$wantedimages = array();
+		$data = array(
+				'action'        => 'query',
+				'list'		=> 'wantedimages',
+				'wilimit'	=> intval($limit),
+			     );
 
-		$oFauxRequest = new FauxRequest(
-				array(
-					'action'        => 'query',
-					'list'		=> 'wantedimages',
-					'wilimit'	=> intval($limit),
-				     )
-				);
-
-		$oApi = new ApiMain($oFauxRequest);
-                $oApi->execute();
-                $aResult =& $oApi->GetResultData();
-
-		if( !isset($aResult['warnings']) )  {
-			if( count($aResult['query']['wantedimages']) > 0) {
-				foreach( $aResult['query']['wantedimages'] as $newfound ) {
-					$wantedimages[] = $newfound['title'] ;
-				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ ); 		
-		return $wantedimages;
+        	return $this->getFeed( 'wantedimages', $data );
 	}
-
 }
