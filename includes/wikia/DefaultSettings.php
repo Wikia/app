@@ -336,3 +336,11 @@ $wgUseWikiaSearchUI = false;
  * @see Login friction project
  */
 $wgSpecialPagesRequiredLogin = array('Resetpass', 'MyHome', 'Preferences', 'Watchlist', 'Upload', 'CreateBlogPage', 'CreateBlogListingPage', 'MultipleUpload');
+
+/*
+ * @name: $wgArticleCommentsMaxPerPage
+ * max comments per page under article
+ * @see Article comments
+ */
+//TODO: move this variable to WF and change default value to 25
+$wgArticleCommentsMaxPerPage = 2;

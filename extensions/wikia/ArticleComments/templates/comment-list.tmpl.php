@@ -62,6 +62,8 @@
 				echo "\n</li>\n";
 			endforeach;
 			echo '</ul>';
+
+			echo '<div id="article-comments-pagination">' . $pagination . '</div>';
 		}
 
 		if ( $canEdit && !$isBlocked ) {

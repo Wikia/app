@@ -100,11 +100,24 @@ ArticleComments.postComment = function(e) {
 	$().log('end: postComment');
 }
 
+ArticleComments.setPage = function(e) {
+	$().log('begin: setPage');
+	e.preventDefault();
+	$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentList::axGetComments&article=' + wgArticleId, {page: $(this).attr('page'), order: $('#article-comm-order').attr('value')}, function(json) {
+		$().log(json);
+		if (!json.error) {
+			$('#article-comments-ul').replaceWith(json.text);
+		}
+	});
+	$().log('end: setPage');
+}
+
 ArticleComments.init = function() {
 	$('#article-comm-submit-top').bind('click', {source: '#article-comm-top'}, ArticleComments.postComment);
 	$('#article-comm-submit-bottom').bind('click', {source: '#article-comm-bottom'}, ArticleComments.postComment);
 	$('#article-comm-form-select').bind('change', function() {this.submit()});
 	$('.article-comm-edit').bind('click', ArticleComments.edit);
+	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage);
 }
 //on DOM ready
 $(ArticleComments.init);

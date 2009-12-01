@@ -79,3 +79,12 @@ div.article-comment strong {
 .rtl #article-comm-form-select select {
 	float: left;
 }
+
+.article-comments-pagination-link {
+	padding: 0 4px;
+}
+
+.article-comments-pagination-link-active {
+	font-weight: bold;
+	background-color: yellow;
+}
