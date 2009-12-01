@@ -19,8 +19,9 @@ class WikiStickies extends SpecialPage {
 		// load dependencies (CSS and JS)
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");
-		
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");		
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");		
+
 		// get the Three Feeds		
 		$this->formatFeed( $this->getNewpagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-newpages-hd') );
 		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd') );
@@ -75,11 +76,16 @@ class WikiStickies extends SpecialPage {
 			$body.
 			Xml::closeElement( 'ul' );
 			if( $continue  ) {
-				// todo show only if it's really more
-				$html .= Xml::openElement( 'div', array( 'class' => 'wikistickiesmore' ) );
+				$onclick = 'WikiStickies.clickMoreWantedpages();';
+				$linkmore =	Xml::openElement( 'a', array( 'href' => '#', 'onclick' => $onclick ) ) .
+						'more V'.
+						Xml::closeElement( 'a' );
+
+				$html .= Xml::openElement( 'div', array( 'class' => 'wikistickiesmore' ) ).
+				 	$linkmore.       
+					Xml::closeElement( 'div' );
 			}
-		$html .= Xml::closeElement( 'div' ).			
-			Xml::closeElement( 'div' );
+		$html .= Xml::closeElement( 'div' );
 					       	
                 $wgOut->addHTML( $html );
 	}
