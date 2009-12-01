@@ -429,7 +429,7 @@ jQuery.fn.getData = function() {
 	}
 
 	// decode JSON
-	json = json.replace(/\x7f-FF/g, '"');
+	json = decodeURIComponent(json);
 
 	var data = $.secureEvalJSON(json) || {};
 	return data;
@@ -451,9 +451,9 @@ jQuery.fn.setData = function(key, value) {
 	data = jQuery().extend(true, this.getData(), data);
 
 	// encode JSON
-	var json = $.toJSON(data).replace(/"/g, "\x7f-FF");
+	var json = $.toJSON(data);
 
-	this.attr('_rte_data', json);
+	this.attr('_rte_data', encodeURIComponent(json));
 
 	// return modified data
 	return data;
