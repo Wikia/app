@@ -2,7 +2,7 @@
 <?php
 if ( $canEdit ) {
 ?>
-	<div class="article-comm-input reset clearfix">
+	<div class="article-comm-input reset clearfix accent">
 	<form action="<?php echo $title->getFullURL() ?>" method="post" id="article-comm-form-<?=$title->getArticleId()?>">
 	<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
 		<div class="article-comm-input-text" style="margin-left: 5px">

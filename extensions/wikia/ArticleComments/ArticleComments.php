@@ -23,6 +23,7 @@ global $wgAjaxExportList;
 $wgAjaxExportList[] = 'ArticleComment::axPost';
 $wgAjaxExportList[] = 'ArticleComment::axEdit';
 $wgAjaxExportList[] = 'ArticleComment::axSave';
+$wgAjaxExportList[] = 'ArticleCommentList::axGetComments';
 
 $wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
 $wgHooks['ArticleRevisionUndeleted'][] = 'ArticleCommentList::undeleteComments';
@@ -879,6 +880,7 @@ class ArticleCommentList {
 	private $mText;
 	private $mComments = false;
 	private $mOrder = false;
+	private $mCountAll;
 
 	static public function newFromTitle( Title $title ) {
 		$comments = new ArticleCommentList();
@@ -927,10 +929,10 @@ class ArticleCommentList {
 	 */
 	private function sort() {
 		Wikia::log( __METHOD__, 'order', $this->mOrder );
-		if( $this->mOrder == 'asc' ) {
-			ksort( $this->mComments, SORT_NUMERIC );
-		} else {
+		if( $this->mOrder == 'desc' ) {
 			krsort( $this->mComments, SORT_NUMERIC );
+		} else {
+			ksort( $this->mComments, SORT_NUMERIC );
 		}
 		return $this->mComments;
 	}
@@ -944,8 +946,8 @@ class ArticleCommentList {
 	 *
 	 * @return array
 	 */
-	public function getCommentPages( $master = true ) {
-		global $wgRequest, $wgMemc;
+	public function getCommentPages( $master = true, $page = 0 ) {
+		global $wgRequest, $wgMemc, $wgArticleCommentsMaxPerPage;
 
 		wfProfileIn( __METHOD__ );
 
@@ -953,7 +955,7 @@ class ArticleCommentList {
 		$action = $wgRequest->getText( 'action', false );
 
 		$this->handleArticleCommentOrderCookie( $order ); // it's &$order...
-		$this->mOrder = $order == 'asc' ? 'asc' : 'desc';
+		$this->mOrder = $order == 'desc' ? 'desc' : 'asc';
 
 		/**
 		 * skip cache if purging or using master connection
@@ -987,8 +989,14 @@ class ArticleCommentList {
 			$wgMemc->set( wfMemcKey( 'articlecomment', 'comm', $this->getTitle()->getArticleId() ), $this->mComments, 3600 );
 		}
 
+		$this->mComments = $this->sort();
+
+		//pagination
+		$this->mCountAll = count($this->mComments);
+		$this->mComments = array_slice($this->mComments, $page * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
+
 		wfProfileOut( __METHOD__ );
-		return $this->sort();
+		return $this->mComments;
 	}
 
 	/**
@@ -1080,8 +1088,7 @@ class ArticleCommentList {
 	 * @return String HTML text with rendered comments section
 	 */
 	public function render() {
-		global $wgUser, $wgTitle, $wgRequest;
-		global $wgOut;
+		global $wgUser, $wgTitle, $wgRequest, $wgOut, $wgArticleCommentsMaxPerPage;
 
 		if ($wgRequest->wasPosted()) {
 			// for non-JS version !!!
@@ -1114,6 +1121,15 @@ class ArticleCommentList {
 		$canDelete = $wgUser->isAllowed( 'delete' );
 		$isReadOnly = wfReadOnly();
 
+		//pagination
+		$pagination = '';
+		if ($this->mCountAll > count($comments)) {
+			$numberOfPages = ceil($this->mCountAll / $wgArticleCommentsMaxPerPage);
+			for ($i = 0; $i < $numberOfPages; $i++) {
+				$pagination .= '<a href="#" class="article-comments-pagination-link' . ($i ? '' : ' article-comments-pagination-link-active') . '" page="' . $i . '">' . ($i+1) . '</a>';
+			}
+		}
+
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
 		$template->set_vars( array(
@@ -1129,6 +1145,7 @@ class ArticleCommentList {
 			'comments'  => $comments,
 			'canDelete' => $canDelete,
 			'isReadOnly' => $isReadOnly,
+			'pagination' => $pagination
 		) );
 
 		$text = $template->execute( 'comment-list' );
@@ -1413,5 +1430,50 @@ class ArticleCommentList {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * axGetComments -- static hook/entry for ajax request for pagination
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return String - HTML
+	 */
+	static function axGetComments() {
+		global $wgRequest, $wgTitle;
+
+		$page = $wgRequest->getVal('page', false);
+		$articleId = $wgRequest->getVal('article', false);
+		$order  = $wgRequest->getText('order',  false);
+		$error = 0;
+		$text = '';
+
+		$title = Title::newFromID($articleId);
+		if( !$title ) {
+			$error = 1;
+		} else {
+			wfLoadExtensionMessages('ArticleComments');
+			$listing = ArticleCommentList::newFromTitle($title);
+			$listing->handleArticleCommentOrderCookie($order);
+			$listing->mOrder = $order == 'desc' ? 'desc' : 'asc';
+			$comments = $listing->getCommentPages(true, $page);
+
+			$text = '<ul id="article-comments-ul">';
+			$odd = true;
+			foreach( $comments as $articleID => $comment ) {
+				$class = $odd ? 'odd' : 'even'; $odd = !$odd;
+				$text .= "<li id=\"comm-{$articleID}\" class=\"article-comments-li article-comment-row-{$class}\">\n";
+				$text .= $comment->render();
+				$text .= "\n</li>\n";
+			}
+			$text .= '</ul>';
+		}
+
+		$result = Wikia::json_encode(array('error' => $error, 'text' => $text));
+		$ar = new AjaxResponse($result);
+		$ar->setCacheDuration(60 * 60);
+
+		return $ar;
 	}
 }
