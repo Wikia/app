@@ -15,6 +15,9 @@ CKEDITOR.plugins.add('rte-mw-toolbar',
 			// move MW toolbar inside CK
 			$('#toolbar').appendTo(toolbar);
 
+			// add toolbar covering div - will be used during loading state
+			toolbar.append('<div id="toolbarCover" class="color1" />');
+
 			// reference to editor container (wrapping element for iframe / textarea)
 			self.editorContainer = $(RTE.instance.container.$).find('.cke_contents');
 		});
