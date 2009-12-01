@@ -15,6 +15,9 @@ class RTEReverseParser {
 
 	function __construct() {
 		$this->dom = new DOMdocument();
+
+		// enable libxml errors and allow user to fetch error information as needed
+		libxml_use_internal_errors(true);
 	}
 
 	/**
@@ -91,7 +94,11 @@ class RTEReverseParser {
 
 			// try to parse as XML
 			if($this->dom->loadXML($xml)) {
+				// parsing successful
 				$ret = $this->dom->getElementsByTagName('body')->item(0);
+			}
+			else {
+				$this->handleParseErrors(__METHOD__);
 			}
 		}
 		else {
@@ -110,6 +117,17 @@ class RTEReverseParser {
 
 		// return <body> node or false if XML parsing failed
 		return $ret;
+	}
+
+	/**
+	 * Handle XML/HTML parsing error errors
+	 */
+	private function handleParseErrors($method) {
+		foreach (libxml_get_errors() as $err) {
+			RTE::log("{$method} - XML parsing error '". trim($err->message) ."' (line {$err->line}, col {$err->column})");
+		}
+
+		 libxml_clear_errors();
 	}
 
 	/**
