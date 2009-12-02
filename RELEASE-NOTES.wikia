@@ -1,5 +1,5 @@
 == Changes since 200912.1 ==
-* 
+* rt#28908: Answers, Ads: Q+A list as leaderboard widget. (Nef)
 
 == Changes since 200911.4 ==
 * rt#31909: Fixed bad HTML in MyHome (TOR)

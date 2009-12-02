@@ -296,6 +296,10 @@ class AdEngine {
         }
 
 	public function getPlaceHolderIframe($slotname, $reserveSpace=true){
+		$html = null;
+		wfRunHooks("fillInAdPlaceholder", array("iframe", $slotname, &$this, &$html));
+		if (!empty($html)) return $html;
+
 		$AdProvider = $this->getAdProvider($slotname);
 		// If it's a Null Ad, just return an empty comment, and don't store in place holder array.
 		if ($AdProvider instanceof AdProviderNull){
@@ -338,6 +342,10 @@ class AdEngine {
 	   to be loaded at the bottom of the page with an absolute position.
 	   Keep track fo the placeholders for future refence */
 	public function getPlaceHolderDiv($slotname, $reserveSpace=true){
+		$html = null;
+		wfRunHooks("fillInAdPlaceholder", array("div", $slotname, &$this, &$html));
+		if (!empty($html)) return $html;
+
 		$AdProvider = $this->getAdProvider($slotname);
 		// If it's a Null Ad, just return an empty comment, and don't store in place holder array.
 		if ($AdProvider instanceof AdProviderNull){
