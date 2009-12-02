@@ -41,7 +41,9 @@
 	width: 80px;
 }
 
-
+.wikicitiestools {
+	border:1px solid #AAAAAA;
+}
 
 .wikistickiesfeed, .wikiheadertools {
 	text-align: center;
@@ -96,8 +98,6 @@ ul, li {
 	-webkit-border-top-right-radius: 7px;
 }
 .wrapper {
-	border-width: 1px; 
-	border-style: solid;
 	padding: 20px 40px;	
 	-moz-border-radius-bottomleft: 7px;
 	-moz-border-radius-bottomright: 7px;
@@ -190,27 +190,6 @@ button.secondary span {
 	padding: 10px;
 }
 
-/*** Step 1: Description ***/
-#step1_example {
-	background: url(/extensions/wikia/NewWikiBuilder/description.png) top right no-repeat;
-	float: right;
-	height: 377px;
-	width: 401px;
-}
-#step1 .note {
-	height: 140px;
-	margin-top: 126px;
-	overflow: auto;
-	width: 298px;
-}
-#step1 textarea {
-	width: 95%;
-	height: 240px;
-}
-#step1_form {
-	margin-right: 441px;
-}
-
 /*** Step 2: Logo ***/
 #logo_current {
 	border: ridge black 3px;
@@ -265,35 +244,6 @@ button.secondary span {
 	margin-bottom: 5px;
 }
 
-/*** Step 4: Create Pages ***/
-#all_fp {
-	float: left;
-}
-.bullets li {
-	list-style: disc;
-	margin-left: 15px;
-}
-#all_fp li {
-	padding: 3px;
-}
-#all_fp label {
-	font-weight: bold;
-	margin-right: 5px;
-}
-#step4_form {
-	float: left;
-}
-#step4 .note {
-	float: left;
-	margin-left: 20px;
-	width: 300px;
-}
-.fp_page {
-	font-size: 14px;
-	padding: 5px;
-	width: 300px;
-}
-
 /*** Step 5: Done ***/
 #wiki_army_container {
 	background: url(wiki_army_floor.png) bottom left repeat-x;
@@ -345,8 +295,6 @@ button.secondary span {
 	background-color: red;
 	color: white;    
 }
-
-
 
 .clearfix:after {
 	content: ".";
