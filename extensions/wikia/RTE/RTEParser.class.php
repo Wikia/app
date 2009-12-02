@@ -106,6 +106,11 @@ class RTEParser extends Parser {
 			$data['params']['thumbnail'] = true;
 		}
 
+		// keep caption only for thumbs and framed images
+		if (!isset($data['params']['thumbnail']) && !isset($data['params']['framed'])) {
+			$data['params']['caption'] = '';
+		}
+
 		RTE::log(__METHOD__, $data);
 
 		// image width
