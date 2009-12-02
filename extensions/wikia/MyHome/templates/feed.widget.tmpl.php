@@ -11,7 +11,7 @@
 <?php
 		foreach($data as $row) {
 ?>
-		<li class="activity-type-<?= FeedRenderer::getIconType($row) ?>">
+		<li class="activity-type-<?= FeedRenderer::getIconType($row) ?> acitivity-ns-<?= $row['ns'] ?>">
 <?php
 			if (isset($row['url'])) {
 ?>
