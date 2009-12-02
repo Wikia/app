@@ -2,12 +2,15 @@
 
 class WikiStickies extends SpecialPage {
 
-	const SPECIAL_FEED_LIMIT = 11;
+	const STICKY_FEED_LIMIT = 1; // one for the sticky note, to display in yellow
+	const INITIAL_FEED_LIMIT = 11; // 11 to get initially for this nice viewer fellow
+	const SPECIAL_FEED_LIMIT = 21; // 21 to rule them all, and in light display them
 
         function __construct() {
                 parent::__construct('WikiStickies');
         }
 
+	// the main heavy-hitter of the special page: wrapper for display-it-all
         function execute() {
                 global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 		wfLoadExtensionMessages( 'WikiStickies' );
@@ -30,7 +33,8 @@ class WikiStickies extends SpecialPage {
 		// get the Two Tools
                 $this->generateTools();
         }
-	
+
+	// tool generation wrapper (basically template call)	
 	function generateTools() {
 		global $wgOut;
 
@@ -47,25 +51,24 @@ class WikiStickies extends SpecialPage {
 
 		$sk = $wgUser->getSkin () ;
 		$body = '';
-		$continue = false;
 
 		if( empty( $feed_data ) ) {
 			return false;
 		}
 
 		if( isset( $feed_data['continue'] ) ) {
-			$continue = true;						
 			array_pop( $feed_data );
 		}
 
-		foreach( $feed_data as $title ) {
-			
-			if( 1 != 'title' ) {
+        	// display the sticky
+		$sticky = '';
+	
+
+		foreach( $feed_data as $title ) {			
 			$body .= Xml::openElement( 'li' ).
 				// todo namespace too (especially for Wantedpages)
 				$sk->makeLink( $title ).			
 				Xml::closeElement( 'li' );
-			}
 		}
 		
 		$html = Xml::openElement( 'div', array( 'class' => 'wikistickiesfeed' ) ).
@@ -75,16 +78,16 @@ class WikiStickies extends SpecialPage {
 			Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
 			$body.
 			Xml::closeElement( 'ul' );
-			if( $continue  ) {
-				$onclick = 'WikiStickies.clickMoreWantedpages();';
-				$linkmore =	Xml::openElement( 'a', array( 'href' => '#', 'onclick' => $onclick ) ) .
-						'more V'.
-						Xml::closeElement( 'a' );
+		/*
+		   $onclick = 'WikiStickies.clickMoreWantedpages();';
+		   $linkmore =	Xml::openElement( 'a', array( 'href' => '#', 'onclick' => $onclick ) ) .
+		   'more V'.
+		   Xml::closeElement( 'a' );
 
-				$html .= Xml::openElement( 'div', array( 'class' => 'wikistickiesmore' ) ).
-				 	$linkmore.       
-					Xml::closeElement( 'div' );
-			}
+		   $html .= Xml::openElement( 'div', array( 'class' => 'wikistickiesmore' ) ).
+		   $linkmore.       
+		   Xml::closeElement( 'div' );
+		 */
 		$html .= Xml::closeElement( 'div' );
 					       	
                 $wgOut->addHTML( $html );
@@ -107,10 +110,6 @@ class WikiStickies extends SpecialPage {
 					$result[] = $newfound['title'] ;
 				}
 			} 
-			// can we continue or not?
-			if( count($aResult['query-continue'][$feed]) > 0) {
-				$result['continue'] = true;
-			}			
 		}
 
 		wfProfileOut( __METHOD__ ); 		
