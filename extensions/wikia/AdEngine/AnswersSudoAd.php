@@ -53,7 +53,7 @@ class AnswersSudoAd {
 	static public function getImgAd() {
 		wfLoadExtensionMessages("AnswersSudoAd");
 
-		$list = wfMsgForContent("asa-leaderboard-list-of-images");
+		$list = wfMsgForContent("asa-leaderboard-list");
 		if (empty($list)) return "";
 
 		if (!preg_match_all("/http[^\s]+\.(?:png|jpg|jpeg)/", $list, $matches)) return "";
