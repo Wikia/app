@@ -4,11 +4,17 @@ if ( ! defined( 'MEDIAWIKI' ) )
 
 /**
  */
-$wgExtensionFunctions[] = 'wfVideoGallery';
 
-function wfVideoGallery() {
-	global $wgParser;
-	$wgParser->setHook('videogallery', 'wfRenderVideoGallery');
+//Avoid unstubbing $wgParser on setHook() too early on modern (1.12+) MW versions, as per r35980
+if ( defined( 'MW_SUPPORTS_PARSERFIRSTCALLINIT' ) ) {
+	$wgHooks['ParserFirstCallInit'][] = 'wfVideoGallery';
+}
+else {
+	$wgExtensionFunctions[] = 'wfVideoGallery';
+}
+
+function wfVideoGallery(&$parser) {
+	$parser->setHook('videogallery', 'wfRenderVideoGallery');
 }
 
 function wfRenderVideoGallery($input, $argv, &$parser){
@@ -31,15 +37,15 @@ function wfRenderVideoGallery($input, $argv, &$parser){
 	foreach ( $lines as $line ) {
 		# match lines like these:
 		# Image:someimage.jpg|This is some image
-		 
-		
+
+
 		$matches = array();
 		preg_match( "/^([^|]+)(\\|(.*))?$/", $line, $matches );
 		# Skip empty lines
 		if ( count( $matches ) == 0 ) {
 			continue;
 		}
-		 
+
 		$tp = Title::newFromText( $matches[1] );
 		$nt =& $tp;
 		if( is_null( $nt ) ) {
@@ -61,7 +67,7 @@ function wfRenderVideoGallery($input, $argv, &$parser){
 		);
 		$html = $pout->getText();
 		*/
-		 
+
 		$vg->add( new Video( $nt ), $html );
 
 	}
@@ -115,7 +121,7 @@ class VideoGallery
 	/**
 	 * Get the caption (as plain text)
 	 *
-	 * @param 
+	 * @param
 	 */
 	function getCaption() {
 		return (isset($this->mCaption)) ? $this->mCaption : "";
@@ -240,7 +246,7 @@ class VideoGallery
 		global $wgLang;
 
 		$sk = $this->getSkin();
-	 
+
 		$s = '<table class="gallery" cellspacing="0" cellpadding="0">';
 		if( $this->getCaption() )
 			$s .= "\n\t<caption>{$this->mCaption}</caption>";
@@ -268,7 +274,7 @@ class VideoGallery
 			//$ul = $sk->makeLink( $wgContLang->getNsText( Namespace::getUser() ) . ":{$ut}", $ut );
 
 			$nb = '';
-		
+
 			$textlink = $this->mShowFilename ?
 				$sk->makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 30, '...' ) ) ) . "<br />\n" :
 				'' ;
@@ -306,7 +312,7 @@ class VideoGallery
 	public function count() {
 		return count( $this->mVideos );
 	}
-	
+
 	/**
 	 * Set the contextual title
 	 *
@@ -315,7 +321,7 @@ class VideoGallery
 	public function setContextTitle( $title ) {
 		$this->contextTitle = $title;
 	}
-	
+
 	/**
 	 * Get the contextual title, if applicable
 	 *

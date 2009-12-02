@@ -79,13 +79,13 @@ function WikiaVideoNewImagesBeforeQuery( $where ) {
 }
 
 function WikiaVideoParserBeforeStrip($parser, $text, $strip_state) {
-	global $wgExtraNamespaces, $wgWysiwygParserEnabled, $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId;
+	global $wgExtraNamespaces, $wgWysiwygParserEnabled, $wgWikiaVideoGalleryId, $wgWikiaVideoPlaceholderId, $wgRTEParserEnabled;
 
 	$wgWikiaVideoGalleryId = 0;
 	$wgWikiaVideoPlaceholderId = 0;
 
 	// macbre: don't touch anything when parsing for FCK
-	if (!empty($wgWysiwygParserEnabled)) {
+	if (!empty($wgWysiwygParserEnabled) || !empty($wgRTEParserEnabled)) {
 		return true;
 	}
 	// fix for RT #22010
@@ -127,9 +127,8 @@ function WikiaVideo_init() {
 	$wgAutoloadClasses['VideoPageArchive'] = dirname(__FILE__). '/VideoPage.php';
 }
 
-function WikiaVideo_initParserHook() {
-	global $wgParser;
-	$wgParser->setHook('videogallery', 'WikiaVideo_renderVideoGallery');
+function WikiaVideo_initParserHook(&$parser) {
+	$parser->setHook('videogallery', 'WikiaVideo_renderVideoGallery');
 	return true;
 }
 
@@ -425,7 +424,8 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		$video->load();
 
 		// generate different HTML for MW editor and FCK editor
-		if (!empty($wgWysiwygParserEnabled)) {
+		global $wgRTEParserEnabled;
+		if (!empty($wgWysiwygParserEnabled) || !empty($wgRTEParserEnabled)) {
 			$out = $video->generateWysiwygWindow($refId, $title, $align, $width, $caption, $thumb, $frame);
 		}
 		else {
