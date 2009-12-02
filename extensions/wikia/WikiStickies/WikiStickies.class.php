@@ -2,7 +2,7 @@
 
 class WikiStickies extends SpecialPage {
 
-	const FEED_LIMIT = 3;
+	const SPECIAL_SPECIAL_FEED_LIMIT = 11;
 
         function __construct() {
                 parent::__construct('WikiStickies');
@@ -23,9 +23,9 @@ class WikiStickies extends SpecialPage {
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");		
 
 		// get the Three Feeds		
-		$this->formatFeed( $this->getNewpagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-newpages-hd') );
-		$this->formatFeed( $this->getWantedpagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd') );
-		$this->formatFeed( $this->getWantedimagesFeed( self::FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd') ) ;
+		$this->formatFeed( $this->getNewpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-newpages-hd') );
+		$this->formatFeed( $this->getWantedpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd') );
+		$this->formatFeed( $this->getWantedimagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd') ) ;
 
 		// get the Two Tools
                 $this->generateTools();
