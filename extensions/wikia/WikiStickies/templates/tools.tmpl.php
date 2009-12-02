@@ -7,8 +7,8 @@
 <!-- ############## Pick Theme ############## -->
 
 <li id="step3" class="step">
-<div class="wikistickiesheader"><?php echo wfMsg("nwb-step3-headline")?></div>
 <div class="wrapper clearfix">
+<div class="wikistickiesheader"><?php echo wfMsg("wikistickies-theme-hd")?></div>
         <div id="theme_template" style="display:none" class="theme_selekction">
                 <label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
                 <input onclick="NWB.changeTheme('monaco-$theme', false)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
@@ -46,8 +46,8 @@ for (var i = 0; i < themes.length; i++){
 
 <!-- ############## Add a logo ############ -->
 <li id="step2" class="step">
-<div class="wikistickiesheader"><?php echo wfMsg("nwb-step2-headline")?></div>
 <div class="wrapper clearfix">
+<div class="wikistickiesheader"><?php echo wfMsg("wikistickies-logo-hd")?></div>
         <!-- Hidden iframe to handle the file upload -->
         <iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
 
@@ -65,11 +65,14 @@ for (var i = 0; i < themes.length; i++){
                 <div id="logo_preview"></div>
         </div>
 
+	<div id="wikistickies-save-all">
+		<a id="WikistickiesToolsSubmit" class="wikia_button" href="#" onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
+	</div>
+
         </div><!--float-->
 </div>
 </li>
 
 
 </ul>
-<a id="WikistickiesToolsSubmit" class="wikia_button" href="#" onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
 </div>

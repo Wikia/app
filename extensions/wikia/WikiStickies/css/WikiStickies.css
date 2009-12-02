@@ -41,7 +41,11 @@
 	width: 80px;
 }
 
-.wikicitiestools {
+#wikistickies_save_all {
+	margin-top: 12px;
+}
+
+.wikistickiestools {
 	border:1px solid #AAAAAA;
 }
 
