@@ -169,9 +169,6 @@ function wfSpecialWantedpages( $par = null, $specialPage ) {
 	}
 
 	/** Wikia improvements **/
-	global $wgArticleRobotPolicies, $wgOut;
-	if ( isset( $wgArticleRobotPolicies['Special:WantedPages'] ) )
-		$wgOut->setRobotPolicy( $wgArticleRobotPolicies['Special:WantedPages'] );
 	$excludetitles = '';
 	if( $et = $wgRequest->getText( 'excludetitles' ) )
 		$excludetitles = $et;
