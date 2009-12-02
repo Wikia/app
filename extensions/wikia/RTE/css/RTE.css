@@ -199,10 +199,11 @@ body.rte_source #editform #toolbar {
 /* preview area */
 .RTEPlaceholderPreviewCode {
 	cursor: default;
-	height: 75px;
-	max-height: 160px;
+	min-height: 75px;
+	max-height: 350px;
 	overflow: auto;
 	padding: 4px;
+	_height: 75px; /* for IE */
 }
 
 .RTEPlaceholderPreviewCode * {
