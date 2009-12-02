@@ -4,6 +4,35 @@
 <div class="wikiheadertools">
 <ul>
 
+<!-- ############## Add a logo ############ -->
+<li id="step2" class="step">
+<div class="wrapper clearfix">
+<div class="wikistickiesheader"><?php echo wfMsg("wikistickies-logo-hd")?></div>
+        <!-- Hidden iframe to handle the file upload -->
+        <iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
+
+        <div style="float: left;">
+        <form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)' id="logo_form">
+                <input type="hidden" name="action" value="uploadlogo">
+                <input type="hidden" name="format" value="xml">
+                <input id="logo_article" type="hidden" name="title" value="Wiki.png">
+                <input type="file" name="logo_file" id="logo_file" onclick="WET.byStr('nwb/step2browse');"/> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onclick="WET.byStr('nwb/step2preview');this.form.title.value='Wiki-Preview.png'"/>
+                <!--<input type="submit" value="Save" onclick="this.form.title.value='Wiki.png'"/>-->
+        </form>
+
+        <div id="logo_preview_wrapper">
+                <label><?php echo wfMsg("nwb-logo-preview")?>:</label>
+                <div id="logo_preview"></div>
+        </div>
+
+	<div id="wikistickies_save_all">
+		<a id="WikistickiesToolsSubmit" class="wikia_button" href="#" onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
+	</div>
+
+        </div><!--float-->
+</div>
+</li>
+
 <!-- ############## Pick Theme ############## -->
 
 <li id="step3" class="step">
@@ -43,36 +72,6 @@ for (var i = 0; i < themes.length; i++){
 </script>
 </div>
 </li>
-
-<!-- ############## Add a logo ############ -->
-<li id="step2" class="step">
-<div class="wrapper clearfix">
-<div class="wikistickiesheader"><?php echo wfMsg("wikistickies-logo-hd")?></div>
-        <!-- Hidden iframe to handle the file upload -->
-        <iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
-
-        <div style="float: left;">
-        <form action="/api.php" method="post" enctype="multipart/form-data" target="hidden_iframe" onSubmit='return NWB.iframeFormInit(this)' id="logo_form">
-                <input type="hidden" name="action" value="uploadlogo">
-                <input type="hidden" name="format" value="xml">
-                <input id="logo_article" type="hidden" name="title" value="Wiki.png">
-                <input type="file" name="logo_file" id="logo_file" onclick="WET.byStr('nwb/step2browse');"/> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onclick="WET.byStr('nwb/step2preview');this.form.title.value='Wiki-Preview.png'"/>
-                <!--<input type="submit" value="Save" onclick="this.form.title.value='Wiki.png'"/>-->
-        </form>
-
-        <div id="logo_preview_wrapper">
-                <label><?php echo wfMsg("nwb-logo-preview")?>:</label>
-                <div id="logo_preview"></div>
-        </div>
-
-	<div id="wikistickies_save_all">
-		<a id="WikistickiesToolsSubmit" class="wikia_button" href="#" onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
-	</div>
-
-        </div><!--float-->
-</div>
-</li>
-
 
 </ul>
 </div>

@@ -26,9 +26,10 @@ class WikiStickies extends SpecialPage {
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");		
 
 		// get the Three Feeds		
+		$this->formatFeed( $this->getWantedimagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd'), wfMsg( 'wikistickies-wantedimages-st' ) ) ;
+
 		$this->formatFeed( $this->getNewpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-newpages-hd'), wfMsg( 'wikistickies-newpages-st' ) );
 		$this->formatFeed( $this->getWantedpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd'), wfMsg( 'wikistickies-wantedpages-st' ) );
-		$this->formatFeed( $this->getWantedimagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd'), wfMsg( 'wikistickies-wantedimages-st' ) ) ;
 
 		// get the Two Tools
                 $this->generateTools();
@@ -63,6 +64,9 @@ class WikiStickies extends SpecialPage {
         	// display the sticky
 		$sticky = Xml::openElement( 'div', array( 'id' => 'wikisticky_browser' ) ).
 			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).			
+			Xml::openElement( 'strong' ).
+			'&nbsp;'.
+			Xml::closeElement( 'strong' ).
 			Xml::openElement( 'p' ). 
 			$sticker .'<br/>'. $sk->makeLink( array_shift( $feed_data ) ).
 			Xml::closeElement( 'p' ).
