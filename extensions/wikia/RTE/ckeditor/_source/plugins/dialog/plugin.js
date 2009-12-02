@@ -1191,7 +1191,11 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		resizable : CKEDITOR.DIALOG_RESIZE_NONE,
 		minWidth : 600,
 		minHeight : 400,
-		buttons : [ CKEDITOR.dialog.okButton, CKEDITOR.dialog.cancelButton ]
+		//buttons : [ CKEDITOR.dialog.okButton, CKEDITOR.dialog.cancelButton ]
+
+		// Wikia - start
+		buttons : [ CKEDITOR.dialog.cancelButton, CKEDITOR.dialog.okButton ]
+		// Wikia - end
 	};
 
 	// Tool function used to return an item from an array based on its id
