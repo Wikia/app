@@ -65,7 +65,7 @@ for (var i = 0; i < themes.length; i++){
                 <div id="logo_preview"></div>
         </div>
 
-	<div id="wikistickies-save-all">
+	<div id="wikistickies_save_all">
 		<a id="WikistickiesToolsSubmit" class="wikia_button" href="#" onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
 	</div>
 

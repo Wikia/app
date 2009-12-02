@@ -1,6 +1,7 @@
 
 #wikisticky_browser {
-	background: url(sticky.png) no-repeat;
+	float: left;
+	background: url(../images/sticky.png) no-repeat;
 	height: 222px;
 	width: 249px;	
 }
@@ -60,7 +61,13 @@
 	margin-bottom: 6px;
 }
 
+.wikistickieslistwrapper {
+	margin-left: 240px;
+}
+
 .wikistickiesul li {
+	width: 48%;
+	float: left;	
 	font-size: 135%;
 	margin-bottom: 4px;
 }
