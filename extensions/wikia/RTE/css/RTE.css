@@ -126,6 +126,9 @@ body.rte_source #editform #toolbar {
 	height: 14px;
 	opacity: 0.9;
 	padding: 4px;
+	position: absolute;
+	right: 0;
+	top: 0;
 	white-space: nowrap;
 }
 

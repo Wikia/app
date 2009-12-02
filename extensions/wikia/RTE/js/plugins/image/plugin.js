@@ -106,7 +106,7 @@ CKEDITOR.plugins.add('rte-image',
 			var data = image.getData();
 
 			// create menu node
-			overlay = $('<div>').addClass('RTEImageOverlay');
+			overlay = $('<div>').addClass('RTEImageOverlay').width( parseInt(image.attr('width') + 8) + 'px' );
 			overlay.html('<div class="RTEImageMenu color1">' +
 				'<span class="RTEImageOverlayEdit">edit</span> <span class="RTEImageOverlayDelete">delete</span>' +
 				'</div>');
