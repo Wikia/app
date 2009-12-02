@@ -65,6 +65,13 @@ if (in_array($wgLanguageCode, array("de", "ru"))) {
 			$wgExtraNamespaces[503] = "Обсуждение_блога";
 
 			break;
+		case "es":
+			$wgExtraNamespaces[500] = 'Usuario_Blog';
+			$wgExtraNamespaces[501] = 'Usuario_Blog_Comentario';
+			$wgExtraNamespaces[502] = 'Blog';
+			$wgExtraNamespaces[503] = 'Blog_Discusión';
+
+			break;
 	}
 }
 
