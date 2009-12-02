@@ -26,9 +26,9 @@ class WikiStickies extends SpecialPage {
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");		
 
 		// get the Three Feeds		
-		$this->formatFeed( $this->getNewpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-newpages-hd') );
-		$this->formatFeed( $this->getWantedpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd') );
-		$this->formatFeed( $this->getWantedimagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd') ) ;
+		$this->formatFeed( $this->getNewpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-newpages-hd'), wfMsg( 'wikistickies-newpages-st' ) );
+		$this->formatFeed( $this->getWantedpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd'), wfMsg( 'wikistickies-wantedpages-st' ) );
+		$this->formatFeed( $this->getWantedimagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd'), wfMsg( 'wikistickies-wantedimages-st' ) ) ;
 
 		// get the Two Tools
                 $this->generateTools();
@@ -46,7 +46,7 @@ class WikiStickies extends SpecialPage {
 	}
 
 	// general feed formatting
-	function formatFeed( &$feed_data, $header ) {
+	function formatFeed( &$feed_data, $header, $sticker ) {
         	global $wgOut, $wgUser;
 
 		$sk = $wgUser->getSkin () ;
@@ -61,9 +61,14 @@ class WikiStickies extends SpecialPage {
 		}
 
         	// display the sticky
-		$sticky = '';
+		$sticky = Xml::openElement( 'div', array( 'id' => 'wikisticky_browser' ) ).
+			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).			
+			Xml::openElement( 'p' ). 
+			$sticker .'<br/>'. $sk->makeLink( array_shift( $feed_data ) ).
+			Xml::closeElement( 'p' ).
+			Xml::closeElement( 'div' ).
+			Xml::closeElement( 'div' );
 	
-
 		foreach( $feed_data as $title ) {			
 			$body .= Xml::openElement( 'li' ).
 				// todo namespace too (especially for Wantedpages)
@@ -75,9 +80,13 @@ class WikiStickies extends SpecialPage {
 			Xml::openElement( 'div', array( 'class' => 'wikistickiesheader' ) ).
                         $header.
 			Xml::closeElement( 'div' ).
+			$sticky.
+			Xml::openElement( 'div', array( 'class' => 'wikistickieslistwrapper clearfix' ) ).
 			Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
 			$body.
-			Xml::closeElement( 'ul' );
+			Xml::closeElement( 'ul' ).
+			Xml::closeElement( 'div' );
+
 		/*
 		   $onclick = 'WikiStickies.clickMoreWantedpages();';
 		   $linkmore =	Xml::openElement( 'a', array( 'href' => '#', 'onclick' => $onclick ) ) .
