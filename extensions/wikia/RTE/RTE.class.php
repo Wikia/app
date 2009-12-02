@@ -357,6 +357,8 @@ HTML
 		$options->setEditSection(false);
 		// use modified Linker
 		$options->setSkin( new RTELinker() );
+		// disable headings numbering
+		$options->setNumberHeadings(false);
 
 		RTE::$parser = new RTEParser();
 		$html = RTE::$parser->parse($wikitext, $wgTitle, $options)->getText();
