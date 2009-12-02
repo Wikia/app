@@ -1,4 +1,6 @@
 == Changes since 200912.1 ==
+* rt#26761: Blogs: translated namespaces to Spanish (TOR)
+* rt#28296: Answers, ActivityFeed: per-ns CSS classes and quetion marks in feed (TOR)
 * rt#32053: language scope issue regarding AWC talk page signer (uberfuzzy)
 * rt#28908: Answers, Ads: Q+A list as leaderboard widget. (Nef)
 
