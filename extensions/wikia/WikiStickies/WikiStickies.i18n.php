@@ -10,6 +10,7 @@ $messages['en'] = array(
 	'wikistickies-wantedpages-st' => 'Can you add to the page about $1?'
 	'wikistickies-wantedpages-st' => 'Can you add an image to $1?'
 	'wikistickies-wantedpages-st' => 'Can you start a page about $1?'
+	'wikistickies-save-changes' => 'Save Changes',
 	'wikistickies-more' => 'see more',
 	'wikistickies-admins-hd' => 'Admins only',
 	'wikistickies-admins-msg' => 'These aren\'t your typical WikiStickies. These are things that can only be done by administrators of the wiki that influence how everyone sees the wiki.',
