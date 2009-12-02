@@ -276,7 +276,7 @@ HTML
 
 		// check user preferences option
 		$userOption = $wgUser->getOption('enablerichtext');
-		if( ($userOption === false) && ($useEditor != 'wysiwyg') ) {
+		if( ($userOption == '0') && ($useEditor != 'wysiwyg') ) {
 			RTE::log('editor is disabled because of user preferences');
 			self::disableEditor();
 		}
