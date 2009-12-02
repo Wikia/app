@@ -116,6 +116,11 @@ ul, li {
 	-webkit-border-bottom-right-radius: 7px;
 }
 
+
+.submerged {
+	display: none;
+}
+
 #header {
 	border-bottom-width: 1px;
 	border-bottom-style: solid;

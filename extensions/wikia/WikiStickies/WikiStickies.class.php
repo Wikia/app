@@ -69,7 +69,6 @@ class WikiStickies extends SpecialPage {
 			Xml::closeElement( 'strong' ).
 			Xml::openElement( 'p' ). 
 			$sticker .'<br/>'. $sk->makeLink( array_shift( $feed_data ) ).
-			'<a href="#" id="wikisticky_next">Next -></a><img src="curl.png" id="wikisticky_curl" />'.
 			Xml::closeElement( 'p' ).
 			Xml::closeElement( 'div' ).
 			Xml::closeElement( 'div' );
@@ -94,6 +93,7 @@ class WikiStickies extends SpecialPage {
 			}
 		}
 
+		$uptolimit = 0;
 		foreach( $feed_data as $title ) {			
 			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {			
 				if( 0 == ( $uptolimit % 2 ) ) {
@@ -129,7 +129,7 @@ class WikiStickies extends SpecialPage {
 
 
 
-                $html .= Xml::openElement( 'div', array( 'class' => 'wikistickieslistwrapper clearfix' ) ).
+                $html .= Xml::openElement( 'div', array( 'class' => 'wikistickieslistwrapper clearfix submerged' ) ).
                         Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
                         $body3.
                         Xml::closeElement( 'ul' ).
