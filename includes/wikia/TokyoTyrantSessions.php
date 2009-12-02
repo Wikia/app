@@ -13,12 +13,15 @@ require_once dirname(__FILE__) . "/../../lib/Tyrant.php";
 #  * val: string (data)  
 #
 # master-master replication
-# ttserver -port 1979 -ulog ulog-2 -sid 2 -mhost localhost -mport 1978 -rts 2.rts -ext /path/to/expire.lua -extpc expire 1.0 '/tmp/sessions.tct#idx=key:lex#idx=x:dec#idx=val:lex#dfunit=8'
+# ttserver -port 16666 -pid /tmp/ttserver.pid -sid 666  -ulog /tmp/ulog/ -ulim 1000000
+#			-mhost 10.10.10.163 -mport 11212 -rts /tmp/2.rts 
+#			-ext /path/to/expire.lua -extpc expire 1.0 
+#			'/tmp/sessions.tct#idx=key:lex#idx=x:dec#idx=val:lex#dfunit=8'
 #
 
 
 class TokyoTyrantSession {
-	const SESS_EXPIRE	= 100; #3600;
+	const SESS_EXPIRE	= 3600;
 	const V_COLUMN		= 'val';
 	const X_COLUMN		= 'x';
 	const KEY_COLUMN	= 'key';
@@ -43,7 +46,6 @@ class TokyoTyrantSession {
 	
 	public static function newFromKey($key) {
 		global $wgSessionTTServers;
-		error_log("key = $key \n");
 		$TTSess = new TokyoTyrantSession();
 		$TTSess->set_servers($wgSessionTTServers);
 		return $TTSess->connect($key);
@@ -78,10 +80,8 @@ class TokyoTyrantSession {
 
 		$conn = self::isConnected();
 		if ( $conn ) {
-			error_log ("sock: " . @$conn->socket() . "\n");
 			return $conn;
 		}
-		error_log ("no connection: \n");
 		
 		if ( strpos($key, ' ') ) {
 			error_log( __METHOD__ . ": found a space character in the key '".$key."'. Fixing it" );
@@ -96,11 +96,9 @@ class TokyoTyrantSession {
 			list ( $this->host, $this->port ) = explode( ":", $this->servers[$this->cid] );
 			if ( $this->host && $this->port ) {
 				try {
-					error_log ("connect: $this->host, $this->port, $this->cid \n");
 					$TT = Tyrant::connect($this->host, $this->port, $this->cid);
 					if ( $TT ) {
 						$sock = $TT->socket();
-						error_log ("TT->socket = " . print_r($sock, true));
 						self::$sess_conn[$sock] = array($this->host, $this->port, $this->cid);
 						return $TT;
 					}
@@ -115,11 +113,8 @@ class TokyoTyrantSession {
 	
 	public static function close() {
 		$conn = self::isConnected();
-		error_log( __METHOD__ . ": sock: " . @$conn->socket() ."\n");
-		/*
 		if ( $conn ) {
 			$sock = $conn->socket();
-			error_log ( __METHOD__ . ": sock = " .print_r( $sock, true) );
 			if ( isset(self::$sess_conn[$sock]) ) {
 				list($host, $port, $cid) = self::$sess_conn[$sock]; 
 				if ( $host && $port && $cid ) {
@@ -127,12 +122,11 @@ class TokyoTyrantSession {
 				}
 				unset(self::$sess_conn[$sock]);
 			}
-		}*/
+		}
 		return true;
 	}
 	
 	public static function put( $key, $value ) {
-		error_log (__METHOD__ . "($key)");
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
 			if ( !empty($value) ) {
@@ -140,7 +134,6 @@ class TokyoTyrantSession {
 					self::V_COLUMN => $value,
 					self::X_COLUMN => time() + self::SESS_EXPIRE
 				);
-				error_log ( __METHOD__ . " values = " . print_r($values, true) );
 				return $TT->put($key, $values);
 			}
 		}
@@ -148,7 +141,6 @@ class TokyoTyrantSession {
 	}
 	
 	public static function get( $key ) {
-		error_log (__METHOD__ . "($key)");
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
 			$result = $TT->get($key);
@@ -160,7 +152,6 @@ class TokyoTyrantSession {
 	}
 	
 	public static function out( $key ) { 
-		error_log (__METHOD__ . "($key)");
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
 			return $TT->out( $key );
