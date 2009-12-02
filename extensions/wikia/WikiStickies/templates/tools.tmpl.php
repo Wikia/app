@@ -42,10 +42,6 @@ for (var i = 0; i < themes.length; i++){
 }
 </script>
 </div>
-<div class="nav">
-	<button onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);"><span><?php echo wfMsg("nwb-save-theme")?></span></button>
-        <input onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true);WET.byStr('nwb/step3save');NWB.gotostep(4);" type="button" id="hidden_theme_submit" style="display:none"><!-- For selenium tests -->
-</div>
 </li>
 
 <!-- ############## Add a logo ############ -->
@@ -71,11 +67,9 @@ for (var i = 0; i < themes.length; i++){
 
         </div><!--float-->
 </div>
-<div class="nav">
-        <button onclick="WET.byStr('nwb/step2save');NWB.uploadLogo();"><span><?php echo wfMsg("nwb-save-logo")?></span></button>
-</div>
 </li>
 
 
 </ul>
+<a id="WikistickiesToolsSubmit" class="wikia_button" href="#" onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
 </div>
