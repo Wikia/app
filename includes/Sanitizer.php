@@ -774,6 +774,9 @@ class Sanitizer {
 		// RTE - begin
 		global $wgRTEParserEnabled;
 		if(!empty($wgRTEParserEnabled)) {
+			if(strpos($text, "\x7f") !== false) {
+				RTE::$edgeCases[] = 'COMPLEX.08';
+			}
 			$attribs[] = RTEReverseParser::encodeAttributesStr($text);
 		}
 		// RTE - end
