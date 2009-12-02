@@ -1,5 +1,7 @@
 CKEDITOR.plugins.add('rte-dragdrop',
 {
+	timeout: 500,
+
 	onDrop: function(ev) {
 		RTE.log(ev);
 
@@ -34,7 +36,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 				bind('dragdrop.dnd', function(ev) { // for Gecko
 					setTimeout(function() {
 						self.onDrop(ev);
-					}, 100);
+					}, self.timeout);
 				}).
 				bind('mousedown.dnd', function(ev) {
 					var target = $(ev.target);
@@ -54,7 +56,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 				// force re-init of all placeholders
 				setTimeout(function() {
 					editor.fire('wysiwygModeReady');
-				}, 100);
+				}, self.timeout);
 			};
 		});
 	}
