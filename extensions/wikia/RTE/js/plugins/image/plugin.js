@@ -105,8 +105,14 @@ CKEDITOR.plugins.add('rte-image',
 		if (typeof overlay == 'undefined') {
 			var data = image.getData();
 
+			// image width (including paddings and borders)
+			var width = image.attr('width');
+			if (image.hasClass('thumb') || image.hasClass('frame')) {
+				width += 8;
+			}
+
 			// create menu node
-			overlay = $('<div>').addClass('RTEImageOverlay').width( parseInt(image.attr('width') + 8) + 'px' );
+			overlay = $('<div>').addClass('RTEImageOverlay').width( width + 'px' );
 			overlay.html('<div class="RTEImageMenu color1">' +
 				'<span class="RTEImageOverlayEdit">edit</span> <span class="RTEImageOverlayDelete">delete</span>' +
 				'</div>');
@@ -178,6 +184,11 @@ CKEDITOR.plugins.add('rte-image',
 		// position image menu over an image
 		var position = RTE.tools.getPlaceholderPosition(image);
 
+		// take border-top into consideration for "framed" images
+		if (image.hasClass('thumb') || image.hasClass('frame')) {
+			position.top += 1;
+		}
+
 		// fix for non-gecko browsers
 		if (!CKEDITOR.env.gecko) {
 			// take image margins into consideration
@@ -192,7 +203,7 @@ CKEDITOR.plugins.add('rte-image',
 
 		overlay.css({
 			'left': position.left + 'px',
-			'top': parseInt(position.top + 2) + 'px'
+			'top': parseInt(position.top + 1) + 'px'
 		});
 
 		// don't show menu above RTE toolbar
