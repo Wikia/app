@@ -2,7 +2,7 @@
 
 class WikiStickies extends SpecialPage {
 
-	const SPECIAL_SPECIAL_FEED_LIMIT = 11;
+	const SPECIAL_FEED_LIMIT = 11;
 
         function __construct() {
                 parent::__construct('WikiStickies');
