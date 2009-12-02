@@ -17,7 +17,7 @@ class RTEAjax {
 
 		if (RTE::edgeCasesFound()) {
 			$ret['edgecases'] = true;
-			$ret['edgecaseInfo'] = wfMsg('rte-edgecase-info') . ' ' . wfMsg('rte-edgecase-' . RTE::getEdgeCaseType());
+			$ret['edgecaseInfo'] = wfMsg('rte-edgecase-info');
 		}
 
 		return $ret;
