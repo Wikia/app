@@ -32,9 +32,6 @@ ArticleComments.save = function(e) {
 					//replace
 					$('#comm-' + json.commentId).html(json.text)
 					$('#' + json.commentId).bind('click', ArticleComments.edit);
-				} else {
-					//add
-					ArticleComments.add(json);
 				}
 				//clear error box
 				$('#article-comm-bottom-info').html('');
@@ -77,17 +74,22 @@ ArticleComments.postComment = function(e) {
 	e.preventDefault();
 	if (ArticleComments.processing) return;
 	$(e.data.source).attr('readonly', 'readonly');
-	$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axPost&article=' + wgArticleId, {wpArticleComment: $(e.data.source).val()}, function(json) {
+	//TODO: change to postJSON (all parameters as {}) to omit limit for comment
+	$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axPost&article=' + wgArticleId, {wpArticleComment: $(e.data.source).val(), order: $('#article-comm-order').attr('value')}, function(json) {
 		$().log(json);
 		if (!json.error) {
 			//remove zero comments div
 			$('#article-comments-zero').remove();
-			ArticleComments.add(json);
+			$('#article-comments-ul').replaceWith(json.text);
+			//pagination
+			$('#article-comments-pagination').html(json.pagination);
+			$('.article-comments-pagination-link').bind('click', ArticleComments.setPage);
+			//ArticleComments.add(json);
 			//clear error box
-			$('#article-comm-bottom-info').html('');
+			//$('#article-comm-bottom-info').html('');
 		} else {
 			//fill error box
-			$('#article-comm-bottom-info').html(json.msg);
+			//$('#article-comm-bottom-info').html(json.msg);	//msg not filled on backend
 		}
 		$(e.data.source).removeAttr('readonly');
 		$(e.data.source).val('');
@@ -103,10 +105,16 @@ ArticleComments.postComment = function(e) {
 ArticleComments.setPage = function(e) {
 	$().log('begin: setPage');
 	e.preventDefault();
-	$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentList::axGetComments&article=' + wgArticleId, {page: $(this).attr('page'), order: $('#article-comm-order').attr('value')}, function(json) {
+	var page = $(this).attr('page');
+	$('#article-comments-pagination-link-' + page).blur();
+
+	$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentList::axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
 		$().log(json);
 		if (!json.error) {
+			$('.article-comments-pagination-link').removeClass('article-comments-pagination-link-active');
+			$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active');
 			$('#article-comments-ul').replaceWith(json.text);
+			$('.article-comm-edit').bind('click', ArticleComments.edit);
 		}
 	});
 	$().log('end: setPage');
