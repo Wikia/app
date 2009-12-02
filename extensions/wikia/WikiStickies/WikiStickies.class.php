@@ -51,7 +51,7 @@ class WikiStickies extends SpecialPage {
         	global $wgOut, $wgUser;
 
 		$sk = $wgUser->getSkin () ;
-		$body = $body2 = '';
+		$body = $body2 = $body3 = $body4 = '';
 	
 		if( empty( $feed_data ) ) {
 			return false;
@@ -93,6 +93,25 @@ class WikiStickies extends SpecialPage {
 				$uptolimit++;			
 			}
 		}
+
+		foreach( $feed_data as $title ) {			
+			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {			
+				if( 0 == ( $uptolimit % 2 ) ) {
+					$body3 .= Xml::openElement( 'li' ).
+						// todo namespace too (especially for Wantedpages)
+						$sk->makeLink( $title ).			
+						Xml::closeElement( 'li' );
+				} else {
+					$body4 .= Xml::openElement( 'li' ).
+						// todo namespace too (especially for Wantedpages)
+						$sk->makeLink( $title ).			
+						Xml::closeElement( 'li' );
+				}
+				array_shift( $feed_data );
+				$uptolimit++;			
+			}
+		}
+
 		
 		$html = Xml::openElement( 'div', array( 'class' => 'wikistickiesfeed' ) ).
 			Xml::openElement( 'div', array( 'class' => 'wikistickiesheader' ) ).
@@ -107,6 +126,17 @@ class WikiStickies extends SpecialPage {
 			$body2.
 			Xml::closeElement( 'ul' ).
 			Xml::closeElement( 'div' );
+
+
+
+                $html .= Xml::openElement( 'div', array( 'class' => 'wikistickieslistwrapper clearfix' ) ).
+                        Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
+                        $body3.
+                        Xml::closeElement( 'ul' ).
+                        Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
+                        $body4.
+                        Xml::closeElement( 'ul' ).
+                        Xml::closeElement( 'div' );
 
 		/*
 		   $onclick = 'WikiStickies.clickMoreWantedpages();';
