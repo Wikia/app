@@ -284,7 +284,7 @@ class RTEParser extends Parser {
 	}
 
 	public function getStripList() {
-		return array_merge(parent::getStripList(), array('noinclude', 'includeonly', 'onlyinclude'));
+		return array_merge(parent::getStripList(), array('noinclude', 'includeonly', 'onlyinclude', 'references'));
 
 	}
 }
