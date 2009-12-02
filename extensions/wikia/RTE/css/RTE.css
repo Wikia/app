@@ -375,7 +375,7 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 #templatePreview {
 	height: 250px;
 	overflow: auto;
-	width: 100%;
+	width: 310px;
 }
 
 .templateEditorDialog .cke_dialog_choose_another_tpl .cke_dialog_ui_button {
