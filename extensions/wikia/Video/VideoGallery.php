@@ -15,6 +15,7 @@ else {
 
 function wfVideoGallery(&$parser) {
 	$parser->setHook('videogallery', 'wfRenderVideoGallery');
+	return true;
 }
 
 function wfRenderVideoGallery($input, $argv, &$parser){
