@@ -1,4 +1,48 @@
 
+#wikisticky_browser {
+	background: url(sticky.png) no-repeat;
+	height: 222px;
+	width: 249px;	
+}
+#wikisticky_content {
+	height: 213px;
+	overflow: hidden;
+	position: relative;
+	width: 240px;	
+}
+#wikisticky_content strong {
+	display: block;
+	font-size: 11pt;
+	height: 33px;
+	line-height: 33px;
+	padding-left: 5px;
+	text-align: left;	
+}
+#wikisticky_content p {
+	display: block;
+	font-family: "Comic Sans MS", "Arial", sans-serif;
+	margin: 0;
+	padding: 0 20px;
+	position: relative;
+	text-align: center;
+}
+#wikisticky_next {
+	bottom: 0;
+	color: #999;
+	padding: 10px 0;
+	position: absolute;
+	right: 50px;	
+}
+#wikisticky_curl {
+	bottom: -8px;
+	cursor: pointer;
+	right: -8px;
+	position: absolute;
+	width: 80px;
+}
+
+
+
 .wikistickiesfeed, .wikiheadertools {
 	text-align: center;
 	margin-bottom: 15px;	
