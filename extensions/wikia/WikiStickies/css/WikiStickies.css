@@ -65,34 +65,34 @@
 	margin-bottom: 4px;
 }
 
-#wikiheadertools form {
+form {
 	margin: 0;
 	padding: 0;
 }
-#wikiheadertools ul, li {
+ul, li {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
-#wikiheadertools .reflow {
+.reflow {
 	border-right: 1px solid transparent;
 }
-#wikiheadertools .accent {
+.accent {
 	border-width: 1px;
 	border-style: solid;
 }
-#wikiheadertools .step {
+.step {
 	clear: both;
 	position: relative;
 	z-index: 200;
 }
 
-#wikiheadertools .step .wrapper {
+.step .wrapper {
 	text-align: left;
 	margin-top: 10px;
 }
 
-#wikiheadertools .headline {
+.headline {
 	font-size: 18pt;
 	margin: 0;
 	padding: 10px 15px;
@@ -101,7 +101,7 @@
 	-webkit-border-top-left-radius: 7px;
 	-webkit-border-top-right-radius: 7px;
 }
-#wikiheadertools .wrapper {
+.wrapper {
 	padding: 20px 40px;	
 	-moz-border-radius-bottomleft: 7px;
 	-moz-border-radius-bottomright: 7px;
@@ -141,16 +141,16 @@
 	-webkit-border-radius: 7px;
 }
 
-#wikiheadertools .nav {
+.nav {
 	padding: 15px;
 	text-align: right;
 }
-#wikiheadertools .nav_reverse {
+.nav_reverse {
 	clear: both;
 	float: left;
 }
 /* Button styling research: http://www.filamentgroup.com/lab/update_styling_the_button_element_with_css_sliding_doors_now_with_image_spr/ */
-#wikiheadertools button {
+button {
 	background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat right -57px; 
 	position: relative;
 	border: 0; 
@@ -159,10 +159,10 @@
 	overflow: visible; /* removes extra side padding in IE */
 	margin-left: 5px;
 }
-#wikiheadertools button::-moz-focus-inner {
+button::-moz-focus-inner {
 	border: none;  /* overrides extra padding in Firefox */
 }
-#wikiheadertools button span { 
+button span { 
 	background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat left top; 
 	color: #FFF;
 	font-family: "Arial Narrow", sans-serif;
@@ -181,15 +181,15 @@
 	}
 }
 
-#wikiheadertools button.secondary {
+button.secondary {
 	background-position: right -171px;
 }
-#wikiheadertools button.secondary span {
+button.secondary span {
 	background-position: 0px -114px;
 	color: #000;
 }
 
-#wikiheadertools .note {
+.note {
 	font-size: 10pt;
 	padding: 10px;
 }
@@ -270,7 +270,7 @@
 
 /*** Styles for status bar http://www.west-wind.com/WebLog/posts/388213.aspx ***/
 
-#wikiheadertools .statusbar { 
+.statusbar { 
 	background: black;
 	border: solid 1px lightgray;
 	bottom: 5px;
@@ -288,25 +288,25 @@
 	z-index: 200;
 }
 
-#wikiheadertools .statusbarhighlight {
+.statusbarhighlight {
 	background-color: #F0E68C;
 	border: solid 1px silver;
 	color: maroon;
 	font-weight: bold;
 }
 
-#wikiheadertools .statusbarerror {
+.statusbarerror {
 	background-color: red;
 	color: white;    
 }
 
-#wikiheadertools  .clearfix:after {
+.clearfix:after {
 	content: ".";
 	display: block;
 	height: 0;
 	clear: both;
 	visibility: hidden;
 }
-#wikiheadertools  .clearfix {
+.clearfix {
 	zoom: 1;
 }
