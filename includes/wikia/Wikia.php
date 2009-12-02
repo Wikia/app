@@ -407,7 +407,7 @@ class Wikia {
 	static public function staffForLang( $langCode ) {
 		wfProfileIn( __METHOD__ );
 
-		$staffSigs = wfMsgForContent( "staffsigs" );
+		$staffSigs = wfMsgExt('staffsigs', array('language'=>'en')); // fzy, rt#32053
 		$staffUser = false;
 		if( !empty( $staffSigs ) ) {
 			$lines = explode("\n", $staffSigs);
