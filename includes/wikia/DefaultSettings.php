@@ -302,6 +302,14 @@ $wgExternalSharedDB = false;
 $wgDumpsDisabledWikis = array();
 
 /**
+ * @name wgEnableUploadInfoExt
+ *
+ * write to dataware information about every upload, it's by default off when
+ * you do not use wikia-conf/CommonSettings.php
+ */
+$wgEnableUploadInfoExt = false;
+
+/**
  * external databases
  */
 $wgExternalDatawareDB = 'dataware';
