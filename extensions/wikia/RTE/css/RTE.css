@@ -191,6 +191,7 @@ body.rte_source #editform #toolbar {
 /* info line */
 .RTEPlaceholderPreviewIntro {
 	border-bottom: solid 1px #aaa;
+	cursor: default;
 	font-style: italic;
 	padding: 3px 0;
 }
@@ -201,6 +202,10 @@ body.rte_source #editform #toolbar {
 	max-height: 160px;
 	overflow: auto;
 	padding: 4px;
+}
+
+.RTEPlaceholderPreviewCode * {
+	cursor: default !important;
 }
 
 .RTEPlaceholderPreviewPreformatted {
