@@ -3,7 +3,7 @@
 class WikiStickies extends SpecialPage {
 
 	const STICKY_FEED_LIMIT = 1; // one for the sticky note, to display in yellow
-	const INITIAL_FEED_LIMIT = 11; // 11 to get initially for this nice viewer fellow
+	const INITIAL_FEED_LIMIT = 10; // 10 to get initially for this nice viewer fellow
 	const SPECIAL_FEED_LIMIT = 21; // 21 to rule them all, and in light display them
 
         function __construct() {
@@ -51,8 +51,8 @@ class WikiStickies extends SpecialPage {
         	global $wgOut, $wgUser;
 
 		$sk = $wgUser->getSkin () ;
-		$body = '';
-
+		$body = $body2 = '';
+	
 		if( empty( $feed_data ) ) {
 			return false;
 		}
@@ -69,15 +69,29 @@ class WikiStickies extends SpecialPage {
 			Xml::closeElement( 'strong' ).
 			Xml::openElement( 'p' ). 
 			$sticker .'<br/>'. $sk->makeLink( array_shift( $feed_data ) ).
+			'<a href="#" id="wikisticky_next">Next -></a><img src="curl.png" id="wikisticky_curl" />'.
 			Xml::closeElement( 'p' ).
 			Xml::closeElement( 'div' ).
 			Xml::closeElement( 'div' );
-	
+
+		$uptolimit = 0;	
+
 		foreach( $feed_data as $title ) {			
-			$body .= Xml::openElement( 'li' ).
-				// todo namespace too (especially for Wantedpages)
-				$sk->makeLink( $title ).			
-				Xml::closeElement( 'li' );
+			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {			
+				if( 0 == ( $uptolimit % 2 ) ) {
+					$body .= Xml::openElement( 'li' ).
+						// todo namespace too (especially for Wantedpages)
+						$sk->makeLink( $title ).			
+						Xml::closeElement( 'li' );
+				} else {
+					$body2 .= Xml::openElement( 'li' ).
+						// todo namespace too (especially for Wantedpages)
+						$sk->makeLink( $title ).			
+						Xml::closeElement( 'li' );
+				}
+				array_shift( $feed_data );
+				$uptolimit++;			
+			}
 		}
 		
 		$html = Xml::openElement( 'div', array( 'class' => 'wikistickiesfeed' ) ).
@@ -88,6 +102,9 @@ class WikiStickies extends SpecialPage {
 			Xml::openElement( 'div', array( 'class' => 'wikistickieslistwrapper clearfix' ) ).
 			Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
 			$body.
+			Xml::closeElement( 'ul' ).
+			Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
+			$body2.
 			Xml::closeElement( 'ul' ).
 			Xml::closeElement( 'div' );
 
