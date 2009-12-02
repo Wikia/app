@@ -7,14 +7,14 @@ if (!defined('MEDIAWIKI')) {
 
 /**
  * A query action to return meta information about the wiki site.
- * 
+ *
  * @addtogroup API
  */
 
 class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
-	
+
 	private $variablesList = array('wgDefaultSkin','wgDefaultTheme','wgAdminSkin','wgArticlePath','wgScriptPath','wgScript','wgServer','wgLanguageCode','wgCityId','wgContentNamespaces');
-	
+
 	public function __construct($query, $moduleName) {
 		parent :: __construct($query, $moduleName, 'si');
 		$this->showError = true;
@@ -32,9 +32,19 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 				case 'category':
 					$this->appendCategory($p);
 					break;
+				case 'wikidesc':
+					$this->appendWikidesc($p);
+					break;
 			}
 		}
 		parent::execute();
+	}
+
+	protected function appendWikidesc($property) {
+		$result = $this->getResult();
+		$data = array( "pagetitle" => wfMsg( 'pagetitle' ) );
+		$result->setIndexedTagName($data, $property);
+		$result->addValue('query', $property, $data);
 	}
 
 	protected function appendVariables($property) {
@@ -43,7 +53,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 			$data[$id] = array( 'id' => $variableName );
 			$value = (array_key_exists($variableName, $GLOBALS) && !is_null($GLOBALS[$variableName])) ? $GLOBALS[$variableName] : "";
 			if ( is_array($value) ) {
-				$loop = 0; foreach ($value as $key => $v) { 
+				$loop = 0; foreach ($value as $key => $v) {
 					$data[$id]["value".$loop] = array( 'id' => $key);
 					ApiResult :: setContent( $data[$id]["value".$loop], $v );
 					$loop++;
@@ -52,7 +62,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 				ApiResult :: setContent( $data[$id], $value );
 			}
 		}
-		
+
 		$result = $this->getResult();
 		$result->setIndexedTagName($data, $property);
 		$result->addValue('query', $property, $data);
@@ -66,13 +76,14 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		$result = $this->getResult();
 		$result->setIndexedTagName($data, $property);
 		$result->addValue('query', $property, $data);
-		
+
 	}
 
 	public function getAllowedParams() {
 		$params = parent::getAllowedParams();
 		array_push($params['prop'][ApiBase::PARAM_TYPE],'category');
 		array_push($params['prop'][ApiBase::PARAM_TYPE],'variables');
+		array_push($params['prop'][ApiBase::PARAM_TYPE],'wikidesc');
 		return $params;
 	}
 
@@ -80,6 +91,7 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		$params = parent::getParamDescription();
 		$params['prop'][] = ' "category"     - Returns name of category of selected Wikia';
 		$params['prop'][] = ' "variables"    - Returns values of main global variables';
+		$params['prop'][] = ' "wikidesc"     - Returns wiki description (such as Mediawiki:pagetitle)';
 		return $params;
 	}
 
@@ -89,8 +101,8 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 
 	protected function getExamples() {
 		return array_merge(
-				parent::getExamples(), 
-				array('api.php?action=query&meta=siteinfo&siprop=general|namespaces|statistics|variables|category')
+				parent::getExamples(),
+				array('api.php?action=query&meta=siteinfo&siprop=general|namespaces|statistics|variables|category|wikidesc')
 		);
 	}
 }
