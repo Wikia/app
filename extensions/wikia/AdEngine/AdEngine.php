@@ -219,7 +219,7 @@ class AdEngine {
 
 		// First handle error conditions
 		if (empty($this->slots[$slotname])) {
-			return new AdProviderNull('Unrecognized slot', true);
+			return new AdProviderNull('Unrecognized slot', false);
 
 		} else if ($this->slots[$slotname]['enabled'] == 'No'){
 			return new AdProviderNull("Slot is disabled", false);
