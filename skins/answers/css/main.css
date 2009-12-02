@@ -975,3 +975,8 @@ div.category br {
 .ns-2 #answers_article {
 	padding-top: 20px;
 }
+
+/** activity feed tweaks **/
+.activity-ns-0 strong a:after {
+	content: '?';
+}
