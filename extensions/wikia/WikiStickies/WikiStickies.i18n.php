@@ -13,9 +13,9 @@ $messages['en'] = array(
 	'wikistickies-save-changes' => 'Save Changes',
 	'wikistickies-more' => 'see more',
 	'wikistickies-admins-hd' => 'Admins only',
-	'wikistickies-admins-msg' => 'These aren\'t your typical WikiStickies. These are things that can only be done by administrators of the wiki that influence how everyone sees the wiki.',
-	'wikistickies-logo-hd' => 'Logo',		
-	'wikistickies-theme-hd' => 'Theme',
+	'wikistickies-admins-msg' => 'These aren\'t your typical WikiStickies. These are things that can only be done by administrators of the wiki to influence how everyone sees the wiki.',
+	'wikistickies-logo-hd' => 'Upload a Logo',		
+	'wikistickies-theme-hd' => 'Choose a Theme',
 	'wikistickies-next' => 'Next ->',
 	'wikistickies-hide' => 'hide',
 );
