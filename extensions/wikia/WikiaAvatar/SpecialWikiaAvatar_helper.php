@@ -345,8 +345,7 @@ function wfWAvatarUpload( $request, $user ) {
 				 */
 				global $wgEnableUploadInfoExt, $wgUser;
 				if( $wgEnableUploadInfoExt ) {
-					$user = User::newFromId( $mUserID );
-					UploadInfo::log( $wgUser->getUserPage(), $sThumb );
+					UploadInfo::log( $user->getUserPage(), $sThumb );
 				}
 				return true;
 			}
