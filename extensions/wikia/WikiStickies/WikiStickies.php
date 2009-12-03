@@ -24,4 +24,4 @@ $wgAutoloadClasses['ApiQueryWantedpages'] = $dir . 'ApiQueryWantedpages.php';
 $wgAutoloadClasses['ApiQueryWantedimages'] = $dir . 'ApiQueryWantedimages.php';
 $wgAPIListModules['wantedpages'] = 'ApiQueryWantedpages';
 $wgAPIListModules['wantedimages'] = 'ApiQueryWantedimages';
-
+$wgHooks['MyHome::sidebarBeforeContent'][] = 'WikiStickies::addToMyHome';
