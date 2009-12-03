@@ -103,7 +103,6 @@ class WikiStickies extends SpecialPage {
 				} else {
 					$body .= Xml::openElement( 'li' );
 				}
-				// todo namespace too (especially for Wantedpages)
 				$body .= $sk->makeKnownLinkObj( $title ).
 				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
@@ -123,7 +122,6 @@ class WikiStickies extends SpecialPage {
 				} else {
 					$body2 .= Xml::openElement( 'li' );
 				}
-				// todo namespace too (especially for Wantedpages)
 				$body2 .= $sk->makeKnownLinkObj( $title ).
 				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
