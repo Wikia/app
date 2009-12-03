@@ -151,7 +151,7 @@ echo $html;
 
 	<!-- ##### Begin main content #### -->
         <div id="answers_header" class="reset">
-		<a href="/" id="wikianswers_logo"><img src="/skins/answers/images/wikianswers_logo.png" alt="<?php print $wgSitename; ?>" title="<?php print $wgSitename; ?>" /></a>
+		<a href="/" id="wikianswers_logo"><img src="<?php print $wgStylePath; ?>/answers/images/wikianswers_logo.png" alt="<?php print $wgSitename; ?>" title="<?php print $wgSitename; ?>" /></a>
 
 		<div class="yui-skin-sam" id="ask_wrapper">
 
