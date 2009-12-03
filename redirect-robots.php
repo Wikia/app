@@ -203,7 +203,7 @@ function getSitemapUrl(){
 }
 
 function getLangSpecificNamespace( &$lang, $code, $bot='' ){
-   global $wgSpecialPages;
+   global $wgSpecialPages, $wgArticleRobotPolicies;
 
    $r = '';
 
@@ -224,6 +224,10 @@ function getLangSpecificNamespace( &$lang, $code, $bot='' ){
    $r .= 'Noindex: /wiki/' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
    $r .= 'Noindex: /' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
    $r .= 'Noindex: /*title=' . urlencode( $ns[NS_SPECIAL] ) ."%3A*\n";
+   if ( $code == "en" && !empty( $wgArticleRobotPolicies['Special:WhatLinksHere'] ) ) {
+	$r .= "Allow: /Special:WhatLinksHere\n";
+	$r .= "Allow: /wiki/Special:WhatLinksHere\n";
+   }
  }else{
    $r .= "# " . $code . "\n" ;
    $r .= 'Disallow: /wiki/' . urlencode( $ns[NS_SPECIAL] ) .":*\n";
