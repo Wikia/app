@@ -196,7 +196,7 @@ class WikiaAvatar {
 			global $wgEnableUploadInfoExt;
 			if( $wgEnableUploadInfoExt ) {
 				$user = User::newFromId( $mUserID );
-				UploadInfo::log( $user->getTalkPage(), $sImageFull, "", "r" );
+				UploadInfo::log( $user->getUserPage(), $sImageFull, "", "", "r" );
 			}
 			return true;
 		}
@@ -346,7 +346,7 @@ function wfWAvatarUpload( $request, $user ) {
 				global $wgEnableUploadInfoExt, $wgUser;
 				if( $wgEnableUploadInfoExt ) {
 					$user = User::newFromId( $mUserID );
-					UploadInfo::log( $wgUser->getTalkPage(), $sThumb );
+					UploadInfo::log( $wgUser->getUserPage(), $sThumb );
 				}
 				return true;
 			}
