@@ -13,6 +13,9 @@
 	<!-- right sidebar -->
 	<div id="myhome-sidebar">
 
+		<!-- additional stuff, governed by myHomeSidebarBeforeContent hook -->
+		<?=$sidebarBeforeContent?>			
+
 		<!-- user contributions -->
 		<?=$contribsHTML?>
 		<!-- /user contributions -->
