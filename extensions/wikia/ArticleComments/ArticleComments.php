@@ -35,6 +35,8 @@ $wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockG
 # special::watchlist
 $wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
 $wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
+# ActivityFeed
+$wgHooks['MyHome:BeforeStoreInRC'][] = 'ArticleCommentList::BeforeStoreInRC';
 # init
 $wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
 $wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
@@ -1519,5 +1521,21 @@ class ArticleCommentList {
 		}
 		$text .= '</ul>';
 		return $text;
+	}
+
+	/**
+	 * Hook
+	 *
+	 * @param RecentChange $rc -- instance of RecentChange class
+	 * @param array $data -- data used by ActivityFeed
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static function BeforeStoreInRC(&$rc, &$data) {
+		$data['articleComment'] = true;
+		return true;
 	}
 }
