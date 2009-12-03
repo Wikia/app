@@ -29,7 +29,7 @@ class UploadAvatar extends UnlistedSpecialPage {
   }
   
   function initAvatar(&$request){
-	   $this->fileExtensions = array(   'gif',  'jpg', 'jepg', 'png' );
+		$this->fileExtensions = array(   'gif',  'jpg', 'jepg', 'png' );
 		
 		if( !$request->wasPosted() ) {
 			# GET requests just give the main form; no data except wpDestfile.
@@ -242,7 +242,9 @@ class UploadAvatar extends UnlistedSpecialPage {
 function createThumbnail($imageSrc, $ext,$imgDest,$thumbWidth){
 	list($origWidth ,$origHeight,$TypeCode)=getimagesize($imageSrc);
 
-	if($origWidth < $thumbWidth)$thumbWidth = $origWidth;
+	if($origWidth < $thumbWidth){
+		$thumbWidth = $origWidth;
+	}
 	$thumbHeight = ($thumbWidth * $origHeight / $origWidth);
 	$border = "";
 	if ($thumbHeight < $thumbWidth) {
@@ -280,11 +282,13 @@ function createThumbnail($imageSrc, $ext,$imgDest,$thumbWidth){
 			$stats->incStatField("user_image");
 		}
 		$this->mSavedFile = "{$dest}/{$saveName}";
+		
 	 	$this->createThumbnail($tempName,$ext, $wgDBname . "_" . $wgUser->mId . "_l", 75);
 		$this->createThumbnail($tempName,$ext, $wgDBname . "_" . $wgUser->mId . "_ml", 50);
 		$this->createThumbnail($tempName,$ext, $wgDBname . "_" . $wgUser->mId . "_m", 30);
 		$this->createThumbnail($tempName,$ext, $wgDBname . "_" . $wgUser->mId . "_s", 16);
 		
+		$type = 0;
 		if($ext == "JPG" && is_file( $this->avatarUploadDirectory . "/" . $wgDBname . "_" . $wgUser->mId . "_l.jpg")){$type = 2;}
 		if($ext == "GIF" && is_file( $this->avatarUploadDirectory . "/" . $wgDBname . "_" . $wgUser->mId . "_l.gif")){$type = 1;}
 		if($ext == "PNG" && is_file( $this->avatarUploadDirectory . "/" . $wgDBname . "_" . $wgUser->mId . "_l.png")){$type = 3;}
@@ -324,10 +328,10 @@ function createThumbnail($imageSrc, $ext,$imgDest,$thumbWidth){
 			//$sql = "UPDATE user set user_avatar = " . $type . " WHERE user_id = " . $wgUser->mId;
 			//$res = $dbr->query($sql);
 		}else{
-			$wgOut->fileCopyError( $tempName, $stash );
+			$wgOut->fileCopyError( $tempName, $this->avatarUploadDirectory );
 		}
 		return $type;
-	} 
+	}
 
 	/**
 	 * Stash a file in a temporary directory for later processing
