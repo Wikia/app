@@ -25,6 +25,7 @@ define('ANSWERED_CATEGORY', 'answered_questions'); // must be set to the name of
 
 ///// BEGIN - SETUP HOOKS /////
 $wgHooks['LanguageGetMagic'][] = 'categoryHubAddMagicWords'; // setup names for parser functions (needed here)
+$wgHooks['BeforePageDisplay'][] = 'categoryHubAdditionalScripts';
 $wgHooks['ParserAfterStrip'][] = 'categoryHubCheckForMagicWords';
 
 // Allows us to define a special order for the various sections on the page.
@@ -33,8 +34,9 @@ $wgHooks['FlexibleCategoryPage::closeShowCategory'][] = 'categoryHubAfterArticle
 
 // Override the appearance of the sections on the category page.
 $wgHooks['FlexibleCategoryViewer::getCategoryTop'][] = 'categoryHubCategoryTop';
-//$wgHooks['FlexibleCategoryViewer::getOtherSection'][] = 'categoryHubOtherSection';
+$wgHooks['FlexibleCategoryViewer::getOtherSection'][] = 'categoryHubOtherSection';
 $wgHooks['FlexibleCategoryViewer::getSubcategorySection'][] = 'categoryHubSubcategorySection';
+//$wgHooks['FlexibleCategoryViewer::getCategoryBottom'][] = 'categoryHubCategoryBottom';
 
 $wgExtensionMessagesFiles['CategoryHub'] = dirname(__FILE__).'/CategoryHubs.i18n.php';
 $wgExtensionCredits['other'][] = array(
@@ -61,6 +63,21 @@ function categoryHubAddMagicWords(&$magicWords, $langCode){
 	$magicWords[CATHUB_NORICHCATEGORY] = array( 0, '__NORICHCATEGORY__' );
 	return true;
 }
+
+////
+// Before the page is rendered this gives us a chance to cram some Javascript in.
+////
+function categoryHubAdditionalScripts( &$out, &$sk ){
+	$out->addScript('<link type="text/css" href="http://jqueryui.com/latest/themes/base/ui.all.css" rel="stylesheet" />');
+	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.core.js"></script>');
+	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.tabs.js"></script>');
+	$out->addScript('<script type="text/javascript">
+  $(document).ready(function(){
+    $("#tabs").tabs();
+  });
+  </script>');
+	return true;
+} // end categoryHubAdditionalScripts()
 
 ////
 // Determines if the magic word is present for disabling the Category Hub and defaulting to previous behavior.
@@ -156,8 +173,10 @@ function categoryHubTitleBar(&$catView, &$r){
 	GLOBAL $wgScriptPath;
 	$r .= "<style type='text/css'>
 	h1.firstHeading { display:none; }
+	#page_bar{ display:none; }
+	#answers_article{ padding-top:0px; }
 	#cathub-title-bar{
-		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/cat_hub_title_bg.png);
+		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/cathub_title_bg.png);
 	}
 	.cathub-progbar-wrapper{
 		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/prog_bar_endcap.png);
@@ -167,6 +186,12 @@ function categoryHubTitleBar(&$catView, &$r){
 	}
 	.cathub-progbar-unanswered{
 		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/prog_bar_unanswered.png);
+	}
+	.ui-tabs .ui-tabs-hide { /* required for jquery ui tabs */
+		display: none;
+	}
+	.ui-widget-header{
+		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/tab_navbar_bg.png);
 	}
 	</style>";
 
@@ -313,11 +338,52 @@ function categoryHubContributorsToHtml($editsByUserId){
 function categoryHubOtherSection(&$catView, &$r){
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
-		
-		// TODO: IMPLEMENT
-		$r .= "[ANSWERED / UNANSWERED TABS HERE]";
-		
-		
+		global $wgUser;
+
+		$ti = htmlspecialchars( $catView->title->getText() );
+		$cat = $catView->getCat();
+
+		if ( $wgUser->isAnon() && $cat->getSubcatCount() > 0 && ( !empty($catView->answers["answered_questions"]) || !empty($catView->answers["unanswered_questions"]) ) ) {
+			$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_LEADERBOARD_U');
+		}
+
+		$r .= "<div id='tabs'>\n"; // jquery ui tabs widget
+
+		// The tabs.
+		$r .= "<ul>\n";
+		$r .= "<li><a href='#cathub-tab-unanswered'><span>".str_replace("-","",Answer::getSpecialCategory("unanswered"))."</span></a></li>\n";
+		$r .= "<li><a href='#cathub-tab-answered'><span>".Answer::getSpecialCategory("answered")."</span></a></li>\n";
+		$r .= "</ul>\n";
+
+		if (!empty($catView->answers["unanswered_questions"])){
+			$r .= "<div id=\"cathub-tab-unanswered\">\n";
+			$r .= wfMsg( 'answers-category-count-unanswered', count( $catView->answers['unanswered_questions'] ) );
+			$r .= "<ul>\n";
+			foreach($catView->answers["unanswered_questions"] as $q){
+				$r.= "<li>$q</li>\n";
+			}
+			$r .= "</ul>\n";
+			$r .= "</div>\n";
+			if ( $wgUser->isAnon() ) {
+				$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_U');
+			}
+		}
+
+		if (!empty($catView->answers["answered_questions"])){
+			$r .= "<div id=\"cathub-tab-answered\">\n";
+			$r .= wfMsg( 'answers-category-count-answered', count($catView->answers['answered_questions'] ) );
+			$r .= "<ul>\n";
+			foreach($catView->answers["answered_questions"] as $q){
+				$r.= "<li>$q</li>\n";
+			}
+			$r .= "</ul>\n";
+			$r .= "</div>\n";
+			if ( $wgUser->isAnon() ) {
+				$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_A');
+			}
+		}
+
+		$r .= "</div>\n"; // end of #tabs
 	}
 	return $wgCatHub_useDefaultView;
 } // end categoryHubOtherSection()
