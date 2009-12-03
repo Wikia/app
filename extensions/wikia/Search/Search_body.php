@@ -39,7 +39,7 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 
 		if(!$titlesOnly) {
 			if($this->crossWikiSearch) {
-				$queryFields = 'title^5 host^2 html';
+				$queryFields = 'title^10 host^5 html';
 			}
 			else {
 				$queryFields = 'title^7 html';
@@ -131,10 +131,9 @@ class SolrSearchSet extends SearchResultSet {
 		$sanitizedQuery = self::sanitizeQuery($query);
 
 		$params = array(
-			'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks', // fields we want to fetch back
+			'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
 			'qf' => $queryFields,
-			//'bf' => ( !$crossWikiaSearch ? 'scale(map(backlinks,10000,100000000,10000),0,100)^20' : 'scale(map(views,10000,100000000,10000),0,10)^20' ), // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
-			'bf' => ( $crossWikiaSearch ? 'scale(map(backlinks,10000,100000000,10000),0,100)^20' : 'scale(map(views,10000,100000000,10000),0,10)^20' ), // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
+			'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
 			'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
 			'qt' => 'dismax',
 			'pf' => '', // override defaults
@@ -149,15 +148,17 @@ class SolrSearchSet extends SearchResultSet {
 			'hl.simple.post' => '</span>',
 			'indent' => 1,
 			'fq' => ''
-			//'sort' => 'backlinks desc, views desc, revcount desc, created asc'
 		);
 
 		if( $crossWikiaSearch ) {
+			$params['bf'] = 'scale(map(views,100000,100000000,100000),0,100)^10 map(backlinks,100,500,100)^2';
+			$params['bq'] = '(*:* -html:(' . $sanitizedQuery . '))^10 host:(' . $sanitizedQuery . '.wikia.com)^20';
+
 			$widQuery = '';
 			foreach($wgCrossWikiaSearchExcludedWikis as $wikiId) {
 				$widQuery .= ( !empty($widQuery) ? ' AND ' : '' ) . '!wid:' . $wikiId;
 			}
-			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en";
+			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . $widQuery . " AND lang:en AND iscontent:true";
 		}
 		else {
 			if(count($namespaces)) {
@@ -167,7 +168,6 @@ class SolrSearchSet extends SearchResultSet {
 				}
 				$params['fq'] = $nsQuery; // filter results for selected ns
 			}
-
 			$params['fq'] = ( !empty( $params['fq'] ) ? "(" . $params['fq'] . ") AND " : "" ) . "wid:" . $wgCityId;
 		}
 		//echo "fq=" . $params['fq'] . "<br />";
@@ -313,6 +313,7 @@ class SolrResult extends SearchResult {
 	private $mUrl = null;
 	private $crossWikiaResult = false;
 	private $mDebug = '';
+	private $mWikiTitle = '';
 
 	/**
 	 * Construct a result object from single Apache_Solr_Document object
@@ -323,11 +324,11 @@ class SolrResult extends SearchResult {
 	public function __construct( Apache_Solr_Document $document, $crossWikiaResult = false ) {
 		$this->crossWikiaResult = $crossWikiaResult;
 		$this->mWikiId = $document->wid;
-		$this->mDebug = "<br>views:" . $document->views . " revcount:" . $document->revcount . " backlinks:" . $document->backlinks;
+		$this->mDebug = "<br>views:" . $document->views . " revcount:" . $document->revcount . " backlinks:" . $document->backlinks . " articles:" . $document->wikiarticles . " pages:" . $document->wikipages . " ativeusers:" . $document->activeusers;
+		$this->mWikiTitle = $document->wikititle;
 
 		$url = utf8_decode( htmlspecialchars_decode( $document->url ) );
 		$title = htmlspecialchars_decode( $document->title );
-
 		if(isset($document->canonical) && !empty($document->canonical)) {
 			$canonical = htmlspecialchars_decode($document->canonical);
 			$this->mTitle = new SolrResultTitle($document->ns, $canonical, $url);
@@ -413,7 +414,7 @@ class SolrResult extends SearchResult {
 
 	public static function showHit($result, $link, $redirect, $section, $extract, $data) {
 		if($result->isCrossWikiaResult()) {
-			$data = "<a href=\"" . $result->getUrl() . "\" title=\"" . $result->getUrl() . "\" style=\"text-decoration: none;\"><span class=\"dark_text_2\">" . $result->mUrl . "</span></a>";
+			$data = "<a href=\"" . $result->getUrl() . "\" title=\"" . $result->getUrl() . "\" style=\"text-decoration: none; font-size: small\"><span class=\"dark_text_2\">" . $result->mUrl . "</span></a>";
 			//$data .= $result->getDebug();
 		}
 		else {
