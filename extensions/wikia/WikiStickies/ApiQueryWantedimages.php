@@ -30,7 +30,7 @@ class ApiQueryWantedimages extends ApiQueryBase {
 		$this->addWhere( array( 
 			"qc_type = 'Mostlinked'",
 			"il_to is NULL",
-			"qc_namespace IN (" . implode( ",", $wgContentNamespaces ) . ")",
+			"page_namespace IN (" . implode( ",", $wgContentNamespaces ) . ")",
 			"page_is_redirect = 0",
 			) );
 		$this->addOption( 'ORDER BY', 'qc_value DESC' );
