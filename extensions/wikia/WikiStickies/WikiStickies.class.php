@@ -80,7 +80,7 @@ class WikiStickies extends SpecialPage {
 		$sticky = Xml::openElement( 'div', array( 'id' => 'wikisticky_browser' ) ).
 			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).
 			Xml::openElement( 'p' ).
-			$sticker . ' ' . $sk->makeLink( array_shift( $feed_data ) ). '?'.
+			$sticker . ' ' . $sk->makeKnownLinkObj( array_shift( $feed_data ) ). '?'.
 			Xml::closeElement( 'p' ).
 			Xml::closeElement( 'div' ).
 			Xml::closeElement( 'div' );
@@ -99,7 +99,7 @@ class WikiStickies extends SpecialPage {
 					$body .= Xml::openElement( 'li' );
 				}
 				// todo namespace too (especially for Wantedpages)
-				$body .= $sk->makeLink( $title ).
+				$body .= $sk->makeKnownLinkObj( $title ).
 				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
 				$uptolimit++;
@@ -119,7 +119,7 @@ class WikiStickies extends SpecialPage {
 					$body2 .= Xml::openElement( 'li' );
 				}
 				// todo namespace too (especially for Wantedpages)
-				$body2 .= $sk->makeLink( $title ).
+				$body2 .= $sk->makeKnownLinkObj( $title ).
 				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
 				$uptolimit++;
@@ -165,7 +165,11 @@ class WikiStickies extends SpecialPage {
 		if( !isset($aResult['warnings']) ) {
 			if( count($aResult['query'][$feed]) > 0) {
 				foreach( $aResult['query'][$feed] as $newfound ) {
-					$result[] = $newfound['title'];
+					if( isset( $newfound['namespace'] ) ) {
+						$result[] = Title::makeTitle( $newfound['namespace'], $newfound['title']);
+					} else {
+						$result[] = Title::makeTitle( $newfound['ns'], $newfound['title']);
+					}
 				}
 			}
 		}
@@ -176,12 +180,14 @@ class WikiStickies extends SpecialPage {
 
 	// fetch the feed for SpecialNewpages
 	function getNewpagesFeed( $limit ) {
+		global $wgContentNamespaces;
 		$data =	array(
 				'action'		=> 'query',
 				'list'			=> 'recentchanges',
 				'rcprop'		=> 'title',
-				'rcnamespace'	=> 0,
+				'rcnamespace'		=> $wgContentNamespaces,
 				'rctype'		=> 'new',
+				'rcshow' 		=> '!redirect',
 				'rclimit'		=> intval($limit),
 				 );
 
