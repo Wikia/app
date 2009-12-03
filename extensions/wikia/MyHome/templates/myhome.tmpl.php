@@ -16,13 +16,13 @@
 		<!-- additional stuff, governed by myHomeSidebarBeforeContent hook -->
 		<?=$sidebarBeforeContent?>			
 
-		<!-- user contributions -->
-		<?=$contribsHTML?>
-		<!-- /user contributions -->
-
 		<!-- hot spots -->
 		<?=$hotSpotsHTML?>
 		<!-- /hot spots -->
+
+		<!-- user contributions -->
+		<?=$contribsHTML?>
+		<!-- /user contributions -->
 
 		<!-- community corner -->
 		<?=$communityCornerHTML?>
