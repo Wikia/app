@@ -98,6 +98,11 @@ JS
 		$communityCornerTemplate->set_vars(array('isAdmin' => $isAdmin));
 		$communityCornerHTML = $communityCornerTemplate->execute('communityCorner');
 
+                // hook to enable adding something extra on the top of the MyHome sidebar
+		
+		$sidebarBeforeContent = '';
+		wfRunHooks( 'MyHome::sidebarBeforeContent', array( &$sidebarBeforeContent ) ); 
+		
 		######
 		### Show HTML
 		######
@@ -108,6 +113,7 @@ JS
 			'myhomeUrl' => Skin::makeSpecialUrl('MyHome'),
 
 			'feedHTML' => $feedHTML,
+			'sidebarBeforeContent' => $sidebarBeforeContent,
 			'contribsHTML' => $contribsHtml,
 			'hotSpotsHTML' => $hotSpotsHtml,
 			'communityCornerHTML' => $communityCornerHTML,
