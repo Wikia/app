@@ -23,19 +23,14 @@
 
 // ISSUES TO KEEP IN MIND AND DISCUSS WITH WIKIA:
 // TRACKING:
-//  - We need to install the DynamicPageLists extension (now in SVN).
 //  - I have to add the code below (the #vardefine... etc.) into the Song template but only after DPL is installed - http://lyrics.wikia.com/index.php?title=Template:Song&action=edit
 //	- This tracking requires the advanced "ga.js" code which Google explicitly says not to use on the same page as "urchin.js" code which is there now. They say this can lead to errors.
 //	  The documentation touches on a way to do both at once but it's just in the form of a vaguely documented function: http://code.google.com/intl/en-US/apis/analytics/docs/gaJS/gaJSApiUrchin.html#_gat.GA_Tracker_._setRemoteServerMode
-//	- The existing Tag_Lyric code should be updated from SVN also (if there were changes since it was grabbed from SVN, they may need to be merged).
 // COPY PROTECTION:
 //	- One of the requirements specified is "Save As" but it appears that there aren't even futile methods to do this.
 
 // TODO: Copy protection
 //		TODO: No-cache headers: http://www.codeave.com/html/code.asp?u_log=5080 (check with Artur to see if this will destroy Varnish's ability to cache the site). My guess is that the intention is just to prevent cached pages from being used instead of ads (but the ads aren't cached) so unless they actually think a user could dig through their browser's cache to find the page more easily than just searching for it again...
-// TODO: FOR TOR :)
-//		TODO: In LocalSettings.php, protect the Gracenote namespace from editing: http://www.mediawiki.org/wiki/Manual:$wgNamespaceProtection
-//		TODO: Move the values from the top of Gracenote.php to LocalSettings (it will be obvious from the comments which lines need to be moved).
 # Copy-prevention measures in this extension:
 #		Clear-clipboard script is enabled for IE 6.  No modern browsers support it in a way that would prevent print-screens.
 #		Print CSS should disabled and some text which is normally hidden which will explain this issue when printed (or print previewed).
@@ -131,7 +126,7 @@ if(isset($wgScriptPath))
 	// This only needs to be included once between the Lyrics tag and the GracenoteLyrics tag.
 	$wgHooks['BeforePageDisplay'][] = "gracenote_installCopyProtection";
 	$wgHooks['BeforePageDisplay'][] = "gracenote_disableEdit";
-	$wgHooks['SkinAfterBottomScripts'][] = 'gracenote_outputGoogleAnalytics';
+	$wgHooks['OutputPageParserOutput'][] = 'gracenote_outputGoogleAnalytics';
 
 	//$wgHooks['getUserPermissionsErrorsExpensive'][] = "gracenote_disableEditByPermissions";
 }
