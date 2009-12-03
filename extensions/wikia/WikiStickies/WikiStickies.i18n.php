@@ -17,4 +17,5 @@ $messages['en'] = array(
 	'wikistickies-logo-hd' => 'Logo',		
 	'wikistickies-theme-hd' => 'Theme',
 	'wikistickies-next' => 'Next ->',
+	'wikistickies-hide' => 'hide',
 );

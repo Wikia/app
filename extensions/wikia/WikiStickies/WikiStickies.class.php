@@ -143,9 +143,10 @@ class WikiStickies extends SpecialPage {
 		// See more link
 		// TODO: This href attribute should actually point to the source of the feed
 		//       in case JS is off.
-		$html .= '<a href="#" class="MoreLink">'. wfMsg( 'wikistickies-more' ) .'</a>';
-
-		$html .= Xml::closeElement( 'div' );
+		$html .= Xml::openElement( 'a', array( 'class' => 'MoreLink' ) ).
+			wfMsg( 'wikistickies-more' ).
+			Xml::closeElement( 'a' ).
+			Xml::closeElement( 'div' );
 
 		$wgOut->addHTML( $html );
 	}
