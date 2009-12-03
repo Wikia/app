@@ -926,7 +926,7 @@ div.category br {
 	display:inline;
 }
 .userInfoNoAvatar, .userInfoNoAvatar * {
-	font-size:.75em !important;
+	font-size:.8em !important;
 	color:#888;
 	font-weight:normal !important;
 }
