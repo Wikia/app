@@ -114,8 +114,8 @@ JS
 
 			'feedHTML' => $feedHTML,
 			'sidebarBeforeContent' => $sidebarBeforeContent,
-			'contribsHTML' => $contribsHtml,
 			'hotSpotsHTML' => $hotSpotsHtml,
+			'contribsHTML' => $contribsHtml,
 			'communityCornerHTML' => $communityCornerHTML,
 		));
 
