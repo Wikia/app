@@ -9,12 +9,12 @@
 			<strong><?php echo $comment["sig"] ?></strong>
 			<span class="timestamp"><?php echo $comment["timestamp"] ?></span>
 		<?php if ( $canDelete ) { ?>
-			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>"><?=wfMsg('article-comments-delete')?></a>
+			<a href="<?php echo $comment[ "title" ]->getLocalUrl( "redirect=no&action=delete" ) ?>" class="article-comm-delete"><?=wfMsg('article-comments-delete')?></a>
 		<?php } ?>
 		<?php if ( $canEdit ) { ?>
 			<a name="<?php echo $comment[ "title" ]->getArticleId() ?>" href="#<?php echo $comment[ "title" ]->getArticleId() ?>" class="article-comm-edit" id="<?php echo $comment[ "title" ]->getArticleId() ?>"><?=wfMsg('article-comments-edit')?></a>
 			<?php if ( !empty($showHistory) && !$comment[ "title" ]->isNewPage() ) { ?>
-				<?= $sk->makeKnownLinkObj( $comment[ "title" ], wfMsgHtml('article-comments-history'), 'action=history' ) ?>
+				<?= $sk->makeKnownLinkObj( $comment[ "title" ], wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' ) ?>
 			<?php } ?>
 		<?php } ?>
 		</div>
