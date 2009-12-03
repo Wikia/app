@@ -39,6 +39,7 @@ $wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
 $wgHooks['MyHome:BeforeStoreInRC'][] = 'ArticleCommentList::BeforeStoreInRC';
 # init
 $wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
+$wgHooks['CustomArticleFooter'][] = 'ArticleCommentInit::ArticleCommentEnableMonaco';
 $wgHooks['BeforePageDisplay'][] = 'ArticleCommentInit::ArticleCommentAddJS';
 $wgHooks['SkinTemplateTabs'][] = 'ArticleCommentInit::ArticleCommentHideTab';
 
@@ -61,10 +62,10 @@ class ArticleCommentInit {
 			}
 
 			// Initialize only for allowed skins
-			$allowedSkins = array('SkinMonaco');
-			if(!in_array(get_class($wgUser->getSkin()), $allowedSkins)) {
-				self::$enable = false;
-			}
+//			$allowedSkins = array('SkinMonaco');
+//			if(!in_array(get_class($wgUser->getSkin()), $allowedSkins)) {
+//				self::$enable = false;
+//			}
 
 			$action = $wgRequest->getVal('action', 'view');
 			if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
@@ -78,8 +79,25 @@ class ArticleCommentInit {
 		return self::$enable;
 	}
 
+	//hook used only in Monaco - we want to put comment box in slightly different position, just between article area and the footer
+	static public function ArticleCommentEnableMonaco(&$this, &$tpl, &$custom_article_footer) {
+		//don't touch $custom_article_footer! we don't want to replace the footer - we just want to echo something just before it
+		if (self::ArticleCommentCheck()) {
+			global $wgTitle;
+			wfLoadExtensionMessages('ArticleComments');
+			$page = ArticleCommentList::newFromTitle($wgTitle);
+			echo $page->render(true);
+		}
+		return true;
+	}
+
 	static public function ArticleCommentEnable(&$data) {
-		global $wgTitle;
+		global $wgTitle, $wgUser;
+
+		//use this hook only for skins other than Monaco
+		if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+			return true;
+		}
 		wfProfileIn( __METHOD__ );
 
 		if (self::ArticleCommentCheck()) {
