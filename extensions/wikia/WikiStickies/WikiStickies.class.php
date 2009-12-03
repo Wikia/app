@@ -225,8 +225,9 @@ class WikiStickies extends SpecialPage {
 			Xml::closeElement( 'p' ).
 			Xml::openElement( 'a', array( 'id' => 'wikisticky_next' ) ).
 			wfMsg( 'wikistickies-next' ).
-			Xml::openElement( 'img', array( 'src' => '../images/curl.png', 'id' => 'wikisticky_curl' ) ).
                 	Xml::closeElement( 'a' ).
+			Xml::openElement( 'img', array( 'src' => '../images/curl.png', 'id' => 'wikisticky_curl' ) ).
+			Xml::closeElement( 'img' ).
 			Xml::closeElement( 'div' ).
 			Xml::closeElement( 'div' );
 
