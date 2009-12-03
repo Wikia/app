@@ -895,45 +895,66 @@ div.category br {
 }
 
 #contributors li {
-	height: 56px;
+/*	height: 56px;*/
 	float: left;
 	margin: 5px;
 }
 
-#contributors .userInfo {
-	margin-top: 14px;
-	padding: 0 35px 0 0;
+
+.userInfoBadgeAvatarWrapper{
+	float:left;
+	height:100%;
+	padding: 2px !important;
+	margin-right: 5px !important;
+}
+
+.userInfoBadge img{
+	border: solid 1px #aaa;
+	width:100%;
+	width:50px;
+}
+
+.userInfo {
+	display:inline;
+	margin-top: 7px !important;
+	padding: 0 15px 0 0 !important;
+	height:100%;
+	width:auto;
+}
+.userInfoNoAvatar {
+	margin-top:0px !important;
+	display:inline;
+}
+.userInfoNoAvatar, .userInfoNoAvatar * {
+	font-size:.75em !important;
+	color:#888;
+	font-weight:normal !important;
+}
+.userInfoNoAvatar:hover a{
+	color:#00c !important;
 }
 /* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
-*:lang(en) #contributors .userInfo {
-	float: right;
-}
-
-#contributors li img {
-	border: solid 1px #aaa;
-	display: block;
+*:lang(en) .userInfo {
 	float: left;
-	margin-right: 10px;
-	padding: 2px;
 }
 
-#contributors li .userPageLink {
+.userInfo .userPageLink {
 	display: block;
 	font-size: 1em;
 	font-weight: bold;
 }
 
-#contributors li .anonEditPoints {
+.userInfo .anonEditPoints {
 	display: block;
 	font-size: 0.9em;
 	margin-top: 2px;
 }
 
-#contributors li .userEditPoints {
+.userInfo .userEditPoints {
 	margin-top: 4px;
 }
 
-#contributors li .userEditPoints {
+.userInfo .userEditPoints {
 	background: #e0e0e0 url('../images/user_edit_points_bg.png') no-repeat -175px 0;
 	border: solid 1px #aaa;
 	border-left: none;
@@ -946,17 +967,25 @@ div.category br {
 }
 
 /* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
-*:lang(en) #contributors li .userEditPoints {
+*:lang(en) .userInfo .userEditPoints {
 	margin-left: 0;
 }
 
-#contributors li .userEditPoints .userPoints {
+.userInfo .userPoints, .userInfoNoAvatar:hover .userPoints {
 	background: #f6dd5d url('../images/user_edit_points_bg.png') no-repeat;
 	border: 1px solid #584013;
 	float: left;
 	margin: -1px 3px 0 0;
 	padding: 0 3px;
 	font-size: 13px;
+}
+
+.userInfoNoAvatar .userPoints {
+	background: #eee;
+	border:1px #888 solid;
+	line-height:.95em !important;
+	margin-top: 4px !important;
+	margin-left: 5px !important;
 }
 
 /** User profile edit points **/
@@ -979,4 +1008,100 @@ div.category br {
 /** activity feed tweaks **/
 .activity-ns-0 strong a:after {
 	content: '?';
+}
+
+
+/** Category Hubs **/	
+#topContribsAllTime, #topContribsRecent{
+	margin:0px auto;
+	float:left;
+	width: 47%;
+}
+#topContributorsWrapper{
+	float:left;
+	clear:both;
+	width:100%;
+}
+#topContributorsWrapper h2{
+	border:0px;
+	margin:0px;
+}
+#cathub-title-bar{
+	width:100%;
+	padding-left:5px;
+	margin-bottom:5px;
+	background-image:url(/Wikia_DEV/public_svn/answers/CategoryHubs/cat_hub_title_bg.png);
+	height:86px !important;
+}
+#cathub-title-bar h1{
+	border: 0px;
+	margin-bottom: 7px;
+}
+.cathub-progbar-wrapper{
+	float:left;
+	height:25px;
+	margin:0px;
+	background-image:url(/Wikia_DEV/public_svn/answers/CategoryHubs/prog_bar_endcap.png);
+	padding-left:1px;padding-right:1px;
+}
+.cathub-progbar{
+	float:left;
+	margin:0;
+	height:100%;
+	cursor:help;
+	text-align:center;
+	font-weight:bold;
+	line-height:25px;
+}
+.cathub-progbar-answered{
+	text-align:left;
+	color:#fff;
+	background-color:#55ff55;
+	background-color:transparent;
+	background-image:url(/Wikia_DEV/public_svn/answers/CategoryHubs/prog_bar_answered.png);
+}
+.cathub-progbar-unanswered{
+	text-align:right;
+	color:#000;
+	border-left:1px #717171 solid;
+	margin-left:-1px; /* to make room for the border */
+	background-color:#888;
+	background-color:transparent;
+	background-image:url(/Wikia_DEV/public_svn/answers/CategoryHubs/prog_bar_unanswered.png);
+}
+.cathub-progbar-label{
+	font-size:.75em;
+	font-weight:bold;
+}
+.cathub-progbar-label-left{
+	float:left;
+}
+.cathub-progbar-label-right{
+	width:100%;
+	text-align:right;
+}
+.cathub-contributors-list{
+	float:left;
+	list-style:none;
+	margin-top:0px !important;
+}
+.cathub-contributors-list-wide{
+	width:60%;
+}
+.cathub-contributors-list-narrow{
+	width:40%;
+}
+
+.cathub-contributors-list li{
+	margin:0px;
+	width:100%;
+	padding: 0px !important;
+}
+.cathub-contributors-list li .listNumber{
+	float:left;
+	height:100% !important;
+}
+.cathub-contributors-list li .badgeWrapper{
+	display:inline;
+	height:100% !important;
 }
