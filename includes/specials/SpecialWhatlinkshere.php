@@ -11,9 +11,11 @@
  * @param $par String: An article name ??
  */
 function wfSpecialWhatlinkshere($par = NULL) {
-	global $wgRequest;
+	global $wgRequest, $wgOut, $wgArticleRobotPolicies;
 	$page = new WhatLinksHerePage( $wgRequest, $par );
 	$page->execute();
+	if ( isset( $wgArticleRobotPolicies['Special:WhatLinksHere'] ) ) 
+		$wgOut->setRobotPolicy( $wgArticleRobotPolicies['Special:WhatLinksHere'] ); 
 }
 
 /**
