@@ -81,7 +81,7 @@ class SignupTemplate extends QuickTemplate {
 		<tr>
 			<td class="mw-input" id="wpNameTD">
 				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
-				<input type='text' class='loginText' name="wpName" id="wpName2"	value="<?php $this->text('name') ?>" size='20' />
+				<input type='text' class='loginText' name="wpName" id="wpName2" value="<?php $this->text('name') ?>" size='20' />
 			</td>
 		</tr>
 		<tr>
@@ -601,7 +601,7 @@ class SignupTemplate extends QuickTemplate {
 	<table>
 	<tr>
 	<td id="ajaxlogin_username_cell2">
-		<input type="text" name="wpName" id="wpName2Ajax" tabindex="101" size="20" class="loginText" />
+		<input type="text" name="wpName" id="wpName2Ajax" tabindex="101" size="20" class="loginText" value="<?php $this->text('name') ?>"/>
 	</td>
 	<td></td>
 	</tr>
