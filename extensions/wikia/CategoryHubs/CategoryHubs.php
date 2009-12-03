@@ -200,6 +200,7 @@ WikiFactory::isUsed(true); // TODO: REMOVE - ONLY NEEDED FOR LOCAL TESTING!
 	$r .= "<div style='display:table;width:$PROG_BAR_WIDTH"."px'>"; // wraps the progress bar and the labels below it
 	$r .= "<div class='cathub-progbar-wrapper' style='width:$PROG_BAR_WIDTH"."px'>";
 	$percentAnswered = $categoryEdits->getPercent(ANSWERED_CATEGORY);
+$percentAnswered = "75%"; // TODO: REMOVE
 	if($percentAnswered <= 0){
 		$percentAnswered = 0;
 		$r .= "<div class='cathub-progbar-unanswered' style='width:$PROG_BAR_WIDTH'>No questions answered yet</div>\n";
@@ -313,7 +314,7 @@ function categoryHubOtherSection(&$catView, &$r){
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
 		
-		
+		// TODO: IMPLEMENT
 		$r .= "[ANSWERED / UNANSWERED TABS HERE]";
 		
 		

@@ -1052,6 +1052,7 @@ div.category br {
 	text-align:center;
 	font-weight:bold;
 	line-height:25px;
+	padding:0px !important;
 }
 .cathub-progbar-answered{
 	text-align:left;
