@@ -6,7 +6,6 @@
  * @copyright © 2007-2009, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
  *
- * Hook which add additional info about uploaded picture to dataware database
  */
 if ( ! defined( 'MEDIAWIKI' ) ) {
     die();
@@ -68,7 +67,9 @@ class UploadInfo {
 
 
 	/**
-	 * generic function when is not used as hook
+	 * generic function when upload is not covered by hook.
+	 *
+	 * Whan called check before if $wgEnableUploadInfoExt is set to true
 	 *
 	 * @access public
 	 * @static
@@ -77,11 +78,11 @@ class UploadInfo {
 	 * @param string $fullPath -- full path to image with root directory
 	 * @param string $relPath  -- relative path to image without root directory
 	 * @param string $oldPath  -- path to old version if file has new version
-	 * @param string $action   -- action, default 'u' as upload,
+	 * @param string $action   -- action, default 'u' as upload, other possible
+	 *    valuses are: m - move, r - remove
 	 */
 	static public function log( $title, $fullPath, $relPath = "", $oldPath = "", $action = "u" ) {
 		global $wgWikiaDatacenter, $wgExternalDatawareDB, $wgCityId, $wgTitle;
-
 
 		wfProfileIn( __METHOD__ );
 

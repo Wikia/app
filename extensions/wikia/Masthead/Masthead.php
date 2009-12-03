@@ -359,7 +359,7 @@ class Masthead {
 		$result = false;
 		$sImageFull = $this->getFullPath();
 
-		if (file_exists($sImageFull)) {
+		if( file_exists( $sImageFull ) ) {
 			if (!unlink($sImageFull)) {
 				wfDebug( __METHOD__.": cannot remove avatar's files {$sImageFull}\n" );
 				$result = false;
@@ -374,6 +374,16 @@ class Masthead {
 				$oLogPage->addEntry( 'avatar_rem', $mUserPage, '', array($sUserText));
 				/* */
 				$result = true;
+
+				/**
+				 * notice image replication system
+				 */
+				global $wgEnableUploadInfoExt;
+				if( $wgEnableUploadInfoExt ) {
+					UploadInfo::log( $mUserPage, $sImageFull, $this->getLocalPath(), "r" );
+				}
+				$errorNo = UPLOAD_ERR_OK;
+
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -510,7 +520,7 @@ class Masthead {
 				return UPLOAD_ERR_CANT_WRITE;
 			}
 
-			if ( !imagepng($oImg, $sFilePath) ) {
+			if( !imagepng( $oImg, $sFilePath ) ) {
 				Wikia::log( __METHOD__, 'save', sprintf('Cannot save png Avatar: %s', $sFilePath ));
 				$errorNo = UPLOAD_ERR_CANT_WRITE;
 			}
@@ -523,6 +533,14 @@ class Masthead {
 				$oLogPage = new LogPage( AVATAR_LOG_NAME );
 				$oLogPage->addEntry( 'avatar_chn', $mUserPage, '');
 				unlink($sTmpFile);
+
+				/**
+				 * notice image replication system
+				 */
+				global $wgEnableUploadInfoExt;
+				if( $wgEnableUploadInfoExt ) {
+					UploadInfo::log( $mUserPage, $sFilePath, $this->getLocalPath() );
+				}
 				$errorNo = UPLOAD_ERR_OK;
 			}
 		}
