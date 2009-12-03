@@ -177,18 +177,26 @@ class WikiaAvatar {
     static public function getAvatarFileFull($mUserID, $size)
     {
         global $wgAvatarUploadPath;
-        return $wgAvatarUploadPath."/".self::getAvatarFile($mUserID, $size);
+        return $wgAvatarUploadPath."/".self::getAvatarFile( $mUserID, $size);
     }
 
-	public function removeAvatarFile($mUserID, $size)
-	{
-		$sImageFull = self::getAvatarFileFull($mUserID, $size);
-		if (file_exists($sImageFull))
-		{
-			if (!unlink($sImageFull))
-			{
+	/**
+	 * remove avatar file from filesystem
+	 */
+	public function removeAvatarFile($mUserID, $size) {
+		$sImageFull = self::getAvatarFileFull( $mUserID, $size);
+		if( file_exists( $sImageFull ) ) {
+			if( !unlink( $sImageFull ) ) {
             	wfDebug( __METHOD__.": cannot remove avatar's files {$sImageFull}\n" );
 				return false;
+			}
+			/**
+			 * notice image replication system
+			 */
+			global $wgEnableUploadInfoExt;
+			if( $wgEnableUploadInfoExt ) {
+				$user = User::newFromId( $mUserID );
+				UploadInfo::log( $user->getTalkPage(), $sImageFull, "", "r" );
 			}
 			return true;
 		}
@@ -246,126 +254,126 @@ class WikiaAvatar {
 };
 
 ################################# Helpers  ###################################
-function wfWAvatarUpload($request, $user)
-{
-    global $wgTmpDirectory, $wgLogTypes, $wgDebugLogGroups;
+function wfWAvatarUpload( $request, $user ) {
+	global $wgTmpDirectory, $wgLogTypes, $wgDebugLogGroups;
 
-    #--- $wgDebugLogGroups["avatar"] = "/tmp/debug-avatar.log";
-
-    wfProfileIn(__METHOD__);
+	wfProfileIn(__METHOD__);
 
 	if (!in_array('avatar', $wgLogTypes)) {
 		$wgLogTypes[] = 'avatar';
 	}
 
-    if (!isset($wgTmpDirectory) || empty($wgTmpDirectory)) {
-    	$wgTmpDirectory = "/tmp";
-    }
-    wfDebugLog( "avatar", "Temp directory set to {$wgTmpDirectory}" );
+	if (!isset($wgTmpDirectory) || empty($wgTmpDirectory)) {
+		$wgTmpDirectory = "/tmp";
+	}
+	wfDebugLog( "avatar", "Temp directory set to {$wgTmpDirectory}" );
 
-    $iErrNo = UPLOAD_ERR_OK;
-    $iFileSize = $request->getFileSize("wpUpload");
+	$iErrNo = UPLOAD_ERR_OK;
+	$iFileSize = $request->getFileSize("wpUpload");
 
-    if (empty($iFileSize)) {
-        return UPLOAD_ERR_NO_FILE; #--- file size = 0;
-    }
+	if (empty($iFileSize)) {
+		return UPLOAD_ERR_NO_FILE; #--- file size = 0;
+	}
 
-    $sTmpFile = $wgTmpDirectory."/".substr(sha1(uniqid($user->getID())), 0, 16);
-    $oTmp = $request->getFileTempname("wpUpload");
-    wfDebugLog( "avatar", "Temp file set to {$sTmpFile}" );
-    wfDebugLog( "avatar", "Path to uploaded file is {$oTmp}" );
+	$sTmpFile = $wgTmpDirectory."/".substr(sha1(uniqid($user->getID())), 0, 16);
+	$oTmp = $request->getFileTempname("wpUpload");
+	wfDebugLog( "avatar", "Temp file set to {$sTmpFile}" );
+	wfDebugLog( "avatar", "Path to uploaded file is {$oTmp}" );
 
-    if (move_uploaded_file($oTmp, $sTmpFile)) {
-        $aImgInfo = getimagesize($sTmpFile);
+	if (move_uploaded_file($oTmp, $sTmpFile)) {
+		$aImgInfo = getimagesize($sTmpFile);
 
-        #--- check if mimetype is allowed
-        #if (!in_array($aImgInfo["mime"],
-        #    array("image/jpeg", "image/pjpeg", "image/gif", "image/png", "image/x-png", "image/jpg", "image/bmp"))) {
-        #    wfProfileOut(__METHOD__);
-        #    return UPLOAD_ERR_EXTENSION;
-        #}
-
-        switch ($aImgInfo["mime"]) {
-            case "image/gif":
-                $oImgOrig = @imagecreatefromgif($sTmpFile);
-                break;
-            case "image/jpeg":
-                $oImgOrig = @imagecreatefromjpeg($sTmpFile);
-                break;
-            case "image/bmp":
-                $oImgOrig = @imagecreatefrombmp($sTmpFile);
-                break;
-            case "image/png":
-                $oImgOrig = @imagecreatefrompng($sTmpFile);
-                break;
-        }
-        $aOrigSize = array("width" => $aImgInfo[0], "height" => $aImgInfo[1]);
+		switch ($aImgInfo["mime"]) {
+			case "image/gif":
+				$oImgOrig = @imagecreatefromgif($sTmpFile);
+				break;
+			case "image/jpeg":
+				$oImgOrig = @imagecreatefromjpeg($sTmpFile);
+				break;
+			case "image/bmp":
+				$oImgOrig = @imagecreatefrombmp($sTmpFile);
+				break;
+			case "image/png":
+				$oImgOrig = @imagecreatefrompng($sTmpFile);
+				break;
+		}
+		$aOrigSize = array("width" => $aImgInfo[0], "height" => $aImgInfo[1]);
 
 
-        #--- generate thumbnails (always png format)
-        $addedAvatars = array();
-        foreach (array("l","m","s") as $size) {
-            $sThumb = WikiaAvatar::getAvatarFileFull($user->getID(), $size);
-            $aThumbSize = WikiaAvatar::getAvatarSize($size);
+		#--- generate thumbnails (always png format)
+		$addedAvatars = array();
+		foreach (array("l","m","s") as $size) {
+			$sThumb = WikiaAvatar::getAvatarFileFull($user->getID(), $size);
+			$aThumbSize = WikiaAvatar::getAvatarSize($size);
 
-            #--- calculate thumbnail size
-            if ( $aOrigSize["width"] > $aOrigSize["height"] ) {
-                $iThumbW = $aThumbSize["width"];
-            	$iThumbH = $aOrigSize["height"] * ( $aThumbSize["height"] / $aOrigSize["width"] );
-            }
-            if ( $aOrigSize["width"] < $aOrigSize["height"] ) {
-                $iThumbW = $aOrigSize["width"] * ( $aThumbSize["width"] / $aOrigSize["height"] );
-            	$iThumbH = $aThumbSize["height"];
-            }
-            if ( $aOrigSize["width"] == $aOrigSize["height"] ) {
-            	$iThumbW = $aThumbSize["width"];
-            	$iThumbH = $aThumbSize["height"];
-            }
-
-            #--- empty image with thumb size on white background
-            $oImg = @imagecreatetruecolor($aThumbSize["width"], $aThumbSize["height"]);
-            $white = imagecolorallocate($oImg, 255, 255, 255);
-            imagefill($oImg, 0, 0, $white);
-
-            $tImg = $oImgOrig;
-            imagecopyresampled($oImg, $tImg,
-                floor ( ( $aThumbSize["width"] - $iThumbW ) / 2 ) /*dx*/,
-                floor ( ( $aThumbSize["height"] - $iThumbH ) / 2 ) /*dy*/,
-                0 /*sx*/, 0 /*sy*/,
-                $iThumbW /*dw*/, $iThumbH /*dh*/,
-                $aOrigSize["width"]/*sw*/, $aOrigSize["height"]/*sh*/
-            );
-
-            #--- write to file
-            if (!imagepng($oImg, $sThumb)) {
-                wfDebugLog( "avatar", sprintf("%s: cannot save png Avatar: %s", __METHOD__, $sThumb ));
-                $iErrNo = UPLOAD_ERR_CANT_WRITE;
-            } else {
-            	$addedAvatars[] = $size;
+			#--- calculate thumbnail size
+			if ( $aOrigSize["width"] > $aOrigSize["height"] ) {
+				$iThumbW = $aThumbSize["width"];
+				$iThumbH = $aOrigSize["height"] * ( $aThumbSize["height"] / $aOrigSize["width"] );
 			}
-            imagedestroy($oImg);
-        }
+			if ( $aOrigSize["width"] < $aOrigSize["height"] ) {
+				$iThumbW = $aOrigSize["width"] * ( $aThumbSize["width"] / $aOrigSize["height"] );
+				$iThumbH = $aThumbSize["height"];
+			}
+			if ( $aOrigSize["width"] == $aOrigSize["height"] ) {
+				$iThumbW = $aThumbSize["width"];
+				$iThumbH = $aThumbSize["height"];
+			}
 
-        if (empty($iErrNo)) {
+			#--- empty image with thumb size on white background
+			$oImg = @imagecreatetruecolor($aThumbSize["width"], $aThumbSize["height"]);
+			$white = imagecolorallocate($oImg, 255, 255, 255);
+			imagefill($oImg, 0, 0, $white);
+
+			$tImg = $oImgOrig;
+			imagecopyresampled($oImg, $tImg,
+				floor ( ( $aThumbSize["width"] - $iThumbW ) / 2 ) /*dx*/,
+				floor ( ( $aThumbSize["height"] - $iThumbH ) / 2 ) /*dy*/,
+				0 /*sx*/, 0 /*sy*/,
+				$iThumbW /*dw*/, $iThumbH /*dh*/,
+				$aOrigSize["width"]/*sw*/, $aOrigSize["height"]/*sh*/
+			);
+
+			#--- write to file
+			if (!imagepng($oImg, $sThumb ) ) {
+				wfDebugLog( "avatar", sprintf("%s: cannot save png Avatar: %s", __METHOD__, $sThumb ));
+				$iErrNo = UPLOAD_ERR_CANT_WRITE;
+			} else {
+				$addedAvatars[] = $size;
+				/**
+				 * notice image replication system
+				 */
+				global $wgEnableUploadInfoExt, $wgUser;
+				if( $wgEnableUploadInfoExt ) {
+					$user = User::newFromId( $mUserID );
+					UploadInfo::log( $wgUser->getTalkPage(), $sThumb );
+				}
+				return true;
+			}
+			imagedestroy($oImg);
+		}
+
+		if (empty($iErrNo)) {
 			$userText = $user->getName();
 			$userProfilePage = Title::newFromText( $user->getName(), 207 );
 			$logComment = "Add/change avatars (sizes: '".implode("','", $addedAvatars)."') by {$userText}";
 			$logPage = new LogPage( 'avatar' );
 			$logPage->addEntry( 'avatar', $userProfilePage, $logComment);
 		}
-        unlink($sTmpFile);
-    }
-    else {
-        $iErrNo = UPLOAD_ERR_CANT_WRITE;
-        wfDebugLog( "avatar", sprintf("%s: cannot move uploaded file from %s to", __METHOD__, $oTmp, $sTmpFile ));
-    }
-    wfProfileOut(__METHOD__);
-    return $iErrNo;
+		unlink($sTmpFile);
+	}
+	else {
+		$iErrNo = UPLOAD_ERR_CANT_WRITE;
+		wfDebugLog( "avatar", sprintf("%s: cannot move uploaded file from %s to", __METHOD__, $oTmp, $sTmpFile ));
+	}
+	wfProfileOut(__METHOD__);
+	return $iErrNo;
 }
-############################## Ajax methods ##################################
 
-function axWAvatarUpload()
-{
+/**
+ * Ajax method for uploading avatars
+ */
+function axWAvatarUpload() {
     global $wgRequest, $wgUser;
 
     $iStatus = wfWAvatarUpload($wgRequest, $wgUser);
@@ -384,5 +392,3 @@ function axWAvatarUpload()
 }
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "axWAvatarUpload";
-
-?>
