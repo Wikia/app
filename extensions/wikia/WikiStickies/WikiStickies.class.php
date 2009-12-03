@@ -41,7 +41,12 @@ class WikiStickies extends SpecialPage {
 
 	// tool generation wrapper (basically template call)
 	function generateTools() {
-		global $wgOut;
+		global $wgOut, $wgUser;
+
+		// same as for Monaco bar, I guess
+		if( !$wgUser->isAllowed( 'editinterface' ) ) {
+			return false;
+		}
 
 		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
 		$tpl->set_vars( array());
