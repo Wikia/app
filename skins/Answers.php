@@ -1020,35 +1020,7 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 
 		foreach($contributors as $contributor) {
 			$ret .= Xml::openElement('li');
-
-			// get avatar
-			$avatarImg = Answer::getUserAvatar($contributor['user_id']);
-			$ret .= $avatarImg;
-
-			// render user info
-			$ret .= Xml::openElement('div', array('class' => 'userInfo'));
-
-			if ($contributor['user_name'] == 'helper') {
-				// anonymous users
-				$ret .= Xml::element('span', array('class' => 'userPageLink'), wfMsg('unregistered'));
-				$ret .= Xml::element('span', array('class' => 'anonEditPoints'), wfMsgExt('anonymous_edit_points', array('parsemag'), array($contributor['edits'])));
-			} else {
-				// link to user page
-				$userPage = Title::newFromText($contributor['user_name'], NS_USER);
-				$userPageLink = !empty($userPage) ? $userPage->getLocalUrl() : '';
-
-				$ret .= Xml::element('a', array('href' => $userPageLink, 'class' => 'userPageLink'), $contributor['user_name']);
-
-//				// user points
-				$ret .= Xml::openElement('div', array('class' => 'userEditPoints'));
-				$ret .= Xml::element('span', array('id' => "contributors-user-points-{$contributor['user_id']}", 'class' => 'userPoints', 'timestamp' => wfTimestampNow()), $contributor['edits']);
-				$ret .= ' '; // space for graceful degradation
-				$ret .= wfMsgExt('edit_points', array('parsemag'), array($contributor['edits']));
-				$ret .= Xml::closeElement('div'); // END .userEditPoints
-			}
-
-			$ret .= Xml::closeElement('div'); // END .userInfo
-
+			$ret .= Answer::getUserBadge($contributor);
 			$ret .= Xml::closeElement('li');
 		}
 

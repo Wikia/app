@@ -135,7 +135,7 @@ class FlexibleCategoryViewer extends CategoryViewer{
 		global $wgOut, $wgCategoryMagicGallery, $wgCategoryPagingLimit;
 		wfProfileIn( __METHOD__ );
 
-		$wgOut->getRedirect(); // wgOut is a StubObject so it isn't initialized until some method is called, therefore we call a method here so that mNoGallery can be used on the next line
+		$wgOut->getRedirect(); // NOTE: wgOut is a StubObject so it isn't initialized until some method is called, therefore we call a method here so that mNoGallery can be used on the next line
 		$this->showGallery = $wgCategoryMagicGallery && !$wgOut->mNoGallery;
 
 		$this->clearCategoryState();
