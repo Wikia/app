@@ -43,6 +43,7 @@ $messages['en'] = array(
 	'myhome-feed-section-edit-details' => 'Edited the section',
 	'myhome-feed-new-blog-post-details' => 'New blog',
 	'myhome-feed-new-blog-comment-details' => 'Comment',
+	'myhome-feed-new-article-comment-details' => 'Comment',
 	'myhome-feed-move-details' => 'Renamed',
 	'myhome-feed-redirect-details' => 'Redirect',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Added photo|Added photos}}',

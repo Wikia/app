@@ -507,6 +507,10 @@ class FeedRenderer {
 			else if (defined('NS_BLOG_ARTICLE_TALK') && $row['ns'] == NS_BLOG_ARTICLE_TALK) {
 				$html .= self::formatDetailsRow('new-blog-comment', self::formatIntro($row['intro']));
 			}
+			// article comment
+			else if (!empty($row['articleComment'])) {
+				$html .= self::formatDetailsRow('new-article-comment', self::formatIntro($row['intro']));
+			}
 			// another new content
 			else {
 				$html .= self::formatDetailsRow('new-page', self::formatIntro($row['intro']));
