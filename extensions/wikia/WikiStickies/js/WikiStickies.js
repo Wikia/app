@@ -60,8 +60,22 @@ WikiStickies.showMore = function (e) {
     if (e) {
         e.preventDefault();
         $(e.currentTarget.previousSibling).show();
-        $(e.currentTarget).hide();
+	$(e.currentTarget).unbind( 'click', WikiStickies.showMore );
+	$(e.currentTarget).click( WikiStickies.showLess );
+	//todo function to get name
+        $(e.currentTarget).html( 'hide' );
     }
+}
+
+WikiStickies.showLess = function( e ) {
+	if( e ) {
+		e.preventDefault();
+        	$(e.currentTarget.previousSibling).hide();
+		$(e.currentTarget).unbind( 'click', WikiStickies.showLess );
+		$(e.currentTarget).click( WikiStickies.showMore );
+		// todo function to get message
+	        $(e.currentTarget).html( 'what was the Jquery function to show the message again?' );	
+	}
 }
 
 $(document).ready(function() {
