@@ -380,7 +380,7 @@ class Masthead {
 				 */
 				global $wgEnableUploadInfoExt;
 				if( $wgEnableUploadInfoExt ) {
-					UploadInfo::log( $mUserPage, $sImageFull, $this->getLocalPath(), "r" );
+					UploadInfo::log( $mUserPage, $sImageFull, $this->getLocalPath(), "", "r" );
 				}
 				$errorNo = UPLOAD_ERR_OK;
 
