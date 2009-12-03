@@ -890,11 +890,11 @@ div.category br {
 	margin-top: 20px;
 }
 
-#contributors {
+#contributors, ul.contributors {
 	margin: 5px 0;
 }
 
-#contributors li {
+#contributors li, ul.contributors li {
 /*	height: 56px;*/
 	float: left;
 	margin: 5px;
