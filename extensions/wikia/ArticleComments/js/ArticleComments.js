@@ -23,7 +23,7 @@ ArticleComments.save = function(e) {
 	if (ArticleComments.processing) return;
 	if ($('#article-comm-form-' + e.data.id)) {
 		e.preventDefault();
-		WET.byStr('articleAction/postComment');
+		WET.byStr('article/editSave');
 		var textfield = $('#article-comm-textfield-' + e.data.id).attr('readonly', 'readonly');
 		$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axSave&article=' + wgArticleId + "&id=" + e.data.id, {wpArticleComment: textfield.val()}, function(json) {
 			$().log(json);
@@ -32,6 +32,7 @@ ArticleComments.save = function(e) {
 					//replace
 					$('#comm-' + json.commentId).html(json.text)
 					$('#' + json.commentId).bind('click', ArticleComments.edit);
+					ArticleComments.bind();
 				}
 				//clear error box
 				$('#article-comm-bottom-info').html('');
@@ -54,6 +55,7 @@ ArticleComments.save = function(e) {
 ArticleComments.edit = function(e) {
 	$().log('begin: edit');
 	e.preventDefault();
+	WET.byStr('article/edit');
 	if (ArticleComments.processing) return;
 	$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axEdit&id=' + e.target.id + '&article=' + wgArticleId, function(json) {
 		if (!json.error) {
@@ -72,6 +74,7 @@ ArticleComments.edit = function(e) {
 ArticleComments.postComment = function(e) {
 	$().log('begin: postComment');
 	e.preventDefault();
+	WET.byStr('article/post');
 	if (ArticleComments.processing) return;
 	$(e.data.source).attr('readonly', 'readonly');
 	//TODO: change to postJSON (all parameters as {}) to omit limit for comment
@@ -83,13 +86,14 @@ ArticleComments.postComment = function(e) {
 			$('#article-comments-ul').replaceWith(json.text);
 			//pagination
 			$('#article-comments-pagination').html(json.pagination);
+			//readd events
 			$('.article-comments-pagination-link').bind('click', ArticleComments.setPage);
-			//ArticleComments.add(json);
+			ArticleComments.bind();
 			//clear error box
-			//$('#article-comm-bottom-info').html('');
+			$('#article-comm-bottom-info').html('');
 		} else {
 			//fill error box
-			//$('#article-comm-bottom-info').html(json.msg);	//msg not filled on backend
+			$('#article-comm-bottom-info').html(json.msg);
 		}
 		$(e.data.source).removeAttr('readonly');
 		$(e.data.source).val('');
@@ -106,6 +110,7 @@ ArticleComments.setPage = function(e) {
 	$().log('begin: setPage');
 	e.preventDefault();
 	var page = $(this).attr('page');
+	WET.byStr('article/pageSwitch/' + page);
 	$('#article-comments-pagination-link-' + page).blur();
 
 	$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentList::axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
@@ -115,9 +120,24 @@ ArticleComments.setPage = function(e) {
 			$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active');
 			$('#article-comments-ul').replaceWith(json.text);
 			$('.article-comm-edit').bind('click', ArticleComments.edit);
+			ArticleComments.bind();
 		}
+		ArticleComments.processing = false;
 	});
 	$().log('end: setPage');
+}
+
+ArticleComments.delete = function() {
+	WET.byStr('article/delete');
+}
+
+ArticleComments.history = function() {
+	WET.byStr('article/history');
+}
+
+ArticleComments.bind = function() {
+	$('.article-comm-delete').bind('click', ArticleComments.delete);
+	$('.article-comm-history').bind('click', ArticleComments.history);
 }
 
 ArticleComments.init = function() {
