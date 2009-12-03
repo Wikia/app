@@ -212,7 +212,10 @@ class WikiStickies extends SpecialPage {
 	// run on a hook adding sidebar content for Special:MyHome
 	static function addToMyHome( $html ) {
 		wfLoadExtensionMessages( 'WikiStickies' );
-		global $wgOut;
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesMyHome.css?{$wgStyleVersion}");
+
 		$html = Xml::openElement( 'div', array( 'id' => 'wikisticky_browser' ) ).
 			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).
                         Xml::openElement( 'strong' ).
