@@ -250,6 +250,7 @@ class WikiFactoryPage extends SpecialPage {
 			"info"        => $info,
 			"title"       => $this->mTitle,
 			"groups"      => WikiFactory::getGroups(),
+			"cluster"     => WikiFactory::getVarValueByName( "wgDBcluster", $this->mWiki->city_id ),
 			"domains"     => WikiFactory::getDomains( $this->mWiki->city_id ),
 			"statuses" 	  => $this->mStatuses,
 			"variables"   => WikiFactory::getVariables(),

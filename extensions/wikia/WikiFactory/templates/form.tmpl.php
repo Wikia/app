@@ -355,6 +355,7 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 			</li>
             <li>
 				Wiki uses database <strong><?php echo $wiki->city_dbname ?></strong>
+				on cluster <strong><?php echo empty( $cluster ) ? "c1 (DEFAULT)" : $cluster ?></strong>
 			</li>
             <li>
 				Wiki language is <strong><?php echo $wiki->city_lang ?></strong>
