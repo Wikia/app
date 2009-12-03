@@ -12,12 +12,15 @@ class ApiQueryWantedpages extends ApiQueryBase {
 	}
 
 	public function execute() {
+		global $wgContentNamespaces;
+
 		$db = $this->getDB();
 		$params = $this->extractRequestParams();
 
 		$this->addTables( 'querycache' );
 		$this->addFields( array( 'qc_title', 'qc_namespace' ) );
 		$this->addWhereFld( 'qc_type', 'Wantedpages' );
+		$this->addWhere( 'qc_namespace IN (' . implode( ',', $wgContentNamespaces ) . ')' );
 		$this->addOption( 'ORDER BY', 'qc_value DESC' );
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );		
 
