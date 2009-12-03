@@ -4,12 +4,12 @@ $messages = array();
 
 $messages['en'] = array(
 	'wikistickies' => 'WikiStickies',
-	'wikistickies-newpages-hd' => 'Can you add to these short pages?',
+	'wikistickies-newpages-hd' => 'Can you add to these new pages?',
 	'wikistickies-wantedimages-hd' => 'Can you add images to these pages?',
 	'wikistickies-wantedpages-hd' => 'Can you start these pages?',
 	'wikistickies-newpages-st' => 'Can you add to the page about',
-	'wikistickies-wantedpages-st' => 'Can you add an image to',
-	'wikistickies-wantedimages-st' => 'Can you start a page about',
+	'wikistickies-wantedpages-st' => 'Can you start a page about',
+	'wikistickies-wantedimages-st' => 'Can you add an image to',
 	'wikistickies-save-changes' => 'Save Changes',
 	'wikistickies-more' => 'see more',
 	'wikistickies-admins-hd' => 'Admins only',

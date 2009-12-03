@@ -1,324 +1,341 @@
+.wikistickiesfeed {
+    clear: left;
+    margin: 0 0 3em 0;
+}
+.wikistickiesfeed h2 {
+    border-bottom: none;
+     font-size: 135%;
+    font-weight: bold;
+    margin: 0 0 6px 0;
+    padding: 0 0 0 20px;
+}
+
+.wikistickiesfeed .sprite {
+    background: url(//images.wikia.com/common/skins/monaco/images/sprite.png);
+    height: 16px;
+    position: absolute;
+    width: 560px;
+}
+
+/* TODO: There should be a single site-wide "sprite stylesheet." */
+#wikistickies-wantedimages .sprite {
+    clip: rect(0px 432px 16px 416px);
+    left: -406px;
+}
+#wikistickies-newpages .sprite {
+    clip: rect(0px 16px 16px 0px);
+}
+#wikistickies-wantedpages .sprite {
+    clip: rect(0px 528px 16px 512px);
+    left: -502px;
+}
 
 #wikisticky_browser {
-	float: left;
-	background: url(../images/sticky.png) no-repeat;
-	height: 222px;
-	width: 249px;	
-}
-#wikisticky_content {
-	height: 213px;
-	overflow: hidden;
-	position: relative;
-	width: 240px;	
-}
-#wikisticky_content strong {
-	display: block;
-	font-size: 11pt;
-	height: 33px;
-	line-height: 33px;
-	padding-left: 5px;
-	text-align: left;	
-}
-#wikisticky_content p {
-	display: block;
-	font-family: "Comic Sans MS", "Arial", sans-serif;
-	margin: 0;
-	padding: 0 20px;
-	position: relative;
-	text-align: center;
-}
-#wikisticky_next {
-	bottom: 0;
-	color: #999;
-	padding: 10px 0;
-	position: absolute;
-	right: 50px;	
-}
-#wikisticky_curl {
-	bottom: -8px;
-	cursor: pointer;
-	right: -8px;
-	position: absolute;
-	width: 80px;
+    background: url(../images/sticky.png) no-repeat;
+    float: left;
+    height: 159px;
+    margin-bottom: 3em;
+    padding-top: 28px;
+    width: 209px;
 }
 
-#wikistickies_save_all {
-	margin-top: 12px;
+#wikisticky_content {
+    font: 20px/1.25em "Comic Sans MS", Arial, sans-serif;
+    margin: 0 auto;
+    text-align: center;
+    width: 175px;
+}
+
+.wikistickiesfeed ul, .wikistickiesfeed .MoreLink {
+    margin-left: 240px;
+}
+
+.wikistickiesfeed ul {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    position: relative;
+}
+.wikistickiesfeed ul li {
+    width: 48%;
+    line-height: 1.75;
+    margin-bottom: 0;
+    list-style-position: inside;
+}
+.wikistickiesfeed .secondcolumn {
+    margin-left: 50%;
+}
+.wikistickiesfeed .secondcolumn.reset {
+    margin-top: -8.75em;
+}
+
+.wikistickiesfeed .submerged {
+    display: none;
+    margin-top: 0;
+}
+
+.wikistickiesfeed .MoreLink {
+    display: block;
+    border: 1px solid #CCC;
+    border-width: 1px 0;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 5px 0;
 }
 
 .wikistickiestools {
-	border:1px solid #AAAAAA;
+    border:1px solid #AAAAAA;
 }
 
 .wikistickiesfeed, .wikiheadertools {
-	text-align: left;
-	margin-bottom: 15px;	
+    text-align: left;
+    margin-bottom: 15px;
 }
 
-.wikistickiesheader {
- 	font-size: 135%;
-	font-weight: bold;
-	margin-bottom: 6px;
-}
-
-.wikistickieslistwrapper {
-	margin-left: 240px;
-}
-
-.wikistickiesul li {
-	width: 48%;
-	float: left;	
-	font-size: 135%;
-	margin-bottom: 4px;
-}
 
 form {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 ul, li {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 .reflow {
-	border-right: 1px solid transparent;
+    border-right: 1px solid transparent;
 }
 .accent {
-	border-width: 1px;
-	border-style: solid;
+    border-width: 1px;
+    border-style: solid;
 }
 .step {
-	clear: both;
-	position: relative;
-	z-index: 200;
+    clear: both;
+    position: relative;
+    z-index: 200;
 }
 
 .step .wrapper {
-	text-align: left;
-	margin-top: 10px;
+    text-align: left;
+    margin-top: 10px;
 }
 
 .headline {
-	font-size: 18pt;
-	margin: 0;
-	padding: 10px 15px;
-	-moz-border-radius-topleft: 7px;
-	-moz-border-radius-topright: 7px;
-	-webkit-border-top-left-radius: 7px;
-	-webkit-border-top-right-radius: 7px;
+    font-size: 18pt;
+    margin: 0;
+    padding: 10px 15px;
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
 }
 .wrapper {
-	padding: 20px 40px;	
-	-moz-border-radius-bottomleft: 7px;
-	-moz-border-radius-bottomright: 7px;
-	-webkit-border-bottom-left-radius: 7px;
-	-webkit-border-bottom-right-radius: 7px;
-}
-
-
-.submerged {
-	display: none;
+    padding: 20px 40px;
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+    -webkit-border-bottom-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
 }
 
 #header {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	height: 120px;
-	left: 0;
-	padding: 15px 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    height: 120px;
+    left: 0;
+    padding: 15px 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 #logo {
-	position: absolute;
-	top: 10px;
-	left: 55px;
+    position: absolute;
+    top: 10px;
+    left: 55px;
 }
 #progress {
-	float: right;
-	margin-right: 55px;
+    float: right;
+    margin-right: 55px;
 }
 #progress li {
-	float: left;
-	font-size: 20pt;
-	font-weight: bold;
-	height: 28px;
-	line-height: 32px;
-	margin-left: 5px;
-	text-align: center;
-	width: 28px;
-	-moz-border-radius: 7px;
-	-webkit-border-radius: 7px;
+    float: left;
+    font-size: 20pt;
+    font-weight: bold;
+    height: 28px;
+    line-height: 32px;
+    margin-left: 5px;
+    text-align: center;
+    width: 28px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
 }
 
 .nav {
-	padding: 15px;
-	text-align: right;
+    padding: 15px;
+    text-align: right;
 }
 .nav_reverse {
-	clear: both;
-	float: left;
+    clear: both;
+    float: left;
 }
+
 /* Button styling research: http://www.filamentgroup.com/lab/update_styling_the_button_element_with_css_sliding_doors_now_with_image_spr/ */
 button {
-	background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat right -57px; 
-	position: relative;
-	border: 0; 
-	padding: 0 15px 0 0;
-	cursor: pointer;
-	overflow: visible; /* removes extra side padding in IE */
-	margin-left: 5px;
+    background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat right -57px;
+    position: relative;
+    border: 0;
+    padding: 0 15px 0 0;
+    cursor: pointer;
+    overflow: visible; /* removes extra side padding in IE */
+    margin-left: 5px;
 }
 button::-moz-focus-inner {
-	border: none;  /* overrides extra padding in Firefox */
+    border: none;  /* overrides extra padding in Firefox */
 }
-button span { 
-	background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat left top; 
-	color: #FFF;
-	font-family: "Arial Narrow", sans-serif;
-	font-size: 14pt;
-	line-height: 36px;
-	height: 37px;
-	padding-left: 40px;
-	position: relative;
-	display: block; 
-	white-space: nowrap;
+button span {
+    background: transparent url(/extensions/wikia/NewWikiBuilder/button_sprite.png) no-repeat left top;
+    color: #FFF;
+    font-family: "Arial Narrow", sans-serif;
+    font-size: 14pt;
+    line-height: 36px;
+    height: 37px;
+    padding-left: 40px;
+    position: relative;
+    display: block;
+    white-space: nowrap;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-	/* Safari and Google Chrome only - fix margins */
-	button span {
-		margin-top: -1px;
-	}
+    /* Safari and Google Chrome only - fix margins */
+    button span {
+        margin-top: -1px;
+    }
 }
 
 button.secondary {
-	background-position: right -171px;
+    background-position: right -171px;
 }
 button.secondary span {
-	background-position: 0px -114px;
-	color: #000;
+    background-position: 0px -114px;
+    color: #000;
 }
 
 .note {
-	font-size: 10pt;
-	padding: 10px;
+    font-size: 10pt;
+    padding: 10px;
 }
 
 /*** Step 2: Logo ***/
 #logo_current {
-	border: ridge black 3px;
-	height: 155px;
-	width: 216px;
-	background-position:center center;
-	background-repeat:no-repeat;
+    border: ridge black 3px;
+    height: 155px;
+    width: 216px;
+    background-position:center center;
+    background-repeat:no-repeat;
 }
 #step2 .note {
-	float: right;
-	width: 200px;
+    float: right;
+    width: 200px;
 }
 #sample_logo {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 #step2 label {
-	display: block;
-	font-weight: bold;
-	float: left;
-	width: 150px;
+    display: block;
+    font-weight: bold;
+    float: left;
+    width: 150px;
 }
 #logo_preview_wrapper {
-	display: none;
-	margin-top: 20px;
+    display: none;
+    margin-top: 20px;
 }
 
 #logo_preview {
-	background-repeat: no-repeat;
-	float: left;
-	height: 155px;
-	width: 216px;
+    background-repeat: no-repeat;
+    float: left;
+    height: 155px;
+    width: 216px;
 }
 
 /*** Step 3: Theme ***/
 #theme_scroller {
-	height: 270px;
-	overflow: auto;
-	-moz-border-radius-topleft: 7px;
-	-moz-border-radius-topright: 7px;
-	-webkit-border-top-left-radius: 7px;
-	-webkit-border-top-right-radius: 7px;
+    height: 270px;
+    overflow: auto;
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
 }
 #theme_scroller td {
-	font-weight: bold;
-	padding: 10px;
-	text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
 }
 #theme_scroller img {
-	border: 1px solid #AAA;
-	cursor: pointer;
-	display: block;
-	margin-bottom: 5px;
+    border: 1px solid #AAA;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 5px;
 }
 
 /*** Step 5: Done ***/
 #wiki_army_container {
-	background: url(wiki_army_floor.png) bottom left repeat-x;
-	height: 184px;
-	margin-top: 50px;
-	overflow: hidden;
-	position: relative;
+    background: url(wiki_army_floor.png) bottom left repeat-x;
+    height: 184px;
+    margin-top: 50px;
+    overflow: hidden;
+    position: relative;
 }
 #wiki_army {
-	left: 50%;
-	margin-left: -468px;
-	position: absolute;
+    left: 50%;
+    margin-left: -468px;
+    position: absolute;
 }
 #wiki_army_logo {
-	bottom: 0;
-	left: 50%;
-	margin-left: -115px;
-	position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -115px;
+    position: absolute;
 }
 
 /*** Styles for status bar http://www.west-wind.com/WebLog/posts/388213.aspx ***/
 
-.statusbar { 
-	background: black;
-	border: solid 1px lightgray;
-	bottom: 5px;
-	color: white;    
-	filter: alpha(opacity="70");
-	font-family:Lucida Grande,Lucida Sans,Arial,sans-serif;
-	height: 20px;    
-	left: 0;
-	opacity: .70;    
-	overflow: hidden;
-	overflow-y: auto; 
-	padding: 5px;
-	position: fixed;
-	right: 0;
-	z-index: 200;
+.statusbar {
+    background: black;
+    border: solid 1px lightgray;
+    bottom: 5px;
+    color: white;
+    filter: alpha(opacity="70");
+    font-family:Lucida Grande,Lucida Sans,Arial,sans-serif;
+    height: 20px;
+    left: 0;
+    opacity: .70;
+    overflow: hidden;
+    overflow-y: auto;
+    padding: 5px;
+    position: fixed;
+    right: 0;
+    z-index: 200;
 }
 
 .statusbarhighlight {
-	background-color: #F0E68C;
-	border: solid 1px silver;
-	color: maroon;
-	font-weight: bold;
+    background-color: #F0E68C;
+    border: solid 1px silver;
+    color: maroon;
+    font-weight: bold;
 }
 
 .statusbarerror {
-	background-color: red;
-	color: white;    
+    background-color: red;
+    color: white;
 }
 
 .clearfix:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 .clearfix {
-	zoom: 1;
+    zoom: 1;
 }

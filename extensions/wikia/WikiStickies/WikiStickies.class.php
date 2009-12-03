@@ -1,41 +1,45 @@
 <?php
-
+/**
+ * WikiStickies
+ *
+ * @see https://contractor.wikia-inc.com/wiki/WikiStickies
+ */
 class WikiStickies extends SpecialPage {
 
 	const STICKY_FEED_LIMIT = 1; // one for the sticky note, to display in yellow
 	const INITIAL_FEED_LIMIT = 10; // 10 to get initially for this nice viewer fellow
 	const SPECIAL_FEED_LIMIT = 21; // 21 to rule them all, and in light display them
 
-        function __construct() {
-                parent::__construct('WikiStickies');
-        }
+	function __construct() {
+		parent::__construct('WikiStickies');
+	}
 
 	// the main heavy-hitter of the special page: wrapper for display-it-all
-        function execute() {
-                global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+	function execute() {
+		global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 		wfLoadExtensionMessages( 'WikiStickies' );
 		// for tools: logo upload and skin chooser
 		wfLoadExtensionMessages( 'NewWikiBuilder' );
 
-                $this->setHeaders();
+		$this->setHeaders();
 
 		// load dependencies (CSS and JS)
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");		
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");		
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");
 
-		// get the Three Feeds		
-		$this->formatFeed( $this->getWantedimagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd'), wfMsg( 'wikistickies-wantedimages-st' ) ) ;
+		// get the Three Feeds
+		$this->formatFeed( 'wikistickies-wantedimages', $this->getWantedimagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd'), wfMsg( 'wikistickies-wantedimages-st' ) ) ;
 
-		$this->formatFeed( $this->getNewpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-newpages-hd'), wfMsg( 'wikistickies-newpages-st' ) );
-		$this->formatFeed( $this->getWantedpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd'), wfMsg( 'wikistickies-wantedpages-st' ) );
+		$this->formatFeed( 'wikistickies-newpages', $this->getNewpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-newpages-hd'), wfMsg( 'wikistickies-newpages-st' ) );
+		$this->formatFeed( 'wikistickies-wantedpages', $this->getWantedpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd'), wfMsg( 'wikistickies-wantedpages-st' ) );
 
 		// get the Two Tools
-                $this->generateTools();
-        }
+		$this->generateTools();
+	}
 
-	// tool generation wrapper (basically template call)	
+	// tool generation wrapper (basically template call)
 	function generateTools() {
 		global $wgOut;
 
@@ -46,13 +50,24 @@ class WikiStickies extends SpecialPage {
 		$wgOut->addHTML( $text );
 	}
 
-	// general feed formatting
-	function formatFeed( &$feed_data, $header, $sticker ) {
-        	global $wgOut, $wgUser;
+	/**
+	 * Constructs the majority of HTML output to render.
+	 *
+	 * @param string $type Moniker for the feed. This becomes the HTML ID attribute value.
+	 * @param array $feed_data The list of page names that will become items in the feed.
+	 * @param string $header The natural-language feed headline.
+	 * @param string $sticker ???
+	 *
+	 * @TODO: Need a non-redundant way of informing this function what feed is being used.
+	 *		We should probably find some way of collapsing the $type, $header,
+	 *		and $sticker variables.
+	 */
+	function formatFeed( $type, &$feed_data, $header, $sticker ) {
+		global $wgOut, $wgUser;
 
 		$sk = $wgUser->getSkin () ;
-		$body = $body2 = $body3 = $body4 = '';
-	
+		$body = $body2 = '';
+
 		if( empty( $feed_data ) ) {
 			return false;
 		}
@@ -61,131 +76,113 @@ class WikiStickies extends SpecialPage {
 			array_pop( $feed_data );
 		}
 
-        	// display the sticky
+		// display the sticky
 		$sticky = Xml::openElement( 'div', array( 'id' => 'wikisticky_browser' ) ).
-			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).			
-			Xml::openElement( 'strong' ).
-			'&nbsp;'.
-			Xml::closeElement( 'strong' ).
-			Xml::openElement( 'p' ). 
-			$sticker .'<br/>'. $sk->makeLink( array_shift( $feed_data ) ).
+			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).
+			Xml::openElement( 'p' ).
+			$sticker . ' ' . $sk->makeLink( array_shift( $feed_data ) ). '?'.
 			Xml::closeElement( 'p' ).
 			Xml::closeElement( 'div' ).
 			Xml::closeElement( 'div' );
 
-		$uptolimit = 0;	
+		$uptolimit = 0;
 
-		foreach( $feed_data as $title ) {			
-			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {			
-				if( 0 == ( $uptolimit % 2 ) ) {
-					$body .= Xml::openElement( 'li' ).
-						// todo namespace too (especially for Wantedpages)
-						$sk->makeLink( $title ).			
-						Xml::closeElement( 'li' );
+		foreach( $feed_data as $title ) {
+			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {
+				if ( $uptolimit > 4 ) { // start a new column at 6th item
+					if ( $uptolimit === 5 ) {
+						$body .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
+					} else {
+						$body .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn' ) );
+					}
 				} else {
-					$body2 .= Xml::openElement( 'li' ).
-						// todo namespace too (especially for Wantedpages)
-						$sk->makeLink( $title ).			
-						Xml::closeElement( 'li' );
+					$body .= Xml::openElement( 'li' );
 				}
+				// todo namespace too (especially for Wantedpages)
+				$body .= $sk->makeLink( $title ).
+				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
-				$uptolimit++;			
+				$uptolimit++;
 			}
 		}
 
 		$uptolimit = 0;
-		foreach( $feed_data as $title ) {			
-			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {			
-				if( 0 == ( $uptolimit % 2 ) ) {
-					$body3 .= Xml::openElement( 'li' ).
-						// todo namespace too (especially for Wantedpages)
-						$sk->makeLink( $title ).			
-						Xml::closeElement( 'li' );
+		foreach( $feed_data as $title ) {
+			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {
+				if ( $uptolimit > 4 ) { // start a new column at 6th item
+					if ( $uptolimit === 5 ) {
+						$body2 .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
+					} else {
+						$body2 .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn' ) );
+					}
 				} else {
-					$body4 .= Xml::openElement( 'li' ).
-						// todo namespace too (especially for Wantedpages)
-						$sk->makeLink( $title ).			
-						Xml::closeElement( 'li' );
+					$body2 .= Xml::openElement( 'li' );
 				}
+				// todo namespace too (especially for Wantedpages)
+				$body2 .= $sk->makeLink( $title ).
+				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
-				$uptolimit++;			
+				$uptolimit++;
 			}
 		}
 
-		
-		$html = Xml::openElement( 'div', array( 'class' => 'wikistickiesfeed' ) ).
-			Xml::openElement( 'div', array( 'class' => 'wikistickiesheader' ) ).
-                        $header.
-			Xml::closeElement( 'div' ).
+
+		$html = Xml::openElement( 'div', array( 'id' => $type, 'class' => 'wikistickiesfeed' ) ).
+			'<img alt="" class="sprite" src="/skins/monobook/blank.gif" />'.
+			Xml::openElement( 'h2' ).
+						$header.
+			Xml::closeElement( 'h2' ).
 			$sticky.
-			Xml::openElement( 'div', array( 'class' => 'wikistickieslistwrapper clearfix' ) ).
-			Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
+			Xml::openElement( 'ul' ).
 			$body.
 			Xml::closeElement( 'ul' ).
-			Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
+			Xml::openElement( 'ul', array ( 'class' => 'submerged' ) ).
 			$body2.
-			Xml::closeElement( 'ul' ).
-			Xml::closeElement( 'div' );
+			Xml::closeElement( 'ul' );
 
+		// See more link
+		// TODO: This href attribute should actually point to the source of the feed
+		//       in case JS is off.
+		$html .= '<a href="#" class="MoreLink">'. wfMsg( 'wikistickies-more' ) .'</a>';
 
-
-                $html .= Xml::openElement( 'div', array( 'class' => 'wikistickieslistwrapper clearfix submerged' ) ).
-                        Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
-                        $body3.
-                        Xml::closeElement( 'ul' ).
-                        Xml::openElement( 'ul', array( 'class' => 'wikistickiesul' ) ).
-                        $body4.
-                        Xml::closeElement( 'ul' ).
-                        Xml::closeElement( 'div' );
-
-		/*
-		   $onclick = 'WikiStickies.clickMoreWantedpages();';
-		   $linkmore =	Xml::openElement( 'a', array( 'href' => '#', 'onclick' => $onclick ) ) .
-		   'more V'.
-		   Xml::closeElement( 'a' );
-
-		   $html .= Xml::openElement( 'div', array( 'class' => 'wikistickiesmore' ) ).
-		   $linkmore.       
-		   Xml::closeElement( 'div' );
-		 */
 		$html .= Xml::closeElement( 'div' );
-					       	
-                $wgOut->addHTML( $html );
+
+		$wgOut->addHTML( $html );
 	}
 
-	// feed packaging 
+	// feed packaging
 	function getFeed( $feed, $data ) {
 		wfProfileIn( __METHOD__ );
 		$result = array();
 		$oFauxRequest = new FauxRequest( $data );
-		
+
 		$oApi = new ApiMain($oFauxRequest);
-                $oApi->execute();
-                $aResult =& $oApi->GetResult()->getData();
+		$oApi->execute();
+		$aResult =& $oApi->GetResult()->getData();
 
 		// get the pages
-		if( !isset($aResult['warnings']) )  {
+		if( !isset($aResult['warnings']) ) {
 			if( count($aResult['query'][$feed]) > 0) {
 				foreach( $aResult['query'][$feed] as $newfound ) {
-					$result[] = $newfound['title'] ;
+					$result[] = $newfound['title'];
 				}
-			} 
+			}
 		}
 
-		wfProfileOut( __METHOD__ ); 		
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
-	                               
+
 	// fetch the feed for SpecialNewpages
 	function getNewpagesFeed( $limit ) {
 		$data =	array(
-				'action'        => 'query',
-				'list'		=> 'recentchanges',
-				'rcprop'	=> 'title',					
+				'action'		=> 'query',
+				'list'			=> 'recentchanges',
+				'rcprop'		=> 'title',
 				'rcnamespace'	=> 0,
-				'rctype'	=> 'new',
-				'rclimit'	=> intval($limit),
-			     );
+				'rctype'		=> 'new',
+				'rclimit'		=> intval($limit),
+				 );
 
 		return $this->getFeed( 'recentchanges', $data );
 	}
@@ -193,22 +190,22 @@ class WikiStickies extends SpecialPage {
 	// fetch the feed for SpecialWantedpages
 	function getWantedpagesFeed( $limit ) {
 		$data = array(
-				'action'        => 'query',
+				'action'	=> 'query',
 				'list'		=> 'wantedpages',
 				'wnlimit'	=> intval($limit),
-			     );
+				 );
 
-        	return $this->getFeed( 'wantedpages', $data );
+			return $this->getFeed( 'wantedpages', $data );
 	}
 
 	// fetch the feed for pages without images
 	function getWantedimagesFeed( $limit ) {
 		$data = array(
-				'action'        => 'query',
+				'action'	=> 'query',
 				'list'		=> 'wantedimages',
 				'wilimit'	=> intval($limit),
-			     );
+				 );
 
-        	return $this->getFeed( 'wantedimages', $data );
+			return $this->getFeed( 'wantedimages', $data );
 	}
 }
