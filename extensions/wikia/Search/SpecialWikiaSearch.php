@@ -93,6 +93,20 @@ STOP;
 		return $out;
 	}
 
+	public function setupPage( $term ) {
+		global $wgOut, $wgSupressPageTitle, $wgSupressSiteNotice;
+		if( !empty( $term ) ){
+			$wgOut->setPageTitle( wfMsg( 'searchresults') );	//left for skins other than Monaco
+			$wgSupressPageTitle = true;
+			$wgSupressSiteNotice = true;
+			$wgOut->setHTMLTitle( wfMsg( 'pagetitle', wfMsg( 'searchresults-title', $term) ) );
+		}
+		$subtitlemsg = ( Title::newFromText( $term ) ? 'searchsubtitle' : 'searchsubtitleinvalid' );
+		//$wgOut->setSubtitle( $wgOut->parse( wfMsg( $subtitlemsg, wfEscapeWikiText($term) ) ) );
+		$wgOut->setArticleRelated( false );
+		$wgOut->setRobotPolicy( 'noindex,nofollow' );
+	}
+
 	/**
 	 * @param string $term
 	 * @param string $extra Extra HTML to add after "did you mean"
