@@ -38,12 +38,12 @@ $wgLogTypes[] = 'piggyback';
  */
 
 $wgHooks['UserLogoutComplete'][] = 'PiggybackGoToParent';
-function PiggybackGoToParent($wgUser,$injected_html,$oldName) {
+function PiggybackGoToParent( $user, $injected_html, $oldName ) {
 	global $wgRequest;
 	if( PBLoginForm::isPiggyback() ) {
-		$loginForm = new PBLoginForm($wgRequest);
+		$loginForm = new PBLoginForm( $wgRequest );
 		$loginForm->goToParent( $oldName );
-		wfRunHooks('PiggybackLogOut',array($wgUser,User::newFromName($oldName)));
+		wfRunHooks( 'PiggybackLogOut', array( $user, User::newFromName( $oldName ) ) );
 	}
 	return true;
 }
