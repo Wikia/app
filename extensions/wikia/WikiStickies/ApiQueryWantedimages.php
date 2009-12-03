@@ -12,16 +12,27 @@ class ApiQueryWantedimages extends ApiQueryBase {
 	}
 
 	public function execute() {
+		global $wgContentNamespaces;
+
 		$db = $this->getDB();
 		$params = $this->extractRequestParams();
 
+                $this->addFields( array( 'page_title', 'page_namespace' ) );
+                $this->addTables( 'querycache' );
                 $this->addTables( 'page' );
                 $this->addTables( 'imagelinks' );
-                $this->addFields( array( 'page_title', 'page_namespace' ) );
 		$this->addJoinConds( array(
-			'imagelinks' => array( 'LEFT OUTER JOIN', 'page_id = il_from'
-		)));
-		$this->addWhere( 'il_from is NULL' );
+			'page' => array( 'JOIN', array(
+						'qc_title = page_title',
+						'qc_namespace = page_namespace' ) ),
+			'imagelinks' => array( 'LEFT JOIN', 'page_id = il_from' )
+			) );
+		$this->addWhere( array( 
+			"qc_type = 'Mostlinked'",
+			"il_to is NULL",
+			"qc_namespace IN (" . implode( ",", $wgContentNamespaces ) . ")",
+			) );
+		$this->addOption( 'ORDER BY', 'qc_value DESC' );
                 $this->addOption( 'LIMIT', $params['limit'] + 1 );
 
                 $res = $this->select(__METHOD__);
@@ -72,7 +83,7 @@ class ApiQueryWantedimages extends ApiQueryBase {
 	}
 
 	protected function getExamples() {
-		return 'api.php?action=query&list=wantedimages&wnlimit=5';
+		return 'api.php?action=query&list=wantedimages&wilimit=5';
 	}
 
 	public function getVersion() {
