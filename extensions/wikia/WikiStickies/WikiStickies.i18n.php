@@ -18,4 +18,5 @@ $messages['en'] = array(
 	'wikistickies-theme-hd' => 'Choose a Theme',
 	'wikistickies-next' => 'Next ->',
 	'wikistickies-hide' => 'hide',
+	'wikistickies-see-more' => 'See more pages that need help',
 );
