@@ -186,7 +186,9 @@ WikiFactory::isUsed(true); // TODO: REMOVE - ONLY NEEDED FOR LOCAL TESTING!
 	// TODO: IMPLEMENT THE AJAX FOR CLICKING THIS BUTTON
 	// TODO: IMPLEMENT THE NEW APPEARANCE OF THIS BUTTON FOR A USER WHO IS ALREADY FOLLOWING THIS CATEGORY
 	// TODO: GET THE CORRECT ARTWORK FOR BOTH THE ALREADY-NOTIFIED AND UN-NOTIFIED STATES OF THE BUTTON
-	$r .= " <img id='cathub-notify-me' src='./images/TEMP_NOTIFY_ICON.jpg' width='64' height='64' style='float:right;padding:5px;'/>";
+	$r .= " <div style='float:right;border-left:#ccf 1px solid'>\n";
+	$r .= " <img id='cathub-notify-me' src='$wgScriptPath/extensions/wikia/CategoryHubs/notify.png' width='114' height='74' style='float:right;padding:5px;'/>";
+	$r .= "</div>";
 
 	// The actual title that will show up (since we hide the default).
 	$r .= "<h1>".$catView->getCat()->getTitle()."</h1>";
