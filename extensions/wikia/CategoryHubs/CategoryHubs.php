@@ -212,8 +212,8 @@ WikiFactory::isUsed(true); // TODO: REMOVE - ONLY NEEDED FOR LOCAL TESTING!
 		$uPercent = (100 - $aPercent);
 		$aWidth = round(($PROG_BAR_WIDTH * $aPercent) / 100);
 		$uWidth = $PROG_BAR_WIDTH - $aWidth;
-		$aTitle = "$percentAnswered answered"; // TODO: USE MESSAGES FOR answered / not answered
-		$uTitle = "$uPercent% not answered yet";
+		$aTitle = wfMsgExt('cathub-progbar-mouseover-answered', array(), $aPercent);
+		$uTitle = wfMsgExt('cathub-progbar-mouseover-not-answered', array(), $uPercent);
 
 		// Heuristic to figure out which side to put the text on (prefering to put it on the left whenever possible since it is more intuitive
 		// to see the percent done rather than not done).  Since users have various font-sizes, this is meant to give a sizable leeway.
@@ -237,7 +237,8 @@ WikiFactory::isUsed(true); // TODO: REMOVE - ONLY NEEDED FOR LOCAL TESTING!
 	}
 	$r .= "</div>"; // close the wrapper on the progress bar
 
-	$r .= "<div class='cathub-progbar-label cathub-progbar-label-left'>Answered</div><div class='cathub-progbar-label cathub-progbar-label-right'>Unanswered</div>";
+	$r .= "<div class='cathub-progbar-label cathub-progbar-label-left'>".wfMsgExt('cathub-answered', array())."</div>";
+	$r .= "<div class='cathub-progbar-label cathub-progbar-label-right'>".wfMsgExt('cathub-unanswered', array())."</div>";
 	$r .= "</div>"; // close the wrapper on the div containing the progress bar and the labels.
 
 	$r .= "</div>\n";
@@ -279,12 +280,11 @@ function categoryHubContributorsToHtml($editsByUserId){
 	$NUM_TO_SHOW_BIG = 3; // all beyond this will use the small text-only badge
 
 	if(is_array($editsByUserId) && count($editsByUserId) > 0){
-		// TODO: Make the style not require #contributors id, but rather a list class.  This is needed since there will be more than one list per page.
-		$r .= "<ul id='contributors' class='cathub-contributors-list cathub-contributors-list-wide'>\n";
+		$r .= "<ul class='contributors cathub-contributors-list cathub-contributors-list-wide'>\n";
 		$numShown = 0;
 		foreach($editsByUserId as $userId => $numEdits){
 			if($numShown == $NUM_TO_SHOW_BIG){
-				$r .= "</ul><ul id='contributors' class='cathub-contributors-list cathub-contributors-list-narrow'>\n";
+				$r .= "</ul><ul class='contributors cathub-contributors-list cathub-contributors-list-narrow'>\n";
 			}
 			$r .= "<li>";
 			$r .= "<div class='listNumber".(($numShown >= $NUM_TO_SHOW_BIG)?" userInfoNoAvatar":"")."'>\n";
