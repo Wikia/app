@@ -208,4 +208,25 @@ class WikiStickies extends SpecialPage {
 
 			return $this->getFeed( 'wantedimages', $data );
 	}
+
+	// run on a hook adding sidebar content for Special:MyHome
+	static function addToMyHome( $html ) {
+		wfLoadExtensionMessages( 'WikiStickies' );
+		global $wgOut;
+		$html = Xml::openElement( 'div', array( 'id' => 'wikisticky_browser' ) ).
+			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).
+                        Xml::openElement( 'strong' ).
+			wfMsg( 'wikistickies' ).
+			Xml::closeElement( 'strong' ).
+			Xml::openElement( 'p' ).
+			Xml::closeElement( 'p' ).
+			Xml::openElement( 'a', array( 'id' => 'wikisticky_next' ) ).
+			wfMsg( 'wikistickies-next' ).
+			Xml::openElement( 'img', array( 'src' => '../images/curl.png', 'id' => 'wikisticky_curl' ) ).
+                	Xml::closeElement( 'a' ).
+			Xml::closeElement( 'div' ).
+			Xml::closeElement( 'div' );
+
+		return true;
+	}
 }
