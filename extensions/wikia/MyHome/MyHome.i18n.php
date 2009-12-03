@@ -32,6 +32,8 @@ $messages['en'] = array(
 	'myhome-feed-comment-by' => 'comment by $1',
 	'myhome-feed-deleted-by' => 'deleted by $1',
 	'myhome-feed-moved-by' => 'moved by $1',
+	'myhome-feed-article-comment-created-by' => 'new comment by $1',
+	'myhome-feed-article-comment-edited-by' => 'edited comment by $1',
 	'myhome-feed-by' => 'by $1',
 
 	'myhome-feed-diff-alt' => 'show me the change on this page',

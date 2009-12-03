@@ -83,6 +83,9 @@ class MyHome {
 				break;
 		}
 
+		//allow to alter $data by other extensions (eg. Article Comments)
+		wfRunHooks('MyHome:BeforeStoreInRC', array(&$rc, &$data));
+
 		// encode data to be stored in rc_params
 		if (!empty($data)) {
 			$rc->mAttribs['rc_params'] = self::packData($data);

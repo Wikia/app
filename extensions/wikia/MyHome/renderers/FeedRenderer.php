@@ -152,7 +152,11 @@ class FeedRenderer {
 
 					// content NS
 					default:
-						$msgType = 'created';
+						if (!empty($row['articleComment'])) {
+							$msgType = 'article-comment-created';
+						} else {
+							$msgType = 'created';
+						}
 				}
 				break;
 
@@ -165,7 +169,11 @@ class FeedRenderer {
 				break;
 
 			default:
-				$msgType = 'edited';
+				if (!empty($row['articleComment'])) {
+					$msgType = 'article-comment-edited';
+				} else {
+					$msgType = 'edited';
+				}
 		}
 
 		$res = wfMsg("myhome-feed-{$msgType}-by", self::getUserPageLink($row))  . ' ';
@@ -349,7 +357,11 @@ class FeedRenderer {
 
 					// content NS
 					default:
-						$type = Namespace::isTalk($row['ns']) ? self::FEED_TALK_ICON : self::FEED_SUN_ICON;
+						if (empty($row['articleComment'])) {
+							$type = Namespace::isTalk($row['ns']) ? self::FEED_TALK_ICON : self::FEED_SUN_ICON;
+						} else {
+							$type = self::FEED_COMMENT_ICON;
+						}
 				}
 				break;
 
@@ -358,7 +370,11 @@ class FeedRenderer {
 				if (empty($row['viewMode'])) {
 					// talk pages
 					if (Namespace::isTalk($row['ns'])) {
-						$type = self::FEED_TALK_ICON;
+						if (empty($row['articleComment'])) {
+							$type = self::FEED_TALK_ICON;
+						} else {
+							$type = self::FEED_COMMENT_ICON;
+						}
 					}
 					// content pages
 					else {

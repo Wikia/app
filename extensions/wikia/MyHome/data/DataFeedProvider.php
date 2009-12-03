@@ -289,6 +289,11 @@ class DataFeedProvider {
 			if(defined('NS_BLOG_ARTICLE') && $res['ns'] === NS_BLOG_ARTICLE) {
 				$item['title'] = end(explode('/', $res['title'], 2));
 			}
+
+			if (!empty($res['rc_params']['articleComment'])) {
+				$item['articleComment'] = true;
+				$item['title'] = end(explode(':', reset(explode('/', $res['title'], 2)), 2));
+			}
 		}
 
 		if(count($item) > 1) {
@@ -317,6 +322,11 @@ class DataFeedProvider {
 
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
+
+			if (!empty($res['rc_params']['articleComment'])) {
+				$item['articleComment'] = true;
+				$item['title'] = end(explode(':', reset(explode('/', $res['title'], 2)), 2));
+			}
 
 		} else if(defined('NS_BLOG_ARTICLE') && $res['ns'] == NS_BLOG_ARTICLE) {
 
