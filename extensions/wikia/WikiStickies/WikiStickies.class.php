@@ -63,12 +63,13 @@ class WikiStickies {
 			array_pop( $feed_data );
 		}
 
-		$sticky = self::renderWikiSticky( array( array_shift( $feed_data ) ),
-			$sticker,
-			array(
-				'id' => $type . '-browser',
-				'class' => 'wikisticky_browser' )
-			);
+		$sticky = self::renderWikiSticky(
+				array_shift( $feed_data ),
+				$sticker,
+				array(
+					'id' => $type . '-browser',
+					'class' => 'wikisticky_browser' )
+				);
 
 		$numitems = count($feed_data);
 		$uptolimit = 0;
@@ -206,16 +207,14 @@ class WikiStickies {
 	/**
 	 * Outputs the appropriate HTML for a WikiSticky.
 	 *
-	 * @param $text array A list of Title objects the WikiSticky should display.
+	 * @param $title A Title object the WikiSticky should display.
 	 * @param $prefix string The natural-language prefix to the type of sticky.
 	 * @param $attrs array An array of attribute-value pairs. (Optional.)
 	 *
 	 * @return string The appropriate HTML to output.
 	 */
-	static function renderWikiSticky ( $text, $prefix, $attrs = NULL ) {
-		global $wgExtensionsPath, $wgUser;
-
-		$sk = $wgUser->getSkin() ;
+	static function renderWikiSticky ( $title, $prefix, $attrs = NULL ) {
+		global $wgExtensionsPath;
 
 		// Set default attributes.
 		if( !is_array( $attrs ) ) {
@@ -231,11 +230,7 @@ class WikiStickies {
 				wfMsg( 'wikistickies' ).
 			Xml::closeElement( 'h2' ).
 			Xml::openElement( 'p' ).
-				Xml::openElement( 'span' ).
-					$prefix.
-				Xml::closeElement( 'span' ).
-				// TODO: Handle an array with more than one item?
-				' ' . $sk->makeKnownLinkObj($text[0]) . '?'.
+			self::renderWikiStickyContent( $title, $prefix ).
 			Xml::closeElement( 'p' ).
 			// TODO: This should link to the source of the feed fetched, not a '#' fragment.
 			Xml::openElement( 'a', array( 'href' => '#', 'class' => 'wikisticky_next' ) ).
@@ -249,18 +244,54 @@ class WikiStickies {
 		return $html;
 	}
 
-	// run on a hook adding sidebar content for Special:MyHome
-	static function addToMyHome( $html ) {
-		wfLoadExtensionMessages( 'WikiStickies' );
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+	static function renderWikiStickyContent( $title, $prefix ) {
+		global $wgUser;
 
+		$sk = $wgUser->getSkin();
+
+		$html = xml::openelement( 'span' ).
+			$prefix.
+			xml::closeelement( 'span' ).
+			// todo: handle an array with more than one item?
+			' ' . $sk->makeKnownLinkObj($title) . '?';
+		return $html;
+	}
+
+	// run on a hook adding sidebar content for Special:MyHome
+	static function addToMyHome( &$html ) {
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+
+		wfLoadExtensionMessages( 'WikiStickies' );
 		self::addWikiStickyResources();
 		// Special:MyHome page-specific resources
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesMyHome.css?{$wgStyleVersion}");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js?{$wgStyleVersion}\"></script>\n");
 
-		// TODO: Still need to pull this in from the feed. Right now we're faking it with JS on the front-end.
-		$html = self::renderWikiSticky( 'Hello world.', 'Can you add images to the page about');
+		$feeds = array();
+		foreach( self::getWantedimagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
+			$feeds[] = array( 
+					'prefix' => wfMsg( 'wikistickies-wantedimages-st' ),
+					'title' => $title );
+		}
+		foreach( self::getNewpagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
+			$feeds[] = array(
+					'prefix' => wfMsg( 'wikistickies-newpages-st' ),
+					'title' => $title );
+		}
+		foreach( self::getWantedpagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
+			$feeds[] = array(
+					'prefix' => wfMsg( 'wikistickies-wantedpages-st' ),
+					'title' => $title );
+		}
+		shuffle( $feeds );
+		$js = "WIKIA.WikiStickies.stickies = [\n";
+		foreach( $feeds as $f ) {
+			$js .= "'" . self::renderWikiStickyContent( $f['title'], $f['prefix'] ) . "',\n";
+		}
+		$js .= "];\n";
+		$wgOut->addInlineScript( $js );
+		$wgOut->addScriptFile("{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js");
+
+		$html = self::renderWikiSticky( $feeds[0]['title'], $feeds[0]['prefix'] );
 
 		return true;
 	}
