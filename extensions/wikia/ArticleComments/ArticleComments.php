@@ -33,8 +33,9 @@ $wgHooks['RecentChange_save'][] = 'ArticleComment::watchlistNotify';
 $wgHooks['ChangesListMakeSecureName'][] = 'ArticleCommentList::makeChangesListKey';
 $wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockGroup';
 # special::watchlist
-$wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
-$wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
+//TODO: fix bad condition - using $this in static function
+//$wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
+//$wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
 # ActivityFeed
 $wgHooks['MyHome:BeforeStoreInRC'][] = 'ArticleCommentList::BeforeStoreInRC';
 # init
@@ -1199,7 +1200,7 @@ class ArticleCommentList {
 		if ($countAll > $countComments) {
 			$numberOfPages = ceil($countAll / $wgArticleCommentsMaxPerPage);
 			for ($i = 0; $i < $numberOfPages; $i++) {
-				$pagination .= '<a href="#" id="article-comments-pagination-link-' . $i . '" class="article-comments-pagination-link' . ($i == $activePage ? ' article-comments-pagination-link-active' : '') . '" page="' . $i . '">' . ($i+1) . '</a>';
+				$pagination .= '<a href="#" id="article-comments-pagination-link-' . $i . '" class="article-comments-pagination-link dark_text_1' . ($i == $activePage ? ' article-comments-pagination-link-active' : '') . '" page="' . $i . '">' . ($i+1) . '</a>';
 			}
 		}
 		return $pagination;

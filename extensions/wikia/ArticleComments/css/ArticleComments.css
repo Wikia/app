@@ -1,31 +1,21 @@
-div#mw-data-after-content h2.wikia_header {
-	background: #F9F9F9;
-	border-bottom: 1px solid #AAA;
-	border-top: 1px solid #AAA;
-	clear: both;
-	color: #36C;
-	font-family: Arial, sans-serif;
-	font-size: 12pt;
-	font-weight: 700;
-	margin: 0 !important;
-	padding: 3px 10px;
-	text-transform: uppercase;
-}
-
 #article-comments-wrapper {
 	clear: both;
 	margin-top: 30px;
+	/* copied from Monobook.css */
+	font-size: 127%;
+	line-height: 1.5em;
 }
 
 #article-comments-wrapper h2 {
-	margin-bottom: 0;
+	border-top: 1px solid #AAA;
+	margin-bottom: 20px;
 	margin-top: 10px;
 	padding: 4px 10px;
 }
 
 #article-comm-order {
 	float: right;
-	margin-top: -24px;
+	margin-top: -44px;
 	margin-right: 10px;
 }
 
@@ -81,10 +71,12 @@ div.article-comment strong {
 }
 
 .article-comments-pagination-link {
+	border: 1px solid #AAA;
+	font-weight: bold;
+	margin: 0 1px;
 	padding: 0 4px;
 }
 
 .article-comments-pagination-link-active {
-	font-weight: bold;
-	background-color: yellow;
+	border: none;
 }
