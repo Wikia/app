@@ -19,7 +19,7 @@ class SpecialWikiStickies extends SpecialPage {
 
 		$this->setHeaders();
 
-		WikiStickies::addWikiStickyResources();
+		WikiStickies::addWikiStickyResources( 'all' );
 		// load additional dependencies (CSS and JS)?
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");
