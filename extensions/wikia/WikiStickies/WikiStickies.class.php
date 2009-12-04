@@ -110,7 +110,7 @@ class WikiStickies extends SpecialPage {
 				} else {
 					$body .= Xml::openElement( 'li' );
 				}
-				$body .= $sk->makeKnownLinkObj( $title ).
+				$body .= $sk->makeKnownLinkObj( $title, $title->getText() ).
 				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
 				$uptolimit++;
@@ -129,7 +129,7 @@ class WikiStickies extends SpecialPage {
 				} else {
 					$body2 .= Xml::openElement( 'li' );
 				}
-				$body2 .= $sk->makeKnownLinkObj( $title ).
+				$body2 .= $sk->makeKnownLinkObj( $title, $title->getText() ).
 				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
 				$uptolimit++;
@@ -181,7 +181,7 @@ class WikiStickies extends SpecialPage {
 					if( isset( $newfound['namespace'] ) ) {
 						$result[] = Title::makeTitle( $newfound['namespace'], $newfound['title']);
 					} else {
-						$result[] = Title::makeTitle( $newfound['ns'], $newfound['title']);
+						$result[] = Title::newFromText( $newfound['title']);
 					}
 				}
 			}
