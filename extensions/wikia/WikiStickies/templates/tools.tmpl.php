@@ -16,7 +16,7 @@
                 <input type="hidden" name="action" value="uploadlogo">
                 <input type="hidden" name="format" value="xml">
                 <input id="logo_article" type="hidden" name="title" value="Wiki.png">
-                <input type="file" name="logo_file" id="logo_file" onclick="WET.byStr('nwb/step2browse');"/> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onclick="WET.byStr('nwb/step2preview');this.form.title.value='Wiki-Preview.png'"/>
+                <input type="file" name="logo_file" id="logo_file" onclick="WIKIA.WikiStickies.track('/admin/browse');"/> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onclick="WIKIA.WikiStickies.track( '/admin/preview' ); this.form.title.value='Wiki-Preview.png'"/>
                 <!--<input type="submit" value="Save" onclick="this.form.title.value='Wiki.png'"/>-->
         </form>
 
