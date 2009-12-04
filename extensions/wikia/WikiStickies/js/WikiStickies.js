@@ -35,7 +35,7 @@ WIKIA.WikiStickies.toggleMore = function (e) {
  * Wrapper for tracking
  */
 
-WIKIA.WikiStickies.track( fakeUrl ) {
+WIKIA.WikiStickies.track = function( fakeUrl ) {
 	WET.byStr('WikiStickies' + fakeUrl);
 }
 
@@ -58,6 +58,7 @@ WIKIA.WikiStickies.placeContent = function () {
 };
 
 $(document).ready(function() {
-    $('.wikistickiesfeed .MoreLink').click(WIKIA.WikiStickies.toggleMore);
-    WIKIA.WikiStickies.placeContent();
+	$('.wikistickiesfeed .MoreLink').click(WIKIA.WikiStickies.toggleMore);
+	
+	WIKIA.WikiStickies.placeContent();
 });
