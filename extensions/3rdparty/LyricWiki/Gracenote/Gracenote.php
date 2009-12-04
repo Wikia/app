@@ -287,10 +287,10 @@ function gracenote_getNoscriptTag(){
 //
 // If there was a Gracenote-licensed song, tracks that as well.
 ////
-function gracenote_outputGoogleAnalytics(&$skin, &$text){
+function gracenote_outputGoogleAnalytics(&$out, $parserOutput){
 	GLOBAL $wgGracenoteView;
 
-	$text .= gracenote_getAnalyticsHtml($wgGracenoteView);
+	$out->addHTML(gracenote_getAnalyticsHtml($wgGracenoteView));
 
 	return true;
 } // end gracenote_outputGoogleAnalytics()
