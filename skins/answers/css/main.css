@@ -1127,7 +1127,7 @@ span.answered_questions a, span.unanswered_questions a{
 	font-size:1.2em;
 }
 .cathub-asked {
-	font-size:.75em;
+	font-size:.9em;
 	color:#707070;
 	line-height:.8em;
 }
@@ -1154,4 +1154,9 @@ li .hideUntilHover{
 }
 li:hover .hideUntilHover{
 	visibility:visible;
+}
+.ui-tabs-panel{
+	padding:0px !important;
+	margin-left:-2px !important;
+	margin-right:-2px !important;
 }
