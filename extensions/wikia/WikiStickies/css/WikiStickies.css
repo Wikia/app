@@ -114,8 +114,23 @@ ul, li {
 	margin-top: 20px;
 }
 
+.wikiheadertools #step2 {
+	background-color: ##F5F5F5; 
+	border-top: 1px solid #AAAAAA;
+	border-left: 1px solid #AAAAAA;
+	border-right: 1px solid #AAAAAA;
+}
+
+.wikiheadertools #step3 {
+	background-color: ##F5F5F5; 
+	border-bottom: 1px solid #AAAAAA;
+	border-left: 1px solid #AAAAAA;
+	border-right: 1px solid #AAAAAA;
+}
+
 .wikiheadertools li {
     list-style-type:none;	
+    list-style-image: none;
 }
 
 .reflow {
@@ -133,7 +148,6 @@ ul, li {
 
 .step .wrapper {
     text-align: left;
-    margin-top: 10px;
 }
 
 .headline {
