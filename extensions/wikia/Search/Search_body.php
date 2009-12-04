@@ -432,7 +432,7 @@ class SolrResult extends SearchResult {
 	public static function showHit($result, $link, $redirect, $section, $extract, $data) {
 		if($result->isCrossWikiaResult()) {
 			$data = "<a href=\"" . $result->getUrl() . "\" title=\"" . $result->getUrl() . "\" style=\"text-decoration: none; font-size: small\"><span class=\"dark_text_2\">" . strtr( $result->mUrl, array( 'http://' => '' ) ) . "</span></a>";
-			$data .= $result->getDebug();
+			//$data .= $result->getDebug();
 		}
 		else {
 			$data = '';
