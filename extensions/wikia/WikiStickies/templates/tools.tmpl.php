@@ -63,12 +63,13 @@ for (var i = 0; i < themes.length; i++){
         if (wgAdminSkin.replace(/monaco-/, '')  == ltheme) {
                 // Check the box and change the theme 
                 $("#theme_radio_" + ltheme).attr("checked", true);
+		WIKIA.WikiStickies.track( '/admin/' + ltheme );
                 NWB.changeTheme(ltheme, false);
         }
 }
 </script>
 	<div id="wikistickies_save_all">
-		<a id="WikistickiesToolsSubmit" class="wikia_button" href="#" onclick="NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
+		<a id="WikistickiesToolsSubmit" class="wikia_button" href="#" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
 	</div>
 
 </div>
