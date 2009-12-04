@@ -23,10 +23,17 @@ define('CATHUB_NORICHCATEGORY', 'CATHUB_NORICHCATEGORY');
 define('CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS', 7);
 define('ANSWERED_CATEGORY', 'answered_questions'); // must be set to the name of the category containing answered questions.
 
+// Since the entire article for the answered questions will be loaded, we create a more conservative limit.
+// The maximum number of articles per tab because the whole article will be loaded (eg: max of 15 answered, 15 unanswered)
+// WARNING: Defaults to 0 (since not this would involve a lot of extra data-loading that will only be needed if CategoryHubs is enabled).
+global $wgCategoryHubArticleLimitPerTab;
+$wgCategoryHubArticleLimitPerTab = 15; // required (otherwise will default to 0).
+
+
 ///// BEGIN - SETUP HOOKS /////
 $wgHooks['LanguageGetMagic'][] = 'categoryHubAddMagicWords'; // setup names for parser functions (needed here)
-$wgHooks['BeforePageDisplay'][] = 'categoryHubAdditionalScripts';
 $wgHooks['ParserAfterStrip'][] = 'categoryHubCheckForMagicWords';
+$wgHooks['BeforePageDisplay'][] = 'categoryHubAdditionalScripts';
 
 // Allows us to define a special order for the various sections on the page.
 $wgHooks['FlexibleCategoryPage::openShowCategory'][] = 'categoryHubBeforeArticleText';
@@ -187,9 +194,6 @@ function categoryHubTitleBar(&$catView, &$r){
 	.cathub-progbar-unanswered{
 		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/prog_bar_unanswered.png);
 	}
-	.ui-tabs .ui-tabs-hide { /* required for jquery ui tabs */
-		display: none;
-	}
 	.ui-widget-header{
 		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/tab_navbar_bg.png);
 	}
@@ -211,9 +215,10 @@ WikiFactory::isUsed(true); // TODO: REMOVE - ONLY NEEDED FOR LOCAL TESTING!
 	// TODO: IMPLEMENT THE AJAX FOR CLICKING THIS BUTTON
 	// TODO: IMPLEMENT THE NEW APPEARANCE OF THIS BUTTON FOR A USER WHO IS ALREADY FOLLOWING THIS CATEGORY
 	// TODO: GET THE CORRECT ARTWORK FOR BOTH THE ALREADY-NOTIFIED AND UN-NOTIFIED STATES OF THE BUTTON
-	$r .= " <div style='float:right;border-left:#ccf 1px solid'>\n";
-	$r .= " <img id='cathub-notify-me' src='$wgScriptPath/extensions/wikia/CategoryHubs/notify.png' width='114' height='74' style='float:right;padding:5px;'/>";
-	$r .= "</div>";
+// TODO: RE-ENABLE DISPLAY OF THIS WHEN WE'RE ACTUALLY IMPLEMENTING IT.
+//	$r .= " <div style='float:right;border-left:#ccf 1px solid'>\n";
+//	$r .= " <img id='cathub-notify-me' src='$wgScriptPath/extensions/wikia/CategoryHubs/notify.png' width='114' height='74' style='float:right;padding:5px;'/>";
+//	$r .= "</div>";
 
 	// The actual title that will show up (since we hide the default).
 	$r .= "<h1>".$catView->getCat()->getTitle()."</h1>";
@@ -355,12 +360,20 @@ function categoryHubOtherSection(&$catView, &$r){
 		$r .= "<li><a href='#cathub-tab-answered'><span>".Answer::getSpecialCategory("answered")."</span></a></li>\n";
 		$r .= "</ul>\n";
 
-		if (!empty($catView->answers["unanswered_questions"])){
+		// Unanswered questions in this category.
+		$UN_CLASS = "unanswered_questions";
+		if (!empty($catView->answerArticles[$UN_CLASS])){
 			$r .= "<div id=\"cathub-tab-unanswered\">\n";
-			$r .= wfMsg( 'answers-category-count-unanswered', count( $catView->answers['unanswered_questions'] ) );
-			$r .= "<ul>\n";
-			foreach($catView->answers["unanswered_questions"] as $q){
-				$r.= "<li>$q</li>\n";
+			$r .= "<ul class='interactive-questions'>\n";
+			foreach($catView->answerArticles[$UN_CLASS] as $qArticle){
+				$r .= "<li class=\"$UN_CLASS\">\n";
+
+				// Question & attribution for last edit.
+				$title = $qArticle->getTitle();
+				$r .= "<span class=\"$UN_CLASS\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+				$r .= categoryHubGetAttributionByArticle($qArticle);
+
+				$r .= "</li>\n";
 			}
 			$r .= "</ul>\n";
 			$r .= "</div>\n";
@@ -369,12 +382,31 @@ function categoryHubOtherSection(&$catView, &$r){
 			}
 		}
 
-		if (!empty($catView->answers["answered_questions"])){
+		// Answered questions in this category.
+		$ANS_CLASS = "answered_questions";
+		if (!empty($catView->answerArticles[$ANS_CLASS])){
+			global $wgParser, $wgMessageCache;
+			$tmpParser = new Parser();
+			$tmpParser->setOutputType(OT_HTML);
+			$tmpParserOptions = new ParserOptions();
+
 			$r .= "<div id=\"cathub-tab-answered\">\n";
-			$r .= wfMsg( 'answers-category-count-answered', count($catView->answers['answered_questions'] ) );
-			$r .= "<ul>\n";
-			foreach($catView->answers["answered_questions"] as $q){
-				$r.= "<li>$q</li>\n";
+			$r .= "<ul class='interactive-questions'>\n";
+			foreach($catView->answerArticles[$ANS_CLASS] as $qArticle){
+				$r .= "<li class=\"$ANS_CLASS\">\n";
+
+				// Question & attribution for last edit.
+				$title = $qArticle->getTitle();
+				$r .= "<span class=\"$ANS_CLASS\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+				$r .= categoryHubGetAttributionByArticle($qArticle);
+
+				// Show the  actual answer.
+				$r .= "<div class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</div>\n";
+				$r .= "<div class='cathub-actual-answer'>";
+				$r .= $tmpParser->parse($qArticle->getRawText(), $title, $tmpParserOptions, false)->getText();
+				$r .= "</div>\n";
+	
+				$r .= "</li>\n";
 			}
 			$r .= "</ul>\n";
 			$r .= "</div>\n";
@@ -409,5 +441,33 @@ function categoryHubSubcategorySection(&$catView, &$r){
 	}
 	return $wgCatHub_useDefaultView;
 } // end categoryHubSubcategorySection()
+
+////
+// Returns a string containing the HTML for the attribution line which can be used in
+// the answered/unanswered lists given an article.
+////
+function categoryHubGetAttributionByArticle($qArticle){
+	global $wgLang, $wgStylePath;
+	$title = $qArticle->getTitle();
+	$timestamp = $qArticle->getTimestamp();
+	$lastUpdate = $wgLang->date($timestamp); // TODO: Turn this into X minutes ago, etc.  We have functions for that somewhere (used in MyHome).
+	$userId = $qArticle->getUser();
+	$userLink = "";
+	if($userId > 0){
+		$userText = $qArticle->getUserText();
+		$userPageTitle = Title::makeTitle(NS_USER, $userText);
+		$userPageLink = $userPageTitle->getLocalUrl();
+		$userPageExists = $userPageTitle->exists();
+		$userLinkText = $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '';
+		$userLinkText .= "<img src='$wgStylePath/monobook/blank.gif' id='fe_user_img' class='sprite' alt='".wfMsg('userpage')."' />";
+		$userLinkText .= $userPageExists ? '</a>' : '';
+		$userLinkText .= '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>';
+		$userLink = wfMsgExt('cathub-question-asked-by', array(), $userLinkText);
+	} else {
+		$userLink = wfMsgExt('cathub-anon-username', array());
+	}
+	$asked = wfMsgExt('cathub-question-asked-ago', array(), $lastUpdate, $userLink);
+	return "<div class='cathub-asked'>$asked</div>";
+} // end categoryHubGetAttributionByArticle()
 
 ?>
