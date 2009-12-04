@@ -106,6 +106,16 @@ ul, li {
     margin: 0;
     padding: 0;
 }
+
+
+#wikistickies_save_all {
+	margin-top: 20px;
+}
+
+.wikiheadertools li {
+    list-style-type:none;	
+}
+
 .reflow {
     border-right: 1px solid transparent;
 }
