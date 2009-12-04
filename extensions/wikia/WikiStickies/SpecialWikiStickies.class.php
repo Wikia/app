@@ -31,17 +31,17 @@ class SpecialWikiStickies extends SpecialPage {
 			'wikistickies-wantedimages',
 			WikiStickies::getWantedimagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ),
 			wfMsg('wikistickies-wantedimages-hd'),
-			wfMsg( 'wikistickies-wantedimages-st' ) ) ;
+			wfMsg( 'wikistickies-wantedimages-st-short' ) ) ;
 
 		WikiStickies::formatFeed( 'wikistickies-newpages', 
 			WikiStickies::getNewpagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
 			wfMsg('wikistickies-newpages-hd'), 
-			wfMsg( 'wikistickies-newpages-st' ) );
+			wfMsg( 'wikistickies-newpages-st-short' ) );
 
 		WikiStickies::formatFeed( 'wikistickies-wantedpages', 
 			WikiStickies::getWantedpagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
 			wfMsg('wikistickies-wantedpages-hd'), 
-			wfMsg( 'wikistickies-wantedpages-st' ) );
+			wfMsg( 'wikistickies-wantedpages-st-short' ) );
 
 		// get the Two Tools
 		WikiStickies::generateTools();

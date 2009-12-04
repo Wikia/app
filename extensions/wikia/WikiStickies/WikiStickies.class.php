@@ -267,10 +267,10 @@ class WikiStickies {
 		$sk = $wgUser->getSkin();
 
 		$html = xml::openelement( 'span' ).
-			$prefix.
+			htmlspecialchars( $prefix ).
 			xml::closeelement( 'span' ).
 			// todo: handle an array with more than one item?
-			' ' . $sk->makeKnownLinkObj($title) . '?';
+			' ' . $sk->link( $title, htmlspecialchars( $title->getText(), ENT_QUOTES ), array(), array(), array( 'known') ) . '?';
 		return $html;
 	}
 
