@@ -222,10 +222,9 @@ class WikiStickies extends SpecialPage {
 	// run on a hook adding sidebar content for Special:MyHome
 	static function addToMyHome( $html ) {
 		wfLoadExtensionMessages( 'WikiStickies' );
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesMyHome.css?{$wgStyleVersion}");
-
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/WikiStickiesMyHome.js?{$wgStyleVersion}\"></script>\n");
 		$html = Xml::openElement( 'div', array( 'id' => 'wikisticky_browser' ) ).
 			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).
                         Xml::openElement( 'strong' ).
@@ -233,10 +232,10 @@ class WikiStickies extends SpecialPage {
 			Xml::closeElement( 'strong' ).
 			Xml::openElement( 'p' ).
 			Xml::closeElement( 'p' ).
-			Xml::openElement( 'a', array( 'id' => 'wikisticky_next' ) ).
+			Xml::openElement( 'a', array( 'href' => '#', 'id' => 'wikisticky_next' ) ).
 			wfMsg( 'wikistickies-next' ).
                 	Xml::closeElement( 'a' ).
-			Xml::openElement( 'img', array( 'src' => '../WikiStickies/images/curl.png', 'id' => 'wikisticky_curl' ) ).
+			Xml::openElement( 'img', array( 'src' => '/images/curl.png', 'id' => 'wikisticky_curl' ) ).
 			Xml::closeElement( 'img' ).
 			Xml::closeElement( 'div' ).
 			Xml::closeElement( 'div' );
