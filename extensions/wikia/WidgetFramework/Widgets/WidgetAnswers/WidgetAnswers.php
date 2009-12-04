@@ -107,11 +107,19 @@ EOD;
 		$no_questions .= wfMsgForContent( 'answers_widget_no_questions_askabout' );
 	}
 
+	global $wgWidgetAnswersForceCategoryForAsk;
+	if (!empty($wgWidgetAnswersForceCategoryForAsk)) {
+		$category = $wgWidgetAnswersForceCategoryForAsk;
+	} else {
+		$category = $wgSitename;
+	}
+
 	$output .= <<<EOD
 <script type="text/javascript">/*<![CDATA[*/
 var ask_a_question_msg = "{$ask_a_question}";
 if(typeof WidgetAnswers_html == 'undefined') var WidgetAnswers_html = '';
 var WidgetAnswers_domain = '$domain';
+var WidgetAnswers_category = '$category';
 var WidgetAnswers_url = '$url';
 var node = jQuery('#{$id}_content').children('div:last');
 if(WidgetAnswers_html == '') {
