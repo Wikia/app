@@ -59,7 +59,7 @@ WIKIA.WikiStickies.placeContent = function () {
         var ws_content = this.childNodes[0];
         var ws_para = this.getElementsByTagName('p')[0];
         $(ws_para).css('fontSize', '14pt');
-        var verticalDifference = $(this).height() - $(ws_para).height();
+        var verticalDifference = $(ws_content).height() - $(ws_para).height();
         while (verticalDifference < 0) {
             $(ws_para).css("fontSize", parseInt($(ws_para).css("fontSize") ) - 1);
             verticalDifference = $(ws_content).height() - $(ws_para).height();

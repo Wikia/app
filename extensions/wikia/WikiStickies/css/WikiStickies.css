@@ -40,6 +40,7 @@
 
 .wikisticky_content {
     font: 20px/1.25em "Comic Sans MS", Arial, sans-serif;
+    height: 135px;
     margin: 28px auto 0 auto;
     text-align: center;
     width: 175px;
@@ -47,6 +48,7 @@
 }
 
 .wikisticky_content span { display: block; }
+.wikisticky_content p { position: relative; }
 .wikisticky_content a { padding-right: 3px; }
 
 .wikisticky_content h2, .wikisticky_curl, .wikisticky_next { display: none; }
