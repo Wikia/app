@@ -17,6 +17,7 @@ WIKIA.WikiStickies.count = 0;
 
 WIKIA.WikiStickies.flipWikisticky = function (e) {
 	e.preventDefault();
+	WET.trackByStr( 'MyHome/wikistickies/next' );
 	$(".wikisticky_content p").fadeOut("fast", WIKIA.WikiStickies.updateSticky);
 	$(".wikisticky_content h2").fadeOut("fast");
 	$(".wikisticky_next").hide();
