@@ -3,6 +3,8 @@
 #wikisticky_browser {
     background: url(../images/bg.wikisticky.249x222.png) no-repeat;
     height: 222px;
+    margin-left: auto;
+    margin-right: auto;
     width: 249px;
 }
 
@@ -47,4 +49,12 @@
     right: -8px;
     position: absolute;
     width: 80px;
+}
+
+#wikisticky_special_link {
+    color:#002BB8;
+    font-size: 8pt;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
 }
