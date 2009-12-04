@@ -21,7 +21,7 @@ $messages['en'] = array(
 	'wikistickies-admins-msg' => 'These aren\'t your typical WikiStickies. These are things that can only be done by administrators of the wiki to influence how everyone sees the wiki.',
 	'wikistickies-logo-hd' => 'Upload a Logo',		
 	'wikistickies-theme-hd' => 'Choose a Theme',
-	'wikistickies-next' => 'Next ->',
+	'wikistickies-next' => 'Next &rarr;',
 	'wikistickies-hide' => 'hide',
 	'wikistickies-see-more' => 'See more pages that need help',
 );
