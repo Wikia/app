@@ -13,9 +13,11 @@ class WikiStickies {
 	/**
 	 * Loads base WikiSticky CSS and JavaScript resources.
 	 */
-	static function addWikiStickyResources () {
+	static function addWikiStickyResources ( $all = false) {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
+		if( $all ) {
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
+		}
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");
 	}
 
