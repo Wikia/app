@@ -18,12 +18,12 @@ WIKIA.WikiStickies = {};
 WIKIA.WikiStickies.toggleMore = function (e) {
     if (e) { e.preventDefault(); }
 
-    // TODO: Internationalize "see more" and "see less" text.
+    // TODO: Internationalize "see more" and "hide" text.
     // What's the JS equivalent of wfMsg()?
     if (this.innerHTML === 'see more') {
         // show more
         $(this.previousSibling).show();
-        this.innerHTML = 'see less';
+        this.innerHTML = 'hide';
     } else {
         // show less
         $(this.previousSibling).hide();
