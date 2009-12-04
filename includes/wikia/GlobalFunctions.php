@@ -845,19 +845,19 @@ function wfTimeFormatAgo($stamp){
 
 	if ($ago < 60) {
 		// Under 1 min: to the second (ex: 30 seconds ago)
-		$res = wfMsgExt('myhome-seconds-ago', array('parsemag'), $ago);
+		$res = wfMsgExt('wikia-seconds-ago', array('parsemag'), $ago);
 	}
 	else if ($ago < 3600) {
 		// Under 1 hr: to the minute (3 minutes ago)
-		$res = wfMsgExt('myhome-minutes-ago', array('parsemag'), floor($ago / 60));
+		$res = wfMsgExt('wikia-minutes-ago', array('parsemag'), floor($ago / 60));
 	}
 	else if ($ago < 86400) {
 		// Under 24 hrs: to the hour (4 hours ago)
-		$res = wfMsgExt('myhome-hours-ago', array('parsemag'), floor($ago / 3600));
+		$res = wfMsgExt('wikia-hours-ago', array('parsemag'), floor($ago / 3600));
 	}
 	else if ($ago < 30 * 86400) {
 		// Under 30 days: to the day (5 days ago)
-		$res = wfMsgExt('myhome-days-ago', array('parsemag'), floor($ago / 86400));
+		$res = wfMsgExt('wikia-days-ago', array('parsemag'), floor($ago / 86400));
 	}
 	else if ($ago < 365 * 86400) {
 		// Under 365 days: date, with no year (July 26)
