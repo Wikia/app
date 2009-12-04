@@ -175,7 +175,7 @@ class WikiStickies {
 				'action'		=> 'query',
 				'list'			=> 'recentchanges',
 				'rcprop'		=> 'title',
-				'rcnamespace'		=> $wgContentNamespaces,
+				'rcnamespace'		=> implode('|',$wgContentNamespaces),
 				'rctype'		=> 'new',
 				'rcshow'		=> '!redirect',
 				'rclimit'		=> intval($limit),
