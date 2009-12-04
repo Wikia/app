@@ -245,12 +245,21 @@ class WikiStickies {
 			Xml::openElement( 'img', array( 'src' => "{$wgExtensionsPath}/wikia/WikiStickies/images/curl.png", 'class' => 'wikisticky_curl' ) ).
 			Xml::closeElement( 'img' ).
 			Xml::closeElement( 'div' ).
-			Xml::closeElement( 'div' ).
-			// this is the link for Special:WikiStickies
-			Xml::openElement( 'div', array( 'id' => 'wikisticky_special_link' ) ).
-			$special_link.
 			Xml::closeElement( 'div' );
-				
+
+		// leave if canonical is not MyHome
+		global $wgTitle, $wgCanonicalNamespaceNames;
+		$nsname = isset( $wgCanonicalNamespaceNames[ $wgTitle->getNamespace() ] ) ?
+			$wgCanonicalNamespaceNames[ $wgTitle->getNamespace() ] :
+			$wgTitle->getNsText();
+			
+		if( 'MyHome' == $nsname ) {
+			// this is the link for Special:WikiStickies
+			$html .= Xml::openElement( 'div', array( 'id' => 'wikisticky_special_link' ) ).
+				$special_link.
+				Xml::closeElement( 'div' );
+		}		
+		
 		return $html;
 	}
 
