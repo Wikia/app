@@ -85,11 +85,21 @@ class WikiaReplicateImages {
 		/**
 		 * rsync must be run from root in order to save file's ownership
 		 */
-		$this->mRunAs = isset( $this->mOptions['u'])       ? $this->mOptions['u'] : 'root';
-		$this->mTest  = isset( $this->mOptions['test'])    ? true : false;
-		$limit        = isset( $this->mOptions['limit'] )  ? $this->mOptions['limit'] : 10000;
-		$reverse      = isset( $this->mOptions['reverse']) ? true : false;
-		$wgErrorLog   = isset( $this->mOptions['log'])     ? true : false;
+		$this->mRunAs = isset( $this->mOptions['u'] )
+			? $this->mOptions['u']
+			: 'root';
+		$this->mTest  = isset( $this->mOptions['test'] )
+			? true
+			: false;
+		$limit        = isset( $this->mOptions['limit'] )
+			? $this->mOptions['limit']
+			: 5000;
+		$reverse      = isset( $this->mOptions['reverse'] )
+			? true
+			: false;
+		$wgErrorLog   = isset( $this->mOptions['log'] )
+			? true
+			: false;
 
 		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 
@@ -129,7 +139,7 @@ class WikiaReplicateImages {
 				/**
 				 * just uploaded file
 				 */
-				Wikia::log( __CLASS__, "start", "===> {$cnt} up_id:{$Row->up_id} city_id:{$Row->up_city_id} path:{$Row->up_imgpath} created:{$Row->up_created} flags:{$Row->up_flags}" );
+				Wikia::log( __CLASS__, "start", "===> {$cnt} up_id:{$Row->up_id} city_id:{$Row->up_city_id} created:{$Row->up_created} flags:{$Row->up_flags}" );
 
 				foreach( $this->mServers as $name => $server ) {
 					/**
