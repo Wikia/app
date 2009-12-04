@@ -32,6 +32,14 @@ WIKIA.WikiStickies.toggleMore = function (e) {
 };
 
 /**
+ * Wrapper for tracking
+ */
+
+WIKIA.WikiStickies.track( fakeUrl ) {
+	WET.byStr('WikiStickies' + fakeUrl);
+}
+
+/**
  * Appropriately sizes, positions, and finally displays a wikisticky.
  */
 WIKIA.WikiStickies.placeContent = function () {
