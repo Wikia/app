@@ -1,12 +1,21 @@
 /**
- * WikiStickies "namespace."
+ * @ingroup Wikia
+ * @file WikiStickies.js
+ * @package WikiStickies
+ *
+ * Base WikiStickies JavaScript file.
+ *
+ * This JavaScript contains the base WikiStickies functionality as well as any
+ * functionality necessary for the Special:WikiStickies page.
  */
-var WikiStickies = {};
+
+// WikiStickies "namespace."
+WIKIA.WikiStickies = {};
 
 /**
  * Toggles the display of additional items and the more/less link.
  */
-WikiStickies.toggleMore = function (e) {
+WIKIA.WikiStickies.toggleMore = function (e) {
     if (e) { e.preventDefault(); }
 
     // TODO: Internationalize "see more" and "see less" text.
@@ -20,10 +29,12 @@ WikiStickies.toggleMore = function (e) {
         $(this.previousSibling).hide();
         this.innerHTML = 'see more';
     }
-}
+};
 
-// Set font size and position of sticky content.
-WikiStickies.placeContent = function () {
+/**
+ * Appropriately sizes, positions, and finally displays a wikisticky.
+ */
+WIKIA.WikiStickies.placeContent = function () {
     $(".wikisticky_browser").each(function() {
         var ws_content = this.childNodes[0];
         var ws_para = this.getElementsByTagName('p')[0];
@@ -36,9 +47,9 @@ WikiStickies.placeContent = function () {
         $(ws_para).css("top", verticalDifference / 2);
         $(ws_content).css('visibility', 'visible');
     });
-}
+};
 
 $(document).ready(function() {
-    $('.wikistickiesfeed .MoreLink').click(WikiStickies.toggleMore);
-    WikiStickies.placeContent();
+    $('.wikistickiesfeed .MoreLink').click(WIKIA.WikiStickies.toggleMore);
+    WIKIA.WikiStickies.placeContent();
 });

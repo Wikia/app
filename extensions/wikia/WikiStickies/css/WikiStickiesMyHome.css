@@ -1,42 +1,49 @@
+#myhome-sidebar .wikisticky_content h2, #myhome-sidebar .wikisticky_curl, #myhome-sidebar .wikisticky_next { display: block; }
+
 #wikisticky_browser {
-	background: url(../images/sticky.png) no-repeat;
-	height: 222px;
-	width: 249px;	
-}
-#wikisticky_content {
-	height: 213px;
-	overflow: hidden;
-	position: relative;
-	width: 240px;	
-}
-#wikisticky_content strong {
-	display: block;
-	font-size: 11pt;
-	height: 33px;
-	line-height: 33px;
-	padding-left: 5px;
-	text-align: left;	
-}
-#wikisticky_content p {
-	display: block;
-	font-family: "Comic Sans MS", "Arial", sans-serif;
-	margin: 0;
-	padding: 0 20px;
-	position: relative;
-	text-align: center;
-}
-#wikisticky_next {
-	bottom: 0;
-	color: #999;
-	padding: 10px 0;
-	position: absolute;
-	right: 50px;	
-}
-#wikisticky_curl {
-	bottom: -8px;
-	cursor: pointer;
-	right: -8px;
-	position: absolute;
-	width: 80px;
+    background: url(../images/bg.wikisticky.249x222.png) no-repeat;
+    height: 222px;
+    width: 249px;
 }
 
+.wikisticky_content {
+    height: 213px;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 240px;
+}
+
+#wikisticky_browser h2 {
+    font-size: 11pt;
+    height: 33px;
+    line-height: 33px;
+    padding: 0 0 0 5px;
+    border: none;
+    font-weight: bold;
+    margin: 0;
+    text-align: left;
+}
+
+.wikisticky_content p {
+    font-family: "Comic Sans MS", Arial, sans-serif;
+    margin: 0;
+    padding: 0 20px;
+    position: relative;
+    text-align: center;
+}
+.wikisticky_next {
+    bottom: 0;
+    color: #999;
+    font-size: 12px;
+    padding: 10px 0;
+    position: absolute;
+    right: 50px;
+}
+.wikisticky_curl {
+    bottom: -8px;
+    cursor: pointer;
+    right: -8px;
+    position: absolute;
+    width: 80px;
+}

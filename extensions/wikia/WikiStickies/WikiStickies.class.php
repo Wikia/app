@@ -14,6 +14,15 @@ class WikiStickies extends SpecialPage {
 		parent::__construct('WikiStickies');
 	}
 
+	/**
+	 * Loads base WikiSticky CSS and JavaScript resources.
+	 */
+	function addWikiStickyResources () {
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");
+	}
+
 	// the main heavy-hitter of the special page: wrapper for display-it-all
 	function execute() {
 		global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
@@ -23,11 +32,10 @@ class WikiStickies extends SpecialPage {
 
 		$this->setHeaders();
 
-		// load dependencies (CSS and JS)
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
+		$this->addWikiStickyResources();
+		// load additional dependencies (CSS and JS)?
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");
 
 		// get the Three Feeds
 		$this->formatFeed( 'wikistickies-wantedimages', $this->getWantedimagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd'), wfMsg( 'wikistickies-wantedimages-st' ) ) ;
@@ -70,7 +78,7 @@ class WikiStickies extends SpecialPage {
 	function formatFeed( $type, &$feed_data, $header, $sticker ) {
 		global $wgOut, $wgUser;
 
-		$sk = $wgUser->getSkin () ;
+		$sk = $wgUser->getSkin() ;
 		$body = $body2 = '';
 
 		if( empty( $feed_data ) ) {
@@ -81,17 +89,12 @@ class WikiStickies extends SpecialPage {
 			array_pop( $feed_data );
 		}
 
-		// display the sticky
-		$sticky = Xml::openElement( 'div', array( 'id' => $type . '-browser', 'class' => 'wikisticky_browser' ) ).
-			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) ).
-			Xml::openElement( 'p' ).
-			Xml::openElement( 'span' ).
-				$sticker .
-			Xml::closeElement( 'span' ).
-				' ' . $sk->makeKnownLinkObj( array_shift( $feed_data ) ). '?'.
-			Xml::closeElement( 'p' ).
-			Xml::closeElement( 'div' ).
-			Xml::closeElement( 'div' );
+		$sticky = $this->renderWikiSticky( array( array_shift( $feed_data ) ),
+			$sticker,
+			array(
+				'id' => $type . '-browser',
+				'class' => 'wikisticky_browser' )
+			);
 
 		$numitems = count($feed_data);
 		$uptolimit = 0;
@@ -149,7 +152,7 @@ class WikiStickies extends SpecialPage {
 
 		// See more link
 		// TODO: This href attribute should actually point to the source of the feed
-		//       in case JS is off. It should not remain an empty fragment.
+		//	   in case JS is off. It should not remain an empty fragment.
 		if ($numitems > 10) { // don't show link if less than 10 items in list
 			$html .= Xml::openElement( 'a', array( 'href' => '#', 'class' => 'MoreLink' ) ).
 				wfMsg( 'wikistickies-more' ).
@@ -226,26 +229,64 @@ class WikiStickies extends SpecialPage {
 			return $this->getFeed( 'wantedimages', $data );
 	}
 
+	/**
+	 * Outputs the appropriate HTML for a WikiSticky.
+	 *
+	 * @param $text array A list of Title objects the WikiSticky should display.
+	 * @param $prefix string The natural-language prefix to the type of sticky.
+	 * @param $attrs array An array of attribute-value pairs. (Optional.)
+	 *
+	 * @return string The appropriate HTML to output.
+	 */
+	function renderWikiSticky ( $text, $prefix, $attrs = NULL ) {
+		global $wgExtensionsPath, $wgUser;
+
+		$sk = $wgUser->getSkin() ;
+
+		// Set default attributes.
+		if( !is_array( $attrs ) ) {
+			$attrs = array(
+				'id' => 'wikisticky_browser',
+				'class' => 'wikisticky_browser'
+			);
+		}
+
+		$html = Xml::openElement( 'div', $attrs ).
+			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) ).
+			Xml::openElement( 'h2' ).
+				wfMsg( 'wikistickies' ).
+			Xml::closeElement( 'h2' ).
+			Xml::openElement( 'p' ).
+				Xml::openElement( 'span' ).
+					$prefix.
+				Xml::closeElement( 'span' ).
+				// TODO: Handle an array with more than one item?
+				' ' . $sk->makeKnownLinkObj($text[0]) . '?'.
+			Xml::closeElement( 'p' ).
+			// TODO: This should link to the source of the feed fetched, not a '#' fragment.
+			Xml::openElement( 'a', array( 'href' => '#', 'class' => 'wikisticky_next' ) ).
+				wfMsg( 'wikistickies-next' ).
+			Xml::closeElement( 'a' ).
+			Xml::openElement( 'img', array( 'src' => "{$wgExtensionsPath}/wikia/WikiStickies/images/curl.png", 'class' => 'wikisticky_curl' ) ).
+			Xml::closeElement( 'img' ).
+			Xml::closeElement( 'div' ).
+			Xml::closeElement( 'div' );
+
+		return $html;
+	}
+
 	// run on a hook adding sidebar content for Special:MyHome
 	static function addToMyHome( $html ) {
 		wfLoadExtensionMessages( 'WikiStickies' );
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+
+		WikiStickies::addWikiStickyResources();
+		// Special:MyHome page-specific resources
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesMyHome.css?{$wgStyleVersion}");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/WikiStickiesMyHome.js?{$wgStyleVersion}\"></script>\n");
-		$html = Xml::openElement( 'div', array( 'id' => 'wikisticky_browser' ) ).
-			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).
-                        Xml::openElement( 'strong' ).
-			wfMsg( 'wikistickies' ).
-			Xml::closeElement( 'strong' ).
-			Xml::openElement( 'p' ).
-			Xml::closeElement( 'p' ).
-			Xml::openElement( 'a', array( 'href' => '#', 'id' => 'wikisticky_next' ) ).
-			wfMsg( 'wikistickies-next' ).
-                	Xml::closeElement( 'a' ).
-			Xml::openElement( 'img', array( 'src' => '/images/curl.png', 'id' => 'wikisticky_curl' ) ).
-			Xml::closeElement( 'img' ).
-			Xml::closeElement( 'div' ).
-			Xml::closeElement( 'div' );
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js?{$wgStyleVersion}\"></script>\n");
+
+		// TODO: Still need to pull this in from the feed. Right now we're faking it with JS on the front-end.
+		$html = WikiStickies::renderWikiSticky( 'Hello world.', 'Can you add images to the page about');
 
 		return true;
 	}
