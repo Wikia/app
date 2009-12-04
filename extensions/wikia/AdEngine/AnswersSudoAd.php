@@ -9,6 +9,9 @@ class AnswersSudoAd {
 	static public function getAd($placeholdertype, $slotname, $AdEngine, $html) {
 		if (("HOME_TOP_LEADERBOARD" != $slotname) && ("TOP_LEADERBOARD" != $slotname)) return true;
 
+		global $wgUser;
+		if (empty($_GET["showads"]) && is_object($wgUser) && $wgUser->isLoggedIn() && !$wgUser->getOption("showAds")) return true;
+						 
 		wfLoadExtensionMessages("AnswersSudoAd");
 
 		$html = wfMsgForContent("asa-leaderboard");
