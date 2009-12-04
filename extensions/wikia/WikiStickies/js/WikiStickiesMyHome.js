@@ -13,13 +13,6 @@
  *        any of the features here.
  */
 
-// TODO: fetch from api a data set, yeah
-WIKIA.WikiStickies.stickies = [
-	'Can you add to the page about<br /><a href="#">Axl Rose</a>?',
-	'Can you add to the page about<br /><a href="#">Some really freaking long, crazy article name</a>?',
-	'Can you upload a photo to the page about<br /><a href="#">Kermit the Frog</a>?',
-	'Can you start an article about<br /><a href="#">The Chaosmaker</a>?'
-];
 WIKIA.WikiStickies.count = 0;
 
 WIKIA.WikiStickies.flipWikisticky = function (e) {
