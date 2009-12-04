@@ -249,11 +249,9 @@ class WikiStickies {
 
 		// leave if canonical is not MyHome
 		global $wgTitle, $wgCanonicalNamespaceNames;
-		$nsname = isset( $wgCanonicalNamespaceNames[ $wgTitle->getNamespace() ] ) ?
-			$wgCanonicalNamespaceNames[ $wgTitle->getNamespace() ] :
-			$wgTitle->getNsText();
+		$canname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
 			
-		if( 'MyHome' == $nsname ) {
+		if( 'MyHome' == $canname ) {
 			// this is the link for Special:WikiStickies
 			$html .= Xml::openElement( 'div', array( 'id' => 'wikisticky_special_link' ) ).
 				$special_link.
