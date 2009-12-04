@@ -216,7 +216,7 @@ class WikiStickies {
 	 * @return string The appropriate HTML to output.
 	 */
 	static function renderWikiSticky ( $title, $prefix, $attrs = NULL ) {
-		global $wgExtensionsPath;
+		global $wgExtensionsPath, $wgUser;
 
 		// Set default attributes.
 		if( !is_array( $attrs ) ) {
@@ -225,6 +225,10 @@ class WikiStickies {
 				'class' => 'wikisticky_browser'
 			);
 		}
+
+		$sp_title = Title::makeTitle( NS_SPECIAL, 'WikiStickies' );
+		$sk = $wgUser->getSkin();
+		$special_link = $sk->makeKnownLinkObj( $sp_title, wfMsg( 'wikistickies-see-more' ) );
 
 		$html = Xml::openElement( 'div', $attrs ).
 			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) ).
@@ -241,8 +245,12 @@ class WikiStickies {
 			Xml::openElement( 'img', array( 'src' => "{$wgExtensionsPath}/wikia/WikiStickies/images/curl.png", 'class' => 'wikisticky_curl' ) ).
 			Xml::closeElement( 'img' ).
 			Xml::closeElement( 'div' ).
+			Xml::closeElement( 'div' ).
+			// this is the link for Special:WikiStickies
+			Xml::openElement( 'div', array( 'id' => 'wikisticky_special_link' ) ).
+			$special_link.
 			Xml::closeElement( 'div' );
-
+				
 		return $html;
 	}
 
