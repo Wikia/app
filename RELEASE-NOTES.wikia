@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#28761: Answers: Hack answers widget to send questions to a particular category. (Nef)
 * rt#31994: Signup: load cookie of last user into loginform, not signup (uberfuzzy)
 * rt#26761: Blogs: translated namespaces to Spanish (TOR)
 * rt#28296: Answers, ActivityFeed: per-ns CSS classes and quetion marks in feed (TOR)
