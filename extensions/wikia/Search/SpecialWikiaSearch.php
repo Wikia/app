@@ -3,16 +3,60 @@
 class SpecialWikiaSearch extends SpecialSearchOld {
 
 	private $searchLocalWikiOnly = false;
+	private $searchLocalWikiOnlySession = 'WikiaSearch-localOnly';
 
 	public function __construct( &$request, &$user ) {
-		$this->searchLocalWikiOnly = $request->getcheck( 'thisWikiOnly' ) ? true : false;
+		global $wgSessionStarted;
+
+		wfLoadExtensionMessages( 'WikiaSearch' );
+
+		if(empty($wgSessionStarted)) {
+			// start session
+			wfSetupSession();
+			$wgSessionStarted = true;
+		}
+
+		if($request->getcheck( 'thisWikiOnly' ) || (isset($_SESSION[$this->searchLocalWikiOnlySession]) && ($_SESSION[$this->searchLocalWikiOnlySession] == true))) {
+			$this->searchLocalWikiOnly = true;
+			$_SESSION[$this->searchLocalWikiOnlySession] = true;
+		}
+		else {
+			$this->searchLocalWikiOnly = false;
+			$_SESSION[$this->searchLocalWikiOnlySession] = false;
+		}
+
+		$_SESSION[$this->searchLocalWikiOnlySession] = $request->getcheck( 'thisWikiOnly' );
 
 		parent::__construct( $request, $user );
 	}
 
 	public function shortDialog( $term ) {
-		// no change required at the moment
-		return parent::shortDialog( $term );
+		global $wgScript;
+
+		$out  = Xml::openElement( 'form', array( 'id' => 'search', 'method' => 'get', 'action' => $wgScript ));
+		$searchTitle = SpecialPage::getTitleFor( 'Search' );
+		$out .= Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'searchText', 'class' => 'wikia_search_field' ) );
+		$out .= '<a id="searchButton" class="big_button"><big>' . wfMsg( 'wikiasearch-button' ) . '</big><small></small></a>';
+
+		foreach( SearchEngine::searchableNamespaces() as $ns => $name ) {
+			if( in_array( $ns, $this->namespaces ) ) {
+				$out .= Xml::hidden( "ns{$ns}", '1' );
+			}
+		}
+		$out .= Xml::hidden( 'title', $searchTitle->getPrefixedText() );
+		$out .= Xml::hidden( 'fulltext', 'Search' );
+		$out .= Xml::submitButton( wfMsg( 'searchbutton' ), array( 'style' => 'display: none;', 'name' => 'fulltext' ) );
+		$out .= Xml::closeElement( 'form' );
+
+		$out .= <<<STOP
+<script type="text/javascript">
+//<![CDATA[
+$("#searchButton").click(function() { $("#search").submit() } );
+//]]>
+</script>
+STOP;
+
+		return $out;
 	}
 
 	public function powerSearchBox( $term ) {
@@ -59,8 +103,8 @@ class SpecialWikiaSearch extends SpecialSearchOld {
 
 		$redirect = Xml::check( 'redirs', $this->searchRedirects, array( 'value' => '1', 'id' => 'redirs' ) );
 		$redirectLabel = Xml::label( wfMsg( 'powersearch-redir' ), 'redirs' );
-		$searchField = Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'powerSearchText' ) );
-		$searchButton = Xml::submitButton( wfMsg( 'powersearch' ), array( 'name' => 'fulltext' ) ) . "\n";
+		$searchField = Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'powerSearchText', 'class' => 'wikia_search_field' ) );
+		$searchButton = Xml::submitButton( wfMsg( 'searchbutton' ), array( 'name' => 'fulltext', 'style' => 'display: none;' ) ) . "\n";
 		$searchTitle = SpecialPage::getTitleFor( 'Search' );
 		$searchHiddens = Xml::hidden( 'title', $searchTitle->getPrefixedText() ) . "\n";
 		$searchHiddens .= Xml::hidden( 'fulltext', 'Advanced search' ) . "\n";
@@ -68,11 +112,12 @@ class SpecialWikiaSearch extends SpecialSearchOld {
 		$extraRefinements = "<p>" . $redirect . " " . $redirectLabel . "</p>\n";
 		wfRunHooks( 'SpecialSearchBoxExtraRefinements', array( &$extraRefinements ) );
 
-		$out = "<br />";
-		$out.= Xml::openElement( 'form', array(	'id' => 'powersearch', 'method' => 'get', 'action' => $wgScript ) );
+		$out = Xml::openElement( 'form', array( 'id' => 'powersearch', 'method' => 'get', 'action' => $wgScript ) );
 		$out.= $searchHiddens;
-		$out.= $searchField . "&nbsp;" . $searchButton;
-		$out.= "<p>" . Xml::checkLabel( wfMsg( 'wikiasearch-search-this-wiki', array( $wgSitename ) ), 'thisWikiOnly', 'thisWikiOnly', $this->searchLocalWikiOnly ) . "</p>";
+		$out.= $searchField;
+		$out.= '<a id="powersearchButton" class="big_button"><big>' . wfMsg( 'wikiasearch-button' ) . '</big><small></small></a>';
+		$out.= $searchButton;
+		$out.= "<p style=\"clear: left;\">" . Xml::checkLabel( wfMsg( 'wikiasearch-search-this-wiki', array( $wgSitename ) ), 'thisWikiOnly', 'thisWikiOnly', $this->searchLocalWikiOnly ) . "</p>";
 		$out.= Xml::openElement( 'div', array( 'id' => 'powersearch-advanced', 'style' => ( $this->searchLocalWikiOnly ? 'display: block;' : 'display: none;' ) ) );
 		$out.= Xml::fieldset( wfMsg( 'powersearch-legend' ),
 				"<p>" . wfMsgExt( 'powersearch-ns', array( 'parseinline' ) ) . "</p>" .
@@ -86,6 +131,7 @@ class SpecialWikiaSearch extends SpecialSearchOld {
 <script type="text/javascript">
 //<![CDATA[
 $("#thisWikiOnly").click(function() { if(this.checked) { $("#powersearch-advanced").show(); } else { $("#powersearch-advanced").hide(); } } );
+$("#powersearchButton").click(function() { $("#powersearch").submit() } );
 //]]>
 </script>
 STOP;
@@ -101,10 +147,13 @@ STOP;
 			$wgSupressSiteNotice = true;
 			$wgOut->setHTMLTitle( wfMsg( 'pagetitle', wfMsg( 'searchresults-title', $term) ) );
 		}
-		$subtitlemsg = ( Title::newFromText( $term ) ? 'searchsubtitle' : 'searchsubtitleinvalid' );
+		$wgSupressPageTitle = true;
+		$wgSupressSiteNotice = true;
+		//$subtitlemsg = ( Title::newFromText( $term ) ? 'searchsubtitle' : 'searchsubtitleinvalid' );
 		//$wgOut->setSubtitle( $wgOut->parse( wfMsg( $subtitlemsg, wfEscapeWikiText($term) ) ) );
 		$wgOut->setArticleRelated( false );
 		$wgOut->setRobotPolicy( 'noindex,nofollow' );
+		$wgOut->addHTML('<div class="wikia_search_header dark_text_1">' . wfMsg( 'wikiasearch-search-wikia' ) . '</div>');
 	}
 
 	/**
@@ -123,7 +172,9 @@ STOP;
 		$search->prefix = $this->mPrefix;
 		$term = $search->transformSearchTerm($term);
 
-		$this->setupPage( $term );
+		if(!empty($term)) {
+			$this->setupPage( $term );
+		}
 
 		$rewritten = $search->replacePrefixes($term);
 		$titleMatches = $search->searchTitle( $rewritten );
@@ -165,6 +216,9 @@ STOP;
 
 		if( '' === trim( $term ) ) {
 			// Empty query -- straight view of search form
+			global $wgSupressPageTitle, $wgSupressSiteNotice;
+			$wgSupressPageTitle = true;
+			$wgSupressSiteNotice = true;
 			$wgOut->setSubtitle( '' );
 			$wgOut->addHTML( $this->powerSearchBox( $term ) );
 			$wgOut->addHTML( $this->powerSearchFocus() );
@@ -226,7 +280,7 @@ STOP;
 			} else {
 				$top = wfShowingResultsNum( $this->offset, $this->limit, $num );
 			}
-			$wgOut->addHTML( "<p class='mw-search-numberresults'>{$top}</p>\n" );
+			$wgOut->addHTML( "<p class='mw-search-numberresults' style='clear: left;'>{$top}</p>\n" );
 		}
 
 		// prev/next links
@@ -260,7 +314,9 @@ STOP;
 					$wgOut->addHTML("<br/>");
 			} elseif( $num == 0 ) {
 				# Don't show the 'no text matches' if we received title matches
+				$wgOut->addHTML( "<p style='clear: left;'>" );
 				$wgOut->wrapWikiMsg( "==$1==\n", 'notextmatches' );
+				$wgOut->addHTML( "</p>" );
 			}
 			// show interwiki results if any
 			if( $textMatches->hasInterwikiResults() )
@@ -280,6 +336,39 @@ STOP;
 		}
 		$wgOut->addHTML( $this->powerSearchBox( $term ) );
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Show whole set of results
+	 *
+	 * @param SearchResultSet $matches
+	 */
+	function showMatches( &$matches ) {
+		wfProfileIn( __METHOD__ );
+
+		global $wgContLang;
+		$terms = $wgContLang->convertForSearchResult( $matches->termMatches() );
+
+		$out = "";
+
+		$infoLine = $matches->getInfo();
+		if( !is_null($infoLine) )
+			$out .= "\n<!-- {$infoLine} -->\n";
+
+
+		$off = $this->offset + 1;
+		$out .= "<ul class='mw-search-results' style='margin-left: 0;'>\n";
+
+		while( $result = $matches->next() ) {
+			$out .= $this->showHit( $result, $terms );
+		}
+		$out .= "</ul>\n";
+
+		// convert the whole thing to desired language variant
+		global $wgContLang;
+		$out = $wgContLang->convert( $out );
+		wfProfileOut( __METHOD__ );
+		return $out;
 	}
 
 }

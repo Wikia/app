@@ -232,6 +232,56 @@ strong .secondary_back span {
 	left: -320px;
 }
 
+a.big_button {
+	display: block;
+	float: left;
+	height: 28px;
+	overflow: hidden;
+	padding-right: 10px;
+	position: relative;
+	text-decoration: none;
+}
+a.big_button:hover {
+	text-decoration: none;
+}
+a.big_button * {
+	cursor: pointer;
+	float: left;
+	font-family: "Lucida Grande", arial, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	height: 28px;
+	line-height: 28px;
+}
+a.big_button big, a.big_button small {
+	background: url(../../home/images/big_button.png) no-repeat;
+}
+a.big_button big {
+	color: #EEE;
+	padding-left: 10px;
+}
+a.big_button small {
+	clip: rect(0px 300px 28px 290px);
+	position: absolute;
+	right: 0;
+	width: 300px;
+}
+
+.wikia_search_field {
+	float: left;
+	color: #1e64b4;
+	font-family: "arial", sans-serif;
+	font-size: 14pt;
+	width: 400px;
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+
+.wikia_search_header {
+font-size:155%;
+font-weight:bold;
+margin-bottom:5px;
+}
 
 /*** SLOTS STYLES ***/
 #HOME_TOP_LEADERBOARD {
