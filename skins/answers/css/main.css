@@ -1106,3 +1106,36 @@ div.category br {
 	display:inline;
 	height:100% !important;
 }
+.interactive-questions{
+	list-style:none;
+	margin:0px;
+	padding:0px;
+}
+.interactive-questions li{
+	margin:0px;
+	padding:10px;
+	border-bottom: 1px #aaa solid;
+	font-size:1em;
+}
+.interactive-questions li:hover{
+	background-color:#f0f0f0;
+}
+span.answered_questions a, span.unanswered_questions a{
+	color:#00c;
+	font-size:1.1em;
+}
+.cathub-asked {
+	font-size:.75em;
+	color:#777;
+	line-height:.8em;
+}
+.cathub-actual-answer{
+	margin-top:15px;
+	font-size:.8em;
+}
+.cathub-answer-heading{
+	font-size:1.1em;
+	font-weight:bold;
+	color:#090;
+	line-height:.8em;
+}

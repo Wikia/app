@@ -341,6 +341,7 @@ function categoryHubContributorsToHtml($editsByUserId){
 // the Answered/Unanswered questions section.
 ////
 function categoryHubOtherSection(&$catView, &$r){
+	wfProfileIn(__METHOD__);
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
 		global $wgUser;
@@ -401,8 +402,8 @@ function categoryHubOtherSection(&$catView, &$r){
 				$r .= categoryHubGetAttributionByArticle($qArticle);
 
 				// Show the  actual answer.
-				$r .= "<div class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</div>\n";
 				$r .= "<div class='cathub-actual-answer'>";
+				$r .= "<span class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</span><br/>\n";
 				$r .= $tmpParser->parse($qArticle->getRawText(), $title, $tmpParserOptions, false)->getText();
 				$r .= "</div>\n";
 	
@@ -417,6 +418,8 @@ function categoryHubOtherSection(&$catView, &$r){
 
 		$r .= "</div>\n"; // end of #tabs
 	}
+
+	wfProfileOut(__METHOD__);
 	return $wgCatHub_useDefaultView;
 } // end categoryHubOtherSection()
 
@@ -447,10 +450,10 @@ function categoryHubSubcategorySection(&$catView, &$r){
 // the answered/unanswered lists given an article.
 ////
 function categoryHubGetAttributionByArticle($qArticle){
-	global $wgLang, $wgStylePath;
+	global $wgStylePath;
 	$title = $qArticle->getTitle();
 	$timestamp = $qArticle->getTimestamp();
-	$lastUpdate = $wgLang->date($timestamp); // TODO: Turn this into X minutes ago, etc.  We have functions for that somewhere (used in MyHome).
+	$lastUpdate = wfTimeFormatAgo($timestamp);
 	$userId = $qArticle->getUser();
 	$userLink = "";
 	if($userId > 0){
