@@ -131,7 +131,7 @@ class SolrSearchSet extends SearchResultSet {
 		$sanitizedQuery = self::sanitizeQuery($query);
 
 		$params = array(
-			'fl' => 'title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
+			'fl' => 'html,title,canonical,url,host,bytes,words,ns,lang,indexed,created,views,wid,revcount,backlinks,wikititle,wikiarticles,wikipages,activeusers', // fields we want to fetch back
 			'qf' => $queryFields,
 			'bf' => 'scale(map(views,10000,100000000,10000),0,10)^20', // force view count to maximum threshold of 10k (make popular articles a level playing field, otherwise main/top pages always win) and scale all views to same scale
 			'bq' => '(*:* -html:(' . $sanitizedQuery . '))^20', // boost the inverse set of the content matches again, to make content-only matches at the bottom but still sorted by match
@@ -287,9 +287,15 @@ class SolrSearchSet extends SearchResultSet {
 		if(isset($this->mResults[$this->mPos])) {
 			$solrResult = new SolrResult($this->mResults[$this->mPos], $this->crossWikiaSearch);
 			$url = $this->mResults[$this->mPos]->url;
+			$html = trim($this->mResults[$this->mPos]->html);
 			if(isset($this->mSnippets[$url]->html)) {
 				$solrResult->setSnippets($this->mSnippets[$url]->html);
 			}
+			elseif(!empty($html)) {
+				//no highlighting, take html instead (if we have one)
+				$solrResult->setSnippets( array( 0 => substr($html, 0, 150) ) );
+			}
+
 			if(isset($this->mSnippets[$url]->title[0])) {
 				$solrResult->setHighlightTitle($this->mSnippets[$url]->title[0]);
 			}
