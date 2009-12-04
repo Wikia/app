@@ -18,8 +18,9 @@ $dir = dirname(__FILE__) . '/';
 // special page
 $wgAutoloadClasses['WikiStickies'] = $dir.'WikiStickies.class.php';
 $wgAutoloadClasses['SpecialWikiStickies'] = $dir.'SpecialWikiStickies.class.php';
-$wgSpecialPages['SpecialWikiStickies'] = 'SpecialWikiStickies';
-$wgSpecialPageGroups['SpecialWikiStickies'] = 'users';
+$wgSpecialPages['WikiStickies'] = 'SpecialWikiStickies';
+$wgSpecialPageGroups['WikiStickies'] = 'users';
+$wgExtensionAliasesFiles['WikiStickies'] = $dir . 'SpecialWikiStickies.alias.php';
 $wgExtensionMessagesFiles['WikiStickies'] = $dir . 'WikiStickies.i18n.php';
 $wgAutoloadClasses['ApiQueryWantedpages'] = $dir . 'ApiQueryWantedpages.php';
 $wgAutoloadClasses['ApiQueryWantedimages'] = $dir . 'ApiQueryWantedimages.php';

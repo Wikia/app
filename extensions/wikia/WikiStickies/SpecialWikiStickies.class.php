@@ -8,12 +8,12 @@ class SpecialWikiStickies extends SpecialPage {
 
 	function __construct() {
 		parent::__construct('WikiStickies');
+		wfLoadExtensionMessages( 'WikiStickies' );
 	}
 
 	// the main heavy-hitter of the special page: wrapper for display-it-all
 	function execute() {
 		global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
-		wfLoadExtensionMessages( 'WikiStickies' );
 		// for tools: logo upload and skin chooser
 		wfLoadExtensionMessages( 'NewWikiBuilder' );
 
