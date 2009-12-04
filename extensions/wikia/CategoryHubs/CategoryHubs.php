@@ -75,14 +75,11 @@ function categoryHubAddMagicWords(&$magicWords, $langCode){
 // Before the page is rendered this gives us a chance to cram some Javascript in.
 ////
 function categoryHubAdditionalScripts( &$out, &$sk ){
+	global $wgScriptPath;
 	$out->addScript('<link type="text/css" href="http://jqueryui.com/latest/themes/base/ui.all.css" rel="stylesheet" />');
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.core.js"></script>');
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.tabs.js"></script>');
-	$out->addScript('<script type="text/javascript">
-  $(document).ready(function(){
-    $("#tabs").tabs();
-  });
-  </script>');
+	$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/wikia/CategoryHubs/interactiveLists.js'></script>");
 	return true;
 } // end categoryHubAdditionalScripts()
 
@@ -379,6 +376,14 @@ function categoryHubOtherSection(&$catView, &$r){
 				$title = $qArticle->getTitle();
 				$r .= "<span class=\"$UN_CLASS\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
 				$r .= categoryHubGetAttributionByArticle($qArticle);
+
+				// Form for answering inline.
+				$r .= "<div class='cathub-actual-answer' style='display:none'>";
+				$r .= "<span class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</span><br/>\n";
+				// TODO: FLOAT THE SAVE/CANCEL BUTTONS TO THE RIGHT HERE.
+				$r .= "<div class='hoverform'><textarea style='width:75%'></textarea><input type='button' value='SAVE' class='hoverbutton'/></div>";
+//				$r .= $tmpParser->parse($qArticle->getRawText(), $title, $tmpParserOptions, false)->getText();
+				$r .= "</div>\n";
 
 				$r .= "</li>\n";
 			}
