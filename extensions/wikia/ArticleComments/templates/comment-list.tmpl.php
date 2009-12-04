@@ -19,7 +19,7 @@
 	if ( count( $comments ) > 10) {
 		if ( $canEdit ) {
 	?>
-		<div class="article-comm-input reset clearfix accent">
+		<div class="article-comm-input reset clearfix">
 		<form action="<?php echo $title->getFullURL() ?>" method="post" id="article-comm-form-top">
 		<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
 			<!-- avatar -->
@@ -68,7 +68,7 @@
 
 		if ( $canEdit && !$isBlocked ) {
 	?>
-	<div class="article-comm-input reset clearfix accent">
+	<div class="article-comm-input reset clearfix">
 		<div id="article-comm-bottom-info">&nbsp;</div>
 		<form action="<?php echo $title->getFullURL() ?>" method="post" id="article-comm-form-bottom">
 		<input type="hidden" name="wpArticleId" value="<?= $title->getArticleId() ?>" />
@@ -98,7 +98,7 @@
 		} else {
 			if ( $isBlocked ) {
 	?>
-	<div class="article-comm-input reset clearfix accent">
+	<div class="article-comm-input reset clearfix">
 		<div id="article-comm-bottom-info"><p><?=wfMsg('article-comments-comment-cannot-add')?></p><br/><p><?=$output->parse($reason)?></p></div>
 	</div>
 	<?php

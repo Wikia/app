@@ -87,7 +87,7 @@ ArticleComments.postComment = function(e) {
 			//pagination
 			$('#article-comments-pagination').html(json.pagination);
 			//readd events
-			$('.article-comments-pagination-link').bind('click', ArticleComments.setPage);
+			$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).hover(function() {$(this).addClass('selected');}, function() {$(this).removeClass('selected');});;
 			ArticleComments.bind();
 			//clear error box
 			$('#article-comm-bottom-info').html('');
@@ -145,7 +145,7 @@ ArticleComments.init = function() {
 	$('#article-comm-submit-bottom').bind('click', {source: '#article-comm-bottom'}, ArticleComments.postComment);
 	$('#article-comm-form-select').bind('change', function() {this.submit()});
 	$('.article-comm-edit').bind('click', ArticleComments.edit);
-	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage);
+	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).hover(function() {$(this).addClass('selected');}, function() {$(this).removeClass('selected');});
 }
 //on DOM ready
 $(ArticleComments.init);
