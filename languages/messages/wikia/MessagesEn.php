@@ -892,4 +892,10 @@ Text should be placed on this page if you wish to explain usage, style and polic
 # Wikia.php
 'rcshowhidelogs' => '$1 logs',
 
+# Wikia timestamps
+'wikia-seconds-ago' => '$1 {{PLURAL:$1|second|seconds}} ago',
+'wikia-minutes-ago' => '$1 {{PLURAL:$1|minute|minutes}} ago',
+'wikia-hours-ago' => '$1 {{PLURAL:$1|hour|hours}} ago',
+'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
+
 ));
