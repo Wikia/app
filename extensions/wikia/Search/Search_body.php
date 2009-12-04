@@ -361,14 +361,21 @@ class SolrResult extends SearchResult {
 		$this->mSnippets = $snippets;
 	}
 
-	private function getWikiName() {
+	private function getWikiHeading() {
 		$sitename = WikiFactory::getVarValueByName( 'wgSitename', $this->mWikiId );
-		return ( $this->crossWikiaResult && $sitename ) ? ( ' - ' . $sitename ) : '';
+		$wikititle = trim($this->getWikiTitle());
+		if($this->crossWikiaResult) {
+			$wikiname = !empty($wikititle) ? ' - ' . $wikititle : ( !empty($sitename) ? ' - ' . $sitename : '' );
+		}
+		else {
+			$wikiname = '';
+		}
+		return $wikiname;
 	}
 
 	public function setHighlightTitle($title) {
 		if($this->mHighlightTitle == null) {
-			$this->mHighlightTitle = str_replace('_', ' ', htmlspecialchars_decode($title)) . $this->getWikiName();
+			$this->mHighlightTitle = str_replace('_', ' ', htmlspecialchars_decode($title)) . $this->getWikiHeading();
 		}
 	}
 
@@ -387,7 +394,7 @@ class SolrResult extends SearchResult {
 	}
 
 	public function getTitleSnippet($terms = null) {
-		return ( !is_null($this->mHighlightTitle) ? $this->mHighlightTitle : '' );
+		return ( !is_null($this->mHighlightTitle) ? $this->mHighlightTitle : ( $this->mTitle->getText() . $this->getWikiHeading() ) );
 	}
 
 	public function isMissingRevision() {
@@ -418,10 +425,14 @@ class SolrResult extends SearchResult {
 		return $this->mDebug;
 	}
 
+	public function getWikiTitle() {
+		return strtr( $this->mWikiTitle, array( '$1 - ' => '' ) );
+	}
+
 	public static function showHit($result, $link, $redirect, $section, $extract, $data) {
 		if($result->isCrossWikiaResult()) {
-			$data = "<a href=\"" . $result->getUrl() . "\" title=\"" . $result->getUrl() . "\" style=\"text-decoration: none; font-size: small\"><span class=\"dark_text_2\">" . $result->mUrl . "</span></a>";
-			//$data .= $result->getDebug();
+			$data = "<a href=\"" . $result->getUrl() . "\" title=\"" . $result->getUrl() . "\" style=\"text-decoration: none; font-size: small\"><span class=\"dark_text_2\">" . strtr( $result->mUrl, array( 'http://' => '' ) ) . "</span></a>";
+			$data .= $result->getDebug();
 		}
 		else {
 			$data = '';
