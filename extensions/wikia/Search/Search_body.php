@@ -364,6 +364,9 @@ class SolrResult extends SearchResult {
 	private function getWikiHeading() {
 		$sitename = WikiFactory::getVarValueByName( 'wgSitename', $this->mWikiId );
 		$wikititle = trim($this->getWikiTitle());
+		if(strlen($wikititle) > 90) {
+			$wikititle = substr($wikititle, 0 ,90) . '...';
+		}
 		if($this->crossWikiaResult) {
 			$wikiname = !empty($wikititle) ? ' - ' . $wikititle : ( !empty($sitename) ? ' - ' . $sitename : '' );
 		}
