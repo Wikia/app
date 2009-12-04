@@ -25,6 +25,7 @@
     text-align: left;
 }
 
+.wikisticky_content span { display: block; }
 .wikisticky_content p {
     font-family: "Comic Sans MS", Arial, sans-serif;
     margin: 0;
