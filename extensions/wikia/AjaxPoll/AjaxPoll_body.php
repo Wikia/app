@@ -242,6 +242,7 @@ JS;
 		}
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$timestamp = wfTimestamp( TS_MW, $this->mCreated );
 		$oTmpl->set_vars( array(
 			"id"		=> $this->mId,
 			"votes"		=> $votes,
@@ -251,8 +252,8 @@ JS;
 			"title"		=> $this->mTitle,
 			"status"	=> $this->mStatus,
 			"attribs"	=> $this->mAttribs,
-			"created_time"	=> $wgContLang->time( $this->mCreated ),
-			"created_date"	=> $wgContLang->date( $this->mCreated ),
+			"created_time"	=> $wgContLang->time( $timestamp ),
+			"created_date"	=> $wgContLang->date( $timestamp ),
 		));
 
 		$before .= $oTmpl->execute( "poll" );
