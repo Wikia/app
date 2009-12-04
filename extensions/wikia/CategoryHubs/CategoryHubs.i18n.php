@@ -21,7 +21,10 @@ $messages['en'] = array(
 	'cathub-question-asked-by'              => 'by $1',
 	'cathub-anon-username'                  => 'a curious user',
 	'cathub-answer-heading'                 => 'Answer',
-	''                                      => ''
+	'cathub-button-answer'                  => 'Answer',
+	'cathub-button-improve-answer'          => 'Improve Answer',
+	'cathub-button-rephrase'                => 'rephrase',
+	''                                      => '',
 );
 
 ?>

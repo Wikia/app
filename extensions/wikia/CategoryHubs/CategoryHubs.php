@@ -180,7 +180,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	GLOBAL $wgScriptPath;
 	$r .= "<style type='text/css'>
 	h1.firstHeading { display:none; }
-	#page_bar{ display:none; }
+	/*#page_bar{ display:none; }*/
 	#answers_article{ padding-top:0px; }
 	#cathub-title-bar{
 		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/cathub_title_bg.png);
@@ -315,7 +315,7 @@ function categoryHubContributorsToHtml($editsByUserId){
 		$numShown = 0;
 		foreach($editsByUserId as $userId => $numEdits){
 			if($numShown == $NUM_TO_SHOW_BIG){
-				$r .= "</ul><ul class='contributors cathub-contributors-list cathub-contributors-list-narrow'>\n";
+				$r .= "</ul><ul class='contributors cathub-contributors-list cathub-contributors-list-narrow userInfoNoAvatar'>\n";
 			}
 			$r .= "<li>";
 			$r .= "<div class='listNumber".(($numShown >= $NUM_TO_SHOW_BIG)?" userInfoNoAvatar":"")."'>\n";
@@ -369,6 +369,12 @@ function categoryHubOtherSection(&$catView, &$r){
 			foreach($catView->answerArticles[$UN_CLASS] as $qArticle){
 				$r .= "<li class=\"$UN_CLASS\">\n";
 
+				// Button to trigger the form for answering inline.
+				$r .= "<div class='cathub-button hideUntilHover' style='float:right'>\n";
+				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer'><big>";
+				$r .= wfMsgExt('cathub-button-answer', array())."</big><small>&nbsp;</small></a>\n";
+				$r .= "</div>\n";
+
 				// Question & attribution for last edit.
 				$title = $qArticle->getTitle();
 				$r .= "<span class=\"$UN_CLASS\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
@@ -396,9 +402,16 @@ function categoryHubOtherSection(&$catView, &$r){
 			foreach($catView->answerArticles[$ANS_CLASS] as $qArticle){
 				$r .= "<li class=\"$ANS_CLASS\">\n";
 
+				// Button to trigger the form for changing an answer inline.
+				$r .= "<div class='cathub-button hideUntilHover' style='float:right;'>\n";
+				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer'><big>";
+				$r .= wfMsgExt('cathub-button-improve-answer', array())."</big><small>&nbsp;</small></a>\n";
+				$r .= "</div>\n";
+
 				// Question & attribution for last edit.
 				$title = $qArticle->getTitle();
 				$r .= "<span class=\"$ANS_CLASS\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+				$r .= "&nbsp;<span class='cathub-rephrase hideUntilHover'><a href='#'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
 				$r .= categoryHubGetAttributionByArticle($qArticle);
 
 				// Show the  actual answer.
