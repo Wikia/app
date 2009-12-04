@@ -925,12 +925,14 @@ div.category br {
 	margin-top:0px !important;
 	display:inline;
 }
-.userInfoNoAvatar, .userInfoNoAvatar * {
+ul.userInfoNoAvatar, ul.userInfoNoAvatar div.userPoints{
 	font-size:.8em !important;
+}
+.userInfoNoAvatar, .userInfoNoAvatar * {
 	color:#888;
 	font-weight:normal !important;
 }
-.userInfoNoAvatar:hover a{
+li .userInfoNoAvatar:hover a{
 	color:#00c !important;
 }
 /* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
@@ -971,7 +973,7 @@ div.category br {
 	margin-left: 0;
 }
 
-.userInfo .userPoints, .userInfoNoAvatar:hover .userPoints {
+.userInfo .userPoints, li .userInfoNoAvatar:hover .userPoints {
 	background: #f6dd5d url('../images/user_edit_points_bg.png') no-repeat;
 	border: 1px solid #584013;
 	float: left;
@@ -980,11 +982,11 @@ div.category br {
 	font-size: 13px;
 }
 
-.userInfoNoAvatar .userPoints {
+div.userInfoNoAvatar .userPoints {
 	background: #eee;
 	border:1px #888 solid;
 	line-height:.95em !important;
-	margin-top: 4px !important;
+	margin-top: 2px !important;
 	margin-left: 5px !important;
 }
 
@@ -1122,11 +1124,11 @@ div.category br {
 }
 span.answered_questions a, span.unanswered_questions a{
 	color:#00c;
-	font-size:1.1em;
+	font-size:1.2em;
 }
 .cathub-asked {
 	font-size:.75em;
-	color:#777;
+	color:#707070;
 	line-height:.8em;
 }
 .cathub-actual-answer{
@@ -1138,4 +1140,18 @@ span.answered_questions a, span.unanswered_questions a{
 	font-weight:bold;
 	color:#090;
 	line-height:.8em;
+}
+.cathub-rephrase{
+	margin-left:10px;
+	font-style:italic;
+	font-size:.8em;
+}
+.cathub-rephrase a{
+	color:#00c;
+}
+li .hideUntilHover{
+	visibility:hidden;
+}
+li:hover .hideUntilHover{
+	visibility:visible;
 }
