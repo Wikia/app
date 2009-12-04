@@ -4,51 +4,25 @@
  *
  * @see https://contractor.wikia-inc.com/wiki/WikiStickies
  */
-class WikiStickies extends SpecialPage {
+class WikiStickies {
 
 	const STICKY_FEED_LIMIT = 1; // one for the sticky note, to display in yellow
 	const INITIAL_FEED_LIMIT = 10; // 10 to get initially for this nice viewer fellow
 	const SPECIAL_FEED_LIMIT = 21; // 21 to rule them all, and in light display them
 
-	function __construct() {
-		parent::__construct('WikiStickies');
-	}
-
 	/**
 	 * Loads base WikiSticky CSS and JavaScript resources.
 	 */
-	function addWikiStickyResources () {
+	static function addWikiStickyResources () {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");
 	}
 
-	// the main heavy-hitter of the special page: wrapper for display-it-all
-	function execute() {
-		global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
-		wfLoadExtensionMessages( 'WikiStickies' );
-		// for tools: logo upload and skin chooser
-		wfLoadExtensionMessages( 'NewWikiBuilder' );
-
-		$this->setHeaders();
-
-		$this->addWikiStickyResources();
-		// load additional dependencies (CSS and JS)?
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");
-
-		// get the Three Feeds
-		$this->formatFeed( 'wikistickies-wantedimages', $this->getWantedimagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedimages-hd'), wfMsg( 'wikistickies-wantedimages-st' ) ) ;
-
-		$this->formatFeed( 'wikistickies-newpages', $this->getNewpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-newpages-hd'), wfMsg( 'wikistickies-newpages-st' ) );
-		$this->formatFeed( 'wikistickies-wantedpages', $this->getWantedpagesFeed( self::SPECIAL_FEED_LIMIT ), wfMsg('wikistickies-wantedpages-hd'), wfMsg( 'wikistickies-wantedpages-st' ) );
-
-		// get the Two Tools
-		$this->generateTools();
-	}
-
-	// tool generation wrapper (basically template call)
-	function generateTools() {
+	/**
+	 * tool generation wrapper (basically template call)
+	 */
+	static function generateTools() {
 		global $wgOut, $wgUser;
 
 		// same as for Monaco bar, I guess
@@ -75,7 +49,7 @@ class WikiStickies extends SpecialPage {
 	 *		We should probably find some way of collapsing the $type, $header,
 	 *		and $sticker variables.
 	 */
-	function formatFeed( $type, &$feed_data, $header, $sticker ) {
+	static function formatFeed( $type, &$feed_data, $header, $sticker ) {
 		global $wgOut, $wgUser;
 
 		$sk = $wgUser->getSkin() ;
@@ -89,7 +63,7 @@ class WikiStickies extends SpecialPage {
 			array_pop( $feed_data );
 		}
 
-		$sticky = $this->renderWikiSticky( array( array_shift( $feed_data ) ),
+		$sticky = self::renderWikiSticky( array( array_shift( $feed_data ) ),
 			$sticker,
 			array(
 				'id' => $type . '-browser',
@@ -100,7 +74,7 @@ class WikiStickies extends SpecialPage {
 		$uptolimit = 0;
 
 		foreach( $feed_data as $title ) {
-			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {
+			if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
 				if ( $uptolimit > 4 ) { // start a new column at 6th item
 					if ( $uptolimit === 5 ) {
 						$body .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
@@ -165,7 +139,7 @@ class WikiStickies extends SpecialPage {
 	}
 
 	// feed packaging
-	function getFeed( $feed, $data ) {
+	static function getFeed( $feed, $data ) {
 		wfProfileIn( __METHOD__ );
 		$result = array();
 		$oFauxRequest = new FauxRequest( $data );
@@ -192,7 +166,7 @@ class WikiStickies extends SpecialPage {
 	}
 
 	// fetch the feed for SpecialNewpages
-	function getNewpagesFeed( $limit ) {
+	static function getNewpagesFeed( $limit ) {
 		global $wgContentNamespaces;
 		$data =	array(
 				'action'		=> 'query',
@@ -204,29 +178,29 @@ class WikiStickies extends SpecialPage {
 				'rclimit'		=> intval($limit),
 				 );
 
-		return $this->getFeed( 'recentchanges', $data );
+		return self::getFeed( 'recentchanges', $data );
 	}
 
 	// fetch the feed for SpecialWantedpages
-	function getWantedpagesFeed( $limit ) {
+	static function getWantedpagesFeed( $limit ) {
 		$data = array(
 				'action'	=> 'query',
 				'list'		=> 'wantedpages',
 				'wnlimit'	=> intval($limit),
 				 );
 
-			return $this->getFeed( 'wantedpages', $data );
+			return self::getFeed( 'wantedpages', $data );
 	}
 
 	// fetch the feed for pages without images
-	function getWantedimagesFeed( $limit ) {
+	static function getWantedimagesFeed( $limit ) {
 		$data = array(
 				'action'	=> 'query',
 				'list'		=> 'wantedimages',
 				'wilimit'	=> intval($limit),
 				 );
 
-			return $this->getFeed( 'wantedimages', $data );
+			return self::getFeed( 'wantedimages', $data );
 	}
 
 	/**
@@ -238,7 +212,7 @@ class WikiStickies extends SpecialPage {
 	 *
 	 * @return string The appropriate HTML to output.
 	 */
-	function renderWikiSticky ( $text, $prefix, $attrs = NULL ) {
+	static function renderWikiSticky ( $text, $prefix, $attrs = NULL ) {
 		global $wgExtensionsPath, $wgUser;
 
 		$sk = $wgUser->getSkin() ;
@@ -280,13 +254,13 @@ class WikiStickies extends SpecialPage {
 		wfLoadExtensionMessages( 'WikiStickies' );
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 
-		WikiStickies::addWikiStickyResources();
+		self::addWikiStickyResources();
 		// Special:MyHome page-specific resources
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesMyHome.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js?{$wgStyleVersion}\"></script>\n");
 
 		// TODO: Still need to pull this in from the feed. Right now we're faking it with JS on the front-end.
-		$html = WikiStickies::renderWikiSticky( 'Hello world.', 'Can you add images to the page about');
+		$html = self::renderWikiSticky( 'Hello world.', 'Can you add images to the page about');
 
 		return true;
 	}
