@@ -17,7 +17,7 @@ WIKIA.WikiStickies.count = 0;
 
 WIKIA.WikiStickies.flipWikisticky = function (e) {
 	e.preventDefault();
-	WET.trackByStr( 'MyHome/wikistickies/next' );
+	WET.byStr( 'MyHome/wikistickies/next' );
 	$(".wikisticky_content p").fadeOut("fast", WIKIA.WikiStickies.updateSticky);
 	$(".wikisticky_content h2").fadeOut("fast");
 	$(".wikisticky_next").hide();
@@ -35,6 +35,11 @@ WIKIA.WikiStickies.flipWikisticky = function (e) {
 		});
 	});
 }
+
+WIKIA.WikiStickies.trackLink = function() {
+	WET.byStr( 'MyHome/wikistickies/seemorepages' );
+}
+
 WIKIA.WikiStickies.updateSticky = function () {
 	//set content
 	$(".wikisticky_content p").html(WIKIA.WikiStickies.stickies[WIKIA.WikiStickies.count]);
@@ -55,7 +60,7 @@ WIKIA.WikiStickies.updateSticky = function () {
 
 $(document).ready(function() {
 	$(".wikisticky_curl, .wikisticky_next").bind("click", WIKIA.WikiStickies.flipWikisticky);
-
+	$('#wikisticky_special_link a').click(WIKIA.WikiStickies.trackLink);
 	stickyContentHeight = $(".wikisticky_content").height() - $(".wikisticky_content h2").height() - $(".wikisticky_next").outerHeight();
 	WIKIA.WikiStickies.updateSticky();
 });
