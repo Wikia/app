@@ -30,7 +30,7 @@
     left: -502px;
 }
 
-#wikisticky_browser {
+.wikisticky_browser {
     background: url(../images/sticky.png) no-repeat;
     float: left;
     height: 159px;
@@ -39,12 +39,16 @@
     width: 209px;
 }
 
-#wikisticky_content {
+.wikisticky_content {
     font: 20px/1.25em "Comic Sans MS", Arial, sans-serif;
     margin: 0 auto;
     text-align: center;
     width: 175px;
+    visibility: hidden; /* Shown with JS. */
 }
+
+.wikisticky_content span { display: block; }
+.wikisticky_content a { padding-right: 3px; }
 
 .wikistickiesfeed ul, .wikistickiesfeed .MoreLink {
     margin-left: 240px;

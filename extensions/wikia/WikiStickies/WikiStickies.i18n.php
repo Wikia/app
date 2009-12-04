@@ -1,4 +1,9 @@
 <?php
+/**
+ * @ingroup Wikia
+ * @package WikiStickies
+ * @file WikiStickies.i18n.php
+ */
 
 $messages = array();
 

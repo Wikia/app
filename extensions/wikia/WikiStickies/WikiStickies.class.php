@@ -61,7 +61,7 @@ class WikiStickies extends SpecialPage {
 	 * @param string $type Moniker for the feed. This becomes the HTML ID attribute value.
 	 * @param array $feed_data The list of page names that will become items in the feed.
 	 * @param string $header The natural-language feed headline.
-	 * @param string $sticker ???
+	 * @param string $sticker The natural-language sticky question text.
 	 *
 	 * @TODO: Need a non-redundant way of informing this function what feed is being used.
 	 *		We should probably find some way of collapsing the $type, $header,
@@ -82,14 +82,18 @@ class WikiStickies extends SpecialPage {
 		}
 
 		// display the sticky
-		$sticky = Xml::openElement( 'div', array( 'id' => 'wikisticky_browser' ) ).
-			Xml::openElement( 'div', array( 'id' => 'wikisticky_content' ) ).
+		$sticky = Xml::openElement( 'div', array( 'id' => $type . '-browser', 'class' => 'wikisticky_browser' ) ).
+			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) ).
 			Xml::openElement( 'p' ).
-			$sticker . ' ' . $sk->makeKnownLinkObj( array_shift( $feed_data ) ). '?'.
+			Xml::openElement( 'span' ).
+				$sticker .
+			Xml::closeElement( 'span' ).
+				' ' . $sk->makeKnownLinkObj( array_shift( $feed_data ) ). '?'.
 			Xml::closeElement( 'p' ).
 			Xml::closeElement( 'div' ).
 			Xml::closeElement( 'div' );
 
+		$numitems = count($feed_data);
 		$uptolimit = 0;
 
 		foreach( $feed_data as $title ) {
@@ -145,11 +149,14 @@ class WikiStickies extends SpecialPage {
 
 		// See more link
 		// TODO: This href attribute should actually point to the source of the feed
-		//       in case JS is off.
-		$html .= Xml::openElement( 'a', array( 'href' => '#', 'class' => 'MoreLink' ) ).
-			wfMsg( 'wikistickies-more' ).
-			Xml::closeElement( 'a' ).
-			Xml::closeElement( 'div' );
+		//       in case JS is off. It should not remain an empty fragment.
+		if ($numitems > 10) { // don't show link if less than 10 items in list
+			$html .= Xml::openElement( 'a', array( 'href' => '#', 'class' => 'MoreLink' ) ).
+				wfMsg( 'wikistickies-more' ).
+				Xml::closeElement( 'a' );
+		}
+
+		$html .= Xml::closeElement( 'div' );
 
 		$wgOut->addHTML( $html );
 	}
@@ -190,7 +197,7 @@ class WikiStickies extends SpecialPage {
 				'rcprop'		=> 'title',
 				'rcnamespace'		=> $wgContentNamespaces,
 				'rctype'		=> 'new',
-				'rcshow' 		=> '!redirect',
+				'rcshow'		=> '!redirect',
 				'rclimit'		=> intval($limit),
 				 );
 
