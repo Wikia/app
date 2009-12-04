@@ -23,7 +23,7 @@
 				$percent = isset( $votes[ $nr ][ "percent" ] )
 					? $votes[ $nr ][ "percent" ] : 0;
 			?>
-			<span id="wpPollVote<?php echo $id ?>-<?php echo $nr ?>" title='<?php echo ( isset($votes[ $nr ][ "percent" ]) ? ($votes[ $nr ][ "percent" ] . "%&nbsp;" . wfMsg("ajaxpoll-percentVotes") ): 0 ); ?>'><?php echo isset( $votes[ $nr ][ "value" ] ) ? $votes[ $nr ][ "value" ] : 0 ?></span>
+			<span id="wpPollVote<?php echo $id ?>-<?php echo $nr ?>" title='<?php echo ( isset($votes[ $nr ][ "percent" ]) ? ( wfMsg("ajaxpoll-percentVotes", $votes[ $nr ][ "percent" ]) ): 0 ); ?>'><?php echo isset( $votes[ $nr ][ "value" ] ) ? $votes[ $nr ][ "value" ] : 0 ?></span>
 			<div class="wpPollBar<?php echo $id ?>" id="wpPollBar<?php echo $id; ?>-<?php echo $nr; ?>" style="width: <?php echo $percent;?>%;<?php if ($percent) echo " border:0;"; ?>">&nbsp;</div>
 		</div>
 		</div>
@@ -32,7 +32,7 @@
 			<div>
 			<?php
 				$span = sprintf("<span class=\"total\" id=\"wpPollTotal%s\">%d</span>&nbsp;", $id, $total );
-				$summary = wfMsg("ajaxpoll-summary", array( $created, $span ));
+				$summary = wfMsg("ajaxpoll-summary", array( $created_time, $created_date, $span ));
 				echo $summary;
 			?>
 			</div>
