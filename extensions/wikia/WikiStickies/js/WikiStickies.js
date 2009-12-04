@@ -3,81 +3,42 @@
  */
 var WikiStickies = {};
 
-// Parameters for feed types.
-WikiStickies.newpagesParams = [
-    'format=json',
-    'action=query', 
-    'list=recentchanges',
-    'rcprop=title',
-    'rcnamespace=0',
-    'rctype=new',
-    'rclimit=50'
-];
-WikiStickies.wantedpagesParams = [
-    'format=json',
-    'action=query', 
-    'list=wantedpages',
-    'wnoffset=3',
-    'wnlimit=50'
-];
-WikiStickies.wantedimagesParams = [
-'format=json',
-    'action=query', 
-    'list=wantedimages',
-    'wnoffset=3',
-    'wnlimit=50'
-];
-
 /**
- * Retrieves more items from a feed.
- *
- * @param object e    Event object used to call the function. Probably a click.
- * @param string feed Which feed to retrieve more items from.
- * @return ???
+ * Toggles the display of additional items and the more/less link.
  */
-WikiStickies.retrieveFeed = function (e, feed) {
+WikiStickies.toggleMore = function (e) {
     if (e) { e.preventDefault(); }
-    switch (feed) {
-        case 'newpages':
-            var params = WikiStickies.newpagesParams;
-            break;
-        case 'wantedpages':
-            var params = WikiStickies.wantedpagesParams;
-            break;
-        case 'wantedimages':
-        default:
-            var params = WikiStickies.wantedimagesParams;
-            break;
-    };
-    $.getJSON( wgServer + '/api.php?' + params.join('&'), function ( response ) {
-    });
-}
 
-/**
- * Displays the additional items and hides itself.
- */
-WikiStickies.showMore = function (e) {
-    if (e) {
-        e.preventDefault();
-        $(e.currentTarget.previousSibling).show();
-	$(e.currentTarget).unbind( 'click', WikiStickies.showMore );
-	$(e.currentTarget).click( WikiStickies.showLess );
-	//todo function to get name
-        $(e.currentTarget).html( 'hide' );
+    // TODO: Internationalize "see more" and "see less" text.
+    // What's the JS equivalent of wfMsg()?
+    if (this.innerHTML === 'see more') {
+        // show more
+        $(this.previousSibling).show();
+        this.innerHTML = 'see less';
+    } else {
+        // show less
+        $(this.previousSibling).hide();
+        this.innerHTML = 'see more';
     }
 }
 
-WikiStickies.showLess = function( e ) {
-	if( e ) {
-		e.preventDefault();
-        	$(e.currentTarget.previousSibling).hide();
-		$(e.currentTarget).unbind( 'click', WikiStickies.showLess );
-		$(e.currentTarget).click( WikiStickies.showMore );
-		// todo function to get message
-	        $(e.currentTarget).html( 'what was the Jquery function to show the message again?' );	
-	}
+// Set font size and position of sticky content.
+WikiStickies.placeContent = function () {
+    $(".wikisticky_browser").each(function() {
+        var ws_content = this.childNodes[0];
+        var ws_para = this.getElementsByTagName('p')[0];
+        $(ws_para).css('fontSize', '14pt');
+        var verticalDifference = $(this).height() - $(ws_para).height();
+        while (verticalDifference < 0) {
+            $(ws_para).css("fontSize", parseInt($(ws_para).css("fontSize") ) - 1);
+            verticalDifference = $(ws_content).height() - $(ws_para).height();
+        }
+        $(ws_para).css("top", verticalDifference / 2);
+        $(ws_content).css('visibility', 'visible');
+    });
 }
 
 $(document).ready(function() {
-    $('.wikistickiesfeed .MoreLink').click(WikiStickies.showMore);
+    $('.wikistickiesfeed .MoreLink').click(WikiStickies.toggleMore);
+    WikiStickies.placeContent();
 });
