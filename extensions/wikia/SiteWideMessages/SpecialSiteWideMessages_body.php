@@ -796,11 +796,17 @@ class SiteWideMessages extends SpecialPage {
 	static function getLanguageConstraintsForUser( $user, $langs ) {
 		global $wgSWMSupportedLanguages;
 
+		# if no language options were specified, just let it through
+		if ( $langs == null ) {
+			return true;			
+		}
+
 		$langs = explode( ',', $langs );
 		$userLang = $user->getOption( 'language' );
 
-		return ( in_array( MSG_LANG_ALL, $langs ) || in_array( $userLang, $langs ) || ( in_array( MSG_LANG_OTHER, $langs) && !in_array( $userLang, $wgSWMSupportedLanguages ) ) );
+		$ret = ( in_array( MSG_LANG_ALL, $langs ) || in_array( $userLang, $langs ) || ( in_array( MSG_LANG_OTHER, $langs) && !in_array( $userLang, $wgSWMSupportedLanguages ) ) );
 
+		return $ret;
 	}
 
 	static function dismissMessage($messageID) {
