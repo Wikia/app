@@ -85,10 +85,15 @@ WIKIA.WikiStickies.themeChooser = function () {
         // Copy the template, search and replace the values
         var ltheme = themes[i].toLowerCase();
         var thtml = $("#wikistickies-themechooser").html();
-        thtml = thtml.replace(/\$Theme/g, themes[i]);
-        thtml = thtml.replace(/\$theme/g, ltheme);
+        // TODO: This should gracefully degrade better. And '$' isn't a valid
+        //       character in HTML ID or class names. It needed to change.
+        thtml = thtml.replace(/_THEME/g, themes[i]);
+        thtml = thtml.replace(/_THEME/g, ltheme);
 
         // Create element with that preview and append it
+        // TODO: Need to create ALL of the table, if you're going to use a
+        //       table, in JavaScript. Cannot leave empty stub tables in
+        //       template because they cause validation errors.
         $("#theme_scroller tr").append("<td>" + thtml + "</td>");
         $("#theme_preview_image_" + ltheme).attr("src", "http://images.wikia.com/common/skins/monaco/" + ltheme + "/images/preview.png");
 
