@@ -1,7 +1,8 @@
 <?php
 /**
- * WikiStickies
- *
+ * @ingroup Wikia
+ * @file WikiStickies.class.php
+ * @package WikiStickies
  * @see https://contractor.wikia-inc.com/wiki/WikiStickies
  */
 class WikiStickies {
@@ -228,7 +229,6 @@ class WikiStickies {
 
 		$sp_title = Title::makeTitle( NS_SPECIAL, 'WikiStickies' );
 		$sk = $wgUser->getSkin();
-		$special_link = $sk->makeKnownLinkObj( $sp_title, wfMsg( 'wikistickies-see-more' ) );
 
 		$html = Xml::openElement( 'div', $attrs ).
 			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) ).
@@ -250,14 +250,13 @@ class WikiStickies {
 		// leave if canonical is not MyHome
 		global $wgTitle, $wgCanonicalNamespaceNames;
 		$canname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
-			
+
 		if( 'MyHome' == $canname ) {
 			// this is the link for Special:WikiStickies
-			$html .= Xml::openElement( 'div', array( 'id' => 'wikisticky_special_link' ) ).
-				$special_link.
-				Xml::closeElement( 'div' );
-		}		
-		
+			$html .= $sk->makeKnownLinkObj( $sp_title, wfMsg( 'wikistickies-see-more' ),
+					'', '', '', 'class="wikisticky_special_link"' );
+		}
+
 		return $html;
 	}
 
@@ -285,7 +284,7 @@ class WikiStickies {
 
 		$feeds = array();
 		foreach( self::getWantedimagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
-			$feeds[] = array( 
+			$feeds[] = array(
 					'prefix' => wfMsg( 'wikistickies-wantedimages-st' ),
 					'title' => $title );
 		}
