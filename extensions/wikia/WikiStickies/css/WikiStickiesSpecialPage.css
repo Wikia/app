@@ -2,19 +2,19 @@
  * CSS rules specific to the Special:WikiStickies page go here.
  */
 .wikisticky_browser {
+    background: url(../images/bg.wikisticky.209x187.png) no-repeat;
     float: left;
     height: 187px;
+    margin-bottom: 3em;
     width: 209px;
-    background: url(../images/bg.wikisticky.209x187.png) no-repeat;
 }
-.wikisticky_browser h2, .wikisticky_next, .wikisticky_curl { display: none; }
 .wikistickiesfeed {
     clear: left;
     margin: 0 0 3em 0;
 }
 .wikistickiesfeed h2 {
     border-bottom: none;
-     font-size: 135%;
+    font-size: 135%;
     font-weight: bold;
     margin: 0 0 6px 0;
     padding: 0 0 0 20px;
@@ -27,7 +27,6 @@
     width: 560px;
 }
 
-/* TODO: There should be a single site-wide "sprite stylesheet." */
 #wikistickies-wantedimages .sprite {
     clip: rect(0px 432px 16px 416px);
     left: -406px;
@@ -78,7 +77,7 @@
 }
 
 .wikistickiestools {
-    border:1px solid #AAAAAA;
+    border:1px solid #AAA;
 }
 
 .wikistickiesfeed, .wikiheadertools {
@@ -86,37 +85,24 @@
     margin-bottom: 15px;
 }
 
-form {
-    margin: 0;
-    padding: 0;
+.wikiheadertools li {
+    list-style-image: none;
+    list-style-type:none;
+    margin-bottom: 0;
 }
-ul, li {
-    margin: 0;
-    padding: 0;
+.wikiheadertools .step {
+    background-color: #F5F5F5;
+    border: 1px solid #AAA;
 }
-
+.wikiheadertools #step2 {
+	border-bottom: none;
+}
+.wikiheadertools #step3 {
+	border-top: none;
+}
 
 #wikistickies_save_all {
 	margin-top: 20px;
-}
-
-.wikiheadertools #step2 {
-	background-color: ##F5F5F5; 
-	border-top: 1px solid #AAAAAA;
-	border-left: 1px solid #AAAAAA;
-	border-right: 1px solid #AAAAAA;
-}
-
-.wikiheadertools #step3 {
-	background-color: ##F5F5F5; 
-	border-bottom: 1px solid #AAAAAA;
-	border-left: 1px solid #AAAAAA;
-	border-right: 1px solid #AAAAAA;
-}
-
-.wikiheadertools li {
-    list-style-type:none;	
-    list-style-image: none;
 }
 
 .reflow {
@@ -130,10 +116,6 @@ ul, li {
     clear: both;
     position: relative;
     z-index: 200;
-}
-
-.step .wrapper {
-    text-align: left;
 }
 
 .headline {
