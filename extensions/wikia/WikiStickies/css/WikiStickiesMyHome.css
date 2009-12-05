@@ -51,9 +51,10 @@
     width: 80px;
 }
 
-#wikisticky_special_link {
+.wikisticky_special_link {
+    display: block;
     color:#002BB8;
-    font-size: 8pt;
+    font-size: 9pt;
     font-weight: bold;
     margin-bottom: 30px;
     text-align: center;
