@@ -98,13 +98,15 @@ WIKIA.WikiStickies.themeChooser = function () {
             $("#theme_radio_" + ltheme).attr("checked", true);
             WIKIA.WikiStickies.track( '/admin/' + ltheme );
             NWB.changeTheme(ltheme, false);
+        }
     }
-}
 };
 
 $(document).ready(function() {
 	$('.wikistickiesfeed .MoreLink').click(WIKIA.WikiStickies.toggleMore);
 	$('.wikistickiesfeed').children('ul').find('a').click(WIKIA.WikiStickies.trackContainer);
 	WIKIA.WikiStickies.placeContent();
-	WIKIA.WikiStickies.themeChooser();
+	if ($('#wikistickies-themechooser').length) {
+        WIKIA.WikiStickies.themeChooser();
+    }
 });
