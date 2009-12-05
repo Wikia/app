@@ -1,8 +1,9 @@
 == Changes since 200912.1 ==
+* WidgetWikiPage: wrap missing error message in tagged span for detection (uberfuzzy)
 * rt#32317: AjaxPoll: adjust code to match messages (uberfuzzy)
 * rt#32071: Answers, Ads: AnswersSudoAd emission restrictions. (Nef)
 * rt#28761: Answers: Hack answers widget to send questions to a particular category. (Nef)
-* rt#31994: Signup: load cookie of last user into loginform, not signup (uberfuzzy)
+* rt#31994: Signup: load cookie of last user into loginform, not just signup (uberfuzzy)
 * rt#26761: Blogs: translated namespaces to Spanish (TOR)
 * rt#28296: Answers, ActivityFeed: per-ns CSS classes and quetion marks in feed (TOR)
 * rt#32053: language scope issue regarding AWC talk page signer (uberfuzzy)
