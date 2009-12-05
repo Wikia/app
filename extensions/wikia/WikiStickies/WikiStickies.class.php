@@ -232,7 +232,7 @@ class WikiStickies {
 
 		$html = Xml::openElement( 'div', $attrs ).
 			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) );
-		// TODO: These checks for pages might be better abstracted later.
+		// TODO: These checks for page location might be better abstracted later.
 		if( 'MyHome' == $canname ) {
 			$html .= Xml::openElement( 'h2' ).
 				wfMsg( 'wikistickies' ).
@@ -240,15 +240,17 @@ class WikiStickies {
 		}
 		$html .= Xml::openElement( 'p' ).
 			self::renderWikiStickyContent( $title, $prefix ).
-			Xml::closeElement( 'p' ).
+			Xml::closeElement( 'p' );
+		if( 'MyHome' == $canname ) {
 			// TODO: This should link to the source of the feed fetched, not a '#' fragment.
+			$html .=
 			Xml::openElement( 'a', array( 'href' => '#', 'class' => 'wikisticky_next' ) ).
 				wfMsg( 'wikistickies-next' ).
 			Xml::closeElement( 'a' ).
-			Xml::openElement( 'img', array( 'src' => "{$wgExtensionsPath}/wikia/WikiStickies/images/curl.png", 'class' => 'wikisticky_curl' ) ).
-			Xml::closeElement( 'img' ).
-			Xml::closeElement( 'div' ).
-			Xml::closeElement( 'div' );
+			"<img src=\"{$wgExtensionsPath}/wikia/WikiStickies/images/curl.png\" class=\"wikisticky_curl\" />";
+		}
+		$html .= Xml::closeElement( 'div' ). // END .wikisticky_content
+			Xml::closeElement( 'div' ); // END #$attrs
 
 		if( 'MyHome' == $canname ) {
 			// this is the link for Special:WikiStickies
