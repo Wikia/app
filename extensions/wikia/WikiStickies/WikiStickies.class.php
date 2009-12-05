@@ -39,6 +39,45 @@ class WikiStickies {
 	}
 
 	/**
+	 * Prints feed items in batch.
+	 *
+	 * @param array $feed_data The list of page names that will become the items in the feed.
+	 * @param array $attrs An array of attribute-value pairs. (Optional.)
+	 * @return The complete list HTML to print.
+	 */
+	function renderFeedList ( &$feed_data, $attrs = NULL ) {
+		global $wgUser;
+
+		$sk = $wgUser->getSkin();
+		$out = '';
+		$uptolimit = 0;
+
+		$out .= Xml::openElement( 'ul', $attrs );
+
+		foreach( $feed_data as $title ) {
+			if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
+				if ( $uptolimit > 4 ) { // start a new column at 6th item
+					if ( $uptolimit === 5 ) {
+						$out .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
+					} else {
+						$out .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn' ) );
+					}
+				} else {
+					$out .= Xml::openElement( 'li' );
+				}
+				$out .= $sk->makeKnownLinkObj( $title, $title->getText() ).
+				Xml::closeElement( 'li' );
+				array_shift( $feed_data );
+				$uptolimit++;
+			}
+		}
+
+		$out .= Xml::closeElement( 'ul' );
+
+		return $out;
+	}
+
+	/**
 	 * Constructs the majority of HTML output to render.
 	 *
 	 * @param string $type Moniker for the feed. This becomes the HTML ID attribute value.
@@ -54,7 +93,7 @@ class WikiStickies {
 		global $wgOut, $wgUser;
 
 		$sk = $wgUser->getSkin() ;
-		$body = $body2 = '';
+		$body = '';
 
 		if( empty( $feed_data ) ) {
 			return false;
@@ -73,58 +112,22 @@ class WikiStickies {
 				);
 
 		$numitems = count($feed_data);
-		$uptolimit = 0;
 
-		foreach( $feed_data as $title ) {
-			if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
-				if ( $uptolimit > 4 ) { // start a new column at 6th item
-					if ( $uptolimit === 5 ) {
-						$body .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
-					} else {
-						$body .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn' ) );
-					}
-				} else {
-					$body .= Xml::openElement( 'li' );
-				}
-				$body .= $sk->makeKnownLinkObj( $title, $title->getText() ).
-				Xml::closeElement( 'li' );
-				array_shift( $feed_data );
-				$uptolimit++;
-			}
+		// First batch. These are visible by default.
+		if( $numitems ) {
+			$body .= self::renderFeedList( $feed_data );
 		}
-
-		$uptolimit = 0;
-		foreach( $feed_data as $title ) {
-			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {
-				if ( $uptolimit > 4 ) { // start a new column at 6th item
-					if ( $uptolimit === 5 ) {
-						$body2 .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
-					} else {
-						$body2 .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn' ) );
-					}
-				} else {
-					$body2 .= Xml::openElement( 'li' );
-				}
-				$body2 .= $sk->makeKnownLinkObj( $title, $title->getText() ).
-				Xml::closeElement( 'li' );
-				array_shift( $feed_data );
-				$uptolimit++;
-			}
+		// Second batch of items. These are hidden by default.
+		if( $numitems > 10 ) {
+			$body .= self::renderFeedList( $feed_data, array( 'class' => 'submerged' ) );
 		}
-
 
 		$html = Xml::openElement( 'div', array( 'id' => $type, 'class' => 'wikistickiesfeed' ) ).
 			'<img alt="" class="sprite" src="/skins/monobook/blank.gif" />'.
 			Xml::openElement( 'h2' ).
 						$header.
 			Xml::closeElement( 'h2' ).
-			$sticky.
-			Xml::openElement( 'ul' ).
-			$body.
-			Xml::closeElement( 'ul' ).
-			Xml::openElement( 'ul', array ( 'class' => 'submerged' ) ).
-			$body2.
-			Xml::closeElement( 'ul' );
+			$sticky.$body;
 
 		// See more link
 		// TODO: This href attribute should actually point to the source of the feed
