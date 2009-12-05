@@ -34,7 +34,6 @@ WIKIA.WikiStickies.toggleMore = function (e) {
 /**
  * Wrapper for tracking
  */
-
 WIKIA.WikiStickies.track = function( fakeUrl ) {
 	WET.byStr('WikiStickies' + fakeUrl);
 }
@@ -42,8 +41,6 @@ WIKIA.WikiStickies.track = function( fakeUrl ) {
 /**
  * Track the container
  */
-
-
 WIKIA.WikiStickies.trackContainer = function (ev) {
 	var containerId = $(ev.target).closest( '.wikistickiesfeed' ).attr('id');
 	var containerName = containerId.split('-').pop();
@@ -69,8 +66,45 @@ WIKIA.WikiStickies.placeContent = function () {
     });
 };
 
+/**
+ * JavaScript for the theme chooser.
+ */
+WIKIA.WikiStickies.themeChooser = function () {
+    // TODO: Is there some why to populate this dynamically?
+    //       Seems like a bad idea to hardcode these like magic numbers.
+    var themes = [
+        'Sapphire',
+        'Jade',
+        'Slate',
+        'Smoke',
+        'Beach',
+        'Brick',
+        'Gaming'
+    ];
+    for (var i = 0; i < themes.length; i++) {
+        // Copy the template, search and replace the values
+        var ltheme = themes[i].toLowerCase();
+        var thtml = $("#wikistickies-themechooser").html();
+        thtml = thtml.replace(/\$Theme/g, themes[i]);
+        thtml = thtml.replace(/\$theme/g, ltheme);
+
+        // Create element with that preview and append it
+        $("#theme_scroller tr").append("<td>" + thtml + "</td>");
+        $("#theme_preview_image_" + ltheme).attr("src", "http://images.wikia.com/common/skins/monaco/" + ltheme + "/images/preview.png");
+
+        // Check the box with the current theme ($wgAdminSkin)
+        if (WIKIA.WikiStickies.wgAdminSkin.replace(/monaco-/, '') == ltheme) {
+            // Check the box and change the theme
+            $("#theme_radio_" + ltheme).attr("checked", true);
+            WIKIA.WikiStickies.track( '/admin/' + ltheme );
+            NWB.changeTheme(ltheme, false);
+    }
+}
+};
+
 $(document).ready(function() {
 	$('.wikistickiesfeed .MoreLink').click(WIKIA.WikiStickies.toggleMore);
 	$('.wikistickiesfeed').children('ul').find('a').click(WIKIA.WikiStickies.trackContainer);
 	WIKIA.WikiStickies.placeContent();
+	WIKIA.WikiStickies.themeChooser();
 });
