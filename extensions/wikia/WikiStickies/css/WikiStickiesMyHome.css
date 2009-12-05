@@ -16,13 +16,13 @@
 }
 
 #wikisticky_browser h2 {
+    border: none;
     font-size: 11pt;
+    font-weight: bold;
     height: 33px;
     line-height: 33px;
-    padding: 0 0 0 5px;
-    border: none;
-    font-weight: bold;
     margin: 0;
+    padding: 0 0 0 5px;
     text-align: left;
 }
 .wikisticky_content p {
@@ -41,13 +41,13 @@
 .wikisticky_curl {
     bottom: -8px;
     cursor: pointer;
-    right: -8px;
     position: absolute;
+    right: -8px;
     width: 80px;
 }
 .wikisticky_special_link {
-    display: block;
     color:#002BB8;
+    display: block;
     font-size: 9pt;
     font-weight: bold;
     margin-bottom: 30px;
