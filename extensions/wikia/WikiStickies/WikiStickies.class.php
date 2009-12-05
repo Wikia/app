@@ -277,42 +277,4 @@ class WikiStickies {
 		return $html;
 	}
 
-	// run on a hook adding sidebar content for Special:MyHome
-	static function addToMyHome( &$html ) {
-		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-
-		wfLoadExtensionMessages( 'WikiStickies' );
-		self::addWikiStickyResources();
-		// Special:MyHome page-specific resources
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesMyHome.css?{$wgStyleVersion}");
-
-		$feeds = array();
-		foreach( self::getWantedimagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
-			$feeds[] = array(
-					'prefix' => wfMsg( 'wikistickies-wantedimages-st' ),
-					'title' => $title );
-		}
-		foreach( self::getNewpagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
-			$feeds[] = array(
-					'prefix' => wfMsg( 'wikistickies-newpages-st' ),
-					'title' => $title );
-		}
-		foreach( self::getWantedpagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
-			$feeds[] = array(
-					'prefix' => wfMsg( 'wikistickies-wantedpages-st' ),
-					'title' => $title );
-		}
-		shuffle( $feeds );
-		$js = "WIKIA.WikiStickies.stickies = [\n";
-		foreach( $feeds as $f ) {
-			$js .= "'" . self::renderWikiStickyContent( $f['title'], $f['prefix'] ) . "',\n";
-		}
-		$js .= "];\n";
-		$wgOut->addInlineScript( $js );
-		$wgOut->addScriptFile("{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js");
-
-		$html = self::renderWikiSticky( $feeds[0]['title'], $feeds[0]['prefix'] );
-
-		return true;
-	}
 }
