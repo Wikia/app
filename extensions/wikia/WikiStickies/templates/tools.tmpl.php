@@ -63,6 +63,8 @@ for (var i = 0; i < themes.length; i++) {
     </ul>
 
     <!-- TODO: Need to gracefully degrade this. Why isn't it a <form>? -->
-    <a id="wikistickies-admintools-submit" class="wikia_button" href="#" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?php print wfMsg("wikistickies-save-changes") ?></span></a>
+    <div id="wikistickies-admintools-submit">
+        <a class="wikia_button" href="#" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?php print wfMsg("wikistickies-save-changes") ?></span></a>
+    </div>
 
 </div><!-- END #wikistickies-admintools -->
