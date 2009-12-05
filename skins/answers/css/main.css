@@ -1129,7 +1129,7 @@ span.answered_questions a, span.unanswered_questions a{
 .cathub-asked {
 	font-size:.9em;
 	color:#707070;
-	line-height:.8em;
+	line-height:1em;
 }
 .cathub-actual-answer{
 	margin-top:15px;
@@ -1141,12 +1141,12 @@ span.answered_questions a, span.unanswered_questions a{
 	color:#090;
 	line-height:.8em;
 }
-.cathub-rephrase{
+.cathub-button-rephrase{
 	margin-left:10px;
 	font-style:italic;
 	font-size:.8em;
 }
-.cathub-rephrase a{
+.cathub-button-rephrase a{
 	color:#00c;
 }
 li .hideUntilHover{
@@ -1159,4 +1159,8 @@ li:hover .hideUntilHover{
 	padding:0px !important;
 	margin-left:-2px !important;
 	margin-right:-2px !important;
+}
+.ui-widget-content{
+	border:0px;
+	margin-bottom:10px;
 }

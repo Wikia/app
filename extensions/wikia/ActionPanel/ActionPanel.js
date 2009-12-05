@@ -149,7 +149,7 @@ function ActionPanelMouseover(e) {
 				jQuery( quick_answer ).append(add_answer);
 
 				//get page content first
-				url = wgServer + "/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=" + this_title;
+				url = wgServer + wgScriptPath + "/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=" + this_title;
 				jQuery.getJSON( url, "", function( j ){
 
 					existing_content = "";
@@ -168,7 +168,7 @@ function ActionPanelMouseover(e) {
 					jQuery( quick_answer ).append(save_button);
 					jQuery( save_button ).click( function(){
 						actionWait()
-						url = wgServer + "/api.php?format=json&action=query&prop=info&intoken=edit&titles=" + this_title;
+						url = wgServer + wgScriptPath + "/api.php?format=json&action=query&prop=info&intoken=edit&titles=" + this_title;
 
 
 						jQuery.getJSON( url, "", function( editPage ){
@@ -180,7 +180,7 @@ function ActionPanelMouseover(e) {
 								//alert( "you would have saved (" + add_answer + ") to " + questions[1] + " with token " + token + " (disabled for testing)" )
 								//return false;
 
-								url = wgServer + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=edit&title=" + this_title + "&text=" + encodeURIComponent(add_answer.value);
+								url = wgServer + wgScriptPath + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=edit&title=" + this_title + "&text=" + encodeURIComponent(add_answer.value);
 								jQuery.post( url, "", function( response ){
 									eval("j=" + response);
 
@@ -211,7 +211,7 @@ function ActionPanelMouseover(e) {
 					//alert( "you would have renamed  " + this_title + " (disabled for testing)" )
 					//return false;
 					//Need to first get an edit token
-					url = wgServer + "/api.php?format=json&action=query&prop=info&intoken=move&titles=" + this_title;
+					url = wgServer + wgScriptPath + "/api.php?format=json&action=query&prop=info&intoken=move&titles=" + this_title;
 
 					jQuery.getJSON( url, "", function( movePage ){
 
@@ -220,7 +220,7 @@ function ActionPanelMouseover(e) {
 							for( page in movePage.query.pages ){
 								token = movePage.query.pages[page].movetoken ;
 							}
-							url = wgServer + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=move&from=" + this_title + "&to=" + encodeURIComponent(document.getElementById("quickmove").value.replace(/\?+$/, ''));
+							url = wgServer + wgScriptPath + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=move&from=" + this_title + "&to=" + encodeURIComponent(document.getElementById("quickmove").value.replace(/\?+$/, ''));
 							jQuery.post( url, "", function( response ){
 								eval("j=" + response);
 								removeSpinner("do_action")
@@ -244,7 +244,7 @@ function ActionPanelMouseover(e) {
 					//alert( "you would have renamed  " + this_title + " (disabled for testing)" )
 					//return false;
 					//Need to first get an edit token
-					url = wgServer + "/api.php?format=json&action=query&prop=info&intoken=delete&titles=" + this_title;
+					url = wgServer + wgScriptPath + "/api.php?format=json&action=query&prop=info&intoken=delete&titles=" + this_title;
 
 					jQuery.getJSON( url, "", function( deletePage ){
 
@@ -252,7 +252,7 @@ function ActionPanelMouseover(e) {
 							for( page in deletePage.query.pages ){
 								token = deletePage.query.pages[page].deletetoken ;
 							}
-							url = wgServer + "/api.php?action=delete";
+							url = wgServer + wgScriptPath + "/api.php?action=delete";
 
 							jQuery.post( url, { token: encodeURIComponent(token), title: this_title.replace(/_/g," ") } , function( response ){
 
@@ -286,7 +286,7 @@ function ActionPanelMouseover(e) {
 					jQuery(".categorize_help_container").remove();
 					actionWait()
 					//get page content first
-					url = wgServer + "/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=" + this_title;
+					url = wgServer + wgScriptPath + "/api.php?format=json&action=query&prop=revisions&rvprop=content&titles=" + this_title;
 					jQuery.getJSON( url, "", function( j ){
 
 						existing_content = "";
@@ -296,7 +296,7 @@ function ActionPanelMouseover(e) {
 							}
 						}
 
-						url = wgServer + "/api.php?format=json&action=query&prop=info&intoken=edit&titles=" + this_title;
+						url = wgServer + wgScriptPath + "/api.php?format=json&action=query&prop=info&intoken=edit&titles=" + this_title;
 
 
 						jQuery.getJSON( url, "", function( editPage ){
@@ -319,7 +319,7 @@ function ActionPanelMouseover(e) {
 								wiki_text = existing_content.replace(regex,"") + "\n\n" + categories_wiki_text;
 								//alert( "would have saved wiki text:" + wiki_text )
 								//return false;
-								url = wgServer + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=edit&title=" + this_title + "&text=" + encodeURIComponent(wiki_text) + "&summary=" + wgActionPanelAddCategoriesSummary;
+								url = wgServer + wgScriptPath + "/api.php?format=json&token=" + encodeURIComponent(token) + "&action=edit&title=" + this_title + "&text=" + encodeURIComponent(wiki_text) + "&summary=" + wgActionPanelAddCategoriesSummary;
 								jQuery.post( url, "", function( response ){
 									eval("j=" + response);
 
@@ -343,7 +343,7 @@ function ActionPanelMouseover(e) {
 				jQuery( ".hoverrename" ).click( function(){ selectHoverLink( modes, "rename",this) });
 				jQuery( ".hovercategorize" ).click( function(){
 					current_link = this
-					url = wgServer + "/api.php?format=json&action=query&prop=categories&titles=" + this_title;
+					url = wgServer + wgScriptPath + "/api.php?format=json&action=query&prop=categories&titles=" + this_title;
 
 					jQuery.getJSON( url, "", function( j ){
 

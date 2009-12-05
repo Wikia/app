@@ -34,6 +34,7 @@ $wgCategoryHubArticleLimitPerTab = 15; // required (otherwise will default to 0)
 $wgHooks['LanguageGetMagic'][] = 'categoryHubAddMagicWords'; // setup names for parser functions (needed here)
 $wgHooks['ParserAfterStrip'][] = 'categoryHubCheckForMagicWords';
 $wgHooks['BeforePageDisplay'][] = 'categoryHubAdditionalScripts';
+$wgHooks['MakeGlobalVariablesScript'][] = 'categoryHubJsGlobalVariables';
 
 // Allows us to define a special order for the various sections on the page.
 $wgHooks['FlexibleCategoryPage::openShowCategory'][] = 'categoryHubBeforeArticleText';
@@ -82,6 +83,24 @@ function categoryHubAdditionalScripts( &$out, &$sk ){
 	$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/wikia/CategoryHubs/interactiveLists.js'></script>");
 	return true;
 } // end categoryHubAdditionalScripts()
+
+////
+// Adds global variables to the JS that will be needed by the CategoryHubs javascript.
+// This includes internationalized messages that the JS will need.
+////
+function categoryHubJsGlobalVariables(&$vars){
+	wfLoadExtensionMessages('CategoryHub');
+	$vars['wgCatHubSaveButtonMsg'] = wfMsg('save');
+	$vars['wgCatHubCancelButtonMsg'] = wfMsg('cancel');
+	$vars['wgCatHubAnswerButtonMsg'] = wfMsg('cathub-button-answer');
+	$vars['wgCatHubAnswerHeadingMsg'] = wfMsg('cathub-answer-heading');
+	$vars['wgCatHubImproveAnswerButtonMsg'] = wfMsg('cathub-button-improve-answer');
+	$vars['wgCatHubRephraseButtonMsg'] = wfMsg('cathub-button-rephrase');
+
+	// FIXME: There is probably a more robust way to get this image than hardcoding it.
+	$vars['wgAjaxImageSrc'] = "http://images.wikia.com/common/skins/common/images/ajax.gif";
+	return true;
+} // end categoryHubJsGlobalVariables()
 
 ////
 // Determines if the magic word is present for disabling the Category Hub and defaulting to previous behavior.
@@ -368,13 +387,13 @@ function categoryHubOtherSection(&$catView, &$r){
 
 				// Button to trigger the form for answering inline.
 				$r .= "<div class='cathub-button hideUntilHover' style='float:right'>\n";
-				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer'><big>";
+				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
 				$r .= wfMsgExt('cathub-button-answer', array())."</big><small>&nbsp;</small></a>\n";
 				$r .= "</div>\n";
 
 				// Question & attribution for last edit.
 				$title = $qArticle->getTitle();
-				$r .= "<span class=\"$UN_CLASS\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+				$r .= "<span class=\"$UN_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
 				$r .= categoryHubGetAttributionByArticle($qArticle);
 
 				// Form for answering inline.
@@ -409,14 +428,14 @@ function categoryHubOtherSection(&$catView, &$r){
 
 				// Button to trigger the form for changing an answer inline.
 				$r .= "<div class='cathub-button hideUntilHover' style='float:right;'>\n";
-				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer'><big>";
+				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
 				$r .= wfMsgExt('cathub-button-improve-answer', array())."</big><small>&nbsp;</small></a>\n";
 				$r .= "</div>\n";
 
 				// Question & attribution for last edit.
 				$title = $qArticle->getTitle();
-				$r .= "<span class=\"$ANS_CLASS\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
-				$r .= "&nbsp;<span class='cathub-rephrase hideUntilHover'><a href='#'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
+				$r .= "<span class=\"$ANS_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+				$r .= "&nbsp;<span class='cathub-button-rephrase hideUntilHover'><a href='javascript:void(0)'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
 				$r .= categoryHubGetAttributionByArticle($qArticle);
 
 				// Show the  actual answer.
