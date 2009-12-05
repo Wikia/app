@@ -32,9 +32,9 @@ class WikiStickies {
 		}
 
 		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
-		$tpl->set_vars( array());
+		$tpl->set_vars( array() );
 
-		$text = $tpl->execute('tools');
+		$text = $tpl->execute( 'tools' );
 		$wgOut->addHTML( $text );
 	}
 
