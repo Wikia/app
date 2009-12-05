@@ -48,8 +48,9 @@
 .wikisticky_special_link {
     color:#002BB8;
     display: block;
-    font-size: 9pt;
+    font-size: 10pt;
     font-weight: bold;
+    margin-top: .5em;
     margin-bottom: 30px;
     text-align: center;
 }
