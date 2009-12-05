@@ -8,8 +8,8 @@
     margin-bottom: 3em;
     width: 209px;
 }
+.wikistickiesfeed, #wikistickies-admintools { clear: left; }
 .wikistickiesfeed {
-    clear: left;
     margin: 0 0 3em 0;
 }
 .wikistickiesfeed h2 {
@@ -76,33 +76,27 @@
     padding: 5px 0;
 }
 
-.wikistickiestools {
-    border:1px solid #AAA;
-}
-
-.wikistickiesfeed, .wikiheadertools {
-    text-align: left;
-    margin-bottom: 15px;
-}
-
-.wikiheadertools li {
-    list-style-image: none;
-    list-style-type:none;
-    margin-bottom: 0;
-}
-.wikiheadertools .step {
-    background-color: #F5F5F5;
+#wikistickies-admintools, #wikistickies-admintools-submit {
     border: 1px solid #AAA;
 }
-.wikiheadertools #step2 {
-	border-bottom: none;
-}
-.wikiheadertools #step3 {
-	border-top: none;
+#wikistickies-admintools {
+    background-color: #F5F5F5;
+    padding: 20px;
 }
 
-#wikistickies_save_all {
+#wikistickies-admintools h2 {
+    margin-top: 0;
+}
+
+#wikistickies-admintools ul {
+    list-style: none;
+    margin: 0;
+}
+
+#wikistickies-admintools-submit {
+    border-width: 1px 0 0 0;
 	margin-top: 20px;
+    padding-top: 5px;
 }
 
 .reflow {
