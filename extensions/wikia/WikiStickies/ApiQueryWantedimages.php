@@ -29,12 +29,12 @@ class ApiQueryWantedimages extends ApiQueryBase {
 				foreach( $res as $row ) {
 					if( $this->getReferencesCount( $row->il_to ) < $threshold ) {
 						$this->has_images[$page] = true;
-						$wgMemc->set( $this->has_images[$page], 60*60*12 );
+						$wgMemc->set( $memcKey, $this->has_images[$page], 60*60*12 );
 						return true;
 					}	       
 				}
 				$this->has_images[$page] = false;
-				$wgMemc->set( $this->has_images[$page], 60*60*12 );
+				$wgMemc->set( $memcKey, $this->has_images[$page], 60*60*12 );
 			}
 		}
 		return $this->has_images[$page];
