@@ -70,7 +70,7 @@ function WidgetWikiPage($id, $params) {
 	
 		if ( $article == false ) {
 			// failed to get text, show error message, failed pagename is in $1
-			$ret = $parser->parse( wfMsg('widgetwikipagemissing', $params['source']) , $wgTitle, $options )->getText();
+			$ret = $parser->parse( '<span class="widget-error-wikipage-missing">' . wfMsg('widgetwikipagemissing', $params['source']) . '</span>' , $wgTitle, $options )->getText();
 			// TODO: change title if page missing?
 		}
 		else {
