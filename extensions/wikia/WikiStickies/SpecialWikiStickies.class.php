@@ -1,8 +1,12 @@
 <?php
 /**
- * WikiStickies
- *
+ * @ingroup Wikia
+ * @file SpecialWikiStickies.class.php
+ * @package WikiStickies
  * @see https://contractor.wikia-inc.com/wiki/WikiStickies
+ *
+ * Creates a wiki "sticky note" visual interface, a "wikisticky."
+ * Wikisticky notes appear in several different places.
  */
 class SpecialWikiStickies extends SpecialPage {
 
@@ -19,8 +23,9 @@ class SpecialWikiStickies extends SpecialPage {
 
 		$this->setHeaders();
 
-		WikiStickies::addWikiStickyResources( 'all' );
+		WikiStickies::addWikiStickyResources();
 		// load additional dependencies (CSS and JS)?
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesSpecialPage.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\">WIKIA.WikiStickies.track( '/view' );</script>");
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
