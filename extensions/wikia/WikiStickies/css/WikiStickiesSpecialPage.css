@@ -87,6 +87,9 @@
 #wikistickies-admintools h2 {
     margin-top: 0;
 }
+#wikistickies-admintools h3 {
+    font: bold 14px/1em Arial, sans-serif;
+}
 
 #wikistickies-admintools ul {
     list-style: none;
