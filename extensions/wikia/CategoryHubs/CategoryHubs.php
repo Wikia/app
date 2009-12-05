@@ -436,7 +436,8 @@ function categoryHubOtherSection(&$catView, &$r){
 				// Question & attribution for last edit.
 				$title = $qArticle->getTitle();
 				$r .= "<span class=\"$ANS_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
-				$r .= "&nbsp;<span class='cathub-button-rephrase hideUntilHover'><a href='javascript:void(0)'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
+				// TODO: RESTORE THIS WHEN rephrase IS WORKING.
+				//$r .= "&nbsp;<span class='cathub-button-rephrase hideUntilHover'><a href='javascript:void(0)'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
 				$r .= categoryHubGetAttributionByArticle($qArticle);
 
 				// Show the  actual answer.
