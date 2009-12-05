@@ -33,10 +33,10 @@ class SpecialWikiStickies extends SpecialPage {
 
 		// get the Three Feeds
 		WikiStickies::formatFeed(
-			'wikistickies-wantedimages',
-			WikiStickies::getWantedimagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ),
-			wfMsg('wikistickies-wantedimages-hd'),
-			wfMsg( 'wikistickies-wantedimages-st-short' ) ) ;
+			'wikistickies-pageswithoutimages',
+			WikiStickies::getPagesWithoutImagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ),
+			wfMsg('wikistickies-pageswithoutimages-hd'),
+			wfMsg( 'wikistickies-pageswithoutimages-st-short' ) ) ;
 
 		WikiStickies::formatFeed( 'wikistickies-newpages', 
 			WikiStickies::getNewpagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 

@@ -16,7 +16,7 @@ $wgExtensionCredits['specialpage'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 // autoloader
-$wgAutoloadClasses['ApiQueryWantedimages'] = $dir . 'ApiQueryWantedimages.php';
+$wgAutoloadClasses['ApiQueryPagesWithoutImages'] = $dir . 'ApiQueryPagesWithoutImages.php';
 $wgAutoloadClasses['ApiQueryWantedpages'] = $dir . 'ApiQueryWantedpages.php';
 $wgAutoloadClasses['SpecialWikiStickies'] = $dir.'SpecialWikiStickies.class.php';
 $wgAutoloadClasses['WikiStickies'] = $dir.'WikiStickies.class.php';
@@ -31,7 +31,7 @@ $wgExtensionMessagesFiles['WikiStickies'] = $dir . 'WikiStickies.i18n.php';
 
 // API
 $wgAPIListModules['wantedpages'] = 'ApiQueryWantedpages';
-$wgAPIListModules['wantedimages'] = 'ApiQueryWantedimages';
+$wgAPIListModules['pageswithoutimages'] = 'ApiQueryPagesWithoutImages';
 
 // Hooks
 $wgHooks['MyHome::sidebarBeforeContent'][] = 'efAddWikiSticky';
@@ -47,9 +47,9 @@ function efAddWikiSticky( &$html ) {
 
 	// fetch the feeds and shuffle them
 	$feeds = array();
-	foreach( WikiStickies::getWantedimagesFeed( WikiStickies::INITIAL_FEED_LIMIT ) as $title ) {
+	foreach( WikiStickies::getPagesWithoutImagesFeed( WikiStickies::INITIAL_FEED_LIMIT ) as $title ) {
 		$feeds[] = array(
-			'prefix' => wfMsg( 'wikistickies-wantedimages-st' ),
+			'prefix' => wfMsg( 'wikistickies-pageswithoutimages-st' ),
 			'title' => $title );
 	}
 	foreach( WikiStickies::getNewpagesFeed( WikiStickies::INITIAL_FEED_LIMIT ) as $title ) {

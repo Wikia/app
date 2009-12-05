@@ -198,14 +198,14 @@ class WikiStickies {
 	}
 
 	// fetch the feed for pages without images
-	static function getWantedimagesFeed( $limit ) {
+	static function getPagesWithoutImagesFeed( $limit ) {
 		$data = array(
 				'action'	=> 'query',
-				'list'		=> 'wantedimages',
+				'list'		=> 'pageswithoutimages',
 				'wilimit'	=> intval($limit),
 				 );
 
-			return self::getFeed( 'wantedimages', $data );
+			return self::getFeed( 'pageswithoutimages', $data );
 	}
 
 	/**
