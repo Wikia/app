@@ -8,6 +8,7 @@
     margin-bottom: 3em;
     width: 209px;
 }
+.wikisticky_content { padding-right: 8px; }
 .wikistickiesfeed, #wikistickies-admintools { clear: left; }
 .wikistickiesfeed {
     margin: 0 0 3em 0;
