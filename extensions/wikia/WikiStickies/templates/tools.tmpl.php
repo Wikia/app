@@ -8,37 +8,17 @@
             <h3><?php echo wfMsg("wikistickies-theme-hd")?></h3>
 
             <div id="wikistickies-themechooser">
-                <label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
-                <input onclick="NWB.changeTheme('monaco-$theme', false)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
+                <!-- TODO: i18n for the preview image alt="" attribute. -->
+                <label for="theme_radio_$theme"><img id="theme_preview_image_$theme" alt="Theme preview image." /></label>
+                <input type="radio" id="theme_radio_$theme" name="theme" value="monaco-$theme" onclick="NWB.changeTheme('monaco-$theme', false);" />
+                <label for="theme_radio_$theme">$Theme</label>
             </div>
             <div id="theme_scroller" class="accent">
                     <table><tr></tr></table>
             </div>
-<!-- TODO: This should be moved into the external JavaScript. -->
-<script type="text/javascript">
-var wgAdminSkin = '<?php echo $wgAdminSkin?>';
-
-var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
-for (var i = 0; i < themes.length; i++) {
-    // Copy the template, search and replace the values
-    var ltheme = themes[i].toLowerCase();
-    var thtml = $("#wikistickies-themechooser").html();
-    thtml = thtml.replace(/\$Theme/g, themes[i]);
-    thtml = thtml.replace(/\$theme/g, ltheme);
-
-    // Create element with that preview and append it
-    $("#theme_scroller tr").append("<td>" + thtml + "</td>");
-    $("#theme_preview_image_" + ltheme).attr("src", "http://images.wikia.com/common/skins/monaco/" + ltheme + "/images/preview.png");
-
-    // Check the box with the current theme ($wgAdminSkin)
-    if (wgAdminSkin.replace(/monaco-/, '')  == ltheme) {
-        // Check the box and change the theme
-        $("#theme_radio_" + ltheme).attr("checked", true);
-        WIKIA.WikiStickies.track( '/admin/' + ltheme );
-        NWB.changeTheme(ltheme, false);
-    }
-}
-</script>
+            <script type="text/javascript">
+                WIKIA.WikiStickies.wgAdminSkin = '<?php echo $wgAdminSkin?>';
+            </script>
         </li>
 
         <li id="wikistickies-admintools-step3" class="step">
@@ -62,7 +42,7 @@ for (var i = 0; i < themes.length; i++) {
 
     </ul>
 
-    <!-- TODO: Need to gracefully degrade this. Why isn't it a <form>? -->
+    <!-- TODO: Need to gracefully degrade this functionality. Why isn't it a <form>? -->
     <div id="wikistickies-admintools-submit">
         <a class="wikia_button" href="#" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?php print wfMsg("wikistickies-save-changes") ?></span></a>
     </div>
