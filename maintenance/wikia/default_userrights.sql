@@ -19,6 +19,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Jimbo Wales*/13,'staff'),
 (/*JoePlay*/171752,'staff'),
 (/*Kirkburn*/126761,'staff'),
+(/*KimberlySue*/1670804,'staff'),
 (/*KyleH*/265264,'staff'),
 (/*Lleowen*/261184,'staff'),
 (/*Macbre*/119245,'staff'),
