@@ -1,10 +1,11 @@
-#myhome-sidebar .wikisticky_content h2, #myhome-sidebar .wikisticky_curl, #myhome-sidebar .wikisticky_next { display: block; }
+/**
+ * Base CSS rules for the wikisticky visual component.
+ */
 
 #wikisticky_browser {
     background: url(../images/bg.wikisticky.249x222.png) no-repeat;
     height: 222px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     width: 249px;
 }
 

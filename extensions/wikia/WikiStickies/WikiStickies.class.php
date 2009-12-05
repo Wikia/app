@@ -14,11 +14,9 @@ class WikiStickies {
 	/**
 	 * Loads base WikiSticky CSS and JavaScript resources.
 	 */
-	static function addWikiStickyResources ( $all = false) {
+	static function addWikiStickyResources () {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
-		if( $all ) {
-			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
-		}
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");
 	}
 
@@ -217,7 +215,9 @@ class WikiStickies {
 	 * @return string The appropriate HTML to output.
 	 */
 	static function renderWikiSticky ( $title, $prefix, $attrs = NULL ) {
-		global $wgExtensionsPath, $wgUser;
+		global $wgExtensionsPath, $wgUser, $wgTitle, $wgCanonicalNamespaceNames;
+		// Where are we?
+		$canname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
 
 		// Set default attributes.
 		if( !is_array( $attrs ) ) {
@@ -231,11 +231,14 @@ class WikiStickies {
 		$sk = $wgUser->getSkin();
 
 		$html = Xml::openElement( 'div', $attrs ).
-			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) ).
-			Xml::openElement( 'h2' ).
+			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) );
+		// TODO: These checks for pages might be better abstracted later.
+		if( 'MyHome' == $canname ) {
+			$html .= Xml::openElement( 'h2' ).
 				wfMsg( 'wikistickies' ).
-			Xml::closeElement( 'h2' ).
-			Xml::openElement( 'p' ).
+			Xml::closeElement( 'h2' );
+		}
+		$html .= Xml::openElement( 'p' ).
 			self::renderWikiStickyContent( $title, $prefix ).
 			Xml::closeElement( 'p' ).
 			// TODO: This should link to the source of the feed fetched, not a '#' fragment.
@@ -246,10 +249,6 @@ class WikiStickies {
 			Xml::closeElement( 'img' ).
 			Xml::closeElement( 'div' ).
 			Xml::closeElement( 'div' );
-
-		// leave if canonical is not MyHome
-		global $wgTitle, $wgCanonicalNamespaceNames;
-		$canname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
 
 		if( 'MyHome' == $canname ) {
 			// this is the link for Special:WikiStickies
