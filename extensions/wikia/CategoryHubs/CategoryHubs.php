@@ -96,9 +96,10 @@ function categoryHubJsGlobalVariables(&$vars){
 	$vars['wgCatHubAnswerHeadingMsg'] = wfMsg('cathub-answer-heading');
 	$vars['wgCatHubImproveAnswerButtonMsg'] = wfMsg('cathub-button-improve-answer');
 	$vars['wgCatHubRephraseButtonMsg'] = wfMsg('cathub-button-rephrase');
+	$vars['wgCatHubEditSuccessMsg'] = wfMsg('cathub-edit-success');
 
-	// FIXME: There is probably a more robust way to get this image than hardcoding it.
-	$vars['wgAjaxImageSrc'] = "http://images.wikia.com/common/skins/common/images/ajax.gif";
+	global $wgStylePath;
+	$vars['wgAjaxImageSrc'] = $wgStylePath."/common/images/ajax.gif";
 	return true;
 } // end categoryHubJsGlobalVariables()
 
@@ -246,7 +247,6 @@ WikiFactory::isUsed(true); // TODO: REMOVE - ONLY NEEDED FOR LOCAL TESTING!
 	$r .= "<div style='display:table;width:$PROG_BAR_WIDTH"."px'>"; // wraps the progress bar and the labels below it
 	$r .= "<div class='cathub-progbar-wrapper' style='width:$PROG_BAR_WIDTH"."px'>";
 	$percentAnswered = $categoryEdits->getPercent(ANSWERED_CATEGORY);
-$percentAnswered = "75%"; // TODO: REMOVE
 	if($percentAnswered <= 0){
 		$percentAnswered = 0;
 		$r .= "<div class='cathub-progbar-unanswered' style='width:$PROG_BAR_WIDTH'>No questions answered yet</div>\n";
@@ -379,9 +379,14 @@ function categoryHubOtherSection(&$catView, &$r){
 
 		// Unanswered questions in this category.
 		$UN_CLASS = "unanswered_questions";
-		if (!empty($catView->answerArticles[$UN_CLASS])){
-			$r .= "<div id=\"cathub-tab-unanswered\">\n";
+		$r .= "<div id=\"cathub-tab-unanswered\">\n";
+		if(empty($catView->answerArticles[$UN_CLASS]) || count($catView->answerArticles[$UN_CLASS]) == 0){
+			$r .= "<div class='no-questions-now'>";
+			$r .= wfMsgExt('cathub-no-unanswered-questions', array());
+			$r .= "</div>";
+		} else {
 			$r .= "<ul class='interactive-questions'>\n";
+			
 			foreach($catView->answerArticles[$UN_CLASS] as $qArticle){
 				$r .= "<li class=\"$UN_CLASS\">\n";
 
@@ -396,32 +401,28 @@ function categoryHubOtherSection(&$catView, &$r){
 				$r .= "<span class=\"$UN_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
 				$r .= categoryHubGetAttributionByArticle($qArticle);
 
-				// Form for answering inline.
-				$r .= "<div class='cathub-actual-answer' style='display:none'>";
-				$r .= "<span class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</span><br/>\n";
-				// TODO: FLOAT THE SAVE/CANCEL BUTTONS TO THE RIGHT HERE.
-				$r .= "<div class='hoverform'><textarea style='width:75%'></textarea><input type='button' value='SAVE' class='hoverbutton'/></div>";
-//				$r .= $tmpParser->parse($qArticle->getRawText(), $title, $tmpParserOptions, false)->getText();
-				$r .= "</div>\n";
-
 				$r .= "</li>\n";
 			}
 			$r .= "</ul>\n";
-			$r .= "</div>\n";
-			if ( $wgUser->isAnon() ) {
-				$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_U');
-			}
+		}
+		$r .= "</div>\n";
+		if ( $wgUser->isAnon() ) {
+			$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_U');
 		}
 
 		// Answered questions in this category.
 		$ANS_CLASS = "answered_questions";
-		if (!empty($catView->answerArticles[$ANS_CLASS])){
+		$r .= "<div id=\"cathub-tab-answered\">\n";
+		if(empty($catView->answerArticles[$ANS_CLASS]) || count($catView->answerArticles[$ANS_CLASS]) == 0){
+			$r .= "<div class='no-questions-now'>";
+			$r .= wfMsgExt('cathub-no-answered-questions', array());
+			$r .= "</div>";
+		} else {
 			global $wgParser, $wgMessageCache;
 			$tmpParser = new Parser();
 			$tmpParser->setOutputType(OT_HTML);
 			$tmpParserOptions = new ParserOptions();
 
-			$r .= "<div id=\"cathub-tab-answered\">\n";
 			$r .= "<ul class='interactive-questions'>\n";
 			foreach($catView->answerArticles[$ANS_CLASS] as $qArticle){
 				$r .= "<li class=\"$ANS_CLASS\">\n";
@@ -447,11 +448,11 @@ function categoryHubOtherSection(&$catView, &$r){
 				$r .= "</li>\n";
 			}
 			$r .= "</ul>\n";
-			$r .= "</div>\n";
 			if ( $wgUser->isAnon() ) {
 				$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_A');
 			}
 		}
+		$r .= "&nbsp;</div>\n";
 
 		$r .= "</div>\n"; // end of #tabs
 	}
