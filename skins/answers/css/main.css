@@ -1164,3 +1164,7 @@ li:hover .hideUntilHover{
 	border:0px;
 	margin-bottom:10px;
 }
+.no-questions-now{
+	padding:10px;
+	font-style:italic;
+}
