@@ -103,6 +103,13 @@ function WidgetReferrers($id, $params) {
 	    }
 	}
 
+	// exit early if no domains were found
+	if ( empty( $domains ) ) {
+		$wgMemc->set( $memcKey, '', 7200 ); // store for 2h
+		// FIXME: should probably give some sort of message to the user
+		return '';
+	}
+
 	ksort($domains);
 
 	//print_pre($wgCityId);print_pre($results);print_pre($domains);
