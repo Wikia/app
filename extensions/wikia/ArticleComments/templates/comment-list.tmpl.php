@@ -1,6 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
 <div id="article-comments-wrapper">
-	<a name="comments"></a>
+	<a name="article-comment-header"></a>
 	<h2 class="neutral"><span class="dark_text_1"><?php echo wfMsg('article-comments-comments') ?></span></h2>
 	<?php
 	if ( count( $comments ) > 1 ) {

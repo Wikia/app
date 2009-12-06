@@ -4253,6 +4253,7 @@ class Parser
 			if( $prevtoclevel > 0 && $prevtoclevel < $wgMaxTocLevel ) {
 				$toc .= $sk->tocUnindent( $prevtoclevel - 1 );
 			}
+			wfRunHooks( 'Parser::InjectTOCitem', array( $this, $sk, &$toc, &$sublevelCount ) );
 			$toc = $sk->tocList( $toc );
 		}
 
