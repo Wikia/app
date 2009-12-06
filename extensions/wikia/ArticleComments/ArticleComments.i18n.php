@@ -33,7 +33,7 @@ $messages['en'] = array(
 	'article-comments-asc' => 'Newest last',
 //	"article-comments-zero-comments" => "No comments yet!",
 	'article-comments-zero-comments' => 'No comments yet!',
-
+	'article-comments-toc-item' => 'Comments'
 );
 
 $messages['enx'] = array(

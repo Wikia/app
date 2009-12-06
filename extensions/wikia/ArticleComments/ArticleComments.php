@@ -38,6 +38,8 @@ $wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockG
 //$wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
 # ActivityFeed
 $wgHooks['MyHome:BeforeStoreInRC'][] = 'ArticleCommentList::BeforeStoreInRC';
+# TOC
+$wgHooks['Parser::InjectTOCitem'][] = 'ArticleCommentList::InjectTOCitem';
 # init
 $wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
 $wgHooks['CustomArticleFooter'][] = 'ArticleCommentInit::ArticleCommentEnableMonaco';
@@ -1555,6 +1557,26 @@ class ArticleCommentList {
 	 */
 	static function BeforeStoreInRC(&$rc, &$data) {
 		$data['articleComment'] = true;
+		return true;
+	}
+
+	/**
+	 * Hook
+	 *
+	 * @param Parser $rc -- instance of Parser class
+	 * @param Skin $sk -- instance of Skin class
+	 * @param string $toc -- HTML for TOC
+	 * @param array $sublevelCount -- last used numbers for each indentation
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @return true -- because it's hook
+	 */
+	static function InjectTOCitem($parser, $sk, &$toc, &$sublevelCount) {
+		wfLoadExtensionMessages('ArticleComments');
+		$tocnumber = ++$sublevelCount[1];
+		$toc .= $sk->tocLine('article-comment-header', wfMsg('article-comments-toc-item'), $tocnumber, 1);
 		return true;
 	}
 }
