@@ -26,7 +26,7 @@ $wgHooks['ParserFirstCallInit'][] = 'wfHighscores';
 $wgExtensionCredits['parserhook'][] = array(
     'path' => __FILE__,
     'name' => 'RSHighscores',
-    'version' => '0.2.2',
+    'version' => '1.0',
     'description' => 'A parser function which returns raw player data from RuneScape Highscores Lite',
     'url' => 'http://runescape.wikia.com/wiki/User:Catcrewser/RSHighscores',
     'author' => '[http://runescape.wikia.com/wiki/User:Catcrewser TehKittyCat]'
@@ -57,11 +57,9 @@ function wfHighscores_Render(&$parser, $player = '') {
     if($wgRSTimes<$wgRSLimit || $wgRSLimit==0) {
         $wgRSTimes++;
         if($player!='') {
-            $data = Http::get('http://services.runescape.com/m=hiscore/index_lite.ws?player='.urlencode($player),$info);
-            if($data===false) {
-    			return(0);
-            } elseif($info['response_code']==404) {
-                return(2);
+            $data = Http::get('http://services.runescape.com/m=hiscore/index_lite.ws?player='.urlencode($player));
+            if($data==false) {
+                return(1);
             } else {
                 return($data);
             }
@@ -72,8 +70,5 @@ function wfHighscores_Render(&$parser, $player = '') {
         return(0);
     }
 }
-## Possible return values
-# 0 = Could not connect
-# 1 = No player name
-# 2 = Player does not exist
-# Anything else is the highscores data
+## If 0 is returned, no name was entered.
+## If 1 is returned, the player could not be found or an error occurred.
