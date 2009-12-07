@@ -15,64 +15,15 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
-// autoloader
-$wgAutoloadClasses['ApiQueryPagesWithoutImages'] = $dir . 'ApiQueryPagesWithoutImages.php';
-$wgAutoloadClasses['ApiQueryWantedpages'] = $dir . 'ApiQueryWantedpages.php';
-$wgAutoloadClasses['SpecialWikiStickies'] = $dir.'SpecialWikiStickies.class.php';
-$wgAutoloadClasses['WikiStickies'] = $dir.'WikiStickies.class.php';
-
 // special page
+$wgAutoloadClasses['WikiStickies'] = $dir.'WikiStickies.class.php';
+$wgAutoloadClasses['SpecialWikiStickies'] = $dir.'SpecialWikiStickies.class.php';
 $wgSpecialPages['WikiStickies'] = 'SpecialWikiStickies';
 $wgSpecialPageGroups['WikiStickies'] = 'users';
-
-// i18n
 $wgExtensionAliasesFiles['WikiStickies'] = $dir . 'SpecialWikiStickies.alias.php';
 $wgExtensionMessagesFiles['WikiStickies'] = $dir . 'WikiStickies.i18n.php';
-
-// API
+$wgAutoloadClasses['ApiQueryWantedpages'] = $dir . 'ApiQueryWantedpages.php';
+$wgAutoloadClasses['ApiQueryWantedimages'] = $dir . 'ApiQueryWantedimages.php';
 $wgAPIListModules['wantedpages'] = 'ApiQueryWantedpages';
-$wgAPIListModules['pageswithoutimages'] = 'ApiQueryPagesWithoutImages';
-
-// Hooks
-$wgHooks['MyHome::sidebarBeforeContent'][] = 'efAddWikiSticky';
-
-function efAddWikiSticky( &$html ) {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion;
-
-	wfLoadExtensionMessages( 'WikiStickies' );
-
-	WikiStickies::addWikiStickyResources();
-	// Special:MyHome page-specific resources
-	$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesMyHome.css?{$wgStyleVersion}");
-
-	// fetch the feeds and shuffle them
-	$feeds = array();
-	foreach( WikiStickies::getPagesWithoutImagesFeed( WikiStickies::INITIAL_FEED_LIMIT ) as $title ) {
-		$feeds[] = array(
-			'prefix' => wfMsg( 'wikistickies-pageswithoutimages-st' ),
-			'title' => $title );
-	}
-	foreach( WikiStickies::getNewpagesFeed( WikiStickies::INITIAL_FEED_LIMIT ) as $title ) {
-		$feeds[] = array(
-			'prefix' => wfMsg( 'wikistickies-newpages-st' ),
-			'title' => $title );
-	}
-	foreach( WikiStickies::getWantedpagesFeed( WikiStickies::INITIAL_FEED_LIMIT ) as $title ) {
-		$feeds[] = array(
-			'prefix' => wfMsg( 'wikistickies-wantedpages-st' ),
-			'title' => $title );
-	}
-	//shuffle( $feeds );
-
-	$js = "WIKIA.WikiStickies.stickies = [\n";
-	foreach( $feeds as $f ) {
-		$js .= "'" . WikiStickies::renderWikiStickyContent( $f['title'], $f['prefix'] ) . "',\n";
-	}
-	$js .= "];\n";
-	$wgOut->addInlineScript( $js );
-	$wgOut->addScriptFile("{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js");
-
-	$html = WikiStickies::renderWikiSticky( $feeds[0]['title'], $feeds[0]['prefix'] );
-
-	return true;
-}
+$wgAPIListModules['wantedimages'] = 'ApiQueryWantedimages';
+$wgHooks['MyHome::sidebarBeforeContent'][] = 'WikiStickies::addToMyHome';
