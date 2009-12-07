@@ -1,8 +1,7 @@
 <?php global $wgAdminSkin; ?>
 <div id="wikistickies-admintools">
     <h2>Admins Only</h2>
-    <p>These aren&rsquo;t your typical WikiStickies. These are things that can only be done by administrators of the wiki that influence how everyone sees the wiki.</p>
-
+    <p><?= wfMsg('wikistickies-admins-msg'); ?></p>
     <ul>
         <li id="wikistickies-admintool-step2" class="step">
             <h3><?php echo wfMsg("wikistickies-theme-hd")?></h3>
