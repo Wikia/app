@@ -416,8 +416,90 @@ class UsercreateTemplate extends QuickTemplate {
 				}
 			}
 		}
-
+	<?php $this->executeRegisterJS(); ?>
+	$(UserRegistration.init);
+	</script>
+	<input type="submit" value="Register" style="position: absolute; left: -10000px; width: 0" />
+<?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
+</form>
+</div>
+</td>
+<td width="45%" style="vertical-align: top;">
+	<div class="loginHeader rightSideElem dark_text_1"><?php $this->msg('log-in-new') ?></div>
+	<form action="<?php $this->text('actionlogin') ?>" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
+	<div id="userloginErrorBox2">
+	<table>
+	<tr>
+	<td style="vertical-align:top;">
+	<span style="position: relative; top: -1px;"><img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span>
+	</td>
+	<td>
+	<div id="userloginInnerErrorBox2">
+	</td>
+	</table>
+	</div>
+	<label for="wpName2Ajax" style="display: block; font-weight: bold;"><?= wfMsg("yourname") ?></label>
+	<table>
+	<tr>
+	<td id="ajaxlogin_username_cell2">
+		<input type="text" name="wpName" id="wpName2Ajax" tabindex="101" size="20" class="loginText" />
+	</td>
+	<td></td>
+	</tr>
+	</table>
+	<div style="display: block; margin-top: 8px">
+		<label for="wpPassword2Ajax" style="font-weight: bold;"><?= wfMsg("signup-password") ?></label>
+		<a id="wpMailmypassword" href="#" style="font-size: 9pt;" onclick="AjaxLogin2.action='password'; AjaxLogin2.form.submit();"><?= wfMsg('mailmypassword') ?></a>
+	</div>
+	<table>
+	<tr>
+	<td id="ajaxlogin_password_cell2">
+		<input type="password" name="wpPassword" id="wpPassword2Ajax" tabindex="102" size="20" class="loginPassword" />
+	</td>
+	<?php 	global $wgEnableEmail, $wgAuth;
+		if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
+	</td>
+	<?php } ?>
+	</tr>
+	</table>
+	<div style="margin: 10px 0;">
+	<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1"  />
+	<div id="ControlBox" style="display:none"></div>
+	<label for="wpRemember1" class="plain"><?= wfMsg('remembermypassword') ?></label>
+	</div>
+	<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
+	</form>
+        <div class="modalToolbar">
+                <a id="wpLoginattempt" class="wikia_button rightSideElem" href="#" onclick="AjaxLogin2.action='login'; AjaxLogin2.form.submit();" ><span><?= wfMsg("login") ?></span></a>
+        </div>
+	<div id="loginIntro" class="accent rightSideElem">
+		<div class="announcementHeader dark_text_2">
+			<?php $this->msg( 'registerintro-title' ) ?>
+		</div>
+		<div class="announcementText">
+			<table>
+			<tr><td>
+			<?php $this->msg( 'registerintro-text' ) ?>
+			</td>
+			<td>
+			<?php global $wgExtensionsPath; ?>
+			<img src="<?=$wgExtensionsPath?>/wikia/SpecialSignup/images/signup_login_accent_graphic.png" alt="<?php $this->msg( 'registerintro-title' ) ?>"/>
+			</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+</td>
+</tr>
+</table>
+<div id="signupWhyProvide"></div>
+<div id="signupend" style="clear: both;"><?php $this->msgWiki( 'signupend' ); ?></div>
+<?php
+	}
+	function executeRegisterJS()
+	{ ?>
 		var UserRegistration = {};
+		UserRegistration.WET_str = 'signupActions/signup';
 
 		UserRegistration.errorNick = false;	//nick checking can be disabled
 		UserRegistration.errorEmail = UserRegistration.errorPass = UserRegistration.errorRetype = UserRegistration.errorDate = true;
@@ -515,12 +597,11 @@ class UsercreateTemplate extends QuickTemplate {
 				}
 			});
 		}
-		$(UserRegistration.init);
 
-		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal', 'onClose': function() {WET.byStr('signupActions/signup/moreinfo/email/close');} }); WET.byStr('signupActions/signup/moreinfo/email/open'); });
-		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal', 'onClose': function() {WET.byStr('signupActions/signup/moreinfo/birthdate/close'); } });  WET.byStr('signupActions/signup/moreinfo/birthdate/open'); });
-		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal', 'onClose' : function() {WET.byStr('signupActions/signup/moreinfo/captcha/close'); } });  WET.byStr('signupActions/signup/moreinfo/captcha/open'); });
-		$('#termsOfUse').bind('click', function(){ WET.byStr('signupActions/signup/termsofuse'); } );
+		$('#wpEmailInfo').bind('click', function(){$.showModal(prefs_help_mailmesg, prefs_help_email, {'id': 'wpEmailInfoModal', 'onClose': function() {WET.byStr(UserRegistration.WET_str + '/moreinfo/email/close');} }); WET.byStr(UserRegistration.WET_str + '/moreinfo/email/open'); });
+		$('#wpBirthDateInfo').bind('click', function(){$.showModal(prefs_help_birthmesg, prefs_help_birthinfo, {'id': 'wpBirthDateInfoModal', 'onClose': function() {WET.byStr(UserRegistration.WET_str + '/moreinfo/birthdate/close'); } });  WET.byStr(UserRegistration.WET_str + '/moreinfo/birthdate/open'); });
+		$('#wpUserCaptchaInfo').bind('click', function(){$.showModal(prefs_help_blurmesg, prefs_help_blurinfo, {'id': 'wpUserCaptchaInfoModal', 'onClose' : function() {WET.byStr(UserRegistration.WET_str + '/moreinfo/captcha/close'); } });  WET.byStr(UserRegistration.WET_str + '/moreinfo/captcha/open'); });
+		$('#termsOfUse').bind('click', function(){ WET.byStr(UserRegistration.WET_str + '/termsofuse'); } );
 
 		UserRegistration.toggleError = function(id, show) {
 			if (show == 'ok') {
@@ -605,7 +686,7 @@ class UsercreateTemplate extends QuickTemplate {
 			if (UserRegistration.checkForm()) {
 				$('#userlogin2').submit();
 			} else {
-				WET.byStr('signupActions/signup/createaccount/failure');
+				WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
 			}
 		}
 
@@ -637,83 +718,8 @@ class UsercreateTemplate extends QuickTemplate {
 		$('#wpBirthDay').bind('change', UserRegistration.checkDate);
 		$('#wpPassword2').bind('blur', function(){UserRegistration.checkPass(); UserRegistration.checkRetype();});
 		$('#wpRetype').bind('blur', UserRegistration.checkRetype);
-	</script>
-	<input type="submit" value="Register" style="position: absolute; left: -10000px; width: 0" />
-<?php if( @$this->haveData( 'uselang' ) ) { ?><input type="hidden" name="uselang" value="<?php $this->text( 'uselang' ); ?>" /><?php } ?>
-</form>
-</div>
-</td>
-<td width="45%" style="vertical-align: top;">
-	<div class="loginHeader rightSideElem dark_text_1"><?php $this->msg('log-in-new') ?></div>
-	<form action="<?php $this->text('actionlogin') ?>" method="post" style="margin: 10px;" name="userajaxloginform2" id="userajaxloginform2">
-	<div id="userloginErrorBox2">
-	<table>
-	<tr>
-	<td style="vertical-align:top;">
-	<span style="position: relative; top: -1px;"><img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span>
-	</td>
-	<td>
-	<div id="userloginInnerErrorBox2">
-	</td>
-	</table>
-	</div>
-	<label for="wpName2Ajax" style="display: block; font-weight: bold;"><?= wfMsg("yourname") ?></label>
-	<table>
-	<tr>
-	<td id="ajaxlogin_username_cell2">
-		<input type="text" name="wpName" id="wpName2Ajax" tabindex="101" size="20" class="loginText" />
-	</td>
-	<td></td>
-	</tr>
-	</table>
-	<div style="display: block; margin-top: 8px">
-		<label for="wpPassword2Ajax" style="font-weight: bold;"><?= wfMsg("signup-password") ?></label>
-		<a id="wpMailmypassword" href="#" style="font-size: 9pt;" onclick="AjaxLogin2.action='password'; AjaxLogin2.form.submit();"><?= wfMsg('mailmypassword') ?></a>
-	</div>
-	<table>
-	<tr>
-	<td id="ajaxlogin_password_cell2">
-		<input type="password" name="wpPassword" id="wpPassword2Ajax" tabindex="102" size="20" class="loginPassword" />
-	</td>
-	<?php 	global $wgEnableEmail, $wgAuth;
-		if( $wgEnableEmail && $wgAuth->allowPasswordChange() ) { ?>
-	</td>
-	<?php } ?>
-	</tr>
-	</table>
-	<div style="margin: 10px 0;">
-	<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1"  />
-	<div id="ControlBox" style="display:none"></div>
-	<label for="wpRemember1" class="plain"><?= wfMsg('remembermypassword') ?></label>
-	</div>
-	<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
-	</form>
-        <div class="modalToolbar">
-                <a id="wpLoginattempt" class="wikia_button rightSideElem" href="#" onclick="AjaxLogin2.action='login'; AjaxLogin2.form.submit();" ><span><?= wfMsg("login") ?></span></a>
-        </div>
-	<div id="loginIntro" class="accent rightSideElem">
-		<div class="announcementHeader dark_text_2">
-			<?php $this->msg( 'registerintro-title' ) ?>
-		</div>
-		<div class="announcementText">
-			<table>
-			<tr><td>
-			<?php $this->msg( 'registerintro-text' ) ?>
-			</td>
-			<td>
-			<?php global $wgExtensionsPath; ?>
-			<img src="<?=$wgExtensionsPath?>/wikia/SpecialSignup/images/signup_login_accent_graphic.png" alt="<?php $this->msg( 'registerintro-title' ) ?>"/>
-			</td>
-			</tr>
-			</table>
-		</div>
-	</div>
-</td>
-</tr>
-</table>
-<div id="signupWhyProvide"></div>
-<div id="signupend" style="clear: both;"><?php $this->msgWiki( 'signupend' ); ?></div>
-<?php
-
-	}
+	<?php  }
+	
 }
+
+

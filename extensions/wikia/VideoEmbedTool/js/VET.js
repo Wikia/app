@@ -325,6 +325,11 @@ function VET_getFirstFree( gallery, box ) {
 
 // some parameters are
 function VET_show( e, gallery, box, align, thumb, size, caption ) {
+	
+	if(typeof gallery == "undefined") {
+		if (showComboAjaxForPalceHolder("",false)) return false;
+	}
+	
 	VET_refid = null;
 	VET_wysiwygStart = 1;
 	VET_gallery = -1;

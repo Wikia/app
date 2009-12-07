@@ -4,6 +4,8 @@
 
 if(typeof wgEnableAjaxLogin != 'undefined' && wgEnableAjaxLogin) {
 
+	
+	
 	YAHOO.namespace("wikia.AjaxLogin");
 
 	(function() {

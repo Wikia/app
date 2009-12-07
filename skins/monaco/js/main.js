@@ -1,5 +1,6 @@
 // == meitar @ 2009-12-04 02:57:36 ==
 // New global Wikia namespace. Please see
+ global Wikia namespace. Please see
 //     https://staff.wikia-inc.com/wiki/Coding_conventions#JavaScript
 // for details.
 // TODO: Is there a better, more fundamental place for this?
@@ -84,36 +85,142 @@ function openUserMenu(event) {
 // AjaxLogin
 function openLogin(event) {
 	// check wgEnableAjaxLogin
-	if ( (typeof wgEnableAjaxLogin == 'undefined') || !wgEnableAjaxLogin) {
+	if ( (typeof wgEnableAjaxLogin == 'undefined') || !wgEnableAjaxLogin ) {
 		$().log('AjaxLogin: wgEnableAjaxLogin is false, going to Special:Userlogin...');
 		return;
 	}
 
-	if (typeof event.preventDefault == 'function') {
+	if(typeof event.preventDefault == 'function') {
 		event.preventDefault();
-	}
+	}	
 
-	if ($('#AjaxLoginBox').length > 0) {
-		// show ajax login dialog if already in DOM
-		$('#AjaxLoginBox').showModal();
-		$('#wpName1Ajax').focus();
+	if((typeof AjaxLogin != 'undefined') && AjaxLogin.showFromDOM()){
 		WET.byStr('signupActions/signup/open');
+		return true;
 	}
-	else {
-		$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
-				$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AwesomeAjaxLogin.js?' + wgStyleVersion, function() {
-					// first initialized AjaxLogin form (move login/password fields)
-					AjaxLogin.init( $('#AjaxLoginBox form') );
+	
+	$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
+			$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AwesomeAjaxLogin.js?' + wgStyleVersion, function() {
+				// first initialized AjaxLogin form (move login/password fields)
+				AjaxLogin.init( $('#AjaxLoginBox form') );
 
-					// then show as modal
-					$('#AjaxLoginBox').makeModal({width: 320, persistent: true, onClose: function(){ WET.byStr('signupActions/popup/close'); } });
-					setTimeout("$('#wpName1Ajax').focus()", 100);
-					WET.byStr('signupActions/signup/open');
-				});
+				// then show as modal
+				$('#AjaxLoginBox').makeModal({width: 320, persistent: true, onClose: function(){ WET.byStr('signupActions/popup/close'); } });
+				setTimeout("$('#wpName1Ajax').focus()", 100);
+				WET.byStr('signupActions/signup/open');
+			});
+		}
+	});
+}
+
+//Combo login WikiaImagePlaceholde
+
+function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
+	if ( typeof showComboAjaxForPalceHolder.statusAjaxLogin == 'undefined' ) { // java script static var 
+		showComboAjaxForPalceHolder.statusAjaxLogin = false;
+    }
+
+	$('html, body').attr("scrollTop",0);
+	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin) 
+		|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) { 
+		return false;
+	}
+	
+	if ((typeof  AjaxLogin != 'undefined') && AjaxLogin.showComboFromDOM()) {
+		// show ajax login dialog if already in DOM
+		WET.byStr('signupActions/signup/open');
+		return true;
+	}
+	if (showComboAjaxForPalceHolder.statusAjaxLogin){
+		return true;
+	}
+	
+/*   	$("#positioned_elements").append('<div id="loadmask" class="blackout"></div>');
+   	$(".blackout:last")
+   		.height($(document).height())
+		.css({zIndex: 9999}).fadeTo("fast", 0.65); */
+	showComboAjaxForPalceHolder.statusAjaxLogin = true;
+	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
+			callback: function() {
+				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {									
+						//$("#loadmask").remove();
+						if (isPlaceholder) AjaxLogin.setPlaceHolder(element);	
+						AjaxLogin.init( $('#AjaxLoginLoginForm form') );
+						AjaxLogin.show();
+						showComboAjaxForPalceHolder.statusAjaxLogin = false;
+						if (typeof callback != 'undefined'){
+							callback();
+						}
+					});
+				}
+	}); 
+	return true;
+}
+
+(function(){ //before on ready 	
+	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin) 
+			|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) { 
+			return false;
+	}
+
+	if ((typeof WET == "undefined") || (typeof $ == "undefined") || $(".wikiaPlaceholder .wikia_button").length < 1 ) {
+		setTimeout(arguments.callee,50); 
+		return false;
+	}
+	
+	$(".wikiaPlaceholder .wikia_button").attr("onClick","");
+	$(".wikiaPlaceholder .wikia_button").click(
+	function(e){
+		$(function(){  //wait for evn
+			if( e.target.nodeName == "SPAN" ){
+				showComboAjaxForPalceHolder($(e.target.parentNode).attr('id'),true);
+			} else
+			{
+				showComboAjaxForPalceHolder($(e.target).attr('id'),true);
 			}
 		});
+		return false;
 	}
-}
+	);
+})();
+
+(function(){ //before on ready 
+	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin) 
+			|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) { 
+			return false;
+	}
+	
+	if ((typeof WET == "undefined") || (typeof $ == "undefined") || $("#ca-viewsource").length < 1 ) {
+		setTimeout(arguments.callee,50);
+		return false;
+	}
+	
+	$("#ca-viewsource").click(function(e){
+		$(function(){  //wait for evn
+			showComboAjaxForPalceHolder(false,"",
+			function(){
+				AjaxLogin.doSuccess = function() {
+					window.location.href = e.target.href;
+				}			
+			});
+		});
+		return false;
+	})	
+})();
+
+//Open image place holder if pass in get
+$(function(){
+	if ((typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
+		if (wgIsLogin) {
+			if (window.location.href.indexOf("placeholder=") > 0) {
+				element = window.location.href.split("placeholder=")[1].split("&")[0];
+				if ($("#"+element).parent().parent().hasClass("wikiaPlaceholder")){
+					$("#"+element).trigger("click");
+				}
+			}
+		}
+	}
+});
 
 //Header Menu
 $.fn.extend({
