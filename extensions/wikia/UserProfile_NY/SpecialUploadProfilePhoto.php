@@ -60,7 +60,7 @@ class UploadProfilePhoto extends UnlistedSpecialPage {
 	function ProfileUpload($request, $user) {
 
 		global $wgTmpDirectory, $wgLogTypes, $wgDebugLogGroups, $wgUser,
-			$wgProfilePhotoUploadPath;
+			$wgProfilePhotoUploadPath, $wgEnableUploadInfoExt;
 
 	    wfProfileIn(__METHOD__);
 
@@ -113,52 +113,52 @@ class UploadProfilePhoto extends UnlistedSpecialPage {
 
 			#--- generate thumbnails (always png format)
 			$addedAvatars = array();
-			foreach (array("l","m","s","g","p","d","t") as $size) {
-			    $sThumb = ProfilePhoto::getPhotoFileFull($user->getID(), $new_photo_id, $size);
-			    $aThumbSize = ProfilePhoto::getPhotoSize($size);
+			foreach( array( "l", "m", "s", "g", "p", "d", "t" ) as $size ) {
+				$sThumb = ProfilePhoto::getPhotoFileFull($user->getID(), $new_photo_id, $size);
+				$aThumbSize = ProfilePhoto::getPhotoSize($size);
 
 				#-- check if directory part exists and is writable
 				if (!is_dir(dirname($sThumb))) {
-				    #--- try create
-				    if (!mkdir(dirname($sThumb), 0777, true /*recursive*/)) {
+					#--- try create
+					if (!mkdir(dirname($sThumb), 0777, true /*recursive*/)) {
 						wfDebug( __METHOD__.": cannot create directory for {$sImageFull}\n" );
-				    }
+					}
 				}
 
-		    $iThumbW = $aThumbSize["width"];
-		    if( $aOrigSize["width"] < $iThumbW ){
-			    $iThumbW  = $aOrigSize["width"];
-		    }
-		    exec("convert -resize " .$iThumbW . "  -quality 80  " . $sTmpFile . " " . $sThumb);
-		}
-		
-		$hash = md5($user->getName());
-		$dir = substr( $hash, 0, 3 );
+				$iThumbW = $aThumbSize["width"];
+				if( $aOrigSize["width"] < $iThumbW ){
+					$iThumbW  = $aOrigSize["width"];
+				}
+				exec("convert -resize " .$iThumbW . "  -quality 80  " . $sTmpFile . " " . $sThumb );
+				if( $wgEnableUploadInfoExt ) {
+					UploadInfo::log( $user->getUserPage(), $sThumb );
+				}
+			}
 
-		//create file with username.jpg format
-		foreach (array("l","m","s","g","p","d","t") as $size) {
-		    $sThumb = $wgProfilePhotoUploadPath . "/static/" . $dir . "/" . $this->CleanFilename($user->getName()) . "-" . $size . ".jpg";
-		    $aThumbSize = ProfilePhoto::getPhotoSize($size);
+			$hash = md5($user->getName());
+			$dir = substr( $hash, 0, 3 );
 
-		    $iThumbW = $aThumbSize["width"];
-		    if( $aOrigSize["width"] < $iThumbW ){
-			    $iThumbW  = $aOrigSize["width"];
-		    }
-		    exec("convert -resize " .$iThumbW . "  -quality 80  " . $sTmpFile . " " . $sThumb);
+			//create file with username.jpg format
+			foreach( array( "l", "m", "s", "g", "p", "d", "t" ) as $size ) {
+			    $sThumb = $wgProfilePhotoUploadPath . "/static/" . $dir . "/" . $this->CleanFilename($user->getName()) . "-" . $size . ".jpg";
+			    $aThumbSize = ProfilePhoto::getPhotoSize($size);
 
-		}
-
-
-		unlink($sTmpFile);
+			    $iThumbW = $aThumbSize["width"];
+			    if( $aOrigSize["width"] < $iThumbW ){
+				    $iThumbW  = $aOrigSize["width"];
+			    }
+			    exec("convert -resize " .$iThumbW . "  -quality 80  " . $sTmpFile . " " . $sThumb);
+				if( $wgEnableUploadInfoExt ) {
+					UploadInfo::log( $user->getUserPage(), $sThumb );
+				}
+			}
+			unlink( $sTmpFile );
 	    }
 	    else {
-		$iErrNo = UPLOAD_ERR_CANT_WRITE;
-		wfDebugLog( "photo", sprintf("%s: cannot move uploaded file from %s to", __METHOD__, $oTmp, $sTmpFile ));
+			$iErrNo = UPLOAD_ERR_CANT_WRITE;
+			wfDebugLog( "photo", sprintf("%s: cannot move uploaded file from %s to", __METHOD__, $oTmp, $sTmpFile ));
 	    }
 	    wfProfileOut(__METHOD__);
 	    return $iErrNo;
 	}
-
-
 }
-?>
