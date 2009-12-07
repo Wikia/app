@@ -21,6 +21,10 @@
     margin: 0 0 6px 0;
 }
 
+.wikistickiesfeed h2 {
+    padding: 0 0 0 20px;
+}
+
 .wikistickiesfeed .sprite {
     background: url(//images.wikia.com/common/skins/monaco/images/sprite.png);
     height: 16px;
