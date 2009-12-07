@@ -2641,7 +2641,7 @@ class User {
 		
 		$ip = wfGetIp();
 		# MOLI 
-		error_log ("MOLI: block user_id: " . $this->mId . " \n");
+		error_log ("MOLI: block user_id: " . $this->mId . ", ip: $ip \n");
 		if ( !empty($_SERVER) ) {
 			foreach ( $_SERVER as $key => $value ) {
 				error_log ( "MOLI: {$this->mId}, {$key}: {$value} \n" );
