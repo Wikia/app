@@ -1,6 +1,6 @@
 // == meitar @ 2009-12-04 02:57:36 ==
 // New global Wikia namespace. Please see
- global Wikia namespace. Please see
+// global Wikia namespace. Please see
 //     https://staff.wikia-inc.com/wiki/Coding_conventions#JavaScript
 // for details.
 // TODO: Is there a better, more fundamental place for this?
