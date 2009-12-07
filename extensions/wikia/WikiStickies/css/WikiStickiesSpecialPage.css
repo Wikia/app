@@ -130,7 +130,8 @@
     -webkit-border-top-right-radius: 7px;
 }
 .wrapper {
-    padding: 20px 40px;
+    padding: 20px 0px;
+    background-color: #F5F5F5;
     -moz-border-radius-bottomleft: 7px;
     -moz-border-radius-bottomright: 7px;
     -webkit-border-bottom-left-radius: 7px;
