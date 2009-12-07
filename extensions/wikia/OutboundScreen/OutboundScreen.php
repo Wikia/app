@@ -64,14 +64,16 @@ function efOutboundScreen ( $url, $text, $link, $attribs, $linktype, $linker ) {
 
 		if(!$isWhitelisted) {
 			// make the actual link
-			$special = Title::newFromText( 'Special:Outbound' );
+			$special = SpecialPage::getTitleFor( 'Outbound' );
 			if($special instanceof Title) {
 				// RT #19167
+				global $wgTitle; //rt#32382
+				$href = $special->getFullURL('f='.urlencode($wgTitle->getPrefixedDBkey()).'&u=' . urlencode($url));
 				$link = Xml::tags('a', array(
 					'class' => 'external',
 					'rel' => 'nofollow',
 					'title' => $url,
-					'href' => $special->getFullURL('u=' . urlencode($url)),
+					'href' => $href,
 				), $text);
 
 				return false;
