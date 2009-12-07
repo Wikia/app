@@ -2,7 +2,7 @@
 <?php global $wgAdminSkin, $wgContLang, $NWBmessages; ?>
 
 <div id="wikistickies-admintools">
-<h2><?= wfMsg('wikistickies-admins-hd'); ?></h2>
+<h2 class="bigger"><?= wfMsg('wikistickies-admins-hd'); ?></h2>
 <p><?= wfMsg('wikistickies-admins-msg'); ?></p>
 
 <script type="text/javascript">
