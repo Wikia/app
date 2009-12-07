@@ -2638,8 +2638,17 @@ class User {
 		if ( !$userblock ) {
 			return;
 		}
-
-		$userblock->doAutoblock( wfGetIp() );
+		
+		$ip = wfGetIp();
+		# MOLI 
+		error_log ("MOLI: block user_id: " . $this->mId . " \n");
+		if ( !empty($_SERVER) ) {
+			foreach ( $_SERVER as $key => $value ) {
+				error_log ( "MOLI: {$this->mId}, {$key}: {$value} \n" );
+			}
+		}
+		# /MOLI
+		$userblock->doAutoblock( $ip );
 
 	}
 
