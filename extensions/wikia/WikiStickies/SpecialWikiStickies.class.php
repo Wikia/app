@@ -17,13 +17,23 @@ class SpecialWikiStickies extends SpecialPage {
 
 	// the main heavy-hitter of the special page: wrapper for display-it-all
 	function execute() {
-		global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
+		global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgContLang, $NWBmessages;
 		// for tools: logo upload and skin chooser
 		wfLoadExtensionMessages( 'NewWikiBuilder' );
+
+                // Set up the messages variable for other languages - from NWB
+                $lang = $wgContLang->getCode();
+
+                if (empty($NWBmessages[$lang])){
+                        foreach($NWBmessages["en"] as $name => $value) {
+                                $NWBmessages[$lang][$name] = wfMsg($name);
+                        }
+                }
 
 		$this->setHeaders();
 
 		WikiStickies::addWikiStickyResources();
+
 		// load additional dependencies (CSS and JS)?
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesSpecialPage.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\">WIKIA.WikiStickies.track( '/view' );</script>");

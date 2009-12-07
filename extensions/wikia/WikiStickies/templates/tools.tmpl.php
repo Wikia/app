@@ -1,9 +1,15 @@
 
-<?php global $wgAdminSkin; ?>
+<?php global $wgAdminSkin, $wgContLang, $NWBmessages; ?>
 
 <div id="wikistickies-admintools">
 <h2><?= wfMsg('wikistickies-admins-hd'); ?></h2>
 <p><?= wfMsg('wikistickies-admins-msg'); ?></p>
+
+<script type="text/javascript">
+	NWB.language = "<?= $wgContLang->getCode() ?>";
+	NWB.messages = {"<?php echo $wgContLang->getCode() . '": ' . json_encode($NWBmessages[$wgContLang->getCode()]) . "};"?>
+</script>
+
 <ul>
 
 <!-- ############## Add a logo ############ -->
@@ -47,6 +53,7 @@
 
 
 <script>
+
 var wgAdminSkin = '<?php echo $wgAdminSkin?>';
 
 var themes = ['Sapphire', 'Jade', 'Slate', 'Smoke', 'Beach', 'Brick', 'Gaming'];
