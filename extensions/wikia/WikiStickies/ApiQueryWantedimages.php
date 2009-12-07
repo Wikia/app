@@ -5,10 +5,10 @@ if (!defined('MEDIAWIKI')) {
         require_once ('ApiQueryBase.php');
 }
 
-class ApiQueryPagesWithoutImages extends ApiQueryBase {
+class ApiQueryWantedimages extends ApiQueryBase {
 
 	public function __construct($query, $moduleName) {
-		parent::__construct($query, $moduleName, 'pwoi');
+		parent::__construct($query, $moduleName, 'wi');
 	}
 
 	/*
@@ -29,12 +29,12 @@ class ApiQueryPagesWithoutImages extends ApiQueryBase {
 				foreach( $res as $row ) {
 					if( $this->getReferencesCount( $row->il_to ) < $threshold ) {
 						$this->has_images[$page] = true;
-						$wgMemc->set( $memcKey, $this->has_images[$page], 60*60*12 );
+						$wgMemc->set( $this->has_images[$page], 60*60*12 );
 						return true;
 					}	       
 				}
 				$this->has_images[$page] = false;
-				$wgMemc->set( $memcKey, $this->has_images[$page], 60*60*12 );
+				$wgMemc->set( $this->has_images[$page], 60*60*12 );
 			}
 		}
 		return $this->has_images[$page];
@@ -124,11 +124,11 @@ class ApiQueryPagesWithoutImages extends ApiQueryBase {
 	}
 
 	protected function getExamples() {
-		return 'api.php?action=query&list=pageswithoutimages&pwoilimit=5';
+		return 'api.php?action=query&list=wantedimages&wilimit=5';
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryPagesWithoutImages.php overlordq$';
+		return __CLASS__ . ': $Id: ApiQueryWantedimages.php overlordq$';
 	}
 }
 

@@ -1,12 +1,8 @@
 <?php
 /**
- * @ingroup Wikia
- * @file SpecialWikiStickies.class.php
- * @package WikiStickies
- * @see https://contractor.wikia-inc.com/wiki/WikiStickies
+ * WikiStickies
  *
- * Creates a wiki "sticky note" visual interface, a "wikisticky."
- * Wikisticky notes appear in several different places.
+ * @see https://contractor.wikia-inc.com/wiki/WikiStickies
  */
 class SpecialWikiStickies extends SpecialPage {
 
@@ -23,9 +19,8 @@ class SpecialWikiStickies extends SpecialPage {
 
 		$this->setHeaders();
 
-		WikiStickies::addWikiStickyResources();
+		WikiStickies::addWikiStickyResources( 'all' );
 		// load additional dependencies (CSS and JS)?
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesSpecialPage.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\">WIKIA.WikiStickies.track( '/view' );</script>");
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
@@ -33,10 +28,10 @@ class SpecialWikiStickies extends SpecialPage {
 
 		// get the Three Feeds
 		WikiStickies::formatFeed(
-			'wikistickies-pageswithoutimages',
-			WikiStickies::getPagesWithoutImagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ),
-			wfMsg('wikistickies-pageswithoutimages-hd'),
-			wfMsg( 'wikistickies-pageswithoutimages-st-short' ) ) ;
+			'wikistickies-wantedimages',
+			WikiStickies::getWantedimagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ),
+			wfMsg('wikistickies-wantedimages-hd'),
+			wfMsg( 'wikistickies-wantedimages-st-short' ) ) ;
 
 		WikiStickies::formatFeed( 'wikistickies-newpages', 
 			WikiStickies::getNewpagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 

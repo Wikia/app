@@ -50,8 +50,7 @@ WIKIA.WikiStickies.updateSticky = function () {
 	//set font size and position
 	var paragraph = $(".wikisticky_content p");
 	paragraph.css("fontSize", "14pt");
-	var stickyContentHeight = $(".wikisticky_content").height() - $(".wikisticky_content h2").height() - $(".wikisticky_next").outerHeight();
-	var verticalDifference = stickyContentHeight - paragraph.height();
+	var verticalDifference = stickyContentHeight - paragraph.height();	
 	while (verticalDifference < 0) {
 		paragraph.css("fontSize", parseInt( paragraph.css("fontSize") ) - 1);
 		verticalDifference = stickyContentHeight - paragraph.height();
@@ -61,6 +60,7 @@ WIKIA.WikiStickies.updateSticky = function () {
 
 $(document).ready(function() {
 	$(".wikisticky_curl, .wikisticky_next").bind("click", WIKIA.WikiStickies.flipWikisticky);
-	$('#wikisticky_special_link').click(WIKIA.WikiStickies.trackLink);
+	$('#wikisticky_special_link a').click(WIKIA.WikiStickies.trackLink);
+	stickyContentHeight = $(".wikisticky_content").height() - $(".wikisticky_content h2").height() - $(".wikisticky_next").outerHeight();
 	WIKIA.WikiStickies.updateSticky();
 });

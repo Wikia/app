@@ -1,12 +1,13 @@
-/**
- * CSS rules for the wikisticky visual component on MyHome page.
- */
+#myhome-sidebar .wikisticky_content h2, #myhome-sidebar .wikisticky_curl, #myhome-sidebar .wikisticky_next { display: block; }
+
 #wikisticky_browser {
     background: url(../images/bg.wikisticky.249x222.png) no-repeat;
     height: 222px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     width: 249px;
 }
+
 .wikisticky_content {
     height: 213px;
     margin: 0;
@@ -16,20 +17,24 @@
 }
 
 #wikisticky_browser h2 {
-    border: none;
     font-size: 11pt;
-    font-weight: bold;
     height: 33px;
     line-height: 33px;
-    margin: 0;
     padding: 0 0 0 5px;
+    border: none;
+    font-weight: bold;
+    margin: 0;
     text-align: left;
 }
+
+.wikisticky_content span { display: block; }
 .wikisticky_content p {
+    font-family: "Comic Sans MS", Arial, sans-serif;
     margin: 0;
     padding: 0 20px;
+    position: relative;
+    text-align: center;
 }
-
 .wikisticky_next {
     bottom: 0;
     color: #999;
@@ -41,16 +46,15 @@
 .wikisticky_curl {
     bottom: -8px;
     cursor: pointer;
-    position: absolute;
     right: -8px;
+    position: absolute;
     width: 80px;
 }
-.wikisticky_special_link {
+
+#wikisticky_special_link {
     color:#002BB8;
-    display: block;
-    font-size: 10pt;
+    font-size: 8pt;
     font-weight: bold;
-    margin-top: .5em;
     margin-bottom: 30px;
     text-align: center;
 }

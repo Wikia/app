@@ -1,8 +1,7 @@
 <?php
 /**
- * @ingroup Wikia
- * @file WikiStickies.class.php
- * @package WikiStickies
+ * WikiStickies
+ *
  * @see https://contractor.wikia-inc.com/wiki/WikiStickies
  */
 class WikiStickies {
@@ -14,9 +13,11 @@ class WikiStickies {
 	/**
 	 * Loads base WikiSticky CSS and JavaScript resources.
 	 */
-	static function addWikiStickyResources () {
+	static function addWikiStickyResources ( $all = false) {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
-		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
+		if( $all ) {
+			$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickies.css?{$wgStyleVersion}");
+		}
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickies.js?{$wgStyleVersion}\"></script>\n");
 	}
 
@@ -32,49 +33,10 @@ class WikiStickies {
 		}
 
 		$tpl = new EasyTemplate( dirname( __FILE__ )."/templates/" );
-		$tpl->set_vars( array() );
+		$tpl->set_vars( array());
 
-		$text = $tpl->execute( 'tools' );
+		$text = $tpl->execute('tools');
 		$wgOut->addHTML( $text );
-	}
-
-	/**
-	 * Prints feed items in batch.
-	 *
-	 * @param array $feed_data The list of page names that will become the items in the feed.
-	 * @param array $attrs An array of attribute-value pairs. (Optional.)
-	 * @return The complete list HTML to print.
-	 */
-	function renderFeedList ( &$feed_data, $attrs = NULL ) {
-		global $wgUser;
-
-		$sk = $wgUser->getSkin();
-		$out = '';
-		$uptolimit = 0;
-
-		$out .= Xml::openElement( 'ul', $attrs );
-
-		foreach( $feed_data as $title ) {
-			if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
-				if ( $uptolimit > 4 ) { // start a new column at 6th item
-					if ( $uptolimit === 5 ) {
-						$out .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
-					} else {
-						$out .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn' ) );
-					}
-				} else {
-					$out .= Xml::openElement( 'li' );
-				}
-				$out .= $sk->makeKnownLinkObj( $title, $title->getText() ).
-				Xml::closeElement( 'li' );
-				array_shift( $feed_data );
-				$uptolimit++;
-			}
-		}
-
-		$out .= Xml::closeElement( 'ul' );
-
-		return $out;
 	}
 
 	/**
@@ -93,7 +55,7 @@ class WikiStickies {
 		global $wgOut, $wgUser;
 
 		$sk = $wgUser->getSkin() ;
-		$body = '';
+		$body = $body2 = '';
 
 		if( empty( $feed_data ) ) {
 			return false;
@@ -112,22 +74,58 @@ class WikiStickies {
 				);
 
 		$numitems = count($feed_data);
+		$uptolimit = 0;
 
-		// First batch. These are visible by default.
-		if( $numitems ) {
-			$body .= self::renderFeedList( $feed_data );
+		foreach( $feed_data as $title ) {
+			if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
+				if ( $uptolimit > 4 ) { // start a new column at 6th item
+					if ( $uptolimit === 5 ) {
+						$body .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
+					} else {
+						$body .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn' ) );
+					}
+				} else {
+					$body .= Xml::openElement( 'li' );
+				}
+				$body .= $sk->makeKnownLinkObj( $title, $title->getText() ).
+				Xml::closeElement( 'li' );
+				array_shift( $feed_data );
+				$uptolimit++;
+			}
 		}
-		// Second batch of items. These are hidden by default.
-		if( $numitems > 10 ) {
-			$body .= self::renderFeedList( $feed_data, array( 'class' => 'submerged' ) );
+
+		$uptolimit = 0;
+		foreach( $feed_data as $title ) {
+			if( $uptolimit < self:: INITIAL_FEED_LIMIT ) {
+				if ( $uptolimit > 4 ) { // start a new column at 6th item
+					if ( $uptolimit === 5 ) {
+						$body2 .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
+					} else {
+						$body2 .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn' ) );
+					}
+				} else {
+					$body2 .= Xml::openElement( 'li' );
+				}
+				$body2 .= $sk->makeKnownLinkObj( $title, $title->getText() ).
+				Xml::closeElement( 'li' );
+				array_shift( $feed_data );
+				$uptolimit++;
+			}
 		}
+
 
 		$html = Xml::openElement( 'div', array( 'id' => $type, 'class' => 'wikistickiesfeed' ) ).
 			'<img alt="" class="sprite" src="/skins/monobook/blank.gif" />'.
 			Xml::openElement( 'h2' ).
 						$header.
 			Xml::closeElement( 'h2' ).
-			$sticky.$body;
+			$sticky.
+			Xml::openElement( 'ul' ).
+			$body.
+			Xml::closeElement( 'ul' ).
+			Xml::openElement( 'ul', array ( 'class' => 'submerged' ) ).
+			$body2.
+			Xml::closeElement( 'ul' );
 
 		// See more link
 		// TODO: This href attribute should actually point to the source of the feed
@@ -198,14 +196,14 @@ class WikiStickies {
 	}
 
 	// fetch the feed for pages without images
-	static function getPagesWithoutImagesFeed( $limit ) {
+	static function getWantedimagesFeed( $limit ) {
 		$data = array(
 				'action'	=> 'query',
-				'list'		=> 'pageswithoutimages',
+				'list'		=> 'wantedimages',
 				'wilimit'	=> intval($limit),
 				 );
 
-			return self::getFeed( 'pageswithoutimages', $data );
+			return self::getFeed( 'wantedimages', $data );
 	}
 
 	/**
@@ -218,9 +216,7 @@ class WikiStickies {
 	 * @return string The appropriate HTML to output.
 	 */
 	static function renderWikiSticky ( $title, $prefix, $attrs = NULL ) {
-		global $wgExtensionsPath, $wgUser, $wgTitle, $wgCanonicalNamespaceNames;
-		// Where are we?
-		$canname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
+		global $wgExtensionsPath, $wgUser;
 
 		// Set default attributes.
 		if( !is_array( $attrs ) ) {
@@ -232,35 +228,36 @@ class WikiStickies {
 
 		$sp_title = Title::makeTitle( NS_SPECIAL, 'WikiStickies' );
 		$sk = $wgUser->getSkin();
+		$special_link = $sk->makeKnownLinkObj( $sp_title, wfMsg( 'wikistickies-see-more' ) );
 
 		$html = Xml::openElement( 'div', $attrs ).
-			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) );
-		// TODO: These checks for page location might be better abstracted later.
-		if( 'MyHome' == $canname ) {
-			$html .= Xml::openElement( 'h2' ).
+			Xml::openElement( 'div', array( 'class' => 'wikisticky_content' ) ).
+			Xml::openElement( 'h2' ).
 				wfMsg( 'wikistickies' ).
-			Xml::closeElement( 'h2' );
-		}
-		$html .= Xml::openElement( 'p' ).
+			Xml::closeElement( 'h2' ).
+			Xml::openElement( 'p' ).
 			self::renderWikiStickyContent( $title, $prefix ).
-			Xml::closeElement( 'p' );
-		if( 'MyHome' == $canname ) {
+			Xml::closeElement( 'p' ).
 			// TODO: This should link to the source of the feed fetched, not a '#' fragment.
-			$html .=
 			Xml::openElement( 'a', array( 'href' => '#', 'class' => 'wikisticky_next' ) ).
 				wfMsg( 'wikistickies-next' ).
 			Xml::closeElement( 'a' ).
-			"<img src=\"{$wgExtensionsPath}/wikia/WikiStickies/images/curl.png\" class=\"wikisticky_curl\" />";
-		}
-		$html .= Xml::closeElement( 'div' ). // END .wikisticky_content
-			Xml::closeElement( 'div' ); // END #$attrs
+			Xml::openElement( 'img', array( 'src' => "{$wgExtensionsPath}/wikia/WikiStickies/images/curl.png", 'class' => 'wikisticky_curl' ) ).
+			Xml::closeElement( 'img' ).
+			Xml::closeElement( 'div' ).
+			Xml::closeElement( 'div' );
 
+		// leave if canonical is not MyHome
+		global $wgTitle, $wgCanonicalNamespaceNames;
+		$canname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
+			
 		if( 'MyHome' == $canname ) {
 			// this is the link for Special:WikiStickies
-			$html .= $sk->makeKnownLinkObj( $sp_title, wfMsg( 'wikistickies-see-more' ),
-					'', '', '', 'class="wikisticky_special_link"' );
-		}
-
+			$html .= Xml::openElement( 'div', array( 'id' => 'wikisticky_special_link' ) ).
+				$special_link.
+				Xml::closeElement( 'div' );
+		}		
+		
 		return $html;
 	}
 
@@ -277,4 +274,42 @@ class WikiStickies {
 		return $html;
 	}
 
+	// run on a hook adding sidebar content for Special:MyHome
+	static function addToMyHome( &$html ) {
+		global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+
+		wfLoadExtensionMessages( 'WikiStickies' );
+		self::addWikiStickyResources();
+		// Special:MyHome page-specific resources
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesMyHome.css?{$wgStyleVersion}");
+
+		$feeds = array();
+		foreach( self::getWantedimagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
+			$feeds[] = array( 
+					'prefix' => wfMsg( 'wikistickies-wantedimages-st' ),
+					'title' => $title );
+		}
+		foreach( self::getNewpagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
+			$feeds[] = array(
+					'prefix' => wfMsg( 'wikistickies-newpages-st' ),
+					'title' => $title );
+		}
+		foreach( self::getWantedpagesFeed( self::INITIAL_FEED_LIMIT ) as $title ) {
+			$feeds[] = array(
+					'prefix' => wfMsg( 'wikistickies-wantedpages-st' ),
+					'title' => $title );
+		}
+		shuffle( $feeds );
+		$js = "WIKIA.WikiStickies.stickies = [\n";
+		foreach( $feeds as $f ) {
+			$js .= "'" . self::renderWikiStickyContent( $f['title'], $f['prefix'] ) . "',\n";
+		}
+		$js .= "];\n";
+		$wgOut->addInlineScript( $js );
+		$wgOut->addScriptFile("{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js");
+
+		$html = self::renderWikiSticky( $feeds[0]['title'], $feeds[0]['prefix'] );
+
+		return true;
+	}
 }
