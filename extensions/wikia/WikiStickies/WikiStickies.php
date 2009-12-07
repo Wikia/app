@@ -62,7 +62,7 @@ function efAddWikiSticky( &$html ) {
 			'prefix' => wfMsg( 'wikistickies-wantedpages-st' ),
 			'title' => $title );
 	}
-	shuffle( $feeds );
+	//shuffle( $feeds );
 
 	$js = "WIKIA.WikiStickies.stickies = [\n";
 	foreach( $feeds as $f ) {
