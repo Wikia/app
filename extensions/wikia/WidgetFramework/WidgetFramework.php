@@ -659,7 +659,7 @@ function WidgetFrameworkMoreLink($link) {
  * @author Inez Korczyński
  * @author Maciej Brencz
  */
-function WidgetFrameworkGetArticle($title, $ns) {
+function WidgetFrameworkGetArticle($title, $ns = NS_MAIN ) {
 	$titleObj = Title::newFromText($title, $ns);
 	if ( !is_object($titleObj) ) {
 		return false;
