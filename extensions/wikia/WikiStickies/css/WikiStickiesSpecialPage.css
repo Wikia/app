@@ -13,12 +13,12 @@
     clear: left;
     margin: 0 0 3em 0;
 }
-.wikistickiesfeed h2 {
+.wikistickiesfeed h2,
+#wikistickies-admintools h2 {
     border-bottom: none;
     font-size: 135%;
     font-weight: bold;
     margin: 0 0 6px 0;
-    padding: 0 0 0 20px;
 }
 
 .wikistickiesfeed .sprite {
