@@ -15,7 +15,7 @@
 <!-- ############## Add a logo ############ -->
 <li id="step2" class="step">
 <div class="wrapper clearfix">
-<div class="wikistickiesheader"><?php echo wfMsg("wikistickies-logo-hd")?></div>
+<h2><?php echo wfMsg("wikistickies-logo-hd")?></h2>
         <!-- Hidden iframe to handle the file upload -->
         <iframe id="hidden_iframe" src="about:blank" style="display:none" name="hidden_iframe" onLoad="NWB.iframeFormUpload(this)"></iframe>
 
@@ -42,7 +42,7 @@
 
 <li id="step3" class="step">
 <div class="wrapper clearfix">
-<div class="wikistickiesheader"><?php echo wfMsg("wikistickies-theme-hd")?></div>
+<h2><?php echo wfMsg("wikistickies-theme-hd")?></h2>
         <div id="theme_template" style="display:none" class="theme_selekction">
                 <label for="theme_radio_$theme"><img id="theme_preview_image_$theme" /></label>
                 <input onclick="NWB.changeTheme('monaco-$theme', false)" type="radio" name="theme" value="monaco-$theme" id="theme_radio_$theme"> <label for="theme_radio_$theme">$Theme</label>
