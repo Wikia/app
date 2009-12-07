@@ -77,33 +77,33 @@
     padding: 5px 0;
 }
 
-.wikistickiestools {
+#wikistickies-admintools, #wikistickies_save_all {
     border:1px solid #AAA;
 }
 
-.wikistickiesfeed, .wikiheadertools {
-    text-align: left;
-    margin-bottom: 15px;
+#wikistickies-admintools {
+	background-color: #F5F5F5;
+	padding: 20px;
 }
 
-.wikiheadertools li {
-    list-style-image: none;
-    list-style-type:none;
-    margin-bottom: 0;
+#wikistickies-admintools h2 {
+	margin-top: 0;
 }
-.wikiheadertools .step {
-    background-color: #F5F5F5;
-    border: 1px solid #AAA;
+
+#wikistickies-admintools h3 {
+	font: bold 14px/1em Arial, sans-serif;
 }
-.wikiheadertools #step2 {
-	border-bottom: none;
+
+#wikistickies-admintools ul {
+	list-style: none;
+	margin: 0;
 }
-.wikiheadertools #step3 {
-	border-top: none;
-}
+
 
 #wikistickies_save_all {
+	border-width: 1px 0 0 0;
 	margin-top: 20px;
+	padding-top: 5px;
 }
 
 .reflow {
