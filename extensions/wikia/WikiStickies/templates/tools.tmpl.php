@@ -1,7 +1,9 @@
 
 <?php global $wgAdminSkin; ?>
 
-<div class="wikiheadertools">
+<div id="wikistickies-admintools">
+<h2><?= wfMsg('wikistickies-admins-hd'); ?></h2>
+<p><?= wfMsg('wikistickies-admins-msg'); ?></p>
 <ul>
 
 <!-- ############## Add a logo ############ -->
