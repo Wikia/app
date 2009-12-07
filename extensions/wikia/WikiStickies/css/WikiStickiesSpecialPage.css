@@ -25,7 +25,7 @@
     padding: 0 0 0 20px;
 }
 
-.wikistickiesfeed .bigger {
+.wikistickies-admintools .bigger {
 	font-size: 155%;
 	font-weight: none;
 }
@@ -147,6 +147,10 @@
     -webkit-border-bottom-right-radius: 7px;
 }
 
+#step2 .wrapper, #step3 .wrapper {
+    background-color: #F5F5F5;
+}
+
 #header {
     border-bottom-width: 1px;
     border-bottom-style: solid;
@@ -241,6 +245,10 @@ button.secondary span {
     background-position:center center;
     background-repeat:no-repeat;
 }
+#step2 {
+    margin-bottom: 50px;
+}
+
 #step2 .note {
     float: right;
     width: 200px;
