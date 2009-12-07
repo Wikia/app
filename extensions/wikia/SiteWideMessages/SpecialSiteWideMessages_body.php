@@ -853,6 +853,11 @@ class SiteWideMessages extends SpecialPage {
 			$key = 'wikia:talk_messages:' . $userID . ':' . str_replace(' ', '_', $wgUser->getName());
 			$wgMemc->set($key, 'deleted', 100);
 
+			//also clear shared wikia newtalk cache
+			if ( function_exists( 'wfClearWikiaNewtalk' ) {
+				wfClearWikiaNewtalk( $wgUser );
+			}
+
 			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || WikiId=$mWikiId, messageID=$messageID, result=" . ($dbResult ? 'true':'false') . "\n");
 			return (bool)$dbResult;
 		}
