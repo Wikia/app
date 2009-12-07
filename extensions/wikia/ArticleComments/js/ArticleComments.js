@@ -127,17 +127,17 @@ ArticleComments.setPage = function(e) {
 	$().log('end: setPage');
 }
 
-ArticleComments.delete = function() {
+ArticleComments.linkDelete = function() {
 	WET.byStr('article/delete');
 }
 
-ArticleComments.history = function() {
+ArticleComments.linkHistory = function() {
 	WET.byStr('article/history');
 }
 
 ArticleComments.bind = function() {
-	$('.article-comm-delete').bind('click', ArticleComments.delete);
-	$('.article-comm-history').bind('click', ArticleComments.history);
+	$('.article-comm-delete').bind('click', ArticleComments.linkDelete);
+	$('.article-comm-history').bind('click', ArticleComments.linkHistory);
 }
 
 ArticleComments.init = function() {
