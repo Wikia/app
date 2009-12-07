@@ -538,6 +538,7 @@ $wgAutoloadLocalClasses = array(
 	'textStatsOutput' => 'maintenance/language/StatOutputs.php',
 	'csvStatsOutput' => 'maintenance/language/StatOutputs.php',
 
+	'UserAjaxCreateTemplate' => 'includes/templates/wikia/UserAjaxCreate.php'
 );
 
 class AutoLoader {

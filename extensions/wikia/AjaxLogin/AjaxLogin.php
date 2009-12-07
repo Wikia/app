@@ -21,7 +21,7 @@ function GetAjaxLoginForm($skin) {
 	}
 
 	if ($wgUser->isAnon() && $wgTitle->getNamespace() != 8 && $wgTitle->getDBkey() != 'Userlogin') {
-		$tmpl = new EasyTemplate(dirname( __FILE__ ));
+		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		echo $tmpl->execute('AjaxLogin');
 	}
 	return true;
@@ -29,13 +29,13 @@ function GetAjaxLoginForm($skin) {
 
 $wgAjaxExportList[] = 'GetAjaxLogin';
 function GetAjaxLogin() {
-	$tmpl = new EasyTemplate(dirname( __FILE__ ));
-
+	
+	$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 	$response = new AjaxResponse();
 	$response->addText( $tmpl->execute('AwesomeAjaxLogin') );
 	$response->setCacheDuration( 3600 * 24 * 365 * 10); // 10 years
-
 	header("X-Pass-Cache-Control: s-maxage=315360000, max-age=315360000");
 
 	return $response;
 }
+
