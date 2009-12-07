@@ -258,7 +258,7 @@ class UploadAvatar extends UnlistedSpecialPage {
 		}
 		$thumbHeight = $thumbWidth * $origHeight / $origWidth;
 		$border = "";
-		$target = "";
+		$target = false;
 		if( $thumbHeight < $thumbWidth ) {
 			$border = " -bordercolor white  -border  0x" . (($thumbWidth - $thumbHeight) / 2);
 		}
@@ -289,10 +289,9 @@ class UploadAvatar extends UnlistedSpecialPage {
 				);
 				break;
 		}
-		if( $wgEnableUploadInfoExt ) {
+		if( $wgEnableUploadInfoExt && $target ) {
 			UploadInfo::log( $wgTitle, $target );
 		}
-
 	}
 
 	/**
