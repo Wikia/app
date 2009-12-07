@@ -1,6 +1,6 @@
 <?php global $wgAdminSkin; ?>
 <div id="wikistickies-admintools">
-    <h2>Admins Only</h2>
+    <h2><?= wfMsg('wikistickies-admins-hd'); ?></h2>
     <p><?= wfMsg('wikistickies-admins-msg'); ?></p>
     <ul>
         <li id="wikistickies-admintool-step2" class="step">
@@ -11,7 +11,7 @@
                 <!-- TODO: Fill in value for src="" attribute. Cannot be left blank. -->
                 <label for="theme_radio__THEME"><img id="theme_preview_image__THEME" src="" alt="Theme preview image." /></label>
                 <input type="radio" id="theme_radio__THEME" name="theme" value="monaco-_THEME" onclick="NWB.changeTheme('monaco-_THEME', false);" />
-                <label for="theme_radio__THEME">$Theme</label>
+                <label for="theme_radio__THEME">_Theme</label>
             </div>
             <div id="theme_scroller" class="accent">
             </div>
