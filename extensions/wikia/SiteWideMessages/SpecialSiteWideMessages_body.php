@@ -854,7 +854,7 @@ class SiteWideMessages extends SpecialPage {
 			$wgMemc->set($key, 'deleted', 100);
 
 			//also clear shared wikia newtalk cache
-			if ( function_exists( 'wfClearWikiaNewtalk' ) {
+			if ( function_exists( 'wfClearWikiaNewtalk' ) ) {
 				wfClearWikiaNewtalk( $wgUser );
 			}
 
