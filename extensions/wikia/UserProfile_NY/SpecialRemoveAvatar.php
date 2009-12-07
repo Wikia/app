@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * @ingroup Wikia
+ *
+ * 2009-12-10 added upload_log (eloy)
+ */
 class RemoveAvatar extends SpecialPage {
 
 	function RemoveAvatar(){
@@ -109,14 +115,7 @@ class RemoveAvatar extends SpecialPage {
 			}
 		}
 
-
-		//clear cache
 		$key = wfMemcKey( 'user', 'profile', 'avatar-1', $id, $size );
 		$wgMemc->delete( $key );
 	}
 }
-
-
-
-
-?>
