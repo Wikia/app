@@ -792,7 +792,7 @@ function getSong($artist, $song="", $doHyphens=true){
 					if(strlen($lyrics) < 50){
 						$lyrics = "";
 					} else {
-						$lyrics = substr($lyrics, 0, max(0, round(strlen($lyrics) / 7))) . "[...]";
+						$lyrics = mb_substr($lyrics, 0, max(0, round(strlen($lyrics) / 7)), 'UTF-8') . "[...]";
 					}
 					//$lyrics .= "\n\n\n\n$TRUNCATION_NOTICE".$retVal['url']."$urlLink"; // we'll let apps decide how to handle this.
 
