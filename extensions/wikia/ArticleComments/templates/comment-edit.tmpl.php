@@ -10,7 +10,6 @@ if ( $canEdit ) {
 <? if (!$isReadOnly) { ?>
 			<a href="<?php echo $title->getFullURL() ?>" name="wpArticleSubmit" id="article-comm-submit-<?=$title->getArticleId()?>" class="wikia_button"><span><? echo wfMsg('article-comments-post') ?></span></a>
 <? } ?>
-			<div class="right" style="font-style: italic;"><?php echo wfMsg('article-comments-info') ?></div>
 		</div>
 	</form>
 	</div>

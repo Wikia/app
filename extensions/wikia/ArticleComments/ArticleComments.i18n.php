@@ -112,12 +112,14 @@ $messages['it'] = array(
 
 $messages['pl'] = array(
 	'article-comments-zero-comments' => 'Nikt jeszcze nie skomentował!',
-	'article-comments-post' => 'Komentarze do posta',
+	'article-comments-post' => 'Wyślij komentarz',
 	'article-comments-comments' => 'Komentarze',
 	'article-comments-dsc' => 'Najnowsze pierwsze',
 	'article-comments-asc' => 'Najnowsze ostatnie',
 	'article-comments-login' => '<a href="$1">Zaloguj się</a>, aby komentować',
 	'article-comments-anonymous' => 'Anonimowy użytkownik',
 	'article-comments-delete' => 'usuń',
+	'article-comments-edit' => 'edytuj',
+	'article-comments-history' => 'historia',
 	'article-comments-undeleted-comment' => 'Usunięcie komentarza na stronie $1 blogu.',
 );
