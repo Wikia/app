@@ -94,6 +94,9 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	 * Create a WikiaCentralAuthUser object from a joined globaluser row
 	 */
 	public static function newFromRow( $row, $fromMaster = false ) {
+		if ( !is_object( $row ) ) {
+			$caUser = null;
+		}
 		$caUser = new self( $row->user_name );
 		$caUser->loadFromRow( $row, $fromMaster );
 		return $caUser;
@@ -490,7 +493,7 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 			'user_editcount' => 0,
 		);
 
-		$ok = $dbw->insert ( '`user`', $fields, __METHOD__ );
+		$ok = $dbw->insert ( '`user`', $fields, __METHOD__, 'IGNORE' );
 
 		if( $ok ) {
 			wfDebug( __METHOD__ . ": registered global account '$this->mName' \n" );
