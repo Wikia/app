@@ -7,23 +7,16 @@
 $dir = dirname(__FILE__) . '/';
 
 // autoloader
-$wgAutoloadClasses['WithoutimagesPage'] = $dir . 'SpecialWithoutimages.class.php';
+$wgAutoloadClasses['SpecialWithoutimages'] = $dir . 'SpecialWithoutimages.class.php';
+$wgAutoloadClasses['WithoutimagesPage'] = $dir . 'WithoutimagesPage.class.php';
 
 // i18n
 $wgExtensionAliasesFiles['Withoutimages'] = $dir . 'SpecialWithoutimages.alias.php';
 $wgExtensionMessagesFiles['Withoutimages'] = $dir . 'SpecialWithoutimages.i18n.php';
 
 // special page
-$wgSpecialPages['Withoutimages'] = array( 'SpecialPage', 'Withoutimages' );
+$wgSpecialPages['Withoutimages'] = 'SpecialWithoutimages';
 $wgSpecialPageGroups['Withoutimages'] = 'maintenance';
-function wfSpecialWithoutimages() {
-	list( $limit, $offset ) = wfCheckLimits();
-
-	wfLoadExtensionMessages( 'Withoutimages' );
-	$wpp = new WithoutimagesPage();
-
-	$wpp->doQuery( $offset, $limit );
-}
 
 // hooks
 $wgHooks['wgQueryPages'][] = 'efRegisterWithoutimagesPage';
