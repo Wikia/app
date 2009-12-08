@@ -16,6 +16,7 @@ class ApiQueryWithoutimages extends ApiQueryBase {
 		$params = $this->extractRequestParams();
 
 		$this->addTables( 'querycache' );
+		$this->addFields( array( 'qc_title', 'qc_namespace' ) );
 		$this->addWhereFld( 'qc_type', 'Withoutimages' );
 		$this->addOption( 'ORDER BY', 'qc_value DESC' );
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );		
@@ -28,11 +29,11 @@ class ApiQueryWithoutimages extends ApiQueryBase {
 			if (++$count > $params['limit']) {
 				// We've reached the one extra which shows that
 				// there are additional pages to be had. Stop here...
-				$this->setContinueEnumParameter('continue', $row->page_title );
+				$this->setContinueEnumParameter('continue', $row->qc_title );
 				break;
 			}
-			$vals['title'] = $row->page_title;
-			$vals['namespace'] = $row->page_namespace;
+			$vals['title'] = $row->qc_title;
+			$vals['namespace'] = $row->qc_namespace;
 
 			$fit = $this->getResult()->addValue(array('query', $this->getModuleName()), null, $vals);
 			if(!$fit) {
