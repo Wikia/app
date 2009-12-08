@@ -101,6 +101,15 @@ function openLogin(event) {
 	
 	$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
 			$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AwesomeAjaxLogin.js?' + wgStyleVersion, function() {
+
+				// should not happen - but sometimes it does )-: rt#32793
+				if ( (typeof AjaxLogin == 'undefined') || !(typeof AjaxLogin.init == 'function') ) {
+					$().log('AjaxLogin: AjaxLogin object does not exist, going to Special:Userlogin...');
+					WET.byStr('signupActions/signup/rt32793_error');
+					document.location = wgServer + wgScriptPath + $('#login').attr('href');
+					return;
+				}
+
 				// first initialized AjaxLogin form (move login/password fields)
 				AjaxLogin.init( $('#AjaxLoginBox form') );
 
