@@ -308,27 +308,33 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					   dataType: "json",
 					   url: window.wgScriptPath  + "/index.php",
 					   data: $("#userajaxregisterform").serialize() + "&action=ajax&rs=createUserLogin",
+					   beforeSend: function(){
+					 		$("#userRegisterAjax").find("input,select").attr("disabled",true);
+				 	   },
 					   success: function(msg){
+				 		   	$("#userRegisterAjax").find("input,select").removeAttr("disabled"); 
+					 		$("#wpCaptchaWord").val("");
 					 		/* post data to normal form if age < 13 */
 					 		if (msg.type === "redirectQuery") {
 					 			WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
 					 			$('#userajaxregisterform').submit();
 					 			return ;
 					 		}
-					 
+
 					 		if( msg.status == "OK" ) {
 					 			$('#AjaxLoginBoxWrapper').closeModal();
 					 			WET.byStr(UserRegistration.WET_str + '/createaccount/success');
 			 					AjaxLogin.doSuccess();
 					 			return ;
 					 		}
-					 		
+					 							 		
 					 		WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
 					 		$('#userloginInnerErrorBox').empty().append(msg.msg);
 					 		$("#userloginErrorBox").show();
 					 		$(".captcha img").attr("src",msg.captchaUrl);
 					 		$("#wpCaptchaId").val(msg.captcha);
 					 		UserRegistration.submitForm.statusAjax = false;
+					 		
 					   }
 					 });
 			} else {
