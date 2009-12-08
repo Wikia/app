@@ -85,9 +85,9 @@ ArticleComments.postComment = function(e) {
 			$('#article-comments-zero').remove();
 			$('#article-comments-ul').replaceWith(json.text);
 			//pagination
-			$('#article-comments-pagination').html(json.pagination);
+			$('#article-comments-pagination').html("<div>" + json.pagination + "</div>");
 			//readd events
-			$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).hover(function() {$(this).addClass('selected');}, function() {$(this).removeClass('selected');});;
+			$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not(".article-comments-pagination-link-active").hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});;
 			ArticleComments.bind();
 			//clear error box
 			$('#article-comm-bottom-info').html('');
@@ -111,13 +111,14 @@ ArticleComments.setPage = function(e) {
 	e.preventDefault();
 	var page = $(this).attr('page');
 	WET.byStr('article/pageSwitch/' + page);
-	$('#article-comments-pagination-link-' + page).blur();
+	$('#article-comments-pagination-link-' + page).mouseleave();
 
 	$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentList::axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
 		$().log(json);
 		if (!json.error) {
-			$('.article-comments-pagination-link').removeClass('article-comments-pagination-link-active');
+			$('.article-comments-pagination-link').removeClass('article-comments-pagination-link-active').unbind("mouseenter mouseleave");
 			$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active');
+			$('.article-comments-pagination-link').not(".article-comments-pagination-link-active").hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
 			$('#article-comments-ul').replaceWith(json.text);
 			$('.article-comm-edit').bind('click', ArticleComments.edit);
 			ArticleComments.bind();
@@ -145,7 +146,8 @@ ArticleComments.init = function() {
 	$('#article-comm-submit-bottom').bind('click', {source: '#article-comm-bottom'}, ArticleComments.postComment);
 	$('#article-comm-form-select').bind('change', function() {this.submit()});
 	$('.article-comm-edit').bind('click', ArticleComments.edit);
-	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).hover(function() {$(this).addClass('selected');}, function() {$(this).removeClass('selected');});
+	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not(".article-comments-pagination-link-active").hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
+	$('#article-comments-pagination div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
 }
 //on DOM ready
 $(ArticleComments.init);

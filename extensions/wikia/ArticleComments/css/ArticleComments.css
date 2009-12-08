@@ -36,7 +36,6 @@ div.article-comm-input-text textarea {
 }
 
 div.article-comm-input {
-	border-bottom: 1px solid #3366CC;
 	margin-bottom: 10px;
 	padding: 10px;
 }
@@ -74,9 +73,22 @@ div.article-comment strong {
 	border: 1px solid #AAA;
 	font-weight: bold;
 	margin: 0 1px;
-	padding: 0 4px;
+	padding: 2px 5px 1px;
 }
-
+.article-comments-pagination-link:hover {
+	text-decoration: none;
+}
 .article-comments-pagination-link-active {
 	border: none;
+}
+
+#article-comments-pagination {
+	border-top: 1px solid #AAA;
+	margin: 10px;
+}
+#article-comments-pagination div {
+	background-color: #FFF;
+	float: left;
+	margin: -10px 0 0 65px;
+	padding: 0 5px;
 }
