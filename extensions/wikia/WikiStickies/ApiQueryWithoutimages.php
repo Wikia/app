@@ -5,7 +5,7 @@ if (!defined('MEDIAWIKI')) {
         require_once ('ApiQueryBase.php');
 }
 
-class ApiQueryPagesWithoutImages extends ApiQueryBase {
+class ApiQueryWithoutimages extends ApiQueryBase {
 
 	public function __construct($query, $moduleName) {
 		parent::__construct($query, $moduleName, 'pwoi');
@@ -103,12 +103,12 @@ class ApiQueryPagesWithoutImages extends ApiQueryBase {
 
 	public function getParamDescription() {
 		return array(
-				'limit' => 'Limit how many wanted pages will be returned'
+				'limit' => 'Limit how many pages without images will be returned'
 			    );
 	}
 
 	public function getDescription() {
-		return "Returns given number of Wanted (missing) images";
+		return "Returns given number of pages without images";
 	}
 
 	public function getAllowedParams() {
@@ -124,11 +124,11 @@ class ApiQueryPagesWithoutImages extends ApiQueryBase {
 	}
 
 	protected function getExamples() {
-		return 'api.php?action=query&list=pageswithoutimages&pwoilimit=5';
+		return 'api.php?action=query&list=withoutimages&pwoilimit=5';
 	}
 
 	public function getVersion() {
-		return __CLASS__ . ': $Id: ApiQueryPagesWithoutImages.php overlordq$';
+		return __CLASS__ . ': $Id: ApiQueryWithoutimages.php$';
 	}
 }
 
