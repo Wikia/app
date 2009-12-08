@@ -4,7 +4,7 @@ $titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 $link = $titleObj->getLocalUrl('type=signup');
 ?>
 <div id="AjaxLoginBox" title="<?= wfMsg('login') ?>">
-	<div id="userloginErrorBox2" style="display: none;">
+	<div id="userloginErrorBox3" style="display: none;">
 		<table>
 		<tbody>
 		<tr>
