@@ -24,10 +24,10 @@ class WikiStickies {
 	 * tool generation wrapper (basically template call)
 	 */
 	static function generateTools() {
-		global $wgOut, $wgUser;
+		global $wgOut, $wgUser, $wgEnableNewWikiBuilder;
 
 		// same as for Monaco bar, I guess
-		if( !$wgUser->isAllowed( 'editinterface' ) ) {
+		if( empty( $wgEnableNewWikiBuilder ) || !$wgUser->isAllowed( 'editinterface' ) ) {
 			return false;
 		}
 
@@ -198,14 +198,14 @@ class WikiStickies {
 	}
 
 	// fetch the feed for pages without images
-	static function getPagesWithoutImagesFeed( $limit ) {
+	static function getWithoutimagesFeed( $limit ) {
 		$data = array(
 				'action'	=> 'query',
-				'list'		=> 'pageswithoutimages',
+				'list'		=> 'withoutimages',
 				'wilimit'	=> intval($limit),
 				 );
 
-			return self::getFeed( 'pageswithoutimages', $data );
+			return self::getFeed( 'withoutimages', $data );
 	}
 
 	/**

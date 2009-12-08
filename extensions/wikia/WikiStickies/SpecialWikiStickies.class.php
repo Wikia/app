@@ -18,17 +18,21 @@ class SpecialWikiStickies extends SpecialPage {
 	// the main heavy-hitter of the special page: wrapper for display-it-all
 	function execute() {
 		global $wgRequest, $wgHooks, $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType, $wgContLang, $NWBmessages;
-		// for tools: logo upload and skin chooser
-		wfLoadExtensionMessages( 'NewWikiBuilder' );
+		global $wgEnableNewWikiBuilder;
 
-                // Set up the messages variable for other languages - from NWB
-                $lang = $wgContLang->getCode();
+		if( !empty( $wgEnableNewWikiBuilder ) ) {
+			// for tools: logo upload and skin chooser
+			wfLoadExtensionMessages( 'NewWikiBuilder' );
 
-                if (empty($NWBmessages[$lang])){
-                        foreach($NWBmessages["en"] as $name => $value) {
-                                $NWBmessages[$lang][$name] = wfMsg($name);
-                        }
-                }
+			// Set up the messages variable for other languages - from NWB
+			$lang = $wgContLang->getCode();
+
+			if (empty($NWBmessages[$lang])){
+				foreach($NWBmessages["en"] as $name => $value) {
+					$NWBmessages[$lang][$name] = wfMsg($name);
+				}
+			}
+		}
 
 		$this->setHeaders();
 
@@ -38,15 +42,17 @@ class SpecialWikiStickies extends SpecialPage {
 		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesSpecialPage.css?{$wgStyleVersion}");
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\">WIKIA.WikiStickies.track( '/view' );</script>");
 
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
-		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");
+		if( !empty( $wgEnableNewWikiBuilder ) ) {
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/JavascriptAPI/Mediawiki.js?{$wgStyleVersion}\"></script>\n");
+			$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/NWB/main.js?{$wgStyleVersion}\"></script>\n");
+		}
 
 		// get the Three Feeds
 		WikiStickies::formatFeed(
-			'wikistickies-pageswithoutimages',
-			WikiStickies::getPagesWithoutImagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ),
-			wfMsg('wikistickies-pageswithoutimages-hd'),
-			wfMsg( 'wikistickies-pageswithoutimages-st-short' ) ) ;
+			'wikistickies-withoutimages',
+			WikiStickies::getWithoutimagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ),
+			wfMsg('wikistickies-withoutimages-hd'),
+			wfMsg( 'wikistickies-withoutimages-st-short' ) ) ;
 
 		WikiStickies::formatFeed( 'wikistickies-newpages', 
 			WikiStickies::getNewpagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
@@ -58,8 +64,10 @@ class SpecialWikiStickies extends SpecialPage {
 			wfMsg('wikistickies-wantedpages-hd'), 
 			wfMsg( 'wikistickies-wantedpages-st-short' ) );
 
-		// get the Two Tools
-		WikiStickies::generateTools();
+		if( !empty( $wgEnableNewWikiBuilder ) ) {
+			// get the Two Tools
+			WikiStickies::generateTools();
+		}
 	}
 
 }
