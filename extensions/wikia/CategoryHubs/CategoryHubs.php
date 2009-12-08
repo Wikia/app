@@ -199,9 +199,14 @@ function categoryHubTitleBar(&$catView, &$r){
 	$r .= "<style type='text/css'>
 	h1.firstHeading { display:none; }
 	/*#page_bar{ display:none; }*/
+	#siteNotice { display: none; }
 	#answers_article{ padding-top:0px; }
 	#cathub-title-bar{
 		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/cathub_title_bg.png);
+		/* Stretch across entire div#article. */
+		margin-left: -30px;
+		padding-left: 30px;
+		padding-right: 30px;
 	}
 	.cathub-progbar-wrapper{
 		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/prog_bar_endcap.png);
@@ -215,13 +220,20 @@ function categoryHubTitleBar(&$catView, &$r){
 	.ui-widget-header{
 		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/tab_navbar_bg.png);
 	}
+	.cathub-actual-answer { position: relative; }
+	.cathub-add-answer-wrapper { margin-right: 150px; }
+	.cathub-actual-answer .cathub-button {
+		position: absolute;
+		top: 1em;
+		right: 0;
+	}
 	</style>";
 
 	// Build up the title bar by its various pieces
 	$r .= "<div id='cathub-title-bar'>\n";
 
 	// Fetch the icon for the corresponding wiki if there is one.
-WikiFactory::isUsed(true); // TODO: REMOVE - ONLY NEEDED FOR LOCAL TESTING!
+	WikiFactory::isUsed(true);
 	$logoSrc = WikiFactory::getVarValueByName( "wgLogo", WikiFactory::DomainToId( $catView->getCat()->getName().".wikia.com"));
 	if($logoSrc != ""){
 		$r .= "<img src='$logoSrc' width='78' height='78' style='float:left;padding:5px;'/>";
@@ -374,8 +386,8 @@ function categoryHubOtherSection(&$catView, &$r){
 
 		// The tabs.
 		$r .= "<ul>\n";
-		$r .= "<li><a href='#cathub-tab-unanswered' id=\"cathub-tablink-unanswered\"><span>".str_replace("-","",Answer::getSpecialCategory("unanswered"))."</span></a></li>\n";
-		$r .= "<li><a href='#cathub-tab-answered'   id=\"cathub-tablink-answered\"><span>".Answer::getSpecialCategory("answered")."</span></a></li>\n";
+		$r .= "<li><a href='#cathub-tab-unanswered' id=\"cathub-tablink-unanswered\"><span>".wfMsgExt('Unanswered_category', array())."</span></a></li>\n";
+		$r .= "<li><a href='#cathub-tab-answered'   id=\"cathub-tablink-answered\"><span>".wfMsgExt('Answered_category', array())."</span></a></li>\n";
 		$r .= "</ul>\n";
 
 		// Unanswered questions in this category.

@@ -43,11 +43,11 @@ function createAnswerForm(button){
 		formCode += "<span class='cathub-answer-heading'>"+wgCatHubAnswerHeadingMsg+"</span><br/>\n";
 			formCode += "<div>";
 				// Add the textarea (content will be loaded via the API).
-				formCode += "<textarea class='cathub-add-answer'></textarea>";
+				formCode += '<div class="cathub-add-answer-wrapper"><textarea class="cathub-add-answer" rows="10" columns="80"></textarea></div>';
 				var add_answer = $(button).parents('li').find('.cathub-add-answer').get(0);
 
 				// Add the save and cancel buttons.
-				formCode += "<div class='cathub-button' style='height:25px';>\n";
+				formCode += "<div class='cathub-button' style='height:25px'>\n";
 				formCode += "<a rel='nofollow' class='bigButton cathub-button-save' href='javascript:void(0)'><big>";
 				formCode += wgCatHubSaveButtonMsg + "</big><small>&nbsp;</small></a>\n";
 				formCode += "<a rel='nofollow' class='bigButton cathub-button-cancel' href='javascript:void(0)' style='margin-left:10px'><big>";
