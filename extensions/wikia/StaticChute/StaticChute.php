@@ -19,7 +19,7 @@ class StaticChute {
 	private $theme = false;
 
 	// RT #23935 - one value to purge'em all
-	const imagesCacheBuster = '10.1';
+	const imagesCacheBuster = '000';
 
 	public function __construct($fileType){
 		// macbre: we will return HTTP 400 when file type is invalid (RT #18825)
