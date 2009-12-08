@@ -37,7 +37,7 @@
     width: 560px;
 }
 
-#wikistickies-pageswithoutimages .sprite {
+#wikistickies-withoutimages .sprite {
     clip: rect(0px 432px 16px 416px);
     left: -406px;
 }
