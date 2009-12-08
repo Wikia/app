@@ -3,9 +3,9 @@ var NWB = {
 	"language":		"en", // default
 	"firstPagesBlocks" :	1,
 	"currentStep":		null,
+	"linkTag":		false,
 	"statusTimeout": 	5000
 };
-
 
 NWB.apiFailed = function(reqObj, msg, error){
 	Mediawiki.waitingDone();
@@ -63,9 +63,12 @@ NWB.changeTheme = function (theme, changeData){
 
         // Create a link object for the stylesheet
 	var href = "/skins/monaco/" + theme.replace(/monaco-/, '').toLowerCase() + "/css/main.css";
-	// Heh. Head first.
-	var linkTag = $('');
-	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
+	if (typeof NWB.linkTag == "object") {
+		NWB.linkTag.remove();
+       	}
+	NWB.linkTag = $( '<link rel="stylesheet" type="text/css" href="' + href + '" />' );
+	$("head:first").append(NWB.linkTag);
+
 
    } catch (e) {
 	Mediawiki.waitingDone();
