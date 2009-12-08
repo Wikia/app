@@ -1006,7 +1006,7 @@ class memcached
 
       if ($this->_debug)
       {
-         $this->_debugprint(sprintf("%s %s (%s)\n", $cmd, $key, $line));
+         $this->_debugprint(sprintf("[%s] %s %s (%s)\n", $this->_memc_host, $cmd, $key, $line));
       }
       if ($line == "STORED")
          return true;
