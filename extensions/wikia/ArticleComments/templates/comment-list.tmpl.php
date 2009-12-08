@@ -38,7 +38,6 @@
 			<input type="submit" name="wpArticleSubmit" id="article-comm-submit-top" value="<? echo wfMsg('article-comments-post') ?>" />
 			</noscript>
 			<? } ?>
-			<div class="right" style="font-style: italic;"><?php echo wfMsg('article-comments-info') ?></div>
 			</div>
 		</form>
 		</div>
@@ -63,7 +62,7 @@
 			endforeach;
 			echo '</ul>';
 
-			echo '<div id="article-comments-pagination">' . $pagination . '</div>';
+			echo '<div id="article-comments-pagination"><div>' . $pagination . '</div></div>';
 		}
 
 		if ( $canEdit && !$isBlocked ) {
@@ -90,7 +89,6 @@
 			<input type="submit" name="wpArticleSubmit" id="article-comm-submit-bottom" value="<? echo wfMsg('article-comments-post') ?>" />
 			</noscript>
 			<? } ?>
-			<div class="right" style="font-style: italic;"><?php echo wfMsg('article-comments-info') ?></div>
 			</div>
 		</form>
 	</div>
