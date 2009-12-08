@@ -62,8 +62,9 @@ NWB.changeTheme = function (theme, changeData){
         } 
 
         // Create a link object for the stylesheet
-	var href = "/extensions/wikia/WikiStickies/NWB/themes/" + theme.replace(/monaco-/, '').toLowerCase() + ".css";
+	var href = "/skins/monaco/" + theme.replace(/monaco-/, '').toLowerCase() + "/css/main.css";
 	// Heh. Head first.
+	var linkTag = $('');
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
 
    } catch (e) {
