@@ -36,6 +36,8 @@ $wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockG
 $wgHooks['MyHome:BeforeStoreInRC'][] = 'ArticleCommentList::BeforeStoreInRC';
 # TOC
 $wgHooks['Parser::InjectTOCitem'][] = 'ArticleCommentList::InjectTOCitem';
+# omit captcha
+$wgHooks['ConfirmEdit::onConfirmEdit'][] = 'ArticleCommentList::onConfirmEdit';
 # redirect
 $wgHooks['ArticleFromTitle'][] = 'ArticleCommentList::ArticleFromTitle';
 # init
@@ -1595,6 +1597,21 @@ class ArticleCommentList {
 				$redirect = Title::newFromText(reset(explode('/', $Title->getText())), Namespace::getSubject($Title->getNamespace()));
 				$wgOut->redirect($redirect->getFullUrl());
 			}
+		}
+		return true;
+	}
+
+	/**
+	 * static entry point for hook
+	 *
+	 * @static
+	 * @access public
+	 */
+	static public function onConfirmEdit(&$SimpleCaptcha, &$editPage, $newtext, $section, $merged, &$result) {
+		$title = $editPage->getArticle()->getTitle();
+		if (Namespace::isTalk($title->getNamespace()) && strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
+			$result = true;	//omit captcha
+			return false;
 		}
 		return true;
 	}
