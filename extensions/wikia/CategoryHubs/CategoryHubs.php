@@ -81,6 +81,7 @@ function categoryHubAdditionalScripts( &$out, &$sk ){
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.core.js"></script>');
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.tabs.js"></script>');
 	$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/wikia/CategoryHubs/interactiveLists.js'></script>");
+	$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/wikia/CategoryHubs/tracking.js'></script>");
 	return true;
 } // end categoryHubAdditionalScripts()
 
@@ -373,8 +374,8 @@ function categoryHubOtherSection(&$catView, &$r){
 
 		// The tabs.
 		$r .= "<ul>\n";
-		$r .= "<li><a href='#cathub-tab-unanswered'><span>".str_replace("-","",Answer::getSpecialCategory("unanswered"))."</span></a></li>\n";
-		$r .= "<li><a href='#cathub-tab-answered'><span>".Answer::getSpecialCategory("answered")."</span></a></li>\n";
+		$r .= "<li><a href='#cathub-tab-unanswered' id=\"cathub-tablink-unanswered\"><span>".str_replace("-","",Answer::getSpecialCategory("unanswered"))."</span></a></li>\n";
+		$r .= "<li><a href='#cathub-tab-answered'   id=\"cathub-tablink-answered\"><span>".Answer::getSpecialCategory("answered")."</span></a></li>\n";
 		$r .= "</ul>\n";
 
 		// Unanswered questions in this category.
