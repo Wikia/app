@@ -169,7 +169,7 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 		return false;
 	}
 	
-	$(".wikiaPlaceholder .wikia_button").attr("onClick","");
+	$(".wikiaPlaceholder .wikia_button").removeAttr("onclick");
 	$(".wikiaPlaceholder .wikia_button").click(
 	function(e){
 		$(function(){  //wait for evn
