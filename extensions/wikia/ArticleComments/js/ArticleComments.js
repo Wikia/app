@@ -116,7 +116,7 @@ ArticleComments.setPage = function(e) {
 	$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentList::axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
 		$().log(json);
 		if (!json.error) {
-			$('.article-comments-pagination-link').removeClass('article-comments-pagination-link-active').unbind('mouseenter mouseleave');
+			$('.article-comments-pagination-link').removeClass('article-comments-pagination-link-active accent').unbind('mouseenter mouseleave');
 			$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active');
 			$('.article-comments-pagination-link').not('.article-comments-pagination-link-active').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
 			$('#article-comments-ul').replaceWith(json.text);
