@@ -65,7 +65,7 @@ function efRemoveFromSpecialWithoutimages( &$uploadForm ) {
 	return true;
 }
 
-function efRemoveFromSpecialWantpages( &$rc ) {
+function efRemoveFromSpecialWantedpages( &$rc ) {
 	if( $rc->mAttribs['rc_type'] == RC_NEW ) {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'querycache', array( 
