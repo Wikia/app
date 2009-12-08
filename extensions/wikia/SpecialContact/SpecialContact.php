@@ -77,7 +77,7 @@ function wfSpecialContactSetup() {
 			$m = "$this->mRealName";
 			$m .= " ({$this->mEmail}) {$this->mWhichWiki}/wiki/User:{$this->mName} contacted Wikia about ";
 			$m .= "$this->mProblem.\n";
-			$m .= "User browser data: $this->mBrowser\n\n";
+			$m .= "User browser data: {$this->mBrowser}; IP: " . wfGetIP() . "\n\n";
 			$m .= "$this->mProblemDesc\n";
 
 		#	exec("/bin/echo '$m' >> /home/wikicities/contactmails.log");
