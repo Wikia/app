@@ -39,7 +39,7 @@ function efAddWikiSticky( &$html ) {
 	}
 	$js .= "];\n";
 	$wgOut->addInlineScript( $js );
-	$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/WikiStickiesMyHome.js?{$wgStyleVersion}\"></script>\n");
+	$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js?{$wgStyleVersion}\"></script>\n");
 	$html = WikiStickies::renderWikiSticky( $feeds[0]['title'], $feeds[0]['prefix'] );
 
 	return true;
