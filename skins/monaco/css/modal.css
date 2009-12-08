@@ -160,7 +160,7 @@ h1.modalTitle div {
 	text-align:center;
 }
 
-#userloginErrorBox,#userloginErrorBox2 {
+#userloginErrorBox,#userloginErrorBox2,#userloginErrorBox3 {
 	background-color: #FFFFCC;	
 	border: 1px solid #AAA;
 	margin: 1em 3em 1em 0;
@@ -188,7 +188,7 @@ h1.modalTitle div {
 	list-style-type:square;
 }
 
-.wpAjaxRegisterTable .sprite,#userloginErrorBox .sprite,#userloginErrorBox2 .sprite
+.wpAjaxRegisterTable .sprite,#userloginErrorBox .sprite,#userloginErrorBox2 .sprite,#userloginErrorBox3 .sprite
 {
 	clip:rect(0px, 624px, 16px, 608px);
 	height:16px;
@@ -198,7 +198,7 @@ h1.modalTitle div {
 	width:16px;
 }
 
-.wpAjaxRegisterTable .mw-input-error .sprite,#userloginErrorBox .sprite,#userloginErrorBox2 .sprite
+.wpAjaxRegisterTable .mw-input-error .sprite,#userloginErrorBox .sprite,#userloginErrorBox2 .sprite,#userloginErrorBox3 .sprite
 {
 	background:transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113) no-repeat scroll  -608px 0 ;
 }

@@ -157,7 +157,7 @@ var AjaxLogin = {
 	},
 	displayReason: function(reason) {
 		$('#wpError').css('display', '').html(reason);
-		$('#userloginErrorBox2').show();
+		$('#userloginErrorBox3').show();
 	},
 	blockLoginForm: function(block) {
 		AjaxLogin.form.find('input').attr('disabled', (block ? true : false));
@@ -178,6 +178,9 @@ var AjaxLogin = {
 		return true
 	}
 };
+
+
+/* over load for ajaxComboLogin */
 
 if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 	/* clear repted names */ 
@@ -233,7 +236,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 				},
 				close: function()
 				{
-					$('#AjaxLoginBoxWrapper').closeModal();
+					$('#AjaxLoginBoxWrapper').hideModal();
 					WET.byStr(AjaxLogin.WET_str + '/close');
 					AjaxLogin.isShow = false;
 				},

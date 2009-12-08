@@ -14,7 +14,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 			</a>
 	</div>
 	<div id="AjaxLoginLoginForm" style="display:none" title="<?= wfMsg('login') ?>">
-	<div id="userloginErrorBox2" style="display: none;">
+	<div id="userloginErrorBox3" style="display: none;">
 		<table>
 		<tbody>
 		<tr>

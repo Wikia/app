@@ -119,7 +119,6 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 	if ( typeof showComboAjaxForPalceHolder.statusAjaxLogin == 'undefined' ) { // java script static var 
 		showComboAjaxForPalceHolder.statusAjaxLogin = false;
     }
-
 	$('html, body').attr("scrollTop",0);
 	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin) 
 		|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) { 
@@ -134,6 +133,8 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 	if (showComboAjaxForPalceHolder.statusAjaxLogin){
 		return true;
 	}
+	
+	
 	
 /*   	$("#positioned_elements").append('<div id="loadmask" class="blackout"></div>');
    	$(".blackout:last")
@@ -185,6 +186,7 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 })();
 
 (function(){ //before on ready 
+	Event = null; //ie
 	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin) 
 			|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) { 
 			return false;
@@ -221,6 +223,7 @@ $(function(){
 		}
 	}
 });
+
 
 //Header Menu
 $.fn.extend({
