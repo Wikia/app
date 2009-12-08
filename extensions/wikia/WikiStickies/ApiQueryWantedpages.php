@@ -36,7 +36,6 @@ class ApiQueryWantedpages extends ApiQueryBase {
 				break;
 			}
 
-			$title = Title::makeTitle($row->qc_namespace, $row->qc_title);
 			$vals['title'] = $row->qc_title;
 			$vals['namespace'] = $row->qc_namespace;
 
