@@ -379,7 +379,7 @@ function categoryHubOtherSection(&$catView, &$r){
 		$cat = $catView->getCat();
 
 		if ( $wgUser->isAnon() && $cat->getSubcatCount() > 0 && ( !empty($catView->answers["answered_questions"]) || !empty($catView->answers["unanswered_questions"]) ) ) {
-			$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_LEADERBOARD_U');
+			//$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_LEADERBOARD_U');
 		}
 
 		$r .= "<div id='tabs'>\n"; // jquery ui tabs widget
@@ -420,7 +420,7 @@ function categoryHubOtherSection(&$catView, &$r){
 		}
 		$r .= "</div>\n";
 		if ( $wgUser->isAnon() ) {
-			$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_U');
+			//$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_U');
 		}
 
 		// Answered questions in this category.
@@ -463,7 +463,7 @@ function categoryHubOtherSection(&$catView, &$r){
 			}
 			$r .= "</ul>\n";
 			if ( $wgUser->isAnon() ) {
-				$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_A');
+				//$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_A');
 			}
 		}
 		$r .= "&nbsp;</div>\n";
