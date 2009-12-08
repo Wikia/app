@@ -202,7 +202,7 @@ class WikiStickies {
 		$data = array(
 				'action'	=> 'query',
 				'list'		=> 'withoutimages',
-				'wilimit'	=> intval($limit),
+				'woilimit'	=> intval($limit),
 				 );
 
 			return self::getFeed( 'withoutimages', $data );
