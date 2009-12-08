@@ -1,7 +1,7 @@
 <?php
 
 function efAddWikiSticky( &$html ) {
-	global $wgOut, $wgExtensionsPath, $wgStyleVersion;
+	global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgJsMimeType;
 
 	wfLoadExtensionMessages( 'WikiStickies' );
 
@@ -39,8 +39,7 @@ function efAddWikiSticky( &$html ) {
 	}
 	$js .= "];\n";
 	$wgOut->addInlineScript( $js );
-	$wgOut->addScriptFile("{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js");
-
+	$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/WikiStickiesMyHome.js?{$wgStyleVersion}\"></script>\n");
 	$html = WikiStickies::renderWikiSticky( $feeds[0]['title'], $feeds[0]['prefix'] );
 
 	return true;
