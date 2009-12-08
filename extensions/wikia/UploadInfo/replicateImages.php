@@ -242,6 +242,7 @@ class WikiaReplicateImages {
 			"--quiet",
 			"--owner",
 			"--group",
+			"--numeric-ids",
 			"--chmod=g+w",
 			$source,
 			escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target )
@@ -275,6 +276,7 @@ class WikiaReplicateImages {
 					"--quiet",
 					"--owner",
 					"--group",
+					"--numeric-ids",
 					"--chmod=g+w",
 					$source,
 					escapeshellcmd( $this->mRunAs . '@' . $server["address"] . ':' . $target )
