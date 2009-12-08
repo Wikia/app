@@ -132,24 +132,24 @@ h1.modalTitle div {
 /*** Switch button for combo ajax login ***/
 
 .ajaxregister_button {
-	background: transparent url(../images/ajaxreg_button_sprite.png) no-repeat scroll -367px -86px;
+	background: transparent url(../images/ajaxreg_button_sprite.png?1) no-repeat scroll -367px -86px;
 	color: black;
 
 }
 	
 .ajaxregister_button span {
-	background: transparent url(../images/ajaxreg_button_sprite.png) no-repeat scroll -269px -31px;
+	background: transparent url(../images/ajaxreg_button_sprite.png?1) no-repeat scroll -269px -31px;
 	color: black;
 	width: 120px;
 }
 
 .ajaxregister_button_enable {
-	background: transparent url(../images/ajaxreg_button_sprite.png) no-repeat -367px -55px; 
+	background: transparent url(../images/ajaxreg_button_sprite.png?1) no-repeat -367px -55px; 
 	color: black; 
 }
 	 
 .ajaxregister_button_enable span {
-	background: transparent url(../images/ajaxreg_button_sprite.png) no-repeat right top;
+	background: transparent url(../images/ajaxreg_button_sprite.png?1) no-repeat right top;
 	color: black;
 }
  
