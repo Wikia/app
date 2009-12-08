@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#32793: Failsafe to mysteriously missing AjaxLogin. (Nef)
 * SpecialContact: append current IP to browser data before send (uberfuzzy)
 * rt#32428: Widgettag: size to 206 wide to match sidebar and dashboard (uberfuzzy)
 * WidgetWikiPage: wrap missing error message in tagged span for detection (uberfuzzy)
