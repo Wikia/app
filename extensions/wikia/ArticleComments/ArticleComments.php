@@ -9,10 +9,6 @@
  *
  */
 
-//TODO:
-//* change $this->getTitle()->getNamespace() to some private variable
-//* change Namespace::getTalk($this->getTitle()->getNamespace()) to some private variable
-
 define('ARTICLECOMMENTORDERCOOKIE_NAME', 'articlecommentorder');
 define('ARTICLECOMMENTORDERCOOKIE_EXPIRE', 60 * 60 * 24 * 365);
 define('ARTICLECOMMENT_PREFIX', '@comment-');
@@ -40,6 +36,8 @@ $wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockG
 $wgHooks['MyHome:BeforeStoreInRC'][] = 'ArticleCommentList::BeforeStoreInRC';
 # TOC
 $wgHooks['Parser::InjectTOCitem'][] = 'ArticleCommentList::InjectTOCitem';
+# redirect
+$wgHooks['ArticleFromTitle'][] = 'ArticleCommentList::ArticleFromTitle';
 # init
 $wgHooks['SkinAfterContent'][] = 'ArticleCommentInit::ArticleCommentEnable';
 $wgHooks['CustomArticleFooter'][] = 'ArticleCommentInit::ArticleCommentEnableMonaco';
@@ -57,6 +55,11 @@ class ArticleCommentInit {
 			self::$enable = true;
 			//enable comments only on content namespaces
 			if (!in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
+				self::$enable = false;
+			}
+
+			//non-existing articles
+			if (!$wgTitle->exists()) {
 				self::$enable = false;
 			}
 
@@ -406,7 +409,7 @@ class ArticleComment {
 			$title = $oTitle->getPrefixedDBkey();
 		}
 		$elements = explode( '/', $title );
-		$res = array( '', '', '' );
+		$res = array( '', '' );
 		if ( !empty($elements) && is_array($elements) ) {
 			reset($elements);
 			$user = $elements[key($elements)];
@@ -519,7 +522,6 @@ class ArticleComment {
 			$editPage->edittime = $article->getTimestamp();
 			$editPage->textbox1 = $text;
 			$retval = $editPage->internalAttemptSave( $result );
-			Wikia::log( __METHOD__, 'editpage', "Returned value {$retval}" );
 
 			/**
 			 * clear comments cache for this article
@@ -565,7 +567,6 @@ class ArticleComment {
 
 		$Title = Title::newFromID( $articleId );
 		if( ! $Title ) {
-			Wikia::log( __METHOD__, 'error', 'Cannot create title' );
 			return Wikia::json_encode( array( 'error' => 1 ) );
 		}
 
@@ -649,7 +650,6 @@ class ArticleComment {
 
 		$Title = Title::newFromID( $articleId );
 		if( ! $Title ) {
-			Wikia::log( __METHOD__, 'error', 'Cannot create title' );
 			return Wikia::json_encode( array( 'error' => 1 ) );
 		}
 
@@ -723,7 +723,6 @@ class ArticleComment {
 		$editPage->edittime = $article->getTimestamp();
 		$editPage->textbox1 = $text;
 		$retval = $editPage->internalAttemptSave( $result );
-		Wikia::log( __METHOD__, 'editpage', "Returned value {$retval}" );
 
 		/**
 		 * clear comments cache for this article
@@ -969,7 +968,6 @@ class ArticleCommentList {
 	 * @return Array --sorted array
 	 */
 	private function sort() {
-		Wikia::log( __METHOD__, 'order', $this->mOrder );
 		if ( $this->mOrder == 'desc' ) {
 			krsort( $this->mComments, SORT_NUMERIC );
 		} else {
@@ -1577,6 +1575,27 @@ class ArticleCommentList {
 		wfLoadExtensionMessages('ArticleComments');
 		$tocnumber = ++$sublevelCount[1];
 		$toc .= $sk->tocLine('article-comment-header', wfMsg('article-comments-toc-item'), $tocnumber, 1);
+		return true;
+	}
+
+	/**
+	 * static entry point for hook
+	 *
+	 * @static
+	 * @access public
+	 */
+	static public function ArticleFromTitle( &$Title, &$Article ) {
+		if (Namespace::isTalk($Title->getNamespace()) && strpos(end(explode('/', $Title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
+			global $wgRequest, $wgTitle, $wgOut;
+			$redirect = $wgRequest->getText('redirect', false);
+			$diff = $wgRequest->getText('diff', '');
+			$oldid = $wgRequest->getText('oldid', '');
+			$action = $wgRequest->getText('action', '');
+			if (($redirect != 'no') && empty($diff) && empty($oldid) && ($action != 'history')) {
+				$redirect = Title::newFromText(reset(explode('/', $Title->getText())), Namespace::getSubject($Title->getNamespace()));
+				$wgOut->redirect($redirect->getFullUrl());
+			}
+		}
 		return true;
 	}
 }
