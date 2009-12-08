@@ -476,12 +476,12 @@ if ( $wgUser->isAnon() ) {
 <div id="footer">
 	<div class="shrinkwrap">
 		<ul>
-			<li><a href="http://www.wikia.com/wiki/About_Wikia">About Us</a></li>
-			<li><a href="http://www.wikia.com/wiki/Advertising">Advertise</a></li>
-			<li><a href="http://www.wikia.com/wiki/Contact_us">Contact Us</a></li>
-			<li><a href="http://www.wikia.com/wiki/Hiring">Hiring</a></li>
-			<li><a href="http://www.wikia.com/wiki/Press">Press</a></li>
-			<li><a href="http://www.wikia.com/wiki/Terms_of_use">Terms of Use</a></li>
+			<li><a href="http://www.wikia.com/wiki/Wikia:About">About Us</a></li>
+			<li><a href="http://www.wikia.com/wiki/Wikia:Advertising">Advertise</a></li>
+			<li><a href="http://www.wikia.com/wiki/Special:Contact">Contact Us</a></li>
+			<li><a href="http://www.wikia.com/wiki/Wikia:Hiring">Hiring</a></li>
+			<li><a href="http://www.wikia.com/wiki/Wikia:Press">Press</a></li>
+			<li><a href="http://www.wikia.com/wiki/Wikia:Terms_of_use">Terms of Use</a></li>
 		</ul>
 		<div id="copyright">
 			<img src="<?php $this->text('stylepath') ?>/home/images/footer_logo.gif?<?= $wgStyleVersion ?>" alt="Wikia" /><br />
