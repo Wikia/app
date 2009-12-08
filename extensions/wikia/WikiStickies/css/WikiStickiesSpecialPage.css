@@ -3,16 +3,27 @@
  */
 .wikisticky_browser {
     background: url(../images/bg.wikisticky.209x187.png) no-repeat;
+    color: #000;
     float: left;
     height: 187px;
     margin-bottom: 3em;
     width: 209px;
 }
+
+#bodyContent .wikisticky_browser .wikisticky_content a {
+	color: #002BB8;
+}
+
 .wikisticky_content { padding-right: 8px; }
 .wikistickiesfeed {
     clear: left;
     margin: 0 0 3em 0;
 }
+
+#wikistickies-admintools {
+	color: #000;
+}
+
 .wikistickiesfeed h2,
 #wikistickies-admintools h2 {
     border-bottom: none;
@@ -25,7 +36,7 @@
     padding: 0 0 0 20px;
 }
 
-.wikistickies-admintools .bigger {
+#wikistickies-admintools .bigger {
 	font-size: 155%;
 	font-weight: none;
 }
