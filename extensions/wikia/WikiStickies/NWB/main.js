@@ -62,7 +62,7 @@ NWB.changeTheme = function (theme, changeData){
         } 
 
         // Create a link object for the stylesheet
-	var href = "/extensions/wikia/NewWikiBuilder/themes/" + theme.replace(/monaco-/, '').toLowerCase() + ".css";
+	var href = "/extensions/wikia/WikiStickies/NWB/themes/" + theme.replace(/monaco-/, '').toLowerCase() + ".css";
 	// Heh. Head first.
 	$("head:first").append('<link rel="stylesheet" type="text/css" href="' + href + '" />');
 
