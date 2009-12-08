@@ -917,7 +917,7 @@ div.category br {
 .userInfo {
 	display:inline;
 	margin-top: 7px !important;
-	padding: 0 15px 0 0 !important;
+	padding: 0 10px 0 0 !important;
 	height:100%;
 	width:auto;
 }
@@ -1017,7 +1017,7 @@ div.userInfoNoAvatar .userPoints {
 #topContribsAllTime, #topContribsRecent{
 	margin:0px auto;
 	float:left;
-	width: 47%;
+	width: 50%;
 }
 #topContributorsWrapper{
 	float:left;
