@@ -3,10 +3,16 @@
  */
 #wikisticky_browser {
     background: url(../images/bg.wikisticky.249x222.png) no-repeat;
+    color: #000;
     height: 222px;
     margin: 0 auto;
     width: 249px;
 }
+
+#wikisticky_browser a {
+	color: #002BB8;
+}
+
 .wikisticky_content {
     height: 213px;
     margin: 0;
