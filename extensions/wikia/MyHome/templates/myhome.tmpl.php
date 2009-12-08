@@ -15,15 +15,24 @@
 
 		<!-- additional stuff, governed by myHomeSidebarBeforeContent hook -->
 		<?=$sidebarBeforeContent?>			
+		<?php global $wgEnableWikiStickiesExt;
+		if (!empty( $wgEnableWikiStickiesExt ) ) { ?>
+			<!-- hot spots -->
+			<?=$hotSpotsHTML?>
+			<!-- /hot spots -->
 
-		<!-- hot spots -->
-		<?=$hotSpotsHTML?>
-		<!-- /hot spots -->
+			<!-- user contributions -->
+			<?=$contribsHTML?>
+			<!-- /user contributions -->
+		<?php } else { ?>
+			<!-- user contributions -->
+			<?=$contribsHTML?>
+			<!-- /user contributions -->
 
-		<!-- user contributions -->
-		<?=$contribsHTML?>
-		<!-- /user contributions -->
-
+			<!-- hot spots -->
+			<?=$hotSpotsHTML?>
+			<!-- /hot spots -->
+		<?php } ?>
 		<!-- community corner -->
 		<?=$communityCornerHTML?>
 		<!-- /community corner -->
