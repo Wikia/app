@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#32428: Widgettag: size to 206 wide to match sidebar and dashboard (uberfuzzy)
 * WidgetWikiPage: wrap missing error message in tagged span for detection (uberfuzzy)
 * rt#32317: AjaxPoll: adjust code to match messages (uberfuzzy)
 * rt#32071: Answers, Ads: AnswersSudoAd emission restrictions. (Nef)
