@@ -10,13 +10,14 @@ class WithoutimagesPage extends QueryPage {
 	 * Note: Getting page_namespace only works if $this->isCached() is false
 	 */
 	function getSQL() {
+		global $wgContentNamespaces;
 		return "SELECT 'Withoutimages' AS type,
 		       		page_namespace AS namespace,
 				page_title AS title,
 				COUNT(*) as value
 			FROM page
 			JOIN pagelinks ON page_title = pl_title AND page_namespace = pl_namespace
-			WHERE pl_from > 0 AND page_namespace = 0 AND page_is_redirect = 0
+			WHERE pl_from > 0 AND page_namespace IN (".implode(",", $wgContentNamespaces).") AND page_is_redirect = 0
 			AND (
 				NOT EXISTS (
 					SELECT il_from FROM imagelinks WHERE il_from = page_id LIMIT 1
