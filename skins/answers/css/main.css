@@ -1126,6 +1126,9 @@ span.answered_questions a, span.unanswered_questions a{
 	color:#00c;
 	font-size:1.2em;
 }
+span.unanswered_questions a{
+	padding-right:75px;
+}
 .cathub-asked {
 	font-size:.9em;
 	color:#707070;
