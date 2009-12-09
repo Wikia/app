@@ -41,14 +41,14 @@ WIKIA.WikiStickies.trackLink = function() {
 }
 
 WIKIA.WikiStickies.updateSticky = function () {
+ 	var paragraph = $('.wikisticky_content').children('p'); 
 	//set content
-	$(".wikisticky_content p").html(WIKIA.WikiStickies.stickies[WIKIA.WikiStickies.count]);
+	paragraph.html(WIKIA.WikiStickies.stickies[WIKIA.WikiStickies.count]);
 	WIKIA.WikiStickies.count++;
 	if (WIKIA.WikiStickies.count == WIKIA.WikiStickies.stickies.length) {
 		WIKIA.WikiStickies.count = 0;
 	}
 	//set font size and position
-	var paragraph = $(".wikisticky_content p");
 	paragraph.css("fontSize", "14pt");
 	var verticalDifference = stickyContentHeight - paragraph.height();	
 	while (verticalDifference < 0) {
@@ -61,6 +61,14 @@ WIKIA.WikiStickies.updateSticky = function () {
 $(document).ready(function() {
 	$(".wikisticky_curl, .wikisticky_next").bind("click", WIKIA.WikiStickies.flipWikisticky);
 	$('#wikisticky_special_link a').click(WIKIA.WikiStickies.trackLink);
+	var content = $('.wikisticky_content').children('p');
+	content.bind('click', function(ev) {
+		var target = $(ev.target).filter('a');
+		if (target.exists()) {
+			WET.byStr( 'MyHome/wikistickies/item' + content.children('span').attr('class').split('_').pop() );     		
+		}
+	});
+
 	stickyContentHeight = $(".wikisticky_content").height() - $(".wikisticky_content h2").height() - $(".wikisticky_next").outerHeight();
 	WIKIA.WikiStickies.updateSticky();
 });
