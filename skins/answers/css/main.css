@@ -1162,6 +1162,9 @@ li:hover .hideUntilHover{
 	font-size:1.2em;
 	color:#222;
 }
+.ui-tabs-nav span{
+	font-weight:bold;
+}
 .ui-tabs-panel{
 	padding:0px !important;
 	margin-left:-2px !important;
