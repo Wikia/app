@@ -50,6 +50,9 @@ CKEDITOR.plugins.add('rte-dragdrop',
 					// "mark" dragged element
 					var target = $(ev.target);
 					target.attr('_rte_dragged', true);
+
+					// trigger custom event
+					target.trigger('dragged');
 				}).
 
 				bind('drop', self.onDrop).
@@ -64,6 +67,9 @@ CKEDITOR.plugins.add('rte-dragdrop',
 					// "mark" dragged element
 					var target = $(ev.target);
 					target.attr('_rte_dragged', true);
+
+					// trigger custom event
+					target.trigger('dragged');
 				}).
 
 				// ok, so this wasn't drag&drop, just a click on placeholder / image
