@@ -188,6 +188,7 @@ packages :
 					'../js/plugins/comment/plugin.js',
 					'../js/plugins/comment/dialogs/comment.js',
 					'../js/plugins/dragdrop/plugin.js',
+					'../js/plugins/edit-buttons/plugin.js',
 					'../js/plugins/entities/plugin.js',
 					'../js/plugins/first-run-notice/plugin.js',
 					'../js/plugins/justify/plugin.js',
