@@ -786,6 +786,7 @@ class RTEReverseParser {
 				$out = "{$out}\n";
 
 				$out = $this->fixForTableCell($node, $out);
+				$out = $this->fixForDiv($node, $out);
 				break;
 
 			case 'li':
@@ -939,6 +940,7 @@ class RTEReverseParser {
 				$out = "{|{$attributes}\n{$textContent}\n|}\n";
 
 				$out = $this->fixForTableCell($node, $out);
+				$out = $this->fixForDiv($node, $out);
 				break;
 
 			case 'caption':
@@ -1018,6 +1020,18 @@ class RTEReverseParser {
 					$out = "{$out}\n";
 				}
 			}
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Adds extra line break before given element not being first child of div
+	 */
+	private function fixForDiv($node, $out) {
+		// add \n before when inside div
+		if (self::isChildOf($node, 'div') && !self::isFirstChild($node)) {
+			$out = "\n{$out}";
 		}
 
 		return $out;
