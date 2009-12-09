@@ -50,13 +50,13 @@ class ArticleCommentInit {
 	private static $enable = null;
 
 	static private function ArticleCommentCheck() {
-		global $wgOut, $wgTitle, $wgUser, $wgRequest, $wgContentNamespaces, $wgEnableBlogArticles;
+		global $wgOut, $wgTitle, $wgUser, $wgRequest, $wgContentNamespaces, $wgArticleCommentsNamespaces, $wgEnableBlogArticles;
 		wfProfileIn( __METHOD__ );
 
 		if (is_null(self::$enable)) {
 			self::$enable = true;
-			//enable comments only on content namespaces
-			if (!in_array($wgTitle->getNamespace(), $wgContentNamespaces)) {
+			//enable comments only on content namespaces (use $wgArticleCommentsNamespaces if defined)
+			if (!in_array($wgTitle->getNamespace(), empty($wgArticleCommentsNamespaces) ? $wgContentNamespaces : $wgArticleCommentsNamespaces)) {
 				self::$enable = false;
 			}
 
