@@ -593,7 +593,7 @@ function categoryHubSubcategorySection(&$catView, &$r){
 function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 	global $wgStylePath;
 	$title = $qArticle->getTitle();
-	$timestamp = $qArticle->getTimestamp();
+	$timestamp = $qArticle->getTitle()->getTouched();
 	$lastUpdate = wfTimeFormatAgo($timestamp);
 	$userId = $qArticle->getUser();
 	$userLink = "";
