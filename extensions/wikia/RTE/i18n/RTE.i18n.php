@@ -16,7 +16,7 @@ $messages['en'] = array(
 	'rte-edgecase-unclosed-tags' => 'unclosed HTML tag',
 	'enablerichtexteditor' => 'Enable Rich Text Editor',
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
-	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more [[Ead_the_annoucement|read the annoucement]].',
+	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more [http://www.wikia.com/wiki/User_blog:Kirkburn/Beta_test_the_new_rich_text_editor read the annoucement].',
 );
 $messages['pl'] = array(
 	'rte-desc' => 'CKeditor dla MediaWiki',

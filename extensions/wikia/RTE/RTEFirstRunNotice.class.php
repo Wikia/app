@@ -15,7 +15,7 @@ class RTEFirstRunNotice {
 
 			$html = '';
 
-			$html .= Xml::openElement('div', array('id' => 'RTEFirstRunNotice'));
+			$html .= Xml::openElement('div', array('id' => 'RTEFirstRunNotice', 'class' => 'plainlinks'));
 			$html .= Xml::element('div', array('id' => 'RTEFirstRunNoticeClose'), ' ');
 			$html .= wfMsgExt('rte-first-run-notice', array('parseinline'));
 			$html .= Xml::closeElement('div');
