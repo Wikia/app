@@ -5,7 +5,7 @@
 	<?php
 	if ( count( $comments ) > 1 ) {
 	?>
-	<form action="<?php echo $title->getFullURL() ?>" method="get" id="article-comm-form-select">
+	<form action="<?php echo $title->getFullURL() ?>#article-comment-header" method="get" id="article-comm-form-select">
 	<select name="order" id="article-comm-order">
 		<option value="desc" <?php if ($order=="desc") echo 'selected="selected"' ?>><?php echo wfMsg('article-comments-dsc') ?></option>
 		<option value="asc" <?php if ($order=="asc") echo 'selected="selected"' ?>><?php echo wfMsg('article-comments-asc') ?></option>
