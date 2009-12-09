@@ -41,6 +41,8 @@ $wgHooks['FlexibleCategoryPage::openShowCategory'][] = 'categoryHubBeforeArticle
 $wgHooks['FlexibleCategoryPage::closeShowCategory'][] = 'categoryHubAfterArticleText';
 
 // Override the appearance of the sections on the category page.
+$wgHooks['FlexibleCategoryViewer::init'][] = 'categoryHubInitViewer';
+$wgHooks['FlexibleCategoryViewer::doCategoryQuery'][] = 'categoryHubDoCategoryQuery';
 $wgHooks['FlexibleCategoryViewer::getCategoryTop'][] = 'categoryHubCategoryTop';
 $wgHooks['FlexibleCategoryViewer::getOtherSection'][] = 'categoryHubOtherSection';
 $wgHooks['FlexibleCategoryViewer::getSubcategorySection'][] = 'categoryHubSubcategorySection';
@@ -171,6 +173,91 @@ function categoryHubAfterArticleText(&$flexibleCategoryPage){
 	return $wgCatHub_useDefaultView;
 } // end categoryHubAfterArticleText()
 
+
+///// THESE SECTIONS CHANGE SOME OF THE UNDER-THE-HOOD BEHAVIOR (SUCH AS ORDERING OF THE LISTS)  /////
+
+////
+// Called when the viewer is created.  We will use it to determine ahead of time if the page has rich categories enabled or not.
+//
+// Allows default behavior to happen.
+////
+function categoryHubInitViewer(&$flexibleCategoryViewer){
+	global $wgCatHub_useDefaultView;
+
+	// Since this and some other functions that need this info are executed before the parser gets called (and thus the hooks for checking the magic words),
+	// we check for the magic word here (unless it was already found elsewhere).  This is used in categoryHubDoCategoryQuery and some of the
+	// display functions that are called before the parser.
+	if((!isset($wgCatHub_useDefaultView)) || (!$wgCatHub_useDefaultView)){
+		$mw = MagicWord::get(CATHUB_NORICHCATEGORY);
+		$article = Article::newFromID($flexibleCategoryViewer->getCat()->getTitle()->getArticleID());
+		$wgCatHub_useDefaultView = (0 < $mw->match($article->getRawText())); // match does not return bool as documented. fix is committed to MediaWiki svn.
+	}
+
+	return true;
+} // end categoryHubInitViewer()
+
+////
+// Overrides the default doCategoryQuery behavior to instead sort the pages by their last touched date (descending).
+////
+function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
+	global $wgCatHub_useDefaultView;
+
+	// Order by "page_touched" instead of alphabetically.  Keep in mind that if pagination starts being used, that
+	// it will have to be modified to include the page_touched values in the 'from' and 'until' parameters instead of the page names (will require changes in
+	// which parameter is used when because the order is DESC by default here and ascending by default normally).
+	if(!$wgCatHub_useDefaultView){
+		$dbr = wfGetDB( DB_SLAVE, 'category' );
+		if( $flexibleCategoryViewer->from != '' ) {
+			$pageCondition = 'page_touched >= ' . $dbr->addQuotes( $flexibleCategoryViewer->from );
+			$flexibleCategoryViewer->flip = false;
+		} elseif( $flexibleCategoryViewer->until != '' ) {
+			$pageCondition = 'page_touched < ' . $dbr->addQuotes( $flexibleCategoryViewer->until );
+			$flexibleCategoryViewer->flip = true;
+		} else {
+			$pageCondition = '1 = 1';
+			$flexibleCategoryViewer->flip = false;
+		}
+		$res = $dbr->select(
+			array( 'page', 'categorylinks', 'category' ),
+			array( 'page_title', 'page_namespace', 'page_len', 'page_is_redirect', 'cl_sortkey',
+				'cat_id', 'cat_title', 'cat_subcats', 'cat_pages', 'cat_files' ),
+			array( $pageCondition, 'cl_to' => $flexibleCategoryViewer->title->getDBkey() ),
+			__METHOD__,
+			array( 'ORDER BY' => $flexibleCategoryViewer->flip ? 'page_touched' : 'page_touched DESC',
+				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+				'LIMIT'    => $flexibleCategoryViewer->limit + 1 ),
+			array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
+				'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) )
+		);
+
+		$count = 0;
+		$flexibleCategoryViewer->nextPage = null;
+		while( $x = $dbr->fetchObject ( $res ) ) {
+			if( ++$count > $flexibleCategoryViewer->limit ) {
+				// We've reached the one extra which shows that there are
+				// additional pages to be had. Stop here...
+				$this->nextPage = $x->cl_sortkey;
+				break;
+			}
+
+			$title = Title::makeTitle( $x->page_namespace, $x->page_title );
+
+			if( $title->getNamespace() == NS_CATEGORY ) {
+				$cat = Category::newFromRow( $x, $title );
+				$flexibleCategoryViewer->addSubcategoryObject( $cat, $x->cl_sortkey, $x->page_len );
+			} elseif( $flexibleCategoryViewer->showGallery && $title->getNamespace() == NS_FILE ) {
+				$this->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
+			} else {
+				if( wfRunHooks( "CategoryViewer::addPage", array( &$flexibleCategoryViewer, &$title, &$x ) ) ) {
+					$flexibleCategoryViewer->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
+				}
+			}
+		}
+		$dbr->freeResult( $res );
+	}
+
+	return $wgCatHub_useDefaultView;
+} // end categoryHubDoCategoryQuery()
 
 ///// THE SECTIONS BELOW MODIFY THE APPEARANCE OF EACH SECTION /////
 
