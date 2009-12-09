@@ -36,7 +36,7 @@
     padding: 0 20px;
 }
 
-.wikisticky_next {
+#wikisticky_browser .wikisticky_next {
     bottom: 0;
     color: #999;
     font-size: 12px;
