@@ -334,9 +334,13 @@ function categoryHubTitleBar(&$catView, &$r){
 	// Fetch the icon for the corresponding wiki if there is one.
 	WikiFactory::isUsed(true);
 	$canonicalCatName = str_replace("_", "", $catView->getCat()->getName());
-	$logoSrc = WikiFactory::getVarValueByName( 'wgLogo', WikiFactory::DomainToId($canonicalCatName .'.wikia.com'));
+	$cityId = WikiFactory::DomainToId($canonicalCatName .'.wikia.com');
+	$logoSrc = WikiFactory::getVarValueByName( 'wgLogo', $cityId );
 	global $wgUploadPath;
-	$logoSrc = str_replace("\$wgUploadPath", $wgUploadPath, $logoSrc); // safer than eval'ing.  Runescape uses wgUploadPath, others probably do too.
+	if(strpos($logoSrc, "wgUploadPath") !== false){
+		$wikiUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
+		$logoSrc = str_replace("\$wgUploadPath", $wikiUploadPath, $logoSrc); // safer than eval'ing.  Runescape uses wgUploadPath, others probably do too.
+	}
 	if($logoSrc != ""){
 		$r .= "<img src='$logoSrc' width='78' height='78' style='float:left;padding:5px 5px 5px 0px;'/>";
 	}
