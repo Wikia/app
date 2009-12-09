@@ -68,8 +68,9 @@ function createAnswerForm(button){
 				existing_content = j.query.pages[page].revisions[0]["*"];
 			}
 		}
-		existing_content = existing_content.replace( new RegExp("\\[\\[" + wgCategoryName  + ":" + wgAnsweredCategory  + "\]\]", "gi"), "");
-		existing_content = existing_content.replace( new RegExp("\\[\\[" + wgCategoryName  + ":" + wgUnAnsweredCategory  + "\]\]", "gi"), "");
+		//existing_content = existing_content.replace( new RegExp("\\[\\[" + wgCategoryName  + ":" + wgAnsweredCategory  + "\]\]", "gi"), "");
+		//existing_content = existing_content.replace( new RegExp("\\[\\[" + wgCategoryName  + ":" + wgUnAnsweredCategory  + "\]\]", "gi"), "");
+		existing_content = existing_content.replace( new RegExp("\\[\\[.*?\]\]", "gi"), ""); // remove all 
 		var add_answer = $(button).parents('li').find('.cathub-add-answer').get(0);
 		add_answer.value = jQuery.trim(existing_content);
 
