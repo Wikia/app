@@ -29,9 +29,8 @@ $wgHooks['RecentChange_save'][] = 'ArticleComment::watchlistNotify';
 $wgHooks['ChangesListMakeSecureName'][] = 'ArticleCommentList::makeChangesListKey';
 $wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockGroup';
 # special::watchlist
-//TODO: fix bad condition - using $this in static function
-//$wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
-//$wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
+$wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
+$wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
 # ActivityFeed
 $wgHooks['MyHome:BeforeStoreInRC'][] = 'ArticleCommentList::BeforeStoreInRC';
 # TOC
@@ -886,12 +885,12 @@ class ArticleComment {
 	static public function ComposeCommonMail( $Title, &$keys, &$message, $editor ) {
 		global $wgEnotifUseRealName;
 
-		$name = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
-
-		if ( $Title->getNamespace() == $this->getTitle()->getNamespace() ) {
+		if (Namespace::isTalk($Title->getNamespace()) && strpos(end(explode('/', $Title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
 			if ( !is_array($keys) ) {
 				$keys = array();
 			}
+
+			$name = $wgEnotifUseRealName ? $editor->getRealName() : $editor->getName();
 			if( $editor->isIP( $name ) ) {
 				$utext = trim(wfMsgForContent('enotif_anon_editor', ""));
 				$message = str_replace('$PAGEEDITOR', $utext, $message);
