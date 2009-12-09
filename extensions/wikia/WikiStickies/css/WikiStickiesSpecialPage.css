@@ -67,13 +67,14 @@
 .wikistickiesfeed ul {
     font-family: Arial, sans-serif;
     font-size: 13px;
+    height: 1%; /* For IE7 */
+    padding-left: 1.25em;
     position: relative;
 }
 .wikistickiesfeed ul li {
     width: 48%;
     line-height: 1.75;
     margin-bottom: 0;
-    list-style-position: inside;
 }
 .wikistickiesfeed .secondcolumn {
     margin-left: 50%;
