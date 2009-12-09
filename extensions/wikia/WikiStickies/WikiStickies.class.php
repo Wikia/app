@@ -217,7 +217,7 @@ class WikiStickies {
 	 *
 	 * @return string The appropriate HTML to output.
 	 */
-	static function renderWikiSticky ( $title, $prefix, $attrs = NULL ) {
+	static function renderWikiSticky ( $title, $prefix, $attrs = NULL, $inside_attrs = NULL ) {
 		global $wgExtensionsPath, $wgUser, $wgTitle, $wgCanonicalNamespaceNames;
 		// Where are we?
 		$canname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
@@ -241,9 +241,13 @@ class WikiStickies {
 				wfMsg( 'wikistickies' ).
 			Xml::closeElement( 'h2' );
 		}
-		$html .= Xml::openElement( 'p' ).
-			self::renderWikiStickyContent( $title, $prefix ).
-			Xml::closeElement( 'p' );
+		$html .= Xml::openElement( 'p' );
+		if( 'MyHome' == $canname ) {
+			$html .= self::renderWikiStickyContent( $title, $prefix, $inside_attrs );
+		} else {
+			$html .= self::renderWikiStickyContent( $title, $prefix );
+		}
+		$html .= Xml::closeElement( 'p' );
 		if( 'MyHome' == $canname ) {
 			// TODO: This should link to the source of the feed fetched, not a '#' fragment.
 			$html .=
@@ -264,13 +268,16 @@ class WikiStickies {
 		return $html;
 	}
 
-	static function renderWikiStickyContent( $title, $prefix ) {
+	static function renderWikiStickyContent( $title, $prefix, $attrs = NULL ) {
 		global $wgUser;
 
 		$sk = $wgUser->getSkin();
-
-		$html = xml::openelement( 'span' ).
-			htmlspecialchars( $prefix ).
+		if( is_array( $attrs ) ) { 
+			$html = xml::openelement( 'span', $attrs );
+		} else {
+			$html = xml::openelement( 'span' );
+		}
+		$html .= htmlspecialchars( $prefix ).
 			xml::closeelement( 'span' ).
 			// todo: handle an array with more than one item?
 			' ' . $sk->link( $title, htmlspecialchars( $title->getText(), ENT_QUOTES ), array(), array(), array( 'known') ) . '?';
