@@ -25,7 +25,7 @@ class VideoPage extends Article {
 	const V_VIDDLER	 = 19;
 
 	const K_VIDDLER = "hacouneo6n6o3nysn0em";
-	
+
 	var	$mName,
 		$mVideoName,
 		$mId,
@@ -460,7 +460,7 @@ EOD;
 		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
 	}
 
-	// generates the video window (in FCK editor)	
+	// generates the video window (in FCK editor)
 	public function generateWysiwygWindow($refid, $title, $align, $width, $caption, $thumb) {
 		global $wgStylePath, $wgWysiwygMetaData;
 
@@ -494,6 +494,61 @@ EOD;
 EOD;
 		return str_replace("\n", ' ', $s); // TODO: Figure out what for this string replace is
 
+	}
+
+	// generates the video thumb for CKeditor (plain image with RTE meta data)
+	public function generateThumbForCK($wikitext, $title, $align, $width, $caption, $thumb) {
+		wfProfileIn(__METHOD__);
+
+		// render video thumb
+		$video = $this->getThumbnailCode($width, false);
+
+		// add extra CSS classes
+		$videoClass = array('video');
+		if ($align != 'vetnone') {
+			$videoClass[] = 'align' . ucfirst($align);
+		}
+		if (!empty($thumb)) {
+			$videoClass[] = 'thumb';
+		}
+		if ($caption != '') {
+			$videoClass[] = 'withCaption';
+		}
+
+		$class = 'class="' . implode(' ', $videoClass) . '"';
+
+		// add classes and type attribute to rendered video thumb
+		$video = substr($video, 0, -2) . $class . ' type="video" />';
+
+		// prepare RTE meta data
+		$params = array(
+			'href' => !empty($title) ? $title->getPrefixedText() : '',
+			'align' => $align,
+		);
+		if (!empty($width)) {
+			$params['width'] = intval($width);
+		}
+		if ($caption != '') {
+			$params['caption'] = $caption;
+		}
+		if (!empty($thumb)) {
+			$params['thumb'] = 1;
+		}
+
+		// mark rendered video thumbnail with RTE marker
+		$data = array(
+			'type' => 'video',
+			'params' => $params,
+			'wikitext' => $wikitext,
+		);
+
+		RTE::log(__METHOD__, $data);
+
+		$out = RTEData::addIdxToTag(RTEData::put('data', $data), $video);
+
+		wfProfileOut(__METHOD__);
+
+		return $out;
 	}
 
 	// recognize which supported provider we have from a given real life url
@@ -667,7 +722,7 @@ EOD;
                     	$blip = array_pop( $parsed );
                     }
 	                $this->mProvider = $provider;
-	                $this->mData = array();                
+	                $this->mData = array();
 					$last = explode( "?", $blip);
 					$this->mId = $last[0];
 					return true;
@@ -675,8 +730,8 @@ EOD;
             }
 
                 $text = strpos( $fixed_url, "WWW.DAILYMOTION" );
-                if( false !== $text ) { // Dailymotion	
-			// dailymotion goes like 
+                if( false !== $text ) { // Dailymotion
+			// dailymotion goes like
 			// http://www.dailymotion.pl/video/xavqj5_NAME
 			// (example for Polish location)
                         $provider = self::V_DAILYMOTION;
@@ -704,13 +759,13 @@ EOD;
                                 if ( ('' != $mdata ) && ( false === strpos( $mdata, "?" ) ) ) {
                                         $this->mId = $mdata;
                                 } else {
-                                	
+
                                         $this->mId = array_pop( $parsed );
                                 }
                                 if ( substr( $this->mId, -1, 1) != "/" )
                                 {
-                                	$this->mId .= "/";	
-                                } 
+                                	$this->mId .= "/";
+                                }
                                 $this->mProvider = $provider;
                                 $this->mData = array();
                                 return true;
@@ -896,7 +951,7 @@ EOD;
 			case self::V_BLIPTV: // todo verify if exists
 				$exists = $this->getBlipTVData() != false ;
 				break;
-			case self::V_DAILYMOTION: 
+			case self::V_DAILYMOTION:
 				$file = @file_get_contents( 'http://www.dailymotion.com/video/' . $this->mId );
 				if (strpos($file,$this->mId) > -1)
 				{
@@ -904,7 +959,7 @@ EOD;
 				}
 				return false;
 				break;
-			case self::V_VIDDLER: 
+			case self::V_VIDDLER:
 				$exists = $this->getViddlerTrueID() != false ;
 				break;
 			case self::V_GAMETRAILERS: // todo verify if exists
@@ -1013,7 +1068,7 @@ EOD;
 				break;
 			case self::V_DAILYMOTION:
 				$url = 'http://www.dailymotion.com/video/' . $id;
-				break;			
+				break;
 			case self::V_VIDDLER:
 				$url = 'http://www.viddler.com/explore/' . $id;
 				break;
@@ -1316,21 +1371,21 @@ EOD;
                 if ( $count > $limit )
                         $wgOut->addWikiMsg( 'morelinkstoimage', $this->mTitle->getPrefixedDBkey() );
         }
-        
+
     /* for get Viddler id by api and hold in cache */
-            
+
 	private function getViddlerTrueID()
 	{
 		global $wgMemc,$wgTranscludeCacheExpiry;
 		$cacheKey = wfMemcKey( "wvi", "viddlerid",$this->mId, $url );
 		$obj  = $wgMemc->get( $cacheKey );
 
-		if (isset($obj)) 
+		if (isset($obj))
 		{
 			return 	$obj;
-		}				
+		}
 		$url =  "http://api.viddler.com/rest/v1/?method=viddler.videos.getDetailsByUrl&api_key=".
-					self::K_VIDDLER . "&url=http://www.viddler.com/explore/" . $this->mId;  
+					self::K_VIDDLER . "&url=http://www.viddler.com/explore/" . $this->mId;
 		$file = @file_get_contents($url );
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
 		@$doc->loadXML( $file );
@@ -1338,7 +1393,7 @@ EOD;
 		if (empty($mTrueID))
 		{
 			return false;
-		} 
+		}
 		$wgMemc->set( $cacheKey, $mTrueID,60*60*24 );
 		return $mTrueID;
 	}
@@ -1349,17 +1404,17 @@ EOD;
 		$cacheKey = wfMemcKey( "wvi", "bliptv",$this->mId, $url );
 		$obj  = $wgMemc->get( $cacheKey );
 
-		if (isset($obj)) 
+		if (isset($obj))
 		{
 			return $obj;
-		}	
+		}
 
 		$url = "http://blip.tv/file/" . $this->mId . "?skin=rss&version=3";
-	
+
 		$file = @file_get_contents($url );
 	 	if (empty($file))
 	 	{
-	 		return false;	
+	 		return false;
 	 	}
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
 		@$doc->loadXML( $file );
@@ -1372,20 +1427,20 @@ EOD;
 		{
 			return false;
 		}
-		
-		$obj = array(	'mTrueID' => $mTrueID , 
+
+		$obj = array(	'mTrueID' => $mTrueID ,
 						'thumbnailUrl' => $thumbnailUrl);
 		$wgMemc->set( $cacheKey, $obj,60*60*24 );
 		return $obj;
 	}
 	public function getUrlToEmbed() {
-		
+
 		// todo switch through providers, make an API call and return proper stuff
 		// basically this is for Blip.tv and Viddler for now, since they are using
 		// some custom conversion between their ids and src values
 		$converted_id = '';
 		switch( $this->mProvider ) {
-			case self::V_BLIPTV:		
+			case self::V_BLIPTV:
 			 	$result = $this->getBlipTVData();
 			 	return "http://blip.tv/play/".$result['mTrueID'];
 				break;
@@ -1451,7 +1506,7 @@ EOD;
 				// URL id -> embedding id
 				$url = $this->getUrlToEmbed();
 				break;
-			case self::V_GAMETRAILERS:				
+			case self::V_GAMETRAILERS:
 				$url = 'http://www.gametrailers.com/remote_wrap.php?umid=' . $this->mId;
 				break;
 			default: break;

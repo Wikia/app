@@ -70,7 +70,7 @@ class RTE {
 			'_rte_placeholder' => true,
 			'class' => "placeholder placeholder-{$data['type']}",
 			'src' => 'http://images.wikia.com/common/skins/monobook/blank.gif?1',
-			'title' => $label,
+			//'title' => $label,
 			'type' => $data['type'],
 		));
 	}
@@ -117,10 +117,8 @@ class RTE {
 
 		$wgOut->addExtensionStyle("$wgExtensionsPath/wikia/RTE/css/RTE.css?$wgStyleVersion");
 
-		// parse wikitext of edited page (only for wysiwyg mode)
-		if (self::$initMode == 'wysiwyg') {
-			$wgHooks['EditPage::showEditForm:fields'][] = 'RTE::init2';
-		}
+		// parse wikitext of edited page and add extra fields to editform
+		$wgHooks['EditPage::showEditForm:fields'][] = 'RTE::init2';
 
 		// add global JS variables
 		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';
@@ -145,21 +143,31 @@ class RTE {
 		// add hidden edit form field
 		$out->addHTML( "\n" . Xml::element('input', array('type' => 'hidden', 'value' => '', 'name' => 'RTEMode', 'id' => 'RTEMode')) );
 
-		// parse wikitext using RTEParser
-		$html = RTE::WikitextToHtml($form->textbox1);
+		// add fields to perform temporary save
+		self::addTemporarySaveFields(&$out);
 
-		// check for edgecases
+		// let's parse wikitext (only for wysiwyg mode)
+		if (self::$initMode == 'wysiwyg') {
+			$html = RTE::WikitextToHtml($form->textbox1);
+		}
+
+		// check for edgecases (found during parsing done above)
 		if (RTE::edgeCasesFound()) {
 			self::setInitMode('source');
 
 			// get edgecase type and add it to JS variables
 			$edgeCaseType = Xml::encodeJsVar(self::getEdgeCaseType());
 			$out->addInlineScript("var RTEEdgeCase = {$edgeCaseType}");
-			return true;
 		}
 
-		// set editor textarea content
-		$form->textbox1 = $html;
+		// parse wikitext using RTEParser (only for wysiwyg mode)
+		if (self::$initMode == 'wysiwyg') {
+			// set editor textarea content
+			$form->textbox1 = $html;
+		}
+
+		// allow other extensions to add extra HTML to edit form
+		wfRunHooks('RTEAddToEditForm', array(&$form, &$out));
 
 		return true;
 	}
@@ -199,6 +207,11 @@ class RTE {
 		// this MUST point to local domain
 		$vars['RTELocalPath'] = $wgServer .  $wgScriptPath . '/extensions/wikia/RTE';
 
+		// domain and path for cookies
+		global $wgCookieDomain, $wgCookiePath;
+		$vars['RTECookieDomain'] = $wgCookieDomain;
+		$vars['RTECookiePath'] = $wgCookiePath;
+
 		return true;
 	}
 
@@ -211,20 +224,34 @@ class RTE {
 		$fallbackMessage = trim(wfMsgExt('rte-no-js-fallback', 'parseinline'));
 		$wgOut->addHTML(
 <<<HTML
-		<noscript>
-			<style type="text/css">
-				#editform {
-					display: none;
-				}
 
-				.RTEFallback,
-				#page_bar {
-					display: block !important;
-				}
-			</style>
-			<div class="RTEFallback usermessage">$fallbackMessage</div>
-		</noscript>
+<noscript>
+	<style type="text/css">
+		#editform {
+			display: none;
+		}
+
+		.RTEFallback,
+		#page_bar {
+			display: block !important;
+		}
+	</style>
+	<div class="RTEFallback usermessage">$fallbackMessage</div>
+</noscript>
+
 HTML
+		);
+	}
+
+	/**
+	 * Add fields to perform temporary save
+	 */
+	private static function addTemporarySaveFields($out) {
+		$out->addHtml(
+			"\n".
+			Xml::element('input', array('type' => 'hidden', 'id' => 'RTETemporarySaveType', 'name' => 'RTETemporarySaveType')).
+			Xml::element('input', array('type' => 'hidden', 'id' => 'RTETemporarySaveContent', 'name' => 'RTETemporarySaveContent')).
+			"\n"
 		);
 	}
 
@@ -286,6 +313,14 @@ HTML
 		if($skinName != 'SkinMonaco') {
 			RTE::log("editor is disabled because skin {$skinName} is unsupported");
 			self::disableEditor();
+		}
+
+		// start in source when previewing from source mode
+		$action = $wgRequest->getVal('action', 'view');
+		$mode = $wgRequest->getVal('RTEMode', false);
+		if ($action == 'submit' && $mode == 'source') {
+			RTE::log('POST triggered from source mode');
+			RTE::setInitMode('source');
 		}
 
 		wfProfileOut(__METHOD__);
@@ -350,7 +385,7 @@ HTML
 	 * Parse given wikitext to HTML for CK
 	 */
 	public static function WikitextToHtml($wikitext) {
-		global $wgTitle;
+		global $wgTitle, $wgParser;
 
 		$options = new ParserOptions();
 		// don't show [edit] link for sections
@@ -361,6 +396,10 @@ HTML
 		$options->setNumberHeadings(false);
 
 		RTE::$parser = new RTEParser();
+
+		RTE::$parser->mTagHooks = &$wgParser->mTagHooks;
+		RTE::$parser->mStripList = &$wgParser->mStripList;
+
 		$html = RTE::$parser->parse($wikitext, $wgTitle, $options)->getText();
 
 		return $html;
@@ -412,15 +451,21 @@ HTML
 	}
 
 	public static function getTemplateParams($titleObj, $parser) {
+		global $wgRTETemplateParams;
+
+		$wgRTETemplateParams = true;
+
 		$params = array();
 
 		$templateDom = $parser->getTemplateDom($titleObj);
 		if($templateDom[0]) {
 			$templateArgs = $templateDom[0]->getChildrenOfType('tplarg')->node;
 			for($i = 0; $i < $templateArgs->length; $i++) {
-				$params[] = $templateArgs->item($i)->textContent;
+				$params[] = $templateArgs->item($i)->firstChild->textContent;
 			}
 		}
+
+		$wgRTETemplateParams = false;
 
 		return array_values(array_unique($params));
 	}

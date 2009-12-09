@@ -8,16 +8,21 @@ CKEDITOR.plugins.add('rte-tools',
 				window.$.showModal(title, '<p>' + content + '</p>', {className: 'RTEAlert'});
 			},
 
-			// call given function with special RTE event type and provide function with given placeholder
-			callFunction: function(fn, placeholder) {
+			// call given function with special RTE event type and provide function with given element and extra data
+			callFunction: function(fn, element, data) {
 				// extra check
 				if (typeof fn != 'function') {
 					return;
 				}
 
-				// create "fake" event with extra data and "fake" target
+				// create "fake" event
 				var ev = jQuery.Event('rte');
-				ev.data = {placeholder: placeholder || false};
+
+				// add extra event data
+				ev.data = (typeof data == 'object') ? data : {};
+				ev.data.element = element || false;
+
+				// "fake" target
 				ev.target = window.document.createElement('div');
 
 				fn.call(window, ev);
@@ -109,6 +114,12 @@ CKEDITOR.plugins.add('rte-tools',
 				return images;
 			},
 
+			// get list of media (images / videos)
+			getMedia: function() {
+				var media = RTE.getEditor().find('img.image,img.video');
+				return media;
+			},
+
 			// get position of given placeholder in coordinates of browser window
 			getPlaceholderPosition: function(placeholder) {
 				var position = placeholder.position();
@@ -139,7 +150,7 @@ CKEDITOR.plugins.add('rte-tools',
 
 			// get list of placeholders of given type (or all if no type is provided)
 			getPlaceholders: function(type) {
-				var query = type ? ('img[type=' + type + ']') : 'img[type]';
+				var query = type ? ('img[type=' + type + ']') : 'img.placeholder';
 				var placeholders = RTE.getEditor().find(query);
 				return placeholders;
 			},
@@ -150,6 +161,12 @@ CKEDITOR.plugins.add('rte-tools',
 				var text = selection.type ? selection.createRange().text : selection.toString();
 
 				return text;
+			},
+
+			// get list of videos
+			getVideos: function() {
+				var videos = RTE.getEditor().find('img.video');
+				return videos;
 			},
 
 			// inserts given DOMElement / jQuery element into CK
@@ -231,6 +248,7 @@ CKEDITOR.plugins.add('rte-tools',
 					}
 				});
 			},
+
 			// set loading state of current dialog
 			setDialogLoading: function(dialog, loading) {
 				var wrapper = dialog.getElement();
@@ -240,6 +258,17 @@ CKEDITOR.plugins.add('rte-tools',
 				if (loading) {
 					wrapper.addClass('wikiaEditorLoading');
 				}
+			},
+
+			// makes the element and its children unselectable
+			// @see http://www.highdots.com/forums/javascript/making-image-unselectable-ff-292462.html
+			unselectable: function(elem) {
+				return;
+
+				$(elem).each(function(i) {
+					var CKelem = new CKEDITOR.dom.element(this);
+					CKelem.unselectable();
+				});
 			}
 		}
 	}

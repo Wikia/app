@@ -6,11 +6,8 @@ CKEDITOR.plugins.add('rte-placeholder',
 		var self = this;
 
 		editor.on('instanceReady', function() {
-			// take CK toolbar height into consideration
-			var previewTop = $('#cke_top_wpTextbox1').height();
-
 			// add node in which template previews will be stored
-			self.previews = $('<div id="RTEPlaceholderPreviews" />').css('top', previewTop + 'px');
+			self.previews = $('<div id="RTEPlaceholderPreviews" />');
 			$('#RTEStuff').append(self.previews);
 		});
 
@@ -22,13 +19,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 			// get all placeholders (template / magic words / double underscores / broken image links)
 			var placeholders = RTE.tools.getPlaceholders();
-
-			if (!placeholders.exists()) {
-				// no placeholders found - leave!
-				return;
-			}
-
-			RTE.log(placeholders);
 
 			// regenerate preview and template info
 			placeholders.removeData('preview').removeData('info');
@@ -244,8 +234,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 			$(this).hide();
 		});
 
-		preview.fadeIn();
-		//preview.show();
+		// hover preview popup delay: 150ms (cursor should be kept over an placeholder for 150ms for preview to show up)
+		placeholder.data('showTimeout', setTimeout(function() {
+			preview.fadeIn();
+		}, 150));
 
 		// clear timeout used to hide preview with small delay
 		if (timeoutId = placeholder.data('hideTimeout')) {
@@ -256,6 +248,11 @@ CKEDITOR.plugins.add('rte-placeholder',
 	// hide preview popup
 	hidePreview: function(placeholder, hideNow) {
 		var preview = this.getPreview(placeholder);
+
+		// clear show timeout
+		if (showTimeout = placeholder.data('showTimeout')) {
+			clearTimeout(showTimeout);
+		}
 
 		if (hideNow) {
 			// hide preview now - "close" has been clicked
@@ -275,7 +272,16 @@ CKEDITOR.plugins.add('rte-placeholder',
 	setupPlaceholder: function(placeholder) {
 		var self = this;
 
-		placeholder.removeAttr('title');
+		// ignore image / video placeholders
+		placeholder = placeholder.not('.placeholder-image-placeholder').not('.placeholder-video-placeholder');
+
+		// no placeholders to setup - leave
+		if (!placeholder.exists()) {
+			return;
+		}
+
+		// don't allow users to resize placeholders
+		placeholder.attr('contentEditable', false);
 
 		// unbind previous events
 		placeholder.unbind('.placeholder');
@@ -292,6 +298,9 @@ CKEDITOR.plugins.add('rte-placeholder',
 			// don't show CK context menu
 			ev.stopPropagation();
 		});
+
+		// make placeholder not selecteable
+		RTE.tools.unselectable(placeholder);
 
 		// this event is triggered by clicking [edit] in preview pop-up
 		placeholder.bind('edit.placeholder', function(ev) {
@@ -315,10 +324,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 			// filter out non placeholders
 			target = target.filter('img[_rte_placeholder]');
-
-			if (!target.exists()) {
-				return;
-			}
 
 			self.setupPlaceholder(target);
 		});

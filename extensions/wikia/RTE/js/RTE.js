@@ -12,7 +12,7 @@ window.RTE = {
 		'format_tags': 'p;h2;h3;h4;h5;pre',
 		'height': 400,
 		'language': window.wgUserLanguage,
-		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,maximize,newpage,pagebreak,save,wsc,link,justify',
+		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,maximize,newpage,pagebreak,save,wsc',
 		'resize_enabled': false,
 		'startupFocus': true,
 		'toolbar': 'Wikia',
@@ -38,16 +38,17 @@ window.RTE = {
 		'comment',
 		'dragdrop',
 		'entities',
-		'image',
+		'first-run-notice',
 		'justify',
 		'link',
+		'media',
 		'mw-toolbar',
-		'paste',
+		/*'paste',*/
 		'placeholder',
 		'signature',
 		'template',
+		'temporary-save',
 		'tools',
-		'video',
 		'widescreen'
 	],
 
@@ -97,12 +98,9 @@ window.RTE = {
 		RTE.loadPlugins();
 
 		// add and position wrapper for extra RTE stuff
-		var editorPosition = $('#editform').offset();
-
-		$('<div id="RTEStuff" />').appendTo('body').css({
-			'left': parseInt(editorPosition.left) + 'px',
-			'top': parseInt(editorPosition.top) + 'px'
-		});
+		$('<div id="RTEStuff" />').appendTo('body');
+		RTE.repositionRTEStuff();
+		$(window).bind('resize', RTE.repositionRTEStuff);
 
 		// base colors: use color / background-color from .color1 CSS class
 		var colorPicker = $('<div>').addClass('color1').appendTo('#RTEStuff').hide();
@@ -119,6 +117,7 @@ window.RTE = {
 		RTE.loadCss();
 
 		// register event handlers
+		//
 		CKEDITOR.on('instanceReady', RTE.onEditorReady);
 
 		RTE.instance.on('beforeModeUnload', function() {
@@ -126,6 +125,14 @@ window.RTE = {
 		});
 
 		RTE.instance.on('wysiwygModeReady', RTE.onWysiwygModeReady);
+
+		// regenerate placeholders after each redo/undo
+		RTE.instance.on('afterUndo', function() {
+			RTE.instance.fire('wysiwygModeReady');
+		});
+		RTE.instance.on('afterRedo', function() {
+			RTE.instance.fire('wysiwygModeReady');
+		});
 
 		// event fired when Widescreen button in pressed
 		RTE.instance.on('widescreen', RTE.onWidescreen);
@@ -187,6 +194,13 @@ window.RTE = {
 		$('#editform').bind('submit', function() {
 			$('#RTEMode').attr('value', RTE.instance.mode);
 		});
+		// do the same for clicks on preview button (event used by AjaxLogin on edit page)
+		$('#wpPreview').bind('click', function() {
+			$('#RTEMode').attr('value', RTE.instance.mode);
+		});
+
+		// reposition #RTEStuff
+		RTE.repositionRTEStuff();
 
 		// ok, we're done!
 		RTE.loaded = true;
@@ -200,7 +214,7 @@ window.RTE = {
 			') is ready in "' + RTE.instance.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
 		// load time in ms (to be reported to GA)
-		var trackingLoadTime = parseInt(RTE.loadTime * 1000);
+		var trackingLoadTime = parseInt(RTE.loadTime * 10) * 100;
 
 		// tracking
 		switch (RTE.instance.mode) {
@@ -227,6 +241,8 @@ window.RTE = {
 
 	// extra setup of <body> wrapping editing area in wysiwyg mode
 	onWysiwygModeReady: function() {
+		RTE.log('onWysiwygModeReady');
+
 		var body = RTE.getEditor();
 
 		// set ID, so CSS rules from MW can be applied
@@ -235,14 +251,18 @@ window.RTE = {
 
 	// reposition of #RTEStuff div when Widescreen button is pressed
 	onWidescreen: function() {
-		var editorPosition = $('#editform').offset();
-
-		$('#RTEStuff').appendTo('body').css({
-			'left': parseInt(editorPosition.left) + 'px',
-			'top': parseInt(editorPosition.top) + 'px'
-		});
+		RTE.repositionRTEStuff();
 	},
 
+	// reposition #RTEStuff div
+	repositionRTEStuff: function() {
+		var editorPosition = $('#editform').offset();
+
+		$('#RTEStuff').css({
+			'left': parseInt(editorPosition.left) + 'px',
+			'top': parseInt(editorPosition.top + $('#cke_top_wpTextbox1').height()) + 'px'
+		});
+	},
 
 	// get jQuery object wrapping body of editor' iframe
 	getEditor: function() {
@@ -258,6 +278,7 @@ window.RTE = {
 			$('body').removeClass('RTEloading');
 		}
 	},
+
 	// handle mode switching (prepare data)
 	onBeforeModeSwitch: function(mode) {
 		RTE.log('switching from "' + mode +'" mode');
@@ -275,20 +296,24 @@ window.RTE = {
 					RTE.instance.setData(data.wikitext);
 					RTE.loading(false);
 
+					// body CSS class change and tracking
 					$('body').addClass('rte_source').removeClass('rte_wysiwyg');
+					RTE.track('switchMode', 'source2wysiwyg');
 				});
 				break;
 
 			case 'source':
 				RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, function(data) {
-					if (data.edgecases) {
+					if (data.edgecase) {
 						RTE.log('edgecase found!');
-
-						RTE.tools.alert('&nbsp;', data.edgecaseInfo);
+						RTE.tools.alert('&nbsp;', data.edgecase.info);
 
 						// stay in source mode
-						RTE.loading(false);
 						RTE.instance.forceSetMode('source', content);
+						RTE.loading(false);
+
+						// tracking
+						RTE.track('switchMode', 'edgecase', data.edgecase.type);
 						return;
 					}
 
@@ -297,7 +322,9 @@ window.RTE = {
 					setTimeout(function() {
 						RTE.loading(false);
 
+						// body CSS class change and tracking
 						$('body').addClass('rte_wysiwyg').removeClass('rte_source');
+						RTE.track('switchMode', 'wysiwyg2source');
 					}, 150);
 				});
 				break;
@@ -415,6 +442,10 @@ CKEDITOR.editor.prototype.forceSetMode = function(mode, data) {
 	var holderElement = this.getThemeSpace('contents');
 
 	modeEditor.load(holderElement, data);
+	this.mode = mode;
+
+	// set correct body class
+	$('body').removeClass('rte_wysiwyg rte_source').addClass('rte_' + mode);
 }
 
 //

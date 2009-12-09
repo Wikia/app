@@ -78,6 +78,14 @@ class Preprocessor_DOM implements Preprocessor {
 		}
 		/* Wikia change end */
 
+		// RTE - begin
+		// TODO: document
+		global $wgRTETemplateParams;
+		if(!empty($wgRTETemplateParams) || !empty($wgRTEParserEnabled)) {
+			$cacheable = false;
+		}
+		// RTE - end
+
 		if ( $cacheable ) {
 			wfProfileIn( __METHOD__.'-cacheable' );
 			global $wgWysiwygParserEnabled, $wgWysiwygParserTildeEnabled, $wgCategorySelectEnabled;
@@ -178,7 +186,7 @@ class Preprocessor_DOM implements Preprocessor {
 
 		// RTE - begin
 		// TODO: document
-		global $wgRTEParserEnabled;
+		global $wgRTEParserEnabled, $wgRTETemplateParams;
 		if(!empty($wgRTEParserEnabled)) {
 			$rules['['] = array(
 				'end' => ']',
@@ -188,6 +196,10 @@ class Preprocessor_DOM implements Preprocessor {
 			);
 			$RTE_flags = $flags;
 			$ignoredTags = $ignoredElements = array();
+		}
+		if(!empty($wgRTETemplateParams)) {
+			$rules['{']['min'] = 3;
+			$rules['{']['names'] = array(3 => 'tplarg');
 		}
 		// RTE - end
 

@@ -16,8 +16,10 @@ class RTEAjax {
 		);
 
 		if (RTE::edgeCasesFound()) {
-			$ret['edgecases'] = true;
-			$ret['edgecaseInfo'] = wfMsg('rte-edgecase-info');
+			$ret['edgecase'] = array(
+				'info' => wfMsg('rte-edgecase-info'),
+				'type' => RTE::getEdgeCaseType(),
+			);
 		}
 
 		return $ret;
@@ -106,11 +108,14 @@ class RTEAjax {
 	 * Get info about given wikitext with double brackets syntax (templates, magic words, parser functions)
 	 */
 	static public function resolveDoubleBrackets() {
-		global $wgRequest, $wgTitle, $wgRDBEnabled, $wgRDBData;
+		global $wgRequest, $wgTitle, $wgRDBEnabled, $wgRDBData, $wgParser;
 
 		// initialization of required objects and settings
 		$parser = new Parser();
-		$parser->mDefaultStripList = $parser->mStripList = array();
+		//$parser->mDefaultStripList = $parser->mStripList = array();
+		$parser->mTagHooks = &$wgParser->mTagHooks;
+		$parser->mStripList = &$wgParser->mStripList;
+
 		$parserOptions = new ParserOptions();
 		$parserOptions->setEditSection(false);
 
@@ -149,5 +154,12 @@ class RTEAjax {
 	 */
 	static public function getHotTemplates() {
 		return RTE::getHotTemplates();
+	}
+
+	/**
+	 * Dismiss first run notice
+	 */
+	static public function firstRunNoticeDismiss() {
+		return RTEFirstRunNotice::dismiss();
 	}
 }

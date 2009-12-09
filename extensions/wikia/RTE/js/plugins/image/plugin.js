@@ -15,11 +15,22 @@ CKEDITOR.plugins.add('rte-image',
 		});
 
 		editor.on('wysiwygModeReady', function() {
+			// clean image menus
+			if (typeof self.overlays == 'object') {
+				self.overlays.html('');
+			}
+
 			// get all images
 			var images = RTE.tools.getImages();
-			RTE.log(images);
+
+			// regenerate image menu
+			images.removeData('overlay');
 
 			self.setupImage(images);
+
+			// get all image placeholders
+			var imagePlaceholders =  RTE.tools.getPlaceholders('image-placeholder');
+			self.setupImagePlaceholder(imagePlaceholders);
 		});
 
 		// register "Add Image" command
@@ -184,11 +195,6 @@ CKEDITOR.plugins.add('rte-image',
 		// position image menu over an image
 		var position = RTE.tools.getPlaceholderPosition(image);
 
-		// take border-top into consideration for "framed" images
-		if (image.hasClass('thumb') || image.hasClass('frame')) {
-			position.top += 1;
-		}
-
 		// fix for non-gecko browsers
 		if (!CKEDITOR.env.gecko) {
 			// take image margins into consideration
@@ -203,7 +209,7 @@ CKEDITOR.plugins.add('rte-image',
 
 		overlay.css({
 			'left': position.left + 'px',
-			'top': parseInt(position.top + 1) + 'px'
+			'top': parseInt(position.top + 2) + 'px'
 		});
 
 		// don't show menu above RTE toolbar
@@ -229,6 +235,11 @@ CKEDITOR.plugins.add('rte-image',
 
 	setupImage: function(image) {
 		var self = this;
+
+		// no images to setup - leave
+		if (!image.exists()) {
+			return;
+		}
 
 		// @see http://stackoverflow.com/questions/289433/firefox-designmode-disable-image-resizing-handles
 		image.attr('contentEditable', false);
@@ -268,14 +279,9 @@ CKEDITOR.plugins.add('rte-image',
 			// filter out placeholders
 			target = target.not('img[_rte_placeholder]');
 
-			if (!target.exists()) {
-				return;
-			}
-
 			self.setupImage(target);
 
-			return;
-
+/*
 			// check coordinates and try to re-align an image
 			RTE.log(extra);
 
@@ -291,6 +297,51 @@ CKEDITOR.plugins.add('rte-image',
 
 			// re-align image in editor
 			target.removeClass('alignLeft alignRight').addClass(align == 'left' ? 'alignLeft' : 'alignRight');
+*/
+		});
+	},
+
+	setupImagePlaceholder: function(placeholder) {
+		var self = this;
+
+		// no image placeholders to setup - leave
+		if (!placeholder.exists()) {
+			return;
+		}
+
+		// @see http://stackoverflow.com/questions/289433/firefox-designmode-disable-image-resizing-handles
+		placeholder.attr('contentEditable', false);
+
+		// unbind previous events
+		placeholder.unbind('.imageplaceholder');
+
+		// setup events
+		placeholder.bind('contextmenu.imageplaceholder', function(ev) {
+			// don't show CK context menu
+			ev.stopPropagation();
+		});
+
+		placeholder.bind('click.imageplaceholder', function(ev) {
+			// click to use placeholder
+			$(this).trigger('edit');
+		});
+
+		placeholder.bind('edit.imageplaceholder', function(ev) {
+			RTE.log('Placeholder clicked');
+			RTE.log($(this).getData());
+
+			// call WikiaMiniUpload and provide WMU with image clicked
+			//RTE.tools.callFunction(window.WMU_show,$(this));
+		});
+
+		// setup events once more on each drag&drop
+		RTE.getEditor().unbind('dropped.imageplaceholder').bind('dropped.imageplaceholder', function(ev, extra) {
+                        var target = $(ev.target);
+
+			// keep image placeholders
+			target = target.filter('.placeholder-image-placeholder');
+
+			self.setupImagePlaceholder(target);
 		});
 	}
 });

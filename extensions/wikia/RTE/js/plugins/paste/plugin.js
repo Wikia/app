@@ -3,21 +3,22 @@ CKEDITOR.plugins.add('rte-paste',
 	init: function(editor) {
 		// storage for paste data
 		RTE.paste = {
-			'checks': 0,
+			'attempts': 0,
 			'lock': false,
 			'htmlBeforePaste': false
 		};
 
 		// detect pastes
 		editor.on('beforePaste', function(ev) {
+			RTE.log('beforePaste fired');
+
 			// only care when in wysiwyg mode
 			if (editor.mode != 'wysiwyg') {
 				return;
 			}
 
-			// check for lock
+			// break if paste is alread in progess
 			if (RTE.paste.lock) {
-				// yes, we're during pasting
 				RTE.log('paste is in progress');
 				ev.cancel();
 				return;
@@ -25,44 +26,59 @@ CKEDITOR.plugins.add('rte-paste',
 
 			RTE.log('paste has been detected');
 
-			// set lock
-			RTE.paste.lock = true;
-			RTE.paste.checks = 0;
-
 			// store current HTML - without pasted content
 			RTE.paste.htmlBeforePaste = RTE.instance.document.getBody().getHtml();
+
+			// set lock
+			RTE.paste.lock = true;
+
+			// reset handle attemps counter
+			RTE.paste.attempts = 0;
 
 			// handle pasted HTML
 			setTimeout(RTE.paste.handlePaste, 10);
 		});
 
 		RTE.paste.handlePaste = function() {
-			RTE.paste.checks++;
+			RTE.paste.attempts++;
 
 			// get current HTML - with pasted content
 			var newHTML = RTE.instance.document.getBody().getHtml();
 
 			// check whether paste has ended
 			if (newHTML == RTE.paste.htmlBeforePaste) {
-				if (RTE.paste.checks < 50) {
+				if (RTE.paste.attempts < 75) {
 					// try again
 					setTimeout(RTE.paste.handlePaste, 10);
-				}
-				else {
+				} else {
+					// unlock
+					// TODO: log it since it should never happen
+					RTE.paste.lock = false;
 					RTE.log('paste handling timeout');
 				}
 				return;
 			}
 
+			RTE.log('handlePaste successfully fired');
+
+			// required to restore cursor position
+			var selection = RTE.instance.getSelection();
+			var bookmarks = selection.createBookmarks2();
+
 			// we have HTML before and after the paste -> generate 'diff'
 			var diff = RTE.paste.diff(RTE.paste.htmlBeforePaste, newHTML);
-			RTE.log(diff);
 
 			// add _rte_pasted attribute to pasted nodes
 			diff.pasted = diff.pasted.replace(/\<(\w+)/g, '<$1 _rte_pasted="true"');
 
+			RTE.log(diff);
+
 			// update HTML in editor
-			RTE.instance.setData(diff.prefix + diff.pasted + diff.suffix);
+			RTE.getEditor().html('');
+			RTE.instance.insertHtml(diff.prefix + diff.pasted + diff.suffix);
+
+			// restore cursor position
+			selection.selectBookmarks(bookmarks);
 
 			// unlock
 			RTE.paste.lock = false;

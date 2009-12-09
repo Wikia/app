@@ -423,8 +423,13 @@ CKEDITOR.dialog.add( 'cellProperties', function( editor )
 			onOk : function()
 			{
 				var cells = this.cells;
-				for ( var i = 0 ; i < cells.length ; i++ )
+				for ( var i = 0 ; i < cells.length ; i++ ) {
 					this.commitContent( cells[ i ] );
+
+					// Wikia - remove _rte_attribs and _rte_style attributes, so changes made in popup will be saved in wikitext
+					cells[i].removeAttribute('_rte_attribs');
+					cells[i].removeAttribute('_rte_style');
+				}
 			}
 		};
 	} );

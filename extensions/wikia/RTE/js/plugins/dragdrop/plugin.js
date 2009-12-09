@@ -1,27 +1,33 @@
 CKEDITOR.plugins.add('rte-dragdrop',
 {
-	timeout: 500,
+	// delay re-init of editor area when drag&drop is finished (in ms)
+	timeout: 250,
 
 	onDrop: function(ev) {
-		RTE.log(ev);
+		RTE.log('drag&drop finished');
 
-		// get dragged element
-		var draggedElement = RTE.getEditor().find('[_rte_dragged]');
+		// reinitialize wysiwyg mode
+		setTimeout(function() {
+			RTE.instance.fire('wysiwygModeReady');
 
-		RTE.log('drag&drop: dropped');
-		RTE.log(draggedElement);
+			// get dropped element (and remove marking attribute)
+			var droppedElement = RTE.getEditor().find('[_rte_dragged]').removeAttr('_rte_dragged');
 
+			RTE.log('dropped element:');
+			RTE.log(droppedElement);
 /*
-		// get coordinates from "dragdrop" event and send it with "dropped" event
-		// @see http://www.quirksmode.org/js/events_properties.html#position
-		var extra = {
-			pageX: (ev.pageX ? ev.pageX : ev.clientX),
-			pageY: (ev.pageY ? ev.pageY : ev.clientY)
-		};
+			// get coordinates from "dragdrop" event and send it with "dropped" event
+			// @see http://www.quirksmode.org/js/events_properties.html#position
+			var extra = {
+				pageX: (ev.pageX ? ev.pageX : ev.clientX),
+				pageY: (ev.pageY ? ev.pageY : ev.clientY)
+			};
+
+			// trigger custom event handler
+			droppedElement.trigger('dropped');
 */
-		// remove "marking" attribute and trigger event handler
-		RTE.log('drag&drop: triggering "dropped" event...');
-		draggedElement.removeAttr('_rte_dragged').trigger('dropped');
+
+		}, this.timeout);
 	},
 
 	init: function(editor) {
@@ -31,33 +37,55 @@ CKEDITOR.plugins.add('rte-dragdrop',
 		editor.on('wysiwygModeReady', function() {
 			// fire "dropped" custom event when element is drag&drop-ed
 			// mark dragged element with _rte_dragged attribute
-			RTE.getEditor().
+			//
+			// @see https://developer.mozilla.org/en/DragDrop/Drag_and_Drop (new version - Fx3.5+)
+			// @see https://developer.mozilla.org/en/Drag_and_Drop (old version - Fx3.0)
+			//
+			$(editor.document.$).
 				unbind('.dnd').
-				bind('dragdrop.dnd', function(ev) { // for Gecko
-					setTimeout(function() {
-						self.onDrop(ev);
-					}, self.timeout);
-				}).
-				bind('mousedown.dnd', function(ev) {
-					var target = $(ev.target);
 
+				// for new Fx (3.5+)
+				//
+				bind('dragstart.dnd', function(ev) {
 					// "mark" dragged element
+					var target = $(ev.target);
 					target.attr('_rte_dragged', true);
 				}).
+
+				bind('drop', self.onDrop).
+
+				// for old Fx (3.0-)
+				//
+				bind('dragdrop.dnd', self.onDrop).
+
+				// user clicked on placeholder / image
+				// this can be beginning of drag&drop
+				bind('mousedown.dnd', function(ev) {
+					// "mark" dragged element
+					var target = $(ev.target);
+					target.attr('_rte_dragged', true);
+				}).
+
+				// ok, so this wasn't drag&drop, just a click on placeholder / image
 				bind('mouseup.dnd', function(ev) {
 					var target = $(ev.target);
 
 					// remove "marking" attribute
 					target.removeAttr('_rte_dragged');
+
+					// remove selection box
+					ev.preventDefault();
+				}).
+
+				// stop double click events (prevent resize box)
+				bind('dblclick.dnd', function(ev) {
+					RTE.log(ev);
+					ev.preventDefault();
 				});
 
 			// for IE
-			RTE.getEditor()[0].ondrop = function(ev) {
-				// force re-init of all placeholders
-				setTimeout(function() {
-					editor.fire('wysiwygModeReady');
-				}, self.timeout);
-			};
+			//
+			RTE.getEditor()[0].ondrop = self.onDrop;
 		});
 	}
 });

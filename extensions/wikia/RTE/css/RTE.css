@@ -1,3 +1,8 @@
+/* positioning for first run notice */
+#editform {
+	position: relative;
+}
+
 /* hide MW textarea */
 #wpTextbox1 {
 	visibility: hidden;
@@ -29,7 +34,7 @@ body.rte_source .cke_toolbox #cke_source_button {
 }
 
 /* MW toolbar */
-#editform #toolbar {
+#editform #mw-toolbar {
 	display: block !important;
 	left: 9px;
 	position: absolute;
@@ -37,7 +42,7 @@ body.rte_source .cke_toolbox #cke_source_button {
 	visibility: hidden;
 }
 
-body.rte_source #editform #toolbar {
+body.rte_source #editform #mw-toolbar {
 	visibility: visible;
 }
 
@@ -59,11 +64,6 @@ body.rte_source #editform #toolbar {
 
 .RTEloading #toolbarCover {
 	display: block;
-}
-
-/* disable GoogleMaps ext. toolbar button */
-#mw-editbutton-googlemaps {
-	display: none;
 }
 
 /* hide stuff */
@@ -111,17 +111,17 @@ body.rte_source #editform #toolbar {
 }
 
 /* image previews */
-#RTEImageOverlays {
+#RTEMediaOverlays {
 	left: 11px;
 	position: absolute;
 }
 
-.RTEImageOverlay {
+.RTEMediaOverlay {
 	display: none;
 	position: absolute;
 }
 
-.RTEImageMenu {
+.RTEMediaMenu {
 	font-size: 11px;
 	height: 14px;
 	opacity: 0.9;
@@ -132,12 +132,12 @@ body.rte_source #editform #toolbar {
 	white-space: nowrap;
 }
 
-.RTEImageMenu span {
+.RTEMediaMenu span {
 	cursor: pointer;
 	padding: 0 3px;
 }
 
-.RTEImageCaption {
+.RTEMediaCaption {
 	background: #f9f9f9;
 	border: solid 1px #ccc;
 	border-top: none;
@@ -145,7 +145,6 @@ body.rte_source #editform #toolbar {
 	left: 0;
 	line-height: 16px;
 	padding: 3px;
-	position: absolute;
 }
 
 /* template previews */
@@ -382,6 +381,15 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 	width: 200px !important;
 }
 
+/* positioning of footer buttons in step #2 */
+.templateEditorDialog .cke_dialog_footer_buttons {
+	width: 100% !important;
+}
+
+.templateEditorDialog .cke_dialog_ui_hbox_last {
+	text-align: right;
+}
+
 /* fix alignment of "Preview" button */
 .cke_dialog_contents div[name=step2] .cke_dialog_ui_hbox_child {
 	text-align: center;
@@ -433,4 +441,26 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 
 #editform .RTEWidescreenButton .cke_icon {
 	background-position: 0 -1296px;
+}
+
+/* first run notice */
+#RTEFirstRunNotice {
+	background: #ff9;
+	color: #000;
+	display: none;
+	margin-bottom: 2px;
+	padding: 5px;
+	position: relative;
+	text-align: center;
+}
+
+#RTEFirstRunNoticeClose {
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113);
+	background-position: -304px 0;
+	cursor: pointer;
+	height: 16px;
+	position: absolute;
+	right: 4px;
+	top: 6px;
+	width: 16px;
 }

@@ -38,8 +38,6 @@ function VET_editVideo() {
 	var callback = {
 		success: function(o) {
 			var data = FCK.wysiwygData[VET_refid];
-			FCK.log('video # ' + VET_refid + ' edit');
-			FCK.log(data);
 
 			VET_displayDetails(o.responseText);
 
@@ -129,8 +127,21 @@ function VET_doEditVideo() {
 
 	wikitext += ']]';
 
-	// update FCK
-	FCK.VideoUpdate(VET_refid, wikitext, extraData);
+	// macbre: CK support
+	if (typeof window.VET_RTEVideo != 'undefined') {
+		if (window.VET_RTEVideo) {
+			// update existing video
+			RTE.mediaEditor.update(window.VET_RTEVideo, wikitext, extraData);
+		}
+		else {
+			// add new video
+			RTE.mediaEditor.addVideo(wikitext, extraData);
+		}
+	}
+	else {
+		// update FCK
+		FCK.VideoUpdate(VET_refid, wikitext, extraData);
+	}
 
 	// close dialog
 	VET_close();
@@ -360,6 +371,7 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 		}
 	}
 
+	// TODO: FCK support - to be removed after full switch to RTE
 	if(YAHOO.lang.isNumber(e)) {
 		VET_refid = e;
 		if(VET_refid == -1) {
@@ -375,14 +387,54 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 			}
 		}
 	} else {
-		var el = YAHOO.util.Event.getTarget(e);
-		if (el.id == 'vetHelpLink') {
-			VET_track('open/fromEditTips'); //tracking
-		} else if (el.id == 'mw-editbutton-vet') {
-			VET_inGalleryPosition = VET_inGallery();
-			VET_track('open/fromToolbar'); //tracking
-		} else {
-			VET_track('open');
+		// macbre: CK support
+		if (typeof e.type != 'undefined' && e.type == 'rte') {
+			// get video from event data
+			window.VET_RTEVideo = e.data.element;
+			if (window.VET_RTEVideo) {
+				// edit an  video
+				var data = window.VET_RTEVideo.getData();
+
+				if (e.data.isPlaceholder) {
+					// video placeholder
+					RTE.log('video placeholder clicked');
+
+					VET_gallery = -1;
+				}
+				else {
+					// "regular" video
+					$.extend(data, data.params);
+					delete data.params;
+
+					VET_wysiwygStart = 2;
+				}
+
+				// FIXME: let's pretend we're FCK for now
+				VET_refid = 0;
+				window.FCK = {wysiwygData: {0: {}}};
+				window.FCK.wysiwygData[0] = data;
+
+				VET_track('open/fromWysiwyg/existing');
+
+				RTE.log(data);
+			}
+			else {
+				// add new video
+				VET_refid = -1;
+
+				VET_track('open/fromWysiwyg/new');
+			}
+		}
+		else {
+			var el = YAHOO.util.Event.getTarget(e);
+			if (el.id == 'vetHelpLink') {
+				VET_track('open/fromEditTips'); //tracking
+			} else if (el.id == 'mw-editbutton-vet') {
+				VET_inGalleryPosition = VET_inGallery();
+				VET_track('open/fromToolbar'); //tracking
+			} else {
+				VET_track('open');
+			}
 		}
 	}
 
@@ -838,7 +890,11 @@ function VET_insertFinalVideo(e, type) {
 							}
 							options.caption = $G('VideoEmbedCaption').value;
 
-							if(VET_refid != -1) {
+							// macbre: CK support
+							if (typeof window.VET_RTEVideo != 'undefined') {
+								RTE.mediaEditor.addVideo(wikitag, options);
+							}
+							else if(VET_refid != -1) {
 								if( VET_gallery != -1 ) { // gallery
 									FCK.VideoGalleryUpdate( VET_refid, wikitag );
 								} else { // placeholder
