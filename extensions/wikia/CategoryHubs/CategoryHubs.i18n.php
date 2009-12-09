@@ -23,6 +23,7 @@ $messages['en'] = array(
 	'cathub-top-contribs-all-time'          => 'Of All Time',
 	'cathub-top-contribs-recent'            => 'In the Last $1 Days',
 	'cathub-question-asked-ago'             => 'asked $1 $2',
+	'cathub-question-answered-ago'          => 'answered $1 $2',
 	'cathub-question-asked-by'              => 'by $1',
 	'cathub-anon-username'                  => 'a curious user',
 	'cathub-answer-heading'                 => 'Answer',
