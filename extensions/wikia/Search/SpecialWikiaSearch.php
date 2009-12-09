@@ -31,6 +31,19 @@ class SpecialWikiaSearch extends SpecialSearchOld {
 		parent::__construct( $request, $user );
 	}
 
+	/**
+	 * remove "go" page functionality for cross-wikia searching
+	 * @see includes/specials/SpecialSearchOld#goResult($term)
+	 */
+	function goResult( $term ) {
+		if($this->searchLocalWikiOnly) {
+			parent::goResult( $term );
+		}
+		else {
+			$this->showResults( $term, '' );
+		}
+	}
+
 	public function shortDialog( $term ) {
 		global $wgScript;
 
