@@ -216,6 +216,11 @@ class RTEReverseParser {
 				$out = $this->handleLineBreaks($node);
 				break;
 
+			// horizontal lines
+			case 'hr':
+				$out = $this->handleHorizontalLines($node);
+				break;
+
 			// links
 			case 'a':
 				$out = $this->handleLink($node, $textContent);
@@ -531,6 +536,15 @@ class RTEReverseParser {
 		if ( self::isChildOf($node, 'li') && self::nextSiblingIs($node, array('ul', 'ol')) ) {
 			$out = '';
 		}
+
+		return $out;
+	}
+
+	/**
+	 * Handle <hr /> tags
+	 */
+	private function handleHorizontalLines() {
+		$out = "----\n";
 
 		return $out;
 	}
