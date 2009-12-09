@@ -339,7 +339,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	global $wgUploadPath;
 	if(strpos($logoSrc, "wgUploadPath") !== false){
 		$wikiUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
-		$logoSrc = str_replace("\$wgUploadPath", $wikiUploadPath, $logoSrc); // safer than eval'ing.  Runescape uses wgUploadPath, others probably do too.
+		$logoSrc = str_replace("\$wgUploadPath", $wikiUploadPath, $logoSrc);
 	}
 	if($logoSrc != ""){
 		$r .= "<img src='$logoSrc' width='78' height='78' style='float:left;padding:5px 5px 5px 0px;'/>";
