@@ -30,7 +30,12 @@ class UserContributionsProvider {
 			);
 
 			if (MWNamespace::isTalk($entry['ns']) || in_array($entry['ns'], array(400 /* video */, NS_USER, NS_TEMPLATE, NS_MEDIAWIKI))) {
-				$result[$i]['title'] = $titleObj->getPrefixedText();
+				$title = $titleObj->getPrefixedText();
+				if (defined('ARTICLECOMMENT_PREFIX') && strpos($title, '/') !== false && strpos(end(explode('/', $title)), ARTICLECOMMENT_PREFIX) === 0) {
+					$result[$i]['title'] = end(explode(':', reset(explode('/', $title, 2)), 2));
+				} else {
+					$result[$i]['title'] = $title;
+				}
 			}
 
 			if (defined('NS_BLOG_ARTICLE_TALK') && $entry['ns'] == NS_BLOG_ARTICLE_TALK) {
