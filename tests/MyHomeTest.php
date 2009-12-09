@@ -41,7 +41,7 @@ class MyHomeTest extends PHPUnit_Framework_TestCase {
 
 		$data = Wikia::getVar('rc_data');
 
-		//var_dump($rc); var_dump($data);
+		unset( $data['articleComment'] );
 
 		return $data;
 	}
