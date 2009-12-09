@@ -13,6 +13,8 @@
 //	FlexibleCategoryPageView
 //	FlexibleCategoryPage::openShowCategory
 //	FlexibleCategoryPage::closeShowCategory
+//	FlexibleCategoryViewer::doCategoryQuery
+//	FlexibleCategoryViewer::init
 //	FlexibleCategoryViewer::getCategoryTop
 //	FlexibleCategoryViewer::getSubcategorySection
 //	FlexibleCategoryViewer::getPagesSection
@@ -134,6 +136,11 @@ class FlexibleCategoryViewer extends CategoryViewer{
 	function init(){
 		global $wgOut, $wgCategoryMagicGallery, $wgCategoryPagingLimit;
 		wfProfileIn( __METHOD__ );
+		
+		if( !wfRunHooks( 'FlexibleCategoryViewer::init', array( &$this ) ) ){
+			wfProfileOut( __METHOD__ );
+			return;
+		}
 
 		$wgOut->getRedirect(); // NOTE: wgOut is a StubObject so it isn't initialized until some method is called, therefore we call a method here so that mNoGallery can be used on the next line
 		$this->showGallery = $wgCategoryMagicGallery && !$wgOut->mNoGallery;
@@ -144,6 +151,17 @@ class FlexibleCategoryViewer extends CategoryViewer{
 		$this->isInitialized = true;
 		wfProfileOut( __METHOD__ );
 	}
+	
+	////
+	// Overrides the default doCategoryQuery to add a hook before execution of the default.
+	// Return false from the hook 'FlexibleCategoryPage::doCategoryQuery' to prevent default behavior.
+	////
+	function doCategoryQuery() {
+		if( !wfRunHooks( 'FlexibleCategoryViewer::doCategoryQuery', array( &$this ) ) )
+			return;
+			
+		parent::doCategoryQuery();
+	} // end doCategoryQuery()
 
 	////
 	// Displays the category page's pieces in the same order that CategoryViewer would.  The various
