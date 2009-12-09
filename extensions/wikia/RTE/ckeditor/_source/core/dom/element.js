@@ -603,7 +603,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 			if ( CKEDITOR.env.ie )
 			{
 				var scopeName = this.$.scopeName;
-				if ( scopeName != 'HTML' )
+				if ( typeof scopeName != 'undefined' && scopeName != 'HTML' )
 					nodeName = scopeName.toLowerCase() + ':' + nodeName;
 			}
 

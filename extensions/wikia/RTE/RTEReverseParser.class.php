@@ -355,7 +355,11 @@ class RTEReverseParser {
 
 		$isShort = in_array($node->nodeName, array('br', 'hr'));
 		if ($isShort) {
-			$out = "{$prefix}<{$node->nodeName}{$attr} />";
+			if ($attr == '') {
+				// render br with no attributes as <br />
+				$attr = ' ';
+			}
+			$out = "{$prefix}<{$node->nodeName}{$attr}/>";
 		}
 		else {
 			$out = "{$prefix}<{$node->nodeName}{$attr}>{$beforeText}{$textContent}{$beforeClose}</{$node->nodeName}>{$suffix}";
@@ -498,12 +502,12 @@ class RTEReverseParser {
 		// this node was added in CK
 		else if ( self::isNewNode($node)) {
 			// previous element is paragraph
-			if (self::previousSiblingIs($node, 'p')) {
+			if (self::previousSiblingIs($node, 'p') && !self::isNewNode($node->previousSibling)) {
 				$out = "\n{$out}";
 			}
 
 			// next element is (not pasted) paragraph
-			if (self::nextSiblingIs($node, 'p') && !self::isNewNode($node->nextSibling)) {
+			if (self::nextSiblingIs($node, 'p') && self::isNewNode($node->nextSibling)) {
 				$out = "{$out}\n";
 			}
 		}
@@ -805,7 +809,16 @@ class RTEReverseParser {
 					$out = "\n{$out}";
 				}
 
-				$out = "{$out}\n";
+				// fix for lists like
+				// *: a
+				// * b
+				$isIntended = (strspn($this->listBullets, ':') > 0);
+				if ( self::isChildOf($node, 'li') && !$isIntended ) {
+					$out = "\n{$out}";
+				}
+				else {
+					$out = "{$out}\n";
+				}
 
 				$out = $this->fixForTableCell($node, $out);
 				break;
@@ -1100,10 +1113,10 @@ class RTEReverseParser {
 	}
 
 	/**
-	 * Checks if given node was pasted into CK
+	 * Checks if given node (check is only performed for paragraphs) was pasted
 	 */
 	private static function isPasted($node) {
-		return $node->hasAttribute('_rte_pasted') && (self::getEmptyLinesBefore($node) == 0);
+		return !$node->hasAttribute('_rte_fromparser') && !$node->hasAttribute('_rte_new_mode');
 	}
 
 	/**

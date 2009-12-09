@@ -1890,10 +1890,8 @@ class Parser
 							// TODO: document
 							global $wgRTEParserEnabled;
 							if (!empty($wgRTEParserEnabled)) {
-								$dataIdx = RTEData::put('placeholder', array(
-									'type' => 'video-placeholder',
-									'wikitextIdx' => $RTE_wikitextIdx));
-								$videoOut = RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
+								$wikitext = RTEData::get('wikitext', $RTE_wikitextIdx);
+								$videoOut = WikiaVideo_makeVideo($nt, $text, $sk, $wikitext);
 							} else {
 								$videoOut = WikiaVideo_makeVideo($nt, $text, $sk, '', $in_template);
 							}
@@ -3544,9 +3542,14 @@ class Parser
 			$title = Title::makeTitle( $ns, $dbk );
 			$titleText = $title->getPrefixedDBkey();
 		}
-		if ( isset( $this->mTplDomCache[$titleText] ) ) {
+
+		// RTE - begin
+		// TODO: document
+		global $wgRTETemplateParams;
+		if (empty($wgRTETemplateParams) && isset( $this->mTplDomCache[$titleText] ) ) {
 			return array( $this->mTplDomCache[$titleText], $title );
 		}
+		// RTE - end
 
 		// Cache miss, go to the database
 		list( $text, $title ) = $this->fetchTemplateAndTitle( $title );

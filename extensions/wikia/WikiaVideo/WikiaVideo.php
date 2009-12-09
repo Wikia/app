@@ -239,7 +239,7 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 }
 
 function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_template = false ) {
-	global $wgWysiwygParserEnabled, $wgRequest;
+	global $wgWysiwygParserEnabled, $wgRTEParserEnabled, $wgRequest;
 
 	wfProfileIn('WikiaVideo_makeVideo');
 
@@ -362,6 +362,24 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		// increase counter
 		$wgWikiaVideoPlaceholderId++;
 
+		// dirty hack for CK support
+		if (!empty($wgRTEParserEnabled)) {
+			RTE::log(__METHOD__ . '::placeholder', $wikitext);
+
+			$dataIdx = RTEData::put('placeholder', array(
+				'type' => 'video-placeholder',
+				'parans' => array(
+					'width' => $width,
+					'height' => $height,
+					'isAlign' => $isalign,
+					'isThumb' => $isthumb
+				),
+				'wikitext' => $wikitext,
+			));
+
+			$html = RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
+		}
+
 		wfProfileOut('WikiaVideo_makeVideo');
 		return $html;
 	}
@@ -423,10 +441,12 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		$video = new VideoPage($title);
 		$video->load();
 
-		// generate different HTML for MW editor and FCK editor
-		global $wgRTEParserEnabled;
-		if (!empty($wgWysiwygParserEnabled) || !empty($wgRTEParserEnabled)) {
+		// generate different HTML for MW editor and FCK/CK editor
+		if (!empty($wgWysiwygParserEnabled)) {
 			$out = $video->generateWysiwygWindow($refId, $title, $align, $width, $caption, $thumb, $frame);
+		}
+		else if (!empty($wgRTEParserEnabled)) {
+			$out = $video->generateThumbForCK($wikitext, $title, $align, $width, $caption, $thumb, $frame);
 		}
 		else {
 			$out = $video->generateWindow($align, $width, $caption, $thumb, $frame);

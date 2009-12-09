@@ -25,7 +25,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						if ( undoManager.undo() )
 						{
 							editor.selectionChange();
-							this.fire( 'afterUndo' );
+							editor.fire( 'afterUndo' );
 						}
 					},
 					state : CKEDITOR.TRISTATE_DISABLED,
@@ -39,7 +39,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						if ( undoManager.redo() )
 						{
 							editor.selectionChange();
-							this.fire( 'afterRedo' );
+							editor.fire( 'afterRedo' );
 						}
 					},
 					state : CKEDITOR.TRISTATE_DISABLED,

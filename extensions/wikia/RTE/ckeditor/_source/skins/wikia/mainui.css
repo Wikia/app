@@ -89,8 +89,8 @@ span.cke_skin_wikia
 
 .cke_skin_wikia textarea.cke_source
 {
-	font-family: 'Courier New' , Monospace;
-	font-size: small;
+	font-family: monospace;
+	font-size: 13px;
 	background-color: #fff;
 	white-space: pre;
 }

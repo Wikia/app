@@ -18,6 +18,7 @@ $wgAutoloadClasses['RTELinker'] = "$dir/RTELinker.class.php";
 $wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
 $wgAutoloadClasses['RTEData'] = "$dir/RTEData.class.php";
 $wgAutoloadClasses['RTEMagicWord'] = "$dir/RTEMagicWord.class.php";
+$wgAutoloadClasses['RTEFirstRunNotice'] = "$dir/RTEFirstRunNotice.class.php";
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
@@ -37,6 +38,9 @@ $wgHooks['InternalParseBeforeLinks'][] = 'RTEMagicWord::remove';
 $wgHooks['ParserBeforeStrip'][] = 'RTEMagicWord::checkParserBeforeStrip';
 $wgHooks['EditPage::getContent::end'][] = 'RTEMagicWord::checkEditPageContent';
 //$wgHooks['Parser::FetchTemplateAndTitle'][] = 'RTEMagicWord::fetchTemplate'; # not called when doing RTE parsing
+
+// first run notice
+$wgHooks['RTEAddToEditForm'][] = 'RTEFirstRunNotice::render';
 
 // i18n
 $wgExtensionMessagesFiles['RTE'] = $dir.'/i18n/RTE.i18n.php';

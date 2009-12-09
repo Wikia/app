@@ -232,8 +232,11 @@ RTE.templateEditor = {
 				// show dialog footer - buttons
 				$('.templateEditorDialog').find('.cke_dialog_footer').show();
 
-				// template name (with localised namespace - RT #3808)
-				$('#templateEditorTemplateName').html(info.title.replace(/^Template:/, window.RTEMessages.template + ':'));
+				// template name (with localised namespace - RT #3808 - and spaces instead of underscores)
+				var templateName = info.title.replace(/_/g, ' ');
+				templateName = templateName.replace(/^Template:/, window.RTEMessages.template + ':');
+
+				$('#templateEditorTemplateName').html(templateName);
 
 				// URL to template source
 				var viewHref = window.wgServer + window.wgArticlePath.replace(/\$1/, encodeURI(info.title.replace(/ /g, '_')));

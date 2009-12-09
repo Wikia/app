@@ -17,5 +17,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 html .cke_skin_wikia,
 html.cke_skin_wikia_container
 {
+	clear: both;
 	visibility: visible;
 }

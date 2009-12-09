@@ -398,25 +398,35 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 		// macbre: CK support
 		if (typeof e.type != 'undefined' && e.type == 'rte') {
 			// get image from event data
-			window.WMU_RTEImage = e.data.placeholder;
+			window.WMU_RTEImage = e.data.element;
 			if (window.WMU_RTEImage) {
 				// edit an image
 				var data = window.WMU_RTEImage.getData();
 
-				data.href = 'File:' + data.title;
-				data.thumb = data.params.thumbnail;
+				if (e.data.isPlaceholder) {
+					// image placeholder
+					RTE.log('image placeholder clicked');
 
-				$.extend(data, data.params);
-				delete data.params;
+					WMU_gallery = -2;
+				}
+				else {
+					// "regular" image
+					data.href = 'File:' + data.title;
+					data.thumb = data.params.thumbnail;
+
+					$.extend(data, data.params);
+					delete data.params;
+
+					WMU_wysiwygStart = 2;
+				}
 
 				// FIXME: let's pretend we're FCK for now
+				WMU_refid = 0;
 				window.FCK = {wysiwygData: {0: {}}};
 				window.FCK.wysiwygData[0] = data;
-				WMU_refid = 0;
-
-				WMU_wysiwygStart = 2;
 
 				WMU_track('open/fromWysiwyg/existing');
+
 				RTE.log(data);
 			}
 			else {
@@ -969,17 +979,19 @@ function WMU_insertImage(e, type) {
 
 						// macbre: CK support
 						if (typeof window.WMU_RTEImage != 'undefined') {
+							var image = window.WMU_RTEImage;
+
 							// modify options format
 							options.thumbnail = options.thumb;
 							delete options.thumb;
 
-							if (window.WMU_RTEImage) {
-								// update existing image
-								RTE.imageEditor.update(window.WMU_RTEImage, wikitag, options);
+							if (image) {
+								// update existing image / replace image placeholder
+								RTE.mediaEditor.update(image, wikitag, options);
 							}
 							else {
 								// add new image
-								RTE.imageEditor.add(wikitag, options);
+								RTE.mediaEditor.addImage(wikitag, options);
 							}
 						}
 						else  if(WMU_refid != -1) {

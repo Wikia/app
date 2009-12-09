@@ -38,13 +38,16 @@ img.frame {
 	padding: 3px;
 }
 
-img.thumb {
+img.thumb,
+img.frame {
+	clear: right;
 	display: inline;
 	float: right;
 	margin: 6px 0 10px 18px;
 }
 
-img.thumb.alignLeft {
+img.alignLeft {
+	clear: left;
 	display: inline;
 	float: left;
 	margin: 6px 18px 10px 0;
@@ -72,4 +75,18 @@ img.placeholder {
 
 img.placeholder-comment {
 	background-position: 0 -1312px;
+}
+
+img.placeholder-image-placeholder {
+	background-position: 0 -1248px;
+}
+
+img.placeholder-video-placeholder {
+	background-position: 0 -1232px;
+}
+
+img.placeholder-image-placeholder,
+img.placeholder-video-placeholder {
+	background-color: #eee;
+	border: solid 15px #eee;
 }

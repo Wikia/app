@@ -11,6 +11,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	var protectedSourceMarker = '{cke_protected}';
 
+	// Wikia - start
+	// checks if given node is "raw" <br> - i.e. without _rte_* attribs
+	function isRawBr(node) {
+		return node.type == CKEDITOR.NODE_ELEMENT && node.name == 'br' && (typeof node.attributes['_rte_washtml'] == 'undefined');
+	}
+	// Wikia - end
 
 	// Return the last non-space child node of the block (#4344).
 	function lastNoneSpaceChild( block )
@@ -32,7 +38,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		var children = block.children, lastChild = lastNoneSpaceChild( block );
 		if ( lastChild )
 		{
-			if ( ( fromSource || !CKEDITOR.env.ie ) && lastChild.type == CKEDITOR.NODE_ELEMENT && lastChild.name == 'br' )
+			// Wikia - start
+			// only remove trailing BR node if it didn't come from wikitext
+			if ( ( fromSource || !CKEDITOR.env.ie ) && isRawBr(lastChild) )
 				children.pop();
 			if ( lastChild.type == CKEDITOR.NODE_TEXT && tailNbspRegex.test( lastChild.value ) )
 				children.pop();
@@ -42,7 +50,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	function blockNeedsExtension( block )
 	{
 		var lastChild = lastNoneSpaceChild( block );
-		return !lastChild || lastChild.type == CKEDITOR.NODE_ELEMENT && lastChild.name == 'br';
+		return !lastChild || isRawBr(lastChild); //lastChild.type == CKEDITOR.NODE_ELEMENT && lastChild.name == 'br';
 	}
 
 	function extendBlockForDisplay( block )

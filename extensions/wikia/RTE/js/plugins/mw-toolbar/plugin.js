@@ -12,8 +12,18 @@ CKEDITOR.plugins.add('rte-mw-toolbar',
 			// mark source button wrapper
 			sourceButton.attr('id', 'cke_source_button');
 
-			// move MW toolbar inside CK
-			$('#toolbar').appendTo(toolbar);
+			// render MW toolbar inside CK
+			var MWtoolbar = $('<div id="mw-toolbar">');
+			toolbar.append(MWtoolbar);
+
+			// add buttons
+			for (var i = 0; i < mwEditButtons.length; i++) {
+				mwInsertEditButton(MWtoolbar[0], mwEditButtons[i]);
+			}
+
+			for (var i = 0; i < mwCustomEditButtons.length; i++) {
+				mwInsertEditButton(MWtoolbar[0], mwCustomEditButtons[i]);
+			}
 
 			// add toolbar covering div - will be used during loading state
 			toolbar.append('<div id="toolbarCover" class="color1" />');

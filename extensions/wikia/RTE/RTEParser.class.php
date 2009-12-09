@@ -101,6 +101,10 @@ class RTEParser extends Parser {
 			'params' => array_merge($params['frame'], $params['handler']),
 		);
 
+		if(strpos($data['wikitext'] , "\x7f") !== false || strpos($data['wikitext'], '_rte_wikitextidx') !== false || strpos($data['wikitext'], '_rte_dataidx') !== false) {
+			RTE::$edgeCases[] = 'COMPLEX.09';
+		}
+
 		// small fix: set value of thumbnail entry
 		if (isset($data['params']['thumbnail'])) {
 			$data['params']['thumbnail'] = true;
@@ -161,6 +165,9 @@ class RTEParser extends Parser {
 		$thumb = $image->transform( array('width' => $width) );
 		$ret = $thumb->toHtml( array('img-class' => implode(' ', $imgClass)) );
 
+		// add type attribute
+		$ret = substr($ret, 0, -2). ' type="image" />';
+
 		RTE::log(__METHOD__, $ret);
 
 		// store data and mark HTML
@@ -182,6 +189,34 @@ class RTEParser extends Parser {
 		self::$imageParams = $params;
 
 		return true;
+	}
+
+	/**
+	 * make an image if it's allowed, either through the global
+	 * option, through the exception, or through the on-wiki whitelist
+	 * @private
+	 */
+	function maybeMakeExternalImage( $url ) {
+		wfProfileIn(__METHOD__);
+
+		$text = parent::maybeMakeExternalImage($url);
+
+		// MW parser has rendered an external whitelisted image
+		if ($text !== false) {
+			RTE::log(__METHOD__, $url);
+
+			// mark rendered image with RTE marker
+			$data = array(
+				'type' => 'image-whitelisted',
+				'wikitext' => $url,
+			);
+
+			$text = RTEData::addIdxToTag(RTEData::put('data', $data), $text);
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return $text;
 	}
 
 	/**
@@ -257,6 +292,14 @@ class RTEParser extends Parser {
 		$html = preg_replace_callback('/ _rte_dataidx="(\d{4})" /', 'RTEData::replaceIdxByData', $html);
 
 		$html = preg_replace("/\x7f-(?:".RTEMarker::INTERNAL_WIKITEXT."|".RTEMarker::EXTERNAL_WIKITEXT.")-\d{4}/", '', $html);
+
+		// add extra attribute for p tags coming from parser
+		$html = strtr($html, array('<p>' => '<p _rte_fromparser="true">', '<p ' => '<p _rte_fromparser="true" '));
+
+		// add empty paragraph for new / empty pages
+		if ($html == '') {
+			$html = Xml::element('p');
+		}
 
 		// update parser output
 		RTE::log(__METHOD__, $html);
