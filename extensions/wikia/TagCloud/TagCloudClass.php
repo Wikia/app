@@ -22,10 +22,13 @@ class TagCloud {
 			LIMIT 0,{$this->limit}";
 
 		$res = $dbr->query($sql);
+
+		$catsExcluded = explode("\n* ", wfMsgForContent( 'tagcloud-blacklist' ));
+
 		while ($row = $dbr->fetchObject( $res ) ) {
 			$tag_name = Title::makeTitle( 14, $row->cl_to);
 			$tag_text = $tag_name->getText();
-			if( strtotime( $tag_text  ) == "" ){ //dont want dates to show up
+			if( !in_array( $tag_text, $catsExcluded ) && strtotime( $tag_text  ) == "" ){ //dont want dates to show up
 				if($row->count > $this->tags_highest_count)$this->tags_highest_count = $row->count;
 				$this->tags[ $tag_text ] = array("count" => $row->count);
 			}
@@ -45,5 +48,3 @@ class TagCloud {
 		}
 	}
 }
-
-?>
