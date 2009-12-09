@@ -37,6 +37,7 @@ $wgHooks['BeforePageDisplay'][] = 'categoryHubAdditionalScripts';
 $wgHooks['MakeGlobalVariablesScript'][] = 'categoryHubJsGlobalVariables';
 
 // Allows us to define a special order for the various sections on the page.
+$wgHooks['CategoryViewer::getOtherSection'][] = 'categoryHubPreviewCheck'; // only for neutering display of previews.
 $wgHooks['FlexibleCategoryPage::openShowCategory'][] = 'categoryHubBeforeArticleText';
 $wgHooks['FlexibleCategoryPage::closeShowCategory'][] = 'categoryHubAfterArticleText';
 
@@ -124,6 +125,17 @@ function categoryHubCheckForMagicWords(&$parser, &$text, &$strip_state) {
 
 
 ///// THE NEXT TWO FUNCTIONS LET US OVERRIDE THE ORDER OF THE SECTIONS ON THE CATEGORY PAGE /////
+
+////
+// Used to intercept calls to CategoryPage::openShowCategory just for the use of disabling the display of extra things on
+// preview pages when CategoryHubs is enabled..
+////
+function categoryHubPreviewCheck(&$catView, &$r){
+	global $wgRequest;
+
+	// If this is a preview page, return false so that the default behavior of getOtherSection doesn't happen.
+	return (!$wgRequest->getCheck('wpPreview'));
+} // end categoryHubPreviewCheck()
 
 ////
 // Overrides FlexibleCategoryPage::openShowCategory to allow us to choose which sections to display
