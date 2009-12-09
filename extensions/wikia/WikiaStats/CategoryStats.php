@@ -577,7 +577,8 @@ class CategoryEdits {
 				array( 'cue_cat_id' => $this->mCatId ),
 				__METHOD__,
 				array( 
-					'GROUP BY' => 'cue_user_id'
+					'GROUP BY' => 'cue_user_id',
+					'USE INDEX' => 'cat_user'
 				)
 			);
 			if ( $dbr->numRows($res) ) {
