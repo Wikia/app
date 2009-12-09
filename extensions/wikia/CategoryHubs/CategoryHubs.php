@@ -24,10 +24,10 @@ define('CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS', 7);
 define('ANSWERED_CATEGORY', 'answered_questions'); // must be set to the name of the category containing answered questions.
 
 // Since the entire article for the answered questions will be loaded, we create a more conservative limit.
-// The maximum number of articles per tab because the whole article will be loaded (eg: max of 15 answered, 15 unanswered)
+// The maximum number of articles per tab because the whole article will be loaded (eg: max of 10 answered, 10 unanswered)
 // WARNING: Defaults to 0 (since not this would involve a lot of extra data-loading that will only be needed if CategoryHubs is enabled).
 global $wgCategoryHubArticleLimitPerTab;
-$wgCategoryHubArticleLimitPerTab = 15; // required (otherwise will default to 0).
+$wgCategoryHubArticleLimitPerTab = 10; // required (otherwise will default to 0).
 
 
 ///// BEGIN - SETUP HOOKS /////
@@ -538,7 +538,7 @@ function categoryHubOtherSection(&$catView, &$r){
 				$r .= "<span class=\"$ANS_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
 				// TODO: RESTORE THIS WHEN rephrase IS WORKING.
 				//$r .= "&nbsp;<span class='cathub-button-rephrase hideUntilHover'><a href='javascript:void(0)'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
-				$r .= categoryHubGetAttributionByArticle($qArticle);
+				$r .= categoryHubGetAttributionByArticle($qArticle, true); //'true' uses messages for 'answered'
 
 				// Show the  actual answer.
 				$r .= "<div class='cathub-actual-answer'>";
@@ -587,8 +587,10 @@ function categoryHubSubcategorySection(&$catView, &$r){
 ////
 // Returns a string containing the HTML for the attribution line which can be used in
 // the answered/unanswered lists given an article.
+//
+// If 'answered' then the text will say "answered by" instead of "asked by".
 ////
-function categoryHubGetAttributionByArticle($qArticle){
+function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 	global $wgStylePath;
 	$title = $qArticle->getTitle();
 	$timestamp = $qArticle->getTimestamp();
@@ -608,7 +610,11 @@ function categoryHubGetAttributionByArticle($qArticle){
 	} else {
 		$userLink = wfMsgExt('cathub-anon-username', array());
 	}
-	$asked = wfMsgExt('cathub-question-asked-ago', array(), $lastUpdate, $userLink);
+	if($answered){
+		$asked = wfMsgExt('cathub-question-answered-ago', array(), $lastUpdate, $userLink);
+	} else {
+		$asked = wfMsgExt('cathub-question-asked-ago', array(), $lastUpdate, $userLink);
+	}
 	return "<div class='cathub-asked'>$asked</div>";
 } // end categoryHubGetAttributionByArticle()
 
