@@ -168,8 +168,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 				// set HTML and type attribute
 				preview.removeClass('RTEPlaceholderPreviewLoading').html(html).attr('type', info.type);
 
-				// handle clicks on [edit] / [delete] buttons
+				// handle clicks on [delete] button
 				preview.find('.RTEPlaceholderPreviewToolsDelete').bind('click', function(ev) {
+					RTE.track(self.getTrackingType($(placeholder)), 'hover', 'delete');
+
 					if (confirm('Are you sure?')) {
 						// remove placeholder and its preview
 						preview.remove();
@@ -177,10 +179,14 @@ CKEDITOR.plugins.add('rte-placeholder',
 					}
 				});
 
+				// handle clicks on [edit] button
 				if (showEdit && isEditable) {
 					preview.find('.RTEPlaceholderPreviewToolsEdit').bind('click', function(ev) {
 						// hide preview
 						preview.hide();
+
+						// tracking code
+						RTE.track(self.getTrackingType($(placeholder)), 'hover', 'edit');
 
 						// call editor for this type of placeholder
 						$(placeholder).trigger('edit');
@@ -194,6 +200,8 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 				// close button
 				preview.find('.RTEPlaceholderPreviewTitleBar').children('span').bind('click', function(ev) {
+					RTE.track(self.getTrackingType($(placeholder)), 'hover', 'close');
+
 					self.hidePreview(placeholder, true);
 				});
 
@@ -236,6 +244,13 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 		// hover preview popup delay: 150ms (cursor should be kept over an placeholder for 150ms for preview to show up)
 		placeholder.data('showTimeout', setTimeout(function() {
+			// trigger custom event only when preview is about to be shown (used for tracking)
+			var visible = preview.css('display') == 'block';
+			if (!visible) {
+				placeholder.trigger('hover');
+			}
+
+			// show preview pop-up
 			preview.fadeIn();
 		}, 150));
 
@@ -318,6 +333,11 @@ CKEDITOR.plugins.add('rte-placeholder',
 			}
 		});
 
+		// tracking code when hovered
+		placeholder.bind('hover.placeholder', function(ev) {
+			RTE.track(self.getTrackingType($(this)), 'hover', 'init');
+		});
+
 		// setup events once more on each drag&drop
 		RTE.getEditor().unbind('dropped.placeholder').bind('dropped.placeholder', function(ev) {
                         var target = $(ev.target);
@@ -327,5 +347,26 @@ CKEDITOR.plugins.add('rte-placeholder',
 
 			self.setupPlaceholder(target);
 		});
+	},
+
+	// get type name for tracking code
+	getTrackingType: function(placeholder) {
+		var type;
+		var data = $(placeholder).getData();
+
+		switch(data.type) {
+			case 'double-brackets':
+				type = 'template';
+				break;
+
+			case 'comment':
+				type = 'comment';
+				break;
+
+			default:
+				type = 'advancedCode';
+		}
+
+		return type;
 	}
 });
