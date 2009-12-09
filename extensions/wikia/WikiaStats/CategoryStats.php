@@ -533,7 +533,7 @@ class CategoryEdits {
 				__METHOD__,
 				array( 
 					'ORDER BY' => 'cue_count DESC',
-					'LIMIT' => $limit + 1,
+					'LIMIT' => $limit,
 					'OFFSET' => $offset * $limit
 				)
 			);

@@ -411,7 +411,7 @@ function categoryHubTopContributors(&$catView, &$r){
 	// Recent Top Contributors
 	$r .= "<div id='topContribsRecent'>\n";
 	$r .= "<h3>".wfMsgExt('cathub-top-contribs-recent', array(), CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS)."</h3>";
-	$r .= categoryHubContributorsToHtml($categoryEdits->getXDayContribs($NUM_CONTRIBS_PER_SECTION));
+	$r .= categoryHubContributorsToHtml($categoryEdits->getXDayContribs(CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS, $NUM_CONTRIBS_PER_SECTION));
 	$r .= "</div>\n";
 
 	$r .= "</div><div style='clear:both'>&nbsp;</div>\n"; // clearing div is for Chrome
