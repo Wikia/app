@@ -1176,5 +1176,5 @@ li:hover .hideUntilHover{
 	font-style:italic;
 }
 .ui-widget *{
-	font-family:inherit;
+	font-family: sans-serif;
 }
