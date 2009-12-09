@@ -1084,7 +1084,7 @@ class User {
 	 *                    done against master.
 	 */
 	function getBlockedStatus( $bFromSlave = true ) {
-		global $wgEnableSorbs, $wgProxyWhitelist;
+		global $wgEnableSorbs, $wgProxyWhitelist, $wgUser;
 
 		if ( -1 != $this->mBlockedby ) {
 			wfDebug( "User::getBlockedStatus: already loaded.\n" );
@@ -1100,7 +1100,7 @@ class User {
 		// due to -1 !== 0. Probably session-related... Nothing should be
 		// overwriting mBlockedby, surely?
 		$this->load();
-
+		
 		$this->mBlockedby = 0;
 		$this->mHideName = 0;
 		$this->mAllowUsertalk = 0;
@@ -1120,7 +1120,7 @@ class User {
 			$this->mBlockreason = $this->mBlock->mReason;
 			$this->mHideName = $this->mBlock->mHideName;
 			$this->mAllowUsertalk = $this->mBlock->mAllowUsertalk;
-			if ( $this->isLoggedIn() ) {
+			if ( $this->isLoggedIn() && $wgUser->getID() == $this->getID() ) {
 				$this->spreadBlock();
 			}
 		} else {
@@ -2639,16 +2639,7 @@ class User {
 			return;
 		}
 		
-		$ip = wfGetIp();
-		# MOLI 
-		error_log ("MOLI: block user_id: " . $this->mId . ", ip: $ip \n");
-		if ( !empty($_SERVER) ) {
-			foreach ( $_SERVER as $key => $value ) {
-				error_log ( "MOLI: {$this->mId}, {$key}: {$value} \n" );
-			}
-		}
-		# /MOLI
-		$userblock->doAutoblock( $ip );
+		$userblock->doAutoblock( wfGetIp() );
 
 	}
 
