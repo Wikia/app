@@ -62,7 +62,9 @@ NWB.changeTheme = function (theme, changeData){
         } 
 
         // Create a link object for the stylesheet
-	var href = "/skins/monaco/" + theme.replace(/monaco-/, '').toLowerCase() + "/css/main.css";
+	var ltheme = theme.replace(/monaco-/, '').toLowerCase();
+	var href = "/skins/monaco/" + ltheme + "/css/main.css";
+	WIKIA.WikiStickies.track( '/admin/' + ltheme );
 	if (typeof NWB.linkTag == "object") {
 		NWB.linkTag.remove();
        	}
