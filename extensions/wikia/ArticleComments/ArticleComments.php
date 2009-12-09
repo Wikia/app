@@ -1556,7 +1556,10 @@ class ArticleCommentList {
 	 * @return true -- because it's hook
 	 */
 	static function BeforeStoreInRC(&$rc, &$data) {
-		$data['articleComment'] = true;
+		$rcTitle = $rc->getAttribute('rc_title');
+		if (strpos($rcTitle, '/') !== false && strpos(end(explode('/', $rcTitle)), ARTICLECOMMENT_PREFIX) === 0) {
+			$data['articleComment'] = true;
+		}
 		return true;
 	}
 
