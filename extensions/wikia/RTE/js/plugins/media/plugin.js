@@ -146,9 +146,15 @@ CKEDITOR.plugins.add('rte-media',
 
 				// call editor for image
 				$(image).trigger('edit');
+
+				// tracking
+				RTE.track(self.getTrackingType(image), 'menu', 'edit');
 			});
 
 			overlay.find('.RTEMediaOverlayDelete').bind('click', function(ev) {
+				// tracking
+				RTE.track(self.getTrackingType(image), 'menu', 'delete');
+
 				if (confirm('Are you sure?')) {
 					// remove image and its menu
 					overlay.remove();
@@ -235,6 +241,11 @@ CKEDITOR.plugins.add('rte-media',
 		media.bind('contextmenu.media', function(ev) {
 			// don't show CK context menu
 			ev.stopPropagation();
+		});
+
+		// track when drag&drop starts
+		media.bind('dragged.media', function(ev) {
+			 RTE.track(self.getTrackingType($(this)), 'event', 'move');
 		});
 
 		// make media not selecteable
@@ -343,6 +354,23 @@ CKEDITOR.plugins.add('rte-media',
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			RTE.tools.callFunction(window.VET_show,$(this), {isPlaceholder: true});
 		});
+	},
+
+	// get type name for tracking code
+	getTrackingType: function(media) {
+		var type;
+
+		switch($(media).attr('type')) {
+			case 'image':
+				type = 'image';
+				break;
+
+			case 'video':
+				type = 'video';
+				break;
+		}
+
+		return type;
 	}
 });
 
@@ -399,6 +427,9 @@ RTE.mediaEditor = {
 
 			// setup added media
 			self.plugin.setupMedia(newMedia);
+
+			// tracking
+			RTE.track(self.plugin.getTrackingType(newMedia), 'event', 'add');
 		});
 	},
 
@@ -416,6 +447,9 @@ RTE.mediaEditor = {
 
 			// setup added media
 			self.plugin.setupMedia(newMedia);
+
+			// tracking
+			RTE.track(self.plugin.getTrackingType(newMedia), 'event', 'modified');
 		});
 	}
 };
