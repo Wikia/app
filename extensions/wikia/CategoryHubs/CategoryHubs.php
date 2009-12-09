@@ -202,7 +202,7 @@ function categoryHubInitViewer(&$flexibleCategoryViewer){
 	if((!isset($wgCatHub_useDefaultView)) || (!$wgCatHub_useDefaultView)){
 		$mw = MagicWord::get(CATHUB_NORICHCATEGORY);
 		$article = Article::newFromID($flexibleCategoryViewer->getCat()->getTitle()->getArticleID());
-		$wgCatHub_useDefaultView = (0 < $mw->match($article->getRawText())); // match does not return bool as documented. fix is committed to MediaWiki svn.
+		$wgCatHub_useDefaultView = ($article && (0 < $mw->match($article->getRawText()))); // match does not return bool as documented. fix is committed to MediaWiki svn.
 	}
 
 	return true;
@@ -333,9 +333,10 @@ function categoryHubTitleBar(&$catView, &$r){
 
 	// Fetch the icon for the corresponding wiki if there is one.
 	WikiFactory::isUsed(true);
-	$logoSrc = WikiFactory::getVarValueByName( "wgLogo", WikiFactory::DomainToId( $catView->getCat()->getName().".wikia.com"));
+	$canonicalCatName = str_replace("_", "", $catView->getCat()->getName());
+	$logoSrc = WikiFactory::getVarValueByName( "wgLogo", WikiFactory::DomainToId($canonicalCatName .".wikia.com"));
 	if($logoSrc != ""){
-		$r .= "<img src='$logoSrc' width='78' height='78' style='float:left;padding:5px;'/>";
+		$r .= "<img src='$logoSrc' width='78' height='78' style='float:left;padding:5px 5px 5px 0px;'/>";
 	}
 
 	// Button for being notified of any new questions tagged with this category.
