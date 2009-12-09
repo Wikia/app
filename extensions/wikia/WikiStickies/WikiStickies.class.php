@@ -269,22 +269,21 @@ class WikiStickies {
 	}
 
 	static function renderWikiStickyContent( $title, $prefix, $attrs = NULL ) {
-		global $wgUser;
-		
-		if ( is_null($title) ) {
-			return "";
-		}
+		$html = '';
+		if( is_object( $title ) && $title instanceof Title ) {
+			global $wgUser;
 
-		$sk = $wgUser->getSkin();
-		if( is_array( $attrs ) ) { 
-			$html = xml::openelement( 'span', $attrs );
-		} else {
-			$html = xml::openelement( 'span' );
+			$sk = $wgUser->getSkin();
+			if( is_array( $attrs ) ) { 
+				$html = xml::openelement( 'span', $attrs );
+			} else {
+				$html = xml::openelement( 'span' );
+			}
+			$html .= htmlspecialchars( $prefix ).
+				xml::closeelement( 'span' ).
+				// todo: handle an array with more than one item?
+				' ' . $sk->link( $title, htmlspecialchars( $title->getText(), ENT_QUOTES ), array(), array(), array( 'known') ) . '?';
 		}
-		$html .= htmlspecialchars( $prefix ).
-			xml::closeelement( 'span' ).
-			// todo: handle an array with more than one item?
-			' ' . $sk->link( $title, htmlspecialchars( $title->getText(), ENT_QUOTES ), array(), array(), array( 'known') ) . '?';
 		return $html;
 	}
 
