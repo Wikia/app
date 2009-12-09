@@ -254,7 +254,7 @@ a.big_button * {
 	line-height: 28px;
 }
 a.big_button big, a.big_button small {
-	background: url(../../home/images/big_button.png) no-repeat;
+	background: url(http://images.wikia.com/common/skins/home/images/big_button.png) no-repeat;
 }
 a.big_button big {
 	color: #EEE;
