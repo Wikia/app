@@ -21,46 +21,14 @@ function get_search_term() {
 	search_site = search_terms[search_term_index][1];
 }
 
-function change_search_value() {
-	get_search_term();
-	searchField.value = search_query;
-}
-
 function perform_search() {
-	for (i=0; i<search_terms.length; i++) {
-		if ( (searchField.value+'').toLowerCase() == search_terms[i][0].toLowerCase()) {
-			document.location = 'http://' + search_terms[i][1] + '.wikia.com';
-			return false;
-		}
-	}
-	for (i=0; i<search_terms_extra.length; i++) {
-		if ( (searchField.value+'').toLowerCase() == search_terms_extra[i][0].toLowerCase()) {
-			document.location = 'http://' + search_terms_extra[i][1] + '.wikia.com';
-			return false;
-		}
-	}
 	document.location = 'http://www.wikia.com/wiki/Special:Search?search=' + searchField.value;
 	return false;
 }
 
-function search_field_focus() {
-	clearInterval(search_timer);
-	searchField.value = '';
-}
-function search_field_blur() {
-	if (searchField.value == '') {
-		change_search_value();
-		search_timer = setInterval(change_search_value, 5000);
-	}
-}
-
 YAHOO.util.Event.onDOMReady(function() {
 	YAHOO.util.Event.addListener('search_button', "click", perform_search);
-	YAHOO.util.Event.addListener('search_field', "focus", search_field_focus);
-	YAHOO.util.Event.addListener('search_field', "blur", search_field_blur);
 	searchField = YAHOO.util.Dom.get('search_field');
-	change_search_value();
-	search_timer = setInterval(change_search_value, 5000);
 });
 
 function wikia_search() {
