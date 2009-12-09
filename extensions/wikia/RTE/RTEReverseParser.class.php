@@ -773,10 +773,12 @@ class RTEReverseParser {
 				// this list (789) is nested list
 				// <ul><li>abc<ul><li>789</li></ul></li></ul>
 				if ( self::isChildOf($node, 'li') && !self::isFirstChild($node) ) {
+					// check wrapping list node
 					$parentListType = $node->parentNode->parentNode->nodeName;
+					$parentListIsFirstChild = self::isFirstChild($node->parentNode->parentNode);
 
 					// only add newline if current list is wrapped within same type
-					if ($parentListType == $node->nodeName) {
+					if ( $parentListIsFirstChild || ($parentListType == $node->nodeName) ) {
 						$out = "\n{$out}";
 					}
 				}
