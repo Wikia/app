@@ -438,6 +438,9 @@ class GlobalWatchlistBot {
 				if ( count($aDigestData) ) {
 					$iEmailsSent++;
 					$this->sendMail( $iUserId, $aDigestData, $bTooManyPages );
+					if ( ($iEmailsSent % self::RECORDS_SLEEP) == 0 ) {
+						sleep(self::TIME_SLEEP);
+					}
 				}
 			} // foreach
 		}
