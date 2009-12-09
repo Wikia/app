@@ -109,7 +109,6 @@ class HotSpotsProvider {
 		$namespaces = array(NS_PROJECT_TALK);
 		foreach(array_values($wgContentNamespaces) as $ns) {
 			$namespaces[] = $ns;
-			$namespaces[] = $ns + 1;
 		}
 
 		$dbr = wfGetDB(DB_SLAVE);
