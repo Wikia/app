@@ -36,7 +36,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 				<td id="ajaxlogin_username_cell">
 					
 				</td>
-				<td><a id="wpAjaxRegister" href="<?= htmlspecialchars($link) ?>" style="font-size: 9pt;"><?= wfMsg('nologinlink') ?></a></td>
+				<td><a id="wpAjaxRegister" href="<?= htmlspecialchars($link) ?>" style="font-size: 9pt;display:none;"><?= wfMsg('nologinlink') ?></a></td>
 			</tr>
 			</table>
 			<label for="wpPassword1" style="display: block; font-weight: bold; margin-top: 8px"><?= wfMsg("yourpassword") ?></label>

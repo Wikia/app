@@ -174,7 +174,7 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 	}
 
 	if ((typeof WET == "undefined") || (typeof $ == "undefined") || $(".wikiaPlaceholder .wikia_button").length < 1 ) {
-		setTimeout(arguments.callee,50); 
+		setTimeout(arguments.callee,150); 
 		return false;
 	}
 	
@@ -202,7 +202,7 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 	}
 	
 	if ((typeof WET == "undefined") || (typeof $ == "undefined") || $("#ca-viewsource").length < 1 ) {
-		setTimeout(arguments.callee,50);
+		setTimeout(arguments.callee,150);
 		return false;
 	}
 	
