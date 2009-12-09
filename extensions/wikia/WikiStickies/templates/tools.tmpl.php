@@ -72,7 +72,6 @@ for (var i = 0; i < themes.length; i++){
         if (wgAdminSkin.replace(/monaco-/, '')  == ltheme) {
                 // Check the box and change the theme 
                 $("#theme_radio_" + ltheme).attr("checked", true);
-		WIKIA.WikiStickies.track( '/admin/' + ltheme );
                 NWB.changeTheme(ltheme, false);
         }
 }
