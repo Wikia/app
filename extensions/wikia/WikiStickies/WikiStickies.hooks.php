@@ -45,16 +45,11 @@ function efAddWikiSticky( &$html ) {
 	return true;
 }
 
-function efRemoveFromSpecialWithoutimages( &$uploadForm ) {
-	if( !($uploadForm->mLocalFile instanceof LocalFile) ) {
-		return true;
-	}
-
-	$title = $uploadForm->mLocalFile->getTitle();
-	if( !($title instanceof Title) ) {
-		return true;
-	}
-
+// TODO find (or create) a good hook for this
+// it should be on article save, scan if there was added a new imagelink
+// and the imagelink should have less than 20 references
+// Special:MyHome uses such tricks
+function efRemoveFromSpecialWithoutimages( ) {
 	$dbw = wfGetDB( DB_MASTER );
 	$dbw->delete( 'querycache', array( 
 		'qc_type'      => 'Withoutimages',
