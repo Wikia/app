@@ -23,10 +23,14 @@ WIKIA.WikiStickies.toggleMore = function (e) {
     if (this.innerHTML === 'see more') {
         // show more
         $(this.previousSibling).show();
+	// click tracking
+	WIKIA.WikiStickies.track('/item/seemore/' + WIKIA.WikiStickies.getFeedContainer( e.target ) );	
         this.innerHTML = 'hide';
     } else {
         // show less
         $(this.previousSibling).hide();
+	// click tracking
+	WIKIA.WikiStickies.track('/item/hidemore/' + WIKIA.WikiStickies.getFeedContainer( e.target ) );	
         this.innerHTML = 'see more';
     }
 };
@@ -43,12 +47,14 @@ WIKIA.WikiStickies.track = function( fakeUrl ) {
  * Track the container
  */
 
+WIKIA.WikiStickies.getFeedContainer = function (target) {
+	var containerId = $(target).closest( '.wikistickiesfeed' ).attr('id');
+	return containerId.split('-').pop();
+}
+
 
 WIKIA.WikiStickies.trackContainer = function (ev) {
-	var containerId = $(ev.target).closest( '.wikistickiesfeed' ).attr('id');
-	var containerName = containerId.split('-').pop();
-
-	WIKIA.WikiStickies.track('/item/' + containerName);
+	WIKIA.WikiStickies.track('/item/' + WIKIA.WikiStickies.getFeedContainer( ev.target ) );
 }
 
 
