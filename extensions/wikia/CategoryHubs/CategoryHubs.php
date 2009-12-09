@@ -236,7 +236,7 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 			if( ++$count > $flexibleCategoryViewer->limit ) {
 				// We've reached the one extra which shows that there are
 				// additional pages to be had. Stop here...
-				$this->nextPage = $x->cl_sortkey;
+				$flexibleCategoryViewer->nextPage = $x->cl_sortkey;
 				break;
 			}
 
@@ -246,7 +246,7 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 				$cat = Category::newFromRow( $x, $title );
 				$flexibleCategoryViewer->addSubcategoryObject( $cat, $x->cl_sortkey, $x->page_len );
 			} elseif( $flexibleCategoryViewer->showGallery && $title->getNamespace() == NS_FILE ) {
-				$this->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
+				$flexibleCategoryViewer->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
 			} else {
 				if( wfRunHooks( "CategoryViewer::addPage", array( &$flexibleCategoryViewer, &$title, &$x ) ) ) {
 					$flexibleCategoryViewer->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
