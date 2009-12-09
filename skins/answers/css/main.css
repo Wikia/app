@@ -1134,7 +1134,6 @@ span.answered_questions a, span.unanswered_questions a{
 }
 .cathub-actual-answer{
 	margin-top:15px;
-	font-size:.8em;
 }
 .cathub-answer-heading{
 	font-size:1.1em;
@@ -1157,7 +1156,8 @@ li:hover .hideUntilHover{
 	visibility:visible;
 }
 .cathub-add-answer-wrapper textarea{
-	font-size:1.3em;
+	font-size:1.2em;
+	color:#222;
 }
 .ui-tabs-panel{
 	padding:0px !important;

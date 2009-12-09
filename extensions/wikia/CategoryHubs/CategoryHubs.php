@@ -396,8 +396,8 @@ function categoryHubTitleBar(&$catView, &$r){
 	}
 	$r .= "</div>"; // close the wrapper on the progress bar
 
-	$r .= "<div class='cathub-progbar-label cathub-progbar-label-left'>".wfMsgExt('cathub-answered', array())."</div>";
-	$r .= "<div class='cathub-progbar-label cathub-progbar-label-right'>".wfMsgExt('cathub-unanswered', array())."</div>";
+	$r .= "<div class='cathub-progbar-label cathub-progbar-label-left'>".wfMsgExt('cathub-progbar-label-answered', array())."</div>";
+	$r .= "<div class='cathub-progbar-label cathub-progbar-label-right'>".wfMsgExt('cathub-progbar-label-unanswered', array())."</div>";
 	$r .= "</div>"; // close the wrapper on the div containing the progress bar and the labels.
 
 	$r .= "</div>\n";
