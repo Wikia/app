@@ -94,7 +94,7 @@ class ArticleCommentInit {
 			global $wgTitle;
 			wfLoadExtensionMessages('ArticleComments');
 			$page = ArticleCommentList::newFromTitle($wgTitle);
-			echo $page->render(true);
+			echo $page->render();
 		}
 		return true;
 	}
@@ -111,7 +111,7 @@ class ArticleCommentInit {
 		if (self::ArticleCommentCheck()) {
 			wfLoadExtensionMessages('ArticleComments');
 			$page = ArticleCommentList::newFromTitle( $wgTitle );
-			$data = $page->render( true );
+			$data = $page->render();
 		}
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -1131,7 +1131,7 @@ class ArticleCommentList {
 	 * @return String HTML text with rendered comments section
 	 */
 	public function render() {
-		global $wgUser, $wgTitle, $wgRequest, $wgOut;
+		global $wgUser, $wgTitle, $wgRequest, $wgOut, $wgArticleCommentsMaxPerPage;
 
 		if ($wgRequest->wasPosted()) {
 			// for non-JS version !!!
@@ -1160,11 +1160,16 @@ class ArticleCommentList {
 		$canEdit   = $wgUser->isAllowed( 'edit' );
 		$isBlocked = $wgUser->isBlocked();
 
-		$comments  = $this->getCommentPages();
+		//get first or last page to show newest comments in default view
+		$comments = $this->getCommentPages(true, false);
+		$countComments = count($comments);
+		$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
+		$page = $this->getOrder() == 'desc' ? 0 : $countPages-1;
+		$comments = array_slice($comments, $page * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
+		$pagination = self::doPagination($countComments, count($comments), $page);
+
 		$canDelete = $wgUser->isAllowed( 'delete' );
 		$isReadOnly = wfReadOnly();
-
-		$pagination = ArticleCommentList::doPagination($this->mCountAll, count($comments));
 
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
@@ -1181,7 +1186,8 @@ class ArticleCommentList {
 			'comments'  => $comments,
 			'canDelete' => $canDelete,
 			'isReadOnly' => $isReadOnly,
-			'pagination' => $pagination
+			'pagination' => $pagination,
+			'countComments' => $countComments
 		) );
 
 		$text = $template->execute( 'comment-list' );

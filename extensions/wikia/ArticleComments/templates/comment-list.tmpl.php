@@ -3,7 +3,7 @@
 	<a name="article-comment-header"></a>
 	<h2 class="neutral"><span class="dark_text_1"><?php echo wfMsg('article-comments-comments') ?></span></h2>
 	<?php
-	if ( count( $comments ) > 1 ) {
+	if ( $countComments > 1 ) {
 	?>
 	<form action="<?php echo $title->getFullURL() ?>#article-comment-header" method="get" id="article-comm-form-select">
 	<select name="order" id="article-comm-order">
