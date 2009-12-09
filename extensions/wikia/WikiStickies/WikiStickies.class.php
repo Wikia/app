@@ -270,6 +270,10 @@ class WikiStickies {
 
 	static function renderWikiStickyContent( $title, $prefix, $attrs = NULL ) {
 		global $wgUser;
+		
+		if ( is_null($title) ) {
+			return "";
+		}
 
 		$sk = $wgUser->getSkin();
 		if( is_array( $attrs ) ) { 
