@@ -37,6 +37,7 @@ window.RTE = {
 	plugins: [
 		'comment',
 		'dragdrop',
+		'edit-buttons',
 		'entities',
 		'first-run-notice',
 		'justify',

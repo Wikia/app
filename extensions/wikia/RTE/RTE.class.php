@@ -80,7 +80,7 @@ class RTE {
 	 *
 	 * @author Inez Korczyński, Macbre
 	 */
-	public static function init($form) {
+	public static function init(&$form) {
 		global $wgOut, $wgExtensionsPath, $wgStyleVersion, $wgHooks, $wgRequest;
 
 		RTE::log('init');
@@ -120,6 +120,9 @@ class RTE {
 		// parse wikitext of edited page and add extra fields to editform
 		$wgHooks['EditPage::showEditForm:fields'][] = 'RTE::init2';
 
+		// disable save / preview / show changes buttons until RTE is fully loaded
+		$wgHooks['EditPageBeforeEditButtons'][] = 'RTE::disableEditButtons';
+
 		// add global JS variables
 		$wgHooks['MakeGlobalVariablesScript'][] = 'RTE::makeGlobalVariablesScript';
 
@@ -139,7 +142,7 @@ class RTE {
 	/**
 	 * Parse wikitext of edited article, so CK can be provided with HTML
 	 */
-	public static function init2($form, $out) {
+	public static function init2(&$form, &$out) {
 		// add hidden edit form field
 		$out->addHTML( "\n" . Xml::element('input', array('type' => 'hidden', 'value' => '', 'name' => 'RTEMode', 'id' => 'RTEMode')) );
 
@@ -168,6 +171,25 @@ class RTE {
 
 		// allow other extensions to add extra HTML to edit form
 		wfRunHooks('RTEAddToEditForm', array(&$form, &$out));
+
+		return true;
+	}
+
+	/**
+	 * Disable save / preview / show changes buttons until RTE is fully loaded
+	 *
+	 * @author Macbre
+	 */
+	public static function disableEditButtons(&$editPage, &$checkboxes) {
+		wfProfileIn(__METHOD__);
+
+		// add disabled='disabled' attribute
+		$buttons = array('save', 'preview', 'diff');
+		foreach($buttons as $button) {
+			$checkboxes[$button] = substr($checkboxes[$button], 0, -3) . ' disabled="disabled" />';
+		}
+
+		wfProfileOut(__METHOD__);
 
 		return true;
 	}
