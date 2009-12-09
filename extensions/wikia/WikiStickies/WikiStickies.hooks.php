@@ -19,28 +19,31 @@ function efAddWikiSticky( &$html ) {
 		if( isset( $feedWithoutimages[$i] ) ) {
 			$feeds[] = array(
 					'prefix' => wfMsg( 'wikistickies-withoutimages-st' ),
+					'context' => 'withoutimages',
 					'title' => $feedWithoutimages[$i] );
 		}
 		if( isset( $feedNewpages[$i] ) ) {
 			$feeds[] = array(
 					'prefix' => wfMsg( 'wikistickies-newpages-st' ),
+					'context' => 'newpages',
 					'title' => $feedNewpages[$i] );
 		}
 		if( isset( $feedWantedpages[$i] ) ) {
 			$feeds[] = array(
 					'prefix' => wfMsg( 'wikistickies-wantedpages-st' ),
+					'context' => 'wantedpages',
 					'title' => $feedWantedpages[$i] );
 		}
 	}
 
 	$js = "WIKIA.WikiStickies.stickies = [\n";
 	foreach( $feeds as $f ) {
-		$js .= "'" . WikiStickies::renderWikiStickyContent( $f['title'], $f['prefix'] ) . "',\n";
+		$js .= "'" . WikiStickies::renderWikiStickyContent( $f['title'], $f['prefix'], array( 'class' => 'fake_' . $f['context'] ) ) . "',\n";
 	}
 	$js .= "];\n";
 	$wgOut->addInlineScript( $js );
 	$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/WikiStickies/js/WikiStickiesMyHome.js?{$wgStyleVersion}\"></script>\n");
-	$html = WikiStickies::renderWikiSticky( $feeds[0]['title'], $feeds[0]['prefix'] );
+	$html = WikiStickies::renderWikiSticky( $feeds[0]['title'], $feeds[0]['prefix'], NULL,  array('class' => 'fake_' . $feeds[0]['context'] ) );
 
 	return true;
 }
