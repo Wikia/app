@@ -18,19 +18,19 @@ function efAddWikiSticky( &$html ) {
 	for( $i = 0; $i < max( count( $feedWithoutimages ), count( $feedNewpages ), count( $feedWantedpages ) ); $i++ ) {
 		if( isset( $feedWithoutimages[$i] ) ) {
 			$feeds[] = array(
-					'prefix' => wfMsg( 'wikistickies-withoutimages-st' ),
+					'prefix' => 'wikistickies-withoutimages-st',
 					'context' => 'withoutimages',
 					'title' => $feedWithoutimages[$i] );
 		}
 		if( isset( $feedNewpages[$i] ) ) {
 			$feeds[] = array(
-					'prefix' => wfMsg( 'wikistickies-newpages-st' ),
+					'prefix' => 'wikistickies-newpages-st',
 					'context' => 'newpages',
 					'title' => $feedNewpages[$i] );
 		}
 		if( isset( $feedWantedpages[$i] ) ) {
 			$feeds[] = array(
-					'prefix' => wfMsg( 'wikistickies-wantedpages-st' ),
+					'prefix' => 'wikistickies-wantedpages-st',
 					'context' => 'wantedpages',
 					'title' => $feedWantedpages[$i] );
 		}

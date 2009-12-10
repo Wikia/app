@@ -52,17 +52,17 @@ class SpecialWikiStickies extends SpecialPage {
 			'wikistickies-withoutimages',
 			WikiStickies::getWithoutimagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ),
 			wfMsg('wikistickies-withoutimages-hd'),
-			wfMsg( 'wikistickies-withoutimages-st-short' ) ) ;
+			'wikistickies-withoutimages-st-short' ) ;
 
 		WikiStickies::formatFeed( 'wikistickies-newpages', 
 			WikiStickies::getNewpagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
 			wfMsg('wikistickies-newpages-hd'), 
-			wfMsg( 'wikistickies-newpages-st-short' ) );
+			'wikistickies-newpages-st-short' );
 
 		WikiStickies::formatFeed( 'wikistickies-wantedpages', 
 			WikiStickies::getWantedpagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
 			wfMsg('wikistickies-wantedpages-hd'), 
-			wfMsg( 'wikistickies-wantedpages-st-short' ) );
+			'wikistickies-wantedpages-st-short' );
 
 		if( !empty( $wgEnableNewWikiBuilder ) ) {
 			// get the Two Tools

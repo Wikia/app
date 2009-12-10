@@ -212,7 +212,7 @@ class WikiStickies {
 	 * Outputs the appropriate HTML for a WikiSticky.
 	 *
 	 * @param $title A Title object the WikiSticky should display.
-	 * @param $prefix string The natural-language prefix to the type of sticky.
+	 * @param $prefix string The key to the message for a type of sticky.
 	 * @param $attrs array An array of attribute-value pairs. (Optional.)
 	 *
 	 * @return string The appropriate HTML to output.
@@ -283,10 +283,11 @@ class WikiStickies {
 			} else {
 				$html = xml::openelement( 'span' );
 			}
-			$html .= htmlspecialchars( $prefix ).
-				xml::closeelement( 'span' ).
+			$html .= wfMsg( $prefix ,
 				// todo: handle an array with more than one item?
-				' ' . $sk->link( $title, htmlspecialchars( $title->getText(), ENT_QUOTES ), array(), array(), array( 'known') ) . '?';
+				$sk->link( $title, htmlspecialchars( $title->getText(), ENT_QUOTES ), array(), array(), array( 'known') ) );
+
+			xml::closeelement( 'span' );
 		}
 		return $html;
 	}
