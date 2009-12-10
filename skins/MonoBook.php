@@ -286,10 +286,11 @@ if ( !$this->isSkyscraper() ) {
 
 		// Generate additional footer links
 		$footerlinks = array(
-			'lastmod', 'viewcount', 'numberofwatchingusers', 'credits', 'copyright',
-			'privacy', 'about', 'disclaimer', 'tagline',
 			// wikia addons
-			'advertise', 'diggs', 'delicious', 'hosting'
+			'lastmod', /* own line, must be first */
+			'credits', /* block'd with css */
+			'about', 'contact', 'disclaimer', 'privacy', 'advertise', /* match order in monaco footer */
+			'hosting', /* wikia(r) line, must be last, block'd with css*/
 		);
 		$validFooterLinks = array();
 		foreach( $footerlinks as $aLink ) {

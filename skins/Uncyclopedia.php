@@ -122,9 +122,6 @@ class UncyclopediaTemplate extends MonoBookTemplate {
 	  <li id="f-copyright">Content is available under a <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/">Creative Commons License</a>.</li>
 	  <li id="f-about"><a href="<?= $skin->makeUrl('Uncyclopedia:About');?>" title="Uncyclopedia:About">About Uncyclopedia</a></li>
 	  <li id="f-disclaimer"><a href="<?= $skin->makeUrl('Uncyclopedia:General_disclaimer');?>" title="Uncyclopedia:General disclaimer">Disclaimers</a></li>
-	  <li id="f-diggs"><a href="http://digg.com/submit"  onclick="location.href='http://digg.com/submit?phase=2&amp;url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title); return false;"><img src="http://images.wikia.com/common/91x17-digg-button.png?js=0" width="91" height="17" id="digg-icon" alt="Digg!" />
-	    </a></li>
-	  <li id="f-delicious"><a href="http://del.icio.us/post" onclick="location.href='https://api.del.icio.us/v1/posts/add?description='+encodeURIComponent(document.title)+'&amp;url='+encodeURIComponent(location.href); return false;"><img src="http://images.wikia.com/common/OPmydel.gif" alt="delicious" /></a></li>
 	</ul>
 	<div id="f-hosting"><i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.</div>
 <?php	}
