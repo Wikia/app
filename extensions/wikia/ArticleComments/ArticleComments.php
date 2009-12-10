@@ -28,6 +28,7 @@ $wgHooks['RecentChange_save'][] = 'ArticleComment::watchlistNotify';
 # recentchanges
 $wgHooks['ChangesListMakeSecureName'][] = 'ArticleCommentList::makeChangesListKey';
 $wgHooks['ChangesListHeaderBlockGroup'][] = 'ArticleCommentList::setHeaderBlockGroup';
+$wgHooks['ChangesListInsertArticleLink'][] = 'ArticleCommentList::ChangesListInsertArticleLink';
 # special::watchlist
 $wgHooks['ComposeCommonSubjectMail'][] = 'ArticleComment::ComposeCommonMail';
 $wgHooks['ComposeCommonBodyMail'][] = 'ArticleComment::ComposeCommonMail';
@@ -842,23 +843,27 @@ class ArticleComment {
 	 *
 	 * @return true -- because it's hook
 	 */
-	static public function watchlistNotify ( RecentChange &$oRC ) {
-		global $wgEnableGroupedArticleCommentsRC, $wgTitle;
+	static public function watchlistNotify(RecentChange &$oRC) {
+		global $wgEnableGroupedArticleCommentsRC;
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty($wgEnableGroupedArticleCommentsRC) && ( $oRC instanceof RecentChange ) ) {
+			$title = $oRC->getAttribute('rc_title');
 			$namespace = $oRC->getAttribute('rc_namespace');
 			$article_id = $oRC->getAttribute('rc_cur_id');
-			//TODO: is this usage of wgTitle is proper?
-			if ( ( $namespace == Namespace::getTalk($wgTitle->getNamespace()) ) && !empty( $article_id ) ) {
+
+			if (Namespace::isTalk($namespace) &&
+				strpos(end(explode('/', $title)), ARTICLECOMMENT_PREFIX) === 0 &&
+				!empty($article_id)) {
+
 				$Comment = ArticleComment::newFromId( $article_id );
 				if ( !is_null($Comment) ) {
 					$oArticlePage = $Comment->getArticleTitle();
 					#---
 					$mAttribs = $oRC->mAttribs;
 					#---
-					$mAttribs['rc_title'] = $oArticlePage->getText();
-					$mAttribs['rc_namespace'] = $oArticlePage->getNamespace();
+					$mAttribs['rc_title'] = $oArticlePage->getDBkey();
+					$mAttribs['rc_namespace'] = Namespace::getSubject($oArticlePage->getNamespace());
 					$mAttribs['rc_log_action'] = 'article_comment';
 					#---
 					$oRC->setAttribs($mAttribs);
@@ -1399,13 +1404,13 @@ class ArticleCommentList {
 		$namespace = $oTitle->getNamespace();
 
 		$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
-		if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) && $allowed ) {
+		if ( !is_null($oTitle) && Namespace::isTalk($oTitle->getNamespace()) && strpos(end(explode('/', $oTitle->getText())), ARTICLECOMMENT_PREFIX) === 0 && $allowed ) {
 			$user = $comment = '';
 			$newTitle = null;
 			list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
 			if ( !empty($user) ) {
-				$currentName = 'ArticleComments';
+				$currentName = 'ArticleComments' . reset(explode('/', $oTitle->getText()));
 			}
 		}
 
@@ -1442,7 +1447,7 @@ class ArticleCommentList {
 			$namespace = $oTitle->getNamespace();
 
 			$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
-			if ( !is_null($oTitle) && in_array( $namespace, array ( Namespace::getTalk($oTitle->getNamespace()) ) ) && $allowed ) {
+			if ( !is_null($oTitle) && Namespace::isTalk($oTitle->getNamespace()) && strpos(end(explode('/', $oTitle->getText())), ARTICLECOMMENT_PREFIX) === 0 && $allowed ) {
 				list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
 
 				if ( !empty($user) ) {
@@ -1450,13 +1455,6 @@ class ArticleCommentList {
 
 					$userlinks = array();
 					foreach ( $oRCCacheEntryArray as $id => $oRCCacheEntry ) {
-			 			# make proper text
-			 			if ( !isset($oRCCacheEntry->mOtherFlags) ) {
-			 				$oRCCacheEntry->mOtherFlags = array();
-						}
-			 			$oRCCacheEntry->mOtherFlags[] = $oRCCacheEntry->timestamp;
-			 			$oRCCacheEntry->ownTitle = $oRCCacheEntry->getTitle()->getText();
-
 			 			$u = $oRCCacheEntry->userlink;
 						if( !isset( $userlinks[$u] ) ) {
 							$userlinks[$u] = 0;
@@ -1479,7 +1477,7 @@ class ArticleCommentList {
 					$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 					$template->set_vars(
 						array (
-							'hdrtitle' 		=> wfMsg('article-comments-rc-comments'),
+							'hdrtitle' 		=> wfMsgExt('article-comments-rc-comments', array('parseinline'), reset(explode('/', $oTitle->getText()))),
 							'inx'			=> $oChangeList->rcCacheIndex,
 							'cntChanges'	=> $cntChanges,
 							'users'			=> $users,
@@ -1620,6 +1618,19 @@ class ArticleCommentList {
 		if (Namespace::isTalk($title->getNamespace()) && strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
 			$result = true;	//omit captcha
 			return false;
+		}
+		return true;
+	}
+
+	static function ChangesListInsertArticleLink($changeList, &$articlelink, &$s, &$rc, $unpatrolled, $watched) {
+		$title = $rc->getAttribute('rc_title');
+		$namespace = $rc->getAttribute('rc_namespace');
+
+		if (Namespace::isTalk($namespace) &&
+			strpos(end(explode('/', $title)), ARTICLECOMMENT_PREFIX) === 0) {
+
+			wfLoadExtensionMessages('ArticleComments');
+			$articlelink = wfMsgExt('article-comments-rc-comment', array('parseinline'), str_replace('_', ' ', reset(explode('/', $title))));
 		}
 		return true;
 	}
