@@ -29,7 +29,6 @@ function GetComboAjaxLogin() {
 
 	$tmpl->set("registerAjax",$form->ajaxRender());
 	$response->addText( $tmpl->execute('ComboAjaxLogin') );
-	$tmpl->execute("register",$form->ajaxRender() );
 	return $response;
 }
 
