@@ -122,6 +122,9 @@ class AdProviderGAM implements iAdProvider {
 		// And languages
 		$out .= 'GA_googleAddAttr("cont_lang", wgContentLanguage);' . "\n";
 		$out .= 'GA_googleAddAttr("user_lang", wgUserLanguage);' . "\n";
+		
+		// And dbname
+		$out .= 'GA_googleAddAttr("dbname", wgDBname);' . "\n";
 
 		// ###### Ad Sense attributes
 		$out .= $this->getAdSenseAttr() . "\n" .
