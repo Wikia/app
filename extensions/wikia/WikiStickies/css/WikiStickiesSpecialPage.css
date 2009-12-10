@@ -4,10 +4,10 @@
 .wikisticky_browser {
     background: url(../images/bg.wikisticky.209x187.png) no-repeat;
     color: #000;
-    float: left;
     height: 187px;
-    margin-bottom: 3em;
+    position: absolute;
     width: 209px;
+    left: 10px;
 }
 
 #bodyContent .wikisticky_browser .wikisticky_content a {
@@ -16,8 +16,7 @@
 
 .wikisticky_content { padding-right: 8px; }
 .wikistickiesfeed {
-    clear: left;
-    margin: 0 0 3em 0;
+    margin: 0 0 3em;
 }
 
 #wikistickies-admintools {
@@ -29,7 +28,7 @@
     border-bottom: none;
     font-size: 135%;
     font-weight: bold;
-    margin: 0 0 6px 0;
+    margin: 0 0 6px;
 }
 
 .wikistickiesfeed h2 {
@@ -60,40 +59,50 @@
     left: -502px;
 }
 
-.wikistickiesfeed ul, .wikistickiesfeed .MoreLink {
+.wikistickiesfeed ol, .wikistickiesfeed .MoreLink {
     margin-left: 240px;
 }
 
-.wikistickiesfeed ul {
+.wikistickiesfeed ol {
     font-family: Arial, sans-serif;
     font-size: 13px;
     height: 1%; /* For IE7 */
-    padding-left: 1.25em;
+    list-style-type: none;
     position: relative;
 }
-.wikistickiesfeed ul li {
+.wikistickiesfeed ol li {
     width: 48%;
     line-height: 1.75;
     margin-bottom: 0;
+    padding-left: 16px;
+    background: url(//images.wikia.com/common/skins/monobook/bullet.gif) no-repeat left center;
+}
+.wikistickiesfeed li.bottom {
+    float: left;
 }
 .wikistickiesfeed .secondcolumn {
     margin-left: 50%;
 }
 .wikistickiesfeed .secondcolumn.reset {
-    margin-top: -8.75em;
+    /*
+       This value is arrived at by calculating the following:
+           number of non-floated <li>s * line-height
+    */
+    margin-top: -7em;
 }
 
 .wikistickiesfeed .submerged {
     display: none;
-    margin-top: 0;
+    margin-top: -10px;
 }
 
 .wikistickiesfeed .MoreLink {
+    clear: left;
     display: block;
     border: 1px solid #CCC;
     border-width: 1px 0;
-    margin-top: 10px;
     margin-bottom: 20px;
+    margin-top: 10px;
     text-align: center;
     padding: 5px 0;
 }
