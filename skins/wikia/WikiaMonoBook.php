@@ -48,7 +48,7 @@ class WikiaSkinMonoBook extends SkinTemplate {
 	}
 
 	public function addWikiaVars(&$obj, &$tpl) {
-		global $wgCityId, $wgStyleVersion, $wgStylePath, $wgOut, $wgHooks;
+		global $wgCityId, $wgStyleVersion, $wgStylePath, $wgOut, $wgHooks, $wgUser;
 		wfProfileIn(__METHOD__);
 
 		// setup ads
@@ -97,13 +97,16 @@ class WikiaSkinMonoBook extends SkinTemplate {
 
 		// setup footer links
 		$tpl->set('copyright',  '');
-		$tpl->set('privacy',    '');
+		$tpl->set('privacy',    '<a href="http://www.wikia.com/wiki/Wikia:Privacy_Policy" title="Privacy Policy">Privacy</a>');
 
-		$tpl->set('about',      '<a href="http://www.wikia.com/wiki/About_Wikia" title="About Wikia">About Wikia</a>');
-		$tpl->set('disclaimer', '<a href="http://www.wikia.com/wiki/Terms_of_use" title="Terms of use">Terms of use</a>');
-		$tpl->set('advertise',  '<a href="http://www.federatedmedia.net/authors/wikia" title="advertise on wikia">Advertise</a>');
+		$tpl->set('about',      '<a href="http://www.wikia.com/wiki/Wikia:About" title="About Wikia">About Wikia</a>');
+		$tpl->set('disclaimer', '<a href="http://www.wikia.com/wiki/Wikia:Terms_of_use" title="Terms of use">Terms of use</a>');
+		$tpl->set('advertise',  '<a href="http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia" title="advertise on Wikia">Advertise</a>'); # rt33045
 		$tpl->set('hosting',    '<i>Wikia</i>&reg; is a registered service mark of Wikia, Inc. All rights reserved.');
 		$tpl->set('credits',    ' ');
+		
+		# rt33045
+		$tpl->set('contact',    '<a href="'. $wgUser->getSkin()->makeUrl('Special:Contact') . '" title="Contact Wikia">Contact Wikia</a>');
 
 		wfProfileOut(__METHOD__);
 		return true;
