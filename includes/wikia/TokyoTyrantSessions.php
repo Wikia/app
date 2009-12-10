@@ -4,18 +4,18 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( "This file is part of MediaWiki, it is not a valid entry point" );
 }
 
-require_once dirname(__FILE__) . "/../../lib/Tyrant.php";
+require_once( "Tyrant.php" );
 
 #ttserver -port 1979 -ext /path/to/expire.lua -extpc expire 1.0 '/tmp/sessions.tct#idx=key:lex#idx=x:dec#idx=val:lex#dfunit=8'
-# where 
+# where
 #  * key: string (wikicities:session:md5) - primary key
 #  * x: decimal (number of seconds) - use to remove expire keys from table
-#  * val: string (data)  
+#  * val: string (data)
 #
 # master-master replication
 # ttserver -port 16666 -pid /tmp/ttserver.pid -sid 666  -ulog /tmp/ulog/ -ulim 1000000
-#			-mhost 10.10.10.163 -mport 11212 -rts /tmp/2.rts 
-#			-ext /path/to/expire.lua -extpc expire 1.0 
+#			-mhost 10.10.10.163 -mport 11212 -rts /tmp/2.rts
+#			-ext /path/to/expire.lua -extpc expire 1.0
 #			'/tmp/sessions.tct#idx=key:lex#idx=x:dec#idx=val:lex#dfunit=8'
 #
 
@@ -33,25 +33,25 @@ class TokyoTyrantSession {
 	var $cid = null;
 	var $host = "";
 	var $port = "";
-	
+
 	public static $sess_conn = array();
-	
+
 	function __construct($servers = null) {
 		$this->set_servers($servers);
 	}
-	
+
 	public static function isConnected() {
 		return Tyrant::getConnection();
 	}
-	
+
 	public static function newFromKey($key) {
 		global $wgSessionTTServers;
 		$TTSess = new TokyoTyrantSession();
 		$TTSess->set_servers($wgSessionTTServers);
 		return $TTSess->connect($key);
 	}
-	
-	public function set_servers($servers = null) { 
+
+	public function set_servers($servers = null) {
 		$this->servers = $servers;
 		$this->active = count($servers);
 	}
@@ -69,8 +69,8 @@ class TokyoTyrantSession {
 	}
 
 	# functions c&p from memcached-client.php
-	private function hashfunc($key) { 
-		return hexdec(substr(md5($key),0,8)) & 0x7fffffff; 
+	private function hashfunc($key) {
+		return hexdec(substr(md5($key),0,8)) & 0x7fffffff;
 	}
 
 	private function connect($key) {
@@ -82,7 +82,7 @@ class TokyoTyrantSession {
 		if ( $conn ) {
 			return $conn;
 		}
-		
+
 		if ( strpos($key, ' ') ) {
 			error_log( __METHOD__ . ": found a space character in the key '".$key."'. Fixing it" );
 			$key = str_replace( ' ', '_', $key );
@@ -103,20 +103,20 @@ class TokyoTyrantSession {
 						return $TT;
 					}
 				} catch (Tyrant_Exception $e) {
-					echo "cannot connect to TTserver ({$this->host}, {$this->port}, {$this->cid}) - " . $e->getMessage() . "\n";
+					error_log( __METHOD__ .  ": cannot connect to TTserver ({$this->host}, {$this->port}, {$this->cid}) - " . $e->getMessage() );
 				}
 			}
 			$hv = $this->hashfunc( $hv . $realkey );
 		}
 		return false;
-	}	
-	
+	}
+
 	public static function close() {
 		$conn = self::isConnected();
 		if ( $conn ) {
 			$sock = $conn->socket();
 			if ( isset(self::$sess_conn[$sock]) ) {
-				list($host, $port, $cid) = self::$sess_conn[$sock]; 
+				list($host, $port, $cid) = self::$sess_conn[$sock];
 				if ( $host && $port && $cid ) {
 					$conn->disconnect($host, $port, $cid);
 				}
@@ -125,7 +125,7 @@ class TokyoTyrantSession {
 		}
 		return true;
 	}
-	
+
 	public static function put( $key, $value ) {
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
@@ -139,7 +139,7 @@ class TokyoTyrantSession {
 		}
 		return false;
 	}
-	
+
 	public static function get( $key ) {
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
@@ -150,42 +150,41 @@ class TokyoTyrantSession {
 		}
 		return '';
 	}
-	
-	public static function out( $key ) { 
+
+	public static function out( $key ) {
 		$TT = TokyoTyrantSession::newFromKey($key);
 		if ( $TT ) {
 			return $TT->out( $key );
-		} 
-		return false; 
+		}
+		return false;
 	}
-	
+
 	# sessions functions
-	public static function __open( $save_path, $session_name ) { 
+	public static function __open( $save_path, $session_name ) {
 		return true;
 	}
-	public static function __close() { 
-		return self::close(); 
+	public static function __close() {
+		return self::close();
 	}
-	public static function __read( $id ) { 
-		return self::get( self::get_key($id) ); 
+	public static function __read( $id ) {
+		return self::get( self::get_key($id) );
 	}
-	public static function __write( $id, $data ) { 
-		return self::put( self::get_key($id), $data ); 
+	public static function __write( $id, $data ) {
+		return self::put( self::get_key($id), $data );
 	}
-	public static function __destroy( $id ) { 
-		return self::out( self::get_key($id) ); 
+	public static function __destroy( $id ) {
+		return self::out( self::get_key($id) );
 	}
-	public static function __gc( $maxlifetime ) { 
-		return true; 
+	public static function __gc( $maxlifetime ) {
+		return true;
 	}
 }
 
 session_set_save_handler(
-	array('TokyoTyrantSession','__open'), 
+	array('TokyoTyrantSession','__open'),
 	array('TokyoTyrantSession','__close'),
 	array('TokyoTyrantSession','__read'),
 	array('TokyoTyrantSession','__write'),
 	array('TokyoTyrantSession','__destroy'),
 	array('TokyoTyrantSession','__gc')
 );
-
