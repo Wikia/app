@@ -20,7 +20,34 @@ $messages['en'] = array(
 	'article-comments-asc' => 'Newest last',
 	'article-comments-login' => "<a href=\"$1\">Log in</a> to comment",
 	'article-comments-zero-comments' => 'No comments yet!',
-	'article-comments-toc-item' => 'Comments'
+	'article-comments-toc-item' => 'Comments',
+	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$BLOGTITLE" on {{SITENAME}}',
+	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
+
+$PAGEEDITOR made a comment on "$BLOGTITLE". 
+
+To see the comment thread, follow the link below:
+$PAGETITLE_URL 
+
+Please visit and edit often...
+
+Wikia',
+	'enotif_body_article_comment-HTML' => '<p>
+Dear $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR made a comment on "$BLOGTITLE".
+<br /><br />
+To see the comment thread, follow the link below: <a href="$PAGETITLE_URL">$PAGETITLE_URL</a> 
+<br /><br />
+Please visit and edit often...
+<br /><br />
+{{SITENAME}}
+<br /><hr />
+<ul>
+<li>Have you checked out our hubs? <a href="http://www.wikia.com/wiki/Category:Hubs">Visit Here!</a></li>
+<li>Want to control which emails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{fullurl:{{ns:special}}:Preferences}}<a>.</li>
+</ul>
+</p>',
 );
 
 $messages['fi'] = array(
