@@ -79,12 +79,12 @@ function categoryHubAddMagicWords(&$magicWords, $langCode){
 // Before the page is rendered this gives us a chance to cram some Javascript in.
 ////
 function categoryHubAdditionalScripts( &$out, &$sk ){
-	global $wgScriptPath;
+	global $wgScriptPath,$wgStyleVersion;
 	$out->addScript('<link type="text/css" href="http://jqueryui.com/latest/themes/base/ui.all.css" rel="stylesheet" />');
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.core.js"></script>');
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.tabs.js"></script>');
-	$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/wikia/CategoryHubs/interactiveLists.js'></script>");
-	$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/wikia/CategoryHubs/tracking.js'></script>");
+	$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/wikia/CategoryHubs/interactiveLists.js?$wgStyleVersion'></script>");
+	$out->addScript("<script type='text/javascript' src='$wgScriptPath/extensions/wikia/CategoryHubs/tracking.js?$wgStyleVersion'></script>");
 	return true;
 } // end categoryHubAdditionalScripts()
 
@@ -368,10 +368,10 @@ function categoryHubTitleBar(&$catView, &$r){
 	$percentAnswered = $categoryEdits->getPercent(ANSWERED_CATEGORY);
 	if($percentAnswered <= 0){
 		$percentAnswered = 0;
-		$r .= "<div class='cathub-progbar-unanswered' style='width:$PROG_BAR_WIDTH'>No questions answered yet</div>\n";
+		$r .= "<div class='cathub-progbar-unanswered' style='width:$PROG_BAR_WIDTH'>".wfMsgExt('cathub-progbar-none-done', array())."</div>\n";
 	} else if($percentAnswered >= 100){
 		$percentAnswered = 100;
-		$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>All questions answered!</div>\n";
+		$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-all-done', array())."</div>\n";
 	} else {
 		// TODO: EXTRACT THIS TO A FUNCTION WHICH WILL MAKE A BANDWIDTH-EFFICIENT PROGRESS BAR FOR ANY USE (IF POSSIBLE TO DO CLEANLY... MIGHT HAVE TO REQUIRE IT TO BE ANSWERS-SPECIFIC).
 		$aPercent = substr($percentAnswered, 0, -1); // removes the "%" sign

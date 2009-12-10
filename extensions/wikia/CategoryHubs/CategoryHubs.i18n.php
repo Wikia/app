@@ -14,6 +14,8 @@ $messages['en'] = array(
 	'cathub-progbar-mouseover-not-answered' => '$1% not answered yet',
 	'cathub-progbar-label-answered'         => 'Answered',
 	'cathub-progbar-label-unanswered'       => 'Unanswered',
+	'cathub-progbar-none-done'              => 'No questions answered yet',
+	'cathub-progbar-all-done'               => 'All questions answered!',
 
 	// Keep in mind that there may be questions either unanswer/answered that just don't show up in this pagination so it would be wrong to say there are none in the category at all.
 	'cathub-no-unanswered-questions'        => 'There are no unanswered questions to see right now.', 
