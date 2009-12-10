@@ -21,7 +21,6 @@ class ApiQueryWantedpages extends ApiQueryBase {
 		$this->addFields( array( 'qc_title', 'qc_namespace' ) );
 		$this->addWhereFld( 'qc_type', 'Wantedpages' );
 		$this->addWhere( 'qc_namespace IN (' . implode( ',', $wgContentNamespaces ) . ')' );
-		$this->addWhere( 'qc_namespace NOT IN (' . implode( ',', array( NS_HELP, NS_HELP_TALK ) ) . ')' );
 		$this->addWhere( 'qc_value > 1' );
 		$this->addOption( 'ORDER BY', 'qc_value DESC' );
 		$this->addOption( 'LIMIT', $params['limit'] + 1 );		
