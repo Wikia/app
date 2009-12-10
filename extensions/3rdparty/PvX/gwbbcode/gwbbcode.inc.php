@@ -37,7 +37,7 @@ function parse_gwbbcode($text, $build_name=false, $ignore_includes=false)
       $text = preg_replace('#(\[build[^\]]*?) name="[^\]"]+"#isS', "\\1", $text);   //Remove all build names
       $text = preg_replace('#(\[build )#isS', "\\1name=\"$build_name\" ", $text);   //Add build names
    }
-   
+
    //Make sure header hook was included
    if (!defined('GWBBCODE_HEADER_HOOK')) {
       define('GWBBCODE_HEADER_HOOK', true);
@@ -57,7 +57,7 @@ function parse_gwbbcode($text, $build_name=false, $ignore_includes=false)
 //Converts a gwBBCode text to HTML
 function gwbbcodize ($t) {
    $start = gws_microtime_float();
-   
+
    // Replace all '['s inside [pre]..[/pre] by '&#91;'
    if (!defined('SMF')) {  //SMF uses the [pre] tag already
       $t = preg_replace_callback('#\[pre\](.*?)\[\/pre\]#isS', 'pre_replace', $t);
@@ -294,14 +294,14 @@ function skill_name_replace($reg) {
       if (!empty($db_suffix)) {
          $db_attr = " db=$db_suffix";
       }
-      
+
       //Handle [shock|a knockdown]
       $show = '';
       if (!empty($shown_name)) {
          $show = " show=\"$shown_name\"";
          $noicon = true;
       }
-      
+
       //Handle the difference between [[shock] and [shock]
       if ($noicon)
          return "[skill noicon$attr$db_attr$show]".$name.'[/skill]';
@@ -477,7 +477,7 @@ function build_replace($reg) {
       preg_match('@^([0-9]+)(\\+[+0-9]+)?@', $raw_level, $reg);
       $base_level = $reg[1];
       $bonus = isset($reg[2]) ? $reg[2] : '0';
-      
+
       //Primary attributes
       if ($prof_attr_list[$attr] == $primary) {
          $bonus_level = @eval('return '.$bonus.';');
@@ -583,7 +583,7 @@ function build_replace($reg) {
                $new_skill_str = str_replace('$', '\\$', $new_skill_str);   //you never know..
                $skills = preg_replace('@'.preg_quote($reg[0]).'@', $new_skill_str, $skills, 1);
             }
-                  
+
             if (   ($skill['profession'] == $primary || $skill['profession'] == $secondary || $skill['prof'] == '?')
                 && (array_search($id, $template_skills) === false || $id == 0)) {
                if ($id >= $skill_id_max) {
@@ -649,12 +649,12 @@ function build_replace($reg) {
 		$buildbox_center = 'class="gwbuildbox_center"';
 		$buildbox_right = 'class="gwbuildbox_right"';
 	}
-   else {   		
+   else {
 		$buildbox_left = '';
 		$buildbox_center = '';
 		$buildbox_right = '';
 	}
-	
+
    $tpl = $gwbbcode_tpl['build'];
    //Replace all "{var_name}" by $var_name till there is none to replace (i.e a tag replacement can contain other tags)
    do {
@@ -697,7 +697,7 @@ function skill_replace($reg) {
    if (($id=gws_skill_id($name)) === false) {
       return $all;
    }
-   
+
    //else
    $details = gws_details($id, $db_suffix);
    if ($details === false)
@@ -742,12 +742,12 @@ function skill_replace($reg) {
          $tpl = $gwbbcode_tpl['icon'];
       }
       $tpl .= $gwbbcode_tpl['skill'];
-   
+
       //What adrenaline/energy/energyregen is required?
       $required = Array();
       if ($recharge != 0)
          $required[] = infuse_values($gwbbcode_tpl['requirement'], Array('type' => 'rech', 'value' => $recharge));
-   
+
       //Format casting time
       if ($casting != 0) {
          switch ($casting) {
@@ -767,7 +767,7 @@ function skill_replace($reg) {
          }
          $required[] = infuse_values($gwbbcode_tpl['requirement'], Array('type' => 'cast', 'value' => $casting_html));
       }
-   
+
       //Format energy, adrenaline and upkeep
       if ($adrenaline != 0) {
          $required[] = infuse_values($gwbbcode_tpl['requirement'], Array('type' => 'adre', 'value' => $adrenaline));
@@ -802,7 +802,7 @@ function skill_replace($reg) {
       if ($eregen != 0)
          $required[] = infuse_values($gwbbcode_tpl['requirement'], Array('type' => 'eregen', 'value' => -$eregen));
       $required = implode('', $required);
-      
+
       //Campaign names
       $campaign_names = Array('Core', 'Prophecies', 'Factions', 'Nightfall', 'EotN');
       if (isset($campaign_names[$chapter])) {
@@ -818,8 +818,8 @@ function skill_replace($reg) {
       $attr_html = $attribute == 'No Attribute' ? $gwbbcode_tpl['tpl_skill_no_attr'] : $gwbbcode_tpl['tpl_skill_attr'];
       $extra_desc = empty($extra_desc) ? '' : infuse_values($gwbbcode_tpl['tpl_extra_desc'], Array('extra_desc' => $extra_desc));
 
-      $desc_len = strlen($desc) / 2.5 + 340;   
-      
+      $desc_len = strlen($desc) / 2.5 + 340;
+
       //Change the skill aspect if skill is elite
       if (isset($elite) && $elite) {
          $elite_or_normal = 'elite_skill';
@@ -828,7 +828,7 @@ function skill_replace($reg) {
       else {
          $elite_or_normal = 'normal_skill';
       }
-      
+
       //Profession icon
       if ($prof == '?')
          $prof_img = "$gwbbcode_img_path/img_interface/void2.gif";
@@ -908,7 +908,7 @@ function gws_skill_id($skill_name) {
       $query = "SELECT id,attr FROM `skills` WHERE name_id "
             . ((strlen($name_id) >= 4) ? "like '$name_id%'" : "= '$name_id'") //Allows the use of partial skill names longer than 4 chars
             . ' ORDER BY name_id';
-      $result = mysql_query($query) or die('Query failed: ' . mysql_error()); 
+      $result = mysql_query($query) or die('Query failed: ' . mysql_error());
       $ret = mysql_fetch_assoc($result);
       mysql_free_result($result);
       if (!empty($ret)) {
@@ -1048,16 +1048,19 @@ function gws_attr_name($attr) {
 
 //Returns the attribute name abbreviation of a partial one. Returns false if no match is found
 function gws_attribute_name($attribute) {
-   static $attribute_list = Array('air'=>'airmagic', 'ear'=>'earthmagic', 'ene'=>'energystorage', 'fir'=>'firemagic', 'wat'=>'watermagic', 'dom'=>'dominationmagic', 'fas'=>'fastcasting', 'ill'=>'illusionmagic', 'ins'=>'inspirationmagic', 'div'=>'divinefavor', 'hea'=>'healingprayers', 'pro'=>'protectionprayers', 'smi'=>'smitingprayers', 'blo'=>'bloodmagic', 'cur'=>'curses', 'dea'=>'deathmagic', 'sou'=>'soulreaping', 'bea'=>'beastmastery', 'exp'=>'expertise', 'mar'=>'marksmanship', 'wil'=>'wildernesssurvival', 'axe'=>'axemastery', 'ham'=>'hammermastery', 'str'=>'strength', 'swo'=>'swordsmanship', 'tac'=>'tactics', 'cri' => 'criticalstrikes', 'dag' => 'daggermastery', 'dead' => 'deadlyarts', 'sha' => 'shadowarts', 'spa' => 'spawningpower', 'cha' => 'channelingmagic', 'com' => 'communing', 'res' => 'restorationmagic', 'spe' => 'spearmastery', 'comma' => 'command', 'mot' => 'motivation', 'lea' => 'leadership', 'scy' => 'scythemastery', 'win' => 'windprayers', 'earthp' => 'earthprayers', 'mys' => 'mysticism', 'kur' => 'kurzickrank', 'lux' => 'luxonrank', 'sun' => 'sunspearrank', 'lig' => 'lightbringerrank', 'asu' => 'asurarank', 'del' => 'deldrimorrank', 'ebo' => 'ebonvanguardrank', 'nor' => 'nornrank');
+	static $attribute_list = Array('air'=>'airmagic', 'ear'=>'earthmagic', 'ene'=>'energystorage', 'fir'=>'firemagic', 'wat'=>'watermagic', 'dom'=>'dominationmagic', 'fas'=>'fastcasting', 'ill'=>'illusionmagic', 'ins'=>'inspirationmagic', 'div'=>'divinefavor', 'hea'=>'healingprayers', 'pro'=>'protectionprayers', 'smi'=>'smitingprayers', 'blo'=>'bloodmagic', 'cur'=>'curses', 'dea'=>'deathmagic', 'sou'=>'soulreaping', 'bea'=>'beastmastery', 'exp'=>'expertise', 'mar'=>'marksmanship', 'wil'=>'wildernesssurvival', 'axe'=>'axemastery', 'ham'=>'hammermastery', 'str'=>'strength', 'swo'=>'swordsmanship', 'tac'=>'tactics', 'cri' => 'criticalstrikes', 'dag' => 'daggermastery', 'dead' => 'deadlyarts', 'sha' => 'shadowarts', 'spa' => 'spawningpower', 'cha' => 'channelingmagic', 'com' => 'communing', 'res' => 'restorationmagic', 'spe' => 'spearmastery', 'comma' => 'command', 'mot' => 'motivation', 'lea' => 'leadership', 'scy' => 'scythemastery', 'win' => 'windprayers', 'earthp' => 'earthprayers', 'mys' => 'mysticism', 'kur' => 'kurzickrank', 'lux' => 'luxonrank', 'sun' => 'sunspearrank', 'lig' => 'lightbringerrank', 'asu' => 'asurarank', 'del' => 'deldrimorrank', 'ebo' => 'ebonvanguardrank', 'nor' => 'nornrank');
 
-   $attribute = strtolower(str_replace(' ', '', $attribute));
-   foreach ($attribute_list as $attr => $long_attr) {
-      if (strpos($long_attr, $attribute) === 0) {
-         return $attr;
-      }
-   }
-   //else
-   return false;
+	$attribute = strtolower(str_replace(' ', '', $attribute));
+	foreach ($attribute_list as $attr => $long_attr) {
+		if( empty( $attribute ) ) {
+			continue;
+		}
+		elseif (strpos($long_attr, $attribute) === 0) {
+			return $attr;
+		}
+	}
+	//else
+	return false;
 }
 
 //Returns true only if the partial attribute is a pve attribute, else false
@@ -1354,7 +1357,7 @@ function calc_leadership($name, $attr_list, $type, $energy, $pve_only) {
          return '+' . $max_energy;
       }
    }
-   
+
    //else
    return false;
 }
@@ -1502,12 +1505,12 @@ function template_to_gwbbcode($text) {
    if ($bin === false) {
       return 'Invalid characters found';
    }
-   
+
    //Handle the new format (i.e leading '0111')
    if (preg_match('@^0111@', $bin)) {
       $bin = substr($bin, 4);
    }
-   
+
    $ret = '';
    if (!preg_match('@^([01]{6})([01]{4})([01]{4})([01]{4})([01]{4})@', $bin, $reg)) {
       return 'Couldn\'t read professions nor attribute count and size';
@@ -1627,14 +1630,14 @@ function skill_sort_cmp($a, $b) {
          if ($b['attribute'] == 'No Attribute') {
             $b['attribute'] = 'ZZZ';
          }
-   
+
          //Special case: Dervish
          $d_attributes = Array('Earth Prayers', 'Wind Prayers', 'Mysticism', 'Scythe Mastery', 'ZZZ');
          if ($a['prof'] == 'D') {
             $a['attribute'] = array_search($a['attribute'], $d_attributes);
             $b['attribute'] = array_search($b['attribute'], $d_attributes);
          }
-   
+
          if (preg_replace('|[\'! ]|', '', strtolower($a['attribute'])) == preg_replace('|[\'! ]|', '', strtolower($b['attribute']))) {
             if (preg_replace('|[\'!]|', '', strtolower($a['name'])) == preg_replace('|[\'!]|', '', strtolower($b['name']))) {
                 return 0;
@@ -1654,7 +1657,7 @@ function desc_with_div_tag($skill) {
    $desc = $skill['desc'];
    //Clean up the description
    $desc = str_replace('{target}', '', str_replace('{self}', '', str_replace('{div}', '', $desc)));
-   
+
    //Add the appropriate div tag
    if ($skill['prof'] != 'Mo' || strpos($skill['type'], 'Spell') === false) {
       //No div fav bonus for you
@@ -1717,4 +1720,4 @@ function add_div_tag($effect, $desc) {
    }
    return $desc;
 }
-?>
+
