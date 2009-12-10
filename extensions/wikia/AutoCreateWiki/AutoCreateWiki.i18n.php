@@ -63,6 +63,7 @@ $messages['en'] = array(
 	"autocreatewiki-empty-username" => "Username cannot be empty.",
 	"autocreatewiki-empty-password" => "Password cannot be empty.",
 	"autocreatewiki-empty-retype-password" => "Retype password cannot be empty.",
+	"autocreatewiki-category-other" => "Other",	
 	"autocreatewiki-set-username" => "Set username first.",
 	"autocreatewiki-invalid-category" => "Invalid value of category. Please select proper from dropdown list.",
 	"autocreatewiki-invalid-language" => "Invalid value of language. Please select proper from dropdown list.",

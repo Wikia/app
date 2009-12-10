@@ -50,7 +50,7 @@ var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 <?php
 	endforeach
 ?>
-				<option value="9">Other</option>
+				<option value="9"><?=wfMsg('autocreatewiki-category-other')?></option>
 <?php endif ?>
 				</select>
 				<div class="error" style="display: none;" id="wiki-category-error"></div>
