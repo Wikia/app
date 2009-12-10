@@ -59,3 +59,7 @@ ol li {
 .activityfeed img.sprite {
 	top: 3px;
 }
+
+.wikistickiesfeed .secondcolumn.reset {
+	margin-top: -8.5em;
+}

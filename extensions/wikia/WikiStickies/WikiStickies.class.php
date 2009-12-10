@@ -41,6 +41,9 @@ class WikiStickies {
 	/**
 	 * Prints feed items in batch.
 	 *
+	 * This function generates the appropriate markup for a WikiStickies
+	 * columnar list. It's a bit hairy due to the necessary markup logic.
+	 *
 	 * @param array $feed_data The list of page names that will become the items in the feed.
 	 * @param array $attrs An array of attribute-value pairs. (Optional.)
 	 * @return The complete list HTML to print.
@@ -52,11 +55,13 @@ class WikiStickies {
 		$out = '';
 		$uptolimit = 0;
 
-		$out .= Xml::openElement( 'ul', $attrs );
+		$out .= Xml::openElement( 'ol', $attrs );
 
 		foreach( $feed_data as $title ) {
 			if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
-				if ( $uptolimit > 4 ) { // start a new column at 6th item
+				if ( $uptolimit === 4 ) { // mark the bottom of a column
+					$out .= Xml::openElement ( 'li', array ( 'class' => 'bottom' ) );
+				} else if ( $uptolimit > 4 ) { // start a new column at 6th item
 					if ( $uptolimit === 5 ) {
 						$out .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
 					} else {
@@ -72,7 +77,7 @@ class WikiStickies {
 			}
 		}
 
-		$out .= Xml::closeElement( 'ul' );
+		$out .= Xml::closeElement( 'ol' );
 
 		return $out;
 	}
