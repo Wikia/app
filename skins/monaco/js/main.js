@@ -84,6 +84,16 @@ function openUserMenu(event) {
 
 // AjaxLogin
 function openLogin(event) {
+	
+	if ( typeof openLogin.statusAjaxLogin == 'undefined' ) { // java script static var 
+		openLogin.statusAjaxLogin = false;
+    }
+	
+	if (openLogin.statusAjaxLogin ){
+		return false;
+	}
+	
+
 	// check wgEnableAjaxLogin
 	if ( (typeof wgEnableAjaxLogin == 'undefined') || !wgEnableAjaxLogin ) {
 		$().log('AjaxLogin: wgEnableAjaxLogin is false, going to Special:Userlogin...');
@@ -98,7 +108,7 @@ function openLogin(event) {
 		WET.byStr('signupActions/signup/open');
 		return true;
 	}
-	
+	openLogin.statusAjaxLogin = true;	
 	$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
 			$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AwesomeAjaxLogin.js?' + wgStyleVersion, function() {
 
@@ -117,6 +127,7 @@ function openLogin(event) {
 				$('#AjaxLoginBox').makeModal({width: 320, persistent: true, onClose: function(){ WET.byStr('signupActions/popup/close'); } });
 				setTimeout("$('#wpName1Ajax').focus()", 100);
 				WET.byStr('signupActions/signup/open');
+				openLogin.statusAjaxLogin = false;
 			});
 		}
 	});
@@ -139,11 +150,10 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 		WET.byStr('signupActions/signup/open');
 		return true;
 	}
+	
 	if (showComboAjaxForPalceHolder.statusAjaxLogin){
 		return true;
 	}
-	
-	
 	
 /*   	$("#positioned_elements").append('<div id="loadmask" class="blackout"></div>');
    	$(".blackout:last")
