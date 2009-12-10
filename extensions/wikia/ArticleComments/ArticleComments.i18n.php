@@ -21,10 +21,10 @@ $messages['en'] = array(
 	'article-comments-login' => "<a href=\"$1\">Log in</a> to comment",
 	'article-comments-zero-comments' => 'No comments yet!',
 	'article-comments-toc-item' => 'Comments',
-	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$BLOGTITLE" on {{SITENAME}}',
+	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$ARTICLETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
 
-$PAGEEDITOR made a comment on "$BLOGTITLE". 
+$PAGEEDITOR made a comment on "$ARTICLETITLE". 
 
 To see the comment thread, follow the link below:
 $PAGETITLE_URL 
@@ -35,7 +35,7 @@ Wikia',
 	'enotif_body_article_comment-HTML' => '<p>
 Dear $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR made a comment on "$BLOGTITLE".
+$PAGEEDITOR made a comment on "$ARTICLETITLE".
 <br /><br />
 To see the comment thread, follow the link below: <a href="$PAGETITLE_URL">$PAGETITLE_URL</a> 
 <br /><br />
