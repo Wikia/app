@@ -8,4 +8,7 @@
 }
 .wikisticky_content span { display: block; }
 .wikisticky_content p { position: relative; }
-.wikisticky_content a { padding-right: 3px; }
+#wikisticky_browser .wikisticky_content a {
+    color: #002bb8;
+    padding-right: 3px;
+}
