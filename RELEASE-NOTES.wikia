@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#32083: Ad changes on answers. (Nef)
 * rt#33045: Skins: update footer links in monobook (uberfuzzy)
 * rt#32985: Blogs: reduced default count for blog listings (TOR)
 * rt#32922: update homepage footer links (uberfuzzy)

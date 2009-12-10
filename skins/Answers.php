@@ -57,7 +57,7 @@ class AnswersTemplate extends MonacoTemplate {
 	 */
 	function execute() {
 		global $wgRequest, $wgUser, $wgStyleVersion, $wgStylePath, $wgTitle, $wgEnableFacebookConnect, $wgSitename;
-		global $wgGoogleAdClient;
+		global $wgGoogleAdClient, $wgGoogleAdChannel;
 
 		$this->skin = $skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
@@ -351,7 +351,8 @@ yieldbuild_loc = "question_bubble";
 			// Adsense for search
 			global $wgAFSEnabled;
 			if ($wgAFSEnabled && $wgTitle->getLocalURL() == $this->data['searchaction'] && !$wgUser->isLoggedIn() ) {
-				renderAdsenseForSearch('w2n8', '7000000004');
+				$channel = !empty($wgGoogleAdChannel) ? $wgGoogleAdChannel : '7000000004';
+				renderAdsenseForSearch('w2n8', $channel);
 			}
 			?>
 			<!-- start content -->
@@ -369,7 +370,7 @@ yieldbuild_loc = "question_bubble";
 				$ads = '<div id="ads-unaswered-bottom">
 				<script type="text/javascript">
 					google_ad_client    = "' . $wgGoogleAdClient . '";
-					google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
+					google_ad_channel   = "' . $wgGoogleAdChannel . '";
 					google_ad_width     = "300";
 					google_ad_height    = "250";
 					google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
@@ -390,7 +391,7 @@ yieldbuild_loc = "question_bubble";
 			if ( $wgUser->isAnon() ) {
 				$ads = '<script type="text/javascript">
 					google_ad_client    = "' . $wgGoogleAdClient . '";
-					google_ad_channel = (( wgIsAnswered )?"7000000004":"7000000003");
+					google_ad_channel   = "' . $wgGoogleAdChannel . '";
 					google_ad_width     = "468";
 					google_ad_height    = "60";
 					google_ad_format    = google_ad_width + "x" + google_ad_height + "_as";
@@ -754,7 +755,7 @@ yieldbuild_loc = "right_nav_bottom";
 <?php endif; ?>
 <script>
 google_ad_client = '<?=$wgGoogleAdClient?>'; // substitute your client_id (pub-#)
-google_ad_channel = (( wgIsAnswered )?'7000000004':'7000000003');
+google_ad_channel = '<?=$wgGoogleAdChannel?>';
 google_ad_output = 'js';
 google_max_num_ads = '10';
 google_ad_type = 'text';
