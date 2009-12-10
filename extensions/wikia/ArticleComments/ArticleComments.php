@@ -536,14 +536,6 @@ class ArticleComment {
 			$wgMemc->delete( wfMemcKey( 'articlecomment', 'comm', $Title->getArticleID() ) );
 
 			$res = array( $retval, $article );
-
-			/**
-			 * update cache from master
-			 */
-//TODO: check this
-//			$clist = ArticleCommentList::newFromTitle( $Title );
-//			$clist->getCommentPages( true );
-
 		} else {
 			$res = false;
 		}
@@ -735,10 +727,6 @@ class ArticleComment {
 		$key = $Title->getPrefixedDBkey();
 		$wgMemc->delete( wfMemcKey( 'articlecomment', 'listing', $key, 0 ) );
 
-//TODO: check this
-//		$clist = ArticleCommentList::newFromTitle( $Title );
-//		$clist->getCommentPages( true );
-
 		wfProfileOut( __METHOD__ );
 
 		return array( $retval, $article );
@@ -785,8 +773,7 @@ class ArticleComment {
 	}
 
 	static public function addArticlePageToWatchlist($Comment, $commentId) {
-		global $wgUser, $wgEnableArticleWatchlist, $wgTitle;
-		//TODO: check proper usage of wgTitle
+		global $wgUser, $wgEnableArticleWatchlist;
 
 		$watchthis = false;
 		if ( empty($wgEnableArticleWatchlist) ) {
@@ -810,7 +797,7 @@ class ArticleComment {
 				$dbw->insert( 'watchlist',
 					array(
 					'wl_user' => $wgUser->getId(),
-					'wl_namespace' => Namespace::getTalk($wgTitle->getNamespace()),
+					'wl_namespace' => Namespace::getTalk($comment->mTitle->getNamespace()),
 					'wl_title' => $Comment->mTitle->getDBkey(),
 					'wl_notificationtimestamp' => wfTimestampNow()
 					), __METHOD__, 'IGNORE'
@@ -822,7 +809,7 @@ class ArticleComment {
 				$dbw->insert( 'watchlist',
 					array(
 					'wl_user' => $wgUser->getId(),
-					'wl_namespace' => $wgTitle->getNamespace(),
+					'wl_namespace' => $comment->mTitle->getNamespace(),
 					'wl_title' => $oArticlePage->getDBkey(),
 					'wl_notificationtimestamp' => NULL
 					), __METHOD__, 'IGNORE' );
@@ -1291,8 +1278,9 @@ class ArticleCommentList {
 	static public function articleDeleteComplete( &$Article, &$User, $reason, $id ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->getTitle()->getNamespace() == $Article->getTitle()->getNamespace() ) {
-			$listing = ArticleCommentList::newFromTitle( $Article->getTitle() );
+		$title = $Article->getTitle();
+		if (Namespace::isTalk($title->getNamespace()) && strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0) {
+			$listing = ArticleCommentList::newFromTitle($title);
 
 			$aComments = $listing->getCommentPages();
 			if ( !empty($aComments) ) {
@@ -1404,7 +1392,7 @@ class ArticleCommentList {
 		$namespace = $oTitle->getNamespace();
 
 		$allowed = !( $wgEnableBlogArticles && in_array($oTitle->getNamespace(), array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK)) );
-		if ( !is_null($oTitle) && Namespace::isTalk($oTitle->getNamespace()) && strpos(end(explode('/', $oTitle->getText())), ARTICLECOMMENT_PREFIX) === 0 && $allowed ) {
+		if (!is_null($oTitle) && Namespace::isTalk($oTitle->getNamespace()) && strpos(end(explode('/', $oTitle->getText())), ARTICLECOMMENT_PREFIX) === 0 && $allowed) {
 			$user = $comment = '';
 			$newTitle = null;
 			list( $user, $comment ) = ArticleComment::explode( $oTitle->getDBkey() );
@@ -1521,7 +1509,6 @@ class ArticleCommentList {
 
 		$result = Wikia::json_encode(array('error' => $error, 'text' => $text));
 		$ar = new AjaxResponse($result);
-//		$ar->setCacheDuration(60 * 60);
 
 		return $ar;
 	}
