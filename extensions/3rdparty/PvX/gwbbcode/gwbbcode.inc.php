@@ -1050,8 +1050,8 @@ function gws_attr_name($attr) {
 function gws_attribute_name($attribute) {
 	static $attribute_list = Array('air'=>'airmagic', 'ear'=>'earthmagic', 'ene'=>'energystorage', 'fir'=>'firemagic', 'wat'=>'watermagic', 'dom'=>'dominationmagic', 'fas'=>'fastcasting', 'ill'=>'illusionmagic', 'ins'=>'inspirationmagic', 'div'=>'divinefavor', 'hea'=>'healingprayers', 'pro'=>'protectionprayers', 'smi'=>'smitingprayers', 'blo'=>'bloodmagic', 'cur'=>'curses', 'dea'=>'deathmagic', 'sou'=>'soulreaping', 'bea'=>'beastmastery', 'exp'=>'expertise', 'mar'=>'marksmanship', 'wil'=>'wildernesssurvival', 'axe'=>'axemastery', 'ham'=>'hammermastery', 'str'=>'strength', 'swo'=>'swordsmanship', 'tac'=>'tactics', 'cri' => 'criticalstrikes', 'dag' => 'daggermastery', 'dead' => 'deadlyarts', 'sha' => 'shadowarts', 'spa' => 'spawningpower', 'cha' => 'channelingmagic', 'com' => 'communing', 'res' => 'restorationmagic', 'spe' => 'spearmastery', 'comma' => 'command', 'mot' => 'motivation', 'lea' => 'leadership', 'scy' => 'scythemastery', 'win' => 'windprayers', 'earthp' => 'earthprayers', 'mys' => 'mysticism', 'kur' => 'kurzickrank', 'lux' => 'luxonrank', 'sun' => 'sunspearrank', 'lig' => 'lightbringerrank', 'asu' => 'asurarank', 'del' => 'deldrimorrank', 'ebo' => 'ebonvanguardrank', 'nor' => 'nornrank');
 
+	$attribute = strtolower(str_replace(' ', '', $attribute));
 	if( !empty( $attribute ) ) {
-		$attribute = strtolower(str_replace(' ', '', $attribute));
 		foreach ($attribute_list as $attr => $long_attr) {
 			if (strpos($long_attr, $attribute) === 0) {
 				return $attr;
