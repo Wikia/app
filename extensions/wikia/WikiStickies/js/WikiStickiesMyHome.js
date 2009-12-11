@@ -60,7 +60,7 @@ WIKIA.WikiStickies.updateSticky = function () {
 
 $(document).ready(function() {
 	$(".wikisticky_curl, .wikisticky_next").bind("click", WIKIA.WikiStickies.flipWikisticky);
-	$('#wikisticky_special_link a').click(WIKIA.WikiStickies.trackLink);
+	$('.wikisticky_special_link').click(WIKIA.WikiStickies.trackLink);
 	var content = $('.wikisticky_content').children('p');
 	content.bind('click', function(ev) {
 		var target = $(ev.target).filter('a');
