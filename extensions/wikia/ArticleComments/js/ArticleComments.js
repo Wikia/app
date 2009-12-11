@@ -2,21 +2,6 @@ var ArticleComments = {};
 
 ArticleComments.processing = false;
 
-ArticleComments.add = function(json) {
-	$().log('begin: add');
-	var node = $('<li>').html(json.text).attr('id', 'comm-' + json.id).addClass('article-comments-li');
-	//check order and place for new comment
-	if ($('#article-comm-order').attr('value') == 'asc') {
-		//add at the end
-		node.appendTo('#article-comments-ul');
-	} else {
-		//add at the beginning
-		node.prependTo('#article-comments-ul');
-	}
-	$('#' + json.id).bind('click', ArticleComments.edit);
-	$().log('end: add');
-}
-
 ArticleComments.save = function(e) {
 	$().log('begin: save');
 	e.preventDefault();
@@ -84,6 +69,7 @@ ArticleComments.postComment = function(e) {
 			//remove zero comments div
 			$('#article-comments-zero').remove();
 			$('#article-comments-ul').replaceWith(json.text);
+			$('.article-comm-edit').bind('click', ArticleComments.edit);
 			//pagination
 			$('#article-comments-pagination').html('<div>' + json.pagination + '</div>');
 			//readd events
@@ -144,7 +130,7 @@ ArticleComments.bind = function() {
 ArticleComments.init = function() {
 	$('#article-comm-submit-top').bind('click', {source: '#article-comm-top'}, ArticleComments.postComment);
 	$('#article-comm-submit-bottom').bind('click', {source: '#article-comm-bottom'}, ArticleComments.postComment);
-	$('#article-comm-form-select').bind('change', function() {this.submit()});
+	$('#article-comm-order').bind('change', function() {$('#article-comm-form-select').submit()});
 	$('.article-comm-edit').bind('click', ArticleComments.edit);
 	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not('.article-comments-pagination-link-active').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
 	$('#article-comments-pagination div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));

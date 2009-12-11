@@ -749,6 +749,8 @@ class ArticleComment {
 					$ok = self::addArticlePageToWatchlist($comment, $commentId) ;
 				}
 				$message = false;
+				$listing = ArticleCommentList::newFromTitle($comment->mTitle);
+				$listing->purge();
 				break;
 			default:
 				$wgDevelEnvironment = true;
@@ -888,10 +890,6 @@ class ArticleComment {
 				$message = str_replace('$PAGEEDITOR', $utext, $message);
 				$keys['$PAGEEDITOR'] = $utext;
 			}
-
-			$keys['$DBPAGETITLE'] = $Title->getText();
-			$keys['$CHANGEDORCREATED'] = wfMsgForContent('article-comments-added');
-			list ( $keys['$AUTHOR'], $keys['$ARTICLETITLE'] ) = explode( '/', $keys['$DBPAGETITLE'], 2 );
 		}
 		return true;
 	}
