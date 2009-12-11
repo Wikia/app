@@ -45,12 +45,17 @@ class WikiStickies {
 	 * @param array $attrs An array of attribute-value pairs. (Optional.)
 	 * @return The complete list HTML to print.
 	 */
-	function renderFeedList ( &$feed_data, $attrs = NULL ) {
+	function renderFeedList ( &$feed_data, $attrs = NULL, $editlinks = NULL ) {
 		global $wgUser;
 
 		$sk = $wgUser->getSkin();
 		$out = '';
 		$uptolimit = 0;
+		$linkQuery = '';
+
+		if ( $editlinks ) {
+			$linkQuery = $sk->editUrlOptions();
+		}
 
 		if( !is_array( $attrs ) ) {
 			$attrs = array( 'class' => '' );
@@ -62,7 +67,7 @@ class WikiStickies {
 		foreach( $feed_data as $title ) {
 			if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
 				$out .= Xml::openElement( 'li' );
-				$out .= $sk->makeKnownLinkObj( $title, $title->getText() ).
+				$out .= $sk->makeKnownLinkObj( $title, $title->getText(), $linkQuery ).
 				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
 				$uptolimit++;
@@ -91,6 +96,7 @@ class WikiStickies {
 
 		$sk = $wgUser->getSkin() ;
 		$body = '';
+		$editlinks = null;
 
 		if( empty( $feed_data ) ) {
 			return false;
@@ -98,6 +104,10 @@ class WikiStickies {
 
 		if( isset( $feed_data['continue'] ) ) {
 			array_pop( $feed_data );
+		}
+
+		if ( $type == 'wikistickies-wantedpages' ) {
+			$editlinks = true;
 		}
 
 		$sticky = self::renderWikiSticky(
@@ -112,11 +122,11 @@ class WikiStickies {
 
 		// First batch. These are visible by default.
 		if( $numitems ) {
-			$body .= self::renderFeedList( $feed_data );
+			$body .= self::renderFeedList( $feed_data, null, $editlinks );
 		}
 		// Second batch of items. These are hidden by default.
 		if( $numitems > 10 ) {
-			$body .= self::renderFeedList( $feed_data, array( 'class' => 'submerged' ) );
+			$body .= self::renderFeedList( $feed_data, array( 'class' => 'submerged' ), $editlinks );
 		}
 
 		$html = Xml::openElement( 'div', array( 'id' => $type, 'class' => 'wikistickiesfeed' ) ).
