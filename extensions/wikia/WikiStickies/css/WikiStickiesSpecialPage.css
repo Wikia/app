@@ -120,7 +120,6 @@
 
 #step2 #wikistickies_save_all_upper {
 	clear: both;
-	margin-top: 170px;
 }
 
 #wikistickies_save_all, #wikistickies_save_all_upper {
@@ -273,7 +272,6 @@ button.secondary span {
     width: 150px;
 }
 #logo_preview_wrapper {
-    display: none;
     margin-top: 20px;
 }
 
@@ -282,6 +280,7 @@ button.secondary span {
     float: left;
     height: 155px;
     width: 216px;
+    margin-bottom: 20px;
 }
 
 /*** Step 3: Theme ***/
