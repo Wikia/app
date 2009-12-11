@@ -1039,6 +1039,10 @@ div.userInfoNoAvatar .userPoints {
 	border: 0px;
 	margin-bottom: 7px;
 }
+#cathub-title-bar .cathub-title-bar-wikilogo{
+	 float:left;
+	 padding:5px 5px 5px 0px;
+}
 .cathub-progbar-wrapper{
 	float:left;
 	height:25px;
@@ -1143,6 +1147,9 @@ span.unanswered_questions a{
 	font-weight:bold;
 	color:#090;
 	line-height:.8em;
+}
+.cathub-button{
+	float:right;
 }
 .cathub-button-rephrase{
 	margin-left:10px;
