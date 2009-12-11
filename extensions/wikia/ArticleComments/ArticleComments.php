@@ -1262,7 +1262,7 @@ class ArticleCommentList {
 		//purge varnish
 		$title = Title::newFromText(reset(explode('/', $this->mText)), Namespace::getSubject($this->mTitle->getNamespace()));
 		$titleURL = $title->getFullUrl();
-		$urls = array($titleURL, "$titleURL?order=asc", "$titleURL?order=desc");
+		$urls = array("$titleURL?order=asc", "$titleURL?order=desc");
 		SquidUpdate::purge($urls);
 	}
 
