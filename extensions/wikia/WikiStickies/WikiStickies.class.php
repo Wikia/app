@@ -274,17 +274,11 @@ class WikiStickies {
 			return "";
 		}
 
-			$sk = $wgUser->getSkin();
-			if( is_array( $attrs ) ) { 
-				$html = xml::openelement( 'span', $attrs );
-			} else {
-				$html = xml::openelement( 'span' );
-			}
-			$html .= wfMsg( $prefix ,
-				// todo: handle an array with more than one item?
-				$sk->link( $title, htmlspecialchars( $title->getText(), ENT_QUOTES ), array(), array(), array( 'known') ) );
+		$sk = $wgUser->getSkin();
+		$html .= wfMsgWikiHtml( $prefix ,
+			// todo: handle an array with more than one item?
+			$sk->link( $title, htmlspecialchars( $title->getText(), ENT_QUOTES ), array(), array(), array( 'known' ) ) );
 
-			xml::closeelement( 'span' );
 		}
 		return $html;
 	}
