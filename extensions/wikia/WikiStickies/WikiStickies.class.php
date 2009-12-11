@@ -53,7 +53,7 @@ class WikiStickies {
 		$uptolimit = 0;
 
 		if( !is_array( $attrs ) ) {
-			$attrs = array();
+			$attrs = array( 'class' => '' );
 		}
 		$attrs['class'] = $attrs['class'] . ' clearfix'; // Needs to clear.
 
