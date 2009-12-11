@@ -19,19 +19,13 @@ class WithoutimagesPage extends QueryPage {
 			JOIN pagelinks ON page_title = pl_title AND page_namespace = pl_namespace
 			WHERE pl_from > 0 AND page_namespace IN (".implode(",", $wgContentNamespaces).") AND page_is_redirect = 0
 			AND (
-				NOT EXISTS ( 
-					SELECT il_from FROM imagelinks 
-					WHERE il_from = page_id limit 1 
-				) 
-				OR 
-				NOT EXISTS ( 
+				( 
 					SELECT i1.il_to FROM imagelinks i1 
 					WHERE 20 > ANY ( 
 						SELECT count(*) FROM imagelinks i2 
 						WHERE i1.il_to = i2.il_to 
-					) 
-					AND i1.il_from = page_id 
-				)  
+					) AND i1.il_from = page_id LIMIT 1 
+				) IS NULL
 			)
 			GROUP BY page_title, page_namespace";
 	}
