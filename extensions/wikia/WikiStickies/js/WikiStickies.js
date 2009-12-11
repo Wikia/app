@@ -61,7 +61,9 @@ WIKIA.WikiStickies.trackContainer = function (ev) {
 WIKIA.WikiStickies.trackSticky = function (ev) {
 	var containerId = $(ev.target).closest( '.wikisticky_browser' ).attr('id');
 	var containerName = containerId.split('-')[1];
+	if (containerName != "undefined") {
 	WIKIA.WikiStickies.track('/item/' + containerName + '-sticky');	
+	}
 }
 
 /**
