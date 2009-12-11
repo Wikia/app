@@ -751,6 +751,7 @@ class ArticleComment {
 				$message = false;
 				$listing = ArticleCommentList::newFromTitle($comment->mTitle);
 				$listing->purge();
+				wfGetDB(DB_MASTER)->commit();
 				break;
 			default:
 				$wgDevelEnvironment = true;
