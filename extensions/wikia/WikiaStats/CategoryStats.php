@@ -419,7 +419,7 @@ class CategoryEdits {
 				);
 				if ( $Row ) {
 					$data = intval($Row->cnt);
-					$wgMemc->set( $memkey , $data, 60*60 );
+					$wgMemc->set( $memkey , $data, 60*5 );
 				}
 			}
 			# calculate percent
@@ -591,7 +591,7 @@ class CategoryEdits {
 					arsort($tmp); 
 					$users = array_slice($tmp, $limit * $offset, $limit, true);
 				}
-				$wgMemc->set( $memkey, $users, 60*30 );
+				$wgMemc->set( $memkey, $users, 60*15 );
 			}
 		}
 		
