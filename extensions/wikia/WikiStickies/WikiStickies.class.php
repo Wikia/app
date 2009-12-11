@@ -275,7 +275,7 @@ class WikiStickies {
 		}
 
 		$sk = $wgUser->getSkin();
-		$html .= wfMsgWikiHtml( $prefix ,
+		$html .= wfMsgExt( $prefix, array( 'parseinline', 'replaceafter' ),
 			// todo: handle an array with more than one item?
 			$sk->link( $title, htmlspecialchars( $title->getText(), ENT_QUOTES ), array(), array(), array( 'known' ) ) );
 
