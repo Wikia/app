@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt:33246: StaffLog: fix permissions (uberfuzzy)
 * rt#33097: WikiStickies: Click-tracking here and there. (Nef)
 * rt#32083: Ad changes on answers. (Nef)
 * rt#33045: Skins: update footer links in monobook (uberfuzzy)

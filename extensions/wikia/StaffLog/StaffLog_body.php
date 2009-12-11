@@ -12,9 +12,14 @@ class StaffLog extends SpecialPage
 	
 
 	function execute( $par ){
-		global $wgOut;
+		global $wgOut, $wgUser;
 		$this->setHeaders();
 		
+		if( !$wgUser->isAllowed( 'stafflog' ) ) {
+			$wgOut->permissionRequired( 'stafflog' );
+			return;
+		}
+
 		$pager = new StaffLoggerPager( "" );
 		$wgOut->addHTML(
 			XML::openElement( 'div', array('class' => 'mw-spcontent') ) .
