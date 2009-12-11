@@ -135,5 +135,5 @@ ArticleComments.init = function() {
 	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not('.article-comments-pagination-link-active').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
 	$('#article-comments-pagination div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
 }
-//on DOM ready
-$(ArticleComments.init);
+//on content ready
+wgAfterContentAndJS.push(ArticleComments.init);
