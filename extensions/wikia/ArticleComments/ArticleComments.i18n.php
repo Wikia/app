@@ -12,7 +12,6 @@ $messages['en'] = array(
 	'article-comments-edit' => 'edit',
 	'article-comments-history' => 'history',
 	'article-comments-error' => 'Comment could not be saved',
-	'article-comments-added' => 'added',
 	'article-comments-undeleted-comment' => 'Undeleted comment for blog page $1',
 	'article-comments-rc-comment' => 'Article comment ([[$1]])',
 	'article-comments-rc-comments' => 'Article comments ([[$1]])',
@@ -21,10 +20,10 @@ $messages['en'] = array(
 	'article-comments-login' => "<a href=\"$1\">Log in</a> to comment",
 	'article-comments-zero-comments' => 'No comments yet!',
 	'article-comments-toc-item' => 'Comments',
-	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$ARTICLETITLE" on {{SITENAME}}',
+	'enotif_subject_article_comment' => '$PAGEEDITOR has commented on "$PAGETITLE" on {{SITENAME}}',
 	'enotif_body_article_comment' => 'Dear $WATCHINGUSERNAME,
 
-$PAGEEDITOR made a comment on "$ARTICLETITLE". 
+$PAGEEDITOR made a comment on "$PAGETITLE". 
 
 To see the comment thread, follow the link below:
 $PAGETITLE_URL 
@@ -35,7 +34,7 @@ Wikia',
 	'enotif_body_article_comment-HTML' => '<p>
 Dear $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR made a comment on "$ARTICLETITLE".
+$PAGEEDITOR made a comment on "$PAGETITLE".
 <br /><br />
 To see the comment thread, follow the link below: <a href="$PAGETITLE_URL">$PAGETITLE_URL</a> 
 <br /><br />
@@ -64,7 +63,6 @@ $messages['fi'] = array(
 );
 
 $messages['de'] = array(
-	'article-comments-added' => 'kommentiert',
 	'article-comments-zero-comments' => 'Noch keine Kommentare!',
 	'article-comments-post' => 'Kommentieren',
 	'article-comments-comments' => 'Kommentare',
