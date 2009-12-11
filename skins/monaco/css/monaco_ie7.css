@@ -60,6 +60,9 @@ ol li {
 	top: 3px;
 }
 
-.wikistickiesfeed .secondcolumn.reset {
-	margin-top: -8.5em;
+.wikistickiesfeed ul li {
+    background: url(//images.wikia.com/common/skins/monobook/bullet.gif) no-repeat 5px 3px;
+    list-style-type: none;
+    margin-left: -16px;
+    padding-left: 16px;
 }

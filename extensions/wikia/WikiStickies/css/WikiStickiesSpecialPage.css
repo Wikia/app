@@ -4,10 +4,11 @@
 .wikisticky_browser {
     background: url(../images/bg.wikisticky.209x187.png) no-repeat;
     color: #000;
-    float: left;
     height: 187px;
     margin-bottom: 3em;
     width: 209px;
+    position: absolute;
+    left: 10px;
 }
 
 #bodyContent .wikisticky_browser .wikisticky_content a {
@@ -17,7 +18,8 @@
 .wikisticky_content { padding-right: 8px; }
 .wikistickiesfeed {
     clear: left;
-    margin: 0 0 3em 0;
+    margin: 0 0 3em;
+    min-height: 215px;
 }
 
 #wikistickies-admintools {
@@ -67,20 +69,14 @@
 .wikistickiesfeed ul {
     font-family: Arial, sans-serif;
     font-size: 13px;
-    height: 1%; /* For IE7 */
     padding-left: 1.25em;
-    position: relative;
 }
 .wikistickiesfeed ul li {
-    width: 48%;
+    float: left;
     line-height: 1.75;
     margin-bottom: 0;
-}
-.wikistickiesfeed .secondcolumn {
-    margin-left: 50%;
-}
-.wikistickiesfeed .secondcolumn.reset {
-    margin-top: -8.75em;
+    margin-right: 16px;
+    width: 45%;
 }
 
 .wikistickiesfeed .submerged {
@@ -357,15 +353,4 @@ button.secondary span {
 .statusbarerror {
     background-color: red;
     color: white;
-}
-
-.clearfix:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-.clearfix {
-    zoom: 1;
 }
