@@ -27,7 +27,6 @@
                 <input type="file" name="logo_file" id="logo_file" onclick="WIKIA.WikiStickies.track('/admin/browse');"/> <input type="submit" value="<?php echo wfMsg("nwb-preview")?>" onclick="WIKIA.WikiStickies.track( '/admin/preview' ); this.form.title.value='Wiki-Preview.png'"/>
                 <!--<input type="submit" value="Save" onclick="this.form.title.value='Wiki.png'"/>-->
         </form>
-
         <div id="logo_preview_wrapper">
                 <label><?php echo wfMsg("nwb-logo-preview")?>:</label>
                 <div id="logo_preview"></div>
