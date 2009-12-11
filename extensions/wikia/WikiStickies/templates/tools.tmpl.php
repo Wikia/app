@@ -33,6 +33,9 @@
                 <div id="logo_preview"></div>
         </div>
 
+	<div id="wikistickies_save_all_upper">
+		<a id="WikistickiesToolsSubmitUpper" class="wikia_button" href="#" onclick="WIKIA.WikiStickies.track( '/admin/save' ); NWB.changeTheme($('input[name=theme]:checked').val(), true); NWB.uploadLogo();" ><span><?= wfMsg("wikistickies-save-changes") ?></span></a>
+	</div>
 
         </div><!--float-->
 </div>

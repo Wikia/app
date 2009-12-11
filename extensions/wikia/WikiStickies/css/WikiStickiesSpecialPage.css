@@ -94,7 +94,8 @@
     padding: 5px 0;
 }
 
-#wikistickies-admintools, #wikistickies_save_all {
+#wikistickies-admintools, #wikistickies_save_all,
+#wikistickies_save_all_upper {
     border:1px solid #AAA;
 }
 
@@ -117,8 +118,12 @@
 	margin: 0;
 }
 
+#step2 #wikistickies_save_all_upper {
+	clear: both;
+	margin-top: 170px;
+}
 
-#wikistickies_save_all {
+#wikistickies_save_all, #wikistickies_save_all_upper {
 	border-width: 1px 0 0 0;
 	margin-top: 20px;
 	padding-top: 5px;
@@ -252,9 +257,6 @@ button.secondary span {
     width: 216px;
     background-position:center center;
     background-repeat:no-repeat;
-}
-#step2 {
-    margin-bottom: 50px;
 }
 
 #step2 .note {
