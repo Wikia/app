@@ -342,7 +342,7 @@ function categoryHubTitleBar(&$catView, &$r){
 		$logoSrc = str_replace("\$wgUploadPath", $wikiUploadPath, $logoSrc);
 	}
 	if($logoSrc != ""){
-		$r .= "<img src='$logoSrc' width='78' height='78' style='float:left;padding:5px 5px 5px 0px;'/>";
+		$r .= "<img src='$logoSrc' width='78' height='78' class='cathub-title-bar-wikilogo'/>";
 	}
 
 	// Button for being notified of any new questions tagged with this category.
@@ -352,6 +352,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	// TODO: IMPLEMENT THE NEW APPEARANCE OF THIS BUTTON FOR A USER WHO IS ALREADY FOLLOWING THIS CATEGORY
 	// TODO: GET THE CORRECT ARTWORK FOR BOTH THE ALREADY-NOTIFIED AND UN-NOTIFIED STATES OF THE BUTTON
 // TODO: RE-ENABLE DISPLAY OF THIS WHEN WE'RE ACTUALLY IMPLEMENTING IT.
+// TODO: REMOVE THE 'style' DECLARATIONS ONCE WE'RE USING THIS AND GET THEM INTO CSS FILES.
 //	$r .= " <div style='float:right;border-left:#ccf 1px solid'>\n";
 //	$r .= " <img id='cathub-notify-me' src='$wgScriptPath/extensions/wikia/CategoryHubs/notify.png' width='114' height='74' style='float:right;padding:5px;'/>";
 //	$r .= "</div>";
@@ -510,7 +511,7 @@ function categoryHubOtherSection(&$catView, &$r){
 				$r .= "<li class=\"$UN_CLASS\">\n";
 
 				// Button to trigger the form for answering inline.
-				$r .= "<div class='cathub-button hideUntilHover' style='float:right'>\n";
+				$r .= "<div class='cathub-button hideUntilHover'>\n";
 				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
 				$r .= wfMsgExt('cathub-button-answer', array())."</big><small>&nbsp;</small></a>\n";
 				$r .= "</div>\n";
@@ -547,7 +548,7 @@ function categoryHubOtherSection(&$catView, &$r){
 				$r .= "<li class=\"$ANS_CLASS\">\n";
 
 				// Button to trigger the form for changing an answer inline.
-				$r .= "<div class='cathub-button hideUntilHover' style='float:right;'>\n";
+				$r .= "<div class='cathub-button hideUntilHover'>\n";
 				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
 				$r .= wfMsgExt('cathub-button-improve-answer', array())."</big><small>&nbsp;</small></a>\n";
 				$r .= "</div>\n";
