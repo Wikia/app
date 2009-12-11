@@ -75,7 +75,7 @@ function wfSpecialContactSetup() {
 			$wgOut->addHTML(wfMsg( 'contactsubmitcomplete' ));
 
 			$m = "$this->mRealName";
-			$m .= " ({$this->mEmail}) {$this->mWhichWiki}/wiki/User:{$this->mName} contacted Wikia about ";
+			$m .= " ({$this->mEmail}) {$this->mWhichWiki}/wiki/User:" . str_replace(" ", "_", $this->mName) . " contacted Wikia about ";
 			$m .= "$this->mProblem.\n";
 			$m .= "User browser data: {$this->mBrowser}; IP: " . wfGetIP() . "\n\n";
 			$m .= "$this->mProblemDesc\n";
