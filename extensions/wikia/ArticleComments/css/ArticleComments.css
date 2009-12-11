@@ -70,10 +70,14 @@ div.article-comment strong {
 }
 
 .article-comments-pagination-link {
+	display: inline-block;
 	border: 1px solid #AAA;
 	font-weight: bold;
 	margin: 0 1px;
-	padding: 2px 5px 1px;
+	height: 16px;
+	width: 16px;
+	line-height: 16px;
+	text-align: center;
 }
 .article-comments-pagination-link:hover {
 	text-decoration: none;
