@@ -10,7 +10,7 @@ ArticleComments.save = function(e) {
 		e.preventDefault();
 		WET.byStr('article/editSave');
 		var textfield = $('#article-comm-textfield-' + e.data.id).attr('readonly', 'readonly');
-		$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axSave&article=' + wgArticleId + '&id=' + e.data.id, {wpArticleComment: textfield.val()}, function(json) {
+		$.postJSON(wgScript, {action: 'ajax', rs: 'ArticleComment::axSave', article: wgArticleId, id: e.data.id, wpArticleComment: textfield.val()}, function(json) {
 			$().log(json);
 			if (!json.error) {
 				if (json.commentId && json.commentId != 0) {
@@ -62,8 +62,7 @@ ArticleComments.postComment = function(e) {
 	WET.byStr('article/post');
 	if (ArticleComments.processing) return;
 	$(e.data.source).attr('readonly', 'readonly');
-	//TODO: change to postJSON (all parameters as {}) to omit limit for comment
-	$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axPost&article=' + wgArticleId, {wpArticleComment: $(e.data.source).val(), order: $('#article-comm-order').attr('value')}, function(json) {
+	$.postJSON(wgScript, {action: 'ajax', rs: 'ArticleComment::axPost', article: wgArticleId, wpArticleComment: $(e.data.source).val(), order: $('#article-comm-order').attr('value')}, function(json) {
 		$().log(json);
 		if (!json.error) {
 			//remove zero comments div
