@@ -52,19 +52,16 @@ class WikiStickies {
 		$out = '';
 		$uptolimit = 0;
 
+		if( !is_array( $attrs ) ) {
+			$attrs = array();
+		}
+		$attrs['class'] = $attrs['class'] . ' clearfix'; // Needs to clear.
+
 		$out .= Xml::openElement( 'ul', $attrs );
 
 		foreach( $feed_data as $title ) {
 			if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
-				if ( $uptolimit > 4 ) { // start a new column at 6th item
-					if ( $uptolimit === 5 ) {
-						$out .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn reset' ) );
-					} else {
-						$out .= Xml::openElement ( 'li', array ( 'class' => 'secondcolumn' ) );
-					}
-				} else {
-					$out .= Xml::openElement( 'li' );
-				}
+				$out .= Xml::openElement( 'li' );
 				$out .= $sk->makeKnownLinkObj( $title, $title->getText() ).
 				Xml::closeElement( 'li' );
 				array_shift( $feed_data );
