@@ -135,18 +135,11 @@ td.activityfeed-details-label {
 
 .activityfeed-inserted-media li a {
 	cursor: pointer;
-	display: block;
+	display: table-cell;
 	height: 160px;
 	text-align: center;
 	vertical-align: middle;
 	width: 160px;
-}
-/* Filter IE <=7 */
-*:lang(en) .activityfeed-inserted-media li a { display: table-cell; }
-/* Entirely for IE <= 7; this element doesn't exist for other browsers */
-.activityfeed-inserted-media li a span {
-	display: inline-block;
-	line-height: 160px;
 }
 
 .myhome-video-play {
