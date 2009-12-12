@@ -36,19 +36,32 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 		}
 	}
 
+	private function prepareCategories($params_title) {
+		$categories = array();
+
+		foreach (explode("|", $params_title) as $title) {
+			$categoryTitle = Title::newFromText($title, NS_CATEGORY);
+
+			if ( is_null( $categoryTitle ) || $categoryTitle->getNamespace() != NS_CATEGORY )
+				$this->dieUsage("The category name you entered is not valid", 'invalidcategory');
+
+			// rt#24487: We need this code altered for a specific case. When the category = "foo",
+			// we would like this list to show only questions from a predefined list of categories.
+			$this->rt_24487_special_case($categoryTitle);
+
+			$categories[] = $categoryTitle->getDBkey();
+		}
+		
+		return $categories;
+	}
+
 	public function execute() {
 		$params = $this->extractRequestParams();
 
 		if ( !isset($params['title']) || is_null($params['title']) )
 			$this->dieUsage("The coatitle parameter is required", 'notitle');
-		$categoryTitle = Title::newFromText($params['title'], NS_CATEGORY);
 
-		if ( is_null( $categoryTitle ) || $categoryTitle->getNamespace() != NS_CATEGORY )
-			$this->dieUsage("The category name you entered is not valid", 'invalidcategory');
-
-		// rt#24487: We need this code altered for a specific case. When the category = "foo",
-		// we would like this list to show only questions from a predefined list of categories.
-		$this->rt_24487_special_case($categoryTitle);
+		$categoryDBkeys = $this->prepareCategories($params['title']);
 
 		$answeredTitle = Title::newFromText( ( 'no' == $params['answered'] ? $this->unanswered_category : $this->answered_category ), NS_CATEGORY );
 
@@ -58,10 +71,11 @@ class ApiQueryCategoriesOnAnswers extends ApiQueryBase {
 		$this->addFields(array('c1.cl_from', 'c1.cl_timestamp'));
 		$this->addTables(array('categorylinks AS c1', 'categorylinks AS c2'));
 		$this->addWhere('c1.cl_from = c2.cl_from');
-		$this->addWhereFld('c1.cl_to', $categoryTitle->getDBkey());
+		$this->addWhere('c1.cl_to IN (' . $this->getDB()->makeList($categoryDBkeys) . ')');
 		$this->addWhereFld('c2.cl_to', $answeredTitle->getDBkey());
 		$this->addOption('ORDER BY', 'c1.cl_timestamp DESC');
 		$this->addOption('LIMIT', $params['limit']);
+		$this->addOption('DISTINCT');
 
 		$db = $this->getDB();
 
