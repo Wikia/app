@@ -59,6 +59,12 @@ ol li {
 .activityfeed img.sprite {
 	top: 3px;
 }
+.activityfeed-inserted-media li a { display: block; }
+/* Entirely for IE <= 7; this element doesn't exist for other browsers */
+.activityfeed-inserted-media li a span {
+	display: inline-block;
+	line-height: 160px;
+}
 
 .wikistickiesfeed ul li {
     background: url(//images.wikia.com/common/skins/monobook/bullet.gif) no-repeat 5px 3px;
