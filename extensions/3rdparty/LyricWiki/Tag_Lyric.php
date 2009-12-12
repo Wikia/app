@@ -94,39 +94,39 @@ DOC
 
 function renderLyricTag($input, $argv, $parser)
 {
-  #make new lines in wikitext new lines in html
-  $transform=str_replace(array("\r\n", "\r","\n"), "<br/>", trim($input));
+	#make new lines in wikitext new lines in html
+	$transform=str_replace(array("\r\n", "\r","\n"), "<br/>", trim($input));
   
-  $isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
+	$isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
 
-  // If appropriate, build ringtones links.
-  GLOBAL $wgFirstLyricTag, $wgLyricTagDisplayRingtone;
-  $ringtoneLink = "";
-  // NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
-  // If a user has ringtone-ads turned off, their CSS will make the ad invisible.
-  if( !empty( $wgLyricTagDisplayRingtone ) && $wgFirstLyricTag ){
-	GLOBAL $wgTitle, $wgUploadPath;
-	$artist = $wgTitle->getDBkey();
-	$colonIndex = strpos("$artist", ":");
-	$songTitle = $wgTitle->getText();
-	$artistLink = $artist;
-	$songLink = $songTitle;
-	if($colonIndex !== false){
-		$artist = substr($artist, 0, $colonIndex);
-		$songTitle = substr($songTitle, $colonIndex+1);
-
-		$artistLink = str_replace(" ", "+", $artist);
-		$songLink = str_replace(" ", "+", $songTitle);
-	}
-	$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' target='_blank'>";
+	// If appropriate, build ringtones links.
+	GLOBAL $wgFirstLyricTag, $wgLyricTagDisplayRingtone;
 	$ringtoneLink = "";
-	$ringtoneLink = "<div class='rtMatcher'>";
-	$ringtoneLink.= "$href<img src='" . $wgUploadPath . "/phone_left.gif' alt='phone' width='16' height='17'/></a> ";
-	$ringtoneLink.= $href."Send \"$songTitle\" Ringtone to your Cell</a>";
-	$ringtoneLink.= " $href<img src='" . $wgUploadPath . "/phone_right.gif' alt='phone' width='16' height='17'/></a>";
-	$ringtoneLink.= "</div>";
-	$wgFirstLyricTag = false;
-  }
+	// NOTE: we put the link here even if wfAdPrefs_doRingtones() is false since ppl all share the article-cache, so the ad will always be in the HTML.
+	// If a user has ringtone-ads turned off, their CSS will make the ad invisible.
+	if( !empty( $wgLyricTagDisplayRingtone ) && $wgFirstLyricTag ){
+		GLOBAL $wgTitle, $wgUploadPath;
+		$artist = $wgTitle->getDBkey();
+		$colonIndex = strpos("$artist", ":");
+		$songTitle = $wgTitle->getText();
+		$artistLink = $artist;
+		$songLink = $songTitle;
+		if($colonIndex !== false){
+			$artist = substr($artist, 0, $colonIndex);
+			$songTitle = substr($songTitle, $colonIndex+1);
+
+			$artistLink = str_replace(" ", "+", $artist);
+			$songLink = str_replace(" ", "+", $songTitle);
+		}
+		$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' target='_blank'>";
+		$ringtoneLink = "";
+		$ringtoneLink = "<div class='rtMatcher'>";
+		$ringtoneLink.= "$href<img src='" . $wgUploadPath . "/phone_left.gif' alt='phone' width='16' height='17'/></a> ";
+		$ringtoneLink.= $href."Send \"$songTitle\" Ringtone to your Cell</a>";
+		$ringtoneLink.= " $href<img src='" . $wgUploadPath . "/phone_right.gif' alt='phone' width='16' height='17'/></a>";
+		$ringtoneLink.= "</div>";
+		$wgFirstLyricTag = false;
+	}
 
 	#parse embedded wikitext
 	$retVal = "";
@@ -136,10 +136,13 @@ function renderLyricTag($input, $argv, $parser)
 	$retVal.= gracenote_obfuscateText($parser->parse($transform, $parser->mTitle, $parser->mOptions, false, false)->getText());
 	$retVal.= $ringtoneLink;
 	$retVal.= "</div>";
-	
-	// Tell the Google Analytics code that this view was for non-Gracenote lyrics.
+
+	// TODO: FIXME: If current plan ends up working, completely remove wgGracenoteView variable.
 	GLOBAL $wgGracenoteView;
 	$wgGracenoteView = GRACENOTE_VIEW_OTHER_LYRICS;
+
+	// Tell the Google Analytics code that this view was for non-Gracenote lyrics.
+	$retVal.= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_OTHER_LYRICS);
 
 	return $retVal;
 }

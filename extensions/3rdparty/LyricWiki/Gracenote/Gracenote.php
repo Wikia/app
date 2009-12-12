@@ -19,6 +19,7 @@ $wgGroupPermissions['staff']['editgracenote'] = true;
 define('GRACENOTE_VIEW_GRACENOTE_LYRICS', 'ViewGracenote');
 define('GRACENOTE_VIEW_OTHER_LYRICS', 'ViewOther');
 define('GRACENOTE_VIEW_NOT_LYRICS', 'NotLyrics');
+define('GRACENOTE_VIEW_UNKNOWN', 'Unknown'); // indicates an error
 define('GOOGLE_ANALYTICS_ID', "UA-10496195-1"); // lyrics.wikia.com ID
 
 ////
@@ -93,8 +94,7 @@ function gracenote_getAnalyticsHtml($google_action){
 	$trackEventCode = "";
 
 	if($google_action != GRACENOTE_VIEW_NOT_LYRICS){
-		$trackEventCode = "$(document).ready(function(){
-		var gIdDiv = document.getElementById('gracenoteid');
+		$trackEventCode = "var gIdDiv = document.getElementById('gracenoteid');
 		var jsGoogleLabel = \"Unknown\";
 		if(gIdDiv){
 			jsGoogleLabel = gIdDiv.innerHTML;
@@ -109,12 +109,9 @@ function gracenote_getAnalyticsHtml($google_action){
 				}
 			}
 		}
-		WET.byStr('GN/{$google_action}/' + jsGoogleLabel);
-	});\n";
+		WET.byStr('GN/{$google_action}/' + jsGoogleLabel);";
 	} else {
-		$trackEventCode = "$(document).ready(function(){
-		WET.byStr('GN/{$google_action}');
-	});\n";
+		$trackEventCode = "WET.byStr('GN/{$google_action}');\n";
 	}
 
 	$retVal = <<<GOOGLE_JS
@@ -287,10 +284,15 @@ function gracenote_getNoscriptTag(){
 //
 // If there was a Gracenote-licensed song, tracks that as well.
 ////
-function gracenote_outputGoogleAnalytics(&$out, $parserOutput){
+function gracenote_outputGoogleAnalytics(&$skin, &$text){
 	GLOBAL $wgGracenoteView;
+	if(!$wgGracenoteView){
+		// The view should have always been set if this code is being called far enough down the page.
+		// If we see stats for the Unknown view-type then there is an error.
+		$wgGracenoteView = GRACENOTE_VIEW_UNKNOWN;
+	}
 
-	$out->addHTML(gracenote_getAnalyticsHtml($wgGracenoteView));
+	$text .= gracenote_getAnalyticsHtml($wgGracenoteView);
 
 	return true;
 } // end gracenote_outputGoogleAnalytics()
