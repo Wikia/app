@@ -134,7 +134,7 @@ if(isset($wgScriptPath))
 #Install extension
 function gracenoteLyricsTag( &$parser)
 {
-  #install hook on the element <lyric>
+  #install hook on the element <gracenotelyrics>
   $parser->setHook("gracenotelyrics", "renderGracenoteLyricsTag");
 
   return true;
