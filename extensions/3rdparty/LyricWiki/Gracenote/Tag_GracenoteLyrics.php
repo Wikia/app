@@ -126,7 +126,7 @@ if(isset($wgScriptPath))
 	// This only needs to be included once between the Lyrics tag and the GracenoteLyrics tag.
 	$wgHooks['BeforePageDisplay'][] = "gracenote_installCopyProtection";
 	$wgHooks['BeforePageDisplay'][] = "gracenote_disableEdit";
-	$wgHooks['OutputPageParserOutput'][] = 'gracenote_outputGoogleAnalytics';
+	$wgHooks['SkinAfterBottomScripts'][] = 'gracenote_outputGoogleAnalytics';
 
 	//$wgHooks['getUserPermissionsErrorsExpensive'][] = "gracenote_disableEditByPermissions";
 }
@@ -164,10 +164,10 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 	GLOBAL $wgGracenoteView;
 	$wgGracenoteView = GRACENOTE_VIEW_GRACENOTE_LYRICS;
 
-  #make new lines in wikitext new lines in html
-  $transform = str_replace(array("\r\n", "\r","\n"), "<br />", trim($input));
+	#make new lines in wikitext new lines in html
+	$transform = str_replace(array("\r\n", "\r","\n"), "<br />", trim($input));
 
-  $isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
+	$isInstrumental = (strtolower(trim($transform)) == "{{instrumental}}");
 
 	// If appropriate, build ringtones links.
 	$ringtoneLink = "";
