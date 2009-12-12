@@ -286,6 +286,7 @@ function gracenote_getNoscriptTag(){
 ////
 function gracenote_outputGoogleAnalytics(&$skin, &$text){
 	GLOBAL $wgGracenoteView;
+	
 	if(!$wgGracenoteView){
 		// The view should have always been set if this code is being called far enough down the page.
 		// If we see stats for the Unknown view-type then there is an error.

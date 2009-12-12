@@ -65,14 +65,15 @@ if(isset($wgScriptPath))
 #Install extension
 function lyricTag()
 {
-  #install hook on the element <lyric>
-  global $wgParser;
-  $wgParser->setHook("lyric", "renderLyricTag");
-  $wgParser->setHook("lyrics", "renderLyricTag");
+	#install hook on the element <lyric>
+	global $wgParser;
 
-  // Keep track of whether this is the first <lyric> tag on the page - this is to prevent too many Ringtones ad links.
-  GLOBAL $wgFirstLyricTag;
-  $wgFirstLyricTag = true;
+	$wgParser->setHook("lyric", "renderLyricTag");
+	$wgParser->setHook("lyrics", "renderLyricTag");
+
+	// Keep track of whether this is the first <lyric> tag on the page - this is to prevent too many Ringtones ad links.
+	GLOBAL $wgFirstLyricTag;
+	$wgFirstLyricTag = true;
 }
 
 function lyricTagCss($out)
@@ -142,7 +143,7 @@ function renderLyricTag($input, $argv, $parser)
 	$wgGracenoteView = GRACENOTE_VIEW_OTHER_LYRICS;
 
 	// Tell the Google Analytics code that this view was for non-Gracenote lyrics.
-	$retVal.= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_OTHER_LYRICS);
+	//$retVal.= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_OTHER_LYRICS);
 
 	return $retVal;
 }
