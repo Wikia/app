@@ -20,6 +20,7 @@ define('GRACENOTE_VIEW_GRACENOTE_LYRICS', 'ViewGracenote');
 define('GRACENOTE_VIEW_OTHER_LYRICS', 'ViewOther');
 define('GRACENOTE_VIEW_NOT_LYRICS', 'NotLyrics');
 define('GRACENOTE_VIEW_UNKNOWN', 'Unknown'); // indicates an error
+define('GRACENOTE_ALREADY_PROCESSED', '#PROCESSED#'); // this would not be a valid page name, so this is guaranteed not to be a valid entry into the gracenote-id div.
 define('GOOGLE_ANALYTICS_ID', "UA-10496195-1"); // lyrics.wikia.com ID
 
 ////
@@ -75,27 +76,26 @@ function gracenote_obfuscateText($text){
 } // end gracenote_obfuscateText()
 
 ////
-// Returns the HTML which should be inserted into a page to track the song-specific stats for Gracenote tracking.
+// Returns the HTML which should be inserted into a tag page to track the song-specific stats for Gracenote tracking.
 //
 // The only parameter is the 'action' to pass into the _trackEvent function.  Use one of the predefined values from
 // the top of the Gracenote.php file such as GRACENOTE_VIEW_GRACENOTE_LYRICS or GRACENOTE_VIEW_OTHER_LYRICS.
 //
 // For more info on how this works, see:
 // http://code.google.com/intl/en-US/apis/analytics/docs/tracking/eventTrackerGuide.html
+//
+// NOTE: This function is just for outputting the tracking inside of tags (which will be stored in the parser-cache).
+// In order to make sure that stats get tracked even on pages without lyrics or gracenotelyrics tags, this code will
+// be called after the parser-cached area with the GRACENOTE_VIEW_NOT_LYRICS parameter.  If that is set, then the code
+// will only record a hit when there was not a previously-recorded hit by a lyrics or gracenotelyrics tag earlier on the
+// page.
 ////
 function gracenote_getAnalyticsHtml($google_action){
-	GLOBAL $wgGracenoteView;
-	if(!$wgGracenoteView){
-	  $wgGracenoteView = GRACENOTE_VIEW_NOT_LYRICS;
-	}
-
-	$google_category = "Lyrics";
-	
 	$trackEventCode = "";
-
 	if($google_action != GRACENOTE_VIEW_NOT_LYRICS){
-		$trackEventCode = "var gIdDiv = document.getElementById('gracenoteid');
+		$trackEventCode = "
 		var jsGoogleLabel = \"Unknown\";
+		var gIdDiv = document.getElementById('gracenoteid');
 		if(gIdDiv){
 			jsGoogleLabel = gIdDiv.innerHTML;
 		} else {
@@ -109,9 +109,20 @@ function gracenote_getAnalyticsHtml($google_action){
 				}
 			}
 		}
-		WET.byStr('GN/{$google_action}/' + jsGoogleLabel);";
+		if(jsGoogleLabel != \"".GRACENOTE_ALREADY_PROCESSED."\"){
+			WET.byStr('GN/{$google_action}/' + jsGoogleLabel);
+			gIdDiv.innerHTML = '".GRACENOTE_ALREADY_PROCESSED."';
+		}";
 	} else {
-		$trackEventCode = "WET.byStr('GN/{$google_action}');\n";
+		$trackEventCode = "
+		var jsGoogleLabel = \"Unknown\";
+		var gIdDiv = document.getElementById('gracenoteid');
+		if(gIdDiv){
+			jsGoogleLabel = gIdDiv.innerHTML;
+		}
+		if(jsGoogleLabel != \"".GRACENOTE_ALREADY_PROCESSED."\"){
+			WET.byStr('GN/{$google_action}');
+		}";
 	}
 
 	$retVal = <<<GOOGLE_JS
@@ -282,19 +293,12 @@ function gracenote_getNoscriptTag(){
 ////
 // Adds Google Analytics tracking to the bottom of every page.
 //
-// If there was a Gracenote-licensed song, tracks that as well.
+// The javascript that this section adds will only record an impression
+// if there was not a previous impression earlier on the page (from a 'lyrics'
+// tag or 'gracenotelyrics' tag).
 ////
 function gracenote_outputGoogleAnalytics(&$skin, &$text){
-	GLOBAL $wgGracenoteView;
-	
-	if(!$wgGracenoteView){
-		// The view should have always been set if this code is being called far enough down the page.
-		// If we see stats for the Unknown view-type then there is an error.
-		$wgGracenoteView = GRACENOTE_VIEW_UNKNOWN;
-	}
-
-	$text .= gracenote_getAnalyticsHtml($wgGracenoteView);
-
+	$text .= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_NOT_LYRICS);
 	return true;
 } // end gracenote_outputGoogleAnalytics()
 
