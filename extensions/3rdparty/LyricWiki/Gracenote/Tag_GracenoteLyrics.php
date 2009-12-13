@@ -160,10 +160,6 @@ DOC
 
 function renderGracenoteLyricsTag($input, $argv, $parser)
 {
-	// Tell the Google Analytics code that this view was for Gracenote lyrics.
-	GLOBAL $wgGracenoteView;
-	$wgGracenoteView = GRACENOTE_VIEW_GRACENOTE_LYRICS;
-
 	#make new lines in wikitext new lines in html
 	$transform = str_replace(array("\r\n", "\r","\n"), "<br />", trim($input));
 
@@ -211,6 +207,9 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 
 	// Required Gracenote branding.
 	$retVal.= gracenote_getBrandingHtml();
+	
+	// Tell the Google Analytics code that this view was for Gracenote lyrics.
+	$retVal.= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_GRACENOTE_LYRICS);
 
 	return $retVal;
 }

@@ -138,12 +138,8 @@ function renderLyricTag($input, $argv, $parser)
 	$retVal.= $ringtoneLink;
 	$retVal.= "</div>";
 
-	// TODO: FIXME: If current plan ends up working, completely remove wgGracenoteView variable.
-	GLOBAL $wgGracenoteView;
-	$wgGracenoteView = GRACENOTE_VIEW_OTHER_LYRICS;
-
 	// Tell the Google Analytics code that this view was for non-Gracenote lyrics.
-	//$retVal.= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_OTHER_LYRICS);
+	$retVal.= gracenote_getAnalyticsHtml(GRACENOTE_VIEW_OTHER_LYRICS);
 
 	return $retVal;
 }
