@@ -331,16 +331,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	// Build up the title bar by its various pieces
 	$r .= "<div id='cathub-title-bar'>\n";
 
-	// Fetch the icon for the corresponding wiki if there is one.
-	WikiFactory::isUsed(true);
-	$canonicalCatName = str_replace("_", "", $catView->getCat()->getName());
-	$cityId = WikiFactory::DomainToId($canonicalCatName .'.wikia.com');
-	$logoSrc = WikiFactory::getVarValueByName( 'wgLogo', $cityId );
-	global $wgUploadPath;
-	if(strpos($logoSrc, "wgUploadPath") !== false){
-		$wikiUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
-		$logoSrc = str_replace("\$wgUploadPath", $wikiUploadPath, $logoSrc);
-	}
+	$logoSrc = categoryHubGetLogo($catView->getCat()->getName());
 	if($logoSrc != ""){
 		$r .= "<img src='$logoSrc' width='78' height='78' class='cathub-title-bar-wikilogo'/>";
 	}
@@ -410,6 +401,37 @@ function categoryHubTitleBar(&$catView, &$r){
 
 	$r .= "</div>\n";
 } // end categoryHubTitleBar()
+
+function categoryHubGetLogo($cat_name) {
+	$cat_name = str_replace("_", " ", $cat_name);
+
+	// Fetch the icon for the corresponding wiki if there is one.
+	WikiFactory::isUsed(true);
+
+	$cityId = null;
+	if (empty($cityId)) {
+		$cityId = WikiFactory::VarValueToId($cat_name);
+	}
+	if (empty($cityId)) {
+		$cityId = WikiFactory::VarValueToId(preg_replace("/\s*Wiki$/i", "", $cat_name));
+	}
+	if (empty($cityId)) {
+		$cityId = WikiFactory::VarValueToId(str_replace(" ", "", $cat_name));
+	}
+	if (empty($cityId)) {
+		$cityId = WikiFactory::DomainToId(str_replace(" ", "", $cat_name) . ".wikia.com");
+	}
+	if (empty($cityId)) return "";
+
+	$logoSrc = WikiFactory::getVarValueByName( 'wgLogo', $cityId );
+	global $wgUploadPath;
+	if(strpos($logoSrc, "wgUploadPath") !== false){
+		$wikiUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
+		$logoSrc = str_replace("\$wgUploadPath", $wikiUploadPath, $logoSrc);
+	}
+
+	return $logoSrc;
+}
 
 ////
 // Appends the top contributors of all time for this category as well as the top contributors
