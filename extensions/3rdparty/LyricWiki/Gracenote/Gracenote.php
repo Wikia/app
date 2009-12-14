@@ -93,7 +93,7 @@ function gracenote_obfuscateText($text){
 function gracenote_getAnalyticsHtml($google_action){
 	$trackEventCode = "";
 	if($google_action != GRACENOTE_VIEW_NOT_LYRICS){
-		$trackEventCode = "		var jsGoogleLabel = \"Unknown\";
+		$trackEventCode = "var jsGoogleLabel = \"Unknown\";
 		var gIdDiv = document.getElementById('gracenoteid');
 		if(gIdDiv){
 			jsGoogleLabel = gIdDiv.innerHTML;
@@ -108,28 +108,27 @@ function gracenote_getAnalyticsHtml($google_action){
 				}
 			}
 		}
-		if(jsGoogleLabel != \"".GRACENOTE_ALREADY_PROCESSED."\"){
-			WET.byStr('GN/{$google_action}/' + jsGoogleLabel);
+		if(jsGoogleLabel!=\"".GRACENOTE_ALREADY_PROCESSED."\"){
+			var wgGracenoteToTrack = 'GN/{$google_action}/' + jsGoogleLabel; // store for when WET is available
 			gIdDiv.innerHTML = '".GRACENOTE_ALREADY_PROCESSED."';
 		}";
 	} else {
-		$trackEventCode = "
-		var jsGoogleLabel = \"Unknown\";
+		$trackEventCode = "var jsGoogleLabel = \"Unknown\";
 		var gIdDiv = document.getElementById('gracenoteid');
 		if(gIdDiv){
 			jsGoogleLabel = gIdDiv.innerHTML;
 		}
-		if(jsGoogleLabel != \"".GRACENOTE_ALREADY_PROCESSED."\"){
+		if(typeof wgGracenoteToTrack!=\"undefined\" && (wgGracenoteToTrack != \"\")){
+			WET.byStr(wgGracenoteToTrack);
+		} else if(jsGoogleLabel!=\"".GRACENOTE_ALREADY_PROCESSED."\"){
 			WET.byStr('GN/{$google_action}');
 		}";
 	}
 
-	$retVal = <<<GOOGLE_JS
-	<script type="text/javascript">/* <![CDATA[ */
-	$trackEventCode
-	/* ]]> */</script>
-GOOGLE_JS
-;
+	// Do not remove the leading line-break or the parser will put a <p> tag inside the <script> tag (which causes a JS error).
+	$retVal = "\n<script type=\"text/javascript\">/* <![CDATA[ */
+		$trackEventCode
+	/* ]]> */</script>";
 
 	return $retVal;
 } // end gracenote_getAnalyticsHtml()
