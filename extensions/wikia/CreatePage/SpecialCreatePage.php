@@ -19,8 +19,10 @@ class CreatePage extends SpecialEditPage {
 	}
 
 	public function execute() {
-		global $wgUser, $wgOut, $wgRequest;
+		global $wgUser, $wgOut, $wgRequest,$wgJsMimeType,$wgExtensionsPath;
 
+		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CreatePage/js/focus.js?{$wgStyleVersion}\" ></script>\n");
+		
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
 			return;
