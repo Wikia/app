@@ -165,9 +165,14 @@ class WikiStickies {
 			if( count($aResult['query'][$feed]) > 0) {
 				foreach( $aResult['query'][$feed] as $newfound ) {
 					if( isset( $newfound['namespace'] ) ) {
-						$result[] = Title::makeTitle( $newfound['namespace'], $newfound['title']);
+						$title = Title::makeTitle( $newfound['namespace'], $newfound['title']);
 					} else {
-						$result[] = Title::newFromText( $newfound['title']);
+						$title = Title::newFromText( $newfound['title']);
+					}
+					if( is_object( $title ) && $title instanceof Title ) {
+						if( !$title->isProtected() ) {
+							$result[] = $title;
+						}
 					}
 				}
 			}
