@@ -527,14 +527,27 @@ class CategoryEdits {
 		if ( empty($users) ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select ( 
-				array( 'category_user_edits' ),
+				array( 'category_user_edits', 'user_groups' ),
 				array( 'cue_user_id as user_id, cue_count as cnt' ),
-				array( 'cue_cat_id' => $this->mCatId ),
+				array( 
+					'cue_cat_id' => $this->mCatId,
+					'ug_user is null'
+				),
 				__METHOD__,
 				array( 
 					'ORDER BY' => 'cue_count DESC',
 					'LIMIT' => $limit,
 					'OFFSET' => $offset * $limit
+				),
+				array(
+					'user_groups' => array( 'LEFT JOIN', 
+						implode ( ' AND ', 
+							array(
+								"cue_user_id = ug_user",
+								"ug_group = 'bot'"
+							)
+						)
+					)
 				)
 			);
 			if ( $dbr->numRows($res) ) { 
@@ -570,21 +583,37 @@ class CategoryEdits {
 		$users = $wgMemc->get( $memkey );
 		
 		if ( empty($users) ) {
+			$min_date = date('Y-m-d', time() - $days * 24 * 60 * 60);
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select ( 
-				array( 'category_user_edits' ),
-				array( 'cue_user_id as user_id, sum(cue_count) as cnt' ),
-				array( 'cue_cat_id' => $this->mCatId ),
-				__METHOD__,
+				array( 'category_edits', 'user_groups' ),
+				array( 'ce_user_id as user_id, ce_count as cnt' ),
 				array( 
-					'GROUP BY' => 'cue_user_id',
-					'USE INDEX' => 'cat_user'
+					"ce_cat_id" => $this->mCatId,
+					"ug_user is null",
+					"ce_date >= '$min_date'"
+				),
+				__METHOD__,
+				"",
+				array(
+					'user_groups' => array( 'LEFT JOIN', 
+						implode ( ' AND ', 
+							array(
+								"ce_user_id = ug_user",
+								"ug_group = 'bot'"
+							)
+						)
+					)
 				)
 			);
+			
 			if ( $dbr->numRows($res) ) {
 				$users = $tmp = array();
 				while( $oRow = $dbr->fetchObject($res) ) {
-					$tmp[$oRow->user_id] = $oRow->cnt;
+					if ( !isset($tmp[$oRow->user_id]) ) {
+						$tmp[$oRow->user_id] = 0;
+					}
+					$tmp[$oRow->user_id] += $oRow->cnt;
 				}
 				$dbr->freeResult($res);
 				if ( count($tmp) > 0 ) { 
