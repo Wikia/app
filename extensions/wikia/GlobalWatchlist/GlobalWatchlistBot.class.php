@@ -9,9 +9,11 @@ class GlobalWatchlistBot {
 	private $mStartTime;
 	private $mWatchlisters;
 	private $mWikiData = array();
+	private $iEmailsSent;
 	
 	const MAX_LAG = 30;
 	const RECORDS_SLEEP = 1000;
+	const EMAILS = 100;
 	const TIME_SLEEP = 10;
 
 	public function __construct($bDebugMode = false, $aUsers = array(), $useDB = array() ) {
@@ -19,6 +21,7 @@ class GlobalWatchlistBot {
 		$this->mDebugMode = $bDebugMode;
 		$this->mUsers = $aUsers;
 		$this->useDB = $useDB;
+		$this->iEmailsSent = 0;
 
 		$wgExtensionMessagesFiles['GlobalWatchlist'] = dirname(__FILE__) . '/GlobalWatchlist.i18n.php';
 		wfLoadExtensionMessages('GlobalWatchlist');
@@ -438,9 +441,6 @@ class GlobalWatchlistBot {
 				if ( count($aDigestData) ) {
 					$iEmailsSent++;
 					$this->sendMail( $iUserId, $aDigestData, $bTooManyPages );
-					if ( ($iEmailsSent % self::RECORDS_SLEEP) == 0 ) {
-						sleep(self::TIME_SLEEP);
-					}
 				}
 			} // foreach
 		}
@@ -512,6 +512,12 @@ class GlobalWatchlistBot {
 			UserMailer::send(new MailAddress($this->mDebugMailTo), new MailAddress($sFrom), $sEmailSubject, $sEmailBody, null, null, 'GlobalWatchlist');
 			$this->printDebug("Digest email sent to: " . $this->mDebugMailTo . " (debug mode)");
 		}
+
+		if ( ($this->iEmailsSent % self::EMAILS) == 0 ) {
+			$this->printDebug("Sent: " . $this->iEmailsSent . ", sleep: " . self::TIME_SLEEP . " sec.");
+			sleep(self::TIME_SLEEP);
+		}
+		$this->iEmailsSent++;
 	}
 
 	private function printDebug($sMessage, $bForceDebugMode = false) {
