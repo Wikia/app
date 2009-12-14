@@ -286,6 +286,7 @@ class WikiStickies {
 		$linkQuery = array();
 
 		if( is_object( $title ) && $title instanceof Title ) {
+			global $wgUser;
 
 			$sk = $wgUser->getSkin();
 
