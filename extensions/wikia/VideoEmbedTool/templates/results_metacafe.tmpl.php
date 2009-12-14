@@ -42,7 +42,7 @@ for($j = 0; $j < ceil(count($results['item']) / 4); $j++) {
 	for($i = $j*4; $i < ($j+1)*4; $i++) {
 		if(isset($results['item'][$i])) {
 ?>
-			<td><a href="#" onclick="VET_chooseImage(0, '<?= $results['item'][$i]['id'] ?>', '<?= $results['item'][$i]['link'] ?>', '<?= addslashes( $results['item'][$i]['title'] ) ?>'); return false;"><?= $results['item'][$i]['title'] ?></a></td>
+			<td><a href="#" onclick="VET_chooseImage(0, '<?= $results['item'][$i]['id'] ?>', '<?= $results['item'][$i]['link'] ?>', '<?= addslashes( $results['item'][$i]['title'] ) ?>'); return false;"><?= VideoEmbedTool::neatTrim($results['item'][$i]['title'],50) ?></a></td>
 <?php
 		}
 	}
