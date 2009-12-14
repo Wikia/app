@@ -115,7 +115,8 @@ class WikiStickies {
 				$sticker,
 				array(
 					'id' => $type . '-browser',
-					'class' => 'wikisticky_browser' )
+					'class' => 'wikisticky_browser' ),
+				$editlinks
 				);
 
 		$numitems = count($feed_data);
@@ -229,7 +230,7 @@ class WikiStickies {
 	 *
 	 * @return string The appropriate HTML to output.
 	 */
-	static function renderWikiSticky ( $title, $prefix, $attrs = NULL, $inside_attrs = NULL ) {
+	static function renderWikiSticky ( $title, $prefix, $attrs = NULL, $inside_attrs = NULL, $editlinks = false ) {
 		global $wgExtensionsPath, $wgUser, $wgTitle, $wgCanonicalNamespaceNames;
 		// Where are we?
 		$canname = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
@@ -255,9 +256,9 @@ class WikiStickies {
 		}
 		$html .= Xml::openElement( 'p' );
 		if( 'MyHome' == $canname ) {
-			$html .= self::renderWikiStickyContent( $title, $prefix, $inside_attrs );
+			$html .= self::renderWikiStickyContent( $title, $prefix, $inside_attrs, $editlinks );
 		} else {
-			$html .= self::renderWikiStickyContent( $title, $prefix );
+			$html .= self::renderWikiStickyContent( $title, $prefix, null, $editlinks );
 		}
 		$html .= Xml::closeElement( 'p' );
 		if( 'MyHome' == $canname ) {
@@ -280,22 +281,28 @@ class WikiStickies {
 		return $html;
 	}
 
-	static function renderWikiStickyContent( $title, $prefix, $attrs = NULL ) {
+	static function renderWikiStickyContent( $title, $prefix, $attrs = NULL, $editlinks = false ) {
 		$html = '';
+		$linkQuery = array();
+
 		if( is_object( $title ) && $title instanceof Title ) {
-			global $wgUser;
+
+			$sk = $wgUser->getSkin();
+
+			if ( $editlinks ) {
+				$linkQuery = $sk->editUrlOptions();
+			} 
+
+			$wrapped = wordwrap( htmlspecialchars( $title->getText(), ENT_QUOTES ), 18, "<wbr/>", true );
+			$html .= wfMsgExt(
+					$prefix,
+					array( 'parseinline', 'replaceafter' ),
+					// todo: handle an array with more than one item?
+					$sk->link( $title, $wrapped, array(), $linkQuery, array( 'known' ) )
+					);
+
+		}
 		
-		if ( is_null($title) ) {
-			return "";
-		}
-
-		$sk = $wgUser->getSkin();
-		$wrapped = wordwrap( htmlspecialchars( $title->getText(), ENT_QUOTES ), 18, "<wbr/>", true );
-		$html .= wfMsgExt( $prefix, array( 'parseinline', 'replaceafter' ),
-			// todo: handle an array with more than one item?
-			$sk->link( $title, $wrapped, array(), array(), array( 'known' ) ) );
-
-		}
 		return $html;
 	}
 
