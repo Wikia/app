@@ -100,23 +100,17 @@ if ( !$wgLocalFileRepo ) {
 if ( $wgUseSharedUploads ) {
 	if ( $wgSharedUploadDBname ) {
 		$wgForeignFileRepos[] = array(
-			'class' => 'ForeignDBRepo',
+			'class' => 'ForeignDBViaLBRepo',
 			'name' => 'shared',
 			'directory' => $wgSharedUploadDirectory,
 			'url' => $wgSharedUploadPath,
 			'hashLevels' => $wgHashedSharedUploadDirectory ? 2 : 0,
 			'thumbScriptUrl' => $wgSharedThumbnailScriptPath,
 			'transformVia404' => !$wgGenerateThumbnailOnParse,
-			'dbType' => $wgDBtype,
-			'dbServer' => $wgDBserver,
-			'dbUser' => $wgDBuser,
-			'dbPassword' => $wgDBpassword,
-			'dbName' => $wgSharedUploadDBname,
-			'dbFlags' => ($wgDebugDumpSql ? DBO_DEBUG : 0) | DBO_DEFAULT,
-			'tablePrefix' => $wgSharedUploadDBprefix,
 			'hasSharedCache' => $wgCacheSharedUploads,
 			'descBaseUrl' => $wgRepositoryBaseUrl,
 			'fetchDescription' => $wgFetchCommonsDescriptions,
+			'wiki' => $wgSharedUploadDBname,
 		);
 	} else {
 		$wgForeignFileRepos[] = array(
