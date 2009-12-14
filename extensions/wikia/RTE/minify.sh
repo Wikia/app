@@ -1,5 +1,7 @@
 #!/bin/bash
 # This shell script is used to concatenate and minify JS files (CK core and RTE code)
+svn up
+
 cd ckeditor && java -jar ../_minify/ckpackager.jar ckeditor.wikia.pack # -v
 
 # perform %VERSION% and %REVISION% replacements

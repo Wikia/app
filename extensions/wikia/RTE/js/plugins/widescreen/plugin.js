@@ -22,7 +22,7 @@ CKEDITOR.plugins.add('rte-widescreen',
 
 		// register "Widescreen" toolbar button
 		editor.ui.addButton('Widescreen', {
-			title: 'Toggle widescreen',
+			title: editor.lang.widescreen.toggle,
 			className: 'RTEWidescreenButton',
 			command: 'widescreen'
 		});
