@@ -71,7 +71,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		this._.selectedElement = element;
 
 		// setup MW suggest
-		RTE.tools.enableSuggesionsOn(this, this.getContentElement('internal', 'name'));
+		this.enableSuggesionsOn(this.getContentElement('internal', 'name'));
 	};
 
 	var createNewLink = function(editor) {
@@ -100,6 +100,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		return element;
 	};
 
+	var lang = editor.lang.link;
+
 	return {
 		title : editor.lang.link.title,
 		minWidth : 500,
@@ -107,57 +109,59 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		contents : [
 			{
 				id : 'internal',
-				label : 'Internal link',
-				title : 'Internal link',
+				label : lang.internal.tab,
+				title : lang.internal.tab,
 				elements : [
 					{
 						'type': 'text',
-						'label': 'Page name',
+						'label': lang.internal.pageName,
 						'id': 'name',
 
 						validate: function() {
-							var activeTab = RTE.tools.getActiveTab(this.getDialog());
+							var activeTab = this.getDialog().getActiveTab();
 
+							// validate page name
 							var re = new RegExp('^[' + RTE.constants.validTitleChars + ']+$');
-							var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.noUrl);
+							var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
 
 							return (activeTab == 'external') || validPageNameFunc.apply(this);
 						}
 					},
 					{
 						'type': 'text',
-						'label': 'Link text',
+						'label': lang.internal.linkText,
 						'id': 'label'
 					}
 				]
 			},
 			{
 				id : 'external',
-				label : 'External link',
-				title : 'External link',
+				label : lang.external.tab,
+				title : lang.external.tab,
 				elements : [
 					{
 						'type': 'text',
-						'label': 'URL',
+						'label': lang.external.url,
 						'id': 'url',
 
 						validate: function() {
-							var activeTab = RTE.tools.getActiveTab(this.getDialog());
+							var activeTab = this.getDialog().getActiveTab();
 
+							// validate URL
 							var re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
-							var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.noUrl);
+							var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
 
 							return (activeTab == 'internal') || validUrlFunc.apply(this);
 						}
 					},
 					{
 						'type': 'text',
-						'label': 'Link text',
+						'label': lang.external.linkText,
 						'id': 'label'
 					},
 					{
 						'type': 'checkbox',
-						'label': 'Create a numbered link',
+						'label': lang.external.numberedLink,
 						'id': 'autonumber',
 
 						onChange: function() {
@@ -204,12 +208,31 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 			// setup editor fields
 			setupDialog.apply( this, [editor, element] );
+
+			// tracking
+			var self = this;
+
+			// tabs
+			var tabs = this._.tabs;
+			tabs.external[0].on('click', function(ev) {
+				RTE.track('link', 'dialog', 'tab', 'internal2external');
+			});
+			tabs.internal[0].on('click', function(ev) {
+				RTE.track('link', 'dialog', 'tab', 'external2internal');
+			});
+
+			// setup dialog tracking code (close / cancel)
+			this.setupTracking('link');
 		},
+
 		// create new link / update link' meta data
 		onOk : function()
 		{
+			// for tracking
+			var type = '';
+
 			// get selected tab
-			var currentTab = RTE.tools.getActiveTab(this);
+			var currentTab = this.getActiveTab();
 
 			//RTE.log('link: selected tab "' + currentTab + '"');
 
@@ -243,17 +266,23 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						'wikitext': null
 					};
 
+					type = 'externalNamed';
+
 					if (this.getValueOf('external', 'autonumber')) {
 						// autonumbered link
 						data.linktype = 'autonumber';
 						data.text = '[1]';
 
 						element.addClass('autonumber');
+
+						type = 'externalNumbered';
 					}
 
 					if (data.text == '') {
 						// no link text provided? generate external raw link
 						data.type = 'external-raw';
+
+						type = 'externalSimple';
 					}
 
 					// set content and class of link element
@@ -276,6 +305,13 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					// set content of link element
 					element.setText(data.text != '' ? data.text : data.link);
 
+					if (data.text == '') {
+						type = 'internalSimple';
+					}
+					else {
+						type = 'internalNamed';
+					}
+
 					// add .new CSS class if needed
 					RTE.tools.checkInternalLink(element, data.link);
 					break;
@@ -294,6 +330,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			if (typeof this._.suggestContainer != 'undefined') {
 				this._.suggestContainer.css('visibility', 'hidden');
 			}
+
+			RTE.track('link', 'dialog', 'type', type);
 		}
 	};
 } );

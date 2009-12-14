@@ -65,6 +65,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					colsInput && colsInput.enable();
 					rowsInput && rowsInput.select();
 				}
+
+				// Wikia - start
+				// setup dialog tracking code (close / cancel)
+				this.setupTracking('table');
+				// Wikia - end
 			},
 			onOk : function()
 			{
@@ -228,7 +233,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													&& value > 0;
 												if ( !pass )
 												{
-													alert( editor.lang.table.invalidRows );
+													// Wikia - start
+													//alert( editor.lang.table.invalidRows );
+													RTE.tools.alert(editor.lang.errorPopupTitle, editor.lang.table.invalidRows);
+													// Wikia - end
+
 													this.select();
 												}
 												return pass;
@@ -253,7 +262,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 													&& value > 0;
 												if ( !pass )
 												{
-													alert( editor.lang.table.invalidCols );
+													// Wikia - start
+													//alert( editor.lang.table.invalidCols );
+													RTE.tools.alert(editor.lang.errorPopupTitle, editor.lang.table.invalidCols);
+													// Wikia - end
 													this.select();
 												}
 												return pass;

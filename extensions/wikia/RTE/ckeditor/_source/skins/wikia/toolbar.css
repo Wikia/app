@@ -23,6 +23,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 {
 	clear: both;
 	padding: 5px 3px 5px 6px;
+	visibility: hidden;
 }
 
 .cke_skin_wikia .cke_rtl .cke_toolbox

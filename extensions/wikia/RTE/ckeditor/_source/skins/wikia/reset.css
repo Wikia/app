@@ -18,21 +18,21 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	margin: 0;
 	padding: 0;
 	background: transparent;
+	font: normal normal normal 100% Sans-Serif;
+	text-align: left;
 */
 	text-decoration: none;
 	border: 0;
-	font: normal normal normal 100% Sans-Serif;
 	width: auto;
 	height: auto;
 	border-collapse: collapse;
-	text-align: left;
 	vertical-align: baseline;
 	white-space: nowrap;
 	cursor: auto;
 	color: #000;
 
-    font-size: 12px;
-    font-family: arial, sans-serif;
+	font-size: 12px;
+	font-family: arial, sans-serif;
 }
 
 .cke_skin_wikia div,

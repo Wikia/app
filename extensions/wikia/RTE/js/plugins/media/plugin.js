@@ -39,7 +39,7 @@ CKEDITOR.plugins.add('rte-media',
 
 		// register "Image" toolbar button
 		editor.ui.addButton('Image', {
-			title: 'Add picture',
+			title: editor.lang.image.add,
 			className: 'RTEImageButton',
 			command: 'addimage'
 		});
@@ -57,7 +57,7 @@ CKEDITOR.plugins.add('rte-media',
 
 			// register "Video" toolbar button
 			editor.ui.addButton('Video', {
-				title: 'Add a video',
+				title: editor.lang.video.add,
 				className: 'RTEVideoButton',
 				command: 'addvideo'
 			});
@@ -104,11 +104,13 @@ CKEDITOR.plugins.add('rte-media',
 			// create menu node
 			overlay = $('<div>').addClass('RTEMediaOverlay').width(width + 'px').attr('type', image.attr('type'));
 			overlay.html('<div class="RTEMediaMenu color1">' +
-				'<span class="RTEMediaOverlayEdit">edit</span> <span class="RTEMediaOverlayDelete">delete</span>' +
+				'<span class="RTEMediaOverlayEdit">' + RTE.instance.lang.media.edit  + '</span> ' +
+				'<span class="RTEMediaOverlayDelete">' + RTE.instance.lang.media['delete'] + '</span>' +
 				'</div>');
 
 			// render image caption
-			if (data.params.caption && isFramed) {
+			var captionContent = data.params.captionParsed || data.params.caption;
+			if (captionContent && isFramed) {
 				var captionTop = parseInt(image.attr('height') + 7);
 
 				// IE
@@ -119,7 +121,7 @@ CKEDITOR.plugins.add('rte-media',
 				var caption = $('<div>').
 					addClass('RTEMediaCaption').
 					css('marginTop',captionTop + 'px').
-					html(data.params.caption);
+					html(captionContent);
 
 				caption.appendTo(overlay);
 			}
@@ -152,14 +154,20 @@ CKEDITOR.plugins.add('rte-media',
 			});
 
 			overlay.find('.RTEMediaOverlayDelete').bind('click', function(ev) {
-				// tracking
-				RTE.track(self.getTrackingType(image), 'menu', 'delete');
+				var type = self.getTrackingType(image);
 
-				if (confirm('Are you sure?')) {
+				// tracking
+				RTE.track(type, 'menu', 'delete');
+
+				// show modal version of confirm()
+				var title = RTE.instance.lang[type].confirmDeleteTitle;
+				var msg = RTE.instance.lang[type].confirmDelete;
+
+				RTE.tools.confirm(title, msg, function() {
 					// remove image and its menu
 					overlay.remove();
 					$(image).remove();
-				}
+				});
 			});
 		}
 
@@ -344,12 +352,14 @@ CKEDITOR.plugins.add('rte-media',
 
 		// setup image / video placeholder separatelly
 		var images = placeholder.filter('.placeholder-image-placeholder');
+		images.attr('title', RTE.instance.lang.imagePlaceholder.tooltip);
 		images.bind('edit.placeholder', function(ev) {
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
 			RTE.tools.callFunction(window.WMU_show,$(this), {isPlaceholder: true});
 		});
 
 		var videos = placeholder.filter('.placeholder-video-placeholder');
+		videos.attr('title', RTE.instance.lang.videoPlaceholder.tooltip);
 		videos.bind('edit.placeholder', function(ev) {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
 			RTE.tools.callFunction(window.VET_show,$(this), {isPlaceholder: true});

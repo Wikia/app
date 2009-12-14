@@ -27,7 +27,7 @@ class RTE {
 	 * Perform "reverse" parsing of HTML to wikitext when saving / doing preview from wysiwyg mode
 	 */
 	public static function reverse($form,  $out = null) {
-		global $wgRequest;
+		global $wgRequest, $wgHooks;
 		if($wgRequest->wasPosted()) {
 			if($wgRequest->getVal('RTEMode') == 'wysiwyg') {
 				if($out == null) {
@@ -36,7 +36,30 @@ class RTE {
 				} else {
 					$form->textbox1 = $form->getContent();
 				}
+				if(!empty($wgRequest->data['wpSave'])) {
+					$wgHooks['ArticleSaveComplete'][] = 'RTE::notifySave';
+				}
 			}
+		}
+		return true;
+	}
+
+	public static function notifySave(&$article, &$user, &$text, &$summary, &$minoredit, &$watchthis, &$sectionanchor, &$flags, $revision) {
+		global $wgTitle;
+		if(is_object($revision) && is_object($wgTitle)) {
+			global $wgSitename;
+
+			$data = array('title' => $wgSitename, 'description' => '<a href="'.$wgTitle->getFullURL('diff=' . $revision->getId()).'">diff</a>');
+
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+			curl_setopt($ch, CURLOPT_URL, "http://fp026.sjc.wikia-inc.com/inez/test.php");
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_exec($ch);
+			curl_close($ch);			
 		}
 		return true;
 	}
@@ -228,6 +251,17 @@ class RTE {
 		// local path to RTE (used to apply htc fixes for IE)
 		// this MUST point to local domain
 		$vars['RTELocalPath'] = $wgServer .  $wgScriptPath . '/extensions/wikia/RTE';
+
+		// link to raw version of MediaWiki:Common.css
+		global $wgSquidMaxage;
+		$query = wfArrayToCGI(array(
+			'action' => 'raw',
+			'maxage' => $wgSquidMaxage,
+			'usemsgcache' => 'yes',
+			'ctype' => 'text/css',
+			'smaxage' => $wgSquidMaxage,
+		));
+		$vars['RTEMWCommonCss'] = $wgServer . Skin::makeNSUrl('Common.css', $query, NS_MEDIAWIKI);
 
 		// domain and path for cookies
 		global $wgCookieDomain, $wgCookiePath;

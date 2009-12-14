@@ -44,6 +44,10 @@ CKEDITOR.plugins.contextMenu = CKEDITOR.tools.createClass(
 			var menu = this._.menu,
 				editor = this.editor;
 
+			// Wikia - start
+			editor.fire('contextMenuOnOpen', {menu: menu});
+			// Wikia - end
+
 			if ( menu )
 			{
 				menu.hide();
@@ -56,6 +60,10 @@ CKEDITOR.plugins.contextMenu = CKEDITOR.tools.createClass(
 				{
 					var noUnlock = true;
 					menu.hide();
+
+					// Wikia - start
+					editor.fire('contextMenuOnClick', {menu: menu, item: item});
+					// Wikia - end
 
 					if ( CKEDITOR.env.ie )
 						menu.onEscape();

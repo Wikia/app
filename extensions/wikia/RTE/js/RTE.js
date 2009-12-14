@@ -2,6 +2,7 @@ window.RTE = {
 	// configuration
 	config: {
 		'alignableElements':  ['p', 'div', 'td' ,'th'],
+		'baseFloatZIndex': 500,
 		'bodyId': 'bodyContent',
 		'coreStyles_bold': {element: 'b', overrides: 'strong'},
 		'coreStyles_italic': {element: 'i', overrides: 'em'},
@@ -12,13 +13,13 @@ window.RTE = {
 		'format_tags': 'p;h2;h3;h4;h5;pre',
 		'height': 400,
 		'language': window.wgUserLanguage,
-		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,maximize,newpage,pagebreak,save,wsc',
+		'removePlugins': 'about,elementspath,filebrowser,flash,forms,horizontalrule,image,justify,link,maximize,newpage,pagebreak,save,scayt,wsc',
 		'resize_enabled': false,
+		'skin': 'wikia',
 		'startupFocus': true,
-		'toolbar': 'Wikia',
-		'toolbarCanCollapse': false,
 		'theme': 'wikia',
-		'skin': 'wikia'
+		'toolbar': 'Wikia',
+		'toolbarCanCollapse': false
 	},
 
 	// refernece to current CK instance
@@ -36,6 +37,7 @@ window.RTE = {
 	// list of our RTE custom plugins (stored in js/plugins) to be loaded on editor init
 	plugins: [
 		'comment',
+		'dialog',
 		'dragdrop',
 		'edit-buttons',
 		'entities',
@@ -43,13 +45,14 @@ window.RTE = {
 		'justify',
 		'link',
 		'media',
-		'mw-toolbar',
-		/*'paste',*/
+		'paste',
 		'placeholder',
 		'signature',
 		'template',
 		'temporary-save',
+		'toolbar',
 		'tools',
+		'track',
 		'widescreen'
 	],
 
@@ -91,6 +94,12 @@ window.RTE = {
 	init : function(mode) {
 		// cache buster used by CK when loading CSS/JS
 		CKEDITOR.timestamp = window.wgStyleVersion;
+
+		// allow <img> (used for placeholders) to be placed inside <pre>
+		CKEDITOR.dtd.pre.img = 1;
+
+		// allow <center> to be placed inside <p>
+		CKEDITOR.dtd.p.center = 1;
 
 		// set startup mode
 		RTE.config.startupMode = mode;
@@ -146,10 +155,12 @@ window.RTE = {
 	loadCss: function() {
 		var css = [
 			window.stylepath + '/monobook/main.css',
-			CKEDITOR.basePath + '../css/RTEcontent.css'
+			CKEDITOR.basePath + '../css/RTEcontent.css',
+			window.RTEMWCommonCss
 		];
 		for (var n=0; n<css.length; n++) {
-			RTE.instance.addCss('@import url(' + css[n] + '?' + CKEDITOR.timestamp + ');');
+			var cb = ( (css[n].indexOf('?') > -1) ? '' : ('?' + CKEDITOR.timestamp) );
+			RTE.instance.addCss('@import url(' + css[n] + cb + ');');
 		}
 
 		// disable object resizing in IE
@@ -182,12 +193,6 @@ window.RTE = {
 		RTE.instance.dataProcessor.writer.indentationChars = '';
 		RTE.instance.dataProcessor.writer.lineBreakChars = '';
 
-		// allow <img> (used for placeholders) to be placed inside <pre>
-		CKEDITOR.dtd.pre.img = 1;
-
-		// allow <center> to be placed inside <p>
-		CKEDITOR.dtd.p.center = 1;
-
 		// set class for body indicating current editor mode
 		$('body').addClass('rte_' + RTE.instance.mode);
 
@@ -214,30 +219,13 @@ window.RTE = {
 			(window.RTEDevMode ? 'in development mode' : CKEDITOR.revision + ' build ' + CKEDITOR.version) +
 			') is ready in "' + RTE.instance.mode + '" mode (loaded in ' + RTE.loadTime + ' s)');
 
-		// load time in ms (to be reported to GA)
-		var trackingLoadTime = parseInt(RTE.loadTime * 10) * 100;
-
-		// tracking
-		switch (RTE.instance.mode) {
-			case 'source':
-				RTE.track('init', 'sourceMode', trackingLoadTime);
-
-				// add edgecase name (if any)
-				if (window.RTEEdgeCase) {
-					RTE.track('init', 'edgecase',  window.RTEEdgeCase);
-				}
-
-				break;
-
-			case 'wysiwyg':
-				RTE.track('init', 'wysiwygMode', trackingLoadTime);
-				break;
-		}
-
 		// editor resizing
 		if (typeof window.EditEnhancements == 'function') {
 			EditEnhancements();
 		}
+
+		// fire custom event for "track" plugin
+		RTE.instance.fire('RTEready');
 	},
 
 	// extra setup of <body> wrapping editing area in wysiwyg mode
@@ -307,7 +295,7 @@ window.RTE = {
 				RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, function(data) {
 					if (data.edgecase) {
 						RTE.log('edgecase found!');
-						RTE.tools.alert('&nbsp;', data.edgecase.info);
+						RTE.tools.alert(data.edgecase.info.title, data.edgecase.info.content);
 
 						// stay in source mode
 						RTE.instance.forceSetMode('source', content);
@@ -415,8 +403,25 @@ CKEDITOR.dom.element.prototype.hasAttributes = function() {
 	return ret;
 }
 
+// catch requests for language JS files
+CKEDITOR.langRegExp = /lang\/(\w+).js/;
+
 // load CK files from _source subdirectory
 CKEDITOR.getUrl = function( resource ) {
+
+	// catch requests for /lang/xx.js
+	if (CKEDITOR.langRegExp.test(resource)) {
+		var matches = resource.match(CKEDITOR.langRegExp);
+		var lang = matches[1];
+
+		RTE.log('language "' + lang + '" requested');
+
+		// fetch JSON with language definition from backend
+		var url = window.wgServer + wgScript + '?action=ajax&rs=RTEAjax&method=i18n&uselang=' + lang +
+			'&cb=' + window.wgMWrevId + '-' + window.wgStyleVersion;
+
+		return url;
+	}
 
 	// If this is not a full or absolute path.
 	if ( resource.indexOf('://') == -1 && resource.indexOf( '/' ) !== 0 ) {

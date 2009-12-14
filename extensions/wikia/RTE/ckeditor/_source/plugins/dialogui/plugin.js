@@ -476,7 +476,6 @@ CKEDITOR.plugins.add( 'dialogui' );
 					}, this );
 
 				// wikia: CSS class changes
-				RTE.log(elementDefinition);
 				if (typeof elementDefinition['class'] != 'undefined') {
 					elementDefinition['class'] = elementDefinition['class']
 						.replace(/cke_dialog_ui_button_cancel/, 'secondary')

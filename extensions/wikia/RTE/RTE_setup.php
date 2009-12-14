@@ -19,6 +19,7 @@ $wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
 $wgAutoloadClasses['RTEData'] = "$dir/RTEData.class.php";
 $wgAutoloadClasses['RTEMagicWord'] = "$dir/RTEMagicWord.class.php";
 $wgAutoloadClasses['RTEFirstRunNotice'] = "$dir/RTEFirstRunNotice.class.php";
+$wgAutoloadClasses['RTELang'] = "$dir/RTELang.class.php";
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
@@ -44,7 +45,8 @@ $wgHooks['RTEAddToEditForm'][] = 'RTEFirstRunNotice::render';
 
 // i18n
 $wgExtensionMessagesFiles['RTE'] = $dir.'/i18n/RTE.i18n.php';
-//$wgExtensionMessagesFiles['CK'] = $dir.'/i18n/CK.i18n.php';
+$wgExtensionMessagesFiles['CKcore'] = $dir.'/i18n/CK.core.i18n.php';
+$wgExtensionMessagesFiles['CKwikia'] = $dir.'/i18n/CK.wikia.i18n.php';
 
 // enable MW suggest - this needs to be set here to make API calls working
 $wgEnableMWSuggest = true;
@@ -59,10 +61,16 @@ function RTEAjax() {
                 wfLoadExtensionMessages('RTE');
 
                 $data = RTEAjax::$method();
-                $json = Wikia::json_encode($data);
 
-                $response = new AjaxResponse($json);
-                $response->setContentType('application/json; charset=utf-8');
-                return $response;
+		if (is_array($data)) {
+			$json = Wikia::json_encode($data);
+
+			$response = new AjaxResponse($json);
+			$response->setContentType('application/json; charset=utf-8');
+			return $response;
+		}
+		else {
+			return $data;
+		}
         }
 }

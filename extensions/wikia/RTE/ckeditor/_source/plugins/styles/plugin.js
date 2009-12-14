@@ -1206,6 +1206,10 @@ CKEDITOR.STYLE_OBJECT = 3;
 
 	function applyStyle( document, remove )
 	{
+		// Wikia - start
+		document.fire('applyStyle', {style: this.element, remove: remove});
+		// Wikia - end
+
 		// Get all ranges from the selection.
 		var selection = document.getSelection();
 		var ranges = selection.getRanges();

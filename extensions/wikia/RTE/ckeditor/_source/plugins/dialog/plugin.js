@@ -219,12 +219,21 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 							if ( typeof isValid == 'string' )
 							{
-								alert( isValid );
+								// Wikia - start
+								//alert( isValid );
+								var editor = this.getDialog()._.editor;
+								RTE.tools.alert(editor.lang.errorPopupTitle, isValid);
+								// Wikia - end
 								isValid = false;
 							}
 
 							if ( isValid === false )
 							{
+								// Wikia - start
+								var dialog = item.getDialog();
+								dialog.fire('notvalid', {item: item});
+								// Wikia - end
+
 								if ( item.select )
 									item.select();
 								else
@@ -253,6 +262,10 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 		this.parts.close.on( 'click', function( evt )
 				{
+					// Wikia - start
+					this.fire('close', {close: true});
+					// Wikia - end
+
 					if ( this.fire( 'cancel', { hide : true } ).hide !== false )
 						this.hide();
 				}, this );
@@ -646,6 +659,10 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			// Register the Esc hotkeys.
 			registerAccessKey( this, this, '\x1b', null, function()
 					{
+						// Wikia - start
+						this.fireOnce('close', {esc: true});
+						// Wikia - end
+
 						this.getButton( 'cancel' ) && this.getButton( 'cancel' ).click();
 					} );
 
@@ -1145,6 +1162,11 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 						onClick : function( evt )
 						{
 							var dialog = evt.data.dialog;
+
+							// Wikia - start
+							dialog.fireOnce('cancelClicked');
+							// Wikia - end
+
 							if ( dialog.fire( 'cancel', { hide : true } ).hide !== false )
 								dialog.hide();
 						}
@@ -2616,8 +2638,13 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 					if ( !passed )
 					{
-						if ( msg !== undefined )
-							alert( msg );
+						if ( msg !== undefined ) {
+							// Wikia - start
+							//alert( msg );
+							var editor = this.getDialog()._.editor;
+							RTE.tools.alert(editor.lang.errorPopupTitle, msg);
+							// Wikia - end
+						}
 						if ( this && ( this.select || this.focus ) )
 							( this.select || this.focus )();
 						return false;
@@ -2638,8 +2665,13 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 					var value = this && this.getValue ? this.getValue() : arguments[0];
 					if ( !regex.test( value ) )
 					{
-						if ( msg !== undefined )
-							alert( msg );
+						if ( msg !== undefined ) {
+							// Wikia - start
+							//alert( msg );
+							var editor = this.getDialog()._.editor;
+							RTE.tools.alert(editor.lang.errorPopupTitle, msg);
+							// Wikia - end
+						}
 						if ( this && ( this.select || this.focus ) )
 						{
 							if ( this.select )

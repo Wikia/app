@@ -8,8 +8,8 @@ CKEDITOR.plugins.add('rte-template',
 
 		// register template dropdown list
 		editor.ui.addRichCombo('Template', {
-			label : 'Template',
-			title: 'Choose template',
+			label : editor.lang.templateDropDown.label,
+			title: editor.lang.templateDropDown.title,
 			className : 'cke_template',
 			multiSelect : false,
 
@@ -18,7 +18,7 @@ CKEDITOR.plugins.add('rte-template',
 			},
 
 			init : function() {
-				this.startGroup('Templates');
+				this.startGroup(editor.lang.templateDropDown.title);
 
 				// list of templates to be added to dropdown
 				var templates = window.RTETemplatesDropdown;
@@ -31,7 +31,9 @@ CKEDITOR.plugins.add('rte-template',
 				}
 
 				// add "Other template / magic word"
-				this.add('--other--', '<strong>Other template / magic word</strong>', 'Other template / magic word');
+				this.add('--other--',
+					'<strong>' + editor.lang.templateDropDown.chooseAnotherTpl  + '</strong>',
+					editor.lang.templateDropDown.chooseAnotherTpl);
 			},
 
 			onClick : function(value) {
@@ -42,6 +44,8 @@ CKEDITOR.plugins.add('rte-template',
 					RTE.templateEditor.createTemplateEditor(false);
 				}
 				else {
+					RTE.track('template', 'dialog', 'search', 'dropdown', value);
+
 					// show template editor with selected template
 					RTE.templateEditor.createTemplateEditor(value);
 				}
@@ -207,15 +211,15 @@ RTE.templateEditor = {
 					});
 
 					// setup MW suggest (search only in NS_TEMPLATE = 10)
-					RTE.tools.enableSuggesionsOn(dialog, dialog.getContentElement('step1', 'templateSearchQuery'), [10]);
+					dialog.enableSuggesionsOn(dialog.getContentElement('step1', 'templateSearchQuery'), [10]);
 				}
 
 				if (typeof window.RTEHotTemplates == 'undefined') {
-					RTE.tools.setDialogLoading(dialog, true);
+					dialog.setLoading(true);
 
 					// fetch list of frequently used templates via AJAX
 					RTE.ajax('getHotTemplates', {}, function(hotTemplates) {
-						RTE.tools.setDialogLoading(dialog, false);
+						dialog.setLoading(false);
 
 						window.RTEHotTemplates = hotTemplates;
 						renderFirstStep();
@@ -252,8 +256,11 @@ RTE.templateEditor = {
 					// fix for HTML in value
 					value = value.replace(/&/g, '&amp;');
 
+					// show different message for unnamed template parameters
+					var keyLabel = !!parseInt(key) ? RTE.instance.lang.templateEditor.editor.unnamedParamLabel : key;
+
 					// render key - value pair
-					html += '<dt><label for="templateEditorParameter' + i + '">' + key  + '</label></dt>';
+					html += '<dt><label for="templateEditorParameter' + i + '">' + keyLabel  + '</label></dt>';
 					html += '<dd><textarea rel="' + key + '" id="templateEditorParameter' + i +'">' + value + '</textarea></dd>';
 				});
 
@@ -297,12 +304,12 @@ RTE.templateEditor = {
 		this.placeholder.setData(data);
 
 		RTE.templateEditor.usePlaceholder(this.placeholder);
-		RTE.tools.setDialogLoading(dialog, true);
+		dialog.setLoading(true);
 
 		// get template info
 		var self = this;
 		RTE.tools.resolveDoubleBrackets(data.wikitext, function(info) {
-			RTE.tools.setDialogLoading(dialog, false);
+			dialog.setLoading(false);
 
 			// store template info
 			self.placeholder.data('info', info);

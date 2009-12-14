@@ -7,7 +7,7 @@ CKEDITOR.dialog.add('rte-comment', function(editor)
 {
 	// return dialog structure definition
 	return {
-		title: 'Comment Editor',
+		title: editor.lang.commentEditor.title,
 		resizable: CKEDITOR.DIALOG_RESIZE_NONE,
 		minWidth: 400,
 		minHeight: 150,
@@ -33,11 +33,14 @@ CKEDITOR.dialog.add('rte-comment', function(editor)
 			// if all text is removed from edit area and saved, remove comment
 			if (content == '') {
 				RTE.log('removing comment');
+				RTE.track('comment', 'dialog', 'delete');
+
 				placeholder.remove();
 				return;
 			}
 
 			RTE.log('storing modified comment data: ' + content);
+			RTE.track('comment', 'dialog', 'save');
 
 			// update placeholder
 			var wikitext = '<!-- ' + content + ' -->';
@@ -58,6 +61,9 @@ CKEDITOR.dialog.add('rte-comment', function(editor)
 			wikitext = data.wikitext.replace(/^<!--\s+/, '').replace(/\s+-->$/, '');
 
 			this.setValueOf('comment', 'content', wikitext);
+
+			// setup dialog tracking code (don't report clicks on OK)
+			this.setupTracking('comment', {ok: false});
 		}
 	};
 });

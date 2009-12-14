@@ -75,12 +75,15 @@ CKEDITOR.plugins.add('rte-placeholder',
 				// encode HTML inside wikisyntax
 				var code = data.wikitext.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+				// messages
+				var lang = RTE.instance.lang.hoverPreview;
+
 				switch(info.type) {
 					case 'tpl':
 						className = 'RTEPlaceholderPreviewTemplate';
 
 						title = info.title.replace(/_/g, ' ').replace(/^Template:/, window.RTEMessages.template + ':');
-						intro = info.exists ? 'This is a template' : 'This template does not exist!';
+						intro = info.exists ? lang.template.intro : lang.template.notExisting;
 
 						// show wikitext, if template does not exist
 						code = info.exists ? info.html : data.wikitext;
@@ -91,8 +94,8 @@ CKEDITOR.plugins.add('rte-placeholder',
 						break;
 
 					case 'comment':
-						title = 'Comment';
-						intro = 'This can only be seen during editing';
+						title = lang.comment.title;
+						intro = lang.comment.intro;
 
 						// exclude comment beginning and end markers
 						code = data.wikitext.replace(/^<!--\s+/, '').replace(/\s+-->$/, '');
@@ -107,12 +110,12 @@ CKEDITOR.plugins.add('rte-placeholder',
 						var imageName = data.wikitext.replace(/^\[\[/, '').replace(/]]$/, '').split('|').shift();
 						title = imageName;
 
-						intro = 'This image or file does not exist!';
+						intro = lang.media.notExisting;
 						break;
 
 					default:
-						title = 'Coded element';
-						intro = 'Please switch to source mode to edit';
+						title = lang.codedElement.title;
+						intro = lang.codedElement.intro;
 						break;
 				}
 
@@ -138,10 +141,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 				if (showEdit) {
 					tools += '<a class="RTEPlaceholderPreviewToolsEdit' +
 						(!isEditable ? ' RTEPlaceholderPreviewToolsButtonDisabled' : '') +
-						'">' + spriteImg + 'edit</a>';
+						'">' + spriteImg + lang.edit + '</a>';
 				}
 
-				tools += '<a class="RTEPlaceholderPreviewToolsDelete">' + spriteImg + 'delete</a>';
+				tools += '<a class="RTEPlaceholderPreviewToolsDelete">' + spriteImg + lang['delete'] + '</a>';
 
 				//
 				// render HTML
@@ -172,11 +175,11 @@ CKEDITOR.plugins.add('rte-placeholder',
 				preview.find('.RTEPlaceholderPreviewToolsDelete').bind('click', function(ev) {
 					RTE.track(self.getTrackingType($(placeholder)), 'hover', 'delete');
 
-					if (confirm('Are you sure?')) {
+					RTE.tools.confirm(title, lang.confirmDelete, function() {
 						// remove placeholder and its preview
 						preview.remove();
 						$(placeholder).remove();
-					}
+					});
 				});
 
 				// handle clicks on [edit] button

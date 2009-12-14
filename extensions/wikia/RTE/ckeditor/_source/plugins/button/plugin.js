@@ -86,6 +86,10 @@ CKEDITOR.ui.button.prototype =
 			},
 			execute : function()
 			{
+				// Wikia - start
+				this.editor.fire('buttonClick', {button: this.button});
+				// Wikia - end
+
 				this.button.click( editor );
 			}
 		};
