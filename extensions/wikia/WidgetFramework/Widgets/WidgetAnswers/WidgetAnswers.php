@@ -114,6 +114,7 @@ EOD;
 		$category = $wgSitename;
 	}
 
+	$category = addcslashes($category, "'");
 	$output .= <<<EOD
 <script type="text/javascript">/*<![CDATA[*/
 var ask_a_question_msg = "{$ask_a_question}";
