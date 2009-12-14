@@ -104,6 +104,7 @@ form#userajaxloginform2 .plain {
 
 #userloginInnerErrorBox,
 #userloginInnerErrorBox2 {
+	color:black;
 	margin-left: 20px;
 }
 
