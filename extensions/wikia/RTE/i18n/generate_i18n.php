@@ -8,6 +8,16 @@
  * @author Maciej Brencz <macbre@wikia-inc.com>
  */
 
+// list of languages to import
+$langs = array(
+	'de',
+	'en',
+	'es',
+	'fr',
+	'it',
+	'pl',
+);
+
 // fix single line of JS file
 function parse_json_line($matches) {
 	$key = $matches[1];
@@ -59,12 +69,6 @@ function make_flat_array($data, $lang, $prefix = '') {
 $dir = dirname(__FILE__) . '/../ckeditor/_source/lang/';
 $files = glob($dir . '*.js');
 $messages = array();
-
-// list of supported languages
-$langs = array(
-	'en',
-	'pl',
-);
 
 // messages "groups" to be skipped
 $skipGroups = array(
