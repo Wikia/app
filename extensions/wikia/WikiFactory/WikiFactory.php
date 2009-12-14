@@ -1527,7 +1527,7 @@ class WikiFactory {
 		);
 
 		wfProfileOut( __METHOD__ );
-		return isset( $oRow->city_id ) ? $oRow->city_id : null;
+		return isset( $oRow->cv_city_id ) ? $oRow->cv_city_id : null;
 	}
 
 
