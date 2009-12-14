@@ -64,4 +64,5 @@ $messages['en'] = array(
 	'rte-ck-video-confirmDelete' => 'Are you sure you wish to remove the video from this page?',
 	'rte-ck-video-confirmDeleteTitle' => 'Remove this video?',
 	'rte-ck-videoPlaceholder-tooltip' => 'A video placeholder. Click to edit!',
+	'rte-ck-widescreen-toggle' => 'Toggle widescreen',
 );
