@@ -3,6 +3,7 @@ $messages = array();
 $messages['en'] = array(
 	'rte-desc' => 'CKeditor integration for MediaWiki',
 	'rte-no-js-fallback' => 'The rich text editor does not work with JavaScript switched off. Please either enable it in your browser options, or visit your [[Special:Preferences]] to switch to the old MediaWiki editor',
+	'rte-edgecase-info-title' => 'Source mode required',
 	'rte-edgecase-info' => 'Rich text editing has been disabled because the article contains complex code.',
 	'rte-edgecase-comment' => 'HTML comments',
 	'rte-edgecase-triplecurls' => 'template parameters',
@@ -16,7 +17,7 @@ $messages['en'] = array(
 	'rte-edgecase-unclosed-tags' => 'unclosed HTML tag',
 	'enablerichtexteditor' => 'Enable Rich Text Editor',
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
-	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the annoucement].',
+	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 );
 $messages['pl'] = array(
 	'rte-desc' => 'CKeditor dla MediaWiki',

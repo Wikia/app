@@ -17,8 +17,11 @@ class RTEAjax {
 
 		if (RTE::edgeCasesFound()) {
 			$ret['edgecase'] = array(
-				'info' => wfMsg('rte-edgecase-info'),
 				'type' => RTE::getEdgeCaseType(),
+				'info' => array(
+					'title' => wfMsg('rte-edgecase-info-title'),
+					'content' => wfMsg('rte-edgecase-info'),
+				),
 			);
 		}
 
@@ -161,5 +164,25 @@ class RTEAjax {
 	 */
 	static public function firstRunNoticeDismiss() {
 		return RTEFirstRunNotice::dismiss();
+	}
+
+	/**
+	 * Get localisation
+	 */
+	static public function i18n() {
+		// get CK messages array
+		$messages = RTELang::getMessages();
+
+		// code of requested language
+		global $wgLang;
+		$lang = $wgLang->getCode();
+
+		$js = "CKEDITOR.lang['{$lang}'] = " . Wikia::json_encode($messages) . ';';
+
+		$ret = new AjaxResponse($js);
+		$ret->setContentType('application/x-javascript');
+		$ret->setCacheDuration(86400 * 365 * 10); // 10 years
+
+		return $ret;
 	}
 }

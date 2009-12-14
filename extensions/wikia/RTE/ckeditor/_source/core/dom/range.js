@@ -280,6 +280,12 @@ CKEDITOR.dom.range = function( document )
 				}
 			else
 			{
+				// Wikia - start
+				if (node.$.nodeType == CKEDITOR.NODE_COMMENT) {
+					return false;
+				}
+				// Wikia - end
+
 				// If there are non-empty inline elements (e.g. <img />), then we're not
 				// at the start.
 				if ( !inlineChildReqElements[ node.getName() ] )

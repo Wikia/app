@@ -108,8 +108,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				nextBlock.insertBefore( doc.createText( '\xa0' ), node );
 
 			// Move the selection to the end block.
-			if ( nextBlock )
+			if ( nextBlock ) {
+				// Wikia - start
+				// add empty line between paragraphs when parsing back to wikitext
+				// if first node is comment (wikitext line-break marker), don't add _rte_empty_lines_before attribute
+				var firstChild = nextBlock.getFirst();
+				if (firstChild.$.nodeType != CKEDITOR.NODE_COMMENT) {
+					nextBlock.setAttribute('_rte_empty_lines_before', 1);
+				}
+				nextBlock.setAttribute('_rte_fromparser', 1);
+				// Wikia - end
+
 				range.moveToElementEditStart( nextBlock );
+			}
 		}
 		else
 		{

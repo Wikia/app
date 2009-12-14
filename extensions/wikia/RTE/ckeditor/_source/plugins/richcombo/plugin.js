@@ -214,6 +214,10 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 
 			panel.onShow = function()
 				{
+					// Wikia - start
+					editor.fire('panelShow', {panel: this, me: me});
+					// Wikia - end
+
 					if ( me.className )
 						this.element.getFirst().addClass( me.className + '_panel' );
 
@@ -248,6 +252,10 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 
 			list.onClick = function( value, marked )
 				{
+					// Wikia - start
+					editor.fire('panelClick', {panel: this, me: me, value: value});
+					// Wikia - end
+
 					// Move the focus to the main windows, otherwise it will stay
 					// into the floating panel, even if invisible, and Safari and
 					// Opera will go a bit crazy.

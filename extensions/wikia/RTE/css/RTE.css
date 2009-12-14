@@ -91,18 +91,29 @@ body.rte_source #editform #mw-toolbar {
 	color: highlighttext !important;
 }
 
-/* jQuery "alerts" */
-.RTEAlert p {
+/* jQuery "alerts" and "confirms" */
+.RTEModal p {
 	font-size: 0.9em;
 	line-height: 1.4em;
+	padding: 8px 5px;
+}
+
+.RTEModal .RTEConfirmButtons {
+	border-top-style: solid;
+	border-top-width: 1px;
 	padding: 5px;
+	text-align: right;
+}
+
+.RTEModal .RTEConfirmButtons a {
+	margin: 0 0 0 4px;
 }
 
 /* div for placeholder previews / image menus */
 #RTEStuff {
 	color: #000;
 	position: absolute;
-	z-index: 10000;
+	z-index: 100;
 }
 
 /* hide placeholder preview / image menu in source mode */
@@ -248,10 +259,13 @@ body.rte_source #editform #mw-toolbar {
 }
 
 .RTEPlaceholderPreviewToolsButtonDisabled {
+	display: none;
+/*
 	cursor: default !important;
 	color: #ccc;
 	opacity: 0.5;
 	text-decoration: none !important;
+*/
 }
 
 /* wikia editor pop-ups */
@@ -354,6 +368,7 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 
 #templateParameters label {
 	display: block;
+	font-weight: normal;
 	margin-top: 5px;
 }
 
@@ -377,6 +392,10 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 	width: 310px;
 }
 
+#templatePreview * {
+	white-space: normal;
+}
+
 .templateEditorDialog .cke_dialog_choose_another_tpl .cke_dialog_ui_button {
 	width: 200px !important;
 }
@@ -386,7 +405,11 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 	width: 100% !important;
 }
 
-.templateEditorDialog .cke_dialog_ui_hbox_last {
+.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_first {
+	text-align: left;
+}
+
+.templateEditorDialog .cke_dialog_footer .cke_dialog_ui_hbox_last {
 	text-align: right;
 }
 
@@ -413,9 +436,14 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 }
 
 /* dropdown lists */
-.cke_skin_wikia .cke_rcombopanel {
-	height: 120px !important;
-	width: 250px !important;
+.cke_skin_wikia .cke_format_panel {
+	height: 200px !important;
+	width: 200px !important;
+}
+
+.cke_skin_wikia .cke_template_panel {
+	height: 155px !important;
+	width: 220px !important;
 }
 
 /* image / video toolbar items */

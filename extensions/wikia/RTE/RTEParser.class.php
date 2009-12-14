@@ -115,6 +115,20 @@ class RTEParser extends Parser {
 			$data['params']['caption'] = '';
 		}
 
+		// get "unparsed" caption from original wikitext
+		if ($data['params']['caption'] != '') {
+			$wikitext = trim($data['wikitext'], '[]');
+			$wikitextParts = explode('|', $wikitext);
+
+			// let's assume caption is the last part of image wikitext
+			$originalCaption = end($wikitextParts);
+			$originalCaption = htmlspecialchars_decode($originalCaption);
+
+			// keep parsed caption and store its wikitext
+			$data['params']['captionParsed'] = $data['params']['caption'];
+			$data['params']['caption'] = $originalCaption;
+		}
+
 		RTE::log(__METHOD__, $data);
 
 		// image width

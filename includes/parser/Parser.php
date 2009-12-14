@@ -1847,7 +1847,7 @@ class Parser
 
 				# Interwikis
 				wfProfileIn( __METHOD__."-interwiki" );
-				if( $iw && $this->mOptions->getInterwikiMagic() && $nottalk && $wgContLang->getLanguageName( $iw ) ) {
+				if( empty($wgRTEParserEnabled) && $iw && $this->mOptions->getInterwikiMagic() && $nottalk && $wgContLang->getLanguageName( $iw ) ) {
 					$this->mOutput->addLanguageLink( $nt->getFullText() );
 
 					/* Wikia change begin - @author: Marooned */

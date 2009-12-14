@@ -51,12 +51,14 @@ class RTEReverseParser {
 				$out = html_entity_decode($out);
 
 				// replace HTML entities markers with entities (\x7f-ENTITY-lt-\x7f -> &lt;)
-				$out = preg_replace("%\x7f-ENTITY-(#?[\w\d]+)-\x7f%", '&\1;', $out);
+				$out = preg_replace('%\x7f-ENTITY-(#?[\w\d]+)-\x7f%', '&\1;', $out);
 
-				// fix &nbsp; entity added by MW parser
-				$out = strtr($out, array(
-					"\xA0" => ' ',
-				));
+				// fix &nbsp; entity added by MW parser (&gt; : &#58;)
+				// don't break UTF characters (à - \xC3\xA0)
+				$out = preg_replace('%([\x00-\xAF])\xA0%', '\1 ', $out);
+
+				// fix &nbsp; entity when switching from wysiwyg (<p>a[spacex3]b</p>)
+				$out = str_replace("\x20\xA0", '  ', $out);
 
 				// trim trailing whitespaces
 				$out = rtrim($out, "\n ");
@@ -453,7 +455,7 @@ class RTEReverseParser {
 			$out = '';
 		}
 
-		// remmove spaces from the beginning of paragraph (people use spaces to centre text)
+		// remove spaces from the beginning of paragraph (people use spaces to centre text)
 		if (self::isChildOf($node, 'p') && self::isFirstChild($node)) {
 			// grab &nbsp; and "soft" spaces
 			preg_match('%^(&nbsp;)+[ ]?%', $out, $matches);
@@ -787,20 +789,27 @@ class RTEReverseParser {
 				// this list (789) is nested list
 				// <ul><li>abc<ul><li>789</li></ul></li></ul>
 				if ( self::isChildOf($node, 'li') && !self::isFirstChild($node) ) {
-					// check wrapping list node
-					$parentListType = $node->parentNode->parentNode->nodeName;
-					$parentListIsFirstChild = self::isFirstChild($node->parentNode->parentNode);
-
-					// only add newline if current list is wrapped within same type
-					if ( $parentListIsFirstChild || ($parentListType == $node->nodeName) ) {
-						$out = "\n{$out}";
-					}
+					$out = "\n{$out}";
 				}
 
-				$out = "{$out}\n";
+				// mixed nested lists
+				// *** foo
+				// **# bar
+				// next sibling has the same parent (same list level),
+				// but is list of different type
+				$nextNode = $node->nextSibling;
+				if ( !empty($nextNode) && self::isListNode($nextNode) &&
+					!empty($node->parentNode->parentNode) && self::isListNode($node->parentNode->parentNode) &&
+					($nextNode->nodeName != $node->nodeName) && self::haveSameParent($node, $nextNode) ) {
+						// don't add line break
+				}
+				else {
+					$out = "{$out}\n";
+				}
 
 				$out = $this->fixForTableCell($node, $out);
 				$out = $this->fixForDiv($node, $out);
+
 				break;
 
 			case 'li':
@@ -1019,18 +1028,16 @@ class RTEReverseParser {
 	 * Adds extra line break before/after given element being first child of table cell (td/th)
 	 */
 	private function fixForTableCell($node, $out) {
+		// $node must be first child of table cell / header (td/th)
 		if ( self::isFirstChild($node) && (self::isChildOf($node, 'td') || self::isChildOf($node, 'th')) ) {
 			if ($node->nodeType == XML_ELEMENT_NODE) {
 				// for HTML elements add extra line break before
 				$out = "\n{$out}";
 			}
 			else {
-				if (!empty($node->nextSibling) && self::isPlaceholder($node->nextSibling)) {
-					// {|
-					// | a [[Category::a]]
-					// |}
-				}
-				else {
+				// for text nodes check what is next sibling
+				// add line break before paragraphs, tables and lists
+				if ( self::nextSiblingIs($node, array('p', 'table', 'ul', 'ol')) ) {
 					$out = "{$out}\n";
 				}
 			}
@@ -1045,7 +1052,10 @@ class RTEReverseParser {
 	private function fixForDiv($node, $out) {
 		// add \n before when inside div
 		if (self::isChildOf($node, 'div') && !self::isFirstChild($node)) {
-			$out = "\n{$out}";
+			// only add \n if node before given one is plain text node
+			if ($node->previousSibling->nodeType == XML_TEXT_NODE) {
+				$out = "\n{$out}";
+			}
 		}
 
 		return $out;
@@ -1129,10 +1139,24 @@ class RTEReverseParser {
 	}
 
 	/**
+	 * Checks if given node is last child of its parent
+	 */
+	private static function isLastChild($node) {
+		return ( !empty($node->parentNode) && $node->parentNode->lastChild->isSameNode($node) );
+	}
+
+	/**
 	 * Checks name of parent of given node
 	 */
 	private static function isChildOf($node, $parentName) {
 		return ( !empty($node->parentNode) && $node->parentNode->nodeName == $parentName );
+	}
+
+	/**
+	 * Checks whether two given nodes have the same parent node
+	 */
+	private static function haveSameParent($nodeA, $nodeB) {
+		return ( !empty($nodeA->parentNode) && !empty($nodeB->parentNode) && $nodeA->parentNode->isSameNode($nodeB->parentNode) );
 	}
 
 	/**
