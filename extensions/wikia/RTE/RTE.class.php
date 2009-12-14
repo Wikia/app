@@ -27,7 +27,7 @@ class RTE {
 	 * Perform "reverse" parsing of HTML to wikitext when saving / doing preview from wysiwyg mode
 	 */
 	public static function reverse($form,  $out = null) {
-		global $wgRequest, $wgHooks;
+		global $wgRequest, $wgHooks, $wgRC2UDPEnabled;
 		if($wgRequest->wasPosted()) {
 			if($wgRequest->getVal('RTEMode') == 'wysiwyg') {
 				if($out == null) {
@@ -36,7 +36,7 @@ class RTE {
 				} else {
 					$form->textbox1 = $form->getContent();
 				}
-				if(!empty($wgRequest->data['wpSave'])) {
+				if(!empty($wgRC2UDPEnabled) && !empty($wgRequest->data['wpSave'])) {
 					$wgHooks['ArticleSaveComplete'][] = 'RTE::notifySave';
 				}
 			}
