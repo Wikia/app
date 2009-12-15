@@ -21,8 +21,8 @@ if ( ! defined( 'MEDIAWIKI' ) ){
 
 define('CATHUB_NORICHCATEGORY', 'CATHUB_NORICHCATEGORY');
 define('CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS', 7);
-define('ANSWERED_CATEGORY', 'answered_questions'); // must be set to the name of the category containing answered questions.
-define('UNANSWERED_CATEGORY', 'unanswered_questions'); // must be set to the name of the category containing unanswered questions.
+define('ANSWERED_CATEGORY', 'answered_questions');
+define('UNANSWERED_CATEGORY', 'unanswered_questions');
 
 // Since the entire article for the answered questions will be loaded, we create a more conservative limit.
 // The maximum number of articles per tab because the whole article will be loaded (eg: max of 10 answered, 10 unanswered)
@@ -223,25 +223,22 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 		global $wgCategoryHubArticleLimitPerTab; // A more conservative limit than the normal articles-per-page limit since we're loading the entire article.
 		$limit = $wgCategoryHubArticleLimitPerTab;
 		$categoryEditsObj = CategoryEdits::newFromName($flexibleCategoryViewer->getCat()->getName());
-		$ANS_CAT = "answered_questions";
-		$UNANS_CAT = "unanswered_questions";
 		$UNANS_QUERY_CAT = "Un-answered_questions"; // the name is different in the query.
-		$flexibleCategoryViewer->answerArticles[$ANS_CAT] = array();
-		$flexibleCategoryViewer->answerArticles[$UNANS_CAT] = array();
-		$answered = $categoryEditsObj->getPages($ANS_CAT, array(), $limit);
+		$flexibleCategoryViewer->answerArticles[ANSWERED_CATEGORY] = array();
+		$flexibleCategoryViewer->answerArticles[UNANSWERED_CATEGORY] = array();
+		$answered = $categoryEditsObj->getPages(ANSWERED_CATEGORY, array(), $limit);
 		if(is_array($answered)){
 			foreach($answered as $ans){
-				$flexibleCategoryViewer->answerArticles[$ANS_CAT][] = Article::newFromID($ans['id']);
+				$flexibleCategoryViewer->answerArticles[ANSWERED_CATEGORY][] = Article::newFromID($ans['id']);
 			}
 		}
 		$unanswered = $categoryEditsObj->getPages($UNANS_QUERY_CAT, array(), $limit);
 		if(is_array($unanswered)){
 			foreach($unanswered as $unans){
-				$flexibleCategoryViewer->answerArticles[$UNANS_CAT][] = Article::newFromID($unans['id']);
+				$flexibleCategoryViewer->answerArticles[UNANSWERED_CATEGORY][] = Article::newFromID($unans['id']);
 			}
 		}
 
-//print_pre($flexibleCategoryViewer->answerArticles);exit;
 		// Ordering...
 		if( $flexibleCategoryViewer->from != '' ) {
 			$flexibleCategoryViewer->flip = false;
@@ -250,64 +247,6 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 		} else {
 			$flexibleCategoryViewer->flip = false;
 		}
-
-/*
-//		if(!isset($catView->answerArticles[$class])){
-//			$catView->answerArticles[$class] = array();
-//		}
-//		if(count($catView->answerArticles[$class]) < $wgCategoryHubArticleLimitPerTab){
-//			$catView->answerArticles[$class][] = Article::newFromID($title->getArticleID());
-//		}
-
-		$dbr = wfGetDB( DB_SLAVE, 'category' );
-		if( $flexibleCategoryViewer->from != '' ) {
-			$pageCondition = 'page_touched >= ' . $dbr->addQuotes( $flexibleCategoryViewer->from );
-			$flexibleCategoryViewer->flip = false;
-		} elseif( $flexibleCategoryViewer->until != '' ) {
-			$pageCondition = 'page_touched < ' . $dbr->addQuotes( $flexibleCategoryViewer->until );
-			$flexibleCategoryViewer->flip = true;
-		} else {
-			$pageCondition = '1 = 1';
-			$flexibleCategoryViewer->flip = false;
-		}
-		$res = $dbr->select(
-			array( 'page', 'categorylinks', 'category' ),
-			array( 'page_title', 'page_namespace', 'page_len', 'page_is_redirect', 'cl_sortkey',
-				'cat_id', 'cat_title', 'cat_subcats', 'cat_pages', 'cat_files' ),
-			array( $pageCondition, 'cl_to' => $flexibleCategoryViewer->title->getDBkey() ),
-			__METHOD__,
-			array( 'ORDER BY' => $flexibleCategoryViewer->flip ? 'page_touched' : 'page_touched DESC',
-				'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
-				'LIMIT'    => $flexibleCategoryViewer->limit + 1 ),
-			array( 'categorylinks'  => array( 'INNER JOIN', 'cl_from = page_id' ),
-				'category' => array( 'LEFT JOIN', 'cat_title = page_title AND page_namespace = ' . NS_CATEGORY ) )
-		);
-
-		$count = 0;
-		$flexibleCategoryViewer->nextPage = null;
-		while( $x = $dbr->fetchObject ( $res ) ) {
-			if( ++$count > $flexibleCategoryViewer->limit ) {
-				// We've reached the one extra which shows that there are
-				// additional pages to be had. Stop here...
-				$flexibleCategoryViewer->nextPage = $x->cl_sortkey;
-				break;
-			}
-
-			$title = Title::makeTitle( $x->page_namespace, $x->page_title );
-
-			if( $title->getNamespace() == NS_CATEGORY ) {
-				$cat = Category::newFromRow( $x, $title );
-				$flexibleCategoryViewer->addSubcategoryObject( $cat, $x->cl_sortkey, $x->page_len );
-			} elseif( $flexibleCategoryViewer->showGallery && $title->getNamespace() == NS_FILE ) {
-				$flexibleCategoryViewer->addImage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
-			} else {
-				if( wfRunHooks( "CategoryViewer::addPage", array( &$flexibleCategoryViewer, &$title, &$x ) ) ) {
-					$flexibleCategoryViewer->addPage( $title, $x->cl_sortkey, $x->page_len, $x->page_is_redirect );
-				}
-			}
-		}
-		$dbr->freeResult( $res );
-*/
 	}
 
 	return $wgCatHub_useDefaultView;
