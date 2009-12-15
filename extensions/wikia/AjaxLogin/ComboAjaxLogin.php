@@ -49,9 +49,13 @@ function getRegisterJS(){
 }
 
 function comboAjaxLoginVars($vars) {
-	global $wgUser;
-	wfLoadExtensionMessages('ConfirmEdit');
-	$vars['wgComboAjaxLogin'] = true;
+	global $wgUser,$wgWikiaEnableConfirmEditExt;
+	if ($wgWikiaEnableConfirmEditExt){
+		wfLoadExtensionMessages('ConfirmEdit');
+	}
+	if ( !wfReadOnly() ) {
+		$vars['wgComboAjaxLogin'] = true;
+	}
 	$vars['prefs_help_birthmesg'] = wfMsg('prefs-help-birthmesg');
 	$vars['prefs_help_birthinfo'] = wfMsg('prefs-help-birthinfo');
 	$vars['prefs_help_mailmesg'] = wfMsg('prefs-help-mailmesg');
@@ -64,7 +68,7 @@ function comboAjaxLoginVars($vars) {
 
 $wgAjaxExportList[] = 'createUserLogin';
 function createUserLogin(){
-	global $wgRequest,$wgUser,$wgExternalSharedDB;
+	global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt;
 	// Init session if necessary
 	if ( session_id() == '' ) {
 		wfSetupSession();
@@ -99,6 +103,17 @@ function createUserLogin(){
 	$dbw->commit();
 	
 	if( $form->msgtype == "error" ) {
+		if( !$wgWikiaEnableConfirmEditExt ){ 
+		/*theoretically impossible because the only possible error is captcha error*/
+			$response->addText(json_encode(
+				array(	
+						'status' => "ERROR",		
+						'msg' => $form->msg ,
+						'type' => $form->msgtype,
+						'captchaUrl' =>	'',
+						'captcha' => '')));
+			return $response;			
+		}
 		$captchaObj = new FancyCaptcha();
 		$captcha = $captchaObj->pickImage();
 		$captchaIndex = $captchaObj->storeCaptcha( $captcha );
@@ -172,22 +187,6 @@ class AjaxLoginForm extends LoginForm {
 
 		$this->msg = $msg;
 		$this->msgtype = $msgtype;
-
-		if ( $this->mType == 'signup' ) {
-			// Block signup here if in readonly. Keeps user from
-			// going through the process (filling out data, etc)
-			// and being informed later.
-			if ( wfReadOnly() ) {
-				$wgOut->readOnlyPage();
-				return;
-			} elseif ( $wgUser->isBlockedFromCreateAccount() ) {
-				$this->userBlockedMessage();
-				return;
-			} elseif ( count( $permErrors = $titleObj->getUserPermissionsErrors( 'createaccount', $wgUser, true ) )>0 ) {
-				$wgOut->showPermissionsErrorPage( $permErrors, 'createaccount' );
-				return;
-			}
-		}
 
 		if ( '' == $this->mName ) {
 			if ( $wgUser->isLoggedIn() ) {
