@@ -353,6 +353,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	} else {
 		// TODO: EXTRACT THIS TO A FUNCTION WHICH WILL MAKE A BANDWIDTH-EFFICIENT PROGRESS BAR FOR ANY USE (IF POSSIBLE TO DO CLEANLY... MIGHT HAVE TO REQUIRE IT TO BE ANSWERS-SPECIFIC).
 		#$aPercent = substr($percentAnswered, 0, -1); // removes the "%" sign
+		$aPercent = $percentAnswered;
 		$uPercent = (100 - $percentAnswered);
 		$aWidth = round(($PROG_BAR_WIDTH * $aPercent) / 100);
 		$uWidth = $PROG_BAR_WIDTH - $aWidth;
