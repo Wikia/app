@@ -287,6 +287,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		var insertAnchor = listContents[ listContents.length - 1 ].getNext(),
 			listNode = doc.createElement( this.type );
 
+		// Wikia - start
+		editor.fire('listCreated', {listNode: listNode});
+		// Wikia - end
+
 		listsCreated.push( listNode );
 		while ( listContents.length )
 		{

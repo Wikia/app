@@ -13,6 +13,9 @@ CKEDITOR.plugins.add('rte-track',
 		editor.on('contextMenuOnOpen', self.trackContextMenuOpen);
 		editor.on('contextMenuOnClick', self.trackContextMenuItem);
 
+		// track list creation
+		editor.on('listCreated', self.trackListCreated);
+
 		// track loading time
 		editor.on('RTEready', function() {
 			self.trackLoadTime(editor);
@@ -49,6 +52,13 @@ CKEDITOR.plugins.add('rte-track',
 		}
 
 		RTE.track('contextMenu', 'action', name);
+	},
+
+	trackListCreated: function(ev) {
+		var listNode = ev.data.listNode;
+		var listType = (listNode.getName() == 'ul') ? 'unorderedList' : 'orderedList';
+
+		RTE.track('format', listType);
 	},
 
 	trackLoadTime: function(editor) {
