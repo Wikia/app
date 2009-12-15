@@ -115,7 +115,7 @@ class StaffLoggerPager extends ReverseChronologicalPager {
 				$siteurl = $result->slog_site;
 				if (!empty($domains))
 				{
-					$siteurl =  Xml::tags('a', array("href" => "htttp://".$domains[0] ), $siteurl);
+					$siteurl =  Xml::tags('a', array("href" => "http://".$domains[0] ), $siteurl);
 				}
 				$out = wfMsg( 'stafflog-blockmsg' ,
 						array($time,

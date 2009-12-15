@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#33722: StaffLog: htttp fix (uberfuzzy)
 * rt#33423: CatHubs: Better cat. logo logic. (Nef)
 * rt#33493: Answers: Missed escaping in widget. (Nef)
 * rt#28247: Answers: Allow multiple categories on HPL. (Nef)
