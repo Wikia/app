@@ -2050,8 +2050,10 @@ function requestStarted($funcName, $requestData){
 // of the request.
 ////
 function requestFinished($id){
-	if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES){
-		$db = lw_connect();
-		mysql_query("DELETE FROM apiRequests WHERE id=$id", $db);
+	if( !wfReadOnly() ) {
+		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES){
+			$db = lw_connect();
+			mysql_query("DELETE FROM apiRequests WHERE id=$id", $db);
+		}
 	}
 } // end requestFinished()
