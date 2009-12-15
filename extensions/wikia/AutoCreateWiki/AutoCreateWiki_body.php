@@ -863,7 +863,8 @@ class AutoCreateWikiPage extends SpecialPage {
 		
 		
 		$this->mAction = $wgRequest->getVal( "action", false );
-		if( $this->mAction != "reload" ){
+		
+		if( $this->mAction == "reload" ){
 			$params['wiki-name'] = $wgRequest->getVal( 'wiki-name', false );
 			$params['wiki-domain'] = $wgRequest->getVal( 'wiki-domain', false );
 			$params['wiki-category'] = $wgRequest->getVal( 'wiki-category', false );
