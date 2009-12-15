@@ -288,7 +288,7 @@ window.RTE = {
 
 					// body CSS class change and tracking
 					$('body').addClass('rte_source').removeClass('rte_wysiwyg');
-					RTE.track('switchMode', 'source2wysiwyg');
+					RTE.track('switchMode', 'wysiwyg2source');
 				});
 				break;
 
@@ -314,7 +314,7 @@ window.RTE = {
 
 						// body CSS class change and tracking
 						$('body').addClass('rte_wysiwyg').removeClass('rte_source');
-						RTE.track('switchMode', 'wysiwyg2source');
+						RTE.track('switchMode', 'source2wysiwyg');
 					}, 150);
 				});
 				break;
