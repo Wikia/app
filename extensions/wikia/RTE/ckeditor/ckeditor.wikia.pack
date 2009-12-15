@@ -199,6 +199,7 @@ packages :
 					'../js/plugins/paste/plugin.js',
 					'../js/plugins/placeholder/plugin.js',
 					'../js/plugins/signature/plugin.js',
+					'../js/plugins/source/plugin.js',
 					'../js/plugins/template/plugin.js',
 					'../js/plugins/template/dialogs/template.js',
 					'../js/plugins/temporary-save/plugin.js',

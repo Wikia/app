@@ -48,6 +48,7 @@ window.RTE = {
 		'paste',
 		'placeholder',
 		'signature',
+		'source',
 		'template',
 		'temporary-save',
 		'toolbar',
