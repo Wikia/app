@@ -338,7 +338,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	$categoryEdits = CategoryEdits::newFromId($catView->getCat()->getId());
 	$r .= "<div style='display:table;width:$PROG_BAR_WIDTH"."px'>"; // wraps the progress bar and the labels below it
 	$r .= "<div class='cathub-progbar-wrapper' style='width:$PROG_BAR_WIDTH"."px'>";
-	$percentAnswered = $categoryEdits->getPercent(ANSWERED_CATEGORY);
+	$percentAnswered = $categoryEdits->getPercentInCats(ANSWERED_CATEGORY, UNANSWERED_CATEGORY);
 	if($percentAnswered <= 0){
 		$percentAnswered = 0;
 		$r .= "<div class='cathub-progbar-unanswered' style='width:$PROG_BAR_WIDTH'>".wfMsgExt('cathub-progbar-none-done', array())."</div>\n";
@@ -347,8 +347,8 @@ function categoryHubTitleBar(&$catView, &$r){
 		$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-all-done', array())."</div>\n";
 	} else {
 		// TODO: EXTRACT THIS TO A FUNCTION WHICH WILL MAKE A BANDWIDTH-EFFICIENT PROGRESS BAR FOR ANY USE (IF POSSIBLE TO DO CLEANLY... MIGHT HAVE TO REQUIRE IT TO BE ANSWERS-SPECIFIC).
-		$aPercent = substr($percentAnswered, 0, -1); // removes the "%" sign
-		$uPercent = (100 - $aPercent);
+		#$aPercent = substr($percentAnswered, 0, -1); // removes the "%" sign
+		$uPercent = (100 - $percentAnswered);
 		$aWidth = round(($PROG_BAR_WIDTH * $aPercent) / 100);
 		$uWidth = $PROG_BAR_WIDTH - $aWidth;
 		$aTitle = wfMsgExt('cathub-progbar-mouseover-answered', array(), $aPercent);
