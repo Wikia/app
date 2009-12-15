@@ -451,31 +451,47 @@ function categoryHubTopContributors(&$catView, &$r){
 // (as returned from CategoryEdits::getContribs or CategoryEdits::getXDayContribs, etc.), returns the HTML for an
 // ordered list of the users.
 ////
-function categoryHubContributorsToHtml($editsByUserId){
+function categoryHubContributorsToHtml( $editsByUserId ) {
 	$r = '';
 	$NUM_TO_SHOW_BIG = 3; // all beyond this will use the small text-only badge
 
-	if(is_array($editsByUserId) && count($editsByUserId) > 0){
-		$r .= "<ul class='contributors cathub-contributors-list cathub-contributors-list-wide'>\n";
+	if( is_array ( $editsByUserId ) && count( $editsByUserId ) > 0 ) {
 		$numShown = 0;
-		foreach($editsByUserId as $userId => $numEdits){
+
+		$r .= Xml::openElement( 'ol', array( 'class' => 'contributors cathub-contributors-list cathub-contributors-list-wide' ) );
+
+		foreach( $editsByUserId as $userId => $numEdits ) {
 			if($numShown == $NUM_TO_SHOW_BIG){
-				$r .= "</ul><ul class='contributors cathub-contributors-list cathub-contributors-list-narrow userInfoNoAvatar'>\n";
+				$r .= Xml::closeElement( 'ol' );
+				$r .= Xml::openElement( 'ol',
+						array(
+							'start' => $NUM_TO_SHOW_BIG + 1,
+							'class' => 'contributors cathub-contributors-list cathub-contributors-list-narrow userInfoNoAvatar'
+						)
+					);
 			}
-			$r .= "<li>";
+			$r .= Xml::openElement( 'li' );
+
+			// TODO: Must find a way to get rid of these for Internet Explorer versions. (IE7/IE8)
 			$r .= "<div class='listNumber".(($numShown >= $NUM_TO_SHOW_BIG)?" userInfoNoAvatar":"")."'>\n";
 			$r .= ($numShown+1).".&nbsp;";
-			$r .= "</div><div class='badgeWrapper'>\n";
+			$r .= "</div>";
+
+			// Another <div> we probably don't need, right?
+			$r .= Xml::openElement( 'div', array( 'class' => 'badgeWrapper' ) );
+
 			$user = User::newFromId($userId);
 			$userData['user_id'] = $userId;
 			$userData['user_name'] = $user->getName();
 			$userData['edits'] = $user->getEditCount(); // spec is to show total edit count, not current relevant numEdits.
 			$r .= Answer::getUserBadge($userData, ($numShown < $NUM_TO_SHOW_BIG));
-			$r .= "</div>";
-			$r .= "</li>";
+
+			$r .= Xml::closeElement( 'div' ); // END .badgeWrapper
+
+			$r .= Xml::closeElement( 'li' );
 			$numShown++;
 		}
-		$r .= "</ol>\n";
+		$r .= Xml::closeElement( 'ol' );
 	}
 
 	return $r;
