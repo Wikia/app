@@ -763,10 +763,15 @@ function getSong($artist, $song="", $doHyphens=true){
 				// a song was looked for so that we can find the most desired lyrics and fill them in.
 				$origArtistSql = str_replace("'", "\'", $origArtist);
 				$origSongSql = str_replace("'", "\'", $origSong);
-				$db = lw_connect();
-				$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song) VALUES ('$origArtistSql', '$origSongSql') ON DUPLICATE KEY UPDATE numRequests=numRequests+1";
-				mysql_query($queryString, $db);
 
+				/**
+				 * rt#27684 eloy
+				 */
+				if( !wfReadOnly() ) {
+					$db = lw_connect();
+					$queryString = "INSERT INTO lw_soap_failures (request_artist,request_song) VALUES ('$origArtistSql', '$origSongSql') ON DUPLICATE KEY UPDATE numRequests=numRequests+1";
+					mysql_query($queryString, $db);
+				}
 				$resultFound = false;
 			} else {
 				$resultFound = true;
@@ -2020,13 +2025,19 @@ function requestStarted($funcName, $requestData){
 	// The system used to make the request. Typically just "SOAP" or "REST"
 	GLOBAL $REQUEST_TYPE;
 	$retVal = false;
-	if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES){
-		$db = lw_connect();
-		$requestData = str_replace("'", "[&apos;]", $requestData);
-		$queryString = "INSERT INTO apiRequests (requestedThrough, requestedFunction, requestData, requestTime)";
-		$queryString.= " VALUES ('$REQUEST_TYPE', '$funcName', '$requestData', NOW())";
-		if(mysql_query($queryString, $db)){
-			$retVal = mysql_insert_id($db);
+
+	/**
+	 * rt#27684/eloy
+	 */
+	if( !wfReadOnly() ) {
+		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES) {
+			$db = lw_connect();
+			$requestData = str_replace("'", "[&apos;]", $requestData);
+			$queryString = "INSERT INTO apiRequests (requestedThrough, requestedFunction, requestData, requestTime)";
+			$queryString.= " VALUES ('$REQUEST_TYPE', '$funcName', '$requestData', NOW())";
+			if( mysql_query($queryString, $db ) ){
+				$retVal = mysql_insert_id( $db );
+			}
 		}
 	}
 	return $retVal;
