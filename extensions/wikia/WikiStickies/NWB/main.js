@@ -39,38 +39,41 @@ NWB.checkStep = function(firstStep) {
  * 2. Save the value using the API
  */
 NWB.changeTheme = function (theme, changeData){
-    try {
-        // Save the changes using the API
-        if (theme != window.wgAdminSkin && changeData ) {
-		Mediawiki.waiting();
-                Mediawiki.apiCall({
-                        "action" : "foundersettings",
-                        "changesetting" : "wgAdminSkin", 
-                        "value" : theme},
-			function(result) { 
-				Mediawiki.waitingDone();
-				var cresult = Mediawiki.checkResult(result);
-				if (cresult !== true) {
-					NWB.apiFailedr(NWB.msg("nwb-error-saving-theme") + cresult, true);
-				} else if (result.settings == "success") {
-					Mediawiki.updateStatus(NWB.msg("nwb-theme-saved"), false, NWB.statusTimeout);
-				} else {
-					NWB.apiFailed(null, result, null);
-				}
-			}, NWB.apiFailed, "POST");
-                window.wgAdminSkin = theme;
-        } 
+	try {
+		if ( typeof theme != 'undefined' ) {
+			// Save the changes using the API
+			if (theme != window.wgAdminSkin && changeData ) {
+				Mediawiki.waiting();
+				Mediawiki.apiCall({
+						"action" : "foundersettings",
+						"changesetting" : "wgAdminSkin", 
+						"value" : theme},
+						function(result) { 
+						Mediawiki.waitingDone();
+						var cresult = Mediawiki.checkResult(result);
+						if (cresult !== true) {
+						NWB.apiFailedr(NWB.msg("nwb-error-saving-theme") + cresult, true);
+						} else if (result.settings == "success") {
+						Mediawiki.updateStatus(NWB.msg("nwb-theme-saved"), false, NWB.statusTimeout);
+						} else {
+						NWB.apiFailed(null, result, null);
+						}
+						}, NWB.apiFailed, "POST");
+				window.wgAdminSkin = theme;
+			} 
 
-        // Create a link object for the stylesheet
-	var ltheme = theme.replace(/monaco-/, '').toLowerCase();
-	var href = "/skins/monaco/" + ltheme + "/css/main.css";
-	WIKIA.WikiStickies.track( '/admin/' + ltheme );
-	if (typeof NWB.linkTag == "object") {
-		NWB.linkTag.remove();
-       	}
-	NWB.linkTag = $( '<link rel="stylesheet" type="text/css" href="' + href + '" />' );
-	$("head:first").append(NWB.linkTag);
-
+			// Create a link object for the stylesheet
+			var ltheme = theme.replace(/monaco-/, '').toLowerCase();
+			var href = "/skins/monaco/" + ltheme + "/css/main.css";
+			WIKIA.WikiStickies.track( '/admin/' + ltheme );
+			if (typeof NWB.linkTag == "object") {
+				NWB.linkTag.remove();
+			}
+			NWB.linkTag = $( '<link rel="stylesheet" type="text/css" href="' + href + '" />' );
+			$("head:first").append(NWB.linkTag);
+		} else {
+			Mediawiki.waitingDone();		
+		}
 
    } catch (e) {
 	Mediawiki.waitingDone();
