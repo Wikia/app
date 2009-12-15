@@ -79,9 +79,11 @@ div.article-comment strong {
 	line-height: 16px;
 	text-align: center;
 }
+
 .article-comments-pagination-link:hover {
 	text-decoration: none;
 }
+
 .article-comments-pagination-link-active {
 	border: none;
 }
@@ -90,9 +92,16 @@ div.article-comment strong {
 	border-top: 1px solid #AAA;
 	margin: 10px;
 }
+
 #article-comments-pagination div {
 	background-color: #FFF;
 	float: left;
 	margin: -10px 0 0 65px;
 	padding: 0 5px;
+}
+
+#article-comments-pagination-link-prev,
+#article-comments-pagination-link-next {
+	border: none;
+	font-size: 1.4em;
 }
