@@ -238,6 +238,7 @@ class RTEParser extends Parser {
 		$attribs = array(
 			'src' => 'http://images.wikia.com/common/skins/monobook/blank.gif?1',
 			'class' => "media-placeholder {$data['type']}",
+			'type' => $data['type'],
 			'height' => intval($data['params']['height']),
 			'width' => intval($data['params']['width']),
 		);

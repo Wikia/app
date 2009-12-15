@@ -25,7 +25,7 @@ CKEDITOR.plugins.add('rte-media',
 			self.setupMedia(media);
 
 			// get all image / video placeholders
-			var placeholders =  RTE.tools.getPlaceholders().filter('.placeholder-image-placeholder,.placeholder-video-placeholder');
+			var placeholders =  RTE.getEditor().find('.media-placeholder');
 			self.setupPlaceholder(placeholders);
 		});
 
@@ -102,7 +102,8 @@ CKEDITOR.plugins.add('rte-media',
 			}
 
 			// create menu node
-			overlay = $('<div>').addClass('RTEMediaOverlay').width(width + 'px').attr('type', image.attr('type'));
+			overlay = $('<div class="RTEMediaOverlay">');
+			overlay.width(width + 'px').attr('type', image.attr('type'));
 			overlay.html('<div class="RTEMediaMenu color1">' +
 				'<span class="RTEMediaOverlayEdit">' + RTE.instance.lang.media.edit  + '</span> ' +
 				'<span class="RTEMediaOverlayDelete">' + RTE.instance.lang.media['delete'] + '</span>' +
@@ -323,6 +324,9 @@ CKEDITOR.plugins.add('rte-media',
 			return;
 		}
 
+		// add [edit] / [delete] menu
+		this.setupMedia(placeholder);
+
 		// @see http://stackoverflow.com/questions/289433/firefox-designmode-disable-image-resizing-handles
 		placeholder.attr('contentEditable', false);
 
@@ -335,30 +339,25 @@ CKEDITOR.plugins.add('rte-media',
 			ev.stopPropagation();
 		});
 
-		placeholder.bind('click.placeholder', function(ev) {
-			// click to use placeholder
-			$(this).trigger('edit');
-		});
-
 		// setup events once more on each drag&drop
 		RTE.getEditor().unbind('dropped.placeholder').bind('dropped.placeholder', function(ev, extra) {
                         var target = $(ev.target);
 
-			// keep image placeholders
-			target = target.filter('.placeholder-image-placeholder,.placeholder-video-placeholder');
+			// keep image/video placeholders
+			target = target.filter('.media-placeholder');
 
 			self.setupPlaceholder(target);
 		});
 
 		// setup image / video placeholder separatelly
-		var images = placeholder.filter('.placeholder-image-placeholder');
+		var images = placeholder.filter('.image-placeholder');
 		images.attr('title', RTE.instance.lang.imagePlaceholder.tooltip);
 		images.bind('edit.placeholder', function(ev) {
 			// call WikiaMiniUpload and provide WMU with image clicked + inform it's placeholder
 			RTE.tools.callFunction(window.WMU_show,$(this), {isPlaceholder: true});
 		});
 
-		var videos = placeholder.filter('.placeholder-video-placeholder');
+		var videos = placeholder.filter('.video-placeholder');
 		videos.attr('title', RTE.instance.lang.videoPlaceholder.tooltip);
 		videos.bind('edit.placeholder', function(ev) {
 			// call VideoEmbedTool and provide VET with video clicked + inform it's placeholder
@@ -377,6 +376,14 @@ CKEDITOR.plugins.add('rte-media',
 
 			case 'video':
 				type = 'video';
+				break;
+
+			case 'image-placeholder':
+				type = 'imagePlaceholder';
+				break;
+
+			case 'video-placeholder':
+				type = 'videoPlaceholder';
 				break;
 		}
 
