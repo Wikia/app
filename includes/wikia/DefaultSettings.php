@@ -350,5 +350,4 @@ $wgSpecialPagesRequiredLogin = array('Resetpass', 'MyHome', 'Preferences', 'Watc
  * max comments per page under article
  * @see Article comments
  */
-//TODO: move this variable to WF and change default value to 25
-$wgArticleCommentsMaxPerPage = 5;
+$wgArticleCommentsMaxPerPage = 25;
