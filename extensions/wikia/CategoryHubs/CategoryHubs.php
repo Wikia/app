@@ -22,6 +22,7 @@ if ( ! defined( 'MEDIAWIKI' ) ){
 define('CATHUB_NORICHCATEGORY', 'CATHUB_NORICHCATEGORY');
 define('CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS', 7);
 define('ANSWERED_CATEGORY', 'answered_questions'); // must be set to the name of the category containing answered questions.
+define('UNANSWERED_CATEGORY', 'unanswered_questions'); // must be set to the name of the category containing unanswered questions.
 
 // Since the entire article for the answered questions will be loaded, we create a more conservative limit.
 // The maximum number of articles per tab because the whole article will be loaded (eg: max of 10 answered, 10 unanswered)
@@ -218,6 +219,46 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 	// it will have to be modified to include the page_touched values in the 'from' and 'until' parameters instead of the page names (will require changes in
 	// which parameter is used when because the order is DESC by default here and ascending by default normally).
 	if(!$wgCatHub_useDefaultView){
+		// If we haven't passed the limit, store the entire article for the answer so that extensions (such as CategoryHubs) can display in-depth data.
+		global $wgCategoryHubArticleLimitPerTab; // A more conservative limit than the normal articles-per-page limit since we're loading the entire article.
+		$limit = $wgCategoryHubArticleLimitPerTab;
+		$categoryEditsObj = CategoryEdits::newFromName($flexibleCategoryViewer->getCat()->getName());
+		$ANS_CAT = "answered_questions";
+		$UNANS_CAT = "unanswered_questions";
+		$UNANS_QUERY_CAT = "Un-answered_questions"; // the name is different in the query.
+		$flexibleCategoryViewer->answerArticles[$ANS_CAT] = array();
+		$flexibleCategoryViewer->answerArticles[$UNANS_CAT] = array();
+		$answered = $categoryEditsObj->getPages($ANS_CAT, array(), $limit);
+		if(is_array($answered)){
+			foreach($answered as $ans){
+				$flexibleCategoryViewer->answerArticles[$ANS_CAT][] = Article::newFromID($ans['id']);
+			}
+		}
+		$unanswered = $categoryEditsObj->getPages($UNANS_QUERY_CAT, array(), $limit);
+		if(is_array($unanswered)){
+			foreach($unanswered as $unans){
+				$flexibleCategoryViewer->answerArticles[$UNANS_CAT][] = Article::newFromID($unans['id']);
+			}
+		}
+
+//print_pre($flexibleCategoryViewer->answerArticles);exit;
+		// Ordering...
+		if( $flexibleCategoryViewer->from != '' ) {
+			$flexibleCategoryViewer->flip = false;
+		} elseif( $flexibleCategoryViewer->until != '' ) {
+			$flexibleCategoryViewer->flip = true;
+		} else {
+			$flexibleCategoryViewer->flip = false;
+		}
+
+/*
+//		if(!isset($catView->answerArticles[$class])){
+//			$catView->answerArticles[$class] = array();
+//		}
+//		if(count($catView->answerArticles[$class]) < $wgCategoryHubArticleLimitPerTab){
+//			$catView->answerArticles[$class][] = Article::newFromID($title->getArticleID());
+//		}
+
 		$dbr = wfGetDB( DB_SLAVE, 'category' );
 		if( $flexibleCategoryViewer->from != '' ) {
 			$pageCondition = 'page_touched >= ' . $dbr->addQuotes( $flexibleCategoryViewer->from );
@@ -266,6 +307,7 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 			}
 		}
 		$dbr->freeResult( $res );
+*/
 	}
 
 	return $wgCatHub_useDefaultView;

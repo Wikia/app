@@ -449,7 +449,6 @@ class CategoryEdits {
 			# integer
 			$CatIn = Category::newFromID($incat);
 		} else {
-			# integer
 			$CatIn = Category::newFromName($incat);
 		}
 		
@@ -459,16 +458,17 @@ class CategoryEdits {
 			$memkey = wfMemcKey( 'pages', $this->mCatId, $CatIn->getID(), md5($nsPaces), $limit, $offset );
 			$pages = $wgMemc->get( $memkey );
 			
+			$conditional = array('page_id = c2.cl_from');
+			if($nsPaces != ""){
+				$conditional[] = 'page_namespace in (' . $nsPaces . ')';
+			}
+			$conditional['page_is_redirect'] = 0;
+			$conditional['c2.cl_to'] = $this->mCatName;
 			if ( empty($pages) ) {
 				$res = $dbr->select ( 
 					array( 'page', 'categorylinks AS c1', 'categorylinks AS c2' ),
 					array( 'c2.cl_from as page_id, page_title, page_namespace, page_latest as rev_id, c2.cl_timestamp as rev_timestamp' ),
-					array(
-						'page_id = c2.cl_from',
-						'page_namespace in (' . $nsPaces . ')',
-						'page_is_redirect' => 0,
-						'c2.cl_to' => $this->mCatName
-					),
+					$conditional,
 					__METHOD__,
 					array(
 						'ORDER BY' => 'c2.cl_timestamp DESC',
