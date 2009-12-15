@@ -5,6 +5,8 @@
 <script type="text/javascript">
 /*<![CDATA[*/
 var divErrors = new Array();
+var isAutoCreateWiki = true;
+var formViewAction = "<?=$mTitle->getLocalURL(( $mLanguage != 'en' ) ? 'action=view&uselang=' . $mLanguage : 'action=reload')?>"; 
 var msgError = "<?=addslashes(wfMsg('autocreatewiki-invalid-wikiname'))?>";
 /*]]>*/
 </script>

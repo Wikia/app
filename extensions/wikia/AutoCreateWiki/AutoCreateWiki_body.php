@@ -214,7 +214,7 @@ class AutoCreateWikiPage extends SpecialPage {
 					break;
 			}
 			default: {
-					if ($this->mPosted) {
+					if ( ($this->mPosted) && ($this->mAction != "reload") ) {
 						$this->clearSessionKeys();
 						$this->makeRequestParams();
 						$this->checkWikiCreationParams();
@@ -860,6 +860,16 @@ class AutoCreateWikiPage extends SpecialPage {
 
 		$wgOut->addScript( "<script type=\"text/javascript\" src=\"{$wgStylePath}/common/form.js?{$wgStyleVersion}\"></script>" );
 		/* run template */
+		
+		
+		$this->mAction = $wgRequest->getVal( "action", false );
+		if( $this->mAction != "reload" ){
+			$params['wiki-name'] = $wgRequest->getVal( 'wiki-name', false );
+			$params['wiki-domain'] = $wgRequest->getVal( 'wiki-domain', false );
+			$params['wiki-category'] = $wgRequest->getVal( 'wiki-category', false );
+			$params['wiki-language'] = $wgRequest->getVal( 'wiki-language', false );
+		}		
+		
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"wgUser" => $wgUser,

@@ -61,6 +61,14 @@ function isTextCorrect(field) {
 	return (errors > 0) ? false : true;
 }
 
+
+function realoadAutoCreateForm(){
+	$("#wiki-submit").attr("disabled",true);
+	$("#wiki-cancel").attr("disabled",true);		
+	$("#highlightform").attr("action",formViewAction);
+	$("#highlightform").submit();
+}
+
 YAHOO.util.Event.onDOMReady(function () {
 	canAcceptForm()
 });

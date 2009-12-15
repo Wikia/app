@@ -33,6 +33,12 @@ var AjaxLogin = {
 		$('#AjaxLoginBoxWrapper').closeModal();		
 	},
 	doSuccess: function(openwindow) {
+		
+		if( (typeof isAutoCreateWiki != 'undefined') && isAutoCreateWiki ) {
+			realoadAutoCreateForm();
+			return ;
+		}
+		
 		// macbre: call custom function (if provided by any extension)
 		if (typeof window.wgAjaxLoginOnSuccess == 'function') {
 			// let's update wgUserName
