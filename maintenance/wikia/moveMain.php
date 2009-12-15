@@ -52,12 +52,12 @@ if ( $wgUser->isAnon() ) {
  */
 $sourceTitle = Title::newFromText( $source );
 if( !$sourceTitle ) {
-	print "Invalid page title: $source";
+	Wikia::log( __CLASS__, false, "Invalid page title: $source" );
 	exit(1);
 }
 $mainPageArticle = new Article( $sourceTitle, 0 );
 if( !$mainPageArticle->exists() ) {
-	print "Article $source not exists.";
+	Wikia::log( __CLASS__, false, "Article $source not exists." );
 	exit(1);
 }
 
@@ -68,10 +68,11 @@ if( !is_null( $sourceTitle ) ) {
 	$targetTitle = Title::newFromText( $target );
 	if( !is_null( $targetTitle ) ) {
 		if( $sourceTitle->getPrefixedText() !== $targetTitle->getPrefixedText() ) {
-			print $sourceTitle->getPrefixedText() . ' --> ' . $targetTitle->getPrefixedText();
+			$log = $sourceTitle->getPrefixedText() . ' --> ' . $targetTitle->getPrefixedText();
 			$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
 			if( $err !== true ) {
-				print " - Moving FAILED: ". var_dump($err) . "\n";
+				$log .= "- moving FAILED: ". print_r($err, true);
+				Wikia::log( __CLASS__, false, $log );
 			}
 			else {
 				/**
@@ -81,7 +82,8 @@ if( !is_null( $sourceTitle ) ) {
 				$mwMainPageArticle = new Article( $mwMainPageTitle, 0 );
 
 				$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_MINOR | EDIT_FORCE_BOT );
-				print " - Page moved.\n";
+				$log .= "- moved";
+				Wikia::log( __CLASS__, false, $log );
 
 				/**
 				 * also move associated talk page if it exists
@@ -89,23 +91,24 @@ if( !is_null( $sourceTitle ) ) {
 				$sourceTalkTitle = $sourceTitle->getTalkPage();
 				$targetTalkTitle = $targetTitle->getTalkPage();
 				if ( $sourceTalkTitle instanceof Title && $sourceTalkTitle->exists() && $targetTalkTitle instanceof Title ) {
-					print $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText();
+					$log = $sourceTalkTitle->getPrefixedText() . ' --> ' . $targetTalkTitle->getPrefixedText();
 					$err = $sourceTalkTitle->moveTo( $targetTitle->getTalkPage(), false, "SEO");
 					if ( $err === true ) {
-						print " - Moved talk page.\n";
+						$log .= " - Moved talk page.\n";
 					}
 					else {
-						print " - Found talk page but moving FAILED: " . var_dump($err) . "\n";
+						$log .= " - Found talk page but moving FAILED: " . print_r($err, true);
 					}
+					Wikia::log( __CLASS__, false, $log );
 				}
 			}
 		}
 		else {
-			print "source {$source} and target {$target} are the same\n";
+			Wikia::log( __CLASS__, false, "source {$source} and target {$target} are the same" );
 		}
 	}
 }
 else {
-	print "sourceTitle is null.\n";
+	Wikia::log( __CLASS__, false, "sourceTitle is null" );
 	exit(1);
 }
