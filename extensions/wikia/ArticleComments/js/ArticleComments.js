@@ -11,7 +11,6 @@ ArticleComments.save = function(e) {
 		WET.byStr('article/editSave');
 		var textfield = $('#article-comm-textfield-' + e.data.id).attr('readonly', 'readonly');
 		$.postJSON(wgScript, {action: 'ajax', rs: 'ArticleComment::axSave', article: wgArticleId, id: e.data.id, wpArticleComment: textfield.val()}, function(json) {
-			$().log(json);
 			if (!json.error) {
 				if (json.commentId && json.commentId != 0) {
 					//replace
@@ -63,7 +62,6 @@ ArticleComments.postComment = function(e) {
 	if (ArticleComments.processing) return;
 	$(e.data.source).attr('readonly', 'readonly');
 	$.postJSON(wgScript, {action: 'ajax', rs: 'ArticleComment::axPost', article: wgArticleId, wpArticleComment: $(e.data.source).val(), order: $('#article-comm-order').attr('value')}, function(json) {
-		$().log(json);
 		if (!json.error) {
 			//remove zero comments div
 			$('#article-comments-zero').remove();
@@ -94,13 +92,22 @@ ArticleComments.postComment = function(e) {
 ArticleComments.setPage = function(e) {
 	$().log('begin: setPage');
 	e.preventDefault();
-	var page = $(this).attr('page');
-	WET.byStr('article/pageSwitch/' + page);
-	$('#article-comments-pagination-link-' + page).blur();
+	var page = parseInt($(this).attr('page'));
+
+	var trackingPage = page;
+	var id = $(this).attr('id');
+	if (id == 'article-comments-pagination-link-prev') {
+		trackingPage = 'prev';
+	} else if (id == 'article-comments-pagination-link-next') {
+		trackingPage = 'next';
+	}
+	WET.byStr('article/pageSwitch/' + trackingPage);
+	$('#article-comments-pagination-link-' + trackingPage).blur();
 
 	$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentList::axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
-		$().log(json);
 		if (!json.error) {
+			$('#article-comments-pagination-link-prev').attr('page', Math.max(page - 1, 0));
+			$('#article-comments-pagination-link-next').attr('page', Math.min(page + 1, $('#article-comments-pagination').find('a').length - 3));
 			$('.article-comments-pagination-link').removeClass('article-comments-pagination-link-active accent').unbind('mouseenter mouseleave');
 			$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active');
 			$('.article-comments-pagination-link').not('.article-comments-pagination-link-active').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});

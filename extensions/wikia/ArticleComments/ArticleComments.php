@@ -1197,9 +1197,11 @@ class ArticleCommentList {
 		$pagination = '';
 		if ($countAll > $countComments) {
 			$numberOfPages = ceil($countAll / $wgArticleCommentsMaxPerPage);
+			$pagination .= '<a href="#" id="article-comments-pagination-link-prev" class="article-comments-pagination-link dark_text_1" page="' . (max($activePage - 1, 0)) . '">&laquo;</a>';
 			for ($i = 0; $i < $numberOfPages; $i++) {
 				$pagination .= '<a href="#" id="article-comments-pagination-link-' . $i . '" class="article-comments-pagination-link dark_text_1' . ($i == $activePage ? ' article-comments-pagination-link-active' : '') . '" page="' . $i . '">' . ($i+1) . '</a>';
 			}
+			$pagination .= '<a href="#" id="article-comments-pagination-link-next" class="article-comments-pagination-link dark_text_1" page="' . (min($activePage + 1, $numberOfPages - 1)) . '">&raquo;</a>';
 		}
 		return $pagination;
 	}
