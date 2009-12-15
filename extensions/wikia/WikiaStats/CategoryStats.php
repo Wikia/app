@@ -519,7 +519,7 @@ class CategoryEdits {
 			
 			$sum = $secCount + $firstCount;
 			if ( $sum > 0 ) {
-				$return = round( ($firstCount * 100)/100, 0 );
+				$return = round( ($firstCount * 100)/$sum, 0 );
 				$wgMemc->set( $memkey , $return, 60*5 );
 			} else {
 				$return = 0;
