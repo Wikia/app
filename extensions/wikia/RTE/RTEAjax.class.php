@@ -53,10 +53,14 @@ class RTEAjax {
 		$res = array('exists' => false);
 
 		if (!empty($wgTitle)) {
+			// existing local URL or interwiki link
+			$exists = $wgTitle->exists() || $wgTitle->isExternal();
+
 			$res = array(
-				'exists' => $wgTitle->exists(),
+				'exists' => $exists,
+				'external' => $wgTitle->isExternal(),
 				'href' => $wgTitle->getLocalUrl(),
-				'title' => ( $wgTitle->exists() ? $wgTitle->getPrefixedText() : wfMsg('red-link-title', $wgTitle->getPrefixedText()) ),
+				'title' => $exists ? $wgTitle->getPrefixedText() : wfMsg('red-link-title', $wgTitle->getPrefixedText()),
 			);
 		}
 
