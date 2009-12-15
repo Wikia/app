@@ -11,8 +11,11 @@ function efAddWikiSticky( &$html ) {
 
 	// fetch the feeds and rotate them
 	$feedWithoutimages = WikiStickies::getWithoutimagesFeed( WikiStickies::INITIAL_FEED_LIMIT );
+	shuffle( $feedWithoutimages );
 	$feedNewpages = WikiStickies::getNewpagesFeed( WikiStickies::INITIAL_FEED_LIMIT );
+	shuffle( $feedNewpages );
 	$feedWantedpages = WikiStickies::getWantedpagesFeed( WikiStickies::INITIAL_FEED_LIMIT );
+	shuffle( $feedWantedpages );
 
 	$feeds = array();
 	for( $i = 0; $i < max( count( $feedWithoutimages ), count( $feedNewpages ), count( $feedWantedpages ) ); $i++ ) {
