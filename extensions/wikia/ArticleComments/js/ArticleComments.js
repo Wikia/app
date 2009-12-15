@@ -70,7 +70,7 @@ ArticleComments.postComment = function(e) {
 			//pagination
 			$('#article-comments-pagination').html('<div>' + json.pagination + '</div>');
 			//readd events
-			$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not('.article-comments-pagination-link-active').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});;
+			ArticleComments.addHover();
 			ArticleComments.bind();
 			//clear error box
 			$('#article-comm-bottom-info').html('');
@@ -110,9 +110,9 @@ ArticleComments.setPage = function(e) {
 			$('#article-comments-pagination-link-next').attr('page', Math.min(page + 1, $('#article-comments-pagination').find('a').length - 3));
 			$('.article-comments-pagination-link').removeClass('article-comments-pagination-link-active accent').unbind('mouseenter mouseleave');
 			$('#article-comments-pagination-link-' + page).addClass('article-comments-pagination-link-active');
-			$('.article-comments-pagination-link').not('.article-comments-pagination-link-active').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
 			$('#article-comments-ul').replaceWith(json.text);
 			$('.article-comm-edit').bind('click', ArticleComments.edit);
+			ArticleComments.addHover();
 			ArticleComments.bind();
 		}
 		ArticleComments.processing = false;
@@ -133,13 +133,17 @@ ArticleComments.bind = function() {
 	$('.article-comm-history').bind('click', ArticleComments.linkHistory);
 }
 
+ArticleComments.addHover = function() {
+	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not('.article-comments-pagination-link-active, #article-comments-pagination-link-prev, #article-comments-pagination-link-next').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
+}
+
 ArticleComments.init = function() {
 	$('#article-comm-submit-top').bind('click', {source: '#article-comm-top'}, ArticleComments.postComment);
 	$('#article-comm-submit-bottom').bind('click', {source: '#article-comm-bottom'}, ArticleComments.postComment);
 	$('#article-comm-order').bind('change', function() {$('#article-comm-form-select').submit()});
 	$('.article-comm-edit').bind('click', ArticleComments.edit);
-	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not('.article-comments-pagination-link-active').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
 	$('#article-comments-pagination div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
+	ArticleComments.addHover();
 }
 //on content ready
 wgAfterContentAndJS.push(ArticleComments.init);
