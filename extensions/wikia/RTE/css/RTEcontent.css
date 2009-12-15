@@ -77,16 +77,18 @@ img.placeholder-comment {
 	background-position: 0 -1312px;
 }
 
-img.placeholder-image-placeholder {
-	background-position: 0 -1248px;
-}
-
-img.placeholder-video-placeholder {
-	background-position: 0 -1232px;
-}
-
-img.placeholder-image-placeholder,
-img.placeholder-video-placeholder {
+/* Add Image / Add Video */
+img.media-placeholder {
 	background-color: #eee;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
 	border: solid 15px #eee;
+}
+
+img.image-placeholder {
+	background-image: url(http://images.wikia.com/common/extensions/wikia/WikiaMiniUpload/images/button_wmu.png);
+}
+
+img.video-placeholder {
+	background-image: url(http://images.wikia.com/common/extensions/wikia/VideoEmbedTool/images/button_vet.png);
 }

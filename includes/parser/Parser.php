@@ -1938,16 +1938,6 @@ class Parser
 						}
 						// RTE - end
 
-						// RTE - begin
-						// TODO: document
-						if (!empty($wgRTEParserEnabled) && ImagePlaceholderIsPlaceholder($nt->getText())) {
-							$dataIdx = RTEData::put('placeholder', array(
-								'type' => 'image-placeholder',
-								'wikitextIdx' => $RTE_wikitextIdx));
-							$s .= $prefix . RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx) . $trail;
-						} else
-						// RTE - end
-
 						# cater for new placeholder-in-template namespace -  Bartek
 						if( "Template Placeholder" != $nt->getText() ) {
 							$s .= $prefix . $this->armorLinks( $this->makeImage( $nt, $text, $holders ) ) . $trail;
