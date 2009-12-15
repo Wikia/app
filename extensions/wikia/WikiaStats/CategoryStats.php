@@ -429,6 +429,107 @@ class CategoryEdits {
 		wfProfileOut( __METHOD__ );
 		return $this->mPercent;
 	}
+
+	/**
+	 * getPercentInCats
+	 * 
+	 * @access public
+	 *
+	 * @param Integer $cat1 - first category (id/name)
+	 * @param Integer $cat2 - second category (id/name)
+	 */
+	
+	public function getPercentInCats($cat1, $cat2) {
+		global $wgMemc;
+		wfProfileIn( __METHOD__ );
+
+		$return = 0;
+		if ( is_int($cat1) ) { # id(?)
+			$CatFirst = Category::newFromID($cat1);
+		} else { # name
+			$CatFirst = Category::newFromName($cat1);
+		}
+		
+		if ( !is_object( $CatFirst ) ) {
+			wfProfileOut( __METHOD__ );
+			return $return;
+		}
+		
+		if ( is_int($cat2) ) { # id(?)
+			$CatSec = Category::newFromID($cat2);
+		} else { # name
+			$CatSec = Category::newFromName($cat2);
+		}
+
+		if ( !is_object( $CatSec ) ) {
+			$return = 100;
+			wfProfileOut( __METHOD__ );
+			return $return;
+		}
+		
+		$memkey = wfMemcKey( 'percentincats', $this->mCatId, $CatFirst->getId(), $CatSec->getId() );
+		$return = $wgMemc->get( $memkey );
+			
+		if ( empty($return) ) {
+			$dbr = wfGetDB( DB_SLAVE );
+			$Row = $dbr->selectRow ( 
+				array( 'categorylinks AS c1', 'categorylinks AS c2' ),
+				array( 'count(c2.cl_to) as cnt' ),
+				array(
+					'c2.cl_to' => $this->mCatName
+				),
+				__METHOD__,
+				"",
+				array(
+					'categorylinks AS c2' => array(
+						'JOIN', 
+						implode ( ' AND ', 
+							array( 
+								'c1.cl_from = c2.cl_from',
+								'c1.cl_to = ' . $dbr->addQuotes($CatFirst->getName())
+							)
+						)
+					)
+				)
+			);
+			$firstCount = ( $Row ) ? intval($Row->cnt) : 0;
+
+			# second category
+			$Row = $dbr->selectRow ( 
+				array( 'categorylinks AS c1', 'categorylinks AS c2' ),
+				array( 'count(c2.cl_to) as cnt' ),
+				array(
+					'c2.cl_to' => $this->mCatName
+				),
+				__METHOD__,
+				"",
+				array(
+					'categorylinks AS c2' => array(
+						'JOIN', 
+						implode ( ' AND ', 
+							array( 
+								'c1.cl_from = c2.cl_from',
+								'c1.cl_to = ' . $dbr->addQuotes($CatSec->getName())
+							)
+						)
+					)
+				)
+			);
+			$secCount = ( $Row ) ? intval($Row->cnt) : 0;
+			
+			$sum = $secCount + $firstCount;
+			if ( $sum > 0 ) {
+				$return = round( ($firstCount * 100)/100, 0 );
+				$wgMemc->set( $memkey , $return, 60*5 );
+			} else {
+				$return = 0;
+			}
+		}
+
+
+		wfProfileOut( __METHOD__ );
+		return $return;
+	}
 	
 	/**
 	 * getPages
