@@ -18,6 +18,9 @@ $langs = array(
 	'pl',
 );
 
+// import'em all
+$langs = false;
+
 // fix single line of JS file
 function parse_json_line($matches) {
 	$key = $matches[1];
@@ -86,6 +89,11 @@ foreach($files as $file) {
 		continue;
 	}
 
+	// only parse language files
+	if (!preg_match('#^[a-z\-]+$#', $lang)) {
+		continue;
+	}
+
 	$content = file_get_contents($file);
 
 	// strip comments
@@ -103,6 +111,11 @@ foreach($files as $file) {
 
 	// parse JSON to array
 	$parsed = json_decode($content, true);
+
+	// check for parsing errors
+	if (empty($parsed)) {
+		die("Error while parsing message file for {$lang}!\n");
+	}
 
 	// let's filter messages
 	foreach($skipGroups as $skipGroup) {
