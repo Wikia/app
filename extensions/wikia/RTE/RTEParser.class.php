@@ -75,6 +75,8 @@ class RTEParser extends Parser {
 	 * @param int $wikitextIdx
 	 */
 	function makeImage($title, $options, $holders = false) {
+		wfProfileIn(__METHOD__);
+
 		$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::IMAGE_DATA, $options);
 
 		parent::makeImage($title, $options, $holders);
@@ -177,6 +179,18 @@ class RTEParser extends Parser {
 
 		// generate image thumbnail
 		$thumb = $image->transform( array('width' => $width) );
+		$thumbClass = get_class($thumb);
+
+		// RT #25329
+		if ($thumbClass == 'OggAudioDisplay') {
+			$data['type'] = 'ogg-file';
+			$ret = RTEMarker::generate(RTEMarker::PLACEHOLDER, RTEData::put('placeholder', $data));
+
+			wfProfileOut(__METHOD__);
+
+			return $ret;
+		}
+
 		$ret = $thumb->toHtml( array('img-class' => implode(' ', $imgClass)) );
 
 		// add type attribute
@@ -186,6 +200,9 @@ class RTEParser extends Parser {
 
 		// store data and mark HTML
 		$ret = RTEData::addIdxToTag(RTEData::put('data', $data), $ret);
+
+		wfProfileOut(__METHOD__);
+
 		return $ret;
 	}
 
