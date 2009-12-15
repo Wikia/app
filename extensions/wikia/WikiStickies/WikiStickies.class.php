@@ -116,6 +116,7 @@ class WikiStickies {
 				array(
 					'id' => $type . '-browser',
 					'class' => 'wikisticky_browser' ),
+				null,
 				$editlinks
 				);
 
