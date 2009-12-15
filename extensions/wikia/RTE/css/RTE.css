@@ -7,6 +7,10 @@
 #wpTextbox1 {
 	visibility: hidden;
 }
+/* hide edit tools in wysiwyg mode */
+.rte_wysiwyg .mw-editTools {
+	display: none;
+}
 
 /* loading indicator */
 .RTEloading #cke_contents_wpTextbox1 {
