@@ -381,12 +381,23 @@ class RTEReverseParser {
 	private function handleEntity($node, $textContent) {
 		$entity = $node->getAttribute('_rte_entity');
 
-		RTE::log(__METHOD__, $entity);
+		// convert text content back to HTML entity
+		$textEncoded = htmlentities($textContent, ENT_COMPAT, 'UTF-8');
+
+		//RTE::log(__METHOD__, array($entity, $textContent, $textEncoded));
 
 		// compare stored entity with text content
-		$matches = ( html_entity_decode($textContent) == html_entity_decode("&{$entity};") );
+		if ($entity{0} == '#') {
+			// get ASCII code of entity (&#x5f; / &#58;) and compare it with textContent
+			$code = ($entity{1} == 'x') ? hexdec(substr($entity, 2)) : intval(substr($entity, 1));
+			$matches = $code == ord($textContent);
+		}
+		else {
+			// &nbsp;
+			$matches = in_array("&{$entity};", array($textEncoded, $textContent));
+		}
 
-		RTE::log(__METHOD__ . '::compare', $matches ? 'true' : 'false');
+		RTE::log(__METHOD__ . '::compare', $matches ? 'true' : "false ({$entity})");
 
 		if ($matches) {
 			// return entity marker
