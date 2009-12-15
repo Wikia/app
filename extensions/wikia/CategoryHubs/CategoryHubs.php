@@ -223,16 +223,18 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 		global $wgCategoryHubArticleLimitPerTab; // A more conservative limit than the normal articles-per-page limit since we're loading the entire article.
 		$limit = $wgCategoryHubArticleLimitPerTab;
 		$categoryEditsObj = CategoryEdits::newFromName($flexibleCategoryViewer->getCat()->getName());
-		$UNANS_QUERY_CAT = "Un-answered_questions"; // the name is different in the query.
 		$flexibleCategoryViewer->answerArticles[ANSWERED_CATEGORY] = array();
 		$flexibleCategoryViewer->answerArticles[UNANSWERED_CATEGORY] = array();
-		$answered = $categoryEditsObj->getPages(ANSWERED_CATEGORY, array(), $limit);
+		
+		$answeredCategory = CategoryHub::getAnsweredCategory();
+		$answered = $categoryEditsObj->getPages($answeredCategory, array(), $limit);
 		if(is_array($answered)){
 			foreach($answered as $ans){
 				$flexibleCategoryViewer->answerArticles[ANSWERED_CATEGORY][] = Article::newFromID($ans['id']);
 			}
 		}
-		$unanswered = $categoryEditsObj->getPages($UNANS_QUERY_CAT, array(), $limit);
+		$unAnsweredCategory = CategoryHub::getUnAnsweredCategory();
+		$unanswered = $categoryEditsObj->getPages($unAnsweredCategory, array(), $limit);
 		if(is_array($unanswered)){
 			foreach($unanswered as $unans){
 				$flexibleCategoryViewer->answerArticles[UNANSWERED_CATEGORY][] = Article::newFromID($unans['id']);
@@ -338,7 +340,10 @@ function categoryHubTitleBar(&$catView, &$r){
 	$categoryEdits = CategoryEdits::newFromId($catView->getCat()->getId());
 	$r .= "<div style='display:table;width:$PROG_BAR_WIDTH"."px'>"; // wraps the progress bar and the labels below it
 	$r .= "<div class='cathub-progbar-wrapper' style='width:$PROG_BAR_WIDTH"."px'>";
-	$percentAnswered = $categoryEdits->getPercentInCats(ANSWERED_CATEGORY, UNANSWERED_CATEGORY);
+
+	$answeredCategory = CategoryHub::getAnsweredCategory();	
+	$unAnsweredCategory = CategoryHub::getUnAnsweredCategory();
+	$percentAnswered = $categoryEdits->getPercentInCats($answeredCategory, $unAnsweredCategory);
 	if($percentAnswered <= 0){
 		$percentAnswered = 0;
 		$r .= "<div class='cathub-progbar-unanswered' style='width:$PROG_BAR_WIDTH'>".wfMsgExt('cathub-progbar-none-done', array())."</div>\n";
@@ -640,5 +645,31 @@ function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 	}
 	return "<div class='cathub-asked'>$asked</div>";
 } // end categoryHubGetAttributionByArticle()
+
+
+class CategoryHub {
+	public function __construct( ) {}
+	
+	public static function getAnsweredCategory() {
+		if ( class_exists("Answer") ) {
+			$catName = Answer::getSpecialCategory("answered");
+			$catName = str_replace(" ", "_", $catName); 
+		} else {
+			$catName = "Answered_questions";
+		}
+		return $catName;
+	}
+
+	public static function getUnAnsweredCategory() {
+		if ( class_exists("Answer") ) {
+			$catName = Answer::getSpecialCategory("unanswered");
+			$catName = str_replace(" ", "_", $catName); 
+		} else {
+			$catName = "Un-answered_questions";
+		}
+		return $catName;
+	}
+
+}
 
 ?>
