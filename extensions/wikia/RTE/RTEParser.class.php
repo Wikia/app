@@ -11,6 +11,9 @@ class RTEParser extends Parser {
 	// image params grabed in ParserMakeImageParams hook to be used in makeImage
 	private static $imageParams = null;
 
+	// place to store HTML of rendered image placeholder to be returned by makeImage()
+	private static $mediaPlaceholderHtml = null;
+
 	/*
 	 * Find empty lines in wikitext and mark following element
 	 */
@@ -79,12 +82,30 @@ class RTEParser extends Parser {
 
 		$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::IMAGE_DATA, $options);
 
+		// call MW parser - image params will be populated
 		parent::makeImage($title, $options, $holders);
 
-		// generate image
-		$image = wfFindFile($title);
+		// maybe it's an image placeholder
+		global $wgEnableImagePlaceholderExt;
+		if (!empty($wgEnableImagePlaceholderExt)) {
+			$isImagePlaceholder = ImagePlaceholderIsPlaceholder($title->getText());
 
-		if (empty($image)) {
+			// pass rendered image placeholder
+			if ($isImagePlaceholder) {
+				// return HTML stored by renderMediaPlaceholder() method
+				$ret = self::$mediaPlaceholderHtml;
+
+				wfProfileOut(__METHOD__);
+				return $ret;
+			}
+		}
+
+		// check that given image exists
+		$image = wfFindFile($title);
+		$isBrokenImage = empty($image);
+
+		// render broken image placeholder
+		if ($isBrokenImage) {
 			// handle not existing images
 			$sk = $this->mOptions->getSkin();
 
@@ -200,6 +221,39 @@ class RTEParser extends Parser {
 
 		// store data and mark HTML
 		$ret = RTEData::addIdxToTag(RTEData::put('data', $data), $ret);
+
+		wfProfileOut(__METHOD__);
+
+		return $ret;
+	}
+
+	/**
+	 * Render media (image / video) placeholder
+	 */
+	static public function renderMediaPlaceholder($data) {
+		wfProfileIn(__METHOD__);
+
+		RTE::log(__METHOD__, $data['wikitext']);
+
+		$attribs = array(
+			'src' => 'http://images.wikia.com/common/skins/monobook/blank.gif?1',
+			'class' => "media-placeholder {$data['type']}",
+			'height' => intval($data['params']['height']),
+			'width' => intval($data['params']['width']),
+		);
+
+		if (!empty($data['params']['isThumb'])) {
+			$attribs['class'] .= ' thumb';
+		}
+
+		// render image for media placeholder
+		$ret = Xml::element('img', $attribs);
+
+		// store data and mark HTML
+		$ret = RTEData::addIdxToTag(RTEData::put('data', $data), $ret);
+
+		// store marked HTML to be used by makeImage() method
+		self::$mediaPlaceholderHtml = $ret;
 
 		wfProfileOut(__METHOD__);
 

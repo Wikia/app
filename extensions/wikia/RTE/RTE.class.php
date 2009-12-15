@@ -59,7 +59,7 @@ class RTE {
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_exec($ch);
-			curl_close($ch);			
+			curl_close($ch);
 		}
 		return true;
 	}
@@ -93,7 +93,6 @@ class RTE {
 			'_rte_placeholder' => true,
 			'class' => "placeholder placeholder-{$data['type']}",
 			'src' => 'http://images.wikia.com/common/skins/monobook/blank.gif?1',
-			//'title' => $label,
 			'type' => $data['type'],
 		));
 	}

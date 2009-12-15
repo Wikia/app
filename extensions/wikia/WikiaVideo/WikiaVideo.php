@@ -364,20 +364,17 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 
 		// dirty hack for CK support
 		if (!empty($wgRTEParserEnabled)) {
-			RTE::log(__METHOD__ . '::placeholder', $wikitext);
-
-			$dataIdx = RTEData::put('placeholder', array(
+			$html = RTEParser::renderMediaPlaceholder(array(
 				'type' => 'video-placeholder',
-				'parans' => array(
+				'params' => array(
 					'width' => $width,
 					'height' => $height,
+					'caption' => $caption,
 					'isAlign' => $isalign,
 					'isThumb' => $isthumb
 				),
 				'wikitext' => $wikitext,
 			));
-
-			$html = RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
 		}
 
 		wfProfileOut('WikiaVideo_makeVideo');

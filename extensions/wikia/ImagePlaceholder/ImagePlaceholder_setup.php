@@ -224,10 +224,10 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		$refid = Wysiwyg_SetRefId('image_add', array( 'width' => $iswidth, 'height' => $height, 'isAlign' => $isalign, 'isThumb' => $isthumb, 'original' => $wikitext, 'caption' => $caption, 'link' => $link ), false, true);
         } else {
 			if( ($wgRequest->getVal('diff',0) == 0) && ($wgRequest->getVal('oldid',0) == 0) ) {
-				$onclick = 'WET.byStr(\'articleAction/imageplaceholder\');$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )';			
+				$onclick = 'WET.byStr(\'articleAction/imageplaceholder\');$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/WikiaMiniUpload/js/WMU.js?\'+wgStyleVersion, function() { WMU_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaImagePlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' , \'' . htmlspecialchars($link) . '\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/WikiaMiniUpload/css/WMU.css?\'+wgStyleVersion ) } ) } )';
 			} else {
 				$onclick = 'alert('.escapeshellarg(wfMsg('imgplc-notinhistory')).'); return false;';
-			}   	
+			}
         }
 
 	// FIXME: argh! inline styles! Move to classes someday... --TOR
@@ -280,6 +280,22 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	// increase counter
         $wgWikiaImagePlaceholderId++;
+
+	// dirty hack for CK support
+	global $wgRTEParserEnabled;
+	if (!empty($wgRTEParserEnabled)) {
+		$out = RTEParser::renderMediaPlaceholder(array(
+			'type' => 'image-placeholder',
+			'params' => array(
+				'width' => $width,
+				'height' => $height,
+				'caption' => $caption,
+				'isAlign' => $isalign,
+				'isThumb' => $thumb
+			),
+			'wikitext' => $wikitext,
+		));
+	}
 
 	wfProfileOut(__METHOD__);
 
