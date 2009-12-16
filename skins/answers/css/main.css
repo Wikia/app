@@ -921,6 +921,7 @@ ol.contributors li {
 	margin-top: 7px !important;
 	padding: 0 10px 0 0 !important;
 	height:100%;
+	margin-left: 62px;
 	width:auto;
 }
 .userInfoNoAvatar {
@@ -947,6 +948,9 @@ li .userInfoNoAvatar:hover a{
 	display: block;
 	font-size: 1em;
 	font-weight: bold;
+	margin-left: 62px;
+	white-space:pre;
+	margin-top: -10px;
 }
 
 .userInfo .anonEditPoints {
