@@ -2099,6 +2099,7 @@ if(count($wikiafooterlinks) > 0) {
 
 	echo '<table cellspacing="0" id="link_box_table">';
 	//BEGIN: create dynamic box
+	$showDynamicLinks = true;
 	$dynamicLinksArray = array();
 	$userIsAnon = $wgUser->isAnon();
 	if ($userIsAnon) {
@@ -2106,8 +2107,13 @@ if(count($wikiafooterlinks) > 0) {
 		$signupTitle = Title::makeTitle(NS_SPECIAL, 'Signup');
 	}
 
+	global $wgRequest;
+	if ( $wgRequest->getText( 'action' ) == 'edit' || $wgRequest->getText( 'action' ) == 'submit' ) {
+		$showDynamicLinks = false;
+	}
+
 	//Blog, User_Blog namespaces
-	if (defined('NS_BLOG_ARTICLE') && defined('NS_BLOG_LISTING') && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_LISTING))) {
+	if ($showDynamicLinks && defined('NS_BLOG_ARTICLE') && defined('NS_BLOG_LISTING') && in_array($namespace, array(NS_BLOG_ARTICLE, NS_BLOG_LISTING))) {
 		$sp = Title::makeTitle(NS_SPECIAL, 'CreateBlogPage');
 		/* Redirect to login page instead of showing error, see Login friction project */
 		$url = $userIsAnon ? $signupTitle->getLocalURL(wfGetReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
@@ -2128,7 +2134,7 @@ if(count($wikiafooterlinks) > 0) {
 		);
 	}
 	//all other namespaces
-	else {
+	elseif ( $showDynamicLinks ) {
 		$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage');
 		/* Redirect to login page instead of showing error, see Login friction project */
 		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'Signup')->getLocalURL(wfGetReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
