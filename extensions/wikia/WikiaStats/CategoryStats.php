@@ -614,18 +614,24 @@ class CategoryEdits {
 	 * 
 	 * @access public
 	 *
+	 * @param Boolean $show_staff - show staff users on list
 	 * @param Integer $limit,
 	 * @param Integer $offset,
 	 * 
 	 */
-	public function getContribs($limit = 30, $offset = 0) {
+	public function getContribs($show_staff = true, $limit = 30, $offset = 0) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$memkey = wfMemcKey( 'contribs', $this->mCatId, $limit, $offset );
+		$memkey = wfMemcKey( 'contribs', $this->mCatId, intval($show_staff), $limit, $offset );
 		$users = $wgMemc->get( $memkey );
 		
 		if ( empty($users) ) {
+			$group_cond = "ug_group = 'bot'";
+			if ( empty($show_staff) ) {
+				$group_cond = "ug_group in ('bot', 'staff')";
+			}
+			
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select ( 
 				array( 'category_user_edits', 'user_groups' ),
@@ -645,7 +651,7 @@ class CategoryEdits {
 						implode ( ' AND ', 
 							array(
 								"cue_user_id = ug_user",
-								"ug_group = 'bot'"
+								$group_cond
 							)
 						)
 					)
@@ -672,18 +678,23 @@ class CategoryEdits {
 	 * @access public
 	 *
 	 * @param Integer $days,
+	 * @param Boolean $show_staff - show staff users on list
 	 * @param Integer $limit,
 	 * @param Integer $offset,
 	 * 
 	 */
-	public function getXDayContribs($days = 7, $limit = 30, $offset = 0) {
+	public function getXDayContribs($days = 7, $show_staff = true, $limit = 30, $offset = 0) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
-		$memkey = wfMemcKey( 'xdayscontribs', $this->mCatId, $days, $limit, $offset );
+		$memkey = wfMemcKey( 'xdayscontribs', $this->mCatId, intval($show_staff), $days, $limit, $offset );
 		$users = $wgMemc->get( $memkey );
 		
 		if ( empty($users) ) {
+			$group_cond = "ug_group = 'bot'";
+			if ( empty($show_staff) ) {
+				$group_cond = "ug_group in ('bot', 'staff')";
+			}
 			$min_date = date('Y-m-d', time() - $days * 24 * 60 * 60);
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select ( 
@@ -701,7 +712,7 @@ class CategoryEdits {
 						implode ( ' AND ', 
 							array(
 								"ce_user_id = ug_user",
-								"ug_group = 'bot'"
+								$group_cond
 							)
 						)
 					)

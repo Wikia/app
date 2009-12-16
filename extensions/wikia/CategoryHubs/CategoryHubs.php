@@ -432,15 +432,16 @@ function categoryHubTopContributors(&$catView, &$r){
 	$NUM_CONTRIBS_PER_SECTION = 10;
 
 	// Top Contributors for all time
+	$show_staff = false;
 	$r .= "<div id='topContribsAllTime'>\n";
 	$r .= "<h3>".wfMsgExt('cathub-top-contribs-all-time', array())."</h3>";
-	$r .= categoryHubContributorsToHtml($categoryEdits->getContribs($NUM_CONTRIBS_PER_SECTION));
+	$r .= categoryHubContributorsToHtml($categoryEdits->getContribs($show_staff, $NUM_CONTRIBS_PER_SECTION));
 	$r .= "</div>\n";
 
 	// Recent Top Contributors
 	$r .= "<div id='topContribsRecent'>\n";
 	$r .= "<h3>".wfMsgExt('cathub-top-contribs-recent', array(), CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS)."</h3>";
-	$r .= categoryHubContributorsToHtml($categoryEdits->getXDayContribs(CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS, $NUM_CONTRIBS_PER_SECTION));
+	$r .= categoryHubContributorsToHtml($categoryEdits->getXDayContribs(CATHUB_RECENT_CONTRIBS_LOOKBACK_DAYS, $show_staff, $NUM_CONTRIBS_PER_SECTION));
 	$r .= "</div>\n";
 
 	$r .= "</div><div style='clear:both'>&nbsp;</div>\n"; // clearing div is for Chrome
