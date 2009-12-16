@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#33850: RTE: Toolbar resizing layout bug (macbre)
 * rt#33845: RTE: jQuery data added to some tables, reason unknown (macbre)
 * rt#20344: RTE: Implement LinkSuggest in source mode (macbre)
 * rt#28286: testProblemReportsDialogOpen should cleanup after itself (macbre)
