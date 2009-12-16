@@ -286,6 +286,12 @@ CKEDITOR.plugins.add('rte-media',
 */
 		});
 
+		// update position of image caption ("..." icon)
+		var mediaWithCaption = media.filter('.withCaption');
+		mediaWithCaption.each(function() {
+			$(this).css('backgroundPosition', '5px ' + parseInt($(this).attr('height') + 10)  + 'px');
+		});
+
 		// images / videos specific setup
 		var image = media.filter('img.image');
 		self.setupImage(image);
