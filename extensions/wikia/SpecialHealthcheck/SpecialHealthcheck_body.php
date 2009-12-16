@@ -35,6 +35,8 @@ class HealthCheck extends UnlistedSpecialPage {
 		$this->setHeaders();
 		$wgOut->setPageTitle( 'Special:Healthcheck' );
 
+		// for faster response
+		$wgOut->setArticleBodyOnly( true );
 
 		if ( file_exists("/usr/wikia/conf/current/host_disabled") ) {
 			# failure!
@@ -43,7 +45,7 @@ class HealthCheck extends UnlistedSpecialPage {
 		} else {
 			# success!
 			$wgOut->setStatusCode( 200 );
-			$wgOut->addWikiText( 'Server status is: OK' );
+			$wgOut->addHTML( 'Server status is: OK' );
 		}
 	}
 }
