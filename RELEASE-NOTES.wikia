@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#33857: RTE: Captions are missing the "..." placeholder image (macbre)
 * rt#33859: RTE: Thumbed images should not be resized larger than the original file resolution (macbre)
 * rt#33861: RTE: Table editor: Remove "summary" option from table (macbre)
 * rt#33850: RTE: Toolbar resizing layout bug (macbre)
