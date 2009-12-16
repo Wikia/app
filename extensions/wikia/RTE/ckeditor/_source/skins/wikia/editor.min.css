@@ -86,7 +86,7 @@ outset #D3D3D3;margin:11px
 .cke_skin_wikia a:hover.cke_toolbox_collapser_min{background-image:url(images/sprites.png?20091216);_background-image:url(images/sprites_ie6.png?20091216);background-position:4px -1387px;background-repeat:no-repeat;margin:2px
 4px}.cke_skin_wikia .cke_rtl a.cke_toolbox_collapser_min,
 .cke_skin_wikia .cke_rtl a:hover.cke_toolbox_collapser_min{background-position:4px -1408px}.cke_skin_wikia
-.cke_toolbar{display:inline}.cke_skin_wikia
+.cke_toolbar{display:inline;height:32px}.cke_skin_wikia
 .cke_separator{display:none}.cke_skin_wikia
 .cke_break{font-size:0;clear:left}.cke_skin_wikia .cke_rtl
 .cke_break{clear:right}.cke_skin_wikia
