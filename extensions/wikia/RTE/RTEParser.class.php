@@ -175,6 +175,12 @@ class RTEParser extends Parser {
 			}
 
 			$width = $wgThumbLimits[$wopt];
+
+			// thumbed images should not be resized larger than the original file resolution
+			$imageWidth = $image->getWidth();
+			if ($imageWidth < $width) {
+				$width = $imageWidth;
+			}
 		}
 		else {
 			// full size
