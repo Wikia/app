@@ -160,6 +160,7 @@ body.rte_source #editform #mw-toolbar {
 	left: 0;
 	line-height: 16px;
 	padding: 3px;
+	position: relative;
 }
 
 /* template previews */

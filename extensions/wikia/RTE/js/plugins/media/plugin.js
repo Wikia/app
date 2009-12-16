@@ -113,15 +113,18 @@ CKEDITOR.plugins.add('rte-media',
 			var captionContent = data.params.captionParsed || data.params.caption;
 			if (captionContent && isFramed) {
 				var captionTop = parseInt(image.attr('height') + 7);
+				var captionWidth = image.attr('width');
 
 				// IE
 				if (CKEDITOR.env.ie) {
-					captionTop -= 25;
+					captionTop -= 25; /* padding-top (25px) */
+					captionWidth -= 6; /* padding (3px) * 2 */
 				}
 
 				var caption = $('<div>').
 					addClass('RTEMediaCaption').
-					css('marginTop',captionTop + 'px').
+					css('top',captionTop + 'px').
+					width(captionWidth).
 					html(captionContent);
 
 				caption.appendTo(overlay);
