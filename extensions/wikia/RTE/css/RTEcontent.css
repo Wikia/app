@@ -59,6 +59,8 @@ img.border {
 }
 /* caption indicator */
 img.withCaption {
+	background-image: url('../images/imageCaption.png');
+	background-repeat: no-repeat;
 	padding-bottom: 25px;
 }
 
