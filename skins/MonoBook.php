@@ -249,7 +249,7 @@ class MonoBookTemplate extends QuickTemplate {
 ?>
 		</div><!-- end of the left (by default at least) column -->
 		</div><!-- macbre: fixes strange footer bug in IE6 (#2068) -->
-
+<div class="visualClear"></div>
 		<?php
     // macbre: google adsense column
 
@@ -257,7 +257,6 @@ if ( !$this->isSkyscraper() ) {
     $this->html('ads_columngoogle');
 }
 ?>
-			<div class="visualClear"></div>
 			<div id="footer">
 <?php $this->footer(); ?>
 		</div>
