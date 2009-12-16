@@ -158,12 +158,17 @@ class TagsReportPage extends SpecialPage {
 	}
 
 	private function getGenDate() {
-		global $wgLang, $wgExternalStatsDB;
+		global $wgLang, $wgExternalStatsDB, $wgCityId;
 		$tagsArticles = array();
 		$dbs = wfGetDB(DB_SLAVE, array(), $wgExternalStatsDB);
-		$time = $dbs->selectField( "city_used_tags", "ct_timestamp", null, __METHOD__ );
+		$s = $dbs->selectRow( 
+			'city_used_tags',
+			array( 'max(ct_timestamp) as ts' ),
+			array( 'ct_wikia_id' =>  $wgCityId ), 
+			__METHOD__
+		);
 
-		return $wgLang->timeanddate( wfTimestamp( TS_MW, $time ), true );
+		return $wgLang->timeanddate( wfTimestamp( TS_MW, $s->ts ), true );
 	}
 
 }
