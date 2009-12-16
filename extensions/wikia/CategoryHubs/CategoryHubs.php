@@ -484,7 +484,7 @@ function categoryHubContributorsToHtml( $editsByUserId ) {
 			$user = User::newFromId($userId);
 			$userData['user_id'] = $userId;
 			$userData['user_name'] = $user->getName();
-			$userData['edits'] = $user->getEditCount(); // spec is to show total edit count, not current relevant numEdits.
+			$userData['edits'] = Answer::getUserEditPoints($userId); // spec is to show total edit count, not current relevant numEdits.
 			$r .= Answer::getUserBadge($userData, ($numShown < $NUM_TO_SHOW_BIG));
 
 			$r .= Xml::closeElement( 'div' ); // END .badgeWrapper
