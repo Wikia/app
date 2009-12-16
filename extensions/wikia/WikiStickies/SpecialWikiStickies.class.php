@@ -48,9 +48,10 @@ class SpecialWikiStickies extends SpecialPage {
 		}
 
 		// get the Three Feeds
+		// the without images feed needs to be doubled - we will perform some extra magic on it
 		WikiStickies::formatFeed(
 			'wikistickies-withoutimages',
-			WikiStickies::getWithoutimagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ),
+			WikiStickies::getWithoutimagesFeed( WikiStickies::SPECIAL_FEED_LIMIT * 2 ),
 			wfMsg('wikistickies-withoutimages-hd'),
 			'wikistickies-withoutimages-st-short' ) ;
 

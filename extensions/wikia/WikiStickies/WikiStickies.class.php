@@ -79,6 +79,28 @@ class WikiStickies {
 		return $out;
 	}
 
+	// exclude names supplied in a MediaWiki page
+	static function excludeFromFeed( &$feed_data ) {
+		$excluded = $result = array();
+		$excluded_txt = wfMsgForContent( 'Nowantedimages' ) ;
+		if ('' != $excluded_txt) {
+			$excluded = preg_split( "/\*/", $excluded_txt );
+		}
+		$excluded = array_map( "trim", $excluded );
+		
+		foreach( $feed_data as $title ) {
+			if( !in_array( $title->getPrefixedText(), $excluded ) ) {
+				$result[] = $title;
+			}
+		}
+
+		// trim array to limit		
+		if( count( $result ) > self::SPECIAL_FEED_LIMIT ) {
+			$result = array_slice( $result, 0, self::SPECIAL_FEED_LIMIT );
+		}
+		$feed_data = $result;
+	}
+
 	/**
 	 * Constructs the majority of HTML output to render.
 	 *
@@ -106,8 +128,10 @@ class WikiStickies {
 			array_pop( $feed_data );
 		}
 
-		if ( $type == 'wikistickies-wantedpages' ) {
+		if ( 'wikistickies-wantedpages' == $type ) {
 			$editlinks = true;
+		} else if ( 'wikistickies-withoutimages' == $type ) { // for page that has exclusion
+			self::excludeFromFeed( $feed_data );
 		}
 		
 		$sticky = self::renderWikiSticky(
