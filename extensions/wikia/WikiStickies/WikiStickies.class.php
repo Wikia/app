@@ -109,7 +109,7 @@ class WikiStickies {
 		if ( $type == 'wikistickies-wantedpages' ) {
 			$editlinks = true;
 		}
-
+		
 		$sticky = self::renderWikiSticky(
 				array_shift( $feed_data ),
 				$sticker,
@@ -127,7 +127,7 @@ class WikiStickies {
 			$body .= self::renderFeedList( $feed_data, null, $editlinks );
 		}
 		// Second batch of items. These are hidden by default.
-		if( $numitems > 10 ) {
+		if( $numitems > self::INITIAL_FEED_LIMIT ) {
 			$body .= self::renderFeedList( $feed_data, array( 'class' => 'submerged' ), $editlinks );
 		}
 
@@ -141,7 +141,7 @@ class WikiStickies {
 		// See more link
 		// TODO: This href attribute should actually point to the source of the feed
 		//	   in case JS is off. It should not remain an empty fragment.
-		if ($numitems > 10) { // don't show link if less than 10 items in list
+		if ($numitems > self::INITIAL_FEED_LIMIT) { // don't show link if less than 10 items in list
 			$html .= Xml::openElement( 'a', array( 'href' => '#', 'class' => 'MoreLink' ) ).
 				wfMsg( 'wikistickies-more' ).
 				Xml::closeElement( 'a' );
