@@ -10,7 +10,8 @@ function efAddWikiSticky( &$html ) {
 	$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/WikiStickies/css/WikiStickiesMyHome.css?{$wgStyleVersion}");
 
 	// fetch the feeds and rotate them
-	$feedWithoutimages = WikiStickies::getWithoutimagesFeed( WikiStickies::INITIAL_FEED_LIMIT );
+	$feedWithoutimages = WikiStickies::getWithoutimagesFeed( WikiStickies::INITIAL_FEED_LIMIT * 2 );
+	WikiStickies::excludeFromFeed( $feedWithoutimages );
 	shuffle( $feedWithoutimages );
 	$feedNewpages = WikiStickies::getNewpagesFeed( WikiStickies::INITIAL_FEED_LIMIT );
 	shuffle( $feedNewpages );
