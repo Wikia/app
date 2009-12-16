@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#28286: testProblemReportsDialogOpen should cleanup after itself (macbre)
 * rt#25910: RTE: You can't delete image placeholder (macbre)
 * rt#33766: RTE: import all available core language files (macbre)
 * rt#27684: lyrics soap API doesn't respect read-only (eloy)
