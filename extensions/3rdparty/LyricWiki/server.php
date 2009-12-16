@@ -1438,7 +1438,7 @@ function postSong($overwriteIfExists, $artist, $song, $lyrics, $onAlbums, $flags
 
 	$title = lw_getTitle($artist,$song);
 	$pageTitle = Title::newFromDBkey(utf8_decode(htmlspecialchars_decode($title)));
-	$pageExists = $pageTitle->exists(); // call here and store the result to check after page is created to determine if it was an overwrite
+	$pageExists = (is_object($pageTitle) && $pageTitle->exists()); // call here and store the result to check after page is created to determine if it was an overwrite
 	if(isset($pageTitle) && $pageExists && (!$overwriteIfExists)){
 		$retVal['dataUsed'] = false;
 		$retVal['message'] = "Song already exists and overwriteIfExists was not set to true.";
