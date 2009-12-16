@@ -68,10 +68,12 @@ sub scaleHeight {
 #
 # do not make zombies
 #
-$SIG{CHLD} = 'IGNORE';
+use POSIX ":sys_wait_h";
+$SIG{CHLD} = sub { while( waitpid( -1, WNOHANG ) >0 ) { print STDERR "waiting for child to finish\n" } };
 
 my @tests = qw(
 	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/240px-Black_Mesa_logo.svg.png
+	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
 	/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG
 	/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png
 	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
