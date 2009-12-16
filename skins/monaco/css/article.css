@@ -412,6 +412,7 @@
 
 /*** Search results ***/
 ul.mw-search-results {
+	margin-top: 1.25em;
 	list-style-type: none;
 	list-style-image: none;
 	font-family: "Arial", sans-serif;
