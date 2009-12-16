@@ -1233,8 +1233,10 @@ class RTEReverseParser {
                 }
                 else {
                         foreach ($node->attributes as $attrName => $attrNode) {
-                                // ignore attributes used internally by RTE ("washtml" and with "_rte_" prefix)
-                                if ( ($attrName == 'washtml') || (substr($attrName, 0, 5) == '_rte_') ) {
+                                // ignore attributes used internally by RTE ("washtml" and with "_rte_" or "jquery" prefix)
+                                if ( $attrName == 'washtml' ||
+					substr($attrName, 0, 5) == '_rte_' ||
+					substr($attrName, 0, 6) == 'jquery' ) {
                                         continue;
                                 }
                                 $attrStr .= ' ' . $attrName . '="' . $attrNode->nodeValue  . '"';
