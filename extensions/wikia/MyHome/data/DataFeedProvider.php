@@ -380,6 +380,10 @@ class DataFeedProvider {
 		wfProfileIn(__METHOD__);
 		if($res['logtype'] == 'move') {
 			if(isset($res['move'])) {
+				//RT#27870
+				if (!empty($this->parameters['type']) && $this->parameters['type'] == 'widget') {
+					return;
+				}
 				$newTitle = Title::newFromText($res['move']['new_title'], $res['move']['new_ns']);
 			} else {
 				$newTitle = Title::newFromText(trim($res['rc_params']));
