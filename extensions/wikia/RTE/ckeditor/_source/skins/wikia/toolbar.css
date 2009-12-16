@@ -74,6 +74,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_wikia .cke_toolbar
 {
 	display: inline;
+	height: 32px;
 }
 
 .cke_skin_wikia .cke_separator
