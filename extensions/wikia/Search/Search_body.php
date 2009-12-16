@@ -464,7 +464,7 @@ class SolrResultTitle extends Title {
 	}
 
 	public function getLinkUrl( $query = array(), $variant = false ) {
-		return $this->mUrl;
+		return wfUrlencodeExt($this->mUrl);
 	}
 
 	private function sanitizeUrl($url) {
