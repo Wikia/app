@@ -44,6 +44,7 @@ window.RTE = {
 		'first-run-notice',
 		'justify',
 		'link',
+		'linksuggest',
 		'media',
 		'paste',
 		'placeholder',
