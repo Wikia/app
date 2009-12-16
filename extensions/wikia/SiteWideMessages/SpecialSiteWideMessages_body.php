@@ -66,7 +66,7 @@ class SiteWideMessages extends SpecialPage {
 		$formData['groupNameS'] = $wgRequest->getText('mGroupNameS');
 		$formData['userName'] = $wgRequest->getText('mUserName');
 		$formData['expireTime'] = $wgRequest->getVal('mExpireTime');
-		$formData['lang'] = $wgRequest->getVal('mLang');
+		$formData['mLang'] = $wgRequest->getArray('mLang');
 
 		//fetching hub list
 		$DB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
