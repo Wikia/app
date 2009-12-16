@@ -79,7 +79,12 @@ class ArticleCommentInit {
 			if ($action == 'purge' && $wgUser->isAnon() && !$wgRequest->wasPosted()) {
 				self::$enable = false;
 			}
-			if($action != 'view' && $action != 'purge') {
+			if ($action != 'view' && $action != 'purge') {
+				self::$enable = false;
+			}
+
+			//disable on main page (RT#33703)
+			if (Title::newMainPage()->getText() == $wgTitle->getText()) {
 				self::$enable = false;
 			}
 		}
