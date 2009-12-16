@@ -105,7 +105,8 @@ class CreateBlogPage extends SpecialBlogPage {
 		$editPage->summary = isset($this->mFormData['postEditSummary']) ? $this->mFormData['postEditSummary'] : wfMsgForContent('create-blog-updated');
 
 		$result = false;
-		$status = $editPage->internalAttemptSave( $result );
+		$bot = $wgUser->isAllowed('bot') && $wgRequest->getBool('bot',true);
+		$status = $editPage->internalAttemptSave( $result, $bot );
 		switch( $status ) {
 			case EditPage::AS_SUCCESS_UPDATE:
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
