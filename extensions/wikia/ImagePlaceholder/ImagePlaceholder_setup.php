@@ -292,8 +292,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 				'caption' => $caption,
 				'isAlign' => $isalign,
 				'isThumb' => $thumb
-			),
-			'wikitext' => $wikitext,
+			)
 		));
 	}
 

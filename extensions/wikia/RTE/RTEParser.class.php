@@ -11,8 +11,11 @@ class RTEParser extends Parser {
 	// image params grabed in ParserMakeImageParams hook to be used in makeImage
 	private static $imageParams = null;
 
-	// place to store HTML of rendered image placeholder to be returned by makeImage()
-	private static $mediaPlaceholderHtml = null;
+	// place to store data of rendered image placeholder to be returned by makeImage()
+	private static $mediaPlaceholder = null;
+
+	// last wikitext parsed by makeImage()
+	private static $lastWikitext = null;
 
 	/*
 	 * Find empty lines in wikitext and mark following element
@@ -82,6 +85,9 @@ class RTEParser extends Parser {
 
 		$wikitextIdx = RTEMarker::getDataIdx(RTEMarker::IMAGE_DATA, $options);
 
+		// store wikitext for media placeholder rendering method
+		self::$lastWikitext = RTEData::get('wikitext', $wikitextIdx);
+
 		// call MW parser - image params will be populated
 		parent::makeImage($title, $options, $holders);
 
@@ -93,7 +99,7 @@ class RTEParser extends Parser {
 			// pass rendered image placeholder
 			if ($isImagePlaceholder) {
 				// return HTML stored by renderMediaPlaceholder() method
-				$ret = self::$mediaPlaceholderHtml;
+				$ret = self::$mediaPlaceholder;
 
 				wfProfileOut(__METHOD__);
 				return $ret;
@@ -233,8 +239,6 @@ class RTEParser extends Parser {
 	static public function renderMediaPlaceholder($data) {
 		wfProfileIn(__METHOD__);
 
-		RTE::log(__METHOD__, $data['wikitext']);
-
 		$attribs = array(
 			'src' => 'http://images.wikia.com/common/skins/monobook/blank.gif?1',
 			'class' => "media-placeholder {$data['type']}",
@@ -247,14 +251,22 @@ class RTEParser extends Parser {
 			$attribs['class'] .= ' thumb';
 		}
 
+		// set original wikitext of none provided (used by ImagePlaceholder)
+		if (!isset($data['wikitext'])) {
+			$data['wikitext'] = self::$lastWikitext;
+		}
+
 		// render image for media placeholder
 		$ret = Xml::element('img', $attribs);
 
 		// store data and mark HTML
-		$ret = RTEData::addIdxToTag(RTEData::put('data', $data), $ret);
+		$dataIdx = RTEData::put('data', $data);
+		$ret = RTEData::addIdxToTag($dataIdx, $ret);
 
 		// store marked HTML to be used by makeImage() method
-		self::$mediaPlaceholderHtml = $ret;
+		self::$mediaPlaceholder = $ret;
+
+		RTE::log(__METHOD__, $data['wikitext']);
 
 		wfProfileOut(__METHOD__);
 
