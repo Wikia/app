@@ -531,7 +531,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 												captionElement.getItem( i ).remove();
 										}
 									}
-								},
+								}/*,
 								{
 									type : 'text',
 									id : 'txtSummary',
@@ -545,7 +545,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 										if ( this.getValue() )
 											selectedTable.setAttribute( 'summary', this.getValue() );
 									}
-								}
+								}*/
 							]
 						}
 					]
