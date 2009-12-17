@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#33882: RTE: Bullets can add unintentional line spacing (macbre)
 * rt#33873: RTE: "move" cursor only appears for thumb images without captions - should work for all images and video (macbre)
 * rt#33860: RTE: Editor has some issues with turning bold/formatted text into headings (macbre)
 * rt#27508: Close wiki msg change. (Nef)
