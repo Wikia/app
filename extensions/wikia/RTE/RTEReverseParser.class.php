@@ -988,7 +988,7 @@ class RTEReverseParser {
 					$attributes .= '|';
 				}
 
-				$out = "|+{$attributes}{$textContent}";
+				$out = "\n|+{$attributes}{$textContent}";
 				break;
 
 			case 'tr':
