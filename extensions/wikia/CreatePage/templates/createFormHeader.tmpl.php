@@ -1,4 +1,4 @@
-<?php echo $isReload; /* no error when it is reload by login form */ ?>
+<?php /* no error when it is reload by login form */ ?>
 <?php if(!$isReload)  : ?>
 	<?php if(count($formErrors)): ?>
 		<div style="color:red; font-weight:700;">
