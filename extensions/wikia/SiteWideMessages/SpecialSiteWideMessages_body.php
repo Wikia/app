@@ -664,12 +664,13 @@ class SiteWideMessages extends SpecialPage {
 
 		//step 1 of 3: get all active messages sent to *all*
 		$dbResult = $DB->Query (
-			  'SELECT msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang'
+			  'SELECT msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status'
 			. ' FROM ' . MSG_TEXT_DB
+			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_removed = ' . MSG_REMOVED_NO
 			. ' AND msg_mode = ' . MSG_MODE_ALL
 			. ' AND (msg_expire IS NULL OR msg_expire > ' . $DB->AddQuotes(date('Y-m-d H:i:s')) . ')'
-			. " AND msg_date > '{$user->mRegistration}'"	//fix for ticket #2624
+			. " AND " . MSG_TEXT_DB . ".msg_date > '{$user->mRegistration}'"	//fix for ticket #2624
 			. ';'
 			, __METHOD__
 		);
@@ -677,7 +678,7 @@ class SiteWideMessages extends SpecialPage {
 		$tmpMsg = array();
 		while ($oMsg = $DB->FetchObject($dbResult)) {
 			if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
-				$tmpMsg[$oMsg->id] = array('wiki_id' => null, 'text' => $oMsg->text, 'expire' => $oMsg->expire);
+				$tmpMsg[$oMsg->id] = array('wiki_id' => null, 'text' => $oMsg->text, 'expire' => $oMsg->expire, 'status' => $oMsg->status);
 			}
 		}
 
@@ -706,7 +707,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 		//step 3 of 3: add not dismissed messages sent to *this* user (on *all* wikis or *this* wiki)
 		$dbResult = $DB->Query (
-			  'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang'
+			  'SELECT msg_wiki_id, msg_id AS id, msg_text AS text, msg_expire AS expire, msg_lang AS lang, msg_status AS status'
 			. ' FROM ' . MSG_TEXT_DB
 			. ' LEFT JOIN ' . MSG_STATUS_DB . ' USING (msg_id)'
 			. ' WHERE msg_mode = ' . MSG_MODE_SELECTED
@@ -721,7 +722,7 @@ class SiteWideMessages extends SpecialPage {
 
 		while ($oMsg = $DB->FetchObject($dbResult)) {
 			if ( self::getLanguageConstraintsForUser( $user, $oMsg->lang ) ) {
-				$tmpMsg[$oMsg->id] = array('wiki_id' => $oMsg->msg_wiki_id, 'text' => $oMsg->text, 'expire' => $oMsg->expire);
+				$tmpMsg[$oMsg->id] = array('wiki_id' => $oMsg->msg_wiki_id, 'text' => $oMsg->text, 'expire' => $oMsg->expire, 'status' => $oMsg->status);
 			}
 		}
 		if ($dbResult !== false) {
@@ -743,9 +744,12 @@ class SiteWideMessages extends SpecialPage {
 				"<div class=\"SWM_message\">{$tmpMsgData['text']}</div>";
 		}
 
+		$userID = $user->GetID();
 		//once the messages are displayed, they must be marked as "seen" so user will not see "you have new messages" from now on
+		$countDisplayed = count($tmpMsg);
+		//do update only for not marked before
+		$tmpMsg = array_filter($tmpMsg, create_function('$row', 'return $row["status"] == 0;'));
 		if (count($tmpMsg) && !wfReadOnly()) {
-			$userID = $user->GetID();
 
 			$DB = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$dbResult = (boolean)$DB->Query (
@@ -775,13 +779,17 @@ class SiteWideMessages extends SpecialPage {
 					, __METHOD__
 				);
 			}
+			//purge browser cache
+			$user->invalidateCache();
+			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID=$userID, result=" . ($dbResult ? 'true':'false') . "\n");
+		}
 
+		if ($countDisplayed) {
 			//purge the cache
 			$key = 'wikia:talk_messages:' . $userID . ':' . str_replace(' ', '_', $user->getName());
 			$wgMemc->set($key, 'deleted', 100);
-
-			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || userID=$userID, result=" . ($dbResult ? 'true':'false') . "\n");
 		}
+
 		return implode("\n", $messages);
 	}
 
@@ -810,7 +818,7 @@ class SiteWideMessages extends SpecialPage {
 	}
 
 	static function dismissMessage($messageID) {
-		global $wgUser, $wgMemc, $wgExternalSharedDB;
+		global $wgUser, $wgMemc, $wgExternalSharedDB, $wgTitle;
 		$userID = $wgUser->GetID();
 		if (wfReadOnly()) {
 			return wfMsg('readonly');
@@ -847,16 +855,14 @@ class SiteWideMessages extends SpecialPage {
 				, __METHOD__
 			);
 
-			$DB->commit();
-
 			//purge the cache
 			$key = 'wikia:talk_messages:' . $userID . ':' . str_replace(' ', '_', $wgUser->getName());
 			$wgMemc->set($key, 'deleted', 100);
 
-			//also clear shared wikia newtalk cache
-			if ( function_exists( 'wfClearWikiaNewtalk' ) ) {
-				wfClearWikiaNewtalk( $wgUser );
-			}
+			//omit browser cache by increasing pageTouch
+			$wgTitle->invalidateCache();
+
+			$DB->commit();
 
 			wfDebug(basename(__FILE__) . ' || ' . __METHOD__ . " || WikiId=$mWikiId, messageID=$messageID, result=" . ($dbResult ? 'true':'false') . "\n");
 			return (bool)$dbResult;

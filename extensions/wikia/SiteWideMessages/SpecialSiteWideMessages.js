@@ -13,7 +13,7 @@ YAHOO.util.Event.onDOMReady(function() {
 
 function SWMAjaxDismiss(e, id) {
 	YAHOO.util.Event.preventDefault(e);
-	var ajaxUrl = wgServer + wgScript + "?action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs=" + id;
+	var ajaxUrl = wgServer + wgScript + "?title=" + wgPageName + "&action=ajax&rs=SiteWideMessagesAjaxDismiss&rsargs=" + id;
 	var request = YAHOO.util.Connect.asyncRequest('GET', ajaxUrl, {
 		success: function(o) {
 			if (o.responseText == '1') {
