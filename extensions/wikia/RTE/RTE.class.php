@@ -30,6 +30,7 @@ class RTE {
 		global $wgRequest, $wgHooks, $wgRC2UDPEnabled;
 		if($wgRequest->wasPosted()) {
 			if($wgRequest->getVal('RTEMode') == 'wysiwyg') {
+				RTE::log(__METHOD__);
 				if($out == null) {
 					$wikitext = RTE::HtmlToWikitext($wgRequest->getText('wpTextbox1'));
 					$wgRequest->setVal('wpTextbox1', $wikitext);
