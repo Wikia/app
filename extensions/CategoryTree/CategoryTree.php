@@ -51,7 +51,7 @@ define('CT_HIDEPREFIX_AUTO', 30);
  * $wgCategoryTreeSpecialPageOptions - options to apply on Special:CategoryTree.
  */
 
-$wgCategoryTreeMaxChildren = 200;
+if (empty($wgCategoryTreeMaxChildren)) $wgCategoryTreeMaxChildren = 200;
 $wgCategoryTreeAllowTag = true;
 $wgCategoryTreeDisableCache = true;
 $wgCategoryTreeDynamicTag = false;
