@@ -593,28 +593,30 @@ function categoryHubOtherSection(&$catView, &$r){
 
 			$r .= "<ul class='interactive-questions'>\n";
 			foreach($catView->answerArticles[$ANS_CLASS] as $qArticle){
-				$r .= "<li class=\"$ANS_CLASS\">\n";
+				if(is_object($qArticle)){
+					$r .= "<li class=\"$ANS_CLASS\">\n";
 
-				// Button to trigger the form for changing an answer inline.
-				$r .= "<div class='cathub-button hideUntilHover'>\n";
-				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
-				$r .= wfMsgExt('cathub-button-improve-answer', array())."</big><small>&nbsp;</small></a>\n";
-				$r .= "</div>\n";
+					// Button to trigger the form for changing an answer inline.
+					$r .= "<div class='cathub-button hideUntilHover'>\n";
+					$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
+					$r .= wfMsgExt('cathub-button-improve-answer', array())."</big><small>&nbsp;</small></a>\n";
+					$r .= "</div>\n";
 
-				// Question & attribution for last edit.
-				$title = $qArticle->getTitle();
-				$r .= "<span class=\"$ANS_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
-				// TODO: RESTORE THIS WHEN rephrase IS WORKING.
-				//$r .= "&nbsp;<span class='cathub-button-rephrase hideUntilHover'><a href='javascript:void(0)'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
-				$r .= categoryHubGetAttributionByArticle($qArticle, true); //'true' uses messages for 'answered'
+					// Question & attribution for last edit.
+					$title = $qArticle->getTitle();
+					$r .= "<span class=\"$ANS_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+					// TODO: RESTORE THIS WHEN rephrase IS WORKING.
+					//$r .= "&nbsp;<span class='cathub-button-rephrase hideUntilHover'><a href='javascript:void(0)'>".wfMsgExt('cathub-button-rephrase', array())."</a></span>";
+					$r .= categoryHubGetAttributionByArticle($qArticle, true); //'true' uses messages for 'answered'
 
-				// Show the  actual answer.
-				$r .= "<div class='cathub-actual-answer'>";
-				$r .= "<span class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</span><br/>\n";
-				$r .= $tmpParser->parse($qArticle->getRawText(), $title, $tmpParserOptions, false)->getText();
-				$r .= "</div>\n";
-	
-				$r .= "</li>\n";
+					// Show the  actual answer.
+					$r .= "<div class='cathub-actual-answer'>";
+					$r .= "<span class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</span><br/>\n";
+					$r .= $tmpParser->parse($qArticle->getRawText(), $title, $tmpParserOptions, false)->getText();
+					$r .= "</div>\n";
+		
+					$r .= "</li>\n";
+				}
 			}
 			$r .= "</ul>\n";
 			if ( $wgUser->isAnon() ) {
