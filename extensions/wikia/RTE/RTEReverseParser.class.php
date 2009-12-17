@@ -550,6 +550,11 @@ class RTEReverseParser {
 			$out = '';
 		}
 
+		// don't break headings with formatted (bold/italic) content
+		if ( self::isLastChild($node) && self::isChildOf($node, array('b', 'i')) ) {
+			$out = '';
+		}
+
 		return $out;
 	}
 
@@ -1160,7 +1165,11 @@ class RTEReverseParser {
 	 * Checks name of parent of given node
 	 */
 	private static function isChildOf($node, $parentName) {
-		return ( !empty($node->parentNode) && $node->parentNode->nodeName == $parentName );
+		if (is_string($parentName)) {
+			$parentName = array($parentName);
+		}
+
+		return ( !empty($node->parentNode) && in_array($node->parentNode->nodeName, $parentName) );
 	}
 
 	/**
