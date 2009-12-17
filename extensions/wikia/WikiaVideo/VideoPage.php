@@ -4,7 +4,7 @@ $wgExtensionMessagesFiles['WikiaVideo'] = dirname(__FILE__).'/WikiaVideo.i18n.ph
 
 class VideoPage extends Article {
 
-	const V_GAMETRAILERS = 0;
+	const V_GAMETRAILERS = 20;
 	const V_GAMEVIDEOS = 1;
 	const V_GAMESPOT = 2;
 	const V_MTVGAMES = 3;
@@ -963,9 +963,11 @@ EOD;
 				$exists = $this->getViddlerTrueID() != false ;
 				break;
 			case self::V_GAMETRAILERS: // todo verify if exists
-			/*	$url = $this->getUrl(self::V_GAMETRAILERS.",".$this->mId);
-				$file = @file_get_contents($url);
-				echo $file; */
+				$url = $this->getUrl(self::V_GAMETRAILERS.",".$this->mId);
+				$file = @file_get_contents($url); // if 404 file is empty 
+				if( strlen($file) < 100 ){
+					return false;	
+				}
 				return true;
 				break;
 			default:
@@ -1507,7 +1509,15 @@ EOD;
 				$url = $this->getUrlToEmbed();
 				break;
 			case self::V_GAMETRAILERS:
-				$url = 'http://www.gametrailers.com/remote_wrap.php?umid=' . $this->mId;
+				$code = 'custom';
+				$embed = 
+				'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" id="gtembed" width="'.$width.'" height="'.$height.'">	
+					<param name="allowScriptAccess" value="sameDomain" /> 
+					<param name="allowFullScreen" value="true" />
+					<param name="movie" value="http://www.gametrailers.com/remote_wrap.php?mid='.$this->mId.'"/>
+					<param name="quality" value="high" /> 
+					<embed src="http://www.gametrailers.com/remote_wrap.php?mid='.$this->mId.'" swLiveConnect="true" name="gtembed" align="middle" allowScriptAccess="sameDomain" allowFullScreen="true" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'"></embed> ]
+				</object>' ;
 				break;
 			default: break;
 		}
