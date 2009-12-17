@@ -149,6 +149,7 @@ class WikiaMiniUpload {
 			),
 			__METHOD__
 		);	
+		$dbw->commit();
 		return $dbw->insertId();		
 	}
 
@@ -164,6 +165,7 @@ class WikiaMiniUpload {
 			),
 			__METHOD__
 		);			
+		$dbw->commit();
 	}
 
 	// this function loads the image details page
