@@ -995,8 +995,31 @@ class RTEReverseParser {
 				// remove cell line breaks
 				$textContent = trim($textContent, "\n");
 
-				// don't add |- for first row without attributes
-				if (!self::isFirstChild($node) || $attributes != '') {
+				$addRowDelimiter = false;
+
+				if (self::isFirstChild($node)) {
+					// add |- before first table row when table header (thead) is present
+					$tableNode = $node->parentNode->parentNode;
+					if (self::firstChildIs($tableNode, 'thead')) {
+						$addRowDelimiter = true;
+					}
+
+					// don't add |- before table header row
+					if (self::isChildOf($node, 'thead')) {
+						$addRowDelimiter = false;
+					}
+				}
+				else {
+					// for next rows always add row delimiter
+					$addRowDelimiter = true;
+				}
+
+				if ($attributes != '') {
+					$addRowDelimiter = true;
+				}
+
+				// add row delimiter and attributes when needed
+				if ($addRowDelimiter) {
 					$out = "\n|-{$attributes}";
 				}
 
