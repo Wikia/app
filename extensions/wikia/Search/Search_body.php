@@ -386,7 +386,7 @@ class SolrResult extends SearchResult {
 				$this->mHighlightText .= $snippet . '... ';
 			}
 		}
-		return $this->mHighlightText;
+		return strip_tags($this->mHighlightText, '<span>');
 	}
 
 	public function getRedirectTitle() {
