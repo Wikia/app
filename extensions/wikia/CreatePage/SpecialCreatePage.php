@@ -19,7 +19,7 @@ class CreatePage extends SpecialEditPage {
 	}
 
 	public function execute() {
-		global $wgUser, $wgOut, $wgRequest,$wgJsMimeType,$wgExtensionsPath;
+		global $wgUser, $wgOut, $wgRequest,$wgJsMimeType,$wgExtensionsPath, $wgStyleVersion;
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CreatePage/js/focus.js?{$wgStyleVersion}\" ></script>\n");
 		
