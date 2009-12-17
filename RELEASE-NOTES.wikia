@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#27508: Close wiki msg change. (Nef)
 * rt#33881: RTE: Can't drag images with captions (macbre)
 * rt#33857: RTE: Captions are missing the "..." placeholder image (macbre)
 * rt#33859: RTE: Thumbed images should not be resized larger than the original file resolution (macbre)
