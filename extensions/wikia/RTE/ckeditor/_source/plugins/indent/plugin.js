@@ -143,6 +143,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		// Convert the list DOM tree into a one dimensional array.
 		var listArray = CKEDITOR.plugins.list.listToArray( listNode, database );
 
+		// Wikia - start
+		// RT #33882
+		listArray[ lastItem.getCustomData( 'listarray_index' ) ].toIndent = true;
+		// Wikia - end
+
 		// Apply indenting or outdenting on the array.
 		var baseIndent = listArray[ lastItem.getCustomData( 'listarray_index' ) ].indent;
 		for ( i = startItem.getCustomData( 'listarray_index' ) ; i <= lastItem.getCustomData( 'listarray_index' ) ; i++ )

@@ -550,7 +550,7 @@ class RTEReverseParser {
 			$out = '';
 		}
 
-		// don't break headings with formatted (bold/italic) content
+		// don't break headings with formatted (bold/italic) content (RT #33860)
 		if ( self::isLastChild($node) && self::isChildOf($node, array('b', 'i')) ) {
 			$out = '';
 		}
