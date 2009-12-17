@@ -46,10 +46,10 @@ window.RTE = {
 		'link',
 		'linksuggest',
 		'media',
+		'modeswitch',
 		'paste',
 		'placeholder',
 		'signature',
-		'source',
 		'template',
 		'temporary-save',
 		'toolbar',
@@ -195,18 +195,6 @@ window.RTE = {
 		RTE.instance.dataProcessor.writer.indentationChars = '';
 		RTE.instance.dataProcessor.writer.lineBreakChars = '';
 
-		// set class for body indicating current editor mode
-		$('body').addClass('rte_' + RTE.instance.mode);
-
-		// on submit set value of RTEMode hidden field
-		$('#editform').bind('submit', function() {
-			$('#RTEMode').attr('value', RTE.instance.mode);
-		});
-		// do the same for clicks on preview button (event used by AjaxLogin on edit page)
-		$('#wpPreview').bind('click', function() {
-			$('#RTEMode').attr('value', RTE.instance.mode);
-		});
-
 		// reposition #RTEStuff
 		RTE.repositionRTEStuff();
 
@@ -286,9 +274,6 @@ window.RTE = {
 				RTE.ajax('html2wiki', {html: content, title: window.wgPageName}, function(data) {
 					RTE.instance.setData(data.wikitext);
 					RTE.loading(false);
-
-					// body CSS class change and tracking
-					$('body').addClass('rte_source').removeClass('rte_wysiwyg');
 					RTE.track('switchMode', 'wysiwyg2source');
 				});
 				break;
@@ -312,9 +297,6 @@ window.RTE = {
 
 					setTimeout(function() {
 						RTE.loading(false);
-
-						// body CSS class change and tracking
-						$('body').addClass('rte_wysiwyg').removeClass('rte_source');
 						RTE.track('switchMode', 'source2wysiwyg');
 					}, 150);
 				});
