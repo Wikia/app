@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#33097: WikiStickies: Click-tracking revisited. (Nef)
 * rt#33956: RTE: Setting the table "Headers" attribute as "First row" or "Both" breaks tables (macbre)
 * rt#33882: RTE: Bullets can add unintentional line spacing (macbre)
 * rt#33873: RTE: "move" cursor only appears for thumb images without captions - should work for all images and video (macbre)
@@ -21,7 +22,6 @@
 * rt#33493: Answers: Missed escaping in widget. (Nef)
 * rt#28247: Answers: Allow multiple categories on HPL. (Nef)
 * rt#33246: StaffLog: fix permissions (uberfuzzy)
-* rt#33097: WikiStickies: Click-tracking here and there. (Nef)
 * rt#32083: Ad changes on answers. (Nef)
 * rt#33045: Skins: update footer links in monobook (uberfuzzy)
 * rt#32985: Blogs: reduced default count for blog listings (TOR)
