@@ -283,6 +283,11 @@ font-weight:bold;
 margin-bottom:10px;
 }
 
+/**********************
+ * Sprite Definitions *
+ **********************/
+.SpriteWrapper { position: relative; }
+
 /*** SLOTS STYLES ***/
 #HOME_TOP_LEADERBOARD {
 	margin-bottom: 10px;

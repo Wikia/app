@@ -436,6 +436,26 @@ class FeedRenderer {
 		return $ret;
 	}
 
+	/**
+	 * Render an HTML sprite.
+	 *
+	 * @param $row Row details.
+	 * @param $src string The src of the sprite <img> element.
+	 * @return string HTML for an appropriate sprite, based on $row.
+	 */
+	public static function getSprite ( $row, $src = '' ) {
+		$r = '';
+		$r .= Xml::openElement( 'div', array( 'class' => 'SpriteWrapper' ) );
+		$r .= '<img '.
+			'class="' . FeedRenderer::getIconType( $row ) . ' sprite"'.
+			'src="'. $src .'"'.
+			'alt="'. FeedRenderer::getIconAltText( $row ).'"'.
+			'width="16" height="16"';
+		$r .= Xml::closeElement( 'div' );
+
+		return $r;
+	}
+
 	/*
 	 * Returns 3rd row (with details) for given feed item
 	 *
