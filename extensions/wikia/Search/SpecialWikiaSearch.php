@@ -8,7 +8,6 @@ class SpecialWikiaSearch extends SpecialSearchOld {
 
 	public function __construct( &$request, &$user ) {
 		global $wgSessionStarted;
-
 		wfLoadExtensionMessages( 'WikiaSearch' );
 
 		if(empty($wgSessionStarted)) {
@@ -17,16 +16,19 @@ class SpecialWikiaSearch extends SpecialSearchOld {
 			$wgSessionStarted = true;
 		}
 
-		if($request->getcheck( 'thisWikiOnly' ) || (isset($_SESSION[$this->searchLocalWikiOnlySession]) && ($_SESSION[$this->searchLocalWikiOnlySession] == true))) {
+		if(($request->getVal('fulltext') == null) && (isset($_SESSION[$this->searchLocalWikiOnlySession]) && ($_SESSION[$this->searchLocalWikiOnlySession] == true))) {
 			$this->searchLocalWikiOnly = true;
-			$_SESSION[$this->searchLocalWikiOnlySession] = true;
 		}
-		else {
-			$this->searchLocalWikiOnly = false;
-			$_SESSION[$this->searchLocalWikiOnlySession] = false;
+		elseif($request->getVal('fulltext') != null) {
+			if($request->getcheck( 'thisWikiOnly' )) {
+				$this->searchLocalWikiOnly = true;
+				$_SESSION[$this->searchLocalWikiOnlySession] = true;
+			}
+			else {
+				$this->searchLocalWikiOnly = false;
+				$_SESSION[$this->searchLocalWikiOnlySession] = false;
+			}
 		}
-
-		$_SESSION[$this->searchLocalWikiOnlySession] = $request->getcheck( 'thisWikiOnly' );
 
 		parent::__construct( $request, $user );
 	}
@@ -307,7 +309,7 @@ STOP;
 				SpecialPage::getTitleFor( 'Search' ),
 				wfArrayToCGI(
 					$this->powerSearchOptions(),
-					array( 'search' => $term ) ),
+					array( 'search' => $term, 'thisWikiOnly' => $this->searchLocalWikiOnly ? '1' : '0' ) ),
 					($num < $this->limit) );
 			//if ($showTopControls) $wgOut->addHTML( "<p class='mw-search-pager-top'>{$prevnext}</p>\n" );
 			wfRunHooks( 'SpecialSearchResults', array( $term, &$titleMatches, &$textMatches ) );
