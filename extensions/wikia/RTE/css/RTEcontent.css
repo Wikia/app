@@ -29,12 +29,17 @@ img.alignRight {
 	margin: 0 0 0 auto;
 }
 
+img.image,
+img.media-placeholder,
+img.video {
+	cursor: move !important;
+}
+
 /* thumbs */
 img.thumb,
 img.frame {
 	background-color: #F9F9F9;
 	border: 1px solid #CCCCCC;
-	cursor: move !important;
 	padding: 3px;
 }
 
