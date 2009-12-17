@@ -386,6 +386,13 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 		if (!empty($wgWysiwygParserEnabled)) {
 			$out = Wysiwyg_SetRefId('placeholder', array('text' => $wikitext));
 		}
+		else if (!empty($wgRTEParserEnabled)) {
+			RTE::log(__METHOD__ . '::brokenVideoLink', $wikitext);
+
+			// add broken-video link placeholder
+			$dataIdx = RTEData::put('placeholder', array('type' => 'broken-video', 'wikitext' => $wikitext, 'title' => $title->getDBkey()));
+			$out = RTEMarker::generate(RTEMarker::PLACEHOLDER, $dataIdx);
+		}
 		else {
 			$out = $sk->makeColouredLinkObj(Title::newFromText('WikiaVideoAdd', NS_SPECIAL), 'new', $title->getPrefixedText(), 'name=' . $title->getDBKey());
 		}
