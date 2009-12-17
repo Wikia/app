@@ -350,4 +350,4 @@ $wgSpecialPagesRequiredLogin = array('Resetpass', 'MyHome', 'Preferences', 'Watc
  * max comments per page under article
  * @see Article comments
  */
-$wgArticleCommentsMaxPerPage = 25;
+$wgArticleCommentsMaxPerPage = 5;
