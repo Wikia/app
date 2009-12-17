@@ -109,14 +109,16 @@ class CreatePage extends SpecialEditPage {
 
 	//print extra field for 'title'
 	public function renderFormHeader($wgOut) {
-		global $wgScriptPath;
-
+		global $wgScriptPath,$wgRequest;
+		
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
-		$oTmpl->set_vars( array(
+		$oTmpl->set_vars(array(
 			"formErrors" => $this->mFormErrors,
 			"formData" => $this->mFormData,
-		) );
+			/*field with value 1 add by login form befor reload */
+			"isReload" => ($wgRequest->getVal('wpIsReload',0) == 1) 
+		));
 
 		$wgOut->setPageTitle( wfMsg("createpage") );
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');

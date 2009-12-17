@@ -54,6 +54,7 @@ var AjaxLogin = {
 
 		// we're on edit page
 		if($('#wpPreview').exists() && $('#wpLogin').exists()) {
+			$('#editform').append('<input value="1" name="wpIsReload" ></input>');
 			if ($('#wikiDiff').children().exists()) {  
 				$('#wpDiff').click();
 			} else {
