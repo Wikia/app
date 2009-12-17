@@ -87,6 +87,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					if ( !rootNode || listArray[ currentIndex ].parent.getName() != rootNode.getName() )
 					{
 						rootNode = listArray[ currentIndex ].parent.clone( false, true );
+
+						// Wikia - start
+						// RT #33882
+						if (item.toIndent) {
+							rootNode.removeAttribute('_rte_empty_lines_before');
+							rootNode.setAttribute('_rte_new_node', true);
+						}
+						// Wikia - end
+
 						retval.append( rootNode );
 					}
 					currentListItem = rootNode.append( doc.createElement( 'li' ) );
