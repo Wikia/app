@@ -41,13 +41,11 @@ h3.myhome-empty-message {
 
 .activityfeed {
 	margin-left: 20px;
-	position: relative;
 }
 
 .activityfeed li {
 	height: 1%;
 	margin-bottom: 25px;
-	position: relative;
 }
 
 .activityfeed em {

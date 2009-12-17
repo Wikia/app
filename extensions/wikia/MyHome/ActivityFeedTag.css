@@ -1,11 +1,9 @@
 .activityfeed {
 	margin-left: 20px;
-	position: relative;
 }
 
 .activityfeed li {
 	margin-bottom: 15px;
-	position: relative;
 	height: 1%;
 }
 
@@ -130,7 +128,6 @@ td.activityfeed-details-label {
 	border: solid 1px #ccc;
 	float: left;
 	margin: 4px 4px 4px 0;
-	position: relative;
 }
 
 .activityfeed-inserted-media li a {
