@@ -63,7 +63,8 @@ function renderWidget (&$parser, $widgetName)
 	$smarty = new Smarty;
 	$smarty->left_delimiter = '<!--{';
 	$smarty->right_delimiter = '}-->';
-	$smarty->compile_dir  = "$IP/extensions/Widgets/compiled_templates/";
+	global $wgUploadDirectory;
+	$smarty->compile_dir  = $wgUploadDirectory; // it's not perfect but for one wiki with few widgets...
 
 	// registering custom Smarty plugins
 	$smarty->plugins_dir[] = "$IP/extensions/Widgets/smarty_plugins/";
