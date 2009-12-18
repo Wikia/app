@@ -427,7 +427,7 @@ function parseItem($line) {
  * @return array
  */
 function getMessageAsArray($messageKey) {
-	$message = trim(wfMsg($messageKey));
+	$message = trim(wfMsgForContent($messageKey));
 	if(!wfEmptyMsg($messageKey, $message)) {
 		$lines = explode("\n", $message);
 		if(count($lines) > 0) {
