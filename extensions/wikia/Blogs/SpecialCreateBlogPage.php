@@ -245,7 +245,7 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$wgOut->setPageTitle( wfMsg("create-blog-post-title") );
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/skins/common/edit.js"><!-- edit js --></script>');
-		$wgOut->addHTML( $oTmpl->execute("createBlogFormHeader") );
+		$wgOut->addHTML( $oTmpl->render("createBlogFormHeader") );
 	}
 
 	private function parseArticle($sTitle) {
