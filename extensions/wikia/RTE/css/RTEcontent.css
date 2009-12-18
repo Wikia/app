@@ -86,15 +86,17 @@ img.placeholder-comment {
 
 /* Add Image / Add Video */
 img.media-placeholder {
-	background-color: #eee;
+	background-color: #f9f9f9;
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+	margin: 2px;
 }
 
 img.image-placeholder {
-	background-image: url(http://images.wikia.com/common/extensions/wikia/WikiaMiniUpload/images/button_wmu.png);
+	background-image: url(../images/imagePlaceholder.png);
 }
 
 img.video-placeholder {
-	background-image: url(http://images.wikia.com/common/extensions/wikia/VideoEmbedTool/images/button_vet.png);
+	background-image: url(../images/videoPlaceholder.png);
 }
