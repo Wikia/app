@@ -213,6 +213,8 @@ class CreateBlogPage extends SpecialBlogPage {
 		// Allow extensions to modify edit form
 		global $wgEnableRTEExt, $wgRequest;
 		if (!empty($wgEnableRTEExt)) {
+			$wgRequest->setVal('wpTextbox1', $sPostBody); // RT #34055
+
 			wfRunHooks('AlternateEdit', array(&$this->mEditPage));
 			$this->mEditPage->textbox1 = $wgRequest->getVal('wpTextbox1');
 
