@@ -247,14 +247,15 @@ class RTEParser extends Parser {
 
 		$attribs = array(
 			'src' => 'http://images.wikia.com/common/skins/monobook/blank.gif?1',
-			'class' => "media-placeholder {$data['type']}",
+			'class' => "media-placeholder {$data['type']} thumb",
 			'type' => $data['type'],
 			'height' => intval($data['params']['height']),
 			'width' => intval($data['params']['width']),
 		);
 
-		if (!empty($data['params']['isThumb'])) {
-			$attribs['class'] .= ' thumb';
+		if (isset($data['params']['align'])) {
+			$align = $data['params']['align'] ? $data['params']['align'] : 'none';
+			$attribs['class'] .= ' align' . ucfirst($align);
 		}
 
 		// set original wikitext of none provided (used by ImagePlaceholder)

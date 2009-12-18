@@ -51,7 +51,8 @@ img.frame {
 	margin: 6px 0 10px 18px;
 }
 
-img.alignLeft {
+img.alignLeft,
+img.alignNone {
 	clear: left;
 	display: inline;
 	float: left;
@@ -90,6 +91,7 @@ img.media-placeholder {
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	border: 1px solid #ccc;
+	clear: both;
 	margin: 2px;
 }
 
