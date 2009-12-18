@@ -18,6 +18,7 @@ HTML attributes used by RTE:
 * _rte_empty_lines_before - number of empty lines of wikitext before given node
 * _rte_entity - used in entities' wrapping spans (contains "name" of wrapped entity)
 * _rte_placeholder - indicates given node is placeholder (template, magic word, broken image link, ...)
+* _rte_short_row_markup - number of trailing spaces for previous table cell
 * _rte_spaces_before - number of spaces at the beginning of given node text content (list item, table cell)
 * _rte_style - stores original value of style attribute (to preserve their order and formatting)
 * _rte_washtml - indicates whether given node was HTML node in wikitext
