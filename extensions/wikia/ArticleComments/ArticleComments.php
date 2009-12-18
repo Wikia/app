@@ -23,7 +23,6 @@ $wgAjaxExportList[] = 'ArticleCommentList::axGetComments';
 
 $wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
 $wgHooks['ArticleRevisionUndeleted'][] = 'ArticleCommentList::undeleteComments';
-$wgHooks['UndeleteComplete'][] = 'ArticleCommentList::undeleteComplete';
 $wgHooks['RecentChange_save'][] = 'ArticleComment::watchlistNotify';
 # recentchanges
 $wgHooks['ChangesListMakeSecureName'][] = 'ArticleCommentList::makeChangesListKey';
@@ -1350,30 +1349,6 @@ class ArticleCommentList {
 						}
 					}
 				}
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
-
-	/**
-	 * Hook
-	 *
-	 * @param Title $oTitle -- instance of Title class
-	 * @param User    $User    -- current user
-	 * @param string  $reason  -- undeleting reason
-	 *
-	 * @static
-	 * @access public
-	 *
-	 * @return true -- because it's hook
-	 */
-	static public function undeleteComplete($oTitle, $oUser, $reason) {
-		wfProfileIn( __METHOD__ );
-		if ($oTitle instanceof Title) {
-			if ( in_array($oTitle->getNamespace(), array($this->getTitle()->getNamespace(), Namespace::getTalk($this->getTitle()->getNamespace()))) ) {
-				$pageId = $oTitle->getArticleId();
 			}
 		}
 
