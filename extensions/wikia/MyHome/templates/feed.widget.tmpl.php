@@ -12,16 +12,16 @@
 		foreach($data as $row) {
 ?>
 		<li class="activity-type-<?= FeedRenderer::getIconType($row) ?> activity-ns-<?= $row['ns'] ?>">
+			<?php print FeedRenderer::getSprite( $row, $assets['blank'] ) ?>
 <?php
 			if (isset($row['url'])) {
 ?>
-			<img src="<?= $assets['blank'] ?>" class="sprite"<?= FeedRenderer::getIconAltText($row) ?>/>
 			<strong><a href="<?= htmlspecialchars($row['url']) ?>"><?= htmlspecialchars($row['title'])  ?></a></strong>
 <?php
 			}
 			else {
 ?>
-			<img src="<?= $assets['blank'] ?>" class="sprite"<?= FeedRenderer::getIconAltText($row) ?>/><span class="title"><?= htmlspecialchars($row['title'])  ?></span>
+			<span class="title"><?= htmlspecialchars($row['title'])  ?></span>
 <?php
 			}
 ?>
