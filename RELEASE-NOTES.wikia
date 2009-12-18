@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#34047: RTE: link editor does not accept links to anchors (macbre)
 * rt#33879: RTE: whitespace changes in shorthand tables (macbre)
 * rt#34038: RTE: on CreatePage, hover elements do not appear in correct location (macbre)
 * rt#33877: RTE: template editor: Previews within the template editor don't show links formatting (macbre)
