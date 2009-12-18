@@ -869,12 +869,14 @@ class CategoryEdits {
 					list( $subcats, $catTitle ) = $values;
 					if ( !isset($categories[$cat_id]) ) {
 						$categories[$cat_id] = $catTitle;
+						/* full tree is not needed now, first level is enough
 						if ( $subcats > 0 ) {
 							$oCat = self::newFromId($cat_id);
 							if ( $oCat ) {
 								$oCat->getSubcategories($categories);
 							}
 						}
+						*/
 					}
 				}
 			}
