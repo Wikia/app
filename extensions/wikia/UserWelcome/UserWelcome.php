@@ -142,7 +142,7 @@ function getRequests() {
 
 	function getNewGiftLink(){
 		global $wgUser, $IP, $wgUploadPath;
-		require_once("$IP/extensions/wikia/UserGifts/UserGiftsClass.php");
+		require_once("$IP/extensions/wikia/UserGifts_NY/UserGiftsClass.php");
 		$gift_count = UserGifts::getNewGiftCount($wgUser->getID());
 		$gifts_title = Title::makeTitle(NS_SPECIAL,"ViewGifts");
 		$output = "";

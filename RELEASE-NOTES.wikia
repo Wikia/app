@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#34051: NYC: fixed gifts on halo (TOR)
 * rt#33943: CatHubs: Resurfacing subcategories. (Nef)
 * rt#34047: RTE: link editor does not accept links to anchors (macbre)
 * rt#33879: RTE: whitespace changes in shorthand tables (macbre)
