@@ -290,8 +290,11 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 				'width' => $width,
 				'height' => $height,
 				'caption' => $caption,
+				'align' => $align,
+
+				// extra data to be passed to WMU
 				'isAlign' => $isalign,
-				'isThumb' => $thumb
+				'isThumb' => $isthumb,
 			)
 		));
 	}

@@ -370,8 +370,11 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 					'width' => $width,
 					'height' => $height,
 					'caption' => $caption,
+					'align' => $align,
+
+					// extra data to be passed to VET
 					'isAlign' => $isalign,
-					'isThumb' => $isthumb
+					'isThumb' => $isthumb,
 				),
 				'wikitext' => $wikitext,
 			));
