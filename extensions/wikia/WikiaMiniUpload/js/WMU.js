@@ -334,16 +334,18 @@ function WMU_loadMainFromView() {
 }
 
 
-function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {	
+function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 	if(gallery === -2){
 	//	if (showComboAjaxForPalceHolder("WikiaImagePlaceholderInner" + box,true)) return false;
 	}
-	
+
 	if(typeof gallery == "undefined") {
-		if (showComboAjaxForPalceHolder("",false)) return false;
+		if (typeof showComboAjaxForPalceHolder == 'function') {
+			if (showComboAjaxForPalceHolder("",false)) return false;
+		}
 	}
-	
+
 	WMU_refid = null;
 	WMU_wysiwygStart = 1;
         WMU_gallery = -1;
@@ -514,7 +516,7 @@ function WMU_show( e, gallery, box, align, thumb, size, caption, link ) {
 
 $(function(){
 	if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
-		if( (window.location.href.indexOf("openwindow=WMU") > 1) 
+		if( (window.location.href.indexOf("openwindow=WMU") > 1)
 			&& (window.location.href.indexOf("action=submit") > 1)
 			&& ((typeof wgIsLogin != 'undefined') && wgIsLogin ) ) {
 			WMU_show(-1);
@@ -929,12 +931,12 @@ function WMU_insertImage(e, type) {
 
 	var callback = {
 		success: function(o) {
-		
+
 			var screenType = o.getResponseHeader['X-screen-type'];
 			if(typeof screenType == "undefined") {
 				screenType = o.getResponseHeader['X-Screen-Type'];
 			}
-			
+
 			switch(YAHOO.lang.trim(screenType)) {
 				case 'error':
 					o.responseText = o.responseText.replace(/<script.*script>/, "" );
@@ -948,8 +950,8 @@ function WMU_insertImage(e, type) {
 					WMU_switchScreen('Summary');
 					$G('ImageUploadBack').style.display = 'none';
 					$G('ImageUpload' + WMU_curScreen).innerHTML = o.responseText;
-				
-					
+
+
 					if((WMU_refid == null) || (wgAction == "view") || (wgAction == "purge") ){ // not FCK
 						if( -2 == WMU_gallery) {
 							WMU_insertPlaceholder( WMU_box );

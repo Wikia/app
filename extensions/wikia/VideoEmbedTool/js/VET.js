@@ -338,7 +338,9 @@ function VET_getFirstFree( gallery, box ) {
 function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 	if(typeof gallery == "undefined") {
-		if (showComboAjaxForPalceHolder("",false)) return false;
+		if (typeof showComboAjaxForPalceHolder == 'function') {
+			if (showComboAjaxForPalceHolder("",false)) return false;
+		}
 	}
 
 	VET_refid = null;
