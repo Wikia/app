@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#33691: CatHubs: Logo aspect ratio preserved. (Nef)
 * rt#34055: RTE: editing blog posts broken (macbre)
 * rt#34043: RTE: table linebreak loss for bullets following formatted text (macbre)
 * rt#34051: NYC: fixed gifts on halo (TOR)
