@@ -699,6 +699,9 @@ class RTEReverseParser {
 				break;
 		}
 
+		// RT #34043
+		$out = self::fixForTableCell($node, $out);
+
 		return $out;
 	}
 
@@ -771,6 +774,9 @@ class RTEReverseParser {
 		}
 
 		$out = "{$open}{$textContent}{$close}";
+
+		// RT #34043
+		$out = self::fixForTableCell($node, $out);
 
 		return $out;
 	}
@@ -1080,8 +1086,22 @@ class RTEReverseParser {
 		// $node must be first child of table cell / header (td/th)
 		if ( self::isFirstChild($node) && (self::isChildOf($node, 'td') || self::isChildOf($node, 'th')) ) {
 			if ($node->nodeType == XML_ELEMENT_NODE) {
-				// for HTML elements add extra line break before
-				$out = "\n{$out}";
+				switch($node->nodeName) {
+					// link (RT #34043)
+					case 'a':
+					// simple formatting tags (RT #34043)
+					case 'b':
+					case 'i':
+					case 'u':
+					case 's':
+					case 'strike':
+						$out = "{$out}\n";
+						break;
+
+					default:
+						// for HTML elements add extra line break before
+						$out = "\n{$out}";
+				}
 			}
 			else {
 				// for text nodes check what is next sibling
