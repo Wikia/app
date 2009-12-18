@@ -22,7 +22,7 @@ class CreatePage extends SpecialEditPage {
 		global $wgUser, $wgOut, $wgRequest,$wgJsMimeType,$wgExtensionsPath, $wgStyleVersion;
 
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/CreatePage/js/focus.js?{$wgStyleVersion}\" ></script>\n");
-		
+
 		if( $wgUser->isBlocked() ) {
 			$wgOut->blockedPage();
 			return;
@@ -110,14 +110,14 @@ class CreatePage extends SpecialEditPage {
 	//print extra field for 'title'
 	public function renderFormHeader($wgOut) {
 		global $wgScriptPath,$wgRequest;
-		
+
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$oTmpl->set_vars(array(
 			"formErrors" => $this->mFormErrors,
 			"formData" => $this->mFormData,
 			/*field with value 1 add by login form befor reload */
-			"isReload" => ($wgRequest->getVal('wpIsReload',0) == 1) 
+			"isReload" => ($wgRequest->getVal('wpIsReload',0) == 1)
 		));
 
 		$wgOut->setPageTitle( wfMsg("createpage") );
@@ -127,7 +127,7 @@ class CreatePage extends SpecialEditPage {
 			$wgOut->addWikiText (wfMsgForContent ('newarticletext')) ;
 			$wgOut->addHTML ('</div>') ;
 		}
-		$wgOut->addHTML( $oTmpl->execute("createFormHeader") );
+		$wgOut->addHTML( $oTmpl->render("createFormHeader") );
 	}
 
 	protected function save() {
