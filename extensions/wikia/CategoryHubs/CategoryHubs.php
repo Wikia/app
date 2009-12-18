@@ -323,30 +323,8 @@ function categoryHubTitleBar(&$catView, &$r){
 	$r .= "<div id='cathub-title-bar'>\n";
 
 	$logoSrc = categoryHubGetLogo($catView->getCat()->getName());
-
-	// Request a particular image size. (RT #33691)
-	// TODO: There's gotta be a cleaner way to do this using Mediawiki's
-	//		extended image syntax. See:
-	//
-	//			http://en.wikipedia.org/wiki/Wikipedia:Extended_image_syntax#Size
-	//
-	//		The problem with that idea is that the extended image syntax uses
-	//		wikitext, whereas we're in PHP. So somehow we'll need to "parse"
-	//		the logo URI, turn that into appropriate wikitext, then request the
-	//		image as desired in order to keep the aspect ratio. I...think....
-	//
-	//		There are hints for this sort of thing in makeImage() within:
-	//
-	//			includes/parser/Parser.php
-	//
-	// For now, I'm just calling the images a little smaller in case preserving
-	// their aspect ratio makes them too tall or too wide in the case of an
-	// image that is particularly wide but not tall or tall but not wide.
-	$logoSrc = preg_replace( '/\/images\//', '/images/thumb/', $logoSrc, 1 );
-	$logoSrc = $logoSrc . "/66px-Wiki.png";
-
 	if($logoSrc != ""){
-		$r .= '<img src="'.$logoSrc.'" alt="" class="cathub-title-bar-wikilogo" />';
+		$r .= "<img src='$logoSrc' height='78' class='cathub-title-bar-wikilogo'/>";
 	}
 
 	// Button for being notified of any new questions tagged with this category.
