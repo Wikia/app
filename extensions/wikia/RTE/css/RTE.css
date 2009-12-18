@@ -401,6 +401,15 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 	white-space: normal;
 }
 
+#templatePreview a {
+	color: #002BB8;
+	cursor: pointer !important;
+}
+
+#templatePreview a:hover {
+	text-decoration: underline !important;
+}
+
 .templateEditorDialog .cke_dialog_choose_another_tpl .cke_dialog_ui_button {
 	width: 200px !important;
 }
