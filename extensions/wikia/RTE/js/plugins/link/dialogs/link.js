@@ -119,12 +119,15 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 						validate: function() {
 							var activeTab = this.getDialog().getActiveTab();
+							if (activeTab == 'external') {
+								return true;
+							}
 
-							// validate page name
-							var re = new RegExp('^[' + RTE.constants.validTitleChars + ']+$');
+							// validate page name and anchors (RT #34047)
+							var re = new RegExp('^(#(.+))|[' + RTE.constants.validTitleChars + ']+$');
 							var validPageNameFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badPageTitle);
 
-							return (activeTab == 'external') || validPageNameFunc.apply(this);
+							return validPageNameFunc.apply(this);
 						}
 					},
 					{
@@ -146,12 +149,15 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 						validate: function() {
 							var activeTab = this.getDialog().getActiveTab();
+							if (activeTab == 'internal') {
+								return true;
+							}
 
 							// validate URL
 							var re = new RegExp('^(' + RTE.constants.urlProtocols + ')');
 							var validUrlFunc = CKEDITOR.dialog.validate.regex(re, editor.lang.link.error.badUrl);
 
-							return (activeTab == 'internal') || validUrlFunc.apply(this);
+							return validUrlFunc.apply(this);
 						}
 					},
 					{
