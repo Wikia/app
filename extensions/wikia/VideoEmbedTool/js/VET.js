@@ -336,11 +336,11 @@ function VET_getFirstFree( gallery, box ) {
 
 // some parameters are
 function VET_show( e, gallery, box, align, thumb, size, caption ) {
-	
+
 	if(typeof gallery == "undefined") {
 		if (showComboAjaxForPalceHolder("",false)) return false;
 	}
-	
+
 	VET_refid = null;
 	VET_wysiwygStart = 1;
 	VET_gallery = -1;
@@ -892,7 +892,13 @@ function VET_insertFinalVideo(e, type) {
 
 							// macbre: CK support
 							if (typeof window.VET_RTEVideo != 'undefined') {
-								RTE.mediaEditor.addVideo(wikitag, options);
+								if (window.VET_RTEVideo && window.VET_RTEVideo.hasClass('media-placeholder')) {
+									// replace "Add Video" placeholder
+									RTE.mediaEditor.update(window.VET_RTEVideo, wikitag, options);
+								}
+								else {
+									RTE.mediaEditor.addVideo(wikitag, options);
+								}
 							}
 							else if(VET_refid != -1) {
 								if( VET_gallery != -1 ) { // gallery
