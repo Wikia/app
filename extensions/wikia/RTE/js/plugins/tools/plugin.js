@@ -29,6 +29,14 @@ window.RTE.tools = {
 
 	// checks whether given page name exists and sets appriopriate CSS classes / href of element
 	checkInternalLink: function(element, pageName) {
+		// check for anchor
+		var anchor = '';
+		if (/^#(.+)/.test(pageName)) {
+			// use current page name and store anchor
+			anchor = pageName;
+			pageName = window.wgPageName;
+		}
+
 		RTE.ajax('checkInternalLink', {title: pageName}, function(data) {
 			if (!data.exists) {
 				element.addClass('new');
@@ -37,7 +45,7 @@ window.RTE.tools = {
 				element.removeClass('new');
 			}
 
-			element.setAttribute('href', data.href);
+			element.setAttribute('href', data.href + anchor);
 			element.setAttribute('title', data.title);
 		});
 	},
