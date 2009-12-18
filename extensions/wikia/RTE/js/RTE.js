@@ -236,10 +236,15 @@ window.RTE = {
 	// reposition #RTEStuff div
 	repositionRTEStuff: function() {
 		var editorPosition = $('#editform').offset();
+		var toolbarPosition = $('#cke_wpTextbox1').position(); // in Special:CreatePage CKeditor is not the first child of editform
+
+		if (!toolbarPosition) {
+			toolbarPosition = {top: 0};
+		}
 
 		$('#RTEStuff').css({
 			'left': parseInt(editorPosition.left) + 'px',
-			'top': parseInt(editorPosition.top + $('#cke_top_wpTextbox1').height()) + 'px'
+			'top': parseInt(editorPosition.top + toolbarPosition.top + $('#cke_top_wpTextbox1').height()) + 'px'
 		});
 	},
 
