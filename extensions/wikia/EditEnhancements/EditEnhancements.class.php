@@ -39,14 +39,14 @@ class EditEnhancements {
 
 	public function editPageJS() {
 
-		echo $this->tmpl->execute('EditEnhancementsJS');
+		echo $this->tmpl->render('EditEnhancementsJS');
 
 		return true;
 	}
 
 	public function previewJS() {
 
-		echo $this->tmpl->execute('EditEnhancementsPreviewJS');
+		echo $this->tmpl->render('EditEnhancementsPreviewJS');
 
 		return true;
 	}
@@ -63,7 +63,7 @@ class EditEnhancements {
 			'arrowTitle' => wfMsg('edit-enhancements-scroll-down-arrow')
 		));
 
-		$wgOut->addHTML($this->tmpl->execute('EditEnhancementsToolbar'));
+		$wgOut->addHTML($this->tmpl->render('EditEnhancementsToolbar'));
 
 		return true;
 	}
