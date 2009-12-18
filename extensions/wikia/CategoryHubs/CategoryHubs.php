@@ -285,6 +285,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	#answers_article{ padding-top:0px; }
 	#cathub-title-bar{
 		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/cathub_title_bg.png);
+		color: black;
 		/* Stretch across entire div#article. */
 		margin-left: -30px;
 		padding-left: 30px;
