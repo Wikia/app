@@ -961,9 +961,6 @@ class RTEReverseParser {
 		// get node attributes
 		$attributes = self::getAttributesStr($node);
 
-		// support syntax using || and !!
-		$shortRowMarkup = $node->hasAttribute('_rte_short_row_markup');
-
 		switch($node->nodeName) {
 			case 'table':
 				// remove row line breaks
@@ -1028,10 +1025,23 @@ class RTEReverseParser {
 
 			case 'th':
 			case 'td':
+				$out = '';
 				$char = ($node->nodeName == 'td') ? '|' : '!';
 
 				// support cells separated using double pipe
-				$out = $shortRowMarkup ? "{$char}{$char}" : "\n{$char}";
+				$shortRowMarkup = $node->hasAttribute('_rte_short_row_markup');
+				$spacesAfterLastCell = intval( $node->getAttribute('_rte_spaces_after_last_cell') );
+
+				if($shortRowMarkup) {
+					// add trailing spaces from previous cell (RT #33879)
+					if ($spacesAfterLastCell) {
+						$out .= str_repeat(' ', $spacesAfterLastCell);
+					}
+					$out .= "{$char}{$char}";
+				}
+				else {
+					 $out .= "\n{$char}";
+				}
 
 				// add pipe after attributes
 				if ($attributes != '') {
