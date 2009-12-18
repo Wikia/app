@@ -329,7 +329,7 @@ class SiteWideMessages extends SpecialPage {
 				. $DB->AddQuotes($mGroupName) . ', '
 				. $DB->AddQuotes($mWikiName) . ', '
 				. $DB->AddQuotes($mHubId) . ' , '
-				. $DB->AddQuotes( implode( ',', $mLang ) )
+				. $DB->AddQuotes($mLang)
 				. ');'
 				, __METHOD__
 			);
