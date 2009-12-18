@@ -23,7 +23,7 @@
  */
 class SMWUpdateJob extends Job {
 
-	function __construct(Title $title) {
+	function __construct($title) {
 		parent::__construct( 'SMWUpdateJob', $title);
 	}
 
