@@ -40,8 +40,19 @@ abstract class SpecialEditPage extends SpecialPage {
 
 	protected function createEditPage($sPostBody) {
 		$oArticle = new Article( Title::makeTitle( NS_MAIN, 'New or Updated Page' ) );
+
 		$this->mEditPage = new EditPage($oArticle);
 		$this->mEditPage->textbox1 = $sPostBody;
+
+		// fix for RT #33844 - run hook fired by "classical" EditPage
+		// Allow extensions to modify edit form
+		global $wgEnableRTEExt, $wgRequest;
+		if (!empty($wgEnableRTEExt)) {
+			wfRunHooks('AlternateEdit', array(&$this->mEditPage));
+			$this->mEditPage->textbox1 = $wgRequest->getVal('wpTextbox1');
+
+			RTE::log(__METHOD__ . '::wikitext', $this->mEditPage->textbox1);
+		}
 	}
 
 	protected function renderForm() {
