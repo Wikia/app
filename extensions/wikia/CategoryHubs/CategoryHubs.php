@@ -249,6 +249,13 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 		} else {
 			$flexibleCategoryViewer->flip = false;
 		}
+
+		$categories = array();
+		$categoryEditsObj->getSubcategories($categories);
+		foreach ($categories as $id => $title) {
+			$cat = Category::newFromName($title);
+			$flexibleCategoryViewer->addSubcategoryObject($cat, $title, 0);
+		}
 	}
 
 	return $wgCatHub_useDefaultView;
