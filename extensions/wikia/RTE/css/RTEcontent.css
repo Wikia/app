@@ -51,17 +51,23 @@ img.frame {
 	margin: 6px 0 10px 18px;
 }
 
-img.alignLeft,
-img.alignNone {
+img.alignLeft {
 	clear: left;
 	display: inline;
 	float: left;
 	margin: 6px 18px 10px 0;
 }
 
+img.alignNone {
+	display: block;
+	float: none;
+	margin: 6px 18px 10px 0;
+}
+
+
 /* border */
 img.border {
-	border: 1px solid #DDDDDD;
+	border: 1px solid #ddd;
 }
 /* caption indicator */
 img.withCaption {
