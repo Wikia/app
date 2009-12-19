@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#34094: NWB: fix permission check (uberfuzzy)
 * rt#23227: Monaco: getMessageAsArray now uses wiki lang (uberfuzzy)
 * rt#33691: CatHubs: Logo aspect ratio preserved. (Nef)
 * rt#34055: RTE: editing blog posts broken (macbre)

@@ -9,8 +9,8 @@ class NewWikiBuilder extends SpecialPage {
 		global $wgRequest, $wgOut, $wgUser, $wgAdminSkin, $wgContLang, $NWBmessages;
 
 		if ( !$this->userCanExecute($wgUser) ) {
-//			$this->displayRestrictionError();
-//			return;
+			$this->displayRestrictionError();
+			return;
 		}
 
 		// Default the skin
