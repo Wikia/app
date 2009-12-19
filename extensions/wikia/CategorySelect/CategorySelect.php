@@ -59,8 +59,8 @@ function CategorySelectInit() {
 		return true;
 	}
 
-	global $wgHooks, $wgAutoloadClasses;
-	$wgAutoloadClasses['CategorySelect'] = 'extensions/wikia/CategorySelect/CategorySelect_body.php';
+	global $IP, $wgHooks, $wgAutoloadClasses;
+	$wgAutoloadClasses['CategorySelect'] = "$IP/extensions/wikia/CategorySelect/CategorySelect_body.php";
 	$wgHooks['MediaWikiPerformAction'][] = 'CategorySelectInitializeHooks';
 	$wgHooks['UserToggles'][] = 'CategorySelectToggleUserPreference';
 	$wgHooks['getEditingPreferencesTab'][] = 'CategorySelectToggleUserPreference';
