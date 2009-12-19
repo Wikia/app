@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#34160: CreatePage: Fixed fatal caused by malformed url. (Nef)
 * rt#26916: Answers: Shorten your list now111 (Nef)
 * rt#26975: Answers: Allow users to exclude themselves from attribution list. (Nef)
 * rt#34094: NWB: fix permission check (uberfuzzy)
