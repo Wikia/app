@@ -1,4 +1,6 @@
 == Changes since 200912.1 ==
+* rt#26916: Answers: Shorten your list now111 (Nef)
+* rt#26975: Answers: Allow users to exclude themselves from attribution list. (Nef)
 * rt#34094: NWB: fix permission check (uberfuzzy)
 * rt#23227: Monaco: getMessageAsArray now uses wiki lang (uberfuzzy)
 * rt#33691: CatHubs: Logo aspect ratio preserved. (Nef)

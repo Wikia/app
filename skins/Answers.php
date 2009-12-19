@@ -1019,10 +1019,20 @@ echo AdEngine::getInstance()->getDelayedLoadingCode();
 		// use <ul> as a list wrapper
 		$ret .= Xml::openElement('ul', array('id' => 'contributors', 'class' => 'reset clearfix'));
 
+		$i = 0; $max = 7;
 		foreach($contributors as $contributor) {
-			$ret .= Xml::openElement('li');
-			$ret .= Answer::getUserBadge($contributor);
-			$ret .= Xml::closeElement('li');
+			if ($i++ < $max) {
+				$ret .= Xml::openElement('li');
+				$ret .= Answer::getUserBadge($contributor);
+				$ret .= Xml::closeElement('li');
+			} else {
+				$ret .= Xml::openElement('li');
+				# change it to [more] when rt#26916 mockup comes
+				$ret .= Answer::getUserBadge($contributor);
+				$ret .= Xml::closeElement('li');
+
+				break;
+			}
 		}
 
 		$ret .= Xml::closeElement('ul'); // END #contributors
