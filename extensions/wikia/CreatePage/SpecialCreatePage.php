@@ -39,6 +39,8 @@ class CreatePage extends SpecialEditPage {
 			return;
 		}
 
+		$wgRequest->setVal("diff", null); // rt#34160
+
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreatePage' );
 
 		parent::execute();
