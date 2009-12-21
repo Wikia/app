@@ -443,6 +443,7 @@ class CategoryEdits {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
+		$firstCount = $secCount = 0;
 		$return = 0;
 		if ( is_int($cat1) ) { # id(?)
 			$CatFirst = Category::newFromID($cat1);
@@ -467,7 +468,7 @@ class CategoryEdits {
 			return $return;
 		}
 		
-		$memkey = wfMemcKey( 'percentincats', $this->mCatId, $CatFirst->getId(), $CatSec->getId() );
+		$memkey = wfMemcKey( 'percentcats', $this->mCatId, $CatFirst->getId(), $CatSec->getId() );
 		$return = $wgMemc->get( $memkey );
 			
 		if ( empty($return) ) {
@@ -519,10 +520,18 @@ class CategoryEdits {
 			
 			$sum = $secCount + $firstCount;
 			if ( $sum > 0 ) {
-				$return = round( ($firstCount * 100)/$sum, 0 );
+				$return = array(
+					round( ($firstCount * 100)/$sum ),
+					$firstCount,
+					$secCount
+				);
 				$wgMemc->set( $memkey , $return, 60*5 );
 			} else {
-				$return = 0;
+				$return = array(
+					0,
+					$firstCount,
+					$secCount
+				);
 			}
 		}
 
