@@ -147,7 +147,8 @@ class InputBox {
 								'type' => 'checkbox',
 								'name' => 'ns' . $i,
 								'value' => 1,
-								'id' => 'mw-inputbox-ns' . $i
+								'id' => 'mw-inputbox-ns' . $i,
+								'class' => 'checkbox' //#rt28823, fix for fixed width of checkbox
 							) + $checked
 						);
 						// Label
