@@ -602,7 +602,8 @@ class EmailNotification {
 		$keys    = array();
 
 		if( $this->oldid ) {
-			$difflink = $this->title->getFullUrl( 'diff=0&oldid=' . $this->oldid );
+			/* WIKIA change, watchlist link tracking, rt#33913 */
+			$difflink = $this->title->getFullUrl( 's=wldiff&diff=0&oldid=' . $this->oldid );
 			$keys['$NEWPAGE'] = wfMsgForContent( 'enotif_lastvisited', $difflink );
 			$keys['$OLDID']   = $this->oldid;
 			$keys['$CHANGEDORCREATED'] = wfMsgForContent( 'changed' );
@@ -624,7 +625,7 @@ class EmailNotification {
 		$body = strtr( $body, $keys );
 		$pagetitle = $this->title->getPrefixedText();
 		$keys['$PAGETITLE']          = $pagetitle;
-		$keys['$PAGETITLE_URL']      = wfUrlencodeExt( $this->title->getFullUrl() );
+		$keys['$PAGETITLE_URL']      = wfUrlencodeExt( $this->title->getFullUrl('s=wl') ); // watchlist tracking, rt#33913
 
 		$keys['$PAGEMINOREDIT']      = $medit;
 		$keys['$PAGESUMMARY']        = $summary;
