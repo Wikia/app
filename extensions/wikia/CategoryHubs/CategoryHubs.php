@@ -351,13 +351,18 @@ function categoryHubTitleBar(&$catView, &$r){
 
 	$answeredCategory = CategoryHub::getAnsweredCategory();	
 	$unAnsweredCategory = CategoryHub::getUnAnsweredCategory();
-	$percentAnswered = $categoryEdits->getPercentInCats($answeredCategory, $unAnsweredCategory);
+	list($percentAnswered, $countAnswered, $countUnAnswered) = $categoryEdits->getPercentInCats($answeredCategory, $unAnsweredCategory);
 	if($percentAnswered <= 0){
 		$percentAnswered = 0;
 		$r .= "<div class='cathub-progbar-unanswered' style='width:$PROG_BAR_WIDTH'>".wfMsgExt('cathub-progbar-none-done', array())."</div>\n";
 	} else if($percentAnswered >= 100){
-		$percentAnswered = 100;
-		$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-all-done', array())."</div>\n";
+		if ( empty($countUnAnswered) ) {
+			$percentAnswered = 100;
+			$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-all-done', array())."</div>\n";
+		} else {
+			// some unanswered questions 
+			$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-allmost-done', array(), $countUnAnswered)."</div>\n";
+		}
 	} else {
 		// TODO: EXTRACT THIS TO A FUNCTION WHICH WILL MAKE A BANDWIDTH-EFFICIENT PROGRESS BAR FOR ANY USE (IF POSSIBLE TO DO CLEANLY... MIGHT HAVE TO REQUIRE IT TO BE ANSWERS-SPECIFIC).
 		#$aPercent = substr($percentAnswered, 0, -1); // removes the "%" sign
