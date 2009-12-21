@@ -91,6 +91,15 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 			return null;
 		}
 	}
+	
+	public static function addPagerParams( $ops ) {
+		global $wgRequest;
+		$titlesOnly = $wgRequest->getCheck('titlesOnly');
+		if ($titlesOnly) {
+			$ops['titlesOnly'] = 1;
+		}
+		return true; 
+	}
 
 	public static function renderExtraRefinements( $refinements ) {
 		global $wgRequest;

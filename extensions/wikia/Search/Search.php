@@ -38,6 +38,7 @@ $wgExtensionMessagesFiles['WikiaSearch'] = $dir . 'Search.i18n.php';
 // hooks
 $wgHooks['SearchShowHit'][] = 'SolrResult::showHit';
 $wgHooks['SpecialSearchBoxExtraRefinements'][] = 'SolrSearch::renderExtraRefinements';
+$wgHooks['SpecialSearchPagerParams'][] = 'SolrSearch::addPagerParams';
 
 // classes
 $wgAutoloadClasses['SolrSearch'] = $dir . 'Search_body.php';
