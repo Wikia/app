@@ -277,12 +277,22 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					if( AjaxLogin.placeholderID !== null){
 						params = "placeholder=" + AjaxLogin.placeholderID;
 					}
-					
-					if (window.location.href.indexOf("?") > 0) {
-						window.location.href = window.location.href.replace("#","") + ("&" + params);
-						return;
+
+					var reload_loc = '';
+				       	if( window.location.href.indexOf("#") > 0 ) {
+						reload_loc = window.location.href.substring( 0, window.location.href.indexOf("#") ); 
+					} else {
+						reload_loc = window.location.href;
 					}
-					window.location.href = window.location.href.replace("#","") + ("?" + params);
+					if( "" != params ) {					
+						if (window.location.href.indexOf("?") > 0) {
+							window.location.href = reload_loc + ("&" + params);
+						} else {
+							window.location.href = reload_loc + ("?" + params);
+						}
+					} else {
+						window.location.href = reload_loc;
+					}
 				},
 				show: function() {
 					AjaxLogin.WET_str = 'signupActions/combopopup';
