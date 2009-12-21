@@ -1176,6 +1176,7 @@ class SpecialSearchOld {
 			$opt['ns' . $n] = 1;
 		}
 		$opt['redirs'] = $this->searchRedirects ? 1 : 0;
+		wfRunHooks( 'SpecialSearchPagerParams', array( &$opt ) );
 		return $opt;
 	}
 
