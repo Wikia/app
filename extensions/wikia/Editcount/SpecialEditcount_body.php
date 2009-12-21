@@ -38,7 +38,7 @@ class Editcount extends SpecialPage {
 		$uid = User::idFromName( $username );
 
 		if ( $this->including() ) {
-			if ( empty($namespace) ) {
+			if ( !isset($namespace) ) {
 				if ($uid != 0) {
 					// ADi: can't do that, we need count per wiki
 					// $out = $wgContLang->formatNum( User::edits( $uid ) );
@@ -81,8 +81,9 @@ class Editcount extends SpecialPage {
 		@list($user, $namespace) = explode( '/', $par, 2 );
 
 		// str*cmp sucks
-		if ( isset( $namespace ) )
+		if ( isset( $namespace ) && !is_numeric($namespace) ) {
 			$namespace = $wgContLang->getNsIndex( $namespace );
+		}
 
 		return array( $user, $namespace );
 	}
