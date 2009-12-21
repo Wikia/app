@@ -1,6 +1,7 @@
 <?php
 interface SearchErrorReporting {
 	public function getError();
+	public function getErrorTracker();
 }
 
 class SolrSearch extends SearchEngine implements SearchErrorReporting {
@@ -19,6 +20,14 @@ class SolrSearch extends SearchEngine implements SearchErrorReporting {
 			// don't bother with error codes, just display standard error message for now
 			return wfMsg( 'wikiasearch-system-error-msg' );
 		}
+	}
+	
+	public function getErrorTracker()
+	{
+		$code = '<script type="text/javascript">
+					WET.byStr("search/searchResults/error");
+				</script> ';
+		return $code;
 	}
 
 	/**
