@@ -271,8 +271,10 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 function categoryHubCategoryTop(&$catView, &$r){
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
-		categoryHubTitleBar($catView, $r);
-		categoryHubTopContributors($catView, $r);
+		$countQuestions = categoryHubTitleBar($catView, $r);
+		if ( $countQuestions > 0 ) {
+			categoryHubTopContributors($catView, $r);
+		}
 	}
 	return $wgCatHub_useDefaultView;
 } // end categoryHubCategoryTop()
@@ -352,6 +354,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	$answeredCategory = CategoryHub::getAnsweredCategory();	
 	$unAnsweredCategory = CategoryHub::getUnAnsweredCategory();
 	list($percentAnswered, $countAnswered, $countUnAnswered) = $categoryEdits->getPercentInCats($answeredCategory, $unAnsweredCategory);
+	$allQuestions = $countAnswered + $countUnAnswered;
 	if($percentAnswered <= 0){
 		$percentAnswered = 0;
 		$r .= "<div class='cathub-progbar-unanswered' style='width:$PROG_BAR_WIDTH'>".wfMsgExt('cathub-progbar-none-done', array())."</div>\n";
@@ -400,6 +403,8 @@ function categoryHubTitleBar(&$catView, &$r){
 	$r .= "</div>"; // close the wrapper on the div containing the progress bar and the labels.
 
 	$r .= "</div>\n";
+	
+	return $allQuestions;
 } // end categoryHubTitleBar()
 
 function categoryHubGetLogo($cat_name) {
