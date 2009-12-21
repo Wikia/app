@@ -276,6 +276,9 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					params = "";
 					if( AjaxLogin.placeholderID !== null){
 						params = "placeholder=" + AjaxLogin.placeholderID;
+					} else {
+        	                                 window.location.reload(true);
+						return;
 					}
 
 					var reload_loc = '';
