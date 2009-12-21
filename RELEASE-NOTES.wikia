@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#28823: InputBox: checkbox css issue, patch 3rdparty version too (uberfuzzy)
 * rt#33913: dummy params to watchlist and digest emails for tracking (uberfuzzy)
 * rt#34160: CreatePage: Fixed fatal caused by malformed url. (Nef)
 * rt#26916: Answers: Shorten your list now111 (Nef)
