@@ -96,9 +96,10 @@ class WikiaCentralAuthUser extends AuthPluginUser {
 	public static function newFromRow( $row, $fromMaster = false ) {
 		if ( !is_object( $row ) ) {
 			$caUser = null;
+		} else {
+			$caUser = new self( $row->user_name );
+			$caUser->loadFromRow( $row, $fromMaster );
 		}
-		$caUser = new self( $row->user_name );
-		$caUser->loadFromRow( $row, $fromMaster );
 		return $caUser;
 	}
 
