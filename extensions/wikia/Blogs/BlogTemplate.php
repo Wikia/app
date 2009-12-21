@@ -586,7 +586,11 @@ class BlogTemplateClass {
 	
 	private static function __parseCategories($text, $parser) { 
 		if ( is_object($parser) ) {
-			$text = $parser->recursiveTagParse($text);
+			$pOptions = $parser->getOptions();
+			if ( is_null($pOptions) ) {
+				$parser->startExternalParse( $wgTitle, new ParserOptions(), OT_PREPROCESS );
+			}
+			$text = $parser->replaceVariables($text);
 		}
 		return $text; 
 	}
@@ -594,7 +598,6 @@ class BlogTemplateClass {
 	private static function __getCategories ($aParamValues, &$parser) {
     	wfProfileIn( __METHOD__ );
 		self::$aCategoryNames = $aParamValues;
-		error_log ( __METHOD__ . ": " . print_r($aParamValues, true) );
 		$aPages = array();
     	if ( !empty($aParamValues) ) {
     		#RT 26917
