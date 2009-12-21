@@ -20,6 +20,7 @@ var AjaxLogin = {
 
 		// add submit event handler for login form
 		this.form.bind('submit', this.formSubmitHandler);
+		$('#wpLoginattempt').click( this.clickLogIn );
 
 		$().log('AjaxLogin: init()');
 
@@ -73,6 +74,15 @@ var AjaxLogin = {
 	},
 	doReload: function() {
 		window.location.reload(true);
+	},
+	clickLogIn: function( ev ) {
+		// Prevent the default action for event (click)
+		if(ev) {
+			ev.preventDefault();
+		}
+
+		AjaxLogin.action = 'login';
+		AjaxLogin.form.submit();
 	},
 	formSubmitHandler: function(ev) {
 		// Prevent the default action for event (submit of form)
