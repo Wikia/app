@@ -55,11 +55,13 @@ if( !$sourceTitle ) {
 	Wikia::log( __CLASS__, false, "Invalid page title: $source" );
 	exit(1);
 }
-$mainPageArticle = new Article( $sourceTitle, 0 );
-if( !$mainPageArticle->exists() ) {
-	Wikia::log( __CLASS__, false, "Article $source not exists." );
-	exit(1);
-}
+
+# article is not used anywhere
+#$mainPageArticle = new Article( $sourceTitle, 0 );
+#if( !$mainPageArticle->exists() ) {
+#	Wikia::log( __CLASS__, false, "Article $source not exists." );
+#	exit(1);
+#}
 
 if( !is_null( $sourceTitle ) ) {
 	/**
