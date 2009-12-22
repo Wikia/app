@@ -167,8 +167,13 @@ include_once( "$IP/extensions/wikia/MergeFiles/MergeFiles.php" );
 include_once( "$IP/extensions/wikia/TagCloud/TagCloudClass.php" );
 include_once( "$IP/extensions/wikia/MostPopularCategories/SpecialMostPopularCategories.php" );
 include_once( "$IP/extensions/wikia/MostPopularArticles/SpecialMostPopularArticles.php" );
-include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
 include_once( "$IP/extensions/wikia/WidgetSpecialPage/WidgetsSpecialPage.php" );
+
+/**
+ * onedot is switched off for while
+ *
+ * include_once( "$IP/extensions/wikia/MostVisitedPages/SpecialMostVisitedPages.php" );
+ */
 
 /**
  * @name $wgSkipSkins
