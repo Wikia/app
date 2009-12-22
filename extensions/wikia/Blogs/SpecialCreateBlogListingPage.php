@@ -26,6 +26,16 @@ class CreateBlogListingPage extends SpecialBlogPage {
 			return;
 		}
 
+		if( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
+
+		if( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'CreateBlogListingPage' );
 
 		$wgOut->setPageTitle( wfMsg('create-blog-listing-title') );
