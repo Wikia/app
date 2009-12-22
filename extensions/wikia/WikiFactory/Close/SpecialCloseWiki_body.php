@@ -199,6 +199,9 @@ class CloseWikiPage extends SpecialPage {
 		$valid = true;
 		$newWiki = 0;
 		if ( isset($this->mRedirect) && !empty($this->mRedirect) ) {
+			if ('http://' == substr($this->mRedirect, 0, 7)) {
+				$this->mRedirect = str_replace('http://', '', $this->mRedirect);
+			}
 			Wikia::log( __METHOD__, "check domain {$this->mRedirect}" );
 			$city_id = WikiFactory::DomainToID( trim( $this->mRedirect ) );
 			if( !$city_id ) {
