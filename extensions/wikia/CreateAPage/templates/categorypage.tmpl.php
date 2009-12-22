@@ -37,17 +37,18 @@ document.getElementById('createpage_cloud_div').style.display = 'block';
 <div id="createpage_cloud_section_njs">
 <?
 $xnum = 0;
-
-foreach ( $cloud->tags as $xname => $xtag ) {
-	$checked = (array_key_exists($xname, $array_category) && ($array_category[$xname])) ? "checked" : "";
-	$array_category[$xname] = 0;
-	#--$xtag['size']
+if ( !empty($cloud->tags) ) {
+	foreach ( $cloud->tags as $xname => $xtag ) {
+		$checked = (array_key_exists($xname, $array_category) && ($array_category[$xname])) ? "checked" : "";
+		$array_category[$xname] = 0;
+		#--$xtag['size']
 ?>
 	<span id="tag_njs_<?=$xnum?>" style="font-size:9pt">
 		<input <?=$checked?> type="checkbox" name="category_<?=$xnum?>" id="category_<?=$xnum?>" value="<?=$xname?>">&nbsp;<?=$xname?>
 	</span>
 <?
-$xnum++;
+	$xnum++;
+	}
 }
 $display_category = array();
 foreach ($array_category as $xname => $visible) {
