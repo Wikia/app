@@ -37,6 +37,7 @@ $wgAPIListModules['withoutimages'] = 'ApiQueryWithoutimages';
 include( $dir . 'WikiStickies.hooks.php' );
 $wgHooks['MyHome::sidebarBeforeContent'][] = 'efAddWikiSticky';
 $wgHooks['RecentChange_save'][] = 'efRemoveFromSpecialWantedpages';
+$wgHooks['MakeGlobalVariablesScript'][] = 'WikiStickiesJSVars';
 
 // Special:Withoutimages
 include( $dir . 'SpecialWithoutimages.php' );

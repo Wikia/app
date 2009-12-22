@@ -17,22 +17,24 @@ WIKIA.WikiStickies = {};
  */
 WIKIA.WikiStickies.toggleMore = function (e) {
     if (e) { e.preventDefault(); }
-
-    // TODO: Internationalize "see more" and "hide" text.
-    // What's the JS equivalent of wfMsg()?
-    if (this.innerHTML === 'see more') {
+    
+    status = $(e.target.parentNode).find(".submerged").css("display") !== "none"; 
+ 
+    if (!status) {
         // show more
         $(this.previousSibling).show();
-	// click tracking
-	WIKIA.WikiStickies.track('/item/seemore/' + WIKIA.WikiStickies.getFeedContainer( e.target ) );	
-        this.innerHTML = 'hide';
+        // click tracking
+        WIKIA.WikiStickies.track('/item/seemore/' + WIKIA.WikiStickies.getFeedContainer( e.target ) );	
+        this.innerHTML = wikistickies_msg_hide;
     } else {
         // show less
         $(this.previousSibling).hide();
-	// click tracking
-	WIKIA.WikiStickies.track('/item/hidemore/' + WIKIA.WikiStickies.getFeedContainer( e.target ) );	
-        this.innerHTML = 'see more';
+        // click tracking
+        WIKIA.WikiStickies.track('/item/hidemore/' + WIKIA.WikiStickies.getFeedContainer( e.target ) );	
+        this.innerHTML = wikistickies_msg_see_more;
     }
+    
+    return false;
 };
 
 /**
