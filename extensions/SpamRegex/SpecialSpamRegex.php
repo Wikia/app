@@ -404,7 +404,12 @@ class spamRegexForm {
 		}
 
 		/* insert to memc */
-		spamRegexList::updateMemcKeys('add', $this->mBlockedPhrase, ( !empty($this->mBlockedTextbox) ) ? SPAMREGEX_TEXTBOX : SPAMREGEX_SUMMARY );
+		if ( !empty($this->mBlockedTextbox) ) { 
+			spamRegexList::updateMemcKeys( 'add', $this->mBlockedPhrase, SPAMREGEX_TEXTBOX );
+		}
+		if ( !empty($this->mBlockedSummary) ) {
+			spamRegexList::updateMemcKeys( 'add', $this->mBlockedPhrase, SPAMREGEX_SUMMARY );
+		}
 
 		/* make insert to db */
 		$dbw = wfSpamRegexGetDB( DB_MASTER );
