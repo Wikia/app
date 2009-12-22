@@ -80,8 +80,11 @@ class AutoCreateWikiLocalJob extends Job {
 		}
 		$wgUser = User::newFromName( "CreateWiki script" );
 
-		##
-		## $this->moveMainPage();
+		/**
+		 * main page should be move in first stage of create wiki, but sometimes
+		 * is too early for that. This is fallback function
+		 */
+		$this->moveMainPage();
 
 		$this->changeStarterContributions();
 		$this->setWelcomeTalkPage();
