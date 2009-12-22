@@ -99,7 +99,7 @@ endif;
 			if ( $isBlocked ) :
 ?>			
 <div class="blog-comm-input reset clearfix">
-	<div id="blog-comm-bottom-info"><p><?=wfMsg("blog-comment-cannot-add")?></p><br/><p><?=$output->parse($reason)?></p></div>
+	<div id="blog-comm-bottom-info"><p><?=wfMsg("blog-comment-cannot-add")?></p><br/><p><?=$reason?></p></div>
 </div>	
 <?php	
 			else :
