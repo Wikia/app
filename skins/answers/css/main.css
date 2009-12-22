@@ -503,6 +503,13 @@ a.bigButton small {
 #huge_buttons {
 	margin-top: 1em;
 }
+#ask_button span {
+	background: url(http://images.wikia.com/common/skins/answers/images/huge_button.png);
+	display: block;
+	height: 37px;
+	padding: 0;
+	width: 10px;
+}
 body .header_menu_button {
 	cursor: pointer;
 	float: left;
