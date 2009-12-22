@@ -1042,13 +1042,6 @@ div.userInfoNoAvatar .userPoints {
 	border:0px;
 	margin:0px;
 }
-#cathub-title-bar{
-	width:100%;
-	padding-left:5px;
-	margin-bottom:5px;
-	background-image:url(/Wikia_DEV/public_svn/answers/CategoryHubs/cat_hub_title_bg.png);
-	height:86px !important;
-}
 #cathub-title-bar h1{
 	border: 0px;
 	margin-bottom: 7px;
@@ -1061,7 +1054,6 @@ div.userInfoNoAvatar .userPoints {
 	float:left;
 	height:25px;
 	margin:0px;
-	background-image:url(/Wikia_DEV/public_svn/answers/CategoryHubs/prog_bar_endcap.png);
 	padding-left:1px;padding-right:1px;
 }
 .cathub-progbar{
@@ -1079,7 +1071,6 @@ div.userInfoNoAvatar .userPoints {
 	color:#fff;
 	background-color:#55ff55;
 	background-color:transparent;
-	background-image:url(/Wikia_DEV/public_svn/answers/CategoryHubs/prog_bar_answered.png);
 }
 .cathub-progbar-unanswered{
 	text-align:right;
@@ -1088,7 +1079,6 @@ div.userInfoNoAvatar .userPoints {
 	margin-left:-1px; /* to make room for the border */
 	background-color:#888;
 	background-color:transparent;
-	background-image:url(/Wikia_DEV/public_svn/answers/CategoryHubs/prog_bar_unanswered.png);
 }
 .cathub-progbar-label{
 	font-size:.75em;

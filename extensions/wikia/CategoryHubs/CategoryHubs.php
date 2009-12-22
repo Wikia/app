@@ -81,6 +81,7 @@ function categoryHubAddMagicWords(&$magicWords, $langCode){
 ////
 function categoryHubAdditionalScripts( &$out, &$sk ){
 	global $wgExtensionsPath,$wgStyleVersion;
+	$out->addStyle( "$wgExtensionsPath/wikia/CategoryHubs/CategoryHubs.css" );
 	$out->addScript('<link type="text/css" href="http://jqueryui.com/latest/themes/base/ui.all.css" rel="stylesheet" />');
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.core.js"></script>');
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.tabs.js"></script>');
@@ -288,43 +289,6 @@ function categoryHubCategoryTop(&$catView, &$r){
 // wiki (if applicable),  the title, progress bar or how many are answered, and the notification button.
 ////
 function categoryHubTitleBar(&$catView, &$r){
-	// Hide the normal title and add any other CategoryHub specific CSS.
-	// Most of the CSS for CategoryHubs is in Answers' main.css.  This just contains things that we either don't want on every page (the h1.firstHeading hiding) or need to compute in here (background images).
-	GLOBAL $wgScriptPath;
-	$r .= "<style type='text/css'>
-	h1.firstHeading { display:none; }
-	/*#page_bar{ display:none; }*/
-	#siteNotice { display: none; }
-	#answers_article{ padding-top:0px; }
-	#cathub-title-bar{
-		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/cathub_title_bg.png);
-		color: black;
-		/* Stretch across entire div#article. */
-		margin-left: -30px;
-		padding-left: 30px;
-		padding-right: 30px;
-	}
-	.cathub-progbar-wrapper{
-		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/prog_bar_endcap.png);
-	}
-	.cathub-progbar-answered{
-		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/prog_bar_answered.png);
-	}
-	.cathub-progbar-unanswered{
-		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/prog_bar_unanswered.png);
-	}
-	.ui-widget-header{
-		background-image:url($wgScriptPath/extensions/wikia/CategoryHubs/tab_navbar_bg.png);
-	}
-	.cathub-actual-answer { position: relative; }
-	.cathub-add-answer-wrapper { margin-right: 150px; }
-	.cathub-actual-answer .cathub-button {
-		position: absolute;
-		top: 1em;
-		right: 0;
-	}
-	</style>";
-
 	// Build up the title bar by its various pieces
 	$r .= "<div id='cathub-title-bar'>\n";
 
