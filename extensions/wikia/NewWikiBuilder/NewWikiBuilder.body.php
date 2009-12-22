@@ -19,15 +19,9 @@ class NewWikiBuilder extends SpecialPage {
 		}
  
 		// Set up the messages variable for other languages
-		if ( !empty($_GET['uselang'])){
-			$this->lang = $_GET['uselang'];
-		} else {
-			$this->lang = $wgContLang->getCode();
-		}
-		if (empty($NWBmessages[$this->lang])){
-			foreach($NWBmessages["en"] as $name => $value) {
-				$NWBmessages[$this->lang][$name] = wfMsg($name);
-			}
+		$this->lang = $wgContLang->getCode();
+		foreach($NWBmessages["en"] as $name => $value) {
+			$NWBmessages[$lang][$name] = wfMsgForContent($name);
 		}
 
 		$this->setHeaders();
