@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#34579: Blogs: add block check to Special:CreateBlogListingPage (uberfuzzy)
 * rt#28823: InputBox: checkbox css issue, patch 3rdparty version too (uberfuzzy)
 * rt#33913: dummy params to watchlist and digest emails for tracking (uberfuzzy)
 * rt#34160: CreatePage: Fixed fatal caused by malformed url. (Nef)
