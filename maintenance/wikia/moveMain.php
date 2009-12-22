@@ -52,14 +52,14 @@ if ( $wgUser->isAnon() ) {
  */
 $sourceTitle = Title::newFromText( $source );
 if( !$sourceTitle ) {
-	Wikia::log( __CLASS__, false, "Invalid page title: $source" );
+	Wikia::log( "moveMain", false, "Invalid page title: $source" );
 	exit(1);
 }
 
 # article is not used anywhere
 #$mainPageArticle = new Article( $sourceTitle, 0 );
 #if( !$mainPageArticle->exists() ) {
-#	Wikia::log( __CLASS__, false, "Article $source not exists." );
+#	Wikia::log( "moveMain", false, "Article $source not exists." );
 #	exit(1);
 #}
 
@@ -74,7 +74,7 @@ if( !is_null( $sourceTitle ) ) {
 			$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
 			if( $err !== true ) {
 				$log .= "- moving FAILED: ". print_r($err, true);
-				Wikia::log( __CLASS__, false, $log );
+				Wikia::log( "moveMain", false, $log );
 			}
 			else {
 				/**
@@ -85,7 +85,7 @@ if( !is_null( $sourceTitle ) ) {
 
 				$mwMainPageArticle->doEdit( $targetTitle->getText(), "SEO", EDIT_MINOR | EDIT_FORCE_BOT );
 				$log .= "- moved";
-				Wikia::log( __CLASS__, false, $log );
+				Wikia::log( "moveMain", false, $log );
 
 				/**
 				 * also move associated talk page if it exists
@@ -101,16 +101,16 @@ if( !is_null( $sourceTitle ) ) {
 					else {
 						$log .= " - Found talk page but moving FAILED: " . print_r($err, true);
 					}
-					Wikia::log( __CLASS__, false, $log );
+					Wikia::log( "moveMain", false, $log );
 				}
 			}
 		}
 		else {
-			Wikia::log( __CLASS__, false, "source {$source} and target {$target} are the same" );
+			Wikia::log( "moveMain", false, "source {$source} and target {$target} are the same" );
 		}
 	}
 }
 else {
-	Wikia::log( __CLASS__, false, "sourceTitle is null" );
+	Wikia::log( "moveMain", false, "sourceTitle is null" );
 	exit(1);
 }
