@@ -312,7 +312,7 @@ class WikiStickies {
 
 	static function renderWikiStickyContent( $title, $prefix, $attrs = NULL, $editlinks = false ) {
 		$html = '';
-		$linkQuery = array();
+		$linkQuery = array();		
 
 		if( is_object( $title ) && $title instanceof Title ) {
 			global $wgUser;
@@ -322,8 +322,11 @@ class WikiStickies {
 			if ( $editlinks ) {
 				$linkQuery = $sk->editUrlOptions();
 			} 
-
-			$wrapped = wordwrap( htmlspecialchars( $title->getText(), ENT_QUOTES ), 18, "<wbr/>", true );
+			if( false === strrpos( $title->getText(), " " ) ) {
+				$wrapped = wordwrap( htmlspecialchars( $title->getText(), ENT_QUOTES ), 18, "<wbr/>", true );
+			} else {
+				$wrapped = htmlspecialchars( $title->getText(), ENT_QUOTES );
+			}             
 			$html .= wfMsgExt(
 					$prefix,
 					array( 'parseinline', 'replaceafter' ),
