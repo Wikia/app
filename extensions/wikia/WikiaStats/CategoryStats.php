@@ -564,34 +564,59 @@ class CategoryEdits {
 		
 		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
 			$dbr = wfGetDB( DB_SLAVE );
+			
+			$subQuery = $dbr->selectSQLText ( 
+				array( 'categorylinks AS c1', 'categorylinks AS c2' ),
+				array( 'c2.cl_from' ),
+				array(
+					'c2.cl_to' => $this->mCatName
+				),
+				__METHOD__,
+				"",
+				array(
+					'categorylinks AS c2' => array(
+						'JOIN', 
+						implode ( ' AND ', 
+							array( 
+								'c1.cl_from = c2.cl_from',
+								'c1.cl_to = ' . $dbr->addQuotes($CatIn->getName())
+							)
+						)
+					)
+				)
+			);
+			
 			$nsPaces = (!empty($namespaces)) ? $dbr->makeList( $namespaces ) : "";
 			$memkey = wfMemcKey( 'pages', $this->mCatId, $CatIn->getID(), md5($nsPaces), $limit, $offset );
 			$pages = $wgMemc->get( $memkey );
 			
-			$conditional = array('page_id = c2.cl_from');
-			if($nsPaces != ""){
+			$conditional = array(
+				'page_id in (' . $subQuery . ')',
+				'page_is_redirect = 0'
+			);
+			if ($nsPaces != "") {
 				$conditional[] = 'page_namespace in (' . $nsPaces . ')';
 			}
-			$conditional['page_is_redirect'] = 0;
-			$conditional['c2.cl_to'] = $this->mCatName;
+
 			if ( empty($pages) ) {
 				$res = $dbr->select ( 
-					array( 'page', 'categorylinks AS c1', 'categorylinks AS c2' ),
-					array( 'c2.cl_from as page_id, page_title, page_namespace, page_latest as rev_id, c2.cl_timestamp as rev_timestamp' ),
+					array( 'page', 'revision' ),
+					array( 'rev_id, rev_page, page_title, page_namespace, rev_timestamp' ),
 					$conditional,
 					__METHOD__,
 					array(
-						'ORDER BY' => 'c2.cl_timestamp DESC',
+						'STRAIGHT_JOIN',					
+						'ORDER BY' => 'rev_id DESC',
 						'LIMIT' => $limit + 1,
 						'OFFSET' => $offset * $limit
 					),
 					array(
-						'categorylinks AS c2' => array(
+						'page' => array(
 							'JOIN', 
 							implode ( ' AND ', 
 								array( 
-									'c1.cl_from = c2.cl_from',
-									'c1.cl_to = ' . $dbr->addQuotes($CatIn->getName())
+									'page_id = rev_page', 
+									'page_latest = rev_id'
 								)
 							)
 						)
@@ -601,7 +626,7 @@ class CategoryEdits {
 					$pages = array();
 					while( $oRow = $dbr->fetchObject($res) ) {
 						$pages[] = array(
-							'id'		=> $oRow->page_id,
+							'id'		=> $oRow->rev_page,
 							'title'		=> $oRow->page_title,
 							'namespace'	=> $oRow->page_namespace,
 							'rev_id'	=> $oRow->rev_id,
@@ -609,7 +634,7 @@ class CategoryEdits {
 						);
 					}
 					$dbr->freeResult($res);
-					$wgMemc->set( $memkey, $pages, 60*5 );
+					$wgMemc->set( $memkey, $pages, 60*15 );
 				}
 			}
 		}
