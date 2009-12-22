@@ -144,6 +144,10 @@ function categoryHubPreviewCheck(&$catView, &$r){
 ////
 function categoryHubBeforeArticleText(&$flexibleCategoryPage){
 	global $wgCatHub_useDefaultView;
+
+	global $wgRequest;
+	$wgCatHub_useDefaultView = $wgRequest->getBool("useoldcats", $wgCatHub_useDefaultView);
+
 	wfLoadExtensionMessages('CategoryHub');
 
 	// Since this is executed before the parser gets called (and thus the hooks), must also check for the magic word here (unless it was already found elsewhere).

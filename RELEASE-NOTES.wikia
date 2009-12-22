@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#34514: CatHubs: Add URL parameter to switch view to old category style. (Nef)
 * rt#34569: NWB: use messaging i18n layer and contentLang everywhere (TOR)
 * rt#34580: blocked admins cannot change theme and site settings (TOR)
 * rt#34583: Blogs: dont re-parse parsed block html (uberfuzzy)
