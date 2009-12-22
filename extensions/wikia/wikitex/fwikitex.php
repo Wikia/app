@@ -191,19 +191,23 @@ class objRend {
 			/**
 			 * params for post
 			 */
+			global $wgUploadPath, $wgUploadDirectory;
+
+			$targetUrl = "http://localhost/wikitex.fcgi";
 			$options = array(
 				CURLOPT_POSTFIELDS => array(
 					"source"    => $strTex,
 					"class"     => $arr['class'],
 					"hash"      => $strHash,
-					"suffix"    => $outDirSuffix,
-					"directory" => $strURI
+#					"suffix"    => $outDirSuffix,
+					"directory" => $wgUploadDirectory . "/wikitex/" . $outDirSuffix,
+					"path"      => $wgUploadPath . "/wikitex/" . $outDirSuffix,
 				),
-				CURLOPT_PROXY => "127.0.0.1:6081"
+#				CURLOPT_PROXY => "127.0.0.1:6081"
 			);
-#			Http::post( self::REMINDER_URL, 'default', $options );
+#			Http::post( $targetUrl, 'default', $options );
 
-			return trim( sprintf( $strBash, $strHash, $arr['class'], $strURI, $outDirSuffix, $strTex ) );
+			return Http::post( $targetUrl, 'default', $options );
 		}
     }
 }
