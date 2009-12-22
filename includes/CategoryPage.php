@@ -469,7 +469,7 @@ class CategoryViewer {
 				wfArrayToCGI( $query + array( 'from' => $last ) ) );
 		}
 
-		return "($prevLink) ($nextLink)";
+		return "<div class=\"pagingLinks\"><span class=\"prevLink\">($prevLink)</span> <span class=\"nextLink\">($nextLink)</span></div>";
 	}
 
 	/**

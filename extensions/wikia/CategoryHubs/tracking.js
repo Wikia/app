@@ -18,3 +18,11 @@ $(document).ready(function() {
 
 	$("#mw-subcategories > a").click(function() { WET.byStr("cathub/subcategories"); });
 });
+
+if ((typeof $.getUrlVar("useoldcats") != "undefined") && ($.getUrlVar("useoldcats") != 0)) {
+	$("#bodyContent").ready(function() {
+		$(".pagingLinks").find("a").each(function() {
+			$(this).attr("href", function() { return $(this).attr("href") + "&useoldcats=1"; });
+		});
+	});
+}
