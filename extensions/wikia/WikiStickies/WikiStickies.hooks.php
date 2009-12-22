@@ -81,3 +81,10 @@ function efRemoveFromSpecialWantedpages( &$rc ) {
 	}
 	return true;
 }
+
+function WikiStickiesJSVars(&$vars) {
+	$vars['wikistickies_msg_hide'] = wfMsg('wikistickies-hide');
+	$vars['wikistickies_msg_see_more'] = wfMsg('wikistickies-more');
+	return true;
+};
+
