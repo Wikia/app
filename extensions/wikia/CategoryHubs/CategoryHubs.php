@@ -294,7 +294,7 @@ function categoryHubTitleBar(&$catView, &$r){
 
 	$logoSrc = categoryHubGetLogo($catView->getCat()->getName());
 	if($logoSrc != ""){
-		$r .= "<img src='$logoSrc' height='78' class='cathub-title-bar-wikilogo'/>";
+		$r .= '<img src="'.$logoSrc.'" alt="" height="78" class="cathub-title-bar-wikilogo"/>';
 	}
 
 	// Button for being notified of any new questions tagged with this category.
