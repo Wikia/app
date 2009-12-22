@@ -95,11 +95,6 @@ function CategorySelectInitializeHooks($output, $article, $title, $user, $reques
 		return true;
 	}
 
-	// Don't initialize when DB is locked
-	if ( wfReadOnly() ) {
-		return true;
-	}
-
 	// Don't initialize when user will see the source instead of the editor, see RT#25246
 	if ( !$title->quickUserCan('edit') ) {
 		return true;
