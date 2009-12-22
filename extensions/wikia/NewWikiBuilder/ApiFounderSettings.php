@@ -29,7 +29,7 @@ class ApiFounderSettings extends ApiBase {
 
 		// Logged in?
 		global $wgUser;
-		if ( !$wgUser->isAllowed('newwikibuilder') ) {
+		if ( !$wgUser->isAllowed('newwikibuilder') || $wgUser->isBlocked() ) {
 			$this->dieUsageMsg(array("badaccess-groups"));
 		} 
 

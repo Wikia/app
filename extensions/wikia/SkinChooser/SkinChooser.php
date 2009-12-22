@@ -42,7 +42,7 @@ function SavePreferencesSkinChooser($pref) {
 
 	# Save setting for admin skin
 	if(!empty($pref->mAdminSkin)) {
-		if( $wgUser->isAllowed( 'setadminskin' ) ) {
+		if( $wgUser->isAllowed( 'setadminskin' ) && !$wgUser->isBlocked() ) {
 			$pref->mAdminSkin = str_replace('awesome', 'monaco', $pref->mAdminSkin); #RT17498
 			if($pref->mAdminSkin != $wgAdminSkin && !(empty($wgAdminSkin) && $pref->mAdminSkin == 'ds')) {
 				$log = new LogPage('var_log');
