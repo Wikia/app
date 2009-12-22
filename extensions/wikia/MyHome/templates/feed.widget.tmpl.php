@@ -23,7 +23,7 @@ if( isset( $emptyMessage ) ) {
 <?php
 		}
 ?>
-			<cite><?php print ActivityFeedRenderer::formatTimestamp( $row['timestamp'] ); ?> <?php print wfMsg( "myhome-feed-by", FeedRenderer::getUserPageLink( $row ) ) ?></cite>
+			<cite><span class="timeago" title="<?= wfTimestamp(TS_ISO_8601, $row['timestamp']) ?>"><?php print ActivityFeedRenderer::formatTimestamp( $row['timestamp'] ); ?></span> <?php print wfMsg( "myhome-feed-by", FeedRenderer::getUserPageLink( $row ) ) ?></cite>
 		</li>
 <?php
 	}

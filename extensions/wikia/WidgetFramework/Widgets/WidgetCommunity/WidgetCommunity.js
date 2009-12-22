@@ -1,5 +1,5 @@
 function WidgetCommunity_init(id, widget) {
-	
+
 	$('#community-widget-action-button').click( function(e) {
 		if ($(e.target).hasClass('forward') || $(e.target.parentNode).hasClass('forward'))
 		{
@@ -9,7 +9,7 @@ function WidgetCommunity_init(id, widget) {
 			WET.byStr('widget/WidgetCommunity/createaccount');
 		}
 	});
-	
+
 	// Latest Activity links
 	$('#widget_' + id + '-recently-edited').find('a').each(function(n) {
 		$(this).click( function(e) {
@@ -31,5 +31,11 @@ function WidgetCommunity_init(id, widget) {
 
 	if (wgUserName == null) {
 		loadFreshData(id, window['timestamp_widget_'+id]);
+	}
+
+	if (wgUserLanguage == 'en') {
+		$.getScript(stylepath + '/common/jquery/jquery.timeago.js?' + wgStyleVersion, function() {
+			$('span.timeago').timeago();
+		});
 	}
 }
