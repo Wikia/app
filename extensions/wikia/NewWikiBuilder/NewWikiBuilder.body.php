@@ -6,7 +6,7 @@ class NewWikiBuilder extends SpecialPage {
 	}
  
 	function execute( $par ) {
-		global $wgRequest, $wgOut, $wgUser, $wgAdminSkin, $wgContLang, $NWBmessages;
+		global $wgRequest, $wgOut, $wgUser, $wgAdminSkin, $wgLanguageCode, $NWBmessages;
 
 		if ( !$this->userCanExecute($wgUser) ) {
 			$this->displayRestrictionError();
@@ -19,9 +19,11 @@ class NewWikiBuilder extends SpecialPage {
 		}
  
 		// Set up the messages variable for other languages
-		$this->lang = $wgContLang->getCode();
+		// Don't bother with user language here and just go with content language
+		$this->lang = $wgLanguageCode;
 		foreach($NWBmessages["en"] as $name => $value) {
-			$NWBmessages[$lang][$name] = wfMsgForContent($name);
+			// wfMsgForContent is used here to take into account the messaging.wikia layer
+			$NWBmessages[$this->lang][$name] = wfMsgForContent($name);
 		}
 
 		$this->setHeaders();
