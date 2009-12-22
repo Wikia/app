@@ -14,7 +14,7 @@ class GlobalWatchlistBot {
 	const MAX_LAG = 30;
 	const RECORDS_SLEEP = 1000;
 	const EMAILS = 100;
-	const TIME_SLEEP = 10;
+	const TIME_SLEEP = 60;
 
 	public function __construct($bDebugMode = false, $aUsers = array(), $useDB = array() ) {
 		global $wgExtensionMessagesFiles;
