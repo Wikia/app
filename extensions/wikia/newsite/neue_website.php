@@ -1,7 +1,5 @@
 <?php
 
-// include_once('extensions/twitter.php');
-
 function neue_website($nws) 
 {
   global $wgUser;
@@ -14,7 +12,7 @@ function neue_website($nws)
      stristr($nws, "4visitors.net"))
   {
     $nws = htmlspecialchars($nws);
-    $output = "$nws kann nicht als neue Website angelegt werden.";
+    $output = wfMsg( 'newsite-error-invalid', $nws );
     return $output;
   }
 
@@ -22,14 +20,14 @@ function neue_website($nws)
   if(!$newdom)
   {
     $nws = htmlspecialchars($nws);
-    $output = "$nws kann nicht als neue Website angelegt werden.";
+    $output = wfMsg( 'newsite-error-invalid', $nws );
     return $output;
   }
 
   $newhost = get_host($newdom);
   if(!$newhost)
   {
-    $output = "Die Website $newdom wurde nicht gefunden.";
+    $output = wfMsg( 'newsite-error-notfound', $newdom );
     return $output;
   }
 
@@ -40,12 +38,12 @@ function neue_website($nws)
   $title = Title::newFromUrl($newpage);
   if(!is_object($title)) 
   {
-    $output = "$newpage kann nicht als neue Wikipage angelegt werden.";
+    $output = wfMsg( 'newsite-error-invalid', $newdom );
     return;
   }
   if($title->exists())
   {
-    $output = "Die Website <a href=\"/$newpage\">$newpage</a> existiert schon im WebsiteWiki.";
+    $output = wfMsg( 'newsite-error-exists' );
     return $output;
   }
 
@@ -55,26 +53,27 @@ function neue_website($nws)
 
   if(!get_content($newhost))
   {
-    $output = "Die Website $newhost kann nicht kontaktiert werden.";
+    $output = wfMsg( 'newsite-error-nocontact', $newhost );
     return $output;
   }
 
   $wikitext = get_wikitext($dbw, $newhost, $newdom);
   if(!$wikitext)
   {
-    $output = "Der Website-Inhalt von $newhost kann nicht aufgebaut werden.";
+    $output = wfMsg( 'newsite-error-nowikitext', $newhost );
     return $output;
   }
 
-  if(!is_object($wgUser) || User::isIP($wgUser->getName()))
-    $wgUser = User::newFromName('Anonym');
+# FIXME: is this needed? messes with skin, among other things
+# if(!is_object($wgUser) || User::isIP($wgUser->getName()))
+#   $wgUser = User::newFromName('Anonym');
 
   $article = new Article( $title );
-  $article->doEdit( $wikitext, 'Neue Website' );
+  $article->doEdit( $wikitext, wfMsg( 'newsite-edit-comment' ) );
 
   $sk = $wgUser->getSkin();
 
-  $output .= "Die Website " . $sk->link( $title ) . " wurde angelegt.";
+  $output .= wfMsg( 'newsite-article-created', $sk->link( $title ) );
 
 /****
   $todo = fopen("/var/www/mkwebsites/todo", "a");
@@ -650,49 +649,51 @@ function get_wikitext($dbw, $site, $domsite)
     }
 
     if($description && strcmp($description, $title))
-      $output .= "==Beschreibung==\n" . webclean($description, $charset) . "\n\n";
+      $output .= wfMsgForContent( 'newsite-output-description' ) . "\n" . webclean($description, $charset) . "\n\n";
 
     if($weberror || $baustelle || $empty || $redir || $parking || $verkauf)
     {
-      $output .= "==Status der Website==\n";
+      $output .= wfMsgForContent( 'newsite-output-status' ) . "\n";
       if($weberror)
-	$output .= "*Fehler beim Aufruf: " . wikilink($weberror) . "\n";
+	$output .= wfMsgForContent( 'newsite-output-status-error', wikilink($weberror) ) . "\n";
       if($baustelle)
-	$output .= "*Die Website ist eine [[Baustelle]].\n";
+	$output .= wfMsgForContent( 'newsite-output-status-under-construction' ) . "\n";
       if($verkauf)
-	$output .= "*Die Website ist [[zu verkaufen]].\n";
+	$output .= wfMsgForContent( 'newsite-output-status-forsale' ) . "\n";
       if($empty)
-	$output .= "*Die Website ist [[Leer|leer]].\n";
+	$output .= wfMsgForContent( 'newsite-output-status-empty' ) . "\n";
       if($redir)
-	$output .= "*Die Website wird umgelenkt auf " . wikilink($redir) . ".\n";
+	$output .= wfMsgForContent( 'newsite-output-status-redir', wikilink($redir) ) . "\n";
       if($parking)
-	$output .= "*Die Website ist [[Parking|geparkt]].\n";
+	$output .= wfMsgForContent( 'newsite-output-status-parked' ) . "\n";
     }
 
-    $output .= "==Website-Technologien==\n===Content-Technologien===\n";
+    $output .= wfMsgForContent( 'newsite-output-technology' ) . "\n";
+    $output .= wfMsgForContent( 'newsite-output-technology-content' ) . "\n";
     if($framesets)
-      $output .= "*Die Website benutzt [[Framesets]].\n";
+      $output .= wfMsgForContent( 'newsite-output-technology-content-framesets' ) . "\n";
     if($iframes)
-      $output .= "*Die Website benutzt [[Iframes]].\n";
+      $output .= wfMsgForContent( 'newsite-output-technology-content-iframes' ) . "\n";
     if($scripts)
-      $output .= "*Die Website benutzt [[Browser-Scripts]].\n";
-    $output .=  "*Die Website verwendet den " . wikilink($charset) . " Zeichensatz.\n";
+      $output .= wfMsgForContent( 'newsite-output-technology-content-scripts' ) . "\n";
+    $output .=  wfMsgForContent( 'newsite-output-technology-content-charset', wikilink($charset) ) . "\n";
     if($generator)
     {
-      $generator = eregi_replace("f[^r]*r windows", "for windows", $generator);
-      $output .= "*Die Website wurde mithilfe von " . wikilink($generator) . " erstellt.\n";
+#	FIXME: German only hack
+#     $generator = eregi_replace("f[^r]*r windows", "for windows", $generator);
+      $output .= wfMsgForContent( 'newsite-output-technology-content-generator', wikilink($generator) ) . "\n";
     }
 
     if(count($servertech) > 2 || $system || $server)
     {
-      $output .= "===Server-Technologien===\n";
+      $output .= wfMsgForContent( 'newsite-output-technology-server' ) . "\n";
       if($server)
-	$output .= "*Die Website nutzt einen " . wikilink($server, false) . " Webserver.\n";
+	$output .= wfMsgForContent( 'newsite-output-technology-server-webserver', wikilink($server, false) ) . "\n";
       if($system)
-	$output .= "*Der Webserver l&auml;uft auf " . wikilink($system) . ".\n";
+	$output .= wfMsgForContent( 'newsite-output-technology-server-os', wikilink($system) ) . "\n";
       if(count($servertech) > 2)
       {
-	$output .= "*Der Webserver unterst&uuml;tzt folgende weitere Komponenten:\n";
+	$output .= wfMsgForContent( 'newsite-output-technology-server-components' ) . "\n";
 	for($i = 2; $i < count($servertech); $i++)
 	  if(!strpos($servertech[$i], ')') && strcasecmp($servertech[$i], "with"))
 	  {
@@ -718,7 +719,7 @@ function get_wikitext($dbw, $site, $domsite)
 //	echo "kommas $kommas spaces $spaces\n";
 
       $wkeywords = webclean($keywords, $charset);
-      $output .= "==Keywords auf $newpage==\n<keywords>";
+      $output .= wfMsgForContent( 'newsite-output-keywords', $newpage ) . "\n<keywords>";
       $ktok = strtok($wkeywords, $tokki);
 
       while ($ktok !== false) 
@@ -733,12 +734,13 @@ function get_wikitext($dbw, $site, $domsite)
 
     if(count($related) > 0)
     {
-      $output .= "==Verwandte Websites==\n<span class=\"small\">";
+      $output .= wfMsgForContent( 'newiki-output-related' ) . "\n<span class=\"small\">";
       foreach($related as $rel)
 	$output .= wikilink($rel) . " ";
       $output .= "</span>\n";
     }
 
+	# FIXME: hardcoded german kategories!
     if($erotik)
       $output .= "\n[[Kategorie:Erotik]]\n";
     else
@@ -751,6 +753,3 @@ function get_wikitext($dbw, $site, $domsite)
 }
 
 // -- end mkwiki
-
-
-?>

@@ -10,17 +10,8 @@ EOT;
 
 include('neue_website.php');
 
-$wgAutoloadClasses['NeueWebsite'] = dirname(__FILE__) . '/NeueWebsite.body.php';
+$dir = dirname(__FILE__);
+
+$wgAutoloadClasses['NeueWebsite'] = $dir . '/NeueWebsite.body.php';
 $wgSpecialPages['NeueWebsite'] = 'NeueWebsite';
-// $wgHooks['LoadAllMessages'][] = 'NeueWebsite::loadMessages';
-
-$wgExtensionFunctions[] = 'newsitesetup';
-
-function newsitesetup() 
-{
-  global $wgMessageCache;
-  $wgMessageCache->addMessage('neuewebsite', 'Neue Website');
-}
-
-
-?>
+$wgExtensionMessagesFiles['Newsite'] = $dir . '/NeueWebsite.i18n.php';
