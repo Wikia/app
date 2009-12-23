@@ -742,7 +742,6 @@ yieldbuild_loc = "right_nav_bottom";
 
 	<div id="footer">
 	</div><?/*footer*/?>
-</div>
 <?php $this->html('bottomscripts'); /* JS call to runBodyOnloadHook */ ?>
 <?php $this->html('reporttime') ?>
 <?php if ( $this->data['debug'] ): ?>
