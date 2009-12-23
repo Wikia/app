@@ -41,6 +41,9 @@ class ActivityFeedHelper {
 				case 'shortlist':
 					if (!isset($val) || $val != 'false') $parameters['flags'][] = 'shortlist';
 					break;
+				case 'hidenewpages':
+					if (!isset($val) || $val != 'false') $parameters['flags'][] = 'hidenewpages';
+					break;
 				case 'exclude':	//only from tag
 					if (!empty($val)) {
 						$namespaces = explode(',', $val);
@@ -93,6 +96,7 @@ class ActivityFeedHelper {
 						if (in_array('hidevideos', $flags)) $parameters['flags'][] = 'hidevideos';
 						if (in_array('hidecategories', $flags)) $parameters['flags'][] = 'hidecategories';
 						if (in_array('shortlist', $flags)) $parameters['flags'][] = 'shortlist';
+						if (in_array('hidenewpages', $flags)) $parameters['flags'][] = 'hidenewpages';
 					}
 					break;
 				case 'tagid':	//only from ajax

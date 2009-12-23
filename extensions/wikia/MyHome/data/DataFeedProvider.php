@@ -144,7 +144,6 @@ class DataFeedProvider {
 				$shortlist = $useflags && in_array('shortlist', $this->parameters['flags']);
 				$hideimages = $useflags && ($shortlist || in_array('hideimages', $this->parameters['flags']));
 				$hidevideos = $useflags && ($shortlist || in_array('hidevideos', $this->parameters['flags']));
-				$hidecategories = $useflags && ($shortlist || in_array('hidecategories', $this->parameters['flags']));
 
 				if(isset($res['rc_params']['autosummaryType'])) {
 					$item['autosummaryType'] = $res['rc_params']['autosummaryType'];
@@ -226,7 +225,8 @@ class DataFeedProvider {
 					if(isset($res['rc_params']['rollback'])) {
 						$this->invisibleRevisions[] = $res['rc_params']['revId'];
 					} else if(!in_array($res['revid'], $this->invisibleRevisions)) {
-						if($res['type'] == 'new') {
+						$hidenewpages = !empty($this->parameters['flags']) && in_array('hidenewpages', $this->parameters['flags']);
+						if($res['type'] == 'new' && !$hidenewpages) {
 							$this->filterNew($res, $title);
 						} else if($res['type'] == 'edit') {
 							$this->filterEdit($res, $title);
