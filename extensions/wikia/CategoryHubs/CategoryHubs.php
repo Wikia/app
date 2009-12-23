@@ -636,10 +636,10 @@ function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 		$userPageTitle = Title::makeTitle(NS_USER, $userText);
 		$userPageLink = $userPageTitle->getLocalUrl();
 		$userPageExists = $userPageTitle->exists();
-		$userLinkText = $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '';
-		$userLinkText .= "<img src='$wgStylePath/monobook/blank.gif' id='fe_user_img' class='sprite' alt='".wfMsg('userpage')."' />";
+		$userLinkText = $userPageExists ? '<a class="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '';
+		$userLinkText .= "<img src='$wgStylePath/monobook/blank.gif' class='fe_user_img sprite' alt='".wfMsg('userpage')."' />";
 		$userLinkText .= $userPageExists ? '</a>' : '';
-		$userLinkText .= '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>';
+		$userLinkText .= '<a rel="nofollow" class="fe_user_link'.($userPageExists ? '' : ' new').'" href="'.$userPageLink.'">'.$userText.'</a>';
 		$userLink = wfMsgExt('cathub-question-asked-by', array(), $userLinkText);
 	} else {
 		$userLink = wfMsgExt('cathub-anon-username', array());
