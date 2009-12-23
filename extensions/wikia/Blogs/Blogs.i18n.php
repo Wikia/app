@@ -118,6 +118,7 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 	"blogs-recent-url" => "Blog:Recent_posts",
 	"blogs-recent-url-text" => "Recent Blog Posts",
 	"blog-desc" => "Blog Articles",
+	"blog-movepage-badtitle" => "Invalid blog post title.",
 );
 
 $messages['fi'] = array(

@@ -19,6 +19,9 @@ $wgHooks[ "EditPage::showEditForm:checkboxes" ][] = "BlogArticle::editPageCheckb
 $wgHooks[ "LinksUpdate" ][] = "BlogArticle::linksUpdate";
 $wgHooks[ "WikiFactoryChanged" ][] = "BlogArticle::WikiFactoryChanged";
 $wgHooks[ "UnwatchArticleComplete" ][] = "BlogArticle::UnwatchBlogComments";
+#---
+$wgHooks[ "SpecialMovepageBeforeMove" ][] = "BlogArticle::checkBeforeMove";
+$wgHooks[ "SpecialMovepageAfterMove" ][] = "BlogArticle::checkAfterMove";
 
 class BlogArticle extends Article {
 
@@ -245,7 +248,7 @@ class BlogArticle extends Article {
 	 */
 	static public function ArticleFromTitle( &$Title, &$Article ) {
 		global $wgRequest;
-
+		
 		if( $Title->getNamespace() === NS_BLOG_ARTICLE_TALK ) {
 			/**
 			 * redirect to proper comment in NS_BLOG_ARTICLE namespace
@@ -781,4 +784,107 @@ class BlogArticle extends Article {
 		return true;
 	}
 
+	/**
+	 * hook
+	 *
+	 * @access public
+	 * @static
+	 */
+	static public function checkBeforeMove( /*MovePageForm*/ &$form ) {
+		global $wgUser;
+		wfProfileIn( __METHOD__ );
+		$return = true;
+		
+		$oOldTitle = $form->oldTitle;
+		$oNewTitle = $form->newTitle;
+
+		if ( ( $oOldTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oOldTitle->getNamespace() ) ) {
+			if ( ( $oNewTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oNewTitle->getNamespace() ) ) {
+				$oldTitleOwner = self::getOwner($oOldTitle);
+				$newTitleOwner = self::getOwner($oNewTitle);
+
+				$groups = $wgUser->getGroups();
+				$isAllowed = 
+					in_array( 'staff', $groups ) || 
+					in_array( 'sysop', $groups ) || 
+					$oldTitleOwner == $wgUser->getName();
+				
+				if ( !( $isAllowed && $newTitleOwner == $oldTitleOwner ) ) {
+					Wikia::log( __METHOD__, "movepage", 
+						"invalid blog owner: oldpage: ".$oOldTitle->getPrefixedText().", newPage: ".$oNewTitle->getPrefixedText() 
+					);
+					$return = false;
+				}
+			} else {
+				Wikia::log( __METHOD__, "movepage", 
+					"cannot move blog: oldpage: ".$oOldTitle->getPrefixedText().", newPage: ".$oNewTitle->getPrefixedText() 
+				);
+				$return = false;
+			}
+			
+			if ( $return == false ) {
+				$form->showForm( 'blog-movepage-badtitle' );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $return;
+	}
+	
+	/**
+	 * hook
+	 *
+	 * @access public
+	 * @static
+	 */
+	static public function checkAfterMove ( /*MovePageForm*/ &$form , /*Title*/&$oOldTitle , /*Title*/ &$oNewTitle ) {
+		global $wgUser;
+		wfProfileIn( __METHOD__ );
+		
+		if ( ( $oOldTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oOldTitle->getNamespace() ) ) {
+			if ( ( $oNewTitle instanceof Title ) && ( NS_BLOG_ARTICLE == $oNewTitle->getNamespace() ) ) {
+				$oldTitleOwner = self::getOwner($oOldTitle);
+				$newTitleOwner = self::getOwner($oNewTitle);
+
+				$groups = $wgUser->getGroups();
+				$isAllowed = 
+					in_array( 'staff', $groups ) || 
+					in_array( 'sysop', $groups ) || 
+					$oldTitleOwner == $wgUser->getName();
+				
+				if ( ( $isAllowed ) && ( $newTitleOwner == $oldTitleOwner ) ) {
+					$clist = BlogCommentList::newFromTitle( $oOldTitle );
+					$comments = $clist->getCommentPages();
+					if ( count($comments) > 0 ) {
+						# maybe check number of comments?
+						list( $author, $newTitleText )  = explode('/', $oNewTitle->getPrefixedText(), 2);
+						foreach ($comments as $oComment) {
+							#---
+							if ( !$oComment->mTitle instanceof Title ) continue;
+							#---
+							list ( $user, $page_title, $comment ) = BlogComment::explode($oComment->mTitle->getDBkey());
+							
+							$newCommentTitle = Title::newFromText(
+								sprintf( "%s/%s/%s", $newTitleOwner, $newTitleText, $comment ),
+								NS_BLOG_ARTICLE_TALK );
+							
+							$error = $oComment->mTitle->moveTo( $newCommentTitle, false, $form->reason, false );
+							if ( $error !== true ) {
+								Wikia::log( __METHOD__, "movepage", 
+									"cannot move blog comments: old comment: ".$oComment->mTitle->getPrefixedText().", ".
+									"new comment: ".$newCommentTitle->getPrefixedText().", error: " . @implode(", ", $error )
+								);
+							}
+						}
+					} else {
+						Wikia::log( __METHOD__, "movepage", "cannot move blog comments, because no comments: ". $oOldTitle->getPrefixedText() );
+					} 
+				}
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
+
