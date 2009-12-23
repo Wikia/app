@@ -134,7 +134,8 @@ ArticleComments.bind = function() {
 }
 
 ArticleComments.addHover = function() {
-	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not('.article-comments-pagination-link-active, #article-comments-pagination-link-prev, #article-comments-pagination-link-next').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
+	//.bind('click', ArticleComments.setPage)
+	$('.article-comments-pagination-link').not('.article-comments-pagination-link-active, #article-comments-pagination-link-prev, #article-comments-pagination-link-next').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
 }
 
 ArticleComments.init = function() {

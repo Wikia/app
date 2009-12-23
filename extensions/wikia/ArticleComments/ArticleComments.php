@@ -664,7 +664,7 @@ class ArticleComment {
 			$page = $listing->getOrder() == 'desc' ? 0 : $countPages-1;
 			$comments = array_slice($comments, $page * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
 			$comments = ArticleCommentList::formatList($comments);
-			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page);
+			$pagination = ArticleCommentList::doPagination($countComments, count($comments), $page,$Title);
 
 			$res = array('text' => $comments, 'pagination' => $pagination);
 		}
@@ -1159,6 +1159,14 @@ class ArticleCommentList {
 		$countComments = count($comments);
 		$countPages = ceil($countComments / $wgArticleCommentsMaxPerPage);
 		$page = $this->getOrder() == 'desc' ? 0 : $countPages-1;
+		
+		$pageRequest = (int) $wgRequest->getVal( 'page', 0 );
+		if( $pageRequest != 0 ) {
+			if ( ( $pageRequest <= $countPages ) & ($pageRequest > 0) ) {
+				$page = (int) $wgRequest->getVal( 'page', -1 ) - 1;
+			}
+		}
+
 		$comments = array_slice($comments, $page * $wgArticleCommentsMaxPerPage, $wgArticleCommentsMaxPerPage, true);
 		$pagination = self::doPagination($countComments, count($comments), $page);
 
@@ -1196,16 +1204,26 @@ class ArticleCommentList {
 	 *
 	 * @return String HTML text
 	 */
-	static function doPagination($countAll, $countComments, $activePage = 0) {
-		global $wgArticleCommentsMaxPerPage;
+	static function doPagination($countAll, $countComments, $activePage = 0,$title = null) {
+		global $wgArticleCommentsMaxPerPage,$wgTitle,$wgRequest;
 		$pagination = '';
+		
+		if ( $title == null ){
+			$title = $wgTitle;
+		}
+		
+		$query = "";
+		if( ($wgRequest->getVal('order') == 'desc') || ($wgRequest->getVal('order') == 'asc') ){
+			$query = "order=".$wgRequest->getVal('order')."&";
+		}
+		
 		if ($countAll > $countComments) {
 			$numberOfPages = ceil($countAll / $wgArticleCommentsMaxPerPage);
-			$pagination .= '<a href="#" id="article-comments-pagination-link-prev" class="article-comments-pagination-link dark_text_1" page="' . (max($activePage - 1, 0)) . '">&laquo;</a>';
+			$pagination .= '<a href="' . $title->getLinkUrl($query . "page=1") . '#article-comment-header" id="article-comments-pagination-link-prev" class="article-comments-pagination-link dark_text_1" page="' . (max($activePage - 1, 0)) . '">&laquo;</a>';
 			for ($i = 0; $i < $numberOfPages; $i++) {
-				$pagination .= '<a href="#" id="article-comments-pagination-link-' . $i . '" class="article-comments-pagination-link dark_text_1' . ($i == $activePage ? ' article-comments-pagination-link-active' : '') . '" page="' . $i . '">' . ($i+1) . '</a>';
+				$pagination .= '<a href="' . $title->getFullUrl($query . "page=".($i+1)) . '#article-comment-header" id="article-comments-pagination-link-' . $i . '" class="article-comments-pagination-link dark_text_1' . ($i == $activePage ? ' article-comments-pagination-link-active' : '') . '" page="' . $i . '">' . ($i+1) . '</a>';
 			}
-			$pagination .= '<a href="#" id="article-comments-pagination-link-next" class="article-comments-pagination-link dark_text_1" page="' . (min($activePage + 1, $numberOfPages - 1)) . '">&raquo;</a>';
+			$pagination .= '<a href="' . $title->getFullUrl($query . "page=".$numberOfPages) . '#article-comment-header" id="article-comments-pagination-link-next" class="article-comments-pagination-link dark_text_1" page="' . (min($activePage + 1, $numberOfPages - 1)) . '">&raquo;</a>';
 		}
 		return $pagination;
 	}
