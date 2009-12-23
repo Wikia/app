@@ -750,7 +750,7 @@ yieldbuild_loc = "right_nav_bottom";
 
 -->
 <?php endif; ?>
-<script>
+<script type="text/javascript">
 google_ad_client = '<?=$wgGoogleAdClient?>'; // substitute your client_id (pub-#)
 google_ad_channel = '<?=$wgGoogleAdChannel?>';
 google_ad_output = 'js';
@@ -761,7 +761,7 @@ google_feedback = 'on';
 echo 'google_hints = \'' . ( !empty($google_hints) ? $google_hints : '' ) . '\';';
 ?>
 </script>
-<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+<script language="JavaScript" type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 
 <?php
 echo AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
