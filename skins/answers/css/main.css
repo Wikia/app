@@ -696,6 +696,12 @@ body .header_menu_button * {
 	font-size: 13pt;
 	font-weight: bold;
 }
+#answers_sidebar .popularsidebarcats h2 {
+    margin-bottom: 2em;
+}
+#answers_sidebar .popularsidebarcats ul {
+    border-bottom: 1px solid #AAA;
+}
 #answers_sidebar .widget {
 	font-size: 9pt;
 	margin: 25px 5px 0;
