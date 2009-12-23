@@ -700,10 +700,9 @@ yieldbuild_loc = "right_nav_middle";
 </div>
 <?php endif; ?>
 
-		<div class="widget">
-			<h2><?= wfMsg("popular_categories") ?></h2>
-			<ul id="popular_categories">
-				<?
+		<div class="widget popularsidebarcats">
+			<h2><?php print wfMsg("popular_categories") ?></h2>
+				<?php
 				$popular_categories = array();
 				$lines = getMessageAsArray("sidebar-popular-categories");
 				if( is_array( $lines ) ){
@@ -726,8 +725,7 @@ yieldbuild_loc = "right_nav_middle";
 				echo '<li><div id="google_ad_2" class="google_ad"></div></li>';
 				}
 				?>
-			</ul>
-		</div>
+		</div><!-- END .widget.popularsidebarcats -->
 
 <?php if ($YB): ?>
 <div style="border: solid 5px red">
