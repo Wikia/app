@@ -155,7 +155,7 @@ class ActivityFeedHelper {
 		$feedHTML = $wgMemc->get($key);
 		if (empty($feedHTML)) {
 			$feedHTML = ActivityFeedHelper::getList($parameters);
-			$wgMemc->set($key, $feedHTML, $userLangEqContent ? 60*5 : 60*5);
+			$wgMemc->set($key, $feedHTML, $userLangEqContent ? 60*60*24 : 60*5);
 		}
 
 		wfProfileOut(__METHOD__);
@@ -214,7 +214,7 @@ function CommunityWidgetAjax() {
 		$uselang = $langCode;
 	}
 	$parameters['uselang'] = $uselang;
-	$userLangEqContent = $uselang == $wgLanguageCode;
+	$userLangEqContent = $uselang == $wgLanguageCode && $uselang == 'en';	//since we are using jQuery `timeago` plugin which works only for en, let's cache longer only this language
 
 	wfLoadExtensionMessages('MyHome');
 	$feedHTML = ActivityFeedHelper::getListForWidget($parameters, $userLangEqContent);
@@ -223,7 +223,7 @@ function CommunityWidgetAjax() {
 	$json = Wikia::json_encode($data);
 	$response = new AjaxResponse($json);
 	$response->setContentType('application/json; charset=utf-8');
-	$response->setCacheDuration($userLangEqContent ? 60*5 : 60*5);
+	$response->setCacheDuration($userLangEqContent ? 60*60*24 : 60*5);
 	wfProfileOut(__METHOD__);
 	return $response;
 }
