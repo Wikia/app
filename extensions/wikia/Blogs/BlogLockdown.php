@@ -41,7 +41,7 @@ class BlogLockdown {
 			$oComment = BlogComment::newFromTitle( $title );
 			$oComment->fetch();
 			$canEdit = $oComment->canEdit();
-			$isOwner = (bool) ( $canEdit && !in_array($action, array('move', 'watch', 'protect') ) );
+			$isOwner = (bool) ( $canEdit && !in_array($action, array('watch', 'protect') ) );
 			$isArticle = (bool )( $namespace == NS_BLOG_ARTICLE_TALK && $isOwner );
 		} 
 		else {
@@ -59,7 +59,7 @@ class BlogLockdown {
 		switch( $action ) {
 			case "move":
 				$result = array();
-				$return = false;
+				$return = true;
 				break;
 
 			case "read":
