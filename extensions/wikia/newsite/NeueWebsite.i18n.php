@@ -12,7 +12,7 @@ $messages['en'] = array(
         'newsite-error-nocontact' => 'Could not reach website $1.',
         'newsite-error-nowikitext' => 'Could not fetch content for website $1.',
         'newsite-edit-comment' => 'new website',
-        'newsite-article-created' => '"A page about $1 has been created.',
+        'newsite-article-created' => 'A page about $1 has been created.',
 
         # page output
         'newsite-output-description' => '== Description ==',
