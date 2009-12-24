@@ -12,7 +12,7 @@
 <?php echo $variable->cv_description ?>
 <ul>
 	<li>
-		Id: <strong><?php echo $variable->cv_id ?></strong>
+		Id: <strong><?php echo $variable->cv_id ?></strong> <sup><small><a href="http://www.wikia.com/wiki/Special:WhereIsExtension?var=<?php echo $variable->cv_id ?>&val=2">Where is...</a></small></sup>
 	</li>
 	<li>
 		Name: <strong><?php echo $variable->cv_name ?></strong> <sup><small><a href="http://www.mediawiki.org/wiki/Manual:$<?php echo $variable->cv_name ?>" title='link to manual page at mediawiki.org'>manual</a></small></sup>
