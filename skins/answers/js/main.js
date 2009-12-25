@@ -164,7 +164,6 @@ YAHOO.widget.Effects.Fade = function( id ){
 
 //Sidebar Widgets
 var recent_questions_page = '';
-var recent_questions_limit = 10;
 function renderQuestions() {
 	
 	url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categorymembers&cmtitle=Category:" + wgUnAnsweredCategory + "&cmnamespace=0&cmprop=title|timestamp&cmsort=timestamp&cmdir=desc&cmlimit=" + recent_questions_limit + recent_questions_page;
