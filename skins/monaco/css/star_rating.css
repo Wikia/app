@@ -97,7 +97,7 @@ ul.star-rating
 
 /* macbre: progress wheel stuff */
 .star-rating-progress {
-	background-image:  url('http://images.wikia.com/common/skins/common/progress-wheel.gif') !important;
+	background-image:  url('http://images.wikia.com/common/skins/common/images/ajax.gif') !important;
 	background-repeat: no-repeat;
 }
 
