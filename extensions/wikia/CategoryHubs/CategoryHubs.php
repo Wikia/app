@@ -520,6 +520,7 @@ function categoryHubOtherSection(&$catView, &$r){
 			$r .= "<ul class='interactive-questions'>\n";
 			
 			foreach($catView->answerArticles[$UN_CLASS] as $qArticle){
+				if(is_object($qArticle)){
 				$r .= "<li class=\"$UN_CLASS\">\n";
 
 				// Button to trigger the form for answering inline.
@@ -534,6 +535,7 @@ function categoryHubOtherSection(&$catView, &$r){
 				$r .= categoryHubGetAttributionByArticle($qArticle);
 
 				$r .= "</li>\n";
+				}
 			}
 			$r .= "</ul>\n";
 		}
