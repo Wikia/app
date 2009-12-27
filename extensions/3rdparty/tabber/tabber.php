@@ -28,6 +28,8 @@ function renderTabber( $paramstring, $params = array() ){
 		
 	$htmlFooter = '</div>';
 	
+	$htmlTabs = "";
+
 	$arr = explode("|-|", $paramstring);
 	foreach($arr as $tab){
 		$htmlTabs .= buildTab($tab);
