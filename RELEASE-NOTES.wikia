@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#35137: Fixed undefined var warning. (Nef)
 * rt#35116: CatHubs: Fixed fatal call to getTitle. (Nef)
 * SemanticForms: parse anoneditwarning msg (re-apply of 11042 for #19782) (uberfuzzy)
 * rt#34514: CatHubs: Add URL parameter to switch view to old category style. (Nef)
