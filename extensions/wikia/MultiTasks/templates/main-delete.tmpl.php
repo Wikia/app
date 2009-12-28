@@ -16,8 +16,8 @@
 				<td class="right"><?= wfMsg('multiwikiedit_as') ?></td>
 				<td>
 					<select tabindex="1" name="wpMode" id="wpMode" style="width:350px">
-						<option value="script" <?= ( $obj->mMode == 'script' ) ? 'selected="selected"' : '' ?> > <?= wfMsg('multidelete_select_script') ?> </option>
 						<option value="you" <?= ( $obj->mMode == 'you' ) ? 'selected="selected"' : '' ?> > <?= wfMsg('multiwikiedit_select_yourself') ?> </option>
+						<option value="script" <?= ( $obj->mMode == 'script' ) ? 'selected="selected"' : '' ?> > <?= wfMsg('multidelete_select_script') ?> </option>
 					</select>
 				</td>
 			</tr>
