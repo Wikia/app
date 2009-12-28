@@ -382,17 +382,12 @@ function categoryHubGetLogo($cat_name) {
 	WikiFactory::isUsed(true);
 
 	$cityId = null;
+	global $wgContLang;
 	if (empty($cityId)) {
-		$cityId = WikiFactory::VarValueToId($cat_name);
+		$cityId = WikiFactory::MultipleVarsToID(array("wgSitename" => $cat_name, "wgLanguageCode" => $wgContLang->getCode()));
 	}
 	if (empty($cityId)) {
-		$cityId = WikiFactory::VarValueToId(preg_replace("/\s*Wiki$/i", "", $cat_name));
-	}
-	if (empty($cityId)) {
-		$cityId = WikiFactory::VarValueToId(str_replace(" ", "", $cat_name));
-	}
-	if (empty($cityId)) {
-		$cityId = WikiFactory::DomainToId(str_replace(" ", "", $cat_name) . ".wikia.com");
+		$cityId = WikiFactory::MultipleVarsToID(array("wgWidgetAnswersForceCategoryForAsk" => $cat_name, "wgLanguageCode" => $wgContLang->getCode()));
 	}
 	if (empty($cityId)) return "";
 

@@ -1894,4 +1894,59 @@ class WikiFactory {
 		return isset( $oRow->city_id ) ? $oRow : false;
 	}
 	
+	/**
+	 * MultipleVarsToID
+	 *
+	 * Find city_id matching one or more name+val config variables
+	 *
+	 * @author Nef
+	 * @access public
+	 * @static
+	 *
+	 * @param array	$data	table of name+val config variables
+	 *
+	 *
+	 * @return integer: city ID or null if not found
+	 */
+	static public function MultipleVarsToID($data) {
+
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return null;
+		}
+
+		if (!is_array($data)) {
+			return null;
+		}
+
+		$i = 0;
+		$tables = array();
+		$where = array();
+		foreach ($data as $key => $val) {
+			$i++;
+			$tables[] = "city_variables AS cv{$i}";
+
+			$where[] = "cv1.cv_city_id = cv{$i}.cv_city_id";
+			$where["cv{$i}.cv_variable_id"] = self::getVarByName($key, 177)->cv_variable_id;
+			$where["cv{$i}.cv_value"] = @serialize($val);
+		}
+
+		if (!$i) {
+			return null;
+		}
+
+		wfProfileIn( __METHOD__ );
+
+		$dbr = self::db( DB_SLAVE );
+
+		$oRow = $dbr->selectRow(
+			$tables,
+			array("cv1.cv_city_id"),
+			$where,
+			__METHOD__
+		);
+
+		wfProfileOut( __METHOD__ );
+		return isset( $oRow->cv_city_id ) ? $oRow->cv_city_id : null;
+	}
 };
