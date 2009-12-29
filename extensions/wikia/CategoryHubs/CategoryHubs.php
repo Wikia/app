@@ -383,6 +383,18 @@ function categoryHubGetLogo($cat_name) {
 
 	$cityId = null;
 	global $wgContLang;
+
+	$key = "cathub-logo:{$cat_name}";
+	if (!isMsgEmpty($key)) {
+		$logoMsg = trim(wfMsg($key));
+
+		if ("-" == $logoMsg) return "";
+
+		if (preg_match("/^http:\/\/images\d?\.wikia\.(com|nocookie\.net)/", $logoMsg)) return htmlspecialchars($logoMsg);
+
+		$cityId = WikiFactory::DomainToID($logoMsg);
+	}
+
 	if (empty($cityId)) {
 		$cityId = WikiFactory::MultipleVarsToID(array("wgSitename" => $cat_name, "wgLanguageCode" => $wgContLang->getCode()));
 	}
