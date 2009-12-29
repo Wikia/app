@@ -100,6 +100,8 @@ EOD;
 			$domain = $wgLanguageCode . '.answers.wikia.com';
 		}
 #	}
+	global $wgWidgetAnswersForceDomain;
+	if (!empty($wgWidgetAnswersForceDomain)) $domain = $wgWidgetAnswersForceDomain;
 	$url = 'http://'.$domain.'/api.php?'.http_build_query($apiparams);
 
 	$no_questions = wfMsgForContent("answers_widget_no_questions");
