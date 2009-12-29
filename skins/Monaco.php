@@ -1938,6 +1938,7 @@ echo AnalyticsEngine::track('GA_Urchin', 'hub', AdEngine::getCachedCategory());
 global $wgCityId;
 echo AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
 echo AnalyticsEngine::track('GA_Urchin', 'pagetime', array('lean_monaco'));
+if (43339 == $wgCityId) echo AnalyticsEngine::track("GA_Urchin", "lyrics");
 ?>
 <!-- End Analytics -->
 
