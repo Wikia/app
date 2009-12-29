@@ -41,6 +41,12 @@ switch( $wgLanguageCode ) {
 		$wgNamespaceAliases["Video"] = 400;
 		$wgNamespaceAliases["Video_talk"] = 401;
 		break;
+	case "no":
+		$wgExtraNamespaces[400] = "Video";
+		$wgExtraNamespaces[401] = "Videodiskusjon";
+		$wgNamespaceAliases["Video"] = 400;
+		$wgNamespaceAliases["Video_talk"] = 401;
+		break;
 }
 
 require_once( "$IP/extensions/wikia/WikiaVideo/WikiaVideo.php" );
