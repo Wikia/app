@@ -16,6 +16,10 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 
 	public function trackEvent($event, $eventDetails=array()){
 		switch ($event){
+			case "lyrics":
+				return $this->lyrics();
+
+				break;
 		  case AnalyticsEngine::EVENT_PAGEVIEW:
 			return '<script type="text/javascript">_uff=0;_uacct="UA-288915-1";urchinTracker();</script>';
 		  case 'hub':
@@ -61,4 +65,9 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 			</script>';
 	}
 
+	private function lyrics() {
+		global $wgTitle;
+		$ns = (is_object($wgTitle) && $wgTitle instanceof Title) ? $wgTitle->getNamespace() : -99;
+		return "<script type=\"text/javascript\">_uff=0; _uacct=\"UA-12241505-1\"; urchinTracker(\"/GN2/{$ns}\");</script>";
+	}
 }

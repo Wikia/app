@@ -91,6 +91,8 @@ function gracenote_obfuscateText($text){
 // page.
 ////
 function gracenote_getAnalyticsHtml($google_action){
+	return "";
+
 	$trackEventCode = "";
 	if($google_action != GRACENOTE_VIEW_NOT_LYRICS){
 		$trackEventCode = "var jsGoogleLabel = \"Unknown\";
