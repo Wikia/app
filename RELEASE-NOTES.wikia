@@ -1,4 +1,5 @@
 == Changes since 200912.1 ==
+* rt#35234: Answers: Allow widget to use and send q. to a different wikianswers site. (Nef)
 * rt#33717: CatHubs: Logo fetching rules rewritten. (Nef)
 * rt#35137: Fixed undefined var warning. (Nef)
 * rt#35116: CatHubs: Fixed fatal call to getTitle. (Nef)
