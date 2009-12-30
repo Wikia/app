@@ -63,7 +63,6 @@ class AnswersTemplate extends MonacoTemplate {
 		$action = $wgRequest->getText( 'action' );
 		$answer_page = Answer::newFromTitle( $wgTitle );
 		$is_question = $answer_page->isQuestion();
-		($is_question) ? $question_mark = '?' : $question_mark = '';
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="<?php $this->text('xhtmldefaultnamespace') ?>" <?php
@@ -244,7 +243,8 @@ yieldbuild_loc = "leaderboard";
 		<div id="question">
 			<div class="top"><span></span></div>
 			<?php global $wgSupressPageTitle; if(empty($wgSupressPageTitle)): ?>
-			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?><?=$question_mark?>
+			<?php if ($is_question) $this->data["title"] = Answer::s2q($this->data["title"]); ?>
+			<h1 id="firstHeading" class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?>
 			<?php if (!empty($this->data['content_actions']['move'])): ?>
 		<a href="<?=$this->data['content_actions']['move']['href']?>" rel="nofollow" onclick="WET.byStr('articleAction/rephrase');"><?=wfMsg('rephrase')?></a>
 			<?php endif ;?>
