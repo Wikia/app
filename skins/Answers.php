@@ -105,6 +105,13 @@ class AnswersTemplate extends MonacoTemplate {
 		}
 ?>
 
+		<?php
+		if ($is_question) {
+			if (preg_match("/^{$wgTitle->getText()}( - .*)$/", $this->data["pagetitle"], $matches)) {
+				$this->data["pagetitle"] = Answer::s2q($wgTitle->getText()) . $matches[1];
+			}
+		}
+		?>
 		<title><?php $this->text('pagetitle') ?></title>
 		<?php $this->html('csslinks') ?>
 
