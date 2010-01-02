@@ -257,7 +257,7 @@ EOF;
 			}
 			$out .= "</span>
 			</div>";
-			$out .= "<script>
+			$out .= "<script type=\"text/javascript\">
 			function uploadCSV(f){
 				if(!f.sendersemail.value){
 					alert('".wfMsg('entervalidemail')."');

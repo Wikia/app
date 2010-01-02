@@ -46,7 +46,7 @@
 				return false;
 			}
 			
-			$wgOut->addHTML("<script>
+			$wgOut->addHTML("<script type=\"text/javascript\">
 			function enablize(which_div, disable) {
 				 
 	if(disable == null) disable = true;

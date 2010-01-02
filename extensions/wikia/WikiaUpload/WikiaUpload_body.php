@@ -96,7 +96,7 @@ EOT
 		);
 
 		$wgOut->addHTML( <<<EOT
-<script>
+<script type="text/javascript">
 YAHOO.util.Event.addListener('wpUpload', 'click', WikiaUpload);
 function WikiaUpload(e) {
 	YAHOO.util.Connect.setForm('upload', true);

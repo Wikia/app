@@ -242,7 +242,7 @@ $jsListeners = array();
 ?>
 <div id="dt-jobs-loader" style="height:15px"></div>
 <div class="dt-jobs-list" id="dt-jobs-list"></div>
-<script>
+<script type="text/javascript">
 YAHOO.util.Event.onDOMReady(function() {
 	wkDTshowDetails(30, 0, 'dj_id', -1);
 	var desc = -1;

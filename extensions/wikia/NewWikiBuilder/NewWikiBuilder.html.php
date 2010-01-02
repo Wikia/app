@@ -15,9 +15,9 @@ $StaticChute = new StaticChute('js');
 $StaticChute->useLocalChuteUrl();
 echo $StaticChute->getChuteHtmlForPackage('monaco_loggedin_js');
 ?>
-<script src="/extensions/wikia/JavascriptAPI/Mediawiki.js?<?= $wgStyleVersion ?>"></script>
-<script src="/extensions/wikia/NewWikiBuilder/main.js?<?= $wgStyleVersion ?>"></script>
-<script>
+<script type="text/javascript" src="/extensions/wikia/JavascriptAPI/Mediawiki.js?<?= $wgStyleVersion ?>"></script>
+<script type="text/javascript" src="/extensions/wikia/NewWikiBuilder/main.js?<?= $wgStyleVersion ?>"></script>
+<script type="text/javascript">
 // Set up the cookie prefix, which is set in Mediawiki as $wgCookiePrefix
 Mediawiki.cookiePrefix = "wikicities";
 var match = window.location.search.match(/js_debug=([0-9])/);
@@ -58,7 +58,7 @@ NWB.messages = {"<?php echo $this->lang . '": ' . json_encode($NWBmessages[$this
 		<textarea name="desc" id="desc_textarea"></textarea>
 	</form>
 
-	<script>
+	<script type="text/javascript">
 	// Setup
 	$(function() {
 		Mediawiki.pullArticleContent(Mediawiki.followRedirect(wgMainpage), NWB.pullWikiDescriptionCallback, {"rvsection": 1});
@@ -122,7 +122,7 @@ NWB.messages = {"<?php echo $this->lang . '": ' . json_encode($NWBmessages[$this
 	</div>
 
 
-<script>
+<script type="text/javascript">
 var wgAdminSkin = '<?php echo $wgAdminSkin?>';
 
 // TODO: Pull this list from wgSkinTheme? 

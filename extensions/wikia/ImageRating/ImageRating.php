@@ -54,7 +54,7 @@ class ImageRating extends UnlistedSpecialPage {
 		$wgOut->addScript("<script type=\"text/javascript\" src=\"{$wgVoteScripts}/Vote.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/ImageRating/ImageRating.js?{$wgStyleVersion}\"></script>\n");
 		$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/ImageRating/ImageRating.css?{$wgStyleVersion}\"/>\n");
-			$wgOut->addHTML("<script>
+			$wgOut->addHTML("<script type=\"text/javascript\">
 				var _CATEGORY_NS_NAME = \"" . $wgContLang->getNsText( NS_CATEGORY ) . "\"
 			</script>
 			");

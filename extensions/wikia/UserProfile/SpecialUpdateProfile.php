@@ -374,7 +374,7 @@ function wfSpecialUpdateProfile()
 			$form .= '<p class="profile-update-unit">';
 			$form .= '<span id="location_state_form">';
 			$form .= "</span>
-			<script>
+			<script type=\"text/javascript\">
 				displaySection(\"location_state\",\"" . $this->location_country . "\",\"" . $this->location_state . "\")
 			</script>";
 			$form .= '</p>
@@ -404,7 +404,7 @@ function wfSpecialUpdateProfile()
 
 			$form .= '<span id="hometown_state_form">';
 			$form .= "</span>
-			<script>
+			<script type=\"text/javascript\">
 				displaySection(\"hometown_state\",\"" . $this->hometown_country . "\",\"" . $this->hometown_state . "\")
 			</script>";
 			$form .= '</p>

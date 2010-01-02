@@ -12,7 +12,7 @@ function registerCreateForm(){
 function renderCreateForm($input, $args, &$parser){
 	global $wgUser, $wgSiteView, $wgOut, $wgStyleVersion, $wgBlogDates;
 	
-	$wgOut->addScript("<script>var wgBlogDates=" . (($wgBlogDates)?1:0) . "</script>");
+	$wgOut->addScript("<script type=\"text/javascript\">var wgBlogDates=" . (($wgBlogDates)?1:0) . "</script>");
 	
 	$form = null;
 	$fromview = "";

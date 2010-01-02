@@ -76,7 +76,7 @@
 </form>
 </fieldset>
 </div>
-<script>
+<script type="text/javascript">
 YAHOO.util.Event.onDOMReady(function() {
 	var loadImg = "<img src=\"/skins/common/images/ajax.gif\" />";
 	var divLoader = YAHOO.util.Dom.get("dt-loader");

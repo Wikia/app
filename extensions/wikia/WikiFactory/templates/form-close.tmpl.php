@@ -1,5 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<script>
+<script type="text/javascript">
 function close_allowToSave() {
 	var result = true;
 	var redirect = document.getElementById('flag_<?=WikiFactory::FLAG_REDIRECT?>');

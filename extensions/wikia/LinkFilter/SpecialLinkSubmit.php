@@ -75,7 +75,7 @@ class LinkSubmit extends UnlistedSpecialPage {
 		$output = "";
 
 		$lf_desc = isset($_POST["lf_desc"]) ? $_POST["lf_desc"] : "" ;		
-		$output .= "<script>
+		$output .= "<script type=\"text/javascript\">
 			function submit_link(){
 				if(\$('lf_title').value == '' ){
 					alert(\"" . wfMsg("linkfilter-submit-no-title" ) . "\");

@@ -5,7 +5,7 @@ global $wgUser, $wgTitle;
 $dbr =& wfGetDB( DB_MASTER );
 
 $output = "
-	   <script language=\"javascript\">
+	   <script type=\"text/javascript\" language=\"javascript\">
 	   
 	   	var numReplaces = 0;
 	   	var replaceID = 0;

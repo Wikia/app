@@ -78,7 +78,7 @@ class LinkEdit extends UnlistedSpecialPage {
 		$_SESSION["alreadysubmitted"] = false;
 		$output = "";
 		
-		$output .= "<script>
+		$output .= "<script type=\"text/javascript\">
 			function submit_link(){
 				if(\$('lf_type').value == '' ){
 					alert(\"" . wfMsg("linkfilter-submit-no-type" ) . "\");

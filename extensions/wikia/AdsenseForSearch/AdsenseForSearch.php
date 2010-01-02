@@ -19,7 +19,7 @@ echo <<<EOS
 	});
 	</script>
 
-	<script language="JavaScript">
+	<script type="text/javascript" language="JavaScript">
     	<!--
       	/*
       	* This function retrieves the search query from the URL.
@@ -149,6 +149,6 @@ echo <<<EOS
 
     -->
     </script>
-    <script language="JavaScript" src="http://www.google.com/afsonline/show_afs_ads.js"></script>
+    <script type="text/javascript" language="JavaScript" src="http://www.google.com/afsonline/show_afs_ads.js"></script>
 EOS;
 }

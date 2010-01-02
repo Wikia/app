@@ -54,7 +54,7 @@
         </div>
 
 
-<script>
+<script type="text/javascript">
 
 var wgAdminSkin = '<?php echo $wgAdminSkin?>';
 

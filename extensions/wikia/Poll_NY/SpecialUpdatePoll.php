@@ -108,7 +108,7 @@ function wfSpecialUpdatePoll(){
 				$prev_qs = "&prev_id=".$wgRequest->getVal("prev_poll_id");
 			}
 			$form .= "
-			<script>
+			<script type=\"text/javascript\">
 				function reset_upload(){
 					//Element.hide('real-form');
 					//Element.show('fake-form');

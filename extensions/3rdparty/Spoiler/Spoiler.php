@@ -25,7 +25,7 @@ function wfSpoilerExtension() {
 }
 
 function wfSpoilerJavaScript() {
-	return	"<script language=\"JavaScript\">\n" .
+	return	"<script type=\"text/javascript\" language=\"JavaScript\">\n" .
 				"\n" . 
 				"function getStyleObject(objectId) {\n" .
 				"    // checkW3C DOM, then MSIE 4, then NN 4.\n" .
@@ -117,7 +117,7 @@ function renderSpoiler( $input, $argv, &$parser ) {
 	}
 	$output .= "</div>";
 	if ($argv["collapsed"] != "false") {
-		$output .= "<script language=\"JavaScript\">";
+		$output .= "<script type=\"text/javascript\" language=\"JavaScript\">";
 		$output .= "toggleObjectVisibility('" . $spoilerId . "');";
 		$output .= "</script>";
 	}

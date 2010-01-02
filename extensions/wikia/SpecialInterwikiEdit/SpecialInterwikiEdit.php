@@ -314,7 +314,7 @@ function wfSIWEEditInterwiki(){
 
 	$ret .= "
 
-	<script>
+	<script type=\"text/javascript\">
 	function updateForm( data ){
 	        var form = {$document}.getElementById('edit_form');
 

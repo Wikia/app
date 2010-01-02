@@ -89,7 +89,7 @@ class ViewPoll extends UnlistedSpecialPage {
 		
 		//javascript
 		
-		$output .= "<script>
+		$output .= "<script type=\"text/javascript\">
 				function doHover(divID) {
 					\$El(divID).setStyle('backgroundColor', '#FFFCA9'); 
 				}

@@ -721,7 +721,7 @@ function wfSpecialPictureGameHome(){
 
 			$preloadImages = array();
 
-			$output .= "<script>
+			$output .= "<script type=\"text/javascript\">
 			
 			function doHover(divID){
 				\$El(divID).setStyle('background-color', '#e5e7ea');
@@ -1139,7 +1139,7 @@ function wfSpecialPictureGameHome(){
 			$output .= "
 			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}lightbox_light.js?{$wgStyleVersion}\"></script>
 			<script type=\"text/javascript\" src=\"{$this->INCLUDEPATH}picturegame.js?{$wgStyleVersion}\"></script>
-			<script>var next_id = \"{$next_id}\";</script>
+			<script type=\"text/javascript\">var next_id = \"{$next_id}\";</script>
 			{$editLink}
 			<div class=\"editDiv\" id=\"editDiv\" style=\"display: none\"> </div>
 			<div class=\"serverMessages\" id=\"serverMessages\"></div>
@@ -1214,7 +1214,7 @@ function wfSpecialPictureGameHome(){
 				</div>
 			</div>
 			<div class=\"cleared\">
-			<script language=\"javascript\">
+			<script type=\"text/javascript\" language=\"javascript\">
 				{$permalinkJS}
 			</script>
 			</div>

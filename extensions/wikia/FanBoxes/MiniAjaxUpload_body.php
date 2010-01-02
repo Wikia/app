@@ -112,7 +112,7 @@ class FanBoxAjaxUploadForm extends UploadForm{
 			if(strlen($prefix) == 0)
 				$prefix = "";
 			
-			$wgOut->addHTML( "<script language=\"javascript\">
+			$wgOut->addHTML( "<script type=\"text/javascript\" language=\"javascript\">
 					  /*<![CDATA[*/
 					  window.parent.{$prefix}uploadError('{$msg}');
 					  /*]]>*/</script>");
@@ -179,7 +179,7 @@ class FanBoxAjaxUploadForm extends UploadForm{
 			$prefix = "";
 
 		$wgOut->addHTML( "
-			<script language=\"javascript\">
+			<script type=\"text/javascript\" language=\"javascript\">
 			
 			function submitForm(){
 				
@@ -302,7 +302,7 @@ class FanBoxAjaxUploadForm extends UploadForm{
 
 		
 		?> 
-			<script language="javascript">
+			<script type="text/javascript" language="javascript">
 			/*<![CDATA[*/ 
 			window.parent.<?php print $prefix?>uploadComplete("<?php print addslashes( $img_tag ); ?>", "<?php print $this->mDestName ?>", "<?php print htmlentities ( $desc ) ?>");
 			/*]]>*/</script>
@@ -320,7 +320,7 @@ class FanBoxAjaxUploadForm extends UploadForm{
 			$prefix = "";
 		
 		$error = addslashes ($error);
-		$wgOut->addHTML("<script language=\"javascript\">
+		$wgOut->addHTML("<script type=\"text/javascript\" language=\"javascript\">
 				/*<![CDATA[*/
 				window.parent.{$prefix}uploadError('{$error}');
 				/*]]>*/</script>");

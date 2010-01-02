@@ -99,7 +99,7 @@ endif;
 ?>
 </div>
 </form>
-<script>
+<script type="text/javascript">
 var loadImg = "<img src=\"/skins/common/images/ajax.gif\" />";
 var divCreatorLoader = YAHOO.util.Dom.get("dt-creator-loader");
 var divDaemonInfo = YAHOO.util.Dom.get("dt-daemon-info");

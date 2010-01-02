@@ -45,7 +45,7 @@
 }
 -->
 </style>
-<script>
+<script type="text/javascript">
 var tabView;
 </script>
 <?php if (!empty($saved)) { ?>
@@ -70,7 +70,7 @@ var tabView;
 <?php endif ?>		
 	</div>
 </div>
-<script>
+<script type="text/javascript">
 <!--
 (function() {
     tabView = new YAHOO.widget.TabView('daemontasks-tabs');

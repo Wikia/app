@@ -1,5 +1,5 @@
 <!-- s:<?= __FILE__ ?> -->
-<script>
+<script type="text/javascript">
 var ColorTxt = new Array();
 ColorTxt["ILLEGAL_HEX"] = "<?=wfMsg("user-badge-invalid-color")?>";
 ColorTxt["SHOW_CONTROLS"] = "<?=wfMsg("user-badge-show-color")?>";

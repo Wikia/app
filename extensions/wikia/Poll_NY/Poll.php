@@ -161,7 +161,7 @@ function RenderEmbedPoll( $input, $args, &$parser ){
 	
 			//Display Question and Let user vote
 			if( ! $p->user_voted( $wgUser->getName(), $poll_info["id"] ) && $poll_info["status"] == 1 ){
-				$wgOut->addScript( "<script>YAHOO.util.Event.on(window, 'load', function () {show_embed_poll({$poll_info["id"]});});</script>");
+				$wgOut->addScript( "<script type=\"text/javascript\">YAHOO.util.Event.on(window, 'load', function () {show_embed_poll({$poll_info["id"]});});</script>");
 				$output .= "<div id=\"loading-poll_{$poll_info["id"]}\" >" . wfMsgForContent( 'poll_js_loading' ) . "</div>";
 				$output .= "<div id=\"poll-display_{$poll_info["id"]}\" style=\"display:none;\">";
 				$output .= "<form name=\"poll_{$poll_info["id"]}\"><input type=\"hidden\" id=\"poll_id_{$poll_info["id"]}\" name=\"poll_id_{$poll_info["id"]}\" value=\"{$poll_info["id"]}\"/>";

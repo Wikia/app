@@ -31,7 +31,7 @@ function wfSpecialSiteScoutPage(){
 			$output .= $Scout->getControls();
 			$output .=  $Scout->getHeader() . $Scout->displayItems();
 			
-			$output .= '<script language="javascript">itemMax = 30;timestamp = ' .  time() . ';</script>';
+			$output .= '<script type="text/javascript" language="javascript">itemMax = 30;timestamp = ' .  time() . ';</script>';
 			$wgOut->addHtml($output);
 		}
 	}
