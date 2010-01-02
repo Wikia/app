@@ -447,7 +447,7 @@ class Masthead {
 			/**
 			 * check if mimetype is allowed
 			 */
-			$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg', 'image/bmp' );
+			$aAllowMime = array( 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg' );
 			if (!in_array($aImgInfo['mime'], $aAllowMime)) {
 				Wikia::log( __METHOD__, 'mime', 'Imvalid mime type, allowed: ' . implode(',', $aAllowMime) );
 				wfProfileOut(__METHOD__);
@@ -462,9 +462,6 @@ class Masthead {
 				case 'image/jpeg':
 				case 'image/jpg':
 					$oImgOrig = @imagecreatefromjpeg($sTmpFile);
-					break;
-				case 'image/bmp':
-					$oImgOrig = @imagecreatefrombmp($sTmpFile);
 					break;
 				case 'image/x-png':
 				case 'image/png':
