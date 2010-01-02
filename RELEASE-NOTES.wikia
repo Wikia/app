@@ -1,6 +1,5 @@
 == Changes since 200912.1 ==
 * rt#35417: Disallow .bmp avatars. (Nef)
-* rt#35492: Fix amp encoding in returnto links. (Nef)
 * rt#35491: Add required type to script tags. (Nef)
 * rt#35299: Don't force underscore magic words in sidebar. (Nef)
 * rt#35283: Add .no lang namespace names/aliases for video. (Nef)
