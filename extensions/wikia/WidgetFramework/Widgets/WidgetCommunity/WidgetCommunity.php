@@ -49,7 +49,7 @@ function WidgetCommunity($id, $params) {
 		}
 	} else {
 		$footerButton['text'] = wfMsg('nologinlink');
-		$footerButton['href'] = Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() );
+		$footerButton['href'] = htmlspecialchars(Skin::makeSpecialUrl( 'Signup', 'returnto=' . $wgTitle->getPrefixedURL() ));
 		$footerButton['class'] = 'wikia_button';
 	}
 
