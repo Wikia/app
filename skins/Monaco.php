@@ -980,6 +980,8 @@ EOS;
 			return $data[$name];
 		}
 
+		$name = str_replace(" ", "_", $name);
+
 		$dbr =& wfGetDB( DB_SLAVE );
 		$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = '".addslashes($name)."' ORDER BY COUNT DESC LIMIT $limit";
 		$res = $dbr->query($query);
