@@ -1451,10 +1451,10 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 // to only do it if they needed. Only use DART or Google (fast Ad Providers with good infrastructure)
 global $wgEnableAdInvisibleTop, $wgEnableAdInvisibleHomeTop, $wgOut;
 if (!empty($wgEnableAdInvisibleHomeTop) && ArticleAdLogic::isMainPage()){
-	echo '<script src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
+	echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
 	echo AdEngine::getInstance()->getAd('HOME_INVISIBLE_TOP');
 } else if (!empty($wgEnableAdInvisibleTop) && $wgOut->isArticle() && ArticleAdLogic::isContentPage()){
-	echo '<script src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
+	echo '<script type="text/javascript" src="/extensions/wikia/AdEngine/AdEngine.js"></script>' . "\n";
 	echo AdEngine::getInstance()->getAd('INVISIBLE_TOP');
 }
 ?>

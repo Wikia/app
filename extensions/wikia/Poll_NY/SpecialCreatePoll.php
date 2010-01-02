@@ -136,7 +136,7 @@ function wfSpecialCreatePoll(){
 			$iframe_title = Title::makeTitle(NS_SPECIAL, "PollAjaxUpload");
 			$wgOut->setHTMLTitle( wfMsg( 'pagetitle', wfMsgForContent( 'poll_create_title' ) ) );
 	
-			$form = "<script>
+			$form = "<script type=\"text/javascript\">
 					function update_answer_boxes(){
 						for(x=1;x<=9;x++){
 						

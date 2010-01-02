@@ -386,7 +386,7 @@ yieldbuild_loc = "question_bubble";
 					google_color_border = "FFFFFF";
 					google_hints	    = "' . $google_hints . '";
 				</script>
-				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+				<script type="text/javascript" language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
 				</div>';
 				echo $ads;
 			}
@@ -407,7 +407,7 @@ yieldbuild_loc = "question_bubble";
 					google_color_border = "FFFFFF";
 					google_hints	    = "' . $google_hints . '";
 				</script>
-				<script language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
+				<script type="text/javascript" language="JavaScript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 				echo $ads;
 			}
 		}?>

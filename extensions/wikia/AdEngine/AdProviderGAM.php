@@ -83,7 +83,7 @@ class AdProviderGAM implements iAdProvider {
 			'</script>';
 		if ($this->iframeRendering){ 
 			// I had to ask to have this enabled
-			$out.= '<script>GA_googleUseIframeRendering();' . "</script>";
+			$out.= '<script type="text/javascript">GA_googleUseIframeRendering();' . "</script>";
 		}
 		$out .= "<!-- ## END " . __CLASS__ . '::' . __METHOD__ . " ## -->\n";
 		return $out;
@@ -215,7 +215,7 @@ class AdProviderGAM implements iAdProvider {
 		if ($this->iframeRendering){
 			// I had to ask them to get this turned on
 			$args = array($this->adManagerId, $slotname, $dim['width'], $dim['height']);
-			return $out . '<script>GA_googleFillSlotWithSize("' . implode('","', $args) . '");</script>';
+			return $out . '<script type="text/javascript">GA_googleFillSlotWithSize("' . implode('","', $args) . '");</script>';
 		} else {
 			return $out . '<script type="text/javascript">GA_googleFillSlot("' . $slotname . '")</script>';
 		}

@@ -72,7 +72,7 @@ class SiteScout{
 		}
 		$largest_value = max($edits, $votes, $comments,$networkupdates);
 		
-		$output .= "<script >
+		$output .= "<script type=\"text/javascript\">
 			function changeFilter(){
 				if(!\$(\"f_edits\").checked){scout_edits=0}else{scout_edits=1};
 				if(!\$(\"f_votes\").checked){scout_votes=0}else{scout_votes=1};
@@ -210,9 +210,9 @@ class SiteScout{
 			</table>
 			 
 		</td><td width=25></td><td valign=bottom>
-		</td></tr></table><script>edits_count=' . $edits . ';votes_count=' . $votes . ';comments_count=' . $comments . ';networkupdates_count=' . $networkupdates . '</script>';
+		</td></tr></table><script type="text/javascript">edits_count=' . $edits . ';votes_count=' . $votes . ';comments_count=' . $comments . ';networkupdates_count=' . $networkupdates . '</script>';
 		
-		$output.= "<script>edits=" . (($this->showEdits)?1:0) . ";votes=" . (($this->showVotes)?1:0) . ";comments=" . (($this->showComments)?1:0) . ";networkupdates=" . (($this->showNetworkUpdates)?1:0) . ";</script>";
+		$output.= "<script type=\"text/javascript\">edits=" . (($this->showEdits)?1:0) . ";votes=" . (($this->showVotes)?1:0) . ";comments=" . (($this->showComments)?1:0) . ";networkupdates=" . (($this->showNetworkUpdates)?1:0) . ";</script>";
 		
 		return $output;
 	}

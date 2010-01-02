@@ -744,7 +744,7 @@ function wfSpecialQuizGameHome(){
 				$prev_question = $this->get_question( $lastid  );
 			}
 			
-			$wgOut->addScript("<script>YAHOO.util.Event.on(window, 'load', function () {" . $on_load . "});</script>");
+			$wgOut->addScript("<script type=\"text/javascript\">YAHOO.util.Event.on(window, 'load', function () {" . $on_load . "});</script>");
 			
 			$gameid = $question["id"];
 			$wgOut->setHTMLTitle( wfMsg( 'pagetitle', $question["text"] ) );
@@ -1167,7 +1167,7 @@ function wfSpecialQuizGameHome(){
 
 			
 			$output .= "
-			<script language=\"javascript\">
+			<script type=\"text/javascript\" language=\"javascript\">
 			
 			var __quiz_max_answers__ = {$max_answers};
 			var __quiz_create_error_numanswers__ = \"" . wfMsgForContent( 'quiz_create_error_numanswers' ) . "\";

@@ -79,7 +79,7 @@ class SiteScout{
 		<tr><td><img src="images/scout-vote.gif" border="0" alt="Votes"></td><td>Votes</td><td><span id=vote_stats><table><tr><td><table bgcolor="#009900"  height=7  width="' . ($votes / $largest_value * 300) . '"><tr><td></td></tr></table></td><td>' . $votes . '</td></tr></table></span></td></tr>
 		<tr><td><img src="images/scout-comment.gif" border="0" alt="Comments"></td><td>Comments</td><td><span id=comment_stats><table><tr><td><table bgcolor="#990000" height=7  width="' . ($comments  / $largest_value * 300) . '"><tr><td></td></tr></table></td><td>' . $comments . '</td></tr></table></span></td></tr>
 		
-		</table></td></tr></table><script>edits_count=' . $edits . ';votes_count=' . $votes . ';comments_count=' . $comments . ';</script>';
+		</table></td></tr></table><script type=\"text/javascript\">edits_count=' . $edits . ';votes_count=' . $votes . ';comments_count=' . $comments . ';</script>';
 		return $output;
 	}
 	

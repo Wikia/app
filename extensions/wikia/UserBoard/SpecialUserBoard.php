@@ -107,7 +107,7 @@
 			$output .= "</div>";
 		
 			
-			$output .= "<script>
+			$output .= "<script type=\"text/javascript\">
 				var _DELETE_CONFIRM = \"" . wfMsg("userboard_confirmdelete") . "\"
 				var posted = 0;
 				function send_message(){

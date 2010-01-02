@@ -41,7 +41,7 @@ class SiteMetrics extends UnlistedSpecialPage {
 		}
 		
 		//Write Google Charts API script to generate graph
-		$output = "<script>
+		$output = "<script type=\"text/javascript\">
 		
 		var simpleEncoding = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		var maxValue='{$max}';

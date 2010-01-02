@@ -333,7 +333,7 @@ function embedTangler($input, $argv, &$parser)
 
 	if (!empty($tid) && !empty($gid))
 	{
-		return "<p style=\"width: 410px; height: 480px\" id=\"tangler-embed-topic-{$tid}\"></p><script src=\"http://www.tangler.com/widget/embedtopic.js?id={$tid}&gId={$gid}\"></script>";
+		return "<p style=\"width: 410px; height: 480px\" id=\"tangler-embed-topic-{$tid}\"></p><script type=\"text/javascript\" src=\"http://www.tangler.com/widget/embedtopic.js?id={$tid}&gId={$gid}\"></script>";
 	}
 }
 

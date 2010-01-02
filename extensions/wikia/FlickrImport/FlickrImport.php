@@ -44,7 +44,7 @@ function wfImageImport() {
 			$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/FlickrImport/FlickrImport.css?{$wgStyleVersion}\"/>\n");
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/FlickrImport/FlickrImport.js?{$wgStyleVersion}\"></script>\n");
 			
-			$wgOut->addHTML("<script>
+			$wgOut->addHTML("<script type=\"text/javascript\">
 					var _IMPORTING_MSG = \"" . wfMsgForContent( 'importfreeimages_importing' ) . "\"
 					var _LOADING_MSG = \"" . wfMsgForContent( 'importfreeimages_loading' ) . "\"
 					</script>

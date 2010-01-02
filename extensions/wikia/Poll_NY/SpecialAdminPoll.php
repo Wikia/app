@@ -26,7 +26,7 @@ class AdminPoll extends UnlistedSpecialPage {
 			$wgMessageCache->addMessages( $messages, $lang );
 		}
 		
-		$wgOut->addHTML("<script>
+		$wgOut->addHTML("<script type=\"text/javascript\">
 				var _POLL_OPEN_MESSAGE = \"" . addslashes(wfMsgForContent( 'poll_open_message' )) . "\"
 				var _POLL_CLOSE_MESSAGE = \"" . addslashes(wfMsgForContent( 'poll_close_message' )) . "\"
 				var _POLL_FLAGGED_MESSAGE = \"" . addslashes(wfMsgForContent( 'poll_flagged_message' )) . "\"

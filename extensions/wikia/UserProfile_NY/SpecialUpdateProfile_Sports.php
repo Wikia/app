@@ -127,7 +127,7 @@ function wfSpecialUpdateProfileSports(){
 			$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/UserProfile/UserProfile.css?{$wgStyleVersion}\"/>\n");
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/UserProfile/UpdateProfile.js?{$wgStyleVersion}\"></script>\n");
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/DoubleCombo/DoubleCombo.js?{$wgStyleVersion}\"></script>\n");
-			$js = "<script>
+			$js = "<script type=\"text/javascript\">
 				var fav_count;
 				function show_next(){
 					YAHOO.widget.Effects.Hide(\$('add_more'));
@@ -238,7 +238,7 @@ function wfSpecialUpdateProfileSports(){
 				<input type=\"hidden\" value=\"\" name=\"s_id\">
 				<input type=\"hidden\" value=\"\" name=\"t_id\">
 				</form>
-				<script>
+				<script type=\"text/javascript\">
 				fav_count=" . ((count($favorites))?count($favorites):1) . "
 				</script>
 				</div>

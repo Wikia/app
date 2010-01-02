@@ -55,7 +55,7 @@ function renderPolldaddy($input, $params) {
 
         //$output =    '<embed allowScriptAccess="never"  saveEmbedTags="true" src="http://www.polldaddy.com/poll.swf" FlashVars="p='.$pollid.'" width="'.$width.'"  height="'.$height.'" quality="high" wmode="transparent"  bgcolor="#ffffff" name="beta3" salign="tl" scale="autoscale" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" ></embed>';
 
-		$output ='<script language="javascript" src="http://www.polldaddy.com/p/'.$pollid.'.js"> </script> <noscript> <a href ="http://www.polldaddy.com" >PollDaddy.com</a> - <a href ="http://www.polldaddy.com/poll.asp?p=52352" >Nimm an unserer Umfrage teil!</a> </noscript>';
+		$output ='<script type="text/javascript" language="javascript" src="http://www.polldaddy.com/p/'.$pollid.'.js"> </script> <noscript> <a href ="http://www.polldaddy.com" >PollDaddy.com</a> - <a href ="http://www.polldaddy.com/poll.asp?p=52352" >Nimm an unserer Umfrage teil!</a> </noscript>';
 		return $output;
 }
 

@@ -133,7 +133,7 @@ function renderFlashMP3($input, $args) {
                                 $param_string = implode('&amp;', $params);
                                 if (!empty($param_string)) $param_string .= '&amp;';
  
-                                $output = '<script language="JavaScript" src="'.$player_path.'audio-player.js?'.$wgStyleVersion.'"></script>'
+                                $output = '<script type="text/javascript" language="JavaScript" src="'.$player_path.'audio-player.js?'.$wgStyleVersion.'"></script>'
                                         . '<object type="application/x-shockwave-flash" data="'.$player_path.'player.swf" id="audioplayer'.$id.'" height="24" width="290">'
                                         . '<param name="movie" value="'.$player_path.'player.swf">'
                                         . '<param name="FlashVars" value="playerID='.$id.'&amp;'.$param_string.'soundFile='.$file_string.'">'

@@ -179,7 +179,7 @@ class FanBoxes extends UnlistedSpecialPage {
 				<input type=\"button\" class=\"site-button\" value=\"" . wfMsgForContent( 'fanbox_update_button' ) . "\" size=\"20\" onclick=\"create_fantag()\" />
 			</div>";
 			
-					$output.="<script>
+					$output.="<script type=\"text/javascript\">
 						
 						function reset_upload(){
 							\$G('imageUpload-frame').src=\"/index.php?title=Special:FanBoxAjaxUpload\"
@@ -205,7 +205,7 @@ class FanBoxes extends UnlistedSpecialPage {
 					</script>
 			";
 			
-			$output.="<script>
+			$output.="<script type=\"text/javascript\">
 						
 						function create_fantag(){
 									
@@ -343,7 +343,7 @@ class FanBoxes extends UnlistedSpecialPage {
 			</div>
 			";                       
 
-			$output.="<script>
+			$output.="<script type=\"text/javascript\">
 						
 						function reset_upload(){
 							\$G('imageUpload-frame').src=\"/index.php?title=Special:FanBoxAjaxUpload\"
@@ -369,7 +369,7 @@ class FanBoxes extends UnlistedSpecialPage {
 					</script>
 			";
 
-			$output.="<script>
+			$output.="<script type=\"text/javascript\">
 
 
 						function create_fantag(){
@@ -462,7 +462,7 @@ class FanBoxes extends UnlistedSpecialPage {
 					<div id=\"colorpickerholder\"></div>
 					</div>
 
-						<script>
+						<script type=\"text/javascript\">
 	
 						var colorPickerTest = new YAHOO.widget.ColorPicker(\"colorpickerholder\", {
 								showhsvcontrols: true,

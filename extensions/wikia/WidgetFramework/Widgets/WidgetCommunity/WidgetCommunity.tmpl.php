@@ -7,6 +7,6 @@
 <div class="toolbar neutral">
 	<a id="community-widget-action-button" href="<?= $footerButton['href'] ?>" class="<?= $footerButton['class'] ?>" rel="nofollow"><span><?= $footerButton['text'] ?></span></a>
 </div>
-<script>
+<script type="text/javascript">
 var timestamp_<?= $tagid ?> = '<?= $timestamp ?>';
 </script>

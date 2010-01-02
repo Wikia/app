@@ -47,7 +47,7 @@ function wfVideoImport() {
 			$categories = urldecode($wgRequest->getVal("wpCategories"));
 			$q = $wgRequest->getVal("q");
 			
-			$wgOut->addHTML("<script>
+			$wgOut->addHTML("<script type=\"text/javascript\">
 					var _IMPORTING_MSG = \"" . wfMsgForContent( 'videoimport_importing' ) . "\"
 					var _LOADING_MSG = \"" . wfMsgForContent( 'videoimport_loading' ) . "\"
 					</script>

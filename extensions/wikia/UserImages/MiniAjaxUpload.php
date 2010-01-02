@@ -136,7 +136,7 @@ class MiniAjaxUploadForm extends UploadForm{
 			if(strlen($prefix) == 0)
 				$prefix = "";
 			
-			$wgOut->addHTML( "<script language=\"javascript\">
+			$wgOut->addHTML( "<script type=\"text/javascript\" language=\"javascript\">
 					  /*<![CDATA[*/
 					  window.parent.{$prefix}uploadError('{$msg}');
 					  /*]]>*/</script>");
@@ -203,8 +203,8 @@ class MiniAjaxUploadForm extends UploadForm{
 			$prefix = "";
 
 		$wgOut->addHTML( "
-			<script language=\"javascript\" src=\"/extensions/wikia/onejstorule.js?{$wgStyleVersion}\"></script>
-			<script language=\"javascript\">
+			<script type=\"text/javascript\" language=\"javascript\" src=\"/extensions/wikia/onejstorule.js?{$wgStyleVersion}\"></script>
+			<script type=\"text/javascript\" language=\"javascript\">
 			
 			function submitForm(){
 				
@@ -319,7 +319,7 @@ class MiniAjaxUploadForm extends UploadForm{
 
 		
 		?> 
-			<script language="javascript">
+			<script type="text/javascript" language="javascript">
 			/*<![CDATA[*/ 
 			window.parent.<?php print $prefix?>uploadComplete("<?php print addslashes( $img_tag ); ?>", "<?php print $this->mUploadSaveName ?>", "<?php print htmlentities ( $desc ) ?>");
 			/*]]>*/</script>
@@ -337,7 +337,7 @@ class MiniAjaxUploadForm extends UploadForm{
 			$prefix = "";
 		
 		$error = addslashes ($error);
-		$wgOut->addHTML("<script language=\"javascript\">
+		$wgOut->addHTML("<script type=\"text/javascript\" language=\"javascript\">
 				/*<![CDATA[*/
 				window.parent.{$prefix}uploadError('{$error}');
 				/*]]>*/</script>");

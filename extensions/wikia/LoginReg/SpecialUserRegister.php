@@ -34,7 +34,7 @@ function wfSpecialUserRegister(){
 			
 			$output = "";
 
-			$output .= "<script>
+			$output .= "<script type=\"text/javascript\">
 				 var _AGE_ALERT = \"" . wfMsg("r-age-alert", $wgSitename ) . "\";
 				 var _IS_TAKEN = \"" . wfMsg("r-is-taken") . "\";
 				 var _IS_AVAILABLE = \"" . wfMsg("r-is-available") . "\";

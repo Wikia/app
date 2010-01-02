@@ -23,9 +23,9 @@ function wfSpecialSiteScoutPage(){
 			$wgOut->setPagetitle( "Site Scout" );
 			$wgOut->addScript("<link rel='stylesheet' type='text/css' href=\"/extensions/wikia/SiteScout/sitescout.css?{$wgStyleVersion}\"/>\n");
 			$wgOut->addScript("<script type=\"text/javascript\" src=\"/extensions/wikia/SiteScout/SiteScout.js?{$wgStyleVersion}\"></script>\n");
-			$wgOut->addScript("<script>YAHOO.util.Event.on(window, 'load', function () {start_scout()});</script>");
+			$wgOut->addScript("<script type=\"text/javascript\">YAHOO.util.Event.on(window, 'load', function () {start_scout()});</script>");
 			
-			$wgOut->addHTML("<script>
+			$wgOut->addHTML("<script type=\"text/javascript\">
 				var _NEW = \"" . wfMsgForContent( 'sitescout_new' ) . "\"
 				var _MINOR = \"" . wfMsgForContent( 'sitescout_minor' ) . "\"
 				var wgUploadPath = \"" . $wgUploadPath . "\"
@@ -95,7 +95,7 @@ function wfSpecialSiteScoutPage(){
 			$output .= $Scout->getControls();
 			$output .=  $Scout->getHeader() . $Scout->displayItems();
 			
-			$output .= '<script language="javascript">
+			$output .= '<script type="text/javascript" language="javascript">
  				itemMax = 30;timestamp = ' .  time() . ';</script>';
 			$wgOut->addHtml($output);
 		}

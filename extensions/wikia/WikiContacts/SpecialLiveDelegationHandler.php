@@ -60,7 +60,7 @@ class LiveDelegationHandler extends UnlistedSpecialPage {
 		    global $wgProfileJSONPath;
 		    
 		    // Prepare the message to display the consent token contents.
-		    $message_html = "<script>
+		    $message_html = "<script type=\"text/javascript\">
 		    window.location='{$wgProfileJSONPath}/JSON/msform.html'
 		    </script>";
 		 
