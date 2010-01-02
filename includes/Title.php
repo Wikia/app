@@ -808,7 +808,7 @@ class Title {
 			if ( $query == '' ) {
 				if( $variant != false && $wgContLang->hasVariants() ) {
 					if( $wgVariantArticlePath == false ) {
-						$variantArticlePath =  "$wgScript?title=$1&amp;variant=$2"; // default
+						$variantArticlePath =  "$wgScript?title=$1&variant=$2"; // default
 					} else {
 						$variantArticlePath = $wgVariantArticlePath;
 					}
@@ -838,7 +838,7 @@ class Title {
 					if ( $query == '-' ) {
 						$query = '';
 					}
-					$url = "{$wgScript}?title={$dbkey}&amp;{$query}";
+					$url = "{$wgScript}?title={$dbkey}&{$query}";
 				}
 			}
 
