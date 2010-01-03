@@ -31,7 +31,6 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionFunctions[] = 'CategorySelectInit';
 $wgExtensionMessagesFiles['CategorySelect'] = dirname(__FILE__) . '/CategorySelect.i18n.php';
-$wgAjaxExportList[] = 'CategorySelectAjaxGetCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxParseCategories';
 $wgAjaxExportList[] = 'CategorySelectAjaxSaveCategories';
 $wgAjaxExportList[] = 'CategorySelectGenerateHTMLforView';
@@ -150,35 +149,6 @@ function CategorySelectSetupVars($vars) {
 	$vars['csVisualView'] = wfMsg('categoryselect-visual-view');
 
 	return true;
-}
-
-/**
- * Get categories via AJAX that are matching typed text [for suggestion dropdown]
- *
- * @author Maciej Błaszkowski <marooned at wikia-inc.com>
- */
-function CategorySelectAjaxGetCategories() {
-	global $wgRequest;
-	$cat = $wgRequest->getText('query');
-
-	$dbr = wfGetDB(DB_SLAVE);
-	$res = $dbr->select(
-		'category',
-		'cat_title',
-		array('cat_title LIKE "%' . $dbr->escapeLike(str_replace(' ', '_', $cat)) . '%"', 'cat_pages > 0'),
-		__METHOD__,
-		array('LIMIT' => '10')
-	);
-
-	$categories = '';
-	while($row = $dbr->fetchObject($res)) {
-		$categories .= str_replace('_', ' ', $row->cat_title) . "\n";
-	}
-
-	$ar = new AjaxResponse($categories);
-	$ar->setCacheDuration(60 * 20);
-
-	return $ar;
 }
 
 /**
