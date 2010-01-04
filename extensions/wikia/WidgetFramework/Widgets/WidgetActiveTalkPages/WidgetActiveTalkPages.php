@@ -30,31 +30,31 @@ function WidgetActiveTalkPages($id, $params) {
 	// get last edits from API
 	$results = WidgetFrameworkCallAPI(array
 	(
-		'action'	=> 'query',
-		'list'		=> 'recentchanges',
+		'action'		=> 'query',
+		'list'			=> 'recentchanges',
 		'rcnamespace'   => NS_TALK,
-		'rclimit'	=> 100
+		'rcprop'		=> 'title|timestamp|ids|user|loginfo',
+		'rclimit'		=> 150
 	));
 
 	$list = array();
 
 	if ( !empty($results['query']['recentchanges']) ) {
-	    // prevent showing the same page more then once
-	    foreach($results['query']['recentchanges'] as $edit)
-	    {
-		$timestamp = strtotime($edit['timestamp']);
-		$date = $wgLang->sprintfDate('j M Y (H:i)', date('YmdHis', $timestamp));
-
-		$title = Title::newFromText( $edit['title'], $edit['ns'] );
-		if ( $title !== null && !isset($list[$edit['title']])) {
-    		    $list[$edit['title']] = array
-		    (
-			'href'  => $title->getLocalURL('diff='.$edit['revid']), 
-			'title' => $date.' (rev #'.$edit['revid'].')',
-			'name'  => $title->getText(),
-		    );
+		// prevent showing the same page more then once
+		foreach($results['query']['recentchanges'] as $edit) {
+			if ( isset($edit['logtype']) && ( $edit['logtype'] == 'delete' ) ) continue;
+			$timestamp = strtotime($edit['timestamp']);
+			$date = $wgLang->sprintfDate('j M Y (H:i)', date('YmdHis', $timestamp));
+			
+			$title = Title::newFromText( $edit['title'], $edit['ns'] );
+			if ( $title !== null && !isset($list[$edit['title']])) {
+				$list[$edit['title']] = array (
+					'href'  => $title->getLocalURL('diff='.$edit['revid']), 
+					'title' => $date.' (rev #'.$edit['revid'].')',
+					'name'  => $title->getText(),
+				);
+			}
 		}
-	    }
 	}
 	
 	$limit = intval($params['limit']);
