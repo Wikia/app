@@ -86,7 +86,7 @@ class MostvisitedpagesPage extends QueryPage {
 		}
 		$where = " page_id = article_id and page_namespace in ('".implode("','", $namespaces)."') ";
 		if (!empty($this->mArticle)) {
-			$where .= " and lower(page_title) like '%".htmlspecialchars(strtolower($this->mArticle))."%' ";
+			$where .= " and lower(page_title) like lower('%".htmlspecialchars($this->mArticle)."%') ";
 		}
 		if (!empty($this->mArticleId)) { 
 			$where .= " and page_id = '".$this->mArticleId."' ";
@@ -96,15 +96,16 @@ class MostvisitedpagesPage extends QueryPage {
 	}
 
 	function formatResult( $skin, $result ) {
+		$res = false;
 		if (empty($this->show)) {
 			$this->data[$result->title] = array('value' => $result->value, 'namespace' => $result->namespace);
-			return false;
 		} else {
 			$title = Title::newFromText($result->title, $result->namespace);
 			if ($title) {
-				$result->title = Xml::element("a", array("href" => $title->getLocalURL()), $result->title) ;
-			}
-			return wfSpecialList( $result->title, $result->value );
+				$result->title = Xml::element("a", array("href" => $title->getLocalURL()), $title->getFullText()) ;
+			} 
+			$res = wfSpecialList( $result->title, $result->value );
 		}
+		return $res;
 	}
 }
