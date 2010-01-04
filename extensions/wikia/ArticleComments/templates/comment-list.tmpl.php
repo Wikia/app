@@ -41,11 +41,13 @@
 			</div>
 		</form>
 		</div>
-	<?php
-		} else {
-			echo wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() );
+	<?php } else { ?>
+			<div id="article-comments-login">
+				<?php echo wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?>
+			</div>
+			<?php 
+			}
 		}
-	}
 
 		if ( ! count( $comments ) ) {
 			echo '<ul id="article-comments-ul"><li>';
@@ -99,9 +101,12 @@
 	<div class="article-comm-input reset clearfix">
 		<div id="article-comm-bottom-info"><p><?=wfMsg('article-comments-comment-cannot-add')?></p><br/><p><?=$output->parse($reason)?></p></div>
 	</div>
-	<?php
-			} else {
-				echo wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() );
+
+	<?php } else { ?>
+			<div id="article-comments-login">
+				<?php echo wfMsg('article-comments-login', SpecialPage::getTitleFor('UserLogin')->getLocalUrl() ); ?>
+			</div>
+			<?php 
 			}
 		}
 	?>
