@@ -12,7 +12,7 @@ class GlobalWatchlistBot {
 	private $iEmailsSent;
 	
 	const MAX_LAG = 30;
-	const RECORDS_SLEEP = 1000;
+	const RECORDS_SLEEP = 350;
 	const EMAILS = 100;
 	const TIME_SLEEP = 60;
 
@@ -267,12 +267,11 @@ class GlobalWatchlistBot {
 
 			if ( !empty($aDigest['pages']) ) {
 				foreach( $aDigest['pages'] as $aPageData ) {
-					 // watchlist tracking, rt#33913
-					$sDigests .= $aPageData['title']->getFullURL('s=dgdiff' . ($aPageData['revisionId'] ? "&diff=0&oldid=" . $aPageData['revisionId'] : "")) . "\n";
+					$sDigests .= $aPageData['title']->getFullURL(($aPageData['revisionId'] ? "diff=0&oldid=" . $aPageData['revisionId'] : "")) . "\n";
 					$iPagesCount++;
 				}
 			}
-
+			
 			# blog comments
 			if ( !empty($aDigest['blogs']) ) {
 				foreach( $aDigest['blogs'] as $blogTitle => $blogComments ) {
@@ -281,7 +280,7 @@ class GlobalWatchlistBot {
 					$message = wfMsgReplaceArgs(
 						($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUser->getOption('language') ) : "$1",
 						array ( 
-							0 => $blogComments['blogpage']->getFullURL('s=dg'),  // watchlist tracking, rt#33913
+							0 => $blogComments['blogpage']->getFullURL(),
 							1 => $countComments
 						)
 					);
