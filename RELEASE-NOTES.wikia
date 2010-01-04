@@ -1,4 +1,5 @@
 == Changes since 201001.1 ==
+* rt#22164: Answers: Related answered questions refactored. (Nef)
 * rt#35276: RTE: add Image/Video buttons don't work in source mode (macbre)
 * rt#33862: RTE: toolbar padding issue on IE8's IE7 compat mode (macbre)
 * rt#35575: lowercase letters cause image placeholder to epic fail (macbre)
