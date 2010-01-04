@@ -898,7 +898,12 @@ function WMU_insertImage(e, type) {
 	if($G('ImageUploadThumb')) {
 		if( $G('ImageUploadThumbOption').checked ) {
 			params.push( 'size=thumb' );
-			params.push( 'width=' + $G( 'ImageUploadManualWidth' ).value + 'px' );
+
+			// refs RT #35575
+			var width = parseInt( $G( 'ImageUploadManualWidth' ).value );
+			if (width > 0) {
+				params.push( 'width=' + width + 'px' );
+			}
 		} else {
 			params.push( 'size=full' );
 		}

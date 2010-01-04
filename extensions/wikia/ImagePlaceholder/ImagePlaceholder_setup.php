@@ -103,7 +103,7 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( $parser, $title, $
 			$params['handler']['width'] = intval( $m[1] ) ;
 		} elseif ( preg_match( '/^[0-9]*\s*(?:px)?\s*$/', $part ) ) {
 			$params['handler']['width'] = intval( $part );
-		} else if( ( $plc_tag != $part ) && ( $img_tag != $part ) ) {
+		} else if( ( mb_strtolower($plc_tag) != mb_strtolower($part) /* RT #35575 */ ) && ( $img_tag != $part ) ) {
 			$params['frame']['caption'] = $part;
 		}
 	}
