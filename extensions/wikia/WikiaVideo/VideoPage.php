@@ -612,6 +612,11 @@ EOD;
 					$id = $id_test;
 				}
 			}
+			if( false !== strpos( $id, "&" ) ){
+				$id = explode("&",$id);
+				$id = $id[0];
+			}
+			
 			$this->mProvider = $provider;
 			$this->mId = $id;
 			$this->mData = array();
