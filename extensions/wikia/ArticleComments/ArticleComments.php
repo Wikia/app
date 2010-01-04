@@ -436,9 +436,9 @@ class ArticleComment {
 		$res = false;
 		if ( $this->mUser ) {
 			$isAuthor = ($this->mUser->getId() == $wgUser->getId()) && (!$wgUser->isAnon());
-			//TODO: create new permission and remove checking groups below
-			$canEdit   = $wgUser->isAllowed( 'edit' );
+			$canEdit = $wgUser->isAllowed( 'edit' ) && $this->mTitle->userCanEdit();
 
+			//TODO: create new permission and remove checking groups below
 			$groups = $wgUser->getGroups();
 			$isAdmin = in_array( 'staff', $groups ) || in_array( 'sysop', $groups );
 
