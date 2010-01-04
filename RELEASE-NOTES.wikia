@@ -1,5 +1,6 @@
 == Changes since 201001.1 ==
 * rt#33862: RTE: toolbar padding issue on IE8's IE7 compat mode (macbre)
+* rt#35575: lowercase letters cause image placeholder to epic fail (macbre)
 
 == Changes since 200912.1 ==
 * rt#35717: fix language issue in CustomFooter ext (uberfuzzy)
