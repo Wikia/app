@@ -245,7 +245,6 @@ class RTE {
 		$vars['RTEMagicWords'] = self::getMagicWords();
 
 		// messages to be used in JS code
-		// TODO: move to i18n file and load via JS
 		$vars['RTEMessages'] = self::getMessages();
 
 		// local path to RTE (used to apply htc fixes for IE)
@@ -639,8 +638,6 @@ HTML
 
 	/**
 	 * Get messages to be used in JS code
-	 *
-	 * TODO: move to i18n file and load via JS
 	 */
 	static private function getMessages() {
 		global $wgLang;
@@ -667,7 +664,7 @@ HTML
 		global $wgWysiwygEnabledNamespaces, $wgContentNamespaces;
 
 		if ( !empty($wgWysiwygEnabledNamespaces) && is_array($wgWysiwygEnabledNamespaces) ) {
-			// per-wiki list of namespaces
+			// use per-wiki list of namespaces
 			$editableNamespaces = $wgWysiwygEnabledNamespaces;
 		}
 		else {
