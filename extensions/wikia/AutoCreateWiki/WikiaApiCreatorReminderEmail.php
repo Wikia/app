@@ -59,7 +59,7 @@ class WikiaApiCreatorReminderEmail extends ApiBase {
 			}
 
 			Wikia::log( __METHOD__, "user", $founder->getName() );
-			if( $founder ) {
+			if( $founder && !$founder->isNewbie() ) {
 				if( $founder->sendMail(
 					wfMsg( "autocreatewiki-reminder-subject" ),
 					wfMsg( "autocreatewiki-reminder-body", array( $founder->getName(), $wgServer ) ),
