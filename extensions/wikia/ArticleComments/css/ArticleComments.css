@@ -105,3 +105,11 @@ div.article-comment strong {
 	border: none;
 	font-size: 1.4em;
 }
+
+#article-comments-zero{
+	margin-left:10px;
+}
+
+#article-comments-login{
+	margin-left:10px;
+}
