@@ -2,7 +2,7 @@
 # This shell script is used to concatenate and minify JS files (CK core and RTE code)
 svn up
 
-cd ckeditor && java -jar ../_minify/ckpackager.jar ckeditor.wikia.pack # -v
+cd ckeditor && java -jar ../_minify/ckpackager.jar ckeditor.wikia.pack # in case of errors read http://dev.fckeditor.net/ticket/4693
 
 # perform %VERSION% and %REVISION% replacements
 version=`date +%Y%m%d`
