@@ -214,40 +214,9 @@ jQuery("#recent_unanswered_questions").ready( renderQuestions );
 
 
 jQuery("#related_answered_questions").ready(function() {
-	var category = null;
-	$("#mw-normal-catlinks > span > a, #mw-hidden-catlinks > span > a").each(function (e) {
-		// pick first category...
-		if (category == null) {
-			c = $(this).attr("href").replace(/^.*:/, "").replace(/_/g, " ");
-			// ...but skip un/answered cats
-			if (c != wgAnsweredCategory && c != wgUnAnsweredCategory) { // c is dbkey, wgVars are plain text - utf fail if wgVars contain utf
-				category = c.replace(/ /g, "_");
-			}
-		}
+   $.get(wgScript + "?smaxage=60&action=ajax&rs=HomePageListAjax&method=related_answered_questions&title=" + encodeURIComponent(wgPageName), null, function(data) {
+		if (data != "") $("#related_answered_questions").html(data);
 	});
-	if (category) {
-
-	url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categoriesonanswers&coatitle=" + category + "&coaanswered=yes&coalimit=5";
-	jQuery.getJSON( url, "", function( j ){
-		if( j.query == null ) return;
-		var
-			html = "";
-		if( j.query.categoriesonanswers) {
-			for( var recent_q in j.query.categoriesonanswers ){
-				var page = j.query.categoriesonanswers[recent_q];
-				if (wgTitle == page.title) continue;
-				var url  = page.title.replace(/ /g,"_");
-				var text = page.title + "?";
-				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('answered')\">" + text + "</a></li>";
-			}
-		}
-
-		if (html != "")
-			jQuery("#related_answered_questions").html( html );
-
-	});
-
-	}
 });
 
 jQuery(document).ready(function() {
