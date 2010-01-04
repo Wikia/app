@@ -389,4 +389,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	/* revert previous */
 	vertical-align: middle;
 }
+
+/* RT#33862 */
+.cke_browser_ie7 .cke_top {
+	height: 37px !important;
+}
 /* END IE8 strict button valign correction */
