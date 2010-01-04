@@ -13,7 +13,7 @@ if(!defined('MEDIAWIKI')) {
 $wgHooks['SpecialFooterAfterWikia'][] = 'SpecialFooterHook';
 
 function SpecialFooterHook() {
-	$message = wfMsg('custom-footer');
+	$message = wfMsgForContent('custom-footer');
 	if (!wfEmptyMsg('custom-footer', $message) && trim($message) != '-') {
 		global $wgOut;
 		$message = $wgOut->parse($message);
