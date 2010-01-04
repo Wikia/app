@@ -227,6 +227,9 @@ function CategorySelectAjaxSaveCategories($articleId, $categories) {
 				$article_text .= $categories;
 				$edit_summary = wfMsgForContent('categoryselect-edit-summary');
 				$flags = EDIT_UPDATE;
+				if ($wgUser->isAllowed('bot')) {
+					$flags |= EDIT_FORCE_BOT;
+				}
 				$article->doEdit($article_text, $edit_summary, $flags);
 
 				//return HTML with new categories
