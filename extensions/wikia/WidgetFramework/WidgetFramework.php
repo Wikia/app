@@ -71,6 +71,10 @@ class WidgetFramework {
 					),
 				);
 
+				// RT #28807
+				global $wgCityId;
+				$isRecipesWiki = ($wgCityId == 3355);
+
 				// Turn this widget on for anons if the wiki factory variable is on
 				global $wgEnableAnswersMonacoWidget;
 				if ($wgEnableAnswersMonacoWidget){
@@ -81,7 +85,7 @@ class WidgetFramework {
 
 				// Add MagCloud widget (immediately after WidgetCommunity) if extension is enabled
 				global $wgEnableMagCloudExt;
-				if (!empty($wgEnableMagCloudExt)) {
+				if (!empty($wgEnableMagCloudExt) && !$isRecipesWiki) {
 					$config1 = array();
 					foreach ($this->config[1] as $widget) {
 						$config1[] = $widget;
