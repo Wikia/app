@@ -18,7 +18,24 @@ function efAddWikiSticky( &$html ) {
 	$feedWantedpages = WikiStickies::getWantedpagesFeed( WikiStickies::INITIAL_FEED_LIMIT );
 	shuffle( $feedWantedpages );
 
+	// custom wikistickies added per RT #34558
+	$feedCustompages = WikiStickies::getCustomFeed( WikiStickies::INITIAL_FEED_LIMIT );
+	shuffle( $feedCustompages );
+
+
 	$feeds = array();
+
+        // for custom stickies, display them before everything else, as per RT #34558
+	for( $i = 0; $i < count( $feedCustompages ); $i++ ) {
+		if( isset( $feedCustompages[$i] ) ) {
+			$feeds[] = array(
+					'prefix' => 'wikistickies-custompages-st',
+					'context' => 'custompages',
+					'title' => $feedCustompages[$i],
+					'editlinks' => false );
+		}
+	}	
+
 	for( $i = 0; $i < max( count( $feedWithoutimages ), count( $feedNewpages ), count( $feedWantedpages ) ); $i++ ) {
 		if( isset( $feedWithoutimages[$i] ) ) {
 			$feeds[] = array(
@@ -40,7 +57,7 @@ function efAddWikiSticky( &$html ) {
 					'context' => 'wantedpages',
 					'title' => $feedWantedpages[$i],
 					'editlinks' => true );
-		}
+		}		
 	}
 
 	$js = "WIKIA.WikiStickies.stickies = [\n";
