@@ -199,7 +199,8 @@ function WikiaVideo_renderVideoGallery($input, $args, $parser) {
 			if (count($videos) < 4) { // fill up
 				global $wgUser;
 				for($i = count($videos); $i < 4; $i++) {
-					$onclick = '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { VET_show( $.getEvent(), ' . $args['id'] . ', ' . $i . ' ); importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } )';
+					$show = ' VET_show( $.getEvent(), ' . $args['id'] . ', ' . $i . ' ); ';
+					$onclick = '$.loadYUI(  function() {if (typeof VET_show != \'function\' ){ $.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { '.$show.' importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } else {'.$show.'} } )';
 
 					// render placeholder cell
 					$out .= Xml::openElement('td');
@@ -311,7 +312,8 @@ function WikiaVideo_makeVideo( $title, $options, $sk, $wikitext = '', $plc_templ
 
 		}
 		else {
-			$onclick= '$.loadYUI( function() {$.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() { VET_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' ); importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) } ) } )';
+			$show =  ' VET_show( $.getEvent(), ' . -2  . ', ' . $wgWikiaVideoPlaceholderId . ','. $isalign .','. $isthumb .' ,'. $iswidth .', \''. htmlspecialchars($caption) .'\' ); ';
+			$onclick= '$.loadYUI( function() { if (typeof VET_show != \'function\' ){  $.getScript(wgExtensionsPath+\'/wikia/VideoEmbedTool/js/VET.js?\'+wgStyleVersion, function() {'.$show.' importStylesheetURI( wgExtensionsPath+\'/wikia/VideoEmbedTool/css/VET.css?\'+wgStyleVersion ) }  ) }else{ '.$show.'} } )';
 		}
 
 		// render HTML (RT #21087)
