@@ -5,7 +5,7 @@
  */
 
 function wfInitStats( $options=array() ) {
-	global $wgExternalSharedDB, $wgMemc;
+	global $wgExternalSharedDB, $wgMemc, $wgRCMaxAge;
 
 	$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 	$dbc = wfGetDB( DB_SLAVE, 'vslow', $wgExternalSharedDB );
@@ -41,9 +41,15 @@ function wfInitStats( $options=array() ) {
 	}
 	wfOut( "{$users}\nCounting number of active users..." );
 
-	$active_users = $dbr->selectField( 'recentchanges', 'COUNT( DISTINCT rc_user_text )',
-	         array( 'rc_user != 0', 'rc_bot' => 0, "rc_log_type != 'newusers' OR rc_log_type IS NULL" ),
-				         __METHOD__ );
+	$active_users_conds = array( 
+		'rc_user != 0', 
+		'rc_bot' => 0, 
+		"rc_log_type != 'newusers' OR rc_log_type IS NULL" 
+	),
+	if ( !empty($wgRCMaxAge) ) {
+		$active_users_conds[] = sprintf("rc_timestamp >= '%s'", date( 'YmdHis', time()- $wgRCMaxAge ));
+	}
+	$active_users = $dbr->selectField( 'recentchanges', 'COUNT( DISTINCT rc_user_text )', $active_users_conds, __METHOD__ );
 	wfOut( "{$active_users}\nCounting number of admins..." );
 
 	$admin = $dbr->selectField( 'user_groups', 'COUNT(*)', array( 'ug_group' => 'sysop' ), __METHOD__ );
