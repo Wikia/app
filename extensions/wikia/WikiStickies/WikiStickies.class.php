@@ -180,7 +180,13 @@ class WikiStickies {
 		$wgOut->addHTML( $html );
 	}
 
-	// feed packaging
+	// format for single feed
+	static function formatFakeFeed( ) {
+
+
+	}
+
+	// feed packaging, for a feed taken from db
 	static function getFeed( $feed, $data ) {
 		wfProfileIn( __METHOD__ );
 		$result = array();
@@ -210,6 +216,26 @@ class WikiStickies {
 
 		wfProfileOut( __METHOD__ );
 		return $result;
+	}
+
+	// feed packaging, for a "fake" feed, taken from a MediaWiki message rather than db
+	static function getFakeFeed( $page, $limit ) {
+		$result = array();
+		$custom = wfMsgForContent( 'CommunityStickies' ) ;
+		if ('' != $custom) {
+			$custom = preg_split( "/\*/", $custom );
+		}
+		$custom = array_map( "trim", $custom );
+		
+		foreach( $custom as $title ) {
+			// todo something
+		}
+
+		return $result;
+	}
+
+	static function getCustomFeed( $limit ) {
+		return self::getFakeFeed( 'CommunityStickies', $limit );
 	}
 
 	// fetch the feed for SpecialNewpages
