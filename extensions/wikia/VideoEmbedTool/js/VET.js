@@ -375,17 +375,19 @@ function VET_show( e, gallery, box, align, thumb, size, caption ) {
 
 	// TODO: FCK support - to be removed after full switch to RTE
 	if(YAHOO.lang.isNumber(e)) {
-		VET_refid = e;
-		if(VET_refid == -1) {
-			VET_track('open/fromWysiwyg/new');
-			// go to main page
-		} else {
-			VET_track('open/fromWysiwyg/existing');
-			if(FCK.wysiwygData[VET_refid].href) {
-				// go to details page
-				VET_wysiwygStart = 2;
-			} else {
+		if( typeof FCK != "undefined" ){
+			VET_refid = e;
+			if(VET_refid == -1) {
+				VET_track('open/fromWysiwyg/new');
 				// go to main page
+			} else {
+				VET_track('open/fromWysiwyg/existing');
+				if(FCK.wysiwygData[VET_refid].href) {
+					// go to details page
+					VET_wysiwygStart = 2;
+				} else {
+					// go to main page
+				}
 			}
 		}
 	} else {
