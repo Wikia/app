@@ -235,12 +235,20 @@ class SiteStatsUpdate {
 	}
 	
 	public static function cacheUpdate( $dbw ) {
+		global $wgRCMaxAge;
 		$dbr = wfGetDB( DB_SLAVE, array( 'SpecialStatistics', 'vslow') );
 		# Get non-bot users than did some recent action other than making accounts.
 		# If account creation is included, the number gets inflated ~20+ fold on enwiki.
-		$activeUsers = $dbr->selectField( 'recentchanges', 'COUNT( DISTINCT rc_user_text )',
-			array( 'rc_user != 0', 'rc_bot' => 0, "rc_log_type != 'newusers' OR rc_log_type IS NULL" ),
-			__METHOD__ );
+		$active_users_conds = array( 
+			'rc_user != 0', 
+			'rc_bot' => 0, 
+			"rc_log_type != 'newusers' OR rc_log_type IS NULL" 
+		),
+		if ( !empty($wgRCMaxAge) ) {
+			$active_users_conds[] = sprintf("rc_timestamp >= '%s'", date( 'YmdHis', time()- $wgRCMaxAge ));
+		}
+		
+		$activeUsers = $dbr->selectField( 'recentchanges', 'COUNT( DISTINCT rc_user_text )', $active_users_conds, __METHOD__ );
 		$dbw->update( 'site_stats', 
 			array( 'ss_active_users' => intval($activeUsers) ),
 			array( 'ss_row_id' => 1 ), __METHOD__
