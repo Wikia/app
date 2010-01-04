@@ -15,7 +15,7 @@ CKEDITOR.plugins.add('rte-toolbar',
 			// show toolbar - CK is fully loaded now
 			toolbar.css('visibility', 'visible');
 
-			// render MW toolbar inside CK
+			// render new MW toolbar inside CK
 			var MWtoolbar = $('<div id="mw-toolbar">');
 			toolbar.append(MWtoolbar);
 
@@ -28,8 +28,14 @@ CKEDITOR.plugins.add('rte-toolbar',
 				mwInsertEditButton(MWtoolbar[0], mwCustomEditButtons[i]);
 			}
 
+			// toolbar is ready!
+			editor.fire('toolbarReady', toolbar);
+
 			// add toolbar covering div - will be used during loading state
 			toolbar.append('<div id="toolbarCover" class="color1" />');
+
+			// remove MW toolbar (rendered by MW core)
+			$('#toolbar').remove();
 
 			// reference to editor container (wrapping element for iframe / textarea)
 			self.editorContainer = $(RTE.instance.container.$).find('.cke_contents');
