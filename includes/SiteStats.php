@@ -243,7 +243,7 @@ class SiteStatsUpdate {
 			'rc_user != 0', 
 			'rc_bot' => 0, 
 			"rc_log_type != 'newusers' OR rc_log_type IS NULL" 
-		),
+		);
 		if ( !empty($wgRCMaxAge) ) {
 			$active_users_conds[] = sprintf("rc_timestamp >= '%s'", date( 'YmdHis', time()- $wgRCMaxAge ));
 		}
