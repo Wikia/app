@@ -68,7 +68,9 @@ ArticleComments.postComment = function(e) {
 			$('#article-comments-ul').replaceWith(json.text);
 			$('.article-comm-edit').bind('click', ArticleComments.edit);
 			//pagination
-			$('#article-comments-pagination').html('<div>' + json.pagination + '</div>');
+			if (json.pagination != '') {
+				$('#article-comments-pagination').show().html('<div>' + json.pagination + '</div>');
+			}
 			//readd events
 			ArticleComments.addHover();
 			ArticleComments.bind();
