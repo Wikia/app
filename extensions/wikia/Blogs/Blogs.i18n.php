@@ -27,7 +27,7 @@ $messages['en'] = array(
 	'create-blog-invalid-title-error' => 'Invalid title',
 	'create-listing-confirm-info' => 'Copy and paste the following code:',
 	'create-blog-no-login' => 'Not logged in',
-	'create-blog-login-required' => 'You must be <span class="plainlinks">[{{fullurl:Special:Signup|$1}} logged in]</span> to create blog posts or listings.',
+	'create-blog-login-required' => 'You must be [{{fullurl:Special:Signup|$1}} logged in] to create blog posts or listings.',
 	'create-blog-categories-title' => 'Add this blog post to these categories (click to select)',
 	'create-blog-categories-textinput' => 'Add a new category',
 	'create-blog-categories-submit' => 'Submit',
