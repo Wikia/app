@@ -179,7 +179,7 @@ class WikiStickies {
 		$wgOut->addHTML( $html );
 	}
 
-	// format for single feed
+	// format for single feed, taken from 
 	static function formatFakeFeed( ) {
 
 

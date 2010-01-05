@@ -65,7 +65,7 @@ class SpecialWikiStickies extends SpecialPage {
 			wfMsg('wikistickies-wantedpages-hd'), 
 			'wikistickies-wantedpages-st-short' );
 
-		WikiStickies::formatFeed( 'wikistickies-communitystickies', 
+		WikiStickies::formatFakeFeed( 'wikistickies-communitystickies', 
 			WikiStickies::getCustomFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
 			wfMsg('wikistickies-wantedpages-hd'), 
 			'wikistickies-wantedpages-st-short' );
