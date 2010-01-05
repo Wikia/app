@@ -331,7 +331,7 @@ class FeedRenderer {
 				// edit done from editor
 				if (empty($row['viewMode'])) {
 					// talk pages
-					if (Namespace::isTalk($row['ns'])) {
+					if (isset($row['ns']) && Namespace::isTalk($row['ns'])) {
 						if (empty($row['articleComment'])) {
 							$type = self::FEED_TALK_ICON;
 						} else {
