@@ -313,7 +313,7 @@ class WikiStickies {
 				wfMsg( 'wikistickies' ).
 			Xml::closeElement( 'h2' );
 		}
-		$html .= Xml::openElement( 'p' );
+		$html .= Xml::openElement( 'p', array( 'id' => 'wikisticky_main_p' ) );
 		if( 'MyHome' == $canname ) {
 			$html .= self::renderWikiStickyContent( $title, $prefix, $inside_attrs, $editlinks );
 		} else {
