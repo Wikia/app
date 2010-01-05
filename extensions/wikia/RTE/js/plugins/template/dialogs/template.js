@@ -143,7 +143,7 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 										self.enable();
 									}]);
 
-									RTE.track('template', 'editor', 'preview');
+									RTE.track('template', 'dialog', 'editor', 'preview');
 								}
 							},
 							{
@@ -285,10 +285,10 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 
 			// tracking
 			this.getButton('ok').on('click', function(ev) {
-				RTE.track('template', 'editor', 'ok');
+				RTE.track('template', 'dialog', 'editor', 'ok');
 			});
 			this.getButton('chooseAnotherTpl').on('click', function(ev) {
-				RTE.track('template', 'editor', 'chooseAnother');
+				RTE.track('template', 'dialog', 'editor', 'chooseAnother');
 			});
 
 			// let's show proper step
@@ -296,9 +296,9 @@ CKEDITOR.dialog.add('rte-template', function(editor)
 		},
 		onHide: function() {
 			// detect current step
-			var step = (this.getActiveTab() == 'step1') ? 'dialog' : 'editor';
+			var step = (this.getActiveTab() == 'step1') ? 'search' : 'editor';
 
-			RTE.track('template', step, 'close');
+			RTE.track('template', 'dialog', step, 'close');
 		}
 	};
 });
