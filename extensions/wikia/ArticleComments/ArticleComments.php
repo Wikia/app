@@ -584,7 +584,10 @@ class ArticleComment {
 			return Wikia::json_encode( array( 'error' => 1 ) );
 		}
 
-		return Wikia::json_encode( $res );
+		$json = Wikia::json_encode($res);
+		$response = new AjaxResponse($json);
+		$response->setContentType('application/json; charset=utf-8');
+		return $response;
 	}
 
 	/**
@@ -623,7 +626,7 @@ class ArticleComment {
 			$status = false;
 		}
 
-		return Wikia::json_encode(
+		$json = Wikia::json_encode(
 			array(
 				'id'	=> $commentId,
 				'error'	=> $error,
@@ -631,6 +634,9 @@ class ArticleComment {
 				'text'	=> $text
 			)
 		);
+		$response = new AjaxResponse($json);
+		$response->setContentType('application/json; charset=utf-8');
+		return $response;
 	}
 
 	/**
@@ -669,7 +675,10 @@ class ArticleComment {
 			$res = array('text' => $comments, 'pagination' => $pagination);
 		}
 
-		return Wikia::json_encode( $res );
+		$json = Wikia::json_encode($res);
+		$response = new AjaxResponse($json);
+		$response->setContentType('application/json; charset=utf-8');
+		return $response;
 	}
 
 	/**

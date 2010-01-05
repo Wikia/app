@@ -93,6 +93,10 @@ div.article-comment strong {
 	margin: 10px;
 }
 
+.article-comments-pagination-hidden {
+	display: none;
+}
+
 #article-comments-pagination div {
 	background-color: #FFF;
 	float: left;

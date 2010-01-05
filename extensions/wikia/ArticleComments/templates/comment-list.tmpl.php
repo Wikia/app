@@ -49,10 +49,12 @@
 			}
 		}
 
+		$class = '';
 		if ( ! count( $comments ) ) {
 			echo '<ul id="article-comments-ul"><li>';
 			echo '<div id="article-comments-zero">' . wfMsg('article-comments-zero-comments') . '</div>';
 			echo '</li></ul>';
+			$class = ' class="article-comments-pagination-hidden"';
 		} else {
 			echo '<ul id="article-comments-ul">';
 			$odd = true;
@@ -63,9 +65,8 @@
 				echo "\n</li>\n";
 			endforeach;
 			echo '</ul>';
-
-			echo '<div id="article-comments-pagination"><div>' . $pagination . '</div></div>';
 		}
+		echo '<div id="article-comments-pagination"' . $class . '><div>' . $pagination . '</div></div>';
 
 		if ( $canEdit && !$isBlocked ) {
 	?>
