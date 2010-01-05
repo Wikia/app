@@ -91,13 +91,12 @@ class WikiStickies {
 
 			foreach( $feed_data as $title ) {
 				if( !in_array( $title->getPrefixedText(), $excluded ) ) {
-					$result[] = $title;
+					if( count( $result ) > self::SPECIAL_FEED_LIMIT ) {
+                                       		break;
+					} else {
+						$result[] = $title;
+					}
 				}
-			}
-
-			// trim array to limit		
-			if( count( $result ) > self::SPECIAL_FEED_LIMIT ) {
-				$result = array_slice( $result, 0, self::SPECIAL_FEED_LIMIT );
 			}
 			$feed_data = $result;
 		}
@@ -118,7 +117,7 @@ class WikiStickies {
 	static function formatFeed( $type, &$feed_data, $header, $sticker ) {
 		global $wgOut, $wgUser;
 
-		$sk = $wgUser->getSkin() ;
+		$sk = $wgUser->getSkin();
 		$body = '';
 		$editlinks = null;
 
@@ -220,15 +219,20 @@ class WikiStickies {
 
 	// feed packaging, for a "fake" feed, taken from a MediaWiki message rather than db
 	static function getFakeFeed( $page, $limit ) {
+		global $wgOut;
 		$result = array();
 		$custom = wfMsgForContent( 'CommunityStickies' ) ;
 		if ('' != $custom) {
 			$custom = preg_split( "/\*/", $custom );
 		}
 		$custom = array_map( "trim", $custom );
-		
-		foreach( $custom as $title ) {
-			// todo something
+		$number = 0;		
+		foreach( $custom as $text ) {
+			if( count( $result ) > $limit ) {
+				break;
+			} else {
+				$result[] = $text;	
+			}
 		}
 
 		return $result;
