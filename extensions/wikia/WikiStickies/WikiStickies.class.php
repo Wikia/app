@@ -181,7 +181,7 @@ class WikiStickies {
 
 	// format for single feed, taken from 
 	static function formatFakeFeed( ) {
-
+        	// todo for the second part of RT #34558
 
 	}
 
@@ -230,7 +230,7 @@ class WikiStickies {
 		foreach( $custom as $text ) {
 			if( count( $result ) > $limit ) {
 				break;
-			} else {
+			} else if( '' != $text ) {
 				$result[] = $text;	
 			}
 		}
@@ -340,9 +340,34 @@ class WikiStickies {
 		return $html;
 	}
 
+	// customized version of addWikiText from OutputPage, it just returns html, not outputs it
+	static function parseHtml( $html ) {
+		global $wgParser, $wgOut, $wgTitle;
+		wfProfileIn( __METHOD__ );
+
+		$popts = $wgOut->parserOptions();
+                $oldTidy = $popts->setTidy( false );
+
+                $parserOutput = $wgParser->parse( $html, $wgTitle, $popts, true, true, $wgOut->mRevisionId );
+
+                $popts->setTidy( $oldTidy );
+
+		wfProfileOut( __METHOD__ );			
+		return Xml::escapeJsString( $parserOutput->getText() );
+	}
+
 	static function renderWikiStickyContent( $title, $prefix, $attrs = NULL, $editlinks = false ) {
+		global $wgOut;
 		$html = '';
 		$linkQuery = array();		
+
+		// different treatment for custom wikistickies: they are in wikitext format, and they just contain links
+		// they need to be parsed, for reference, check RT #34558 - Bartek 05.01.2010
+			
+		if( 'wikistickies-custompages-st' == $prefix ) {
+			$html .= self::parseHtml( $title );						
+                        return $html;
+		} 
 
 		if( is_object( $title ) && $title instanceof Title ) {
 			global $wgUser;
