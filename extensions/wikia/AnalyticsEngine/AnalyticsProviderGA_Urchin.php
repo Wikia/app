@@ -66,8 +66,19 @@ class AnalyticsProviderGA_Urchin implements iAnalyticsProvider {
 	}
 
 	private function lyrics() {
+		global $wgRequest;
+		if ("view" != $wgRequest->getVal("action", "view")) return "";
+
 		global $wgTitle;
-		$ns = (is_object($wgTitle) && $wgTitle instanceof Title) ? $wgTitle->getNamespace() : -99;
-		return "<script type=\"text/javascript\">_uff=0; _uacct=\"UA-12241505-1\"; urchinTracker(\"/GN2/{$ns}\");</script>";
+		if (!is_object($wgTitle) || !($wgTitle instanceof Title)) return "";
+	
+		$ns = $wgTitle->getNamespace();
+
+		$out  = "<script type=\"text/javascript\">_uff=0; _uacct=\"UA-12241505-1\"; urchinTracker(\"/GN2/{$ns}\");</script>\n";
+
+		if (in_array($ns, array(0, 220))) 
+		$out .= "<script type=\"text/javascript\">_uff=0; _uacct=\"UA-12241505-1\"; urchinTracker(\"/GN4/{$ns}/{$wgTitle->getArticleID()}\");</script>\n";
+
+		return $out;
 	}
 }
