@@ -54,7 +54,7 @@ sub testResults {
 # scaleHeight function compatible with MediaWiki
 #
 sub scaleHeight {
-	my( $srcWidth, $srcHeight, $dstWidth ) = @_;
+	my( $srcWidth, $srcHeight, $dstWidth, $test ) = @_;
 	my $dstHeight;
 	if( $srcWidth == 0  )  {
 		$dstHeight = 0;
@@ -62,6 +62,7 @@ sub scaleHeight {
 	else {
 		$dstHeight = round_even( $srcHeight * $dstWidth /  $srcWidth );
 	}
+	print qq/$srcWidth x $srcHeight -> $dstWidth x $dstHeight\n/ if( $test );
 	return $dstHeight;
 }
 
@@ -84,6 +85,7 @@ my @tests = qw(
 	/h/half-life/en/images/thumb/1/1d/Zombie_Assassin.jpg/100px-Zombie_Assassin.jpg
 	/h/half-life/en/images/thumb/a/a5/Gene_worm_model.jpg/260px-Gene_worm_model.jpg
 	/h/half-life/en/images/thumb/a/a5/Gene_worm_model.jpg/250px-Gene_worm_model.jpg
+	/h/half-life/en/images/thumb/b/b1/Alyx_hanging_trailer.jpg/250px-Alyx_hanging_trailer.jpg
 );
 my @done = ();
 
@@ -93,11 +95,11 @@ my @done = ();
 # configurable via environmet variables
 #
 my $maxrequests = $ENV{ "REQUESTS" } || 1000;
+my $basepath    = $ENV{ "IMGPATH" }  || "/images";
 my $clients     = $ENV{ "CHILDREN" } || 10;
 my $listen      = $ENV{ "SOCKET" }   || "127.0.0.1:39393";
 my $debug       = $ENV{ "DEBUG" }    || 1;
 my $test        = $ENV{ "TEST" }     || 0;
-my $basepath    = $ENV{ "IMGPATH" }  || "/images";
 
 #
 # fastcgi request
@@ -244,7 +246,7 @@ while( $request->Accept() >= 0 || $test ) {
 					my $origh = $xmlp->{ 'height' };
 					$origw = to_float( $origw ) unless is_float( $origw );
 					$origh = to_float( $origh ) unless is_float( $origh );
-					my $height = scaleHeight( $origw, $origh, $width );
+					my $height = scaleHeight( $origw, $origh, $width, $test );
 
 					#
 					# RSVG thumbnailer
@@ -335,7 +337,7 @@ while( $request->Accept() >= 0 || $test ) {
 					my $origw  = $image->Get( 'width' );
 					my $origh  = $image->Get( 'height' );
 					if( $origw && $origh ) {
-						my $height = scaleHeight( $origw, $origh, $width );
+						my $height = scaleHeight( $origw, $origh, $width, $test );
 						$image->Resize( "geometry" => "${width}x${height}!", "blur" => 0.9 );
 						$image->Write( "filename" => $thumbnail );
 						$transformed = 1;
