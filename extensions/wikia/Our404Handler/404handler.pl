@@ -18,7 +18,7 @@ use File::Basename;
 use File::Path;
 use XML::Simple;
 use Data::Types qw(:all);
-use Math::Round qw(round_even);
+use Math::Round qw(round);
 
 sub real404 {
 	my $request_uri  = shift;
@@ -60,7 +60,7 @@ sub scaleHeight {
 		$dstHeight = 0;
 	}
 	else {
-		$dstHeight = round_even( $srcHeight * $dstWidth /  $srcWidth );
+		$dstHeight = round( $srcHeight * $dstWidth /  $srcWidth );
 	}
 	print qq/$srcWidth x $srcHeight -> $dstWidth x $dstHeight\n/ if( $test );
 	return $dstHeight;
