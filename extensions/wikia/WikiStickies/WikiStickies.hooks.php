@@ -51,13 +51,6 @@ function efAddWikiSticky( &$html ) {
 					'title' => $feedNewpages[$i],
 					'editlinks' => false );
 		}
-		if( isset( $feedWantedpages[$i] ) ) {
-			$feeds[] = array(
-					'prefix' => 'wikistickies-wantedpages-st',
-					'context' => 'wantedpages',
-					'title' => $feedWantedpages[$i],
-					'editlinks' => true );
-		}		
 	}
 
 	$js = "WIKIA.WikiStickies.stickies = [\n";
