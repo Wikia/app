@@ -344,11 +344,28 @@ HTML
 		}
 
 		// check namespaces
+		global $wgWysiwygDisabledNamespaces, $wgWysiwygDisableOnTalk;
+		if(!empty($wgWysiwygDisabledNamespaces) && is_array($wgWysiwygDisabledNamespaces)) {
+			if(in_array(self::$title->getNamespace(), $wgWysiwygDisabledNamespaces)) {
+				self::disableEditor();
+			}
+		} else {
+			if(self::$title->getNamespace() == NS_TEMPLATE || self::$title->getNamespace() == NS_MEDIAWIKI) {
+				self::disableEditor();
+			}
+		}
+		if(!empty($wgWysiwygDisableOnTalk)) {
+			if(self::$title->getNamespace()->isTalk()) {
+				self::disableEditor();
+			}
+		}
+		/*
 		$editableNamespaces = self::getEditableNamespaces();
 		if(!in_array(self::$title->getNamespace(), $editableNamespaces)) {
 			RTE::log('this page is not in editable namespace');
 			self::disableEditor();
 		}
+		*/
 
 		// RT #10170: do not initialize for user JS/CSS subpages
 		if (self::$title->isCssJsSubpage()) {
