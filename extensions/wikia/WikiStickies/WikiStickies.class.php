@@ -324,13 +324,13 @@ class WikiStickies {
 				wfMsg( 'wikistickies' ).
 			Xml::closeElement( 'h2' );
 		}
-		$html .= Xml::openElement( 'p', array( 'id' => 'wikisticky_main_p' ) );
+		$html .= Xml::openElement( 'div', array( 'class' => 'wikisticky_main_p' ) );
 		if( 'MyHome' == $canname ) {
 			$html .= self::renderWikiStickyContent( $title, $prefix, $inside_attrs, $editlinks );
 		} else {
 			$html .= self::renderWikiStickyContent( $title, $prefix, null, $editlinks );
 		}
-		$html .= Xml::closeElement( 'p' );
+		$html .= Xml::closeElement( 'div' );
 		if( 'MyHome' == $canname ) {
 			// TODO: This should link to the source of the feed fetched, not a '#' fragment.
 			$html .=
@@ -374,10 +374,13 @@ class WikiStickies {
 
 		// different treatment for custom wikistickies: they are in wikitext format, and they contain mixed text and links in data
 		// they need to be parsed, for reference, check RT #34558 - Bartek 05.01.2010			
-		if( 'wikistickies-custompages-st' == $prefix ) {
+		if( 'wikistickies-custompages-st' == $prefix ) { // special page
 			$html .= Xml::escapeJsString( self::parseHtml( $title ) );						
                         return $html;
-		} 
+		} else if( 'wikistickies-custompages-st-short' == $prefix ) { // MyHome
+			$html .= self::parseHtml( $title );
+                        return $html;
+		}
 
 		if( is_object( $title ) && $title instanceof Title ) {
 			global $wgUser;

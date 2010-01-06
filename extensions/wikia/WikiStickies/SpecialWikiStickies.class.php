@@ -63,7 +63,7 @@ class SpecialWikiStickies extends SpecialPage {
 		WikiStickies::formatFeed( 'wikistickies-communitystickies', 
 			WikiStickies::getCustomFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
 			'', 
-			'',
+			'wikistickies-custompages-st-short',
 			true );
 
 

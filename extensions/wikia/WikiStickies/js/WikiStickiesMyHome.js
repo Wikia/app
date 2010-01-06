@@ -18,13 +18,13 @@ WIKIA.WikiStickies.count = 0;
 WIKIA.WikiStickies.flipWikisticky = function (e) {
 	e.preventDefault();
 	WET.byStr( 'MyHome/wikistickies/next' );
-	$(".wikisticky_content #wikisticky_main_p").fadeOut("fast", WIKIA.WikiStickies.updateSticky);
+	$(".wikisticky_content .wikisticky_main_p").fadeOut("fast", WIKIA.WikiStickies.updateSticky);
 	$(".wikisticky_content h2").fadeOut("fast");
 	$(".wikisticky_next").hide();
 	$(".wikisticky_curl").animate({
 		width: "900px"
 	}, function() {
-		$(".wikisticky_content p, .wikisticky_next, .wikisticky_content h2").fadeIn("slow");
+		$(".wikisticky_content .wikisticky_main_p, .wikisticky_next, .wikisticky_content h2").fadeIn("slow");
 		$(this).css({
 			bottom: "-80px",
 			right: "-80px",
@@ -41,7 +41,7 @@ WIKIA.WikiStickies.trackLink = function() {
 }
 
 WIKIA.WikiStickies.updateSticky = function () {
- 	var paragraph = $('#wikisticky_main_p'); 
+ 	var paragraph = $('.wikisticky_main_p'); 
 	//set content
 	paragraph.html(WIKIA.WikiStickies.stickies[WIKIA.WikiStickies.count]);
 	WIKIA.WikiStickies.count++;
@@ -61,7 +61,7 @@ WIKIA.WikiStickies.updateSticky = function () {
 $(document).ready(function() {
 	$(".wikisticky_curl, .wikisticky_next").bind("click", WIKIA.WikiStickies.flipWikisticky);
 	$('.wikisticky_special_link').click(WIKIA.WikiStickies.trackLink);
-	var content = $('#wikisticky_main_p');
+	var content = $('.wikisticky_main_p');
 	content.bind('click', function(ev) {
 		var target = $(ev.target).filter('a');
 		if (target.exists()) {
