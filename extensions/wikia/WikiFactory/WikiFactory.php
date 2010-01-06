@@ -26,6 +26,12 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
 	}
 }
 
+/**
+ * define hooks for WikiFactory here
+ */
+
+$wgHooks[ "RecentChange_save" ][] = "WikiFactory::updateLastTimestamp";
+
 class WikiFactory {
 
 	const LOG_VARIABLE  = 1;
@@ -1862,7 +1868,7 @@ class WikiFactory {
 
 		return empty( $row ) ? false : $row;
 	}
-	
+
 	/**
 	 * getWikiByDB
 	 *
@@ -1893,7 +1899,7 @@ class WikiFactory {
 
 		return isset( $oRow->city_id ) ? $oRow : false;
 	}
-	
+
 	/**
 	 * MultipleVarsToID
 	 *
@@ -1948,5 +1954,37 @@ class WikiFactory {
 
 		wfProfileOut( __METHOD__ );
 		return isset( $oRow->cv_city_id ) ? $oRow->cv_city_id : null;
+	}
+
+	/**
+	 * updateLastTimestamp
+	 *
+	 * update city_last_timestamp in city_list table to current timestamp
+	 *
+	 * @author Krzysztof Krzyżaniak (eloy)
+	 * @access public
+	 * @static
+	 *
+	 * @param RecentChanges $rc	instance of RecentChanges class
+	 *
+	 */
+	static public function updateLastTimestamp( $rc, $city_id = false ) {
+		if( ! self::isUsed() ) {
+			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			return false;
+		}
+
+		if( !$city_id ) {
+			global $wgCityId;
+			$city_id = $wgCityId;
+		}
+
+		$dbw = self::db( DB_MASTER );
+		return $dbw->update(
+			"city_list",
+			array( "city_last_timestamp" => '' ),
+			array( "city_id" => $city_id ),
+			__METHOD__
+		);
 	}
 };
