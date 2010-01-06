@@ -660,12 +660,12 @@ function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 	$timestamp = $qArticle->getTitle()->getTouched();
 	$lastUpdate = wfTimeFormatAgo($timestamp);
 	#
-	$userId = 0; $userLink = "";
+	$user_id = 0; $userLink = "";
 	$author = CategoryHub::getTitleOwner($title);
 	if ( is_array($author) ) {
 		list( $user_id, $userText, $userPageTitle, $userAvatar ) = array_values( $author );
 	}
-	if($userId > 0){
+	if($user_id > 0){
 		$userPageLink = $userPageTitle->getLocalUrl();
 		$userPageExists = $userPageTitle->exists();
 		$userLinkText = $userPageExists ? '<a class="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '';
