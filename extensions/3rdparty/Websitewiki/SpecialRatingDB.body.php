@@ -45,7 +45,7 @@ $checkIP = null;
 //connecting to the database to get some information
 $dbr = wfGetDB( DB_SLAVE );
 
-$ratingTable = $dbr->tableName( 'rating' );
+$ratingTable = $dbr->tableName( 'ratings' );
 
 $row = $dbr->selectRow(
 	$ratingTable,
