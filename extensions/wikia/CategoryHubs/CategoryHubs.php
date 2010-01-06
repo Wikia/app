@@ -10,9 +10,6 @@
 // This extension depends on the FlexibleCategoryViewer extension.
 // This extension depends on the CategoryStats extension.
 // This extension depends on the Answer class.
-//
-// TODO: MAKE SURE THE USERBADGES STILL LOOK THE SAME ON ALL PAGES.  IT SEEMS THAT THE TOP MARGIN ON THE USERINFO MIGHT HAVE CHANGED IN ITS ORIGINAL USAGE (ALTHOUGH IT SEEMS TO RENDER FINE IN MY NEW USAGE... CACHING??).
-// TODO: MAKE SURE THE PAGINATION LINKS SHOW UP IN THE RIGHT SPOT.  Category:Pokemon SHOULD BE HELPFUL FOR TESTING. They used to be in getCategoryBottom, but currently we're just not showing that section (probably want to override it in the future instead).
 ////
 
 if ( ! defined( 'MEDIAWIKI' ) ){
@@ -67,18 +64,18 @@ if(!isset($wgCatHub_useDefaultView)){
 	$wgCatHub_useDefaultView = false;
 }
 
-////
-// Used to add the __NORICHCATEGORY__ behavior switch (magic word).
-// Bound to $wgHooks['LanguageGetMagic'][]
-////
+/**
+ * Used to add the __NORICHCATEGORY__ behavior switch (magic word).
+ * Bound to $wgHooks['LanguageGetMagic'][]
+ */
 function categoryHubAddMagicWords(&$magicWords, $langCode){
 	$magicWords[CATHUB_NORICHCATEGORY] = array( 0, '__NORICHCATEGORY__' );
 	return true;
 }
 
-////
-// Before the page is rendered this gives us a chance to cram some Javascript in.
-////
+/**
+ * Before the page is rendered this gives us a chance to cram some Javascript in.
+ */
 function categoryHubAdditionalScripts( &$out, &$sk ){
 	global $wgExtensionsPath,$wgStyleVersion;
 	$out->addStyle( "$wgExtensionsPath/wikia/CategoryHubs/CategoryHubs.css?$wgStyleVersion" );
@@ -90,10 +87,10 @@ function categoryHubAdditionalScripts( &$out, &$sk ){
 	return true;
 } // end categoryHubAdditionalScripts()
 
-////
-// Adds global variables to the JS that will be needed by the CategoryHubs javascript.
-// This includes internationalized messages that the JS will need.
-////
+/**
+ * Adds global variables to the JS that will be needed by the CategoryHubs javascript.
+ * This includes internationalized messages that the JS will need.
+ */
 function categoryHubJsGlobalVariables(&$vars){
 	wfLoadExtensionMessages('CategoryHub');
 	$vars['wgCatHubSaveButtonMsg'] = wfMsg('save');
@@ -109,9 +106,9 @@ function categoryHubJsGlobalVariables(&$vars){
 	return true;
 } // end categoryHubJsGlobalVariables()
 
-////
-// Determines if the magic word is present for disabling the Category Hub and defaulting to previous behavior.
-////
+/**
+ * Determines if the magic word is present for disabling the Category Hub and defaulting to previous behavior.
+ */
 function categoryHubCheckForMagicWords(&$parser, &$text, &$strip_state) {
 	global $wgCatHub_useDefaultView;
 	if((!isset($wgCatHub_useDefaultView)) || (!$wgCatHub_useDefaultView)){
@@ -128,10 +125,10 @@ function categoryHubCheckForMagicWords(&$parser, &$text, &$strip_state) {
 
 ///// THE NEXT TWO FUNCTIONS LET US OVERRIDE THE ORDER OF THE SECTIONS ON THE CATEGORY PAGE /////
 
-////
-// Used to intercept calls to CategoryPage::openShowCategory just for the use of disabling the display of extra things on
-// preview pages when CategoryHubs is enabled..
-////
+/**
+ * Used to intercept calls to CategoryPage::openShowCategory just for the use of disabling the display of extra things on
+ * preview pages when CategoryHubs is enabled..
+ */
 function categoryHubPreviewCheck(&$catView, &$r){
 	global $wgRequest;
 
@@ -139,10 +136,10 @@ function categoryHubPreviewCheck(&$catView, &$r){
 	return (!$wgRequest->getCheck('wpPreview'));
 } // end categoryHubPreviewCheck()
 
-////
-// Overrides FlexibleCategoryPage::openShowCategory to allow us to choose which sections to display
-// before the category's article text.
-////
+/**
+ * Overrides FlexibleCategoryPage::openShowCategory to allow us to choose which sections to display
+ * before the category's article text.
+ */
 function categoryHubBeforeArticleText(&$flexibleCategoryPage){
 	global $wgCatHub_useDefaultView;
 
@@ -171,10 +168,10 @@ function categoryHubBeforeArticleText(&$flexibleCategoryPage){
 	return $wgCatHub_useDefaultView;
 } // end categoryHubOpenBeforeArticleText()
 
-////
-// Overrides FlexibleCategoryPage::closeShowCategory to allow us to choose which sections to display
-// after the category's article text.
-////
+/**
+ * Overrides FlexibleCategoryPage::closeShowCategory to allow us to choose which sections to display
+ * after the category's article text.
+ */
 function categoryHubAfterArticleText(&$flexibleCategoryPage){
 	global $wgCatHub_useDefaultView;
 	wfLoadExtensionMessages('CategoryHub');
@@ -194,11 +191,11 @@ function categoryHubAfterArticleText(&$flexibleCategoryPage){
 
 ///// THESE SECTIONS CHANGE SOME OF THE UNDER-THE-HOOD BEHAVIOR (SUCH AS ORDERING OF THE LISTS)  /////
 
-////
-// Called when the viewer is created.  We will use it to determine ahead of time if the page has rich categories enabled or not.
-//
-// Allows default behavior to happen.
-////
+/**
+ * Called when the viewer is created.  We will use it to determine ahead of time if the page has rich categories enabled or not.
+ *
+ * Allows default behavior to happen.
+ */
 function categoryHubInitViewer(&$flexibleCategoryViewer){
 	global $wgCatHub_useDefaultView;
 
@@ -214,9 +211,9 @@ function categoryHubInitViewer(&$flexibleCategoryViewer){
 	return true;
 } // end categoryHubInitViewer()
 
-////
-// Overrides the default doCategoryQuery behavior to instead sort the pages by their last touched date (descending).
-////
+/**
+ * Overrides the default doCategoryQuery behavior to instead sort the pages by their last touched date (descending).
+ */
 function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 	global $wgCatHub_useDefaultView;
 
@@ -225,21 +222,24 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 	// which parameter is used when because the order is DESC by default here and ascending by default normally).
 	if(!$wgCatHub_useDefaultView){
 		// If we haven't passed the limit, store the entire article for the answer so that extensions (such as CategoryHubs) can display in-depth data.
-		global $wgCategoryHubArticleLimitPerTab; // A more conservative limit than the normal articles-per-page limit since we're loading the entire article.
+		global $wgCategoryHubArticleLimitPerTab, $wgRequest; // A more conservative limit than the normal articles-per-page limit since we're loading the entire article.
 		$limit = $wgCategoryHubArticleLimitPerTab;
+		$offset_u = $wgRequest->getVal('offset_u', 0);
+		$offset_a = $wgRequest->getVal('offset_a', 0);
+
 		$categoryEditsObj = CategoryEdits::newFromName($flexibleCategoryViewer->getCat()->getName());
 		$flexibleCategoryViewer->answerArticles[ANSWERED_CATEGORY] = array();
 		$flexibleCategoryViewer->answerArticles[UNANSWERED_CATEGORY] = array();
 
 		$answeredCategory = CategoryHub::getAnsweredCategory();
-		$answered = $categoryEditsObj->getPages($answeredCategory, array(), $limit);
+		$answered = $categoryEditsObj->getPages($answeredCategory, array(), $limit, $offset_a);
 		if(is_array($answered)){
 			foreach($answered as $ans){
 				$flexibleCategoryViewer->answerArticles[ANSWERED_CATEGORY][] = Article::newFromID($ans['id']);
 			}
 		}
 		$unAnsweredCategory = CategoryHub::getUnAnsweredCategory();
-		$unanswered = $categoryEditsObj->getPages($unAnsweredCategory, array(), $limit);
+		$unanswered = $categoryEditsObj->getPages($unAnsweredCategory, array(), $limit, $offset_u);
 		if(is_array($unanswered)){
 			foreach($unanswered as $unans){
 				$flexibleCategoryViewer->answerArticles[UNANSWERED_CATEGORY][] = Article::newFromID($unans['id']);
@@ -269,10 +269,10 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 ///// THE SECTIONS BELOW MODIFY THE APPEARANCE OF EACH SECTION /////
 
 
-////
-// Returns the HTML for the top of the category hub page.  This includes our modified title bar and
-// the Top Contributors section.
-////
+/**
+ * Returns the HTML for the top of the category hub page.  This includes our modified title bar and
+ * the Top Contributors section.
+ */
 function categoryHubCategoryTop(&$catView, &$r){
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
@@ -284,10 +284,10 @@ function categoryHubCategoryTop(&$catView, &$r){
 	return $wgCatHub_useDefaultView;
 } // end categoryHubCategoryTop()
 
-////
-// Displays the custom title bar (replaces the normal title) this includes the icon of the associated
-// wiki (if applicable),  the title, progress bar or how many are answered, and the notification button.
-////
+/**
+ * Displays the custom title bar (replaces the normal title) this includes the icon of the associated
+ * wiki (if applicable),  the title, progress bar or how many are answered, and the notification button.
+ */
 function categoryHubTitleBar(&$catView, &$r){
 	// Build up the title bar by its various pieces
 	$r .= "<div id='cathub-title-bar'>\n";
@@ -413,10 +413,10 @@ function categoryHubGetLogo($cat_name) {
 	return $logoSrc;
 }
 
-////
-// Appends the top contributors of all time for this category as well as the top contributors
-// in the last X days (X == 7 initially, this may change) to the value of r.
-////
+/**
+ * Appends the top contributors of all time for this category as well as the top contributors
+ * in the last X days (X == 7 initially, this may change) to the value of r.
+ */
 function categoryHubTopContributors(&$catView, &$r){
 	$r .= "<div id='topContributorsWrapper'>\n";
 	$r .= "<h2>".wfMsgExt('cathub-top-contributors', array())."</h2>";
@@ -440,11 +440,11 @@ function categoryHubTopContributors(&$catView, &$r){
 	$r .= "</div><div style='clear:both'>&nbsp;</div>\n"; // clearing div is for Chrome
 } // end categoryHubTopContributors()
 
-////
-// Given an array of user ids mapped to and how many edits they've had in the valid lookback period for this category,
-// (as returned from CategoryEdits::getContribs or CategoryEdits::getXDayContribs, etc.), returns the HTML for an
-// ordered list of the users.
-////
+/**
+ * Given an array of user ids mapped to and how many edits they've had in the valid lookback period for this category,
+ * (as returned from CategoryEdits::getContribs or CategoryEdits::getXDayContribs, etc.), returns the HTML for an
+ * ordered list of the users.
+ */
 function categoryHubContributorsToHtml( $editsByUserId ) {
 	$r = '';
 	$NUM_TO_SHOW_BIG = 3; // all beyond this will use the small text-only badge
@@ -512,6 +512,35 @@ function categoryHubOtherSection(&$catView, &$r){
 
 		$r .= "<div id='tabs'>\n"; // jquery ui tabs widget
 
+		$UN_CLASS = "unanswered_questions";
+		$ANS_CLASS = "answered_questions";
+		$U_SUFFIX = "_u"; // appended to url params to differentiate whihc tab is being paginated
+		$A_SUFFIX = "_a";
+
+		global $wgCategoryHubArticleLimitPerTab, $wgRequest;
+		$offset_u = $wgRequest->getVal("offset$U_SUFFIX", 0);
+		$offset_a = $wgRequest->getVal("offset$A_SUFFIX", 0);
+
+		// Determine if there needs to be a "Next" button (ie: there are more items than the limit), then actually enforce the limit.
+		if(empty($catView->answerArticles[$UN_CLASS])){
+			$catView->answerArticles[$UN_CLASS] = array();
+		}
+		if(empty($catView->answerArticles[$ANS_CLASS])){
+			$catView->answerArticles[$ANS_CLASS] = array();
+		}
+		$numReturned_u = count($catView->answerArticles[$UN_CLASS]);
+		$numReturned_a = count($catView->answerArticles[$ANS_CLASS]);
+		while(count($catView->answerArticles[$UN_CLASS]) > $wgCategoryHubArticleLimitPerTab){
+			array_pop($catView->answerArticles[$UN_CLASS]);
+		}
+		while(count($catView->answerArticles[$ANS_CLASS]) > $wgCategoryHubArticleLimitPerTab){
+			array_pop($catView->answerArticles[$ANS_CLASS]);
+		}
+
+		// Store info in the DOM on which tab to select (interactiveLists.js will apply this selection).
+		$tabIndex = (($offset_a != 0) && ($offset_u == 0))?1:0; // if we are paginating Answered questions, select that tab.
+		$r .= "<div id=\"cathub-tab-index-to-select\" style='display:none'>$tabIndex</div>\n";
+
 		// The tabs.
 		$r .= "<ul>\n";
 		$r .= "<li><a href='#cathub-tab-unanswered' id=\"cathub-tablink-unanswered\"><span>".wfMsgExt('Unanswered_category', array())."</span></a></li>\n";
@@ -519,7 +548,6 @@ function categoryHubOtherSection(&$catView, &$r){
 		$r .= "</ul>\n";
 
 		// Unanswered questions in this category.
-		$UN_CLASS = "unanswered_questions";
 		$r .= "<div id=\"cathub-tab-unanswered\">\n";
 		if(empty($catView->answerArticles[$UN_CLASS]) || count($catView->answerArticles[$UN_CLASS]) == 0){
 			$r .= "<div class='no-questions-now'>";
@@ -530,21 +558,26 @@ function categoryHubOtherSection(&$catView, &$r){
 
 			foreach($catView->answerArticles[$UN_CLASS] as $qArticle){
 				if(is_object($qArticle)){
-				$r .= "<li class=\"$UN_CLASS\">\n";
+					$r .= "<li class=\"$UN_CLASS\">\n";
 
-				// Button to trigger the form for answering inline.
-				$r .= "<div class='cathub-button hideUntilHover'>\n";
-				$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
-				$r .= wfMsgExt('cathub-button-answer', array())."</big><small>&nbsp;</small></a>\n";
-				$r .= "</div>\n";
+					// Button to trigger the form for answering inline.
+					$r .= "<div class='cathub-button hideUntilHover'>\n";
+					$r .= "<a rel='nofollow' class='bigButton cathub-button-answer' href='javascript:void(0)'><big>";
+					$r .= wfMsgExt('cathub-button-answer', array())."</big><small>&nbsp;</small></a>\n";
+					$r .= "</div>\n";
 
-				// Question & attribution for last edit.
-				$title = $qArticle->getTitle();
-				$r .= "<span class=\"$UN_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
-				$r .= categoryHubGetAttributionByArticle($qArticle);
+					// Question & attribution for last edit.
+					$title = $qArticle->getTitle();
+					$r .= "<span class=\"$UN_CLASS cathub-article-link\">" . $catView->getSkin()->makeKnownLinkObj( $title, $title->getPrefixedText() . '?' ) . '</span>';
+					$r .= categoryHubGetAttributionByArticle($qArticle);
 
-				$r .= "</li>\n";
+					$r .= "</li>\n";
 				}
+			}
+			if($numReturned_u > 0){
+				$r .= Xml::openElement('li');
+				$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_u, $numReturned_u, $U_SUFFIX);
+				$r .= Xml::closeElement('li');
 			}
 			$r .= "</ul>\n";
 		}
@@ -554,14 +587,13 @@ function categoryHubOtherSection(&$catView, &$r){
 		}
 
 		// Answered questions in this category.
-		$ANS_CLASS = "answered_questions";
 		$r .= "<div id=\"cathub-tab-answered\">\n";
 		if(empty($catView->answerArticles[$ANS_CLASS]) || count($catView->answerArticles[$ANS_CLASS]) == 0){
 			$r .= "<div class='no-questions-now'>";
 			$r .= wfMsgExt('cathub-no-answered-questions', array());
 			$r .= "</div>";
 		} else {
-			global $wgParser, $wgMessageCache;
+			global $wgParser;
 			$tmpParser = new Parser();
 			$tmpParser->setOutputType(OT_HTML);
 			$tmpParserOptions = new ParserOptions();
@@ -593,6 +625,11 @@ function categoryHubOtherSection(&$catView, &$r){
 					$r .= "</li>\n";
 				}
 			}
+			if($numReturned_a > 0){
+				$r .= Xml::openElement('li');
+				$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_a, $numReturned_a, $A_SUFFIX);
+				$r .= Xml::closeElement('li');
+			}
 			$r .= "</ul>\n";
 			if ( $wgUser->isAnon() ) {
 				//$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_A');
@@ -602,9 +639,6 @@ function categoryHubOtherSection(&$catView, &$r){
 
 		$r .= "</div>\n"; // end of #tabs
 	}
-
-	// Uncomment this line to work on RT #33702
-	//$r .= categoryHubPagination();
 
 	wfProfileOut(__METHOD__);
 	return $wgCatHub_useDefaultView;
@@ -616,20 +650,46 @@ function categoryHubOtherSection(&$catView, &$r){
  * Currently only outputs HTML.
  *
  * Called by categoryHubOtherSection()
+ *
+ * @param limit Int - the number of items allowed to appear in the current tab
+ * @param offset Int - the index of the first question to display (also equal to the number of questions skipped).
+ * @param numReturned Int - the number of questions returned by getPages.  If this is greater than the limit, we will know to use a Next link.
+ * @param suffix String - a suffix to append to the offset.  This is needed since there are two pagination links
+ *                        per page (one for each tab).
  */
-function categoryHubPagination( ) {
-	return <<<END_OF_HTML
-<ul class="cathub-pagination">
-    <li class="first"><a href="DEV_LINK" rel="previous">&larr; Previous</a></li>
-    <li class="last"><a href="DEV_LINK" rel="next">Next &rarr;</a></li>
-</ul>
-END_OF_HTML;
-}
+function categoryHubPagination($limit, $offset, $numReturned, $suffix) {
+	$html = "";
+	$html .= Xml::openElement('ul', array('class' => "cathub-pagination"));
 
-////
-// Appends the HTML to 'r' for the "other section" which for Category Hubs is
-// the Answered/Unanswered questions section.
-////
+	GLOBAL $wgUser,$wgTitle;
+	$sk = $wgUser->getSkin();
+	$html .= Xml::openElement('li', array('class' => "first"));
+	if($offset > 0){
+		$html .= $sk->link( $wgTitle, wfMsgExt('cathub-prev', array()), array('rel' => 'previous'),
+							array( "offset$suffix" => ($offset - $limit)), array('known'));
+	} else {
+		$html .= "&nbsp;";
+	}
+	$html .= Xml::closeElement('li');
+
+	$nextLink = "";
+	$html .= Xml::openElement('li', array('class' => 'last'));
+	if($numReturned > $limit){
+		$html .= $sk->link( $wgTitle, wfMsgExt('cathub-next', array()), array('rel' => 'next'),
+							array( "offset$suffix" => ($offset + $limit)), array('known'));
+	} else {
+		$html .= "&nbsp;";
+	}
+	$html .= Xml::closeElement('li');
+
+	$html .= Xml::closeElement('ul');
+	return $html;
+} // end categoryHubPagination()
+
+/**
+ * Appends the HTML to 'r' for the "other section" which for Category Hubs is
+ * the Answered/Unanswered questions section.
+ */
 function categoryHubSubcategorySection(&$catView, &$r){
 	global $wgCatHub_useDefaultView;
 	if(!$wgCatHub_useDefaultView){
@@ -648,24 +708,36 @@ function categoryHubSubcategorySection(&$catView, &$r){
 	return $wgCatHub_useDefaultView;
 } // end categoryHubSubcategorySection()
 
-////
-// Returns a string containing the HTML for the attribution line which can be used in
-// the answered/unanswered lists given an article.
-//
-// If 'answered' then the text will say "answered by" instead of "asked by".
-////
+/**
+ * Returns a string containing the HTML for the attribution line which can be used in
+ * the answered/unanswered lists given an article.
+ *
+ * If 'answered' then the text will say "answered by" instead of "asked by".
+ */
 function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 	global $wgStylePath;
 	$title = $qArticle->getTitle();
 	$timestamp = $qArticle->getTitle()->getTouched();
 	$lastUpdate = wfTimeFormatAgo($timestamp);
-	#
-	$user_id = 0; $userLink = "";
-	$author = CategoryHub::getTitleOwner($title);
-	if ( is_array($author) ) {
-		list( $user_id, $userText, $userPageTitle, $userAvatar ) = array_values( $author );
+
+	$userId = 0; $userLink = "";
+	if($answered){
+		$author = CategoryHub::getTitleOwner($title);
+	} else {
+		$userId = AttributionCache::getInstance()->getFirstRevisionUserId($title);
+		$avatarImg = Answer::getUserAvatar($userId, 30, 30);
+		$user = User::newFromId($userId);
+		$user_title = Title::makeTitle(NS_USER, $user->getTitleKey());
+		$author = array( "user_id" => $userId,
+						 "user_name" => $user->getTitleKey(),
+						 "title" => $user_title,
+						 "avatar" => $avatarImg );
 	}
-	if($user_id > 0){
+
+	if ( is_array($author) ) {
+		list( $userId, $userText, $userPageTitle, $userAvatar ) = array_values( $author );
+	}
+	if($userId > 0){
 		$userPageLink = $userPageTitle->getLocalUrl();
 		$userPageExists = $userPageTitle->exists();
 		$userLinkText = $userPageExists ? '<a class="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '';
@@ -674,7 +746,7 @@ function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 		$userLinkText .= '<a rel="nofollow" class="fe_user_link'.($userPageExists ? '' : ' new').'" href="'.$userPageLink.'">'.$userText.'</a>';
 		$userLink = wfMsgExt('cathub-question-asked-by', array(), $userLinkText);
 	} else {
-		$userLink = wfMsgExt('cathub-anon-username', array());
+		$userLink = wfMsgExt('cathub-question-asked-by', array(), wfMsgExt('cathub-anon-username', array()));
 	}
 	if($answered){
 		$asked = wfMsgExt('cathub-question-answered-ago', array(), $lastUpdate, $userLink);

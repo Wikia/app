@@ -34,7 +34,8 @@ $messages['en'] = array(
 	'cathub-button-improve-answer'          => 'Improve Answer',
 	'cathub-button-rephrase'                => 'rephrase',
 	'cathub-edit-success'                   => 'Your answer has been saved',
-	''                                      => '',
+	'cathub-prev'                           => '&larr; Previous',
+	'cathub-next'                           => 'Next &rarr;',
 );
 
 ?>
