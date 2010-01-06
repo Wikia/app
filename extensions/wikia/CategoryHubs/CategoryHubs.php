@@ -727,7 +727,8 @@ class CategoryHub {
 		} 
 
 		if ( empty($author) ) {
-			$key = wfMemcKey( 'cathub_author', $Title->getArticleID() );
+			$pageId = $Title->getArticleID();
+			$key = wfMemcKey( 'cathub_author', $pageId );
 			$data = $wgMemc->get( $key );
 
 			if ( empty($data) ) {
@@ -736,7 +737,7 @@ class CategoryHub {
 				$s = $dbr->selectRow( 
 					'revision',
 					array( 'rev_user','rev_user_text' ),
-					array( 'rev_page' => $Title->getArticleID() ), 
+					array( 'rev_page' => $pageId ), 
 					__METHOD__ ,
 					array(
 						'ORDER BY' => "rev_id  ASC", 
