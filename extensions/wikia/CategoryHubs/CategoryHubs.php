@@ -604,7 +604,7 @@ function categoryHubOtherSection(&$catView, &$r){
 	}
 
 	// Uncomment this line to work on RT #33702
-	$r .= categoryHubPagination();
+	//$r .= categoryHubPagination();
 
 	wfProfileOut(__METHOD__);
 	return $wgCatHub_useDefaultView;
