@@ -113,7 +113,16 @@ RTE.templateEditor = {
 			if (value == '') {
 				return;
 			}
-			wikitext += '\n|' + key + ' = ' + value;
+			wikitext += '\n|';
+
+			if (parseInt(key) == key) {
+				// unnamed param
+				wikitext += value;
+			}
+			else {
+				// named param
+				wikitext += key + ' = ' + value;
+			}
 
 			paramsCount++;
 		});
@@ -256,8 +265,8 @@ RTE.templateEditor = {
 					// fix for HTML in value
 					value = value.replace(/&/g, '&amp;');
 
-					// show different message for unnamed template parameters
-					var keyLabel = !!parseInt(key) ? RTE.instance.lang.templateEditor.editor.unnamedParamLabel : key;
+					// show different message for unnamed template parameters (#1 / foo)
+					var keyLabel = !!parseInt(key) ? ('#' + parseInt(i+1)) : key;
 
 					// render key - value pair
 					html += '<dt><label for="templateEditorParameter' + i + '">' + keyLabel  + '</label></dt>';
