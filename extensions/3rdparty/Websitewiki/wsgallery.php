@@ -39,11 +39,9 @@ function wfWSGallery_Render( &$parser, $param1 = '0') {
 
 	$dbw = wfGetDB( DB_MASTER );
 
-	// $qr = $dbw->query("SELECT id FROM ratings WHERE total_votes > 3 and total_votes < 100 and total_value/total_votes > 3.0 order by RAND($rand)  limit 150");
-	$qr = $dbw->query("SELECT page_title FROM page WHERE page_title like '%eihnacht%' order by RAND($rand)  limit 150");
+	$qr = $dbw->query("SELECT id FROM ratings WHERE total_votes > 3 and total_votes < 100 and total_value/total_votes > 3.0 order by RAND($rand)  limit 150");
 
 	$res = $qr->result;
-
 
 	$result .= "<table width=\"95%\" cellspacing=\"0\" cellpadding=\"5\" style=\"margin:0 0 .5em 1em;
         text-align:center; background:#9ca; border:1px solid #040;\"><tr><td colspan=\"3\"><b>Zuf&auml;llig

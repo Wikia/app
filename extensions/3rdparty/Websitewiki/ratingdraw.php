@@ -68,8 +68,10 @@ ETX;
 	  for ($ncount = 1; $ncount <= $units; $ncount++) { // loop from 1 to the number of units
 		  if(!$voted) { // if the user hasn't yet voted, draw the voting stars 
 
+  $formurl = Title::newFromText( 'RatingDB', NS_SPECIAL )->getFullURL();
+
   $rput .= <<<ETX
-  <li><a href="ratingdb.php?j=$ncount&amp;q=$id&amp;t=$ip&amp;c=$units" title="$ncount von $units" class="r$ncount-unit rater" rel="nofollow">$ncount</a></li>
+  <li><a href="$formurl?j=$ncount&amp;q=$id&amp;t=$ip&amp;c=$units" title="$ncount von $units" class="r$ncount-unit rater" rel="nofollow">$ncount</a></li>
 ETX;
 
 	   } 
