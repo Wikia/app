@@ -30,3 +30,27 @@ h1.firstHeading { display:none; }
 	top: 1em;
 	right: 0;
 }
+
+.cathub-pagination {
+	margin: 0;
+	padding: 0;
+}
+.cathub-pagination li {
+	list-style: none;
+	width: 50%;
+	float: left;
+	text-transform: lowercase;
+}
+.cathub-pagination .last {
+	float: right;
+	text-align: right;
+}
+.cathub-pagination a {
+	border: 2px solid #B9B9B9;
+	padding: .25em;
+	color: #000;
+}
+.cathub-pagination a:hover {
+	color: blue;
+    border-color: blue;
+}
