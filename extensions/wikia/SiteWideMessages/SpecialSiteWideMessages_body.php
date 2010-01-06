@@ -611,7 +611,7 @@ class SiteWideMessages extends SpecialPage {
 			);
 
 			while ($oMsg = $DB->FetchObject($dbResult)) {
-        	                        $tmpMsg[$oMsg->id] = array('wiki_id' => null);
+				unset($tmpMsg[$oMsg->id]);
 			}
 
 			if ($dbResult !== false) {
@@ -643,7 +643,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 		//sort from newer to older
 		krsort($tmpMsg);
-
+Wikia::log(__FUNCTION__, __LINE__, print_r($tmpMsg, true));
 		$messages = array();
 		$IDs = array();
 		foreach ($tmpMsg as $tmpMsgId => $tmpMsgData) {
@@ -730,7 +730,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 		//sort from newer to older
 		krsort($tmpMsg);
-
+Wikia::log(__FUNCTION__, __LINE__, print_r($tmpMsg, true));
 		$messages = array();
 		$language = Language::factory($wgLanguageCode);
 		foreach ($tmpMsg as $tmpMsgId => $tmpMsgData) {
