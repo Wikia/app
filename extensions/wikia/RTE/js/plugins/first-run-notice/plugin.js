@@ -7,6 +7,9 @@ CKEDITOR.plugins.add('rte-first-run-notice',
 		// hide notice
 		$('#RTEFirstRunNotice').slideUp();
 
+		// and reposition hover menus when notice animation ends
+		setTimeout(RTE.repositionRTEStuff, 1000);
+
 		// for logged-in: store in user settings
 		if (window.wgUserName) {
 			RTE.ajax('firstRunNoticeDismiss');
@@ -53,6 +56,9 @@ CKEDITOR.plugins.add('rte-first-run-notice',
 			var notice = $('#RTEFirstRunNotice');
 			notice.children('#RTEFirstRunNoticeClose').bind('click', self.dismiss);
 			notice.slideDown();
+
+			// and reposition hover menus when notice animation ends
+			setTimeout(RTE.repositionRTEStuff, 1000);
 
 			RTE.log('first run notice - show');
 			RTE.track('firstRunNotice', 'init');
