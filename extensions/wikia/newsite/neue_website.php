@@ -2,7 +2,7 @@
 
 function neue_website($nws) 
 {
-  global $wgUser;
+  global $wgUser, $wgOut;
 
   // $output = "Schnapp. ++$nws++\n\n";
   $output = "";
@@ -71,10 +71,6 @@ function neue_website($nws)
   $article = new Article( $title );
   $article->doEdit( $wikitext, wfMsg( 'newsite-edit-comment' ) );
 
-  $sk = $wgUser->getSkin();
-
-  $output .= wfMsg( 'newsite-article-created', $sk->link( $title ) );
-
 /****
   $todo = fopen("/var/www/mkwebsites/todo", "a");
   if($todo)
@@ -98,7 +94,8 @@ function neue_website($nws)
     $tw->updateStatus($twstatus);
 **/
 
-  return $output;
+  // redirect on success!
+  $wgOut->redirect( $title->getFullURL() );
 }
 
 
