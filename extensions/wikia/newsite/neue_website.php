@@ -43,7 +43,7 @@ function neue_website($nws)
   }
   if($title->exists())
   {
-    $output = wfMsg( 'newsite-error-exists', $newdom );
+    $output = wfMsg( 'newsite-error-exists', $title->getText(), $title->getFullUrl() );
     return $output;
   }
 
