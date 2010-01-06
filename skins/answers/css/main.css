@@ -1198,3 +1198,25 @@ li:hover .hideUntilHover{
 .ui-widget *{
 	font-family: sans-serif;
 }
+
+.cathub-contributors-list .userInfo
+{
+  margin-left:0px;
+}
+
+.cathub-contributors-list .userInfo .userPageLink
+{
+  margin-left:0px;
+}
+
+.cathub-contributors-list .userInfoNoAvatar .userPageLink
+{
+  margin-top:0px;
+}
+
+.cathub-contributors-list .userEditPoints
+{
+  margin-left:0px;
+  float: left;
+}
+
