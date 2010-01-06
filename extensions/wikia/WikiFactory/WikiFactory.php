@@ -1982,7 +1982,7 @@ class WikiFactory {
 		$dbw = self::db( DB_MASTER );
 		return $dbw->update(
 			"city_list",
-			array( "city_last_timestamp" => '' ),
+			array( "city_last_timestamp" => wfTimestamp( TS_DB, time() ) ),
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
