@@ -1,4 +1,6 @@
-h1.firstHeading { display:none; }
+body.ns-14 h1.firstHeading {
+	display:none;
+}
 /*#page_bar{ display:none; }*/
 #siteNotice { display: none; }
 #answers_page #answers_article{ padding-top:0px; }
