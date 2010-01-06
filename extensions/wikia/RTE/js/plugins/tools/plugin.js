@@ -213,6 +213,19 @@ window.RTE.tools = {
 		});
 	},
 
+	// remove resize box (added by Fx when image is double-clicked)
+	removeResizeBox: function() {
+		setTimeout(function() {
+			// simply switch design mode off and on - this solves #RT #33853
+			if (CKEDITOR.env.gecko) {
+				var documentNode = RTE.instance.document.$;
+
+				documentNode.designMode = 'off';
+				documentNode.designMode = 'on';
+			}
+		}, 50);
+	},
+
 	// simple JS "cache" for resolveDoubleBrackets() method
 	resolveDoubleBracketsCache: {},
 

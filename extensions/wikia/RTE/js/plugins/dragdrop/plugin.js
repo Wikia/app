@@ -83,10 +83,14 @@ CKEDITOR.plugins.add('rte-dragdrop',
 					ev.preventDefault();
 				}).
 
-				// stop double click events (prevent resize box)
+				// prevent resize box - RT #33853
 				bind('dblclick.dnd', function(ev) {
-					RTE.log(ev);
-					ev.preventDefault();
+					// apply fix only for placeholders and images
+					var target = $(ev.target);
+
+					if ( !!target.filter('img').attr('type') ) {
+						RTE.tools.removeResizeBox();
+					}
 				});
 
 			// for IE
