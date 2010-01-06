@@ -81,7 +81,7 @@ function categoryHubAddMagicWords(&$magicWords, $langCode){
 ////
 function categoryHubAdditionalScripts( &$out, &$sk ){
 	global $wgExtensionsPath,$wgStyleVersion;
-	$out->addStyle( "$wgExtensionsPath/wikia/CategoryHubs/CategoryHubs.css" );
+	$out->addStyle( "$wgExtensionsPath/wikia/CategoryHubs/CategoryHubs.css?$wgStyleVersion" );
 	$out->addScript('<link type="text/css" href="http://jqueryui.com/latest/themes/base/ui.all.css" rel="stylesheet" />');
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.core.js"></script>');
 	$out->addScript('<script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.tabs.js"></script>');
@@ -230,7 +230,7 @@ function categoryHubDoCategoryQuery(&$flexibleCategoryViewer){
 		$categoryEditsObj = CategoryEdits::newFromName($flexibleCategoryViewer->getCat()->getName());
 		$flexibleCategoryViewer->answerArticles[ANSWERED_CATEGORY] = array();
 		$flexibleCategoryViewer->answerArticles[UNANSWERED_CATEGORY] = array();
-		
+
 		$answeredCategory = CategoryHub::getAnsweredCategory();
 		$answered = $categoryEditsObj->getPages($answeredCategory, array(), $limit);
 		if(is_array($answered)){
@@ -319,7 +319,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	$r .= "<div style='display:table;width:$PROG_BAR_WIDTH"."px'>"; // wraps the progress bar and the labels below it
 	$r .= "<div class='cathub-progbar-wrapper' style='width:$PROG_BAR_WIDTH"."px'>";
 
-	$answeredCategory = CategoryHub::getAnsweredCategory();	
+	$answeredCategory = CategoryHub::getAnsweredCategory();
 	$unAnsweredCategory = CategoryHub::getUnAnsweredCategory();
 	list($percentAnswered, $countAnswered, $countUnAnswered) = $categoryEdits->getPercentInCats($answeredCategory, $unAnsweredCategory);
 	$allQuestions = $countAnswered + $countUnAnswered;
@@ -331,7 +331,7 @@ function categoryHubTitleBar(&$catView, &$r){
 			$percentAnswered = 100;
 			$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-all-done', array())."</div>\n";
 		} else {
-			// some unanswered questions 
+			// some unanswered questions
 			$r .= "<div class='cathub-progbar-answered' style='width:$PROG_BAR_WIDTH' title=''>".wfMsgExt('cathub-progbar-allmost-done', array(), $countUnAnswered)."</div>\n";
 		}
 	} else {
@@ -371,7 +371,7 @@ function categoryHubTitleBar(&$catView, &$r){
 	$r .= "</div>"; // close the wrapper on the div containing the progress bar and the labels.
 
 	$r .= "</div>\n";
-	
+
 	return $allQuestions;
 } // end categoryHubTitleBar()
 
@@ -527,7 +527,7 @@ function categoryHubOtherSection(&$catView, &$r){
 			$r .= "</div>";
 		} else {
 			$r .= "<ul class='interactive-questions'>\n";
-			
+
 			foreach($catView->answerArticles[$UN_CLASS] as $qArticle){
 				if(is_object($qArticle)){
 				$r .= "<li class=\"$UN_CLASS\">\n";
@@ -589,7 +589,7 @@ function categoryHubOtherSection(&$catView, &$r){
 					$r .= "<span class='cathub-answer-heading'>".wfMsgExt('cathub-answer-heading', array())."</span><br/>\n";
 					$r .= $tmpParser->parse($qArticle->getRawText(), $title, $tmpParserOptions, false)->getText();
 					$r .= "</div>\n";
-		
+
 					$r .= "</li>\n";
 				}
 			}
@@ -687,11 +687,11 @@ function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 
 class CategoryHub {
 	public function __construct( ) {}
-	
+
 	public static function getAnsweredCategory() {
 		if ( class_exists("Answer") ) {
 			$catName = Answer::getSpecialCategory("answered");
-			$catName = str_replace(" ", "_", $catName); 
+			$catName = str_replace(" ", "_", $catName);
 		} else {
 			$catName = "Answered_questions";
 		}
@@ -701,7 +701,7 @@ class CategoryHub {
 	public static function getUnAnsweredCategory() {
 		if ( class_exists("Answer") ) {
 			$catName = Answer::getSpecialCategory("unanswered");
-			$catName = str_replace(" ", "_", $catName); 
+			$catName = str_replace(" ", "_", $catName);
 		} else {
 			$catName = "Un-answered_questions";
 		}
@@ -710,7 +710,7 @@ class CategoryHub {
 
 	public static function getTitleOwner( Title $Title ) {
 		global $wgMemc;
-		
+
 		wfProfileIn( __METHOD__ );
 
 		$author = array();
@@ -724,7 +724,7 @@ class CategoryHub {
 			if ( is_object($aTitle) ) {
 				$author = $aTitle->getOriginalAuthor();
 			}
-		} 
+		}
 
 		if ( empty($author) ) {
 			$pageId = $Title->getArticleID();
@@ -734,21 +734,21 @@ class CategoryHub {
 			if ( empty($data) ) {
 				$dbr =& wfGetDB( DB_SLAVE );
 
-				$s = $dbr->selectRow( 
+				$s = $dbr->selectRow(
 					'revision',
 					array( 'rev_user','rev_user_text' ),
-					array( 'rev_page' => $pageId ), 
+					array( 'rev_page' => $pageId ),
 					__METHOD__ ,
 					array(
-						'ORDER BY' => "rev_id  ASC", 
+						'ORDER BY' => "rev_id  ASC",
 						'LIMIT' => 1
 					)
 				);
 				$user_title = Title::makeTitle(NS_USER,$s->rev_user_text);
-				$author = array( 
-					"user_id" => $s->rev_user, 
-					"user_name" => $s->rev_user_text, 
-					"title" => $user_title, 
+				$author = array(
+					"user_id" => $s->rev_user,
+					"user_name" => $s->rev_user_text,
+					"title" => $user_title,
 					"avatar" => ""
 				);
 				$wgMemc->set( $key, $author, 60 * 60 );
