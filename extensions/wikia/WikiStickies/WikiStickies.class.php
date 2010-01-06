@@ -45,7 +45,7 @@ class WikiStickies {
 	 * @param array $attrs An array of attribute-value pairs. (Optional.)
 	 * @return The complete list HTML to print.
 	 */
-	function renderFeedList ( &$feed_data, $attrs = NULL, $editlinks = NULL ) {
+	function renderFeedList ( &$feed_data, $attrs = NULL, $editlinks = NULL, $fake = false ) {
 		global $wgUser;
 
 		$sk = $wgUser->getSkin();
@@ -63,15 +63,28 @@ class WikiStickies {
 		$attrs['class'] = $attrs['class'] . ' clearfix'; // Needs to clear.
 
 		$out .= Xml::openElement( 'ul', $attrs );
-
-		foreach( $feed_data as $title ) {
-			if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
-				$out .= Xml::openElement( 'li' );
-				$out .= $sk->makeKnownLinkObj( $title, $title->getText(), $linkQuery ).
-				Xml::closeElement( 'li' );
-				array_shift( $feed_data );
-				$uptolimit++;
+		
+		if( !$fake ) { // for feed taken from db, containing titles
+			foreach( $feed_data as $title ) {
+				if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
+					$out .= Xml::openElement( 'li' );
+					$out .= $sk->makeKnownLinkObj( $title, $title->getText(), $linkQuery ).
+						Xml::closeElement( 'li' );
+					array_shift( $feed_data );
+					$uptolimit++;
+				}
 			}
+		} else { // for feed taken from MW message, containing wikitext
+			foreach( $feed_data as $text ) {
+				if( $uptolimit < self::INITIAL_FEED_LIMIT ) {
+					$out .= Xml::openElement( 'li' )
+						.self::parseHtml( $text )
+						.Xml::closeElement( 'li' );
+					array_shift( $feed_data );
+					$uptolimit++;
+				}
+			}
+
 		}
 
 		$out .= Xml::closeElement( 'ul' );
@@ -109,12 +122,13 @@ class WikiStickies {
 	 * @param array $feed_data The list of page names that will become items in the feed.
 	 * @param string $header The natural-language feed headline.
 	 * @param string $sticker The natural-language sticky question text.
+	 * @param boolean $fake if it's feed taken from message or not (from db), default is false
 	 *
 	 * @TODO: Need a non-redundant way of informing this function what feed is being used.
 	 *		We should probably find some way of collapsing the $type, $header,
 	 *		and $sticker variables.
 	 */
-	static function formatFeed( $type, &$feed_data, $header, $sticker ) {
+	static function formatFeed( $type, &$feed_data, $header, $sticker, $fake = false ) {
 		global $wgOut, $wgUser;
 
 		$sk = $wgUser->getSkin();
@@ -151,19 +165,22 @@ class WikiStickies {
 
 		// First batch. These are visible by default.
 		if( $numitems ) {
-			$body .= self::renderFeedList( $feed_data, null, $editlinks );
+			$body .= self::renderFeedList( $feed_data, null, $editlinks, $fake );
 		}
 		// Second batch of items. These are hidden by default.
 		if( $numitems > self::INITIAL_FEED_LIMIT ) {
-			$body .= self::renderFeedList( $feed_data, array( 'class' => 'submerged' ), $editlinks );
+			$body .= self::renderFeedList( $feed_data, array( 'class' => 'submerged' ), $editlinks, $fake );
 		}
 
-		$html = Xml::openElement( 'div', array( 'id' => $type, 'class' => 'wikistickiesfeed' ) ).
-			'<img alt="" class="sprite" src="/skins/monobook/blank.gif" />'.
+		$html = Xml::openElement( 'div', array( 'id' => $type, 'class' => 'wikistickiesfeed' ) );
+		if( '' != $header ) {
+			$html .= '<img alt="" class="sprite" src="/skins/monobook/blank.gif" />'.
 			Xml::openElement( 'h2' ).
 						$header.
-			Xml::closeElement( 'h2' ).
-			$sticky.$body;
+			Xml::closeElement( 'h2' );
+		}
+
+		$html .= $sticky.$body;
 
 		// See more link
 		// TODO: This href attribute should actually point to the source of the feed
@@ -177,12 +194,6 @@ class WikiStickies {
 		$html .= Xml::closeElement( 'div' );
 
 		$wgOut->addHTML( $html );
-	}
-
-	// format for single feed, taken from 
-	static function formatFakeFeed( ) {
-        	// todo for the second part of RT #34558
-
 	}
 
 	// feed packaging, for a feed taken from db
@@ -353,7 +364,7 @@ class WikiStickies {
                 $popts->setTidy( $oldTidy );
 
 		wfProfileOut( __METHOD__ );			
-		return Xml::escapeJsString( $parserOutput->getText() );
+		return $parserOutput->getText();
 	}
 
 	static function renderWikiStickyContent( $title, $prefix, $attrs = NULL, $editlinks = false ) {
@@ -361,11 +372,10 @@ class WikiStickies {
 		$html = '';
 		$linkQuery = array();		
 
-		// different treatment for custom wikistickies: they are in wikitext format, and they just contain links
-		// they need to be parsed, for reference, check RT #34558 - Bartek 05.01.2010
-			
+		// different treatment for custom wikistickies: they are in wikitext format, and they contain mixed text and links in data
+		// they need to be parsed, for reference, check RT #34558 - Bartek 05.01.2010			
 		if( 'wikistickies-custompages-st' == $prefix ) {
-			$html .= self::parseHtml( $title );						
+			$html .= Xml::escapeJsString( self::parseHtml( $title ) );						
                         return $html;
 		} 
 
