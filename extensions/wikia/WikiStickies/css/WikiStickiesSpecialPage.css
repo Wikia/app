@@ -94,6 +94,10 @@
     padding: 5px 0;
 }
 
+#wikistickies-communitystickies .clearfix li {
+	width: 100%;
+}
+
 #wikistickies-admintools, #wikistickies_save_all,
 #wikistickies_save_all_upper {
     border:1px solid #AAA;

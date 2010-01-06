@@ -13,6 +13,14 @@
 <ul>
 
 <!-- ############## Add a logo ############ -->
+
+<li class="step">
+<div class="wrapper clearfix">
+<h2><?php echo wfMsg("wikistickies-custom-hd")?></h2>
+<p><?= wfMsgExt('wikistickies-custom-msg', array( 'parseinline', 'replaceafter' ) ); ?></p>		
+</div>
+</li>
+           
 <li id="step2" class="step">
 <div class="wrapper clearfix">
 <h2><?php echo wfMsg("wikistickies-logo-hd")?></h2>
