@@ -54,7 +54,7 @@ function efAddWikiSticky( &$html ) {
 	}
 
 	$js = "WIKIA.WikiStickies.stickies = [\n";
-	foreach( $feeds as $f ) {
+	foreach( $feeds as $f ) {		
 		$js .= "'" . WikiStickies::renderWikiStickyContent( $f['title'], $f['prefix'], array( 'class' => 'fake_' . $f['context'] ), $f['editlinks'] ) . "',\n";
 	}
 	$js .= "];\n";

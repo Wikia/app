@@ -74,7 +74,7 @@ WIKIA.WikiStickies.trackSticky = function (ev) {
 WIKIA.WikiStickies.placeContent = function () {
     $(".wikisticky_browser").each(function() {
         var ws_content = this.childNodes[0];
-        var ws_para = this.getElementsByTagName('p')[0];
+        var ws_para = ws_content.childNodes[0];
         $(ws_para).css('fontSize', '14pt');
         var verticalDifference = $(ws_content).height() - $(ws_para).height();
         while (verticalDifference < 0) {
