@@ -643,7 +643,7 @@ class SiteWideMessages extends SpecialPage {
 		}
 		//sort from newer to older
 		krsort($tmpMsg);
-Wikia::log(__FUNCTION__, __LINE__, print_r($tmpMsg, true));
+
 		$messages = array();
 		$IDs = array();
 		foreach ($tmpMsg as $tmpMsgId => $tmpMsgData) {
@@ -730,7 +730,7 @@ Wikia::log(__FUNCTION__, __LINE__, print_r($tmpMsg, true));
 		}
 		//sort from newer to older
 		krsort($tmpMsg);
-Wikia::log(__FUNCTION__, __LINE__, print_r($tmpMsg, true));
+
 		$messages = array();
 		$language = Language::factory($wgLanguageCode);
 		foreach ($tmpMsg as $tmpMsgId => $tmpMsgData) {
