@@ -1,7 +1,5 @@
 <?php
 
-include_once('extensions/twitter.php');
-
 class NeueWebsite extends SpecialPage
 {
   function NeueWebsite() 

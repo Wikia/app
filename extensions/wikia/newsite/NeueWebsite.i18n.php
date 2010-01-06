@@ -8,7 +8,7 @@ $messages['en'] = array(
         'newsite-form-submit' => 'Create',
         'newsite-error-invalid' => 'A page about $1 cannot be created.',
         'newsite-error-notfound' => 'Website $1 was not found.',
-        'newsite-error-exists' => 'A page about <a href=\"/$1\">$1</a> already exists.',
+        'newsite-error-exists' => 'A page about <a href="$2">$1</a> already exists.',
         'newsite-error-nocontact' => 'Could not reach website $1.',
         'newsite-error-nowikitext' => 'Could not fetch content for website $1.',
         'newsite-edit-comment' => 'new website',
