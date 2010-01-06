@@ -3,8 +3,12 @@ var success_close_speed = 3000;
 
 $(document).ready(function(){
 	$("#tabs").tabs(); // active jQuery UI tab widget for answered/unanswered
-
-	// TODO: Bind events.
+	
+	// Select the appropriate tab (for instance for using pagination on the non-default tab).
+	var tabIndex = $("#cathub-tab-index-to-select").html();
+	if(tabIndex && (tabIndex != 0)){
+		$("#tabs").tabs('option', 'selected', parseInt(tabIndex));
+	}
 
 	// Answer button.
 	$(".cathub-button-answer").live('click', function(){
