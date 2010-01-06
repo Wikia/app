@@ -60,7 +60,6 @@ $messages['en'] = array(
 	'rte-ck-templateEditor-editor-parameters' => 'Parameters',
 	'rte-ck-templateEditor-editor-previewButton' => 'Preview',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Preview',
-	'rte-ck-templateEditor-editor-unnamedParamLabel' => '#[X]',
 	'rte-ck-templateEditor-editor-viewTemplate' => '(view template page - opens a new window)',
 	'rte-ck-templateEditor-title' => 'Template editor',
 	'rte-ck-unlink' => 'Remove link',
