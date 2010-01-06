@@ -75,13 +75,19 @@ CREATE TABLE IF NOT EXISTS `city_list` (
   `city_google_search` varchar(100) default '',
   `city_google_maps` varchar(100) default '',
   `city_indexed_rev` int(8) unsigned NOT NULL default '1',
-  `city_deleted_timestamp` varchar(14) default '19700101000000',
+  `city_lastdump_timestamp` varchar(14) default '19700101000000',
+  `city_factory_timestamp` varchar(14) default '19700101000000',
+  `city_useshared` tinyint(1) default '1',
+  `ad_cat` char(4) NOT NULL default '',
+  `city_flags` int(10) unsigned NOT NULL default '0',
+  `city_cluster` varchar(255) default NULL,
+  `city_last_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`city_id`),
   KEY `city_dbname_idx` (`city_dbname`),
   KEY `titleidx` (`city_title`),
-  KEY `dbnameidx` (`city_dbname`),
-  KEY `urlidx` (`city_url`)
-) ENGINE=InnoDB;
+  KEY `urlidx` (`city_url`),
+  KEY `city_flags` (`city_flags`)
+) ENGINE=InnoDB ;
 
 CREATE TABLE IF NOT EXISTS `city_list_requests` (
   `request_id` int(11) NOT NULL auto_increment,
@@ -586,4 +592,3 @@ CREATE TABLE IF NOT EXISTS `garbage_collector` (
   PRIMARY KEY  (`gc_id`),
   KEY `gc_timestamp` (`gc_timestamp`)
 );
-
