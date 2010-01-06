@@ -201,15 +201,17 @@ YAHOO.Wikia.Blogs.save = function( event, id ) {
 };
 
 YAHOO.Wikia.Blogs.toggle = function( event ) {
+	var commentID = YAHOO.util.Event.getTarget(event).id;
 	YAHOO.util.Event.preventDefault( event );
 	document.body.style.cursor = "wait";
-	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScript + "?action=ajax&rs=BlogComment::axToggle&id=" + event.target.id + "&article=" + wgArticleId, YAHOO.Wikia.Blogs.hideCallback );
+	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScript + "?action=ajax&rs=BlogComment::axToggle&id=" + commentID + "&article=" + wgArticleId, YAHOO.Wikia.Blogs.hideCallback );
 };
 
 YAHOO.Wikia.Blogs.edit = function( event ) {
+	var commentID = YAHOO.util.Event.getTarget(event).id;
 	YAHOO.util.Event.preventDefault( event );
 	document.body.style.cursor = "wait";
-	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScript + "?action=ajax&rs=BlogComment::axEdit&id=" + event.target.id + "&article=" + wgArticleId, YAHOO.Wikia.Blogs.editCallback );
+	YAHOO.util.Connect.asyncRequest( "GET", wgServer + wgScript + "?action=ajax&rs=BlogComment::axEdit&id=" + commentID + "&article=" + wgArticleId, YAHOO.Wikia.Blogs.editCallback );
 };
 
 YAHOO.util.Event.addListener( "blog-comm-submit-top", "click", YAHOO.Wikia.Blogs.submit, "blog-comm-form-top" );
