@@ -48,6 +48,12 @@ class SpecialWikiStickies extends SpecialPage {
 		}
 
 		// get the Three Feeds Plus Extra Special Custom Feed
+		WikiStickies::formatFeed( 'wikistickies-communitystickies', 
+			WikiStickies::getCustomFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
+			'', 
+			'wikistickies-custompages-st-short',
+			true );
+
 		// the without images feed needs to be doubled - we will perform some extra magic on it
 		WikiStickies::formatFeed(
 			'wikistickies-withoutimages',
@@ -59,13 +65,6 @@ class SpecialWikiStickies extends SpecialPage {
 			WikiStickies::getNewpagesFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
 			wfMsg('wikistickies-newpages-hd'), 
 			'wikistickies-newpages-st-short' );
-
-		WikiStickies::formatFeed( 'wikistickies-communitystickies', 
-			WikiStickies::getCustomFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
-			'', 
-			'wikistickies-custompages-st-short',
-			true );
-
 
 		if( !empty( $wgEnableNewWikiBuilder ) ) {
 			// get the Two Tools
