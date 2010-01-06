@@ -491,10 +491,12 @@ function categoryHubContributorsToHtml( $editsByUserId ) {
 	return $r;
 } // end categoryHubContriutorsToHtml()
 
-////
-// Appends the HTML to 'r' for the "other section" which for Category Hubs is
-// the Answered/Unanswered questions section.
-////
+/**
+ * Appends the HTML to 'r' for the "other section" which for Category Hubs is
+ * the Answered/Unanswered questions section, and the pagination.
+ *
+ * @see categoryHubPagination()
+ */
 function categoryHubOtherSection(&$catView, &$r){
 	wfProfileIn(__METHOD__);
 	global $wgCatHub_useDefaultView;
@@ -601,9 +603,28 @@ function categoryHubOtherSection(&$catView, &$r){
 		$r .= "</div>\n"; // end of #tabs
 	}
 
+	// Uncomment this line to work on RT #33702
+	$r .= categoryHubPagination();
+
 	wfProfileOut(__METHOD__);
 	return $wgCatHub_useDefaultView;
 } // end categoryHubOtherSection()
+
+/**
+ * Pagination for category hub pages.
+ *
+ * Currently only outputs HTML.
+ *
+ * Called by categoryHubOtherSection()
+ */
+function categoryHubPagination( ) {
+	return <<<END_OF_HTML
+<ul class="cathub-pagination">
+    <li class="first"><a href="DEV_LINK" rel="previous">&larr; Previous</a></li>
+    <li class="last"><a href="DEV_LINK" rel="next">Next &rarr;</a></li>
+</ul>
+END_OF_HTML;
+}
 
 ////
 // Appends the HTML to 'r' for the "other section" which for Category Hubs is
