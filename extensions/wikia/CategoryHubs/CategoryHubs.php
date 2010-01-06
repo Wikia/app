@@ -659,11 +659,13 @@ function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 	$title = $qArticle->getTitle();
 	$timestamp = $qArticle->getTitle()->getTouched();
 	$lastUpdate = wfTimeFormatAgo($timestamp);
-	$userId = $qArticle->getUser();
-	$userLink = "";
+	#
+	$userId = 0; $userLink = "";
+	$author = CategoryHub::getTitleOwner($title);
+	if ( is_array($author) ) {
+		list( $user_id, $userText, $userPageTitle, $userAvatar ) = array_values( $author );
+	}
 	if($userId > 0){
-		$userText = $qArticle->getUserText();
-		$userPageTitle = Title::makeTitle(NS_USER, $userText);
 		$userPageLink = $userPageTitle->getLocalUrl();
 		$userPageExists = $userPageTitle->exists();
 		$userLinkText = $userPageExists ? '<a class="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '';
@@ -704,6 +706,58 @@ class CategoryHub {
 			$catName = "Un-answered_questions";
 		}
 		return $catName;
+	}
+
+	public static function getTitleOwner( Title $Title ) {
+		global $wgMemc;
+		
+		wfProfileIn( __METHOD__ );
+
+		$author = array();
+		if ( !($Title instanceof Title) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		if ( class_exists("Answer") ) {
+			$aTitle = Answer::newFromTitle($Title);
+			if ( is_object($aTitle) ) {
+				$author = $aTitle->getOriginalAuthor();
+			}
+		} 
+
+		if ( empty($author) ) {
+			$key = wfMemcKey( 'cathub_author', $Title->getArticleID() );
+			$data = $wgMemc->get( $key );
+
+			if ( empty($data) ) {
+				$dbr =& wfGetDB( DB_SLAVE );
+
+				$s = $dbr->selectRow( 
+					'revision',
+					array( 'rev_user','rev_user_text' ),
+					array( 'rev_page' => $Title->getArticleID() ), 
+					__METHOD__ ,
+					array(
+						'ORDER BY' => "rev_id  ASC", 
+						'LIMIT' => 1
+					)
+				);
+				$user_title = Title::makeTitle(NS_USER,$s->rev_user_text);
+				$author = array( 
+					"user_id" => $s->rev_user, 
+					"user_name" => $s->rev_user_text, 
+					"title" => $user_title, 
+					"avatar" => ""
+				);
+				$wgMemc->set( $key, $author, 60 * 60 );
+			} else {
+				$author = $data;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $author;
 	}
 
 }
