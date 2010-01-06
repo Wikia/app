@@ -170,7 +170,7 @@ class RTE {
 		$out->addHTML( "\n" . Xml::element('input', array('type' => 'hidden', 'value' => '', 'name' => 'RTEMode', 'id' => 'RTEMode')) );
 
 		// add fields to perform temporary save
-		self::addTemporarySaveFields(&$out);
+		self::addTemporarySaveFields($out);
 
 		// let's parse wikitext (only for wysiwyg mode)
 		if (self::$initMode == 'wysiwyg') {
@@ -775,7 +775,7 @@ HTML
 
 		if ( strpos($sAgent, 'Chrome') !== false )
 		{
-			$ret = false;
+			$ret = true;
 		}
 		else if ( strpos($sAgent, 'MSIE') !== false && strpos($sAgent, 'mac') === false && strpos($sAgent, 'Opera') === false )
 		{
@@ -787,7 +787,6 @@ HTML
 			$iVersion = (int)substr($sAgent, strpos($sAgent, 'Gecko/') + 6, 8) ;
 			$ret = ($iVersion >= 20030210) ;
 		}
-		/*
 		else if ( strpos($sAgent, 'Opera/') !== false )
 		{
 			$fVersion = (float)substr($sAgent, strpos($sAgent, 'Opera/') + 6, 4) ;
@@ -798,7 +797,6 @@ HTML
 			$iVersion = $matches[1] ;
 			$ret = ( $matches[1] >= 522 ) ;
 		}
-		*/
 
 		RTE::log(__METHOD__, $ret ? 'yes' : 'no');
 
