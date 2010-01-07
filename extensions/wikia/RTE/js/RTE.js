@@ -22,16 +22,16 @@ window.RTE = {
 		'toolbarCanCollapse': false
 	},
 
-	// refernece to current CK instance
+	// reference to current CK instance
 	instance: false,
 
 	// editor instance ID
 	instanceId: window.RTEInstanceId,
 
-	// is instance filly loaded?
+	// is instance fully loaded?
 	loaded: false,
 
-	// time of CK load
+	// CK loading time
 	loadTime: false,
 
 	// list of our RTE custom plugins (stored in js/plugins) to be loaded on editor init
@@ -80,14 +80,13 @@ window.RTE = {
 	},
 
 	// track events
-	// TODO: use GA event tracking
 	// @see http://code.google.com/intl/pl-PL/apis/analytics/docs/tracking/eventTrackerGuide.html
 	track: function(action, label, value) {
 		// get method attributes
 		var args = ['ckeditor']; for (i=0; i < arguments.length; i++) args.push(arguments[i]);
 
+		// TODO: use GA event tracking
 		// pageTracker._trackEvent.apply(window, args);
-		//RTE.log('track - ' + args.join('/'));
 
 		WET.byStr(args.join('/'));
 	},
