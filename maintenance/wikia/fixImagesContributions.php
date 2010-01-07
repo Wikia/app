@@ -35,42 +35,55 @@ $sth = $dbw->select(
 
 while( $row = $dbw->fetchRow( $sth ) ) {
 	/**
-	 * for this username check user_id in external shared
+	 * check local user name first
 	 */
-	$text_val = $row[ 0 ];
-	$id_val   = $row[ 1 ];
+	$localUser = $dbw->selectRow(
+		'`user`',
+		array( "user_id", "user_name"),
+		array( "user_id" => $row->img_user ),
+		__METHOD__
+	);
 
-	if( empty( $cachedUsers[ $text_val ] ) ) {
-		$user = $central->selectRow(
-			array( "user" ),
-			array( "user_id", "user_name"),
-			array( "user_id" => $id_val ),
+	if( !empty( $localUser->user_name ) ) {
+
+		/**
+		 * for this username check user_id in external shared
+		 */
+		$text_val = $row[ 0 ];
+		$id_val   = $row[ 1 ];
+
+		if( empty( $cachedUsers[ $text_val ] ) ) {
+			$user = $central->selectRow(
+				array( "user" ),
+				array( "user_id", "user_name"),
+				array( "user_name" => $localUser->user_name ),
 			__METHOD__
-		);
-		if( !empty( $user ) ) {
-			$cachedUsers[ $user->user_name ] = $user->user_id;
+			);
+			if( !empty( $user ) ) {
+				$cachedUsers[ $user->user_name ] = $user->user_id;
+			}
 		}
+
+		$userid = $cachedUsers[ $text_val ];
+		if( $userid != $id_val && !empty( $id_val ) ) {
+			Wikia::log( "log", false, "inconsistency in image, for {$text_val} local = {$id_val}, global = {$userid}" );
+			$sql = sprintf(
+				"UPDATE image SET img_user = %d, img_user_text = %d WHERE img_user_text = '0' and img_timestamp <= '20090927200647'",
+				$userid,
+				$dbw->addQuotes( $text_val ),
+				$id_val
+			);
+
+
+	#			if( $write ) {
+	#				$dbw->begin( );
+	#				$dbw->query( $sql, __METHOD__ );
+	#				$dbw->commit( );
+	#			}
+	#			else {
+				echo $sql . "\n";
+	#			}
+		}
+		$central->ping();
 	}
-
-	$userid = $cachedUsers[ $text_val ];
-	if( $userid != $id_val && !empty( $id_val ) ) {
-		Wikia::log( "log", false, "inconsistency in image, for {$text_val} local = {$id_val}, global = {$userid}" );
-		$sql = sprintf(
-			"UPDATE image SET img_user = %d, img_user_text = %d WHERE img_user_text = '0' and img_timestamp <= '20090927200647'",
-			$userid,
-			$dbw->addQuotes( $text_val ),
-			$id_val
-		);
-
-
-#			if( $write ) {
-#				$dbw->begin( );
-#				$dbw->query( $sql, __METHOD__ );
-#				$dbw->commit( );
-#			}
-#			else {
-			echo $sql . "\n";
-#			}
-	}
-	$central->ping();
 }
