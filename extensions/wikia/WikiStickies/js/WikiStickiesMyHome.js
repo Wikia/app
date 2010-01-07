@@ -65,7 +65,11 @@ $(document).ready(function() {
 	content.bind('click', function(ev) {
 		var target = $(ev.target).filter('a');
 		if (target.exists()) {
-			WET.byStr( 'MyHome/wikistickies/item' + content.children('span').attr('class').split('_').pop() );     		
+			if( content.children('span').exists() ) {
+				WET.byStr( 'MyHome/wikistickies/item' + content.children('span').attr('class').split('_').pop() );     		
+			} else { // we know it's community
+				WET.byStr( 'MyHome/wikistickies/itemcommunity');
+			}                                      
 		}
 	});
 

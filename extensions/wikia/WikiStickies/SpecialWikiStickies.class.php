@@ -48,7 +48,7 @@ class SpecialWikiStickies extends SpecialPage {
 		}
 
 		// get the Three Feeds Plus Extra Special Custom Feed
-		WikiStickies::formatFeed( 'wikistickies-communitystickies', 
+		WikiStickies::formatFeed( 'wikistickies-community', 
 			WikiStickies::getCustomFeed( WikiStickies::SPECIAL_FEED_LIMIT ), 
 			'', 
 			'wikistickies-custompages-st-short',
