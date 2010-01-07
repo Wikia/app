@@ -14,9 +14,9 @@ class ArticleAdLogic {
 
 	// Play with these levels, once we get more test cases.
 	const stubArticleThreshold = 400; // what defines a "stub" article, in characters.
-	const shortArticleThreshold = 650; // what defines a "short" article, in pixel height 
-	const longArticleThreshold = 1200; // what defines a "long" article, in pixel height. 
-	const superLongArticleThreshold = 2500; // what defines a "super long" article, in pixel height. (3 skyscrapers) 
+	const shortArticleThreshold = 650; // what defines a "short" article, in pixel height
+	const longArticleThreshold = 1200; // what defines a "long" article, in pixel height.
+	const superLongArticleThreshold = 2500; // what defines a "super long" article, in pixel height. (3 skyscrapers)
 	const collisionRankThreshold = .200;  // what collison score constitutes a collision. 0-1
 	const firstHtmlThreshold = 1500; // Check this much of the html for collision causing tags
 	const pixelThreshold = 350; // how many pixels for a "wide" object that will cause a collision, in pixels
@@ -53,9 +53,9 @@ class ArticleAdLogic {
 
 	/* Note, this comment in the html is filled in by the hook AdEngineMagicWords */
 	public static function hasWikiaMagicWord ($html, $word){
-		$out = strpos($html, "<!--{$word}-->") !== false; 
+		$out = strpos($html, "<!--{$word}-->") !== false;
 		self::adDebug( "Check for $word is ". var_export($out, true));
-		return $out;	
+		return $out;
 	}
 
 	/* Return the likelihood that there is a collision with the Box Ad
@@ -76,12 +76,12 @@ class ArticleAdLogic {
 		$tableFound = false;
 		if (preg_match_all('/<(table|img|div)[^>]+>/is', $firstHtml, $matches, PREG_OFFSET_CAPTURE)){
 
-			// PHP's preg_match_all return is a PITA to deal with	
+			// PHP's preg_match_all return is a PITA to deal with
 			for ($i = 0; $i < sizeof($matches[0]) && $score < 1; $i++){
 				$wholetag = $matches[0][$i];
 				$tag = $matches[1][$i][0];
 				if (strtolower($tag) == 'table' ) $tableFound=true;
-					
+
 				$attr = self::getHtmlAttributes($matches[0][$i][0]);
 
 				$tagscore = self::getTagCollisionScore($tag, $attr);
@@ -110,7 +110,7 @@ class ArticleAdLogic {
 
 	}
 
-	
+
 	/* Find out how naughty a particular tag is.*/
 	private function getTagCollisionScore($tag, $attr){
 		switch (strtolower($tag)){
@@ -204,7 +204,7 @@ class ArticleAdLogic {
 			}
 			self::adDebug("Div seems harmless");
 			return 0;
-		    
+
 		  case 'img':
 			self::adDebug("Image found: " . print_r($attr, true));
 			if (isset($attr['width']) && $attr['width'] >= self::pixelThreshold){
@@ -241,12 +241,12 @@ class ArticleAdLogic {
 	 * 200px
  	 * 20em (yeah, not exact, but close enough)
  	 *
- 	 * For any of the values 
+ 	 * For any of the values
  	 */
 	public function getPixels($in){
 		$in=trim($in);
 		if (preg_match('/^[0-9]{1,4}$/', $in)){
-			// Nothing bug numbers. 
+			// Nothing bug numbers.
 			return $in;
 		} else if (preg_match('/^([0-9]{1,4})px/i', $in, $match)){
 			// NNNpx
@@ -294,8 +294,8 @@ class ArticleAdLogic {
 		} else {
 			$result = true;
 		}
-		
-		
+
+
 		$lastMd5 = $currentMd5;
 		$lastResult = $result;
 		return $result;
@@ -304,7 +304,7 @@ class ArticleAdLogic {
 
 	public function isMainPage(){
                 global $wgTitle;
-                if (is_object($wgTitle) && 
+                if (is_object($wgTitle) &&
 		    $wgTitle->getArticleId() == Title::newMainPage()->getArticleId() &&
 		    $wgTitle->getArticleId() != 0 && # caused problems on central due to NS_SPECIAL main page
 		    !self::isDiffPage() &&
@@ -329,19 +329,19 @@ class ArticleAdLogic {
 		}
 	}
 
-	
+
 	public function isContentPage(){
                 global $wgTitle, $wgContentNamespaces;
 
 		// not a content page if one of the weird edge cases occurs
 		if ( self::isDiffPage() || self::isAnonPurgePrompt() || self::isActionPage() ) {
 			return false;
-		} 
-		
+		}
+
 		// actual content namespace check along with hardcoded override (main, image & category)
 		// note this is NOT used in isMainPage() since that is to ignore content namespaces
-                if (is_object($wgTitle)){ 
-			return in_array($wgTitle->getNamespace(), array_merge( $wgContentNamespaces, array(NS_MAIN, NS_IMAGE, NS_CATEGORY) ));	
+                if (is_object($wgTitle)){
+			return in_array($wgTitle->getNamespace(), array_merge( $wgContentNamespaces, array(NS_MAIN, NS_IMAGE, NS_CATEGORY) ));
 		} else {
 			return false;
 		}
@@ -407,7 +407,8 @@ class ArticleAdLogic {
   	 	* See http://staff.wikia-inc.com/wiki/DART_Implementation#When_to_show_ads */
 		$mandatoryAds = array(
 			'HOME_TOP_LEADERBOARD',
-			'HOME_TOP_RIGHT_BOXAD'
+			'HOME_TOP_RIGHT_BOXAD',
+			'LEFT_NAV_205x400'
 		);
 
 		// Certain ads always display
@@ -416,7 +417,7 @@ class ArticleAdLogic {
 			return true;
 		} else {
 			return false;
-		}	
+		}
 	}
 
 
@@ -430,9 +431,9 @@ class ArticleAdLogic {
 			}
 		}
 		return $attr;
-	}	
+	}
 
-	
+
 	// Get attributes from html tag.
 	// Note, this requires well-formed html with quoted attributes. Second regexp for poor html?
 	public function getHtmlAttributes($tag){
@@ -446,7 +447,7 @@ class ArticleAdLogic {
 		return $attr;
 	}
 
-	
+
 	public function adDebug($msg){
 		if (empty($_GET['adDebug'])){
 			return;
@@ -454,7 +455,7 @@ class ArticleAdLogic {
 			$backtrace = debug_backtrace();
 			echo "<font color='red'>Ad Debug from {$backtrace[1]['function']}: $msg</font><br />";
 		}
-		
+
 	}
 
 
@@ -474,7 +475,7 @@ class ArticleAdLogic {
 		self::adDebug("Article is $textOnlyLength characters.");
 		$textHeight = round($textOnlyLength * self::getCharacterFactor());
 		self::adDebug("Text height is $textHeight pixels.");
-	
+
 		// Next measure the html height
 		$htmlHeight = self::getHtmlHeight($html);
 		self::adDebug("Weighted HTML height is $htmlHeight pixels.");
@@ -482,7 +483,7 @@ class ArticleAdLogic {
 		// Next look at images;
 		$imageHeight = self::getImageHeight($html);
 		self::adDebug("Weighted image height is $imageHeight pixels.");
-		
+
 		$result = $textHeight + $htmlHeight + $imageHeight;
 
 		$lastMd5 = $currentMd5;
@@ -492,11 +493,11 @@ class ArticleAdLogic {
 
 	/* Get the mutiplier based on the number of pixels wide we expect the article area to be(articleAreaWidth).
 	 * I used 4 data points to arrive at the multiplier:
-	 * A 500x1000 div fits 3151 characters 
+	 * A 500x1000 div fits 3151 characters
 	 * A 750x1000 div fits 4760 characters
-	 * A 1000x1000 div fits 5430 characters 
-	 * A 1250x1000 div fits 6639 characters 
-	 * A 1500x1000 div fits 8463 characters 
+	 * A 1000x1000 div fits 5430 characters
+	 * A 1250x1000 div fits 6639 characters
+	 * A 1500x1000 div fits 8463 characters
 	 *
 	 * Tested in Firefox 3, with negligible differences in other browsers.
 	 * See testfiles/testHeight.html if you want to do your own experimenting
@@ -509,12 +510,12 @@ class ArticleAdLogic {
 		} else if ($usableWidth < 1250) { return 1000/6639;
 		} else if ($usableWidth < 1500) { return 1000/8463;
 		} else { return 1;
-		}	
+		}
 	}
 
 	public function getArticleAreaWidth(){
 		/* Average window width is 1100 (confirmed with the collision tester),
-		 * note this is different from screen resolution reported by Google Analytics. 
+		 * note this is different from screen resolution reported by Google Analytics.
 		 */
 
 		global $wgUser;
@@ -526,7 +527,7 @@ class ArticleAdLogic {
 			case 'monaco': return 1100; // Assume generous 1300 px browser width, subtract 200 for left nav
 			case 'monobook': return 1030; // Assume generous 1300 px browser width, subtract 150 for left nav and 120 for right nav
 			case 'uncyclopedia': return 1150; // Assume generous 1300 px browser width, subtract 150 for left nav
-			default: return 1100; 
+			default: return 1100;
 		}
 	}
 
@@ -549,10 +550,10 @@ class ArticleAdLogic {
 
 		if (preg_match_all('/<img[^>]+>/is', $html, $matches)){
 
-			// PHP's preg_match_all return is a PITA to deal with	
+			// PHP's preg_match_all return is a PITA to deal with
 			for ($i = 0; $i< sizeof($matches[0]); $i++){
 				$wholetag = $matches[0][$i];
-					
+
 				$attr = self::getHtmlAttributes($matches[0][$i]);
 
 				if (empty($attr['width']) || empty($attr['height'])){
@@ -560,11 +561,11 @@ class ArticleAdLogic {
 				}
 
 				$imageArea =+ $imageArea + ($attr['width'] * $attr['height']);
-				
+
 			}
 		}
 
-		// This assumes that all the images are perfectly arranged 
+		// This assumes that all the images are perfectly arranged
 		// unlikely best case scenario, but good minimum floor
 		return round($imageArea / self::getArticleAreaWidth());
 	}
