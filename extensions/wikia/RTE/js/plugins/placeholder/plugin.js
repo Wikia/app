@@ -299,9 +299,6 @@ CKEDITOR.plugins.add('rte-placeholder',
 			return;
 		}
 
-		// don't allow users to resize placeholders
-		placeholder.attr('contentEditable', false);
-
 		// unbind previous events
 		placeholder.unbind('.placeholder');
 
