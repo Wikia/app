@@ -34,7 +34,7 @@ body.ns-14 h1.firstHeading {
 }
 
 .cathub-pagination {
-	margin: 0;
+	margin: 1.5em 0 0 0;
 	padding: 0;
 }
 .cathub-pagination li {
