@@ -50,7 +50,7 @@ class DataFeedProvider {
 	}
 
 	private static $users = array();
-
+	private static $hiddenCategories = null;
 	private static $images = array();
 
 	private $removeDuplicatesType;
@@ -246,18 +246,20 @@ class DataFeedProvider {
 		global $wgMemc;
 		wfProfileIn(__METHOD__);
 
-		$memcKey = wfMemcKey('hidden-categories');
-		$hcats = $wgMemc->get($memcKey);
-		if (!is_array($hcats)) {
-			$dbr = wfGetDB(DB_SLAVE);
-			$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';");
-			$hcats = array();
-			while($row = $dbr->fetchObject($res)) {
-				$hcats[] = $row->page_title;
+		if (!is_array(self::$hiddenCategories)) {
+			$memcKey = wfMemcKey('hidden-categories');
+			self::$hiddenCategories = $wgMemc->get($memcKey);
+			if (!is_array(self::$hiddenCategories)) {
+				$dbr = wfGetDB(DB_SLAVE);
+				$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';");
+				self::$hiddenCategories = array();
+				while($row = $dbr->fetchObject($res)) {
+					self::$hiddenCategories[] = $row->page_title;
+				}
+				$wgMemc->set($memcKey, self::$hiddenCategories, 60*60);
 			}
-			$wgMemc->set($memcKey, $hcats, 60*60);
 		}
-		$categories = array_values(array_diff($categories, $hcats));
+		$categories = array_values(array_diff($categories, self::$hiddenCategories));
 
 		wfProfileOut(__METHOD__);
 		return $categories;
