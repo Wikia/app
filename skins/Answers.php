@@ -107,7 +107,7 @@ class AnswersTemplate extends MonacoTemplate {
 
 		<?php
 		if ($is_question) {
-			if (preg_match("/^" . preg_quote($wgTitle->getText()) . "( - .*)$/", $this->data["pagetitle"], $matches)) {
+			if (preg_match("/^" . preg_quote($wgTitle->getText(), "/") . "( - .*)$/", $this->data["pagetitle"], $matches)) {
 				$this->data["pagetitle"] = Answer::s2q($wgTitle->getText()) . $matches[1];
 			}
 		}
