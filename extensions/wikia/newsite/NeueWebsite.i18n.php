@@ -45,7 +45,7 @@ $messages['de'] = array(
 	'newsite-form-submit' => 'anlegen',
 	'newsite-error-invalid' => '$1 kann nicht als neue Website angelegt werden.',
 	'newsite-error-notfound' => 'Die Website $1 wurde nicht gefunden.',
-	'newsite-error-exists' => 'Die Website <a href=\"/$1\">$1</a> existiert schon im WebsiteWiki.',
+	'newsite-error-exists' => 'Die Website <a href="$1">$1</a> existiert schon im WebsiteWiki.',
 	'newsite-error-nocontact' => 'Die Website $1 kann nicht kontaktiert werden.',
 	'newsite-error-nowikitext' => 'Der Website-Inhalt von $1 kann nicht aufgebaut werden.',
 	'newsite-edit-comment' => 'Neue Website',
