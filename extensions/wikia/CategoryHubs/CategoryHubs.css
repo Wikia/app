@@ -22,6 +22,7 @@ body.ns-14 #answers_page #answers_article{ padding-top:0; }
 .cathub-progbar-unanswered{
 	background-image:url(prog_bar_unanswered.png);
 }
+/* #answers_page is needed, .ui-widget alone gets "cascaded over" (-; by core ui.css */
 #answers_page .ui-widget-header{
 	background-image:url(tab_navbar_bg.png);
 }
