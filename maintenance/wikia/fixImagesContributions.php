@@ -36,8 +36,6 @@ $cachedUsers = array();
 		/**
 		 * for this username check user_id in external shared
 		 */
-		$text = $columns[ 0 ];
-		$id   = $columns[ 1 ];
 		$text_val = $row[ 0 ];
 		$id_val   = $row[ 1 ];
 
@@ -57,14 +55,10 @@ $cachedUsers = array();
 		if( $userid != $id_val && !empty( $id_val ) ) {
 			Wikia::log( "log", false, "inconsistency in image, for {$text_val} local = {$id_val}, global = {$userid}" );
 			$sql = sprintf(
-				"UPDATE image SET %s = %d WHERE %s = %s AND %s <> %d AND %s <> 0",
-				$text,
+				       "UPDATE image SET img_user = %d, img_user_text = %d WHERE img_user_text = '0' and img_timestamp <= '20090927200647'",
 				$userid,
-				$text,
 				$dbw->addQuotes( $text_val ),
-				$id,
-				$userid,
-				$id
+				$id_val
 			);
 
 

@@ -73,7 +73,7 @@ if( !is_null( $sourceTitle ) ) {
 			$log = $sourceTitle->getPrefixedText() . ' --> ' . $targetTitle->getPrefixedText();
 			$err = $sourceTitle->moveTo( $targetTitle, false, "SEO" );
 			if( $err !== true ) {
-				$log .= "- moving FAILED: ". print_r($err, true);
+				$log .= " moving FAILED: ". print_r($err, true);
 				Wikia::log( "moveMain", false, $log );
 			}
 			else {
