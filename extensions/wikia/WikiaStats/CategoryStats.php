@@ -547,7 +547,8 @@ class CategoryEdits {
 	 *
 	 * @param Integer $incat - percent of pages in $incat category
 	 * @param Array $namespaces - IDs of NS (all namespace if empty)
-	 * @param Integer $limit 
+	 * @param Integer $limit - the maximum number of desired results to return... the real maximum will
+	 *                         be one higher.  This allows the caller to tell if they need a "Next" link.
 	 * @param Integer $offset
 	 */
 	public function getPages($incat, $namespaces = array(), $limit = 30, $offset = 0) {
@@ -607,7 +608,7 @@ class CategoryEdits {
 					array(
 						'STRAIGHT_JOIN',					
 						'ORDER BY' => 'rev_id DESC',
-						'LIMIT' => $limit + 1,
+						'LIMIT' => $limit + 1, // the extra 1 is to detect if we need a "Next" link
 						'OFFSET' => $offset * $limit
 					),
 					array(
