@@ -49,11 +49,13 @@ body.ns-14 #answers_page #answers_article{ padding-top:0; }
 	text-align: right;
 }
 .cathub-pagination a {
-	border: 2px solid #B9B9B9;
+	border: 1px solid #B9B9B9;
 	padding: .25em;
 	color: #000;
 }
 .cathub-pagination a:hover {
-	color: blue;
-    border-color: blue;
+	color: #000;
+    border-color: #000080;
+	text-decoration:none;
+	background-color:#eef;
 }
