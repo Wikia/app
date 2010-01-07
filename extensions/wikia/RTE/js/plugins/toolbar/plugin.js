@@ -6,8 +6,16 @@ CKEDITOR.plugins.add('rte-toolbar',
 		var self = this;
 
 		editor.on('instanceReady', function() {
+			// try to set toolbar colors (fix for preview in Chrome)
+			var toolbarWrapper = $('#cke_top_wpTextbox1');
+
+			toolbarWrapper.css({
+				backgroundColor: RTE.config.baseBackgroundColor,
+				color: RTE.config.baseColor
+			});
+
 			// find source button and mark it with ID
-			var toolbar = $('#cke_top_wpTextbox1').children('div').eq(0);
+			var toolbar = toolbarWrapper.children('div').eq(0);
 			var sourceButton = toolbar.find('.cke_button_source').parent().parent().parent();
 
 			sourceButton.attr('id', 'cke_source_button');
