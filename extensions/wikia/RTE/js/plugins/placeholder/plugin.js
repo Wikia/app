@@ -176,9 +176,10 @@ CKEDITOR.plugins.add('rte-placeholder',
 					RTE.track(self.getTrackingType($(placeholder)), 'hover', 'delete');
 
 					RTE.tools.confirm(title, lang.confirmDelete, function() {
-						// remove placeholder and its preview
+						RTE.tools.removeElement(placeholder);
+
+						// remove preview
 						preview.remove();
-						$(placeholder).remove();
 					});
 				});
 
