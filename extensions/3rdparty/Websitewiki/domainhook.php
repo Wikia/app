@@ -298,11 +298,11 @@ function makekatkeine($artid, $artname)
 
   $spice = sha1("Kroko-katMeNot-$artid-$artname-NotMekat-Schnapp");
 
-  global $wgServer, $wgScriptPath;
+  $catUrl = Title::newFromText( 'FastCat', NS_SPECIAL )->getFullURL();
 
   $ret =<<< EORET
 
-<form action="$wgServer$wgScriptPath/wiki/Special:FastCat" method="post"
+<form action="$catUrl" method="post"
   style="background-color:#fafafa; border:1px solid #999; padding:0 0 .5em 1em;">
 <p><b>Kategorie-Schnellauswahl</b><br>
 <small>Diese Website hat noch keine Kategorie. Bitte hilf mit, sie zu kategorisieren.
@@ -338,7 +338,6 @@ EORET;
   $ret .=<<< EORET
 </p>
 </form>
-</div>
 EORET;
 
   return $ret;
