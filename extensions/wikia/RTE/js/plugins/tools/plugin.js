@@ -99,6 +99,19 @@ window.RTE.tools = {
 		return placeholder;
 	},
 
+	// get theme colors from .color1 CSS class
+	getThemeColors: function() {
+		// create or use existing color picker div
+		var colorPicker = $('#RTEColorPicker');
+		if ( !colorPicker.exists() ) {
+			colorPicker = $('<div id="RTEColorPicker">').addClass('color1').appendTo('#RTEStuff').hide();
+		}
+
+		// get colors and update CK config
+		RTE.config.baseBackgroundColor = colorPicker.css('backgroundColor');
+		RTE.config.baseColor = colorPicker.css('color');
+	},
+
 	// get list of images
 	getImages: function() {
 		var images = RTE.getEditor().find('img.image');

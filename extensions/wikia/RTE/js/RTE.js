@@ -114,11 +114,6 @@ window.RTE = {
 		RTE.repositionRTEStuff();
 		$(window).bind('resize', RTE.repositionRTEStuff);
 
-		// base colors: use color / background-color from .color1 CSS class
-		var colorPicker = $('<div>').addClass('color1').appendTo('#RTEStuff').hide();
-		RTE.config.baseBackgroundColor = colorPicker.css('backgroundColor');
-		RTE.config.baseColor = colorPicker.css('color');
-
 		// make textarea wysiwygable
 		CKEDITOR.replace('wpTextbox1', RTE.config);
 
@@ -191,6 +186,9 @@ window.RTE = {
 
 	// final setup
 	onEditorReady: function() {
+		// base colors: use color / background-color from .color1 CSS class
+		RTE.tools.getThemeColors();
+
 		// remove HTML indentation
 		RTE.instance.dataProcessor.writer.indentationChars = '';
 		RTE.instance.dataProcessor.writer.lineBreakChars = '';
