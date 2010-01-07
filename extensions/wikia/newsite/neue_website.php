@@ -1,5 +1,8 @@
 <?php
 
+// this is to be able to pull related websites feed
+ini_set("user_agent",  "");
+
 function neue_website($nws) 
 {
   global $wgUser, $wgOut;
