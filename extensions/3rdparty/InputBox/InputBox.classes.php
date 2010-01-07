@@ -62,8 +62,8 @@ class InputBox {
 							'class' => 'error'
 						),
 						strlen( $this->mType ) > 0
-						? wfMsgForContent( 'inputbox-error-bad-type', $this->mType ) 
-						: wfMsgForContent( 'inputbox-error-no-type' ) 
+						? wfMsgForContent( 'inputbox-error-bad-type', $this->mType )
+						: wfMsgForContent( 'inputbox-error-no-type' )
 					)
 				);
 		}
@@ -71,10 +71,10 @@ class InputBox {
 
 	/**
 	 * Generate search form
-	 * @param $type 
+	 * @param $type
 	 */
 	public function getSearchForm( $type ) {
-		global $wgContLang;
+		global $wgContLang, $wgEnableCrossWikiaSearch;
 
 		// Use button label fallbacks
 		if ( !$this->mButtonLabel ) {
@@ -108,7 +108,7 @@ class InputBox {
 				'size' => $this->mWidth,
 			)
 		);
-		
+
 		if( $this->mPrefix != '' ){
 			$htmlOut .= Xml::element( 'input',
 				array(
@@ -116,9 +116,20 @@ class InputBox {
 					'type' => 'hidden',
 					'value' => $this->mPrefix,
 				)
-			);	
+			);
 		}
-		
+
+		// #rt35840 - cross-wikia search compatibility
+		if( !empty($wgEnableCrossWikiaSearch) ){
+			$htmlOut .= Xml::element( 'input',
+				array(
+					'name' => 'thisWikiOnly',
+					'type' => 'hidden',
+					'value' => 1,
+				)
+			);
+		}
+
 		$htmlOut .= $this->mBR;
 
 		// Determine namespace checkboxes
@@ -366,7 +377,7 @@ class InputBox {
 		// Return HTML
 		return $htmlOut;
 	}
-	
+
 	/**
 	 * Generate new section form
 	 */
