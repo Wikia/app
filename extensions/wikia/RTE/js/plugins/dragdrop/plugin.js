@@ -101,11 +101,13 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 				// prevent resize box - RT #33853
 				bind('dblclick.dnd', function(ev) {
-					// apply fix only for placeholders and images
-					var target = $(ev.target);
+					if (CKEDITOR.env.gecko) {
+						var target = $(ev.target);
 
-					if ( !!target.filter('img').attr('type') ) {
-						RTE.tools.removeResizeBox();
+						// apply fix only for placeholders and images
+						if ( !!target.filter('img').attr('type') ) {
+							RTE.tools.removeResizeBox();
+						}
 					}
 				});
 
