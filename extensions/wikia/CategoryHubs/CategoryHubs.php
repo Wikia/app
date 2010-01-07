@@ -574,14 +574,12 @@ function categoryHubOtherSection(&$catView, &$r){
 					$r .= "</li>\n";
 				}
 			}
-			if($numReturned_u > 0){
-				$r .= Xml::openElement('li');
-				$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_u, $numReturned_u, $U_SUFFIX);
-				$r .= Xml::closeElement('li');
-			}
 			$r .= "</ul>\n";
 		}
-		$r .= "</div>\n";
+		if($numReturned_u > 0){
+			$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_u, $numReturned_u, $U_SUFFIX);
+		}
+		$r .= "&nbsp;</div>\n";
 		if ( $wgUser->isAnon() ) {
 			//$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_U');
 		}
@@ -625,15 +623,13 @@ function categoryHubOtherSection(&$catView, &$r){
 					$r .= "</li>\n";
 				}
 			}
-			if($numReturned_a > 0){
-				$r .= Xml::openElement('li');
-				$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_a, $numReturned_a, $A_SUFFIX);
-				$r .= Xml::closeElement('li');
-			}
 			$r .= "</ul>\n";
 			if ( $wgUser->isAnon() ) {
 				//$r .= AdEngine::getInstance()->getPlaceHolderDiv('ANSWERSCAT_BOXAD_A');
 			}
+		}
+		if($numReturned_a > 0){
+			$r .= categoryHubPagination($wgCategoryHubArticleLimitPerTab, $offset_a, $numReturned_a, $A_SUFFIX);
 		}
 		$r .= "&nbsp;</div>\n";
 
