@@ -9,6 +9,8 @@ CKEDITOR.plugins.add('rte-toolbar',
 			// try to set toolbar colors (fix for preview in Chrome)
 			var toolbarWrapper = $('#cke_top_wpTextbox1');
 
+			RTE.tools.getThemeColors();
+
 			toolbarWrapper.css({
 				backgroundColor: RTE.config.baseBackgroundColor,
 				color: RTE.config.baseColor
