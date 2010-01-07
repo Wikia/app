@@ -1080,11 +1080,17 @@ class RTEReverseParser {
 	}
 
 	/**
-	 * Adds extra line break before/after given element being first child of table cell (td/th)
+	 * Adds extra line break before/after given element which is the first child of table cell (td/th)
 	 */
 	private function fixForTableCell($node, $out) {
+
+		// just fix elements which are children of <td> or <th>
+		if ( !self::isChildOf($node, 'td') && !self::isChildOf($node, 'th') ) {
+			return $out;
+		}
+
 		// $node must be first child of table cell / header (td/th)
-		if ( self::isFirstChild($node) && (self::isChildOf($node, 'td') || self::isChildOf($node, 'th')) ) {
+		if ( self::isFirstChild($node)) {
 			if ($node->nodeType == XML_ELEMENT_NODE) {
 				switch($node->nodeName) {
 					// link (RT #34043)
@@ -1095,7 +1101,13 @@ class RTEReverseParser {
 					case 'u':
 					case 's':
 					case 'strike':
-						$out = "{$out}\n";
+						// if next element is text node, don't add line break (refs RT #34043)
+						if ( self::nextSiblingIsTextNode($node) ) {
+							// ...
+						}
+						else {
+							$out = "{$out}\n";
+						}
 						break;
 
 					default:
@@ -1110,6 +1122,11 @@ class RTEReverseParser {
 					$out = "{$out}\n";
 				}
 			}
+		}
+
+		// add line break before lists, if previous node is text node (RT #34043)
+		if ( self::isListNode($node) && self::previousSiblingIsTextNode($node) ) {
+			$out = "\n{$out}";
 		}
 
 		return $out;
@@ -1166,6 +1183,20 @@ class RTEReverseParser {
 		}
 
 		return ( !empty($node->nextSibling->nodeName) && in_array($node->nextSibling->nodeName, $nodeName) );
+	}
+
+	/**
+	 * Checks if previous node is text node
+	 */
+	private static function previousSiblingIsTextNode($node) {
+		return ( !empty($node->previousSibling) && $node->previousSibling->nodeType == XML_TEXT_NODE );
+	}
+
+	/**
+	 * Checks if next node is text node
+	 */
+	private static function nextSiblingIsTextNode($node) {
+		return ( !empty($node->nextSibling) && $node->nextSibling->nodeType == XML_TEXT_NODE );
 	}
 
 	/**
