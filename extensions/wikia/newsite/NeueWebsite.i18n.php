@@ -21,7 +21,7 @@ $messages['en'] = array(
         'newsite-output-status-under-construction' => '* The website is [[Under construction]].',
         'newsite-output-status-forsale' => '* The website is [[for sale]].',
         'newsite-output-status-empty' => '* The website is [[empty]].',
-        'newsite-output-status-redir' => '"* The website redirects to  $1.',
+        'newsite-output-status-redir' => '* The website redirects to  $1.',
         'newsite-output-status-parked' => '* The website is [[Parking|parked]].',
         'newsite-output-technology' => '== Website technologies ==',
         'newsite-output-technology-content' => '=== Content technologies ===',
