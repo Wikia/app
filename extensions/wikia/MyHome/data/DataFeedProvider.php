@@ -192,7 +192,7 @@ class DataFeedProvider {
 					if(count($item['new_videos']) == 0) unset($item['new_videos']);
 				}
 
-				if(isset($res['rc_params']['categoryInserts'])) {
+				if(isset($res['rc_params']['categoryInserts']) && count($res['rc_params']['categoryInserts'])) {
 					$item['new_categories'] = $res['rc_params']['categoryInserts'];
 				}
 
@@ -226,6 +226,10 @@ class DataFeedProvider {
 						$this->invisibleRevisions[] = $res['rc_params']['revId'];
 					} else if(!in_array($res['revid'], $this->invisibleRevisions)) {
 						$hidenewpages = !empty($this->parameters['flags']) && in_array('hidenewpages', $this->parameters['flags']);
+						//do not show hidden categories (see RT#32015)
+						if(isset($res['rc_params']['categoryInserts'])) {
+							$res['rc_params']['categoryInserts'] = $this->filterHiddenCategories($res['rc_params']['categoryInserts']);
+						}
 						if($res['type'] == 'new' && !$hidenewpages) {
 							$this->filterNew($res, $title);
 						} else if($res['type'] == 'edit') {
@@ -236,6 +240,27 @@ class DataFeedProvider {
 			}
 		}
 		wfProfileOut(__METHOD__);
+	}
+
+	private function filterHiddenCategories($categories) {
+		global $wgMemc;
+		wfProfileIn(__METHOD__);
+
+		$memcKey = wfMemcKey('hidden-categories');
+		$hcats = $wgMemc->get($memcKey);
+		if (!is_array($hcats)) {
+			$dbr = wfGetDB(DB_SLAVE);
+			$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';");
+			$hcats = array();
+			while($row = $dbr->fetchObject($res)) {
+				$hcats[] = $row->page_title;
+			}
+			$wgMemc->set($memcKey, $hcats, 60*60);
+		}
+		$categories = array_values(array_diff($categories, $hcats));
+
+		wfProfileOut(__METHOD__);
+		return $categories;
 	}
 
 	private function filterRedirect($res, $title) {
