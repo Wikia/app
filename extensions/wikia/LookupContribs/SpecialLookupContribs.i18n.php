@@ -45,7 +45,10 @@ $messages["en"] = array(
     'lookupcontribscontribs' => 'contribs',
     'lookupcontribshist' => 'hist',
     'lookupcontribsdiff' => 'diff',
-	 'right-lookupcontribs' => 'View user\'s global edits',
+	'right-lookupcontribs' => 'View user\'s global edits',
+	'lookupcontribsshowpages' => 'All pages ($1 namespaces)',
+	'lookupcontribsshowpages' => 'All pages ($1 namespaces)',
+	'lookupcontribscontent' => 'content',
 );
 
 

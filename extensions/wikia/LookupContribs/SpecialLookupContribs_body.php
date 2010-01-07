@@ -14,7 +14,6 @@ class LookupContribsPage extends SpecialPage {
 	private $mTitle, $mUsername, $mMode, $mModeText, $mView, $mModes, $mViewModes;
 	private $mUserPage, $mUserLink;
 	private $mCore;
-	const USE_EXTERNAL_DB = 1;
 	/**
 	 * constructor
 	 */
@@ -89,8 +88,9 @@ class LookupContribsPage extends SpecialPage {
         wfProfileOut( __METHOD__ );
 	}
 	
+	/* draws the results table  */
 	function showUserList() {
-		global $wgOut, $wgRequest ;
+		global $wgOut, $wgRequest, $wgLang ;
         wfProfileIn( __METHOD__ );
 
 		/* no list when no user */
@@ -103,52 +103,21 @@ class LookupContribsPage extends SpecialPage {
 		#---
 		$action = $this->mTitle->escapeLocalURL("");
 		$this->numResults = 0;
-		$wikiList = $this->mCore->getWikiList();
 		/* check user activity */
-		if (self::USE_EXTERNAL_DB == 0) {
-			$userActivity = $this->mCore->checkUserActivity($this->mUsername);
-			$userActivityWikiaList = array();
-			$userActivityWikiaListByCnt = array();
-			if (!empty($userActivity)) {
-				$userActivityWikiaList = explode(",",$userActivity);
-				if (is_array($userActivityWikiaList)) {
-					foreach ($userActivityWikiaList as $id => $wikisWithCnt) {
-						$_temp = explode("<CNT>", $wikisWithCnt);
-						if (is_array($_temp) && count($_temp) == 2) {
-							$wikiName = $_temp[0]; 
-							$cnt = $_temp[1];
-							$userActivityWikiaListByCnt[$cnt][] = $wikiName;
-						}
-					}
-				}
-				// sort array 
-				unset($userActivityWikiaList);
-				$userActivityWikiaList = array();
-				krsort($userActivityWikiaListByCnt);
-				if (!empty($userActivityWikiaListByCnt)) {
-					$loop=0;
-					foreach ($userActivityWikiaListByCnt as $cnt => $wikis) {
-						if (is_array($wikis) && !empty($wikis)) {
-							foreach ($wikis as $i => $wikiName) {
-								$userActivityWikiaList[$loop] = $wikiName;
-								$loop++;
-							}
-						}
-					}
-				}
-			} 
-		} else {
-			$userActivityWikiaList = $this->mCore->checkUserActivityExternal($this->mUsername);
+		$userActivity = array();
+		if ( $this->mCore->checkUser() ) {
+			$userActivity = $this->mCore->checkUserActivityExternal();
 		}
 				
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$oTmpl->set_vars( array(
 			"action"		=> $action,
+			"numResults"	=> $this->numResults,
 			"username"  	=> $this->mUsername,
 			"mode"     		=> $this->mMode,
 			"view"    		=> $this->mView,
-			"userActivity" 	=> $userActivityWikiaList,
-			"wikiList"		=> $wikiList
+			"userActivity" 	=> $userActivity,
+			"nspaces"		=> $wgLang->getFormattedNamespaces(),
 		));
 		$wgOut->addHTML( $oTmpl->execute("user-activity") );
 		wfProfileOut( __METHOD__ );

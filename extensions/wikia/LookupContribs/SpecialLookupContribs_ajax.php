@@ -14,8 +14,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 ############################## Ajax ##################################
 
-function axWLookupContribsUserActivityDetails($dbname, $username, $mode, $limit=25, $offset=0)
-{
+function axWLookupContribsUserActivityDetails($dbname, $username, $mode, $limit = 25, $offset = 0, $nspace = -1) {
 	global $wgRequest, $wgUser;
 	if ( empty($wgUser) ) { return ""; }
 	if ( $wgUser->isBlocked() ) { return ""; }
@@ -24,33 +23,35 @@ function axWLookupContribsUserActivityDetails($dbname, $username, $mode, $limit=
 		return ""; #--- later change to something reasonable
 	}
 
-	$mLCCore = new LookupContribsCore($username);
+	$oLC = new LookupContribsCore($username);
 	$aResponse = array();
-	if ($mLCCore->checkUser()) {
-		$data = $mLCCore->fetchContribs ($dbname, $mode);
+	if ($oLC->checkUser()) {
+		$data = $oLC->fetchContribs($dbname, $mode, $nspace);
   		/* order by timestamp desc */
   		$nbr_records = 0;
   		$result = array();
 		$res = array();
-  		if (!empty($data) && is_array($data)) {
+  		if ( !empty($data) && is_array($data) ) {
 			krsort($data);
 			$result = array_slice($data, $offset*$limit, $limit, true);
 			$loop = 0;
 			foreach ($result as $date => $row) {
-				$res[$loop] = $mLCCore->produceLine($row, $username, $mode);
+				$res[$loop] = $oLC->produceLine($row, $username, $mode);
 				$loop++;
 			}
-			$nbr_records = count($data);
+			$nbr_records = $oLC->getNumRecords();
 		}
-		$aResponse = array("nbr_records" => intval($nbr_records), "limit" => $limit, "offset" => $offset, "res" => $res);
+		
+		$aResponse = array(
+			"nbr_records" => intval($nbr_records), 
+			"limit" => $limit, 
+			"offset" => $offset, 
+			"nspace" => $nspace,
+			"res" => $res
+		);
 	}
 
-	if (!function_exists('json_encode')) {
-		$oJson = new Services_JSON();
-		return $oJson->encode($aResponse);
-	} else {
-		return json_encode($aResponse);
-	}
+	return Wikia::json_encode($aResponse);
 }
 
 global $wgAjaxExportList;

@@ -4,7 +4,7 @@
 	define ('LOOKUPCONTRIBS_PATH', '/') ;
 
 	/* cache? no cache? */
-	define ('LOOKUPCONTRIBS_NO_CACHE', 'true') ;
+	define ('LOOKUPCONTRIBS_NO_CACHE', 'false') ;
 
 	require_once ($IP.LOOKUPCONTRIBS_PATH."extensions/wikia/LookupContribs/SpecialLookupContribs.php") ;
 	require_once ($IP.LOOKUPCONTRIBS_PATH."extensions/wikia/LookupContribs/LookupContribsCore.php") ;
