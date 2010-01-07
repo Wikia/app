@@ -22,7 +22,7 @@ body.ns-14 h1.firstHeading {
 .cathub-progbar-unanswered{
 	background-image:url(prog_bar_unanswered.png);
 }
-.ui-widget-header{
+#answers_page .ui-widget-header{
 	background-image:url(tab_navbar_bg.png);
 }
 .cathub-actual-answer { position: relative; }
