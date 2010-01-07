@@ -165,21 +165,14 @@ YAHOO.widget.Effects.Fade = function( id ){
 //Sidebar Widgets
 var recent_questions_page = '';
 function renderQuestions() {
-	
-	url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categorymembers&cmtitle=Category:" + wgUnAnsweredCategory + "&cmnamespace=0&cmprop=title|timestamp&cmsort=timestamp&cmdir=desc&cmlimit=" + recent_questions_limit + recent_questions_page;
-	jQuery.getJSON( url, "", function( j ){
-		if( j.query.categorymembers ){
-			html = "";
-			var timestamp1 = '';
-			for( var recent_q in j.query.categorymembers ){
-				var page = j.query.categorymembers[recent_q];
-				var url  = page.title.replace(/ /g,"_");
-				var text = page.title + "?";
-				var timestamp = page.timestamp;
-				html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('unanswered/click')\">" + text + "</a></li>";
+   $.get(wgScript + "?smaxage=60&action=ajax&rs=HomePageListAjax&method=recent_unanswered_questions" + recent_questions_page, null, function(data) {
+		if (data != "") {
+			$("#recent_unanswered_questions").html(data);
 
-				if (timestamp1 == '') timestamp1 = timestamp;
-			}
+			var timestamp1 = $("#timestamp1").html();
+			var timestamp  = $("#timestamp").html();
+
+			var html = data;
 
 			// round to full minute, make caching easier; if smaxage is higher than 1 min consider changing this as well
 			if(timestamp != null) {
