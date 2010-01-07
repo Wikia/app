@@ -532,17 +532,19 @@ EOI;
   $result .= rating_bar($dom, 5);
   $result .= "</td></tr>\n";
 
-  $bookurl = "http://www.websitewiki.de/$title";
+  global $wgUploadPath, $wgTitle;
+
+  $bookurl = $wgTitle->getFullURL();
   $bookdesc = "WebsiteWiki+$title";
   $result .= "<tr><td align=\"center\" style=\"background:#ffffff;\"><strong>
     Bookmarken bei ...</strong><br />\n";
-  $result .= "<a href=\"http://www.mister-wong.de/index.php?action=addurl&amp;bm_url=$bookurl&amp;bm_description=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"/images/social/mrwong.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Mr. Wong\" alt=\"Mr. Wong\"></a>\n";
-  $result .= "<a href=\"http://www.google.com/bookmarks/mark?op=add&amp;hl=de&amp;bkmk=$bookurl&amp;title=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"/images/social/google.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Google\" alt=\"Google\"></a>\n";
-  $result .= "<a href=\"http://del.icio.us/post?url=$bookurl&amp;title=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"/images/social/delicious.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"del.icio.us\" alt=\"del.icio.us\"></a>\n";
-  $result .= "<a href=\"http://linkarena.com/bookmarks/addlink/?url=$bookurl'&amp;title=$bookdesc&amp;desc=&amp;tags=\" target=\"_new\" rel=\"nofollow\"><img src=\"/images/social/linkarena.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Linkarena\" alt=\"Linkarena\"></a>\n";
-  $result .= "<a href=\"http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Url=$bookurl&amp;Title=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"/images/social/blinklist.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Blinklist\" alt=\"Blinklist\"></a>\n";
-  $result .= "<a href=\"http://myweb2.search.yahoo.com/myresults/bookmarklet?u=$bookurl&amp;t=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"/images/social/yahoo.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Yahoo\" alt=\"Yahoo\"></a>\n";
-  $result .= "<a href=\"http://twitter.com/home/?source=WebsiteWiki&amp;status=$bookdesc - $bookurl\" target=\"_new\" rel=\"nofollow\"><img src=\"/images/social/twitter.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Twitter\" alt=\"Twitter\"></a>\n";
+  $result .= "<a href=\"http://www.mister-wong.de/index.php?action=addurl&amp;bm_url=$bookurl&amp;bm_description=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/mrwong.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Mr. Wong\" alt=\"Mr. Wong\"></a>\n";
+  $result .= "<a href=\"http://www.google.com/bookmarks/mark?op=add&amp;hl=de&amp;bkmk=$bookurl&amp;title=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/google.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Google\" alt=\"Google\"></a>\n";
+  $result .= "<a href=\"http://del.icio.us/post?url=$bookurl&amp;title=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/delicious.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"del.icio.us\" alt=\"del.icio.us\"></a>\n";
+  $result .= "<a href=\"http://linkarena.com/bookmarks/addlink/?url=$bookurl'&amp;title=$bookdesc&amp;desc=&amp;tags=\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/linkarena.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Linkarena\" alt=\"Linkarena\"></a>\n";
+  $result .= "<a href=\"http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Url=$bookurl&amp;Title=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/blinklist.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Blinklist\" alt=\"Blinklist\"></a>\n";
+  $result .= "<a href=\"http://myweb2.search.yahoo.com/myresults/bookmarklet?u=$bookurl&amp;t=$bookdesc\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/yahoo.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Yahoo\" alt=\"Yahoo\"></a>\n";
+  $result .= "<a href=\"http://twitter.com/home/?source=WebsiteWiki&amp;status=$bookdesc - $bookurl\" target=\"_new\" rel=\"nofollow\"><img src=\"$wgUploadPath/social/twitter.gif\" border=\"0\" width=\"20\" height=\"20\" title=\"Twitter\" alt=\"Twitter\"></a>\n";
   $result .= "</td></tr>\n";
 
   if($wswErotik)
