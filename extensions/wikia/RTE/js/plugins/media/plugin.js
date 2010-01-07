@@ -244,9 +244,6 @@ CKEDITOR.plugins.add('rte-media',
 			return;
 		}
 
-		// @see http://stackoverflow.com/questions/289433/firefox-designmode-disable-image-resizing-handles
-		media.attr('contentEditable', false);
-
 		// keep constant value of _rte_instance
 		media.attr('_rte_instance', RTE.instanceId);
 
@@ -347,9 +344,6 @@ CKEDITOR.plugins.add('rte-media',
 
 		// add [edit] / [delete] menu
 		this.setupMedia(placeholder);
-
-		// @see http://stackoverflow.com/questions/289433/firefox-designmode-disable-image-resizing-handles
-		placeholder.attr('contentEditable', false);
 
 		// unbind previous events
 		placeholder.unbind('.placeholder');
