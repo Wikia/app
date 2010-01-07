@@ -731,7 +731,7 @@ function get_wikitext($dbw, $site, $domsite)
 
     if(count($related) > 0)
     {
-      $output .= wfMsgForContent( 'newiki-output-related' ) . "\n<span class=\"small\">";
+      $output .= wfMsgForContent( 'newsite-output-related' ) . "\n<span class=\"small\">";
       foreach($related as $rel)
 	$output .= wikilink($rel) . " ";
       $output .= "</span>\n";
