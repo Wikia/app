@@ -499,6 +499,8 @@ function wsinfo($title, $parser, $thetext)
 	 \n";
   }
 
+  global $wgUploadDirectory, $wgUploadPath;
+
   $rev = Revision::newFromTitle( $parser->getTitle() );
   if(is_object($rev))
   {
@@ -509,16 +511,16 @@ function wsinfo($title, $parser, $thetext)
     {
       $country = $regs[1];
       $myplz = $regs[2];
-      $imgurl = '/images/plzmap/' . strtolower($country{0}) . $myplz{0} .
+      $imgurl = '/plzmap/' . strtolower($country{0}) . $myplz{0} .
 	'/' . strtolower($country{0}) . $myplz . '.png';
-      $imgfile = '/var/www/htdocs.www.websitewiki.de' . $imgurl;
+      $imgfile = $wgUploadDirectory . $imgurl;
 
       if(file_exists($imgfile))
       {
 	$result .= <<< EOI
 	<tr><td align="center" style="background:#ffffff;"><div style="position:relative; top:6px; width:250px;
 	  height:0px; text-align:center;"><strong><a href="/Kategorie:$country-$myplz" style="background-color:white;">&nbsp;$country-$myplz&nbsp;</a></strong></div>
-	<img src="$imgurl" width="250" height="200" alt="$country-$myplz">
+	<img src="$wgUploadPath$imgurl" width="250" height="200" alt="$country-$myplz">
 	<div style="position:relative; bottom:15px; left:3px; width:250px; height:0px; text-align:left;"><a href="/Landkarten_Copyright_OpenStreetMap" title="&copy; OpenStreetMap contributors">&copy; OSM</a></div>
 	 </td></tr>
 
@@ -532,7 +534,7 @@ EOI;
   $result .= rating_bar($dom, 5);
   $result .= "</td></tr>\n";
 
-  global $wgUploadPath, $wgTitle;
+  global $wgTitle;
 
   $bookurl = $wgTitle->getFullURL();
   $bookdesc = "WebsiteWiki+$title";
