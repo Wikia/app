@@ -3,7 +3,7 @@ body.ns-14 h1.firstHeading {
 }
 /*#page_bar{ display:none; }*/
 #siteNotice { display: none; }
-#answers_page #answers_article{ padding-top:0px; }
+body.ns-14 #answers_page #answers_article{ padding-top:0; }
 #cathub-title-bar{
 	background-image:url(cathub_title_bg.png);
 	color: black;
