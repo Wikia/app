@@ -11,8 +11,9 @@ class NeueWebsite extends SpecialPage
   {
     global $wgRequest, $wgOut;
 
-	# FIXME: plain silly
-    sleep(5); // throttle
+	if ( wfReadOnly() ) {
+		$wgOut->readOnlyPage();
+	}
 
 	wfLoadExtensionMessages( 'Newsite' );
 

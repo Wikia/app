@@ -20,6 +20,10 @@ class FastCat extends UnlistedSpecialPage {
 function execute( $par ) {
 	global $wgUser, $wgOut;
 
+	if ( wfReadOnly() ) {
+		$wgOut->readOnlyPage();
+	}
+
   if(!is_object($wgUser) || User::isIP($wgUser->getName()))
     errjump();
 
