@@ -213,6 +213,18 @@ window.RTE.tools = {
 		});
 	},
 
+	// remove given node and add undo step
+	removeElement: function(elem) {
+		// save undo step (RT #35914)
+		RTE.instance.fire('saveSnapshot');
+
+		// remove element
+		$(elem).remove();
+
+		// save undo step (RT #35914)
+		RTE.instance.fire('saveSnapshot');
+	},
+
 	// remove resize box
 	removeResizeBox: function() {
 		setTimeout(function() {

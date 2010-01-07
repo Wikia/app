@@ -179,9 +179,10 @@ CKEDITOR.plugins.add('rte-media',
 				var msg = RTE.instance.lang[type].confirmDelete;
 
 				RTE.tools.confirm(title, msg, function() {
-					// remove image and its menu
+					RTE.tools.removeElement(image);
+
+					// remove menu
 					overlay.remove();
-					$(image).remove();
 				});
 			});
 		}
