@@ -26,8 +26,8 @@ use Wikia::DB;
 my @CHECK_ALLOWED = ("day", "week", "month");
 my $DEF_WEEK = "6";
 my $email_title = "Referrers report";
-my $XLS_FILE_DETAILS = "/home/reports/referrer/referrer_details_" . substr (&ParseDate("today"), 0, 8) . ".xls";
-my $XLS_FILE = "/home/reports/referrer/referrer_" . substr (&ParseDate("today"), 0, 8) . ".xls";
+my $XLS_FILE_DETAILS = "/images/reports/referrer/referrer_details_" . substr (&ParseDate("today"), 0, 8) . ".xls";
+my $XLS_FILE = "/images/reports/referrer/referrer_" . substr (&ParseDate("today"), 0, 8) . ".xls";
 
 =help function
 =cut
@@ -288,7 +288,7 @@ my $res = ();
 =XLS - default settings ========================
 =init XLS spreadsheet
 =cut
-my $dir = "/home/reports/referrer/";
+my $dir = "/images/reports/referrer/";
 mkdir($dir) if (!(-e $dir)) ;
 unlink ($XLS_FILE_DETAILS);
 unlink ($XLS_FILE);
