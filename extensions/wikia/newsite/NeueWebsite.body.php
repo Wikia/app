@@ -4,7 +4,7 @@ class NeueWebsite extends SpecialPage
 {
   function NeueWebsite() 
   {
-    SpecialPage::SpecialPage("NeueWebsite");
+    SpecialPage::SpecialPage("NewWebsite");
   }
 
   function execute($par) 

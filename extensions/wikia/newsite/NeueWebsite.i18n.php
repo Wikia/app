@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array( 
 	'newsite' => 'NewSite',
-	'neuewebsite' => 'NewSite',
+	'newwebsite' => 'NewSite',
         'newsite-form-label' => 'New website:',
         'newsite-form-submit' => 'Create',
         'newsite-error-invalid' => 'A page about $1 cannot be created.',
@@ -40,7 +40,7 @@ $messages['en'] = array(
 
 $messages['de'] = array( 
 	'newsite' => 'NeueWebsite',
-	'neuewebsite' => 'NeueWebsite',
+	'newwebsite' => 'NeueWebsite',
 	'newsite-form-label' => 'Neue Website:',
 	'newsite-form-submit' => 'anlegen',
 	'newsite-error-invalid' => '$1 kann nicht als neue Website angelegt werden.',
