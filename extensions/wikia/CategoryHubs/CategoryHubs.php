@@ -713,26 +713,30 @@ function categoryHubSubcategorySection(&$catView, &$r){
 function categoryHubGetAttributionByArticle($qArticle, $answered=false){
 	global $wgStylePath;
 	$title = $qArticle->getTitle();
-	$timestamp = $qArticle->getTitle()->getTouched();
-	$lastUpdate = wfTimeFormatAgo($timestamp);
+	$timestamp = $qArticle->getTimestamp();
 
 	$userId = 0; $userLink = "";
-	if($answered){
+	if ( empty($answered) ) {
+		# get user who asked a question
 		$author = CategoryHub::getTitleOwner($title);
 	} else {
-		$userId = AttributionCache::getInstance()->getFirstRevisionUserId($title);
-		$avatarImg = Answer::getUserAvatar($userId, 30, 30);
-		$user = User::newFromId($userId);
-		$user_title = Title::makeTitle(NS_USER, $user->getTitleKey());
-		$author = array( "user_id" => $userId,
-						 "user_name" => $user->getTitleKey(),
-						 "title" => $user_title,
-						 "avatar" => $avatarImg );
+		# get user who answered a question
+		$userName = $qArticle->getUserText();
+		$userTitle = Title::makeTitle(NS_USER, $userName);
+		$author = array( 
+			"user_id" => $qArticle->getUser(),
+			"user_name" => $userName,
+			"title" => $userTitle,
+			"avatar" => "",
+			"ts" => $qArticle->getTimestamp()
+		);
 	}
 
 	if ( is_array($author) ) {
-		list( $userId, $userText, $userPageTitle, $userAvatar ) = array_values( $author );
+		list( $userId, $userText, $userPageTitle, $userAvatar, $timestamp ) = array_values( $author );
 	}
+	$lastUpdate = wfTimeFormatAgo($timestamp);
+	
 	if($userId > 0){
 		$userPageLink = $userPageTitle->getLocalUrl();
 		$userPageExists = $userPageTitle->exists();
@@ -804,7 +808,7 @@ class CategoryHub {
 
 				$s = $dbr->selectRow(
 					'revision',
-					array( 'rev_user','rev_user_text' ),
+					array( 'rev_user','rev_user_text', 'rev_timestamp' ),
 					array( 'rev_page' => $pageId ),
 					__METHOD__ ,
 					array(
@@ -817,7 +821,8 @@ class CategoryHub {
 					"user_id" => $s->rev_user,
 					"user_name" => $s->rev_user_text,
 					"title" => $user_title,
-					"avatar" => ""
+					"avatar" => "",
+					"ts" => $s->rev_timestamp
 				);
 				$wgMemc->set( $key, $author, 60 * 60 );
 			} else {
