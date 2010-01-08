@@ -114,7 +114,7 @@ class ActivityFeedHelper {
 
 		if (in_array('shortlist', $parameters['flags'])) {
 			global $wgContentNamespaces;
-			$parameters['includeNamespaces'] = implode('|', $wgContentNamespaces);
+			$parameters['includeNamespaces'] = implode('|', array_diff($wgContentNamespaces, $excludeNamespaces));
 		}
 
 		wfProfileOut(__METHOD__);
