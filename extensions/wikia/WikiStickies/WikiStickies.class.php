@@ -10,6 +10,7 @@ class WikiStickies {
 	const STICKY_FEED_LIMIT = 1; // one for the sticky note, to display in yellow
 	const INITIAL_FEED_LIMIT = 10; // 10 to get initially for this nice viewer fellow
 	const SPECIAL_FEED_LIMIT = 21; // 21 to rule them all, and in light display them
+	const CUSTOM_FEED_LIMIT = 999; // really a no limit, but I don't see more of them on the same page
 
 	/**
 	 * Loads base WikiSticky CSS and JavaScript resources.
@@ -233,8 +234,10 @@ class WikiStickies {
 		global $wgOut;
 		$result = array();
 		$custom = wfMsgForContent( 'CommunityStickies' ) ;
-		if ('' != $custom) {
+		if ( ('' != $custom) && ( '<CommunityStickies>' != $custom ) && ('&lt;CommunityStickies&gt;' != $custom ) ) {
 			$custom = preg_split( "/\*/", $custom );
+		} else {
+                 	return '';
 		}
 		$custom = array_map( "trim", $custom );
 		$number = 0;		

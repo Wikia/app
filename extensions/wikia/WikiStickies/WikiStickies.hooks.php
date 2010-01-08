@@ -12,15 +12,21 @@ function efAddWikiSticky( &$html ) {
 	// fetch the feeds and rotate them
 	$feedWithoutimages = WikiStickies::getWithoutimagesFeed( WikiStickies::INITIAL_FEED_LIMIT * 2 );
 	WikiStickies::excludeFromFeed( $feedWithoutimages );
-	shuffle( $feedWithoutimages );
+	if( !empty( $feedWithoutimages ) ) {
+		shuffle( $feedWithoutimages );
+	}
 	$feedNewpages = WikiStickies::getNewpagesFeed( WikiStickies::INITIAL_FEED_LIMIT );
-	shuffle( $feedNewpages );
+	if( !empty( $feedNewpages ) ) {
+		shuffle( $feedNewpages );
+	}
 	$feedWantedpages = WikiStickies::getWantedpagesFeed( WikiStickies::INITIAL_FEED_LIMIT );
 	shuffle( $feedWantedpages );
 
 	// custom wikistickies added per RT #34558
-	$feedCustompages = WikiStickies::getCustomFeed( WikiStickies::INITIAL_FEED_LIMIT );
-	shuffle( $feedCustompages );
+	$feedCustompages = WikiStickies::getCustomFeed( WikiStickies::CUSTOM_FEED_LIMIT );
+	if( !empty( $feedCustompages ) ) {
+		shuffle( $feedCustompages );
+	}
 
 
 	$feeds = array();
