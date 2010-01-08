@@ -25,7 +25,7 @@ use Wikia::DB;
 =default values
 =cut
 my $email_title = "Number of categories";
-my $XLS_FILE = "/home/reports/nbr_categories/nbr_categories_" . substr (&ParseDate("today"), 0, 8) . ".xls";
+my $XLS_FILE = "/images/reports/nbr_categories/nbr_categories_" . substr (&ParseDate("today"), 0, 8) . ".xls";
 
 =help function
 =cut
@@ -164,7 +164,7 @@ if (! scalar keys %$DATA) {
 =XLS - default settings ========================
 =init XLS spreadsheet
 =cut
-my $dir = "/home/reports/nbr_categories/";
+my $dir = "/images/reports/nbr_categories/";
 mkdir($dir) if (!(-e $dir)) ;
 unlink ($XLS_FILE);
 
