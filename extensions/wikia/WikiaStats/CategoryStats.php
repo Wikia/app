@@ -555,7 +555,7 @@ class CategoryEdits {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 		
-		$pages = array();
+		$pages = $result = array();
 		if ( is_int($incat) ) {
 			# integer
 			$CatIn = Category::newFromID($incat);
@@ -566,34 +566,15 @@ class CategoryEdits {
 		if ( is_object( $CatIn ) && !empty( $this->mCatPageCount ) ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			
-			$subQuery = $dbr->selectSQLText ( 
-				array( 'categorylinks AS c1', 'categorylinks AS c2' ),
-				array( 'c2.cl_from' ),
-				array(
-					'c2.cl_to' => $this->mCatName
-				),
-				__METHOD__,
-				"",
-				array(
-					'categorylinks AS c2' => array(
-						'JOIN', 
-						implode ( ' AND ', 
-							array( 
-								'c1.cl_from = c2.cl_from',
-								'c1.cl_to = ' . $dbr->addQuotes($CatIn->getName())
-							)
-						)
-					)
-				)
-			);
-			
 			$nsPaces = (!empty($namespaces)) ? $dbr->makeList( $namespaces ) : "";
-			$memkey = wfMemcKey( 'pages', $this->mCatId, $CatIn->getID(), md5($nsPaces), $limit, $offset );
+			$memkey = wfMemcKey( 'cepages', $this->mCatId, $CatIn->getID(), md5($nsPaces) );
 			$pages = $wgMemc->get( $memkey );
 			
 			$conditional = array(
-				'page_id in (' . $subQuery . ')',
-				'page_is_redirect = 0'
+				'page_id = rev_page',
+				'page_latest = rev_id',
+				'page_is_redirect = 0',
+				'c2.cl_to' => $this->mCatName
 			);
 			if ($nsPaces != "") {
 				$conditional[] = 'page_namespace in (' . $nsPaces . ')';
@@ -601,47 +582,51 @@ class CategoryEdits {
 
 			if ( empty($pages) ) {
 				$res = $dbr->select ( 
-					array( 'page', 'revision' ),
-					array( 'rev_id, rev_page, page_title, page_namespace, rev_timestamp' ),
+					array( 'revision', 'page', 'categorylinks AS c1', 'categorylinks AS c2' ),
+					array( 'rev_page, rev_timestamp, page_title, page_namespace' ),
 					$conditional,
-					__METHOD__,
+					__METHOD__,	
+					"",
 					array(
-						'STRAIGHT_JOIN',					
-						'ORDER BY' => 'rev_id DESC',
-						'LIMIT' => $limit + 1, // the extra 1 is to detect if we need a "Next" link
-						'OFFSET' => $offset * $limit
-					),
-					array(
-						'page' => array(
+						'categorylinks AS c1' => array(
+							'JOIN', 
+							'c1.cl_from = page_id',
+						),
+						'categorylinks AS c2' => array(
 							'JOIN', 
 							implode ( ' AND ', 
 								array( 
-									'page_id = rev_page', 
-									'page_latest = rev_id'
+									'c1.cl_from = c2.cl_from',
+									'c1.cl_to = ' . $dbr->addQuotes($CatIn->getName())
 								)
 							)
 						)
 					)
 				);
+
 				if ( $dbr->numRows($res) ) { 
 					$pages = array();
 					while( $oRow = $dbr->fetchObject($res) ) {
-						$pages[] = array(
-							'id'		=> $oRow->rev_page,
-							'title'		=> $oRow->page_title,
-							'namespace'	=> $oRow->page_namespace,
-							'rev_id'	=> $oRow->rev_id,
-							'timetamp'	=> $oRow->rev_timestamp,
+						$pages[$oRow->rev_timestamp] = array(
+							'id' => $oRow->rev_page, 
+							'title' => $oRow->page_title, 
+							'ns' => $oRow->page_namespace
 						);
 					}
 					$dbr->freeResult($res);
-					$wgMemc->set( $memkey, $pages, 60*15 );
+					$wgMemc->set( $memkey, $pages, 60*30 );
 				}
+			} 
+			
+			/* sort results and slice array */
+			if ( !empty($pages) && is_array($pages) ) {
+				krsort($pages); 
+				$result = array_slice($pages, $limit * $offset, $limit + 1, true);
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return $pages;
+		return $result;
 	}
 	
 	/**
