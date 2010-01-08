@@ -740,11 +740,15 @@ function get_wikitext($dbw, $site, $domsite)
       $output .= "</span>\n";
     }
 
-	# FIXME: hardcoded german kategories!
+    # add category
     if($erotik)
-      $output .= "\n[[Kategorie:Erotik]]\n";
+      $initialCategory = wfMsgForContent( 'newsite-category-erotic' );
     else
-      $output .= "\n[[Kategorie:Keine]]\n";
+      $initialCategory = wfMsgForContent( 'newsite-category-default' );
+
+    global $wgContLang;
+
+    $output .= '[[' . $wgContLang->getNsText(NS_CATEGORY) . ':' . $initialCategory . ']]';
 
     return $output;
   }

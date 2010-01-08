@@ -36,6 +36,10 @@ $messages['en'] = array(
         'newsite-output-technology-server-components' => '* The website uses the following modules:',
         'newsite-output-keywords' => '== Keywords for $1 ==',
         'newsite-output-related' => '== Related websites ==',
+
+	# categories in output
+	'newsite-category-default' => 'None',
+	'newsite-category-erotic' => 'Erotic',
 );
 
 $messages['de'] = array( 
@@ -73,4 +77,8 @@ $messages['de'] = array(
 	'newsite-output-technology-server-components' => '*Der Webserver unterst&uuml;tzt folgende weitere Komponenten:',
 	'newsite-output-keywords' => '== Keywords auf $1 ==',
 	'newsite-output-related' => '== Verwandte Websites ==',
+
+	# categories in output
+	'newsite-category-default' => 'Keine',
+	'newsite-category-erotic' => 'Erotik',
 );
