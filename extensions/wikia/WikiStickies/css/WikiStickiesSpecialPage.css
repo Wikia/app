@@ -62,6 +62,10 @@
     left: -502px;
 }
 
+#contentSub {
+	margin:0 0 2.4em 1em;
+}
+
 .wikistickiesfeed ul, .wikistickiesfeed .MoreLink {
     margin-left: 240px;
 }
