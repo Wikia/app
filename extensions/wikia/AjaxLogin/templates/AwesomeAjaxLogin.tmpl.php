@@ -43,7 +43,7 @@ $link = $titleObj->getLocalUrl('type=signup');
 		</table>
 		<div style="margin: 15px 0;">
 			
-			<label for="wpRemember1" style="padding-left: 5px"><?= wfMsg('remembermypassword') ?></label>
+			<label for="wpRemember2Ajax" style="padding-left: 5px"><?= wfMsg('remembermypassword') ?></label>
 		</div>
 		<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
 	</form>

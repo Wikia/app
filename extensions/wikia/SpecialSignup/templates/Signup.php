@@ -622,9 +622,9 @@ class SignupTemplate extends QuickTemplate {
 	</tr>
 	</table>
 	<div style="margin: 10px 0;">
-	<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1"  />
+	<input type="checkbox" name="wpRemember" id="wpRemember2Ajax" tabindex="104" value="1"  />
 	<div id="ControlBox" style="display:none"></div>
-	<label for="wpRemember1" class="plain"><?= wfMsg('remembermypassword') ?></label>
+	<label for="wpRemember2Ajax" class="plain"><?= wfMsg('remembermypassword') ?></label>
 	</div>
 	<input type="submit" value="Login" style="position: absolute; left: -10000px; width: 0" />
 	</form>
