@@ -136,10 +136,10 @@ CKEDITOR.themes.add( 'wikia', (function()
 			body.getChild( 0 ).unselectable();
 			body.getChild( 1 ).unselectable();
 
-			// customize colors of dialog header
+			// Wikia: customize colors of dialog header
 			body.getChild(0).setStyles({
-				backgroundColor: editor.config.baseBackgroundColor,
-				color: editor.config.baseColor
+				backgroundColor: RTE.config.baseBackgroundColor,
+				color: RTE.config.baseColor
 			});
 
 			return {
