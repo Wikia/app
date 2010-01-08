@@ -51,7 +51,7 @@ if ( !window.CKEDITOR )
 			 * @example
 			 * alert( CKEDITOR.version );  // e.g. 'CKEditor 3.0 Beta'
 			 */
-			version : '3.1',
+			version : '%VERSION%',
 
 			/**
 			 * Contains the CKEditor revision number.
@@ -60,7 +60,7 @@ if ( !window.CKEDITOR )
 			 * @example
 			 * alert( CKEDITOR.revision );  // e.g. '3975'
 			 */
-			revision : '4891',
+			revision : '%REV%',
 
 			/**
 			 * Private object used to hold core stuff. It should not be used out of
