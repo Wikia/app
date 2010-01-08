@@ -19,9 +19,9 @@ $wgWidgets['WidgetAdvertiser'] = array(
 
 function WidgetAdvertiser($id, $params) {
     wfProfileIn(__METHOD__);
-    global $wgUser, $wgShowAds, $wgUseAdServer, $wgAdCalled, $wgRequest;
+    global $wgUser, $wgShowAds, $wgUseAdServer, $wgAdCalled, $wgRequest, $wgEnableLeftNavWidget;
 
-	if(!$wgShowAds || !$wgUseAdServer) {
+	if(!$wgShowAds || !$wgUseAdServer || !empty( $wgEnableLeftNavWidget ) ) {
 		wfProfileOut(__METHOD__);
 		return '';
 	}
