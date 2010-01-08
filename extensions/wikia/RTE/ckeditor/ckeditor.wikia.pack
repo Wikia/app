@@ -4,7 +4,7 @@
 
 header :
 	'/*'																			+ '\n' +
-	'Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.'	+ '\n' +
+	'Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.'	+ '\n' +
 	'For licensing, see LICENSE.html or http://ckeditor.com/license'				+ '\n' +
 	'*/'																			+ '\n' +
 	'\n',
@@ -107,12 +107,14 @@ packages :
 					'_source/core/htmlparser/filter.js',
 					'_source/core/htmlparser/basicwriter.js',
 					'_source/core/ckeditor.js',
+					'_source/core/dom/comment.js',
 					'_source/core/dom/elementpath.js',
 					'_source/core/dom/text.js',
 					'_source/core/dom/documentfragment.js',
 					'_source/core/dom/walker.js',
 					'_source/core/dom/range.js',
 					'_source/core/_bootstrap.js',
+					'_source/skins/kama/skin.js',
 
 					// TODO: remove unused plugins
 					//'_source/plugins/about/plugin.js',
@@ -123,6 +125,7 @@ packages :
 					'_source/plugins/colorbutton/plugin.js',
 					'_source/plugins/colordialog/plugin.js',
 					'_source/plugins/contextmenu/plugin.js',
+					'_source/plugins/div/plugin.js',
 					//'_source/plugins/elementspath/plugin.js',
 					'_source/plugins/enterkey/plugin.js',
 					'_source/plugins/entities/plugin.js',
@@ -154,6 +157,7 @@ packages :
 					//'_source/plugins/scayt/plugin.js',
 					'_source/plugins/smiley/plugin.js',
 					'_source/plugins/showblocks/plugin.js',
+					'_source/plugins/showborders/plugin.js',
 					'_source/plugins/sourcearea/plugin.js',
 					'_source/plugins/stylescombo/plugin.js',
 					'_source/plugins/table/plugin.js',
@@ -180,7 +184,6 @@ packages :
 					'_source/plugins/panel/plugin.js',
 					'_source/plugins/listblock/plugin.js',
 					'_source/plugins/dialogui/plugin.js',
-					'_source/skins/kama/skin.js',
 					'_source/themes/default/theme.js',
 
 					// Wikia plugins and dialogs
