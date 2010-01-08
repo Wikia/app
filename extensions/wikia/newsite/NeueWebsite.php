@@ -13,5 +13,6 @@ include('neue_website.php');
 $dir = dirname(__FILE__);
 
 $wgAutoloadClasses['NeueWebsite'] = $dir . '/NeueWebsite.body.php';
-$wgSpecialPages['NeueWebsite'] = 'NeueWebsite';
+$wgSpecialPages['NewWebsite'] = 'NeueWebsite';
 $wgExtensionMessagesFiles['Newsite'] = $dir . '/NeueWebsite.i18n.php';
+$wgExtensionAliasesFiles['Newsite'] = $dir . '/NeueWebsite.alias.php';
