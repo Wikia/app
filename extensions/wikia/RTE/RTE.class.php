@@ -355,7 +355,7 @@ HTML
 			}
 		}
 		if(!empty($wgWysiwygDisableOnTalk)) {
-			if(self::$title->getNamespace()->isTalk()) {
+			if(self::$title->isTalkPage()) {
 				self::disableEditor();
 			}
 		}
