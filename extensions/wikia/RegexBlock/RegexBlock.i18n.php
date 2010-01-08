@@ -3,9 +3,9 @@
 $messages = array();
 $messages["en"] = array(
     "regexblock" => "RegexBlock",
-	"regexblock_reason_ip" => "This IP address is prevented from editing due to vandalism or other disruption by you or by someone who shares your IP address. If you believe this is in error, please $1",
-	"regexblock_reason_name" => "This username is prevented from editing due to vandalism or other disruption. If you believe this is in error, please $1",
-	"regexblock_reason_regex" => "This username is prevented from editing due to vandalism or other disruption by a user with a similar name. Please create an alternate user name or $1 about the problem.",
+    "regexblock_reason_ip" => "This IP address is prevented from editing due to vandalism or other disruption by you or by someone who shares your IP address. If you believe this is in error, please $1",
+    "regexblock_reason_name" => "This username is prevented from editing due to vandalism or other disruption. If you believe this is in error, please $1",
+    "regexblock_reason_regex" => "This username is prevented from editing due to vandalism or other disruption by a user with a similar name. Please create an alternate user name or $1 about the problem.",
     "regexblock_help" => "Use the form below to block write access from a specific IP address or username. This should be done only only to prevent vandalism, and in accordance with policy. <i>This page will allow you to block even non-existing users, and will also block users with names similar to given, i.e. 'Test' will be blocked along with 'Test 2' etc. You can also block full IP addresses, meaning that no one logging from them will be able to edit pages. Note: partial IP addresses will be treated as usernames in determining blocking.  If no reason is specified, a default generic reason will be used.</i>",
     "regexblock_title" => "Regular Expression Name Block",
     "regexblock_form_header" => "Currently blocked addresses",
@@ -49,5 +49,5 @@ $messages["en"] = array(
     "regexblock_stats_title" => "Statistics for regular-expression name: ",
     "regexblock_match_stats_record" => "$1 blocked '$2' on '$3' at '$4', logging from address '$5'",
     "regexblock_nodata_found" => "No data found",
-	"right-regexblock" => "Block users from editing on all Wikia",
+    "right-regexblock" => "Block users from editing on all Wikia",
 );
