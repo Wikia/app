@@ -627,7 +627,8 @@ class RTEReverseParser {
 				}
 
 				// link description after pipe
-				if ( ($trail === false) && ($data['link'] != $textContent) ) {
+				// htmlspecialchars() used because of RT #35999
+				if ( ($trail === false) && (htmlspecialchars($data['link']) != $textContent) ) {
 					$out .= "|{$textContent}";
 				}
 
