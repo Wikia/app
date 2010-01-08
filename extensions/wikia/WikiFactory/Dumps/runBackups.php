@@ -106,6 +106,7 @@ function runBackups( $from, $to, $full, $options ) {
 		 * get cluster for this wiki
 		 */
 		$cluster = WikiFactory::getVarValueByName( "wgDBcluster", $row->city_id );
+		$server  = wfGetDB( DB_SLAVE, 'dumps', $row->city_dbname )->getProperty( "mServer" );
 		/**
 		 * build command
 		 */
@@ -124,6 +125,7 @@ function runBackups( $from, $to, $full, $options ) {
 				"--full",
 				"--xml",
 				"--quiet",
+				"--server=$server",
 				"--output=gzip:{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
@@ -143,6 +145,7 @@ function runBackups( $from, $to, $full, $options ) {
 				"--current",
 				"--xml",
 				"--quiet",
+				"--server=$server",
 				"--output=gzip:{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
