@@ -235,20 +235,23 @@ class WikiStickies {
 		$result = array();
 		$custom = wfMsgForContent( 'CommunityStickies' ) ;
 		if ( ('' != $custom) && ( '<CommunityStickies>' != $custom ) && ('&lt;CommunityStickies&gt;' != $custom ) ) {
-			$custom = preg_split( "/\*/", $custom );
+			$custom = preg_split( "/\\n/", $custom );
+
 		} else {
                  	return '';
 		}
-		$custom = array_map( "trim", $custom );
-		$number = 0;		
 		foreach( $custom as $text ) {
 			if( count( $result ) > $limit ) {
 				break;
 			} else if( '' != $text ) {
-				$result[] = $text;	
+				$exploded = explode( "*", $text);
+				if( isset( $exploded[1] ) && 2 == count( $exploded ) )  {
+					if( "" != trim( $exploded[1] ) ) {
+						$result[] = trim( $exploded[1] );	
+					}
+				}
 			}
 		}
-
 		return $result;
 	}
 
