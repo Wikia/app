@@ -594,9 +594,9 @@ EOI;
       $result .= <<<EOI
 <tr><td align="center" height="250" style="background:#ffffff;">
 <script type="text/javascript"><!--
-google_ad_client = "pub-6826490085913423";
-/* wsw */
-google_ad_slot = "8473340069";
+google_ad_client = "pub-7078170683927487";
+/* 250x250, created 1/8/10 for websitewiki.de hard coded slot */
+google_ad_slot = "2130596228";
 google_ad_width = 250;
 google_ad_height = 250;
 //-->
