@@ -124,14 +124,14 @@ class WhereIsExtension extends SpecialPage {
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgExternalSharedDB);
 		$oRes = $dbr->select(
 			$aTables,
-			array('city_title', 'city_url'),
+			array('city_id', 'city_title', 'city_url'),
 			$aWhere,
 			__METHOD__,
 			array('ORDER BY' => 'city_sitename')
 		);
 
 		while ($oRow = $dbr->fetchObject($oRes)) {
-			$aWikis[$oRow->city_title] = $oRow->city_url;
+			$aWikis[$oRow->city_id] = array('u' => $oRow->city_url, 't' => $oRow->city_title);
 		}
 		$dbr->freeResult( $oRes );
 
