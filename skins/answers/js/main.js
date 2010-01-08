@@ -228,41 +228,16 @@ jQuery(document).ready(function() {
 	});
 });
 
-//main page
-jQuery(document).ready(function() {
-if( wgIsMainpage == true ){
-	jQuery("#homepage_new_questions").ready(function() {
-		url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categorymembers&cmtitle=Category:" + wgUnAnsweredCategory + "&cmnamespace=0&cmprop=title|timestamp&cmsort=timestamp&cmdir=desc&cmlimit=5";
-		jQuery.getJSON( url, "", function( j ){
-			if( j.query.categorymembers ){
-				html = "";
-				for( var recent_q in j.query.categorymembers ){
-					var page = j.query.categorymembers[recent_q];
-					var url  = page.title.replace(/ /g,"_");
-					var text = page.title + "?";
-					html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('mainpage/homepage_new_questions')\">" + text + "</a></li>";
-				}
-				jQuery("#homepage_new_questions").html( html );
-			}
-		});
+jQuery("#homepage_new_questions").ready(function() {
+   $.get(wgScript + "?smaxage=60&action=ajax&rs=HomePageListAjax&method=homepage_new_questions", null, function(data) {
+		if (data != "") $("#homepage_new_questions").html(data);
 	});
-	
-	jQuery("#homepage_recently_answered_questions").ready(function() {
-		url = wgServer + "/api.php?smaxage=60&format=json&action=query&list=categorymembers&cmtitle=Category:" + wgAnsweredCategory + "&cmnamespace=0&cmprop=title|timestamp&cmsort=timestamp&cmdir=desc&cmlimit=5";
-		jQuery.getJSON( url, "", function( j ){
-			if( j.query.categorymembers ){
-				html = "";
-				for( var recent_q in j.query.categorymembers ){
-					var page = j.query.categorymembers[recent_q];
-					var url  = page.title.replace(/ /g,"_");
-					var text = page.title + "?";
-					html += "<li><a href=\"/wiki/" + encodeURIComponent(url) + "\" onclick=\"WET.byStr('mainpage/homepage_recently_answered_questions')\">" + text + "</a></li>";
-				}
-				jQuery("#homepage_recently_answered_questions").html( html );
-			}
-		});
+});
+jQuery("#homepage_recently_answered_questions").ready(function() {
+   $.get(wgScript + "?smaxage=60&action=ajax&rs=HomePageListAjax&method=homepage_recently_answered_questions", null, function(data) {
+		if (data != "") $("#homepage_recently_answered_questions").html(data);
 	});
-}});
+});
 
 jQuery("#facebook-connect").ready(function() {
 	if( !wgEnableFacebookConnect || !wgIsQuestion )return false;
