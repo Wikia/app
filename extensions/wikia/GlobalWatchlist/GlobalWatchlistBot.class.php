@@ -303,7 +303,7 @@ class GlobalWatchlistBot {
 			2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogs : $this->getLocalizedMsg('globalwatchlist-no-blog-page-found', $oUser->getOption('language')),
 		);
 
-		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUser->getOption('language') );
+		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUser->getOption('language') ) . "\n";
 		$sBody = wfMsgReplaceArgs($sMessage, $aEmailArgs);
 
 		return $sBody;

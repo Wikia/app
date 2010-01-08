@@ -66,7 +66,7 @@
 <div class="dt-creator">
 <div id="dt-creator-loader" style="padding-right:10px;float:left;"></div>
 <div id="dt-task-steps">
-	<span id="dt-span-steps"><?=wfMsg('daemonloader_steps')?></span>
+	<span id="dt-span-steps"><?= wfMsg( 'daemonloader_steps' ) . wfMsg( 'word-separator' ) ?></span>
 	<span id="dt-span-1step" class="dt-steps"> 1 </span>
 	<span id="dt-span-1step-arrow" class="dt-steps-arrows"> &rarr; </span>
 	<span id="dt-span-2step" class="dt-steps"> 2 </span>
