@@ -679,10 +679,23 @@ class Parser
 		foreach ( $lines as $outLine ) {
 			$line = trim( $outLine );
 
+			// RTE - begin
+			// TODO: document
+			$RTEcomment = null;
+			if(!empty($wgRTEParserEnabled)) {
+				$data = RTEData::get('placeholder', RTEMarker::getDataIdx(RTEMarker::PLACEHOLDER, $line, false));
+				if($data && $data['type'] == 'comment'){
+					$RTEcomment = substr($line, 0, 9);
+					$line = substr($line, 9);
+				}
+			}
+			// RTE - end
+
 			if( $line == '' ) { // empty line, go to next line
 				$out .= $outLine."\n";
 				continue;
 			}
+
 			$first_character = $line[0];
 			$matches = array();
 
@@ -710,6 +723,10 @@ class Parser
 				$attributes = Sanitizer::fixTagAttributes ( $attributes , 'table' );
 
 				$outLine = str_repeat( '<dl><dd>' , $indent_level ) . "<table{$attributes}>";
+
+				$outLine = $RTEcomment.$outLine;
+				$RTEcomment = null;
+
 				array_push ( $td_history , false );
 				array_push ( $last_tag_history , '' );
 				array_push ( $tr_history , false );
@@ -877,6 +894,11 @@ class Parser
 					}
 				}
 			}
+
+			if(!empty($RTEcomment)) {
+				RTE::$edgeCases[] = 'COMPLEX.10';
+			}
+
 			$out .= $outLine . "\n";
 		}
 
