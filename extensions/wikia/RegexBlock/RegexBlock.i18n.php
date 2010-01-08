@@ -32,7 +32,7 @@ $messages["en"] = array(
     "regexblock_block_date_from" => "From",
     "regexblock_block_date_to" => "To",
     "regexblock_on_time" => "on",
-    "regexblock_ip_or_address" => "IP Adress or username",
+    "regexblock_ip_or_address" => "IP Address or username",
     "regexblock_expire_duration" => "1 hour,2 hours,4 hours,6 hours,1 day,3 days,1 week,2 weeks,1 month,3 months,6 months,1 year,infinite",
     "regexblock_block_creation_text" => "Block creation of new accounts (IP only)",
     "regexblock_submit_block" => "Block this user",
@@ -49,5 +49,5 @@ $messages["en"] = array(
     "regexblock_stats_title" => "Statistics for regular-expression name: ",
     "regexblock_match_stats_record" => "$1 blocked '$2' on '$3' at '$4', logging from address '$5'",
     "regexblock_nodata_found" => "No data found",
-	 "right-regexblock" => "Block users from editing on all Wikia",
+	"right-regexblock" => "Block users from editing on all Wikia",
 );
