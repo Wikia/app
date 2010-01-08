@@ -14,7 +14,7 @@
 <?php if (!empty($aDaemons)) { ?>
 <fieldset>
 <legend><?=wfMsg('daemonloader_alldaemons')?></legend>
-<div><?=wfMsg('daemonloader_loaddaemon')?><select id="dt-daemons" style="min-width:200px">
+<div><?= wfMsg( 'daemonloader_loaddaemon' ) . wfMsg( 'word-separator' ) ?><select id="dt-daemons" style="min-width:200px">
 <?php foreach ($aDaemons as $dt_id => $values) { ?>
 	<option value="<?=$dt_id?>"><?=$values['dt_name']?></option>
 <?php } ?>
