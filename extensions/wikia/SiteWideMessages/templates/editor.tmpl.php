@@ -215,6 +215,7 @@ function grayOut(e) {
 			$('mSendModeWikisA').disabled = true;
 			$('mSendModeWikisH').disabled = true;
 			$('mSendModeWikisW').disabled = true;
+			$('input.swm-lang-checkbox').disabled = true;
 			break;
 		default:
 			if ($('mSendModeWikisA').checked)
@@ -222,6 +223,7 @@ function grayOut(e) {
 			$('mSendModeWikisA').disabled = false;
 			$('mSendModeWikisH').disabled = false;
 			$('mSendModeWikisW').disabled = false;
+			$('input.swm-lang-checkbox').disabled = false;
 	}
 }
 var radio = ['mSendModeWikisA', 'mSendModeWikisH', 'mSendModeWikisW', 'mSendModeUsersA', 'mSendModeUsersC', 'mSendModeUsersG', 'mSendModeUsersU'];
