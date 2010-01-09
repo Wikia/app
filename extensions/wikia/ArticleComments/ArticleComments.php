@@ -773,7 +773,7 @@ class ArticleComment {
 				$text  = false;
 				$error = true;
 				$message = wfMsg('article-comments-error');
-				$wgDevelEnvironment = false;
+				$wgDevelEnvironment = false; // TODO: FIXME: is this right or do we want to set this to the original value?
 		}
 
 		$res = array(
@@ -844,7 +844,7 @@ class ArticleComment {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	static public function watchlistNotify(RecentChange &$oRC) {
 		global $wgEnableGroupedArticleCommentsRC;
@@ -888,7 +888,7 @@ class ArticleComment {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	static public function ComposeCommonMail( $Title, &$keys, &$message, $editor ) {
 		global $wgEnotifUseRealName;
@@ -1305,7 +1305,7 @@ class ArticleCommentList {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	static public function articleDeleteComplete( &$Article, &$User, $reason, $id ) {
 		wfProfileIn( __METHOD__ );
@@ -1341,7 +1341,7 @@ class ArticleCommentList {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	static public function undeleteComments( &$oTitle, $revision, $old_page_id ) {
 		// to do
@@ -1386,7 +1386,7 @@ class ArticleCommentList {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	static public function makeChangesListKey( &$oChangeList, &$currentName, &$oRCCacheEntry ) {
 		global $wgUser, $wgEnableGroupedArticleCommentsRC, $wgTitle, $wgEnableBlogArticles;
@@ -1424,7 +1424,7 @@ class ArticleCommentList {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	static public function setHeaderBlockGroup(&$oChangeList, &$header, Array /*of oRCCacheEntry*/ &$oRCCacheEntryArray) {
 		global $wgLang, $wgContLang, $wgEnableGroupedArticleCommentsRC, $wgTitle, $wgEnableBlogArticles;
@@ -1551,7 +1551,7 @@ class ArticleCommentList {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	static function BeforeStoreInRC(&$rc, &$data) {
 		$rcTitle = $rc->getAttribute('rc_title');
@@ -1572,7 +1572,7 @@ class ArticleCommentList {
 	 * @static
 	 * @access public
 	 *
-	 * @return true -- because it's hook
+	 * @return true -- because it's a hook
 	 */
 	static function InjectTOCitem($parser, $sk, &$toc, &$sublevelCount) {
 		wfLoadExtensionMessages('ArticleComments');

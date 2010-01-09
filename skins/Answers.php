@@ -640,6 +640,9 @@ yieldbuild_loc = "left_content_bottom";
 					<tr>
 						<td>
 						<?
+						// Some indecies are removed (such as 4 => "Backlinks" for SpecialPages), this re-keys the array before the loops.
+						$this->data['data']['toolboxlinks'] = array_values($this->data['data']['toolboxlinks']);
+
 						for($i=0; $i<ceil(count($this->data['data']['toolboxlinks'])/2); $i++) {
 							echo '<a href="'. $this->data['data']['toolboxlinks'][$i]['href'] .'" onclick="WET.byStr(\'' . $this->data['data']['toolboxlinks'][$i]['tracker'] . '\')">'. $this->data['data']['toolboxlinks'][$i]['text'] .'</a><br />';
 						}

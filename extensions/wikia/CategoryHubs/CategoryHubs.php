@@ -31,7 +31,8 @@ $wgCategoryHubArticleLimitPerTab = 10; // required (otherwise will default to 0)
 ///// BEGIN - SETUP HOOKS /////
 $wgHooks['LanguageGetMagic'][] = 'categoryHubAddMagicWords'; // setup names for parser functions (needed here)
 $wgHooks['ParserAfterStrip'][] = 'categoryHubCheckForMagicWords';
-$wgHooks['BeforePageDisplay'][] = 'categoryHubAdditionalScripts';
+	// TODO: FIXME: Can this be put somewhere better so that the scripts are only included on CategoryHubs rather than all Answers pages?
+	$wgHooks['BeforePageDisplay'][] = 'categoryHubAdditionalScripts';
 $wgHooks['MakeGlobalVariablesScript'][] = 'categoryHubJsGlobalVariables';
 
 // Allows us to define a special order for the various sections on the page.
