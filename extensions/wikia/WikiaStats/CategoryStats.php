@@ -834,15 +834,21 @@ class CategoryEdits {
 	}
 
 	/**
-	 * getSubcategories - get all subcategories 
+	 * getSubcategories - get all subcategories of the currently configured category.
 	 * 
 	 * @access public
-	 * @param Array $categories
+	 * @param Array $categories - array into which the subcategories will be added as
+	 *                            key/value pairs where the category id is the key and the
+	 *                            category title is the value.  If the key is already set in
+	 *                            the <code>categories</code> array, the value will NOT be changed.
+	 * @return Array a mapping from category.cat_id to category.cat_title of the subcategories of the
+	 *               currently configured category.
 	 */
 	public function getSubcategories( &$categories ) {
 		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
+		$cats = array();
 		if ( $this->mCatSubcatCount > 0 ) {
 			$dbr = wfGetDB( DB_SLAVE );
 			$memkey = wfMemcKey( 'subcats', $this->mCatId );

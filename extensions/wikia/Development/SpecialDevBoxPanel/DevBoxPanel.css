@@ -1,0 +1,43 @@
+
+table td{
+	vertical-align:top;
+}
+
+table.devBoxPanel ul{
+	list-style:none;
+}
+
+table.devBoxPanel li {
+	margin:0px;
+	padding:5px;
+	border:1px #000 solid;
+}
+
+table.devBoxPanel li.dbp-alreadyInstalled{
+	background-color:#cfc;
+}
+
+table.devBoxPanel li.dbp-recommended{
+	background-color:#fcc;
+}
+
+table.devBoxPanel li.dbp-available{
+	background-color:#fff;
+}
+
+span.dbp-rightButtons{
+	display:inline;
+	float:right;
+}
+
+table.devbox-settings{
+	border-spacing:0px;
+	border-collapse:collapse;
+}
+table.devbox-settings td{
+	padding:5px;
+	border:1px #000 solid;
+}
+table.devbox-settings .odd{
+	background-color:#ddd;
+}
