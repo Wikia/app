@@ -1,5 +1,9 @@
 var ArticleComments = {};
 
+ArticleComments.track = function(fakeUrl) {
+	WET.byStr('comment/article' + fakeUrl);
+}
+
 ArticleComments.processing = false;
 
 ArticleComments.save = function(e) {
@@ -8,7 +12,7 @@ ArticleComments.save = function(e) {
 	if (ArticleComments.processing) return;
 	if ($('#article-comm-form-' + e.data.id)) {
 		e.preventDefault();
-		WET.byStr('article/editSave');
+		ArticleComments.track('/editSave');
 		var textfield = $('#article-comm-textfield-' + e.data.id).attr('readonly', 'readonly');
 		$.postJSON(wgScript, {action: 'ajax', rs: 'ArticleComment::axSave', article: wgArticleId, id: e.data.id, wpArticleComment: textfield.val()}, function(json) {
 			if (!json.error) {
@@ -39,7 +43,7 @@ ArticleComments.save = function(e) {
 ArticleComments.edit = function(e) {
 	$().log('begin: edit');
 	e.preventDefault();
-	WET.byStr('article/edit');
+	ArticleComments.track('/edit');
 	if (ArticleComments.processing) return;
 	$.getJSON(wgScript + '?action=ajax&rs=ArticleComment::axEdit&id=' + e.target.id + '&article=' + wgArticleId, function(json) {
 		if (!json.error) {
@@ -58,7 +62,7 @@ ArticleComments.edit = function(e) {
 ArticleComments.postComment = function(e) {
 	$().log('begin: postComment');
 	e.preventDefault();
-	WET.byStr('article/post');
+	ArticleComments.track('/post');
 	if (ArticleComments.processing) return;
 	$(e.data.source).attr('readonly', 'readonly');
 	$.postJSON(wgScript, {action: 'ajax', rs: 'ArticleComment::axPost', article: wgArticleId, wpArticleComment: $(e.data.source).val(), order: $('#article-comm-order').attr('value')}, function(json) {
@@ -103,7 +107,7 @@ ArticleComments.setPage = function(e) {
 	} else if (id == 'article-comments-pagination-link-next') {
 		trackingPage = 'next';
 	}
-	WET.byStr('article/pageSwitch/' + trackingPage);
+	ArticleComments.track('/pageSwitch/' + trackingPage);
 	$('#article-comments-pagination-link-' + trackingPage).blur();
 
 	$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentList::axGetComments&article=' + wgArticleId, {page: page, order: $('#article-comm-order').attr('value')}, function(json) {
@@ -123,11 +127,11 @@ ArticleComments.setPage = function(e) {
 }
 
 ArticleComments.linkDelete = function() {
-	WET.byStr('article/delete');
+	ArticleComments.track('/delete');
 }
 
 ArticleComments.linkHistory = function() {
-	WET.byStr('article/history');
+	ArticleComments.track('/history');
 }
 
 ArticleComments.bind = function() {
