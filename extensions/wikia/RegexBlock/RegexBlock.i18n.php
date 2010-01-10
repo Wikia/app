@@ -10,6 +10,7 @@ $messages["en"] = array(
     "regexblock_title" => "Regular Expression Name Block",
     "regexblock_form_header" => "Currently blocked addresses",
     "regexblock_view_blocked" => "View blocked by",
+    "regexblock_view_block_id" => "View block ID",
     "regexblock_exact_match_form" => "Exact match (names only)",
     "regexblock_exact_match" => "exact match",
     "regexblock_regex_match" => "regex match",
