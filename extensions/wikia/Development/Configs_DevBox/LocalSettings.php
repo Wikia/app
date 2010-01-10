@@ -20,6 +20,10 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonSettings.php' );
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DB.sjc-dev.php' );
 
+
+# NOTE: THIS MUST BE DONE _BEFORE_ CALLING WikiFactory::execute IF WIKIFACTORY IS BEING USED.
+include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");
+
 #
 # Load all variables for the given wikia from a wiki.factory database
 #
@@ -38,5 +42,3 @@ $wgExtensionsPath = "/extensions";
 # Former CustomSettings.php
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
-
-include("$IP/extensions/wikia/Development/SpecialDevBoxPanel/Special_DevBoxPanel.php");

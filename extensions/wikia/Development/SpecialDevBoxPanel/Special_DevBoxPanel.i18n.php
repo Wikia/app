@@ -21,6 +21,16 @@ $messages["en"] = Array(
 	"devbox-recommended"          => "(recommended)",
 	"devbox-get-db"               => "Get it",
 	"devbox-reload-db"            => "Reload it",
+
+	"devbox-change-wiki-heading"  => "Change Active Wiki",
+	"devbox-change-wiki-intro"    => "Allows you to set the active wiki instead of modifying hosts files.  To use the hosts-file method, leave this field blank.",
+	"devbox-change-wiki-label"    => "Wiki to use (eg: \"lyrics.wikia.com\"): ",
+	"devbox-change-wiki-submit"   => "Update",
+	"devbox-change-wiki-success"  => "This MediaWiki will now run as <strong><code>\$1</code></strong>",
+	"devbox-default-wiki"         => "whatever wiki is in the url",
+	"devbox-change-wiki-fileerror"=> "There was an error writing to \"<em>\$1</em>\".  Make sure you have appropriate write-permissions.",
+
+	"devbox-footer"               => "<br/><br/><small>Want to change something?<br/>The code for this extension is located in <code>\$1</code></small>",
 );
 
 ?>

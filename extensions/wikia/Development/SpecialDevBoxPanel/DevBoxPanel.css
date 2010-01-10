@@ -41,3 +41,16 @@ table.devbox-settings td{
 table.devbox-settings .odd{
 	background-color:#ddd;
 }
+
+div.devbox-success{
+	border:2px #080 dotted;
+	background-color:#cfc;
+	padding:10px;
+	font-weight:bold;
+}
+div.devbox-error{
+	border:2px #800 dotted;
+	background-color:#fcc;
+	padding:10px;
+	font-weight:bold;
+}
