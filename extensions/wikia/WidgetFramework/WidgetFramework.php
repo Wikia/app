@@ -81,6 +81,26 @@ class WidgetFramework {
 					$last = array_pop($this->config[1]);
 					$this->config[1][] = array('type' => 'WidgetAnswers', 'id' => 142);
 					$this->config[1][] = $last;
+
+					// RT #36587
+					global $wgLanguageCode;
+					if (in_array($wgLanguageCode, array("fr", "it", "es"))) {
+						$config1 = array();
+						foreach ($this->config[1] as $widget) {
+							switch ($widget["type"]) {
+							default:
+								$config1[] = $widget;
+								break;
+							case "WidgetAnswers":
+								break;
+							case "WidgetCommunity":
+								$config1[] = array('type' => 'WidgetAnswers', 'id' => 142);
+								$config1[] = $widget;
+								break;
+							}
+						}
+						$this->config[1] = $config1;
+					}
 				}
 
 				// Add MagCloud widget (immediately after WidgetCommunity) if extension is enabled
