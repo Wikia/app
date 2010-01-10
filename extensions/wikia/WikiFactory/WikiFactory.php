@@ -1175,7 +1175,7 @@ class WikiFactory {
 	}
 
 	/**
-	 * DomainToID
+	 * DomainToDB
 	 *
 	 * @access public
 	 * @static

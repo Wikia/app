@@ -224,6 +224,14 @@ class WikiFactoryLoader {
 		wfProfileIn(__METHOD__);
 		global $wgCityId, $wgDevelEnvironment, $wgWikiaAdvertiserCategory,
 			$wgDBservers, $wgLBFactoryConf, $wgDBserver;
+			
+		/**
+		 * Hook to allow extensions to alter the initialization.  For example,
+		 * setting the mCityID then returning true will over-ride which wiki
+		 * to use.
+		 */
+		if( !wfRunHooks( 'WikiFactory::execute', array( &$this ) ) )
+			return;
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local
@@ -416,7 +424,7 @@ class WikiFactoryLoader {
 		}
 
 		/**
-		 * if wikia is not defined or is marked for closing we redirecting to
+		 * if wikia is not defined or is marked for closing we redirect to
 		 * Not_a_valid_Wikia
 		 */
 		if( empty( $this->mWikiID ) || $this->mIsWikiaActive < 0 ) {
