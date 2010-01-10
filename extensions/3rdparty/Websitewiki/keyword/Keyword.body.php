@@ -39,7 +39,8 @@ class Keyword extends SpecialPage
      font-size:smaller; line-height:1.5; " summary="Anzeigen">
 <tr><td align="center" height="250" style="background:#ffffff;">
 <script type="text/javascript"><!--
-google_ad_client = "pub-6826490085913423";
+google_ad_client = "pub-7078170683927487";
+google_ad_slot = "2130596228";
 google_ad_width = 250;
 google_ad_height = 250;
 google_ad_format = "250x250_as";
