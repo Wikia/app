@@ -11,9 +11,13 @@ if (is_array($blockers)) {
 <?  } 
 } 
 ?>    
-</select>&nbsp;<?=wfMsg('regexblock_regex_filter')?><input type="text" name="rfilter" id="regex_filter" value="<?=$regex_filter?>" /><input type="submit" value="Go">
+</select>&nbsp;<?=wfMsg('regexblock_regex_filter')?><input type="text" name="rfilter" id="regex_filter" value="<?=$regex_filter?>" /><input type="submit" value="Go" />
 </form>
 <br/>
+<form name="regexbyid" method="get" action="<?=$action?>">
+<input type='hidden' name='action' value='stats' />
+<?=wfMsg('regexblock_view_block_id')?>: <input type="text" name="blckid" id="blckid" value="" /><input type="submit" value="Go" />
+</form>
 <? if (!empty($blockers)) { ?>
 <ul id="regexblock_blocks">
 <? $loop = 0; $coma = "<b>&#183;</b>";
