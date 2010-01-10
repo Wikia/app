@@ -122,15 +122,17 @@ class WikiFactory {
 
 
 	/**
-	 * wrapper to database connection
+	 * wrapper to database connection for connecting to the database
+	 * containing the mappings of wiki to daatabase.
 	 *
 	 * @access public
 	 * @static
 	 *
-	 * @param string	$table	table name
-	 * @param string	$column	column name default false
+	 * @param integer $db Index of the connection to get. May be DB_MASTER for the
+	 *                master (for write queries), DB_SLAVE for potentially lagged
+	 *                read queries, or an integer >= 0 for a particular server.
 	 *
-	 * @return string	table name with database
+	 * @return Database object
 	 */
 	static public function db( $db ) {
 		global $wgExternalSharedDB;
@@ -271,7 +273,7 @@ class WikiFactory {
 		}
 
 		/**
-		 * ewentually insert
+		 * eventually insert
 		 */
 		$dbw->insert(
 			"city_domains",
@@ -609,10 +611,10 @@ class WikiFactory {
 	 *
 	 * @return boolean: transaction status
 	 */
-        static public function removeVarByName( $variable, $wiki ) {
-                $oVariable = self::getVarByName( $variable, $wiki );
-                return WikiFactory::removeVarById( $oVariable->cv_variable_id, $wiki );
-        }
+	static public function removeVarByName( $variable, $wiki ) {
+		$oVariable = self::getVarByName( $variable, $wiki );
+		return WikiFactory::removeVarById( $oVariable->cv_variable_id, $wiki );
+	}
 
 
 	/**
