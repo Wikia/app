@@ -1,5 +1,5 @@
 == Changes since 201001.2 ==
-* 
+* rt#36730: Fix google webmaster tools domain verification. (Nef)
 
 == Changes since 201001.1 ==
 * rt#36721: Answers: Magic footer links changes. (Nef)
