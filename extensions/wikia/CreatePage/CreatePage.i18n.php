@@ -23,12 +23,12 @@ $messages['en'] = array(
 	'createpage_spam' => 'Sorry, your edit could not be saved',
 	'createpage_cant_edit' => 'Could not perform edit',
 	'createpage-dialog-title' => 'Create a New Article',
-	'createpage-dialog-message' => 'Hooray, you\'re creating a new page! \n \'\'What do you want to call it?\'\'',
+	'createpage-dialog-message1' => 'Hooray, you\'re creating a new page!',
+	'createpage-dialog-message2' => 'What do you want to call it?',
 	'createpage-dialog-choose' => 'Choose a page layout:',
 	'createpage-dialog-format' => 'Format',
 	'createpage-dialog-blank' => 'Blank page',	
 );
-
 
 $messages['de'] = array(
 	'createpage-sp-title' => 'Neue Seite anlegen',
