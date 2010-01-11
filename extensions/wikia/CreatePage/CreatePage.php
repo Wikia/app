@@ -32,7 +32,7 @@ $wgExtensionFunctions[] = 'wfCreatePageInit';
 
 // initialize (new) create page extension
 function wfCreatePageInit() {
-	global $wgWikiaEnableNewCreatepageExt, $wgAjaxExportList, $wgOut, $wgScriptPath;
+	global $wgWikiaEnableNewCreatepageExt, $wgAjaxExportList, $wgOut, $wgScriptPath, $wgStyleVersion, $wgExtensionsPath;
 
 	// load messages from file
 	wfLoadExtensionMessages('CreatePage');
@@ -44,6 +44,8 @@ function wfCreatePageInit() {
 		$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
 
 		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/CreatePage/js/CreatePage.js"><!-- CreatePage js --></script>');
+		$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/CreatePage/css/CreatePage.css?{$wgStyleVersion}");
+
 	}
 }
 
