@@ -21,9 +21,10 @@
  *
  * TODO: GUI for setting which local databases will override the production slaves.
  *
+ * TODO: Double-check that the db dumps are being done from slaves, not the master.
  * TODO: Programmatically install a link in the User Links for the Dev Box Panel
  * TODO: Create docs similar to https://staff.wikia-inc.com/wiki/User:Sean_Colombo/Setting_up_a_local_dev_environment but for Dev Boxes
- * TODO: Create an updateDevBox.pl script to update the 3 svns (trunk, answers, and wikia-conf and warn if Configs_DevBox/LocalSettings.php has changed since it may need the changes to be merged).fs
+ * TODO: Create an updateDevBox.pl script to update the 3 svns (trunk, answers, and wikia-conf and warn if Configs_DevBox/LocalSettings.php has changed since it may need the changes to be merged).
  */
 
 if(!defined('MEDIAWIKI')) die();
@@ -435,6 +436,9 @@ function getHtmlForDatabaseComparisonTool(){
 	$html = "";
 	
 	$html .= "<h2>".wfMsg('devbox-heading-pull-dbs')."</h2>";
+	
+	// TODO: REMOVE OR MAKE THIS BETTER INTEGRATED (I'm JUST RANDOMLY TYPING NOW) AFTER CONFIRMING THAT SLAVES ARE USED.
+	$html .= "<strong>Please don't dump LARGE databases yet - I haven't evaluated the performance impact of that yet!</strong><br/>\n";
 	
 	// Form for pulling any wiki by its domain.
 	$html .= "<form name='".DEVBOX_ACTION_PULL_DOMAIN."' method='post' action=''>
