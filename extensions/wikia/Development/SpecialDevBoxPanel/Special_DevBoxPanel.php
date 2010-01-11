@@ -18,6 +18,13 @@
  *
  * TODO: Since "local" isn't technically a requirement, make sure to update the comments here to make that clear.  It
  * is quite likely that all of the devbox dbs will be moved to some other server for space reasons relatively soon.
+ *
+ * TODO: GUI for pulling/refreshing databases.
+ * TODO: GUI for setting which local databases will override the production slaves.
+ *
+ * TODO: Programmatically install a link in the User Links for the Dev Box Panel
+ * TODO: Create docs similar to https://staff.wikia-inc.com/wiki/User:Sean_Colombo/Setting_up_a_local_dev_environment but for Dev Boxes
+ * TODO: Create an updateDevBox.pl script to update the 3 svns (trunk, answers, and wikia-conf and warn if Configs_DevBox/LocalSettings.php has changed since it may need the changes to be merged).fs
  */
 
 if(!defined('MEDIAWIKI')) die();
@@ -36,7 +43,6 @@ $wgGroupPermissions['*']['devboxpanel'] = true; // for now, allow all users as l
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
 $wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
-$wgHooks['WikiFactory::execute::done'][] = "wfDevBoxForceDbServer";
 
 $wgExtensionFunctions[] = 'wfSetupDevBoxPanel';
 $wgExtensionCredits['specialpage'][] = array(
@@ -130,6 +136,7 @@ function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
 	// Modify wgLBFactoryConf using loaded settings...
 	$wgLBFactoryConf['sectionLoads'][DEV_BOX_CLUSTER] = array(DEV_BOX_SERVER_NAME => 1);
 	$wgLBFactoryConf['hostsByName'][DEV_BOX_SERVER_NAME] = $wgDBdevboxServer;
+	$wgLBFactoryConf['readOnlyBySection'][DEV_BOX_CLUSTER] = false;
 	$wgLBFactoryConf['templateOverridesByServer'][DEV_BOX_SERVER_NAME] = array(
 		'user' => $wgDBdevboxUser,
 		'password' => $wgDBdevboxPassword,
@@ -263,9 +270,22 @@ function setDevBoxOverrideDatabases($overDbs){
  * configuration settings for this run.  Due to these side-effects, it is
  * recommended that this function be called on a page that's either inside
  * of an iframe or is just an AJAX request.
+ *
+ * Based largely on Nick's pullDB.bash.
  */
 function pullProdDatabaseToLocal($domainOfWikiToPull){
-	global $wgCityId,$wgDBserver,$wgDBname;
+	global $wgCityId,$wgDBserver,$wgDBname,$wgDBuser,$wgDBpassword;
+	global $wgExtensionsPath,$wgStyleVersion;
+	
+	set_time_limit(0);
+	
+	// Print out a minimal header.
+	print "<html>
+	<head>
+		<title>Pulling $domainOfWikiToPull</title>
+		<link rel='stylesheet' type='text/css' href='$wgExtensionsPath/wikia/Development/SpecialDevBoxPanel/DevBoxPanel.css?$wgStyleVersion'/>
+	</head>
+	<body><div style='font-family:courier,\"courier new\",monospaced'>";
 	
 	// Set the wiki, but with overrides turned off (we're trying to find the production slave
 	// for the database).
@@ -275,24 +295,48 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 
 	$wikiFactoryLoader = new WikiFactoryLoader();
 	$wgCityId = $wikiFactoryLoader->execute();
-
-	print "server: $wgDBserver<br/>\n";
-	print "db: $wgDBname<br/>\n";
-	global $wgLBFactoryConf;
-	print "<!--";
-	//print_r($wgLBFactoryConf);
-	//print_r($wikiFactoryLoader);
-	print "-->";
-
+	
 	// Restore the dev-box overrides because they're persistent and we only wanted to temporarily ignore them.
 	setDevBoxOverrideDatabases($originalOverrides);
+
+	// Everything is configured, now move the data.
+	$tmpFile = "/tmp/$wgDBname.mysql.gz";
+	print "Dumping \"$wgDBname\" from host \"$wgDBserver\"...<br/>\n";
+	$response = `mysqldump --compress --single-transaction --skip-comments --quick -h $wgDBserver -u$wgDBuser -p$wgDBpassword $wgDBname --result-file=$tmpFile`;
+	if(trim($response) != ""){
+		print "<div class='devbox-error'>Database dump returned the following error:\n<em>$response</em></div>\n";
+	} else {
+		print "Backup created.<br/>\n";
+	}
+	print "<br/>\n";
+
+	print "Creating database...<br/>\n";
+	global $wgDBdevboxUser,$wgDBdevboxPassword,$wgDBdevboxServer;
+	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer -e "CREATE DATABASE IF NOT EXISTS $wgDBname"`;
+	if(trim($response) != ""){
+		print "<div class='devbox-error'>CREATE DATABASE attempt returned the error:\n<em>$response</em></div>\n";
+	} else {
+		print "\"$wgDBname\" created on \"$wgDBdevboxServer\".<br/>\n";
+	}
+	print "<br/>";
 	
+	print "Loading \"$wgDBname\" into \"$wgDBdevboxServer\"...<br/>\n";
+	$response = `cat $tmpFile | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $wgDBname`;
+	if(trim($response) != ""){
+		print "<div class='devbox-error'>Error loading the database dump into $wgDBdevboxServer:\n<em>$response</em></div>\n";
+	} else {
+		print "<div class='devbox-success'>Database loaded successfully!</div>\n";
+	}
+	print "<br/>\n";
 	
-	// TODO: BASICALLY CLONE THE FUNCTIONALITY OF pullDB.bash TO GRAB AND LOAD THE DATA (but w/svn-safe handling of database credentials).
-	// TODO: BASICALLY CLONE THE FUNCTIONALITY OF pullDB.bash TO GRAB AND LOAD THE DATA (but w/svn-safe handling of database credentials).
-	
-	
-	
+	print "Removing dumpfile...<br/>\n";
+	$response = `rm -f $tmpFile`;
+	if(trim($response) != ""){
+		print "<div class='devbox-error'>WARNING: Problem deleting the dump-file:\n<em>$response</em></div>\n";
+	}
+	print "Done.<br/>\n";
+
+	print "</div></body></html>\n";
 
 	exit; // This is not a normal page!  See function-comment.
 } // end pullProdDatabaseToLocal()
@@ -309,6 +353,8 @@ function wfDevBoxPanel() {
 	$wgOut->setPageTitle(wfMsg("devbox-title"));
 	
 	if($wgDevelEnvironment){
+		$wgOut->addHTML("<div class='skinKiller'>");
+
 		// Intro
 		$wgOut->addHTML("<em>");
 		$wgOut->addHTML(wfMsg('devbox-intro'));
@@ -317,7 +363,7 @@ function wfDevBoxPanel() {
 		
 		
 // TODO: MOVE THIS TO BE PROCESSED IN THE SWITCH STATEMENT BELOW FROM ACTUAL GUI REQUESTS. - THIS FUNCTION WILL CURRENTLY DESTROY ALL OTHER PROCESSING BASICALLY.. JUST TESTING IT HERE.
-pullProdDatabaseToLocal("armyoftwo.wikia.com");
+//pullProdDatabaseToLocal("armyoftwo.wikia.com");
 		
 		
 		
@@ -366,6 +412,8 @@ pullProdDatabaseToLocal("armyoftwo.wikia.com");
 
 		// Footer to attract changes...
 		$wgOut->addHTML(wfMsg("devbox-footer", __FILE__));
+		
+		$wgOut->addHTML("</div>"); // end of skinKiller div
 	} else {
 		$wgOut->addHTML(wfMsg('devbox-panel-not-enabled'));
 	}

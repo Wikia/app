@@ -42,3 +42,6 @@ $wgExtensionsPath = "/extensions";
 # Former CustomSettings.php
 #
 require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../CommonExtensions.php' );
+
+// DevBoxes can't currently survive without this... TODO: Make them handle pretty-urls
+$wgArticlePath = "/index.php?title=$1";
