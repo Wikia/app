@@ -15,6 +15,8 @@ ShareFeature.ajax = function( provider ) {
 		);
 };
 
+
+// footer is a String to differentiate between clicking link on menu bar and article footer
 ShareFeature.openDialog = function( footer ) {
 	if( false == ShareFeatureEnabled ) {
 		ShareFeatureEnabled = true;
