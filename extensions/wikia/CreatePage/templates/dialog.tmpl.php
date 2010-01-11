@@ -15,7 +15,7 @@
 		<div id="CreatePageDialogChoices">
 			<div id="CreatePageDialogFormatContainer" class="chooser chosen">
 				<div>
-					<input type="radio" name="wpCreatePageChoices" id="CreatePageDialogFormat" value="format" selected="selected" />
+					<input type="radio" name="wpCreatePageChoices" id="CreatePageDialogFormat" value="format" checked="checked" />
 					<label for="CreatePageDialogFormat"><?= wfMsg( 'createpage-dialog-format' ) ?>
 					<img src="/extensions/wikia/CreatePage/images/plc.png" /></label>
 				</div>
