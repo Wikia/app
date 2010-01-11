@@ -143,10 +143,19 @@ ArticleComments.addHover = function() {
 	$('.article-comments-pagination-link').bind('click', ArticleComments.setPage).not('.article-comments-pagination-link-active, #article-comments-pagination-link-prev, #article-comments-pagination-link-next').hover(function() {$(this).addClass('accent');}, function() {$(this).removeClass('accent');});
 }
 
+ArticleComments.changeOrder = function() {
+	if ($('#article-comm-order').attr('value') == "desc") {
+		ArticleComments.track('/orderSwitch/newestFirst');
+	} else {
+		ArticleComments.track('/orderSwitch/newestLast');
+	}
+	$('#article-comm-form-select').submit();
+}
+
 ArticleComments.init = function() {
 	$('#article-comm-submit-top').bind('click', {source: '#article-comm-top'}, ArticleComments.postComment);
 	$('#article-comm-submit-bottom').bind('click', {source: '#article-comm-bottom'}, ArticleComments.postComment);
-	$('#article-comm-order').bind('change', function() {$('#article-comm-form-select').submit()});
+	$('#article-comm-order').bind('change', ArticleComments.changeOrder);
 	$('.article-comm-edit').bind('click', ArticleComments.edit);
 	$('#article-comments-pagination div').css('backgroundColor', $('#wikia_page').css('backgroundColor'));
 	ArticleComments.addHover();
