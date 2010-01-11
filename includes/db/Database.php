@@ -2725,7 +2725,8 @@ class DBQueryError extends DBError {
 		$time = wfTimestamp( TS_MW );
 		$uri  = $_SERVER[ 'SERVER_NAME' ] . $_SERVER[ 'REQUEST_URI' ];
 		$qry  = $_SERVER[ 'QUERY_STRING' ];
-		error_log("DBQueryError: id=$time, errorNo={$this->errno}, errorMessage={$this->error}, functionName={$this->fname}, SQL={$this->sql} NAME={$wgDBname} URI={$uri} QUERY={$qry}");
+		error_log("DBQueryError: id=$time, errorNo={$this->errno}, errorMessage={$this->error}, SQL={$this->sql}");
+		error_log("DBQueryError: id=$time, errorNo={$this->errno}, NAME={$wgDBname}, functionName={$this->fname}, URI={$uri}, QUERY={$qry}");
 		if( !$wgShowSQLErrors ) {
 			return "/*id=$time*/ " . $this->msg( 'sqlhidden', 'SQL hidden' );
 		} else {
