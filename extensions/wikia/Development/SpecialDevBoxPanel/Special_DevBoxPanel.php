@@ -19,7 +19,6 @@
  * TODO: Since "local" isn't technically a requirement, make sure to update the comments here to make that clear.  It
  * is quite likely that all of the devbox dbs will be moved to some other server for space reasons relatively soon.
  *
- * TODO: GUI for pulling/refreshing databases.
  * TODO: GUI for setting which local databases will override the production slaves.
  *
  * TODO: Programmatically install a link in the User Links for the Dev Box Panel
@@ -59,8 +58,15 @@ define('DEVBOX_FORCED_WIKI_FILE', '/tmp/devbox_forceWiki.txt');
 define('DEVBOX_OVERRIDDEN_DBS_KEY', 'devbox_overridden_dbs');
 define('DEVBOX_OVERRIDDEN_DBS_FILE', '/tmp/devbox_overriden_dbs.txt');
 define('DEVBOX_OVERRIDDEN_DBS_DELIM', '`'); // delimiter used to separate values in both memory & file (grave is used because it is not allowed in table names)
-define('DEVBOX_CHANGE_WIKI_FORMNAME', 'devbox-change-wiki');
+
+define('DEVBOX_ACTION', 'panelAction');
+define('DEVBOX_ACTION_CHANGE_WIKI', 'devbox-change-wiki');
 define('DEVBOX_FIELD_FORCE_WIKI', 'devbox-field-force-wiki');
+define('DEVBOX_ACTION_PULL_DB', 'devbox-pull-database');
+define('DEVBOX_FIELD_DB_TO_PULL', 'dbToPull');
+define('DEVBOX_ACTION_PULL_DOMAIN', 'devbox-pull-domain');
+define('DEVBOX_FIELD_DOMAIN_TO_PULL', 'domainToPull');
+
 define('DEVBOX_DEFAULT_WIKI_DOMAIN', 'devbox.wikia.com');
 define('DEV_BOX_CLUSTER', "devbox_section");
 define('DEV_BOX_SERVER_NAME', "devbox-server");
@@ -359,21 +365,12 @@ function wfDevBoxPanel() {
 		$wgOut->addHTML("<em>");
 		$wgOut->addHTML(wfMsg('devbox-intro'));
 		$wgOut->addHTML("</em><br/><br/>");
-		
-		
-		
-// TODO: MOVE THIS TO BE PROCESSED IN THE SWITCH STATEMENT BELOW FROM ACTUAL GUI REQUESTS. - THIS FUNCTION WILL CURRENTLY DESTROY ALL OTHER PROCESSING BASICALLY.. JUST TESTING IT HERE.
-//pullProdDatabaseToLocal("armyoftwo.wikia.com");
-		
-		
-		
-		
 
 		// TODO: Do any processing of actions here (and display success/error messages).
 		global $wgRequest;
-		$formName = $wgRequest->getVal('formName');
-		switch($formName){
-		case DEVBOX_CHANGE_WIKI_FORMNAME:
+		$action = $wgRequest->getVal(DEVBOX_ACTION);
+		switch($action){
+		case DEVBOX_ACTION_CHANGE_WIKI:
 			$forceWiki = $wgRequest->getVal(DEVBOX_FIELD_FORCE_WIKI);
 
 			// TODO: VERIFY THAT forceWiki IS A REAL WIKI AND DISPLAY A WARNING OTHERWISE (and don't save it in that case).
@@ -386,11 +383,17 @@ function wfDevBoxPanel() {
 				$wgOut->addHTML(errorHtml(wfMsg('devbox-change-wiki-fileerror', DEVBOX_FORCED_WIKI_FILE)));
 			}
 			break;
+		case DEVBOX_ACTION_PULL_DB:
+			$domainToPull = WikiFactory::DBtoDomain($wgRequest->getVal(DEVBOX_FIELD_DB_TO_PULL));
+			pullProdDatabaseToLocal($domainToPull);
+			break;
+		case DEVBOX_ACTION_PULL_DOMAIN:
+			pullProdDatabaseToLocal($wgRequest->getVal(DEVBOX_FIELD_DOMAIN_TO_PULL));
+			break;
 		default:
 			break;
 		}
 
-		$wgOut->addHTML("<br/><hr/><br/>");
 		// TODO: Do any processing of actions here (and display success/error messages).
 
 
@@ -401,11 +404,9 @@ function wfDevBoxPanel() {
 
 		// Display section which lets the developer force which wiki to act as.
 		$wgOut->addHTML(getHtmlForChangingCurrentWiki());
-		$wgOut->addHTML("<br/><hr/><br/>");
 
 		// Display section with vital stats on the server (where the LocalSettings are, the error logs, databases, etc.) with a link to phpinfo.
 		$wgOut->addHTML(getHtmlForInfo());
-		$wgOut->addHTML("<br/><hr/><br/>");
 
 		// Display section for creating local copies of dbs from production slaves.
 		$wgOut->addHTML(getHtmlForDatabaseComparisonTool());
@@ -428,89 +429,88 @@ function wfDevBoxPanel() {
  * locally (overwrites existing db if there is
  * already a local version).
  *
- * TODO: Add the option on each existing db to reload it or set it as the ACTIVE wiki.
- *
  * @return String - HTML for displaying the tool.
  */
 function getHtmlForDatabaseComparisonTool(){
 	$html = "";
+	
+	$html .= "<h2>".wfMsg('devbox-heading-pull-dbs')."</h2>";
+	
+	// Form for pulling any wiki by its domain.
+	$html .= "<form name='".DEVBOX_ACTION_PULL_DOMAIN."' method='post' action=''>
+		<div>
+			".wfMsg('devbox-pull-by-domain')."
+			<input type='hidden' name='".DEVBOX_ACTION."' value='".DEVBOX_ACTION_PULL_DOMAIN."'/>
+			<input type='text' name='".DEVBOX_FIELD_DOMAIN_TO_PULL."' value=''/>
+			<input type='submit'/>
+		</div>
+	</form>";
+	$html .= "<br/><br/>";
 
 	// A set of recommended databases so that any new user can know a basic set of dbs to get them started.
 	$RECOMMENDED_DBS = array(
-		"wikicities", 		// required for wikifactory settings
-		"dataware", 		// contains the text of articles
+		//"wikicities",		// just use the prod database
+		//"dataware", 		// just use the prod database
 		"answers",			// required for answers.wikia development
-		"wowwiki",			// very popular wiki
+		"armyoftwo",        // a small wiki to use for testing db loading
+		"farmville",        // a small wiki to use for testing db loading
 		"ffxi",				// a random wiki for comparison
-		"lyricwiki"			// a wiki from the B shard
+		"lyricwiki",		// a wiki from the B shard
+		"wowwiki",			// very popular wiki
 	);
 
 	// Determine what databases are on this dev-box.
-	$db = wfGetDB(DB_SLAVE)->getProperty('mConn');
-	$local_dbs_objs = mysql_list_dbs($db);
-	$local_dbs = array();
-	while ($row = mysql_fetch_object($local_dbs_objs)) {
-		$local_dbs[] = $row->Database;
+	global $wgDBdevboxUser, $wgDBdevboxPassword, $wgDBdevboxServer;
+	$db = mysql_connect($wgDBdevboxServer, $wgDBdevboxUser, $wgDBdevboxPassword);
+	$devbox_dbs_objs = mysql_list_dbs($db);
+	$devbox_dbs = array();
+	$IGNORE_DBS = array('information_schema', 'mysql');
+	while ($row = mysql_fetch_object($devbox_dbs_objs)) {
+		$devbox_dbs[] = $row->Database;
 	}
-	asort($local_dbs);
-
-	// TODO: DETERMINE WHAT DATABASES ARE AVAILABLE FROM PRODUCTION SLAVES.
-	$available_dbs = array();
-// TODO: REMOVE AND REPLACE W/CODE TO ACTUALLY LOAD THE LIST OF DBs
-$available_dbs[] = "lyricwiki";
-$available_dbs[] = "answers";
-$available_dbs[] = "dataware";
-$available_dbs[] = "wikicities";
-$available_dbs[] = "wowwiki";
-$available_dbs[] = "ffxi";
-$available_dbs[] = "muppet";
-$available_dbs[] = "twighlightsaga";
-// TODO: REMOVE AND REPLACE W/CODE TO ACTUALLY LOAD THE LIST OF DBs
-	asort($available_dbs);
-
-	// TODO: DISPLAY THE GUI FOR GETTING MORE DATABASES.
+	$devbox_dbs = array_diff($devbox_dbs, $IGNORE_DBS);
+	asort($devbox_dbs);
 
 	$html .= "<table class='devBoxPanel'>";
 	$html .= "<tr><th>".wfMsg("devbox-dbs-on-devbox")."</th><th>".wfMsg("devbox-dbs-in-production")."</th></tr>";
+	
+	// List the databases on the devbox mysql instance.
 	$html .= "<tr><td width='50%'>";
-	if(count($local_dbs) > 0){
-		$html .= "<em>".wfMsg("devbox-section-existing")."</em>";
-		$html .= "<ul>";
-		foreach($local_dbs as $dbName){
-			$html .= "<li class='dbp-alreadyInstalled'>$dbName</li>";
-		}
-		$html .= "</ul>";
-	}
+	$html .= "<em>".wfMsg("devbox-section-existing")."</em>";
+	$html .= getHtmlForDbList($devbox_dbs, $RECOMMENDED_DBS, $devbox_dbs);
 	$html .= "</td><td width='50%'>";
-	if(count($available_dbs) > 0){
-		$html .= "<em>".wfMsg("devbox-section-summary")."</em>";
-		$html .= "<ul>";
-		// List the databases we already have and the recommended ones first.
-		foreach($available_dbs as $dbName){
-			$reloadIt = "<a href='#'>".wfMsg("devbox-reload-db")."</a>"; // TODO: MAKE THIS A WORKING LINK
-			$getIt = "<a href='#'>".wfMsg("devbox-get-db")."</a>"; // TODO: MAKE THIS A WORKING LINK
-			if(in_array($dbName, $local_dbs)){
-				// Already have this database.
-				$html .= "<li class='dbp-alreadyInstalled'>$dbName <span class='dbp-rightButtons'>$reloadIt</span></li>";
-			} else if(in_array($dbName, $RECOMMENDED_DBS)){
-				// This isn't installed yet but it's recommended that it should be.
-				$html .= "<li class='dbp-recommended'>$dbName <span class='dbp-rightButtons'><em>".wfMsg("devbox-recommended")."</em> $getIt</span></li>";
-			}
-		}
-		$html .= "</ul>";
 
-		// Go through and list ALL databases now.
-		$html .= "<br/><em>".wfMsg("devbox-section-all")."</em>";
+	// List the recommended databases.
+	$html .= "<em>".wfMsg("devbox-section-recommended")."</em>";
+	$html .= getHtmlForDbList($RECOMMENDED_DBS, $RECOMMENDED_DBS, $devbox_dbs);
+
+	$html .= "</td></tr></table>";
+
+	return $html;
+} // end getHtmlForDatabaseComparisonTool()
+
+/**
+ * Given an array of dbs and the settings for which are recommended and/or
+ * installed on the devbox mysql instance, returns the HTML for a list which lets
+ * the user fetch those databases if desired.
+ */
+function getHtmlForDbList($dbsToList, $RECOMMENDED_DBS, $devbox_dbs){
+	$html = "";
+	if(count($dbsToList) > 0){
 		$html .= "<ul>";
-		foreach($available_dbs as $dbName){
-			$reloadIt = "<a href='#'>".wfMsg("devbox-reload-db")."</a>"; // TODO: MAKE THIS A WORKING LINK
-			$getIt = "<a href='#'>".wfMsg("devbox-get-db")."</a>"; // TODO: MAKE THIS A WORKING LINK
-			if(in_array($dbName, $local_dbs)){
+		global $wgArticlePath,$wgRequest;
+		$title = $wgRequest->getVal('title');
+		$pageUrl = str_replace( "$1", urlencode( $title ), $wgArticlePath );
+		foreach($dbsToList as $dbName){
+			$link = "$pageUrl&".DEVBOX_ACTION."=".DEVBOX_ACTION_PULL_DB."&".DEVBOX_FIELD_DB_TO_PULL."=".urlencode($dbName);
+			$reloadIt = "<a href='$link'>".wfMsg("devbox-reload-db")."</a>";
+			$getIt = "<a href='$link'>".wfMsg("devbox-get-db")."</a>";
+			if(in_array($dbName, $devbox_dbs)){
 				// Already have this database.
 				$html .= "<li class='dbp-alreadyInstalled'>$dbName <span class='dbp-rightButtons'>$reloadIt</span></li>";
 			} else if(in_array($dbName, $RECOMMENDED_DBS)){
 				// This isn't installed yet but it's recommended that it should be.
-				$html .= "<li class='dbp-recommended'>$dbName <span class='dbp-rightButtons'><em>".wfMsg("devbox-recommended")."</em> $getIt</span></li>";
+				$html .= "<li class='dbp-recommended'>$dbName <span class='dbp-rightButtons'>$getIt</span></li>";
 			} else {
 				// Available, not currently installed, not one of the specifically recommended.
 				// This will be most databases.
@@ -518,11 +518,11 @@ $available_dbs[] = "twighlightsaga";
 			}
 		}
 		$html .= "</ul>";
+	} else {
+		$html .= "<small>".wfMsg('devbox-no-dbs-in-list')."</small>";
 	}
-	$html .= "</td></tr></table>";
-
 	return $html;
-} // end getHtmlForDatabaseComparisonTool()
+} // end getHtmlForDbList()
 
 /**
  * Displays information that will help the developer develop more
@@ -532,9 +532,10 @@ $available_dbs[] = "twighlightsaga";
 function getHtmlForInfo(){
 	$html = "";
 	
-	$html .= "<em>".wfMsg("devbox-vital-settings")."</em>";
+	$html .= "<h2>".wfMsg("devbox-heading-vital")."</h2>";
 
-	GLOBAL $IP,$wgScriptPath,$wgExtensionsPath,$wgCityId,$wgNotAValidWikia;
+	global $IP,$wgScriptPath,$wgExtensionsPath,$wgCityId;
+	global $wgDBname,$wgExternalSharedDB;
 	
 	$settings = array(
 		"error_log"            => ini_get('error_log'),
@@ -542,6 +543,8 @@ function getHtmlForInfo(){
 		"\$wgScriptPath"       => $wgScriptPath,
 		"\$wgExtensionsPath"   => $wgExtensionsPath,
 		"\$wgCityId"           => $wgCityId,
+		"\$wgDBname"           => $wgDBname,
+		"\$wgExternalSharedDB" => $wgExternalSharedDB,
 	);
 	$html .= "<table class='devbox-settings'>\n";
 	$html .= "<tr><th>".wfMsg("devbox-setting-name")."</th><th>".wfMsg("devbox-setting-value")."</th></tr>\n";
@@ -571,17 +574,17 @@ function getHtmlForInfo(){
 function getHtmlForChangingCurrentWiki(){
 	$html = "";
 
-	$forceWiki = getForcedWikiValue();
+	$html .= "<h2>".wfMsg("devbox-heading-change-wiki")."</h2><br/>";
 
 	// If no wiki is specified yet, highlight this section.
-	$style = ($forceWiki==""?" style='background-color:#ffa'":"");
-	
-	$html .= "<div$style>\n";
-	$html .= "<strong>".wfMsg("devbox-change-wiki-heading")."</strong><br/>";
+	$forceWiki = getForcedWikiValue();
+	$class = ($forceWiki==""?" class='attention'":"");
+
+	$html .= "<div$class>\n";
 	$html .= "<em>".wfMsg("devbox-change-wiki-intro")."</em><br/>";
 
 	$html .= "<form method='post' action=''>
-		<input type='hidden' name='formName' value='".DEVBOX_CHANGE_WIKI_FORMNAME."'/>
+		<input type='hidden' name='".DEVBOX_ACTION."' value='".DEVBOX_ACTION_CHANGE_WIKI."'/>
 		<div>".wfMsg("devbox-change-wiki-label")." <input type='text' name='".DEVBOX_FIELD_FORCE_WIKI."' value='$forceWiki' />
 		<input type='submit' value='".wfMsg('devbox-change-wiki-submit')."'/>
 		</div>

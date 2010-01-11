@@ -1183,11 +1183,38 @@ class WikiFactory {
 	 *
 	 * @param $domain string - domain name
 	 *
-	 * @return integer - id in city_list
+	 * @return integer - id in city_list or null on failure.
 	 */
 	static public function DomainToDB( $domain ) {
 		$wikiID = self::DomainToID($domain);
 		return is_null($wikiID) ? null : self::IDtoDB($wikiID);
+	}
+	
+	/**
+	* DBtoDomain
+	*
+	* @access public
+	* @static
+	* @author Sean Colombo
+	*
+	* @param $db string - database name
+	*
+	* @return string - a domain name for the wiki whose database was
+	*                  passed in or null on failure.
+	*/
+	static public function DBtoDomain( $db ) {
+		$wikiID = self::DBtoID($db);
+		if(is_null($wikiID)){
+			$retVal = null;
+		} else {
+			$domains = self::getDomains($wikiID);
+			if(count($domains) == 0){
+				$retVal = null;
+			} else {
+				$retVal = array_shift($domains);
+			}
+		}
+		return $retVal;
 	}
 
 	/**
