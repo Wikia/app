@@ -18,7 +18,7 @@ function wfAnswersMagicFooterLinks($results) {
 	if (!empty($results)) return true;
 
 	$links = array(
-		"de" => "[[w:c:frag|Frag Wikia Wikianswers]]",
+		"de" => "Besuche das [[w:c:websitewiki|WebsiteWiki]] und [[w:c:frag|Wikianswers: Frag Wikia!]]",
 		"es" => "[[w:c:respuestas|WikiRespuestas]]",
 	);
 
