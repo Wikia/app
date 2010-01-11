@@ -169,8 +169,8 @@ function make_related($dbw, $dom, $domdom)
 
 //    echo $gourl;
 
-  $gofp = fopen($gourl, "r");
-  $go = fread($gofp, 10240);
+  $gofp = @fopen($gourl, "r");
+  $go = @fread($gofp, 10240);
   $go = $go.fread($gofp, 10240);
   $go = $go.fread($gofp, 10240);
   $go = $go.fread($gofp, 10240);
