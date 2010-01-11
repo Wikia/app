@@ -20,3 +20,30 @@
 	margin-bottom: 8px;
 }
 
+#wpCreatePageDialogTitle {
+	width: 340px;
+}
+
+#CreatePageContainer .chooser {
+	float: left;
+	width: 140px;
+	text-align: center;	
+	margin-bottom: 12px;
+	margin-right: 20px;
+}
+
+.chooser div {
+	width: 80%;
+	padding: 1em 1em 1em 1em;
+}
+
+.chosen {
+	background-color: #d6e0f5;
+	-moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+}
+
+#CreatePageDialogButton {
+	clear: both;
+}
+
