@@ -15,7 +15,7 @@ ShareFeature.ajax = function( provider ) {
 };
 
 CreatePage.openDialog = function(e) {
-	$.getEvent().preventDefault();
+	e.preventDefault();
 	if( false == CreatePageEnabled ) {
 		CreatePageEnabled = true;
 		$().getModal(
@@ -41,11 +41,11 @@ CreatePage.track = function( str ) {
 $(function() {
 	if( $( '#dynamic-links-write-article-icon' ).exists() ) {
 		// open dialog on clicking
-		$( '#dynamic-links-write-article-icon' ).click( function() { CreatePage.openDialog(); });
+		$( '#dynamic-links-write-article-icon' ).click( function(e) { CreatePage.openDialog(e); });
 	}
 	if( $( '#dynamic-links-write-article-link' ).exists() ) {
 		// open dialog on clicking
-		$( '#dynamic-links-write-article-link' ).click( function() { CreatePage.openDialog(); });
+		$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e); });
 	}
 
 });
