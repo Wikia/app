@@ -7,8 +7,6 @@
 class CreatePage extends SpecialEditPage {
 
 	public function __construct() {
-		// initialise messages
-		wfLoadExtensionMessages( 'CreatePage' );
 		// confirm edit captcha [RT#21902] - Marooned
 		global $wgHooks, $wgWikiaEnableConfirmEditExt;
 		if( $wgWikiaEnableConfirmEditExt ) {

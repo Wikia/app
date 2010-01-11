@@ -21,7 +21,8 @@ $messages['en'] = array(
 	'createpage_invalid_title_error' => 'Invalid title',
 	'createpage_article_already_exists' => 'Article with that name already exists, please select different name',
 	'createpage_spam' => 'Sorry, your edit could not be saved',
-	'createpage_cant_edit' => 'Could not perform edit'
+	'createpage_cant_edit' => 'Could not perform edit',
+	'createpage-dialog-title' => 'Create a New Article'
 );
 
 
