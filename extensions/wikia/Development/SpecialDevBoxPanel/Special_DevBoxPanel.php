@@ -21,7 +21,6 @@
  *
  * TODO: GUI for setting which local databases will override the production slaves.
  *
- * TODO: Double-check that the db dumps are being done from slaves, not the master.
  * TODO: Programmatically install a link in the User Links for the Dev Box Panel
  * TODO: Create docs similar to https://staff.wikia-inc.com/wiki/User:Sean_Colombo/Setting_up_a_local_dev_environment but for Dev Boxes
  * TODO: Create an updateDevBox.pl script to update the 3 svns (trunk, answers, and wikia-conf and warn if Configs_DevBox/LocalSettings.php has changed since it may need the changes to be merged).
@@ -53,11 +52,12 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // Definitions
-define('DEVBOX_FORCED_WIKI_KEY', 'devbox_forceWiki');
+$serv = $_SERVER['SERVER_NAME'];
+define('DEVBOX_FORCED_WIKI_KEY', "devbox_forceWiki_$serv");
 //define('DEVBOX_FORCED_WIKI_FILE', dirname(__FILE__).'/devbox_forceWiki.txt');
-define('DEVBOX_FORCED_WIKI_FILE', '/tmp/devbox_forceWiki.txt');
-define('DEVBOX_OVERRIDDEN_DBS_KEY', 'devbox_overridden_dbs');
-define('DEVBOX_OVERRIDDEN_DBS_FILE', '/tmp/devbox_overriden_dbs.txt');
+define('DEVBOX_FORCED_WIKI_FILE', "/tmp/$serv"."_devbox_forceWiki.txt");
+define('DEVBOX_OVERRIDDEN_DBS_KEY', "devbox_overridden_dbs_$serv");
+define('DEVBOX_OVERRIDDEN_DBS_FILE', "/tmp/$serv"."_devbox_overridden_dbs.txt");
 define('DEVBOX_OVERRIDDEN_DBS_DELIM', '`'); // delimiter used to separate values in both memory & file (grave is used because it is not allowed in table names)
 
 define('DEVBOX_ACTION', 'panelAction');
@@ -297,6 +297,7 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 	// Set the wiki, but with overrides turned off (we're trying to find the production slave
 	// for the database).
 	$originalOverrides = getDevBoxOverrideDatabases(); // restore these later
+	$originalWikiValue = getForcedWikiValue();
 	setDevBoxOverrideDatabases(array());
 	setForcedWikiValue($domainOfWikiToPull);
 
@@ -305,11 +306,12 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 	
 	// Restore the dev-box overrides because they're persistent and we only wanted to temporarily ignore them.
 	setDevBoxOverrideDatabases($originalOverrides);
+	setForcedWikiValue($originalWikiValue);
 
 	// Everything is configured, now move the data.
 	$tmpFile = "/tmp/$wgDBname.mysql.gz";
 	print "Dumping \"$wgDBname\" from host \"$wgDBserver\"...<br/>\n";
-	$response = `mysqldump --compress --single-transaction --skip-comments --quick -h $wgDBserver -u$wgDBuser -p$wgDBpassword $wgDBname --result-file=$tmpFile`;
+	$response = `mysqldump --compress --single-transaction --skip-comments --quick -h $wgDBserver -u$wgDBuser -p$wgDBpassword $wgDBname --result-file=$tmpFile 2>&1`;
 	if(trim($response) != ""){
 		print "<div class='devbox-error'>Database dump returned the following error:\n<em>$response</em></div>\n";
 	} else {
@@ -319,7 +321,7 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 
 	print "Creating database...<br/>\n";
 	global $wgDBdevboxUser,$wgDBdevboxPassword,$wgDBdevboxServer;
-	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer -e "CREATE DATABASE IF NOT EXISTS $wgDBname"`;
+	$response = `mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer -e "CREATE DATABASE IF NOT EXISTS $wgDBname" 2>&1`;
 	if(trim($response) != ""){
 		print "<div class='devbox-error'>CREATE DATABASE attempt returned the error:\n<em>$response</em></div>\n";
 	} else {
@@ -328,7 +330,7 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 	print "<br/>";
 	
 	print "Loading \"$wgDBname\" into \"$wgDBdevboxServer\"...<br/>\n";
-	$response = `cat $tmpFile | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $wgDBname`;
+	$response = `cat $tmpFile | mysql -u $wgDBdevboxUser -p$wgDBdevboxPassword -h $wgDBdevboxServer $wgDBname 2>&1`;
 	if(trim($response) != ""){
 		print "<div class='devbox-error'>Error loading the database dump into $wgDBdevboxServer:\n<em>$response</em></div>\n";
 	} else {
@@ -337,7 +339,7 @@ function pullProdDatabaseToLocal($domainOfWikiToPull){
 	print "<br/>\n";
 	
 	print "Removing dumpfile...<br/>\n";
-	$response = `rm -f $tmpFile`;
+	$response = `rm -f $tmpFile 2>&1`;
 	if(trim($response) != ""){
 		print "<div class='devbox-error'>WARNING: Problem deleting the dump-file:\n<em>$response</em></div>\n";
 	}
@@ -453,7 +455,7 @@ function getHtmlForDatabaseComparisonTool(){
 
 	// A set of recommended databases so that any new user can know a basic set of dbs to get them started.
 	$RECOMMENDED_DBS = array(
-		//"wikicities",		// just use the prod database
+		"wikicities",		// required for several write-operations (update it frequently!)
 		//"dataware", 		// just use the prod database
 		"answers",			// required for answers.wikia development
 		"armyoftwo",        // a small wiki to use for testing db loading
@@ -549,6 +551,13 @@ function getHtmlForInfo(){
 		"\$wgCityId"           => $wgCityId,
 		"\$wgDBname"           => $wgDBname,
 		"\$wgExternalSharedDB" => $wgExternalSharedDB,
+		"Databases that will use devbox-mysql<br/>
+		server in read/write instead of prod<br/>
+		slaves in readOnly" => implode(", ", getDevBoxOverrideDatabases()),
+		"Hacky solution to change which databases<br/>
+		will use the devbox mysql server instead<br/>
+		of readOnly prod slaves is to <strong>edit this file:</strong>"
+							=> DEVBOX_OVERRIDDEN_DBS_FILE,
 	);
 	$html .= "<table class='devbox-settings'>\n";
 	$html .= "<tr><th>".wfMsg("devbox-setting-name")."</th><th>".wfMsg("devbox-setting-value")."</th></tr>\n";
