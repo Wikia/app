@@ -6,6 +6,8 @@
  * @copyright (C) 2007, Wikia Inc.
  * @licence GNU General Public Licence 2.0 or later
  * @version: $Id: BatchTask.php 5982 2007-10-02 14:07:24Z eloy $
+ *
+ * NOTE: Doesn't do writes if $wgWikicitiesReadOnly is true.
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -296,7 +298,7 @@ abstract class BatchTask {
 	 * @param string $timestamp default null - timestamp to set in MW oformat
 	 */
 	public function log( $line, $timestamp = null ) {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgWikicitiesReadOnly;
 		if( empty( $this->mTaskID ) ) {
 			/**
 			 * task id not defined
@@ -304,19 +306,21 @@ abstract class BatchTask {
 			return false;
 		}
 		wfProfileIn( __METHOD__ );
-		$sTimestamp = is_null($timestamp) ? wfTimestampNow() : $timestamp;
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
-		$dbw->insert(
-			"wikia_tasks_log",
-			array(
-			  "task_id"         => $this->mTaskID,
-			  "log_timestamp"   => $sTimestamp,
-			  "log_line"        => $line
-			),
-			__METHOD__
-		);
-		if ( !empty( $this->mDebug )) {
-			echo "{$sTimestamp}: {$line}\n";
+		if(!$wgWikicitiesReadOnly){
+			$sTimestamp = is_null($timestamp) ? wfTimestampNow() : $timestamp;
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
+			$dbw->insert(
+				"wikia_tasks_log",
+				array(
+				  "task_id"         => $this->mTaskID,
+				  "log_timestamp"   => $sTimestamp,
+				  "log_line"        => $line
+				),
+				__METHOD__
+			);
+			if ( !empty( $this->mDebug )) {
+				echo "{$sTimestamp}: {$line}\n";
+			}
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -389,27 +393,31 @@ abstract class BatchTask {
 	 * @return integer: id of added task or null
 	 */
 	public function createTask( $params, $status = TASK_WAITING ) {
-		global $wgUser, $wgExternalSharedDB;
+		global $wgUser, $wgExternalSharedDB, $wgWikicitiesReadOnly;
 
 		wfProfileIn( __METHOD__ );
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
-		$dbw->insert(
-			"wikia_tasks",
-			array(
-			   "task_user_id" => $wgUser->getID(),
-			   "task_type" => $this->getType(),
-			   "task_priority" => 1,
-			   "task_status" => $status,
-			   "task_added" => wfTimestampNow(),
-			   "task_started" => "",
-			   "task_finished" => "",
-			   "task_arguments" => serialize( $params )
-			),
-			__METHOD__
-		);
+		if(!$wgWikicitiesReadOnly){
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
+			$dbw->insert(
+				"wikia_tasks",
+				array(
+				   "task_user_id" => $wgUser->getID(),
+				   "task_type" => $this->getType(),
+				   "task_priority" => 1,
+				   "task_status" => $status,
+				   "task_added" => wfTimestampNow(),
+				   "task_started" => "",
+				   "task_finished" => "",
+				   "task_arguments" => serialize( $params )
+				),
+				__METHOD__
+			);
+			$this->mTaskID = $dbw->insertId();
+		} else {
+			$this->mTaskID = "";
+		}
 		wfProfileOut( __METHOD__ );
 
-		$this->mTaskID = $dbw->insertId();
 		return $this->mTaskID;
 	}
 
@@ -428,7 +436,7 @@ abstract class BatchTask {
 	 * @return void
 	 */
 	public function closeTask( $success = true ) {
-		global $wgExternalSharedDB;
+		global $wgExternalSharedDB, $wgWikicitiesReadOnly;
 		if (is_null($this->mTaskID)) {
 			return false; #--- task id not defined
 		}
@@ -438,18 +446,20 @@ abstract class BatchTask {
 			? TASK_FINISHED_SUCCESS
 			: TASK_FINISHED_ERROR;
 
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
-		$dbw->update(
-			"wikia_tasks",
-			array(
-			   "task_status" => $status,
-			   "task_finished" => wfTimestampNow(),
-			),
-			array(
-				"task_id" => $this->mTaskID
-			),
-			__METHOD__
-		);
+		if(!$wgWikicitiesReadOnly){
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB ); 
+			$dbw->update(
+				"wikia_tasks",
+				array(
+				   "task_status" => $status,
+				   "task_finished" => wfTimestampNow(),
+				),
+				array(
+					"task_id" => $this->mTaskID
+				),
+				__METHOD__
+			);
+		}
 
 		wfProfileOut( __METHOD__ );
 	}

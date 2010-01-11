@@ -203,7 +203,7 @@ function setForcedWikiValue($forcedWikiName){
 	$retVal = file_put_contents(DEVBOX_FORCED_WIKI_FILE, $forcedWikiName);
 	if($retVal !== false){
 		$retVal = true; // make success boolean
-		$memc->set(DEVBOX_FORCED_WIKI_KEY, $forcedWikiName, strtotime("+2 hour"));
+		$memc->set(DEVBOX_FORCED_WIKI_KEY, $forcedWikiName, strtotime("+5 minute"));
 	}
 	return $retVal;
 } // end setForcedWikiValue()
@@ -260,7 +260,7 @@ function setDevBoxOverrideDatabases($overDbs){
 	$retVal = file_put_contents(DEVBOX_OVERRIDDEN_DBS_FILE, $overDbsRaw);
 	if($retVal !== false){
 		$retVal = true; // make success boolean
-		$memc->set(DEVBOX_OVERRIDDEN_DBS_KEY, $overDbsRaw, strtotime("+2 hour"));
+		$memc->set(DEVBOX_OVERRIDDEN_DBS_KEY, $overDbsRaw, strtotime("+5 minute"));
 	}
 	return $retVal;
 } // end setDevBoxOverrideDatabases()
