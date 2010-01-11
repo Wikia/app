@@ -65,3 +65,9 @@ div.devbox-error{
 	padding:10px;
 	font-weight:bold;
 }
+
+div.attention{
+	background-color:#ff8;
+	padding:5px;
+	border: 2px #000 dotted;
+}
