@@ -1876,7 +1876,7 @@ if ($custom_article_footer !== '') {
 
 <?php } ?>
 							</ul>
-							<div class="clearfix">
+							<div class="clearfix" id="star-rating-row">
 								<strong><?= wfMsgHtml('rate_it') ?></strong>
 <?php
 			$FauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $this->data['articleid'], "wkuservote" => true ));
