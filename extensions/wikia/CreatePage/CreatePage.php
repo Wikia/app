@@ -25,5 +25,39 @@ $wgExtensionMessagesFiles['CreatePage'] = dirname(__FILE__) . '/CreatePage.i18n.
  */
 extAddSpecialPage(dirname(__FILE__) . '/SpecialCreatePage.php', 'CreatePage', 'CreatePage');
 
+/**
+ * setup functions
+ */
+$wgExtensionFunctions[] = 'wfCreatePageInit';
+
+// initialize (new) create page extension
+function wfCreatePageInit() {
+	global $wgWikiaEnableNewCreatepageExt, $wgAjaxExportList, $wgOut, $wgScriptPath;
+
+	// load messages from file
+	wfLoadExtensionMessages('CreatePage');
+
+	if ( !empty($wgWikiaEnableNewCreatepageExt) ) {
+		/**
+		 * hooks
+		 */
+		$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
+
+		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/CreatePage/js/CreatePage.js"><!-- CreatePage js --></script>');
+	}
+}
+
+function wfCreatePageAjaxGetDialog() {
+	$template = new EasyTemplate( dirname( __FILE__ )."/templates/" );
+	//$template->set_vars( array() );
+
+	$body = $template->execute( 'dialog' );
+	$response = new AjaxResponse( $body );
+	$response->setContentType('text/plain; charset=utf-8');
+
+	return $response;
+}
+
+
 include( dirname( __FILE__ ) . "/SpecialEditPage.php");
 include( dirname( __FILE__ ) . "/SpecialCreatePage.php");
