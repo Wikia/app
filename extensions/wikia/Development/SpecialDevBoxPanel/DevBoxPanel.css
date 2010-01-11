@@ -1,4 +1,15 @@
 
+/* For simplicity */
+div.skinKiller {
+	background-color:white;
+	color:black;
+	
+	padding:5px;
+}
+div.skinKiller a{
+	color:#00f;
+}
+
 table td{
 	vertical-align:top;
 }

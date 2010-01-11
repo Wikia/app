@@ -26,7 +26,7 @@ $messages["en"] = Array(
 	"devbox-change-wiki-intro"    => "Allows you to set the active wiki instead of modifying hosts files.  To use the hosts-file method, leave this field blank.",
 	"devbox-change-wiki-label"    => "Wiki to use (eg: \"lyrics.wikia.com\"): ",
 	"devbox-change-wiki-submit"   => "Update",
-	"devbox-change-wiki-success"  => "This MediaWiki will now run as <strong><code>\$1</code></strong>",
+	"devbox-change-wiki-success"  => "This MediaWiki will now run as <strong><code>\$1</code></strong><br/><em>Note: this change won't be apparent until the next page-load.</em>",
 	"devbox-default-wiki"         => "whatever wiki is in the url",
 	"devbox-change-wiki-fileerror"=> "There was an error writing to \"<em>\$1</em>\".  Make sure you have appropriate write-permissions.",
 
