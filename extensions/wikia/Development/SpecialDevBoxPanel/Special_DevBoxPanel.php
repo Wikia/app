@@ -11,21 +11,32 @@
  *
  * This panel will only work on systems where $wgDevelEnvironment is set to true.
  *
- * Prerequisite: need to have the 'devbox' user on your local database.
- * TO GET THERE: Do "sudo su -" then "mysql" then "GRANT ALL ON *.* TO 'devbox'@'localhost' IDENTIFIED BY 'devbox'".
- * TODO: Make sure all dev-boxes get to that point automatically w/a devbox/devbox user.
+ * Prerequisite: need to have the 'devbox' user on your editable (usually localhost) database.
+ * Look in the private svn's wikia-conf/DevBoxDatabase.php for the query to use.
+ *
+ * TODO: Make sure all dev-boxes get to that point automatically w/a devbox user.
+ *
+ * TODO: Since "local" isn't technically a requirement, make sure to update the comments here to make that clear.  It
+ * is quite likely that all of the devbox dbs will be moved to some other server for space reasons relatively soon.
  */
 
 if(!defined('MEDIAWIKI')) die();
 
-// this is so that only sysops can do batch moves
+// Credentials for the editable (not public) devbox database.
+require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxDatabase.php' );
+
+// TODO: DETERMINE THE CORRECT PERMISSIONS... IS THERE A "DEVELOPERS" GROUP THAT WE ALL ACTUALLY BELONG TO?  WILL WE BE ON ALL WIKIS?
+// Permissions
 $wgAvailableRights[] = 'devboxpanel';
-//$wgGroupPermissions['sysop']['devboxpanel'] = true;
+$wgGroupPermissions['staff']['devboxpanel'] = true;
+$wgGroupPermissions['user']['devboxpanel'] = true; // for now, allow all users as long as $wgDevelEnvironment is true
 $wgGroupPermissions['*']['devboxpanel'] = true; // for now, allow all users as long as $wgDevelEnvironment is true
 
+// Hooks
 $dir = dirname(__FILE__) . '/';
 $wgExtensionMessagesFiles['DevBoxPanel'] = $dir.'Special_DevBoxPanel.i18n.php';
 $wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
+$wgHooks['WikiFactory::execute::done'][] = "wfDevBoxForceDbServer";
 
 $wgExtensionFunctions[] = 'wfSetupDevBoxPanel';
 $wgExtensionCredits['specialpage'][] = array(
@@ -35,12 +46,18 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '0.0.1',
 );
 
+// Definitions
 define('DEVBOX_FORCED_WIKI_KEY', 'devbox_forceWiki');
 //define('DEVBOX_FORCED_WIKI_FILE', dirname(__FILE__).'/devbox_forceWiki.txt');
 define('DEVBOX_FORCED_WIKI_FILE', '/tmp/devbox_forceWiki.txt');
+define('DEVBOX_OVERRIDDEN_DBS_KEY', 'devbox_overridden_dbs');
+define('DEVBOX_OVERRIDDEN_DBS_FILE', '/tmp/devbox_overriden_dbs.txt');
+define('DEVBOX_OVERRIDDEN_DBS_DELIM', '`'); // delimiter used to separate values in both memory & file (grave is used because it is not allowed in table names)
 define('DEVBOX_CHANGE_WIKI_FORMNAME', 'devbox-change-wiki');
 define('DEVBOX_FIELD_FORCE_WIKI', 'devbox-field-force-wiki');
 define('DEVBOX_DEFAULT_WIKI_DOMAIN', 'devbox.wikia.com');
+define('DEV_BOX_CLUSTER', "devbox_section");
+define('DEV_BOX_SERVER_NAME', "devbox-server");
 
 function wfSetupDevBoxPanel() {
 	global $IP, $wgMessageCache;
@@ -80,9 +97,50 @@ function wfDevBoxForceWiki(&$wikiFactoryLoader){
 			$wikiFactoryLoader->mCityId = $cityId;
 			$wikiFactoryLoader->mWikiId = $cityId;
 		}
+		
+		wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader);
 	}
 	return true;
 } // end wfDevBoxForceWiki()
+
+/**
+ * Applies our mapping of which databases should use localhost as their
+ * server instead of the production slaves.  If the current database is
+ * using localhost, then this function removes the read-only mode to allow
+ * normal usage since this is just a sandbox db on a dev-box.
+ */
+function wfDevBoxApplyLocalDatabaseOverrides(&$wikiFactoryLoader){
+	global $wgLBFactoryConf;
+
+	$databasesToOverride = getDevBoxOverrideDatabases();
+
+	// If the current db is overridden, make sure to override the cluster setting from the database.
+	$dbName = WikiFactory::DomainToDB($wikiFactoryLoader->mServerName);
+	if(in_array($dbName, $databasesToOverride)){
+		$wikiFactoryLoader->mVariables["wgDBcluster"] = DEV_BOX_CLUSTER;
+
+		// Since the currently in-use database is on the devbox server, we can safely remove the read-only setting.
+		global $wgReadOnly;
+		$wgReadOnly = false;
+	}
+
+	// Devbox database credentials (from private svn /wikia-conf/DevBoxDatabase.php).
+	global $wgDBdevboxUser,$wgDBdevboxPassword,$wgDBdevboxServer;
+
+	// Modify wgLBFactoryConf using loaded settings...
+	$wgLBFactoryConf['sectionLoads'][DEV_BOX_CLUSTER] = array(DEV_BOX_SERVER_NAME => 1);
+	$wgLBFactoryConf['hostsByName'][DEV_BOX_SERVER_NAME] = $wgDBdevboxServer;
+	$wgLBFactoryConf['templateOverridesByServer'][DEV_BOX_SERVER_NAME] = array(
+		'user' => $wgDBdevboxUser,
+		'password' => $wgDBdevboxPassword,
+	);
+	// Makes all of the overridden databases connect to the devbox server instead of prod slaves.
+	// This isn't needed to do the override, but it leaves the data in a "correct" state in case other
+	// code tries to load from the conf. again.
+	foreach($databasesToOverride as $dbName){
+		$wgLBFactoryConf['sectionsByDB'][$dbName] = DEV_BOX_CLUSTER;
+	}
+} // end wfDevBoxApplyLocalDatabaseOverrides()
 
 /**
  * @return String domain of wiki which this dev-box should behave as. Empty
@@ -137,6 +195,109 @@ function setForcedWikiValue($forcedWikiName){
 } // end setForcedWikiValue()
 
 /**
+ * @return array - databases which the developer wants to be overridden to
+ *                 use the writable devbox server instead of the production slaves.
+ */
+function getDevBoxOverrideDatabases(){
+	global $wgMemc;
+	if(!$wgMemc){
+		$memc = wfGetCache( CACHE_MEMCACHED );
+	} else {
+		$memc = $wgMemc;
+	}
+
+	$overDbsRaw = $memc->get(DEVBOX_OVERRIDDEN_DBS_KEY);
+	if(!$overDbsRaw){
+		// File won't exist at first... fail gracefully.
+		$overDbsRaw = @trim(file_get_contents(DEVBOX_OVERRIDDEN_DBS_FILE));
+		if($overDbsRaw === false){
+			$overDbs = array();
+		} else {
+			$overDbs = explode(DEVBOX_OVERRIDDEN_DBS_DELIM, $overDbsRaw);
+		}
+	} else {
+		$overDbs = explode(DEVBOX_OVERRIDDEN_DBS_DELIM, $overDbsRaw);
+	}
+
+	return $overDbs;
+} // end getDevBoxOverrideDatabases()
+
+/**
+ * Stores the array of which databases the developer wants to point to
+ * the devbox database for (in read/write mode) instead of using the default
+ * which is to be in read-only mode from the production slaves.
+ *
+ * @param overDbs array whose values are the names of the databases to override
+ * @return boolean - true on success, false on error
+ */
+function setDevBoxOverrideDatabases($overDbs){
+	global $wgMemc;
+	if(!$wgMemc){
+		$memc = wfGetCache( CACHE_MEMCACHED );
+	} else {
+		$memc = $wgMemc;
+	}
+
+	if(!is_array($overDbs) || (count($overDbs) == 0)){
+		$overDbsRaw = "";
+	} else {
+		$overDbsRaw = implode(DEVBOX_OVERRIDDEN_DBS_DELIM, $overDbs);
+	}
+	$retVal = file_put_contents(DEVBOX_OVERRIDDEN_DBS_FILE, $overDbsRaw);
+	if($retVal !== false){
+		$retVal = true; // make success boolean
+		$memc->set(DEVBOX_OVERRIDDEN_DBS_KEY, $overDbsRaw, strtotime("+2 hour"));
+	}
+	return $retVal;
+} // end setDevBoxOverrideDatabases()
+
+/**
+ * Given the domain name of a wiki, finds its server then creates a dump
+ * of the content & loads it into a database of the same name locally.
+ *
+ * If the database already exists locally, it will be dropped and completely
+ * replaced by whatever is available from the production slaves.
+ *
+ * NOTE: This function makes the assumption that it is the primary purpose
+ * of the current page-load and therefore it completely messes with the
+ * configuration settings for this run.  Due to these side-effects, it is
+ * recommended that this function be called on a page that's either inside
+ * of an iframe or is just an AJAX request.
+ */
+function pullProdDatabaseToLocal($domainOfWikiToPull){
+	global $wgCityId,$wgDBserver,$wgDBname;
+	
+	// Set the wiki, but with overrides turned off (we're trying to find the production slave
+	// for the database).
+	$originalOverrides = getDevBoxOverrideDatabases(); // restore these later
+	setDevBoxOverrideDatabases(array());
+	setForcedWikiValue($domainOfWikiToPull);
+
+	$wikiFactoryLoader = new WikiFactoryLoader();
+	$wgCityId = $wikiFactoryLoader->execute();
+
+	print "server: $wgDBserver<br/>\n";
+	print "db: $wgDBname<br/>\n";
+	global $wgLBFactoryConf;
+	print "<!--";
+	//print_r($wgLBFactoryConf);
+	//print_r($wikiFactoryLoader);
+	print "-->";
+
+	// Restore the dev-box overrides because they're persistent and we only wanted to temporarily ignore them.
+	setDevBoxOverrideDatabases($originalOverrides);
+	
+	
+	// TODO: BASICALLY CLONE THE FUNCTIONALITY OF pullDB.bash TO GRAB AND LOAD THE DATA (but w/svn-safe handling of database credentials).
+	// TODO: BASICALLY CLONE THE FUNCTIONALITY OF pullDB.bash TO GRAB AND LOAD THE DATA (but w/svn-safe handling of database credentials).
+	
+	
+	
+
+	exit; // This is not a normal page!  See function-comment.
+} // end pullProdDatabaseToLocal()
+
+/**
  * The main function of the SpecialPage.  Adds the content for the page
  * to the wgOut global. 
  */
@@ -152,6 +313,15 @@ function wfDevBoxPanel() {
 		$wgOut->addHTML("<em>");
 		$wgOut->addHTML(wfMsg('devbox-intro'));
 		$wgOut->addHTML("</em><br/><br/>");
+		
+		
+		
+// TODO: MOVE THIS TO BE PROCESSED IN THE SWITCH STATEMENT BELOW FROM ACTUAL GUI REQUESTS. - THIS FUNCTION WILL CURRENTLY DESTROY ALL OTHER PROCESSING BASICALLY.. JUST TESTING IT HERE.
+pullProdDatabaseToLocal("armyoftwo.wikia.com");
+		
+		
+		
+		
 
 		// TODO: Do any processing of actions here (and display success/error messages).
 		global $wgRequest;
@@ -159,9 +329,9 @@ function wfDevBoxPanel() {
 		switch($formName){
 		case DEVBOX_CHANGE_WIKI_FORMNAME:
 			$forceWiki = $wgRequest->getVal(DEVBOX_FIELD_FORCE_WIKI);
-			
-			// TODO: VERIFY THAT forceWiki IS A REAL WIKI.
-			// TODO: VERIFY THAT forceWiki IS A REAL WIKI.
+
+			// TODO: VERIFY THAT forceWiki IS A REAL WIKI AND DISPLAY A WARNING OTHERWISE (and don't save it in that case).
+			// TODO: VERIFY THAT forceWiki IS A REAL WIKI AND DISPLAY A WARNING OTHERWISE (and don't save it in that case).
 
 			if(setForcedWikiValue($forceWiki)){
 				$nameForMessage = ($forceWiki==""?wfMsg('devbox-default-wiki'):$forceWiki);
@@ -177,7 +347,7 @@ function wfDevBoxPanel() {
 		$wgOut->addHTML("<br/><hr/><br/>");
 		// TODO: Do any processing of actions here (and display success/error messages).
 
-		
+
 		//// DISPLAY OF THE MAIN CONTENT OF THE PANEL IS BELOW ////
 
 		// TODO: Divide these sections into tabs (possibly using jQuery UI).
@@ -190,10 +360,10 @@ function wfDevBoxPanel() {
 		// Display section with vital stats on the server (where the LocalSettings are, the error logs, databases, etc.) with a link to phpinfo.
 		$wgOut->addHTML(getHtmlForInfo());
 		$wgOut->addHTML("<br/><hr/><br/>");
-		
+
 		// Display section for creating local copies of dbs from production slaves.
 		$wgOut->addHTML(getHtmlForDatabaseComparisonTool());
-		
+
 		// Footer to attract changes...
 		$wgOut->addHTML(wfMsg("devbox-footer", __FILE__));
 	} else {
@@ -324,7 +494,6 @@ function getHtmlForInfo(){
 		"\$wgScriptPath"       => $wgScriptPath,
 		"\$wgExtensionsPath"   => $wgExtensionsPath,
 		"\$wgCityId"           => $wgCityId,
-		"\$wgNotAValidWikia"   => $wgNotAValidWikia,
 	);
 	$html .= "<table class='devbox-settings'>\n";
 	$html .= "<tr><th>".wfMsg("devbox-setting-name")."</th><th>".wfMsg("devbox-setting-value")."</th></tr>\n";
@@ -356,7 +525,10 @@ function getHtmlForChangingCurrentWiki(){
 
 	$forceWiki = getForcedWikiValue();
 
-	$html .= "<div>\n";
+	// If no wiki is specified yet, highlight this section.
+	$style = ($forceWiki==""?" style='background-color:#ffa'":"");
+	
+	$html .= "<div$style>\n";
 	$html .= "<strong>".wfMsg("devbox-change-wiki-heading")."</strong><br/>";
 	$html .= "<em>".wfMsg("devbox-change-wiki-intro")."</em><br/>";
 

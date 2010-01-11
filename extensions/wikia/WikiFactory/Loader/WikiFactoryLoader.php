@@ -227,11 +227,11 @@ class WikiFactoryLoader {
 			
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
-		 * setting the mCityID then returning true will over-ride which wiki
+		 * setting the mCityID then returning true will override which wiki
 		 * to use.
 		 */
 		if( !wfRunHooks( 'WikiFactory::execute', array( &$this ) ) )
-			return;
+			return $this->mWikiID;
 
 		/**
 		 * local cache, change to CACHE_ACCEL for local
