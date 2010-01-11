@@ -31,15 +31,15 @@ var AjaxLogin = {
 	},
 	close: function()
 	{
-		$('#AjaxLoginBoxWrapper').closeModal();		
+		$('#AjaxLoginBoxWrapper').closeModal();
 	},
 	doSuccess: function(openwindow) {
-		
+
 		if( (typeof isAutoCreateWiki != 'undefined') && isAutoCreateWiki ) {
 			realoadAutoCreateForm();
 			return ;
 		}
-		
+
 		// macbre: call custom function (if provided by any extension)
 		if (typeof window.wgAjaxLoginOnSuccess == 'function') {
 			// let's update wgUserName
@@ -56,7 +56,7 @@ var AjaxLogin = {
 		// we're on edit page
 		if($('#wpPreview').exists() && $('#wpLogin').exists()) {
 			$('#editform').append('<input value="1" name="wpIsReload" ></input>');
-			if ($('#wikiDiff').children().exists()) {  
+			if ($('#wikiDiff').children().exists()) {
 				$('#wpDiff').click();
 			} else {
 				if (!$('#wikiPreview').children().exists()) {
@@ -85,6 +85,11 @@ var AjaxLogin = {
 		AjaxLogin.form.submit();
 	},
 	formSubmitHandler: function(ev) {
+
+
+
+
+
 		// Prevent the default action for event (submit of form)
 		if(ev) {
 			ev.preventDefault();
@@ -98,14 +103,14 @@ var AjaxLogin = {
 			'action=ajaxlogin',
 			'format=json',
 			(AjaxLogin.action == 'password' ? 'wpMailmypassword=1' : 'wpLoginattempt=1'),
-
-			// serialize form fields
-			AjaxLogin.form.serialize()
 		];
+
+		var POSTparams = AjaxLogin.form.serialize();
 
 		// Let's block login form (disable buttons and input boxes)
 		AjaxLogin.blockLoginForm(true);
-		$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), function(response) {
+
+		$.postJSON(window.wgScriptPath + '/api.php?' + params.join('&'), POSTparams, function(response) {
 					var responseResult = response.ajaxlogin.result;
 					switch(responseResult) {
 					case 'Reset':
@@ -130,9 +135,9 @@ var AjaxLogin = {
 					break;
 
 					case 'Success':
-					
+
 					// Bartek: tracking
-					
+
 					if( AjaxLogin.action == 'password'  ) {
 						WET.byStr(AjaxLogin.WET_str + '/emailpassword/success');
 					} else {
@@ -162,7 +167,7 @@ var AjaxLogin = {
                                         } else {
                                                 WET.byStr(AjaxLogin.WET_str + '/login/failure');
                                         }
-					
+
 					AjaxLogin.blockLoginForm(false);
 					AjaxLogin.displayReason(response.ajaxlogin.text);
 					break;
@@ -181,7 +186,7 @@ var AjaxLogin = {
 	},
 	ajaxRegisterConfirm: function(ev) {
 		AjaxLogin.form.log('AjaxLogin: ajaxRegisterConfirm()');
-        	
+
 		if($('#wpPreview').exists() && $('#wpLogin').exists()) {
 			if(typeof(ajaxLogin2)!="undefined" && !confirm(ajaxLogin2)) {
 				ev.preventDefault();
@@ -200,14 +205,14 @@ var AjaxLogin = {
 /* over load for ajaxComboLogin */
 
 if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
-	/* clear repted names */ 
-	
+	/* clear repted names */
+
 	/* expend AjaxLogin object for combo ajax login */
 	$.extend(AjaxLogin,{
 				clicked : 0,
 				placeholderID : null,
 				isShow : false,
-				topPos : "130px",				
+				topPos : "130px",
 				getNewTop: function(newHeight){
 					var modalTop = (($(window).height() - newHeight) / 2) + $(window).scrollTop();
 					if (modalTop < $(window).scrollTop() + 20) {
@@ -225,14 +230,14 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					$('#wpGoRegister').addClass('ajaxregister_button_enable');
 					$('#wpGoLogina').removeClass('ajaxregister_button_enable');
 					$('#AjaxLoginLoginForm').hide();
-			        $("#AjaxLoginBoxWrapper").animate({ 
+			        $("#AjaxLoginBoxWrapper").animate({
 			        	'width': "700px",
-			        	'marginLeft': parseInt(this.getNewMarginLeft(709))+"px",  
+			        	'marginLeft': parseInt(this.getNewMarginLeft(709))+"px",
 			        	'top': AjaxLogin.topPos
 			        }, 500 );
 			        $('#AjaxLoginEndDiv').hide();
 			        $('#AjaxLoginRegisterForm').show("fast");
-			        
+
 			        WET.byStr(AjaxLogin.WET_str + '/choosecreateaccount');
 				},
 				showLogin : function() {
@@ -241,10 +246,10 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					$('#wpGoLogina').addClass('ajaxregister_button_enable');
 					$('#wpGoRegister').removeClass('ajaxregister_button_enable');
 					$('#AjaxLoginRegisterForm').hide();
-					$("#AjaxLoginBoxWrapper").animate({ 
+					$("#AjaxLoginBoxWrapper").animate({
 				          'width': "320px",
 				          'marginLeft': parseInt(this.getNewMarginLeft(329))+"px",
-				          'top':  AjaxLogin.topPos    
+				          'top':  AjaxLogin.topPos
 						}, 500 );
 					$('#AjaxLoginEndDiv').hide();
 					$('#AjaxLoginLoginForm').show("fast");
@@ -257,7 +262,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					WET.byStr(AjaxLogin.WET_str + '/close');
 					AjaxLogin.isShow = false;
 				},
-				showFromDOM: function() {	
+				showFromDOM: function() {
 					if ($('#AjaxLoginButtons').length > 0)
 					{
 						$('#AjaxLoginBoxWrapper').remove();
@@ -273,7 +278,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 						$('#AjaxLoginBox').showModal();
 						$('#wpName1Ajax').focus();
 						$('#AjaxLoginBoxWrapper').css({'top' : AjaxLogin.topPos});
-						return true;						
+						return true;
 					}
 					/* remove normal ajax login to show combo (id)*/
 					$('#AjaxLoginBoxWrapper').remove();
@@ -293,11 +298,11 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 
 					var reload_loc = '';
 				       	if( window.location.href.indexOf("#") > 0 ) {
-						reload_loc = window.location.href.substring( 0, window.location.href.indexOf("#") ); 
+						reload_loc = window.location.href.substring( 0, window.location.href.indexOf("#") );
 					} else {
 						reload_loc = window.location.href;
 					}
-					if( "" != params ) {					
+					if( "" != params ) {
 						if (window.location.href.indexOf("?") > 0) {
 							window.location.href = reload_loc + ("&" + params);
 						} else {
@@ -317,15 +322,15 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 								},100);
 					WET.byStr(AjaxLogin.WET_str + '/open');
 				}
-			}); 
+			});
 	//override submitForm for submitForm
-	if (typeof UserRegistration != 'undefined') 
+	if (typeof UserRegistration != 'undefined')
 	{
 		UserRegistration.submitForm2 = function() {
-			if( typeof UserRegistration.submitForm.statusAjax == 'undefined' ) { // java script static var 
+			if( typeof UserRegistration.submitForm.statusAjax == 'undefined' ) { // java script static var
 				UserRegistration.submitForm.statusAjax = false;
 		    }
-			
+
 			if(UserRegistration.submitForm.statusAjax)
 			{
 				return false;
@@ -342,7 +347,7 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 					 		$("#userRegisterAjax").find("input,select").attr("disabled",true);
 				 	   },
 					   success: function(msg){
-				 		   	$("#userRegisterAjax").find("input,select").removeAttr("disabled"); 
+				 		   	$("#userRegisterAjax").find("input,select").removeAttr("disabled");
 					 		$("#wpCaptchaWord").val("");
 					 		/* post data to normal form if age < 13 */
 					 		if (msg.type === "redirectQuery") {
@@ -357,14 +362,14 @@ if ( (typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
 			 					AjaxLogin.doSuccess();
 					 			return ;
 					 		}
-					 							 		
+
 					 		WET.byStr(UserRegistration.WET_str + '/createaccount/failure');
 					 		$('#userloginInnerErrorBox').empty().append(msg.msg);
 					 		$("#userloginErrorBox").show();
 					 		$(".captcha img").attr("src",msg.captchaUrl);
 					 		$("#wpCaptchaId").val(msg.captcha);
 					 		UserRegistration.submitForm.statusAjax = false;
-					 		
+
 					   }
 					 });
 			} else {
