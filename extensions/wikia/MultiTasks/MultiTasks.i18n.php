@@ -107,6 +107,11 @@ $messages['en'] = array(
 	'multidelete_french_wikis' => 'all french wikis',
 	'multidelete_swedish_wikis' => 'all swedish wikis',
 	'multidelete_german_wikis' => 'all german wikis',
+/*multi-wiki finder*/	
+	'multiwikifinder' => 'Multiwiki Title Finder',
+	'multiwikifindpagenames' => 'Find pagenames',
+	'multiwikienterpagename' => 'Enter a pagename: ',
+	'multiwikirecords' => '$1 wiki found',
 ) ;
 
 
