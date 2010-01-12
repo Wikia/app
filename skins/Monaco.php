@@ -1418,8 +1418,8 @@ class MonacoTemplate extends QuickTemplate {
 		$this->html('headscripts');
 	}
 
+	$this->printAdditionalHead();
 ?>
-
 	</head>
 <?php		wfProfileOut( __METHOD__ . '-head');  ?>
 
@@ -1595,78 +1595,9 @@ if( $custom_user_data ) {
 	<div class="monaco_shrinkwrap" id="monaco_shrinkwrap_main">
 		<div id="wikia_page">
 			<?php wfRunHooks('MonacoBeforePageBar'); ?>
-			<div id="page_bar" class="reset color1 clearfix">
-				<ul id="page_controls">
-<?php
-if(isset($this->data['articlelinks']['left'])) {
-	foreach($this->data['articlelinks']['left'] as $key => $val) {
-?>
-					<li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><div>&nbsp;</div><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
-<?php
-	}
-	wfRunHooks( 'MonacoAfterArticleLinks' );
-}
-?>
-				</ul>
-				<ul id="page_tabs">
-<?php
-$showright = true;
-if( defined( "NS_BLOG_ARTICLE" ) && $namespace == NS_BLOG_ARTICLE ) {
-	$showright = false;
-}
-global $wgMastheadVisible;
-if (!empty($wgMastheadVisible)) {
-	$showright = false;
-}
-if(isset($this->data['articlelinks']['right']) && $showright ) {
-	foreach($this->data['articlelinks']['right'] as $key => $val) {
-?>
-					<li class="<?= $val['class'] ?>"><a href="<?= htmlspecialchars($val['href']) ?>" id="ca-<?= $key ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?= $val['class'] ?>"><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
-<?php
-	}
-}
-?>
-				</ul>
-			</div>
-
-			<!-- ARTICLE -->
-<?php
-echo AdEngine::getInstance()->getSetupHtml();
-global $wgOut, $wgAdsForceLeaderboards, $wgEnableIframeAds, $wgEnableTandemAds;
-if (!empty($wgEnableIframeAds)){
-	$AdEngineFunc = "getPlaceHolderIframe";
-} else {
-	$AdEngineFunc = "getPlaceHolderDiv";
-}
-$topAdCode = '';
-$topAdCodeDisplayed = false;
-if ($wgOut->isArticle()){
-	if (ArticleAdLogic::isMainPage()){
-		$topAdCode .= AdEngine::getInstance()->$AdEngineFunc('HOME_TOP_LEADERBOARD');
-		if ($wgEnableFAST_HOME2) {
-			$topAdCode .= AdEngine::getInstance()->$AdEngineFunc('HOME_TOP_RIGHT_BOXAD');
-		}
-	} else if ( ArticleAdLogic::isContentPage()){
-
-		if (!empty($wgAdsForceLeaderboards)){
-			$topAdCode = AdEngine::getInstance()->$AdEngineFunc('TOP_LEADERBOARD');
-			if (!empty($wgEnableTandemAds) && ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-				$topAdCode .= AdEngine::getInstance()->$AdEngineFunc('TOP_RIGHT_BOXAD', false);
-			}
-		} else {
-			// Let the collision detection decide
-			if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
-				$topAdCode = AdEngine::getInstance()->$AdEngineFunc('TOP_LEADERBOARD');
-			} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
-				$topAdCode = AdEngine::getInstance()->$AdEngineFunc('TOP_RIGHT_BOXAD');
-			} else {
-				// Long article, but a collision
-				$topAdCode = AdEngine::getInstance()->$AdEngineFunc('TOP_LEADERBOARD');
-			}
-		}
-	}
-}
-?>
+			<?php $this->printPageBar(); ?>
+	        	<?php echo AdEngine::getInstance()->getSetupHtml(); ?>
+					<!-- ARTICLE -->
 <?php		wfProfileIn( __METHOD__ . '-article'); ?>
 			<div id="article" <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>>
 				<a name="top" id="top"></a>
@@ -1675,9 +1606,10 @@ if ($wgOut->isArticle()){
 				if( empty( $wgSupressSiteNotice ) && $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 				<?php
 				global $wgSupressPageTitle;
-				if( empty( $wgSupressPageTitle ) ){ ?><h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1><?php } ?>
+				if( empty( $wgSupressPageTitle ) ){ 
+					$this->printFirstHeading();
+				}
 
-				<?php
 				if ($wgRequest->getVal('action') == 'edit') {
 					//echo '<br /><a href="#" id="editTipsLink" onclick="editTips(); return false;">Show Editing Tips</a>';
 				}
@@ -1688,12 +1620,7 @@ if ($wgOut->isArticle()){
 					<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
 					<?php if($this->data['newtalk'] ) { ?><div class="usermessage noprint"><?php $this->html('newtalk')  ?></div><?php } ?>
 					<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
-					<?php
-					// Print out call to top leaderboard or box ad, if it's a main page, or not in the bucket test
-					if (ArticleAdLogic::isMainPage() || !$topAdCodeDisplayed){
-						echo $topAdCode;
-					}
-					?>
+					<?php echo $this->getTopAdCode(); ?>
 					<?
 					// Adsense for search
 					global $wgAFSEnabled;
@@ -1705,7 +1632,7 @@ if ($wgOut->isArticle()){
 					<!-- start content -->
 					<?php
 					// Display content
-					$this->html('bodytext');
+					$this->printContent();
 
 		                        // Display additional ads before categories and footer on long pages
 					global $wgEnableAdsPrefooter, $wgDBname;
@@ -1716,14 +1643,15 @@ if ($wgOut->isArticle()){
 
 
 						global $wgEnableAdsFooter600x250;
+
 						if (!empty($wgEnableAdsFooter600x250)){
-							echo AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_BIG", true);
+							echo AdEngine::getInstance()->getPlaceHolderIframe("PREFOOTER_BIG", true);
 						} else {
 							echo  '<table style="margin-top: 1em; width: 100%; clear: both"><tr>' .
 							'<td style="text-align: center">' .
-							AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_LEFT_BOXAD", true) .
+							AdEngine::getInstance()->getPlaceHolderIframe("PREFOOTER_LEFT_BOXAD", true) .
 							'</td><td style="text-align: center">' .
-							AdEngine::getInstance()->$AdEngineFunc("PREFOOTER_RIGHT_BOXAD", true) .
+							AdEngine::getInstance()->getPlaceHolderIframe("PREFOOTER_RIGHT_BOXAD", true) .
 							"</td></tr>\n</table>";
 						}
 					}
@@ -1972,23 +1900,7 @@ if (array_key_exists("TOP_RIGHT_BOXAD", AdEngine::getInstance()->getPlaceholders
 
 <?php
 if ( $wgRequest->getVal('action') != 'edit' ) {
-?>
-		<div id="spotlight_footer">
-		<table>
-		<tr>
-			<td>
-				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT'); ?>
-			</td>
-			<td>
-				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_MIDDLE'); ?>
-			</td>
-			<td>
-				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_RIGHT'); ?>
-			</td>
-		</tr>
-		</table>
-		</div>
-<?php
+	$this->printFooterSpotlights();
 }
 
 	// macbre: BEGIN
@@ -2014,64 +1926,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 	//
 	// macbre: END
 ?>
-		<table id="wikia_footer">
-<?php
-		$footerlinks = $this->data['data']['footerlinks'];
-		if((is_array($footerlinks)) && (!empty($footerlinks))) {
-            foreach($footerlinks as $key => $val) {
-                $links = array();
-                if(isset($val['childs'])) {
-                    foreach($val['childs'] as $childKey => $childVal){
-                        $links[] = '<a href="'.htmlspecialchars($childVal['href']).'">'.$childVal['text'].'</a>';
-                    }
-?>
-                <tr>
-                    <th><?= $val['text'] ?></th>
-                    <td><?= implode(' | ', $links) ?><?php if ($GPshow && $key == 2) echo '<span style="margin-left:50px">' . $GPcontent . '</span>'; ?></td>
-                </tr>
-<?php
-                }
-            }
-        }
-        if(!empty($this->data['data']['magicfooterlinks']) && (isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()])
-																					|| isset($this->data['data']['magicfooterlinks']['*']))) {
-			$magicfooterlinks = isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()]) ?
-										$this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()] : $this->data['data']['magicfooterlinks']['*'];
-?>
-                <tr>
-                    <th><?= wfMsg('magicfooterlinks') ?></th>
-                    <td><?= $magicfooterlinks ?></td>
-                </tr>
-<?php
-        }
-
-
-$wikiafooterlinks = $this->data['data']['wikiafooterlinks'];
-if(count($wikiafooterlinks) > 0) {
-	$wikiafooterlinksA = array();
-?>
-		<tr>
-			<td colspan="2" id="wikia_corporate_footer">
-<?php
-		foreach($wikiafooterlinks as $key => $val) {
-			// Very primitive way to actually have copyright WF variable, not MediaWiki:msg constant.
-			// This is only shown when there is copyright data available. It is not shown on special pages for example.
-			if ( 'GFDL' == $val['text'] ) {
-				if (!empty($this->data['copyright'])) {
-					$wikiafooterlinksA[] = $this->data['copyright'];
-				}
-			} else {
-				$wikiafooterlinksA[] = '<a rel="nofollow" href="'.htmlspecialchars($val['href']).'">'.$val['text'].'</a>';
-			}
-		}
-		echo implode(' | ', $wikiafooterlinksA);
-?>
-			</td>
-		</tr>
-<?php
-}
-?>
-		</table>
+		<?php $this->printFooter() ?>
 		<?php wfRunHooks('SpecialFooterAfterWikia'); ?>
 		</div>
 <?php		wfProfileOut( __METHOD__ . '-monacofooter'); ?>
@@ -2265,10 +2120,10 @@ if(count($wikiafooterlinks) > 0) {
 				echo AdEngine::getInstance()->getAd('LEFT_NAVBOX_1', false);
 				if ($wgOut->isArticle() ){
 					if (ArticleAdLogic::isMainPage()) { //main page
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('HOME_LEFT_SKYSCRAPER_1', true) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderIframe('HOME_LEFT_SKYSCRAPER_1', true) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
 							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('LEFT_SKYSCRAPER_1', true) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderIframe('LEFT_SKYSCRAPER_1', true) .'</div>';
 					}
 				}
 			?>
@@ -2291,10 +2146,10 @@ if(count($wikiafooterlinks) > 0) {
 				echo AdEngine::getInstance()->getAd('LEFT_NAVBOX_2', false);
 				if ($wgOut->isArticle()){
 					if (ArticleAdLogic::isMainPage()) { //main page
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('HOME_LEFT_SKYSCRAPER_2', true) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderIframe('HOME_LEFT_SKYSCRAPER_2', true) .'</div>';
 					} else if ( ArticleAdLogic::isContentPage() &&
 							!ArticleAdLogic::isShortArticle($this->data['bodytext'])) { //valid article
-						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->$AdEngineFunc('LEFT_SKYSCRAPER_2', true) .'</div>';
+						echo '<div style="text-align: center; margin-bottom: 10px;">'. AdEngine::getInstance()->getPlaceHolderIframe('LEFT_SKYSCRAPER_2', true) .'</div>';
 					}
 				}
 			?>
@@ -2317,11 +2172,7 @@ if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 	echo AdEngine::getInstance()->getAd('INVISIBLE_1');
 }
 
-if (empty($wgEnableIframeAds)){
-	echo AdEngine::getInstance()->getDelayedLoadingCode();
-} else {
-	echo AdEngine::getInstance()->getDelayedIframeLoadingCode();
-}
+echo AdEngine::getInstance()->getDelayedIframeLoadingCode();
 
 if ($wgOut->isArticle() && ArticleAdLogic::isContentPage()){
 	echo AdEngine::getInstance()->getAd('INVISIBLE_2');
@@ -2367,4 +2218,182 @@ wfProfileOut( __METHOD__ . '-body');
 	// curse like cobranding
 	function printCustomHeader() {}
 	function printCustomFooter() {}
+
+	// Made a separate method so recipes, answers, etc can override. This is for any additional CSS, Javacript, etc HTML
+	// that appears within the HEAD tag
+	function printAdditionalHead(){}
+
+	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
+	function printPageBar(){
+		global $wgUser;
+                $skin = $wgUser->getSkin();
+	 	?>
+		<div id="page_bar" class="reset color1 clearfix">
+				<ul id="page_controls">
+		  <?php
+		  if(isset($this->data['articlelinks']['left'])) {
+			  foreach($this->data['articlelinks']['left'] as $key => $val) {
+		  ?>
+							  <li id="control_<?= $key ?>" class="<?= $val['class'] ?>"><div>&nbsp;</div><a rel="nofollow" id="ca-<?= $key ?>" href="<?= htmlspecialchars($val['href']) ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?>><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
+		  <?php
+			  }
+			  wfRunHooks( 'MonacoAfterArticleLinks' );
+		  }
+		  ?>
+						  </ul>
+						  <ul id="page_tabs">
+		  <?php
+		  $showright = true;
+		  if( defined( "NS_BLOG_ARTICLE" ) && $namespace == NS_BLOG_ARTICLE ) {
+			  $showright = false;
+		  }
+		  global $wgMastheadVisible;
+		  if (!empty($wgMastheadVisible)) {
+			  $showright = false;
+		  }
+		  if(isset($this->data['articlelinks']['right']) && $showright ) {
+			  foreach($this->data['articlelinks']['right'] as $key => $val) {
+		  ?>
+							  <li class="<?= $val['class'] ?>"><a href="<?= htmlspecialchars($val['href']) ?>" id="ca-<?= $key ?>" <?= $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?= $val['class'] ?>"><?= htmlspecialchars(ucfirst($val['text'])) ?></a></li>
+		  <?php
+			  }
+		  }
+		  ?>
+				</ul>
+			</div>
+	<?php
+	}
+
+	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
+	function printFirstHeading(){
+		?><h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1><?php  
+	}
+
+
+	// Made a separate method so recipes, answers, etc can override. 
+	function printFooter(){
+		global $wgTitle;
+	?>
+	  <table id="wikia_footer">
+	  <?php
+		$footerlinks = $this->data['data']['footerlinks'];
+		if((is_array($footerlinks)) && (!empty($footerlinks))) {
+		    foreach($footerlinks as $key => $val) {
+			$links = array();
+			if(isset($val['childs'])) {
+			    foreach($val['childs'] as $childKey => $childVal){
+				$links[] = '<a href="'.htmlspecialchars($childVal['href']).'">'.$childVal['text'].'</a>';
+			    }
+	  ?>
+			<tr>
+			    <th><?= $val['text'] ?></th>
+			    <td><?= implode(' | ', $links) ?><?php if ($GPshow && $key == 2) echo '<span style="margin-left:50px">' . $GPcontent . '</span>'; ?></td>
+			</tr>
+	  <?php
+			}
+		    }
+		}
+		if(!empty($this->data['data']['magicfooterlinks']) && (isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()])
+																						|| isset($this->data['data']['magicfooterlinks']['*']))) {
+				$magicfooterlinks = isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()]) ?
+											$this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()] : $this->data['data']['magicfooterlinks']['*'];
+	  ?>
+			<tr>
+			    <th><?= wfMsg('magicfooterlinks') ?></th>
+			    <td><?= $magicfooterlinks ?></td>
+			</tr>
+  	  <?php
+		}
+
+
+	  $wikiafooterlinks = $this->data['data']['wikiafooterlinks'];
+	  if(count($wikiafooterlinks) > 0) {
+		$wikiafooterlinksA = array();
+	  ?>
+			<tr>
+				<td colspan="2" id="wikia_corporate_footer">
+	  <?php
+			foreach($wikiafooterlinks as $key => $val) {
+				// Very primitive way to actually have copyright WF variable, not MediaWiki:msg constant.
+				// This is only shown when there is copyright data available. It is not shown on special pages for example.
+				if ( 'GFDL' == $val['text'] ) {
+					if (!empty($this->data['copyright'])) {
+						$wikiafooterlinksA[] = $this->data['copyright'];
+					}
+				} else {
+					$wikiafooterlinksA[] = '<a rel="nofollow" href="'.htmlspecialchars($val['href']).'">'.$val['text'].'</a>';
+				}
+			}
+			echo implode(' | ', $wikiafooterlinksA);
+	  ?>
+				</td>
+			</tr>
+	  <?php
+	  }
+	  ?>
+	  </table>
+	<?php
+	} //\ printFooter
+
+
+	function printFooterSpotlights(){
+	?>
+		<div id="spotlight_footer">
+		<table>
+		<tr>
+			<td>
+				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_LEFT'); ?>
+			</td>
+			<td>
+				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_MIDDLE'); ?>
+			</td>
+			<td>
+				<?php echo AdEngine::getInstance()->getAd('FOOTER_SPOTLIGHT_RIGHT'); ?>
+			</td>
+		</tr>
+		</table>
+		</div>
+	<?php
+	}
+
+
+	function getTopAdCode(){
+	        echo AdEngine::getInstance()->getSetupHtml();
+
+		global $wgOut, $wgAdsForceLeaderboards, $wgEnableIframeAds, $wgEnableTandemAds;
+		$topAdCode = '';
+		if ($wgOut->isArticle()){
+			if (ArticleAdLogic::isMainPage()){
+				$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('HOME_TOP_LEADERBOARD');
+				if ($wgEnableFAST_HOME2) {
+					$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('HOME_TOP_RIGHT_BOXAD');
+				}
+			} else if ( ArticleAdLogic::isContentPage()){
+
+				if (!empty($wgAdsForceLeaderboards)){
+					$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
+					if (!empty($wgEnableTandemAds) && ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+						$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD', false);
+					}
+				} else {
+					// Let the collision detection decide
+					if ( ArticleAdLogic::isStubArticle($this->data['bodytext'])){
+						$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
+					} else if (ArticleAdLogic::isBoxAdArticle($this->data['bodytext'])) {
+						$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_RIGHT_BOXAD');
+					} else {
+						// Long article, but a collision
+						$topAdCode = AdEngine::getInstance()->getPlaceHolderIframe('TOP_LEADERBOARD');
+					}
+				}
+			}
+		}
+		return $topAdCode;
+	}
+
+
+	// Made a separate method so recipes, answers, etc can override. 
+	function printContent(){
+		$this->html('bodytext');
+	}
 }
