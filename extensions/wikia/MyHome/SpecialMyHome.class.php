@@ -18,7 +18,7 @@ class SpecialMyHome extends SpecialPage {
 		}
 
 		// not available for skins different then monaco
-		if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
+		if(get_class($wgUser->getSkin()) != 'SkinMonaco' && get_class($wgUser->getSkin()) != 'SkinAnswers'){
 			$wgOut->addWikiMsg( 'myhome-switch-to-monaco' );
 			return;
 		}
