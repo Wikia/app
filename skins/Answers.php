@@ -20,6 +20,13 @@ if( !defined( 'MEDIAWIKI' ) )
 
 require dirname(__FILE__) . '/Monaco.php';
 
+/* HACK: temporary include of "new" skin for answers that it is based on Monaco */
+global $wgUseNewAnswersSkin;
+if (!empty($wgUseNewAnswersSkin)){
+	require "/usr/wikia/source/answers/AnswersNewSkin.php";
+	return;
+}
+
 class SkinAnswers extends SkinMonaco {
 
 	var $skinname = 'answers';
