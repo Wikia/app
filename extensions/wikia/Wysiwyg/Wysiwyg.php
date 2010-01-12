@@ -1212,7 +1212,7 @@ function WysiwygGetTemplateList() {
 			if($depth === 0) {
 				$node = parseItem($line);
 				$title = Title::newFromText($node['org'], NS_TEMPLATE);
-				if (!$title->exists()) continue;
+				if (!is_object($title) || !$title->exists()) continue;
 				$params = WysiwygGetTemplateParams($node['org']);
 				$nodes[$node['org']] = array('desc' => $node['text'], 'params' => (!empty($params)) ? $params : null);
 			}
