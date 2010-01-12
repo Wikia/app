@@ -108,7 +108,7 @@ ol.contributors li {
 
 .userInfo {
 	display:inline;
-	margin-top: 7px !important;
+	margin-top: 8px !important;
 	padding: 0 10px 0 0 !important;
 	height:100%;
 	margin-left: 62px;
@@ -138,15 +138,13 @@ li .userInfoNoAvatar:hover a{
 	display: block;
 	font-size: 1em;
 	font-weight: bold;
-	margin-left: 62px;
 	white-space:pre;
-	margin-top: -10px;
 }
 
 .userInfo .anonEditPoints {
 	display: block;
 	font-size: 0.9em;
-	margin-top: 2px;
+	margin-top: 6px;
 }
 
 .userInfo .userEditPoints {
@@ -163,7 +161,7 @@ li .userInfoNoAvatar:hover a{
 	padding-right: 3px;
 	line-height: 15px;
 	margin-left: 66px; /* For IE6 and 7, gets overriden. */
-	width: 120px;
+	width: 75px;
 }
 
 /* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
