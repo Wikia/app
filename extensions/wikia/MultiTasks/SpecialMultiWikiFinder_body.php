@@ -208,7 +208,7 @@ class MultiwikifinderPage {
 				if (empty($this->mShow)) {
 					$this->data[$city_id] = array('city_id' => $city_id, 'page_id' => $page_id, 'url' => $page_url);
 				} else {
-					$res = Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' );
+					$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), $city_id);
 				}
 				
 				$html[] = $this->mShow ? Xml::openElement( 'li' ) . $res . Xml::closeElement( 'li' ) : "";
