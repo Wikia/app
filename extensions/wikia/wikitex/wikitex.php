@@ -127,7 +127,7 @@ class objRend {
 
 		$strTemplate= "$strRendPath/wikitex.%s.inc*";
 		$strErrClass= 'error';
-		$strDir   = '/images/wikitex/images/';
+		$strDir   = '/images/w/wikitex/images/';
 		$strURI   = 'http://images.wikia.com/wikitex/images/';
 		$strBash  = "$strRendPath/wikitex.sh %s %s %s %s %s";	// usage: wikitex FILE MODULE OUTPATH DIRSUFFIX DIRTMP
 		$strRend  = '%%%s%%';
