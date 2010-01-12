@@ -1,5 +1,5 @@
 <?php
-class NewWikiBuilder extends SpecialPage {
+class NewWikiBuilder extends UnlistedSpecialPage {
 	function __construct() {
 		parent::__construct( 'NewWikiBuilder' , 'newwikibuilder');
 		wfLoadExtensionMessages('NewWikiBuilder');
