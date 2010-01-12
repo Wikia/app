@@ -130,6 +130,30 @@ class GlobalTitle {
 		return $this->getFullURL( $query, $variant );
 	}
 
+	/**
+	 * Get a date of last edit
+	 *
+	 * @return MW timestamp
+	 */
+	public function getLatestRevTS() {
+
+		$this->loadAll();
+
+		$dbr = wfGetDB( DB_SLAVE, array(), WikiFactory::IDtoDB($this->mCityId) );
+		
+		$ts = $dbr->selectField(
+			array( 'revision', 'page' ),
+			array( 'rev_timestamp' ),
+			array(
+				'page_title' => $this->mText,
+				'page_namespace' => $this->mNamespace,
+				'page_latest=rev_id' 
+			),
+			__METHOD__ 
+		);
+
+		return $ts;
+	}
 
 	/**
 	 * loadServer
