@@ -6,8 +6,9 @@
 <? if (!empty($tagList)) { ?>
 <? foreach ($tagList as $tag => $cnt) { ?>
 <div style="margin:4px 10px">
-<span style="vertical-align: middle"><input type="radio" name="target" value="<?=$tag?>" "<?=($tag == $mTag)?"checked":""?>"></span>
-<span style="vertical-align: middle"><?=$tag . wfMsg('tagsreportpages', $cnt); ?></span>
+<span style="vertical-align: middle;"><input type="radio" name="target" value="<?=$tag?>" "<?=($tag == $mTag)?"checked":""?>"></span>
+<span style="vertical-align: middle; font-family: monospace;" class="tagname"><?=$tag ?></span> 
+<span style="vertical-align: middle;" class="tagcount"><?=wfMsg('tagsreportpages', $cnt); ?></span>
 </div>
 <? } ?>
 <? } ?>
