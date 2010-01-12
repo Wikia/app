@@ -2225,7 +2225,7 @@ wfProfileOut( __METHOD__ . '-body');
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
 	function printPageBar(){
-		global $wgUser;
+		global $wgUser, $wgTitle;
                 $skin = $wgUser->getSkin();
 	 	?>
 		<div id="page_bar" class="reset color1 clearfix">
@@ -2244,6 +2244,7 @@ wfProfileOut( __METHOD__ . '-body');
 						  <ul id="page_tabs">
 		  <?php
 		  $showright = true;
+		  $namespace = $wgTitle->getNamespace();
 		  if( defined( "NS_BLOG_ARTICLE" ) && $namespace == NS_BLOG_ARTICLE ) {
 			  $showright = false;
 		  }
