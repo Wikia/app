@@ -35,12 +35,12 @@ class MultiwikifinderPage {
 	private $mShow = true;
 	const ORDER_ROWS = 200;
 	var $mPage = null;
+	var $mValidPage = false;
 	var $mPageTitle = "";
 	var $mPageNS = 0;
 	var $mTitle = "";
 
 	function __construct($name, $page, $limit = 50, $offset = 0) { 
-
 		$this->mName = $name;
 
 		if ( !empty($page) ) {
@@ -48,10 +48,8 @@ class MultiwikifinderPage {
 			if ( $this->mPage instanceof Title ) {
 				$this->mPageTitle = $this->mPage->getDBkey();
 				$this->mPageNS = $this->mPage->getNamespace();
-			} else {
-				$this->mPageTitle = $page;
-				$this->mPageNS = 0;
-			}
+				$this->mValidPage = true;
+			} 
 		}
 		$this->offset = $offset;
 		$this->limit =  $limit;
@@ -60,7 +58,7 @@ class MultiwikifinderPage {
 
 	function linkParameters() { 
 		$res = array();
-		if ( isset($this->mPageTitle) && isset($this->mPageNS) ) {
+		if ( $this->mValidPage ) {
 			$res = array('target' => $this->mPage->getFullText());	
 		}
 		return $res; 
@@ -68,23 +66,23 @@ class MultiwikifinderPage {
 	function setShow( $bool ) { $this->mShow = $bool; }
 
 	function getPageHeader() { 
-        wfProfileIn( __METHOD__ );
-        
-        if (empty($this->mShow)) {
-        	wfProfileOut( __METHOD__ );
-        	return "";
+		wfProfileIn( __METHOD__ );
+		
+		if (empty($this->mShow)) {
+			wfProfileOut( __METHOD__ );
+			return "";
 		}
 		
 		$action = $this->mTitle->escapeLocalURL("");
-
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-            "action"	=> $action,
-            "mPage"		=> ( is_object($this->mPage) ) ? $this->mPage->getFullText() : "",
-        ));
-        
-        wfProfileOut( __METHOD__ );
-        return $oTmpl->execute("main-finder-form");
+		
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+		$oTmpl->set_vars( array(
+			"action"	=> $action,
+			"mPage"		=> ( $this->mValidPage ) ? $this->mPage->getFullText() : "",
+		));
+		
+		wfProfileOut( __METHOD__ );
+		return $oTmpl->execute("main-finder-form");
 	}
 
 	public function getResult() { return $this->data; }
@@ -95,7 +93,7 @@ class MultiwikifinderPage {
         wfProfileIn( __METHOD__ );
 		$wgOut->addHTML( $this->getPageHeader() );
 		
-		if ( isset($this->mPageTitle) && isset($this->mPageNS) ) {
+		if ( $this->mValidPage ) {
 			$this->showResults();
 		}
         wfProfileOut( __METHOD__ );
