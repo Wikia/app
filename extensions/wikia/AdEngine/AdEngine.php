@@ -109,7 +109,7 @@ class AdEngine {
 				$skin_name = $wgUser->getSkin()->getSkinName();
 		}
 
-		if ($skin_name == 'awesome'){
+		if ($skin_name == 'awesome' || $skin_name == 'answers' ){
 			// Temporary hack while we transition to lean monaco
 			$skin_name = 'monaco';
 		}
