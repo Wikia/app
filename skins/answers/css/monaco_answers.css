@@ -161,7 +161,6 @@ li .userInfoNoAvatar:hover a{
 	padding-right: 3px;
 	line-height: 15px;
 	margin-left: 66px; /* For IE6 and 7, gets overriden. */
-	width: 75px;
 }
 
 /* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
