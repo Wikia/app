@@ -446,11 +446,11 @@ class FeedRenderer {
 	public static function getSprite ( $row, $src = '' ) {
 		$r = '';
 		$r .= Xml::openElement( 'div', array( 'class' => 'SpriteWrapper' ) );
-		$r .= '<img '.
-			'class="' . FeedRenderer::getIconType( $row ) . ' sprite"'.
-			'src="'. $src .'"'.
-			'alt="'. FeedRenderer::getIconAltText( $row ).'"'.
-			'width="16" height="16"';
+		$r .= '<img'.
+			' class="' . FeedRenderer::getIconType( $row ) . ' sprite"'.
+			' src="'. $src .'"'.
+			' alt="'. FeedRenderer::getIconAltText( $row ).'"'.
+			' width="16" height="16" />';
 		$r .= Xml::closeElement( 'div' );
 
 		return $r;
