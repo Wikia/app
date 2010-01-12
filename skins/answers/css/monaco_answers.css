@@ -1,0 +1,197 @@
+/* Answers specific CSS goes here, overriding monaco css, and adding any additional */
+
+/* Change the background image of the logo */
+#wikia_logo {
+        /* background: url(http://images.wikia.com/common/skins/monaco/images/wikia_logo.png) no-repeat; */
+        background: url(/skins/answers/images/wikianswers_logo_transparent.png) no-repeat;
+        height: 23px;
+        width: 198px;
+}
+/* Hide the wiki specific logo and background strip */
+#background_strip {
+	display:none;
+}
+#wikia_page {
+	top: 0px; /* Set to -177 in monaco, reset here */
+}
+#monaco_footer {
+	top: 0px; /* Set to -177 in monaco, reset here */
+}
+
+#siteSub {
+	display: block; /* monaco css hides this */
+}
+
+/* Answers specific layout for question pages */
+/* Search field */
+#answers_ask {
+        font-size: 16pt;
+}
+
+#answers_ask_heading {
+        font-size: 16pt;
+}
+
+#ask_wrapper {
+	padding-left:10px;
+}
+
+#answers_ask input.header_field {
+        font-size: 16pt;
+	width: 676px;
+}
+
+/* Special article layout */
+#answers_article {
+	line-height: normal; /* set to 1.5 in monaco article. Why? */
+
+}
+#question_heading, #answer_heading {
+        font-size: 16pt;
+}
+
+.answers_article_left {
+	float: left;
+	width: 468px;
+}
+
+.answers_article_right {
+	margin-left: 498px;
+}
+
+#question_box, #answer_box {
+	background-color: #D8D8D8;
+	margin-bottom: 25px;
+	padding: 10px;
+}
+
+#answer_edit_link, #question_edit_link {
+	float: right;
+}
+
+/* Misc */
+.adunit {
+	border: 1px dashed black;
+	font-size:30pt;
+	text-align: center;
+}
+
+/** User edit points **/
+.answer_title {
+	padding: 0px; /* Override the padding of 0.5em on monaco css */
+}
+
+#contributors, ul.contributors, ol.contributors {
+	margin: 5px 0;
+}
+
+#contributors li, ul.contributors li,
+ol.contributors li {
+/*	height: 56px;*/
+	float: left;
+	margin: 5px;
+}
+
+
+.userInfoBadgeAvatarWrapper{
+	float:left;
+	height:100%;
+	padding: 2px !important;
+	margin-right: 5px !important;
+}
+
+.userInfoBadge img{
+	border: solid 1px #aaa;
+	width:100%;
+	width:50px;
+}
+
+.userInfo {
+	display:inline;
+	margin-top: 7px !important;
+	padding: 0 10px 0 0 !important;
+	height:100%;
+	margin-left: 62px;
+	width:auto;
+}
+.userInfoNoAvatar {
+	margin-top:0px !important;
+	display:inline;
+}
+ul.userInfoNoAvatar, ul.userInfoNoAvatar div.userPoints,
+ol.userInfoNoAvatar, ol.userInfoNoAvatar div.userPoints {
+	font-size:0.92em !important;
+}
+.userInfoNoAvatar, .userInfoNoAvatar * {
+	color:#888;
+	font-weight:normal !important;
+}
+li .userInfoNoAvatar:hover a{
+	color:#00c !important;
+}
+/* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
+*:lang(en) .userInfo {
+	float: left;
+}
+
+.userInfo .userPageLink {
+	display: block;
+	font-size: 1em;
+	font-weight: bold;
+	margin-left: 62px;
+	white-space:pre;
+	margin-top: -10px;
+}
+
+.userInfo .anonEditPoints {
+	display: block;
+	font-size: 0.9em;
+	margin-top: 2px;
+}
+
+.userInfo .userEditPoints {
+	margin-top: 4px;
+}
+
+.userInfo .userEditPoints {
+	background: #e0e0e0 url('../images/user_edit_points_bg.png') no-repeat -175px 0;
+	border: solid 1px #aaa;
+	border-left: none;
+	font-size: 9px;
+	font-weight: bold;
+	text-transform: uppercase;
+	padding-right: 3px;
+	line-height: 15px;
+	margin-left: 66px; /* For IE6 and 7, gets overriden. */
+	width: 120px;
+}
+
+/* Filter IE < 7; XML namespace isn't updated when user's lang pref changes */
+*:lang(en) .userInfo .userEditPoints {
+	margin-left: 0;
+}
+
+.userInfo .userPoints, li .userInfoNoAvatar:hover .userPoints {
+	background: #f6dd5d url('../images/user_edit_points_bg.png') no-repeat;
+	border: 1px solid #584013;
+	float: left;
+	margin: -1px 3px 0 0;
+	padding: 0 3px;
+	font-size: 13px;
+}
+
+div.userInfoNoAvatar .userPoints {
+	background: #eee;
+	border:1px #888 solid;
+	line-height:.95em !important;
+	margin-top: 2px !important;
+	margin-left: 5px !important;
+}
+
+/** User profile edit points **/
+.profile-title-points {
+	font-size: 0.8em;
+	font-weight: normal;
+	letter-spacing: -1px;
+	padding-left: 10px;
+}
