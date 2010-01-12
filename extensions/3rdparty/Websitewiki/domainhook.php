@@ -374,7 +374,7 @@ function fnDomainHook(&$parser, &$text)
   return(true);
 }
 
-include "ratingdraw.php";
+//include "ratingdraw.php";
 
 $wswErotik = 0;
 
@@ -424,7 +424,7 @@ function wsinfo($title, $parser, $thetext)
   }
 
 
-  $wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"/skins/rating/rating.css\" />\n");
+//  $wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"/skins/rating/rating.css\" />\n");
 
   $dom = strtolower($title);
 
@@ -527,12 +527,12 @@ EOI;
       }
     }
   }
-
+/*
   $result .= "<tr><td align=\"center\" style=\"background:#ffffff;\"><strong><a
     href=\"/Spezial:Bewertungen\">Website-Bewertung</a></strong><br />\n";
   $result .= rating_bar($dom, 5);
   $result .= "</td></tr>\n";
-
+*/
   global $wgTitle;
 
   $bookurl = $wgTitle->getFullURL();
