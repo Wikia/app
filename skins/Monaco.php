@@ -2361,7 +2361,7 @@ wfProfileOut( __METHOD__ . '-body');
 	function getTopAdCode(){
 	        echo AdEngine::getInstance()->getSetupHtml();
 
-		global $wgOut, $wgAdsForceLeaderboards, $wgEnableIframeAds, $wgEnableTandemAds;
+		global $wgOut, $wgAdsForceLeaderboards, $wgEnableIframeAds, $wgEnableTandemAds, $wgEnableFAST_HOME2;
 		$topAdCode = '';
 		if ($wgOut->isArticle()){
 			if (ArticleAdLogic::isMainPage()){
