@@ -104,7 +104,8 @@ CKEDITOR.plugins.add('rte-media',
 			// image width (including paddings and borders)
 			var width = parseInt(image.attr('width'));
 			if (isFramed) {
-				if (CKEDITOR.env.ie) {
+				if (CKEDITOR.env.ie && CKEDITOR.env.version <= 7) {
+					// IE8-
 					width += 2;
 				}
 				else {
@@ -126,8 +127,8 @@ CKEDITOR.plugins.add('rte-media',
 				var captionTop = parseInt(image.attr('height') + 7);
 				var captionWidth = image.attr('width');
 
-				// IE
-				if (CKEDITOR.env.ie) {
+				// IE8-
+				if (CKEDITOR.env.ie && CKEDITOR.env.version <= 7) {
 					captionTop -= 25; /* padding-top (25px) */
 					captionWidth -= 6; /* padding (3px) * 2 */
 				}
@@ -206,7 +207,10 @@ CKEDITOR.plugins.add('rte-media',
 			}
 			else {
 				// take image margins into consideration
-				if ( image.hasClass('thumb') || (image.hasClass('frame') && CKEDITOR.env.opera) ) {
+				// fix "framed" images for Opera and IE8 standards mode)
+				var fixFramed = (CKEDITOR.env.opera || (CKEDITOR.env.ie && CKEDITOR.env.version > 7));
+
+				if ( image.hasClass('thumb') || (image.hasClass('frame') && fixFramed) ) {
 					position.top += 6;
 
 					if (!image.hasClass('alignLeft')) {
