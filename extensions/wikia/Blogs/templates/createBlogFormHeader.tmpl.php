@@ -5,7 +5,7 @@
 	</div>
 	<br />
 <?php endif; ?>
-<div id="blogPostForm">
+<div id="blogPostForm" class="clearfix">
 	<input type="hidden" name="articleEditAllowed" value="<?php echo isset($formData['isExistingArticleEditAllowed']) ? $formData['isExistingArticleEditAllowed'] : "0"; ?>" />
 	<?php if(count($formErrors)): ?>
 		<div class="formErrors">
