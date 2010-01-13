@@ -50,13 +50,14 @@
         font-size: 16pt;
 }
 
-.answers_article_left {
+.answers-article-left {
 	float: left;
 	width: 468px;
 }
 
-.answers_article_right {
+.answers-article-right {
 	margin-left: 498px;
+	width: 300px;
 }
 
 #question_box, #answer_box {
@@ -69,6 +70,13 @@
 	float: right;
 }
 
+.answer-input {
+	height:100px;
+	margin-bottom:10px;
+	margin-top:10px;
+	width:460px;
+}
+
 /* Misc */
 .adunit {
 	border: 1px dashed black;
@@ -77,7 +85,7 @@
 }
 
 /** User edit points **/
-.answer_title {
+.answer-title {
 	padding: 0px; /* Override the padding of 0.5em on monaco css */
 }
 
