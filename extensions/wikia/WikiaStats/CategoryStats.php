@@ -621,7 +621,7 @@ class CategoryEdits {
 			/* sort results and slice array */
 			if ( !empty($pages) && is_array($pages) ) {
 				krsort($pages); 
-				$result = array_slice($pages, $limit * $offset, $limit + 1, true);
+				$result = array_slice($pages, $offset, $limit + 1, true);
 			}
 		}
 
