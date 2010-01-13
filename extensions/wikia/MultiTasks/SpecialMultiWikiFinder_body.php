@@ -135,10 +135,10 @@ class MultiwikifinderPage {
 				#- get last edit TS or not
 				if ( $num <= self::ORDER_ROWS ) {
 					$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $oRow->page_wikia_id );
-					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, $oGTitle->getFullURL() );
+					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, $oGTitle->getFullURL(), $oGTitle->getServer() );
 					$data['order'][ $oRow->page_wikia_id ] = $oGTitle->getLastEdit();
 				} else {
-					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, "" );
+					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, "", "" );
 					$data['order'][ $oRow->page_wikia_id ] = $oRow->page_latest;
 				}
 				$data['numrec']++;
@@ -211,17 +211,20 @@ class MultiwikifinderPage {
 			$loop = 0;
 			foreach ( $data['order'] as $city_id => $ordered ) {
 				if ( $loop >= $this->offset && $loop < $this->limit + $this->offset ) {
-					$res = ""; list ($page_id, $page_url) = $data['rows'][$city_id];
+					$res = ""; list ($page_id, $page_url, $page_server) = $data['rows'][$city_id];
 					# page url
-					if ( empty($page_url) ) {
+					if ( empty($page_url) || empty($page_server) ) {
 						$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $city_id );
-						$page_url = ( is_object($oGTitle) ) ? $oGTitle->getFullURL() : "";
-						if ( empty($page_url) ) continue;
+						if ( is_object($oGTitle) ) {
+							$page_url = $oGTitle->getFullURL();
+							$page_server = $oGTitle->getServer();
+						}
+						if ( empty($page_url) || empty($page_server) ) continue;
 					}
 					if (empty($this->mShow)) {
 						$this->data[$city_id] = array('city_id' => $city_id, 'page_id' => $page_id, 'url' => $page_url);
 					} else {
-						$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), "url: $page_url, id: $city_id");
+						$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), $city_id );
 					}
 					
 					$html[] = $this->mShow ? Xml::openElement( 'li' ) . $res . Xml::closeElement( 'li' ) : "";
