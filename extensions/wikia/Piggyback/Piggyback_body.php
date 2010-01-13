@@ -5,7 +5,7 @@ class Piggyback extends SpecialPage {
 
 	function __construct() {
 		global $wgRequest;
-		parent::__construct( 'Piggyback', 'piggyback', false );
+		parent::__construct( 'Piggyback', 'piggyback' );
 		$this->mAction = $wgRequest->getVal( 'action' );
 		wfLoadExtensionMessages( 'Piggyback' );
 	}
