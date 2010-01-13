@@ -50,14 +50,14 @@ class FastCat extends UnlistedSpecialPage {
 		$rev = Revision::newFromTitle( $title );
 
 		wfLoadExtensionMessages( 'FastCat' );
-		$emptycat = '[[' . $wgContLang->getNsText(NS_CATEGORY) . ':' . wfMsgForContent( 'fastcat-marker-category', $cat ) . ']]';
+		$emptycat = '[[' . $wgContLang->getNsText(NS_CATEGORY) . ':' . wfMsgForContent( 'fastcat-marker-category' ) . ']]';
 
 		if( $rev && (strstr($rev->getText(), $emptycat ))) {
 			$newtext = str_replace( $emptycat, "[[" . $wgContLang->getNsText(NS_CATEGORY) . ':' . $cat . "]]", $rev->getText() );
 
 			if(strcmp($newtext, $rev->getText())) {
 				$article = new Article( $title );
-				$article->updateArticle( $newtext, wfMsgForContent( 'fastcat-edit-comment' ), false, false );
+				$article->updateArticle( $newtext, wfMsgForContent( 'fastcat-edit-comment', $cat ), false, false );
 
 				$wgOut->redirect( $title->getFullUrl() );
 			}
