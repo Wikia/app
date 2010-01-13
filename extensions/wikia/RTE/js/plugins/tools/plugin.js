@@ -161,8 +161,14 @@ window.RTE.tools = {
 
 	// get text content of current selection
 	getSelectionContent: function() {
-		var selection = (CKEDITOR.env.ie) ? RTE.instance.document.$.selection : RTE.instance.window.$.getSelection();
-		var text = selection.type ? selection.createRange().text : selection.toString();
+		if (CKEDITOR.env.ie) {
+			// IE
+			var text = RTE.instance.document.$.selection.createRange().text;
+		}
+		else {
+			// Gecko, Opera, Safari
+			var text = RTE.instance.window.$.getSelection().toString();
+		}
 
 		return text;
 	},
