@@ -241,19 +241,12 @@ window.RTE.tools = {
 	// remove resize box
 	removeResizeBox: function() {
 		setTimeout(function() {
+			// simply switch design mode off and on - this solves #RT #33853
 			if (CKEDITOR.env.gecko) {
-				// simply switch design mode off and on (RT #33853)
 				var documentNode = RTE.instance.document.$;
 
 				documentNode.designMode = 'off';
 				documentNode.designMode = 'on';
-			}
-			else if (CKEDITOR.env.ie) {
-				// simply switch contentEditable off and on (RT #33851)
-				var bodyNode = RTE.getEditor();
-
-				bodyNode.attr('contentEditable', false);
-				bodyNode.attr('contentEditable', true);
 			}
 		}, 50);
 	},
