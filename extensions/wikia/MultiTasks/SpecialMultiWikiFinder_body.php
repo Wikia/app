@@ -159,6 +159,7 @@ class MultiwikifinderPage {
 
         wfProfileIn( __METHOD__ );
 
+		$num = 0;		
 		$html = array();
 		if ( $this->mShow ) {
 			$wgOut->addHTML( XML::openElement( 'div', array('class' => 'mw-spcontent') ) );
