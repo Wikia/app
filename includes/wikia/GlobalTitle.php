@@ -30,6 +30,7 @@ class GlobalTitle {
 	private $mLang = false;
 	private $mArticlePath = false;
 	private $mNamespaceNames = false;
+	private $mLastEdit = false;
 
 	/**
 	 * static constructor, Create new Title from name of page
@@ -93,6 +94,15 @@ class GlobalTitle {
 	}
 
 	/**
+	 * Get the server name
+	 * @return string
+	 */
+	public function getServer() {
+		$this->loadAll();
+		return $this->mServer;
+	}
+
+	/**
 	 * Get a real URL referring to this title
 	 *
 	 * @param string $query an optional query string
@@ -135,13 +145,17 @@ class GlobalTitle {
 	 *
 	 * @return MW timestamp
 	 */
-	public function getLatestRevTS() {
+	public function getLastEdit() {
 
 		$this->loadAll();
 
+		if ( $this->mLastEdit ) {
+			return $this->mLastEdit;
+		}
+
 		$dbr = wfGetDB( DB_SLAVE, array(), WikiFactory::IDtoDB($this->mCityId) );
 		
-		$ts = $dbr->selectField(
+		$this->mLastEdit = $dbr->selectField(
 			array( 'revision', 'page' ),
 			array( 'rev_timestamp' ),
 			array(
@@ -152,7 +166,7 @@ class GlobalTitle {
 			__METHOD__ 
 		);
 
-		return $ts;
+		return $this->mLastEdit;
 	}
 
 	/**
@@ -341,6 +355,7 @@ class GlobalTitle {
 			$this->mServer = isset( $values[ "server" ] ) ? $values[ "server" ] : false;
 			$this->mArticlePath = isset( $values[ "path" ] ) ? $values[ "path" ] : false;
 			$this->mNamespaceNames = isset( $value[ "namespaces" ] ) ? $value[ "namespaces" ] : false;
+			$this->mLastEdit = isset( $value[ "lastedit" ] ) ? $value[ "lastedit" ] : false;
 
 			return true;
 		}
@@ -364,6 +379,7 @@ class GlobalTitle {
 				"lang" => $this->mLang,
 				"server" => $this->mServer,
 				"namespaces" => $this->mNamespaceNames,
+				"lastedit" => $this->mLastEdit,
 			),
 			3600
 		);
