@@ -207,8 +207,8 @@ CKEDITOR.plugins.add('rte-media',
 			}
 			else {
 				// take image margins into consideration
-				// fix "framed" images for Opera and IE8 standards mode)
-				var fixFramed = (CKEDITOR.env.opera || (CKEDITOR.env.ie && CKEDITOR.env.version > 7));
+				// fix "framed" images for Opera and IE8 (standards & compatibility modes)
+				var fixFramed = (CKEDITOR.env.opera || CKEDITOR.env.ie);
 
 				if ( image.hasClass('thumb') || (image.hasClass('frame') && fixFramed) ) {
 					position.top += 6;
