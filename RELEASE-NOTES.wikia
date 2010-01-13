@@ -1,4 +1,5 @@
 == Changes since 201001.2 ==
+* rt#36062: RTE: hover elements alignment issues in IE8 standards mode (macbre)
 * rt#36831: fix html building in getSprite (uberfuzzy)
 * rt#36816: NWB: make special unlisted (uberfuzzy)
 * rt#36730: Fix google webmaster tools domain verification. (Nef)
