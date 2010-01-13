@@ -16,7 +16,7 @@ $wikia_rows = "<div id=\"ws-select-cities\">
 $y = 0;
 foreach ($cityStats as $id => $cityId) {
 	#if ($loop >= 100) break;
-	if (!empty($cityList[$cityId])) { 
+	if (!empty($cityList[$cityId])) {
 		$loop++;
 		$selected = ($wgCityId == $cityId) ? " selected=\"selected\" " : "";
 		$wikia_rows .= "<option value=\"{$cityId}\" $selected>".( ($cityId != 0) ? ucfirst($cityList[$cityId]['urlshort']): wfMsg('wikiastats_trend_all_wikia_text')) ."</option>";
@@ -32,16 +32,16 @@ var background_color = "";
 var compare_stats = 0;
 
 YAHOO.namespace("Wikia.Statistics");
-(function() { 
-    YAHOO.Wikia.Statistics = 
+(function() {
+    YAHOO.Wikia.Statistics =
     {
 	    init: function() {
             YAHOO.util.Dom.get("compareStatsDialog").style.display = "block";
-            if (!YAHOO.Wikia.Statistics.compareStatsDialog) { 
+            if (!YAHOO.Wikia.Statistics.compareStatsDialog) {
                 YAHOO.Wikia.Statistics.handleSubmit = function() {
-                    XLSCancel(); 
+                    XLSCancel();
                     YAHOO.util.Dom.get("compareStatsDialog_c").style.display = "none";
-                    this.cancel(); 
+                    this.cancel();
                     var checklist = document.XLSCompareForm.wscid;
                     var is_checked = 0; var checked_list = "";
                     for (i = 0; i < checklist.length; i++) { if (checklist[i].checked) { checked_list += checklist[i].value + ";"; is_checked++; } }
@@ -55,11 +55,11 @@ YAHOO.namespace("Wikia.Statistics");
                     	XLSGenerate(compare_stats, checked_list, '', '');
 					}
                 };
-                YAHOO.Wikia.Statistics.handleCancel = function() { 
-                    XLSCancel(); 
+                YAHOO.Wikia.Statistics.handleCancel = function() {
+                    XLSCancel();
                     YAHOO.util.Dom.get("compareStatsDialog_c").style.display = "none";
                     StatsPageLoaderHide(0);
-                    this.cancel(); 
+                    this.cancel();
                 };
                 // Instantiate the Dialog
                 YAHOO.Wikia.Statistics.compareStatsDialog = new YAHOO.widget.Dialog("compareStatsDialog", {
@@ -74,18 +74,18 @@ YAHOO.namespace("Wikia.Statistics");
             XLSShowMenu('<?=intval($wgCityId)?>');
             WikiaStatsGetInfo('wk-stats-info-panel', '<?=intval($wgCityId)?>');
         }
-    }    
+    }
 
 	YAHOO.Wikia.Statistics.WSShowStatsTab = function(e) {
 		if (this.id == "ws-wikia-compare-id") {
 			setActiveCompareTab();
 		} else {
 			setActiveSelectTab();
-		} 
+		}
 	}
 	YE.addListener("ws-wikia-select-id", "click", YAHOO.Wikia.Statistics.WSShowStatsTab);
 	YE.addListener("ws-wikia-compare-id", "click", YAHOO.Wikia.Statistics.WSShowStatsTab);
-    YE.onDOMReady(YAHOO.Wikia.Statistics.init, YAHOO.Wikia.Statistics, true); 
+    YE.onDOMReady(YAHOO.Wikia.Statistics.init, YAHOO.Wikia.Statistics, true);
 }
 )();
 
@@ -116,7 +116,7 @@ function sortWikiaList(method) {
 }
 
 function sortWikiaPanelList(method) {
-	YAHOO.util.Dom.get("ws-div-scroll").innerHTML = "<div style=\"height:auto\"><center><img src=\"/skins/common/images/ajax.gif\" border=\"0\"></center></div>";
+	YAHOO.util.Dom.get("ws-div-scroll").innerHTML = "<div style=\"height:auto\"><center><img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif)\" border=\"0\"></center></div>";
 	var sort_div = document.getElementById( "ws-sort-panel" );
 	var text = "<?=addslashes(wfMsg('wikiastats_sort_list_alphabet'))?>";
 	var sort = (method == 1) ? 0 : 1;
@@ -146,7 +146,7 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 			<div style="float:left;padding:3px 0px 1px 0px;clear:both;" id="ws-search-panel">
 				<table><tr><td><?=wfMsg('wikiastats_search_text')?></td><td><input type="text" name="ws-search-input-panel" id="ws-search-input-panel" autocomplete="off" /></td>
 				<td><div id="ws-search-input-panel-btn"></div></td>
-				</tr></table>		
+				</tr></table>
 			</div>
 			<div style="float:right;padding:3px 0px 1px 0px;clear:right;" id="ws-sort-panel"><a href="javascript:void(0);" onClick="sortWikiaPanelList(1)"><?=addslashes(wfMsg('wikiastats_sort_list_alphabet'))?></a></div>
 			<div class="ws-div-scroll" id="ws-div-scroll"></div>
@@ -188,7 +188,7 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 		<table valign="top" id="ws_main_wikia_select_td" style="border:1px solid #2F6FAB; padding:3px;">
 		    <tr>
 				<td align="left" valign="middle">
-					<?=wfMsg('wikiastats_search_text')?> <input type="text" name="ws-city-name" autocomplete="off" id="ws-city-name" class="ws-input" style="width:auto" />	
+					<?=wfMsg('wikiastats_search_text')?> <input type="text" name="ws-city-name" autocomplete="off" id="ws-city-name" class="ws-input" style="width:auto" />
 				</td>
 				<td align="left" valign="top" height="100%" rowspan="2" style="padding: 2px 10px">
 					<div style="float:right;clear:both;font-size:8pt;height:12px;"><a href="http://help.wikia.com/wiki/Help:WikiaStats" target="_new"><?=wfMsg('wikiastats_see_old_statistics_page')?></a></div>
@@ -207,7 +207,7 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 							<ul>
 								<li id="wk-xls-pagetitle"><a href="javascript:void(0);" onClick="XLSStats('1', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_pagetitle")?></a></li>
 								<!--<li><a href="javascript:void(0);" onClick="XLSStats('9', '<?=$DEF_DATE?>', '<?=date('Y-m')?>');"><?=wfMsg("wikiastats_pageviews")?></a></li>-->
-							</ul>	
+							</ul>
 						</div>
 						<div class="wk-stats-main-panel" id="wk-stats-panel">
 							<ul>
@@ -231,28 +231,28 @@ pageLoaderInit('<?=addslashes(wfMsg('wikiastats_generate_stats_msg'))?>', '<?=ad
 						<a href="javascript:void(0);" onClick="sortWikiaList(1)"><?=wfMsg('wikiastats_sort_list_alphabet')?></a>
 					</div>
 				</td>
-			</tr>	
+			</tr>
 		</table>
     </td>
     <td align="left" valign="top">
 		<table style="width:auto;line-height:11pt;display:none;" cellpadding="0" cellspacing="0" id="ws_main_wikia_compare_td" valign="top">
 		<tr><td>
-<? 
-$k = 9; 
+<?
+$k = 9;
 $linkText = array(
 	"1" => wfMsg('wikiastats_comparision'),
-	"3" => wfMsg('wikiastats_distrib_wikians'), 
-	"9" => wfMsg('wikiastats_articles_text'), 
-	"12" => wfMsg('wikiastats_database'), 
-	"15" => wfMsg('wikiastats_links'), 
+	"3" => wfMsg('wikiastats_distrib_wikians'),
+	"9" => wfMsg('wikiastats_articles_text'),
+	"12" => wfMsg('wikiastats_database'),
+	"15" => wfMsg('wikiastats_links'),
 	"17" => wfMsg('wikiastats_images')
 );
-for ($i=1; $i<=17; $i++) { 
-	$l = $k + $i; 
+for ($i=1; $i<=17; $i++) {
+	$l = $k + $i;
 	if ( in_array($i, array_keys($linkText)) ) { if ($i != 1) {
 ?>
 	</fieldset>
-<?  } ?>	
+<?  } ?>
 	<fieldset>
 	<legend style="font-size:10pt;"><strong><?= $linkText[$i] ?></strong></legend>
 <?  } ?>
@@ -261,12 +261,12 @@ for ($i=1; $i<=17; $i++) {
 		<div style="width:auto; float: right;">
 			<a href="javascript:void(0);" onClick="showXLSCompareDialog('<?=$l?>', false);"><?= wfMsg('wikiastats_xls_files_stats') ?></a>&nbsp;-&nbsp;
 			<a href="javascript:void(0);" onClick="showXLSCompareDialog('<?=$l?>', true);"><?= wfMsg('wikiastats_tables') ?></a>
-		</div>	
+		</div>
 	</div>
-<? 
-} 
-?>	
-		</td></tr>	
+<?
+}
+?>
+		</td></tr>
 		</table>
     </td>
  </tr>
@@ -278,10 +278,10 @@ YAHOO.util.Event.onDOMReady(function () {
 	var wsElement = document.getElementById('ws-city-name');
 	if (wsElement) { wsElement.onkeyup = function(){ WikiaStatsGetWikis(this, this.value); }; }
 	var wsCompareElement = document.getElementById('ws-search-input-panel');
-	if (wsCompareElement) { wsCompareElement.onkeyup = 
-		function(){ 
-			WikiaStatsCompareGetWikis(this, this.value); 
-		}; 
+	if (wsCompareElement) { wsCompareElement.onkeyup =
+		function(){
+			WikiaStatsCompareGetWikis(this, this.value);
+		};
 	}
 	if (document.getElementById("ws_main_wikia_select_td") && document.getElementById("ws_main_wikia_compare_td")) {
 		setActiveSelectTab();

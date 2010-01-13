@@ -42,10 +42,10 @@ function visible_articles(rows, col, v) {
 
 	cels = rows[1].getElementsByTagName('td');
 	for (y = 3; y <= 5; y++) { cels[y].style.display = v; }
-	
+
 	cels = rows[3].getElementsByTagName('td');
 	for (y = 5; y < 6; y++) { cels[y].style.display = v; }
-	
+
 	// footers
 	cels = rows[rows.length-1].getElementsByTagName('td');
 	cels[2].style.display = v;
@@ -61,10 +61,10 @@ function visible_database(rows, col, v) {
 	//--- main header and footer
 	var cels = rows[0].getElementsByTagName('td');
 	cels[3].style.display = v;
-	
+
 	cels = rows[1].getElementsByTagName('td');
 	for (y = 6; y <= 8; y++) { cels[y].style.display = v; }
-	
+
 	// footers
 	cels = rows[rows.length-1].getElementsByTagName('td');
 	cels[3].style.display = v;
@@ -77,10 +77,10 @@ function visible_links(rows, col, v) {
 	//--- main header and footer
 	var cels = rows[0].getElementsByTagName('td');
 	cels[4].style.display = v;
-	
+
 	cels = rows[1].getElementsByTagName('td');
 	for (y = 9; y <= 10; y++) { cels[y].style.display = v; }
-	
+
 	// footers
 	cels = rows[rows.length-1].getElementsByTagName('td');
 	cels[4].style.display = v;
@@ -94,9 +94,9 @@ function visible_image(rows, col, v) {
 	//--- main header and footer
 	var cels = rows[0].getElementsByTagName('td');
 	cels[5].style.display = v;
-	
+
 	cels = rows[1].getElementsByTagName('td');
-	cels[11].style.display = v; 
+	cels[11].style.display = v;
 
 	// footers
 	cels = rows[rows.length-1].getElementsByTagName('td');
@@ -114,7 +114,7 @@ function visible_column(col, col_to, show, text, div_hide) {
 
 	var rowStart = 4;
 	var rowEnd = rows.length-4;
-	
+
 	if (show == 1) {
 		for (i = rowStart; i < rowEnd; i++) {
 			var cels = rows[i].getElementsByTagName('td');
@@ -187,22 +187,22 @@ function selectArticleSize(id) {
 function wk_show_page_edited_details(page_id, ns) {
 	div_previous = document.getElementById('wk-page-edited-row-' + previous_page);
 	if (div_previous) {
-		div_previous.style.background = "#ffffdd";		
+		div_previous.style.background = "#ffffdd";
 	}
 
 	previous_page = page_id;
 	div_hidden = document.getElementById('wk-page-edited-row-' + page_id);
 	div_hidden.style.background = "#ADFF2F";
-	
+
 	var city 	= document.getElementById( "wk-stats-city-id" );
 	var params 	= "&rsargs[0]=" + city.value + "&rsargs[1]=" + page_id;
 	//---
 	document.getElementById( "wk-page-edits-stats-page-id" ).value = page_id;
 	//---
 	if (ns == 0) {
-		YD.get("ws-progress-page-edits-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-page-edits-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 	} else {
-		YD.get("ws-progress-othernpaces-edits-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-othernpaces-edits-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 	}
 	//---
 	var baseurl = wgScript + "?action=ajax&rs=axWStatisticsPageEditsDetails" + params;
@@ -221,7 +221,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		success: function( oResponse ) {
 			var resCode = 0;
 			if (oResponse.responseText != "") {
-				resCode = 1;    		
+				resCode = 1;
 				YD.get("ws-main-table").innerHTML = oResponse.responseText;
 				YD.get("ws-progress-bar").innerHTML = "&nbsp;";
 			} else {
@@ -266,7 +266,7 @@ YAHOO.util.Event.onDOMReady(function () {
 		}
 	};
 
-	YAHOO.Wikia.Statistics.ShowStats = function(e) 
+	YAHOO.Wikia.Statistics.ShowStats = function(e)
 	{
 		var city = document.getElementById( "ws-domain" );
 		//document.getElementById( "ws-edits-article-table" ).innerHTML = "";
@@ -305,15 +305,15 @@ YAHOO.util.Event.onDOMReady(function () {
 		}
 		//---
 		YE.preventDefault(e);
-		YD.get("ws-progress-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsGenerate" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.MainStatisticCallback);
 	};
 
-	YAHOO.Wikia.Statistics.DistribEditsStatisticCallback = 
+	YAHOO.Wikia.Statistics.DistribEditsStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -326,16 +326,16 @@ YAHOO.util.Event.onDOMReady(function () {
 			YD.get("ws-edits-article-table").innerHTML = resData['text'];
 			YD.get("ws-progress-edits-bar").innerHTML = "&nbsp;";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			YD.get("ws-edits-article-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
 			YD.get("ws-progress-edits-bar").innerHTML = "&nbsp;";
 		}
 	};
 
-	YAHOO.Wikia.Statistics.WikiansRankStatisticCallback = 
+	YAHOO.Wikia.Statistics.WikiansRankStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -345,21 +345,21 @@ YAHOO.util.Event.onDOMReady(function () {
 			} else {
 				resData = eval('(' + oResponse.responseText + ')');
 			}
-			
+
 			YD.get("ws-wikians-active-absent-table").innerHTML = resData['text'];
 			YD.get("ws-progress-wikians-bar").innerHTML = "&nbsp;";
 			document.getElementById( "wk-select-month-wikians-div" ).style.display = "block";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			YD.get("ws-wikians-active-absent-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
 			YD.get("ws-progress-wikians-bar").innerHTML = "&nbsp;";
 		}
 	};
 
-	YAHOO.Wikia.Statistics.UserAnonStatisticCallback = 
+	YAHOO.Wikia.Statistics.UserAnonStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -369,20 +369,20 @@ YAHOO.util.Event.onDOMReady(function () {
 			} else {
 				resData = eval('(' + oResponse.responseText + ')');
 			}
-			
+
 			YD.get("ws-anon-wikians-table").innerHTML = resData['text'];
 			YD.get("ws-progress-anon-bar").innerHTML = "&nbsp;";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			YD.get("ws-anon-wikians-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
 			YD.get("ws-progress-anon-bar").innerHTML = "&nbsp;";
 		}
 	};
 
-	YAHOO.Wikia.Statistics.PageViewsStatisticCallback = 
+	YAHOO.Wikia.Statistics.PageViewsStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -396,16 +396,16 @@ YAHOO.util.Event.onDOMReady(function () {
 			YD.get("ws-pageviews-table").innerHTML = resData['text'];
 			YD.get("ws-progress-pageviews-bar").innerHTML = "&nbsp;";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			YD.get("ws-pageviews-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
 			YD.get("ws-progress-pageviews-bar").innerHTML = "&nbsp;";
 		}
 	};
 
-	YAHOO.Wikia.Statistics.UserArticlesStatisticCallback = 
+	YAHOO.Wikia.Statistics.UserArticlesStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -418,16 +418,16 @@ YAHOO.util.Event.onDOMReady(function () {
 			YD.get("ws-articles-size-table").innerHTML = resData['text'];
 			YD.get("ws-progress-article-bar").innerHTML = "&nbsp;";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			YD.get("ws-articles-size-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
 			YD.get("ws-progress-article-bar").innerHTML = "&nbsp;";
 		}
 	};
 
-	YAHOO.Wikia.Statistics.NamespaceStatisticCallback = 
+	YAHOO.Wikia.Statistics.NamespaceStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -440,16 +440,16 @@ YAHOO.util.Event.onDOMReady(function () {
 			YD.get("ws-namespace-count-table").innerHTML = resData['text'];
 			YD.get("ws-progress-namespace-bar").innerHTML = "&nbsp;";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			YD.get("ws-namespace-count-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
 			YD.get("ws-progress-namespace-bar").innerHTML = "&nbsp;";
 		}
 	};
 
-	YAHOO.Wikia.Statistics.PageEditsStatisticCallback = 
+	YAHOO.Wikia.Statistics.PageEditsStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -462,16 +462,16 @@ YAHOO.util.Event.onDOMReady(function () {
 			YD.get("ws-page-edits-count-table").innerHTML = resData['text'];
 			YD.get("ws-progress-page-edits-bar").innerHTML = "&nbsp;";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			YD.get("ws-page-edits-count-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
 			YD.get("ws-progress-page-edits-bar").innerHTML = "&nbsp;";
 		}
 	};
 
-	YAHOO.Wikia.Statistics.PageOtherNspacesEditsStatisticCallback = 
+	YAHOO.Wikia.Statistics.PageOtherNspacesEditsStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -484,26 +484,26 @@ YAHOO.util.Event.onDOMReady(function () {
 			YD.get("ws-othernpaces-edits-count-table").innerHTML = resData['text'];
 			YD.get("ws-progress-othernpaces-edits-bar").innerHTML = "&nbsp;";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			YD.get("ws-othernpaces-edits-count-table").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
 			YD.get("ws-progress-othernpaces-edits-bar").innerHTML = "&nbsp;";
 		}
 	};
 
-	YAHOO.Wikia.Statistics.DistribArticleEditsStats = function(e) 
+	YAHOO.Wikia.Statistics.DistribArticleEditsStats = function(e)
 	{
 		var city 	= document.getElementById( "wk-stats-city-id" );
 		var params 	= "&rsargs[0]=" + city.value;
 		//---
 		YE.preventDefault(e);
-		YD.get("ws-progress-edits-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-edits-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsDistribEditsGenerate" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.DistribEditsStatisticCallback);
 	};
 
-	YAHOO.Wikia.Statistics.WikiansRankStats = function(e) 
+	YAHOO.Wikia.Statistics.WikiansRankStats = function(e)
 	{
 		var city 	= document.getElementById( "wk-stats-city-id" );
 		var month 	= document.getElementById( "ws-wikians-active-month" );
@@ -511,45 +511,45 @@ YAHOO.util.Event.onDOMReady(function () {
 		var params 	= "&rsargs[0]=" + city.value + "&rsargs[1]=" + _month;
 		//---
 		YE.preventDefault(e);
-		YD.get("ws-progress-wikians-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-wikians-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsWikiansRank" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.WikiansRankStatisticCallback);
 	};
 
-	YAHOO.Wikia.Statistics.AnonUsersStats = function(e) 
+	YAHOO.Wikia.Statistics.AnonUsersStats = function(e)
 	{
 		var city 	= document.getElementById( "wk-stats-city-id" );
 		document.getElementById( "ws-anon-wikians-table" ).innerHTML = "";
 		var params 	= "&rsargs[0]=" + city.value;
 		//---
 		YE.preventDefault(e);
-		YD.get("ws-progress-anon-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-anon-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsAnonUsers" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.UserAnonStatisticCallback);
 	};
 
-	YAHOO.Wikia.Statistics.PageViewsStats = function(e) 
+	YAHOO.Wikia.Statistics.PageViewsStats = function(e)
 	{
 		var city 	= document.getElementById( "wk-stats-city-id" );
 		document.getElementById( "ws-pageviews-table" ).innerHTML = "";
 		var params 	= "&rsargs[0]=" + city.value;
 		//---
 		YE.preventDefault(e);
-		YD.get("ws-progress-pageviews-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-pageviews-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsPageViews" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.PageViewsStatisticCallback);
 	};
 
-	YAHOO.Wikia.Statistics.ArticlesSizeStats = function(e) 
+	YAHOO.Wikia.Statistics.ArticlesSizeStats = function(e)
 	{
 		var city 	= document.getElementById( "wk-stats-city-id" );
 		document.getElementById( "ws-articles-size-table" ).innerHTML = "";
 		var params 	= "&rsargs[0]=" + city.value;
 
-		var sizeList = "";	
+		var sizeList = "";
 		for (s = 32, i = 0 ; i <= 13 ; s *= 2 , i++)
 		{
 			if (YAHOO.util.Dom.getStyle('article-size-' + s, 'background-color') != "transparent")
@@ -558,45 +558,45 @@ YAHOO.util.Event.onDOMReady(function () {
 			}
 		}
 		params 	+= "&rsargs[1]=" + sizeList;
-		
+
 		//---
 		YE.preventDefault(e);
-		YD.get("ws-progress-article-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-article-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsArticleSize" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.UserArticlesStatisticCallback);
 	};
 
-	YAHOO.Wikia.Statistics.NamespaceStats = function(e) 
+	YAHOO.Wikia.Statistics.NamespaceStats = function(e)
 	{
 		var city 	= document.getElementById( "wk-stats-city-id" );
 		document.getElementById( "ws-namespace-count-table" ).innerHTML = "";
 		var params 	= "&rsargs[0]=" + city.value;
-		
+
 		//---
 		YE.preventDefault(e);
-		YD.get("ws-progress-namespace-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-namespace-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsNamespaceCount" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.NamespaceStatisticCallback);
 	};
 
-	YAHOO.Wikia.Statistics.PageEditsStats = function(e) 
+	YAHOO.Wikia.Statistics.PageEditsStats = function(e)
 	{
 		var city 	= document.getElementById( "wk-stats-city-id" );
 		document.getElementById( "ws-page-edits-count-table" ).innerHTML = "";
 		var params 	= "&rsargs[0]=" + city.value;
 		//---
 		YE.preventDefault(e);
-		YD.get("ws-progress-page-edits-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-page-edits-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsPageEdits" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.PageEditsStatisticCallback);
 	};
 
-	YAHOO.Wikia.Statistics.PageEditsDetailsStatisticCallback = 
+	YAHOO.Wikia.Statistics.PageEditsDetailsStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -610,7 +610,7 @@ YAHOO.util.Event.onDOMReady(function () {
 			YD.get("wk-page-count-details-stats").innerHTML = resData['text'];
 			YD.get("ws-progress-page-edits-bar").innerHTML = "&nbsp;";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			var page_id = document.getElementById( "wk-page-edits-stats-page-id" ).value;
 			YD.get("wk-page-count-details-stats").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
@@ -618,22 +618,22 @@ YAHOO.util.Event.onDOMReady(function () {
 		}
 	};
 
-	YAHOO.Wikia.Statistics.OtherNpacesEditsStats = function(e) 
+	YAHOO.Wikia.Statistics.OtherNpacesEditsStats = function(e)
 	{
 		var city 	= document.getElementById( "wk-stats-city-id" );
 		document.getElementById( "ws-othernpaces-edits-count-table" ).innerHTML = "";
 		var params 	= "&rsargs[0]=" + city.value;
 		//---
 		YE.preventDefault(e);
-		YD.get("ws-progress-othernpaces-edits-bar").innerHTML="&nbsp;<img src=\"/skins/common/images/ajax.gif\" />";
+		YD.get("ws-progress-othernpaces-edits-bar").innerHTML="&nbsp;<img src=\"http://images.wikia.com/common/skins/common/images/ajax.gif\" />";
 		//---
 		var baseurl = wgScript + "?action=ajax&rs=axWStatisticsOtherNpacesPageEdits" + params;
 		YAHOO.util.Connect.asyncRequest( "GET", baseurl, YAHOO.Wikia.Statistics.PageOtherNspacesEditsStatisticCallback);
 	};
 
-	YAHOO.Wikia.Statistics.PageOtherNpacesEditsDetailsStatisticCallback = 
+	YAHOO.Wikia.Statistics.PageOtherNpacesEditsDetailsStatisticCallback =
 	{
-		success: function( oResponse ) 
+		success: function( oResponse )
 		{
 			var resData = "";
 			if (YAHOO.Tools) {
@@ -647,7 +647,7 @@ YAHOO.util.Event.onDOMReady(function () {
 			YD.get("wk-othernpaces-count-details-stats").innerHTML = resData['text'];
 			YD.get("ws-progress-othernpaces-edits-bar").innerHTML = "&nbsp;";
 		},
-		failure: function( oResponse ) 
+		failure: function( oResponse )
 		{
 			var page_id = document.getElementById( "wk-page-edits-stats-page-id" ).value;
 			YD.get("wk-othernpaces-count-details-stats").innerHTML = "<?= wfMsg("wikiastats_nostats_found") ?>";
@@ -655,25 +655,25 @@ YAHOO.util.Event.onDOMReady(function () {
 		}
 	};
 
-	YAHOO.Wikia.Statistics.GenerateXLSStats = function(e) 
+	YAHOO.Wikia.Statistics.GenerateXLSStats = function(e)
 	{
 		var id = 0;
 		switch (this.id) {
 			case "ws-export-xls" : {
-				id = 1; 
-				wk_stats_city_id = parseInt(document.getElementById("wk-stats-city-id").value); 
+				id = 1;
+				wk_stats_city_id = parseInt(document.getElementById("wk-stats-city-id").value);
 				var month_from = document.getElementById("ws-date-month-from").value;
 				var year_from = document.getElementById("ws-date-year-from").value;
 				var month_to = document.getElementById("ws-date-month-to").value;
 				var year_to = document.getElementById("ws-date-year-to").value;
-				XLSGenerate(id, '', year_from + '-' + month_from, year_to + '-' + month_to); 
+				XLSGenerate(id, '', year_from + '-' + month_from, year_to + '-' + month_to);
 				break;
 			}
 			default : {
 				var id = this.id;
-				wk_stats_city_id = parseInt(document.getElementById("wk-stats-city-id").value); 
+				wk_stats_city_id = parseInt(document.getElementById("wk-stats-city-id").value);
 				id = id.replace("ws-xls-", "");
-				XLSGenerate(id, '', '', ''); 
+				XLSGenerate(id, '', '', '');
 			}
 		}
 	}
@@ -687,7 +687,7 @@ YAHOO.util.Event.onDOMReady(function () {
 	YE.addListener("ws-anon-users-show", "click", YAHOO.Wikia.Statistics.AnonUsersStats);
 	//YE.addListener("ws-pageviews-show", "click", YAHOO.Wikia.Statistics.PageViewsStats);
 	//YE.addListener("ws-article-size-show", "click", YAHOO.Wikia.Statistics.ArticlesSizeStats);
-	//YE.addListener("ws-namespace-count-show", "click", YAHOO.Wikia.Statistics.NamespaceStats); 
+	//YE.addListener("ws-namespace-count-show", "click", YAHOO.Wikia.Statistics.NamespaceStats);
 	YE.addListener("ws-page-edits-count-show", "click", YAHOO.Wikia.Statistics.PageEditsStats);
 	YE.addListener("ws-page-edits-details-show", "click", YAHOO.Wikia.Statistics.PageEditsStats);
 	YE.addListener("ws-othernspaces-edits-count-show", "click", YAHOO.Wikia.Statistics.OtherNpacesEditsStats);
@@ -695,23 +695,23 @@ YAHOO.util.Event.onDOMReady(function () {
 
 	for (k=2; k<=9; k++) {
 		YE.addListener("ws-xls-" + k, "click", YAHOO.Wikia.Statistics.GenerateXLSStats);
-	}	
+	}
 });
 
 /*]]>*/
 </script>
-<?php 
+<?php
 $select_stats = "";
 $selected_stats = "";
 foreach ($cityList as $domain => $city_id)
 {
 	$selected = ($city_id == $selCity) ? " selected=\"selected\" " : "";
 	if (!empty($selected)) {
-		$selected_stats = ucfirst($domain);		
+		$selected_stats = ucfirst($domain);
 	}
 	$select_stats .= "<option $selected value=\"$city_id\">".ucfirst($domain)."</option>";
 }
-?>	
+?>
 <fieldset>
 <legend class="legend-subtitle"><?=wfMsg('wikiastats_main_statistics_legend')?></legend>
 <div id="ws-upload">
@@ -721,7 +721,7 @@ foreach ($cityList as $domain => $city_id)
 	<br />
 	<span class="wk-select-class"><select name="ws-domain" id="ws-domain" style="text-align:left; font-size:11px;"><?=$select_stats?></select></span>
 	<br />
-	<span class="wk-select-class"><?= wfMsg('wikiastats_daterange_from') ?> 
+	<span class="wk-select-class"><?= wfMsg('wikiastats_daterange_from') ?>
 	<select name="ws-date-month-from" id="ws-date-month-from" style="text-align:left; font-size:11px;">
 <?php
 $curMonth = date("m"); $curYear = date("Y");
@@ -732,24 +732,24 @@ list ($fromYear, $fromMonth) = array($curYear, "");
 if (!empty($fromDate)) {
 	list ($fromYear, $fromMonth) = $fromDate;
 }
-foreach ($dateRange['months'] as $id => $month) { 
+foreach ($dateRange['months'] as $id => $month) {
 	$selected = ($fromMonth == ($id+1)) ? " selected=\"selected\" " : "";
 ?>
 	<option value="<?= ($id+1) ?>" <?=$selected?>><?= ucfirst($month) ?></option>
 <?php
-}	
-?>	
+}
+?>
 	</select>
 	<select name="ws-date-year-from" id="ws-date-year-from" style="text-align:left; font-size:11px;">
 <?php
-$minYear = intval($dateRange['minYear']); 
+$minYear = intval($dateRange['minYear']);
 if ($minYear < 2000) $minYear = 2000;
 $maxYear = intval($dateRange['maxYear']);
 while ($minYear <= $maxYear) {
 	$selected = ($fromYear == $minYear) ? " selected=\"selected\" " : "";
 ?>
 	<option <?= $selected ?> value="<?= $minYear ?>"><?= $minYear ?></option>
-<?php	
+<?php
 	$minYear++;
 }
 ?>
@@ -765,8 +765,8 @@ foreach ($dateRange['months'] as $id => $month)
 ?>
 	<option <?= $selected ?> value="<?= $k ?>"><?= ucfirst($month) ?></option>
 <?php
-}	
-?>	
+}
+?>
 	</select>
 	<select name="ws-date-year-to" id="ws-date-year-to" style="text-align:left; font-size:11px;">
 <?php
@@ -776,7 +776,7 @@ while ($minYear <= $maxYear)
 	$selected = ($curYear == $minYear) ? " selected=\"selected\" " : "";
 ?>
 	<option <?= $selected ?> value="<?= $minYear ?>"><?= $minYear ?></option>
-<?php	
+<?php
 	$minYear++;
 }
 ?>
@@ -807,7 +807,7 @@ if (!empty($main_tbl)) {
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-edits-article-show"><?= wfMsg('wikiastats_distrib_article'); ?></a>
 			<span style="padding:5px 2px;"><input type="image" id="ws-xls-2" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
-		</div>	
+		</div>
 		<span class="small"><?= wfMsg('wikiastats_distrib_article_subtext') ?></span><br />
 		<span class="small"><?= wfMsg('wikiastats_distrib_article_counting') ?></span>
 	</div>
@@ -821,24 +821,24 @@ if (!empty($main_tbl)) {
 	<div id="ws-wikians-title" style="clear:left;width:auto;float:left">
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-wikians-rank-show"><?= wfMsg('wikiastats_active_absent_wikians'); ?></a>
-			<span style="padding:5px 2px;"><input type="image" id="ws-xls-3" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>		
-		</div>	
+			<span style="padding:5px 2px;"><input type="image" id="ws-xls-3" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
+		</div>
 		<span class="small"><?= wfMsg('wikiastats_active_wikians_subtitle') ?></span>
 	</div>
 	<div id="ws-progress-wikians-bar"></div>
 	<div class="clear">&nbsp;</div>
 	<div style="text-align:left;" id="wk-select-month-wikians-div"><?= wfMsg("wikiastats_active_wikians_date") ?>
 		<span class="wk-select-class"><select name="ws-wikians-active-month" id="ws-wikians-active-month" style="text-align:left; font-size:11px;">
-<?php 
+<?php
 for ($i = 1; $i <= 6; $i++)
 {
 	$month_name = ($i == 1) ? wfMsg('wikiastats_active_month') : wfMsg('wikiastats_active_months');
 	$selected = ""; //($i == $cur_month) ? " selected=\"selected\" " : "" ;
 ?>
 		<option <?= $selected ?> value="<?= $i ?>"><?= $i . " " .$month_name ?></option>
-<?php 
+<?php
 }
-?>	
+?>
 		</select></span>
 		<span class="wk-select-class"><input type="button" id="ws-wikians-active-btn" name="ws-wikians-active-btn" value=" ... " /></span>
 	</div>
@@ -851,7 +851,7 @@ for ($i = 1; $i <= 6; $i++)
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-anon-users-show"><?= wfMsg('wikiastats_anon_wikians'); ?></a>
 			<span style="padding:5px 2px;"><input type="image" id="ws-xls-4" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
-		</div>	
+		</div>
 		<span class="small"><?= wfMsg('wikiastats_anon_wikians_subtitle') ?></span>
 	</div>
 	<div id="ws-progress-anon-bar"></div>
@@ -865,7 +865,7 @@ for ($i = 1; $i <= 6; $i++)
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-pageviews-show"><?= wfMsg('wikiastats_pageviews'); ?></a>
 			<span style="padding:5px 2px;"><input type="image" id="ws-xls-9" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
-		</div>	
+		</div>
 		<span class="small"><?= wfMsg('wikiastats_pageviews_subtext') ?></span><br />
 		<span class="small"><?= wfMsg('wikiastats_pageviews_counting') ?></span>
 	</div>
@@ -880,7 +880,7 @@ for ($i = 1; $i <= 6; $i++)
 		<div valign="middle">
 			<?= wfMsg('wikiastats_article_size'); ?>
 			<span style="padding:5px 2px;"><input type="image" id="ws-xls-5" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
-		</div>	
+		</div>
 		<br />
 		<span class="small"><?= wfMsg('wikiastats_article_size_subtitle') ?></span>
 		<br />
@@ -889,14 +889,14 @@ for ($i = 1; $i <= 6; $i++)
 		$bT = wfMsg('size-bytes', $s);
 		$text = "&lt;&nbsp;".$bT;
 		if ($s >= 1024) {
-			$kbT = wfMsg('size-kilobytes', $wgLang->formatNum(sprintf("%0.0f", $s/1024)));		
+			$kbT = wfMsg('size-kilobytes', $wgLang->formatNum(sprintf("%0.0f", $s/1024)));
 			$text = "&lt;&nbsp;".$kbT;
 		}
-?>		
+?>
 		<span class="medium" id="article-size-<?=$s?>" onclick="selectArticleSize('<?=$s?>');" style="border:1px outset white; cursor:pointer; padding:2px;"><?=$text?></span>
 <?php
 	}
-?>		
+?>
 		<span class="medium"><input type="button" class="medium" id="ws-article-size-show" value="<?= wfMsg('wikiastats_show') ?>" /></span>
 	</div>
 	<div id="ws-progress-article-bar"></div>
@@ -910,7 +910,7 @@ for ($i = 1; $i <= 6; $i++)
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-namespace-count-show"><?= wfMsg('wikiastats_namespace_records'); ?></a>
 			<span style="padding:5px 2px;"><input type="image" id="ws-xls-6" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
-		</div>	
+		</div>
 	</div>
 	<div id="ws-progress-namespace-bar"></div>
 	<div class="clear">&nbsp;</div>
@@ -923,7 +923,7 @@ for ($i = 1; $i <= 6; $i++)
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-page-edits-count-show"><?= wfMsg('wikiastats_page_edits'); ?></a>
 			<span style="padding:5px 2px;"><input type="image" id="ws-xls-7" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
-		</div>	
+		</div>
 	</div>
 	<div id="ws-progress-page-edits-bar"></div>
 	<div class="clear">&nbsp;</div>
@@ -934,7 +934,7 @@ for ($i = 1; $i <= 6; $i++)
 		<div valign="middle">
 			<a href="javascript:void(0)" id="ws-othernspaces-edits-count-show"><?= wfMsg('wikiastats_other_nspaces_edits'); ?></a>
 			<span style="padding:5px 2px;"><input type="image" id="ws-xls-8" value="<?= wfMsg("wikiastats_export_xls") ?>" src="/extensions/wikia/WikiaStats/images/xls.gif" /></span>
-		</div>	
+		</div>
 	</div>
 	<div id="ws-progress-othernpaces-edits-bar"></div>
 	<div class="clear">&nbsp;</div>
@@ -957,7 +957,7 @@ document.getElementById( "ws-anon-wikians" ).style.display = "block";
 document.getElementById( "ws-page-edits-count" ).style.display = "block";
 document.getElementById( "ws-othernpaces-edits-count" ).style.display = "block";
 </script>
-<?	
+<?
 	}
 }
 ?>
