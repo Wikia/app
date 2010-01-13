@@ -16,9 +16,19 @@ use File::LibMagic;
 use IO::File;
 use File::Basename;
 use File::Path;
+use File::Copy;
 use XML::Simple;
 use Data::Types qw(:all);
 use Math::Round qw(round);
+use Getopt::Long;
+use Cwd;
+
+#
+# constant
+#
+use constant FFMPEG   => "/usr/bin/ffmpeg";
+use constant OGGTHUMB => "/usr/bin/oggThumb";
+
 
 sub real404 {
 	my $request_uri  = shift;
@@ -66,6 +76,67 @@ sub scaleHeight {
 	return $dstHeight;
 }
 
+
+#
+# video thumbnail, by default oggThumb will be used.
+# as for now $seek is ignored
+#
+sub videoThumbnail {
+	my ( $original, $thumbnail, $seek ) = @_;
+
+	my $useFfmpeg = 0;
+
+	if( $useFfmpeg ) {
+		#
+		# use ffmpeg
+		#
+		my @cmd = ();
+		push @cmd, qw(-ss 1);
+		push @cmd, "-an";
+		push @cmd, qw(-vframes 1);
+		push @cmd, "-y";
+		push @cmd, "-i", $original;
+		push @cmd, qw(-f mjpeg);
+		push @cmd, $thumbnail;
+
+		open( CMD, "-|", FFMPEG, @cmd );
+		close( CMD );
+
+		unless( -f $thumbnail ) {
+			#
+			# get first stream
+			#
+			unshift @cmd, qw(-map 0:1);
+			open( CMD, "-|", FFMPEG, @cmd );
+			close( CMD );
+		}
+	}
+	else {
+		#
+		# use oggThumb, but first change current working directory to /tmp
+		#
+		my $pwd = getcwd();
+		chdir( "/tmp" );
+
+		my @cmd = ();
+		push @cmd, qw(-o jpg);
+		push @cmd, qw(-t 0);
+		push @cmd, $original;
+		open( CMD, "-|", OGGTHUMB, @cmd );
+		my @result = <CMD>;
+		close( CMD );
+
+		#
+		# check result for thumbnail name, in future version it will
+		# be parametrized
+		#
+		my $out = join "", @result;
+		my ( $file ) = $out =~ m/writing (.+)/;
+		move( $file, $thumbnail );
+		chdir( $pwd );
+	}
+}
+
 #
 # do not make zombies
 #
@@ -73,12 +144,9 @@ use POSIX ":sys_wait_h";
 $SIG{CHLD} = sub { while( waitpid( -1, WNOHANG ) >0 ) { print STDERR "waiting for child to finish\n" } };
 
 my @tests = qw(
-	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/240px-Black_Mesa_logo.svg.png
-	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
+	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
 	/g/gw/images/thumb/archive/7/78/20090811221502!Nicholas_the_Traveler_location_20090810_2.PNG/120px-Nicholas_the_Traveler_location_20090810_2.PNG
 	/m/meerundmehr/images/thumb/1/17/Mr._Icognito.svg/150px-Mr._Icognito.svg.png
-	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
-	/a/answers/images/thumb/8/84/Play_fight_of_polar_bears_edit_1.avi.OGG/mid-Play_fight_of_polar_bears_edit_1.avi.OGG.jpg
 	/c/central/images/thumb/e/e9/CP_c17i4°.svg/250px-CP_c17i4°.svg.png
 	/c/central/images/thumb/b/bf/Wiki_wide.png/155px-Wiki_wide.png
 	/c/central/images/thumb/8/8c/The_Smurfs_Animated_Gif.gif/200px-The_Smurfs_Animated_Gif.gif
@@ -86,6 +154,8 @@ my @tests = qw(
 	/h/half-life/en/images/thumb/a/a5/Gene_worm_model.jpg/260px-Gene_worm_model.jpg
 	/h/half-life/en/images/thumb/a/a5/Gene_worm_model.jpg/250px-Gene_worm_model.jpg
 	/h/half-life/en/images/thumb/b/b1/Alyx_hanging_trailer.jpg/250px-Alyx_hanging_trailer.jpg
+	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/240px-Black_Mesa_logo.svg.png
+	/h/half-life/en/images/thumb/d/d6/Black_Mesa_logo.svg/250px-Black_Mesa_logo.svg.png
 );
 my @done = ();
 
@@ -118,7 +188,6 @@ else {
 
 my $flm         = new File::LibMagic;
 my $maxwidth    = 3000;
-my $ffmpeg      = "/usr/bin/ffmpeg";
 
 #
 # if thumbnail was really generated
@@ -276,32 +345,8 @@ while( $request->Accept() >= 0 || $test ) {
 					#
 					my $seek = ( $width eq "mid" ) ? 1 : $width;
 
-					#
-					# ... but take first second anyway
-					#
-					my @cmd = ();
-					# -ss 1 -f mjpeg -vframes 1
-					#push @cmd, $ffmpeg;
-					push @cmd, qw(-ss 1);
-					push @cmd, "-an";
-					push @cmd, qw(-vframes 1);
-					push @cmd, "-y";
-					push @cmd, "-i", $original;
-					push @cmd, qw(-f mjpeg);
-					push @cmd, $thumbnail;
+					videoThumbnail( $original, $thumbnail, $seek );
 
-					open( CMD, "-|", $ffmpeg, @cmd );
-					close( CMD );
-
-					#system( @cmd ) == 0 and $transformed = 1;
-					unless( -f $thumbnail ) {
-						#
-						# get first stream
-						#
-						unshift @cmd, qw(-map 0:1);
-						open( CMD, "-|", $ffmpeg, @cmd );
-						close( CMD );
-					}
 					$transformed = 1;
 					if( -f $thumbnail ) {
 						chmod 0664, $thumbnail;
