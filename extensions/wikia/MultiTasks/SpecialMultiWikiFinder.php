@@ -27,6 +27,11 @@ $wgExtensionCredits['specialpage'][] = array(
 #--- messages file
 $wgExtensionMessagesFiles["Multiwikifinder"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
 
+$wgAvailableRights[] = 'multiwikifinder';
+$wgGroupPermissions['staff']['multiwikifinder'] = true;
+$wgGroupPermissions['helper']['multiwikifinder'] = true;
+$wgGroupPermissions['vstf']['multiwikifinder'] = true;
+
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once ( "$IP/extensions/ExtensionFunctions.php" );
 }
