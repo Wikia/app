@@ -33,7 +33,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
 class MultiwikifinderPage {
 	private $data = array();
 	private $mShow = true;
-	const ORDER_ROWS = 2000;
+	const ORDER_ROWS = 1500;
 	var $mPage = null;
 	var $mValidPage = false;
 	var $mPageTitle = "";
@@ -115,39 +115,33 @@ class MultiwikifinderPage {
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB ); 
 			$oRes = $dbr->select(
 				'pages',
-				array( 'page_wikia_id, page_id, page_title, page_namespace, page_latest' ),
+				array( 'page_latest, page_wikia_id, page_id' ),
 				array( 
 					'page_title_lower'	=> strtolower($this->mPageTitle),
 					'page_namespace' 	=> $this->mPageNS,
 					'page_status'		=> 0
 				),
-				__METHOD__ 
+				__METHOD__, 
+				array(
+					'ORDER BY' => 'page_latest desc'
+				)
 			);
 
 			$num = $dbr->numRows($oRes);
 
-			$data = array( 'numrec' => $num, 'rows' => array() );
+			$data = array( 'numrec' => 0, 'rows' => array() );
+			$loop = 0;
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
-				$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $oRow->page_wikia_id );
-				#--
-				if ( is_object( $oGTitle ) ) {
-					$oWiki = WikiFactory::getWikiByID( $oRow->page_wikia_id );
-					if ( $oWiki->city_public == 1 ) {
-						#- data
-						$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, $oGTitle->getFullURL() );
-						#- get last edit TS or not
-						if ( $num <= self::ORDER_ROWS ) {
-							$data['order'][ $oRow->page_wikia_id ] = $oGTitle->getLastEdit();
-						} else {
-							$data['order'][ $oRow->page_wikia_id ] = $oRow->page_latest;
-						}
-					}
+				#- get last edit TS or not
+				if ( $num <= self::ORDER_ROWS ) {
+					$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $oRow->page_wikia_id );
+					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, $oGTitle->getFullURL() );
+					$data['order'][ $oRow->page_wikia_id ] = $oGTitle->getLastEdit();
+				} else {
+					$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, "" );
+					$data['order'][ $oRow->page_wikia_id ] = $oRow->page_latest;
 				}
-			}
-			
-			if ( $data['numrec'] > 0 ) {
-				arsort($data['order']);
-				$data = array_slice($data, $this->offset, $this->limit);
+				$data['numrec']++;
 			}
 			
 			$dbr->freeResult( $oRes );
@@ -206,16 +200,33 @@ class MultiwikifinderPage {
 				$html[] = XML::openElement( 'ol', array('start' => $this->offset + 1, 'class' => 'special' ) );
 			}
 
+			if ( $data['numrec'] <= self::ORDER_ROWS ) { 
+				arsort($data['order']);
+			}
+#				$data = array_slice($data, $this->offset, $this->limit);
+#			}
+
+#			$oWiki = WikiFactory::getWikiByID( $oRow->page_wikia_id );
+#			if ( $oWiki->city_public == 1 ) {
+			$loop = 0;
 			foreach ( $data['order'] as $city_id => $ordered ) {
-				$res = "";
-				list ($page_id, $page_url) = $data['rows'][$city_id];
-				if (empty($this->mShow)) {
-					$this->data[$city_id] = array('city_id' => $city_id, 'page_id' => $page_id, 'url' => $page_url);
-				} else {
-					$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), $city_id);
+				if ( $loop >= $this->offset && $loop < $this->limit + $this->offset ) {
+					$res = ""; list ($page_id, $page_url) = $data['rows'][$city_id];
+					# page url
+					if ( empty($page_url) ) {
+						$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $city_id );
+						$page_url = ( is_object($oGTitle) ) ? $oGTitle->getFullURL() : "";
+						if ( empty($page_url) ) continue;
+					}
+					if (empty($this->mShow)) {
+						$this->data[$city_id] = array('city_id' => $city_id, 'page_id' => $page_id, 'url' => $page_url);
+					} else {
+						$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), $city_id);
+					}
+					
+					$html[] = $this->mShow ? Xml::openElement( 'li' ) . $res . Xml::closeElement( 'li' ) : "";
 				}
-				
-				$html[] = $this->mShow ? Xml::openElement( 'li' ) . $res . Xml::closeElement( 'li' ) : "";
+				$loop++;
 			}
 
 			if( $this->mShow ) {
@@ -227,5 +238,4 @@ class MultiwikifinderPage {
 			$out->addHTML( $html );
 		}
 	}
-	
 }
