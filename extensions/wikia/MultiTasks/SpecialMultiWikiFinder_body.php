@@ -204,35 +204,35 @@ class MultiwikifinderPage {
 			}
 
 			$num = $num - $skip;
-			# Top header and navigation
-			if ( $this->mShow ) {
-				$wgOut->addHTML( '<p>' . wfMsgExt('multiwikirecords', array(), $num) . '</p>' );
-				if( $num > 0 ) {
-					$wgOut->addHTML( '<p>' . wfShowingResults( $this->offset, $num ) . '</p>' );
-					# Disable the "next" link when we reach the end
-					$paging = wfViewPrevNext( 
-						$this->offset, 
-						$this->limit, 
-						$wgContLang->specialPage( $this->mName ), 
-						wfArrayToCGI( $this->linkParameters() ), 
-						( $num < $this->limit ) 
-					);
-					$wgOut->addHTML( '<p>' . $paging . '</p>' );
-				} else {
-					$wgOut->addHTML( XML::closeElement( 'div' ) );
-					return;
-				}
-			}
-
 
 			if( $this->mShow ) {
 				$html[] = XML::closeElement( 'ol' );
 			}
 
-			$html = $this->mShow ? implode( '', $html ) : $wgContLang->listToText( $html );
-
-			$wgOut->addHTML( $html );
 		}
+
+		# Top header and navigation
+		if ( $this->mShow ) {
+			$wgOut->addHTML( '<p>' . wfMsgExt('multiwikirecords', array(), $num) . '</p>' );
+			if( $num > 0 ) {
+				$wgOut->addHTML( '<p>' . wfShowingResults( $this->offset, $num ) . '</p>' );
+				# Disable the "next" link when we reach the end
+				$paging = wfViewPrevNext( 
+					$this->offset, 
+					$this->limit, 
+					$wgContLang->specialPage( $this->mName ), 
+					wfArrayToCGI( $this->linkParameters() ), 
+					( $num < $this->limit ) 
+				);
+				$wgOut->addHTML( '<p>' . $paging . '</p>' );
+			} else {
+				$wgOut->addHTML( XML::closeElement( 'div' ) );
+				return;
+			}
+		}
+
+		$html = $this->mShow ? implode( '', $html ) : $wgContLang->listToText( $html );
+		$wgOut->addHTML( $html );
 		
 		# Repeat the paging links at the bottom
 		if( $this->mShow ) {
