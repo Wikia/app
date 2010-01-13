@@ -33,7 +33,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
 class MultiwikifinderPage {
 	private $data = array();
 	private $mShow = true;
-	const ORDER_ROWS = 200;
+	const ORDER_ROWS = 2000;
 	var $mPage = null;
 	var $mValidPage = false;
 	var $mPageTitle = "";
@@ -107,7 +107,7 @@ class MultiwikifinderPage {
 
 		$num = 0;
 		$key = wfMemcKey( "MTF", $this->mPageTitle, $this->mPageNS, $this->limit, $this->offset );
-		$data = $wgMemc->get( $key );
+		$data = ""; #$wgMemc->get( $key );
 		
 		if ( empty($data) || 
 			( isset($data) && ( 0 == intval($data['numrec'] ) ) ) 
@@ -129,15 +129,19 @@ class MultiwikifinderPage {
 			$data = array( 'numrec' => $num, 'rows' => array() );
 			while ( $oRow = $dbr->fetchObject( $oRes ) ) {
 				$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $oRow->page_wikia_id );
-				$data['rows'][ $oRow->page_wikia_id ] = array(
-					$oRow->page_id,
-					$oGTitle->getFullURL()
-				);
-				#- get last edit TS or not
-				if ( $num <= self::ORDER_ROWS ) {
-					$data['order'][ $oRow->page_wikia_id ] = $oGTitle->getLatestRevTS();
-				} else {
-					$data['order'][ $oRow->page_wikia_id ] = $oRow->page_latest;
+				#--
+				if ( is_object( $oGTitle ) ) {
+					$oWiki = WikiFactory::getWikiByID( $oRow->page_wikia_id );
+					if ( $oWiki->city_public == 1 ) {
+						#- data
+						$data['rows'][ $oRow->page_wikia_id ] = array( $oRow->page_id, $oGTitle->getFullURL() );
+						#- get last edit TS or not
+						if ( $num <= self::ORDER_ROWS ) {
+							$data['order'][ $oRow->page_wikia_id ] = $oGTitle->getLastEdit();
+						} else {
+							$data['order'][ $oRow->page_wikia_id ] = $oRow->page_latest;
+						}
+					}
 				}
 			}
 			
