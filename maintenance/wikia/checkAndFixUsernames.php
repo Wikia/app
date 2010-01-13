@@ -52,30 +52,30 @@ foreach( $tables as $table => $columns ) {
 		$text_val = $row[ 0 ];
 		$id_val   = $row[ 1 ];
 
-		if( empty( $cachedUsers[ $text_val ] ) ) {
+		if( empty( $cachedUsers[ $id_val ] ) ) {
 			$user = $central->selectRow(
 				array( "user" ),
 				array( "user_id", "user_name"),
-				array( "user_name" => $text_val ),
+				array( "user_id" => $id_val ),
 				__METHOD__
 			);
 			if( !empty( $user ) ) {
-				$cachedUsers[ $user->user_name ] = $user->user_id;
+				$cachedUsers[ $user->user_id ] = $user->user_name;
 			}
 		}
 
-		$userid = $cachedUsers[ $text_val ];
-		if( $userid != $id_val && !empty( $id_val ) ) {
-			Wikia::log( "log", false, "inconsistency in $table, for {$text_val} local = {$id_val}, global = {$userid}" );
+		$username = str_replace( " ", "_", $cachedUsers[ $id_val ] );
+		if( $username != $text_val && !empty( $id_val ) && !empty( $username ) ) {
+			Wikia::log( "log", false, "inconsistency in $table, for {$id_val} local = {$text_val}, global = {$username}" );
 			$sql = sprintf(
-				"UPDATE %s SET %s = %d WHERE %s = %s AND %s <> %d AND %s <> 0",
+				"UPDATE %s SET %s = %s WHERE %s = %d AND %s <> %s AND %s <> 0",
 				$table,
 				$text,
-				$userid,
-				$text,
-				$dbw->addQuotes( $text_val ),
+				$dbw->addQuotes( $username ),
 				$id,
-				$userid,
+				$id_val,
+				$text,
+				$dbw->addQuotes( $username ),
 				$id
 			);
 
@@ -83,6 +83,7 @@ foreach( $tables as $table => $columns ) {
 				$sql .= " AND $column = ". $dbw->addQuotes( $row[ $index ] );
 			}
 			if( $write ) {
+				wfWaitForSlaves(3);
 				$dbw->begin( );
 				$dbw->query( $sql, __METHOD__ );
 				$dbw->commit( );
