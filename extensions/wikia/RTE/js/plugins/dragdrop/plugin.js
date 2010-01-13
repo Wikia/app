@@ -27,14 +27,6 @@ CKEDITOR.plugins.add('rte-dragdrop',
 			droppedElement.trigger('dropped');
 */
 
-			// IE adds resize box when drag&drop is finished
-			if (CKEDITOR.env.ie) {
-				// apply fix only for placeholders and images
-				if ( !!droppedElement.filter('img').attr('type') ) {
-					RTE.tools.removeResizeBox();
-				}
-			}
-
 		}, this.timeout);
 	},
 
@@ -78,14 +70,6 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 					// trigger custom event
 					target.trigger('dragged');
-
-					// RT #33851
-					if (CKEDITOR.env.ie) {
-						// apply fix only for placeholders and images
-						if ( !!target.filter('img').attr('type') ) {
-							RTE.tools.removeResizeBox();
-						}
-					}
 				}).
 
 				// ok, so this wasn't drag&drop, just a click on placeholder / image
