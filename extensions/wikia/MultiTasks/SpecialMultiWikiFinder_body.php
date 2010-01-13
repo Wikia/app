@@ -3,13 +3,28 @@
 class MultiwikifinderSpecialPage extends SpecialPage {
     private $mfp = null;
     var $mName = 'Multiwikifinder';
+    var $mRights = 'multiwikifinder';
 
 	function __construct() {
-		parent::__construct( $this->mName );
+		parent::__construct( $this->mName, $this->mRights );
 	}
 
 	function execute($page = null, $limit = "", $offset = "", $show = true) {
-		global $wgRequest;
+		global $wgRequest, $wgUser;
+
+		if( $wgUser->isBlocked() ) {
+			$wgOut->blockedPage();
+			return;
+		}
+		if( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return;
+		}
+		if( !$wgUser->isAllowed( 'multiwikifinder' ) ) {
+			$this->displayRestrictionError();
+			return;
+		}
+
 		wfLoadExtensionMessages("Multiwikifinder");
 
 		$page = $wgRequest->getVal('target', $page);
