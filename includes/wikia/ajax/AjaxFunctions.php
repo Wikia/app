@@ -54,11 +54,15 @@ function GetUserMenu($userName = '') {
 			);
 	}
 
-	$links['widgets'] = array(
+	global $wgUser;
+        $skin_name = $wgUser->getSkin()->getSkinName();
+	if ($skin_name != 'answers'){
+	  $links['widgets'] = array(
 		'text' => wfMsg('manage_widgets'),
 		'id' => 'menuManageWidgets',
 		'href' => '#'
 		);
+	}
 
 	$links['preferences'] = array(
 		'text' => wfMsg('preferences'),
