@@ -33,7 +33,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
 class MultiwikifinderPage {
 	private $data = array();
 	private $mShow = true;
-	const ORDER_ROWS = 1500;
+	const ORDER_ROWS = 2000;
 	var $mPage = null;
 	var $mValidPage = false;
 	var $mPageTitle = "";
@@ -106,8 +106,8 @@ class MultiwikifinderPage {
 		$wgOut->setSyndicated( false );
 
 		$num = 0;
-		$key = wfMemcKey( "MTF", $this->mPageTitle, $this->mPageNS, $this->limit, $this->offset );
-		$data = ""; #$wgMemc->get( $key );
+		$key = wfMemcKey( "MultiWikiFinder", $this->mPageTitle, $this->mPageNS, $this->limit, $this->offset );
+		$data = $wgMemc->get( $key );
 		
 		if ( empty($data) || 
 			( isset($data) && ( 0 == intval($data['numrec'] ) ) ) 
@@ -148,54 +148,25 @@ class MultiwikifinderPage {
 			$wgMemc->set( $key, $data, 60 * 60 );
 		} 
 
-		$num = $data['numrec'] ;
-		$wgOut->addHTML( XML::openElement( 'div', array('class' => 'mw-spcontent') ) );
-		
-		# Top header and navigation
-		if( $this->mShow ) {
-			$wgOut->addHTML( '<p>' . wfMsgExt('multiwikirecords', array(), $num) . '</p>' );
-			if( $num > 0 ) {
-				$wgOut->addHTML( '<p>' . wfShowingResults( $this->offset, $num ) . '</p>' );
-				# Disable the "next" link when we reach the end
-				$paging = wfViewPrevNext( 
-					$this->offset, 
-					$this->limit, 
-					$wgContLang->specialPage( $this->mName ), 
-					wfArrayToCGI( $this->linkParameters() ), 
-					( $num < $this->limit ) 
-				);
-				$wgOut->addHTML( '<p>' . $paging . '</p>' );
-			} else {
-				$wgOut->addHTML( XML::closeElement( 'div' ) );
-				return;
-			}
-		}
-
-		# The actual results; specialist subclasses will want to handle this
-		# with more than a straight list, so we hand them the info, plus
-		# an OutputPage, and let them get on with it
-		$this->outputResults( 
-			$wgOut,
-			$wgUser->getSkin(),
-			$data
-		);
-
-		# Repeat the paging links at the bottom
-		if( $this->mShow ) {
-			$wgOut->addHTML( '<p>' . $paging . '</p>' );
-		}
-
-		$wgOut->addHTML( XML::closeElement( 'div' ) );
+		$num = $this->outputResults( $wgUser->getSkin(), $data );
 
         wfProfileOut( __METHOD__ );
 		return $num;
 	}
 	
-	public function outputResults( $out, $skin, $data ) {
-		global $wgContLang;
+	public function outputResults( $skin, $data ) {
+		global $wgContLang, $wgOut;
 
-		if( isset($data) && $data['numrec'] > 0 ) {
-			$html = array();
+        wfProfileIn( __METHOD__ );
+
+		$html = array();
+		if ( $this->mShow ) {
+			$wgOut->addHTML( XML::openElement( 'div', array('class' => 'mw-spcontent') ) );
+		}	
+
+		if ( isset($data) && $data['numrec'] > 0 ) {
+			$num = $data['numrec'];
+			
 			if ( $this->mShow ) {
 				$html[] = XML::openElement( 'ol', array('start' => $this->offset + 1, 'class' => 'special' ) );
 			}
@@ -203,15 +174,11 @@ class MultiwikifinderPage {
 			if ( $data['numrec'] <= self::ORDER_ROWS ) { 
 				arsort($data['order']);
 			}
-#				$data = array_slice($data, $this->offset, $this->limit);
-#			}
-
-#			$oWiki = WikiFactory::getWikiByID( $oRow->page_wikia_id );
-#			if ( $oWiki->city_public == 1 ) {
-			$loop = 0;
+			$loop = 0; $skip = 0;
 			foreach ( $data['order'] as $city_id => $ordered ) {
+				# check loop
 				if ( $loop >= $this->offset && $loop < $this->limit + $this->offset ) {
-					$res = ""; list ($page_id, $page_url, $page_server) = $data['rows'][$city_id];
+					list ($page_id, $page_url, $page_server) = $data['rows'][$city_id];
 					# page url
 					if ( empty($page_url) || empty($page_server) ) {
 						$oGTitle = GlobalTitle::newFromText( $this->mPageTitle, $this->mPageNS, $city_id );
@@ -219,12 +186,16 @@ class MultiwikifinderPage {
 							$page_url = $oGTitle->getFullURL();
 							$page_server = $oGTitle->getServer();
 						}
-						if ( empty($page_url) || empty($page_server) ) continue;
+
+						if ( empty($page_url) || empty($page_server) ) {
+							$skip++; continue;
+						}
 					}
 					if (empty($this->mShow)) {
+						$res = "";
 						$this->data[$city_id] = array('city_id' => $city_id, 'page_id' => $page_id, 'url' => $page_url);
 					} else {
-						$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), $city_id );
+						$res = wfSpecialList( Xml::openElement( 'a', array('href' => $page_url) ) . $page_url . Xml::closeElement( 'a' ), "" );
 					}
 					
 					$html[] = $this->mShow ? Xml::openElement( 'li' ) . $res . Xml::closeElement( 'li' ) : "";
@@ -232,13 +203,45 @@ class MultiwikifinderPage {
 				$loop++;
 			}
 
+			$num = $num - $skip;
+			# Top header and navigation
+			if ( $this->mShow ) {
+				$wgOut->addHTML( '<p>' . wfMsgExt('multiwikirecords', array(), $num) . '</p>' );
+				if( $num > 0 ) {
+					$wgOut->addHTML( '<p>' . wfShowingResults( $this->offset, $num ) . '</p>' );
+					# Disable the "next" link when we reach the end
+					$paging = wfViewPrevNext( 
+						$this->offset, 
+						$this->limit, 
+						$wgContLang->specialPage( $this->mName ), 
+						wfArrayToCGI( $this->linkParameters() ), 
+						( $num < $this->limit ) 
+					);
+					$wgOut->addHTML( '<p>' . $paging . '</p>' );
+				} else {
+					$wgOut->addHTML( XML::closeElement( 'div' ) );
+					return;
+				}
+			}
+
+
 			if( $this->mShow ) {
 				$html[] = XML::closeElement( 'ol' );
 			}
 
 			$html = $this->mShow ? implode( '', $html ) : $wgContLang->listToText( $html );
 
-			$out->addHTML( $html );
+			$wgOut->addHTML( $html );
 		}
+		
+		# Repeat the paging links at the bottom
+		if( $this->mShow ) {
+			$wgOut->addHTML( '<p>' . $paging . '</p>' );
+		}
+
+		$wgOut->addHTML( XML::closeElement( 'div' ) );
+		
+        wfProfileOut( __METHOD__ );
+		return $num;
 	}
 }
