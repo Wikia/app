@@ -1,14 +1,5 @@
 <?php
 
-function errjump( $num )
-{
-	global $wgOut, $wgServer;
-
-	$wgOut->redirect( $wgServer );
-	$wgOut->output();
-	exit ( 0 );
-}
-
 class FastCat extends UnlistedSpecialPage {
 
 	/**
