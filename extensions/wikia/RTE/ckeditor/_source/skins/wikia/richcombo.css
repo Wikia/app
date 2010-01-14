@@ -59,6 +59,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	margin-left: 6px;
 }
 
+/* RT #33850 */
+.cke_skin_wikia .cke_browser_ie8 .cke_rcombo a {
+	margin-bottom: 5px;
+}
+
 .cke_skin_wikia .cke_hc .cke_rcombo a
 {
 	filter: alpha(opacity=100); /* IE */
