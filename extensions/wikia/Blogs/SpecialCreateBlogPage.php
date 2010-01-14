@@ -255,7 +255,10 @@ class CreateBlogPage extends SpecialBlogPage {
 
 		$oTitle = Title::newFromText($sTitle, NS_BLOG_ARTICLE);
 		$oArticle = new Article($oTitle, 0);
-		$sArticleBody = $oArticle->getContent();
+
+		// macbre: RT #37210
+		$sArticleBody = $oTitle->exists() ? $oArticle->getContent() : '';
+
 		$aPageProps = BlogArticle::getProps($oArticle->getId());
 		$aTitleParts = explode('/', $oTitle->getText(), 2);
 
