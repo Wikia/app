@@ -20,7 +20,7 @@ class NeueWebsite extends SpecialPage
     $newPageRunning = true;
 
     $post = "<p />
-      <form action=\"" . Title::newFromText('Special:NeueWebsite')->getFullUrl() . "\" method=\"get\">
+      <form action=\"" . Title::newFromText( $this->getLocalname(), NS_SPECIAL )->getFullUrl() . "\" method=\"get\">
       <b>" . wfMsg( 'newsite-form-label' ) . "</b>
       <input type=\"text\" name=\"param\" size=\"40\" maxlength=\"80\" />
       <input type=\"submit\" value=\"" . wfMsg( 'newsite-form-submit' ) . "\" /> 
