@@ -52,6 +52,10 @@ CKEDITOR.plugins.add( 'sourcearea',
 							// constraint to the 'td' in IE strick mode
 							if ( CKEDITOR.env.ie )
 							{
+								// Wikia - start
+								// RT #36994
+								styles.height = '99%';
+								/*
 								if ( !CKEDITOR.env.ie8Compat )
 								{
 									onResize = function()
@@ -71,6 +75,8 @@ CKEDITOR.plugins.add( 'sourcearea',
 									});
 									styles.height = holderElement.$.clientHeight + 'px';
 								}
+								*/
+								// Wikia - end
 							}
 							else
 							{
