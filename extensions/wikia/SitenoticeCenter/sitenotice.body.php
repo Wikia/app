@@ -36,7 +36,7 @@ class SitenoticeCenter extends SpecialPage {
 			$this->my_ib = true;
 		}
 
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'Sitenotice' );
+		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'SitenoticeCenter' );
 		$wgOut->setPageTitle( wfMsg('sitenoticecenter-title') );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
@@ -182,7 +182,7 @@ class SitenoticeCenter extends SpecialPage {
 		$wgCookiePrefix = ''; //clear
 		//we do this so we can set the cookie name, without the MW prefix in the way
 
-		$wgRequest->response()->setcookie( $this->mCookieName, "", -1 );
+		$wgRequest->response()->setcookie( $this->mCookieName, false, -1 );
 
 		//restore
 		$wgCookiePrefix = $wCP;
