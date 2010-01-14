@@ -1,21 +1,152 @@
 /* Answers specific CSS goes here, overriding monaco css, and adding any additional */
 
+
+/* import from Healthy Stuff */
+
+.monaco_shrinkwrap {
+   left: 50% !important;
+   margin-left: -505px !important;
+   width: 1010px !important;
+}
+
+.color1 {
+   background-color: #FFF;
+   color:            #666;
+}
+ 
+.color1 a {
+   color:            #333;
+}
+ 
+.color2 {
+   background-color: White;
+}
+ 
+.accent {
+       background-color: #FFF; /*a tint of .color1*/
+       border-color: #FFF; /*same as .color1's background*/
+       color: #666; /*text color that looks appropriate on the background-color*/
+}
+
+.neutral {
+       background-color: #555; /*a color that offsets slightly from the main article background color*/
+       border-color: #FFF; /*a border color that looks good*/
+       color: #000000; /*text color that looks appropriate on the background-color*/
+}
+
+.widget {
+       border: none;
+       background-color: #f5f5f5;
+       color: #666;
+}
+
+.neutral {
+       background-color: #eee;
+}
+
+#background_strip {
+       border-bottom: none;
+}
+
+#wikia_header {
+       border-bottom: none;
+}
+
+#catlinks {
+       background-color: #FFF;
+       border: none;
+}
+
+#wikia_page {
+       border: none;
+}
+
+#navigation .Monaco-sidebar_edit {
+       display: none;
+}
+
+#search_field {
+       border:1px solid #eee;
+}
+
+a:link {color: #369; text-decoration: none; }
+a:active {color: #369; text-decoration: none; }
+a:visited {color: #369; text-decoration: none; }
+a:hover {color: #369; text-decoration: underline; }
+
+a.new {color:#BA5500 !important;}
+
+#wikiaBranding a {color:#888;}
+#userData a {color:#888;}
+#wikia_corporate_footer a {color:#888;}
+
+#wikia_corporate_footer {
+       color:#888;
+}
+
+body {
+       color: #444;
+       font-size:80%;
+}
+
+img {
+       border:1px solid #AAAAAA;
+}
+
+#request_wiki {
+       text-decoration:none;
+       margin-left: 5px;
+       font-size: 10pt !important;
+       color: #ddd;
+}
+
+#link_box_dynamic img {
+       background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
+}
+
+.activityfeed img.sprite {
+       background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
+}
+
+#search_button {
+       background:transparent url(http://images3.wikia.nocookie.net/test123/images/9/95/Search.png?201001.1)
+}
+
+/* maybe needed */
+#wikia_page {
+border-color:#EEEEEE;
+       border-style:solid none none;
+       border-width:8px medium medium;
+       font-family:"Helvetica Neue",Helvetica,Arial,default;
+}
+
+#link_box_table {
+       display: none;
+}
+
+#navigation {
+       display: none;
+}
+
+
+/* end import */
+
+
+
+
+
+
+
+
+
+
+
 /* Change the background image of the logo */
 #wikia_logo {
         /* background: url(http://images.wikia.com/common/skins/monaco/images/wikia_logo.png) no-repeat; */
         background: url(/skins/answers/images/wikianswers_logo_transparent.png) no-repeat;
         height: 23px;
         width: 198px;
-}
-/* Hide the wiki specific logo and background strip */
-#background_strip {
-	display:none;
-}
-#wikia_page {
-	top: 0px; /* Set to -177 in monaco, reset here */
-}
-#monaco_footer {
-	top: 0px; /* Set to -177 in monaco, reset here */
 }
 
 #siteSub {
@@ -75,6 +206,10 @@
 	margin-bottom:10px;
 	margin-top:10px;
 	width:460px;
+}
+
+#answers_category_select {
+	margin-bottom: 20px;
 }
 
 /* Misc */
