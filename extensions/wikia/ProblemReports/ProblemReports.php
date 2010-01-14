@@ -36,6 +36,17 @@ $wgSpecialPages['ProblemReports'] = 'SpecialProblemReports';
 $wgAutoloadClasses['SpecialProblemReports'] = $IP . '/extensions/wikia/ProblemReports/SpecialProblemReports_body.php'; 
 $wgSpecialPageGroups['ProblemReports'] = 'maintenance';
 
+// setup rights
+// -local actions
+$wgAvailableRights[] = 'problemreports_action';
+$wgGroupPermissions['sysop']['problemreports_action'] = true;
+
+// -global actions
+$wgAvailableRights[] = 'problemreports_global';
+$wgGroupPermissions['staff']['problemreports_global'] = true;
+$wgGroupPermissions['vstf']['problemreports_global'] = true;
+$wgGroupPermissions['helper']['problemreports_global'] = true;
+
 // extension setup (install hooks, load WikiaAPI modules)
 function wfProblemReports()
 {

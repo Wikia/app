@@ -771,7 +771,8 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
     // user can do actions: fix, reopen, close problem reports (only local wiki)
     static function userCanDoActions() {
         global $wgUser;
-		return in_array( 'sysop', $wgUser->getGroups() ) || self::userCanDoCrossWikiActions();
+		
+		return $wgUser->isAllowed('problemreports_action') || self::userCanDoCrossWikiActions();
     }
 
     // user is staff member
@@ -780,15 +781,11 @@ class WikiaApiQueryProblemReports extends WikiaApiQuery {
 		return in_array( 'staff', $wgUser->getGroups() );
     }
 
-
-
     // user can do actions: fix, reopen, close problem reports (cross-wiki)
     static function userCanDoCrossWikiActions() {
 		global $wgUser;
 
-		$groups = $wgUser->getGroups();
-
-		return in_array( 'staff', $groups ) || in_array( 'vstf', $groups ) || in_array( 'helper', $groups );
+		return $wgUser->isAllowed('problemreports_global');
     }
 
     // use can remove problem reports
