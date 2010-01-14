@@ -356,3 +356,5 @@ $wgSpecialPagesRequiredLogin = array('Resetpass', 'MyHome', 'Preferences', 'Watc
  * @see Article comments
  */
 $wgArticleCommentsMaxPerPage = 5;
+
+$wgMaxThumbnailArea = 0.9e7;
