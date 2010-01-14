@@ -207,7 +207,8 @@ solid #8F8F73;-moz-border-radius-topleft:0;-webkit-border-top-left-radius:0;bord
 .cke_skin_wikia .cke_rcombo a:active,
 .cke_skin_wikia .cke_rcombo a:hover{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;background-image:url(images/sprites.png?20100114);_background-image:url(images/sprites_ie6.png?20100114);background-repeat:repeat-x;background-position:0 -100px;border-bottom:1px solid #DAD9D9;border-right:1px solid #DAD9D9;float:left;padding:2px;height:21px;margin-right:6px}.cke_skin_wikia .cke_rtl .cke_rcombo a,
 .cke_skin_wikia .cke_rtl .cke_rcombo a:active,
-.cke_skin_wikia .cke_rtl .cke_rcombo a:hover{float:right;margin-right:0;margin-left:6px}.cke_skin_wikia .cke_hc .cke_rcombo
+.cke_skin_wikia .cke_rtl .cke_rcombo a:hover{float:right;margin-right:0;margin-left:6px}.cke_skin_wikia .cke_browser_ie8 .cke_rcombo
+a{margin-bottom:5px}.cke_skin_wikia .cke_hc .cke_rcombo
 a{filter:alpha(opacity=100);opacity:1.0}.cke_skin_wikia .cke_rcombo
 .cke_label{display:none;line-height:26px;vertical-align:top;margin-right:5px;filter:alpha(opacity=70);opacity:0.70}.cke_skin_wikia .cke_rtl .cke_rcombo
 .cke_label{margin-right:0;margin-left:5px}.cke_skin_wikia .cke_rcombo
