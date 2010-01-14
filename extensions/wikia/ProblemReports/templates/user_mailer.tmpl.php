@@ -37,7 +37,7 @@
     
     <div class="headers">
 		<label for="mailer-from"><?= wfMsg('emailfrom') ?></label><input type="text" name="mailer-from" id="mailer-from" value="<?= htmlspecialchars($mailer_from) ?>" disabled="disabled" /><br />
-		<label for="mailer-to"><?= wfMsg('emailto') ?></label><input type="text" name="mailer-to" id="mailer-to" value="<?= htmlspecialchars($problem['reporter']) ?><?= ($isStaff ? ' &lt;'.htmlspecialchars($problem['email']).'&gt;' : wfMsg('pr_mailer_to_default')) ?>" disabled="disabled" /><br />
+		<label for="mailer-to"><?= wfMsg('emailto') ?></label><input type="text" name="mailer-to" id="mailer-to" value="<?= htmlspecialchars($problem['reporter']) ?> <?= ($isStaff ? '&lt;'.htmlspecialchars($problem['email']).'&gt;' : wfMsg('pr_mailer_to_default')) ?>" disabled="disabled" /><br />
 		<label for="mailer-subject"><?= wfMsg('emailsubject') ?></label><input type="text" name="mailer-subject" id="mailer-subject" value="[<?= SpecialProblemReports::makeEmailTitle($problem['city']).'] '.wfMsg('pr_mailer_subject') ?> &quot;<?= htmlspecialchars($problem['title']) ?>&quot;" /><br />
     </div>
     
