@@ -8,7 +8,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	border: 1px solid #8f8f73;
 	background-color: #fff;
 
-	width: 120px;
+	width: 200px; /* RT #36074 */
 	height: 100px;
 
 	overflow: hidden;
