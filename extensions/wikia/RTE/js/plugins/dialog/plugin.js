@@ -40,6 +40,46 @@ CKEDITOR.plugins.add('rte-dialog',
 
 					// store MW suggest container node
 					this._.suggestContainer = container;
+
+					// Prevent some keys from bubbling up. (#4269)
+					var element = new CKEDITOR.dom.element(fieldElem[0]);
+
+					// fix for RT #37023
+					// Prevent some keys from bubbling up. (#4269)
+					var self = this;
+					for (var ev in { keyup :1, keydown :1, keypress :1}) {
+						element.on(ev, function(e) {
+							// ESC, ENTER
+							var preventKeyBubblingKeys = { 27 :1, 13 :1 };
+							if (e.data.getKeystroke() in preventKeyBubblingKeys) {
+								e.data.stopPropagation();
+
+								// check if suggestion is shown
+								var suggestBox = self._.suggestContainer;
+
+								if (suggestBox.css('visibility') != 'hidden') {
+									// set the flag
+									self._.dontHide = true;
+
+									// hide suggest box
+									suggestBox.css('visibility', 'hidden');
+								}
+							}
+						});
+					};
+
+					this.on('ok', function(ev) {
+						// prevent dialog hiding
+						if (this._.dontHide) {
+							RTE.log('dialog hide prevented');
+							ev.data.hide = false;
+
+							// unset this flag
+							this._.dontHide = false;
+						}
+					});
+
+					// fix - end
 				}
 				else {
 					this._.suggestContainer = $('#' + os_map[fieldId].container);

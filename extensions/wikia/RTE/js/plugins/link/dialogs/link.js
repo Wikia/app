@@ -234,6 +234,11 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		// create new link / update link' meta data
 		onOk : function()
 		{
+			// RT #37023 - wait until dialog is hidden
+			if (this._.dontHide) {
+				return;
+			}
+
 			// for tracking
 			var type = '';
 
