@@ -695,7 +695,7 @@ function os_eventMouseup(srcId, e){
 	if(num >= 0 && os_mouse_num == num){
 		os_updateSearchQuery(r,r.results[num]);
 		os_hideResults(r);
-		//document.getElementById(r.searchform).submit(); // macbre: temporary disabled it for FCK
+		document.getElementById(r.searchform).submit();
 	}
 	os_mouse_pressed = false;
 	// keep the focus on the search field
