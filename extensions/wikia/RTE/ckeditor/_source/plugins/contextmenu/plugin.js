@@ -213,16 +213,6 @@ CKEDITOR.plugins.contextMenu = CKEDITOR.tools.createClass(
 						offsetX = domEvent.$.clientX,
 						offsetY = domEvent.$.clientY;
 
-					// Wikia - start
-					// RT #33876
-					var contextMenuWidth = 120 + 10; // use constant width of context menu (+ small padding)
-					var editorWidth = RTE.getEditor().width();
-
-					if ( offsetX > (editorWidth - contextMenuWidth) ) {
-						offsetX = editorWidth - contextMenuWidth;
-					}
-					// Wikia - end
-
 					CKEDITOR.tools.setTimeout( function()
 						{
 							this._.onMenu( offsetParent, null, offsetX, offsetY );
