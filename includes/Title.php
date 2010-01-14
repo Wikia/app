@@ -1178,6 +1178,14 @@ class Title {
 				$errors[] = array( 'movenotallowedfile' );
 			}
 			
+			/* Wikia change begin - @author: uberfuzzy */
+			// Check if uploading disabled or not enabled (wikia #36880)
+			global $wgDisableUploads, $wgEnableUploads;
+			if( $this->getNamespace() == NS_FILE && ($wgDisableUploads || !$wgEnableUploads) ) {
+				$errors[] = array( 'movenotallowedfile' );
+			}
+			/* Wikia change end */
+			
 			if( !$user->isAllowed( 'move' ) ) {
 				// User can't move anything
 				$errors[] = $user->isAnon() ? array ( 'movenologintext' ) : array ('movenotallowed');
