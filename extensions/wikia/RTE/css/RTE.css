@@ -337,6 +337,10 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 	padding: 4px 0;
 }
 
+#templateEditorHotTemplates {
+	width: 510px;
+}
+
 #templateEditorHotTemplates li {
 	float: left;
 	width: 240px;
