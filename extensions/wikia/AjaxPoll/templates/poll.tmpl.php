@@ -31,7 +31,7 @@
 			<br style="clear: both;" />
 			<div>
 			<?php
-				$span = sprintf("<span class=\"total\" id=\"wpPollTotal%s\">%d</span>&nbsp;", $id, $total );
+				$span = sprintf("<span class=\"total\" id=\"wpPollTotal%s\">%d</span>", $id, $total );
 				$summary = wfMsg("ajaxpoll-summary", array( $created_time, $created_date, $span ));
 				echo $summary;
 			?>
