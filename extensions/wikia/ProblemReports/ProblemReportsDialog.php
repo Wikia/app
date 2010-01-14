@@ -39,11 +39,11 @@ function wfProblemReportsAddLink(&$content_actions) {
 	wfLoadExtensionMessages( 'ProblemReports' );
 
 	// add action tab in monobook
-	$content_actions['report-problem'] = array(
-		'class' => '',
-		'text' => wfMsg('reportproblem'),
-		'href' => '#' ,
-	);
+	#$content_actions['report-problem'] = array(
+	#	'class' => '',
+	#	'text' => wfMsg('reportproblem'),
+	#	'href' => '#' ,
+	#);
 
 	wfProfileOut(__METHOD__);
 	
