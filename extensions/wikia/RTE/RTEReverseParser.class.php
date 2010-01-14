@@ -543,13 +543,13 @@ class RTEReverseParser {
 		// handle <br /> added by Shift+Enter
 		if ($node->hasAttribute('_rte_shift_enter')) {
 			$out = "<br />";
-			if(!self::isListNode($node->parentNode->parentNode)) { // (RT#37118)
+			if(!empty($node->parentNode->parentNode) && !self::isListNode($node->parentNode->parentNode)) { // (RT#37118)
 				$out .= "\n";
 			}
 		}
 
 		// handle <br /> in list added by text copy (RT#37118)
-		if(self::isListNode($node->parentNode->parentNode)) {
+		if(!empty($node->parentNode->parentNode) && self::isListNode($node->parentNode->parentNode)) {
 			$out = "<br />";
 		}
 
