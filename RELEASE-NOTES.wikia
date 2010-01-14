@@ -1,5 +1,6 @@
 == Changes since 201001.2 ==
-* rt#34779 :ProblemReports: remove tab in monobook (uberfuzzy)
+* rt#36073: RTE: article NOWYSIWYG not tested within section editing (macbre)
+* rt#34779: ProblemReports: remove tab in monobook (uberfuzzy)
 * rt#36996: Answers: refactor of header question mark (uberfuzzy)
 * rt#36964: RTE: design issue with first run notice on Special:CreateBlogPage (macbre)
 * rt#36062: RTE: hover elements alignment issues in IE8 standards mode (macbre)
