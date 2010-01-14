@@ -50,6 +50,11 @@ EditEnhancements = function() {
 		newSummaryWidth = Math.min(newSummaryWidth, 500);
 
 		Dom.setStyle('wpSummaryEnhanced', 'width', newSummaryWidth + 'px');
+
+		// RT#36994
+		if (typeof window.RTE !='undefined') {
+			RTE.instance.fire('resize');
+		}
 	}
 
 	this.calculate();
