@@ -666,6 +666,12 @@ HTML
 		$ret = array(
 			'ellipsis' => wfMsg('ellipsis'),
 			'template' => $wgLang->getNsText(NS_TEMPLATE), # localised template namespace name (RT #3808)
+
+			// RT #36073
+			'edgecase' => array(
+				'title' => wfMsg('rte-edgecase-info-title'),
+				'content' => wfMsg('rte-edgecase-info'),
+			),
 		);
 
 		wfProfileOut(__METHOD__);

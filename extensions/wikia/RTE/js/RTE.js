@@ -282,6 +282,20 @@ window.RTE = {
 
 			case 'source':
 				RTE.ajax('wiki2html', {wikitext: content, title: window.wgPageName}, function(data) {
+
+					// RT #36073 - don't allow mode switch when __NOWYSIWYG__ is found in another article section
+					if ( (typeof window.RTEEdgeCase != 'undefined') && (window.RTEEdgeCase == 'nowysiwyg') ) {
+						RTE.log('article contains __NOWYSIWYG__ magic word');
+
+						data.edgecase = {
+							type: window.RTEEdgeCase,
+							info: {
+								title: window.RTEMessages.edgecase.title,
+								content: window.RTEMessages.edgecase.content
+							}
+						};
+					}
+
 					if (data.edgecase) {
 						RTE.log('edgecase found!');
 						RTE.tools.alert(data.edgecase.info.title, data.edgecase.info.content);

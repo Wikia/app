@@ -23,6 +23,8 @@ class RTEAjax {
 					'content' => wfMsg('rte-edgecase-info'),
 				),
 			);
+
+			unset($ret['html']);
 		}
 
 		return $ret;
