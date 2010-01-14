@@ -556,7 +556,9 @@ HTML
 			if(strrpos($line, '*') === 0) {
 				$title = Title::newFromText(trim($line, '* '));
 				//$templateDropdown[$title->getPrefixedText()] = RTE::getTemplateParams($title, RTE::$parser);
-				$templateDropdown[] = $title->getPrefixedText();
+				if ( is_object( $title ) ) {
+					$templateDropdown[] = $title->getPrefixedText();
+				}
 			}
 		}
 
