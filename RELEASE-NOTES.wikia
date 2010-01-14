@@ -1,4 +1,5 @@
 == Changes since 201001.2 ==
+* rt#37132: RTE: template editor broken in Chrome (macbre)
 * rt#36994: RTE: source mode edit window does not resize correctly on IE8's IE7 compat mode (macbre)
 * rt#37120: Blogs: "Create" link on non-existent blog pages has odd effects (macbre)
 * rt#37119: RTE: widescreen button tooltip is in dutch! (macbre)
