@@ -1656,9 +1656,7 @@ if( $custom_user_data ) {
 						}
 					}
 
-					// Display categories
-					if($this->data['catlinks'])
-						$this->html('catlinks');
+					$this->printCategories();
 					?>
 					<!-- end content -->
 					<?php if($this->data['dataAfterContent']) { $this->html ('dataAfterContent'); } ?>
@@ -2396,5 +2394,13 @@ wfProfileOut( __METHOD__ . '-body');
 	// Made a separate method so recipes, answers, etc can override. 
 	function printContent(){
 		$this->html('bodytext');
+	}
+
+	// Made a separate method so recipes, answers, etc can override. 
+	function printCategories(){
+		// Display categories
+		if($this->data['catlinks']) {
+			$this->html('catlinks');
+		}
 	}
 }
