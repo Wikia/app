@@ -61,7 +61,7 @@ class Multiwikiedit extends MultiTask {
 				$this->showForm( wfMsg('multiwikiedit_add_text') ) ;
 			}
 			else {
-				$wgOut->setSubTitle ( wfMsg('multiwikiedit_processing') . wfMsg ('multiwikiedit_from_form') );
+				$wgOut->setSubTitle ( wfMsg('multiwikiedit_processing') . wfMsg( 'word-separator' ) . wfMsg ('multiwikiedit_from_form') );
 				$this->doSubmit(0);
 			}
 		} 
@@ -73,7 +73,7 @@ class Multiwikiedit extends MultiTask {
 				$this->showForm( wfMsg('multiwikiedit_add_text') ) ;
 			}
 			else {
-				$wgOut->setSubTitle ( wfMsg('multiwikiedit_processing') . wfMsg ('multiwikiedit_from_form') );
+				$wgOut->setSubTitle ( wfMsg('multiwikiedit_processing') . wfMsg( 'word-separator' ) . wfMsg ('multiwikiedit_from_form') );
 				$this->doSubmit(1);
 			}
 		}
@@ -133,6 +133,6 @@ class Multiwikiedit extends MultiTask {
 	protected function getBackUrl() {
 		global $wgUser;
 		$sk = $wgUser->getSkin();
-		return "<br/><br/>".wfMsg('multiwikiedit_link_back')." ".$sk->makeKnownLinkObj($this->mTitle, '<b>here</b>').".";
+		return "<br/><br/>". wfMsg('multiwikiedit_link_back', $sk->makeKnownLinkObj($this->mTitle, '<b>' . wfMsg( 'multitasks-link-back-label' ) . '</b>') );
 	}
 }

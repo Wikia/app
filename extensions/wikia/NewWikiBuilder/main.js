@@ -31,7 +31,7 @@ NWB.apiFailed = function(reqObj, msg, error){
 	if (typeof msg == "object"){
 		msg = Mediawiki.print_r(msg);
 	}
-	alert(NWB.msg("nwb-api-error") + Mediawiki.print_r(msg));
+	alert(NWB.msg("nwb-api-error") + " " + Mediawiki.print_r(msg));
 };
 
 NWB.showStep = function(stepName) {

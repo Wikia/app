@@ -253,7 +253,7 @@ class InviteSpecialPage extends SpecialPage {
 
 		if ( $uniqueId ) {
 			$out .= "\n\n\n\n\n\n";
-			$out .= wfMsg( 'stf_abuse', wfGetIP() );
+			$out .= wfMsg( 'stf_abuse', wfGetIP() ) . "\n";
 		}
 
 		wfProfileOut( __METHOD__ );

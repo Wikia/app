@@ -17,11 +17,10 @@ $messages['en'] = array(
       'protectsite-upload' => 'Allow file uploads by',
       'protectsite-timeout' => 'Timeout: ',
       'protectsite-timeout-error' => "'''Invalid Timeout.'''",
-      'protectsite-maxtimeout' => 'Maximum: ',
-      'protectsite-comment' => 'Comment: ',
-      'protectsite-ucomment' => 'Unprotect comment: ',
-      'protectsite-until' => 'Protected until: ',
+      'protectsite-maxtimeout' => 'Maximum:',
+      'protectsite-comment' => 'Comment:',
+      'protectsite-ucomment' => 'Unprotect comment:',
+      'protectsite-until' => 'Protected until:',
       'protectsite-protect' => 'Protect',
       'protectsite-unprotect' => 'Unprotect',
-    );
-
+);

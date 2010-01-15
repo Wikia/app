@@ -1,7 +1,7 @@
 <!-- s:<?= __FILE__ ?> -->
 <div class="stats-subtitle"><?= wfMsg('wikiastats_creation_wikia_text') ?></div>
 <div class="wk-select-class-clear">
-<?=wfMsg('wikiastats_creation_legend')?>
+<?=wfMsg('wikiastats_creation_legend') . wfMsg('word-separator') ?>
 0 ≤ <font color="#AF5615">Xxx</font> < 5 ≤ <font color="#8F8735">Xxx</font> < 50 ≤ <font color="#187F17">Xxx</font> < 500 ≤ <font color=\"#267BCF\">Xxx</font>
 </div>
 <br />
