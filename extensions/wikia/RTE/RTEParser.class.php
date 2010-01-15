@@ -165,6 +165,14 @@ class RTEParser extends Parser {
 			// width provided in wikitext
 			$width = $data['params']['width'];
 		}
+		// image height (RT #37266)
+		// [[Image:foo|x250px|caption]]
+		else if (!empty($data['params']['height'])) {
+			$height = $data['params']['height'];
+
+			$width = round( $image->getWidth() * ($height / $image->getHeight()) );
+		}
+		// thumb
 		else if (isset($data['params']['thumbnail'])) {
 			// width not provided - get default for thumbs
 			global $wgUser, $wgThumbLimits;
