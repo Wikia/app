@@ -144,7 +144,7 @@ border-color:#EEEEEE;
 /* Change the background image of the logo */
 #wikia_logo {
         /* background: url(http://images.wikia.com/common/skins/monaco/images/wikia_logo.png) no-repeat; */
-        background: url(/skins/answers/images/wikianswers_logo_transparent.png) no-repeat;
+        background: url(http://images.wikia.com/common/trunk/skins/answers/images/wikianswers_logo_transparent.png) no-repeat;
         height: 23px;
         width: 198px;
 }
@@ -341,10 +341,6 @@ div.userInfoNoAvatar .userPoints {
 	clear:both;
 	margin-top:10px;
 	position:relative;
-}
-.google-feedback-link {
-	/* Remove mediawiki's little lock icon */
-	background: none;
 }
 .google-ad-unit small a {
 	font-size:11px;
