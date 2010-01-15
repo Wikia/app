@@ -38,6 +38,12 @@ class RTEReverseParser {
 			// try to parse fixed HTML as XML
 			$bodyNode = $this->parseToDOM($html);
 
+			// in some edge-cases it may fail - then try to parse original HTML as HTML (refs RT #37253)
+			if (empty($bodyNode)) {
+				RTE::log(__METHOD__, 'parsing as XML failed! Trying HTML parser');
+				$bodyNode = $this->parseToDOM($html, false);
+			}
+
 			// now we should have properly parsed HTML
 			if (!empty($bodyNode)) {
 				RTE::log('XML (as seen by DOM)' ,$this->dom->saveXML());
