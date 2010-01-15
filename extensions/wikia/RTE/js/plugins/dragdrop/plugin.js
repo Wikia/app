@@ -40,6 +40,19 @@ CKEDITOR.plugins.add('rte-dragdrop',
 		}, this.timeout);
 	},
 
+	onDrag: function(ev) {
+		// create undo point (RT #36064)
+		RTE.instance.fire('saveSnapshot');
+		RTE.log('drag&drop: undo point');
+
+		// "mark" dragged element
+		var target = $(ev.target);
+		target.attr('_rte_dragged', true);
+
+		// trigger custom event
+		target.trigger('dragged');
+	},
+
 	init: function(editor) {
 		var self = this;
 
@@ -56,18 +69,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 				// for new Fx (3.5+)
 				//
-				bind('dragstart.dnd', function(ev) {
-					// create undo point (RT #36064)
-					RTE.instance.fire('saveSnapshot');
-					RTE.log('drag&drop: undo point');
-
-					// "mark" dragged element
-					var target = $(ev.target);
-					target.attr('_rte_dragged', true);
-
-					// trigger custom event
-					target.trigger('dragged');
-				}).
+				bind('dragstart.dnd', self.onDrag).
 
 				bind('drop', self.onDrop).
 
@@ -77,18 +79,7 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 				// user clicked on placeholder / image
 				// this can be beginning of drag&drop
-				bind('mousedown.dnd', function(ev) {
-					// create undo point (RT #36064)
-					RTE.instance.fire('saveSnapshot');
-					RTE.log('drag&drop: undo point');
-
-					// "mark" dragged element
-					var target = $(ev.target);
-					target.attr('_rte_dragged', true);
-
-					// trigger custom event
-					target.trigger('dragged');
-				}).
+				bind('mousedown.dnd', self.onDrag).
 
 				// ok, so this wasn't drag&drop, just a click on placeholder / image
 				bind('mouseup.dnd', function(ev) {
