@@ -2223,6 +2223,10 @@ wfProfileOut( __METHOD__ . '-body');
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
 	function printPageBar(){
+		// Allow for other skins to conditionally include it
+		$this->realPrintPageBar();
+	}
+	function realPrintPageBar(){
 		global $wgUser, $wgTitle;
                 $skin = $wgUser->getSkin();
 	 	?>
