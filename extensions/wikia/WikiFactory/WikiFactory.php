@@ -2070,7 +2070,7 @@ class WikiFactoryUpdate {
 		global $wgWikicitiesReadOnly;
 
 		if( ! WikiFactory::isUsed() || $wgWikicitiesReadOnly ) {
-			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
+			Wikia::log( __METHOD__, "", "WikiFactory is not used or in read-only mode." );
 			return false;
 		}
 
@@ -2098,8 +2098,10 @@ class WikiFactoryUpdate {
 	static public function addPostCommitUpdate( &$rc ) {
 		global $wgPostCommitUpdateList, $wgCityId;
 
-		$deffUpdate = new WikiFactoryUpdate( $wgCityId );
-		array_push( $wgPostCommitUpdateList, $deffUpdate );
+		if( ! wfReadOnly() ) {
+			$deffUpdate = new WikiFactoryUpdate( $wgCityId );
+			array_push( $wgPostCommitUpdateList, $deffUpdate );
+		}
 		return true;
 	}
 }
