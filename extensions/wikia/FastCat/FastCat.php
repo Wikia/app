@@ -76,20 +76,14 @@ function efFastCatSelector( &$categories ) {
 
   $catUrl = Title::newFromText( 'FastCat', NS_SPECIAL )->getFullURL();
 
-  $ret =<<< EORET
-
-<form action="$catUrl" method="post">
-<p><b>Kategorie-Schnellauswahl</b><br>
-<small>Diese Website hat noch keine Kategorie. Bitte hilf mit, sie zu kategorisieren.
-Wenn hier keine geeignete Kategorie angezeigt wird, bitte den Artikel bearbeiten.
-Websites aus dem Adultbereich müssen entsprechend kategorisiert werden.
-<b>Bitte</b> keine unsinnigen Kategorien anklicken.</small>
+  $ret = "<form action=\"$catUrl\" method='post'>
+<p><b>" . wfMsg( 'fastcat-box-title' ) . "</b><br>
+<small>" . wfMsg( 'fastcat-box-intro' ) . "</small>
 </p>
-<input type="hidden" name="id" value="$artid">
-<input type="hidden" name="spice" value="$spice">
-<input type="hidden" name="artname" value="$artname">
-<p style="text-indent:-1em;margin-left:1em">
-EORET;
+<input type='hidden' name='id' value='$artid'>
+<input type='hidden' name='spice' value='$spice'>
+<input type='hidden' name='artname' value='$artname'>
+<p style=\"text-indent:-1em;margin-left:1em\">";
 
   foreach($kat as $k) {
 
