@@ -1,4 +1,5 @@
 == Changes since 201001.2 ==
+* rt#37253: RTE: page explodes in editor source mode (macbre)
 * rt#36064: RTE: dragging a thumbnail/frame image can remove it from the page if no text exists (macbre)
 * rt#37203: AjaxPoll: remove nbsp (uberfuzzy)
 * rt#37173: ProblemReports: -group checking, +permission checking (uberfuzzy)
