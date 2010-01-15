@@ -1,4 +1,6 @@
 == Changes since 201001.2 ==
+* rt#37266: RTE: editor does not recognise height markup for images (macbre)
+* rt#37261: RTE: new and old indent positions do not match (macbre)
 * rt#37258: RTE: issues with typing after indented text at the end of a page (macbre)
 * rt#36070: RTE: on IE8 standard mode signature button broken in some situations (macbre)
 * rt#37253: RTE: page explodes in editor source mode (macbre)
