@@ -5,6 +5,8 @@ $messages = array();
 $messages['en'] = array(
 	'fastcat-marker-category' => "None",
 	'fastcat-edit-comment' => "FastCat: added category $1",
+	'fastcat-box-title' => 'Fast Categorization',
+	'fastcat-box-intro' => 'This website doesn\'t have a category yet. Please help us categorize it properly by clicking the most appropriate category on the list below.',
 	'fastcat-categories-list' => "* Parked
 ** Under construction
 ** Error pages
@@ -312,6 +314,11 @@ $messages['en'] = array(
 $messages['de'] = array(
 	'fastcat-marker-category' => "Keine",
 	'fastcat-edit-comment' => "FastCat: Kategorie $1 hinzugefügt",
+        'fastcat-box-title' => 'Kategorie-Schnellauswahl',
+        'fastcat-box-intro' => 'Diese Website hat noch keine Kategorie. Bitte hilf mit, sie zu kategorisieren.
+Wenn hier keine geeignete Kategorie angezeigt wird, bitte den Artikel bearbeiten.
+Websites aus dem Adultbereich müssen entsprechend kategorisiert werden.
+<b>Bitte</b> keine unsinnigen Kategorien anklicken',
 	'fastcat-categories-list' => "* Geparkt
 ** Baustelle
 ** Fehlerseiten
