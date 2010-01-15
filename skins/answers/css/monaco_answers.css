@@ -335,3 +335,53 @@ div.userInfoNoAvatar .userPoints {
 	letter-spacing: -1px;
 	padding-left: 10px;
 }
+
+/* Google js ads */
+.google-ad-unit {
+	clear:both;
+	margin-top:10px;
+	position:relative;
+}
+.google-feedback-link {
+	/* Remove mediawiki's little lock icon */
+	background: none;
+}
+.google-ad-unit small a {
+	font-size:11px;
+	position:absolute;
+	right:0;
+	text-decoration:none;
+	top:0;
+}
+.google-ad-unit p {
+	font-size:13px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:115%;
+	margin-bottom:10px;
+}
+.google-ad-unit p a {
+	color:#333333 !important;
+	text-decoration:none;
+}
+.google-ad-unit a:hover {
+	text-decoration:none;
+}
+.google-ad-unit a strong {
+	color:#336699;
+	font-size:15px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:bold;
+	line-height:122%;
+}
+.google-ad-unit em {
+	color:#999999;
+	font-size:12px;
+	font-style:normal;
+}
