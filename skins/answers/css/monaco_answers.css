@@ -376,4 +376,5 @@ div.userInfoNoAvatar .userPoints {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	list-style-image:none;
+	list-style-type:none;
 }
