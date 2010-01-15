@@ -69,9 +69,14 @@ function testStomp() {
 }
 
 function testWF() {
-	print( WikiFactory::getVarValueByName( "wgFavicon", 40 ) ) . "\n";
-	print( WikiFactory::getVarValueByName( "wgFavicon", 40 ) ) . "\n";
-	print( WikiFactory::substVariables( '$wgUploadDirectory/$wgUploadPath', 40 ) ) . "\n";
+	#print( WikiFactory::getVarValueByName( "wgFavicon", 40 ) ) . "\n";
+	#print( WikiFactory::getVarValueByName( "wgFavicon", 40 ) ) . "\n";
+	#print( WikiFactory::substVariables( '$wgUploadDirectory/$wgUploadPath', 40 ) ) . "\n";
+	print( WikiFactory::UrlToId( 'http://muppet.wikia.com/de/' ) ) . "\n";
+	print( WikiFactory::UrlToId( 'http://www.wikia.com/en/' ) ) . "\n";
+	print( WikiFactory::UrlToId( 'http://memory-alpha.org/en/' ) ) . "\n";
+	print( WikiFactory::UrlToId( 'http://memory-alpha.org/de/' ) ) . "\n";
+	print( WikiFactory::UrlToId( 'http://memory-alpha.org/it/' ) ) . "\n";
 }
 
 #
