@@ -69,24 +69,24 @@ $messages['en'] = array(
 	"autocreatewiki-invalid-language" => "Invalid value of language. Please select proper from dropdown list.",
 	"autocreatewiki-invalid-retype-passwd" => "Please, retype the same password as above",
 	"autocreatewiki-invalid-birthday" => "Invalid birth date",
-	"autocreatewiki-limit-birthday" => "Unable to create registration. ",
+	"autocreatewiki-limit-birthday" => "Unable to create registration.",
 // processing
 	"autocreatewiki-log-title" => "Your wiki is being created",
-	"autocreatewiki-step0" => "Initializing process ... ",
-	"autocreatewiki-stepdefault" => "Process is running, please wait ... ",
-	"autocreatewiki-errordefault" => "Process was not finished ... ",
-	"autocreatewiki-step1" => "Creating images folder ... ",
-	"autocreatewiki-step2" => "Creating database ... ",
+	"autocreatewiki-step0" => "Initializing process ...",
+	"autocreatewiki-stepdefault" => "Process is running, please wait ...",
+	"autocreatewiki-errordefault" => "Process was not finished ...",
+	"autocreatewiki-step1" => "Creating images folder ...",
+	"autocreatewiki-step2" => "Creating database ...",
 	"autocreatewiki-step3" => "Setting default information in database ...",
 	"autocreatewiki-step4" => "Copying default images and logo ...",
 	"autocreatewiki-step5" => "Setting default variables in database ...",
 	"autocreatewiki-step6" => "Setting default tables in database ...",
-	"autocreatewiki-step7" => "Setting language starter ... ",
-	"autocreatewiki-step8" => "Setting user groups and categories ... ",
-	"autocreatewiki-step9" => "Setting variables for new Wiki ... ",
-	"autocreatewiki-step10" => "Setting pages on central Wiki ... ",
-	"autocreatewiki-step11" => "Sending email to user ... ",
-	"autocreatewiki-redirect" => "Redirecting to new Wiki: $1 ... ",
+	"autocreatewiki-step7" => "Setting language starter ...",
+	"autocreatewiki-step8" => "Setting user groups and categories ...",
+	"autocreatewiki-step9" => "Setting variables for new Wiki ...",
+	"autocreatewiki-step10" => "Setting pages on central Wiki ...",
+	"autocreatewiki-step11" => "Sending email to user ...",
+	"autocreatewiki-redirect" => "Redirecting to new Wiki: $1 ...",
 	"autocreatewiki-congratulation" => "Congratulations!",
 	"autocreatewiki-welcometalk-log" => "Welcome Message",
 	"autocreatewiki-regex-error-comment" => "used in Wiki $1 (whole text: $2)",
@@ -144,8 +144,7 @@ Congratulations on starting your new wiki, {{SITENAME}}! You can come back and a
 This is a brand-new project, so please write to us if you have any questions!
 
 
--- Wikia Community Team
-	",
+-- Wikia Community Team",
 	"autocreatewiki-reminder-body-HTML" => "
 <p>Dear $1:</p>
 
@@ -154,8 +153,7 @@ This is a brand-new project, so please write to us if you have any questions!
 
 <p>This is a brand-new project, so please write to us if you have any questions!</p>
 
-<p>-- Wikia Community Team</p>
-	"
+<p>-- Wikia Community Team</p>"
 );
 
 

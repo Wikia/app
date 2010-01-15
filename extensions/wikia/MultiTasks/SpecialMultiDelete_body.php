@@ -58,7 +58,7 @@ class Multidelete extends MultiTask {
 				$this->showForm( wfMsg('multidelete_error_empty_pages') );
 			} 
 			else {
-				$wgOut->setSubTitle ( wfMsg('multidelete_processing') . wfMsg ('multiwikiedit_from_form') );
+				$wgOut->setSubTitle ( wfMsg('multidelete_processing') . wfMsg( 'word-separator' ) . wfMsg ('multiwikiedit_from_form') );
 				$this->doSubmit(0);
 			}
 		} 
@@ -67,7 +67,7 @@ class Multidelete extends MultiTask {
 				$this->showForm( wfMsg('multidelete_error_empty_pages') );
 			} 
 			else {
-				$wgOut->setSubTitle ( wfMsg('multidelete_processing') . wfMsg ('multiwikiedit_from_form') );
+				$wgOut->setSubTitle ( wfMsg('multidelete_processing') . wfMsg( 'word-separator' ) . wfMsg ('multiwikiedit_from_form') );
 				$this->doSubmit(1);
 			}
 		}
@@ -119,7 +119,7 @@ class Multidelete extends MultiTask {
 	protected function getBackUrl() {
 		global $wgUser;
 		$sk = $wgUser->getSkin();
-		return "<br/><br/>".wfMsg('multidelete_link_back')." ".$sk->makeKnownLinkObj($this->mTitle, '<b>here</b>').".";
+		return "<br/><br/>" . wfMsg('multidelete_link_back', $sk->makeKnownLinkObj($this->mTitle, '<b>' . wfMsg( 'multitasks-link-back-label' ) . '</b>') );
 	}
 		
 }

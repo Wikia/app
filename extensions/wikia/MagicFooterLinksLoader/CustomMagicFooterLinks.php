@@ -17,9 +17,6 @@ function wfSolarMagicFooterLinks($results) {
 function wfAnswersMagicFooterLinks($results) {
 	if (!empty($results)) return true;
 
-	global $wgDBname;
-	if ("wswiki" == $wgDBname) return true; // requested in Websitewiki skype chan.
-
 	$links = array(
 		"de" => "Besuche das [[w:c:websitewiki|WebsiteWiki]] und [[w:c:frag|Wikianswers: Frag Wikia!]]",
 		"es" => "[[w:c:respuestas|WikiRespuestas]]",

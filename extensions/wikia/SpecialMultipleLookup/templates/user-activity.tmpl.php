@@ -134,7 +134,7 @@ function wkLCshowDetails(dbname, limit, offset)
  				loop = limit * offset;
 				for (i in resData['res']) {
 					loop++;
-					records.innerHTML += "<tr><td style=\"padding:2px;\">" + loop  + "</td><td style=\"padding:2px 10px\">" +resData['res'][i]['link']+ "</td><td nowrap><?=wfMsg('multilookuplastedit')?>" +resData['res'][i]['last_edit']+ "</td></tr>";
+					records.innerHTML += "<tr><td style=\"padding:2px;\">" + loop  + "</td><td style=\"padding:2px 10px\">" +resData['res'][i]['link']+ "</td><td nowrap><?=wfMsg('multilookuplastedit')?> " +resData['res'][i]['last_edit']+ "</td></tr>";
 				}
 				records.innerHTML += "</table><br />";
 				records.innerHTML += pager + "<br />";

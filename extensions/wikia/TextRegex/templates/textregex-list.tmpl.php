@@ -27,7 +27,7 @@ if ( empty($regexList) ) {
 		$oUser = User::newFromId($row['user']);
 ?>
 <li class="tr_list">
-	<strong class="tr_title"><?=$row['text']?></strong> <?= wfMsg('textregex-addedby-user', ($oUser instanceof User) ? $oUser->getName() : "", $row['timestamp']) ?>
+	<strong class="tr_title"><?=$row['text']?></strong> <?= wfMsg('textregex-addedby-user', ($oUser instanceof User) ? $oUser->getName() : "", $row['timestamp']) . wfMsg( 'word-separator' ) ?>
    (<?=wfMsgExt('textregex-remove-url', 'parseinline', $action_unblock, $row['id'])?>) (<?=wfMsgExt('textregex-stats-url', 'parseinline', $action_stats, $row['id'])?>)
 </li>
 <?php

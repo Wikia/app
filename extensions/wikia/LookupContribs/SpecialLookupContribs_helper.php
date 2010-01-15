@@ -536,7 +536,7 @@ class LookupContribsCore {
 
 		$link = $this->produceLink ($page, $page->getFullText(), '', $row->rc_url, $sk, $meta, $row->rc_namespace, $row->page_id) . ( $row->log_comment ? " <small>($row->log_comment)</small>" : "" );
 		if ($row->page_remove == 1) {
-			$link = wfMsg('lookupcontribspageremoved') . $link;
+			$link = wfMsg('lookupcontribspageremoved') . wfMsg( 'word-separator' ) . $link;
 		}
 		$time = $wgLang->timeanddate( wfTimestamp( TS_MW, $row->timestamp ), true );
 		if ($row->page_remove == 1) {

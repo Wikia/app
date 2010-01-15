@@ -21,8 +21,7 @@ Article '''$1''' could not be found.
 
 * You can try article [[$2]]
 * You can use the search box on the left side of the page
-* To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]
-"
+* To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]"
 );
 
 /** German (Deutsch)

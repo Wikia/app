@@ -116,8 +116,8 @@ function wfSendAjaxForm($sendtofriendbox=true) {
 
 	$name  = ( $wgUser->isLoggedIn() ? $wgUser->getName() : "" );
 	$email = $wgUser->getEmail();
-	$form1 = wfMsg('stf_frm1');
-	$form2 = wfMsg('stf_frm2');
+	$form1 = wfMsg('stf_frm1') . wfMsg( 'word-separator' );
+	$form2 = wfMsg('stf_frm2') . wfMsg( 'word-separator' );
 	$form3 = InviteSpecialPage::generateInviteMessage( true, false, 'I' );
 	$form4 = wfMsg('stf_frm4_send');
 	$form5 = wfMsg('stf_frm5');
