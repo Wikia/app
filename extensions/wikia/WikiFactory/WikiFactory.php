@@ -752,7 +752,48 @@ class WikiFactory {
 	 */
 	static public function getVarValueByName( $cv_name, $city_id, $master = false ) {
 		$variable = self::loadVariableFromDB( false, $cv_name, $city_id, $master );
-		return isset( $variable->cv_value ) ? unserialize( $variable->cv_value ) : false;
+		return isset( $variable->cv_value )
+			? self::substVariables( unserialize( $variable->cv_value ), $city_id )
+			: false;
+	}
+
+	/**
+	 * substVariables
+	 *
+	 * metod for resolving variable values uses in other variables
+	 * i.e.
+	 *	'$wgUploadPath/6/64/Favicon.ico'
+	 * will be resolved to
+	 *	'http://wikia.com/images/wikia/6/64/Favicon.ico'
+	 *
+	 * it's not recursive yet, maybe it should?
+	 *
+	 * @access public
+	 * @author eloy@wikia-inc.com
+	 * @static
+	 */
+	static public function substVariables( $cv_value, $city_id ) {
+		/**
+		 * if there's no $ there is nothing to work
+		 */
+		$value = $cv_value;
+		if( is_string( $cv_value ) && preg_match_all('/(\$\w+)/', $cv_value, $matches ) ) {
+			if( is_array( $matches ) ) {
+				foreach( $matches[ 1 ] as $idx => $key ) {
+					if( !is_numeric( ltrim( $key, '$' ) ) ) {
+						/**
+						 * get value for key
+						 */
+						$val = self::getVarValueByName( ltrim( $key, '$' ), $city_id );
+						if( $val ) {
+							$value = str_replace( $key, $val, $value );
+						}
+					}
+				}
+			}
+		}
+
+		return $value;
 	}
 
 	/**
@@ -2084,7 +2125,7 @@ class WikiFactoryUpdate {
 	}
 
 	/**
-	 * addDeferredUpdate
+	 * addPostCommitUpdate
 	 *
 	 * static method called as hook
 	 *
