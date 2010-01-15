@@ -70,22 +70,17 @@ a.new {color:#BA5500 !important;}
 
 /* Other tweaks */
 
-#background_strip {
-       border-bottom: none;
-}
+#background_strip { border-bottom: none; }
+#wikia_header { border-bottom: none; }
 
-#wikia_header {
-       border-bottom: none;
-}
+body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { display:none; }
 
 #catlinks {
        background-color: #FFF;
        border: none;
 }
 
-#search_field {
-       border:1px solid #eee;
-}
+#search_field { border:1px solid #eee; }
 
 #request_wiki {
        text-decoration:none;
@@ -93,6 +88,15 @@ a.new {color:#BA5500 !important;}
        font-size: 10pt !important;
        color: #ddd;
 }
+
+#page_bar {
+       background-image: none;
+       font-size: 9pt;
+       color: #555;
+       font-family:"Helvetica Neue",Helvetica,Arial,default;
+}
+
+#page_tabs { display: none; }
 
 #link_box_dynamic img {
        background:transparent url(http://images1.wikia.nocookie.net/test123/images/d/d7/Sprite.png?20091113)
@@ -113,8 +117,6 @@ a.new {color:#BA5500 !important;}
 #headerButtonHub { display: none; }
 #navigation .Monaco-sidebar_edit { display: none; }
 
-
-/* end import */
 
 /* Change the background image of the logo */
 #wikia_logo {
