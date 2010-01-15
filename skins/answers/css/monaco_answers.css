@@ -1,12 +1,40 @@
 /* Answers specific CSS goes here, overriding monaco css, and adding any additional */
 
-
-/* import from Healthy Stuff */
+/* Fixed width */
 
 .monaco_shrinkwrap {
    left: 50% !important;
    margin-left: -505px !important;
    width: 1010px !important;
+}
+
+/* Basics */
+
+#wikia_page {
+border-color:#EEEEEE;
+       border-style:solid none none;
+       border-width:8px medium medium;
+       font-family:"Helvetica Neue",Helvetica,Arial,default;
+}
+
+body {
+       color: #444;
+       font-size:80%;
+}
+
+a:link {color: #369; text-decoration: none; }
+a:active {color: #369; text-decoration: none; }
+a:visited {color: #369; text-decoration: none; }
+a:hover {color: #369; text-decoration: underline; }
+
+a.new {color:#BA5500 !important;}
+
+#wikiaBranding a {color:#888;}
+#userData a {color:#888;}
+#wikia_corporate_footer a {color:#888;}
+
+#wikia_corporate_footer {
+       color:#888;
 }
 
 .color1 {
@@ -40,9 +68,7 @@
        color: #666;
 }
 
-.neutral {
-       background-color: #eee;
-}
+/* Other tweaks */
 
 #background_strip {
        border-bottom: none;
@@ -57,40 +83,8 @@
        border: none;
 }
 
-#wikia_page {
-       border: none;
-}
-
-#navigation .Monaco-sidebar_edit {
-       display: none;
-}
-
 #search_field {
        border:1px solid #eee;
-}
-
-a:link {color: #369; text-decoration: none; }
-a:active {color: #369; text-decoration: none; }
-a:visited {color: #369; text-decoration: none; }
-a:hover {color: #369; text-decoration: underline; }
-
-a.new {color:#BA5500 !important;}
-
-#wikiaBranding a {color:#888;}
-#userData a {color:#888;}
-#wikia_corporate_footer a {color:#888;}
-
-#wikia_corporate_footer {
-       color:#888;
-}
-
-body {
-       color: #444;
-       font-size:80%;
-}
-
-img {
-       border:1px solid #AAAAAA;
 }
 
 #request_wiki {
@@ -113,33 +107,14 @@ img {
 }
 
 /* maybe needed */
-#wikia_page {
-border-color:#EEEEEE;
-       border-style:solid none none;
-       border-width:8px medium medium;
-       font-family:"Helvetica Neue",Helvetica,Arial,default;
-}
 
-#link_box_table {
-       display: none;
-}
-
-#navigation {
-       display: none;
-}
+#link_box_table { display: none; }
+#navigation { display: none; }
+#headerButtonHub { display: none; }
+#navigation .Monaco-sidebar_edit { display: none; }
 
 
 /* end import */
-
-
-
-
-
-
-
-
-
-
 
 /* Change the background image of the logo */
 #wikia_logo {
