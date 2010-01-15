@@ -14,7 +14,7 @@ $messages["en"] = array(
 	'multilookupnotspecify' => 'You haven\'t specified a IP yet',
 	'multilookupnext' => 'next',
     'multilookupprevious' => 'previous',
-    'multilookupnbrresult' => 'Number of result: ',
+    'multilookupnbrresult' => 'Number of result:',
 	'multilookupinvalidresults' => 'Invalid results!',
 	'multilookupnoresultfound' => 'No result found!',
 	'multilookupwiki' => 'Wiki',
@@ -22,5 +22,5 @@ $messages["en"] = array(
 	'multilookupdetails' => 'See details',
 	'multilookuplistwikiainfo' => 'List of wikis where articles were edited by users from IP: <b>$1</b>',
 	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" does not exist. Check given IP for possible typos.</p>',
-	'multilookuplastedit' => 'Last edit from this IP: '
+	'multilookuplastedit' => 'Last edit from this IP:'
 );
