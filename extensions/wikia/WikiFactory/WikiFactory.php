@@ -10,7 +10,7 @@
 $wgExtensionCredits['other'][] = array(
 	"name" => "WikiFactoryLoader",
 	"description" => "MediaWiki configuration loader",
-	"version" => '$Revision$',
+	"svn-revision" => '$Revision$',
 	"author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]"
 );
 
