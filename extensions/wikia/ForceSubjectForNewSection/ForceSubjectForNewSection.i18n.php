@@ -17,11 +17,12 @@
  *     require_once("$IP/extensions/wikia/ForceSubjectForNewSection/ForceSubjectForNewSection.php");
  */
 
-$messages = array(
-	'en' => array(
-		'force-subject-for-new-section-message' => 'Please enter a headline for the section'
-	),
-	'pl' => array(
-		'force-subject-for-new-section-message' => 'Proszę wpisać temat dla sekcji'
-	)
+$messages = array();
+
+$messages['en'] = array(
+	'force-subject-for-new-section-message' => 'Please enter a headline for the section'
+);
+
+$messages['pl'] = array(
+	'force-subject-for-new-section-message' => 'Proszę wpisać temat dla sekcji'
 );
