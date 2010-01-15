@@ -117,6 +117,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				if ( !newBlock )
 					newBlock = doc.createElement( blockTag );
 
+				// Wikia - start
+				// RT #37258
+				if (newBlock.is('dl')) {
+					newBlock = new CKEDITOR.dom.element('p');
+				}
+				// Wikia - end
+
 				// Recreate the inline elements tree, which was available
 				// before hitting enter, so the same styles will be available in
 				// the new block.
