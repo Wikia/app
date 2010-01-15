@@ -30,7 +30,7 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
  * define hooks for WikiFactory here
  */
 
-#$wgHooks[ "RecentChange_save" ][] = "WikiFactory::updateLastTimestamp";
+$wgHooks[ "RecentChange_save" ][] = "WikiFactoryUpdate::addDeferredUpdate";
 
 class WikiFactory {
 
@@ -2035,42 +2035,65 @@ class WikiFactory {
 		return isset( $oRow->cv_city_id ) ? $oRow->cv_city_id : null;
 	}
 
+};
+
+/**
+ * update city_last_timestamp in city_list table with current timestamp
+ *
+ * @author Krzysztof Krzyżaniak (eloy)
+ */
+class WikiFactoryUpdate {
+
+	private $mCityId;
+
+	public function __construct( $city_id ) {
+		$this->mCityId = $city_id;
+	}
 	/**
-	 * updateLastTimestamp
+	 * doUpdate -- called on deferred update loop
 	 *
-	 * update city_last_timestamp in city_list table to current timestamp
+	 * update city_last_timestamp in city_list table with current timestamp
 	 *
-	 * @author Krzysztof Krzyżaniak (eloy)
 	 * @access public
 	 * @static
 	 *
 	 * @param RecentChanges $rc	instance of RecentChanges class
 	 *
 	 */
-	static public function updateLastTimestamp( $rc, $city_id = false ) {
+	public function doUpdate() {
 		global $wgWikicitiesReadOnly;
 
-		if( ! self::isUsed() ) {
+		if( ! WikiFactory::isUsed() || $wgWikicitiesReadOnly ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
 		}
 
-		if($wgWikicitiesReadOnly){
-			Wikia::log( __METHOD__, "", "wgWikicitiesReadOnly mode. Skipping update.");
-			return false;
-		}
-
-		if( !$city_id ) {
-			global $wgCityId;
-			$city_id = $wgCityId;
-		}
-
-		$dbw = self::db( DB_MASTER );
+		$dbw = WikiFactory::db( DB_MASTER );
 		return $dbw->update(
 			"city_list",
 			array( "city_last_timestamp" => wfTimestamp( TS_DB, time() ) ),
-			array( "city_id" => $city_id ),
+			array( "city_id" => $this->mCityId ),
 			__METHOD__
 		);
 	}
-};
+
+	/**
+	 * addDeferredUpdate
+	 *
+	 * static method called as hook
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param RecentChanges	$rc	RecentChanges object
+	 *
+	 * @return true means process other hooks
+	 */
+	static public function addDeferredUpdate( &$rc ) {
+		global $wgDeferredUpdateList, $wgCityId;
+
+		$deffUpdate = new WikiFactoryUpdate( $wgCityId );
+		array_push( $wgDeferredUpdateList, $deffUpdate );
+		return true;
+	}
+}
