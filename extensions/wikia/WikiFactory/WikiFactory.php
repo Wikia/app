@@ -30,7 +30,7 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
  * define hooks for WikiFactory here
  */
 
-$wgHooks[ "RecentChange_save" ][] = "WikiFactoryUpdate::addPostCommitUpdate";
+#$wgHooks[ "RecentChange_save" ][] = "WikiFactoryUpdate::addPostCommitUpdate";
 
 class WikiFactory {
 
@@ -771,10 +771,12 @@ class WikiFactory {
 	/**
 	 * getVarValueByName
 	 *
-	 * return only value of variable not whole data for it
+	 * return only value of variable not whole data for it, this value will be:
+	 * - unserialized
+	 * - all internal variables will be replace by their values
 	 *
 	 * @access public
-	 * @author eloy@wikia
+	 * @author eloy@wikia-inc.com
 	 * @static
 	 *
 	 * @param string	$cv_name	variable name in city_variables_pool
