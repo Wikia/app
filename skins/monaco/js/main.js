@@ -386,7 +386,7 @@ function menuInit() {
 	// just 1 per menu 'edit' at top level, rt#22739
 	if (typeof wgMenuEdit != 'undefined') {
 		href = ($("#navigation").hasClass("userMenu")) ? '?title=User:' + wgUserName + '/Monaco-sidebar&action=edit' : '?title=MediaWiki:Monaco-sidebar&action=edit';
-		$("#navigation").append('<div class="menu-item"><a href="' + wgScript + href + '" class="Monaco-sidebar_edit">' + wgMenuEdit + '</a></div>');
+		$("#navigation").append('<div id="navigation-edit" class="menu-item"><a href="' + wgScript + href + '" class="Monaco-sidebar_edit">' + wgMenuEdit + '</a></div>');
 	}
 	monacoNavigationHoverActions();
 }
