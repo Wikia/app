@@ -1247,7 +1247,15 @@ CKEDITOR.dom.range = function( document )
 			var startContainer = this.startContainer;
 			var startOffset = this.startOffset;
 
-			var nextNode = startContainer.getChild( startOffset );
+			// Wikia - start
+			// RT #36070 (fix for IE when startContainer is HTML comment node)
+			if (typeof startContainer.getChild != 'function') {
+				var nextNode = new CKEDITOR.dom.element(startContainer.$.previousSibling /* DOMTextNode */);
+			}
+			else {
+				var nextNode = startContainer.getChild( startOffset );
+			}
+			// Wikia - end
 
 			if ( nextNode )
 				node.insertBefore( nextNode );
