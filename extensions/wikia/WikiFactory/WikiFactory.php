@@ -379,9 +379,20 @@ class WikiFactory {
 
 		$city_id = false;
 		$parts = parse_url( $url );
-		print_r( $parts );
 		if( isset( $parts[ "host" ] ) ) {
-			$city_id = self::DomainToId( $parts[ "host" ] );
+			$host = self::getDomainHash( $parts[ "host" ] );
+
+			if( $host === "memory-alpha.org" ) {
+				/**
+				 * for memory-alpha check first element of path
+				 */
+				$parts = explode( "/", $parts[ "path" ] );
+				$host = sprintf( "%s.%s", $parts[ 1 ], $host );
+				$city_id = self::DomainToId( $host );
+			}
+			else {
+				$city_id = self::DomainToId( $host );
+			}
 		}
 
 		return $city_id;
