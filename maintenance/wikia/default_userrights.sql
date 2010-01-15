@@ -62,6 +62,7 @@ insert into user_groups(ug_user, ug_group) values
 (/*Peteparker*/122657, 'helper'),
 (/*Richard1990*/25261,'helper'),
 (/*Schikado*/1214031,'helper'),
+(/*Snippius*/1821627,'helper'),
 (/*Tedjuh10*/1171508,'helper'),
 (/*Tommy6*/239851,'helper'),
 (/*Urai Fen*/1165627,'helper'),
