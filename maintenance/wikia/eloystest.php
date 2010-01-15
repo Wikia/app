@@ -68,8 +68,15 @@ function testStomp() {
 	}
 }
 
+function testWF() {
+	print( WikiFactory::getVarValueByName( "wgFavicon", 40 ) ) . "\n";
+	print( WikiFactory::getVarValueByName( "wgFavicon", 40 ) ) . "\n";
+	print( WikiFactory::substVariables( '$wgUploadDirectory/$wgUploadPath', 40 ) ) . "\n";
+}
+
 #
 # main
 #
-testDelayedEmails();
+#testDelayedEmails();
 #testStomp();
+testWF();
