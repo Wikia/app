@@ -21,4 +21,4 @@ CKEDITOR.plugins.add('rte-signature',
 });
 
 // wikimarkup of signature to be added
-CKEDITOR.config.signature_markup = '--~~~~';
+CKEDITOR.config.signature_markup = '~~~~';
