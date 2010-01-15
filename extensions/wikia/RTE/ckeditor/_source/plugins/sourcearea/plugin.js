@@ -71,6 +71,16 @@ CKEDITOR.plugins.add( 'sourcearea',
 									});
 									styles.height = holderElement.$.clientHeight + 'px';
 								}
+
+								// Wikia - start
+								// RT #37260
+								// @see http://grantovich.net/posts/2009/06/that-weird-ie8-textarea-bug/
+								if (CKEDITOR.env.ie8) {
+									styles.height = '700px';
+									styles.minHeight = '100%';
+									styles.maxHeight = '100%';
+								}
+								// Wikia - end
 							}
 							else
 							{

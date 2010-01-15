@@ -140,3 +140,10 @@ span.cke_skin_wikia
 	position: absolute;
 	top: 0;
 }
+
+/* RT #37260 */
+.cke_skin_wikia .cke_browser_ie8 .cke_contents textarea {
+	width: 700px !important;
+	min-width: 100% !important;
+	max-width: 100% !important;
+}
