@@ -30,7 +30,7 @@ if( ! function_exists( "wfUnserializeHandler" ) ) {
  * define hooks for WikiFactory here
  */
 
-$wgHooks[ "RecentChange_save" ][] = "WikiFactoryUpdate::addDeferredUpdate";
+$wgHooks[ "RecentChange_save" ][] = "WikiFactoryUpdate::addPostCommitUpdate";
 
 class WikiFactory {
 
@@ -2046,9 +2046,15 @@ class WikiFactoryUpdate {
 
 	private $mCityId;
 
+	/**
+	 * constructor
+	 *
+	 * @access public
+	 */
 	public function __construct( $city_id ) {
 		$this->mCityId = $city_id;
 	}
+
 	/**
 	 * doUpdate -- called on deferred update loop
 	 *
@@ -2089,11 +2095,11 @@ class WikiFactoryUpdate {
 	 *
 	 * @return true means process other hooks
 	 */
-	static public function addDeferredUpdate( &$rc ) {
-		global $wgDeferredUpdateList, $wgCityId;
+	static public function addPostCommitUpdate( &$rc ) {
+		global $wgPostCommitUpdateList, $wgCityId;
 
 		$deffUpdate = new WikiFactoryUpdate( $wgCityId );
-		array_push( $wgDeferredUpdateList, $deffUpdate );
+		array_push( $wgPostCommitUpdateList, $deffUpdate );
 		return true;
 	}
 }
