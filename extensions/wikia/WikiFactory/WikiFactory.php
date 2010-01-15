@@ -366,6 +366,28 @@ class WikiFactory {
 	}
 
 	/**
+	 * UrlToID
+	 *
+	 * @access public
+	 * @static
+	 *
+	 * @param $url string - domain name
+	 *
+	 * @return integer - id of domain or null if not found
+	 */
+	static public function UrlToID( $url ) {
+
+		$city_id = false;
+		$parts = parse_url( $url );
+		print_r( $parts );
+		if( isset( $parts[ "host" ] ) ) {
+			$city_id = self::DomainToId( $parts[ "host" ] );
+		}
+
+		return $city_id;
+	}
+
+	/**
 	 * DomainToID
 	 *
 	 * @access public
