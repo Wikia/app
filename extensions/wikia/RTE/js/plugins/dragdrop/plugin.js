@@ -15,6 +15,16 @@ CKEDITOR.plugins.add('rte-dragdrop',
 
 			RTE.log('dropped element:');
 			RTE.log(droppedElement);
+
+			RTE.instance.fire('saveSnapshot');
+
+			// extra check for RT #36064
+			var content = RTE.instance.getData();
+			if (content == '') {
+				RTE.log('undoing drag&drop');
+				RTE.instance.execCommand('undo');
+			}
+
 /*
 			// get coordinates from "dragdrop" event and send it with "dropped" event
 			// @see http://www.quirksmode.org/js/events_properties.html#position
@@ -47,6 +57,10 @@ CKEDITOR.plugins.add('rte-dragdrop',
 				// for new Fx (3.5+)
 				//
 				bind('dragstart.dnd', function(ev) {
+					// create undo point (RT #36064)
+					RTE.instance.fire('saveSnapshot');
+					RTE.log('drag&drop: undo point');
+
 					// "mark" dragged element
 					var target = $(ev.target);
 					target.attr('_rte_dragged', true);
@@ -64,6 +78,10 @@ CKEDITOR.plugins.add('rte-dragdrop',
 				// user clicked on placeholder / image
 				// this can be beginning of drag&drop
 				bind('mousedown.dnd', function(ev) {
+					// create undo point (RT #36064)
+					RTE.instance.fire('saveSnapshot');
+					RTE.log('drag&drop: undo point');
+
 					// "mark" dragged element
 					var target = $(ev.target);
 					target.attr('_rte_dragged', true);
