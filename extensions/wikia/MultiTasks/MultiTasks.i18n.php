@@ -111,7 +111,7 @@ $messages['en'] = array(
 /*multi-wiki finder*/	
 	'multiwikifinder' => 'Multiwiki Title Finder',
 	'multiwikifindpagenames' => 'Find pagenames',
-	'multiwikienterpagename' => 'Enter a pagename: ',
+	'multiwikienterpagename' => 'Enter a pagename:',
 	'multiwikirecords' => '$1 wiki found',
 ) ;
 
