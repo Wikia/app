@@ -358,3 +358,22 @@ div.userInfoNoAvatar .userPoints {
 	font-size:12px;
 	font-style:normal;
 }
+
+#questionBar {
+	width: 493px;
+}
+#questionBarList {
+	float: right;
+	list-style-image: none;
+}
+#questionBarList li {
+	background-color: #D8D8D8;
+	float: left;
+	white-space: nowrap;
+	margin:5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	list-style-image:none;
+}
