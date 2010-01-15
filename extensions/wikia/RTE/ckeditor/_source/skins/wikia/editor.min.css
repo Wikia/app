@@ -45,7 +45,8 @@ textarea.cke_source{_white-space:normal}.cke_skin_wikia
 .cke_resizer{display:none}.cke_skin_wikia .cke_browser_ie6 .cke_contents textarea,
 .cke_skin_wikia .cke_browser_ie7 .cke_contents
 textarea{position:absolute}.cke_skin_wikia .cke_browser_ie.cke_browser_quirks .cke_contents
-iframe{position:absolute;top:0}.cke_skin_wikia
+iframe{position:absolute;top:0}.cke_skin_wikia .cke_browser_ie8 .cke_contents
+textarea{width:700px !important;min-width:100% !important;max-width:100% !important}.cke_skin_wikia
 .cke_panel{border:1px
 solid #8f8f73;background-color:#fff;width:200px;height:100px;overflow:hidden;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.cke_skin_wikia
 .cke_contextmenu{margin:0}.cke_skin_wikia .cke_panel
