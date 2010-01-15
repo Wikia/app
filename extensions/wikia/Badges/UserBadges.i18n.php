@@ -1,7 +1,8 @@
 <?php
 
-$messages = array(
-	'en' => array(
+$messages = array();
+
+$messages['en'] = array(
 		'user-badge-title' => 'User badge',
 		'user-badge-invalid-color' => 'Illegal hex value entered',
 		'user-badge-show-color' => 'Show color details',
@@ -34,9 +35,7 @@ $messages = array(
 		'user-bagde-copypaste-int-code' => 'Copy & paste (this Wikia)',
 		'user-bagde-copypaste-int-other-code' => 'Copy & paste (other Wikia)',
 		'user-badge-save-info' => 'If you want to save changes, scroll to the page end and press the "Save" button',
-	),
 );
-
 
 $messages['de'] = array(
 	'user-badge-title' => 'Benutzer-Sticker',
