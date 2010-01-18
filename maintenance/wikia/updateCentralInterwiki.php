@@ -43,39 +43,35 @@ if ( isset( $options['o'] ) ) {
 } elseif ( $global || !empty( $options ['target'] ) ) {
 	# Update interwiki tables in all wikias
 
-	# Check if update is needed
-	$lastupdate = WikiFactory::getVarValueByName('wgLastInterwikiUpdate', 177);
 	$dbr = wfGetDB( DB_SLAVE );
 	$dbr->selectDB('wikicities');
 	$lastmod = $dbr->selectField('page', 'page_latest', "page_title = 'Interwiki_map' && page_namespace = 0");
 
-	if ($lastupdate !== $lastmod || $force ) {
-
 		if (!empty($options['target'])) {
-			$res = $dbr->select('city_list', 'city_dbname', "city_id = ". $options['target']);
+			$res = $dbr->select('city_list', array('city_id', 'city_dbname'), "city_id = ". $options['target']);
 		} else {
-			$res = $dbr->select('city_list', 'city_dbname');
+			$res = $dbr->select('city_list', array('city_id', 'city_dbname'));
 		}
 		while ( $row = $dbr->fetchRow( $res ) ) {
+	# Check if update is needed
+	$lastupdate = WikiFactory::getVarValueByName('wgLastInterwikiUpdate', $row['city_id']);
+	if ( $lastupdate !== $lastmod || $force ) {
 			wfWaitForSlaves( 100 );
 			$dbw = wfGetDB( DB_MASTER, array(), $row['city_dbname'] );
 			if ( $dbw != false ) {
 				if ( $verbose )
-					print "Updating database: ". $row['city_dbname']. "... ";
+					print "Updating database: ". $row['city_dbname']. "...\n";
 				$dbw->doQuery($sql);
 			}
+		# Update $wgLastInterwikiUpdate
+		WikiFactory::SetVarByName('wgLastInterwikiUpdate', $row['city_id'], $lastmod);
 			if (isset( $verbose ))
 				print "Done.\n";
+	}
 		}
 
 		$dbr->freeResult( $res );
 
-		# Update $wgLastInterwikiUpdate
-		if (empty($options['target'])) WikiFactory::SetVarByName('wgLastInterwikiUpdate', 177, $lastmod);
-
-	} else {
-		echo "No need to perform update. Aborting. Evoke this script with '--force' parameter to go ahead anyway.\n";
-	}
 } else {
 	# Output to stdout
 	print $sql;
