@@ -1,5 +1,5 @@
 == Changes since 201001.3 ==
-* 
+* rt#36740: Fixed iw map not updating. (Nef, HT Moli) 
 
 == Changes since 201001.2 ==
 * rt#37266: RTE: editor does not recognise height markup for images (macbre)
