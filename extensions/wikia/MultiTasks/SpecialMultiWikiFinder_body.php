@@ -48,7 +48,7 @@ class MultiwikifinderSpecialPage extends SpecialPage {
 class MultiwikifinderPage {
 	private $data = array();
 	private $mShow = true;
-	const ORDER_ROWS = 2000;
+	const ORDER_ROWS = 500;
 	var $mPage = null;
 	var $mValidPage = false;
 	var $mPageTitle = "";
