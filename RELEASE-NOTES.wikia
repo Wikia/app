@@ -1,3 +1,6 @@
+== Changes since 201001.3 ==
+* 
+
 == Changes since 201001.2 ==
 * rt#37266: RTE: editor does not recognise height markup for images (macbre)
 * rt#37261: RTE: new and old indent positions do not match (macbre)
