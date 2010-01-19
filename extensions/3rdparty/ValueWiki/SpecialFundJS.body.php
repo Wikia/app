@@ -2,7 +2,21 @@
 
 class FundJS extends UnlistedSpecialPage {
 
-	execute( $par ) {
+        /**
+         * Constructor
+         */
+        public function __construct() {
+                parent::__construct( 'FundJS' /*class*/ );
+        }
+
+	function execute( $par ) {
+
+		global $wgOut;
+
+                $this->setHeaders();
+
+                // output only template content
+                $wgOut->setArticleBodyOnly(true);
 
 $flag = "sl1d1t1c1ohgvj1pp2wern";
 $class = "fundimentals";

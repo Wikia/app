@@ -10,6 +10,8 @@ $wgExtensionCredits['parserhook'][] = array(
 	'author' => 'Zach' 
 );
 
+include( "SpecialFundJS.php" );
+
 function wfFundimentals() {
         global $wgParser;
         $wgParser->setHook('fundimentals', 'fundimentals');
@@ -42,9 +44,10 @@ function fundimentals($input, $argv, $parser) {
 				break;
 		}
 	}
-	
-	$output = "<script language='javascript' src='http://valuewiki.com/fund_js.php?symbol=$symbol&flag=$flag&cols=$cols&width=$width'></script>";
+
+	$url = Title::newFromText( 'FundJS', NS_SPECIAL )->getFullURL();
+	$output = "<script language='javascript' src='$url?symbol=$symbol&flag=$flag&cols=$cols&width=$width'></script>";
 
 	return $output;
 }
-?>
+
