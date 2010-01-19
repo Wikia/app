@@ -11,6 +11,12 @@
  */
 
 /**
+ * this version has function shadowed by Tyrant session handler for test and
+ * migration purposes
+ */
+include_once( "$IP/includes/wikia/TokyoTyrantSessions.php" );
+
+/**
  * @todo document
  */
 function memsess_key( $id ) {
@@ -49,6 +55,17 @@ function memsess_close() {
 function memsess_read( $id ) {
 	$memc =& getMemc();
 	$data = $memc->get( memsess_key( $id ) );
+
+	/**
+	 * tyrant shadow
+	 */
+	global $wgSessionTTServers;
+	if( isset( $wgSessionTTServers ) && is_array( $wgSessionTTServers ) ) {
+		$tdata = TokyoTyrantSession::__read( $id );
+		if( $tdata !== $data ) {
+			# difference
+		}
+	}
 	if( ! $data ) return '';
 	return $data;
 }
@@ -59,6 +76,15 @@ function memsess_read( $id ) {
 function memsess_write( $id, $data ) {
 	$memc =& getMemc();
 	$memc->set( memsess_key( $id ), $data, 3600 );
+
+	/**
+	 * tyrant shadow
+	 */
+	global $wgSessionTTServers;
+	if( isset( $wgSessionTTServers ) && is_array( $wgSessionTTServers ) ) {
+		TokyoTyrantSession::__write( $id, $data );
+	}
+
 	return true;
 }
 
@@ -68,6 +94,15 @@ function memsess_write( $id, $data ) {
 function memsess_destroy( $id ) {
 	$memc =& getMemc();
 	$memc->delete( memsess_key( $id ) );
+
+	/**
+	 * tyrant shadow
+	 */
+	global $wgSessionTTServers;
+	if( isset( $wgSessionTTServers ) && is_array( $wgSessionTTServers ) ) {
+		TokyoTyrantSession::__destroy( $id );
+	}
+
 	return true;
 }
 
