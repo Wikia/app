@@ -25,7 +25,11 @@ $wgChartSettings = array(
 
 # The callback function for converting the input text to HTML output
 function renderChart( $input, $argv ) {
-	global $wgChartSettings, $chartCount;
+
+	global $wgChartSettings, $chartCount, $wgExtensionsPath, $wgOut;
+
+	# FIXME: evil, I know, but needed to lift Read-Only lock ASAP. Needs a rewrite...
+	$wgOut->addHTML( "<script type='text/javascript' src='$wgExtensionsPath/3rdparty/ValueWiki/chart.js'></script>" );
 	
 	$domain = 'ichart.finance.yahoo.com';
 #die( var_dump( $input ) );	
