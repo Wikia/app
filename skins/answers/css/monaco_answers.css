@@ -15,6 +15,7 @@ border-color:#EEEEEE;
        border-style:solid none none;
        border-width:8px medium medium;
        font-family:"Helvetica Neue",Helvetica,Arial,default;
+       margin-top:4px;
 }
 
 body {
@@ -68,10 +69,16 @@ a.new {color:#BA5500 !important;}
        color: #666;
 }
 
+#article {
+       padding:0 10px 10px;
+}
+
 /* Other tweaks */
 
 #background_strip { border-bottom: none; }
 #wikia_header { border-bottom: none; }
+
+#wikiaBranding { padding-top:22px; }
 
 body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { display:none; }
 
@@ -96,6 +103,13 @@ body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { displ
        font-family:"Helvetica Neue",Helvetica,Arial,default;
 }
 
+#siteSub {
+       font-size:10pt;
+       font-style:italic;
+       font-weight:normal;
+       padding-top: 0px;
+}
+
 #page_tabs { display: none; }
 
 #link_box_dynamic img {
@@ -116,7 +130,11 @@ body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { displ
 #navigation { display: none; }
 #headerButtonHub { display: none; }
 #navigation .Monaco-sidebar_edit { display: none; }
+body.mainpage .firstHeading { display:none; }
 
+/* Hide the ad panel one. Remove this when the spotlights are killed for this site. */
+
+#google_ads_div_LEFT_NAV_205x400 { display:none; }
 
 /* Change the background image of the logo */
 #wikia_logo {
@@ -158,6 +176,18 @@ body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { displ
         font-size: 16pt;
 }
 
+#question_level {
+	clear: both;
+}
+
+#answer_level {
+	clear: left;
+}
+
+#related_level {
+	clear: left;
+}
+
 .answers-article-left {
 	float: left;
 	width: 468px;
@@ -165,13 +195,31 @@ body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { displ
 
 .answers-article-right {
 	margin-left: 498px;
-	width: 300px;
+/*	width: 300px; */
 }
 
-#question_box, #answer_box {
-	background-color: #D8D8D8;
+.answers-tips {
+	background-color: #D0E5F2;
+	margin-top:46px;
+	padding:10px;
+	border:1px solid #C0D5E2;
+}
+
+.answers-tips h3 {
+	padding-top:0px;
+	padding-bottom:0px;
+}
+
+#question_box {
 	margin-bottom: 25px;
 	padding: 10px;
+	background-color: #f8f8f8;
+}
+
+#answer_box {
+	margin-bottom: 25px;
+	padding: 10px;
+	border: 4px solid #eee;
 }
 
 #answer_edit_link, #question_edit_link {
@@ -367,10 +415,10 @@ div.userInfoNoAvatar .userPoints {
 	list-style-image: none;
 }
 #questionBarList li {
-	background-color: #D8D8D8;
+	background-color: #DDD;
 	float: left;
 	white-space: nowrap;
-	margin:5px;
+	margin:5px 5px 0;
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-top: 2px;
