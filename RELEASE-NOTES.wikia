@@ -1,4 +1,7 @@
 == Changes since 201001.3 ==
+* rt#37254: RTE: scrolling issues in IE (wysiwyg mode) (macbre)
+* rt#37260: RTE: scrolling issues in IE (in source mode) (macbre)
+* rt#37689: RTE: template editor formatting issue in IE7 (macbre)
 * rt#36740: Fixed iw map not updating. (Nef, HT Moli) 
 
 == Changes since 201001.2 ==
