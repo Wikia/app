@@ -219,7 +219,7 @@ body.mainpage .firstHeading { display:none; }
 #answer_box {
 	margin-bottom: 25px;
 	padding: 10px;
-	border: 4px solid #eee;
+	background-color: #f8f8f8;
 }
 
 #answer_edit_link, #question_edit_link {
@@ -389,7 +389,7 @@ div.userInfoNoAvatar .userPoints {
 	text-decoration:none;
 }
 .google-ad-unit a:hover {
-	text-decoration:none;
+	color:#FF00FF; text-decoration: underline; 
 }
 .google-ad-unit a strong {
 	color:#336699;
@@ -418,7 +418,7 @@ div.userInfoNoAvatar .userPoints {
 	background-color: #DDD;
 	float: left;
 	white-space: nowrap;
-	margin:5px 5px 0;
+	margin:5px;
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-top: 2px;
