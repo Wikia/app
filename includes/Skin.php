@@ -1473,9 +1473,9 @@ END;
 		global $wgDigg, $wgGraphicalDigg;
 		$digg = ($wgGraphicalDigg) ? '<script type="text/javascript">
 		//<!--
-			document.write(\'<\'+\'img src="http://images.wikia.com/common/91x17-digg-button.png?js=1" width="91" height="17" alt="Digg!" border="0"\'+\' />\');
+			document.write(\'<\'+\'img src="http://images.wikia.com/common/skins/common/images/91x17-digg-button.png?js=1" width="91" height="17" alt="Digg!" border="0"\'+\' />\');
 		 // -->
-		 </script><noscript><div><img src="http://images.wikia.com/common/91x17-digg-button.png?js=0" width="91" height="17" alt="Digg!" /></div></noscript>' : wfMsgForContent('digglink');
+		 </script><noscript><div><img src="http://images.wikia.com/common/skins/common/images/91x17-digg-button.png?js=0" width="91" height="17" alt="Digg!" /></div></noscript>' : wfMsgForContent('digglink');
 		return ( $wgDigg ) ? "<a href=\"http://digg.com/submit\"  onclick=\"location.href='http://digg.com/submit?phase=2&amp;url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title); return false;\">".$digg."</a>" : '';
 	}
 
