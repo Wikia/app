@@ -995,7 +995,7 @@ div.wikiaDialog h2,
 
 #notifyForm input.submit
 {
-  background: url('http://images.wikia.com/common/SendToAFriendSubmitBg.png');
+  background: url('http://images.wikia.com/common/extensions/wikia/SendToAFriend/SendToAFriendSubmitBg.png');
   border: none;
   margin: 15px -55px 15px 15px;
   font-weight: bold;

@@ -109,7 +109,7 @@
 #notifyForm input.submit
 {
     background: none;
-    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/SendToAFriendSubmitBg.png", sizingMethod="image");
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://images.wikia.com/common/extensions/wikia/SendToAFriend/SendToAFriendSubmitBg.png", sizingMethod="image");
 }
 
 /* widgets cockpit */
