@@ -151,7 +151,7 @@ class TextRegexList {
 		$action_unblock = $this->oTitle->escapeLocalURL( 'action=delete&' . $this->getListBits() );
 		$action_stats = $this->oTitle->escapeLocalURL( 'action=stats&' . $this->getListBits() );
 		if ( empty($regexList) ) {
-			$dbr = wfGetDB( $db_conn, array(), $wgExternalDatawareDB );
+			$dbr = wfGetDB( $db_conn, 'blobs', $wgExternalDatawareDB );
 			$res = $dbr->select ( 
 				"text_regex", 
 				'tr_id,	tr_text, tr_timestamp, tr_user, tr_subpage',
@@ -517,7 +517,7 @@ class TextRegexCore {
 		$regexList = array();
 		$cached = $wgMemc->get($key) ;
 		if ( !$cached ) {
-			$dbr = wfGetDB( $db_conn, array(), $wgExternalDatawareDB );
+			$dbr = wfGetDB( $db_conn, 'blobs', $wgExternalDatawareDB );
 			$res = $dbr->select ( 
 				"text_regex", 
 				'tr_id,	tr_text, tr_timestamp, tr_user, tr_subpage',
@@ -549,7 +549,7 @@ class TextRegexCore {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc, $wgUser, $wgExternalDatawareDB;
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 		$res = $dbr->select ( 
 			"text_regex", 
 			'distinct(tr_subpage)',
@@ -569,7 +569,7 @@ class TextRegexCore {
 		wfProfileIn( __METHOD__ );
 		global $wgMemc, $wgUser, $wgExternalDatawareDB;
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 		$row = $dbr->selectRow ( 
 			"text_regex", 
 			'tr_id,	tr_text, tr_timestamp, tr_user, tr_subpage',
@@ -612,7 +612,7 @@ class TextRegexCore {
 		global $wgMemc, $wgUser, $wgLang;
 		global $wgExternalDatawareDB;
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 		$res = $dbr->select ( 
 			"text_regex_stats", 
 			'trs_tr_id, trs_timestamp, trs_user, trs_text, trs_comment',
@@ -647,7 +647,7 @@ class TextRegexCore {
 		wfProfileIn( __METHOD__ );
 		$nbrStats = 0;
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 		$oRes = $dbr->select(
 			"text_regex_stats", 
 			array("COUNT(*) as cnt"),
