@@ -116,7 +116,7 @@ function wfEditingTipsAddBodyClass($classes) {
 $wgHooks['EditPage::showEditForm:initial2'][] = 'AddEditingToggles';
 function AddEditingToggles($o) {
 	global $wgUser, $wgOut, $wgHooks, $editingTips;
-	if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+	if(get_class($wgUser->getSkin()) == 'SkinMonaco' || get_class($wgUser->getSkin()) == 'SkinAnswers') {
 		wfLoadExtensionMessages('EditingTips');
 		$wgHooks['EditPage::showEditForm:fields'][] = 'AddEditingTips';
 		$wgHooks['SkinGetPageClasses'][] = 'wfEditingTipsAddBodyClass';
