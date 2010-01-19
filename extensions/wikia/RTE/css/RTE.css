@@ -19,6 +19,11 @@
 	position: relative;
 }
 
+/* RT #37254 / #37260 */
+.cke_browser_ie7 #cke_contents_wpTextbox1 {
+	position: static !important;
+}
+
 /* hide textarea */
 .RTEloading .cke_contents iframe,
 .RTEloading .cke_contents textarea {
