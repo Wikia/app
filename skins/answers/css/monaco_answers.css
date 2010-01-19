@@ -172,8 +172,12 @@ body.mainpage .firstHeading { display:none; }
 	line-height: normal; /* set to 1.5 in monaco article. Why? */
 
 }
+
 #question_heading, #answer_heading {
         font-size: 16pt;
+        color:#08F;
+		font-weight:bold;
+		letter-spacing:-0.8px;
 }
 
 #question_level {
