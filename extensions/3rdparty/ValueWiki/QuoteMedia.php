@@ -10,12 +10,12 @@
 # To activate the extension, include it from your LocalSettings.php
 # with: require("extensions/YourExtensionName.php");
 
-$wgExtensionFunctions[] = "wfQuoteMedia";
+$wgHooks['ParserFirstCallInit'][] = 'wfQuoteMedia';
 
-function wfQuoteMedia() {
-    global $wgParser;
-    # registers the <QuoteMedia> extension with the WikiText parser
-    $wgParser->setHook( "QuoteMedia", "renderQuoteMedia" );
+function wfQuoteMedia( &$parser ) {
+	$parser->setHook( "QuoteMedia", "renderQuoteMedia" );
+
+	return true;
 }
 
 $wgQuoteMediaSettings = array(
@@ -29,7 +29,7 @@ $wgQuoteMediaSettings = array(
 # The callback function for converting the input text to HTML output
 function renderQuoteMedia( $input, $argv ) {
         global $wgQuoteMediaSettings;
-		
+
 		foreach (array_keys($argv) as $key) {
 			$wgQuoteMediaSettings[$key] = $argv[$key];
 		}
@@ -98,5 +98,3 @@ function writeNews($symbol = '', $class = 'news', $count = 10, $width = "100%") 
 
 	return $output;
 }
-
-?>
