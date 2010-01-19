@@ -500,6 +500,11 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
 	background-position: 0 -1296px;
 }
 
+/* link suggest - RT #37690 */
+.rte_wysiwyg .link-suggest-container {
+	display: none;
+}
+
 /* first run notice */
 #RTEFirstRunNotice {
 	background: #ff9;
