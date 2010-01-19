@@ -249,13 +249,12 @@ body.mainpage .firstHeading { display:none; }
 	padding: 0px; /* Override the padding of 0.5em on monaco css */
 }
 
-#contributors, ul.contributors, ol.contributors {
+.contributors, ul.contributors, ol.contributors {
 	margin: 5px 0;
 }
 
-#contributors li, ul.contributors li,
+.contributors li, ul.contributors li,
 ol.contributors li {
-/*	height: 56px;*/
 	float: left;
 	margin: 5px;
 }
