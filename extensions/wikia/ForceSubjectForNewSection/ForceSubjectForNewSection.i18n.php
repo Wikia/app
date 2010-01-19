@@ -23,6 +23,105 @@ $messages['en'] = array(
 	'force-subject-for-new-section-message' => 'Please enter a headline for the section'
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'force-subject-for-new-section-message' => "Verskaf asseblief 'n opskrif vir die afdeling",
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author Jim-by
+ */
+$messages['be-tarask'] = array(
+	'force-subject-for-new-section-message' => 'Калі ласка, увядзіце назву для сэкцыі',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'force-subject-for-new-section-message' => "Mar plij lakait un titl d'ar rann",
+);
+
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'force-subject-for-new-section-message' => 'Molimo unesite naslov za sekciju',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'force-subject-for-new-section-message' => 'Por favor, dea un título para a sección',
+);
+
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'force-subject-for-new-section-message' => 'Prošu zapodaj nadpismo za wotrězk',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'force-subject-for-new-section-message' => 'Kérlek adj címet a szakasznak',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'force-subject-for-new-section-message' => 'セクションの見出しを入力してください',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'force-subject-for-new-section-message' => 'Gitt w.e.g. eng Iwwerschrëft fir den neien Abschnitt an',
+);
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Jon Harald Søby
+ */
+$messages['no'] = array(
+	'force-subject-for-new-section-message' => 'Skriv inn en overskrift for avsnittet',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'force-subject-for-new-section-message' => 'Picatz un títol per aquesta seccion',
+);
+
 $messages['pl'] = array(
 	'force-subject-for-new-section-message' => 'Proszę wpisać temat dla sekcji'
 );
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
+$messages['pms'] = array(
+	'force-subject-for-new-section-message' => "Për piasì ch'a anserissa un tìtol për la session",
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'force-subject-for-new-section-message' => 'Пожалуйста, введите заголовок для раздела',
+);
+
+/** Swedish (Svenska)
+ * @author Per
+ */
+$messages['sv'] = array(
+	'force-subject-for-new-section-message' => 'Vänligen skriv en rubrik för avsnittet',
+);
+

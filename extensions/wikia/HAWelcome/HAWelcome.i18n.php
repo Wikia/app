@@ -4,6 +4,7 @@
  */
 
 $messages = array();
+
 $messages['en'] = array(
 	"welcome-user" => "@latest",
 	"welcome-enabled" => "page-user message-anon message-user",
@@ -30,6 +31,7 @@ Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 Please leave a message on [[$2|my talk page]] if I can help with anything! $3",
 	"welcome-message-log" => "welcoming new contributor",
 );
+
 $messages['fi'] = array(
 	"welcome-user" => "@latest",
 	"welcome-enabled" => "page-user message-anon message-user",
@@ -58,6 +60,20 @@ Jos vain jotenkin voin auttaa, niin laita rohkeasti viesti [[$2|keskustelusivull
 	"welcome-message-log" => "tervetuloa uusi muokkaaja",
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'welcome-user' => '@latest',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'welcome-user' => '@latest',
+	'welcome-message-log' => 'Degemer un implijer nevez',
+);
 
 $messages['de'] = array(
 	'welcome-user' => '@latest',
@@ -89,7 +105,6 @@ PS: Du kannst auch gerne anonym editieren, allerdings wird dann deine IP-Adresse
 	'welcome-message-log' => 'Begrüßung eines neuen Autors',
 );
 
-
 $messages['es'] = array(
 	'welcome-user' => '@latest',
 	'welcome-user-page' => '==Sobre mi==
@@ -116,7 +131,6 @@ Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en [[$2|mi di
 	'welcome-message-log' => 'Bienvenida',
 );
 
-
 $messages['fa'] = array(
 	'welcome-user' => '@latest',
 	'welcome-user-page' => '[[File:Placeholder|thumb|300px]]
@@ -141,6 +155,34 @@ $messages['fa'] = array(
 	'welcome-message-log' => 'خوش‌آمدگویی کاربر جدید',
 );
 
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'welcome-user' => '@latest',
+	'welcome-user-page' => "==Tietoa minusta==
+
+''Tämä on käyttäjäsivusi. Muokkaa tätä sivua ja kerro yhteisölle itsestäsi!''
+
+==Omat muokkaukset==
+
+* [[Special:Contributions/{{PAGENAME}}|Käyttäjän muokkaukset]]
+
+==Omat suosikkisivut==
+
+* Lisää linkki suosikkisivuillesi tässä wikissä tähän.
+* Suosikkisivu #2
+* Suosikkisivu #3",
+	'welcome-message-user' => 'Hei ja tervetuloa sivustolle {{SITENAME}}! Kiitos, että muokkasit sivua [[:$1]].
+
+Jos vain jotenkin voin auttaa, niin laita viesti [[$2|keskustelusivulleni]]! $3',
+	'welcome-message-anon' => "Hei ja tervetuloa sivustolle {{SITENAME}}! Kiitos, että muokkasit sivua [[:$1]].
+
+'''[[Special:Userlogin|Kirjaudu sisään tai luo tunnus]]'''. Se on helppo tapa pitää kirjaa omista muokkauksistasi ja helpottaa sinua kommunikoimaan yhteisössä.
+
+Jos vain jotenkin voin auttaa, niin laita viesti [[$2|keskustelusivulleni]]! $3",
+	'welcome-message-log' => 'tervetuloa uusi muokkaaja',
+);
 
 $messages['fr'] = array(
 	'welcome-user' => '@latest',
@@ -170,6 +212,34 @@ N\'hésitez pas à laisser un message sur [[$2|ma page de discussion]] si je peu
 	'welcome-message-log' => 'Accueillir un nouvel utilisateur',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'welcome-user' => '@latest',
+	'welcome-user-page' => "==Sobre min==
+
+''Esta é a súa páxina de usuario. Edita esta páxina para contarlles aos demais o que queiras acerca de ti!''
+
+==As miñas contribucións==
+
+* [[Special:Contributions/{{PAGENAME}}|As miñas contribucións]]
+
+==As miñas páxinas favoritas==
+
+* Engada ligazóns cara ás súas páxinas preferidas deste wiki!
+* Ligazón cara á páxina #2
+* Ligazón cara á páxina #3",
+	'welcome-message-user' => 'Ola, benvido(a) a {{SITENAME}}! Grazas pola súa edición na páxina "[[:$1]]".
+
+Por favor, deixe unha mensaxe [[$2|na miña páxina de conversa]] se quere que lle axude con algunha cousa! $3',
+	'welcome-message-anon' => "Ola, benvido(a) a {{SITENAME}}! Grazas pola súa edición na páxina \"[[:\$1]]\".
+
+'''Por favor, [[Special:Userlogin|rexístrese e cree unha conta de usuario]]'''. É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
+
+Por favor, deixe unha mensaxe [[\$2|na miña páxina de conversa]] se quere que lle axude con algunha cousa! \$3",
+	'welcome-message-log' => 'benvida ao novo colaborador',
+);
 
 $messages['he'] = array(
 	'welcome-user' => '@latest',
@@ -193,52 +263,6 @@ $messages['he'] = array(
 במידה ואתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3',
 	'welcome-message-log' => 'ברך משתמש חדש',
 );
-
-
-$messages['ja'] = array(
-	'welcome-user' => '@latest',
-	'welcome-user-page' => '== 自己紹介 ==
-\'\'\'ここは、「{{PAGENAME}}」さんの利用者ページです。\'\'\'
-
-上の"編集"ボタンをクリックしてこのページを編集してみましょう。',
-	'welcome-message-user' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
-
-もし、何か困ったことがありましたら、お気軽に[[$2|私の会話ページ]]までメッセージをお寄せください。$3',
-	'welcome-message-anon' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
-
-もし、まだアカウントをお持ちでなければ、[[Special:Userlogin|ぜひアカウントを取得してみてください]]。他の方とコミュニケーションがとりやすくなりますし、アカウントユーザーだけが利用できる機能も多くあります。
-
-また、何か困ったことがありましたら、お気軽に[[$2|私の会話ページ]]までメッセージをお寄せください。$3',
-	'welcome-message-log' => 'ウィキアへようこそ！',
-);
-
-
-$messages['nl'] = array(
-	'welcome-user' => '@latest',
-	'welcome-user-page' => '==Over mij==
-\'\'Dit is jouw gebruikerspagina. Bewerk alsjeblieft deze pagina om de gemeenschap over jezelf te vertellen!\'\'
-
-==Mijn bijdragen==
-
-* [[Speciaal:Bijdragen/{{PAGENAME}}|Gebruiker\'s bijdragen]]
-
-==Mijn favoriete pagina\'s==
-
-* Voeg hier links toe van je favoriete pagina\'s op deze wiki!
-* Favoriete pagina #2
-* Favoriete pagina #3',
-	'welcome-message-user' => 'Hallo, welkom bij {{SITENAME}}! Bedankt voor je bewerking aan de [[:$1]] pagina.
-
-Laat alsjeblieft een bericht achter op [[$2|mijn overleg pagina]] als ik je ergens mee kan helpen! $3',
-	'welcome-message-anon' => 'Hallo, welkom bij {{SITENAME}}. Bedankt voor je bewerking aan de [[:$1]] pagina.
-
-\'\'\'[[Speciaal:Aanmelden|Log alstjeblieft in en creëer een gebruikersnaam]]\'\'\'. Het is een gemakkelijke manier om je 
-bijdragen te volgen, en het helpt je met het communiceren met de rest van de gemeenschap.
-
-Laat alsjeblieft een bericht achter op [[$2|mijn overleg pagina]] als ik je ergens mee kan helpen! $3',
-	'welcome-message-log' => 'nieuwe gebruiker aan het verwelkomen',
-);
-
 
 $messages['it'] = array(
 	'welcome-user-page' => '==Qualcosa su di me==
@@ -267,6 +291,48 @@ Lascia un messaggio sulla [[$2|pagina delle mie discussioni]], se posso esserti 
 	'welcome-message-log' => 'Benvenuto a un nuovo collaboratore',
 );
 
+$messages['ja'] = array(
+	'welcome-user' => '@latest',
+	'welcome-user-page' => '== 自己紹介 ==
+\'\'\'ここは、「{{PAGENAME}}」さんの利用者ページです。\'\'\'
+
+上の"編集"ボタンをクリックしてこのページを編集してみましょう。',
+	'welcome-message-user' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
+
+もし、何か困ったことがありましたら、お気軽に[[$2|私の会話ページ]]までメッセージをお寄せください。$3',
+	'welcome-message-anon' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
+
+もし、まだアカウントをお持ちでなければ、[[Special:Userlogin|ぜひアカウントを取得してみてください]]。他の方とコミュニケーションがとりやすくなりますし、アカウントユーザーだけが利用できる機能も多くあります。
+
+また、何か困ったことがありましたら、お気軽に[[$2|私の会話ページ]]までメッセージをお寄せください。$3',
+	'welcome-message-log' => 'ウィキアへようこそ！',
+);
+
+$messages['nl'] = array(
+	'welcome-user' => '@latest',
+	'welcome-user-page' => '==Over mij==
+\'\'Dit is jouw gebruikerspagina. Bewerk alsjeblieft deze pagina om de gemeenschap over jezelf te vertellen!\'\'
+
+==Mijn bijdragen==
+
+* [[Speciaal:Bijdragen/{{PAGENAME}}|Gebruiker\'s bijdragen]]
+
+==Mijn favoriete pagina\'s==
+
+* Voeg hier links toe van je favoriete pagina\'s op deze wiki!
+* Favoriete pagina #2
+* Favoriete pagina #3',
+	'welcome-message-user' => 'Hallo, welkom bij {{SITENAME}}! Bedankt voor je bewerking aan de [[:$1]] pagina.
+
+Laat alsjeblieft een bericht achter op [[$2|mijn overleg pagina]] als ik je ergens mee kan helpen! $3',
+	'welcome-message-anon' => 'Hallo, welkom bij {{SITENAME}}. Bedankt voor je bewerking aan de [[:$1]] pagina.
+
+\'\'\'[[Speciaal:Aanmelden|Log alstjeblieft in en creëer een gebruikersnaam]]\'\'\'. Het is een gemakkelijke manier om je 
+bijdragen te volgen, en het helpt je met het communiceren met de rest van de gemeenschap.
+
+Laat alsjeblieft een bericht achter op [[$2|mijn overleg pagina]] als ik je ergens mee kan helpen! $3',
+	'welcome-message-log' => 'nieuwe gebruiker aan het verwelkomen',
+);
 
 $messages['pl'] = array(
 	'welcome-user-page' => '== O mnie ==
@@ -290,6 +356,83 @@ Zostaw wiadomość na [[$2|mojej stronie dyskusji]], gdyby potrzebna była Ci ja
 	'welcome-message-log' => 'powitanie',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'welcome-user' => '@ùltim',
+	'welcome-user-page' => "==A propòsit ëd mi==
+
+''Sta sì a l'é soa pàgina utent. Për piasì ch'a modìfica sta pàgina-sì për parlé ëd chiel a la comunità!''
+
+==Mie contribussion==
+
+ [[Special:Contributions/{{PAGENAME}}|Contribussion ëd l'utent]]
+
+==Mie pàgine preferìe==
+
+* Ch'a gionta ambelessì j'anliure a soe pàgine preferìe dzora a la wiki!
+* Pàgina preferìa #2
+* Pàgina preferìa #3",
+	'welcome-message-user' => "Cerea, bin ëvnù a {{SITENAME}}! Mersì për soe modìfiche a la pàgina [[:$1]].
+
+Për piasì ch'a lassa un mëssagi dzora a [[$2|mia pàgina ëd discussion]] se i peuss giuté con cheicòs! $3",
+	'welcome-message-anon' => "Cerea, bin ëvnù su {{SITENAME}}! Mersì për soa modìfica a la pàgina [[:$1]].
+
+'''[[Special:Userlogin|Per piasì ch'a intra e ch'a crea un nòm utent]]'''. A l'é na manera belfé ëd manten-e na marca ëd soe contribussion e a lo giuta a comuniché con ël rest ëd la comunità.
+
+Për piasì ch'a lassa un mëssagi su [[$2|mia pàgina ëd discussion]] s'i peuss giuté con cheicòs! $3",
+	'welcome-message-log' => 'bin ëvnù a un neuv contribudor',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Jesielt
+ */
+$messages['pt-br'] = array(
+	'welcome-user-page' => "==Sobre mim==
+
+''Essa é sua página de usuário. Por favor, edite esta página e conte a comunidade algo sobre você!''
+
+==Minhas contribuições==
+
+* [[Special:Contributions/{{PAGENAME}}|Contribuições desse usuário]]
+
+==Minhas páginas favoritas==
+
+* Adicione links para as suas páginas favoritas nessa wiki!
+* Página favorita #2
+* Página favorita #3",
+);
+
+/** Russian (Русский)
+ * @author Lockal
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'welcome-user-page' => "== Обо мне ==
+
+''Это ваша страница участника. Пожалуйста, отредактируйте эту страницу, расскажите о себе!''
+
+== Мой вклад ==
+
+* [[Special:Contributions/{{PAGENAME}}|Вклад участника]]
+
+== Мои избранные страницы ==
+
+* Добавьте сюда ссылки на ваши любимые вики-страницы!
+* Избранная страница №2
+* Избранная страница №3",
+	'welcome-message-user' => 'Здравствуйте, добро пожаловать на {{SITENAME}}! Спасибо за вашу правку на странице [[:$1]].
+
+Пожалуйста, оставьте сообщение на [[$2|моей странице обсуждения]], если я могу чем-нибудь помочь! $3',
+	'welcome-message-anon' => "Привет, добро пожаловать на {{SITENAME}}! Спасибо за вашу правку на странице [[:$1]].
+
+'''[[Special:Userlogin|Пожалуйста, представьтесь системе, создайте учётную запись]]'''. Это позволит легко следить за вашими изменениями, позволит вам общаться с другими членами сообщества.
+
+Пожалуйста, оставьте сообщение на [[$2|моей странице обсуждения]], если я могу чем-то помочь! $3",
+	'welcome-message-log' => 'приветствие нового автора',
+);
 
 $messages['sv'] = array(
 	'welcome-user-page' => '==Om mig==
@@ -317,3 +460,4 @@ Hej, välkommen till {{SITENAME}}. Tack för din ändring till [[:$1]] sidan.
 Lämna ett meddelande på [[$2|min diskussionssida]] om jag kan hjälpa till med något! $3',
 	'welcome-message-log' => 'välkomna nya bidragsgivare',
 );
+

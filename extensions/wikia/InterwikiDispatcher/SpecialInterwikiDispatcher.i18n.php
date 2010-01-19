@@ -15,3 +15,67 @@ $messages = array();
 $messages['en'] = array(
 	'interwikidispatcher'	=> 'InterwikiDispatcher',	//the name displayed on Special:SpecialPages
 );
+
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'interwikidispatcher' => 'Special page name as displayed on Special:SpecialPages and page title of special page. Should be "Interwiki dispatcher"',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'interwikidispatcher' => 'Дыспэтчар інтэрвікі',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'interwikidispatcher' => 'InterwikiDispatcher',
+);
+
+/** French (Français)
+ * @author IAlex
+ */
+$messages['fr'] = array(
+	'interwikidispatcher' => 'Répartisseur interwiki',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'interwikidispatcher' => 'Repartidor interwiki',
+);
+
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'interwikidispatcher' => 'InterwikiDispatcher',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'interwikidispatcher' => 'Испраќач на интервикија',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'interwikidispatcher' => 'Interwikiverdeler',
+);
+
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'interwikidispatcher' => 'Repartidor interwiki',
+);
+

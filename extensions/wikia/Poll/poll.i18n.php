@@ -10,18 +10,21 @@ $messages['en'] = array(
 	"pollYourVote"   => "You already voted for \"$1\" on $2, you can change your vote by clicking an answer below.",
 	"pollNoVote"     => "Please vote below.",
 	"pollInfo"       => "There were $1 votes since the poll was created on $2.",
-        "pollSubmitting" => "Please wait, submitting your vote."
+	"pollSubmitting" => "Please wait, submitting your vote."
 );
 
-$messages['pl'] = array(
-	"pollVoteUpdate" => "Twój głos został zmieniony.",
-	"pollVoteAdd"    => "Twój głos został dodany.",
-	"pollVoteError"  => "Wystąpił błąd w czasie dodawania głosu, proszę spróbować później.",
-	"pollPercentVotes" => "$1% wszystkich głosów",
-	"pollYourVote"   => "Zagłosowałeś juz na \"$1\" $2, możesz zaktualizować swój głos klikając na odpowiedź poniżej.",
-	"pollNoVote"     => "Podaj swój głos poniżej.",
-	"pollInfo"       => "Oddano już $1 głosy/ów od założenia ankiety dnia $2.",
-	"pollSubmitting" => "Proszę czekać, trwa dodawanie głosu."
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'pollVoteUpdate' => 'Hizivaet eo bet ho vot.',
+	'pollVoteAdd' => 'Ouzhpennet eo bet ho vot.',
+	'pollVoteError' => "Ur gudenn a zo bet pa vezer oc'h ober war-dro ho vot. Mar plij klaskit adarre.",
+	'pollPercentVotes' => '$1% eus hollad ar mouezhioù',
+	'pollYourVote' => 'Votet ho peus dija evit "$1" d\'an $2, tu \'zo deoc\'h kemmañ ho vot en ur klikañ war unan eus ar respontoù da heul.',
+	'pollNoVote' => 'Mar plij votit amañ dindan.',
+	'pollInfo' => "$1 vot a zo bet abaoe ma 'z eo bet krouet ar sontadeg war $2.",
+	'pollSubmitting' => "Mar plij gortozit, emeur oc'h ober war-dro ho vot.",
 );
 
 $messages['de'] = array(
@@ -40,7 +43,6 @@ $messages['es'] = array(
 	'pollsubmitting' => 'Por favor espera, estamos comprobando tu voto, ten paciencia.',
 );
 
-
 $messages['fr'] = array(
 	'pollvoteupdate' => 'Ta voix est actualisé.',
 	'pollvoteadd' => 'Ta voix était compté.',
@@ -52,6 +54,29 @@ $messages['fr'] = array(
 	'pollsubmitting' => 'Attends une moment, ta voix est traité...',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'pollVoteUpdate' => 'Actualizouse o seu voto.',
+	'pollVoteAdd' => 'Engadiuse o seu voto.',
+	'pollVoteError' => 'Houbo algún problema co procesamento do seu voto, por favor, inténteo de novo.',
+	'pollPercentVotes' => '$1% do total dos votos',
+	'pollYourVote' => 'Xa votou por "$1" o $2, pode cambiar o seu voto premendo nunha resposta das que aparecen a continuación.',
+	'pollNoVote' => 'Por favor, vote a continuación.',
+	'pollInfo' => 'Recibíronse $1 votos des que a enquisa foi creada o $2.',
+	'pollSubmitting' => 'Por favor, agarde durante o envío do seu voto.',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'pollVoteUpdate' => 'A szavazatod frissítve.',
+	'pollVoteAdd' => 'A szavazatod rögzítve.',
+	'pollNoVote' => 'Kérlek szavazz alant.',
+	'pollSubmitting' => 'Kérlek várj a szavazatod elküldésére.',
+);
 
 $messages['ja'] = array(
 	'pollvoteupdate' => '投票を更新しました。',
@@ -64,6 +89,46 @@ $messages['ja'] = array(
 	'pollsubmitting' => '投票を処理しています。少しお待ちください。',
 );
 
+$messages['pl'] = array(
+	"pollVoteUpdate" => "Twój głos został zmieniony.",
+	"pollVoteAdd"    => "Twój głos został dodany.",
+	"pollVoteError"  => "Wystąpił błąd w czasie dodawania głosu, proszę spróbować później.",
+	"pollPercentVotes" => "$1% wszystkich głosów",
+	"pollYourVote"   => "Zagłosowałeś juz na \"$1\" $2, możesz zaktualizować swój głos klikając na odpowiedź poniżej.",
+	"pollNoVote"     => "Podaj swój głos poniżej.",
+	"pollInfo"       => "Oddano już $1 głosy/ów od założenia ankiety dnia $2.",
+	"pollSubmitting" => "Proszę czekać, trwa dodawanie głosu."
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'pollVoteUpdate' => "Tò vot a l'é stàit modificà.",
+	'pollVoteAdd' => "Tò vot a l'é stàit giontà.",
+	'pollVoteError' => "A l'é staje un problema an tratand sò vot, për piasì ch'a preuva torna.",
+	'pollPercentVotes' => '$1% ëd tùit ij vot',
+	'pollYourVote' => 'A l\'ha già votà për "$1" su $2; a peul cangé sò vot an sgnacand su na rispòsta sì-sota.',
+	'pollNoVote' => 'Për piasì, voté sì-sota.',
+	'pollInfo' => "A son staje $1 vot da quand ël sondagi a l'é stàit creà su $2.",
+	'pollSubmitting' => "Për piasì ch'a speta, sò vot a l'é an camin ch'a riva.",
+);
+
+/** Russian (Русский)
+ * @author Lockal
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'pollVoteUpdate' => 'Ваш голос обновлён.',
+	'pollVoteAdd' => 'Ваш голос добавлен.',
+	'pollVoteError' => 'Возникла проблема с обработкой вашего голоса, пожалуйста, попробуйте ещё раз.',
+	'pollPercentVotes' => '$1% от всех голосов',
+	'pollYourVote' => 'Вы уже проголосовали «$1» $2. Вы можете изменить свой выбор, нажав на один из представленных ниже ответов.',
+	'pollNoVote' => 'Пожалуйста, проголосуйте ниже.',
+	'pollInfo' => 'С момента создания голосования $2 поступило $1 голосов.',
+	'pollSubmitting' => 'Пожалуйста, подождите, ваш голос обрабатывается.',
+);
 
 $messages['zh'] = array(
 	'pollvoteupdate' => '你的投票已更新',
@@ -73,3 +138,4 @@ $messages['zh'] = array(
 	'pollnovote' => '請於下方投票',
 	'pollsubmitting' => '正在處理您的投票，請稍候。',
 );
+
