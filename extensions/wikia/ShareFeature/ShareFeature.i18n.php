@@ -1,17 +1,36 @@
 <?php
+
 $messages = array();
+
 $messages['en'] = array(
 	'sf-link' => 'Share this article',
 	'sf-link-popup' => 'Share this article',
 	'sf-link-tooltip' => 'Share this article with your friends',
 );
+
 $messages['pl'] = array(
 	'sf-link' => 'Podziel się tym artykułem',
 	'sf-link-popup' => 'Podziel się tym artykułem',
 	'sf-link-tooltip' => 'Podziel się tym artykułem ze swymi przyjaciółmi',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'sf-link' => 'Deel die artikel',
+	'sf-link-popup' => 'Deel die artikel',
+	'sf-link-tooltip' => 'Deel hierdie artikel met u vriende',
+);
 
+/** Breton (Brezhoneg)
+ * @author Gwenn-Ael
+ */
+$messages['br'] = array(
+	'sf-link' => 'Rannañ ar pennad-mañ',
+	'sf-link-popup' => 'Rannañ ar pennad-mañ',
+	'sf-link-tooltip' => 'Rannañ ar pennad-mañ gant ho mignoned',
+);
 
 $messages['de'] = array(
 	'sf-link' => 'Artikel teilen',
@@ -19,16 +38,69 @@ $messages['de'] = array(
 	'sf-link-tooltip' => 'Weise deine Freunde auf diesen Artikel hin.',
 );
 
-
 $messages['es'] = array(
 	'sf-link' => 'Compartir este artículo',
 	'sf-link-popup' => 'Compartir este artículo',
 	'sf-link-tooltip' => 'Compartir este artículo con tus amigos',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'sf-link' => 'Compartir este artigo',
+	'sf-link-popup' => 'Compartir este artigo',
+	'sf-link-tooltip' => 'Compartir este artigo cos seus amigos',
+);
+
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'sf-link' => 'Tutón nastawk dźělić',
+	'sf-link-popup' => 'Tutón nastawk dźělić',
+	'sf-link-tooltip' => 'Tutón nastawk z wašimi přećelemi dźělić',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'sf-link' => 'Szócikk megosztása',
+	'sf-link-popup' => 'Szócikk megosztása',
+	'sf-link-tooltip' => 'Szócikk megosztása a barátaiddal',
+);
 
 $messages['ja'] = array(
 	'sf-link' => 'この記事を共有',
 	'sf-link-popup' => 'この記事を共有',
 	'sf-link-tooltip' => 'この記事を友人と共有',
 );
+
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'sf-link' => 'Del denne artikkelen',
+	'sf-link-popup' => 'Del denne artikkelen',
+	'sf-link-tooltip' => 'Del denne artikkelen med venene dine',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
+$messages['pms'] = array(
+	'sf-link' => "Condivide st'artìcol-sì",
+	'sf-link-popup' => "Condivide st'artìcol-sì",
+	'sf-link-tooltip' => "Condivide st'artìcol-sì con ij sò amis",
+);
+
+/** Russian (Русский)
+ * @author Lockal
+ */
+$messages['ru'] = array(
+	'sf-link' => 'Поделиться ссылкой на статью',
+	'sf-link-popup' => 'Поделиться ссылкой на статью',
+	'sf-link-tooltip' => 'Поделиться ссылкой на статью с друзьями',
+);
+

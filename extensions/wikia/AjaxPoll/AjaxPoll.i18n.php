@@ -1,7 +1,8 @@
 <?php
 
 $messages = array();
-$messages["en"] = array(
+
+$messages['en'] = array(
 	"ajaxpoll-percentVotes" => "$1%&nbsp;of all votes",
 	"ajaxpoll-thankyou" => "Thank you for your vote!",
 	"ajaxpoll-error" => "There was a problem with processing your vote, please try again.",
@@ -11,6 +12,27 @@ $messages["en"] = array(
 	"ajaxpoll-submitting" => "Please wait, submitting your vote..."
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;van alle stemme',
+	'ajaxpoll-thankyou' => 'Dankie vir u stem!',
+	'ajaxpoll-submit' => 'Stem!',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;eus an holl mouezhioù',
+	'ajaxpoll-thankyou' => 'Trugarez da vezañ votet !',
+	'ajaxpoll-error' => "Ur fazi 'zo bet e-pad gwiriekadenn ho vot, mar plij adklaskit.",
+	'ajaxpoll-summary' => "Krouet eo bet ar sontadeg d'an $1 da $2, ha $3 den o deus votet dija.",
+	'ajaxpoll-submit' => 'Votiñ !',
+	'ajaxpoll-closed' => "Serret eo ar sontadeg bremañ. Keñverit an disoc'hoù.",
+	'ajaxpoll-submitting' => 'Gortozit mar plij, emeur o kas ho vot...',
+);
 
 $messages['de'] = array(
 	'ajaxpoll-percentvotes' => '$1% aller Stimmen',
@@ -21,7 +43,6 @@ $messages['de'] = array(
 	'ajaxpoll-closed' => 'Die Umfrage ist beendet. Viel Spaß mit den Ergebnissen.',
 	'ajaxpoll-submitting' => 'Bitte warte kurz, deine Stimme wird verarbeitet.',
 );
-
 
 $messages['es'] = array(
 	'ajaxpoll-percentvotes' => '$1% de todos los votos',
@@ -34,6 +55,10 @@ $messages['es'] = array(
 );
 
 
+$messages['fa'] = array(
+	'ajaxpoll-submit' => 'ثبت رای!',
+);
+
 $messages['fr'] = array(
 	'ajaxpoll-percentvotes' => '$1% de tout les votes',
 	'ajaxpoll-thankyou' => 'Merci d\'avoir voté!',
@@ -44,6 +69,40 @@ $messages['fr'] = array(
 	'ajaxpoll-submitting' => 'Veuillez patienter pendant l\'envoi de votre vote...',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;do total dos votos',
+	'ajaxpoll-thankyou' => 'Grazas polo seu voto!',
+	'ajaxpoll-error' => 'Houbo algún problema co procesamento do seu voto, por favor, inténteo de novo.',
+	'ajaxpoll-summary' => 'A enquisa creouse o $2 ás $1, e ata o de agora votaron $3 persoas.',
+	'ajaxpoll-submit' => 'Votar!',
+	'ajaxpoll-closed' => 'A enquisa está pechada arestora. Olle os resultados.',
+	'ajaxpoll-submitting' => 'Por favor, agarde durante o envío do seu voto...',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'ajaxpoll-percentVotes' => '$1% vu allne Stimme',
+	'ajaxpoll-thankyou' => 'Dankschen fir Dyy Stimm!',
+	'ajaxpoll-error' => 'S het e Probläm gee bi dr Verarbeitig vu Dyyre Stimm! Versuch s bitte nonemol.',
+	'ajaxpoll-summary' => 'D Umfrog isch am $1 am $2 aagleit wore. Bis jetz hän $3 Lyt abgstimmt.',
+	'ajaxpoll-submit' => 'Abstimme!',
+	'ajaxpoll-closed' => 'D Umfrog isch rum. Vil Spaß mit dr Ergebnis.',
+	'ajaxpoll-submitting' => 'Bitte warte e Wyyli. Am Ibermittle vu Dyyre Stimm ...',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'ajaxpoll-thankyou' => 'Köszönjük a szavazatodat!',
+	'ajaxpoll-submit' => 'Szavazás!',
+	'ajaxpoll-submitting' => 'Kérlek várj, szavazat elküldése …',
+);
 
 $messages['ja'] = array(
 	'ajaxpoll-percentvotes' => '$1% 全投票中',
@@ -55,7 +114,80 @@ $messages['ja'] = array(
 	'ajaxpoll-submitting' => 'あなたの投票を送信しています。お待ちください・・・',
 );
 
-
-$messages['fa'] = array(
-	'ajaxpoll-submit' => 'ثبت رای!',
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;av alle røystene',
+	'ajaxpoll-thankyou' => 'Takk for røysta di!',
+	'ajaxpoll-error' => 'Det var eit problem med handsaming av røysta di, prøv igjen.',
+	'ajaxpoll-summary' => 'Avrøystinga vart oppretta kl. $1 den $2, og til no har $3 personar avgjeve røystene sine.',
+	'ajaxpoll-submit' => 'Røyst!',
+	'ajaxpoll-closed' => 'Avrøystinga er stengd no. Nyt resultata.',
+	'ajaxpoll-submitting' => 'Vent, røysta di vert lagt til…',
 );
+
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ * @author Jon Harald Søby
+ */
+$messages['no'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;av alle stemmer',
+	'ajaxpoll-thankyou' => 'Takk for din stemme!',
+	'ajaxpoll-error' => 'Det var et problem med mottak av stemmen din, prøv igjen.',
+	'ajaxpoll-summary' => 'Avstemningen ble opprettet $1 $2, og hittil har $3 personer stemt.',
+	'ajaxpoll-submit' => 'Stem!',
+	'ajaxpoll-closed' => 'Avstemningen er stengt nå. Nyt resultatene.',
+	'ajaxpoll-submitting' => 'Vennligst vent, sender inn stemmen din...',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;ëd tùit ij vot',
+	'ajaxpoll-thankyou' => 'Mersì për tò vot!',
+	'ajaxpoll-error' => "A l'é staje un problema a traté sò vot, për piasì ch'a preuva torna.",
+	'ajaxpoll-summary' => "Ël sondagi a l'é stàit creà a $1 dzora $2, e për adess a l'han votà $3 përson-e.",
+	'ajaxpoll-submit' => "Ch'a vota!",
+	'ajaxpoll-closed' => "Ël sondagi a l'é sarà adess. Gòdte j'arzultà.",
+	'ajaxpoll-submitting' => "Për piasì ch'a speta, sò vot a l'é anviarasse...",
+);
+
+/** Portuguese (Português)
+ * @author Hamilton Abreu
+ */
+$messages['pt'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
+	'ajaxpoll-thankyou' => 'Obrigado pelo seu voto!',
+	'ajaxpoll-error' => 'Ocorreu um problema ao processar o seu voto, por favor, tente novamente.',
+	'ajaxpoll-summary' => 'A votação foi criada às $1 de $2 e, até agora, $3 pessoas votaram.',
+	'ajaxpoll-submit' => 'Vote!',
+	'ajaxpoll-closed' => 'A votação foi encerrada. Disfrute dos resultados.',
+	'ajaxpoll-submitting' => 'Espere, por favor. A submeter o seu voto...',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Jesielt
+ */
+$messages['pt-br'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;de todos os votos',
+	'ajaxpoll-thankyou' => 'Obrigado pelo seu voto!',
+	'ajaxpoll-error' => 'Ocorreu um problema ao processar o seu voto, por favor, tente novamente.',
+);
+
+/** Russian (Русский)
+ * @author Lockal
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;от всех голосов',
+	'ajaxpoll-thankyou' => 'Спасибо за ваш голос!',
+	'ajaxpoll-error' => 'Возникла проблема с обработкой вашего голоса, пожалуйста, попробуйте ещё раз.',
+	'ajaxpoll-summary' => 'Опрос был создан $1 $2, на текущий момент проголосовали $3 человек.',
+	'ajaxpoll-submit' => 'Проголосовать!',
+	'ajaxpoll-closed' => 'Опрос закрыт. Наслаждайтесь результатами.',
+	'ajaxpoll-submitting' => 'Пожалуйста, подождите, передаётся информация о вашем голосе…',
+);
+

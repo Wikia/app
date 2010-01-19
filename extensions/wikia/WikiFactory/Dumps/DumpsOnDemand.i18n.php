@@ -6,7 +6,8 @@
  */
 
 $messages = array();
-$messages["en"] = array(
+
+$messages['en'] = array(
 	'dump-database' => 'Database dumps',
 	'dump-database-info' => 'Database dumps can be used as a personal backup (Wikia produces separate backups of all wikis automatically) or for maintenance bots',
 	'dump-database-curr-pages' => 'Current pages',
@@ -19,3 +20,206 @@ $messages["en"] = array(
 	'dump-database-request-requested' => 'Request for database dump sent',
 	'dump-database-info-more' => 'Please <a href="http://www.wikia.com/wiki/Wikia:Database_download">see</a> for more info'
 );
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'dump-database' => 'Databasis-dumps',
+	'dump-database-info' => "Databasisdumps kan gebruik word as persoonlike rugsteun (back-up) of vir onderhoudsrobotte.
+Wikia maak outomaties rugsteunkopieë van alle wiki's.",
+	'dump-database-curr-pages' => 'Huidige bladsye',
+	'dump-database-curr-pages-info' => '(Hierdie weergawe is gewoonlik die beste vir robotte)',
+	'dump-database-full-pages' => 'Huidige bladsye en geskiedenis',
+	'dump-database-full-pages-info' => '(Waarskuwing: hierdie lêer mag moontlik baie groot wees)',
+	'dump-database-request' => "Versoek 'n opdatering",
+	'dump-database-request-info' => '(Dumps word gewoonlik weekliks gegenereer)',
+	'dump-database-request-submit' => 'Stuur versoek',
+	'dump-database-request-requested' => "U versoek vir 'n databasisdump is ingedien",
+	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Meer inligting</a>.',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'dump-database' => 'Tumpoù an diaz roadennoù',
+	'dump-database-curr-pages' => 'Pajennoù a-vremañ',
+	'dump-database-curr-pages-info' => "(Gwelloc'h eo ar stumm-se evit implijoù ur bot)",
+	'dump-database-full-pages' => 'Pajennoù a-vremañ hag istor',
+	'dump-database-full-pages-info' => '(Diwallit : marteze eo bras-tre ar restr-mañ)',
+	'dump-database-request' => 'Goulenn un hizivadenn',
+	'dump-database-request-info' => '(Graet e vez an tumpoù dre sizhun dre vras)',
+	'dump-database-request-submit' => 'Kas ar reked',
+	'dump-database-request-requested' => 'Kaset eo bet ar reked evit tumpañ an diaz roadennoù',
+	'dump-database-info-more' => 'Mar plij lennit <a href="http://www.wikia.com/wiki/Wikia:Database_download">amañ</a> evit muioc\'h a ditouroù',
+);
+
+/** German (Deutsch)
+ * @author MtaÄ
+ */
+$messages['de'] = array(
+	'dump-database-info' => 'Database Dumps können als persönliches Backup (Wiki produziert seperate Backups aller Wikis automatisch) genutzt werden, oder für Wartungsbots.',
+	'dump-database-curr-pages' => 'Aktuelle Seiten',
+	'dump-database-curr-pages-info' => '(Diese Version eignet sich am Besten für Bots)',
+	'dump-database-full-pages' => 'Aktuelle Seiten und deren Versionsgeschichte',
+	'dump-database-full-pages-info' => '(Warnung: Diese Datei könnte sehr groß sein)',
+	'dump-database-request' => 'Ein Update beantragen',
+	'dump-database-request-info' => '(Dumps werden normalerweise wöchentlich generiert)',
+	'dump-database-request-submit' => 'Anfrage absenden',
+	'dump-database-request-requested' => 'Anfrage nach versendet.',
+	'dump-database-info-more' => 'Bitte siehe <a href="http://www.wikia.com/wiki/Wikia:Database_download">hier</a> für weitere Infos.',
+);
+
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'dump-database-curr-pages' => 'Páginas actuales',
+	'dump-database-full-pages' => 'Páginas actuales e historial',
+	'dump-database-full-pages-info' => '(Advertencia: Este archivo puede ser muy pesado)',
+	'dump-database-request' => 'Solicitar una actualización',
+	'dump-database-request-submit' => 'Enviar solicitud',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'dump-database' => 'Tietokantavedokset',
+	'dump-database-info' => 'Tietokantavedoksia voidaan käyttää henkilökohtaisina varmuuskopioina (Wikia tuottaa erilliset varmuuskopiot kaikista wikeistä automaattisesti) tai bottitarkoituksiin.',
+	'dump-database-curr-pages' => 'Nykyiset sivut',
+	'dump-database-curr-pages-info' => '(Tämä versio on yleensä paras bottikäyttöön)',
+	'dump-database-full-pages' => 'Nykyiset sivut ja historia',
+	'dump-database-full-pages-info' => '(Varoitus: Tämä tiedosto saattaa olla erittäin suuri)',
+	'dump-database-request' => 'Pyydä päivitystä',
+	'dump-database-request-info' => '(Vedokset luodaan yleensä viikoittain)',
+	'dump-database-request-submit' => 'Lähetä pyyntö',
+	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Katso lisätietoja</a>',
+);
+
+/** French (Français)
+ * @author IAlex
+ * @author Jean-Frédéric
+ */
+$messages['fr'] = array(
+	'dump-database' => 'Dumps de la base de données',
+	'dump-database-info' => 'Les dumps de la base de données peuvent être utilisés comme sauvegarde personnelle (Wikia produit automatiquement des sauvegardes séparées de tous les wikis) ou pour les robots de maintenance',
+	'dump-database-curr-pages' => 'Pages actuelles',
+	'dump-database-curr-pages-info' => '(Cette version est généralement la meilleure pour une utilisation pour un bot)',
+	'dump-database-full-pages' => 'Pages actuelles et historique',
+	'dump-database-full-pages-info' => '(Attention : ce fichier peut être très grand)',
+	'dump-database-request' => 'Demander une mise à jour',
+	'dump-database-request-info' => '(Les dumps sont généralement effectués chaque semaine)',
+	'dump-database-request-submit' => 'Envoyer la requête',
+	'dump-database-request-requested' => 'Requête pour un dump de la base de donnée envoyée',
+	'dump-database-info-more' => 'Voyez <a href="http://www.wikia.com/wiki/Wikia:Database_download">ceci</a> pour plus d\'informations',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'dump-database' => 'Copias da base de datos',
+	'dump-database-info' => 'As copias da base de datos pódense usar como unha copia de seguridade persoal (Wikia produce automaticamente copias de seguridade separadas de todos os wikis) ou para os bots de mantemento',
+	'dump-database-curr-pages' => 'Páxinas actuais',
+	'dump-database-curr-pages-info' => '(Esta versión é a miúdo a mellor para o seu uso por parte dun bot)',
+	'dump-database-full-pages' => 'Páxinas actuais e historial',
+	'dump-database-full-pages-info' => '(Atención: este ficheiro pode ser moi grande)',
+	'dump-database-request' => 'Solicitar unha actualización',
+	'dump-database-request-info' => '(As copias xéranse frecuentemente cada semana)',
+	'dump-database-request-submit' => 'Enviar a solicitude',
+	'dump-database-request-requested' => 'Enviouse a solicitude da copia da base de datos',
+	'dump-database-info-more' => 'Por favor, <a href="http://www.wikia.com/wiki/Wikia:Database_download">lea isto</a> para obter máis información',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'dump-database' => 'Adatbázis dumpok',
+	'dump-database-curr-pages' => 'Aktuális lapok',
+	'dump-database-full-pages' => 'Aktuális lapok és laptörténet',
+	'dump-database-request' => 'Frissítés kérése',
+);
+
+/** Japanese (日本語)
+ * @author Hosiryuhosi
+ */
+$messages['ja'] = array(
+	'dump-database' => 'データベース ダンプ',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'dump-database' => 'Складирани резервни записи',
+	'dump-database-info' => 'Складираните резервни записи на базата (dumps) можат да се користат за лично резервно зачувување (Викија автоматски прави посебни резервни зачувувања на сите викија) или ботови за одржување',
+	'dump-database-curr-pages' => 'Тековни страници',
+	'dump-database-curr-pages-info' => '(Оваа верзија е обично најдобра за ботови)',
+	'dump-database-full-pages' => 'Тековни страници и историја',
+	'dump-database-full-pages-info' => '(Предупредување: оваа податотека може да биде многу голема)',
+	'dump-database-request' => 'Побарај поднова',
+	'dump-database-request-info' => '(Складираните резервни записи обично се создаваат еднаш неделно)',
+	'dump-database-request-submit' => 'Испрати барање',
+	'dump-database-request-requested' => 'Барањето за складиран резервен запис на базата е испратено',
+	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Погледајте тука</a> за повеќе информации',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'dump-database' => 'Databasedumps',
+	'dump-database-info' => "Databasedumps kunnen gebruikt worden als persoonlijke back-up of voor beheerrobots.
+Wikia maakt automatisch back-ups van alle wiki's.",
+	'dump-database-curr-pages' => "Huidige pagina's",
+	'dump-database-curr-pages-info' => 'Deze versie is meestal de beste keus voor botgebruik.',
+	'dump-database-full-pages' => "Huidige pagina's en geschiedenis",
+	'dump-database-full-pages-info' => 'Waarschuwing: dit bestand kan erg groot worden.',
+	'dump-database-request' => 'Update aanvragen',
+	'dump-database-request-info' => 'Dumps worden meestal wekelijks aangemaakt.',
+	'dump-database-request-submit' => 'Verzoek versturen',
+	'dump-database-request-requested' => 'Het verzoek voor de databasedump is ingediend.',
+	'dump-database-info-more' => '<a href="http://www.wikia.com/wiki/Wikia:Database_download">Meer informatie</a>.',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'dump-database' => 'Dump ëd la base ëd dàit',
+	'dump-database-info' => 'Ij dump ëd la base ëd dàit a peulo esse dovrà com còpia përsonal (Wikia a produv automaticament dle còpie separà ëd tute le wiki) o për trigomiro ëd manutension',
+	'dump-database-curr-pages' => 'Pàgine corente',
+	'dump-database-curr-pages-info' => "(Sta version-sì a l'é normalment la mej për l'usagi dij trigomiro)",
+	'dump-database-full-pages' => 'Pàgine corente e stòria',
+	'dump-database-full-pages-info' => "(Atension: st'archivi-sì a peul esse motobin gròss)",
+	'dump-database-request' => 'Ciama na modìfica',
+	'dump-database-request-info' => '(Ij dump a son normalment generà setimanalment)',
+	'dump-database-request-submit' => 'Manda arcesta',
+	'dump-database-request-requested' => 'Arcesta për dump dla base ëd dàit mandà',
+	'dump-database-info-more' => 'Për piasì <a href="http://www.wikia.com/wiki/Wikia:Database_download">varda</a> për savèjne ëd pi',
+);
+
+/** Russian (Русский)
+ * @author Lockal
+ */
+$messages['ru'] = array(
+	'dump-database' => 'Дампы базы данных',
+	'dump-database-info' => 'Дампы базы данных могут быть использованы в качестве личной резервной копии (Викия создаёт отдельные резервные копии для всех вики автоматически) или для обслуживающих ботов',
+	'dump-database-full-pages-info' => '(Предупреждение: этот файл может быть слишком большим)',
+	'dump-database-request' => 'Запросить обновление',
+	'dump-database-request-info' => '(Дампы обычно генерируются еженедельно)',
+	'dump-database-request-submit' => 'Отправить запрос',
+);
+
+/** Swedish (Svenska)
+ * @author Per
+ */
+$messages['sv'] = array(
+	'dump-database-request' => 'Begär en uppdatering',
+	'dump-database-request-submit' => 'Skicka begäran',
+);
+

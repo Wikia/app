@@ -33,9 +33,17 @@ Wikia
  * @author Naudefj
  */
 $messages['af'] = array(
+	'globalwatchlist-digest-email-subject' => 'Weeklikse samevatting',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|opmerking|opmerkings}})',
 	'globalwatchlist-no-page-found' => 'Geen bladsy gevind nie.',
 	'globalwatchlist-no-blog-page-found' => 'Geen blog-bladsy gevind nie.',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'globalwatchlist-no-page-found' => "N'eo bet kavet pajenn ebet.",
 );
 
 /** German (Deutsch) */
@@ -115,7 +123,7 @@ $messages['gl'] = array(
 	'tog-watchlistdigestclear' => 'Marcar como visitadas todas as páxinas do meu boletín semanal da miña lista de vixilancia',
 	'globalwatchlist-see-more' => 'Por favor, comprobe as súas listas de vixilancia locais para ollar máis cambios',
 	'globalwatchlist-digest-email-subject' => 'Boletín semanal',
-	'globalwatchlist-digest-email-body' => 'Estimado $1,
+	'globalwatchlist-digest-email-body' => 'Estimado $1:
 
 Esta é unha lista de páxinas da súa lista de vixilancia de Wikia que foron editadas desde a súa última visita.
 

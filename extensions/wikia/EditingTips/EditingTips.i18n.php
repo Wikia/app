@@ -9,1035 +9,16 @@ $messages['en'] = array(
 	'editingtips_show' => 'Show Editing Tips',
 	'editingTips' => 'Add your tips [[MediaWiki:EditingTips|here]]',
 );
+
 $messages['fi'] = array(
-       'tog-disableeditingtips' => 'Älä näytä muokkausvinkkejä',
-       'tog-widescreeneditingtips' => 'Käytä laajakuvaeditoria',
-       'editingtips_enter_widescreen' => 'Siirry laajakuvaeditoriin',
-       'editingtips_exit_widescreen' => 'Poistu laajakuvaeditorista',
-       'editingtips_hide' => 'Piilota muokkausvinkit',
-       'editingtips_show' => 'Näytä muokkausvinkit',
-       'editingTips' => 'Lisää vinkkisi [[MediaWiki:EditingTips|tänne]]',
+	'tog-disableeditingtips' => 'Älä näytä muokkausvinkkejä',
+	'tog-widescreeneditingtips' => 'Käytä laajakuvaeditoria',
+	'editingtips_enter_widescreen' => 'Siirry laajakuvaeditoriin',
+	'editingtips_exit_widescreen' => 'Poistu laajakuvaeditorista',
+	'editingtips_hide' => 'Piilota muokkausvinkit',
+	'editingtips_show' => 'Näytä muokkausvinkit',
+	'editingTips' => 'Lisää vinkkisi [[MediaWiki:EditingTips|tänne]]',
 );
-
-
-$messages['de'] = array(
-	'tog-disableeditingtips' => 'Bearbeitungs-Tipps ausblenden',
-	'tog-widescreeneditingtips' => 'Benutze den Editor auf voller Breite',
-	'editingtips_enter_widescreen' => 'Volle Breite',
-	'editingtips_exit_widescreen' => 'Normale Breite',
-	'editingtips_hide' => 'Bearbeitungs-Tipps ausblenden',
-	'editingtips_show' => 'Bearbeitungs-Tipps einblenden',
-	'editingtips' => '= Text formatieren =
-
-Du kannst Text mit "Wiki-Markup" oder HTML formatieren.
-
-<br />
-<span style="font-family: courier"><nowiki>\'\'kursiv\'\'</nowiki></span> => \'\'kursiv\'\'
-
-<br />
-<span style="font-family: courier"><nowiki>\'\'\'fett\'\'\'</nowiki></span> => \'\'\'fett\'\'\'
-
-<br />
-<span style="font-family: courier"><nowiki>\'\'\'\'\'kursiv und fett\'\'\'\'\'</nowiki></span> => \'\'\'\'\'kursiv und fett\'\'\'\'\'
-
-----
-
-<br />
-<nowiki><s>durchstreichen</s></nowiki> => <s>durchstreichen</s>
-
-<br />
-<nowiki><u>unterstreichen</u></nowiki> => <u>unterstreichen</u>
-
-<br />
-<nowiki><span style="color:red;">roter Text</span></nowiki> => <span style="color:red;">roter Text</span>
-= Links erstellen =
-
-Links werden mit ein oder zwei eckigen Klammern erzeugt.
-
-<br />
-\'\'\'Ein einfacher interner Link:\'\'\'<br />
-<nowiki>[[Artikelname]]</nowiki>
-
-<br />
-\'\'\'Ein interner Link mit abweichender Beschreibung:\'\'\'<br />
-<nowiki>[[Artikelname | Beschreibung]]</nowiki>
-
-<br />
-----
-
-<br />
-\'\'\'Ein externer Link (mit Nummer):\'\'\'<br />
-<nowiki>[http://www.example.com]</nowiki>
-
-<br />
-\'\'\'Ein externer Link mit Beschreibung:\'\'\'
-
-<nowiki>[http://www.example.com Link-Beschreibung]</nowiki>
-=Überschrift hinzufügen=
-
-Überschriften werden durch Gleich-Zeichen markiert. Je mehr "=", desto kleiner die Überschrift. 
-Überschrift 1 ist für den Titel der Seite reserviert.
-
-<br />
-<span style="font-size: 1.6em"><nowiki>==Überschrift 2==</nowiki></span>
-
-<br />
-<span style="font-size: 1.3em"><nowiki>===Überschrift 3===</nowiki></span>
-
-<br />
-<nowiki>====Überschrift 4====</nowiki>
-= Text einrücken =
-
-Einrückungen können durch Leerzeichen, Punkte oder Nummern erstellt werden.
-
-<br />
-<nowiki>: eingerückt</nowiki><br />
-<nowiki>: eingerückt</nowiki><br />
-<nowiki>:: weiter eingerückt</nowiki><br />
-<nowiki>::: noch weiter eingerückt</nowiki>
-
-<br />
-<nowiki>* Aufzählungspunkt</nowiki><br />
-<nowiki>* Aufzählungspunkt</nowiki><br />
-<nowiki>** Unterpunkt</nowiki><br />
-<nowiki>* Aufzählungspunkt</nowiki>
-
-<br />
-<nowiki># Nummerierte Liste</nowiki><br />
-<nowiki># Nummerierte Liste</nowiki><br />
-<nowiki>## Unterliste</nowiki><br />
-<nowiki># Nummerierte Liste</nowiki>
-=Bilder einfügen=
-
-Bilder werden so ähnlich wie Links hinzugefügt und formatiert.
-
-<br />
-<nowiki>[[Bild:Name.jpg]]</nowiki>
-
-<br />
-\'\'\'Mit Bildbeschreibungstext:\'\'\'<br />
-<nowiki>[[Bild:Name.jpg | Beschreibungstext]]</nowiki>
-
-<br />
-\'\'\'Um ein Vorschaubild zu erzeugen:\'\'\'<br />
-<nowiki>[[Bild:Name.jpg | thumb | ]]</nowiki>
-
-<br />
-\'\'\'Die Größe des Bildes angeben:\'\'\'<br />
-<nowiki>[[Bild:Name.jpg | 200px | ]]</nowiki>
-
-<br />
-\'\'\'Das Bild ausrichten:\'\'\'<br />
-<nowiki>[[Bild:Name.jpg | right|]]</nowiki>
-
-<br />
-Du kannst diese Attribute verknüpfen, wenn du einen senkrechten Strich "|" zwischen sie stellst. Alles was nach dem letzten senkrechten Strich folgt, ist Beschreibungstext.',
-);
-
-
-$messages['es'] = array(
-	'tog-disableeditingtips' => 'No mostrar consejos para editar',
-	'tog-widescreeneditingtips' => 'Usar edición en Pantalla Extendida',
-	'editingtips_enter_widescreen' => 'Editar en pantalla extendida',
-	'editingtips_exit_widescreen' => 'Volver a modo de edición normal',
-	'editingtips_hide' => 'Ocultar consejos para editar',
-	'editingtips_show' => 'Mostrar consejos para editar',
-	'editingtips' => '=Cómo dar formato =
-
-Puedes dar formato al texto usando formato wiki o HTML
-
-<br />
-<tt><nowiki>\'\'cursiva\'\'</nowiki></tt> => \'\'cursiva\'\'
-
-<br />
-<tt><nowiki>\'\'\'negrita\'\'\'</nowiki></tt> => \'\'\'negrita\'\'\'
-
-<br />
-<tt><nowiki>\'\'\'\'\'cursiva y negrita\'\'\'\'\'</nowiki></tt> => \'\'\'\'\'cursiva y negrilla\'\'\'\'\'
-
-----
-
-<br />
-<tt>&lt;s&gt;tachado&lt;/s&gt;</tt> => <s>tachado</s>
-
-<br />
-<tt>&lt;u&gt;subrayado&lt;/u&gt;</tt> => <u>subrayado</u>
-
-<br />
-<tt>&lt;span style="color:red;"&gt;texto en rojo&lt;/span&gt;</tt> => <span style="color:red;">texto en rojo</span>
-
-=Cómo crear enlaces =
-
-Los enlaces se crean usando uno o dos corchetes.
-
-<br />
-\'\'\'Un enlace interno simple:\'\'\'<br />
-<tt><nowiki>[[Artículo]]</nowiki></tt>
-
-<br />
-\'\'\'Un enlace interno con texto diferente:\'\'\'<br />
-<tt><nowiki>[[Artículo|otro texto]]</nowiki></tt>
-
-<br />
-----
-
-<br />
-\'\'\'Un enlace externo numerado:\'\'\'<br />
-<tt><nowiki>[http://www.example.com]</nowiki></tt>
-
-<br />
-\'\'\'Un enlace externo con texto:\'\'\'
-
-<tt><nowiki>[http://www.example.com texto del enlace]</nowiki></tt>
-
-=Cómo agregar encabezados =
-
-Los encabezados usan signos de igual.  cuantos más signos "=", el encabezado será de nivel inferior (más pequeño).
-El encabezado de primer nivel es el título del artículo.
-
-<br />
-<span style="font-size: 1.6em"><tt><nowiki>==Encabezado 2==</nowiki></tt></span>
-
-<br />
-<span style="font-size: 1.3em"><tt><nowiki>===Encabezado 3===</nowiki></tt></span>
-
-<br />
-<nowiki>====Encabezado 4====</nowiki>
-
-=Cómo indentar texto =
-
-La indentación puede ser lisa, con boliches o numerada.
-
-<br />
-<nowiki>: indentado</nowiki><br />
-<nowiki>: indentado</nowiki><br />
-<nowiki>:: más indentado</nowiki><br />
-<nowiki>::: aun más indentado</nowiki>
-
-<br />
-<nowiki>* boliche</nowiki><br />
-<nowiki>* boliche</nowiki><br />
-<nowiki>** sub-elemento</nowiki><br />
-<nowiki>* boliche</nowiki>
-
-<br />
-<nowiki># lista numerada</nowiki><br />
-<nowiki># lista numerada</nowiki><br />
-<nowiki>## sub-elemento</nowiki><br />
-<nowiki># lista numerada</nowiki>
-
-=Cómo insertar imágenes =
-
-Las imágenes se insertan de forma similar a los enlaces.
-
-<br />
-<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg]]</tt>
-
-<br />
-\'\'\'Agregar un texto alternativo\'\'\'<br />
-<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|texto alternativo]]</tt>
-
-<br />
-\'\'\'Crear una miniatura\'\'\'<br />
-<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|thumb|]]</tt>
-
-<br />
-\'\'\'Especificar el tamaño de la imagen\'\'\'<br />
-<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|200px|]]</tt>
-
-<br />
-\'\'\'Alinear la imagen\'\'\'<br />
-<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|right|]]</tt>
-
-<br />
-Puedes combinar estos atributos separándolos con el símbolo de barra vertical "|". Recuerda que el último parámetro que no se reconozca se interpretará como texto.',
-);
-
-
-$messages['fr'] = array(
-	'tog-disableeditingtips' => 'Ne pas montrer les astuces d\'éditions',
-	'tog-widescreeneditingtips' => 'Utiliser une large fenêtre d\'édition',
-	'editingtips_enter_widescreen' => 'Afficher la grande fenêtre d\'édition',
-	'editingtips_exit_widescreen' => 'Masquer la grande fenêtre d\'édition',
-	'editingtips_hide' => 'Masquer l\'aide',
-	'editingtips_show' => 'Afficher l\'aide',
-	'editingtips' => '= Styler votre texte =
-
-Vous pouvez styliser un texte à l\'aide des majorations wiki ou du code HTML.
-
-<br />
-<code><nowiki>\'\'Italique\'\'</nowiki></code> => \'\'Italique\'\'
-
-<br />
-<code><nowiki>\'\'\'Gras\'\'\'</nowiki></code> => \'\'\'Gras\'\'\'
-
-<br />
-<code><nowiki>\'\'\'\'\'Italique et Gras\'\'\'\'\'</nowiki></code> => \'\'\'\'\'Italique et Gras\'\'\'\'\'
-
-----
-
-<br />
-<code><nowiki><s>biffé</s></nowiki></code> => <s>biffé</s>
-
-<br />
-<code><nowiki><u>souligné</u></nowiki></code> => <u>souligné</u>
-
-<br />
-<code><nowiki><span style="color:red;">texte en rouge</span></nowiki></code> => <span style="color:red;">texte en rouge</span>
-
-= Créer des liens =
-
-Les liens sont créer à l\'aide d\'une ou deux parenthèse carrées.
-
-<br />
-\'\'\'Un lien simple interne:\'\'\'<br />
-<code><nowiki>[[Nom de l\'article]]</nowiki></code>
-
-<br />
-\'\'\'Un lien interne avec du texte:\'\'\'<br />
-<code><nowiki>[[Nom de l\'article | Texte que vous voulez mettre]]</nowiki></code>
-
-<br />
-----
-
-<br />
-\'\'\'Un lien externe annoté:\'\'\'<br />
-<code><nowiki>[http://www.site.com]</nowiki></code>
-
-<br />
-\'\'\'Un lien externe sous forme de texte:\'\'\'
-
-<code><nowiki>[http://www.site.com Texte proposé]</nowiki></code>
-
-= Ajouter des titres =
-
-Les titres utilisent des signes d\'égalité. Le plus de « = », le plus petit sera le titre
-Headings use equals signs.  The more "=", the smaller the heading.
-
-<br />
-<span style="font-size: 1.6em;"><code><nowiki>==</nowiki></code>Titre 2<code><nowiki>==</nowiki></code></span>
-
-<br />
-<span style="font-size: 1.3em;"><code><nowiki>===</nowiki></code>\'\'\'Titre 3\'\'\'<code><nowiki>===</nowiki></code></span>
-
-<br />
-<code><nowiki>====</nowiki></code>\'\'\'Titre 4\'\'\'<code><nowiki>====</nowiki></code>
-
-= Créer des alinéas =
-
-Les alinéas peuvent être vide, avec des points ou des nombres.
-
-<br />
-<code>:</code> Alinéa<br />
-<code>:</code> Alinéa<br />
-<code>::</code> Plus d\'alinéa<br />
-<code>:::</code> Encore plus de marge
-
-<br />
-<code>*</code> Point<br />
-<code>*</code> Point<br />
-<code>**</code> Sous-point<br />
-<code>*</code> Point
-
-<br />
-<code>#</code> Liste numérée<br />
-<code>#</code> Liste numérée<br />
-<code>##</code> Sous-liste<br />
-<code>#</code> Liste numérée
-
-= Insérer des images =
-
-Les images sont ajoutées et formatées d\'une manière similaire au lien.
-
-<br />
-<code><nowiki>[[Image:Nom.jpg]]</nowiki></code>
-
-<br />
-\'\'\'Pour ajouter une légende\'\'\'<br />
-<code><nowiki>[[Image:Nom.jpg | Légende]]</nowiki></code>
-
-<br />
-\'\'\'Pour créer un réduit\'\'\'<br />
-<code><nowiki>[[Image:Nom.jpg | thumb | ]]</nowiki></code>
-
-<br />
-\'\'\'Pour spécifier la taille de l\'image<br />
-<code><nowiki>[[Image:Nom.jpg | 200px | ]]</nowiki></code>
-
-<br />
-\'\'\'Pour aligner l\'image\'\'\'<br />
-<code><nowiki>[[Image:Nom.jpg | right|]]</nowiki></code>
-
-<br />
-On peut combiner ces attributs en mettant une barre verticale "<code>|</code>" entres-eux. Se souvenir cependant que tout ce qui est après la dernière barre verticale est du texte.
-
-= Plus d\'aide =
-
-Vous nécessitez encore de l\'aide?
-
-<br />
-Visitez [[w:c:aide|Aide wiki]] !
-
-Ou regardez dans [[w:fr:Forum:Index|les forums de Fr.Wikia]] ou [[w:c:fr.answers|posez une question]] !',
-);
-
-
-$messages['ja'] = array(
-	'tog-disableeditingtips' => '編集時のヘルプを表示しない',
-	'tog-widescreeneditingtips' => '大きな編集画面を使う',
-	'editingtips_enter_widescreen' => '編集画面を大きくする',
-	'editingtips_exit_widescreen' => '編集画面を元に戻す',
-	'editingtips_hide' => 'ヘルプを隠す',
-	'editingtips_show' => 'ヘルプを表示する',
-	'editingtips' => '=テキストの装飾 =
-wiki文法をつかうか、HTMLで装飾できます。
-<br />
-<span style="font-family: courier"><nowiki>\'\'斜体\'\'</nowiki></span> => \'\'斜体\'\'
-
-<br />
-<span style="font-family: courier"><nowiki>\'\'\'太字\'\'\'</nowiki></span> => \'\'\'太字\'\'\'
-
-<br />
-<span style="font-family: courier"><nowiki>\'\'\'\'\'斜体および太字\'\'\'\'\'</nowiki></span> => \'\'\'\'\'斜体および太字\'\'\'\'\'
-
-----
-
-<br />
-<nowiki><s>取り消し線</s></nowiki> => <s>取り消し線</s>
-
-<br />
-<nowiki><u>アンダーライン</u></nowiki> => <u>アンダーライン</u>
-
-<br />
-<nowiki><span style="color:red;">赤文字</span></nowiki> => <span style="color:red;">赤文字</span>
-
-=リンクの作り方 =
-ブラケット("["または"]")をひとつかふたつ使うことでリンクを作ることができます。
-
-<br />
-\'\'\'単純な内部リンク:\'\'\'<br />
-<nowiki>[[ページ名]]</nowiki>
-
-<br />
-\'\'\'テキスト付きの内部リンク:\'\'\'<br />
-<nowiki>[[ページ名|表示したいテキスト]]</nowiki>
-
-<br />
-----
-
-<br />
-\'\'\'外部リンク(表示される際には、<nowiki>[1]</nowiki>と略されます):\'\'\'<br />
-<nowiki>[http://www.example.com]</nowiki>
-
-<br />
-\'\'\'テキスト付きの外部リンク:\'\'\'
-<nowiki>[http://www.example.com 表示したいテキスト]</nowiki>
-
-= 見出し作成 =
-見出しは、"="で作ります。"="が多いほど、見出しは小さくなります。
-見出しの一番大きなものは、ページ名になります。
-
-<br />
-<span style="font-size: 1.6em"><nowiki>==見出し2==</nowiki></span>
-
-<br />
-<span style="font-size: 1.3em"><nowiki>===見出し3===</nowiki></span>
-
-<br />
-<nowiki>====見出し4====</nowiki>
-
-=テキストのインデント=
-単純なインデント、箇条書きによるインデント、数字付きのインデントができます。
-
-<br />
-<nowiki>: インデント</nowiki><br />
-<nowiki>: インデント</nowiki><br />
-<nowiki>:: もう一段インデント</nowiki><br />
-<nowiki>::: 更にインデント</nowiki>
-
-<br />
-<nowiki>* 箇条書き</nowiki><br />
-<nowiki>* 箇条書き</nowiki><br />
-<nowiki>** 一段下の箇条書き</nowiki><br />
-<nowiki>* 箇条書き</nowiki>
-
-<br />
-<nowiki># 数字付きリスト</nowiki><br />
-<nowiki># 数字付きリスト</nowiki><br />
-<nowiki>## 一段下の数字付きリスト</nowiki><br />
-<nowiki># 数字付きリスト</nowiki>
-
-=画像の挿入 =
-リンクを貼るのに似た方法で画像を挿入することができます。
-
-<br />
-<nowiki>[[画像:画像ファイル.jpg]]</nowiki>
-
-<br />
-\'\'\'ブラウザ向けのaltテキストを入れる場合\'\'\'<br />
-<nowiki>[[画像:画像ファイル.jpg|alt text]]</nowiki>
-
-<br />
-\'\'\'画像の縮小表示を行う場合\'\'\'<br />
-<nowiki>[[画像:画像ファイル.jpg|thumb|]]</nowiki>
-
-<br />
-\'\'\'画像を特定のサイズにする場合\'\'\'<br />
-<nowiki>[[画像:画像ファイル.jpg|200px|]]</nowiki>
-
-<br />
-\'\'\'画像を右寄せにする場合(デフォルトは左寄せ)\'\'\'<br />
-<nowiki>[[画像:画像ファイル.jpg|right|]]</nowiki>
-
-<br />
-"|"をつかって、それぞれの値をつなげることができます。最後の"|"以後の値は、全て解説用のテキストになります。',
-);
-
-
-$messages['ru'] = array(
-	'tog-disableeditingtips' => 'Не показывать подсказки во время редактирования',
-	'tog-widescreeneditingtips' => 'Поле при редактировании во всю ширину экрана',
-);
-
-
-$messages['zh'] = array(
-	'editingtips_enter_widescreen' => '放大編輯',
-	'editingtips_exit_widescreen' => '退出放大編輯',
-	'editingtips_hide' => '隱藏編輯小技巧',
-	'editingtips' => '= 如何改變字體格式 =
-你可以利用mediawiki的語法改變字體格式，或是利用HTML
-
-<nowiki>\'\'斜體\'\'</nowiki> => \'\'斜體\'\'
-
-<nowiki>\'\'\'粗體\'\'\'</nowiki> => \'\'\'粗體\'\'\'
-
-<nowiki>\'\'\'\'\'粗體和斜體\'\'\'\'\'</nowiki> => \'\'\'\'\'粗體和斜體\'\'\'\'\'　
-
------
-<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
-
-<br />
-<nowiki><u>底線</u></nowiki> => <u>底線</u>
-
-<br />
-<nowiki><span style="color:red;">紅字</span></nowiki> => <span style="color:red;">紅字</span>
-
-= 連結 =
-利用兩個或是一個中括號，可產生連結的效果
-
-<br />
-\'\'\'基本內部鏈結:\'\'\'<br />
-<nowiki>[[文章名]]</nowiki>
-
-<br />
-\'\'\'改變鏈結字樣:\'\'\'<br />
-<nowiki>[[文章名|你喜歡的字樣]]</nowiki>
-
-<br />
-----
-
-<br />
-\'\'\'連到外部網頁:\'\'\'<br />
-<nowiki>[http://www.example.com]</nowiki>
-
-<br />
-\'\'\'改變外部鏈結字樣:\'\'\'
-
-<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki> 
-
-= 如何增加標題 =
-使用 =(等號)就可以幫你建立次標題和三級標題。前後一個等號的標題等級和頁面名稱等級相同。
-
-<nowiki>==二級標題==</nowiki>
-
-<nowiki>===三級標題===</nowiki>
-
-<nowiki>====四級標題====</nowiki>
-
-
-= 如何把內容分項顯示 =
-
-在句子的開頭使用\'\'\':\'\'\'就可以達到開頭縮排書寫的效果。
-
-
-<nowiki>:一個縮排</nowiki><br>
-<nowiki>:一個縮排</nowiki><br>
-<nowiki>:: 兩個縮排</nowiki><br />
-<nowiki>::: 更多縮排</nowiki>
-
-
-<nowiki>*第一項</nowiki><br>
-<nowiki>*第二項</nowiki><br>
-<nowiki>**第二項的再分項</nowiki><br>
-<nowiki>*第三項</nowiki><br>
-
-
-<nowiki>#第一點</nowiki><br>
-<nowiki>#第二點</nowiki><br>
-<nowiki>##2.1點</nowiki><br>
-<nowiki>#第三點</nowiki><br>
-
-
-= 如何加入圖片 =
-如入圖片的方法和加入鏈結的方法相似。
-
-<br />
-<nowiki>[[Image:圖片名.jpg]]</nowiki>
-
-<br />
-\'\'\'背景說明(滑鼠移到圖片上時顯示)\'\'\'<br />
-<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
-
-<br />
-\'\'\'加入圖片註解\'\'\'<br />
-<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
-
-<br />
-\'\'\'改變圖片大小\'\'\'<br />
-<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
-
-<br />
-\'\'\'改變圖片位置\'\'\'<br />
-<nowiki>[[Image:Name.jpg|right|]]</nowiki>
-
-<br />
-你可以用 "|" 結合上述功能，別忘了，在最後一個 "|" 後面是加註文字。',
-);
-
-
-$messages['zh-cn'] = array(
-	'editingtips_enter_widescreen' => '放大编辑',
-	'editingtips_exit_widescreen' => '退出放大编辑',
-	'editingtips_hide' => '隐藏编辑小技巧',
-	'editingtips' => '= 如何改变字体格式 =
-你可以利用mediawiki的语法改变字体格式，或是利用HTML
-
-<nowiki>\'\'斜体\'\'</nowiki> => \'\'斜体\'\'
-
-<nowiki>\'\'\'粗体\'\'\'</nowiki> => \'\'\'粗体\'\'\'
-
-<nowiki>\'\'\'\'\'粗体和斜体\'\'\'\'\'</nowiki> => \'\'\'\'\'粗体和斜体\'\'\'\'\'　
-
------
-<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
-
-<br />
-<nowiki><u>底線</u></nowiki> => <u>底線</u>
-
-<br />
-<nowiki><span style="color:red;">红字</span></nowiki> => <span style="color:red;">红字</span>
-
-= 连结 =
-利用两个或是一个中括号，可產生连结的效果
-
-<br />
-\'\'\'基本內部链结:\'\'\'<br />
-<nowiki>[[文章名]]</nowiki>
-
-<br />
-\'\'\'改变链结字樣:\'\'\'<br />
-<nowiki>[[文章名|你喜欢的字樣]]</nowiki>
-
-<br />
-----
-
-<br />
-\'\'\'连到外部网页:\'\'\'<br />
-<nowiki>[http://www.example.com]</nowiki>
-
-<br />
-\'\'\'改变外部链结字樣:\'\'\'
-
-<nowiki>[http://www.example.com 你喜欢的字樣]</nowiki> 
-
-= 如何增加标题 =
-使用 =(等号)就可以帮你建立次标题和三级标题。前后一个等号的标题等级和页面名称等级相同。
-
-<nowiki>==二级标题==</nowiki>
-
-<nowiki>===三级标题===</nowiki>
-
-<nowiki>====四级标题====</nowiki>
-
-
-= 如何把內容分项显示 =
-
-在句子的开头使用\'\'\':\'\'\'就可以达到开头缩排书写的效果。
-
-
-<nowiki>:一个缩排</nowiki><br>
-<nowiki>:一个缩排</nowiki><br>
-<nowiki>:: 两个缩排</nowiki><br />
-<nowiki>::: 更多缩排</nowiki>
-
-
-<nowiki>*第一项</nowiki><br>
-<nowiki>*第二项</nowiki><br>
-<nowiki>**第二项的再分项</nowiki><br>
-<nowiki>*第三项</nowiki><br>
-
-
-<nowiki>#第一鲇</nowiki><br>
-<nowiki>#第二鲇</nowiki><br>
-<nowiki>##2.1鲇</nowiki><br>
-<nowiki>#第三鲇</nowiki><br>
-
-
-= 如何加入图片 =
-如入图片的方法和加入链结的方法相似。
-
-<br />
-<nowiki>[[Image:图片名.jpg]]</nowiki>
-
-<br />
-\'\'\'背景說明(滑鼠移到图片上时显示)\'\'\'<br />
-<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
-
-<br />
-\'\'\'加入图片註解\'\'\'<br />
-<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
-
-<br />
-\'\'\'改变图片大小\'\'\'<br />
-<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
-
-<br />
-\'\'\'改变图片位置\'\'\'<br />
-<nowiki>[[Image:Name.jpg|right|]]</nowiki>
-
-<br />
-你可以用 "|" 结合上述功能，別忘了，在最后一个 "|" 后面是加註文字。',
-);
-
-
-$messages['zh-hans'] = array(
-	'editingtips_enter_widescreen' => '放大编辑',
-	'editingtips_exit_widescreen' => '退出放大编辑',
-	'editingtips_hide' => '隐藏编辑小技巧',
-);
-
-
-$messages['zh-hant'] = array(
-	'editingtips_enter_widescreen' => '放大編輯',
-	'editingtips_exit_widescreen' => '退出放大編輯',
-	'editingtips_hide' => '隱藏編輯小技巧',
-);
-
-
-$messages['zh-hk'] = array(
-	'editingtips_enter_widescreen' => '放大編輯',
-	'editingtips_exit_widescreen' => '退出放大編輯',
-	'editingtips_hide' => '隱藏編輯小技巧',
-	'editingtips' => '= 如何改變字體格式 =
-你可以利用mediawiki的語法改變字體格式，或是利用HTML
-
-<nowiki>\'\'斜體\'\'</nowiki> => \'\'斜體\'\'
-
-<nowiki>\'\'\'粗體\'\'\'</nowiki> => \'\'\'粗體\'\'\'
-
-<nowiki>\'\'\'\'\'粗體和斜體\'\'\'\'\'</nowiki> => \'\'\'\'\'粗體和斜體\'\'\'\'\'　
-
------
-<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
-
-<br />
-<nowiki><u>底線</u></nowiki> => <u>底線</u>
-
-<br />
-<nowiki><span style="color:red;">紅字</span></nowiki> => <span style="color:red;">紅字</span>
-
-= 連結 =
-利用兩個或是一個中括號，可產生連結的效果
-
-<br />
-\'\'\'基本內部鏈結:\'\'\'<br />
-<nowiki>[[文章名]]</nowiki>
-
-<br />
-\'\'\'改變鏈結字樣:\'\'\'<br />
-<nowiki>[[文章名|你喜歡的字樣]]</nowiki>
-
-<br />
-----
-
-<br />
-\'\'\'連到外部網頁:\'\'\'<br />
-<nowiki>[http://www.example.com]</nowiki>
-
-<br />
-\'\'\'改變外部鏈結字樣:\'\'\'
-
-<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki> 
-
-= 如何增加標題 =
-使用 =(等號)就可以幫你建立次標題和三級標題。前後一個等號的標題等級和頁面名稱等級相同。
-
-<nowiki>==二級標題==</nowiki>
-
-<nowiki>===三級標題===</nowiki>
-
-<nowiki>====四級標題====</nowiki>
-
-
-= 如何把內容分項顯示 =
-
-在句子的開頭使用\'\'\':\'\'\'就可以達到開頭縮排書寫的效果。
-
-
-<nowiki>:一個縮排</nowiki><br>
-<nowiki>:一個縮排</nowiki><br>
-<nowiki>:: 兩個縮排</nowiki><br />
-<nowiki>::: 更多縮排</nowiki>
-
-
-<nowiki>*第一項</nowiki><br>
-<nowiki>*第二項</nowiki><br>
-<nowiki>**第二項的再分項</nowiki><br>
-<nowiki>*第三項</nowiki><br>
-
-
-<nowiki>#第一點</nowiki><br>
-<nowiki>#第二點</nowiki><br>
-<nowiki>##2.1點</nowiki><br>
-<nowiki>#第三點</nowiki><br>
-
-
-= 如何加入圖片 =
-如入圖片的方法和加入鏈結的方法相似。
-
-<br />
-<nowiki>[[Image:圖片名.jpg]]</nowiki>
-
-<br />
-\'\'\'背景說明(滑鼠移到圖片上時顯示)\'\'\'<br />
-<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
-
-<br />
-\'\'\'加入圖片註解\'\'\'<br />
-<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
-
-<br />
-\'\'\'改變圖片大小\'\'\'<br />
-<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
-
-<br />
-\'\'\'改變圖片位置\'\'\'<br />
-<nowiki>[[Image:Name.jpg|right|]]</nowiki>
-
-<br />
-你可以用 "|" 結合上述功能，別忘了，在最後一個 "|" 後面是加註文字。',
-);
-
-
-$messages['zh-sg'] = array(
-	'editingtips_enter_widescreen' => '放大编辑',
-	'editingtips_exit_widescreen' => '退出放大编辑',
-	'editingtips_hide' => '隐藏编辑小技巧',
-	'editingtips' => '= 如何改变字体格式 =
-你可以利用mediawiki的语法改变字体格式，或是利用HTML
-
-<nowiki>\'\'斜体\'\'</nowiki> => \'\'斜体\'\'
-
-<nowiki>\'\'\'粗体\'\'\'</nowiki> => \'\'\'粗体\'\'\'
-
-<nowiki>\'\'\'\'\'粗体和斜体\'\'\'\'\'</nowiki> => \'\'\'\'\'粗体和斜体\'\'\'\'\'　
-
------
-<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
-
-<br />
-<nowiki><u>底線</u></nowiki> => <u>底線</u>
-
-<br />
-<nowiki><span style="color:red;">红字</span></nowiki> => <span style="color:red;">红字</span>
-
-= 连结 =
-利用两个或是一个中括号，可產生连结的效果
-
-<br />
-\'\'\'基本內部链结:\'\'\'<br />
-<nowiki>[[文章名]]</nowiki>
-
-<br />
-\'\'\'改变链结字樣:\'\'\'<br />
-<nowiki>[[文章名|你喜欢的字樣]]</nowiki>
-
-<br />
-----
-
-<br />
-\'\'\'连到外部网页:\'\'\'<br />
-<nowiki>[http://www.example.com]</nowiki>
-
-<br />
-\'\'\'改变外部链结字樣:\'\'\'
-
-<nowiki>[http://www.example.com 你喜欢的字樣]</nowiki> 
-
-= 如何增加标题 =
-使用 =(等号)就可以帮你建立次标题和三级标题。前后一个等号的标题等级和页面名称等级相同。
-
-<nowiki>==二级标题==</nowiki>
-
-<nowiki>===三级标题===</nowiki>
-
-<nowiki>====四级标题====</nowiki>
-
-
-= 如何把內容分项显示 =
-
-在句子的开头使用\'\'\':\'\'\'就可以达到开头缩排书写的效果。
-
-
-<nowiki>:一个缩排</nowiki><br>
-<nowiki>:一个缩排</nowiki><br>
-<nowiki>:: 两个缩排</nowiki><br />
-<nowiki>::: 更多缩排</nowiki>
-
-
-<nowiki>*第一项</nowiki><br>
-<nowiki>*第二项</nowiki><br>
-<nowiki>**第二项的再分项</nowiki><br>
-<nowiki>*第三项</nowiki><br>
-
-
-<nowiki>#第一鲇</nowiki><br>
-<nowiki>#第二鲇</nowiki><br>
-<nowiki>##2.1鲇</nowiki><br>
-<nowiki>#第三鲇</nowiki><br>
-
-
-= 如何加入图片 =
-如入图片的方法和加入链结的方法相似。
-
-<br />
-<nowiki>[[Image:图片名.jpg]]</nowiki>
-
-<br />
-\'\'\'背景說明(滑鼠移到图片上时显示)\'\'\'<br />
-<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
-
-<br />
-\'\'\'加入图片註解\'\'\'<br />
-<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
-
-<br />
-\'\'\'改变图片大小\'\'\'<br />
-<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
-
-<br />
-\'\'\'改变图片位置\'\'\'<br />
-<nowiki>[[Image:Name.jpg|right|]]</nowiki>
-
-<br />
-你可以用 "|" 结合上述功能，別忘了，在最后一个 "|" 后面是加註文字。',
-);
-
-
-$messages['zh-tw'] = array(
-	'editingtips_enter_widescreen' => '放大編輯',
-	'editingtips_exit_widescreen' => '退出放大編輯',
-	'editingtips_hide' => '隱藏編輯小技巧',
-	'editingtips' => '= 如何改變字體格式 =
-你可以利用mediawiki的語法改變字體格式，或是利用HTML
-
-<nowiki>\'\'斜體\'\'</nowiki> => \'\'斜體\'\'
-
-<nowiki>\'\'\'粗體\'\'\'</nowiki> => \'\'\'粗體\'\'\'
-
-<nowiki>\'\'\'\'\'粗體和斜體\'\'\'\'\'</nowiki> => \'\'\'\'\'粗體和斜體\'\'\'\'\'　
-
------
-<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
-
-<br />
-<nowiki><u>底線</u></nowiki> => <u>底線</u>
-
-<br />
-<nowiki><span style="color:red;">紅字</span></nowiki> => <span style="color:red;">紅字</span>
-
-= 連結 =
-利用兩個或是一個中括號，可產生連結的效果
-
-<br />
-\'\'\'基本內部鏈結:\'\'\'<br />
-<nowiki>[[文章名]]</nowiki>
-
-<br />
-\'\'\'改變鏈結字樣:\'\'\'<br />
-<nowiki>[[文章名|你喜歡的字樣]]</nowiki>
-
-<br />
-----
-
-<br />
-\'\'\'連到外部網頁:\'\'\'<br />
-<nowiki>[http://www.example.com]</nowiki>
-
-<br />
-\'\'\'改變外部鏈結字樣:\'\'\'
-
-<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki> 
-
-= 如何增加標題 =
-使用 =(等號)就可以幫你建立次標題和三級標題。前後一個等號的標題等級和頁面名稱等級相同。
-
-<nowiki>==二級標題==</nowiki>
-
-<nowiki>===三級標題===</nowiki>
-
-<nowiki>====四級標題====</nowiki>
-
-
-= 如何把內容分項顯示 =
-
-在句子的開頭使用\'\'\':\'\'\'就可以達到開頭縮排書寫的效果。
-
-
-<nowiki>:一個縮排</nowiki><br>
-<nowiki>:一個縮排</nowiki><br>
-<nowiki>:: 兩個縮排</nowiki><br />
-<nowiki>::: 更多縮排</nowiki>
-
-
-<nowiki>*第一項</nowiki><br>
-<nowiki>*第二項</nowiki><br>
-<nowiki>**第二項的再分項</nowiki><br>
-<nowiki>*第三項</nowiki><br>
-
-
-<nowiki>#第一點</nowiki><br>
-<nowiki>#第二點</nowiki><br>
-<nowiki>##2.1點</nowiki><br>
-<nowiki>#第三點</nowiki><br>
-
-
-= 如何加入圖片 =
-如入圖片的方法和加入鏈結的方法相似。
-
-<br />
-<nowiki>[[Image:圖片名.jpg]]</nowiki>
-
-<br />
-\'\'\'背景說明(滑鼠移到圖片上時顯示)\'\'\'<br />
-<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
-
-<br />
-\'\'\'加入圖片註解\'\'\'<br />
-<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
-
-<br />
-\'\'\'改變圖片大小\'\'\'<br />
-<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
-
-<br />
-\'\'\'改變圖片位置\'\'\'<br />
-<nowiki>[[Image:Name.jpg|right|]]</nowiki>
-
-<br />
-你可以用 "|" 結合上述功能，別忘了，在最後一個 "|" 後面是加註文字。',
-);
-
 
 $messages['bg'] = array(
 	'editingtips' => '= Как се оформя текст =
@@ -1254,6 +235,119 @@ Obrázky se vkládají podobně jako odkazy.
 Atributy můžete kombinovat tak, že mezi ně vložíte svislítko „|“. Cokoliv po posledním svislítku je text.',
 );
 
+$messages['de'] = array(
+	'tog-disableeditingtips' => 'Bearbeitungs-Tipps ausblenden',
+	'tog-widescreeneditingtips' => 'Benutze den Editor auf voller Breite',
+	'editingtips_enter_widescreen' => 'Volle Breite',
+	'editingtips_exit_widescreen' => 'Normale Breite',
+	'editingtips_hide' => 'Bearbeitungs-Tipps ausblenden',
+	'editingtips_show' => 'Bearbeitungs-Tipps einblenden',
+	'editingtips' => '= Text formatieren =
+
+Du kannst Text mit "Wiki-Markup" oder HTML formatieren.
+
+<br />
+<span style="font-family: courier"><nowiki>\'\'kursiv\'\'</nowiki></span> => \'\'kursiv\'\'
+
+<br />
+<span style="font-family: courier"><nowiki>\'\'\'fett\'\'\'</nowiki></span> => \'\'\'fett\'\'\'
+
+<br />
+<span style="font-family: courier"><nowiki>\'\'\'\'\'kursiv und fett\'\'\'\'\'</nowiki></span> => \'\'\'\'\'kursiv und fett\'\'\'\'\'
+
+----
+
+<br />
+<nowiki><s>durchstreichen</s></nowiki> => <s>durchstreichen</s>
+
+<br />
+<nowiki><u>unterstreichen</u></nowiki> => <u>unterstreichen</u>
+
+<br />
+<nowiki><span style="color:red;">roter Text</span></nowiki> => <span style="color:red;">roter Text</span>
+= Links erstellen =
+
+Links werden mit ein oder zwei eckigen Klammern erzeugt.
+
+<br />
+\'\'\'Ein einfacher interner Link:\'\'\'<br />
+<nowiki>[[Artikelname]]</nowiki>
+
+<br />
+\'\'\'Ein interner Link mit abweichender Beschreibung:\'\'\'<br />
+<nowiki>[[Artikelname | Beschreibung]]</nowiki>
+
+<br />
+----
+
+<br />
+\'\'\'Ein externer Link (mit Nummer):\'\'\'<br />
+<nowiki>[http://www.example.com]</nowiki>
+
+<br />
+\'\'\'Ein externer Link mit Beschreibung:\'\'\'
+
+<nowiki>[http://www.example.com Link-Beschreibung]</nowiki>
+=Überschrift hinzufügen=
+
+Überschriften werden durch Gleich-Zeichen markiert. Je mehr "=", desto kleiner die Überschrift. 
+Überschrift 1 ist für den Titel der Seite reserviert.
+
+<br />
+<span style="font-size: 1.6em"><nowiki>==Überschrift 2==</nowiki></span>
+
+<br />
+<span style="font-size: 1.3em"><nowiki>===Überschrift 3===</nowiki></span>
+
+<br />
+<nowiki>====Überschrift 4====</nowiki>
+= Text einrücken =
+
+Einrückungen können durch Leerzeichen, Punkte oder Nummern erstellt werden.
+
+<br />
+<nowiki>: eingerückt</nowiki><br />
+<nowiki>: eingerückt</nowiki><br />
+<nowiki>:: weiter eingerückt</nowiki><br />
+<nowiki>::: noch weiter eingerückt</nowiki>
+
+<br />
+<nowiki>* Aufzählungspunkt</nowiki><br />
+<nowiki>* Aufzählungspunkt</nowiki><br />
+<nowiki>** Unterpunkt</nowiki><br />
+<nowiki>* Aufzählungspunkt</nowiki>
+
+<br />
+<nowiki># Nummerierte Liste</nowiki><br />
+<nowiki># Nummerierte Liste</nowiki><br />
+<nowiki>## Unterliste</nowiki><br />
+<nowiki># Nummerierte Liste</nowiki>
+=Bilder einfügen=
+
+Bilder werden so ähnlich wie Links hinzugefügt und formatiert.
+
+<br />
+<nowiki>[[Bild:Name.jpg]]</nowiki>
+
+<br />
+\'\'\'Mit Bildbeschreibungstext:\'\'\'<br />
+<nowiki>[[Bild:Name.jpg | Beschreibungstext]]</nowiki>
+
+<br />
+\'\'\'Um ein Vorschaubild zu erzeugen:\'\'\'<br />
+<nowiki>[[Bild:Name.jpg | thumb | ]]</nowiki>
+
+<br />
+\'\'\'Die Größe des Bildes angeben:\'\'\'<br />
+<nowiki>[[Bild:Name.jpg | 200px | ]]</nowiki>
+
+<br />
+\'\'\'Das Bild ausrichten:\'\'\'<br />
+<nowiki>[[Bild:Name.jpg | right|]]</nowiki>
+
+<br />
+Du kannst diese Attribute verknüpfen, wenn du einen senkrechten Strich "|" zwischen sie stellst. Alles was nach dem letzten senkrechten Strich folgt, ist Beschreibungstext.',
+);
 
 $messages['el'] = array(
 	'editingtips' => '=Διαμόρφωση κειμένου=
@@ -1362,6 +456,123 @@ $messages['el'] = array(
 Μπορείτε να συνδυάσετε τις παραπάνω ιδιότητες τοποθετώντας το σύμβολο "|" ανάμεσά τους. Να θυμάστε, οτιδήποτε μετά το τελευταίο "|" είναι το κείμενο της λεζάντας.',
 );
 
+$messages['es'] = array(
+	'tog-disableeditingtips' => 'No mostrar consejos para editar',
+	'tog-widescreeneditingtips' => 'Usar edición en Pantalla Extendida',
+	'editingtips_enter_widescreen' => 'Editar en pantalla extendida',
+	'editingtips_exit_widescreen' => 'Volver a modo de edición normal',
+	'editingtips_hide' => 'Ocultar consejos para editar',
+	'editingtips_show' => 'Mostrar consejos para editar',
+	'editingtips' => '=Cómo dar formato =
+
+Puedes dar formato al texto usando formato wiki o HTML
+
+<br />
+<tt><nowiki>\'\'cursiva\'\'</nowiki></tt> => \'\'cursiva\'\'
+
+<br />
+<tt><nowiki>\'\'\'negrita\'\'\'</nowiki></tt> => \'\'\'negrita\'\'\'
+
+<br />
+<tt><nowiki>\'\'\'\'\'cursiva y negrita\'\'\'\'\'</nowiki></tt> => \'\'\'\'\'cursiva y negrilla\'\'\'\'\'
+
+----
+
+<br />
+<tt>&lt;s&gt;tachado&lt;/s&gt;</tt> => <s>tachado</s>
+
+<br />
+<tt>&lt;u&gt;subrayado&lt;/u&gt;</tt> => <u>subrayado</u>
+
+<br />
+<tt>&lt;span style="color:red;"&gt;texto en rojo&lt;/span&gt;</tt> => <span style="color:red;">texto en rojo</span>
+
+=Cómo crear enlaces =
+
+Los enlaces se crean usando uno o dos corchetes.
+
+<br />
+\'\'\'Un enlace interno simple:\'\'\'<br />
+<tt><nowiki>[[Artículo]]</nowiki></tt>
+
+<br />
+\'\'\'Un enlace interno con texto diferente:\'\'\'<br />
+<tt><nowiki>[[Artículo|otro texto]]</nowiki></tt>
+
+<br />
+----
+
+<br />
+\'\'\'Un enlace externo numerado:\'\'\'<br />
+<tt><nowiki>[http://www.example.com]</nowiki></tt>
+
+<br />
+\'\'\'Un enlace externo con texto:\'\'\'
+
+<tt><nowiki>[http://www.example.com texto del enlace]</nowiki></tt>
+
+=Cómo agregar encabezados =
+
+Los encabezados usan signos de igual.  cuantos más signos "=", el encabezado será de nivel inferior (más pequeño).
+El encabezado de primer nivel es el título del artículo.
+
+<br />
+<span style="font-size: 1.6em"><tt><nowiki>==Encabezado 2==</nowiki></tt></span>
+
+<br />
+<span style="font-size: 1.3em"><tt><nowiki>===Encabezado 3===</nowiki></tt></span>
+
+<br />
+<nowiki>====Encabezado 4====</nowiki>
+
+=Cómo indentar texto =
+
+La indentación puede ser lisa, con boliches o numerada.
+
+<br />
+<nowiki>: indentado</nowiki><br />
+<nowiki>: indentado</nowiki><br />
+<nowiki>:: más indentado</nowiki><br />
+<nowiki>::: aun más indentado</nowiki>
+
+<br />
+<nowiki>* boliche</nowiki><br />
+<nowiki>* boliche</nowiki><br />
+<nowiki>** sub-elemento</nowiki><br />
+<nowiki>* boliche</nowiki>
+
+<br />
+<nowiki># lista numerada</nowiki><br />
+<nowiki># lista numerada</nowiki><br />
+<nowiki>## sub-elemento</nowiki><br />
+<nowiki># lista numerada</nowiki>
+
+=Cómo insertar imágenes =
+
+Las imágenes se insertan de forma similar a los enlaces.
+
+<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg]]</tt>
+
+<br />
+\'\'\'Agregar un texto alternativo\'\'\'<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|texto alternativo]]</tt>
+
+<br />
+\'\'\'Crear una miniatura\'\'\'<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|thumb|]]</tt>
+
+<br />
+\'\'\'Especificar el tamaño de la imagen\'\'\'<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|200px|]]</tt>
+
+<br />
+\'\'\'Alinear la imagen\'\'\'<br />
+<tt><nowiki>[[</nowiki>{{ns:image}}:Nombre.jpg|right|]]</tt>
+
+<br />
+Puedes combinar estos atributos separándolos con el símbolo de barra vertical "|". Recuerda que el último parámetro que no se reconozca se interpretará como texto.',
+);
 
 $messages['fa'] = array(
 	'editingtips' => '<div class="persian" style="direction:rtl">
@@ -1467,6 +678,267 @@ $messages['fa'] = array(
 می‌توانید به  صورت زیر همه تنظیمات را با هم انجام دهید.
 <br /><nowiki>[[تصویر:نام_فایل_تصویری|تنظیم_یک|تنظیم_دو|....|تنظیم_آخر]]</nowiki>
 </div>',
+);
+
+$messages['fr'] = array(
+	'tog-disableeditingtips' => 'Ne pas montrer les astuces d\'éditions',
+	'tog-widescreeneditingtips' => 'Utiliser une large fenêtre d\'édition',
+	'editingtips_enter_widescreen' => 'Afficher la grande fenêtre d\'édition',
+	'editingtips_exit_widescreen' => 'Masquer la grande fenêtre d\'édition',
+	'editingtips_hide' => 'Masquer l\'aide',
+	'editingtips_show' => 'Afficher l\'aide',
+	'editingtips' => '= Styler votre texte =
+
+Vous pouvez styliser un texte à l\'aide des majorations wiki ou du code HTML.
+
+<br />
+<code><nowiki>\'\'Italique\'\'</nowiki></code> => \'\'Italique\'\'
+
+<br />
+<code><nowiki>\'\'\'Gras\'\'\'</nowiki></code> => \'\'\'Gras\'\'\'
+
+<br />
+<code><nowiki>\'\'\'\'\'Italique et Gras\'\'\'\'\'</nowiki></code> => \'\'\'\'\'Italique et Gras\'\'\'\'\'
+
+----
+
+<br />
+<code><nowiki><s>biffé</s></nowiki></code> => <s>biffé</s>
+
+<br />
+<code><nowiki><u>souligné</u></nowiki></code> => <u>souligné</u>
+
+<br />
+<code><nowiki><span style="color:red;">texte en rouge</span></nowiki></code> => <span style="color:red;">texte en rouge</span>
+
+= Créer des liens =
+
+Les liens sont créer à l\'aide d\'une ou deux parenthèse carrées.
+
+<br />
+\'\'\'Un lien simple interne:\'\'\'<br />
+<code><nowiki>[[Nom de l\'article]]</nowiki></code>
+
+<br />
+\'\'\'Un lien interne avec du texte:\'\'\'<br />
+<code><nowiki>[[Nom de l\'article | Texte que vous voulez mettre]]</nowiki></code>
+
+<br />
+----
+
+<br />
+\'\'\'Un lien externe annoté:\'\'\'<br />
+<code><nowiki>[http://www.site.com]</nowiki></code>
+
+<br />
+\'\'\'Un lien externe sous forme de texte:\'\'\'
+
+<code><nowiki>[http://www.site.com Texte proposé]</nowiki></code>
+
+= Ajouter des titres =
+
+Les titres utilisent des signes d\'égalité. Le plus de « = », le plus petit sera le titre
+Headings use equals signs.  The more "=", the smaller the heading.
+
+<br />
+<span style="font-size: 1.6em;"><code><nowiki>==</nowiki></code>Titre 2<code><nowiki>==</nowiki></code></span>
+
+<br />
+<span style="font-size: 1.3em;"><code><nowiki>===</nowiki></code>\'\'\'Titre 3\'\'\'<code><nowiki>===</nowiki></code></span>
+
+<br />
+<code><nowiki>====</nowiki></code>\'\'\'Titre 4\'\'\'<code><nowiki>====</nowiki></code>
+
+= Créer des alinéas =
+
+Les alinéas peuvent être vide, avec des points ou des nombres.
+
+<br />
+<code>:</code> Alinéa<br />
+<code>:</code> Alinéa<br />
+<code>::</code> Plus d\'alinéa<br />
+<code>:::</code> Encore plus de marge
+
+<br />
+<code>*</code> Point<br />
+<code>*</code> Point<br />
+<code>**</code> Sous-point<br />
+<code>*</code> Point
+
+<br />
+<code>#</code> Liste numérée<br />
+<code>#</code> Liste numérée<br />
+<code>##</code> Sous-liste<br />
+<code>#</code> Liste numérée
+
+= Insérer des images =
+
+Les images sont ajoutées et formatées d\'une manière similaire au lien.
+
+<br />
+<code><nowiki>[[Image:Nom.jpg]]</nowiki></code>
+
+<br />
+\'\'\'Pour ajouter une légende\'\'\'<br />
+<code><nowiki>[[Image:Nom.jpg | Légende]]</nowiki></code>
+
+<br />
+\'\'\'Pour créer un réduit\'\'\'<br />
+<code><nowiki>[[Image:Nom.jpg | thumb | ]]</nowiki></code>
+
+<br />
+\'\'\'Pour spécifier la taille de l\'image<br />
+<code><nowiki>[[Image:Nom.jpg | 200px | ]]</nowiki></code>
+
+<br />
+\'\'\'Pour aligner l\'image\'\'\'<br />
+<code><nowiki>[[Image:Nom.jpg | right|]]</nowiki></code>
+
+<br />
+On peut combiner ces attributs en mettant une barre verticale "<code>|</code>" entres-eux. Se souvenir cependant que tout ce qui est après la dernière barre verticale est du texte.
+
+= Plus d\'aide =
+
+Vous nécessitez encore de l\'aide?
+
+<br />
+Visitez [[w:c:aide|Aide wiki]] !
+
+Ou regardez dans [[w:fr:Forum:Index|les forums de Fr.Wikia]] ou [[w:c:fr.answers|posez une question]] !',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'tog-disableeditingtips' => 'Non mostrar os consellos de edición',
+	'tog-widescreeneditingtips' => 'Utilizar a edición na ventá estendida',
+	'editingtips_enter_widescreen' => 'Mostrar a ventá de edición estendida',
+	'editingtips_exit_widescreen' => 'Saír da ventá de edición estendida',
+	'editingtips_hide' => 'Agochar os consellos de edición',
+	'editingtips_show' => 'Mostrar os consellos de edición',
+	'editingTips' => 'Engada os seus consellos [[MediaWiki:EditingTips|aquí]]',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'tog-disableeditingtips' => '編集時のヘルプを表示しない',
+	'tog-widescreeneditingtips' => '大きな編集画面を使う',
+	'editingtips_enter_widescreen' => '編集画面を大きくする',
+	'editingtips_exit_widescreen' => '編集画面を元に戻す',
+	'editingtips_hide' => 'ヘルプを隠す',
+	'editingtips_show' => 'ヘルプを表示する',
+	'editingTips' => "=テキストの装飾 =
+wiki文法をつかうか、HTMLで装飾できます。
+<br />
+<span style=\"font-family: courier\"><nowiki>''斜体''</nowiki></span> => ''斜体''
+
+<br />
+<span style=\"font-family: courier\"><nowiki>'''太字'''</nowiki></span> => '''太字'''
+
+<br />
+<span style=\"font-family: courier\"><nowiki>'''''斜体および太字'''''</nowiki></span> => '''''斜体および太字'''''
+
+----
+
+<br />
+<nowiki><s>取り消し線</s></nowiki> => <s>取り消し線</s>
+
+<br />
+<nowiki><u>アンダーライン</u></nowiki> => <u>アンダーライン</u>
+
+<br />
+<nowiki><span style=\"color:red;\">赤文字</span></nowiki> => <span style=\"color:red;\">赤文字</span>
+
+=リンクの作り方 =
+ブラケット(\"[\"または\"]\")をひとつかふたつ使うことでリンクを作ることができます。
+
+<br />
+'''単純な内部リンク:'''<br />
+<nowiki>[[ページ名]]</nowiki>
+
+<br />
+'''テキスト付きの内部リンク:'''<br />
+<nowiki>[[ページ名|表示したいテキスト]]</nowiki>
+
+<br />
+----
+
+<br />
+'''外部リンク(表示される際には、<nowiki>[1]</nowiki>と略されます):'''<br />
+<nowiki>[http://www.example.com]</nowiki>
+
+<br />
+'''テキスト付きの外部リンク:'''
+<nowiki>[http://www.example.com 表示したいテキスト]</nowiki>
+
+= 見出し作成 =
+見出しは、\"=\"で作ります。\"=\"が多いほど、見出しは小さくなります。
+見出しの一番大きなものは、ページ名になります。
+
+<br />
+<span style=\"font-size: 1.6em\"><nowiki>==見出し2==</nowiki></span>
+
+<br />
+<span style=\"font-size: 1.3em\"><nowiki>===見出し3===</nowiki></span>
+
+<br />
+<nowiki>====見出し4====</nowiki>
+
+=テキストのインデント=
+単純なインデント、箇条書きによるインデント、数字付きのインデントができます。
+
+<br />
+<nowiki>: インデント</nowiki><br />
+<nowiki>: インデント</nowiki><br />
+<nowiki>:: もう一段インデント</nowiki><br />
+<nowiki>::: 更にインデント</nowiki>
+
+<br />
+<nowiki>* 箇条書き</nowiki><br />
+<nowiki>* 箇条書き</nowiki><br />
+<nowiki>** 一段下の箇条書き</nowiki><br />
+<nowiki>* 箇条書き</nowiki>
+
+<br />
+<nowiki># 数字付きリスト</nowiki><br />
+<nowiki># 数字付きリスト</nowiki><br />
+<nowiki>## 一段下の数字付きリスト</nowiki><br />
+<nowiki># 数字付きリスト</nowiki>
+
+=画像の挿入 =
+リンクを貼るのに似た方法で画像を挿入することができます。
+
+<br />
+<nowiki>[[画像:画像ファイル.jpg]]</nowiki>
+
+<br />
+'''ブラウザ向けのaltテキストを入れる場合'''<br />
+<nowiki>[[画像:画像ファイル.jpg|alt text]]</nowiki>
+
+<br />
+'''画像の縮小表示を行う場合'''<br />
+<nowiki>[[画像:画像ファイル.jpg|thumb|]]</nowiki>
+
+<br />
+'''画像を特定のサイズにする場合'''<br />
+<nowiki>[[画像:画像ファイル.jpg|200px|]]</nowiki>
+
+<br />
+'''画像を右寄せにする場合(デフォルトは左寄せ)'''<br />
+<nowiki>[[画像:画像ファイル.jpg|right|]]</nowiki>
+
+<br />
+\"|\"をつかって、それぞれの値をつなげることができます。最後の\"|\"以後の値は、全て解説用のテキストになります。
+
+<br />
+----
+----
+
+<br />
+この編集ガイドは[[MediaWiki:EditingTips]]で編集できます。",
 );
 
 
@@ -1589,6 +1061,31 @@ $messages['ko'] = array(
 * [[w:c:help|위키아 도움말(영어)]]를 방문해보세요!',
 );
 
+/** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
+ * @author Harald Khan
+ */
+$messages['nn'] = array(
+	'tog-disableeditingtips' => 'Ikkje syn endringstips',
+	'tog-widescreeneditingtips' => 'Nytt breiskjermendring',
+	'editingtips_enter_widescreen' => 'Nytt breiskjerm',
+	'editingtips_exit_widescreen' => 'Gå ut av breiskjermmodus',
+	'editingtips_hide' => 'Løyn endringstips',
+	'editingtips_show' => 'Syn endringstips',
+	'editingTips' => 'Legg til tipsa dine [[MediaWiki:EditingTips|her]]',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
+$messages['pms'] = array(
+	'tog-disableeditingtips' => 'Mostré pa ij consèj ëd modìfica',
+	'tog-widescreeneditingtips' => "Dovré l'editor a scren largh",
+	'editingtips_enter_widescreen' => 'Intré an modalità scren gròss',
+	'editingtips_exit_widescreen' => 'Seurte da la modalità Scren gròss',
+	'editingtips_hide' => 'Stërmé ij Consèj ëd Modìfica',
+	'editingtips_show' => 'Mostré ij Consèj ëd Modìfica',
+	'editingTips' => "Ch'a gionta ij sò consèj [[MediaWiki:EditingTips|ambelessì]]",
+);
 
 $messages['ro'] = array(
 	'editingtips' => '=Stilizarea textului=
@@ -1696,3 +1193,549 @@ Imaginile se introduc într-un mod similar adăugării legăturilor.
 <br />
 Se pot combina atributele imaginii punând semnul "pipe" ("|"). Textul pus după ultimul semn pipe este întotdeauna text alternativ.',
 );
+
+/** Russian (Русский)
+ * @author Lockal
+ */
+$messages['ru'] = array(
+	'tog-disableeditingtips' => 'Не показывать подсказки во время редактирования',
+	'tog-widescreeneditingtips' => 'Поле при редактировании во всю ширину экрана',
+	'editingtips_enter_widescreen' => 'Перейти в широкоэкранный режим',
+	'editingtips_exit_widescreen' => 'Выйти из широкоэкранного режима',
+	'editingtips_hide' => 'Скрыть советы по редактированию',
+	'editingtips_show' => 'Показать советы по редактированию',
+	'editingTips' => 'Добавьте свои советы [[MediaWiki:EditingTips|здесь]]',
+);
+
+$messages['zh'] = array(
+	'editingtips_enter_widescreen' => '放大編輯',
+	'editingtips_exit_widescreen' => '退出放大編輯',
+	'editingtips_hide' => '隱藏編輯小技巧',
+	'editingtips' => '= 如何改變字體格式 =
+你可以利用mediawiki的語法改變字體格式，或是利用HTML
+
+<nowiki>\'\'斜體\'\'</nowiki> => \'\'斜體\'\'
+
+<nowiki>\'\'\'粗體\'\'\'</nowiki> => \'\'\'粗體\'\'\'
+
+<nowiki>\'\'\'\'\'粗體和斜體\'\'\'\'\'</nowiki> => \'\'\'\'\'粗體和斜體\'\'\'\'\'　
+
+-----
+<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
+
+<br />
+<nowiki><u>底線</u></nowiki> => <u>底線</u>
+
+<br />
+<nowiki><span style="color:red;">紅字</span></nowiki> => <span style="color:red;">紅字</span>
+
+= 連結 =
+利用兩個或是一個中括號，可產生連結的效果
+
+<br />
+\'\'\'基本內部鏈結:\'\'\'<br />
+<nowiki>[[文章名]]</nowiki>
+
+<br />
+\'\'\'改變鏈結字樣:\'\'\'<br />
+<nowiki>[[文章名|你喜歡的字樣]]</nowiki>
+
+<br />
+----
+
+<br />
+\'\'\'連到外部網頁:\'\'\'<br />
+<nowiki>[http://www.example.com]</nowiki>
+
+<br />
+\'\'\'改變外部鏈結字樣:\'\'\'
+
+<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki> 
+
+= 如何增加標題 =
+使用 =(等號)就可以幫你建立次標題和三級標題。前後一個等號的標題等級和頁面名稱等級相同。
+
+<nowiki>==二級標題==</nowiki>
+
+<nowiki>===三級標題===</nowiki>
+
+<nowiki>====四級標題====</nowiki>
+
+
+= 如何把內容分項顯示 =
+
+在句子的開頭使用\'\'\':\'\'\'就可以達到開頭縮排書寫的效果。
+
+
+<nowiki>:一個縮排</nowiki><br>
+<nowiki>:一個縮排</nowiki><br>
+<nowiki>:: 兩個縮排</nowiki><br />
+<nowiki>::: 更多縮排</nowiki>
+
+
+<nowiki>*第一項</nowiki><br>
+<nowiki>*第二項</nowiki><br>
+<nowiki>**第二項的再分項</nowiki><br>
+<nowiki>*第三項</nowiki><br>
+
+
+<nowiki>#第一點</nowiki><br>
+<nowiki>#第二點</nowiki><br>
+<nowiki>##2.1點</nowiki><br>
+<nowiki>#第三點</nowiki><br>
+
+
+= 如何加入圖片 =
+如入圖片的方法和加入鏈結的方法相似。
+
+<br />
+<nowiki>[[Image:圖片名.jpg]]</nowiki>
+
+<br />
+\'\'\'背景說明(滑鼠移到圖片上時顯示)\'\'\'<br />
+<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
+
+<br />
+\'\'\'加入圖片註解\'\'\'<br />
+<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
+
+<br />
+\'\'\'改變圖片大小\'\'\'<br />
+<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
+
+<br />
+\'\'\'改變圖片位置\'\'\'<br />
+<nowiki>[[Image:Name.jpg|right|]]</nowiki>
+
+<br />
+你可以用 "|" 結合上述功能，別忘了，在最後一個 "|" 後面是加註文字。',
+);
+
+$messages['zh-cn'] = array(
+	'editingtips_enter_widescreen' => '放大编辑',
+	'editingtips_exit_widescreen' => '退出放大编辑',
+	'editingtips_hide' => '隐藏编辑小技巧',
+	'editingtips' => '= 如何改变字体格式 =
+你可以利用mediawiki的语法改变字体格式，或是利用HTML
+
+<nowiki>\'\'斜体\'\'</nowiki> => \'\'斜体\'\'
+
+<nowiki>\'\'\'粗体\'\'\'</nowiki> => \'\'\'粗体\'\'\'
+
+<nowiki>\'\'\'\'\'粗体和斜体\'\'\'\'\'</nowiki> => \'\'\'\'\'粗体和斜体\'\'\'\'\'　
+
+-----
+<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
+
+<br />
+<nowiki><u>底線</u></nowiki> => <u>底線</u>
+
+<br />
+<nowiki><span style="color:red;">红字</span></nowiki> => <span style="color:red;">红字</span>
+
+= 连结 =
+利用两个或是一个中括号，可產生连结的效果
+
+<br />
+\'\'\'基本內部链结:\'\'\'<br />
+<nowiki>[[文章名]]</nowiki>
+
+<br />
+\'\'\'改变链结字樣:\'\'\'<br />
+<nowiki>[[文章名|你喜欢的字樣]]</nowiki>
+
+<br />
+----
+
+<br />
+\'\'\'连到外部网页:\'\'\'<br />
+<nowiki>[http://www.example.com]</nowiki>
+
+<br />
+\'\'\'改变外部链结字樣:\'\'\'
+
+<nowiki>[http://www.example.com 你喜欢的字樣]</nowiki> 
+
+= 如何增加标题 =
+使用 =(等号)就可以帮你建立次标题和三级标题。前后一个等号的标题等级和页面名称等级相同。
+
+<nowiki>==二级标题==</nowiki>
+
+<nowiki>===三级标题===</nowiki>
+
+<nowiki>====四级标题====</nowiki>
+
+
+= 如何把內容分项显示 =
+
+在句子的开头使用\'\'\':\'\'\'就可以达到开头缩排书写的效果。
+
+
+<nowiki>:一个缩排</nowiki><br>
+<nowiki>:一个缩排</nowiki><br>
+<nowiki>:: 两个缩排</nowiki><br />
+<nowiki>::: 更多缩排</nowiki>
+
+
+<nowiki>*第一项</nowiki><br>
+<nowiki>*第二项</nowiki><br>
+<nowiki>**第二项的再分项</nowiki><br>
+<nowiki>*第三项</nowiki><br>
+
+
+<nowiki>#第一鲇</nowiki><br>
+<nowiki>#第二鲇</nowiki><br>
+<nowiki>##2.1鲇</nowiki><br>
+<nowiki>#第三鲇</nowiki><br>
+
+
+= 如何加入图片 =
+如入图片的方法和加入链结的方法相似。
+
+<br />
+<nowiki>[[Image:图片名.jpg]]</nowiki>
+
+<br />
+\'\'\'背景說明(滑鼠移到图片上时显示)\'\'\'<br />
+<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
+
+<br />
+\'\'\'加入图片註解\'\'\'<br />
+<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
+
+<br />
+\'\'\'改变图片大小\'\'\'<br />
+<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
+
+<br />
+\'\'\'改变图片位置\'\'\'<br />
+<nowiki>[[Image:Name.jpg|right|]]</nowiki>
+
+<br />
+你可以用 "|" 结合上述功能，別忘了，在最后一个 "|" 后面是加註文字。',
+);
+
+$messages['zh-hans'] = array(
+	'editingtips_enter_widescreen' => '放大编辑',
+	'editingtips_exit_widescreen' => '退出放大编辑',
+	'editingtips_hide' => '隐藏编辑小技巧',
+);
+
+$messages['zh-hant'] = array(
+	'editingtips_enter_widescreen' => '放大編輯',
+	'editingtips_exit_widescreen' => '退出放大編輯',
+	'editingtips_hide' => '隱藏編輯小技巧',
+);
+
+$messages['zh-hk'] = array(
+	'editingtips_enter_widescreen' => '放大編輯',
+	'editingtips_exit_widescreen' => '退出放大編輯',
+	'editingtips_hide' => '隱藏編輯小技巧',
+	'editingtips' => '= 如何改變字體格式 =
+你可以利用mediawiki的語法改變字體格式，或是利用HTML
+
+<nowiki>\'\'斜體\'\'</nowiki> => \'\'斜體\'\'
+
+<nowiki>\'\'\'粗體\'\'\'</nowiki> => \'\'\'粗體\'\'\'
+
+<nowiki>\'\'\'\'\'粗體和斜體\'\'\'\'\'</nowiki> => \'\'\'\'\'粗體和斜體\'\'\'\'\'　
+
+-----
+<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
+
+<br />
+<nowiki><u>底線</u></nowiki> => <u>底線</u>
+
+<br />
+<nowiki><span style="color:red;">紅字</span></nowiki> => <span style="color:red;">紅字</span>
+
+= 連結 =
+利用兩個或是一個中括號，可產生連結的效果
+
+<br />
+\'\'\'基本內部鏈結:\'\'\'<br />
+<nowiki>[[文章名]]</nowiki>
+
+<br />
+\'\'\'改變鏈結字樣:\'\'\'<br />
+<nowiki>[[文章名|你喜歡的字樣]]</nowiki>
+
+<br />
+----
+
+<br />
+\'\'\'連到外部網頁:\'\'\'<br />
+<nowiki>[http://www.example.com]</nowiki>
+
+<br />
+\'\'\'改變外部鏈結字樣:\'\'\'
+
+<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki> 
+
+= 如何增加標題 =
+使用 =(等號)就可以幫你建立次標題和三級標題。前後一個等號的標題等級和頁面名稱等級相同。
+
+<nowiki>==二級標題==</nowiki>
+
+<nowiki>===三級標題===</nowiki>
+
+<nowiki>====四級標題====</nowiki>
+
+
+= 如何把內容分項顯示 =
+
+在句子的開頭使用\'\'\':\'\'\'就可以達到開頭縮排書寫的效果。
+
+
+<nowiki>:一個縮排</nowiki><br>
+<nowiki>:一個縮排</nowiki><br>
+<nowiki>:: 兩個縮排</nowiki><br />
+<nowiki>::: 更多縮排</nowiki>
+
+
+<nowiki>*第一項</nowiki><br>
+<nowiki>*第二項</nowiki><br>
+<nowiki>**第二項的再分項</nowiki><br>
+<nowiki>*第三項</nowiki><br>
+
+
+<nowiki>#第一點</nowiki><br>
+<nowiki>#第二點</nowiki><br>
+<nowiki>##2.1點</nowiki><br>
+<nowiki>#第三點</nowiki><br>
+
+
+= 如何加入圖片 =
+如入圖片的方法和加入鏈結的方法相似。
+
+<br />
+<nowiki>[[Image:圖片名.jpg]]</nowiki>
+
+<br />
+\'\'\'背景說明(滑鼠移到圖片上時顯示)\'\'\'<br />
+<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
+
+<br />
+\'\'\'加入圖片註解\'\'\'<br />
+<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
+
+<br />
+\'\'\'改變圖片大小\'\'\'<br />
+<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
+
+<br />
+\'\'\'改變圖片位置\'\'\'<br />
+<nowiki>[[Image:Name.jpg|right|]]</nowiki>
+
+<br />
+你可以用 "|" 結合上述功能，別忘了，在最後一個 "|" 後面是加註文字。',
+);
+
+$messages['zh-sg'] = array(
+	'editingtips_enter_widescreen' => '放大编辑',
+	'editingtips_exit_widescreen' => '退出放大编辑',
+	'editingtips_hide' => '隐藏编辑小技巧',
+	'editingtips' => '= 如何改变字体格式 =
+你可以利用mediawiki的语法改变字体格式，或是利用HTML
+
+<nowiki>\'\'斜体\'\'</nowiki> => \'\'斜体\'\'
+
+<nowiki>\'\'\'粗体\'\'\'</nowiki> => \'\'\'粗体\'\'\'
+
+<nowiki>\'\'\'\'\'粗体和斜体\'\'\'\'\'</nowiki> => \'\'\'\'\'粗体和斜体\'\'\'\'\'　
+
+-----
+<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
+
+<br />
+<nowiki><u>底線</u></nowiki> => <u>底線</u>
+
+<br />
+<nowiki><span style="color:red;">红字</span></nowiki> => <span style="color:red;">红字</span>
+
+= 连结 =
+利用两个或是一个中括号，可產生连结的效果
+
+<br />
+\'\'\'基本內部链结:\'\'\'<br />
+<nowiki>[[文章名]]</nowiki>
+
+<br />
+\'\'\'改变链结字樣:\'\'\'<br />
+<nowiki>[[文章名|你喜欢的字樣]]</nowiki>
+
+<br />
+----
+
+<br />
+\'\'\'连到外部网页:\'\'\'<br />
+<nowiki>[http://www.example.com]</nowiki>
+
+<br />
+\'\'\'改变外部链结字樣:\'\'\'
+
+<nowiki>[http://www.example.com 你喜欢的字樣]</nowiki> 
+
+= 如何增加标题 =
+使用 =(等号)就可以帮你建立次标题和三级标题。前后一个等号的标题等级和页面名称等级相同。
+
+<nowiki>==二级标题==</nowiki>
+
+<nowiki>===三级标题===</nowiki>
+
+<nowiki>====四级标题====</nowiki>
+
+
+= 如何把內容分项显示 =
+
+在句子的开头使用\'\'\':\'\'\'就可以达到开头缩排书写的效果。
+
+
+<nowiki>:一个缩排</nowiki><br>
+<nowiki>:一个缩排</nowiki><br>
+<nowiki>:: 两个缩排</nowiki><br />
+<nowiki>::: 更多缩排</nowiki>
+
+
+<nowiki>*第一项</nowiki><br>
+<nowiki>*第二项</nowiki><br>
+<nowiki>**第二项的再分项</nowiki><br>
+<nowiki>*第三项</nowiki><br>
+
+
+<nowiki>#第一鲇</nowiki><br>
+<nowiki>#第二鲇</nowiki><br>
+<nowiki>##2.1鲇</nowiki><br>
+<nowiki>#第三鲇</nowiki><br>
+
+
+= 如何加入图片 =
+如入图片的方法和加入链结的方法相似。
+
+<br />
+<nowiki>[[Image:图片名.jpg]]</nowiki>
+
+<br />
+\'\'\'背景說明(滑鼠移到图片上时显示)\'\'\'<br />
+<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
+
+<br />
+\'\'\'加入图片註解\'\'\'<br />
+<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
+
+<br />
+\'\'\'改变图片大小\'\'\'<br />
+<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
+
+<br />
+\'\'\'改变图片位置\'\'\'<br />
+<nowiki>[[Image:Name.jpg|right|]]</nowiki>
+
+<br />
+你可以用 "|" 结合上述功能，別忘了，在最后一个 "|" 后面是加註文字。',
+);
+
+$messages['zh-tw'] = array(
+	'editingtips_enter_widescreen' => '放大編輯',
+	'editingtips_exit_widescreen' => '退出放大編輯',
+	'editingtips_hide' => '隱藏編輯小技巧',
+	'editingtips' => '= 如何改變字體格式 =
+你可以利用mediawiki的語法改變字體格式，或是利用HTML
+
+<nowiki>\'\'斜體\'\'</nowiki> => \'\'斜體\'\'
+
+<nowiki>\'\'\'粗體\'\'\'</nowiki> => \'\'\'粗體\'\'\'
+
+<nowiki>\'\'\'\'\'粗體和斜體\'\'\'\'\'</nowiki> => \'\'\'\'\'粗體和斜體\'\'\'\'\'　
+
+-----
+<nowiki><s>刪去</s></nowiki> => <s>刪去</s>
+
+<br />
+<nowiki><u>底線</u></nowiki> => <u>底線</u>
+
+<br />
+<nowiki><span style="color:red;">紅字</span></nowiki> => <span style="color:red;">紅字</span>
+
+= 連結 =
+利用兩個或是一個中括號，可產生連結的效果
+
+<br />
+\'\'\'基本內部鏈結:\'\'\'<br />
+<nowiki>[[文章名]]</nowiki>
+
+<br />
+\'\'\'改變鏈結字樣:\'\'\'<br />
+<nowiki>[[文章名|你喜歡的字樣]]</nowiki>
+
+<br />
+----
+
+<br />
+\'\'\'連到外部網頁:\'\'\'<br />
+<nowiki>[http://www.example.com]</nowiki>
+
+<br />
+\'\'\'改變外部鏈結字樣:\'\'\'
+
+<nowiki>[http://www.example.com 你喜歡的字樣]</nowiki> 
+
+= 如何增加標題 =
+使用 =(等號)就可以幫你建立次標題和三級標題。前後一個等號的標題等級和頁面名稱等級相同。
+
+<nowiki>==二級標題==</nowiki>
+
+<nowiki>===三級標題===</nowiki>
+
+<nowiki>====四級標題====</nowiki>
+
+
+= 如何把內容分項顯示 =
+
+在句子的開頭使用\'\'\':\'\'\'就可以達到開頭縮排書寫的效果。
+
+
+<nowiki>:一個縮排</nowiki><br>
+<nowiki>:一個縮排</nowiki><br>
+<nowiki>:: 兩個縮排</nowiki><br />
+<nowiki>::: 更多縮排</nowiki>
+
+
+<nowiki>*第一項</nowiki><br>
+<nowiki>*第二項</nowiki><br>
+<nowiki>**第二項的再分項</nowiki><br>
+<nowiki>*第三項</nowiki><br>
+
+
+<nowiki>#第一點</nowiki><br>
+<nowiki>#第二點</nowiki><br>
+<nowiki>##2.1點</nowiki><br>
+<nowiki>#第三點</nowiki><br>
+
+
+= 如何加入圖片 =
+如入圖片的方法和加入鏈結的方法相似。
+
+<br />
+<nowiki>[[Image:圖片名.jpg]]</nowiki>
+
+<br />
+\'\'\'背景說明(滑鼠移到圖片上時顯示)\'\'\'<br />
+<nowiki>[[Image:Name.jpg|說明文字]]</nowiki>
+
+<br />
+\'\'\'加入圖片註解\'\'\'<br />
+<nowiki>[[Image:Name.jpg|thumb|]]</nowiki>
+
+<br />
+\'\'\'改變圖片大小\'\'\'<br />
+<nowiki>[[Image:Name.jpg|200px|]]</nowiki>
+
+<br />
+\'\'\'改變圖片位置\'\'\'<br />
+<nowiki>[[Image:Name.jpg|right|]]</nowiki>
+
+<br />
+你可以用 "|" 結合上述功能，別忘了，在最後一個 "|" 後面是加註文字。',
+);
+

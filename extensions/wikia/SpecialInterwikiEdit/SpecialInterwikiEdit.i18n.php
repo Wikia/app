@@ -1,5 +1,4 @@
 <?php
-
 /**
  * SpecialInterwikiEdit
  *
@@ -12,18 +11,106 @@
  *
  */
 
-if (!defined('MEDIAWIKI')) {
-	echo "This is MediaWiki extension named InterwikiEdit.\n";
-	exit(1) ;
-}
+$messages = array();
 
-$messages = array(
-	'en' => array(
-		'iwedit-title'	 		=> 'Interwiki Editor',
-		'iwedit-language-interwikis' 	=> 'language interwikis only',
-		'iwedit-all-interwikis' 	=> 'all interwikis',
-		'iwedit-update' 		=> 'Update',
-        	'iwedit-error' 			=> '<p>An error occured.</p>',
-	        'iwedit-success' 		=> '<p>Link creation succesfull.</p>',
-	)
+$messages['en'] = array(
+	'iwedit-title'	 		=> 'Interwiki Editor',
+	'iwedit-language-interwikis' 	=> 'language interwikis only',
+	'iwedit-all-interwikis' 	=> 'all interwikis',
+	'iwedit-update' 		=> 'Update',
+	'iwedit-error' 			=> '<p>An error occured.</p>',
+	'iwedit-success' 		=> '<p>Link creation succesfull.</p>',
 );
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'iwedit-title' => 'Wysig Interwikitabel',
+	'iwedit-all-interwikis' => "alle interwiki's",
+	'iwedit-update' => 'Opdateer',
+	'iwedit-error' => "<p>'n Fout het voorgekom.</p>",
+	'iwedit-success' => '<p>Die skakel is geskep.</p>',
+);
+
+/** Breton (Brezhoneg)
+ * @author Gwenn-Ael
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'iwedit-title' => 'Embanner Interwiki',
+	'iwedit-language-interwikis' => 'interwikioù yezhoù hepken',
+	'iwedit-all-interwikis' => 'An holl wikioù',
+	'iwedit-update' => 'Hizivaat',
+	'iwedit-error' => "<p>ur fazi zo c'hoarvezet</p>",
+	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'iwedit-title' => 'Éditeur Interwiki',
+	'iwedit-language-interwikis' => 'interwikis de langues seulement',
+	'iwedit-all-interwikis' => 'tous les interwikis',
+	'iwedit-update' => 'Mettre à jour',
+	'iwedit-error' => '<p>Une erreur est survenue.</p>',
+	'iwedit-success' => '<p>Le lien a été créé avec succès.</p>',
+);
+
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'iwedit-title' => 'Editor de interwiki',
+	'iwedit-language-interwikis' => 'só interwikis de linguas',
+	'iwedit-all-interwikis' => 'todos os interwikis',
+	'iwedit-update' => 'Actualizar',
+	'iwedit-error' => '<p>Houbo un erro.</p>',
+	'iwedit-success' => '<p>A ligazón creouse con éxito.</p>',
+);
+
+/** Hungarian (Magyar)
+ * @author Glanthor Reviol
+ */
+$messages['hu'] = array(
+	'iwedit-update' => 'Frissítés',
+);
+
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'iwedit-title' => 'インターウィキの編集',
+	'iwedit-language-interwikis' => '言語間インターウィキのみ',
+	'iwedit-all-interwikis' => '全てのインターウィキ',
+	'iwedit-update' => '更新',
+	'iwedit-error' => '<p>エラーが発生しました。</p>',
+	'iwedit-success' => '<p>リンクの作成に成功しました。</p>',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'iwedit-title' => 'Editor Interwiki',
+	'iwedit-language-interwikis' => 'mach lenghe interwiki',
+	'iwedit-all-interwikis' => "tuti j'interwiki",
+	'iwedit-update' => 'Modìfica',
+	'iwedit-error' => "<p>A l'é capitaje n'eror.</p>",
+	'iwedit-success' => '<p>Creassion dël colegament andàit bin.</p>',
+);
+
+/** Russian (Русский)
+ * @author Lockal
+ */
+$messages['ru'] = array(
+	'iwedit-title' => 'Редактор интервики',
+	'iwedit-language-interwikis' => 'только языковые интервики',
+	'iwedit-all-interwikis' => 'все интервики',
+	'iwedit-update' => 'Обновить',
+	'iwedit-error' => '<p>Произошла ошибка.</p>',
+	'iwedit-success' => '<p>Ссылка успешно создана.</p>',
+);
+
