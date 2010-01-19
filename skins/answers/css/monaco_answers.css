@@ -367,12 +367,10 @@ div.userInfoNoAvatar .userPoints {
 	margin-top:10px;
 	position:relative;
 }
-.google-ad-unit small a {
+.google-ad-unit small a { /* Ads By Google link */
 	font-size:11px;
-	position:absolute;
-	right:0;
 	text-decoration:none;
-	top:0;
+	color:#999999;
 }
 .google-ad-unit p {
 	font-size:13px;
@@ -389,7 +387,7 @@ div.userInfoNoAvatar .userPoints {
 	text-decoration:none;
 }
 .google-ad-unit a:hover {
-	color:#FF00FF; text-decoration: underline; 
+	text-decoration: underline; 
 }
 .google-ad-unit a strong {
 	color:#336699;
