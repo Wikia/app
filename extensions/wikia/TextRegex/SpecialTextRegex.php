@@ -410,25 +410,11 @@ class TextRegexForm {
 			return;
 		}
 
-		/* make insert */
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-		$iUser = $wgUser->getId();
-		$timestamp = wfTimestampNow();
-
-		$dbw->insert(
-			"text_regex",
-			array(
-				'tr_text' => $this->mBlockedRegex,
-				'tr_timestamp' => $timestamp,
-				'tr_user' => intval($iUser),
-				'tr_subpage' => $this->subPage
-			),
-			__METHOD__,
-			array( 'IGNORE' )
-		);
+		$oRegexCore = new TextRegexCore($this->subPage, 0);
+		$res = $oRegexCore->addPhrase($this->mBlockedRegex);
 
 		/* duplicate entry */
-		if ( !$dbw->affectedRows() ) {
+		if ( $res === false ) {
 			$this->showForm( wfMsgHtml( 'textregex-already-added', $this->mBlockedRegex ) );
 			wfProfileOut( __METHOD__ );
 			return;
@@ -484,6 +470,41 @@ class TextRegexCore {
 	function TextRegexCore( $subpage, $id ) {
 		$this->subPage = $subpage;
 		$this->id = $id;
+	}
+
+	public function addPhrase($text) {
+		global $wgMemc, $wgExternalDatawareDB, $wgUser;
+		wfProfileIn( __METHOD__ );
+		
+		/* make insert */
+		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+		$iUser = $wgUser->getId();
+		$timestamp = wfTimestampNow();
+
+		$dbw->insert(
+			"text_regex",
+			array(
+				'tr_text' => $text,
+				'tr_timestamp' => $timestamp,
+				'tr_user' => intval($iUser),
+				'tr_subpage' => $this->subPage
+			),
+			__METHOD__,
+			array( 'IGNORE' )
+		);
+
+		/* duplicate entry */
+		if ( !$dbw->affectedRows() ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		$oTRList = new TextRegexList($this->subPage);
+		$key = $oTRList->getMemcAllKey();
+		$regexList = array();
+		$cached = $wgMemc->delete($key) ;
+		
+		return true;
 	}
 
 	public function getRegexes( $db_conn = DB_SLAVE ) {
@@ -644,7 +665,7 @@ class TextRegexCore {
 	}
 
 	/* check if text contain "bad" words (if yes, put comment to the stats table) */
-	public function isAllowedText ($text, $comment = "") {
+	public function isAllowedText ($text, $comment = "", $allowStats = true) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_array($text) ) {
@@ -666,8 +687,10 @@ class TextRegexCore {
 					$badWordId = intval($badWord['id']);
 					if ( @preg_match("/{$badWordTxt}/i", $sWord, $m) ) {
 						#--- match
-						$this->setID($badWordId);
-						$this->setStats($sWord, $comment);
+						if ( $allowStats ) {
+							$this->setID($badWordId);
+							$this->setStats($sWord, $comment);
+						}
 						#--- 
 						wfProfileOut( __METHOD__ );
 						return false;

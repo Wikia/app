@@ -8,6 +8,268 @@
  * @version: $Id: Classes.php 6127 2007-10-11 11:10:32Z moli $
  */
 
+/*
+ * classes
+ * 1. WikiaEditStatistics
+ * 2. WikiaHubStats
+ * 3. WikiaGlobalStats
+ */
+
+/*
+ * hooks
+ */
+$wgHooks['ArticleSaveComplete'][] = "WikiaEditStatistics::saveComplete";
+$wgHooks['ArticleDeleteComplete'][] = "WikiaEditStatistics::deleteComplete";
+$wgHooks['UndeleteComplete'][] = "WikiaEditStatistics::undeleteComplete";
+
+/*
+ * update statistics 
+ */
+
+class WikiaEditStatistics {
+	private 
+		$mPageId, 
+		$mPageNs, 
+		$mIsContent,
+		$mDate;
+	const updateWithToday = false;
+		
+	public function __construct( $Title, $User, $articleId = 0 ) {
+		global $wgEnableBlogArticles;
+		/**
+		 * initialization	
+		 */
+		$this->mPageNs = $Title->getNamespace();
+		if ( empty($articleId) ) {
+			$this->mPageId = $Title->getArticleID();
+			if ( empty($this->mPageId) ) {
+				$Title->getArticleID(GAID_FOR_UPDATE);
+			}
+		} else {
+			$this->setPageId($articleId);
+		}
+
+		if ( is_object ( $User ) ) {
+			$this->mUserId = intval($User->getID());
+		} else {
+			$this->mUserId = intval($User);
+		}
+		$this->mIsContent = 
+			( $Title->isContentPage() ) && 
+			( 
+				($wgEnableBlogArticles) && 
+				(!in_array($this->mPageNs, array(NS_BLOG_ARTICLE, NS_BLOG_ARTICLE_TALK, NS_BLOG_LISTING, NS_BLOG_LISTING_TALK))) 
+			);
+
+		$this->mDate = date('Y-m-d');
+	}
+
+	public function setPageId($page_id) { $this->mPageId = $page_id; }
+	public function setUserId($user_id) { $this->mUserId = $user_id; }
+	public function setDate($date) { $this->mDate = $date; }
+		
+	/**
+	 * increase -- update stats
+	 *
+	 * @access private
+	 *
+	 * @return boolean
+	 */
+	public function increase( $inc = 1 ) {
+		global $wgExternalDatawareDB, $wgCityId;
+		wfProfileIn( __METHOD__ );
+		
+		$return = 0;
+		if ( !empty($this->mPageId) ) {
+			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
+
+			# number of edits 
+			$conditions = array( 
+				'pe_wikia_id'	=> $wgCityId,
+				'pe_page_id'	=> $this->mPageId,
+				'pe_page_ns'	=> $this->mPageNs,
+				'pe_date'		=> $this->mDate
+			);
+
+			$oRow = $dbr->selectRow( 
+				array( 'page_edits' ),
+				array( 'pe_page_id, pe_all_count, pe_anon_count' ),
+				$conditions,
+				__METHOD__
+			);
+
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );			
+			if ( $oRow ) {
+				# update edits count
+				$data = array( 
+					'pe_all_count' 	=> intval($oRow->pe_all_count + $inc),
+					'pe_is_content' => $this->mIsContent
+				);
+				if ( empty($this->mUserId) ) {
+					$data['pe_anon_count'] = intval($oRow->pe_anon_count + $inc);
+				}
+				$dbw->update( 'page_edits', $data, $conditions, __METHOD__ );
+			} 
+			else {
+				# insert edits count
+				$conditions['pe_all_count'] = $inc;
+				$conditions['pe_is_content'] = $this->mIsContent;
+				if ( empty($this->mUserId) ) {
+					$conditions['pe_anon_count'] = $inc;
+				};
+				$dbw->insert( 'page_edits', $conditions, __METHOD__ );
+			}
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $return;
+	}
+
+	/**
+	 * increaseRevision  -- update stats
+	 *
+	 * @access private
+	 *
+	 * @return boolean
+	 */
+	public function increaseRevision( $inc = 1 ) {
+		wfProfileIn( __METHOD__ );
+		
+		$return = 0;
+		# after undelete function we have to check number of restored revisions 
+		$dbr = wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 
+			'revision', 
+			array( 'rev_user', 'cast(rev_timestamp as date) as rev_date' ), 
+			array( 
+				'rev_page'		=> $this->mPageId,
+				'rev_deleted'	=> 0
+			), 
+			__METHOD__ 
+		);
+		
+		if ( $dbr->numRows($res) ) { 
+			while( $oRow = $dbr->fetchObject($res) ) {
+				$this->setUserId($oRow->rev_user);
+				if ( self::updateWithToday == false ) {
+					$this->setDate($oRow->rev_date);
+				}
+				$update = $this->increase($inc);
+				if ( !empty($update) ) $return += $update;
+			}
+			$dbr->freeResult($res);
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $return;
+	}
+
+	/**
+	 * decrease -- update stats
+	 *
+	 * @access private
+	 *
+	 * @return boolean
+	 */
+	public function decrease() {
+		global $wgCityId, $wgExternalDatawareDB;
+		wfProfileIn( __METHOD__ );
+
+		$return = 0;
+		if ( !empty($this->mPageId) ) {
+			$conditions = array( 
+				'pe_wikia_id'	=> $wgCityId,
+				'pe_page_id'	=> $this->mPageId,
+				'pe_page_ns'	=> $this->mPageNs,
+				'pe_date'		=> $this->mDate
+			);
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );			
+			$dbw->delete( 'page_edits', $conditions, __METHOD__ );
+		}
+		
+		wfProfileOut( __METHOD__ );
+		return $return;
+	}
+
+	/**
+	 * saveComplete -- hook 
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param Article $Article,
+	 * @param User $User,
+	 *
+	 * @return true
+	 */
+	static public function saveComplete(&$Article, &$User /* other params */) {
+		wfProfileIn( __METHOD__ );
+		if ( ( $Article instanceof Article ) && ( $User instanceof User ) ) {
+			$Title = $Article->mTitle;
+			$oEdits = new WikiaEditStatistics($Title, $User);
+			$oEdits->increase();
+		}
+		wfProfileOut( __METHOD__ );
+		return true;		
+	}
+
+	/**
+	 * deleteComplete -- hook 
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param Article $Article,
+	 * @param User $User,
+	 * @param String $reason,
+	 * @param String $articleId,
+	 *
+	 * @return true
+	 */
+	static public function deleteComplete( &$Article, &$User, $reason, $articleId ) {
+		wfProfileIn( __METHOD__ );
+		if ( ( $Article instanceof Article ) && ( $User instanceof User ) ) {
+			$Title = $Article->mTitle;
+			$oEdits = new WikiaEditStatistics($Title, $User, $articleId);
+			$oEdits->decrease();
+		}
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+	
+	/**
+	 * undeleteComplete -- hook 
+	 *
+	 * @static
+	 * @access public
+	 *
+	 * @param Title $Title,
+	 * @param User $User,
+	 * @param String reason
+	 *
+	 * @return true
+	 */
+	static public function undeleteComplete( &$Title, $User, $reason ) {
+		wfProfileIn( __METHOD__ );
+		if ( ( $Title instanceof Title ) && ( $User instanceof User ) ) {
+			$newId = $Title->getLatestRevID();
+			if ( empty($newId) ) {
+				$newId = $Title->getLatestRevID(GAID_FOR_UPDATE);
+			}
+			$revCount = $Title->countRevisionsBetween( 1, $newId );
+			if ( $revCount ) {
+				$oEdits = new WikiaEditStatistics($Title, $User);
+				$oEdits->increaseRevision( );
+			}
+		}
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+}
+
+/*
+ * per hub statistics 
+ */
 class WikiaHubStats {
 	const PV_MONTHS = 12;
 	private 
@@ -122,6 +384,7 @@ class WikiaHubStats {
 	 */
 	private function getCities() {
     	global $wgExternalSharedDB, $wgMemc;
+		wfProfileIn( __METHOD__ );
 
 		$memkey = wfMemcKey( __METHOD__, $this->mName );
 		$data = $wgMemc->get( $memkey );
@@ -143,5 +406,202 @@ class WikiaHubStats {
 
 		wfProfileOut( __METHOD__ );
 		return $data;
+	}
+}
+
+/*
+ * global edits statistics 
+ */
+class WikiaGlobalStats {
+	private static $excludeNames = array('un', 'fanon', 'sex');
+	private static $allowedLanguages = array('en');
+	private static $excludeWikiDomainsKey = 'homepage-exclude-wiki';
+	private static $excludeWikiArticles = 'homepage-exclude-pages';
+	private static $excludeWikiHubs = array('Humor');
+	private static $limitWikiHubs = array(
+		'Gaming' => 2, 
+		'Entertainment' => 2,
+		'_default_' => 1
+	);
+	private static $defaultLimit = 100;
+
+	public static function getEditedArticles( $days = 7, $limit = 5, $onlyContent = true ) {
+    	global $wgExternalDatawareDB, $wgMemc;
+		wfProfileIn( __METHOD__ );
+    	
+		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
+		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
+		$data = ""; #$wgMemc->get( $memkey );
+		if ( empty($data) ) {
+			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
+			
+			$conditions = array("pe_date >= '$date_diff'");
+			if ( $onlyContent === true ) {
+				$conditions['pe_is_content'] = 1;
+			}
+			
+			$oRes = $dbr->select(
+				array( "page_edits" ),
+				array( "pe_is_content, pe_wikia_id, pe_page_id, sum(pe_all_count) as all_count" ),
+				$conditions,
+				__METHOD__,
+				array(
+					'GROUP BY' 	=> 'pe_wikia_id, pe_page_id',
+					'ORDER BY' 	=> 'all_count desc',
+					'LIMIT'		=> self::$defaultLimit
+				)
+			);
+			$data = array(); while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$data[] = array(
+					'wikia'		=> $oRow->pe_wikia_id,
+					'page'		=> $oRow->pe_page_id,
+					'count' 	=> $oRow->all_count
+				);
+			}
+			$dbr->freeResult( $oRes );
+			$wgMemc->set( $memkey , $data, 60*60 );
+		}
+
+		$result = $values = array();
+		$loop = 0;
+		if ( !empty( $data ) ) {
+			foreach ( $data as $row ) {
+				if ( $loop >= $limit ) break;
+				# check results
+				$res = self::allowResultsForEditedArticles( $row );
+				if ( $res === false ) continue;
+				
+				list( $wikiaTitle, $db, $hub, $wikia_ul, $page_url, $count ) = array_values($res);
+				if ( !isset( $values[$hub] ) ) $values[$hub] = 0;
+				
+				# limit results
+				$hubLimit = ( isset( self::$limitWikiHubs[ $hub ] ) ) 
+					? self::$limitWikiHubs[ $hub ]
+					: self::$limitWikiHubs[ '_default_' ];
+				if ( $values[$hub] == $hubLimit ) continue;
+				
+				# add to array
+				$result[] = $res;
+				# increase counter
+				$values[$hub]++; $loop++;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+	
+	private static function excludeArticle($text) {
+		$oRegexCore = new TextRegexCore(self::$excludeWikiArticles, 0);
+		$res = false;
+		if ( is_object($oRegexCore) ) {
+			$res = $oRegexCore->addPhrase($text);
+		}
+		return $res;
+	}
+	
+	private static function allowResultsForEditedArticles ( $row ) {
+		wfProfileIn( __METHOD__ );
+		$result = array();
+		
+		$oWikia = WikiFactory::getWikiByID($row['wikia']);
+		/*
+		 * check city list
+		 */
+		if ( !$oWikia ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		if ( !in_array( $oWikia->city_lang, self::$allowedLanguages ) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		/*
+		 * check sitename
+		 */
+		$siteName = WikiFactory::getVarByName('wgSitename', $row['wikia']);
+		if ( !$siteName ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		/*
+		 * check wikiname
+		 */
+		$wikiName = unserialize($siteName->cv_value);
+		if ( !$wikiName ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+		
+		foreach( self::$excludeNames as $search ) {
+			$pos = stripos( $wikiName, $search );
+			if ( $pos !== false ) {
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+		}
+
+		/*
+		 * check Title && Wiki domain
+		 */
+		$oGTitle = GlobalTitle::newFromId( $row['page'], $row['wikia'], $oWikia->city_dbname );
+		if ( !is_object($oGTitle) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		$wikiaUrl = $oGTitle->getServer();
+		$pageUrl = $oGTitle->getFullURL();
+		$articleName = $oGTitle->mTextform;
+
+		$oRegexCore = new TextRegexCore( self::$excludeWikiDomainsKey, 0 );
+		if ( is_object( $oRegexCore ) ) {
+			$allowed = $oRegexCore->isAllowedText( $wikiaUrl, "", false );
+			if ( !$allowed ) {
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+		}
+		
+		/*
+		 * check hub name
+		 */
+		$hubName = WikiFactoryHub::getInstance()->getCategoryName($row['wikia']);
+		if ( in_array($hubName, self::$excludeWikiHubs) ) {
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		/*
+		 * check article name 
+		 */
+		$oRegexArticles = new TextRegexCore( self::$excludeWikiArticles, 0 );
+		if ( is_object( $oRegexArticles ) ) {
+			$filterText = sprintf("%s:%s", $oWikia->city_dbname, $articleName);
+			$allowed = $oRegexArticles->isAllowedText( $filterText , "", false );
+			if ( !$allowed ) {
+				wfProfileOut( __METHOD__ );
+				return false;
+			}
+		}
+
+		/*
+		 * ok
+		 */
+		$result = array( 
+			'wikia'		=> $wikiName,
+			'db'		=> $oWikia->city_dbname,
+			'hub' 		=> $hubName,
+			'wikia_url'	=> $wikiaUrl,
+			'page_url'	=> $pageUrl,
+			'count'		=> $row['count']
+		);
+		
+		wfProfileOut( __METHOD__ );
+		
+		return $result;
 	}
 }
