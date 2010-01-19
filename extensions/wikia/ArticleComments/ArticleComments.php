@@ -107,7 +107,7 @@ class ArticleCommentInit {
 		global $wgTitle, $wgUser;
 
 		//use this hook only for skins other than Monaco
-		if(get_class($wgUser->getSkin()) == 'SkinMonaco') {
+		if(get_class($wgUser->getSkin()) == 'SkinMonaco' || get_class($wgUser->getSkin()) == 'SkinAnswers') {
 			return true;
 		}
 		wfProfileIn( __METHOD__ );
