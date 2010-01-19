@@ -81,6 +81,7 @@ $wgAutoloadClasses["WikiaApiQueryPageinfo"] = "extensions/wikia/WikiaApi/WikiaAp
 $wgAutoloadClasses[ "ApiImageThumb"                ] = "{$IP}/extensions/wikia/Our404Handler/ApiImageThumb.php";
 $wgAutoloadClasses[ "WikiaApiReportEmail"          ] = "{$IP}/extensions/wikia/WikiaApi/WikiaApiReportEmail.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail" ] = "{$IP}/extensions/wikia/AutoCreateWiki/WikiaApiCreatorReminderEmail.php";
+$wgAutoloadClasses[ "TokyoTyrantSession"           ] = "{$IP}/includes/wikia/TokyoTyrantSessions.php";
 
 /**
  * registered API methods

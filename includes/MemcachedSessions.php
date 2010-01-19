@@ -14,7 +14,6 @@
  * this version has function shadowed by Tyrant session handler for test and
  * migration purposes
  */
-include_once( "$IP/includes/wikia/TokyoTyrantSessions.php" );
 
 /**
  * @todo document
