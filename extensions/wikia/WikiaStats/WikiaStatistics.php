@@ -413,13 +413,13 @@ class WikiaHubStats {
  * global edits statistics 
  */
 class WikiaGlobalStats {
-	private static $excludeNames = array('un', 'fanon', 'sex');
-	private static $allowedLanguages = array('en');
-	private static $excludeWikiDomainsKey = 'homepage-exclude-wikis';
-	private static $excludeWikiArticles = 'homepage-exclude-pages';
-	private static $excludeWikiHubs = array( 'Humor' );
-	private static $limitWikiHubs = array( 'Gaming' => 2, 'Entertainment' => 2, '_default_' => 1 );
-	private static $defaultLimit = 100;
+	private static $excludeNames 			= array('un', 'fanon', 'sex');
+	private static $allowedLanguages 		= array('en');
+	private static $excludeWikiDomainsKey 	= 'homepage-exclude-wikis';
+	private static $excludeWikiArticles 	= 'homepage-exclude-pages';
+	private static $excludeWikiHubs 		= array( 'Humor' );
+	private static $limitWikiHubs 			= array( 'Gaming' => 2, 'Entertainment' => 2, '_default_' => 1 );
+	private static $defaultLimit 			= 100;
 
 	public static function getEditedArticles( $days = 7, $limit = 5, $onlyContent = true ) {
     	global $wgExternalDatawareDB, $wgMemc;
@@ -427,7 +427,7 @@ class WikiaGlobalStats {
     	
 		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
 		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
-		$data = ""; #$wgMemc->get( $memkey );
+		$data = $wgMemc->get( $memkey );
 		if ( empty($data) ) {
 			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
 			
