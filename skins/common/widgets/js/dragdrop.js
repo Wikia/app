@@ -282,9 +282,9 @@ YAHOO.w.DragDrop = {
 				var leftImage = args[1];
 
 				if(enabling) {
-					leftImage.src = "http://images.wikia.com/common/left-enabled.gif";
+					leftImage.src = "http://images.wikia.com/common/skins/common/widgets/icons/left-enabled.gif";
 				} else {
-					leftImage.src = "http://images.wikia.com/common/left-disabled.gif";
+					leftImage.src = "http://images.wikia.com/common/skins/common/widgets/icons/left-disabled.gif";
 				}
 			};
 
@@ -293,9 +293,9 @@ YAHOO.w.DragDrop = {
 				var leftImage = args[1];
 
 				if(enabling) {
-					leftImage.src = "http://images.wikia.com/common/right-enabled.gif";
+					leftImage.src = "http://images.wikia.com/common/skins/common/widgets/icons/right-enabled.gif";
 				} else {
-					leftImage.src = "http://images.wikia.com/common/right-disabled.gif";
+					leftImage.src = "http://images.wikia.com/common/skins/common/widgets/icons/right-disabled.gif";
 				}
 			};
 
