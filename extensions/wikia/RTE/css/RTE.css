@@ -19,16 +19,17 @@
 	position: relative;
 }
 
-/* RT #37254 / #37260 */
-.cke_browser_ie7 #cke_contents_wpTextbox1 {
-	position: static !important;
-}
-
 /* hide textarea */
 .RTEloading .cke_contents iframe,
 .RTEloading .cke_contents textarea {
 	position: absolute !important;
 	left: -10000px;
+}
+
+/* RT #37254 / #37260 */
+.cke_browser_ie7 #cke_contents_wpTextbox1,
+.cke_browser_ie8 #cke_contents_wpTextbox1 {
+	position: static !important;
 }
 
 /* hide toolbar in source mode */
