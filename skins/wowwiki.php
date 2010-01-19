@@ -122,7 +122,7 @@ border="0" alt="Google"></img></a>
 <input type="hidden" name="channel" value="' . $ch . '"></input>
 <input type="hidden" name="ie" value="UTF-8"></input>
 <input type="hidden" name="oe" value="UTF-8"></input>
-<input type="hidden" name="cof" value="GALT:#46ABFF;GL:1;DIV:#EEEEEE;VLC:4274FF;AH:center;BGC:333333;LBGC:FFFF99;ALC:46ABFF;LC:46ABFF;T:EEEEEE;GFNT:AAAAAA;GIMP:AAAAAA;LH:100;LW:100;L:http://images.wikia.com/common/skins-wow/common/images/wiki-100.jpg;S:http://www.wowwiki.com/;LP:1;FORID:1;"></input>
+<input type="hidden" name="cof" value="GALT:#46ABFF;GL:1;DIV:#EEEEEE;VLC:4274FF;AH:center;BGC:333333;LBGC:FFFF99;ALC:46ABFF;LC:46ABFF;T:EEEEEE;GFNT:AAAAAA;GIMP:AAAAAA;LH:100;LW:100;L:http://images.wikia.com/common/skins/wowwiki/wiki-100.jpg;S:http://www.wowwiki.com/;LP:1;FORID:1;"></input>
 <input type="hidden" name="hl" value="en"></input>
 </td></tr></table>
 </form>
