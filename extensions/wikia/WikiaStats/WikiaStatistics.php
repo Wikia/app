@@ -415,14 +415,10 @@ class WikiaHubStats {
 class WikiaGlobalStats {
 	private static $excludeNames = array('un', 'fanon', 'sex');
 	private static $allowedLanguages = array('en');
-	private static $excludeWikiDomainsKey = 'homepage-exclude-wiki';
+	private static $excludeWikiDomainsKey = 'homepage-exclude-wikis';
 	private static $excludeWikiArticles = 'homepage-exclude-pages';
-	private static $excludeWikiHubs = array('Humor');
-	private static $limitWikiHubs = array(
-		'Gaming' => 2, 
-		'Entertainment' => 2,
-		'_default_' => 1
-	);
+	private static $excludeWikiHubs = array( 'Humor' );
+	private static $limitWikiHubs = array( 'Gaming' => 2, 'Entertainment' => 2, '_default_' => 1 );
 	private static $defaultLimit = 100;
 
 	public static function getEditedArticles( $days = 7, $limit = 5, $onlyContent = true ) {
