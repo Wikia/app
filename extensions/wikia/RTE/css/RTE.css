@@ -317,6 +317,11 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
 	top: -15px;
 }
 
+/* RT #37689 */
+div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
+	width: 800px !important;
+}
+
 #templateLinkToHelp {
 	color: #0080C0;
 	cursor: pointer;
