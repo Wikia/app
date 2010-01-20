@@ -50,6 +50,28 @@ class GlobalTitle {
 	}
 
 	/**
+	 * static constructor, Create new Title from id of page 
+	 */
+	public static function newFromId( $id, $city_id, $dbname = "" ) {
+		$title = null;
+		if ( $dbname ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), ( $dbname ) ? $dbname : WikiFactory::IDtoDB($city_id) );
+			$row = $dbr->selectRow( 'page', 
+				array( 'page_namespace', 'page_title' ),
+				array( 'page_id' => $id ), 
+				__METHOD__ 
+			);
+			if ( $row !== false ) {
+				$title = GlobalTitle::newFromText( $row->page_title, $row->page_namespace, $city_id );
+			} else {
+				$title = NULL;
+			}
+		}
+
+		return $title;
+	}
+
+	/**
 	 * loadAll
 	 *
 	 *  constructor doesnt load anything from database. This is the place
@@ -100,6 +122,25 @@ class GlobalTitle {
 	public function getServer() {
 		$this->loadAll();
 		return $this->mServer;
+	}
+
+	/**
+	 * Get article path
+	 * @return string
+	 */
+	public function getArticleName() {
+		$this->loadAll();
+
+		$namespace = wfUrlencode( $this->getNsText() );
+
+		if( $this->mNamespace != NS_MAIN ) {
+			$namespace .= ":";
+		}
+		/**
+		 * replace $1 with article title with namespace
+		 */
+
+		return $namespace . $this->mUrlform;
 	}
 
 	/**

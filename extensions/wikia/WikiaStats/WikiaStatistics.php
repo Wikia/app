@@ -551,7 +551,7 @@ class WikiaGlobalStats {
 
 		$wikiaUrl = $oGTitle->getServer();
 		$pageUrl = $oGTitle->getFullURL();
-		$articleName = $oGTitle->mTextform;
+		$articleName = $oGTitle->getArticleName();
 
 		$oRegexCore = new TextRegexCore( self::$excludeWikiDomainsKey, 0 );
 		if ( is_object( $oRegexCore ) ) {
@@ -591,6 +591,7 @@ class WikiaGlobalStats {
 			'wikia'		=> $wikiName,
 			'db'		=> $oWikia->city_dbname,
 			'hub' 		=> $hubName,
+			'page_name'	=> $articleName,
 			'wikia_url'	=> $wikiaUrl,
 			'page_url'	=> $pageUrl,
 			'count'		=> $row['count']
