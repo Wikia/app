@@ -2364,8 +2364,9 @@ wfProfileOut( __METHOD__ . '-body');
 	        echo AdEngine::getInstance()->getSetupHtml();
 
 		global $wgOut, $wgAdsForceLeaderboards, $wgEnableIframeAds, $wgEnableTandemAds, $wgEnableFAST_HOME2;
+		global $wgAdsDisableLeaderboards;
 		$topAdCode = '';
-		if ($wgOut->isArticle()){
+		if (!$wgAdsDisableLeaderboards && $wgOut->isArticle()){
 			if (ArticleAdLogic::isMainPage()){
 				$topAdCode .= AdEngine::getInstance()->getPlaceHolderIframe('HOME_TOP_LEADERBOARD');
 				if ($wgEnableFAST_HOME2) {
