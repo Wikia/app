@@ -27,7 +27,7 @@
 }
 
 /* RT #37254 / #37260 */
-.cke_browser_ie8 #cke_contents_wpTextbox1 {
+.cke_browser_ie #cke_contents_wpTextbox1 {
 	position: static !important;
 }
 
