@@ -41,7 +41,7 @@ function renderBadge( $input, $argv ) {
 	$output .= "document.write('<div id=\"badgeCodeDiv\">');";
 	$output .= "document.write('Copy this code and paste it into your message board signature box,<br>your website, or your MySpace profile.<br>');";
 	$output .= "document.write('<textarea name=\"badgeCodeArea\" style=\"overflow: hidden; width:90%; height: 60px;\" onFocus=\"javascript: this.select();\">');";
-	$output .= "document.write('<a href=\"&#104;ttp://valuewiki.wikia.com/wikia/$symbol\">');";
+	$output .= "document.write('<a href=\"&#104;ttp://valuewiki.wikia.com/wiki/$symbol\">');";
 	$output .= "document.write('<img src=\"'+url+'\" border=\"0\"></a></textarea><br>');";
 	$output .= "document.write('<a href=\"javascript: badgeCode();\">Close</a>');";
 	$output .= "document.write('</div>');";
