@@ -82,7 +82,7 @@ class Checksite extends SpecialPage
       return;
     }
 
-    if($rob = fopen("http://$newhost/robots.txt", "r"))
+    if($rob = @fopen("http://$newhost/robots.txt", "r"))
     {
       $txt = fread($rob, 4096);
 
