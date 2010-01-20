@@ -245,7 +245,7 @@ class TextRegexList {
 
 		/* we use memcached here */
 		$key = $this->getMemcKey();
-		$wgMemc->set( $key, $data, 3600 * 24 );
+		$wgMemc->set( $key, $data, 60 * 30 );
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -539,7 +539,7 @@ class TextRegexCore {
 					"subpage"			=> $row->tr_subpage,
 				);
 			}
-			$wgMemc->set($key, $regexList, 3600 * 24) ; 
+			$wgMemc->set($key, $regexList, 60 * 30) ; 
 			$dbr->freeResult ($res) ;
 		} else {
 			$regexList = $cached;
