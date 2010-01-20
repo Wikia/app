@@ -503,8 +503,11 @@ class TextRegexCore {
 		$key = $oTRList->getMemcAllKey();
 		$regexList = array();
 		$cached = $wgMemc->delete($key) ;
+		# load words
+		$aBadWords = $this->getRegexes( DB_MASTER );
+		$result = (count($aBadWords) > 0);
 		
-		return true;
+		return $result;
 	}
 
 	public function getRegexes( $db_conn = DB_SLAVE ) {
