@@ -21,6 +21,25 @@ $(function() {
 	$('.ajaxLogin').click(openLogin);
 	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
 	setupVoting();
+	$(".wikiaPlaceholder .wikia_button").removeAttr("onclick");
+	$(".wikiaPlaceholder .wikia_button").click(function(e){
+		if( e.target.nodeName == "SPAN" ){
+			showComboAjaxForPalceHolder($(e.target.parentNode).attr('id'),true);
+		}
+		else
+		{
+			showComboAjaxForPalceHolder($(e.target).attr('id'),true);
+		}
+		return false;
+	});
+	$("#ca-viewsource").click(function(e){
+		showComboAjaxForPalceHolder(false, "", function(){
+			AjaxLogin.doSuccess = function() {
+				window.location.href = e.target.href;
+			}
+		});
+		return false;
+	});
 });
 
 //Ajax Wait Indicator
@@ -67,7 +86,7 @@ function openUserMenu(event) {
 		$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#userData", attach_at: "bottom"});
 	}
 	else {
-		$.get(wgScript + '?action=ajax&rs=GetUserMenu&rsargs[]='+ wgUserName +'&uselang='+ wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, 
+		$.get(wgScript + '?action=ajax&rs=GetUserMenu&rsargs[]='+ wgUserName +'&uselang='+ wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,
 			function(html) {
 				$("#positioned_elements").append(html);
 				$("#headerMenuUser").makeHeaderMenu("headerButtonUser", openUserMenu, {attach_to: "#userData", attach_at: "bottom"});
@@ -84,15 +103,15 @@ function openUserMenu(event) {
 
 // AjaxLogin
 function openLogin(event) {
-	
-	if ( typeof openLogin.statusAjaxLogin == 'undefined' ) { // java script static var 
+
+	if ( typeof openLogin.statusAjaxLogin == 'undefined' ) { // java script static var
 		openLogin.statusAjaxLogin = false;
     }
-	
+
 	if (openLogin.statusAjaxLogin ){
 		return false;
 	}
-	
+
 
 	// check wgEnableAjaxLogin
 	if ( (typeof wgEnableAjaxLogin == 'undefined') || !wgEnableAjaxLogin ) {
@@ -102,13 +121,13 @@ function openLogin(event) {
 
 	if(typeof event.preventDefault == 'function') {
 		event.preventDefault();
-	}	
+	}
 
 	if((typeof AjaxLogin != 'undefined') && AjaxLogin.showFromDOM()){
 		WET.byStr('signupActions/signup/open');
 		return true;
 	}
-	openLogin.statusAjaxLogin = true;	
+	openLogin.statusAjaxLogin = true;
 	$().getModal(window.wgScript + '?action=ajax&rs=GetAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {callback: function() {
 			$.getScript(wgExtensionsPath + '/wikia/AjaxLogin/AwesomeAjaxLogin.js?' + wgStyleVersion, function() {
 
@@ -136,25 +155,25 @@ function openLogin(event) {
 //Combo login WikiaImagePlaceholde
 
 function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
-	if ( typeof showComboAjaxForPalceHolder.statusAjaxLogin == 'undefined' ) { // java script static var 
+	if ( typeof showComboAjaxForPalceHolder.statusAjaxLogin == 'undefined' ) { // java script static var
 		showComboAjaxForPalceHolder.statusAjaxLogin = false;
     }
 	$('html, body').attr("scrollTop",0);
-	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin) 
-		|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) { 
+	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin)
+		|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) {
 		return false;
 	}
-	
+
 	if ((typeof  AjaxLogin != 'undefined') && AjaxLogin.showComboFromDOM()) {
 		// show ajax login dialog if already in DOM
 		WET.byStr('signupActions/signup/open');
 		return true;
 	}
-	
+
 	if (showComboAjaxForPalceHolder.statusAjaxLogin){
 		return true;
 	}
-	
+
 /*   	$("#positioned_elements").append('<div id="loadmask" class="blackout"></div>');
    	$(".blackout:last")
    		.height($(document).height())
@@ -162,9 +181,9 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 	showComboAjaxForPalceHolder.statusAjaxLogin = true;
 	$().getModal(window.wgScript + '?action=ajax&rs=GetComboAjaxLogin&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion,  false, {
 			callback: function() {
-				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {									
+				$.getScript(window.wgScript + '?action=ajax&rs=getRegisterJS&uselang=' + window.wgUserLanguage + '&cb=' + wgMWrevId + '-' + wgStyleVersion, function() {
 						//$("#loadmask").remove();
-						if (isPlaceholder) AjaxLogin.setPlaceHolder(element);	
+						if (isPlaceholder) AjaxLogin.setPlaceHolder(element);
 						AjaxLogin.init( $('#AjaxLoginLoginForm form') );
 						AjaxLogin.show();
 						showComboAjaxForPalceHolder.statusAjaxLogin = false;
@@ -173,62 +192,9 @@ function showComboAjaxForPalceHolder(element,isPlaceholder,callback) {
 						}
 					});
 				}
-	}); 
+	});
 	return true;
 }
-
-(function(){ //before on ready 	
-	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin) 
-			|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) { 
-			return false;
-	}
-
-	if ((typeof WET == "undefined") || (typeof $ == "undefined") || $(".wikiaPlaceholder .wikia_button").length < 1 ) {
-		setTimeout(arguments.callee,150); 
-		return false;
-	}
-	
-	$(".wikiaPlaceholder .wikia_button").removeAttr("onclick");
-	$(".wikiaPlaceholder .wikia_button").click(
-	function(e){
-		$(function(){  //wait for evn
-			if( e.target.nodeName == "SPAN" ){
-				showComboAjaxForPalceHolder($(e.target.parentNode).attr('id'),true);
-			} else
-			{
-				showComboAjaxForPalceHolder($(e.target).attr('id'),true);
-			}
-		});
-		return false;
-	}
-	);
-})();
-
-(function(){ //before on ready 
-	Event = null; //ie
-	if ( (typeof wgIsLogin == 'undefined') || (wgIsLogin) 
-			|| (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) ) { 
-			return false;
-	}
-	
-	if ((typeof WET == "undefined") || (typeof $ == "undefined") || $("#ca-viewsource").length < 1 ) {
-		setTimeout(arguments.callee,150);
-		return false;
-	}
-	
-	$("#ca-viewsource").click(function(e){
-		$(function(){  //wait for evn
-			showComboAjaxForPalceHolder(false,"",
-			function(){
-				AjaxLogin.doSuccess = function() {
-					window.location.href = e.target.href;
-				}			
-			});
-		});
-		return false;
-	})	
-})();
-
 //Open image place holder if pass in get
 $(function(){
 	if ((typeof wgComboAjaxLogin != 'undefined') && wgComboAjaxLogin ) {
