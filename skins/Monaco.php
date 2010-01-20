@@ -1282,6 +1282,7 @@ EOS;
 }
 
 class MonacoTemplate extends QuickTemplate {
+	var $GPshow = false;
 
 	private function printMenu($id, $last_count='', $level=0) {
 		global $wgUploadPath, $wgArticlePath, $wgCityId;
@@ -1912,9 +1913,9 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 
 	$GPmainPage = Title::newMainPage();
 
-	$GPshow = ( in_array($wgCityId, $GPcities) && $GPmainPage->getPrefixedText() == $wgTitle->getPrefixedText() );
+	$this->GPshow = ( in_array($wgCityId, $GPcities) && $GPmainPage->getPrefixedText() == $wgTitle->getPrefixedText() );
 
-	if ( $GPshow ) {
+	if ( $this->GPshow ) {
 		$GPcontent = '<img src="' . $wgStylePath . '/home/images/gp_media.png" width="128" height="22" alt="GamePro Media" />';
 		// on WoW add link to the image
 		if ($wgCityId == 490) {
@@ -2290,7 +2291,7 @@ wfProfileOut( __METHOD__ . '-body');
 	  ?>
 			<tr>
 			    <th><?= $val['text'] ?></th>
-			    <td><?= implode(' | ', $links) ?><?php if ($GPshow && $key == 2) echo '<span style="margin-left:50px">' . $GPcontent . '</span>'; ?></td>
+			    <td><?= implode(' | ', $links) ?><?php if ($this->GPshow && $key == 2) echo '<span style="margin-left:50px">' . $GPcontent . '</span>'; ?></td>
 			</tr>
 	  <?php
 			}
