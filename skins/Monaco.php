@@ -1282,7 +1282,6 @@ EOS;
 }
 
 class MonacoTemplate extends QuickTemplate {
-	var $GPshow = false;
 
 	private function printMenu($id, $last_count='', $level=0) {
 		global $wgUploadPath, $wgArticlePath, $wgCityId;
@@ -1902,28 +1901,6 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 	$this->printFooterSpotlights();
 }
 
-	// macbre: BEGIN
-	//
-	global $wgCityId;
-
-	$GPcities = array(
-		490,  // wow
-		1657, // ffxi
-	);
-
-	$GPmainPage = Title::newMainPage();
-
-	$this->GPshow = ( in_array($wgCityId, $GPcities) && $GPmainPage->getPrefixedText() == $wgTitle->getPrefixedText() );
-
-	if ( $this->GPshow ) {
-		$GPcontent = '<img src="' . $wgStylePath . '/home/images/gp_media.png" width="128" height="22" alt="GamePro Media" />';
-		// on WoW add link to the image
-		if ($wgCityId == 490) {
-			$GPcontent = '<a href="http://www.idgentertainment.com" rel="nofollow">' . $GPcontent . '</a>';
-		}
-	}
-	//
-	// macbre: END
 ?>
 		<?php $this->printFooter() ?>
 		<?php wfRunHooks('SpecialFooterAfterWikia'); ?>
@@ -2277,6 +2254,30 @@ wfProfileOut( __METHOD__ . '-body');
 	// Made a separate method so recipes, answers, etc can override. 
 	function printFooter(){
 		global $wgTitle;
+
+	// macbre: BEGIN
+	//
+	global $wgCityId;
+
+	$GPcities = array(
+		490,  // wow
+		1657, // ffxi
+	);
+
+	$GPmainPage = Title::newMainPage();
+
+	$GPshow = ( in_array($wgCityId, $GPcities) && $GPmainPage->getPrefixedText() == $wgTitle->getPrefixedText() );
+
+	if ( $GPshow ) {
+		$GPcontent = '<img src="' . $wgStylePath . '/home/images/gp_media.png" width="128" height="22" alt="GamePro Media" />';
+		// on WoW add link to the image
+		if ($wgCityId == 490) {
+			$GPcontent = '<a href="http://www.idgentertainment.com" rel="nofollow">' . $GPcontent . '</a>';
+		}
+	}
+	//
+	// macbre: END
+
 	?>
 	  <table id="wikia_footer">
 	  <?php
@@ -2291,7 +2292,7 @@ wfProfileOut( __METHOD__ . '-body');
 	  ?>
 			<tr>
 			    <th><?= $val['text'] ?></th>
-			    <td><?= implode(' | ', $links) ?><?php if ($this->GPshow && $key == 2) echo '<span style="margin-left:50px">' . $GPcontent . '</span>'; ?></td>
+			    <td><?= implode(' | ', $links) ?><?php if ($GPshow && $key == 2) echo '<span style="margin-left:50px">' . $GPcontent . '</span>'; ?></td>
 			</tr>
 	  <?php
 			}
