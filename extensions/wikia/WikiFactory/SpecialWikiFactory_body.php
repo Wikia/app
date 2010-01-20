@@ -86,7 +86,7 @@ class WikiFactoryPage extends SpecialPage {
 		elseif ( $subpage === "short.stats" ) {
 			$wgOut->addHTML( $this->shortStats() );
 		}
-		elseif ( strtolower($subpage) === "addvariable" ) {
+		elseif ( strtolower($subpage) === "add.variable" ) {
 			$wgOut->addHTML( $this->addVariableForm() );
 		}
 		else {
@@ -400,9 +400,17 @@ class WikiFactoryPage extends SpecialPage {
 	 * Returns HTML to be rendered.
 	 */
 	private function addVariableForm() {
-	
-		// TODO: SWC: Implement.
-	
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+		$vars = array(
+			"title"         => $this->mTitle,
+			"groups"        => WikiFactory::getGroups(),
+			"accesslevels"  => WikiFactory::$levels,
+			"types"         => WikiFactory::$types,
+		);
+		$oTmpl->set_vars( $vars );
+
+		return $oTmpl->render( "add-variable" );
 	}
 }
 
