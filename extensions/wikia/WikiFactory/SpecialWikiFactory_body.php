@@ -86,6 +86,9 @@ class WikiFactoryPage extends SpecialPage {
 		elseif ( $subpage === "short.stats" ) {
 			$wgOut->addHTML( $this->shortStats() );
 		}
+		elseif ( strtolower($subpage) === "addvariable" ) {
+			$wgOut->addHTML( $this->addVariableForm() );
+		}
 		else {
 			$subpage = ( $subpage == "/" ) ? null : $subpage;
 			$oWiki = $this->getWikiData( $subpage );
@@ -389,6 +392,17 @@ class WikiFactoryPage extends SpecialPage {
 
 
 		return $Tmpl->render( "shortstats" );
+	}
+	
+	/**
+	 * Quick form for introducing a new variable to be used in WikiFactory (not setting a value).
+	 *
+	 * Returns HTML to be rendered.
+	 */
+	private function addVariableForm() {
+	
+		// TODO: SWC: Implement.
+	
 	}
 }
 
