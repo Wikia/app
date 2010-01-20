@@ -1,4 +1,4 @@
-<!-- s:<?= __FILE__ ?> -->
+<!-- s:<?php echo __FILE__ ?> -->
 <style type="text/css">
 /*<![CDATA[*/
 #cityselect {z-index:9000} /* for IE z-index of absolute divs inside relative divs issue */
@@ -22,6 +22,9 @@ table.TablePager { border: 1px solid gray;}
 	<li>
 		You can use "shortcuts" for wikia address (<strong>.wikia.com</strong>
 		will be added automaticly). For example food means food.wikia.com
+	</li>
+	<li>
+		You can <a href="<?php echo $title->getFullUrl() ?>/add.variable"><strong>add a new variable</strong></a> to be tracked by WikiFactory (pre-BETA... don't use it yet!)
 	</li>
 	<li>
 		You can start typing begining of domain name into input field below
@@ -60,4 +63,4 @@ table.TablePager { border: 1px solid gray;}
 <h2>Results for <?php echo $domain ?>:</h2>
 <?php echo $pager ?>
 <?php endif ?>
-<!-- e:<?= __FILE__ ?> -->
+<!-- e:<?php echo __FILE__ ?> -->
