@@ -487,7 +487,7 @@ class WikiaGlobalStats {
 		return $result;
 	}
 	
-	private static function excludeArticle($text) {
+	public static function excludeArticle($text) {
 		$oRegexCore = new TextRegexCore(self::$excludeWikiArticles, 0);
 		$res = false;
 		if ( is_object($oRegexCore) ) {
