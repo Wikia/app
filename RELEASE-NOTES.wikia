@@ -1,4 +1,5 @@
 == Changes since 201001.3 ==
+* rt#37650: Enable top 728x90 to be toggle on/off. (Nef)
 * rt#37690: RTE: typing {{ in source mode and switching modes leaves annoying popup (macbre)
 * rt#37254: RTE: scrolling issues in IE (wysiwyg mode) (macbre)
 * rt#37260: RTE: scrolling issues in IE (in source mode) (macbre)
