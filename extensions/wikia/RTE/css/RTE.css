@@ -27,7 +27,6 @@
 }
 
 /* RT #37254 / #37260 */
-.cke_browser_ie7 #cke_contents_wpTextbox1,
 .cke_browser_ie8 #cke_contents_wpTextbox1 {
 	position: static !important;
 }
@@ -501,6 +500,7 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
 }
 
 /* link suggest - RT #37690 */
+.RTEloading .link-suggest-container,
 .rte_wysiwyg .link-suggest-container {
 	display: none;
 }
