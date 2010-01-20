@@ -28,7 +28,7 @@ class WikiaGenericStats {
     var $mSelectedCityId = -1;
 
     const MONTHLY_STATS = 7;
-    const USE_MEMC = 0;
+    const USE_MEMC = 1;
     const USE_OLD_DB = 0;
 	const IGNORE_WIKIS = "5, 11, 6745";
 
@@ -102,7 +102,7 @@ class WikiaGenericStats {
 			#---
 			ksort($wkCityDomains, SORT_STRING);
 			#---
-			if (self::USE_MEMC) $wgMemc->set("wikiacitystatslist", $wkCityDomains, 60*60*3);
+			if (self::USE_MEMC) $wgMemc->set("wikiacitystatslist", $wkCityDomains, 60*60);
 		}
 		wfProfileOut( __METHOD__ );
 		return $wkCityDomains;
@@ -148,7 +148,7 @@ class WikiaGenericStats {
 
 			$wkCityAllDomains[0] = array("dbname" => "wikicities", "title" => "&Sigma;", "url" => "http://www.wikipedia.org/", "urlshort" => "");
 			#---
-			if (self::USE_MEMC) $wgMemc->set($memckey, $wkCityAllDomains, 60*60*3);
+			if (self::USE_MEMC) $wgMemc->set($memckey, $wkCityAllDomains, 60*60);
 		}
 		wfProfileOut( __METHOD__ );
 		return $wkCityAllDomains;
@@ -202,7 +202,7 @@ class WikiaGenericStats {
 			$dbs->freeResult( $res );
 			#---
 			#---
-			if (self::USE_MEMC) $wgMemc->set($memckey, $wkCityOrderStats, 60*60*3);
+			if (self::USE_MEMC) $wgMemc->set($memckey, $wkCityOrderStats, 60*60);
 		}
 		wfProfileOut( __METHOD__ );
 		return $wkCityOrderStats;
@@ -249,7 +249,7 @@ class WikiaGenericStats {
 			$dbs->freeResult( $res );
 			#---
 			$wkCreationWikiansList = array(0 => $result, 1 => $max_values);
-			if (self::USE_MEMC) $wgMemc->set("wikiacreationwikiansstats", $wkCreationWikiansList, 60*60*3);
+			if (self::USE_MEMC) $wgMemc->set("wikiacreationwikiansstats", $wkCreationWikiansList, 60*60);
 		}
 		wfProfileOut( __METHOD__ );
 		return $wkCreationWikiansList;
@@ -298,7 +298,7 @@ class WikiaGenericStats {
 			$dbs->freeResult( $res );
 			#---
 			$wkCreationArticleList = array(0 => $result, 1 => $max_values);
-			if (self::USE_MEMC) $wgMemc->set("wikiacreationarticlestats", $wkCreationArticleList, 60*60*3);
+			if (self::USE_MEMC) $wgMemc->set("wikiacreationarticlestats", $wkCreationArticleList, 60*60);
 		}
 		wfProfileOut( __METHOD__ );
 		return $wkCreationArticleList;
@@ -400,7 +400,7 @@ class WikiaGenericStats {
 		#---
    		if (empty($wkStatsUrl)) {
 			$wkStatsUrl = WikiFactory::getVarValueByName('wgServer', $city_id);
-			if (self::USE_MEMC) $wgMemc->set($memkey, $wkStatsUrl, 60*60*3);
+			if (self::USE_MEMC) $wgMemc->set($memkey, $wkStatsUrl, 60*60);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -434,7 +434,7 @@ class WikiaGenericStats {
 				}
 				$dbs->freeResult( $res );
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 			}
 		}
 		else {
@@ -539,7 +539,7 @@ class WikiaGenericStats {
 				}
 				$dbs->freeResult( $res );
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $wkCityTrendStatistics, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $wkCityTrendStatistics, 60*60);
 			} catch (DBConnectionError $e) {
 				return -1;
 			} catch (DBQueryError $e) {
@@ -611,7 +611,7 @@ class WikiaGenericStats {
 				}
 				$dbs->freeResult( $res );
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 			}
 		}
 
@@ -652,7 +652,7 @@ class WikiaGenericStats {
 				}
 				$dbs->freeResult( $res );
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 			}
 		}
 
@@ -688,7 +688,7 @@ class WikiaGenericStats {
 				}
 				$dbs->freeResult( $res );
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 			}
 		}
 
@@ -751,7 +751,7 @@ class WikiaGenericStats {
 				}
 				$dbs->freeResult( $res );
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 			}
 		}
 
@@ -811,7 +811,7 @@ class WikiaGenericStats {
 				}
 				$dbs->freeResult( $res );
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 			}
 		}
 
@@ -923,7 +923,7 @@ class WikiaGenericStats {
 
 				$dbs->freeResult( $res );
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 			}
 		}
 
@@ -979,7 +979,7 @@ class WikiaGenericStats {
 				}
 				$dbs->freeResult( $res );
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 			}
 		}
 
@@ -1024,7 +1024,7 @@ class WikiaGenericStats {
 				$lStatsRangeTime['maxYear'] = $years['maxYear'];
 				#---
 				$dbs->freeResult( $res );
-				if (self::USE_MEMC) $wgMemc->set($memkey, $lStatsRangeTime, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $lStatsRangeTime, 60*60);
 				#---
 			} catch (DBConnectionError $e) {
 				$result = array("code" => -1, "text" => $e->getText());
@@ -1070,7 +1070,7 @@ class WikiaGenericStats {
 					$result[$city] = array("name" => $row->cat_name, "url" => $row->cat_url);
 				}
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 			}
 		}
 
@@ -1116,7 +1116,7 @@ class WikiaGenericStats {
 				$shorturl = self::makeWikiNameFromUrl($urlshort);
 				$result[$row->city_id] = ucfirst($shorturl);
 			}
-			if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60*3);
+			if (self::USE_MEMC) $wgMemc->set($memkey, $result, 60*60);
 		}
 		wfProfileOut( __METHOD__ );
 		#---
@@ -1279,7 +1279,7 @@ class WikiaGenericStats {
 				#---
 				ksort($wkColumnStatistics);
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $wkColumnStatistics, 60*60*5);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $wkColumnStatistics, 60*60);
 			} catch (DBConnectionError $e) {
 				return -1;
 			} catch (DBQueryError $e) {
@@ -1774,7 +1774,7 @@ class WikiaGenericStats {
 			}
 			$dbr->freeResult( $res );
 			#---
-			$wgMemc->set($memkey, $result, 60*60*3);
+			$wgMemc->set($memkey, $result, 60*60);
 		}
 		wfProfileOut( __METHOD__ );
 		return $result;
@@ -1869,7 +1869,7 @@ class WikiaGenericStats {
 				$dbs->freeResult( $res );
 
 				#---
-				if (self::USE_MEMC) $wgMemc->set($memkey, $wkCityMainStatistics, 60*60*3);
+				if (self::USE_MEMC) $wgMemc->set($memkey, $wkCityMainStatistics, 60*60);
 			} catch (DBConnectionError $e) {
 				$result = array("code" => -1, "text" => $e->getText());
 			} catch (DBQueryError $e) {
