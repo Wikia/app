@@ -133,7 +133,7 @@ $flags = array (
 	
 $url 	= "http://quote.yahoo.com/d/quotes.csv?e=csv&s=" . $symbol . "&f=" . $flag;
 echo "//" . $url . chr(10);
-$info 	= file_get_contents($url);
+$info 	= @file_get_contents($url);
 $info	= str_ireplace('"', '', $info);
 $output .= '<table width="' . $width . '" class="' . $class . '" cellpadding="0" cellspacing="0"><tr>';
 $info = explode(',', $info);
