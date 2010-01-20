@@ -179,28 +179,5 @@ class SimpleWikiaSearchEngine {
 		}
 		return true;
 	}
-
-
-	/* Allow for a custom query to be supplied
- 	 * Originally developed for the SearchFeed, which powers the
- 	 * answers embedded question feed.
- 	 * 
- 	 * @param $qstring a custom query string that will be passed to the search. 
- 	 * Note that the format needs to be xml (don't use the wt parameter)
- 	 */
-	function getCustomResultsArray($qstring) {
-
-		$this->query = $qtring;
-
-		if($this->fetchXML() == false) {
-			return false;
-		}
-
-		if($this->parseXML() == false) {
-			return false;
-		}
-
-		return $this->result;
-	}
 }
 ?>
