@@ -49,10 +49,6 @@ class WikiaStatsClass extends SpecialPage
             $wgOut->readOnlyPage();
             return;
         }
-        if ( !$wgUser->isLoggedIn() ) {
-            $this->displayRestrictionErrorExt();
-            return;
-        }
 
        	$t = intval($wgRequest->getVal("table"));
 		$this->userIsSpecial = 0;
