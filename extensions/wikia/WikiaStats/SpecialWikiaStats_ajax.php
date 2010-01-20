@@ -26,10 +26,6 @@ function axWStatisticsGenerate($city_id, $year_from, $month_from, $year_to, $mon
 	if ( $wgUser->isBlocked() ) {
 		return;
 	}
-	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
 
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
@@ -66,10 +62,6 @@ function axWStatisticsDistribEditsGenerate($city_id)
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
-
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city_id = $wgCityId;
@@ -100,10 +92,6 @@ function axWStatisticsWikiansRank($city_id, $month = 1)
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
-
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city_id = $wgCityId;
@@ -134,10 +122,6 @@ function axWStatisticsAnonUsers($city_id)
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
-
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city_id = $wgCityId;
@@ -168,10 +152,7 @@ function axWStatisticsArticleSize ($city_id, $sizeList = "")
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
-    
+   
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city_id = $wgCityId;
@@ -202,10 +183,6 @@ function axWStatisticsNamespaceCount($city_id)
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
-
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city_id = $wgCityId;
@@ -236,10 +213,6 @@ function axWStatisticsPageEdits($city_id)
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
-    
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city_id = $wgCityId;
@@ -270,10 +243,6 @@ function axWStatisticsOtherNpacesPageEdits($city_id)
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
-    
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city_id = $wgCityId;
@@ -305,10 +274,6 @@ function axWStatisticsPageEditsDetails($city_id, $page_id)
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
-
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city_id = $wgCityId;
@@ -337,10 +302,6 @@ function axWStatisticsXLS($city_id, $param, $others = "", $date_from = "", $date
 	error_log ("axWStatisticsXLS($city_id, $param, $others, $date_from, $date_to)");
 
 	if ( $wgUser->isBlocked() ) {
-		return;
-	}
-	
-	if ( !$wgUser->isLoggedIn() ) {
 		return;
 	}
 	
@@ -458,10 +419,6 @@ function axWStatisticsWikiaList() {
 		return;
 	}
 
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}
-	
 	wfLoadExtensionMessages("WikiaStats");
 	$usLang = $wgUser->getOption( 'language' );
 	$usLang = (!empty($usLang)) ? $usLang : "en";
@@ -521,10 +478,6 @@ function axWStatisticsWikiaListJson($limit=25, $offset=0) {
 		return;
 	}
 
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}
-	
 	wfLoadExtensionMessages("WikiaStats");
 	$cities_list = array();
 	$memckey = wfMemcKey("wikiastatslistjson_".$limit."_".$offset);
@@ -590,10 +543,6 @@ function axWStatisticsWikiaInfo($city) {
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}
-
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city = $wgCityId;
@@ -641,10 +590,6 @@ function axWStatisticsSearchWikis($search_text) {
 		return;
 	}
 
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}
-
 	wfLoadExtensionMessages("WikiaStats");
 	$cities = WikiaGenericStats::getWikisListByValue($search_text);
 
@@ -670,10 +615,6 @@ function axWStatisticsPageViews($city_id)
 		return;
 	}
 	
-	if ( !$wgUser->isLoggedIn() ) {
-		return;
-	}	
-    
 	if ($wgDBname != CENTRAL_WIKIA_ID) { 
 		// central version
 		$city_id = $wgCityId;
