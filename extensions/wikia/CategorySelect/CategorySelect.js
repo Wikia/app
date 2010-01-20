@@ -43,8 +43,6 @@ function extractSortkey(text) {
 		result['name'] = text.slice(0, pipePos);
 		result['sort'] = text.slice(pipePos + 1);
 	}
-	console.log("result in extractSortKey");
-	console.dir(result);
 	return result;
 }
 
@@ -192,8 +190,6 @@ function inputBlur() {
 }
 
 function addCategory(category, params, index) {
-	console.log("addCategory called");
-	console.dir(addCaegory.arguments);
 	if (params == undefined) {
 		params = {'namespace': csDefaultNamespace, 'outerTag': '', 'sortkey': ''};
 	}
