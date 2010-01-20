@@ -75,7 +75,7 @@ CKEDITOR.plugins.add( 'sourcearea',
 								// Wikia - start
 								// RT #37260
 								// @see http://grantovich.net/posts/2009/06/that-weird-ie8-textarea-bug/
-								if (CKEDITOR.env.ie8) {
+								if (CKEDITOR.env.ie8Compat) {
 									styles.height = '700px';
 									styles.minHeight = '100%';
 									styles.maxHeight = '100%';
