@@ -601,4 +601,66 @@ class WikiaGlobalStats {
 		
 		return $result;
 	}
+
+	public static function getCountEditedPages( $days = 7, $onlyContent = false ) {
+    	global $wgExternalDatawareDB, $wgMemc;
+		wfProfileIn( __METHOD__ );
+    	
+		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
+		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
+		$count = $wgMemc->get( $memkey );
+		if ( empty($count) ) {
+			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
+			
+			$conditions = array("pe_date >= '$date_diff'");
+			if ( $onlyContent === true ) {
+				$conditions['pe_is_content'] = 1;
+			}
+			
+			$oRow = $dbr->selectRow(
+				array( "page_edits" ),
+				array( "sum(pe_all_count) as all_count" ),
+				$conditions,
+				__METHOD__
+			);
+			$count = 0; if ( $oRow ) {
+				$count = $oRow->all_count;
+			}
+			$dbr->freeResult( $oRes );
+			$wgMemc->set( $memkey , $data, 60*30 );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $count;
+	}
+
+	public static function getCountMonthlyEditedPages( $month ) {
+    	global $wgExternalStatsDB, $wgMemc;
+		wfProfileIn( __METHOD__ );
+    	
+    	$month = str_replace("-", "", $month);
+		$memkey = wfMemcKey( __METHOD__, $month );
+		$count = $wgMemc->get( $memkey );
+		if ( empty($count) ) {
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalStatsDB );
+			
+			$conditions = array( "cw_stats_date" => sprintf("%0d00000000", $month) );
+			
+			$oRow = $dbr->selectRow(
+				array( "city_stats_full" ),
+				array( "sum(cw_article_new_per_day) as all_count" ),
+				$conditions,
+				__METHOD__
+			);
+			$count = 0; if ( $oRow ) {
+				$count = $oRow->all_count;
+			}
+			$dbr->freeResult( $oRes );
+			$wgMemc->set( $memkey , $data, 60*60*3 );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $count;
+	}
+
 }
