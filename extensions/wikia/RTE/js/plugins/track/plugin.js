@@ -20,6 +20,15 @@ CKEDITOR.plugins.add('rte-track',
 		editor.on('RTEready', function() {
 			self.trackLoadTime(editor);
 		});
+
+		// track browser info (RT #37894)
+		editor.on('RTEready', function() {
+			self.trackBrowser('init');
+		});
+
+		$('#wpSave').click(function() {
+			self.trackBrowser('save');
+		});
 	},
 
 	trackApplyStyle: function(ev) {
@@ -81,5 +90,31 @@ CKEDITOR.plugins.add('rte-track',
 				RTE.track('init', 'wysiwygMode', trackingLoadTime);
 				break;
 		}
+	},
+
+	// track browser data (name, version) - RT #37894
+	trackBrowser: function(eventName) {
+		var env = CKEDITOR.env;
+
+		var name = (
+			env.ie ? 'ie' :
+			env.gecko ? 'gecko' :
+			env.opera ? 'opera' :
+			env.air ? 'air' :
+			env.webkit ? 'webkit' :
+			'unknown'
+		);
+
+		if (name == 'gecko') {
+			// small version fix for Gecko browsers
+			// 10900 => 1.9.0
+			var version = Math.round(env.version / 10000) + '.' + (env.version / 100 % 100) + '.' + (env.version % 100);
+		}
+		else {
+			var version = env.version;
+		}
+
+		// and finally send it to GA
+		RTE.track('browser', eventName, name, version);
 	}
 });
