@@ -66,7 +66,7 @@ SET character_set_client = @saved_cs_client;
 --
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wikia_dba`@`10.8.2.%` */ /*!50003 TRIGGER `user_summary_update` BEFORE UPDATE ON `blobs` FOR EACH ROW BEGIN 
+/*!50003 CREATE */ /*!50017 DEFINER=`wikia_dba`@`10.8.2.%` */ /*!50003 DEFINER = 'root'@'localhost' TRIGGER `user_summary_update` BEFORE UPDATE ON `blobs` FOR EACH ROW BEGIN 
 	DECLARE global_row_cnt INT DEFAULT -1;
 	DECLARE wikia_row_cnt INT DEFAULT -1;
 
@@ -471,7 +471,7 @@ SET character_set_client = @saved_cs_client;
 --
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wikia_dba`@`10.8.2.%` */ /*!50003 TRIGGER `user_summary_options_update` AFTER INSERT ON `user_history` FOR EACH ROW BEGIN 
+/*!50003 CREATE */ /*!50017 DEFINER=`wikia_dba`@`10.8.2.%` */ /*!50003 DEFINER = 'root'@'localhost' TRIGGER `user_summary_options_update` AFTER INSERT ON `user_history` FOR EACH ROW BEGIN 
 	DECLARE global_row_cnt INT DEFAULT -1;
 	/* global user data */
 	SELECT /* TRIGGER user_summary_options_update */ edit_count INTO global_row_cnt 
@@ -510,7 +510,7 @@ SET character_set_client = @saved_cs_client;
 --
 DELIMITER ;;
 /*!50003 SET SESSION SQL_MODE="" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`wikia_dba`@`10.8.2.%` */ /*!50003 TRIGGER `user_summary_login_update` AFTER INSERT ON `user_login_history` FOR EACH ROW BEGIN 
+/*!50003 CREATE */ /*!50017 DEFINER=`wikia_dba`@`10.8.2.%` */ /*!50003 DEFINER = 'root'@'localhost' TRIGGER `user_summary_login_update` AFTER INSERT ON `user_login_history` FOR EACH ROW BEGIN 
 	DECLARE global_row_cnt INT DEFAULT -1;
 	DECLARE wikia_row_cnt INT DEFAULT -1;
 	/* user data per Wikia */
