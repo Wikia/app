@@ -1,24 +1,23 @@
 <?php
 
-function fnDomainHook(&$parser, &$text)
+$wgHooks['ArticleAfterFetchContent'][] = 'fnDomainHook';
+$wgHooks['ParserBeforeTidy'][] = 'wsinfo';
+
+define( 'WSINFO_PLACEHOLDER', '__wsinfo_here__' );
+
+function fnDomainHook(&$article, &$text)
 { 
   global $action;
   global $exDomainList;
-
-//  $text = "action $action im " . $parser->getOptions()->getInterfaceMessage() . " ns " . 
-//    $parser->getTitle()->getNamespace() . " ti " . $parser->getTitle()->getText() . $text;
+  global $wgTitle;
+  global $wgParser;
 
   if($action === 'edit' || $action === 'history' || $action === 'submit' ||
-      $parser->getOptions()->getInterfaceMessage() ||
-      $parser->getTitle()->getNamespace() != 0 ||
-      !ereg($exDomainList, $parser->getTitle()->getText() ))
+      $wgTitle->getNamespace() != NS_MAIN ||
+      !ereg($exDomainList, $wgTitle->getText() ))
     return(true);
 
-  if(strlen($text) < 150)      // gallery goes thru parse 
-  {
-    return(true);
-  }
-  $text = wsinfo($parser->getTitle()->getText(), $parser, $text) . $text;
+  $text = WSINFO_PLACEHOLDER . $text;
 
   return(true);
 }
@@ -27,22 +26,27 @@ function fnDomainHook(&$parser, &$text)
 
 $wswErotik = 0;
 
-function wsinfo($title, $parser, $thetext)
+function wsinfo($parser, $thetext)
 {
   global $dbhost;
   global $dbuser;
   global $dbpass;
   global $db;
-  global $wgOut;
+  global $wgOut, $wgTitle;
   global $wswErotik;
 
   $forsale = "";
 
-  if(isset($_SERVER['QUERY_STRING']) && strpos($_SERVER['QUERY_STRING'], 'oldid='))
-    return "\n<!-- no wsinfo -->\n";
-
   if(strpos($thetext, 'Neue Website anlegen? Dann hier zunächst den Basiseintrag erstellen'))
-    return "\n<!-- no wsinfo -->\n";
+    return true;
+
+  if(strpos($thetext, WSINFO_PLACEHOLDER) === false ) {
+	return true;
+  } else {
+	$thetext = str_replace( WSINFO_PLACEHOLDER, '', $thetext );
+  }
+
+  $title = $wgTitle->getText();
 
   $wswErotik = 0;
 
@@ -260,7 +264,9 @@ EOI;
 
   $result .= "</table>\n";
 
-  return "\n<!-- wsinfo -->$result<!-- /wsinfo -->\n";
+  $thetext = "\n<!-- wsinfo -->$result<!-- /wsinfo -->\n" . $thetext;
+
+  return true;
 }
 
 ############## Hot Link / Legal
