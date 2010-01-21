@@ -87,7 +87,9 @@ class WikiFactoryPage extends SpecialPage {
 			$wgOut->addHTML( $this->shortStats() );
 		}
 		elseif ( strtolower($subpage) === "add.variable" ) {
-			$wgOut->addHTML( $this->addVariableForm() );
+			$varOverrides = array();
+			$wgOut->addHTML( $this->doAddVariableForm($varOverrides) ); // process the post (if relevant).
+			$wgOut->addHTML( $this->addVariableForm($varOverrides) ); // display the form
 		}
 		else {
 			$subpage = ( $subpage == "/" ) ? null : $subpage;
@@ -397,9 +399,16 @@ class WikiFactoryPage extends SpecialPage {
 	/**
 	 * Quick form for introducing a new variable to be used in WikiFactory (not setting a value).
 	 *
-	 * Returns HTML to be rendered.
+	 * @author Sean Colombo
+	 * @access private
+	 *
+	 * @param varOverrides array - associative array of values to put into the template.  These are assumed
+	 *                             to have been loaded as a form re-initialization and are given precedence
+	 *                             over the defaults.
+	 *
+	 * @return HTML to be rendered.
 	 */
-	private function addVariableForm() {
+	private function addVariableForm($varOverrides = array()) {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 		$vars = array(
@@ -408,10 +417,77 @@ class WikiFactoryPage extends SpecialPage {
 			"accesslevels"  => WikiFactory::$levels,
 			"types"         => WikiFactory::$types,
 		);
+		$vars = array_merge($vars, $varOverrides);
 		$oTmpl->set_vars( $vars );
 
 		return $oTmpl->render( "add-variable" );
 	}
+	
+	/**
+	 * If there was a post to the add variable form, this will process it.
+	 *
+	 * @author Sean Colombo
+	 * @access private
+	 *
+	 * @param varOverrides array - array that will be filled (by reference) with any values
+	 *                             which should be used as overrides for form re-initialization
+	 *                             (for instance, if there was an error in the form we start where
+	 *                             the user left off instead of starting from scratch).
+	 *
+	 * @return any additional HTML that should be rendered as a result of the form post.
+	 */
+	private function doAddVariableForm(&$varOverrides){
+		global $wgRequest;
+		$html = "";
+		if( $wgRequest->wasPosted() ) {
+			$cv_name = $wgRequest->getVal("cv_name");
+			$cv_variable_type = $wgRequest->getVal("cv_variable_type");
+			$cv_access_level = $wgRequest->getVal("cv_access_level");
+			$cv_variable_group = $wgRequest->getVal("cv_variable_group");
+			$cv_description = $wgRequest->getval("cv_description");
+
+			// Verify that the form is filled out, then add the variable if it is (display an error if it isn't).
+			$err = "";
+			if($cv_name == ""){
+				$err .= "<li>Please enter a name for the variable.</li>\n";
+			}
+			if(!in_array($cv_variable_type, WikiFactory::$types)){
+				$err .= "<li>The value \"$cv_variable_type\" was not recognized as a valid WikiFactory::\$type.</li>\n";
+			}
+			if(!in_array($cv_access_level, array_keys(WikiFactory::$levels))){
+				$err .= "<li>The value \"$cv_access_level\" was not recognized as a valid key from WikiFactory::\$levels.</li>\n";
+			}
+			if(!in_array($cv_variable_group, array_keys(WikiFactory::getGroups()))){
+				$err .= "<li>The value \"$cv_variable_group\" was not recognized as a valid group_id from city_variables_groups table as returned by WikiFactory::getGroups()</li>\n";
+			}
+			if($cv_description == ""){
+				$err .= "<li>Please enter a description of what the variable is used for.</li>\n";
+			}
+			if($err == ""){
+				$success = WikiFactory::createVariable($cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description);
+				if($success){
+					$html .= "<div style='border:1px #0f0 solid;background-color:#afa;padding:5px'><strong>$cv_name</strong> successfully added to WikiFactory.</div>";
+				} else {
+					$html .= "<div style='border:1px #f00 solid;background-color:#faa;padding:5px'>";
+					$html .= "<strong>ERROR: There was a database error while trying to create the variable.  Please see the logs for more info.</strong>";
+					$html .= "</div>";
+				}
+			} else {
+				$html .= "<div style='border:1px #f00 solid;background-color:#faa;padding:5px'>";
+				$html .= "<strong>ERROR: Unable to add variable!</strong>";
+				$html .= "<ul>\n$err</ul>\n";
+				$html .= "</div>";
+				
+				$varOverrides['cv_name'] = $cv_name;
+				$varOverrides['cv_variable_type'] = $cv_variable_type;
+				$varOverrides['cv_access_level'] = $cv_access_level;
+				$varOverrides['cv_variable_group'] = $cv_variable_group;
+				$varOverrides['cv_description'] = $cv_description;
+			}
+		}
+		return $html;
+	}
+
 }
 
 /**

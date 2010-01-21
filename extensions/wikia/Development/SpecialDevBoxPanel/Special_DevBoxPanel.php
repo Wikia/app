@@ -14,7 +14,6 @@
  * Prerequisite: need to have the 'devbox' user on your editable (usually localhost) database.
  * Look in the private svn's wikia-conf/DevBoxDatabase.php for the query to use.
  *
- * TODO: Make sure all dev-boxes get to that point automatically w/a devbox user.
  *
  * TODO: Since "local" isn't technically a requirement, make sure to update the comments here to make that clear.  It
  * is quite likely that all of the devbox dbs will be moved to some other server for space reasons relatively soon.
@@ -22,8 +21,8 @@
  * TODO: GUI for setting which local databases will override the production slaves.
  *
  * TODO: Programmatically install a link in the User Links for the Dev Box Panel
- * TODO: Create docs similar to https://staff.wikia-inc.com/wiki/User:Sean_Colombo/Setting_up_a_local_dev_environment but for Dev Boxes
  * TODO: Create an updateDevBox.pl script to update the 3 svns (trunk, answers, and wikia-conf and warn if Configs_DevBox/LocalSettings.php has changed since it may need the changes to be merged).
+ *       NOTE: THIS IS STARTED and is in /wikia-conf/devbox/updateDevBox.sh  IT's PROBABLY A BIT EARLY TO RELEASE IT TO THE WILD THOUGH (need to handle LocalSettings.php).
  */
 
 if(!defined('MEDIAWIKI')) die();
@@ -35,8 +34,11 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxDatabase.php' );
 // Permissions
 $wgAvailableRights[] = 'devboxpanel';
 $wgGroupPermissions['staff']['devboxpanel'] = true;
+$wgGroupPermissions['devboxpanel']['devboxpanel'] = true;
 $wgGroupPermissions['user']['devboxpanel'] = true; // for now, allow all users as long as $wgDevelEnvironment is true
 $wgGroupPermissions['*']['devboxpanel'] = true; // for now, allow all users as long as $wgDevelEnvironment is true
+
+$wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 
 // Hooks
 $dir = dirname(__FILE__) . '/';
@@ -45,10 +47,10 @@ $wgHooks['WikiFactory::execute'][] = "wfDevBoxForceWiki";
 
 $wgExtensionFunctions[] = 'wfSetupDevBoxPanel';
 $wgExtensionCredits['specialpage'][] = array(
-	'name' => 'Dev-Box Panel',
+	'name' => 'DevBoxPanel',
 	'author' => '[http://lyrics.wikia.com/User:Sean_Colombo Sean Colombo]',
 	'description' => 'This extension makes it easier to administer a Wikia Dev Box.',
-	'version' => '0.0.1',
+	'version' => '0.0.2',
 );
 
 // Definitions
@@ -360,6 +362,8 @@ function wfDevBoxPanel() {
 
 	wfLoadExtensionMessages('DevBoxPanel');
 	$wgOut->setPageTitle(wfMsg("devbox-title"));
+	$wgOut->setRobotpolicy( 'noindex,nofollow' );
+	$wgOut->setArticleRelated( false );
 	
 	if($wgDevelEnvironment){
 		$wgOut->addHTML("<div class='skinKiller'>");
@@ -369,7 +373,7 @@ function wfDevBoxPanel() {
 		$wgOut->addHTML(wfMsg('devbox-intro'));
 		$wgOut->addHTML("</em><br/><br/>");
 
-		// TODO: Do any processing of actions here (and display success/error messages).
+		// Do any processing of actions here (and display success/error messages).
 		global $wgRequest;
 		$action = $wgRequest->getVal(DEVBOX_ACTION);
 		switch($action){
@@ -396,9 +400,6 @@ function wfDevBoxPanel() {
 		default:
 			break;
 		}
-
-		// TODO: Do any processing of actions here (and display success/error messages).
-
 
 		//// DISPLAY OF THE MAIN CONTENT OF THE PANEL IS BELOW ////
 
