@@ -43,11 +43,13 @@ create table if not exists send_stats (
     send_seen int not null default 0
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `page_visited` (
-  `article_id` int(9) not null,
-  `count` int(8) NOT NULL,
-  PRIMARY KEY (`article_id`),
-  KEY `page_visited_cnt_inx` (`count`)
+CREATE TABLE `page_visited` (
+	`article_id` int(9) not null, 
+	`count` int(8) NOT NULL, 
+	`prev_diff` int(8) NOT NULL DEFAULT 0, 
+	PRIMARY KEY (`article_id`), 
+	KEY `page_visited_cnt_inx` (`count`), 
+	KEY `pv_changes` (`prev_diff`,`article_id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `poll_info` (
