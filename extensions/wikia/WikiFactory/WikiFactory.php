@@ -676,7 +676,8 @@ class WikiFactory {
 	 * @param string $variable_id: variable id in city_variables_pool
 	 * @param integer $wiki: wiki id in city list
 	 *
-	 * @return
+	 * @throws a DBQueryError if there is an error with the deletion.
+	 * @return boolean true on success, false on failure
 	 */
 	static public function removeVarById( $variable_id, $wiki ) {
 		$bStatus = false;
@@ -2110,6 +2111,61 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return isset( $oRow->cv_city_id ) ? $oRow->cv_city_id : null;
 	}
+	
+	/**
+	 * Introduces a new variable to be managed by WikiFactory.
+	 *
+	 * @author Sean Colombo
+	 * @access public
+	 * @static
+	 *
+	 * @param cv_name string - name of the variable.
+	 * @param cv_variabe_type string - type of the variable, must be one of the values in WikiFactory::types.
+	 * @param cv_access_level integer - key from the WikiFactory::$levels array representing the access-level.
+	 * @param group integer - the cv_group_id of the group this variable belongs in from the city_variables_groups table.
+	 * @param cv_description string - human-readable description of what the variable is used for.  If this is an empty
+	 *                                string, then "(unknown)" will be substituted.
+	 *
+	 * @throws a DBQueryError if there is an error with any of the queries used.
+	 * @return boolean true on success, false on failure
+	 */
+	static public function createVariable($cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description){
+		$bStatus = false;
+		wfProfileIn( __METHOD__ );
+		$dbw = self::db( DB_MASTER );
+
+		// Follow the convention already started in the database of putting "(unknown)" for non-descriptions.
+		if($cv_description == ""){
+			$cv_description = "(unknown)";
+		}
+
+		$dbw->begin();
+		try {
+			// Don't re-check validity of variables, they are a precondition.  Do the queries here.
+			$dbw->insert(
+				"city_variables_pool",
+				array(
+					"cv_name" => $cv_name,
+					"cv_variable_type" => $cv_variable_type,
+					"cv_access_level" => $cv_access_level,
+					"cv_variable_group" => $cv_variable_group,
+					"cv_description" => $cv_description
+				),
+				__METHOD__
+			);
+			self::log(self::LOG_VARIABLE, "Variable \"$cv_name\" created");
+			$dbw->commit();
+			$bStatus = true;
+		} catch ( DBQueryError $e ) {
+			Wikia::log( __METHOD__, "", "Database error, cannot create WikiFactory variable." );
+			$dbw->rollback();
+			$bStatus = false;
+			throw $e;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $bStatus;
+	} // end createVariable()
 
 };
 

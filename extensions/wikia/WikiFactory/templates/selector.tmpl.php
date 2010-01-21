@@ -24,7 +24,7 @@ table.TablePager { border: 1px solid gray;}
 		will be added automaticly). For example food means food.wikia.com
 	</li>
 	<li>
-		You can <a href="<?php echo $title->getFullUrl() ?>/add.variable"><strong>add a new variable</strong></a> to be tracked by WikiFactory (pre-BETA... don't use it yet!)
+		You can <a href="<?php echo $title->getFullUrl() ?>/add.variable"><strong>add a new variable</strong></a> to be managed by WikiFactory
 	</li>
 	<li>
 		You can start typing begining of domain name into input field below
