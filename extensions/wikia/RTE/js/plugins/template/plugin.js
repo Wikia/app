@@ -95,6 +95,11 @@ RTE.templateEditor = {
 		RTE.tools.parse(wikitext, function(html) {
 			$('#templatePreview').html(html).removeClass('loading');
 
+			// make links in preview unclickable
+			$('#templatePreview').bind('click', function(ev) {
+				ev.preventDefault();
+			});
+
 			if (typeof callback == 'function') {
 				callback();
 			}
