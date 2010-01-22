@@ -141,7 +141,7 @@ class WikiaMiniUpload {
 
 		$path = RepoGroup::singleton()
 			->getLocalRepo()
-			->newFileFromRow( Title::makeTitle( NS_FILE, $filename ) )
+			->newFileFromTitle( Title::makeTitle( NS_FILE, $filename ) )
 			->getPath( );
 
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
