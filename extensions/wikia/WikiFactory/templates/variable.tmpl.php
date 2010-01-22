@@ -24,6 +24,9 @@
 		Access Level: <strong><?php echo $variable->cv_access_level ?></strong>
 		(<strong><?php echo $accesslevels[ $variable->cv_access_level ] ?></strong>)
 	</li>
+	<li>
+		<a href='#' id="wk-variable-change" onclick='javascript:$Factory.Variable.change(this, [ "wk-variable-select", 1]);return false;'>Click here to edit this variable</a>
+	</li>
 </ul>
 <h2>
     Variable value

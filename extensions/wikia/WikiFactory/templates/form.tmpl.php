@@ -264,6 +264,35 @@ $Factory.Variable.select = function ( e, data ) {
     $Connect.asyncRequest( 'GET', ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=axWFactoryGetVariable" + values, $Factory.VariableCallback );
 };
 
+// For editing the variable itself (not its value).
+$Factory.Variable.change = function ( e, data ) {
+    $Factory.Busy(1);
+    var values = "";
+    values += "&varid=" + $Dom.get( "wk-variable-select" ).value;
+    values += "&wiki=" + <?php echo $wiki->city_id ?>;
+    $Connect.asyncRequest( 'GET', ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=axWFactoryChangeVariable" + values, $Factory.VariableCallback );
+};
+
+// For editing the variable itself (not its value).
+$Factory.Variable.submitChangeVariable = function ( e, data ) {
+	$Factory.Busy(1);
+	
+    var values = "";
+	
+	// TODO: FILL THE VALUES WITH EVERYTHING FROM THE FORM.
+	values += "&cv_variable_id=" + encodeURIComponent($Dom.get('wk-change-cv_variable_id').value);
+	values += "&cv_name=" + encodeURIComponent($Dom.get('wk-change-cv_name').value);
+	values += "&cv_variable_type=" + encodeURIComponent($Dom.get('wk-change-cv_variable_type').value);
+	values += "&cv_access_level=" + encodeURIComponent($Dom.get('wk-change-cv_access_level').value);
+	values += "&cv_variable_group=" + encodeURIComponent($Dom.get('wk-change-cv_variable_group').value);
+	values += "&cv_description=" + encodeURIComponent($Dom.get('wk-change-cv_description').value);
+
+	// For restoring to the original form afterwards.
+    values += "&wiki=" + <?php echo $wiki->city_id ?>;
+    $Connect.asyncRequest( 'POST', ajaxpath+"?action=ajax&rsargs[0]="+data[1]+"&rs=axWFactorySubmitChangeVariable" + values, $Factory.VariableCallback );
+	return false;
+};
+
 // filter variable selector
 $Factory.Variable.filter = function ( e ) {
     $Factory.Busy(1);
@@ -335,6 +364,7 @@ YAHOO.util.Event.addListener("wfOnlyWithString", "keypress", $Factory.Variable.f
 YAHOO.util.Event.addListener("wk-group-select", "change", $Factory.Variable.filter );
 
 YAHOO.util.Event.addListener("wk-variable-select", "click", $Factory.Variable.select, [ "wk-variable-select", 1] );
+//YAHOO.util.Event.addListener("wk-variable-change", "click", $Factory.Variable.change, [ "wk-variable-select", 1] ); // only works for first load.
 YAHOO.util.Event.addListener("wk-domain-add-submit", "click", $Factory.Domain.add, "wk-domain-add");
 YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear);
 

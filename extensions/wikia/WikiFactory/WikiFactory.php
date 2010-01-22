@@ -2166,6 +2166,64 @@ class WikiFactory {
 		wfProfileOut( __METHOD__ );
 		return $bStatus;
 	} // end createVariable()
+	
+	/**
+	 * Modifies the properties of a variable managed by WikiFactory.  This does
+	 * not change the VALUE of that variable on wikis.
+	 *
+	 * @author Sean Colombo
+	 * @access public
+	 * @static
+	 *
+	 * @param cv_variable_id integer - the id of the variable to change.
+	 * @param cv_name string - new name of the variable.
+	 * @param cv_variabe_type string - new type of the variable, must be one of the values in WikiFactory::types.
+	 * @param cv_access_level integer - key from the WikiFactory::$levels array representing the new access-level.
+	 * @param group integer - the new cv_group_id of the group this variable belongs in from the city_variables_groups table.
+	 * @param cv_description string - new human-readable description of what the variable is used for.  If this is an empty
+	 *                                string, then "(unknown)" will be substituted.
+	 *
+	 * @throws a DBQueryError if there is an error with any of the queries used.
+	 * @return boolean true on success, false on failure
+	 */
+	static public function changeVariable($cv_variable_id, $cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description){
+		$bStatus = false;
+		wfProfileIn( __METHOD__ );
+		$dbw = self::db( DB_MASTER );
+
+		// Follow the convention already started in the database of putting "(unknown)" for non-descriptions.
+		if($cv_description == ""){
+			$cv_description = "(unknown)";
+		}
+
+		$dbw->begin();
+		try {
+			// Don't re-check validity of variables, they are a precondition.  Do the queries here.
+			$dbw->update(
+				"city_variables_pool",
+				array(
+					"cv_name" => $cv_name,
+					"cv_variable_type" => $cv_variable_type,
+					"cv_access_level" => $cv_access_level,
+					"cv_variable_group" => $cv_variable_group,
+					"cv_description" => $cv_description
+				),
+				array( "cv_id" => $cv_variable_id ),
+				__METHOD__
+			);
+			self::log(self::LOG_VARIABLE, "Variable id $cv_variable_id (now called \"$cv_name\") changed");
+			$dbw->commit();
+			$bStatus = true;
+		} catch ( DBQueryError $e ) {
+			Wikia::log( __METHOD__, "", "Database error, cannot modify properties of WikiFactory variable $cv_variable_id (when setting name \"$cv_name\")." );
+			$dbw->rollback();
+			$bStatus = false;
+			throw $e;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $bStatus;
+	} // end createVariable()
 
 };
 
