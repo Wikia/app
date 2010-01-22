@@ -38,17 +38,17 @@ do {
 		}
 
 		if ( $stat['mode'] & 040000 ) {
-			echo "{$row->img_name}: is a directory\n";
+			echo "{$row->img_name} $path: is a directory\n";
 			continue;
 		}
 
 		if ( $stat['size'] == 0 && $row->img_size != 0 ) {
-			echo "{$row->img_name}: truncated, was {$row->img_size}\n";
+			echo "{$row->img_name} $path: truncated, was {$row->img_size}\n";
 			continue;
 		}
 
 		if ( $stat['size'] != $row->img_size ) {
-			echo "{$row->img_name}: size mismatch DB={$row->img_size}, actual={$stat['size']}\n";
+			echo "{$row->img_name} $path: size mismatch DB={$row->img_size}, actual={$stat['size']}\n";
 			continue;
 		}
 
