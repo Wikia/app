@@ -139,11 +139,16 @@ class WikiaMiniUpload {
 	function tempFileStoreInfo( $filename ) {
 		global $wgExternalSharedDB, $wgCityId;
 
+		$path = RepoGroup::singleton()
+			->getLocalRepo()
+			->newFileFromRow( Title::makeTitle( NS_FILE, $filename ) )
+			->getPath( );
+
 		$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB );
 		$dbw->insert(
 			'garbage_collector',
 			array(
-				'gc_filename'	=>	$filename,
+				'gc_filename'	=>	$path,
 				'gc_timestamp'	=>	$dbw->timestamp(),
 				'gc_wiki_id'	=>	$wgCityId,
 			),
