@@ -634,7 +634,7 @@ class WikiaGlobalStats {
 		return $count;
 	}
 
-	public static function getCountMonthlyEditedPages( $month ) {
+	public static function getCountMonthlyCreatedPages( $month ) {
     	global $wgExternalStatsDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
     	
