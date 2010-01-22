@@ -626,7 +626,6 @@ class WikiaGlobalStats {
 			$count = 0; if ( $oRow ) {
 				$count = $oRow->all_count;
 			}
-			$dbr->freeResult( $oRes );
 			$wgMemc->set( $memkey , $data, 60*30 );
 		}
 
@@ -655,7 +654,6 @@ class WikiaGlobalStats {
 			$count = 0; if ( $oRow ) {
 				$count = $oRow->all_count;
 			}
-			$dbr->freeResult( $oRes );
 			$wgMemc->set( $memkey , $data, 60*60*3 );
 		}
 
