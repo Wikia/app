@@ -3032,6 +3032,7 @@ class User {
 
 		$to = new MailAddress( $this );
 		$sender = new MailAddress( $from );
+
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
 		global $wgEnableRichEmails;

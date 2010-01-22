@@ -413,7 +413,7 @@ class UserMailer {
  *
  */
 class EmailNotification {
-	private $to, $subject, $body, $replyto, $from;
+	private $to, $subject, $body, $bodyHTML, $replyto, $from;
 	private $user, $title, $timestamp, $summary, $minorEdit, $oldid, $composed_common, $editor, $action;
 	private $mailTargets = array();
 
@@ -598,10 +598,11 @@ class EmailNotification {
 			$subject = wfMsgForContent( 'enotif_subject' );
 		}
 
-		$body    = wfMsgForContent( 'enotif_body_' . strtolower($this->action) );
-		if(wfEmptyMsg( 'enotif_body_' . strtolower($this->action), $body )) {
-			$body   = wfMsgForContent( 'enotif_body' );
-		}
+		$msgKey = 'enotif_body' . ($this->action == '' ? '' : ('_' . strtolower($this->action)));
+
+		global $wgLanguageCode;
+		list($body, $bodyHTML) = wfMsgHTMLwithLanguageAndAlternative($msgKey, 'enotif_body', $wgLanguageCode);
+
 		$from    = ''; /* fail safe */
 		$replyto = ''; /* fail safe */
 		$keys    = array();
@@ -628,6 +629,9 @@ class EmailNotification {
 					$this->title->getFullURL("oldid={$this->oldid}&diff=prev"));
 
 		$body = strtr( $body, $keys );
+		if ($bodyHTML) {
+			$bodyHTML = strtr( $bodyHTML, $keys );
+		}
 		$pagetitle = $this->title->getPrefixedText();
 		$keys['$PAGETITLE']          = $pagetitle;
 		$keys['$PAGETITLE_URL']      = wfUrlencodeExt( $this->title->getFullUrl('s=wl') ); // watchlist tracking, rt#33913
@@ -677,6 +681,9 @@ class EmailNotification {
 		$keys['$PAGEEDITOR_WIKI'] = wfUrlencodeExt( $userPage->getFullUrl() );
 		wfRunHooks('ComposeCommonBodyMail', array( $this->title, &$keys, &$body, $editor ));
 		$body = strtr( $body, $keys );
+		if ($bodyHTML) {
+			$bodyHTML = strtr( $bodyHTML, $keys );
+		}
 		$body = wordwrap( $body, 72 );
 
 		# now save this as the constant user-independent part of the message
@@ -684,6 +691,7 @@ class EmailNotification {
 		$this->replyto = $replyto;
 		$this->subject = $subject;
 		$this->body    = $body;
+		$this->bodyHTML= $bodyHTML;
 	}
 
 	/**
@@ -731,6 +739,8 @@ class EmailNotification {
 		// From the PHP manual:
 		//     Note:  The to parameter cannot be an address in the form of "Something <someone@example.com>".
 		//     The mail command will not parse this properly while talking with the MTA.
+
+		$richMail = $watchingUser->getOption('htmlemails') && !empty($this->bodyHTML);
 		$to = new MailAddress( $watchingUser );
 		$name = $wgEnotifUseRealName ? $watchingUser->getRealName() : $watchingUser->getName();
 		$body = str_replace( '$WATCHINGUSERNAME', $name , $this->body );
@@ -742,11 +752,16 @@ class EmailNotification {
 		# recipient, i.e. watching user
 
 		// RT #1294 Bartek 07.05.2009, use the language object with the wiki code
-		$body = str_replace('$PAGEEDITDATE',
-			$wgContLang->timeanddate( $this->timestamp, true, false, $timecorrection ),
-			$body);
+		$timedate = $wgContLang->timeanddate( $this->timestamp, true, false, $timecorrection );
+		$body = str_replace('$PAGEEDITDATE', $timedate, $body);
 
-		return UserMailer::send($to, $this->from, $this->subject, $body, $this->replyto, null, 'UserMailer');
+		if ($richMail) {
+			$bodyHTML = str_replace('$WATCHINGUSERNAME', $name , $this->bodyHTML);
+			$bodyHTML = str_replace('$PAGEEDITDATE', $timedate, $bodyHTML);
+			return UserMailer::sendHTML($to, $this->from, $this->subject, $body, $bodyHTML, $this->replyto, 'UserMailer');
+		} else {
+			return UserMailer::send($to, $this->from, $this->subject, $body, $this->replyto, null, 'UserMailer');
+		}
 	}
 
 	/**

@@ -374,31 +374,18 @@ class AutoCreateWikiLocalJob extends Job {
 			htmlspecialchars( $oReceiver->getTalkPage()->getFullURL() ),
 		);
 
-		$sBody = $sSubject = null;
-		if ( !empty( $this->mParams['language'] ) ) {
-			// custom lang translation
-			$sBody = wfMsgExt("autocreatewiki-welcomebody",
-				array( 'language' => $this->mParams['language'] ),
-				$aBodyParams
-			);
-			$sSubject = wfMsgExt("autocreatewiki-welcomesubject",
-				array( 'language' => $this->mParams['language'] ),
-				array( $this->mParams[ "title" ] )
-			);
-		}
+		$sBody = $sBodyHTML = $sSubject = null;
 
-		/**
-		 * fallback to english
-		 */
-		if( empty( $sBody ) ) {
-			$sBody = wfMsg( "createwiki_welcomebody", $aBodyParams );
-		}
-		if( empty( $sSubject ) ) {
-			$sSubject = wfMsg( "createwiki_welcomesubject", array( $this->mParams[ 'title' ] ) );
-		}
+		$language = empty($this->mParams['language']) ? 'en' : $this->mParams['language'];
+		list($sBody, $sBodyHTML) = wfMsgHTMLwithLanguage('autocreatewiki-welcomebody', $language, array(), $aBodyParams);
+
+		$sSubject = wfMsgExt('autocreatewiki-welcomesubject',
+			array( 'language' => $language ),
+			array( $this->mParams[ "title" ] )
+		);
 
 		if ( !empty($sTo) ) {
-			$status = $oReceiver->sendMail( $sSubject, $sBody, $sFrom, null, 'AutoCreateWiki' );
+			$status = $oReceiver->sendMail( $sSubject, $sBody, $sFrom, null, 'AutoCreateWiki', $sBodyHTML );
 			Wikia::log( __METHOD__, "mail", "Mail to founder {$sTo} sent." );
 		} else {
 			Wikia::log( __METHOD__, "mail", "Founder email is not set. Welcome email is not sent" );
