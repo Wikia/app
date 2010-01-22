@@ -141,7 +141,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mUserLanguage = $wgUser->getOption( 'language', $wgContLanguageCode );
 		$this->mNbrCreated = $this->countCreatedWikis();
 
-		if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrCreated >= self::DAILY_LIMIT) ) {
+		if ( !$wgUser->isAllowed( 'createwikilimitsexempt' ) && ($this->mNbrCreated >= self::DAILY_LIMIT) ) {
 			$wgOut->addHTML(
 				wfMsgExt( "autocreatewiki-limit-day",
 					array( "language" => $this->mUserLanguage ), array( $this->mNbrCreated )
@@ -164,7 +164,7 @@ class AutoCreateWikiPage extends SpecialPage {
 					}
 					if ( isset( $_SESSION['mAllowToCreate'] ) /*&& ( $_SESSION['mAllowToCreate'] >= wfTimestamp() )*/ ) {
 						$this->mNbrUserCreated = $this->countCreatedWikisByUser();
-						if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrUserCreated >= self::DAILY_USER_LIMIT) ) {
+						if ( !$wgUser->isAllowed( 'createwikilimitsexempt' ) && ($this->mNbrUserCreated >= self::DAILY_USER_LIMIT) ) {
 							$wgOut->addHTML(
 								wfMsgExt( "autocreatewiki-limit-creation",
 									array( "language" => $this->mUserLanguage ), array( $this->mNbrUserCreated )
@@ -195,7 +195,7 @@ class AutoCreateWikiPage extends SpecialPage {
 						 * Limit of user creation
 						 */
 						$this->mNbrUserCreated = $this->countCreatedWikisByUser();
-						if ( !in_array('staff', $wgUser->getGroups()) && ($this->mNbrUserCreated >= self::DAILY_USER_LIMIT) ) {
+						if ( !$wgUser->isAllowed( 'createwikilimitsexempt' ) && ($this->mNbrUserCreated >= self::DAILY_USER_LIMIT) ) {
 							$wgOut->addHTML(
 								wfMsgExt( "autocreatewiki-limit-creation",
 									array( "language" => $this->mUserLanguage ), array(	$this->mNbrUserCreated )
@@ -743,7 +743,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		$this->mDefaultUser->load();
 
 		#-- for other users -> for staff only
-		if ( in_array('staff', $wgUser->getGroups()) && !empty($this->awcStaff_username) ) {
+		if ( $wgUser->isAllowed( 'createwikimakefounder' ) && !empty($this->awcStaff_username) ) {
 			$this->mFounder = User::newFromName($this->awcStaff_username);
 		}
 
@@ -1057,7 +1057,7 @@ class AutoCreateWikiPage extends SpecialPage {
 		}
 
 		#-- check username given by staff
-		if ( in_array('staff', $wgUser->getGroups()) && !empty($this->mStaff_username) ) {
+		if ( $wgUser->isAllowed( 'createwikimakefounder' ) && !empty($this->mStaff_username) ) {
 			$user_id = User::idFromName($this->mStaff_username);
 			if ( empty($user_id) ) {
 				$this->makeError( "wiki-staff-username", wfMsg('autocreatewiki-invalid-username') );
