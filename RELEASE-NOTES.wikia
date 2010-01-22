@@ -1,4 +1,9 @@
 == Changes since 201001.3 ==
+* rt#37688: RTE: template editor formatting issue in IE8 standards mode (macbre)
+* rt#37692: RTE: template previews have formatting issues in IE8, Firefox, Chrome (macbre)
+* rt#37810: RTE: Semantic MediaWiki issues (macbre)
+* rt#37811: RTE: page explodes in editor source mode (2) (macbre)
+* rt#37897: RTE: too many newlines sometimes added on Enter (macbre)
 * rt#37899: RTE: editor confused by full lines of formatting (macbre)
 * rt#37812: Gamepro link+button removed. (Nef)
 * rt#37894: RTE: GA track browser types when initialising and saving an edit (macbre)
@@ -8,7 +13,7 @@
 * rt#37254: RTE: scrolling issues in IE (wysiwyg mode) (macbre)
 * rt#37260: RTE: scrolling issues in IE (in source mode) (macbre)
 * rt#37689: RTE: template editor formatting issue in IE7 (macbre)
-* rt#36740: Fixed iw map not updating. (Nef, HT Moli) 
+* rt#36740: Fixed iw map not updating. (Nef, HT Moli)
 
 == Changes since 201001.2 ==
 * rt#37266: RTE: editor does not recognise height markup for images (macbre)
