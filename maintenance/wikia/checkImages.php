@@ -33,7 +33,7 @@ do {
 		}
 		$stat = @stat( $file->getPath() );
 		if ( !$stat ) {
-			echo "{$row->img_name}: missing\n";
+			echo "{$row->img_name} $path: missing\n";
 			continue;
 		}
 
