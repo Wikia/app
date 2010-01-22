@@ -34,8 +34,6 @@ function WidgetCommunity_init(id, widget) {
 	}
 
 	if (wgUserLanguage == 'en') {
-		$.getScript(stylepath + '/common/jquery/jquery.timeago.js?' + wgStyleVersion, function() {
-			$('span.timeago').timeago();
-		});
+		$('span.timeago').timeago();
 	}
 }
