@@ -2177,7 +2177,7 @@ class WikiFactory {
 	 *
 	 * @param cv_variable_id integer - the id of the variable to change.
 	 * @param cv_name string - new name of the variable.
-	 * @param cv_variabe_type string - new type of the variable, must be one of the values in WikiFactory::types.
+	 * @param cv_variabe_type string - CURRENTLY IGNORED!  Doesn't seem like a good idea to have this value be changable.
 	 * @param cv_access_level integer - key from the WikiFactory::$levels array representing the new access-level.
 	 * @param group integer - the new cv_group_id of the group this variable belongs in from the city_variables_groups table.
 	 * @param cv_description string - new human-readable description of what the variable is used for.  If this is an empty
@@ -2203,7 +2203,7 @@ class WikiFactory {
 				"city_variables_pool",
 				array(
 					"cv_name" => $cv_name,
-					"cv_variable_type" => $cv_variable_type,
+					//"cv_variable_type" => $cv_variable_type // Currently seems dangerous
 					"cv_access_level" => $cv_access_level,
 					"cv_variable_group" => $cv_variable_group,
 					"cv_description" => $cv_description
