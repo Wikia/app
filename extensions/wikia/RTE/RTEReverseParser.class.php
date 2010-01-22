@@ -38,8 +38,6 @@ class RTEReverseParser {
 			// try to parse fixed HTML as XML
 			$bodyNode = $this->parseToDOM($html);
 
-			//RTE::hex(__METHOD__, $html); // debug
-
 			// in some edge-cases it may fail - then try to parse original HTML as HTML (refs RT #37253)
 			if (empty($bodyNode)) {
 				RTE::log(__METHOD__, 'parsing as XML failed! Trying HTML parser');
@@ -62,10 +60,10 @@ class RTEReverseParser {
 				$out = preg_replace('%\x7f-ENTITY-(#?[\w\d]+)-\x7f%', '&\1;', $out);
 
 				// fix &nbsp; entity added by MW parser (&gt; : &#58;)
-				// don't break UTF characters (à - \xC3\xA0 / 誠 - \xE8\xAA)
-				$out = preg_replace('%([\x00-\xA0])\xA0%', '\1 ', $out);
+				// don't break UTF characters (à - \xC3\xA0 / 誠 - \xE8\xAA / ム - \xE3\x83)
+				$out = preg_replace('%([^\xC0-\xFF][\x00-\xAF])\xA0%', '\1 ', $out);
 
-				//RTE::hex(__METHOD__, $out); // debug
+				//RTE::hex(__METHOD__, $html); RTE::hex(__METHOD__, $out); // debug
 
 				// fix &nbsp; entity when switching from wysiwyg (<p>a[spacex3]b</p>)
 				$out = str_replace("\x20\xA0", '  ', $out);
