@@ -418,6 +418,7 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
 }
 
 #templatePreview * {
+	float: none !important;
 	white-space: normal;
 }
 
