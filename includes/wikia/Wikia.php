@@ -397,6 +397,7 @@ class Wikia {
 	 * get staff person responsible for language
 	 *
 	 * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
+	 * @author Chris Stafford <uberfuzzy@wikia-inc.com>
 	 * @access public
 	 * @static
 	 *
@@ -408,29 +409,49 @@ class Wikia {
 		wfProfileIn( __METHOD__ );
 
 		$staffSigs = wfMsgExt('staffsigs', array('language'=>'en')); // fzy, rt#32053
+		
 		$staffUser = false;
 		if( !empty( $staffSigs ) ) {
 			$lines = explode("\n", $staffSigs);
 
+			$data = array();
+			$sectLangCode = '';
 			foreach ( $lines as $line ) {
 				if( strpos( $line, '* ' ) === 0 ) {
+					//language line
 					$sectLangCode = trim( $line, '* ' );
 					continue;
 				}
-				if( ( strpos( $line, '* ' ) == 1 ) && ( $langCode === $sectLangCode ) ) {
+				if( strpos( $line, '* ' ) == 1 && $sectLangCode ) {
+					//user line
 					$user = trim( $line, '** ' );
-					$staffUser = User::newFromName( $user );
-					$staffUser->load();
-					break;
+					$data[$sectLangCode][] = $user;
 				}
+			}
+
+			//did we get any names for our target language?
+			if( !empty( $data[$langCode] ) ) {
+				//pick one
+				$key = array_rand($data[$langCode]);
+				
+				//use it
+				$staffUser = User::newFromName( $data[$langCode][$key] );
+				$staffUser->load();
 			}
 		}
 
 		/**
-		 * fallback to Angela
+		 * fallback to Angela (with an override)
 		 */
 		if( ! $staffUser ) {
-			$staffUser = User::newFromName( "Angela" );
+			$fallbackname = "Angela"; //still hardcoded
+
+			if( !empty($data['?']) ) {
+				//but overrideable
+				$fallbackname = $data['?'][0];
+			}
+
+			$staffUser = User::newFromName( $fallbackname );
 			$staffUser->load();
 		}
 
