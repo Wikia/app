@@ -81,7 +81,7 @@ class WikiaEditStatistics {
 		
 		$return = 0;
 		if ( !empty($this->mPageId) ) {
-			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
+			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );			
 
 			# number of edits 
 			$conditions = array( 
@@ -91,14 +91,13 @@ class WikiaEditStatistics {
 				'pe_date'		=> $this->mDate
 			);
 
-			$oRow = $dbr->selectRow( 
+			$oRow = $dbw->selectRow( 
 				array( 'page_edits' ),
 				array( 'pe_page_id, pe_all_count, pe_anon_count' ),
 				$conditions,
 				__METHOD__
 			);
 
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );			
 			if ( $oRow ) {
 				# update edits count
 				$data = array( 
@@ -118,6 +117,37 @@ class WikiaEditStatistics {
 					$conditions['pe_anon_count'] = $inc;
 				};
 				$dbw->insert( 'page_edits', $conditions, __METHOD__ );
+			}
+			
+			#editor stats
+			$conditions = array( 
+				'pc_wikia_id'	=> $wgCityId,
+				'pc_page_id'	=> $this->mPageId,
+				'pc_page_ns'	=> $this->mPageNs,
+				'pc_date'		=> $this->mDate,
+				'pc_user_id'	=> $this->mUserId
+			);
+
+			$oRow = $dbw->selectRow( 
+				array( 'page_editors' ),
+				array( 'pc_all_count' ),
+				$conditions,
+				__METHOD__
+			);
+
+			if ( $oRow ) {
+				# update edits count
+				$data = array( 
+					'pc_all_count' 	=> intval($oRow->pc_all_count + $inc),
+					'pc_is_content' => $this->mIsContent
+				);
+				$dbw->update( 'page_editors', $data, $conditions, __METHOD__ );
+			} 
+			else {
+				# insert edits count
+				$conditions['pc_all_count'] = $inc;
+				$conditions['pc_is_content'] = $this->mIsContent;
+				$dbw->insert( 'page_editors', $conditions, __METHOD__ );
 			}
 		}
 		
@@ -177,6 +207,7 @@ class WikiaEditStatistics {
 
 		$return = 0;
 		if ( !empty($this->mPageId) ) {
+			#edits
 			$conditions = array( 
 				'pe_wikia_id'	=> $wgCityId,
 				'pe_page_id'	=> $this->mPageId,
@@ -185,6 +216,15 @@ class WikiaEditStatistics {
 			);
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );			
 			$dbw->delete( 'page_edits', $conditions, __METHOD__ );
+
+			#editors
+			$conditions = array( 
+				'pc_wikia_id'	=> $wgCityId,
+				'pc_page_id'	=> $this->mPageId,
+				'pc_page_ns'	=> $this->mPageNs,
+				'pc_date'		=> $this->mDate
+			);
+			$dbw->delete( 'page_editors', $conditions, __METHOD__ );
 		}
 		
 		wfProfileOut( __METHOD__ );
@@ -451,6 +491,72 @@ class WikiaGlobalStats {
 				$data[] = array(
 					'wikia'		=> $oRow->pe_wikia_id,
 					'page'		=> $oRow->pe_page_id,
+					'count' 	=> $oRow->all_count
+				);
+			}
+			$dbr->freeResult( $oRes );
+			$wgMemc->set( $memkey , $data, 60*60 );
+		}
+
+		$result = $values = array();
+		$loop = 0;
+		if ( !empty( $data ) ) {
+			foreach ( $data as $row ) {
+				if ( $loop >= $limit ) break;
+				# check results
+				$res = self::allowResultsForEditedArticles( $row );
+				if ( $res === false ) continue;
+				
+				list( $wikiaTitle, $db, $hub, $wikia_ul, $page_url, $count ) = array_values($res);
+				if ( !isset( $values[$hub] ) ) $values[$hub] = 0;
+				
+				# limit results
+				$hubLimit = ( isset( self::$limitWikiHubs[ $hub ] ) ) 
+					? self::$limitWikiHubs[ $hub ]
+					: self::$limitWikiHubs[ '_default_' ];
+				if ( $values[$hub] == $hubLimit ) continue;
+				
+				# add to array
+				$result[] = $res;
+				# increase counter
+				$values[$hub]++; $loop++;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $result;
+	}
+
+	public static function getPagesEditors( $days = 7, $limit = 5, $onlyContent = true ) {
+    	global $wgExternalDatawareDB, $wgMemc;
+		wfProfileIn( __METHOD__ );
+    	
+		$date_diff = date('Y-m-d', time() - $days * 60 * 60 * 24);
+		$memkey = wfMemcKey( __METHOD__, $days, intval($onlyContent) );
+		$data = $wgMemc->get( $memkey );
+		if ( empty($data) ) {
+			$dbr = wfGetDB( DB_SLAVE, 'blobs', $wgExternalDatawareDB );
+			
+			$conditions = array("pc_date >= '$date_diff'");
+			if ( $onlyContent === true ) {
+				$conditions['pc_is_content'] = 1;
+			}
+			
+			$oRes = $dbr->select(
+				array( "page_editors" ),
+				array( "pc_is_content, pc_wikia_id, pc_page_id, count(distinct(pc_user_id)) as all_count" ),
+				$conditions,
+				__METHOD__,
+				array(
+					'GROUP BY' 	=> 'pc_wikia_id, pc_page_id',
+					'ORDER BY' 	=> 'all_count desc',
+					'LIMIT'		=> self::$defaultLimit
+				)
+			);
+			$data = array(); while ( $oRow = $dbr->fetchObject( $oRes ) ) {
+				$data[] = array(
+					'wikia'		=> $oRow->pc_wikia_id,
+					'page'		=> $oRow->pc_page_id,
 					'count' 	=> $oRow->all_count
 				);
 			}
