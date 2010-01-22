@@ -317,9 +317,15 @@ div.templateEditorDialog .cke_dialog_contents {
 	margin-top: 0;
 }
 
-div.templateEditorDialog .cke_browser_ie .cke_dialog_contents {
+div.templateEditorDialog .cke_browser_ie7 .cke_dialog_contents {
 	position: relative;
 	top: -15px;
+}
+
+/* RT #37688  */
+div.templateEditorDialog .cke_browser_ie8 .cke_dialog_contents {
+	position: relative;
+	top: 8px;
 }
 
 /* RT #37689 */
@@ -456,6 +462,12 @@ div.templateEditorDialog .cke_browser_ie .cke_dialog_body {
 	height: 285px;
 	overflow: auto;
 	width: 100%;
+}
+
+/* link editor */
+/* RT #37688 */
+div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
+	height: 38px;
 }
 
 /* comment editor - show title */
