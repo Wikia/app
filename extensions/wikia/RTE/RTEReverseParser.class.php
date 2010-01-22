@@ -792,10 +792,16 @@ class RTEReverseParser {
 				$close = '';
 		}
 
-		$out = "{$open}{$textContent}{$close}";
+		// don't output formatting markup with empty content (RT #37899)
+		if ($textContent == '') {
+			$out = '';
+		}
+		else {
+			$out = "{$open}{$textContent}{$close}";
 
-		// RT #34043
-		$out = self::fixForTableCell($node, $out);
+			// RT #34043
+			$out = self::fixForTableCell($node, $out);
+		}
 
 		return $out;
 	}
