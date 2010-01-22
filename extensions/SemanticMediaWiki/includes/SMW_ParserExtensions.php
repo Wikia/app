@@ -26,9 +26,9 @@ class SMWParserExtensions {
 	 *  at the end of the article.
 	 */
 	static public function onInternalParseBeforeLinks(&$parser, &$text) {
-		// macbre: Wysiwyg change
-		global $wgWysiwygParserEnabled;
-		if (!empty($wgWysiwygParserEnabled)) {
+		// macbre: RT #37810
+		global $wgRTEParserEnabled;
+		if (!empty($wgRTEParserEnabled)) {
 			return true;
 		}
 
