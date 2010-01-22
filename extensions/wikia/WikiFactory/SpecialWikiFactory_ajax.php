@@ -31,7 +31,7 @@ function axWFactoryGetVariable() {
 	global $wgRequest, $wgUser, $wgOut;
 
 	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
-		$wgOut->readOnlyPage(); #--- later change to something reasonable
+		$wgOut->readOnlyPage(); #--- FIXME: later change to something reasonable
 		return;
 	}
 
@@ -50,6 +50,151 @@ function axWFactoryGetVariable() {
 		"div-body" => $oTmpl->execute( "variable" ),
 		"div-name" => "wk-variable-form"
 	));
+}
+
+/**
+ * axWFactoryChangeVariable
+ *
+ * Method for getting a change-variable form via AJAX request.
+ * This is for changing the variable itself (discription, groups, etc.), NOT for
+ * changing the values set on each wiki.
+ *
+ * @author Sean Colombo
+ * @access public
+ *
+ * @return HTML code with variable-edit form
+ */
+function axWFactoryChangeVariable() {
+	global $wgRequest, $wgUser, $wgOut;
+
+	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
+		$wgOut->readOnlyPage(); #--- FIXME: later change to something reasonable
+		return;
+	}
+
+	$cv_id = $wgRequest->getVal("varid");
+	$city_id = $wgRequest->getVal("wiki");
+
+	$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+
+	$variable = WikiFactory::getVarById( $cv_id, $city_id );
+	$vars = array(
+			"title"             => Title::makeTitle( NS_SPECIAL, 'WikiFactory' ),
+			"groups"            => WikiFactory::getGroups(),
+			"accesslevels"      => WikiFactory::$levels,
+			"types"             => WikiFactory::$types,
+			"cv_variable_id"    => $variable->cv_variable_id,
+			"cv_name"           => $variable->cv_name,
+			"cv_access_level"   => $variable->cv_access_level,
+			"cv_variable_group" => $variable->cv_variable_group,
+			"cv_description"    => $variable->cv_description,
+		);
+	$oTmpl->set_vars($vars);
+
+	return Wikia::json_encode( array(
+		"div-body" => $oTmpl->execute( "change-variable" ),
+		"div-name" => "wk-variable-form"
+	));
+}
+
+/**
+ * axWFactorySubmitChangeVariable
+ *
+ * Method for getting a change-variable form via AJAX request.
+ * This is for changing the variable itself (discription, groups, etc.), NOT for
+ * changing the values set on each wiki.
+ *
+ * @author Sean Colombo
+ * @access public
+ *
+ * @return HTML code with variable-edit form
+ */
+function axWFactorySubmitChangeVariable() {
+	global $wgRequest, $wgUser, $wgOut;
+
+	if ( !$wgUser->isAllowed( 'wikifactory' ) ) {
+		$wgOut->readOnlyPage(); #--- FIXME: later change to something reasonable
+		return;
+	}
+
+	$cv_variable_id = $wgRequest->getVal("cv_variable_id");
+	$city_id = $wgRequest->getVal("wiki");
+	$cv_name = $wgRequest->getVal("cv_name");
+	$cv_variable_type = $wgRequest->getVal("cv_variable_type");
+	$cv_access_level = $wgRequest->getVal("cv_access_level");
+	$cv_variable_group = $wgRequest->getVal("cv_variable_group");
+	$cv_description = $wgRequest->getval("cv_description");
+
+	// Verify that the form is filled out, then add the variable if it is (display an error if it isn't).
+	$errMsg = "";
+	if($cv_name == ""){
+		$errMsg .= "<li>Please enter a name for the variable.</li>\n";
+	}
+	if(!in_array($cv_variable_type, WikiFactory::$types)){
+		$errMsg .= "<li>The value \"$cv_variable_type\" was not recognized as a valid WikiFactory::\$type.</li>\n";
+	}
+	if(!in_array($cv_access_level, array_keys(WikiFactory::$levels))){
+		$errMsg .= "<li>The value \"$cv_access_level\" was not recognized as a valid key from WikiFactory::\$levels.</li>\n";
+	}
+	if(!in_array($cv_variable_group, array_keys(WikiFactory::getGroups()))){
+		$errMsg .= "<li>The value \"$cv_variable_group\" was not recognized as a valid group_id from city_variables_groups table as returned by WikiFactory::getGroups()</li>\n";
+	}
+	if($cv_description == ""){
+		$errMsg .= "<li>Please enter a description of what the variable is used for.</li>\n";
+	}
+	if($errMsg == ""){
+		$success = WikiFactory::changeVariable($cv_variable_id, $cv_name, $cv_variable_type, $cv_access_level, $cv_variable_group, $cv_description);
+		if(!$success){
+			$errMsg .= "<li>There was a database error while trying to change the variable.  Please see the logs for more info.</li>";
+		}
+	}
+
+	$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+	$variable = WikiFactory::getVarById( $cv_variable_id, $city_id );
+	if($errMsg != ""){
+		$errHtml = "";
+		$errHtml .= "<div style='border:1px #f00 solid;background-color:#faa;padding:5px'>";
+		$errHtml .= "<strong>ERROR: Unable to update variable!</strong>";
+		$errHtml .= "<ul>\n$errMsg</ul>\n";
+		$errHtml .= "</div>";
+		$vars = array(
+				"error_message"     => $errHtml,
+				"title"             => Title::makeTitle( NS_SPECIAL, 'WikiFactory' ),
+				"groups"            => WikiFactory::getGroups(),
+				"accesslevels"      => WikiFactory::$levels,
+				"types"             => WikiFactory::$types,
+				"cv_variable_id"    => $cv_variable_id,
+				"cv_name"           => $cv_name,
+				"cv_access_level"   => $cv_access_level,
+				"cv_variable_group" => $cv_variable_group,
+				"cv_description"    => $cv_description,
+			);
+		$oTmpl->set_vars($vars);
+
+		return Wikia::json_encode( array(
+			"div-body" => $oTmpl->execute( "change-variable" ),
+			"div-name" => "wk-variable-form"
+		));
+	} else {
+		// Set it back to the normal form for just setting the variable's value for the current wiki.
+		$oTmpl->set_vars( array(
+			"cityid"        => $city_id,
+			"variable"      => WikiFactory::getVarById( $cv_variable_id, $city_id ),
+			"groups"        => WikiFactory::getGroups(),
+			"accesslevels"  => WikiFactory::$levels,
+		));
+
+		// Inject a success message above the form so that the user know the updates worked.
+		$html = "";
+		$html .= "<div style='border:1px #0f0 solid;background-color:#afa;padding:5px'>";
+		$html .= "<strong>{$variable->cv_name}</strong> successfully updated.";
+		$html .= "</div>";
+
+		return Wikia::json_encode( array(
+			"div-body" => $html . $oTmpl->execute( "variable" ),
+			"div-name" => "wk-variable-form"
+		));
+	}
 }
 
 function axWFactoryDomainCRUD($type="add") {
@@ -602,6 +747,8 @@ function axAWCMetricsAllWikis() {
 
 global $wgAjaxExportList;
 $wgAjaxExportList[] = "axWFactoryGetVariable";
+$wgAjaxExportList[] = "axWFactoryChangeVariable";
+$wgAjaxExportList[] = "axWFactorySubmitChangeVariable";
 $wgAjaxExportList[] = "axWFactoryFilterVariables";
 $wgAjaxExportList[] = "axWFactoryDomainCRUD";
 $wgAjaxExportList[] = "axWFactoryDomainQuery";
