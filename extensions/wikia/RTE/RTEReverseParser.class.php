@@ -498,8 +498,14 @@ class RTEReverseParser {
 	private function handleParagraph($node, $textContent) {
 		// handle empty paragraphs (<p>&nbsp;</p>)
 		// empty paragraphs added in CK / already existing in wikitext
+		// RT #37897
 		if (($textContent == self::getEntityMarker('nbsp')) || ($textContent == '&nbsp;')) {
-			$textContent = "\n";
+			if ($node->hasAttribute('_rte_new_node')) {
+				$textContent = '';
+			}
+			else {
+				$textContent = "\n";
+			}
 		}
 
 		// handle paragraphs alignment and indentation
