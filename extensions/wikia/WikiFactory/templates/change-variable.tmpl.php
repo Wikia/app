@@ -25,7 +25,7 @@
 		<br/>
 
 		Name for the variable: <input type="text" id="wk-change-cv_name" name="cv_name" value="<?php print $cv_name; ?>"/><br/>
-		
+
 		Variable type: <select id="wk-change-cv_variable_type" name="cv_variable_type" disabled='disabled'>
 		 	<?php foreach ($types as $varType): ?>
 			<option value="<?php echo $varType ?>"<?php print (($cv_variable_type==$varType)?" selected='selected'":""); ?>>
@@ -33,7 +33,7 @@
 			</option>
 			<?php endforeach ?>
 		</select> (not changable at the moment because that would mess with all of the existing variables that were set)<br/>
-		
+	
 		Access-level: <select id="wk-change-cv_access_level" name="cv_access_level">
 			<?php foreach($accesslevels as $index => $level): ?>
 			<option value="<?php echo $index ?>"<?php print (($cv_access_level==$index)?" selected='selected'":""); ?>>
