@@ -1362,7 +1362,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces;
+		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces;
 		$skin = $wgUser->getSkin();
 		$namespace = $wgTitle->getNamespace();
 
@@ -1606,7 +1606,7 @@ if( $custom_user_data ) {
 				if( empty( $wgSupressSiteNotice ) && $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 				<?php
 				global $wgSupressPageTitle;
-				if( empty( $wgSupressPageTitle ) ){ 
+				if( empty( $wgSupressPageTitle ) ){
 					$this->printFirstHeading();
 				}
 
@@ -1872,7 +1872,7 @@ if (43339 == $wgCityId) echo AnalyticsEngine::track("GA_Urchin", "lyrics");
 
 <?php		wfProfileOut( __METHOD__ . '-page'); ?>
 
-		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css" /></noscript>
+		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css?<?= $wgStyleVersion ?>" /></noscript>
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
 		$this->html('mergedJS');
@@ -2247,11 +2247,11 @@ wfProfileOut( __METHOD__ . '-body');
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
 	function printFirstHeading(){
-		?><h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1><?php  
+		?><h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1><?php
 	}
 
 
-	// Made a separate method so recipes, answers, etc can override. 
+	// Made a separate method so recipes, answers, etc can override.
 	function printFooter(){
 		global $wgTitle;
 	?>
@@ -2373,12 +2373,12 @@ wfProfileOut( __METHOD__ . '-body');
 	}
 
 
-	// Made a separate method so recipes, answers, etc can override. 
+	// Made a separate method so recipes, answers, etc can override.
 	function printContent(){
 		$this->html('bodytext');
 	}
 
-	// Made a separate method so recipes, answers, etc can override. 
+	// Made a separate method so recipes, answers, etc can override.
 	function printCategories(){
 		// Display categories
 		if($this->data['catlinks']) {
