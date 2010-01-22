@@ -1,4 +1,5 @@
 == Changes since 201001.3 ==
+* rt#36729: Garbage collector - full path instead of filename only (eloy)
 * rt#37688: RTE: template editor formatting issue in IE8 standards mode (macbre)
 * rt#37692: RTE: template previews have formatting issues in IE8, Firefox, Chrome (macbre)
 * rt#37810: RTE: Semantic MediaWiki issues (macbre)
