@@ -628,6 +628,10 @@ class StaticChute {
 			$fileCount++;
 
 			$rawData = file_get_contents($file);
+
+			// macbre: remove BOM
+			$rawData = str_replace("\xEF\xBB\xBF", '', $rawData);
+
 			if ($this->minify){
 				switch ($this->fileType){
 				  case 'css': $data = $this->minifyCssData($rawData); break;
