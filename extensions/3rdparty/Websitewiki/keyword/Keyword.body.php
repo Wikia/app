@@ -33,31 +33,11 @@ class Keyword extends SpecialPage
     $wgOut->setRobotPolicy('index,follow');
 
     // Google
-      $google =  <<<EOG
-<table border="1" cellspacing="0" cellpadding="4" style="float:right; margin:0 0 .5em 1em;
+      $google = '<table border="1" cellspacing="0" cellpadding="4" style="float:right; margin:0 0 .5em 1em;
      width:260px; background:#fff; border-collapse:collapse; border:1px solid #999;
-     font-size:smaller; line-height:1.5; " summary="Anzeigen">
-<tr><td align="center" height="250" style="background:#ffffff;">
-<script type="text/javascript"><!--
-google_ad_client = "pub-7078170683927487";
-google_ad_slot = "2130596228";
-google_ad_width = 250;
-google_ad_height = 250;
-google_ad_format = "250x250_as";
-google_ad_type = "text";
-google_ad_channel = "0080536474";
-google_color_border = "F0F0F0";
-google_color_bg = "F0F0F0";
-google_color_link = "002BB8";
-google_color_text = "000000";
-google_color_url = "3366BB";
-//-->
-</script>
-<script type="text/javascript"
-  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</td></tr></table>
-EOG;
+     font-size:smaller; line-height:1.5; " summary="Anzeigen"><tr><td align="center" height="250" style="background:#ffffff;">';
+      $google .= AdEngine::getInstance()->getAd( 'WEBSITEWIKI_KEYWORDS' );
+      $google .= '</td></tr></table>';
 
     # Get request data from, e.g.
     $kwp = $wgRequest->getText('kw');
