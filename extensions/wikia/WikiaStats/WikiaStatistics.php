@@ -597,7 +597,7 @@ class WikiaGlobalStats {
 		$oRegexCore = new TextRegexCore(self::$excludeWikiArticles, 0);
 		$res = false;
 		if ( is_object($oRegexCore) ) {
-			$res = $oRegexCore->addPhrase($text);
+			$res = $oRegexCore->addPhrase(preg_quote($text));
 		}
 		return $res;
 	}
