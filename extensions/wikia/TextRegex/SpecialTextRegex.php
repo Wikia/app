@@ -193,7 +193,7 @@ class TextRegexList {
 	}
 
 	/* remove from list - without confirmation */
-	function deleteFromList($regexText) {
+	function deleteFromList() {
 		wfProfileIn( __METHOD__ );
 		global $wgOut, $wgRequest, $wgUser;
 		global $wgExternalDatawareDB;
