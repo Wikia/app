@@ -37,6 +37,12 @@ $wgSpecialPages['CreateWiki'] = 'AutoCreateWikiPage';
 $wgSpecialPageGroups['CreateWiki'] = 'wikia';
 
 /**
+ * user permissions
+ */
+$wgAvailableRights[] = 'createwikimakefounder'; // user can give another's name as founder
+$wgAvailableRights[] = 'createwikilimitsexempt'; // user not bound by creation throttle
+
+/**
  * register job class
  */
 $wgJobClasses[ "ACWLocal" ] = "AutoCreateWikiLocalJob";
