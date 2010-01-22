@@ -56,6 +56,9 @@ class AdEngine {
 		} else {
 			$this->loadConfig();
 		}
+		if (isset($_GET['athena_debug'])){
+			echo "<!-- Ad Slot settings:" . print_r($this->slots, true) . "-->";
+		}
 		global $wgAutoloadClasses;
 		foreach($this->providers as $p) {
 			$wgAutoloadClasses['AdProvider' . $p]=dirname(__FILE__) . '/AdProvider'.$p.'.php';
@@ -143,6 +146,7 @@ class AdEngine {
 				'as_id' => $row->as_id,
 				'size' => $row->size,
 				'provider_id' => $row->provider_id,
+				'provider' => $this->providers[$row->provider_id],	 // information only
 				'enabled' => $row->enabled,
 				'load_priority' => $row->load_priority
 			);
@@ -158,15 +162,46 @@ class AdEngine {
 			 	}
 			 }
 		}
+		$this->applyWikiOverrides();
 		$wgMemc->set($cacheKey, $this->slots, self::cacheTimeout);
 
 		return true;
 	}
 
+
+	function getProviderid($provider){
+		foreach($this->providers as $id => $p) {
+			if ($provider == $p ){
+				return $id;
+			}
+		}
+		return false;
+	}
+
+
+	/* Allow Wiki Factory variables to override what is in the slots */
+	function applyWikiOverrides(){
+		foreach($this->slots as $slotname => $slot) {
+			$name = 'wgAdslot_' . $slotname;
+			if (!empty($GLOBALS[$name])){
+				$provider_id = $this->getProviderid($GLOBALS[$name]);
+				if ($provider_id === false ){
+					trigger_error("Invalid value for $name ({$GLOBALS[$name]})", E_USER_WARNING);
+					continue;
+				}
+				$this->slots[$slotname]['provider_id'] = $provider_id;
+				$this->slots[$slotname]['provider'] = $GLOBALS[$name];
+				$this->slots[$slotname]['overridden_by'] = $name;
+			}
+		}
+	}
+
+
 	/* Simple accessor for slots array */
 	public function getSlots() {
 		return $this->slots;
 	}
+
 
 	/* Category name/id is needed multiple times for multiple providers. Be gentle on our dbs by adding a thin caching layer. */
 	public function getCachedCategory(){
