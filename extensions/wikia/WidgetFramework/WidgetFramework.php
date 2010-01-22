@@ -37,6 +37,9 @@ class WidgetFramework {
 			case "SkinMonaco":
 				$this->skinname = 'monaco';
 				break;
+			case "SkinAnswers":
+				$this->skinname = 'monaco';
+				break;
 			case "SkinQuartz":
 				$this->skinname = 'quartz';
 				break;
