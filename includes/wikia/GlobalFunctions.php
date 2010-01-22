@@ -902,3 +902,4 @@ function wfTimeFormatAgoOnlyRecent($stamp){
 	wfProfileOut(__METHOD__);
 	return $res;
 } // end wfTimeFormatAgoOnlyRecent()
+

@@ -10,7 +10,7 @@ class GlobalWatchlistBot {
 	private $mWatchlisters;
 	private $mWikiData = array();
 	private $iEmailsSent;
-	
+
 	const MAX_LAG = 30;
 	const RECORDS_SLEEP = 350;
 	const EMAILS = 100;
@@ -57,7 +57,7 @@ class GlobalWatchlistBot {
 			$dbr = wfGetDB( DB_SLAVE, array(), $wgWikiaCentralAuthDatabase );
 			$userTbl = 'user';
 		}
-		
+
 		$oResource = $dbr->select(
 			$userTbl,
 			array("user_id", "user_name", "user_email"),
@@ -65,7 +65,7 @@ class GlobalWatchlistBot {
 				"user_email_authenticated IS NOT NULL",
 				$sWhereClause
 			),
-			__METHOD__, 
+			__METHOD__,
 			array("ORDER BY" => "user_id")
 		);
 
@@ -74,14 +74,14 @@ class GlobalWatchlistBot {
 
 			while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
 				$iWatchlisters++;
-				$aUsers[$oResultRow->user_id] = array ( 
-					'name' => $oResultRow->user_name, 
-					'email' => $oResultRow->user_email 
+				$aUsers[$oResultRow->user_id] = array (
+					'name' => $oResultRow->user_name,
+					'email' => $oResultRow->user_email
 				);
 			}
 			$dbr->freeResult( $oResource );
 			$this->printDebug("$iWatchlisters global watchilster(s) found. (time: " . $this->calculateDuration( time() - $this->mStartTime ). ")");
-		} 
+		}
 		else {
 			$this->printDebug("No global watchlist users were found.", true);
 		}
@@ -100,17 +100,17 @@ class GlobalWatchlistBot {
 		wfWaitForSlaves(5);
 
 		if ( $dbr->tableExists('watchlist') ) {
-			
+
 			$oResource = $dbr->select(
 				array ( "watchlist", "page" ),
-				array ( 
-					"wl_user", 
-					"page_id", 
-					"wl_title as page_title", 
-					"wl_namespace as page_namespace", 
-					"wl_notificationtimestamp as page_timestamp", 
+				array (
+					"wl_user",
+					"page_id",
+					"wl_title as page_title",
+					"wl_namespace as page_namespace",
+					"wl_notificationtimestamp as page_timestamp",
 					"(select max(rev_id) from revision where rev_page = page_id and rev_timestamp <= wl_notificationtimestamp) as page_revision"
-				), 
+				),
 				array (
 					"page_title = wl_title",
 					"page_namespace = wl_namespace",
@@ -119,7 +119,7 @@ class GlobalWatchlistBot {
 				),
 				__METHOD__
 			);
-			
+
 			if ( $oResource ) {
 				while ( $oResultRow = $dbr->fetchObject($oResource) ) {
 					$aPages[ $oResultRow->wl_user ][] = $oResultRow;
@@ -127,7 +127,7 @@ class GlobalWatchlistBot {
 				$dbr->freeResult( $oResource );
 			}
 		}
-		
+
 		$dbr->close();
 
 		return $aPages;
@@ -138,7 +138,7 @@ class GlobalWatchlistBot {
 	 */
 	public function fetchWatchlists() {
 		global $wgExternalSharedDB, $wgExternalDatawareDB;
-		
+
 		$wlNbr = 0;
 		$this->getGlobalWatchlisters();
 		$this->printDebug("Gathering watchlist data ...");
@@ -158,13 +158,13 @@ class GlobalWatchlistBot {
 			array("city_list"),
 			array("city_id", "city_dbname", "city_lang", "city_title"),
 			$where,
-			__METHOD__, 
+			__METHOD__,
 			array("ORDER BY" => "city_id")
 		);
 
 		$this->mUsers = array();
 		while ( $oResultRow = $dbr->fetchObject($oResource) ) {
-			#-- load users from watchlist table with list of pages 
+			#-- load users from watchlist table with list of pages
 			$localTime = time();
 			$this->printDebug("Processing {$oResultRow->city_dbname} ... ");
 			$aUsers = $this->getUsersPagesFromWatchlist( $oResultRow->city_dbname );
@@ -177,7 +177,7 @@ class GlobalWatchlistBot {
 					if ( !isset($this->mWatchlisters[ $iUserId ]) ) {
 						continue;
 					}
-							
+
 					$this->mUsers[ $iUserId ] = $this->mWatchlisters[ $iUserId ];
 
 					if (!isset($this->mWikiData[$oResultRow->city_id])) {
@@ -193,9 +193,9 @@ class GlobalWatchlistBot {
 								"global_watchlist",
 								array(
 									"gwa_user_id" 	=> $iUserId,
-									"gwa_city_id"	=> $oResultRow->city_id, 
+									"gwa_city_id"	=> $oResultRow->city_id,
 									"gwa_namespace" => $oWatchLists->page_namespace,
-									"gwa_title"		=> $oWatchLists->page_title, 
+									"gwa_title"		=> $oWatchLists->page_title,
 									"gwa_rev_id"	=> $oWatchLists->page_revision,
 									"gwa_timestamp"	=> $oWatchLists->page_timestamp
 								),
@@ -211,7 +211,7 @@ class GlobalWatchlistBot {
 				sleep(self::TIME_SLEEP);
 			}
 		} // while
-		$dbr->freeResult( $oResource );		
+		$dbr->freeResult( $oResource );
 
 		$this->printDebug("Gathering all watchlist data ... done! (time: " . $this->calculateDuration(time() - $this->mStartTime ) . ")");
 		return $wlNbr;
@@ -307,7 +307,15 @@ class GlobalWatchlistBot {
 		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUser->getOption('language') ) . "\n";
 		$sBody = wfMsgReplaceArgs($sMessage, $aEmailArgs);
 
-		return $sBody;
+		$sBodyHTML = null;
+		if ($oUser->isAnon() || $oUser->getOption('htmlemails')) {
+			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-HTML', $oUser->getOption('language') );
+			if(!wfEmptyMsg( 'globalwatchlist-digest-email-body-HTML', $sMessageHTML )) {
+				$sBodyHTML = wfMsgReplaceArgs($sMessageHTML, $aEmailArgs);
+			}
+		}
+
+		return array($sBody, $sBodyHTML);
 	}
 
 	private function getLocalizedMsg($sMsgKey, $sLangCode) {
@@ -371,15 +379,15 @@ class GlobalWatchlistBot {
 			$this->printDebug("Sending digest emails to " . count($this->mUsers) . " users ");
 
 			foreach($this->mUsers as $iUserId => $aUserData) {
-				
+
 				$oResource = $dbr->select(
 					array ( "global_watchlist" ),
 					array ( "gwa_id", "gwa_user_id", "gwa_city_id", "gwa_namespace", "gwa_title", "gwa_rev_id", "gwa_timestamp" ),
 					array (
 						"gwa_user_id" => intval($iUserId),
 					),
-					__METHOD__, 
-					array ( 
+					__METHOD__,
+					array (
 						"ORDER BY" => "gwa_timestamp, gwa_city_id",
 						"LIMIT" => $wgGlobalWatchlistMaxDigestedArticlesPerWiki + 1,
 					)
@@ -397,13 +405,13 @@ class GlobalWatchlistBot {
 				while ( $oResultRow = $dbr->fetchObject($oResource) ) {
 					#---
 					if ( $iWikiId != $oResultRow->gwa_city_id ) {
-						
+
 						if ( count( $aWikiDigest['pages'] ) ) {
 							$aDigestData[ $iWikiId ] = $aWikiDigest;
 						}
 
 						$iWikiId = $oResultRow->gwa_city_id;
-						
+
 						if ( isset( $aDigestData[ $iWikiId ] ) ) {
 							$aWikiDigest = $aDigestData[ $iWikiId ];
 						} else {
@@ -425,6 +433,7 @@ class GlobalWatchlistBot {
 							'revisionId' => $oResultRow->gwa_rev_id
 						);
 					}
+
 				} // while
 				$dbr->freeResult( $oResource );
 	
@@ -499,11 +508,11 @@ class GlobalWatchlistBot {
 		$oUser->load();
 
 		$sEmailSubject = $this->getLocalizedMsg('globalwatchlist-digest-email-subject', $oUser->getOption('language'));
-		$sEmailBody = $this->composeMail($oUser, $aDigestData, $isDigestLimited);
+		list($sEmailBody, $sEmailBodyHTML) = $this->composeMail($oUser, $aDigestData, $isDigestLimited);
 
 		$sFrom = 'Wikia <community@wikia.com>';
 		if ( empty($this->mDebugMailTo) ) {
-			$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, null, 'GlobalWatchlist' );
+			$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, null, 'GlobalWatchlist', $sEmailBodyHTML );
 			$this->printDebug("Digest email sent to user: " . $oUser->getName());
 		}
 		else {
