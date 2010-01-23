@@ -33,10 +33,10 @@ require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxDatabase.php' );
 // TODO: DETERMINE THE CORRECT PERMISSIONS... IS THERE A "DEVELOPERS" GROUP THAT WE ALL ACTUALLY BELONG TO?  WILL WE BE ON ALL WIKIS?
 // Permissions
 $wgAvailableRights[] = 'devboxpanel';
+$wgGroupPermissions['*']['devboxpanel'] = false;
+$wgGroupPermissions['user']['devboxpanel'] = false;
 $wgGroupPermissions['staff']['devboxpanel'] = true;
 $wgGroupPermissions['devboxpanel']['devboxpanel'] = true;
-$wgGroupPermissions['user']['devboxpanel'] = true; // for now, allow all users as long as $wgDevelEnvironment is true
-$wgGroupPermissions['*']['devboxpanel'] = true; // for now, allow all users as long as $wgDevelEnvironment is true
 
 $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 
