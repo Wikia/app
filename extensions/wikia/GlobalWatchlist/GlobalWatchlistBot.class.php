@@ -260,16 +260,49 @@ class GlobalWatchlistBot {
 	private function composeMail ($oUser, $aDigestsData, $isDigestLimited) {
 		global $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 
-		$sDigestsBlogs = ""; $sDigests = ""; 
+		$sDigests = ""; 
+		$sDigestsHTML = ""; 
+		$sDigestsBlogs = "";
+		$sDigestsBlogsHTML = "";
 		$iPagesCount = 0; $iBlogsCount = 0;
+		
+		$sBodyHTML = null;
+		$usehtmlemail = false;
+		if ($oUser->isAnon() || $oUser->getOption('htmlemails')) {
+			$usehtmlemail = true;
+		}
+
 		foreach ( $aDigestsData as $aDigest ) {
-			$sDigests .= $aDigest['wikiName'] . ( $aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "" ) . ":\n";
+			$wikiname = $aDigest['wikiName'] . ( $aDigest['wikiLangCode'] != 'en' ?  " (" . $aDigest['wikiLangCode'] . ")": "" ) . ':';
+
+			$sDigests .=  $wikiname . "\n";
+			if( $usehtmlemail ) {
+				$sDigestsHTML .= "<b>" . $wikiname . "</b><br/>\n";
+			}
 
 			if ( !empty($aDigest['pages']) ) {
+				if( $usehtmlemail ) {
+					$sDigestsHTML .= "<ul>\n";
+				}
+
 				foreach( $aDigest['pages'] as $aPageData ) {
-					 // watchlist tracking, rt#33913
-					$sDigests .= $aPageData['title']->getFullURL('s=dgdiff' . ($aPageData['revisionId'] ? "&diff=0&oldid=" . $aPageData['revisionId'] : "")) . "\n";
+					// watchlist tracking, rt#33913
+					$url = $aPageData['title']->getFullURL('s=dgdiff' . ($aPageData['revisionId'] ? "&diff=0&oldid=" . $aPageData['revisionId'] : ""));
+					$pagename = $aPageData['title']->getPrefixedText();
+					
+					//plain email
+					$sDigests .= $url . "\n";
+
+					//html email
+					if( $usehtmlemail ) {
+						$sDigestsHTML .= '<li><a href="' . $url . '">' . $pagename . "</a></li>\n";
+					}
+
 					$iPagesCount++;
+				}
+
+				if( $usehtmlemail ) {
+					$sDigestsHTML .= "</ul>\n<br/>\n";
 				}
 			}
 			
@@ -285,7 +318,12 @@ class GlobalWatchlistBot {
 							1 => $countComments
 						)
 					);
+
 					$sDigestsBlogs .= $message . "\n";
+					//fornow, just use the ugly url for the HTML version
+					//todo, figure how to get "User:NAME/blog title" from the title obj, and build <a> tag, but need to keep the (# of comments) message
+					$sDigestsBlogsHTML .= $message . "<br/>\n";
+
 					$iBlogsCount++;
 				}
 				$sDigestsBlogs .= "\n";
@@ -307,8 +345,14 @@ class GlobalWatchlistBot {
 		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUser->getOption('language') ) . "\n";
 		$sBody = wfMsgReplaceArgs($sMessage, $aEmailArgs);
 
-		$sBodyHTML = null;
-		if ($oUser->isAnon() || $oUser->getOption('htmlemails')) {
+		if ($usehtmlemail) {
+			//rebuild the $ args using the HTML text we've built
+			$aEmailArgs = array(
+				0 => ucfirst($oUser->getName()),
+				1 => ( $iPagesCount > 0 ) ? $sDigestsHTML : $this->getLocalizedMsg('globalwatchlist-no-page-found', $oUser->getOption('language')),
+				2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogsHTML : $this->getLocalizedMsg('globalwatchlist-no-blog-page-found', $oUser->getOption('language')),
+			);
+
 			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-HTML', $oUser->getOption('language') );
 			if(!wfEmptyMsg( 'globalwatchlist-digest-email-body-HTML', $sMessageHTML )) {
 				$sBodyHTML = wfMsgReplaceArgs($sMessageHTML, $aEmailArgs);
