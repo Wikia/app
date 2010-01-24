@@ -311,18 +311,20 @@ class GlobalWatchlistBot {
 				foreach( $aDigest['blogs'] as $blogTitle => $blogComments ) {
 					#$countComments = ($blogComments['comments'] >= $blogComments['own_comments']) ? intval($blogComments['comments'] - $blogComments['own_comments']) : $blogComments['comments'];
 					$countComments = $blogComments['comments'];
+					$url = $blogComments['blogpage']->getFullURL('s=dg'); // watchlist tracking, rt#33913
+
 					$message = wfMsgReplaceArgs(
 						($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUser->getOption('language') ) : "$1",
 						array ( 
-							0 => $blogComments['blogpage']->getFullURL('s=dg'),  // watchlist tracking, rt#33913
+							0 => $url,
 							1 => $countComments
 						)
 					);
 
 					$sDigestsBlogs .= $message . "\n";
-					//fornow, just use the ugly url for the HTML version
-					//todo, figure how to get "User:NAME/blog title" from the title obj, and build <a> tag, but need to keep the (# of comments) message
-					$sDigestsBlogsHTML .= $message . "<br/>\n";
+					if( $usehtmlemail ) {
+						$sDigestsBlogsHTML .= "<a href=\"{$url}\">" . $message . "</a><br/>\n";
+					}
 
 					$iBlogsCount++;
 				}
