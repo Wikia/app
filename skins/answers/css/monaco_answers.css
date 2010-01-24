@@ -78,6 +78,21 @@ a.new {color:#BA5500 !important;}
 	padding:0 10px 10px;
 }
 
+/* Social Profile page tweaks */
+
+#profile-toggle-button { display:none; }
+
+.user-section-heading {
+	margin-top: 35px;
+	border: none;
+}
+
+.user-section-title {
+	font-weight:bold;
+	letter-spacing:-0.8px;
+}
+
+
 /* Other tweaks */
 
 #background_strip { border-bottom: none; }
@@ -107,6 +122,7 @@ body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { displ
 #catlinks {
 	border:medium none;
 	width:478px;
+	margin-top: 0px;
 }
 
 #mw-normal-catlinks {
@@ -159,8 +175,6 @@ body.page-Wikianswers h1.firstHeading, body.page-Wikianswers #contentSub { displ
 #search_button {
        background:transparent url(http://images3.wikia.nocookie.net/test123/images/9/95/Search.png?201001.1)
 }
-
-/* maybe needed */
 
 #link_box_table { display: none; }
 #navigation { display: none; }
@@ -250,11 +264,12 @@ body.mainpage .firstHeading { display:none; }
 /*	width: 300px; */
 }
 
-.answers-tips {
+.answers-tips, .category-tips {
 	background-color: #ffe;
 	margin-top:10px;
 	padding:10px;
-	border:1px solid #ffd;
+	border-top:1px solid #fec;
+	border-bottom: 1px solid #fec;
 }
 
 .answers-tips h3 {
@@ -266,28 +281,38 @@ body.mainpage .firstHeading { display:none; }
 	margin-bottom: 25px;
 	padding: 10px;
 	background-color: #f8f8f8;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 
 #answer_box {
 	margin-bottom: 25px;
 	padding: 10px;
 	background-color: #f8f8f8;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 
 #article_save_button {
 	color: #fff;
-	background: #a00;
+	background: #e42;
 	border: 1px solid #ddd;
+	font-size: 120%;
+	padding: 4px 8px;
+	margin-right: 3px;
 }
 
 #article_save_button:hover {
   color: #333;
-  background: #f88;
+  background: #fdd;
 }
 
 #answer_edit_link, #question_edit_link {
 	float: right;
 }
+
+#answer_edit_link a:link, #question_edit_link a:link { color:#bbb; }
+#answer_edit_link a:hover, #question_edit_link a:hover {color: #369; text-decoration: none; }
 
 .answer-input {
 	height:100px;
@@ -304,6 +329,8 @@ body.mainpage .firstHeading { display:none; }
 #related_questions {
 	padding: 10px;
 	background-color: #f8f8f8;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 
 #related_questions h2 {
@@ -332,7 +359,7 @@ body.mainpage .firstHeading { display:none; }
 }
 
 .contributors, ul.contributors, ol.contributors {
-	margin: 5px 0;
+	margin: 5px 5px 5px 0px;
 }
 
 .contributors li, ul.contributors li,
