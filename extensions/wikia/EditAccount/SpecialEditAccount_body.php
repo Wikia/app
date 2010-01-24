@@ -222,6 +222,7 @@ class EditAccount extends SpecialPage {
 
 		// Remove e-mail address
 		$this->mUser->setEmail( '' );
+		$this->mUser->invalidateEmail();
 
 		if ( $this->mUser->setPassword( wfGenerateToken() ) ) {
 			global $wgUser, $wgTitle;
