@@ -9,12 +9,12 @@ function kwlink($kw)
 
 class Keyword extends SpecialPage
 {
-  function Keyword() 
+  function Keyword()
   {
     SpecialPage::SpecialPage("Keyword");
   }
 
-  function execute($par) 
+  function execute($par)
   {
     global $wgRequest, $wgOut;
 //    sleep(1);  // throttle ...
@@ -24,7 +24,7 @@ class Keyword extends SpecialPage
       <form action=\"/Spezial:Keyword\" method=\"get\">
       <b>Keyword: </b>
       <input type=\"text\" name=\"kw\" size=\"40\" maxlength=\"80\" />
-      <input type=\"submit\" value=\" suchen \" /> 
+      <input type=\"submit\" value=\" suchen \" />
       </form><p />
       <b>Liste der <a href=\"/Spezial:Keyword?target=common\">h&auml;ufigsten Keywords</a></b><p />";
 
@@ -48,7 +48,7 @@ class Keyword extends SpecialPage
 
     # Do stuff
 
-    $dbr =& wfGetDB( DB_MASTER );
+    $dbr = wfGetDB( DB_SLAVE, "vslow" );
 
     if($tar == "common")
     {
@@ -132,11 +132,11 @@ class Keyword extends SpecialPage
     // $output .= "<li>npc = $porncount</li>\n";
 
     $similstring = '(';
-    foreach( $similpages as $spage) 
+    foreach( $similpages as $spage)
       $similstring .= $spage . ",";
 
     $similstring .= '0)';
-    
+
     $res = $dbr->doQuery("select kw_word from kw_keywords,kw_page where kw_page in $similstring  and kw_key=kw_id group by kw_key order by count(kw_key) desc limit 15 offset 1");
     while($res && $row = mysql_fetch_row($res))
     {
@@ -182,7 +182,7 @@ class Keyword extends SpecialPage
       $wgOut->addHTML( $output );
   }
 
-  function loadMessages() 
+  function loadMessages()
   {
 	  static $messagesLoaded = false;
 	  global $wgMessageCache;
