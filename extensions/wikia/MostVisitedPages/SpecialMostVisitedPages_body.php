@@ -7,7 +7,6 @@ class MostvisitedpagesSpecialPage extends SpecialPage {
 		parent::__construct( 'Mostvisitedpages' );
 	}
 
-
 	function execute($article_id = null, $limit = "", $offset = "", $show = true) {
 		wfLoadExtensionMessages("Mostvisitedpages");
 
@@ -35,12 +34,18 @@ class MostvisitedpagesPage extends QueryPage {
 	var $mArticleId = "";
 	var $mTitle = "";
 	var $mName = "Mostvisitedpages";
+	var $order_column = 'count';
+	var $latest = '3';
 
 	function __construct($page_id, $show) { 
 		global $wgRequest;
 		$this->show = $show; 
 		$this->mArticle = $wgRequest->getVal('target');
 		$this->mArticleId = $page_id;
+		if ( $page_id == 'latest' ) {
+			$this->setOrder('prev_diff');
+			$this->setOrderColumn('prev_diff');
+		}
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, $this->mName );
 	}
 
@@ -48,6 +53,11 @@ class MostvisitedpagesPage extends QueryPage {
 	function isExpensive() { return false; }
 	function isSyndicated() { return false; }
 	function sortDescending() { return true; }
+	function setOrder($val) { $this->order = $val; }
+	function setOrderColumn($val) { $this->order_column = $val; }
+	function getOrder() {
+		return sprintf(" ORDER BY value %s", ($this->sortDescending() ? 'DESC' : '') );
+	}
 
 	function getPageHeader() { 
         wfProfileIn( __METHOD__ );
@@ -55,15 +65,22 @@ class MostvisitedpagesPage extends QueryPage {
         	wfProfileOut( __METHOD__ );
         	return "";
 		}
-		$action = $this->mTitle->escapeLocalURL("");
+		
+		$res = "";
+		if ( $this->mArticleId != 'latest' ) {
+			$action = $this->mTitle->escapeLocalURL("");
 
-        $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
-        $oTmpl->set_vars( array(
-            "action"		=> $action,
-            "articleName"	=> $this->mArticle,
-        ));
-        wfProfileOut( __METHOD__ );
-        return $oTmpl->execute("main-form");
+			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
+			$oTmpl->set_vars( array(
+				"action"		=> $action,
+				"articleName"	=> $this->mArticle,
+			));
+			$res = $oTmpl->execute("main-form"); 
+		} else {
+			$res = wfMsgExt('mostvisitedpageslatest', array(), $this->latest);
+		}
+		wfProfileOut( __METHOD__ );
+        return $res;
 	}
 	public function getResult() { return $this->data; }
 
@@ -85,13 +102,13 @@ class MostvisitedpagesPage extends QueryPage {
 			}			
 		}
 		$where = " page_id = article_id and page_namespace in ('".implode("','", $namespaces)."') ";
-		if (!empty($this->mArticle)) {
+		if ( !empty($this->mArticle) ) {
 			$where .= " and lower(page_title) like lower('%".htmlspecialchars($this->mArticle)."%') ";
 		}
-		if (!empty($this->mArticleId)) { 
+		if ( !empty($this->mArticleId) && ($this->mArticleId != 'latest') ) { 
 			$where .= " and page_id = '".$this->mArticleId."' ";
 		}
-		$sql = "SELECT 'Mostpopularpages' as type, page_namespace as namespace, page_title as title, count as value FROM $page, $page_visited where $where";
+		$sql = "SELECT 'Mostpopularpages' as type, page_namespace as namespace, page_title as title, " . $this->order_column . " as value FROM $page, $page_visited where $where";
 		return $sql;
 	}
 

@@ -11,7 +11,8 @@ $messages = array();
 $messages['en'] = array(
 	'mostvisitedpages' => 'Most visited pages',
 	'mostvisitedpagessearchtext' => 'Article\'s name:',
-	'mostvisitedpagessearchbtn' => 'search'
+	'mostvisitedpagessearchbtn' => 'search',
+	'mostvisitedpageslatest' => 'in the last $1 minutes'
 );
 
 /** Breton (Brezhoneg)
