@@ -1977,7 +1977,6 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 			'text' => wfMsg('dynamic-links-write-article'),
 			'id' => 'dynamic-links-write-article',
 			'tracker' => 'CreatePage',
-			'disabled' => true
 		);
 		$sp = Title::makeTitle(NS_SPECIAL, 'Upload');
 		/* Redirect to login page instead of showing error, see Login friction project */
@@ -2000,13 +1999,7 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 			foreach ($dynamicLinksArray as $link) {
 				//print_r($link);
 				$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
-				if(isset($link['disabled'])) {
-					$disabled = 'disabled';
-				}
-				else {
-					$disabled = '';
-				}
-				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item ' . $disabled . '"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="' . $wgStylePath  . '/monobook/blank.gif" id="' . $link['id'] . '-img" class="sprite" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></li>';
+				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="' . $wgStylePath  . '/monobook/blank.gif" id="' . $link['id'] . '-img" class="sprite" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></li>';
 			}
 ?>
 					</ul>
