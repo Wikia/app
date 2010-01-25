@@ -9,11 +9,13 @@
 
 #CreatePageDialogSub {
 	font-weight: bold;
+	margin-bottom: 8px;
 }
 
 #CreatePageDialogChoose {
 	font-weight: bold;
 	margin-top: 10px;
+	margin-bottom: 8px;
 }
 
 #CreatePageDialogChoices {
@@ -21,15 +23,22 @@
 }
 
 #wpCreatePageDialogTitle {
-	width: 340px;
+	width: 380px;
 }
 
 #CreatePageContainer .chooser {
 	float: left;
-	width: 140px;
+	width: 48%;
 	text-align: center;	
 	margin-bottom: 12px;
-	margin-right: 20px;
+}
+
+#CreatePageContainer div img {
+	margin-top: 8px;
+}
+
+#CreatePageDialogWrapper {
+	margin-top: -62px;
 }
 
 .chooser div {
@@ -47,3 +56,11 @@
 	clear: both;
 }
 
+#CreatePageDialogTitleErrorMsg {
+	margin-top: 8px;
+}
+
+.CreatePageError {
+	font-weight: bold;
+	color: red;
+}

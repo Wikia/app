@@ -1,5 +1,4 @@
 #siteNotice,
-.firstHeading,
 #siteSub,
 #contentSub,
 #mw-anon-edit-warning,
@@ -9,6 +8,15 @@
 .mediawiki_longpagewarning,
 #editingTipsToggleDiv {
 	display: none !important;
+}
+
+#siteNotice .firstHeading {
+	display: inline !important;
+	margin-bottom: 15px !important;
+}
+
+.firstHeading {
+	margin-top: 0px !important;
 }
 
 #editform {

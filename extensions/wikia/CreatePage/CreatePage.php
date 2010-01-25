@@ -32,13 +32,51 @@ $wgExtensionFunctions[] = 'wfCreatePageInit';
 
 // initialize create page extension
 function wfCreatePageInit() {
+	global $wgUser, $wgHooks, $wgAjaxExportList, $wgOut, $wgScriptPath, $wgStyleVersion, $wgExtensionsPath;
+
 	// load messages from file
 	wfLoadExtensionMessages('CreatePage');
+
+	if(get_class($wgUser->getSkin()) == 'SkinMonoBook') {
+		return true;
+	}
+
+	/**
+	 * hooks
+	 */
+	$wgHooks['EditPage::showEditForm:initial'][] = 'wfCreatePageLoadPreformattedContent';
+	$wgHooks['UserToggles'][] = 'wfCreatePageToggleUserPreference';
+	$wgHooks['getEditingPreferencesTab'][] = 'wfCreatePageToggleUserPreference';
+
+	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
+	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
+
+	$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/CreatePage/js/CreatePage.js"><!-- CreatePage js --></script>');
+	$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/CreatePage/css/CreatePage.css?{$wgStyleVersion}");
+}
+
+function wfCreatePageToggleUserPreference($toggles, $default_array = false) {
+	if(is_array($default_array)) {
+		$default_array[] = 'createpagedefaultblank';
+	}
+	else {
+		$toggles[] = 'createpagedefaultblank';
+	}
+	return true;
 }
 
 function wfCreatePageAjaxGetDialog() {
+	global $wgWikiaCreatePageUseFormatOnly, $wgUser;
+
 	$template = new EasyTemplate( dirname( __FILE__ )."/templates/" );
-	//$template->set_vars( array() );
+
+	$defaultLayout = $wgUser->getOption('createpagedefaultblank', false) ?  'blank' : 'format';
+
+	$template->set_vars( array(
+			'useFormatOnly' => !empty($wgWikiaCreatePageUseFormatOnly) ? true : false,
+			'defaultPageLayout' => $defaultLayout
+		)
+	);
 
 	$body = $template->execute( 'dialog' );
 	$response = new AjaxResponse( $body );
@@ -47,6 +85,61 @@ function wfCreatePageAjaxGetDialog() {
 	return $response;
 }
 
+function wfCreatePageAjaxCheckTitle() {
+	global $wgRequest, $wgUser;
+
+	$result = array( 'result' => 'ok' );
+	$sTitle = $wgRequest->getVal ('title') ;
+
+	// perform title validation
+	if(empty($sTitle)) {
+		$result['result'] = 'error';
+		$result['msg'] = wfMsg( 'createpage-error-empty-title' );
+	}
+	else {
+		$oTitle = Title::newFromText($sTitle);
+
+		if(!($oTitle instanceof Title)) {
+			$result['result'] = 'error';
+			$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
+		}
+		else {
+			if($oTitle->exists()) {
+				$result['result'] = 'error';
+				$result['msg'] = wfMsg( 'createpage-error-article-exists', array( $oTitle->getFullUrl(), $oTitle->getText() ) );
+			}
+			else { // title not exists
+				// compressed spam filter - other have no sense since it's only title here at this point
+				if( !wfSpamBlacklistTitleGenericTitleCheck( $oTitle ) ) {
+					$result['result'] = 'error';
+					$result['msg'] = wfMsg( 'createpage-error-article-spam' );
+				}
+				if ( $oTitle->getNamespace() == -1 ) {
+					$result['result'] = 'error';
+					$result['msg'] = wfMsg( 'createpage-error-invalid-title' );
+				}
+				if ( $wgUser->isBlockedFrom( $oTitle, false ) ) {
+					$result['result'] = 'error';
+					$result['msg'] = wfMsg( 'createpage-error-article-blocked' );
+				}
+			}
+		}
+	}
+
+	$json = Wikia::json_encode($result);
+	$response = new AjaxResponse( $json );
+	$response->setContentType('text/plain; charset=utf-8');
+
+	return $response;
+}
+
+function wfCreatePageLoadPreformattedContent( $editpage ) {
+	global $wgRequest;
+	if ($wgRequest->getCheck('useFormat')) {
+		$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
+	}
+	return true ;
+}
 
 include( dirname( __FILE__ ) . "/SpecialEditPage.php");
 include( dirname( __FILE__ ) . "/SpecialCreatePage.php");
