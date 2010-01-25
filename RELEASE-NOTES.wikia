@@ -1,4 +1,6 @@
 == Changes since 201001.3 ==
+* rt#38254: RTE: headers following divs lose the line break (macbre)
+* rt#37978: RTE: use StaticChute to generate concatenated and minified JS/CSS (macbre)
 * EditAccount: invalidate emails when blanking for close (uberfuzzy)
 * rt#37213: add randomization to staffForLang (uberfuzzy)
 * rt#36729: Garbage collector - full path instead of filename only (eloy)
