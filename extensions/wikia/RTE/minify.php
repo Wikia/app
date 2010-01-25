@@ -11,6 +11,9 @@ error_reporting(E_ERROR);
 // this function takes type (CSS/JS) and list of files
 // and saves minified version in file provided
 function minify($type, $files, $target) {
+	$count = count($files);
+	echo "Packaging {$target} ({$count} files)...";
+
 	$chute = new StaticChute($type);
 	$chute->compress = false;
 	$chute->httpCache = false;
@@ -23,22 +26,44 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 HEAD;
 
-	$res = $chute->process($files);
+	// concatenate files
+	$res = '';
+	foreach($files as $file) {
+		// remove BOM UTF-8 marker
+		$res .= str_replace("\xEF\xBB\xBF", '', file_get_contents($file));
+	}
 
-	if ($type == 'js') {
-		$rev = trim( `svn info | tail -n 7 | head -n 1 | awk '{ print $2 }'` );
-		$res = str_replace('%REV%', $rev, $res);
+	// minify
+	switch($type) {
+		case 'css':
+			// remove @import url("foo") lines
+			$res = preg_replace('#^@import url.*$#m', '', $res);
 
-		$res = str_replace('%VERSION%', date('Ymd'), $res);
+			$res = $chute->minifyCSSData($res);
+			break;
+
+		case 'js':
+			// remove lines marked with "@Packager.RemoveLine" comment
+			$res = preg_replace('#^.*@Packager\\.RemoveLine.*$#m', '', $res);
+
+			// minify
+			$res = $chute->minifyJSData($res);
+
+			// add date and revision data
+			$rev = trim( `svn info | tail -n 7 | head -n 1 | awk '{ print $2 }'` );
+			$res = str_replace('%REV%', $rev, $res);
+
+			$res = str_replace('%VERSION%', date('Ymd'), $res);
+			break;
 	}
 
 	file_put_contents($target, $header.$res);
+
+	echo " done!\n";
 }
 
 
 // generate minified version of CSS
-echo "Packaging file editor.css...\n";
-
 $files = array();
 
 chdir(dirname(__FILE__) . '/ckeditor/_source/skins/wikia');
@@ -52,12 +77,13 @@ if (preg_match_all('%@import url\(([^)]+)\);%', $input, $matches, PREG_SET_ORDER
 	}
 }
 
+// add root CSS too
+$files[] = getcwd() . '/editor.css';
+
 minify('css', $files, 'editor.min.css');
 
 
 // generate minified version of JS
-echo "Packaging file ckeditor.js...\n";
-
 $files = array();
 
 chdir(dirname(__FILE__) . '/ckeditor');
@@ -67,8 +93,7 @@ $input = file_get_contents('ckeditor.wikia.pack');
 $input = substr($input, strpos($input, 'files :') + 7);
 $input = trim($input, " \n\t[]{}");
 
-// CK basic core
-$files[] = realpath(getcwd() . '/_source/core/loader.js');
+// CK core files
 $files[] = realpath(getcwd() . '/_source/core/ckeditor_base.js');
 
 // get all *.js files
@@ -79,9 +104,8 @@ if (preg_match_all('%[^/]\'([^\']+).js%', $input, $matches, PREG_SET_ORDER)) {
 	}
 }
 
-//var_dump($input);var_dump($files);
+//var_dump($files);
 
 minify('js', $files, 'ckeditor.js');
-
 
 echo "Done!\n\n";
