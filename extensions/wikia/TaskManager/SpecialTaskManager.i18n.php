@@ -31,11 +31,20 @@ $messages['br'] = array(
 	'taskmanager_tasklist' => 'Distreiñ da roll an trevelloù',
 );
 
-
+/** German (Deutsch) */
 $messages['de'] = array(
 	'taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
 	'taskmanager_title' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
 	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'taskmanager' => "Afficher et gérer les tâches d'arrière-plan",
+	'taskmanager_title' => "Afficher et gérer les tâches d'arrière-plan",
+	'taskmanager_tasklist' => 'Retourner à la liste des tâches',
 );
 
 /** Galician (Galego)
@@ -65,10 +74,29 @@ $messages['hu'] = array(
 	'taskmanager_tasklist' => 'Vissza a feladatlistához',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'taskmanager' => 'Прикажувај и раководи со позадински задачи',
+	'taskmanager_title' => 'Прикажувај и раководи со позадински задачи',
+	'taskmanager_tasklist' => 'Назад кон Листата на задачи',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'taskmanager' => 'Achtergrondtaken weergeven en beheren',
+	'taskmanager_title' => 'Achtergrondtaken weergeven en beheren',
+	'taskmanager_tasklist' => 'Terugkeren naar de takenlijst',
+);
+
+/** Polish (Polski) */
 $messages['pl'] = array(
-	"taskmanager" => "Zarządzanie zadaniami uruchamianymi w tle",
-	"taskmanager_title" => "Zarządzanie zadaniami uruchamianymi w tle",
-	"taskmanager_tasklist" => "Wróc do listy zadań",
+	'taskmanager' => 'Zarządzanie zadaniami uruchamianymi w tle',
+	'taskmanager_title' => 'Zarządzanie zadaniami uruchamianymi w tle',
+	'taskmanager_tasklist' => 'Wróc do listy zadań',
 );
 
 /** Piedmontese (Piemontèis)

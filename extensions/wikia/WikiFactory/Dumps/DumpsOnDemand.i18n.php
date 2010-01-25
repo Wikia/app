@@ -55,6 +55,15 @@ $messages['br'] = array(
 	'dump-database-info-more' => 'Mar plij lennit <a href="http://www.wikia.com/wiki/Wikia:Database_download">amañ</a> evit muioc\'h a ditouroù',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'dump-database-curr-pages' => 'Trenutne stranice',
+	'dump-database-request' => 'Zahtjevaj ažuriranje',
+	'dump-database-request-submit' => 'Pošalji zahtjev',
+);
+
 /** German (Deutsch)
  * @author MtaÄ
  */
@@ -72,14 +81,21 @@ $messages['de'] = array(
 );
 
 /** Spanish (Español)
+ * @author Bola
  * @author Translationista
  */
 $messages['es'] = array(
+	'dump-database' => 'Descarga de Base de Datos',
+	'dump-database-info' => 'La descarga de la base de datos puede ser usada como una copia de seguridad personal (Wikia produce copias de seguridad separadas para todos los wikis automáticamente) o para los bots de mantenimiento.',
 	'dump-database-curr-pages' => 'Páginas actuales',
+	'dump-database-curr-pages-info' => '(Esta versión es normalmente la mejor para el uso de bots)',
 	'dump-database-full-pages' => 'Páginas actuales e historial',
 	'dump-database-full-pages-info' => '(Advertencia: Este archivo puede ser muy pesado)',
 	'dump-database-request' => 'Solicitar una actualización',
+	'dump-database-request-info' => '(Las descargas normalmente se generan semanalmente)',
 	'dump-database-request-submit' => 'Enviar solicitud',
+	'dump-database-request-requested' => 'Solicitud para envío de descarga de base de datos',
+	'dump-database-info-more' => 'Por favor, <a href="http://www.wikia.com/wiki/Wikia:Database_download">ver esto</a> para más información',
 );
 
 /** Finnish (Suomi)
@@ -143,6 +159,23 @@ $messages['hu'] = array(
 	'dump-database-request' => 'Frissítés kérése',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'dump-database' => 'Copias del base de datos',
+	'dump-database-info' => 'Le copias del base de datos pote esser usate como copia de securitate personal (Wikia produce automaticamente copias de securitate separate de tote le wikis) o pro le robots de mantenentia.',
+	'dump-database-curr-pages' => 'Paginas actual',
+	'dump-database-curr-pages-info' => '(Iste version es generalmente le melior pro uso per robots)',
+	'dump-database-full-pages' => 'Paginas actual e historia',
+	'dump-database-full-pages-info' => '(Attention: iste file pote esser multo grande)',
+	'dump-database-request' => 'Requestar un actualisation',
+	'dump-database-request-info' => '(Le copias es normalmente generate cata septimana)',
+	'dump-database-request-submit' => 'Inviar requesta',
+	'dump-database-request-requested' => 'Requesta de un copia del base de datos inviate',
+	'dump-database-info-more' => 'Vide <a href="http://www.wikia.com/wiki/Wikia:Database_download">ulterior informationes</a>',
+);
+
 /** Japanese (日本語)
  * @author Hosiryuhosi
  */
@@ -201,6 +234,23 @@ $messages['pms'] = array(
 	'dump-database-request-submit' => 'Manda arcesta',
 	'dump-database-request-requested' => 'Arcesta për dump dla base ëd dàit mandà',
 	'dump-database-info-more' => 'Për piasì <a href="http://www.wikia.com/wiki/Wikia:Database_download">varda</a> për savèjne ëd pi',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'dump-database' => 'Descarregamento do banco de dados',
+	'dump-database-info' => 'Descarregamentos do banco de dados podem ser usados como cópias de segurança pessoais (Wikia produz cópias de segurança para todas wikis automaticamente) ou para robôs de manutenção',
+	'dump-database-curr-pages' => 'Páginas atuais',
+	'dump-database-curr-pages-info' => '(Esta versão geralmente é melhor para uso por robôs)',
+	'dump-database-full-pages' => 'Páginas atuais e histórico',
+	'dump-database-full-pages-info' => '(Aviso: este arquivo pode ser muito grande)',
+	'dump-database-request' => 'Pedir atualização',
+	'dump-database-request-info' => '(Descarregamentos geralmente são gerados semanalmente)',
+	'dump-database-request-submit' => 'Enviar pedido',
+	'dump-database-request-requested' => 'Pedido para descarregamento do banco de dados enviado',
+	'dump-database-info-more' => 'Por favor <a href="http://www.wikia.com/wiki/Wikia:Database_download">veja isto</a> para mais informações',
 );
 
 /** Russian (Русский)

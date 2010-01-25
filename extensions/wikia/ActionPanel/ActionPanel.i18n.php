@@ -52,6 +52,7 @@ $messages['br'] = array(
 	'actionpanel-desc' => 'Ur popup evit rumata, adenvel ha kemmañ pennadoù',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'action_panel_edit_title' => 'Antwort',
 	'action_panel_title' => 'Quick Action Panel',
@@ -61,6 +62,35 @@ $messages['de'] = array(
 	'action_panel_save_success' => 'Der Beitrag wurde gespeichert.',
 	'action_panel_rename_success' => 'Die Frage wurde umformuliert.',
 	'action_panel_categorize_success' => 'Kategorien hinzugefügt',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ * @author Ilkea
+ */
+$messages['fi'] = array(
+	'action_panel_edit_title' => 'Vastaa',
+	'action_panel_categorize' => 'Luokittele',
+	'action_panel_categorize_help' => 'Yksi luokka riviä kohden',
+	'action_panel_categories_summary' => 'Lisää luokkia',
+	'action_panel_save_success' => 'Artikkelisi on tallennettu',
+	'action_panel_rename_success' => 'Artikkelisi on nimetty uudelleen',
+	'action_panel_categorize_success' => 'Luokkasi on lisätty',
+);
+
+/** French (Français)
+ * @author Jean-Frédéric
+ */
+$messages['fr'] = array(
+	'action_panel_edit_title' => 'Réponse',
+	'action_panel_title' => 'Panneau d’action rapide',
+	'action_panel_categorize' => 'Catégoriser',
+	'action_panel_categorize_help' => 'Une catégorie par ligne',
+	'action_panel_categories_summary' => 'Ajouter des catégories',
+	'action_panel_save_success' => 'Votre article a bien été sauvegardé.',
+	'action_panel_rename_success' => 'Votre article a bien été renommé.',
+	'action_panel_categorize_success' => 'Les catégories article ont bien été ajoutées à l’article',
+	'actionpanel-desc' => 'Un popup permettant de catégoriser, renommer et modifier des articles',
 );
 
 /** Galician (Galego)
@@ -101,6 +131,21 @@ $messages['hu'] = array(
 	'action_panel_categorize' => 'Kategorizálás',
 	'action_panel_categories_summary' => 'Kategóriák hozzáadása',
 	'action_panel_save_success' => 'A szócikked elmentve.',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'action_panel_edit_title' => 'Одговор',
+	'action_panel_title' => 'Табла за брзи постапки',
+	'action_panel_categorize' => 'Категоризирај',
+	'action_panel_categorize_help' => 'По една категорија во секој нов ред',
+	'action_panel_categories_summary' => 'Додај категории',
+	'action_panel_save_success' => 'Вашата статија е зачувана.',
+	'action_panel_rename_success' => 'Вашата статија е преименувана',
+	'action_panel_categorize_success' => 'Вашите категории се додадени',
+	'actionpanel-desc' => 'згодно скокачко прозорче што ви овозможува да категоризирате, преименувате и уредувате статии',
 );
 
 /** Dutch (Nederlands)

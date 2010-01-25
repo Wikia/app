@@ -82,6 +82,7 @@ $messages['af'] = array(
 	'lookupcontribsnbrresult' => 'Aantal resultate:',
 	'lookupcontribsnext' => 'volgende',
 	'lookupcontribsprevious' => 'vorige',
+	'lookupcontribspageremoved' => 'Verwyder:',
 	'lookupcontribsrestore' => 'herstel',
 	'lookupcontribslog' => 'logboek',
 	'lookupcontribshist' => 'geskiedenis',
@@ -92,24 +93,53 @@ $messages['af'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
+	'lookupcontribs' => 'Klask degasadennoù',
+	'lookupcontribstitle' => 'Klask harpoù',
+	'lookupcontribsrecentcontributions' => 'Degasadennoù nevez $1',
+	'lookupcontribsfinalcontributions' => 'Degasadennoù dibenn $1',
+	'lookupcontribshelp' => "Ar bajenn a-ratozh-se a c'haller implijout evit diskouez degasadennoù an implijer war meur a wikia. Evit diskwel ar roll, roit un anv implijer amañ dindan.",
+	'lookupcontribusernotspecify' => "N'hoc'h eus spisaet implijer ebet betek-henn",
 	'lookupcontribsselectuser' => 'Diuzañ an implijer :',
 	'lookupcontribsselectfor' => 'Diuzañ evit :',
+	'lookupcontribsdisplaymode' => 'Mod diskwel :',
+	'lookupcontribsselectmodenormal' => 'Degasadennoù nevez evit an implijer-se',
+	'lookupcontribsselectmodefinal' => 'Degasadennoù dibenn  evit an implijer-se',
+	'lookupcontribsselectmodeall' => 'holl zegasadennoù an implijer-se',
+	'lookupcontribsfullurls' => "Chomlec'hioù URL klok",
+	'lookupcontribslinks' => 'liammoù war-du an degasadennoù',
 	'lookupcontribsgo' => 'Mont',
+	'lookupcontribsinvaliduser' => '<p class="error">N\'eus ket eus an implijer « <b>$1</b> ». Gwiriit an niver-anaout evit diguzhat fazioù a c\'hallfe bezañ.</p>',
+	'lookupcontribsinvalidviewmode' => '<p class="error">"<b>$1</b>" n\'eo ket ur mod diskwel.</p>',
+	'lookupcontribsinvalidmode' => '<p class="error">"<b>$1</b>" n\'eo ket ur mod reizh.</p>',
 	'lookupcontribsselectwikis' => 'Diuzañ ar wikioù :',
+	'lookupcontribslistwikiainfo' => 'Roll ar wikioù pe pennadoù zo bet kemmet gant <b>$1</b>',
 	'lookupcontribsnoresultfound' => "N'eus bet kavet disoc'h ebet",
+	'lookupcontribsinvalidresults' => "Disoc'hoù direizh !",
 	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Anv an diaz roadennoù',
 	'lookupcontribswikiurl' => 'Url',
 	'lookupcontribswikititle' => 'Titl',
+	'lookupcontribscontribslink' => 'Liammoù war-du an degasadennoù',
+	'lookupcontribsdetails' => 'Gwelet ar munudoù evit :',
+	'lookupcontribscontribs' => 'degasadennoù',
 	'lookupcontribsnbrresult' => "Niver a zisoc'hoù :",
 	'lookupcontribsnext' => 'da-heul',
 	'lookupcontribsprevious' => 'a-raok',
+	'lookupcontribspageremoved' => 'Dilamet :',
+	'lookupcontribsrestore' => 'adsevel',
 	'lookupcontribslog' => 'marilh',
+	'lookupcontribshist' => 'istor',
+	'lookupcontribsdiff' => 'dish.',
+	'right-lookupcontribs' => 'Gwelet kemmoù hollek an implijer',
+	'lookupcontribsshowpages' => 'An holl bajennoù (egorennoù anvioù $1)',
 	'lookupcontribscontent' => 'danvez',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'lookupcontribs' => 'Búsqueda de Contribuciones',
 	'lookupcontribstitle' => 'Búsqueda de Contribuciones',
@@ -137,6 +167,13 @@ $messages['es'] = array(
 	'lookupcontribsnbrresult' => 'Número de resultados:',
 	'lookupcontribsnext' => 'siguiente',
 	'lookupcontribsprevious' => 'Anterior',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'lookupcontribsgo' => 'Siirry',
 );
 
 /** French (Français)
@@ -246,6 +283,7 @@ $messages['hu'] = array(
 	'lookupcontribsrestore' => 'visszaállítás',
 );
 
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'lookupcontribs' => '全体の投稿履歴を見る',
 );

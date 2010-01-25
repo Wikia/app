@@ -37,6 +37,13 @@ $messages['br'] = array(
 	'interwikidispatcher' => 'InterwikiDispatcher',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'interwikidispatcher' => 'DespachadorInterwiki',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -77,5 +84,26 @@ $messages['nl'] = array(
  */
 $messages['oc'] = array(
 	'interwikidispatcher' => 'Repartidor interwiki',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Borichèt
+ */
+$messages['pms'] = array(
+	'interwikidispatcher' => 'Ripartagiator antërwiki',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'interwikidispatcher' => 'DespachadorInterwiki',
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'interwikidispatcher' => 'Интервики-диспетчер',
 );
 

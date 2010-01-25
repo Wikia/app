@@ -47,6 +47,13 @@ $messages['fr'] = array(
 	'wikiaupload' => 'Import wikia',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikiaupload' => 'Cargar en Wikia',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
@@ -59,6 +66,13 @@ $messages['hsb'] = array(
  */
 $messages['hu'] = array(
 	'wikiaupload' => 'Wikia feltöltés',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wikiaupload' => 'IncargaWikia',
 );
 
 /** Macedonian (Македонски)
@@ -94,6 +108,13 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'wikiaupload' => 'Impòrt wikia',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikiaupload' => 'Carié Wikia',
 );
 
 /** Russian (Русский)

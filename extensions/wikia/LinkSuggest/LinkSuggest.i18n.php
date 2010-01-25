@@ -13,14 +13,24 @@ $messages['be-tarask'] = array(
 	'tog-disablelinksuggest' => 'Не паказваць прапановы спасылак',
 );
 
+/** Breton (Brezhoneg)
+ * @author Gwenn-Ael
+ */
+$messages['br'] = array(
+	'tog-disablelinksuggest' => 'Chomp hep diskouez al liammoù kinniget',
+);
+
+/** German (Deutsch) */
 $messages['de'] = array(
 	'tog-disablelinksuggest' => 'Keine Link-Vorschläge anzeigen',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos',
 );
 
+/** French (Français) */
 $messages['fr'] = array(
 	'tog-disablelinksuggest' => 'Ne pas montrer les liens suggérés',
 );
@@ -39,9 +49,23 @@ $messages['hsb'] = array(
 	'tog-disablelinksuggest' => 'Žadyn wotkazowy namjet pokazać',
 );
 
-
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'tog-disablelinksuggest' => '編集時のリンク補完を使わない',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'tog-disablelinksuggest' => 'Не прикажувај предложени врски',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'tog-disablelinksuggest' => 'Geen verwijzigssuggesties weergeven',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -72,6 +96,13 @@ $messages['pms'] = array(
 	'tog-disablelinksuggest' => "Mostra pa ij sugeriment ëd j'anliure",
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'tog-disablelinksuggest' => 'Não mostrar sugestões de ligação',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -79,6 +110,7 @@ $messages['roa-tara'] = array(
 	'tog-disablelinksuggest' => "No fà vedè 'u collegamende suggerite",
 );
 
+/** Russian (Русский) */
 $messages['ru'] = array(
 	'tog-disablelinksuggest' => 'Не показывать предложения ссылок',
 );

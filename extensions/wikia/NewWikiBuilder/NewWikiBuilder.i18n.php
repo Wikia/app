@@ -1,6 +1,10 @@
 <?php
 global $wgSitename;
 
+// Note that this variable is referenced in the NewWikiBuilder.html.php file
+global $NWBmessages;
+$NWBmessages = $messages;
+
 $messages = array();
 
 $messages['en'] = array( 
@@ -68,10 +72,6 @@ Write the first section of your article here. Remember to include links to other
 Write the second section of your article here. Don't forget to add a category, to help people find the article.",
 );
 
-// Note that this variable is referenced in the NewWikiBuilder.html.php file
-global $NWBmessages;
-$NWBmessages = $messages;
-
 /** Message documentation (Message documentation)
  * @author IAlex
  * @author Siebrand
@@ -95,7 +95,18 @@ $messages['af'] = array(
 	'nwb-saving-articles' => 'Stoor bladsye...',
 	'nwb-finalizing' => 'Finalisering...',
 	'nwb-articles-saved' => 'Bladsye is gestoor',
+	'nwb-theme-saved' => 'Die gekose tema is gestoor',
+	'nwb-saving-description' => 'Besig om die beskrywing te stoor...',
+	'nwb-description-saved' => 'Beskrywing is gestoor',
+	'nwb-uploading-logo' => 'Besig met die oplaai van die logo...',
+	'nwb-logo-uploaded' => 'Die logo is opgelaai',
+	'nwb-login-successful' => 'Suksesvol aangeteken',
+	'nwb-logout-successful' => 'Suksesvol afgeteken',
+	'nwb-login-error' => 'Fout met aanmelding',
+	'nwb-logging-in' => 'Besig met aanmelding...',
 	'nwb-api-error' => "Daar was 'n probleem:",
+	'nwb-no-more-pages' => 'Geen bladsye kan meer geskep word nie',
+	'nwb-must-be-logged-in' => 'U moet aanteken alvorens u hierdie aksie kan uitvoer',
 	'nwb-skip-this-step' => 'Slaan hierdie stap oor',
 	'nwb-coming-soon' => 'Binnekort',
 	'nwb-new-pages' => 'Nuwe bladsye',
@@ -119,12 +130,41 @@ $messages['af'] = array(
 	'nwb-or' => 'of',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'nwb-uploading-logo' => 'Загрузка лягатыпу…',
+	'nwb-logo-uploaded' => 'Лягатып загружаны',
+	'nwb-step2-headline' => 'Загрузіць лягатып',
+	'nwb-save-description' => 'Захаваць апісаньне',
+	'nwb-save-theme' => 'Захаваць тэму',
+	'nwb-save-logo' => 'Захаваць лягатып',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
 $messages['br'] = array(
+	'newwikibuilder' => 'Saver wikioù nevez',
+	'nwb-choose-a-file' => 'Mar plij dibabit ur restr',
+	'nwb-error-saving-description' => "Ur fazi 'zo bet e-pad enrolladenn an diskrivadur",
+	'nwb-error-saving-theme' => 'Ur fazi a zo bet e-pad enrolladenn an dodenn',
+	'nwb-error-saving-articles' => 'Ur fazi a zo bet e-pad enrolladenn ar pajennoù',
+	'nwb-saving-articles' => "Oc'h enrollañ pajennoù...",
 	'nwb-articles-saved' => 'Pajennoù enrollet',
+	'nwb-login-successful' => "Kevreet oc'h",
+	'nwb-logout-successful' => "Digevreet oc'h",
+	'nwb-login-error' => "Ur fazi  'zo bet pa oac'h o kevreañ",
+	'nwb-logging-in' => 'Kevreadenn...',
+	'nwb-api-error' => 'Ur gudenn a zo bet :',
+	'nwb-no-more-pages' => "Ne c'hell bezañ krouet pajenn ebet all",
+	'nwb-must-be-logged-in' => "Evit ober kement-mañ e rankoc'h bezañ luget",
+	'nwb-skip-this-step' => 'Tremen al lodenn-mañ',
+	'nwb-coming-soon' => 'Bez e vo dioutañ a-benn nebeut',
 	'nwb-new-pages' => 'Pajennoù nevez',
+	'nwb-step1-headline' => 'Diskrivit ho wiki',
+	'nwb-step3-headline' => 'Diuzit un dodenn',
 	'nwb-step4-headline' => 'Krouiñ pajennoù',
 	'nwb-step5-headline' => "Petra 'zo da heul ?",
 	'nwb-preview' => 'Rakwelet',
@@ -142,6 +182,7 @@ $messages['br'] = array(
 	'nwb-or' => 'pe',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'nwb-choose-a-file' => 'Wähle eine Datei',
 	'nwb-error-saving-description' => 'Fehler beim Speichern der Beschreibung',
@@ -197,6 +238,7 @@ $messages['de'] = array(
 Ersetzte diesen Text durch deinen Artikel!',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'nwb-choose-a-file' => 'Por favor, elige un archivo',
 	'nwb-error-saving-description' => 'Error guardando la descripción',
@@ -603,6 +645,9 @@ Escreva a segunda seção do seu artigo aqui. Não se esqueça de adicionar uma 
  * @author Lockal
  */
 $messages['ru'] = array(
+	'nwb-saving-description' => 'Сохранение описания…',
+	'nwb-description-saved' => 'Описание сохранено',
+	'nwb-uploading-logo' => 'Загрузка логотипа…',
 	'nwb-skip-this-step' => 'Пропустить этот шаг',
 	'nwb-new-pages' => 'Новые страницы',
 	'nwb-step1-headline' => 'Опишите вашу вики',
@@ -622,5 +667,22 @@ $messages['ru'] = array(
 	'nwb-back-to-step-3' => 'Возврат к шагу 3',
 	'nwb-back-to-step-4' => 'Возврат к шагу 4',
 	'nwb-or' => 'или',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'nwb-new-pages' => 'కొత్త పేజీలు',
+	'nwb-or' => 'లేదా',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'nwb-step3-text' => '<p>Тепер оберіть варіант оформлення для <b>{{SITENAME}}</b>.</p><p>Ви можете змінити його пізніше, якщо ваша думка зміниться.</p>',
+	'nwb-back-to-step-1' => 'Повернутись до кроку 1',
+	'nwb-or' => 'або',
 );
 

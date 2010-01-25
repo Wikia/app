@@ -45,6 +45,7 @@ $messages['br'] = array(
 	'wva-notallowed' => "Ne c'hallit ket ensoc'hañ videoioù war ar wiki-mañ",
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'wva-success' => 'Videoseite für $1 wurde erfolgreich erstellt.',
 	'wva-success-replaced' => 'Videoseite für $1 wurde erfolgreich ersetzt.',
@@ -74,12 +75,13 @@ $messages['eu'] = array(
 	'wva-add' => 'Gehitu',
 );
 
+/** French (Français) */
 $messages['fr'] = array(
 	'wva-success' => 'La page de la vidéo $1 a été ajoutée avec succès.',
 	'wva-success-replaced' => 'La page de vidéo $1 a été remplacée avec succès',
 	'wva-failure' => 'Veuillez fournir des paramètres valides',
 	'wva-name' => 'Entrez le nom:',
-	'wva-url' => 'Entrez l\'URL:',
+	'wva-url' => "Entrez l'URL:",
 	'wva-add' => 'Ajouter',
 	'wva-title' => 'Ajouter une vidéo rapidement à partir de son URL',
 	'wva-notlogged' => 'Vous devez vous inscrire ou bien vous enregistrer pour ajouter des vidéos',
@@ -108,6 +110,21 @@ $messages['hu'] = array(
 	'wva-name' => 'Add meg a nevet:',
 	'wva-url' => 'Add meg az URL-t:',
 	'wva-add' => 'Hozzáadás',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wva-success' => 'Le pagina de video $1 ha essite addite con successo.',
+	'wva-success-replaced' => 'Le pagina de video $1 ha essite reimplaciate con successo.',
+	'wva-failure' => 'Per favor forni parametros valide.',
+	'wva-name' => 'Entra le nomine:',
+	'wva-url' => 'Entra le URL:',
+	'wva-add' => 'Adder',
+	'wva-title' => 'Adder video rapidemente con URL',
+	'wva-notlogged' => 'Tu debe aperir un session o registrar te pro inserer videos.',
+	'wva-notallowed' => 'Non es possibile inserer videos in iste wiki.',
 );
 
 /** Japanese (日本語)
@@ -140,6 +157,21 @@ $messages['km'] = array(
 	'wva-notallowed' => 'អ្នកមិនអាចបញ្ចូលវីដេអូនៅក្នុងវិគីនេះទេ។',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'wva-success' => 'Видео-страницата $1 е успешно додадена.',
+	'wva-success-replaced' => 'Видео-страницата $1 е успешно заменета.',
+	'wva-failure' => 'Наведете важечки параметри.',
+	'wva-name' => 'Внесете го името:',
+	'wva-url' => 'Внесете URL-адреса:',
+	'wva-add' => 'Додај',
+	'wva-title' => 'Брзо додавање на видеоснимка од URL-адреса',
+	'wva-notlogged' => 'Треба да сте најавени или да се регистрирате за да можете да вметнувате видеоснимки.',
+	'wva-notallowed' => 'Не можете да вметнувате видеоснимки на ова вики.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -155,6 +187,22 @@ $messages['nl'] = array(
 	'wva-notallowed' => "U kunt geen video's toevoegen in deze wiki.",
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'wva-success' => 'Videoside $1 ble lagt til.',
+	'wva-success-replaced' => 'Videoside $1 ble erstattet.',
+	'wva-failure' => 'Vennligst oppgi gyldige parametre.',
+	'wva-name' => 'Skriv inn navnet:',
+	'wva-url' => 'Skriv inn internettadressen:',
+	'wva-add' => 'Legg til',
+	'wva-title' => 'Legg til video raskt fra internettadresse',
+	'wva-notlogged' => 'Du må logge inn eller registrere deg for å legge til videoer.',
+	'wva-notallowed' => 'Du kan ikke legge til videoer på denne wikien.',
+);
+
+/** Polish (Polski) */
 $messages['pl'] = array(
 	'wva-success' => 'Strona video „$1” została pomyślnie dodana.',
 	'wva-name' => 'Wpisz nazwę:',
@@ -177,6 +225,21 @@ $messages['pms'] = array(
 	'wva-notallowed' => 'It peule pa anserì video su sta wiki-sì.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'wva-success' => 'Página de vídeo $1 foi adicionada com sucesso.',
+	'wva-success-replaced' => 'Página de Vídeo $1 foi substituída com sucesso.',
+	'wva-failure' => 'Por favor, forneça parâmetros válidos.',
+	'wva-name' => 'Especifique o nome:',
+	'wva-url' => 'Especifique a URL:',
+	'wva-add' => 'Adicionar',
+	'wva-title' => 'Adicionar Vídeo Rapidamente Via URL',
+	'wva-notlogged' => 'Você precisa se autenticar ou registrar para inserir vídeos.',
+	'wva-notallowed' => 'Você não pode inserir vídeos nesta wiki.',
+);
+
 /** Russian (Русский)
  * @author Lockal
  * @author Александр Сигачёв
@@ -191,5 +254,19 @@ $messages['ru'] = array(
 	'wva-title' => 'Быстрое добавление видео по URL',
 	'wva-notlogged' => 'Чтобы добавить видео вам необходимо представиться системе или зарегистрироваться.',
 	'wva-notallowed' => 'Вы не можете вставлять видео в этой вики.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wva-add' => 'చేర్చు',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'wva-name' => 'Введіть назву:',
 );
 

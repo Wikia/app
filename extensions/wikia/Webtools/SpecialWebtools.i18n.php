@@ -28,23 +28,11 @@ $messages['en'] = array(
 	
 );
 
-$messages['es'] = array(
-	'webtools' => 'Herramientas de la web [BETA]',
-	'wt_search_stats' => 'Búsqueda de Estadísticas',
-	'wt_click_stats' => 'Haz click a las estadísticas',
-	'wt_nodata' => 'No hay datos disponibles',
-	'wt_update' => 'Actualizar',
-	'wt_cancel' => 'Cancelar',
-	'wt_date_range' => 'Rango de fechas',
-	'wt_search_src' => 'Fuente de búsqueda',
-	'wt_location_src' => 'Localización de la búsqueda',
-	'site_url' => 'Dirección del sitio',
-	'sitemap_url' => 'Dirección del mapa del sitio',
-	'sitemap_format' => 'Mapa del sitio',
-	'sitemap_type' => 'Tipo de mapa',
-	'last_downloaded' => 'Última vez bajado',
-	'sitemap_status' => 'Estado del mapa',
-	'url_count' => 'Recuento de vínculos',
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
+$messages['qqq'] = array(
+	'wt_cancel' => '{{Identical|Cancel}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -72,6 +60,13 @@ $messages['af'] = array(
 	'search_keyword' => 'Soek sleutelwoord',
 	'serp_weight' => 'persentasie van alle %',
 	'serp_position' => 'Sleutelwoord posisie',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'wt_cancel' => 'Адмяніць',
 );
 
 /** Breton (Brezhoneg)
@@ -102,6 +97,7 @@ $messages['br'] = array(
 	'serp_position' => "Renk ar ger-alc'hwez",
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'wt_search_stats' => 'Such Statistik',
 	'wt_click_stats' => 'Klick Statistik',
@@ -120,6 +116,26 @@ $messages['de'] = array(
 	'search_keyword' => 'Suche Stichwort',
 	'serp_weight' => 'Prozent von allen%',
 	'serp_position' => 'Stichwort-Rang',
+);
+
+/** Spanish (Español) */
+$messages['es'] = array(
+	'webtools' => 'Herramientas de la web [BETA]',
+	'wt_search_stats' => 'Búsqueda de Estadísticas',
+	'wt_click_stats' => 'Haz click a las estadísticas',
+	'wt_nodata' => 'No hay datos disponibles',
+	'wt_update' => 'Actualizar',
+	'wt_cancel' => 'Cancelar',
+	'wt_date_range' => 'Rango de fechas',
+	'wt_search_src' => 'Fuente de búsqueda',
+	'wt_location_src' => 'Localización de la búsqueda',
+	'site_url' => 'Dirección del sitio',
+	'sitemap_url' => 'Dirección del mapa del sitio',
+	'sitemap_format' => 'Mapa del sitio',
+	'sitemap_type' => 'Tipo de mapa',
+	'last_downloaded' => 'Última vez bajado',
+	'sitemap_status' => 'Estado del mapa',
+	'url_count' => 'Recuento de vínculos',
 );
 
 /** Finnish (Suomi)
@@ -200,6 +216,33 @@ $messages['hu'] = array(
 	'serp_position' => 'Kulcsszó helyezése',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'webtools' => 'Веб-алатки [БЕТА]',
+	'wt_search_stats' => 'Статистики за пребарување',
+	'wt_click_stats' => 'Статистики за кликнувања',
+	'wt_nodata' => 'Нема достапни податоци',
+	'wt_update' => 'Поднови',
+	'wt_cancel' => 'Откажи',
+	'wt_date_range' => 'Датуми (од-до)',
+	'wt_search_src' => 'Извор за пребарување',
+	'wt_location_src' => 'Локација за пребарување',
+	'site_url' => 'URL на веб-страната',
+	'sitemap_url' => 'URL на планот на веб-страницата',
+	'sitemap_format' => 'Формат на планот на веб-страницата',
+	'sitemap_type' => 'Тип на план на веб-страница',
+	'last_downloaded' => 'Последно преземени',
+	'sitemap_status' => 'Статус на планот на веб-страницата',
+	'url_count' => 'Бр. на URL-адреси',
+	'search_age' => 'Старост на пребарувањето',
+	'search_type' => 'Тип на пребарување',
+	'search_keyword' => 'Клучен збор',
+	'serp_weight' => 'процент од сите%',
+	'serp_position' => 'Ранг на клучниот збор',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -257,8 +300,10 @@ $messages['pms'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'webtools' => 'Веб-инструменты [β]',
 	'wt_search_stats' => 'Статистика поиска',
 	'wt_click_stats' => 'Статистика переходов',
 	'wt_nodata' => 'Данные отсутствуют',
@@ -267,8 +312,17 @@ $messages['ru'] = array(
 	'wt_date_range' => 'Промежуток времени',
 	'wt_search_src' => 'Источник поиска',
 	'wt_location_src' => 'Положение поиска',
+	'site_url' => 'АдресСайта',
 	'sitemap_url' => 'URL карты сайта',
 	'sitemap_format' => 'Формат карты сайта',
 	'sitemap_type' => 'Тип карты сайта',
+	'last_downloaded' => 'Последние загрузки',
+	'sitemap_status' => 'Состояние карты сайта',
+	'url_count' => 'Количество URL',
+	'search_age' => 'Возраст поиска',
+	'search_type' => 'Тип поиска',
+	'search_keyword' => 'Ключевое слово поиска',
+	'serp_weight' => 'процент от всего',
+	'serp_position' => 'Рейтинг ключевых слов',
 );
 

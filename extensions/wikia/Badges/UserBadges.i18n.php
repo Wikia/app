@@ -41,9 +41,19 @@ $messages['en'] = array(
  * @author Naudefj
  */
 $messages['af'] = array(
+	'user-badge-invalid-color' => 'Ongeldige heksadesimale waarde ingesleutel',
+	'user-badge-header-body-box' => 'Opskrif en inhoud:',
 	'user-badge-edits-txt' => 'Wysigings',
 );
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'user-badge-edits-txt' => 'Kemmoù',
+);
+
+/** German (Deutsch) */
 $messages['de'] = array(
 	'user-badge-title' => 'Benutzer-Sticker',
 	'user-badge-invalid-color' => 'Ungültiger Hex-Wert',
@@ -77,6 +87,41 @@ $messages['de'] = array(
 	'user-bagde-copypaste-int-code' => 'Copy & Paste (in diesem Wiki)',
 	'user-bagde-copypaste-int-other-code' => 'Copy & Paste (anderes Wikia-Wiki)',
 	'user-badge-save-info' => 'Wenn du die Änderungen speichern möchtest, scrolle bitte zum Ende der Seite und klicke auf "Speichern".',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'user-badge-title' => 'Badge utilisateur',
+	'user-badge-invalid-color' => 'Valeur hexadécimale saisie incorrecte',
+	'user-badge-show-color' => 'Montrer les détails des couleurs',
+	'user-badge-hide-color' => 'Masquer les détails des couleurs',
+	'user-badge-selected-color' => 'Couleur actuellement sélectionnée {rgb}',
+	'user-badge-web-color' => 'Couleur web standard la plus proche : {rgb}. Cliquez pour la sélectionner !',
+	'user-badge-dialog-title' => 'Veuillez choisir une couleur',
+	'user-badge-current' => 'Badge actuel',
+	'user-badge-configure' => 'Configurer votre badge',
+	'user-badge-not-found' => 'Aucun badge trouvé !',
+	'user-badge-use-configurator' => "Utilisez l'outil de configuration pour créer un nouveau badge !",
+	'user-badge-create' => 'Créer un badge :',
+	'user-badge-overwrite-msg' => 'Écraser le badge existant',
+	'user-badge-header-body-box' => 'Titre et corps :',
+	'user-badge-header-text' => 'Couleur du texte du titre :',
+	'user-badge-header-bgcolor' => "Couleur d'arrière-plan du titre :",
+	'user-badge-body-bgcolor' => "Couleur d'arrière-plan du corps :",
+	'user-badge-text-align' => 'Alignement du titre :',
+	'user-badge-logo-opt' => "Options d'image :",
+	'user-badge-wikia-logo-pos' => 'Position du logo Wikia :',
+	'user-badge-small-wikia-logo-pos' => 'Position du petit logo Wikia :',
+	'user-badge-label-color' => "Couleur d'étiquette (nom d'utilisateur, modifications) :",
+	'user-badge-small-wikia-logo-color' => 'Couleur du logo Wikia :',
+	'user-badge-data-color' => 'Couleur des données :',
+	'user-badge-edits-txt' => 'Modifications',
+	'user-bagde-copypaste-ext-code' => 'Copier et coller (dans des sites externes)',
+	'user-bagde-copypaste-int-code' => 'Copier et coller (dans ce Wikia)',
+	'user-bagde-copypaste-int-other-code' => 'Copier et coller (dans un autre Wikia)',
+	'user-badge-save-info' => 'Si vous voulez enregistrer les changements, rendez-vous en bas de la page et cliquez sur le bouton « Enregistrer ».',
 );
 
 /** Galician (Galego)
@@ -126,6 +171,7 @@ $messages['hu'] = array(
 	'user-badge-edits-txt' => 'Szerkesztések',
 );
 
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'user-badge-title' => '利用者バッジ',
 	'user-badge-invalid-color' => '不正な16進値が入力されました',

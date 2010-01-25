@@ -27,6 +27,13 @@ $messages['be-tarask'] = array(
 	'wysiwyginterface' => 'WYSIWYG-інтэфэйс',
 );
 
+/** Breton (Brezhoneg)
+ * @author Gwenn-Ael
+ */
+$messages['br'] = array(
+	'wysiwyginterface' => 'Etrefas Wysiwyg',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -34,8 +41,16 @@ $messages['dsb'] = array(
 	'wysiwyginterface' => 'WysiwygInterface',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'wysiwyginterface' => 'Interfaz Wysiwyg',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'wysiwyginterface' => 'WYSIWYG-käyttöliittymä',
 );
 
 /** French (Français)
@@ -66,6 +81,13 @@ $messages['hu'] = array(
 	'wysiwyginterface' => 'WYSIWYG felület',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wysiwyginterface' => 'Interfacie WYSIWYG',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
@@ -94,11 +116,32 @@ $messages['oc'] = array(
 	'wysiwyginterface' => 'Interfàcia Wysiwyg',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wysiwyginterface' => 'Antërfacia Wysiwyg',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
 	'wysiwyginterface' => 'Interface Wysiwyg',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'wysiwyginterface' => 'InterfaceWysiwyg',
+);
+
+/** Tarifit (Tarifit)
+ * @author Aryaz
+ */
+$messages['rif'] = array(
+	'wysiwyginterface' => 'Agrudm n Wysiwyg (min twalid id gha iffghn)',
 );
 
 /** Tarandíne (Tarandíne)

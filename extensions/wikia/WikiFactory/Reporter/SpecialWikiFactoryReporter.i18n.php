@@ -25,11 +25,25 @@ $messages['br'] = array(
 	'wikifactoryreporter' => 'Adkaser ar WikiFactory',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'wikifactoryreporter' => 'WikiFactory Reporter',
+);
+
 /** German (Deutsch)
  * @author MtaÄ
  */
 $messages['de'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
+);
+
+/** Spanish (Español)
+ * @author Bola
+ */
+$messages['es'] = array(
+	'wikifactoryreporter' => 'Informe de WikiFactory',
 );
 
 /** French (Français)
@@ -53,11 +67,32 @@ $messages['hsb'] = array(
 	'wikifactoryreporter' => 'WikiFactory Reporter',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wikifactoryreporter' => 'Reportator WikiFactory',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
 	'wikifactoryreporter' => 'WikiFactory-Reporter',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'wikifactoryreporter' => 'WikiFactory пријавувач',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'wikifactoryreporter' => 'Wikifactory rapportage',
 );
 
 /** Occitan (Occitan)
@@ -72,5 +107,12 @@ $messages['oc'] = array(
  */
 $messages['pms'] = array(
 	'wikifactoryreporter' => 'Rapòrt ëd la WikiFactory',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'wikifactoryreporter' => 'Relator do WikiFactory',
 );
 

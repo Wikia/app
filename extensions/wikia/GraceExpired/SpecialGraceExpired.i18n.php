@@ -55,6 +55,28 @@ $messages['gl'] = array(
 A actividade nas páxinas de avaliación '''non''' se ten en conta aquí.",
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'graceexpired' => 'Резервниот период е истечен',
+	'graceexpired-row' => '$1 (во $2, последно уредено во $3)',
+	'graceexpired-header' => "На оваа страница се наведени сите состави кои се сметаат за [[:Category:Abandoned|напуштени]], [[:Category:Trash_builds|ѓубре]], [[:Category:Build stubs|никулци]] или [[:Category:Trial Builds|пробни]], и никој ги нема уредувано барем две недели.
+
+Activity on rating pages is ''not'' taken into account here.",
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'graceexpired' => 'Proefperiode verlopen',
+	'graceexpired-row' => '$1 (in $2, voor het laatst bewerkt op $3)',
+	'graceexpired-header' => "Op deze pagina worden alle builds weergegeven die [[:Category:Abandoned|verlaten]], [[:Category:Trash_builds|verwijderd]], [[:Category:Build stubs|onafgemaakt]] of [[:Category:Trial Builds|probeerseltjes]] zijn en in de afgelopen twee weken niet zijn bewerkt.
+
+Er wordt ''geen rekening gehouden'' met beoordelingen van pagina's.",
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -65,6 +87,17 @@ $messages['pms'] = array(
 	'graceexpired-header' => "Sta pàgina-sì a lista tute le configurassion che a son [[:Category:Abandoned|abandonà]], [[:Category:Trash_builds|rumenta]], [[:Category:Build stubs|sbòss]] o [[:Category:Trial Builds|preuve]], e a son pa stàite modificà për almanch doe sman-e.
 
 L'atività an sle pàgine ëd vot a l'é ''pa'' pijà an cont ambelessì.",
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'graceexpired' => 'Graça expirada',
+	'graceexpired-row' => '$1 (em $2, editado pela última vez em $3)',
+	'graceexpired-header' => "Esta página lista todas as construções que são [[:Category:Abandoned|abandonas]], [[:Category:Trash_builds|lixo]], [[:Category:Build stubs|rascunhos]] ou [[:Category:Trial Builds|ensaios]], e não foram editadas por pelo menos duas semanas.
+
+Atividade nas páginas de avaliação ''não'' são levadas em consideração aqui.",
 );
 
 /** Russian (Русский)

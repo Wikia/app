@@ -59,10 +59,12 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Prima klasy4na
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'createpage_categories' => '{{Identical|Categories}}',
+	'createpage_upload_location' => '{{Identical|Location}}',
 	'createpage_login_required' => 'Lego. Cannot be translated properly.',
 	'createpage_login_href' => 'Lego. Cannot be translated properly.',
 	'createpage_login_required2' => 'Lego. Cannot be translated properly.',
@@ -81,15 +83,24 @@ $messages['af'] = array(
 	'createpage_title' => "Skep 'n nuwe artikel",
 	'createpage_title_caption' => 'Artikel se titel',
 	'createpage_choose_createplate' => "Kies 'n bladsy-tipe",
+	'createpage_add_content' => 'Voeg inhoud by',
 	'createpage_button_createplate_submit' => 'Laai hierdie sjabloon',
+	'createpage_article_title' => 'Bladsynaam hier',
 	'createpage_give_title' => "Verskaf 'n naam",
 	'createpage_title_invalid' => "Verskaf 'n geldige bladsynaam",
+	'createpage_article_exists' => "Hierdie bladsy bestaan reeds.
+Wysig $1 of verskaf 'n ander bladsynaam.",
 	'createpage_article_do_edit' => 'Wysig hierdie artikel',
 	'createpage_yes' => 'Ja',
 	'createpage_no' => 'Nee',
 	'createpage_categories' => 'Kategorieë',
 	'createpage_addcategory' => 'Voeg kategorie by',
+	'createpage_uploaded_from' => 'Opgelaai vanuit Special:Createpage',
 	'createpage_rename_label' => 'naam',
+	'createpage_upload_location' => 'Ligging',
+	'createpage_image_label' => 'Beeldligging',
+	'createpage_image_rename_label' => 'Beeldnaam',
+	'createpage_upload_aborted' => 'Invoeg van beeld was gekanselleer',
 	'createpage_login_required' => 'U moet',
 	'createpage_please_wait' => 'Wag asseblief...',
 	'headline_tip_3' => 'Vlak 3 opskrif',
@@ -111,9 +122,11 @@ $messages['as'] = array(
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
+	'me_upload' => 'Загрузіць выяву',
 	'createpage_categories' => 'Катэгорыі',
 );
 
+/** Bulgarian (Български) */
 $messages['bg'] = array(
 	'createpage_categories' => 'Категории:',
 );
@@ -125,12 +138,22 @@ $messages['br'] = array(
 	'me_hide' => 'Kuzhat',
 	'me_show' => 'Diskouez',
 	'createpage_title' => 'Krouiñ ur pennad nevez',
+	'createpage_title_caption' => 'Titl ar pennad',
+	'createpage_add_content' => 'Ouzhpennañ danvez',
+	'createpage_title_invalid' => 'Mar plij lakait un titl reizh',
+	'createpage_article_do_edit' => 'Kemmañ ar pennad-mañ',
 	'createpage_yes' => 'Ya',
 	'createpage_no' => 'Nann',
+	'createpage_categories' => 'Rummadoù',
+	'createpage_addcategory' => 'Ouzhpennañ ur rummad',
+	'createpage_rename_label' => 'anv',
+	'createpage_upload_location' => "Lec'hiadur",
 	'createpage_image_rename_label' => 'Anv ar skeudenn',
+	'createpage_insert_image' => "Ensoc'hañ ur skeudenn",
 	'createpage_login_required' => "Rankout a reoc'h",
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'me_edit_normal' => 'Erweiterter Editor',
 	'me_hide' => 'Ausblenden',
@@ -145,7 +168,6 @@ $messages['de'] = array(
 	'createpage_give_title' => 'Gib bitte einen Titel an',
 	'createpage_title_invalid' => 'Gib bitte einen gültigen Titel an',
 	'createpage_article_exists' => 'Diese Seite existiert bereits. Bearbeite',
-	'createpage_article_exists2' => 'oder gib einen neuen Titel an.',
 	'createpage_article_do_edit' => 'Diese Seite bearbeiten.',
 	'createpage_advanced_warning' => 'Der Wechsel des Editors kann die Formatierung der Seite stören - trotzdem fortfahren?',
 	'createpage_login_warning' => 'Wenn du dich jetzt anmeldest, verlierst du möglicherweise deinen noch nicht gespeicherten Text. Trotzdem fortfahren?',
@@ -156,9 +178,6 @@ $messages['de'] = array(
 	'createpage_top_of_page' => 'Seitenanfang',
 	'createpage_uploaded_from' => 'Upload via Special:Createpage',
 	'createplate-list' => 'Blank|Leer',
-	'createplate-blank' => '<!---blanktemplate--->
-
-Füge hier Text ein',
 	'createpage_rename_label' => 'Name',
 	'createpage_upload_location' => 'Ort',
 	'createpage_image_label' => 'Ort des Bildes',
@@ -180,6 +199,7 @@ Füge hier Text ein',
 	'createpage_optionals_text' => 'Füge optionale Abschnitte hinzu',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'me_edit_normal' => 'Edición avanzada',
 	'me_upload' => 'Subir una imagen',
@@ -195,7 +215,6 @@ $messages['es'] = array(
 	'createpage_give_title' => 'Por favor, especifica un título',
 	'createpage_title_invalid' => 'Por favor especifica un título valido',
 	'createpage_article_exists' => 'Este artículo ya existe. Edítalo',
-	'createpage_article_exists2' => 'o especifica otro título.',
 	'createpage_article_do_edit' => 'Edita este artículo',
 	'createpage_advanced_warning' => 'Cambiar el modo de edición puede romper el formato de la página, ¿quieres continuar?',
 	'createpage_login_warning' => 'Identificándote ahora, podrías perder todo el texto que no haya sido guardado. ¿Quieres continuar?',
@@ -203,9 +222,6 @@ $messages['es'] = array(
 	'createpage_categories' => 'Categorías:',
 	'createpage_top_of_page' => 'Parte superior de la página',
 	'createpage_uploaded_from' => 'Subida desde Special:Createpage',
-	'createplate-blank' => '<!---blanktemplate--->
-
-Inserta texto aquí',
 	'createpage_rename_label' => 'nombre',
 	'createpage_upload_location' => 'Localización',
 	'createpage_image_label' => 'Localización de la Imagen',
@@ -228,12 +244,14 @@ Inserta texto aquí',
 	'tog-createpage-redlinks' => 'Usa <a href="http://www.inside.wikia.com/wiki/CreatePage">CreatePage</a> cuando sigas enlaces rotos',
 );
 
+/** Persian (فارسی) */
 $messages['fa'] = array(
 	'createpage_title' => 'ایجاد مقالۀ جدید',
 	'createpage_title_caption' => 'نام',
 	'createpage_categories' => 'رده‌ها:',
 );
 
+/** Finnish (Suomi) */
 $messages['fi'] = array(
 	'createpage_title' => 'Luo uusi artikkeli',
 	'createpage_title_caption' => 'Otsikko:',
@@ -361,6 +379,7 @@ $messages['hu'] = array(
 	'createpage_login_href' => 'bejelentkezés',
 );
 
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'me_edit_normal' => '通常の編集',
 	'me_hide' => '非表示',
@@ -377,9 +396,6 @@ $messages['ja'] = array(
 	'createpage_top_of_page' => 'ページトップ',
 	'createpage_uploaded_from' => '[[Special:Createpage]]よりアップロード',
 	'createplate-list' => 'Blank|白紙',
-	'createplate-blank' => '<!---blanktemplate--->
-
-ここにテキストを入力してください。',
 	'createpage_rename_label' => '名前',
 	'createpage_title_check_text' => 'タイトルのチェックが完了しないと次へ進めません。続けるにはもう一度ボタンをクリックしてください。',
 	'createpage_preview_end' => 'プレビューはここまでです。以下で編集を継続できます。',
@@ -657,49 +673,81 @@ $messages['sv'] = array(
 	'createpage_advanced_edit' => 'avancerad editor',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'createpage_yes' => 'అవును',
+	'createpage_no' => 'కాదు',
+	'createpage_categories' => 'వర్గాలు',
+	'createpage_rename_label' => 'పేరు',
+);
+
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */
 $messages['uk'] = array(
+	'me_upload' => 'Завантажити зображення',
+	'me_hide' => 'Сховати',
+	'me_show' => 'Показати',
+	'createpage_title' => 'Створити нову статтю',
+	'createpage_title_caption' => 'Назва статті',
+	'createpage_yes' => 'Так',
+	'createpage_no' => 'Ні',
 	'createpage_categories' => 'Категорії',
+	'createpage_addcategory' => 'Додати категорію',
+	'createpage_rename_label' => 'назва',
+	'createpage_upload_location' => 'Розташування',
+	'createpage_image_label' => 'Розташування зображення',
+	'createpage_image_rename_label' => 'Назва зображення',
+	'createpage_login_required' => 'Вам необхідно',
+	'createpage_please_wait' => 'Будь ласка, зачекайте...',
+	'createpage_advanced_text' => 'Ви можете також скористатись $1.',
 );
 
+/** Chinese (中文) */
 $messages['zh'] = array(
 	'createpage_title' => '發表新文章',
 	'createpage_title_caption' => '文章標題',
 	'createpage_categories' => '分類：',
 );
 
+/** Chinese (China) (‪中文(中国大陆)‬) */
 $messages['zh-cn'] = array(
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '文章标题',
 	'createpage_categories' => '分类：',
 );
 
+/** Simplified Chinese (‪中文(简体)‬) */
 $messages['zh-hans'] = array(
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '文章标题',
 	'createpage_categories' => '分类：',
 );
 
+/** Traditional Chinese (‪中文(繁體)‬) */
 $messages['zh-hant'] = array(
 	'createpage_title' => '發表新文章',
 	'createpage_title_caption' => '文章標題',
 	'createpage_categories' => '分類：',
 );
 
+/** Chinese (Hong Kong) (‪中文(香港)‬) */
 $messages['zh-hk'] = array(
 	'createpage_title' => '發表新文章',
 	'createpage_title_caption' => '文章標題',
 	'createpage_categories' => '分類：',
 );
 
+/** Chinese (Singapore) (‪中文(新加坡)‬) */
 $messages['zh-sg'] = array(
 	'createpage_title' => '发表新文章',
 	'createpage_title_caption' => '文章标题',
 	'createpage_categories' => '分类：',
 );
 
+/** Chinese (Taiwan) (‪中文(台灣)‬) */
 $messages['zh-tw'] = array(
 	'me_edit_normal' => '進階編輯',
 	'me_upload' => '上傳圖片',

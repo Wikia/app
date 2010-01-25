@@ -290,8 +290,11 @@ $messages['en'] = array(
  * @author EugeneZelenko
  */
 $messages['qqq'] = array(
+	'wysiwygSave' => '{{Identical|Save}}',
 	'wysiwygFontSize' => '{{Identical|Size}}',
+	'wysiwygDlgBtnCancel' => '{{Identical|Cancel}}',
 	'wysiwygDlgSelectSize' => '{{Identical|Size}}',
+	'wysiwygDlgSelectBtnDelete' => '{{Identical|Delete}}',
 	'wysiwygTemplateInsert' => '{{Identical|Insert}}',
 );
 
@@ -305,13 +308,25 @@ $messages['af'] = array(
 	'wysiwygCut' => 'Knip',
 	'wysiwygCopy' => 'Kopieer',
 	'wysiwygPaste' => 'Plak',
+	'wysiwygPasteText' => 'Plak as gewone teks',
+	'wysiwygPasteWord' => 'Plak as Word-data',
 	'wysiwygPrint' => 'Druk',
 	'wysiwygSelectAll' => 'Kies alles',
 	'wysiwygInsertLinkLbl' => 'Skakel',
+	'wysiwygInsertLink' => 'Skakel invoeg/wysig',
+	'wysiwygRemoveLink' => 'Skrap skakel',
+	'wysiwygVisitLink' => 'Volg skakel',
+	'wysiwygAnchor' => 'Anker invoeg/wysig',
+	'wysiwygAnchorDelete' => 'Skrap anker',
 	'wysiwygInsertImageLbl' => 'Beeld',
+	'wysiwygInsertImage' => 'Beeld invoeg/wysig',
+	'wysiwygInsertFlash' => 'Flash invoeg/wysig',
 	'wysiwygInsertTableLbl' => 'Tabel',
 	'wysiwygInsertTable' => 'Tabel invoeg/wysig',
 	'wysiwygInsertLineLbl' => 'Lyn',
+	'wysiwygInsertLine' => 'Voeg horisontale lyn by',
+	'wysiwygInsertSpecialChar' => 'Voeg spesiale karakter in',
+	'wysiwygInsertSmiley' => 'Voeg gesiggie by',
 	'wysiwygAbout' => 'Oor FCKeditor',
 	'wysiwygBold' => 'Vet',
 	'wysiwygItalic' => 'Skuinsdruk',
@@ -351,6 +366,7 @@ $messages['af'] = array(
 	'wysiwygInsertCellBefore' => 'Voeg sel in voor',
 	'wysiwygDeleteCells' => 'Skrap selle',
 	'wysiwygMergeCells' => 'Versmelt selle',
+	'wysiwygTableDelete' => 'Skrap tabel',
 	'wysiwygDone' => 'Gedoen',
 	'wysiwygDlgBtnOK' => 'OK',
 	'wysiwygDlgBtnCancel' => 'Kanselleer',
@@ -367,6 +383,9 @@ $messages['af'] = array(
 	'wysiwygDlgColorTitle' => 'Kies kleur',
 	'wysiwygDlgColorBtnClear' => 'Opruim',
 	'wysiwygDlgColorSelected' => 'Gekies',
+	'wysiwygDlgSmileyTitle' => 'Voeg gesiggie by',
+	'wysiwygDlgSpecialCharTitle' => 'Kies spesiale karakter',
+	'wysiwygDlgTableTitle' => 'Tabel se eienskappe',
 	'wysiwygDlgTableRows' => 'Rye',
 	'wysiwygDlgTableColumns' => 'Kolomme',
 	'wysiwygDlgTableAlignNotSet' => '<Nie gestel nie>',
@@ -399,10 +418,12 @@ $messages['af'] = array(
 	'wysiwygDlgCellType' => 'Seltipe',
 	'wysiwygDlgCellTypeData' => 'Data',
 	'wysiwygDlgCellTypeHeader' => 'Opskrif',
+	'wysiwygDlgCellBackColor' => 'Agtergrondkleur',
 	'wysiwygDlgCellBtnSelect' => 'Selekteer...',
 	'wysiwygDlgFindAndReplaceTitle' => 'Soek en vervang',
 	'wysiwygDlgFindTitle' => 'Soek',
 	'wysiwygDlgFindFindBtn' => 'Soek',
+	'wysiwygDlgFindNotFoundMsg' => 'Die gegewe teks is nie gevind nie.',
 	'wysiwygDlgReplaceTitle' => 'Vervang',
 	'wysiwygDlgReplaceFindLbl' => 'Soek na:',
 	'wysiwygDlgReplaceReplaceLbl' => 'Vervang met:',
@@ -412,10 +433,13 @@ $messages['af'] = array(
 	'wysiwygPasteFromWord' => 'Plak vanaf Word',
 	'wysiwygColorAutomatic' => 'Outomaties',
 	'wysiwygColorMoreColors' => 'Meer kleure...',
+	'wysiwygDocProps' => 'Dokument se eienskappe',
+	'wysiwygIeSpellDownload' => 'Die speltoetser is nie geïnstalleer nie. Wil u dit nou aflaai?',
 	'wysiwygDlgSelectName' => 'Naam',
 	'wysiwygDlgSelectValue' => 'Waarde',
 	'wysiwygDlgSelectSize' => 'Grootte',
 	'wysiwygDlgSelectLines' => 'Reëls',
+	'wysiwygDlgSelectChkMulti' => 'Laat meervoudige keuses toe',
 	'wysiwygDlgSelectOpAvail' => 'Beskikbare opsies',
 	'wysiwygDlgSelectOpText' => 'Teks',
 	'wysiwygDlgSelectOpValue' => 'Waarde',
@@ -427,31 +451,51 @@ $messages['af'] = array(
 	'wysiwygTemplates' => 'Sjablone',
 	'wysiwygMove' => 'Skuif',
 	'wysiwygDlgImageRemoveTitle' => 'Verwyder hierdie beeld',
+	'wysiwygDlgImageRemoveContent' => 'Is u seker u wil die beeld verwyder?',
 	'wysiwygDlgVideoRemoveTitle' => 'Verwyder hierdie video',
+	'wysiwygDlgVideoRemoveContent' => 'Is u seker u wil die video verwyder?',
+	'wysiwygTemplateOther' => 'Ander sjabloon of magiese woord',
 	'wysiwygTemplateSearchFor' => 'Soek vir sjabloon',
 	'wysiwygTemplateInsert' => 'Invoeg',
 	'wysiwygTemplateBrowseFor' => 'Blaai deur sjablone',
+	'wysiwygTemplateMostFrequenty' => 'Mees gebruikte',
 	'wysiwygTemplateMagicWords' => 'Magiese woorde',
 	'wysiwygTemplateMagicWordsLink' => 'http://help.wikia.com/wiki/Help:Magic_words',
 	'wysiwygTemplateChooseAnother' => "kies 'n ander sjabloon",
+	'wysiwygTemplateView' => 'wys sjabloonbladsy (maak in nuwe venster oop)',
 	'wysiwygTemplateParameters' => 'Parameters',
 	'wysiwygComment' => 'Opmerking',
 	'wysiwygCommentRemove' => 'Verwyder',
 	'wysiwygLinkInternal' => 'Interne skakel',
 	'wysiwygLinkExternal' => 'Eksterne skakel',
 	'wysiwygLinkArticleName' => 'Bladsynaam',
+	'wysiwygLinkInternalText' => 'Skakel se teks (as anders as die bladsynaam)',
 	'wysiwygLinkURL' => 'URL',
+	'wysiwygLinkExternalText' => 'Skakel se teks (as anders as die URL)',
+	'wysiwygLinkExternalNumbered' => "skep 'n genommerde skakel",
 	'wysiwygToolbarH2' => 'Afdelingsopskrif',
 	'wysiwygToolbarH3' => 'Subopskrif',
+	'wysiwygToolbarPre' => 'Vooraf-geformateerde',
 	'wysiwygToolbarNormal' => 'Verwyder opskrif',
+	'wysiwygToolbarSignature' => 'Voeg u handtekening by',
+);
+
+/** Arabic (العربية)
+ * @author OsamaK
+ */
+$messages['ar'] = array(
+	'wysiwygSave' => 'احفظ',
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
+	'wysiwygSave' => 'Захаваць',
 	'wysiwygFontSize' => 'Памер',
+	'wysiwygDlgBtnCancel' => 'Адмяніць',
 	'wysiwygDlgSelectSize' => 'Памер',
+	'wysiwygDlgSelectBtnDelete' => 'Выдаліць',
 	'wysiwygTemplateInsert' => 'Уставіць',
 );
 
@@ -480,6 +524,7 @@ $messages['br'] = array(
 	'wysiwygAnchorDelete' => 'Dilemel an Eor',
 	'wysiwygInsertImageLbl' => 'Skeudenn',
 	'wysiwygInsertImage' => "Ensoc'hañ/Kemmañ ar Skeudenn",
+	'wysiwygInsertFlash' => "Ensoc'hañ/Kemmañ ar flash",
 	'wysiwygInsertTableLbl' => "Ensoc'hañ un daolenn",
 	'wysiwygInsertTable' => "Ensoc'hañ un daolenn",
 	'wysiwygInsertLineLbl' => 'Disparti',
@@ -640,6 +685,7 @@ $messages['br'] = array(
 	'wysiwygToolbarSignature' => 'Ouzhpennañ ho sinadur',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'wysiwygToolbarCollapse' => 'Symbolleiste einklappen',
 	'wysiwygToolbarExpand' => 'Symbolleiste ausklappen',
@@ -756,11 +802,11 @@ $messages['de'] = array(
 	'wysiwygDone' => 'Fertig',
 	'wysiwygPasteWordConfirm' => 'Der Text, den Sie einfügen möchten, scheint aus MS-Word kopiert zu sein. Möchten Sie ihn zuvor bereinigen lassen?',
 	'wysiwygNotCompatiblePaste' => 'Diese Funktion steht nur im Internet Explorer ab Version 5.5 zur Verfügung. Möchten Sie den Text unbereinigt einfügen?',
-	'wysiwygUnknownToolbarItem' => 'Unbekanntes Menüleisten-Objekt \"%1\"',
-	'wysiwygUnknownCommand' => 'Unbekannter Befehl \"%1\"',
+	'wysiwygUnknownToolbarItem' => 'Unbekanntes Menüleisten-Objekt \\"%1\\"',
+	'wysiwygUnknownCommand' => 'Unbekannter Befehl \\"%1\\"',
 	'wysiwygNotImplemented' => 'Befehl nicht implementiert',
-	'wysiwygUnknownToolbarSet' => 'Menüleiste \"%1\" existiert nicht',
-	'wysiwygNoActiveX' => 'Die Sicherheitseinstellungen Ihres Browsers beschränken evtl. einige Funktionen des Editors. Aktivieren Sie die Option \"ActiveX-Steuerelemente und Plugins ausführen\" in den Sicherheitseinstellungen, um diese Funktionen nutzen zu können',
+	'wysiwygUnknownToolbarSet' => 'Menüleiste \\"%1\\" existiert nicht',
+	'wysiwygNoActiveX' => 'Die Sicherheitseinstellungen Ihres Browsers beschränken evtl. einige Funktionen des Editors. Aktivieren Sie die Option \\"ActiveX-Steuerelemente und Plugins ausführen\\" in den Sicherheitseinstellungen, um diese Funktionen nutzen zu können',
 	'wysiwygBrowseServerBlocked' => 'Ein Auswahlfenster konnte nicht geöffnet werden. Stellen Sie sicher, das alle Popup-Blocker ausgeschaltet sind.',
 	'wysiwygDialogBlocked' => 'Das Dialog-Fenster konnte nicht geöffnet werden. Stellen Sie sicher, das alle Popup-Blocker ausgeschaltet sind.',
 	'wysiwygVisitLinkBlocked' => 'Es war leider nicht möglich ein neues Fenster zu öffnen. Bitte versichern Sie sich das der Popup-Blocker ausgeschaltet ist.',
@@ -887,6 +933,7 @@ $messages['de'] = array(
 	'wysiwygTemplates' => 'Vorlagen',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'wysiwygToolbarCollapse' => 'Contraer Barra',
 	'wysiwygToolbarExpand' => 'Expandir Barra',
@@ -1003,11 +1050,11 @@ $messages['es'] = array(
 	'wysiwygDone' => 'Hecho',
 	'wysiwygPasteWordConfirm' => 'El texto que desea parece provenir de Word. Desea depurarlo antes de pegarlo?',
 	'wysiwygNotCompatiblePaste' => 'Este comando está disponible sólo para Internet Explorer version 5.5 or superior. Desea pegar sin depurar?',
-	'wysiwygUnknownToolbarItem' => 'Item de barra desconocido \"%1\"',
-	'wysiwygUnknownCommand' => 'Nombre de comando desconocido \"%1\"',
+	'wysiwygUnknownToolbarItem' => 'Item de barra desconocido \\"%1\\"',
+	'wysiwygUnknownCommand' => 'Nombre de comando desconocido \\"%1\\"',
 	'wysiwygNotImplemented' => 'Comando no implementado',
-	'wysiwygUnknownToolbarSet' => 'Nombre de barra \"%1\" no definido',
-	'wysiwygNoActiveX' => 'La configuración de las opciones de seguridad de su navegador puede estar limitando algunas características del editor. Por favor active la opción \"Ejecutar controles y complementos de ActiveX \", de lo contrario puede experimentar errores o ausencia de funcionalidades.',
+	'wysiwygUnknownToolbarSet' => 'Nombre de barra \\"%1\\" no definido',
+	'wysiwygNoActiveX' => 'La configuración de las opciones de seguridad de su navegador puede estar limitando algunas características del editor. Por favor active la opción \\"Ejecutar controles y complementos de ActiveX \\", de lo contrario puede experimentar errores o ausencia de funcionalidades.',
 	'wysiwygBrowseServerBlocked' => 'La ventana de visualización del servidor no pudo ser abierta. Verifique que su navegador no esté bloqueando las ventanas emergentes (pop up).',
 	'wysiwygDialogBlocked' => 'No se ha podido abrir la ventana de diálogo. Verifique que su navegador no esté bloqueando las ventanas emergentes (pop up).',
 	'wysiwygVisitLinkBlocked' => 'Nose ha podido abrir la ventana. Asegurese de que todos los bloqueadores de popups están deshabilitados.',
@@ -1132,6 +1179,13 @@ $messages['es'] = array(
 	'wysiwygBulletedListProp' => 'Propiedades de Viñetas',
 	'wysiwygNumberedListProp' => 'Propiedades de Numeraciones',
 	'wysiwygTemplates' => 'Plantillas',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'wysiwygSave' => 'Tallenna',
 );
 
 /** French (Français)
@@ -1484,6 +1538,7 @@ $messages['hu'] = array(
 	'wysiwygDlgSelectValue' => 'Érték',
 );
 
+/** Italian (Italiano) */
 $messages['it'] = array(
 	'wysiwygToolbarCollapse' => 'Nascondi la barra degli strumenti',
 	'wysiwygToolbarExpand' => 'Mostra la barra degli strumenti',
@@ -1560,7 +1615,7 @@ $messages['it'] = array(
 	'wysiwygButton' => 'Bottone',
 	'wysiwygSelectionField' => 'Menu di selezione',
 	'wysiwygImageButton' => 'Bottone immagine',
-	'wysiwygFitWindow' => 'Massimizza l\'area dell\'editor',
+	'wysiwygFitWindow' => "Massimizza l'area dell'editor",
 	'wysiwygShowBlocks' => 'Visualizza Blocchi',
 	'wysiwygEditLink' => 'Modifica collegamento',
 	'wysiwygCellCM' => 'Cella',
@@ -1600,11 +1655,11 @@ $messages['it'] = array(
 	'wysiwygDone' => 'Completato',
 	'wysiwygPasteWordConfirm' => 'Il testo da incollare sembra provenire da Word. Desideri pulirlo prima di incollare?',
 	'wysiwygNotCompatiblePaste' => 'Questa funzione è disponibile solo per Internet Explorer 5.5 o superiore. Desideri incollare il testo senza pulirlo?',
-	'wysiwygUnknownToolbarItem' => 'Elemento della barra strumenti sconosciuto \"%1\"',
-	'wysiwygUnknownCommand' => 'Comando sconosciuto \"%1\"',
+	'wysiwygUnknownToolbarItem' => 'Elemento della barra strumenti sconosciuto \\"%1\\"',
+	'wysiwygUnknownCommand' => 'Comando sconosciuto \\"%1\\"',
 	'wysiwygNotImplemented' => 'Comando non implementato',
-	'wysiwygUnknownToolbarSet' => 'La barra di strumenti \"%1\" non esiste',
-	'wysiwygNoActiveX' => 'Le impostazioni di sicurezza del tuo browser potrebbero limitare alcune funzionalità dell\'editor. Devi abilitare l\'opzione \"Esegui controlli e plug-in ActiveX\". Potresti avere errori e notare funzionalità mancanti.',
+	'wysiwygUnknownToolbarSet' => 'La barra di strumenti \\"%1\\" non esiste',
+	'wysiwygNoActiveX' => 'Le impostazioni di sicurezza del tuo browser potrebbero limitare alcune funzionalità dell\'editor. Devi abilitare l\'opzione \\"Esegui controlli e plug-in ActiveX\\". Potresti avere errori e notare funzionalità mancanti.',
 	'wysiwygBrowseServerBlocked' => 'Non è possibile aprire la finestra di espolorazione risorse. Verifica che tutti i blocca popup siano bloccati.',
 	'wysiwygDialogBlocked' => 'Non è possibile aprire la finestra di dialogo. Verifica che tutti i blocca popup siano bloccati.',
 	'wysiwygVisitLinkBlocked' => 'It was not possible to open a new window. Make sure all popup blockers are disabled.',
@@ -1615,7 +1670,7 @@ $messages['it'] = array(
 	'wysiwygDlgAdvancedTag' => 'Avanzate',
 	'wysiwygDlgOpOther' => '<Altro>',
 	'wysiwygDlgInfoTab' => 'Info',
-	'wysiwygDlgAlertUrl' => 'Devi inserire l\'URL',
+	'wysiwygDlgAlertUrl' => "Devi inserire l'URL",
 	'wysiwygDlgGenNotSet' => '<non impostato>',
 	'wysiwygDlgGenId' => 'Id',
 	'wysiwygDlgGenLangCode' => 'Codice Lingua',
@@ -1629,9 +1684,9 @@ $messages['it'] = array(
 	'wysiwygDlgGenLinkCharset' => 'Set di caretteri della risorsa collegata',
 	'wysiwygDlgGenStyle' => 'Stile',
 	'wysiwygDlgBtnResetSize' => 'Reimposta dimensione',
-	'wysiwygDlnLnkMsgNoUrl' => 'Devi inserire l\'URL del collegamento',
-	'wysiwygDlnLnkMsgNoEMail' => 'Devi inserire un\'indirizzo e-mail',
-	'wysiwygDlnLnkMsgNoAnchor' => 'Devi selezionare un\'ancora',
+	'wysiwygDlnLnkMsgNoUrl' => "Devi inserire l'URL del collegamento",
+	'wysiwygDlnLnkMsgNoEMail' => "Devi inserire un'indirizzo e-mail",
+	'wysiwygDlnLnkMsgNoAnchor' => "Devi selezionare un'ancora",
 	'wysiwygDlnLnkMsgInvPopName' => 'Il nome del popup deve iniziare con una lettera, e non può contenere spazi',
 	'wysiwygDlgColorTitle' => 'Seleziona colore',
 	'wysiwygDlgColorBtnClear' => 'Vuota',
@@ -1692,7 +1747,7 @@ $messages['it'] = array(
 	'wysiwygDlgFindAndReplaceTitle' => 'Cerca e Sostituisci',
 	'wysiwygDlgFindTitle' => 'Trova',
 	'wysiwygDlgFindFindBtn' => 'Trova',
-	'wysiwygDlgFindNotFoundMsg' => 'L\'elemento cercato non è stato trovato.',
+	'wysiwygDlgFindNotFoundMsg' => "L'elemento cercato non è stato trovato.",
 	'wysiwygDlgReplaceTitle' => 'Sostituisci',
 	'wysiwygDlgReplaceFindLbl' => 'Trova:',
 	'wysiwygDlgReplaceReplaceLbl' => 'Sostituisci con:',
@@ -1704,8 +1759,8 @@ $messages['it'] = array(
 	'wysiwygPasteErrorCopy' => 'Le impostazioni di sicurezza del browser non permettono di copiare automaticamente il testo. Usa la tastiera (Ctrl+C).',
 	'wysiwygPasteAsText' => 'Incolla come testo semplice',
 	'wysiwygPasteFromWord' => 'Incolla da Word',
-	'wysiwygDlgPasteMsg2' => 'Incolla il testo all\'interno dell\'area sottostante usando la scorciatoia di tastiere (<STRONG>Ctrl+V</STRONG>) e premi <STRONG>OK</STRONG>.',
-	'wysiwygDlgPasteSec' => 'A causa delle impostazioni di sicurezza del browser,l\'editor non è in grado di accedere direttamente agli appunti. E\' pertanto necessario incollarli di nuovo in questa finestra.',
+	'wysiwygDlgPasteMsg2' => "Incolla il testo all'interno dell'area sottostante usando la scorciatoia di tastiere (<STRONG>Ctrl+V</STRONG>) e premi <STRONG>OK</STRONG>.",
+	'wysiwygDlgPasteSec' => "A causa delle impostazioni di sicurezza del browser,l'editor non è in grado di accedere direttamente agli appunti. E' pertanto necessario incollarli di nuovo in questa finestra.",
 	'wysiwygDlgPasteIgnoreFont' => 'Ignora le definizioni di Font',
 	'wysiwygDlgPasteRemoveStyles' => 'Rimuovi le definizioni di Stile',
 	'wysiwygColorAutomatic' => 'Automatico',
@@ -2036,6 +2091,7 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author Naudefj
  * @author Siebrand
  */
 $messages['nl'] = array(
@@ -2288,7 +2344,7 @@ $messages['nl'] = array(
 	'wysiwygDlgImageRemoveTitle' => 'Deze afbeelding verwijderen',
 	'wysiwygDlgImageRemoveContent' => 'Weet u zeker dat u deze afbeelding wilt verwijderen>',
 	'wysiwygDlgVideoRemoveTitle' => 'Deze video verwijderen',
-	'wysiwygDlgVideoRemoveContent' => 'Weet u zeker dat u deze video wilt verwijderen>',
+	'wysiwygDlgVideoRemoveContent' => 'Weet u zeker dat u deze video wilt verwijderen?',
 	'wysiwygDlgSwitchToWikitext' => 'Klik op de knop "Wikitekst bekijken" om dit deel van de pagina te kunnen bewerken',
 	'wysiwygTemplateOther' => 'Ander sjabloon of magisch woord',
 	'wysiwygTemplateClickToEdit' => 'Klik om dit sjabloon te bewerken of gebruik klikken en slepen om het sjabloon te verplaatsen',
@@ -2339,6 +2395,7 @@ $messages['no'] = array(
 	'wysiwygInsertImageLbl' => 'Bilde',
 );
 
+/** Polish (Polski) */
 $messages['pl'] = array(
 	'wysiwygToolbarCollapse' => 'Zwiń pasek narzędzi',
 	'wysiwygToolbarExpand' => 'Rozwiń pasek narzędzi',
@@ -2456,11 +2513,11 @@ $messages['pl'] = array(
 	'wysiwygDone' => 'Gotowe',
 	'wysiwygPasteWordConfirm' => 'Tekst, który chcesz wkleić, prawdopodobnie pochodzi z programu Word. Czy chcesz go wyczyścic przed wklejeniem?',
 	'wysiwygNotCompatiblePaste' => 'Ta funkcja jest dostępna w programie Internet Explorer w wersji 5.5 lub wyższej. Czy chcesz wkleić tekst bez czyszczenia?',
-	'wysiwygUnknownToolbarItem' => 'Nieznany element paska narzędzi \"%1\"',
-	'wysiwygUnknownCommand' => 'Nieznana komenda \"%1\"',
+	'wysiwygUnknownToolbarItem' => 'Nieznany element paska narzędzi \\"%1\\"',
+	'wysiwygUnknownCommand' => 'Nieznana komenda \\"%1\\"',
 	'wysiwygNotImplemented' => 'Komenda niezaimplementowana',
-	'wysiwygUnknownToolbarSet' => 'Pasek narzędzi \"%1\" nie istnieje',
-	'wysiwygNoActiveX' => 'Ustawienia zabezpieczeń twojej przeglądarki mogą ograniczyć niektóre funkcje edytora. Musisz włączyć opcję \"Uruchamianie formantów Activex i dodatków plugin\". W przeciwnym wypadku mogą pojawiać się błędy.',
+	'wysiwygUnknownToolbarSet' => 'Pasek narzędzi \\"%1\\" nie istnieje',
+	'wysiwygNoActiveX' => 'Ustawienia zabezpieczeń twojej przeglądarki mogą ograniczyć niektóre funkcje edytora. Musisz włączyć opcję \\"Uruchamianie formantów Activex i dodatków plugin\\". W przeciwnym wypadku mogą pojawiać się błędy.',
 	'wysiwygBrowseServerBlocked' => 'Nie można otworzyć okno menadżera plików. Upewnij się, że wszystkie blokady wyskakujących okienek są wyłączone.',
 	'wysiwygDialogBlocked' => 'Nie można otworzyć okna dialogowego. Upewnij się, że wszystkie blokady wyskakujących okienek są wyłączone.',
 	'wysiwygVisitLinkBlocked' => 'It was not possible to open a new window. Make sure all popup blockers are disabled.',
@@ -2562,7 +2619,7 @@ $messages['pl'] = array(
 	'wysiwygPasteFromWord' => 'Wklej z Worda',
 	'wysiwygDlgPasteMsg2' => 'Proszę wkleić w poniższym polu używając klawiaturowego skrótu (<STRONG>Ctrl+V</STRONG>) i kliknąć <STRONG>OK</STRONG>.',
 	'wysiwygDlgPasteSec' => 'Zabezpieczenia przeglądarki uniemożliwiają wklejenie danych bezpośrednio do edytora. Proszę dane wkleić ponownie w tym okienku.',
-	'wysiwygDlgPasteIgnoreFont' => 'Ignoruj definicje \'Font Face\'',
+	'wysiwygDlgPasteIgnoreFont' => "Ignoruj definicje 'Font Face'",
 	'wysiwygDlgPasteRemoveStyles' => 'Usuń definicje Stylów',
 	'wysiwygColorAutomatic' => 'Automatycznie',
 	'wysiwygColorMoreColors' => 'Więcej kolorów...',
@@ -2590,7 +2647,7 @@ $messages['pl'] = array(
 	'wysiwygDlgImageRemoveContent' => 'Czy jesteś pewien, że chcesz usunąć tę grafikę?',
 	'wysiwygDlgVideoRemoveTitle' => 'Usuń video',
 	'wysiwygDlgVideoRemoveContent' => 'Czy jesteś pewien, że chcesz usunąć to video?',
-	'wysiwygDlgSwitchToWikitext' => 'Aby edytować tę sekcję musisz przełączyć się tryb WikiTekstu, klikając w przycisk \'Źródło dokumentu\'',
+	'wysiwygDlgSwitchToWikitext' => "Aby edytować tę sekcję musisz przełączyć się tryb WikiTekstu, klikając w przycisk 'Źródło dokumentu'",
 	'wysiwygTemplateOther' => 'Inny szablon / słowo kluczowe',
 	'wysiwygTemplateClickToEdit' => 'Kliknij, aby przejść do edycji szablonu lub kliknij i przytrzymaj, aby przenieść go w inne miejsce',
 	'wysiwygTemplateSearchFor' => 'Wyszukaj szablon',
@@ -2915,6 +2972,31 @@ $messages['ru'] = array(
 	'wysiwygToolbarNormal' => 'Убрать заголовок',
 	'wysiwygToolbarSignature' => 'Добавить вашу подпись',
 	'wysiwygToolbarWidescreen' => 'Переключить широкоэкранный режим',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wysiwygSave' => 'భద్రపరచు',
+	'wysiwygBold' => 'బొద్దు',
+	'wysiwygItalic' => 'వాలు',
+	'wysiwygUnderline' => 'క్రీగీత',
+	'wysiwygDlgBtnOK' => 'సరే',
+	'wysiwygDlgBtnCancel' => 'రద్దుచేయి',
+	'wysiwygDlgBtnClose' => 'మూసివేయి',
+	'wysiwygDlgGenName' => 'పేరు',
+	'wysiwygDlgTableSummary' => 'సారాంశం',
+	'wysiwygDlgCellWidth' => 'వెడల్పు',
+	'wysiwygDlgCellHeight' => 'ఎత్తు',
+	'wysiwygDlgCellWordWrapYes' => 'అవును',
+	'wysiwygDlgCellWordWrapNo' => 'కాదు',
+	'wysiwygColorMoreColors' => 'మరిన్ని రంగులు...',
+	'wysiwygDlgSelectName' => 'పేరు',
+	'wysiwygDlgSelectValue' => 'విలువ',
+	'wysiwygDlgSelectOpText' => 'పాఠ్యం',
+	'wysiwygTemplates' => 'మూసలు',
+	'wysiwygComment' => 'వ్యాఖ్య',
 );
 
 /** Ukrainian (Українська)

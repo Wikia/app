@@ -27,6 +27,16 @@ $messages['br'] = array(
 	'wikiasearch-search-wikia' => 'Klask e Wikia',
 );
 
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'wikiasearch-titles-only' => 'Ne chercher que dans les titres des pages',
+	'wikiasearch-system-error-msg' => "À cause d'une erreur du système, nous n'avons pas pu accomplir votre recherche",
+	'wikiasearch-search-this-wiki' => 'Ne chercher que dans Wikia Central',
+	'wikiasearch-search-wikia' => 'Chercher dans Wikia',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -57,6 +67,36 @@ $messages['hu'] = array(
 	'wikiasearch-search-wikia' => 'Keresés a Wikián',
 );
 
+/** Japanese (日本語)
+ * @author Tommy6
+ */
+$messages['ja'] = array(
+	'wikiasearch-titles-only' => 'ページのタイトルだけを検索する',
+	'wikiasearch-system-error-msg' => 'システムエラーにより検索を完了できませんでした。',
+	'wikiasearch-search-this-wiki' => 'セントラルウィキアのみを検索する',
+	'wikiasearch-search-wikia' => 'ウィキア全体を検索',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'wikiasearch-titles-only' => 'Пребарувај само наслови на страници',
+	'wikiasearch-system-error-msg' => 'Се појави системска грешја и пребарувањето не можеше да се изврши',
+	'wikiasearch-search-this-wiki' => 'Пербарувај само по Викија Централата',
+	'wikiasearch-search-wikia' => 'Пребарајте ја Викија',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'wikiasearch-titles-only' => 'Alleen paginanamen doorzoeken',
+	'wikiasearch-system-error-msg' => 'Door een systeemfout was het niet mogelijk uw zoekopdracht uit te voeren',
+	'wikiasearch-search-this-wiki' => 'Alleen Wikia Central doorzoeken',
+	'wikiasearch-search-wikia' => 'Wikia doorzoeken',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -66,6 +106,16 @@ $messages['pms'] = array(
 	'wikiasearch-system-error-msg' => "Për n'eror dël sistema, soa arserca a peul pa esse completà",
 	'wikiasearch-search-this-wiki' => 'Serca Mach an Wikia Sentral',
 	'wikiasearch-search-wikia' => 'Serca an Wikia',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'wikiasearch-titles-only' => 'Pesquisar apenas nos títulos de páginas',
+	'wikiasearch-system-error-msg' => 'Devido a um erro de sistema, sua pesquisa não pôde ser efetuada',
+	'wikiasearch-search-this-wiki' => 'Pesquisar apenas na wikia Central',
+	'wikiasearch-search-wikia' => 'Pesquisar na wikia',
 );
 
 /** Russian (Русский)

@@ -72,17 +72,50 @@ $messages['af'] = array(
 	'editaccount-invalid-email' => '"$1" is nie \'n geldige e-posadres nie!',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'editaccount-submit-email' => 'Захаваць адрас электроннай пошты',
+	'editaccount-submit-pass' => 'Захаваць пароль',
+	'editaccount-submit-realname' => 'Захаваць сапраўднае імя',
+);
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'editaccount' => 'Kemmañ ar gont',
+	'editaccount-title' => 'Special:EditAccount',
+	'editaccount-frame-manage' => 'Kemmañ ur gont',
+	'editaccount-frame-usage' => 'Notenn',
+	'editaccount-label-select' => 'Dibab ur gont implijer',
+	'editaccount-submit-account' => 'Merañ ar gont',
+	'editaccount-frame-account' => 'Kemmoù ar gont implijer : $1',
+	'editaccount-label-email' => "Termeniñ ur chomlec'h postel nevez",
+	'editaccount-label-pass' => 'Termeniñ ur ger-tremen nevez',
+	'editaccount-label-realname' => 'Termeniñ un anv klok nevez',
+	'editaccount-submit-email' => 'Enrollañ ar postel',
+	'editaccount-submit-pass' => 'Enrollañ ar ger-tremen',
+	'editaccount-submit-realname' => 'Enrollañ an anv klok',
+	'editaccount-submit-close' => 'Serriñ ar gont',
+	'editaccount-status' => 'Kemenadenn statud',
+	'editaccount-success-email' => 'Kemmet eo bet ar postel evit ar gont $1 da $2.',
+	'editaccount-nouser' => 'N\'eus ket eus ar gont "$1" !',
+	'editaccount-log' => 'Marilh ar gontoù implijer',
+);
+
+/** German (Deutsch) */
 $messages['de'] = array(
 	'edit-account-closed-flag' => '<div style="border: 1px solid black; padding: 1em">Dieses Benutzerkonto wurde deaktiviert.</div>',
 );
 
-
+/** Spanish (Español) */
 $messages['es'] = array(
 	'right-editaccount' => 'Editar las preferencias de otros usuarios',
 );
 
-
+/** Persian (فارسی) */
 $messages['fa'] = array(
 	'editaccount-submit-close' => 'بستن حساب کاربری',
 );
@@ -374,5 +407,6 @@ $messages['ru'] = array(
 	'editaccount-success-realname' => 'Настоящее имя для учётной записи $1 успешно изменено.',
 	'editaccount-success-close' => 'Учётная запись $1 успешно отключена.',
 	'editaccount-nouser' => 'Учётная запись «$1» не существует!',
+	'right-editaccount' => 'Редактировать настройки других участников',
 );
 

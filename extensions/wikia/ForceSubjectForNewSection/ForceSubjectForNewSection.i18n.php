@@ -51,6 +51,20 @@ $messages['bs'] = array(
 	'force-subject-for-new-section-message' => 'Molimo unesite naslov za sekciju',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
+$messages['es'] = array(
+	'force-subject-for-new-section-message' => 'Por favor escriba un encabezado para esta sección',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'force-subject-for-new-section-message' => 'Veuillez saisir un titre pour cette section',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -86,6 +100,20 @@ $messages['lb'] = array(
 	'force-subject-for-new-section-message' => 'Gitt w.e.g. eng Iwwerschrëft fir den neien Abschnitt an',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'force-subject-for-new-section-message' => 'Внесете наслов на заглавието',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'force-subject-for-new-section-message' => 'Voeg alstublieft een kop voor de paragraaf toe',
+);
+
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Jon Harald Søby
  */
@@ -100,8 +128,9 @@ $messages['oc'] = array(
 	'force-subject-for-new-section-message' => 'Picatz un títol per aquesta seccion',
 );
 
+/** Polish (Polski) */
 $messages['pl'] = array(
-	'force-subject-for-new-section-message' => 'Proszę wpisać temat dla sekcji'
+	'force-subject-for-new-section-message' => 'Proszę wpisać temat dla sekcji',
 );
 
 /** Piedmontese (Piemontèis)
@@ -109,6 +138,20 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'force-subject-for-new-section-message' => "Për piasì ch'a anserissa un tìtol për la session",
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'force-subject-for-new-section-message' => 'Por favor especifique um cabeçalho para esta seção',
+);
+
+/** Tarandíne (Tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'force-subject-for-new-section-message' => "Pe piacere mitte 'na linèe de testate pa sezione",
 );
 
 /** Russian (Русский)

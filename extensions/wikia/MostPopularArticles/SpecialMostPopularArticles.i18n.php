@@ -33,12 +33,21 @@ $messages['br'] = array(
 	'mostpopulararticles' => 'Pennadoù ar poblekañ (eus an diaz roadennoù)',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'mostpopulararticles' => 'Häufig geänderte Artikel',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'mostpopulararticles' => 'Páginas más populares',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'mostpopulararticles' => "Articles les plus populaires (d'après la base de données)",
 );
 
 /** Galician (Galego)
@@ -69,6 +78,20 @@ $messages['lb'] = array(
 	'mostpopulararticles' => 'Beléiwsten Artikelen (aus der Datebank)',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'mostpopulararticles' => 'Најпопуларни статии (од базата на податоци)',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'mostpopulararticles' => 'Meest populaire artikelen (uit de database)',
+);
+
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  */
@@ -97,6 +120,13 @@ $messages['pms'] = array(
 	'mostpopulararticles' => 'Artìcoj pi popolar (da la base ëd dàit)',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'mostpopulararticles' => 'Arigos mais populares (do banco de dados)',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -116,5 +146,12 @@ $messages['ru'] = array(
  */
 $messages['sv'] = array(
 	'mostpopulararticles' => 'Populäraste artiklarna (från databasen)',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'mostpopulararticles' => 'Найпопулярніші статті (з бази даних)',
 );
 

@@ -33,16 +33,26 @@ $messages['br'] = array(
 	'mostpopularcategories' => 'Rummadoù ar poblekañ',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'mostpopularcategories' => 'Beliebteste Kategorien',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'mostpopularcategories' => 'Categorías más populares',
 );
 
+/** Persian (فارسی) */
 $messages['fa'] = array(
 	'mostpopularcategories' => 'رده‌های محبوب',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'mostpopularcategories' => 'Catégories les plus populaires',
 );
 
 /** Galician (Galego)
@@ -66,6 +76,20 @@ $messages['hu'] = array(
 	'mostpopularcategories' => 'Legnépszerűbb kategóriák',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'mostpopularcategories' => 'Најпопуларни категории',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'mostpopularcategories' => 'Meest populaire categorieën',
+);
+
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  */
@@ -85,6 +109,20 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'mostpopularcategories' => 'Categorias mai popularas',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'mostpopularcategories' => 'Categorìe pi popolar',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'mostpopularcategories' => 'Categorias mais populares',
 );
 
 /** Tarandíne (Tarandíne)
@@ -113,5 +151,12 @@ $messages['sv'] = array(
  */
 $messages['tk'] = array(
 	'mostpopularcategories' => 'Iň ýörgünli kategoriýalar',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'mostpopularcategories' => 'Найпопулярніші категорії',
 );
 

@@ -25,22 +25,22 @@ $messages['br'] = array(
 	'theorytab-parent-title' => '',
 );
 
-$messages['de'] = array (
-	"theorytab-subpage" => "/Theories",
-	"theorytab-title" => "Theorien",
-	"theorytab-parent-title" => "Hauptartikel"
+/** German (Deutsch) */
+$messages['de'] = array(
+	'theorytab-title' => 'Theorien',
+	'theorytab-parent-title' => 'Hauptartikel',
 );
 
-$messages['es'] = array (
-	"theorytab-subpage" => "/Theories",
-	"theorytab-title" => "Teorias",
-	"theorytab-parent-title" => "Articulo Principal" 
+/** Spanish (Español) */
+$messages['es'] = array(
+	'theorytab-title' => 'Teorias',
+	'theorytab-parent-title' => 'Articulo Principal',
 );
 
-$messages['fr'] = array (
-	"theorytab-subpage" => "/Theories",
-	"theorytab-title" => "Theories",
-	"theorytab-parent-title" => "Article Principal"
+/** French (Français) */
+$messages['fr'] = array(
+	'theorytab-title' => 'Theories',
+	'theorytab-parent-title' => 'Article Principal',
 );
 
 /** Galician (Galego)
@@ -66,16 +66,24 @@ $messages['hu'] = array(
 	'theorytab-parent-title' => 'Szülő szócikk',
 );
 
-$messages['it'] = array (
-	"theorytab-subpage" => "/Theories",
-	"theorytab-title" => "Teorie",
-	"theorytab-parent-title" => "Articolo principale"
+/** Italian (Italiano) */
+$messages['it'] = array(
+	'theorytab-title' => 'Teorie',
+	'theorytab-parent-title' => 'Articolo principale',
 );
 
-$messages['nl'] = array (
-	"theorytab-subpage" => "/Theories",
-	"theorytab-title" => "Theorieen",
-	"theorytab-parent-title" => "Hoofd Artikel"
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'theorytab-title' => 'Теорија',
+	'theorytab-parent-title' => 'Матична статија',
+);
+
+/** Dutch (Nederlands) */
+$messages['nl'] = array(
+	'theorytab-title' => 'Theorieen',
+	'theorytab-parent-title' => 'Hoofd Artikel',
 );
 
 /** Occitan (Occitan)
@@ -86,10 +94,18 @@ $messages['oc'] = array(
 	'theorytab-parent-title' => 'Article Principal',
 );
 
-$messages['pt-br'] = array (
-	"theorytab-subpage" => "/Theories",
-	"theorytab-title" => "Teorias",
-	"theorytab-parent-title" => "Artigo Princdipal"
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'theorytab-title' => 'Teorìa',
+	'theorytab-parent-title' => 'Artìcol pare',
+);
+
+/** Brazilian Portuguese (Português do Brasil) */
+$messages['pt-br'] = array(
+	'theorytab-title' => 'Teorias',
+	'theorytab-parent-title' => 'Artigo Princdipal',
 );
 
 /** Russian (Русский)
