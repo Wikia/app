@@ -51,7 +51,7 @@ HEAD;
 
 			// add date and revision data
 			$rev = trim( `svn info | tail -n 7 | head -n 1 | awk '{ print $2 }'` );
-			$res = str_replace('%REV%', $rev, $res);
+			$res = str_replace('%REV%', "r{$rev}", $res);
 
 			$res = str_replace('%VERSION%', date('Ymd'), $res);
 			break;
