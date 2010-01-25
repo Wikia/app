@@ -104,7 +104,7 @@ $(function() {
 	if( $( '#dynamic-links-write-article-link' ).exists() ) {
 		// open dialog on clicking
 		$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e, null); });
-		$( '#dynamic-links-write-article-row' ).removeClass( 'disabled' );
+		$( '#dynamic-links-write-article-row' ).attr( 'class', 'link_box_dynamic_item' );
 	}
 
 	$(".new").bind('click', function(e) { CreatePage.openDialog(e, CreatePage.getTitleFromUrl(this.href) ); } );
