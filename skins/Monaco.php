@@ -1969,7 +1969,16 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 	}
 	//all other namespaces
 	elseif ( $showDynamicLinks ) {
-		$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage');
+	
+		global $wgMonacoDynamicCreateOverride;
+		if( !empty($wgMonacoDynamicCreateOverride) )
+		{
+			$sp = Title::newFromText($wgMonacoDynamicCreateOverride);
+		}
+		else
+		{
+			$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage');
+		}
 		/* Redirect to login page instead of showing error, see Login friction project */
 		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'Signup')->getLocalURL(wfGetReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(

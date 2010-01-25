@@ -1,5 +1,5 @@
 == Changes since 201001.4 ==
-* 
+* Monaco: Allow override of where dynamicbox create points to (uberfuzzy)
 
 == Changes since 201001.3 ==
 * rt#38254: RTE: headers following divs lose the line break (macbre)
