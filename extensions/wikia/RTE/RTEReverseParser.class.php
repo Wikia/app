@@ -984,6 +984,11 @@ class RTEReverseParser {
 
 		$out = $this->fixForTableCell($node, $out);
 
+		// RT #38254
+		if (self::isChildOf($node, 'div') && self::isFirstChild($node)) {
+			$out = "\n{$out}";
+		}
+
 		return $out;
 	}
 
