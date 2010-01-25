@@ -26,8 +26,15 @@ $messages['en'] = array(
 	'createpage-dialog-message1' => 'Hooray, you\'re creating a new page!',
 	'createpage-dialog-message2' => 'What do you want to call it?',
 	'createpage-dialog-choose' => 'Choose a page layout:',
-	'createpage-dialog-format' => 'Format',
-	'createpage-dialog-blank' => 'Blank page',	
+	'createpage-dialog-format' => 'Standard layout',
+	'createpage-dialog-blank' => 'Blank page',
+	'createpage-error-empty-title' => 'Please write a title for your article',
+	'createpage-error-invalid-title' => 'Sorry, the article title was invalid. Please use a different title.',
+	'createpage-error-article-exists' => 'An article with that title already exists. You can go to <a href="$1">$2</a>, or rename your page',
+	'createpage-error-article-spam' => 'Sorry, the article title was rejected by our spam filter. Please use a different title.',
+	'createpage-error-article-blocked' => 'Sorry, you are unable to create that article at this time.',
+	'tog-createpagedefaultblank' => 'Use blank page as default for creating a new page',
+	'newpagelayout' => '',
 );
 
 $messages['de'] = array(
