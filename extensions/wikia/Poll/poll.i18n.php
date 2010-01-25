@@ -13,6 +13,23 @@ $messages['en'] = array(
 	"pollSubmitting" => "Please wait, submitting your vote."
 );
 
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'pollInfo' => 'Needs plural and date/time split.',
+);
+
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'pollVoteUpdate' => 'U stem is opgedateer.',
+	'pollVoteAdd' => 'U stem is bygevoeg.',
+	'pollPercentVotes' => '$1% van alle stemme',
+	'pollNoVote' => 'Stem asseblief hier onder.',
+);
+
 /** Breton (Brezhoneg)
  * @author Y-M D
  */
@@ -27,31 +44,35 @@ $messages['br'] = array(
 	'pollSubmitting' => "Mar plij gortozit, emeur oc'h ober war-dro ho vot.",
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
-	"pollInfo"       => "Bisher gab es $1 Stimmen seit der Erstellung der Umfrage am $2.",
-	"pollSubmitting" => "Bitte warten, deine Stimme wird gezählt.",
+	'pollInfo' => 'Bisher gab es $1 Stimmen seit der Erstellung der Umfrage am $2.',
+	'pollSubmitting' => 'Bitte warten, deine Stimme wird gezählt.',
 );
 
 $messages['es'] = array(
-	'pollvoteupdate' => 'Tu voto ha sido actualizado.',
-	'pollvoteadd' => 'Tu voto ha sido añadido.',
-	'pollvoteerror' => 'Ha habido un problema cuando comprobábamos tu voto, por favor, inténtalo de nuevo.',
-	'pollpercentvotes' => '$1% de todos los votos',
-	'pollyourvote' => 'Ya votaste por "$1" el $2, puedes cambiar tu voto haciendo clic en una respuesta debajo.',
-	'pollnovote' => 'Por favor, vota debajo.',
-	'pollinfo' => 'Ha habido $1 votos desde que la encuesta fue creada el $2.',
-	'pollsubmitting' => 'Por favor espera, estamos comprobando tu voto, ten paciencia.',
+	'pollVoteUpdate' => 'Tu voto ha sido actualizado.',
+	'pollVoteAdd' => 'Tu voto ha sido añadido.',
+	'pollVoteError' => 'Ha habido un problema cuando comprobábamos tu voto, por favor, inténtalo de nuevo.',
+	'pollPercentVotes' => '$1% de todos los votos',
+	'pollYourVote' => 'Ya votaste por "$1" el $2, puedes cambiar tu voto haciendo clic en una respuesta debajo.',
+	'pollNoVote' => 'Por favor, vota debajo.',
+	'pollInfo' => 'Ha habido $1 votos desde que la encuesta fue creada el $2.',
+	'pollSubmitting' => 'Por favor espera, estamos comprobando tu voto, ten paciencia.',
 );
 
+/** French (Français)
+ * @author Peter17
+ */
 $messages['fr'] = array(
-	'pollvoteupdate' => 'Ta voix est actualisé.',
-	'pollvoteadd' => 'Ta voix était compté.',
-	'pollvoteerror' => 'Il y avait une problème avec le traitement de ta voix. Essaie-cela s\'il te plaît encore une fois.',
-	'pollpercentvotes' => '$1% de tous voix.',
-	'pollyourvote' => 'Tu a déjà voté pour $1 (à $2). Tu peux changer ta voix, si tu cliques à l\'une des réponses en bas.',
-	'pollnovote' => 'Vote en bas.',
-	'pollinfo' => 'Il y avait 1$ voix, depuis l\'élaboration du sondage au 2$.',
-	'pollsubmitting' => 'Attends une moment, ta voix est traité...',
+	'pollVoteUpdate' => 'Votre vote a été actualisé.',
+	'pollVoteAdd' => 'Votre vote a été ajouté.',
+	'pollVoteError' => "Un problème est apparu lors du traitement de votre vote. Essayez encore une fois, s'il-vous-plaît.",
+	'pollPercentVotes' => '$1% du total des voix',
+	'pollYourVote' => 'Vous avez déjà voté pour "$1" sur $2 ; vous pouvez changer votre vote en cliquant sur l\'une des réponses ci-dessous.',
+	'pollNoVote' => 'Merci de voter ci-dessous.',
+	'pollInfo' => '$1 votes ont été exprimés depuis la création du sondage sur $2.',
+	'pollSubmitting' => 'Merci de patienter pendant le traitement de votre vote...',
 );
 
 /** Galician (Galego)
@@ -79,25 +100,57 @@ $messages['hu'] = array(
 );
 
 $messages['ja'] = array(
-	'pollvoteupdate' => '投票を更新しました。',
-	'pollvoteadd' => '投票が追加されました。',
-	'pollvoteerror' => '問題が発生しました。少ししてから再度投票してください。',
-	'pollpercentvotes' => '全体の$1%',
-	'pollyourvote' => '$2について、$1に投票しています。以下の回答をクリックすると、投票を変更できます。',
-	'pollnovote' => 'さあ、投票しよう!',
-	'pollinfo' => 'これまでに$1票が入れられました。<br /><b>投票作成日:</b>$2',
-	'pollsubmitting' => '投票を処理しています。少しお待ちください。',
+	'pollVoteUpdate' => '投票を更新しました。',
+	'pollVoteAdd' => '投票が追加されました。',
+	'pollVoteError' => '問題が発生しました。少ししてから再度投票してください。',
+	'pollPercentVotes' => '全体の$1%',
+	'pollYourVote' => '$2について、$1に投票しています。以下の回答をクリックすると、投票を変更できます。',
+	'pollNoVote' => 'さあ、投票しよう!',
+	'pollInfo' => 'これまでに$1票が入れられました。<br /><b>投票作成日:</b>$2',
+	'pollSubmitting' => '投票を処理しています。少しお待ちください。',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'pollVoteUpdate' => 'Вашиот глас е подновен.',
+	'pollVoteAdd' => 'Вашиот глас е додаден.',
+	'pollVoteError' => 'Се појави проблем при обработката на вашиот глас. Обидете се повторно.',
+	'pollPercentVotes' => '$1% од вкупниот број на гласови',
+	'pollYourVote' => 'Веќе имате гласано за „$1“ на $2; можете да го промените гласот со кликнување на еден од одговорите подолу.',
+	'pollNoVote' => 'Гласајте подолу.',
+	'pollInfo' => 'Откако е создадена анкетата ($2) гласано е $1 пати.',
+	'pollSubmitting' => 'Почекајте, го заведувам вашиот глас.',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'pollVoteUpdate' => 'Uw stem is bijgewerkt.',
+	'pollVoteAdd' => 'Uw stem is toegevoegd.',
+	'pollVoteError' => 'Er is een probleem opgetreden tijdens het verwerken van uw stem.
+Probeer het opnieuw.',
+	'pollPercentVotes' => '$1% van alle stemmen',
+	'pollYourVote' => 'U hebt al voor "$1" gestemd op $2.
+U kunt uw stem wijzigen door hieronder op een antwoord te klikken.',
+	'pollNoVote' => 'Stem hieronder.',
+	'pollInfo' => 'Er zijn $1 stemmen uitgebracht sinds de peiling op $2 is aangemaakt.',
+	'pollSubmitting' => 'Even geduld alstublieft.
+Uw stem wordt opgeslagen...',
+);
+
+/** Polish (Polski) */
 $messages['pl'] = array(
-	"pollVoteUpdate" => "Twój głos został zmieniony.",
-	"pollVoteAdd"    => "Twój głos został dodany.",
-	"pollVoteError"  => "Wystąpił błąd w czasie dodawania głosu, proszę spróbować później.",
-	"pollPercentVotes" => "$1% wszystkich głosów",
-	"pollYourVote"   => "Zagłosowałeś juz na \"$1\" $2, możesz zaktualizować swój głos klikając na odpowiedź poniżej.",
-	"pollNoVote"     => "Podaj swój głos poniżej.",
-	"pollInfo"       => "Oddano już $1 głosy/ów od założenia ankiety dnia $2.",
-	"pollSubmitting" => "Proszę czekać, trwa dodawanie głosu."
+	'pollVoteUpdate' => 'Twój głos został zmieniony.',
+	'pollVoteAdd' => 'Twój głos został dodany.',
+	'pollVoteError' => 'Wystąpił błąd w czasie dodawania głosu, proszę spróbować później.',
+	'pollPercentVotes' => '$1% wszystkich głosów',
+	'pollYourVote' => 'Zagłosowałeś juz na "$1" $2, możesz zaktualizować swój głos klikając na odpowiedź poniżej.',
+	'pollNoVote' => 'Podaj swój głos poniżej.',
+	'pollInfo' => 'Oddano już $1 głosy/ów od założenia ankiety dnia $2.',
+	'pollSubmitting' => 'Proszę czekać, trwa dodawanie głosu.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -113,6 +166,20 @@ $messages['pms'] = array(
 	'pollNoVote' => 'Për piasì, voté sì-sota.',
 	'pollInfo' => "A son staje $1 vot da quand ël sondagi a l'é stàit creà su $2.",
 	'pollSubmitting' => "Për piasì ch'a speta, sò vot a l'é an camin ch'a riva.",
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'pollVoteUpdate' => 'Seu voto foi atualizado.',
+	'pollVoteAdd' => 'Seu voto foi adicionado.',
+	'pollVoteError' => 'Houve um problema com o processamento de seu voto, por favor tente novamente.',
+	'pollPercentVotes' => '$1% de todos votos',
+	'pollYourVote' => 'Vocâ já votou para "$1" em $2, você pode alterar seu voto clicando em uma opção abaixo.',
+	'pollNoVote' => 'Por favor vote abaixo',
+	'pollInfo' => '$1 votos desde a criação da votação em $2.',
+	'pollSubmitting' => 'Por favor aguarde, enviando sua opção.',
 );
 
 /** Russian (Русский)
@@ -131,11 +198,11 @@ $messages['ru'] = array(
 );
 
 $messages['zh'] = array(
-	'pollvoteupdate' => '你的投票已更新',
-	'pollvoteadd' => '您的投票已計入',
-	'pollvoteerror' => '投票過程發生問題，請再試一次',
-	'pollpercentvotes' => '$1%',
-	'pollnovote' => '請於下方投票',
-	'pollsubmitting' => '正在處理您的投票，請稍候。',
+	'pollVoteUpdate' => '你的投票已更新',
+	'pollVoteAdd' => '您的投票已計入',
+	'pollVoteError' => '投票過程發生問題，請再試一次',
+	'pollPercentVotes' => '$1%',
+	'pollNoVote' => '請於下方投票',
+	'pollSubmitting' => '正在處理您的投票，請稍候。',
 );
 

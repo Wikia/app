@@ -188,12 +188,14 @@ $messages['de'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author IAlex
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'multiwikiedit_on' => 'Lego. Probably has leading and trailing parameters. Please add this to the message...',
 	'multiwikiedit_split_results' => 'Needs plural support for $1 and $2',
+	'multidelete_button' => '{{Identical|Delete}}',
 	'multidelete_split_results' => 'Needs plural support for $1 and $2.',
 	'multidelete_max_display_size' => 'Needs plural support for $1',
 	'multiwikirecords' => 'If $1 is a number, add plural support',
@@ -204,6 +206,7 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'multitasks-link-back-label' => 'hier',
+	'multiwikiedit' => 'Wysig meervoudige bladsye',
 	'multiwikiedit_button' => 'WYSIG',
 	'multiwikiedit_confirm' => 'BEVESTIG',
 	'multiwikiedit_caption' => 'Bladsylys',
@@ -216,25 +219,44 @@ $messages['af'] = array(
 	'multiwikiedit_list_caption' => 'Wikilys',
 	'multiwikiedit_minoredit_caption' => 'Klein wysiging',
 	'multiwikiedit_newonly_caption' => 'Slaan bestaande artikels oor',
+	'multiwikiedit_choose_articles' => 'kies welke van die gevonde bladsye gewysig moet word',
 	'multiwikiedit_processing' => 'besig met wysiging van bladsye',
+	'multiwikiedit_from_file' => 'uit lêerlys',
+	'multiwikiedit_from_form' => 'uit vorm',
+	'multiwikiedit_summary_text' => 'Samevattingsveld',
 	'multiwikiedit_this_wiki' => 'hierdie wiki',
 	'multiwikiedit_inbox_caption' => 'geskei deur kommas',
 	'multiwikiedit_all_wikis' => "alle wiki's",
 	'multiwikiedit_selected_wikis' => "gekose wiki's",
 	'multiwikiedit_success_subtitle' => 'vir $1',
+	'multiwikiedit_omitting_nonexistant' => 'Die nie-bestaande bladsy $1 word oorgeslaan.',
+	'multiwikiedit_omitting_invalid' => 'Die ongeldige bladsy "$1" word nie verwerk nie.',
+	'multiwikiedit_file_bad_format' => 'Die lêer moet gewone teks bevat',
+	'multiwikiedit_file_missing' => 'Die lêer verskaf kon nie gelees word nie',
 	'multiwikiedit_select_yourself' => 'u',
+	'multiwikiedit_no_page' => "Verskaf ten minste een bladsy of kies 'n lêer wat die bladsylys bevat.",
+	'multiwikiedit_add_text' => 'Verskaf eers die bladsyteks',
+	'multiwikiedit_supply_wikis' => "Verskaf asseblief die lys van geselekteerde wiki's",
 	'multiwikiedit_tasks_list' => 'Lys van take om uit te voer',
 	'multiwikiedit_edit_options' => 'Wysigingsopsies',
+	'multidelete' => "Skrap 'n lys van bladsye",
 	'multidelete_button' => 'SKRAP',
 	'multidelete_caption' => 'Bladsylys',
 	'multidelete_or' => '<b>OF</b>',
+	'multidelete_reason' => 'Rede vir verwydering',
+	'multidelete_error_empty_selection' => "Verskaf asseblief die lys met geselekteerde wiki's",
 	'multidelete_select_all' => 'Kies almal',
 	'multidelete_page' => 'Bladsye om te verwyder',
+	'multidelete_processing' => 'besig met die verwydering van bladsye',
 	'multidelete_this_wiki' => 'hierdie wiki',
 	'multidelete_inbox_caption' => 'of deur kommas geskei',
 	'multidelete_all_wikis' => "alle wiki's",
 	'multidelete_selected_wikis' => "seselekteerde wiki's",
 	'multidelete_success_subtitle' => 'vir $1',
+	'multidelete_omitting_nonexistant' => 'Die nie-bestaande bladsy $1 word oorgeslaan',
+	'multidelete_omitting_invalid' => 'Die ongeldige bladsynaam $1 word oorgeslaan',
+	'multidelete_file_bad_format' => 'Die lêer moet gewone teks bevat',
+	'multidelete_file_missing' => 'Die gegewe lêer kon nie gelees word nie',
 	'multidelete_brazilian_portuguese_wikis' => "alle Brasiliaans-Portugese wiki's",
 	'multidelete_hebrew_wikis' => "alle Hebreeuse wiki's",
 	'multidelete_chinese_wikis' => "alle Sjinese wiki's",
@@ -256,30 +278,75 @@ $messages['af'] = array(
 	'multiwikirecords' => "Gevind op $1 wiki's",
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'multidelete_button' => 'ВЫДАЛІЦЬ',
+);
+
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
+	'multitasks-link-back-label' => 'amañ',
+	'multiwikiedit' => 'Kemmañ un heuliad pajennoù',
 	'multiwikiedit_button' => 'KEMMAÑ',
 	'multiwikiedit_confirm' => 'GWIRIAÑ',
+	'multiwikiedit_help' => 'Kemmañ un heuliad pajennoù. Gallout a rit kemmañ ar pajennoù zo listennet er voest skrid. Dibabit un implijer a vo diskwelet e renabl an dilamadurioù. Er restr enporzhiet e tle bezañ un anv pajenn hag un tres diret dispartiet gant « | » e pep linenn.',
 	'multiwikiedit_caption' => 'Roll ar pajennoù',
+	'multiwikiedit_title' => 'Kemmañ Lieswiki',
+	'multiwikiedit_as' => 'Seveniñ ar skript evel',
+	'multiwikiedit_both_modes' => 'Dibabit ur pajenn zibar pe ur roll pajennoù roet',
 	'multiwikiedit_or' => '<b>PE</b>',
+	'multiwikiedit_task_added' => 'Ouzhpennet eo bet an trevell lieskemmañ #$1.',
+	'multiwikiedit_task_error' => 'Ur fazi zo bet en ur ouzhpennañ ar poellad lieskemmañ.',
+	'multiwikiedit_task_none_selected' => "N'hoc'h eus ouzhpennet pennad ebet. N'eo ket bet ouzhpennet an trevell.",
+	'multiwikiedit_task_link' => 'Gallout a rit gwiriañ ho poellad',
 	'multiwikiedit_on' => 'war',
+	'multiwikiedit_page' => 'Pajennoù da gemmañ',
 	'multiwikiedit_page_text' => 'Testenn da enrollañ',
 	'multiwikiedit_reason' => "Abeg ar c'hemm",
 	'multiwikiedit_list_caption' => 'Roll ar wikioù',
 	'multiwikiedit_minoredit_caption' => 'Kemm dister',
+	'multiwikiedit_autosummary_caption' => 'Kuzhat an diverradenn',
+	'multiwikiedit_norecentchanges_caption' => "Chom hep diskwel ar c'hemm er c'hemmoù nevez",
+	'multiwikiedit_choose_articles' => 'Dibabit ar pennadoù kavet zo da gemmañ',
+	'multiwikiedit_processing' => 'kemmañ pajennoù',
 	'multiwikiedit_from_file' => 'eus roll ar restroù',
 	'multiwikiedit_from_form' => 'eus ar furmskrid',
+	'multiwikiedit_summary_text' => 'Maezienn an diverradenn',
 	'multiwikiedit_this_wiki' => 'ar wiki-mañ',
 	'multiwikiedit_inbox_caption' => 'dispartiet gant virgulennoù',
 	'multiwikiedit_all_wikis' => 'an holl wikioù',
 	'multiwikiedit_selected_wikis' => 'ar wikioù diuzhet',
 	'multiwikiedit_success_subtitle' => 'evit $1',
+	'multiwikiedit_link_back' => "Gallout a rit distreiñ d'ar furmskrid MultiWikiEdit  $1.",
+	'multiwikiedit_omitting_nonexistant' => "Pajenn n'eus ket anezhi $1 disoñjet.",
+	'multiwikiedit_file_bad_format' => 'Ar restr a rank bezañ ur resr skrid',
+	'multiwikiedit_file_missing' => "ne c'haller ket lenn ar restr roet",
+	'multiwikiedit_select_script' => 'Skript kemmañ pajenn',
 	'multiwikiedit_select_yourself' => "c'hwi",
+	'multiwikiedit_no_page' => 'Spisait, mar plij,  ur bajenn da nebeutañ PE dibabit ur restr zo roll ar pajennoù enni.',
+	'multiwikiedit_split_results' => "Re vras eo ho kont pennad evit bezañ sevenet en un trevell hepken. Dispartiet eo bet an dra-se e '''$1''' trevell, gant '''$2''' pennad dre drevell da nebeutañ.",
+	'multiwikiedit_add_text' => 'Spisait skrid ar pennad da gentañ',
+	'multiwikiedit_supply_wikis' => 'Roit, mar plij, roll ar wikioù dibabet',
+	'multiwikiedit_tasks_list' => 'Roll an trevelloù da ober',
+	'multiwikiedit_general_options' => 'Dibaboù hollek al lieskemmoù',
+	'multiwikiedit_edit_options' => 'Kemmañ dibaboù',
+	'multidelete' => 'Dilemel un heuliad pajennoù',
 	'multidelete_button' => 'DILEMEL',
+	'multidelete_help' => "Dilemel un heuliad pajennoù dre ur poellad drekleur. Gallout a rit en ober evit ar wiki-se gant ur diaz roadennoù rannet, ar wikioù dibabet pe ar yezhoù dibabet. Gallout a rit dibab ivez da zilemel ar pajennoù evel C'HWI pe dre ur gont skript rakdibabet.",
+	'multidelete_caption' => 'Roll ar pajennoù',
+	'multidelete_title' => 'Dilemel Lies',
+	'multidelete_both_modes' => 'Dibabit, mar plij, pe ur bajenn zibar pe ur roll pajennoù roet.',
 	'multidelete_or' => '<b>PE</b>',
 	'multidelete_reason' => 'Abeg an dilamidigezh',
+	'multidelete_error_empty_selection' => 'Roit, mar plij, roll ar wikioù dibabet',
+	'multidelete_error_multi_page' => 'Ne vez aotreet nemet un titl en un taol evit dilemel lies Wiki.',
+	'multidelete_info_empty_list' => "N'eo ket kavet an titloù roet war wiki dibabet ebet.",
+	'multidelete_task_added' => 'Ouzhpennet eo bet ar poellad dilemel lies #$1 .',
 	'multidelete_select_all' => 'Diuzañ pep tra',
 	'multidelete_page' => 'Pajennoù da zilemel',
 	'multidelete_processing' => 'dilamadenn pajennoù',
@@ -290,7 +357,9 @@ $messages['br'] = array(
 	'multidelete_hebrew_wikis' => 'an holl wikioù hebraek',
 	'multidelete_chinese_wikis' => 'an holl wikioù sinaek',
 	'multidelete_polish_wikis' => 'an holl wikioù polonek',
+	'multidelete_czech_wikis' => 'an holl wikioù tchekek',
 	'multidelete_portuguese_wikis' => 'an holl wikioù portugalek',
+	'multidelete_dutch_wikis' => 'an holl wikioù alamanek',
 	'multidelete_italian_wikis' => 'an holl wikioù italianek',
 	'multidelete_russian_wikis' => 'an holl wikioù rusek',
 	'multidelete_english_wikis' => 'an holl wikioù saoznek',
@@ -298,7 +367,11 @@ $messages['br'] = array(
 	'multidelete_finnish_wikis' => 'an holl wikioù finnek',
 	'multidelete_spanish_wikis' => 'an holl wikioù spagnolek',
 	'multidelete_french_wikis' => 'an holl wikioù gallek',
+	'multidelete_swedish_wikis' => 'an holl wikioù svedat',
 	'multidelete_german_wikis' => 'an holl wikioù alamanek',
+	'multiwikifindpagenames' => 'Kavout anvioù pajennoù',
+	'multiwikienterpagename' => 'Lakait un anv pajenn :',
+	'multiwikirecords' => '$1 wiki bet kavet',
 );
 
 /** German (Deutsch) */
@@ -740,6 +813,13 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina's te verwerken.",
 	'multiwikirecords' => "Gevonden op $1 wiki's",
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'multitasks-link-back-label' => 'ambelessì',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
@@ -753,6 +833,7 @@ $messages['roa-tara'] = array(
 $messages['ru'] = array(
 	'multiwikiedit_caption' => 'Список страниц',
 	'multiwikiedit_minoredit_caption' => 'Малая правка',
+	'multidelete_button' => 'УДАЛИТЬ',
 	'multidelete_caption' => 'Список страниц',
 );
 
@@ -772,6 +853,7 @@ $messages['sv'] = array(
 	'multidelete_german_wikis' => 'alla tyska wikis',
 );
 
+/** Chinese (Taiwan) (‪中文(台灣)‬) */
 $messages['zh-tw'] = array(
 	'multiwikiedit_norecentchanges_caption' => '不要將此項修訂顯示於最近修改頁。',
 	'multidelete_button' => '刪除',

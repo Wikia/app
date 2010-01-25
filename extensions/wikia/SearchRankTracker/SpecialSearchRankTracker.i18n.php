@@ -26,6 +26,16 @@ $messages['af'] = array(
 	'searchranktracker-serach-phrase-required' => "'n Soekterm is verpligtend",
 );
 
+/** Breton (Brezhoneg)
+ * @author Gwenn-Ael
+ */
+$messages['br'] = array(
+	'searchranktracker-add-new-entry' => 'Ouzhpennañ un enmont',
+	'searchranktracker-edit-entry' => 'Kemmañ un enmont',
+	'searchranktracker-page-name-required' => 'Anv ar bajenn ret',
+	'searchranktracker-serach-phrase-required' => 'Klask ar frazennoù goulennet',
+);
+
 /** French (Français)
  * @author IAlex
  * @author Peter17
@@ -63,6 +73,32 @@ $messages['hu'] = array(
 	'searchranktracker-serach-phrase-required' => 'Keresőkifejezés megadása kötelező',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'searchranktracker' => 'Пребарај го пронаоѓачот на ранг',
+	'searchranktracker-add-new-entry' => 'Додај нов запис',
+	'searchranktracker-edit-entry' => 'Уреди запис',
+	'searchranktracker-entry-list' => 'Листа на следени вики-страници',
+	'searchranktracker-page-name-required' => 'Потребно е име на страницата',
+	'searchranktracker-serach-phrase-required' => 'Потребен е израз за пребарување',
+	'searchranktracker-empty-list' => 'Моментално нема изрази за следење.',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'searchranktracker' => 'Zoekrangvolger',
+	'searchranktracker-add-new-entry' => 'Nieuwe toevoegen',
+	'searchranktracker-edit-entry' => 'Bewerken',
+	'searchranktracker-entry-list' => "Lijst met volgende wikipagina's",
+	'searchranktracker-page-name-required' => 'Een paginanaam opgeven is verplicht',
+	'searchranktracker-serach-phrase-required' => 'Een zoekterm  is verplicht',
+	'searchranktracker-empty-list' => 'Er zijn op dit moment geen te volgen zoektermen.',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -75,5 +111,31 @@ $messages['pms'] = array(
 	'searchranktracker-page-name-required' => 'Nòm ëd la pàgina obligatòri',
 	'searchranktracker-serach-phrase-required' => "Fras d'arserca obligatòria",
 	'searchranktracker-empty-list' => "Al moment a-i é gnun-e fras d'arserca da marché.",
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'searchranktracker' => 'Pesquisar no acompanhador de avaliações',
+	'searchranktracker-add-new-entry' => 'Adicionar entrada',
+	'searchranktracker-edit-entry' => 'Editar entrada',
+	'searchranktracker-entry-list' => 'Lista de páginas wiki acompanhadas',
+	'searchranktracker-page-name-required' => 'Nome de página necessário',
+	'searchranktracker-serach-phrase-required' => 'Frase de pesquisa necessária',
+	'searchranktracker-empty-list' => 'Atualmente não há frases de pesquisa para acompanhar.',
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'searchranktracker' => 'Отслеживание поискового ранга',
+	'searchranktracker-add-new-entry' => 'Добавить новую запись',
+	'searchranktracker-edit-entry' => 'Изменить запись',
+	'searchranktracker-entry-list' => 'Список отслеживаемых вики-страниц',
+	'searchranktracker-page-name-required' => 'Требуется название страницы',
+	'searchranktracker-serach-phrase-required' => 'Требуется поисковая фраза',
+	'searchranktracker-empty-list' => 'В настоящее время нет поисковых фраз для отслеживания.',
 );
 

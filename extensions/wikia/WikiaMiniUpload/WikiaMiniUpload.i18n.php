@@ -79,6 +79,8 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'wmu-upload' => '{{Identical|Upload}}',
+	'wmu-upload-btn' => '{{Identical|Upload}}',
 	'wmu-insert' => '{{Identical|Insert}}',
 	'wmu-license' => '{{Identical|License}}',
 	'wmu-size' => '{{Identical|Size}}',
@@ -93,6 +95,7 @@ $messages['qqq'] = array(
  */
 $messages['af'] = array(
 	'wmu-upload' => 'Oplaai',
+	'wmu-notlogged' => 'Teken aan of registreer om beelde te kan oplaai',
 	'wmu-find' => 'Vind',
 	'wmu-thiswiki' => 'Hierdie Wiki',
 	'wmu-flickr' => 'Flickr',
@@ -101,6 +104,7 @@ $messages['af'] = array(
 	'wmu-conflict-inf' => "<h1>Oeps, 'n lêer met daardie naam bestaan reeds.</h1>Wat wil u met <b>$1</b> doen?",
 	'wmu-rename' => 'Hernoem u beeld',
 	'wmu-existing' => 'Gebruik bestaande beeld',
+	'wmu-overwrite' => 'Oorskryf die bestaande beeld met u beeld',
 	'wmu-insert' => 'Invoeg',
 	'wmu-name' => 'Naam',
 	'wmu-license' => 'Lisensie',
@@ -130,6 +134,7 @@ $messages['af'] = array(
 	'wmu-imagebutton' => 'Voeg beelde by',
 	'wmu-create' => 'Voeg beeld by',
 	'wmu-filetype-missing' => "Hierdie lêer het nie 'n uitbreiding nie",
+	'wmu-filetype-incorrect' => "Die lêer het 'n verkeerde uitbreiding",
 	'wmu-show-message' => 'wys boodskap',
 	'wmu-hide-message' => 'versteek boodskap',
 	'wmu-hide-license-msg' => 'versteek lisensie-teks',
@@ -157,6 +162,8 @@ U kan nie hier beelde byvoeg nie.',
  * @author EugeneZelenko
  */
 $messages['be-tarask'] = array(
+	'wmu-upload' => 'Загрузіць',
+	'wmu-upload-btn' => 'Загрузіць',
 	'wmu-insert' => 'Уставіць',
 	'wmu-license' => 'Ліцэнзія',
 	'wmu-size' => 'Памер',
@@ -240,6 +247,7 @@ Gwelit ivez [[Special:Log/upload|lroll an enporzhiadurioù]] ha[[Special:ImageLi
 	'wmu-no-rights' => "N'och ket aotreet da ouzhpennañ skeudennoù d'ar bajenn-mañ",
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'wmu-upload' => 'Hochladen',
 	'wmu-notlogged' => 'Melde dich an oder registriere dich, um Bilder von deinem Rechner hochzuladen',
@@ -284,9 +292,9 @@ $messages['de'] = array(
 	'wmu-bad-extension' => 'Du hast versucht einen nicht erlaubten Dateityp hochzuladen.',
 	'wmu-filetype-missing' => 'Der Datei fehlt eine Dateiendung.',
 	'wmu-filetype-incorrect' => 'Diese Datei hat eine inkorrekte Dateiendung.',
-	'wmu-uploadtext' => '\'\'\'Dieses Formular erlaubt dir das schnelle Hochladen und Einbinden von Bildern in Artikel.\'\'\'
+	'wmu-uploadtext' => "'''Dieses Formular erlaubt dir das schnelle Hochladen und Einbinden von Bildern in Artikel.'''
 
-\'\'Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].\'\'',
+''Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].''",
 	'wmu-show-message' => 'Hinweis',
 	'wmu-hide-message' => 'Ausblenden',
 	'wmu-hide-license-msg' => 'Lizenz-Text ausblenden',
@@ -296,6 +304,7 @@ $messages['de'] = array(
 	'wmu-added-from-plc' => 'Datei via Platzhalter hinzugefügt',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'wmu-upload' => 'Subir',
 	'wmu-notlogged' => 'Identifícate o regístrate para subir imágenes desde tu ordenador',
@@ -338,9 +347,9 @@ $messages['es'] = array(
 	'wmu-license-cc' => 'Licenciada como Creative Commons Attribution-Share Alike 3.0',
 	'wmu-bad-extension' => 'Intestaste subir un tipo de archivo no permitido. Por favor inténtalo de nuevo.',
 	'wmu-filetype-incorrect' => 'Este archivo que quieres subir tiene una extensión incorrecta',
-	'wmu-uploadtext' => '\'\'\'Este formulario permite subir y mostrar archivos en los artículos de una forma más rápida.\'\'\'
+	'wmu-uploadtext' => "'''Este formulario permite subir y mostrar archivos en los artículos de una forma más rápida.'''
 
-\'\'Puedes ver también [[Especial:Log/upload|el registro de subidas]] y una [[Especial:ImageList|lista de todos los archivos subidos]].\'\'',
+''Puedes ver también [[Especial:Log/upload|el registro de subidas]] y una [[Especial:ImageList|lista de todos los archivos subidos]].''",
 	'wmu-show-message' => 'mostrar mensaje',
 	'wmu-hide-message' => 'ocultar mensaje',
 	'wmu-hide-license-msg' => 'ocultar el texto de la licencia',
@@ -350,6 +359,7 @@ $messages['es'] = array(
 	'wmu-added-from-plc' => 'Archivo añadido mediante posicionador de imagen',
 );
 
+/** Persian (فارسی) */
 $messages['fa'] = array(
 	'wmu-added-from-plc' => 'افزودن پروندۀ جدید توسط مکان نگه‏دار تصویر',
 );
@@ -463,6 +473,7 @@ $messages['hu'] = array(
 	'wmu-column' => 'Oszlopok',
 );
 
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'wmu-upload' => 'アップロード',
 	'wmu-notlogged' => '画像をアップロードするには、アカウントを取得してログインしてください。',
@@ -513,6 +524,7 @@ $messages['ja'] = array(
 	'wmu-hide-license-msg' => 'ライセンステキストを隠す',
 );
 
+/** Korean (한국어) */
 $messages['ko'] = array(
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
 );
@@ -592,6 +604,7 @@ $messages['mk'] = array(
 	'wmu-no-rights' => 'Не ви е дозволено да додавате слики на оваа страница',
 );
 
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'wmu-added-from-plc' => 'Fil lagt til via bildeplassholderen',
 );
@@ -675,10 +688,12 @@ U kunt er geen afbeeldingen aan toevoegen.',
 	'wmu-no-rights' => 'U mag geen afbeeldingen toevoegen aan deze pagina',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $messages['no'] = array(
 	'wmu-added-from-plc' => 'Fil lagt til via bildeplassholderen',
 );
 
+/** Polish (Polski) */
 $messages['pl'] = array(
 	'wmu-added-from-plc' => 'Dokument dodany przez pole obrazka',
 );
@@ -801,8 +816,20 @@ $messages['ru'] = array(
 	'wmu-gallery-btn2' => 'Вставить галерею в статью',
 );
 
+/** Swedish (Svenska) */
 $messages['sv'] = array(
 	'wmu-added-from-plc' => 'Arkiv tillsätts med hjälp av bild platshållare',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wmu-name' => 'పేరు',
+	'wmu-width' => 'వెడల్పు',
+	'wmu-optional' => '  (ఐచ్చికం)',
+	'wmu-back' => 'వెనక్కి',
+	'wmu-close' => 'మూసివేయి',
 );
 
 /** Ukrainian (Українська)

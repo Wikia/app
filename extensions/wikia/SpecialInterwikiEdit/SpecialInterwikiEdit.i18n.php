@@ -89,6 +89,30 @@ $messages['ja'] = array(
 	'iwedit-success' => '<p>リンクの作成に成功しました。</p>',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'iwedit-title' => 'Уредник на интервикија',
+	'iwedit-language-interwikis' => 'само јазични интервикија',
+	'iwedit-all-interwikis' => 'сите интервикија',
+	'iwedit-update' => 'Поднови',
+	'iwedit-error' => '<p>Се појави грешка.</p>',
+	'iwedit-success' => '<p>Врската е успешно создадена.</p>',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'iwedit-title' => 'Interwikitabel bewerken',
+	'iwedit-language-interwikis' => "alleen taalinterwiki's",
+	'iwedit-all-interwikis' => "alle interwiki's",
+	'iwedit-update' => 'Bijwerken',
+	'iwedit-error' => '<p>Er is een fout opgetreden.</p>',
+	'iwedit-success' => '<p>De verwijzing is aangemaakt.</p>',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt

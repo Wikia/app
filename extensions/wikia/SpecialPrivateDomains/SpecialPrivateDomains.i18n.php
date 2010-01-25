@@ -29,6 +29,8 @@ $messages['qqq'] = array(
  * @author Naudefj
  */
 $messages['af'] = array(
+	'privatedomains' => 'Bestuur private domeine',
+	'saveprivatedomains_success' => 'Die wysigings aan privaatdomeine is gestoor.',
 	'privatedomains_affiliatenamelabel' => '<br>Naam van organisasie:',
 );
 
@@ -83,6 +85,20 @@ $messages['hu'] = array(
 	'privatedomains_emailadminlabel' => '<br />Kapcsolattartó neve hozzáférési problémák vagy kérdések esetére:',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'privatedomains_nomanageaccess' => "<p>Жалиме, немате доволно права за да раководите со дозволените приватни домени за ова вики. Само вики-бирократи и членови на персоналот имаат таков пристап.</p><p>Ако не сте најавени, веројатно ќе <a href='/wiki/Special:Userlogin'>треба да се најавите</a>.</p>",
+	'privatedomains' => 'Раководење со приватни домени',
+	'privatedomains_ifemailcontact' => '<p>Во спротивно, обратете се на [[Special:Emailuser/$1|$1]] ако имате било какви прашања.</p>',
+	'saveprivatedomains_success' => 'Промените во приватните домени се зачувани.',
+	'privatedomains_invalidemail' => '<p>Жалиме, но само членови на $1 имаат пристап на ова вики. Ако имате е-поштенска адреса здружена со $1, можете да ја внесете или препотврдите на страницата за нагодување на сметката <a href=/wiki/Special:Preferences>тука</a>. Ќе можете и понатаму да ги гледате страниците на ова вики, но нема да можете да уредувате.</p>',
+	'privatedomains_affiliatenamelabel' => '<br />Име на организација:',
+	'privatedomains_emailadminlabel' => '<br />Корисничко име за контакт при проблеми или прашања за пристап:',
+	'privatedomainsinstructions' => '<br /> <br /> <p>Подолу е наведена листа од е-поштенски домени дозволени за уредниците на ова вики. Во секој ред е назначена е-поштенска наставка што добива право на уредување. Ова треба да се форматира со по една наставка за секој ред. На пример:</p> <p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p> <p>Ова дозволува уредувања од секој со адреса нешто@cs.stanford.edu или нешто@stanfordalumni.org</p> <p><b>Во полето подолу внесете ги дозволените домени, и кликнете на „зачувај“.</b></p>',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -120,5 +136,19 @@ $messages['pms'] = array(
 	'privatedomains_affiliatenamelabel' => "<br />Nòm ëd l'organisassion:",
 	'privatedomains_emailadminlabel' => "<br />Nòm utent ëd contat për problema d'acess o arceste:",
 	'privatedomainsinstructions' => "<br /> <br /> <p>Sota a-i é la lista dij domini ëd pòsta eletrònica përmëttù a j'editor dë sta wiki-sì. Minca linia a spessìfica un sufiss ëd pòsta eletrònica che a l'ha acess për modifiché. Sòn a dovrìa pijé la forma con un sufiss për linia. Për esempi:</p> <p style=\"width: 20%; padding:5px; border: 1px solid grey;\">cs.stanford.edu<br /> stanfordalumni.org</p> <p>Sòn a përmët modìfiche da tuti coj ch'a l'han l'adrëssa ëd pòsta eletrònica whatever@cs.stanford.edu o whatever@stanfordalumni.org</p> <p><b>Ch'a anserissa ij domini përmëttù ant la casela ëd test sì-sota, e ch'a sgnaca \"salvé\".</b></p>",
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'privatedomains_nomanageaccess' => "<p>Извините, у вас недостаточно полномочий для управления частными доменами этой вики. Только вики-бюрократы и сотрудники имеют подобный доступ.</p><p>Если вы не вошли в систему, то вам, вероятно, <a href='/wiki/Special:Userlogin'>следует это сделать</a>.</p>",
+	'privatedomains' => 'Управление частными доменами',
+	'privatedomains_ifemailcontact' => '<p>В противном случае, просим обращаться к [[Special:Emailuser/$1|$1]], если у вас есть какие-либо вопросы.</p>',
+	'saveprivatedomains_success' => 'Изменения в частных доменах сохранены.',
+	'privatedomains_invalidemail' => '<p>Извините, доступ к этой вики доступен только для членов $1. Если у вас есть адрес электронной почты, связанный с $1, вы можете ввести или подтвердить ваш адрес электронной почты на вашей <a href=/wiki/Special:Preferences>странице настроек</a>. Вы можете просматривать страницы этой вики, но вы не сможете их править.</p>',
+	'privatedomains_affiliatenamelabel' => '<br />Название организации:',
+	'privatedomains_emailadminlabel' => '<br />Контактное имя участника для запросов или проблем с доступом:',
+	'privatedomainsinstructions' => '<br /> <br /> <p>Ниже приведён список почтовых доменов, допустимых для редакторов этой вики. Каждая строка обозначает суффикс адреса электронной почты, позволяющего производить правки. На каждой строке должно быть не более одного суффикса. Например: </p> <p style="width: 20%; padding:5px; border: 1px solid grey;">cs.stanford.edu<br /> stanfordalumni.org</p> <p>Подобная настройка позволит править статьи участникам, обладающим электронными адресами  whatever@cs.stanford.edu и whatever@stanfordalumni.org</p> <p><b>Введите разрешённые домены в представленное ниже текстовое поле и нажмите «Сохранить».</b></p>',
 );
 

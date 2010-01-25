@@ -30,6 +30,13 @@ $messages['en'] = array(
 	'whereisextension-name-contains'	=> 'variable name contains',
 );
 
+/** Message documentation (Message documentation)
+ * @author Siebrand
+ */
+$messages['qqq'] = array(
+	'whereisextension-filter' => 'Noun or verb?',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -91,6 +98,32 @@ $messages['hu'] = array(
 	'whereisextension-filter' => 'Szűrő',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'whereisextension' => 'Проширување Where is',
+	'whereisextension-submit' => 'Пребарај',
+	'whereisextension-list' => 'Листа на викија со совпаднати критериуми',
+	'whereisextension-isset' => 'е наместено на',
+	'whereisextension-filter' => 'Филтрирање',
+	'whereisextension-all-groups' => 'Сите групи',
+	'whereisextension-name-contains' => 'името на променливата содржи',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'whereisextension' => 'Waar is de uitbreiding',
+	'whereisextension-submit' => 'Zoeken',
+	'whereisextension-list' => "Lijst met wiki's die aan de voorwaarden voldoen",
+	'whereisextension-isset' => 'is ingesteld op',
+	'whereisextension-filter' => 'Filteren',
+	'whereisextension-all-groups' => 'Alle groepen',
+	'whereisextension-name-contains' => 'variabelenaam bevat',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
@@ -103,6 +136,19 @@ $messages['pms'] = array(
 	'whereisextension-filter' => 'Filtr',
 	'whereisextension-all-groups' => 'Tute le partìe',
 	'whereisextension-name-contains' => 'ël nòm ëd variàbil a conten',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'whereisextension' => 'Extensão onde está',
+	'whereisextension-submit' => 'Pesquisar',
+	'whereisextension-list' => 'Lista de wikis com critério correspondente',
+	'whereisextension-isset' => 'está configurado como',
+	'whereisextension-filter' => 'Filtro',
+	'whereisextension-all-groups' => 'Todos os os grupos',
+	'whereisextension-name-contains' => 'nome de variável contêm',
 );
 
 /** Russian (Русский)

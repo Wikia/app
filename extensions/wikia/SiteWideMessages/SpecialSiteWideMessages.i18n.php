@@ -87,10 +87,14 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'swm-label-language' => '{{Identical|Language}}',
+	'swm-button-save' => '{{Identical|Save}}',
 	'swm-expire-info' => 'If $1 is a time stamp, split date and time.',
+	'swm-list-table-lang' => '{{Identical|Language}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -107,9 +111,11 @@ $messages['af'] = array(
 	'swm-label-recipient-users' => 'Gebruikers',
 	'swm-label-expiration' => 'Vervaldatum',
 	'swm-label-mode-wikis-all' => "Alle wiki's",
+	'swm-label-mode-wikis-hub' => 'Geselekteerde hub',
 	'swm-label-mode-wikis-wiki' => 'Geselekteerde wiki',
 	'swm-label-mode-users-all' => 'Alle gebruikers',
 	'swm-label-mode-users-active' => 'Aktiewe grbruikers',
+	'swm-label-mode-users-group' => 'Gebruikers wat aan die groep behoort',
 	'swm-label-mode-users-user' => 'Geselekteerde gebruiker',
 	'swm-label-content' => 'Inhoud',
 	'swm-label-comment' => 'Opmerking',
@@ -117,10 +123,15 @@ $messages['af'] = array(
 	'swm-label-language' => 'Taal',
 	'swm-button-lang-checkall' => '[ Kies alles ]',
 	'swm-button-lang-checknone' => '[ Kies niks ]',
+	'swm-taskmanager-hint' => '<i>Sommige opsies neem langer as ander en kan in die agtergrond deur die taakbeheerder voltooi word.</i>',
 	'swm-button-preview' => '[ Voorskou ]',
 	'swm-button-send' => '[ Stuur ]',
 	'swm-button-save' => '[ Stoor ]',
 	'swm-button-new' => '[ Nuwe ]',
+	'swm-msg-sent-ok' => '<h3>Die boodskap is gestuur.</h3>',
+	'swm-msg-sent-err' => '<h3>Die boodskap is nie gestuur nie.</h3>Sien die foutlogboek vir meer inligting.',
+	'swm-msg-remove' => 'Is u seker u wil die boodskap verwyder?
+Dit kan nie ongedaan gemaak word nie!',
 	'swm-days' => 'nooit,uur,ure,dag,dae',
 	'swm-expire-info' => 'Hierdie boodskap sal op $1 verval.',
 	'swm-link-dismiss' => 'verdaag die boodskap',
@@ -146,36 +157,70 @@ $messages['af'] = array(
 	'swm-lang-other' => 'alle oorblywende tale',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'swm-label-language' => 'Мова',
+	'swm-button-save' => '[ Захаваць ]',
+	'swm-list-table-lang' => 'Мовы',
+);
+
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
+	'sitewidemessages' => "Kemennadennoù a-dreuz al lec'hienn",
+	'swm-page-title-editor' => "Kemennadennoù a-dreuz al lec'hienn :: Embanner",
+	'swm-page-title-preview' => "Kemennadennoù a-dreuz al lec'hienn :: Rakwelet",
+	'swm-page-title-send' => "Kemennadennoù a-dreuz al lec'hienn :: Kas",
+	'swm-page-title-sent' => "Kemennadennoù a-dreuz al lec'hienn :: Kas",
+	'swm-page-title-dismiss' => "Kemennadennoù a-dreuz al lec'hienn :: Disteuler",
+	'swm-page-title-list' => "Kemennadennoù a-dreuz al lec'hienn :: Roll",
 	'swm-label-preview' => 'Rakwelet',
 	'swm-label-edit' => 'Kemmañ',
 	'swm-label-remove' => 'Dilemel',
 	'swm-label-sent' => 'Kaset',
 	'swm-label-list' => 'Roll',
+	'swm-label-recipient' => 'Degemererien',
 	'swm-label-recipient-wikis' => 'Wikioù',
 	'swm-label-recipient-users' => 'Implijerien',
+	'swm-label-expiration' => 'Deiziad termen',
 	'swm-label-mode-wikis-all' => 'An holl wikioù',
+	'swm-label-mode-wikis-hub' => 'Hub diuzet',
+	'swm-label-mode-wikis-wiki' => 'Wiki diuzet',
 	'swm-label-mode-users-all' => 'An holl implijerien',
 	'swm-label-mode-users-active' => 'Implijerien oberiant',
+	'swm-label-mode-users-group' => "Implijerien a aparchant d'ar strollad-se",
+	'swm-label-mode-users-group-hint' => '<i>Dibabit ur strollad eus ar roll disachañ pe skrivit an anv gant an dorn evit mont dreist ar roll disachañ. </i>',
 	'swm-label-mode-users-user' => 'An implijer dibabet',
+	'swm-label-mode-users-user-hint' => '<i>Ne vez ket anavezet an dibab-se er strollad « Wikioù ».</i>',
 	'swm-label-content' => 'Danvez',
 	'swm-label-comment' => 'Evezhiadenn',
+	'swm-label-dismissed' => 'Distaolet',
 	'swm-label-language' => 'Yezh',
+	'swm-button-lang-checkall' => '[Dibab pep tra]',
+	'swm-button-lang-checknone' => '[Diziuzañ pep tra]',
 	'swm-button-preview' => '[ Rakwelet ]',
 	'swm-button-send' => '[ Kas ]',
 	'swm-button-save' => '[ Enrollañ ]',
 	'swm-button-new' => '[ Nevez ]',
 	'swm-msg-sent-ok' => '<h3>Kaset eo bet ar gemenadenn.</h3>',
+	'swm-msg-sent-err' => "<h3>N'eo ket bet kaset ar gemmennadenn;<h3>Gwelit ar renabl fazioù evit gouzout hiroc'h.",
+	'swm-msg-remove' => "Ha c'hoant hoc'h eus da zilemel ar gemennadenn-mañ ? Ne c'haller nullañ !",
 	'swm-days' => 'morse,eurvezh,eurvezhioù,devezh,devezhioù',
+	'swm-expire-info' => 'Deiziad termen ar gemennadenn-mañ : $1',
+	'swm-link-dismiss' => 'disteuler ar gemennadenn-mañ',
+	'swm-dismiss-content' => '<p>Distaolet eo bet ar gemennadenn-mañ</p><p>%s</p>',
 	'swm-list-no-messages' => 'Kemennadenn ebet.',
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => 'Kaser',
 	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Degemerer',
 	'swm-list-table-group' => 'Strollad',
 	'swm-list-table-expire' => 'Termenet',
+	'swm-list-table-date' => 'Deiziad kas',
 	'swm-list-table-removed' => 'Tennañ kuit',
 	'swm-list-table-content' => 'Danvez',
 	'swm-list-table-tools' => 'Ostilhoù',
@@ -183,8 +228,13 @@ $messages['br'] = array(
 	'swm-yes' => 'Ya',
 	'swm-no' => 'Nann',
 	'swm-error-no-such-wiki' => "N'eus ket a wiki evel-se",
+	'swm-error-no-such-user' => "N'eus ket eus an implijer merket",
+	'swm-error-empty-message' => "Ebarzhiñ endalc'h ar gemennadenn-mañ.",
+	'swm-error-empty-group' => 'Ebarzhiñ anv ar strollad-se.',
+	'swm-lang-other' => 'an holl yezhoù a chom',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'sitewidemessages' => 'Nachricht an Alle',
 	'swm-page-title-editor' => 'Nachricht an Alle :: Editor',
@@ -211,7 +261,6 @@ $messages['de'] = array(
 	'swm-msg-sent-err' => '<h3>Die Nachricht wurde NICHT verschickt.</h3>
 Mehr Informationen findest du im Fehler-Log.',
 	'swm-days' => 'nie,Tag,Tage',
-	'swm-expire-options' => '0,1,3,7,14,30,60',
 	'swm-expire-info' => 'Diese Nachricht wird am $1 ablaufen.',
 	'swm-link-dismiss' => 'Nachricht ausblenden',
 	'swm-dismiss-content' => '<p>Die Nachricht wurde ausgeblendet.</p><p>%s</p>',
@@ -233,6 +282,7 @@ Mehr Informationen findest du im Fehler-Log.',
 	'swm-error-empty-group' => 'Gib den Namen der Gruppe ein.',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'swm-label-preview' => 'Previsualización',
 	'swm-label-edit' => 'Editar',
@@ -433,6 +483,7 @@ $messages['hu'] = array(
 	'swm-no' => 'nem',
 );
 
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'sitewidemessages' => 'サイト横断メッセージ',
 	'swm-page-title-editor' => 'サイト横断メッセージ:編集',
@@ -755,5 +806,22 @@ $messages['ru'] = array(
 	'swm-list-table-lang' => 'Языки',
 	'swm-yes' => 'Да',
 	'swm-no' => 'Нет',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'swm-label-list' => 'జాబితా',
+	'swm-label-recipient-wikis' => 'వికీలు',
+	'swm-label-recipient-users' => 'వాడుకరులు',
+	'swm-label-mode-wikis-all' => 'అన్ని వికీలు',
+	'swm-label-mode-users-all' => 'అందరు వాడుకరులు',
+	'swm-label-mode-users-active' => 'క్రియాశీల వాడుకరులు',
+	'swm-label-language' => 'భాష',
+	'swm-list-table-tools' => 'పనిముట్లు',
+	'swm-list-table-lang' => 'భాషలు',
+	'swm-yes' => 'అవును',
+	'swm-no' => 'కాదు',
 );
 

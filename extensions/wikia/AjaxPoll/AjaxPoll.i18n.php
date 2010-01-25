@@ -34,8 +34,8 @@ $messages['br'] = array(
 	'ajaxpoll-submitting' => 'Gortozit mar plij, emeur o kas ho vot...',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
-	'ajaxpoll-percentvotes' => '$1% aller Stimmen',
 	'ajaxpoll-thankyou' => 'Vielen Dank für deine Stimme!',
 	'ajaxpoll-error' => 'Es gab ein Problem bei der Verarbeitung deiner Stimme. Probiere es bitte noch einmal.',
 	'ajaxpoll-summary' => 'Die Umfrage wurde erstellt am $1 $2. Bisher haben $3 Nutzer abgestimmt.',
@@ -44,8 +44,8 @@ $messages['de'] = array(
 	'ajaxpoll-submitting' => 'Bitte warte kurz, deine Stimme wird verarbeitet.',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
-	'ajaxpoll-percentvotes' => '$1% de todos los votos',
 	'ajaxpoll-thankyou' => '¡Gracias por tu voto!',
 	'ajaxpoll-error' => 'Hubo un problema al procesar tu voto, por favor, inténtalo de nuevo.',
 	'ajaxpoll-summary' => 'La encuesta fue creada el $1 $2, y hasta ahora $3 personas votaron.',
@@ -54,19 +54,36 @@ $messages['es'] = array(
 	'ajaxpoll-submitting' => 'Por favor, espera, procesando tu voto...',
 );
 
-
+/** Persian (فارسی) */
 $messages['fa'] = array(
 	'ajaxpoll-submit' => 'ثبت رای!',
 );
 
+/** Finnish (Suomi)
+ * @author Crt
+ * @author Ilkea
+ */
+$messages['fi'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;kaikista äänistä',
+	'ajaxpoll-thankyou' => 'Kiitos vastauksestasi!',
+	'ajaxpoll-error' => 'Ongelma käsitellessä vastaustasi. Yritä uudelleen.',
+	'ajaxpoll-summary' => 'Äänestys luotiin $1 kello $2, ja tähän mennessä siihen on vastannut $3 henkilöä.',
+	'ajaxpoll-submit' => 'Äänestä!',
+	'ajaxpoll-closed' => 'Äänestys on nyt sulkeutunut. Nauti tuloksista.',
+	'ajaxpoll-submitting' => 'Odota, vastaustasi lähetetään...',
+);
+
+/** French (Français)
+ * @author Jean-Frédéric
+ */
 $messages['fr'] = array(
-	'ajaxpoll-percentvotes' => '$1% de tout les votes',
-	'ajaxpoll-thankyou' => 'Merci d\'avoir voté!',
+	'ajaxpoll-percentVotes' => '$1% de tous les votes',
+	'ajaxpoll-thankyou' => "Merci d'avoir voté!",
 	'ajaxpoll-error' => 'Une erreur est survenue lors de la validation de votre vote, veuillez réessayer.',
 	'ajaxpoll-summary' => 'Le sondage fut créé le $1 $2, et $3 personnes ont déjà voté.',
 	'ajaxpoll-submit' => 'Votez!',
 	'ajaxpoll-closed' => 'Le sondage est désormais terminé. Comparez les résultats.',
-	'ajaxpoll-submitting' => 'Veuillez patienter pendant l\'envoi de votre vote...',
+	'ajaxpoll-submitting' => "Veuillez patienter pendant l'envoi de votre vote...",
 );
 
 /** Galician (Galego)
@@ -104,14 +121,46 @@ $messages['hu'] = array(
 	'ajaxpoll-submitting' => 'Kérlek várj, szavazat elküldése …',
 );
 
+/** Japanese (日本語)
+ * @author Fryed-peach
+ */
 $messages['ja'] = array(
-	'ajaxpoll-percentvotes' => '$1% 全投票中',
+	'ajaxpoll-percentVotes' => '全投票中 $1%',
 	'ajaxpoll-thankyou' => '投票ありがとうございます！',
 	'ajaxpoll-error' => '投票を処理中に問題が発生しました。再投票してください。',
 	'ajaxpoll-summary' => 'この投票は $1 $2 に作成され、これまでに$3人が投票しました。',
 	'ajaxpoll-submit' => '投票',
 	'ajaxpoll-closed' => '投票は既に終了しています。結果をお楽しみください。',
 	'ajaxpoll-submitting' => 'あなたの投票を送信しています。お待ちください・・・',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;од вкупниот број на гласови',
+	'ajaxpoll-thankyou' => 'Ви благодариме што гласавте!',
+	'ajaxpoll-error' => 'Се појави проблем во обработката на вашиот глас. Обидете се повторно',
+	'ajaxpoll-summary' => 'Анкетата е создадена на $1 во $2, и досега имаат гласано $3 учесници.',
+	'ajaxpoll-submit' => 'Гласај!',
+	'ajaxpoll-closed' => 'Анкетата сега е затворена. Уживајте во резултатите.',
+	'ajaxpoll-submitting' => 'Почекајте, ви го заведувам гласот...',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'ajaxpoll-percentVotes' => '$1%&nbsp;van alle stemmen',
+	'ajaxpoll-thankyou' => 'Dank u wel voor uw stem!',
+	'ajaxpoll-error' => 'Er is een fount opgetreden bij het verwerken van uw stem.
+Probeer het nog een keer.',
+	'ajaxpoll-summary' => 'De peiling is aangemaakt op $2 om $1 en tot nu toe hebben $3 gebruikers gestemd.',
+	'ajaxpoll-submit' => 'Stemmen!',
+	'ajaxpoll-closed' => 'Deze peiling is gesloten.
+Geniet van de resultaten.',
+	'ajaxpoll-submitting' => 'Even geduld alstublieft.
+Bezig met het opslaan van uw stem...',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)

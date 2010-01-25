@@ -76,9 +76,17 @@ $messages['qqq'] = array(
 $messages['af'] = array(
 	'daemonloader_createtask' => 'Skep taak',
 	'daemonloader_listtask' => 'Lys van take',
+	'daemonloader_configure' => 'Prosesinstellings',
+	'daemonloader_daemonname' => 'Prosesnaam',
 	'daemonloader_daemondesc' => 'Beskrywing',
+	'daemonloader_inputparams' => 'Invoerparameters',
+	'daemonloader_paramname' => 'Parameternaam',
+	'daemonloader_paramdesc' => 'Parameterbeskrywing',
+	'daemonloader_paramtype' => 'Parametertipe',
 	'daemonloader_paramremove' => 'Verwyder?',
+	'daemonloader_removedaemon' => 'Verwyder proses',
 	'daemonloader_paramdefvalue' => 'Verstekwaarde',
+	'daemonloader_alldaemons' => 'Alle prosesse',
 	'daemonloader_selectlist' => 'Kies vanuit lys',
 	'daemonloader_search' => 'Soek:',
 	'daemonloader_daemonchanged' => 'U veranderinge is gestoor',
@@ -94,6 +102,7 @@ $messages['af'] = array(
 	'daemonloader_2step' => 'Stap 2 (prosesinstellings)',
 	'daemonloader_3step' => 'Stap 3 (taakinstellings)',
 	'daemonloader_steps' => 'U huidige stap:',
+	'daemonloader_daemoninfo' => 'Prosesbeskrywing',
 	'daemonloader_startdate' => 'Begindatum',
 	'daemonloader_enddate' => 'Einddatum',
 	'daemonloader_emails' => 'E-posse',
@@ -104,9 +113,11 @@ $messages['af'] = array(
 	'daemonloader_month' => 'elke maand',
 	'daemonloader_taskid' => 'Id',
 	'daemonloader_newtask' => 'Nuwe taak',
+	'daemonloader_daemonparams' => 'Prosesparameters',
 	'daemonloader_createdby' => 'Geskep deur',
 	'daemonloader_created' => 'Geskep',
 	'daemonloader_options' => 'Opsies',
+	'daemonloader_nojobsfound' => 'Geen take gevind nie',
 	'daemonloader_removejobconfirm' => 'Is u seker?',
 );
 
@@ -115,6 +126,30 @@ $messages['af'] = array(
  */
 $messages['be-tarask'] = array(
 	'daemonloader_daemondesc' => 'Апісаньне',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'daemonloader_createtask' => 'Krouiñ un trevell',
+	'daemonloader_listtask' => 'Roll an trevelloù',
+	'daemonloader_paramremove' => 'Dilemel ?',
+	'daemonloader_alldaemons' => 'An holl diaouled',
+	'daemonloader_selectlist' => 'Dibab eus ar roll',
+	'daemonloader_search' => 'Klask :',
+	'daemonloader_date_yyyymmdd' => 'deiziad (YYYYMMDD)',
+	'daemonloader_date_yyyymm' => 'miz (YYYYMM)',
+	'daemonloader_date_yyyy' => 'bloavezh (YYYY)',
+	'daemonloader_wikilist' => 'Roll ar wikioù',
+	'daemonloader_day' => 'bemdez',
+	'daemonloader_week' => 'bep sizhun',
+	'daemonloader_month' => 'Bep miz',
+	'daemonloader_taskid' => 'Id',
+	'daemonloader_newtask' => 'Trevell nevez',
+	'daemonloader_createdby' => 'Krouet gant',
+	'daemonloader_created' => 'Krouet',
+	'daemonloader_removejobconfirm' => "Ha sur oc'h ?",
 );
 
 /** French (Français)
@@ -442,7 +477,20 @@ $messages['pms'] = array(
 $messages['ru'] = array(
 	'daemonloader_createtask' => 'Создать задачу',
 	'daemonloader_listtask' => 'Список задач',
+	'daemonloader_daemonname' => 'Имя демона',
+	'daemonloader_scriptname' => 'Имя скрипта',
 	'daemonloader_daemondesc' => 'Описание',
+	'daemonloader_inputparams' => 'Входные параметры',
+	'daemonloader_paramname' => 'Имя параметра',
+	'daemonloader_paramdesc' => 'Описание параметра',
+	'daemonloader_paramtype' => 'Тип параметра',
+	'daemonloader_paramremove' => 'Удалить?',
+	'daemonloader_removedaemon' => 'Удалить демона',
+	'daemonloader_paramdefvalue' => 'Значение по умолчанию',
+	'daemonloader_alldaemons' => 'Все демоны',
+	'daemonloader_loaddaemon' => 'Выберите демона для изменения или создайте нового ниже:',
+	'daemonloader_selectdaemon' => 'Выберите демона для получения информации и нажмите на кнопку для перехода к следующему шагу',
+	'daemonloader_selectlist' => 'Выберите из списка',
 	'daemonloader_search' => 'Поиск:',
 	'daemonloader_string' => 'строка',
 	'daemonloader_number' => 'число',
@@ -451,7 +499,26 @@ $messages['ru'] = array(
 	'daemonloader_date_yyyy' => 'годы (ГГГГ)',
 	'daemonloader_wikilist' => 'Список вики',
 	'daemonloader_gonextstep' => 'Перейти к следующему шагу',
+	'daemonloader_1step' => 'Первый шаг (выбор демона)',
+	'daemonloader_2step' => 'Второй шаг (настройки демона)',
+	'daemonloader_3step' => 'Третий шаг (настройки задачи)',
+	'daemonloader_steps' => 'Текущий шаг:',
+	'daemonloader_daemoninfo' => 'Описание демона',
+	'daemonloader_startdate' => 'Дата начала',
+	'daemonloader_enddate' => 'Дата окончания',
+	'daemonloader_frequency' => 'Частота отчётов',
+	'daemonloader_emails' => 'Email-адреса',
+	'daemonloader_files' => 'XLS-файлы',
+	'daemonloader_dateformat' => 'Формат даты: ГГГГММДД',
+	'daemonloader_emails_info' => 'Разделённые запятыми адреса эл. почты, на которые будет отправлен результат задачи',
+	'daemonloader_day' => 'каждый день',
+	'daemonloader_week' => 'каждую неделю',
+	'daemonloader_month' => 'каждый месяц',
 	'daemonloader_taskid' => 'Идентификатор',
+	'daemonloader_newtask' => 'Новая задача',
+	'daemonloader_daemonparams' => 'Параметры демона',
+	'daemonloader_createdby' => 'Создатель',
+	'daemonloader_created' => 'Создан',
 	'daemonloader_removejobconfirm' => 'Вы уверены?',
 );
 

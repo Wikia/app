@@ -64,6 +64,13 @@ Sien die [[Help:New editor|hulpbladsy]] vir meer inligting.",
 	'wysiwyg-toolbar-controls' => 'Kontroles',
 );
 
+/** Arabic (العربية)
+ * @author ترجمان05
+ */
+$messages['ar'] = array(
+	'wysiwyg-toolbar-wiki-templates' => 'قوالب ويكي',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  */
@@ -123,6 +130,23 @@ $messages['br'] = array(
 	'wysiwyg-toolbar-controls' => 'Kontrolloù',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'wysiwyg-edgecase-comment' => 'HTML komentari',
+	'wysiwyg-edgecase-triplecurls' => 'parametri šablona',
+	'wysiwyg-edgecase-nowysiwyg' => 'naredba "bez wysiwyg"',
+	'wysiwyg-edgecase-complex-description' => 'vanjski URL ili šablon unutar opisa linka',
+	'wysiwyg-edgecase-syntax' => 'nije dopuštena sintaksa',
+	'wysiwyg-edgecase-redirect' => 'preusmjerenje',
+	'wysiwyg-toolbar-text-appearance' => 'Prikaz teksta',
+	'wysiwyg-toolbar-lists-and-links' => 'Spiskovi i linkovi',
+	'wysiwyg-toolbar-insert' => 'Ubaci',
+	'wysiwyg-toolbar-wiki-templates' => 'Wiki šabloni',
+	'wysiwyg-toolbar-controls' => 'Kontrole',
+);
+
 /** German (Deutsch) */
 $messages['de'] = array(
 	'wysiwyg' => 'Integration des FCKeditors in MediaWiki',
@@ -140,10 +164,7 @@ $messages['de'] = array(
 	'wysiwyg-edgecase-unclosed-tags' => 'nicht geschlossener HTML-Tag',
 	'wysiwyg-tooltip' => "'''Neu!''' Befehlsleiste. Weitere Informationen in der [[w:c:hilfe:Hilfe:Neuer Editor|Hilfe]].",
 	'enablerichtexteditor' => 'Grafischen Editor aktivieren',
-	'wysiwyg-enablerichtexteditormessage' => "'''Der grafische Editor wurde für dieses Benutzerkonto aktiviert!'''
-
-* Probiere den neuen Editor doch aus, indem du deine [{{fullurl:Special:MyPage|action=edit}} Benutzerseite bearbeitest].
-* Falls du zurück zum alten Editor wechseln möchtest, kannst du das im ''Bearbeiten''-Reiter in deinen [[Special:Preferences#prefsection-4|Einstellungen]] tun.",
+	'wysiwyg-enablerichtexteditormessage' => 'Der grafische Editor wurde aktiviert!',
 	'wysiwyg-toolbar-text-appearance' => 'Textformatierung',
 	'wysiwyg-toolbar-lists-and-links' => 'Listen und Links',
 	'wysiwyg-toolbar-insert' => 'Einfügen',
@@ -161,7 +182,7 @@ $messages['es'] = array(
 	'wysiwyg-edgecase-comment' => 'Comentarios HTML',
 	'wysiwyg-edgecase-triplecurls' => 'parámetros de plantilla',
 	'wysiwyg-edgecase-nowysiwyg' => 'el comando "no wysiwyg"',
-	'wysiwyg-edgecase-complex-description' => 'una URL externa o una plantilla sin descripción',
+	'wysiwyg-edgecase-complex-description' => 'una URL externa o una plantilla dentro de una descripción de vínculo',
 	'wysiwyg-edgecase-template-with-link' => 'una plantilla con un enlace como parámetro',
 	'wysiwyg-edgecase-syntax' => 'sintaxis no permitida',
 	'wysiwyg-edgecase-image-with-link' => 'imagen con un enlace en la descripción',
@@ -178,17 +199,19 @@ $messages['es'] = array(
 	'wysiwyg-toolbar-controls' => 'Controles',
 );
 
+/** Persian (فارسی) */
 $messages['fa'] = array(
-	'wysiwyg-first-edit-title' => 'به ویرایشگر جدید ویکیا خوش‌آمدید',
 	'enablerichtexteditor' => 'فعال کردن ویرایشگر پیشرفته',
 );
 
 /** Finnish (Suomi)
  * @author Crt
+ * @author Ilkea
  */
 $messages['fi'] = array(
 	'wysiwyg-edgecase-comment' => 'HTML-kommentit',
 	'wysiwyg-edgecase-redirect' => 'ohjaus',
+	'wysiwyg-toolbar-lists-and-links' => 'Luettelot ja linkit',
 );
 
 /** French (Français)
@@ -260,11 +283,31 @@ $messages['hu'] = array(
 	'wysiwyg-toolbar-wiki-templates' => 'Wiki sablonok',
 );
 
-$messages['ja'] = array(
-	'wysiwyg-first-edit-title' => 'ウィキアの新しいエディタへようこそ',
-	'wysiwyg-first-edit-message' => 'このウィキでは、ウィキアの新しい高機能テキストエディタが使用されています。もし、従来のウィキテキストを利用したいのであれば、ツールバーにある"ソース"ボタンをクリックしてください。<!--また、このエディタについての詳細は[[w:ja:<Editor\'s help>|<Editor\'s help>]]]をご覧ください。-->',
-	'wysiwyg-first-edit-dont-show-me' => 'このメッセージを再度表示しないようにする',
-	'wysiwyg-first-edit-dismiss' => '閉じる',
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wysiwyg' => 'Integration de FCKeditor in MediaWiki',
+	'wysiwyg-no-js-fallback' => 'Le editor de texto inricchite non functiona si JavaScript es disactivate. Per favor activa lo in le optiones de tu navigator, o visita le [[Special:Preferences|Preferentias]] pro cambiar al ancian editor de MediaWiki.',
+	'wysiwyg-edgecase-info' => 'Le editor de texto inricchite ha essite disactivate pro iste pagina proque le articulo contine:',
+	'wysiwyg-edgecase-comment' => 'Commentos HTML',
+	'wysiwyg-edgecase-triplecurls' => 'parametros de patrono',
+	'wysiwyg-edgecase-nowysiwyg' => 'le commando "no wysiwyg"',
+	'wysiwyg-edgecase-complex-description' => 'un URL externe o un patrono intra le description de un ligamine',
+	'wysiwyg-edgecase-template-with-link' => 'un patrono con un ligamine como parametro',
+	'wysiwyg-edgecase-syntax' => 'syntaxe non permittite',
+	'wysiwyg-edgecase-image-with-link' => 'un imagine con un ligamine in le description',
+	'wysiwyg-edgecase-redirect' => 'un redirection',
+	'wysiwyg-edgecase-templateintable' => 'un tabella con un appello a un patrono in le definition',
+	'wysiwyg-edgecase-unclosed-tags' => 'un etiquetta HTML non terminate',
+	'wysiwyg-tooltip' => "'''Nove!''' Instrumentario de modification. Vide le [[Help:New editor|adjuta]] pro leger plus",
+	'enablerichtexteditor' => 'Activar le editor de texto inricchite',
+	'wysiwyg-enablerichtexteditormessage' => 'Le editor de texto inricchite es active!',
+	'wysiwyg-toolbar-text-appearance' => 'Apparentia del texto',
+	'wysiwyg-toolbar-lists-and-links' => 'Listas e ligamines',
+	'wysiwyg-toolbar-insert' => 'Inserer',
+	'wysiwyg-toolbar-wiki-templates' => 'Patronos wiki',
+	'wysiwyg-toolbar-controls' => 'Controlos',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -361,30 +404,27 @@ $messages['no'] = array(
 	'wysiwyg-toolbar-wiki-templates' => 'Wiki-maler',
 );
 
+/** Polish (Polski) */
 $messages['pl'] = array(
 	'wysiwyg' => 'FCKeditor dla MediaWiki',
+	'wysiwyg-edgecase-info' => 'Edycja w trybie wizualnym została wyłączona dla tej strony, ponieważ zawiera ona:',
+	'wysiwyg-edgecase-comment' => 'komentarze w kodzie HTML',
+	'wysiwyg-edgecase-triplecurls' => 'parametry szablonu',
+	'wysiwyg-edgecase-nowysiwyg' => 'dyrektywę "no wysiwyg"',
+	'wysiwyg-edgecase-complex-description' => 'link zewnętrzny lub szablon wewnątrz opisu linku',
+	'wysiwyg-edgecase-template-with-link' => 'szablon z linkiem jako parametrem',
+	'wysiwyg-edgecase-syntax' => 'niedozwoloną składnię',
+	'wysiwyg-edgecase-image-with-link' => 'grafikę z linkiem w opisie',
+	'wysiwyg-edgecase-redirect' => 'przekierowanie',
+	'wysiwyg-edgecase-templateintable' => 'definicję tabeli zawierającą wywołanie szablonu',
+	'wysiwyg-edgecase-unclosed-tags' => 'niezamknięte tagi HTML',
+	'wysiwyg-tooltip' => "'''New!''' Edit toolbar. See [[Help:New editor|help]] to learn more",
 	'enablerichtexteditor' => 'Włącz edytor wizualny',
 	'wysiwyg-enablerichtexteditormessage' => 'Edytor wizualny został włączony!',
 	'wysiwyg-toolbar-text-appearance' => 'Wygląd tekstu',
 	'wysiwyg-toolbar-lists-and-links' => 'Listy i linki',
+	'wysiwyg-toolbar-wiki-templates' => 'Szablony',
 	'wysiwyg-toolbar-controls' => 'Narzędzia',
-        'wysiwyg-edgecase-info' => 'Edycja w trybie wizualnym została wyłączona dla tej strony, ponieważ zawiera ona:',
-        'wysiwyg-edgecase-comment' => 'komentarze w kodzie HTML',
-        'wysiwyg-edgecase-triplecurls' => 'parametry szablonu',
-        'wysiwyg-edgecase-nowysiwyg' => 'dyrektywę "no wysiwyg"',
-        'wysiwyg-edgecase-complex-description' => 'link zewnętrzny lub szablon wewnątrz opisu linku',
-        'wysiwyg-edgecase-template-with-link' => 'szablon z linkiem jako parametrem',
-        'wysiwyg-edgecase-syntax' => 'niedozwoloną składnię',
-        'wysiwyg-edgecase-image-with-link' => 'grafikę z linkiem w opisie',
-        'wysiwyg-edgecase-redirect' => 'przekierowanie',
-        'wysiwyg-edgecase-templateintable' => 'definicję tabeli zawierającą wywołanie szablonu',
-	'wysiwyg-edgecase-unclosed-tags' => 'niezamknięte tagi HTML',
-        'wysiwyg-first-edit-title' => 'Witaj w nowym edytorze Wikia',
-        'wysiwyg-first-edit-message' => 'Ta wiki używa nowego Edytora Wizualnego. Jeśli chcesz edytować w trybie wikitekstu, użyj przycisku "źródło" na pasku narzędzi. Aby dowiedzieć się więcej o nowym edytorze, zajrzyj na stronę [[Help:New editor]]',
-        'wysiwyg-first-edit-dont-show-me' => 'Nie pokazuj tego okna ponownie',
-        'wysiwyg-first-edit-dismiss' => 'Zamknij',
-        'wysiwyg-tooltip' => "'''New!''' Edit toolbar. See [[Help:New editor|help]] to learn more",
-        'wysiwyg-toolbar-wiki-templates' => 'Szablony',
 );
 
 /** Piedmontese (Piemontèis)
@@ -413,6 +453,33 @@ $messages['pms'] = array(
 	'wysiwyg-toolbar-insert' => 'Anserì',
 	'wysiwyg-toolbar-wiki-templates' => 'Stamp Wiki',
 	'wysiwyg-toolbar-controls' => 'Contròj',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'wysiwyg' => 'Integração do FCKeditor para MediaWiki',
+	'wysiwyg-no-js-fallback' => 'O editor de texto rico não funciona com JavaScript desativado. Por favor, ative-o nas opções do navegador, ou desative a edição rica em suas [[Special:Preferences|Preferências]].',
+	'wysiwyg-edgecase-info' => 'Edição de texto rica foi desativada para esta página por ela conter:',
+	'wysiwyg-edgecase-comment' => 'comentários HTML',
+	'wysiwyg-edgecase-triplecurls' => 'parâmetros da predefinição',
+	'wysiwyg-edgecase-nowysiwyg' => 'o comando "sem wysiwyg"',
+	'wysiwyg-edgecase-complex-description' => 'uma URL externa ou uma predefinição na descrição de uma ligação',
+	'wysiwyg-edgecase-template-with-link' => 'uma predefinição com uma ligação como parâmetro',
+	'wysiwyg-edgecase-syntax' => 'sintaxe não permitida',
+	'wysiwyg-edgecase-image-with-link' => 'imagem com uma ligação na descrição',
+	'wysiwyg-edgecase-redirect' => 'redirecionar',
+	'wysiwyg-edgecase-templateintable' => 'uma tabela com chamada de predefinição na definição',
+	'wysiwyg-edgecase-unclosed-tags' => 'Etiqueta HTML aberta',
+	'wysiwyg-tooltip' => "'''Novidade!''' Barra de edição. Leia a [[Help:New editor|ajuda]] para aprender mais",
+	'enablerichtexteditor' => 'Ativar Editor de Texto Rico',
+	'wysiwyg-enablerichtexteditormessage' => 'Editor Rico de Texto ativado!',
+	'wysiwyg-toolbar-text-appearance' => 'Aparência do Texto',
+	'wysiwyg-toolbar-lists-and-links' => 'Listas e ligações',
+	'wysiwyg-toolbar-insert' => 'Inserir',
+	'wysiwyg-toolbar-wiki-templates' => 'Predefinições da Wiki',
+	'wysiwyg-toolbar-controls' => 'Controles',
 );
 
 /** Russian (Русский)
@@ -444,18 +511,28 @@ $messages['ru'] = array(
 );
 
 /** Swedish (Svenska)
+ * @author McDutchie
  * @author Per
  */
 $messages['sv'] = array(
 	'wysiwyg-edgecase-comment' => 'HTML-kommentarer',
 	'wysiwyg-edgecase-triplecurls' => 'mallparameterar',
 	'wysiwyg-edgecase-syntax' => 'ej tillåten syntax',
-	'wysiwyg-edgecase-redirect' => 'omdirigera',
+	'wysiwyg-edgecase-redirect' => 'en omdirigering',
 	'wysiwyg-edgecase-unclosed-tags' => 'ej stängd HTML-tag',
 	'wysiwyg-toolbar-lists-and-links' => 'Listor och länkar',
 	'wysiwyg-toolbar-insert' => 'Infoga',
 	'wysiwyg-toolbar-wiki-templates' => 'Wiki-mallar',
 	'wysiwyg-toolbar-controls' => 'Funktioner',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'wysiwyg-edgecase-comment' => 'HTML వ్యాఖ్యలు',
+	'wysiwyg-edgecase-redirect' => 'దారిమార్పు',
+	'wysiwyg-toolbar-wiki-templates' => 'వికీ మూసలు',
 );
 
 /** Yiddish (ייִדיש)
@@ -465,6 +542,7 @@ $messages['yi'] = array(
 	'wysiwyg-edgecase-redirect' => 'ווײַטערפֿירן',
 );
 
+/** Chinese (中文) */
 $messages['zh'] = array(
 	'wysiwyg-edgecase-info' => '此頁無法使用所見即所得編輯模式因為條目裡包含:',
 	'wysiwyg-edgecase-comment' => 'HTML 註解',
@@ -474,8 +552,5 @@ $messages['zh'] = array(
 	'wysiwyg-edgecase-template-with-link' => '模板的變數中使用連結',
 	'wysiwyg-edgecase-syntax' => '不被允許的語法',
 	'wysiwyg-edgecase-image-with-link' => '圖像描述中有連結',
-	'wysiwyg-first-edit-title' => '歡迎使用新版 Wikia 編輯器',
-	'wysiwyg-first-edit-message' => '此 wiki 使用 Wikia 新的所見即所得編輯器. 您若想使用傳統式 wiki 原碼的話請點擊工具列右方的\'原始碼\'按鈕. 新編輯器的使用解說請詳見 Help:New editor (英文).',
-	'wysiwyg-first-edit-dont-show-me' => '不要在顯示這信息',
 );
 

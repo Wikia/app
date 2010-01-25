@@ -119,6 +119,7 @@ Verskaf 'n beskrywende naam vir die video.",
 	'vet-optional' => ' (Opsioneel)',
 	'vet-insert2' => 'Voeg video in',
 	'vet-update' => 'Opdateer video',
+	'vet-video-replace-link' => 'Gaan asseblief na [[:$1]] om hierdie video te vervang',
 	'vet-prev' => 'Vorige 8',
 	'vet-next' => 'Volgende 8',
 	'vet-insert3' => 'Voeg hierdie video in',
@@ -236,6 +237,7 @@ $messages['br'] = array(
 	'vet-protected' => 'Gwarezet eo ar video-mañ',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'vet-upload' => 'Komplette URL',
 	'vet-notlogged' => 'Melde dich an oder registriere dich, um Videos einzubinden',
@@ -300,6 +302,7 @@ $messages['de'] = array(
 	'vet-protected' => 'Dieses Video ist geschützt.',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'vet-upload' => 'URL completa',
 	'vet-notlogged' => 'Identifícate o regístrate para insertar vídeos en este wiki',
@@ -341,7 +344,7 @@ $messages['es'] = array(
 	'vet-imagebutton' => 'Insertar Vídeos',
 	'vet-license-cc' => 'Licenciada bajo Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'El nombre de este vídeo contiene caracteres inválidos',
-	'vet-uploadtext' => '\'\'\'Este formulario te permite subir rápidamente y mostrar archivos en los artículos.\'\'\' \'\'Echa un vistazo también al [[Special:Log/upload|registro de subidas]] y la [[Special:ImageList|lista de todos los archivos subidos]].\'\'',
+	'vet-uploadtext' => "'''Este formulario te permite subir rápidamente y mostrar archivos en los artículos.''' ''Echa un vistazo también al [[Special:Log/upload|registro de subidas]] y la [[Special:ImageList|lista de todos los archivos subidos]].''",
 	'vet-show-message' => 'mostrar mensaje',
 	'vet-hide-message' => 'ocultar mensaje',
 	'vet-hide-license-msg' => 'ocultar texto de la licencia',
@@ -358,16 +361,17 @@ $messages['es'] = array(
 	'vet-no-preview' => 'No puedes añadir un vídeo a un artículo desde el modo de previsualización',
 );
 
+/** French (Français) */
 $messages['fr'] = array(
 	'vet-upload' => 'URL complète',
-	'vet-notlogged' => 'Connectez-vous ou créez un compte d\'utilisateur pour incorporer des vidéos',
+	'vet-notlogged' => "Connectez-vous ou créez un compte d'utilisateur pour incorporer des vidéos",
 	'vet-find' => 'Chercher une vidéo',
 	'vet-thiswiki' => 'Ce wiki',
 	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'Ajouter',
 	'vet-find-btn' => 'Chercher',
 	'vet-flickr-inf' => 'Rechercher des photos de licence libre à partir de Flickr et les incorporer dans votre wiki.',
-	'vet-conflict-inf' => '<h1>Il y a déjà une vidéo existant avec ce nom !</h1>Qu\'est-ce que vous voulez faire avec <b>$1</b> ?',
+	'vet-conflict-inf' => "<h1>Il y a déjà une vidéo existant avec ce nom !</h1>Qu'est-ce que vous voulez faire avec <b>$1</b> ?",
 	'vet-rename' => 'Renommer la vidéo',
 	'vet-existing' => 'Utiliser une vidéo existant déjà',
 	'vet-overwrite' => 'Remplacer la vidéo existante par votre vidéo.',
@@ -375,7 +379,7 @@ $messages['fr'] = array(
 	'vet-details-inf' => '<h1>Le nom du fichier</h1>Merci de donner un nom très significatif pour la vidéo.',
 	'vet-name' => 'Nom',
 	'vet-license' => 'Licence',
-	'vet-details-inf2' => '<h1>Les options d\'affichage vidéo</h1>',
+	'vet-details-inf2' => "<h1>Les options d'affichage vidéo</h1>",
 	'vet-size' => 'Taille',
 	'vet-thumbnail' => 'Aperçu',
 	'vet-fullsize' => 'Taille originale ($1px/$2px)',
@@ -392,40 +396,40 @@ $messages['fr'] = array(
 	'vet-insert3' => 'Incorper cette vidéo',
 	'vet-recent-inf' => 'Vidéos récemment ajoutées',
 	'vet-thiswiki2' => '$1 vidéos sur ce wiki',
-	'vet-success' => '<h1>Vidéo incorporée</h1>Le code suivant est incorporé dans l\'article avec succès :',
+	'vet-success' => "<h1>Vidéo incorporée</h1>Le code suivant est incorporé dans l'article avec succès :",
 	'vet-return' => 'Retourner à la modification',
 	'vet-back' => 'retourner',
 	'vet-close' => 'fermer',
-	'vet-warn1' => 'Vous devez d\'abord spécifier votre requête!',
-	'vet-warn2' => 'Merci d\'ajouter l\'URL de la vidéo que vous voulez importer sur {{SITENAME}}',
+	'vet-warn1' => "Vous devez d'abord spécifier votre requête!",
+	'vet-warn2' => "Merci d'ajouter l'URL de la vidéo que vous voulez importer sur {{SITENAME}}",
 	'vet-warn3' => 'Merci de donner un nom à la vidéo que vous importez.',
 	'vet-imagelink' => '<b>Nouveau!</b> Ajouter des vidéos',
 	'vet-imagebutton' => 'Ajouter des vidéos',
 	'vet-license-cc' => 'Disponible sous licence Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Le nom de cette vidéo contient des caractères non-valides',
-	'vet-uploadtext' => '\'\'\'Ce formulaire vous permet d\'importer rapidement des fichiers et de les afficher dans les articles.\'\'\'
+	'vet-uploadtext' => "'''Ce formulaire vous permet d'importer rapidement des fichiers et de les afficher dans les articles.'''
 
-\'\'Allez voir aussi l\'[[Special:Log/upload|historique des imports de fichiers multimédia]] et la [[Special:ImageList|liste de tout les fichiers importés]].\'\'',
+''Allez voir aussi l'[[Special:Log/upload|historique des imports de fichiers multimédia]] et la [[Special:ImageList|liste de tout les fichiers importés]].''",
 	'vet-show-message' => 'Afficher le message',
 	'vet-hide-message' => 'masquer le message',
 	'vet-hide-license-msg' => 'Masquer le texte de licence',
 	'vet-show-license-msg' => 'Afficher la licence',
-	'vet-max-thumb' => 'la taille maximale de l\'image a été atteinte, retour à la taille originale',
+	'vet-max-thumb' => "la taille maximale de l'image a été atteinte, retour à la taille originale",
 	'vet-notallowed' => 'Vous ne pouvez pas importer de vidéos sur ce wiki',
-	'vet-title' => 'Ajouter une vidéo dans l\'article',
+	'vet-title' => "Ajouter une vidéo dans l'article",
 	'vet-supported' => 'Sites de vidéos pris en charge :',
-	'vet-preview' => '\'\'Cet aperçu n\'est pas à la taille réelle\'\'',
-	'vet-bad-url' => 'Cette adresse URL n\'est pas valide. Vérifiez l\'adresse, s\'il vous plaît.',
-	'vet-non-existing' => 'La vidéo ajoutée n\'existe pas',
-	'vet-main-info' => '<i>Écrivez l\'adresse complète de l\'URL d\'une vidéo prise en charge par l\'un des sites supportés.</i>',
+	'vet-preview' => "''Cet aperçu n'est pas à la taille réelle''",
+	'vet-bad-url' => "Cette adresse URL n'est pas valide. Vérifiez l'adresse, s'il vous plaît.",
+	'vet-non-existing' => "La vidéo ajoutée n'existe pas",
+	'vet-main-info' => "<i>Écrivez l'adresse complète de l'URL d'une vidéo prise en charge par l'un des sites supportés.</i>",
 	'vet-page-success' => 'La page de la vidéo fut mise à jour avec succès. Vous devez purger la page de la vidéo pour voir les changements',
 	'vet-add-button' => 'Ajouter une vidéo',
-	'vet-added-from-gallery' => 'Vidéo ajoutée d\'une galerie de vidéos',
+	'vet-added-from-gallery' => "Vidéo ajoutée d'une galerie de vidéos",
 	'vet-see-all' => 'Tout voir',
 	'vet-bad-search' => 'Une erreur est survenue durant le chargement de la requête',
 	'vet-no-preview' => 'Vous ne pouvez pas ajouter de vidéos lors du mode de prévisualisation',
-	'vet-single-success' => 'La vidéo fut placée avec succès dans l\'article',
-	'vet-gallery-create-success' => 'Une galerie de vidéos fut ajoutée à l\'article',
+	'vet-single-success' => "La vidéo fut placée avec succès dans l'article",
+	'vet-gallery-create-success' => "Une galerie de vidéos fut ajoutée à l'article",
 	'vet-gallery-add-success' => 'Une vidéo a été ajoutée dans la galerie de vidéos de cet article',
 	'vet-left' => 'Gauche',
 	'vet-right' => 'Droite',
@@ -719,6 +723,7 @@ $messages['no'] = array(
 	'vet-protected' => 'Denne videoen er beskyttet',
 );
 
+/** Polish (Polski) */
 $messages['pl'] = array(
 	'vet-upload' => 'Pełny URL',
 	'vet-find' => 'Znajdź film',
@@ -864,6 +869,20 @@ $messages['ru'] = array(
 	'vet-show-license-msg' => 'показать текст лицензии',
 	'vet-add-button' => 'Добавить видео',
 	'vet-protected' => 'Это видео защищено',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'vet-upload-btn' => 'వెళ్ళు',
+	'vet-find-btn' => 'వెతుకు',
+	'vet-name' => 'పేరు',
+	'vet-size' => 'పరిమాణం',
+	'vet-width' => 'వెడల్పు',
+	'vet-optional' => '  (ఐచ్చికం)',
+	'vet-back' => 'వెనక్కి',
+	'vet-close' => 'మూసివేయి',
 );
 
 /** Ukrainian (Українська)

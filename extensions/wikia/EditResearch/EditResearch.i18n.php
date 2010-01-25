@@ -16,6 +16,7 @@ $messages['en'] = array(
 $messages['af'] = array(
 	'search_wikipedia' => 'Deursoek Wikipedia',
 	'previous' => 'vorige',
+	'research_this' => 'Vors dit na',
 );
 
 /** Breton (Brezhoneg)
@@ -27,6 +28,11 @@ $messages['br'] = array(
 	'research_no_results' => "N'eo bet kavet pajenn ebet. Mar plij klaskit adarre.",
 	'research_wikipedia_title' => 'Klask ar respont war Wikipedia',
 	'research_this' => 'Klask-se',
+);
+
+/** Buginese (ᨅᨔ ᨕᨘᨁᨗ) */
+$messages['bug'] = array(
+	'previous' => 'Ala na',
 );
 
 /** French (Français)
@@ -67,6 +73,28 @@ $messages['ja'] = array(
 	'research_no_results' => 'ページが見つかりませんでした。再検索してください。',
 	'research_wikipedia_title' => 'ウィキペディアで回答を調べる',
 	'research_this' => 'この質問について調べる',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'search_wikipedia' => 'Пребарај ја Википедија',
+	'previous' => 'претходно',
+	'research_no_results' => 'Нема пронајдено страници. Пребарајте повторно.',
+	'research_wikipedia_title' => 'Истражете го вашиот одговор на Википедија',
+	'research_this' => 'Истражи го ова',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'search_wikipedia' => 'Wikipedia doorzoeken',
+	'previous' => 'vorige',
+	'research_no_results' => "Er zijn geen pagina's gevonden. Voer nog een zoekopdracht uit.",
+	'research_wikipedia_title' => 'Uw antwoord op Wikipedia zoeken',
+	'research_this' => 'Opzoeken',
 );
 
 /** Piedmontese (Piemontèis)

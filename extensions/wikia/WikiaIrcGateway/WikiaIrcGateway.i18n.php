@@ -36,6 +36,14 @@ $messages['br'] = array(
 	'ircgate-channel' => 'Kanol :',
 );
 
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'ircgate-username' => "Nom d'utilisateur :",
+	'ircgate-channel' => 'Canal :',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
@@ -66,6 +74,38 @@ $messages['hu'] = array(
 $messages['ja'] = array(
 	'ircgate-username' => 'ユーザー名:',
 	'ircgate-channel' => 'チャンネル:',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'ircgate-username' => 'Корисничко име:',
+	'ircgate-channel' => 'Канал:',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'ircgate-username' => 'Gebruikersnaam:',
+	'ircgate-channel' => 'Kanaal:',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'ircgate-username' => 'Nòm utent:',
+	'ircgate-channel' => 'Canal:',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'ircgate-username' => 'Nome de usuário:',
+	'ircgate-channel' => 'Canal:',
 );
 
 /** Russian (Русский)

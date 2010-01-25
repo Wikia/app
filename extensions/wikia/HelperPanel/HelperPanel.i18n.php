@@ -51,6 +51,22 @@ $messages['hsb'] = array(
 	'helperPanel_widgets' => 'Moje asistenty',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'helperPanel_help' => 'Елемент за помош',
+	'helperPanel_widgets' => 'Мои елементи',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'helperPanel_help' => 'Hulp bij widgets',
+	'helperPanel_widgets' => 'Mijn widgets',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
@@ -66,6 +82,14 @@ $messages['oc'] = array(
 $messages['pms'] = array(
 	'helperPanel_help' => "Widget ëd l'agiut",
 	'helperPanel_widgets' => 'Ij mè widget',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'helperPanel_help' => 'Widget de ajuda',
+	'helperPanel_widgets' => 'Meus widgets',
 );
 
 /** Russian (Русский)

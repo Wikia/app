@@ -22,12 +22,25 @@ $messages['br'] = array(
 	'templatesused-toggle' => 'Diskouez/kuzhat $1 elfenn{{PLURAL:$1||}}',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'new-edit-page-preview-notice' => 'Vorschau: Es wurden noch keine Änderungen gespeichert! Scrolle runter zum Editieren.',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
 $messages['es'] = array(
 	'new-edit-page-preview-notice' => 'Modo de previsualización: ¡Los cambios no han sido guardados aún! Desplazate hacia abajo para continuar editando.',
+	'templatesused-toggle' => 'Mostrar/ocultar{{PLURAL:$1|$1 objeto|$1 objetos}}',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'new-edit-page-preview-notice' => "Mode de prévisualisation : aucun changement n'a pour l'instant été enregistré ! Rendez-vous en bas de la page pour continuer votre modification.",
+	'templatesused-toggle' => 'Afficher/masquer {{PLURAL:$1|$1 élément|$1 éléments}}',
 );
 
 /** Galician (Galego)
@@ -46,7 +59,7 @@ $messages['hsb'] = array(
 	'templatesused-toggle' => '{{PLURAL:$1|$1 zapisk|$1 zapiskaj|$1 zapiski|$1 zapiskow}} pokazać/schować',
 );
 
-
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'new-edit-page-preview-notice' => 'プレビュー中 : 編集内容はまだ保存されていません！ スクロールし編集を続けてください。',
 );
@@ -57,6 +70,23 @@ $messages['ja'] = array(
 $messages['lb'] = array(
 	'new-edit-page-preview-notice' => 'Kucken ouni ze späicheren: et sinn nach keng Ännerunge gespäichert! Scrollt erof fir mam ännere weiderzefueren.',
 	'templatesused-toggle' => '{{PLURAL:$1|$1 Objet|$1 Objete}} weisen/verstoppen',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'new-edit-page-preview-notice' => 'Преглед: промените сè уште не се зачувани! Одете подолу да продолжите со уредување.',
+	'templatesused-toggle' => 'Прикажи/сокриј {{PLURAL:$1|$1 елемент|$1 елементи}}',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'new-edit-page-preview-notice' => 'Voorvertoningsmodus: er zijn nog geen wijzigingen opgeslagen!
+Scroll naar beneden om door te gaan met bewerken.',
+	'templatesused-toggle' => '{{PLURAL:$1|$1 item|$1 items}} weergeven/verbergen',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -75,6 +105,7 @@ $messages['oc'] = array(
 	'templatesused-toggle' => 'Afichar/amagar {{PLURAL:$1|$1 element|$1 elements}}',
 );
 
+/** Polish (Polski) */
 $messages['pl'] = array(
 	'templatesused-toggle' => 'Pokaż/ukryj {{PLURAL:$1|1 element|$1 elementów}}',
 );
@@ -103,6 +134,7 @@ $messages['ru'] = array(
 	'templatesused-toggle' => 'Показать/скрыть $1 {{PLURAL:$1|запись|записи|записей}}',
 );
 
+/** Chinese (中文) */
 $messages['zh'] = array(
 	'new-edit-page-preview-notice' => '預覽模式: 更變尚未儲存! 向下繼續編輯.',
 );

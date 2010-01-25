@@ -44,28 +44,42 @@ $messages['af'] = array(
 	'multilookup' => 'Meervoudige opsoek',
 	'multilookupstitle' => 'Meervoudige opsoek',
 	'multilookupgo' => 'Gaan',
+	'multilookupnotspecify' => "U het nog nie 'n IP-adres gespesifiseer nie",
 	'multilookupnext' => 'volgende',
 	'multilookupprevious' => 'vorige',
 	'multilookupnbrresult' => 'Aantal resultate:',
 	'multilookupinvalidresults' => 'Ongeldige resultate!',
 	'multilookupnoresultfound' => 'Geen resultate gevind nie!',
 	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Bydraeskakel',
 	'multilookupdetails' => 'Wys details',
+	'multilookuplistwikiainfo' => "Lys van wiki's waar bladsye deur gebruikers van IP-adres <b>$1</b> gewysig is.",
+	'multilookupinvaliduser' => '<p class="error">Die IP-adres "<b>$1</b>" bestaan nie.
+Kontroleer die gegewe IP-adres; u met moontlik \'n invoerfout gemaak.</p>',
 	'multilookuplastedit' => 'Laste wysiging vanaf die IP:',
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
+	'multilookup' => 'Lookup liesseurt',
+	'multilookupstitle' => 'Lookup liesseurt',
+	'multilookupselectuser' => "Klask kontoù gant ar memes chomlec'h IP war wikioù liesseurt",
 	'multilookupgo' => 'Mont',
+	'multilookupnotspecify' => "N'ho peus meneget chomlec'h IP ebet",
 	'multilookupnext' => 'da-heul',
 	'multilookupprevious' => 'a-raok',
 	'multilookupnbrresult' => "Niver a zisoc'hoù :",
 	'multilookupinvalidresults' => "Disoc'h fall !",
 	'multilookupnoresultfound' => "N'eus bet kavet disoc'h ebet !",
 	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Liamm davet an degasadennoù',
 	'multilookupdetails' => 'Gwelet ar munudoù',
+	'multilookuplistwikiainfo' => "roll ar wikioù zo bet kemmet pennadoù warno gant an implierien o deus ur chomlec'h IP :<b>$1</b>",
+	'multilookupinvaliduser' => '<p class="error">IP "<b>$1</b>" n\'eus ket anezhañ.  Gwiriit ar chomlec\'h IP abalamour da fazioù a c\'\'hallfe bezañ ennañ. C</p>',
+	'multilookuplastedit' => "Kemm diwezhañ ar chomlec'h IP-mañ :",
 );
 
 /** French (Français)
@@ -195,5 +209,13 @@ $messages['pms'] = array(
  */
 $messages['ru'] = array(
 	'multilookupwiki' => 'Вики',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'multilookupgo' => 'వెళ్ళు',
+	'multilookupdetails' => 'వివరాలను చూడండి',
 );
 

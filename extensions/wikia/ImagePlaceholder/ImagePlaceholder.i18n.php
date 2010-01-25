@@ -27,22 +27,38 @@ $messages['br'] = array(
 	'imgplc-notinhistory' => "Ne c'helloc'h ket ouzhpennañ poltriji er mod istor.",
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'imgplc-create' => 'Bild hinzufügen',
 	'imgplc-placeholder' => 'Platzhalter',
 	'imgplc-image' => 'Bild',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
 $messages['es'] = array(
 	'imgplc-create' => 'Añadir imagen',
 	'imgplc-placeholder' => 'Posicionador',
 	'imgplc-image' => 'Imagen',
+	'imgplc-notinhistory' => 'No puedes añadir una imagen en modo historial',
 );
 
+/** Persian (فارسی) */
 $messages['fa'] = array(
 	'imgplc-create' => 'افزودن تصویر',
 	'imgplc-placeholder' => 'مکان نگه‏دار',
 	'imgplc-image' => 'تصویر',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'imgplc-create' => 'Ajouter une image',
+	'imgplc-placeholder' => 'Positionneur',
+	'imgplc-image' => 'Image',
+	'imgplc-notinhistory' => "Vous ne pouvez pas ajouter d'image en mode historique.",
 );
 
 /** Galician (Galego)
@@ -85,22 +101,38 @@ $messages['ja'] = array(
 	'imgplc-notinhistory' => '履歴表示モードでは画像を追加できません。',
 );
 
+/** Korean (한국어) */
 $messages['ko'] = array(
 	'imgplc-create' => '그림 넣기',
 	'imgplc-placeholder' => '플레이스홀더',
 	'imgplc-image' => '그림',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'imgplc-create' => 'Додај слика',
+	'imgplc-placeholder' => 'Пополнувач',
+	'imgplc-image' => 'Слика',
+	'imgplc-notinhistory' => 'Не можете да додавате слики во историски режим.',
+);
+
+/** Norwegian Bokmål (‪Norsk (bokmål)‬) */
 $messages['nb'] = array(
 	'imgplc-create' => 'Legg til bilde',
 	'imgplc-placeholder' => 'Plassholder',
 	'imgplc-image' => 'Bilde',
 );
 
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
 $messages['nl'] = array(
 	'imgplc-create' => 'Voeg afbeelding toe',
 	'imgplc-placeholder' => 'Plaatshouder',
 	'imgplc-image' => 'Afbeelding',
+	'imgplc-notinhistory' => 'U kunt geen afbeelding toevoegen in geschiedenismodus.',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -124,6 +156,7 @@ $messages['no'] = array(
 	'imgplc-notinhistory' => 'Du kan ikke legge til bilder i historikkmodus',
 );
 
+/** Polish (Polski) */
 $messages['pl'] = array(
 	'imgplc-create' => 'Dodaj obrazek',
 	'imgplc-placeholder' => 'Wypełniacz',
@@ -141,6 +174,16 @@ $messages['pms'] = array(
 	'imgplc-notinhistory' => 'A peul pa gionté na figura an modalità stòria.',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'imgplc-create' => 'Adicionar Imagem',
+	'imgplc-placeholder' => 'Espaço reservado',
+	'imgplc-image' => 'Imagem',
+	'imgplc-notinhistory' => 'Você não pode adicionar uma imagem no modo de histórico',
+);
+
 /** Russian (Русский)
  * @author Александр Сигачёв
  */
@@ -151,6 +194,7 @@ $messages['ru'] = array(
 	'imgplc-notinhistory' => 'Вы не можете добавить изображение в режиме истории.',
 );
 
+/** Swedish (Svenska) */
 $messages['sv'] = array(
 	'imgplc-create' => 'Lägg till bild',
 	'imgplc-placeholder' => 'Platshållare',

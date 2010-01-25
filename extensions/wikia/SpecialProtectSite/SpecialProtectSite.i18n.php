@@ -30,7 +30,10 @@ $messages['en'] = array(
  */
 $messages['af'] = array(
 	'protectsite' => 'Beskerm werf',
+	'protectsite-title' => 'Veiligheidsinstellings vir die werf',
 	'protectsite-allowall' => 'Alle gebruikers',
+	'protectsite-allowusersysop' => 'Geregistreerde gebruikers en administrateurs',
+	'protectsite-allowsysop' => 'Slegs administrateurs',
 	'protectsite-maxtimeout' => 'Maksimum:',
 	'protectsite-comment' => 'Rede:',
 	'protectsite-ucomment' => 'Rede:',
@@ -230,5 +233,13 @@ $messages['ru'] = array(
 	'protectsite-until' => 'Защищено до:',
 	'protectsite-protect' => 'Защитить',
 	'protectsite-unprotect' => 'Снять защиту',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'protectsite-allowall' => 'అందరు వాడుకరులు',
+	'protectsite-comment' => 'వ్యాఖ్య:',
 );
 

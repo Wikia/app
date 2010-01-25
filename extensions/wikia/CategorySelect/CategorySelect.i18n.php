@@ -40,6 +40,14 @@ $messages['en'] = array(
 	'tog-disablecategoryselect' => 'Disable Category Tagging'
 );
 
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
+$messages['qqq'] = array(
+	'categoryselect-button-save' => '{{Identical|Save}}',
+	'categoryselect-button-cancel' => '{{Identical|Cancel}}',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -52,6 +60,24 @@ $messages['af'] = array(
 	'categoryselect-error-db-locked' => 'Databasis is gesluit.',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'categoryselect-button-save' => 'Захаваць',
+	'categoryselect-button-cancel' => 'Адмяніць',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'categoryselect-addcategory-button' => 'Ouzhpennañ rummadoù',
+	'categoryselect-button-save' => 'Enrollañ',
+	'categoryselect-button-cancel' => 'Nullañ',
+);
+
+/** German (Deutsch) */
 $messages['de'] = array(
 	'categoryselect-code-view' => 'Quelltext',
 	'categoryselect-visual-view' => 'Grafische Ansicht',
@@ -60,7 +86,7 @@ $messages['de'] = array(
 	'categoryselect-infobox-sortkey' => 'Ordne diesen Artikel in der Kategorie „$1“ unter folgendem Namen ein:',
 	'categoryselect-addcategory-button' => 'Kategorie hinzufügen',
 	'categoryselect-suggest-hint' => 'Mit Eingabetaste beenden',
-	'categoryselect-tooltip' => '\'\'\'Neu!:\'\'\' Unsere KategorieAuswahl-Leiste. Probier sie aus oder lies die [[Hilfe:KategorieAuswahl|Hilfe]] für weitere Informationen.',
+	'categoryselect-tooltip' => "'''Neu!:''' Unsere KategorieAuswahl-Leiste. Probier sie aus oder lies die [[Hilfe:KategorieAuswahl|Hilfe]] für weitere Informationen.",
 	'categoryselect-unhandled-syntax' => 'Nicht unterstützte Syntax entdeckt - Wechsel in grafische Ansicht nicht möglich.',
 	'categoryselect-edit-summary' => 'Kategorien hinzufügen',
 	'categoryselect-empty-name' => 'Kategorie-Name (der Teil vor |)',
@@ -72,6 +98,7 @@ $messages['de'] = array(
 	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'categoryselect-code-view' => 'Vista de código',
 	'categoryselect-visual-view' => 'Vista visual',
@@ -80,7 +107,7 @@ $messages['es'] = array(
 	'categoryselect-infobox-sortkey' => 'Clasifica este artículo en la categoría "$1" con el nombre:',
 	'categoryselect-addcategory-button' => 'Añadir categoría',
 	'categoryselect-suggest-hint' => 'Presiona Enter cuando termines',
-	'categoryselect-tooltip' => '\'\'\'¡Nuevo!\'\'\' Barra de etiquetas de categoría. Pruebala o échale un vistazo a [[Help:CategorySelect|ayuda]] para aprender más',
+	'categoryselect-tooltip' => "'''¡Nuevo!''' Barra de etiquetas de categoría. Pruebala o échale un vistazo a [[Help:CategorySelect|ayuda]] para aprender más",
 	'categoryselect-unhandled-syntax' => 'Detectada sintaxis inmanipulable - imposible cambiar al modo visual.',
 	'categoryselect-edit-summary' => 'Añadiendo categorías',
 	'categoryselect-empty-name' => 'Pon el nombre de la categoría (parte antes de |)',
@@ -89,6 +116,7 @@ $messages['es'] = array(
 	'tog-disablecategoryselect' => 'Desactivar el Etiquetador de Categorías (Category Tagging)',
 );
 
+/** Persian (فارسی) */
 $messages['fa'] = array(
 	'categoryselect-addcategory-button' => 'افزودن رده',
 	'categoryselect-suggest-hint' => 'پس از اتمام دکمه اینتر را فشار دهید',
@@ -97,23 +125,29 @@ $messages['fa'] = array(
 	'categoryselect-button-cancel' => 'لغو',
 );
 
+/** Finnish (Suomi)
+ * @author Crt
+ */
 $messages['fi'] = array(
-		'categoryselect-code-view' => 'Näytä koodi',
-		'categoryselect-visual-view' => 'Näytä visuaalisena',
-		'categoryselect-infobox-caption' => 'Luokan asetukset',
-		'categoryselect-infobox-category' => 'Syötä luokan nimi:',
-		'categoryselect-infobox-sortkey' => 'Aakkosta tämä artikkeli "$1" luokkasivulle nimellä:',
-		'categoryselect-addcategory-button' => 'Lisää luokka',
-		'categoryselect-suggest-hint' => 'Paina Enter, kun olet valmis',
-		'categoryselect-tooltip' => "'''Uutuus!''' Luokan lisäystyökalurivi. Testaa sitä tai katso [[Ohje:CategorySelect|ohje]] saadaksesi lisätietoa.",
-		'categoryselect-unhandled-syntax' => 'Käsittelemätön syntaksi havaittu - visuaalisen moodin takaisin kytkentä on mahdotonta.',
-		'categoryselect-edit-summary' => 'Luokkien lisääminen',
-		'categoryselect-empty-name' => 'Syötä luokan nimi (osaa ennen |)',
-		'categoryselect-button-save' => 'Tallenna',
-		'categoryselect-button-cancel' => 'Peruuta',
-		'tog-disablecategoryselect' => 'peru luokkien lisäys'
+	'categoryselect-code-view' => 'Näytä koodi',
+	'categoryselect-visual-view' => 'Näytä visuaalisena',
+	'categoryselect-infobox-caption' => 'Luokan asetukset',
+	'categoryselect-infobox-category' => 'Syötä luokan nimi:',
+	'categoryselect-infobox-sortkey' => 'Aakkosta tämä artikkeli "$1" luokkasivulle nimellä:',
+	'categoryselect-addcategory-button' => 'Lisää luokka',
+	'categoryselect-suggest-hint' => 'Paina Enter, kun olet valmis',
+	'categoryselect-tooltip' => "'''Uusi!''' Luokan lisäystyökalurivi. Testaa sitä tai katso [[Help:CategorySelect|ohjesta]] lisätietoa.",
+	'categoryselect-unhandled-syntax' => 'Käsittelemätön syntaksi havaittu - visuaalisen moodin takaisin kytkentä on mahdotonta.',
+	'categoryselect-edit-summary' => 'Luokkien lisääminen',
+	'categoryselect-empty-name' => 'Syötä luokan nimi (osa ennen |)',
+	'categoryselect-button-save' => 'Tallenna',
+	'categoryselect-button-cancel' => 'Peruuta',
+	'tog-disablecategoryselect' => 'peru luokkien lisäys',
 );
 
+/** French (Français)
+ * @author Peter17
+ */
 $messages['fr'] = array(
 	'categoryselect-code-view' => 'Voir le code',
 	'categoryselect-visual-view' => 'Vue visuelle',
@@ -122,12 +156,16 @@ $messages['fr'] = array(
 	'categoryselect-infobox-sortkey' => 'Mettre cet article dans la catégorie « $1 » sous le nom suivant :',
 	'categoryselect-addcategory-button' => 'Ajouter des catégories',
 	'categoryselect-suggest-hint' => 'Taper sur "Entrée" pour finir',
-	'categoryselect-tooltip' => '\'\'\'Nouveau ! :\'\'\' Notre outil de sélection de catégorie (CatégorieSélection). Essayez le ou lisez [[w:c:aide:Aide:CatégorieSélection|l\'aide]] pour d\'autres informations.',
-	'categoryselect-unhandled-syntax' => 'Il y a un problème de syntaxe inconnue. Il n\'est pas possible de changer en vue graphique.',
+	'categoryselect-tooltip' => "'''Nouveau ! :''' Barre d'outils de sélection de catégorie. Essayez-la ou lisez [[Help:CategorySelect|l'aide]] pour en apprendre plus.",
+	'categoryselect-unhandled-syntax' => "Il y a un problème de syntaxe inconnue. Il n'est pas possible de changer en vue graphique.",
 	'categoryselect-edit-summary' => 'Ajouter une catégorie',
-	'categoryselect-empty-name' => 'Nom de la catégorie (ce qu\'on écrit devant |)',
+	'categoryselect-empty-name' => "Nom de la catégorie (ce qu'on écrit devant |)",
 	'categoryselect-button-save' => 'Enregistrer',
 	'categoryselect-button-cancel' => 'Annuler',
+	'categoryselect-error-not-exist' => "L'article [id=$1] n'existe pas.",
+	'categoryselect-error-user-rights' => "Erreur de droits d'utilisateurs.",
+	'categoryselect-error-db-locked' => 'La base de données est verrouillée.',
+	'categoryselect-desc' => "Fournit une interface permettant de gérer les catégories d'un article sans avoir à éditer tout l'article.",
 	'tog-disablecategoryselect' => 'Désactiver le balisage des catégories',
 );
 
@@ -187,6 +225,30 @@ $messages['ja'] = array(
 	'tog-disablecategoryselect' => 'カテゴリタグ付け機能を無効にする。',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'categoryselect-code-view' => 'Коден изглед',
+	'categoryselect-visual-view' => 'Визуелен изглед',
+	'categoryselect-infobox-caption' => 'Нагодувања за категории',
+	'categoryselect-infobox-category' => 'Наведете го името на категоријата:',
+	'categoryselect-infobox-sortkey' => 'Азбучно заведи ја статијава во категоријата „$1“ под името:',
+	'categoryselect-addcategory-button' => 'Додај категорија',
+	'categoryselect-suggest-hint' => 'Пристиснете Enter кога сте готови',
+	'categoryselect-tooltip' => "'''Ново!''' Алатник за означување на категории. Испробајте го или одете на [[Help:CategorySelect|помош]] за да дознаете повеќе",
+	'categoryselect-unhandled-syntax' => 'Пронајдена е необработена синтакса - не можам да ве вратам во визуелен режим.',
+	'categoryselect-edit-summary' => 'Додавање на категории',
+	'categoryselect-empty-name' => 'Наведете има на категоријата (делот пред |)',
+	'categoryselect-button-save' => 'Зачувај',
+	'categoryselect-button-cancel' => 'Откажи',
+	'categoryselect-error-not-exist' => 'Статијата [id=$1] не постои.',
+	'categoryselect-error-user-rights' => 'Грешка со корисничките права.',
+	'categoryselect-error-db-locked' => 'Базата на податоци е заклучена.',
+	'categoryselect-desc' => 'Дава интерфејс за раководење со категориите во една статија без да треба да се уредува целата статија.',
+	'tog-disablecategoryselect' => 'Оневозможи означување на категории',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
@@ -238,15 +300,32 @@ $messages['pms'] = array(
 	'tog-disablecategoryselect' => 'Disabìlita etichëtté categorìe',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Jesielt
+ */
+$messages['pt-br'] = array(
+	'categoryselect-addcategory-button' => 'Adicione uma categoria',
+	'categoryselect-suggest-hint' => 'Pressione "Enter" depois de digitar',
+	'categoryselect-button-save' => 'Salvar',
+	'categoryselect-button-cancel' => 'Cancelar',
+);
+
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'categoryselect-code-view' => 'Просмотр кода',
 	'categoryselect-visual-view' => 'Визуальный просмотр',
+	'categoryselect-infobox-caption' => 'Настройки категории',
+	'categoryselect-infobox-category' => 'Укажите имя категории:',
+	'categoryselect-infobox-sortkey' => 'Приводить эту статью на странице категории «$1» под следующем именем:',
 	'categoryselect-addcategory-button' => 'Добавить категорию',
 	'categoryselect-suggest-hint' => 'Нажмите Enter, когда закончите',
+	'categoryselect-tooltip' => "'''Новое!''' Панель категоризации. Попробуйте. Подробнее см. в [[Help:CategorySelect|справке]]",
+	'categoryselect-unhandled-syntax' => 'Обнаружен неподдерживаемый синтаксис — невозможно вернуть назад к наглядному режиму.',
 	'categoryselect-edit-summary' => 'Добавление категорий',
+	'categoryselect-empty-name' => 'Укажите название категории (часть до |)',
 	'categoryselect-button-save' => 'Сохранить',
 	'categoryselect-button-cancel' => 'Отмена',
 	'categoryselect-error-not-exist' => 'Статья [id=$1] не существует.',
@@ -256,6 +335,15 @@ $messages['ru'] = array(
 	'tog-disablecategoryselect' => 'Отключить Category Taging',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'categoryselect-button-save' => 'భద్రపరచు',
+	'categoryselect-button-cancel' => 'రద్దుచేయి',
+);
+
+/** Chinese (中文) */
 $messages['zh'] = array(
 	'categoryselect-infobox-caption' => '分類選項',
 	'categoryselect-infobox-category' => '分類的名稱',
@@ -265,3 +353,4 @@ $messages['zh'] = array(
 	'categoryselect-button-save' => '儲存',
 	'categoryselect-button-cancel' => '取消',
 );
+

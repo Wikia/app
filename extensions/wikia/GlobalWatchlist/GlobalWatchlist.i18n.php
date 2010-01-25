@@ -44,6 +44,7 @@ $messages['af'] = array(
  */
 $messages['br'] = array(
 	'globalwatchlist-no-page-found' => "N'eo bet kavet pajenn ebet.",
+	'globalwatchlist-no-blog-page-found' => "N'eo bet kavet pajenn blog ebet.",
 );
 
 /** German (Deutsch) */
@@ -287,9 +288,32 @@ Wikia
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'tog-watchlistdigest' => 'Отправлять мне еженедельно дайжест списка наблюдения',
+	'tog-watchlistdigestclear' => 'Отметить как посещённые все страницы из моего Еженедельного дайджеста списка наблюдения',
+	'globalwatchlist-see-more' => 'Пожалуйста, ищите дополнительные изменения в ваших локальных списках наблюдения',
+	'globalwatchlist-digest-email-subject' => 'Еженедельный дайджест',
+	'globalwatchlist-digest-email-body' => 'Здравствуйте, $1.
+
+Это список страниц вашего списка наблюдения Wikia, которые были отредактированы с момента вашего последнего их посещения.
+
+$2
+
+
+Это список страниц блогов вашего списка наблюдения Wikia, отредактированых с момента вашего последнего их посещения. 
+
+$3
+
+Пожалуйста заходите и делайте правки чаще…
+
+Wikia
+
+* Чтобы изменить настройки уведомления для списка наблюдения, пожалуйста, посетите http://www.wikia.com/wiki/Special:Preferences
+* Чтобы отметить все страницы этого Еженедельного дайджеста как посещённые, см. настройку на вкладке «Список наблюдения» вашей страницы настроек',
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|комментарий|комментария|комментариев}})',
+	'globalwatchlist-no-page-found' => 'Не найдено страниц.',
+	'globalwatchlist-no-blog-page-found' => 'Не найдено страниц блогов.',
 );
 

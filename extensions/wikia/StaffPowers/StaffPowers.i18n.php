@@ -30,12 +30,23 @@ $messages['br'] = array(
 	'staffpowers-ipblock-aborted' => "N'eo ket posupl stankañ izili skipailh Wikia. Gallout a reot implijout [[Special:Contact]] evit reiñ da c'houzout  kudenn pe gudenn d'hor skipailh",
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'staffpowers-ipblock-aborted' => 'Dieser Benutzer ist Mitarbeiter von Wikia und kann nicht gesperrt werden. Falls es irgendwelche Problemen gibt, [[Special:Contact|melde dich bei uns]].',
 );
 
+/** Spanish (Español)
+ * @author Translationista
+ */
 $messages['es'] = array(
-	'staffpowers-ipblock-aborted' => 'Este usuario es un miembro del staff de Wikia y no puede ser bloqueado. Para problemas con las funcionalidades u otros temas, por favor <a href="/index.php?title=Special:Contact">contacta con nosotros</a>.',
+	'staffpowers-ipblock-aborted' => 'No puede bloquearse un miembro del personal de Wikia. Para reportar cualquier problema con nuestro personal, por favor contáctanos a través de [[Special:Contact]] .',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'staffpowers-ipblock-aborted' => "Il n'est pas possible de bloquer les membres de l'équipe Wikia. Vous pouvez utiliser [[Special:Contact]] pour nous signaler tout problème avec notre équipe.",
 );
 
 /** Galician (Galego)
@@ -71,6 +82,21 @@ $messages['hu'] = array(
  */
 $messages['lb'] = array(
 	'staffpowers-ipblock-aborted' => 'Et ass net méiglech déi bezuelt Mataarbechter vun der Wikia Equipe ze spären. Benotzt w.e.g. [[Special:Contact]] fir all Froen a Problemer mat eise bezuelte Mataarbechter.',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'staffpowers-ipblock-aborted' => 'Не можете да блокирате персонал на Викија. За да пријавите проблеми со програмот или персоналот, одете на [[Special:Contact]]',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'staffpowers-ipblock-aborted' => 'Het blokkeren van stafmedewerkers van Wikia is niet mogelijk.
+Gebruik de [[Special:Contact|contactpagina]] om problemen met stafmedewerkers te melden.',
 );
 
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)

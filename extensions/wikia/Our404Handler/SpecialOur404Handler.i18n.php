@@ -24,11 +24,27 @@ Article '''$1''' could not be found.
 * To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]"
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'our404handler' => 'Fout 404: bladsy nie gevind nie!',
+);
+
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
 	'our404handler' => "Fazi 404 : N'eo ket bet kavet ar bajenn !",
+	'our404handler-oops' => "N'eo ket ar pajennoù emaoc'h o klask. Kit da welet da lec'h all, mar plij.",
+	'message404' => "'''Digarezit ac'hanomp met evit abeg-mañ abeg n'ez eus ket eus ar bajenn-se.'''
+
+N'eo ket bet kavet ar pennad '''$1'''.
+
+* Gellout a reoc'h klask ar pennad [[$2]]
+* Gellout a reoc'h implijout ar boest klask e lodenn kleiz ar bajenn
+* Evit distreiñ da bajenn degemer al lec'hienn, klikit amañ : [{{SERVER}} {{SITENAME}}]",
 );
 
 /** German (Deutsch)
@@ -57,7 +73,7 @@ El artículo '''$1''' no pudo ser encontrado.
 
 * Puedes reintentarlo con el artículo [[$2]]
 * Puedes usar el cajón de búsqueda en el lado izquierdo de la página
-* Para ir a la portada de este sitio, haz click en el vínculo: [{{SERVER}} {{SITENAME}}]"
+* Para ir a la portada de este sitio, haz click en el vínculo: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Finnish (Suomi)
@@ -77,9 +93,12 @@ Artikkelia '''$1''' ei löytynyt.
 );
 
 /** French (Français)
+ * @author Peter17
  * @author Polytherion
  */
 $messages['fr'] = array(
+	'our404handler' => 'Erreur 404 : Page non-trouvée !',
+	'our404handler-oops' => "Ceci ne sont pas les pages que vous cherchez. Circulez, s'il-vous-plaît.",
 	'message404' => "'''Désolé, mais pour une raison ou une autre la page demandée n'existe pas.'''
 
 Article '''$1''' introuvable.
@@ -140,6 +159,37 @@ $messages['ko'] = array(
 	'our404handler' => '404 오류: 페이지를 찾을 수 없습니다.',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'our404handler' => 'Грешка 404: Страницата не е пронајдена!',
+	'our404handler-oops' => 'Ова не се страниците кои ги барате. Ве молиме продолжете на друго место.',
+	'message404' => "'''Навистина жалиме, но од извесна причина страницата која ја побаравте не постои.'''
+
+Статијата '''$1''' не беше пронајдена.
+
+* Обидете се со статијата [[$2]]
+* Можете да го употребите полето за пребарување од лево
+* За да отидете на главната страница на оваа веб-страна, кликнете ја врската: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'our404handler' => 'Fout 404: De pagina is niet aangetroffen!',
+	'our404handler-oops' => "Dit zijn niet de pagina's waar u naar op zoek bent.
+Probeer het nog eens.",
+	'message404' => "'''Het spijt ons, maar op een of andere manier hebt u een pagina opgevraagd die niet bestaat.'''
+
+Artikel \"'''\$1'''\" is niet aangetroffen.
+
+* U kunt het artikel \"[[\$2]]\" proberen
+* U kunt het zoekveld gebruiken links op de pagina
+* U kunt naar de hoofdpagina van deze site gaan: [{{SERVER}} {{SITENAME}}]",
+);
+
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
  * @author Harald Khan
  */
@@ -155,7 +205,7 @@ Artikkelen '''$1''' kunne ikkje verta funnen.
 * For å gå til hovudsida på denne nettstaden, trykk på lenkja: [{{SERVER}} {{SITENAME}}]",
 );
 
-/** Polish (Polskie)
+/** Polish (Polski)
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 $messages['pl'] = array(
@@ -175,6 +225,22 @@ L'artìcol '''$1''' a peul pa esse trovà.
 * A peul prové l'artìcol [[$2]]
 * A peul dovré la casela d'arserca ant la part snista dla pàgina
 * Për andé a la pàgina prinsipal dë sto sit-sì, ch'a sgnaca an sl'anliura: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'our404handler' => 'Erro 404: Página não encontrada!',
+	'our404handler-oops' => 'Estas não são as páginas pelas quais você está procurando. Mova-se, por favor.',
+	'message404' => "
+'''Sentimos muito, mas por algum motivo a página que você procura não existe.'''
+
+O artigo '''$1''' não pode ser encontrado.
+
+* Você pode tentar o artigo [[[$2]]]
+* Você pode usar o mecanismo de pesquisa na caixa a esquerda da página
+* Ir até a página principal do sítio, clique na ligação: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Russian (Русский)

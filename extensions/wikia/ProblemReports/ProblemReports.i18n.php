@@ -106,95 +106,130 @@ Software bugs can be reported on the forums. Reports made here will be [[Special
 	'right-problemreports_global' => 'Change state and type of ProblemReports across wikis',
 );
 
-$messages['pl'] = array(
-	'problemreports' => 'Lista zgłoszonych problemów',
-	'reportproblem' => 'Zgłoś problem',
-		
-	'prlogtext' => 'Zgłoszone problemy',
-	'prlogheader' => 'Lista zgłoszonych problemów i zmian w ich statusach',
-	'prlog_reportedentry' => 'zgłoszono problem z $1 ($2)',
-	'prlog_changedentry' => 'oznaczono problem $1 jako "$2"',
-	'prlog_typeentry'    => 'zmieniono rodzaj problemu $1 na "$2"',
-	'prlog_removedentry' => 'usunięto problem $1',
-	'prlog_emailedentry' => 'wysłał wiadomość email do $2 ($3)',
-
-	'pr_introductory_text' => 'Większość stron na tej wiki jest edytowalna i zachęcamy Ciebie do ich edycji oraz korygowania błędów w ich treści! Jeśli potrzebujesz pomocy, zobacz poradnik [[help:editing|jak edytować strony]] i [[help:revert|jak usuwać wandalizmy]].
-
-Aby skontaktować się z zarządcami wiki lub zgłosić problem związany z prawami autorskimi, zajrzyj na stronę [[w:contact us|kontakt z Wikią]].
-
-Błędy w oprogramowaniu mogą być zgłaszane na forach. Problemy zgłaszane tutaj będą [[Special:ProblemReports|widoczne na wiki]].',
-
-	'pr_what_problem' => 'Temat',
-	'pr_what_problem_spam' => 'na stronie znajduje się link spamera',
-	'pr_what_problem_vandalised' => 'strona padła ofiarą wandala',
-	'pr_what_problem_incorrect_content' => 'zawartość strony jest niepoprawna',
-	'pr_what_problem_software_bug' => 'w oprogramowaniu znajduje się błąd',
-	'pr_what_problem_other' => 'inny',
-
-	'pr_what_problem_select' => 'Proszę wybrać rodzaj problemu',
-	'pr_what_problem_unselect' => 'wszystkie',
-	'pr_what_problem_spam_short' => 'spam',
-	'pr_what_problem_vandalised_short' => 'wandalizm',
-	'pr_what_problem_incorrect_content_short' => 'zawartość',
-	'pr_what_problem_software_bug_short' => 'błąd',
-	'pr_what_problem_other_short' => 'inny',
-		
-	'pr_what_problem_change' => 'Zmień rodzaj problemu',
-
-	'pr_describe_problem' => 'Wiadomość',
-	'pr_what_page' => 'Tytuł strony',
-	'pr_email_visible_only_to_staff' => 'dostępny tylko dla administracji Wikii',
-	'pr_thank_you' => "Dziękujemy za zgłoszenie problemu!\n\n[[Special:ProblemReports/$1|Możesz obserować postępy w jego rozwiązywaniu]].",
-	'pr_thank_you_error' => 'Wystąpił problem w czasie wysyłania raportu, spróbuj później...',
-	'pr_spam_found' => 'Wykryto spam w treści komentarza. Prosimy skorygować jego treść',
-	'pr_empty_summary' => 'Podaj krótki opis problemu',
-	'pr_empty_email' => 'Podaj swój adres emailowy',
-		
-	'pr_mailer_notice' => 'Adres e-mailowy, który został przez Ciebie wprowadzony w Twoich preferencjach pojawi się w polu "Od", dzięki temu odbiorca będzie mógł Ci odpowiedzieć',
-	'pr_mailer_subject' => 'Zgłoszono problem związany z',
-	'pr_mailer_tmp_info' => 'Możesz edytować schematy odpowiedzi na [[MediaWiki:ProblemReportsResponses|tej stronie]]',
-	'pr_mailer_to_default' => 'Użytkownik Wikii',
-
-	'pr_total_number'       => 'Łączna liczba raportów',
-	'pr_view_archive'       => 'Przejrzyj archiwalne raporty',
-	'pr_view_all'           => 'Przeglądaj wszystkie raporty',
-	'pr_view_staff'         => 'Przejrzyj raporty wymagające pomocy administracji Wikii',
-	'pr_raports_from_this_wikia' => 'Przejrzyj raporty dotyczące tylko tej Wikii',
-	'pr_reports_from'       => 'Raporty z',
-	'pr_no_reports' => 'Brak raportów',
-		
-	'pr_sysops_notice' => 'Jeśli chcesz dokonać zmian w statusie raportów, proszę przejść <a href="$1">tutaj</a>...',
-
-	'pr_table_problem_id'   => 'ID problemu',
-	'pr_table_wiki_name'    => 'Nazwa Wikii',
-	'pr_table_problem_type' => 'Rodzaj problemu',
-	'pr_table_page_link'    => 'Strona',
-	'pr_table_date_submitted' => 'Data zgłoszenia',
-	'pr_table_reporter_name'=> 'Kto zgłosił',
-	'pr_table_description'  => 'Opis',
-	'pr_table_comments'  => 'Komentarze',
-	'pr_table_status'       => 'Status',
-	'pr_table_actions'      => 'Akcje',
-
-	'pr_status_0' => 'oczekuje',
-	'pr_status_1' => 'naprawione',
-	'pr_status_2' => 'to nie jest problem',
-	'pr_status_3' => 'konieczna pomoc',
-	'pr_status_10' => 'usuń raport',
-
-	'pr_status_undo' => 'Cofnij zmianę statusu raportu',
-	'pr_status_ask'  => 'Zmienić status raportu?',
-		
-	'pr_remove_ask'  => 'Na pewno usunąć raport?',
-
-	'pr_status_wait' => 'czekaj...',
-
-	'pr_read_only' => 'Nowe zgłoszenia nie mogą zostać teraz dodane, prosimy spróbować później.',
-
-                'pr_msg_exceeded' => 'Maksymalna liczba znaków w polu Wiadomości wynosi 512, prosimy o zmianę zawartości tego pola.',
-                'pr_msg_exchead' => 'Wiadomość jest zbyt długa',
+/** Message documentation (Message documentation)
+ * @author EugeneZelenko
+ */
+$messages['qqq'] = array(
+	'pr_table_description' => '{{Identical|Description}}',
+	'pr_table_status' => '{{Identical|Status}}',
+	'pr_table_actions' => '{{Identical|Action}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'reportproblem' => "Rapporteer 'n probleem",
+	'prlog_reportedentry' => "'n probleem gerapporteer op $1 ($2)",
+	'prlog_changedentry' => 'probleem $1 gemerk as "$2"',
+	'prlog_typeentry' => 'tipe probleem $1 verander na "$2"',
+	'prlog_removedentry' => 'het probleem $1 verwyder',
+	'prlog_emailedentry' => 'e-pos gestuur na $2 ($3)',
+	'pr_what_problem' => 'Onderwerp',
+	'pr_what_problem_spam' => "daar is 'n spam-skakel in",
+	'pr_what_problem_vandalised' => 'die bladsy is gevandaliseer',
+	'pr_what_problem_incorrect_content' => 'die inhoud is verkeerd',
+	'pr_what_problem_software_bug' => "daar is 'n fout in die wiki-sagteware",
+	'pr_what_problem_other' => 'ander',
+	'pr_what_problem_select' => "Kies asseblief 'n probleem-tipe",
+	'pr_what_problem_unselect' => 'alle',
+	'pr_what_problem_spam_short' => 'spam',
+	'pr_what_problem_vandalised_short' => 'vandalisme',
+	'pr_what_problem_incorrect_content_short' => 'inhoud',
+	'pr_what_problem_software_bug_short' => 'bug',
+	'pr_what_problem_other_short' => 'ander',
+	'pr_describe_problem' => 'Boodskap',
+	'pr_what_page' => 'Titel van die bladsy',
+	'pr_email_visible_only_to_staff' => 'slegs vir personeel sigbaar',
+	'pr_empty_summary' => "Verskaf asseblief 'n kort probleembeskrywing",
+	'pr_empty_email' => 'Verskaf asseblief u e-posadres',
+	'pr_mailer_to_default' => 'Wikia-gebruiker',
+	'pr_total_number' => 'Totale aantal verslae',
+	'pr_view_archive' => 'Wys geargiveerde probleme',
+	'pr_view_all' => 'Wys alle verslae',
+	'pr_view_staff' => 'Wys verslae waar hulp vanaf personeel benodig word',
+	'pr_raports_from_this_wikia' => 'Wys slegs hierdie Wikia se verslae',
+	'pr_reports_from' => 'Slegs verslae van',
+	'pr_table_problem_id' => 'Probleem-ID',
+	'pr_table_wiki_name' => 'Wiki-naam',
+	'pr_table_problem_type' => 'Probleem-tipe',
+	'pr_table_page_link' => 'Bladsy',
+	'pr_table_date_submitted' => 'Datum ingedien',
+	'pr_table_reporter_name' => 'Gerapporteer deur',
+	'pr_table_description' => 'Beskrywing',
+	'pr_table_comments' => 'Kommentaar',
+	'pr_table_status' => 'Status',
+	'pr_table_actions' => 'Aksies',
+	'pr_status_0' => 'afwagtend',
+	'pr_status_1' => 'Reggemaak',
+	'pr_status_2' => 'gesluit',
+	'pr_status_3' => 'benodig hulp van personeel',
+	'pr_status_10' => 'verwyder verslag',
+	'pr_status_wait' => 'wag...',
+	'pr_msg_exchead' => 'Boodskap is te lank',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'pr_table_description' => 'Апісаньне',
+	'pr_table_status' => 'Статус',
+	'pr_table_actions' => 'Дзеяньні',
+);
+
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'problemreports' => 'Roll danevelloù kudennoù',
+	'reportproblem' => 'Menegiñ ur gudennoù',
+	'prlogtext' => 'Danevelloù kudennoù',
+	'prlog_reportedentry' => 'en deus meneget ur gudenn war $1 ($2)',
+	'prlog_changedentry' => 'en deus merket ar gudenn  $1 evel "$2"',
+	'prlog_typeentry' => 'en deus kemmet seurt ar gudenn $1 da "$2"',
+	'prlog_removedentry' => 'en deus dilamet ar gudenn $1',
+	'prlog_emailedentry' => 'en deus kaset ur postel da $2 ($3)',
+	'pr_what_problem' => 'Objed',
+	'pr_what_problem_spam' => 'un liamm strob a zo amañ',
+	'pr_what_problem_vandalised' => 'Vandalerezh a zo bet er bajenn-mañ',
+	'pr_what_problem_incorrect_content' => 'direizh eo an danvez',
+	'pr_what_problem_other' => 'all',
+	'pr_what_problem_select' => 'Mar plij dibabit seurt ar gudenn',
+	'pr_what_problem_unselect' => 'pep tra',
+	'pr_what_problem_spam_short' => 'strob',
+	'pr_what_problem_vandalised_short' => 'vandal',
+	'pr_what_problem_incorrect_content_short' => 'danvez',
+	'pr_what_problem_software_bug_short' => 'bug',
+	'pr_what_problem_other_short' => 'all',
+	'pr_what_problem_change' => 'Kemmañ seurt ar gudenn',
+	'pr_describe_problem' => 'Kemennadenn',
+	'pr_what_page' => 'Titl ar bajenn',
+	'pr_email_visible_only_to_staff' => "n'eus nemet ar staff a well kement-mañ",
+	'pr_thank_you' => "Trugarez evit bezañ meneget ar gudenn !
+
+[[Special:ProblemReports/$1|Tu 'zo deoc'h heuliañ emdroadur an diskoulmadenn]].",
+	'pr_mailer_subject' => 'Danevell diwar-benn',
+	'pr_mailer_to_default' => 'Implijer Wikia',
+	'pr_total_number' => 'Niver hollek a danevelloù',
+	'pr_view_all' => 'Diskouez an holl danevelloù',
+	'pr_reports_from' => 'An danevelloù abaoe',
+	'pr_table_problem_id' => 'ID ar gudenn',
+	'pr_table_wiki_name' => 'Anv ar wiki',
+	'pr_table_problem_type' => 'Seurt ar gudenn',
+	'pr_table_page_link' => 'Pajenn',
+	'pr_table_description' => 'Diskrivadur',
+	'pr_table_comments' => 'Evezhiadennoù',
+	'pr_table_status' => 'Statud',
+	'pr_table_actions' => 'Oberoù',
+	'pr_status_2' => 'serret',
+	'pr_status_10' => 'dilemel an danevell',
+	'pr_remove_ask' => 'Dilemel da viken an danevell ?',
+	'pr_status_wait' => 'gortozit...',
+	'pr_msg_exchead' => 'Re hir eo ar gemenadenn',
+);
+
+/** German (Deutsch) */
 $messages['de'] = array(
 	'problemreports' => 'Liste der Problemmeldungen',
 	'reportproblem' => 'Problem melden',
@@ -267,97 +302,7 @@ Berichte, die über dieses Formular abgeschickt werden, sind für jeden [[Specia
 	'pr_msg_exchead' => 'Die Nachricht ist zu lang',
 );
 
-/** Message documentation (Message documentation)
- * @author EugeneZelenko
- */
-$messages['qqq'] = array(
-	'pr_table_description' => '{{Identical|Description}}',
-	'pr_table_actions' => '{{Identical|Action}}',
-);
-
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
-$messages['af'] = array(
-	'reportproblem' => "Rapporteer 'n probleem",
-	'prlog_reportedentry' => "'n probleem gerapporteer op $1 ($2)",
-	'prlog_changedentry' => 'probleem $1 gemerk as "$2"',
-	'prlog_typeentry' => 'tipe probleem $1 verander na "$2"',
-	'prlog_removedentry' => 'het probleem $1 verwyder',
-	'prlog_emailedentry' => 'e-pos gestuur na $2 ($3)',
-	'pr_what_problem' => 'Onderwerp',
-	'pr_what_problem_spam' => "daar is 'n spam-skakel in",
-	'pr_what_problem_vandalised' => 'die bladsy is gevandaliseer',
-	'pr_what_problem_incorrect_content' => 'die inhoud is verkeerd',
-	'pr_what_problem_software_bug' => "daar is 'n fout in die wiki-sagteware",
-	'pr_what_problem_other' => 'ander',
-	'pr_what_problem_select' => "Kies asseblief 'n probleem-tipe",
-	'pr_what_problem_unselect' => 'alle',
-	'pr_what_problem_spam_short' => 'spam',
-	'pr_what_problem_vandalised_short' => 'vandalisme',
-	'pr_what_problem_incorrect_content_short' => 'inhoud',
-	'pr_what_problem_software_bug_short' => 'bug',
-	'pr_what_problem_other_short' => 'ander',
-	'pr_describe_problem' => 'Boodskap',
-	'pr_what_page' => 'Titel van die bladsy',
-	'pr_email_visible_only_to_staff' => 'slegs vir personeel sigbaar',
-	'pr_mailer_to_default' => 'Wikia-gebruiker',
-	'pr_total_number' => 'Totale aantal verslae',
-	'pr_view_archive' => 'Wys geargiveerde probleme',
-	'pr_view_all' => 'Wys alle verslae',
-	'pr_view_staff' => 'Wys verslae waar hulp vanaf personeel benodig word',
-	'pr_raports_from_this_wikia' => 'Wys slegs hierdie Wikia se verslae',
-	'pr_reports_from' => 'Slegs verslae van',
-	'pr_table_problem_id' => 'Probleem-ID',
-	'pr_table_wiki_name' => 'Wiki-naam',
-	'pr_table_problem_type' => 'Probleem-tipe',
-	'pr_table_page_link' => 'Bladsy',
-	'pr_table_date_submitted' => 'Datum ingedien',
-	'pr_table_reporter_name' => 'Gerapporteer deur',
-	'pr_table_description' => 'Beskrywing',
-	'pr_table_comments' => 'Kommentaar',
-	'pr_table_status' => 'Status',
-	'pr_table_actions' => 'Aksies',
-	'pr_status_0' => 'afwagtend',
-	'pr_status_1' => 'Reggemaak',
-	'pr_status_2' => 'gesluit',
-	'pr_status_3' => 'benodig hulp van personeel',
-	'pr_status_10' => 'verwyder verslag',
-	'pr_status_wait' => 'wag...',
-	'pr_msg_exchead' => 'Boodskap is te lank',
-);
-
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
- * @author EugeneZelenko
- */
-$messages['be-tarask'] = array(
-	'pr_table_description' => 'Апісаньне',
-	'pr_table_actions' => 'Дзеяньні',
-);
-
-/** Breton (Brezhoneg)
- * @author Y-M D
- */
-$messages['br'] = array(
-	'pr_what_problem' => 'Objed',
-	'pr_what_problem_other' => 'all',
-	'pr_what_problem_unselect' => 'pep tra',
-	'pr_what_problem_spam_short' => 'strob',
-	'pr_what_problem_incorrect_content_short' => 'danvez',
-	'pr_what_problem_other_short' => 'all',
-	'pr_describe_problem' => 'Kemennadenn',
-	'pr_what_page' => 'Titl ar bajenn',
-	'pr_mailer_to_default' => 'Implijer Wikia',
-	'pr_table_problem_id' => 'ID ar gudenn',
-	'pr_table_wiki_name' => 'Anv ar wiki',
-	'pr_table_page_link' => 'Pajenn',
-	'pr_table_comments' => 'Evezhiadennoù',
-	'pr_table_status' => 'Statud',
-	'pr_table_actions' => 'Oberoù',
-	'pr_status_2' => 'serret',
-	'pr_status_wait' => 'gortozit...',
-);
-
+/** Spanish (Español) */
 $messages['es'] = array(
 	'problemreports' => 'Lista de informes de problemas',
 	'reportproblem' => 'Informar sobre un problema',
@@ -428,6 +373,7 @@ Los bugs de software puede ser informados en los foros. Los informes que estén 
 	'pr_msg_exchead' => 'Mensaje demasiado largo',
 );
 
+/** Persian (فارسی) */
 $messages['fa'] = array(
 	'problemreports' => 'فهرست گزارش‌ اشکال‌ها',
 	'reportproblem' => 'گزارش اشکال',
@@ -612,6 +558,7 @@ $messages['hu'] = array(
 	'pr_msg_exchead' => 'Az üzenet túl hosszú',
 );
 
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'problemreports' => '報告された問題のリスト',
 	'reportproblem' => '問題の報告',
@@ -836,8 +783,85 @@ Hier gemelde problemen zijn [[Special:ProblemReports|zichtbaar op de wiki]].',
 	'right-problemreports_global' => "Status en type van probeemrapporten in alle wiki's wijzigen",
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬) */
 $messages['no'] = array(
 	'problemreports' => 'Problemrapportsliste',
+);
+
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'problemreports' => 'Lista zgłoszonych problemów',
+	'reportproblem' => 'Zgłoś problem',
+	'prlogtext' => 'Zgłoszone problemy',
+	'prlogheader' => 'Lista zgłoszonych problemów i zmian w ich statusach',
+	'prlog_reportedentry' => 'zgłoszono problem z $1 ($2)',
+	'prlog_changedentry' => 'oznaczono problem $1 jako "$2"',
+	'prlog_typeentry' => 'zmieniono rodzaj problemu $1 na "$2"',
+	'prlog_removedentry' => 'usunięto problem $1',
+	'prlog_emailedentry' => 'wysłał wiadomość email do $2 ($3)',
+	'pr_introductory_text' => 'Większość stron na tej wiki jest edytowalna i zachęcamy Ciebie do ich edycji oraz korygowania błędów w ich treści! Jeśli potrzebujesz pomocy, zobacz poradnik [[help:editing|jak edytować strony]] i [[help:revert|jak usuwać wandalizmy]].
+
+Aby skontaktować się z zarządcami wiki lub zgłosić problem związany z prawami autorskimi, zajrzyj na stronę [[w:contact us|kontakt z Wikią]].
+
+Błędy w oprogramowaniu mogą być zgłaszane na forach. Problemy zgłaszane tutaj będą [[Special:ProblemReports|widoczne na wiki]].',
+	'pr_what_problem' => 'Temat',
+	'pr_what_problem_spam' => 'na stronie znajduje się link spamera',
+	'pr_what_problem_vandalised' => 'strona padła ofiarą wandala',
+	'pr_what_problem_incorrect_content' => 'zawartość strony jest niepoprawna',
+	'pr_what_problem_software_bug' => 'w oprogramowaniu znajduje się błąd',
+	'pr_what_problem_other' => 'inny',
+	'pr_what_problem_select' => 'Proszę wybrać rodzaj problemu',
+	'pr_what_problem_unselect' => 'wszystkie',
+	'pr_what_problem_spam_short' => 'spam',
+	'pr_what_problem_vandalised_short' => 'wandalizm',
+	'pr_what_problem_incorrect_content_short' => 'zawartość',
+	'pr_what_problem_software_bug_short' => 'błąd',
+	'pr_what_problem_other_short' => 'inny',
+	'pr_what_problem_change' => 'Zmień rodzaj problemu',
+	'pr_describe_problem' => 'Wiadomość',
+	'pr_what_page' => 'Tytuł strony',
+	'pr_email_visible_only_to_staff' => 'dostępny tylko dla administracji Wikii',
+	'pr_thank_you' => 'Dziękujemy za zgłoszenie problemu!
+
+[[Special:ProblemReports/$1|Możesz obserować postępy w jego rozwiązywaniu]].',
+	'pr_thank_you_error' => 'Wystąpił problem w czasie wysyłania raportu, spróbuj później...',
+	'pr_spam_found' => 'Wykryto spam w treści komentarza. Prosimy skorygować jego treść',
+	'pr_empty_summary' => 'Podaj krótki opis problemu',
+	'pr_empty_email' => 'Podaj swój adres emailowy',
+	'pr_mailer_notice' => 'Adres e-mailowy, który został przez Ciebie wprowadzony w Twoich preferencjach pojawi się w polu "Od", dzięki temu odbiorca będzie mógł Ci odpowiedzieć',
+	'pr_mailer_subject' => 'Zgłoszono problem związany z',
+	'pr_mailer_tmp_info' => 'Możesz edytować schematy odpowiedzi na [[MediaWiki:ProblemReportsResponses|tej stronie]]',
+	'pr_mailer_to_default' => 'Użytkownik Wikii',
+	'pr_total_number' => 'Łączna liczba raportów',
+	'pr_view_archive' => 'Przejrzyj archiwalne raporty',
+	'pr_view_all' => 'Przeglądaj wszystkie raporty',
+	'pr_view_staff' => 'Przejrzyj raporty wymagające pomocy administracji Wikii',
+	'pr_raports_from_this_wikia' => 'Przejrzyj raporty dotyczące tylko tej Wikii',
+	'pr_reports_from' => 'Raporty z',
+	'pr_no_reports' => 'Brak raportów',
+	'pr_sysops_notice' => 'Jeśli chcesz dokonać zmian w statusie raportów, proszę przejść <a href="$1">tutaj</a>...',
+	'pr_table_problem_id' => 'ID problemu',
+	'pr_table_wiki_name' => 'Nazwa Wikii',
+	'pr_table_problem_type' => 'Rodzaj problemu',
+	'pr_table_page_link' => 'Strona',
+	'pr_table_date_submitted' => 'Data zgłoszenia',
+	'pr_table_reporter_name' => 'Kto zgłosił',
+	'pr_table_description' => 'Opis',
+	'pr_table_comments' => 'Komentarze',
+	'pr_table_status' => 'Status',
+	'pr_table_actions' => 'Akcje',
+	'pr_status_0' => 'oczekuje',
+	'pr_status_1' => 'naprawione',
+	'pr_status_2' => 'to nie jest problem',
+	'pr_status_3' => 'konieczna pomoc',
+	'pr_status_10' => 'usuń raport',
+	'pr_status_undo' => 'Cofnij zmianę statusu raportu',
+	'pr_status_ask' => 'Zmienić status raportu?',
+	'pr_remove_ask' => 'Na pewno usunąć raport?',
+	'pr_status_wait' => 'czekaj...',
+	'pr_read_only' => 'Nowe zgłoszenia nie mogą zostać teraz dodane, prosimy spróbować później.',
+	'pr_msg_exceeded' => 'Maksymalna liczba znaków w polu Wiadomości wynosi 512, prosimy o zmianę zawartości tego pola.',
+	'pr_msg_exchead' => 'Wiadomość jest zbyt długa',
 );
 
 /** Piedmontese (Piemontèis)
@@ -918,6 +942,8 @@ Ij difet dël programa a peulo esse arportà an sle piasse ëd discussion. Ij ra
 	'pr_read_only' => "Ij rapòrt neuv a peulo pa esse compilà ant ës moment-sì, për piasì ch'a preuva torna pi tard.",
 	'pr_msg_exceeded' => "Ël nùmer màssim ëd caràter ant ël camp Mëssagi a l'é 512. Për piasì, ch'a scriva torna sò mëssagi.",
 	'pr_msg_exchead' => 'Mëssagi tròp longh',
+	'right-problemreports_action' => 'Cangé lë statù e la sòrt ëd Rapòrt ëd Problema',
+	'right-problemreports_global' => 'Cangé statù e sòrt ëd Rapòrt ëd Problema a travers dle wiki',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
@@ -969,8 +995,21 @@ $messages['ru'] = array(
 	'pr_what_problem_incorrect_content_short' => 'содержание',
 	'pr_describe_problem' => 'Сообщение',
 	'pr_what_page' => 'Название страницы',
+	'pr_table_problem_id' => 'ID проблемы',
+	'pr_table_wiki_name' => 'Название вики',
 	'pr_table_problem_type' => 'Тип проблемы',
 	'pr_table_page_link' => 'Страница',
+	'pr_table_date_submitted' => 'Дата отправки',
+	'pr_table_reporter_name' => 'Имя сообщившего',
+	'pr_table_description' => 'Описание',
+	'pr_table_comments' => 'Комментарии',
+	'pr_table_status' => 'Статус',
+	'pr_table_actions' => 'Действия',
+	'pr_status_0' => 'на рассмотрении',
+	'pr_status_1' => 'исправлена',
+	'pr_status_2' => 'закрыта',
+	'pr_status_wait' => 'подождите…',
+	'pr_msg_exchead' => 'Слишком длинное сообщение',
 );
 
 /** Swedish (Svenska)
@@ -1039,7 +1078,7 @@ $messages['uk'] = array(
 	'pr_table_actions' => 'Дії',
 );
 
-
+/** Chinese (中文) */
 $messages['zh'] = array(
 	'reportproblem' => '問題回報',
 	'pr_what_problem_change' => '更改問題類型',
@@ -1052,6 +1091,7 @@ $messages['zh'] = array(
 	'pr_table_status' => '狀態',
 );
 
+/** Chinese (China) (‪中文(中国大陆)‬) */
 $messages['zh-cn'] = array(
 	'problemreports' => '问题回报列表',
 	'reportproblem' => '问题回报',
@@ -1065,6 +1105,7 @@ $messages['zh-cn'] = array(
 	'pr_table_status' => '状态',
 );
 
+/** Simplified Chinese (‪中文(简体)‬) */
 $messages['zh-hans'] = array(
 	'problemreports' => '问题回报列表',
 	'pr_what_problem_change' => '更改问题类型',
@@ -1076,6 +1117,7 @@ $messages['zh-hans'] = array(
 	'pr_table_status' => '状态',
 );
 
+/** Traditional Chinese (‪中文(繁體)‬) */
 $messages['zh-hant'] = array(
 	'problemreports' => '問題回報列表',
 	'reportproblem' => '問題回報',
@@ -1089,6 +1131,7 @@ $messages['zh-hant'] = array(
 	'pr_table_status' => '狀態',
 );
 
+/** Chinese (Hong Kong) (‪中文(香港)‬) */
 $messages['zh-hk'] = array(
 	'problemreports' => '問題回報列表',
 	'reportproblem' => '問題回報',
@@ -1102,6 +1145,7 @@ $messages['zh-hk'] = array(
 	'pr_table_status' => '狀態',
 );
 
+/** Chinese (Singapore) (‪中文(新加坡)‬) */
 $messages['zh-sg'] = array(
 	'reportproblem' => '问题回报',
 	'pr_what_problem_change' => '更改问题类型',
@@ -1114,6 +1158,7 @@ $messages['zh-sg'] = array(
 	'pr_table_status' => '状态',
 );
 
+/** Chinese (Taiwan) (‪中文(台灣)‬) */
 $messages['zh-tw'] = array(
 	'problemreports' => '問題回報列表',
 	'reportproblem' => '問題回報',

@@ -86,9 +86,11 @@ Probeer asseblief weer.",
 );
 
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
+	'textregex-error-unblocking' => "Ur fazi 'zo bet e-pad an distankañ ($1). Klaskit adarre.",
 	'textregex-currently-blocked' => "'''Frazennoù stanket evit bremañ :'''",
 	'textregex_nocurrently-blocked' => "N'eo bet kavet frazenn stanket ebet",
 	'textregex-addedby-user' => "bet ouzhpennet gant $1 d'an $2",
@@ -96,12 +98,22 @@ $messages['br'] = array(
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 stadegoù]',
 	'textregex-unblock-succ' => 'Graet eo an distankadur',
 	'textregex-block-succ' => 'Graet eo ar stankadur',
+	'textregex-unblock-message' => "Dilemet eo bet ar frazenn '''$1''' deus ar frazennoù ne vez ket c'hoant outo.",
+	'textregex-block-message' => "Ouzhpennet eo bet ar frazenn '''$1''' d'ar frazennoù ne vez ket c'hoant outo.",
+	'textregex-regex-block' => 'Frazenn da stankañ :',
+	'textregex-regex-search' => 'Klask frazennoù :',
+	'textregex-submit-regex' => 'Ouzhpennañ ur frazenn',
 	'textregex-submit-showlist' => 'Diskouez ar roll',
 	'textregex-already-added' => 'Ouzhpennet eo bet "$1" dija',
 	'textregex-nodata-found' => "N'eus ket bet kavet roadennoù",
+	'textregex-stats-record' => "ar ger''$1'' a oa bet implijet gant $2 war $3 (''displegadenn: $4'')",
+	'textregex-select-subpage' => 'Dibab unan eus frazennoù al listenn :',
 	'textregex-select-default' => '-- dibab --',
 	'textregex-create-subpage' => 'pe krouit ur roll nevez :',
 	'textregex-select-regexlist' => "mont d'ar roll",
+	'textregex-invalid-regexid' => 'Frazenn fall.',
+	'textregex-phrase-statistics' => "Stadegoù evit ar frazenn '''$1''' (niver a enrolladennoù : $2)",
+	'textregex-return-mainpage' => "[{{SERVIJER}}$1 distreiñ d'ar roll.]",
 );
 
 /** French (Français)
@@ -313,6 +325,7 @@ $messages['ru'] = array(
 	'textregex' => 'Тестировать регулярное выражение',
 	'textregex-stats-url' => '[{{SERVER}}$1&id=$2 статистика]',
 	'textregex-page-title-block' => 'Блокирование нежелательных фраз с помощью регулярных выражений',
+	'textregex-regex-search' => 'Поиск регулярных выражений:',
 	'textregex-invalid-regex' => 'Неверное регулярное выражение.',
 	'textregex-select-subpage' => 'Выберите из списка регулярных выражений:',
 );

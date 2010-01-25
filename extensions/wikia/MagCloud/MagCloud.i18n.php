@@ -85,6 +85,7 @@ $messages['qqq'] = array(
 $messages['af'] = array(
 	'wikiacollection' => "Maak 'n tydskrif!",
 	'magcloud-intro-get-started' => 'Versamel artikels',
+	'magcloud-intro-create-magazine' => "Skep 'n tydskrif van artikels op hierdie wiki!",
 	'magcloud-intro-view-my-magazines' => 'Wys my tydskrifte',
 	'magcloud-load-magazine-title' => "Laai 'n tydskrif",
 	'magcloud-load-magazine-load' => 'Laai hierdie tydskrif',
@@ -106,25 +107,54 @@ $messages['af'] = array(
 	'magcloud-design-default-subtitle' => 'Subtitel',
 	'magcloud-design-preview' => 'Voorskou',
 	'magcloud-design-image-selected' => 'het $1 gekies',
+	'magcloud-preview-done' => 'U tydskrif is geskep.',
 	'magcloud-preview-save-magazine' => 'Stoor u tydskrif',
 	'magcloud-preview-publish' => 'Publiseer u tydskrif',
 	'magcloud-preview-generating-pdf' => 'Besig om u tydskrif te skep...',
 	'magcloud-publish-status-title' => 'Publiseer u tydskrif',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'magcloud-discard-magazine-title' => 'Захаваць Вашую калекцыю?',
+);
+
 /** Breton (Brezhoneg)
+ * @author Gwenn-Ael
  * @author Y-M D
  */
 $messages['br'] = array(
+	'wikiacollection' => 'Sevel ur gelaouenn !',
+	'magcloud-intro-get-started' => 'Dastum pennadoù',
+	'magcloud-intro-create-magazine' => 'Krouiñ ur gelaouenn gant pennadoù eus ar Wiki-mañ !',
+	'magcloud-intro-check-out' => "Klikit war ar gelaouenn evit kavout ur skouer eus hor c'humuniezh !",
+	'magcloud-intro-hint' => "Implijit ar voest-ostilhoù e krec'h ar bajenn ha dibabit ar pennadoù  hoc'h eus c'hoant da gempunañ en ho kelaouenn.
+Klikit war « Mont d'ho kelaouenn » pa vo echuet ganeoc'h.",
+	'magcloud-intro-view-my-magazines' => "Gwelet ma c'helaouennoù",
+	'magcloud-load-magazine-title' => 'Pellgargañ ur gelaouenn',
+	'magcloud-load-magazine-load' => 'Pellgargañ ar gelaouenn-se',
+	'magcloud-load-magazine-empty' => "N'hoc'h eus ket saveteet ho kelaouennoù betek-henn. Klaskit krouiñ unan ha saveteiñ anezhi evit gwelet er roll !",
+	'magcloud-add-article-success' => "Ouzhpennet ez eus bet '''$1''' d'ho kazetenn",
 	'magcloud-add-article-already' => "Ouzhpennet eo bet '''$1''' dija",
 	'magcloud-toolbar-step' => 'Pazenn $1 : $2',
+	'magcloud-toolbar-article-in-collection' => "'''$1''' a zo dija en ho kazetenn",
+	'magcloud-toolbar-article-add' => "Ouzhpennañ '''$1''' d'ho kazetenn ?",
 	'magcloud-toolbar-add' => 'Ouzhpennañ',
 	'magcloud-toolbar-articles-count' => '<big>$1</big> pennad{{PLURAL:$1||}}',
+	'magcloud-toolbar-go-to-magazine' => "Mont d'ho kelaouenn",
+	'magcloud-discard-magazine-title' => 'Saveteiñ ho tastumad ?',
+	'magcloud-discard-magazine-msg' => "Emaoc'h o labourat war ur gelaouenn n'eo ket bet saveteet. C'hoant hoc'h eus saveteiñ anezhi ? (Ezhomm zo da vezañ kevreet evit saveteiñ ho tastumad.)",
+	'magcloud-discard-magazine-discard' => 'Disteuler ha mont er-maez',
 	'magcloud-discard-magazine-save' => 'Enrollañ ha kuitaat',
+	'magcloud-special-collection-title' => 'Sevel ur gelaouenn !',
 	'magcloud-order-your-articles' => 'Urzhiañ ho pennadoù',
+	'magcloud-design-default-title' => "Va c'helaouenn $1",
 	'magcloud-design-default-subtitle' => 'Istitl',
 	'magcloud-design-preview' => 'Rakwelet',
 	'magcloud-design-image-selected' => '$1 diuzet',
+	'magcloud-preview-done' => 'Krouet eo bet ho kelaouenn.',
 );
 
 /** French (Français)
@@ -455,5 +485,6 @@ $messages['roa-tara'] = array(
 $messages['ru'] = array(
 	'magcloud-toolbar-step' => 'Шаг $1: $2',
 	'magcloud-toolbar-add' => 'Добавить',
+	'magcloud-design-default-subtitle' => 'Подзаголовок',
 );
 

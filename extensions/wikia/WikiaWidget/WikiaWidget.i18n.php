@@ -26,6 +26,13 @@ $messages['be-tarask'] = array(
 	'wikiawidget' => 'Прылада Wikia',
 );
 
+/** Breton (Brezhoneg)
+ * @author Gwenn-Ael
+ */
+$messages['br'] = array(
+	'wikiawidget' => 'Widget wikia',
+);
+
 /** French (Français)
  * @author IAlex
  */
@@ -33,11 +40,25 @@ $messages['fr'] = array(
 	'wikiawidget' => 'Widget wikia',
 );
 
+/** Galician (Galego)
+ * @author Toliño
+ */
+$messages['gl'] = array(
+	'wikiawidget' => 'Widgets de Wikia',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
 	'wikiawidget' => 'Wikia_Asistenty',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'wikiawidget' => 'WikiaWidget',
 );
 
 /** Macedonian (Македонски)
@@ -66,6 +87,20 @@ $messages['no'] = array(
  */
 $messages['oc'] = array(
 	'wikiawidget' => 'Widget wikia',
+);
+
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'wikiawidget' => 'WikiaWidget',
+);
+
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'wikiawidget' => 'WikiaWidget',
 );
 
 /** Russian (Русский)

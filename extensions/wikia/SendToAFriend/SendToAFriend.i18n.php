@@ -53,9 +53,11 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'stf_frm4_cancel' => '{{Identical|Cancel}}',
 	'stf_throttle' => 'Needs plural support',
 	'stf_ctx_invite' => 'Should support plural for $1.',
 	'stf_we_dont_keep' => 'Should get rid of leading whitespace.',
@@ -96,13 +98,23 @@ Ek nooi u hartlik uit om te kom kyk!',
 	'stf_frm4_cancel' => 'Kanselleer',
 	'stf_frm4_invite' => 'Stuur uitnodiging!',
 	'stf_multiemail' => 'Stuur na meer as een ontvanger?',
+	'stf_frm5' => 'Die URL van hierdie webwerf word by u boodskap gevoeg.',
 	'stf_frm6' => 'Sluit venster',
 	'stf_throttle' => 'Vir sekuriteitsredes kan u slegs $1 uitnodigings per dag stuur.',
+	'stf_abuse' => 'Hierdie e-pos is gestuur deur $1 via Wikia.
+As u dink dat dit foutiewelik aan u gestuur is, laat ons asseblief weet by  support@wikia.com.',
+	'stf_ctx_invite' => 'Meer as een?
+Skei dan met kommas - maksimum $1!',
+	'stf_ctx_check' => 'Kontroleer kontakpersone',
+	'stf_ctx_empty' => 'U het geen kontakpersone vir hierdie gebruiker nie.',
+	'stf_ctx_invalid' => 'Die gebruikersnaam of wagwoord wat u verskaf het is verkeerd.
+Probeer asseblief weer.',
 	'stf_sending' => 'Wag asseblief...',
 	'stf_email_sent' => 'Stuur bevestiging',
 	'stf_back_to_article' => 'Terug na artikel',
 	'stf_most_emailed' => 'Mees ge-eposte artikels op $1 vandag:',
 	'stf_most_popular' => 'Mees populêre artikels op $1:',
+	'stf_choose_from_existing' => 'Kies uit u bestaande kontakpersone:',
 	'stf_add_emails' => 'Voeg E-posadresse by:',
 	'stf_your_email' => 'U e-posdiens',
 	'stf_your_login' => 'U gebruikersnaam',
@@ -110,10 +122,19 @@ Ek nooi u hartlik uit om te kom kyk!',
 	'stf_your_name' => 'U naam',
 	'stf_your_address' => 'U e-posadres',
 	'stf_your_friends' => 'E-posadresse|van u vriende',
+	'stf_we_dont_keep' => 'Ons hou nie hierdie e-pos of wagwoord nie',
+	'stf_need_approval' => 'Sonder u toestemming word geen e-pos gestuur nie',
 	'stf_message' => 'Boodskap',
 	'stf_instructions' => '1. Kies vriende|2. Kliek "$1"',
 	'stf_select_all' => 'Kies alles',
 	'stf_select_friends' => 'Kies vriende:',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'stf_frm4_cancel' => 'Адмяніць',
 );
 
 /** Breton (Brezhoneg)
@@ -181,6 +202,7 @@ Ma soñj deoc'h ez eo dre fazi, roit dimp da c'houzout, mar plij, war support@wi
 	'stf_select_friends' => 'Diuzañ Mignoned :',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'invitespecialpage' => 'Lade Freunde zu Wikia ein',
 	'stf_button' => 'Artikel an einen Freund versenden',
@@ -201,11 +223,11 @@ $messages['de'] = array(
 $1 denkt, dass dir diese Seite von Wikia gefallen könnte: $2
 
 Wirf mal einen Blick drauf!',
-	'stf_frm3_invite' => 'Hi!
+	'stf_frm3_invite' => "Hi!
 
-Ich hab\' mich gerade bei diesem Wiki bei Wikia angemeldet: $1
+Ich hab' mich gerade bei diesem Wiki bei Wikia angemeldet: $1
 
-Schau doch mal vorbei!',
+Schau doch mal vorbei!",
 	'stf_frm4_send' => 'Abschicken',
 	'stf_frm4_cancel' => 'Abbrechen',
 	'stf_frm4_invite' => 'Einladung verschicken!',
@@ -240,6 +262,7 @@ Wenn du glaubst, dass dieses Angebot missbraucht wird, teile uns dies bitte unte
 	'stf_select_friends' => 'Freunde auswählen:',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'invitespecialpage' => 'Invita a tus amigos a participar en Wikia',
 	'stf_button' => 'Envía este artículo a un amigo',
@@ -299,6 +322,19 @@ Si piensas que fue enviado por error, por favor háznoslo saber a support@wikia.
 	'stf_instructions' => '1. Selecciona amigos.|2. Haz clic en "$1"',
 	'stf_select_all' => 'Seleccionar todos',
 	'stf_select_friends' => 'Seleccionar amigos:',
+);
+
+/** Persian (فارسی) */
+$messages['fa'] = array(
+	'invitespecialpage' => 'دعوت دوستان برای پیوستن به ویکیا',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'invitespecialpage' => 'Kutsu ystävä Wikiaan',
+	'stf_frm4_cancel' => 'Peruuta',
 );
 
 /** French (Français)
@@ -428,31 +464,6 @@ Se pensa que lle chegou por erro, por favor, fáganolo saber en support@wikia.co
 	'stf_instructions' => '1. Seleccione os amigos.|2. Prema en "$1"',
 	'stf_select_all' => 'Seleccionar todos',
 	'stf_select_friends' => 'Seleccionar os amigos:',
-);
-
-$messages['fa'] = array(
-	'invitespecialpage' => 'دعوت دوستان برای پیوستن به ویکیا',
-);
-
-$messages['fi'] = array(
-	'invitespecialpage' => 'Kutsu ystävä',
-);
-
-$messages['fr'] = array(
-	'invitespecialpage' => 'Inviter des amis à rejoindre Wikia',
-	'stf_frm4_invite' => 'Envoyer les invitations!',
-	'stf_ctx_invite' => 'Plus d\'une adresse? Séparez les avec des virgules - jusqu\'à $1 !',
-	'stf_ctx_check' => 'Vérification des contacts',
-	'stf_choose_from_existing' => 'Choisir parmi vos contacts actuels :',
-	'stf_add_emails' => 'Ajouter des adresses email',
-	'stf_your_email' => 'Votre service d\'email',
-	'stf_your_login' => 'Votre nom d\'utilisateur',
-	'stf_your_password' => 'Votre mot de passe',
-	'stf_your_name' => 'Votre nom',
-	'stf_your_address' => 'Votre adresse email',
-	'stf_your_friends' => 'Les adresses email|de vos amis',
-	'stf_we_dont_keep' => 'Nous ne gardons pas ces email et mot de passe',
-	'stf_need_approval' => 'Aucun envoi d\'email sans votre approbation',
 );
 
 /** Hungarian (Magyar)
@@ -673,54 +684,66 @@ Probeer het nog eens.',
 	'stf_select_friends' => 'Selecteer vrienden:',
 );
 
+/** Polish (Polski) */
 $messages['pl'] = array(
-		'invitespecialpage'        => 'Zaproś znajomych do Wikii!',
-		'stf_button'               => 'Wyślij ten artykuł do znajomego',
-		'stf_after_reg'            => 'Zaproś znajomego do Wikii! [[Special:InviteSpecialPage|Kliknij tutaj]].',
-		'stf_subject'              => '$2 wysłał(a) Ci artykuł z $1!',
-		'stf_confirm'              => 'Zaproszenie wysłane! Zaprosić następnych?',
-		'stf_error'                => 'Błąd podczas wysyłania emaila.',
-		'stf_error_name'           => 'Nie podałeś swojego imienia.',
-		'stf_error_from'           => 'Nie podałeś swojego adresu email.',
-		'stf_error_to'             => 'Nie podałeś adresu email swojego przyjaciela.',
-		'stf_frm1'                 => 'Twój adres email: ',
-		'stf_frm2'                 => 'Adres email znajomego (Chcesz wysłać kilka emaili? Rozdziel je przecinkami)',
-		'stf_msg_label'            => 'Wiadomość do wysłania',
-		'stf_name_label'           => 'Twoje imię',
-		'stf_email_label'          => 'Twój email',
-		'stf_frm3_send'            => "Cześć!\n\n\$1 uważa, że spodoba Ci się ta strona na Wikii!\n\n$2\n\nKliknij i zobacz!",
-		'stf_frm3_invite'          => "Cześć!\n\nWłaśnie dołączyłem do tego wiki na Wikii...  \$1\n\nWejdź i zobacz!",
-		'stf_frm4_send'            => 'Wyślij',
-		'stf_frm4_cancel'          => 'Anuluj',
-		'stf_frm4_invite'          => 'Zaproś!',
-		'stf_multiemail'           => 'Wysłać emaile na podane adresy?',
-		'stf_frm5'                 => '(URL tej strony zostanie dołączony do Twojego tekstu)',
-		'stf_frm6'                 => 'Zamknij to okienko',
-		'stf_throttle'             => 'Ze względów bezpieczeństwa możesz wysłać dziennie jedynie $1 zaproszeń.',
-		'stf_abuse'                => "Ten email został wysłany przez $1 z Wikii.\nJeśli uważasz, że nie powinien on do Ciebie trafić, daj nam znać na support@wikia.com.\n",
-		'stf_ctx_invite'           => 'Więcej niż jeden? Rozdziel przecinkami - aż do $1 !',
-		'stf_ctx_check'            => 'Sprawdź Kontakty',
-		'stf_ctx_empty'            => 'Lista kontaktów tego konta jest pusta.',
-		'stf_ctx_invalid'          => 'Podany login lub hasło są nieprawidłowe. Proszę spróbować ponownie.',
-		'stf_sending'	           => 'Proszę czekać...',
-		'stf_email_sent'           => 'Potwierdzenie wysyłki',
-		'stf_back_to_article'      => 'Wróć do artykułu',
-		'stf_most_emailed'         => 'Najczęściej wysyłane dziś artykuły na $1:',
-		'stf_most_popular'         => 'Najpopularniejsze artykuły na $1:',
-		'stf_choose_from_existing' => 'Wybierz z istniejących kontaktów:',
-		'stf_add_emails'           => 'Dodaj adresy:',
-		'stf_your_email'           => 'Twoja usługa email',
-		'stf_your_login'           => 'Twój login',
-		'stf_your_password'        => 'Twoje hasło',
-		'stf_your_name'            => 'Twoje imię',
-		'stf_your_address'         => 'Twój adres email',
-		'stf_your_friends'         => 'Adresy email|Twoich przyjaciół',
-		'stf_we_dont_keep'         => ' Email i hasło nie są nigdzie zapisywane',
-		'stf_need_approval'        => 'Nic nie wyślemy bez Twojej zgody',
-		'stf_message'              => 'Wiadomość',
-		'stf_instructions'         => '1. Wybierz przyjaciół.|2. Kliknij "$1"',
-		'stf_select_all'           => 'Zaznacz wszystkich',
-		'stf_select_friends'       => 'Wybierz przyjaciół:',
+	'invitespecialpage' => 'Zaproś znajomych do Wikii!',
+	'stf_button' => 'Wyślij ten artykuł do znajomego',
+	'stf_after_reg' => 'Zaproś znajomego do Wikii! [[Special:InviteSpecialPage|Kliknij tutaj]].',
+	'stf_subject' => '$2 wysłał(a) Ci artykuł z $1!',
+	'stf_confirm' => 'Zaproszenie wysłane! Zaprosić następnych?',
+	'stf_error' => 'Błąd podczas wysyłania emaila.',
+	'stf_error_name' => 'Nie podałeś swojego imienia.',
+	'stf_error_from' => 'Nie podałeś swojego adresu email.',
+	'stf_error_to' => 'Nie podałeś adresu email swojego przyjaciela.',
+	'stf_frm1' => 'Twój adres email:',
+	'stf_frm2' => 'Adres email znajomego (Chcesz wysłać kilka emaili? Rozdziel je przecinkami)',
+	'stf_msg_label' => 'Wiadomość do wysłania',
+	'stf_name_label' => 'Twoje imię',
+	'stf_email_label' => 'Twój email',
+	'stf_frm3_send' => 'Cześć!
+
+$1 uważa, że spodoba Ci się ta strona na Wikii!
+
+$2
+
+Kliknij i zobacz!',
+	'stf_frm3_invite' => 'Cześć!
+
+Właśnie dołączyłem do tego wiki na Wikii...  $1
+
+Wejdź i zobacz!',
+	'stf_frm4_send' => 'Wyślij',
+	'stf_frm4_cancel' => 'Anuluj',
+	'stf_frm4_invite' => 'Zaproś!',
+	'stf_multiemail' => 'Wysłać emaile na podane adresy?',
+	'stf_frm5' => '(URL tej strony zostanie dołączony do Twojego tekstu)',
+	'stf_frm6' => 'Zamknij to okienko',
+	'stf_throttle' => 'Ze względów bezpieczeństwa możesz wysłać dziennie jedynie $1 zaproszeń.',
+	'stf_abuse' => 'Ten email został wysłany przez $1 z Wikii.
+Jeśli uważasz, że nie powinien on do Ciebie trafić, daj nam znać na support@wikia.com.',
+	'stf_ctx_invite' => 'Więcej niż jeden? Rozdziel przecinkami - aż do $1 !',
+	'stf_ctx_check' => 'Sprawdź Kontakty',
+	'stf_ctx_empty' => 'Lista kontaktów tego konta jest pusta.',
+	'stf_ctx_invalid' => 'Podany login lub hasło są nieprawidłowe. Proszę spróbować ponownie.',
+	'stf_sending' => 'Proszę czekać...',
+	'stf_email_sent' => 'Potwierdzenie wysyłki',
+	'stf_back_to_article' => 'Wróć do artykułu',
+	'stf_most_emailed' => 'Najczęściej wysyłane dziś artykuły na $1:',
+	'stf_most_popular' => 'Najpopularniejsze artykuły na $1:',
+	'stf_choose_from_existing' => 'Wybierz z istniejących kontaktów:',
+	'stf_add_emails' => 'Dodaj adresy:',
+	'stf_your_email' => 'Twoja usługa email',
+	'stf_your_login' => 'Twój login',
+	'stf_your_password' => 'Twoje hasło',
+	'stf_your_name' => 'Twoje imię',
+	'stf_your_address' => 'Twój adres email',
+	'stf_your_friends' => 'Adresy email|Twoich przyjaciół',
+	'stf_we_dont_keep' => ' Email i hasło nie są nigdzie zapisywane',
+	'stf_need_approval' => 'Nic nie wyślemy bez Twojej zgody',
+	'stf_message' => 'Wiadomość',
+	'stf_instructions' => '1. Wybierz przyjaciół.|2. Kliknij "$1"',
+	'stf_select_all' => 'Zaznacz wszystkich',
+	'stf_select_friends' => 'Wybierz przyjaciół:',
 );
 
 /** Piedmontese (Piemontèis)
@@ -846,37 +869,54 @@ $messages['ru'] = array(
 	'stf_email_label' => 'Ваш адрес эл. почты',
 	'stf_frm4_send' => 'Отправить',
 	'stf_frm4_cancel' => 'Отменить',
+	'stf_frm4_invite' => 'Отправить приглашение!',
+	'stf_email_sent' => 'Отправить подтверждение',
+	'stf_back_to_article' => 'Возврат к статье',
 	'stf_message' => 'Сообщение',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'stf_name_label' => 'మీ పేరు',
+);
+
+/** Chinese (中文) */
 $messages['zh'] = array(
 	'invitespecialpage' => '邀請朋友加入Wikia',
 );
 
+/** Chinese (China) (‪中文(中国大陆)‬) */
 $messages['zh-cn'] = array(
 	'invitespecialpage' => '邀請朋友加入Wikia',
 	'stf_frm4_cancel' => '取消',
 	'stf_back_to_article' => '返回文章',
 );
 
+/** Simplified Chinese (‪中文(简体)‬) */
+$messages['zh-hans'] = array(
+	'stf_frm4_cancel' => '取消',
+	'stf_back_to_article' => '返回文章',
+);
+
+/** Traditional Chinese (‪中文(繁體)‬) */
+$messages['zh-hant'] = array(
+	'stf_frm4_cancel' => '取消',
+	'stf_back_to_article' => '返回文章',
+);
+
+/** Chinese (Hong Kong) (‪中文(香港)‬) */
 $messages['zh-hk'] = array(
 	'invitespecialpage' => '邀請朋友加入Wikia',
 	'stf_frm4_cancel' => '取消',
 	'stf_back_to_article' => '返回文章',
 );
 
+/** Chinese (Taiwan) (‪中文(台灣)‬) */
 $messages['zh-tw'] = array(
 	'invitespecialpage' => '邀請朋友加入Wikia',
 	'stf_frm4_cancel' => '取消',
 	'stf_back_to_article' => '返回文章',
 );
 
-$messages['zh-hans'] = array(
-	'stf_frm4_cancel' => '取消',
-	'stf_back_to_article' => '返回文章',
-);
-
-$messages['zh-hant'] = array(
-	'stf_frm4_cancel' => '取消',
-	'stf_back_to_article' => '返回文章',
-);

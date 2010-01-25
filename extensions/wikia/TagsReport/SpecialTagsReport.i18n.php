@@ -53,6 +53,7 @@ $messages['br'] = array(
 	'tagsreportgenerated' => "Krouet d'an $1",
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'tagsreportselecttag' => 'Seleccionar etiqueta:',
 	'tagsreportgo' => 'Mostrar',
@@ -60,7 +61,6 @@ $messages['es'] = array(
 	'tagsreportnoresults' => 'No se han encontrado resultados',
 	'tagsreportmainnspace' => 'Principal',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|página|páginas}})',
-	'tagsreportpage' => '<strong>$1</strong> página',
 	'tagsreportpagesfound' => '<strong>$1</strong> páginas encontradas, que contengan alguna etiqueta especial (dpl, youtube, etc.)',
 );
 
@@ -173,10 +173,33 @@ $messages['pms'] = array(
 
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'tagsreport' => 'Отчёт о метках',
+	'tagsreporttitle' => 'Отчёт о метках',
 	'tagsreportselecttag' => 'Выберите тег:',
 	'tagsreportgo' => 'Показать',
+	'tagsreportnotspecify' => 'Вы ещё не выбрали конкретную метку',
 	'tagsreportnoresults' => 'Ничего не найдено',
+	'tagsreportmainnspace' => 'Основное',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|страница|страницы|страниц}})',
+	'tagsreportpagesfound' => 'Найдено <strong>$1</strong> страниц, содержащих указанную метку (dpl, youtube, и т. д.)',
+	'tagsreportgenerated' => 'Создано $1',
+);
+
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'tagsreport' => 'Звіт про теги',
+	'tagsreporttitle' => 'Звіт про теги',
+	'tagsreportselecttag' => 'Оберіть тег:',
+	'tagsreportgo' => 'Показати',
+	'tagsreportnotspecify' => 'Ви ще не обрали жодного спеціального тега',
+	'tagsreportnoresults' => 'Нічого не знайдено',
+	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|сторінка|сторінки|сторінок}})',
+	'tagsreportpagesfound' => 'Знайдено <strong>$1</strong> {{PLURAL:$1|сторінку|сторінки|сторінок}}, що містять спеціальні теги (dpl, youtube, і т.д.)',
+	'tagsreportgenerated' => 'Створено $1',
 );
 

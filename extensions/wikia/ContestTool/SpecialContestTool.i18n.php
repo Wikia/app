@@ -16,11 +16,13 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'cntool-button-preview' => 'Translate as verb.',
-	'cntool-button-save' => 'Translate as verb.',
+	'cntool-button-save' => 'Translate as verb.
+{{Identical|Save}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -31,6 +33,13 @@ $messages['af'] = array(
 	'cntool-button-save' => 'Stoor',
 	'cntool-label-preview' => 'Voorskou:',
 	'cntool-label-caveat' => 'Waarskuwing',
+);
+
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'cntool-button-save' => 'Захаваць',
 );
 
 /** Breton (Brezhoneg)
@@ -46,6 +55,13 @@ $messages['br'] = array(
 	'cntool-label-content' => 'Kemmañ danvez ar pennad amañ da-heul :',
 	'cntool-label-preview' => 'Rakwelet :',
 	'cntool-label-caveat' => 'Kemenn',
+);
+
+/** Finnish (Suomi)
+ * @author Crt
+ */
+$messages['fi'] = array(
+	'cntool-button-save' => 'Tallenna',
 );
 
 /** French (Français)
@@ -150,12 +166,44 @@ $messages['pms'] = array(
 Ch'a ten-a da ment che j'arzultà a son pa argistrà daspërtut e a son pa reversìbij an pressa a sto pont-sì sensa agiut dl'echip técnica (sòn a l'é an camin ch'as modìfica).",
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Daemorris
+ */
+$messages['pt-br'] = array(
+	'cntool-page-title-editor' => 'Ferramenta de Disputa  ::  Editor',
+	'cntool-page-title-preview' => 'Prever',
+	'cntool-page-title-select' => 'Ferramenta de Disputa',
+	'cntool-label-select' => 'Especifique um título de página válido',
+	'cntool-button-preview' => 'Prever',
+	'cntool-button-save' => 'Salvar',
+	'cntool-label-content' => 'Modificar conteúdo do artigo abaixo',
+	'cntool-label-preview' => 'Previsão:',
+	'cntool-label-caveat' => 'Advertência',
+	'cntool-caveat' => 'Esta extensão não deve ser pouco usada.
+
+Lembre-se de que os resultados não são registrados em nenhum lugar, e não são reversíveis atualmente sem ajuda técnica (está sendo resolvido)',
+);
+
 /** Russian (Русский)
  * @author Lockal
+ * @author Александр Сигачёв
  */
 $messages['ru'] = array(
+	'cntool-page-title-preview' => 'ContestTool :: Предпросмотр',
+	'cntool-label-select' => 'Ведите правильное название страницы',
 	'cntool-button-preview' => 'Предварительный просмотр',
 	'cntool-button-save' => 'Сохранить',
 	'cntool-label-preview' => 'Предварительный просмотр:',
+	'cntool-label-caveat' => 'Предостережение',
+	'cntool-caveat' => 'Это расширение не должно использоваться легкомысленно.
+
+Имейте в виду, что результаты не записываются в журнал и не могут быть в настоящее время легко отменены без обращения к технической службе (будем над этим работать).',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'cntool-button-save' => 'భద్రపరచు',
 );
 

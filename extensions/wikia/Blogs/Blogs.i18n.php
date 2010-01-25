@@ -123,11 +123,13 @@ Create blog listing pages for categories such as "Barrack Obama", "Fan Fiction",
 );
 
 /** Message documentation (Message documentation)
+ * @author EugeneZelenko
  * @author Siebrand
  */
 $messages['qqq'] = array(
 	'create-blog-listing-matches-info' => 'Looks like this message may have a leading number. Please check. If so, integrate in message.',
 	'blog-last-edited' => 'If $1 is a time stamp, split date and time to $2 and $3.',
+	'blog-comment-delete' => '{{Identical|Delete}}',
 );
 
 /** Afrikaans (Afrikaans)
@@ -152,13 +154,19 @@ $messages['af'] = array(
 	'create-blog-listing-sortby-date' => 'Mees onlangse',
 	'create-blog-listing-sortby-author' => 'Outeur',
 	'blog-defaulttitle' => 'Blogs',
+	'blog-olderposts' => 'Ouer boodskappe',
+	'blog-newerposts' => 'Nuwer boodskappe',
 	'blog-nbrcomments' => '$1 {{PLURAL:$1|opmerking|opmerkings}}',
 	'blog-nopostfound' => 'Geen inskrywings gevind nie.',
 	'blog-writeone' => 'Skryf een!',
 	'blog-added' => 'bygevoeg',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Nog geen opmerkings nie.',
+	'blog-comments' => 'Opmerkings',
+	'blog-comments-label' => 'Lewer kommentaar',
 	'blog-comments-login' => 'U moet <a href="$1">aanteken</a> alvorens u opmerkings kan plaas',
+	'blog-comments-dsc' => 'Nuutste eerste',
+	'blog-comments-asc' => 'Nuutste onderaan',
 	'blog-comment-delete' => 'skrap',
 	'blog-comment-hide' => 'versteek',
 	'blog-comment-unhide' => 'wys',
@@ -175,6 +183,15 @@ $messages['af'] = array(
 	'blogs-reportproblem' => 'Rapporteer probleem',
 );
 
+/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
+ */
+$messages['be-tarask'] = array(
+	'create-blog-save' => 'Захаваць старонку',
+	'blog-comment-delete' => 'выдаліць',
+);
+
+/** Bulgarian (Български) */
 $messages['bg'] = array(
 	'create-blog-categories-textinput' => 'Добавяне на нова категория',
 );
@@ -203,6 +220,7 @@ $messages['br'] = array(
 	'blog-userblog' => 'Blog $1',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'createblogpage' => 'Erstelle Blog-Beitrag',
 	'createbloglistingpage' => 'Erstelle Blog-Aggregationsseite',
@@ -246,7 +264,7 @@ $messages['de'] = array(
 	'blog-header' => 'Blog-Beiträge in der Kategorie "$1"',
 	'blog-subheader' => 'Die folgenden $1 Blog-Beiträge sind in dieser Kategorie.',
 	'blog-subheader-all' => 'Die folgenden $1 Blog-Beiträge sind in dieser Kategorie (von insgesamt $2).',
-	'blog-invalidparam' => 'Unbekannter Parameter \'$1\' wird ignoriert. Bitte benutze einen der folgenden Parameter: <code>$2</code>.',
+	'blog-invalidparam' => "Unbekannter Parameter '$1' wird ignoriert. Bitte benutze einen der folgenden Parameter: <code>$2</code>.",
 	'blog-emptyparam' => 'Parameter-Name kann nicht leer sein.',
 	'blog-continuereading' => 'Weiterlesen &raquo;',
 	'blog-readfullpost' => 'Ganzen Beitrag lesen',
@@ -255,7 +273,7 @@ $messages['de'] = array(
 	'blog-nbrcomments' => '$1 Kommentare',
 	'blog-nopostfound' => 'Keine Beiträge gefunden',
 	'blog-writeone' => 'Beitrag verfassen!',
-	'blog-empty-user-blog' => 'Dieser Benutzer hat noch keine Blog-Beiträge verfasst! \'\'(Um einen Blog-Beitrag zu schreiben, besuche [[Special:CreateBlogPage]].)\'\'',
+	'blog-empty-user-blog' => "Dieser Benutzer hat noch keine Blog-Beiträge verfasst! ''(Um einen Blog-Beitrag zu schreiben, besuche [[Special:CreateBlogPage]].)''",
 	'blog-last-edited' => '<strong>Zuletzt bearbeitet:</strong> $1',
 	'blog-added' => 'kommentiert',
 	'blog-zero-comments' => 'Noch keine Kommentare!',
@@ -280,25 +298,8 @@ Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
-	'blog-avatar-removeavatar' => 'Avatar entfernen',
-	'blog-avatar-goto-userpage' => 'Zur Benutzerseite',
-	'blog-avatar-edit' => 'Ändern',
-	'blog-avatar-delete' => 'Löschen',
 	'blog-avatar-talk' => 'Diskussion',
 	'blog-avatar-contrib' => 'Beiträge',
-	'blog-avatar-choose-avatar' => 'Wähle neuen Avatar',
-	'blog-avatar-upload-avatar' => 'Neuen Avatar hochladen',
-	'blog-avatar-nouser' => 'Kann diesen Benutzer nicht finden!',
-	'blog-avatar-cannot-remove' => 'Entfernung von Avataren des ausgewählten Benutzers nicht möglich!',
-	'blog-avatar-remove-info' => 'Auf dieser Seite kannst du den Avatar eines Benutzer entfernen. Gib den exakten Namen des Benutzer in die folgende Box ein und klicke auf "Suchen".<br />Bitte beachte, dass Avatare global genutzt werden! Wenn du den Avatar eines Benutzers entfernst, so wird er in allen Wikis von Wikia entfernt.',
-	'blog-avatar-getuser' => 'Suchen',
-	'blog-avatar-remove-confirm' => 'Bist du sicher, dass du den Avatar entfernen möchtest?',
-	'blog-avatar-error-nofile' => 'Bitte wähle eine Datei von deiner Platte.',
-	'blog-avatar-error-size' => 'Die Datei ist zu groß! Sie sollte nicht größer als $1 KB sein.',
-	'blog-avatar-error-cantwrite' => 'Fehler aufgetreten: Kann Datei nicht auf Medium speichern.',
-	'blog-avatar-changed-log' => 'hat einen Avatar hinzugefügt oder geändert',
-	'blog-avatar-removed-log' => 'Entfernte den Avatar von $1',
-	'blog-avatar-save-info' => 'Um Änderungen zu speichern, gehe <a href="#prefcontrol">zum Ende der Seite</a> und wähle „Einstellungen speichern“.',
 	'blog-page-rate' => 'Bewerte diesen Beitrag',
 	'blog-create-post-label' => 'Blog-Beitrag erstellen',
 	'blog-create-label' => 'Blog-Beitrag erstellen',
@@ -316,7 +317,6 @@ Avatar6.jpg',
 	'right-blog-comments-delete' => 'Löschen von Kommentaren in Blog-Artikeln',
 	'right-blog-articles-edit' => 'Editieren von Blog-Artikel',
 	'blogs-undeleted-comment' => 'Kommentar zu Blog-Beitrag $1 wiederhergestellt.',
-	'blogs-recent-url' => 'Blog:Letzte_Beiträge',
 	'blogs-recent-url-text' => 'Letzte Blog-Beiträge',
 );
 
@@ -432,6 +432,7 @@ Avatar6.jpg',
 	'blogs-recent-url-text' => 'Entradas de Blog recientes',
 );
 
+/** Persian (فارسی) */
 $messages['fa'] = array(
 	'create-blog-post-category' => 'پست‌های وبلاگ',
 	'create-blog-no-login' => 'به سیستم وارد نشده‌اید',
@@ -439,7 +440,7 @@ $messages['fa'] = array(
 	'blog-header' => 'پست‌های وبلاگ واقع در ردۀ "$1"',
 	'blog-subheader' => '$1 از پست‌های ذیل وبلاگ در این رده قرار دارند.',
 	'blog-subheader-all' => 'از میان $2 پست‌های وبلاگ، $1 آن‌ها در این رده قرار دارند.',
-	'blog-invalidparam' => 'پارامتر نامعلوم \'$1\' نادیده گرفته‌شد. لطفا از یکی از پارامترهای در دسترس استفاده کنید: <code>$2</code>',
+	'blog-invalidparam' => "پارامتر نامعلوم '$1' نادیده گرفته‌شد. لطفا از یکی از پارامترهای در دسترس استفاده کنید: <code>$2</code>",
 	'blog-emptyparam' => 'نام پارامتر نمی تواند خالی باشد',
 	'blog-defaulttitle' => 'وبلاگ‌ها',
 	'blog-continuereading' => 'ادامه مطالب &raquo;',
@@ -462,12 +463,8 @@ $messages['fa'] = array(
 	'blog-comment-hide' => 'نهفتن',
 	'blog-comment-unhide' => 'نمایش',
 	'blog-comment-history' => 'تاریخچه',
-	'blog-avatar-edit' => 'تغییر',
-	'blog-avatar-delete' => 'حذف',
 	'blog-avatar-talk' => 'صفحۀ بحث کاربر',
 	'blog-avatar-contrib' => 'مشارکت‌ها',
-	'blog-avatar-getuser' => 'جستجو',
-	'blog-avatar-save-info' => 'اگر مایل به ذخیره تغییرات انجام‌شده هستید <a href="#prefcontrol">به پایین بروید</a> و روی دکمه \'\'ذخیره ترجیحات\'\' کلیک کنید.',
 	'blog-page-rate' => 'به این مقاله رأی مثبت دهید:',
 	'blog-create-post-label' => 'ایجاد پست جدید',
 	'blog-create-label' => 'ایجاد پست جدید',
@@ -478,7 +475,6 @@ $messages['fa'] = array(
 	'blogs-reportproblem' => 'گزارش اشکال',
 	'blogs-comment-hidden' => 'نظر پنهان شده‌است.',
 	'blogs-undeleted-comment' => 'نظر برای صفحۀ وبلاگ $1 احیاء شد',
-	'blogs-recent-url' => 'وبلاگ:پست‌های_اخیر',
 	'blogs-recent-url-text' => 'پست‌های اخیر وبلاگ',
 );
 
@@ -723,11 +719,12 @@ $messages['hu'] = array(
 	'blog-refresh-label' => 'Frissítés',
 );
 
+/** Italian (Italiano) */
 $messages['it'] = array(
 	'blog-header' => 'Post nella categoria "$1"',
 	'blog-subheader' => 'I seguenti $1 post sono in questa categoria.',
 	'blog-subheader-all' => 'I seguenti $1 post sono in questa categoria, su un totatle di $2',
-	'blog-invalidparam' => 'Il parametro \'$1\' è stato ignorato. Scegli uno dei parametri disponibili: <code>$2</code>.',
+	'blog-invalidparam' => "Il parametro '$1' è stato ignorato. Scegli uno dei parametri disponibili: <code>$2</code>.",
 	'blog-emptyparam' => 'Il parametro non può essere vuoto',
 	'blog-defaulttitle' => 'Blog',
 	'blog-continuereading' => 'Continua a leggere &raquo;',
@@ -756,25 +753,8 @@ $messages['it'] = array(
 	'blog-comment-error' => 'Il commento non è stato salvato',
 	'blog-comment-cannot-add' => 'Non è possibile aggiungere commenti al blog.',
 	'blog-avatar-defaults' => 'Avatar.jpg Avatar2.jpg Avatar3.jpg Avatar4.jpg Avatar5.jpg Avatar6.jpg',
-	'blog-avatar-removeavatar' => 'Rimuovi l\'avatar',
-	'blog-avatar-goto-userpage' => 'Vai alla pagina utente',
-	'blog-avatar-edit' => 'Cambia',
-	'blog-avatar-delete' => 'Cancella',
 	'blog-avatar-talk' => 'Discussione',
 	'blog-avatar-contrib' => 'contributi',
-	'blog-avatar-choose-avatar' => 'Scegli un nuovo avatar',
-	'blog-avatar-upload-avatar' => 'Carica un nuovo avatar',
-	'blog-avatar-nouser' => 'Utente non trovato',
-	'blog-avatar-cannot-remove' => 'Non è possibile rimuovere l\'avatar di questo utente!',
-	'blog-avatar-remove-info' => 'Questa pagina ti consente di eliminare l\'avatar di un utente. Scrivi il nome dell\'utente nella casella e premi "Cerca". <br />
-Non dimenticare che gli avatar sono globali: rimuovere un avatar da questa wiki equivale a cancellarlo da ogni wiki.',
-	'blog-avatar-getuser' => 'Cerca',
-	'blog-avatar-remove-confirm' => 'Sei sicuro di voler rimuovere questo avatar?',
-	'blog-avatar-error-nofile' => 'Scegli un file dal tuo computer.',
-	'blog-avatar-error-size' => 'Il file scelto supera il limite di $1 KB.',
-	'blog-avatar-error-cantwrite' => 'Un errore ha terminato il processo. Non è possibile caricare il file.',
-	'blog-avatar-changed-log' => '(Avatar aggiunto o modificato)',
-	'blog-avatar-save-info' => 'Per salvare le modifiche vai a <a href="#prefcontrol">piè di pagina</a> e premi "Salva"',
 	'blog-page-rate' => 'Valuta questo articolo:',
 	'blog-create-post-label' => 'Crea un nuovo post',
 	'blog-create-label' => 'Crea un post',
@@ -1135,6 +1115,17 @@ Gebruik alstublieft een van de beschikbare parameters: <code>$2</code>.',
 	'blog-movepage-badtitle' => 'Ongeldige titel voor blogbericht.',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Audun
+ */
+$messages['no'] = array(
+	'blog-userblog' => '$1s blogg',
+	'blog-fromsitename' => 'Fra $1',
+	'blogs-reportproblem' => 'Rapporter problem',
+	'blogs-comment-hidden' => 'Kommentar skjult.',
+);
+
+/** Polish (Polski) */
 $messages['pl'] = array(
 	'blog-header' => 'Wpisy na blogu w kategorii „$1”',
 	'blog-subheader' => 'Następujące wpisy w ilości $1 są w tej kategorii.',
@@ -1168,24 +1159,9 @@ $messages['pl'] = array(
 	'blog-comment-unhide' => 'nie ukrywaj',
 	'blog-comment-error' => 'Komentarz nie mógł zostać zapisany.',
 	'blog-comment-cannot-add' => 'Nie możesz dodać komentarza do bloga.',
-	'blog-avatar-removeavatar' => 'Usuń avatar',
-	'blog-avatar-goto-userpage' => 'Idź do strony użytkownika',
-	'blog-avatar-edit' => 'Zmień',
-	'blog-avatar-delete' => 'Usuń',
 	'blog-avatar-talk' => 'dyskusja',
 	'blog-avatar-contrib' => 'wkład',
 	'blog-avatar-preferences-title' => 'Avatar',
-	'blog-avatar-choose-avatar' => 'wybierz nowy avatar',
-	'blog-avatar-upload-avatar' => 'Wczytaj nowy avatar',
-	'blog-avatar-nouser' => 'Nie znaleziono takiego użytkownika!',
-	'blog-avatar-cannot-remove' => 'Nie można usunąć avataru wybranego użytkownika!',
-	'blog-avatar-remove-info' => 'Ta strona pozwala ci usunąć avatar. Wybierz dokładną nazwę użytkownika w polu, po czym naciśnij „Szukaj”.<br />Pamiętaj, że avatary są globalne – jeśli zmienisz go tutaj, stanie się to samo na innych Wikiach.',
-	'blog-avatar-getuser' => 'Znajdź',
-	'blog-avatar-error-nofile' => 'Proszę wybrać plik na dysku.',
-	'blog-avatar-error-size' => 'Przesłany plik jest zbyt duży, dozwolony rozmiar to $1 KB.',
-	'blog-avatar-error-cantwrite' => 'Wystąpił błąd, który uniemożliwia zapisanie pliku.',
-	'blog-avatar-changed-log' => 'zmiana lub dodanie avatara',
-	'blog-avatar-save-info' => 'Jeśli chcesz zapisać zmiany, <a href="#prefcontrol">idź na dół strony</a> i naciśnij „Zapisz”.',
 	'blog-page-rate' => 'Oceń ten artykuł:',
 	'blog-create-post-label' => 'Utwórz nowy post na blogu',
 	'blog-create-label' => 'Dokonaj wpisu na blogu',
@@ -1200,7 +1176,6 @@ $messages['pl'] = array(
 	'blogs-reportproblem' => 'Zgłoś problem',
 	'blogs-comment-hidden' => 'Komentarz ukryty.',
 	'blogs-undeleted-comment' => 'Usunięcie komentarza na stronie $1 blogu.',
-	'blogs-recent-url' => 'Blog:Ostatnie posty',
 	'blogs-recent-url-text' => 'Ostatnie posty na blogach',
 );
 
@@ -1241,23 +1216,40 @@ $messages['ru'] = array(
 	'create-blog-post-category' => 'Записи в блоге',
 	'create-blog-post-title' => 'Создание новой записи в блоге',
 	'create-blog-form-post-title' => 'Заголовок записи блога',
+	'create-blog-empty-title-error' => 'Заголовок обязателен',
+	'create-blog-invalid-title-error' => 'Неверный заголовок',
+	'create-blog-categories-textinput' => 'Добавить новую категорию',
 	'create-blog-categories-submit' => 'Отправить',
 	'create-blog-save' => 'Сохранить страницу',
 	'create-blog-preview' => 'Предварительный просмотр',
 	'create-blog-updated' => 'Запись блога создана или обновлена.',
 	'create-blog-listing-preview' => 'Предварительный просмотр',
+	'create-blog-listing-matches' => 'Совпадения',
 	'create-blog-listing-sortby' => 'Сортировать по',
 	'create-blog-listing-sortby-date' => 'Наиболее свежие',
 	'create-blog-listing-sortby-author' => 'Автору',
 	'blog-defaulttitle' => 'Блоги',
+	'blog-page' => 'Блог',
+	'blog-comment-post' => 'Оставить комментарий',
 	'blog-rc-comments' => 'Комментарии в блоге',
 	'blog-comments-label' => 'Комментирование',
 	'blog-voting-label' => 'Голосование',
+	'blog-comment-history' => 'история',
 	'blog-avatar-talk' => 'обсуждение',
 	'blog-avatar-contrib' => 'вклад',
 	'blog-avatar-preferences-title' => 'Аватара',
 	'blog-fromsitename' => 'Из $1',
 	'blogs-reportproblem' => 'Сообщить о проблеме',
 	'blogs-comment-hidden' => 'Комментарий скрыт.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'blog-defaulttitle' => 'బ్లాగులు',
+	'blog-page' => 'బ్లాగు',
+	'blog-comments' => 'వ్యాఖ్యలు',
+	'blog-comment-history' => 'చరిత్ర',
 );
 

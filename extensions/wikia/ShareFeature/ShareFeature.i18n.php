@@ -8,12 +8,6 @@ $messages['en'] = array(
 	'sf-link-tooltip' => 'Share this article with your friends',
 );
 
-$messages['pl'] = array(
-	'sf-link' => 'Podziel się tym artykułem',
-	'sf-link-popup' => 'Podziel się tym artykułem',
-	'sf-link-tooltip' => 'Podziel się tym artykułem ze swymi przyjaciółmi',
-);
-
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -32,16 +26,27 @@ $messages['br'] = array(
 	'sf-link-tooltip' => 'Rannañ ar pennad-mañ gant ho mignoned',
 );
 
+/** German (Deutsch) */
 $messages['de'] = array(
 	'sf-link' => 'Artikel teilen',
 	'sf-link-popup' => 'Verweise auf diesen Artikel',
 	'sf-link-tooltip' => 'Weise deine Freunde auf diesen Artikel hin.',
 );
 
+/** Spanish (Español) */
 $messages['es'] = array(
 	'sf-link' => 'Compartir este artículo',
 	'sf-link-popup' => 'Compartir este artículo',
 	'sf-link-tooltip' => 'Compartir este artículo con tus amigos',
+);
+
+/** French (Français)
+ * @author Peter17
+ */
+$messages['fr'] = array(
+	'sf-link' => 'Partager cet article',
+	'sf-link-popup' => 'Partager cet article',
+	'sf-link-tooltip' => 'Partager cet article avec vos amis',
 );
 
 /** Galician (Galego)
@@ -71,10 +76,29 @@ $messages['hu'] = array(
 	'sf-link-tooltip' => 'Szócikk megosztása a barátaiddal',
 );
 
+/** Japanese (日本語) */
 $messages['ja'] = array(
 	'sf-link' => 'この記事を共有',
 	'sf-link-popup' => 'この記事を共有',
 	'sf-link-tooltip' => 'この記事を友人と共有',
+);
+
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'sf-link' => 'Сподели ја статијава',
+	'sf-link-popup' => 'Сподели ја статијава',
+	'sf-link-tooltip' => 'Сподели ја статијава со пријателите',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'sf-link' => 'Dit artikel delen',
+	'sf-link-popup' => 'Dit artikel delen',
+	'sf-link-tooltip' => 'Dit artikel met uw vrienden delen',
 );
 
 /** Norwegian Nynorsk (‪Norsk (nynorsk)‬)
@@ -84,6 +108,13 @@ $messages['nn'] = array(
 	'sf-link' => 'Del denne artikkelen',
 	'sf-link-popup' => 'Del denne artikkelen',
 	'sf-link-tooltip' => 'Del denne artikkelen med venene dine',
+);
+
+/** Polish (Polski) */
+$messages['pl'] = array(
+	'sf-link' => 'Podziel się tym artykułem',
+	'sf-link-popup' => 'Podziel się tym artykułem',
+	'sf-link-tooltip' => 'Podziel się tym artykułem ze swymi przyjaciółmi',
 );
 
 /** Piedmontese (Piemontèis)
