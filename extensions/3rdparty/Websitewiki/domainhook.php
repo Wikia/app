@@ -14,6 +14,7 @@ function fnDomainHook(&$article, &$text)
 
   if($action === 'edit' || $action === 'history' || $action === 'submit' ||
       $wgTitle->getNamespace() != NS_MAIN ||
+      $wgTitle->isRedirect() ||
       !ereg($exDomainList, $wgTitle->getText() ))
     return(true);
 
