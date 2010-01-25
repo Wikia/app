@@ -525,7 +525,7 @@ class StaticChute {
 	public function minifyJSData($js){
 		// Write the data to a temporary file first
 		$tmpfile = tempnam(sys_get_temp_dir(), 'minifyTemp');
-		$file_put_contents($tmpfile, $js);
+		file_put_contents($tmpfile, $js);
 
 		$min = self::minifyJSFile($tmpfile);
 		unlink($tmpfile);
