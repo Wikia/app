@@ -32,10 +32,16 @@ $wgExtensionFunctions[] = 'wfCreatePageInit';
 
 // initialize create page extension
 function wfCreatePageInit() {
-	global $wgUser, $wgHooks, $wgAjaxExportList, $wgOut, $wgScriptPath, $wgStyleVersion, $wgExtensionsPath;
+	global $wgUser, $wgHooks, $wgAjaxExportList, $wgOut, $wgScriptPath, $wgStyleVersion, $wgExtensionsPath, $wgWikiaEnableNewCreatepageExt;
 
 	// load messages from file
 	wfLoadExtensionMessages('CreatePage');
+
+	if(empty($wgWikiaEnableNewCreatepageExt)) {
+		// disable all new features and preserve old Special:CreatePage behavior
+		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/CreatePage/js/CreatePageDefault.js"><!-- CreatePageDefault js --></script>');
+		return true;
+	}
 
 	if(get_class($wgUser->getSkin()) == 'SkinMonoBook') {
 		return true;
