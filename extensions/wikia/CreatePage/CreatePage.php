@@ -39,11 +39,10 @@ function wfCreatePageInit() {
 
 	if(empty($wgWikiaEnableNewCreatepageExt)) {
 		// disable all new features and preserve old Special:CreatePage behavior
-		$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/CreatePage/js/CreatePageDefault.js"><!-- CreatePageDefault js --></script>');
 		return true;
 	}
 
-	if(get_class($wgUser->getSkin()) == 'SkinMonoBook') {
+	if(get_class($wgUser->getSkin()) != 'SkinMonaco') {
 		return true;
 	}
 
