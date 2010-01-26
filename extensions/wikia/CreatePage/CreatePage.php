@@ -86,6 +86,8 @@ function wfCreatePageAjaxGetDialog() {
 
 	$body = $template->execute( 'dialog' );
 	$response = new AjaxResponse( $body );
+	$response->setCacheDuration( 3600 * 8 ); // 8 hours
+
 	$response->setContentType('text/plain; charset=utf-8');
 
 	return $response;
@@ -134,6 +136,8 @@ function wfCreatePageAjaxCheckTitle() {
 
 	$json = Wikia::json_encode($result);
 	$response = new AjaxResponse( $json );
+	$response->setCacheDuration( 3600 );
+
 	$response->setContentType('text/plain; charset=utf-8');
 
 	return $response;
