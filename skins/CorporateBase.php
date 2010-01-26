@@ -51,7 +51,7 @@ class SkinCorporateBase extends SkinTemplate {
 			'text' => wfMsg('home2-create-button')
 		);
 						
-		return array_merge(parent::buildPersonalUrls(),$data);
+		return array_merge(parent::buildPersonalUrls($obj, $tpl),$data);
 	}
 }
 
