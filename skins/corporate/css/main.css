@@ -53,15 +53,14 @@ body {
 	padding: 20px 0;
 }
 
-/* Contain floats. ("Clearfix.") */
-#MainArticle::after, #CompanyInfo::after {
+/* Contain floats. */
+.clearfix {
 	clear: both;
 	content: ".";
 	display: block;
 	height: 0;
 	visibility: hidden;
 }
-
 
 /* Typography. */
 h1, h2, h3, h4, h5, h6,

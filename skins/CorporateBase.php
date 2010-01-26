@@ -204,7 +204,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 
 	protected function htmlCompanyInfo(){
 ?>
-		<section id="CompanyInfo">
+		<section id="CompanyInfo" class="clearfix">
 			<div class="shrinkwrap">
 			<h1 id="company-info-headline"><?php print wfMsg('home2-company-info-headline') ;?> </h1>
 				<section id="wikia-international">

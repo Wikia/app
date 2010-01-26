@@ -57,7 +57,7 @@ class CorporateTemplate extends CorporateBaseTemplate {
 		<div id="MainContent">
 			<!-- DEV NOTE: This area has the blue-striped background.  -->
 
-			<article id="MainArticle">
+			<article id="MainArticle" class="clearfix">
 				<?php print $this->htmlMainArticleContents();?>
 				<ul id="article-links" class="shrinkwrap">
 					<?php if (!$wgUser->isAnon() && $wgOut->isArticleRelated()) { ?>
