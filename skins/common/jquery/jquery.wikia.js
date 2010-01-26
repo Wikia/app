@@ -1,4 +1,4 @@
-//@see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
+//see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache
 $.ajaxSetup({cache: true});
 
 jQuery.fn.log = function (msg, group) {
@@ -185,7 +185,7 @@ $.getEvent = function(e, boundEl) {
 	return ev;
 };
 
-//@see http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
+//see http://jquery-howto.blogspot.com/2009/09/get-url-parameters-values-with-jquery.html
 $.extend({
 	getUrlVars: function(){
 		var vars = [], hash;
