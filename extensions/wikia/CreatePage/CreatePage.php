@@ -63,9 +63,6 @@ function wfCreatePageInit() {
 
 	$wgAjaxExportList[] = 'wfCreatePageAjaxGetDialog';
 	$wgAjaxExportList[] = 'wfCreatePageAjaxCheckTitle';
-
-	$wgOut->addScript( '<script type="text/javascript" src="' . $wgScriptPath . '/extensions/wikia/CreatePage/js/CreatePage.js"><!-- CreatePage js --></script>');
-	$wgOut->addExtensionStyle("{$wgExtensionsPath}/wikia/CreatePage/css/CreatePage.css?{$wgStyleVersion}");
 }
 
 function wfCreatePageToggleUserPreference($toggles, $default_array = false) {
