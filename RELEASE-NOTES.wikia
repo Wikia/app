@@ -1,4 +1,5 @@
 == Changes since 201001.4 ==
+* rt#37994: Ads: Center 728x90 on all pages. (Nef)
 * Monaco: Allow override of where dynamicbox create points to (uberfuzzy)
 
 == Changes since 201001.3 ==
