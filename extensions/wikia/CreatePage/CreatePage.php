@@ -29,6 +29,14 @@ extAddSpecialPage(dirname(__FILE__) . '/SpecialCreatePage.php', 'CreatePage', 'C
  * setup functions
  */
 $wgExtensionFunctions[] = 'wfCreatePageInit';
+$wgHooks['MakeGlobalVariablesScript'][] = 'wfCreatePageSetupVars';
+
+function wfCreatePageSetupVars( $vars ) {
+	global $wgWikiaEnableNewCreatepageExt;
+
+	$vars['WikiaEnableNewCreatepage'] = $wgWikiaEnableNewCreatepageExt;
+	return true;
+}
 
 // initialize create page extension
 function wfCreatePageInit() {

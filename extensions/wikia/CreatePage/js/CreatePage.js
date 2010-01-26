@@ -97,19 +97,21 @@ CreatePage.getTitleFromUrl = function( url ) {
 };
 
 $(function() {
-	if( $( '#dynamic-links-write-article-icon' ).exists() ) {
+	if( WikiaEnableNewCreatepage ) {
+		if( $( '#dynamic-links-write-article-icon' ).exists() ) {
 		// open dialog on clicking
 		$( '#dynamic-links-write-article-icon' ).click( function(e) { CreatePage.openDialog(e, null); });
-	}
-	if( $( '#dynamic-links-write-article-link' ).exists() ) {
+		}
+		if( $( '#dynamic-links-write-article-link' ).exists() ) {
 		// open dialog on clicking
 		$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e, null); });
-	}
+		}
 
-	$(".new").bind('click', function(e) { CreatePage.openDialog(e, CreatePage.getTitleFromUrl(this.href) ); } );
-	$(".createboxButton").bind('click', function(e) {
-		var form = $(e.target).parent();
-		var field = form.children('.createboxInput');
-		CreatePage.openDialog(e, field.val());
-	});
+		$(".new").bind('click', function(e) { CreatePage.openDialog(e, CreatePage.getTitleFromUrl(this.href) ); } );
+		$(".createboxButton").bind('click', function(e) {
+			var form = $(e.target).parent();
+			var field = form.children('.createboxInput');
+			CreatePage.openDialog(e, field.val());
+			});
+	}
 });

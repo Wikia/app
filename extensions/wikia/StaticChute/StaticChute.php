@@ -59,7 +59,8 @@ class StaticChute {
 			'../extensions/wikia/Userengagement/Userengagement.js',
 			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 			'common/contributed.js',
-			'../extensions/wikia/ShareFeature/js/ShareFeature.js'
+			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
+			'../extensions/wikia/CreatePage/js/CreatePage.js',
 		);
 		$this->config['monaco_anon_article_js'] = array_merge($this->config['monaco_anon_article_js'], $widgetsAssets['js']);
 
@@ -97,7 +98,8 @@ class StaticChute {
 			'../extensions/wikia/AdEngine/AdEngine.js',
 			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 			'common/contributed.js',
-			'../extensions/wikia/ShareFeature/js/ShareFeature.js'
+			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
+			'../extensions/wikia/CreatePage/js/CreatePage.js',
 		);
 		$this->config['monaco_loggedin_js'] = array_merge($this->config['monaco_loggedin_js'], $widgetsAssets['js']);
 
@@ -133,7 +135,8 @@ class StaticChute {
 			'../extensions/wikia/Userengagement/Userengagement.js',
 			'../extensions/wikia/TieDivLibrary/TieDivLibrary.js',
 			'common/contributed.js',
-			'../extensions/wikia/ShareFeature/js/ShareFeature.js'
+			'../extensions/wikia/ShareFeature/js/ShareFeature.js',
+			'../extensions/wikia/CreatePage/js/CreatePage.js',
 		);
 		$this->config['monaco_anon_everything_else_js'] = array_merge($this->config['monaco_anon_everything_else_js'], $widgetsAssets['js']);
 
@@ -203,6 +206,7 @@ class StaticChute {
 			'../extensions/wikia/Blogs/css/Blogs.css',
 			'../extensions/wikia/Masthead/css/Masthead.css',
 			'../extensions/wikia/ShareFeature/css/ShareFeature.css',
+			'../extensions/wikia/CreatePage/css/CreatePage.css',
 		);
 		$this->config['monaco_css'] = array_merge($this->config['monaco_css'], $widgetsAssets['css']);
 
