@@ -99,12 +99,12 @@ CreatePage.getTitleFromUrl = function( url ) {
 $(function() {
 	if( WikiaEnableNewCreatepage ) {
 		if( $( '#dynamic-links-write-article-icon' ).exists() ) {
-		// open dialog on clicking
-		$( '#dynamic-links-write-article-icon' ).click( function(e) { CreatePage.openDialog(e, null); });
+			// open dialog on clicking
+			$( '#dynamic-links-write-article-icon' ).click( function(e) { CreatePage.openDialog(e, null); });
 		}
 		if( $( '#dynamic-links-write-article-link' ).exists() ) {
-		// open dialog on clicking
-		$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e, null); });
+			// open dialog on clicking
+			$( '#dynamic-links-write-article-link' ).click( function(e) { CreatePage.openDialog(e, null); });
 		}
 
 		$(".new").bind('click', function(e) { CreatePage.openDialog(e, CreatePage.getTitleFromUrl(this.href) ); } );
