@@ -21,7 +21,7 @@ class SkinCorporateBase extends SkinTemplate {
 		parent::initPage( $out );
 	}
 	
-	public function buildPersonalUrls(&$obj, &$tpl) {
+	public function buildPersonalUrls() {
 		global $wgUser, $wgTitle;
 
 		$data = array();
@@ -51,7 +51,7 @@ class SkinCorporateBase extends SkinTemplate {
 			'text' => wfMsg('home2-create-button')
 		);
 						
-		return array_merge(parent::buildPersonalUrls($obj, $tpl),$data);
+		return array_merge(parent::buildPersonalUrls(),$data);
 	}
 }
 
