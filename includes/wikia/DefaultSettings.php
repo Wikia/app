@@ -233,7 +233,7 @@ $wgSkipOldSkins = array(
  * @name wgReleaseNumber
  * release number is used for building links
  */
-$HeadURL = preg_split('/\//', '$HeadURL$');
+$HeadURL = explode('/', '$HeadURL$');
 $wgReleaseNumber = ($HeadURL[4] === "trunk" ) ? "trunk" : $HeadURL[5];
 
 /**
