@@ -1,0 +1,924 @@
+/**
+ * Wikia Global main stylesheet.
+ *
+ * This stylesheet provides the foundational base layer of styling for all
+ * Wikia Global elements.
+ *
+ * Author: Meitar Moscovitz <meitar@wikia-inc.com>
+ */
+
+/* @group Defaults, initializations. */
+
+/* CSS reset */
+html,
+body,
+#CompanyInfo h1,
+#CompanyInfo ul,
+.isMainpage #wikia-global-stats ul,
+#GlobalHeader fieldset,
+#GlobalHeader h1,
+#GlobalNav ul,
+#homepage-feature-spotlight ul,
+#MainArticle aside ul,
+#MainArticle aside p,
+#wikia-global-hot-spots ol,
+#SupplementalNav {
+	border: none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* Hold the hands of browser to figure out HTML5 display contexts. */
+header, article, section, footer, nav, aside {
+	display: block;
+}
+
+/* @end */
+
+/* @group Page design defaults. */
+
+body {
+	background: #002F55;
+	border: none;
+	color: #EEE;
+	font: 62.5%/1.25em "Lucida Grande", Helvetica, Arial, sans-serif;
+	overflow-x: hidden; /* Gecko annoyingly counts outline as layout. */
+}
+
+.editsection { display: none; }
+
+#MainContent {
+	background: url(/skins/corporate/images/bg.page.blue.gif);
+	padding: 20px 0;
+}
+
+/* Contain floats. ("Clearfix.") */
+#MainArticle::after, #CompanyInfo::after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+
+/* Typography. */
+h1, h2, h3, h4, h5, h6,
+#GlobalNav,
+#wikia-search,
+#homepage-feature-spotlight .description p,
+#wikia-global-stats ul,
+#wikia-global-hot-spots .page-activity-sources {
+	font-family: "Myriad Pro", Helvetica, Arial, sans-serif;
+}
+a {
+	color: #002bbd;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+#MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd,
+#wikia-global-hot-spots p, #CompanyInfo a, #wikia-create-wiki {
+	font-size: 1.3em;
+}
+
+/* Hide headlines used only for semantics. */
+#globalnav-headline,
+#homepage-feature-headline,
+#featured-wikis-headline,
+#wikia-overview-headline,
+#wikia-wide-stats-headline,
+#company-info-headline {
+	display: none;
+}
+
+/* Colors. */
+.neutral {
+	background-color: #F5F5F5;
+	border: 1px solid #CCC;
+	color: #333;
+}
+.accent {
+	background-color: #dae2fd;
+	border: 1px solid #8d9da7;
+	color: #000;
+}
+#MainArticle, #wikia-create-wiki .wikia_button span, header {
+	color: #333;
+}
+#CompanyInfo h1, #wikia-create-wiki {
+	border-color: #4d6477;
+}
+#CompanyInfo, footer {
+	background: #002F55;
+}
+header a, #CompanyInfo a, footer a {
+	color: #EEE;
+}
+
+/* Center-bias layout. */
+.shrinkwrap {
+	margin: 0 auto;
+	width: 960px;
+}
+#MainArticle > .shrinkwrap {
+	width: 940px;
+}
+#MainArticle {
+	min-width: 972px; /* Room for borders+outline+gutter. */
+}
+
+#GlobalHeader h1 {
+	margin-left: 10px;
+}
+#wikia-tools, #wikia-whats-up {
+	margin-right: 10px;
+}
+
+#CompanyInfo h1, #wikia-create-wiki {
+	border-style: solid;
+}
+
+/* @end */
+
+/* @group Global header specifics. */
+#GlobalHeader {
+	background: #FFF url(/skins/corporate/images/bg.global.header-nav.sprite.png) repeat-x 624px -10px;
+	height: 54px;
+}
+
+#GlobalHeader h1 {
+	float: left;
+	margin-top: 9px;
+	margin-bottom: 0;
+	margin-right: 0;
+}
+#wikia-tools {
+	text-align: right;
+}
+#wikia-account-tools {
+	margin: 0;
+	padding: 5px 0 4px;
+}
+.loggedin #wikia-account-tools * {
+	margin-left: .5em;
+}
+#wikia-account-tools a {
+	color: #00416B;
+}
+#wikia-search-form fieldset {
+	position: relative;
+}
+#wikia-search-form legend {
+	display: none;
+}
+#wikia-search {
+	background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -10px;
+	border: 0;
+	font-size: 1.6em;
+	height: 20px;
+	padding: 6px 40px 0 15px;
+	width: 245px;
+}
+#wikia-search.placeholder, .isMainpage #wikia-global-stats p {
+	color: #999;
+}
+
+#wikia-search-submit {
+	cursor: pointer;
+	height: 22px;
+	/* Opacities for IE. */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	opacity: 0;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	width: 35px;
+}
+
+/* @end */
+
+/* @group Global navigation specifics. */
+
+#GlobalNav {
+	background: #333 url(/skins/corporate/images/bg.global.header-nav.sprite.png) repeat-x 0 -84px;
+	font-size: 1.7em;
+	height: 34px;
+}
+
+/* Make sure Webkit and IE8 stacks the GlobalNav atop the MainContent. */
+#GlobalNav, #MainContent { position: relative; }
+#GlobalNav { z-index: 1; }
+
+/* Top level container. */
+#GlobalNav ul {
+	position: relative;
+	left: -4px;
+	height: 30px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+/* Sub-level container. */
+#GlobalNav li ul {
+	background: #FFF url(skins/corporate/images/bg.globalnav.subnav.gray.5x83.png) left bottom repeat-x;
+	border: 1px solid #FFF;
+	display: none;
+	height: auto;
+	left: -1px;
+	min-width: 200px;
+	position: absolute;
+	top: 35px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+}
+#GlobalNav li:hover ul {
+	display: block;
+}
+
+/* Top level item.  */
+#GlobalNav li {
+	border-left: 1px solid #444;
+	border-right: 1px solid #000;
+	float: left;
+	height: 32px;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	white-space: nowrap;
+}
+#GlobalNav li.first {
+	border-left: none;
+	padding-left: 1px;
+}
+#GlobalNav li.last {
+	border-right: none;
+	padding-right: 1px;
+}
+/* Sub-level item. */
+#GlobalNav li li {
+	border-color: #0066a7;
+	border-style: solid;
+	border-width: 0 1px;
+	float: none;
+	font-size: .8em;
+	height: auto;
+	padding: 4px 12px;
+	position: static;
+}
+#GlobalNav li li.first {
+	border-color: #0066a7;
+	border-style: solid;
+	border-width: 1px 1px 0;
+	padding: 10px 12px 4px 12px;
+}
+#GlobalNav li li.last {
+	border-color: #0066a7;
+	border-style: solid;
+	border-width: 0 1px 1px;
+	padding: 4px 12px 10px 12px;
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+}
+
+/* Top-level link. */
+#GlobalNav a {
+	background: url(/skins/corporate/images/globalnav.arrow.gray.20x100.png) 100% 14px no-repeat;
+	color: #FFF;
+	display: inline-block;
+	font-weight: 600;
+	height: 32px;
+	line-height: 34px;
+	padding: 1px 23px 0 13px;
+	text-decoration: none;
+	position: relative;
+	z-index: 100;
+}
+#GlobalNav a:hover {
+	text-decoration: underline;
+}
+/* Sub-level link. */
+#GlobalNav li li a {
+	background: transparent;
+	color: #0066a7;
+	display: inline;
+	height: auto;
+	line-height: normal;
+	padding: 0;
+}
+#GlobalNav li li a:hover {
+}
+
+/* Top-level rollover. */
+#GlobalNav li:hover {
+	border: 1px solid #FFF;
+	height: 37px;
+	top: -5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	z-index: 100;
+}
+#GlobalNav li.first:hover {
+	padding-left: 0;
+}
+#GlobalNav li.last:hover {
+	padding-right: 0;
+}
+/* Sub-level rollover. */
+#GlobalNav li li:hover {
+	border-width: 0 1px;
+	border-color: #0066a7;
+	height: auto;
+	top: 0;
+	-moz-border-radius-topleft: 0;
+	-moz-border-radius-topright: 0;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-top-right-radius: 0;
+}
+#GlobalNav li li.first:hover {
+	padding-left: 12px;
+	border-width: 1px 1px 0 1px;
+}
+#GlobalNav li li.last:hover {
+	padding-right: 12px;
+	border-width: 0 1px 1px 1px;
+}
+
+/* Top-level rollover link. */
+#GlobalNav li:hover a {
+	background-color: #FFF;
+	background-position: 100% -77px;
+	border-color: #0066a7;
+	border-style: solid;
+	border-width: 1px 1px 0;
+	color: #0066a7;
+	padding: 4px 22px 0 12px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+}
+/* Sub-level rollover link. */
+#GlobalNav li:hover li a {
+	background: transparent;
+	border: none;
+	color: #0066a7;
+	padding: 0;
+	-moz-border-radius-topleft: 0;
+	-moz-border-radius-topright: 0;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-top-right-radius: 0;
+}
+
+#GlobalNav img {
+	height: 16px;
+	margin-right: 4px;
+	position: relative;
+	top: -2px;
+	vertical-align: middle;
+	width: 16px;
+}
+
+/* @end */
+
+/* @group Main article specifics. */
+
+#MainArticle {
+	background: #FFF;
+	border: 1px solid #CCC;
+	margin: 0 20px 20px;
+	padding: 60px 0 40px 0;
+	outline: 1px solid #FFF;
+}
+#MainArticle h1 {
+	font-size: 2em;
+}
+#MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd {
+	line-height: 1.3em;
+}
+
+#MainArticle aside {
+	background: #f5f5f5;
+	border: 1px solid #FFF;
+	outline: 1px solid #CCC;
+	float: right;
+	margin-left: 110px;
+	width: 215px;
+}
+#MainArticle aside div {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 35px;
+}
+
+#MainArticle aside h3 {
+	font-size: 1.5em;
+	margin: .75em 0 0;
+}
+#MainArticle aside p, #MainArticle aside li {
+	font-size: 1.2em;
+}
+
+#MainArticle #wikia-get-involved {
+	background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;
+	padding-bottom: 125px;
+	margin-bottom: 0;
+}
+#wikia-get-involved  p:last-child {
+	position: relative;
+	top: 100px;
+	text-align: center;
+}
+
+/* @end */
+
+/* @group Advertisements. */
+
+#wikia-spotlights {
+	text-align: center;
+	font-size: 0; /* Remove text node spacing. */
+}
+#wikia-spotlights div {
+	display: inline;
+	padding: 0 20px;
+}
+
+/* @end */
+
+/* @group Company info. */
+
+#CompanyInfo {
+	border-top: 1px solid #FFF;
+	padding-top: 25px;
+	overflow: hidden;
+}
+
+#CompanyInfo section {
+	float: left;
+	width: 320px;
+}
+#CompanyInfo h1 {
+	border-width: 0 0 1px 0;
+	font-size: 1.5em;
+	letter-spacing: 1px;
+	padding-bottom: 5px;
+}
+#CompanyInfo h1, #CompanyInfo li {
+	margin: 0 10px;
+}
+#CompanyInfo ul {
+	padding: 15px 0 30px 0;
+}
+#CompanyInfo ul, #CompanyInfo li {
+	float: left; /* Float both for containment. */
+	line-height: 2em;
+}
+#CompanyInfo li {
+	width: 140px;
+}
+#wikia-in-the-know ul {
+	padding-top: 5px;
+}
+#wikia-in-the-know li {
+	float: none;
+	width: auto;
+}
+#wikia-in-the-know a {
+	background-position: left middle;
+	background-repeat: no-repeat;
+	display: block;
+	height: 32px;
+	line-height: 32px;
+	padding: 2px 0 2px 42px;
+	margin: 5px 0;
+}
+#wikia-in-the-know-0 a {
+	margin-top: 0;
+}
+#wikia-in-the-know-2 a {
+	margin-bottom: 0;
+}
+
+/* @end */
+
+/* @group Global footer specifics. */
+
+footer {
+	text-align: center;
+	padding-bottom: 10em;
+}
+#wikia-create-wiki {
+	border-width: 1px 0 0 0;
+	margin: 0 10px;
+	padding: 15px 0;
+}
+
+#copyright, #SupplementalNav a {
+	font-size: 1.1em;
+}
+#copyright, #SupplementalNav, #SupplementalNav li {
+	display: inline;
+}
+#SupplementalNav a {
+	padding-left: 10px;
+}
+
+/* @end */
+
+/* @group Various in-article elements */
+
+.MainArticle-sidebar {
+	border-width: 1px;
+	float: right;
+	margin-left: 20px;
+	width: 218px;
+}
+.MainArticle-sidebar > span {
+	display: block;
+	padding: 10px;
+}
+.MainArticle-sidebar h3 {
+	font-size: 1.5em;
+	line-height: normal;
+	margin: 10px 0 0;
+}
+.MainArticle-sidebar ul {
+	margin: 0 0 30px;
+	padding: 0;
+	list-style: none;
+}
+.MainArticle-sidebar p {
+	margin: 0;
+}
+.MainArticle-sidebar .create-wiki-container {
+	margin-bottom: 30px;
+}
+
+/* @end */
+
+/* @group =Homepage-specific styles. */
+
+	/* @group -Feature-box specifics. */
+	#HomepageFeature {
+		margin: 0 0 20px;
+	}
+	#homepage-feature-box {
+		background: #FFF;
+		border: 1px solid #CCC;
+		margin: 0 1px 10px 1px;
+		outline: 1px solid #FFF;
+		padding: 8px;
+	}
+	#homepage-feature-sidebar {
+		color: #333;
+		float: right;
+		width: 220px;
+	}
+	#homepage-feature-sidebar h1 {
+		color: #000;
+		font-size: 2.4em;
+		font-weight: 600;
+		line-height: normal;
+		margin: 15px 0 0;
+	}
+	#homepage-feature-sidebar div h2 {
+		background: none;
+		color: #666;
+		font-size: 2.1em;
+		font-weight: normal;
+		line-height: normal;
+		margin: 0;
+		padding: 0;
+	}
+	#homepage-feature-sidebar h2 {
+		background: url(/skins/corporate/images/bg.separators.sprite.png) no-repeat -10px -40px;
+		font-size: 1.8em;
+		line-height: normal;
+		margin: 10px 0 0;
+		padding-top: 10px;
+	}
+	#homepage-feature-sidebar p {
+		font-size: 1.3em;
+		line-height: normal;
+		margin-top: 0;
+	}
+	.create-wiki-container {
+		background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;
+		min-height: 90px;
+		padding: 0;
+		text-align: center;
+	}
+	.create-wiki-container a {
+		margin-top: 85px;
+	}
+	#homepage-feature-spotlight .description {
+		bottom: 40px;
+		color: #FFF;
+		display: none;
+		margin: 0;
+		padding: 10px;
+		position: absolute;
+		width: 680px;
+		z-index: 99;
+	}
+	#homepage-feature-spotlight .description h2 {
+		display: block;
+		font-size: 2.4em;
+		font-weight: normal;
+		line-height: normal;
+		margin: 0;
+		text-shadow: 0 1px 1px #000;
+	}
+	#homepage-feature-spotlight .description p {
+		font-size: 1.6em;
+		line-height: normal;
+		margin: 0 0 .3em;
+		text-shadow: 0 1px 1px #000;
+	}
+	#homepage-feature-spotlight {
+		background: url(/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;
+		position: relative;
+		height: 350px;
+		width: 700px;
+		overflow: hidden;
+	}
+	/*
+	 * description here
+	 * */
+	#homepage-feature-spotlight .nav {
+		padding: 16px 5px 0;
+		position: absolute;
+		margin: 0;
+		top: 304px;
+		z-index: 100;
+	}
+	#homepage-feature-spotlight .nav img {
+		cursor: pointer;
+		opacity: .5;
+	}
+	#homepage-feature-spotlight .selected {
+		background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
+	}
+	#homepage-feature-spotlight .selected img {
+		opacity: 1;
+	}
+	#homepage-feature-spotlight .homepage-spotlight {
+		position: absolute;
+		top: 0;
+	}
+	#homepage-feature-spotlight-0 .homepage-spotlight {
+		left: 0;
+	}
+	#homepage-feature-spotlight-0 .nav {
+		left: 200px;
+	}
+	#homepage-feature-spotlight-1 .homepage-spotlight {
+		left: 700px;
+	}
+	#homepage-feature-spotlight-1 .nav {
+		left: 280px;
+	}
+	#homepage-feature-spotlight-2 .homepage-spotlight {
+		left: 1400px;
+	}
+	#homepage-feature-spotlight-2 .nav {
+		left: 360px;
+	}
+	#homepage-feature-spotlight-3 .homepage-spotlight {
+		left: 2100px;
+	}
+	#homepage-feature-spotlight-3 .nav {
+		left: 440px;
+	}
+
+	/* @end */
+
+.isMainpage #MainContent {
+	padding-bottom: 0;
+}
+.isMainpage #CompanyInfo {
+	border-top: none;
+}
+
+.isMainpage #MainArticle {
+	border-left-width: 0;
+	border-right-width: 0;
+	margin-left: 0;
+	margin-right: 0;
+	outline-left-width: 0;
+	outline-right-width: 0;
+	overflow: hidden;
+	padding-bottom: 20px;
+	padding-top: 20px;
+}
+/* Do not re-center nested shrinkwrapped elements. */
+.isMainpage .shrinkwrap .shrinkwrap {
+	margin: 0;
+	width: auto;
+}
+
+.isMainpage #wikia-global-stats {
+	background: #fff url(/skins/corporate/images/bg.separators.sprite.png) no-repeat -20px 36px;
+	margin-bottom: 25px;
+	padding-bottom: 20px;
+	text-align: center;
+}
+.isMainpage #wikia-global-stats li {
+	color: #000;
+	display: inline;
+	font-size: 1.9em;
+	padding: 0 30px;
+}
+.isMainpage #wikia-global-stats span {
+	color: #002f55;
+	font-weight: bold;
+}
+.isMainpage #wikia-global-stats p {
+	margin: 0;
+	font-size: .9em;
+}
+.isMainpage #wikia-global-stats p::before,
+.isMainpage #wikia-global-stats p::after {
+	content: "~";
+	padding: 0 1em;
+}
+
+	/* @group -Hot Spots */
+
+	#wikia-global-hot-spots {
+		width: 620px;
+	}
+
+	#wikia-global-hot-spots, #wikia-global-hot-spots .page-activity-badge,
+	#wikia-global-hot-spots .page-activity-badge div {
+		float: left;
+	}
+	#wikia-global-hot-spots h1 {
+		font-size: 1.8em;
+		margin: 0;
+	}
+	#wikia-global-hot-spots p {
+		margin-top: .25em;
+	}
+	#wikia-global-hot-spots li {
+		font-size: 1em; /* Reset font-sizing inheritance. */
+		clear: left;
+	}
+	#wikia-global-hot-spots .page-activity-badge {
+		color: #FFF;
+		height: 26px;
+		margin-bottom: 10px;
+		margin-right: 20px;
+		text-align: right;
+	}
+	#wikia-global-hot-spots .hot-spots-hilite {
+		margin-right: 10px;
+	}
+	#wikia-global-hot-spots .page-activity-badge div {
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+	}
+	#wikia-global-hot-spots strong {
+		display: block;
+		float: left;
+		font-size: 2em;
+		font-weight: normal;
+		line-height: 30px;
+		width: 50px;
+	}
+	#wikia-global-hot-spots .page-activity-badge span {
+		line-height: 28px;
+		margin-left: 10px;
+		margin-right: 15px;
+		padding-right: 24px;
+	}
+	#wikia-global-hot-spots .page-activity-badge span,
+	#wikia-global-hot-spots .page-activity-sources span,
+	#wikia-global-hot-spots .wikia-wiki-link {
+		font-size: 1.2em;
+	}
+	#wikia-global-hot-spots .page-activity-sources {
+		display: block;
+		line-height: 2em;
+		margin-left: 160px;
+		padding-top: 6px;
+	}
+	#wikia-global-hot-spots .page-activity-sources img {
+		position: relative;
+		top: -2px;
+		vertical-align: middle;
+	}
+	#wikia-global-hot-spots .wikia-page-link {
+		font-size: 1.6em;
+		font-weight: bold;
+		padding-right: .25em;
+	}
+	#wikia-global-hot-spots .page-activity-sources span {
+		color: #666;
+		white-space: nowrap;
+	}
+	#wikia-global-hot-spots .page-activity-sources .wikia-wiki-link {
+		color: #333;
+	}
+	.page-activity-level-1 {
+		background-color: #C03;
+	}
+	.page-activity-level-2 {
+		background-color: #F90;
+	}
+	.page-activity-level-3 {
+		background-color: #FC0;
+	}
+	.page-activity-level-4 {
+		background-color: #390;
+	}
+	.page-activity-level-5 {
+		background-color: #069;
+	}
+
+	/* If we need to hilite a particular entry, the following apply. */
+	#wikia-global-hot-spots .hilite .page-activity-badge {
+		background: url(http://images.wikia.com/common/extensions/wikia/MyHome/images/fire.png) repeat-x;
+		padding-top: 30px;
+	}
+	#wikia-global-hot-spots .hilite .page-activity-sources {
+		padding-top: 36px;
+	}
+
+	/* @end */
+
+#wikia-whats-up {
+	float: right;
+}
+#wikia-whats-up h1, #wikia-whats-up h2, #wikia-whats-up p {
+	color: #323232;
+	padding: 0 15px;
+}
+.isMainpage #wikia-whats-up {
+	width: 302px;
+	background: url(/skins/corporate/images/bg.whats-up.middle.white.302x5.gif) repeat-y;
+}
+.isMainpage #wikia-whats-up .shrinkwrap {
+	background: url(/skins/corporate/images/bg.whats-up.bottom.white.302x44.gif) no-repeat bottom;
+	padding-bottom: 45px;
+}
+.isMainpage #wikia-whats-up h1 {
+	background: url(/skins/corporate/images/bg.whats-up.top.white.302x24.gif) no-repeat;
+	font-size: 1.5em;
+	padding-top: 25px;
+	margin: 0;
+}
+.isMainpage #wikia-whats-up h2, .isMainpage #wikia-whats-up p {
+	font-size: 1.2em;
+}
+.isMainpage #wikia-whats-up h2 {
+	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+	margin: 0;
+}
+
+/* @end */
+
+/* @group Temporary development stuff. */
+
+.printfooter {
+	display: none;
+}
+
+/* @end */
+
+/* TODO: move this to proper place */
+#article-links {
+	list-style-type: none;
+	padding: 0;
+}
+#article-links div {
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113);
+	clip: rect(0px 0px 0px 0px);
+	height: 16px;
+	margin: 8px 2px 0 0;
+	position: absolute;
+	width: 576px;
+}
+#article-links li {
+	margin-right: 12px;
+	line-height: 32px;
+	padding-left: 18px;
+	position: relative;
+}
+#article-links #control-watch div {
+	clip: rect(0px 48px 16px 32px);
+	left: -32px;
+}
+/* TODO: this is unused - unless different way of building watch link will be used */
+#article-links #control-unwatch div {
+	clip: rect(0px 240px 16px 224px);
+	left: -224px;
+}

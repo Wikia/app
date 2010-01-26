@@ -215,7 +215,22 @@ class StaticChute {
 			'monaco/css/print.css',
 			'common/commonPrint.css',
 		);
-
+		
+		$this->config['corporate_page_js'] = array(
+			'common/wikibits.js',
+			'common/jquery/jquery-1.4.min.js',
+			'common/jquery/jquery.wikia.js',
+			'common/urchin.js',
+			'corporate/js/main.js',
+			'monaco/js/tracker.js',
+			'corporate/js/tracker.js',
+		);
+		
+		$this->config['corporate_page_css'] = array(		
+			'common/wikia-ui.css',	
+			'common/shared.css',
+			'corporate/css/main.css',
+		);
 	}
 
 

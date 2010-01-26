@@ -101,8 +101,8 @@ YAHOO.Wikia.Tracker = {
 		else if (skin == 'monaco') { skinname = 'monaco'; }
 		else if (skin == 'home') { skinname = 'home'; }
 		else if (skin == 'answers') { skinname = 'answers'; }
-
-		if(window.skinname && YAHOO.lang.isFunction(urchinTracker)) {
+		
+		if(window.skinname && (typeof urchinTracker != 'undefined') && YAHOO.lang.isFunction(urchinTracker)) {
 			_uacct = "UA-2871474-1";
 
 			username = wgUserName == null ? 'anon' : 'user';
