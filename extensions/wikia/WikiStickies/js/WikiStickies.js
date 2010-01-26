@@ -77,9 +77,14 @@ WIKIA.WikiStickies.placeContent = function () {
         var ws_para = ws_content.childNodes[0];
         $(ws_para).css('fontSize', '14pt');
         var verticalDifference = $(ws_content).height() - $(ws_para).height();
+	var infinitumGuard = 0;
         while (verticalDifference < 0) {
-            $(ws_para).css("fontSize", parseInt($(ws_para).css("fontSize") ) - 1);
-            verticalDifference = $(ws_content).height() - $(ws_para).height();
+		if( 99 < infinitumGuard ) { // did they put in an image? do we need to operate?
+			break;
+		}	
+		$(ws_para).css("fontSize", parseInt($(ws_para).css("fontSize") ) - 1);
+		verticalDifference = $(ws_content).height() - $(ws_para).height();
+		infinitumGuard++;
         }
         $(ws_para).css("top", verticalDifference / 2);
         $(ws_content).css('visibility', 'visible');
