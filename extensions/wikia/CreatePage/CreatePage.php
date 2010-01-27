@@ -90,7 +90,7 @@ function wfCreatePageAjaxGetDialog() {
 
 	$body = $template->execute( 'dialog' );
 	$response = new AjaxResponse( $body );
-	$response->setCacheDuration( 3600 * 8 ); // 8 hours
+	$response->setCacheDuration( 0 ); // no caching
 
 	$response->setContentType('text/plain; charset=utf-8');
 
