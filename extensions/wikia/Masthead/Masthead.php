@@ -672,14 +672,15 @@ class Masthead {
 			'Watchlist',
 			'WidgetDashboard',
 			'Preferences',
-			'MyHome'
+			'MyHome',
 		);
 
 		# special pages visible for other users
 		# /$par or target paramtere are used for username
 		$allowedPagesMulti = array (
 			'Contributions',
-			'Emailuser'
+			'Emailuser',
+			'SavedPages',
 		);
 
 		if (in_array($namespace, $allowedNamespaces)) {
@@ -721,14 +722,15 @@ class Masthead {
 			'Watchlist',
 			'WidgetDashboard',
 			'Preferences',
-			'MyHome'
+			'MyHome',
 		);
 
 		# special pages visible for other users
 		# /$par or target paramtere are used for username
 		$allowedPagesMulti = array (
 			'Contributions',
-			'Emailuser'
+			'Emailuser',
+			'SavedPages',
 		);
 
 		if( in_array( $namespace, $allowedNamespaces ) ||
@@ -795,9 +797,16 @@ class Masthead {
 					}
 				}
 
+				// macbre: hide "Contributions" tab on Recipes Wiki
+				global $wgEnableRecipesTweaksExt;
 				$oTitle = Title::newFromText( "Contributions/{$userspace}", NS_SPECIAL );
-				if ($oTitle instanceof Title) {
+				if ($oTitle instanceof Title && empty($wgEnableRecipesTweaksExt)) {
 					$out['nav_links'][] = array('text' => wfMsg('contris'), 'href' => $oTitle->getLocalUrl(), 'dbkey' => 'Contributions', 'tracker' => 'contributions');
+				}
+
+				// macbre: add "Saved Pages" tab
+				if (!empty($wgEnableRecipesTweaksExt)) {
+					$out['nav_links'][] = array('text' => wfMsg('savedpages'), 'href' => Skin::makeSpecialUrl("SavedPages/{$userspace}"), 'dbkey' => 'SavedPages', 'tracker' => 'savedpages');
 				}
 
 				$avatarActions = array();
@@ -950,6 +959,56 @@ class Masthead {
 
 		}
 		return true;
+	}
+
+	/**
+	 * Check if masthead should be shown on current page
+	 *
+	 * TODO: use this method inside Masthead class
+	 */
+	public static function isMastheadShown() {
+		global $wgTitle;
+
+		wfProfileIn(__METHOD__);
+
+		$namespace = $wgTitle->getNamespace();
+		$dbKey = SpecialPage::resolveAlias( $wgTitle->getDBkey() );
+
+		$allowedNamespaces = array( NS_USER, NS_USER_TALK );
+		if ( defined('NS_BLOG_ARTICLE') ) {
+			$allowedNamespaces[] = NS_BLOG_ARTICLE;
+		}
+
+		# special pages visible only for the current user
+		# /$par is used for other things here
+		$allowedPagesSingle = array (
+			'Watchlist',
+			'WidgetDashboard',
+			'Preferences',
+			'MyHome',
+		);
+
+		# special pages visible for other users
+		# /$par or target paramtere are used for username
+		$allowedPagesMulti = array (
+			'Contributions',
+			'Emailuser',
+			'SavedPages',
+		);
+
+		// not shown by default
+		$shown = false;
+
+		if (in_array($namespace, $allowedNamespaces)) {
+			$shown = true;
+		}
+		elseif ($namespace == NS_SPECIAL && (in_array($dbKey, $allowedPagesSingle) || in_array($dbKey, $allowedPagesMulti))) {
+			$shown = true;
+		}
+
+		wfProfileOut(__METHOD__);
+
+		return $shown;
 	}
 }
 

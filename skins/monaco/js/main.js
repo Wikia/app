@@ -16,6 +16,7 @@ var magicWords = {};
 
 //Attach DOM-Ready handlers
 $(function() {
+	$("#ca-watch").click(function(e){showComboAjaxForPalceHolder(false,"");});
 	$("#headerButtonHub").bind("click.headerMenu", openHubMenu);
 	$("#headerButtonUser").bind("click.headerMenu", openUserMenu);
 	$('.ajaxLogin').click(openLogin);

@@ -203,7 +203,7 @@ body.rte_source #editform #mw-toolbar {
 }
 
 .RTEPlaceholderPreviewTitleBar span {
-	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113) no-repeat -304px 0;
+	background: transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100120) no-repeat -304px 0;
 	cursor: pointer;
 	height: 16px;
 	position: absolute;
@@ -253,7 +253,7 @@ body.rte_source #editform #mw-toolbar {
 }
 
 .RTEPlaceholderPreviewTools .sprite {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100120);
 	height: 16px;
 	left: 0;
 	position: absolute;
@@ -530,7 +530,7 @@ div.linkEditorDialog .cke_browser_ie8 .cke_dialog_title {
 }
 
 #RTEFirstRunNoticeClose {
-	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113);
+	background-image: url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100120);
 	background-position: -304px 0;
 	cursor: pointer;
 	height: 16px;

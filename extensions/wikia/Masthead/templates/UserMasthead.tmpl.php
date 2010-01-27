@@ -35,7 +35,7 @@ global $wgStyleVersion, $wgExtensionsPath, $wgTitle, $wgUser;
 	<ul id="user_masthead_tabs" class="nav_links">
 		<?php
 		foreach ($data['nav_links'] as $navLink) {
-					echo "<li class=\"color1". ( ( $current  == $navLink[ "dbkey" ]) ? ' selected' : "" ) . '"><a href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')" rel="nofollow">'. $navLink['text'] .'</a></li>';
+					echo "<li class=\"color1". ( ( $current  == $navLink[ "dbkey" ]) ? ' selected' : "" ) . '" id="user_masthead_tab_'.$navLink['tracker'].'"><a href="'. $navLink['href'] .'" onclick="WET.byStr(\'usermasthead/' . $navLink['tracker'] . '\')" rel="nofollow">'. $navLink['text'] .'</a></li>';
 		}
 		?>
 	</ul>
