@@ -202,3 +202,8 @@ $.extend({
 		return $.getUrlVars()[name];
 	}
 });
+
+// see http://www.texotela.co.uk/code/jquery/reverse/
+jQuery.fn.reverse = function() {
+	return this.pushStack(this.get().reverse(), arguments);
+};
