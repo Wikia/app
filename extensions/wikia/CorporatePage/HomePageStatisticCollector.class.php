@@ -105,7 +105,7 @@ class HomePageStatisticCollector
 	public static function updateWordsInLastHour( $value = 0 ){
 		$timeSample = 60;
 		$fifoLength = 60*60; // one hour
-		$key = wfMemcKey( "hp_stats", "fifo_words" );
+		$key = wfSharedMemcKey( "hp_stats", "fifo_words" );
 		$out = self::fifoLine($value,$timeSample,$fifoLength,$key);
 		return $out;
 	}
