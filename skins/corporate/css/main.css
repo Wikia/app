@@ -855,7 +855,7 @@ footer {
 	background: url(http://images.wikia.com/common/skins/corporate/images/bg.whats-up.middle.white.302x5.gif) repeat-y;
 }
 .isMainpage #wikia-whats-up .shrinkwrap {
-	background: url(/skins/corporate/images/bg.whats-up.bottom.white.302x44.gif) no-repeat bottom;
+	background: url(http://images.wikia.com/common/skins/corporate/images/bg.whats-up.bottom.white.302x44.gif) no-repeat bottom;
 	padding-bottom: 45px;
 }
 .isMainpage #wikia-whats-up h1 {
