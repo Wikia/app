@@ -72,6 +72,13 @@ class CorporatePageHelper{
 	 * @author Marooned
 	 */
 	static function ArticleFromTitle(&$title, &$article) {
+		global $wgRequest;
+		//do not redirect for action different than view (allow creating, deleting, etc)
+		if ($wgRequest->getVal('action', 'view') != 'view') {
+			return true;
+		}
+		wfProfileIn(__METHOD__);
+
 		switch ($title->getNamespace()) {
 			case NS_HELP:
 			case NS_USER_TALK:
@@ -97,8 +104,10 @@ class CorporatePageHelper{
 		}
 		if (!empty($redirect)) {
 			header("Location: $redirect");
+			wfProfileOut(__METHOD__);
 			exit;
 		}
+		wfProfileOut(__METHOD__);
 		return true;
 	}
 }
