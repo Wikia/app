@@ -58,9 +58,13 @@ a {
 a:hover {
 	text-decoration: underline;
 }
-#MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd,
+#MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd, #MainArticle td,
 #wikia-global-hot-spots p, #CompanyInfo a, #wikia-create-wiki {
 	font-size: 1.3em;
+}
+#MainArticle td {
+	padding: 1em;
+	vertical-align: top;
 }
 
 /* Hide headlines used only for semantics. */
@@ -394,29 +398,8 @@ header a, #CompanyInfo a, footer a {
 	font-size: 1.1em;
 }
 #MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd {
+	margin: 1em 0;
 	line-height: 1.3em;
-}
-
-#MainArticle aside {
-	background: #f5f5f5;
-	border: 1px solid #FFF;
-	outline: 1px solid #CCC;
-	float: right;
-	margin-left: 110px;
-	width: 215px;
-}
-#MainArticle aside div {
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-bottom: 35px;
-}
-
-#MainArticle aside h3 {
-	font-size: 1.5em;
-	margin: .75em 0 0;
-}
-#MainArticle aside p, #MainArticle aside li {
-	font-size: 1.2em;
 }
 
 #MainArticle #wikia-get-involved {
