@@ -9,29 +9,18 @@
 
 /* @group Defaults, initializations. */
 
-/* CSS reset */
-html,
-body,
-#CompanyInfo h1,
-#CompanyInfo ul,
-.isMainpage #wikia-global-stats ul,
-#GlobalHeader fieldset,
-#GlobalHeader h1,
-#GlobalNav ul,
-#homepage-feature-spotlight ul,
-#MainArticle aside ul,
-#MainArticle aside p,
-#wikia-global-hot-spots ol,
-#SupplementalNav {
-	border: none;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
 /* Hold the hands of browser to figure out HTML5 display contexts. */
 header, article, section, footer, nav, aside {
 	display: block;
+}
+
+/* Contain floats. */
+.clearfix::after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
 }
 
 /* @end */
@@ -51,15 +40,6 @@ body {
 #MainContent {
 	background: url(/skins/corporate/images/bg.page.blue.gif);
 	padding: 20px 0;
-}
-
-/* Contain floats. */
-.clearfix::after {
-	clear: both;
-	content: ".";
-	display: block;
-	height: 0;
-	visibility: hidden;
 }
 
 /* Typography. */
@@ -151,14 +131,11 @@ header a, #CompanyInfo a, footer a {
 #GlobalHeader h1 {
 	float: left;
 	margin-top: 9px;
-	margin-bottom: 0;
-	margin-right: 0;
 }
 #wikia-tools {
 	text-align: right;
 }
 #wikia-account-tools {
-	margin: 0;
 	padding: 5px 0 4px;
 }
 .loggedin #wikia-account-tools * {
@@ -216,9 +193,6 @@ header a, #CompanyInfo a, footer a {
 	position: relative;
 	left: -4px;
 	height: 30px;
-	list-style: none;
-	margin: 0;
-	padding: 0;
 }
 /* Sub-level container. */
 #GlobalNav li ul {
@@ -245,8 +219,6 @@ header a, #CompanyInfo a, footer a {
 	border-right: 1px solid #000;
 	float: left;
 	height: 32px;
-	margin: 0;
-	padding: 0;
 	position: relative;
 	white-space: nowrap;
 }
@@ -607,12 +579,10 @@ footer {
 	#homepage-feature-sidebar p {
 		font-size: 1.3em;
 		line-height: normal;
-		margin-top: 0;
 	}
 	.create-wiki-container {
 		background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;
 		min-height: 90px;
-		padding: 0;
 		text-align: center;
 	}
 	.create-wiki-container a {
@@ -622,7 +592,6 @@ footer {
 		bottom: 40px;
 		color: #FFF;
 		display: none;
-		margin: 0;
 		padding: 10px;
 		position: absolute;
 		width: 680px;
@@ -633,7 +602,6 @@ footer {
 		font-size: 2.4em;
 		font-weight: normal;
 		line-height: normal;
-		margin: 0;
 		text-shadow: 0 1px 1px #000;
 	}
 	#homepage-feature-spotlight .description p {
@@ -649,13 +617,9 @@ footer {
 		width: 700px;
 		overflow: hidden;
 	}
-	/*
-	 * description here
-	 * */
 	#homepage-feature-spotlight .nav {
 		padding: 16px 5px 0;
 		position: absolute;
-		margin: 0;
 		top: 304px;
 		z-index: 100;
 	}
@@ -741,7 +705,6 @@ footer {
 	font-weight: bold;
 }
 .isMainpage #wikia-global-stats p {
-	margin: 0;
 	font-size: .9em;
 }
 .isMainpage #wikia-global-stats p::before,
@@ -762,7 +725,6 @@ footer {
 	}
 	#wikia-global-hot-spots h1 {
 		font-size: 1.8em;
-		margin: 0;
 	}
 	#wikia-global-hot-spots p {
 		margin-top: .25em;
@@ -873,14 +835,12 @@ footer {
 	background: url(/skins/corporate/images/bg.whats-up.top.white.302x24.gif) no-repeat;
 	font-size: 1.5em;
 	padding-top: 25px;
-	margin: 0;
 }
 .isMainpage #wikia-whats-up h2, .isMainpage #wikia-whats-up p {
 	font-size: 1.2em;
 }
 .isMainpage #wikia-whats-up h2 {
 	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
-	margin: 0;
 }
 
 /* @end */
