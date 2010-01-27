@@ -405,7 +405,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 
 	protected function isManager(){
 		global $wgUser;
-		return $wgUser->isAllowed( 'CorporatePageManager' );
+		return $wgUser->isAllowed( 'corporatepagemanager' );
 	}
 
 	protected function getStaticChuteJS(){
