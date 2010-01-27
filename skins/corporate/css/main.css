@@ -533,7 +533,7 @@ footer {
 	padding: 0;
 	list-style: none;
 }
-.MainArticle-sidebar p {
+#MainArticle .MainArticle-sidebar p, #MainArticle .MainArticle-sidebar li {
 	margin: 0;
 }
 .MainArticle-sidebar .create-wiki-container {
