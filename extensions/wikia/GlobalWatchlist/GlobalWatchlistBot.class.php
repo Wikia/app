@@ -311,19 +311,29 @@ class GlobalWatchlistBot {
 				foreach( $aDigest['blogs'] as $blogTitle => $blogComments ) {
 					#$countComments = ($blogComments['comments'] >= $blogComments['own_comments']) ? intval($blogComments['comments'] - $blogComments['own_comments']) : $blogComments['comments'];
 					$countComments = $blogComments['comments'];
-					$url = $blogComments['blogpage']->getFullURL('s=dg'); // watchlist tracking, rt#33913
+					
+					$tracking_url = $blogComments['blogpage']->getFullURL('s=dg'); // watchlist tracking, rt#33913
 
 					$message = wfMsgReplaceArgs(
 						($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUser->getOption('language') ) : "$1",
 						array ( 
-							0 => $url,
+							0 => $tracking_url, //send the ugly tracking url to the plain emails
 							1 => $countComments
 						)
 					);
-
 					$sDigestsBlogs .= $message . "\n";
+
 					if( $usehtmlemail ) {
-						$sDigestsBlogsHTML .= "<a href=\"{$url}\">" . $message . "</a><br/>\n";
+						//for html emails, remake some things
+						$clean_url = $blogComments['blogpage']->getFullURL();
+						$message = wfMsgReplaceArgs(
+							($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUser->getOption('language') ) : "$1",
+							array ( 
+								0 => $clean_url, //but use the non-tracking one for html display
+								1 => $countComments
+							)
+						);
+						$sDigestsBlogsHTML .= "<a href=\"{$tracking_url}\">" . $message . "</a><br/>\n";
 					}
 
 					$iBlogsCount++;
