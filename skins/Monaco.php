@@ -1362,7 +1362,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces;
+		global $wgArticle, $wgUser, $wgLogo, $wgStylePath, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgEnableFAST_HOME2, $wgExtensionsPath, $wgAllInOne, $wgContentNamespaces, $wgEnableRecipesTweaksExt;
 		$skin = $wgUser->getSkin();
 		$namespace = $wgTitle->getNamespace();
 
@@ -1593,15 +1593,23 @@ if( $custom_user_data ) {
 <?php		wfProfileIn( __METHOD__ . '-page'); ?>
 
 	<div class="monaco_shrinkwrap" id="monaco_shrinkwrap_main">
+<?php
+wfRunHooks('MonacoBeforeWikiaPage', array($this));
+?>
 		<div id="wikia_page">
-			<?php wfRunHooks('MonacoBeforePageBar'); ?>
+<?php
+wfRunHooks('MonacoBeforePageBar', array($this));
+if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
+?>
 			<?php $this->printPageBar(); ?>
 	        	<?php echo AdEngine::getInstance()->getSetupHtml(); ?>
 					<!-- ARTICLE -->
-<?php		wfProfileIn( __METHOD__ . '-article'); ?>
+
+<?php }		wfProfileIn( __METHOD__ . '-article'); ?>
 			<div id="article" <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>>
 				<a name="top" id="top"></a>
 				<?php
+				wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed?
 				global $wgSupressSiteNotice;
 				if( empty( $wgSupressSiteNotice ) && $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 				<?php
@@ -1675,7 +1683,7 @@ if( $custom_user_data ) {
 			<!-- ARTICLE FOOTER -->
 <?php		wfProfileIn( __METHOD__ . '-articlefooter'); ?>
 <?php
-global $wgTitle, $wgOut;
+global $wgTitle, $wgOut, $wgEnableRecipesTweaksExt, $wgEnableShareFeatureExt;
 $custom_article_footer = '';
 $namespaceType = '';
 wfRunHooks( 'CustomArticleFooter', array( &$this, &$tpl, &$custom_article_footer ));
@@ -1703,8 +1711,18 @@ if ($custom_article_footer !== '') {
 	if ($namespaceType != 'none' && in_array($action, array('view', 'purge', 'edit', 'history', 'delete', 'protect'))) {
 		$nav_urls = $this->data['nav_urls'];
 
+		if(!empty($wgEnableRecipesTweaksExt)) {
+			unset($nav_urls['recentchangeslinked']);
+			unset($nav_urls['permalink']);
+		}
+
 		$actions = '';
 		if (!empty($this->data['content_actions']['history']) || !empty($nav_urls['recentchangeslinked'])) {
+
+			if(!empty($wgEnableRecipesTweaksExt)) {
+				$this->data['content_actions']['history']['text'] = wfMsg('recipes-history');
+			}
+
 			$actions =
 								'<ul id="articleFooterActions3" class="actions clearfix">' .
 								(!empty($this->data['content_actions']['history']) ? ('
@@ -1713,7 +1731,11 @@ if ($custom_article_footer !== '') {
 								(!empty($nav_urls['recentchangeslinked']) ? ('
 								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_recent_img" class="sprite" alt="' . wfMsg('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsg('recentchangeslinked') . '</a></div></li>') : '') .
 
+								((!empty($wgEnableShareFeatureExt) && !empty($wgEnableRecipesTweaksExt)) ?
+								('<li><img src="'.$wgStylePath.'/monobook/blank.gif" id="fe_sharefeature_img" class="sprite" alt="'.wfMsg('sf-link').'" /> <div><a style="cursor:pointer" id="fe_sharefeature_link">'.wfMsg('sf-link').'</a></div></li>') : '').
+
 								'</ul>';
+
 		}
 		if (!empty($nav_urls['permalink']) || !empty($nav_urls['whatlinkshere'])) {
 			$actions .=
@@ -1722,8 +1744,11 @@ if ($custom_article_footer !== '') {
 								(!empty($nav_urls['permalink']) ? ('
 								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_permalink_img" class="sprite" alt="' . wfMsg('permalink') . '" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
 
-								(!empty($nav_urls['whatlinkshere']) ? ('
+								((!empty($nav_urls['whatlinkshere']) && empty($wgEnableRecipesTweaksExt)) ? ('
 								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="' . $wgStylePath . '/monobook/blank.gif" id="fe_whatlinkshere_img" class="sprite" alt="' . wfMsg('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsg('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
+
+
+
 		}
 
 		global $wgArticle, $wgLang, $wgSitename;
@@ -1744,11 +1769,12 @@ if ($custom_article_footer !== '') {
 ?>
 								<li><a rel="nofollow" id="fe_createblog_icon" href="<?= $href ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_createblog_img" class="sprite" alt="<?= wfMsg('blog-create-next-label') ?>" /></a> <div><a id="fe_createblog_link" rel="nofollow" href="<?= $href ?>"><?= wfMsg('blog-create-next-label') ?></a></div></li>
 <?php
-		} else {
+		} else if(empty($wgEnableRecipesTweaksExt)) {
 ?>
 								<li><a rel="nofollow" id="fe_edit_icon" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_edit_img" class="sprite" alt="<?= wfMsg('edit') ?>" /></a> <div><?= wfMsg('footer_1', $wgSitename) ?> <a id="fe_edit_link" rel="nofollow" href="<?= htmlspecialchars($wgTitle->getEditURL()) ?>"><?= wfMsg('footer_1.5') ?></a></div></li>
 <?php
 		}
+
 		if(is_object($wgArticle)) {
 			$timestamp = $wgArticle->getTimestamp();
 			$lastUpdate = $wgLang->date($timestamp);
@@ -1786,6 +1812,13 @@ if ($custom_article_footer !== '') {
 <?php
 			}
 
+			if(!empty($nav_urls['whatlinkshere']) && !empty($wgEnableRecipesTweaksExt)) {
+?>
+								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_whatlinkshere_img" class="sprite" alt="<?= wfMsg('whatlinkshere') ?>" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="<?= htmlspecialchars($nav_urls['whatlinkshere']['href']) ?>"><?= wfMsg('whatlinkshere') ?></a></div></li>
+<?php
+			}
+
+
 			if(!empty($wgNotificationEnableSend)) {
 ?>
 								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" id="shareEmail_a"><?= wfMsg('footer_7') ?></a></div></li>
@@ -1793,15 +1826,13 @@ if ($custom_article_footer !== '') {
 			}
 ?>
 
-<?php global $wgEnableShareFeatureExt;
-
-	if( !empty( $wgEnableShareFeatureExt ) ) {
-?>
-
+<?php if( !empty( $wgEnableShareFeatureExt ) && empty($wgEnableRecipesTweaksExt) ) { ?>
 								<li><img src="<?= $wgStylePath ?>/monobook/blank.gif" id="fe_sharefeature_img" class="sprite" alt="<?= wfMsg('sf-link') ?>" /> <div><a style="cursor:pointer" id="fe_sharefeature_link"><?= wfMsg('sf-link'); ?></a></div></li>
-
 <?php } ?>
 							</ul>
+<?php
+			if(empty($wgEnableRecipesTweaksExt)) {
+?>
 							<div class="clearfix" id="star-rating-row">
 								<strong><?= wfMsgHtml('rate_it') ?></strong>
 <?php
@@ -1842,6 +1873,9 @@ if ($custom_article_footer !== '') {
 									<span style="<?= ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a rel="nofollow" id="unrate" href="#"><?= wfMsg( 'unrate_it' ) ?></a></span>
 								</div>
 							</div>
+<?php
+			}
+?>
 <?php
 		}
 ?>
@@ -1911,12 +1945,13 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 		<div id="widget_sidebar" class="reset widget_sidebar">
 
 			<!-- SEARCH/NAVIGATION -->
-<?php
-	global $wgSitename;
-	$msgSearchLabel = wfMsg('Tooltip-search');
-	$searchLabel = wfEmptyMsg('Tooltip-search', $msgSearchLabel) ? (wfMsg('ilsubmit').' '.$wgSitename.'...') : $msgSearchLabel;
-?>
 			<div class="widget" id="navigation_widget">
+<?php
+	if (empty($wgEnableRecipesTweaksExt)) {
+		global $wgSitename;
+		$msgSearchLabel = wfMsg('Tooltip-search');
+		$searchLabel = wfEmptyMsg('Tooltip-search', $msgSearchLabel) ? (wfMsg('ilsubmit').' '.$wgSitename.'...') : $msgSearchLabel;
+?>
 				<div id="search_box" class="color1">
 					<form action="<?php $this->text('searchaction') ?>" id="searchform">
 						<input id="search_field" name="search" type="text" value="<?= htmlspecialchars($searchLabel) ?>" maxlength="200" onfocus="sf_focus(event);" alt="<?= htmlspecialchars($searchLabel) ?>" autocomplete="off"<?= $skin->tooltipAndAccesskey('search'); ?> />
@@ -1925,6 +1960,14 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 					</form>
 				</div>
 <?php
+	}
+	else {
+		wfLoadExtensionMessages('RecipesTweaks');
+?>
+				<div class="color1" id="navigation_header"><?= wfMsg('recipes-browse') ?></div>
+<?php
+	}
+
 	$monacoSidebar = new MonacoSidebar();
 	if(isset($this->data['content_actions']['edit'])) {
 		$monacoSidebar->editUrl = $this->data['content_actions']['edit']['href'];

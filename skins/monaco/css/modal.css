@@ -202,7 +202,7 @@ h1.modalTitle div {
 
 .wpAjaxRegisterTable .mw-input-error .sprite,#userloginErrorBox .sprite,#userloginErrorBox2 .sprite,#userloginErrorBox3 .sprite
 {
-	background:transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113) no-repeat scroll  -608px 0 ;
+	background:transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100120) no-repeat scroll  -608px 0 ;
 }
 
 .wpAjaxRegisterTable .mw-progress .sprite
@@ -212,7 +212,7 @@ h1.modalTitle div {
 
 .wpAjaxRegisterTable .mw-input-ok .sprite
 { 
-	background:transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20091113) no-repeat scroll  -592px 0;
+	background:transparent url(http://images.wikia.com/common/skins/monaco/images/sprite.png?20100120) no-repeat scroll  -592px 0;
 }
 
 .wpAjaxLoginInput .pseudolabel
