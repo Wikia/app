@@ -31,7 +31,7 @@ class CorporatePageHelper{
 
 	static function jsVars($vars){
 		global $wgUser;
-		if ($wgUser->isAllowed( 'CorporatePageManager' )){
+		if ($wgUser->isAllowed( 'corporatepagemanager' )){
 			$vars['home2_hide_confirm'] = wfMsg('home2-hide-confirm');
 			$vars['home2_hide_error'] = wfMsg('home2_hide_error');
 			$vars['home2_hide_success'] = wfMsg('home2_hide_success');
@@ -43,7 +43,7 @@ class CorporatePageHelper{
 		global $wgUser,$wgExternalDatawareDB,$wgRequest;
 
 		$response = new AjaxResponse();
-		if ((!$wgUser->isAllowed( 'CorporatePageManager' )) || (!$wgRequest->wasPosted())) {
+		if ((!$wgUser->isAllowed( 'corporatepagemanager' )) || (!$wgRequest->wasPosted())) {
 			$response->addText(json_encode( array(
 					'status' => "ERROR1" )));
 			return $response;
