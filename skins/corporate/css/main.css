@@ -401,10 +401,13 @@ header a, #CompanyInfo a, footer a {
 #MainArticle h6 {
 	font-size: 1.1em;
 }
+#MainArticle ul, #MainArticle ol { padding: 0 1em; }
 #MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd {
 	margin: 1em 0;
 	line-height: 1.3em;
+	list-style-type: disc;
 }
+#MainArticle ol li { list-style-type: decimal; }
 
 #MainArticle #wikia-get-involved {
 	background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;
@@ -536,6 +539,7 @@ footer {
 }
 #MainArticle .MainArticle-sidebar p, #MainArticle .MainArticle-sidebar li {
 	margin: 0;
+	list-style-type: none;
 }
 .MainArticle-sidebar .create-wiki-container {
 	margin-bottom: 30px;
