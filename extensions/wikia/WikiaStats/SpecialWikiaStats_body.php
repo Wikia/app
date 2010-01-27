@@ -175,7 +175,7 @@ class WikiaStatsClass extends SpecialPage
 			));
 			
 			$main_select = $oTmpl->execute("main-select");
-			$wgMemc->set("wikiastatsmainmenu", $main_select, 60*60*3);
+			$wgMemc->set("wikiastatsmainmenu", $main_select, 60*60);
 		}
         
         $wgOut->addHTML( $main_select );
@@ -255,7 +255,7 @@ class WikiaStatsClass extends SpecialPage
 			));
 			$mainStats .= $oTmpl->execute("main-stats-definitions");
 
-			$wgMemc->set($memkey, $mainStats, 60*60*3);
+			$wgMemc->set($memkey, $mainStats, 60*60);
 			unset($cityList);
 			unset($table_stats);
 			unset($dateRange);
@@ -367,7 +367,7 @@ class WikiaStatsClass extends SpecialPage
 			unset($dWikians);
 			unset($dArticles);
 			#---
-			$wgMemc->set($memkey, $creationHistory, 60*60*3);
+			$wgMemc->set($memkey, $creationHistory, 60*60);
 		}
 		
 		$wgOut->addHTML( $creationHistory );
