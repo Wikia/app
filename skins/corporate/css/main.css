@@ -728,6 +728,7 @@ footer {
 	}
 	#wikia-global-hot-spots p {
 		margin-top: .25em;
+		margin-bottom: 1em;
 	}
 	#wikia-global-hot-spots li {
 		font-size: 1em; /* Reset font-sizing inheritance. */
@@ -822,6 +823,11 @@ footer {
 #wikia-whats-up h1, #wikia-whats-up h2, #wikia-whats-up p {
 	color: #323232;
 	padding: 0 15px;
+	font-weight: bold;
+}
+#wikia-whats-up p {
+	font-weight: normal;
+	margin: 1em 0;
 }
 .isMainpage #wikia-whats-up {
 	width: 302px;
