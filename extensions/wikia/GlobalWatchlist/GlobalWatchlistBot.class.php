@@ -294,7 +294,7 @@ class GlobalWatchlistBot {
 
 					//html email
 					if( $usehtmlemail ) {
-						$pagename = $aPageData['title']->getArticleName();
+						$pagename = str_replace('_', ' ', $aPageData['title']->getArticleName());
 						$sDigestsHTML .= '<li><a href="' . $url . '">' . $pagename . "</a></li>\n";
 					}
 
