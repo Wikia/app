@@ -278,6 +278,7 @@ function alterTable( $table, $column, $from_val, $to_val, $where_column = false,
 	}
 
 	if( !$options['dryrun'] ) {
+		wfWaitForSlaves( 4 );
 		$db->query("UPDATE low_priority $table SET $column=$to_val where $where_column=$from_val");
 	}
 }
