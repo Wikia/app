@@ -97,7 +97,7 @@ CreatePage.getTitleFromUrl = function( url ) {
 };
 
 $(function() {
-	if( WikiaEnableNewCreatepage ) {
+	if( window.WikiaEnableNewCreatepage ) {
 		if( $( '#dynamic-links-write-article-icon' ).exists() ) {
 			// open dialog on clicking
 			$( '#dynamic-links-write-article-icon' ).click( function(e) { CreatePage.openDialog(e, null); });
