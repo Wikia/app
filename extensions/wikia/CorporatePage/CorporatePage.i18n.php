@@ -39,13 +39,13 @@ $messages['en'] = array(
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png
 * http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
 	'home2-footer-rightcolumn'  => '* /wiki/About_Us|About Wikia
-* /wiki/Wikia:Hiring|Jobs
+* /wiki/Hiring|Jobs
 * /wiki/Special:Contact|Contact
-* /wiki/Wikia:Advertising_on_Wikia|Advertising
-* /wiki/Wikia:Press|Press
-* /wiki/Help:Contents|Help',
-	'home2-footer-bottom' => '* /wiki/Wikia:Terms_of_use|Terms of Use
-* /wiki/Wikia:Privacy_Policy|Privacy Policy
+* /wiki/Advertising|Advertising
+* /wiki/Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+	'home2-footer-bottom' => '* /wiki/Terms_of_use|Terms of Use
+* /wiki/Privacy_Policy|Privacy Policy
 * http://recipes.wikia.com/|Recipes
 * http://green.wikia.com/|Green
 * http://starwars.wikia.com/|Star Wars
@@ -55,7 +55,7 @@ $messages['en'] = array(
 * http://es.wikia.com|Espa&ntilde;ol
 * http://pl.wikia.com|Polski
 * http://fr.wikia.com|Français
-* /wiki/Hub:Wikia_languages|More...',
+* /wiki/Wikia_languages|More...',
 	'home2-create-your-own-wiki' => 'Create your own wiki and find a community of people who all love what you love.', 
 	'home2-create-button' => 'Create a wiki',
 	'home2-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
