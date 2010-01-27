@@ -288,13 +288,13 @@ class GlobalWatchlistBot {
 				foreach( $aDigest['pages'] as $aPageData ) {
 					// watchlist tracking, rt#33913
 					$url = $aPageData['title']->getFullURL('s=dgdiff' . ($aPageData['revisionId'] ? "&diff=0&oldid=" . $aPageData['revisionId'] : ""));
-					$pagename = $aPageData['title']->getText();
 					
 					//plain email
 					$sDigests .= $url . "\n";
 
 					//html email
 					if( $usehtmlemail ) {
+						$pagename = $aPageData['title']->getArticleName();
 						$sDigestsHTML .= '<li><a href="' . $url . '">' . $pagename . "</a></li>\n";
 					}
 
