@@ -72,6 +72,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 		<!--title-->
 		<title><?php $this->text('pagetitle') ?></title>
 		<!--csslinks-->
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.0.0/build/cssreset/reset-min.css">
 		<?php echo $this->getStaticChuteCSS(); ?>
 		<?php $this->html('csslinks') ?>
 		<!--[if lt IE 8]>
