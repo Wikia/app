@@ -52,7 +52,7 @@ EditEnhancements = function() {
 		Dom.setStyle('wpSummaryEnhanced', 'width', newSummaryWidth + 'px');
 
 		// RT#36994
-		if (typeof window.RTE !='undefined') {
+		if (typeof window.RTE !='undefined' && typeof window.RTE.instance == 'object') {
 			RTE.instance.fire('resize');
 		}
 	}
