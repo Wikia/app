@@ -54,7 +54,7 @@ body {
 }
 
 /* Contain floats. */
-.clearfix {
+.clearfix::after {
 	clear: both;
 	content: ".";
 	display: block;
