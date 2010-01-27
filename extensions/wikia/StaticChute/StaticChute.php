@@ -195,6 +195,7 @@ class StaticChute {
         		'common/shared.css',
 			'monaco/css/monobook_modified.css',
 			'monaco/css/reset_modified.css',
+			'common/wikia-ui.css',
 			'monaco/css/root.css',
 			'monaco/css/header.css',
 			'monaco/css/article.css',
