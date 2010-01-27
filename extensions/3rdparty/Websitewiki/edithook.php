@@ -7,17 +7,15 @@ if( !defined( 'MEDIAWIKI' ) )
 }
 
 function fnwswEditHook($ea) { 
-    global $wgOut;
+    global $wgOut, $exDomainList;
 
     $newpage = $ea->mArticle->mTitle->mTextform;
 
-    $title = Title::newFromUrl($ea->mArticle->mTitle->mUrlform);
-
-    if(is_object($title) && $title->exists()) {
+    if($ea->mArticle->exists()) {
       return true;
     }
 
-    if($ea->mArticle->mTitle->mNamespace == NS_MAIN && eregi("^[0-9a-zA-Z-]+\.(de$)|(at$)|(ch$)|(pl$)", $newpage)) {
+    if($ea->mArticle->mTitle->mNamespace == NS_MAIN && eregi($exDomainList, $newpage)) {
 
 	$wgOut->redirect( Title::newFromText( 'NeueWebsite', NS_SPECIAL )->getFullURL( "param=$newpage" ), 307 );
 
