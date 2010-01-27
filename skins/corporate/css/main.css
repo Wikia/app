@@ -84,6 +84,9 @@ a:hover {
 	border: 1px solid #8d9da7;
 	color: #000;
 }
+.dark_text_1, .dark_text_2 {
+	color: #002F55;
+}
 #MainArticle, #wikia-create-wiki .wikia_button span, header {
 	color: #333;
 }
@@ -131,6 +134,9 @@ header a, #CompanyInfo a, footer a {
 #GlobalHeader h1 {
 	float: left;
 	margin-top: 9px;
+}
+#GlobalHeader h1 img {
+	border: 0;
 }
 #wikia-tools {
 	text-align: right;
@@ -371,6 +377,21 @@ header a, #CompanyInfo a, footer a {
 }
 #MainArticle h1 {
 	font-size: 2em;
+}
+#MainArticle h2 {
+	font-size: 1.9em;
+}
+#MainArticle h3 {
+	font-size: 1.7em;
+}
+#MainArticle h4 {
+	font-size: 1.5em;
+}
+#MainArticle h5 {
+	font-size: 1.3em;
+}
+#MainArticle h6 {
+	font-size: 1.1em;
 }
 #MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd {
 	line-height: 1.3em;
@@ -851,9 +872,9 @@ footer {
 
 /* @end */
 
-/* @group Temporary development stuff. */
+/* @group Specific MediaWiki overrides */
 
-.printfooter {
+.printfooter, .emptymwmsg {
 	display: none;
 }
 
