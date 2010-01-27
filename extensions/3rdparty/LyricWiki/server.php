@@ -1664,7 +1664,7 @@ function lw_createPage($pageTitle, $content, $summary="Page created using [[Lyri
 	$wgTitle = $pageTitle; // must be done after lw_initAdvanced()
 
 	// Some of this is used in Wiki.php and EditPage.php to do an edit:
-	$article = $mediaWiki->articleFromTitle($pageTitle);
+	$article = $mediaWiki->articleFromTitle(Title::newFromText($pageTitle));
 	$editor = new EditPage($article);
 
 	# These fields need to be checked for encoding.
