@@ -3,8 +3,9 @@
 /**
  * @package MediaWiki
  * @ingroup WikiFactory
- *
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia.com> for Wikia Inc.
+ * @copyright (C) 2010, Wikia Inc.
+ * @licence GNU General Public Licence 2.0 or later
  */
 
 # use tables
