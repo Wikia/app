@@ -329,11 +329,11 @@ class GlobalWatchlistBot {
 						$message = wfMsgReplaceArgs(
 							($countComments != 0) ? $this->getLocalizedMsg('globalwatchlist-blog-page-title-comment', $oUser->getOption('language') ) : "$1",
 							array ( 
-								0 => $clean_url, //but use the non-tracking one for html display
+								0 => "<a href=\"{$tracking_url}\">" . $clean_url . "</a>", //but use the non-tracking one for html display
 								1 => $countComments
 							)
 						);
-						$sDigestsBlogsHTML .= "<a href=\"{$tracking_url}\">" . $message . "</a><br/>\n";
+						$sDigestsBlogsHTML .= $message . "<br/>\n";
 					}
 
 					$iBlogsCount++;
