@@ -35,17 +35,17 @@ $messages['en'] = array(
 *http://recipes.wikia.com/|Recipes Wiki|Mmmm... delicious cookies!|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|Serious gaming for the serious gamer! Check it out!|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
 *http://answers.wikia.com/|Wikianswers|Ask questions and help to craft the best answer at Wikianswers.|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
-	'home2-footer-middlecolumn' => '* http://www.wikia.com/wiki/Category:Hubs|Become a Facebook fan|File:Icon.footer.facebook.32x32.png
-* http://www.wikia.com/wiki/Category:Hubs|Follow us on Twitter|File:Icon.footer.twitter.32x32.png
-* http://www.wikia.com/wiki/Category:Hubs|Read our blog|File:Icon.footer.wikia.32x32.png',
+	'home2-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png
+* http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
 	'home2-footer-rightcolumn'  => '* /wiki/About_Us|About Wikia
-* http://www.wikia.com/wiki/Category:Hubs|Jobs
-* http://www.wikia.com/wiki/Category:Hubs|Contact
-* http://www.wikia.com/wiki/Advertising|Advertising
-* http://www.wikia.com/wiki/Press|Press
-* http://www.wikia.com/wiki/Help|Help',
-	'home2-footer-bottom' => '* http://www.wikia.com/wiki/Category:Hubs|Terms of Use
-* http://www.wikia.com/wiki/Category:Hubs|Privacy Policy
+* /wiki/Wikia:Hiring|Jobs
+* /wiki/Special:Contact|Contact
+* /wiki/Wikia:Advertising_on_Wikia|Advertising
+* /wiki/Wikia:Press|Press
+* /wiki/Help:Contents|Help',
+	'home2-footer-bottom' => '* /wiki/Wikia:Terms_of_use|Terms of Use
+* /wiki/Wikia:Privacy_Policy|Privacy Policy
 * http://recipes.wikia.com/|Recipes
 * http://green.wikia.com/|Green
 * http://starwars.wikia.com/|Star Wars
@@ -55,7 +55,7 @@ $messages['en'] = array(
 * http://es.wikia.com|Espa&ntilde;ol
 * http://pl.wikia.com|Polski
 * http://fr.wikia.com|Français
-* Hub:Wikia_languages|More...',
+* /wiki/Hub:Wikia_languages|More...',
 	'home2-create-your-own-wiki' => 'Create your own wiki and find a community of people who all love what you love.', 
 	'home2-create-button' => 'Create a wiki',
 	'home2-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
