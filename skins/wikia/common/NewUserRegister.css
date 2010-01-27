@@ -105,7 +105,6 @@ form#userajaxloginform2 .plain {
 #userloginInnerErrorBox,
 #userloginInnerErrorBox2 {
 	color:black;
-	margin-left: 20px;
 }
 
 #userajaxloginform2 {
@@ -197,3 +196,21 @@ div#userlogin .inputError {
 	color: red;
 }
 
+/* @group Corporate skin */
+.skin-Corporate label {
+	font-weight: bold;
+	font-size: 1.4em;
+	line-height: normal;
+}
+.skin-Corporate #userloginSpecial input {
+	margin-bottom: 5px;
+}
+.skin-Corporate .announcementHeader {
+	font-size: 1.5em;
+	line-height: normal;
+}
+.skin-Corporate .announcementText {
+	font-size: 1.3em;
+	line-height: normal;
+}
+/* @end */
