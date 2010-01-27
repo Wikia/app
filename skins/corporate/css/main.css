@@ -60,6 +60,7 @@ a:hover {
 }
 h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
+	line-height: normal;
 }
 #MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd, #MainArticle td,
 #wikia-global-hot-spots p, #CompanyInfo a, #wikia-create-wiki {
@@ -517,21 +518,21 @@ footer {
 	border-width: 1px;
 	float: right;
 	margin-left: 20px;
+	margin-top: 1em;
 	width: 218px;
 }
 .MainArticle-sidebar > span {
 	display: block;
 	padding: 10px;
 }
-.MainArticle-sidebar h3 {
-	font-size: 1.5em;
-	line-height: normal;
-	margin: 10px 0 0;
-}
 .MainArticle-sidebar ul {
 	margin: 0 0 30px;
 	padding: 0;
 	list-style: none;
+}
+#MainArticle .MainArticle-sidebar h3 {
+	font-size: 1.5em;
+	margin: 10px 0 0;
 }
 #MainArticle .MainArticle-sidebar p, #MainArticle .MainArticle-sidebar li {
 	margin: 0;
