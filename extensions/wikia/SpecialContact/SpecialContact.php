@@ -226,7 +226,9 @@ function wfSpecialContactSetup() {
 				'contactsubmitcomplete' => 'Thank you for contacting Wikia.',
 				'contactrealname' => 'Your name',
 				'contactwikiname' => 'Name of the wiki',
-				'contactintro' => 'Please read the <a href=http://www.wikia.com/wiki/Report_a_problem>Report a problem</a> page for information on reporting problems and using this contact form.<p />You can contact the Wikia community at the <a href=http://www.wikia.com/wiki/Community_portal>Community portal</a> and report software bugs at <a href=http://bugs.wikia.com>bugs.wikia.com</a>. <p>If you prefer your message to <a href=http://www.wikia.com/wiki/Wikia>Wikia</a> to be private, please use the contact form below. <i>All fields are optional</i>.',
+				'contactintro' => '<p>Contact <a href="http://www.wikia.com/wiki/Wikia:Staff">Wikia Staff</a> using this form. All fields are optional, except the email address.</p>
+<p>You can also <a href="http://help.wikia.com/wiki/Help:ProblemReports">report a problem to the wiki\'s editors</a> or contact the Wikia community on the <a href="http://www.wikia.com/wiki/Forum:Index">Central Wikia Forums</a>.</p>
+<p>If you prefer to use email, you can contact us at <a href="mailto:community@wikia.com">community@wikia.com</a></p>',
 			) );
 		}
 
