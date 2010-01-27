@@ -228,6 +228,7 @@ class StaticChute {
 		);
 		
 		$this->config['corporate_page_css'] = array(		
+			'common/yui300css-reset-min.css',
 			'common/wikia-ui.css',	
 			'common/shared.css',
 			'corporate/css/main.css',
