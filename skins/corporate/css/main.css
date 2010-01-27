@@ -38,7 +38,7 @@ body {
 .editsection { display: none; }
 
 #MainContent {
-	background: url(/skins/corporate/images/bg.page.blue.gif);
+	background: url(http://images.wikia.com/common/skins/corporate/images/bg.page.blue.gif);
 	padding: 20px 0;
 }
 
@@ -127,7 +127,7 @@ header a, #CompanyInfo a, footer a {
 
 /* @group Global header specifics. */
 #GlobalHeader {
-	background: #FFF url(/skins/corporate/images/bg.global.header-nav.sprite.png) repeat-x 624px -10px;
+	background: #FFF url(http://images.wikia.com/common/skins/corporate/images/bg.global.header-nav.sprite.png) repeat-x 624px -10px;
 	height: 54px;
 }
 
@@ -157,7 +157,7 @@ header a, #CompanyInfo a, footer a {
 	display: none;
 }
 #wikia-search {
-	background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -10px;
+	background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -10px;
 	border: 0;
 	font-size: 1.6em;
 	height: 20px;
@@ -185,7 +185,7 @@ header a, #CompanyInfo a, footer a {
 /* @group Global navigation specifics. */
 
 #GlobalNav {
-	background: #333 url(/skins/corporate/images/bg.global.header-nav.sprite.png) repeat-x 0 -84px;
+	background: #333 url(http://images.wikia.com/common/skins/corporate/images/bg.global.header-nav.sprite.png) repeat-x 0 -84px;
 	font-size: 1.7em;
 	height: 34px;
 }
@@ -202,7 +202,7 @@ header a, #CompanyInfo a, footer a {
 }
 /* Sub-level container. */
 #GlobalNav li ul {
-	background: #FFF url(skins/corporate/images/bg.globalnav.subnav.gray.5x83.png) left bottom repeat-x;
+	background: #FFF url(http://images.wikia.com/common/skins/corporate/images/bg.globalnav.subnav.gray.5x83.png) left bottom repeat-x;
 	border: 1px solid #FFF;
 	display: none;
 	height: auto;
@@ -266,7 +266,7 @@ header a, #CompanyInfo a, footer a {
 
 /* Top-level link. */
 #GlobalNav a {
-	background: url(/skins/corporate/images/globalnav.arrow.gray.20x100.png) 100% 14px no-repeat;
+	background: url(http://images.wikia.com/common/skins/corporate/images/globalnav.arrow.gray.20x100.png) 100% 14px no-repeat;
 	color: #FFF;
 	display: inline-block;
 	font-weight: 600;
@@ -420,7 +420,7 @@ header a, #CompanyInfo a, footer a {
 }
 
 #MainArticle #wikia-get-involved {
-	background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;
+	background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;
 	padding-bottom: 125px;
 	margin-bottom: 0;
 }
@@ -591,7 +591,7 @@ footer {
 		padding: 0;
 	}
 	#homepage-feature-sidebar h2 {
-		background: url(/skins/corporate/images/bg.separators.sprite.png) no-repeat -10px -40px;
+		background: url(http://images.wikia.com/common/skins/corporate/images/bg.separators.sprite.png) no-repeat -10px -40px;
 		font-size: 1.8em;
 		line-height: normal;
 		margin: 10px 0 0;
@@ -602,7 +602,7 @@ footer {
 		line-height: normal;
 	}
 	.create-wiki-container {
-		background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;
+		background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -122px;
 		min-height: 90px;
 		text-align: center;
 	}
@@ -632,7 +632,7 @@ footer {
 		text-shadow: 0 1px 1px #000;
 	}
 	#homepage-feature-spotlight {
-		background: url(/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;
+		background: url(http://images.wikia.com/common/skins/corporate/images/bg.homepage.feature.png) center bottom no-repeat;
 		position: relative;
 		height: 350px;
 		width: 700px;
@@ -649,7 +649,7 @@ footer {
 		opacity: .5;
 	}
 	#homepage-feature-spotlight .selected {
-		background: url(/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
+		background: url(http://images.wikia.com/common/skins/corporate/images/misc.wikiaglobal.sprite.png) no-repeat -10px -56px;
 	}
 	#homepage-feature-spotlight .selected img {
 		opacity: 1;
@@ -710,7 +710,7 @@ footer {
 }
 
 .isMainpage #wikia-global-stats {
-	background: #fff url(/skins/corporate/images/bg.separators.sprite.png) no-repeat -20px 36px;
+	background: #fff url(http://images.wikia.com/common/skins/corporate/images/bg.separators.sprite.png) no-repeat -20px 36px;
 	margin-bottom: 25px;
 	padding-bottom: 20px;
 	text-align: center;
@@ -852,14 +852,14 @@ footer {
 }
 .isMainpage #wikia-whats-up {
 	width: 302px;
-	background: url(/skins/corporate/images/bg.whats-up.middle.white.302x5.gif) repeat-y;
+	background: url(http://images.wikia.com/common/skins/corporate/images/bg.whats-up.middle.white.302x5.gif) repeat-y;
 }
 .isMainpage #wikia-whats-up .shrinkwrap {
 	background: url(/skins/corporate/images/bg.whats-up.bottom.white.302x44.gif) no-repeat bottom;
 	padding-bottom: 45px;
 }
 .isMainpage #wikia-whats-up h1 {
-	background: url(/skins/corporate/images/bg.whats-up.top.white.302x24.gif) no-repeat;
+	background: url(http://images.wikia.com/common/skins/corporate/images/bg.whats-up.top.white.302x24.gif) no-repeat;
 	font-size: 1.5em;
 	padding-top: 25px;
 }
