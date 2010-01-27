@@ -80,17 +80,30 @@ class CorporatePageHelper{
 		wfProfileIn(__METHOD__);
 
 		switch ($title->getNamespace()) {
-			case NS_HELP:
+			case NS_USER:
 			case NS_USER_TALK:
+			case NS_FILE:
+			case NS_FILE_TALK:
+			case NS_HELP:
+			case NS_HELP_TALK:
+			case NS_CATEGORY_TALK:
+			case 110: //NS_FORUM
+			case 111: //NS_FORUM_TALK
 			case 150: //NS_HUB
+			case 151: //NS_HUB_TALK
+			case 400: //NS_VIDEO
+			case 401: //NS_VIDEO_TALK
 			case 500: //NS_BLOG_ARTICLE
 			case 501: //NS_BLOG_ARTICLE_TALK
 			case 502: //NS_BLOG_LISTING
 			case 503: //NS_BLOG_LISTING_TALK
-				$redirect = 'http://community.wikia.com/wiki/' . $title->prefix($title->getPartialURL());
+				if (!$title->exists()) {
+					$redirect = 'http://community.wikia.com/wiki/' . $title->prefix($title->getPartialURL());
+				}
 				break;
 
 			case NS_PROJECT:
+			case NS_PROJECT_TALK:
 				//"Project" namespace hardcoded because MW will rename it to name of redirecting page - not the destination wiki
 				$redirect = 'http://community.wikia.com/wiki/Project:' . $title->getPartialURL();
 				break;
@@ -99,6 +112,15 @@ class CorporatePageHelper{
 			case NS_MAIN:
 				if (!$title->exists()) {
 					$redirect = 'http://www.wikia.com/wiki/Special:Search?search=' . wfUrlencode($title->getText());
+				}
+				break;
+
+			case NS_TALK:
+				$t = $title->getSubjectPage();
+				if ($t->exists()) {
+					$redirect = 'http://www.wikia.com/wiki/' . $t->getPartialURL();
+				} else {
+					$redirect = 'http://www.wikia.com/wiki/Special:Search?search=' . wfUrlencode($t->getText());
 				}
 				break;
 		}
