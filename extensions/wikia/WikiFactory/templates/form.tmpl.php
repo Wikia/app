@@ -11,7 +11,7 @@
 	display: inline;
 	margin: 0;
 	text-align: center;
-	padding: 0.2em 1em 0.2em 1em;
+	padding: 0.2em 0.4em 0.2em 0.4em;
 	width: 100%;
 }
 #wiki-factory ul.tabs li.active {
