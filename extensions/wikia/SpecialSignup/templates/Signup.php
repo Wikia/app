@@ -41,25 +41,17 @@ class SignupTemplate extends QuickTemplate {
 <td width="55%" style="border-right: 1px solid #AAA; vertical-align: top;">
 <div class="loginHeader dark_text_1"><?php $this->msg('create-account-new') ?></div>
 <div id="userloginErrorBox">
-	<table>
-	<tr>
-	<td style="vertical-align:top;">
-	<span style="position: relative; top: -1px;"><img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span>
-	</td>
-	<td>
-	<div id="userloginInnerErrorBox">
 		<?php if( ($this->data['messagetype'] == 'error') && ($this->data['actiontype'] == 'signup') ) {
 			$wgOut->addHTML('<style type="text/css">
 				#userloginErrorBox {
 					display: block !important;
 				}				
 			</style>');
-			$this->html('message');
 		} ?>
-	</div>
-	</td>
-	</tr>
-	</table>
+		<img alt="status" class="icon-sprite alert" src="<?= $wgStylePath ?>/monobook/blank.gif"/>
+		<span id="userloginInnerErrorBox">
+			<?php $this->html('message'); ?>
+		</span>
 </div>
 <div id="userlogin<?php if ($this->data['ajax']) { ?>Ajax<?php } ?>">
 <form name="userlogin2" id="userlogin2" method="post" action="<?php $this->text('actioncreate') ?>" onsubmit="return UserRegistration.checkForm()">
@@ -80,21 +72,21 @@ class SignupTemplate extends QuickTemplate {
 		</colgroup>
 		<tr>
 			<td class="mw-input" id="wpNameTD">
-				<label for='wpName2'><?php $this->msg('yourname') ?></label><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
+				<label for='wpName2'><?php $this->msg('yourname') ?></label> <img alt="status" src="<?= $wgStylePath ?>/monobook/blank.gif"/><br/>
 				<input type='text' class='loginText' name="wpName" id="wpName2" value="<?php $this->text('name') ?>" size='20' />
 			</td>
 		</tr>
 		<tr>
 			<?php if( $this->data['useemail'] ) { ?>
 			<td class="mw-input" id="wpEmailTD">
-				<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
+				<label for='wpEmail'><?php $this->msg('signup-mail') ?></label><a id="wpEmailInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a> <img alt="status" src="<?= $wgStylePath ?>/monobook/blank.gif"/><br/>
 				<input type='text' class='loginText' name="wpEmail" id="wpEmail" value="<?php $this->text('email') ?>" size='20' />
 			</td>
 			<?php } ?>
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpPasswordTD">
-				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
+				<label for='wpPassword2'><?php $this->msg('yourpassword') ?></label> <img alt="status" src="<?= $wgStylePath ?>/monobook/blank.gif"/><br/>
 				<input type='password' class='loginPassword' name="wpPassword" id="wpPassword2" value="" size='20' />
 			</td>
 		</tr>
@@ -115,7 +107,7 @@ class SignupTemplate extends QuickTemplate {
 	<?php } ?>
 		<tr>
 			<td class="mw-input" id="wpRetypeTD">
-				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
+				<label for='wpRetype'><?php $this->msg('yourpasswordagain') ?></label> <img alt="status" src="<?= $wgStylePath ?>/monobook/blank.gif"/><br/>
 				<input type='password' class='loginPassword' name="wpRetype" id="wpRetype" value="" size='20' />
 			</td>
 		</tr>
@@ -165,7 +157,7 @@ class SignupTemplate extends QuickTemplate {
 		</tr>
 		<tr>
 			<td class="mw-input" id="wpBirthDateTD">
-				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span><br/>
+				<label for='wpBirthYear'><?php $this->msg('yourbirthdate') ?></label><a id="wpBirthDateInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a> <img alt="status" src="<?= $wgStylePath ?>/monobook/blank.gif"/><br/>
 				<select name="wpBirthYear" id="wpBirthYear">
 					<option value="-1"><?php $this->msg('userlogin-choose-year') ?></option>
 					<?php
@@ -202,7 +194,7 @@ class SignupTemplate extends QuickTemplate {
 	<?php if($this->haveData('captcha')) { ?>
 		<tr>
 			<td>
-				<div id="blurryword"><span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a><span>&nbsp;<img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span></div>
+				<div id="blurryword"><span class="pseudolabel"><?php $this->msg( 'usercaptcha' ) ?></span><a id="wpUserCaptchaInfo" href="#"><?php $this->msg( 'signup-moreinfo' ) ?></a> <img alt="status" src="<?= $wgStylePath ?>/monobook/blank.gif"/></div>
 			</td>
 
 		</tr>
@@ -442,14 +434,15 @@ class SignupTemplate extends QuickTemplate {
 		$('#termsOfUse').bind('click', function(){ WET.byStr('signupActions/signup/termsofuse'); } );
 
 		UserRegistration.toggleError = function(id, show) {
+			console.log("id: " + id + " show: " + show);
 			if (show == 'ok') {
-				$('#' + id).addClass('mw-input-ok').removeClass('mw-input-error mw-progress');
+				$('#' + id + ' img:first').removeClass().addClass('icon-sprite ok');
 			} else if (show == 'clear') {
-				$('#' + id).removeClass('mw-input-ok mw-input-error mw-progress');
+				$('#' + id + ' img:first').removeClass();
 			} else if (show == 'progress') {
-				$('#' + id).addClass('mw-progress').removeClass('mw-input-ok mw-input-error');
+				$('#' + id + ' img:first').removeClass().addClass('icon-sprite progress');
 			} else {
-				$('#' + id).addClass('mw-input-error').removeClass('mw-input-ok mw-progress');
+				$('#' + id + ' img:first').removeClass().addClass('icon-sprite alert');
 			}
 		}
 
@@ -577,25 +570,17 @@ class SignupTemplate extends QuickTemplate {
 	</div>
 
 	<div id="userloginErrorBox2">
-		<table>
-			<tr>
-				<td style="vertical-align:top;">
-					<span style="position: relative; top: -1px;"><img alt="status" class="sprite" src="<?= $wgStylePath ?>/monobook/blank.gif"/></span>
-				</td>
-				<td>
-					<div id="userloginInnerErrorBox2">
 		<?php if( ($this->data['messagetype'] == 'error') && ($this->data['actiontype'] == 'login') ) {
 			$wgOut->addHTML('<style type="text/css">
 				#userloginErrorBox2 {
 					display: block !important;
 				}				
 			</style>');
-			$this->html('message');
 		} ?>
-					</div>
-				</td>
-			</tr>
-		</table>
+		<img alt="status" class="icon-sprite alert" src="<?= $wgStylePath ?>/monobook/blank.gif"/>
+		<span id="userloginInnerErrorBox2">
+			<? $this->html('message'); ?>
+		</span>
 	</div>
 	<label for="wpName2Ajax" style="display: block; font-weight: bold;"><?= wfMsg("yourname") ?></label>
 	<table>
