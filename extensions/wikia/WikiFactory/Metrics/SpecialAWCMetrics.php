@@ -98,7 +98,7 @@ class WikiMetrics {
 			return;
 		}
 		
-		if ( !in_array( 'wikifactory', $wgUser->getGroups() ) ) {
+		if ( !$wgUser->isAllowed('wikifactory') ) {
 			$wgOut->redirect( $this->mTitle->getLocalURL() );
 			return;
 		}
