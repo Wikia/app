@@ -22,25 +22,29 @@ $(function() {
 	$('.ajaxLogin').click(openLogin);
 	$(document).ajaxSend(startAjax).ajaxComplete(stopAjax);
 	setupVoting();
-	$(".wikiaPlaceholder .wikia_button").removeAttr("onclick");
-	$(".wikiaPlaceholder .wikia_button").click(function(e){
-		if( e.target.nodeName == "SPAN" ){
-			showComboAjaxForPalceHolder($(e.target.parentNode).attr('id'),true);
-		}
-		else
-		{
-			showComboAjaxForPalceHolder($(e.target).attr('id'),true);
-		}
-		return false;
-	});
-	$("#ca-viewsource").click(function(e){
-		showComboAjaxForPalceHolder(false, "", function(){
-			AjaxLogin.doSuccess = function() {
-				window.location.href = e.target.href;
+	
+	if(!((typeof wgIsLogin == 'undefined') || (wgIsLogin) || (typeof wgComboAjaxLogin == 'undefined') || (!wgComboAjaxLogin) )) {	
+		$(".wikiaPlaceholder .wikia_button").removeAttr("onclick");
+		$(".wikiaPlaceholder .wikia_button").click(function(e){
+			if( e.target.nodeName == "SPAN" ){
+				showComboAjaxForPalceHolder($(e.target.parentNode).attr('id'),true);
 			}
+			else
+			{
+				showComboAjaxForPalceHolder($(e.target).attr('id'),true);
+			}
+			return false;
 		});
-		return false;
-	});
+		
+		$("#ca-viewsource").click(function(e){
+			showComboAjaxForPalceHolder(false, "", function(){
+				AjaxLogin.doSuccess = function() {
+					window.location.href = e.target.href;
+				}
+			});
+			return false;
+		});
+	}
 });
 
 //Ajax Wait Indicator
