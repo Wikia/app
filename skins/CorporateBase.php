@@ -48,7 +48,7 @@ class SkinCorporateBase extends SkinTemplate {
 
 		$data['createwiki'] = array(
 			'href' => Skin::makeSpecialUrl('CreateWiki'),
-			'text' => wfMsg('home2-create-button')
+			'text' => wfMsg('corporatepage-create-button')
 		);
 						
 		return array_merge(parent::buildPersonalUrls(),$data);
@@ -149,14 +149,14 @@ class CorporateBaseTemplate extends QuickTemplate {
 							<a id="wikia-create-account-link" href="<?php echo $this->data['personal_urls']['register']['href']; ?>"><?php print wfMsg('nologinlink'); ?></a>
 						<?php else: ?>
 							<strong><?php echo $this->data['username']; ?></strong>
-							<a href="<?php echo $this->data['personal_urls']['watchlist']['href']; ?>"><?php echo wfMsg('home2-watchlist'); ?></a>
+							<a href="<?php echo $this->data['personal_urls']['watchlist']['href']; ?>"><?php echo wfMsg('corporatepage-watchlist'); ?></a>
 							<a id="wikia-login-link" href="<?php echo $this->data['personal_urls']['logout']['href']; ?>"><?php print wfMsg('logout'); ?></a>
 						<?php endif;?>
 					</p>
 					<form id="wikia-search-form" name="wikia_search_form" action="<?php echo $this->data['personal_urls']['search']['href']; ?>" method="get">
 						<fieldset>
-							<legend><?php print wfMsg('home2-find-a-wiki') ?></legend>
-							<input type="text" class="SearchField<?php print (wfMsg('home2-find-a-wiki') === $this->getSearchValue()) ? ' placeholder' : '' ;?>" id="wikia-search" name="search" title="<?php print wfMsg("home2-search-title"); ?>" value="<?php print $this->getSearchValue(); ?>">
+							<legend><?php print wfMsg('corporatepage-find-a-wiki') ?></legend>
+							<input type="text" class="SearchField<?php print (wfMsg('corporatepage-find-a-wiki') === $this->getSearchValue()) ? ' placeholder' : '' ;?>" id="wikia-search" name="search" title="<?php print wfMsg("corporatepage-search-title"); ?>" value="<?php print $this->getSearchValue(); ?>">
 							<input type="submit" id="wikia-search-submit" name="wikia_search_submit" value="Search">
 						</fieldset>
 					</form>
@@ -170,7 +170,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 ?>
 		<nav id="GlobalNav">
 			<div class="shrinkwrap">
-				<h1 id="globalnav-headline"><?php print wfMsg('home2-global-nav-headline'); ?></h1>
+				<h1 id="globalnav-headline"><?php print wfMsg('corporatepage-global-nav-headline'); ?></h1>
 				<ul class="nav-top-level">
 					<?php foreach ($this->getGlobalNav() as $key => $value): ?>
 						<li<?php print $value['islast'] ? ' class="last"':'';?> <?php print $value['isfirst'] ? ' class="first"':'';?>>
@@ -178,10 +178,10 @@ class CorporateBaseTemplate extends QuickTemplate {
 							<ul class="nav-sub-level">
 								<?php foreach ($value['sub'] as $key2 => $value2): ?>
 									<li<?php print ($key2 == 0) ? ' class="first"':'';?> <?php print ($key2 == (count($value['sub'])-1)) ? ' class="last"':'';?> >
-										<?php if (!empty($value2['favicon'])) { ?><img src="<?php print $value2['favicon'] ?>" alt=""><?php } ?>
+										<?php if (!empty($value2['favicon'])) { ?><img <?php echo ($value2['param'] == "no-icon" ? 'style="visibility: hidden"':''); ?> src="<?php print $value2['favicon'] ?>" alt=""><?php } ?>
 										<a id="nav_sub_link_<?php print $key + 1 ?>_<?php print $key2 + 1 ?>" class="nav-sub-link" href="<?php print $value2['href'] ?>">
 											<?php print $value2['title'] ?>
-										</a>
+										</a> 
 									</li>
 								<?php endforeach; ?>
 							</ul>
@@ -206,9 +206,9 @@ class CorporateBaseTemplate extends QuickTemplate {
 ?>
 		<section id="CompanyInfo" class="clearfix">
 			<div class="shrinkwrap">
-			<h1 id="company-info-headline"><?php print wfMsg('home2-company-info-headline') ;?> </h1>
+			<h1 id="company-info-headline"><?php print wfMsg('corporatepage-company-info-headline') ;?> </h1>
 				<section id="wikia-international">
-					<h1><?php print wfMsg('home2-wikia-international') ?></h1>
+					<h1><?php print wfMsg('corporatepage-wikia-international') ?></h1>
 					<ul>
 					<?php foreach ($this->getFooterLeftcolumn() as $key => $value): ?>
 						<li id="wikia-international-<?php print $key;?>"<?php print $value['islast'] ? ' class="last"':'';?> <?php print $value['isfirst'] ? ' class="first"':'';?>>
@@ -219,18 +219,18 @@ class CorporateBaseTemplate extends QuickTemplate {
 				</section>
 
 				<section id="wikia-in-the-know">
-					<h1><?php print wfMsg('home2-in-the-know') ?></h1>
+					<h1><?php print wfMsg('corporatepage-in-the-know') ?></h1>
 					<ul>
-					<?php foreach($this->parseMsgImg('home2-footer-middlecolumn') as $key => $value): ?>
+					<?php foreach($this->parseMsgImg('corporatepage-footer-middlecolumn') as $key => $value): ?> 
 						<li id="wikia-in-the-know-<?php print $key;?>">
-							<a href="<?php echo $value['href']; ?>" style="background-image:url(<?php print $value['imagename'] ?>);"><?php echo $value['title']; ?></a>
+							<a <?php echo $value['param'] == "new-window" ? " target='_blank' ":"" ?> href="<?php echo $value['href']; ?>" style="background-image:url(<?php print $value['imagename'] ?>);"><?php echo $value['title']; ?></a>
 						</li>
 					<?php endforeach; ?>
 					</ul>
 				</section>
 
 				<section id="wikia-more-links">
-					<h1><?php print wfMsg('home2-more-link') ?></h1>
+					<h1><?php print wfMsg('corporatepage-more-link') ?></h1>
 					<ul>
 					<?php foreach ($this->getFooterRightcolumn() as $key => $value): ?>
 						<li id="wikia-more-links-<?php print $key;?>"><a href="<?php print $value['href'] ?>"><?php print $value['title'] ?></a></li>
@@ -258,13 +258,13 @@ class CorporateBaseTemplate extends QuickTemplate {
 		<footer>
 			<div class="shrinkwrap">
 				<p id="wikia-create-wiki">
-					<?php print wfMsg('home2-create-your-own-wiki') ?>
+					<?php print wfMsg('corporatepage-create-your-own-wiki') ?>
 					<a href="<?php echo $this->data['personal_urls']['createwiki']['href']; ?>" class="wikia_button secondary">
 						<span><?php echo $this->data['personal_urls']['createwiki']['text']; ?></span>
 					</a>
 				</p>
 
-				<p id="copyright"><?php print wfMsg('home2-rights',date('Y')) ?> </p>
+				<p id="copyright"><?php print wfMsg('corporatepage-rights',date('Y')) ?> </p>
 
 				<ul id="SupplementalNav">
 					<?php $footerBottom = $this->getFooterBottom(); ?>
@@ -291,34 +291,34 @@ class CorporateBaseTemplate extends QuickTemplate {
 	}
 
 	protected function getGlobalNav(){
-		$message = $this->parseMsg('home2-sidebar',true);
+		$message = $this->parseMsg('corporatepage-sidebar',true);
 		return $message;
 	}
 
 	protected function getFooterLeftcolumn(){
-		$message = $this->parseMsg('home2-footer-leftcolumn');
+		$message = $this->parseMsg('corporatepage-footer-leftcolumn');
 		return $message;
 	}
 
 	protected function getFooterRightcolumn(){
-		$message = $this->parseMsg('home2-footer-rightcolumn');
+		$message = $this->parseMsg('corporatepage-footer-rightcolumn');
 		return $message;
 	}
 
 	protected function getFooterMiddlecolumn(){
-		$message = $this->parseMsg('home2-footer-middlecolumn');
+		$message = $this->parseMsg('corporatepage-footer-middlecolumn');
 		return $message;
 	}
 
 	protected function getFooterBottom(){
-		$message = $this->parseMsg('home2-footer-bottom');
+		$message = $this->parseMsg('corporatepage-footer-bottom');
 		return $message;
 	}
 
 	protected function getSearchValue(){
 		global $wgRequest;
 		$x = $wgRequest->getVal( 'search', '' );
-		return ( !empty( $x ) ) ? $x : wfMsg('home2-find-a-wiki') ;
+		return ( !empty( $x ) ) ? $x : wfMsg('corporatepage-find-a-wiki') ;
 	}
 
 	protected function parseMsg($msg,$favicon = false){
@@ -332,11 +332,20 @@ class CorporateBaseTemplate extends QuickTemplate {
 		$lines = explode("\n",$message);
 		$out = array();
 		foreach($lines as $v){
-			if (preg_match("/^([\*]+)([^|]+)\|(.*)$/",trim($v),$matches)){
-				if (strlen($matches[1]) == 1){
-					$out[] = array("title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
+			if (preg_match("/^([\*]+)([^|]+)\|(((.*)\|(.*))|(.*))$/",trim($v),$matches)){
+				$param = "";
+				
+				if (!empty($matches[5])){
+					$param = $matches[6];
+					$title = trim($matches[5]);
+				} else {
+					$title = trim($matches[3]);
 				}
-
+					
+				if (strlen($matches[1]) == 1){
+					$out[] = array("title" => $title, 'href' => trim($matches[2]),'sub' => array());
+				}
+			
 				if (strlen($matches[1]) == 2){
 					if (count($out) > 0){
 						if ($favicon){
@@ -346,7 +355,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 								$favicon = WikiFactory::getVarValueByName( "wgFavicon", $id );
 							}
 						}
-						$out[count($out) - 1]['sub'][] = array("favicon" => $favicon, "title" => trim($matches[3]), 'href' => trim($matches[2]));
+						$out[count($out) - 1]['sub'][] = array("param" => $param, "favicon" => $favicon, "title" => $title, 'href' => trim($matches[2]));
 					}
 				}
 			}
@@ -364,7 +373,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 		$mcKey = wfMemcKey( "hp_msg_parser", $msg, $wgLang->getCode());
 		$out = $wgMemc->get( $mcKey, null);
 		if ($this->memc && $out != null){
-			return $out;
+		//	return $out;
 		}
 		$message = wfMsg($msg);
 		$lines = explode("\n",$message);
@@ -373,8 +382,9 @@ class CorporateBaseTemplate extends QuickTemplate {
 			if ($descThumb){
 				$str = "/^([\*]+)([^|]+)\|([^|]+)\|([^|]+)\|([^|]+)\|(.*)$/";
 			} else {
-				$str = "/^([\*]+)([^|]+)\|([^|]+)\|(.*)$/";
+				$str = "/^([\*]+)([^|]+)\|([^|]+)\|(((.*)\|(.*))|(.*))$/";
 			}
+				
 			if (preg_match($str,trim($v),$matches)){
 				if (strlen($matches[1]) == 1){
 					if ($descThumb){
@@ -382,8 +392,15 @@ class CorporateBaseTemplate extends QuickTemplate {
 						$thumbName = $this->getImageName($matches[6]);
 						$out[] = array("desc" => $matches[4],"imagethumb" => $thumbName,"imagename" => $imageName, "title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
 					} else {
-						$imageName = $this->getImageName($matches[4]);
-						$out[] = array("imagename" => $imageName, "title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
+						$param = "";
+						if (!empty($matches[7])){
+							$param = $matches[7];
+							$rowImageName = $matches[6];
+						} else{
+							$rowImageName = $matches[4];
+						}
+						$imageName = $this->getImageName($rowImageName);
+						$out[] = array("param" => $param,"imagename" => $imageName, "title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
 					}
 				}
 			}
@@ -419,5 +436,4 @@ class CorporateBaseTemplate extends QuickTemplate {
 		$StaticChute->useLocalChuteUrl();
 		return $StaticChute->getChuteHtmlForPackage('corporate_page_css');
 	}
-
 } // end of class

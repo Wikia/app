@@ -32,9 +32,9 @@ class CorporatePageHelper{
 	static function jsVars($vars){
 		global $wgUser;
 		if ($wgUser->isAllowed( 'corporatepagemanager' )){
-			$vars['home2_hide_confirm'] = wfMsg('home2-hide-confirm');
-			$vars['home2_hide_error'] = wfMsg('home2_hide_error');
-			$vars['home2_hide_success'] = wfMsg('home2_hide_success');
+			$vars['corporatepage_hide_confirm'] = wfMsg('corporatepage-hide-confirm');
+			$vars['corporatepage_hide_error'] = wfMsg('corporatepage-hide-error');
+			$vars['corporatepage_hide_success'] = wfMsg('corporatepage-hide-success');
 		}
 		return true;
 	}
