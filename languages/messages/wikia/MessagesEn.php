@@ -2,8 +2,8 @@
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages , array(
 # Default for corporate skin
-'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entaaertainment|no-icon
-** http://harrypotter.wikia.com/|Harry Potter Wiki|no-icon
+'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entaaertainment
+** http://harrypotter.wikia.com/|Harry Potter Wiki
 **http://twilightsaga.wikia.com/|Twilight Saga Wiki
 **http://lyrics.wikia.com/|Lyric Wiki
 **http://percyjackson.wikia.com/|Percy Jackson Wiki
@@ -25,24 +25,24 @@ $messages = array_merge( $messages , array(
 ** http://anime.answers.wikia.com|Anime Answers
 ** http://lego.answers.wikia.com|Lego Answers
 * http://community.wikia.com|Community
-** http://community.wikia.com/wiki/Forum:Index|Forum
-** http://help.wikia.com|Help
-** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog',
+** http://community.wikia.com/wiki/Forum:Index|Forum|no-icon
+** http://help.wikia.com|Help|no-icon
+** http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Blog|no-icon',
 'corporatepage-slider' => "*http://percyjackson.wikia.com/|Percy Jackson Wiki|Check out the latest on your boy, Percy Jackson!|File:Homepage.feature.0.jpg|File:Homepage.feature.thumb.0.jpg
 *http://recipes.wikia.com/|Recipes Wiki|Mmmm... delicious cookies!|File:Homepage.feature.1.jpg|File:Homepage.feature.thumb.1.jpg
 *http://godofwar.wikia.com/|God of War Wiki|Serious gaming for the serious gamer! Check it out!|File:Homepage.feature.2.jpg|File:Homepage.feature.thumb.2.jpg
 *http://answers.wikia.com/|Wikianswers|Ask questions and help to craft the best answer at Wikianswers.|File:Homepage.feature.3.jpg|File:Homepage.feature.thumb.3.jpg",
-'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png
+'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/pages/Wikia/5678222299|Become a Facebook fan|File:Icon.footer.facebook.32x32.png|new-window
 * http://twitter.com/wikia|Follow us on Twitter|File:Icon.footer.twitter.32x32.png|new-window
-* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png',
+* http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog|Read our blog|File:Icon.footer.wikia.32x32.png|new-window',
 'corporatepage-footer-rightcolumn'  => '* /wiki/About_Us|About Wikia
-* /wiki/Wikia:Hiring|Jobs
-* /wiki/Special:Contact|Contact
-* /wiki/Wikia:Advertising_on_Wikia|Advertising
-* /wiki/Wikia:Press|Press
-* /wiki/Help:Contents|Help',
-'corporatepage-footer-bottom' => '* /wiki/Wikia:Terms_of_use|Terms of Use
-* /wiki/Wikia:Privacy_Policy|Privacy Policy
+* Hiring|Jobs
+* Special:Contact|Contact
+* Advertising_on_Wikia|Advertising
+* Press|Press
+* http://community.wikia.com/wiki/Help:Contents|Help',
+'corporatepage-footer-bottom' => '* Terms_of_use|Terms of Use
+* Privacy_Policy|Privacy Policy
 * http://recipes.wikia.com/|Recipes
 * http://green.wikia.com/|Green
 * http://starwars.wikia.com/|Star Wars
