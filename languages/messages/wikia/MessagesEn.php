@@ -41,7 +41,7 @@ $messages = array_merge( $messages , array(
 * Advertising_on_Wikia|Advertising
 * Press|Press
 * http://community.wikia.com/wiki/Help:Contents|Help',
-'corporatepage-footer-bottom' => '* Terms_of_use|Terms of Use
+'corporatepage-footer-bottom' => '* Terms_of_Use|Terms of Use
 * Privacy_Policy|Privacy Policy
 * http://recipes.wikia.com/|Recipes
 * http://green.wikia.com/|Green

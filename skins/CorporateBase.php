@@ -195,10 +195,8 @@ class CorporateBaseTemplate extends QuickTemplate {
 
 	protected function htmlMainArticleContents(){
 ?>
-			<div class="shrinkwrap">
-				<h1 class="firstHeading"><?php print $this->data['title']?></h1>
-				<?php $this->html('bodytext'); ?>
-			</div>
+			<h1 class="firstHeading"><?php print $this->data['title']?></h1>
+			<?php $this->html('bodytext'); ?>
 <?php
 	} // END: function htmlMainArticleContents
 
