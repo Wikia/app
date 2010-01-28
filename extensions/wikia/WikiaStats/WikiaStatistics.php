@@ -542,6 +542,7 @@ class WikiaGlobalStats {
 				$conditions['pc_is_content'] = 1;
 			}
 			
+			$dbLimit = (int) ($limit/5)*self::$defaultLimit;
 			$oRes = $dbr->select(
 				array( "page_editors" ),
 				array( "pc_is_content, pc_wikia_id, pc_page_id, count(distinct(pc_user_id)) as all_count" ),
@@ -550,7 +551,7 @@ class WikiaGlobalStats {
 				array(
 					'GROUP BY' 	=> 'pc_wikia_id, pc_page_id',
 					'ORDER BY' 	=> 'all_count desc',
-					'LIMIT'		=> self::$defaultLimit
+					'LIMIT'		=> $dbLimit
 				)
 			);
 			$data = array(); while ( $oRow = $dbr->fetchObject( $oRes ) ) {
