@@ -14,7 +14,7 @@ function makeWikiaButtons() {
 //Ajax block article
 function blockArticle(e){
 	e.preventDefault();
-	if (confirm(home2_hide_confirm)) {
+	if (confirm(corporatepage_hide_confirm)) {
 		var me = $(this);
 		var args = me.attr("href").split("?")[1];
 		var data = args.split("&");
@@ -26,9 +26,9 @@ function blockArticle(e){
 				name: data[1].split("=")[1]
 			}, function(data) {
 		 		if (data.status == "OK"){
-					me.closest(".page-activity-sources").html(home2_hide_success).closest("li").animate({opacity: 1}, 1500).slideUp();
+					me.closest(".page-activity-sources").html(corporatepage_hide_success).closest("li").animate({opacity: 1}, 1500).slideUp();
 				} else {
-		 			alert(home2_hide_error);
+		 			alert(corporatepage_hide_error);
 				}
 			}
 		);
