@@ -245,13 +245,14 @@ class RecipesTweaks {
 		global $wgTitle;
 		$userName = $wgTitle->getText();
 		$user = User::newFromName($userName);
-		$userId = $user->getId();
 
 		// user page of not existing user
-		if ($userId == 0) {
+		if (empty($user) || $user->getId() == 0) {
 			wfProfileOut(__METHOD__);
 			return true;
 		}
+
+		$userId = $user->getId();
 
 		// get user's saved pages
 		$pages = self::getSavedPages($user->getId(), 5, false);
