@@ -9,7 +9,7 @@
 				padding: 0;
 			}
 			#pageTop {
-				background-image: url('<?=$imagesPath?>/wikia_logo_tiny.png');
+				background-image: url('<?php print $imagesPath?>/wikia_logo_tiny.png');
 				background-repeat: no-repeat;
 				background-position: 5px 50%;
 				padding: 5px;
@@ -22,19 +22,19 @@
 				font-family: Verdana, Arial, sans-serif;
 			}
 		</style>
-		<?= $css ?>
+		<?php print $css ?>
 
 		<script type="text/javascript">/*<![CDATA[*/
 			function doRedirect() {
-				window.location = <?= Xml::encodeJSvar( htmlspecialchars_decode( $url ) ); ?>;
+				window.location = <?php print Xml::encodeJSvar( htmlspecialchars_decode( $url ) ); ?>;
 			}
 		/*]]>*/</script>
 	</head>
-	<body class="color2"<?php if($redirectDelay > 0): ?> onLoad="setTimeout(doRedirect, <?=($redirectDelay * 1000);?>)"<?php endif?>>
-		<?= $athenaInitStuff; ?>
+	<body class="color2"<?php if($redirectDelay > 0): ?> onLoad="setTimeout(doRedirect, <?php print ($redirectDelay * 1000);?>)"<?php endif?>>
+		<?php print $athenaInitStuff; ?>
 		<div>
-			<div id="pageTop" class="color1"><a href="<?= $url ?>" id="exitLink" rel="nofollow"><?=($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a>&nbsp;<?=wfMsgForContent('outbound-screen-login-text', array( $userloginTitle->getFullUrl('type=signup'), $userloginTitle->getFullUrl() ) );?></div>
-			<?=$adLayout;?>
+			<div id="pageTop" class="color1"><a href="<?php print $url ?>" id="exitLink" rel="nofollow"><?php print ($redirectDelay > 0) ? wfMsgForContent('outbound-screen-text-with-redirect', $redirectDelay) : wfMsgForContent('outbound-screen-text');?></a>&nbsp;<?php print wfMsgForContent('outbound-screen-login-text', array( $userloginTitle->getFullUrl('type=signup'), $userloginTitle->getFullUrl() ) );?></div>
+			<?php print $adLayout;?>
 		</div>
 	</body>
 </html>
