@@ -19,8 +19,9 @@ class HomePageStatistic
 			return number_format($result);
 		}
 		$month = date("Y-m");
-		$result = WikiaGlobalStats::getCountMonthlyCreatedPages($month);
-		$wgMemc->set( $key, $result, 60*60*12);
+		$time =  date("j") + date("H")/24;
+		$result = (int) WikiaGlobalStats::getCountAverageDayCreatePages($month)*$time;
+		$wgMemc->set( $key, $result, 60*60);
 		return number_format($result);	
 	}
 
