@@ -6,7 +6,7 @@ form.highlightform {
 form.highlightform * {
 	position: relative;
 }
-form.highlightform li { 
+#highlightform li { 
 	list-style-image:none;
 	list-style-position:outside;
 	list-style-type:none;
@@ -54,13 +54,13 @@ div.formhighlight {
 .formblock .data1 select {
 	width: 250px;	
 }
-.formblock ul.col2 .data1 {
+#highlightform .formblock ul.col2 .data1 {
 	float: none;
 	margin-left: 175px;
 	padding-right: 15px;
 	width: auto;	
 }
-.formblock li.data2 {
+#highlightform .formblock li.data2 {
 	margin-left: 520px;
 	padding-right: 15px;
 	padding-left: 15px;
