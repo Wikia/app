@@ -18,6 +18,7 @@ class HomePageStatistic
 		if ($result != null){
 			return number_format($result);
 		}
+		
 		$month = date("Y-m");
 		$time =  date("j") + date("H")/24;
 		$result = (int) WikiaGlobalStats::getCountAverageDayCreatePages($month)*$time;
@@ -30,7 +31,12 @@ class HomePageStatistic
 	}
 	
 	public static function getMostEditArticles72(){
-		$out = WikiaGlobalStats::getPagesEditors();
+		global $wgUser;
+		if ($wgUser->isAllowed( 'corporatepagemanager' )){
+			$out = WikiaGlobalStats::getPagesEditors(7, 10);
+		} else {
+			$out = WikiaGlobalStats::getPagesEditors();
+		}
 		$level = 1;
 		foreach ($out as $key => $value){
 			$out[$key]['level'] = $level;
