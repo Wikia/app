@@ -7,7 +7,7 @@
 $wgExtensionCredits['other'][] = array(
 		'name' => 'TitleEdit',
 		'description' => 'Adds top title edit buttons',
-		'version' => '0.1',
+		'version' => '0.5',
 		'author' => array('Bartek Lapinski')
 		);
 
@@ -15,16 +15,31 @@ $wgHooks['MonacoPrintFirstHeading'][] = 'wfTitleEditPrintFirstHeading';
 
 
 function wfTitleEditPrintFirstHeading() {
-	global $wgTitle, $wgUser; // different for Anon? or will js handle this?	
-	
+	global $wgTitle, $wgUser;
+
+	if ( $wgTitle->isProtected( 'edit' ) ) {
+		return true;
+	}
+
+	// todo click tracking 
+
 	$sk = $wgUser->getSkin();
-	$link = $sk->link( $wgTitle, wfMsg('editsection'),
+	$result = '';
+
+	if (is_object($wgUser) && $wgUser->isLoggedIn()) {
+		$link = $sk->link( $wgTitle, wfMsg('editsection'), // todo is it truly only 'edit' message?
 			array(),
 			array( 'action' => 'edit'),
 			array( 'noclasses', 'known' )
 			);
-	$result = wfMsgHtml( 'editsection-brackets', $link );
-	$result = "<span class=\"editsection\">$result</span>";
+		$result = wfMsgHtml( 'editsection-brackets', $link );
+		$result = "<span class=\"editsection-upper\">$result</span>";
+	} else { // anon
+		if ( empty($wgDisableAnonymousEditig)) {
+			$link = "<a class=\"wikia_button\" onclick=\"\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'editsection' ) . "</span></a>";
+			$result = "<span class=\"editsection-upper\">$link</span>";
+		}
+	}
 
 	echo $result;
 	return true;
