@@ -66,10 +66,6 @@ h1, h2, h3, h4, h5, h6 {
 #wikia-global-hot-spots p, #CompanyInfo a, #wikia-create-wiki {
 	font-size: 1.3em;
 }
-#MainArticle td {
-	padding: 1em;
-	vertical-align: top;
-}
 
 /* Hide headlines used only for semantics. */
 #globalnav-headline,
@@ -903,3 +899,12 @@ footer {
 	clip: rect(0px 240px 16px 224px);
 	left: -224px;
 }
+
+/* @group Extension exceptions. */
+
+#contactform td {
+	padding: 1em;
+	vertical-align: top;
+}
+
+/* @end */
