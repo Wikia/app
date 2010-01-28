@@ -6,7 +6,7 @@ class HomePageStatisticCollector
 	 * hook for count numbers of words added in last hour
 	 */
 	public static function articleCountWordDiff(&$article,&$user,&$newText){
-		if (self::chackNamespace($article)){
+		if (self::checkNamespace($article)){
 			return true;
 		}
 
@@ -41,7 +41,7 @@ class HomePageStatisticCollector
 	 * hook for numbers of new pages made in this month
 	 */
 	public static function articleCountPagesAddedMonth(&$article,&$user,&$newText){
-		if (self::chackNamespace($article)){
+		if (self::checkNamespace($article)){
 			return true;
 		}
 
@@ -58,7 +58,7 @@ class HomePageStatisticCollector
 	 */
 
 	public static function articleCountUpdateEditsMadeWeek(&$article,&$user,&$newText){
-		if (self::chackNamespace($article)){
+		if (self::checkNamespace($article)){
 			return true;
 		}
 
@@ -71,9 +71,9 @@ class HomePageStatisticCollector
 
 	/*
 	 * Author: Tomek Odrobny
-	 * chack namespace
+	 * check namespace
 	 */
-	private static function chackNamespace(&$article){
+	private static function checkNamespace(&$article){
 		global $wgContentNamespaces;
 		return !in_array($article->getTitle()->getNamespace(),$wgContentNamespaces);
 	}
