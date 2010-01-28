@@ -527,7 +527,7 @@ class WikiaGlobalStats {
 		return $result;
 	}
 
-	public static function getPagesEditors( $days = 7, $limit = 5, $onlyContent = true, $noHubDepe = false ) {
+	public static function getPagesEditors( $days = 7, $limit = 5, $onlyContent = true, $recalculateLimit = false, $noHubDepe = false ) {
     	global $wgExternalDatawareDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
     	
@@ -564,7 +564,13 @@ class WikiaGlobalStats {
 			$dbr->freeResult( $oRes );
 			$wgMemc->set( $memkey , $data, 60*60 );
 		}
-
+		$limitWikiHubs = self::$limitWikiHubs;
+		if ( $recalculateLimit ){
+			$factor = $limit/5;
+			foreach( $limitWikiHubs as $key => $value ){
+				$limitWikiHubs[$key] = ceil($value*$factor);
+			}
+		}
 		$result = $values = array();
 		$loop = 0;
 		if ( !empty( $data ) ) {
@@ -578,9 +584,9 @@ class WikiaGlobalStats {
 				if ( !isset( $values[$hub] ) ) $values[$hub] = 0;
 				if ( !$noHubDepe ){
 					# limit results
-					$hubLimit = ( isset( self::$limitWikiHubs[ $hub ] ) ) 
-						? self::$limitWikiHubs[ $hub ]
-						: self::$limitWikiHubs[ '_default_' ];
+					$hubLimit = ( isset( $limitWikiHubs[ $hub ] ) ) 
+						? $limitWikiHubs[ $hub ]
+						: $limitWikiHubs[ '_default_' ];
 					if ( $values[$hub] == $hubLimit ) continue;
 				}
 				# add to array
