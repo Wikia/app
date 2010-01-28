@@ -66,6 +66,10 @@ h1, h2, h3, h4, h5, h6 {
 #wikia-global-hot-spots p, #CompanyInfo a, #wikia-create-wiki {
 	font-size: 1.3em;
 }
+#MainArticle p *, #MainArticle li *, #MainArticle dt *, #MainArticle dd *, #MainArticle td *,
+#wikia-global-hot-spots p *, #CompanyInfo a *, #wikia-create-wiki * {
+	font-size: 1em;
+}
 
 /* Hide headlines used only for semantics. */
 #globalnav-headline,
