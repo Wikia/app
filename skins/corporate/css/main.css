@@ -15,6 +15,7 @@ header, article, section, footer, nav, aside {
 }
 
 /* Contain floats. */
+.clearfix { overflow: auto; } /* So IE8 behaves, too. */
 .clearfix::after {
 	clear: both;
 	content: ".";
