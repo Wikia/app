@@ -203,13 +203,13 @@ header a, #CompanyInfo a, footer a {
 #GlobalNav { z-index: 10; }
 
 /* Top level container. */
-#GlobalNav ul {
+#GlobalNav .nav-top-level {
 	position: relative;
 	left: -4px;
 	height: 30px;
 }
 /* Sub-level container. */
-#GlobalNav li ul {
+#GlobalNav .nav-sub-level {
 	background: #FFF url(http://images.wikia.com/common/skins/corporate/images/bg.globalnav.subnav.gray.5x83.png) left bottom repeat-x;
 	border: 1px solid #FFF;
 	display: none;
@@ -223,7 +223,7 @@ header a, #CompanyInfo a, footer a {
 	-webkit-border-bottom-left-radius: 5px;
 	-webkit-border-bottom-right-radius: 5px;
 }
-#GlobalNav li:hover ul {
+#GlobalNav li:hover .nav-sub-level {
 	display: block;
 }
 
@@ -289,7 +289,7 @@ header a, #CompanyInfo a, footer a {
 	text-decoration: underline;
 }
 /* Sub-level link. */
-#GlobalNav li li a {
+#GlobalNav .nav-sub-level a {
 	background: transparent;
 	color: #0066a7;
 	display: inline;
@@ -297,7 +297,7 @@ header a, #CompanyInfo a, footer a {
 	line-height: normal;
 	padding: 0;
 }
-#GlobalNav li li a:hover {
+#GlobalNav .nav-sub-level a:hover {
 }
 
 /* Top-level rollover. */
