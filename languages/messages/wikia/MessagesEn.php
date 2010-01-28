@@ -2,7 +2,7 @@
 #Related to visitor skins: Slate.php and Smoke.php
 $messages = array_merge( $messages , array(
 # Default for corporate skin
-'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entaaertainment
+'corporatepage-sidebar' => '*http://entertainment.wikia.com/|Entertainment
 ** http://harrypotter.wikia.com/|Harry Potter Wiki
 **http://twilightsaga.wikia.com/|Twilight Saga Wiki
 **http://lyrics.wikia.com/|Lyric Wiki
