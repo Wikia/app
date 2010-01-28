@@ -37,7 +37,7 @@ class CorporateTemplate extends CorporateBaseTemplate {
 	 * @access private
 	 */
 	function execute() {
-		global $wgRequest, $wgOut, $wgUser;
+		global $wgRequest, $wgOut, $wgUser, $wgStylePath;
 		$this->skin = $skin = $this->data['skin'];
 		$action = $wgRequest->getText( 'action' );
 		// Suppress warnings to prevent notices about missing indexes in $this->data
@@ -58,14 +58,16 @@ class CorporateTemplate extends CorporateBaseTemplate {
 			<!-- DEV NOTE: This area has the blue-striped background.  -->
 
 			<article id="MainArticle" class="clearfix">
-				<?php print $this->htmlMainArticleContents();?>
-				<ul id="article-links" class="shrinkwrap">
+				<div class="shrinkwrap">
+					<?php print $this->htmlMainArticleContents();?>
+
+
 					<?php if (!$wgUser->isAnon() && $wgOut->isArticleRelated()) { ?>
-					<li id="control-watch" class=""><div>&nbsp;</div>
-						<?= $this->skin->watchThisPage() ?>
-					</li>
+						<p>
+							<img src="<?= $wgStylePath ?>/monobook/blank.gif" class="icon-sprite watch"> <?= $this->skin->watchThisPage(); ?>
+						</p>
 					<?php } ?>
-				</ul>
+				</div>
 			</article>
 
 			<!-- DEV NOTE: These spotlights only show up on non-"homepage" pages. -->

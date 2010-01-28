@@ -214,5 +214,8 @@ a.big_button small {
 .icon-sprite.ok {
 	background-position: -592px;
 }
+.icon-sprite.watch {
+	background-position: -32px;
+}
 
 /* @end */
