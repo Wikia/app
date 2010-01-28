@@ -799,19 +799,23 @@ function wfMsgHTMLwithLanguageAndAlternative($key, $keyAlternative, $lang, $opti
  */
 function wfGetReturntoParam($customReturnto = null) {
 	global $wgTitle, $wgRequest;
-	$query = $wgRequest->getValues();
-	unset($query['title']);
-	unset($query['returnto']);
-	unset($query['returntoquery']);
-	$thisquery = wfUrlencode(wfArrayToCGI($query));
+
 	if ($customReturnto) {
 		$returnto = "returnto=$customReturnto";
 	} else {
 		$thisurl = $wgTitle->getPrefixedURL();
 		$returnto = "returnto=$thisurl";
 	}
-	if($thisquery != '')
-		$returnto .= "&returntoquery=$thisquery";
+
+	if (!$wgRequest->wasPosted()) {
+		$query = $wgRequest->getValues();
+		unset($query['title']);
+		unset($query['returnto']);
+		unset($query['returntoquery']);
+		$thisquery = wfUrlencode(wfArrayToCGI($query));
+		if($thisquery != '')
+			$returnto .= "&returntoquery=$thisquery";
+	}
 	return $returnto;
 }
 
