@@ -217,7 +217,7 @@ function WikiaSkinPreferences($pref) {
 				continue;
 			}
 			if($skinKey == 'quartz') {
-				$skinKeyA = split('-', $wgAdminSkin);
+				$skinKeyA = preg_split('/-/', $wgAdminSkin);
 				if($skinKey != $skinKeyA[0]) {
 					continue;
 				}
@@ -248,7 +248,7 @@ function WikiaSkinPreferences($pref) {
 	} else {
 		$wgOut->addHTML('<br/>');
 		if(!empty($wgAdminSkin)) {
-            $elems = split('-', $wgAdminSkin);
+            $elems = preg_split('/-/', $wgAdminSkin);
             $skin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
             $theme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 			if($theme != 'custom') {
@@ -310,7 +310,7 @@ function WikiaGetSkin ($user) {
 	}
 
 	if(!empty($wgForceSkin)) {
-		$elems = split('-', $wgForceSkin);
+		$elems = preg_split('/-/', $wgForceSkin);
 		$userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
 		$userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 		$user->mSkin = &Skin::newFromKey($wgRequest->getVal('useskin', $userSkin));
@@ -341,11 +341,11 @@ function WikiaGetSkin ($user) {
 
 	if(!$user->isLoggedIn()) { # If user is not logged in
 		if(count($_COOKIE) > 0 && isset($_COOKIE[$wgCookiePrefix.'skinpref'])) { # If user has cookie with variable 'skinpref'
-			$skinpref = split('-', $_COOKIE[$wgCookiePrefix.'skinpref']);
+			$skinpref = preg_split('/-/', $_COOKIE[$wgCookiePrefix.'skinpref']);
 			if(true == (bool) $skinpref[2]) { # Doest have overwrite enabled?
 
 				if(!empty($wgAdminSkin)) {
-					$elems = split('-',$wgAdminSkin);
+					$elems = preg_split('/-/',$wgAdminSkin);
                     $userSkin = ( array_key_exists(0, $elems) ) ? $elems[0] : null;
                     $userTheme = ( array_key_exists(1, $elems) ) ? $elems[1] : null;
 				} else {
@@ -359,7 +359,7 @@ function WikiaGetSkin ($user) {
 			}
 		} else {
 			if(!empty($wgAdminSkin)) {
-				$adminSkinArray = split('-', $wgAdminSkin);
+				$adminSkinArray = preg_split('/-/', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 			} else {
@@ -373,7 +373,7 @@ function WikiaGetSkin ($user) {
 
 		if(true == (bool) $user->getOption('skinoverwrite')) { # Doest have overwrite enabled?
 			if(!empty($wgAdminSkin)) {
-				$adminSkinArray = split('-', $wgAdminSkin);
+				$adminSkinArray = preg_split('/-/', $wgAdminSkin);
 				$userSkin = isset($adminSkinArray[0]) ? $adminSkinArray[0] : null;
 				$userTheme = isset($adminSkinArray[1]) ? $adminSkinArray[1] : null;
 			}
