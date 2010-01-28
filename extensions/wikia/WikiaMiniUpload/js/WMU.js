@@ -1135,7 +1135,7 @@ function WMU_close(e) {
 	}
 	WMU_track('close/' + WMU_curScreen);
 	WMU_panel.hide();
-	if(typeof FCK == 'undefined' && $G('wpTextbox1')) $G('wpTextbox1').focus();
+	if(typeof window.RTE == 'undefined' && $G('wpTextbox1')) $G('wpTextbox1').focus();
 	WMU_switchScreen('Main');
 	WMU_loadMain();
 	YAHOO.util.Dom.setStyle('header_ad', 'display', 'block');
