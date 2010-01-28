@@ -130,7 +130,7 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 										<span><?php print wfMsg('home2-from'); ?></span>
 										<a href="<?php echo $value['wikia_url']; ?>" class="wikia-wiki-link"><?php echo $value['wikia']; ?></a>
 										<?php if ($this->isManager()):?>
-										<a class="wikia-page-link staff-hide-link" href="<?php echo $wgExtensionsPath; ?>/wikia/CorporatePage/CorporatePageHelper.php?wiki=<?php echo $value['db']; ?>&name=<?php echo $value['page_name']; ?>"><img src="<?php print $wgStylePath?>/corporate/images/icon.delete.png" alt="<?php print wfMsg('home2-hide'); ?>" title"<?php print wfMsg('home2-hide'); ?>"></a>
+										<a class="wikia-page-link staff-hide-link" href="<?php echo $wgExtensionsPath; ?>/wikia/CorporatePage/CorporatePageHelper.php?wiki=<?php echo $value['db']; ?>&name=<?php echo $value['real_pagename']; ?>"><img src="<?php print $wgStylePath?>/corporate/images/icon.delete.png" alt="<?php print wfMsg('home2-hide'); ?>" title"<?php print wfMsg('home2-hide'); ?>"></a>
 										<?php endif;?>
 									</span>
 								</span>
