@@ -93,8 +93,11 @@ h1, h2, h3, h4, h5, h6 {
 	border: 1px solid #8d9da7;
 	color: #000;
 }
-.dark_text_1, .dark_text_2 {
+.dark_text_1 {
 	color: #002F55;
+}
+.dark_text_2 {
+	color: #1F7A1F;
 }
 #MainArticle, #wikia-create-wiki .wikia_button span, header {
 	color: #333;
@@ -915,4 +918,11 @@ footer {
 .wikia_search_header {
 	display: none;
 }
+#MainArticle .mw-search-results ul {
+	padding: 0;
+}
+#MainArticle .mw-search-results li {
+	list-style: none;
+}
+
 /* @end */
