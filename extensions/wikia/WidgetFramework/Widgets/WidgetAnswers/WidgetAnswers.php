@@ -26,7 +26,9 @@ function WidgetAnswers($id, $params) {
 
 	# TODO: should be handled directly in WidgetFramework, probably Draw/DrawOne method
 	global $wgLanguageCode, $wgAvailableAnswersLang;
-	if (empty( $wgAvailableAnswersLang ) || !in_array($wgLanguageCode, $wgAvailableAnswersLang)) {
+	if (empty( $wgAvailableAnswersLang ) ||
+	(!in_array($wgLanguageCode, $wgAvailableAnswersLang) && !in_array(preg_replace("/-.*$/", "", $wgLanguageCode), $wgAvailableAnswersLang))
+	) {
 		return '';
 	}
 
@@ -96,6 +98,8 @@ EOD;
 #	} else {
 		if ( !empty( $wgAnswersURLs[$wgLanguageCode] ) ) {
 			$domain = $wgAnswersURLs[$wgLanguageCode];
+		} elseif ( !empty( $wgAnswersURLs[preg_replace("/-.*$/", "", $wgLanguageCode)] ) ) {
+			$domain = $wgAnswersURLs[preg_replace("/-.*$/", "", $wgLanguageCode)];
 		} else {
 			$domain = $wgLanguageCode . '.answers.wikia.com';
 		}
