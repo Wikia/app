@@ -745,7 +745,7 @@ footer {
 	#wikia-global-hot-spots ol {
 		padding: 0;
 	}
-	#wikia-global-hot-spots li {
+	#wikia-global-hot-spots ol li {
 		clear: left;
 		font-size: 1em; /* Reset font-sizing inheritance. */
 		list-style-type: none;
