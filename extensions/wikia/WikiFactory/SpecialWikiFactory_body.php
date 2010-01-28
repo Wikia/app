@@ -247,11 +247,13 @@ class WikiFactoryPage extends SpecialPage {
 			$user_name = User::WhoIs($this->mWiki->city_founding_user);
 		}
 
+		$tags = new WikiFactoryTags( $this->mWiki->city_id );
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
 			"tab"         => $this->mTab,
 			"hub"         => WikiFactoryHub::getInstance(),
 			"wiki"        => $this->mWiki,
+			"tags"        => $tags->getTags(),
 			"info"        => $info,
 			"title"       => $this->mTitle,
 			"groups"      => WikiFactory::getGroups(),
@@ -273,7 +275,7 @@ class WikiFactoryPage extends SpecialPage {
 			);
 		}
 		$oTmpl->set_vars( $vars );
-		$wgOut->addHTML( $oTmpl->execute("form") );
+		$wgOut->addHTML( $oTmpl->render("form") );
 	}
 
 	/**
@@ -395,7 +397,7 @@ class WikiFactoryPage extends SpecialPage {
 
 		return $Tmpl->render( "shortstats" );
 	}
-	
+
 	/**
 	 * Quick form for introducing a new variable to be used in WikiFactory (not setting a value).
 	 *
@@ -422,7 +424,7 @@ class WikiFactoryPage extends SpecialPage {
 
 		return $oTmpl->render( "add-variable" );
 	}
-	
+
 	/**
 	 * Quick form for choosing which variable to change.
 	 *
@@ -459,7 +461,7 @@ class WikiFactoryPage extends SpecialPage {
 
 		return $oTmpl->render( "form-variables" );
 	}
-	
+
 	/**
 	 * If there was a post to the add variable form, this will process it.
 	 *
@@ -514,7 +516,7 @@ class WikiFactoryPage extends SpecialPage {
 				$html .= "<strong>ERROR: Unable to add variable!</strong>";
 				$html .= "<ul>\n$err</ul>\n";
 				$html .= "</div>";
-				
+
 				$varOverrides['cv_name'] = $cv_name;
 				$varOverrides['cv_variable_type'] = $cv_variable_type;
 				$varOverrides['cv_access_level'] = $cv_access_level;

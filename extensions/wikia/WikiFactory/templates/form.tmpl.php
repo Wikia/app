@@ -276,9 +276,9 @@ $Factory.Variable.change = function ( e, data ) {
 // For editing the variable itself (not its value).
 $Factory.Variable.submitChangeVariable = function ( e, data ) {
 	$Factory.Busy(1);
-	
+
     var values = "";
-	
+
 	// TODO: FILL THE VALUES WITH EVERYTHING FROM THE FORM.
 	values += "&cv_variable_id=" + encodeURIComponent($Dom.get('wk-change-cv_variable_id').value);
 	values += "&cv_name=" + encodeURIComponent($Dom.get('wk-change-cv_name').value);
@@ -418,17 +418,20 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 			</li>
             <li>
                 This wiki is <strong><?php echo $statuses[ $wiki->city_public ] ?></strong>.
-				            <? if(($statuses[$wiki->city_public] == 'disabled') && is_object($wikiRequest)): ?>
-				            	(<a href="/index.php?title=Special:CreateWiki&request=<?=$wikiRequest->request_id;?>&action=delete&doit=1">delete request for this wiki</a>)
-				            <? elseif(($statuses[$wiki->city_public] == 'disabled') && ($wikiRequest != null)): ?>
-				             (<i>no wiki request were found with name: <?=$wikiRequest;?></i>)
-				            <? endif; ?>
-<? if ($statuses[$wiki->city_public] == 'disabled') : ?>
+<?php if(($statuses[$wiki->city_public] == 'disabled') && is_object($wikiRequest)): ?>
+				(<a href="/index.php?title=Special:CreateWiki&request=<?=$wikiRequest->request_id;?>&action=delete&doit=1">delete request for this wiki</a>)
+<?php elseif(($statuses[$wiki->city_public] == 'disabled') && ($wikiRequest != null)): ?>
+				(<i>no wiki request were found with name: <?=$wikiRequest;?></i>)
+<?php endif;
+	  if ($statuses[$wiki->city_public] == 'disabled') : ?>
             <div>
             	(<?=wfMsg('closed-reason')?> <?=$wiki->city_additional?>)
             </div>
-<? endif ?>
+<?php endif ?>
             </li>
+			<li>
+			 Tags: <?php foreach( $tags as $id => $tag ): echo "<strong>{$tag}</strong> "; endforeach; ?>
+			</li>
             <li>
 				<a href="#" id="wf-clear-cache"><?php echo wfMsg("wikifactory_removevariable") ?></a>
 			</li>
@@ -447,6 +450,12 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 			</li>
 			<li <?php echo ( $tab === "domains" ) ? 'class="active"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "domains", $tab, $wiki->city_id ); ?>
+			</li>
+			<li>
+				&nbsp;
+			</li>
+			<li <?php echo ( $tab === "tags" ) ? 'class="active"' : 'class="inactive"' ?> >
+				<?php echo WikiFactoryPage::showTab( "tags", $tab, $wiki->city_id ); ?>
 			</li>
 			<li>
 				&nbsp;
@@ -491,6 +500,10 @@ YAHOO.util.Event.addListener("wf-clear-cache", "click", $Factory.Variable.clear)
 
 		case "clog":
 			include_once( "form-clog.tmpl.php" );
+		break;
+
+		case "tags":
+			include_once( "form-tags.tmpl.php" );
 		break;
 
 		case "close":

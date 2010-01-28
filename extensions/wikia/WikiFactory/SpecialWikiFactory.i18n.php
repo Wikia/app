@@ -29,6 +29,7 @@ $messages['en'] = array(
 	"wikifactory-label-clog" => "Changelog",
 	"wikifactory-label-actions" => "Actions",
 	"wikifactory-label-close" => "Close",
+	"wikifactory-label-tags" => "Tags",
 	"right-wikifactory" => "Change internal settings for wikis",
 	"closewiki-check-and-confirm" => "Check wikis and confirm operation",
 	"closewiki-redirect-to" => "Redirect to",
@@ -1600,4 +1601,3 @@ $messages['uk'] = array(
 	'closed-wiki-create-wiki' => 'Створити нову вікі',
 	'closed-reason' => 'Причина:',
 );
-
