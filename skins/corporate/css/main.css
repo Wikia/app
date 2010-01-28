@@ -200,7 +200,7 @@ header a, #CompanyInfo a, footer a {
 
 /* Make sure Webkit and IE8 stacks the GlobalNav atop the MainContent. */
 #GlobalNav, #MainContent { position: relative; }
-#GlobalNav { z-index: 1; }
+#GlobalNav { z-index: 10; }
 
 /* Top level container. */
 #GlobalNav ul {
