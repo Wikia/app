@@ -182,6 +182,8 @@ function renderGracenoteLyricsTag($input, $argv, $parser)
 		$artistLink = str_replace(" ", "+", $artist);
 		$songLink = str_replace(" ", "+", $songTitle);
 	}
+	$artistLink = str_replace("_", "+", $artistLink);
+	$songLink = str_replace("_", "+", $songLink);
 	$href = "<a href='http://www.ringtonematcher.com/co/ringtonematcher/02/noc.asp?sid=WILWros&amp;artist=".urlencode($artistLink)."&amp;song=".urlencode($songLink)."' target='_blank'>";
 	$ringtoneLink = "";
 	$ringtoneLink.= "<div class='rtMatcher'>";
