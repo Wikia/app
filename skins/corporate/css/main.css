@@ -742,9 +742,13 @@ footer {
 		margin-top: .25em;
 		margin-bottom: 1em;
 	}
+	#wikia-global-hot-spots ol {
+		padding: 0;
+	}
 	#wikia-global-hot-spots li {
-		font-size: 1em; /* Reset font-sizing inheritance. */
 		clear: left;
+		font-size: 1em; /* Reset font-sizing inheritance. */
+		list-style-type: none;
 	}
 	#wikia-global-hot-spots .page-activity-badge {
 		color: #FFF;
