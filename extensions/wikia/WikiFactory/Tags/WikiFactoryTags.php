@@ -166,7 +166,7 @@ class WikiFactoryTags {
 	}
 
 	/**
-	 * use provided string to add new tags into database. Tags will be:
+	 * use provided array to add new tags into database.
 	 *
 	 * @param Array $ids
 	 *
@@ -235,6 +235,14 @@ class WikiFactoryTags {
 		return $this->removeTagsById( $ids );
 	}
 
+	/**
+	 * use provided array to remove tags from database.
+	 *
+	 * @access public
+	 * @param Array $ids
+	 *
+	 * @return Array current tags for wiki
+	 */
 	public function removeTagsById( $ids ) {
 
 		wfProfileIn( __METHOD__ );
