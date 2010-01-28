@@ -2307,7 +2307,9 @@ wfProfileOut( __METHOD__ . '-body');
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
 	function printFirstHeading(){
-		?><h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1><?php
+		?><h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title');
+		wfRunHooks( 'MonacoPrintFirstHeading' );
+		?></h1><?php
 	}
 
 
