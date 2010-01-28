@@ -428,7 +428,7 @@ class RecipesTweaks {
 		$res = $dbr->select(
 			'watchlist',
 			'wl_namespace, wl_title',
-			array('wl_user' => $userId, 'wl_namespace % 2 = 0'),
+			array('wl_user' => $userId, 'wl_namespace % 2 = 0', 'wl_namespace != '.NS_USER_TALK, 'wl_namespace != '.NS_FILE),
 			__METHOD__,
 			array('ORDER BY' => 'wl_wikia_addedtimestamp DESC', 'LIMIT' => $limit)
 		);
