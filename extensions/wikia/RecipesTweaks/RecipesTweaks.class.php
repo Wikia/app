@@ -293,7 +293,7 @@ class RecipesTweaks {
 			// show only on view
 			global $wgRequest;
 			$action = $wgRequest->getVal('action', 'view');
-			$actions = array('view', 'delete', 'protect', 'history', 'watch', 'unwatch');
+			$actions = array('view', 'purge', 'delete', 'protect', 'history', 'watch', 'unwatch');
 
 			// "detect" user masthead
 			$isMastheadShown = Masthead::isMastheadShown();
@@ -391,7 +391,7 @@ class RecipesTweaks {
 		$action = $wgRequest->getVal('action', 'view');
 		$ns = $wgTitle->getNamespace();
 
-		$res = ($ns == NS_USER) && ($action == 'view') && !$wgTitle->isSubpage();
+		$res = ($ns == NS_USER) && in_array($action, array('view', 'purge')) && !$wgTitle->isSubpage();
 
 		wfProfileOut(__METHOD__);
 
@@ -409,7 +409,7 @@ class RecipesTweaks {
 		$action = $wgRequest->getVal('action', 'view');
 		$ns = $wgTitle->getNamespace();
 
-		$res = ($ns == NS_MAIN) && $wgTitle->exists() && ($action == 'view') && !self::isMainPage();
+		$res = ($ns == NS_MAIN) && $wgTitle->exists() && in_array($action, array('view', 'purge')) && !self::isMainPage();
 
 		wfProfileOut(__METHOD__);
 
