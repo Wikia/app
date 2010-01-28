@@ -1201,8 +1201,6 @@ class PreferencesForm {
 				'previewonfirst',
 				'previewontop',
 				'minordefault',
-				'externaleditor',
-				'externaldiff',
 				$wgLivePreview ? 'uselivepreview' : false,
 				'forceeditsummary');
 
