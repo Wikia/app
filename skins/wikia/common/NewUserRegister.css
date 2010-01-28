@@ -197,20 +197,25 @@ div#userlogin .inputError {
 }
 
 /* @group Corporate skin */
+/* Using pixel font sizing because this extension is used on both Monaco and Corporate */
 .skin-Corporate label {
 	font-weight: bold;
-	font-size: 1.4em;
+	font-size: 14px;
 	line-height: normal;
 }
 .skin-Corporate #userloginSpecial input {
 	margin-bottom: 5px;
 }
-.skin-Corporate .announcementHeader {
-	font-size: 1.5em;
+.skin-Corporate #userloginSpecial .announcementHeader {
+	font-size: 15px;
 	line-height: normal;
 }
-.skin-Corporate .announcementText {
-	font-size: 1.3em;
+.skin-Corporate #userloginSpecial .announcementText {
+	font-size: 13px;
+	line-height: normal;
+}
+.skin-Corporate #userloginSpecial .loginHeader {
+	font-size: 19px;
 	line-height: normal;
 }
 /* @end */
