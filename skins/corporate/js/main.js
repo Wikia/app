@@ -19,7 +19,7 @@ function blockArticle(e){
 		var args = me.attr("href").split("?")[1];
 		var data = args.split("&");
 
-		$.get(window.wgScriptPath + "/index.php", {
+		$.postJSON(window.wgScriptPath + "/index.php", {
 				action: "ajax",
 				rs: "CorporatePageHelper::blockArticle",
 				wiki: data[0].split("=")[1],
