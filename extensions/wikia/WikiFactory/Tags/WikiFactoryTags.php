@@ -75,9 +75,7 @@ class WikiFactoryTags {
 			 * check if cache has any values stored
 			 */
 			$result = $wgMemc->get( $this->cacheKey() );
-			if( !is_array( $result ) ) {
-				$usedb = true;
-			}
+			$usedb  = is_array( $result ) ? false : true;
 		}
 		else {
 			$usedb = true;
@@ -104,5 +102,75 @@ class WikiFactoryTags {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * use provided string to add new tags into database. Tags will be:
+	 *
+	 * 1) splitted by space
+	 * 2) lowercased
+	 * 3) added to city_tag table if they are not exist already
+	 * 4) added to city_tag_map
+	 *
+	 * @access public
+	 *
+	 * @param string $stag string with tag definition
+	 *
+	 * @param string $tags  string sent from form
+	 */
+	public function setTags( $stag ) {
+
+		global $wgMemc;
+
+		wfProfileIn( __METHOD__ );
+
+		$tags = explode( " ", trim( str_lowercase( $stag ) ) );
+		$dbw  = WikiFactory::db( DB_MASTER );
+
+		/**
+		 * check if all tags are already defined in database,
+		 *
+		 * if not - add them and get id value
+		 * if yes - just get id value
+		 *
+		 */
+		$ids = array();
+		foreach( $tags as $tag ) {
+			$row = $dbw->selectRow(
+				array( "city_tag" ),
+				array( "*" ),
+				array( "name" => $tag ),
+				__METHOD__
+			);
+
+			if( !empty( $row->id ) ) {
+				$ids[] = $row->id;
+			}
+			else {
+				/**
+				 * add new tag to database
+				 */
+				$dbw->insert(
+					"city_tag",
+					array( "name"=> $tag ),
+					__METHOD__
+				);
+				$ids[] = $dbw->insertId();
+			}
+		}
+
+		/**
+		 * and now map tags in city_tag_map
+		 */
+		foreach( $ids as $id ) {
+			$dbw->replace(
+				"city_tag",
+				array( "city_id", "tag_id" ),
+				array( "city_id" => $this->mCityId, "tag_id" => $id ),
+				__METHOD__
+			);
+		}
+
+		wfProfileOut( __METHOD__ );
 	}
 }
