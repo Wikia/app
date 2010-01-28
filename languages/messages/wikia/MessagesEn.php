@@ -72,8 +72,6 @@ $messages = array_merge( $messages , array(
 <p>We're running a game to find the missing Spider-man. Please help us track him down at Spiderpedia.</p>
 <p>Did you know that we have a whole wiki about Lady Gaga? Don't miss the Fame Monster article!</p>
 <p>We need hits because we totally oversold FlashForward. Dig the globe!</p>",
-'skip-to-content-link-text' => 'Skip to main content',
-'skip-to-content-link-title' => 'Skip over login, search, and global navigation and jump to main content',
 'corporatepage-global-nav-headline' => 'Wikia Global Navigation',
 'corporatepage-watchlist' => 'Watchlist', 
 'corporatepage-homepage-feature-headline' => 'Featured at Wikia',
