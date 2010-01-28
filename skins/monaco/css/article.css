@@ -410,6 +410,14 @@
 	color: #333;
 }
 
+/* Bartek - for RT 37771 */
+.editsection-upper {
+	margin-left: 16px;
+	position: relative;
+	margin-bottom: -2px;
+	top: -3px;		
+}
+
 /*** Search results ***/
 ul.mw-search-results {
 	margin-top: 1.25em;
