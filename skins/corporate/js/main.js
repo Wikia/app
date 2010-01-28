@@ -1,5 +1,4 @@
 $(function() {
-	$("#GlobalNav ul:first > li").hover(GlobalNav_hover, GlobalNav_unhover);
 	wikiaSearch_setup();
 	homepageFeature_setup(blockArticle);
 	$('.staff-hide-link').click(blockArticle);
@@ -87,12 +86,6 @@ function homepageFeature_scroll(nav) {
 	});
 }
 
-function GlobalNav_hover() {
-	$(this).addClass("hover").find("ul").show();
-}
-function GlobalNav_unhover() {
-	$(this).removeClass("hover").find("ul").hide();
-}
 function wikiaSearch_setup() {
 	var placeholder = $("#wikia-search-form legend").text();
 	$("#wikia-search").focus(function() {
