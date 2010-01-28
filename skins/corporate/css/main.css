@@ -401,7 +401,7 @@ header a, #CompanyInfo a, footer a {
 #MainArticle h6 {
 	font-size: 1.1em;
 }
-#MainArticle ul, #MainArticle ol { padding: 0 1em; }
+#MainArticle ul, #MainArticle ol { padding: 0 2em; }
 #MainArticle p, #MainArticle li, #MainArticle dt, #MainArticle dd {
 	margin: 1em 0;
 	line-height: 1.3em;
@@ -528,7 +528,7 @@ footer {
 	display: block;
 	padding: 10px;
 }
-.MainArticle-sidebar ul {
+#MainArticle .MainArticle-sidebar ul {
 	margin: 0 0 30px;
 	padding: 0;
 	list-style: none;
