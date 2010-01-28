@@ -52,7 +52,7 @@ class SpecialWikiaSearch extends SpecialSearchOld {
 		$out  = Xml::openElement( 'form', array( 'id' => 'search', 'method' => 'get', 'action' => $wgScript ));
 		$searchTitle = SpecialPage::getTitleFor( 'Search' );
 		$out .= Xml::input( 'search', 50, $term, array( 'type' => 'text', 'id' => 'searchText', 'class' => 'wikia_search_field' ) );
-		$out .= '<a id="searchButton" class="big_button"><big>' . wfMsg( 'searchbutton' ) . '</big><small></small></a>';
+		$out .= ' <a id="searchButton" class="wikia_button"><span>' . wfMsg( 'searchbutton' ) . '</span></a>';
 
 		foreach( SearchEngine::searchableNamespaces() as $ns => $name ) {
 			if( in_array( $ns, $this->namespaces ) ) {
@@ -132,7 +132,7 @@ STOP;
 		$out = Xml::openElement( 'form', array( 'id' => 'powersearch', 'method' => 'get', 'action' => $wgScript ) );
 		$out.= $searchHiddens;
 		$out.= $searchField;
-		$out.= '<a id="powersearchButton" class="big_button"><big>' . wfMsg( 'searchbutton' ) . '</big><small></small></a>';
+		$out.= ' <a id="powersearchButton" class="wikia_button"><span>' . wfMsg( 'searchbutton' ) . '</span></a>';
 		$out.= $searchButton;
 		$out.= "<p style=\"clear: left;\">" . Xml::checkLabel( wfMsg( 'wikiasearch-search-this-wiki', array( $wgSitename ) ), 'thisWikiOnly', 'thisWikiOnly', $this->searchLocalWikiOnly ) . "</p>";
 		$out.= Xml::openElement( 'div', array( 'id' => 'powersearch-advanced', 'style' => ( $this->searchLocalWikiOnly ? 'display: block;' : 'display: none;' ) ) );

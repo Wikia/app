@@ -912,4 +912,7 @@ footer {
 	vertical-align: top;
 }
 
+.wikia_search_header {
+	display: none;
+}
 /* @end */
