@@ -570,6 +570,10 @@ class WikiaGlobalStats {
 			foreach( $limitWikiHubs as $key => $value ){
 				$limitWikiHubs[$key] = ceil($value*$factor);
 			}
+			$delta = $limit - array_sum($limitWikiHubs);
+			if ( $delta > 0){
+			$limitWikiHubs['_default_'] += $delta;
+			}
 		}
 		$result = $values = array();
 		$loop = 0;
