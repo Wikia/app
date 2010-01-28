@@ -739,8 +739,8 @@ class WikiaGlobalStats {
 		return $count;
 	}
 
-	public static function getCountMonthlyCreatedPages( $month ) {
-    	global $wgExternalStatsDB, $wgMemc;
+	public static function getCountAverageDayCreatePages( $month ) {
+		global $wgExternalStatsDB, $wgMemc;
 		wfProfileIn( __METHOD__ );
     	
     	$month = str_replace("-", "", $month);
