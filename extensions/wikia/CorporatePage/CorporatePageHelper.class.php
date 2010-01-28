@@ -31,6 +31,7 @@ class CorporatePageHelper{
 
 	static function jsVars($vars){
 		global $wgUser;
+		wfLoadExtensionMessages( 'CorporatePage' );
 		if ($wgUser->isAllowed( 'corporatepagemanager' )){
 			$vars['corporatepage_hide_confirm'] = wfMsg('corporatepage-hide-confirm');
 			$vars['corporatepage_hide_error'] = wfMsg('corporatepage-hide-error');
