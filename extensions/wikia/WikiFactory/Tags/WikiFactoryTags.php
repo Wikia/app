@@ -116,11 +116,9 @@ class WikiFactoryTags {
 	 *
 	 * @param string $stag string with tag definition
 	 *
-	 * @param string $tags  string sent from form
+	 * @return Array current tags for wiki
 	 */
-	public function setTags( $stag ) {
-
-		global $wgMemc;
+	public function setTagsByName( $stag ) {
 
 		wfProfileIn( __METHOD__ );
 
@@ -159,18 +157,103 @@ class WikiFactoryTags {
 			}
 		}
 
+		wfProfileOut( __METHOD__ );
+
+		/**
+		 * add tags by id, refresh cache, return defined tags
+		 */
+		return $this->setTagsById( $ids );
+	}
+
+	/**
+	 * use provided string to add new tags into database. Tags will be:
+	 *
+	 * @param Array $ids
+	 *
+	 * @return Array current tags for wiki
+	 */
+	public function setTagsById( $ids ) {
+
 		/**
 		 * and now map tags in city_tag_map
 		 */
-		foreach( $ids as $id ) {
-			$dbw->replace(
-				"city_tag",
-				array( "city_id", "tag_id" ),
-				array( "city_id" => $this->mCityId, "tag_id" => $id ),
+		wfProfileIn( __METHOD__ );
+		if( is_array( $ids ) ) {
+			foreach( $ids as $id ) {
+				$dbw->replace(
+					"city_tag",
+					array( "city_id", "tag_id" ),
+					array( "city_id" => $this->mCityId, "tag_id" => $id ),
+					__METHOD__
+				);
+			}
+		}
+		wfProfileOut( __METHOD__ );
+
+		/**
+		 * refresh cache, return defined tags
+		 */
+		return $this->getTags( true );
+	}
+
+	/**
+	 * use provided string to remove tags from database. Tags will be:
+	 *
+	 * 1) splitted by space
+	 * 2) lowercased
+	 * 3) removed from city_tag_map
+	 * 4) leaved in city_tag
+	 *
+	 * @access public
+	 *
+	 * @param string $stag string with tag definition
+	 *
+	 * @return Array current tags for wiki
+	 */
+	public function removeTagsByName( $stag ) {
+
+		wfProfileIn( __METHOD__ );
+
+		$tags = explode( " ", trim( str_lowercase( $stag ) ) );
+		$dbw  = WikiFactory::db( DB_MASTER );
+
+		$ids = array();
+		foreach( $tags as $tag ) {
+			$row = $dbw->selectRow(
+				array( "city_tag" ),
+				array( "*" ),
+				array( "name" => $tag ),
 				__METHOD__
 			);
+
+			if( !empty( $row->id ) ) {
+				$ids[] = $row->id;
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
+		return $this->removeTagsById( $ids );
+	}
+
+	public function removeTagsById( $ids ) {
+
+		wfProfileIn( __METHOD__ );
+
+		if( is_array( $ids ) ) {
+			foreach( $ids as $id ) {
+				$dbw->delete(
+					"city_tag",
+					array( "city_id" => $this->mCityId, "tag_id" => $id ),
+					__METHOD__
+				);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		/**
+		 * refresh cache, return defined tags
+		 */
+		return $this->getTags( true );
 	}
 }
