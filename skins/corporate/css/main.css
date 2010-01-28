@@ -918,11 +918,14 @@ footer {
 .wikia_search_header {
 	display: none;
 }
-#MainArticle .mw-search-results ul {
+#MainArticle .mw-search-results {
 	padding: 0;
 }
 #MainArticle .mw-search-results li {
 	list-style: none;
+}
+#MainArticle .mw-search-results a {
+	font-size: 16px;
 }
 
 /* @end */
