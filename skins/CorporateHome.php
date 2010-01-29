@@ -24,6 +24,18 @@ class SkinCorporateHome extends SkinCorporateBase {
 		$this->stylename = 'CorporateHome';
 		$this->template  = 'CorporateHomeTemplate';
 	}
+	
+
+	private function getSpotlight(){
+		return CorporatePageHelper::parseMsgImg('corporatepage-slider',true);
+	}
+	
+	public function prepareData($self,$tpl){
+		parent::prepareData($self,$tpl);
+		$tpl->set('slider', CorporatePageHelper::parseMsgImg('corporatepage-slider',true));
+		$tpl->set('wikia_whats_up', wfMsgExt("corporatepage-wikia-whats-up",array("parsemag"))); 
+		return true;
+	}
 }
 
 class CorporateHomeTemplate extends CorporateBaseTemplate {
@@ -55,7 +67,7 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 	-->
 	<body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
- class="<?php print $this->htmlBodyClassAttributeValues(); ?> isMainpage">
+ class="<?php echo $this->data['body_class_attribute'] ?> isMainpage">
 
 <?php print $this->htmlGlobalHeader();?>
 		<!-- DEV NOTE: This is the dark navigation strip at the top. -->
@@ -77,7 +89,7 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 						<section id="homepage-feature-spotlight">
 						<h1 id="featured-wikis-headline"><?php print wfMsg('corporatepage-featured-wikis-headline'); ?></h1>
 						<ul>
-							<?php foreach($this->getSpotlight() as $key => $value): ?>
+							<?php foreach($this->data['slider'] as $key => $value): ?>
 							<li id="homepage-feature-spotlight-<?php echo $key; ?>">
 								<a href="<?php echo $value['href'] ?>">
 								<img width="700" height="310" src="<?php echo $value['imagename'] ?>" class="homepage-spotlight"></a>
@@ -129,8 +141,8 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 									<span>
 										<span><?php print wfMsg('corporatepage-from'); ?></span>
 										<a href="<?php echo $value['wikia_url']; ?>" class="wikia-wiki-link"><?php echo $value['wikia']; ?></a>
-										<?php if ($this->isManager()):?>
-										<a class="wikia-page-link staff-hide-link" href="<?php echo $wgExtensionsPath; ?>/wikia/CorporatePage/CorporatePageHelper.php?wiki=<?php echo $value['db']; ?>&name=<?php echo $value['real_pagename']; ?>"><img src="<?php print $wgStylePath?>/corporate/images/icon.delete.png" alt="<?php print wfMsg('corporatepage-hide'); ?>" title"<?php print wfMsg('corporatepage-hide'); ?>"></a>
+										<?php if ($this->data['is_manager']):?>
+											<a class="wikia-page-link staff-hide-link" href="<?php echo $wgExtensionsPath; ?>/wikia/CorporatePage/CorporatePageHelper.php?wiki=<?php echo $value['db']; ?>&name=<?php echo $value['real_pagename']; ?>"><img src="<?php print $wgStylePath?>/corporate/images/icon.delete.png" alt="<?php print wfMsg('corporatepage-hide'); ?>" title"<?php print wfMsg('corporatepage-hide'); ?>"></a>
 										<?php endif;?>
 									</span>
 								</span>
@@ -148,7 +160,7 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 							Moreover, the message MUST begin with an <h1> followed
 							immediately by an <h2> in order to function correctly.
 						-->
-							<?php echo $this->getWikiaWhatsUp(); ?>
+							<?php echo $this->html('wikia_whats_up'); ?>
 						</div>
 					</section>
 
@@ -163,22 +175,5 @@ class CorporateHomeTemplate extends CorporateBaseTemplate {
 </html>
 
 <?php
-	}
-
-	private function getSpotlight(){
-		return $this->parseMsgImg('corporatepage-slider',true);
-	}
-
-	private function getWikiaWhatsUp(){
-		global $wgMemc,$wgLang;
-		$msg = "corporatepage-wikia-whats-up";
-		$key = wfMemcKey( "hp_msg_parser", $msg, $wgLang->getCode());
-		$out = $wgMemc->get($key ,null);
-		if ($this->memc && $out != null){
-			return $out;
-		}
-		$out = wfMsgExt($msg,array("parsemag"));
-		$wgMemc->set($key, $out, 60*60);
-		return $out;
 	}
 } // end of class

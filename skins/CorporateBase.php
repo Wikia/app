@@ -18,6 +18,7 @@ class SkinCorporateBase extends SkinTemplate {
 	
 	function initPage( OutputPage $out ) {
 		global $wgHooks;
+		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'prepareData');
 		parent::initPage( $out );
 	}
 	
@@ -53,13 +54,40 @@ class SkinCorporateBase extends SkinTemplate {
 						
 		return array_merge(parent::buildPersonalUrls(),$data);
 	}
+	
+	public function prepareData($self,$tpl){
+		global $wgUser,$wgRequest;
+		$tpl->set('footer_middlecolumn', CorporatePageHelper::parseMsgImg('corporatepage-footer-middlecolumn'));
+		$tpl->set('footer_bottom', CorporatePageHelper::parseMsg('corporatepage-footer-bottom'));
+		$tpl->set('footer_rightcolumn', CorporatePageHelper::parseMsg('corporatepage-footer-rightcolumn'));
+		$tpl->set('footer_bottom', CorporatePageHelper::parseMsg('corporatepage-footer-bottom'));
+		$tpl->set('footer-leftcolumn', CorporatePageHelper::parseMsg('corporatepage-footer-leftcolumn'));
+		$tpl->set('sidebar', CorporatePageHelper::parseMsg('corporatepage-sidebar',true));
+		/**
+	 	* Generic <body> element class attribute values for all pages.
+	 	*/
+		$tpl->set('body_class_attribute', 'mediawiki '. $tpl->textret('dir').' '. $tpl->textret('pageclass').' '. $tpl->textret('skinnameclass').(( $wgUser->isLoggedIn() ) ? ' loggedin' : ' loggedout'));
+		
+		$StaticChute = new StaticChute('js');
+		$StaticChute->useLocalChuteUrl();		
+		$tpl->set('static_chute_js',$StaticChute->getChuteHtmlForPackage('corporate_page_js'));
+
+		$StaticChute = new StaticChute('css');
+		$StaticChute->useLocalChuteUrl();
+		$tpl->set('static_chute_css',$StaticChute->getChuteHtmlForPackage('corporate_page_css'));
+		
+		$tpl->set('is_anon', $wgUser->isAnon());
+		$tpl->set('is_manager', $wgUser->isAllowed( 'corporatepagemanager' ));
+		
+		$searchValue = $wgRequest->getVal( 'search', '' );
+		$tpl->set('search_value', ( !empty( $searchValue ) ) ? $searchValue : wfMsg('corporatepage-find-a-wiki'));
+		return true;
+	}
 }
 
 require_once dirname(__FILE__) . "/../extensions/wikia/AnalyticsEngine/AnalyticsEngine.php";
 
 class CorporateBaseTemplate extends QuickTemplate {
-	var $skin;
-	var $memc = false;
 	/**
 	 * Prints the HTML for the <head></head> (inclusive) section.
 	 */
@@ -72,7 +100,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 		<!--title-->
 		<title><?php $this->text('pagetitle') ?></title>
 		<!--csslinks-->
-		<?php echo $this->getStaticChuteCSS(); ?>
+		<?php $this->html('static_chute_css') ?>
 		<?php $this->html('csslinks') ?>
 		<!--[if lt IE 8]>
 		<link rel="stylesheet" href="/skins/corporate/css/ie.css" type="text/css" media="screen">
@@ -86,7 +114,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		<?php $this->html('wikia_headscripts'); ?>
-		<?php echo $this->getStaticChuteJS(); ?>
+		<?php $this->html('static_chute_js') ?>
 		<?php $this->html('headscripts') ?>
 
 		<?php	if($this->data['jsvarurl']) { ?>
@@ -113,21 +141,6 @@ class CorporateBaseTemplate extends QuickTemplate {
 	</head>
 <?php
 	} // END: function htmlHead()
-
-	/**
-	 * Generic <body> element class attribute values for all pages.
-	 */
-	protected function htmlBodyClassAttributeValues(){
-		global $wgUser;
-		ob_start(); // next functions want to print but we don't want that yet
-		print 'mediawiki ';
-		print ' ' . $this->text('dir');
-		print ' ' . $this->text('pageclass');
-		print ' ' . $this->text('skinnameclass');
-		print ( $wgUser->isLoggedIn() ) ? ' loggedin' : ' loggedout';
-		ob_end_flush();
-	} // END: function htmlBodyClassAttributeValues
-
 	/**
 	 * The HTML for the Wikia Global header.
 	 */
@@ -144,7 +157,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 
 				<div id="wikia-tools">
 					<p id="wikia-account-tools">
-						<?php if($this->isAnon()): ?>
+						<?php if($this->data['is_anon']): ?>
 							<a id="wikia-login-link" href="<?php echo $this->data['personal_urls']['login']['href']; ?>"><?php print wfMsg('login'); ?></a>/
 							<a id="wikia-create-account-link" href="<?php echo $this->data['personal_urls']['register']['href']; ?>"><?php print wfMsg('nologinlink'); ?></a>
 						<?php else: ?>
@@ -156,7 +169,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 					<form id="wikia-search-form" name="wikia_search_form" action="<?php echo $this->data['personal_urls']['search']['href']; ?>" method="get">
 						<fieldset>
 							<legend><?php print wfMsg('corporatepage-find-a-wiki') ?></legend>
-							<input type="text" class="SearchField<?php print (wfMsg('corporatepage-find-a-wiki') === $this->getSearchValue()) ? ' placeholder' : '' ;?>" id="wikia-search" name="search" title="<?php print wfMsg("corporatepage-search-title"); ?>" value="<?php print $this->getSearchValue(); ?>">
+							<input type="text" class="SearchField<?php print (wfMsg('corporatepage-find-a-wiki') === $this->data['search_value']) ? ' placeholder' : '' ;?>" id="wikia-search" name="search" title="<?php print wfMsg("corporatepage-search-title"); ?>" value="<?php print $this->data['search_value']; ?>">
 							<input type="submit" id="wikia-search-submit" name="wikia_search_submit" value="Search">
 						</fieldset>
 					</form>
@@ -172,7 +185,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 			<div class="shrinkwrap">
 				<h1 id="globalnav-headline"><?php print wfMsg('corporatepage-global-nav-headline'); ?></h1>
 				<ul class="nav-top-level">
-					<?php foreach ($this->getGlobalNav() as $key => $value): ?>
+					<?php foreach ($this->data['sidebar'] as $key => $value): ?>
 						<li<?php print $value['islast'] ? ' class="last"':'';?> <?php print $value['isfirst'] ? ' class="first"':'';?>>
 							<a class="nav-link" href="<?php print $value['href'] ?>"><?php print $value['title'] ?></a>
 							<ul class="nav-sub-level">
@@ -208,7 +221,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 				<section id="wikia-international">
 					<h1><?php print wfMsg('corporatepage-wikia-international') ?></h1>
 					<ul>
-					<?php foreach ($this->getFooterLeftcolumn() as $key => $value): ?>
+					<?php foreach ($this->data['footer-leftcolumn'] as $key => $value): ?>
 						<li id="wikia-international-<?php print $key;?>"<?php print $value['islast'] ? ' class="last"':'';?> <?php print $value['isfirst'] ? ' class="first"':'';?>>
 							<a href="<?php print $value['href'] ?>"><?php print $value['title'] ?></a>
 						</li>
@@ -219,7 +232,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 				<section id="wikia-in-the-know">
 					<h1><?php print wfMsg('corporatepage-in-the-know') ?></h1>
 					<ul>
-					<?php foreach($this->parseMsgImg('corporatepage-footer-middlecolumn') as $key => $value): ?> 
+					<?php foreach($this->data['footer_middlecolumn'] as $key => $value): ?> 
 						<li id="wikia-in-the-know-<?php print $key;?>">
 							<a <?php echo $value['param'] == "new-window" ? " target='_blank' ":"" ?> href="<?php echo $value['href']; ?>" style="background-image:url(<?php print $value['imagename'] ?>);"><?php echo $value['title']; ?></a>
 						</li>
@@ -230,7 +243,7 @@ class CorporateBaseTemplate extends QuickTemplate {
 				<section id="wikia-more-links">
 					<h1><?php print wfMsg('corporatepage-more-link') ?></h1>
 					<ul>
-					<?php foreach ($this->getFooterRightcolumn() as $key => $value): ?>
+					<?php foreach ($this->data['footer_rightcolumn'] as $key => $value): ?>
 						<li id="wikia-more-links-<?php print $key;?>"><a href="<?php print $value['href'] ?>"><?php print $value['title'] ?></a></li>
 					<?php endforeach; ?>
 					</ul>
@@ -265,11 +278,10 @@ class CorporateBaseTemplate extends QuickTemplate {
 				<p id="copyright"><?php print wfMsg('corporatepage-rights',date('Y')) ?> </p>
 
 				<ul id="SupplementalNav">
-					<?php $footerBottom = $this->getFooterBottom(); ?>
-					<?php foreach ($footerBottom as $key => $value): ?>
+					<?php foreach ($this->data['footer_bottom'] as $key => $value): ?>
 						<li <?php print $value['islast'] ? 'class="first"':'';?> <?php print $value['isfirst'] ? 'class="first"':'';?>>
-							<?php if((count($footerBottom) - $key) <= 4 ): ?>
-								<a class="last4" id="footer_bottom_<?php echo (  $key - (count($footerBottom) - 5)); ?>" href="<?php print $value['href'] ?>"><?php print $value['title'] ?></a>
+							<?php if((count($this->data['footer_bottom']) - $key) <= 4 ): ?>
+								<a class="last4" id="footer_bottom_<?php echo (  $key - (count($this->data['footer_bottom']) - 5)); ?>" href="<?php print $value['href'] ?>"><?php print $value['title'] ?></a>
 							<?php else: ?>
 								<a href="<?php print $value['href'] ?>"><?php print $value['title'] ?></a>
 							<?php endif; ?>
@@ -282,156 +294,4 @@ class CorporateBaseTemplate extends QuickTemplate {
 		</footer>
 <?php
 	} // END: function GlobalFooter
-
-	protected function isAnon(){
-		global $wgUser;
-		return $wgUser->isAnon();
-	}
-
-	protected function getGlobalNav(){
-		$message = $this->parseMsg('corporatepage-sidebar',true);
-		return $message;
-	}
-
-	protected function getFooterLeftcolumn(){
-		$message = $this->parseMsg('corporatepage-footer-leftcolumn');
-		return $message;
-	}
-
-	protected function getFooterRightcolumn(){
-		$message = $this->parseMsg('corporatepage-footer-rightcolumn');
-		return $message;
-	}
-
-	protected function getFooterMiddlecolumn(){
-		$message = $this->parseMsg('corporatepage-footer-middlecolumn');
-		return $message;
-	}
-
-	protected function getFooterBottom(){
-		$message = $this->parseMsg('corporatepage-footer-bottom');
-		return $message;
-	}
-
-	protected function getSearchValue(){
-		global $wgRequest;
-		$x = $wgRequest->getVal( 'search', '' );
-		return ( !empty( $x ) ) ? $x : wfMsg('corporatepage-find-a-wiki') ;
-	}
-
-	protected function parseMsg($msg,$favicon = false){
-		global $wgMemc,$wgLang;
-		$mcKey = wfMemcKey( "hp_msg_parser", $msg, $wgLang->getCode() );
-		$out = $wgMemc->get( $mcKey, null);
-		if ($this->memc && $out != null){
-			return $out;
-		}
-		$message = wfMsg($msg);
-		$lines = explode("\n",$message);
-		$out = array();
-		foreach($lines as $v){
-			if (preg_match("/^([\*]+)([^|]+)\|(((.*)\|(.*))|(.*))$/",trim($v),$matches)){
-				$param = "";
-				
-				if (!empty($matches[5])){
-					$param = $matches[6];
-					$title = trim($matches[5]);
-				} else {
-					$title = trim($matches[3]);
-				}
-					
-				if (strlen($matches[1]) == 1){
-					$out[] = array("title" => $title, 'href' => trim($matches[2]),'sub' => array());
-				}
-			
-				if (strlen($matches[1]) == 2){
-					if (count($out) > 0){
-						if ($favicon){
-							$id = (int) WikiFactory::UrlToID(trim($matches[2]));
-							$favicon = "";
-							if ($id > 0){
-								$favicon = WikiFactory::getVarValueByName( "wgFavicon", $id );
-							}
-						}
-						$out[count($out) - 1]['sub'][] = array("param" => $param, "favicon" => $favicon, "title" => $title, 'href' => trim($matches[2]));
-					}
-				}
-			}
-		}
-		if (count($out) >0){
-			$out[0]['isfirst'] = true;
-			$out[count($out)-1]['islast'] = true;
-		}
-		$wgMemc->set( $mcKey ,$out,60*60);
-		return $out;
-	}
-
-	protected function parseMsgImg($msg,$descThumb = false){
-		global $wgMemc,$wgLang;
-		$mcKey = wfMemcKey( "hp_msg_parser", $msg, $wgLang->getCode());
-		$out = $wgMemc->get( $mcKey, null);
-		if ($this->memc && $out != null){
-		//	return $out;
-		}
-		$message = wfMsg($msg);
-		$lines = explode("\n",$message);
-		$out = array();
-		foreach($lines as $v){
-			if ($descThumb){
-				$str = "/^([\*]+)([^|]+)\|([^|]+)\|([^|]+)\|([^|]+)\|(.*)$/";
-			} else {
-				$str = "/^([\*]+)([^|]+)\|([^|]+)\|(((.*)\|(.*))|(.*))$/";
-			}
-				
-			if (preg_match($str,trim($v),$matches)){
-				if (strlen($matches[1]) == 1){
-					if ($descThumb){
-						$imageName = $this->getImageName($matches[5]);
-						$thumbName = $this->getImageName($matches[6]);
-						$out[] = array("desc" => $matches[4],"imagethumb" => $thumbName,"imagename" => $imageName, "title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
-					} else {
-						$param = "";
-						if (!empty($matches[7])){
-							$param = $matches[7];
-							$rowImageName = $matches[6];
-						} else{
-							$rowImageName = $matches[4];
-						}
-						$imageName = $this->getImageName($rowImageName);
-						$out[] = array("param" => $param,"imagename" => $imageName, "title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
-					}
-				}
-			}
-		}
-		$wgMemc->set( $mcKey, $out,60*60);
-		return $out;
-	}
-
-	private function getImageName($name){
-		global $wgStylePath;
-		$image = Title::newFromText($name);
-		$image = wfFindFile($image);
-		$imageName = $wgStylePath."/common/dot.gif";
-		if (($image) && ($image->exists())){
-			$imageName = $image->getViewURL();
-		}
-		return $imageName;
-	}
-
-	protected function isManager(){
-		global $wgUser;
-		return $wgUser->isAllowed( 'corporatepagemanager' );
-	}
-
-	protected function getStaticChuteJS(){
-		$StaticChute = new StaticChute('js');
-		$StaticChute->useLocalChuteUrl();
-		return $StaticChute->getChuteHtmlForPackage('corporate_page_js');
-	}
-
-	protected function getStaticChuteCSS(){
-		$StaticChute = new StaticChute('css');
-		$StaticChute->useLocalChuteUrl();
-		return $StaticChute->getChuteHtmlForPackage('corporate_page_css');
-	}
 } // end of class

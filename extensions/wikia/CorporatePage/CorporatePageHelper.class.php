@@ -64,7 +64,131 @@ class CorporatePageHelper{
 		$dbw->commit();
 		return $response;
 	}
+	
+		
 
+	/*
+	 * parseMsg
+	 *
+	 * message parsers for menu and etc.
+	 *
+	 * @author Tomek
+	 */
+	
+	static public function parseMsg($msg,$favicon = false){
+		global $wgMemc,$wgLang;
+		$mcKey = wfMemcKey( "hp_msg_parser", $msg, $wgLang->getCode() );
+		$out = $wgMemc->get( $mcKey, null);
+		if ( $out != null ){
+			return $out;
+		}
+		$message = wfMsg($msg);
+		$lines = explode("\n",$message);
+		$out = array();
+		foreach($lines as $v){
+			if (preg_match("/^([\*]+)([^|]+)\|(((.*)\|(.*))|(.*))$/",trim($v),$matches)){
+				$param = "";
+				
+				if (!empty($matches[5])){
+					$param = $matches[6];
+					$title = trim($matches[5]);
+				} else {
+					$title = trim($matches[3]);
+				}
+					
+				if (strlen($matches[1]) == 1){
+					$out[] = array("title" => $title, 'href' => trim($matches[2]),'sub' => array());
+				}
+			
+				if (strlen($matches[1]) == 2){
+					if (count($out) > 0){
+						if ($favicon){
+							$id = (int) WikiFactory::UrlToID(trim($matches[2]));
+							$favicon = "";
+							if ($id > 0){
+								$favicon = WikiFactory::getVarValueByName( "wgFavicon", $id );
+							}
+						}
+						$out[count($out) - 1]['sub'][] = array("param" => $param, "favicon" => $favicon, "title" => $title, 'href' => trim($matches[2]));
+					}
+				}
+			}
+		}
+		if (count($out) >0){
+			$out[0]['isfirst'] = true;
+			$out[count($out)-1]['islast'] = true;
+		}
+		$wgMemc->set( $mcKey ,$out,60*60);
+		return $out;
+	}
+	
+	/*
+	 *
+	 * message parsers for menu and etc., with images  
+	 *
+	 * @author Tomek
+	 */
+	
+	static public function parseMsgImg($msg,$descThumb = false){
+		global $wgMemc,$wgLang;
+		$mcKey = wfMemcKey( "hp_msg_parser", $msg, $wgLang->getCode());
+		$out = $wgMemc->get( $mcKey, null);
+		if ( $out != null ){
+		//	return $out;
+		}
+		$message = wfMsg($msg);
+		$lines = explode("\n",$message);
+		$out = array();
+		foreach($lines as $v){
+			if ($descThumb){
+				$str = "/^([\*]+)([^|]+)\|([^|]+)\|([^|]+)\|([^|]+)\|(.*)$/";
+			} else {
+				$str = "/^([\*]+)([^|]+)\|([^|]+)\|(((.*)\|(.*))|(.*))$/";
+			}
+				
+			if (preg_match($str,trim($v),$matches)){
+				if (strlen($matches[1]) == 1){
+					if ($descThumb){
+						$imageName = self::getImageName($matches[5]);
+						$thumbName = self::getImageName($matches[6]);
+						$out[] = array("desc" => $matches[4],"imagethumb" => $thumbName,"imagename" => $imageName, "title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
+					} else {
+						$param = "";
+						if (!empty($matches[7])){
+							$param = $matches[7];
+							$rowImageName = $matches[6];
+						} else{
+							$rowImageName = $matches[4];
+						}
+						$imageName = self::getImageName($rowImageName);
+						$out[] = array("param" => $param,"imagename" => $imageName, "title" => trim($matches[3]), 'href' => trim($matches[2]),'sub' => array());
+					}
+				}
+			}
+		}
+		$wgMemc->set( $mcKey, $out,60*60);
+		return $out;
+	}
+
+	/*
+	 * getImageName
+	 *
+	 * find media wiki image path 
+	 *
+	 * @author Tomek
+	 */
+	
+	private static function getImageName($name){
+		global $wgStylePath;
+		$image = Title::newFromText($name);
+		$image = wfFindFile($image);
+		$imageName = $wgStylePath."/common/dot.gif";
+		if (($image) && ($image->exists())){
+			$imageName = $image->getViewURL();
+		}
+		return $imageName;
+	}
+	
 	/*
 	 * ArticleFromTitle
 	 *
