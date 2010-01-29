@@ -7,16 +7,17 @@
 $wgExtensionCredits['other'][] = array(
 		'name' => 'TitleEdit',
 		'description' => 'Adds top title edit buttons',
-		'version' => '0.7',
+		'version' => '1.0',
 		'author' => array('Bartek Lapinski')
 		);
 
+$wgExtensionMessagesFiles['TitleEdit'] = dirname(__FILE__) . '/TitleEdit.i18n.php';
 $wgHooks['MonacoPrintFirstHeading'][] = 'wfTitleEditPrintFirstHeading';
 
 
 function wfTitleEditPrintFirstHeading() {
 	global $wgTitle, $wgUser, $wgRequest;
-
+	
 	if ( $wgTitle->isProtected( 'edit' ) ) {
 		return true;
 	}
@@ -25,12 +26,13 @@ function wfTitleEditPrintFirstHeading() {
 		return true;
 	}
 
+	wfLoadExtensionMessages( 'TitleEdit' );
 	$sk = $wgUser->getSkin();
 	$result = '';
 
 	if (is_object($wgUser) && $wgUser->isLoggedIn()) {
-		$link = $sk->link( $wgTitle, wfMsg('editsection'), // todo is it truly only 'edit' message?
-			array( 'onclick' => '"WET.byStr(\'articleAction/topedit\')"'),
+		$link = $sk->link( $wgTitle, wfMsg('titleedit'), // todo is it truly only 'edit' message?
+			array( 'onclick' => 'WET.byStr("articleAction/topedit")'),
 			array( 'action' => 'edit'),
 			array( 'noclasses', 'known' )
 			);
@@ -38,7 +40,7 @@ function wfTitleEditPrintFirstHeading() {
 		$result = "<span class=\"editsection-upper\">$result</span>";
 	} else { // anon
 		if ( empty($wgDisableAnonymousEditig)) {
-			$link = "<a class=\"wikia_button\" onclick=\"WET.byStr(\'articleAction/topedit\')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'editsection' ) . "</span></a>";
+			$link = "<a class=\"wikia_button\" onclick=\"WET.byStr('articleAction/topedit')\" href=\"" . $wgTitle->getEditUrl() . "\"><span>" . wfMsg( 'titleedit' ) . "</span></a>";
 			$result = "<span class=\"editsection-upper\">$link</span>";
 		}
 	}
