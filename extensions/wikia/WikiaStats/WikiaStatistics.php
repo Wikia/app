@@ -459,7 +459,7 @@ class WikiaGlobalStats {
 	private static $excludeWikiArticles 	= 'homepage-exclude-pages';
 	private static $excludeWikiHubs 		= array( 'Humor' );
 	private static $limitWikiHubs 			= array( 'Gaming' => 2, 'Entertainment' => 2, '_default_' => 1 );
-	private static $defaultLimit 			= 100;
+	private static $defaultLimit 			= 200;
 
 	public static function getEditedArticles( $days = 7, $limit = 5, $onlyContent = true ) {
     	global $wgExternalDatawareDB, $wgMemc;
@@ -585,7 +585,7 @@ class WikiaGlobalStats {
 				if ( $res === false ) continue;
 				
 				list( $wikiaTitle, $db, $hub, $wikia_ul, $page_url, $count ) = array_values($res);
-				if ( !isset( $values[$hub] ) ) $values[$hub] = 0;
+				
 				if ( !$noHubDepe ){
 					# limit results
 					if ( isset( $limitWikiHubs[ $hub ] ) ){
@@ -595,12 +595,17 @@ class WikiaGlobalStats {
 						$hubLimit = $limitWikiHubs[ '_default_' ];	
 						$hubCounter = '_default_';
 					}
-					if ( $values[$hub] == $hubLimit ) continue;
+					if ( !isset( $values[$hubCounter] ) ) $values[$hubCounter] = 0;
+					if ( $values[$hubCounter] == $hubLimit ) continue;
 				}
-				# add to array
-				$result[] = $res;
 				# increase counter
 				$values[$hubCounter]++; $loop++;
+				
+				# add to array
+				if ($values[$hubCounter] > self::$limitWikiHubs[$hubCounter]){
+					$res['out_of_limit'] = 1;			
+				}
+				$result[] = $res;
 			}
 		}
 
