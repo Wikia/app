@@ -1138,7 +1138,7 @@ class EditPage {
 			} else {
 				$title = $wgTitle->getPrefixedText();
 			}
-			$wgOut->setPageTitle( $title );
+			$wgOut->setPageTitle( wfMsg( 'editing', $title ) );
 		}
 	}
 
