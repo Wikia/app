@@ -422,10 +422,10 @@ class TaskManagerPager extends TablePager {
 		switch ($field) {
 			case "task_status":
 				$taskId = $this->mCurrentRow->task_id;
-				$name = BatchTask::getStatusName( $value );
-
+				$name   = BatchTask::getStatusName( $value );
+				$offset = $wgRequest->getVal( "offset", 0 );
 				$return = sprintf( "<a href=\"%s\">%s</a>",
-					$this->mTitle->getLocalUrl( "action=log&id={$taskId}"),
+					$this->mTitle->getLocalUrl( "action=log&id={$taskId}&offset={$offset}"),
 					$name
 				);
 
