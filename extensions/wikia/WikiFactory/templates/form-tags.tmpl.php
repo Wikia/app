@@ -1,4 +1,12 @@
 <!-- s:<?= __FILE__ ?> -->
+<script type="text/javascript">
+/*<![CDATA[*/
+function deletechecked() {
+    var answer = confirm("Delete tag?")
+	return answer;
+}
+/*]]>*/
+</script>
 <h2>Tags</h2>
 <div>
 <?php
@@ -12,7 +20,7 @@
 	foreach( $tags as $id => $tag ):
 		echo " <strong>{$tag}</strong><sup><a href=\"";
 		echo $title->getFullUrl( array( "tag" => $id, "city" => $wiki->city_id ) );
-		echo "\">remove</a></sup> ";
+		echo "\" class=\"wfTagRemove\" onclick=\"return deletechecked()\" >remove</a></sup> ";
 	endforeach;
 ?>
 	<br />
