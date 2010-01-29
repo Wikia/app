@@ -419,7 +419,7 @@ class HAWelcomeJob extends Job {
 							Wikia::log( __METHOD__, "task", $taskId );
 						}
 						else {
-							Wikia::log( __METHOD__, "exists", sprintf( "Talk page for user %s alredy exits", $wgUser->getName() ) );
+							Wikia::log( __METHOD__, "exists", sprintf( "Talk page for user %s already exits", $wgUser->getName() ) );
 						}
 					}
 				}
