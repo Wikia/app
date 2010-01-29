@@ -48,7 +48,7 @@ class CorporateTemplate extends CorporateBaseTemplate {
 	<?php $this->htmlHead() ?>
 	<body<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>
 <?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
- class="<?php print $this->htmlBodyClassAttributeValues(); ?>">
+ class="<?php echo $this->data['body_class_attribute'] ?>">
 
 <?php print $this->htmlGlobalHeader(); ?>
 		<!-- DEV NOTE: This is the dark navigation strip at the top. -->
