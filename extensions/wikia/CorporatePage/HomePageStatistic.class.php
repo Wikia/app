@@ -42,8 +42,12 @@ class HomePageStatistic
 			$out[$key]['level'] = $level;
 			$out[$key]['real_pagename'] = $out[$key]['page_name'];
 			$out[$key]['page_name'] = str_replace('_' ,' ' , $out[$key]['page_name']);
-			if ($out[$key]['count'] != $out[$key+1]['count']){
-				$level ++;
+			if ( empty($out[$key]['out_of_limit'] )){
+				if ($out[$key]['count'] != $out[$key+1]['count']){
+					$level ++;
+				}				
+			} else {
+				$out[$key]['level'] = 'x';
 			}
 		}
 		return $out;      			
